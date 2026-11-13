@@ -27,6 +27,7 @@
 =====================================================================*/
 
 #include "asnmp/gauge.h"          // header file for gauge class
+#include <memory>
 
 // constructor with a value
 Gauge32::Gauge32 (unsigned long i)
@@ -67,7 +68,7 @@ Gauge32 &Gauge32::operator= (unsigned long i)
 // TODO: this is broken if not inherited from UInt32 (see UInt32 code).
 SnmpSyntax& Gauge32::operator=( SnmpSyntax &in_val)
 {
-  if ( this == &in_val )        // handle assignment from itself
+  if (this == std::addressof (in_val))        // handle assignment from itself
       return *this;
 
   valid_flag = 0;               // will get set true if really valid

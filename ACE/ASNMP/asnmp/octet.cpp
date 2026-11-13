@@ -177,7 +177,7 @@ OctetStr &OctetStr::operator= (char const *string)
 OctetStr &OctetStr::operator= (OctetStr const &octet)
 {
    // protect against assignment from self
-   if ( this == &octet )
+   if (this == std::addressof (octet))
        return *this;
 
    // don't assign from invalid objs
@@ -512,7 +512,7 @@ char const *OctetStr::to_string ()
 SnmpSyntax &OctetStr::operator= (SnmpSyntax &val)
 {
    // protect against assignment from self
-   if ( this == &val )
+   if (this == std::addressof (val))
        return *this;
 
   // blow away the old value

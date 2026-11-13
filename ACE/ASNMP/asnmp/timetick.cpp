@@ -27,6 +27,7 @@
 
 #include "asnmp/timetick.h"            // include header file for timetick class
 #include <cstdio>
+#include <memory>
 
 // constructor with a value
 TimeTicks::TimeTicks (unsigned long const i)
@@ -71,7 +72,7 @@ TimeTicks &TimeTicks::operator= (TimeTicks const &uli)
 // general assignment from any Value
 SnmpSyntax& TimeTicks::operator=( SnmpSyntax &in_val)
 {
-  if ( this == &in_val )        // handle assignment from itself
+  if (this == std::addressof (in_val))        // handle assignment from itself
       return *this;
 
   valid_flag = false;

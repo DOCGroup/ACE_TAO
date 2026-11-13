@@ -27,6 +27,7 @@
 
 #include "asnmp/ctr64.h"
 #include <cstdio>
+#include <memory>
 
 static constexpr ACE_UINT64 counter64_base = 1ULL << 32;
 
@@ -116,7 +117,7 @@ Counter64 &Counter64::assign (long double ld)
 SnmpSyntax& Counter64::operator=( SnmpSyntax &val)
 {
   // protect against assignment from itself
-  if ( this == &val )
+  if (this == std::addressof (val))
       return *this;
 
   smival.value.hNumber.lopart = 0;      // pessimsitic - assume no mapping

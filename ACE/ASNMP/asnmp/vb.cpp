@@ -87,7 +87,7 @@ int Vb::valid () const
 // before assigning source
 Vb &Vb::operator= (Vb const &vb)
 {
-   if (this == &vb)
+   if (this == std::addressof (vb))
      return *this;
 
    std::unique_ptr<SnmpSyntax> value_copy {

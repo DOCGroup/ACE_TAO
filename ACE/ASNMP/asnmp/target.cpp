@@ -27,6 +27,7 @@
 
 #include "asnmp/target.h"
 #include <cstdio>
+#include <memory>
 
 //----------------------------------------------------------------------
 //--------[ Class default values ]----------------------
@@ -136,7 +137,7 @@ u_long SnmpTarget::get_timeout () const
 
 SnmpTarget &SnmpTarget::operator= (SnmpTarget const &lhs)
 {
-  if (this == &lhs)
+  if (this == std::addressof (lhs))
     return *this;
 
   validity_ = lhs.validity_;
@@ -250,7 +251,7 @@ int UdpTarget::set_address (UdpAddress &udp_address)
 // overloaded assignment
 UdpTarget &UdpTarget::operator= (UdpTarget const &lhs)
 {
-  if (this == &lhs)
+  if (this == std::addressof (lhs))
      return *this;
 
   // assign base part

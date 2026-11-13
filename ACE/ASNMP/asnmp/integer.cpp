@@ -28,6 +28,7 @@
 
 #include "asnmp/integer.h"        // header file for gauge class
 #include <cstdio>
+#include <memory>
 
 // constructor with value
 SnmpUInt32::SnmpUInt32 (unsigned long const i)
@@ -68,7 +69,7 @@ SnmpUInt32 &SnmpUInt32::operator= (unsigned long const i)
 // general assignment from any Value
 SnmpSyntax& SnmpUInt32::operator=( SnmpSyntax &in_val)
 {
-  if ( this == &in_val )        // handle assignment from itself
+  if (this == std::addressof (in_val))        // handle assignment from itself
       return *this;
 
   valid_flag = false;
@@ -167,7 +168,7 @@ SnmpInt32 &SnmpInt32::operator= (SnmpInt32 const &uli)
 // general assignment from any Value
 SnmpSyntax& SnmpInt32::operator=( SnmpSyntax &in_val)
 {
-  if ( this == &in_val )        // handle assignment from itself
+  if (this == std::addressof (in_val))        // handle assignment from itself
       return *this;
 
   valid_flag = false;

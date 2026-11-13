@@ -41,6 +41,7 @@
 #include "ace/OS_Memory.h"
 #include <cerrno>
 #include <cstdio>
+#include <memory>
 #include <new>
 
 //=================================================================
@@ -330,7 +331,7 @@ bool IpAddress::is_broadcast() const
 SnmpSyntax& IpAddress::operator=( SnmpSyntax &val)
 {
   // protect against assignment from itself
-  if ( this == &val )
+  if (this == std::addressof (val))
     return *this;
 
   valid_flag = 0;       // will get set 1 if really valid
@@ -359,7 +360,7 @@ SnmpSyntax& IpAddress::operator=( SnmpSyntax &val)
 IpAddress& IpAddress::operator=( const IpAddress &ipaddress)
 {
   // protect against assignment from itself
-  if ( this == &ipaddress )
+  if (this == std::addressof (ipaddress))
     return *this;
 
   valid_flag = ipaddress.valid_flag;
@@ -782,7 +783,7 @@ UdpAddress::~UdpAddress()
 SnmpSyntax& UdpAddress::operator=( SnmpSyntax &val)
 {
   // protect against assignment from itself
-  if ( this == &val )
+  if (this == std::addressof (val))
       return *this;
 
   valid_flag=0;         // will get set 1 if really valid
@@ -816,7 +817,7 @@ SnmpSyntax& UdpAddress::operator=( SnmpSyntax &val)
 UdpAddress& UdpAddress::operator=( const UdpAddress &udpaddr)
 {
   // protect against assignment from itself
-  if ( this == &udpaddr )
+  if (this == std::addressof (udpaddr))
       return *this;
 
   (IpAddress &)*this = udpaddr; // use ancestor assignment for ipaddr value
@@ -1036,7 +1037,7 @@ void NetbiosAddress::to_octet(OctetStr& octet) const
 NetbiosAddress& NetbiosAddress::operator=( const NetbiosAddress &val)
 {
  // protect against assignment from itself
-  if ( this == &val )
+  if (this == std::addressof (val))
       return *this;
 
   valid_flag = 0;         // will set to 1 if really valid
@@ -1072,7 +1073,7 @@ NetbiosAddress::operator const char *() const
 SnmpSyntax& NetbiosAddress::operator=( SnmpSyntax &val)
 {
   // protect against assignment from itself
-  if ( this == &val )
+  if (this == std::addressof (val))
       return *this;
 
   valid_flag = 0;         // will set to 1 if really valid
@@ -1194,7 +1195,7 @@ IpxAddress::~IpxAddress()
 SnmpSyntax& IpxAddress::operator=( SnmpSyntax &val)
 {
   // protect against assignment from itself
-  if ( this == &val )
+  if (this == std::addressof (val))
       return *this;
 
   valid_flag=0;         // will set to 1 if really valid
@@ -1216,7 +1217,7 @@ SnmpSyntax& IpxAddress::operator=( SnmpSyntax &val)
 IpxAddress& IpxAddress::operator=( const IpxAddress &ipxaddress)
 {
   // protect against assignment from itself
-  if ( this == &ipxaddress )
+  if (this == std::addressof (ipxaddress))
       return *this;
 
   valid_flag = ipxaddress.valid_flag;
@@ -1546,7 +1547,7 @@ IpxSockAddress::~IpxSockAddress()
 SnmpSyntax& IpxSockAddress::operator=( SnmpSyntax &val)
 {
   // protect against assignment from itself
-  if ( this == &val )
+  if (this == std::addressof (val))
       return *this;
 
   valid_flag=0;         // will set to 1 if really valid
@@ -1579,7 +1580,7 @@ SnmpSyntax& IpxSockAddress::operator=( SnmpSyntax &val)
 IpxSockAddress& IpxSockAddress::operator=( const IpxSockAddress &ipxaddr)
 {
   // protect against assignment from itself
-  if ( this == &ipxaddr )
+  if (this == std::addressof (ipxaddr))
       return *this;
 
   (IpxAddress&)*this = ipxaddr;         // use ancestor assignment for ipx addr
@@ -1763,7 +1764,7 @@ SnmpSyntax *MacAddress::clone() const
 MacAddress& MacAddress::operator=( const MacAddress &macaddress)
 {
   // protect against assignment from itself
-  if ( this == &macaddress )
+  if (this == std::addressof (macaddress))
       return *this;
 
   valid_flag = macaddress.valid_flag;
@@ -1777,7 +1778,7 @@ MacAddress& MacAddress::operator=( const MacAddress &macaddress)
 SnmpSyntax& MacAddress::operator=( SnmpSyntax &val)
 {
   // protect against assignment from itself
-  if ( this == &val )
+  if (this == std::addressof (val))
       return *this;
 
   valid_flag=0;         // will set to 1 if really valid
@@ -2063,7 +2064,7 @@ SnmpSyntax *GenAddress::clone() const
 GenAddress& GenAddress::operator= (GenAddress const &addr)
 {
   // protect against assignment from itself
-  if ( this == &addr )
+  if (this == std::addressof (addr))
       return *this;
 
   valid_flag = 0;
@@ -2085,7 +2086,7 @@ GenAddress& GenAddress::operator= (GenAddress const &addr)
 SnmpSyntax& GenAddress::operator= (SnmpSyntax& val)
 {
   // protect against assignment from itself
-  if ( this == &val )
+  if (this == std::addressof (val))
       return *this;
 
   valid_flag = 0;
@@ -2392,7 +2393,7 @@ const char *DecNetAddress::to_string()
 DecNetAddress& DecNetAddress::operator=( const DecNetAddress &decaddr)
 {
   // protect against assignment from itself
-  if ( this == &decaddr )
+  if (this == std::addressof (decaddr))
       return *this;
   valid_flag = decaddr.valid_flag;
   if (valid_flag)
@@ -2419,7 +2420,7 @@ SmiUINT32 DecNetAddress::get_syntax()
 SnmpSyntax& DecNetAddress::operator=( SnmpSyntax &val)
 {
   // protect against assignment from itself
-  if ( this == &val )
+  if (this == std::addressof (val))
     return *this;
 
   valid_flag = 0;       // will get set 1 if really valid
@@ -2527,7 +2528,7 @@ const char *AppleTalkAddress::to_string()
 AppleTalkAddress& AppleTalkAddress::operator=( const AppleTalkAddress &ataddr)
 {
   // protect against assignment from itself
-  if ( this == &ataddr )
+  if (this == std::addressof (ataddr))
       return *this;
   valid_flag = ataddr.valid_flag;
   if (valid_flag)
@@ -2554,7 +2555,7 @@ SmiUINT32 AppleTalkAddress::get_syntax()
 SnmpSyntax& AppleTalkAddress::operator=( SnmpSyntax &val)
 {
   // protect against assignment from itself
-  if ( this == &val )
+  if (this == std::addressof (val))
     return *this;
 
   valid_flag = 0;       // will get set 1 if really valid

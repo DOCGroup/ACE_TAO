@@ -30,6 +30,7 @@
 //---------[ external C libraries used ]--------------------------------
 
 #include <cstring>
+#include <memory>
 
 #include "asnmp/oid.h"                  // include def for oid class
 #include "ace/OS_NS_string.h"
@@ -172,7 +173,7 @@ void Oid::set_data( const char *dotted_oid_string)
 Oid& Oid::operator=( const Oid &oid)
 {
   // protect against assignment from self
-  if ( this == &oid)
+  if (this == std::addressof (oid))
       return *this;
 
   set_invalid();
@@ -780,7 +781,7 @@ int Oid::OidToStr( SmiLPOID srcOid, unsigned long size,
 SnmpSyntax& Oid::operator=( SnmpSyntax &val)
 {
   // protect against assignment from self
-  if ( this == &val )
+  if (this == std::addressof (val))
     return *this;
 
   // blow away old value

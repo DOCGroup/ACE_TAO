@@ -26,6 +26,7 @@
 =====================================================================*/
 
 #include "asnmp/counter.h"
+#include <memory>
 
 // constructor with a value
 Counter32::Counter32 (unsigned long i)
@@ -50,7 +51,7 @@ SmiUINT32 Counter32::get_syntax()
 
 // general assignment from any Value
 SnmpSyntax& Counter32::operator=( SnmpSyntax &in_val){
-  if ( this == &in_val )        // handle assignment from itself
+  if (this == std::addressof (in_val))        // handle assignment from itself
       return *this;
 
   valid_flag = 0;               // will get set true if really valid

@@ -33,6 +33,7 @@
 #include <cstring>
 #include <new>
 #include <utility>
+#include <memory>
 
 //=====================[ constructor no args ]=========================
 Pdu::Pdu() = default;
@@ -87,7 +88,7 @@ Pdu::~Pdu() = default;
 //=====================[ assignment to another Pdu object overloaded ]===
 Pdu &Pdu::operator= (Pdu const &pdu)
 {
-   if (this == &pdu)
+   if (this == std::addressof (pdu))
      return *this;
 
    // Initialize all mv's
