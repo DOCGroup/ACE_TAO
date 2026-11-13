@@ -14,6 +14,7 @@
 #include "ace/INet/StreamHandler.h"
 #include "ace/INet/SSLSock_IOStream.h"
 #include "ace/INet/HTTPS_Context.h"
+#include <memory>
 
 // we need OpenSSL > v0.9.8e to get support for SSL_set_SSL_CTX
 #define OPENSSL_VERSION_098E 0x0090805fL
@@ -47,6 +48,11 @@ namespace ACE
 #endif
                          );
 
+              Session_T (Session_T const&) = delete;
+              Session_T& operator= (Session_T const&) = delete;
+              Session_T (Session_T&&) = delete;
+              Session_T& operator= (Session_T&&) = delete;
+
               Session_T (const ACE_Time_Value& timeout,
                          bool keep_alive = true,
                          const ACE_Time_Value* alive_timeout = nullptr
@@ -73,9 +79,11 @@ namespace ACE
             private:
               using sock_stream_type = ACE::IOS::SSLSock_IOStreamBase<ACE_SYNCH_USE>;
 
-              connection_type* connection_;
-              sock_stream_type* sock_stream_;
+              /// The session holds an ACE event-handler reference to this connection.
+              connection_type* connection_ {};
+              std::unique_ptr<sock_stream_type> sock_stream_ {};
 #if defined (SSL_HAS_SSL_set_SSL_CTX) && (SSL_HAS_SSL_set_SSL_CTX == 1)
+              /// Borrowed; the caller retains ownership of the SSL context.
               Context* context_;
 #endif
           };

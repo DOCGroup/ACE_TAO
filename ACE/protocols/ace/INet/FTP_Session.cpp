@@ -23,8 +23,6 @@ namespace ACE
     Session_T<ACE_SYNCH_USE>::Session_T ()
       : port_ (FTP_PORT),
         reactive_ (false),
-        connection_ (nullptr),
-        sock_stream_ (nullptr),
         ftp_timeout_ (DEFAULT_TIMEOUT),
         cannot_reconnect_ (false),
         has_ftp_ext_ (true),
@@ -37,8 +35,6 @@ namespace ACE
     Session_T<ACE_SYNCH_USE>::Session_T (const ACE_Time_Value& timeout)
       : port_ (FTP_PORT),
         reactive_ (false),
-        connection_ (nullptr),
-        sock_stream_ (nullptr),
         ftp_timeout_ (timeout),
         cannot_reconnect_ (false),
         has_ftp_ext_ (true),
@@ -143,8 +139,10 @@ namespace ACE
         this->connection_->reference_counting_policy ().value (
             ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
 
-        ACE_NEW_NORETURN (this->sock_stream_,
+        sock_stream_type* new_sock_stream {};
+        ACE_NEW_NORETURN (new_sock_stream,
                           sock_stream_type (this->connection_));
+        this->sock_stream_.reset (new_sock_stream);
         if (this->sock_stream_)
           {
             this->new_connect_ = true;
@@ -194,8 +192,10 @@ namespace ACE
         this->connection_ = connection;
         this->connection_->add_reference ();
 
-        ACE_NEW_NORETURN (this->sock_stream_,
+        sock_stream_type* new_sock_stream {};
+        ACE_NEW_NORETURN (new_sock_stream,
                           sock_stream_type (this->connection_));
+        this->sock_stream_.reset (new_sock_stream);
 
         if (this->sock_stream_)
           {
@@ -268,11 +268,7 @@ namespace ACE
 
         if (this->connection_)
           {
-            if (this->sock_stream_)
-              {
-                delete this->sock_stream_;
-                this->sock_stream_ = nullptr;
-              }
+            this->sock_stream_.reset ();
             // this should be the last referece and removing it
             // causes the connection to be destroyed
             this->connection_->remove_reference ();

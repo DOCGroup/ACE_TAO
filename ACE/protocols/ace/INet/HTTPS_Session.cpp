@@ -28,9 +28,7 @@ namespace ACE
                                          , Context* ctx
 #endif
                                          )
-      : ACE::HTTP::SessionBase (URL::HTTPS_PORT, keep_alive),
-        connection_ (nullptr),
-        sock_stream_ (nullptr)
+      : ACE::HTTP::SessionBase (URL::HTTPS_PORT, keep_alive)
 #if defined (SSL_HAS_SSL_set_SSL_CTX) && (SSL_HAS_SSL_set_SSL_CTX == 1)
         , context_ (ctx)
 #endif
@@ -46,9 +44,7 @@ namespace ACE
                                          , Context* ctx
 #endif
                                          )
-      : ACE::HTTP::SessionBase (URL::HTTPS_PORT, timeout, keep_alive, alive_timeout),
-        connection_ (nullptr),
-        sock_stream_ (nullptr)
+      : ACE::HTTP::SessionBase (URL::HTTPS_PORT, timeout, keep_alive, alive_timeout)
 #if defined (SSL_HAS_SSL_set_SSL_CTX) && (SSL_HAS_SSL_set_SSL_CTX == 1)
         , context_ (ctx)
 #endif
@@ -186,8 +182,10 @@ namespace ACE
         this->connection_->reference_counting_policy ().value (
             ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
 
-        ACE_NEW_NORETURN (this->sock_stream_,
+        sock_stream_type* new_sock_stream {};
+        ACE_NEW_NORETURN (new_sock_stream,
                           sock_stream_type (this->connection_));
+        this->sock_stream_.reset (new_sock_stream);
         if (this->sock_stream_)
           {
             this->cannot_reconnect_ = false;
@@ -224,8 +222,10 @@ namespace ACE
         this->connection_ = connection;
         this->connection_->add_reference ();
 
-        ACE_NEW_NORETURN (this->sock_stream_,
+        sock_stream_type* new_sock_stream {};
+        ACE_NEW_NORETURN (new_sock_stream,
                           sock_stream_type (this->connection_));
+        this->sock_stream_.reset (new_sock_stream);
 
         if (this->sock_stream_)
           {
@@ -244,11 +244,7 @@ namespace ACE
     template <ACE_SYNCH_DECL>
     void Session_T<ACE_SYNCH_USE>::close_connection ()
       {
-        if (this->sock_stream_)
-          {
-            delete this->sock_stream_;
-            this->sock_stream_ = nullptr;
-          }
+        this->sock_stream_.reset ();
 
         if (this->connection_)
           {

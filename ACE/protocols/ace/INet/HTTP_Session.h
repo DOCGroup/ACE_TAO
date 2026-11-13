@@ -13,6 +13,7 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/INet/StreamHandler.h"
 #include "ace/INet/Sock_IOStream.h"
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -38,6 +39,11 @@ namespace ACE
                          bool keep_alive = false,
                          const ACE_Time_Value* alive_timeout = nullptr);
 
+              Session_T (Session_T const&) = delete;
+              Session_T& operator= (Session_T const&) = delete;
+              Session_T (Session_T&&) = delete;
+              Session_T& operator= (Session_T&&) = delete;
+
               ~Session_T () override;
 
               bool is_connected () const override;
@@ -56,8 +62,9 @@ namespace ACE
             private:
               using sock_stream_type = ACE::IOS::Sock_IOStreamBase<ACE_SYNCH_USE>;
 
-              connection_type* connection_;
-              sock_stream_type* sock_stream_;
+              /// The session holds an ACE event-handler reference to this connection.
+              connection_type* connection_ {};
+              std::unique_ptr<sock_stream_type> sock_stream_ {};
           };
 
         using Session = Session_T<ACE_NULL_SYNCH>;

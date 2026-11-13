@@ -18,6 +18,7 @@
 #include "ace/INet/FTP_Response.h"
 #include "ace/INet/StreamHandler.h"
 #include "ace/INet/Sock_IOStream.h"
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -45,6 +46,11 @@ namespace ACE
               Session_T ();
 
               explicit Session_T (const ACE_Time_Value& timeout);
+
+              Session_T (Session_T const&) = delete;
+              Session_T& operator= (Session_T const&) = delete;
+              Session_T (Session_T&&) = delete;
+              Session_T& operator= (Session_T&&) = delete;
 
               virtual ~Session_T ();
 
@@ -98,8 +104,9 @@ namespace ACE
               using sock_stream_type = ACE::IOS::Sock_IOStreamBase<ACE_SYNCH_USE>;
 
               bool reactive_;
-              connection_type* connection_;
-              sock_stream_type* sock_stream_;
+              /// The session holds an ACE event-handler reference to this connection.
+              connection_type* connection_ {};
+              std::unique_ptr<sock_stream_type> sock_stream_ {};
               ACE_Time_Value ftp_timeout_;
               bool cannot_reconnect_;
               bool has_ftp_ext_; // RFC 2428 - IPv6 and NAT
