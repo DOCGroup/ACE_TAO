@@ -63,10 +63,9 @@ ACEXML_Svcconf_Handler::endElement (ACEXML_Char const *,
 
       ACE_Service_Object_Exterminator gobbler {};
 
-      long const temp_ptr =
-        reinterpret_cast<long> (svc_dll.symbol (active_info->init_func ()));
-      void *(* const func) (ACE_Service_Object_Exterminator *) =
-        reinterpret_cast<void *(*)(ACE_Service_Object_Exterminator *)> (temp_ptr);
+      using init_func_type = void *(*)(ACE_Service_Object_Exterminator *);
+      init_func_type const func =
+        reinterpret_cast<init_func_type> (svc_dll.symbol (active_info->init_func ()));
 
       if (func == nullptr)
         {
@@ -88,6 +87,10 @@ ACEXML_Svcconf_Handler::endElement (ACEXML_Char const *,
          ACE_Service_Type::DELETE_THIS |
          ACE_Service_Type::DELETE_OBJ,
          gobbler);
+      if (stp == nullptr)
+        {
+          throw ACEXML_SAXException (ACE_TEXT ("Unable to create dynamic service implementation"));
+        }
 
       if (this->in_stream_def_)
         {
@@ -148,30 +151,23 @@ ACEXML_Svcconf_Handler::endElement (ACEXML_Char const *,
 
                   throw ACEXML_SAXException (msg.c_str ());
                 }
-
-
-//               ACE_DEBUG ((LM_INFO, ACE_TEXT ("Push dynamic %s into stream %s\n"),
-//                           this->parsed_info_.name (),
-//                           this->stream_info_.name ()));
             }
           else
             {
-              ACE_Service_Type * const stype =
+              std::unique_ptr<ACE_Service_Type> stype (
                 ACE_Service_Config::create_service_type (active_info->name (),
                                                          stp,
                                                          svc_dll,
-                                                         active_info->active ());
+                                                         active_info->active ()));
               // @@ Check error here.
 
               //               ACE_DEBUG ((LM_INFO, ACE_TEXT ("Apply dynamic %s\n"),
 //                           this->parsed_info_.name ()));
-              if (ACE_Service_Config::initialize (stype,
+              if (ACE_Service_Config::initialize (stype.get (),
                                                   active_info->init_params ()) == -1)
                 {
                   // If it did not initialize correctly, the
                   // ACE_Service_Config doesn't own this object
-                  delete stype;
-
                   // build the error message
                   ACE_TString msg (ACE_TEXT ("Failed to initialize dynamic service"));
                   msg += ACE_TString (ACE_TEXT (" for entity '"));
@@ -180,6 +176,7 @@ ACEXML_Svcconf_Handler::endElement (ACEXML_Char const *,
 
                   throw ACEXML_SAXException (msg.c_str ());
                 }
+              stype.release ();
             }
           this->parsed_info_.reset ();
         }

@@ -20,7 +20,7 @@ ACE_Parsed_Info::name () const
 ACE_INLINE int
 ACE_Parsed_Info::service_type (int type)
 {
-  if (this->service_type_ == -1)
+  if (this->service_type_ == ACE_Service_Type::INVALID_TYPE)
     {
       this->service_type_ = type;
       return 0;
