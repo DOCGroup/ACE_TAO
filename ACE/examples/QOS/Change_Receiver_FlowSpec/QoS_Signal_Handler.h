@@ -23,7 +23,7 @@
 class QoS_Signal_Handler : public ACE_Event_Handler
 {
 public:
-  /// constructor.
+  QoS_Signal_Handler () = delete;
   explicit QoS_Signal_Handler (ACE_QoS_Session *qos_session);
   QoS_Signal_Handler (QoS_Signal_Handler const &) = delete;
   QoS_Signal_Handler (QoS_Signal_Handler &&) = delete;
@@ -34,8 +34,8 @@ public:
   int handle_signal (int signum, siginfo_t *, ucontext_t *) override;
 
 private:
-  /// Session to be gracefully shutdown.
-  ACE_QoS_Session *qos_session_ {};
+  /// Borrowed session; its creator retains ownership.
+  ACE_QoS_Session *qos_session_;
 };
 
 #endif /* QOS_SIGNAL_HANDLER_H */
