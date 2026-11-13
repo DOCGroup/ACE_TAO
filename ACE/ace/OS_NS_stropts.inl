@@ -171,7 +171,7 @@ ACE_OS::putmsg (ACE_HANDLE handle, const struct strbuf *ctl,
     {
       // This is the hard case.
       char *buf;
-      const auto alloc {static_cast<unsigned int> (ctl->len) + static_cast<unsigned int> (data->len)};
+      unsigned int const alloc {static_cast<unsigned int> (ctl->len) + static_cast<unsigned int> (data->len)};
 #if defined (ACE_HAS_ALLOC_HOOKS)
       ACE_ALLOCATOR_RETURN (buf, static_cast<char*> (ACE_Allocator::instance ()->malloc (alloc)), -1);
 #else

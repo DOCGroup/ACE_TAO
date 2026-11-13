@@ -24,7 +24,7 @@ int ACE_Single_Input_Reactor::register_handler (ACE_Event_Handler *event_handler
   event_handler_ = event_handler;
   event_handler->add_reference ();
   // disable ACE_NONBLOCK, see ACE_IPC_SAP::disable()
-  const auto handle = event_handler->get_handle ();
+  ACE_HANDLE const handle = event_handler->get_handle ();
 #if defined ACE_WIN32 || defined ACE_VXWORKS
   u_long nonblock = 0;
   ACE_OS::ioctl (handle, FIONBIO, &nonblock);
@@ -36,7 +36,7 @@ int ACE_Single_Input_Reactor::register_handler (ACE_Event_Handler *event_handler
 
 int ACE_Single_Input_Reactor::handle_events (ACE_Time_Value *)
 {
-  const auto handler = event_handler_.handler ();
+  ACE_Event_Handler * const handler = event_handler_.handler ();
   if (handler)
     {
       return handler->handle_input (handler->get_handle ());
