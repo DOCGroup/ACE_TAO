@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file BiDir_Service_Context_Handler.h
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-// ===================================================================
 
 #ifndef TAO_BIDIR_SERVICE_CONTEXT_HANDLER_H
 #define TAO_BIDIR_SERVICE_CONTEXT_HANDLER_H

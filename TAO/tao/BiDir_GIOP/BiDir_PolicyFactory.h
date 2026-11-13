@@ -1,12 +1,10 @@
 // -*- C++ -*-
 //
-// ===================================================================
 /**
  *  @file BiDir_PolicyFactory.h
  *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
-// ===================================================================
 #ifndef TAO_BIDIR_POLICY_FACTORY_H
 #define TAO_BIDIR_POLICY_FACTORY_H
 
