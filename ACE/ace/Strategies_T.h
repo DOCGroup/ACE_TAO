@@ -915,6 +915,8 @@ protected:
     std::unique_ptr<CONCURRENCY_STRATEGY, strategy_deleter>;
   using recycling_strategy_ptr =
     std::unique_ptr<RECYCLING_STRATEGY, strategy_deleter>;
+  using mutex_ptr = std::unique_ptr<MUTEX, strategy_deleter>;
+  using reverse_mutex_ptr = std::unique_ptr<REVERSE_MUTEX>;
 
   /// Creates a new connection.
   virtual int new_connection (SVC_HANDLER *&sh,
@@ -979,14 +981,11 @@ protected:
   /// Table that maintains the cache of connected SVC_HANDLERs.
   CONNECTION_MAP connection_map_;
 
-  /// Mutual exclusion for this object.
-  MUTEX *lock_;
+  /// Mutex ownership follows its conditional deleter.
+  mutex_ptr lock_;
 
-  /// Mutual exclusion for this object.
-  bool delete_lock_;
-
-  /// Reverse lock.
-  REVERSE_MUTEX *reverse_lock_;
+  /// Reverse lock owned by this strategy.
+  reverse_mutex_ptr reverse_lock_;
 
   /// Creation strategy for an <Connector>; ownership follows its deleter.
   creation_strategy_ptr creation_strategy_;

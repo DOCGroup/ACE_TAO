@@ -462,9 +462,8 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::ACE_Cache
  ACE_Recycling_Strategy<SVC_HANDLER> *rec_s,
  MUTEX *lock,
  bool delete_lock)
-  : lock_ (lock),
-    delete_lock_ (delete_lock),
-    reverse_lock_ (nullptr),
+  : lock_ (lock, strategy_deleter {delete_lock}),
+    reverse_lock_ {},
     creation_strategy_ {},
     concurrency_strategy_ {},
     recycling_strategy_ {}
@@ -472,14 +471,15 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::ACE_Cache
   // Create a new lock if necessary.
   if (this->lock_ == nullptr)
     {
-      ACE_NEW (this->lock_,
-               MUTEX);
-
-      this->delete_lock_ = true;
+      MUTEX *lock {};
+      ACE_NEW (lock, MUTEX);
+      this->lock_.get_deleter ().owned = true;
+      this->lock_.reset (lock);
     }
 
-  ACE_NEW (this->reverse_lock_,
-           REVERSE_MUTEX (*this->lock_));
+  REVERSE_MUTEX *reverse_lock {};
+  ACE_NEW (reverse_lock, REVERSE_MUTEX (*this->lock_));
+  this->reverse_lock_.reset (reverse_lock);
 
   if (this->open (cre_s,
                   con_s,
@@ -492,10 +492,8 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::ACE_Cache
 template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX>
 ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::~ACE_Cached_Connect_Strategy ()
 {
-  if (this->delete_lock_)
-    delete this->lock_;
-
-  delete this->reverse_lock_;
+  this->lock_.reset ();
+  this->reverse_lock_.reset ();
 
   this->creation_strategy_.reset ();
   this->concurrency_strategy_.reset ();
