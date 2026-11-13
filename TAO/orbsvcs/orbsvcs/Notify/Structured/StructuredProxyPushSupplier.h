@@ -57,6 +57,8 @@ public:
   void load_attrs (TAO_Notify::NVPList const &attrs) override;
   void validate () override;
 
+  /// @name Servant interface methods
+  /// @{
   CosNotifyChannelAdmin::ProxyType MyType () override;
 
   void connect_structured_push_consumer (
@@ -65,6 +67,7 @@ public:
   void disconnect_structured_push_supplier () override;
 
   char const * get_proxy_type_name () const override;
+  /// @}
 
   virtual void configure(TAO_Notify_ConsumerAdmin & admin, CosNotifyChannelAdmin::ProxyID_out proxy_id);
 
