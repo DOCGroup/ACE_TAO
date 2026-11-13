@@ -4,23 +4,15 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+// Split inaccuracy into the lower 32 bits and the upper 16 bits stored by UtcT.
 TAO_UTO::TAO_UTO (TimeBase::TimeT time,
                   TimeBase::InaccuracyT inaccuracy,
                   TimeBase::TdfT tdf)
+  : attr_utc_time_ {time,
+                    static_cast<CORBA::ULong> (ACE_U64_TO_U32 (inaccuracy)),
+                    static_cast<CORBA::UShort> ((inaccuracy >> 32U) & 0xFFFF),
+                    tdf}
 {
-  this->attr_utc_time_.time = time;
-
-  // Extract the lower 32 bits in the inacclo.
-  this->attr_utc_time_.inacclo =
-    static_cast<CORBA::ULong> (ACE_U64_TO_U32 (inaccuracy));
-
-  // Extract the lower 16 bits of the remaining bits. 'And'ing with 0xFFFF
-  // is only a sanity check.
-
-  this->attr_utc_time_.inacchi =
-    static_cast<CORBA::UShort> ((inaccuracy >> 32U) & 0xFFFF);
-
-  this->attr_utc_time_.tdf = tdf;
 }
 
 /// Returns the readonly time attribute.

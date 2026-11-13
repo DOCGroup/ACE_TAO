@@ -4,9 +4,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_TIO::TAO_TIO (TimeBase::TimeT lower,
                   TimeBase::TimeT upper)
+  : attr_time_interval {lower, upper}
 {
-  this->attr_time_interval.lower_bound = lower;
-  this->attr_time_interval.upper_bound = upper;
 }
 
 /// Returns the time interval.
