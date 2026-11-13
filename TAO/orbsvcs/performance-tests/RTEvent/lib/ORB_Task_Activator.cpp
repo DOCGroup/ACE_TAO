@@ -15,7 +15,7 @@ ORB_Task_Activator::~ORB_Task_Activator ()
   if (this->task_ == nullptr)
     return;
   try{
-    (*this->task_)->shutdown (0);
+    (*this->task_)->shutdown (false);
   } catch (const CORBA::Exception&) {
   }
 }
