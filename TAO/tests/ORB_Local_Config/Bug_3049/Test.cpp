@@ -1,11 +1,4 @@
-// @author Phil Mesnier <mesnier_p@ociweb.com>
-
-// This test scenario is documented in bugzilla bug 3049. This test
-// creates 3 ORBs. ORB-A becomes the default ORB, which shares the
-// global config context, ORB-B initializes a local configuration
-// context which loads a service. ORB-C finally shares the configuration
-// from ORB-B. The demonstration is to show that a service is available
-// to ORB-C from the configuration initialized by ORB-B.
+/// @author Phil Mesnier <mesnier_p@ociweb.com>
 
 #include "tao/corba.h"
 #include "tao/ORB_Core.h"
@@ -17,6 +10,10 @@ constexpr ACE_TCHAR arg_a[] = ACE_TEXT ("AAA -ORBGestalt LOCAL -ORBId ORB-A");
 constexpr ACE_TCHAR arg_b[] = ACE_TEXT ("BBB -ORBGestalt LOCAL -ORBId ORB-B -ORBSvcConf a.conf");
 constexpr ACE_TCHAR arg_c[] = ACE_TEXT ("BBB -ORBGestalt ORB:ORB-B -ORBId ORB-C");
 
+/// Tests Bug 3049 across three ORBs: ORB-A is the default ORB and uses the
+/// global configuration; ORB-B loads a service in its local configuration,
+/// and ORB-C shares ORB-B's configuration. The service should be visible
+/// through ORB-C but remain unavailable globally.
 int
 testBug3049 (int, ACE_TCHAR *[])
 {
@@ -38,7 +35,7 @@ testBug3049 (int, ACE_TCHAR *[])
 
       // Confirm ORB-C inherited SHMIOP from ORB-B, while it is unavailable
       // in the global context.
-      ACE_Service_Object * const global_service =
+      ACE_Service_Object const * const global_service =
         ACE_Dynamic_Service<ACE_Service_Object>::instance ("SHMIOP_Factory");
       bool failed {};
       if (global_service != nullptr)
@@ -48,7 +45,7 @@ testBug3049 (int, ACE_TCHAR *[])
                       ACE_TEXT ("Unexpected to find SHMIOP_Factory globally\n")));
         }
 
-      ACE_Service_Object * const orb_service =
+      ACE_Service_Object const * const orb_service =
         ACE_Dynamic_Service<ACE_Service_Object>::instance (
           orb_c->orb_core ()->configuration (), "SHMIOP_Factory");
       if (orb_service == nullptr)
@@ -78,8 +75,7 @@ testBug3049 (int, ACE_TCHAR *[])
   return 0;
 }
 
-// @brief the main driver
-
+/// Runs the Bug 3049 test.
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
