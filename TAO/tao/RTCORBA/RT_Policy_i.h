@@ -222,11 +222,14 @@ public:
 
   void destroy () override;
 
+  /// @name CDR encoder and decoder methods
+  /// @{
   /// This method writes a CDR representation of the current object.
   CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr) override;
 
   /// This method reads the object state from a CDR representation.
   CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr) override;
+  /// @}
 
   // Return the cached policy type for this policy.
   TAO_Cached_Policy_Type _tao_cached_type () const override;
@@ -511,6 +514,8 @@ public:
                                         char const *mmap_filename,
                                         char const *mmap_lockname);
 
+  /// @name IDL interface methods
+  /// @{
   CORBA::Long send_buffer_size () override;
 
   void send_buffer_size (CORBA::Long send_buffer_size) override;
@@ -544,6 +549,7 @@ public:
   char *mmap_lockname () override;
 
   void mmap_lockname (char const *mmap_lockname) override;
+  /// @}
 
   /**
    * This method writes the CDR encapsulation of an instance of
@@ -696,8 +702,11 @@ class TAO_RTCORBA_Export TAO_GIOP_Protocol_Properties
     public ::CORBA::LocalObject
 {
 public:
+  /// @name CDR encoder and decoder methods
+  /// @{
   CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr) override;
   CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr) override;
+  /// @}
 
 protected:
   /// Protected destructor to enforce proper memory management of this

@@ -43,6 +43,8 @@ public:
   /// Insert Properties.
   void insert (TAO_RT_Transport_Descriptor_Property *descriptor_property);
 
+  /// @name TAO_Transport_Descriptor_Interface methods
+  /// @{
   /// This call allocates and copies the contents of this class and
   /// returns the pointer
   TAO_Transport_Descriptor_Interface *duplicate () override;
@@ -53,6 +55,7 @@ public:
 
   /// Generate hash value for our class
   u_long hash () const override;
+  /// @}
 
 private:
   TAO_RT_Transport_Descriptor (TAO_RT_Transport_Descriptor const &) = delete;
