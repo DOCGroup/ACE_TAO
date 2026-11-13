@@ -1090,7 +1090,7 @@ ACE_Service_Gestalt::open_i (const ACE_TCHAR program_name[],
     }
 
   // See if we need to load the static services.
-  if (this->no_static_svcs_ == 0
+  if (!this->no_static_svcs_
       && this->load_static_svcs () == -1)
     result = -1;
   else
@@ -1201,10 +1201,10 @@ ACE_Service_Gestalt::parse_args_i (int argc,
         this->logger_key_ = get_opt.opt_arg ();
         break;
       case 'n':
-        this->no_static_svcs_ = 1;
+        this->no_static_svcs_ = true;
         break;
       case 'y':
-        this->no_static_svcs_ = 0;
+        this->no_static_svcs_ = false;
         break;
       case 'S':
         if (this->svc_queue_ == nullptr)
