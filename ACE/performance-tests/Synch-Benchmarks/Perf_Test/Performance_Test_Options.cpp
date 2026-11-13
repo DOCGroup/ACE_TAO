@@ -14,14 +14,14 @@ Performance_Test_Options::count () const
   size_t total {};
 
   if (performance_test_options.verbose ())
-    ACE_DEBUG ((LM_DEBUG, "Thread work count size = %d\n", performance_test_options.thr_wc_size));
+    ACE_DEBUG ((LM_DEBUG, "Thread work count size = %B\n", performance_test_options.thr_work_count.size ()));
 
-  for (int i {}; i < performance_test_options.thr_wc_size; ++i)
+  for (size_t i {}; i < performance_test_options.thr_work_count.size (); ++i)
     {
       if (performance_test_options.thr_work_count[i] != 0)
         {
           //          if (performance_test_options.verbose ())
-            ACE_DEBUG ((LM_DEBUG, "count[%d] = %d\n", i, performance_test_options.thr_work_count[i]));
+            ACE_DEBUG ((LM_DEBUG, "count[%B] = %B\n", i, performance_test_options.thr_work_count[i]));
           total += performance_test_options.thr_work_count[i];
         }
     }
@@ -32,7 +32,7 @@ Performance_Test_Options::count () const
 void
 Performance_Test_Options::init ()
 {
-  std::fill (this->thr_work_count.begin (), this->thr_work_count.end (), 0);
+  std::fill (this->thr_work_count.begin (), this->thr_work_count.end (), size_t {});
 }
 
 void

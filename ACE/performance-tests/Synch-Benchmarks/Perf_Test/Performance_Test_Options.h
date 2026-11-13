@@ -95,8 +95,7 @@ public:
   bool do_zero_copy () const;
   void   print_results ();
 
-  std::vector<int> thr_work_count = std::vector<int> (10000);
-  int thr_wc_size {10000};  // Max number of threads.
+  std::vector<size_t> thr_work_count = std::vector<size_t> (10000);
 
 private:
   ACE_Profile_Timer _itimer;            // Keep track of time.
