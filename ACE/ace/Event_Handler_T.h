@@ -14,6 +14,8 @@
 
 #include "ace/Event_Handler.h"
 
+#include <memory>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -144,9 +146,21 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
+private:
+  struct Op_Handler_Deleter
+  {
+    bool delete_handler {};
+
+    void operator() (T *op_handler) const
+    {
+      if (this->delete_handler)
+        delete op_handler;
+    }
+  };
+
 protected:
-  /// This may be borrowed; delete_handler_ controls whether it is deleted.
-  T *op_handler_;
+  /// Can own or borrow the operations handler, according to its deleter.
+  std::unique_ptr<T, Op_Handler_Deleter> op_handler_;
 
   // = Handle input, output, and exception events.
   IO_HANDLER input_handler_;
@@ -161,8 +175,6 @@ protected:
 
   /// Handle signal events.
   SIG_HANDLER sig_handler_;
-
-  bool delete_handler_;
 
   // = Get/set underlying handle.
   SET_HANDLE set_handle_;
