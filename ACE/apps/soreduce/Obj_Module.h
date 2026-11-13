@@ -6,66 +6,56 @@
 #ifndef _OBJ_MODULE_H_
 #define _OBJ_MODULE_H_
 
-// Obj_Module encapsulates the result of applying nm to a single object module
-// in a shared library.  Currently an object module consists of two types of
-// signatures, those that are exported, able to resolve references from others,
-// and those that are imported, needing resolution.
-//
-// Obj_Modules keep track of external references. In the end, any module that
-// has one or more external references to it must be included in the resulting
-// library. While the means exists to remove external references, perhaps
-// through further analysis of undefined signatures and their usage, this is
-// not currently done. Once a technique is discovered to allow for easy
-// determination that reference is truly unneeded this code may be useful.
-
 #include "Sig_List.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Message_Block;
 ACE_END_VERSIONED_NAMESPACE_DECL
 
+/**
+ * @brief Stores the symbols imported and exported by one object module.
+ *
+ * Modules with external references are included in the reduced library.
+ */
 class Obj_Module {
 public:
-  explicit Obj_Module (ACE_CString const &, int = 500);
+  explicit Obj_Module (ACE_CString const &, size_t = 500);
   Obj_Module (Obj_Module const &) = delete;
   Obj_Module (Obj_Module &&) = delete;
   Obj_Module &operator= (Obj_Module const &) = delete;
   Obj_Module &operator= (Obj_Module &&) = delete;
 
-  // Returns the list of exported signatures, ie. those that are defined in
-  // this module
+  /// Returns the signatures defined in this module.
   Sig_List & exports();
 
-  // Returns the list of signatures used by this module but not defined within
+  /// Returns the signatures used by this module but not defined within it.
   Sig_List & imports();
 
-  // Returns the name of the object module.
+  /// Returns the object module name.
   ACE_CString const &name() const;
 
-  // Add_source invokes GNU nm on the supplied file and parses the output to
-  // build the list of imported and exported signatures.  When replacing GNU
-  // nm to use a different tool, this method must be modified.  In the future
-  // this could be a virtual to allow for specialization based on toolset.
+  /**
+   * Invokes GNU nm on the supplied file and parses its output into imported
+   * and exported signatures.
+   */
   void add_source (char const *, bool = false);
 
-  // Get the number of external references to this object module. At the end
-  // of processing, if the number of external references is 0, the module is
-  // not included in the final library.
-  int extref () const;
+  /// Returns the number of external references to this module.
+  size_t extref () const;
 
-  // add a new external reference to this module.
+  /// Adds an external reference to this module.
   void add_extref ();
 
 private:
-  // The message block is borrowed; its chain owns any heap continuations.
-  void populate_sig_list (Sig_List &, int, ACE_Message_Block &);
-  // buf is a borrowed cursor; a null value tells read_line to discard input.
+  /// The message block is borrowed; its chain owns any heap continuations.
+  void populate_sig_list (Sig_List &, size_t, ACE_Message_Block &);
+  /// buf is borrowed; null tells read_line to discard input.
   int read_line (ACE_HANDLE src, ACE_Message_Block *&buf);
 
   ACE_CString name_;
   Sig_List imports_;
   Sig_List exports_;
-  int extrefs_ {};
+  size_t extrefs_ {};
 };
 
 #endif /* _OBJ_MODULE_H_ */

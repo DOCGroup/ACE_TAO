@@ -7,12 +7,6 @@
 
 // Author: Phil Mesnier
 
-// A Library is a collection of Obj_Modules that define a single shared
-// library. It is used to manipulate the list of unresolved references by
-// removing those that are resolved and adding those brought in by new modules
-// that are required to resolve references.  The Library is responsible
-// for outputting a specialized mpc file to build the reduce footprint library.
-
 #include "Obj_Module.h"
 #include <memory>
 #include <vector>
@@ -20,10 +14,11 @@
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
-// The MPC generator class serves as the base class used to output the
-// custom mpc files used to build the subsetted libraries.
-// The base class will make libACE_subset.so
-
+/**
+ * @brief Generates MPC files for subset libraries.
+ *
+ * The base class generates a project for libACE_subset.so.
+ */
 class MPC_Generator
 {
 public:
@@ -47,7 +42,7 @@ protected:
   ACE_CString mpcfilename_;
 };
 
-// Generate mpc files for libraries dependant on ACE, that are not TAO.
+/// Generates MPC files for libraries that depend on ACE but not TAO.
 class MPC_ACE_Dep_Lib : public MPC_Generator
 {
 public:
@@ -62,7 +57,7 @@ protected:
   void write_projectinfo () override;
 };
 
-// Generates mpc files for libTAO_subset.so
+/// Generates MPC files for libTAO_subset.so.
 class MPC_TAO_Lib : public MPC_ACE_Dep_Lib
 {
 public:
@@ -77,8 +72,12 @@ protected:
   void write_projectinfo () override;
 };
 
-// Generates makefiles for libs dependant on TAO.  This has a problem when
-// building libraries in the orbsvcs tree.
+/**
+ * @brief Generates MPC files for libraries that depend on TAO.
+ *
+ * The generated projects need special handling for libraries in the orbsvcs
+ * tree.
+ */
 class MPC_TAO_Dep_Lib : public MPC_TAO_Lib
 {
 public:
@@ -93,50 +92,52 @@ protected:
   void write_projectinfo () override;
 };
 
-//----------------------------------------------------------------------------
-
+/**
+ * @brief Models a shared library and the object modules it contains.
+ *
+ * It resolves undefined references by loading required modules and generates
+ * an MPC project to build a reduced library.
+ */
 class Library
 {
 public:
-  explicit Library (ACE_TCHAR const *name = nullptr);
-  /// Constructor is responsible for loading all of the modules related to the
-  /// library
+  explicit Library (ACE_TCHAR const *name = {});
   ~Library () = default;
   Library (Library const &) = delete;
   Library (Library &&) = delete;
   Library &operator= (Library const &) = delete;
   Library &operator= (Library &&) = delete;
 
-  // Resolve interates over the supplied list of undefined signatures to locate
-  // modules that contain definitions. Any symbol defined in a module marked as
-  // exported is simply removed from the undef list. Any symbol defined in a
-  // module not yet exported removed from the undef list, the module is marked
-  // as exported, and its unresolved symbols are added to the undef list.
+  /**
+   * Resolves undefined signatures against modules in this library. Symbols
+   * found in a module mark it as exported and add its unresolved imports to
+   * the list being resolved.
+   */
   void resolve (Sig_List &undefs);
 
-  // Outputs a list of files suitable for inclusion in an mpc file to produce
-  // a subsetted library. If requested, reference counts for each module are
-  // also listed.
+  /**
+   * Writes the object modules needed for a subset library to an MPC file.
+   * Optionally writes reference counts for each module.
+   */
   void write_export_list (bool);
 
-  // set the path to find the .so files
+  /// Sets the path used to find the shared library object files.
   void set_path (ACE_TCHAR const *p);
 
-  // Load the actual .so files from the path.
+  /// Loads the object modules from the library path.
   void load_modules();
 
-  // returns the library name
+  /// Returns the library name.
   ACE_CString const &name () const;
 
-  // Returns true if the module count is greater than zero.
+  /// Returns true if the library contains object modules.
   bool has_modules () const;
 
 private:
   ACE_CString name_;
   ACE_CString path_;
 
-  int num_modules_ {};
-  int num_extrefs_ {};
+  size_t num_extrefs_ {};
 
   std::vector<std::unique_ptr<Obj_Module>> modules_;
   Sig_List exported_;

@@ -17,7 +17,7 @@
 
 //----------------------------------------------------------------------------
 
-Obj_Module::Obj_Module (ACE_CString const &name, int cap)
+Obj_Module::Obj_Module (ACE_CString const &name, size_t cap)
   : name_ (name),
     imports_(cap),
     exports_(cap)
@@ -42,8 +42,8 @@ Obj_Module::imports()
   return imports_;
 }
 
-int
-Obj_Module::extref() const
+size_t
+Obj_Module::extref () const
 {
   return extrefs_;
 }
@@ -51,7 +51,7 @@ Obj_Module::extref() const
 void
 Obj_Module::add_extref()
 {
-  extrefs_ ++;
+  ++extrefs_;
 }
 
 int
@@ -99,7 +99,7 @@ Obj_Module::add_source(char const *p, bool imports_only)
     workpath= path.substr(0,pathsep);
   }
 
-  ACE_HANDLE pipe[2];
+  ACE_HANDLE pipe[2] {};
   ACE_Pipe io(pipe);
 
   nm_opts.working_directory (workpath.c_str());
@@ -118,12 +118,12 @@ Obj_Module::add_source(char const *p, bool imports_only)
     ACE_DEBUG ((LM_DEBUG, "%p\n", "close"));
   nm_opts.release_handles();
 
-  int import_lines = 0;
-  int export_lines = 0;
+  size_t import_lines = 0;
+  size_t export_lines = 0;
   ACE_Message_Block im_buffer (102400);
   ACE_Message_Block ex_buffer (102400);
-  ACE_Message_Block *im_buf_cur = &im_buffer;
-  ACE_Message_Block *ex_buf_cur = &ex_buffer;
+  ACE_Message_Block *im_buf_cur {&im_buffer};
+  ACE_Message_Block *ex_buf_cur {&ex_buffer};
   ACE_Message_Block *discarded_buf {};
   char dummy;
   int eoln = 1;
@@ -132,7 +132,7 @@ Obj_Module::add_source(char const *p, bool imports_only)
   bool is_export = true;
 
   while (eoln == 1) {
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 10; ++i) {
       if (ACE_OS::read(pipe[0],&dummy,1) != 1) {
         eoln = 2;
         break;
@@ -166,14 +166,14 @@ Obj_Module::add_source(char const *p, bool imports_only)
 
 void
 Obj_Module::populate_sig_list (Sig_List &siglist,
-                               int lines,
+                               size_t lines,
                                ACE_Message_Block &buffer)
 {
-  ACE_Message_Block *buf = &buffer;
+  ACE_Message_Block *buf {&buffer};
   char *c;
   ACE_CString temp;
 
-  for (int i = 0; i < lines; i++)
+  for (size_t i = 0; i < lines; ++i)
     {
       for (c = buf->rd_ptr (); c != buf->wr_ptr () && *c != '\n'; ++c)
         {

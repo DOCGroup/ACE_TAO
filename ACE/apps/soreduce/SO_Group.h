@@ -10,10 +10,9 @@
 #include <memory>
 #include <vector>
 
-// A shared object group is a wrapper around all of the information needed to
-// analize a collection of applications so that common shared libraries can
-// be reduced.
-
+/**
+ * @brief Holds information used to reduce libraries shared by applications.
+ */
 class SO_Group
 {
 public:
@@ -24,19 +23,19 @@ public:
   SO_Group &operator= (SO_Group const &) = delete;
   SO_Group &operator= (SO_Group &&) = delete;
 
-  // For each executable named, run ldd to get the dependances list, For each
-  // library listed, see if there is a path to .shobj and add to the list of
-  // libraries if found. Finally, add the undefined symbols from the executable
-  // to the undefs collection.
+  /**
+   * Runs ldd for the executable, adds libraries with a .shobj directory, and
+   * adds the executable's undefined symbols to the unresolved list.
+   */
   void add_executable (char const *);
 
-  // Do the actual business of the program
+  /// Resolves references across the executable's libraries.
   void analize ();
 
-  // Output the results
+  /// Writes the reduced library project files.
   void write_results ();
 
-  // load the object modules for the group
+  /// Loads object modules for the group's libraries.
   void load_modules ();
 
   void list_libs();
@@ -45,7 +44,6 @@ private:
   Obj_Module undef_wrapper_;
   Sig_List &undefs_;
   std::vector<std::unique_ptr<Library>> libs_;
-  int num_libs_ {};
 };
 
 #endif //_SO_GROUP_H_

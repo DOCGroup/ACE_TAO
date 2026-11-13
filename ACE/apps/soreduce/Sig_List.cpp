@@ -7,7 +7,7 @@
 
 //-----------------------------------------------------------------------------
 
-Sig_List::Sig_List (int cap)
+Sig_List::Sig_List (size_t cap)
 {
   this->array_.reserve (cap);
 }
@@ -15,14 +15,14 @@ Sig_List::Sig_List (int cap)
 void
 Sig_List::add (ACE_CString const &s)
 {
-  if (this->index_of (s) != -1)
+  if (this->contains (s))
     return;
   modified_ = true;
   if (has_nulls_)
-    for (int i = 0; i < static_cast<int> (array_.size ()); i++)
+    for (size_t i = 0; i < array_.size (); ++i)
       if (!array_[i]) {
         array_[i] = std::make_shared<Signature> (s);
-        has_nulls_ --;
+        --has_nulls_;
         return;
       }
   array_.push_back (std::make_shared<Signature> (s));
@@ -32,18 +32,18 @@ void
 Sig_List::add (Sig_List const &other)
 {
   modified_ = true;
-  for (int i = 0; i < static_cast<int> (other.array_.size ()); i++)
+  for (size_t i = 0; i < other.array_.size (); ++i)
     if (other.array_[i] &&
-        this->index_of (other.array_[i]->name ()) == -1)
+        !this->contains (other.array_[i]->name ()))
       {
         if (!has_nulls_)
           array_.push_back (other.array_[i]);
         else
-          for (int j = 0; j < static_cast<int> (array_.size ()); j++)
+          for (size_t j = 0; j < array_.size (); ++j)
             if (!array_[j])
               {
                 array_[j] = other.array_[i];
-                has_nulls_ --;
+                --has_nulls_;
                 break;
               }
       }
@@ -54,37 +54,37 @@ Sig_List::remove_current ()
 {
   array_[index_].reset ();
   modified_ = true;
-  if (index_ == static_cast<int> (array_.size ()) - 1)
+  if (index_ == array_.size () - 1)
     array_.pop_back ();
   else
-    has_nulls_++;
+    ++has_nulls_;
 }
 
-int
-Sig_List::index_of (Signature const *s)
+bool
+Sig_List::find_and_mark_used (Signature const *s)
 {
-  for (int i = 0; i < static_cast<int> (array_.size ()); i++)
+  for (size_t i = 0; i < array_.size (); ++i)
     if (array_[i] && array_[i]->name () == s->name ()) {
-      array_[i]->used();
-      return i;
+      array_[i]->used ();
+      return true;
     }
-  return -1;
+  return false;
 }
 
-int
-Sig_List::index_of (ACE_CString const &s) const
+bool
+Sig_List::contains (ACE_CString const &s) const
 {
-  for (int i = 0; i < static_cast<int> (array_.size ()); i++)
+  for (size_t i = 0; i < array_.size (); ++i)
     if (array_[i] && array_[i]->name () == s) {
-      return i;
+      return true;
     }
-  return -1;
+  return false;
 }
 
 Signature const *
 Sig_List::first ()
 {
-  for (index_ = 0; index_ < static_cast<int> (array_.size ()); index_++)
+  for (index_ = 0; index_ < array_.size (); ++index_)
     if (array_[index_])
       return array_[index_].get ();
   return nullptr;
@@ -93,7 +93,7 @@ Sig_List::first ()
 Signature const *
 Sig_List::next ()
 {
-  for (++index_; index_ < static_cast<int> (array_.size ()); index_++)
+  for (++index_; index_ < array_.size (); ++index_)
     if (array_[index_])
       return array_[index_].get ();
   return nullptr;
@@ -102,13 +102,13 @@ Sig_List::next ()
 bool
 Sig_List::hasmore () const
 {
-  return index_ < static_cast<int> (array_.size ());
+  return index_ < array_.size ();
 }
 
-int
+size_t
 Sig_List::size () const
 {
-  return static_cast<int> (array_.size ());
+  return array_.size ();
 }
 
 bool

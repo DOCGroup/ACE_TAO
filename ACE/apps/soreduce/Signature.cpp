@@ -8,11 +8,11 @@ Signature::Signature (ACE_CString const &name)
 void
 Signature::used ()
 {
-  used_++;
+  ++used_;
 }
 
-int
-Signature::used_count() const
+size_t
+Signature::used_count () const
 {
   return used_;
 }
