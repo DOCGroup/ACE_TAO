@@ -1,15 +1,16 @@
 #include "Foo_Bar.h"
 #include "ace/Time_Value.h"
+#include <memory>
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var poa_object =
+      CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var root_poa =
@@ -24,17 +25,18 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         root_poa->the_POAManager ();
 
       // Keep the servant pointer until ownership transfers to ServantBase_var below.
-      Foo_Bar *foobar_impl = nullptr;
+      Foo_Bar *foobar_impl {};
       ACE_NEW_RETURN (foobar_impl,
                       Foo_Bar (orb.in ()),
                       1);
+      std::unique_ptr<Foo_Bar> servant_owner {foobar_impl};
 
       PortableServer::ObjectId_var id =
-        root_poa->activate_object (foobar_impl);
+        root_poa->activate_object (servant_owner.get ());
 
-      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+      CORBA::Object_var const object = root_poa->id_to_reference (id.in ());
 
-      Test::Foo_var foo =
+      Test::Foo_var const foo =
         Test::Foo::_narrow (object.in ());
 
       poa_manager->activate ();
@@ -43,7 +45,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // purpose. If you dont understand this, please re-read the
       // README file.
       {
-        PortableServer::ServantBase_var owner_transfer (foobar_impl);
+        PortableServer::ServantBase_var owner_transfer (servant_owner.release ());
       }
 
       ACE_Time_Value tv (10);
@@ -63,7 +65,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (CORBA::Exception const& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;
