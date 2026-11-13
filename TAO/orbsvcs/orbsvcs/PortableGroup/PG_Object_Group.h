@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    PG_Object_Group.h
  *
@@ -13,7 +12,6 @@
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_PG_OBJECT_GROUP_H_
 #define TAO_PG_OBJECT_GROUP_H_
@@ -24,7 +22,6 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
 
 /////////////////////////////////
 // Includes needed by this header
@@ -163,7 +160,6 @@ namespace TAO
      */
     PortableGroup::TypeId get_type_id () const;
 
-
     /**
      * @@TODO DOC
      */
@@ -178,7 +174,6 @@ namespace TAO
      * @@TODO DOC
      */
     PortableGroup::InitialNumberMembersValue get_initial_number_members () const;
-
 
     /**
      * @@TODO DOC
@@ -222,7 +217,6 @@ namespace TAO
     virtual void remove_member (
         PortableGroup::Location const & the_location);
 
-
     /**
      * @@TODO DOC
      */
@@ -242,7 +236,6 @@ namespace TAO
     virtual CORBA::Object_ptr get_member_reference (
         PortableGroup::Location const & the_location);
 
-
     /**
      * @@TODO DOC
      */
@@ -253,12 +246,10 @@ namespace TAO
      */
     virtual void minimum_populate ();
 
-
     /**
      * @@TODO DOC
      */
     virtual bool has_member_at (PortableGroup::Location const & location);
-
 
     /**
      * Tell the object group that it should distribute updates to the object
@@ -320,7 +311,6 @@ namespace TAO
     bool empty_ {true};
 
     std::string role_;
-
 
     PortableGroup::TypeId_var type_id_;
 

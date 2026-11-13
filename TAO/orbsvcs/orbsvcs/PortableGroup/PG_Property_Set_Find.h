@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    PG_Property_Set_Find.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
-//=============================================================================
 #ifndef TAO_PG_PROPERTY_SET_FIND_H
 #define TAO_PG_PROPERTY_SET_FIND_H
 #include /**/ "ace/pre.h"

@@ -1,13 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file  PG_GenericFactory.h
  *
  * @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_PG_GENERIC_FACTORY_H
 #define TAO_PG_GENERIC_FACTORY_H
@@ -33,7 +30,6 @@ class TAO_PG_ObjectGroupManager;
 class TAO_PG_PropertyManager;
 
 struct TAO_PG_ObjectGroup_Map_Entry;
-
 
 /**
  * @class TAO_PG_GenericFactory

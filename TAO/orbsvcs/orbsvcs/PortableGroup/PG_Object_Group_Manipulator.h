@@ -1,13 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file PG_Object_Group_Manipulator.h
  *
  * @author Dale Wilson <wilson_d@ociweb.com>
  */
-//=============================================================================
-
 
 #ifndef TAO_PG_OBJECT_GROUP_MANIPULATOR_H
 #define TAO_PG_OBJECT_GROUP_MANIPULATOR_H

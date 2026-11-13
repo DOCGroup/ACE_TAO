@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file     UIPMC_Transport_Recv_Packet.h
  *
  *  @author Vladimir Zykov <vz@prismtech.com>
  */
-//=============================================================================
 
 #ifndef TAO_UIPMC_TRANSPORT_RECV_PACKET_H
 #define TAO_UIPMC_TRANSPORT_RECV_PACKET_H

@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file     UIPMC_Mcast_Transport.h
  *
  *  @author Vladimir Zykov <vz@prismtech.com>
  */
-//=============================================================================
 
 #ifndef TAO_UIPMC_MCAST_TRANSPORT_H
 #define TAO_UIPMC_MCAST_TRANSPORT_H

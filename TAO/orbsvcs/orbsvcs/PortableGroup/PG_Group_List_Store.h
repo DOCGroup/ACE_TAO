@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file PG_Group_List_Store.h
  *
  * @author Byron Harris <harrisb@ociweb.com>
  */
-//=============================================================================
 
 #ifndef PG_GROUP_LIST_STORE_H
 #define PG_GROUP_LIST_STORE_H

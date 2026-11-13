@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file     PortableGroup_Loader.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Frank Hunleth <fhunleth@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_PORTABLEGROUP_LOADER_H
 #define TAO_PORTABLEGROUP_LOADER_H
@@ -25,7 +23,6 @@
 
 #include "ace/Service_Config.h"
 #include "ace/Service_Object.h"
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

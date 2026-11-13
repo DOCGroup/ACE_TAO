@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    PG_Object_Group_Storable.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Byron Harris <harrisb@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_PG_OBJECT_GROUP_STORABLE_H_
 #define TAO_PG_OBJECT_GROUP_STORABLE_H_
@@ -19,7 +17,6 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
 
 /////////////////////////////////
 // Includes needed by this header

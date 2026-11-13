@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file PG_Object_Group_Manipulator.cpp
  *
  * @author Dale Wilson <wilson_d@ociweb.com>
  */
-//=============================================================================
 
 #include "orbsvcs/PortableGroup/PG_Object_Group_Manipulator.h"
 #include "orbsvcs/PortableGroup/PG_Utils.h"

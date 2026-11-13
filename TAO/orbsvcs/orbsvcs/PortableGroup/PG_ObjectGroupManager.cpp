@@ -75,7 +75,6 @@ TAO_PG_ObjectGroupManager::add_member (
                              check_type_id);
 }
 
-
 PortableGroup::ObjectGroup_ptr
 TAO_PG_ObjectGroupManager::_tao_add_member (
     PortableGroup::ObjectGroup_ptr object_group,
@@ -269,7 +268,6 @@ TAO_PG_ObjectGroupManager::remove_member (
   throw PortableGroup::MemberNotFound ();
 }
 
-
 PortableGroup::Locations *
 TAO_PG_ObjectGroupManager::locations_of_members (
     PortableGroup::ObjectGroup_ptr object_group)
@@ -311,7 +309,6 @@ TAO_PG_ObjectGroupManager::locations_of_members (
   }
   return locations._retn ();
 }
-
 
 PortableGroup::ObjectGroups *
 TAO_PG_ObjectGroupManager::groups_at_location (
@@ -375,7 +372,6 @@ TAO_PG_ObjectGroupManager::get_object_group_ref (
                       guard,
                       this->lock_,
                       PortableGroup::ObjectGroup::_nil ());
-
 
     entry = this->get_group_entry (object_group);
   }
@@ -593,7 +589,6 @@ TAO_PG_ObjectGroupManager::poa (PortableServer::POA_ptr p)
   this->poa_ = PortableServer::POA::_duplicate (p);
 }
 
-
 PortableGroup::Properties *
 TAO_PG_ObjectGroupManager::get_properties (
     PortableGroup::ObjectGroup_ptr object_group)
@@ -683,7 +678,6 @@ TAO_PG_ObjectGroupManager::member_already_present (
   // No member with given type ID present at the given location.
   return 0;
 }
-
 
 int
 TAO_PG_ObjectGroupManager::get_object_group_position (
@@ -827,7 +821,6 @@ TAO_PG_ObjectGroupManager::generic_factory (
   this->generic_factory_ = generic_factory;
 }
 
-
 size_t
 TAO_PG_ObjectGroupManager::member_count (
     PortableServer::ObjectId const & oid,
@@ -857,7 +850,6 @@ TAO_PG_ObjectGroupManager::member_count (
   return count;
 }
 
-
 bool
 TAO_PG_ObjectGroupManager::is_alive (
     PortableServer::ObjectId const & oid,
@@ -885,7 +877,6 @@ TAO_PG_ObjectGroupManager::is_alive (
 
   throw PortableGroup::MemberNotFound ();
 }
-
 
 void TAO_PG_ObjectGroupManager::remove_inactive_members ()
 {
@@ -1049,6 +1040,5 @@ TAO_PG_ObjectGroupManager::ping (CORBA::ORB_ptr orb,
 
   return status;
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

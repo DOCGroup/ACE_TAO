@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    UIPMC_Wait_Never.h
  *
  *  @author  Frank Hunleth <fhunleth@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_UIPMC_WAIT_NEVER_H
 #define TAO_UIPMC_WAIT_NEVER_H
@@ -35,7 +33,8 @@ public:
   explicit TAO_UIPMC_Wait_Never (TAO_Transport *transport);
   ~TAO_UIPMC_Wait_Never () override = default;
 
-  // = Documented in TAO_Wait_Strategy.
+  /// @name TAO_Wait_Strategy methods
+  /// @{
   int sending_request (TAO_ORB_Core *orb_core,
                        TAO_Message_Semantics msg_semantics) override;
   int wait (ACE_Time_Value *max_wait_time,
@@ -43,6 +42,7 @@ public:
   int register_handler () override;
   bool non_blocking () const override;
   bool can_process_upcalls () const override;
+  /// @}
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

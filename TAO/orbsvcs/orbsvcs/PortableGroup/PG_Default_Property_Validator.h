@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file PG_Default_Property_Validator.h
  *
  * @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_PG_DEFAULT_PROPERTY_VALIDATOR_H
 #define TAO_PG_DEFAULT_PROPERTY_VALIDATOR_H

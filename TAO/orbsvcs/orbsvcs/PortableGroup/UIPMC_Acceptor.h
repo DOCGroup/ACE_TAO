@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file     UIPMC_Acceptor.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Frank Hunleth <fhunleth@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_UIPMC_ACCEPTOR_H
 #define TAO_UIPMC_ACCEPTOR_H

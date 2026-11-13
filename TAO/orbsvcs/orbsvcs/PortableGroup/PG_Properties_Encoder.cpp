@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    PG_Properties_Encoder.cpp
  *
@@ -7,7 +6,6 @@
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
-//=============================================================================
 #include "orbsvcs/PortableGroup/PG_Properties_Encoder.h"
 
 #if ! defined (__ACE_INLINE__)

@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    PG_Properties_Encoder.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
-//=============================================================================
 #ifndef TAO_PG_PROPERTIES_ENCODER_H
 #define TAO_PG_PROPERTIES_ENCODER_H
 

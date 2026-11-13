@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// ================================================================
 /**
  *  @file   Fragments_Cleanup_Strategy.h
  *
  *  @author Vladimir Zykov <vz@prismtech.com>
  */
-// ================================================================
 
 #ifndef TAO_FRAGMENTS_CLEANUP_STRATEGY_H
 #define TAO_FRAGMENTS_CLEANUP_STRATEGY_H

@@ -1,13 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file PortableGroup_ORBInitializer.h
  *
  *  @author Frank Hunleth <fhunleth@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_PORTABLEGROUP_ORB_INITIALIZER_H
 #define TAO_PORTABLEGROUP_ORB_INITIALIZER_H

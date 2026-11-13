@@ -126,7 +126,6 @@ int TAO::PG_FactoryRegistry::idle (int &result)
   return quit ? 1 : 0;
 }
 
-
 int TAO::PG_FactoryRegistry::fini ()
 {
   if (this->ior_output_file_ != nullptr)
@@ -141,7 +140,6 @@ int TAO::PG_FactoryRegistry::fini ()
   }
   return 0;
 }
-
 
 void TAO::PG_FactoryRegistry::init (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa)
 {
@@ -182,7 +180,6 @@ int TAO::PG_FactoryRegistry::init (CORBA::ORB_ptr orb)
   this->poa_ =
     PortableServer::POA::_narrow (poa_object.in ());
 
-
   if (CORBA::is_nil (this->poa_.in()))
   {
     ORBSVCS_ERROR_RETURN ((LM_ERROR,
@@ -201,7 +198,6 @@ int TAO::PG_FactoryRegistry::init (CORBA::ORB_ptr orb)
   // find my identity as a corba object
   this->this_obj_ =
     this->poa_->id_to_reference (object_id_.in ());
-
 
   // and create a ior string
   this->ior_ = this->orb_->object_to_string (this->this_obj_.in ());
@@ -240,13 +236,11 @@ int TAO::PG_FactoryRegistry::init (CORBA::ORB_ptr orb)
   return result;
 }
 
-
 ::PortableGroup::FactoryRegistry_ptr TAO::PG_FactoryRegistry::reference()
 {
   // narrow and duplicate
   return ::PortableGroup::FactoryRegistry::_narrow(this->this_obj_.in ());
 }
-
 
 //////////////////////////////////////////
 // PG_FactoryRegistry CORBA methods
@@ -588,7 +582,6 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_location (
   ACE_NEW_THROW_EX (result, ::PortableGroup::FactoryInfos(),
     CORBA::NO_MEMORY (TAO::VMCID, CORBA::COMPLETED_NO));
 
-
   RoleInfo * role_info {};
   if (this->registry_.find(role, role_info) == 0)
   {
@@ -617,7 +610,6 @@ void TAO::PG_FactoryRegistry::unregister_factory_by_location (
     ::PortableGroup::FactoryInfos(
       static_cast<CORBA::ULong> (this->registry_.current_size())),
     CORBA::NO_MEMORY (TAO::VMCID, CORBA::COMPLETED_NO));
-
 
   size_t result_length {};
 

@@ -1,13 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file  PG_Group_List_Store.cpp
  *
  * @author Byron Harris <harrisb@ociweb.com>
  */
-//=============================================================================
-
 
 #include "orbsvcs/PortableGroup/PG_Group_List_Store.h"
 #include <string>

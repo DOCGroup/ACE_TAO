@@ -319,7 +319,6 @@ TAO::PG_Object_Group_Storable::get_primary_location ()
   return TAO::PG_Object_Group::get_primary_location ();
 }
 
-
 void
 TAO::PG_Object_Group_Storable::add_member (
   PortableGroup::Location const &the_location,
@@ -349,7 +348,6 @@ TAO::PG_Object_Group_Storable::remove_member (
   PG_Object_Group::remove_member (the_location);
   this->write (fg.peer ());
 }
-
 
 PortableGroup::Locations *
 TAO::PG_Object_Group_Storable::locations_of_members ()

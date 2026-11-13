@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file     PortableGroup_Acceptor_Registry.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Frank Hunleth <fhunleth@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_PORTABLEGROUP_ACCEPTOR_REGISTRY_H
 #define TAO_PORTABLEGROUP_ACCEPTOR_REGISTRY_H

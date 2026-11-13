@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file     UIPMC_Mcast_Connection_Handler.h
  *
  *  @author Vadym Ridosh <vridosh@prismtech.com>
  */
-//=============================================================================
 
 #ifndef TAO_UIPMC_MCAST_CONNECTION_HANDLER_H
 #define TAO_UIPMC_MCAST_CONNECTION_HANDLER_H

@@ -1,13 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   miop_resource.h
  *
  *  @author Vladimir Zykov <vz@prismtech.com>
  */
-//=============================================================================
-
 
 #ifndef TAO_MIOP_RESOURCE_H
 #define TAO_MIOP_RESOURCE_H

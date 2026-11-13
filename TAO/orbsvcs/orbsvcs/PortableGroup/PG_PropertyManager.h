@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file PG_PropertyManager.h
  *
  * @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_PG_PROPERTY_MANAGER_H
 #define TAO_PG_PROPERTY_MANAGER_H

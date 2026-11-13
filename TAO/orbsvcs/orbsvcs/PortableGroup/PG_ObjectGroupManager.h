@@ -1,13 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file PG_ObjectGroupManager.h
  *
  * @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_PG_OBJECT_GROUP_MANAGER_H
 #define TAO_PG_OBJECT_GROUP_MANAGER_H
@@ -27,12 +24,10 @@
 #include "tao/PortableServer/Key_Adapters.h"
 #include "tao/PortableServer/PortableServerC.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Forward declarations
 class TAO_PG_GenericFactory;
-
 
 /**
  * @class TAO_PG_ObjectGroupManager
@@ -211,7 +206,6 @@ protected:
   /// ObjectGroup reference.
   TAO_PG_ObjectGroup_Map_Entry * get_group_entry (
       PortableGroup::ObjectGroup_ptr object_group);
-
 
   /// Check if a member resides at the location to which the group
   /// array belongs to.

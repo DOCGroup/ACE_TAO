@@ -1,6 +1,5 @@
 //-*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    PortableGroup_Request_Dispatcher.h
  *
@@ -8,8 +7,6 @@
  *
  *  @author  Frank Hunleth <fhunleth@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_PORTABLEGROUP_REQUEST_DISPATCHER_H
 #define TAO_PORTABLEGROUP_REQUEST_DISPATCHER_H

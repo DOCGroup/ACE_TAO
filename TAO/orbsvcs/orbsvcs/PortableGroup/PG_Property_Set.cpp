@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    PG_Property_Set.cpp
  *
@@ -10,7 +9,6 @@
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
-//=============================================================================
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/PortableGroup/PG_Property_Set.h"
 #include "tao/debug.h"
@@ -34,7 +32,6 @@ TAO::PG_Property_Set::PG_Property_Set (PortableGroup::Properties const & ps,
 {
   this->decode (ps);
 }
-
 
 TAO::PG_Property_Set::PG_Property_Set (PG_Property_Set_var const & defaults)
   : defaults_ (defaults)
@@ -160,7 +157,6 @@ void TAO::PG_Property_Set::set_property (
     }
 }
 
-
 void TAO::PG_Property_Set::export_properties (PortableGroup::Properties & property_set) const
 {
   ValueMap merged_values;
@@ -205,7 +201,6 @@ void TAO::PG_Property_Set::merge_properties (ValueMap & merged_values) const
     merged_values.rebind ( (*it).ext_id_, (*it).int_id_);
   }
 }
-
 
 int TAO::PG_Property_Set::find (
   ACE_CString const & key,
@@ -305,7 +300,6 @@ int TAO_PG::test_encode_decode ()
       ));
     result = 0;
   }
-
 
   CORBA::Double doubleResult = 0.0;
   if (find (decoder, testDoubleKey, doubleResult))

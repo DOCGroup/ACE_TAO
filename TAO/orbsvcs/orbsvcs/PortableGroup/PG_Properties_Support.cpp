@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    PG_Properties_Support.cpp
  *
@@ -8,7 +7,6 @@
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
-//=============================================================================
 
 #include "orbsvcs/PortableGroup/PG_Properties_Support.h"
 
@@ -112,7 +110,6 @@ TAO::PG_Properties_Support::remove_type_properties (
     typeid_properties->remove (props);
   }
 }
-
 
 TAO::PG_Property_Set_var
 TAO::PG_Properties_Support::find_typeid_properties (char const * type_id)

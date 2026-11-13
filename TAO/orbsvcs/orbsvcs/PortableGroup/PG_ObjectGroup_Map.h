@@ -1,13 +1,10 @@
 // -*- C++ -*-
 
-//=======================================================================
 /**
  *  @file    PG_ObjectGroup_Map.h
  *
  *  @author  Ossama Othman <ossama@uci.edu>
  */
-//=======================================================================
-
 
 #ifndef TAO_PG_OBJECTGROUP_MAP_H
 #define TAO_PG_OBJECTGROUP_MAP_H

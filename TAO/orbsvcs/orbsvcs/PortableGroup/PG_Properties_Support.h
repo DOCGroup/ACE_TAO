@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    PG_Properties_Support.h
  *
@@ -12,7 +11,6 @@
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
-//=============================================================================
 #ifndef TAO_PG_PROPERTIES_SUPPORT_H
 #define TAO_PG_PROPERTIES_SUPPORT_H
 

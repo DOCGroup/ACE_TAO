@@ -60,7 +60,6 @@ TAO_GOA::disassociate_reference_with_id (CORBA::Object_ptr ref,
   ACE_UNUSED_ARG (oid);
 }
 
-
 TAO_GOA::TAO_GOA (TAO_Root_POA::String const &name,
                   PortableServer::POAManager_ptr poa_manager,
                   TAO_POA_Policy_Set const &policies,
@@ -137,7 +136,6 @@ TAO_GOA::destroy (CORBA::Boolean etherealize_objects,
                           wait_for_completion);
 }
 
-
 #if (TAO_HAS_MINIMUM_POA == 0)
 
 PortableServer::ThreadPolicy_ptr
@@ -166,7 +164,6 @@ TAO_GOA::create_id_uniqueness_policy (PortableServer::IdUniquenessPolicyValue va
   return policy;
 }
 
-
 PortableServer::IdAssignmentPolicy_ptr
 TAO_GOA::create_id_assignment_policy (PortableServer::IdAssignmentPolicyValue value)
 {
@@ -174,7 +171,6 @@ TAO_GOA::create_id_assignment_policy (PortableServer::IdAssignmentPolicyValue va
     this->TAO_Regular_POA::create_id_assignment_policy (value);
   return policy;
 }
-
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
@@ -194,7 +190,6 @@ TAO_GOA::create_servant_retention_policy (PortableServer::ServantRetentionPolicy
   return policy;
 }
 
-
 PortableServer::RequestProcessingPolicy_ptr
 TAO_GOA::create_request_processing_policy (PortableServer::RequestProcessingPolicyValue value)
 {
@@ -202,7 +197,6 @@ TAO_GOA::create_request_processing_policy (PortableServer::RequestProcessingPoli
     this->TAO_Regular_POA::create_request_processing_policy (value);
   return policy;
 }
-
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
@@ -237,7 +231,6 @@ TAO_GOA::the_POAManager ()
     this->TAO_Regular_POA::the_POAManager ();
   return poa_manager;
 }
-
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
@@ -339,7 +332,6 @@ TAO_GOA::servant_to_reference (PortableServer::Servant p_servant)
     this->TAO_Regular_POA::servant_to_reference (p_servant);
   return obj;
 }
-
 
 PortableServer::Servant
 TAO_GOA::reference_to_servant (CORBA::Object_ptr reference)

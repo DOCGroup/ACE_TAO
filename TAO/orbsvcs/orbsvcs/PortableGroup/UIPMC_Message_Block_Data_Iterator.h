@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file     UIPMC_Message_Block_Data_Iterator.h
  *
  *  @author Frank Hunleth <frank@hunleth.com>
  */
-//=============================================================================
 
 #ifndef TAO_UIPMC_MESSAGE_BLOCK_DATA_ITERATOR_H
 #define TAO_UIPMC_MESSAGE_BLOCK_DATA_ITERATOR_H

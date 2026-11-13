@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file     UIPMC_Connector.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Frank Hunleth <fhunleth@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_UIPMC_CONNECTOR_H
 #define TAO_UIPMC_CONNECTOR_H
@@ -43,8 +41,8 @@ public:
 
   ~TAO_UIPMC_Connector () override = default;
 
-  // = The TAO_Connector methods, please check the documentation on
-  // Transport_Connector.h
+  /// @name TAO_Connector methods
+  /// @{
   int open (TAO_ORB_Core *orb_core) override;
   int close () override;
   TAO_Profile *create_profile (TAO_InputCDR &cdr) override;
@@ -54,8 +52,10 @@ public:
   char object_key_delimiter () const override;
 
 protected:
-  /// = More TAO_Connector methods, please check the documentation on
-  ///   Transport_Connector.h
+  /// @}
+
+  /// @name Additional TAO_Connector methods
+  /// @{
   int set_validate_endpoint (TAO_Endpoint *endpoint) override;
 
   TAO_Transport *make_connection (TAO::Profile_Transport_Resolver *r,
@@ -66,6 +66,7 @@ protected:
 
   /// Cancel the passed cvs handler from the connector
   int cancel_svc_handler (TAO_Connection_Handler * svc_handler) override;
+  /// @}
 
   TAO_UIPMC_Connector (TAO_UIPMC_Connector const &) = delete;
   TAO_UIPMC_Connector (TAO_UIPMC_Connector &&) = delete;

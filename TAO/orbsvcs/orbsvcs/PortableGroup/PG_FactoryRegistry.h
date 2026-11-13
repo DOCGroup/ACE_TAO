@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    PG_FactoryRegistry.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_PG_FACTORYREGISTRY_H_
 #define TAO_PG_FACTORYREGISTRY_H_
@@ -145,7 +143,6 @@ namespace TAO
         PortableGroup::Location const &location) override;
 
     void unregister_factory_by_role (char const *role) override;
-
 
     void unregister_factory_by_location (
       PortableGroup::Location const &location) override;

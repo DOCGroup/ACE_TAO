@@ -1,13 +1,10 @@
 // -*- C++ -*-
 
-//=======================================================================
 /**
  *  @file    PG_Factory_Set.h
  *
  *  @author  Ossama Othman <ossama@uci.edu>
  */
-//=======================================================================
-
 
 #ifndef TAO_PG_FACTORY_SET_H
 #define TAO_PG_FACTORY_SET_H

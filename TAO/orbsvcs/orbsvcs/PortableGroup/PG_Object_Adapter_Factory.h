@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    PG_Object_Adapter_Factory.h
  *
  *  @author  Johnny Willemsen
  */
-// ===================================================================
 
 #ifndef TAO_PG_OBJECT_ADAPTER_FACTORY_H
 #define TAO_PG_OBJECT_ADAPTER_FACTORY_H

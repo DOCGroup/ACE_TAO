@@ -23,7 +23,6 @@ TAO_PG_Object_Adapter_Factory::create (TAO_ORB_Core * orb_core)
                   nullptr);
   object_adapter->servant_dispatcher (rt_servant_dispatcher);
 
-
   return object_adapter;
 }
 

@@ -1,13 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    PG_Location_Hash.h
  *
  *  @author  Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_PG_LOCATION_HASH_H
 #define TAO_PG_LOCATION_HASH_H

@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file  PG_Group_Factory.cpp
  *
  * @author Dale Wilson <wilson_d@ociweb.com>
  * @author Byron Harris <harrisb@ociweb.com>
  */
-//=============================================================================
 
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/PortableGroup/PG_Group_Factory.h"
@@ -70,7 +68,6 @@ TAO::PG_Group_Factory::~PG_Group_Factory ()
   this->storable_factory_.reset ();
 }
 
-
 void TAO::PG_Group_Factory::init (
   CORBA::ORB_ptr orb,
   PortableServer::POA_ptr poa,
@@ -86,14 +83,12 @@ void TAO::PG_Group_Factory::init (
   this->factory_registry_ =
     PortableGroup::FactoryRegistry::_duplicate (factory_registry);
 
-
   ACE_ASSERT (!CORBA::is_nil (this->orb_.in ()));
   ACE_ASSERT (!CORBA::is_nil (this->poa_.in ()));
   ACE_ASSERT (!CORBA::is_nil (this->factory_registry_.in ()));
 
   this->manipulator_.init (orb, poa);
 }
-
 
 TAO::PG_Object_Group * TAO::PG_Group_Factory::create_group (
     char const * type_id,
@@ -182,7 +177,6 @@ void TAO::PG_Group_Factory::delete_group (
     throw PortableGroup::ObjectNotFound ();
   }
 }
-
 
 void TAO::PG_Group_Factory::delete_group (
   PortableGroup::ObjectGroupId group_id)
@@ -286,7 +280,6 @@ int TAO::PG_Group_Factory::destroy_group (PortableGroup::ObjectGroup_ptr object_
   TAO::PG_Utils::get_tagged_component (object_group, tc);
   return destroy_group (tc.object_group_id);
 }
-
 
 PortableGroup::ObjectGroups *
 TAO::PG_Group_Factory::groups_at_location (
@@ -481,6 +474,5 @@ TAO::PG_Group_Factory::restore_persistent_group (
     CORBA::NO_MEMORY());
   return objectGroup;
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

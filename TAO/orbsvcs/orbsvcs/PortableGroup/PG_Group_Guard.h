@@ -1,13 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file  PG_Group_Guard.h
  *
  * @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_PG_GROUP_GUARD_H
 #define TAO_PG_GROUP_GUARD_H

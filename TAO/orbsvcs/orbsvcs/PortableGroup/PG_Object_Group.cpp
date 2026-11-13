@@ -49,7 +49,6 @@ TAO::PG_Object_Group::MemberInfo::~MemberInfo ()
     }
 }
 
-
 TAO::PG_Object_Group::PG_Object_Group (
   CORBA::ORB_ptr orb,
   PortableGroup::FactoryRegistry_ptr factory_registry,
@@ -151,7 +150,6 @@ TAO::PG_Object_Group::get_primary_location ()
                     this->primary_location_);
   return this->primary_location_;
 }
-
 
 PortableGroup::ObjectGroup_ptr
 TAO::PG_Object_Group::add_member_to_iogr (CORBA::Object_ptr member)
@@ -390,7 +388,6 @@ TAO::PG_Object_Group::set_primary_member (
   return result;
 }
 
-
 void
 TAO::PG_Object_Group::remove_member (
     PortableGroup::Location const & the_location)
@@ -436,7 +433,6 @@ TAO::PG_Object_Group::remove_member (
     }
 }
 
-
 PortableGroup::ObjectGroupId
 TAO::PG_Object_Group::get_object_group_id () const
 {
@@ -466,7 +462,6 @@ TAO::PG_Object_Group::get_properties (
   this->properties_.export_properties(*result);
 }
 
-
 PortableGroup::TypeId
 TAO::PG_Object_Group::get_type_id () const
 {
@@ -476,7 +471,6 @@ TAO::PG_Object_Group::get_type_id () const
                     0);
   return CORBA::string_dup (this->type_id_);
 }
-
 
 ///////////////////
 // Internal method
@@ -503,7 +497,6 @@ TAO::PG_Object_Group::increment_version ()
     }
   return result;
 }
-
 
 //////////////////
 // Internal method
@@ -626,7 +619,6 @@ TAO::PG_Object_Group::get_member_reference (
   return result._retn ();
 }
 
-
 PortableGroup::MembershipStyleValue
 TAO::PG_Object_Group::get_membership_style () const
 {
@@ -639,7 +631,6 @@ TAO::PG_Object_Group::get_membership_style () const
     }
   return membership_style;
 }
-
 
 PortableGroup::MinimumNumberMembersValue
 TAO::PG_Object_Group::get_minimum_number_members () const
@@ -674,7 +665,6 @@ TAO::PG_Object_Group::create_member (
     PortableGroup::Criteria const & the_criteria)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
-
 
   if (0 != this->members_.find (the_location))
     {

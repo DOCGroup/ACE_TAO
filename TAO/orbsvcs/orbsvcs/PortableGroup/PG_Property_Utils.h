@@ -1,13 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file  PG_Property_Utils.h
  *
  * @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_PG_PROPERTY_UTILS_H
 #define TAO_PG_PROPERTY_UTILS_H

@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    PG_Property_Set.h
  *
@@ -14,7 +13,6 @@
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
-//=============================================================================
 #ifndef TAO_PG_PROPERTY_SET
 #define TAO_PG_PROPERTY_SET
 #include /**/ "ace/pre.h"
@@ -106,7 +104,6 @@ namespace TAO
      */
     int find (ACE_CString const & key, PortableGroup::Value const *& pValue) const;
 
-
     /**
      * Decode additional properties
      * Duplicate values replace previous values.
@@ -128,7 +125,6 @@ namespace TAO
     void set_property (
       char const * name,
       PortableGroup::Value const & value);
-
 
     /**
      * Export the properties to a PortableGroup::Properties
@@ -166,7 +162,6 @@ namespace TAO
      */
     PG_Property_Set_var defaults_ {};
   };
-
 
 #ifdef PG_PS_UNIT_TEST
 

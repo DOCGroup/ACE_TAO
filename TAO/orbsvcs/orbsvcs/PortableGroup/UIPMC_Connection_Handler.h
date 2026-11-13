@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file     UIPMC_Connection_Handler.h
  *
  *  @author Frank Hunleth <fhunleth@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_UIPMC_CONNECTION_HANDLER_H
 #define TAO_UIPMC_CONNECTION_HANDLER_H

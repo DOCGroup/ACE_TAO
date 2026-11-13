@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    PG_Servant_Dispatcher.h
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
 
 #ifndef TAO_PG_SERVANT_DISPATCHER_H
 #define TAO_PG_SERVANT_DISPATCHER_H

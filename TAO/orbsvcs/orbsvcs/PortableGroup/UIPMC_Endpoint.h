@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file     UIPMC_Endpoint.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Frank Hunleth <fhunleth@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_UIPMC_ENDPOINT_H
 #define TAO_UIPMC_ENDPOINT_H
@@ -47,8 +45,8 @@ public:
 
   ~TAO_UIPMC_Endpoint () override;
 
-  // = Implementation of abstract TAO_Endpoint methods.  See
-  // Endpoint.h for their documentation.
+  /// @name TAO_Endpoint methods
+  /// @{
 
   TAO_Endpoint *next () override;
   int addr_to_string (char *buffer, size_t length) override;
@@ -62,10 +60,10 @@ public:
 
   /// Return a hash value for this object.
   CORBA::ULong hash () override;
+  /// @}
 
-  // Allocates memory and returns a copy of <this>
-
-  // = UIPMC_Endpoint-specific methods.
+  /// @name UIPMC_Endpoint-specific methods
+  /// @{
 
   /// Return a reference to the  object_addr .
   ACE_INET_Addr const &object_addr () const;
@@ -90,6 +88,7 @@ public:
 
   /// Return the preferred network interface if any.
   char const *preferred_network () const;
+  /// @}
 
   /// Transform this endpoint into (potentially) a chain of endpoints
   /// in preferrence order of specific local interface bind address (if

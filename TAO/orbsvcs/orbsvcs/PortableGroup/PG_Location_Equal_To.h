@@ -1,13 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    PG_Location_Equal_To.h
  *
  *  @author  Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_PG_LOCATION_EQUAL_TO_H
 #define TAO_PG_LOCATION_EQUAL_TO_H

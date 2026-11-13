@@ -19,7 +19,6 @@ TAO_PG_PropertyManager::TAO_PG_PropertyManager (
 {
 }
 
-
 void
 TAO_PG_PropertyManager::set_default_properties (
     PortableGroup::Properties const & props)
@@ -47,7 +46,6 @@ TAO_PG_PropertyManager::set_default_properties (
   this->default_properties_ = props;
 }
 
-
 PortableGroup::Properties *
 TAO_PG_PropertyManager::get_default_properties ()
 {
@@ -65,7 +63,6 @@ TAO_PG_PropertyManager::get_default_properties ()
   return props;
 }
 
-
 void
 TAO_PG_PropertyManager::remove_default_properties (
     PortableGroup::Properties const & props)
@@ -78,7 +75,6 @@ TAO_PG_PropertyManager::remove_default_properties (
   this->remove_properties (props,
                            this->default_properties_);
 }
-
 
 void
 TAO_PG_PropertyManager::set_type_properties (
@@ -102,13 +98,11 @@ TAO_PG_PropertyManager::set_type_properties (
   props = overrides;
 }
 
-
 PortableGroup::Properties *
 TAO_PG_PropertyManager::get_type_properties (
     char const * type_id)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, nullptr);
-
 
   Type_Prop_Table::ENTRY * entry {};
   PortableGroup::Properties * type_properties {};
@@ -147,7 +141,6 @@ TAO_PG_PropertyManager::get_type_properties (
   return properties._retn ();
 }
 
-
 void
 TAO_PG_PropertyManager::remove_type_properties (
     char const * type_id,
@@ -167,7 +160,6 @@ TAO_PG_PropertyManager::remove_type_properties (
   this->remove_properties (props,
                            type_properties);
 }
-
 
 void
 TAO_PG_PropertyManager::set_properties_dynamically (
@@ -199,7 +191,6 @@ TAO_PG_PropertyManager::set_properties_dynamically (
 
   throw CORBA::NO_IMPLEMENT ();
 }
-
 
 PortableGroup::Properties *
 TAO_PG_PropertyManager::get_properties (
@@ -265,7 +256,6 @@ TAO_PG_PropertyManager::get_properties (
 
   return properties._retn ();
 }
-
 
 void
 TAO_PG_PropertyManager::remove_properties (

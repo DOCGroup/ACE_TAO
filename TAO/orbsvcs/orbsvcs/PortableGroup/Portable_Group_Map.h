@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Portable_Group_Map.h
  *
  *  @author Frank Hunleth <fhunleth@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_PORTABLE_GROUP_MAP_H
 #define TAO_PORTABLE_GROUP_MAP_H
@@ -94,7 +92,6 @@ public:
   /// This function takes ownership of the memory pointed to be group_id
   void add_groupid_objectkey_pair (PortableGroup::TagGroupTaggedComponent *group_id,
                                    TAO::ObjectKey const &key);
-
 
   /// Remove a GroupId->ObjectKey mapping from the map.
   void remove_groupid_objectkey_pair (PortableGroup::TagGroupTaggedComponent const *group_id,
