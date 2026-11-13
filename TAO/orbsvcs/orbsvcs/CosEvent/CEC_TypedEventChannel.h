@@ -86,7 +86,7 @@ public:
 
   /**
    * If not zero the event channel will deactive its Impl and call
-   * orb->shutdown(0), when destroy is invoked.
+   * orb->shutdown(false), when destroy is invoked.
    */
   bool destroy_on_shutdown;
 
