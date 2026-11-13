@@ -3,6 +3,8 @@
 
 #include "tao/ORB_Constants.h"
 
+#include <utility>
+
 FOO_IORInterceptor::FOO_IORInterceptor (IOP::Codec_ptr codec)
   : codec_ (IOP::Codec::_duplicate (codec))
 {
@@ -42,15 +44,11 @@ FOO_IORInterceptor::establish_components (
 
   component.tag = FOO::COMPONENT_ID;
 
-  CORBA::ULong const maximum = encoded_data->maximum ();
   CORBA::ULong const length = encoded_data->length ();
-  CORBA::Octet *buffer = encoded_data->get_buffer ();
-  CORBA::Boolean const release {};  // OctetSeq retains ownership.
 
-  ACE_ASSERT (maximum > 1);  // Sanity check.
   ACE_ASSERT (length > 1);   // Sanity check.
 
-  component.component_data.replace (maximum, length, buffer, release);
+  component.component_data = std::move (*encoded_data.ptr ());
 
   ACE_ASSERT (component.component_data.length () == length);
 
