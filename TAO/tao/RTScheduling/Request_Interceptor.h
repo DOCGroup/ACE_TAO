@@ -51,7 +51,7 @@ class TAO_RTScheduler_Export Server_Interceptor :
   public ::CORBA::LocalObject
 {
 public:
-  Server_Interceptor (TAO_RTScheduler_Current_ptr current);
+  explicit Server_Interceptor (TAO_RTScheduler_Current_ptr current);
 
   void receive_request_service_contexts (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
