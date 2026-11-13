@@ -2056,7 +2056,7 @@ unmap_dependency_i (RtecScheduler::handle_t key,
   // and if successful, destroy the
   if (dependency_map.find (key, dependency_set) == 0)
     {
-      if (dependency_set)
+      if (dependency_set != nullptr)
         {
           int prev_length =  dependency_set->length ();
           bool found {};
@@ -2122,7 +2122,7 @@ map_dependency_enable_state_i (RtecScheduler::handle_t key,
   // and if successful, destroy the
   if (dependency_map.find (key, dependency_set) == 0)
     {
-      if (dependency_set)
+      if (dependency_set != nullptr)
         {
           int set_length =  dependency_set->length ();
           bool found {};

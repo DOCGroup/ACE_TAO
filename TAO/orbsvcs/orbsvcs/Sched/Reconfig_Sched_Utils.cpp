@@ -125,7 +125,7 @@ TAO_RT_Info_Ex::reset (u_long reset_flags)
                            volatile_token);
 
   //ORBSVCS_DEBUG((LM_DEBUG, "Removing Entries for RT_Info: %d, entry_ptr: %x\n", handle, entry_ptr));
-  if (entry_ptr)
+  if (entry_ptr != nullptr)
     {
       entry_ptr->remove_tuples (reset_flags);
     }
@@ -141,7 +141,7 @@ TAO_RT_Info_Ex::enabled_state (RtecScheduler::RT_Info_Enabled_Type_t enabled_in)
   TAO_Reconfig_Scheduler_Entry * entry_ptr =
       ACE_LONGLONG_TO_PTR (TAO_Reconfig_Scheduler_Entry *,
                            volatile_token);
-  if (entry_ptr)
+  if (entry_ptr != nullptr)
     {
       this->enabled = enabled_in;
       entry_ptr->enabled_state (enabled_in);

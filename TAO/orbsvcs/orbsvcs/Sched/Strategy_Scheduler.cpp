@@ -119,7 +119,7 @@ ACE_Strategy_Scheduler::assign_priorities (
           // Log the anomaly.
           anomaly =
             create_anomaly (ST_INSUFFICIENT_THREAD_PRIORITY_LEVELS);
-          if (anomaly)
+          if (anomaly != nullptr)
             {
               anomaly_set.insert (anomaly);
             }
@@ -167,7 +167,7 @@ ACE_Strategy_Scheduler::assign_priorities (
           // Log the anomaly.
           anomaly =
             create_anomaly (ST_INVALID_PRIORITY_ORDERING);
-          if (anomaly)
+          if (anomaly != nullptr)
             {
               anomaly_set.insert (anomaly);
             }
@@ -307,7 +307,7 @@ ACE_Strategy_Scheduler::assign_subpriorities (
                   // Log the anomaly.
                   anomaly =
                     create_anomaly (ST_INVALID_PRIORITY_ORDERING);
-                  if (anomaly)
+                  if (anomaly != nullptr)
                     {
                       anomaly_set.insert (anomaly);
                     }
@@ -333,7 +333,7 @@ ACE_Strategy_Scheduler::assign_subpriorities (
               // Log the anomaly.
               anomaly =
                 create_anomaly (ST_INVALID_PRIORITY_ORDERING);
-              if (anomaly)
+              if (anomaly != nullptr)
                 {
                   anomaly_set.insert (anomaly);
                 }
@@ -362,7 +362,7 @@ ACE_Strategy_Scheduler::assign_subpriorities (
         // Log the anomaly.
         anomaly =
           create_anomaly (ST_INVALID_PRIORITY_ORDERING);
-        if (anomaly)
+        if (anomaly != nullptr)
           {
             anomaly_set.insert (anomaly);
           }
@@ -524,7 +524,7 @@ ACE_Strategy_Scheduler::schedule_timeline_entry (
         ST_VIRTUAL_MEMORY_EXHAUSTED);
 
       // Patch up the pointers within the list of entries for this dispatch.
-      if (last_entry)
+      if (last_entry != nullptr)
       {
         last_entry->next (current_entry);
       }
@@ -560,7 +560,7 @@ ACE_Strategy_Scheduler::schedule_timeline_entry (
       ST_VIRTUAL_MEMORY_EXHAUSTED);
 
     // Patch up the pointers within the list of entries for this dispatch.
-    if (last_entry)
+    if (last_entry != nullptr)
     {
       last_entry->next (current_entry);
     }

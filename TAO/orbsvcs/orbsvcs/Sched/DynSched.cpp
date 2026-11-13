@@ -680,7 +680,7 @@ ACE_DynScheduler::schedule (
     {
       // Create an anomaly, add it to anomaly set
       anomaly = create_anomaly (status_);
-      if (anomaly)
+      if (anomaly != nullptr)
         {
           anomaly_set.insert (anomaly);
         }
@@ -709,7 +709,7 @@ ACE_DynScheduler::schedule (
     {
       // Create an anomaly, add it to anomaly set
       anomaly = create_anomaly (temp_status);
-      if (anomaly)
+      if (anomaly != nullptr)
         {
           anomaly_set.insert (anomaly);
         }
@@ -838,7 +838,7 @@ ACE_DynScheduler::schedule (
       {
         // Create an anomaly, add it to anomaly set
         anomaly = create_anomaly (ST_UNRESOLVED_LOCAL_DEPENDENCIES);
-        if (anomaly)
+        if (anomaly != nullptr)
           {
             anomaly_set.insert (anomaly);
           }
@@ -865,7 +865,7 @@ ACE_DynScheduler::schedule (
       {
         // Create an anomaly, add it to anomaly set
         anomaly = create_anomaly (ST_UNRESOLVED_REMOTE_DEPENDENCIES);
-        if (anomaly)
+        if (anomaly != nullptr)
           {
             anomaly_set.insert (anomaly);
           }
@@ -922,7 +922,7 @@ ACE_DynScheduler::schedule (
     {
       // Create an anomaly, add it to anomaly set
       anomaly = create_anomaly (temp_status);
-      if (anomaly)
+      if (anomaly != nullptr)
         {
           anomaly_set.insert (anomaly);
         }
@@ -961,7 +961,7 @@ ACE_DynScheduler::schedule (
     {
       // Create an anomaly, add it to anomaly set
       anomaly = create_anomaly (temp_status);
-      if (anomaly)
+      if (anomaly != nullptr)
         {
           anomaly_set.insert (anomaly);
         }
@@ -1003,7 +1003,7 @@ ACE_DynScheduler::schedule (
         {
           // Create an anomaly, add it to anomaly set
           anomaly = create_anomaly (temp_status);
-          if (anomaly)
+          if (anomaly != nullptr)
             {
               anomaly_set.insert (anomaly);
             }
@@ -1042,7 +1042,7 @@ ACE_DynScheduler::schedule (
         {
           // Create an anomaly, add it to anomaly set
           anomaly = create_anomaly (temp_status);
-          if (anomaly)
+          if (anomaly != nullptr)
             {
               anomaly_set.insert (anomaly);
             }
@@ -1123,7 +1123,7 @@ ACE_DynScheduler::propagate_dispatches (
       case Task_Entry::INTERNAL_ERROR :
         // Create an anomaly, add it to anomaly set
         anomaly = create_anomaly (ST_BAD_INTERNAL_POINTER);
-        if (anomaly)
+        if (anomaly != nullptr)
           {
             anomaly_set.insert (anomaly);
           }
@@ -1140,7 +1140,7 @@ ACE_DynScheduler::propagate_dispatches (
             status = TWO_WAY_DISJUNCTION;
           }
         anomaly = create_anomaly (TWO_WAY_DISJUNCTION);
-        if (anomaly)
+        if (anomaly != nullptr)
           {
             anomaly_set.insert (anomaly);
           }
@@ -1156,7 +1156,7 @@ ACE_DynScheduler::propagate_dispatches (
             status = TWO_WAY_CONJUNCTION;
           }
         anomaly = create_anomaly (TWO_WAY_CONJUNCTION);
-        if (anomaly)
+        if (anomaly != nullptr)
           {
             anomaly_set.insert (anomaly);
           }
@@ -1172,7 +1172,7 @@ ACE_DynScheduler::propagate_dispatches (
             status = UNRECOGNIZED_INFO_TYPE;
           }
         anomaly = create_anomaly (UNRECOGNIZED_INFO_TYPE);
-        if (anomaly)
+        if (anomaly != nullptr)
           {
             anomaly_set.insert (anomaly);
           }
@@ -1868,7 +1868,7 @@ ACE_DynScheduler::output_dispatch_priorities (char const *filename)
 
   // open the file
   FILE *file = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(filename), ACE_TEXT("w"));
-  if (file)
+  if (file != nullptr)
   {
     status = output_dispatch_priorities (file);
     ACE_OS::fclose (file);
@@ -1961,7 +1961,7 @@ ACE_DynScheduler::output_dispatch_timeline (char const *filename)
 
   // open the file
   FILE *file = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(filename), ACE_TEXT("w"));
-  if (file)
+  if (file != nullptr)
   {
     status = output_dispatch_timeline (file);
     ACE_OS::fclose (file);
@@ -2088,7 +2088,7 @@ ACE_DynScheduler::output_preemption_timeline (char const *filename)
 
   // open the file
   FILE *file = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(filename), ACE_TEXT("w"));
-  if (file)
+  if (file != nullptr)
   {
     status = output_preemption_timeline (file);
     ACE_OS::fclose (file);
@@ -2178,7 +2178,7 @@ ACE_DynScheduler::output_viewer_timeline (char const *filename)
 
   // open the file
   FILE *file = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(filename), ACE_TEXT("w"));
-  if (file)
+  if (file != nullptr)
   {
     status = output_dispatch_timeline (file);
     ACE_OS::fclose (file);
@@ -2262,7 +2262,7 @@ ACE_DynScheduler::output_viewer_timeline (FILE *file)
     }
 
     // if we found another entry, print it (otherwise we're done)
-    if (current_entry)
+    if (current_entry != nullptr)
     {
       if (std::fprintf (
             file, "%-11s  %9f  %9f  %8u  %8u  %11u  %11u\n",
@@ -2350,7 +2350,7 @@ ACE_DynScheduler::output_timeline (char const *filename, char const *heading)
     status = output_viewer_timeline (file);
   }
 
-  if (file)
+  if (file != nullptr)
   {
     ACE_OS::fclose (file);
   }
