@@ -16,11 +16,9 @@
 #include "ace/Guard_T.h"
 #include "ace/Synch_Traits.h"
 #include "ace/os_include/os_ctype.h"
-#include <cstring>
 
-#if !defined (__GNUG__)
-# include <memory>
-#endif
+#include <cstring>
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -53,20 +51,13 @@ struct ace_yy_buffer_state
      state_ (ACE_NO_STATE),
      string_start_ (0)
 #if defined (ACE_USES_WCHAR)
-     , converter_ (0)
+     , converter_ {}
 #endif /* ACE_USES_WCHAR */
   {
   }
 #if defined (_MSC_VER)
 #  pragma warning (pop)
 #endif /* VC8 */
-
-  ~ace_yy_buffer_state ()
-  {
-#if defined (ACE_USES_WCHAR)
-    delete converter_;
-#endif /* ACE_USES_WCHAR */
-  }
 
   ACE_ALLOC_HOOK_DECLARE;
 
@@ -84,7 +75,7 @@ struct ace_yy_buffer_state
 
 #if defined (ACE_USES_WCHAR)
   // Code set conversion related
-  ACE_Encoding_Converter* converter_;
+  std::unique_ptr<ACE_Encoding_Converter> converter_;
 #endif /* ACE_USES_WCHAR */
 };
 
@@ -340,7 +331,7 @@ ACE_Svc_Conf_Lexer::scan (ACE_YYSTYPE* ace_yylval,
 #if defined (ACE_USES_WCHAR)
                 ACE_TCHAR target[ACE_YY_CONVERSION_SPACE] = ACE_TEXT ("");
                 size_t length = 0;
-                if (!convert_from_utf8 (buffer->converter_,
+                if (!convert_from_utf8 (buffer->converter_.get (),
                                         source,
                                         amount,
                                         target,
@@ -489,7 +480,7 @@ ACE_Svc_Conf_Lexer::scan (ACE_YYSTYPE* ace_yylval,
 #if defined (ACE_USES_WCHAR)
                     ACE_TCHAR target[ACE_YY_CONVERSION_SPACE] = ACE_TEXT ("");
                     size_t length = 0;
-                    if (!convert_from_utf8 (buffer->converter_,
+                    if (!convert_from_utf8 (buffer->converter_.get (),
                                             str,
                                             amount,
                                             target,
@@ -573,16 +564,16 @@ ACE_Svc_Conf_Lexer::convert_to_utf8 (
                       ACE_Encoding_Converter_Factory::Encoding_Hint hint)
 {
   bool status = false;
-  if (param->buffer->converter_ == 0)
+  if (!param->buffer->converter_)
     {
-      param->buffer->converter_ =
+      param->buffer->converter_.reset (
         ACE_Encoding_Converter_Factory::create (
           reinterpret_cast<ACE_Byte*> (param->buffer->input_ + skip_bytes),
           param->buffer->size_ - skip_bytes,
-          hint);
+          hint));
     }
 
-  if (param->buffer->converter_ != 0)
+  if (param->buffer->converter_)
     {
       char target[ACE_YY_CONVERSION_SPACE] = "";
       if (param->buffer->converter_->to_utf8 (
