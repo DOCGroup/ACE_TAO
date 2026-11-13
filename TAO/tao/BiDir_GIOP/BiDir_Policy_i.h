@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file BiDir_Policy_i.h
  *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
-// ===================================================================
 
 #ifndef TAO_BIDIR_POLICY_I_H
 #define TAO_BIDIR_POLICY_I_H
@@ -43,8 +41,7 @@ class TAO_BidirectionalPolicy
 {
 public:
   explicit TAO_BidirectionalPolicy (BiDirPolicy::BidirectionalPolicyValue val);
-
-  /// Copy constructor.
+  TAO_BidirectionalPolicy () = delete;
   TAO_BidirectionalPolicy (TAO_BidirectionalPolicy const &rhs);
 
   /// Returns a copy of this.

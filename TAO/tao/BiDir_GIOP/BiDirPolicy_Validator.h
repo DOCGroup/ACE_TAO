@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    BiDirPolicy_Validator.h
  *
@@ -10,7 +9,6 @@
  *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
  *  @author  Frank Hunleth  <fhuntleth@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_BIDIR_POLICY_VALIDATOR_H_
 #define TAO_BIDIR_POLICY_VALIDATOR_H_
@@ -37,6 +35,7 @@ class TAO_BIDIRGIOP_Export TAO_BiDirPolicy_Validator : public TAO_Policy_Validat
 {
 public:
   explicit TAO_BiDirPolicy_Validator (TAO_ORB_Core &orb_core);
+  TAO_BiDirPolicy_Validator () = delete;
 
   void validate_impl (TAO_Policy_Set &policies) override;
 
