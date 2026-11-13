@@ -53,12 +53,14 @@ public:
                           CosNotifyChannelAdmin::ProxyID_out proxy_id);
 
 protected:
-
+  /// @name CosEventChannelAdmin::ProxyPushConsumer methods
+  /// @{
   void push (CORBA::Any const &data) override;
 
   void connect_push_supplier (CosEventComm::PushSupplier_ptr push_supplier) override;
 
   void disconnect_push_consumer () override;
+  /// @}
 
 private:
   /// Release

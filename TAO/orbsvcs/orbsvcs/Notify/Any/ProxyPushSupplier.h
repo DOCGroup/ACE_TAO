@@ -60,11 +60,14 @@ public:
   virtual void configure (TAO_Notify_ConsumerAdmin &admin,
                           CosNotifyChannelAdmin::ProxyID_out proxy_id);
 
+  /// @name Interface methods
+  /// @{
   CosNotifyChannelAdmin::ProxyType MyType () override;
 
   void connect_any_push_consumer (CosEventComm::PushConsumer_ptr push_consumer) override;
 
   void disconnect_push_supplier () override;
+  /// @}
 
 private:
   /// TAO_Notify_Destroy_Callback methods
