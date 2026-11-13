@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_SL3_OBJECT_CREDENTIALS_POLICY_H
 #define TAO_SL3_OBJECT_CREDENTIALS_POLICY_H
 
@@ -27,7 +26,6 @@
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_SL3_CREDENTIALS_CURATOR_H
 #define TAO_SL3_CREDENTIALS_CURATOR_H
 
@@ -26,12 +25,10 @@
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Map_Manager.h"
 
-
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -82,6 +79,11 @@ namespace TAO
 
       CredentialsCurator ();
 
+      CredentialsCurator (CredentialsCurator const &) = delete;
+      CredentialsCurator (CredentialsCurator &&) = delete;
+      CredentialsCurator &operator= (CredentialsCurator const &) = delete;
+      CredentialsCurator &operator= (CredentialsCurator &&) = delete;
+
       static CredentialsCurator_ptr _duplicate (CredentialsCurator_ptr obj);
       static CredentialsCurator_ptr _nil ();
       static CredentialsCurator_ptr _narrow (CORBA::Object_ptr obj);
@@ -131,11 +133,6 @@ namespace TAO
       ~CredentialsCurator () override;
 
     private:
-      CredentialsCurator (CredentialsCurator const &) = delete;
-      CredentialsCurator (CredentialsCurator &&) = delete;
-      CredentialsCurator &operator= (CredentialsCurator const &) = delete;
-      CredentialsCurator &operator= (CredentialsCurator &&) = delete;
-
       /// Lock used to synchronize access to underlying tables.
       TAO_SYNCH_MUTEX lock_;
 
@@ -147,7 +144,6 @@ namespace TAO
     };
   } // End SL3 namespace
 }  // End TAO namespace
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

@@ -8,7 +8,6 @@
  */
 // ===================================================================
 
-
 #ifndef TAO_SL2_QOP_POLICY_H
 #define TAO_SL2_QOP_POLICY_H
 

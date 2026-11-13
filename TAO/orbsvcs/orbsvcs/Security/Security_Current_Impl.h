@@ -46,6 +46,11 @@ namespace TAO
     public:
       virtual ~Current_Impl ();
 
+      Current_Impl (Current_Impl const &) = delete;
+      Current_Impl (Current_Impl &&) = delete;
+      Current_Impl &operator= (Current_Impl const &) = delete;
+      Current_Impl &operator= (Current_Impl &&) = delete;
+
       /**
        * @name SecurityLevel1::Current Methods
        *

@@ -8,7 +8,6 @@
  */
 // ===================================================================
 
-
 #ifndef TAO_ESTABLISH_TRUST_POLICY_H
 #define TAO_ESTABLISH_TRUST_POLICY_H
 

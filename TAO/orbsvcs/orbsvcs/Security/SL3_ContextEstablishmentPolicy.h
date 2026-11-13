@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_SL3_CONTEXT_ESTABLISHMENT_POLICY_H
 #define TAO_SL3_CONTEXT_ESTABLISHMENT_POLICY_H
 

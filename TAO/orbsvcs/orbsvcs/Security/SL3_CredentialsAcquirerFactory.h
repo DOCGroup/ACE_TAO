@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_SL3_CREDENTIALS_ACQUIRER_FACTORY_H
 #define TAO_SL3_CREDENTIALS_ACQUIRER_FACTORY_H
 
@@ -44,6 +43,11 @@ namespace TAO
     public:
       virtual ~CredentialsAcquirerFactory ();
 
+      CredentialsAcquirerFactory (CredentialsAcquirerFactory const &) = delete;
+      CredentialsAcquirerFactory (CredentialsAcquirerFactory &&) = delete;
+      CredentialsAcquirerFactory &operator= (CredentialsAcquirerFactory const &) = delete;
+      CredentialsAcquirerFactory &operator= (CredentialsAcquirerFactory &&) = delete;
+
       /// Create a TAO::SL3::CredentialsAcquirerFactory.
       virtual SecurityLevel3::CredentialsAcquirer_ptr make (
         TAO::SL3::CredentialsCurator_ptr curator,
@@ -53,7 +57,6 @@ namespace TAO
 }  // End TAO namespace
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 #include /**/ "ace/post.h"
 

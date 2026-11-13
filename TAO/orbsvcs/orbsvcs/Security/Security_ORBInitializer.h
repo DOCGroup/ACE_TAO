@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_SECURITY_ORB_INITIALIZER_H
 #define TAO_SECURITY_ORB_INITIALIZER_H
 

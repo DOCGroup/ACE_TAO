@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_SL3_SECURITY_MANAGER_H
 #define TAO_SL3_SECURITY_MANAGER_H
 
@@ -95,7 +94,6 @@ namespace TAO
 }  // End TAO namespace
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

@@ -22,7 +22,6 @@
 #include "orbsvcs/Security/security_export.h"
 #include "orbsvcs/SecurityLevel3C.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -46,6 +45,11 @@ namespace TAO
     {
     public:
       virtual ~SecurityCurrent_Impl ();
+
+      SecurityCurrent_Impl (SecurityCurrent_Impl const &) = delete;
+      SecurityCurrent_Impl (SecurityCurrent_Impl &&) = delete;
+      SecurityCurrent_Impl &operator= (SecurityCurrent_Impl const &) = delete;
+      SecurityCurrent_Impl &operator= (SecurityCurrent_Impl &&) = delete;
 
       /**
        * @name SecurityLevel3::Current Methods
