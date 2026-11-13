@@ -4,9 +4,7 @@
 #include "ACEXML/common/StreamFactory.h"
 #include "ace/ACE.h"
 
-ACEXML_InputSource::ACEXML_InputSource ()
-{
-}
+ACEXML_InputSource::ACEXML_InputSource () = default;
 
 ACEXML_InputSource::ACEXML_InputSource (ACEXML_CharStream *stm)
   : charStream_ (stm),

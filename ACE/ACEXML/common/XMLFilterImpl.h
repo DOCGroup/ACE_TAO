@@ -47,206 +47,139 @@ public:
   explicit ACEXML_XMLFilterImpl (ACEXML_XMLReader *parent);
 
   ~ACEXML_XMLFilterImpl () override;
+  ACEXML_XMLFilterImpl (ACEXML_XMLFilterImpl const &) = delete;
+  ACEXML_XMLFilterImpl (ACEXML_XMLFilterImpl &&) = delete;
+  ACEXML_XMLFilterImpl &operator= (ACEXML_XMLFilterImpl const &) = delete;
+  ACEXML_XMLFilterImpl &operator= (ACEXML_XMLFilterImpl &&) = delete;
 
-  /*
-   * Look up the value of a feature.
-   */
+  /// Look up the value of a feature.
   int getFeature (const ACEXML_Char *name) override;
 
-  /*
-   * Look up the value of a property.
-   */
+  /// Look up the value of a property.
   void * getProperty (const ACEXML_Char *name) override;
 
-  /*
-   * Parse an XML document.
-   */
+  /// Parse an XML document.
   void parse (ACEXML_InputSource *input) override;
 
-  /*
-   * Parse an XML document from a system identifier (URI).
-   */
+  /// Parse an XML document from a system identifier (URI).
   void parse (const ACEXML_Char *systemId) override;
 
-  /*
-   * Set the state of a feature.
-   */
+  /// Set the state of a feature.
   void setFeature (const ACEXML_Char *name, int boolean_value) override;
 
-  /*
-   * Set the value of a property.
-   */
+  /// Set the value of a property.
   void setProperty (const ACEXML_Char *name, void *value) override;
 
-  /*
-   * Get the parent reader.
-   */
+  /// Get the parent reader.
   ACEXML_XMLReader *getParent () const override;
 
-  /*
-   * Set the parent reader.
-   */
+  /// Set the parent reader.
   void setParent (ACEXML_XMLReader *parent) override;
 
-  /*
-   * Get the current DTD event handler.
-   */
+  /// Get the current DTD event handler.
   ACEXML_DTDHandler *getDTDHandler () const override;
 
-  /*
-   * Get the current content event handler.
-   */
+  /// Get the current content event handler.
   ACEXML_ContentHandler *getContentHandler () const override;
 
-  /*
-   * Get the current entity resolver.
-   */
+  /// Get the current entity resolver.
   ACEXML_EntityResolver *getEntityResolver () const override;
 
-  /*
-   * Get the current error event handler.
-   */
+  /// Get the current error event handler.
   ACEXML_ErrorHandler *getErrorHandler () const override;
 
-  /*
-   * Set the DTD event handler.
-   */
+  /// Set the DTD event handler.
   void setDTDHandler (ACEXML_DTDHandler *handler) override;
 
-  /*
-   * Set the content event handler.
-   */
+  /// Set the content event handler.
   void setContentHandler (ACEXML_ContentHandler *handler) override;
 
-  /*
-   * Set the entity resolver.
-   */
+  /// Set the entity resolver.
   void setEntityResolver (ACEXML_EntityResolver *handler) override;
 
-  /*
-   * Set the error event handler.
-   */
+  /// Set the error event handler.
   void setErrorHandler (ACEXML_ErrorHandler *handler) override;
 
-  /*
-   * Receive notification of character data.
-   */
+  /// Receive notification of character data.
   void characters (const ACEXML_Char *ch,
                    size_t start,
                    size_t length) override;
 
-  /*
-   * Receive notification of the end of a document.
-   */
+  /// Receive notification of the end of a document.
   void endDocument () override;
 
-  /*
-   * Receive notification of the end of an element.
-   */
+  /// Receive notification of the end of an element.
   void endElement (const ACEXML_Char *namespaceURI,
                    const ACEXML_Char *localName,
                    const ACEXML_Char *qName) override;
 
-  /*
-   * End the scope of a prefix-URI mapping.
-   */
+  /// End the scope of a prefix-URI mapping.
   void endPrefixMapping (const ACEXML_Char *prefix) override;
 
-  /*
-   * Receive notification of ignorable whitespace in element content.
-   */
+  /// Receive notification of ignorable whitespace in element content.
   void ignorableWhitespace (const ACEXML_Char *ch,
                             int start,
                             int length) override;
 
-  /*
-   * Receive notification of a processing instruction.
-   */
+  /// Receive notification of a processing instruction.
   void processingInstruction (const ACEXML_Char *target,
                               const ACEXML_Char *data) override;
 
-  /*
-   * Receive an object for locating the origin of SAX document events.
-   */
+  /// Receive an object for locating the origin of SAX document events.
   void setDocumentLocator (ACEXML_Locator *locator) override;
 
-  /*
-   * Receive notification of a skipped entity.
-   */
+  /// Receive notification of a skipped entity.
   void skippedEntity (const ACEXML_Char *name) override;
 
-  /*
-   * Receive notification of the beginning of a document.
-   */
+  /// Receive notification of the beginning of a document.
   void startDocument () override;
 
-  /*
-   * Receive notification of the beginning of an element.
-   */
+  /// Receive notification of the beginning of an element.
   void startElement (const ACEXML_Char *namespaceURI,
                      const ACEXML_Char *localName,
                      const ACEXML_Char *qName,
                      ACEXML_Attributes *atts) override;
 
-  /*
-   * Begin the scope of a prefix-URI Namespace mapping.
-   */
+  /// Begin the scope of a prefix-URI Namespace mapping.
   void startPrefixMapping (const ACEXML_Char *prefix,
                            const ACEXML_Char *uri) override;
 
-  // *** Methods inherit from ACEXML_DTDHandler.
-
-  /*
-   * Receive notification of a notation declaration event.
-   */
+  /// Receive notification of a notation declaration event.
   void notationDecl (const ACEXML_Char *name,
                      const ACEXML_Char *publicId,
                      const ACEXML_Char *systemId) override;
 
-  /*
-   * Receive notification of an unparsed entity declaration event.
-   */
+  /// Receive notification of an unparsed entity declaration event.
   void unparsedEntityDecl (const ACEXML_Char *name,
                            const ACEXML_Char *publicId,
                            const ACEXML_Char *systemId,
                            const ACEXML_Char *notationName) override;
 
-  // Methods inherit from ACEXML_EnitityResolver.
-
-  /*
-   * Allow the application to resolve external entities.
-   */
+  /// Allow the application to resolve external entities.
   ACEXML_InputSource *resolveEntity (const ACEXML_Char *publicId,
                                      const ACEXML_Char *systemId) override;
 
-  // Methods inherit from ACEXML_ErrorHandler.
-
-  /*
-   * Receive notification of a recoverable error.
-   */
+  /// Receive notification of a recoverable error.
   void error (ACEXML_SAXParseException &exception) override;
 
-  /*
-   * Receive notification of a non-recoverable error.
-   */
+  /// Receive notification of a non-recoverable error.
   void fatalError (ACEXML_SAXParseException &exception) override;
 
-  /*
-   * Receive notification of a warning.
-   */
+  /// Receive notification of a warning.
   void warning (ACEXML_SAXParseException &exception) override;
+
 protected:
+  /// Configure the parent reader to send events through this filter.
   int setupParser ();
-  // Set up the event handlers of parent parser to this.
-  // Returns -1 if no valid parent is set.
 
 private:
-  ACEXML_XMLReader *parent_;
-  // ACEXML_Locator *locator_;
-  ACEXML_EntityResolver *entityResolver_;
-  ACEXML_DTDHandler *dtdHandler_;
-  ACEXML_ContentHandler *contentHandler_;
-  ACEXML_ErrorHandler *errorHandler_;
+  /// Non-owning pointer to the parent reader.
+  ACEXML_XMLReader *parent_ {};
+  /// Non-owning event handlers installed on the parent reader.
+  ACEXML_EntityResolver *entityResolver_ {};
+  ACEXML_DTDHandler *dtdHandler_ {};
+  ACEXML_ContentHandler *contentHandler_ {};
+  ACEXML_ErrorHandler *errorHandler_ {};
 };
 
 #if defined (__ACEXML_INLINE__)

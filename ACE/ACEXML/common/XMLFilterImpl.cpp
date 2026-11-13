@@ -6,23 +6,10 @@
 # include "ACEXML/common/XMLFilterImpl.inl"
 #endif /* __ACEXML_INLINE__ */
 
-ACEXML_XMLFilterImpl::ACEXML_XMLFilterImpl ()
-  : parent_ (nullptr),
-    // locator_ (nullptr),
-    entityResolver_ (nullptr),
-    dtdHandler_ (nullptr),
-    contentHandler_ (nullptr),
-    errorHandler_ (nullptr)
-{
-}
+ACEXML_XMLFilterImpl::ACEXML_XMLFilterImpl () = default;
 
 ACEXML_XMLFilterImpl::ACEXML_XMLFilterImpl (ACEXML_XMLReader *parent)
-  : parent_ (parent),
-    // locator_ (nullptr),
-    entityResolver_ (nullptr),
-    dtdHandler_ (nullptr),
-    contentHandler_ (nullptr),
-    errorHandler_ (nullptr)
+  : parent_ (parent)
 {
 }
 
@@ -46,7 +33,7 @@ ACEXML_XMLFilterImpl::parse (const ACEXML_Char *systemId)
       throw ACEXML_SAXException (ACE_TEXT ("No Parent available"));
     }
 
-  this->parent_->parse (new ACEXML_InputSource (systemId));
+  this->parent_->parse (systemId);
 }
 
 int
