@@ -1,5 +1,7 @@
 #include "ACEXML/common/URL_Addr.h"
 
+#include <memory>
+
 #if !defined (__ACEXML_INLINE__)
 #include "ACEXML/common/URL_Addr.inl"
 #endif /* __ACEXML_INLINE__ */
@@ -150,7 +152,7 @@ ACEXML_URL_Addr::ACEXML_URL_Addr (const ACEXML_URL_Addr &addr)
 int
 ACEXML_URL_Addr::set (const ACEXML_URL_Addr &addr)
 {
-  if (this == &addr)
+  if (this == std::addressof (addr))
     return 0;
 
   this->path_name_.reset ();

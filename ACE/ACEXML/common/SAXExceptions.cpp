@@ -1,6 +1,9 @@
 // -*- C++ -*-
 
 #include "ACEXML/common/SAXExceptions.h"
+
+#include <memory>
+
 #include "ace/Log_Msg.h"
 #include "ace/ACE.h"
 #include "ace/OS_Memory.h"
@@ -34,7 +37,7 @@ ACEXML_SAXException::ACEXML_SAXException (const ACEXML_SAXException &ex)
 ACEXML_SAXException&
 ACEXML_SAXException::operator= (const ACEXML_SAXException& src)
 {
-  if (this != &src)
+  if (this != std::addressof (src))
     {
       this->message_.reset (ACE::strnew (src.message_.get ()));
     }

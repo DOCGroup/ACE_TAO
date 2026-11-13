@@ -3,6 +3,8 @@
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
 
+#include <memory>
+
 ACEXML_INLINE
 ACEXML_Attribute::ACEXML_Attribute (ACEXML_Attribute const &attr)
   : uri_ (ACE::strnew (attr.uri_.get ())),
@@ -104,7 +106,7 @@ ACEXML_Attribute::setAttribute (ACEXML_Char const *uri,
 ACEXML_INLINE ACEXML_Attribute &
 ACEXML_Attribute::operator= (ACEXML_Attribute const &rhs)
 {
-  if (this != &rhs)             // Check for self assignment
+  if (this != std::addressof (rhs)) // Check for self assignment
     {
       this->uri (rhs.uri ());
       this->qName (rhs.qName ());
