@@ -33,13 +33,6 @@ namespace TAO
 {
   namespace SL3
   {
-    /**
-     * @class ContextEstablishmentPolicy
-     *
-     * @brief
-     *
-     *
-     */
     class ContextEstablishmentPolicy
       : public virtual SecurityLevel3::ContextEstablishmentPolicy,
         public virtual ::CORBA::LocalObject

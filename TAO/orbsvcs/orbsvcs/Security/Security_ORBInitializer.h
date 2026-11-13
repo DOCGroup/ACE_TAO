@@ -33,7 +33,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-/// Security ORB initializer.
 namespace TAO
 {
   namespace Security

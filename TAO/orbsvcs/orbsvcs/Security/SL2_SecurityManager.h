@@ -41,17 +41,11 @@ namespace TAO
   {
     // This should move out of here probably, but it's easier to stick it
     // here for the moment...(CJC)
-    /**
-     * @class AccessDecision
-     *
-     * @brief
-     */
     class AccessDecision
       : public virtual TAO::SL2::AccessDecision,
-  public virtual ::CORBA::LocalObject
+        public virtual ::CORBA::LocalObject
     {
     public:
-      /*! Constructor */
       AccessDecision () = default;
       ~AccessDecision () override = default;
 
@@ -167,12 +161,6 @@ namespace TAO
                                          CORBA::Boolean collocated = false);
     };
 
-    /**
-     * @class SecurityManager
-     *
-     * @brief
-     *
-     */
     class SecurityManager
       : public virtual SecurityLevel2::SecurityManager,
         public virtual ::CORBA::LocalObject

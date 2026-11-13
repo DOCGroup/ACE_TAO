@@ -33,13 +33,6 @@ namespace TAO
 {
   namespace SL3
   {
-    /**
-     * @class SecurityManager
-     *
-     * @brief
-     *
-     *
-     */
     class SecurityManager
       : public virtual SecurityLevel3::SecurityManager,
         public virtual ::CORBA::LocalObject

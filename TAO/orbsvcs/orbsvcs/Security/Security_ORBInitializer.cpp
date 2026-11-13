@@ -41,26 +41,6 @@ TAO::Security::ORBInitializer::pre_init (
   // thread-specific portion of Security::Current.
   size_t const tss_slot = tao_info->allocate_tss_slot_id (0 /* no cleanup function */);
 
-#if 0 // why am I getting a BAD_OPERATION from no SSL context?!
-  CORBA::String_var orb_id = info->orb_id ();
-
-  // Create the SecurityLevel2::Current object.
-  SecurityLevel2::Current_ptr current = SecurityLevel2::Current::_nil ();
-  ACE_NEW_THROW_EX (current,
-                    TAO_Security_Current (tss_slot, orb_id.in ()),
-                    CORBA::NO_MEMORY (
-                                      CORBA::SystemException::_tao_minor_code (
-                         TAO::VMCID,
-                         ENOMEM),
-                       CORBA::COMPLETED_NO));
-
-  SecurityLevel2::Current_var security_current = current;
-
-  // Register the SecurityLevel2::Current object reference with the
-  // ORB.
-  info->register_initial_reference ("SecurityCurrent",
-                                    security_current.in ());
-#endif
   /*
    * Instantiate and register the SecurityLevel2::SecurityManager
    */
