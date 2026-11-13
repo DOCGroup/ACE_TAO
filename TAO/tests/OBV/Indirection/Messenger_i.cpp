@@ -1,6 +1,7 @@
 #include "Messenger_i.h"
 
 #include "tao/AnyTypeCode/TypeCode.h"
+#include "ace/Vector_T.h"
 
 #include <sstream>
 
