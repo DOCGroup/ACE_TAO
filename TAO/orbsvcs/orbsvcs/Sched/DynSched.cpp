@@ -569,9 +569,9 @@ ACE_DynScheduler::reset ()
       // free all the dispatch entries in the list, then the list itself
       ACE_Unbounded_Set_Iterator <Dispatch_Entry *> iter (*dispatch_entries_);
       Dispatch_Entry **entry {};
-      for (iter.first (); ! iter.done (); iter.advance (), entry = 0)
+      for (iter.first (); ! iter.done (); iter.advance (), entry = nullptr)
       {
-        if ((iter.next (entry) != 0) && (entry) && (*entry))
+        if (iter.next (entry) != 0 && entry != nullptr && *entry != nullptr)
         {
           delete (*entry);
         }
@@ -585,9 +585,9 @@ ACE_DynScheduler::reset ()
       // free all the config info entries in the list, then the list itself
       ACE_Unbounded_Set_Iterator <Config_Info *> iter (*config_info_entries_);
       Config_Info **entry {};
-      for (iter.first (); ! iter.done (); iter.advance (), entry = 0)
+      for (iter.first (); ! iter.done (); iter.advance (), entry = nullptr)
       {
-        if ((iter.next (entry) != 0) && (entry) && (*entry))
+        if (iter.next (entry) != 0 && entry != nullptr && *entry != nullptr)
         {
           delete (*entry);
         }
@@ -603,10 +603,10 @@ ACE_DynScheduler::reset ()
       ACE_Unbounded_Set_Iterator <Dispatch_Entry *> expanded_iter (*expanded_dispatches_);
       Dispatch_Entry **expanded_entry {};
       for (expanded_iter.first (); ! expanded_iter.done ();
-           expanded_iter.advance (), expanded_entry = 0)
+           expanded_iter.advance (), expanded_entry = nullptr)
       {
-        if ((expanded_iter.next (expanded_entry) != 0) &&
-            (expanded_entry) && (*expanded_entry))
+        if (expanded_iter.next (expanded_entry) != 0 &&
+            expanded_entry != nullptr && *expanded_entry != nullptr)
         {
           delete (*expanded_entry);
         }
@@ -635,16 +635,16 @@ ACE_DynScheduler::reset ()
       // iterate over and delete the set of timeline entries
       ACE_Ordered_MultiSet_Iterator <TimeLine_Entry_Link> t_iter (*timeline_);
       TimeLine_Entry_Link *t_entry {};
-      for (t_iter.first (); ! t_iter.done (); t_iter.advance (), t_entry = 0)
+      for (t_iter.first (); ! t_iter.done (); t_iter.advance (), t_entry = nullptr)
       {
-        if ((t_iter.next (t_entry) != 0) && (t_entry))
+        if (t_iter.next (t_entry) != 0 && t_entry != nullptr)
         {
           delete &(t_entry->entry ());
         }
       }
       delete timeline_;
       timeline_ = nullptr;
-         }
+    }
 
     up_to_date_ = false;
   }
@@ -1704,8 +1704,9 @@ ACE_DynScheduler::store_assigned_info ()
 {
   for  (u_int i {}; i < dispatch_entry_count_; ++i)
     {
-      if ((! ordered_dispatch_entries_) || (! (ordered_dispatch_entries_[i])) ||
-          (! (ordered_dispatch_entries_[i]->task_entry ().rt_info ())))
+      if (ordered_dispatch_entries_ == nullptr ||
+          ordered_dispatch_entries_[i] == nullptr ||
+          ordered_dispatch_entries_[i]->task_entry ().rt_info () == nullptr)
         {
           ORBSVCS_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT("ACE_DynScheduler::store_assigned_info () could not store ")
@@ -2001,7 +2002,7 @@ ACE_DynScheduler::output_dispatch_timeline (FILE *file)
   for (iter.first (); iter.done () == 0; iter.advance ())
   {
     TimeLine_Entry_Link *link;
-    if ((iter.next (link) == 0) || (! link))
+    if (iter.next (link) == 0 || link == nullptr)
     {
       ORBSVCS_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT("ACE_DynScheduler::output_dispatch_timeline: ")
@@ -2010,11 +2011,11 @@ ACE_DynScheduler::output_dispatch_timeline (FILE *file)
     }
 
     // for each timeline entry that starts a dispatch
-    if (link->entry ().prev () == 0)
+    if (link->entry ().prev () == nullptr)
     {
       // find the last time slice for the dispatch
       TimeLine_Entry *last_entry = &(link->entry ());
-      while (last_entry->next ())
+      while (last_entry->next () != nullptr)
       {
         last_entry = last_entry->next ();
       }
@@ -2123,7 +2124,7 @@ ACE_DynScheduler::output_preemption_timeline (FILE *file)
   TimeLine_Entry_Link *link;
   for (iter.first (); iter.done () == 0; iter.advance ())
   {
-    if ((iter.next (link) == 0) || (! link))
+    if (iter.next (link) == 0 || link == nullptr)
     {
       ORBSVCS_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT("ACE_DynScheduler::output_preemption_timeline: ")
@@ -2224,7 +2225,7 @@ ACE_DynScheduler::output_viewer_timeline (FILE *file)
     for (iter.first (); iter.done () == 0; iter.advance ())
     {
       TimeLine_Entry_Link *link;
-      if ((iter.next (link) == 0) || (! link))
+      if (iter.next (link) == 0 || link == nullptr)
       {
         return ST_BAD_INTERNAL_POINTER;
       }
@@ -2233,11 +2234,11 @@ ACE_DynScheduler::output_viewer_timeline (FILE *file)
                                link->entry ().start ();
 
       // for each timeline entry that starts a dispatch
-      if (link->entry ().prev () == 0)
+      if (link->entry ().prev () == nullptr)
       {
         // find the last time slice for the dispatch
         TimeLine_Entry *last_entry = &(link->entry ());
-        while (last_entry->next ())
+        while (last_entry->next () != nullptr)
         {
           last_entry = last_entry->next ();
         }
@@ -2297,7 +2298,7 @@ ACE_DynScheduler::output_timeline (char const *filename, char const *heading)
   FILE *file {};
 
   // bail out if we're not up to date or there is no timeline
-  if ((! up_to_date_) || (! timeline_))
+  if (!up_to_date_ || timeline_ == nullptr)
   {
     status = NOT_SCHEDULED;
     ORBSVCS_ERROR ((LM_ERROR,

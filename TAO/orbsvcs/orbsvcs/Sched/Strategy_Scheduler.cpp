@@ -424,7 +424,7 @@ ACE_Strategy_Scheduler::schedule_timeline_entry (
        iter.advance ())
   {
     TimeLine_Entry_Link *link;
-    if ((iter.next (link) == 0) || (! link))
+    if (iter.next (link) == 0 || link == nullptr)
     {
       return ST_BAD_INTERNAL_POINTER;
     }
@@ -470,7 +470,7 @@ ACE_Strategy_Scheduler::schedule_timeline_entry (
       while (iter.done () == 0)
       {
         // Point to the current link.
-        if ((iter.next (link) == 0) || (! link))
+        if (iter.next (link) == 0 || link == nullptr)
         {
           return ST_BAD_INTERNAL_POINTER;
         }
