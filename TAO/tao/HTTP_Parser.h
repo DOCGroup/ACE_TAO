@@ -41,6 +41,10 @@ class TAO_HTTP_Parser : public TAO_IOR_Parser
 public:
   TAO_HTTP_Parser () = default;
   ~TAO_HTTP_Parser () override = default;
+  TAO_HTTP_Parser (TAO_HTTP_Parser const &) = delete;
+  TAO_HTTP_Parser (TAO_HTTP_Parser &&) = delete;
+  TAO_HTTP_Parser &operator= (TAO_HTTP_Parser const &) = delete;
+  TAO_HTTP_Parser &operator= (TAO_HTTP_Parser &&) = delete;
 
   bool match_prefix (char const *ior_string) const override;
   CORBA::Object_ptr parse_string (char const *ior, CORBA::ORB_ptr orb) override;

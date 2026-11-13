@@ -43,7 +43,7 @@ TAO_HTTP_Parser::parse_string (char const *nior,
   std::basic_string<ACE_TCHAR> filename;
   ACE_TCHAR const *hostname_arg {ACE_TEXT ("")};
   ACE_TCHAR const *ptr {};
-  u_short port = 80;
+  u_short port {80};
 
   if (http_url[0] == '/')
     {
