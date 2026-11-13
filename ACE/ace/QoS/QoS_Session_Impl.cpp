@@ -233,7 +233,7 @@ ACE_RAPI_Session::ACE_RAPI_Session ()
 
 // Open a RAPI QoS session [dest IP, dest port, Protocol ID].
 int
-ACE_RAPI_Session::open (ACE_INET_Addr dest_addr,
+ACE_RAPI_Session::open (ACE_INET_Addr const &dest_addr,
                         ACE_Protocol_ID protocol_id)
 {
   char buf [BUFSIZ];
@@ -288,7 +288,7 @@ ACE_RAPI_Session::close ()
 
 /// Returns the most recent QoS event.
 ACE_QoS_Session::RSVP_Event_Type
-ACE_RAPI_Session::rsvp_event_type ()
+ACE_RAPI_Session::rsvp_event_type () const
 {
   return this->rsvp_event_type_;
 }
@@ -628,7 +628,7 @@ ACE_GQoS_Session::ACE_GQoS_Session ()
 
 // Open a GQoS session [dest IP, dest port, Protocol ID].
 int
-ACE_GQoS_Session::open (ACE_INET_Addr dest_addr,
+ACE_GQoS_Session::open (ACE_INET_Addr const &dest_addr,
                         ACE_Protocol_ID protocol_id)
 {
   this->dest_addr_ = dest_addr;
@@ -692,7 +692,7 @@ ACE_GQoS_Session::update_qos ()
 
 /// Returns the most recent QoS event.
 ACE_QoS_Session::RSVP_Event_Type
-ACE_GQoS_Session::rsvp_event_type ()
+ACE_GQoS_Session::rsvp_event_type () const
 {
   return this->rsvp_event_type_;
 }

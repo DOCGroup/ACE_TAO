@@ -91,7 +91,7 @@ ACE_RAPI_Session::source_port () const
 
 // Set the source port for this RAPI session.
 ACE_INLINE void
-ACE_RAPI_Session::source_port (u_short const &source_port)
+ACE_RAPI_Session::source_port (u_short source_port)
 {
   this->source_port_ = source_port;
 }
@@ -111,7 +111,7 @@ ACE_RAPI_Session::source_addr (ACE_INET_Addr *source_addr)
 
 // RAPI version. Returned value = 100 * major-version + minor-version.
 ACE_INLINE int
-ACE_RAPI_Session::version ()
+ACE_RAPI_Session::version () const
 {
   return 0;
 }
@@ -199,7 +199,7 @@ ACE_GQoS_Session::source_port () const
 
 // Set the source port for this RAPI session.
 ACE_INLINE void
-ACE_GQoS_Session::source_port (u_short const &source_port)
+ACE_GQoS_Session::source_port (u_short source_port)
 {
   this->source_port_ = source_port;
 }
@@ -219,7 +219,7 @@ ACE_GQoS_Session::source_addr (ACE_INET_Addr *source_addr)
 
 // GQoS version.
 ACE_INLINE int
-ACE_GQoS_Session::version ()
+ACE_GQoS_Session::version () const
 {
   return 0;
 }

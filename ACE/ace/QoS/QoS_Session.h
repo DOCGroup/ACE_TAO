@@ -70,7 +70,7 @@ public:
   ACE_QoS_Session &operator= (ACE_QoS_Session &&) = delete;
 
   /// Open a QoS session [dest IP, dest port, Protocol ID].
-  virtual int open (ACE_INET_Addr dest_addr,
+  virtual int open (ACE_INET_Addr const &dest_addr,
                     ACE_Protocol_ID protocol_id) = 0;
 
   /// Close the QoS Session.
@@ -118,10 +118,10 @@ public:
   virtual ACE_HANDLE rsvp_events_handle () = 0;
 
   /// Set the last QoS event.
-  virtual void  rsvp_event_type (RSVP_Event_Type event_type) = 0;
+  virtual void rsvp_event_type (RSVP_Event_Type event_type) = 0;
 
   /// Get the last QoS event.
-  virtual RSVP_Event_Type rsvp_event_type () = 0;
+  virtual RSVP_Event_Type rsvp_event_type () const = 0;
 
   /// Get the destination address for this session.
   virtual ACE_INET_Addr dest_addr () const = 0;
@@ -133,7 +133,7 @@ public:
   virtual u_short source_port () const = 0;
 
   /// Set the source port for this session.
-  virtual void source_port (u_short const &source_port) = 0;
+  virtual void source_port (u_short source_port) = 0;
 
   /// Returns the borrowed source address, or nullptr if none is set.
   virtual ACE_INET_Addr *source_addr () const = 0;
@@ -146,7 +146,7 @@ public:
    * meaningful only when the underlying implementation has
    * versioning.
    */
-  virtual int version () = 0;
+  virtual int version () const = 0;
 
 protected:
   /// Source port if this is a Sender session. Used for rapi_sender ().

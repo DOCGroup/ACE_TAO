@@ -47,7 +47,7 @@ public:
   static int rsvp_error;
 
   /// Open a RAPI QoS session [dest IP, dest port, Protocol ID].
-  int open (ACE_INET_Addr dest_addr,
+  int open (ACE_INET_Addr const &dest_addr,
             ACE_Protocol_ID protocol_id) override;
 
   /// Close the RAPI QoS Session.
@@ -97,7 +97,7 @@ public:
   void rsvp_event_type (RSVP_Event_Type event_type) override;
 
   /// Get the last QoS event.
-  RSVP_Event_Type rsvp_event_type () override;
+  RSVP_Event_Type rsvp_event_type () const override;
 
   /// Get the destination address for this RAPI session.
   ACE_INET_Addr dest_addr () const override;
@@ -109,7 +109,7 @@ public:
   u_short source_port () const override;
 
   /// Set the source port for this session.
-  void source_port (u_short const &source_port) override;
+  void source_port (u_short source_port) override;
 
   /// Returns the borrowed source address, or nullptr if none is set.
   ACE_INET_Addr *source_addr () const override;
@@ -118,7 +118,7 @@ public:
   void source_addr (ACE_INET_Addr *source_addr) override;
 
   /// RAPI version. Returned value = 100 * major-version + minor-version.
-  int version () override;
+  int version () const override;
 
   /// The factory is a friend so it can create this object through
   /// the only private constructor.
@@ -171,7 +171,7 @@ public:
   static int GQoS_session_id;
 
   /// Open a GQoS session [dest IP, dest port, Protocol ID].
-  int open (ACE_INET_Addr dest_addr,
+  int open (ACE_INET_Addr const &dest_addr,
             ACE_Protocol_ID protocol_id) override;
 
   /// Close the GQoS Session.
@@ -213,7 +213,7 @@ public:
   u_short source_port () const override;
 
   /// Set the source port for this session.
-  void source_port (u_short const &source_port) override;
+  void source_port (u_short source_port) override;
 
   /// Returns the borrowed source address, or nullptr if none is set.
   ACE_INET_Addr *source_addr () const override;
@@ -234,10 +234,10 @@ public:
   void rsvp_event_type (RSVP_Event_Type event_type) override;
 
   /// Get the last QoS event.
-  RSVP_Event_Type rsvp_event_type () override;
+  RSVP_Event_Type rsvp_event_type () const override;
 
   /// GQoS version.
-  int version () override;
+  int version () const override;
 
   /// The factory is a friend so it can create this object through
   /// the only private constructor.
