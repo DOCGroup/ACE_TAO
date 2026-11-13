@@ -3,7 +3,8 @@
 #include "orbsvcs/CosNotifyCommC.h"
 #include "orbsvcs/CosNamingC.h"
 #include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 
 const char*
@@ -35,7 +36,7 @@ Any_String (const CORBA::Any& any)
     }
   else if (any >>= str)
     {
-      ACE_OS::strcpy (out, str);
+      std::strcpy (out, str);
     }
   else if (any >>= ull)
     {
@@ -43,7 +44,7 @@ Any_String (const CORBA::Any& any)
     }
   else
     {
-      ACE_OS::strcpy (out, "Unsupported Any Type");
+      std::strcpy (out, "Unsupported Any Type");
     }
 
   return out;
