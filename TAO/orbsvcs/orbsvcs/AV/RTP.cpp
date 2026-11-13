@@ -94,7 +94,7 @@ RTP_Packet::RTP_Packet(char* buffer, int length)
     for (int i {}; i < this->payload_size_; ++i)
       {
         this->host_byte_order_payload_[i] = this->packet_[index];
-        index++;
+        ++index;
       }
 }
 
@@ -137,10 +137,10 @@ RTP_Packet::RTP_Packet(unsigned char padding,
                           ((0 & 0x1) << 4) |  // extension bit
                           ((csrc_count & 0xf));
 
-  index++;
+  ++index;
   this->packet_[index] = ((marker & 0x1) << 7 ) |
                          ((payload_type & 0x7f));
-  index++;
+  ++index;
   *((ACE_UINT16*)&this->packet_[index]) = (ACE_UINT16)htons(static_cast<u_short> (seq_num));
   index+=2;
   *((ACE_UINT32*)&this->packet_[index]) = (ACE_UINT32)htonl(timestamp);
@@ -173,7 +173,7 @@ RTP_Packet::RTP_Packet(unsigned char padding,
     for (int i {}; i < this->payload_size_; ++i)
       {
         this->packet_[index] = data[i];
-        index++;
+        ++index;
       }
 }
 
@@ -410,7 +410,7 @@ TAO_AV_RTP_Object::send_frame (ACE_Message_Block *frame,
                                   -1);
       rtp_packet.reset (raw_rtp_packet);
 
-      frame_info->sequence_num ++;
+      ++frame_info->sequence_num;
     }
   else
     {
@@ -467,7 +467,7 @@ TAO_AV_RTP_Object::send_frame (ACE_Message_Block *frame,
                                   -1);
       rtp_packet.reset (raw_rtp_packet);
 
-      this->sequence_num_ ++;
+      ++this->sequence_num_;
     }
 
   char *data_ptr;
@@ -534,7 +534,7 @@ TAO_AV_RTP_Object::send_frame (iovec const *iov,
                                   -1);
       rtp_packet.reset (raw_rtp_packet);
 
-      frame_info->sequence_num ++;
+      ++frame_info->sequence_num;
     }
   else
     {
@@ -593,7 +593,7 @@ TAO_AV_RTP_Object::send_frame (iovec const *iov,
                                   -1);
       rtp_packet.reset (raw_rtp_packet);
 
-      this->sequence_num_ ++;
+      ++this->sequence_num_;
     }
 
   char *data_ptr;
@@ -603,7 +603,7 @@ TAO_AV_RTP_Object::send_frame (iovec const *iov,
   iovec send_iov[ACE_IOV_MAX];
   send_iov [0].iov_base = data_ptr;
   send_iov [0].iov_len  = data_length;
-  for (int i=1;i<iovcnt; i++)
+  for (int i=1;i<iovcnt; ++i)
     send_iov [i] = iov [i];
   result = this->transport_->send (send_iov, iovcnt);
 

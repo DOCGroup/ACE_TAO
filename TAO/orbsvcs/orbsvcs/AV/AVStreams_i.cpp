@@ -913,7 +913,7 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
       ACE_NEW_RETURN (b_fep_map,
                       FlowEndPoint_Map,
                       0);
-      for (i=0;i<a_flows.length ();i++)
+      for (i=0;i<a_flows.length ();++i)
         {
           char const *flowname = a_flows[i];
           // get the flowendpoint references.
@@ -927,7 +927,7 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
             if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG, "TAO_StreamCtrl::bind failed for %s\n", flowname));
         }
       // get the flowendpoints for streamendpoint_b
-      for (i=0;i<b_flows.length ();i++)
+      for (i=0;i<b_flows.length ();++i)
         {
           char const *flowname = b_flows[i];
           // get the flowendpoint references.
@@ -955,7 +955,7 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
           ACE_NEW_RETURN (spec_fep_map_b,
                           FlowEndPoint_Map,
                           0);
-          for (i=0; i< flow_spec.length ();i++)
+          for (i=0; i< flow_spec.length ();++i)
             {
               TAO_Forward_FlowSpec_Entry *entry {};
               ACE_NEW_RETURN (entry,
@@ -1637,7 +1637,7 @@ TAO_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
                     "TAO_StreamEndPoint::connect: flow_spec_length = %d\n",
                     flow_spec.length ()));
       u_int i;
-      for (i=0;i<flow_spec.length ();i++)
+      for (i=0;i<flow_spec.length ();++i)
         {
           TAO_Forward_FlowSpec_Entry *entry {};
           ACE_NEW_RETURN (entry,
@@ -1675,7 +1675,7 @@ TAO_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
 
       if (retv == 0)
         return retv;
-      for (i=0;i<flow_spec.length ();i++)
+      for (i=0;i<flow_spec.length ();++i)
         {
           TAO_Reverse_FlowSpec_Entry *entry {};
           ACE_NEW_RETURN (entry,
@@ -2264,7 +2264,7 @@ TAO_StreamEndPoint::add_fep (CORBA::Object_ptr fep_obj)
           throw AVStreams::streamOpFailed ();
         }
       // increment the flow count.
-      this->flow_count_++;
+      ++this->flow_count_;
       this->flows_.length (this->flow_count_);
       this->flows_[this->flow_count_-1] = flow_name;
       // define/modify the "Flows" property.
@@ -2295,7 +2295,7 @@ TAO_StreamEndPoint::remove_fep (char const *flow_name)
       // redefine the "Flows" property
       AVStreams::flowSpec new_flows (this->flows_.length ());
       new_flows.length(this->flows_.length ());
-      for (u_int i=0, j=0 ; i <this->flows_.length (); i++)
+      for (u_int i=0, j=0 ; i <this->flows_.length (); ++i)
         if (std::strcmp (flow_name, this->flows_[i]) != 0)
           new_flows[j++] = this->flows_[i];
 
@@ -2475,7 +2475,7 @@ TAO_StreamEndPoint_A::multiconnect (AVStreams::streamQoS &stream_qos,
                                           0);
                           //@@ Strategize the multicast address allocation.
                           flowConnection->set_mcast_addr (this->mcast_addr_, this->mcast_port_);
-                          this->mcast_port_++;
+                          ++this->mcast_port_;
                           flowConnection->set_protocol (forward_entry->carrier_protocol_str ());
                           flow_connection = flowConnection->_this ();
                           this->streamctrl_->set_flow_connection (forward_entry->flowname (),
@@ -2532,7 +2532,7 @@ TAO_StreamEndPoint_A::multiconnect (AVStreams::streamQoS &stream_qos,
                                         ACE_INET_Addr,
                                         0);
                         mcast_addr->set (this->mcast_port_, this->mcast_addr_.c_str ());
-                        this->mcast_port_++;
+                        ++this->mcast_port_;
                         ACE_TCHAR buf[BUFSIZ];
                         mcast_addr->addr_to_string (buf, BUFSIZ);
                         if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG, "%s\n", buf));
@@ -3259,7 +3259,7 @@ TAO_MMDevice::add_fdev (CORBA::Object_ptr fdev_obj)
   if ( (this->fdev_map_.bind (fdev_name_key, fdev )) != 0)
     throw AVStreams::streamOpFailed ();
   // increment the flow count.
-  this->flow_count_++;
+  ++this->flow_count_;
   this->flows_.length (this->flow_count_);
   this->flows_ [this->flow_count_-1] = flow_name;
   // define/modify the "Flows" property.
@@ -3302,7 +3302,7 @@ TAO_MMDevice::remove_fdev (char const *flow_name)
         throw AVStreams::streamOpFailed ();
 
       AVStreams::flowSpec new_flows (this->flows_.length ());
-      for (u_int i=0, j=0 ; i <this->flows_.length (); i++)
+      for (u_int i=0, j=0 ; i <this->flows_.length (); ++i)
         if (std::strcmp (flow_name, this->flows_[i]) != 0)
           new_flows[j++] = this->flows_[i];
 
@@ -3984,7 +3984,7 @@ TAO_FlowEndPoint::set_protocol_restriction (AVStreams::protocolSpec const &proto
     {
       u_int i = 0;
       if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG, "%N:%l\n"));
-      for (i=0;i<protocols.length ();i++)
+      for (i=0;i<protocols.length ();++i)
         {
           char const *protocol = (protocols)[i];
           if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG, "%s\n", protocol));
@@ -3997,7 +3997,7 @@ TAO_FlowEndPoint::set_protocol_restriction (AVStreams::protocolSpec const &proto
       CORBA::Any_var temp_any = this->get_property_value ("AvailableProtocols");
       temp_any.in () >>= temp_spec;
       if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG, "%N:%l\n"));
-      for (i=0;i<temp_spec->length ();i++)
+      for (i=0;i<temp_spec->length ();++i)
         {
           char const *protocol = (*temp_spec)[i];
           if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG, "%s\n", protocol));
@@ -4139,10 +4139,10 @@ TAO_FlowEndPoint::go_to_listen_i (TAO_FlowSpec_Entry::Role role,
   int protocol_match = 0;
   CORBA::String_var listen_protocol;
   u_int i =0;
-  for (i=0;i<my_protocol_spec.length ();i++)
+  for (i=0;i<my_protocol_spec.length ();++i)
     {
       CORBA::String_var my_protocol_string;
-      for (u_int j=0;j<peer_protocol_spec.length ();j++)
+      for (u_int j=0;j<peer_protocol_spec.length ();++j)
         {
           CORBA::String_var peer_protocol_string;
           my_protocol_string = CORBA::string_dup (my_protocol_spec[i]);
@@ -4505,7 +4505,7 @@ TAO_Tokenizer::parse (char const *string, char delimiter)
               ORBSVCS_ERROR_RETURN ((LM_ERROR, "TAO_Tokenizer::parse error"), -1);
             }
         }
-      count++;
+      ++count;
       this->num_tokens_ = count;
     }
   return 0;

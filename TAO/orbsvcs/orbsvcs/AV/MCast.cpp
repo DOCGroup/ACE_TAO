@@ -109,7 +109,7 @@ TAO_AV_UDP_MCast_Transport::send (ACE_Message_Block const *mblk, ACE_Time_Value 
         {
           iov[iovcnt].iov_base = i->rd_ptr ();
           iov[iovcnt].iov_len  = static_cast<u_long> (i->length ());
-          iovcnt++;
+          ++iovcnt;
 
           // The buffer is full make a OS call.  @@ TODO this should
           // be optimized on a per-platform basis, for instance, some

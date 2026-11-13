@@ -148,12 +148,12 @@ RTCP_Channel_In::update_seq(ACE_UINT16 seq)
       // packet is in sequence
       if (seq == this->max_seq_ + (ACE_UINT16)1)
         {
-          this->probation_ --;
+          --this->probation_;
           this->max_seq_ = seq;
           if (this->probation_ == 0)
             {
               this->init_seq(seq);
-              this->received_++;
+              ++this->received_;
               return 1;
             }
         }
@@ -199,7 +199,7 @@ RTCP_Channel_In::update_seq(ACE_UINT16 seq)
     {
       // dup or reordered packet
     }
-  this->received_++;
+  ++this->received_;
 
   return 1;
 }
@@ -229,7 +229,7 @@ RTCP_Channel_In::getRRBlock()
   // If no data has been received since the last report, don't create a block.
   if (!this->data_since_last_report_)
     {
-      this->no_data_counter_++;
+      ++this->no_data_counter_;
 
       // make the source inactive if significant time has passed since last report
       if (this->no_data_counter_ == 32)
@@ -312,7 +312,7 @@ RTCP_Channel_Out::updateStatistics (RTP_Packet *data_packet)
 
   // Update various counters.
   this->octets_sent_ += data_packet->payload_size();
-  this->packets_sent_ ++;
+  ++this->packets_sent_;
   this->seq_num_ = data_packet->sn ();
   this->timestamp_ = data_packet->ts ();
 }

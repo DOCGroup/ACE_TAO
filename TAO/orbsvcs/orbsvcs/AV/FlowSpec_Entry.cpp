@@ -198,7 +198,7 @@ TAO_FlowSpec_Entry::parse_address (char const *address,
                 {
                   addr += addr_token [0];
                   ACE_NEW_RETURN (local_sec_addr_, char* [addr_token.num_tokens () - 1],-1);
-                  for (int j = 1; j <= addr_token.num_tokens () - 1; j++)
+                  for (int j = 1; j <= addr_token.num_tokens () - 1; ++j)
                     {
                       ORBSVCS_DEBUG ((LM_DEBUG,
                                   "adding addresses to sequence %s\n",
@@ -288,7 +288,7 @@ TAO_FlowSpec_Entry::parse_address (char const *address,
               if (port_tokenizer.num_tokens () - 1 != 0)
                 {
                   ACE_NEW_RETURN (local_sec_addr_, char* [port_tokenizer.num_tokens () - 1],-1);
-                  for (int j = 1; j <= port_tokenizer.num_tokens () - 1; j++)
+                  for (int j = 1; j <= port_tokenizer.num_tokens () - 1; ++j)
                     {
                       ORBSVCS_DEBUG ((LM_DEBUG,
                                   "adding addresses to sequence %s\n",
@@ -477,7 +477,7 @@ TAO_Forward_FlowSpec_Entry::parse (char const *flowSpec_entry)
                               0);
 
               ACE_NEW_RETURN (peer_sec_addr_, char* [addr_token.num_tokens () - 1],-1);
-              for (int j = 1; j <= addr_token.num_tokens () - 1; j++)
+              for (int j = 1; j <= addr_token.num_tokens () - 1; ++j)
                 {
                   ORBSVCS_DEBUG ((LM_DEBUG,
                               "adding addresses to sequence %s\n",

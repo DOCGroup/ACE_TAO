@@ -50,7 +50,7 @@ TAO_AV_Core::~TAO_AV_Core ()
           delete (*transport_iter)->factory();
         }
       delete (*transport_iter);
-      transport_iter++;
+      ++transport_iter;
     }
 
   TAO_AV_Flow_ProtocolFactorySetItor flow_iter =
@@ -64,7 +64,7 @@ TAO_AV_Core::~TAO_AV_Core ()
         }
       delete (*flow_iter);
 
-      flow_iter++;
+      ++flow_iter;
     }
 }
 
@@ -450,7 +450,7 @@ TAO_AV_Core::init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
         //        int index = flow_spec.length () + 1;
         int index = new_flowspec.length ();
         flow_spec.length (index);
-        for (i = 0; i < index; i++)
+        for (i = 0; i < index; ++i)
           {
             flow_spec [i] = new_flowspec [i];
           }
@@ -819,7 +819,7 @@ TAO_AV_Core::init_transport_factories ()
     }
   else
     {
-      for (; factory != end; factory++)
+      for (; factory != end; ++factory)
         {
           ACE_CString const &name = (*factory)->name ();
           if (TAO_debug_level > 0)
@@ -1056,7 +1056,7 @@ TAO_AV_Core::init_flow_protocol_factories ()
     }
   else
     {
-      for (; factory != end; factory++)
+      for (; factory != end; ++factory)
         {
           ACE_CString const &name = (*factory)->name ();
           if (TAO_debug_level > 0)

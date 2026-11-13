@@ -606,7 +606,7 @@ TAO_AV_UDP_QoS_Transport::send (ACE_Message_Block const *mblk,
         {
           iov[iovcnt].iov_base = i->rd_ptr ();
           iov[iovcnt].iov_len  = static_cast<u_long> (i->length ());
-          iovcnt++;
+          ++iovcnt;
 
           // The buffer is full make a OS call.  @@ TODO this should
           // be optimized on a per-platform basis, for instance, some
@@ -1078,7 +1078,7 @@ TAO_AV_UDP_QoS_Connector::open (TAO_Base_StreamEndPoint *endpoint,
 //  {
 //    for (unsigned int i = 0;
 //         i < qos_params.length ();
-//         i++)
+//         ++i)
 //      {
 //        if (ACE_OS::strcmp (qos_params [i].property_name, "Service_Type") == 0)
 //          {

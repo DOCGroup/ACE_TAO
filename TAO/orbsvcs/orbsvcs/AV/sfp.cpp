@@ -1002,10 +1002,10 @@ TAO_SFP_Object::send_frame (ACE_Message_Block *frame,
                 }
             }
           // Increment the sequence_num after sending the message.
-          this->sequence_num_++;
+          ++this->sequence_num_;
           // Also reduce the number of credits.
           if (this->max_credit_ > 0)
-            this->current_credit_--;
+            --this->current_credit_;
         }
     }
   else

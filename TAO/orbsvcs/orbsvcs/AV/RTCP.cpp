@@ -211,7 +211,7 @@ TAO_AV_RTCP::alloc_srcid (ACE_UINT32 addr)
   MD5Update (&context, string_val, length);
   MD5Final ((unsigned char*)&digest, &context);
   r=0;
-  for (i=0; i<3; i++)
+  for (i=0; i<3; ++i)
     r ^= digest.x[i];
 
   return r;
@@ -593,7 +593,7 @@ TAO_AV_RTCP_Callback::send_report (int bye)
           }
       }
 
-      iter++;
+      ++iter;
     }
 
   if (b_iter)
@@ -751,7 +751,7 @@ TAO_AV_RTCP_Callback::get_timeout (ACE_Time_Value *&tv,
   iter = this->inputs_.begin();
 
   if (this->output_.active ())
-    senders++;
+    ++senders;
 
   // determine the number of senders and members of this session
   while (iter != this->inputs_.end ())
@@ -759,10 +759,10 @@ TAO_AV_RTCP_Callback::get_timeout (ACE_Time_Value *&tv,
       if ((*iter).int_id_->active ())
         {
           if ((*iter).int_id_->sender ())
-            senders++;
-          members++;
+            ++senders;
+          ++members;
         }
-      iter++;
+      ++iter;
     }
 
   // Here we do the RTCP timeout calculation.

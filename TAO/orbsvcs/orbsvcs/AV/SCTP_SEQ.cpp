@@ -72,7 +72,7 @@ TAO_AV_SCTP_SEQ_Transport::send (ACE_Message_Block const *mblk, ACE_Time_Value *
         {
           iov[iovcnt].iov_base = i->rd_ptr ();
           iov[iovcnt].iov_len  = static_cast<u_long> (i->length ());
-          iovcnt++;
+          ++iovcnt;
 
           // The buffer is full make a OS call.  @@ TODO this should
           // be optimized on a per-platform basis, for instance, some
@@ -701,7 +701,7 @@ TAO_AV_SCTP_SEQ_Flow_Handler::change_qos (AVStreams::QoS qos)
   CORBA::Long dscp = 0;
   CORBA::Long ecn = 0;
   int dscp_flag=0;
-  for(i=0; i < qos.QoSParams.length(); i++)
+  for(i=0; i < qos.QoSParams.length(); ++i)
     {
       if( std::strcmp( qos.QoSParams[i].property_name.in(), "Diffserv_Codepoint") == 0)
         {

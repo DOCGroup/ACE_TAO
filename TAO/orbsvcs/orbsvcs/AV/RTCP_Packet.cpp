@@ -112,7 +112,7 @@ RTCP_BYE_Packet::RTCP_BYE_Packet(ACE_UINT32 *ssrc_list,
   // Set the packet length
   this->chd_.length_ = static_cast<ACE_UINT16> (this->chd_.count_ + (this->reason_length_+1)/4);
   if ((this->reason_length_+1)%4)
-    this->chd_.length_++;
+    ++this->chd_.length_;
 }
 
 //==============================================================================
@@ -135,7 +135,7 @@ RTCP_BYE_Packet::RTCP_BYE_Packet(char* buffer, int *len)
   this->ssrc_list_length_ = this->chd_.count_;
 
   // Store the source ids of the sources leaving the session
-  for (j=0; j<this->chd_.count_; j++)
+  for (j=0; j<this->chd_.count_; ++j)
     {
       this->ssrc_list_[j] = ACE_NTOHL(*(ACE_UINT32*)&buffer[index]);
       index+=4;
@@ -145,7 +145,7 @@ RTCP_BYE_Packet::RTCP_BYE_Packet(char* buffer, int *len)
   if (this->chd_.length_ > this->chd_.count_)
     {
       this->reason_length_ = buffer[index];
-      index++;
+      ++index;
       std::memcpy(this->reason_, &buffer[index], this->reason_length_);
       index+=this->reason_length_;
     }
@@ -214,13 +214,13 @@ RTCP_BYE_Packet::build_packet()
   this->packet_data_[index] = static_cast<char> ((this->chd_.ver_ << 6) |
                                                  (this->chd_.pad_ << 5) |
                                                  this->chd_.count_);
-  index++;
+  ++index;
   this->packet_data_[index] = this->chd_.pt_;
-  index++;
+  ++index;
   *((ACE_UINT16*)&this->packet_data_[index]) = ACE_HTONS(this->chd_.length_);
   index+=2;
 
-  for (i=0; i<this->chd_.count_; i++)
+  for (i=0; i<this->chd_.count_; ++i)
     {
       *((ACE_UINT32*)&this->packet_data_[index]) = ACE_HTONL(this->ssrc_list_[i]);
       index+=4;
@@ -229,13 +229,13 @@ RTCP_BYE_Packet::build_packet()
   if (this->reason_length_)
     {
       this->packet_data_[index] = this->reason_length_;
-      index++;
+      ++index;
       std::memcpy(&this->packet_data_[index], this->reason_, this->reason_length_);
       index += this->reason_length_;
       while (index < this->packet_size())
         {
           this->packet_data_[index] = 0;
-          index ++;
+          ++index;
         }
     }
 }
@@ -266,7 +266,7 @@ RTCP_RR_Packet::RTCP_RR_Packet(ACE_UINT32 ssrc, RR_Block *blocks)
 
   while (block_ptr)
     {
-      this->chd_.count_++;
+      ++this->chd_.count_;
 
       // Can only have 31 receiver reports
       if (this->chd_.count_ == 31)
@@ -374,9 +374,9 @@ RTCP_RR_Packet::build_packet()
   this->packet_data_[index] = static_cast<char> ((this->chd_.ver_ << 6) |
                                                  (this->chd_.pad_ << 5) |
                                                  this->chd_.count_);
-  index++;
+  ++index;
   this->packet_data_[index] = chd_.pt_;
-  index++;
+  ++index;
   *((ACE_UINT16*)&this->packet_data_[index]) = ACE_HTONS(chd_.length_);
   index+=2;
   *((ACE_UINT32*)&this->packet_data_[index]) = ACE_HTONL(this->ssrc_);
@@ -471,7 +471,7 @@ RTCP_SDES_Packet::RTCP_SDES_Packet(char* buffer, int *len):
                    sdesChunk_t);
           cp = cp->next_;
 
-          this->num_chunks_++;
+          ++this->num_chunks_;
         }
       cp->next_ = nullptr;
       cp->item_ = nullptr;
@@ -498,11 +498,11 @@ RTCP_SDES_Packet::RTCP_SDES_Packet(char* buffer, int *len):
             }
           ip->next_ = nullptr;
           ip->type_ = buffer[i];
-          i++;
+          ++i;
           if (ip->type_ != RTCP_SDES_PRIV)
             {
               ip->info_.standard_.length_ = buffer[i];
-              i++;
+              ++i;
               ACE_NEW (ip->info_.standard_.data_,
                        char[ip->info_.standard_.length_+1]);
               std::memcpy(ip->info_.standard_.data_,
@@ -514,9 +514,9 @@ RTCP_SDES_Packet::RTCP_SDES_Packet(char* buffer, int *len):
           else
             {
               ip->info_.priv_.name_length_ = buffer[i];
-              i++;
+              ++i;
               ip->info_.priv_.data_length_ = buffer[i];
-              i++;
+              ++i;
               ACE_NEW (ip->info_.priv_.name_,
                        char[ip->info_.priv_.name_length_+1]);
               std::memcpy(ip->info_.priv_.name_,
@@ -533,7 +533,7 @@ RTCP_SDES_Packet::RTCP_SDES_Packet(char* buffer, int *len):
               i+=ip->info_.priv_.data_length_;
             }
         }
-        i++; // each chunk ends with a zero (END) item
+        ++i; // each chunk ends with a zero (END) item
         // each chunk must end on an even 32 bit boundary
         while (i%4) i++;
     }
@@ -606,7 +606,7 @@ RTCP_SDES_Packet::add_chunk(ACE_UINT32 ssrc)
       cp->item_ = nullptr;
     }
   cp->ssrc_ = ssrc;    // store the source
-  chd_.count_++;       // increment the source count
+  ++chd_.count_;       // increment the source count
 }
 
 //==============================================================================
@@ -812,9 +812,9 @@ RTCP_SDES_Packet::build_packet()
   this->packet_data_[index] = static_cast<char> ((chd_.ver_ << 6) |
                                                  (chd_.pad_ << 5) |
                                                   chd_.count_);
-  index++;
+  ++index;
   this->packet_data_[index] = chd_.pt_;
-  index++;
+  ++index;
   *((ACE_UINT16*)&this->packet_data_[index]) = ACE_HTONS(chd_.length_);
   index+=2;
 
@@ -828,32 +828,32 @@ RTCP_SDES_Packet::build_packet()
       while (ip && (ip->type_ != 0))
         {
           this->packet_data_[index] = ip->type_;
-          index++;
+          ++index;
           if (ip->type_ != RTCP_SDES_PRIV)
             {
               this->packet_data_[index] = ip->info_.standard_.length_;
-              index++;
-              for (i=0; i<ip->info_.standard_.length_; i++)
+              ++index;
+              for (i=0; i<ip->info_.standard_.length_; ++i)
                 {
                   this->packet_data_[index] = ip->info_.standard_.data_[i];
-                  index++;
+                  ++index;
                 }
             }
           else
             {
               this->packet_data_[index] = ip->info_.priv_.name_length_;
-              index++;
+              ++index;
               this->packet_data_[index] = ip->info_.priv_.data_length_;
-              index++;
-              for (i=0; i<ip->info_.priv_.name_length_; i++)
+              ++index;
+              for (i=0; i<ip->info_.priv_.name_length_; ++i)
                 {
                   this->packet_data_[index] = ip->info_.priv_.name_[i];
-                  index++;
+                  ++index;
                 }
-              for (i=0; i<ip->info_.priv_.data_length_; i++)
+              for (i=0; i<ip->info_.priv_.data_length_; ++i)
                 {
                   this->packet_data_[index] = ip->info_.priv_.data_[i];
-                  index++;
+                  ++index;
                 }
             }
 
@@ -861,14 +861,14 @@ RTCP_SDES_Packet::build_packet()
         }
 
       this->packet_data_[index] = 0;
-      index++;
+      ++index;
 
       i=1;
       while ((index)%4)
         { // pad chunk with zeros to 32 bit bound
           this->packet_data_[index] = 0;
-          index++;
-          i++;
+          ++index;
+          ++i;
         }
 
       // Store the number of bytes added. TODO: do we need this
@@ -985,7 +985,7 @@ RTCP_SR_Packet::RTCP_SR_Packet(ACE_UINT32 ssrc,
 
   while (block_ptr)
     {
-      chd_.count_++;
+      ++chd_.count_;
 
       // Can only have 31 receiver reports
       if (this->chd_.count_ == 31)
@@ -1102,9 +1102,9 @@ void RTCP_SR_Packet::build_packet()
   this->packet_data_[index] = static_cast<char> ((this->chd_.ver_ << 6) |
                                                  (this->chd_.pad_ << 5) |
                                                   this->chd_.count_);
-  index++;
+  ++index;
   this->packet_data_[index] = this->chd_.pt_;
-  index++;
+  ++index;
   *((ACE_UINT16*)&this->packet_data_[index]) = ACE_HTONS(this->chd_.length_);
   index+=2;
   *((ACE_UINT32*)&this->packet_data_[index]) = ACE_HTONL(this->ssrc_);

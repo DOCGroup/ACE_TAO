@@ -55,7 +55,7 @@ TAO_AV_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                               ACE_TEXT("-AVTransportFactory")) == 0)
         {
           TAO_AV_TransportFactorySet *tset = TAO_AV_CORE::instance ()->transport_factories ();
-          curarg++;
+          ++curarg;
           if (curarg < argc)
             {
               TAO_AV_Transport_Item *item {};
@@ -73,7 +73,7 @@ TAO_AV_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                                    ACE_TEXT("-AVFlowProtocolFactory")) == 0)
         {
           TAO_AV_Flow_ProtocolFactorySet *fpset = TAO_AV_CORE::instance ()->flow_protocol_factories ();
-          curarg++;
+          ++curarg;
           if (curarg < argc)
             {
               TAO_AV_Flow_Protocol_Item *item {};
