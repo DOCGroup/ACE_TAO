@@ -2457,7 +2457,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::sublist_enqueue_i (ACE_Me
                                                              ACE_Message_Block *&sublist_tail,
                                                              ACE_Dynamic_Message_Strategy::Priority_Status status)
 {
-  int result {};
+  int const result {};
   ACE_Message_Block *current_item {};
 
   // Find message after which to enqueue new item, based on message

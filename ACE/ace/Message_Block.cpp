@@ -78,7 +78,7 @@ ACE_Message_Block::copy (const char *buf, size_t n)
 
   /*size_t len = static_cast<size_t> (this->end () - this->wr_ptr ());*/
   // Note that for this to work correct, end () *must* be >= mark ().
-  size_t len = this->space ();
+  size_t const len = this->space ();
 
   if (len < n)
     {
@@ -102,7 +102,7 @@ ACE_Message_Block::copy (const char *buf)
 
   /* size_t len = static_cast<size_t> (this->end () - this->wr_ptr ()); */
   // Note that for this to work correct, end() *must* be >= wr_ptr().
-  size_t len = this->space ();
+  size_t const len = this->space ();
 
   size_t const buflen = std::strlen (buf) + 1;
 
