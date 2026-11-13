@@ -50,6 +50,7 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
           ACE_NEW_RETURN (tio,
                           TAO_TIO (lb1, up1),
                           CosTime::OTNoOverlap);
+          PortableServer::ServantBase_var xfer = tio;
           overlap = tio->_this ();
 
           return CosTime::OTOverlap;
@@ -60,6 +61,7 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
                           TAO_TIO (lb1, up1),
                           CosTime::OTNoOverlap);
 
+          PortableServer::ServantBase_var xfer = tio;
           overlap = tio->_this ();
 
           return CosTime::OTContained;
@@ -70,6 +72,7 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
                           TAO_TIO (lb2, up2),
                           CosTime::OTNoOverlap);
 
+          PortableServer::ServantBase_var xfer = tio;
           overlap = tio->_this ();
 
           return CosTime::OTContained;
@@ -82,6 +85,7 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
                               TAO_TIO (0, 0),
                               CosTime::OTNoOverlap);
 
+              PortableServer::ServantBase_var xfer = tio;
               overlap = tio->_this ();
 
               return CosTime::OTNoOverlap;
@@ -91,6 +95,7 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
               ACE_NEW_RETURN (tio,
                               TAO_TIO (lb2, up1),
                               CosTime::OTNoOverlap);
+              PortableServer::ServantBase_var xfer = tio;
               overlap = tio->_this ();
 
               return CosTime::OTOverlap;
@@ -102,6 +107,7 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
                           TAO_TIO (0, 0),
                           CosTime::OTNoOverlap);
 
+          PortableServer::ServantBase_var xfer = tio;
           overlap = tio->_this ();
 
           return CosTime::OTNoOverlap;
@@ -112,6 +118,7 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
                           TAO_TIO (lb1, up2),
                           CosTime::OTNoOverlap);
 
+          PortableServer::ServantBase_var xfer = tio;
           overlap = tio->_this ();
         }
     }
@@ -150,6 +157,7 @@ TAO_TIO::overlaps (CosTime::TIO_ptr tio,
                         TAO_TIO (lb1, up1),
                         CORBA::NO_MEMORY ());
 
+      PortableServer::ServantBase_var xfer = tio_i;
       overlap = tio_i->_this ();
 
       return CosTime::OTOverlap;
@@ -160,6 +168,7 @@ TAO_TIO::overlaps (CosTime::TIO_ptr tio,
                         TAO_TIO (lb1, up1),
                         CORBA::NO_MEMORY ());
 
+      PortableServer::ServantBase_var xfer = tio_i;
       overlap = tio_i->_this ();
 
       return CosTime::OTContained;
@@ -170,6 +179,7 @@ TAO_TIO::overlaps (CosTime::TIO_ptr tio,
                         TAO_TIO (lb2, up2),
                         CORBA::NO_MEMORY ());
 
+      PortableServer::ServantBase_var xfer = tio_i;
       overlap = tio_i->_this ();
 
       return CosTime::OTContained;
@@ -181,6 +191,7 @@ TAO_TIO::overlaps (CosTime::TIO_ptr tio,
           ACE_NEW_THROW_EX (tio_i,
                             TAO_TIO (0, 0),
                             CORBA::NO_MEMORY ());
+          PortableServer::ServantBase_var xfer = tio_i;
           overlap = tio_i->_this ();
 
           return CosTime::OTNoOverlap;
@@ -191,6 +202,7 @@ TAO_TIO::overlaps (CosTime::TIO_ptr tio,
                             TAO_TIO (lb2, up1),
                             CORBA::NO_MEMORY ());
 
+          PortableServer::ServantBase_var xfer = tio_i;
           overlap = tio_i->_this ();
 
           return CosTime::OTOverlap;
@@ -202,6 +214,7 @@ TAO_TIO::overlaps (CosTime::TIO_ptr tio,
                         TAO_TIO (0, 0),
                         CORBA::NO_MEMORY ());
 
+      PortableServer::ServantBase_var xfer = tio_i;
       overlap = tio_i->_this ();
 
       return CosTime::OTNoOverlap;
@@ -211,6 +224,7 @@ TAO_TIO::overlaps (CosTime::TIO_ptr tio,
       ACE_NEW_THROW_EX (tio_i,
                         TAO_TIO (lb1, up2),
                         CORBA::NO_MEMORY ());
+      PortableServer::ServantBase_var xfer = tio_i;
       overlap = tio_i->_this ();
     }
 
@@ -230,6 +244,7 @@ TAO_TIO::time ()
                              0),
                     CORBA::NO_MEMORY ());
 
+  PortableServer::ServantBase_var xfer = uto;
   return uto->_this ();
 }
 

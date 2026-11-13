@@ -65,7 +65,6 @@ public:
   /// This creates a new TIO with the given parameters.
   CosTime::TIO_ptr new_interval (TimeBase::TimeT lower,
                                  TimeBase::TimeT upper) override;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

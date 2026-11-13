@@ -39,6 +39,7 @@ TAO_Time_Service_Clerk::universal_time ()
                              this->inaccuracy (),
                              this->time_displacement_factor ()),
                     CORBA::NO_MEMORY ());
+  PortableServer::ServantBase_var xfer = uto;
   // Return the global time as a UTO.
 
   return uto->_this ();
@@ -65,6 +66,7 @@ TAO_Time_Service_Clerk::new_universal_time (TimeBase::TimeT time,
                              inaccuracy,
                              tdf),
                     CORBA::NO_MEMORY ());
+  PortableServer::ServantBase_var xfer = uto;
 
   return uto->_this ();
 }
@@ -87,6 +89,7 @@ TAO_Time_Service_Clerk::uto_from_utc (TimeBase::UtcT const & utc)
                              inaccuracy,
                              utc.tdf),
                     CORBA::NO_MEMORY ());
+  PortableServer::ServantBase_var xfer = uto;
   return uto->_this ();
 }
 
@@ -101,6 +104,7 @@ TAO_Time_Service_Clerk::new_interval (TimeBase::TimeT lower,
                     TAO_TIO (lower,
                              upper),
                     CORBA::NO_MEMORY ());
+  PortableServer::ServantBase_var xfer = tio;
   return tio->_this ();
 }
 

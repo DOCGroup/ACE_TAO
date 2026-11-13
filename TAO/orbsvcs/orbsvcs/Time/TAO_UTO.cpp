@@ -126,6 +126,7 @@ CosTime::TIO_ptr
 TAO_UTO::time_to_interval (CosTime::UTO_ptr uto)
 {
   TAO_TIO * tio {};
+  PortableServer::ServantBase_var xfer;
 
   try
     {
@@ -145,6 +146,7 @@ TAO_UTO::time_to_interval (CosTime::UTO_ptr uto)
                                      uto_time),
                             CORBA::NO_MEMORY ());
         }
+      xfer = tio;
     }
   catch (CORBA::Exception const & ex)
     {
@@ -160,6 +162,7 @@ CosTime::TIO_ptr
 TAO_UTO::interval ()
 {
   TAO_TIO * tio {};
+  PortableServer::ServantBase_var xfer;
 
   try
     {
@@ -176,6 +179,7 @@ TAO_UTO::interval ()
                         TAO_TIO (lower,
                                  upper),
                         CORBA::NO_MEMORY ());
+      xfer = tio;
     }
   catch (CORBA::Exception const & ex)
     {
