@@ -56,7 +56,7 @@ class TAO_Valuetype_Export TAO_ChunkInfo
 {
 public:
   TAO_ChunkInfo (CORBA::Boolean do_chunking = false,
-                 CORBA::Long init_level = false);
+                 CORBA::Long init_level = 0);
 
   /// Methods to support chunking.
   /// Note: These methods are called for both chunking and non-chunking
