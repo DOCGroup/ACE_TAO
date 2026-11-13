@@ -172,6 +172,11 @@ public:
   void ts_offset (ACE_UINT32 offset);
 
 protected:
+  int add_input_channel (ACE_UINT32 ssrc,
+                         ACE_Addr const *peer_address,
+                         RTCP_Channel_In *&channel);
+
+  /// Owns channels stored in the map; the callback destructor deletes them.
   ACE_Hash_Map_Manager<ACE_UINT32, RTCP_Channel_In*, ACE_Null_Mutex> inputs_;
   RTCP_Channel_Out output_;
   int timeout_ {};

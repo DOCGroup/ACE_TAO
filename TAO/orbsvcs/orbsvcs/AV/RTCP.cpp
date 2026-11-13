@@ -80,14 +80,9 @@ TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *data,
                           "TAO_AV_RTCP_Callback::receive_control_frame - "
                           "warning invalid rtcp packet\n"));
 
-            if (this->inputs_.find (sr.ssrc (), c) == -1)
-              {
-                ACE_NEW_RETURN (c,
-                                RTCP_Channel_In (sr.ssrc (),
-                                                 &peer_address),
-                                -1);
-                this->inputs_.bind (sr.ssrc (), c);
-              }
+            if (this->inputs_.find (sr.ssrc (), c) == -1 &&
+                this->add_input_channel (sr.ssrc (), &peer_address, c) < 0)
+              return -1;
             c->updateStatistics (&sr);
 
             if (TAO_debug_level > 0)
@@ -104,14 +99,9 @@ TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *data,
                           "TAO_AV_RTCP_Callback::receive_control_frame - "
                           "warning invalid rtcp packet\n"));
 
-            if (this->inputs_.find (rr.ssrc (), c) == -1)
-              {
-                ACE_NEW_RETURN (c,
-                                RTCP_Channel_In (rr.ssrc (),
-                                                 &peer_address),
-                                -1);
-                this->inputs_.bind (rr.ssrc (), c);
-              }
+            if (this->inputs_.find (rr.ssrc (), c) == -1 &&
+                this->add_input_channel (rr.ssrc (), &peer_address, c) < 0)
+              return -1;
 
             c->updateStatistics (&rr);
 
@@ -504,7 +494,35 @@ TAO_AV_RTCP_Callback::TAO_AV_RTCP_Callback ()
   this->output_.cname(cname);
 }
 
-TAO_AV_RTCP_Callback::~TAO_AV_RTCP_Callback () = default;
+TAO_AV_RTCP_Callback::~TAO_AV_RTCP_Callback ()
+{
+  ACE_Hash_Map_Iterator<ACE_UINT32, RTCP_Channel_In*, ACE_Null_Mutex> iter (this->inputs_);
+  for (; iter != this->inputs_.end (); ++iter)
+    delete (*iter).int_id_;
+}
+
+int
+TAO_AV_RTCP_Callback::add_input_channel (ACE_UINT32 ssrc,
+                                         ACE_Addr const *peer_address,
+                                         RTCP_Channel_In *&channel)
+{
+  RTCP_Channel_In *raw_channel {};
+  ACE_NEW_RETURN (raw_channel,
+                  RTCP_Channel_In (ssrc, peer_address),
+                  -1);
+  std::unique_ptr<RTCP_Channel_In> channel_owner (raw_channel);
+
+  if (this->inputs_.bind (ssrc, channel_owner.get ()) == -1)
+    {
+      if (this->inputs_.find (ssrc, channel) == 0)
+        return 0;
+
+      ORBSVCS_ERROR_RETURN ((LM_ERROR, "Unable to add RTCP input channel\n"), -1);
+    }
+
+  channel = channel_owner.release ();
+  return 0;
+}
 
 void
 TAO_AV_RTCP_Callback::schedule (int ms)
@@ -780,15 +798,9 @@ TAO_AV_RTCP_Callback::receive_frame (ACE_Message_Block *frame,
 
   RTP_Packet packet (frame->rd_ptr(), static_cast<int> (frame->length()));
 
-  if (this->inputs_.find (packet.ssrc(), c) < 0)
-    {
-      ACE_NEW_RETURN (c,
-                      RTCP_Channel_In (packet.ssrc(),
-                                       &peer_address),
-                      -1);
-
-      this->inputs_.bind (packet.ssrc(), c);
-    }
+  if (this->inputs_.find (packet.ssrc(), c) < 0 &&
+      this->add_input_channel (packet.ssrc (), &peer_address, c) < 0)
+    return -1;
 
   c->recv_rtp_packet (frame, &peer_address);
   return 0;
