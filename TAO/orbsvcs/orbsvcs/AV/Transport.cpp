@@ -10,8 +10,6 @@
 #include "orbsvcs/AV/FlowSpec_Entry.h"
 #include "orbsvcs/AV/AV_Core.h"
 
-#include <cstring>
-
 #if defined (ACE_HAS_RAPI) || defined (ACE_HAS_WINSOCK2_GQOS)
 #include "orbsvcs/AV/QoS_UDP.h"
 #endif /* defined (ACE_HAS_RAPI) || defined (ACE_HAS_WINSOCK2_GQOS) */
@@ -67,7 +65,7 @@ TAO_AV_Connector_Registry::open (TAO_Base_StreamEndPoint *endpoint,
       char const *flow_protocol = entry->flow_protocol_str ();
       char const *transport_protocol = entry->carrier_protocol_str ();
 
-      if (std::strcmp (flow_protocol,"") == 0)
+      if (flow_protocol[0] == '\0')
         flow_protocol = transport_protocol;
 
       if (address == nullptr)
@@ -232,7 +230,7 @@ TAO_AV_Acceptor_Registry::open (TAO_Base_StreamEndPoint *endpoint,
       char const *flow_protocol = entry->flow_protocol_str ();
       char const *transport_protocol = entry->carrier_protocol_str ();
 
-      if (std::strcmp (flow_protocol,"") == 0)
+      if (flow_protocol[0] == '\0')
         flow_protocol = transport_protocol;
 
       if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,
@@ -329,7 +327,7 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
   char const *flow_protocol = entry->flow_protocol_str ();
   char const *transport_protocol = entry->carrier_protocol_str ();
 
-  if (std::strcmp (flow_protocol,"") == 0)
+  if (flow_protocol[0] == '\0')
     flow_protocol = transport_protocol;
 
   TAO_AV_Flow_Protocol_Factory *flow_factory =
@@ -594,7 +592,7 @@ TAO_AV_Flow_Handler::change_qos (AVStreams::QoS)
 TAO_AV_Transport*
 TAO_AV_Flow_Handler::transport ()
 {
-  return this->transport_;
+  return this->transport_.get ();
 }
 
 void

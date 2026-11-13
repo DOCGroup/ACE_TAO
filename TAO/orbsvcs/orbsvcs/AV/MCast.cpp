@@ -15,20 +15,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 //------------------------------------------------------------
 
 TAO_AV_UDP_MCast_Flow_Handler::TAO_AV_UDP_MCast_Flow_Handler ()
-  : peer_addr_ (nullptr)
-  , dgram_mcast_ (nullptr)
 {
-  ACE_NEW (transport_,
-           TAO_AV_UDP_MCast_Transport (this));
-  ACE_NEW (dgram_mcast_,
-           ACE_SOCK_Dgram_Mcast);
+  this->transport_ = std::make_unique<TAO_AV_UDP_MCast_Transport> (this);
+  this->dgram_mcast_ = std::make_unique<ACE_SOCK_Dgram_Mcast> ();
 }
 
-TAO_AV_UDP_MCast_Flow_Handler::~TAO_AV_UDP_MCast_Flow_Handler ()
-{
-  delete this->transport_;
-  delete this->dgram_mcast_;
-}
+TAO_AV_UDP_MCast_Flow_Handler::~TAO_AV_UDP_MCast_Flow_Handler () = default;
 
 
 int
@@ -62,10 +54,7 @@ TAO_AV_UDP_MCast_Flow_Handler::set_peer_addr (ACE_INET_Addr *peer_addr)
 // TAO_AV_UDP_MCast_Transport
 //------------------------------------------------------------
 
-TAO_AV_UDP_MCast_Transport::TAO_AV_UDP_MCast_Transport ()
-  : handler_ (nullptr)
-{
-}
+TAO_AV_UDP_MCast_Transport::TAO_AV_UDP_MCast_Transport () = default;
 
 TAO_AV_UDP_MCast_Transport::TAO_AV_UDP_MCast_Transport (TAO_AV_UDP_MCast_Flow_Handler *handler)
   :handler_ (handler)

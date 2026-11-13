@@ -21,10 +21,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 //------------------------------------------------------------
 
 TAO_AV_UDP_Flow_Handler::TAO_AV_UDP_Flow_Handler ()
-  : av_core_ (nullptr)
+  : av_core_ {}
 {
-  ACE_NEW (this->transport_,
-           TAO_AV_UDP_Transport (this));
+  this->transport_ = std::make_unique<TAO_AV_UDP_Transport> (this);
 }
 
 TAO_AV_UDP_Flow_Handler::~TAO_AV_UDP_Flow_Handler ()
@@ -35,13 +34,12 @@ TAO_AV_UDP_Flow_Handler::~TAO_AV_UDP_Flow_Handler ()
 
   // close the socket.
   this->close ();
-  delete this->transport_;
 }
 
 TAO_AV_Transport *
 TAO_AV_UDP_Flow_Handler::transport ()
 {
-  return this->transport_;
+  return this->transport_.get ();
 }
 
 int
@@ -65,7 +63,7 @@ TAO_AV_UDP_Flow_Handler::set_remote_address (ACE_Addr *address)
 
   ACE_INET_Addr *inet_addr = dynamic_cast<ACE_INET_Addr*> (address);
   this->peer_addr_ = *inet_addr;
-  TAO_AV_UDP_Transport *transport = dynamic_cast<TAO_AV_UDP_Transport*> (this->transport_);
+  TAO_AV_UDP_Transport *transport = dynamic_cast<TAO_AV_UDP_Transport*> (this->transport_.get ());
 
   return transport->set_remote_address (*inet_addr);
 }

@@ -25,6 +25,7 @@
 #include "ace/Connector.h"
 #include "ace/Addr.h"
 #include "ace/SOCK_Dgram.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -147,7 +148,7 @@ public:
   virtual int change_qos (AVStreams::QoS);
 
 protected:
-  TAO_AV_Transport *transport_ {};
+  std::unique_ptr<TAO_AV_Transport> transport_;
   TAO_AV_Callback *callback_ {};
   TAO_AV_Protocol_Object *protocol_object_ {};
   long timer_id_ {-1};

@@ -681,19 +681,15 @@ TAO_AV_SCTP_SEQ_Object::destroy ()
 TAO_AV_SCTP_SEQ_Flow_Handler::TAO_AV_SCTP_SEQ_Flow_Handler (TAO_AV_Callback * /*callback*/)
   //  :TAO_AV_Flow_Handler (callback)
 {
-  ACE_NEW (this->transport_,
-           TAO_AV_SCTP_SEQ_Transport (this));
+  this->transport_ = std::make_unique<TAO_AV_SCTP_SEQ_Transport> (this);
 }
 
-TAO_AV_SCTP_SEQ_Flow_Handler::~TAO_AV_SCTP_SEQ_Flow_Handler ()
-{
-  delete this->transport_;
-}
+TAO_AV_SCTP_SEQ_Flow_Handler::~TAO_AV_SCTP_SEQ_Flow_Handler () = default;
 
 TAO_AV_Transport *
 TAO_AV_SCTP_SEQ_Flow_Handler::transport ()
 {
-  return this->transport_;
+  return this->transport_.get ();
 }
 
 int

@@ -608,19 +608,15 @@ TAO_AV_TCP_Acceptor::close ()
 TAO_AV_TCP_Flow_Handler::TAO_AV_TCP_Flow_Handler (TAO_AV_Callback * /*callback*/)
   //  :TAO_AV_Flow_Handler (callback)
 {
-  ACE_NEW (this->transport_,
-           TAO_AV_TCP_Transport (this));
+  this->transport_ = std::make_unique<TAO_AV_TCP_Transport> (this);
 }
 
-TAO_AV_TCP_Flow_Handler::~TAO_AV_TCP_Flow_Handler ()
-{
-  delete this->transport_;
-}
+TAO_AV_TCP_Flow_Handler::~TAO_AV_TCP_Flow_Handler () = default;
 
 TAO_AV_Transport *
 TAO_AV_TCP_Flow_Handler::transport ()
 {
-  return this->transport_;
+  return this->transport_.get ();
 }
 
 int

@@ -11,7 +11,6 @@
 
 #include "ace/OS_NS_strings.h"
 
-#include <cstring>
 #include <cstdio>
 #include <cstdlib>
 
@@ -170,7 +169,7 @@ TAO_FlowSpec_Entry::parse_address (char const *address,
 
   if (address == nullptr)
     return 0;
-  if (std::strcmp (address,"") == 0)
+  if (address[0] == '\0')
     return 0;
   TAO_Tokenizer protocol_tokenizer (address,'=');
 

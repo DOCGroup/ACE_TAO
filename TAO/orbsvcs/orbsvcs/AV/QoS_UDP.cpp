@@ -182,19 +182,15 @@ TAO_AV_UDP_QoS_Session_Helper::activate_qos_handler (ACE_QoS_Session *qos_sessio
 
 TAO_AV_UDP_QoS_Flow_Handler::TAO_AV_UDP_QoS_Flow_Handler ()
 {
-  ACE_NEW (this->transport_,
-           TAO_AV_UDP_QoS_Transport (this));
+  this->transport_ = std::make_unique<TAO_AV_UDP_QoS_Transport> (this);
 }
 
-TAO_AV_UDP_QoS_Flow_Handler::~TAO_AV_UDP_QoS_Flow_Handler ()
-{
-  delete this->transport_;
-}
+TAO_AV_UDP_QoS_Flow_Handler::~TAO_AV_UDP_QoS_Flow_Handler () = default;
 
 TAO_AV_Transport *
 TAO_AV_UDP_QoS_Flow_Handler::transport ()
 {
-  return this->transport_;
+  return this->transport_.get ();
 }
 
 int
@@ -501,7 +497,7 @@ TAO_AV_UDP_QoS_Flow_Handler::set_remote_address (ACE_Addr *address)
   this->peer_addr_ = *inet_addr;
 
   TAO_AV_UDP_QoS_Transport *transport =
-    dynamic_cast<TAO_AV_UDP_QoS_Transport*> (this->transport_);
+    dynamic_cast<TAO_AV_UDP_QoS_Transport*> (this->transport_.get ());
 
   if (this->entry_->role () == TAO_FlowSpec_Entry::TAO_AV_PRODUCER)
     {
