@@ -23,7 +23,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_TP_REACTOR_H
 #define ACE_TP_REACTOR_H
 
@@ -71,7 +70,6 @@ private:
   ACE_EH_Dispatch_Info (ACE_EH_Dispatch_Info &&) = delete;
   ACE_EH_Dispatch_Info &operator= (ACE_EH_Dispatch_Info &&) = delete;
 };
-
 
 /**
  * @class ACE_TP_Token_Guard
@@ -238,7 +236,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  // = Internal methods that do the actual work.
 
   /// Template method from the base class.
   void clear_dispatch_mask (ACE_HANDLE handle,

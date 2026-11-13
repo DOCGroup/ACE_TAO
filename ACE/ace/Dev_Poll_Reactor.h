@@ -10,7 +10,6 @@
  */
 // =========================================================================
 
-
 #ifndef ACE_DEV_POLL_REACTOR_H
 #define ACE_DEV_POLL_REACTOR_H
 
@@ -291,7 +290,6 @@ class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
     ACE_ALLOC_HOOK_DECLARE;
   };
 
-
   // ---------------------------------------------------------------------
 
   /**
@@ -331,7 +329,6 @@ class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
     /// Return a pointer to the Event_Tuple associated with @a handle.
     /// If there is none associated, returns 0 and sets errno.
     Event_Tuple *find (ACE_HANDLE handle);
-
 
     /// Bind the ACE_Event_Handler to the @c ACE_HANDLE with the
     /// appropriate ACE_Reactor_Mask settings.
@@ -461,7 +458,6 @@ public:
   /// Close down and release all resources.
   int close () override;
 
-  // = Event loop drivers.
   /**
    * Returns non-zero if there are I/O events "ready" for dispatching,
    * but does not actually dispatch the event handlers.  By default,
@@ -512,8 +508,6 @@ public:
   int handle_events (ACE_Time_Value &max_wait_time) override;
   int alertable_handle_events (ACE_Time_Value &max_wait_time) override;
 
-  // = Event handling control.
-
   /**
    * @return The status of Reactor.  If this function returns 0, the
    *         reactor is actively handling events.  If it returns
@@ -529,8 +523,6 @@ public:
    * deactivated/reactived as desired.
    */
   void deactivate (int do_stop) override;
-
-  // = Register and remove Handlers.
 
   /// Register @a event_handler with @a mask.  The I/O handle will
   /// always come from get_handle on the event_handler.
@@ -617,8 +609,6 @@ public:
   /// Calls <remove_handler> for every signal in @a sigset.
   int remove_handler (const ACE_Sig_Set &sigset) override;
 
-  // = Suspend and resume Handlers.
-
   /// Suspend event_handler temporarily.  Use
   /// ACE_Event_Handler::get_handle() to get the handle.
   int suspend_handler (ACE_Event_Handler *event_handler) override;
@@ -653,8 +643,6 @@ public:
   /// Return true if we any event associations were made by the reactor
   /// for the handles that it waits on, false otherwise.
   bool uses_event_associations () override;
-
-  // = Timer management.
 
   /**
    * Schedule an ACE_Event_Handler that will expire after an amount
@@ -708,8 +696,6 @@ public:
                             const void **arg = nullptr,
                             int dont_call_handle_close = 1) override;
 
-  // = High-level event handler scheduling operations
-
   /// Add @a masks_to_be_added to the @a event_handler's entry.
   /// @a event_handler must already have been registered.
   int schedule_wakeup (ACE_Event_Handler *event_handler,
@@ -727,8 +713,6 @@ public:
   /// Clear @a masks_to_be_cleared from the @a handle's entry.
   int cancel_wakeup (ACE_HANDLE handle,
                              ACE_Reactor_Mask masks_to_be_cleared) override;
-
-  // = Notification methods.
 
   /**
    * Notify @a event_handler of @a mask event.  The ACE_Time_Value
@@ -1011,7 +995,6 @@ protected:
   /// The pollfd array that `/dev/poll' will feed its results to.
   struct pollfd *dp_fds_;
 
-
   /// Pointer to the next pollfd array element that contains the next
   /// event to be dispatched.
   struct pollfd *start_pfds_;
@@ -1128,7 +1111,6 @@ protected:
     bool owner_;
   };
 };
-
 
 /**
  * @class ACE_Dev_Poll_Handler_Guard

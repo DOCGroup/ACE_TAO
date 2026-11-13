@@ -133,8 +133,6 @@ public:
   /// Close down the select_reactor and release all of its resources.
   ~ACE_Select_Reactor_T () override;
 
-  // = Event loop drivers.
-
   /**
    * Returns non-zero if there are I/O events "ready" for dispatching,
    * but does not actually dispatch the event handlers.  By default,
@@ -180,8 +178,6 @@ public:
   int alertable_handle_events (ACE_Time_Value &max_wait_time) override;
   //@}
 
-  // = Event handling control.
-
   /**
    * Return the status of Reactor.  If this function returns 0, the reactor is
    * actively handling events.  If it returns non-zero, <handling_events> and
@@ -196,7 +192,6 @@ public:
    */
   void deactivate (int do_stop) override;
 
-  // = Register and remove ACE_Event_Handlers.
   /**
    * Register a @a eh with a particular @a mask.  Note that the
    * <Select_Reactor> will call ACE_Event_Handler::get_handle() to
@@ -297,8 +292,6 @@ public:
   /// Calls <remove_handler> for every signal in @a sigset.
   int remove_handler (const ACE_Sig_Set &sigset) override;
 
-  // = Suspend and resume Handlers.
-
   /// Temporarily suspend the <Event_Handler> associated with @a eh.
   int suspend_handler (ACE_Event_Handler *eh) override;
 
@@ -333,7 +326,6 @@ public:
    */
   bool uses_event_associations () override;
 
-  // = Timer management.
   /**
    * Schedule an ACE_Event_Handler that will expire after an amount
    * of time.  The return value of this method, a timer_id value,
@@ -390,8 +382,6 @@ public:
                             const void **arg = nullptr,
                             int dont_call_handle_close = 1) override;
 
-  // = High-level Event_Handler scheduling operations
-
   /// ADD the dispatch MASK "bit" bound with the @a eh and the @a mask.
   int schedule_wakeup (ACE_Event_Handler *eh,
                                ACE_Reactor_Mask mask) override;
@@ -408,7 +398,6 @@ public:
   int cancel_wakeup (ACE_HANDLE handle,
                              ACE_Reactor_Mask mask) override;
 
-  // = Notification methods.
   /**
    * Called by a thread when it wants to unblock the Select_Reactor.
    * This wakeups the <ACE_Select_Reactor> if currently blocked in
@@ -458,7 +447,6 @@ public:
   /// list of waiters during a <notify> callback.
   int requeue_position () override;
 
-  // = Low-level wait_set mask manipulation methods.
   /// GET/SET/ADD/CLR the dispatch mask "bit" bound with the @a eh and
   /// @a mask.
   int mask_ops (ACE_Event_Handler *eh,
@@ -471,7 +459,6 @@ public:
                         ACE_Reactor_Mask mask,
                         int ops) override;
 
-  // = Low-level ready_set mask manipulation methods.
   /// GET/SET/ADD/CLR the ready "bit" bound with the @a eh and @a mask.
   int ready_ops (ACE_Event_Handler *eh,
                          ACE_Reactor_Mask mask,
@@ -485,15 +472,11 @@ public:
   /// Wake up all threads in waiting in the event loop
   void wakeup_all_threads () override;
 
-  // = Only the owner thread can perform a <handle_events>.
-
   /// Set the new owner of the thread and return the old owner.
   int owner (ACE_thread_t n_id, ACE_thread_t *o_id = nullptr) override;
 
   /// Return the current owner of the thread.
   int owner (ACE_thread_t *) override;
-
-  // = Miscellaneous Handler operations.
 
   /**
    * Return the Event_Handler associated with @a handle.  Return 0 if
@@ -541,7 +524,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  // = Internal methods that do the actual work.
 
   // All of these methods assume that the token
   // lock is held by the public methods that call down to them.
@@ -607,8 +589,6 @@ protected:
   /// Wait for events to occur.
   virtual int wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &,
                                         ACE_Time_Value *);
-
-  // = Dispatching methods.
 
   /**
    * Template Method that dispatches ACE_Event_Handlers for time

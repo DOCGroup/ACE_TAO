@@ -282,7 +282,6 @@ public:
   using key_type = ACE_HANDLE;
   using value_type = ACE_Event_Handler *;
 
-  // = The mapping from <HANDLES> to <Event_Handlers>.
 #ifdef ACE_SELECT_REACTOR_BASE_USES_HASH_MAP
   /**
    * The NT version implements this via a hash map
@@ -326,8 +325,6 @@ public:
   /// Close down the repository.
   int close ();
 
-  // = Search structure operations.
-
   /**
    * Return the @c ACE_Event_Handler* associated with @c ACE_HANDLE.
    */
@@ -346,8 +343,6 @@ public:
   /// Remove all the <ACE_HANDLE, ACE_Event_Handler> tuples.
   int unbind_all ();
 
-  // = Sanity checking.
-
   // Check the @a handle to make sure it's a valid @c ACE_HANDLE that
   // is within the range of legal handles (i.e., >= 0 && < max_size_).
   bool invalid_handle (ACE_HANDLE handle);
@@ -357,7 +352,6 @@ public:
   // @c max_handlep1_).
   bool handle_in_range (ACE_HANDLE handle);
 
-  // = Accessors.
   /// Returns the current table size.
   size_type size () const;
 
@@ -410,8 +404,6 @@ public:
 
   explicit ACE_Select_Reactor_Handler_Repository_Iterator (
     ACE_Select_Reactor_Handler_Repository const * s);
-
-  // = Iteration methods.
 
   /// Pass back the @a next_item that hasn't been seen in the Set.
   /// Returns @c false when all items have been seen, else @c true.
