@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_SSLIOP_PROFILE_H
 #define TAO_SSLIOP_PROFILE_H
 
@@ -71,7 +70,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
       /// connections are used.
       explicit TAO_SSLIOP_Profile (TAO_ORB_Core * orb_core, bool ssl_only = false);
 
-
       // = Please see Profile.h for the documentation of these methods.
       int decode (TAO_InputCDR& cdr) override;
       int encode_endpoints () override;
@@ -94,7 +92,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
        * is not 0, it is added to our parent's class endpoint list.
        */
       void add_endpoint (TAO_SSLIOP_Endpoint * endp);
-
 
       /**
        * Remove @a endp from this profile's list of endpoints.

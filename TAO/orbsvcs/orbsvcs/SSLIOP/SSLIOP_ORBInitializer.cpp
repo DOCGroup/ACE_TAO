@@ -17,7 +17,6 @@
 
 #include <memory>
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::SSLIOP::ORBInitializer::ORBInitializer (::Security::QOP qop)

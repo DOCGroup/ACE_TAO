@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_SSLIOP_ACCEPT_STRATEGY_H
 #define TAO_SSLIOP_ACCEPT_STRATEGY_H
 

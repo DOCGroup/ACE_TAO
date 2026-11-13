@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_SSLIOP_TRANSPORT_H
 #define TAO_SSLIOP_TRANSPORT_H
 

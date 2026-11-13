@@ -116,7 +116,6 @@ namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-
 #if defined (__ACE_INLINE__)
 #include "orbsvcs/SSLIOP/SSLIOP_OpenSSL_st_T.inl"
 #endif  /* __ACE_INLINE__ */

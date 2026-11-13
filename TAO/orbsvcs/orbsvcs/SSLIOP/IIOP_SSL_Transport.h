@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_IIOP_SSL_TRANSPORT_H
 #define TAO_IIOP_SSL_TRANSPORT_H
 

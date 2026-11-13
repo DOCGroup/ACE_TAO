@@ -187,7 +187,6 @@ TAO::SSLIOP::Protocol_Factory::pem_passwd_cb (char *buf, int size, int , void *t
                                     fname));
                   pem_passwd_ = "";
                 }
-              ACE_OS::fclose (file);
             }
         }
       else if (pem_passwd_.find (key_env) == 0)
@@ -277,7 +276,6 @@ TAO::SSLIOP::Protocol_Factory::make_acceptor ()
 
   return acceptor;
 }
-
 
 // Parses a X509 path. Beware: This function modifies
 // the buffer pointed to by arg!
@@ -846,7 +844,6 @@ TAO::SSLIOP::Protocol_Factory::register_orb_initializer ()
 
   return 0;
 }
-
 
 TAO_Connector *
 TAO::SSLIOP::Protocol_Factory::make_connector ()

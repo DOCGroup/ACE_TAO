@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_SSLIOP_ORB_INITIALIZER_H
 #define TAO_SSLIOP_ORB_INITIALIZER_H
 

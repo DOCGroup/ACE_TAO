@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_IIOP_SSL_ACCEPTOR_H
 #define TAO_IIOP_SSL_ACCEPTOR_H
 

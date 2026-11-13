@@ -201,7 +201,7 @@ TAO::SSLIOP::CredentialsAcquirer::make_X509 (::SSLIOP::File const &certificate)
   // No password is used or needed when reading ASN.1 encoded
   // certificates.
 
-      char const *filename = certificate.filename.in ();
+  char const *filename = certificate.filename.in ();
 
   if (filename == nullptr)
     return nullptr;
@@ -272,7 +272,7 @@ TAO::SSLIOP::CredentialsAcquirer::make_EVP_PKEY (::SSLIOP::File const &key)
   // No password is used or needed when reading ASN.1 encoded
   // private keys.
 
-      char const *filename = key.filename.in ();
+  char const *filename = key.filename.in ();
 
   if (filename == nullptr)
     return nullptr;

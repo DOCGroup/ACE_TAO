@@ -198,7 +198,6 @@ TAO::SSLIOP::Connector::connect (TAO::Profile_Transport_Resolver *resolver,
                                timeout);
 }
 
-
 TAO_Profile *
 TAO::SSLIOP::Connector::create_profile (TAO_InputCDR& cdr)
 {
@@ -237,7 +236,6 @@ TAO::SSLIOP::Connector::make_profile ()
   return profile;
 }
 
-
 TAO_Profile *
 TAO::SSLIOP::Connector::make_secure_profile ()
 {
@@ -258,7 +256,6 @@ TAO::SSLIOP::Connector::make_secure_profile ()
 
   return profile;
 }
-
 
 TAO_Profile *
 TAO::SSLIOP::Connector::corbaloc_scan (char const *endpoint, size_t &len)
@@ -312,7 +309,6 @@ TAO::SSLIOP::Connector::corbaloc_scan (char const *endpoint, size_t &len)
    return ptmp;
 }
 
-
 int
 TAO::SSLIOP::Connector::check_prefix (char const *endpoint)
 {
@@ -338,7 +334,6 @@ TAO::SSLIOP::Connector::check_prefix (char const *endpoint)
   // DO NOT throw an exception here.
   return -1;
 }
-
 
 TAO_Transport*
 TAO::SSLIOP::Connector::iiop_connect (
@@ -699,7 +694,6 @@ TAO::SSLIOP::Connector::ssliop_connect (
 
               return nullptr;
             }
-
 
           // At this point, the connection has be successfully connected.
           // #REFCOUNT# is one.

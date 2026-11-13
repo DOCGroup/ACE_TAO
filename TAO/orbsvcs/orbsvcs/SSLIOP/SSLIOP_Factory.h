@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_SSLIOP_FACTORY_H
 #define TAO_SSLIOP_FACTORY_H
 
@@ -29,7 +28,6 @@
 #include "tao/Protocol_Factory.h"
 
 #include "ace/Service_Config.h"
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

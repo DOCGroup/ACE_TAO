@@ -24,7 +24,6 @@
 #include "orbsvcs/SecurityLevel3C.h"
 #include "tao/LocalObject.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -87,7 +86,6 @@ namespace TAO
 
       void remove_relinquished_listener (char const * id) override;
       //@}
-
 
       //@{
       /// Return a pointer to the underlying X.509 certificate.

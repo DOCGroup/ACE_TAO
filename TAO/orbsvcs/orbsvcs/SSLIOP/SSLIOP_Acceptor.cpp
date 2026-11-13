@@ -54,7 +54,6 @@ TAO::SSLIOP::Acceptor::Acceptor (::Security::QOP qop,
     ACE_SET_BITS (this->ssl_component_.target_supports,
                   ::Security::NoProtection);
 
-
   // --- CSIv2 ---
 
   // Clear all bits in the CSIIOP::TLS_SEC_TRANS association option
@@ -198,7 +197,6 @@ TAO::SSLIOP::Acceptor::create_new_profile (TAO::ObjectKey const &object_key,
 
   return 0;
 }
-
 
 int
 TAO::SSLIOP::Acceptor::create_shared_profile (TAO::ObjectKey const &object_key,

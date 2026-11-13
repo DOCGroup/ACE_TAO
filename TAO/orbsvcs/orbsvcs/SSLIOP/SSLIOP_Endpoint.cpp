@@ -79,7 +79,6 @@ TAO_SSLIOP_Endpoint::TAO_SSLIOP_Endpoint (::SSLIOP::SSL const *ssl_component,
   this->trust_.trust_in_client = true;
 }
 
-
 TAO_SSLIOP_Endpoint &
 TAO_SSLIOP_Endpoint::operator= (TAO_SSLIOP_Endpoint const &other)
 {
@@ -120,7 +119,6 @@ TAO_SSLIOP_Endpoint::addr_to_string (char *buffer, size_t length)
 
   return 0;
 }
-
 
 TAO_Endpoint *
 TAO_SSLIOP_Endpoint::next ()
@@ -210,7 +208,6 @@ TAO_SSLIOP_Endpoint::hash ()
     if (this->hash_val_ != 0)
       return this->hash_val_;
 
-
     // Note that we are not using the underlying IIOP endpoint's hash
     // value in order to avoid the influence of the IIOP port number,
     // since it is ignored anyway. When it features a
@@ -226,7 +223,6 @@ TAO_SSLIOP_Endpoint::hash ()
 
   return this->hash_val_;
 }
-
 
 ACE_INET_Addr const &
 TAO_SSLIOP_Endpoint::object_addr () const
@@ -301,7 +297,6 @@ TAO_SSLIOP_Synthetic_Endpoint::TAO_SSLIOP_Synthetic_Endpoint (TAO_IIOP_Endpoint 
 {
    this->ssl_component_.port = iiop_endp->port ();
 }
-
 
 CORBA::Boolean
 TAO_SSLIOP_Synthetic_Endpoint::is_equivalent (TAO_Endpoint const *other_endpoint)

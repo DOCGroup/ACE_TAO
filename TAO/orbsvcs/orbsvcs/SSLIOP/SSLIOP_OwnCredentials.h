@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_SSLIOP_OWN_CREDENTIALS_H
 #define TAO_SSLIOP_OWN_CREDENTIALS_H
 
@@ -97,7 +96,6 @@ namespace TAO
     };
   } // End SSLIOP namespace
 }  // End TAO namespace
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

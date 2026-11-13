@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_SSLIOP_CREDENTIALS_ACQUIRER_H
 #define TAO_SSLIOP_CREDENTIALS_ACQUIRER_H
 

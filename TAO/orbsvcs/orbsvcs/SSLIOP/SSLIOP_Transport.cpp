@@ -185,7 +185,6 @@ TAO::SSLIOP::Transport::tear_listen_point_list (TAO_InputCDR &cdr)
   return this->connection_handler_->process_listen_point_list (listen_list);
 }
 
-
 void
 TAO::SSLIOP::Transport::set_bidir_context_info (
   TAO_Operation_Details &opdetails)
@@ -224,7 +223,6 @@ TAO::SSLIOP::Transport::set_bidir_context_info (
   opdetails.request_service_context ().set_context (IOP::BI_DIR_IIOP, cdr);
   return;
 }
-
 
 int
 TAO::SSLIOP::Transport::get_listen_point (

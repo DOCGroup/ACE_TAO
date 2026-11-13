@@ -5,7 +5,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::SSLIOP::Current_ptr

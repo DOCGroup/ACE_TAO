@@ -46,7 +46,6 @@ TAO::IIOP_SSL_Connector::open (TAO_ORB_Core *orb_core)
                   CONNECT_CONCURRENCY_STRATEGY (orb_core),
                   -1);
 
-
   return this->base_connector_.open (this->orb_core ()->reactor (),
                                      connect_creation_strategy,
                                      &this->connect_strategy_,
@@ -131,7 +130,6 @@ TAO::IIOP_SSL_Connector::make_connection (
       synch_options.timeout (ACE_Time_Value::zero);
       max_wait_time = &tmp_zero;
     }
-
 
   IIOP_SSL_Connection_Handler *svc_handler {};
 

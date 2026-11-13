@@ -377,7 +377,6 @@ TAO::SSLIOP::Connection_Handler::process_listen_point_list (
       ACE_INET_Addr addr (listen_point.port,
                           listen_point.host.in ());
 
-
       if (TAO_debug_level > 0)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,

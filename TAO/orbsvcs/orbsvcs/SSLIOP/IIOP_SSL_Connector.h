@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_IIOP_SSL_CONNECTOR_H
 #define TAO_IIOP_SSL_CONNECTOR_H
 

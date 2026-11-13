@@ -340,7 +340,6 @@ TAO_SSLIOP_Profile::parse_string (char const * ior)
    }
 }
 
-
 void
 TAO_SSLIOP_Profile::remove_endpoint (TAO_SSLIOP_Endpoint *endp)
 {
