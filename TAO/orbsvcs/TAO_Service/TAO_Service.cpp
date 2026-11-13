@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file   TAO_Service.cpp
  *
@@ -9,9 +8,6 @@
  *
  *  @author  Priyanka Gontla <pgontla@ece.uci.edu>
  */
-//=============================================================================
-
-
 #include "tao/ORB.h"
 #include "ace/Service_Config.h"
 #include "orbsvcs/Log_Macros.h"
