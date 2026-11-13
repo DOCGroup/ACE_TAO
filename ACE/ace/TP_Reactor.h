@@ -237,6 +237,9 @@ public:
 
 protected:
 
+  /// @name Internal methods
+  /// @{
+
   /// Template method from the base class.
   void clear_dispatch_mask (ACE_HANDLE handle,
                                     ACE_Reactor_Mask mask) override;
@@ -280,6 +283,9 @@ protected:
                               ACE_Handle_Set &,
                               ACE_Event_Handler *eh,
                               ACE_EH_PTMF callback) override;
+
+  /// @}
+
 private:
   /// Get the handle of the notify pipe from the ready set if there is
   /// an event in the notify pipe.
