@@ -21,41 +21,30 @@ public:
   JAWS_Assoc_Array &operator= (JAWS_Assoc_Array const &) = delete;
   JAWS_Assoc_Array &operator= (JAWS_Assoc_Array &&) = delete;
 
+  /// Return the index associated with key k, or -1 if not found.
   int index (const KEY &k);
-  // Returns the index into the array associated with key k
-  // Returns -1 if not found.
 
+  /// Return the data associated with key k, or nullptr if not found.
   DATA * find (const KEY &k);
-  // Returns the data associated with key k.  nullptr if not found.
 
+  /// Return the data at index i, or nullptr if the index is invalid.
   DATA * find_by_index (int i);
-  // Returns the data associated with array index i.  Returns nullptr if the
-  // index is invalid.
 
+  /// Insert copies of the key and data and return the inserted data, or
+  /// nullptr on error. If the key already exists, return its existing data.
   DATA * insert (const KEY &k, const DATA &d);
-  // Inserts a *copy* of the key and data into the associated array.
-  // Both KEY and DATA must have well defined semantics for copy
-  // construction.  This method returns a pointer to the inserted item
-  // copy, or nullptr if an error occurred.  NOTE: if an identical key
-  // already exists in the tree, no new item is created, and the
-  // returned pointer addresses the existing item associated with the
-  // existing key.
 
+  /// Remove and destroy the item for key k. Return 1 if removed, 0 if not
+  /// found, or -1 on error.
   int remove (const KEY &k);
-  // Removes the item associated with the given key from the
-  // tree and destroys it.  Returns 1 if it found the item
-  // and successfully destroyed it, 0 if it did not find the
-  // item, or -1 if an error occurred.
 
+  /// Destroy all keys and associated data.
   void clear ();
-  // Destroys all keys and associated data.
 
 protected:
+  /// Return the matching index, an available insertion index, or maxsize_ if
+  /// the table is full.
   int find_i (const KEY &k);
-  // If k points to an associated data item, then this function
-  // returns the index into the arrays that hold it.  Otherwise, it
-  // returns an index suitable to insert the item.  If the item is not
-  // found and the table is full, maxsize_ is returned.
 
 private:
   std::vector<std::unique_ptr<KEY>> k_array_;
@@ -86,11 +75,11 @@ public:
 private:
   const JAWS_Assoc_Array<KEY, DATA> &aa_;
 
+  /// Index of the current item.
   int i_;
-  // The current item pointed by iterator.
 
+  /// Index of the next item.
   int j_;
-  // The next item to be pointed to by iterator.
 };
 
 #include "JAWS/Assoc_Array.cpp"

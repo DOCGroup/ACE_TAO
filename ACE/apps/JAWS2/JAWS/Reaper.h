@@ -13,8 +13,6 @@
 
 #include "JAWS/Export.h"
 
-// A reaper class to reap the threads.
-
 class JAWS_Concurrency_Base;
 
 /**

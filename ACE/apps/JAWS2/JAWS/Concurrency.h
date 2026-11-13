@@ -19,15 +19,14 @@ class JAWS_Data_Block;
 class JAWS_Dispatch_Policy;
 class JAWS_Reaper;
 
+/**
+ * Base class for different concurrency models.
+ *
+ * Provides a default put() implementation that calls putq(). Derived classes
+ * can override it to process work synchronously, for example by calling
+ * put_next().
+ */
 class JAWS_Export JAWS_Concurrency_Base : public ACE_Task<ACE_SYNCH>
-  // = TITLE
-  //     Base class for different concurrency models
-  //
-  // = DESCRIPTION
-  //     Provides a default implementaion of the virtual put() method
-  //     which calls putq(), but can be overloaded to do something
-  //     synchronously, such as call put_next().
-
 {
 public:
   JAWS_Concurrency_Base ();
@@ -40,15 +39,15 @@ public:
   int put (ACE_Message_Block *mb, ACE_Time_Value *tv = nullptr) override;
   int svc () override;
 
+  /// Run the service loop; thread-pool workers loop indefinitely, while
+  /// thread-per-request workers process one request.
   virtual int svc_loop (JAWS_Data_Block *db);
-  // in thread pool, this is an infinite loop
-  // in thread per request, it is a single iteration
 
+  /// Follow the pipeline tasks to process the data block.
   virtual int svc_hook (JAWS_Data_Block *db);
-  // does the work of following the pipeline tasks
 
+  /// Handle the callback made when an accept completes.
   virtual int activate_hook ();
-  // callback for IO_Handler when accept completes
 
   virtual ACE_Message_Block *singleton_mb ();
 
@@ -59,14 +58,11 @@ protected:
   ACE_SYNCH_MUTEX lock_;
 };
 
+/**
+ * Routes completed I/O to the appropriate concurrency mechanism.
+ * JAWS_IO_Handler uses the dispatcher to find a thread for completed I/O.
+ */
 class JAWS_Export JAWS_Dispatcher
-  // = TITLE
-  //     The class that is responsible to delivering events to the
-  //     appropriate concurrency mechanism.
-  //
-  // = DESCRIPTION
-  //     JAWS_IO_Handler calls into the dispatcher so that the completed
-  //     IO can find a thread to take care of it.
 {
 public:
   JAWS_Dispatcher ();
@@ -79,17 +75,12 @@ private:
   JAWS_Dispatch_Policy *policy_;
 };
 
+/// Runs requests using a pool of worker threads.
 class JAWS_Export JAWS_Thread_Pool_Task : public JAWS_Concurrency_Base
-  // = TITLE
-  //     Used to implement Thread Pool Concurrency Strategy
-  //
-  // = DESCRIPTION
-  //     This task is created to hold a pool of threads that receive
-  //     requests through the message queue.
 {
 public:
+  /// Start the thread-pool task.
   virtual int make (long flags, int nthreads, int maxthreads);
-  // Initiate the thread_pool task
 
 private:
   long flags_;
@@ -97,26 +88,18 @@ private:
   int maxthreads_;
 };
 
+/// Runs each request on a separate worker thread.
 class JAWS_Export JAWS_Thread_Per_Task : public JAWS_Concurrency_Base
-  // = TITLE
-  //     Used to implement Thread Per Request Concurrency Strategy
-  //
-  // = DESCRIPTION
-  //     As each new message arrives from the queue, a new thread is
-  //     spawned to handle it.  This is done by overloading put to call
-  //     activate.
 {
 public:
+  /// Start the thread-per-request task.
   virtual int make (long flags, int maxthreads);
-  // Initiate the thread_per task
 
   int put (ACE_Message_Block *mb, ACE_Time_Value *tv = nullptr) override;
 
   int svc_loop (JAWS_Data_Block *db) override;
-  // a single iteration
 
   int activate_hook () override;
-  // callback for IO_Handler when accept completes
 
 private:
   long flags_;

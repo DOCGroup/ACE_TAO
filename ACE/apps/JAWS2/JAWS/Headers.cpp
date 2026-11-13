@@ -7,28 +7,24 @@
 
 JAWS_Header_Data::JAWS_Header_Data (const char *name, const char *value,
                                     int type)
-  : header_name_ (name ? ACE_OS::strdup (name) : 0),
-    header_value_ (value ? ACE_OS::strdup (value) : 0),
+  : header_name_ (name ? ACE_OS::strdup (name) : nullptr),
+    header_value_ (value ? ACE_OS::strdup (value) : nullptr),
     header_type_ (type)
 {
 }
 
 JAWS_Header_Data::JAWS_Header_Data (const char *name, int type,
                                     const char *value)
-  : header_name_ (name ? ACE_OS::strdup (name) : 0),
-    header_value_ (value ? ACE_OS::strdup (value) : 0),
+  : header_name_ (name ? ACE_OS::strdup (name) : nullptr),
+    header_value_ (value ? ACE_OS::strdup (value) : nullptr),
     header_type_ (type)
 {
 }
 
 JAWS_Header_Data::~JAWS_Header_Data ()
 {
-  if ( this->header_name_ )
-      ACE_OS::free ((void *)this->header_name_);
-  if ( this->header_value_ )
-  ACE_OS::free ((void *)this->header_value_);
-  this->header_name_ = 0;
-  this->header_value_ = 0;
+  ACE_OS::free (this->header_name_);
+  ACE_OS::free (this->header_value_);
 }
 
 const char *
@@ -52,17 +48,15 @@ JAWS_Header_Data::header_type () const
 void
 JAWS_Header_Data::header_name (const char *name)
 {
-  if (this->header_name_)
-    ACE_OS::free ((void *)this->header_name_);
-  this->header_name_ = name ? ACE_OS::strdup (name) : 0;
+  ACE_OS::free (this->header_name_);
+  this->header_name_ = name ? ACE_OS::strdup (name) : nullptr;
 }
 
 void
 JAWS_Header_Data::header_value (const char *value)
 {
-  if (this->header_value_)
-    ACE_OS::free ((void *)this->header_value_);
-  this->header_value_ = value ? ACE_OS::strdup (value) : 0;
+  ACE_OS::free (this->header_value_);
+  this->header_value_ = value ? ACE_OS::strdup (value) : nullptr;
 }
 
 void
@@ -70,7 +64,6 @@ JAWS_Header_Data::header_type (int type)
 {
   this->header_type_ = type;
 }
-
 
 // Header Table
 
@@ -115,13 +108,13 @@ JAWS_Headers::find_next (const char *const &header_name)
   while (! i.done ())
     {
       data = i.next ();
-      if (data != 0)
+      if (data != nullptr)
         {
           if (ACE_OS::strcasecmp (data->header_name (), header_name) != 0)
-            data = 0;
+            data = nullptr;
         }
       i.advance ();
-      if (data != 0)
+      if (data != nullptr)
         break;
     }
 
@@ -142,7 +135,7 @@ JAWS_Headers::remove_all (const char *const &header_name)
       while (! i.done ())
         {
           data = i.next ();
-          if (data != 0
+          if (data != nullptr
               && ACE_OS::strcasecmp (data->header_name (), header_name) == 0)
             {
               i.remove ();

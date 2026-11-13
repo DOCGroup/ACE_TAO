@@ -11,9 +11,8 @@
 #include "ace/Synch_Traits.h"
 #include "ace/Thread_Mutex.h"
 
+/// Extends ACE_FILE_IO with ACE_Mem_Map support.
 class JAWS_Export JAWS_FILE : public ACE_FILE_IO
-//
-// Like ACE_FILE_IO, but support for ACE_Mem_Map;
 {
 public:
   JAWS_FILE ();

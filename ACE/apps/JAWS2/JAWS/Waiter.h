@@ -25,16 +25,15 @@ public:
   JAWS_Waiter ();
   ~JAWS_Waiter ();
 
+  /// Return an iterator over the waiter table.
   JAWS_Waiter_Base_Iterator &iter ();
-  // Returns an iterator to the headers container.
 
+  /// Return the index associated with the calling thread.
   int index ();
-  // Returns the index into the table associated with calling thread.
 
+  /// Wait for an asynchronous event and return its handler. If i is provided,
+  /// return the entry at that table index.
   JAWS_IO_Handler * wait_for_completion (int i = -1);
-  // The entry point for this class, handles outstanding asynchronous
-  // events.  Can optionally accept a parameter that points to which
-  // table entry to return.
 
 private:
   JAWS_Waiter_Base_Iterator iter_;

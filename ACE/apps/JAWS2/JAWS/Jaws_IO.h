@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef JAWS_IO_H
 #define JAWS_IO_H
 
@@ -47,13 +46,10 @@ class JAWS_Export JAWS_IO
 public:
   JAWS_IO ();
   virtual ~JAWS_IO ();
-
-  //  void acceptor (JAWS_IO_Acceptor *acceptor);
-  //  void handler (JAWS_IO_Handler *handler);
-  //  void handle (ACE_HANDLE h);
-  //  ACE_HANDLE handle ();
-
-  // James, please add documentation here.
+  JAWS_IO (JAWS_IO const &) = delete;
+  JAWS_IO (JAWS_IO &&) = delete;
+  JAWS_IO &operator= (JAWS_IO const &) = delete;
+  JAWS_IO &operator= (JAWS_IO &&) = delete;
 
   /// accept a passive connection
   virtual void accept (JAWS_IO_Handler *ioh,
@@ -100,8 +96,9 @@ public:
 
 protected:
   ACE_HANDLE handle_;
+  /// Non-owning pointer to the active I/O handler.
   JAWS_IO_Handler *handler_;
-  ACE_INET_Addr *inet_addr_;
+  /// Non-owning pointer to the configured acceptor.
   JAWS_IO_Acceptor *acceptor_;
 };
 
@@ -115,7 +112,11 @@ class JAWS_Export JAWS_Synch_IO : public JAWS_IO
 public:
   JAWS_Synch_IO ();
 
-  virtual ~JAWS_Synch_IO ();
+  ~JAWS_Synch_IO () override;
+  JAWS_Synch_IO (JAWS_Synch_IO const &) = delete;
+  JAWS_Synch_IO (JAWS_Synch_IO &&) = delete;
+  JAWS_Synch_IO &operator= (JAWS_Synch_IO const &) = delete;
+  JAWS_Synch_IO &operator= (JAWS_Synch_IO &&) = delete;
 
   void accept (JAWS_IO_Handler *ioh,
                ACE_Message_Block *mb = nullptr,
@@ -161,7 +162,7 @@ protected:
 
 using JAWS_Synch_IO_Singleton = ACE_Singleton<JAWS_Synch_IO, ACE_SYNCH_MUTEX>;
 
-// This only works on asynch I/O-capable systems.
+/// Available on asynchronous I/O-capable systems.
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
 
 /**
@@ -174,7 +175,11 @@ class JAWS_Export JAWS_Asynch_IO : public JAWS_IO
 public:
   JAWS_Asynch_IO ();
 
-  virtual ~JAWS_Asynch_IO ();
+  ~JAWS_Asynch_IO () override;
+  JAWS_Asynch_IO (JAWS_Asynch_IO const &) = delete;
+  JAWS_Asynch_IO (JAWS_Asynch_IO &&) = delete;
+  JAWS_Asynch_IO &operator= (JAWS_Asynch_IO const &) = delete;
+  JAWS_Asynch_IO &operator= (JAWS_Asynch_IO &&) = delete;
 
   void accept (JAWS_IO_Handler *ioh,
                ACE_Message_Block *mb = nullptr,

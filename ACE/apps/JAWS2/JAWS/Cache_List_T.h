@@ -12,21 +12,16 @@ class JAWS_Cache_Manager;
 template <class EXT_ID, class FACTORY, class HASH_FUNC, class EQ_FUNC>
 class JAWS_Cache_List_Item;
 
+/// Doubly linked list used to keep cache operations O(1).
 template <class EXT_ID, class FACT, class H_FN, class E_FN>
 class JAWS_Cache_List
-// Roll my own heap here.  Eventually, a heap should be its own
-// standalone data structure.
-//
-// This version is not a heap, but a doubly linked list.  We are
-// trying to simplify all the heap operations to be O(1).
 {
 public:
   using Cache_Manager = JAWS_Cache_Manager<EXT_ID, FACT, H_FN, E_FN>;
   using Cache_List_Item = JAWS_Cache_List_Item<EXT_ID, FACT, H_FN, E_FN>;
 
+  /// Construct a list that manages at most maxsize objects.
   explicit JAWS_Cache_List (ACE_Allocator *alloc = nullptr, size_t maxsize = 8192);
-  // maxsize is the total number of objects the in memory cache is
-  // willing to manage
 
   ~JAWS_Cache_List ();
   JAWS_Cache_List (JAWS_Cache_List const &) = delete;
@@ -40,31 +35,30 @@ public:
   size_t size () const;
   size_t maxsize () const;
 
+  /// Grow or shrink the list. Return 0 on success and -1 on error.
   int maxsize (Cache_Manager *cm, size_t new_maxsize);
-  // attempt to grow (or shrink) the heap.  Return 0 on success, -1 on
-  // error.
 
+  /// Insert an object into the list.
   int insert (const EXT_ID &ext_id, JAWS_Cache_Object *const &int_id);
-  // attempt to insert int_id into heap.
 
+  /// Remove the highest-priority object from the list.
   int remove (EXT_ID &ext_id, JAWS_Cache_Object *&int_id);
-  // attempt to remove the top element of heap.
 
+  /// Remove an item identified by its address.
   int remove (void *item);
-  // treat item as a Cache_List_Item, and remove it from the heap
 
+  /// Adjust an item's position after its priority changes.
   int adjust (void *item);
-  // treat item as a Cache_List_Item, and alter its heap position
 
 protected:
+  /// Insert an item into the list.
   void insert_i (Cache_List_Item *item);
-  // insert item into heap.
 
+  /// Remove an item without deleting it.
   void remove_i (Cache_List_Item *item);
-  // remove the element residing at pos, but do not delete it.
 
+  /// Remove the head item without deleting it.
   void remove_i ();
-  // remove the element residing at the top of heap, but do not delete it.
 
 private:
   ACE_Allocator *allocator_;

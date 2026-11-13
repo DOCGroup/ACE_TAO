@@ -18,41 +18,12 @@
 
 JAWS_IO::JAWS_IO ()
   : handle_ (ACE_INVALID_HANDLE),
-    handler_ (0),
-    inet_addr_ (0),
-    acceptor_ (0)
+    handler_ (nullptr),
+    acceptor_ (nullptr)
 {
 }
 
-JAWS_IO::~JAWS_IO ()
-{
-}
-
-#if 0
-ACE_HANDLE
-JAWS_IO::handle ()
-{
-  return this->handle_;
-}
-
-void
-JAWS_IO::handle (ACE_HANDLE handle)
-{
-  this->handle_ = handle;
-}
-
-void
-JAWS_IO::handler (JAWS_IO_Handler *handler)
-{
-  this->handler_ = handler;
-}
-
-void
-JAWS_IO::acceptor (JAWS_IO_Acceptor *acceptor)
-{
-  this->acceptor_ = acceptor;
-}
-#endif /* 0 */
+JAWS_IO::~JAWS_IO () = default;
 
 JAWS_Synch_IO::JAWS_Synch_IO ()
 {

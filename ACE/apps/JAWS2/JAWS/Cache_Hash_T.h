@@ -14,10 +14,9 @@ class JAWS_Cache_Hash
 public:
   using CACHE_BUCKET_MANAGER = JAWS_Hash_Bucket_Manager<EXT_ID, JAWS_Cache_Object *, EQ_FUNC>;
 
+  /// Construct the hash table with at least size buckets; the default 521 is
+  /// the smallest prime greater than 512.
   explicit JAWS_Cache_Hash (ACE_Allocator *alloc = nullptr, size_t size = 521);
-  // 521 == smallest number > 512 that is prime.  Why is a prime
-  // number important?  I am trying to maximize scattering when using
-  // mod on the hashed value.  This might be bogus though.
 
   virtual ~JAWS_Cache_Hash ();
   JAWS_Cache_Hash (JAWS_Cache_Hash const &) = delete;
@@ -47,6 +46,7 @@ private:
   size_t size_;
 
   ACE_SYNCH_MUTEX lock_;
+  /// Allocator-owned array of bucket-manager pointers.
   CACHE_BUCKET_MANAGER **hashtable_;
 };
 

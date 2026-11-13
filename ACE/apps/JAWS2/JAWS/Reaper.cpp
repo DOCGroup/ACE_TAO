@@ -2,16 +2,13 @@
 #include "JAWS/Concurrency.h"
 #include "JAWS/IO_Acceptor.h"
 
-
 JAWS_Reaper::JAWS_Reaper (JAWS_Concurrency_Base *concurrency)
   : concurrency_ (concurrency),
     waiting_ (0)
 {
 }
 
-JAWS_Reaper::~JAWS_Reaper ()
-{
-}
+JAWS_Reaper::~JAWS_Reaper () = default;
 
 int
 JAWS_Reaper::open (void *)

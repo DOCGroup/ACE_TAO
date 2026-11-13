@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-
 #ifndef JAWS_CACHE_OBJECT_H
 #define JAWS_CACHE_OBJECT_H
 
@@ -14,9 +13,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Allocator;
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-
-// Cache bucket -- use Hash_Bucket to hold cacheable objects.
-
+/// Cache bucket object stored in JAWS_Hash_Bucket containers.
 class JAWS_Cache_Object
 {
 public:
