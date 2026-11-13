@@ -52,7 +52,8 @@ public:
 
   void fxapplication (FXApp *a);
 
-  // = Timer operations.
+  /// @name Timer operations
+  //@{
   long schedule_timer (ACE_Event_Handler *event_handler,
                        void const *arg,
                        ACE_Time_Value const &delay,
@@ -64,14 +65,17 @@ public:
   int cancel_timer (long timer_id,
                     void const **arg = nullptr,
                     int dont_call_handle_close = 1) override;
+  //@}
 
-  // = Integrate with the Fox callback function mechanism.
+  /// @name FOX callback functions
+  //@{
   long onFileEvents (FXObject *, FXSelector, void *);
   long onTimerEvents (FXObject *, FXSelector, void *);
-
+  //@}
 
 protected:
-  // = Register timers/handles with Fox.
+  /// @name Register timers and handles with FOX
+  //@{
   /// Register a single @a handler.
   int register_handler_i (ACE_HANDLE handle,
                           ACE_Event_Handler *handler,
@@ -97,12 +101,14 @@ protected:
   int FoxWaitForMultipleEvents (int,
                                 ACE_Select_Reactor_Handle_Set &,
                                 ACE_Time_Value *);
+  //@}
 
 private:
   /// This method ensures there's an Fox timeout for the first timeout
   /// in the Reactor's Timer_Queue.
   void reset_timeout ();
 
+  /// Borrowed from the application owner.
   FXApp *fxapp {};
 };
 
