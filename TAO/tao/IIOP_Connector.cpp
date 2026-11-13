@@ -258,7 +258,7 @@ TAO_IIOP_Connector::make_parallel_connection (
   ACE_Time_Value * timeout)
 {
   TAO_Endpoint * const root_ep = desc.endpoint();
-  unsigned max_count = 1;
+  size_t max_count {1};
   long ns_stagger =
     this->orb_core ()->orb_params ()->parallel_connect_delay ();
   time_t const sec_stagger = ns_stagger/1000;
@@ -272,7 +272,7 @@ TAO_IIOP_Connector::make_parallel_connection (
     TAOLIB_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO (%P|%t) - IIOP_Connector::")
                 ACE_TEXT ("make_parallel_connection, ")
-                ACE_TEXT ("to %d endpoints\n"), max_count));
+                ACE_TEXT ("to %zu endpoints\n"), max_count));
   std::vector<TAO_IIOP_Connection_Handler *> shlist;
   std::vector<TAO_IIOP_Endpoint *> eplist;
   try
