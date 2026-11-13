@@ -21,6 +21,19 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Service_Object)
 ACE_ALLOC_HOOK_DEFINE(ACE_Service_Type)
 
 void
+ACE_Service_Type::Name_Deleter::operator() (ACE_TCHAR *name) const
+{
+  if (name != nullptr)
+    {
+#if defined (ACE_HAS_ALLOC_HOOKS)
+      ACE_Allocator::instance ()->free (name);
+#else
+      delete [] name;
+#endif /* ACE_HAS_ALLOC_HOOKS */
+    }
+}
+
+void
 ACE_Service_Type::dump () const
 {
 #if defined (ACE_HAS_DUMP)
@@ -35,7 +48,7 @@ ACE_Service_Type::dump () const
   ACE_OS::fprintf(stderr,
                   "// [ST] dump, this=%p, name=%s, type=%p, so=%p, active=%d\n",
                   static_cast<void const *> (this),
-                  ACE_TEXT_ALWAYS_CHAR (this->name_),
+                  ACE_TEXT_ALWAYS_CHAR (this->name_.get ()),
                   static_cast<void const *> (this->type_),
                   (this->type_ != nullptr) ? this->type_->object () : nullptr,
                   this->active_);
@@ -46,11 +59,9 @@ ACE_Service_Type::ACE_Service_Type (const ACE_TCHAR *n,
                                     ACE_Service_Type_Impl *t,
                                     const ACE_DLL &dll,
                                     bool active)
-  : name_ (nullptr),
-    type_ (t),
+  : type_ (t),
     dll_ (dll),
-    active_ (active),
-    fini_already_called_ (false)
+    active_ (active)
 {
   ACE_TRACE ("ACE_Service_Type::ACE_Service_Type");
   this->name (n);
@@ -60,10 +71,8 @@ ACE_Service_Type::ACE_Service_Type (const ACE_TCHAR *n,
                                     ACE_Service_Type_Impl *t,
                                     ACE_SHLIB_HANDLE handle,
                                     bool active)
-  : name_ (nullptr),
-    type_ (t),
-    active_ (active),
-    fini_already_called_ (false)
+  : type_ (t),
+    active_ (active)
 {
   ACE_TRACE ("ACE_Service_Type::ACE_Service_Type");
   this->dll_.set_handle (handle);
@@ -74,12 +83,6 @@ ACE_Service_Type::~ACE_Service_Type ()
 {
   ACE_TRACE ("ACE_Service_Type::~ACE_Service_Type");
   this->fini ();
-
-#if defined (ACE_HAS_ALLOC_HOOKS)
-  ACE_Allocator::instance()->free(const_cast <ACE_TCHAR *> (this->name_));
-#else
-  delete [] const_cast <ACE_TCHAR *> (this->name_);
-#endif /* ACE_HAS_ALLOC_HOOKS */
 }
 
 int
@@ -88,7 +91,7 @@ ACE_Service_Type::fini ()
   if (ACE::debug ())
     ACELIB_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("ACE (%P|%t) ST::fini - destroying name=%s, dll=%s\n"),
-                this->name_,
+                this->name_.get (),
                 this->dll_.dll_name_));
 
   if (this->fini_already_called_)
@@ -123,7 +126,7 @@ int
 ACE_Service_Type::suspend () const
 {
   ACE_TRACE ("ACE_Service_Type::suspend");
-  (const_cast<ACE_Service_Type *> (this))->active_ = false;
+  this->active_ = false;
   return this->type_->suspend ();
 }
 
@@ -131,7 +134,7 @@ int
 ACE_Service_Type::resume () const
 {
   ACE_TRACE ("ACE_Service_Type::resume");
-  (const_cast<ACE_Service_Type *> (this))->active_ = true;
+  this->active_ = true;
   return this->type_->resume ();
 }
 
@@ -142,9 +145,7 @@ ACE_Service_Object::ACE_Service_Object (ACE_Reactor *r)
 }
 
 ACE_Service_Object::~ACE_Service_Object ()
-{
-  ACE_TRACE ("ACE_Service_Object::~ACE_Service_Object");
-}
+  = default;
 
 int
 ACE_Service_Object::suspend ()
@@ -165,13 +166,7 @@ ACE_Service_Type::name (const ACE_TCHAR *n)
 {
   ACE_TRACE ("ACE_Service_Type::name");
 
-#if defined (ACE_HAS_ALLOC_HOOKS)
-  ACE_Allocator::instance()->free(const_cast <ACE_TCHAR *> (this->name_));
-#else
-  delete [] const_cast <ACE_TCHAR *> (this->name_);
-#endif /* ACE_HAS_ALLOC_HOOKS */
-
-  this->name_ = ACE::strnew (n);
+  this->name_.reset (ACE::strnew (n));
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
