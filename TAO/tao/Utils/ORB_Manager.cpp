@@ -129,7 +129,7 @@ TAO_ORB_Manager::activate_under_child_poa (char const *object_name,
     TAOLIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("\n(%P|%t) TAO_ORB_Manager::register: ")
                        ACE_TEXT ("object_name is null!")),
-                      nullptr);
+                      0);
 
   PortableServer::ObjectId_var const id =
     PortableServer::string_to_ObjectId (object_name);
