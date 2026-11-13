@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Service_Type_Repository.h
  *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  *  @author Seth Widoff <sbw1@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_SERVICE_TYPE_REPOSITORY_H
 #define TAO_SERVICE_TYPE_REPOSITORY_H

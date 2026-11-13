@@ -1,4 +1,3 @@
-//===========================================================================
 
 // LIBRARY
 //   libTAO_CosTrading.so
@@ -9,8 +8,6 @@
 //
 // AUTHORS
 //   Priyanka Gontla <pgontla@ece.uci.edu>
-
-//===========================================================================
 
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Trader/Trading_Loader.h"
@@ -411,7 +408,6 @@ TAO_Trading_Loader::init_multicast_server ()
 #endif /* ACE_HAS_IP_MULTICAST */
   return 0;
 }
-
 
 int
 TAO_Trading_Loader::parse_args (int &argc, ACE_TCHAR *argv [])

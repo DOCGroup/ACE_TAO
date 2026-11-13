@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-// ===========================================================================
 // FILENAME
 //   Trading_Loader.h
 //
@@ -11,7 +10,6 @@
 // AUTHORS
 //   Priyanka Gontla <pgontla@ece.uci.edu>
 //
-// ==========================================================================
 
 #ifndef TAO_TRADING_LOADER_H
 #define TAO_TRADING_LOADER_H

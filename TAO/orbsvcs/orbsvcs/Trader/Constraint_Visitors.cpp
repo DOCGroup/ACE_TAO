@@ -1217,7 +1217,6 @@ TAO_Constraint_Validator::expr_returns_boolean (TAO_Expression_Type expr_type)
   return return_value;
 }
 
-
 int
 TAO_Constraint_Validator::expr_returns_number (TAO_Expression_Type expr_type)
 {

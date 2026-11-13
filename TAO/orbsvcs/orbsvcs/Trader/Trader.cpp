@@ -246,7 +246,6 @@ TAO_Support_Attributes_i::service_type_repos () const
   return this->service_type_repos_.ptr ();
 }
 
-
 TAO_Import_Attributes_i::
 TAO_Import_Attributes_i (TAO_Lockable &locker)
   : locker_ (locker),
@@ -263,7 +262,6 @@ TAO_Import_Attributes_i (TAO_Lockable &locker)
     max_follow_policy_ (CosTrading::always)
 {
 }
-
 
 TAO_Import_Attributes_i::~TAO_Import_Attributes_i () = default;
 
@@ -457,7 +455,6 @@ TAO_Import_Attributes_i::max_follow_policy (CosTrading::FollowOption new_value)
     this->def_follow_policy_ = this->max_follow_policy_;
 }
 
-
 TAO_Trading_Components_i::TAO_Trading_Components_i (TAO_Lockable &locker)
   : locker_ (locker),
     lookup_ (CosTrading::Lookup::_nil ()),
@@ -544,7 +541,6 @@ TAO_Trading_Components_i::admin_if (CosTrading::Admin_ptr new_value)
   ACE_WRITE_GUARD (ACE_Lock, ace_mon, this->locker_.lock ());
   this->admin_ = new_value;
 }
-
 
 TAO_Link_Attributes_i::TAO_Link_Attributes_i (TAO_Lockable &locker)
   :locker_ (locker),

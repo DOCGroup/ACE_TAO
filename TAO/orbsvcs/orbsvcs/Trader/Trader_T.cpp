@@ -80,7 +80,6 @@ TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::~TAO_Trader ()
 {
   // Remove Trading Components from POA
 
-
   for (int i = LOOKUP_IF; i <= LINK_IF; ++i)
     {
       if (this->ifs_[i] != nullptr)

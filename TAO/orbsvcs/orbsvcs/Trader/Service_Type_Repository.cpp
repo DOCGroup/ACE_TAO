@@ -46,7 +46,6 @@ TAO_Service_Type_Repository::incarnation ()
   return inc_num;
 }
 
-
 CosTradingRepos::ServiceTypeRepository::IncarnationNumber
 TAO_Service_Type_Repository::
 add_type (const char *name,

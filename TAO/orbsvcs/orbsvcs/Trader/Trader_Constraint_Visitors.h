@@ -1,13 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Trader_Constraint_Visitors.h
  *
  *  @author Seth Widoff <sbw1@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_TRADER_CONSTRAINT_VISITOR_H
 #define TAO_TRADER_CONSTRAINT_VISITOR_H

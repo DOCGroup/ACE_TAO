@@ -1,12 +1,10 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    Constraint_Interpreter.h
  *
  *  @author Seth Widoff <sbw1@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_CONSTRAINT_INTERPRETER_H
 #define TAO_CONSTRAINT_INTERPRETER_H
