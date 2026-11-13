@@ -53,7 +53,6 @@ public:
                           CosNotifyChannelAdmin::ProxyID_out proxy_id);
 
 protected:
-  ///= CosNotifyChannelAdmin::ProxyPushConsumer methods
 
   void push (CORBA::Any const &data) override;
 

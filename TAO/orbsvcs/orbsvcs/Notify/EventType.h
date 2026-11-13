@@ -19,7 +19,6 @@
 #include "orbsvcs/CosNotificationC.h"
 #include "orbsvcs/Notify/Topology_Object.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -49,7 +48,6 @@ public:
   /// Assignment operator.
   TAO_Notify_EventType& operator=(const TAO_Notify_EventType& event_type);
 
-  /// == operator
   bool operator==(const TAO_Notify_EventType& notify_event_type) const;
 
   /// != operator
@@ -86,7 +84,6 @@ protected:
   bool domain_is_wildcard (const char* domain) const;
   bool type_is_wildcard (const char* type) const;
 
-  // = Data Members
   /// The event_type that we're decorating.
   CosNotification::EventType event_type_;
 

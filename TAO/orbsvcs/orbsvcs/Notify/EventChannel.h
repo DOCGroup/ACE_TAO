@@ -122,7 +122,6 @@ private:
 
   void save_attrs(TAO_Notify::NVPList& attrs) override;
 
-  /// = Data Members
   /// The parent object.
   TAO_Notify_EventChannelFactory::Ptr ecf_;
 
@@ -135,7 +134,6 @@ private:
   CosNotifyChannelAdmin::SupplierAdmin_var default_supplier_admin_;
 
 protected:
-  /// =CosNotifyChannelAdmin::EventChannel methods
 
   ::CosNotifyChannelAdmin::EventChannelFactory_ptr MyFactory () override;
 

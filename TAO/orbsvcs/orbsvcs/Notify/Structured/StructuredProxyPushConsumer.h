@@ -53,7 +53,6 @@ public:
   virtual void configure(TAO_Notify_SupplierAdmin & admin, CosNotifyChannelAdmin::ProxyID_out proxy_id);
 
 protected:
-  // = interface methods
   CosNotifyChannelAdmin::ProxyType MyType () override;
 
   void connect_structured_push_supplier (

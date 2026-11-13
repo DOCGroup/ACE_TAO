@@ -76,13 +76,11 @@ protected:
     CosNotifyChannelAdmin::ClientType ctype,
     const TAO_Notify::NVPList& attrs);
 
-  /// = NotifyExt::ConsumerAdmin methods
   CosNotifyChannelAdmin::ProxySupplier_ptr
   obtain_notification_push_supplier_with_qos (CosNotifyChannelAdmin::ClientType ctype,
                                               CosNotifyChannelAdmin::ProxyID_out proxy_id,
                                               CosNotification::QoSProperties const &initial_qos) override;
 
-  /// = CosNotifyChannelAdmin::ConsumerAdmin methods
   CosNotifyChannelAdmin::AdminID MyID () override;
 
   ::CosNotifyChannelAdmin::EventChannel_ptr MyChannel () override;

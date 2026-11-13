@@ -23,7 +23,6 @@
 #include "orbsvcs/Notify/ETCL_Filter.h"
 #include "orbsvcs/Notify/Topology_Saver.h"
 
-
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
@@ -50,14 +49,10 @@ public:
   TAO_Notify_ETCL_FilterFactory &operator= (TAO_Notify_ETCL_FilterFactory const &) = delete;
   TAO_Notify_ETCL_FilterFactory &operator= (TAO_Notify_ETCL_FilterFactory &&) = delete;
 
-  ///= TAO_Notify_FilterFactory methods.
-
   CosNotifyFilter::FilterFactory_ptr create (
       PortableServer::POA_ptr filter_poa) override;
 
   void destroy () override;
-
-  ///= CosNotifyFilter::FilterFactory methods
 
   CosNotifyFilter::Filter_ptr create_filter (
       const char * constraint_grammar) override;
@@ -67,7 +62,6 @@ public:
       const CORBA::Any & default_value) override;
 
   void remove_filter (CosNotifyFilter::Filter_ptr filter) override;
-
 
   void save_persistent (TAO_Notify::Topology_Saver &saver) override;
 
@@ -81,7 +75,6 @@ public:
 
   CosNotifyFilter::FilterID get_filterid (CosNotifyFilter::Filter_ptr filter) override;
   CosNotifyFilter::Filter_ptr get_filter (CosNotifyFilter::FilterID id) override;
-
 
 protected:
   CosNotifyFilter::Filter_ptr

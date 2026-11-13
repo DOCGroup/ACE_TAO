@@ -26,7 +26,6 @@ public:
   TAO_Notify_ProxyConsumer_Update_Worker (const TAO_Notify_EventTypeSeq& added, const TAO_Notify_EventTypeSeq& removed);
 
 protected:
-  ///= TAO_ESF_Worker method
   void work (TAO_Notify_ProxyConsumer* proxy) override;
 
   const TAO_Notify_EventTypeSeq& added_;
@@ -46,7 +45,6 @@ public:
   TAO_Notify_ProxySupplier_Update_Worker (const TAO_Notify_EventTypeSeq& added, const TAO_Notify_EventTypeSeq& removed);
 
 protected:
-  ///= TAO_ESF_Worker method
   void work (TAO_Notify_ProxySupplier* proxy) override;
 
   const TAO_Notify_EventTypeSeq& added_;

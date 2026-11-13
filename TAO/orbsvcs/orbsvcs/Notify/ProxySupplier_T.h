@@ -43,7 +43,6 @@ public:
   void admin_types_changed (const CosNotification::EventTypeSeq & added,
                             const CosNotification::EventTypeSeq & removed) override;
 
-  ///= POA_Notify_Internal methods
   /// POA_Notify_Internal::Event_Forwarder method
   virtual void forward_structured (const CosNotification::StructuredEvent & event);
 
@@ -56,10 +55,8 @@ public:
   /// POA_Notify_Internal::Event_Forwarder method
   virtual void forward_any_no_filtering (const CORBA::Any & event);
 protected:
-  //= Data Members
   CORBA::Boolean is_suspended_ {};
 
-  // = Interface methods
   // These operations are absent from the CosEvent servant variants.
   virtual CosNotifyChannelAdmin::ConsumerAdmin_ptr MyAdmin ();
 

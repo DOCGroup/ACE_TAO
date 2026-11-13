@@ -81,7 +81,6 @@ public:
   TAO_Notify_ConsumerAdmin& consumer_admin ();
 
 private:
-  ///= Data Members.
   /// The CA parent.
   TAO_Notify_ConsumerAdmin::Ptr consumer_admin_ {};
 

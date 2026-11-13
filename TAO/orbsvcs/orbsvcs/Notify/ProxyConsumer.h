@@ -85,7 +85,6 @@ private:
   /// Is this part of a reliable channel
   bool supports_reliable_events () const;
 
-  ///= Data Members.
   /// The SA parent.
   TAO_Notify_SupplierAdmin::Ptr supplier_admin_ {};
 

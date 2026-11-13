@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef NOTIFY_FILTERADMIN_H
 
 #define NOTIFY_FILTERADMIN_H
@@ -46,11 +45,9 @@ class TAO_Notify_Serv_Export TAO_Notify_FilterAdmin
   TAO_Notify_FilterAdmin &operator= (TAO_Notify_FilterAdmin const &) = delete;
   TAO_Notify_FilterAdmin &operator= (TAO_Notify_FilterAdmin &&) = delete;
 
-  // = match operation on all the filters
   /// See if any of the filters match.
   CORBA::Boolean match (const TAO_Notify_Event::Ptr &event);
 
-  // = match operation on all the filters
   /// See if any of the filters match.
   CORBA::Boolean match (const TAO_Notify_Event* event);
 
@@ -63,7 +60,6 @@ class TAO_Notify_Serv_Export TAO_Notify_FilterAdmin
   virtual CosNotifyFilter::FilterIDSeq * get_all_filters ();
 
   virtual void remove_all_filters ();
-
 
   // TAO_Notify::Topology_Object
 

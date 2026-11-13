@@ -95,7 +95,6 @@ protected:
   using TAO_Notify_Proxy_Container = TAO_Notify_Container_T<TAO_Notify_Proxy>;
 
   TAO_Notify_Proxy_Container& proxy_container();
-  /// = Data Members
 
   /// The EventChannel.
   TAO_Notify_EventChannel::Ptr ec_ {};

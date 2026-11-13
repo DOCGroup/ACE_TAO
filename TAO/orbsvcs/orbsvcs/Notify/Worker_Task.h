@@ -50,7 +50,7 @@ public:
   /// Update QoS Properties.
   virtual void update_qos_properties (const TAO_Notify_QoSProperties& qos_properties);
 
-  ///= Public method to be implemented by subclasses.
+  /// Public method to be implemented by subclasses.
   /// Exec the request.
   virtual void execute (TAO_Notify_Method_Request& method_request) = 0;
 
@@ -59,7 +59,6 @@ public:
 
   /// The object used by clients to register timers.
   virtual TAO_Notify_Timer* timer () = 0;
-
 
 protected:
   ~TAO_Notify_Worker_Task () override;

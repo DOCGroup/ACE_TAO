@@ -54,7 +54,6 @@ public:
 
   char const * get_proxy_type_name () const override;
 
-  // = Interface methods
   void connect_push_consumer (CosEventComm::PushConsumer_ptr push_consumer) override;
 
   void disconnect_push_supplier () override;

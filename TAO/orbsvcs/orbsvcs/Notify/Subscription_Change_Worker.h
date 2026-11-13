@@ -35,7 +35,6 @@ public:
 
   virtual ~TAO_Notify_Subscription_Change_Worker ();
 
-  ///= TAO_ESF_Worker method
   void work (TAO_Notify_Proxy* proxy) override;
 
 protected:

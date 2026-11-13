@@ -56,7 +56,6 @@ public:
                           CosNotifyChannelAdmin::ProxyID_out proxy_id);
 
 protected:
-  ///= CosNotifyChannelAdmin::ProxyPushConsumer methods
 
   CosNotifyChannelAdmin::ProxyType MyType () override;
 

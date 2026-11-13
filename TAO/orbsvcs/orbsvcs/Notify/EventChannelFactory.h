@@ -67,7 +67,6 @@ public:
   TAO_Notify_EventChannelFactory &operator= (TAO_Notify_EventChannelFactory const &) = delete;
   TAO_Notify_EventChannelFactory &operator= (TAO_Notify_EventChannelFactory &&) = delete;
 
-  /// = ServantBase  Methods
   void _add_ref () override;
   void _remove_ref () override;
 
@@ -124,9 +123,6 @@ public:
   TAO_Notify_Object::ID get_id () const override;
 
 private:
-  /// = Data Members
-
-  /// = NotifyExt methods
   void destroy () override;
 
   /// shutdown
@@ -141,7 +137,6 @@ private:
   CORBA::Boolean is_alive () override;
 
 protected:
-  /// = CosNotifyChannelAdmin Methods
   ::CosNotifyChannelAdmin::EventChannel_ptr create_channel (
       CosNotification::QoSProperties const &initial_qos,
       CosNotification::AdminProperties const &initial_admin,

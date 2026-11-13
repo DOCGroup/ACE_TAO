@@ -170,14 +170,12 @@ protected:
   int handle_timeout (ACE_Time_Value const &current_time,
                       void const *act = nullptr) override;
 
-
   /// Schedule timer
   void schedule_timer (bool is_error = false);
 
   /// Cancel timer
   void cancel_timer ();
 
-  ///= Protected Data Members
 protected:
   Request_Queue& pending_events();
 

@@ -91,8 +91,6 @@ private:
   /// Discard as per the Discard Policy.
   bool discard (TAO_Notify_Method_Request_Queueable* method_request);
 
-  ///= Data Members
-
   /// The local Message Queue
   TAO_Notify_Message_Queue& msg_queue_;
 

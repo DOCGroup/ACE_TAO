@@ -47,7 +47,6 @@ public:
 
   static void close ();
 
-  // = Property Accessors
   TAO_Notify_Factory* factory ();
   void factory (TAO_Notify_Factory* factory);
 

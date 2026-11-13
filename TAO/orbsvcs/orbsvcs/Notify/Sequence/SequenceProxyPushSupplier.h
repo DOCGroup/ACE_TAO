@@ -60,7 +60,6 @@ public:
 
   virtual void configure(TAO_Notify_ConsumerAdmin & admin, CosNotifyChannelAdmin::ProxyID_out proxy_id);
 
-  /// = Servant methods
   CosNotifyChannelAdmin::ProxyType MyType () override;
 
   void connect_sequence_push_consumer (

@@ -249,7 +249,7 @@ TAO_Notify_EventTypeSeq::add_and_remove (TAO_Notify_EventTypeSeq& seq_added, TAO
 
           // so now there are no specials anywhere..
             {
-              //= First remove the duplicates in the added and removes lists.
+              // First remove the duplicates in the added and removes lists.
               // compute the intersection.
 
               TAO_Notify_EventTypeSeq common;
@@ -267,7 +267,6 @@ TAO_Notify_EventTypeSeq::add_and_remove (TAO_Notify_EventTypeSeq& seq_added, TAO
               seq_added.remove_seq (common);
               // update the current subscription.
               this->insert_seq (seq_added);
-
 
               // Similarly for removed.. if we're removing EA and now our current list looks like ABC we should emd up with
               // current subscription BC and Removed {A}

@@ -58,7 +58,6 @@ protected:
   /// Execute the dispatch operation.
   int execute_i ();
 
-  ///= TAO_ESF_Worker method
   void work (TAO_Notify_ProxySupplier* proxy_supplier) override;
 
 protected:

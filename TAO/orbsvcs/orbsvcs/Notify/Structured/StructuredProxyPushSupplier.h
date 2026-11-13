@@ -57,8 +57,6 @@ public:
   void load_attrs (TAO_Notify::NVPList const &attrs) override;
   void validate () override;
 
-  /// = Servant methods
-  // = interface methods
   CosNotifyChannelAdmin::ProxyType MyType () override;
 
   void connect_structured_push_consumer (

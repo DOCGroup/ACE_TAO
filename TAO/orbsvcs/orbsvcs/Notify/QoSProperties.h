@@ -48,7 +48,6 @@ public:
   /// Populate @a qos_properties with properties that can be transfered.Returns -1 on error.
   int transfer (TAO_Notify_QoSProperties& qos_properties);
 
-  ///= Accessors
   const TAO_Notify_Property_ThreadPool& thread_pool () const;
   const TAO_Notify_Property_ThreadPoolLanes& thread_pool_lane () const;
 
@@ -83,10 +82,8 @@ protected:
 
   static constexpr int UNSUPPORTED_PROPERTY_COUNT = 1;
 
-  ///= Unsupported Properties.
   ACE_CString unsupported_[UNSUPPORTED_PROPERTY_COUNT];
 
-  ///= Supported standard properties
   TAO_Notify_Property_Short event_reliability_;
   TAO_Notify_Property_Short connection_reliability_;
   TAO_Notify_Property_Short priority_;

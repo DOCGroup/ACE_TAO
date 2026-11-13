@@ -48,7 +48,6 @@ public:
   void save_persistent (
     TAO_Notify::Topology_Saver &saver) override;
 
-
   void load_attrs(
     TAO_Notify::NVPList const &attrs) override;
 
@@ -57,14 +56,11 @@ public:
     CORBA::Long id,
     TAO_Notify::NVPList const &attrs) override;
 
-
 private:
   /// Release this object.
   void release () override;
 
-  // = DESCRIPTION
-  //   Structure for associating ConstraintInfo with an interpreter.
-  //
+  /// Structure for associating ConstraintInfo with an interpreter.
   CosNotifyFilter::ConstraintExp constr_expr;
   // Constraint Expression.
 

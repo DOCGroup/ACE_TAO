@@ -63,7 +63,6 @@ public:
   /// Count accessor
   int count ();
 
-  ///= Reference counting methods.
   // Incr the ref count.
   CORBA::ULong _incr_refcnt ();
 

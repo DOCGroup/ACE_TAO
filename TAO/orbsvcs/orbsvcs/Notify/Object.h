@@ -140,8 +140,6 @@ protected:
   /// saving its own attrs.
   virtual void save_attrs(TAO_Notify::NVPList& attrs);
 
-  ///= Protected data members.
-
   /// QoS Properties.
   TAO_Notify_QoSProperties qos_properties_;
 

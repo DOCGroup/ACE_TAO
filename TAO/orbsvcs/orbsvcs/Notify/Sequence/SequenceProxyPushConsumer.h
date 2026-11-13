@@ -54,12 +54,8 @@ public:
   virtual void configure(TAO_Notify_SupplierAdmin & admin, CosNotifyChannelAdmin::ProxyID_out proxy_id);
 
 protected:
-  ///= Data Members
   TAO_Notify_Property_Time pacing_interval_;
 
-  ///= Protected Methods
-
-  //= interface methods
   CosNotifyChannelAdmin::ProxyType MyType () override;
 
   void connect_sequence_push_supplier (CosNotifyComm::SequencePushSupplier_ptr push_supplier) override;

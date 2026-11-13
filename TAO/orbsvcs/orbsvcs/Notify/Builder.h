@@ -47,8 +47,6 @@ public:
 
   virtual ~TAO_Notify_Builder ();
 
-  ///= Factory Methods
-
   /// Build EventChannel Factory.
   virtual CosNotifyChannelAdmin::EventChannelFactory_ptr
   build_event_channel_factory (PortableServer::POA_ptr poa
@@ -70,7 +68,6 @@ public:
   build_event_channel (TAO_Notify_EventChannelFactory* ecf
                        , const CosNotifyChannelAdmin::ChannelID id
                        , char const *ec_name = nullptr);
-
 
   /// Build ConsumerAdmin
   virtual CosNotifyChannelAdmin::ConsumerAdmin_ptr

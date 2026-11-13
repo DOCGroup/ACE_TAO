@@ -48,7 +48,6 @@ public:
   INTERFACE_PTR resolve (TAO_Notify_Object::ID const id, CONTAINER& container);
 
 protected:
-  ///= TAO_ESF_Worker method
   void work (TYPE* object) override;
 
   /// The id we're looking for.
