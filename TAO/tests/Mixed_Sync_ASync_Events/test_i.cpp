@@ -119,7 +119,7 @@ void Test_Reply_i::request_excep (
   if (!CORBA::is_nil (this->evh_.opponent ()))
     this->evh_.opponent ()->shutdown ();
   if (this->evh_.mode () == A::RM_SLAVE)
-    this->evh_.orb ()->shutdown (0);
+    this->evh_.orb ()->shutdown (false);
 }
 
 void
@@ -141,7 +141,7 @@ Test_Reply_i::report_excep (
   if (!CORBA::is_nil (this->evh_.opponent ()))
     this->evh_.opponent ()->shutdown ();
   if (this->evh_.mode () == A::RM_SLAVE)
-    this->evh_.orb ()->shutdown (0);
+    this->evh_.orb ()->shutdown (false);
 }
 
 TestHandler::TestHandler (CORBA::ORB_ptr orb,
