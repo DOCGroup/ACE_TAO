@@ -146,16 +146,13 @@ namespace TAO
   struct TAO_RTCORBA_Export Objref_Traits< ::RTCORBA::ProtocolProperties>
   {
     static ::RTCORBA::ProtocolProperties_ptr duplicate (
-        ::RTCORBA::ProtocolProperties_ptr
-      );
+        ::RTCORBA::ProtocolProperties_ptr);
     static void release (
-        ::RTCORBA::ProtocolProperties_ptr
-      );
+        ::RTCORBA::ProtocolProperties_ptr);
     static ::RTCORBA::ProtocolProperties_ptr nil ();
     static ::CORBA::Boolean marshal (
         const ::RTCORBA::ProtocolProperties_ptr p,
-        TAO_OutputCDR & cdr
-      );
+        TAO_OutputCDR & cdr);
   };
 
 #endif /* end #if !defined */

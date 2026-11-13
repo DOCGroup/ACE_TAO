@@ -89,8 +89,7 @@ namespace TAO
         CORBA::ULong max,
         CORBA::ULong length,
         CORBA::Octet* buffer,
-        CORBA::Boolean release = false
-      );
+        CORBA::Boolean release = false);
     ObjectKey (const ObjectKey &) = default;
     ObjectKey (ObjectKey &&) = default;
     ObjectKey& operator= (const ObjectKey &) = default;
@@ -148,12 +147,10 @@ namespace TAO
 
 TAO_Export CORBA::Boolean operator<< (
     TAO_OutputCDR &,
-    const TAO::ObjectKey &
-  );
+    const TAO::ObjectKey &);
 TAO_Export CORBA::Boolean operator>> (
     TAO_InputCDR &,
-    TAO::ObjectKey &
-  );
+    TAO::ObjectKey &);
 
 #endif /* _TAO_CDR_OP_TAO_ObjectKey_H_ */
 

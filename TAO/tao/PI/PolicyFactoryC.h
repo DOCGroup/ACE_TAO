@@ -88,14 +88,10 @@ namespace PortableInterceptor
     static void _tao_release (PolicyFactory_ptr obj);
 
     static PolicyFactory_ptr _narrow (
-        ::CORBA::Object_ptr obj
-
-      );
+        ::CORBA::Object_ptr obj);
 
     static PolicyFactory_ptr _unchecked_narrow (
-        ::CORBA::Object_ptr obj
-
-      );
+        ::CORBA::Object_ptr obj);
 
     static PolicyFactory_ptr _nil ()
     {
@@ -112,9 +108,7 @@ namespace PortableInterceptor
 
     // Hand-crafted addition.
     virtual ::CORBA::Policy_ptr _create_policy (
-        CORBA::PolicyType type
-
-      );
+        CORBA::PolicyType type);
 
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:210
@@ -157,16 +151,13 @@ namespace TAO
   struct TAO_PI_Export Objref_Traits< ::PortableInterceptor::PolicyFactory>
   {
     static ::PortableInterceptor::PolicyFactory_ptr duplicate (
-        ::PortableInterceptor::PolicyFactory_ptr
-      );
+        ::PortableInterceptor::PolicyFactory_ptr);
     static void release (
-        ::PortableInterceptor::PolicyFactory_ptr
-      );
+        ::PortableInterceptor::PolicyFactory_ptr);
     static ::PortableInterceptor::PolicyFactory_ptr nil ();
     static ::CORBA::Boolean marshal (
         ::PortableInterceptor::PolicyFactory_ptr p,
-        TAO_OutputCDR & cdr
-      );
+        TAO_OutputCDR & cdr);
   };
 
 #endif /* end #if !defined */
