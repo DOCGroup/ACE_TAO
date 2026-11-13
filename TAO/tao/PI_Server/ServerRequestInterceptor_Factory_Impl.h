@@ -1,13 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    ServerRequestInterceptor_Factory_Impl.h
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
 
 #ifndef TAO_SERVERREQUESTINTERCEPTOR_ADAPTER_FACTORY_IMPL_H
 #define TAO_SERVERREQUESTINTERCEPTOR_ADAPTER_FACTORY_IMPL_H
@@ -51,7 +48,6 @@ private:
   TAO_ServerRequestInterceptor_Adapter_Factory_Impl &operator= (
     TAO_ServerRequestInterceptor_Adapter_Factory_Impl &&) = delete;
 };
-
 
 ACE_STATIC_SVC_DECLARE (TAO_ServerRequestInterceptor_Adapter_Factory_Impl)
 ACE_FACTORY_DECLARE (TAO_PI_Server, TAO_ServerRequestInterceptor_Adapter_Factory_Impl)

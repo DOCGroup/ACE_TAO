@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file PortableServer_PolicyFactory.h
  *
  * @author Irfan Pyarali <irfan@oomworks.com>
  */
-//=============================================================================
 
 #ifndef TAO_PORTABLESERVER_POLICY_FACTORY_H
 #define TAO_PORTABLESERVER_POLICY_FACTORY_H
@@ -32,7 +30,7 @@ public:
   TAO_PortableServer_PolicyFactory () = default;
 
   CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
-                                   const CORBA::Any & value) override;
+                                   CORBA::Any const &value) override;
 
 private:
   TAO_PortableServer_PolicyFactory (TAO_PortableServer_PolicyFactory const &) = delete;

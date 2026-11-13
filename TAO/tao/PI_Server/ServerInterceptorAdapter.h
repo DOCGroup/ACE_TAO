@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    ServerInterceptorAdapter.h
  *
@@ -11,7 +10,6 @@
  *  @author  Ossama Othman <ossama@uci.edu>
  *  @author  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_SERVER_INTERCEPTOR_ADAPTER_H
 #define TAO_SERVER_INTERCEPTOR_ADAPTER_H
@@ -67,7 +65,6 @@ namespace TAO
     , public TAO_RequestInterceptor_Adapter_Impl
   {
   public:
-    /// Constructor.
     ServerRequestInterceptor_Adapter_Impl () = default;
 
     /**
@@ -152,7 +149,7 @@ namespace TAO
 
     void add_interceptor (
       PortableInterceptor::ServerRequestInterceptor_ptr interceptor,
-      const CORBA::PolicyList& policies) override;
+      CORBA::PolicyList const &policies) override;
 
     void destroy_interceptors () override;
 
