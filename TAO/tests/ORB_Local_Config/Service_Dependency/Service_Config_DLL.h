@@ -33,8 +33,7 @@
 class Service_Config_DLL_Export Service_Config_DLL : public ACE_Task_Base
 {
 public:
-  /// Constructor.
-  Service_Config_DLL ();
+  Service_Config_DLL () = default;
 
   Service_Config_DLL (Service_Config_DLL const &) = delete;
   Service_Config_DLL (Service_Config_DLL &&) = delete;
@@ -60,9 +59,7 @@ private:
   ACE_TCHAR directive_[2][BUFSIZ] {};
 };
 
-
 ACE_FACTORY_DECLARE (Service_Config_DLL, Service_Config_DLL)
-
 
 #include /**/ "ace/post.h"
 

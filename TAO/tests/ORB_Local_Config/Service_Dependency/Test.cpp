@@ -13,12 +13,8 @@
 
 #include <memory>
 
-// Return the name of the service configuration file, based on the current ACE
-// support for wide characters and unicode
-/// Borrowing this from the $ACE_ROOT/test/Service_Config_Test
-/// The various config files have the same effect of loading 5
-/// new service objects.
-
+/// Returns the service configuration filename for the current character
+/// encoding. The files all load the same five service objects.
 ACE_TCHAR const *
 file_Service_Config_Test ()
 {
@@ -52,8 +48,7 @@ file_Service_Config_Test ()
   return svc_conf;
 }
 
-// @brief Loading dynamic services in a local repository
-
+/// Loads dynamic services into a local repository and checks the service count.
 int
 testOpenDynamicServices (int, ACE_TCHAR *[])
 {
@@ -61,7 +56,7 @@ testOpenDynamicServices (int, ACE_TCHAR *[])
 
   ACE_ARGV new_argv;
 
-  // Process the Service Configurator directives in this test's
+  // Build the Service Configurator argument list for this test.
   if (new_argv.add (ACE_TEXT ("bogus")) == -1
       || new_argv.add (ACE_TEXT ("-f")) == -1
       || new_argv.add (file_Service_Config_Test ()) == -1)
@@ -70,12 +65,14 @@ testOpenDynamicServices (int, ACE_TCHAR *[])
       return -1;
     }
 
-  // We need this scope to make sure that the destructor for the
-  // <ACE_Service_Config> gets called.
-  ACE_Service_Gestalt_Test daemon (10);
+  // The service-config guard keeps an intrusive reference to the current
+  // gestalt, so it must be heap-allocated and owned by an intrusive pointer.
+  ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt_Test> const daemon {
+    new ACE_Service_Gestalt_Test (10)
+  };
 
-  if (daemon.open (new_argv.argc (),
-                   new_argv.argv ()) == -1 && errno == ENOENT)
+  if (daemon->open (new_argv.argc (),
+                    new_argv.argv ()) == -1)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error: Unable to open service config\n")));
       return -1;
@@ -83,14 +80,14 @@ testOpenDynamicServices (int, ACE_TCHAR *[])
 
   ACE_DEBUG ((LM_DEBUG,
               "\tdaemon.services_count () -> %B\n",
-              daemon.services_count ()));
+              daemon->services_count ()));
 
-  if (5 != daemon.services_count ())
+  if (daemon->services_count () != 5)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Error: Expected %d service, but found %B instead\n"),
                   5,
-                  daemon.services_count ()));
+                  daemon->services_count ()));
       return -1;
     }
 
@@ -100,22 +97,21 @@ testOpenDynamicServices (int, ACE_TCHAR *[])
   return 0;
 }
 
-
-
-
-// @brief Try loading the ORBInitializer_Registry locally
-
+/// Tests local loading and dependency registration for the
+/// ORBInitializer_Registry service.
 int
 testORBInitializer_Registry (int, ACE_TCHAR *[])
 {
   ACE_TRACE ("testORBInitializer_Registry");
 
   // for global service registrations
-  ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt_Test> const glob (
-    new ACE_Service_Gestalt_Test ());
+  ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt_Test> const glob {
+    new ACE_Service_Gestalt_Test ()
+  };
 
-  ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt_Test> const one (
-    new ACE_Service_Gestalt_Test (10));
+  ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt_Test> const one {
+    new ACE_Service_Gestalt_Test (10)
+  };
 
   size_t const glob_size = glob->services_count ();
   size_t const loca_size = one->services_count ();
@@ -136,7 +132,7 @@ testORBInitializer_Registry (int, ACE_TCHAR *[])
 #if defined (TAO_AS_STATIC_LIBS)
   if (oir == nullptr)
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Expected to find staticaly linked ORBInitializer_Registry\n")));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Expected to find statically linked ORBInitializer_Registry\n")));
       return -1;
     }
 #else
@@ -152,12 +148,16 @@ testORBInitializer_Registry (int, ACE_TCHAR *[])
       // output an error then.
   if (oir == nullptr)
     {
-      one->process_directive (
-        ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE("ORBInitializer_Registry",
-                                      "TAO_PI",
-                                      TAO_VERSION,
-                                      "_make_ORBInitializer_Registry",
-                                      ""));
+      int const result = one->process_directive (
+        ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE ("ORBInitializer_Registry",
+                                                 "TAO_PI",
+                                                 TAO_VERSION,
+                                                 "_make_ORBInitializer_Registry",
+                                                 ""));
+      if (result != 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("Failed to load ORBInitializer_Registry\n")),
+                          -1);
       oir =
         ACE_Dynamic_Service<TAO::ORBInitializer_Registry_Adapter>::instance
         (one.get (), "ORBInitializer_Registry");
@@ -179,12 +179,12 @@ testORBInitializer_Registry (int, ACE_TCHAR *[])
       return -1;
     }
 
-  // The local repository must have asquired also the static services
+  // The local repository must also have acquired the static services
   // registered within the dynamic service we just loaded. As of this
   // writing, loading ORBInitializer_Registry causes the registration of
   // four other (static) services. The PolicyFactory_Loader,
   // ClientRequestInterceptor_Adapter_Factory and PICurrent_Loader are
-  // registred explicitely, while CodecFactory_Loader - indirectly.
+  // registered explicitly, while CodecFactory_Loader is registered indirectly.
 
   if (loca_size == one->services_count ())
     {
@@ -223,7 +223,7 @@ testORBInitializer_Registry (int, ACE_TCHAR *[])
                       -1);
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) Explicitely initialize ORBInitializer_Registry"
+              "(%P|%t) Explicitly initialize ORBInitializer_Registry"
               " (although Dynamic_Service already did it) ...\n"));
 
   // ... initialize, but note that without the guard there is nothing to tell
@@ -232,7 +232,10 @@ testORBInitializer_Registry (int, ACE_TCHAR *[])
   // be in memory, which may not be mapped by finalization time!
   {
     ACE_Service_Config_Guard guard (one.get ());
-    oir2->init (0, nullptr);
+    if (oir2->init (0, nullptr) != 0)
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Failed to initialize ORBInitializer_Registry\n")),
+                        -1);
   }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -247,15 +250,19 @@ testORBInitializer_Registry (int, ACE_TCHAR *[])
                       -1);
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) Explicitely dynamic_service PolicyFactory_Loader"
+              "(%P|%t) Explicitly dynamic_service PolicyFactory_Loader"
               " (although ORBInitializer_Registry already did it) ...\n"));
 
-  one->process_directive (
+  int const policy_factory_result = one->process_directive (
     ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE ("PolicyFactory_Loader",
                                              "TAO_PI",
                                              TAO_VERSION,
                                              "_make_TAO_PolicyFactory_Loader",
                                              ""));
+  if (policy_factory_result != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("Failed to load PolicyFactory_Loader\n")),
+                      -1);
 
   if (ACE_Dynamic_Service<ACE_Service_Object>::instance
       (one.get (), "PolicyFactory_Loader") == nullptr)
@@ -267,8 +274,8 @@ testORBInitializer_Registry (int, ACE_TCHAR *[])
   return 0;
 }
 
-// @brief ...
-
+/// Tests lifetime dependencies between a service object and its dynamic
+/// library.
 int
 testServiceDependency (int, ACE_TCHAR *[])
 {
@@ -283,8 +290,9 @@ testServiceDependency (int, ACE_TCHAR *[])
 
   {
     // Start a block to limit the lifespan of a gestalt
-    ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt_Test> const one (
-      new ACE_Service_Gestalt_Test (10));
+    ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt_Test> const one {
+      new ACE_Service_Gestalt_Test (10)
+    };
 
     int const result = one->process_directive (
       ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE ("TAO_Codeset",
@@ -342,8 +350,9 @@ testServiceDependency (int, ACE_TCHAR *[])
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  return
-    testServiceDependency (argc, argv)
-    && testOpenDynamicServices (argc, argv)
-    && testORBInitializer_Registry(argc, argv);
+  if (testServiceDependency (argc, argv) != 0
+      || testOpenDynamicServices (argc, argv) != 0)
+    return -1;
+
+  return testORBInitializer_Registry (argc, argv);
 }
