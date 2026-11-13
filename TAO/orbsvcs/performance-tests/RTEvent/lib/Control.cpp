@@ -93,7 +93,7 @@ Control::join (Federated_Test::Peer_ptr peer)
           new std::unique_ptr<Loopback_Disconnect>[2*this->peers_count_]);
 
       ACE_DEBUG ((LM_DEBUG,
-                  "Control (%P|%t) Running test for peer %d\n",
+                  "Control (%P|%t) Running test for peer %B\n",
                   i));
       CORBA::Long experiment_id = 128 + i;
       CORBA::Long base_event_type = ACE_ES_EVENT_UNDEFINED;

@@ -50,7 +50,7 @@ int processRecords (HASH_MAP *map, ALLOCATOR *shmem_allocator)
 
   size_t mapLength = map->current_size ();
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%P|%t) Found %d records\n\n"),
+              ACE_TEXT ("(%P|%t) Found %B records\n\n"),
               mapLength));
 
   std::unique_ptr<int[]> todelete = std::make_unique<int[]> (mapLength);
@@ -108,7 +108,7 @@ int addRecords(HASH_MAP *map, ALLOCATOR *shmem_allocator)
   char buf[32];
   int mapLength = static_cast<int> (map->current_size ());
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Map has %d entries; adding 20 more\n"),
+              ACE_TEXT ("Map has %B entries; adding 20 more\n"),
               mapLength));
 
   for (int i = mapLength ; i < mapLength + 20; i++)

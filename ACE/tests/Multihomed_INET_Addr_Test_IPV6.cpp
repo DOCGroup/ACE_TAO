@@ -157,7 +157,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
     } else {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Failed get_num_secondary_addresses check\n")
-                  ACE_TEXT ("%d != %d\n"),
+                  ACE_TEXT ("%B != %d\n"),
                   returned_num_secondaries,
                   i));
       status = 1;

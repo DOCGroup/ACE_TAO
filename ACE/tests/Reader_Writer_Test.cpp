@@ -181,7 +181,7 @@ reader (void *)
       //ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%t) done with reading guarded data\n")));
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%t) reader finished %d iterations at %T\n"),
+                  ACE_TEXT ("(%t) reader finished %B iterations at %T\n"),
                   iterations));
     }
   return nullptr;
@@ -231,7 +231,7 @@ writer (void *)
 
       --current_writers;
 
-      ACE_DEBUG((LM_DEBUG, ACE_TEXT (" (%t) write %d done at %T\n"), iterations));
+      ACE_DEBUG((LM_DEBUG, ACE_TEXT (" (%t) write %B done at %T\n"), iterations));
     }
   return nullptr;
 }

@@ -14,7 +14,7 @@ ACEXML_Print_Handler::characters (ACEXML_Char const *cdata,
                                   size_t length)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("* Event characters () ** start: %u  end: %u ***************\n%s\n")
+              ACE_TEXT ("* Event characters () ** start: %B  end: %B ***************\n%s\n")
               ACE_TEXT ("- End event characters () ---------------\n"),
               start, length, cdata));
 }

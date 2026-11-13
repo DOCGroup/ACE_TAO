@@ -118,7 +118,7 @@ wchar_reference::match_warray (short key, ACE_OS::WChar const *test) const
     {
       if (verbose_)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT("  expecting[%d] %x, got %x\n"),
+                    ACE_TEXT("  expecting[%B] %x, got %x\n"),
                     i, wchar_reference::ref_warray[key][i],
                     test[i]));
       if (wchar_reference::ref_warray[key][i] != test[i])

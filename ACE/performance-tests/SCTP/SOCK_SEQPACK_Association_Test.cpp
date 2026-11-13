@@ -95,7 +95,7 @@ void dump_names(const ACE_SOCK_SEQPACK_Association& assoc)
     }
 
     ACE_DEBUG((LM_DEBUG,
-               "get_local_addrs[%i] = %s\n",
+               "get_local_addrs[%B] = %s\n",
                i,
                outbuf));
   }
@@ -123,7 +123,7 @@ void dump_names(const ACE_SOCK_SEQPACK_Association& assoc)
     }
 
     ACE_DEBUG((LM_DEBUG,
-               "get_remote_addrs[%i] = %s\n",
+               "get_remote_addrs[%B] = %s\n",
                i,
                outbuf));
   }

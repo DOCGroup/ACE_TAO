@@ -211,7 +211,7 @@ int RecordMessageUpstreamTask::process (Command *command)
 
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("RecordMessageUpstreamTask ")
-              ACE_TEXT ("- recorded %d byte message\n"),
+              ACE_TEXT ("- recorded %b byte message\n"),
               total_bytes));
 
   return Command::RESULT_SUCCESS;

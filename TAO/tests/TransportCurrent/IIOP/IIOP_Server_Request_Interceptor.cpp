@@ -103,7 +103,7 @@ namespace Test {
           {
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("%C (%P|%t) ")
-                        ACE_TEXT ("pop_request_info: The expected host and port don't match for request %d\n"),
+                        ACE_TEXT ("pop_request_info: The expected host and port don't match for request %B\n"),
                         name.in (),
                         requestID));
             return;
@@ -137,7 +137,7 @@ namespace Test {
             has_remaining_endpoints = true;
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("%C (%P|%t) Endpoint at ")
-                        ACE_TEXT ("index=%d has not been removed yet\n"),
+                        ACE_TEXT ("index=%B has not been removed yet\n"),
                         name.in (),
                         count));
           }

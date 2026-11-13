@@ -467,7 +467,7 @@ Receiver::initiate_read_stream ()
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Receiver::initiate_read_stream - (%s) readv %d\n"),
+              ACE_TEXT ("Receiver::initiate_read_stream - (%s) readv %B\n"),
               this->odd_ ? ACE_TEXT ("ODD ") : ACE_TEXT ("EVEN"),
               bytes_to_read));
 
@@ -1256,8 +1256,8 @@ Sender::handle_read_file (const ACE_Asynch_Read_File::Result &result)
       size_t bytes_transferred = result.bytes_transferred ();
       size_t chunks_chain_size = mb->total_size ();
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Sender::handle_read_file, read %d, ")
-                  ACE_TEXT ("chain total %d\n"),
+                  ACE_TEXT ("Sender::handle_read_file, read %B, ")
+                  ACE_TEXT ("chain total %B\n"),
                   bytes_transferred,
                   chunks_chain_size));
 

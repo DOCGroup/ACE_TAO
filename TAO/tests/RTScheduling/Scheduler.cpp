@@ -120,7 +120,7 @@ TAO_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr reque
                    serv_cxt->context_data.length ());
 
       ACE_DEBUG ((LM_DEBUG,
-                  "The Guid is %d\n",
+                  "The Guid is %B\n",
                   gu_id));
 
       std::unique_ptr<RTScheduling::Current::IdType> guid =

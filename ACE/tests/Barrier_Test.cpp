@@ -91,7 +91,7 @@ run_main (int, ACE_TCHAR *[])
        iteration_count < ACE_MAX_ITERATIONS;
        iteration_count++)
     {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("starting iteration %d\n"),
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("starting iteration %B\n"),
                   iteration_count));
 
       if (ACE_Thread_Manager::instance ()->spawn_n

@@ -154,7 +154,7 @@ SO_Group::analize ()
   for (int passcount = 0; undefs_.modified (); ++passcount)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "pass %d, undef count = %zu\n",
+                  "pass %d, undef count = %B\n",
                   passcount,
                   undefs_.size ()));
 

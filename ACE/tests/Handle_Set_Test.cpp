@@ -198,7 +198,7 @@ test_performance (size_t max_handles,
               et.system_time));
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("time per each of the %d calls = %f usecs\n"),
+              ACE_TEXT ("time per each of the %B calls = %f usecs\n"),
               count,
               et.real_time / double (count) * 1000000));
 }

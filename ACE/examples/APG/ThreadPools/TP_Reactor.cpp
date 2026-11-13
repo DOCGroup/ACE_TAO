@@ -91,7 +91,7 @@ Request_Handler::handle_close (ACE_HANDLE fd, ACE_Reactor_Mask)
 
   if (this->nr_msgs_rcvd_ != cli_req_no)
     ACE_ERROR ((LM_ERROR,
-               ACE_TEXT ("(%t) Handler 0x%x: Expected %d messages; got %d\n"),
+               ACE_TEXT ("(%t) Handler 0x%x: Expected %B messages; got %d\n"),
                this,
                cli_req_no,
                this->nr_msgs_rcvd_));

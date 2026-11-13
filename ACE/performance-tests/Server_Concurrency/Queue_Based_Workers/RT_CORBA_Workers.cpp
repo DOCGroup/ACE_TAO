@@ -294,7 +294,7 @@ Input_Task::svc ()
       if (debug != DEBUGGING_RANGE::DEBUG_NONE)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "(%t) Input thread ->  Sent [%d] messages\n",
+                      "(%t) Input thread ->  Sent [%B] messages\n",
                       i));
         }
     }
@@ -374,7 +374,7 @@ Output_Task::svc ()
       if (debug != DEBUGGING_RANGE::DEBUG_NONE)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "(%t) Output thread ->  received [%d] message\n",
+                      "(%t) Output thread ->  received [%B] message\n",
                       i));
         }
     }

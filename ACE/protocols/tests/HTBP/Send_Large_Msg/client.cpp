@@ -104,7 +104,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         n += stream->send (buffer+n,Send_Size);
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT("(%P|%t) Client: ")
-                    ACE_TEXT("Sending %d of %d\n"),
+                    ACE_TEXT("Sending %b of %d\n"),
                     n, Send_Size));
       }
     if (n == -1 && errno != 0)
@@ -117,7 +117,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       }
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT("(%P|%t) Client: ")
-                ACE_TEXT("In round %d, send returned %d\n"),
+                ACE_TEXT("In round %B, send returned %b\n"),
                 i, n));
   }
 
@@ -137,7 +137,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT("(%P|%t) Client: ")
-              ACE_TEXT("received %d, %s\n"),
+              ACE_TEXT("received %b, %s\n"),
               n,buffer));
   return 0;
 }

@@ -199,7 +199,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       for (ssize_t ni = 0; ni < niterations; ni++)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "Sending asynch message: %d\n",
+                          "Sending asynch message: %b\n",
                       ni));
 
           ami_test_var->sendc_foo (the_handler_var.in (),

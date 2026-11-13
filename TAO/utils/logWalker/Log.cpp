@@ -518,14 +518,14 @@ Log::parse_cleanup_queue_i ()
         {
           ACE_ERROR ((LM_ERROR,
                       "%d: Cleanup queue detected, "
-                      "could not find invocation for rid = %d on thread %d\n",
+                      "could not find invocation for rid = %B on thread %d\n",
                       this->offset_, rid, original_thr->id()));
           rid = target->expected_req_id();
           inv = pp->find_invocation (rid, handle);
           if (inv == nullptr)
             {
               ACE_ERROR ((LM_ERROR,
-                          "%d, Cleanup queue still failed to find rid %d, on thread %d\n",
+                          "%d, Cleanup queue still failed to find rid %B, on thread %d\n",
                           this->offset_, rid, original_thr->id()));
               return;
             }
@@ -722,7 +722,7 @@ Log::parse_connection_handler_ctor_i ()
 {
   // char *c = ACE_OS::strchr (this->info_, '[') + 1;
   // size_t handle = ACE_OS::strtol (c, 0, 10);
-  // ACE_DEBUG ((LM_DEBUG,"%d: constructed new handler for %d\n", offset_, handle));
+  // ACE_DEBUG ((LM_DEBUG,"%d: constructed new handler for %B\n", offset_, handle));
 }
 
 void

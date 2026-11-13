@@ -307,7 +307,7 @@ Peer_Handler::send (ACE_Message_Block *mb)
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("sent %d bytes, total bytes sent = %d\n"),
+              ACE_TEXT ("sent %b bytes, total bytes sent = %d\n"),
               n,
               this->total_bytes_));
   return n;
@@ -348,7 +348,7 @@ Peer_Handler::recv (ACE_Message_Block *&mb)
                       ACE_TEXT ("%p\n"),
                       ACE_TEXT ("Recv error during header read")));
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("attempted to read %d bytes\n"),
+                      ACE_TEXT ("attempted to read %b bytes\n"),
                       header_bytes_left_to_read));
           this->msg_frag_.reset ();
           return header_received;

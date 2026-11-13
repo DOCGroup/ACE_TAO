@@ -95,7 +95,7 @@ test_argv_type_converter ()
   {
     for (size_t i = 0; i < 4; i++)
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT (" (%d) %C\n"),
+                  ACE_TEXT (" (%B) %C\n"),
                   i,
                   argv[i]));
   }
@@ -132,7 +132,7 @@ test_argv_type_converter2 ()
   {
     for (size_t i = 0; i < 4; i++)
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT (" (%d) %s\n"),
+                  ACE_TEXT (" (%B) %s\n"),
                   i,
                   argv[i]));
   }

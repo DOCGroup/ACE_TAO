@@ -332,7 +332,7 @@ TAO_UIOP_Acceptor::rendezvous_point (ACE_UNIX_Addr &addr,
   if (length < std::strlen (rendezvous))
     TAOLIB_DEBUG ((LM_WARNING,
                 "TAO (%P|%t) - UIOP rendezvous point was truncated to <%s>\n"
-                "since it was longer than %d characters long.\n",
+                "since it was longer than %B characters long.\n",
                 addr.get_path_name (),
                 length));
 }

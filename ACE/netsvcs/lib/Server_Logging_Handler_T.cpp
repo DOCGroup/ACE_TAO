@@ -205,7 +205,7 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ha
                                           length);
         if (n != length)
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("%d != %d, %p at host %C\n"),
+                             ACE_TEXT ("%b != %d, %p at host %C\n"),
                              n,
                              length,
                              ACE_TEXT ("server logger"),

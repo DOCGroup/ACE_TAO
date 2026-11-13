@@ -257,7 +257,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   if (get_task.results ().size () != ACE_Utils::truncate_cast<size_t> (n_threads))
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("%d results found; ")
+                  ACE_TEXT ("%B results found; ")
                   ACE_TEXT ("should be %d\n"),
                   get_task.results ().size (),
                   n_threads));

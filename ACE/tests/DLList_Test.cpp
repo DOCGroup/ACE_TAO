@@ -44,7 +44,7 @@ run_iterate (STRLIST &list)
        (entry = iter.next ()) != nullptr;
        iter.advance (), i++)
     {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("iterating (%d): [%s]\n"),
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("iterating (%B): [%s]\n"),
                   i,
                   (ACE_TCHAR *) *entry));
     }
@@ -60,7 +60,7 @@ run_reverse_iterate (STRLIST &list)
        iter.next (entry) != 0;
        iter.advance (), i++)
     {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("iterating (%d): [%s]\n"),
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("iterating (%B): [%s]\n"),
                   i,
                   (ACE_TCHAR *) *entry));
     }

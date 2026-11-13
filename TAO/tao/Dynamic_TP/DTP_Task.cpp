@@ -442,7 +442,7 @@ TAO_DTP_Task::close (u_long flag)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - DTP_Task::close() ")
-                  ACE_TEXT ("shutting down. in_task = %B,  Count = %d \n"),
+                  ACE_TEXT ("shutting down. in_task = %B,  Count = %B \n"),
                   in_task,  this->thr_count ()));
     }
 

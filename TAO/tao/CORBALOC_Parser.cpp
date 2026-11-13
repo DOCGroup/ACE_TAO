@@ -219,7 +219,7 @@ TAO_CORBALOC_Parser::parse_string (const char * ior, CORBA::ORB_ptr orb)
           if (TAO_debug_level)
             TAOLIB_ERROR ((LM_ERROR,
                         ACE_TEXT("TAO (%P|%t) - TAO_CORBALOC_Parser::parse_string ")
-                        ACE_TEXT("mprofile.give_profile failed for i = %d\n"),
+                        ACE_TEXT("mprofile.give_profile failed for i = %B\n"),
                         i));
           throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 10, CORBA::COMPLETED_NO);
         }

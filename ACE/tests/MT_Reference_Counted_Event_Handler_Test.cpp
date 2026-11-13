@@ -466,7 +466,7 @@ Receiver::handle_input (ACE_HANDLE handle)
   if (debug && result < 1)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT("(%t) Receiver::handle input, ")
-                ACE_TEXT("h = %d, result = %d %p\n"),
+                ACE_TEXT("h = %d, result = %b %p\n"),
                 handle_, result, ACE_TEXT("ACE::recv_n")));
 
   if (this->reactor ())

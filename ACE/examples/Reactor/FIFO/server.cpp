@@ -66,7 +66,7 @@ FIFO_Recv_Handler::handle_input (ACE_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("recv")), -1);
   else
     {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("msg.len = %d, n = %d\n"), msg.len, n));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("msg.len = %d, n = %b\n"), msg.len, n));
 
       if (msg.len > 0)
         {

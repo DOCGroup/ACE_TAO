@@ -648,7 +648,7 @@ TAO_RTScheduler_Current_i::cancel_thread ()
                this->guid_.length ());
 
   TAOLIB_DEBUG ((LM_DEBUG,
-              "Distributable Thread - %d is cancelled\n",
+              "Distributable Thread - %B is cancelled\n",
               guid));
 
   // Let the scheduler know that the thread has

@@ -67,7 +67,7 @@ dump_iov (iovec *iov, int iovcnt, size_t id,
 
       TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - Transport[%B]::%s, ")
-                  ACE_TEXT ("buffer %d/%d has %d bytes\n"),
+                  ACE_TEXT ("buffer %d/%d has %B bytes\n"),
                   id, location,
                   i, iovcnt,
                   iov_len));
@@ -1145,7 +1145,7 @@ TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[],
     {
       TAOLIB_DEBUG ((LM_DEBUG,
          ACE_TEXT ("TAO (%P|%t) - Transport[%B]::drain_queue_helper, ")
-         ACE_TEXT ("byte_count = %d, head_is_empty = %d\n"),
+         ACE_TEXT ("byte_count = %B, head_is_empty = %d\n"),
          this->id(), byte_count, this->queue_is_empty_i ()));
     }
 
@@ -1303,7 +1303,7 @@ TAO_Transport::cleanup_queue_i ()
     {
       TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - Transport[%B]::cleanup_queue_i, ")
-                  ACE_TEXT ("discarded %d messages, %u bytes.\n"),
+                  ACE_TEXT ("discarded %d messages, %B bytes.\n"),
                   this->id (), msg_count, byte_count));
     }
 }
@@ -1319,7 +1319,7 @@ TAO_Transport::cleanup_queue (size_t byte_count)
         {
           TAOLIB_DEBUG ((LM_DEBUG,
              ACE_TEXT ("TAO (%P|%t) - Transport[%B]::cleanup_queue, ")
-             ACE_TEXT ("byte_count = %d\n"),
+             ACE_TEXT ("byte_count = %B\n"),
              this->id (), byte_count));
         }
 
@@ -1330,7 +1330,7 @@ TAO_Transport::cleanup_queue (size_t byte_count)
         {
           TAOLIB_DEBUG ((LM_DEBUG,
              ACE_TEXT ("TAO (%P|%t) - Transport[%B]::cleanup_queue, ")
-             ACE_TEXT ("after transfer, bc = %d, all_sent = %d, ml = %d\n"),
+             ACE_TEXT ("after transfer, bc = %B, all_sent = %d, ml = %B\n"),
              this->id (), byte_count, i->all_data_sent (),
              i->message_length ()));
         }
@@ -1529,7 +1529,7 @@ TAO_Transport::send_asynchronous_message_i (TAO_Stub *stub,
         {
           TAOLIB_DEBUG ((LM_DEBUG,
              ACE_TEXT ("TAO (%P|%t) - Transport[%B]::send_asynchronous_message_i, ")
-             ACE_TEXT ("trying to send the message (ml = %d)\n"),
+             ACE_TEXT ("trying to send the message (ml = %B)\n"),
              this->id (), total_length));
         }
 
@@ -1606,7 +1606,7 @@ TAO_Transport::send_asynchronous_message_i (TAO_Stub *stub,
         {
           TAOLIB_DEBUG ((LM_DEBUG,
              ACE_TEXT ("TAO (%P|%t) - Transport[%B]::send_asynchronous_message_i, ")
-             ACE_TEXT ("partial send %d / %d bytes\n"),
+             ACE_TEXT ("partial send %B / %B bytes\n"),
              this->id (), byte_count, total_length));
         }
 
@@ -2033,7 +2033,7 @@ TAO_Transport::handle_input_missing_data (TAO_Resume_Handle &rh,
     {
       TAOLIB_DEBUG ((LM_DEBUG,
          ACE_TEXT ("TAO (%P|%t) - Transport[%B]::handle_input_missing_data_message, ")
-         ACE_TEXT ("read bytes %d\n"),
+         ACE_TEXT ("read bytes %b\n"),
          this->id (), n));
     }
 
@@ -2269,7 +2269,7 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
     {
       TAOLIB_DEBUG ((LM_DEBUG,
          ACE_TEXT ("TAO (%P|%t) - Transport[%B]::handle_input_parse_data, ")
-         ACE_TEXT ("read %d bytes\n"),
+         ACE_TEXT ("read %b bytes\n"),
          this->id (), n));
     }
 

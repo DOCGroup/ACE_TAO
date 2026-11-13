@@ -265,7 +265,7 @@ MIF_Scheduler::end_scheduling_segment (const RTScheduling::Current::IdType &guid
                   guid.length ());
 
   ACE_DEBUG ((LM_DEBUG,
-              "MIF_Scheduler::end_scheduling_segment %d\n",
+              "MIF_Scheduler::end_scheduling_segment %B\n",
                   count));
 
   if (ready_que_.message_count () > 0)
@@ -407,7 +407,7 @@ MIF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr reque
                       guid->length ());
 
       ACE_DEBUG ((LM_DEBUG,
-                  "MIF_Scheduler::receive_request %d\n",
+                  "MIF_Scheduler::receive_request %B\n",
                   gu_id));
 
 
@@ -429,7 +429,7 @@ MIF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr reque
 
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    "%t The Guid is %d Importance is %d\n",
+                    "%t The Guid is %B Importance is %d\n",
                     gu_id,
                     importance));
 
@@ -457,7 +457,7 @@ MIF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr)
                   guid->length ());
 
   ACE_DEBUG ((LM_DEBUG,
-              "MIF_Scheduler::send_reply %d\n",
+              "MIF_Scheduler::send_reply %B\n",
               count));
 
   if (ready_que_.message_count () > 0)
@@ -503,7 +503,7 @@ MIF_Scheduler::send_other (PortableInterceptor::ServerRequestInfo_ptr)
 
 
       ACE_DEBUG ((LM_DEBUG,
-                  "MIF_Scheduler::send_other %d\n",
+                  "MIF_Scheduler::send_other %B\n",
                   count));
     }
 
@@ -544,7 +544,7 @@ MIF_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_ptr)
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-                "MIF_Scheduler::receive_reply Guid = %d Imp = %d\n",
+                "MIF_Scheduler::receive_reply Guid = %B Imp = %d\n",
                 gu_id,
                 importance));
 

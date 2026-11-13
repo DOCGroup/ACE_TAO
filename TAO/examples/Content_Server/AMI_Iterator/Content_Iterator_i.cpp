@@ -83,7 +83,7 @@ Content_Iterator_i::next_chunk (CORBA::ULongLong offset,
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Sending chunk %d at offset <%u> of size <%u>\n"),
+              ACE_TEXT ("Sending chunk %d at offset <%Q> of size <%b>\n"),
               this->chunk_index_,
               offset,
               bytes_read));

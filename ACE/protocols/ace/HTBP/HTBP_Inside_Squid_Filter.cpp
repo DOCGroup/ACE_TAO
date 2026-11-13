@@ -75,8 +75,8 @@ ACE::HTBP::Inside_Squid_Filter::make_request_header (ACE::HTBP::Channel *ch,
   if (size > buffer_size)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT("HTBP::Inside_Squid_Filter: insufficient ")
-                       ACE_TEXT("buffer space for request header, need %d ")
-                       ACE_TEXT("got %d\n"),
+                       ACE_TEXT("buffer space for request header, need %B ")
+                       ACE_TEXT("got %B\n"),
                        size, buffer_size),
                       -1);
 

@@ -101,7 +101,7 @@ functionality_test (TEST_MAP &map,
 
         // Debugging info.
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%d|%d|%d)"),
+                    ACE_TEXT ("(%B|%d|%d)"),
                     counter,
                     original_value,
                     entry.second ()));
@@ -237,7 +237,7 @@ performance_test (void (*ptf) (TEST_MAP &, size_t, KEY *),
   timer.elapsed_time (et);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("time to run %s of size %d for %d iterations\n"),
+              ACE_TEXT ("time to run %s of size %B for %B iterations\n"),
               test_name,
               table_size,
               iterations));

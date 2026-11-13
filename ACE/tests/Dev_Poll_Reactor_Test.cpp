@@ -217,7 +217,7 @@ Server::handle_input (ACE_HANDLE /* handle */)
       bytes_read = this->peer ().recv (buf, end - buf);
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("****** bytes_read = %d\n"),
+                  ACE_TEXT ("****** bytes_read = %b\n"),
                   bytes_read));
 
       if (bytes_read == -1)

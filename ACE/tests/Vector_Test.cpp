@@ -38,7 +38,7 @@ int run_main (int, ACE_TCHAR *[])
 
   ACE_TEST_ASSERT (vector.size () == TOP);
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Size: %d\n"),
+              ACE_TEXT ("Size: %B\n"),
               vector.size ()));
 
   for (i = 0; i < TOP; ++i)
@@ -51,16 +51,16 @@ int run_main (int, ACE_TCHAR *[])
   while (!iter.done ())
     {
       if (iter.next (p_item) == 0)
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Fail to get value on iter pass %d\n"),
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Fail to get value on iter pass %B\n"),
                     iter_count));
       if (*p_item != iter_count)
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Iter pass %d got %d\n"),
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Iter pass %B got %B\n"),
                     iter_count, *p_item));
       iter_count++;
       iter.advance();
     }
   if (iter_count != TOP)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Iterated %d elements; expected %d\n"),
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Iterated %B elements; expected %B\n"),
                 iter_count, TOP));
 
   for (i = 0; i < (TOP - LEFT); ++i)
@@ -68,14 +68,14 @@ int run_main (int, ACE_TCHAR *[])
 
   ACE_TEST_ASSERT (vector.size () == LEFT);
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Size: %d\n"),
+              ACE_TEXT ("Size: %B\n"),
               vector.size ()));
 
   for (i = 0; i < LEFT; ++i)
     {
       ACE_TEST_ASSERT (vector[i] == i);
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("vector[%d]:%d\n"),
+                  ACE_TEXT ("vector[%B]:%B\n"),
                   i, vector[i]));
     }
 
@@ -96,14 +96,14 @@ int run_main (int, ACE_TCHAR *[])
           ACE_TEST_ASSERT (vector[i] == 0);
         }
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("vector[%d]:%d\n"),
+                  ACE_TEXT ("vector[%B]:%B\n"),
                   i, vector[i]));
     }
 
   vector.clear ();
   ACE_TEST_ASSERT (vector.size () == 0);
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Size: %d\n"),
+              ACE_TEXT ("Size: %B\n"),
               vector.size ()));
 
   // test resize (shrink and enlarge with buffer realloc)

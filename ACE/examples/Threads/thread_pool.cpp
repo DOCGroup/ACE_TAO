@@ -124,7 +124,7 @@ Thread_Pool::svc ()
 
       if (length > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    "(%t) in iteration %d, length = %d, text = \"%*s\"\n",
+                    "(%t) in iteration %d, length = %B, text = \"%*s\"\n",
                     count,
                     length,
                     length - 1,
@@ -211,7 +211,7 @@ producer (Thread_Pool &thread_pool)
             {
               //FUZZ: disable check_for_NULL
               ACE_DEBUG ((LM_DEBUG,
-                          "(%t) EOF, enqueueing NULL block for thread = %d\n",
+                          "(%t) EOF, enqueueing NULL block for thread = %B\n",
                           i));
               //FUZZ: enable check_for_NULL
 

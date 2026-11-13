@@ -261,7 +261,7 @@ Supplier_Task::perform_notifications (int notifications)
   for (size_t i = 0; i < iterations; i++)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%t) notifying reactor on iteration %d\n"),
+                  ACE_TEXT ("(%t) notifying reactor on iteration %B\n"),
                   i));
 
       int result;

@@ -182,7 +182,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           if (options.debug)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "Sending asynch message: %d\n",
+                          "Sending asynch message: %b\n",
                           ni));
             }
 

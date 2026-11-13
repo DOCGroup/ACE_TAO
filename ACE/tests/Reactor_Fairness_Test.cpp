@@ -69,7 +69,7 @@ namespace {
     int analyze_reports ()
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Results (%d entries):\n"),
+                  ACE_TEXT ("Results (%B entries):\n"),
                   reports.size()));
       unsigned int max_chunks = 0;
       unsigned int min_chunks = ACE_Numeric_Limits<unsigned int>::max();

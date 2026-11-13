@@ -54,7 +54,7 @@ test (void *args)
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) = trying timed acquire on ")
-                  ACE_TEXT ("iteration %d\n"),
+                  ACE_TEXT ("iteration %B\n"),
                   i));
 
       ACE_Time_Value delta (1, 0);  // One second timeout
@@ -100,12 +100,12 @@ test (void *args)
       // Now try the standard mutex.
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) = trying to acquire on iteration %d\n"),
+                  ACE_TEXT ("(%P|%t) = trying to acquire on iteration %B\n"),
                   i));
       result = mutex->acquire ();
       ACE_TEST_ASSERT (result == 0);
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) = acquired on iteration %d\n"),
+                  ACE_TEXT ("(%P|%t) = acquired on iteration %B\n"),
                   i));
 
       // Sleep for a random amount of time between 0 and 2 seconds.
@@ -116,7 +116,7 @@ test (void *args)
       result = mutex->release ();
       ACE_TEST_ASSERT (result == 0);
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) = released on iteration %d\n"),
+                  ACE_TEXT ("(%P|%t) = released on iteration %B\n"),
                   i));
 
       // FUZZ: disable check_for_ACE_Guard

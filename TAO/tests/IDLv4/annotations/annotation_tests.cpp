@@ -431,7 +431,7 @@ annotation_tests ()
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Annotation Test Error: %C:\n")
           ACE_TEXT ("expected one annotation on test_seq_t base type, ")
-          ACE_TEXT ("it has %d annotations!\n"),
+          ACE_TEXT ("it has %B annotations!\n"),
           t.name_.c_str (), count));
         t.failed ();
       }
@@ -557,7 +557,7 @@ annotation_tests ()
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Annotation Test Error: %C:\n")
           ACE_TEXT ("expected one annotation on test_union discriminator, ")
-          ACE_TEXT ("it has %d annotations!\n"),
+          ACE_TEXT ("it has %B annotations!\n"),
           t.name_.c_str (), count));
         t.failed ();
       }
@@ -745,7 +745,7 @@ annotation_tests ()
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Annotation Test Error: %C:\n")
           ACE_TEXT ("expected one annotation on struct12Array base type, ")
-          ACE_TEXT ("it has %d annotations!\n"),
+          ACE_TEXT ("it has %B annotations!\n"),
           t.name_.c_str (), count));
         t.failed ();
       }

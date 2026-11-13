@@ -540,7 +540,7 @@ test_ostream ()
   if (size != info.size_)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Read %d bytes, rather than expected %d bytes\n"),
+                         ACE_TEXT ("Read %b bytes, rather than expected %B bytes\n"),
                          size,
                          info.size_),
                         -1);

@@ -455,7 +455,7 @@ ACE::HTBP::Channel::recvv (iovec *io_vec,
   if (ACE::debug())
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("ACE::HTBP::Channel::recvv ")
-                ACE_TEXT("recvv, leftover len = %d\n"),
+                ACE_TEXT("recvv, leftover len = %B\n"),
                 this->leftovers_.length()));
   if (this->leftovers_.length())
     {

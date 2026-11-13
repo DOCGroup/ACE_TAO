@@ -594,7 +594,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   size_t const nr_procs = mgr.managed ();
   if (nr_procs != 0)
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P) %d processes left in manager\n"),
+                ACE_TEXT ("(%P) %B processes left in manager\n"),
                 nr_procs));
 #endif /* defined (ACE_WIN32) */
 #endif // ACE_HAS_PROCESS_SPAWN

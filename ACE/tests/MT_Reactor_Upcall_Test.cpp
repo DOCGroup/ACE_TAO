@@ -116,7 +116,7 @@ Handler::handle_input (ACE_HANDLE fd)
                  &message.type_,
                  sizeof (message.type_));
   if (result != static_cast<ssize_t> (sizeof (message.type_)))
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t): read %d, %p\n"),
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t): read %b, %p\n"),
                 result,
                 ACE_TEXT ("recv 1")));
   result =
@@ -124,7 +124,7 @@ Handler::handle_input (ACE_HANDLE fd)
                  &message.size_,
                  sizeof (message.size_));
   if (result != static_cast<ssize_t> (sizeof (message.size_)))
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t): read %d, %p\n"),
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t): read %b, %p\n"),
                 result,
                 ACE_TEXT ("recv 2")));
 
@@ -147,7 +147,7 @@ Handler::handle_input (ACE_HANDLE fd)
                  &message.data_,
                  message.size_);
   if (result != static_cast<ssize_t> (message.size_))
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t): read %d, %p\n"),
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t): read %b, %p\n"),
                 result,
                 ACE_TEXT ("recv 3")));
   else

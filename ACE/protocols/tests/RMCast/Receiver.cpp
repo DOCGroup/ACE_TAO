@@ -57,7 +57,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
       if (s != (ssize_t)sizeof (msg))
       {
-        ACE_ERROR ((LM_ERROR, "unexpected message size %d, expected %d\n",
+        ACE_ERROR ((LM_ERROR, "unexpected message size %b, expected %B\n",
                     s, sizeof (msg)));
         continue;
       }

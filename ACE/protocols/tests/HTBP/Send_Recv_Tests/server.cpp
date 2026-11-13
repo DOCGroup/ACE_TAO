@@ -213,7 +213,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT("(%P) server, Test 1: recvd len = %d\n"),len));
+              ACE_TEXT("(%P) server, Test 1: recvd len = %b\n"),len));
 
   for (i = 0; i < 255; i++)
     if (buffer[i] != i)
@@ -238,7 +238,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   len += stream.send (buffer + 48,189);
   len += stream.send (buffer + 237,18);
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT("(%P) server sent len=%d\n"),len));
+              ACE_TEXT("(%P) server sent len=%b\n"),len));
   //  ACE_OS::sleep(10);
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT("(%P) flushing outbound queue\n")));

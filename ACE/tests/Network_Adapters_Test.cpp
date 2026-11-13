@@ -333,7 +333,7 @@ Echo_Handler::dispatch_echo_checks (int first_call)
             ACE_ERROR
               ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) Echo_Handler::dispatch_echo_checks - ")
-                ACE_TEXT ("failed for this->remote_addrs_[%d].\n"),
+                ACE_TEXT ("failed for this->remote_addrs_[%B].\n"),
                 i));
         }
     }
@@ -481,7 +481,7 @@ Echo_Handler::handle_timeout (ACE_Time_Value const &,
 
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) Echo_Handler::handle_timeout - ")
-                      ACE_TEXT ("this->success_status_[%d] is not zero. ")
+                      ACE_TEXT ("this->success_status_[%B] is not zero. ")
                       ACE_TEXT ("Need to proceed echo-checks.\n"), i));
           break;
         }
@@ -885,7 +885,7 @@ is_ip_address_local (char const * const ip_to_bind)
 
   // debugging messages
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("is_ip_address_local () - there are %d interfaces\n"),
+              ACE_TEXT ("is_ip_address_local () - there are %B interfaces\n"),
               how_many));
 
   for (size_t i = 0; i < how_many; ++i)

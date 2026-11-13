@@ -320,7 +320,7 @@ run_main (int, ACE_TCHAR *[])
   if (events < ACE_MAX_TIMERS + 2)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("expected %d events, got %d instead\n"),
+                  ACE_TEXT ("expected %d events, got %B instead\n"),
                   ACE_MAX_TIMERS + 2,
                   events));
     }

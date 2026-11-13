@@ -481,7 +481,7 @@ client (void *arg)
   for (i = 0; i < ACE_MAX_ITERATIONS; i++)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) client iteration %d\n"),
+                  ACE_TEXT ("(%P|%t) client iteration %B\n"),
                   i));
       if (connector.connect (stream,
                              server_addr) == -1)
@@ -562,13 +562,13 @@ client (void *arg)
                                                     ACE_TEXT (' ')));
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) count = %d\n"),
+                  ACE_TEXT ("(%P|%t) count = %B\n"),
                   count));
       // Make sure that the count is correct.
       if (count != ACE_MAX_ITERATIONS)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("Error: Count invalid, has %d expected %d\n"),
+                             ACE_TEXT ("Error: Count invalid, has %B expected %d\n"),
                              count, ACE_MAX_ITERATIONS),
                             0);
         }

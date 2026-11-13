@@ -128,7 +128,7 @@ Worker_Task<BARRIER>::service (ACE_Message_Block *mb,
   if (length > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t) in iteration %d len=%d text got:\n",
+                  "(%t) in iteration %d len=%B text got:\n",
                   iter,
                   length));
       ACE_OS::write (ACE_STDOUT,

@@ -76,7 +76,7 @@ TAO_DIOP_Transport::recv (char *buf,
   if (TAO_debug_level > 0)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - DIOP_Transport::recv, received %d bytes from %C:%d %d\n",
+                  "TAO (%P|%t) - DIOP_Transport::recv, received %b bytes from %C:%d %d\n",
                   n,
                   from_addr.get_host_name (),
                   from_addr.get_port_number (),

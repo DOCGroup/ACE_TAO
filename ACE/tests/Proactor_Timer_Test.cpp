@@ -94,12 +94,12 @@ Time_Handler::handle_time_out (const ACE_Time_Value &, const void *arg)
   size_t current_counter = *(reinterpret_cast<const size_t *> (arg));
   if (current_counter != counter)
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Expected timer %d, not %d\n"),
+                ACE_TEXT ("Expected timer %B, not %B\n"),
                 counter,
                 current_counter));
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("[%@] Timer id %d with counter #%d|%d expired.\n"),
+              ACE_TEXT ("[%@] Timer id %d with counter #%d|%B expired.\n"),
               this,
               this->timer_id (),
               counter,

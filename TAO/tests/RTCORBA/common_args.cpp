@@ -145,7 +145,7 @@ get_values (const char *test_type,
 
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
-                "\n%s: There are %d %s: ",
+                "\n%s: There are %B %s: ",
                 test_type,
                 length,
                 name));

@@ -350,7 +350,7 @@ Supplier_Handler::recv (ACE_Message_Block *&forward_addr)
           ACE_ERROR ((LM_ERROR, "%p\n",
                       "Recv error during header read "));
           ACE_DEBUG ((LM_DEBUG,
-                      "attempted to read %d\n",
+                      "attempted to read %b\n",
                       header_bytes_left_to_read));
           this->msg_frag_ = this->msg_frag_->release ();
           return header_received;

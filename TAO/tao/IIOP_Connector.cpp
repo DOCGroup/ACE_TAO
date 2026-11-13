@@ -280,7 +280,7 @@ TAO_IIOP_Connector::make_parallel_connection (
     TAOLIB_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("TAO (%P|%t) - IIOP_Connector::")
                 ACE_TEXT ("make_parallel_connection, ")
-                ACE_TEXT ("to %zu endpoints\n"), max_count));
+                ACE_TEXT ("to %B endpoints\n"), max_count));
   std::vector<TAO_IIOP_Connection_Handler *> shlist;
   std::vector<TAO_IIOP_Endpoint *> eplist;
   try

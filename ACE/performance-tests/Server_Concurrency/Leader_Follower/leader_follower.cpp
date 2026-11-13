@@ -307,7 +307,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       latency.accumulate (leader_followers[i]->latency_stats_);
       throughput.accumulate (leader_followers[i]->throughput_stats_);
-      ACE_DEBUG ((LM_DEBUG, "Thread[%d]: ", i));
+      ACE_DEBUG ((LM_DEBUG, "Thread[%B]: ", i));
       leader_followers[i]->throughput_stats_.dump_results (ACE_TEXT(""), ACE_TEXT(""));
     }
 

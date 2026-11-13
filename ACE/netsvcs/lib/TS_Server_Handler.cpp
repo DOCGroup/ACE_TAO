@@ -206,7 +206,7 @@ ACE_TS_Server_Handler::recv_request ()
           ACE_FALLTHROUGH;
         default:
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("%p got %d bytes, expected %d bytes\n"),
+                      ACE_TEXT ("%p got %b bytes, expected %b bytes\n"),
                       ACE_TEXT ("recv failed"),
                       n,
                       bytes_expected));

@@ -103,7 +103,7 @@ int
 Worker_Task::close (u_long)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) closing task %d\n",
+              "(%t) closing task %B\n",
               this->index_));
   // Invoker_Task retains ownership until its Thread_Manager wait completes.
   return 0;
@@ -135,7 +135,7 @@ int
 Worker_Task::svc ()
 {
   ACE_DEBUG ((LM_DEBUG,
-              " (%t) in worker %d\n",
+              " (%t) in worker %B\n",
               index_));
 
   for (size_t iterations = 1;
@@ -143,13 +143,13 @@ Worker_Task::svc ()
        ++iterations)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  " (%t) in iteration %d\n",
+                  " (%t) in iteration %B\n",
                   iterations));
       ACE_OS::sleep (0);
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              " (%t) worker %d ends\n",
+              " (%t) worker %B ends\n",
               index_));
 
   return 0;
@@ -232,7 +232,7 @@ Invoker_Task::svc ()
   size_t n_tasks =
     thr_mgr->num_tasks_in_group (1);
   ACE_DEBUG ((LM_DEBUG,
-              "Number of tasks in group 1: %d\n",
+              "Number of tasks in group 1: %B\n",
               n_tasks)) ;
 
   // Wait for 1 second and then suspend every thread in the group.

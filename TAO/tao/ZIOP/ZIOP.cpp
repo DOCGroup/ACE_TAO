@@ -538,7 +538,7 @@ TAO_ZIOP_Loader::complete_compression (Compression::Compressor_ptr compressor,
               TAOLIB_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("ZIOP (%P|%t) ")
                           ACE_TEXT ("TAO_ZIOP_Loader::complete_compression, ")
-                          ACE_TEXT ("compressed length (%u >= %u) ")
+                          ACE_TEXT ("compressed length (%B >= %B) ")
                           ACE_TEXT ("uncompressed length, (did not compress).\n"),
                           static_cast <unsigned int> (output.length () + Compression_Overhead),
                           static_cast <unsigned int> (original_data_length)));

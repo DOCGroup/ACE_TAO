@@ -931,7 +931,7 @@ Task::svc ()
       if (invocation_priorities.size () != 0 &&
           invocation_priorities.size () != rates.size ())
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Number of invocation priorities (%d) != Number of rates (%d)\n",
+                           "Number of invocation priorities (%B) != Number of rates (%B)\n",
                            invocation_priorities.size (),
                            rates.size ()),
                           -1);

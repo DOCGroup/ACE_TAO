@@ -194,7 +194,7 @@ TAO_Profile::decode (TAO_InputCDR &cdr)
       // If there is extra data in the profile we are supposed to
       // ignore it, but print a warning just in case...
       TAOLIB_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("%d bytes out of %d left after profile data\n"),
+                  ACE_TEXT ("%B bytes out of %B left after profile data\n"),
                   cdr.length (),
                   encap_len));
     }

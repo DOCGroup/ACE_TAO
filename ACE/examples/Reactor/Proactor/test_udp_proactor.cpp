@@ -140,7 +140,7 @@ Receiver::open_addr (const ACE_INET_Addr &localAddr)
       // actually read something, we will handle it in the handler callback
       ACE_DEBUG ((LM_DEBUG, "********************\n"));
       ACE_DEBUG ((LM_DEBUG,
-                  "%s = %d\n",
+                  "%s = %B\n",
                   "bytes received immediately",
                   number_of_bytes_recvd));
       ACE_DEBUG ((LM_DEBUG, "********************\n"));
@@ -311,7 +311,7 @@ Sender::open (const ACE_TCHAR *host,
       // actually sent something, we will handle it in the handler callback
       ACE_DEBUG ((LM_DEBUG, "********************\n"));
       ACE_DEBUG ((LM_DEBUG,
-                  "%s = %d\n",
+                  "%s = %B\n",
                   "bytes sent immediately",
                   number_of_bytes_sent));
       ACE_DEBUG ((LM_DEBUG, "********************\n"));

@@ -27,7 +27,7 @@ public:
     // @@ Note that this code is not portable to all OS platforms
     // since it uses print statements within signal handler context.
     ACE_DEBUG ((LM_DEBUG,
-                "Executed ACE signal handler for signal %S, count = %d\n",
+                "Executed ACE signal handler for signal %S, count = %B\n",
                 sig,
                 signal_count));
     --signal_count;

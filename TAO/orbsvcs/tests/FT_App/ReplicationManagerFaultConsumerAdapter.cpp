@@ -234,8 +234,8 @@ int ReplicationManagerFaultConsumerAdapter::init (
     // create a fault detector for each replica
     size_t replicaCount = this->replica_iors_.size();
     ACE_DEBUG ((LM_DEBUG,
-      ACE_TEXT ("Number of replicas being monitored: (%u)\n"),
-      static_cast<unsigned int> (replicaCount)
+      ACE_TEXT ("Number of replicas being monitored: (%B)\n"),
+      replicaCount
     ));
     for (size_t nRep = 0; result == 0 && nRep < replicaCount; ++nRep)
     {

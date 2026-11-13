@@ -191,7 +191,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   do {
     len = stream.recv (buffer2+total, 145 - total);
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT("(%P) Test 2: want %d bytes, got %d\n"),
+                ACE_TEXT("(%P) Test 2: want %d bytes, got %b\n"),
                 145 - total,len));
     if (len == -1 || errno == EWOULDBLOCK)
       ACE_OS::sleep (1);
@@ -204,7 +204,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   len = stream.recv (buffer2 + total, 110);
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT("(%P) Test 2: second read want 110 bytes, got %d\n"),
+              ACE_TEXT("(%P) Test 2: second read want 110 bytes, got %b\n"),
               len));
 
   if (len != 110)
@@ -214,7 +214,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     if (buffer2[i] != buffer[i])
       {
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) Test 2, rcvd byte %d is %d, not %d\n"),
+                    ACE_TEXT ("(%P|%t) Test 2, rcvd byte %B is %d, not %d\n"),
                     i, buffer2[i], buffer[i]));
         Test_Result = 1;
       }

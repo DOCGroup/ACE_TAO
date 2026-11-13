@@ -287,7 +287,7 @@ Library::write_export_list (bool show_ref_counts)
       ACE_ERROR ((LM_ERROR, "%p\n", "mkdir"));
   }
 
-  ACE_DEBUG ((LM_DEBUG, "%s: %zu out of %zu modules required\n",
+  ACE_DEBUG ((LM_DEBUG, "%s: %B out of %B modules required\n",
               name_.c_str (), num_extrefs_, modules_.size ()));
 
   mpcfile_->write_prolog (path_);

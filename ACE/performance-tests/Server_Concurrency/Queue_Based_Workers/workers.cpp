@@ -114,7 +114,7 @@ Worker_Task::svc ()
           if (debug != DEBUGGING_RANGE::DEBUG_NONE)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "(%t) stop message dequeued after %d data messages\n",
+                          "(%t) stop message dequeued after %B data messages\n",
                           this->messages_dequeued_));
             }
 
@@ -135,7 +135,7 @@ Worker_Task::svc ()
       if (debug != DEBUGGING_RANGE::DEBUG_NONE)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "(%t) dequeued its %d message\n",
+                      "(%t) dequeued its %B message\n",
                       this->messages_dequeued_));
         }
 
@@ -195,7 +195,7 @@ IO_Task::svc ()
           if (debug != DEBUGGING_RANGE::DEBUG_NONE)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "(%t) IO thread -> burst %d: message %d; overall message %d\n",
+                          "(%t) IO thread -> burst %B: message %B; overall message %B\n",
                           burst,
                           i,
                           messages_queued));

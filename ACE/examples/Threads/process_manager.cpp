@@ -123,7 +123,7 @@ worker (size_t iterations)
     if (i && (i % 100) == 0)
       {
         ACE_DEBUG ((LM_DEBUG,
-                    "(%P|%t@%T) worker spinning furiously... (%u)\n",
+                    "(%P|%t@%B) worker spinning furiously... (%u)\n",
                     i));
         ACE_OS::sleep (1);
       }

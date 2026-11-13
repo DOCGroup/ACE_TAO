@@ -24,13 +24,15 @@ public:
   Dgram_Endpoint &operator= (Dgram_Endpoint const &) = delete;
   Dgram_Endpoint &operator= (Dgram_Endpoint &&) = delete;
 
-  /// Hook methods inherited from ACE_Event_Handler.
+  /// @name ACE_Event_Handler hook methods
+  /// @{
   ACE_HANDLE get_handle () const override;
   int handle_input (ACE_HANDLE handle) override;
   int handle_timeout (ACE_Time_Value const &tv,
                       void const *arg = nullptr) override;
   int handle_close (ACE_HANDLE handle,
                     ACE_Reactor_Mask close_mask) override;
+  /// @}
 
   //FUZZ: disable check_for_lack_ACE_OS
   /// Send a datagram to the peer.
@@ -85,7 +87,7 @@ Dgram_Endpoint::handle_input (ACE_HANDLE)
     {
       buf[n] = '\0';
       ACE_DEBUG ((LM_DEBUG,
-                  "Received buf of size %d = %s\n",
+                  "Received buf of size %b = %s\n",
                   n,
                   buf));
     }

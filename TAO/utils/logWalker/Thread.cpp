@@ -102,7 +102,7 @@ Thread::exit_wait (PeerProcess *pp, size_t linenum)
   while (old != pp)
     {
       ACE_ERROR ((LM_ERROR,
-                  "Line %d, Ending an invocation to peer %s, but most recent started"
+                  "Line %B, Ending an invocation to peer %s, but most recent started"
                   " is to peer %s\n", linenum, pp->id(), old->id()));
       //      this->pending_.push(old);
       if (this->pending_.empty ())

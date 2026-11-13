@@ -1575,7 +1575,7 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
     // Print.
     TAOLIB_DEBUG ((LM_DEBUG,
                 ACE_TEXT("TAO (%P|%t) - GIOP_Message_Base::dump_msg, ")
-                ACE_TEXT("%C GIOP message v%c.%c, %d data bytes, %s endian, ")
+                ACE_TEXT("%C GIOP message v%c.%c, %B data bytes, %s endian, ")
                 ACE_TEXT("Type %C[%u]\n"),
                 label,
                 digits[ptr[TAO_GIOP_VERSION_MAJOR_OFFSET]],

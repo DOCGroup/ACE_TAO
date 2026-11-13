@@ -242,7 +242,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       for (ssize_t ni {}; ni < options.iteration_count; ++ni)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("Sending asynch message: %d\n"),
+                      ACE_TEXT ("Sending asynch message: %b\n"),
                       ni));
 
           ami_test_var->sendc_foo (the_handler_var.in (),
@@ -277,7 +277,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       for (ssize_t ni {}; ni < options.iteration_count; ++ni)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("Sending another asynch message: %d\n"),
+                      ACE_TEXT ("Sending another asynch message: %b\n"),
                       ni));
 
           ami_test_var->sendc_foo (the_handler_var.in (),

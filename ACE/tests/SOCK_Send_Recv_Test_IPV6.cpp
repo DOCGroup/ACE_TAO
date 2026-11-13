@@ -135,7 +135,8 @@ client (void *arg)
   if (len != 255)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %p; len is %d, but should be 255!\n"),
+                  ACE_TEXT ("(%P|%t) %p; len is %b, but should be 255!\n"),
+                  ACE_TEXT ("recv"),
                   len));
     }
   ACE_TEST_ASSERT (len == 255);
@@ -144,7 +145,7 @@ client (void *arg)
     if (buffer2[i] != buffer[i])
       {
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) Test 2, rcvd byte %d is %d, not %d\n"),
+                    ACE_TEXT ("(%P|%t) Test 2, rcvd byte %B is %d, not %d\n"),
                     i, buffer2[i], buffer[i]));
         Test_Result = 1;
       }
@@ -167,7 +168,7 @@ client (void *arg)
       if (sent != sizeof (buff) && errno != 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%P|%t) Test 3, pass %d, sent %d, %p\n"),
+                      ACE_TEXT ("(%P|%t) Test 3, pass %d, sent %b, %p\n"),
                       i, sent, ACE_TEXT ("error")));
           Test_Result = 1;   // Fail
         }
@@ -279,7 +280,7 @@ server (void *arg)
       total_recv += got;
     }
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Test 3 received %d bytes\n"),
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Test 3 received %B bytes\n"),
                 total_recv));
 
   if (total_recv == Test3_Total_Size)
@@ -287,7 +288,7 @@ server (void *arg)
       if (got != 0 || errno != 0)
         {
           ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) Test 3 final recv status %d, expected 0\n"),
+                ACE_TEXT ("(%P|%t) Test 3 final recv status %b, expected 0\n"),
                 got));
           ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"),
                       ACE_TEXT ("expected errno == 0, instead")));

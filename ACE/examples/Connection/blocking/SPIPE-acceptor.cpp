@@ -40,7 +40,7 @@ Svc_Handler::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
 
       // Print out the message received from the server.
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%t) message size %d.\n"),
+                  ACE_TEXT ("(%t) message size %B.\n"),
                   result.message_block ().length ()));
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("%C"),

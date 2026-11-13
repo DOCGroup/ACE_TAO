@@ -109,7 +109,7 @@ run_main (int , ACE_TCHAR *[])
     const size_t MSG_BLOCK_TOTAL = MSG_BLOCK_COUNT * MSG_BLOCK_SIZE;
 
     ACE_ERROR ((LM_DEBUG,
-                ACE_TEXT ("(%P|%t) %u blocks %u bytes each, total %u\n"),
+                ACE_TEXT ("(%P|%t) %B blocks %B bytes each, total %B\n"),
                 MSG_BLOCK_COUNT,
                 MSG_BLOCK_SIZE,
                 MSG_BLOCK_TOTAL));
@@ -124,7 +124,7 @@ run_main (int , ACE_TCHAR *[])
     if (duplicate_total != MSG_BLOCK_TOTAL )
     {
       ACE_ERROR ((LM_ERROR,
-        ACE_TEXT ("(%P|%t) duplicate(): returned total of %u\n"),
+        ACE_TEXT ("(%P|%t) duplicate(): returned total of %B\n"),
         duplicate_total));
       rc = 1;
     }
@@ -136,7 +136,7 @@ run_main (int , ACE_TCHAR *[])
     if (clone_total != MSG_BLOCK_TOTAL )
     {
       ACE_ERROR ((LM_ERROR,
-        ACE_TEXT ("(%P|%t) clone(): returned total of %u \n"),
+        ACE_TEXT ("(%P|%t) clone(): returned total of %B \n"),
         clone_total));
       rc = 1;
     }

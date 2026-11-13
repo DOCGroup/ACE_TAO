@@ -134,7 +134,7 @@ Thread_Pool::svc ()
         {
           // The queue has been deactivated, so let's bail out.
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%t) in iteration %d, queue len = %d, ")
+                      ACE_TEXT ("(%t) in iteration %d, queue len = %B, ")
                       ACE_TEXT ("queue deactivated, exiting\n"),
                       count,
                       this->msg_queue ()->message_count ()));
@@ -146,8 +146,8 @@ Thread_Pool::svc ()
 
       if (length > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%t) in iteration %d, queue len = %d, ")
-                    ACE_TEXT ("length = %d, text = \"%*s\"\n"),
+                    ACE_TEXT ("(%t) in iteration %d, queue len = %B, ")
+                    ACE_TEXT ("length = %B, text = \"%*s\"\n"),
                     count,
                     this->msg_queue ()->message_count (),
                     length,
@@ -160,7 +160,7 @@ Thread_Pool::svc ()
       if (length == 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%t) in iteration %d, queue len = %d, ")
+                      ACE_TEXT ("(%t) in iteration %d, queue len = %B, ")
                       ACE_TEXT ("got \"empty\" message, exiting\n"),
                       count,
                       this->msg_queue ()->message_count ()));
@@ -364,7 +364,7 @@ Thread_Pool::test_empty_message_shutdown ()
             {
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%t) end of input, ")
-                          ACE_TEXT ("enqueueing \"empty\" message %d\n"),
+                          ACE_TEXT ("enqueueing \"empty\" message %B\n"),
                           i));
 
               // Note the use of reference counting to avoid copying

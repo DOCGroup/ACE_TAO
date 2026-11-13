@@ -63,7 +63,7 @@ ID_Check_i::check_servant_id (CORBA::Short index)
   size_t const object_index = static_cast<size_t> (index);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("check_servant_id: index = %d current objectid ")
+              ACE_TEXT ("check_servant_id: index = %B current objectid ")
               ACE_TEXT ("len %u octets: "),
               index, oid->length ()));
   for (size_t i = 0; i < oid->length () && i < 16; ++i)
@@ -79,7 +79,7 @@ ID_Check_i::check_servant_id (CORBA::Short index)
       if (oid[i] != this->oids_[object_index][i])
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("check_servant_id: id[%d] mismatch at position %B, ")
+                      ACE_TEXT ("check_servant_id: id[%B] mismatch at position %B, ")
                       ACE_TEXT ("got %d, expected %d\n"),
                       index, i, oid[i], this->oids_[object_index][i]));
           return false;

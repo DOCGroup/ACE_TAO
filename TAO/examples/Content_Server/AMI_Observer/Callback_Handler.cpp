@@ -53,7 +53,7 @@ Callback_Handler::next_chunk ()
       ++this->chunk_index_;
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Sending chunk %d from %s of size <%d>\n"),
+                  ACE_TEXT ("Sending chunk %d from %s of size <%b>\n"),
                   this->chunk_index_,
                   this->file_.get_path_name (),
                   bytes_read));

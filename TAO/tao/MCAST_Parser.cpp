@@ -243,7 +243,7 @@ TAO_MCAST_Parser::multicast_query (char* & buf,
               if (TAO_debug_level > 0)
                 TAOLIB_DEBUG ((LM_DEBUG,
                             ACE_TEXT ("\n%N; Sent multicast.")
-                            ACE_TEXT ("# of bytes sent is %d.\n"),
+                            ACE_TEXT ("# of bytes sent is %b.\n"),
                             result));
               // Wait for response until timeout.
               ACE_Time_Value tv (

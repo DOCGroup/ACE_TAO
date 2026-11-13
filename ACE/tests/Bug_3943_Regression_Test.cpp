@@ -366,7 +366,7 @@ Svc_Handler::send_data ()
                         ACE_TEXT ("ENOBUFS condition logic, so this test ")
                         ACE_TEXT ("probably running into other socket ")
                         ACE_TEXT ("limitations and needs to be redesigned. ")
-                        ACE_TEXT ("Stuck sending %d.\n"),
+                        ACE_TEXT ("Stuck sending %b.\n"),
                         thresholdActualSend));
           close ();
           return;

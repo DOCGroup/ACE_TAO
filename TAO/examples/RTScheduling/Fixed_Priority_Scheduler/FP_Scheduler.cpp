@@ -190,7 +190,7 @@ Fixed_Priority_Scheduler::receive_request (PortableInterceptor::ServerRequestInf
 
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    "Receive request The Guid is %d\n",
+                    "Receive request The Guid is %B\n",
                     gu_id));
 
       guid_out.ptr () = guid;

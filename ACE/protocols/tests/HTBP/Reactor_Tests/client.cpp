@@ -114,7 +114,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) Client: ")
-                  ACE_TEXT("send returned %d\n"),n));
+                  ACE_TEXT("send returned %b\n"),n));
 
       retrycount = 10;
       while ((n = ch->recv_ack()) == -1
@@ -130,7 +130,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) Client: ")
-                  ACE_TEXT("After wait for ack, n = %d, retry = %d\n"),
+                  ACE_TEXT("After wait for ack, n = %b, retry = %d\n"),
                   n,retrycount,ACE_ERRNO_GET));
 
       retrycount = 10;
@@ -175,7 +175,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) Client: ")
-              ACE_TEXT("send returned %d\n"),n));
+              ACE_TEXT("send returned %b\n"),n));
 
   retrycount = 10;
   while (ch &&

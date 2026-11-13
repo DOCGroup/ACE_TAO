@@ -136,7 +136,7 @@ Task_Handler::Task_Handler (size_t number_of_handles,
     if (ACE_Reactor::instance ()->register_handler (this,
                                                     this->events_[i].handle ()) == -1)
       ACE_ERROR ((LM_ERROR,
-                  "%p\t cannot register handle %d with Reactor\n",
+                  "%p\t cannot register handle %B with Reactor\n",
                   "Task_Handler::Task_Handler",
                   i));
 
@@ -221,7 +221,7 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
 
       // Randomly generate events
       ACE_DEBUG ((LM_DEBUG, "********************************************************\n"));
-      ACE_DEBUG ((LM_DEBUG, "(%t -- main thread) signaling %d events : iteration = %d\n",
+      ACE_DEBUG ((LM_DEBUG, "(%t -- main thread) signaling %B events : iteration = %d\n",
                   number_of_handles_to_signal,
                   i));
       ACE_DEBUG ((LM_DEBUG, "********************************************************\n"));

@@ -331,7 +331,7 @@ Performance_Test_Options::print_results ()
   else
     {
       ACE_DEBUG ((LM_INFO,
-                  "\ntotal work = %d\n"
+                  "\ntotal work = %B\n"
                   "(Only interpret the next two statistics for throughput tests)\n"
                   "%f bytes in %.2f real seconds = %.2f Mbit/sec\n"
                   "%f bytes in %.2f CPU seconds = %.2f Mbit/sec\n",

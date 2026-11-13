@@ -324,7 +324,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%P|%t) - Activate failed  for RT class "
-                      " - Using default priority for thread [%d]\n",
+                      " - Using default priority for thread [%B]\n",
                       i));
 
           flags = THR_BOUND;
@@ -367,7 +367,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   for (i = 0; i < number_of_threads; ++i)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Message consumed in thread [%d] is [%d]\n",
+                  "Message consumed in thread [%B] is [%d]\n",
                   i, leader_followers[i]->processed ()));
       delete leader_followers[i];
     }

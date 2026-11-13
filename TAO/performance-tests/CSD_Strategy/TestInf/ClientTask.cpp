@@ -36,7 +36,7 @@ ClientTask::open (void *)
       // no threads were activated.
       ACE_ERROR_RETURN((LM_ERROR,
                         "(%P|%t) ClientTask failed to activate "
-                        "the %d client threads.\n", num_threads),
+                        "the %B client threads.\n", num_threads),
                        -1);
     }
 
