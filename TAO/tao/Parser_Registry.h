@@ -42,10 +42,8 @@ class TAO_IOR_Parser;
 class TAO_Export TAO_Parser_Registry
 {
 public:
-  /// Default constructor.
   TAO_Parser_Registry ();
 
-  /// Dstructor.
   ~TAO_Parser_Registry ();
 
   /// Initialize the parser registry with the list of known protocols.
@@ -56,7 +54,6 @@ public:
   /// The lookup is based on the prefix in the string
   TAO_IOR_Parser *match_parser (const char *ior_string);
 
-  // = Iterator.
   using const_iterator = std::vector<TAO_IOR_Parser *>::const_iterator;
   const_iterator begin () const;
   const_iterator end () const;

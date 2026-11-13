@@ -43,10 +43,8 @@ template <class MUTEX>
 class TAO_Condition
 {
 public:
-  /// Useful typedef
   using LOCK = MUTEX;
 
-  // = Initialiation and termination methods.
   /// Initialize the condition variable.
   explicit TAO_Condition (MUTEX &m);
 
@@ -57,7 +55,6 @@ public:
   /// Implicitly destroy the condition variable.
   ~TAO_Condition ();
 
-  // = Lock accessors.
   /**
    * Block on condition, or until absolute time-of-day has passed.  If
    * abstime == 0 use "blocking" <wait> semantics.  Else, if <abstime>
@@ -85,7 +82,6 @@ public:
   /// Signal *all* waiting threads.
   int broadcast ();
 
-  // = Utility methods.
   /// Explicitly destroy the condition variable.
   int remove ();
 
