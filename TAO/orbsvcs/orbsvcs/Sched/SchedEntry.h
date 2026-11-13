@@ -20,11 +20,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-//////////////////////
-// Helper Functions //
-//////////////////////
-
-
 /// Forward declaration of classes.
 class Task_Entry;
 class Task_Entry_Link;
@@ -462,9 +457,8 @@ public:
                            u_long number_of_calls_ = 1,
                            u_long starting_sub_frame = 0);
 
-  ////////////////////////
-  // iterator interface //
-  ////////////////////////
+  /// @name Iterator interface
+  /// @{
 
     /// returns 0 if there are more entries to see, 1 if not
   int done () const;
@@ -497,9 +491,9 @@ public:
      */
   int retreat ();
 
-  /////////////////////
-  // proxy interface //
-  /////////////////////
+  /// @}
+  /// @name Proxy interface
+  /// @{
 
     /// returns the adjusted arrival time of the virtual entry
   Time arrival () const;
@@ -512,6 +506,7 @@ public:
 
     /// returns the OS priority of the virtual entry
   OS_Priority OS_priority () const;
+  /// @}
 
 
 private:

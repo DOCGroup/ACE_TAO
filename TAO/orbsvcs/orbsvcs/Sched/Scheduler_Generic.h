@@ -120,9 +120,8 @@ private:
   LOCK lock_;
 
 
-  ///////////////////////////////////////
-  // member functions for internal use //
-  ///////////////////////////////////////
+  /// @name Internal scheduler operations
+  /// @{
 
   /// Prepare for another schedule computation, but do not
   /// disturb the "output" (priorities that have already been assigned).
@@ -130,6 +129,7 @@ private:
 
   /// Display the schedule, task-by-task.
   void print_schedule ();
+  /// @}
 
 };
 
