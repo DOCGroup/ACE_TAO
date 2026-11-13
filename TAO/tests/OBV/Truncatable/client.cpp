@@ -2,6 +2,8 @@
 #include "ExtraC.h"
 #include "ace/Get_Opt.h"
 
+#include <cstring>
+
 ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 
 int fail = 0;
@@ -158,7 +160,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         test->op1 ("case1", v1.in (), ov1.out (), desc.inout ());
 
 
-        VERIFY (! ACE_OS::strcmp (desc.in (),
+        VERIFY (! std::strcmp (desc.in (),
                                   "case1: A<-tB, truncate B to A"));
         VERIFY (v1->basic_data () == ov1->basic_data ());
         if (verbose)
@@ -183,7 +185,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
         test->op1 ("case2", v2.in (), ov2.out (), desc.inout ());
 
-        VERIFY (! ACE_OS::strcmp (desc.in (),
+        VERIFY (! std::strcmp (desc.in (),
                                   "case2: A<-tB<-tC, truncate C to A"));
         VERIFY (v2->basic_data () == ov2->basic_data ());
         if (verbose)
@@ -200,7 +202,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
         test->op2 (v2.in (), "case3", otv1.out (), desc.inout ());
 
-        VERIFY (! ACE_OS::strcmp (desc.in (),
+        VERIFY (! std::strcmp (desc.in (),
                                   "case3: A<-tB<-tC, truncate C to B"));
         VERIFY (v2->basic_data () == otv1->basic_data ());
         VERIFY (v2->data1 () == otv1->data1 ());
@@ -224,7 +226,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
         test->op2 (itv1b.in (), "case3b", otv1b.out (), desc.inout ());
 
-        VERIFY (! ACE_OS::strcmp (desc.in (),
+        VERIFY (! std::strcmp (desc.in (),
                 "case3b: A<-tB, truncatable but no truncation"));
         VERIFY (itv1b->basic_data () == otv1b->basic_data ());
         VERIFY (itv1b->data1 () == otv1b->data1 ());
@@ -289,7 +291,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         pretest = fail;
         test->op1 ("case5", v5.in (), ov5.out (), desc.inout ());
 
-        VERIFY (! ACE_OS::strcmp (desc.in (),
+        VERIFY (! std::strcmp (desc.in (),
           "case5: A<-tB<-tC, B & C have nested value type, truncate C to A"));
         VERIFY (v5->basic_data () == ov5->basic_data ());
         if (verbose)
@@ -306,7 +308,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         pretest = fail;
         test->op3 ("case6", v5.in (), otv4.out (), desc.inout ());
 
-        VERIFY (! ACE_OS::strcmp (desc.in (),
+        VERIFY (! std::strcmp (desc.in (),
            "case6: A<-tB<-tC, B & C have nested value type, truncate C to B"));
         VERIFY (v5->basic_data () == otv4->basic_data ());
         VERIFY (v5->nv4 ()->data () == otv4->nv4 ()->data ());
@@ -329,7 +331,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         pretest = fail;
         test->op1 ("case7", iv.in (), ov.out (), desc.inout ());
 
-        VERIFY (! ACE_OS::strcmp (desc.in (),
+        VERIFY (! std::strcmp (desc.in (),
                 "case7: A<-tB, B has no data, truncate B to A"));
         VERIFY (iv->basic_data () == ov->basic_data ());
         if (verbose)
@@ -371,7 +373,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         OBV_TruncatableTest::BaseValue_var ov
           = test->op4 ("case8", v1.in (), 5, v2.in (), v3.in (), v4.in (), desc.inout ());
 
-        VERIFY (! ACE_OS::strcmp (desc.in (),
+        VERIFY (! std::strcmp (desc.in (),
                  "case8: multiple IN truncatable valuetype parameters"
                         " and return truncatable valuetype"));
         CORBA::ULong total = 5 * (v1->basic_data () + v2->basic_data () +
@@ -399,7 +401,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
         test->op2 (v1.in (), "case9", ov1.out (), desc.inout ());
 
-        VERIFY (! ACE_OS::strcmp (desc.in (),
+        VERIFY (! std::strcmp (desc.in (),
                                   "case9: A<-tB, truncate unknown B to A"));
         VERIFY (v1->basic_data () == ov1->basic_data ()
                 && v1->data1() == ov1->data1());
@@ -425,7 +427,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
         test->op5 (a, "case10", ov1.out (), desc.inout ());
 
-        VERIFY (! ACE_OS::strcmp (desc.in (),
+        VERIFY (! std::strcmp (desc.in (),
                                   "case10: A<-tB, known truncatable via Any"));
         VERIFY (v1->basic_data () == ov1->basic_data ()
                 && v1->data1() == ov1->data1());
@@ -453,7 +455,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         test->op5 (a, "case11", ov1.out (), desc.inout ());
 
 
-        VERIFY (! ACE_OS::strcmp (desc.in (),
+        VERIFY (! std::strcmp (desc.in (),
                                   "case11: A<-tB, unknown truncatable via Any"));
         VERIFY (v1->basic_data () == ov1->basic_data ()
                 && v1->data1() == ov1->data1());

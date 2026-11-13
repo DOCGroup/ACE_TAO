@@ -2,7 +2,8 @@
 #include "ServerRequestInterceptor.h"
 
 #include "ace/Log_Msg.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 ServerRequestInterceptor::ServerRequestInterceptor (
   char const *orb_id,
@@ -94,15 +95,15 @@ ServerRequestInterceptor::receive_request (
 
   // Make sure the name of the RootPOA is the first in the AdapterName
   // sequence.
-  ACE_ASSERT (ACE_OS::strcmp ("RootPOA", name[(CORBA::ULong) 0]) == 0);
+  ACE_ASSERT (std::strcmp ("RootPOA", name[(CORBA::ULong) 0]) == 0);
 
   CORBA::String_var orb_id = ri->orb_id ();
 
-  ACE_ASSERT (ACE_OS::strcmp (this->orb_id_.in (), orb_id.in ()) == 0);
+  ACE_ASSERT (std::strcmp (this->orb_id_.in (), orb_id.in ()) == 0);
 
   CORBA::String_var server_id = ri->server_id ();
 
-  ACE_ASSERT (ACE_OS::strcmp (server_id.in (), "ORT_test_server") == 0);
+  ACE_ASSERT (std::strcmp (server_id.in (), "ORT_test_server") == 0);
 }
 
 void
