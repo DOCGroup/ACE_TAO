@@ -110,19 +110,17 @@ public:
    */
   void remove_type (char const* name) override;
 
+  /// The list_types operation permits a client to obtain the names of
+  /// service types which are in the repository. The "which_types"
+  /// parameter permits the client to specify one of two possible
+  /// values:  all types known to the repository  all types
+  /// added/modified since a particular incarnation number The names of
+  /// the requested types are returned by the operation for subsequent
+  /// querying via the describe_type or the fully_describe_type
+  /// operation.
+
   CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq*
   list_types (CosTradingRepos::ServiceTypeRepository::SpecifiedServiceTypes const& which_types) override;
-
-  // BEGIN SPEC
-  // The list_types operation permits a client to obtain the names of
-  // service types which are in the repository. The "which_types"
-  // parameter permits the client to specify one of two possible
-  // values:  all types known to the repository  all types
-  // added/modified since a particular incarnation number The names of
-  // the requested types are returned by the operation for subsequent
-  // querying via the describe_type or the fully_describe_type
-  // operation.
-  // END SPEC
 
   /**
    * BEGIN SPEC

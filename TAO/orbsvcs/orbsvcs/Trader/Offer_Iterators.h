@@ -62,15 +62,13 @@ public:
   virtual void add_offer (CosTrading::OfferId offer_id,
                           const CosTrading::Offer* offer) = 0;
 
-  CORBA::ULong max_left () override = 0;
+  /// The max_left operation returns the number of service offers
+  /// remaining in the iterator. The exception UnknownMaxLeft is raised
+  /// if the iterator cannot determine the remaining number of service
+  /// offers (e.g., if the iterator determines its set of service
+  /// offers through lazy evaluation).
 
-  // BEGIN SPEC
-  // The max_left operation returns the number of service offers
-  // remaining in the iterator. The exception UnknownMaxLeft is raised
-  // if the iterator cannot determine the remaining number of service
-  // offers (e.g., if the iterator determines its set of service
-  // offers through lazy evaluation).
-  // END SPEC
+  CORBA::ULong max_left () override = 0;
 
   /**
    * BEGIN SPEC
