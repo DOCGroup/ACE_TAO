@@ -1,11 +1,13 @@
 #include "ace/INet/ConnectionCache.h"
 
+#include <memory>
+#include <utility>
+
 #if !defined (__ACE_INLINE__)
 #include "ace/INet/ConnectionCache.inl"
 #endif
 
 #include "ace/INet/INet_Log.h"
-#include <utility>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -33,7 +35,7 @@ namespace ACE
 
     ConnectionCacheKey& ConnectionCacheKey::operator = (ConnectionCacheKey const& cachekey)
       {
-        if (this != &cachekey)
+        if (this != std::addressof (cachekey))
           {
             std::unique_ptr<ConnectionKey> duplicate;
             if (cachekey.key_ != nullptr)
@@ -74,7 +76,7 @@ namespace ACE
 
     ConnectionCacheValue& ConnectionCacheValue::operator = (ConnectionCacheValue const& cacheval)
       {
-        if (this != &cacheval)
+        if (this != std::addressof (cacheval))
           {
             this->state_ = cacheval.state_;
             this->connection_ = cacheval.connection_;
