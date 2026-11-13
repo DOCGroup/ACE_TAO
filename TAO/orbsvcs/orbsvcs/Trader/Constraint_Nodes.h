@@ -249,7 +249,6 @@ public:
 
   // Return the type represented by this MysteryOperand.
 
-  // = Comparison operators.
   friend TAO_Trading_Serv_Export bool
     operator< (TAO_Literal_Constraint const& left,
                TAO_Literal_Constraint const& right);
@@ -281,8 +280,6 @@ public:
   friend TAO_Trading_Serv_Export bool
     operator== (const TAO::String_Manager& left,
                 TAO_Literal_Constraint const& right);
-
-  // = Arithmetic operators.
 
   friend TAO_Trading_Serv_Export TAO_Literal_Constraint
     operator+ (TAO_Literal_Constraint const& left,

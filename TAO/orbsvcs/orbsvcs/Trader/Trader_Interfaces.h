@@ -524,8 +524,6 @@ public:
 
   ~TAO_Admin ();
 
-  // = Importing Parameters (used by the Lookup Interface)
-
   /// Search card is the cardinality of the offers searched for
   /// constraint compliance.
   CORBA::ULong set_def_search_card (CORBA::ULong value) override;
@@ -548,16 +546,12 @@ public:
   CORBA::Boolean set_supports_dynamic_properties (CORBA::Boolean value) override;
   CORBA::Boolean set_supports_proxy_offers (CORBA::Boolean value) override;
 
-  // = Link Interface parameters
-
   CORBA::ULong set_def_hop_count (CORBA::ULong value) override;
   CORBA::ULong set_max_hop_count (CORBA::ULong value) override;
 
   CosTrading::FollowOption set_def_follow_policy (CosTrading::FollowOption policy) override;
   CosTrading::FollowOption set_max_follow_policy (CosTrading::FollowOption policy) override;
   CosTrading::FollowOption set_max_link_follow_policy (CosTrading::FollowOption policy) override;
-
-  // = Set Type Repository
 
   CosTrading::TypeRepository_ptr set_type_repos (CosTrading::TypeRepository_ptr repository) override;
 
@@ -788,8 +782,6 @@ public:
 
   CosTrading::Proxy::ProxyInfo*
   describe_proxy (char const*) override;
-
-   // = CosTrading::TraderComponents methods.
 
   void list_proxies (CORBA::ULong,
                      CosTrading::OfferIdSeq*&,

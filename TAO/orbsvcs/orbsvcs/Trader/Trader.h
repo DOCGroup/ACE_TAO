@@ -96,8 +96,6 @@ private:
 
   void parse_args (int& argc, ACE_TCHAR** argv);
 
-  // = Command line configurable parameters.
-
   Conformance conformance_ {TAO_TRADER_LINKED};
   CORBA::Boolean threadsafe_ {};
   CORBA::Boolean supports_dynamic_properties_ {true};
@@ -160,7 +158,6 @@ public:
   explicit TAO_Support_Attributes_i (TAO_Lockable &locker);
   ~TAO_Support_Attributes_i ();
 
-  // = Accessor methods.
   CORBA::Boolean supports_modifiable_properties () const;
   void supports_modifiable_properties (CORBA::Boolean);
 
@@ -215,8 +212,6 @@ public:
   explicit TAO_Link_Attributes_i (TAO_Lockable &locker);
   ~TAO_Link_Attributes_i ();
 
-  // = Accessor methods.
-
   CosTrading::FollowOption max_link_follow_policy () const;
   void  max_link_follow_policy (CosTrading::FollowOption);
 
@@ -247,8 +242,6 @@ public:
 
   explicit TAO_Import_Attributes_i (TAO_Lockable &locker);
   ~TAO_Import_Attributes_i ();
-
-  // = Accessor methods.
 
   CORBA::ULong def_search_card () const;
   void def_search_card (CORBA::ULong);
@@ -429,8 +422,6 @@ public:
 
   ~TAO_Trader_Base () override;
 
-  // = Accessors for objects that manage trader's configuration.
-
   TAO_Trading_Components_i &trading_components ();
 
   const TAO_Trading_Components_i &trading_components () const;
@@ -446,8 +437,6 @@ public:
   TAO_Link_Attributes_i &link_attributes ();
 
   const TAO_Link_Attributes_i &link_attributes () const;
-
-  // = Accessor for trader's lock.
 
   /**
    * Determine whether the identifier is a valid one (i.e., if the
@@ -475,8 +464,6 @@ public:
   }
 
 protected:
-  // = Objects determining current configuration of a trader.
-
   /// Stores and allows lookup of trader's components.
   TAO_Trading_Components_i trading_components_;
 
@@ -506,8 +493,6 @@ using TAO_Offer_Map = ACE_Hash_Map_Manager_Ex<CORBA::ULong,
                                                ACE_Null_Mutex>;
 using TAO_String_Set = std::vector<CORBA::String_var>;
 using TAO_String_Queue = std::deque<std::string>;
-
-// = Helpful operators.
 
 bool
 operator> (const CosTradingRepos::ServiceTypeRepository::IncarnationNumber &l,

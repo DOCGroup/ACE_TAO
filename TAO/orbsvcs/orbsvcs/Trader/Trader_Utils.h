@@ -302,8 +302,6 @@ public:
   // used.
   // END SPEC
 
-  // = Offer consideration policies
-
   CORBA::Boolean use_modifiable_properties () const;
 
   // BEGIN SPEC
@@ -347,8 +345,6 @@ public:
   // type; if not (and by default), then any offer of a type
   // conformant to the importer's service type is considered.
   // END SPEC
-
-  // = Federated trader policies (not implemented yet)
 
   /**
    * BEGIN SPEC
@@ -459,8 +455,6 @@ public:
   TAO_Policy_Creator& operator= (TAO_Policy_Creator&&) = delete;
 
   explicit TAO_Policy_Creator (int num_policies = 0);
-
-  // = Routines to set policies.
 
   /// Set the maximum number of offers searched for the query.
   void search_card (CORBA::ULong scard);
@@ -641,7 +635,6 @@ public:
   /// match_card.
   void matched_offer ();
 
-  // = Return the limits applied.
   /**
    * BEGIN SPEC
    * If any cardinality or other limits were applied by one or more
@@ -687,7 +680,6 @@ class TAO_Property_Filter
 public:
   using SPECIFIED_PROPS = CosTrading::Lookup::SpecifiedProps;
 
-  /// An accomplice to g++'s insane lust for copy constructors.
   TAO_Property_Filter () : policy_ (CosTrading::Lookup::all) {}
 
   /// Verify that the specified properties are correct.

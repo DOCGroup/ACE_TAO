@@ -49,8 +49,8 @@ public:
 
   ~TAO_Register_Offer_Iterator () override;
 
-  /// Deposit at maximum n offers into the return sequence and return 1,
-  /// or return 0 if the iterator is done and no offers are returned.
+  /// Deposit at most n offers into the return sequence and return true,
+  /// or return false if the iterator is done and no offers are returned.
   CORBA::Boolean next_n (CORBA::ULong n,
                          CosTrading::OfferSeq_out offers) override;
 

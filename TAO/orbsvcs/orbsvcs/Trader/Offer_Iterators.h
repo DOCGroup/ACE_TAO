@@ -28,22 +28,16 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
   // TAO_Offer_Iterator
   // *************************************************************
 
+/**
+ * @brief Implements the CosTrading::OfferIterator IDL interface.
+ *
+ * This abstract base class allows for different OfferIterator
+ * implementations. The interface returns service offers from a query
+ * through successive operations on the iterator.
+ */
 class TAO_Offer_Iterator
   : public virtual POA_CosTrading::OfferIterator
 {
-  // = TITLE
-  //     This class implements CosTrading::OfferIterator IDL
-  //     interface.
-
-  // = DESCRIPTION
-  //     This is an abstract base class  to allow for different
-  //     implementations of OfferIterator.
-  // BEGIN SPEC
-  //   The OfferIterator interface is used to return a set of service
-  //   offers from the query operation by enabling the service offers
-  //   to be extracted by successive operations on the OfferIterator
-  //   interface.
-  // END SPEC
 public:
   TAO_Offer_Iterator (TAO_Offer_Iterator const&) = delete;
   TAO_Offer_Iterator& operator= (TAO_Offer_Iterator const&) = delete;
@@ -104,18 +98,14 @@ public:
   // TAO_Query_Only_Offer_Iterator
   // *************************************************************
 
+/**
+ * @brief Implements an OfferIterator for a query-only trader.
+ *
+ * The iterator stores pointers to Offers and accesses them directly
+ * because the trader's service offers are not changed or removed.
+ */
 class TAO_Query_Only_Offer_Iterator
   : public TAO_Offer_Iterator
-  // = TITLE
-  //     An implementation of the CosTrading::OfferIterator IDL
-  //     interface that takes advantage of the fact that the trader is
-  //     Query Only, and therefore its service offers are not being
-  //     changed or removed.
-  //
-  // = DESCRIPTION
-  //     The iterator stores pointers to Offers to be iterated over,
-  //     and later accesses the Offers directly through the pointers.
-  //
 {
 public:
   TAO_Query_Only_Offer_Iterator (TAO_Query_Only_Offer_Iterator const&) = delete;
@@ -127,8 +117,8 @@ public:
 
   ~TAO_Query_Only_Offer_Iterator () override = default;
 
-  /// Deposit at maximum n offers into the return sequence and return 1,
-  /// or return 0 if the iterator is done and no offers are returned.
+  /// Deposit at most n offers into the return sequence and return true,
+  /// or return false if the iterator is done and no offers are returned.
   CORBA::Boolean next_n (CORBA::ULong n,
                          CosTrading::OfferSeq_out offers) override;
 
@@ -149,22 +139,17 @@ private:
   // TAO_Offer_Iterator_Collection
   // *************************************************************
 
+/**
+ * @brief Collects several offer iterators into one iterator.
+ *
+ * A query may query several other traders, and this collection merges
+ * their results into a single set. Since a query returns a sequence and
+ * an iterator, this class collects returned iterators into one iterator.
+ * The result is a distributed tree of iterators, which can become
+ * inefficient when the trader graph is deep.
+ */
 class TAO_Offer_Iterator_Collection :
   public virtual POA_CosTrading::OfferIterator
-// = TITLE
-//   A collection of offer iterator to query in turn.
-//
-// = DESCRIPTION
-//   Since a query could conceivable query several other traders, it
-//   needs a way to merge the results into a single set of results
-//   suitable for being returned to the user. And since all the query
-//   method can return to the user is a sequence and an iterator, and
-//   the size of the sequence is constrained, there needs to be some
-//   way to collect all the returned offer_iterators into a single
-//   offer_iterator. This is that collection. The results of
-//   collecting all the iterators in this way is a distributed tree of
-//   iterators, which could conceivably become hugely inefficient if
-//   the trader graph is deep enough.
 {
 public:
   TAO_Offer_Iterator_Collection (TAO_Offer_Iterator_Collection const&) = delete;
@@ -200,21 +185,14 @@ private:
   // TAO_Offer_Id_Iterator
   // *************************************************************
 
+/**
+ * @brief Stores the overflow of offer IDs from the Admin list_offers method.
+ *
+ * The OfferIdIterator interface returns offer identifiers from the
+ * list_offers and list_proxies operations through successive operations.
+ */
 class TAO_Offer_Id_Iterator :
   public virtual POA_CosTrading::OfferIdIterator
-// = TITLE
-//   Silly little iterator that contains the overflow of offer ids
-//   from the Admin list_offers method.
-//
-// = DESCRIPTION
-//
-//   BEGIN SPEC
-//   The OfferIdIterator interface is used to return a set of offer
-//   identifiers from the list_offers operation and the list_proxies
-//   operation in the Admin interface by enabling the offer identifiers
-//   to be extracted by successive operations on the OfferIdIterator
-//   interface.
-//   END SPEC
 {
  public:
   TAO_Offer_Id_Iterator (TAO_Offer_Id_Iterator const&) = delete;

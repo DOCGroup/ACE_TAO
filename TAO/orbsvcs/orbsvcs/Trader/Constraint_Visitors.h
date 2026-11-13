@@ -129,8 +129,6 @@ public:
    */
   int validate (TAO_Constraint* root);
 
-  // = Visitor Methods
-
   int visit_constraint (TAO_Unary_Constraint* constraint) override;
 
   int visit_with (TAO_Unary_Constraint* unary_with) override;
@@ -241,8 +239,6 @@ public:
   int evaluate_preference (TAO_Constraint* root,
                            TAO_Literal_Constraint& result);
 
-  // = Visitor Methods
-
   int visit_constraint (TAO_Unary_Constraint* constraint) override;
 
   int visit_with (TAO_Unary_Constraint* unary_with) override;
@@ -294,7 +290,7 @@ public:
   /// contains the left operand.
   int visit_in (TAO_Binary_Constraint* binary_in) override;
 
-  // = Compare the results of evaluating left and right operands.
+  /// Compare the results of evaluating left and right operands.
   int visit_less_than (TAO_Binary_Constraint* boolean_lt) override;
   int visit_less_than_equal (TAO_Binary_Constraint* boolean_lte) override;
   int visit_greater_than (TAO_Binary_Constraint* boolean_gt) override;
@@ -309,10 +305,8 @@ public:
   int visit_property (TAO_Property_Constraint* literal) override;
 
 private:
+  /// A queue adapter for setting and getting expression operands.
   class TAO_Trading_Serv_Export Operand_Queue
-  // = TITLE
-  // A queue adapter with methods to setting and getting operands
-  // from the expression evaluation results.
   {
   public:
     Operand_Queue ();

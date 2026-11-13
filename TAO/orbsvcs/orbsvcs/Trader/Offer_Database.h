@@ -107,10 +107,8 @@ public:
                                                   ACE_Null_Mutex>;
 
 private:
-  // The internal id is a pointer here, not only to avoid copying,
-  // since we would only copy on insertion, and we only insert once
-  // --- with an empty Offer_Map_Entry --- but also since most locks
-  // have unimplemented copy constructors.
+  // The map stores entries by pointer because entries contain lock types
+  // that are not copyable.
 
   /// Lookup an offer whose type is @ type and id, @a id. Return 0 on
   /// failure.

@@ -59,9 +59,6 @@ public:
   TAO_Trader (TAO_Trader&&) = delete;
   TAO_Trader& operator= (TAO_Trader&&) = delete;
 
-  // The desired combination of interfaces to be passed to the
-  // TAO_Trader constructor.
-
   /// Offer Database Trait.
   using Offer_Database = TAO_Offer_Database<MAP_LOCK_TYPE>;
 
@@ -112,7 +109,6 @@ public:
 
   explicit TAO_Trader_Components (TAO_Trading_Components_i const& comps);
 
-  // = CosTrading::TraderComponents methods.
   /// Returns an object reference to the Lookup interface of the trader.
   /// Returns nil if the trader does not support Lookup interface.
   CosTrading::Lookup_ptr lookup_if () override;
@@ -148,8 +144,6 @@ public:
 
   explicit TAO_Support_Attributes (TAO_Support_Attributes_i const& attrs);
 
-  // = CosTrading::SupportAttributes methods.
-
   CORBA::Boolean supports_modifiable_properties () override;
 
   CORBA::Boolean supports_dynamic_properties () override;
@@ -172,8 +166,6 @@ public:
   TAO_Import_Attributes& operator= (TAO_Import_Attributes&&) = delete;
 
   explicit TAO_Import_Attributes (TAO_Import_Attributes_i const& attrs);
-
-  // = CosTrading::ImportAttributes methods.
 
   CORBA::ULong def_search_card () override;
 
@@ -221,7 +213,6 @@ public:
 
   explicit TAO_Link_Attributes (TAO_Link_Attributes_i const& attrs);
 
-  // = CosTrading::LinkAttributes methods
   CosTrading::FollowOption max_link_follow_policy () override;
 
 private:
