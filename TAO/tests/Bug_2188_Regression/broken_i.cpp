@@ -160,7 +160,6 @@ ArrayTest_i::~ArrayTest_i ()
 }
 
 ::LongArray_slice * ArrayTest_i::a_longArray ()
-
 {
   // Add your implementation here
   return LongArray_dup(longArray_);
@@ -174,7 +173,6 @@ void ArrayTest_i::a_longArray (
 }
 
 ::ULongArray_slice * ArrayTest_i::a_ulongArray ()
-
 {
   // Add your implementation here
   return ULongArray_dup(ulongArray_);
@@ -188,7 +186,6 @@ void ArrayTest_i::a_ulongArray (
 }
 
 ::StringArray_slice * ArrayTest_i::a_stringArray ()
-
 {
   // Add your implementation here
   return StringArray_dup (stringArray_);
@@ -202,7 +199,6 @@ void ArrayTest_i::a_stringArray (
 }
 
 ::ShortArray_slice * ArrayTest_i::a_shortArray ()
-
 {
   // Add your implementation here
   return ShortArray_dup (shortArray_);
@@ -216,7 +212,6 @@ void ArrayTest_i::a_shortArray (
 }
 
 ::UShortArray_slice * ArrayTest_i::a_ushortArray ()
-
 {
   // Add your implementation here
   return UShortArray_dup (ushortArray_);
@@ -230,7 +225,6 @@ void ArrayTest_i::a_ushortArray (
 }
 
 CORBA::Char ArrayTest_i::a_char ()
-
 {
   // Add your implementation here
   return char_;
@@ -244,7 +238,6 @@ void ArrayTest_i::a_char (
 }
 
 ::CharArray_slice * ArrayTest_i::a_charArray ()
-
 {
   return CharArray_dup (charArray_);
 }
@@ -257,7 +250,6 @@ void ArrayTest_i::a_charArray (
 }
 
 ::OctetArray_slice * ArrayTest_i::a_octetArray ()
-
 {
   // Add your implementation here
   return OctetArray_dup (octetArray_);
@@ -271,7 +263,6 @@ void ArrayTest_i::a_octetArray (
 }
 
 ::DoubleArray_slice * ArrayTest_i::a_doubleArray ()
-
 {
   // Add your implementation here
   return DoubleArray_dup (doubleArray_);
@@ -285,7 +276,6 @@ void ArrayTest_i::a_doubleArray (
 }
 
 ::FloatArray_slice * ArrayTest_i::a_floatArray ()
-
 {
   // Add your implementation here
   return FloatArray_dup (floatArray_);
@@ -299,7 +289,6 @@ void ArrayTest_i::a_floatArray (
 }
 
 ::BucketArray_slice * ArrayTest_i::a_bucketArray ()
-
 {
   // Add your implementation here
   return BucketArray_dup (bucketArray_);
@@ -313,7 +302,6 @@ void ArrayTest_i::a_bucketArray (
 }
 
 ::AccountArray_slice * ArrayTest_i::a_accountArray ()
-
 {
   // Add your implementation here
   return AccountArray_dup (accountArray_);
@@ -327,7 +315,6 @@ void ArrayTest_i::a_accountArray (
 }
 
 ::BooleanArray_slice * ArrayTest_i::a_booleanArray ()
-
 {
   // Add your implementation here
   return BooleanArray_dup (booleanArray_);
@@ -341,7 +328,6 @@ void ArrayTest_i::a_booleanArray (
 }
 
 ::LongArrayArray_slice * ArrayTest_i::a_longArrayArray ()
-
 {
   // Add your implementation here
   return LongArrayArray_dup (longArrayArray_);
@@ -355,7 +341,6 @@ void ArrayTest_i::a_longArrayArray (
 }
 
 ::MyEnumArray_slice * ArrayTest_i::a_myEnumArray ()
-
 {
   // Add your implementation here
   return MyEnumArray_dup (enumArray_);

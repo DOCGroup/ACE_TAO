@@ -44,9 +44,8 @@ public:
                                                // priority item is allowed to
                                                // remain in the cache
 
-                     int counted = 0           // flag for whether to use
-                                               // counts
-                     );
+                     // flag for whether to use counts
+                     int counted = 0);
 
   int open (ACE_Allocator *alloc = nullptr,
             JAWS_Cache_Object_Factory *cof = nullptr,
@@ -67,9 +66,8 @@ public:
                                       // priority item is allowed to
                                       // remain in the cache
 
-            int counted = 0           // flag for whether to use
-                                      // counts
-            );
+            // flag for whether to use counts
+            int counted = 0);
 
   ~JAWS_Cache_Manager ();
 

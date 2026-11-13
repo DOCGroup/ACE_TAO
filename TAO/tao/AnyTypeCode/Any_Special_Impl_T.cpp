@@ -18,8 +18,7 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::Any_Special_Impl_T (
     _tao_destructor destructor,
     CORBA::TypeCode_ptr tc,
     T * const val,
-    CORBA::ULong bound
-  )
+    CORBA::ULong bound)
   : Any_Impl (destructor,
               tc),
     value_ (val),

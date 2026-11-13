@@ -40,8 +40,7 @@ BOOL CALLBACK ErrorDialogProc(
         HWND hDlg,
         UINT message,
         WPARAM wParam,
-        LPARAM lParam
-        );
+        LPARAM lParam);
 
 
 
