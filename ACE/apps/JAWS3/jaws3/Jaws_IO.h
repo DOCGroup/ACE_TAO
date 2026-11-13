@@ -26,22 +26,19 @@ public:
   virtual void send ( ACE_HANDLE handle
                     , ACE_Message_Block *mb
                     , JAWS_Event_Completer *completer
-                    , void *act = nullptr
-                    ) = 0;
+                    , void *act = nullptr) = 0;
 
   virtual void recv ( ACE_HANDLE handle
                     , ACE_Message_Block *mb
                     , JAWS_Event_Completer *completer
-                    , void *act = nullptr
-                    ) = 0;
+                    , void *act = nullptr) = 0;
 
   virtual void transmit ( ACE_HANDLE handle
                         , ACE_HANDLE source
                         , JAWS_Event_Completer *completer
                         , void *act = nullptr
                         , ACE_Message_Block *header = nullptr
-                        , ACE_Message_Block *trailer = nullptr
-                        ) = 0;
+                        , ACE_Message_Block *trailer = nullptr) = 0;
 
   // = Timed IO methods.
 
@@ -49,15 +46,13 @@ public:
                     , ACE_Message_Block *mb
                     , JAWS_Event_Completer *completer
                     , const ACE_Time_Value &tv
-                    , void *act = nullptr
-                    ) = 0;
+                    , void *act = nullptr) = 0;
 
   virtual void recv ( ACE_HANDLE handle
                     , ACE_Message_Block *mb
                     , JAWS_Event_Completer *completer
                     , const ACE_Time_Value &tv
-                    , void *act = nullptr
-                    ) = 0;
+                    , void *act = nullptr) = 0;
 
   virtual void transmit ( ACE_HANDLE handle
                         , ACE_HANDLE source
@@ -65,8 +60,7 @@ public:
                         , const ACE_Time_Value &tv
                         , void *act = nullptr
                         , ACE_Message_Block *header = nullptr
-                        , ACE_Message_Block *trailer = nullptr
-                        ) = 0;
+                        , ACE_Message_Block *trailer = nullptr) = 0;
 };
 
 

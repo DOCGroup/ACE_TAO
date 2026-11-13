@@ -19,8 +19,7 @@ protected:
 
   virtual JAWS_Protocol_State * transition ( const JAWS_Event_Result &
                                            , void *data
-                                           , void *act
-                                           ) = 0;
+                                           , void *act) = 0;
 };
 
 class JAWS_Export JAWS_Protocol_Handler

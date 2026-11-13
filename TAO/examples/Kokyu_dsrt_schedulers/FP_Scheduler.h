@@ -43,12 +43,10 @@ public FP_Scheduling::SegmentSchedulingParameterPolicy,
      FP_Segment_Sched_Param_Policy ();
      FP_Segment_Sched_Param_Policy (const FP_Segment_Sched_Param_Policy &rhs);
 
-     FP_Scheduling::SegmentSchedulingParameter value (
-      ) override;
+     FP_Scheduling::SegmentSchedulingParameter value () override;
 
      void value (
-        const FP_Scheduling::SegmentSchedulingParameter & value
-      ) override;
+        const FP_Scheduling::SegmentSchedulingParameter & value) override;
 
      CORBA::Policy_ptr copy () override;
 
@@ -76,8 +74,7 @@ public ::CORBA::LocalObject
 
   FP_Scheduling::SegmentSchedulingParameterPolicy_ptr
     create_segment_scheduling_parameter (
-        const FP_Scheduling::SegmentSchedulingParameter & value
-      ) override;
+        const FP_Scheduling::SegmentSchedulingParameter & value) override;
 
   void begin_new_scheduling_segment (const RTScheduling::Current::IdType & guid,
                                              const char * name,

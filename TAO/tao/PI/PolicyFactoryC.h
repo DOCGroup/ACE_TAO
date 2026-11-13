@@ -108,8 +108,7 @@ namespace PortableInterceptor
 
     virtual ::CORBA::Policy_ptr create_policy (
         ::CORBA::PolicyType type,
-        const ::CORBA::Any & value
-      ) = 0;
+        const ::CORBA::Any & value) = 0;
 
     // Hand-crafted addition.
     virtual ::CORBA::Policy_ptr _create_policy (

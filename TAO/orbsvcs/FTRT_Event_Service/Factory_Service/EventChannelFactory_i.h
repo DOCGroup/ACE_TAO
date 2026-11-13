@@ -29,12 +29,10 @@ public:
   CORBA::Object_ptr create_object (
     char const *type_id,
     PortableGroup::Criteria const &the_criteria,
-    PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id
-    ) override;
+    PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id) override;
 
   void delete_object (
-    PortableGroup::GenericFactory::FactoryCreationId const &factory_creation_id
-    ) override;
+    PortableGroup::GenericFactory::FactoryCreationId const &factory_creation_id) override;
 
 private:
   EventChannelFactory_i (EventChannelFactory_i const &) = delete;

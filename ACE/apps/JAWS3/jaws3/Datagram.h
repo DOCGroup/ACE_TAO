@@ -18,16 +18,14 @@ public:
   virtual void accept ( const ACE_Addr &local_sap
                       , ACE_SOCK_Dgram &new_dgram
                       , JAWS_Event_Completer *completer
-                      , void *act = nullptr
-                      ) = 0;
+                      , void *act = nullptr) = 0;
   // The address to new_dgram is passed back as the data member of
   // the JAWS_Event_Result that is returned to the completer.
 
   virtual void connect ( const ACE_Addr &remote_sap
                        , ACE_SOCK_Dgram &new_dgram
                        , JAWS_Event_Completer *completer
-                       , void *act = nullptr
-                       ) = 0;
+                       , void *act = nullptr) = 0;
   // The address to new_dgram is passed back as the data member of
   // the JAWS_Event_Result that is returned to the completer.
   // ADDR_ANY is assumed for the local access point.
@@ -36,8 +34,7 @@ public:
                        , ACE_SOCK_Dgram &new_dgram
                        , const ACE_Addr &local_sap
                        , JAWS_Event_Completer *completer
-                       , void *act = nullptr
-                       ) = 0;
+                       , void *act = nullptr) = 0;
   // The address to new_dgram is passed back as the data member of
   // the JAWS_Event_Result that is returned to the completer.
   // Use the specified local access point.
@@ -46,8 +43,7 @@ public:
                       , ACE_SOCK_Dgram &new_dgram
                       , JAWS_Event_Completer *completer
                       , const ACE_Time_Value &timeout
-                      , void *act = nullptr
-                      ) = 0;
+                      , void *act = nullptr) = 0;
   // The address to new_dgram is passed back as the data member of
   // the JAWS_Event_Result that is returned to the completer.
 
@@ -55,8 +51,7 @@ public:
                        , ACE_SOCK_Dgram &new_dgram
                        , JAWS_Event_Completer *completer
                        , const ACE_Time_Value &timeout
-                       , void *act = nullptr
-                       ) = 0;
+                       , void *act = nullptr) = 0;
   // The address to new_dgram is passed back as the data member of
   // the JAWS_Event_Result that is returned to the completer.
   // ADDR_ANY is assumed for the local access point.
@@ -66,8 +61,7 @@ public:
                        , const ACE_Addr &local_sap
                        , JAWS_Event_Completer *completer
                        , const ACE_Time_Value &timeout
-                       , void *act = nullptr
-                       ) = 0;
+                       , void *act = nullptr) = 0;
   // The address to new_dgram is passed back as the data member of
   // the JAWS_Event_Result that is returned to the completer.
   // Use the specified local access point.
