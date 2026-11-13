@@ -42,9 +42,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_SFP_Fragment_Node
 {
 public:
-  TAO_SFP_Fragment_Node () : data_ (nullptr) {}
+  TAO_SFP_Fragment_Node () = default;
   flowProtocol::fragment fragment_info_;
-  ACE_Message_Block *data_;
+  ACE_Message_Block *data_ {};
   friend bool operator< (TAO_SFP_Fragment_Node const &left,
                          TAO_SFP_Fragment_Node const &right);
 };
