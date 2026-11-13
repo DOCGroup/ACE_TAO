@@ -454,6 +454,7 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
                                       OS_priority,
                                       *this),
                       -1);
+      std::unique_ptr<Dispatch_Entry> entry_owner {entry_ptr};
 
       // If even one new dispatch was inserted, result is "something
       // happened".
@@ -463,6 +464,8 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
       // a link to it to the dispatch links for this task entry.
       if (dispatch_entries.insert (entry_ptr) < 0)
         return -1;
+      // The dispatch set now owns the entry; dispatch links are non-owning.
+      entry_owner.release ();
 
       // Use iterator for efficient insertion into the dispatch set.
       ACE_Ordered_MultiSet_Iterator <Dispatch_Entry_Link> insert_iter (dispatches_);
@@ -600,6 +603,7 @@ Task_Entry::merge_frames (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries
                                       src_iter.OS_priority (),
                                       owner),
                       -1);
+      std::unique_ptr<Dispatch_Entry> entry_owner {entry_ptr};
 
       // if even one new dispatch was inserted, status is "something happened".
       status = 1;
@@ -608,8 +612,10 @@ Task_Entry::merge_frames (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries
       // a link to it to the dispatch links for this task entry
       if (dispatch_entries.insert (entry_ptr) < 0)
         return -1;
+      // The dispatch set now owns the entry; dispatch links are non-owning.
+      entry_owner.release ();
 
-      else if (dest.insert (Dispatch_Entry_Link (*entry_ptr), dest_iter) < 0)
+      if (dest.insert (Dispatch_Entry_Link (*entry_ptr), dest_iter) < 0)
         return -1;
 
       // TBD - Clients are not assigned priority, but rather obtain it
