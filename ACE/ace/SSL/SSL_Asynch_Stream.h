@@ -59,7 +59,6 @@ using AWS_RESULT = ACE_POSIX_Asynch_Write_Stream_Result;
 
 #endif  /* ACE_WIN32 */
 
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_SSL_Asynch_Stream;     // Forward decl for use in result class def.
@@ -108,7 +107,6 @@ protected:
                                       int signal_number);
 };
 
-
 /**
  * @class ACE_SSL_Asynch_Result
  *
@@ -124,7 +122,6 @@ public:
                    const void *completion_key,
                    u_long error) override;
 };
-
 
 // Only provide forward declarations to prevent possible abuse of the
 // friend declarations in ACE_SSL_Asynch_Stream.

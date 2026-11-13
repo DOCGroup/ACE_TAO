@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_SSL_SOCK_STREAM_H
 #define ACE_SSL_SOCK_STREAM_H
 

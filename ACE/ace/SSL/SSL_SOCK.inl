@@ -16,7 +16,6 @@ ACE_SSL_SOCK::get_handle () const
   return this->ACE_SOCK::get_handle ();
 }
 
-
 ACE_INLINE int
 ACE_SSL_SOCK::control (int cmd, void *arg) const
 {

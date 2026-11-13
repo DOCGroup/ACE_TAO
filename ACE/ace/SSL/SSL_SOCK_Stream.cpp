@@ -209,7 +209,6 @@ ACE_SSL_SOCK_Stream::recv (void *buf,
   return this->recv_i (buf, n, flags, timeout);
 }
 
-
 ssize_t
 ACE_SSL_SOCK_Stream::send (size_t n, ...) const
 {
@@ -490,7 +489,6 @@ ACE_SSL_SOCK_Stream::sendv_n (const iovec iov[], size_t iovcnt) const
     {
       ssize_t result = this->send_n (iov[i].iov_base,
                                      iov[i].iov_len);
-
 
       if (result == -1)
         {

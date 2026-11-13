@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_SSL_SOCK_H
 #define ACE_SSL_SOCK_H
 
@@ -86,6 +85,4 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include /**/ "ace/post.h"
 
 #endif /* ACE_SSL_SOCK_H */
-
-
 

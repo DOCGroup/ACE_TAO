@@ -98,7 +98,6 @@ extern "C"
 }
 #endif  /* ACE_HAS_THREADS && (OPENSSL_VERSION_NUMBER < 0x10100000L) */
 
-
 // ****************************************************************
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

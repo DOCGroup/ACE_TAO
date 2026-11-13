@@ -116,7 +116,6 @@ ACE_SSL_Asynch_Stream::~ACE_SSL_Asynch_Stream ()
 {
   ACE_TRACE ("ACE_SSL_Asynch_Stream::~ACE_SSL_Asynch_Stream");
 
-
   // It is safe to delete stream if all notifications are received,
   // i.e., state is SF_DELETE_ENABLE or if proactor event loop is
   // done.
@@ -295,7 +294,6 @@ ACE_SSL_Asynch_Stream::open (ACE_Handler & handler,
 
   return 0;
 }
-
 
 // ************************************************************
 //  Asynch_Operation interface
@@ -917,7 +915,6 @@ ACE_SSL_Asynch_Stream::ssl_bio_read (char * buf,
   return -1;
 }
 
-
 int
 ACE_SSL_Asynch_Stream::ssl_bio_write (const char * buf,
                                       size_t len,
@@ -969,7 +966,6 @@ ACE_SSL_Asynch_Stream::ssl_bio_write (const char * buf,
       errval = EINVAL;
       return -1;
     }
-
 
   if (this->bio_ostream_.write (
         this->bio_out_msg_, // message block

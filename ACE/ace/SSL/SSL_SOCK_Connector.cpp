@@ -372,7 +372,6 @@ ACE_SSL_SOCK_Connector::complete (ACE_SSL_SOCK_Stream &new_stream,
   return 0;
 }
 
-
 ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector (
   ACE_SSL_SOCK_Stream &new_stream,
   const ACE_Addr &remote_sap,

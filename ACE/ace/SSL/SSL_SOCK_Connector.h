@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_SSL_SOCK_CONNECTOR_H
 #define ACE_SSL_SOCK_CONNECTOR_H
 
