@@ -219,9 +219,7 @@ TAO_AV_SCTP_SEQ_Base_Acceptor::make_svc_handler (TAO_AV_SCTP_SEQ_Flow_Handler *&
 // TAO_AV_SCTP_SEQ_Acceptor
 //------------------------------------------------------------
 
-TAO_AV_SCTP_SEQ_Acceptor::TAO_AV_SCTP_SEQ_Acceptor ()
-{
-}
+TAO_AV_SCTP_SEQ_Acceptor::TAO_AV_SCTP_SEQ_Acceptor () = default;
 
 TAO_AV_SCTP_SEQ_Acceptor::~TAO_AV_SCTP_SEQ_Acceptor () = default;
 
@@ -400,9 +398,7 @@ TAO_AV_SCTP_SEQ_Base_Connector::connector_connect (TAO_AV_SCTP_SEQ_Flow_Handler 
 //------------------------------------------------------------
 // TAO_AV_SCTP_SEQ_Connector
 //------------------------------------------------------------
-TAO_AV_SCTP_SEQ_Connector::TAO_AV_SCTP_SEQ_Connector ()
-{
-}
+TAO_AV_SCTP_SEQ_Connector::TAO_AV_SCTP_SEQ_Connector () = default;
 
 TAO_AV_SCTP_SEQ_Connector::~TAO_AV_SCTP_SEQ_Connector () = default;
 
@@ -565,9 +561,7 @@ TAO_AV_SCTP_SEQ_Connector::close ()
 //------------------------------------------------------------
 
 
-TAO_AV_SCTP_SEQ_Factory::TAO_AV_SCTP_SEQ_Factory ()
-{
-}
+TAO_AV_SCTP_SEQ_Factory::TAO_AV_SCTP_SEQ_Factory () = default;
 
 TAO_AV_SCTP_SEQ_Factory::~TAO_AV_SCTP_SEQ_Factory () = default;
 
@@ -830,9 +824,7 @@ TAO_AV_SCTP_SEQ_Flow_Handler::handle_timeout (ACE_Time_Value const &tv,
 //------------------------------------------------------------
 // TAO_AV_SCTP_SEQ_Flow_Factory
 //------------------------------------------------------------
-TAO_AV_SCTP_SEQ_Flow_Factory::TAO_AV_SCTP_SEQ_Flow_Factory ()
-{
-}
+TAO_AV_SCTP_SEQ_Flow_Factory::TAO_AV_SCTP_SEQ_Flow_Factory () = default;
 
 TAO_AV_SCTP_SEQ_Flow_Factory::~TAO_AV_SCTP_SEQ_Flow_Factory () = default;
 

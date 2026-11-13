@@ -34,9 +34,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // TAO_AV_Qos
 //------------------------------------------------------------
 
-TAO_AV_QoS::TAO_AV_QoS ()
-{
-}
+TAO_AV_QoS::TAO_AV_QoS () = default;
 
 TAO_AV_QoS::TAO_AV_QoS (AVStreams::streamQoS &stream_qos)
 {
@@ -53,9 +51,7 @@ TAO_AV_QoS::convert (AVStreams::streamQoS &/*network_qos*/)
 // ----------------------------------------------------------------------
 // AV_Null_MediaCtrl
 // ----------------------------------------------------------------------
-AV_Null_MediaCtrl::AV_Null_MediaCtrl ()
-{
-}
+AV_Null_MediaCtrl::AV_Null_MediaCtrl () = default;
 
 AV_Null_MediaCtrl::~AV_Null_MediaCtrl () = default;
 
@@ -4395,9 +4391,7 @@ TAO_FlowProducer::set_source_id (CORBA::Long source_id)
 // ------------------------------------------------------------
 
 
-TAO_FlowConsumer::TAO_FlowConsumer ()
-{
-}
+TAO_FlowConsumer::TAO_FlowConsumer () = default;
 
 TAO_FlowConsumer::TAO_FlowConsumer (char const *flowname,
                                     AVStreams::protocolSpec protocols,

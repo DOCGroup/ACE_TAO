@@ -39,9 +39,7 @@ FillQoSParams (ACE_QoS_Params &qos_params,
   return 0;
 }
 
-TAO_AV_UDP_QoS_Session_Helper::TAO_AV_UDP_QoS_Session_Helper ()
-{
-}
+TAO_AV_UDP_QoS_Session_Helper::TAO_AV_UDP_QoS_Session_Helper () = default;
 
 TAO_AV_UDP_QoS_Session_Helper::~TAO_AV_UDP_QoS_Session_Helper () = default;
 
@@ -762,9 +760,7 @@ TAO_AV_UDP_QoS_Transport::recv (iovec *iov,
 // TAO_AV_UDP_Acceptor
 //------------------------------------------------------------
 
-TAO_AV_UDP_QoS_Acceptor::TAO_AV_UDP_QoS_Acceptor ()
-{
-}
+TAO_AV_UDP_QoS_Acceptor::TAO_AV_UDP_QoS_Acceptor () = default;
 
 TAO_AV_UDP_QoS_Acceptor::~TAO_AV_UDP_QoS_Acceptor () = default;
 
@@ -1056,9 +1052,7 @@ TAO_AV_UDP_QoS_Acceptor::close ()
 //------------------------------------------------------------
 // TAO_AV_UDP_Connector
 //------------------------------------------------------------
-TAO_AV_UDP_QoS_Connector::TAO_AV_UDP_QoS_Connector ()
-{
-}
+TAO_AV_UDP_QoS_Connector::TAO_AV_UDP_QoS_Connector () = default;
 
 TAO_AV_UDP_QoS_Connector::~TAO_AV_UDP_QoS_Connector () = default;
 

@@ -715,9 +715,7 @@ TAO_AV_RTP_Object::stop ()
 }
 
 // TAO_AV_RTP_Flow_Factory
-TAO_AV_RTP_Flow_Factory::TAO_AV_RTP_Flow_Factory ()
-{
-}
+TAO_AV_RTP_Flow_Factory::TAO_AV_RTP_Flow_Factory () = default;
 
 TAO_AV_RTP_Flow_Factory::~TAO_AV_RTP_Flow_Factory () = default;
 

@@ -148,9 +148,7 @@ TAO_AV_TCP_Transport::recv (iovec *iov,
 // TAO_AV_TCP_Protocol_Factory
 //------------------------------------------------------------
 
-TAO_AV_TCP_Factory::TAO_AV_TCP_Factory ()
-{
-}
+TAO_AV_TCP_Factory::TAO_AV_TCP_Factory () = default;
 
 TAO_AV_TCP_Factory::~TAO_AV_TCP_Factory () = default;
 
@@ -254,9 +252,7 @@ TAO_AV_TCP_Object::destroy ()
 //------------------------------------------------------------
 // TAO_AV_TCP_Flow_Factory
 //------------------------------------------------------------
-TAO_AV_TCP_Flow_Factory::TAO_AV_TCP_Flow_Factory ()
-{
-}
+TAO_AV_TCP_Flow_Factory::TAO_AV_TCP_Flow_Factory () = default;
 
 TAO_AV_TCP_Flow_Factory::~TAO_AV_TCP_Flow_Factory () = default;
 
@@ -345,9 +341,7 @@ TAO_AV_TCP_Base_Connector::connector_connect (TAO_AV_TCP_Flow_Handler *&handler,
 //------------------------------------------------------------
 // TAO_AV_TCP_Connector
 //------------------------------------------------------------
-TAO_AV_TCP_Connector::TAO_AV_TCP_Connector ()
-{
-}
+TAO_AV_TCP_Connector::TAO_AV_TCP_Connector () = default;
 
 TAO_AV_TCP_Connector::~TAO_AV_TCP_Connector () = default;
 
@@ -459,9 +453,7 @@ TAO_AV_TCP_Base_Acceptor::make_svc_handler (TAO_AV_TCP_Flow_Handler *&handler)
 // TAO_AV_TCP_Acceptor
 //------------------------------------------------------------
 
-TAO_AV_TCP_Acceptor::TAO_AV_TCP_Acceptor ()
-{
-}
+TAO_AV_TCP_Acceptor::TAO_AV_TCP_Acceptor () = default;
 
 TAO_AV_TCP_Acceptor::~TAO_AV_TCP_Acceptor () = default;
 

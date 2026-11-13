@@ -910,9 +910,7 @@ TAO_AV_UDP_Connection_Setup::setup (TAO_AV_Flow_Handler *&flow_handler,
 // TAO_AV_UDP_Protocol_Factory
 //------------------------------------------------------------
 
-TAO_AV_UDP_Factory::TAO_AV_UDP_Factory ()
-{
-}
+TAO_AV_UDP_Factory::TAO_AV_UDP_Factory () = default;
 
 TAO_AV_UDP_Factory::~TAO_AV_UDP_Factory () = default;
 
@@ -1027,9 +1025,7 @@ TAO_AV_UDP_Object::destroy ()
 //------------------------------------------------------------
 // TAO_AV_UDP_Flow_Factory
 //------------------------------------------------------------
-TAO_AV_UDP_Flow_Factory::TAO_AV_UDP_Flow_Factory ()
-{
-}
+TAO_AV_UDP_Flow_Factory::TAO_AV_UDP_Flow_Factory () = default;
 
 TAO_AV_UDP_Flow_Factory::~TAO_AV_UDP_Flow_Factory () = default;
 

@@ -45,9 +45,7 @@ TAO_AV_Flow_Protocol_Item::TAO_AV_Flow_Protocol_Item (ACE_CString const &name)
 // TAO_AV_Connector_Registry
 //------------------------------------------------------------
 
-TAO_AV_Connector_Registry::TAO_AV_Connector_Registry ()
-{
-}
+TAO_AV_Connector_Registry::TAO_AV_Connector_Registry () = default;
 
 int
 TAO_AV_Connector_Registry::open (TAO_Base_StreamEndPoint *endpoint,
@@ -198,9 +196,7 @@ TAO_AV_Connector_Registry::~TAO_AV_Connector_Registry ()
 // TAO_AV_Acceptor_Registry
 //------------------------------------------------------------
 
-TAO_AV_Acceptor_Registry::TAO_AV_Acceptor_Registry ()
-{
-}
+TAO_AV_Acceptor_Registry::TAO_AV_Acceptor_Registry () = default;
 
 TAO_AV_Acceptor_Registry::~TAO_AV_Acceptor_Registry ()
 {

@@ -23,9 +23,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // TAO_AV_Endpoint_Strategy
 // ----------------------------------------------------------------------
 
-TAO_AV_Endpoint_Strategy::TAO_AV_Endpoint_Strategy ()
-{
-}
+TAO_AV_Endpoint_Strategy::TAO_AV_Endpoint_Strategy () = default;
 
 TAO_AV_Endpoint_Strategy::~TAO_AV_Endpoint_Strategy () = default;
 
