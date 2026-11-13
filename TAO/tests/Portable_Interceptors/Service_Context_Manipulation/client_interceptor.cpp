@@ -2,7 +2,8 @@
 #include "tao/OctetSeqC.h"
 
 #include "ace/Log_Msg.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 const IOP::ServiceId service_id = 0xdeadbeef;
 const char *request_msg = "The Echo_Request_Interceptor request message";
@@ -72,9 +73,9 @@ Echo_Client_Request_Interceptor::send_request (
   IOP::ServiceContext sc;
   sc.context_id = ::service_id;
 
-  CORBA::ULong string_len = ACE_OS::strlen (request_msg) + 1;
+  CORBA::ULong string_len = std::strlen (request_msg) + 1;
   CORBA::Octet *buf = CORBA::OctetSeq::allocbuf (string_len);
-  ACE_OS::strcpy (reinterpret_cast<char *> (buf), request_msg);
+  std::strcpy (reinterpret_cast<char *> (buf), request_msg);
 
   sc.context_data.replace (string_len, string_len, buf, 1);
 
@@ -88,7 +89,7 @@ Echo_Client_Request_Interceptor::send_request (
   const char *buf2 =
     reinterpret_cast<const char *> (sc2->context_data.get_buffer ());
 
-  if (ACE_OS::strcmp (buf2, request_msg) != 0)
+  if (std::strcmp (buf2, request_msg) != 0)
     {
         ACE_ERROR ((LM_ERROR,
                     "ERROR: Expected request service context to be: %C.\n"
@@ -140,7 +141,7 @@ Echo_Client_Request_Interceptor::receive_reply (
               buf));
 #endif /*if 0*/
 
-  if (ACE_OS::strcmp (buf, reply_msg) != 0)
+  if (std::strcmp (buf, reply_msg) != 0)
     {
         ACE_ERROR ((LM_ERROR,
                     "ERROR: Expected reply service context to be: %C\n",
@@ -154,7 +155,7 @@ Echo_Client_Request_Interceptor::receive_reply (
   const char *buf2 =
     reinterpret_cast<const char *> (sc2->context_data.get_buffer ());
 
-  if (ACE_OS::strcmp (buf2, request_msg) != 0)
+  if (std::strcmp (buf2, request_msg) != 0)
     {
         ACE_ERROR ((LM_ERROR,
                     "ERROR: Expected request service context to be: %C.\n"
@@ -215,7 +216,7 @@ Echo_Client_Request_Interceptor::receive_exception (
               buf));
 #endif /*if 0*/
 
-  if (ACE_OS::strcmp (buf, reply_msg) != 0)
+  if (std::strcmp (buf, reply_msg) != 0)
     {
         ACE_ERROR ((LM_ERROR,
                     "ERROR: Expected reply service context to be: %C\n",
@@ -229,7 +230,7 @@ Echo_Client_Request_Interceptor::receive_exception (
   const char *buf2 =
     reinterpret_cast<const char *> (sc2->context_data.get_buffer ());
 
-  if (ACE_OS::strcmp (buf2, request_msg) != 0)
+  if (std::strcmp (buf2, request_msg) != 0)
     {
         ACE_ERROR ((LM_ERROR,
                     "ERROR: Expected request service context to be: %C.\n"
