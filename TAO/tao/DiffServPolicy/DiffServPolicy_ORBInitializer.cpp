@@ -7,6 +7,8 @@
 #include "tao/ORB_Core.h"
 #include "tao/PI/ORBInitInfo.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
@@ -30,10 +32,11 @@ TAO_DiffServPolicy_ORBInitializer::pre_init (
     }
 
   // Bind the service context handler for Diffserv
-  TAO_DiffServ_Service_Context_Handler *h {};
-  ACE_NEW (h, TAO_DiffServ_Service_Context_Handler ());
-  // The service context registry takes ownership of the handler.
-  tao_info->orb_core ()->service_context_registry ().bind (IOP::REP_NWPRIORITY, h);
+  std::unique_ptr<TAO_DiffServ_Service_Context_Handler> handler =
+    std::make_unique<TAO_DiffServ_Service_Context_Handler> ();
+  tao_info->orb_core ()->service_context_registry ().bind (
+    IOP::REP_NWPRIORITY,
+    handler.release ());
 }
 
 void
