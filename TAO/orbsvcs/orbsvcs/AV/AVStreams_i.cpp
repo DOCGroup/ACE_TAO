@@ -328,7 +328,7 @@ MMDevice_Map_Hash_Key::~MMDevice_Map_Hash_Key ()
 bool
 MMDevice_Map_Hash_Key::operator == (MMDevice_Map_Hash_Key const &hash_key) const
 {
-  CORBA::Boolean result = 0;
+  CORBA::Boolean result = false;
   try
     {
       result =
@@ -1552,7 +1552,7 @@ TAO_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
 {
   if (TAO_debug_level > 0)
     ORBSVCS_DEBUG ((LM_DEBUG, "TAO_StreamEndPoint::Connect ()\n"));
-  CORBA::Boolean retv = 0;
+  CORBA::Boolean retv = false;
   this->peer_sep_ = AVStreams::StreamEndPoint::_duplicate (responder);
   try
     {
@@ -2748,7 +2748,7 @@ TAO_VDev::set_peer (AVStreams::StreamCtrl_ptr the_ctrl,
   ACE_UNUSED_ARG (the_qos);
   ACE_UNUSED_ARG (the_spec);
 
-  CORBA::Boolean result = 0;
+  CORBA::Boolean result = false;
   try
     {
       if (TAO_debug_level > 0)
@@ -3507,7 +3507,7 @@ TAO_FlowConnection::connect_devs (AVStreams::FDev_ptr a_party,
                                   AVStreams::FDev_ptr b_party,
                                   AVStreams::QoS & flow_qos)
 {
-  CORBA::Boolean result = 0;
+  CORBA::Boolean result = false;
   try
     {
       AVStreams::FlowConnection_var flowconnection = this->_this ();

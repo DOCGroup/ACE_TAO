@@ -865,7 +865,7 @@ TAO_SFP_Object::send_frame (ACE_Message_Block *frame,
                             TAO_AV_frame_info *frame_info)
 {
   TAO_OutputCDR out_stream;
-  CORBA::Boolean result = 0;
+  CORBA::Boolean result = false;
   if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"TAO_SFP_Object::send_frame\n"));
   CORBA::Octet flags = TAO_ENCAP_BYTE_ORDER;
   if (this->transport_ == nullptr)
