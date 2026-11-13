@@ -6,6 +6,7 @@
 #include "tao/ORB_Constants.h"
 
 #include <cstring>
+#include <utility>
 
 MUF_Sched_Param_Policy::MUF_Sched_Param_Policy ()
 {
@@ -306,7 +307,7 @@ MUF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
       sc_qos_as_any <<= sc_qos;
 
       CORBA::OctetSeq_var cdtmp = codec_->encode (sc_qos_as_any);
-      sc.context_data = cdtmp.in ();
+      sc.context_data = std::move (*cdtmp.ptr ());
 
 #ifdef KOKYU_DSRT_LOGGING
       ACE_DEBUG ((LM_DEBUG,
@@ -501,7 +502,7 @@ MUF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
       sc_qos_as_any <<= sc_qos;
 
       CORBA::OctetSeq_var cdtmp = codec_->encode (sc_qos_as_any);
-      sc.context_data = cdtmp.in ();
+      sc.context_data = std::move (*cdtmp.ptr ());
 
       // Add this context to the service context list.
       ri->add_reply_service_context (sc, 1);
