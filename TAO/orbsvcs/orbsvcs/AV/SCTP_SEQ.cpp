@@ -700,7 +700,7 @@ TAO_AV_SCTP_SEQ_Flow_Handler::change_qos (AVStreams::QoS qos)
   int ret = 0;
   CORBA::Long dscp = 0;
   CORBA::Long ecn = 0;
-  int dscp_flag=0;
+  bool dscp_flag = false;
   for(i=0; i < qos.QoSParams.length(); ++i)
     {
       if( std::strcmp( qos.QoSParams[i].property_name.in(), "Diffserv_Codepoint") == 0)
@@ -709,11 +709,11 @@ TAO_AV_SCTP_SEQ_Flow_Handler::change_qos (AVStreams::QoS qos)
           ORBSVCS_DEBUG ((LM_DEBUG,
                       "DSCP %d\n",
                       dscp));
-          dscp_flag=1;
+          dscp_flag = true;
           // DSCP value can only be 6 bits wide
           if(!((dscp >= 0) && (dscp <= 63)))
             {
-              dscp_flag = 0;
+              dscp_flag = false;
               ORBSVCS_DEBUG((LM_DEBUG, "(%N,%l) ECN value can only be (0-3) not %d\n", ecn));
               return -1;
             }
@@ -735,11 +735,11 @@ TAO_AV_SCTP_SEQ_Flow_Handler::change_qos (AVStreams::QoS qos)
   // Set the Diffserv byte only if we specified
   // the Diffserv Codepoint (DSCP) or ECN via QoSParams
   // passed into this method
-  if(dscp_flag || ecn)
+  if (dscp_flag || ecn != 0)
     {
       int tos;
       tos = (int)(dscp << 2);
-      if(ecn)
+      if (ecn != 0)
         {
           tos |= ecn;
         }

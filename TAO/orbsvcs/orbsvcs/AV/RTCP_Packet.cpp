@@ -46,26 +46,26 @@ RTCP_Packet::get_packet_data(char **buffer, ACE_UINT16 &length)
   *buffer = this->packet_data_.get ();
 }
 
-int
-RTCP_Packet::is_valid (char is_first)
+bool
+RTCP_Packet::is_valid (bool is_first)
 {
   // make sure the RTP version is correct
   if (this->chd_.ver_ != RTP_VERSION)
-    return 0;
+    return false;
 
   // these checks are only for the first RTCP packet in a compound packet
   if (is_first)
     {
       // the payload type must be RR or SR
       if ((this->chd_.pt_ != RTCP_PT_SR) && (this->chd_.pt_ != RTCP_PT_RR))
-        return 0;
+        return false;
 
       // the padding bit must not be set
       if (this->chd_.pad_ != 0)
-        return 0;
+        return false;
     }
 
-  return 1;
+  return true;
 }
 
 /*

@@ -66,7 +66,7 @@ public:
   /// Checks the validity of an RTCP packet.  RTCP packets can be sent
   /// together in a compound packet and is_first indicates the first packet
   /// in a compound packet
-  int is_valid (char is_first);
+  bool is_valid (bool is_first);
 
 protected:
   /// Header data common to all RTCP packets.

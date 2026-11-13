@@ -59,7 +59,7 @@ TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *data,
   int length = static_cast<int> (data->length ());
   int more = length;
   char *buf_ptr = data->rd_ptr ();
-  char first_rtcp_packet = 1;
+  bool first_rtcp_packet = true;
   RTCP_Channel_In *c;
 
   // This code performs the RTCP Header validity checks detailed in RFC 1889
@@ -170,7 +170,7 @@ TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *data,
           more = 0;
       }
 
-      first_rtcp_packet = 0;
+      first_rtcp_packet = false;
     }
 
     if (more != 0)

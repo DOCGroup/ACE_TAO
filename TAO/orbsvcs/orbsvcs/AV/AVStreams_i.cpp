@@ -4055,7 +4055,7 @@ TAO_FlowEndPoint::is_fep_compatible (AVStreams::FlowEndPoint_ptr peer_fep)
       AvailableProtocols_ptr.in () >>= temp_protocols;
       peer_protocol_spec = *temp_protocols;
 
-      int protocol_match = 0;
+      bool protocol_match = false;
       for (u_int i {}; i < my_protocol_spec.length (); ++i)
         {
           CORBA::String_var my_protocol_string;
@@ -4066,7 +4066,7 @@ TAO_FlowEndPoint::is_fep_compatible (AVStreams::FlowEndPoint_ptr peer_fep)
               peer_protocol_string = CORBA::string_dup (peer_protocol_spec[j]);
               if (std::strcmp (my_protocol_string.in (), peer_protocol_string.in ()) == 0)
                 {
-                  protocol_match = 1;
+                  protocol_match = true;
                   break;
                 }
             }
@@ -4136,7 +4136,7 @@ TAO_FlowEndPoint::go_to_listen_i (TAO_FlowSpec_Entry::Role role,
     this->get_property_value ("AvailableProtocols");
   AvailableProtocols_ptr.in () >>= temp_protocols;
   my_protocol_spec = *temp_protocols;
-  int protocol_match = 0;
+  bool protocol_match = false;
   CORBA::String_var listen_protocol;
   u_int i =0;
   for (i=0;i<my_protocol_spec.length ();++i)
@@ -4150,7 +4150,7 @@ TAO_FlowEndPoint::go_to_listen_i (TAO_FlowSpec_Entry::Role role,
           if (std::strcmp (my_protocol_string.in (), peer_protocol_string.in ()) == 0)
             {
               listen_protocol = my_protocol_string;
-              protocol_match = 1;
+              protocol_match = true;
               break;
             }
         }

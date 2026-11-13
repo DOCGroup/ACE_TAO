@@ -93,17 +93,17 @@ TAO_AV_UDP_Flow_Handler::change_qos(AVStreams::QoS qos)
   int ret = 0;
   CORBA::Long dscp = 0;
   CORBA::Long ecn = 0;
-  int dscp_flag=0;
+  bool dscp_flag = false;
   for(i=0; i < qos.QoSParams.length(); ++i)
     {
       if( std::strcmp( qos.QoSParams[i].property_name.in(), "Diffserv_Codepoint") == 0)
         {
           qos.QoSParams[i].property_value >>= dscp;
-          dscp_flag=1;
+          dscp_flag = true;
           // DSCP value can only be 6 bits wide
           if(!((dscp >= 0) && (dscp <= 63)))
             {
-              dscp_flag = 0;
+              dscp_flag = false;
               ORBSVCS_DEBUG((LM_DEBUG, "(%N,%l) ECN value can only be (0-3) not %d\n", ecn));
               return -1;
             }
@@ -125,11 +125,11 @@ TAO_AV_UDP_Flow_Handler::change_qos(AVStreams::QoS qos)
       // Set the Diffserv byte only if we specified
       // the Diffserv Codepoint (DSCP) or ECN via QoSParams
       // passed into this method
-      if(dscp_flag || ecn)
+      if (dscp_flag || ecn != 0)
         {
           int tos;
           tos = (int)(dscp << 2);
-          if(ecn)
+          if (ecn != 0)
             {
               tos |= ecn;
             }
@@ -435,12 +435,12 @@ TAO_AV_UDP_Acceptor::open_i (ACE_INET_Addr *inet_addr,
     {
       // this variable is only used for RTP/UDP; RFC 1889 requires an even/odd
       //  consecutive port pair
-      int get_new_port = 1;
+      bool get_new_port = true;
 
       while (get_new_port)
         {
           // assume the ports will be OK
-          get_new_port = 0;
+          get_new_port = false;
 
           result = TAO_AV_UDP_Connection_Setup::setup (flow_handler,
                                                        inet_addr,
@@ -469,7 +469,7 @@ TAO_AV_UDP_Acceptor::open_i (ACE_INET_Addr *inet_addr,
                       delete local_addr;
                       local_addr = nullptr;
                       delete flow_handler;
-                      get_new_port = 1;
+                      get_new_port = true;
                     }
                   else
                     {
@@ -497,7 +497,7 @@ TAO_AV_UDP_Acceptor::open_i (ACE_INET_Addr *inet_addr,
                           delete flow_handler;
                           delete local_control_addr;
                           delete control_flow_handler;
-                          get_new_port = 1;
+                          get_new_port = true;
                         }
                       else
                         {
@@ -629,12 +629,12 @@ TAO_AV_UDP_Connector::connect (TAO_FlowSpec_Entry *entry,
     {
       // this variable is only used for RTP/UDP; RFC 1889 requires an even/odd
       //  consecutive port pair
-      int get_new_port = 1;
+      bool get_new_port = true;
 
       while (get_new_port)
         {
           // assume the ports will be OK
-          get_new_port = 0;
+          get_new_port = false;
 
           ACE_Addr *addr;
           if ((addr = entry->get_peer_addr ()) != nullptr)
@@ -660,7 +660,7 @@ TAO_AV_UDP_Connector::connect (TAO_FlowSpec_Entry *entry,
                   delete local_addr;
                   local_addr = nullptr;
                   delete flow_handler;
-                  get_new_port = 1;
+                  get_new_port = true;
                 }
               else
                 {
@@ -711,7 +711,7 @@ TAO_AV_UDP_Connector::connect (TAO_FlowSpec_Entry *entry,
                       delete flow_handler;
                       delete local_control_addr;
                       delete control_flow_handler;
-                      get_new_port = 1;
+                      get_new_port = true;
                     }
                   else
                     {
