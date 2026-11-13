@@ -328,7 +328,7 @@ TAO_MProfile::policy_list (CORBA::PolicyList *policy_list)
 int
 TAO_MProfile::give_shared_profile (TAO_Profile *pfile)
 {
-  for (unsigned i {}; i < this->last_; i++)
+  for (unsigned i {}; i < this->last_; ++i)
     if (pfile->tag() == this->pfiles_[i]->tag() &&
         pfile->compare_key(this->pfiles_[i]))
       {

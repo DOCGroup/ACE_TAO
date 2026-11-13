@@ -466,7 +466,7 @@ TAO_IIOP_Acceptor::open_i (ACE_INET_Addr const &addr,
       bool found_a_port {};
       ACE_UINT32 const last_port = (std::min) (requested_port + this->port_span_ - 1, ACE_MAX_DEFAULT_PORT);
 
-      for (ACE_UINT32 p = requested_port; p <= last_port; p++)
+      for (ACE_UINT32 p = requested_port; p <= last_port; ++p)
         {
           if (TAO_debug_level > 5)
             TAOLIB_DEBUG ((LM_DEBUG,
@@ -1181,7 +1181,7 @@ TAO_IIOP_Acceptor::parse_options (char const *str)
                   ACE_TEXT ("TAO (%P|%t) - IIOP")
                   ACE_TEXT (" endpoint has %d unknown options:\n"),
                   argc));
-      for (int i {}; i < argc; i++)
+      for (int i {}; i < argc; ++i)
         TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT("\t%C\n"),
                     argv[i]->c_str ()));

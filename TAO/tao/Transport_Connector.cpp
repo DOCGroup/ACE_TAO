@@ -885,7 +885,7 @@ TAO_Connector::cleanup_pending (TAO_Transport *&the_winner,
   // It is possible that we have more than one connection that happened
   // to complete, or that none completed. Therefore we need to traverse
   // the list and ensure that all of the losers are closed.
-  for (unsigned int i {}; i < count; i++)
+  for (unsigned int i {}; i < count; ++i)
     {
       if (transport[i] != the_winner)
         this->check_connection_closure (transport[i]->connection_handler());
@@ -911,7 +911,7 @@ TAO_Connector::wait_for_connection_completion (
                   ACE_TEXT("waiting for connection completion on ")
                   ACE_TEXT("%d transports, ["),
                   count));
-      for (unsigned int i {}; i < count; i++)
+      for (unsigned int i {}; i < count; ++i)
         TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT("%B%C"),transport[i]->id (),
                     (i < (count -1) ? ", " : "]\n")));
@@ -947,7 +947,7 @@ TAO_Connector::wait_for_connection_completion (
       // the pending connections.
       // Of course, this shouldn't happen in any case, since the wait
       // strategy is called with a timeout value of 0.
-      for (unsigned int i {}; i < count; i++)
+      for (unsigned int i {}; i < count; ++i)
         if (!transport[i]->connection_handler()->is_closed())
           {
             the_winner = transport[i];

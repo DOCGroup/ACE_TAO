@@ -361,7 +361,7 @@ TAO_IIOP_Transport::get_listen_point (
     }
 #endif /* TAO_USE_BROKEN_BIDIR */
 
-  for (size_t index {}; index < count; index++)
+  for (size_t index {}; index < count; ++index)
     {
 #if defined (TAO_USE_BROKEN_BIDIR)
       // Make sure port numbers are equal so the following comparison

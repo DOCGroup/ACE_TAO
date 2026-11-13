@@ -209,7 +209,7 @@ TAO::Storable_FlatFileStream::open()
   this->fl_ = nullptr;
   for (int attempts = this->retry_on_ebadf_ ? 2 : 1;
        attempts > 0 && this->fl_ == nullptr;
-       attempts--)
+       --attempts)
     {
       this->fl_ = ACE_OS::fdopen(filelock_.handle_, ACE_TEXT_CHAR_TO_TCHAR (fdmode));
 
@@ -259,7 +259,7 @@ TAO::Storable_FlatFileStream::flock (int whence, int start, int len)
   bool retry {};
   for (int attempts = this->retry_on_ebadf_ ? 2 : 1;
        attempts > 0 && result != 0;
-       attempts--)
+       --attempts)
     {
       if (retry)
         this->reopen();
@@ -302,7 +302,7 @@ TAO::Storable_FlatFileStream::funlock (int whence, int start, int len)
   bool retry {};
   for (int attempts = this->retry_on_ebadf_ ? 2 : 1;
        attempts > 0 && result != 0;
-       attempts--)
+       --attempts)
     {
       if (retry)
         this->reopen();
@@ -341,7 +341,7 @@ TAO::Storable_FlatFileStream::last_changed ()
       result = -1;
       for (int attempts = this->retry_on_ebadf_ ? 2 : 1;
            attempts > 0 && result != 0;
-           attempts--)
+           --attempts)
         {
           if (retry)
             this->reopen ();
@@ -581,7 +581,7 @@ TAO::Storable_FlatFileStream::create_backup ()
   int result = -1;
   for (int attempts = this->retry_on_ebadf_ ? 2 : 1;
        attempts > 0 && result < 0;
-       attempts--)
+       --attempts)
     {
       if (retry)
         this->reopen();

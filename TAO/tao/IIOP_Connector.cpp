@@ -454,7 +454,7 @@ TAO_IIOP_Connector::complete_connection (int result,
   TAO_Transport *transport {};
 
   //  populate the transport list
-  for (unsigned i {}; i < count; i++)
+  for (unsigned i {}; i < count; ++i)
     tlist[i] = sh_list[i]->transport();
 
   if (result != -1)
@@ -536,7 +536,7 @@ TAO_IIOP_Connector::complete_connection (int result,
 
   if (transport != nullptr)
     {
-      for (unsigned i {}; i < count; i++)
+      for (unsigned i {}; i < count; ++i)
         {
           if (transport == tlist[i])
             {
@@ -552,7 +552,7 @@ TAO_IIOP_Connector::complete_connection (int result,
       // Give users a clue to the problem.
       if (TAO_debug_level > 3)
         {
-          for (unsigned i {}; i < count; i++)
+          for (unsigned i {}; i < count; ++i)
             {
               TAOLIB_ERROR ((LM_ERROR,
                           ACE_TEXT ("TAO (%P|%t) - IIOP_Connector::complete_connection,")

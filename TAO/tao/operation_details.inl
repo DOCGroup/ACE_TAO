@@ -49,7 +49,7 @@ TAO_Operation_Details::in_argument_flag () const
 ACE_INLINE CORBA::Boolean
 TAO_Operation_Details::in_argument_flag () const
 {
-  for (CORBA::ULong i = 1; i < this->num_args_ && !this->has_in_args_; i++)
+  for (CORBA::ULong i = 1; i < this->num_args_ && !this->has_in_args_; ++i)
     {
       if (dynamic_cast<TAO::InArgument *>(args_[i]) != nullptr ||
           dynamic_cast<TAO::InoutArgument *>(args_[i]))
