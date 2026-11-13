@@ -65,12 +65,9 @@ public:
 
   ~TAO_SHMIOP_Endpoint () override = default;
 
-  /**
-   * @name TAO_Endpoint Methods
-   *
-   * Please check the documentation in Endpoint.h for details.
-   */
-  //@{
+  /// @name TAO_Endpoint methods
+  /// Please check the documentation in Endpoint.h for details.
+  /// @{
   /// Return a copy of @c this
   TAO_Endpoint *next () override;
   int addr_to_string (char *buffer, size_t length) override;
@@ -82,9 +79,10 @@ public:
 
   /// Return a hash value for this object.
   CORBA::ULong hash () override;
-  //@}
+  /// @}
 
-
+  /// @name SHMIOP-specific methods
+  /// @{
   /// Return a reference to the <object_addr>.
   ACE_INET_Addr const &object_addr () const;
 
@@ -101,6 +99,7 @@ public:
 
   /// Set the port number.
   CORBA::UShort port (CORBA::UShort p);
+  /// @}
 
 private:
   TAO_SHMIOP_Endpoint (TAO_SHMIOP_Endpoint const &) = delete;

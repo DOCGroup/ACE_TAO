@@ -45,12 +45,9 @@ public:
 
   ~TAO_UIOP_Endpoint () override = default;
 
-  /**
-   * @name TAO_Endpoint Methods
-   *
-   * Please check the documentation in Endpoint.h for details.
-   */
-  //@{
+  /// @name TAO_Endpoint methods
+  /// Please check the documentation in Endpoint.h for details.
+  /// @{
   TAO_Endpoint *next () override;
   int addr_to_string (char *buffer, size_t length) override;
   TAO_Endpoint *duplicate () override;
@@ -61,15 +58,17 @@ public:
 
   /// Return a hash value for this object.
   CORBA::ULong hash () override;
-  //@}
+  /// @}
 
-
+  /// @name UIOP-specific methods
+  /// @{
   /// Return a reference to the <object_addr>.
   ACE_UNIX_Addr const &object_addr () const;
 
   /// Return a pointer to the rendezvous point string.
   /// This object maintains ownership of the returned string.
   char const *rendezvous_point () const;
+  /// @}
 
 private:
   TAO_UIOP_Endpoint (TAO_UIOP_Endpoint const &) = delete;

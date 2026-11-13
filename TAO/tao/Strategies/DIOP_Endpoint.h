@@ -62,14 +62,13 @@ public:
 
   ~TAO_DIOP_Endpoint () override = default;
 
-  /**
-   * @name TAO_Endpoint Methods
-   *
-   * Please check the documentation in Endpoint.h for details.
-   */
-  //@{
+  /// @name TAO_Endpoint methods
+  /// Please check the documentation in Endpoint.h for details.
+  /// @{
   TAO_Endpoint *next () override;
   int addr_to_string (char *buffer, size_t length) override;
+
+  /// Allocate memory and return a copy of this endpoint.
   TAO_Endpoint *duplicate () override;
 
   /// Return true if this endpoint is equivalent to @a other_endpoint.  Two
@@ -78,11 +77,10 @@ public:
 
   /// Return a hash value for this object.
   CORBA::ULong hash () override;
-  //@}
+  /// @}
 
-  // Allocates memory and returns a copy of <this>
-
-
+  /// @name DIOP-specific methods
+  /// @{
   /// Return a reference to the <object_addr>.
   ACE_INET_Addr const &object_addr () const;
 
@@ -99,6 +97,7 @@ public:
 
   /// Set the port number.
   CORBA::UShort port (CORBA::UShort p);
+  /// @}
 
 private:
   TAO_DIOP_Endpoint (TAO_DIOP_Endpoint const &) = delete;

@@ -65,8 +65,9 @@ public:
 
   ~TAO_SCIOP_Endpoint () override = default;
 
-  /// Implements TAO_Endpoint methods documented in Endpoint.h.
-
+  /// @name TAO_Endpoint methods
+  /// Please check the documentation in Endpoint.h for details.
+  /// @{
   TAO_Endpoint *next () override;
   int addr_to_string (char *buffer, size_t length) override;
   TAO_Endpoint *duplicate () override;
@@ -77,8 +78,10 @@ public:
 
   /// Return a hash value for this object.
   CORBA::ULong hash () override;
+  /// @}
 
-
+  /// @name SCIOP-specific methods
+  /// @{
   /// Return a reference to the <object_addr>.
   ACE_INET_Addr const &object_addr () const;
 
@@ -101,6 +104,7 @@ public:
 
   /// Return the preferred network if any.
   char const *preferred_network () const;
+  /// @}
 
 private:
   /// Helper method for setting INET_Addr.
