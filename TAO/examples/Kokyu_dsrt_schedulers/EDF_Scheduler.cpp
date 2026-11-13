@@ -379,12 +379,8 @@ EDF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
     }
   else
     {
-      CORBA::OctetSeq oc_seq = CORBA::OctetSeq (sc->context_data.length (),
-                                                sc->context_data.length (),
-                                                sc->context_data.get_buffer (),
-                                                0);
       CORBA::Any sc_qos_as_any;
-      CORBA::Any_var scqostmp = codec_->decode (oc_seq);
+      CORBA::Any_var scqostmp = codec_->decode (sc->context_data);
       sc_qos_as_any = scqostmp.in ();
       //Don't store in a _var, since >>= returns a pointer to an
       //internal buffer and we are not supposed to free it.
@@ -617,16 +613,12 @@ EDF_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri)
     }
   else
     {
-      CORBA::OctetSeq oc_seq = CORBA::OctetSeq (sc->context_data.length (),
-                                                sc->context_data.length (),
-                                                sc->context_data.get_buffer (),
-                                                0);
 
       //Don't store in a _var, since >>= returns a pointer to an internal buffer
       //and we are not supposed to free it.
       Kokyu::Svc_Ctxt_DSRT_QoS* sc_qos_ptr;
       CORBA::Any sc_qos_as_any;
-      CORBA::Any_var scqostmp = codec_->decode (oc_seq);
+      CORBA::Any_var scqostmp = codec_->decode (sc->context_data);
       sc_qos_as_any = scqostmp.in ();
       sc_qos_as_any >>= sc_qos_ptr;
 
