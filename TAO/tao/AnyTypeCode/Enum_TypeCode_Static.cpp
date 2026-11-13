@@ -141,7 +141,7 @@ TAO::TypeCode::Enum<char const *,
       tc_enumerators[i] = empty_name;
     }
 
-  TAO_TypeCodeFactory_Adapter * adapter =
+  TAO_TypeCodeFactory_Adapter * const adapter =
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
       TAO_ORB_Core::typecodefactory_adapter_name ());
 
