@@ -187,9 +187,14 @@ public:
   // @todo do we want a special method to write an array of
   // strings and wstrings?
 
+  /// @name TAO-specific methods
+  /// @{
+
   static void throw_skel_exception (int error_num);
 
   void get_version (TAO_GIOP_Message_Version& giop_version);
+
+  /// @}
 
   /**
    * @name Outgoing GIOP Fragment Related Methods
@@ -231,7 +236,9 @@ public:
   ACE_Time_Value * timeout () const;
   //@}
 
-  /// These methods are used by valuetype indirection support.
+  /// @name Valuetype indirection support
+  /// @{
+
   /// Accessor to the indirect maps.
   Repo_Id_Map_Handle& get_repo_id_map ();
 #ifdef TAO_HAS_VALUETYPE_CODEBASE
@@ -255,6 +262,8 @@ public:
 
   /// Calculate the offset between pos and current wr_ptr.
   int offset (char* pos);
+
+  /// @}
 
 private:
 private:
@@ -425,6 +434,9 @@ public:
 
   virtual ~TAO_InputCDR ();
 
+  /// @name TAO-specific methods
+  /// @{
+
   /// Accessor
   TAO_ORB_Core *orb_core () const;
 
@@ -432,7 +444,11 @@ public:
 
   static void throw_skel_exception (int error_num);
 
-  /// These methods are used by valuetype indirection support.
+  /// @}
+
+  /// @name Valuetype indirection support
+  /// @{
+
   /// Accessor to the indirect maps.
   Repo_Id_Map_Handle& get_repo_id_map ();
   Codebase_URL_Map_Handle& get_codebase_url_map ();
@@ -448,6 +464,8 @@ public:
   /// If indirect map is not nil and not empty, unbind all entries.
   /// Called after demarshalling.
   void reset_vt_indirect_maps ();
+
+  /// @}
 
 private:
   /// The ORB_Core, required to extract object references.

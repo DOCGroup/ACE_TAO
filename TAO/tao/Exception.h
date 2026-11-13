@@ -109,16 +109,29 @@ namespace CORBA
 
     virtual ~Exception () = default;
 
+    /// @name Throwing
+    /// @{
+
     virtual void _raise () const = 0;
+
+    /// @}
+
+    /// @name Narrowing
+    /// @{
 
     static Exception * _downcast (Exception * x);
     static Exception const * _downcast (Exception const * x);
+
+    /// @}
 
     /// Return the repository ID of the Exception.
     virtual const char * _rep_id () const;
 
     /// Return the name of the Exception.
     virtual const char * _name () const;
+
+    /// @name TAO-specific extensions
+    /// @{
 
     /// Will be overridden in the concrete derived classes.
     virtual CORBA::TypeCode_ptr _tao_type () const = 0;
@@ -171,6 +184,8 @@ namespace CORBA
      * </PRE>
      */
     virtual CORBA::Exception *_tao_duplicate () const = 0;
+
+    /// @}
 
   protected:
     /// Default constructor.
