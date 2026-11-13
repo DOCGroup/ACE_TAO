@@ -130,7 +130,7 @@ private:
   unsigned char ssrc_list_length_ {};
 
   /// An optional reason for leaving the session.
-  char reason_[256];
+  char reason_[256] {};
 
   /// The number of bytes in the reason for leaving the session.
   unsigned char reason_length_ {};

@@ -98,10 +98,11 @@ RTCP_BYE_Packet::RTCP_BYE_Packet(ACE_UINT32 *ssrc_list,
   // Optional - if there is a reason for leaving, store it.
   // The reason is padded with extra zeros because the packet must
   // end on an even 32-bit boundary.
-  std::memset(this->reason_, 0, sizeof(this->reason_));
   if (text)
     {
       size_t text_length = std::strlen(text);
+      if (text_length >= sizeof (this->reason_))
+        text_length = sizeof (this->reason_) - 1;
       std::memcpy(this->reason_, text, text_length);
       this->reason_length_ = static_cast<unsigned char> (text_length);
     }
@@ -141,7 +142,6 @@ RTCP_BYE_Packet::RTCP_BYE_Packet(char* buffer, int *len)
     }
 
   // Optional - store the reason for leaving
-  std::memset(this->reason_, 0, sizeof(this->reason_));
   if (this->chd_.length_ > this->chd_.count_)
     {
       this->reason_length_ = buffer[index];
@@ -192,9 +192,7 @@ RTCP_BYE_Packet::ssrc_list(ACE_UINT32 **ssrc_list, unsigned char &length)
 char const *
 RTCP_BYE_Packet::reason ()
 {
-  ACE_CString reason = reinterpret_cast<char const *> (this->reason_);
-
-  return reason.c_str();
+  return this->reason_;
 }
 
 //==============================================================================
