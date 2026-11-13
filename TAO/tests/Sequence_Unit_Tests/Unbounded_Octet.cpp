@@ -7,8 +7,11 @@
  * @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 #include "tao/Basic_Types.h"
+#include "tao/OctetSeqC.h"
 #include "tao/Unbounded_Octet_Sequence_T.h"
 #include "ace/Log_Msg.h"
+
+#include <utility>
 
 using s_sequence = TAO::unbounded_value_sequence <CORBA::Octet>;
 
@@ -60,6 +63,34 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
       }
 
       s_sequence const e(c);
+
+      CORBA::OctetSeq idl_source (4);
+      idl_source.length (2);
+      idl_source[0] = 3;
+      idl_source[1] = 7;
+      CORBA::OctetSeq idl_copy (idl_source);
+      if (idl_copy[0] != 3 || idl_copy[1] != 7)
+        return 1;
+
+      CORBA::OctetSeq idl_copy_assigned;
+      idl_copy_assigned = idl_source;
+      if (idl_copy_assigned[0] != 3 || idl_copy_assigned[1] != 7)
+        return 1;
+
+      CORBA::Octet * const idl_buffer = idl_source.get_buffer ();
+      CORBA::OctetSeq idl_moved (std::move (idl_source));
+      if (idl_moved.get_buffer () != idl_buffer
+          || idl_moved[0] != 3
+          || idl_moved[1] != 7)
+        return 1;
+
+      CORBA::OctetSeq idl_move_assigned;
+      CORBA::Octet * const idl_move_buffer = idl_moved.get_buffer ();
+      idl_move_assigned = std::move (idl_moved);
+      if (idl_move_assigned.get_buffer () != idl_move_buffer
+          || idl_move_assigned[0] != 3
+          || idl_move_assigned[1] != 7)
+        return 1;
     }
   catch (const ::CORBA::Exception &)
     {
