@@ -50,7 +50,7 @@ protected:
     ACE_BOOLCAP = 2
   };
 
-  ACE_CapEntry (int captype);
+  explicit ACE_CapEntry (int captype);
 
 protected:
   int captype_;
@@ -67,7 +67,7 @@ protected:
 class ACE_Export ACE_IntCapEntry : public ACE_CapEntry
 {
 public:
-  ACE_IntCapEntry (int val);
+  explicit ACE_IntCapEntry (int val);
   int getval () const;
   ACE_ALLOC_HOOK_DECLARE;
 
@@ -86,7 +86,7 @@ protected:
 class ACE_Export ACE_StringCapEntry : public ACE_CapEntry
 {
 public:
-  ACE_StringCapEntry (const ACE_TString &val);
+  explicit ACE_StringCapEntry (const ACE_TString &val);
   ACE_TString getval () const;
   ACE_ALLOC_HOOK_DECLARE;
 
@@ -105,7 +105,7 @@ protected:
 class ACE_Export ACE_BoolCapEntry : public ACE_CapEntry
 {
 public:
-  ACE_BoolCapEntry (int val);
+  explicit ACE_BoolCapEntry (int val);
   int getval () const;
   ACE_ALLOC_HOOK_DECLARE;
 

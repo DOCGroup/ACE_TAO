@@ -184,7 +184,7 @@ class ACE_Read_Guard : public ACE_Guard<ACE_LOCK>
 {
 public:
   /// Implicitly and automatically acquire a read lock.
-  ACE_Read_Guard (ACE_LOCK& m);
+  explicit ACE_Read_Guard (ACE_LOCK& m);
 
   /// Implicitly and automatically acquire (or try to acquire) a read
   /// lock.

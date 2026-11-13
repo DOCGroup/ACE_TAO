@@ -58,7 +58,7 @@ protected:
   ACE_LSOCK ();
 
   /// Initialize based on @a handle.
-  ACE_LSOCK (ACE_HANDLE handle);
+  explicit ACE_LSOCK (ACE_HANDLE handle);
 
   /// Get handle.
   ACE_HANDLE get_handle () const;

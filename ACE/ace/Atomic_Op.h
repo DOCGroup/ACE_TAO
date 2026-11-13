@@ -73,7 +73,7 @@ public:
   ACE_Atomic_Op ();
 
   /// Initialize @c value_ to c.
-  ACE_Atomic_Op (long c);
+  explicit ACE_Atomic_Op (long c);
 
   /// Manage copying...
   ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, long> &c);
@@ -171,7 +171,7 @@ public:
   ACE_Atomic_Op ();
 
   /// Initialize @c value_ to c.
-  ACE_Atomic_Op (unsigned long c);
+  explicit ACE_Atomic_Op (unsigned long c);
 
   /// Manage copying...
   ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long> &c);
@@ -264,7 +264,7 @@ class ACE_Export ACE_Atomic_Op<ACE_Thread_Mutex, int>
 {
 public:
   ACE_Atomic_Op ();
-  ACE_Atomic_Op (int c);
+  explicit ACE_Atomic_Op (int c);
   ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, int> &c);
   ACE_Atomic_Op<ACE_Thread_Mutex, int> &operator= (int rhs);
   ACE_Atomic_Op<ACE_Thread_Mutex, int> &operator= (const ACE_Atomic_Op<ACE_Thread_Mutex, int> &rhs);
@@ -276,7 +276,7 @@ class ACE_Export ACE_Atomic_Op<ACE_Thread_Mutex, unsigned int>
 {
 public:
   ACE_Atomic_Op ();
-  ACE_Atomic_Op (unsigned int c);
+  explicit ACE_Atomic_Op (unsigned int c);
   ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, unsigned> &c);
   ACE_Atomic_Op<ACE_Thread_Mutex, unsigned int> &operator= (unsigned int rhs);
   ACE_Atomic_Op<ACE_Thread_Mutex, unsigned int> &operator= (const ACE_Atomic_Op<ACE_Thread_Mutex, unsigned int> &rhs);
@@ -290,7 +290,7 @@ class ACE_Export ACE_Atomic_Op<ACE_Thread_Mutex, long>
 {
 public:
   ACE_Atomic_Op ();
-  ACE_Atomic_Op (long c);
+  explicit ACE_Atomic_Op (long c);
   ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, long> &c);
   ACE_Atomic_Op<ACE_Thread_Mutex, long> &operator= (long rhs);
   ACE_Atomic_Op<ACE_Thread_Mutex, long> &operator= (const ACE_Atomic_Op<ACE_Thread_Mutex, long> &rhs);
@@ -302,7 +302,7 @@ class ACE_Export ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>
 {
 public:
   ACE_Atomic_Op ();
-  ACE_Atomic_Op (unsigned long c);
+  explicit ACE_Atomic_Op (unsigned long c);
   ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long> &c);
   ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long> &operator= (unsigned long rhs);
   ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long> &operator= (const ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long> &c);
@@ -316,7 +316,7 @@ class ACE_Export ACE_Atomic_Op<ACE_Thread_Mutex, long long>
 {
 public:
   ACE_Atomic_Op ();
-  ACE_Atomic_Op (long long c);
+  explicit ACE_Atomic_Op (long long c);
   ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, long long> &c);
   ACE_Atomic_Op<ACE_Thread_Mutex, long long> &operator= (long long rhs);
   ACE_Atomic_Op<ACE_Thread_Mutex, long long> &operator= (const ACE_Atomic_Op<ACE_Thread_Mutex, long long> &c);
@@ -328,7 +328,7 @@ class ACE_Export ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long long>
 {
 public:
   ACE_Atomic_Op ();
-  ACE_Atomic_Op (unsigned long long c);
+  explicit ACE_Atomic_Op (unsigned long long c);
   ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long long> &c);
   ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long long> &operator= (unsigned long long rhs);
   ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long long> &operator= (const ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long long> &c);
@@ -342,7 +342,7 @@ class ACE_Export ACE_Atomic_Op<ACE_Thread_Mutex, short>
 {
 public:
   ACE_Atomic_Op ();
-  ACE_Atomic_Op (short c);
+  explicit ACE_Atomic_Op (short c);
   ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, short> &c);
   ACE_Atomic_Op<ACE_Thread_Mutex, short> &operator= (short rhs);
   ACE_Atomic_Op<ACE_Thread_Mutex, short> &operator= (const ACE_Atomic_Op<ACE_Thread_Mutex, short> &c);
@@ -354,7 +354,7 @@ class ACE_Export ACE_Atomic_Op<ACE_Thread_Mutex, unsigned short>
 {
 public:
   ACE_Atomic_Op ();
-  ACE_Atomic_Op (unsigned short c);
+  explicit ACE_Atomic_Op (unsigned short c);
   ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, unsigned short> &c);
   ACE_Atomic_Op<ACE_Thread_Mutex, unsigned short> &operator= (unsigned short rhs);
   ACE_Atomic_Op<ACE_Thread_Mutex, unsigned short> &operator= (const ACE_Atomic_Op<ACE_Thread_Mutex, unsigned short> &c);
@@ -368,7 +368,7 @@ class ACE_Export ACE_Atomic_Op<ACE_Thread_Mutex, bool>
 {
 public:
   ACE_Atomic_Op ();
-  ACE_Atomic_Op (bool c);
+  explicit ACE_Atomic_Op (bool c);
   ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, bool> &c);
   ACE_Atomic_Op<ACE_Thread_Mutex, bool> &operator= (bool rhs);
   ACE_Atomic_Op<ACE_Thread_Mutex, bool> &operator= (const ACE_Atomic_Op<ACE_Thread_Mutex, bool> &c);

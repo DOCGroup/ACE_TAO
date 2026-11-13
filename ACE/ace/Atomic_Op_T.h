@@ -147,7 +147,7 @@ public:
   using arg_type = typename ACE_Type_Traits<TYPE>::parameter_type;
 
   /// Initialize @c value_ to 0.
-  ACE_Atomic_Op_Ex (ACE_LOCK & mtx);
+  explicit ACE_Atomic_Op_Ex (ACE_LOCK & mtx);
 
   /// Initialize @c value_ to c.
   ACE_Atomic_Op_Ex (ACE_LOCK & mtx, arg_type c);
@@ -262,7 +262,7 @@ public:
   ACE_Atomic_Op ();
 
   /// Initialize @c value_ to c.
-  ACE_Atomic_Op (arg_type c);
+  explicit ACE_Atomic_Op (arg_type c);
 
   /// Manage copying...
   ACE_Atomic_Op (ACE_Atomic_Op<ACE_LOCK, TYPE> const & c);

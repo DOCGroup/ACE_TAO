@@ -1205,7 +1205,7 @@ class ACE_Export ACE_WIN32_Asynch_Connect :
   public ACE_Event_Handler
 {
 public:
-  ACE_WIN32_Asynch_Connect (ACE_WIN32_Proactor * win32_proactor);
+  explicit ACE_WIN32_Asynch_Connect (ACE_WIN32_Proactor * win32_proactor);
 
   virtual ~ACE_WIN32_Asynch_Connect ();
 

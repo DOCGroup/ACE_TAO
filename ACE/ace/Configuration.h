@@ -419,7 +419,7 @@ class ACE_Export ACE_Section_Key_Win32 : public ACE_Section_Key_Internal
 {
 public:
   /// Constructor based on an HKEY
-  ACE_Section_Key_Win32 (HKEY hKey);
+  explicit ACE_Section_Key_Win32 (HKEY hKey);
 
   HKEY hKey_;
 
@@ -695,7 +695,7 @@ class ACE_Export ACE_Configuration_Section_Key_Heap
 {
 public:
   /// Constructor based on the full path of the section
-  ACE_Configuration_Section_Key_Heap (const ACE_TCHAR* path);
+  explicit ACE_Configuration_Section_Key_Heap (const ACE_TCHAR* path);
 
   /// The path itself
   ACE_TCHAR* path_;

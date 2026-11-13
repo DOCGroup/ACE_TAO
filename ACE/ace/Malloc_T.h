@@ -87,7 +87,7 @@ class ACE_Cached_Allocator : public ACE_New_Allocator
 public:
   /// Create a cached memory pool with @a n_chunks chunks
   /// each with sizeof (TYPE) size.
-  ACE_Cached_Allocator (size_t n_chunks);
+  explicit ACE_Cached_Allocator (size_t n_chunks);
 
   /// Clear things up.
   ~ACE_Cached_Allocator () override;

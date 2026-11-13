@@ -955,7 +955,7 @@ private:
 class ACE_TSS_Ref
 {
 public:
-  ACE_TSS_Ref (ACE_thread_t id);
+  explicit ACE_TSS_Ref (ACE_thread_t id);
 
   /// Default constructor
   ACE_TSS_Ref ();

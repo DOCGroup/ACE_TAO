@@ -122,7 +122,7 @@ inline int ace_sigsuspend_helper (const sigset_t *s)
 # if !defined (ACE_HAS_SIGINFO_T)
 struct ACE_Export siginfo_t
 {
-  siginfo_t (ACE_HANDLE handle);
+  explicit siginfo_t (ACE_HANDLE handle);
 
   /// Win32 HANDLE that has become signaled.
   ACE_HANDLE si_handle_;

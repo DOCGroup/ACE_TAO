@@ -50,7 +50,7 @@ public:
   using ACE_IO_Cntl_Cmds = unsigned short;
 
   /// Initialize the control message.
-  ACE_IO_Cntl_Msg (ACE_IO_Cntl_Cmds c);
+  explicit ACE_IO_Cntl_Msg (ACE_IO_Cntl_Cmds c);
 
   // = Get/set methods
 

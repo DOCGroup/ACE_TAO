@@ -79,7 +79,7 @@ public:
   ACE_SOCK_SEQPACK_Association ();
 
   /// Constructor (sets the underlying ACE_HANDLE with <h>).
-  ACE_SOCK_SEQPACK_Association (ACE_HANDLE h);
+  explicit ACE_SOCK_SEQPACK_Association (ACE_HANDLE h);
 
   ~ACE_SOCK_SEQPACK_Association ();
 

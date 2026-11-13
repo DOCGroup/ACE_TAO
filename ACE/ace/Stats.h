@@ -47,7 +47,7 @@ public:
    * good value, or maybe 4.  5 will probably be too large for
    * non-trivial data sets.
    */
-  ACE_Stats_Value (const u_int precision);
+  explicit ACE_Stats_Value (const u_int precision);
 
   /// Accessor for precision.
   u_int precision () const;

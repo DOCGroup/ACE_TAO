@@ -52,7 +52,7 @@ namespace ACE
        */
       struct ACE_Export Data
       {
-        Data (Monitor_Control_Types::Information_Type type);
+        explicit Data (Monitor_Control_Types::Information_Type type);
         ACE_Time_Value timestamp_;
         double value_;
         ACE_Array_Base<char *> list_;

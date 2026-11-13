@@ -780,7 +780,7 @@ public:
     ACE_InputCDR &rhs_;
   };
   /// Transfer the contents from @a rhs to a new CDR
-  ACE_InputCDR (Transfer_Contents rhs);
+  explicit ACE_InputCDR (Transfer_Contents rhs);
 
   virtual ~ACE_InputCDR ();
 

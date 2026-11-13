@@ -84,7 +84,7 @@ public:
    * Initialize and allocate space for a new Bounded_Stack with the provided
    * size.
    */
-  ACE_Bounded_Stack (size_t size);
+  explicit ACE_Bounded_Stack (size_t size);
 
   /// Initialize the stack to be a copy of the stack provided.
   /**
@@ -1573,7 +1573,7 @@ public:
    * Initialize the Bounded_Set to have a maximum size equal to the size
    * parameter specified.
    */
-  ACE_Bounded_Set (size_t size);
+  explicit ACE_Bounded_Set (size_t size);
 
   /// Construct a Bounded_Set that is a copy of the provides Bounded_Set.
   /**

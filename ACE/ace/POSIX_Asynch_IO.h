@@ -638,7 +638,7 @@ class ACE_Export ACE_POSIX_Asynch_Accept :
   public ACE_Event_Handler
 {
 public:
-  ACE_POSIX_Asynch_Accept (ACE_POSIX_Proactor * posix_proactor);
+  explicit ACE_POSIX_Asynch_Accept (ACE_POSIX_Proactor * posix_proactor);
 
   ~ACE_POSIX_Asynch_Accept () override;
 
@@ -777,7 +777,7 @@ class ACE_Export ACE_POSIX_Asynch_Connect :
   public ACE_Event_Handler
 {
 public:
-  ACE_POSIX_Asynch_Connect (ACE_POSIX_Proactor * posix_proactor);
+  explicit ACE_POSIX_Asynch_Connect (ACE_POSIX_Proactor * posix_proactor);
 
   ~ACE_POSIX_Asynch_Connect () override;
 

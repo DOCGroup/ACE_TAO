@@ -89,7 +89,7 @@ namespace ACE_Utils
 
 #ifndef ACE_LACKS_SSCANF
     /// Constructs a UUID from a string representation.
-    UUID (const ACE_CString& uuidString);
+    explicit UUID (const ACE_CString& uuidString);
 #endif
 
     UUID (const UUID &right);

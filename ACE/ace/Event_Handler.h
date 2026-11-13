@@ -268,7 +268,7 @@ public:
 
   private:
     /// Private constructor.
-    Reference_Counting_Policy (Value value);
+    explicit Reference_Counting_Policy (Value value);
 
     /// The value of the policy.
     Value value_;

@@ -56,7 +56,7 @@ public:
   void recycle_state (ACE_Recyclable_State new_state);
 
 protected:
-  ACE_Recyclable (ACE_Recyclable_State initial_state);
+  explicit ACE_Recyclable (ACE_Recyclable_State initial_state);
 
   /// Our state.
   ACE_Recyclable_State recycle_state_;

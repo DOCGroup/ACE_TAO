@@ -266,7 +266,7 @@ public:
    * static initialization problem when the ACE_Log_Category
    * is created in static storage.
    */
-  ACE_Log_Category(const char* name);
+  explicit ACE_Log_Category(const char* name);
   ~ACE_Log_Category();
 
   unsigned int id() const;

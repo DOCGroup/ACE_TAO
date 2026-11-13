@@ -50,7 +50,7 @@ public:
   ACE_Config_ImpExp_Base &operator= (ACE_Config_ImpExp_Base &&) = delete;
 
   /// Constructor taking the ACE_Configuration to import/export to
-  ACE_Config_ImpExp_Base (ACE_Configuration& config);
+  explicit ACE_Config_ImpExp_Base (ACE_Configuration& config);
 
   /**
    * Destructor

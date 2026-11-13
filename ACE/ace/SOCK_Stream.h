@@ -42,7 +42,7 @@ public:
   ACE_SOCK_Stream ();
 
   /// Constructor (sets the underlying ACE_HANDLE with @a h).
-  ACE_SOCK_Stream (ACE_HANDLE h);
+  explicit ACE_SOCK_Stream (ACE_HANDLE h);
 
   ~ACE_SOCK_Stream ();
 
