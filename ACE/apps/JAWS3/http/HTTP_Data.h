@@ -22,7 +22,8 @@ public:
   ACE_FILE_IO & file_io ();
 
 private:
-  JAWS_HTTP_Service_Handler *sh_; // Non-owning back pointer to the service handler.
+  /// Non-owning back pointer to the service handler.
+  JAWS_HTTP_Service_Handler *sh_;
   ACE_Message_Block mb_;
   ACE_FILE_IO file_io_;
 };
