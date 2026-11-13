@@ -334,6 +334,7 @@ EDF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
 {
   Kokyu::Svc_Ctxt_DSRT_QoS* sc_qos_ptr;
   RTScheduling::Current::IdType guid;
+  RTScheduling::Current::IdType const *schedule_guid = &guid;
   int int_guid;
 
   DSUI_EVENT_LOG (EDF_SCHED_FAM, ENTER_SERVER_SCHED_TIME, 0, 0, 0);
@@ -396,8 +397,6 @@ EDF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
 
       ACE_NEW (guid_out.ptr (),
                RTScheduling::Current::IdType);
-      guid_out.ptr ()->length (guid.length ());
-      *(guid_out.ptr ()) = guid;
 
       ACE_OS::memcpy (&int_guid,
                       guid.get_buffer (),
@@ -411,6 +410,8 @@ EDF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
                   importance,
                   int_guid));
 #endif
+      *(guid_out.ptr ()) = std::move (guid);
+      schedule_guid = guid_out.ptr ();
 
       EDF_Scheduling::SchedulingParameter sched_param;
       sched_param.importance = importance;
@@ -433,9 +434,9 @@ EDF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
   Tenth Time.
 */
 #ifdef KOKYU_HAS_RELEASE_GUARD
-  this->kokyu_dispatcher_->release_guard (guid, qos);
+  this->kokyu_dispatcher_->release_guard (*schedule_guid, qos);
 #else
-  this->kokyu_dispatcher_->schedule (guid, qos);
+  this->kokyu_dispatcher_->schedule (*schedule_guid, qos);
 #endif
 /*DTTIME:
   record the leaving dispatcher time on the server side.

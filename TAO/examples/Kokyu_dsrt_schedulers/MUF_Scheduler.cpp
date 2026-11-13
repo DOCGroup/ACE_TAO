@@ -348,6 +348,7 @@ MUF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
 #endif
 
   RTScheduling::Current::IdType guid;
+  RTScheduling::Current::IdType const *schedule_guid = &guid;
 
   CORBA::String_var operation = ri->operation ();
 
@@ -396,8 +397,6 @@ MUF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
 
       ACE_NEW (guid_out.ptr (),
                RTScheduling::Current::IdType);
-      guid_out.ptr ()->length (guid.length ());
-      *(guid_out.ptr ()) = guid;
 
 #ifdef KOKYU_DSRT_LOGGING
       int int_guid;
@@ -410,6 +409,8 @@ MUF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
                   criticality,
                   int_guid));
 #endif
+      *(guid_out.ptr ()) = std::move (guid);
+      schedule_guid = guid_out.ptr ();
       MUF_Scheduling::SchedulingParameter sched_param;
       sched_param.criticality = criticality;
       sched_param.deadline = deadline;
@@ -421,7 +422,7 @@ MUF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
   qos.deadline_ = deadline;
   qos.exec_time_ = exec_time;
 
-  this->kokyu_dispatcher_->schedule (guid, qos);
+  this->kokyu_dispatcher_->schedule (*schedule_guid, qos);
 
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG, "(%t|%T): receive_request interceptor done\n"));

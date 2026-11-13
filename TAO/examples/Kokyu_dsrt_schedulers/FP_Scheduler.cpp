@@ -337,6 +337,7 @@ Fixed_Priority_Scheduler::receive_request (PortableInterceptor::ServerRequestInf
 #endif
 
   RTScheduling::Current::IdType guid;
+  RTScheduling::Current::IdType const *schedule_guid = &guid;
 
   CORBA::String_var operation = ri->operation ();
 
@@ -377,8 +378,6 @@ Fixed_Priority_Scheduler::receive_request (PortableInterceptor::ServerRequestInf
 
       ACE_NEW (guid_out.ptr (),
                RTScheduling::Current::IdType);
-      guid_out.ptr ()->length (guid.length ());
-      *(guid_out.ptr ()) = guid;
 
 #ifdef KOKYU_DSRT_LOGGING
       int int_guid;
@@ -390,6 +389,8 @@ Fixed_Priority_Scheduler::receive_request (PortableInterceptor::ServerRequestInf
                   desired_priority,
                   int_guid));
 #endif
+      *(guid_out.ptr ()) = std::move (guid);
+      schedule_guid = guid_out.ptr ();
 
       FP_Scheduling::SegmentSchedulingParameter sched_param;
       sched_param.base_priority = desired_priority;
@@ -398,7 +399,7 @@ Fixed_Priority_Scheduler::receive_request (PortableInterceptor::ServerRequestInf
 
   FP_Scheduler_Traits::QoSDescriptor_t qos;
   qos.priority_ = desired_priority;
-  this->kokyu_dispatcher_->schedule (guid, qos);
+  this->kokyu_dispatcher_->schedule (*schedule_guid, qos);
 
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG, "(%t|%T): receive_request interceptor done\n"));
