@@ -98,8 +98,6 @@ ACE_Process_Manager::dump () const
 }
 
 ACE_Process_Manager::Process_Descriptor::Process_Descriptor ()
-  : process_ (nullptr),
-    exit_notify_ (nullptr)
 {
   ACE_TRACE ("ACE_Process_Manager::Process_Descriptor::Process_Descriptor");
 }
@@ -188,17 +186,16 @@ ACE_Process_Manager::resize (size_t size)
                   Process_Descriptor[size],
                   -1);
 
+  std::unique_ptr<Process_Descriptor[]> new_table (temp);
+
   for (size_t i = 0;
        i < this->current_count_;
        i++)
     // Structure assignment.
-    temp[i] = this->process_table_[i];
+    new_table[i] = this->process_table_[i];
 
   this->max_process_table_size_ = size;
-
-  delete [] this->process_table_;
-
-  this->process_table_ = temp;
+  this->process_table_.swap (new_table);
   return 0;
 }
 
@@ -208,7 +205,7 @@ ACE_Process_Manager::open (size_t size, ACE_Reactor *r)
 {
   ACE_TRACE ("ACE_Process_Manager::open");
 
-  if (r)
+  if (r != nullptr)
     {
       this->reactor (r);
 #if !defined (ACE_WIN32) && !defined (ACE_LACKS_UNIX_SIGNALS)
@@ -228,11 +225,7 @@ ACE_Process_Manager::open (size_t size, ACE_Reactor *r)
 // Initialize the synchronization variables.
 ACE_Process_Manager::ACE_Process_Manager (size_t size,
                                           ACE_Reactor *r)
-  : ACE_Event_Handler (),
-    process_table_ (nullptr),
-    max_process_table_size_ (0),
-    current_count_ (0),
-    default_exit_handler_ (nullptr)
+  : ACE_Event_Handler ()
 #if defined (ACE_HAS_THREADS)
   , lock_ ()
 #endif /* ACE_HAS_THREADS */
@@ -268,8 +261,7 @@ ACE_Process_Manager::close ()
       while (this->current_count_ > 0)
         this->remove_proc (0);
 
-      delete [] this->process_table_;
-      this->process_table_ = nullptr;
+      this->process_table_.reset ();
       this->max_process_table_size_ = 0;
       this->current_count_ = 0;
     }
@@ -507,7 +499,7 @@ ACE_Process_Manager::append_proc (ACE_Process *proc,
   // automagically.  Get a handle to this new Process and tell the
   // Reactor we're interested in <handling_input> on it.
   ACE_Reactor * const r = this->reactor ();
-  if (r != 0)
+  if (r != nullptr)
     r->register_handler (this, proc->gethandle ());
 #endif /* ACE_WIN32 */
 
