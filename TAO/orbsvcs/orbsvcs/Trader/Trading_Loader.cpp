@@ -27,47 +27,44 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/os_include/os_netdb.h"
 
+#include <array>
+#include <cstdio>
+#include <cstdlib>
 #include <cstring>
+#include <string>
 
 TAO_Trading_Loader::TAO_Trading_Loader ()
 {
-  char *trader_name = CORBA::string_alloc (MAXHOSTNAMELEN + 10);
-
-  if (trader_name != nullptr)
+  // The trader name is the concatenation of the local host name
+  // and the server's process id.
+  std::array<char, MAXHOSTNAMELEN + 1> host_name {};
+  ACE_INET_Addr localhost {};
+  if (localhost.get_host_name (host_name.data (), host_name.size ()) != 0)
     {
-      // The trader name is the concatenation of the local host name
-      // and the server's process id.
-      char host_name[MAXHOSTNAMELEN + 1];
-      ACE_INET_Addr localhost ((u_short) 0);
-      if (localhost.get_host_name (host_name, sizeof (host_name)) != 0)
-        {
-          char const* tmp = localhost.get_host_addr ();
-          if (tmp == nullptr)
-            ORBSVCS_DEBUG ((LM_DEBUG,
+      char const * const host_address = localhost.get_host_addr ();
+      if (host_address == nullptr)
+        ORBSVCS_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("\n\nTAO Trading Service (%P|%t) ")
                         ACE_TEXT ("TAO_Trading_Loader ")
                         ACE_TEXT ("- %p\n\n"),
                         ACE_TEXT ("cannot determine hostname")));
-          else
-            std::strcpy (host_name, tmp);
-        }
-
-      ACE_OS::sprintf (trader_name,
-                       "%s_%ld",
-                       host_name,
-                       static_cast<long> (ACE_OS::getpid ()));
-
-  for (char* dot {};
-           (dot = std::strchr (trader_name, '.')) != nullptr;
-           *dot = '_')
-        continue;
-
-      ORBSVCS_DEBUG ((LM_DEBUG,
-                  "*** Trading Service %C initializing.\n",
-                  trader_name));
-
-      this->name_ = trader_name;
+      else
+        std::snprintf (host_name.data (), host_name.size (), "%s", host_address);
     }
+
+  std::string trader_name (host_name.data ());
+  for (char &character : trader_name)
+    if (character == '.')
+      character = '_';
+
+  trader_name += '_';
+  trader_name += std::to_string (static_cast<long> (ACE_OS::getpid ()));
+
+  ORBSVCS_DEBUG ((LM_DEBUG,
+                  "*** Trading Service %C initializing.\n",
+                  trader_name.c_str ()));
+
+  this->name_ = CORBA::string_dup (trader_name.c_str ());
 }
 
 int
@@ -215,10 +212,10 @@ TAO_Trading_Loader::create_object (CORBA::ORB_ptr orb_ptr,
   // Dump the ior to a file.
   if (this->ior_output_file_ != nullptr)
     {
-      ACE_OS::fprintf (this->ior_output_file_,
+      ACE_OS::fprintf (this->ior_output_file_.get (),
                        "%s",
                        this->ior_.in ());
-      ACE_OS::fclose (this->ior_output_file_);
+      this->ior_output_file_.reset ();
     }
 
   CORBA::Object_var table_object =
@@ -374,8 +371,8 @@ TAO_Trading_Loader::init_multicast_server ()
       const char *port_number =
         ACE_OS::getenv ("TradingServicePort");
 
-      if (port_number != 0)
-        port = static_cast<u_short> (ACE_OS::atoi (port_number));
+      if (port_number != nullptr)
+        port = static_cast<u_short> (std::atoi (port_number));
       else
         port = TAO_DEFAULT_TRADING_SERVER_REQUEST_PORT;
     }
@@ -439,8 +436,8 @@ TAO_Trading_Loader::parse_args (int &argc, ACE_TCHAR *argv [])
             {
               const ACE_TCHAR *file_name =
                 arg_shifter.get_current ();
-              this->ior_output_file_ =
-                ACE_OS::fopen (file_name, ACE_TEXT("w"));
+              this->ior_output_file_.reset (
+                ACE_OS::fopen (file_name, ACE_TEXT("w")));
 
               if (this->ior_output_file_ == nullptr)
                 ORBSVCS_ERROR_RETURN ((LM_ERROR,
@@ -449,9 +446,9 @@ TAO_Trading_Loader::parse_args (int &argc, ACE_TCHAR *argv [])
               arg_shifter.consume_arg ();
             }
           else
-            this->ior_output_file_ =
+            this->ior_output_file_.reset (
               ACE_OS::fdopen (ACE_STDOUT,
-                              ACE_TEXT("w"));
+                              ACE_TEXT("w")));
         }
 
       else

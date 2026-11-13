@@ -27,6 +27,9 @@
 
 #include "tao/Object_Loader.h"
 #include "tao/Utils/ORB_Manager.h"
+#include "ace/OS_NS_stdio.h"
+
+#include <memory>
 #include <utility>
 
 class TAO_Trading_Serv_Export TAO_Trading_Loader : public TAO_Object_Loader
@@ -85,7 +88,7 @@ protected:
   CORBA::Boolean federate_ {};
 
   /// File to output the Naming Service IOR.
-  FILE *ior_output_file_ {};
+  std::unique_ptr<FILE, int (*) (FILE *)> ior_output_file_ {nullptr, ACE_OS::fclose};
 
   /// Name of this trading service: "hostname:pid".
   CORBA::String_var name_;
