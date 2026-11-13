@@ -11,6 +11,8 @@
 #include "LookupManager.h"
 #include "Priority_Mapping.h"
 
+#include <cstring>
+
 int WARMUP_COUNT = 10;
 
 TAO_Notify_Tests_Periodic_Consumer::TAO_Notify_Tests_Periodic_Consumer ()
@@ -78,7 +80,7 @@ TAO_Notify_Tests_Periodic_Consumer::handle_start_event (const CosNotification::P
 
   for (CORBA::ULong i = 0; i < prop_seq.length (); ++i)
     {
-      if (ACE_OS::strcmp (prop_seq[i].name.in (), "BaseTime") == 0)
+      if (std::strcmp (prop_seq[i].name.in (), "BaseTime") == 0)
         {
           TimeBase::TimeT base_time;
           ACE_hrtime_t base_time_hrtime;
@@ -90,11 +92,11 @@ TAO_Notify_Tests_Periodic_Consumer::handle_start_event (const CosNotification::P
         }
       // if max_count has not been already specified, get it from the supplier.
       else if (this->max_count_ == -1 &&
-               ACE_OS::strcmp (prop_seq[i].name.in (), "MaxCount") == 0)
+               std::strcmp (prop_seq[i].name.in (), "MaxCount") == 0)
         {
           prop_seq[i].value >>= this->max_count_;
         }
-      else if (ACE_OS::strcmp (prop_seq[i].name.in (), "Load") == 0)
+      else if (std::strcmp (prop_seq[i].name.in (), "Load") == 0)
         {
           prop_seq[i].value >>= this->load_;
         }
@@ -116,7 +118,7 @@ TAO_Notify_Tests_Periodic_Consumer::check_priority (const CosNotification::Prope
 
   for (CORBA::ULong i = 0; i < prop_seq.length (); ++i)
     {
-      if (ACE_OS::strcmp (prop_seq[i].name.in (), CosNotification::Priority) == 0)
+      if (std::strcmp (prop_seq[i].name.in (), CosNotification::Priority) == 0)
         {
           prop_seq[i].value >>= event_priority;
 
@@ -203,7 +205,7 @@ TAO_Notify_Tests_Periodic_Consumer::push_structured_event (const CosNotification
 
   for (CORBA::ULong i = 0; i < prop_seq.length (); ++i)
     {
-      if (ACE_OS::strcmp (prop_seq[i].name.in (), "Stop") == 0)
+      if (std::strcmp (prop_seq[i].name.in (), "Stop") == 0)
         {
           this->stop_received_ = 1;
         }

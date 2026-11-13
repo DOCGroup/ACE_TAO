@@ -8,6 +8,8 @@
 
 #include "ace/OS_NS_unistd.h"
 
+#include <cstring>
+
 Notify_Structured_Push_Consumer::Notify_Structured_Push_Consumer (
                                             char const* name,
                                             CORBA::Short policy,
@@ -82,7 +84,7 @@ Notify_Structured_Push_Consumer::push_structured_event (
   CORBA::Long id {};
 
   ACE_ASSERT (event.header.variable_header.length () == 3);
-  ACE_ASSERT (ACE_OS::strcmp (event.header.variable_header[0].name.in (), "id") == 0);
+  ACE_ASSERT (std::strcmp (event.header.variable_header[0].name.in (), "id") == 0);
   event.header.variable_header[0].value >>= id;
 
   // The first event won't necessarilly be in order, because we hadn't yet forced

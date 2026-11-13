@@ -5,6 +5,8 @@
 #include "tao/debug.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <cstring>
+
 constexpr int BATCH_SIZE = 5;
 
 Notify_Sequence_Push_Consumer::Notify_Sequence_Push_Consumer (
@@ -85,7 +87,7 @@ Notify_Sequence_Push_Consumer::push_structured_events (
     }
 
   ACE_ASSERT (events[0].header.variable_header.length () == 3);
-  ACE_ASSERT (ACE_OS::strcmp (events[0].header.variable_header[0].name.in (), "id") == 0);
+  ACE_ASSERT (std::strcmp (events[0].header.variable_header[0].name.in (), "id") == 0);
   CORBA::Long first_id {};
   events[0].header.variable_header[0].value >>= first_id;
   CORBA::Long last_id {};
