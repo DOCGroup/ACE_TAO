@@ -40,17 +40,22 @@ void consumer (ACE_SYNCH_PROCESS_SEMAPHORE &sema,
     }
 }
 
+struct Process_Semaphore_Options
+{
+  bool is_consumer {true};
+  bool delete_semaphore {};
+  int iterations {};
+  int exit_delay {};
+  ACE_TCHAR const *semaphore_name {ACE_TEXT ("Process_Semaphore_Test")};
+};
+
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   //FUZZ: disable check_for_lack_ACE_OS
   ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("csn:xi:d:"));
   //FUZZ: enable check_for_lack_ACE_OS
 
-  bool is_consumer {true};      // By default, make us a consumer.
-  bool delete_sema {};
-  int iteration {};
-  int exit_delay {};
-  ACE_TCHAR const *sema_name = ACE_TEXT ("Process_Semaphore_Test");
+  Process_Semaphore_Options options;
 
   int opt {};
 
@@ -61,38 +66,38 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       switch (opt)
         {
         case 'c':               // Make us a consumer.
-          is_consumer = true;
+          options.is_consumer = true;
           break;
         case 's':               // Make us a supplier.
-          is_consumer = false;
+          options.is_consumer = false;
           break;
         case 'x':               // Remove the semaphore after we're done.
-          delete_sema = true;
+          options.delete_semaphore = true;
           break;
         case 'n':               // Specify the name of the semaphore.
-          sema_name = getopt.opt_arg ();
+          options.semaphore_name = getopt.opt_arg ();
           break;
         case 'i':               // Number of acquire/release we'll perform.
-          iteration = ACE_OS::atoi (getopt.opt_arg ());
+          options.iterations = ACE_OS::atoi (getopt.opt_arg ());
           break;
         case 'd':
-          exit_delay = ACE_OS::atoi (getopt.opt_arg ());
+          options.exit_delay = ACE_OS::atoi (getopt.opt_arg ());
           break;
         default:
           return -1;
         }
     }
 
-  ACE_SYNCH_PROCESS_SEMAPHORE sema (0, sema_name);
+  ACE_SYNCH_PROCESS_SEMAPHORE sema (0, options.semaphore_name);
 
-  if (is_consumer)
-    consumer (sema, iteration);
+  if (options.is_consumer)
+    consumer (sema, options.iterations);
   else
-    producer (sema, iteration);
+    producer (sema, options.iterations);
 
-  ACE_OS::sleep (exit_delay);
+  ACE_OS::sleep (options.exit_delay);
 
-  if (delete_sema)
+  if (options.delete_semaphore)
     sema.remove ();
   return 0;
 }
