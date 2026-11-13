@@ -43,14 +43,15 @@ rsvp_callback (rapi_sid_t /* sid */,
                )
 {
   if (args == nullptr)
-    ACELIB_DEBUG ((LM_DEBUG,
-                "Argument in the call back function is null\n\n"));
+    ACELIB_ERROR_RETURN ((LM_ERROR,
+                          "Argument in the call back function is null\n"),
+                         -1);
 
   ACE_QoS_Session *qos_session = static_cast<ACE_QoS_Session *> (args);
 
   qos_flowspecx_t *csxp {};
 
-  if (!flow_spec_list)
+  if (flow_spec_list == nullptr)
     {
       ACELIB_DEBUG ((LM_DEBUG,
                   "(%N|%l) Null flow_spec_list\n"));
@@ -59,12 +60,6 @@ rsvp_callback (rapi_sid_t /* sid */,
     {
       // Extended Legacy format.
       csxp = &flow_spec_list->specbody_qosx;
-      if(!csxp)
-        {
-          ACELIB_ERROR_RETURN ((LM_ERROR,
-                            "(%N|%l) Null csxp\n"),
-                            -1);
-        }
     }
 
   ACE_QoS ace_qos = qos_session->qos ();
@@ -82,9 +77,10 @@ rsvp_callback (rapi_sid_t /* sid */,
 
         if (flow_spec_no != 0)
           {
-            ACE_NEW_RETURN (receiving_fs,
-                            ACE_Flow_Spec,
-                            -1);
+            if (csxp == nullptr)
+              ACELIB_ERROR_RETURN ((LM_ERROR,
+                                    "(%N|%l) Missing flow specification\n"),
+                                   -1);
 
             ACE_NEW_RETURN (receiving_fs,
                             ACE_Flow_Spec ((u_long)csxp->xspec_r,
@@ -135,6 +131,11 @@ rsvp_callback (rapi_sid_t /* sid */,
 
         if (flow_spec_no != 0)
           {
+            if (csxp == nullptr)
+              ACELIB_ERROR_RETURN ((LM_ERROR,
+                                    "(%N|%l) Missing flow specification\n"),
+                                   -1);
+
             ACE_NEW_RETURN (sending_flow,
                             ACE_Flow_Spec,
                             -1);
