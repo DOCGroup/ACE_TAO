@@ -41,6 +41,7 @@ namespace TAO
     class TAO_Security_Export CredentialsAcquirerFactory
     {
     public:
+      CredentialsAcquirerFactory () = default;
       virtual ~CredentialsAcquirerFactory ();
 
       CredentialsAcquirerFactory (CredentialsAcquirerFactory const &) = delete;

@@ -44,6 +44,7 @@ namespace TAO
     class TAO_Security_Export SecurityCurrent_Impl
     {
     public:
+      SecurityCurrent_Impl () = default;
       virtual ~SecurityCurrent_Impl ();
 
       SecurityCurrent_Impl (SecurityCurrent_Impl const &) = delete;
