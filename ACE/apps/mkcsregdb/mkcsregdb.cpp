@@ -36,7 +36,7 @@ public:
   csdb_generator &operator= (csdb_generator &&) = delete;
   int read_from (char const *source);
   int init_output (char const *srcfile);
-  int write_entry ();
+  void write_entry ();
   int fini_output (char const *target);
   int read_line ();
   void write_dummy_entry ();
@@ -60,7 +60,7 @@ private:
     "max_bytes "
   };
   static constexpr int max_line_ = 1024;
-  int count_ {};
+  size_t count_ {};
   bool in_entry_ {};
   bool have_description_ {};
   bool have_loc_name_ {};
@@ -100,8 +100,10 @@ csdb_generator::read_line ()
   char *cpos = std::strchr (this->source_line_.data (), '#');
   if (cpos == nullptr)
     cpos = this->source_line_.data () + std::strlen (this->source_line_.data ());
-  while (cpos > this->source_line_.data () && std::strchr (" \t", *(cpos - 1))) cpos--;
-  *cpos = 0;
+  while (cpos > this->source_line_.data ()
+         && std::strchr (" \t", *(cpos - 1)))
+    --cpos;
+  *cpos = '\0';
   if (cpos == this->source_line_.data ())
     return 0;
   for (size_t i = 0; i < tags_.size (); ++i)
@@ -111,8 +113,9 @@ csdb_generator::read_line ()
         continue;
       if (cpos > this->source_line_.data ()) // make sure it's first token
         {
-          char *tpos = cpos-1;
-          while (tpos > this->source_line_.data () && std::strchr (" \t", *tpos)) tpos--;
+          char *tpos = cpos - 1;
+          while (tpos > this->source_line_.data () && std::strchr (" \t", *tpos))
+            --tpos;
           if (tpos > this->source_line_.data ())
             continue;
         }
@@ -127,8 +130,9 @@ csdb_generator::read_line ()
       if (i > 1)
         {
           this->line_data_ = cpos + std::strlen (tags_[i]);
-          while (*this->line_data_ && std::strchr (" \t", *this->line_data_))
-            this->line_data_++;
+          while (*this->line_data_ != '\0'
+                 && std::strchr (" \t", *this->line_data_))
+            ++this->line_data_;
         }
       return i+1;
     }
@@ -147,7 +151,7 @@ csdb_generator::read_from (char const *srcfile)
     }
   char *ptr {};
   while (this->inf_.good () && !this->inf_.eof ()) {
-    linecounter_++;
+    ++linecounter_;
     switch (read_line ()) {
     case -1: // bogus line
       fail ("unknown field tag");
@@ -177,7 +181,7 @@ csdb_generator::read_from (char const *srcfile)
       entry_.desc_ = this->description_.c_str ();
       entry_.loc_name_ = this->loc_name_.c_str ();
       write_entry ();
-      this->count_++;
+      ++this->count_;
       this->in_entry_ = false;
       break;
     case 3: // description
@@ -209,18 +213,22 @@ csdb_generator::read_from (char const *srcfile)
       ptr = this->line_data_;
       do {
         if (*ptr == ':')
-          ptr++;
-        ACE_CDR::UShort tmp =
+          ++ptr;
+        ACE_CDR::UShort const tmp =
           static_cast<ACE_CDR::UShort> (std::strtoul (ptr, &ptr, 16));
-        if (*ptr != 0 && *ptr != ':')
+        if (*ptr != '\0' && *ptr != ':')
           {
             char emsg[100];
             std::snprintf (emsg, sizeof emsg, "invalid symbol \'%c\' in char_values", *ptr);
             fail (emsg);
           }
         if (entry_.num_sets_ < max_charsets_)
-          entry_.char_sets_[entry_.num_sets_++] = tmp;
-        else entry_.num_sets_++;
+          {
+            entry_.char_sets_[entry_.num_sets_] = tmp;
+            ++entry_.num_sets_;
+          }
+        else
+          ++entry_.num_sets_;
       } while (*ptr == ':');
       if (entry_.num_sets_ > max_charsets_)
         {
@@ -237,7 +245,7 @@ csdb_generator::read_from (char const *srcfile)
         fail ("duplicate max_bytes");
       entry_.max_bytes_ =
         static_cast<ACE_CDR::UShort> (std::strtol (this->line_data_, &ptr, 10));
-      if (*ptr != 0)
+      if (*ptr != '\0')
         fail ("invalid max_bytes");
       break;
     }
@@ -249,7 +257,7 @@ int
 csdb_generator::init_output (char const *srcfile)
 {
   ACE_stat buf;
-  if (ACE_OS::stat (srcfile,&buf) != 0)
+  if (ACE_OS::stat (srcfile, &buf) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,"Unable to open %s\n",srcfile),-1);
 
   if (this->ace_src_.empty ())
@@ -292,23 +300,22 @@ csdb_generator::init_output (char const *srcfile)
   return 0;
 }
 
-int
+void
 csdb_generator::write_entry ()
 {
-  if (count_)
+  if (this->count_ != 0)
     std::fprintf (this->outf_.get (), ",\n");
   std::fprintf (this->outf_.get (), "  {\"%s\",\"%s\",0x%08x,%d,{",
                    entry_.desc_,
                    entry_.loc_name_,
                    entry_.codeset_id_,
                    entry_.num_sets_);
-  for (ACE_CDR::UShort j = 0; j < entry_.num_sets_; j++)
+  for (size_t j = 0; j < entry_.num_sets_; ++j)
     if (j+1 < entry_.num_sets_)
       std::fprintf (this->outf_.get (), "0x%04x,", entry_.char_sets_[j]);
     else
       std::fprintf (this->outf_.get (), "0x%04x", entry_.char_sets_[j]);
   std::fprintf (this->outf_.get (), "},%d}", entry_.max_bytes_);
-  return 0;
 }
 
 void
@@ -329,20 +336,21 @@ csdb_generator::fini_output (char const *tgt)
   std::string const target = this->ace_src_ + ACE_DIRECTORY_SEPARATOR_STR + "ace"
     + ACE_DIRECTORY_SEPARATOR_STR + tgt;
   if (count_ == 0)
-    write_dummy_entry();
+    write_dummy_entry ();
   std::fprintf (this->outf_.get (),
-                "\n};\n\nsize_t const ACE_Codeset_Registry::num_registry_entries_ = %d;\n\n"
+                "\n};\n\nsize_t const ACE_Codeset_Registry::num_registry_entries_ = %zu;\n\n"
                 "ACE_END_VERSIONED_NAMESPACE_DECL\n",
                 count_);
   this->outf_.reset ();
   ACE_stat buf;
   if (ACE_OS::stat (target.c_str (), &buf) == 0)
     {
-      int index = 0;
+      size_t index {};
       std::string fname;
       do
         {
-          std::string const suffix = std::to_string (index++);
+          std::string const suffix = std::to_string (index);
+          ++index;
           fname = target + "." + std::string (suffix.size () < 3 ? 3 - suffix.size () : 0, '0') + suffix;
         }
       while (ACE_OS::stat (fname.c_str (), &buf) == 0);
