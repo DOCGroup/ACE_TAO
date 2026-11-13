@@ -526,7 +526,7 @@ ACE_Service_Config::reconfigure ()
   if (ACE::debug ())
     {
 #if !defined (ACE_NLOGGING)
-      time_t t = ACE_OS::time (nullptr);
+      time_t const t = ACE_OS::time (nullptr);
 
       if (ACE::debug ())
         ACELIB_DEBUG ((LM_DEBUG,
