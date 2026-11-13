@@ -616,12 +616,11 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_types_i (
 
   // Note that char_rep() allocates memory so we need to delete it
   char *pattern_rep = pattern.char_rep ();
+  bool const wildcard = pattern_rep == nullptr || pattern_rep[0] == '\0';
 
   // Check for wildcard case first.
-  if (std::strcmp ("", pattern_rep) == 0)
-    ACE_ALLOCATOR_RETURN (compiled_regexp,
-                          ACE_OS::strdup (""),
-                          -1);
+  if (wildcard)
+    compiled_regexp = ACE_OS::strdup ("");
   else
     // Compile the regular expression (the 0's cause ACE_OS::compile
     // to allocate space).
@@ -633,6 +632,16 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_types_i (
   compiled_regexp = pattern_rep;
 #endif /* ACE_HAS_REGEX */
 
+  if (compiled_regexp == nullptr)
+    {
+#if defined (ACE_HAS_ALLOC_HOOKS)
+      ACE_Allocator::instance ()->free (pattern_rep);
+#else
+      delete [] pattern_rep;
+#endif /* ACE_HAS_ALLOC_HOOKS */
+      return -1;
+    }
+
   int result = 1;
 
   for (map_entry = nullptr;
@@ -643,7 +652,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_types_i (
       const char *type = map_entry->int_id_.type ();
 
       // Everything matches the wildcard.
-      if (std::strcmp ("", pattern_rep) == 0
+      if (wildcard
 #if defined (ACE_HAS_REGEX)
           || ACE_OS::step (type, compiled_regexp) != 0)
 #else
@@ -747,9 +756,10 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_type_entries_i (
   char *compiled_regexp {};
   // Note that char_rep() allocates memory so we need to delete it
   char *pattern_rep = pattern.char_rep ();
+  bool const wildcard = pattern_rep == nullptr || pattern_rep[0] == '\0';
 
   // Check for wildcard case first.
-  if (std::strcmp ("", pattern_rep) == 0)
+  if (wildcard)
     compiled_regexp = ACE_OS::strdup ("");
   else
     // Compile the regular expression (the 0's cause ACE_OS::compile
@@ -761,6 +771,18 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_type_entries_i (
   compiled_regexp = pattern_rep;
 #endif /* ACE_HAS_REGEX */
 
+  if (compiled_regexp == nullptr)
+    {
+#if defined (ACE_HAS_ALLOC_HOOKS)
+      ACE_Allocator::instance ()->free (pattern_rep);
+#else
+      delete [] pattern_rep;
+#endif /* ACE_HAS_ALLOC_HOOKS */
+      return -1;
+    }
+
+  int result = 0;
+
   for (map_entry = nullptr;
        map_iterator.next (map_entry) != 0;
        map_iterator.advance ())
@@ -768,8 +790,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_type_entries_i (
       // Get the type.
       const char *type = map_entry->int_id_.type ();
 
-      if (std::strcmp ("", pattern_rep) == 0 // Everything matches
-                                                // the wildcard.
+      if (wildcard // Everything matches the wildcard.
 #if defined (ACE_HAS_REGEX)
           || ACE_OS::step (type, compiled_regexp) != 0)
 #else /* If we don't have regular expressions just use strstr() for
@@ -782,7 +803,10 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_type_entries_i (
                                   map_entry->int_id_.type ());
 
           if (set.insert (entry) == -1)
-            return -1;
+            {
+              result = -1;
+              break;
+            }
         }
     }
 #if defined (ACE_HAS_REGEX)
@@ -794,7 +818,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_type_entries_i (
 #else
   delete [] pattern_rep;  // delete pattern_rep;
 #endif /* ACE_HAS_ALLOC_HOOKS */
-  return 0;
+  return result;
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> void
