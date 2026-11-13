@@ -97,11 +97,10 @@ public:
 
   virtual ~ACE_Creation_Strategy ();
 
-  // = Factory method.
   /**
    * Create a SVC_HANDLER with the appropriate creation strategy.  The
    * default behavior of this method is to make a new SVC_HANDLER if
-   * @a sh == 0 (passing in the Thread_Manager), else @a sh is
+   * @a sh == nullptr (passing in the Thread_Manager), else @a sh is
    * unchanged.  Returns -1 on failure, else 0.
    */
   virtual int make_svc_handler (SVC_HANDLER *&sh);
@@ -142,12 +141,16 @@ public:
                           ACE_Thread_Manager * = nullptr);
   int open (SVC_HANDLER *,
             ACE_Thread_Manager * = nullptr);
-  virtual ~ACE_Singleton_Strategy ();
+  ~ACE_Singleton_Strategy () override;
 
-  // = Factory method.
+  ACE_Singleton_Strategy (ACE_Singleton_Strategy const &) = delete;
+  ACE_Singleton_Strategy &operator= (ACE_Singleton_Strategy const &) = delete;
+  ACE_Singleton_Strategy (ACE_Singleton_Strategy &&) = delete;
+  ACE_Singleton_Strategy &operator= (ACE_Singleton_Strategy &&) = delete;
+
   /// Create a Singleton SVC_HANDLER by always returning the same
   /// SVC_HANDLER.  Returns -1 on failure, else 0.
-  virtual int make_svc_handler (SVC_HANDLER *&);
+  int make_svc_handler (SVC_HANDLER *&) override;
 
   /// Dump the state of an object.
   void dump () const;
@@ -176,8 +179,6 @@ public:
   // Useful STL-style traits.
   using base_type = ACE_Creation_Strategy<SVC_HANDLER>;
 
-  // = Intialization and termination methods.
-
   /// "Do-nothing" constructor.
   ACE_DLL_Strategy ();
 
@@ -197,10 +198,9 @@ public:
             ACE_Service_Repository *,
             ACE_Thread_Manager * = nullptr);
 
-  // = Factory method.
   /// Create a SVC_HANDLER by dynamically linking it from a DLL.
   /// Returns -1 on failure, else 0.
-  virtual int make_svc_handler (SVC_HANDLER *&);
+  int make_svc_handler (SVC_HANDLER *&) override;
 
   /// Dump the state of an object.
   void dump () const;
@@ -249,7 +249,6 @@ public:
 
   ACE_Concurrency_Strategy (int flags = 0);
 
-  // = Factory method.
   /**
    * Activate the @a svc_handler with an appropriate concurrency
    * strategy.  The default behavior of this method is to activate the
@@ -290,7 +289,6 @@ public:
   // Useful STL-style traits.
   using base_type = ACE_Concurrency_Strategy<SVC_HANDLER>;
 
-  // = Intialization and termination methods.
   /// "Do-nothing constructor"
   ACE_Reactive_Strategy (int flags = 0);
 
@@ -304,9 +302,8 @@ public:
                     ACE_Reactor_Mask = ACE_Event_Handler::READ_MASK,
                     int flags = 0);
 
-  virtual ~ACE_Reactive_Strategy ();
+  ~ACE_Reactive_Strategy () override;
 
-  // = Factory method.
   /// Activate the @a svc_handler by registering it with the <Reactor>
   /// and then calling it's <open> hook.
   int activate_svc_handler (SVC_HANDLER *svc_handler,
@@ -348,7 +345,6 @@ public:
   // Useful STL-style traits.
   using base_type = ACE_Concurrency_Strategy<SVC_HANDLER>;
 
-  // = Intialization and termination methods.
   /// "Do-nothing constructor"
   ACE_Thread_Strategy (int flags = 0);
 
@@ -364,9 +360,8 @@ public:
                     int n_threads = 1,
                     int flags = 0);
 
-  virtual ~ACE_Thread_Strategy ();
+  ~ACE_Thread_Strategy () override;
 
-  // = Factory method.
   /**
    * Activate the @a svc_handler with an appropriate concurrency
    * strategy.  This method activates the SVC_HANDLER by first calling
@@ -414,8 +409,6 @@ public:
   // Useful STL-style traits.
   using base_type = ACE_Concurrency_Strategy<SVC_HANDLER>;
 
-  // = Intialization and termination methods.
-
   /// Initialize the strategy.  If @a avoid_zombies is non-0 then set a
   /// flag to ACE::fork() to avoid zombies.
   ACE_Process_Strategy (size_t n_processes = 1,
@@ -430,9 +423,8 @@ public:
                     ACE_Reactor * = nullptr,
                     int avoid_zombies = 0);
 
-  virtual ~ACE_Process_Strategy ();
+  ~ACE_Process_Strategy () override;
 
-  // = Factory method.
   /**
    * Activate the @a svc_handler with an appropriate concurrency
    * strategy.  This method activates the SVC_HANDLER by first forking
@@ -509,7 +501,6 @@ public:
 
   virtual ~ACE_Accept_Strategy ();
 
-  // = Factory method.
   /// The default behavior delegates to the <accept> method of the
   /// PEER_ACCEPTOR.
   virtual int accept_svc_handler (SVC_HANDLER *);
@@ -561,7 +552,6 @@ public:
 
   virtual ~ACE_Connect_Strategy ();
 
-  // = Factory method.
   /// The default behavior delegates to the <connect> method of the
   /// <PEER_CONNECTOR::connect>.
   virtual int connect_svc_handler (SVC_HANDLER *&sh,
@@ -620,8 +610,6 @@ public:
 
   virtual ~ACE_Scheduling_Strategy ();
 
-  // = Scheduling methods
-
   /// Suspend hook.
   virtual int suspend ();
 
@@ -651,16 +639,14 @@ public:
 
   ACE_Schedule_All_Reactive_Strategy (SVC_HANDLER * = nullptr);
 
-  // = Scheduling methods
-
   /// Suspend hook.
-  virtual int suspend () override;
+  int suspend () override;
 
   /// Resume hook.
-  virtual int resume () override;
+  int resume () override;
 
   /// Dump the state of the object.
-  virtual void dump () const override;
+  void dump () const override;
 
 protected:
   /// Reactor
@@ -686,16 +672,14 @@ public:
 
   ACE_Schedule_All_Threaded_Strategy (SVC_HANDLER * = nullptr);
 
-  // = Scheduling methods
-
   /// Suspend hook.
-  virtual int suspend () override;
+  int suspend () override;
 
   /// Resume hook.
-  virtual int resume () override;
+  int resume () override;
 
   /// Dump the state of the object.
-  virtual void dump () const override;
+  void dump () const override;
 
 protected:
   /// Thread Manager
@@ -743,7 +727,6 @@ public:
   // Useful STL-style traits.
   using base_type = ACE_Concurrency_Strategy<SVC_HANDLER>;
 
-  // = Factory method.
   /// This is a no-op.
   int activate_svc_handler (SVC_HANDLER *svc_handler,
                             void *arg = nullptr) override;

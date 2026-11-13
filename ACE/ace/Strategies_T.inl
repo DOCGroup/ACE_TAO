@@ -4,8 +4,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 template <class SVC_HANDLER> ACE_INLINE
 ACE_Singleton_Strategy<SVC_HANDLER>::ACE_Singleton_Strategy (SVC_HANDLER *sh,
                                                              ACE_Thread_Manager *tm)
-  : svc_handler_ (0),
-    delete_svc_handler_ (1)
+  : svc_handler_ {},
+    delete_svc_handler_ {true}
 {
   ACE_TRACE ("ACE_Singleton_Strategy<SVC_HANDLER>::ACE_Singleton_Strategy");
   if (this->open (sh, tm) == -1)
