@@ -55,11 +55,11 @@ TAO_NT_Naming_Service::handle_control (DWORD control_code)
       // This must be all that needs to be done since this method is executing
       // in a separate thread from the one running the reactor.
       // When the reactor is stopped it calls ORB::destroy(), which in turn
-      // calls ORB::shutdown(1) *and* unbinds the ORB from the ORB table.
+      // calls ORB::shutdown(true) *and* unbinds the ORB from the ORB table.
 
       try
         {
-          TAO_ORB_Core_instance ()->orb ()->shutdown (1);
+          TAO_ORB_Core_instance ()->orb ()->shutdown (true);
         }
       catch (CORBA::Exception const &)
         {
