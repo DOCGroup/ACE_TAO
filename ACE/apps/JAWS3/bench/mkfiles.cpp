@@ -1,7 +1,7 @@
+#include <array>
 #include <cmath>
 #include <cstdio>
 #include <cstdlib>
-#include <array>
 #include <memory>
 
 #include "ace/Get_Opt.h"
@@ -20,7 +20,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   long maximum {1024};
   long number {1000};
 
-  int c;
+  int c {};
   while ((c = options ()) != -1)
     {
       switch (c)
@@ -48,7 +48,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   for (long i = 0; i < number; ++i)
     {
-      float p = std::floor (std::pow (2, poidev (std::log (2 * median) / std::log (2)) - 1));
+      float p {static_cast<float> (
+        std::floor (std::pow (2, poidev (std::log (2 * median) / std::log (2)) - 1)))};
       if (p > maximum)
         p = maximum;
       p *= 1024;

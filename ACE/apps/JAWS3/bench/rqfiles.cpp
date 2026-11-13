@@ -105,7 +105,7 @@ public:
         HTTP_Sink_Svc_Handler *handler {};
         result = this->connector_.connect (handler, this->addr_,
                                            ACE_Synch_Options::asynch);
-        tries++;
+    ++tries;
       }
     while (result < 0 && tries < 100);
 
@@ -171,10 +171,10 @@ using ACE_Select_NULL_LOCK_Reactor = ACE_Select_Reactor_T<ACE_Select_Reactor_Noo
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  std::unique_ptr<ACE_Select_NULL_LOCK_Reactor> select_reactor =
-    std::make_unique<ACE_Select_NULL_LOCK_Reactor> ();
-  std::unique_ptr<ACE_Reactor> reactor =
-    std::make_unique<ACE_Reactor> (select_reactor.get (), true);
+  std::unique_ptr<ACE_Select_NULL_LOCK_Reactor> select_reactor {
+    std::make_unique<ACE_Select_NULL_LOCK_Reactor> ()};
+  std::unique_ptr<ACE_Reactor> reactor {
+    std::make_unique<ACE_Reactor> (select_reactor.get (), true)};
   // The reactor owns its implementation; the singleton owns the reactor.
   select_reactor.release ();
   ACE_Reactor::instance (reactor.get (), true);
@@ -193,9 +193,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // n -- number of requests to generate
   // w -- website in form of hostname:port (e.g., www.yahoo.com:80)
 
-  char *filelist_name {};
-  double request_rate = 1.0;
-  char *website {};
+  char const *filelist_name {};
+  double request_rate {1.0};
+  char const *website {};
   int number_of_requests {};
 
   int c {};
@@ -252,7 +252,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   std::unique_ptr<HTTP_Make_Request_Event_Handler> request_handler =
     std::make_unique<HTTP_Make_Request_Event_Handler> (tv, number_of_requests, website);
 
-  while (! ACE_Reactor::instance ()->event_loop_done ())
+  while (!ACE_Reactor::instance ()->event_loop_done ())
     ACE_Reactor::instance ()->handle_events ();
   ACE_Reactor::instance ()->remove_handler (SIGINT, ACE_Event_Handler::SIGNAL_MASK);
 

@@ -8,14 +8,13 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 {
   double sum {};
   double count {};
-  int input {};
   char buf[BUFSIZ] {};
 
   while (std::fgets (buf, sizeof (buf), stdin) != nullptr)
     {
-      input = std::atoi (buf);
+      int const input = std::atoi (buf);
       sum += input;
-      count++;
+      ++count;
     }
 
   std::printf ("sum of input is: %f\n", sum);
