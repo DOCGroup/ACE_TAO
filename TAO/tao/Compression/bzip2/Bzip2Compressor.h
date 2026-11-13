@@ -3,8 +3,6 @@
 /**
  *  @file   Bzip2Compressor.h
  *
- *  See http://www.zlib.net/manual.html for the zlib interface itself
- *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 
@@ -29,6 +27,8 @@ namespace TAO
   class TAO_BZIP2COMPRESSOR_Export Bzip2Compressor : public BaseCompressor
   {
     public:
+      Bzip2Compressor () = delete;
+
       Bzip2Compressor (::Compression::CompressorFactory_ptr compressor_factory,
                        ::Compression::CompressionLevel compression_level);
 
