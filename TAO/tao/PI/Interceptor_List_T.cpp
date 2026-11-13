@@ -11,11 +11,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
   template <typename InterceptorType, typename DetailsType>
-  Interceptor_List<InterceptorType,DetailsType>::Interceptor_List ()
-  {
-  }
-
-  template <typename InterceptorType, typename DetailsType>
   typename Interceptor_List<InterceptorType,DetailsType>::RegisteredInterceptor&
   Interceptor_List<InterceptorType,DetailsType>::registered_interceptor (
     size_t index)
@@ -72,12 +67,12 @@ namespace TAO
 
                 // Prevent interceptors with the same name from being
                 // registered.  Anonymous interceptors are okay.
-                for (size_t i = 0; i < old_len; ++i)
+                for (size_t i {}; i < old_len; ++i)
                   {
                     CORBA::String_var existing_name =
                       this->interceptor (i)->name ();
 
-                    if (ACE_OS::strcmp (existing_name.in (), name.in ()) == 0)
+                    if (std::strcmp (existing_name.in (), name.in ()) == 0)
                       {
                         throw PortableInterceptor::ORBInitInfo::DuplicateName ();
                       }
@@ -85,7 +80,6 @@ namespace TAO
               }
           }
 
-        /// Increase the length of the Interceptor sequence by one.
         size_t const new_len = old_len + 1;
         this->interceptors_.size (new_len);
 
@@ -109,7 +103,7 @@ namespace TAO
   void
   Interceptor_List<InterceptorType,DetailsType>::add_interceptor (
     InterceptorType_ptr_type interceptor,
-    const CORBA::PolicyList& policies
+    CORBA::PolicyList const &policies
     )
   {
     if (!CORBA::is_nil (interceptor))
@@ -142,13 +136,13 @@ namespace TAO
 
                 // Prevent interceptors with the same name from being
                 // registered.  Anonymous interceptors are okay.
-                for (size_t i = 0; i < old_len; ++i)
+                for (size_t i {}; i < old_len; ++i)
                   {
                     CORBA::String_var existing_name =
                       this->interceptor (i)->name ();
 
-                    if (ACE_OS::strcmp (existing_name.in (),
-                                        name.in ()) == 0)
+                    if (std::strcmp (existing_name.in (),
+                                     name.in ()) == 0)
                       {
                         throw PortableInterceptor::ORBInitInfo::DuplicateName ();
                       }
@@ -160,7 +154,6 @@ namespace TAO
         DetailsType details;
         details.apply_policies(policies);
 
-        /// Increase the length of the Interceptor sequence by one.
         size_t const new_len = old_len + 1;
         this->interceptors_.size (new_len);
 
@@ -188,12 +181,12 @@ namespace TAO
   Interceptor_List<InterceptorType,DetailsType>::destroy_interceptors (
     void)
   {
-    size_t const len = this->interceptors_.size ();
-    size_t ilen = len;
-
     try
       {
-        for (size_t k = 0; k < len; ++k)
+        size_t const len = this->interceptors_.size ();
+        size_t ilen = len;
+
+        for (size_t k {}; k < len; ++k)
           {
             // Destroy the interceptors in reverse order in case the
             // array list is only partially destroyed and another

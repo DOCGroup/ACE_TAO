@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   RequestInfo_Util.h
  *
  *  @author Ossama Othman <ossama@uci.edu>
  */
-// ===================================================================
 
 #ifndef TAO_REQUEST_INFO_UTIL_H
 #define TAO_REQUEST_INFO_UTIL_H

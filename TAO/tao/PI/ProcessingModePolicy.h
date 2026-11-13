@@ -1,11 +1,9 @@
 /* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file   ProcessingModePolicy.h
  *
  *  @author Tim Bradley (bradley_t@ociweb.com)
  */
-//=============================================================================
 
 #ifndef TAO_PROCESSING_MODE_POLICY_H
 #define TAO_PROCESSING_MODE_POLICY_H
@@ -41,7 +39,6 @@ class TAO_PI_Export TAO_ProcessingModePolicy
     public ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   TAO_ProcessingModePolicy (PortableInterceptor::ProcessingMode mode);
 
   PortableInterceptor::ProcessingMode processing_mode () override;

@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    ClientRequestInterceptor_Adapter_Impl.h
  *
@@ -12,7 +11,6 @@
  *  @author  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
 
 #ifndef TAO_CLIENT_REQUEST_INTERCEPTOR_ADAPTER_IMPL_H
 #define TAO_CLIENT_REQUEST_INTERCEPTOR_ADAPTER_IMPL_H
@@ -24,7 +22,6 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
 
 #if TAO_HAS_INTERCEPTORS == 1
 
@@ -116,7 +113,7 @@ namespace TAO
     /// i.e. invoke the receive_other() interception point, in addition
     /// to notifying the Invocation object of the LOCATION_FORWARD.
     void process_forward_request (Invocation_Base &invocation,
-                                  const PortableInterceptor::ForwardRequest &exc);
+                                  PortableInterceptor::ForwardRequest const &exc);
 
   private:
     /// List of registered interceptors.

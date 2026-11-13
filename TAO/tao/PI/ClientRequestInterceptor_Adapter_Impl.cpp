@@ -30,9 +30,9 @@ namespace TAO
       {
         TAO_ClientRequestInfo ri (&invocation);
 
-        for (size_t i = 0 ; i < this->interceptor_list_.size (); ++i)
+        for (size_t i {}; i < this->interceptor_list_.size (); ++i)
           {
-            ClientRequestInterceptor_List::RegisteredInterceptor& registered =
+            ClientRequestInterceptor_List::RegisteredInterceptor const& registered =
               this->interceptor_list_.registered_interceptor (i);
 
             if (registered.details_.should_be_processed (is_remote_request))
@@ -45,7 +45,7 @@ namespace TAO
             ++invocation.stack_size ();
           }
       }
-    catch (const ::PortableInterceptor::ForwardRequest& exc)
+    catch (::PortableInterceptor::ForwardRequest const &exc)
       {
         this->process_forward_request (invocation, exc);
       }
@@ -68,7 +68,7 @@ namespace TAO
 
     // Unwind the stack.
     size_t const len = invocation.stack_size ();
-    for (size_t i = 0; i < len; ++i)
+    for (size_t i {}; i < len; ++i)
       {
         // Pop the interceptor off of the flow stack before it is
         // invoked.  This is necessary to prevent an interceptor already
@@ -76,7 +76,7 @@ namespace TAO
         // invoked in another "ending" interception point.
         --invocation.stack_size ();
 
-        ClientRequestInterceptor_List::RegisteredInterceptor& registered =
+        ClientRequestInterceptor_List::RegisteredInterceptor const& registered =
           this->interceptor_list_.registered_interceptor (
             invocation.stack_size ());
 
@@ -109,7 +109,7 @@ namespace TAO
 
         // Unwind the flow stack.
         size_t const len = invocation.stack_size ();
-        for (size_t i = 0; i < len; ++i)
+        for (size_t i {}; i < len; ++i)
           {
             // Pop the interceptor off of the flow stack before it is
             // invoked.  This is necessary to prevent an interceptor
@@ -117,7 +117,7 @@ namespace TAO
             // being invoked in another "ending" interception point.
             --invocation.stack_size ();
 
-            ClientRequestInterceptor_List::RegisteredInterceptor& registered =
+            ClientRequestInterceptor_List::RegisteredInterceptor const& registered =
               this->interceptor_list_.registered_interceptor (
                 invocation.stack_size ());
 
@@ -127,7 +127,7 @@ namespace TAO
               }
           }
       }
-    catch (const ::PortableInterceptor::ForwardRequest& exc)
+    catch (::PortableInterceptor::ForwardRequest const &exc)
       {
         this->process_forward_request (invocation, exc);
       }
@@ -147,7 +147,7 @@ namespace TAO
 
         this->receive_exception (invocation);
 
-        PortableInterceptor::ReplyStatus status =
+        PortableInterceptor::ReplyStatus const status =
           this->pi_reply_status (invocation);
 
         // Only re-throw the exception if it hasn't been transformed by
@@ -178,7 +178,7 @@ namespace TAO
 
         // Unwind the stack.
         size_t const len = invocation.stack_size ();
-        for (size_t i = 0; i < len; ++i)
+        for (size_t i {}; i < len; ++i)
         {
           // Pop the interceptor off of the flow stack before it is
           // invoked.  This is necessary to prevent an interceptor
@@ -186,7 +186,7 @@ namespace TAO
           // being invoked in another "ending" interception point.
           --invocation.stack_size ();
 
-          ClientRequestInterceptor_List::RegisteredInterceptor& registered =
+          ClientRequestInterceptor_List::RegisteredInterceptor const& registered =
             this->interceptor_list_.registered_interceptor (
               invocation.stack_size ());
 
@@ -196,7 +196,7 @@ namespace TAO
             }
         }
       }
-    catch (const ::PortableInterceptor::ForwardRequest& exc)
+    catch (::PortableInterceptor::ForwardRequest const &exc)
       {
         this->process_forward_request (invocation, exc);
       }
@@ -216,7 +216,7 @@ namespace TAO
 
         this->receive_exception (invocation);
 
-        PortableInterceptor::ReplyStatus status =
+        PortableInterceptor::ReplyStatus const status =
           this->pi_reply_status (invocation);
 
         // Only re-throw the exception if it hasn't been transformed by
@@ -231,7 +231,7 @@ namespace TAO
   void
   ClientRequestInterceptor_Adapter_Impl::process_forward_request (
       Invocation_Base &invocation,
-      const PortableInterceptor::ForwardRequest &exc)
+      PortableInterceptor::ForwardRequest const &exc)
   {
     invocation.forwarded_reference (exc.forward.in ());
 
@@ -249,7 +249,7 @@ namespace TAO
   void
   ClientRequestInterceptor_Adapter_Impl::add_interceptor (
     PortableInterceptor::ClientRequestInterceptor_ptr interceptor,
-    const CORBA::PolicyList& policies)
+    CORBA::PolicyList const &policies)
   {
     this->interceptor_list_.add_interceptor (interceptor, policies);
   }

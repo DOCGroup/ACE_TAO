@@ -32,7 +32,7 @@ TAO::PICurrent_Impl::get_slot (PortableInterceptor::SlotId identifier)
 
   // Get the slot table that is currently active
   PICurrent_Impl::Table & table = this->current_slot_table ();
-  CORBA::Any * any = nullptr;
+  CORBA::Any * any {};
 
   if (identifier < table.size ())
     {
@@ -63,7 +63,7 @@ TAO::PICurrent_Impl::get_slot (PortableInterceptor::SlotId identifier)
 
 void
 TAO::PICurrent_Impl::set_slot (PortableInterceptor::SlotId identifier,
-                               const CORBA::Any & data)
+                               CORBA::Any const &data)
 {
   // No need to check validity of SlotId.  It is validated before this
   // method is invoked.
@@ -175,7 +175,7 @@ TAO::PICurrent_Impl::push ()
 {
   if (this->orb_core_) // We have a stack to adjust
     {
-      TAO::PICurrent_Impl *const currentHead =
+      TAO::PICurrent_Impl * const currentHead =
         static_cast<TAO::PICurrent_Impl *> (
           this->orb_core_->get_tss_resource (this->tss_slot_));
       if (!currentHead->push_)
@@ -201,7 +201,7 @@ TAO::PICurrent_Impl::pop ()
 {
   if (this->orb_core_) // We have a stack to adjust
     {
-      TAO::PICurrent_Impl *const currentHead =
+      TAO::PICurrent_Impl * const currentHead =
         static_cast<TAO::PICurrent_Impl *> (
           this->orb_core_->get_tss_resource (this->tss_slot_));
       if (currentHead->pop_)

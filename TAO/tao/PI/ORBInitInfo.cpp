@@ -20,8 +20,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_ORBInitInfo::~TAO_ORBInitInfo () = default;
-
 // Traits specializations for TAO_ORBInitInfo.
 
 TAO_ORBInitInfo_ptr
@@ -58,7 +56,6 @@ TAO_ORBInitInfo::TAO_ORBInitInfo (TAO_ORB_Core *orb_core,
   : orb_core_ (orb_core),
     argc_ (argc),
     argv_ (argv),
-    codec_factory_ (),
     slot_count_ (slotid)
 {
 }
@@ -71,7 +68,7 @@ TAO_ORBInitInfo::arguments ()
   // In accordance with the C++ mapping for sequences, it is up to the
   // caller to deallocate storage for returned sequences.
 
-  CORBA::StringSeq *args = nullptr;
+  CORBA::StringSeq *args {};
   ACE_NEW_THROW_EX (args,
                     CORBA::StringSeq,
                     CORBA::NO_MEMORY (
@@ -85,7 +82,7 @@ TAO_ORBInitInfo::arguments ()
   // Copy the argument vector to the string sequence.
 
   args->length (this->argc_);   // Not a problem if argc is zero.
-  for (int i = 0; i < this->argc_; ++i)
+  for (int i {}; i < this->argc_; ++i)
     (*args)[i] = CORBA::string_dup (this->argv_[i]);
 
   return safe_args._retn ();
@@ -123,7 +120,7 @@ TAO_ORBInitInfo::codec_factory ()
 
       if (loader != nullptr)
         {
-          CORBA::Object_var cf =
+          CORBA::Object_var const cf =
             loader->create_object (this->orb_core_->orb (), 0, nullptr);
 
           this->codec_factory_ = IOP::CodecFactory::_narrow (cf.in ());
@@ -135,7 +132,7 @@ TAO_ORBInitInfo::codec_factory ()
 
 void
 TAO_ORBInitInfo::register_initial_reference (
-    const char * id,
+    char const *id,
     CORBA::Object_ptr obj)
 {
   this->check_validity ();
@@ -153,7 +150,7 @@ TAO_ORBInitInfo::register_initial_reference (
 }
 
 CORBA::Object_ptr
-TAO_ORBInitInfo::resolve_initial_references (const char * id)
+TAO_ORBInitInfo::resolve_initial_references (char const *id)
 {
   this->check_validity ();
 
@@ -215,7 +212,7 @@ TAO_ORBInitInfo::add_ior_interceptor (
 void
 TAO_ORBInitInfo::add_client_request_interceptor_with_policy (
     PortableInterceptor::ClientRequestInterceptor_ptr interceptor,
-    const CORBA::PolicyList& policies)
+    CORBA::PolicyList const &policies)
 {
 # if TAO_HAS_INTERCEPTORS == 1
   this->check_validity ();
@@ -235,7 +232,7 @@ TAO_ORBInitInfo::add_client_request_interceptor_with_policy (
 void
 TAO_ORBInitInfo::add_server_request_interceptor_with_policy (
     PortableInterceptor::ServerRequestInterceptor_ptr interceptor,
-    const CORBA::PolicyList& policies)
+    CORBA::PolicyList const &policies)
 {
 # if TAO_HAS_INTERCEPTORS == 1
   this->check_validity ();
@@ -256,7 +253,7 @@ TAO_ORBInitInfo::add_server_request_interceptor_with_policy (
 void
 TAO_ORBInitInfo::add_ior_interceptor_with_policy (
     PortableInterceptor::IORInterceptor_ptr interceptor,
-    const CORBA::PolicyList& policies)
+    CORBA::PolicyList const &policies)
 {
   this->check_validity ();
 
@@ -314,9 +311,9 @@ TAO_ORBInitInfo::allocate_tss_slot_id (ACE_CLEANUP_FUNC cleanup)
 {
   this->check_validity ();
 
-  size_t slot_id = 0;
+  size_t slot_id {};
 
-  const int result = this->orb_core_->add_tss_cleanup_func (cleanup, slot_id);
+  int const result = this->orb_core_->add_tss_cleanup_func (cleanup, slot_id);
 
   if (result != 0)
     throw ::CORBA::INTERNAL (
@@ -375,7 +372,7 @@ TAO_ORBInitInfo::_duplicate (TAO_ORBInitInfo_ptr obj)
   return obj;
 }
 
-const char* TAO_ORBInitInfo::_interface_repository_id () const
+char const *TAO_ORBInitInfo::_interface_repository_id () const
 {
   return "IDL:TAO_ORBInitInfo:1.0";
 }

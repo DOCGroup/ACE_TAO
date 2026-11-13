@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   ORBInitializer_Registry_Impl.h
  *
  *  @author Ossama Othman <ossama@uci.edu>
  */
-// ===================================================================
 
 #ifndef TAO_PI_ORB_INITIALIZER_REGISTRY_IMPL_H
 #define TAO_PI_ORB_INITIALIZER_REGISTRY_IMPL_H
@@ -25,9 +23,9 @@
 #include "tao/Objref_VarOut_T.h"
 #include "tao/ORBInitializer_Registry_Adapter.h"
 
-#include "ace/Array_Base.h"
 #include "ace/Service_Config.h"
 #include "ace/Recursive_Thread_Mutex.h"
+#include "ace/Array_Base.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -43,7 +41,7 @@ namespace TAO
     : public ORBInitializer_Registry_Adapter
   {
   public:
-    ORBInitializer_Registry ();
+    ORBInitializer_Registry () = default;
 
     /// Added to provide registration for the several static service
     /// objects, brought in with this ORBInitializer_Registry
@@ -82,18 +80,17 @@ namespace TAO
   private:
     // Prevent copying
     ORBInitializer_Registry (ORBInitializer_Registry const &) = delete;
-    void operator= (ORBInitializer_Registry const &) = delete;
+    ORBInitializer_Registry &operator= (ORBInitializer_Registry const &) = delete;
     ORBInitializer_Registry (ORBInitializer_Registry &&) = delete;
-    void operator= (ORBInitializer_Registry &&) = delete;
+    ORBInitializer_Registry &operator= (ORBInitializer_Registry &&) = delete;
 
   private:
     TAO_SYNCH_RECURSIVE_MUTEX lock_;
 
-    /// Dynamic array containing registered ORBInitializers.
+    /// Registered ORBInitializers.
     ACE_Array_Base<PortableInterceptor::ORBInitializer_var> initializers_;
   };
 }
-
 
 ACE_STATIC_SVC_DECLARE (ORBInitializer_Registry)
 ACE_FACTORY_DECLARE (TAO_PI, ORBInitializer_Registry)

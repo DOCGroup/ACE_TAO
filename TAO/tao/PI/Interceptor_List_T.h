@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   Interceptor_List_T.h
  *
  *  @author Ossama Othman <ossama@uci.edu>
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-// ===================================================================
 
 #ifndef TAO_INTERCEPTOR_LIST_H
 #define TAO_INTERCEPTOR_LIST_H
@@ -59,14 +57,13 @@ namespace TAO
       DetailsType              details_;
     };
 
-    /// Constructor.
-    Interceptor_List ();
+    Interceptor_List () = default;
 
     void add_interceptor (InterceptorType_ptr_type i);
 
     /// Register an interceptor with policies.
     void add_interceptor (InterceptorType_ptr_type i,
-                          const CORBA::PolicyList& policies);
+                          CORBA::PolicyList const &policies);
 
     void destroy_interceptors ();
 
@@ -79,7 +76,12 @@ namespace TAO
     size_t size () const;
 
   private:
-    using RegisteredArray = ACE_Array_Base<RegisteredInterceptor >;
+    Interceptor_List (Interceptor_List const &) = delete;
+    Interceptor_List &operator= (Interceptor_List const &) = delete;
+    Interceptor_List (Interceptor_List &&) = delete;
+    Interceptor_List &operator= (Interceptor_List &&) = delete;
+
+    using RegisteredArray = ACE_Array_Base<RegisteredInterceptor>;
 
     /// Dynamic array of registered interceptors.
     RegisteredArray interceptors_;

@@ -1,11 +1,9 @@
 // -*- C++ -*-
-//=============================================================================
 /**
  *  @file DLL_Resident_ORB_Initializer.cpp
  *
  *  @author Dale Wilson <wilsond@ociweb.com>
  */
-//=============================================================================
 
 #include "tao/PI/DLL_Resident_ORB_Initializer.h"
 
@@ -13,7 +11,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 PortableInterceptor::DLL_Resident_ORB_Initializer::DLL_Resident_ORB_Initializer (
   PortableInterceptor::ORBInitializer_ptr initializer,
-  const ACE_TCHAR * dll_name)
+  ACE_TCHAR const *dll_name)
   : initializer_(PortableInterceptor::ORBInitializer::_duplicate(initializer))
   , dll_(dll_name)
 {
@@ -40,7 +38,6 @@ PortableInterceptor::DLL_Resident_ORB_Initializer::~DLL_Resident_ORB_Initializer
   // then the ACE_DLL can release the dll on the way out.
 }
 
-
 void
 PortableInterceptor::DLL_Resident_ORB_Initializer::pre_init (
     ::PortableInterceptor::ORBInitInfo_ptr info)
@@ -54,6 +51,5 @@ PortableInterceptor::DLL_Resident_ORB_Initializer::post_init (
 {
   initializer_->post_init (info);
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

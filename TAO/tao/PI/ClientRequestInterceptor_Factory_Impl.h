@@ -1,13 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    ClientRequestInterceptor_Factory_Impl.h
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
 
 #ifndef TAO_CLIENTREQUESTINTERCEPTOR_ADAPTER_FACTORY_IMPL_H
 #define TAO_CLIENTREQUESTINTERCEPTOR_ADAPTER_FACTORY_IMPL_H
@@ -45,7 +42,6 @@ ACE_STATIC_SVC_DECLARE (TAO_ClientRequestInterceptor_Adapter_Factory_Impl)
 ACE_FACTORY_DECLARE (TAO_PI, TAO_ClientRequestInterceptor_Adapter_Factory_Impl)
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
