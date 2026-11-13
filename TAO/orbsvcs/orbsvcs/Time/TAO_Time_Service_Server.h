@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_TIME_SERVICE_SERVER_H
 #define TAO_TIME_SERVICE_SERVER_H
 #include /**/ "ace/pre.h"

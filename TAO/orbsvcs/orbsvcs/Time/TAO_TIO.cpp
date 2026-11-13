@@ -9,19 +9,16 @@ TAO_TIO::TAO_TIO (TimeBase::TimeT lower,
   this->attr_time_interval.upper_bound = upper;
 }
 
-// This is the get method for the attribute time interval.
+/// Returns the time interval.
 TimeBase::IntervalT
 TAO_TIO::time_interval ()
 {
   return attr_time_interval;
 }
 
-// This operation returns a value of type OverlapType depending on how
-// the interval in the object and the time range represented by the
-// parameter UTO overlap.  If OverlapType is not OTNoOverlap, then the
-// out parameter overlap contains the overlap interval, otherwise the
-// out parameter contains the gap between the two intervals.
-
+/// Returns how this interval overlaps the range represented by `uto`.
+/// When the result is not OTNoOverlap, `overlap` contains the overlap
+/// interval; otherwise it contains the gap between the intervals.
 CosTime::OverlapType
 TAO_TIO::spans (CosTime::UTO_ptr uto,
                 CosTime::TIO_out overlap)
@@ -41,7 +38,6 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
       TimeBase::TimeT tmp2 = uto->inaccuracy ();
 
       TimeBase::TimeT const lb2 = tmp1 - tmp2;
-
 
       tmp1 = uto->time ();
 
@@ -127,12 +123,9 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
   return CosTime::OTNoOverlap;
 }
 
-// This operation returns a value of type OverlapType depending on how
-// the interval in the object and interval in the parameter TIO
-// overlap. If OverlapType is not OTNoOverlap, then the out parameter
-// overlap contains the overlap interval, otherwise the out parameter
-// contains the gap between the two intervals.
-
+/// Returns how this interval overlaps the interval in `tio`.
+/// When the result is not OTNoOverlap, `overlap` contains the overlap
+/// interval; otherwise it contains the gap between the intervals.
 CosTime::OverlapType
 TAO_TIO::overlaps (CosTime::TIO_ptr tio,
                    CosTime::TIO_out overlap)
@@ -156,7 +149,6 @@ TAO_TIO::overlaps (CosTime::TIO_ptr tio,
       ACE_NEW_THROW_EX (tio_i,
                         TAO_TIO (lb1, up1),
                         CORBA::NO_MEMORY ());
-
 
       overlap = tio_i->_this ();
 
@@ -237,7 +229,6 @@ TAO_TIO::time ()
                              this->time_interval ().lower_bound,
                              0),
                     CORBA::NO_MEMORY ());
-
 
   return uto->_this ();
 }

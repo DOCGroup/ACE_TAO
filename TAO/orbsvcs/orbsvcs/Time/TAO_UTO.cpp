@@ -23,16 +23,14 @@ TAO_UTO::TAO_UTO (TimeBase::TimeT time,
   this->attr_utc_time_.tdf = tdf;
 }
 
-// Get Method for the readonly attribute time.
-
+/// Returns the readonly time attribute.
 TimeBase::TimeT
 TAO_UTO::time ()
 {
   return attr_utc_time_.time;
 }
 
-// Get method for the readonly attribute inaccuracy.
-
+/// Returns the readonly inaccuracy attribute.
 TimeBase::InaccuracyT
 TAO_UTO::inaccuracy ()
 {
@@ -45,34 +43,28 @@ TAO_UTO::inaccuracy ()
   return inaccuracy;
 }
 
-// Get method for the readonly attribute tdf.
-
+/// Returns the readonly time displacement factor attribute.
 TimeBase::TdfT
 TAO_UTO::tdf ()
 {
   return attr_utc_time_.tdf;
 }
 
-// Get method for the readonly attribute utc_time.
-
+/// Returns the readonly UTC time attribute.
 TimeBase::UtcT
 TAO_UTO::utc_time ()
 {
   return attr_utc_time_;
 }
 
-// Absolute time = Relative time + Base time.  ?? Find out more about
-// the Base Time, UTC and Distributed Time Sync. Algos. [3].
-
+/// Returns the absolute time. The current implementation returns nil.
 CosTime::UTO_ptr
 TAO_UTO::absolute_time ()
 {
   return CosTime::UTO::_nil ();
 }
 
-// Compares the time contained in the object with the time in the
-// supplied uto according to the supplied comparison type.
-
+/// Compares this object's time with `uto` according to `comparison_type`.
 CosTime::TimeComparison
 TAO_UTO::compare_time (CosTime::ComparisonType comparison_type,
                        CosTime::UTO_ptr uto)
@@ -126,12 +118,10 @@ TAO_UTO::compare_time (CosTime::ComparisonType comparison_type,
   return CosTime::TCIndeterminate;
 }
 
-// Returns a TIO representing the time interval between the time in
-// the object and the time in the UTO passed as a parameter. The
-// interval returned is the interval between the mid-points of the two
-// UTOs. Inaccuracies are ignored.  Note the result of this operation
-// is meaningless if the base times of UTOs are different.
-
+/// Returns a TIO for the interval between this time and `uto`'s time.
+/// The interval spans the midpoints of the two UTOs and ignores their
+/// inaccuracies. The result is meaningful only when both UTOs use the
+/// same base time.
 CosTime::TIO_ptr
 TAO_UTO::time_to_interval (CosTime::UTO_ptr uto)
 {
@@ -165,9 +155,7 @@ TAO_UTO::time_to_interval (CosTime::UTO_ptr uto)
   return tio->_this ();
 }
 
-// Returns a TIO object representing the error interval around the
-// time value in the UTO.
-
+/// Returns a TIO representing the error interval around this UTO's time.
 CosTime::TIO_ptr
 TAO_UTO::interval ()
 {

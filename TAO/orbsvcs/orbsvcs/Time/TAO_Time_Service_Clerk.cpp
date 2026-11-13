@@ -20,16 +20,15 @@ TAO_Time_Service_Clerk::TAO_Time_Service_Clerk (int timer_value,
 
   if (TAO_ORB_Core_instance ()->reactor ()->schedule_timer
       (&helper_,
-       0,
+       nullptr,
        ACE_Time_Value::zero,
-       ACE_Time_Value(timer_value,timer_value_usecs)) == -1)
+       ACE_Time_Value (timer_value, timer_value_usecs)) == -1)
     ORBSVCS_ERROR ((LM_ERROR,
                 "%p\n",
                 "schedule_timer ()"));
 }
 
-// This method returns the global time and an estimate of inaccuracy
-// in a UTO.
+/// Returns the global time and an estimate of inaccuracy in a UTO.
 CosTime::UTO_ptr
 TAO_Time_Service_Clerk::universal_time ()
 {
@@ -45,16 +44,15 @@ TAO_Time_Service_Clerk::universal_time ()
   return uto->_this ();
 }
 
-// This method returns the global time in a UTO only if the time can
-// be guaranteed to have been obtained securely.  This method is not
-// implemented currently.
+/// Returns a UTO for global time only when it can be guaranteed to have
+/// been obtained securely. This operation is not implemented.
 CosTime::UTO_ptr
 TAO_Time_Service_Clerk::secure_universal_time ()
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
-// This creates a new UTO based on the given parameters.
+/// Creates a new UTO from the given parameters.
 CosTime::UTO_ptr
 TAO_Time_Service_Clerk::new_universal_time (TimeBase::TimeT time,
                                             TimeBase::InaccuracyT inaccuracy,
@@ -71,7 +69,7 @@ TAO_Time_Service_Clerk::new_universal_time (TimeBase::TimeT time,
   return uto->_this ();
 }
 
-// This creates a new UTO given a time in the UtcT form.
+/// Creates a new UTO from a UtcT value.
 CosTime::UTO_ptr
 TAO_Time_Service_Clerk::uto_from_utc (TimeBase::UtcT const & utc)
 {
@@ -92,8 +90,7 @@ TAO_Time_Service_Clerk::uto_from_utc (TimeBase::UtcT const & utc)
   return uto->_this ();
 }
 
-// This creates a new TIO with the given parameters.
-
+/// Creates a new TIO from the given interval bounds.
 CosTime::TIO_ptr
 TAO_Time_Service_Clerk::new_interval (TimeBase::TimeT lower,
                                       TimeBase::TimeT upper)
@@ -122,8 +119,7 @@ TAO_Time_Service_Clerk::get_time () const
     + this->time_;
 }
 
-// Returns the time displacement factor in minutes.
-// This is displacement from the GMT.
+/// Returns the time displacement factor in minutes from GMT.
 CORBA::Short
 TAO_Time_Service_Clerk::time_displacement_factor () const
 {
@@ -137,14 +133,14 @@ TAO_Time_Service_Clerk::time_displacement_factor (CORBA::Short tdf)
   this->time_displacement_factor_ = tdf;
 }
 
-// GET method for inaccuracy.
+/// Returns the time inaccuracy.
 TimeBase::InaccuracyT
 TAO_Time_Service_Clerk::inaccuracy () const
 {
   return this->inaccuracy_;
 }
 
-// SET method for inaccuracy.
+/// Sets the time inaccuracy.
 void
 TAO_Time_Service_Clerk::inaccuracy (TimeBase::InaccuracyT inaccuracy)
 {

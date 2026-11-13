@@ -9,9 +9,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// This method returns the current system time and an estimate of
-// inaccuracy in a UTO.
-
+/// Returns the current system time and an estimate of inaccuracy in a UTO.
 CosTime::UTO_ptr
 TAO_Time_Service_Server::universal_time ()
 {
@@ -35,18 +33,15 @@ TAO_Time_Service_Server::universal_time ()
   return uto->_this ();
 }
 
-// This method returns the current time in a UTO only if the time can
-// be guaranteed to have been obtained securely.  This method is not
-// implemented currently.
-
+/// Returns a UTO for the current time only when it can be guaranteed to
+/// have been obtained securely. This operation is not implemented.
 CosTime::UTO_ptr
 TAO_Time_Service_Server::secure_universal_time ()
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
-// This creates a new UTO based on the given parameters.
-
+/// Creates a new UTO from the given parameters.
 CosTime::UTO_ptr
 TAO_Time_Service_Server::new_universal_time (TimeBase::TimeT time,
                                              TimeBase::InaccuracyT inaccuracy,
@@ -64,8 +59,7 @@ TAO_Time_Service_Server::new_universal_time (TimeBase::TimeT time,
   return uto->_this ();
 }
 
-// This creates a new UTO given a time in the UtcT form.
-
+/// Creates a new UTO from a UtcT value.
 CosTime::UTO_ptr
 TAO_Time_Service_Server::uto_from_utc (TimeBase::UtcT const & utc)
 {
@@ -81,8 +75,7 @@ TAO_Time_Service_Server::uto_from_utc (TimeBase::UtcT const & utc)
   return uto->_this ();
 }
 
-// This creates a new TIO with the given parameters.
-
+/// Creates a new TIO from the given interval bounds.
 CosTime::TIO_ptr
 TAO_Time_Service_Server::new_interval (TimeBase::TimeT lower,
                                        TimeBase::TimeT upper)
