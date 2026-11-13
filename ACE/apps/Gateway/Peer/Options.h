@@ -27,7 +27,7 @@ public:
   Options &operator= (Options const &) = delete;
   Options &operator= (Options &&) = delete;
 
-  // = Options that can be enabled/disabled.
+  /// Options that can be enabled or disabled.
   enum
   {
     VERBOSE = 01,
@@ -43,7 +43,6 @@ public:
   /// Parse the arguments and set the options.
   void parse_args (int argc, ACE_TCHAR *argv[]);
 
-  // = Accessor methods.
   /// Determine if an option is enabled.
   int enabled (int option) const;
 
@@ -99,9 +98,6 @@ private:
 
   /// Explain usage and exit.
   void print_usage_and_die ();
-
-  /// Singleton.
-  static Options *instance_;
 
   /// Flag to indicate if we want verbose diagnostics.
   u_long options_ {};

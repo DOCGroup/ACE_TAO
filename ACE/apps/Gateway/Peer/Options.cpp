@@ -7,11 +7,7 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"
-#include "ace/OS_Memory.h"
 #include "Options.h"
-
-// Static initialization.
-Options *Options::instance_ {};
 
 void
 Options::print_usage_and_die ()
@@ -24,7 +20,7 @@ Options::print_usage_and_die ()
 
 Options::Options ()
 {
-  char * const timeout = ACE_OS::getenv ("TIMEOUT");
+  char * const timeout = std::getenv ("TIMEOUT");
 
   if (timeout != nullptr)
     this->timeout_ = std::atoi (timeout);
@@ -33,10 +29,8 @@ Options::Options ()
 Options *
 Options::instance ()
 {
-  if (Options::instance_ == nullptr)
-    ACE_NEW_RETURN (Options::instance_, Options, nullptr);
-
-  return Options::instance_;
+  static Options options;
+  return &options;
 }
 
 long

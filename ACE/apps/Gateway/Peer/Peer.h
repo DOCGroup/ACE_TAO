@@ -124,7 +124,7 @@ protected:
   /// Register Consumer subscriptions with the gateway.
   int subscribe ();
 
-  // = Event/state/action handlers.
+  /// Event, state, and action handlers.
   /// Receive a event from stdin and send it to the gateway.
   int transmit_stdin ();
 
@@ -188,7 +188,7 @@ private:
   /// Factor out common code for initializing the <Peer_Acceptor>.
   int open_acceptor (u_short port);
 
-  /// Pointer to <Peer_Handler> allocated once and destroyed by ACE_Acceptor.
+  /// Manually allocated once; destroyed by Peer_Acceptor::close().
   Peer_Handler *peer_handler_ {};
 
   /// Our acceptor addr.
@@ -229,10 +229,10 @@ private:
   /// Factor out common code for initializing the <Peer_Connector>.
   int open_connector (Peer_Handler *&ph, u_short port);
 
-  /// Consumer <Peer_Handler> that is connected to a gatewayd.
+  /// Raw observer to the handler allocated once and handed to ACE_Connector.
   Peer_Handler *consumer_peer_handler_ {};
 
-  /// Supplier <Peer_Handler> that is connected to a gatewayd.
+  /// Raw observer to the handler allocated once and handed to ACE_Connector.
   Peer_Handler *supplier_peer_handler_ {};
 };
 
@@ -251,8 +251,6 @@ public:
   Peer_Factory (Peer_Factory &&) = delete;
   Peer_Factory &operator= (Peer_Factory const &) = delete;
   Peer_Factory &operator= (Peer_Factory &&) = delete;
-
-  // = Dynamic initialization and termination hooks from <ACE_Service_Object>.
 
   /// Initialize the acceptor and connector.
   int init (int argc, ACE_TCHAR *argv[]) override;
