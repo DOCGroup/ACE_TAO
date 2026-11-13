@@ -316,7 +316,7 @@ ACE_Configuration::operator== (const ACE_Configuration& rhs) const
                           // yes, then check each element
                           for (size_t count = 0;
                                (rc) && (count < thisLength);
-                               count++)
+                               ++count)
                             {
                               rc = (* (thisCharData + count) == * (rhsCharData + count));
                             }

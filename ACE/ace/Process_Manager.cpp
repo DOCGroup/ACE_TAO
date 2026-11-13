@@ -190,7 +190,7 @@ ACE_Process_Manager::resize (size_t size)
 
   for (size_t i = 0;
        i < this->current_count_;
-       i++)
+       ++i)
     // Structure assignment.
     new_table[i] = this->process_table_[i];
 
@@ -456,7 +456,7 @@ ACE_Process_Manager::spawn_n (size_t n,
 
   for (size_t i = 0;
        i < n;
-       i++)
+       ++i)
     {
       pid_t const pid = this->spawn (options, event_handler);
       if (pid == ACE_INVALID_PID || pid == 0)

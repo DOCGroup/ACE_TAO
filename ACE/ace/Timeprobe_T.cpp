@@ -363,7 +363,7 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::find_description_i (u_long i)
       EVENT_DESCRIPTIONS::iterator iterator = this->sorted_event_descriptions_.begin ();
       for (u_long j = 0;
            j < this->sorted_event_descriptions_.size () - 1;
-           iterator++, j++)
+           ++iterator, ++j)
         {
           EVENT_DESCRIPTIONS::iterator next_event_descriptions = iterator;
           ++next_event_descriptions;
@@ -382,14 +382,14 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::sort_event_descriptions_i ()
 
   for (size_t i = 0;
        i < total_elements;
-       i++)
+       ++i)
     {
       EVENT_DESCRIPTIONS::iterator iterator = this->event_descriptions_.begin ();
       ACE_Event_Descriptions min_entry = *iterator;
 
       for (;
            iterator != this->event_descriptions_.end ();
-           iterator++)
+           ++iterator)
         if ((*iterator).minimum_id_ < min_entry.minimum_id_)
           min_entry = *iterator;
 

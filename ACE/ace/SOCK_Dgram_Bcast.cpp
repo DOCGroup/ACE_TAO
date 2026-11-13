@@ -165,7 +165,7 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
 
 #if !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__) && !defined (ACE_VXWORKS) && !defined(__APPLE__)
   for (int n = ifc.ifc_len / sizeof (struct ifreq) ; n > 0;
-       n--, ifr++)
+       --n, ++ifr)
 #else
   /*
      There are addresses longer than sizeof (struct sockaddr) eg. IPv6
@@ -180,7 +180,7 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
           (nbytes -= sizeof (ifr->ifr_name) + ifr->ifr_addr.sa_len,
             ifr = (struct ifreq *)
               ((caddr_t) &ifr->ifr_addr + ifr->ifr_addr.sa_len)) :
-          (nbytes -= sizeof (struct ifreq), ifr++)))
+          (nbytes -= sizeof (struct ifreq), ++ifr)))
 #endif /* !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__) && !defined (ACE_VXWORKS) && !defined(__APPLE__) */
     {
 #if defined (__QNX__) || defined (ACE_VXWORKS)

@@ -1665,7 +1665,7 @@ ACE_POSIX_SIG_Proactor::create_asynch_timer
       int si;
       for (si = ACE_SIGRTMAX;
            (is_member == 0) && (si >= ACE_SIGRTMIN);
-           si--)
+           --si)
         {
           is_member = sigismember (&this->RT_completion_signals_,
                                    si);

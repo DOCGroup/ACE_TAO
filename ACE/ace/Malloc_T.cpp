@@ -45,7 +45,7 @@ ACE_Cached_Allocator<T, ACE_LOCK>::ACE_Cached_Allocator (size_t n_chunks)
 
   for (size_t c = 0;
        c < n_chunks;
-       c++)
+       ++c)
     {
       void* placement = this->pool_ + c * chunk_size;
       this->free_list_.add (new (placement) ACE_Cached_Mem_Pool_Node<T>);
@@ -120,7 +120,7 @@ ACE_Dynamic_Cached_Allocator<ACE_LOCK>::ACE_Dynamic_Cached_Allocator
 
   for (size_t c = 0;
        c < n_chunks;
-       c++)
+       ++c)
     {
       void *placement = this->pool_ + c * chunk_size;
 

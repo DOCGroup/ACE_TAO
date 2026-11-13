@@ -831,7 +831,7 @@ ACE_INET_Addr::set_port_number (u_short port_number,
     return;
   for (std::vector<union ip46>::iterator i = this->inet_addrs_.begin ();
        i != this->inet_addrs_.end ();
-       i++)
+       ++i)
     {
 #if defined (ACE_HAS_IPV6)
       if (this->get_type () == AF_INET6)

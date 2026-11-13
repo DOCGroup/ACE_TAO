@@ -702,7 +702,7 @@ ACE_WFMO_Reactor::suspend_handlers ()
   // by ACE_WFMO_Reactor::open(), not by users, and should not be suspended.
   for (size_t i = 2;
        i < this->handler_rep_.max_handlep1_ && !error;
-       i++)
+       ++i)
     {
       result =
         this->handler_rep_.suspend_handler_i (this->handler_rep_.current_handles_[i],
@@ -714,7 +714,7 @@ ACE_WFMO_Reactor::suspend_handlers ()
   // Then suspend all to_be_added_handles
   for (size_t i = 0;
        i < this->handler_rep_.handles_to_be_added_ && !error;
-       i++)
+       ++i)
     {
       if (this->handler_rep_.to_be_added_info_[i].io_entry_)
         {
@@ -792,7 +792,7 @@ ACE_WFMO_Reactor::resume_handlers ()
   bool changes_required = false;
   for (size_t i = 0;
        i < this->handler_rep_.suspended_handles_ && !error;
-       i++)
+       ++i)
     {
       result =
         this->handler_rep_.resume_handler_i (this->handler_rep_.current_suspended_info_[i].event_handle_,
@@ -804,7 +804,7 @@ ACE_WFMO_Reactor::resume_handlers ()
   // Then resume all to_be_added_handles
   for (size_t i = 0;
         i < this->handler_rep_.handles_to_be_added_ && !error;
-        i++)
+        ++i)
     {
       if (this->handler_rep_.to_be_added_info_[i].io_entry_)
         {

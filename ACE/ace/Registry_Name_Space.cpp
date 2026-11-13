@@ -223,7 +223,7 @@ ACE_Registry_Name_Space::list_name_entries (ACE_BINDING_SET &set,
   // Iterator through all entries
   for (ACE_Registry::Binding_List::iterator i = list.begin ();
        i != list.end ();
-       i++)
+       ++i)
     {
       // Yeeesss! STL rules!
       ACE_Registry::Binding &binding = *i;

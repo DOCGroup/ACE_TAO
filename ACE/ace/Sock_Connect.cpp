@@ -201,7 +201,7 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
 
 #if !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__) && !defined (__Lynx__)
   for (int n = ifc.ifc_len / sizeof (struct ifreq) ; n > 0;
-       n--, ifr++)
+       --n, ++ifr)
 #else
   // see mk_broadcast@SOCK_Dgram_Bcast.cpp
   for (int nbytes = ifc.ifc_len; nbytes >= (int) sizeof (struct ifreq) &&
@@ -211,7 +211,7 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
           (nbytes -= sizeof (ifr->ifr_name) + ifr->ifr_addr.sa_len,
             ifr = (struct ifreq *)
               ((caddr_t) &ifr->ifr_addr + ifr->ifr_addr.sa_len)) :
-          (nbytes -= sizeof (struct ifreq), ifr++)))
+          (nbytes -= sizeof (struct ifreq), ++ifr)))
 #endif /* !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__) && !defined (__Lynx__) */
     {
       struct sockaddr_in if_addr;
@@ -741,7 +741,7 @@ ACE::get_ip_interfaces (size_t &count, ACE_INET_Addr *&addrs)
 
   for (size_t i = 0;
        i < num_ifs_found;
-       i++)
+       ++i)
     {
       if (pcur->IFR_ADDR.SA_FAMILY == AF_INET
 #  if defined (ACE_HAS_IPV6)
@@ -929,7 +929,7 @@ return 0;
   // interface to mark the end of the returned interfaces.
   for (i = 0;
        i < num_ifs;
-       i++)
+       ++i)
     {
       /* In OpenBSD, the length of the list is returned. */
       ifcfg.ifc_len -= sizeof (struct ifreq);

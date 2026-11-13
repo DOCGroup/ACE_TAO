@@ -769,7 +769,7 @@ ACE_Double_Linked_List<T>::get (T *&item, size_t slot)
 
   for (size_t i = 0;
        i < slot && !iter.done ();
-       i++)
+       ++i)
     iter.advance ();
 
   item = iter.next ();
