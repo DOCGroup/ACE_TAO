@@ -52,6 +52,11 @@ namespace TAO
     public:
       explicit QOPPolicy (::Security::QOP qop);
 
+      QOPPolicy (QOPPolicy const &) = delete;
+      QOPPolicy (QOPPolicy &&) = delete;
+      QOPPolicy &operator= (QOPPolicy const &) = delete;
+      QOPPolicy &operator= (QOPPolicy &&) = delete;
+
       /**
        * @name CORBA::Policy Methods
        */
@@ -75,11 +80,6 @@ namespace TAO
       ~QOPPolicy () override = default;
 
     private:
-      QOPPolicy (QOPPolicy const &) = delete;
-      QOPPolicy (QOPPolicy &&) = delete;
-      QOPPolicy &operator= (QOPPolicy const &) = delete;
-      QOPPolicy &operator= (QOPPolicy &&) = delete;
-
       /// Quality of protection which can be specified for an object
       /// reference and used to protect messages.
       ::Security::QOP const qop_;

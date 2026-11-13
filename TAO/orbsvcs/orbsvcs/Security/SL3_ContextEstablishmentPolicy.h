@@ -46,6 +46,11 @@ namespace TAO
         SecurityLevel3::FeatureDirective           use_confidentiality,
         SecurityLevel3::FeatureDirective           use_integrity);
 
+      ContextEstablishmentPolicy (ContextEstablishmentPolicy const &) = delete;
+      ContextEstablishmentPolicy (ContextEstablishmentPolicy &&) = delete;
+      ContextEstablishmentPolicy &operator= (ContextEstablishmentPolicy const &) = delete;
+      ContextEstablishmentPolicy &operator= (ContextEstablishmentPolicy &&) = delete;
+
       /**
        * @name SecurityLevel3::ContextEstablishmentPolicy Methods
        *
@@ -80,11 +85,6 @@ namespace TAO
       ~ContextEstablishmentPolicy () override = default;
 
     private:
-      ContextEstablishmentPolicy (ContextEstablishmentPolicy const &) = delete;
-      ContextEstablishmentPolicy (ContextEstablishmentPolicy &&) = delete;
-      ContextEstablishmentPolicy &operator= (ContextEstablishmentPolicy const &) = delete;
-      ContextEstablishmentPolicy &operator= (ContextEstablishmentPolicy &&) = delete;
-
       SecurityLevel3::CredsDirective     creds_directive_;
       SecurityLevel3::OwnCredentialsList creds_list_;
       SecurityLevel3::FeatureDirective   use_client_auth_;

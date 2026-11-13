@@ -52,6 +52,11 @@ namespace TAO
       explicit ObjectCredentialsPolicy (
         SecurityLevel3::OwnCredentialsList const & creds);
 
+      ObjectCredentialsPolicy (ObjectCredentialsPolicy const &) = delete;
+      ObjectCredentialsPolicy (ObjectCredentialsPolicy &&) = delete;
+      ObjectCredentialsPolicy &operator= (ObjectCredentialsPolicy const &) = delete;
+      ObjectCredentialsPolicy &operator= (ObjectCredentialsPolicy &&) = delete;
+
       /**
        * @name SecurityLevel3::ObjectCredentialsPolicy Methods
        *
@@ -76,11 +81,6 @@ namespace TAO
       ~ObjectCredentialsPolicy () override = default;
 
     private:
-      ObjectCredentialsPolicy (ObjectCredentialsPolicy const &) = delete;
-      ObjectCredentialsPolicy (ObjectCredentialsPolicy &&) = delete;
-      ObjectCredentialsPolicy &operator= (ObjectCredentialsPolicy const &) = delete;
-      ObjectCredentialsPolicy &operator= (ObjectCredentialsPolicy &&) = delete;
-
       /// List of POA-specific OwnCredentials.
       SecurityLevel3::OwnCredentialsList creds_list_;
     };

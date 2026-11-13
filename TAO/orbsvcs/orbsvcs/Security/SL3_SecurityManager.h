@@ -40,6 +40,11 @@ namespace TAO
     public:
       explicit SecurityManager (SecurityLevel3::CredentialsCurator_ptr cc);
 
+      SecurityManager (SecurityManager const &) = delete;
+      SecurityManager (SecurityManager &&) = delete;
+      SecurityManager &operator= (SecurityManager const &) = delete;
+      SecurityManager &operator= (SecurityManager &&) = delete;
+
       /**
        * @name SecurityLevel3::SecurityManager Methods
        *
@@ -74,11 +79,6 @@ namespace TAO
       ~SecurityManager () override = default;
 
     private:
-      SecurityManager (SecurityManager const &) = delete;
-      SecurityManager (SecurityManager &&) = delete;
-      SecurityManager &operator= (SecurityManager const &) = delete;
-      SecurityManager &operator= (SecurityManager &&) = delete;
-
       /// The ORB-specific SecurityLevel3::CredentialsCurator
       /// reference.
       SecurityLevel3::CredentialsCurator_var credentials_curator_;

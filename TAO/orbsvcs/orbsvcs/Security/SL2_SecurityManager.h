@@ -49,6 +49,11 @@ namespace TAO
       AccessDecision () = default;
       ~AccessDecision () override = default;
 
+      AccessDecision (AccessDecision const &) = delete;
+      AccessDecision (AccessDecision &&) = delete;
+      AccessDecision &operator= (AccessDecision const &) = delete;
+      AccessDecision &operator= (AccessDecision &&) = delete;
+
       ::CORBA::Boolean access_allowed (
         ::SecurityLevel2::CredentialsList const & cred_list,
         ::CORBA::Object_ptr target,
@@ -79,11 +84,6 @@ namespace TAO
                           ::CORBA::OctetSeq const & object_id) override;
 
     private:
-      AccessDecision (AccessDecision const &) = delete;
-      AccessDecision (AccessDecision &&) = delete;
-      AccessDecision &operator= (AccessDecision const &) = delete;
-      AccessDecision &operator= (AccessDecision &&) = delete;
-
       /*!
        * This is the default value that's returned from access_allowed()
        * when the access table doesn't contain an entry for the reference.
@@ -168,6 +168,11 @@ namespace TAO
     public:
       SecurityManager (/* not sure what's needed yet */);
 
+      SecurityManager (SecurityManager const &) = delete;
+      SecurityManager (SecurityManager &&) = delete;
+      SecurityManager &operator= (SecurityManager const &) = delete;
+      SecurityManager &operator= (SecurityManager &&) = delete;
+
       /**
        * @name SecurityLevel2::SecurityManager Methods
        *
@@ -194,11 +199,6 @@ namespace TAO
       ~SecurityManager () override = default;
 
     private:
-      SecurityManager (SecurityManager const &) = delete;
-      SecurityManager (SecurityManager &&) = delete;
-      SecurityManager &operator= (SecurityManager const &) = delete;
-      SecurityManager &operator= (SecurityManager &&) = delete;
-
       /// The ORB-specific SecurityLevel2::PrincipalAuthenticator
       /// reference.
       // Except we're not going to have one of these right now

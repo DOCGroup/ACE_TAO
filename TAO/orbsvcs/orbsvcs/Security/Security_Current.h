@@ -49,6 +49,11 @@ class TAO_Security_Export TAO_Security_Current
 public:
   TAO_Security_Current (size_t tss_slot, char const *orb_id);
 
+  TAO_Security_Current (TAO_Security_Current const &) = delete;
+  TAO_Security_Current (TAO_Security_Current &&) = delete;
+  TAO_Security_Current &operator= (TAO_Security_Current const &) = delete;
+  TAO_Security_Current &operator= (TAO_Security_Current &&) = delete;
+
   /**
    * @name SecurityLevel1::Current Methods
    *
@@ -100,12 +105,6 @@ protected:
    * TSS.  The underlying security mechanism does that.
    */
   TAO::Security::Current_Impl *implementation ();
-
-private:
-  TAO_Security_Current (TAO_Security_Current const &) = delete;
-  TAO_Security_Current (TAO_Security_Current &&) = delete;
-  TAO_Security_Current &operator= (TAO_Security_Current const &) = delete;
-  TAO_Security_Current &operator= (TAO_Security_Current &&) = delete;
 
 private:
   /// TSS slot assigned to this object.

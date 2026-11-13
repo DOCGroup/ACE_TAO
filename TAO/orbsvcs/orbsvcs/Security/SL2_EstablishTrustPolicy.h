@@ -54,6 +54,11 @@ namespace TAO
     public:
       explicit EstablishTrustPolicy (::Security::EstablishTrust const & trust);
 
+      EstablishTrustPolicy (EstablishTrustPolicy const &) = delete;
+      EstablishTrustPolicy (EstablishTrustPolicy &&) = delete;
+      EstablishTrustPolicy &operator= (EstablishTrustPolicy const &) = delete;
+      EstablishTrustPolicy &operator= (EstablishTrustPolicy &&) = delete;
+
       /**
        * @name CORBA::Policy Methods
        */
@@ -77,11 +82,6 @@ namespace TAO
       ~EstablishTrustPolicy () override = default;
 
     private:
-      EstablishTrustPolicy (EstablishTrustPolicy const &) = delete;
-      EstablishTrustPolicy (EstablishTrustPolicy &&) = delete;
-      EstablishTrustPolicy &operator= (EstablishTrustPolicy const &) = delete;
-      EstablishTrustPolicy &operator= (EstablishTrustPolicy &&) = delete;
-
       /// Quality of protection which can be specified for an object
       /// reference and used to protect messages.
       ::Security::EstablishTrust const trust_;
