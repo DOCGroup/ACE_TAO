@@ -25,10 +25,7 @@ ACEXML_Element_Tree_Name_Node::set (ACEXML_Char const *name,
 }
 
 ACEXML_INLINE
-ACEXML_Element_Tree_List_Node::ACEXML_Element_Tree_List_Node ()
-  : type_ (LIST_TYPE::SEQUENCE)
-{
-}
+ACEXML_Element_Tree_List_Node::ACEXML_Element_Tree_List_Node () = default;
 
 ACEXML_INLINE ACEXML_Element_Tree_List_Node::LIST_TYPE
 ACEXML_Element_Tree_List_Node::get () const

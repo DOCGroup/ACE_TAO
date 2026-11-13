@@ -10,7 +10,9 @@ ACEXML_Debug_DTD_Manager::~ACEXML_Debug_DTD_Manager () = default;
 ACEXML_Element_Def_Builder *
 ACEXML_Debug_DTD_Manager::getElement_Def_Builder ()
 {
-  return new ACEXML_Debug_Element_Builder ();
+  ACEXML_Element_Def_Builder *builder {};
+  ACE_NEW_RETURN (builder, ACEXML_Debug_Element_Builder (), nullptr);
+  return builder;
 }
 
 int
@@ -24,17 +26,17 @@ ACEXML_Debug_DTD_Manager::insertElement_Definition (ACEXML_Element_Def_Builder *
       return 0;
     }
 
-  ACEXML_THROW_RETURN (ACEXML_SAXParseException (ACE_TEXT("ACEXML_Debug_Attributes_Builder internal error")), -1);
+  throw ACEXML_SAXParseException (ACE_TEXT("ACEXML_Debug_Attributes_Builder internal error"));
 }
 
 ACEXML_Attributes_Def_Builder *
 ACEXML_Debug_DTD_Manager::getAttribute_Def_Builder ()
 {
-  ACEXML_Attributes_Def_Builder *tmp;
-  ACE_NEW_RETURN (tmp,
+  ACEXML_Attributes_Def_Builder *builder {};
+  ACE_NEW_RETURN (builder,
                   ACEXML_Debug_Attributes_Builder (),
                   nullptr);
-  return tmp;
+  return builder;
 }
 
 int
@@ -47,7 +49,7 @@ ACEXML_Debug_DTD_Manager::insertAttributes_Definition (ACEXML_Attributes_Def_Bui
       return 0;
     }
 
-  ACEXML_THROW_RETURN (ACEXML_SAXParseException (ACE_TEXT("ACEXML_Debug_Attributes_Builder internal error")), -1);
+  throw ACEXML_SAXParseException (ACE_TEXT("ACEXML_Debug_Attributes_Builder internal error"));
 }
 
 ACEXML_Validator *
@@ -55,5 +57,5 @@ ACEXML_Debug_DTD_Manager::getValidator (ACEXML_Char const *,
                                         ACEXML_Char const *,
                                         ACEXML_Char const *)
 {
-  ACEXML_THROW_RETURN (ACEXML_SAXNotSupportedException (ACE_TEXT ("getValidator()")), nullptr);
+  throw ACEXML_SAXNotSupportedException (ACE_TEXT ("getValidator()"));
 }

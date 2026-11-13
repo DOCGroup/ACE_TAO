@@ -1,4 +1,5 @@
 #include "ACEXML/parser/debug_validator/Element_Tree.h"
+#include "ace/streams.h"
 
 #if !defined (__ACEXML_INLINE__)
 # include "ACEXML/parser/debug_validator/Element_Tree.inl"
@@ -52,7 +53,7 @@ ACEXML_Element_Tree_List_Node::dump ()
         {
           cout << separator;
           ptr->dump ();
-          ptr->next ();
+          ptr = ptr->next ();
         }
     }
 

@@ -1,5 +1,6 @@
 #include "ACEXML/common/SAXExceptions.h"
 #include "ACEXML/parser/debug_validator/Debug_Element_Builder.h"
+#include "ace/streams.h"
 
 ACEXML_Debug_Element_Builder::~ACEXML_Debug_Element_Builder () = default;
 
@@ -21,7 +22,7 @@ ACEXML_Debug_Element_Builder::setContentType (CONTENT_TYPE type)
       return 0;
     }
 
-  ACEXML_THROW_RETURN (ACEXML_SAXParseException (ACE_TEXT("Element type redefinition in Debug_Validator.")), -1);
+  throw ACEXML_SAXParseException (ACE_TEXT("Element type redefinition in Debug_Validator."));
 }
 
 int

@@ -1,5 +1,6 @@
 #include "ACEXML/common/SAXExceptions.h"
 #include "ACEXML/parser/debug_validator/Debug_Attributes_Builder.h"
+#include "ace/streams.h"
 
 ACEXML_Debug_Attribute_Builder::ACEXML_Debug_Attribute_Builder (
   ACEXML_Debug_Attribute_Builder const &rhs)
@@ -34,7 +35,7 @@ ACEXML_Debug_Attribute_Builder::setAttType (ATT_TYPE type)
       this->type_ = type;
       return 0;
     }
-  ACEXML_THROW_RETURN (ACEXML_SAXParseException (ACE_TEXT("Attribute type redefinition in Debug Validator")), -1);
+  throw ACEXML_SAXParseException (ACE_TEXT("Attribute type redefinition in Debug Validator"));
 }
 
 int
@@ -133,8 +134,6 @@ ACEXML_Debug_Attribute_Builder::dump ()
       break;
     }
 }
-// ========================================
-
 ACEXML_Debug_Attributes_Builder::~ACEXML_Debug_Attributes_Builder () = default;
 
 int
@@ -165,13 +164,18 @@ ACEXML_Debug_Attributes_Builder::insertAttribute (
 
   if (def != nullptr)
     {
-      ACEXML_String attname (def->getName (), nullptr, false);
-      ACEXML_Debug_Attribute_Builder *ptr =
+      ACEXML_Debug_Attribute_Builder *attribute =
         dynamic_cast<ACEXML_Debug_Attribute_Builder *> (def);
-      this->attributes_.bind (attname, *ptr);
+      if (attribute == nullptr)
+        {
+          throw ACEXML_SAXParseException (ACE_TEXT("Unexpected attribute builder type"));
+        }
+
+      ACEXML_String attname (attribute->getName (), nullptr, false);
+      this->attributes_.bind (attname, *attribute);
       return 0;
     }
-  ACEXML_THROW_RETURN (ACEXML_SAXParseException (ACE_TEXT("ACEXML_Debug_Attributes_Builder internal error")), -1);
+  throw ACEXML_SAXParseException (ACE_TEXT("ACEXML_Debug_Attributes_Builder internal error"));
 }
 
 void

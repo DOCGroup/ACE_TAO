@@ -30,21 +30,20 @@
 class ACEXML_DEBUG_DTD_MANAGER_Export ACEXML_Element_Tree_Node
 {
 public:
-  /// Default constructor.
   ACEXML_Element_Tree_Node () = default;
 
-  /// Destructor
   virtual ~ACEXML_Element_Tree_Node ();
   ACEXML_Element_Tree_Node (ACEXML_Element_Tree_Node const &) = delete;
   ACEXML_Element_Tree_Node (ACEXML_Element_Tree_Node &&) = delete;
   ACEXML_Element_Tree_Node &operator= (ACEXML_Element_Tree_Node const &) = delete;
   ACEXML_Element_Tree_Node &operator= (ACEXML_Element_Tree_Node &&) = delete;
 
-  /// Accessor for next element in chain
+  /// Get the next element in the chain.
   ACEXML_Element_Tree_Node *next () const;
-  void next (ACEXML_Element_Tree_Node *n); // Takes ownership of n.
+  /// Set the next element, taking ownership of n.
+  void next (ACEXML_Element_Tree_Node *n);
 
-  /// Displaying the content.
+  /// Display the content.
   virtual void dump () = 0;
 
   ACE_ALLOC_HOOK_DECLARE;
@@ -65,7 +64,6 @@ class ACEXML_DEBUG_DTD_MANAGER_Export ACEXML_Element_Tree_Name_Node
   : public ACEXML_Element_Tree_Node
 {
 public:
-  /// Constructor.
   explicit ACEXML_Element_Tree_Name_Node (ACEXML_Char const *name,
                                           bool release = true);
   ACEXML_Element_Tree_Name_Node (ACEXML_Element_Tree_Name_Node const &) = delete;
@@ -105,10 +103,8 @@ public:
     CHOICE
   };
 
-  /// Default constructor.
   ACEXML_Element_Tree_List_Node ();
 
-  /// Destructor.
   ~ACEXML_Element_Tree_List_Node () override;
   ACEXML_Element_Tree_List_Node (ACEXML_Element_Tree_List_Node const &) = delete;
   ACEXML_Element_Tree_List_Node (ACEXML_Element_Tree_List_Node &&) = delete;
@@ -116,7 +112,8 @@ public:
   ACEXML_Element_Tree_List_Node &operator= (ACEXML_Element_Tree_List_Node &&) = delete;
 
   /// Insert a new ACEXML_Element_Tree_Node into the list.
-  int insert (ACEXML_Element_Tree_Node *node); // Takes ownership of node.
+  /// Takes ownership of node.
+  int insert (ACEXML_Element_Tree_Node *node);
 
   /// Get/set the type of list.
   LIST_TYPE get () const;
@@ -126,13 +123,14 @@ public:
 
   ACE_ALLOC_HOOK_DECLARE;
 protected:
-  LIST_TYPE type_;
+  LIST_TYPE type_ {LIST_TYPE::SEQUENCE};
 
   std::unique_ptr<ACEXML_Element_Tree_Node> head_ {};
 
   ACEXML_Element_Tree_Node *tail_ {}; // Non-owning alias into the child node chain.
 
-  ACEXML_Element_Tree_List_Node *pop_next_ {}; // Non-owning stack link.
+  /// Non-owning stack link.
+  ACEXML_Element_Tree_List_Node *pop_next_ {};
 };
 
 /**
@@ -162,7 +160,8 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  ACEXML_Element_Tree_List_Node *top_ {}; // Non-owning; the tree owns the list nodes.
+  /// Non-owning pointer to the top node; the tree owns the list nodes.
+  ACEXML_Element_Tree_List_Node *top_ {};
 };
 
 #if defined (__ACEXML_INLINE__)

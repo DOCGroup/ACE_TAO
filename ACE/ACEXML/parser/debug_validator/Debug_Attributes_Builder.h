@@ -19,6 +19,7 @@
 
 #include "ACEXML/common/Attributes_Def_Builder.h"
 #include "ace/Hash_Map_Manager.h"
+#include "ace/Null_Mutex.h"
 #include "ace/Unbounded_Queue.h"
 
 using ACEXML_STRING_QUEUE = ACE_Unbounded_Queue<ACEXML_String>;
@@ -136,7 +137,7 @@ public:
    */
   int setElement (ACEXML_Char const *namespaceURI,
                   ACEXML_Char const *localName,
-                  ACEXML_Char const *qName ACEXML_ENV_ARG_DECL) override;
+                  ACEXML_Char const *qName) override;
 
   /**
    * Acquire an Attribute_Builder.
@@ -146,7 +147,7 @@ public:
   /**
    * Add a definition for one attribute.
    */
-  int insertAttribute (ACEXML_Attribute_Def_Builder *def ACEXML_ENV_ARG_DECL) override;
+  int insertAttribute (ACEXML_Attribute_Def_Builder *def) override;
 
 
   /**
