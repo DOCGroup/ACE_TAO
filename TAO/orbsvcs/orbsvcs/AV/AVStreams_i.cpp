@@ -2745,7 +2745,7 @@ TAO_VDev::set_peer (AVStreams::StreamCtrl_ptr the_ctrl,
       CORBA::Any_var anyptr;
       anyptr = this->peer_->get_property_value ("Related_MediaCtrl");
 
-      CORBA::Object_ptr media_ctrl_obj = nullptr;
+      CORBA::Object_ptr media_ctrl_obj {};
 
       anyptr.in () >>= CORBA::Any::to_object(media_ctrl_obj);
 
@@ -3119,7 +3119,7 @@ TAO_MMDevice::create_A (AVStreams::StreamCtrl_ptr streamctrl,
                         char *&named_vdev,
                         AVStreams::flowSpec const &flow_spec)
 {
-  AVStreams::StreamEndPoint_A_ptr sep_a = nullptr;
+  AVStreams::StreamEndPoint_A_ptr sep_a {};
   AVStreams::StreamEndPoint_var sep;
   try
     {

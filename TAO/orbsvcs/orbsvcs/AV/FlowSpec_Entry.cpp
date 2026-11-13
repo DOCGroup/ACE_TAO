@@ -633,9 +633,6 @@ TAO_Forward_FlowSpec_Entry::entry_to_string ()
           {
             ACE_INET_Addr *inet_addr = dynamic_cast<ACE_INET_Addr*> (this->peer_addr_);
             inet_addr->addr_to_string (address,BUFSIZ);
-            //inet_addr->get_host_name (address, BUFSIZ);
-
-            //cstring += ACE_OS::itoa (address, BUFSIZ, inet_addr->get_port_number ());
           }
           break;
         default:

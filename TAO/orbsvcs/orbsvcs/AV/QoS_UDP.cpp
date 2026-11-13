@@ -1062,56 +1062,6 @@ TAO_AV_UDP_QoS_Connector::open (TAO_Base_StreamEndPoint *endpoint,
   return 0;
 }
 
-//  int
-//  TAO_AV_UDP_QoS_Connector::translate (CosPropertyService::Properties &qos_params,
-//                                   ACE_Flow_Spec *ace_flow_spec)
-//  {
-//    for (unsigned int i = 0;
-//         i < qos_params.length ();
-//         ++i)
-//      {
-//        if (ACE_OS::strcmp (qos_params [i].property_name, "Service_Type") == 0)
-//          {
-//            CORBA::Short type;
-//            qos_params [i].property_value >>= type;
-//            ace_flow_spec->service_type (type);
-//          }
-//        else if (ACE_OS::strcmp (qos_params [i].property_name, "Token_Rate") == 0)
-//          {
-//            CORBA::ULong tok_rate;
-//            qos_params [i].property_value >>= tok_rate;
-//            ace_flow_spec->token_rate (tok_rate);
-//          }
-//        else if (ACE_OS::strcmp (qos_params [i].property_name, "Token_Bucket_Rate") == 0)
-//          {
-//            CORBA::ULong tok_buck_size;
-//            qos_params [i].property_value >>= tok_buck_size;
-//            ace_flow_spec->token_bucket_size (tok_buck_size);
-//          }
-//        else if (ACE_OS::strcmp (qos_params [i].property_name, "Peak_Bandwidth") == 0)
-//          {
-//            CORBA::ULong peak_bw;
-//            qos_params [i].property_value >>= peak_bw;
-//            ace_flow_spec->peak_bandwidth (peak_bw);
-//          }
-//        else if (ACE_OS::strcmp (qos_params [i].property_name, "Latency") == 0)
-//          {
-//            CORBA::ULong lat;
-//            qos_params [i].property_value >>= lat;
-//            ace_flow_spec->latency (lat);
-//          }
-//        else if (ACE_OS::strcmp (qos_params [i].property_name, "Delay_Variation") == 0)
-//          {
-//            CORBA::ULong delay_var;
-//            qos_params [i].property_value >>= delay_var;
-//            ace_flow_spec->delay_variation (delay_var);
-//          }
-
-//      }
-
-//    return 0;
-//  }
-
 int
 TAO_AV_UDP_QoS_Connector::connect (TAO_FlowSpec_Entry *entry,
                                    TAO_AV_Transport *&transport,
