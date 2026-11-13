@@ -58,7 +58,7 @@ public:
   /// Cancel this timer, remove it from the reactor
   virtual void cancel ();
 
-  /// Borrowed while the timeout is scheduled.
+  /// Borrowed transport mux strategy dispatching the reply while scheduled.
   TAO_Transport_Mux_Strategy *tms_ {};
 
   /// Remember the ID of the request.
