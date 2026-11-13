@@ -66,10 +66,12 @@ namespace CORBA
 
     Any () = default;
     Any (Any const &);
+    Any (Any &&) = delete;
 
     ~Any ();
 
     Any &operator= (Any const &);
+    Any &operator= (Any &&) = delete;
     TAO::Any_Impl *impl () const;
 
     /// Used in our destruction if we ourselves are stored in an Any.
@@ -186,9 +188,11 @@ namespace CORBA
     Any_var ();
     Any_var (Any *a);
     Any_var (Any_var const &);
+    Any_var (Any_var &&) = delete;
     ~Any_var ();
 
     Any_var &operator= (Any *);
+    Any_var &operator= (Any_var &&) = delete;
 
     /**
      * Assignment from an Any_var
@@ -237,12 +241,15 @@ namespace CORBA
   class TAO_AnyTypeCode_Export Any_out
   {
   public:
+    Any_out () = delete;
     Any_out (Any *&);
     Any_out (Any_var &);
     Any_out (Any_out const &);
+    Any_out (Any_out &&) = delete;
 
     /// Assignment from a Any_out.
     Any_out &operator= (Any_out const &s);
+    Any_out &operator= (Any_out &&) = delete;
 
     /// Assignment from a Any.
     Any_out &operator= (Any *);
