@@ -398,7 +398,7 @@ Sender::pace_data ()
       this->streamctrl_->destroy (stop_spec);
 
       // Shut the orb down.
-      TAO_AV_CORE::instance ()->orb ()->shutdown (0);
+      TAO_AV_CORE::instance ()->orb ()->shutdown (false);
     }
   catch (CORBA::Exception const &ex)
     {

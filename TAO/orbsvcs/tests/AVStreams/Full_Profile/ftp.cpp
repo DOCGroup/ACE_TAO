@@ -29,7 +29,7 @@ FTP_Client_Callback::handle_timeout (void *)
                   ACE_DEBUG ((LM_DEBUG, "handle_timeout:End of file\n"));
                   AVStreams::flowSpec stop_spec (1);
                   CLIENT::instance ()->streamctrl ()->stop (stop_spec);
-                  TAO_AV_CORE::instance ()->orb ()->shutdown (0);
+                  TAO_AV_CORE::instance ()->orb ()->shutdown (false);
                   return 0;
                 }
               else

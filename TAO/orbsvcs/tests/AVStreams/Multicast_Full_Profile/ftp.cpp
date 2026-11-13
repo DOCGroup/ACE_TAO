@@ -39,7 +39,7 @@ FTP_Client_Callback::handle_timeout (void *)
                 {
                   ACE_DEBUG ((LM_DEBUG,"handle_timeout:End of file\n"));
                   ACE_DEBUG ((LM_DEBUG, "Just before Orb Shutdown\n"));
-                  TAO_AV_CORE::instance ()->orb ()->shutdown (0);
+                  TAO_AV_CORE::instance ()->orb ()->shutdown (false);
                   return 0;
                 }
               catch (CORBA::Exception const &ex)

@@ -123,7 +123,7 @@ Receiver_Callback::handle_destroy ()
 
   try
     {
-      TAO_AV_CORE::instance ()->orb ()->shutdown (0);
+      TAO_AV_CORE::instance ()->orb ()->shutdown (false);
     }
   catch (CORBA::Exception const &ex)
     {
