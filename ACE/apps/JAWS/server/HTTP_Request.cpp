@@ -38,26 +38,13 @@ HTTP_Request::static_method_strings_[HTTP_Request::NUM_METHOD_STRINGS] =
 // null-terminated, and buflen does NOT include the \0.
 
 HTTP_Request::HTTP_Request ()
-  : got_request_line_ (false),
-    method_ (nullptr),
-    uri_ (nullptr),
-    version_ (nullptr),
-    path_ (nullptr),
-    cgi_ (false),
-    cgi_args_ (nullptr),
-    query_string_ (nullptr),
-    path_info_ (nullptr),
-    header_strings_ (HTTP_Request::static_header_strings_),
+  : header_strings_ (HTTP_Request::static_header_strings_),
     method_strings_ (HTTP_Request::static_method_strings_),
-    data_ (nullptr),
-    datalen_ (0),
-    content_length_ (-1),
-    status_ (HTTP_Status_Code::STATUS_OK),
-    type_ (HTTP_Request::NO_TYPE)
+    status_ (HTTP_Status_Code::STATUS_OK)
 {
   for (size_t i = 0;
        i < HTTP_Request::NUM_HEADER_STRINGS;
-       i++)
+       ++i)
     this->headers_.recognize (this->header_strings_[i]);
 }
 
@@ -69,7 +56,6 @@ HTTP_Request::~HTTP_Request ()
   ACE_OS::free (this->path_);
   ACE_OS::free (this->query_string_);
   ACE_OS::free (this->path_info_);
-
 }
 
 int
@@ -120,7 +106,7 @@ HTTP_Request::parse_request_line (char *const request_line)
   ptr = std::strchr (request_line, '\n');
 
   if (ptr > request_line && ptr[-1] == '\r')
-    ptr--, offset++;
+    --ptr, ++offset;
 
   if (ptr == request_line)
     {
@@ -393,7 +379,7 @@ HTTP_Request::type (const char *type_string)
 
   for (size_t i = 0;
        i < HTTP_Request::NUM_METHOD_STRINGS;
-       i++)
+       ++i)
 
     if (std::strcmp (type_string, this->method_strings_[i]) == 0)
       {
@@ -584,7 +570,7 @@ HTTP_Request::cgi_args_and_env (char *&extra_path_info)
             {
               this->cgi_env_.reserve (count + 1);
 
-              int i = 0;
+              int i {};
               ptr = cgi_question;
               do
                 {

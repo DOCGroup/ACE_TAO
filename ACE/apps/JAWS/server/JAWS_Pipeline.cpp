@@ -1,8 +1,6 @@
 #include "JAWS_Pipeline.h"
 
-JAWS_Pipeline::JAWS_Pipeline ()
-{
-}
+JAWS_Pipeline::JAWS_Pipeline () = default;
 
 int
 JAWS_Pipeline::open (void *)

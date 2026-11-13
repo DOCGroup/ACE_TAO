@@ -56,8 +56,6 @@ public:
             int buflen);
 
 public:
-  // = The Accessors.
-
   /// HTTP request method
   const char *method () const;
 
@@ -115,6 +113,7 @@ public:
   /// Dump the state of the request.
   void dump ();
 
+  /// Values for request type.
   enum
   {
     NO_TYPE = -1,
@@ -124,8 +123,7 @@ public:
     PUT,
     NUM_METHOD_STRINGS
   };
-  // Values for request type
-
+  /// Header strings.
   enum
   {
     DATE = 0,
@@ -143,10 +141,7 @@ public:
     LAST_MODIFIED,
     NUM_HEADER_STRINGS
   };
-  // Header strings
-
 private:
-  // = Private Accessors which can set values
   const char *method (const char *method_string);
   const char *uri (char *uri_string);
   const char *version (const char *version_string);
@@ -170,22 +165,22 @@ private:
   int got_request_line () const;
 
 private:
-  bool got_request_line_;
+  bool got_request_line_ {};
   Headers headers_;
 
-  char *method_;
-  char *uri_;
-  char *version_;
-  char *path_;
+  char *method_ {};
+  char *uri_ {};
+  char *version_ {};
+  char *path_ {};
 
-  bool cgi_;
+  bool cgi_ {};
   // Environment strings borrow storage from uri_; the vector owns only the
   // pointer table passed to the CGI environment builder.
   std::vector<char *> cgi_env_;
-  char *cgi_args_;
+  char *cgi_args_ {};
 
-  char *query_string_;
-  char *path_info_;
+  char *query_string_ {};
+  char *path_info_ {};
 
   const char * const *const header_strings_;
   static const char *const static_header_strings_[NUM_HEADER_STRINGS];
@@ -193,11 +188,11 @@ private:
   const char * const *const method_strings_;
   static const char *const static_method_strings_[NUM_METHOD_STRINGS];
 
-  char *data_;
-  int datalen_;
-  int content_length_;
+  char *data_ {};
+  int datalen_ {};
+  int content_length_ {-1};
   int status_;
-  int type_;
+  int type_ {NO_TYPE};
 };
 
 #endif /* HTTP_REQUEST_H */

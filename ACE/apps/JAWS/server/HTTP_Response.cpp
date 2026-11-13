@@ -120,7 +120,6 @@ HTTP_Response::error_response (int status_code, const char *log_message)
     "</html>\n"
     ;
 
-
   char *buf {};
   char buf1[4 * BUFSIZ];
   char buf2[BUFSIZ];
@@ -242,7 +241,6 @@ HTTP_Response::normal_response ()
                             "Requested method is not implemented.");
     }
 }
-
 
 void
 HTTP_Response::cgi_response ()

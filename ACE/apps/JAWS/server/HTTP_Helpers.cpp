@@ -8,8 +8,7 @@
 #include "ace/OS_NS_stdio.h"
 #include <cstring>
 
-// = Static initialization.
-const char *const
+char const *const
 HTTP_Helper::months_[12]=
 {
   "Jan", "Feb", "Mar", "Apr", "May", "Jun",

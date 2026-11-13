@@ -40,8 +40,8 @@ public:
   const char *value () const;
 
 private:
-  const char *header_;
-  const char *value_;
+  const char *header_ {};
+  const char *value_ {};
 };
 
 /**
@@ -79,7 +79,7 @@ private:
   Headers_Map_Item map_[MAX_HEADERS];
   Headers_Map_Item garbage_;
 
-  int num_headers_;
+  int num_headers_ {};
 };
 
 /**
@@ -127,7 +127,7 @@ private:
 
 private:
   Headers_Map map_;
-  bool done_;
+  bool done_ {};
 };
 
 #endif /* PARSE_HEADERS_H */

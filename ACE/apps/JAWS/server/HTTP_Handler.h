@@ -12,7 +12,6 @@
 #ifndef HTTP_HANDLER_H
 #define HTTP_HANDLER_H
 
-// = Forward declarations
 class Message_Block;
 class HTTP_Handler_Factory;
 
@@ -40,12 +39,10 @@ class HTTP_Handler_Factory;
  */
 class HTTP_Handler : protected JAWS_IO_Handler
 {
-  // Friend I/O classes. Can call protected methods.
   friend class JAWS_Synch_IO;
   friend class JAWS_Synch_IO_No_Cache;
   friend class JAWS_Asynch_IO;
 
-  // Factories
   friend class Asynch_HTTP_Handler_Factory;
   friend class Synch_HTTP_Handler_Factory;
   friend class No_Cache_Synch_HTTP_Handler_Factory;
@@ -92,8 +89,6 @@ protected:
   HTTP_Handler_Factory &factory_;
 
 protected:
-  // = Completion methods inherited from <JAWS_IO_Handler>.
-
   void read_complete (ACE_Message_Block &data) override;
   void read_error () override;
   void transmit_file_complete () override;

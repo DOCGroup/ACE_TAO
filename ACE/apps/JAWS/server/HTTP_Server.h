@@ -52,6 +52,12 @@ using HTTP_Acceptor = HTTP_SOCK_Acceptor;
 class ACE_Svc_Export HTTP_Server : public ACE_Service_Object
 {
 public:
+  HTTP_Server () = default;
+  HTTP_Server (HTTP_Server const &) = delete;
+  HTTP_Server (HTTP_Server &&) = delete;
+  HTTP_Server &operator= (HTTP_Server const &) = delete;
+  HTTP_Server &operator= (HTTP_Server &&) = delete;
+
   /// Initialization
   int init (int argc, ACE_TCHAR *argv[]) override;
 
@@ -69,14 +75,13 @@ protected:
   virtual int synch_thread_pool (HTTP_Handler_Factory &factory);
 
 private:
-  // James, comment these data members.
   void parse_args (int argc, ACE_TCHAR **argv);
-  int port_;
-  int threads_;
-  int strategy_;
-  int backlog_;
-  int throttle_;
-  bool caching_;
+  int port_ {};
+  int threads_ {};
+  int strategy_ {};
+  int backlog_ {};
+  int throttle_ {};
+  bool caching_ {true};
   ACE_Thread_Manager tm_;
   HTTP_Acceptor acceptor_;
 };
@@ -92,6 +97,11 @@ private:
 class Synch_Thread_Pool_Task : public ACE_Task<ACE_NULL_SYNCH>
 {
 public:
+  Synch_Thread_Pool_Task (Synch_Thread_Pool_Task const &) = delete;
+  Synch_Thread_Pool_Task (Synch_Thread_Pool_Task &&) = delete;
+  Synch_Thread_Pool_Task &operator= (Synch_Thread_Pool_Task const &) = delete;
+  Synch_Thread_Pool_Task &operator= (Synch_Thread_Pool_Task &&) = delete;
+
   Synch_Thread_Pool_Task (HTTP_Acceptor &acceptor,
                           ACE_Thread_Manager &tm,
                           int threads,
@@ -115,6 +125,11 @@ private:
 class Thread_Per_Request_Task : public ACE_Task<ACE_NULL_SYNCH>
 {
 public:
+  Thread_Per_Request_Task (Thread_Per_Request_Task const &) = delete;
+  Thread_Per_Request_Task (Thread_Per_Request_Task &&) = delete;
+  Thread_Per_Request_Task &operator= (Thread_Per_Request_Task const &) = delete;
+  Thread_Per_Request_Task &operator= (Thread_Per_Request_Task &&) = delete;
+
   Thread_Per_Request_Task (ACE_HANDLE handle,
                            ACE_Thread_Manager &tm,
                            int &grp_id,
@@ -141,6 +156,11 @@ private:
 class Asynch_Thread_Pool_Task : public ACE_Task<ACE_NULL_SYNCH>
 {
 public:
+  Asynch_Thread_Pool_Task (Asynch_Thread_Pool_Task const &) = delete;
+  Asynch_Thread_Pool_Task (Asynch_Thread_Pool_Task &&) = delete;
+  Asynch_Thread_Pool_Task &operator= (Asynch_Thread_Pool_Task const &) = delete;
+  Asynch_Thread_Pool_Task &operator= (Asynch_Thread_Pool_Task &&) = delete;
+
   Asynch_Thread_Pool_Task (ACE_Proactor &proactor,
                            ACE_Thread_Manager &tm);
   int svc () override;

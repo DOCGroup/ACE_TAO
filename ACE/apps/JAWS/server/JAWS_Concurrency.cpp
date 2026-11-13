@@ -1,9 +1,5 @@
 #include "JAWS_Concurrency.h"
 
-JAWS_Concurrency_Base::JAWS_Concurrency_Base ()
-{
-}
-
 int
 JAWS_Concurrency_Base::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
 {
@@ -31,10 +27,6 @@ JAWS_Concurrency_Base::svc ()
       this->put_next (mb);
     }
   return 0;
-}
-
-JAWS_Dispatch_Policy::JAWS_Dispatch_Policy ()
-{
 }
 
 JAWS_Dispatcher::JAWS_Dispatcher (JAWS_Dispatch_Policy *policy)

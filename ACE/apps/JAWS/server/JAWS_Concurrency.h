@@ -11,32 +11,34 @@
 #include "ace/Task.h"
 #include "JAWS_IO.h"
 
+/**
+ * @brief Base class for different concurrency models.
+ *
+ * Provides a default implementation of put() that calls putq(). Derived
+ * classes can override it to dispatch work synchronously, for example by
+ * calling put_next().
+ */
 class JAWS_Concurrency_Base : public ACE_Task<ACE_SYNCH>
-  // = TITLE
-  //     Base class for different concurrency models
-  //
-  // = DESCRIPTION
-  //     Provides a default implementaion of the virtual put() method
-  //     which calls putq(), but can be overloaded to do something
-  //     synchronously, such as call put_next().
-
 {
 public:
-  JAWS_Concurrency_Base ();
+  JAWS_Concurrency_Base () = default;
+  JAWS_Concurrency_Base (JAWS_Concurrency_Base const &) = delete;
+  JAWS_Concurrency_Base (JAWS_Concurrency_Base &&) = delete;
+  JAWS_Concurrency_Base &operator= (JAWS_Concurrency_Base const &) = delete;
+  JAWS_Concurrency_Base &operator= (JAWS_Concurrency_Base &&) = delete;
   int put (ACE_Message_Block *mb, ACE_Time_Value *tv = nullptr) override;
   int svc () override;
 };
 
+/**
+ * @brief Selects a concurrency model based on application state.
+ *
+ * For now, this policy always returns the same model.
+ */
 class JAWS_Dispatch_Policy
-  // = TITLE
-  //     Policy mechanism for choosing different concurrency models.
-  //
-  // = DESCRIPTION
-  //     Given some (unspecified) state, decides what the concurrency
-  //     model should be.  (For now, we always return the same model.)
 {
 public:
-  JAWS_Dispatch_Policy ();
+  JAWS_Dispatch_Policy () = default;
   virtual ~JAWS_Dispatch_Policy () = default;
   JAWS_Dispatch_Policy (JAWS_Dispatch_Policy const &) = delete;
   JAWS_Dispatch_Policy (JAWS_Dispatch_Policy &&) = delete;
@@ -45,17 +47,20 @@ public:
   virtual JAWS_Concurrency_Base * update (void *state = nullptr) = 0;
 };
 
+/**
+ * @brief Routes completed I/O events to the selected concurrency mechanism.
+ *
+ * JAWS_IO_Handler calls the dispatcher when I/O completes so a worker thread
+ * can process the result.
+ */
 class JAWS_Dispatcher
-  // = TITLE
-  //     The class that is responsible to delivering events to the
-  //     appropriate concurrency mechanism.
-  //
-  // = DESCRIPTION
-  //     JAWS_IO_Handler calls into the dispatcher so that the completed
-  //     IO can find a thread to take care of it.
 {
 public:
   explicit JAWS_Dispatcher (JAWS_Dispatch_Policy *policy);
+  JAWS_Dispatcher (JAWS_Dispatcher const &) = delete;
+  JAWS_Dispatcher (JAWS_Dispatcher &&) = delete;
+  JAWS_Dispatcher &operator= (JAWS_Dispatcher const &) = delete;
+  JAWS_Dispatcher &operator= (JAWS_Dispatcher &&) = delete;
 
   int dispatch (JAWS_IO_Handler *ioh);
 
@@ -63,13 +68,12 @@ private:
   JAWS_Dispatch_Policy *policy_;
 };
 
+/**
+ * @brief Implements the thread pool concurrency strategy.
+ *
+ * A pool of threads receives requests through the message queue.
+ */
 class JAWS_Thread_Pool_Task : public JAWS_Concurrency_Base
-  // = TITLE
-  //     Used to implement Thread Pool Concurrency Strategy
-  //
-  // = DESCRIPTION
-  //     This task is created to hold a pool of threads that receive
-  //     requests through the message queue.
 {
 public:
   JAWS_Thread_Pool_Task (long flags = THR_NEW_LWP,
@@ -81,14 +85,12 @@ private:
   int maxthreads_;
 };
 
+/**
+ * @brief Implements the thread per request concurrency strategy.
+ *
+ * Each queued request starts a thread through the overridden put().
+ */
 class JAWS_Thread_Per_Task : public JAWS_Concurrency_Base
-  // = TITLE
-  //     Used to implement Thread Per Request Concurrency Strategy
-  //
-  // = DESCRIPTION
-  //     As each new message arrives from the queue, a new thread is
-  //     spawned to handle it.  This is done by overloading put to call
-  //     activate.
 {
 public:
   JAWS_Thread_Per_Task (long flags = THR_NEW_LWP, int maxthreads = 20);

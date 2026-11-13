@@ -9,9 +9,7 @@
 
 // Implementation of class Headers
 
-Headers::Headers () : done_ (false)
-{
-}
+Headers::Headers () = default;
 
 void
 Headers::recognize (const char * const header)
@@ -156,19 +154,11 @@ Headers::end_of_line (char *&line, int &offset) const
   return 1;
 }
 
-
 // Implementation of class Headers_Map
 
-Headers_Map::Headers_Map ()
-  : num_headers_(0)
-{
-}
+Headers_Map::Headers_Map () = default;
 
-Headers_Map_Item::Headers_Map_Item ()
-  : header_ (nullptr),
-    value_ (nullptr)
-{
-}
+Headers_Map_Item::Headers_Map_Item () = default;
 
 Headers_Map_Item::~Headers_Map_Item ()
 {
@@ -314,7 +304,7 @@ Headers_Map::place (const char *const header)
       this->map_[i - 1].header_ = nullptr;
       this->map_[i - 1].value_ = nullptr;
 
-      i--;
+      --i;
     }
 
   this->map_[i].header_ = this->garbage_.header_;

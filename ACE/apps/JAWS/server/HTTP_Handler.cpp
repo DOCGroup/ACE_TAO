@@ -9,6 +9,7 @@
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/OS_NS_stdio.h"
 #include <cstdio>
+#include <memory>
 
 HTTP_Handler::HTTP_Handler (JAWS_IO &io,
                             HTTP_Handler_Factory &factory)
@@ -250,10 +251,12 @@ HTTP_Handler::done ()
 HTTP_Handler *
 Synch_HTTP_Handler_Factory::create_http_handler ()
 {
-  JAWS_Synch_IO *io;
-  ACE_NEW_RETURN (io, JAWS_Synch_IO, nullptr);
-  HTTP_Handler *handler;
+  JAWS_Synch_IO *io_ptr {};
+  ACE_NEW_RETURN (io_ptr, JAWS_Synch_IO, nullptr);
+  std::unique_ptr<JAWS_Synch_IO> io (io_ptr);
+  HTTP_Handler *handler {};
   ACE_NEW_RETURN (handler, HTTP_Handler (*io, *this), nullptr);
+  io.release ();
 
   return handler;
 }
@@ -271,10 +274,12 @@ Synch_HTTP_Handler_Factory::destroy_http_handler (HTTP_Handler &handler,
 HTTP_Handler *
 No_Cache_Synch_HTTP_Handler_Factory::create_http_handler ()
 {
-  JAWS_Synch_IO_No_Cache *io {};
-  ACE_NEW_RETURN (io, JAWS_Synch_IO_No_Cache, nullptr);
+  JAWS_Synch_IO_No_Cache *io_ptr {};
+  ACE_NEW_RETURN (io_ptr, JAWS_Synch_IO_No_Cache, nullptr);
+  std::unique_ptr<JAWS_Synch_IO_No_Cache> io (io_ptr);
   HTTP_Handler *handler {};
   ACE_NEW_RETURN (handler, HTTP_Handler (*io, *this), nullptr);
+  io.release ();
 
   return handler;
 }

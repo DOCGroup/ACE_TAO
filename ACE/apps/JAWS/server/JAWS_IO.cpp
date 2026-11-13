@@ -129,19 +129,19 @@ JAWS_Synch_IO::transmit_file (const char *filename,
         {
           iov[iovcnt].iov_base = const_cast<char*> (header);
           iov[iovcnt].iov_len =  header_size;
-          iovcnt++;
+          ++iovcnt;
         }
       if (handle.size () > 0)
         {
           iov[iovcnt].iov_base =  reinterpret_cast<char*> (handle.address ());
           iov[iovcnt].iov_len = handle.size ();
-          iovcnt++;
+          ++iovcnt;
         }
       if (trailer_size > 0)
         {
           iov[iovcnt].iov_base = const_cast<char*> (trailer);
           iov[iovcnt].iov_len = trailer_size;
-          iovcnt++;
+          ++iovcnt;
         }
       if (ACE_OS::writev (this->handle_, iov, iovcnt) < 0)
         result = -1;
@@ -339,7 +339,6 @@ JAWS_Asynch_IO::transmit_file (const char *filename,
       delete handle;
     }
 }
-
 
 // This method will be called when an asynchronous transmit file completes.
 void
