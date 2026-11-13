@@ -110,7 +110,7 @@ ACE_Log_Msg_UNIX_Syslog::log (ACE_Log_Record &log_record)
           || ACE_BIT_ENABLED (flags, ACE_Log_Msg::VERBOSE_LITE))
         {
           ACE_TCHAR date_and_time[27];
-          if (nullptr == ACE::timestamp (date_and_time, sizeof (date_and_time), 1))
+          if (nullptr == ACE::timestamp (date_and_time, sizeof (date_and_time), true))
             ACE_OS::strcpy (date_and_time, ACE_TEXT ("<time error>"));
           const ACE_TCHAR *prio_name =
             ACE_Log_Record::priority_name(ACE_Log_Priority(log_record.type()));
