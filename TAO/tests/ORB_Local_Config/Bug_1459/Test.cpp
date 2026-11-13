@@ -1,13 +1,3 @@
-// @author Jeff Mirwaisi <jeff_mirwaisi@yahoo.com>
-// @author Iliyan Jeliazkov <iliyan2ociweb.com>
-
-// the following is a simplification of the above problems (see
-// bugzilla 1459) and the different scenarios minus the creation of
-// the servant the service manager or threads even without the servant
-// to demonstrate that the server is capable of responding (which in
-// some cases it isnt) problems can already be seen in the multiple
-// orb scenarios
-
 #include "tao/corba.h"
 #include "ace/ARGV.h"
 #include "ace/Dynamic_Service.h"
@@ -34,6 +24,12 @@ constexpr ACE_TCHAR argStrD[] = ACE_TEXT ("DDD -ORBGestalt LOCAL -ORBId ORB-D -O
 // Empty file.
 constexpr ACE_TCHAR argStrM[] = ACE_TEXT ("MMM -ORBGestalt LOCAL -ORBId ORB-M -ORBSvcConf m.conf");
 
+/// @author Jeff Mirwaisi <jeff_mirwaisi@yahoo.com>
+/// @author Iliyan Jeliazkov <iliyan2ociweb.com>
+///
+/// Simplifies Bug 1459 by testing multiple ORBs without creating servants,
+/// service managers, or threads. The scenarios demonstrate that failures can
+/// occur even when the server is otherwise capable of responding.
 static int
 testBug1459 (int, ACE_TCHAR *[])
 {
@@ -41,7 +37,7 @@ testBug1459 (int, ACE_TCHAR *[])
 
   try
     {
-      int error {};
+      bool error {};
 
       ACE_ARGV argM (argStrM);
       int argcM = argM.argc ();
@@ -137,7 +133,7 @@ testBug1459 (int, ACE_TCHAR *[])
         ACE_Dynamic_Service<ACE_Service_Object>::instance ("UIOP_Factory");
       if (uiop_so != nullptr)
         {
-          ++error;
+          error = true;
           ACE_ERROR ((LM_DEBUG,
                       ACE_TEXT("Unexpected to find ")
                       ACE_TEXT("UIOP_Factory globally\n")));
@@ -150,7 +146,7 @@ testBug1459 (int, ACE_TCHAR *[])
         ACE_Dynamic_Service<ACE_Service_Object>::instance ("SSLIOP_Factory");
       if (ssliop_so != nullptr)
         {
-          ++error;
+          error = true;
           ACE_ERROR ((LM_DEBUG,
                       ACE_TEXT("Unexpected to find ")
                       ACE_TEXT("SSLIOP_Factory globally\n")));
@@ -162,7 +158,7 @@ testBug1459 (int, ACE_TCHAR *[])
         ACE_Dynamic_Service<ACE_Service_Object>::instance ("UIPMC_Factory");
       if (uipmc_so != nullptr)
         {
-          ++error;
+          error = true;
           ACE_ERROR ((LM_DEBUG,
                       ACE_TEXT("Unexpected to find ")
                       ACE_TEXT("UIPMC_Factory globally\n")));
@@ -173,27 +169,27 @@ testBug1459 (int, ACE_TCHAR *[])
         ACE_Dynamic_Service<ACE_Service_Object>::instance ("DIOP_Factory");
       if (diop_so != nullptr)
         {
-          ++error;
+          error = true;
           ACE_ERROR ((LM_DEBUG,
                       ACE_TEXT("Unexpected to find ")
                       ACE_TEXT("DIOP_Factory globally\n")));
         }
 
-      ORBM->destroy();
+      ORBM->destroy ();
 
 #if TAO_HAS_UIOP == 1
-      ORBA->destroy();
+      ORBA->destroy ();
 #endif /* TAO_HAS_UIOP */
 
 #if defined (DO_1459_SSLIOP_TEST)
-      ORBB->destroy();
+      ORBB->destroy ();
 #endif
 
-      ORBC->destroy();
+      ORBC->destroy ();
 
-      ORBD->destroy();
+      ORBD->destroy ();
 
-      if (error != 0)
+      if (error)
         return -1;
     }
   catch (CORBA::Exception const &ex)
@@ -205,8 +201,7 @@ testBug1459 (int, ACE_TCHAR *[])
   return 0;
 }
 
-// @brief the main driver
-
+/// Runs the Bug 1459 test.
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
