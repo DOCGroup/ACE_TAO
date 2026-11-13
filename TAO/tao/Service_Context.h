@@ -65,7 +65,8 @@ public:
 
   TAO_Service_Context ();
 
-  /// = Generic components
+  /// @name Generic components
+  /// @{
 
   /// Insert the component into the list, making a copy of the octet
   /// sequence.
@@ -111,10 +112,13 @@ public:
   /// Is the @a id available in the underlying service context list? If
   /// so return true, else return false
   bool is_service_id (IOP::ServiceId id);
+  /// @}
 
-  /// = Marshaling and demarshaling the list
+  /// @name Marshaling and demarshaling the list
+  /// @{
   int encode (TAO_OutputCDR &cdr) const;
   int decode (TAO_InputCDR &cdr);
+  /// @}
 
   /// Return the underlying service context list
   IOP::ServiceContextList &service_info ();

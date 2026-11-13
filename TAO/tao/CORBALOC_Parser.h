@@ -49,13 +49,14 @@ public:
   /// The destructor
   ~TAO_CORBALOC_Parser () override = default;
 
-  /// = The IOR_Parser methods, please read the documentation in
-  ///   IOR_Parser.h
+  /// @name IOR_Parser methods
+  /// @{
   bool match_prefix (const char *ior_string) const override;
 
   /// Parse the ior-string that is passed.
   CORBA::Object_ptr parse_string (const char *ior,
                                   CORBA::ORB_ptr orb) override;
+  /// @}
 
 private:
   /**

@@ -97,7 +97,8 @@ namespace TAO
 
     using CONDITION = TAO_Condition<TAO_SYNCH_MUTEX>;
 
-    // == Public methods
+    /// @name Public methods
+    /// @{
     /// Constructor; ownership of the purge strategy transfers to the cache manager.
     Transport_Cache_Manager_T (
       ACE_Reactor &reactor,
@@ -180,6 +181,7 @@ namespace TAO
 
     /// Return the underlying cache map
     HASH_MAP &map ();
+    /// @}
 
   private:
     friend transport_type;
