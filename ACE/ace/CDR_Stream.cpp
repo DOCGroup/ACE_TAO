@@ -1,4 +1,5 @@
 #include "ace/CDR_Stream.h"
+#include "ace/Malloc_Base.h"
 #include "ace/SString.h"
 #include "ace/Truncate.h"
 
@@ -1532,7 +1533,7 @@ ACE_InputCDR::read_string (ACE_CDR::Char *&x)
                       0);
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
-      std::unique_ptr<ACE_CDR::Char[]> safe_data (x);
+      std::unique_ptr<ACE_CDR::Char[], ACE_Array_Deleter<ACE_CDR::Char>> safe_data (x);
 
       if (this->read_char_array (x, len))
         {
@@ -1568,7 +1569,7 @@ ACE_InputCDR::read_string (ACE_CString &x)
   ACE_CDR::Char * data {};
   if (this->read_string (data))
     {
-      std::unique_ptr<ACE_CDR::Char[]> safe_data (data);
+      std::unique_ptr<ACE_CDR::Char[], ACE_Array_Deleter<ACE_CDR::Char>> safe_data (data);
       x = data;
       return true;
     }
@@ -1606,7 +1607,7 @@ ACE_InputCDR::read_wstring (ACE_CDR::WChar*& x)
   // the memory is allocated.
   if (len > 0 && len <= this->length ())
     {
-      std::unique_ptr<ACE_CDR::WChar[]> safe_data;
+      std::unique_ptr<ACE_CDR::WChar[], ACE_Array_Deleter<ACE_CDR::WChar>> safe_data;
 
       if (static_cast<ACE_CDR::Short> (this->major_version_) == 1
           && static_cast<ACE_CDR::Short> (this->minor_version_) == 2)

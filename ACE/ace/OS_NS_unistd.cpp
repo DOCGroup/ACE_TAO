@@ -8,6 +8,7 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_ctype.h"
 #include "ace/Default_Constants.h"
+#include "ace/Malloc_Base.h"
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_Thread.h"
 #include "ace/Object_Manager_Base.h"
@@ -292,7 +293,7 @@ ACE_OS::fork_exec (ACE_TCHAR *argv[])
 # if defined (ACE_WIN32)
 
   ACE_TCHAR *buf {};
-  std::unique_ptr<ACE_TCHAR[]> safe_ptr (buf);
+  std::unique_ptr<ACE_TCHAR[], ACE_Array_Deleter<ACE_TCHAR>> safe_ptr (buf);
   if (ACE_OS::argv_to_string (argv, buf) != -1)
     {
       PROCESS_INFORMATION process_info;

@@ -1,4 +1,5 @@
 #include "ace/Remote_Name_Space.h"
+#include "ace/Malloc_Base.h"
 #include "ace/Log_Category.h"
 #include "ace/SString.h"
 #include "ace/OS_NS_string.h"
@@ -42,8 +43,8 @@ ACE_Remote_Name_Space::bind (const ACE_NS_WString &name,
                              const char *type)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::bind");
-  std::unique_ptr<ACE_WCHAR_T[]> name_urep (name.rep ());
-  std::unique_ptr<ACE_WCHAR_T[]> value_urep (value.rep ());
+  std::unique_ptr<ACE_WCHAR_T[], ACE_Array_Deleter<ACE_WCHAR_T>> name_urep (name.rep ());
+  std::unique_ptr<ACE_WCHAR_T[], ACE_Array_Deleter<ACE_WCHAR_T>> value_urep (value.rep ());
   ACE_UINT32 name_len = static_cast<ACE_UINT32> (name.length () * sizeof (ACE_WCHAR_T));
   ACE_UINT32 value_len = static_cast<ACE_UINT32> (value.length () * sizeof (ACE_WCHAR_T));
   ACE_UINT32 type_len = static_cast<ACE_UINT32> (ACE_OS::strlen (type));
@@ -63,8 +64,8 @@ ACE_Remote_Name_Space::rebind (const ACE_NS_WString &name,
                                const char *type)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::rebind");
-  std::unique_ptr<ACE_WCHAR_T[]> name_urep (name.rep ());
-  std::unique_ptr<ACE_WCHAR_T[]> value_urep (value.rep ());
+  std::unique_ptr<ACE_WCHAR_T[], ACE_Array_Deleter<ACE_WCHAR_T>> name_urep (name.rep ());
+  std::unique_ptr<ACE_WCHAR_T[], ACE_Array_Deleter<ACE_WCHAR_T>> value_urep (value.rep ());
   ACE_UINT32 name_len = static_cast<ACE_UINT32> (name.length () * sizeof (ACE_WCHAR_T));
   ACE_UINT32 value_len = static_cast<ACE_UINT32> (value.length () * sizeof (ACE_WCHAR_T));
   ACE_UINT32 type_len = static_cast<ACE_UINT32> (ACE_OS::strlen (type));
@@ -84,7 +85,7 @@ ACE_Remote_Name_Space::resolve (const ACE_NS_WString &name,
                                 char *&type)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::resolve");
-  std::unique_ptr<ACE_WCHAR_T[]> name_urep (name.rep ());
+  std::unique_ptr<ACE_WCHAR_T[], ACE_Array_Deleter<ACE_WCHAR_T>> name_urep (name.rep ());
   ACE_UINT32 name_len = static_cast<ACE_UINT32> (name.length () * sizeof (ACE_WCHAR_T));
   ACE_Name_Request request (ACE_Name_Request::RESOLVE,
                             name_urep.get (),
@@ -118,7 +119,7 @@ int
 ACE_Remote_Name_Space::unbind (const ACE_NS_WString &name)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::unbind");
-  std::unique_ptr<ACE_WCHAR_T[]> name_urep (name.rep ());
+  std::unique_ptr<ACE_WCHAR_T[], ACE_Array_Deleter<ACE_WCHAR_T>> name_urep (name.rep ());
   ACE_UINT32 name_len = static_cast<ACE_UINT32> (name.length () * sizeof (ACE_WCHAR_T));
   ACE_Name_Request request (ACE_Name_Request::UNBIND,
                             name_urep.get (),
@@ -132,7 +133,7 @@ ACE_Remote_Name_Space::list_names (ACE_WSTRING_SET &set,
                                    const ACE_NS_WString &pattern)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::list_names");
-  std::unique_ptr<ACE_WCHAR_T[]> pattern_urep (pattern.rep ());
+  std::unique_ptr<ACE_WCHAR_T[], ACE_Array_Deleter<ACE_WCHAR_T>> pattern_urep (pattern.rep ());
   ACE_UINT32 pattern_len = static_cast<ACE_UINT32> (pattern.length () * sizeof (ACE_WCHAR_T));
   ACE_Name_Request request (ACE_Name_Request::LIST_NAMES,
                             pattern_urep.get (),
@@ -165,7 +166,7 @@ ACE_Remote_Name_Space::list_values (ACE_WSTRING_SET &set,
                                     const ACE_NS_WString &pattern)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::list_values");
-  std::unique_ptr<ACE_WCHAR_T[]> pattern_urep (pattern.rep ());
+  std::unique_ptr<ACE_WCHAR_T[], ACE_Array_Deleter<ACE_WCHAR_T>> pattern_urep (pattern.rep ());
   ACE_UINT32 pattern_len = static_cast<ACE_UINT32> (pattern.length () * sizeof (ACE_WCHAR_T));
   ACE_Name_Request request (ACE_Name_Request::LIST_VALUES,
                             pattern_urep.get (),
@@ -199,7 +200,7 @@ ACE_Remote_Name_Space::list_types (ACE_WSTRING_SET &set,
                                    const ACE_NS_WString &pattern)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::list_types");
-  std::unique_ptr<ACE_WCHAR_T[]> pattern_urep (pattern.rep ());
+  std::unique_ptr<ACE_WCHAR_T[], ACE_Array_Deleter<ACE_WCHAR_T>> pattern_urep (pattern.rep ());
   ACE_UINT32 pattern_len = static_cast<ACE_UINT32> (pattern.length () * sizeof (ACE_WCHAR_T));
   ACE_Name_Request request (ACE_Name_Request::LIST_TYPES,
                             pattern_urep.get (),
@@ -233,7 +234,7 @@ ACE_Remote_Name_Space::list_name_entries (ACE_BINDING_SET &set,
                                           const ACE_NS_WString &pattern)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::list_name_entries");
-  std::unique_ptr<ACE_WCHAR_T[]> pattern_urep (pattern.rep ());
+  std::unique_ptr<ACE_WCHAR_T[], ACE_Array_Deleter<ACE_WCHAR_T>> pattern_urep (pattern.rep ());
   ACE_UINT32 pattern_len = static_cast<ACE_UINT32> (pattern.length () * sizeof (ACE_WCHAR_T));
   ACE_Name_Request request (ACE_Name_Request::LIST_NAME_ENTRIES,
                             pattern_urep.get (),
@@ -273,7 +274,7 @@ ACE_Remote_Name_Space::list_value_entries (ACE_BINDING_SET &set,
                                            const ACE_NS_WString &pattern)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::list_value_entries");
-  std::unique_ptr<ACE_WCHAR_T[]> pattern_urep (pattern.rep ());
+  std::unique_ptr<ACE_WCHAR_T[], ACE_Array_Deleter<ACE_WCHAR_T>> pattern_urep (pattern.rep ());
   ACE_UINT32 pattern_len = static_cast<ACE_UINT32> (pattern.length () * sizeof (ACE_WCHAR_T));
   ACE_Name_Request request (ACE_Name_Request::LIST_VALUE_ENTRIES,
                             pattern_urep.get (),
@@ -313,7 +314,7 @@ ACE_Remote_Name_Space::list_type_entries (ACE_BINDING_SET &set,
                                           const ACE_NS_WString &pattern)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::list_type_entries");
-  std::unique_ptr<ACE_WCHAR_T[]> pattern_urep (pattern.rep ());
+  std::unique_ptr<ACE_WCHAR_T[], ACE_Array_Deleter<ACE_WCHAR_T>> pattern_urep (pattern.rep ());
   ACE_UINT32 pattern_len = static_cast<ACE_UINT32> (pattern.length () * sizeof (ACE_WCHAR_T));
   ACE_Name_Request request (ACE_Name_Request::LIST_TYPE_ENTRIES,
                             pattern_urep.get (),

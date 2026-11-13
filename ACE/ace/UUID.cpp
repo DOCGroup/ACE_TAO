@@ -1,4 +1,5 @@
 #include "ace/UUID.h"
+#include "ace/Malloc_Base.h"
 #include "ace/Guard_T.h"
 
 #if !defined (__ACE_INLINE__)
@@ -66,7 +67,7 @@ namespace ACE_Utils
 
     // Get a buffer exactly the correct size. Use the nil UUID as a
     // gauge.  Don't forget the trailing nul.
-    std::unique_ptr <char[]> auto_clean;
+    std::unique_ptr<char[], ACE_Array_Deleter<char>> auto_clean;
     size_t UUID_STRING_LENGTH = 36 + thr_id_.length () + pid_.length ();
     char *buf {};
 

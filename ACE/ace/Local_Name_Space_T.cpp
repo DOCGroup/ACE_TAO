@@ -8,6 +8,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Local_Name_Space.h"
+#include "ace/Malloc_Base.h"
 #include "ace/Guard_T.h"
 #include "ace/OS_NS_regex.h"
 #include "ace/OS_NS_string.h"
@@ -157,8 +158,8 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::shared_bind_i (
       ACE_WCHAR_T *name_rep = (ACE_WCHAR_T *) (ptr + value_len);
       char *new_type = (char *) (ptr + value_len + name_len);
 
-      std::unique_ptr<ACE_WCHAR_T[]> name_urep (name.rep ());
-      std::unique_ptr<ACE_WCHAR_T[]> value_urep (value.rep ());
+      std::unique_ptr<ACE_WCHAR_T[], ACE_Array_Deleter<ACE_WCHAR_T>> name_urep (name.rep ());
+      std::unique_ptr<ACE_WCHAR_T[], ACE_Array_Deleter<ACE_WCHAR_T>> value_urep (value.rep ());
       ACE_NS_String new_name (name_rep, name_urep.get (), name_len);
       ACE_NS_String new_value (value_rep, value_urep.get (), value_len);
 

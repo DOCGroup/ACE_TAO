@@ -3,41 +3,12 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_ctype.h"
 #include "ace/OS_NS_string.h"
+#include "ace/Malloc_Base.h"
 
 #include <cstring>
 #include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
-namespace ACE_Config_Import_Export_Details
-{
-  struct Buffer_Deleter
-  {
-    void operator() (ACE_TCHAR *buffer) const
-    {
-      if (buffer != nullptr)
-        {
-#if defined (ACE_HAS_ALLOC_HOOKS)
-          ACE_Allocator::instance ()->free (buffer);
-#else
-          delete [] buffer;
-#endif /* ACE_HAS_ALLOC_HOOKS */
-        }
-    }
-
-    void operator() (u_char *buffer) const
-    {
-      if (buffer != nullptr)
-        {
-#if defined (ACE_HAS_ALLOC_HOOKS)
-          ACE_Allocator::instance ()->free (buffer);
-#else
-          delete [] buffer;
-#endif /* ACE_HAS_ALLOC_HOOKS */
-        }
-    }
-  };
-}
 
 ACE_Config_ImpExp_Base::ACE_Config_ImpExp_Base (ACE_Configuration& config)
   : config_ (config)
@@ -78,7 +49,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
       in.reset ();
       return -1;
     }
-  std::unique_ptr<ACE_TCHAR[], ACE_Config_Import_Export_Details::Buffer_Deleter> buffer_owner {buffer};
+  std::unique_ptr<ACE_TCHAR[], ACE_Array_Deleter<ACE_TCHAR>> buffer_owner {buffer};
   ACE_Configuration_Section_Key section;
   ACE_TCHAR *end {};
 
@@ -104,7 +75,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
               return -1;
             }
 
-          std::unique_ptr<ACE_TCHAR[], ACE_Config_Import_Export_Details::Buffer_Deleter> temp_buffer_owner {temp_buffer};
+          std::unique_ptr<ACE_TCHAR[], ACE_Array_Deleter<ACE_TCHAR>> temp_buffer_owner {temp_buffer};
 
           // copy the beginnning of the line
           std::memcpy (temp_buffer, buffer, buffer_size * sizeof (ACE_TCHAR));
@@ -190,7 +161,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
                               u_char[length],
                               -1);
 #endif /* ACE_HAS_ALLOC_HOOKS */
-              std::unique_ptr<u_char[], ACE_Config_Import_Export_Details::Buffer_Deleter> data_owner {data};
+              std::unique_ptr<u_char[], ACE_Array_Deleter<u_char>> data_owner {data};
               u_char* out = data;
               ACE_TCHAR* inb = end + 4;
               ACE_TCHAR* endptr {};

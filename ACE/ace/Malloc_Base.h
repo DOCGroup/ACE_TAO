@@ -157,6 +157,23 @@ private:
   static ACE_Allocator *allocator_;
 };
 
+/// Deallocates array storage allocated through ACE's allocation macros.
+template <typename T>
+struct ACE_Array_Deleter
+{
+  void operator() (T *ptr) const
+  {
+    if (ptr != nullptr)
+      {
+#if defined (ACE_HAS_ALLOC_HOOKS)
+        ACE_Allocator::instance ()->free (ptr);
+#else
+        delete [] ptr;
+#endif /* ACE_HAS_ALLOC_HOOKS */
+      }
+  }
+};
+
 /**
  * @class ACE_Allocator_Std_Adapter
  *

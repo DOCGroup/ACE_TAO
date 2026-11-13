@@ -17,6 +17,7 @@
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
 #include "ace/OS_Memory.h"
+#include "ace/Malloc_Base.h"
 #include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -61,16 +62,6 @@ namespace
       ACE_TEXT ("LM_UNK(010000000000)"),
       ACE_TEXT ("LM_UNK(020000000000)")
     };
-
-  void
-  free_verbose_msg (ACE_TCHAR *buffer)
-  {
-#if defined (ACE_HAS_ALLOC_HOOKS)
-    ACE_Allocator::instance ()->free (buffer);
-#else
-    delete [] buffer;
-#endif /* ACE_HAS_ALLOC_HOOKS */
-  }
 }
 
 const ACE_TCHAR *
@@ -313,8 +304,8 @@ ACE_Log_Record::print (const ACE_TCHAR host_name[],
 #else
       ACE_NEW_RETURN (verbose_msg, ACE_TCHAR[MAXVERBOSELOGMSGLEN], -1);
 #endif /* ACE_HAS_ALLOC_HOOKS */
-      std::unique_ptr<ACE_TCHAR[], void (*) (ACE_TCHAR *)> safe_verbose_msg (
-        verbose_msg, free_verbose_msg);
+      std::unique_ptr<ACE_TCHAR[], ACE_Array_Deleter<ACE_TCHAR>> safe_verbose_msg (
+        verbose_msg);
 
       int result = this->format_msg (host_name, verbose_flag,
                                      safe_verbose_msg.get (),
@@ -385,7 +376,8 @@ operator>> (ACE_InputCDR &cdr,
 #else
     ACE_NEW_RETURN (log_msg, ACE_TCHAR[buffer_len + 1], -1);
 #endif /* ACE_HAS_ALLOC_HOOKS */
-    std::unique_ptr<ACE_TCHAR[]> log_msg_p (log_msg);
+    std::unique_ptr<ACE_TCHAR[], ACE_Array_Deleter<ACE_TCHAR>> log_msg_p (
+      log_msg);
     log_record.type (type);
     log_record.pid (pid);
     log_record.time_stamp (ACE_Time_Value (ACE_Utils::truncate_cast<time_t> (sec),

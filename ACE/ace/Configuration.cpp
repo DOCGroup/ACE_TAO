@@ -1,4 +1,5 @@
 #include "ace/Configuration.h"
+#include "ace/Malloc_Base.h"
 #include "ace/SString.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_strings.h"
@@ -95,7 +96,7 @@ ACE_Configuration::expand_path (const ACE_Configuration_Section_Key& key,
 {
   // Make a copy of key
   ACE_Configuration_Section_Key current_section = key;
-  std::unique_ptr<ACE_TCHAR[]> pData (path_in.rep ());
+  std::unique_ptr<ACE_TCHAR[], ACE_Array_Deleter<ACE_TCHAR>> pData (path_in.rep ());
   ACE_Tokenizer parser (pData.get ());
   parser.delimiter_replace ('\\', '\0');
   parser.delimiter_replace ('/', '\0');
