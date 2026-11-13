@@ -5,7 +5,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-const iovec Fill_ACE_QoS::iov_ = {0,0};
+const iovec Fill_ACE_QoS::iov_ {};
 
 Fill_ACE_QoS::Fill_ACE_QoS ()
   : default_traffic_ (ACE_QOS_NOT_SPECIFIED,
