@@ -22,17 +22,11 @@ namespace ACE
   {
     SessionBase::SessionBase (u_short port, bool keep_alive)
       : port_ (port),
-        reactive_ (false),
-        in_stream_ (nullptr),
-        out_stream_ (nullptr),
         http_timeout_ (DEFAULT_TIMEOUT),
         keep_alive_timeout_ (DEFAULT_KEEP_ALIVE_TIMEOUT),
         reconnect_timer_ (DEFAULT_KEEP_ALIVE_TIMEOUT),
         reconnect_countdown_ (&reconnect_timer_),
-        keep_alive_ (keep_alive),
-        needs_reconnect_ (false),
-        cannot_reconnect_ (false),
-        expects_response_body_ (false)
+        keep_alive_ (keep_alive)
       {
         INET_TRACE ("ACE_HTTP_SessionBase - ctor");
       }
@@ -42,17 +36,11 @@ namespace ACE
                               bool keep_alive,
                               const ACE_Time_Value* alive_timeout)
       : port_ (port),
-        reactive_ (false),
-        in_stream_ (nullptr),
-        out_stream_ (nullptr),
         http_timeout_ (timeout),
         keep_alive_timeout_ (DEFAULT_KEEP_ALIVE_TIMEOUT),
         reconnect_timer_ (DEFAULT_KEEP_ALIVE_TIMEOUT),
         reconnect_countdown_ (&reconnect_timer_),
-        keep_alive_ (keep_alive),
-        needs_reconnect_ (false),
-        cannot_reconnect_ (false),
-        expects_response_body_ (false)
+        keep_alive_ (keep_alive)
       {
         INET_TRACE ("ACE_HTTP_SessionBase - ctor");
         if (keep_alive && alive_timeout)

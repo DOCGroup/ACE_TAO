@@ -40,6 +40,11 @@ namespace ACE
                            bool keep_alive = false,
                            const ACE_Time_Value* alive_timeout = nullptr);
 
+              SessionBase (SessionBase const&) = delete;
+              SessionBase& operator= (SessionBase const&) = delete;
+              SessionBase (SessionBase&&) = delete;
+              SessionBase& operator= (SessionBase&&) = delete;
+
               virtual ~SessionBase ();
 
               void set_keep_alive (bool f);
@@ -102,21 +107,23 @@ namespace ACE
 
               ACE_CString host_;
               u_short port_;
-              bool proxy_connection_;
+              bool proxy_connection_ {};
               ACE_CString proxy_target_host_;
-              u_short proxy_target_port_;
+              u_short proxy_target_port_ {};
 
-              bool reactive_;
-              IStream* in_stream_;
-              OStream* out_stream_;
+              bool reactive_ {};
+              /// Owned by this session and released by close_streams ().
+              IStream* in_stream_ {};
+              /// Owned by this session and released by close_streams ().
+              OStream* out_stream_ {};
               ACE_Time_Value http_timeout_;
               ACE_Time_Value keep_alive_timeout_;
               ACE_Time_Value reconnect_timer_;
               ACE_Countdown_Time reconnect_countdown_;
               bool keep_alive_;
-              bool needs_reconnect_;
-              bool cannot_reconnect_;
-              bool expects_response_body_;
+              bool needs_reconnect_ {};
+              bool cannot_reconnect_ {};
+              bool expects_response_body_ {};
           };
       }
   }
