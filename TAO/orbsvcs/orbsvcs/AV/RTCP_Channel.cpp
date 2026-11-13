@@ -18,14 +18,10 @@ RTCP_Channel_In::RTCP_Channel_In (ACE_UINT32 ssrc,
   ACE_INET_Addr *inet_addr {};
   ACE_NEW (inet_addr,
            ACE_INET_Addr (*const_inet_addr));
-
-  this->peer_address_ = inet_addr;
+  this->peer_address_.reset (inet_addr);
 }
 
-RTCP_Channel_In::~RTCP_Channel_In()
-{
-  delete this->peer_address_;
-}
+RTCP_Channel_In::~RTCP_Channel_In() = default;
 
 void
 RTCP_Channel_In::updateStatistics(RTP_Packet* dataPkt)

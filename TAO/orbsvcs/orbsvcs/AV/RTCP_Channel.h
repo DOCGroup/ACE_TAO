@@ -9,6 +9,8 @@
 #include "ace/Message_Block.h"
 #include "ace/SString.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -114,7 +116,7 @@ private:
   ACE_Time_Value init_local_time_ {};
 
   /// The address that the first RTP packet was received from.
-  ACE_Addr *peer_address_ {};
+  std::unique_ptr<ACE_Addr> peer_address_;
 
   /// The most significant word of the last sender report NTP timestamp.
   ACE_UINT32 ntp_ts_msw_ {};
