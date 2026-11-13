@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef CONCRETE_CONNECTION_HANDLER
 #define CONCRETE_CONNECTION_HANDLER
 
@@ -36,7 +35,7 @@ public:
   Supplier_Handler &operator= (Supplier_Handler &&) = delete;
 
 protected:
-  // = All the following methods are upcalls, so they can be protected.
+  /// These methods are upcalls from the framework and are protected.
 
   /// Receive and process peer events.
   int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE) override;

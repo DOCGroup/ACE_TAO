@@ -12,9 +12,6 @@ using FP_RETURN_TYPE = FPRT::Return_Type;
 
 // File_Parser stuff.
 
-template <class ENTRY>
-File_Parser<ENTRY>::~File_Parser () = default;
-
 template <class ENTRY> int
 File_Parser<ENTRY>::open (const ACE_TCHAR filename[])
 {

@@ -60,21 +60,20 @@ class File_Parser
 public:
   File_Parser () = default;
 
-  /// Destructor.
-  virtual ~File_Parser ();
+  virtual ~File_Parser () = default;
   File_Parser (File_Parser const &) = delete;
   File_Parser (File_Parser &&) = delete;
   File_Parser &operator= (File_Parser const &) = delete;
   File_Parser &operator= (File_Parser &&) = delete;
 
-  // = Open and Close the file specified
+  /// Open or close the configured input file.
   int open (const ACE_TCHAR filename[]);
   int close ();
 
+  /// Pure virtual hook for subclasses to fill in an entry using the
+  /// protected parsing methods.
   virtual FPRT::Return_Type read_entry (ENTRY &entry,
                                         int &line_number) = 0;
-  // Pure virtual hook that subclasses override and use the protected
-  // methods to fill in the <entry>.
 
 protected:
   /// Read the next ASCII word.

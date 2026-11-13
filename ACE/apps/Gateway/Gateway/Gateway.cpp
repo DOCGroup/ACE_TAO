@@ -20,7 +20,6 @@
 class ACE_Svc_Export Gateway : public ACE_Service_Object
 {
 protected:
-  // = Service configurator hooks.
   // Perform initialization.
   int init (int argc, ACE_TCHAR *argv[]) override;
 
@@ -30,14 +29,12 @@ protected:
   // Return info about this service.
   int info (ACE_TCHAR **, size_t) const override;
 
-  // = Configuration methods.
   // Parse the proxy configuration file.
   int parse_connection_config_file ();
 
   // Parse the consumer configuration file.
   int parse_consumer_config_file ();
 
-  // = Lifecycle management methods.
   // Shut down the Gateway when input comes in from the controlling
   // console.
   int handle_input (ACE_HANDLE) override;

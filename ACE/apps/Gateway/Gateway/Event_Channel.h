@@ -47,7 +47,6 @@ public:
   /// Close down the Channel.
   virtual int close (u_long = 0);
 
-  // = Proxy management methods.
   /**
    * Initiate the connection of the <Connection_Handler> to its peer.
    * Second paratemer is used for thread connection-handler which will
@@ -77,7 +76,6 @@ public:
   int subscribe (Event_Key const &event_addr,
                  std::unique_ptr<Consumer_Dispatch_Set> cds);
 
-  // = Event processing entry point.
   /// Pass <mb> to the Event Channel so it can forward it to Consumers.
   virtual int put (ACE_Message_Block *mb,
                    ACE_Time_Value * = nullptr);
@@ -93,7 +91,6 @@ private:
   /// Parse the command-line arguments.
   int parse_args (int argc, ACE_TCHAR *argv[]);
 
-  // = Methods for handling events.
   /// Forwards the <data> to Consumer that have registered to receive
   /// it, based on addressing information in the <event_key>.
   void routing_event (Event_Key *event_key,
@@ -119,7 +116,6 @@ private:
   /// Used to establish connections passively and create Consumers.
   Connection_Handler_Acceptor consumer_acceptor_;
 
-  // = Make life easier by defining aliases.
   using CONNECTION_MAP = ACE_Map_Manager<CONNECTION_ID, Connection_Handler *, MAP_MUTEX>;
   using CONNECTION_MAP_ITERATOR = ACE_Map_Iterator<CONNECTION_ID, Connection_Handler *, MAP_MUTEX>;
   using CONNECTION_MAP_ENTRY = ACE_Map_Entry<CONNECTION_ID, Connection_Handler *>;

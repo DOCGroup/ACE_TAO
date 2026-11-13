@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef OPTIONS_H
 #define OPTIONS_H
 
@@ -37,10 +36,10 @@ public:
   Options &operator= (Options const &) = delete;
   Options &operator= (Options &&) = delete;
 
-  // = Options that can be enabled/disabled.
+  /// Options that can be enabled or disabled.
   enum
   {
-    // = The types of threading strategies.
+    /// Threading strategies.
     REACTIVE = 0,
     OUTPUT_MT = 1,
     INPUT_MT = 2,
@@ -63,12 +62,10 @@ public:
   /// Parse the arguments and set the options.
   int parse_args (int argc, ACE_TCHAR *argv[]);
 
-  /**
-   * Print the gateway supported parameters.
-   * = Accessor methods.
-   * Determine if an option is enabled.
-   */
-  void print_usage();
+  /// Print the gateway's supported parameters.
+  void print_usage ();
+
+  /// Determine whether an option is enabled.
   int enabled (int option) const;
 
   /**

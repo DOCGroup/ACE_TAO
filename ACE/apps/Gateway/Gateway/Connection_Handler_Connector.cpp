@@ -1,10 +1,6 @@
 #include "Connection_Handler_Connector.h"
 #include "ace/os_include/os_netdb.h"
 
-Connection_Handler_Connector::Connection_Handler_Connector ()
-{
-}
-
 // Initiate (or reinitiate) a connection to the Connection_Handler.
 
 int

@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef _CONNECTION_HANDLER
 #define _CONNECTION_HANDLER
 
@@ -53,7 +52,7 @@ public:
   /// (called by <ACE_Connector::handle_output>).
   int open (void * = nullptr) override;
 
-  // = The current state of the Connection_Handler.
+  /// Current state of the connection handler.
   enum State
   {
     IDLE = 1,      // Prior to initialization.
@@ -63,40 +62,39 @@ public:
     FAILED         // Connection_Handler has failed.
   };
 
-  // = Set/get the current state.
+  /// Get or set the current state.
   void state (State);
   State state () const;
 
-  // = Set/get remote INET addr.
+  /// Get or set the remote INET address.
   void remote_addr (ACE_INET_Addr &);
   ACE_INET_Addr const &remote_addr () const;
 
-  // = Set/get local INET addr.
+  /// Get or set the local INET address.
   void local_addr (ACE_INET_Addr &);
   ACE_INET_Addr const &local_addr () const;
 
-  // = Set/get connection id.
+  /// Get or set the connection ID.
   void connection_id (CONNECTION_ID);
   CONNECTION_ID connection_id () const;
 
-  // = Set/get the current retry timeout delay.
+  /// Get or set the current retry timeout delay.
   void timeout (long);
   long timeout ();
 
-  // = Set/get the maximum retry timeout delay.
+  /// Get or set the maximum retry timeout delay.
   void max_timeout (long);
   long max_timeout () const;
 
-  // = Set/get proxy role (i.e., 'S' for Supplier and 'C' for Consumer
-  // (necessary for error checking).
+  /// Get or set the proxy role ('S' for Supplier and 'C' for Consumer).
   void connection_role (char);
   char connection_role () const;
 
-  // = Set/get the <Event_Channel> *.
+  /// Get or set the event channel.
   void event_channel (Event_Channel *);
   Event_Channel *event_channel () const;
 
-  // = The total number of bytes sent/received on this proxy.
+  /// Get or set the total number of bytes sent or received on this proxy.
   /// Increment count by <bytes>.
   /// Return the current byte count.
   void total_bytes (size_t bytes);
