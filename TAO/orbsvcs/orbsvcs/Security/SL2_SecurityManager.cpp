@@ -12,10 +12,9 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::Security::SecurityManager::SecurityManager (/* unknown */)
+TAO::Security::SecurityManager::SecurityManager ()
   : principal_authenticator_ (SecurityLevel2::PrincipalAuthenticator::_nil ())
 {
-  // this needs to change to access decision
   SecurityLevel2::AccessDecision_ptr ad {};
   ACE_NEW_THROW_EX (ad,
                     TAO::Security::AccessDecision,

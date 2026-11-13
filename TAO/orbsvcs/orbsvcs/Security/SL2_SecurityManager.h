@@ -39,8 +39,6 @@ namespace TAO
   // would prefer SL2, but all the other SL2 stuff is in the Security namespace
   namespace Security
   {
-    // This should move out of here probably, but it's easier to stick it
-    // here for the moment...(CJC)
     class AccessDecision
       : public virtual TAO::SL2::AccessDecision,
         public virtual ::CORBA::LocalObject
@@ -99,49 +97,27 @@ namespace TAO
       /*!
        * Map containing references and their designated insecure access.
        */
-      // What sorts of maps are available in ACE?  We'll be mapping
-      // an object reference to a boolean, basically.  Looks like for
-      // now we'll map a stringified IOR to the boolean, and provide some
-      // (for now) simple keys and functions for comparing them.
-      //
-      // Locking on this needs to be exclusive to add_object,
-      // remove_object, and access_allowed.  I think that the lock on the
-      // map itself will be sufficient, but we'll model this after the
-      // Active Object map in the POA...so whatever way that goes, so, too,
-      // will this.
       struct ReferenceKeyType
       {
         PortableServer::ObjectId_var oid_;
         CORBA::OctetSeq_var adapter_id_;
         CORBA::String_var orbid_;
 
-        // operations/methods necessary for functors in HashMap; might
-        // need to add operator< if we decide to use an RB_Tree
         bool operator== (ReferenceKeyType const & other) const;
-        CORBA::ULong hash() const;
+        CORBA::ULong hash () const;
 
-        // operator kind of like a "toString()" for debug statements
         operator char const * () const;
       };
       using OBJECT_KEY = ReferenceKeyType;
-      // This is typedef'd because we might try to do something fancier
-      // where, rather than having just a string as the key, we have a
-      // structure and the structure precomputes some of the information
-      // for the actual key.  Thus, we could then customize the hash and
-      // comparison functors so that they use the precomputed information
-      // rather than computing it each time.  For now, though, I want to
-      // make this easy to get things working.
       using ACCESS_MAP_TYPE = ACE_Hash_Map_Manager_Ex<OBJECT_KEY,
                                                        CORBA::Boolean, // access_allowed?
                                                        ACE_Hash<OBJECT_KEY>,
                                                        ACE_Equal_To<OBJECT_KEY>,
-                                                       ACE_Null_Mutex>; // not sure this is right
+                                                       ACE_Null_Mutex>;
 
       ACCESS_MAP_TYPE access_map_;
 
-      // Lock for accessing the map.  It may be possible to get away with
-      // just using a lock directly in the map, but I'm not sure, so I'll err
-      // conservatively.
+      // Protects access_map_.
       TAO_SYNCH_MUTEX map_lock_;
 
     private:
@@ -153,9 +129,7 @@ namespace TAO
        */
       OBJECT_KEY map_key_from_objref (CORBA::Object_ptr obj);
 
-      //
-      // This is the private implementation that is common to both
-      // access_allowed and access_allowed_ex.
+      /// Shared implementation for access_allowed and access_allowed_ex.
       ::CORBA::Boolean access_allowed_i (OBJECT_KEY & key,
                                          char const * operation_name,
                                          CORBA::Boolean collocated = false);
@@ -166,7 +140,7 @@ namespace TAO
         public virtual ::CORBA::LocalObject
     {
     public:
-      SecurityManager (/* not sure what's needed yet */);
+      SecurityManager ();
 
       SecurityManager (SecurityManager const &) = delete;
       SecurityManager (SecurityManager &&) = delete;
