@@ -1,4 +1,7 @@
 #include "orbsvcs/Event/ECG_UDP_Out_Endpoint.h"
+
+#include <memory>
+
 #include "ace/INET_Addr.h"
 #include "ace/Sock_Connect.h"
 #include "ace/OS_NS_string.h"
@@ -55,7 +58,7 @@ TAO_ECG_UDP_Out_Endpoint::is_loopback (ACE_INET_Addr const &from)
 TAO_ECG_UDP_Out_Endpoint&
 TAO_ECG_UDP_Out_Endpoint::operator= (TAO_ECG_UDP_Out_Endpoint const &rhs)
 {
-  if (this != &rhs)
+  if (this != std::addressof (rhs))
     {
       this->request_id_generator_.store (rhs.request_id_generator_.load ());
       this->dgram_ = rhs.dgram_;

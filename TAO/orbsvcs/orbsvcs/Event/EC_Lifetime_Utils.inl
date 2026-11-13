@@ -1,4 +1,7 @@
 // -*- C++ -*-
+
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
@@ -71,7 +74,7 @@ TAO_EC_Object_Deactivator::set_values (PortableServer::POA_ptr poa,
 ACE_INLINE void
 TAO_EC_Object_Deactivator::set_values (TAO_EC_Object_Deactivator & deactivator)
 {
-  if (this == &deactivator)
+  if (this == std::addressof (deactivator))
     return;
 
   this->poa_ = deactivator.poa_._retn ();

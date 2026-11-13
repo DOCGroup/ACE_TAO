@@ -1,4 +1,7 @@
 // -*- C++ -*-
+
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class T>
@@ -36,7 +39,7 @@ template <class T>
 ACE_INLINE void
 TAO_EC_Auto_Command<T>::set_command (TAO_EC_Auto_Command<T> & auto_command)
 {
-  if (this == &auto_command)
+  if (this == std::addressof (auto_command))
     return;
 
   this->command_ = auto_command.command_;
