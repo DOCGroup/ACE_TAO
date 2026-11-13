@@ -14,6 +14,7 @@
 #include <cstddef>
 #include <cstdlib>
 #include <cstring>
+#include <utility>
 
 #include "CrashPoint.h"
 #include "StateUpdate.h"
@@ -146,7 +147,7 @@ listener ()
 
       RecordId rid (client_id.in (), retention_id);
 
-      CORBA::OctetSeq_var const tmp (new CORBA::OctetSeq (reply));
+      CORBA::OctetSeq_var const tmp (new CORBA::OctetSeq (std::move (reply)));
       log_.insert (rid, tmp);
 
       // Update state.
