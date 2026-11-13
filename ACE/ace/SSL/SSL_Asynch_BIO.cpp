@@ -179,7 +179,7 @@ ACE_ASYNCH_BIO_READ_NAME (BIO * pBIO, char * buf, int len)
 
   int errval {};
 
-  int retval =
+  int const retval =
     ACE_SSL_Asynch_Stream_Accessor::read (p_stream,
                                           buf,
                                           len,
@@ -209,7 +209,7 @@ ACE_ASYNCH_BIO_WRITE_NAME (BIO * pBIO, const char * buf, int len)
 
   int errval {};
 
-  int retval =
+  int const retval =
     ACE_SSL_Asynch_Stream_Accessor::write (p_stream,
                                            buf,
                                            len,

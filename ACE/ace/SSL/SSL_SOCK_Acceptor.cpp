@@ -35,7 +35,7 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
   if (!SSL_in_accept_init (ssl))
     ::SSL_set_accept_state (ssl);
 
-  ACE_HANDLE handle = new_stream.get_handle ();
+  ACE_HANDLE const handle = new_stream.get_handle ();
 
   // We're going to call SSL_accept, optionally doing ACE::select and
   // retrying the SSL_accept, until the SSL handshake is done or

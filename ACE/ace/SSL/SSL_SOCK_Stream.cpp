@@ -487,7 +487,7 @@ ACE_SSL_SOCK_Stream::sendv_n (const iovec iov[], size_t iovcnt) const
 
   for (size_t i {}; i < iovcnt; ++i)
     {
-      ssize_t result = this->send_n (iov[i].iov_base,
+      ssize_t const result = this->send_n (iov[i].iov_base,
                                      iov[i].iov_len);
 
       if (result == -1)

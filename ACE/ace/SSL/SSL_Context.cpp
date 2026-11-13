@@ -287,7 +287,7 @@ ACE_SSL_Context::filter_versions (const char* versionlist)
   this->check_context ();
 
   ACE_CString vlist = versionlist;
-  ACE_CString seplist = " ,;";
+  ACE_CString const seplist = " ,;";
   ACE_CString::size_type pos {};
   bool match {};
 
@@ -381,10 +381,10 @@ ACE_SSL_Context::check_host (const ACE_INET_Addr &host, SSL *peerssl)
     }
 
 #if (OPENSSL_VERSION_NUMBER >= 0x30000000L)
-  std::unique_ptr<X509, decltype (&::X509_free)> cert (
+  std::unique_ptr<X509, decltype (&::X509_free)> const cert (
     ::SSL_get1_peer_certificate (peerssl), ::X509_free);
 #else
-  std::unique_ptr<X509, decltype (&::X509_free)> cert (
+  std::unique_ptr<X509, decltype (&::X509_free)> const cert (
     ::SSL_get_peer_certificate (peerssl), ::X509_free);
 #endif
 
@@ -790,7 +790,7 @@ ACE_SSL_Context::dh_params (const char *file_name,
 
   {
     // Swiped from Rescorla's examples and the OpenSSL s_server.c app
-    std::unique_ptr<BIO, decltype (&::BIO_free)> bio (
+    std::unique_ptr<BIO, decltype (&::BIO_free)> const bio (
       ::BIO_new_file (this->dh_params_.file_name (), "r"), ::BIO_free);
     if (bio == nullptr)
       {
@@ -798,7 +798,7 @@ ACE_SSL_Context::dh_params (const char *file_name,
         return -1;
       }
 
-    std::unique_ptr<DH, decltype (&::DH_free)> ret (
+    std::unique_ptr<DH, decltype (&::DH_free)> const ret (
       PEM_read_bio_DHparams (bio.get (), nullptr, nullptr, nullptr), ::DH_free);
 
     if (ret == nullptr)

@@ -39,7 +39,7 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
   if (!SSL_in_connect_init (ssl))
     ::SSL_set_connect_state (ssl);
 
-  ACE_HANDLE handle = new_stream.get_handle ();
+  ACE_HANDLE const handle = new_stream.get_handle ();
 
   // We're going to call SSL_connect, optionally doing ACE::select and
   // retrying the SSL_connect, until the SSL handshake is done or

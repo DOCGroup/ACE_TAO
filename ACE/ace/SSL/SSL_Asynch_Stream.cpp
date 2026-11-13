@@ -173,12 +173,12 @@ ACE_SSL_Asynch_Stream::cancel ()
     }
 
   // attempt to cancel internal, i.e. user's read/write
-  int rc_r_int = bio_istream_.cancel();
-  int rc_w_int = bio_ostream_.cancel();
+  int const rc_r_int = bio_istream_.cancel();
+  int const rc_w_int = bio_ostream_.cancel();
 
   // attempt to cancel external, i.e. bio_ssl read/write
-  int rc_r_ext = notify_read (0, ERR_CANCELED);
-  int rc_w_ext = notify_write (0, ERR_CANCELED);
+  int const rc_r_ext = notify_read (0, ERR_CANCELED);
+  int const rc_w_ext = notify_write (0, ERR_CANCELED);
 
   if ((rc_r_int < 0 || rc_w_int < 0)
       && (rc_r_ext < 0 || rc_w_ext < 0))
@@ -554,7 +554,7 @@ ACE_SSL_Asynch_Stream::do_SSL_read ()
     }
 
   ACE_Message_Block & mb = this->ext_read_result_->message_block ();
-  size_t bytes_req = this->ext_read_result_->bytes_to_read ();
+  size_t const bytes_req = this->ext_read_result_->bytes_to_read ();
 
   ERR_clear_error ();
 
@@ -616,7 +616,7 @@ ACE_SSL_Asynch_Stream::do_SSL_write ()
     }
 
   ACE_Message_Block & mb = this->ext_write_result_->message_block ();
-  size_t       bytes_req = this->ext_write_result_->bytes_to_write ();
+  size_t const bytes_req = this->ext_write_result_->bytes_to_write ();
 
   ERR_clear_error ();
 
@@ -1002,10 +1002,10 @@ ACE_SSL_Asynch_Stream::handle_write_stream (
 
   ACE_Message_Block & mb = result.message_block ();
 
-  size_t bytes_req = result.bytes_to_write ();
-  size_t bytes_trn = result.bytes_transferred ();
-  u_long errval    = result.error ();
-  size_t len       = bytes_req - bytes_trn;
+  size_t const bytes_req = result.bytes_to_write ();
+  size_t const bytes_trn = result.bytes_transferred ();
+  u_long const errval = result.error ();
+  size_t const len = bytes_req - bytes_trn;
 
   if (errval != 0)                    // error ?
     this->bio_out_errno_ = errval;    // save err code
@@ -1045,8 +1045,8 @@ ACE_SSL_Asynch_Stream::handle_read_stream (
 
   this->bio_inp_flag_ &= ~BF_AIO;
 
-  size_t bytes_trn = result.bytes_transferred ();
-  u_long errval    = result.error ();
+  size_t const bytes_trn = result.bytes_transferred ();
+  u_long const errval = result.error ();
 
   if (errval != 0)                     // error ?
      this->bio_inp_errno_ = errval;    // save err code
