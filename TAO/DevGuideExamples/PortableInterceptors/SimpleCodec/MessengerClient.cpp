@@ -98,8 +98,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::Any uid_as_any;
 
       uid_as_any <<= uid;
-      CORBA::OctetSeq client_uid = *codec->encode (uid_as_any);
-      messenger->send_message( client_uid );
+      CORBA::OctetSeq_var const client_uid {codec->encode (uid_as_any)};
+      messenger->send_message (client_uid.in ());
     }
 
   catch (CORBA::Exception const& ex)

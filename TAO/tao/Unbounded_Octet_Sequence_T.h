@@ -12,6 +12,7 @@
 #include "tao/Unbounded_Value_Sequence_T.h"
 
 #include <cstring>
+#include <utility>
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
 
@@ -283,8 +284,28 @@ public:
     return * this;
   }
 
-  unbounded_value_sequence (unbounded_value_sequence &&) = delete;
-  unbounded_value_sequence &operator= (unbounded_value_sequence &&) = delete;
+  unbounded_value_sequence (unbounded_value_sequence &&rhs) noexcept
+    : maximum_ (rhs.maximum_)
+    , length_ (rhs.length_)
+    , buffer_ (rhs.buffer_)
+    , release_ (rhs.release_)
+  {
+    this->mb_.swap (rhs.mb_);
+    rhs.maximum_ = 0;
+    rhs.length_ = 0;
+    rhs.buffer_ = nullptr;
+    rhs.release_ = false;
+  }
+
+  unbounded_value_sequence &operator= (unbounded_value_sequence &&rhs) noexcept
+  {
+    if (this != &rhs)
+      {
+        unbounded_value_sequence tmp (std::move (rhs));
+        this->swap (tmp);
+      }
+    return *this;
+  }
 
 private:
   /// The maximum number of elements the buffer can contain.

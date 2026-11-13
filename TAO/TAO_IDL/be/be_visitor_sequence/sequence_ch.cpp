@@ -240,27 +240,11 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
       *os << be_nl
           << node->local_name () << " (" << node->local_name ()
           << " const &) = default;" << be_nl;
-      if (sequence_element_predef != nullptr
-          && sequence_element_predef->pt () == AST_PredefinedType::PT_octet)
-        {
-          *os << node->local_name () << " (" << node->local_name () << " &&) = delete;" << be_nl;
-        }
-      else
-        {
-          *os << node->local_name () << " (" << node->local_name () << " &&) = default;" << be_nl;
-        }
+      *os << node->local_name () << " (" << node->local_name () << " &&) = default;" << be_nl;
       *os
           << node->local_name () << "& operator= (" << node->local_name ()
           << " const &) = default;" << be_nl;
-      if (sequence_element_predef != nullptr
-          && sequence_element_predef->pt () == AST_PredefinedType::PT_octet)
-        {
-          *os << node->local_name () << "& operator= (" << node->local_name () << " &&) = delete;";
-        }
-      else
-        {
-          *os << node->local_name () << "& operator= (" << node->local_name () << " &&) = default;";
-        }
+      *os << node->local_name () << "& operator= (" << node->local_name () << " &&) = default;";
       *os << be_nl;
 
       *os << "virtual ~" << node->local_name () << " () = default;";

@@ -18,6 +18,8 @@
 #include "tao/Basic_Types.h"
 #include "tao/CDR.h"
 
+#include <utility>
+
 using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO;
 
 using tested_sequence = unbounded_value_sequence<CORBA::Octet>;
@@ -77,6 +79,53 @@ struct Tester
       CHECK_EQUAL(true, y.release());
     }
     FAIL_RETURN_IF_NOT(f.expect(2), f);
+    return 0;
+  }
+
+  int test_move_constructor()
+  {
+    tested_sequence source (8);
+    source.length (4);
+    source[0] = 1;
+    source[1] = 4;
+    source[2] = 9;
+    source[3] = 16;
+    value_type * const buffer = source.get_buffer ();
+
+    tested_sequence destination (std::move (source));
+
+    CHECK_EQUAL (buffer, destination.get_buffer ());
+    CHECK_EQUAL (CORBA::ULong (8), destination.maximum ());
+    CHECK_EQUAL (CORBA::ULong (4), destination.length ());
+    CHECK_EQUAL (CORBA::Octet (1), destination[0]);
+    CHECK_EQUAL (CORBA::Octet (16), destination[3]);
+    CHECK_EQUAL (CORBA::ULong (0), source.maximum ());
+    CHECK_EQUAL (CORBA::ULong (0), source.length ());
+    CHECK_EQUAL (false, source.release ());
+    return 0;
+  }
+
+  int test_move_assignment()
+  {
+    tested_sequence source (8);
+    source.length (4);
+    source[0] = 1;
+    source[1] = 4;
+    source[2] = 9;
+    source[3] = 16;
+    value_type * const buffer = source.get_buffer ();
+    tested_sequence destination (2);
+
+    destination = std::move (source);
+
+    CHECK_EQUAL (buffer, destination.get_buffer ());
+    CHECK_EQUAL (CORBA::ULong (8), destination.maximum ());
+    CHECK_EQUAL (CORBA::ULong (4), destination.length ());
+    CHECK_EQUAL (CORBA::Octet (1), destination[0]);
+    CHECK_EQUAL (CORBA::Octet (16), destination[3]);
+    CHECK_EQUAL (CORBA::ULong (0), source.maximum ());
+    CHECK_EQUAL (CORBA::ULong (0), source.length ());
+    CHECK_EQUAL (false, source.release ());
     return 0;
   }
 
@@ -387,15 +436,20 @@ struct Tester
     tested_sequence a (8, mb.get ());
     CHECK_EQUAL(CORBA::Octet( 't'), a[0]);
     CHECK_EQUAL(CORBA::Octet( 'g'), a[6]);
+    ACE_Message_Block * const retained_mb = a.mb ();
+    tested_sequence moved (std::move (a));
+    CHECK_EQUAL (retained_mb, moved.mb ());
+    CHECK_EQUAL (CORBA::Octet ('t'), moved[0]);
+    CHECK_EQUAL (CORBA::ULong (0), a.length ());
 
     char const upperbuf[] = "THIS IS A TEST";
     size_t const n = sizeof (upperbuf);
     ACE_Message_Block_Unique_Ptr const upper_mb {new ACE_Message_Block (n)};
     // Copy the string into the Message_Block and update the write pointer.
     upper_mb->copy (upperbuf, n);
-    a.replace (n, upper_mb.get ());
-    CHECK_EQUAL(CORBA::Octet( 'T'), a[0]);
-    CHECK_EQUAL(CORBA::Octet( 'S'), a[6]);
+    moved.replace (n, upper_mb.get ());
+    CHECK_EQUAL(CORBA::Octet( 'T'), moved[0]);
+    CHECK_EQUAL(CORBA::Octet( 'S'), moved[6]);
 #endif
     return 0;
   }
@@ -407,6 +461,8 @@ struct Tester
     status += this->test_ulong_constructor();
     status += this->test_copy_constructor_from_ulong();
     status += this->test_assignment_from_ulong();
+    status += this->test_move_constructor();
+    status += this->test_move_assignment();
     status += this->test_exception_in_ulong_constructor();
     status += this->test_set_length_less_than_maximum();
     status += this->test_set_length_more_than_maximum();

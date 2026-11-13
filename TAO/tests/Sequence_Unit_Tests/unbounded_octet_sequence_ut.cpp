@@ -18,6 +18,8 @@
 #include "tao/Basic_Types.h"
 #include "tao/CDR.h"
 
+#include <utility>
+
 using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO;
 
 
@@ -76,6 +78,47 @@ struct Tester
       CHECK_EQUAL(true, y.release());
     }
     FAIL_RETURN_IF_NOT(f.expect(2), f);
+    return 0;
+  }
+
+  int test_move_constructor()
+  {
+    tested_sequence source (8);
+    source.length (4);
+    source[0] = 1;
+    source[1] = 4;
+    source[2] = 9;
+    source[3] = 16;
+    value_type * const buffer = source.get_buffer ();
+
+    tested_sequence destination (std::move (source));
+
+    CHECK_EQUAL (buffer, destination.get_buffer ());
+    CHECK_EQUAL (CORBA::ULong (8), destination.maximum ());
+    CHECK_EQUAL (CORBA::ULong (4), destination.length ());
+    CHECK_EQUAL (CORBA::Octet (1), destination[0]);
+    CHECK_EQUAL (CORBA::Octet (16), destination[3]);
+    return 0;
+  }
+
+  int test_move_assignment()
+  {
+    tested_sequence source (8);
+    source.length (4);
+    source[0] = 1;
+    source[1] = 4;
+    source[2] = 9;
+    source[3] = 16;
+    value_type * const buffer = source.get_buffer ();
+    tested_sequence destination (2);
+
+    destination = std::move (source);
+
+    CHECK_EQUAL (buffer, destination.get_buffer ());
+    CHECK_EQUAL (CORBA::ULong (8), destination.maximum ());
+    CHECK_EQUAL (CORBA::ULong (4), destination.length ());
+    CHECK_EQUAL (CORBA::Octet (1), destination[0]);
+    CHECK_EQUAL (CORBA::Octet (16), destination[3]);
     return 0;
   }
 
@@ -373,6 +416,8 @@ struct Tester
     status += this->test_ulong_constructor();
     status += this->test_copy_constructor_from_ulong();
     status += this->test_assignment_from_ulong();
+    status += this->test_move_constructor();
+    status += this->test_move_assignment();
     status += this->test_exception_in_ulong_constructor();
     status += this->test_set_length_less_than_maximum();
     status += this->test_set_length_more_than_maximum();

@@ -57,6 +57,7 @@
 #include "tao/Range_Checking_T.h"
 
 #include <algorithm>
+#include <utility>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -136,6 +137,28 @@ public:
     generic_sequence tmp(rhs);
     swap(tmp);
     return * this;
+  }
+
+  generic_sequence (generic_sequence &&rhs) noexcept
+    : maximum_ (rhs.maximum_)
+    , length_ (rhs.length_)
+    , buffer_ (rhs.buffer_)
+    , release_ (rhs.release_)
+  {
+    rhs.maximum_ = 0;
+    rhs.length_ = 0;
+    rhs.buffer_ = nullptr;
+    rhs.release_ = false;
+  }
+
+  generic_sequence &operator= (generic_sequence &&rhs) noexcept
+  {
+    if (this != &rhs)
+      {
+        generic_sequence tmp (std::move (rhs));
+        this->swap (tmp);
+      }
+    return *this;
   }
 
   ~generic_sequence()

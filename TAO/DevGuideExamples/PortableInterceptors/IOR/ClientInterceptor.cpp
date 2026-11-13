@@ -4,6 +4,7 @@
 #include "tao/PI/ClientRequestInfo.h"
 
 #include <iostream>
+#include <utility>
 
 constexpr CORBA::ULong service_ctx_id = 0xdeed;
 
@@ -76,7 +77,8 @@ ClientInterceptor::send_request (
   CORBA::Any gid_as_any;
   gid_as_any <<= gid;
 
-  sc.context_data = *codec->encode(gid_as_any);
+  CORBA::OctetSeq_var encoded {this->codec->encode (gid_as_any)};
+  sc.context_data = std::move (encoded.inout ());
 
   // Add this context to the service context list.
   ri->add_request_service_context (sc, false);
