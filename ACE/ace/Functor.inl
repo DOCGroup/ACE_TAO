@@ -1,6 +1,7 @@
 // -*- C++ -*-
 
 #include <cstring>
+#include <cwchar>
 
 //=============================================================================
 /**
@@ -236,26 +237,26 @@ ACE_INLINE int
 ACE_Equal_To<const wchar_t *>::operator () (const wchar_t *lhs,
                                             const wchar_t *rhs) const
 {
-  return !ACE_OS::strcmp (lhs, rhs);
+  return !std::wcscmp (lhs, rhs);
 }
 
 ACE_INLINE int
 ACE_Equal_To<wchar_t *>::operator () (const wchar_t *lhs,
                                       const wchar_t *rhs) const
 {
-  return !ACE_OS::strcmp (lhs, rhs);
+  return !std::wcscmp (lhs, rhs);
 }
 
 ACE_INLINE int
 ACE_Less_Than<const wchar_t *>::operator () (const wchar_t *lhs, const wchar_t *rhs) const
 {
-  return (ACE_OS::strcmp (lhs, rhs) < 0) ? 1 : 0;
+  return (std::wcscmp (lhs, rhs) < 0) ? 1 : 0;
 }
 
 ACE_INLINE int
 ACE_Less_Than<wchar_t *>::operator () (const wchar_t *lhs, const wchar_t *rhs) const
 {
-  return (ACE_OS::strcmp (lhs, rhs) < 0) ? 1 : 0;
+  return (std::wcscmp (lhs, rhs) < 0) ? 1 : 0;
 }
 
 #endif  // ACE_HAS_WCHAR
