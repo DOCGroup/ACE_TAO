@@ -33,8 +33,8 @@ public:
 
   enum { HTTPU_OK, NO_MEMORY, BAD_REQUEST, NOT_IMPLEMENTED };
 
+  /// Return HTTPU_OK on success or an error code.
   int error () const;
-  // 0 -> ok
 
   void dump ();
 
@@ -44,7 +44,8 @@ private:
   int minor_version_;
   char *version_;
   char *url_;
-  char *request_; // Owns the strdup buffer; url_ and version_ point into it.
+  /// Owns the buffer; url_ and version_ point into it.
+  char *request_;
   int error_;
 };
 

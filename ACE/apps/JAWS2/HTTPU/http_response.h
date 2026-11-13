@@ -1,7 +1,3 @@
-// There are two kinds of HTTP Responses in a proxy.
-// One is the kind you have to read in from the HTTP server.
-// The other is the kind you issue to the HTTP client.
-
 #ifndef HTTPU_HTTP_RESPONSE_HPP
 #define HTTPU_HTTP_RESPONSE_HPP
 
@@ -17,6 +13,7 @@
 #include "HTTPU/http_base.h"
 #include "HTTPU/parse_http_response.h"
 
+/// Represents an HTTP response read from a server or sent to a client.
 class HTTPU_Export HTTP_Response : public HTTP_Base
 {
 public:
@@ -27,8 +24,8 @@ public:
   HTTP_Response &operator= (HTTP_Response const &) = delete;
   HTTP_Response &operator= (HTTP_Response &&) = delete;
 
+  /// Return the parsed response line.
   Parse_HTTP_Response *response_line ();
-  // Returns the parsed response line.
 
   void dump ();
 
@@ -39,7 +36,6 @@ protected:
 private:
   Parse_HTTP_Response response_;
 };
-
 #if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)
 #     undef ACE_INLINE
@@ -47,6 +43,5 @@ private:
 #   define ACE_INLINE inline
 #   include "HTTPU/http_response.inl"
 # endif /* ACE_HAS_INLINED_OSCALLS */
-
 
 #endif /* !defined (HTTPU_HTTP_RESPONSE_HPP) */

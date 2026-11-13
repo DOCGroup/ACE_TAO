@@ -31,8 +31,8 @@ public:
 
   enum { HTTPU_OK, NO_MEMORY, BAD_RESPONSE };
 
+  /// Return HTTPU_OK on success or an error code.
   int error () const;
-  // 0 -> ok
 
 private:
   int code_;
@@ -40,7 +40,8 @@ private:
   int major_version_;
   int minor_version_;
   char *version_;
-  char *response_; // Owns the strdup buffer; code_str_ and version_ point into it.
+  /// Owns the buffer; code_str_ and version_ point into it.
+  char *response_;
   int error_;
 };
 

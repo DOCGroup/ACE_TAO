@@ -36,35 +36,32 @@ public:
   HTTP_Headers *http_headers ();
   JAWS_Headers *headers ();
 
+  /// Replace matching headers or add new headers when no match exists.
   int build_headers (JAWS_Headers *new_headers);
-  // takes a set of new headers that will replace existing headers or
-  // be added to the header list if there is no corresponding one to replace.
 
   void dump ();
 
 protected:
+  /// Parse the initial line while receiving; this sets status_.
   virtual void parse_line () = 0;
-  // Hook into the receive function to do specialized parsing of initial line.
-  // Sets the status_ variable.
 
+  /// Create the initial line while delivering; return 0 on success, -1 on failure.
   virtual int espouse_line () = 0;
-  // Hook into the deliver function to do specialized initial line creation.
-  // Returns 0 for success and -1 for failure.
 
+  /// Return the next delivery state.
   int deliver_header_name (JAWS_Header_Data *&data);
-  // Returns the next deliver state
 
+  /// Return the next delivery state.
   int deliver_header_value (JAWS_Header_Data *&data);
-  // Returns the next deliver state
 
+  /// Extract the first line of a request or response. Return 0 if more data is
+  /// needed, 1 if the line was parsed successfully.
   virtual int extract_line (ACE_Message_Block &mb);
-  // The first line of a request or a response.
-  // Return 0 if more data needed.
-  // Return 1 if line successfully parsed.
 
 protected:
   int status_;
-  char *line_; // Owns the strdup buffer.
+  /// Owns the buffer allocated by ACE_OS::strdup.
+  char *line_;
   int deliver_state_;
   bool no_headers_;
   HTTP_Headers info_;
@@ -72,7 +69,6 @@ protected:
   ACE_Message_Block_Unique_Ptr mb_ {};
   ACE_Message_Block payload_;
 };
-
 
 #if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)

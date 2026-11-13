@@ -1,5 +1,4 @@
-// by James Hu
-// Borrowed from HTTP_Headers.*, which appears to be irrelevent now anyway.
+/// Originally contributed by James Hu.
 
 #ifndef HTTPU_HTTP_HEADERS_H
 #define HTTPU_HTTP_HEADERS_H
@@ -23,9 +22,9 @@
 
 class HTTP_Headers;
 
+/// A header token and its formatting string; both are non-owning literals.
 class HTTPU_Export HTTP_Hdr_Node
 {
-  // Constructor should be passed literal strings.
   friend class HTTP_HCodes;
 
 public:
