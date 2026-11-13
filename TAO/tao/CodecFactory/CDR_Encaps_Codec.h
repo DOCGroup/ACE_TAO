@@ -84,7 +84,7 @@ protected:
    * that isn't supported for the version of GIOP associated with this
    * Codec.
    */
-  void check_type_for_encoding (CORBA::Any const& data);
+  void check_type_for_encoding (CORBA::Any const& data) const;
 
 private:
   /// The major GIOP version associated with this Codec.

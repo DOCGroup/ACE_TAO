@@ -318,7 +318,7 @@ TAO_CDR_Encaps_Codec::decode_value (CORBA::OctetSeq const& data,
 }
 
 void
-TAO_CDR_Encaps_Codec::check_type_for_encoding (CORBA::Any const& data)
+TAO_CDR_Encaps_Codec::check_type_for_encoding (CORBA::Any const& data) const
 {
   // @@ TODO: Are there any other conditions we need to check?
 

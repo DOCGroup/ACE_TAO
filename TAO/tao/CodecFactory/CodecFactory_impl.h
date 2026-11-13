@@ -59,7 +59,7 @@ private:
                                  CORBA::Octet minor,
                                  IOP::EncodingFormat encoding_format,
                                  TAO_Codeset_Translator_Base * char_trans,
-                                 TAO_Codeset_Translator_Base * wchar_trans);
+                                 TAO_Codeset_Translator_Base * wchar_trans) const;
   /// Borrowed ORB Core used by codecs created through this factory.
   /**
    * Some Codec implementations may need access to the ORB Core with
