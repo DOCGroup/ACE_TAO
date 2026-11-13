@@ -6,17 +6,19 @@
 #include "ace/Svc_Handler.h"
 #include <string>
 
-// Generate and receives messages from the event server.
-//
-// This class is both a consumer and supplier of events, i.e.,
-// it's a ``transceiver.''
+/**
+ * @class Event_Transceiver
+ * @brief Sends and receives messages through the event server.
+ *
+ * This class acts as both a consumer and supplier of events.
+ */
 class Event_Transceiver : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
 public:
-  // Performs the actual initialization.
+  /// Perform the actual initialization.
   Event_Transceiver (int argc, ACE_TCHAR *argv[]);
 
-  // No-op constructor (required by the <ACE_Connector>).
+  /// No-op constructor required by ACE_Connector.
   Event_Transceiver () = default;
 
   Event_Transceiver (Event_Transceiver const &) = delete;
@@ -24,19 +26,27 @@ public:
   Event_Transceiver &operator= (Event_Transceiver const &) = delete;
   Event_Transceiver &operator= (Event_Transceiver &&) = delete;
 
-  // = Svc_Handler hook called by the <ACE_Connector>.
-  // Initialize the transceiver when we are connected.
+  /// @name Service handler hooks
+  /// @{
+
+  /// Initialize the transceiver when it is connected.
   int open (void *) override;
 
-  // = Demultplexing hooks from the <ACE_Reactor>.
-  // Receive data from STDIN or socket.
+  /// @}
+
+  /// @name Reactor hooks
+  /// @{
+
+  /// Receive data from standard input or the socket.
   int handle_input (ACE_HANDLE) override;
 
-  // Close down via SIGINT.
+  /// Close down via SIGINT.
   int handle_signal (int signum, siginfo_t *, ucontext_t *) override;
 
-  // Close down the event loop.
+  /// Close down the event loop.
   int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override;
+
+  /// @}
 
 private:
   enum class Role
@@ -52,13 +62,13 @@ private:
     Role role {Role::Supplier};
   };
 
-  // Reads data from socket and writes to ACE_STDOUT.
+  /// Read data from the socket and write it to ACE_STDOUT.
   int receiver ();
 
-  // Writes data from ACE_STDIN to socket.
+  /// Write data from ACE_STDIN to the socket.
   int transmitter ();
 
-  // Parse the command-line arguments.
+  /// Parse the command-line arguments.
   int parse_args (int argc, ACE_TCHAR *argv[]);
 
   ACE_TCHAR const *role_name () const;
