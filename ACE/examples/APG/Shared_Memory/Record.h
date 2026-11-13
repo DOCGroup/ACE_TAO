@@ -6,6 +6,7 @@
 #ifndef __RECORD_H_
 #define __RECORD_H_
 
+#include <memory>
 #include <cstring>
 #include "ace/Based_Pointer_T.h"
 
@@ -24,7 +25,7 @@ public:
   }
   Record &operator= (Record const &rec)
   {
-    if (this != &rec)
+    if (this != std::addressof (rec))
       {
         this->id1_ = rec.id1_;
         this->id2_ = rec.id2_;

@@ -1,6 +1,8 @@
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
+
 #include <cstring>
+#include <memory>
 
 #include "JAWS/Cache_Manager.h"
 #include "JAWS/Cache_List_T.h"
@@ -82,7 +84,7 @@ JAWS_Strdup_String::operator = (const char *s)
 void
 JAWS_Strdup_String::operator = (const JAWS_Strdup_String &s)
 {
-  if (this == &s)
+  if (this == std::addressof (s))
     return;
 
   if (this->c_ && --*(this->c_) == 0)

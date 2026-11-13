@@ -1,6 +1,7 @@
 #include "Server_Info.h"
 
 #include <cstring>
+#include <memory>
 
 Server_Info::Server_Info ()
 {
@@ -15,7 +16,7 @@ Server_Info::Server_Info (Server_Info const &other)
 Server_Info&
 Server_Info::operator= (Server_Info const &other)
 {
-  if (this != &other)
+  if (this != std::addressof (other))
   {
     server_id = other.server_id;
     poa_name = other.poa_name;

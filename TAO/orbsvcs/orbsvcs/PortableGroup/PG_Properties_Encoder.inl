@@ -6,6 +6,8 @@
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_PG
@@ -30,7 +32,7 @@ namespace TAO_PG
   Properties_Encoder::NamedValue &
   Properties_Encoder::NamedValue::operator = (Properties_Encoder::NamedValue const & rhs)
   {
-    if (this != &rhs)
+    if (this != std::addressof (rhs))
     {
       this->name_ = rhs.name_;
       this->value_ = rhs.value_;

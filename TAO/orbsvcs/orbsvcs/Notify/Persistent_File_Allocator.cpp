@@ -4,7 +4,7 @@
 #include "tao/debug.h"
 
 #include <cstring>
-
+#include <memory>
 #include <new>
 
 //#define DEBUG_LEVEL 9
@@ -54,7 +54,7 @@ Persistent_Storage_Block::Persistent_Storage_Block(
 Persistent_Storage_Block&
 Persistent_Storage_Block::operator= (Persistent_Storage_Block const &psb)
 {
-  if (this != &psb)
+  if (this != std::addressof (psb))
     {
       unsigned char *data {};
       if (psb.data () != nullptr)

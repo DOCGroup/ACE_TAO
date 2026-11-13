@@ -13,6 +13,8 @@
 #include "orbsvcs/Log_Macros.h"
 #include "ace/Malloc_Base.h"
 
+#include <memory>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -202,7 +204,7 @@ ACE_Unbounded_List<T>::operator= (ACE_Unbounded_List<T> const &us)
 {
   ACE_TRACE ("ACE_Unbounded_List<T>::operator=");
 
-  if (this != &us)
+  if (this != std::addressof (us))
     {
       this->delete_nodes ();
       this->copy_nodes (us);
