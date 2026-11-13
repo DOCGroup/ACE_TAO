@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    TAO_Time_Service_Server.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Vishal Kachroo  <vishal@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_TIME_SERVICE_SERVER_H
 #define TAO_TIME_SERVICE_SERVER_H
