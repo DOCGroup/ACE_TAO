@@ -540,8 +540,8 @@ TAO_ZIOP_Loader::complete_compression (Compression::Compressor_ptr compressor,
                           ACE_TEXT ("TAO_ZIOP_Loader::complete_compression, ")
                           ACE_TEXT ("compressed length (%B >= %B) ")
                           ACE_TEXT ("uncompressed length, (did not compress).\n"),
-                          static_cast <unsigned int> (output.length () + Compression_Overhead),
-                          static_cast <unsigned int> (original_data_length)));
+                          static_cast<size_t> (output.length () + Compression_Overhead),
+                          static_cast<size_t> (original_data_length)));
             }
           return false;
         }

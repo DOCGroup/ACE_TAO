@@ -151,7 +151,7 @@ Thread_Pool::svc ()
                     count,
                     this->msg_queue ()->message_count (),
                     length,
-                    length - 1,
+                    static_cast<int> (length - 1),
                     mb->rd_ptr ()));
 
       // We're responsible for deallocating this.

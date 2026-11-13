@@ -579,7 +579,7 @@ void FT_ReplicaFactory_i::remove_replica(CORBA::ULong id, FT_TestReplica_i * rep
     ACE_ERROR (( LM_ERROR,
       "Attempt to remove invalid replica %d. Limit %B.\n",
       static_cast<int> (id),
-      static_cast<int> (this->replicas_.size())
+      this->replicas_.size ()
       ));
   }
 }

@@ -127,7 +127,7 @@ Thread_Pool::svc ()
                     "(%t) in iteration %d, length = %B, text = \"%*s\"\n",
                     count,
                     length,
-                    length - 1,
+                    static_cast<int> (length - 1),
                     mb->rd_ptr ()));
 
       if (length == 0)

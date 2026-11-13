@@ -67,18 +67,18 @@ run_main (int, ACE_TCHAR *[])
         {
           if (specific == 0)
             {
-              ACE_DEBUG ((LM_DEBUG, "Got back pointer: %x from key: %d. "
+              ACE_DEBUG ((LM_DEBUG, "Got back pointer: %@ from key: %d. "
                                     "Good!\n",
-                                    (size_t)specific, key));
+                                    specific, key));
             }
           else
             {
               ++status;
-              ACE_ERROR ((LM_ERROR, "Something (%x) was found in tss "
+              ACE_ERROR ((LM_ERROR, "Something (%@) was found in tss "
                                     "slot %d.\n"
                                     "Nothing should be stored in our "
                                     "TSS slot!\n",
-                                    (size_t)specific, key));
+                                    specific, key));
             }
         }
       else
