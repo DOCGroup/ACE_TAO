@@ -139,9 +139,7 @@ public:
                              TAO_AV_frame_info *frame_info = nullptr,
                              ACE_Addr const &address = ACE_Addr::sap_any);
 
-  // Called when a frame arrives for a FlowConsumer.
-
-  /// address from which the frame was received.
+  /// Called when a frame arrives for a FlowConsumer.
   virtual int receive_control_frame (ACE_Message_Block *frame,
                                      ACE_Addr const &address = ACE_Addr::sap_any);
 
@@ -162,8 +160,9 @@ public:
   /// get the policies for the protocol object.
   virtual TAO_AV_PolicyList get_policies ();
 protected:
-  TAO_AV_Protocol_Object *protocol_object_;
-  TAO_AV_Flow_Handler *handler_;
+  /// Non-owning protocol object and flow handler assigned by open().
+  TAO_AV_Protocol_Object *protocol_object_ {};
+  TAO_AV_Flow_Handler *handler_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

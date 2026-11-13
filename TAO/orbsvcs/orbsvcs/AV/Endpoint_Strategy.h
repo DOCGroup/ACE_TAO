@@ -108,13 +108,14 @@ protected:
   CosNaming::NamingContext_var naming_context_;
 
   /// Name and arguments for the process to be created
-  ACE_Process_Options *process_options_;
+  /// Non-owning process options supplied by the caller.
+  ACE_Process_Options *process_options_ {};
 
   /// name of this host used for resolving unique names.
   char host_[MAXHOSTNAMELEN];
 
   /// My child's process id.
-  pid_t pid_;
+  pid_t pid_ {-1};
 };
 
 

@@ -66,8 +66,8 @@ private:
   /// The Service Provider is currently null for all ACE_QoS values.
   static const iovec iov_;
 
-  /// NO_TRAFFIC flow spec used for sender receive QoS and receiver send QoS.
-  ACE_Flow_Spec *default_traffic_;
+  /// NO_TRAFFIC flow spec borrowed by ACE_QoS until the QoS call completes.
+  ACE_Flow_Spec default_traffic_;
 
   /// Flow specs indexed by flow spec name.
   FLOW_SPEC_HASH_MAP flow_spec_map_;

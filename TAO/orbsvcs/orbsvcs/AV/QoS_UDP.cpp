@@ -404,6 +404,8 @@ TAO_AV_UDP_QoS_Flow_Handler::change_qos (AVStreams::QoS new_qos)
                   ACE_QoS,
                   -1);
 
+  Fill_ACE_QoS fill_ace_qos;
+
   if (new_qos.QoSParams.length () != 0)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
@@ -418,8 +420,6 @@ TAO_AV_UDP_QoS_Flow_Handler::change_qos (AVStreams::QoS new_qos)
       this->translate (new_qos.QoSParams,
                        ace_flow_spec);
 
-
-      Fill_ACE_QoS fill_ace_qos;
 
       if (this->qos_session_->flags () == ACE_QoS_Session::ACE_QOS_SENDER)
         {

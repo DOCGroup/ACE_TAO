@@ -60,8 +60,7 @@ TAO_AV_Endpoint_Strategy::create_B (AVStreams::StreamEndPoint_B_ptr & /* stream_
 // ----------------------------------------------------------------------
 
 TAO_AV_Endpoint_Process_Strategy::TAO_AV_Endpoint_Process_Strategy (ACE_Process_Options *process_options)
-  : process_options_ (process_options),
-    pid_ (-1)
+  : process_options_ (process_options)
 {
   ACE_OS::hostname (this->host_,
                     sizeof this->host_);
