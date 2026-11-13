@@ -895,7 +895,7 @@ Routing_Slip::unmarshal (TAO_Notify_EventChannelFactory &ecf, TAO_InputCDR & cdr
       }
     }
   }
-  return this->delivery_requests_.size () > 0;
+  return !this->delivery_requests_.empty ();
 }
 
 void
