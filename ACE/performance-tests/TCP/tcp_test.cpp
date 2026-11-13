@@ -31,6 +31,7 @@
 #include "ace/OS_NS_unistd.h"
 
 #include <array>
+#include <cstring>
 #include <memory>
 
 // FUZZ: disable check_for_math_include
@@ -94,9 +95,9 @@ class Client : public ACE_Event_Handler
 public:
   explicit Client (ACE_INET_Addr const &remote_addr);
 
-  ~Client () override = default;
+  ~Client () override;
 
-  // = Override <ACE_Event_Handler> methods.
+  /// Overrides ACE_Event_Handler methods.
   ACE_HANDLE get_handle () const override;
   int handle_input (ACE_HANDLE) override;
   int handle_close (ACE_HANDLE handle,
@@ -151,6 +152,11 @@ Client::Client (ACE_INET_Addr const &remote_addr)
     }
 }
 
+Client::~Client ()
+{
+  this->endpoint_.close ();
+}
+
 ACE_HANDLE
 Client::get_handle () const
 {
@@ -171,8 +177,8 @@ Client::handle_input (ACE_HANDLE)
   else
     ACE_DEBUG ((LM_DEBUG,
                 "(%P|%t) buf of size %d = %*s\n",
-                n,
-                n,
+                static_cast<int> (n),
+                static_cast<int> (n),
                 buf.data ()));
 
   return 0;
@@ -201,8 +207,8 @@ Client::get_response (char *buf, size_t len)
 int
 Client::run ()
 {
-  ACE_OS::memset (sbuf.data (), 0, bufsz);
-  ACE_OS::memset (rbuf.data (), 0, bufsz);
+  std::memset (sbuf.data (), 0, bufsz);
+  std::memset (rbuf.data (), 0, bufsz);
 
   for (int j {}; j != 100; ++j)
     {
@@ -266,7 +272,7 @@ int
 Client::shutdown ()
 {
   char const buf {'S'};
-  int const n {static_cast<int> (this->endpoint_.send (&buf, 1u))};
+  int const n {static_cast<int> (this->endpoint_.send (std::addressof (buf), 1u))};
 
   if (use_reactor != Reactor_Type::NONE)
     {
@@ -289,7 +295,7 @@ public:
 
   ~Server () override;
 
-  // = Override <ACE_Event_Handler> methods.
+  /// Overrides ACE_Event_Handler methods.
   ACE_HANDLE get_handle () const override;
   int handle_input (ACE_HANDLE) override;
   int handle_close (ACE_HANDLE handle,
@@ -334,8 +340,8 @@ Server::Server (ACE_INET_Addr const &addr)
     {
       if (this->endpoint_.set_option (SOL_SOCKET,
                                       SO_SNDBUF,
-                                      (void *) &so_bufsz,
-                                      sizeof (so_bufsz)) == -1
+                                      std::addressof (so_bufsz),
+                                      static_cast<int> (sizeof so_bufsz)) == -1
           && errno != ENOTSUP)
         {
           ACE_ERROR ((LM_ERROR, "Server::Server: SO_SNDBUF %p\n",
@@ -348,8 +354,8 @@ Server::Server (ACE_INET_Addr const &addr)
     {
       if (this->endpoint_.set_option (SOL_SOCKET,
                                       SO_RCVBUF,
-                                      (void *) &so_bufsz,
-                                      sizeof (so_bufsz)) == -1
+                                      std::addressof (so_bufsz),
+                                      static_cast<int> (sizeof so_bufsz)) == -1
                && errno != ENOTSUP)
         {
           ACE_ERROR ((LM_ERROR, "Server::Server: SO_RCVBUF %p\n",
@@ -381,9 +387,10 @@ Server::handle_input (ACE_HANDLE)
   ssize_t const n {this->endpoint_.recv (buf.data (), bufsz)};
 
   if (n == -1)
-    ACE_DEBUG ((LM_ERROR,
-                "%p\n",
-                "handle_input: recv"));
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "handle_input: recv"),
+                      -1);
 
   // Send the message back as the response.
   if (this->endpoint_.send (buf.data (), n) == n)
@@ -646,10 +653,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       return run_server (addr);
     }
 
-  if ((u_int) bufsz < sizeof (ACE_hrtime_t))
+  if (static_cast<size_t> (bufsz) < sizeof (ACE_hrtime_t))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "\nbufsz must be >= %d\n",
+                         "\nbufsz must be >= %B\n",
                          sizeof (ACE_hrtime_t)),
                         1);
     }
@@ -658,9 +665,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   if (ACE_OS::ace_isdigit(argv[get_opt.opt_ind ()][0]))
     {
-      if (remote_addr.set (ACE_HTONS(dstport),
-                           (ACE_UINT32) ACE_OS::inet_addr
-                           (ACE_TEXT_ALWAYS_CHAR(argv[get_opt.opt_ind ()])), 0) == -1)
+      ACE_UINT32 const ip_address {
+        static_cast<ACE_UINT32> (
+          ACE_OS::inet_addr (
+            ACE_TEXT_ALWAYS_CHAR (argv[get_opt.opt_ind ()])))};
+      if (remote_addr.set (ACE_HTONS (dstport), ip_address, 0) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "invalid IP address: %s\n",
                            argv[get_opt.opt_ind ()]),

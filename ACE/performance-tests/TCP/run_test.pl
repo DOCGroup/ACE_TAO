@@ -8,7 +8,7 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
 
 $SV = new PerlACE::Process ("tcp_test", "-s");
-$CL = new PerlACE::Process ("tcp_test", "-c localhost -i 50000 -b 64");
+$CL = new PerlACE::Process ("tcp_test", "-c 127.0.0.1 -i 50000 -b 64");
 
 $status = 0;
 
