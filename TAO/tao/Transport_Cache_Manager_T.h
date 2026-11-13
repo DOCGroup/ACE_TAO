@@ -270,7 +270,7 @@ namespace TAO
     static int cpscmp(const void* a, const void* b);
 #endif
 
-    using DESCRIPTOR_SET = HASH_MAP_ENTRY**;
+    using DESCRIPTOR_SET = std::unique_ptr<HASH_MAP_ENTRY*[]>;
 
     /// Sort the list of entries
     void sort_set (DESCRIPTOR_SET& entries, int size);

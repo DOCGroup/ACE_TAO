@@ -744,9 +744,6 @@ namespace TAO
       DESCRIPTOR_SET sorted_set {};
       int const sorted_size = this->fill_set_i (sorted_set);
 
-      // Only call close_entries () if sorted_set != nullptr.  It takes
-      // control of sorted_set and cleans up any allocated memory.  If
-      // sorted_set == nullptr, then there is nothing to de-allocate.
       if (sorted_set != nullptr)
         {
           // BEGIN FORMER close_entries
@@ -802,8 +799,6 @@ namespace TAO
                 }
             }
 
-          delete [] sorted_set;
-          sorted_set = nullptr;
           // END FORMER close_entries
         }
     }
@@ -870,7 +865,7 @@ namespace TAO
           }
       }
 #else
-    ACE_OS::qsort (entries, current_size,
+    ACE_OS::qsort (entries.get (), current_size,
                    sizeof (HASH_MAP_ENTRY*), (ACE_COMPARE_FUNC)cpscmp);
 #endif /* ACE_LACKS_QSORT */
   }
@@ -901,7 +896,9 @@ namespace TAO
 
         if (current_size >= cache_maximum)
           {
-            ACE_NEW_RETURN (sorted_set, HASH_MAP_ENTRY*[current_size], 0);
+            HASH_MAP_ENTRY **buffer {};
+            ACE_NEW_RETURN (buffer, HASH_MAP_ENTRY*[current_size], 0);
+            sorted_set.reset (buffer);
 
             HASH_MAP_ITER iter = this->cache_map_.begin ();
 
