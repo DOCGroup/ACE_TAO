@@ -19,18 +19,17 @@
 
 #if defined (ACE_HAS_THREADS)
 
-namespace
-{
-  using Message_Block_Owner = ACE_Message_Block_Unique_Ptr;
-}
+using Message_Block_Owner = ACE_Message_Block_Unique_Ptr;
 
 using MT_Stream = ACE_Stream<ACE_MT_SYNCH>;
 using MT_Module = ACE_Module<ACE_MT_SYNCH>;
 using MT_Task = ACE_Task<ACE_MT_SYNCH>;
 
+/**
+ * @class Common_Task
+ * @brief Provides methods shared by the producer and consumer tasks.
+ */
 class Common_Task : public MT_Task
-  // = TITLE
-  //   Methods that are common to the producer and consumer.
 {
 public:
   Common_Task () = default;
@@ -39,15 +38,17 @@ public:
   Common_Task &operator= (Common_Task const &) = delete;
   Common_Task &operator= (Common_Task &&) = delete;
 
+  /// @name ACE_Task hooks
+  /// @{
+
   //FUZZ: disable check_for_lack_ACE_OS
-  // ACE_Task hooks
   int open (void * = nullptr) override;
   int close (u_long = 0) override;
   //FUZZ: enable check_for_lack_ACE_OS
+  /// @}
 };
 
-// Define the Producer interface.
-
+/// Reads standard input and passes messages to the consumer.
 class Producer : public Common_Task
 {
 public:
@@ -61,9 +62,11 @@ public:
   int svc () override;
 };
 
+/**
+ * @class Consumer
+ * @brief Queues output from the producer and writes it to standard output.
+ */
 class Consumer : public Common_Task
-  // = TITLE
-  //    Define the Consumer interface.
 {
 public:
   Consumer () = default;
@@ -72,22 +75,23 @@ public:
   Consumer &operator= (Consumer const &) = delete;
   Consumer &operator= (Consumer &&) = delete;
 
+  /// Enqueue a message for processing by svc().
   int put (ACE_Message_Block *mb,
            ACE_Time_Value *tv = nullptr) override;
-  // Enqueue the message on the ACE_Message_Queue for subsequent
-  // handling in the svc() method.
 
+  /// Receive messages from the producer and write them to standard output.
   int svc () override;
-  // Receive message from producer and print to stdout.
 
 private:
+  /// Timeout used while waiting for the next message.
   ACE_Time_Value timeout_ {};
 };
 
+/**
+ * @class Filter
+ * @brief Prepends a line number to each input line.
+ */
 class Filter : public MT_Task
-  // = TITLE
-  //    Defines a Filter that prepends a line number in front of each
-  //    line.
 {
 public:
   Filter () = default;
@@ -96,13 +100,13 @@ public:
   Filter &operator= (Filter const &) = delete;
   Filter &operator= (Filter &&) = delete;
 
+  /// Change the message size before passing it downstream.
   int put (ACE_Message_Block *mb,
            ACE_Time_Value *tv = nullptr) override;
-  // Change the size of the message before passing it downstream.
 
 private:
+  /// Number of lines passed through the filter.
   size_t count_ {1};
-  // Count the number of lines passing through the filter.
 };
 
 // Spawn off a new thread.

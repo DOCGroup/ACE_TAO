@@ -12,23 +12,20 @@
 
 #if defined (ACE_HAS_THREADS)
 
-namespace
+using Message_Block_Owner = ACE_Message_Block_Unique_Ptr;
+
+struct Allocated_Buffer_Release
 {
-  using Message_Block_Owner = ACE_Message_Block_Unique_Ptr;
+  ACE_Allocator *allocator {};
 
-  struct Allocated_Buffer_Release
+  void operator() (char *buffer) const
   {
-    ACE_Allocator *allocator {};
+    if (buffer != nullptr)
+      this->allocator->free (buffer);
+  }
+};
 
-    void operator() (char *buffer) const
-    {
-      if (buffer != nullptr)
-        this->allocator->free (buffer);
-    }
-  };
-
-  using Allocated_Buffer_Owner = std::unique_ptr<char, Allocated_Buffer_Release>;
-}
+using Allocated_Buffer_Owner = std::unique_ptr<char, Allocated_Buffer_Release>;
 
 // Global thread manager.
 static ACE_Thread_Manager thr_mgr;
