@@ -12,6 +12,8 @@
 #include <new>
 #include "ace/Sched_Params.h"
 
+#include <memory>
+
 //////////////////////////////////////////////
 // Helper function type definition for sort //
 //////////////////////////////////////////////
@@ -75,7 +77,9 @@ ACE_Strategy_Scheduler::assign_priorities (
 
   // Store the dispatch configuration for the highest priority level.
   Config_Info *config_ptr {};
+  std::unique_ptr<Config_Info> config_owner;
   ACE_NEW_RETURN (config_ptr, Config_Info, ST_VIRTUAL_MEMORY_EXHAUSTED);
+  config_owner.reset (config_ptr);
   config_ptr->preemption_priority = current_scheduler_priority;
   config_ptr->thread_priority = current_OS_priority;
   config_ptr->dispatching_type = strategy_.dispatch_type (*(dispatches[0]));
@@ -83,6 +87,8 @@ ACE_Strategy_Scheduler::assign_priorities (
   {
     return ST_VIRTUAL_MEMORY_EXHAUSTED;
   }
+  // The ACE set owns the pointer once insertion succeeds.
+  config_owner.release ();
 
   // Traverse ordered dispatch entry array, assigning priority
   // (array is sorted from highest to lowest priority).
@@ -139,6 +145,7 @@ ACE_Strategy_Scheduler::assign_priorities (
 
         // Store the dispatch configuration for the new priority level.
         ACE_NEW_RETURN(config_ptr, Config_Info, ST_VIRTUAL_MEMORY_EXHAUSTED);
+        config_owner.reset (config_ptr);
         config_ptr->preemption_priority = current_scheduler_priority;
         config_ptr->thread_priority = current_OS_priority;
         config_ptr->dispatching_type = strategy_.dispatch_type (*(dispatches[i]));
@@ -146,6 +153,8 @@ ACE_Strategy_Scheduler::assign_priorities (
         {
           return ST_VIRTUAL_MEMORY_EXHAUSTED;
         }
+        // The ACE set owns the pointer once insertion succeeds.
+        config_owner.release ();
 
                 break;
                 }
