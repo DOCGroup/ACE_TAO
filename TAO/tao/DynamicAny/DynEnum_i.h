@@ -40,6 +40,7 @@ public:
 
   ~TAO_DynEnum_i () override = default;
 
+  /// Use copy() or assign() instead of these.
   TAO_DynEnum_i (TAO_DynEnum_i const &src) = delete;
   TAO_DynEnum_i &operator= (TAO_DynEnum_i const &src) = delete;
   TAO_DynEnum_i (TAO_DynEnum_i &&) = delete;
@@ -51,7 +52,15 @@ public:
   /// Initialize using an Any.
   void init (CORBA::Any const& any);
 
+  /// @name LocalObject methods
+  /// @{
+
   static TAO_DynEnum_i *_narrow (CORBA::Object_ptr obj);
+
+  /// @}
+
+  /// @name Functions specific to DynEnum
+  /// @{
 
   char * get_as_string () override;
 
@@ -60,6 +69,11 @@ public:
   CORBA::ULong get_as_ulong () override;
 
   void set_as_ulong (CORBA::ULong value) override;
+
+  /// @}
+
+  /// @name DynAny common functions not implemented in TAO_DynCommon
+  /// @{
 
   void from_any (CORBA::Any const& value) override;
 
@@ -70,6 +84,8 @@ public:
   void destroy () override;
 
   DynamicAny::DynAny_ptr current_component () override;
+
+  /// @}
 
 private:
   // Called by both versions of init().

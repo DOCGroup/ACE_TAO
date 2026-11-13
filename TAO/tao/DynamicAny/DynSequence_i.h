@@ -41,6 +41,7 @@ public:
 
   ~TAO_DynSequence_i () override = default;
 
+  /// Use copy() or assign() instead of these.
   TAO_DynSequence_i (TAO_DynSequence_i const &src) = delete;
   TAO_DynSequence_i &operator= (TAO_DynSequence_i const &src) = delete;
   TAO_DynSequence_i (TAO_DynSequence_i &&) = delete;
@@ -52,7 +53,15 @@ public:
   /// Initialize using an Any.
   void init (CORBA::Any const& any);
 
+  /// @name LocalObject methods
+  /// @{
+
   static TAO_DynSequence_i *_narrow (CORBA::Object_ptr obj);
+
+  /// @}
+
+  /// @name Functions specific to DynSequence
+  /// @{
 
   CORBA::ULong get_length () override;
 
@@ -66,6 +75,11 @@ public:
 
   void set_elements_as_dyn_any (DynamicAny::DynAnySeq const& value) override;
 
+  /// @}
+
+  /// @name DynAny common functions not implemented in TAO_DynCommon
+  /// @{
+
   void from_any (CORBA::Any const& value) override;
 
   CORBA::Any * to_any () override;
@@ -75,6 +89,8 @@ public:
   void destroy () override;
 
   DynamicAny::DynAny_ptr current_component () override;
+
+  /// @}
 
 private:
   // Utility, turns the type of elements contained in the sequence.

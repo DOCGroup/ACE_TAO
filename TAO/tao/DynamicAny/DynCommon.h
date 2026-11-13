@@ -34,6 +34,10 @@ public:
   TAO_DynCommon &operator= (TAO_DynCommon const &) = delete;
   TAO_DynCommon (TAO_DynCommon &&) = delete;
   TAO_DynCommon &operator= (TAO_DynCommon &&) = delete;
+
+  /// @name Functions common to all Dynamic Any types
+  /// @{
+
   CORBA::TypeCode_ptr type () override;
 
   void assign (DynamicAny::DynAny_ptr dyn_any) override;
@@ -211,6 +215,8 @@ public:
 
   void container_is_destroying (CORBA::Boolean val);
   void ref_to_component (CORBA::Boolean val);
+
+  /// @}
 
 protected:
   /// Were we created by current_component()?

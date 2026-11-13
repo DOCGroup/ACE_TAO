@@ -37,6 +37,8 @@ public:
 
   ~TAO_DynValue_i () override = default;
 
+  /// These are not implemented!
+  /// Use copy() or assign() instead of these.
   TAO_DynValue_i (TAO_DynValue_i const &src) = delete;
   TAO_DynValue_i &operator= (TAO_DynValue_i const &src) = delete;
   TAO_DynValue_i (TAO_DynValue_i &&) = delete;
@@ -51,7 +53,15 @@ public:
   /// Initialize using just a TypeCode.
   void init (CORBA::TypeCode_ptr tc);
 
+  /// @name LocalObject methods
+  /// @{
+
   static TAO_DynValue_i *_narrow (CORBA::Object_ptr obj);
+
+  /// @}
+
+  /// @name Functions specific to DynValue
+  /// @{
 
   DynamicAny::FieldName current_member_name () override;
 
@@ -66,6 +76,11 @@ public:
   void set_members_as_dyn_any (
       DynamicAny::NameDynAnyPairSeq const& value) override;
 
+  /// @}
+
+  /// @name DynAny common functions not implemented in TAO_DynCommon
+  /// @{
+
   void from_any (CORBA::Any const& value) override;
 
   CORBA::Any * to_any () override;
@@ -76,11 +91,18 @@ public:
 
   DynamicAny::DynAny_ptr current_component () override;
 
+  /// @}
+
+  /// @name DynValueCommon methods
+  /// @{
+
   void insert_val (CORBA::ValueBase * value) override;
 
   CORBA::ValueBase * get_val () override;
 
   void set_to_value () override;
+
+  /// @}
 
 private:
   /// List of base types.

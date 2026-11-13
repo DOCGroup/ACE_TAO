@@ -41,6 +41,7 @@ public:
 
   ~TAO_DynArray_i () override = default;
 
+  /// Use copy() or assign() instead of these.
   TAO_DynArray_i (TAO_DynArray_i const &src) = delete;
   TAO_DynArray_i &operator= (TAO_DynArray_i const &src) = delete;
   TAO_DynArray_i (TAO_DynArray_i &&) = delete;
@@ -52,7 +53,15 @@ public:
   /// Initialize using an Any.
   void init (CORBA::Any const& any);
 
+  /// @name LocalObject methods
+  /// @{
+
   static TAO_DynArray_i *_narrow (CORBA::Object_ptr obj);
+
+  /// @}
+
+  /// @name Functions specific to DynArray
+  /// @{
 
   DynamicAny::AnySeq * get_elements () override;
 
@@ -61,6 +70,11 @@ public:
   DynamicAny::DynAnySeq * get_elements_as_dyn_any () override;
 
   void set_elements_as_dyn_any (DynamicAny::DynAnySeq const& value) override;
+
+  /// @}
+
+  /// @name DynAny common functions not implemented in TAO_DynCommon
+  /// @{
 
   void from_any (CORBA::Any const& value) override;
 
@@ -71,6 +85,8 @@ public:
   void destroy () override;
 
   DynamicAny::DynAny_ptr current_component () override;
+
+  /// @}
 
 private:
   /// Returns the type of elements contained in the array.

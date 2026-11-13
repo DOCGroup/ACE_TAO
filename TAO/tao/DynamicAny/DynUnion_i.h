@@ -39,6 +39,7 @@ public:
 
   ~TAO_DynUnion_i () override = default;
 
+  /// Use copy() or assign() instead of these.
   TAO_DynUnion_i (TAO_DynUnion_i const &src) = delete;
   TAO_DynUnion_i &operator= (TAO_DynUnion_i const &src) = delete;
   TAO_DynUnion_i (TAO_DynUnion_i &&) = delete;
@@ -50,7 +51,15 @@ public:
   /// Constructor taking a typecode argument.
   void init (CORBA::TypeCode_ptr tc);
 
+  /// @name LocalObject methods
+  /// @{
+
   static TAO_DynUnion_i *_narrow (CORBA::Object_ptr obj);
+
+  /// @}
+
+  /// @name Functions specific to DynUnion
+  /// @{
 
   DynamicAny::DynAny_ptr get_discriminator () override;
 
@@ -70,6 +79,11 @@ public:
 
   CORBA::TCKind member_kind () override;
 
+  /// @}
+
+  /// @name DynAny common functions not implemented in TAO_DynCommon
+  /// @{
+
   void from_any (CORBA::Any const& value) override;
 
   CORBA::Any * to_any () override;
@@ -79,6 +93,8 @@ public:
   void destroy () override;
 
   DynamicAny::DynAny_ptr current_component () override;
+
+  /// @}
 
 private:
   /// Code common to the constructor from an Any arg and the member

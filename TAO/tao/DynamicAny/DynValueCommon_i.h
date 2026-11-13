@@ -35,21 +35,32 @@ public:
 
   ~TAO_DynValueCommon_i () override = default;
 
+  /// Use copy() or assign() instead of these.
   TAO_DynValueCommon_i (TAO_DynValueCommon_i const &src) = delete;
   TAO_DynValueCommon_i &operator= (TAO_DynValueCommon_i const &src) = delete;
   TAO_DynValueCommon_i (TAO_DynValueCommon_i &&) = delete;
   TAO_DynValueCommon_i &operator= (TAO_DynValueCommon_i &&) = delete;
 
+  /// @name LocalObject methods
+  /// @{
+
   static TAO_DynValueCommon_i *_narrow (CORBA::Object_ptr obj);
+
+  /// @}
 
   /// Called by DynValue and DynValueBox init() functions.
   void init_common ();
+
+  /// @name Functions specific to DynValueCommon
+  /// @{
 
   CORBA::Boolean is_null () override;
 
   void set_to_null () override;
 
   void set_to_value () override = 0;
+
+  /// @}
 
 private:
   /// Check if the typecode is acceptable. Needs to be provided by DynValue or DynValueBox

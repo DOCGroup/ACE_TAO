@@ -41,6 +41,7 @@ public:
 
   ~TAO_DynStruct_i () override = default;
 
+  /// Use copy() or assign() instead of these.
   TAO_DynStruct_i (TAO_DynStruct_i const &src) = delete;
   TAO_DynStruct_i &operator= (TAO_DynStruct_i const &src) = delete;
   TAO_DynStruct_i (TAO_DynStruct_i &&) = delete;
@@ -52,7 +53,15 @@ public:
   /// Initialize using an Any.
   void init (CORBA::Any const& any);
 
+  /// @name LocalObject methods
+  /// @{
+
   static TAO_DynStruct_i *_narrow (CORBA::Object_ptr obj);
+
+  /// @}
+
+  /// @name Functions specific to DynStruct
+  /// @{
 
   DynamicAny::FieldName current_member_name () override;
 
@@ -67,6 +76,11 @@ public:
   void set_members_as_dyn_any (
       DynamicAny::NameDynAnyPairSeq const& value) override;
 
+  /// @}
+
+  /// @name DynAny common functions not implemented in TAO_DynCommon
+  /// @{
+
   void from_any (CORBA::Any const& value) override;
 
   CORBA::Any * to_any () override;
@@ -76,6 +90,8 @@ public:
   void destroy () override;
 
   DynamicAny::DynAny_ptr current_component () override;
+
+  /// @}
 
 private:
   /// Check if the typecode is acceptable.

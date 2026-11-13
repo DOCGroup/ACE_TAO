@@ -35,6 +35,7 @@ public:
 
   ~TAO_DynValueBox_i () override = default;
 
+  /// Use copy() or assign() instead of these.
   TAO_DynValueBox_i (TAO_DynValueBox_i const &src) = delete;
   TAO_DynValueBox_i &operator= (TAO_DynValueBox_i const &src) = delete;
   TAO_DynValueBox_i (TAO_DynValueBox_i &&) = delete;
@@ -46,7 +47,15 @@ public:
   /// Initialize using an Any.
   void init (CORBA::Any const& any);
 
+  /// @name LocalObject methods
+  /// @{
+
   static TAO_DynValueBox_i *_narrow (CORBA::Object_ptr obj);
+
+  /// @}
+
+  /// @name Functions specific to DynValueBox
+  /// @{
 
   CORBA::Any * get_boxed_value () override;
 
@@ -55,6 +64,11 @@ public:
   DynamicAny::DynAny_ptr get_boxed_value_as_dyn_any () override;
 
   void set_boxed_value_as_dyn_any (DynamicAny::DynAny_ptr boxed) override;
+
+  /// @}
+
+  /// @name DynAny common functions not implemented in TAO_DynCommon
+  /// @{
 
   void from_any (CORBA::Any const& value) override;
 
@@ -66,7 +80,14 @@ public:
 
   DynamicAny::DynAny_ptr current_component () override;
 
+  /// @}
+
+  /// @name DynValueCommon methods
+  /// @{
+
   void set_to_value () override;
+
+  /// @}
 
 private:
   /// Check if the typecode is acceptable.
