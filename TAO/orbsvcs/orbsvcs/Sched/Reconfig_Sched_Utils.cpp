@@ -901,11 +901,11 @@ TAO_Reconfig_Sched_Strategy_Base::comp_entry_finish_times (void const *first, vo
     * reinterpret_cast<TAO_Reconfig_Scheduler_Entry const * const *> (second);
 
   // sort blank entries to the end
-  if (! first_entry)
+  if (first_entry == nullptr)
   {
-    return (second_entry) ? 1 : 0;
+    return second_entry != nullptr ? 1 : 0;
   }
-  else if (! second_entry)
+  else if (second_entry == nullptr)
   {
     return -1;
   }

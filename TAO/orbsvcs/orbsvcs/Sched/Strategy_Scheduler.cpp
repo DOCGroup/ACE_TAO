@@ -698,7 +698,7 @@ ACE_MUF_Scheduler_Strategy *ACE_MUF_Scheduler_Strategy::instance_ {};
 ACE_MUF_Scheduler_Strategy *
 ACE_MUF_Scheduler_Strategy::instance ()
 {
-  if (nullptr == ACE_MUF_Scheduler_Strategy::instance_)
+  if (ACE_MUF_Scheduler_Strategy::instance_ == nullptr)
   {
     ACE_NEW_RETURN (ACE_MUF_Scheduler_Strategy::instance_,
                     ACE_MUF_Scheduler_Strategy, nullptr);
@@ -847,7 +847,7 @@ ACE_RMS_Scheduler_Strategy *ACE_RMS_Scheduler_Strategy::instance_ {};
 ACE_RMS_Scheduler_Strategy *
 ACE_RMS_Scheduler_Strategy::instance ()
 {
-  if (nullptr == ACE_RMS_Scheduler_Strategy::instance_)
+  if (ACE_RMS_Scheduler_Strategy::instance_ == nullptr)
   {
     ACE_NEW_RETURN (ACE_RMS_Scheduler_Strategy::instance_,
                     ACE_RMS_Scheduler_Strategy, nullptr);
@@ -968,7 +968,7 @@ ACE_MLF_Scheduler_Strategy *ACE_MLF_Scheduler_Strategy::instance_ {};
 ACE_MLF_Scheduler_Strategy *
 ACE_MLF_Scheduler_Strategy::instance ()
 {
-  if (nullptr == ACE_MLF_Scheduler_Strategy::instance_)
+  if (ACE_MLF_Scheduler_Strategy::instance_ == nullptr)
   {
     ACE_NEW_RETURN (ACE_MLF_Scheduler_Strategy::instance_,
                     ACE_MLF_Scheduler_Strategy, nullptr);
@@ -1091,7 +1091,7 @@ ACE_EDF_Scheduler_Strategy *ACE_EDF_Scheduler_Strategy::instance_ {};
 ACE_EDF_Scheduler_Strategy *
 ACE_EDF_Scheduler_Strategy::instance ()
 {
-  if (nullptr == ACE_EDF_Scheduler_Strategy::instance_)
+  if (ACE_EDF_Scheduler_Strategy::instance_ == nullptr)
   {
     ACE_NEW_RETURN (ACE_EDF_Scheduler_Strategy::instance_,
                     ACE_EDF_Scheduler_Strategy, nullptr);
@@ -1208,7 +1208,7 @@ ACE_Criticality_Scheduler_Strategy::instance_ {};
 ACE_Criticality_Scheduler_Strategy *
 ACE_Criticality_Scheduler_Strategy::instance ()
 {
-  if (nullptr == ACE_Criticality_Scheduler_Strategy::instance_)
+  if (ACE_Criticality_Scheduler_Strategy::instance_ == nullptr)
   {
     ACE_NEW_RETURN (ACE_Criticality_Scheduler_Strategy::instance_,
                     ACE_Criticality_Scheduler_Strategy, nullptr);

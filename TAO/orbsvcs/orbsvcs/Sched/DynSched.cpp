@@ -33,11 +33,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 extern "C" int compare_entry_finish_times (void const *first, void const *second)
 {
   // sort blank entries to the end
-  if (! first)
+  if (first == nullptr)
   {
-    return (second) ? 1 : 0;
+    return second != nullptr ? 1 : 0;
   }
-  else if (! second)
+  else if (second == nullptr)
   {
     return -1;
   }
@@ -48,11 +48,11 @@ extern "C" int compare_entry_finish_times (void const *first, void const *second
           * static_cast<Task_Entry const * const *> (second);
 
   // sort blank entries to the end
-  if (! first_entry)
+  if (first_entry == nullptr)
   {
-    return (second_entry) ? 1 : 0;
+    return second_entry != nullptr ? 1 : 0;
   }
-  else if (! second_entry)
+  else if (second_entry == nullptr)
   {
     return -1;
   }
@@ -236,7 +236,7 @@ ACE_DynScheduler::register_task (RT_Info *rt_info, handle_t &handle)
   ACE_DynScheduler::status_t ret = ST_UNKNOWN_TASK;
 
   // check the pointer we were passed
-  if (! rt_info)
+  if (rt_info == nullptr)
   {
     handle = 0;
     return ret;
@@ -1396,7 +1396,7 @@ ACE_DynScheduler::relate_task_entries_recurse (long &time, Task_Entry &entry)
       RT_Info* dependency_info {};
       lookup_rt_info(entry.rt_info ()->dependencies[i].rt_info, dependency_info);
 
-      if (! dependency_info)
+      if (dependency_info == nullptr)
       {
         return ST_BAD_INTERNAL_POINTER;
       }
@@ -1409,7 +1409,7 @@ ACE_DynScheduler::relate_task_entries_recurse (long &time, Task_Entry &entry)
       Task_Entry *dependency_entry_ptr =
         ACE_LONGLONG_TO_PTR (Task_Entry *, dependency_info->volatile_token);
 
-      if (! dependency_entry_ptr)
+      if (dependency_entry_ptr == nullptr)
       {
         return ST_BAD_INTERNAL_POINTER;
       }
@@ -2309,7 +2309,7 @@ ACE_DynScheduler::output_timeline (char const *filename, char const *heading)
   {
     // open the file
     file = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(filename), ACE_TEXT("w"));
-    if (! file)
+    if (file == nullptr)
     {
       status = UNABLE_TO_OPEN_SCHEDULE_FILE;
       ORBSVCS_ERROR ((LM_ERROR,

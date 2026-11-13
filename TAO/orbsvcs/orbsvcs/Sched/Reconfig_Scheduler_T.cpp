@@ -252,7 +252,7 @@ init (int config_count,
       new_rt_info = create_i (rt_info [num_rt_infos].entry_point,
                               rt_info [num_rt_infos].handle, 1);
 
-      if (new_rt_info == 0)
+      if (new_rt_info == nullptr)
         {
           throw RtecScheduler::INTERNAL ();
         }
@@ -524,7 +524,7 @@ set (::RtecScheduler::handle_t handle,
       throw RtecScheduler::UNKNOWN_TASK ();
     }
 
-  if (rt_info_ptr == 0)
+  if (rt_info_ptr == nullptr)
     {
       throw RtecScheduler::INTERNAL ();
     }
@@ -579,7 +579,7 @@ reset (RtecScheduler::handle_t handle,
     {
       throw RtecScheduler::UNKNOWN_TASK ();
     }
-  if (rt_info_ptr == 0)
+  if (rt_info_ptr == nullptr)
     {
       throw RtecScheduler::INTERNAL ();
     }
@@ -640,7 +640,7 @@ set_seq (RtecScheduler::RT_Info_Set const & infos)
           throw RtecScheduler::UNKNOWN_TASK ();
         }
 
-      if (rt_info_ptr == 0)
+      if (rt_info_ptr == nullptr)
         {
           throw RtecScheduler::INTERNAL ();
         }
@@ -724,8 +724,8 @@ reset_seq (RtecScheduler::RT_Info_Set const & infos)
           throw RtecScheduler::UNKNOWN_TASK ();
         }
 
-      if (rt_info_ptr == 0)
-    {
+      if (rt_info_ptr == nullptr)
+        {
           throw RtecScheduler::INTERNAL ();
         }
 
@@ -773,7 +773,7 @@ replace_seq (RtecScheduler::RT_Info_Set const & infos)
     {
       // Get a pointer to each registered RT_Info.
       rt_info_ptr = (*info_iter).int_id_;
-      if (! rt_info_ptr)
+      if (rt_info_ptr == nullptr)
         {
           throw RtecScheduler::INTERNAL ();
         }
@@ -808,10 +808,10 @@ replace_seq (RtecScheduler::RT_Info_Set const & infos)
       if (rt_info_map_.find (infos[i].handle, rt_info_ptr) != 0)
         {
           throw RtecScheduler::UNKNOWN_TASK ();
-    }
+        }
 
-      if (rt_info_ptr == 0)
-    {
+      if (rt_info_ptr == nullptr)
+        {
           throw RtecScheduler::INTERNAL ();
         }
 
@@ -1043,7 +1043,7 @@ set_rt_info_enable_state (RtecScheduler::handle_t handle,
       throw RtecScheduler::UNKNOWN_TASK ();
     }
 
-  if (rt_info_ptr == 0)
+  if (rt_info_ptr == nullptr)
     {
       throw RtecScheduler::INTERNAL ();
     }
@@ -1077,7 +1077,7 @@ set_rt_info_enable_state_seq (RtecScheduler::RT_Info_Enable_State_Pair_Set const
           throw RtecScheduler::UNKNOWN_TASK ();
         }
 
-      if (rt_info_ptr == 0)
+      if (rt_info_ptr == nullptr)
         {
           throw RtecScheduler::INTERNAL ();
         }
@@ -1248,7 +1248,7 @@ recompute_scheduling (CORBA::Long /* minimum_priority */,
 
   // @@ TODO: record any scheduling anomalies in a set within the scheduler,
   //          storing the maximum severity level recorded so far.
-  if (anomalies.ptr () == 0)
+  if (anomalies.ptr () == nullptr)
     {
       ACE_NEW_THROW_EX (anomalies,
                         RtecScheduler::Scheduling_Anomaly_Set (0),
@@ -1285,7 +1285,7 @@ get_rt_info_set (RtecScheduler::RT_Info_Set_out infos)
 {
   // return the set of scheduled RT_Infos
 
-  if (infos.ptr () == 0)
+  if (infos.ptr () == nullptr)
     {
       ACE_NEW_THROW_EX (infos,
                         RtecScheduler::RT_Info_Set (this->rt_info_count_),
@@ -1317,7 +1317,7 @@ get_dependency_set (RtecScheduler::Dependency_Set_out dependencies)
 {
   // Return the set of dependencies: just need to iterate over one of the maps.
 
-  if (dependencies.ptr () == 0)
+  if (dependencies.ptr () == nullptr)
     {
       dependencies = new RtecScheduler::Dependency_Set (this->dependency_count_);
     }
@@ -1358,7 +1358,7 @@ get_config_info_set (RtecScheduler::Config_Info_Set_out configs)
 {
   // Return the set of scheduled Config_Infos.
 
-  if (configs.ptr () == 0)
+  if (configs.ptr () == nullptr)
     {
       ACE_NEW_THROW_EX (configs,
                         RtecScheduler::Config_Info_Set(this->
@@ -1462,7 +1462,7 @@ get_config_infos (RtecScheduler::Config_Info_Set_out configs)
     }
 
   // return the set of Config_Infos
-  if (configs.ptr () == 0)
+  if (configs.ptr () == nullptr)
     {
       ACE_NEW_THROW_EX (configs,
                         RtecScheduler::Config_Info_Set(this->config_info_count_),
@@ -1652,7 +1652,7 @@ set_i (TAO_RT_Info_Ex *rt_info,
         ACE_LONGLONG_TO_PTR (TAO_Reconfig_Scheduler_Entry *,
                              rt_info->volatile_token);
 //      ORBSVCS_DEBUG((LM_DEBUG, "Updating or inserting tuple for RT_Info: %d, entry_ptr: %x\n", rt_info->handle, rse_ptr));
-      if (rse_ptr == 0)
+      if (rse_ptr == nullptr)
         {
           throw RtecScheduler::INTERNAL ();
         }

@@ -257,7 +257,7 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
        anomaly_iter.next (anomaly);
        anomaly_iter.advance (), ++anomaly_index)
     {
-      if (nullptr == *anomaly)
+      if (*anomaly == nullptr)
         {
           // if for some reason we stored a null anomaly pointer,
           // just give default values to that entry in the sequence.
