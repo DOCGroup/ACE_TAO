@@ -800,14 +800,11 @@ public:
   using concurrency_strategy_type = ACE_Concurrency_Strategy<SVC_HANDLER>;
   using recycling_strategy_type = ACE_Recycling_Strategy<SVC_HANDLER>;
 
-  // = Define some useful (old style) traits.
   using CREATION_STRATEGY = ACE_Creation_Strategy<SVC_HANDLER>;
   using CONCURRENCY_STRATEGY = ACE_Concurrency_Strategy<SVC_HANDLER>;
   using RECYCLING_STRATEGY = ACE_Recycling_Strategy<SVC_HANDLER>;
 
-  // = Super class
   using CONNECT_STRATEGY = ACE_Connect_Strategy<SVC_HANDLER, _ACE_PEER_CONNECTOR>;
-
 
   using SELF = ACE_Cached_Connect_Strategy<SVC_HANDLER, _ACE_PEER_CONNECTOR, MUTEX>;
 
@@ -818,6 +815,11 @@ public:
                                bool delete_lock = false);
 
   ~ACE_Cached_Connect_Strategy () override;
+
+  ACE_Cached_Connect_Strategy (ACE_Cached_Connect_Strategy const &) = delete;
+  ACE_Cached_Connect_Strategy &operator= (ACE_Cached_Connect_Strategy const &) = delete;
+  ACE_Cached_Connect_Strategy (ACE_Cached_Connect_Strategy &&) = delete;
+  ACE_Cached_Connect_Strategy &operator= (ACE_Cached_Connect_Strategy &&) = delete;
 
   /// This methods allow you to change the strategies used by the
   /// cached connector.
@@ -891,11 +893,10 @@ public:
    */
   int mark_as_closed_i (const void *recycling_act) override;
 
-  /// Cleanup hint and reset <*act_holder> to zero if <act_holder != 0>.
+  /// Cleanup hint and reset <*act_holder> to nullptr if <act_holder != nullptr>.
   int cleanup_hint (const void *recycling_act,
                             void **act_holder = nullptr) override;
 
-  // = Traits for managing the map
   using REFCOUNTED_HASH_RECYCLABLE_ADDRESS = ARHR<typename _ACE_PEER_CONNECTOR::PEER_ADDR>;
   using CONNECTION_MAP = ACE_Hash_Map_Manager_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDRESS, SVC_HANDLER *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>, ACE_Null_Mutex>;
 
@@ -904,7 +905,6 @@ public:
 
   using REVERSE_MUTEX = ACE_Reverse_Lock<MUTEX>;
 
-  // = Strategy accessors
   virtual ACE_Creation_Strategy<SVC_HANDLER> *creation_strategy () const;
   virtual ACE_Recycling_Strategy<SVC_HANDLER> *recycling_strategy () const;
   virtual ACE_Concurrency_Strategy<SVC_HANDLER> *concurrency_strategy () const;
@@ -936,11 +936,10 @@ protected:
   /// Get <recycle_state> (non-locking version).
   virtual ACE_Recyclable_State recycle_state_i (const void *recycling_act) const;
 
-  /// Cleanup hint and reset <*act_holder> to zero if <act_holder != 0>.
+  /// Cleanup hint and reset <*act_holder> to nullptr if <act_holder != nullptr>.
   virtual int cleanup_hint_i (const void *recycling_act,
                               void **act_holder);
 
-  // = Helpers
   int check_hint_i (SVC_HANDLER *&sh,
                     const ACE_PEER_CONNECTOR_ADDR &remote_addr,
                     ACE_Time_Value *timeout,
@@ -982,8 +981,6 @@ protected:
 
   /// Reverse lock.
   REVERSE_MUTEX *reverse_lock_;
-
-  // = Strategy objects.
 
   /// Creation strategy for an <Connector>.
   CREATION_STRATEGY *creation_strategy_;
