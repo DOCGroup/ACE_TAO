@@ -28,11 +28,16 @@ public:
 
   ~TAO_Async_Table_Adapter () override = default;
 
+  /// @name TAO_Adapter methods
+  /// @{
+
   void open () override;
 
   int dispatch (TAO::ObjectKey &key,
                 TAO_ServerRequest &request,
                 CORBA::Object_out foward_to) override;
+
+  /// @}
 
   TAO_Async_Table_Adapter (TAO_Async_Table_Adapter const &) = delete;
   TAO_Async_Table_Adapter &operator= (TAO_Async_Table_Adapter const &) = delete;

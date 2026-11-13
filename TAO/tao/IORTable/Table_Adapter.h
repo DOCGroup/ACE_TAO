@@ -33,6 +33,9 @@ public:
 
   ~TAO_Table_Adapter () override = default;
 
+  /// @name TAO_Adapter methods
+  /// @{
+
   void open () override;
   void close (int wait_for_completion) override;
   void check_close (int wait_for_completion) override;
@@ -47,6 +50,8 @@ public:
                                               TAO_MProfile const &) override;
 
   CORBA::Long initialize_collocated_object (TAO_Stub *stub) override;
+
+  /// @}
 
   TAO_Table_Adapter (TAO_Table_Adapter const &) = delete;
   TAO_Table_Adapter &operator= (TAO_Table_Adapter const &) = delete;
