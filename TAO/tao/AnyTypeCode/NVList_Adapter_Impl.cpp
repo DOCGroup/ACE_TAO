@@ -4,8 +4,6 @@
 #include "tao/SystemException.h"
 #include "ace/CORBA_macros.h"
 
-#include <memory>
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
@@ -23,9 +21,7 @@ TAO_NVList_Adapter_Impl::create_list (
                         0,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-  std::unique_ptr<CORBA::NVList, void (*) (CORBA::NVList *)> list_owner (
-    list,
-    [] (CORBA::NVList *value) { value->_decr_refcount (); });
+  CORBA::NVList_var list_owner (list);
 
   // If count is greater than 0, create a list of NamedValues.
   if (count != 0)
@@ -43,22 +39,20 @@ TAO_NVList_Adapter_Impl::create_list (
                                 ENOMEM),
                               CORBA::COMPLETED_NO));
 
-          std::unique_ptr<CORBA::NamedValue, void (*) (CORBA::NamedValue *)> nv_owner (
-            nv,
-            [] (CORBA::NamedValue *value) { value->_decr_refcount (); });
+          CORBA::NamedValue_var nv_owner (nv);
 
-          if (list->values_.enqueue_tail (nv) == -1)
+          if (list->values_.enqueue_tail (nv_owner.in ()) == -1)
             {
               throw CORBA::NO_MEMORY (
                 CORBA::SystemException::_tao_minor_code (0, ENOMEM),
                 CORBA::COMPLETED_NO);
             }
 
-          nv_owner.release ();
+          (void) nv_owner._retn ();
         }
     }
 
-  new_list = list_owner.release ();
+  new_list = list_owner._retn ();
 }
 
 void
