@@ -45,6 +45,9 @@ class TAO_Condition
 public:
   using LOCK = MUTEX;
 
+  /// @name Initialization and termination
+  /// @{
+
   /// Initialize the condition variable.
   explicit TAO_Condition (MUTEX &m);
 
@@ -54,6 +57,11 @@ public:
 
   /// Implicitly destroy the condition variable.
   ~TAO_Condition ();
+
+  /// @}
+
+  /// @name Wait and signal operations
+  /// @{
 
   /**
    * Block on condition, or until absolute time-of-day has passed.  If
@@ -82,11 +90,18 @@ public:
   /// Signal *all* waiting threads.
   int broadcast ();
 
+  /// @}
+
+  /// @name Utility methods
+  /// @{
+
   /// Explicitly destroy the condition variable.
   int remove ();
 
   /// Returns a reference to the underlying mutex_;
   MUTEX *mutex ();
+
+  /// @}
 
 private:
   TAO_Condition (TAO_Condition<MUTEX> const &) = delete;
