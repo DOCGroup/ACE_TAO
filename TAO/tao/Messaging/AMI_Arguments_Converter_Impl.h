@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_AMI_ARGUMENTS_CONVERTER_IMPL_H
 #define TAO_AMI_ARGUMENTS_CONVERTER_IMPL_H
 
@@ -26,7 +25,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-
 /**
  * @class TAO_AMI_Arguments_Converter_Impl
  *
@@ -39,6 +37,13 @@ class TAO_Messaging_Export TAO_AMI_Arguments_Converter_Impl
   : public TAO::Collocated_Arguments_Converter
 {
 public:
+  TAO_AMI_Arguments_Converter_Impl () = default;
+
+  TAO_AMI_Arguments_Converter_Impl (TAO_AMI_Arguments_Converter_Impl const &) = delete;
+  TAO_AMI_Arguments_Converter_Impl &operator= (TAO_AMI_Arguments_Converter_Impl const &) = delete;
+  TAO_AMI_Arguments_Converter_Impl (TAO_AMI_Arguments_Converter_Impl &&) = delete;
+  TAO_AMI_Arguments_Converter_Impl &operator= (TAO_AMI_Arguments_Converter_Impl &&) = delete;
+
   void convert_request (TAO_ServerRequest & server_request,
                         TAO::Argument * const args[],
                         size_t nargs) override;
@@ -72,5 +77,4 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include /**/ "ace/post.h"
 
 #endif /* TAO_AMI_ARGUMENTS_CONVERTER_IMPL_H */
-
 

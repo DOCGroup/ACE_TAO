@@ -38,6 +38,13 @@ class TAO_Messaging_ORBInitializer
     public virtual ::CORBA::LocalObject
 {
 public:
+  TAO_Messaging_ORBInitializer () = default;
+
+  TAO_Messaging_ORBInitializer (TAO_Messaging_ORBInitializer const &) = delete;
+  TAO_Messaging_ORBInitializer &operator= (TAO_Messaging_ORBInitializer const &) = delete;
+  TAO_Messaging_ORBInitializer (TAO_Messaging_ORBInitializer &&) = delete;
+  TAO_Messaging_ORBInitializer &operator= (TAO_Messaging_ORBInitializer &&) = delete;
+
   /**
    * @name PortableInterceptor::ORBInitializer Methods
    *

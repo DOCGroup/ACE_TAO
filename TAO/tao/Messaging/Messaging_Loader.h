@@ -28,11 +28,14 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Messaging_Export TAO_Messaging_Loader : public ACE_Service_Object
 {
 public:
-  /// Constructor.
   TAO_Messaging_Loader () = default;
 
-  /// Destructor.
   ~TAO_Messaging_Loader () override;
+
+  TAO_Messaging_Loader (TAO_Messaging_Loader const &) = delete;
+  TAO_Messaging_Loader &operator= (TAO_Messaging_Loader const &) = delete;
+  TAO_Messaging_Loader (TAO_Messaging_Loader &&) = delete;
+  TAO_Messaging_Loader &operator= (TAO_Messaging_Loader &&) = delete;
 
   /// Initialize the Messaging loader hooks.
   int init (int argc, ACE_TCHAR* []) override;
@@ -41,7 +44,6 @@ private:
   /// Set to true after init is called.
   bool initialized_ {};
 };
-
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_Messaging, TAO_Messaging_Loader)
 ACE_FACTORY_DECLARE (TAO_Messaging, TAO_Messaging_Loader)

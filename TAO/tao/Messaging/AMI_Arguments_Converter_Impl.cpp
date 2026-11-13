@@ -66,7 +66,7 @@ TAO_AMI_Arguments_Converter_Impl::convert_reply (
     {
       TAO_OutputCDR output;
       errno = 0;
-      for (CORBA::ULong j = 0; j < nargs; ++j)
+      for (CORBA::ULong j {}; j < nargs; ++j)
         {
           if (!(args[j]->marshal (output)))
             {

@@ -14,7 +14,7 @@ namespace TAO
   ExceptionHolder::ExceptionHolder (
       ::CORBA::Boolean is_system_exception,
       ::CORBA::Boolean byte_order,
-      const ::CORBA::OctetSeq &marshaled_exception,
+      ::CORBA::OctetSeq const &marshaled_exception,
       ::TAO::Exception_Data* data,
       ::CORBA::ULong exceptions_count,
       ACE_Char_Codeset_Translator *char_translator,
@@ -39,7 +39,8 @@ namespace TAO
 
   void ExceptionHolder::raise_exception ()
     {
-      TAO_InputCDR _tao_in ((const char*) this->marshaled_exception ().get_buffer (),
+      TAO_InputCDR _tao_in (reinterpret_cast<char const *> (
+                                this->marshaled_exception ().get_buffer ()),
                             this->marshaled_exception ().length (),
                             this->byte_order ());
 
@@ -57,8 +58,8 @@ namespace TAO
 
       if (this->is_system_exception ())
         {
-          CORBA::ULong minor = 0;
-          CORBA::ULong completion = 0;
+          CORBA::ULong minor {};
+          CORBA::ULong completion {};
           if (!(_tao_in >> minor) ||
               !(_tao_in >> completion))
             {
@@ -87,7 +88,7 @@ namespace TAO
       // Match the exception interface repository id with the
       // exception in the exception list.
       // This is important to decode the exception.
-      for (CORBA::ULong i = 0; i != this->count_; ++i)
+      for (CORBA::ULong i {}; i != this->count_; ++i)
         {
           if (this->data_[i].id.compare(type_id.in ()) != 0)
             continue;
@@ -120,7 +121,7 @@ namespace TAO
     }
 
   void ExceptionHolder::raise_exception_with_list (
-      const ::Dynamic::ExceptionList &)
+      ::Dynamic::ExceptionList const &)
     {
       // todo convert exceptionlist to something we can really use.
       this->raise_exception ();
@@ -129,7 +130,7 @@ namespace TAO
   CORBA::ValueBase*
   ExceptionHolder::_copy_value ()
   {
-    TAO::ExceptionHolder* ret_val = nullptr;
+    TAO::ExceptionHolder* ret_val {};
     ACE_NEW_THROW_EX (ret_val,
                       ExceptionHolder,
                       CORBA::NO_MEMORY ());
@@ -147,7 +148,7 @@ namespace TAO
   CORBA::ValueBase *
   ExceptionHolderFactory::create_for_unmarshal ()
   {
-    TAO::ExceptionHolder* ret_val = nullptr;
+    TAO::ExceptionHolder* ret_val {};
     ACE_NEW_THROW_EX (ret_val,
                       ExceptionHolder,
                       CORBA::NO_MEMORY ());
