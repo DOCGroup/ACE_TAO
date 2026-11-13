@@ -226,6 +226,28 @@ directly_recursive_valuetype_test (CORBA::ORB_ptr /* orb */,
               ACE_TEXT ("  Currently unimplemented.\n")));
 }
 
+static void
+any_var_assignment_test ()
+{
+  CORBA::Any_var value {new CORBA::Any};
+  CORBA::Any * const original = value.ptr ();
+
+  value = value;
+  if (value.ptr () != original)
+    {
+      throw Test::Recursive_Type_In_Any_Test_Failed ();
+    }
+
+  CORBA::Any_var copy {new CORBA::Any};
+  CORBA::Any * const old_copy = copy.ptr ();
+  copy = value;
+
+  if (copy.ptr () == old_copy || copy.ptr () == value.ptr ())
+    {
+      throw Test::Recursive_Type_In_Any_Test_Failed ();
+    }
+}
+
 #if TAO_HAS_MINIMUM_CORBA == 0
 
 static void
@@ -340,6 +362,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       using Test_Function = void (*) (CORBA::ORB_ptr,
                                       Test::Hello_ptr);
+
+      any_var_assignment_test ();
 
       static Test_Function const tests[] =
         {

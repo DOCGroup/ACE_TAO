@@ -15,6 +15,7 @@
 #include "ace/OS_NS_wchar.h"
 #include "ace/OS_Memory.h"
 #include <cstring>
+#include <memory>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/AnyTypeCode/Any.inl"
@@ -221,14 +222,18 @@ CORBA::Any_var::operator= (CORBA::Any *p)
 CORBA::Any_var &
 CORBA::Any_var::operator= (CORBA::Any_var const &r)
 {
-  delete this->ptr_;
-  this->ptr_ = nullptr;
-
-  if (r.ptr_)
+  if (this != std::addressof (r))
     {
-      ACE_NEW_RETURN (this->ptr_,
-                      CORBA::Any (*r.ptr_),
-                      *this);
+      CORBA::Any *copy {};
+      if (r.ptr_)
+        {
+          ACE_NEW_RETURN (copy,
+                          CORBA::Any (*r.ptr_),
+                          *this);
+        }
+
+      delete this->ptr_;
+      this->ptr_ = copy;
     }
 
   return *this;
