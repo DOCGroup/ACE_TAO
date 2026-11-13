@@ -47,7 +47,7 @@ public:
   int keep_alive_;
   int dont_route_;
   int no_delay_;
-  CORBA::Boolean enable_network_priority_;
+  CORBA::Boolean enable_network_priority_ {};
   CORBA::Long hop_limit_;
 };
 
@@ -82,9 +82,9 @@ public:
 
   CORBA::Long send_buffer_size_;
   CORBA::Long recv_buffer_size_;
-  CORBA::Boolean enable_network_priority_;
+  CORBA::Boolean enable_network_priority_ {};
   CORBA::Long hop_limit_;
-  CORBA::Boolean enable_multicast_loop_;
+  CORBA::Boolean enable_multicast_loop_ {true};
 };
 
 class TAO_Export TAO_SCIOP_Protocol_Properties
@@ -97,7 +97,7 @@ public:
   int keep_alive_;
   int dont_route_;
   int no_delay_;
-  CORBA::Boolean enable_network_priority_;
+  CORBA::Boolean enable_network_priority_ {};
   CORBA::Long hop_limit_;
 };
 

@@ -558,7 +558,7 @@ namespace CORBA
     TAO_ORB_Core * orb_core_;
 
     /// Decides whether to use the URL notation or to use IOR notation.
-    CORBA::Boolean use_omg_ior_format_;
+    CORBA::Boolean use_omg_ior_format_ {true};
 
     // Prevent copying and assignment.
     ORB (const ORB &);

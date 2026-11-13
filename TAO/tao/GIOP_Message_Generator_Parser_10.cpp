@@ -341,7 +341,7 @@ TAO_GIOP_Message_Generator_Parser_10::parse_request_header (
   request.response_expected ((response_flags != 0));
 
   // This is not supported now in GIOP 1.1
-  request.sync_with_server (0);
+  request.sync_with_server (false);
 
   // We use ad-hoc demarshalling here: there is no need to increase
   // the reference count on the CDR message block, because this key

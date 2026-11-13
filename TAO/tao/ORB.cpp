@@ -116,7 +116,6 @@ void CORBA::ORB::InvalidName::_tao_decode (TAO_InputCDR &)
 CORBA::ORB::ORB (TAO_ORB_Core *orb_core)
   : refcount_ (1)
   , orb_core_ (orb_core)
-  , use_omg_ior_format_ (1)
   , timeout_ (nullptr)
 {
 }

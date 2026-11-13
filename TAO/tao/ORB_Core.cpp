@@ -1505,7 +1505,7 @@ TAO_ORB_Core::fini ()
   try
     {
       // Shutdown the ORB and block until the shutdown is complete.
-      this->shutdown (1);
+      this->shutdown (true);
     }
   catch (const ::CORBA::Exception& ex)
     {
