@@ -22,12 +22,12 @@ ACE_SSL_SOCK_Stream::ACE_SSL_SOCK_Stream (ACE_SSL_Context *context)
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::ACE_SSL_SOCK_Stream");
 
-  ACE_SSL_Context * ctx =
+  ACE_SSL_Context * const ctx =
     (context == nullptr ? ACE_SSL_Context::instance () : context);
 
-  this->ssl_ = ::SSL_new (ctx->context ());
+  this->ssl_.reset (::SSL_new (ctx->context ()));
 
-  if (this->ssl_ == nullptr)
+  if (this->ssl_.get () == nullptr)
     {
       ACELIB_ERROR ((LM_ERROR,
                   "(%P|%t) ACE_SSL_SOCK_Stream "
@@ -39,8 +39,6 @@ ACE_SSL_SOCK_Stream::ACE_SSL_SOCK_Stream (ACE_SSL_Context *context)
 ACE_SSL_SOCK_Stream::~ACE_SSL_SOCK_Stream ()
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::~ACE_SSL_SOCK_Stream");
-
-  ::SSL_free (this->ssl_);
 
   // @@ Question: should we reference count the Context object or
   // leave that to the application developer? We do not reference
@@ -184,7 +182,7 @@ ACE_SSL_SOCK_Stream::send (const void *buf,
 
   // If SSL has data in the buffer, i.e. SSL_pending() returns a
   // non-zero value, then don't block on select().
-  if (timeout == nullptr || ::SSL_pending (this->ssl_))
+  if (timeout == nullptr || ::SSL_pending (this->ssl_.get ()))
     return this->send (buf, len, flags);
 
   int val {};
@@ -565,7 +563,7 @@ ACE_SSL_SOCK_Stream::get_remote_addr (ACE_Addr &addr) const
   // complete.  Despite that fact, the SSL connection may not have
   // been completed.  In such a case, a successful return from
   // get_remote_addr() would be misleading.
-  if (SSL_is_init_finished (this->ssl_))
+  if (SSL_is_init_finished (this->ssl_.get ()))
     {
       return this->ACE_SSL_SOCK::get_remote_addr (addr);
     }

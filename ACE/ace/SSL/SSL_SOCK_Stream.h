@@ -32,6 +32,8 @@
 
 #include "ace/SOCK_Stream.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -320,8 +322,18 @@ protected:
                   int flags,
                   const ACE_Time_Value *timeout) const;
 
+private:
   /// The SSL session.
-  SSL *ssl_ {};
+  struct SSL_Deleter
+  {
+    void operator() (SSL *ssl) const
+    {
+      ::SSL_free (ssl);
+    }
+  };
+
+protected:
+  std::unique_ptr<SSL, SSL_Deleter> ssl_ {};
 
   /// The stream which works under the ssl connection.
   ACE_SOCK_Stream stream_;

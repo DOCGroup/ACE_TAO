@@ -102,9 +102,9 @@ ACE_SSL_Asynch_Stream::ACE_SSL_Asynch_Stream (
   ACE_SSL_Context * const ctx =
     (context == nullptr ? ACE_SSL_Context::instance () : context);
 
-  this->ssl_ = ::SSL_new (ctx->context ());
+  this->ssl_.reset (::SSL_new (ctx->context ()));
 
-  if (this->ssl_ == nullptr)
+  if (this->ssl_.get () == nullptr)
     ACELIB_ERROR
       ((LM_ERROR,
         ACE_TEXT ("(%P|%t) ACE_SSL_Asynch_Stream %p\n"),
@@ -126,8 +126,6 @@ ACE_SSL_Asynch_Stream::~ACE_SSL_Asynch_Stream ()
                   ACE_TEXT("ACE_SSL_Asynch_Stream::DTOR-")
                   ACE_TEXT("possible access violation ")
                   ACE_TEXT("if proactor still handles events\n")));
-
-  ::SSL_free (this->ssl_);
 
   // Was honestly copied from ACE_SSL_SOCK_Stream :)
 
@@ -226,7 +224,7 @@ ACE_SSL_Asynch_Stream::open (ACE_Handler & handler,
         ACE_TEXT ("- already opened")),
        -1);
 
-  if (this->ssl_ == nullptr)
+  if (this->ssl_.get () == nullptr)
     ACELIB_ERROR_RETURN
       ((LM_ERROR,
         ACE_TEXT ("(%P|%t) ACE_SSL_Asynch_Stream::open() %p\n"),
@@ -268,16 +266,16 @@ ACE_SSL_Asynch_Stream::open (ACE_Handler & handler,
         ACE_TEXT ("- cannot allocate new BIO structure")),
        -1);
 
-  ::SSL_set_bio (this->ssl_ , this->bio_ , this->bio_);
+  ::SSL_set_bio (this->ssl_.get (), this->bio_, this->bio_);
 
   switch (this->type_)
     {
     case ST_CLIENT:
-      ::SSL_set_connect_state (this->ssl_);
+      ::SSL_set_connect_state (this->ssl_.get ());
       break;
 
     case ST_SERVER:
-      ::SSL_set_accept_state (this->ssl_);
+      ::SSL_set_accept_state (this->ssl_.get ());
       break;
 
     default:
@@ -431,9 +429,9 @@ ACE_SSL_Asynch_Stream::do_SSL_shutdown ()
   this->notify_read  (0, ERR_CANCELED);
   this->notify_write (0, ERR_CANCELED);
 
-  int retval = ::SSL_shutdown (this->ssl_);
+  int retval = ::SSL_shutdown (this->ssl_.get ());
 
-  int const status = ::SSL_get_error (this->ssl_, retval);
+  int const status = ::SSL_get_error (this->ssl_.get (), retval);
 
   switch (status)
     {
@@ -472,7 +470,7 @@ ACE_SSL_Asynch_Stream::do_SSL_shutdown ()
 int
 ACE_SSL_Asynch_Stream::do_SSL_handshake ()
 {
-  if (SSL_is_init_finished (this->ssl_))
+  if (SSL_is_init_finished (this->ssl_.get ()))
     {
       if (!handshake_complete_)
         {
@@ -494,11 +492,11 @@ ACE_SSL_Asynch_Stream::do_SSL_handshake ()
   switch (this->type_)
     {
     case ST_CLIENT:
-      retval = ::SSL_connect (this->ssl_);
+      retval = ::SSL_connect (this->ssl_.get ());
       break;
 
     case ST_SERVER:
-      retval = ::SSL_accept (this->ssl_);
+      retval = ::SSL_accept (this->ssl_.get ());
       break;
 
     default:
@@ -509,7 +507,7 @@ ACE_SSL_Asynch_Stream::do_SSL_handshake ()
          -1);
     }
 
-  int const status = ::SSL_get_error (this->ssl_, retval);
+  int const status = ::SSL_get_error (this->ssl_.get (), retval);
 
   switch (status)
     {
@@ -563,11 +561,11 @@ ACE_SSL_Asynch_Stream::do_SSL_read ()
   ERR_clear_error ();
 
   const int bytes_trn =
-    ::SSL_read (this->ssl_,
+    ::SSL_read (this->ssl_.get (),
                 mb.wr_ptr (),
                 ACE_Utils::truncate_cast<int> (bytes_req));
 
-  int const status = ::SSL_get_error (this->ssl_, bytes_trn);
+  int const status = ::SSL_get_error (this->ssl_.get (), bytes_trn);
 
   switch (status)
     {
@@ -625,11 +623,11 @@ ACE_SSL_Asynch_Stream::do_SSL_write ()
   ERR_clear_error ();
 
   const int bytes_trn =
-    ::SSL_write (this->ssl_,
+    ::SSL_write (this->ssl_.get (),
                  mb.rd_ptr (),
                  ACE_Utils::truncate_cast<int> (bytes_req));
 
-  int const status = ::SSL_get_error (this->ssl_, bytes_trn);
+  int const status = ::SSL_get_error (this->ssl_.get (), bytes_trn);
 
   switch (status)
     {

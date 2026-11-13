@@ -27,6 +27,8 @@
 #include "ace/Synch_Traits.h"
 #include "ace/Thread_Mutex.h"
 
+#include <memory>
+
 /*
  * This facility doesn't follow the normal ACE asynch I/O support classes'
  * interface/implementation arrangement. It's not needed because rather than
@@ -167,7 +169,7 @@ public:
    *               the OpenSSL information to be associated with this
    *               ACE_SSL_Asynch_Stream.  The needed SSL data will be
    *               copied before return. Therefore, this object can be
-   *               reused, modified, or deleted upon return. If a 0 pointer
+   *               reused, modified, or deleted upon return. If a null pointer
    *               is passed, the ACE_SSL_Context::instance() method will
    *               be called to get access to a singleton.
    */
@@ -398,8 +400,18 @@ protected:
 
   int flags_ {};
 
+private:
   /// The SSL session.
-  SSL *ssl_ {};
+  struct SSL_Deleter
+  {
+    void operator() (SSL *ssl) const
+    {
+      ::SSL_free (ssl);
+    }
+  };
+
+protected:
+  std::unique_ptr<SSL, SSL_Deleter> ssl_ {};
 
   /// Flag ensures that post_connection_check() is called at most one time.
   bool handshake_complete_ {};
