@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   ZlibCompressor_Factory.h
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-// ===================================================================
 
 #ifndef TAO_ZLIBCOMPRESSOR_FACTORY_H
 #define TAO_ZLIBCOMPRESSOR_FACTORY_H

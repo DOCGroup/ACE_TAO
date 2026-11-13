@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file Compression.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
 
 #ifndef TAO_COMPRESSION_GIOP_H
 #define TAO_COMPRESSION_GIOP_H

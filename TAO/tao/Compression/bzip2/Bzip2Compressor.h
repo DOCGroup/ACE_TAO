@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   Bzip2Compressor.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-// ===================================================================
 
 #ifndef TAO_BZIP2COMPRESSOR_H
 #define TAO_BZIP2COMPRESSOR_H

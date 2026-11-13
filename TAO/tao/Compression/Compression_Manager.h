@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   Compression_Manager.h
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-// ===================================================================
 
 #ifndef TAO_COMPRESSION_MANAGER_H
 #define TAO_COMPRESSION_MANAGER_H

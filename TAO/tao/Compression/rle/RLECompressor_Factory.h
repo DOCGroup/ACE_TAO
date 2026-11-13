@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   RLECompressor_Factory.h
  *
  *  @author Derek Dominish  <derek.dominish@dsto.defence.gov.au>
  */
-// ===================================================================
 
 #ifndef TAO_RLECOMPRESSOR_FACTORY_H
 #define TAO_RLECOMPRESSOR_FACTORY_H

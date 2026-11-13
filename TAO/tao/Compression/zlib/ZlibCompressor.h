@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   ZlibCompressor.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-// ===================================================================
 
 #ifndef TAO_ZLIBCOMPRESSOR_H
 #define TAO_ZLIBCOMPRESSOR_H

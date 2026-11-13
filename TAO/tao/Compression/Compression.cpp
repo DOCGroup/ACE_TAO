@@ -14,7 +14,6 @@ TAO_Compression_Loader::create_object (CORBA::ORB_ptr, int, ACE_TCHAR *[])
   return obj;
 }
 
-
 int
 TAO_Compression_Loader::Initializer ()
 {

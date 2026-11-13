@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   Compressor_Factory.h
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-// ===================================================================
 
 #ifndef TAO_COMPRESSOR_FACTORY_H
 #define TAO_COMPRESSOR_FACTORY_H

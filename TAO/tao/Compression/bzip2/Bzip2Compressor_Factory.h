@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   Bzip2Compressor_Factory.h
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-// ===================================================================
 
 #ifndef TAO_BZIP2COMPRESSOR_FACTORY_H
 #define TAO_BZIP2COMPRESSOR_FACTORY_H

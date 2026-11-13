@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   LzoCompressor.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-// ===================================================================
 
 #ifndef TAO_LZOCOMPRESSOR_H
 #define TAO_LZOCOMPRESSOR_H
