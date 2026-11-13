@@ -76,10 +76,15 @@ public:
   /// the provided URL style IOR.
   char object_key_delimiter (const char *ior);
 
+  /// @name Iteration methods
+  /// @{
+
   using const_iterator = std::vector<std::unique_ptr<TAO_Connector>>::const_iterator;
 
   const_iterator begin () const;
   const_iterator end () const;
+
+  /// @}
 
 private:
   TAO_Connector_Registry (TAO_Connector_Registry const &) = delete;
