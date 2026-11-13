@@ -24,9 +24,9 @@
 
 #include "ace/Manual_Event.h"
 
-enum DEBUGGING_RANGE
+enum class DEBUGGING_RANGE
 {
-  DEBUG_NONE = 0,
+  DEBUG_NONE,
   DEBUG
 };
 
@@ -87,14 +87,14 @@ public:
   explicit Leader_Follower_Task (Synchronisers &synch);
 
   /// Messages consumed
-  int processed ();
+  size_t processed () const;
 
   /// Method that is run by a daemon thread
   int svc () override;
 
 private:
   /// Number of messages processed by this thread
-  int messages_consumed_;
+  size_t messages_consumed_;
 
   /// Our reference to the synchroniser
   Synchronisers &synch_;
