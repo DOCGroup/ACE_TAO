@@ -6,6 +6,8 @@
 #include "ace/OS_NS_Thread.h"
 #include "ace/Sched_Params.h"
 
+#include <stddef.h>
+
 class Latency_Stats
 {
 public:
@@ -14,13 +16,13 @@ public:
   void dump_results (ACE_TCHAR const *test_name,
                      ACE_TCHAR const *sub_test) const;
 
-  void sample (ACE_hrtime_t sample);
+  void sample (ACE_hrtime_t const sample);
 
+  /// Merge another latency sample set into this one.
   void accumulate (Latency_Stats const &stats);
-  // Useful to merge several Latency_Stats.
 
 private:
-  u_long n_ {};
+  size_t n_ {};
   ACE_hrtime_t sum_ {};
   ACE_hrtime_t sum2_ {};
   ACE_hrtime_t min_ {};
@@ -28,7 +30,7 @@ private:
 };
 
 inline void
-Latency_Stats::sample (ACE_hrtime_t sample)
+Latency_Stats::sample (ACE_hrtime_t const sample)
 {
   this->sum_  += sample;
   this->sum2_ += sample * sample;
@@ -103,14 +105,14 @@ public:
   void dump_results (ACE_TCHAR const *test_name,
                      ACE_TCHAR const *sub_test) const;
 
+  /// Record one received event.
   void sample ();
-  // An event has been received
 
+  /// Merge another event count and its time range into this one.
   void accumulate (Throughput_Stats const &stats);
-  // Useful to merge several Throughput_Stats.
 
 private:
-  u_long n_ {};
+  size_t n_ {};
   ACE_hrtime_t start_ {};
   ACE_hrtime_t stop_ {};
 };
@@ -150,18 +152,27 @@ Throughput_Stats::dump_results (ACE_TCHAR const *test_name,
       return;
     }
 
-  ACE_Time_Value tv;
+  ACE_Time_Value tv {};
   ACE_High_Res_Timer::hrtime_to_tv (tv, this->stop_ - this->start_);
 
-  double const f {1.0 / (tv.sec () + tv.usec () / 1000000.0)};
-  double const events_per_second {this->n_ * f};
+  double const elapsed_seconds {
+    static_cast<double> (tv.sec ())
+      + static_cast<double> (tv.usec ()) / 1000000.0};
+  if (elapsed_seconds <= 0.0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "%s/%s: elapsed time is too short to measure\n",
+                  test_name, subtest));
+      return;
+    }
+  double const events_per_second {
+    static_cast<double> (this->n_) / elapsed_seconds};
 
   ACE_DEBUG ((LM_DEBUG,
-              "%s/%s: "
-              "%d / %d.%06.6d = %.3f events/second\n",
+              "%s/%s: %B / %.6f = %.3f events/second\n",
               test_name, subtest,
               this->n_,
-              tv.sec (), tv.usec (),
+              elapsed_seconds,
               events_per_second));
 }
 
