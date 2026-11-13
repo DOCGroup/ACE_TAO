@@ -70,6 +70,11 @@ namespace TAO
                                      size_t tss_slot,
                                      bool collocated);
 
+      Server_Invocation_Interceptor (Server_Invocation_Interceptor const &) = delete;
+      Server_Invocation_Interceptor (Server_Invocation_Interceptor &&) = delete;
+      Server_Invocation_Interceptor &operator= (Server_Invocation_Interceptor const &) = delete;
+      Server_Invocation_Interceptor &operator= (Server_Invocation_Interceptor &&) = delete;
+
       /**
        * @name PortableInterceptor::ServerRequestInterceptor Methods
        *
@@ -104,20 +109,6 @@ namespace TAO
        * counting mechanism.
        */
       ~Server_Invocation_Interceptor () override = default;
-
-    private:
-      /**
-       * @name Copying and Assignment
-       *
-       * Protected to prevent copying through the copy constructor and the
-       * assignment operator.
-       */
-      //@{
-      Server_Invocation_Interceptor (Server_Invocation_Interceptor const &) = delete;
-      Server_Invocation_Interceptor (Server_Invocation_Interceptor &&) = delete;
-      Server_Invocation_Interceptor &operator= (Server_Invocation_Interceptor const &) = delete;
-      Server_Invocation_Interceptor &operator= (Server_Invocation_Interceptor &&) = delete;
-      //@}
 
     private:
       /// Reference to the current SSLIOP execution context.

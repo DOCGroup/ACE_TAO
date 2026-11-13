@@ -65,6 +65,11 @@ namespace TAO
       /// Constructor.
       explicit Current (TAO_ORB_Core *orb_core);
 
+      Current (Current const &) = delete;
+      Current (Current &&) = delete;
+      Current &operator= (Current const &) = delete;
+      Current &operator= (Current &&) = delete;
+
       /// Return the peer certificate associated with the current
       /// request.
       ::SSLIOP::ASN_1_Cert * get_peer_certificate () override;
@@ -128,12 +133,6 @@ namespace TAO
 
       /// Return the TSS SSLIOP::Current implementation.
       Current_Impl *implementation ();
-
-    private:
-      Current (Current const &) = delete;
-      Current (Current &&) = delete;
-      void operator= (Current const &) = delete;
-      void operator= (Current &&) = delete;
 
     private:
       /// TSS slot assigned to this object.
