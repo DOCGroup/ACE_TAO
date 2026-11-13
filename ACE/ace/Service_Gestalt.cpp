@@ -282,7 +282,7 @@ ACE_Service_Gestalt::load_static_svcs ()
     {
       ACE_Static_Svc_Descriptor *ssd = *ssdp;
 
-      if (this->process_directive (*ssd, 1) == -1)
+      if (this->process_directive (*ssd, true) == -1)
         return -1;
     }
   return 0;
@@ -443,7 +443,7 @@ ACE_Service_Gestalt::initialize (const ACE_TCHAR *svc_name,
         ACE_Service_Config::global()->find_processed_static_svc(svc_name);
       if (assd != nullptr)
         {
-          this->process_directive_i(*assd, 0);
+          this->process_directive_i (*assd, false);
         }
       else
         {
@@ -714,7 +714,7 @@ ACE_Service_Gestalt::process_directive_i (const ACE_Static_Svc_Descriptor &ssd,
 
   if (!force_replace)
     {
-      if (this->repo_->find (ssd.name_, nullptr, 0) >= 0)
+      if (this->repo_->find (ssd.name_, nullptr, false) >= 0)
         {
           // The service is already there, just return
           return 0;
@@ -842,7 +842,7 @@ ACE_Service_Gestalt::process_file (const ACE_TCHAR file[])
   // being processed. Anytime we have to open a new file, we then can check
   // to see if it is not already being processed by searching for a dummy
   // service with a matching name.
-  if (this->repo_->find (file, nullptr, 0) >=0)
+  if (this->repo_->find (file, nullptr, false) >= 0)
     {
       ACELIB_DEBUG ((LM_WARNING,
                   ACE_TEXT ("ACE (%P|%t) Configuration file %s is currently")
