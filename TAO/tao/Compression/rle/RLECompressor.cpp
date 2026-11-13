@@ -28,6 +28,8 @@
 #include "RLECompressor.h"
 #include "ace/Compression/rle/RLECompressor.h"
 
+#include <limits>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -51,7 +53,7 @@ namespace TAO
       source.length (),
       target.get_buffer (),
       target.maximum ());
-    if (out_len == ACE_UINT64 (-1))
+    if (out_len == std::numeric_limits<ACE_UINT64>::max ())
       {
         throw ::Compression::CompressionException ();
       }
@@ -71,7 +73,7 @@ namespace TAO
       source.length (),
       target.get_buffer (),
       target.maximum ());
-    if (out_len == ACE_UINT64 (-1))
+    if (out_len == std::numeric_limits<ACE_UINT64>::max ())
       {
         throw ::Compression::CompressionException ();
       }

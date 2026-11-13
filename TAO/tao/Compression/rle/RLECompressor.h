@@ -27,6 +27,8 @@ namespace TAO
   class TAO_RLECOMPRESSOR_Export RLECompressor : public ::TAO::BaseCompressor
   {
   public:
+    RLECompressor () = delete;
+
     explicit RLECompressor (::Compression::CompressorFactory_ptr);
 
     void compress (::Compression::Buffer const &source,

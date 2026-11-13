@@ -1,6 +1,7 @@
 #include "RLECompressor.h"
 
 #include <cstring>
+#include <limits>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -38,7 +39,7 @@ ACE_RLECompressor::compress (void const *in_ptr,
             case 128:
               out_base = out_index;
               if (out_base >= max_out_len)
-                return static_cast<ACE_UINT64> (-1);
+                return std::numeric_limits<ACE_UINT64>::max ();
               ++out_index;
               run_code = false;
               run_count = 0;
@@ -57,7 +58,7 @@ ACE_RLECompressor::compress (void const *in_ptr,
                     {
                       out_base = out_index;
                       if (out_base >= max_out_len)
-                        return static_cast<ACE_UINT64> (-1);
+                        return std::numeric_limits<ACE_UINT64>::max ();
                       ++out_index;
                       run_count = 0;
                     }
@@ -70,7 +71,7 @@ ACE_RLECompressor::compress (void const *in_ptr,
                     {
                       out_base = out_index;
                       if (out_base >= max_out_len)
-                        return static_cast<ACE_UINT64> (-1);
+                        return std::numeric_limits<ACE_UINT64>::max ();
                       ++out_index;
                     }
                   run_code = false;
@@ -85,7 +86,7 @@ ACE_RLECompressor::compress (void const *in_ptr,
           ++run_count;
 
           if (out_index >= max_out_len)
-            return static_cast<ACE_UINT64> (-1);
+            return std::numeric_limits<ACE_UINT64>::max ();
           out_p[out_index] = cur_byte;
           ++out_index;
         }
@@ -117,11 +118,11 @@ ACE_RLECompressor::decompress (void const *in_ptr,
           ACE_UINT32 const cpy_len {static_cast<ACE_UINT32> ((cur_byte & ACE_CHAR_MAX) + 1)};
 
           if (cpy_len > max_out_len)
-            return static_cast<ACE_UINT64> (-1);
+            return std::numeric_limits<ACE_UINT64>::max ();
           else if ((cur_byte & 0x80) != 0)
             {
               if (in_len == 0)
-                return static_cast<ACE_UINT64> (-1);
+                return std::numeric_limits<ACE_UINT64>::max ();
               --in_len;
               std::memset (out_p, *in_p, cpy_len);
               ++in_p;
@@ -133,7 +134,7 @@ ACE_RLECompressor::decompress (void const *in_ptr,
               in_len -= cpy_len;
             }
           else
-            return static_cast<ACE_UINT64> (-1);
+            return std::numeric_limits<ACE_UINT64>::max ();
 
           out_p += cpy_len;
           max_out_len -= cpy_len;

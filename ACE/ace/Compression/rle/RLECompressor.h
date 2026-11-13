@@ -71,7 +71,7 @@ public:
   * @a dest_ptr buffer with a maximum @a max_out_len using
   * the Run Length Ecoding (RLE) algorithm. If the
   * @a max_out_len is exhausted through the compress process
-  * then a value of -1 will be returned from the function,
+  * then the maximum ACE_UINT64 value will be returned from the function,
   * otherwise the return value will indicate the resultant
   * @a out_ptr compressed buffer length.
   *
@@ -90,7 +90,7 @@ public:
   * @a out_ptr buffer with a maximum @a max_out_len using
   * the Run Length Ecoding (RLE) algorithm. If the
   * @a max_out_len is exhausted during decompression
-  * then a value of -1 will be returned from the function,
+  * then the maximum ACE_UINT64 value will be returned from the function,
   * otherwise the return value will indicate the resultant
   * @a out_ptr decompressed buffer length.
   */
