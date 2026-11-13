@@ -1,14 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file Messaging_PolicyFactory.h
  *
  * @author Carlos O'Ryan <coryan@uci.edu>
  * @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_MESSAGING_POLICY_FACTORY_H
 #define TAO_MESSAGING_POLICY_FACTORY_H

@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Messaging_Policy_i.h
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
-//=============================================================================
 
 #ifndef TAO_MESSAGING_POLICY_I_H
 #define TAO_MESSAGING_POLICY_I_H
@@ -25,7 +23,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
 
-/*
+/**
  * @class TAO_RelativeRoundtripTimeoutPolicy
  *
  * @brief Messaging::RelativeRoundtripTimeoutPolicy implementation
@@ -59,7 +57,6 @@ public:
   /// Returns a copy of @c this.
   virtual TAO_RelativeRoundtripTimeoutPolicy *clone () const;
 
-  // = The Messaging::RelativeRoundtripTimeoutPolicy methods
   TimeBase::TimeT relative_expiry () override;
 
   CORBA::PolicyType policy_type () override;
@@ -85,7 +82,7 @@ private:
 
 #if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
 
-/*
+/**
  * @class TAO_Sync_Scope_Policy
  *
  * @brief Messaging::SyncScopePolicy implementation.
@@ -118,8 +115,6 @@ public:
 
   /// Returns a copy of <this>.
   virtual TAO_Sync_Scope_Policy *clone () const;
-
-  // = The Messaging::SyncScopePolicy methods.
 
   Messaging::SyncScope synchronization () override;
 

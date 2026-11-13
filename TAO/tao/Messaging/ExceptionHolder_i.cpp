@@ -79,7 +79,7 @@ namespace TAO
           exception->completed (CORBA::CompletionStatus (completion));
 
           // Raise the exception.
-          std::unique_ptr<CORBA::SystemException> e_ptr(exception);
+          std::unique_ptr<CORBA::SystemException> const e_ptr (exception);
           exception->_raise ();
 
           return;
@@ -105,7 +105,7 @@ namespace TAO
             }
 
           // Raise the exception.
-          std::unique_ptr<CORBA::Exception> e_ptr (exception);
+          std::unique_ptr<CORBA::Exception> const e_ptr (exception);
           exception->_raise ();
 
           return;

@@ -65,7 +65,6 @@ TAO_Messaging_Loader::init (int, ACE_TCHAR* [])
   return 0;
 }
 
-
 /////////////////////////////////////////////////////////////////////
 
 ACE_FACTORY_DEFINE (TAO_Messaging, TAO_Messaging_Loader)

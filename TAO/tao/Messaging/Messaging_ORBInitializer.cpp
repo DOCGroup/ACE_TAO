@@ -18,7 +18,7 @@ TAO_Messaging_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr inf
 #if ((TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1) || \
      (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1) || \
      (TAO_HAS_SYNC_SCOPE_POLICY == 1))
-  TAO_ORBInitInfo_var tao_info = TAO_ORBInitInfo::_narrow (info);
+  TAO_ORBInitInfo_var const tao_info = TAO_ORBInitInfo::_narrow (info);
 
   if (CORBA::is_nil (tao_info.in ()))
     {
@@ -75,7 +75,7 @@ TAO_Messaging_ORBInitializer::register_value_factory (
 {
   // Narrow to a TAO_ORBInitInfo object to get access to the
   // orb_core() TAO extension.
-  TAO_ORBInitInfo_var tao_info =
+  TAO_ORBInitInfo_var const tao_info =
     TAO_ORBInitInfo::_narrow (info);
 
   if (CORBA::is_nil (tao_info.in ()))
@@ -93,9 +93,9 @@ TAO_Messaging_ORBInitializer::register_value_factory (
   TAO::ExceptionHolderFactory *base_factory {};
   ACE_NEW (base_factory,
            TAO::ExceptionHolderFactory);
-  CORBA::ValueFactory_var factory = base_factory;
+  CORBA::ValueFactory_var const factory = base_factory;
 
-  CORBA::ValueFactory_var old_factory =
+  CORBA::ValueFactory_var const old_factory =
     tao_info->orb_core()->orb ()->register_value_factory (
         Messaging::ExceptionHolder::_tao_obv_static_repository_id (),
         base_factory);
@@ -115,8 +115,7 @@ TAO_Messaging_ORBInitializer::register_policy_factories (
                           ENOMEM),
                         CORBA::COMPLETED_NO));
 
-
-  PortableInterceptor::PolicyFactory_var policy_factory =
+  PortableInterceptor::PolicyFactory_var const policy_factory =
     policy_factory_ptr;
 
   // Bind the same policy factory to all Messaging related policy
