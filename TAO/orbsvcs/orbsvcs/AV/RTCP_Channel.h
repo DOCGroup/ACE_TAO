@@ -72,7 +72,7 @@ private:
   /// The canonical name of the source this channel represents.
   ACE_CString cname_;
 
-  // Used to declare a source valid
+  /// Used to declare the source valid.
   /// The highest sequence number seen.
   ACE_UINT16 max_seq_ {};
 
@@ -103,7 +103,7 @@ private:
   /// The inter-arrival jitter measured in timestamp units.
   double jitter_ {};
 
-  // Used for jitter calculations
+  /// Used for jitter calculations.
   /// Flag to indicate the first data packet received.
   bool first_data_packet_ {true};
 

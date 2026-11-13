@@ -63,14 +63,13 @@ public:
   FLOW_SPEC_HASH_MAP& map ();
 
 private:
-  // The Service Provider is currently set to NULL for all ACE_QoS.
+  /// The Service Provider is currently null for all ACE_QoS values.
   static const iovec iov_;
 
-  // A NO_TRAFFIC flow spec. Senders set the receiving qos to this
-  // while the receivers set the sending qos to this.
+  /// NO_TRAFFIC flow spec used for sender receive QoS and receiver send QoS.
   ACE_Flow_Spec *default_traffic_;
 
-  // A list of flowspecs indexed by the flowspec name.
+  /// Flow specs indexed by flow spec name.
   FLOW_SPEC_HASH_MAP flow_spec_map_;
 };
 

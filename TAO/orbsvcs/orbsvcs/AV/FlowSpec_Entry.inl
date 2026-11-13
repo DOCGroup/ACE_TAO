@@ -1,8 +1,6 @@
 // -*- C++ -*-
 #include "ace/OS_NS_strings.h"
 
-#include <cstring>
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
@@ -10,7 +8,7 @@ int
 TAO_FlowSpec_Entry::set_direction (char const *direction)
 {
   this->direction_str_ = direction;
-  if (direction == 0)
+  if (direction == nullptr)
     {
       this->direction_ = TAO_AV_INVALID;
       return -1;
@@ -29,8 +27,8 @@ TAO_FlowSpec_Entry::parse_flow_protocol_string (char const *flow_string)
   if (flow_string == nullptr)
     return 0;
 
-  if (std::strcmp (flow_string,"") == 0)
-        return 0;
+  if (flow_string[0] == '\0')
+    return 0;
 
   this->use_flow_protocol_ = true;
   // do some flow protocol processing.

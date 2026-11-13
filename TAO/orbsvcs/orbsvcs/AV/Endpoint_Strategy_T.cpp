@@ -18,13 +18,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // TAO_AV_Endpoint_Reactive_Strategy
 // ----------------------------------------------------------------------
 
-template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
-TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Endpoint_Reactive_Strategy ()
-   :  stream_endpoint_a_servant_ (nullptr), stream_endpoint_b_servant_ (nullptr),
-      vdev_servant_ (nullptr), media_ctrl_servant_ (nullptr)
-{
-}
-
 template <class T_StreamEndpoint, class T_VDev, class T_MediaCtrl>
 TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::~TAO_AV_Endpoint_Reactive_Strategy ()
 {
@@ -328,10 +321,7 @@ TAO_AV_Endpoint_Reactive_Strategy_B<T_StreamEndpoint, T_VDev, T_MediaCtrl>::crea
 template <class T_StreamEndpoint_B, class T_VDev , class T_MediaCtrl>
 TAO_AV_Child_Process <T_StreamEndpoint_B, T_VDev, T_MediaCtrl>::TAO_AV_Child_Process ()
   : stream_endpoint_name_ (0),
-    pid_ (-1),
-    stream_endpoint_ (nullptr),
-    vdev_ (nullptr),
-    media_ctrl_ (nullptr)
+    pid_ (-1)
 {
   this->pid_ = ACE_OS::getpid ();
   if (this->pid_ == 0)

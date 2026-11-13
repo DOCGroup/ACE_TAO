@@ -27,7 +27,7 @@ class TAO_AV_Endpoint_Reactive_Strategy
 {
 protected:
 
-  TAO_AV_Endpoint_Reactive_Strategy ();
+  TAO_AV_Endpoint_Reactive_Strategy () = default;
 
   ~TAO_AV_Endpoint_Reactive_Strategy () override;
   TAO_AV_Endpoint_Reactive_Strategy (TAO_AV_Endpoint_Reactive_Strategy const &) = delete;
@@ -68,13 +68,13 @@ protected:
 
   CORBA::Object_var media_ctrl_obj_;
 
-  T_StreamEndpoint *stream_endpoint_a_servant_;
+  T_StreamEndpoint *stream_endpoint_a_servant_ {};
 
-  T_StreamEndpoint *stream_endpoint_b_servant_;
+  T_StreamEndpoint *stream_endpoint_b_servant_ {};
 
-  T_VDev *vdev_servant_;
+  T_VDev *vdev_servant_ {};
 
-  T_MediaCtrl *media_ctrl_servant_;
+  T_MediaCtrl *media_ctrl_servant_ {};
 };
 // ----------------------------------------------------------------------
 
@@ -211,18 +211,18 @@ protected:
   CosNaming::Name stream_endpoint_name_;
 
   /// The stream endpoint member
-  T_StreamEndpoint *stream_endpoint_;
+  T_StreamEndpoint *stream_endpoint_ {};
 
   /// The virtual device
-  T_VDev *vdev_;
+  T_VDev *vdev_ {};
 
   /// Virtual device CORBA object reference
   CORBA::Object_var vdev_obj_;
 
   /// Media controller
-  T_MediaCtrl *media_ctrl_;
+  T_MediaCtrl *media_ctrl_ {};
 
-  // Media controller CORBA object reference
+  /// Media controller CORBA object reference.
   CORBA::Object_var media_ctrl_obj_;
 
   /// pid of this process
@@ -231,9 +231,9 @@ protected:
   /// Name of the host.
   char host_[MAXHOSTNAMELEN];
 
-  CORBA::ORB_ptr orb_;
+  CORBA::ORB_ptr orb_ {};
 
-  PortableServer::POA_ptr poa_;
+  PortableServer::POA_ptr poa_ {};
 };
 
 // ----------------------------------------------------------------------

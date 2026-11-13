@@ -85,14 +85,14 @@ public:
 
   int reset ();
 
+  /// InputCDR used to decode the message.
   TAO_InputCDR cdr;
-  // This is the InputCDR that will be used to decode the message.
   flowProtocol::frameHeader frame_header_;
   flowProtocol::fragment fragment_;
   flowProtocol::frame frame_;
+  /// Indicates whether additional fragments follow.
   bool more_fragments_ {};
   ACE_Message_Block *frame_block_ {};
-  // boolean flags indicating that there are more fragments.
   ACE_Message_Block static_frame_;
   TAO_SFP_Fragment_Table_Map fragment_table_map_;
 };
@@ -107,21 +107,21 @@ class TAO_AV_Core;
 class TAO_AV_Export TAO_SFP_Base
 {
 public:
-  // default arguments to pass to use for the ORB
+  /// Default arguments passed to the ORB.
   static const char TAO_SFP_ORB_ARGUMENTS[];
 
-  // SFP magic numbers
+  /// SFP magic numbers.
   static const char TAO_SFP_MAGIC_NUMBER[];
   static const char TAO_SFP_FRAGMENT_MAGIC_NUMBER[];
   static const char TAO_SFP_START_MAGIC_NUMBER[];
   static const char TAO_SFP_CREDIT_MAGIC_NUMBER[];
   static const char TAO_SFP_STARTREPLY_MAGIC_NUMBER[];
 
-  // SFP version 1.0
+  /// SFP version 1.0.
   static constexpr unsigned char TAO_SFP_MAJOR_VERSION = 1;
   static constexpr unsigned char TAO_SFP_MINOR_VERSION = 0;
 
-  // lengths of various SFP headers
+  /// Lengths of SFP headers and offsets within them.
   static constexpr unsigned char TAO_SFP_FRAME_HEADER_LEN = 12;
   static constexpr unsigned char TAO_SFP_MESSAGE_SIZE_OFFSET = 8;
   static constexpr unsigned char TAO_SFP_FRAGMENT_SIZE_OFFSET = 16;

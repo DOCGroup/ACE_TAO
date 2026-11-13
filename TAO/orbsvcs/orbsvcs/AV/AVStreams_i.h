@@ -624,8 +624,6 @@ class TAO_AV_Export TAO_StreamEndPoint_B :
   public virtual POA_AVStreams::StreamEndPoint_B,
   public virtual TAO_StreamEndPoint
 {
-  // = DESCRIPTION
-  //     The "B" side of a streamendpoint
 public:
   TAO_StreamEndPoint_B ();
   TAO_StreamEndPoint_B (TAO_StreamEndPoint_B const &) = delete;
@@ -932,9 +930,8 @@ public:
   /// flowendpoint is.
   void related_sep (AVStreams::StreamEndPoint_ptr related_sep) override;
 
+  /// Returns the related flow connection.
   AVStreams::FlowConnection_ptr related_flow_connection () override;
-
-  // accessor for the related flow connection attribute.
 
   /// set method for the related flow connection attribute.
   void related_flow_connection (AVStreams::FlowConnection_ptr related_flow_connection) override;
@@ -942,7 +939,7 @@ public:
   /// returns the other flowendpoint to which this is connected.
   AVStreams::FlowEndPoint_ptr get_connected_fep () override;
 
-  //// use the specified flow protocol.
+  /// Uses the specified flow protocol.
   CORBA::Boolean use_flow_protocol (char const *fp_name,
                                     CORBA::Any const &fp_settings) override;
 

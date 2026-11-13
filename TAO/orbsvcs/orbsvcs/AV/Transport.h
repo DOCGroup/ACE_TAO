@@ -64,7 +64,7 @@ private:
   /// Transport factory name.
   ACE_CString name_;
 
-  /// Pointer to factory object.
+  /// Non-owning pointer; AV_Core conditionally deletes the factory by ref_count.
   TAO_AV_Transport_Factory *factory_ {};
 };
 
@@ -99,7 +99,7 @@ private:
   /// Flow_Protocol factory name.
   ACE_CString name_;
 
-  /// pointer to factory object.
+  /// Non-owning pointer; AV_Core conditionally deletes the factory by ref_count.
   TAO_AV_Flow_Protocol_Factory *factory_ {};
 };
 

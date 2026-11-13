@@ -33,23 +33,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 //------------------------------------------------------------
 
 TAO_AV_Core::TAO_AV_Core ()
-  : connector_registry_ (nullptr)
-  , acceptor_registry_ (nullptr)
-  , reactor_ (nullptr)
+  : connector_registry_ (std::make_unique<TAO_AV_Connector_Registry> ())
+  , acceptor_registry_ (std::make_unique<TAO_AV_Acceptor_Registry> ())
 {
-  ACE_NEW (this->connector_registry_,
-           TAO_AV_Connector_Registry
-           );
-  ACE_NEW (this->acceptor_registry_,
-           TAO_AV_Acceptor_Registry
-           );
 }
 
 TAO_AV_Core::~TAO_AV_Core ()
 {
-  delete this->connector_registry_;
-  delete this->acceptor_registry_;
-
   TAO_AV_TransportFactorySetItor transport_iter =
       this->transport_factories_.begin();
 
@@ -105,13 +95,13 @@ TAO_AV_Core::poa (PortableServer::POA_ptr poa)
 TAO_AV_Connector_Registry*
 TAO_AV_Core::connector_registry ()
 {
-  return this->connector_registry_;
+  return this->connector_registry_.get ();
 }
 
 TAO_AV_Acceptor_Registry*
 TAO_AV_Core::acceptor_registry ()
 {
-  return this->acceptor_registry_;
+  return this->acceptor_registry_.get ();
 }
 
 TAO_AV_TransportFactorySet *
@@ -1076,7 +1066,7 @@ TAO_AV_Core::init_flow_protocol_factories ()
 
           (*factory)->factory (
                                ACE_Dynamic_Service<TAO_AV_Flow_Protocol_Factory>::instance (name.c_str ()));
-          if ((*factory)->factory () == 0)
+          if ((*factory)->factory () == nullptr)
             {
               ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("TAO (%P|%t) Unable to load ")
