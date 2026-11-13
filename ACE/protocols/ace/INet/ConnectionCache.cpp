@@ -199,8 +199,9 @@ namespace ACE
 
             if (create_connection)
               {
-                connection = connection_factory.create_connection (key);
-                if (connection != nullptr)
+                std::unique_ptr<connection_type> new_connection (
+                  connection_factory.create_connection (key));
+                if (new_connection != nullptr)
                   {
                     INET_DEBUG (9, (LM_INFO, DLINFO ACE_TEXT ("ConnectionCache::claim_connection - ")
                                              ACE_TEXT ("successfully created new connection\n")));
@@ -210,9 +211,14 @@ namespace ACE
                                               this->lock_,
                                               false));
 
-                    ConnectionCacheValue cacheval (connection);
+                    ConnectionCacheValue cacheval (new_connection.get ());
                     cacheval.state (ConnectionCacheValue::CST_BUSY);
-                    return this->set_connection (key, cacheval);
+                    if (this->set_connection (key, cacheval))
+                      {
+                        connection = new_connection.release ();
+                        return true;
+                      }
+                    return false;
                   }
                 else
                   return false;

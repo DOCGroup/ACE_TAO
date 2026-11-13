@@ -112,6 +112,8 @@ namespace ACE
               ConnectionFactory ();
               virtual ~ConnectionFactory ();
 
+              /// Returns a newly allocated connection whose ownership is
+              /// transferred to the ConnectionCache on successful insertion.
               virtual ConnectionHolder* create_connection (
                   ConnectionKey const& key) const = 0;
           };
