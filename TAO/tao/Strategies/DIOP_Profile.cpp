@@ -294,8 +294,8 @@ TAO_DIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
     return 0;
 
   // Check endpoints equivalence.
-  const TAO_DIOP_Endpoint *other_endp = &op->endpoint_;
-  for (TAO_DIOP_Endpoint *endp = &this->endpoint_;
+  const TAO_DIOP_Endpoint *other_endp = std::addressof (op->endpoint_);
+  for (TAO_DIOP_Endpoint *endp = std::addressof (this->endpoint_);
        endp != nullptr;
        endp = endp->next_)
     {
@@ -313,7 +313,7 @@ TAO_DIOP_Profile::hash (CORBA::ULong max)
 {
   // Get the hashvalue for all endpoints.
   CORBA::ULong hashval {};
-  for (TAO_DIOP_Endpoint *endp = &this->endpoint_;
+  for (TAO_DIOP_Endpoint *endp = std::addressof (this->endpoint_);
        endp != nullptr;
        endp = endp->next_)
     {
@@ -340,7 +340,7 @@ TAO_DIOP_Profile::hash (CORBA::ULong max)
 TAO_Endpoint*
 TAO_DIOP_Profile::endpoint ()
 {
-  return &this->endpoint_;
+  return std::addressof (this->endpoint_);
 }
 
 CORBA::ULong
@@ -377,7 +377,7 @@ TAO_DIOP_Profile::to_string () const
        1 /* colon separator */);
 
  TAO_DIOP_Endpoint const *endp {};
- for (endp = &this->endpoint_; endp != nullptr; endp = endp->next_)
+ for (endp = std::addressof (this->endpoint_); endp != nullptr; endp = endp->next_)
    {
       buflen += (
           pfx_len +
@@ -401,7 +401,7 @@ TAO_DIOP_Profile::to_string () const
 
   std::strcpy (buf, "corbaloc:");
 
-  for (endp = &this->endpoint_; endp != nullptr; endp = endp->next_)
+  for (endp = std::addressof (this->endpoint_); endp != nullptr; endp = endp->next_)
     {
       if (std::addressof (this->endpoint_) != endp)
       std::strcat (buf, ",");
@@ -507,7 +507,7 @@ TAO_DIOP_Profile::encode_endpoints ()
   TAO::IIOPEndpointSequence endpoints;
   endpoints.length (this->count_);
 
-  const TAO_DIOP_Endpoint *endpoint = &this->endpoint_;
+  const TAO_DIOP_Endpoint *endpoint = std::addressof (this->endpoint_);
   for (CORBA::ULong i {};
        i < this->count_;
        ++i)

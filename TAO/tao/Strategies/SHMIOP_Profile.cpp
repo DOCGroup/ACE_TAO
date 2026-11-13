@@ -11,9 +11,10 @@
 
 #include "ace/os_include/os_netdb.h"
 #include "ace/Truncate.h"
-#include <cstring>
 #include <cstdio>
 #include <cstdlib>
+#include <cstring>
+#include <memory>
 
 static const char prefix_[] = "shmiop";
 
@@ -78,7 +79,7 @@ TAO_SHMIOP_Profile::~TAO_SHMIOP_Profile ()
 TAO_Endpoint*
 TAO_SHMIOP_Profile::endpoint ()
 {
-  return &this->endpoint_;
+  return std::addressof (this->endpoint_);
 }
 
 CORBA::ULong
@@ -264,8 +265,8 @@ TAO_SHMIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
     return 0;
 
   // Check endpoints equivalence.
-  const TAO_SHMIOP_Endpoint *other_endp = &op->endpoint_;
-  for (TAO_SHMIOP_Endpoint *endp = &this->endpoint_;
+  const TAO_SHMIOP_Endpoint *other_endp = std::addressof (op->endpoint_);
+  for (TAO_SHMIOP_Endpoint *endp = std::addressof (this->endpoint_);
        endp != nullptr;
        endp = endp->next_)
     {
@@ -283,7 +284,7 @@ TAO_SHMIOP_Profile::hash (CORBA::ULong max)
 {
   // Get the hashvalue for all endpoints.
   CORBA::ULong hashval {};
-  for (TAO_SHMIOP_Endpoint *endp = &this->endpoint_;
+  for (TAO_SHMIOP_Endpoint *endp = std::addressof (this->endpoint_);
        endp != nullptr;
        endp = endp->next_)
     {
@@ -401,7 +402,7 @@ TAO_SHMIOP_Profile::encode_endpoints ()
   TAO::IIOPEndpointSequence endpoints;
   endpoints.length (this->count_);
 
-  TAO_SHMIOP_Endpoint *endpoint = &this->endpoint_;
+  TAO_SHMIOP_Endpoint *endpoint = std::addressof (this->endpoint_);
   for (CORBA::ULong i {};
        i < this->count_;
        ++i)

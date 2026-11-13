@@ -50,7 +50,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (ACE_INET_Addr const &addr,
                  version),
     endpoint_ (addr,
                orb_core->orb_params ()->use_dotted_decimal_addresses ()),
-    last_endpoint_ (&this->endpoint_)
+    last_endpoint_ (std::addressof (this->endpoint_))
 {
 }
 
@@ -65,7 +65,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (char const *host,
                  object_key,
                  version),
     endpoint_ (host, port, addr),
-    last_endpoint_ (&this->endpoint_)
+    last_endpoint_ (std::addressof (this->endpoint_))
 {
 }
 
@@ -75,7 +75,7 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (TAO_ORB_Core *orb_core)
                  TAO_GIOP_Message_Version (TAO_DEF_GIOP_MAJOR,
                                            TAO_DEF_GIOP_MINOR)),
     endpoint_ (),
-    last_endpoint_ (&this->endpoint_)
+    last_endpoint_ (std::addressof (this->endpoint_))
 {
 }
 
@@ -329,8 +329,8 @@ TAO_IIOP_Profile::do_is_equivalent (TAO_Profile const *other_profile)
   if (this->count_ != op->count_)
     return false;
   // Check endpoints equivalence.
-  TAO_IIOP_Endpoint const *other_endp = &op->endpoint_;
-  for (TAO_IIOP_Endpoint *endp = &this->endpoint_;
+  TAO_IIOP_Endpoint const *other_endp = std::addressof (op->endpoint_);
+  for (TAO_IIOP_Endpoint *endp = std::addressof (this->endpoint_);
        endp != nullptr;
        endp = endp->next_)
     {
@@ -348,7 +348,7 @@ TAO_IIOP_Profile::hash (CORBA::ULong max)
 {
   // Get the hash value for all endpoints.
   CORBA::ULong hashval {};
-  for (TAO_IIOP_Endpoint *endp = &this->endpoint_;
+  for (TAO_IIOP_Endpoint *endp = std::addressof (this->endpoint_);
        endp != nullptr;
        endp = endp->next_)
     {
@@ -375,7 +375,7 @@ TAO_IIOP_Profile::hash (CORBA::ULong max)
 TAO_Endpoint *
 TAO_IIOP_Profile::endpoint ()
 {
-  return &this->endpoint_;
+  return std::addressof (this->endpoint_);
 }
 
 TAO_Endpoint *
@@ -383,7 +383,7 @@ TAO_IIOP_Profile::base_endpoint ()
 {
   // do not call endpoint(), return the value directly. This is to
   // avoid calling a derived implementation of endpoint().
-  return &this->endpoint_;
+  return std::addressof (this->endpoint_);
 }
 
 CORBA::ULong
@@ -420,13 +420,13 @@ TAO_IIOP_Profile::remove_endpoint (TAO_IIOP_Endpoint *endp)
           this->endpoint_.next_ = n->next_;
           if (this->last_endpoint_ == n)
             {
-              this->last_endpoint_ = &this->endpoint_;
+              this->last_endpoint_ = std::addressof (this->endpoint_);
             }
         }
       return;
     }
 
-  TAO_IIOP_Endpoint *prev = &this->endpoint_;
+  TAO_IIOP_Endpoint *prev = std::addressof (this->endpoint_);
   TAO_IIOP_Endpoint *cur = this->endpoint_.next_;
 
   while (cur != nullptr)
@@ -490,7 +490,7 @@ TAO_IIOP_Profile::to_string () const
        std::strlen (::the_prefix) /* "iiop" */ +
        1 /* colon separator */);
 
-  TAO_IIOP_Endpoint const *endp = &this->endpoint_;
+  TAO_IIOP_Endpoint const *endp = std::addressof (this->endpoint_);
   for (; endp != nullptr; endp = endp->next_)
     {
       buflen += (
@@ -516,7 +516,7 @@ TAO_IIOP_Profile::to_string () const
 
   std::strcpy (buf, "corbaloc:");
 
-  for (endp = &this->endpoint_; endp != nullptr; endp = endp->next_)
+  for (endp = std::addressof (this->endpoint_); endp != nullptr; endp = endp->next_)
     {
       if (std::addressof (this->endpoint_) != endp)
         std::strcat (buf, ",");
@@ -613,7 +613,7 @@ TAO_IIOP_Profile::encode_alternate_endpoints ()
 {
   // encode IOP::TAG_ALTERNATE_IIOP_ADDRESS tags if there are more
   // than one endpoints to listen to.
-  TAO_IIOP_Endpoint const *endpoint = &this->endpoint_;
+  TAO_IIOP_Endpoint const *endpoint = std::addressof (this->endpoint_);
   for (CORBA::ULong i = 1;
        i < this->count_;
        ++i)
@@ -686,7 +686,7 @@ TAO_IIOP_Profile::encode_endpoints ()
 {
   CORBA::ULong actual_count {};
 
-  TAO_IIOP_Endpoint const *endpoint = &this->endpoint_;
+  TAO_IIOP_Endpoint const *endpoint = std::addressof (this->endpoint_);
 
   // Count the number of endpoints that needs to be encoded
   for (CORBA::ULong c {};
@@ -709,7 +709,7 @@ TAO_IIOP_Profile::encode_endpoints ()
   TAO::IIOPEndpointSequence endpoints;
   endpoints.length (actual_count);
 
-  endpoint = &this->endpoint_;
+  endpoint = std::addressof (this->endpoint_);
 
   for (CORBA::ULong i {};
        i < actual_count;

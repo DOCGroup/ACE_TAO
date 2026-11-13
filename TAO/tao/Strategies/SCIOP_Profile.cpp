@@ -11,9 +11,10 @@
 #include "tao/Strategies/sciop_endpointsC.h"
 #include "ace/os_include/os_netdb.h"
 
-#include <cstring>
 #include <cstdio>
 #include <cstdlib>
+#include <cstring>
+#include <memory>
 
 static const char prefix_[] = "sciop";
 
@@ -239,8 +240,8 @@ TAO_SCIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
     return false;
 
   // Check endpoints equivalence.
-  const TAO_SCIOP_Endpoint *other_endp = &op->endpoint_;
-  for (TAO_SCIOP_Endpoint *endp = &this->endpoint_;
+  const TAO_SCIOP_Endpoint *other_endp = std::addressof (op->endpoint_);
+  for (TAO_SCIOP_Endpoint *endp = std::addressof (this->endpoint_);
        endp != nullptr;
        endp = endp->next_)
     {
@@ -258,7 +259,7 @@ TAO_SCIOP_Profile::hash (CORBA::ULong max)
 {
   // Get the hash value for all endpoints.
   CORBA::ULong hashval {};
-  for (TAO_SCIOP_Endpoint *endp = &this->endpoint_;
+  for (TAO_SCIOP_Endpoint *endp = std::addressof (this->endpoint_);
        endp != nullptr;
        endp = endp->next_)
     {
@@ -285,7 +286,7 @@ TAO_SCIOP_Profile::hash (CORBA::ULong max)
 TAO_Endpoint*
 TAO_SCIOP_Profile::endpoint ()
 {
-  return &this->endpoint_;
+  return std::addressof (this->endpoint_);
 }
 
 CORBA::ULong
@@ -362,7 +363,7 @@ TAO_SCIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
   CORBA::StringSeq strseq;
   strseq.length(this->count_);
 
-  const TAO_SCIOP_Endpoint *endpoint = &this->endpoint_;
+  const TAO_SCIOP_Endpoint *endpoint = std::addressof (this->endpoint_);
   for (CORBA::ULong i {};
        i < this->count_;
        ++i)
@@ -399,7 +400,7 @@ TAO_SCIOP_Profile::encode_endpoints ()
 {
   CORBA::ULong actual_count {};
 
-  const TAO_SCIOP_Endpoint *endpoint = &this->endpoint_;
+  const TAO_SCIOP_Endpoint *endpoint = std::addressof (this->endpoint_);
 
   // Count the number of endpoints that needs to be encoded
   for (CORBA::ULong c {};
@@ -422,7 +423,7 @@ TAO_SCIOP_Profile::encode_endpoints ()
   TAO_SCIOPEndpointSequence endpoints;
   endpoints.length (actual_count);
 
-  endpoint = &this->endpoint_;
+  endpoint = std::addressof (this->endpoint_);
 
   for (CORBA::ULong i {};
        i < this->count_;

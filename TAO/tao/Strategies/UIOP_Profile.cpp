@@ -77,7 +77,7 @@ TAO_UIOP_Profile::~TAO_UIOP_Profile ()
 TAO_Endpoint*
 TAO_UIOP_Profile::endpoint ()
 {
-  return &this->endpoint_;
+  return std::addressof (this->endpoint_);
 }
 
 CORBA::ULong
@@ -179,8 +179,8 @@ TAO_UIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
     return false;
 
   // Check endpoints equivalence.
-  const TAO_UIOP_Endpoint *other_endp = &op->endpoint_;
-  for (TAO_UIOP_Endpoint *endp = &this->endpoint_;
+  const TAO_UIOP_Endpoint *other_endp = std::addressof (op->endpoint_);
+  for (TAO_UIOP_Endpoint *endp = std::addressof (this->endpoint_);
        endp != nullptr;
        endp = endp->next_)
     {
@@ -198,7 +198,7 @@ TAO_UIOP_Profile::hash (CORBA::ULong max)
 {
   // Get the hashvalue for all endpoints.
   CORBA::ULong hashval {};
-  for (TAO_UIOP_Endpoint *endp = &this->endpoint_;
+  for (TAO_UIOP_Endpoint *endp = std::addressof (this->endpoint_);
        endp != nullptr;
        endp = endp->next_)
     {
@@ -345,7 +345,7 @@ TAO_UIOP_Profile::encode_endpoints ()
   TAO_UIOPEndpointSequence endpoints;
   endpoints.length (this->count_);
 
-  TAO_UIOP_Endpoint *endpoint = &this->endpoint_;
+  TAO_UIOP_Endpoint *endpoint = std::addressof (this->endpoint_);
   for (size_t i {};
        i < this->count_;
        ++i)
