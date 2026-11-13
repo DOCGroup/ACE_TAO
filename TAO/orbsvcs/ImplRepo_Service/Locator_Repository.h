@@ -86,8 +86,7 @@ public:
     const CORBA::Long token,
     const ACE_CString& ior = ACE_CString(""),
     ImplementationRepository::Activator_ptr act =
-      ImplementationRepository::Activator::_nil()
-    );
+      ImplementationRepository::Activator::_nil());
 
   /// Update the associated information.
   int update_server (const Server_Info_Ptr& info);

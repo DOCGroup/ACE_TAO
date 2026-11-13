@@ -46,8 +46,7 @@ public:
   CORBA::Boolean is_a (char const *interface_id) override;
 
   CORBA::Boolean is_a_i (
-      char const *interface_id
-    );
+      char const *interface_id);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

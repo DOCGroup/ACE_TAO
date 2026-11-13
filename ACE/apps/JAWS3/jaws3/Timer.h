@@ -59,20 +59,17 @@ public:
   void schedule_timer ( long *timer_id
                       , const ACE_Time_Value &delta
                       , JAWS_Event_Completer *completer
-                      , void *act = nullptr
-                      );
+                      , void *act = nullptr);
 
   void schedule_absolute_timer ( long *timer_id
                                , const ACE_Time_Value &tv
                                , JAWS_Event_Completer *completer
-                               , void *act = nullptr
-                               );
+                               , void *act = nullptr);
 
   void schedule_interval_timer ( long *timer_id
                                , const ACE_Time_Value &interval
                                , JAWS_Event_Completer *completer
-                               , void *act = nullptr
-                               );
+                               , void *act = nullptr);
 
   void cancel_timer (long timer_id);
 

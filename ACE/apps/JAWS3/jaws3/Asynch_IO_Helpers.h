@@ -37,8 +37,7 @@ private:
 protected:
   JAWS_Event_Result make_io_result ( const ACE_Asynch_Result &result
                                    , JAWS_Event_Result::JE_REASON reason_ok
-                                   , JAWS_Event_Result::JE_REASON reason_fail
-                                   );
+                                   , JAWS_Event_Result::JE_REASON reason_fail);
 
 private:
   JAWS_Event_Completer *completer_;

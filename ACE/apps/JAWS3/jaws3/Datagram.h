@@ -81,43 +81,37 @@ public:
   void accept ( const ACE_Addr &local_sap
               , ACE_SOCK_Dgram &new_dgram
               , JAWS_Event_Completer *completer
-              , void *act = nullptr
-              );
+              , void *act = nullptr);
 
   void connect ( const ACE_Addr &remote_sap
                , ACE_SOCK_Dgram &new_dgram
                , JAWS_Event_Completer *completer
-               , void *act = nullptr
-               );
+               , void *act = nullptr);
 
   void connect ( const ACE_Addr &remote_sap
                , ACE_SOCK_Dgram &new_dgram
                , const ACE_Addr &local_sap
                , JAWS_Event_Completer *completer
-               , void *act = nullptr
-               );
+               , void *act = nullptr);
 
   void accept ( const ACE_Addr &local_sap
               , ACE_SOCK_Dgram &new_dgram
               , JAWS_Event_Completer *completer
               , const ACE_Time_Value &timeout
-              , void *act = nullptr
-              );
+              , void *act = nullptr);
 
   void connect ( const ACE_Addr &remote_sap
                , ACE_SOCK_Dgram &new_dgram
                , JAWS_Event_Completer *completer
                , const ACE_Time_Value &timeout
-               , void *act = nullptr
-               );
+               , void *act = nullptr);
 
   void connect ( const ACE_Addr &remote_sap
                , ACE_SOCK_Dgram &new_dgram
                , const ACE_Addr &local_sap
                , JAWS_Event_Completer *completer
                , const ACE_Time_Value &timeout
-               , void *act = nullptr
-               );
+               , void *act = nullptr);
 
 private:
   JAWS_Datagram_Impl *impl_;

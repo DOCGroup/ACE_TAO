@@ -346,8 +346,7 @@ namespace TAO
 
     /// Registers the Fault Notifier with the Replication Manager.
     void register_fault_notifier_i (
-        FT::FaultNotifier_ptr fault_notifier
-      );
+        FT::FaultNotifier_ptr fault_notifier);
 
     ////////////////
     // Forbidden methods

@@ -120,8 +120,7 @@ protected:
                            , ACE_SEH_EXCEPT_HANDLER selector = nullptr
                            , ACE_SEH_EXCEPT_HANDLER handler = nullptr
 # endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
-                           , long cancel_flags = 0
-                      );
+                           , long cancel_flags = 0);
   /// Inherit the logging features if the parent thread has an
   /// ACE_Log_Msg.
   void inherit_log_msg ();

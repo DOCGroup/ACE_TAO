@@ -64,8 +64,7 @@ public:
     Thermostat_impl(
         CCS::AssetType  anum,
         char const *    location,
-        CCS::TempType   nominal_temp
-    );
+        CCS::TempType   nominal_temp);
     ~Thermostat_impl () override = default;
 
 private:

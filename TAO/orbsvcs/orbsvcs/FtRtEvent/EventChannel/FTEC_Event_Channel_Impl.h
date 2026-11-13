@@ -67,35 +67,28 @@ public:
 
    virtual ::FtRtecEventChannelAdmin::ObjectId * connect_push_consumer (
         RtecEventComm::PushConsumer_ptr push_consumer,
-        const RtecEventChannelAdmin::ConsumerQOS & qos
-      );
+        const RtecEventChannelAdmin::ConsumerQOS & qos);
 
 
     virtual ::FtRtecEventChannelAdmin::ObjectId * connect_push_supplier (
         RtecEventComm::PushSupplier_ptr push_supplier,
-        const RtecEventChannelAdmin::SupplierQOS & qos
-      );
+        const RtecEventChannelAdmin::SupplierQOS & qos);
 
     virtual void disconnect_push_supplier (
-        const FtRtecEventChannelAdmin::ObjectId & oid
-      );
+        const FtRtecEventChannelAdmin::ObjectId & oid);
 
     virtual void disconnect_push_consumer (
-        const FtRtecEventChannelAdmin::ObjectId & oid
-      );
+        const FtRtecEventChannelAdmin::ObjectId & oid);
 
     virtual void suspend_push_supplier (
-        const FtRtecEventChannelAdmin::ObjectId & oid
-      );
+        const FtRtecEventChannelAdmin::ObjectId & oid);
 
     virtual void resume_push_supplier (
-        const FtRtecEventChannelAdmin::ObjectId & oid
-      );
+        const FtRtecEventChannelAdmin::ObjectId & oid);
 
     virtual void push (
         const FtRtecEventChannelAdmin::ObjectId & oid,
-        const RtecEventComm::EventSet & data
-      );
+        const RtecEventComm::EventSet & data);
 
   ////////////////////////////////////////////
 

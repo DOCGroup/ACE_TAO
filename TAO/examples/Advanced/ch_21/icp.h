@@ -21,13 +21,11 @@ extern "C" {
             unsigned long   id,
             char const *    attr,
             void *          value,
-            size_t     len
-        );
+            size_t     len);
     int ICP_set(                        // Set attribute
             unsigned long   id,
             char const *    attr,
-            void const *    value
-        );
+            void const *    value);
 }
 
 #endif /* _ICP_H */

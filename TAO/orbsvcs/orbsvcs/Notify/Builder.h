@@ -81,8 +81,7 @@ public:
   /// be an appropriate base class for it to return.
   virtual TAO_Notify_ConsumerAdmin *
   build_consumer_admin (TAO_Notify_EventChannel* ec
-                        , const CosNotifyChannelAdmin::AdminID id //CORBA::Long id          // note: an in parameter!
-                        );
+                        , const CosNotifyChannelAdmin::AdminID id);
 
   /// Build SupplierAdmin
   virtual CosNotifyChannelAdmin::SupplierAdmin_ptr
@@ -96,8 +95,7 @@ public:
   /// be an appropriate base class for it to return.
   virtual TAO_Notify_SupplierAdmin *
   build_supplier_admin (TAO_Notify_EventChannel * ec
-                        , const CosNotifyChannelAdmin::AdminID id //CORBA::Long id          // note: an in parameter!
-                        );
+                        , const CosNotifyChannelAdmin::AdminID id);
 
   /// Build ProxyConsumer
   virtual CosNotifyChannelAdmin::ProxyConsumer_ptr

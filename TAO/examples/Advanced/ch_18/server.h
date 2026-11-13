@@ -97,8 +97,7 @@ public:
 
     Controller_impl(
         PortableServer::POA_ptr poa,
-        char const *asset_file
-    );
+        char const *asset_file);
     ~Controller_impl () override;
 
     // Helper functions to allow access to the object map
