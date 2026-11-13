@@ -18,6 +18,8 @@
 #include "ace/Containers.h"
 #include "ace/SString.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -248,7 +250,8 @@ protected:
   int num_peer_sec_addrs_ {};
   ACE_Addr *peer_control_addr_ {};
   ACE_Addr *local_addr_ {};
-  ACE_Addr *local_control_addr_ {};
+  /// Owns the local control address passed to set_local_control_addr().
+  std::unique_ptr<ACE_Addr> local_control_addr_ {};
   TAO_AV_Transport *transport_ {};
   TAO_AV_Transport *control_transport_ {};
   TAO_AV_Flow_Handler *handler_ {};

@@ -72,8 +72,6 @@ TAO_FlowSpec_Entry::~TAO_FlowSpec_Entry ()
     delete address_;
   if (this->clean_up_control_address_)
     delete control_address_;
-  if (local_control_addr_ != nullptr)
-    delete local_control_addr_;
 }
 
 int

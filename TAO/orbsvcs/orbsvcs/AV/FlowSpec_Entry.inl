@@ -167,7 +167,8 @@ ACE_INLINE
 int
 TAO_FlowSpec_Entry::set_local_control_addr (ACE_Addr *local_addr)
 {
-  this->local_control_addr_ = local_addr;
+  if (this->local_control_addr_.get () != local_addr)
+    this->local_control_addr_.reset (local_addr);
   return 0;
 }
 
@@ -182,7 +183,7 @@ ACE_INLINE
 ACE_Addr*
 TAO_FlowSpec_Entry::get_local_control_addr ()
 {
-  return this->local_control_addr_;
+  return this->local_control_addr_.get ();
 }
 
 ACE_INLINE
