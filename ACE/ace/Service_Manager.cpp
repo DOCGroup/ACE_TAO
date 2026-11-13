@@ -243,15 +243,9 @@ void
 ACE_Service_Manager::process_request (ACE_TCHAR *request)
 {
   ACE_TRACE ("ACE_Service_Manager::process_request");
-  ACE_TCHAR *p;
-
-  // Kill trailing newlines.
-  for (p = request;
-       (*p != '\0') && (*p != '\r') && (*p != '\n');
-       p++)
-    {
-      continue;
-    }
+  ACE_TCHAR *p = request;
+  while (*p != '\0' && *p != '\r' && *p != '\n')
+    ++p;
 
   *p = '\0';
 
