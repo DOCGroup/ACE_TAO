@@ -645,7 +645,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
                 }
             }
 
-          // In case of errors transport is zero
+          // In case of errors transport is null
           if (transport == nullptr)
             {
               // Give users a clue to the problem.

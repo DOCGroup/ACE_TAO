@@ -17,7 +17,7 @@ TAO::SSLIOP::Current::get_peer_certificate ()
 {
   TAO::SSLIOP::Current_Impl *impl = this->implementation ();
 
-  // If the implementation pointer returned from TSS is zero, then
+  // If the implementation pointer returned from TSS is null, then
   // we're not in the middle of a request or an upcall.  Throw an
   // exception to indicate that.
   if (impl == nullptr)
@@ -47,7 +47,7 @@ TAO::SSLIOP::Current::get_peer_certificate_chain ()
 {
   TAO::SSLIOP::Current_Impl *impl = this->implementation ();
 
-  // If the implementation pointer returned from TSS is zero, then
+  // If the implementation pointer returned from TSS is null, then
   // we're not in the middle of a request or an upcall.  Throw an
   // exception to indicate that.
   if (impl == nullptr)

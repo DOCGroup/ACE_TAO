@@ -169,7 +169,7 @@ TAO::IIOP_SSL_Connector::make_connection (
         }
     }
 
-  // In case of errors transport is zero
+  // In case of errors transport is null
   if (transport == nullptr)
     {
       // Give users a clue to the problem.
