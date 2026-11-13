@@ -693,10 +693,10 @@ protected:
 
   CORBA::OctetSeq id_;
 
-  /// Pointer to the object reference template adapter.
+  /// Adapter created and released through ort_adapter_factory_.
   TAO::ORT_Adapter *ort_adapter_ {};
 
-  /// Pointer to the object reference template adapter factory.
+  /// Borrowed from the ORB configuration; the configuration owns the factory.
   TAO::ORT_Adapter_Factory *ort_adapter_factory_ {};
 
   /// Adapter can be accepting, rejecting etc.
@@ -704,6 +704,7 @@ protected:
 
   TAO::Portable_Server::Cached_Policies cached_policies_;
 
+  /// Borrowed from the ACE dynamic service repository.
   TAO_Network_Priority_Hook *network_priority_hook_ {};
 
   TAO::Portable_Server::Active_Policy_Strategies active_policy_strategies_;
@@ -725,7 +726,7 @@ protected:
 
   TAO_ORB_Core &orb_core_;
 
-  /// The object adapter we belong to
+  /// Borrowed from the object adapter that owns this POA.
   TAO_Object_Adapter *object_adapter_;
 
   CORBA::Boolean cleanup_in_progress_ {};
@@ -741,6 +742,7 @@ protected:
   TAO_SYNCH_CONDITION servant_deactivation_condition_;
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
+  /// Borrowed from the ACE dynamic service repository.
   TAO_Acceptor_Filter_Factory * filter_factory_ {};
 #endif
 

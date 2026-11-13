@@ -182,6 +182,8 @@ public:
     const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &creation_parameters);
 
   /// Base class of the id map.
+  /// This map owns each entry stored as its value; successful unbinds and
+  /// TAO_Active_Object_Map destruction delete those entries.
   using user_id_map = ACE_Map<
     PortableServer::ObjectId,
     TAO_Active_Object_Map_Entry *>;
@@ -207,6 +209,8 @@ public:
     TAO_Ignore_Original_Key_Adapter>;
 
   /// Base class of the servant map.
+  /// This is a secondary index of entries owned by user_id_map; it never
+  /// deletes the entries.
   using servant_map = ACE_Map<
     PortableServer::Servant,
     TAO_Active_Object_Map_Entry *>;
