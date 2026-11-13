@@ -101,8 +101,6 @@ public:
   /// Name of the component--ACE_Reactor in this case.
   static const ACE_TCHAR *name ();
 
-  // = Singleton reactor event loop management methods.
-
   // Note that these method ONLY work on the "Singleton Reactor,"
   // i.e., the one returned from ACE_Reactor::instance().
   /**
@@ -170,8 +168,6 @@ public:
    * handle it after handling an event.
    */
   static int check_reconfiguration (ACE_Reactor *);
-
-  // = Reactor event loop management methods.
 
   // These methods work with an instance of a reactor.
   /**
@@ -257,8 +253,6 @@ public:
   /// Close down and release all resources.
   int close ();
 
-  // = Event loop drivers.
-
   /**
    * Returns non-zero if there are I/O events "ready" for dispatching,
    * but does not actually dispatch the event handlers.  By default,
@@ -303,8 +297,6 @@ public:
    */
   int handle_events (ACE_Time_Value &max_wait_time);
   int alertable_handle_events (ACE_Time_Value &max_wait_time);
-
-  // = Register and remove handlers.
 
   /**
    * Register handler for I/O events.
@@ -478,8 +470,6 @@ public:
    */
   int remove_handler (const ACE_Sig_Set &sigset);
 
-  // = Suspend and resume Handlers.
-
   /**
    * Suspend @a handle temporarily.
    */
@@ -535,8 +525,6 @@ public:
   /// the application. A positive value indicates that the handlers
   /// are application resumable. A value of 0 indicates otherwise.
   int resumable_handler ();
-
-  // = Timer management.
 
   /**
    * Schedule a timer event.
@@ -632,8 +620,6 @@ public:
   int cancel_timer (ACE_Event_Handler *event_handler,
                             int dont_call_handle_close = 1) override;
 
-  // = High-level Event_Handler scheduling operations
-
   /// Add @a masks_to_be_added to the @a event_handler's entry.
   /// @a event_handler must already have been registered.
   /// Note that this call does not cause the Reactor to re-examine
@@ -675,8 +661,6 @@ public:
   /// call, or use ACE_Reactor::register_handler instead.
   int cancel_wakeup (ACE_HANDLE handle,
                      ACE_Reactor_Mask masks_to_be_cleared);
-
-  // = Notification methods.
 
   /**
    * Dispatch user specified events.
@@ -744,8 +728,6 @@ public:
                                    ACE_Reactor_Mask =
                                             ACE_Event_Handler::ALL_EVENTS_MASK);
 
-  // = Assorted helper methods.
-
   /**
    * Return the Event_Handler associated with @a handle.  Return 0 if
    * @a handle is not registered.
@@ -808,8 +790,6 @@ public:
   /// Set a new value for restart and return the original value.
   bool restart (bool r);
 
-  // = Low-level wait_set mask manipulation methods.
-
   /// GET/SET/ADD/CLR the dispatch mask "bit" bound with the
   /// @a event_handler and @a mask.
   int mask_ops (ACE_Event_Handler *event_handler,
@@ -822,7 +802,6 @@ public:
                 ACE_Reactor_Mask mask,
                 int ops);
 
-  // = Low-level ready_set mask manipulation methods.
   /// GET/SET/ADD/CLR the ready "bit" bound with the @a event_handler
   /// and @a mask.
   int ready_ops (ACE_Event_Handler *event_handler,

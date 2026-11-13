@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_REACTOR_IMPL_H
 #define ACE_REACTOR_IMPL_H
 #include /**/ "ace/pre.h"
@@ -156,7 +155,6 @@ public:
   /// Close down and release all resources.
   virtual int close () = 0;
 
-  // = Event loop drivers.
   /**
    * Returns non-zero if there are I/O events "ready" for dispatching,
    * but does not actually dispatch the event handlers.  By default,
@@ -202,8 +200,6 @@ public:
   virtual int handle_events (ACE_Time_Value &max_wait_time) = 0;
   virtual int alertable_handle_events (ACE_Time_Value &max_wait_time) = 0;
 
-  // = Event handling control.
-
   /**
    * Return the status of Reactor.  If this function returns 0, the reactor is
    * actively handling events.  If it returns non-zero, handling_events() and
@@ -217,8 +213,6 @@ public:
    * is in active state and can be deactivated/reactived as wish.
    */
   virtual void deactivate (int do_stop) = 0;
-
-  // = Register and remove Handlers.
 
   /// Register @a event_handler with @a mask.  The I/O handle will always
   /// come from get_handle() on the @a event_handler.
@@ -322,8 +316,6 @@ public:
   /// Calls remove_handler() for every signal in @a sigset.
   virtual int remove_handler (const ACE_Sig_Set &sigset) = 0;
 
-  // = Suspend and resume Handlers.
-
   /// Suspend @a event_handler temporarily.  Uses
   /// ACE_Event_Handler::get_handle() to get the handle.
   virtual int suspend_handler (ACE_Event_Handler *event_handler) = 0;
@@ -360,8 +352,6 @@ public:
   virtual bool uses_event_associations () = 0;
 
   // If we need to reset handles returned from accept/connect.
-
-  // = Timer management.
 
   /**
    * Schedule an ACE_Event_Handler that will expire after an amount
@@ -413,8 +403,6 @@ public:
                             const void **arg = nullptr,
                             int dont_call_handle_close = 1) = 0;
 
-  // = High-level Event_Handler scheduling operations
-
   /// Add @a masks_to_be_added to the @a event_handler's entry.
   /// @a event_handler must already have been registered.
   virtual int schedule_wakeup (ACE_Event_Handler *event_handler,
@@ -432,8 +420,6 @@ public:
   /// Clear @a masks_to_be_cleared from the @a handle's entry.
   virtual int cancel_wakeup (ACE_HANDLE handle,
                              ACE_Reactor_Mask masks_to_be_cleared) = 0;
-
-  // = Notification methods.
 
   /**
    * Notify @a event_handler of @a mask event.  The ACE_Time_Value
@@ -528,8 +514,6 @@ public:
   /// Get position of the owner thread.
   virtual int requeue_position () = 0;
 
-  // = Low-level wait_set mask manipulation methods.
-
   /// GET/SET/ADD/CLR the dispatch mask "bit" bound with the
   /// @a event_handler and @a mask.
   virtual int mask_ops (ACE_Event_Handler *event_handler,
@@ -542,7 +526,6 @@ public:
                         ACE_Reactor_Mask mask,
                         int ops) = 0;
 
-  // = Low-level ready_set mask manipulation methods.
   /// GET/SET/ADD/CLR the ready "bit" bound with the @a event_handler
   /// and @a mask.
   virtual int ready_ops (ACE_Event_Handler *event_handler,
