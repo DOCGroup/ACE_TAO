@@ -1,4 +1,5 @@
 #include "tao/Strategies/DIOP_Profile.h"
+#include <memory>
 
 #if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
 
@@ -402,7 +403,7 @@ TAO_DIOP_Profile::to_string () const
 
   for (endp = &this->endpoint_; endp != nullptr; endp = endp->next_)
     {
-      if (&this->endpoint_ != endp)
+      if (std::addressof (this->endpoint_) != endp)
       std::strcat (buf, ",");
 
 #if defined (ACE_HAS_IPV6)

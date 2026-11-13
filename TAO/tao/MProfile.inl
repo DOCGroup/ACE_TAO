@@ -1,4 +1,5 @@
 // -*- C++ -*-
+#include <memory>
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
@@ -24,7 +25,7 @@ TAO_MProfile::TAO_MProfile (const TAO_MProfile &mprofiles)
 ACE_INLINE TAO_MProfile&
 TAO_MProfile::operator= (const TAO_MProfile& rhs)
 {
-  if (this == &rhs)
+  if (this == std::addressof (rhs))
     return *this;
 
   this->set (rhs);

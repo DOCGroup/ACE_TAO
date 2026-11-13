@@ -1,5 +1,6 @@
 // -*- C++ -*-
 #include "tao/Exception.h"
+#include <memory>
 #include "tao/SystemException.h"
 #include "tao/Environment.h"
 #include "tao/ORB_Constants.h"
@@ -48,7 +49,7 @@ CORBA::Exception::Exception (const CORBA::Exception &src)
 CORBA::Exception &
 CORBA::Exception::operator= (const CORBA::Exception &src)
 {
-  if (this != &src)
+  if (this != std::addressof (src))
     {
       this->id_ = CORBA::string_dup (src.id_);
       this->name_ = CORBA::string_dup (src.name_);

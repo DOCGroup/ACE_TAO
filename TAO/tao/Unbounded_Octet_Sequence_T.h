@@ -8,6 +8,7 @@
  * @author Johnny Willemsen
  */
 #include "tao/orbconf.h"
+#include <memory>
 
 #include "tao/Unbounded_Value_Sequence_T.h"
 
@@ -299,7 +300,7 @@ public:
 
   unbounded_value_sequence &operator= (unbounded_value_sequence &&rhs) noexcept
   {
-    if (this != &rhs)
+    if (this != std::addressof (rhs))
       {
         unbounded_value_sequence tmp (std::move (rhs));
         this->swap (tmp);

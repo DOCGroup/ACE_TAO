@@ -12,6 +12,7 @@
 #define TAO_TRANSPORT_SELECTION_GUARD_H
 
 #include /**/ "ace/pre.h"
+#include <memory>
 
 #include "tao/TAO_Export.h"
 
@@ -66,7 +67,7 @@ namespace TAO
     // CSD server-request cloning copies the selected transport state.
     Transport_Selection_Guard &operator= (Transport_Selection_Guard const &rhs)
     {
-      if (this != &rhs)
+      if (this != std::addressof (rhs))
         {
 #if TAO_HAS_TRANSPORT_CURRENT == 1
           this->prev_ = rhs.prev_;

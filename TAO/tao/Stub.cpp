@@ -367,7 +367,7 @@ TAO_Stub::forward_back_one ()
 
   // the current profile in this profile list is no
   // longer being forwarded, so set the reference to zero.
-  if (from == &this->base_profiles_)
+  if (from == std::addressof (this->base_profiles_))
     {
       this->base_profiles_.get_current_profile ()->forward_to (nullptr);
       this->forward_profiles_ = nullptr;

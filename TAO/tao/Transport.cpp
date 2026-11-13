@@ -1,4 +1,5 @@
 #include "tao/Transport.h"
+#include <memory>
 
 #include "tao/LF_Follower.h"
 #include "tao/Leader_Follower.h"
@@ -953,7 +954,7 @@ TAO_Transport::handle_timeout (const ACE_Time_Value & /* current_time */,
     }
 
   /// This is the only legal ACT in the current configuration....
-  if (act != &this->current_deadline_)
+  if (act != std::addressof (this->current_deadline_))
     {
       return -1;
     }

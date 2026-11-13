@@ -1,5 +1,6 @@
 // -*- C++ -*-
 #include "tao/debug.h"
+#include <memory>
 #include "ace/Log_Msg.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -125,7 +126,7 @@ namespace TAO
   Cache_ExtId_T<TRANSPORT_DESCRIPTOR_TYPE> &
   Cache_ExtId_T<TRANSPORT_DESCRIPTOR_TYPE>::operator= (const Cache_ExtId_T &rhs)
   {
-    if (this != &rhs)
+    if (this != std::addressof (rhs))
       {
         // Do a deep copy
         this->transport_property_ =

@@ -1,4 +1,5 @@
 #include "AMH_DSI_Response_Handler.h"
+#include <memory>
 #include "Request.h"
 #include "ExceptionList.h"
 #include "DII_Invocation.h"
@@ -104,7 +105,7 @@ TAO_AMH_DSI_Exception_Holder_var &
 TAO_AMH_DSI_Exception_Holder_var::operator= (
     TAO_AMH_DSI_Exception_Holder_var const &p)
 {
-  if (this != &p)
+  if (this != std::addressof (p))
     {
       CORBA::remove_ref (this->ptr_);
       TAO_AMH_DSI_Exception_Holder *tmp = p.ptr ();

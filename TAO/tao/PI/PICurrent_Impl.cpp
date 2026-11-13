@@ -1,4 +1,5 @@
 #include "tao/PI/PICurrent_Impl.h"
+#include <memory>
 
 #if TAO_HAS_INTERCEPTORS == 1
 
@@ -23,7 +24,7 @@ TAO::PICurrent_Impl::get_slot (PortableInterceptor::SlotId identifier)
 
   // The active slot table should never be a lazy copy of itself!
   if ( (nullptr != this->lazy_copy_)
-      && (&this->lazy_copy_->current_slot_table () == &this->slot_table_))
+      && (std::addressof (this->lazy_copy_->current_slot_table ()) == std::addressof (this->slot_table_)))
   {
     if (TAO_debug_level > 0)
       TAOLIB_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) Lazy copy of self detected at %N,%l\n")));
@@ -95,7 +96,7 @@ TAO::PICurrent_Impl::take_lazy_copy (
   // copying from. (If it is the same as before OR it would ultimately be
   // the same table, we are already correctly setup and we do nothing.)
   if ( (p != this->lazy_copy_)
-      && ((nullptr == p) || (&p->current_slot_table () != &this->current_slot_table ()))
+      && ((nullptr == p) || (std::addressof (p->current_slot_table ()) != std::addressof (this->current_slot_table ())))
       )
     {
       // Break any existing ties that another PICurrent has with our table

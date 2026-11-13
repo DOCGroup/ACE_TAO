@@ -1,4 +1,5 @@
 // -*- C++ -*-
+#include <memory>
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Inline operations for class TAO_Priority_Mapping_Manager_var
@@ -44,7 +45,7 @@ TAO_Priority_Mapping_Manager_var::operator= (TAO_Priority_Mapping_Manager_ptr p)
 ACE_INLINE TAO_Priority_Mapping_Manager_var &
 TAO_Priority_Mapping_Manager_var::operator= (TAO_Priority_Mapping_Manager_var const &p)
 {
-  if (this != &p)
+  if (this != std::addressof (p))
   {
     CORBA::release (this->ptr_);
     this->ptr_ = ::TAO_Priority_Mapping_Manager::_duplicate (p.ptr ());

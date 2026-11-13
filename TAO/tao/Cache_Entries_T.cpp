@@ -1,5 +1,6 @@
 // -*- C++ -*-
 # include "tao/Cache_Entries_T.h"
+#include <memory>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Cache_Entries_T.inl"
@@ -36,7 +37,7 @@ namespace TAO
   Cache_IntId_T<TRANSPORT_TYPE>::operator= (
     const Cache_IntId_T<TRANSPORT_TYPE> &rhs)
   {
-    if (this != &rhs)
+    if (this != std::addressof (rhs))
       {
         this->recycle_state_ = rhs.recycle_state_;
         this->is_connected_ = rhs.is_connected_;

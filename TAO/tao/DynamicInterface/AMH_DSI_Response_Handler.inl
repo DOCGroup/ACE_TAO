@@ -1,4 +1,5 @@
 // -*- C++ -*-
+#include <memory>
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE void
@@ -64,7 +65,7 @@ TAO_AMH_DSI_Response_Handler_var::operator= (TAO_AMH_DSI_Response_Handler_ptr p)
 ACE_INLINE TAO_AMH_DSI_Response_Handler_var &
 TAO_AMH_DSI_Response_Handler_var::operator= (const TAO_AMH_DSI_Response_Handler_var &p)
 {
-  if (this != &p)
+  if (this != std::addressof (p))
     {
       CORBA::release (this->ptr_);
       this->ptr_ = TAO_AMH_DSI_Response_Handler::_duplicate (p.ptr ());

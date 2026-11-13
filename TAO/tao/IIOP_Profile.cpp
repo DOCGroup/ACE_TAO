@@ -408,7 +408,7 @@ TAO_IIOP_Profile::remove_endpoint (TAO_IIOP_Endpoint *endp)
     return;
 
   // special handling for the target matching the base endpoint
-  if (endp == &this->endpoint_)
+  if (endp == std::addressof (this->endpoint_))
     {
       if (--this->count_ > 0)
         {
@@ -518,7 +518,7 @@ TAO_IIOP_Profile::to_string () const
 
   for (endp = &this->endpoint_; endp != nullptr; endp = endp->next_)
     {
-      if (&this->endpoint_ != endp)
+      if (std::addressof (this->endpoint_) != endp)
         std::strcat (buf, ",");
 
 #if defined (ACE_HAS_IPV6)

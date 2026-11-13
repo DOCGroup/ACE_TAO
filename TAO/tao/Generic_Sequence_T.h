@@ -55,6 +55,7 @@
  */
 
 #include "tao/Range_Checking_T.h"
+#include <memory>
 
 #include <algorithm>
 #include <utility>
@@ -153,7 +154,7 @@ public:
 
   generic_sequence &operator= (generic_sequence &&rhs) noexcept
   {
-    if (this != &rhs)
+    if (this != std::addressof (rhs))
       {
         generic_sequence tmp (std::move (rhs));
         this->swap (tmp);

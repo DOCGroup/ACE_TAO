@@ -768,7 +768,7 @@ TAO_RTScheduler_Current_var::operator= (TAO_RTScheduler_Current_ptr p)
 TAO_RTScheduler_Current_var &
 TAO_RTScheduler_Current_var::operator= (const ::TAO_RTScheduler_Current_var &p)
 {
-  if (this != &p)
+  if (this != std::addressof (p))
   {
     ::CORBA::release (this->ptr_);
     this->ptr_ = ::TAO_RTScheduler_Current::_duplicate (p.ptr ());

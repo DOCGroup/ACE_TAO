@@ -1,4 +1,5 @@
 #include "tao/SystemException.h"
+#include <memory>
 #include "tao/ORB_Constants.h"
 #include "tao/CORBA_String.h"
 #include "tao/CDR.h"
@@ -91,7 +92,7 @@ CORBA::SystemException::SystemException (const CORBA::SystemException &src)
 CORBA::SystemException &
 CORBA::SystemException::operator= (const CORBA::SystemException &src)
 {
-  if (this != &src)
+  if (this != std::addressof (src))
     {
       this->Exception::operator= (src);
 

@@ -1,5 +1,6 @@
 // -*- C++ -*-
 #include "tao/ORB_Core.h"
+#include <memory>
 #include "tao/ORB.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -45,7 +46,7 @@ TAO_RTScheduler_Manager_var::operator= (TAO_RTScheduler_Manager_ptr p)
 ACE_INLINE TAO_RTScheduler_Manager_var &
 TAO_RTScheduler_Manager_var::operator= (const ::TAO_RTScheduler_Manager_var &p)
 {
-  if (this != &p)
+  if (this != std::addressof (p))
     {
       CORBA::release (this->ptr_);
       this->ptr_ = ::TAO_RTScheduler_Manager::_duplicate (p.ptr ());
