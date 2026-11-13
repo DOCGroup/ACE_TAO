@@ -151,7 +151,7 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
           // Must have at least one handle to wait for at this point.
           ACE_ASSERT (rd_handle.num_set () == 1 || wr_handle.num_set () == 1);
 
-          // Block indefinitely if timeout pointer is zero.
+          // Block indefinitely if the timeout pointer is null.
           int select_width {};
 #if !defined (ACE_WIN32)
           select_width = handle + 1;

@@ -75,7 +75,7 @@ public:
    *                    contains an IPv6 address, a socket with family
    *                    PF_INET6 will be used, else it will be PF_INET.
    * @param timeout     Pointer to an @c ACE_Time_Value object with amount
-   *                    of time to wait to connect. If the pointer is 0
+   *                    of time to wait to connect. If the pointer is null
    *                    then the call blocks until the connection attempt
    *                    is complete, whether it succeeds or fails.  If
    *                    *timeout == {0, 0} then the connection is done
@@ -126,7 +126,7 @@ public:
    *                    IntServ (RSVP) and DiffServ protocols.
    *                    @see ACE_QoS_Params.
    * @param timeout     Pointer to an @c ACE_Time_Value object with amount
-   *                    of time to wait to connect. If the pointer is 0
+   *                    of time to wait to connect. If the pointer is null
    *                    then the call blocks until the connection attempt
    *                    is complete, whether it succeeds or fails.  If
    *                    *timeout == {0, 0} then the connection is done
@@ -180,7 +180,7 @@ public:
    *                    contains an IPv6 address, a socket with family
    *                    PF_INET6 will be used, else it will be PF_INET.
    * @param timeout     Pointer to an @c ACE_Time_Value object with amount
-   *                    of time to wait to connect. If the pointer is 0
+   *                    of time to wait to connect. If the pointer is null
    *                    then the call blocks until the connection attempt
    *                    is complete, whether it succeeds or fails.  If
    *                    *timeout == {0, 0} then the connection is done
@@ -231,7 +231,7 @@ public:
    *                    IntServ (RSVP) and DiffServ protocols.
    *                    @see ACE_QoS_Params.
    * @param timeout     Pointer to an @c ACE_Time_Value object with amount
-   *                    of time to wait to connect. If the pointer is 0
+   *                    of time to wait to connect. If the pointer is null
    *                    then the call blocks until the connection attempt
    *                    is complete, whether it succeeds or fails.  If
    *                    *timeout == {0, 0} then the connection is done
