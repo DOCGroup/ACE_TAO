@@ -670,21 +670,18 @@ Dispatch_Entry::operator < (Dispatch_Entry const &d) const
           d.task_entry ().rt_info ()->importance) ? true : false;
 }
 
-// ctor
 
 Dispatch_Entry_Link::Dispatch_Entry_Link (Dispatch_Entry &d)
   : dispatch_entry_ (d)
 {
 }
 
-// copy ctor
 
 Dispatch_Entry_Link::Dispatch_Entry_Link (Dispatch_Entry_Link const &d)
   : dispatch_entry_ (d.dispatch_entry_)
 {
 }
 
-// ctor
 
 Dispatch_Proxy_Iterator::Dispatch_Proxy_Iterator
   (ACE_Ordered_MultiSet <Dispatch_Entry_Link> &set,
@@ -884,7 +881,6 @@ Dispatch_Proxy_Iterator::OS_priority () const
   return link->dispatch_entry ().OS_priority ();
 }
 
-// time slice constructor
 
 TimeLine_Entry::TimeLine_Entry (Dispatch_Entry &dispatch_entry,
                                 Time start, Time stop,

@@ -94,6 +94,7 @@ Scheduler_Generic::lookup_rt_info (handle_t handle,
   return ST_UNKNOWN_TASK;
 }
 
+/// Obtains a Config_Info based on its priority.
 Scheduler::status_t
 Scheduler_Generic::lookup_config_info (Preemption_Priority priority,
                                        Config_Info* &config_info)
@@ -108,7 +109,6 @@ Scheduler_Generic::lookup_config_info (Preemption_Priority priority,
     return ST_UNKNOWN_PRIORITY;
   }
 }
-  // Obtains a Config_Info based on its priority.
 
 
 Scheduler::status_t

@@ -255,7 +255,7 @@ public:
   /// Provides the set of Config_Infos associated with the current schedule.
   void get_config_infos (RtecScheduler::Config_Info_Set_out configs) override;
 
-  // = Accessors that allow controlled relaxations of encapsulation.
+  /// Accessors that allow controlled relaxations of encapsulation.
 
   /// Accesses scheduling strategy for the reconfig scheduler.
   RECONFIG_SCHED_STRATEGY & sched_strategy ();
@@ -479,7 +479,7 @@ protected:
 
 
   /// Helper method to give an RT_Info some reasonable default values
-  /// = Protected class members.
+  /// Protected class members.
   static void init_rt_info (RtecScheduler::RT_Info &rt_info);
 */
 

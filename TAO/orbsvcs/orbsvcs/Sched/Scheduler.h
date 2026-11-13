@@ -96,11 +96,11 @@ public:
   ACE_Scheduler &operator= (ACE_Scheduler const &) = delete;
   ACE_Scheduler &operator= (ACE_Scheduler &&) = delete;
 
-  // = Utility function for outputting the textual representation of a
-  //   status_t value to a FILE.
+  /// Utility function for outputting the textual representation of a
+  /// status_t value to a FILE.
   static void output (FILE *, status_t);
 
-  // = Initialize the scheduler.
+  /// Initialize the scheduler.
   /**
    * The minimum and maximum priority are the OS-specific priorities that
    * are used when creating the schedule (assigning priorities).  The
@@ -127,7 +127,7 @@ public:
                      char const *rt_info_filename = nullptr,
                      char const *timeline_filename = nullptr) = 0;
 
-  // = Registers a task.
+  /// Registers a task.
   /**
    * If the Task registration succeeds, this function returns SUCCEEDED
    * and sets "handle" to a unique identifier for the task.
@@ -172,12 +172,12 @@ public:
                                        Config_Info* &config_info) = 0;
 
 
-  // = Computes the schedule.
+  /// Computes the schedule.
   /// This actually generates the files.
   virtual status_t
     schedule (ACE_Unbounded_Set<Scheduling_Anomaly *> &anomaly_set) = 0;
 
-  // = Access a thread priority.
+  /// Access a thread priority.
   /**
    * Defines "priority" as the priority that was assigned to the Task that
    * was assigned "handle", for the specified mode.  Defines "subpriority"
@@ -195,36 +195,36 @@ public:
                         Preemption_Priority &preemption_prio,
                         mode_t = CURRENT_MODE) const = 0;
 
-  // = Access the platform-independent priority value of the lowest-priority
-  //   thread.
+  /// Access the platform-independent priority value of the lowest-priority
+  /// thread.
   /// This is intended for use by the Event Channel, so it can determine the
   /// number of priority dispatch queues to create.
   u_int minimum_priority_queue () const { return minimum_priority_queue_; }
 
-  // = Access the number of modes.
+  /// Access the number of modes.
   u_int modes () const { return modes_; }
 
-  // = Access the number of tasks.
+  /// Access the number of tasks.
   u_int tasks () const { return tasks_; }
 
-  // = Access the number of threads.
+  /// Access the number of threads.
   u_int threads () const { return threads_; }
 
-  // = Access the current mode.
+  /// Access the current mode.
   mode_t mode () const { return mode_; }
 
-  // = Set the current mode.
+  /// Set the current mode.
   void mode (mode_t mode) { mode_ = mode; }
 
-  // = Access the current scheduler status.
+  /// Access the current scheduler status.
   status_t status () const { return status_; }
 
-  // = Access the current output (debugging) level.
+  /// Access the current output (debugging) level.
   /// Default is 0; set to 1 to print out schedule, by task.  Set
   /// to higher than one for debugging info.
   u_int output_level () const { return output_level_; }
 
-  // = Set the scheduler output (debugging) level.
+  /// Set the scheduler output (debugging) level.
   /// the only supported levels are 0 (quiet), 1 (verbose) and 2
   /// (debug)
   void output_level (u_int level) { output_level_ = level; }
@@ -247,20 +247,20 @@ public:
 protected:
   ACE_Scheduler () = default;
 
-  // = Set the minimum priority value.
+  /// Set the minimum priority value.
   void minimum_priority_queue (u_int minimum_priority_queue_number)
     { minimum_priority_queue_ = minimum_priority_queue_number; }
 
-  // = Set the number of modes.
+  /// Set the number of modes.
   void modes (u_int modes) { modes_ = modes; }
 
-  // = Set the number of tasks.
+  /// Set the number of tasks.
   void tasks (u_int tasks) { tasks_ = tasks; }
 
-  // = Set the number of threads.
+  /// Set the number of threads.
   void threads (u_int threads) { threads_ = threads; }
 
-  // = Set the current scheduler status.
+  /// Set the current scheduler status.
   void status (status_t new_status) { status_ = new_status; }
 
 private:

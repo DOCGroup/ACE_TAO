@@ -135,8 +135,8 @@ ACE_DynScheduler::status_message (ACE_DynScheduler::status_t status)
   return "UNKNOWN STATUS";
 }
 
-// = Utility function for creating an entry for determining
-//   the severity of an anomaly detected during scheduling.
+/// Utility function for creating an entry for determining
+/// the severity of an anomaly detected during scheduling.
 ACE_DynScheduler::Anomaly_Severity
 ACE_DynScheduler::anomaly_severity (ACE_DynScheduler::status_t status)
 {
@@ -178,8 +178,8 @@ ACE_DynScheduler::anomaly_severity (ACE_DynScheduler::status_t status)
 }
 
 
-// = Utility function for creating an entry for the
-//   log of anomalies detected during scheduling.
+/// Utility function for creating an entry for the
+/// log of anomalies detected during scheduling.
 ACE_DynScheduler::Scheduling_Anomaly *
 ACE_DynScheduler::create_anomaly (ACE_DynScheduler::status_t status)
 {
@@ -214,6 +214,7 @@ ACE_DynScheduler::~ACE_DynScheduler ()
 }
 
 
+/// Initializes the scheduler.
 void
 ACE_DynScheduler::init (const OS_Priority minimum_priority,
                      const OS_Priority maximum_priority,
@@ -227,8 +228,8 @@ ACE_DynScheduler::init (const OS_Priority minimum_priority,
   rt_info_filename_ = rt_info_filename;
   timeline_filename_ = timeline_filename;
 }
-  // = initializes the scheduler.
 
+/// Registers a task.
 ACE_DynScheduler::status_t
 ACE_DynScheduler::register_task (RT_Info *rt_info, handle_t &handle)
 {
@@ -277,7 +278,6 @@ ACE_DynScheduler::register_task (RT_Info *rt_info, handle_t &handle)
 
   return ret;
 }
-  // = registers a task.
 
 
 ACE_DynScheduler::status_t
@@ -328,6 +328,12 @@ ACE_DynScheduler::get_rt_info (Object_Name name,
 
 
 
+/// "priority" is the OS thread priority assigned to the Task with the given
+/// "handle". "subpriority" combines its dynamic and static subpriorities,
+/// and "preemption_prio" is a platform-independent priority queue number,
+/// ranging from 0 (highest) to "minimum_priority_queue ()" (lowest). The
+/// current and deadline times are used to compute the operation's dynamic
+/// subpriority. Returns 0 on success, or -1 if the handle is invalid.
 int ACE_DynScheduler::priority (
   const RtecScheduler::handle_t handle,
   RtecScheduler::OS_Priority &priority,
@@ -363,14 +369,6 @@ int ACE_DynScheduler::priority (
     return -1;
   }
 }
-  // "priority" is the OS thread priority that was assigned to the Task that
-  // was assigned "handle".  "subpriority" combines the dynamic and static
-  // subpriorities of the Task that was assigned handle.  "preemption_prio"
-  // is a platform-independent priority queue number, ranging from a
-  // highest priority value of 0 to the lowest priority value, which is
-  // returned by "minimum_priority_queue ()".  The current and deadline times
-  // supplied are used to compute the operation's dynamic subpriority
-  // Returns 0 on success, or -1 if an invalid handle was supplied.
 
 
 int ACE_DynScheduler::number_of_dependencies(RT_Info* rt_info)
@@ -467,6 +465,7 @@ void ACE_DynScheduler::export_to_file (RT_Info& info, FILE* file)
 }
 
 
+/// Provides the thread priority and queue type for the given priority level.
 int
 ACE_DynScheduler::dispatch_configuration (Preemption_Priority const & p_priority,
                                           OS_Priority & priority,
@@ -487,9 +486,8 @@ ACE_DynScheduler::dispatch_configuration (Preemption_Priority const & p_priority
 
   return 0;
 }
-  // provide the thread priority and queue type for the given priority level
 
-
+/// Obtains an RT_Info based on its "handle".
 ACE_DynScheduler::status_t
 ACE_DynScheduler::lookup_rt_info (handle_t handle,
                                   RT_Info*& rtinfo)
@@ -514,8 +512,8 @@ ACE_DynScheduler::lookup_rt_info (handle_t handle,
 
   return ST_UNKNOWN_TASK;
 }
-  // obtains an RT_Info based on its "handle".
 
+/// Obtains a Config_Info based on its priority.
 ACE_DynScheduler::status_t
 ACE_DynScheduler::lookup_config_info (Preemption_Priority priority,
                                       Config_Info* &config_info)
@@ -545,7 +543,6 @@ ACE_DynScheduler::lookup_config_info (Preemption_Priority priority,
 
   return ST_UNKNOWN_PRIORITY;
 }
-  // Obtains a Config_Info based on its priority.
 
 
 void
@@ -1102,6 +1099,7 @@ ACE_DynScheduler::schedule (
   return status_;
 }
 
+/// Propagates dispatch information from threads throughout the call graph.
 ACE_DynScheduler::status_t
 ACE_DynScheduler::propagate_dispatches (
   ACE_Unbounded_Set<RtecScheduler::Scheduling_Anomaly *> &anomaly_set,
@@ -1200,8 +1198,6 @@ ACE_DynScheduler::propagate_dispatches (
 
   return status;
 }
-// propagate the dispatch information from the
-// threads throughout the call graph
 
 
 ACE_DynScheduler::status_t
@@ -1544,6 +1540,8 @@ ACE_DynScheduler::identify_threads (ACE_CString & unresolved_locals,
   return result;
 }
 
+/// Uses strongly connected components to detect dependency cycles. Entries
+/// are traversed in descending finish-time order over the transpose graph.
 ACE_DynScheduler::status_t
 ACE_DynScheduler::check_dependency_cycles ()
 {
@@ -1575,11 +1573,6 @@ ACE_DynScheduler::check_dependency_cycles ()
 
   return return_status;
 }
-  // uses strongly connected components algorithm: consider entries
-  // in order of finishing time from dependency DAG traversal,
-  // but traverse transpose graph: any entry that has a dependant
-  // that was not previously visited in this traversal is part
-  // of a dependency cycle
 
 
 ACE_DynScheduler::status_t
@@ -1626,6 +1619,8 @@ ACE_DynScheduler::check_dependency_cycles_recurse (Task_Entry &entry)
 }
 
 
+/// Sets up thread dispatch entries and invokes the internal thread scheduling
+/// method.
 ACE_DynScheduler::status_t
 ACE_DynScheduler::schedule_threads (ACE_Unbounded_Set<RtecScheduler::Scheduling_Anomaly *> &anomaly_set)
 {
@@ -1669,9 +1664,9 @@ ACE_DynScheduler::schedule_threads (ACE_Unbounded_Set<RtecScheduler::Scheduling_
 
   return status;
 }
-  // thread scheduling method: sets up array of pointers to task
-  // entries that are threads, calls internal thread scheduling method
 
+/// Sets up dispatch entries and invokes the internal dispatch scheduling
+/// method.
 ACE_DynScheduler::status_t
 ACE_DynScheduler::schedule_dispatches (ACE_Unbounded_Set<RtecScheduler::Scheduling_Anomaly *> &anomaly_set)
 {
@@ -1702,9 +1697,8 @@ ACE_DynScheduler::schedule_dispatches (ACE_Unbounded_Set<RtecScheduler::Scheduli
   return assign_subpriorities (ordered_dispatch_entries_,
                                dispatch_entry_count_, anomaly_set);
 }
-  // dispatch scheduling method: sets up an array of dispatch entries,
-  // calls internal dispatch scheduling method.
 
+/// Stores assigned information back into the RT_Infos.
 ACE_DynScheduler::status_t
 ACE_DynScheduler::store_assigned_info ()
 {
@@ -1731,9 +1725,9 @@ ACE_DynScheduler::store_assigned_info ()
 
   return SUCCEEDED;
 }
-  // = store assigned information back into the RT_Infos
 
 
+/// Creates a timeline.
 ACE_DynScheduler::status_t
 ACE_DynScheduler::create_timeline ()
 {
@@ -1864,7 +1858,6 @@ ACE_DynScheduler::create_timeline ()
 
   return status;
 }
-  // Create a timeline.
 
 
 ACE_DynScheduler::status_t
@@ -1983,6 +1976,7 @@ ACE_DynScheduler::output_dispatch_timeline (char const *filename)
   return status;
 }
 
+/// Prints the entire dispatch timeline to the specified file.
 ACE_DynScheduler::status_t
 ACE_DynScheduler::output_dispatch_timeline (FILE *file)
 {
@@ -2085,7 +2079,6 @@ ACE_DynScheduler::output_dispatch_timeline (FILE *file)
 
   return SUCCEEDED;
 }
-  // this prints the entire set of timeline outputs to the specified file
 
 ACE_DynScheduler::status_t
 ACE_DynScheduler::output_preemption_timeline (char const *filename)
@@ -2296,6 +2289,7 @@ ACE_DynScheduler::output_viewer_timeline (FILE *file)
 }
 
 
+/// Prints the entire set of timeline outputs to the specified file.
 ACE_DynScheduler::status_t
 ACE_DynScheduler::output_timeline (char const *filename, char const *heading)
 {
@@ -2362,6 +2356,5 @@ ACE_DynScheduler::output_timeline (char const *filename, char const *heading)
 
   return status;
 }
-  // this prints the entire set of timeline outputs to the specified file
 
 TAO_END_VERSIONED_NAMESPACE_DECL

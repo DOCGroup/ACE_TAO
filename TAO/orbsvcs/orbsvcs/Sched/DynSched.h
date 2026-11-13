@@ -109,7 +109,6 @@ public:
   // public member functions //
   /////////////////////////////
 
-  /// public dtor
   virtual ~ACE_DynScheduler ();
 
   ACE_DynScheduler (ACE_DynScheduler const &) = delete;
@@ -117,20 +116,20 @@ public:
   ACE_DynScheduler &operator= (ACE_DynScheduler const &) = delete;
   ACE_DynScheduler &operator= (ACE_DynScheduler &&) = delete;
 
-  // = Utility function for outputting the textual
-  //   representation of a status_t value.
+  /// Utility function for outputting the textual
+  /// representation of a status_t value.
   static char const * status_message (status_t status);
 
-  // = Utility function for creating an entry for determining
-  //   the severity of an anomaly detected during scheduling.
+  /// Utility function for creating an entry for determining
+  /// the severity of an anomaly detected during scheduling.
   static Anomaly_Severity anomaly_severity (status_t status);
 
-  // = Utility function for creating an entry for the
-  //   log of anomalies detected during scheduling.
+  /// Utility function for creating an entry for the
+  /// log of anomalies detected during scheduling.
   static Scheduling_Anomaly * create_anomaly (status_t status);
 
 
-  // = Initialize the scheduler.
+  /// Initialize the scheduler.
   /**
    * The minimum and maximum priority are the OS-specific priorities that
    * are used when creating the schedule (assigning priorities).  The
@@ -166,7 +165,7 @@ public:
    */
   void reset ();
 
-  // = Registers a task.
+  /// Registers a task.
   /**
    * If the Task registration succeeds, this function returns SUCCEEDED
    * and sets "handle" to a unique identifier for the task.
@@ -210,7 +209,7 @@ public:
   status_t output_timeline (char const *filename, char const *heading);
 
 
-  // = Access a thread priority.
+  /// Access a thread priority.
   /**
    * "priority" is the OS thread priority that was assigned to the Task that
    * was assigned "handle".  "subpriority" combines the dynamic and static
@@ -225,25 +224,25 @@ public:
                         Sub_Priority &subpriority,
                         Preemption_Priority &preemption_prio);
 
-  // = Access the platform-independent priority value of the lowest-priority
-  //   thread.
+  /// Access the platform-independent priority value of the lowest-priority
+  /// thread.
    Preemption_Priority minimum_priority_queue () const;
 
-  // = Access the number of tasks.
+  /// Access the number of tasks.
   u_int tasks () const;
 
-  // = Access the number of threads.
+  /// Access the number of threads.
   u_int threads () const;
 
-  // = Access the current scheduler status.
+  /// Access the current scheduler status.
   status_t status () const;
 
-  // = Access the current output (debugging) level.
+  /// Access the current output (debugging) level.
   /// Default is 0; set to 1 to print out schedule, by task.  Set
   /// to higher than one for debugging info.
   u_int output_level () const;
 
-  // = Set the scheduler output (debugging) level.
+  /// Set the scheduler output (debugging) level.
   /// the only supported levels are 0 (quiet), 1 (verbose) and 2 (debug)
   void output_level (const u_int level);
 
@@ -282,45 +281,45 @@ protected:
   status_t schedule_dispatches (
     ACE_Unbounded_Set<RtecScheduler::Scheduling_Anomaly *> &anomaly_set);
 
-  /// = store assigned information back into the RT_Infos
+  /// store assigned information back into the RT_Infos
   virtual status_t store_assigned_info ();
 
-  // = Set the minimum priority value.
+  /// Set the minimum priority value.
   void minimum_priority_queue (const Preemption_Priority minimum_priority_queue_number);
 
-  // = Set the number of tasks.
+  /// Set the number of tasks.
   void tasks (const u_int tasks);
 
-  // = Set the number of threads.
+  /// Set the number of threads.
   void threads (const u_int threads);
 
-  // = Set the current scheduler status.
+  /// Set the current scheduler status.
   void status (const status_t new_status);
 
   /////////////////////////////////////////////
   // protected pure virtual member functions //
   /////////////////////////////////////////////
 
-  /// = determine the minimum critical priority number
+  /// determine the minimum critical priority number
   virtual Preemption_Priority minimum_critical_priority () = 0;
 
   /// internal sorting method: this orders the dispatches by
   /// static priority and dynamic and static subpriority.
   virtual status_t sort_dispatches (Dispatch_Entry **, u_int) = 0;
 
-  /// = assign priorities to the sorted dispatches
+  /// assign priorities to the sorted dispatches
   virtual status_t assign_priorities (
     Dispatch_Entry **dispatches,
     u_int count,
     ACE_Unbounded_Set<RtecScheduler::Scheduling_Anomaly *> &anomaly_set) = 0;
 
-  /// = assign dynamic and static sub-priorities to the sorted dispatches
+  /// assign dynamic and static sub-priorities to the sorted dispatches
   virtual status_t assign_subpriorities (
     Dispatch_Entry **dispatches,
     u_int count,
     ACE_Unbounded_Set<RtecScheduler::Scheduling_Anomaly *> &anomaly_set) = 0;
 
-  /// = schedule a dispatch entry into the timeline being created
+  /// schedule a dispatch entry into the timeline being created
   virtual status_t
     schedule_timeline_entry (Dispatch_Entry &dispatch_entry,
                              std::deque<Dispatch_Entry *> &reschedule_queue) = 0;
@@ -422,11 +421,11 @@ private:
   status_t output_dispatch_priorities (char const *filename);
   status_t output_dispatch_priorities (FILE *file);
 
-  // = Set up the task entry data structures
+  /// Set up the task entry data structures
   status_t setup_task_entries ();
 
-  // = Relate the task entries according to the
-  //   dependencies of the underlying RT_Infos
+  /// Relate the task entries according to the
+  /// dependencies of the underlying RT_Infos
   status_t relate_task_entries ();
 
   // recursively traverse dependency graph, relating
@@ -444,13 +443,13 @@ private:
   // recursion used to check for cycles in the dependency graph
   status_t check_dependency_cycles_recurse (Task_Entry &entry);
 
-  // = Aggregate the scheduling parameters of the threads
+  /// Aggregate the scheduling parameters of the threads
   status_t aggregate_thread_parameters ();
 
-  // = recursion over oneway dependencies used to aggregate thread parameters
+  /// recursion over oneway dependencies used to aggregate thread parameters
   status_t aggregate_oneways_recurse (Task_Entry &entry);
 
-  // = recursion over twoway dependencies used to aggregate thread parameters
+  /// recursion over twoway dependencies used to aggregate thread parameters
   status_t aggregate_twoways_recurse (Task_Entry &entry);
 
   // update the scheduling parameters for the previous priority level

@@ -214,6 +214,7 @@ void ACE_Scheduler::export_to_file (RT_Info& info, FILE* file)
 
 }
 
+/// Provides the thread priority and queue type for the given priority level.
 int
 ACE_Scheduler::dispatch_configuration (Preemption_Priority const &p_priority,
                                        OS_Thread_Priority & priority,
@@ -234,4 +235,3 @@ ACE_Scheduler::dispatch_configuration (Preemption_Priority const &p_priority,
 
   return 0;
 }
-  // provide the thread priority and queue type for the given priority level

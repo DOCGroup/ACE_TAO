@@ -34,14 +34,14 @@ public:
   Scheduler_Generic ();
   ~Scheduler_Generic () override = default;
 
-  // = Initialize the scheduler.
+  /// Initialize the scheduler.
   void init (int minimum_priority,
              int maximum_priority,
              char const *runtime_filename = nullptr,
              char const *rt_info_filename = nullptr,
              char const *timeline_filename = nullptr) override;
 
-  // = Registers a task.
+  /// Registers a task.
   status_t register_task (RT_Info *[],
                           u_int number_of_modes,
                           handle_t &handle) override;
@@ -54,11 +54,11 @@ public:
   status_t lookup_config_info (Preemption_Priority priority,
                                Config_Info* &config_info) override;
 
-  // = Computes the schedule.
+  /// Computes the schedule.
   status_t
     schedule (ACE_Unbounded_Set<Scheduling_Anomaly *> &anomaly_set) override;
 
-  // = Access a thread priority.
+  /// Access a thread priority.
   /**
    * Defines "priority" as the priority that was assigned to the Task that
    * was assigned "handle", for the specified mode.  Defines "subpriority"

@@ -15,28 +15,28 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // Class Task_Entry //
 //////////////////////
 
-// return a pointer to the underlying RT_Info
+/// Returns a pointer to the underlying RT_Info.
 ACE_INLINE Task_Entry::RT_Info *
 Task_Entry::rt_info () const
 {
   return rt_info_;
 }
 
-// set the underlying RT_Info pointer
+/// Sets the underlying RT_Info pointer.
 ACE_INLINE void
 Task_Entry::rt_info (Task_Entry::RT_Info *info)
 {
   rt_info_ = info;
 }
 
-// get effective period for the task entry
+/// Gets the effective period for the task entry.
 ACE_INLINE Task_Entry::Period
 Task_Entry::effective_period () const
 {
   return effective_period_;
 }
 
-// set effective period for the task entry
+/// Sets the effective period for the task entry.
 ACE_INLINE void
 Task_Entry::effective_period (Task_Entry::Period p)
 {
@@ -81,7 +81,7 @@ Task_Entry::dfs_status (Task_Entry::DFS_Status ds)
   dfs_status_ = ds;
 }
 
-// Sets a flag indicating whether node is a thread delineator.
+/// Sets a flag indicating whether the node is a thread delineator.
 
 ACE_INLINE void
 Task_Entry::is_thread_delineator (bool value)
@@ -89,7 +89,7 @@ Task_Entry::is_thread_delineator (bool value)
   is_thread_delineator_ = value;
 }
 
-// Gets the flag indicating whether node is a thread delineator.
+/// Gets the flag indicating whether the node is a thread delineator.
 
 ACE_INLINE bool
 Task_Entry::is_thread_delineator () const
@@ -97,7 +97,7 @@ Task_Entry::is_thread_delineator () const
   return is_thread_delineator_;
 }
 
-// Sets a flag indicating whether node has unresolved remote dependencies.
+/// Sets a flag indicating whether the node has unresolved remote dependencies.
 
 ACE_INLINE void
 Task_Entry::has_unresolved_remote_dependencies (bool value)
@@ -105,7 +105,7 @@ Task_Entry::has_unresolved_remote_dependencies (bool value)
   has_unresolved_remote_dependencies_ = value;
 }
 
-// Gets the flag indicating whether node has unresolved remote dependencies.
+/// Gets the flag indicating whether the node has unresolved remote dependencies.
 
 ACE_INLINE bool
 Task_Entry::has_unresolved_remote_dependencies () const
@@ -114,7 +114,7 @@ Task_Entry::has_unresolved_remote_dependencies () const
 }
 
 
-// Sets a flag indicating whether node has unresolved local dependencies.
+/// Sets a flag indicating whether the node has unresolved local dependencies.
 
 ACE_INLINE void
 Task_Entry::has_unresolved_local_dependencies (bool value)
@@ -122,7 +122,7 @@ Task_Entry::has_unresolved_local_dependencies (bool value)
   has_unresolved_local_dependencies_ = value;
 }
 
-// Gets the flag indicating whether node has unresolved local dependencies.
+/// Gets a flag indicating whether the node has unresolved local dependencies.
 
 ACE_INLINE bool
 Task_Entry::has_unresolved_local_dependencies () const
@@ -130,7 +130,7 @@ Task_Entry::has_unresolved_local_dependencies () const
   return has_unresolved_local_dependencies_;
 }
 
-// Gets the set of Task Entries on which this entry depends.
+/// Gets the set of Task Entries on which this entry depends.
 
 ACE_INLINE ACE_Unbounded_Set <Task_Entry_Link *> &
 Task_Entry::calls ()
@@ -138,7 +138,7 @@ Task_Entry::calls ()
   return calls_;
 }
 
-// Gets the set of Task Entries which depend on this entry.
+/// Gets the set of Task Entries which depend on this entry.
 
 ACE_INLINE ACE_Unbounded_Set <Task_Entry_Link *> &
 Task_Entry::callers ()
@@ -146,7 +146,7 @@ Task_Entry::callers ()
   return callers_;
 }
 
-// Gets set of arrivals in the entry's effective period.
+/// Gets the set of arrivals in the entry's effective period.
 
 ACE_INLINE ACE_Ordered_MultiSet<Dispatch_Entry_Link> &
 Task_Entry::dispatches ()
@@ -181,7 +181,7 @@ Task_Entry::effective_execution_time () const
 ///////////////////////////
 
 
-// accessor: number of calls of dependency by dependant
+/// Gets the number of calls of the dependency by the dependant.
 ACE_INLINE CORBA::Long
 Task_Entry_Link::number_of_calls () const
 {
@@ -194,14 +194,14 @@ Task_Entry_Link::dependency_type () const
   return dependency_type_;
 }
 
-// accessor: dependant task entry
+/// Gets the dependant task entry.
 ACE_INLINE Task_Entry &
 Task_Entry_Link::caller () const
 {
   return caller_;
 }
 
-// accessor: dependency task entry
+/// Gets the dependency task entry.
 ACE_INLINE Task_Entry &
 Task_Entry_Link::called () const
 {
@@ -286,7 +286,7 @@ Dispatch_Entry::task_entry () const
 }
 
 
-// accessor for pointer to original dispatch
+/// Gets a pointer to the original dispatch.
 ACE_INLINE Dispatch_Entry *
 Dispatch_Entry::original_dispatch ()
 {
@@ -298,39 +298,39 @@ Dispatch_Entry::original_dispatch ()
 // Class Dispatch_Entry_Link //
 ///////////////////////////////
 
+/// Compares dispatch entries.
 ACE_INLINE bool
 Dispatch_Entry_Link::operator < (Dispatch_Entry_Link const &d) const
 {
   return (this->dispatch_entry_ < d.dispatch_entry_);
 }
-  // GT comparator
 
 
+/// Gets a reference to the dispatch entry.
 ACE_INLINE Dispatch_Entry &
 Dispatch_Entry_Link::dispatch_entry () const
 {
   return dispatch_entry_;
 }
-  // accessor for reference to dispatch entry
 
 
 ///////////////////////////////////
 // Class Dispatch_Proxy_Iterator //
 ///////////////////////////////////
 
+/// Returns 0 if there are more entries to see, and 1 otherwise.
 ACE_INLINE int
 Dispatch_Proxy_Iterator::done () const
 {
   return iter_.done ();
 }
-  // returns 0 if there are more entries to see, 1 if not
 
 
 //////////////////////////
 // Class TimeLine_Entry //
 //////////////////////////
 
-    // dispatch entry accessor
+/// Gets a reference to the dispatch entry.
 ACE_INLINE Dispatch_Entry &
 TimeLine_Entry::dispatch_entry () const
 {
@@ -338,28 +338,28 @@ TimeLine_Entry::dispatch_entry () const
 }
 
 
-// accessor for time slice start time (100 nanoseconds)
+/// Gets the time slice start time in 100-nanosecond units.
 ACE_INLINE RtecScheduler::Time
 TimeLine_Entry::start () const
 {
   return start_;
 }
 
-// accessor for time slice stop time (100 nanoseconds)
+/// Gets the time slice stop time in 100-nanosecond units.
 ACE_INLINE RtecScheduler::Time
 TimeLine_Entry::stop () const
 {
   return stop_;
 }
 
-// accessor for time slice stop time (100 nanoseconds)
+/// Gets the time slice arrival time in 100-nanosecond units.
 ACE_INLINE RtecScheduler::Time
 TimeLine_Entry::arrival () const
 {
   return arrival_;
 }
 
-// accessor for time slice stop time (100 nanoseconds)
+/// Gets the time slice deadline in 100-nanosecond units.
 ACE_INLINE RtecScheduler::Time
 TimeLine_Entry::deadline () const
 {
@@ -367,28 +367,28 @@ TimeLine_Entry::deadline () const
 }
 
 
-// accessor for next slice for this dispatch
+/// Gets the next slice for this dispatch.
 ACE_INLINE TimeLine_Entry *
 TimeLine_Entry::next () const
 {
   return next_;
 }
 
-// mutator for next slice for this dispatch
+/// Sets the next slice for this dispatch.
 ACE_INLINE void
 TimeLine_Entry::next (TimeLine_Entry *t)
 {
   next_ = t;
 }
 
-// accessor for previous slice for this dispatch
+/// Gets the previous slice for this dispatch.
 ACE_INLINE TimeLine_Entry *
 TimeLine_Entry::prev () const
 {
   return prev_;
 }
 
-// mutator for previous slice for this dispatch
+/// Sets the previous slice for this dispatch.
 ACE_INLINE void
 TimeLine_Entry::prev (TimeLine_Entry *t)
 {
@@ -396,12 +396,12 @@ TimeLine_Entry::prev (TimeLine_Entry *t)
 }
 
 
+/// Compares time line entries by start time.
 ACE_INLINE bool
 TimeLine_Entry::operator < (TimeLine_Entry const &t) const
 {
   return (start_ < t.start_) ? true : false;
 }
-  // comparison operator
 
 
 ///////////////////////////////
@@ -409,24 +409,24 @@ TimeLine_Entry::operator < (TimeLine_Entry const &t) const
 ///////////////////////////////
 
 
+/// Constructs a link for a time line entry.
 ACE_INLINE TimeLine_Entry_Link::TimeLine_Entry_Link (TimeLine_Entry &t)
   : entry_ (t)
 {
 }
-  // ctor
 
+/// Gets the linked time line entry.
 ACE_INLINE TimeLine_Entry &
 TimeLine_Entry_Link::entry () const
 {
   return entry_;
 }
-  // accessor for the underlying entry
 
+/// Compares linked time line entries.
 ACE_INLINE bool
 TimeLine_Entry_Link::operator < (TimeLine_Entry_Link const &l) const
 {
   return (entry_ < l.entry_);
 }
-  // comparison operator
 
 TAO_END_VERSIONED_NAMESPACE_DECL

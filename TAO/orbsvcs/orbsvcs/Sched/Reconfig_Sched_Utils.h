@@ -42,24 +42,23 @@ struct TAO_RTSched_Export TAO_RT_Info_Ex
 {
   TAO_RT_Info_Ex ();
 
+  /// Constructs from an RT_Info and also serves as a copy constructor.
   explicit TAO_RT_Info_Ex (RtecScheduler::RT_Info const &);
-  // Constructor from an RT_Info
-  // (also serves as a copy constructor).
 
   virtual ~TAO_RT_Info_Ex () = default;
 
+  /// Assigns from an RT_Info.
   void operator = (RtecScheduler::RT_Info const &);
-  // Assignment operator with an RT_Info on the RHS.
 
+  /// Resets output data members to initial values and removes tuples
+  /// corresponding to the reset flags.
   virtual void reset (u_long reset_flags);
-  // Resets output data members to initial values, and removes tuples
-  // corresponding to the reset flags.
 
+  /// Sets the info and underlying entry's enable states.
   virtual void enabled_state (RtecScheduler::RT_Info_Enabled_Type_t);
-  // Sets the info and underlying entry's enable states.
 
+  /// Returns the info's enable state.
   virtual RtecScheduler::RT_Info_Enabled_Type_t enabled_state () const;
-  // Returns the info's enable state.
 };
 
 
@@ -78,20 +77,19 @@ struct TAO_RTSched_Export TAO_RT_Info_Tuple
 {
   TAO_RT_Info_Tuple () = default;
 
+  /// Constructs from an RT_Info and also serves as a copy constructor.
   explicit TAO_RT_Info_Tuple (RtecScheduler::RT_Info const &);
-  // Constructor from an RT_Info.
-  // (also serves as a copy constructor).
 
   ~TAO_RT_Info_Tuple () override;
 
+  /// Assigns from an RT_Info.
   void operator = (RtecScheduler::RT_Info const &);
-  // Assignment operator with an RT_Info on the RHS.
 
+  /// Orders tuples by ascending rate (descending period).
   bool operator < (TAO_RT_Info_Tuple const &t) const;
-  // Less-than comparison operator: orders tuples by ascending rate (descending period).
 
+  /// Index of the tuple in the operation's ordered available rates.
   u_long rate_index {};
-  // Index of the tuple in the operation's ordered available rates
 };
 
 

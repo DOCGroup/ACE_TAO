@@ -421,6 +421,7 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
 }
 
 
+/// Provides the thread priority and queue type for the given priority level.
 void ACE_Config_Scheduler::dispatch_configuration (RtecScheduler::Preemption_Priority_t p_priority,
                                                    RtecScheduler::OS_Priority& priority,
                                                    RtecScheduler::Dispatching_Type_t & d_type)
@@ -433,9 +434,12 @@ void ACE_Config_Scheduler::dispatch_configuration (RtecScheduler::Preemption_Pri
       // TODO: throw something.
     }
 }
-  // provide the thread priority and queue type for the given priority level
 
 
+/// Returns the last priority number assigned to an operation in the schedule.
+/// The number returned is one less than the total number of scheduled
+/// priorities. All scheduled priorities range from 0 to the returned number,
+/// inclusive.
 RtecScheduler::Preemption_Priority_t
 ACE_Config_Scheduler::last_scheduled_priority ()
 {
@@ -450,9 +454,6 @@ ACE_Config_Scheduler::last_scheduled_priority ()
 
   return priority;
 }
-  // Returns the last priority number assigned to an operation in the schedule.
-  // The number returned is one less than the total number of scheduled priorities.
-  // All scheduled priorities range from 0 to the number returned, inclusive.
 
 void
 ACE_Config_Scheduler::get_config_infos (RtecScheduler::Config_Info_Set_out configs)
@@ -478,93 +479,91 @@ void ACE_Config_Scheduler::reset (RtecScheduler::handle_t,
   throw CORBA::NO_IMPLEMENT ();
 }
 
+/// Sets characteristics of the RT_Infos corresponding to the passed handles.
+/// Tuples are added in the case of existing and/or multiple definitions.
 void ACE_Config_Scheduler::set_seq (RtecScheduler::RT_Info_Set const &)
-// Set characteristics of the RT_Infos corresponding to the passed handles.
-// Tuples are added in the case of existing and/or multiple definitions.
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
+/// Resets characteristics of the RT_Infos corresponding to the passed handles.
+/// Tuples are replaced in the case of existing and/or multiple definitions.
 void ACE_Config_Scheduler::reset_seq (RtecScheduler::RT_Info_Set const &)
-// Reset characteristics of the RT_Infos corresponding to the passed handles.
-// Tuples are replaced in the case of existing and/or multiple definitions.
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
+/// Replaces all RT_Infos, resetting characteristics of the RT_Infos
+/// corresponding to the passed handles. All other RT_Infos are reset to
+/// their uninitialized values, as they were just after the create call.
 void ACE_Config_Scheduler::replace_seq (RtecScheduler::RT_Info_Set const &)
-// Replace all RT_Infos, resetting characteristics of the RT_Infos
-// corresponding to the passed handles.  All other RT_Infos are
-// reset to their uninitialized values, i.e., the same they have
-// just after the create call.
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
+/// Removes a dependency between two RT_Infos.
 void ACE_Config_Scheduler::remove_dependency (RtecScheduler::handle_t,
                                 RtecScheduler::handle_t,
                                 CORBA::Long,
                                 RtecScheduler::Dependency_Type_t)
-// This method removes a dependency between two RT_Infos.
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
+/// Sets the enable state of a dependency between two RT_Infos.
 void ACE_Config_Scheduler::set_dependency_enable_state (RtecScheduler::handle_t,
                                   RtecScheduler::handle_t,
                                   CORBA::Long,
                                   RtecScheduler::Dependency_Type_t,
                                   RtecScheduler::Dependency_Enabled_Type_t)
-// This method sets the enable state of a dependency between two RT_Infos.
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
+/// Sets the enable state of a sequence of dependencies.
 void ACE_Config_Scheduler::set_dependency_enable_state_seq (RtecScheduler::Dependency_Set const &)
-// This method sets the enable state of a sequence of dependencies.
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
+/// Enables or disables an RT_Info.
 void ACE_Config_Scheduler::set_rt_info_enable_state (RtecScheduler::handle_t,
                                RtecScheduler::RT_Info_Enabled_Type_t)
-// This method enables or disables an RT_Info.
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
+/// Enables or disables a sequence of RT_Infos.
 void ACE_Config_Scheduler::set_rt_info_enable_state_seq (
                   RtecScheduler::RT_Info_Enable_State_Pair_Set const &)
-// This method enables or disables a sequence of RT_Infos.
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
+/// Recomputes the scheduling priorities, etc.
 void ACE_Config_Scheduler::recompute_scheduling (CORBA::Long,
                            CORBA::Long,
                            RtecScheduler::Scheduling_Anomaly_Set_out)
-// Recomputes the scheduling priorities, etc.
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
+/// Returns the set of rt_infos, with their assigned priorities (as
+/// of the last schedule re-computation).
 void ACE_Config_Scheduler::get_rt_info_set (RtecScheduler::RT_Info_Set_out)
-// Returns the set of rt_infos, with their assigned priorities (as
-// of the last schedule re-computation).
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
+/// Returns the set of dependencies in the schedule.
 void ACE_Config_Scheduler::get_dependency_set (RtecScheduler::Dependency_Set_out)
-// Returns the set of rt_infos, with their assigned priorities (as
-// of the last schedule re-computation).
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
+/// Returns the Config_Infos describing the number, types, and priority levels
+/// for the dispatching lanes.
 void ACE_Config_Scheduler::get_config_info_set (RtecScheduler::Config_Info_Set_out)
-// Returns the set of config_infos, describing the appropriate
-// number, types, and priority levels for the dispatching lanes.
 {
   throw CORBA::NO_IMPLEMENT ();
 }
