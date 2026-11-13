@@ -8,6 +8,8 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/Sched_Params.h"
 #include "ace/Lock_Adapter_T.h"
+#include <cerrno>
+#include <limits>
 
 // The number of messages that is being processed
 static size_t number_of_messages {100};
@@ -34,6 +36,22 @@ static DEBUGGING_RANGE debug {DEBUGGING_RANGE::DEBUG_NONE};
 // Keep its base reference until all queued messages have been released.
 ACE_Data_Block *data_block {};
 
+static bool
+parse_size (ACE_TCHAR const *argument, size_t &value)
+{
+  ACE_TCHAR *end {};
+  errno = 0;
+  long const parsed = ACE_OS::strtol (argument, &end, 10);
+  if (argument == end || *end != ACE_TEXT ('\0') || errno == ERANGE || parsed < 0
+      || static_cast<unsigned long> (parsed) > std::numeric_limits<size_t>::max ())
+    {
+      return false;
+    }
+
+  value = static_cast<size_t> (parsed);
+  return true;
+}
+
 Synchronisers::Synchronisers ()
   : mutex_ (),
     event_ ()
@@ -49,7 +67,7 @@ Synchronisers::start_synchronization ()
   {
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
 
-    ready_threads ++;
+    ++ready_threads;
 
     if (ready_threads == (number_of_workers + io_threads))
       {
@@ -97,7 +115,7 @@ Synchronisers::end_synchronization ()
   {
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
 
-    ready_threads ++;
+    ++ready_threads;
 
     if (ready_threads == (number_of_workers + io_threads))
       {
@@ -156,8 +174,8 @@ Worker_Task::svc ()
   for (;;)
     {
       ACE_Message_Block *mb {};
-      int result = this->getq (mb);
-      if (result == -1)
+      int const getq_result = this->getq (mb);
+      if (getq_result == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Worker_Task::svc (%t) -> %p\n",
@@ -166,24 +184,21 @@ Worker_Task::svc ()
         }
 
       // Get the flag in the message blok
-      ACE_Message_Block::Message_Flags flag =
+      ACE_Message_Block::Message_Flags const flag =
         mb->self_flags ();
 
-      // The stop flag
-      bool stop_flag {};
-
       // Check for the stop flag
-      if (ACE_BIT_ENABLED (flag,
-                           Synchronisers::MB_STOP_FLAG))
+      bool const stop_flag = ACE_BIT_ENABLED (flag,
+                                              Synchronisers::MB_STOP_FLAG);
+      if (stop_flag)
         {
           if (debug != DEBUGGING_RANGE::DEBUG_NONE)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "(%P|%t) saw flag after [%d] messages\n",
+                          "(%P|%t) saw flag after [%B] messages\n",
                           this->messages_processed_));
             }
 
-          stop_flag = true;
         }
       // Release the message block
       ACE_Message_Block_Unique_Ptr input_owner {mb};
@@ -195,7 +210,7 @@ Worker_Task::svc ()
       if (debug != DEBUGGING_RANGE::DEBUG_NONE)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "(%P|%t) dequeued my %d message\n",
+                      "(%P|%t) dequeued my %B message\n",
                       this->messages_processed_));
         }
 
@@ -207,7 +222,7 @@ Worker_Task::svc ()
         {
           // Eat a little CPU
           /* takes about 40.2 usecs on a 167 MHz Ultra2 */
-          u_long n = 11UL;
+          u_long const n = 11UL;
           ACE::is_prime (n, 2, n / 2);
         }
 
@@ -220,9 +235,9 @@ Worker_Task::svc ()
 
       // Put this message block into the next queue or the output
       // queue
-      result = this->put_next (output_owner.get ());
+      int const put_next_result = this->put_next (output_owner.get ());
 
-      if (result == -1)
+      if (put_next_result == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Input::svc (%t) -> %p\n",
@@ -236,7 +251,7 @@ Worker_Task::svc ()
         {
           if (debug != DEBUGGING_RANGE::DEBUG_NONE)
             ACE_DEBUG ((LM_DEBUG,
-                        "(%P|%t) Got stop message after [%d] messages\n",
+                        "(%P|%t) Got stop message after [%B] messages\n",
                         this->messages_processed_));
 
           break;
@@ -247,8 +262,8 @@ Worker_Task::svc ()
   return 0;
 }
 
-int
-Worker_Task::processed ()
+size_t
+Worker_Task::processed () const
 {
   return this->messages_processed_;
 }
@@ -269,7 +284,7 @@ Input_Task::svc ()
   (void) this->synch_.start_synchronization ();
 
 
-  size_t i = 0;
+  size_t i {};
   for (i = 0;
        i < (number_of_messages - number_of_workers);
        ++i)
@@ -281,7 +296,7 @@ Input_Task::svc ()
                       -1);
 
       ACE_Message_Block_Unique_Ptr message_owner {message_block};
-      int result = this->putq (message_owner.get ());
+      int const result = this->putq (message_owner.get ());
 
       if (result == -1)
         {
@@ -321,7 +336,7 @@ Input_Task::svc ()
       // Set the stop flag in the message block and not in the datablock
       message_block->set_self_flags (Synchronisers::MB_STOP_FLAG);
 
-      int result = this->putq (message_owner.get ());
+      int const result = this->putq (message_owner.get ());
 
       if (result == -1)
         {
@@ -359,7 +374,7 @@ Output_Task::svc ()
     {
       // Get the message block from queue
       ACE_Message_Block *mb {};
-      int result = this->getq (mb);
+      int const result = this->getq (mb);
 
       if (result == -1)
         {
@@ -400,33 +415,51 @@ Output_Task::put (ACE_Message_Block *mb, ACE_Time_Value *)
 static int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("m:s:t:d:"));
-  int c;
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("m:s:w:t:d:"));
+  int c {};
 
   while ((c = get_opt ()) != -1)
     {
       switch (c)
         {
         case 'm':
-          number_of_messages = ACE_OS::atoi (get_opt.opt_arg ());
+          if (!parse_size (get_opt.opt_arg (), number_of_messages)
+              || number_of_messages == 0)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR, "Message count must be positive\n"), -1);
+            }
           break;
+        case 'w':
         case 't':
-          number_of_workers = ACE_OS::atoi (get_opt.opt_arg ());
+          if (!parse_size (get_opt.opt_arg (), number_of_workers)
+              || number_of_workers == 0)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR, "Worker count must be positive\n"), -1);
+            }
           break;
         case 'd':
-          debug = static_cast<DEBUGGING_RANGE> (ACE_OS::atoi (get_opt.opt_arg ()));
+          {
+            size_t parsed_debug {};
+            if (!parse_size (get_opt.opt_arg (), parsed_debug)
+                || parsed_debug > static_cast<size_t> (DEBUGGING_RANGE::DEBUG))
+              {
+                ACE_ERROR_RETURN ((LM_ERROR, "Invalid debug level\n"), -1);
+              }
+            debug = static_cast<DEBUGGING_RANGE> (parsed_debug);
+          }
           break;
         case 's':
-          message_size = ACE_OS::atoi (get_opt.opt_arg ());
+          if (!parse_size (get_opt.opt_arg (), message_size))
+            {
+              ACE_ERROR_RETURN ((LM_ERROR, "Invalid message size\n"), -1);
+            }
           break;
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
                              "usage: %s\n"
                              "\t[-m number of messages]\n"
                              "\t[-s message size]\n"
-                             "\t[-w number of workers]\n"
-                             "\t[-b burst size]\n"
-                             "\t[-t timeout between bursts]\n"
+                             "\t[-w number of workers (or legacy -t)]\n"
                              "\t[-d debug]\n",
                              argv[0]),
                             -1);
@@ -447,6 +480,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       return result;
     }
 
+  if (number_of_messages < number_of_workers)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Message count must be at least the worker count\n"),
+                        -1);
+    }
+
+  if (number_of_messages > std::numeric_limits<size_t>::max () / 2)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "Message count is too large\n"), -1);
+    }
+
   ACE_High_Res_Timer::calibrate ();
 
   // Create the message queue
@@ -462,9 +507,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Increment the reference count so that we can share the
   // datablock. This is donw twice the number of messages for the
   // input and output queues.
-  size_t i = 0;
+  size_t i {};
 
-  for (i = 0; i < 2*number_of_messages; ++i)
+  for (i = 0; i < 2 * number_of_messages; ++i)
     {
       data_block->duplicate ();
     }
@@ -553,8 +598,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   test_timer.elapsed_time (elapsed_time);
 
 # if !defined (ACE_WIN32)
-  double elapsed_time_per_invocation =
-    (double) elapsed_time / number_of_messages;
+  double const elapsed_time_per_invocation =
+    static_cast<double> (elapsed_time) / number_of_messages;
 
   ACE_DEBUG ((LM_DEBUG,
      "(%P|%t) Throughput is [%f]\n",
@@ -568,11 +613,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   for (i = 0; i < number_of_workers; ++i)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Message process for thread [%d] is [%d]\n",
+                  "Message process for thread [%B] is [%B]\n",
                   i, workers[i]->processed ()));
       delete workers[i];
     }
   delete[] workers;
+
+  if (result == 0)
+    {
+      delete data_block;
+      data_block = nullptr;
+    }
 
   return result;
 }

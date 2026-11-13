@@ -155,7 +155,7 @@ public:
   int svc () override;
 
   /// Processed messages
-  int processed ();
+  size_t processed () const;
 
 private:
   Worker_Task (Worker_Task const &) = delete;
