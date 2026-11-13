@@ -1,10 +1,8 @@
-//=============================================================================
 /**
  *  @file    Reconfig_Scheduler_T.cpp
  *
  *  @author  Chris Gill <cdgill@cs.wustl.edu>
  */
-//=============================================================================
 
 
 #ifndef TAO_RECONFIG_SCHEDULER_T_C
@@ -28,9 +26,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-//////////////////////////////////////////////
-// Helper function type definition for sort //
-//////////////////////////////////////////////
 
 // This is awkward, but it makes MSVC++ happy.
 extern "C"

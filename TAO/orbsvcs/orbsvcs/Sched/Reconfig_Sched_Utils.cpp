@@ -1,10 +1,8 @@
-//=============================================================================
 /**
  *  @file    Reconfig_Sched_Utils.cpp
  *
  *  @author  Chris Gill <cdgill@cs.wustl.edu>
  */
-//=============================================================================
 
 
 #ifndef TAO_RECONFIG_SCHED_UTILS_C
@@ -21,9 +19,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-///////////////////////////
-// struct TAO_RT_Info_Ex //
-///////////////////////////
 
 TAO_RT_Info_Ex::TAO_RT_Info_Ex ()
 {
@@ -159,9 +154,6 @@ TAO_RT_Info_Ex::enabled_state () const
 }
 
 
-//////////////////////////////
-// struct TAO_RT_Info_Tuple //
-//////////////////////////////
 
 // Constructor from an RT_Info.
 // (Also serves as a copy constructor)
@@ -192,9 +184,6 @@ TAO_RT_Info_Tuple::operator < (TAO_RT_Info_Tuple const &t) const
 }
 
 
-////////////////////////////////////////
-// class TAO_Reconfig_Scheduler_Entry //
-////////////////////////////////////////
 
 TAO_Reconfig_Scheduler_Entry::
 TAO_Reconfig_Scheduler_Entry (TAO_RT_Info_Ex &rt_info)
@@ -660,13 +649,9 @@ effective_exec_multiplier (CORBA::Long l)
 }
 */
 
-///////////////////////////
 
 TAO_Reconfig_Sched_Entry_Visitor::~TAO_Reconfig_Sched_Entry_Visitor () = default;
 
-///////////////////////////
-// TAO_RSE_Reset_Visitor //
-///////////////////////////
 
 // Resets the fields in the entry to pre-DFS traversal states.
 // Returns 0 on success and -1 on error.
@@ -856,13 +841,9 @@ enabled_state (RtecScheduler::RT_Info_Enabled_Type_t et)
 }
 
 
-////////////////////////////////////////////
 
 TAO_RT_Info_Tuple_Visitor::~TAO_RT_Info_Tuple_Visitor () = default;
 
-////////////////////////////////////////////
-// class TAO_Reconfig_Sched_Strategy_Base //
-////////////////////////////////////////////
 
 // Ordering function to compare the DFS finish times of
 // two RT_Info_Tuples
@@ -1005,9 +986,6 @@ TAO_Reconfig_Sched_Strategy_Base::compare_subpriority (TAO_Reconfig_Scheduler_En
 }
 
 
-////////////////////////////////////////////////
-// class TAO_MUF_FAIR_Reconfig_Sched_Strategy //
-////////////////////////////////////////////////
 
 // Ordering function used to qsort an array of TAO_RT_Info_Tuple
 // pointers into a total <priority, subpriority> ordering.  Returns -1
@@ -1203,9 +1181,6 @@ TAO_MUF_FAIR_Reconfig_Sched_Strategy::assign_config (RtecScheduler::Config_Info 
   return 0;
 }
 
-///////////////////////////////////////////////////
-// class TAO_RMS_FAIR_Reconfig_Sched_Strategy //
-///////////////////////////////////////////////////
 
 
 // Ordering function used to qsort an array of TAO_RT_Info_Tuple
@@ -1427,9 +1402,6 @@ TAO_RMS_FAIR_Reconfig_Sched_Strategy::assign_config (RtecScheduler::Config_Info 
   return 0;
 }
 
-///////////////////////////////////////////////////
-// class TAO_RMS_MLF_Reconfig_Sched_Strategy //
-///////////////////////////////////////////////////
 
 
 // Ordering function used to qsort an array of TAO_RT_Info_Tuple

@@ -1,19 +1,14 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    SchedEntry.inl
  *
  *  @author Chris Gill
  */
-//=============================================================================
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-//////////////////////
-// Class Task_Entry //
-//////////////////////
 
 /// Returns a pointer to the underlying RT_Info.
 ACE_INLINE Task_Entry::RT_Info *
@@ -176,9 +171,6 @@ Task_Entry::effective_execution_time () const
 }
 
 
-///////////////////////////
-// Class Task_Entry_Link //
-///////////////////////////
 
 
 /// Gets the number of calls of the dependency by the dependant.
@@ -208,9 +200,6 @@ Task_Entry_Link::called () const
   return called_;
 }
 
-//////////////////////////
-// Class Dispatch Entry //
-//////////////////////////
 
 ACE_INLINE u_long
 Dispatch_Entry::dispatch_id () const
@@ -294,9 +283,6 @@ Dispatch_Entry::original_dispatch ()
 }
 
 
-///////////////////////////////
-// Class Dispatch_Entry_Link //
-///////////////////////////////
 
 /// Compares dispatch entries.
 ACE_INLINE bool
@@ -314,9 +300,6 @@ Dispatch_Entry_Link::dispatch_entry () const
 }
 
 
-///////////////////////////////////
-// Class Dispatch_Proxy_Iterator //
-///////////////////////////////////
 
 /// Returns 0 if there are more entries to see, and 1 otherwise.
 ACE_INLINE int
@@ -326,9 +309,6 @@ Dispatch_Proxy_Iterator::done () const
 }
 
 
-//////////////////////////
-// Class TimeLine_Entry //
-//////////////////////////
 
 /// Gets a reference to the dispatch entry.
 ACE_INLINE Dispatch_Entry &
@@ -404,9 +384,6 @@ TimeLine_Entry::operator < (TimeLine_Entry const &t) const
 }
 
 
-///////////////////////////////
-// Class TimeLine_Entry_Link //
-///////////////////////////////
 
 
 /// Constructs a link for a time line entry.

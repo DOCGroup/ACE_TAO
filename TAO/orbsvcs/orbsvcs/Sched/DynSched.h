@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    DynSched.h
  *
  *  @author Chris Gill
  */
-//=============================================================================
 
 
 #ifndef DYNSCHED_H
@@ -42,9 +40,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_RTSched_Export ACE_DynScheduler
 {
 public:
-  //////////////////////////////
-  // public type declarations //
-  //////////////////////////////
 
   using handle_t = RtecScheduler::handle_t;
   using Dependency_Info = RtecScheduler::Dependency_Info;
@@ -105,9 +100,6 @@ public:
   };
 
 
-  /////////////////////////////
-  // public member functions //
-  /////////////////////////////
 
   virtual ~ACE_DynScheduler ();
 
@@ -265,9 +257,6 @@ public:
                                       Dispatching_Type & d_type);
 
 protected:
-  ////////////////////////////////
-  // protected member functions //
-  ////////////////////////////////
 
   ACE_DynScheduler ();
 
@@ -296,9 +285,6 @@ protected:
   /// Set the current scheduler status.
   void status (const status_t new_status);
 
-  /////////////////////////////////////////////
-  // protected pure virtual member functions //
-  /////////////////////////////////////////////
 
   /// determine the minimum critical priority number
   virtual Preemption_Priority minimum_critical_priority () = 0;
@@ -324,9 +310,6 @@ protected:
     schedule_timeline_entry (Dispatch_Entry &dispatch_entry,
                              std::deque<Dispatch_Entry *> &reschedule_queue) = 0;
 
-  ////////////////////////////
-  // protected data members //
-  ////////////////////////////
 
   /// The minimum OS thread priority value that the application specified (in
   /// its call to init ()).
@@ -379,9 +362,6 @@ protected:
   ACE_Ordered_MultiSet <TimeLine_Entry_Link> *timeline_ {};
 
 private:
-  ///////////////////////////////
-  // private type declarations //
-  ///////////////////////////////
 
   using EXT = ACE_CString;
   using INT = RT_Info *;
@@ -398,9 +378,6 @@ private:
   using Info_Collection_Iterator = ACE_Map_Iterator<EXT, INT, TAO_SYNCH_MUTEX>;
   using Info_Collection_Entry = ACE_Map_Entry<EXT, INT>;
 
-  //////////////////////////////
-  // private member functions //
-  //////////////////////////////
 
   /// Create a timeline.
   status_t create_timeline ();
@@ -466,9 +443,6 @@ private:
   /// calculate utilization, frame size, etc.
   status_t calculate_utilization_params ();
 
-  //////////////////////////
-  // private data members //
-  //////////////////////////
 
   /// This protects access to the scheduler during configuration runs.
   LOCK lock_;

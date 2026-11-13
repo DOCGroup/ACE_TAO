@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Strategy_Scheduler.h
  *
  *  @author Chris Gill
  */
-//=============================================================================
 
 
 #ifndef STRATEGY_SCHEDULER_H
@@ -20,9 +18,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // forward declaration of the abstract base class for scheduler strategies
 class ACE_Scheduler_Strategy;
 
-/////////////////////////////////
-// Strategized scheduler class //
-/////////////////////////////////
 
 /**
  * @class ACE_Strategy_Scheduler
@@ -35,7 +30,6 @@ class ACE_Scheduler_Strategy;
  */
 class TAO_RTSched_Export ACE_Strategy_Scheduler : public ACE_DynScheduler
 {
-// public interface
 public:
   explicit ACE_Strategy_Scheduler (ACE_Scheduler_Strategy &strategy);
 
@@ -75,9 +69,6 @@ private:
 };
 
 
-////////////////////////////////////////
-// Factory for strategized schedulers //
-////////////////////////////////////////
 
 /**
  * @class ACE_Strategy_Scheduler_Factory
@@ -97,9 +88,6 @@ public:
 };
 
 
-//////////////////////////
-// Scheduler Strategies //
-//////////////////////////
 
 /**
  * @class ACE_Scheduler_Strategy

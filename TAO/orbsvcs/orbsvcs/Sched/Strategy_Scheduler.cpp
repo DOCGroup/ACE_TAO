@@ -1,10 +1,8 @@
-//=============================================================================
 /**
  *  @file    Strategy_Scheduler.cpp
  *
  *  @author Chris Gill
  */
-//=============================================================================
 
 
 #include "orbsvcs/Log_Macros.h"
@@ -14,9 +12,6 @@
 
 #include <memory>
 
-//////////////////////////////////////////////
-// Helper function type definition for sort //
-//////////////////////////////////////////////
 
 // This is awkward, but it makes MSVC++ happy.
 extern "C"
@@ -24,9 +19,6 @@ extern "C"
 using COMP_FUNC = int (*) (void const *, void const *);
 }
 
-///////////////////////////////////////////////////
-// class ACE_Strategy_Scheduler member functions //
-///////////////////////////////////////////////////
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -568,9 +560,6 @@ ACE_Strategy_Scheduler::schedule_timeline_entry (
 }
 
 
-////////////////////////////////////////////////////////////////////
-// class template ACE_Strategy_Scheduler_Factory member functions //
-////////////////////////////////////////////////////////////////////
 
 /// Constructs and returns a scheduler strategized with
 /// an instance of the the parameterized strategy type.
@@ -589,9 +578,6 @@ ACE_Strategy_Scheduler_Factory<STRATEGY>::create (RtecScheduler::Preemption_Prio
 }
 
 
-/////////////////////////////////////////////////////////////////
-// abstract base class ACE_Scheduler_Strategy member functions //
-/////////////////////////////////////////////////////////////////
 
 ACE_Scheduler_Strategy::ACE_Scheduler_Strategy (
   ACE_DynScheduler::Preemption_Priority minimum_critical_priority)
@@ -679,15 +665,9 @@ ACE_Scheduler_Strategy::minimum_critical_priority ()
 }
 
 
-/////////////////////////////////////////////////////////////////////////
-// class ACE_MUF_Scheduler_Strategy static data member initializations //
-/////////////////////////////////////////////////////////////////////////
 
 ACE_MUF_Scheduler_Strategy *ACE_MUF_Scheduler_Strategy::instance_ {};
 
-///////////////////////////////////////////////////////
-// class ACE_MUF_Scheduler_Strategy member functions //
-///////////////////////////////////////////////////////
 
 /// Returns an instance of the strategy.
 
@@ -828,15 +808,9 @@ ACE_MUF_Scheduler_Strategy::dispatch_type (Dispatch_Entry const & /* entry */)
 
 
 
-/////////////////////////////////////////////////////////////////////////
-// class ACE_RMS_Scheduler_Strategy static data member initializations //
-/////////////////////////////////////////////////////////////////////////
 
 ACE_RMS_Scheduler_Strategy *ACE_RMS_Scheduler_Strategy::instance_ {};
 
-///////////////////////////////////////////////////////
-// class ACE_RMS_Scheduler_Strategy member functions //
-///////////////////////////////////////////////////////
 
 /// Returns an instance of the strategy.
 
@@ -949,15 +923,9 @@ ACE_RMS_Scheduler_Strategy::dispatch_type (Dispatch_Entry const & /* entry */)
 }
 
 
-/////////////////////////////////////////////////////////////////////////
-// class ACE_MLF_Scheduler_Strategy static data member initializations //
-/////////////////////////////////////////////////////////////////////////
 
 ACE_MLF_Scheduler_Strategy *ACE_MLF_Scheduler_Strategy::instance_ {};
 
-///////////////////////////////////////////////////////
-// class ACE_MLF_Scheduler_Strategy member functions //
-///////////////////////////////////////////////////////
 
 /// Returns an instance of the strategy.
 
@@ -1072,15 +1040,9 @@ ACE_MLF_Scheduler_Strategy::dispatch_type (Dispatch_Entry const & /* entry */)
 }
 
 
-/////////////////////////////////////////////////////////////////////////
-// class ACE_EDF_Scheduler_Strategy static data member initializations //
-/////////////////////////////////////////////////////////////////////////
 
 ACE_EDF_Scheduler_Strategy *ACE_EDF_Scheduler_Strategy::instance_ {};
 
-///////////////////////////////////////////////////////
-// class ACE_EDF_Scheduler_Strategy member functions //
-///////////////////////////////////////////////////////
 
 /// Returns an instance of the strategy.
 
@@ -1187,17 +1149,10 @@ ACE_EDF_Scheduler_Strategy::dispatch_type (Dispatch_Entry const & /* entry */)
 }
 
 
-//////////////////////////////////////////////
-// class ACE_Criticality_Scheduler_Strategy //
-//   static data member initializations     //
-//////////////////////////////////////////////
 
 ACE_Criticality_Scheduler_Strategy *
 ACE_Criticality_Scheduler_Strategy::instance_ {};
 
-///////////////////////////////////////////////////////////////
-// class ACE_Criticality_Scheduler_Strategy member functions //
-///////////////////////////////////////////////////////////////
 
 /// Returns an instance of the strategy.
 

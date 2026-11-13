@@ -1,10 +1,8 @@
-//=============================================================================
 /**
  *  @file    DynSched.cpp
  *
  *  @author Chris Gill
  */
-//=============================================================================
 
 
 #include "orbsvcs/Log_Macros.h"
@@ -25,9 +23,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-//////////////////////
-// Helper functions //
-//////////////////////
 
 // compare the DFS finish times of two task entries, order higher time *first*
 extern "C" int compare_entry_finish_times (void const *first, void const *second)
@@ -69,9 +64,6 @@ extern "C" int compare_entry_finish_times (void const *first, void const *second
   return 0;
 }
 
-//////////////////////////////////////////
-// class ACE_DynScheduler member functions //
-//////////////////////////////////////////
 
 char const *
 ACE_DynScheduler::status_message (ACE_DynScheduler::status_t status)

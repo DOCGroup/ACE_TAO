@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
 
-//=============================================================================
 /**
  *  @file    Reconfig_Sched_Utils_T.h
  *
  *  @author  Chris Gill <cdgill@cs.wustl.edu>
  */
-//=============================================================================
 
 
 #ifndef TAO_RECONFIG_SCHED_UTILS_T_H
@@ -24,9 +22,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-//////////////////////////////////////////
-// Reconfig Sched Entry Visitor classes //
-//////////////////////////////////////////
 
 /**
  * A base class for scheduler entry visitors that use a

@@ -3,7 +3,6 @@
  *
  *  @author  Chris Gill <cdgill@cs.wustl.edu>
  */
-//=============================================================================
 
 
 #ifndef TAO_RECONFIG_SCHED_UTILS_T_CPP
@@ -21,9 +20,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-////////////////////////////////
-// TAO_RSE_Dependency_Visitor //
-////////////////////////////////
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
@@ -224,9 +220,6 @@ postfix_action (TAO_Reconfig_Scheduler_Entry & /* rse */)
 }
 
 
-/////////////////////////
-// TAO_RSE_DFS_Visitor //
-/////////////////////////
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 TAO_RSE_DFS_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
@@ -309,9 +302,6 @@ postfix_action (TAO_Reconfig_Scheduler_Entry &rse)
 }
 
 
-/////////////////////////
-// TAO_RSE_SCC_Visitor //
-/////////////////////////
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 TAO_RSE_SCC_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
@@ -457,9 +447,6 @@ postfix_action (TAO_Reconfig_Scheduler_Entry &rse)
   return 0;
 }
 
-/////////////////////////////////////////
-// TAO_RSE_Reverse_Propagation_Visitor //
-/////////////////////////////////////////
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 TAO_RSE_Reverse_Propagation_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
@@ -521,9 +508,6 @@ pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
 }
 
 
-/////////////////////////////////////////
-// TAO_RSE_Forward_Propagation_Visitor //
-/////////////////////////////////////////
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 TAO_RSE_Forward_Propagation_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
@@ -745,9 +729,6 @@ pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
   return 1;
 }
 
-////////////////////////////////////
-// class TAO_RSE_Priority_Visitor //
-////////////////////////////////////
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 TAO_RSE_Priority_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
@@ -867,9 +848,6 @@ TAO_RSE_Priority_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::finish ()
   return 0;
 }
 
-///////////////////////////////////////
-// class TAO_Tuple_Admission_Visitor //
-///////////////////////////////////////
 
 template <class RECONFIG_SCHED_STRATEGY>
 TAO_Tuple_Admission_Visitor<RECONFIG_SCHED_STRATEGY>::
@@ -1000,9 +978,6 @@ TAO_Tuple_Admission_Visitor<RECONFIG_SCHED_STRATEGY>::noncritical_utilization_th
 }
 
 
-/////////////////////////////////////////
-// TAO_RSE_Criticality_Propagation_Visitor //
-/////////////////////////////////////////
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 TAO_RSE_Criticality_Propagation_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
