@@ -442,52 +442,15 @@ ACE_Filecache::finish (ACE_Filecache_Object *&file)
   return file;
 }
 
-void
-ACE_Filecache_Object::init ()
-{
-  this->filename_[0] = '\0';
-  this->handle_ = ACE_INVALID_HANDLE;
-  this->error_ = ACE_SUCCESS;
-  this->tempname_ = nullptr;
-  this->size_ = 0;
-
-  this->stat_ = {};
-}
-
-ACE_Filecache_Object::ACE_Filecache_Object ()
-  : tempname_ (nullptr),
-    mmap_ (),
-    handle_ (0),
-    // stat_ (),
-    size_ (0),
-    action_ (0),
-    error_ (0),
-    stale_ (0),
-    // sa_ (),
-    junklock_ (),
-    lock_ (junklock_)
-{
-  this->init ();
-}
+ACE_Filecache_Object::ACE_Filecache_Object () = default;
 
 ACE_Filecache_Object::ACE_Filecache_Object (const ACE_TCHAR *filename,
                                             ACE_SYNCH_RW_MUTEX &lock,
                                             LPSECURITY_ATTRIBUTES sa,
                                             int mapit)
-  : tempname_ (nullptr),
-    mmap_ (),
-    handle_ (0),
-    // stat_ (),
-    size_ (0),
-    action_ (0),
-    error_ (0),
-    stale_ (0),
-    sa_ (sa),
-    junklock_ (),
+  : sa_ (sa),
     lock_ (lock)
 {
-  this->init ();
-
   // ASSERT strlen(filename) < sizeof (this->filename_)
   ACE_OS::strcpy (this->filename_, filename);
   this->action_ = ACE_Filecache_Object::ACE_READING;
@@ -542,12 +505,9 @@ ACE_Filecache_Object::ACE_Filecache_Object (const ACE_TCHAR *filename,
                                             ACE_OFF_T size,
                                             ACE_SYNCH_RW_MUTEX &lock,
                                             LPSECURITY_ATTRIBUTES sa)
-  : stale_ (0),
-    sa_ (sa),
+  : sa_ (sa),
     lock_ (lock)
 {
-  this->init ();
-
   this->size_ = size;
   ACE_OS::strcpy (this->filename_, filename);
   this->action_ = ACE_Filecache_Object::ACE_WRITING;
