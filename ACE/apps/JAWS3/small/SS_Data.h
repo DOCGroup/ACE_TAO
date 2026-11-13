@@ -11,7 +11,12 @@ class TeraSS_Service_Handler;
 class TeraSS_Data
 {
 public:
-  TeraSS_Data (TeraSS_Service_Handler *sh);
+  explicit TeraSS_Data (TeraSS_Service_Handler &handler);
+
+  TeraSS_Data (TeraSS_Data const &) = delete;
+  TeraSS_Data (TeraSS_Data &&) = delete;
+  TeraSS_Data &operator= (TeraSS_Data const &) = delete;
+  TeraSS_Data &operator= (TeraSS_Data &&) = delete;
 
   ACE_SOCK_Stream & peer ();
   ACE_Message_Block & mb ();
@@ -19,7 +24,8 @@ public:
 
 private:
   ACE_Message_Block mb_;
-  TeraSS_Service_Handler *sh_;
+  /// Non-owning reference to the service handler containing the peer stream.
+  TeraSS_Service_Handler &handler_;
   ACE_FILE_IO file_io_;
 };
 

@@ -10,7 +10,7 @@
 
 TeraSS_Service_Handler::TeraSS_Service_Handler ()
   : JAWS_Protocol_Handler (TeraSS_State_READ::instance (), & this->data_)
-  , data_ (this)
+  , data_ (*this)
 {
 }
 
@@ -36,7 +36,7 @@ TeraSS_Acceptor::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt opt (argc, argv, ACE_TEXT("p:"));
 
-  unsigned short p = 0;
+  unsigned short p {};
 
   int c;
   while ((c = opt ()) != -1)
