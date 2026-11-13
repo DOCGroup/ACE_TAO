@@ -42,6 +42,7 @@
 #include "ace/OS_NS_strings.h"
 
 #include <cstring>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -377,7 +378,8 @@ TAO_AV_RTP_Object::send_frame (ACE_Message_Block *frame,
     }
 
   int result = -1;
-  RTP_Packet *rtp_packet;
+  std::unique_ptr<RTP_Packet> rtp_packet;
+  RTP_Packet *raw_rtp_packet {};
   ACE_UINT32 csrc_count = 0;  // Assume for now no mixers/translators
   ACE_UINT32 *csrc_list {};
 
@@ -394,7 +396,7 @@ TAO_AV_RTP_Object::send_frame (ACE_Message_Block *frame,
       // to the RTP traffic
       rtcp_prot_obj->ssrc(this->ssrc_);
 
-      ACE_NEW_RETURN (rtp_packet,
+      ACE_NEW_RETURN (raw_rtp_packet,
                       RTP_Packet (0,                            // padding
                                   frame_info->boundary_marker,  // marker
                                   static_cast<unsigned char> (this->format_),                // payload type
@@ -406,6 +408,7 @@ TAO_AV_RTP_Object::send_frame (ACE_Message_Block *frame,
                                   frame->rd_ptr (),             // data
                                   (ACE_UINT16)frame->length ()),// data size
                                   -1);
+      rtp_packet.reset (raw_rtp_packet);
 
       frame_info->sequence_num ++;
     }
@@ -450,7 +453,7 @@ TAO_AV_RTP_Object::send_frame (ACE_Message_Block *frame,
                        ((double)now.usec () * samples_per_usec) +
                        this->timestamp_offset_);
 
-      ACE_NEW_RETURN (rtp_packet,
+      ACE_NEW_RETURN (raw_rtp_packet,
                       RTP_Packet (0,                            // padding
                                   0,                            // marker
                                   static_cast<unsigned char> (this->format_),                // payload type
@@ -462,6 +465,7 @@ TAO_AV_RTP_Object::send_frame (ACE_Message_Block *frame,
                                   frame->rd_ptr (),             // data
                                   (ACE_UINT16)frame->length ()),// data size
                                   -1);
+      rtp_packet.reset (raw_rtp_packet);
 
       this->sequence_num_ ++;
     }
@@ -481,8 +485,6 @@ TAO_AV_RTP_Object::send_frame (ACE_Message_Block *frame,
   if (rtcp_prot_obj)
     rtcp_prot_obj->handle_control_output (&mb);
 
-  delete rtp_packet;
-
   return 0;
 }
 
@@ -492,7 +494,8 @@ TAO_AV_RTP_Object::send_frame (iovec const *iov,
                                TAO_AV_frame_info *frame_info)
 {
   int result = -1;
-  RTP_Packet *rtp_packet {};
+  std::unique_ptr<RTP_Packet> rtp_packet;
+  RTP_Packet *raw_rtp_packet {};
   ACE_UINT32 csrc_count = 0;  // Assume for now no mixers/translators
   ACE_UINT32 *csrc_list {};
 
@@ -517,7 +520,7 @@ TAO_AV_RTP_Object::send_frame (iovec const *iov,
       rtcp_prot_obj->ssrc(this->ssrc_);
       ACE_UINT16 data_size = static_cast<ACE_UINT16> (iov[0].iov_len);
 
-      ACE_NEW_RETURN (rtp_packet,
+      ACE_NEW_RETURN (raw_rtp_packet,
                       RTP_Packet (0,                            // padding
                                   frame_info->boundary_marker,  // marker
                                   static_cast<unsigned char> (this->format_),                // payload type
@@ -529,6 +532,7 @@ TAO_AV_RTP_Object::send_frame (iovec const *iov,
                                   (char *)iov[0].iov_base,      // data
                                   data_size),                   // data size
                                   -1);
+      rtp_packet.reset (raw_rtp_packet);
 
       frame_info->sequence_num ++;
     }
@@ -575,7 +579,7 @@ TAO_AV_RTP_Object::send_frame (iovec const *iov,
                        this->timestamp_offset_);
       ACE_UINT16 data_size = static_cast<ACE_UINT16> (iov[0].iov_len);
 
-      ACE_NEW_RETURN (rtp_packet,
+      ACE_NEW_RETURN (raw_rtp_packet,
                       RTP_Packet (0,                            // padding
                                   0,                            // marker
                                   static_cast<unsigned char> (this->format_),                // payload type
@@ -587,6 +591,7 @@ TAO_AV_RTP_Object::send_frame (iovec const *iov,
                                   (char *)iov[0].iov_base,      // data
                                   data_size),                   // data size
                                   -1);
+      rtp_packet.reset (raw_rtp_packet);
 
       this->sequence_num_ ++;
     }
@@ -601,8 +606,6 @@ TAO_AV_RTP_Object::send_frame (iovec const *iov,
   for (int i=1;i<iovcnt; i++)
     send_iov [i] = iov [i];
   result = this->transport_->send (send_iov, iovcnt);
-
-  delete rtp_packet;
 
   if (result < 0)
     ORBSVCS_ERROR_RETURN ((LM_ERROR,"TAO_AV_RTP::send_frame failed\n"),result);
