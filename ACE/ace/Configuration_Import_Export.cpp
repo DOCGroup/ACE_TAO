@@ -5,8 +5,39 @@
 #include "ace/OS_NS_string.h"
 
 #include <cstring>
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+namespace ACE_Config_Import_Export_Details
+{
+  struct Buffer_Deleter
+  {
+    void operator() (ACE_TCHAR *buffer) const
+    {
+      if (buffer != nullptr)
+        {
+#if defined (ACE_HAS_ALLOC_HOOKS)
+          ACE_Allocator::instance ()->free (buffer);
+#else
+          delete [] buffer;
+#endif /* ACE_HAS_ALLOC_HOOKS */
+        }
+    }
+
+    void operator() (u_char *buffer) const
+    {
+      if (buffer != nullptr)
+        {
+#if defined (ACE_HAS_ALLOC_HOOKS)
+          ACE_Allocator::instance ()->free (buffer);
+#else
+          delete [] buffer;
+#endif /* ACE_HAS_ALLOC_HOOKS */
+        }
+    }
+  };
+}
 
 ACE_Config_ImpExp_Base::ACE_Config_ImpExp_Base (ACE_Configuration& config)
   : config_ (config)
@@ -28,7 +59,8 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
       errno = EINVAL;
       return -1;
     }
-  FILE* in = ACE_OS::fopen (filename, ACE_TEXT ("r"));
+  std::unique_ptr<FILE, int (*) (FILE *)> in {
+    ACE_OS::fopen (filename, ACE_TEXT ("r")), ACE_OS::fclose};
   if (!in)
     return -1;
 
@@ -43,13 +75,14 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
   if (!buffer)
     {
       ACE_Errno_Guard guard (errno);
-      (void) ACE_OS::fclose (in);
+      in.reset ();
       return -1;
     }
+  std::unique_ptr<ACE_TCHAR[], ACE_Config_Import_Export_Details::Buffer_Deleter> buffer_owner {buffer};
   ACE_Configuration_Section_Key section;
   ACE_TCHAR *end {};
 
-  while (ACE_OS::fgets (buffer+read_pos, buffer_size - read_pos, in))
+  while (ACE_OS::fgets (buffer+read_pos, buffer_size - read_pos, in.get ()))
     {
       // Check if we got all the line.
       end = ACE_OS::strrchr (buffer + read_pos,
@@ -57,7 +90,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
       if (!end) // we havn't reach the end of the line yet
         {
           // allocate a new buffer - double size the previous one
-          ACE_TCHAR *temp_buffer;
+          ACE_TCHAR *temp_buffer {};
 #if defined (ACE_HAS_ALLOC_HOOKS)
           ACE_ALLOCATOR_NORETURN (temp_buffer, static_cast<ACE_TCHAR*> (ACE_Allocator::instance()->malloc(sizeof (ACE_TCHAR) * buffer_size * 2)));
 #else
@@ -66,25 +99,19 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
           if (!temp_buffer)
             {
               ACE_Errno_Guard guard (errno);
-#if defined (ACE_HAS_ALLOC_HOOKS)
-              ACE_Allocator::instance()->free(buffer);
-#else
-              delete [] buffer;
-#endif /* ACE_HAS_ALLOC_HOOKS */
-              (void) ACE_OS::fclose (in);
+              buffer_owner.reset ();
+              in.reset ();
               return -1;
             }
 
+          std::unique_ptr<ACE_TCHAR[], ACE_Config_Import_Export_Details::Buffer_Deleter> temp_buffer_owner {temp_buffer};
+
           // copy the beginnning of the line
-          std::memcpy (temp_buffer, buffer, buffer_size);
+          std::memcpy (temp_buffer, buffer, buffer_size * sizeof (ACE_TCHAR));
           read_pos = buffer_size - 1;
           buffer_size *= 2;
-#if defined (ACE_HAS_ALLOC_HOOKS)
-          ACE_Allocator::instance()->free(buffer);
-#else
-          delete [] buffer;
-#endif /* ACE_HAS_ALLOC_HOOKS */
-          buffer = temp_buffer;
+          buffer_owner.swap (temp_buffer_owner);
+          buffer = buffer_owner.get ();
           continue;
         }
       read_pos = 0;
@@ -99,24 +126,12 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
           end = ACE_OS::strrchr (buffer, ACE_TEXT (']'));
           if (!end)
             {
-              ACE_OS::fclose (in);
-#if defined (ACE_HAS_ALLOC_HOOKS)
-              ACE_Allocator::instance()->free(buffer);
-#else
-              delete [] buffer;
-#endif /* ACE_HAS_ALLOC_HOOKS */
               return -3;
             }
           *end = 0;
 
           if (config_.expand_path (config_.root_section (), buffer + 1, section, 1))
             {
-              ACE_OS::fclose (in);
-#if defined (ACE_HAS_ALLOC_HOOKS)
-              ACE_Allocator::instance()->free(buffer);
-#else
-              delete [] buffer;
-#endif /* ACE_HAS_ALLOC_HOOKS */
               return -3;
             }
           continue;
@@ -144,12 +159,6 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
                 *trailing = 0;
               if (config_.set_string_value (section, name, end))
                 {
-                  ACE_OS::fclose (in);
-#if defined (ACE_HAS_ALLOC_HOOKS)
-                  ACE_Allocator::instance()->free(buffer);
-#else
-                  delete [] buffer;
-#endif /* ACE_HAS_ALLOC_HOOKS */
                   return -4;
                 }
             }
@@ -161,12 +170,6 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
               if (config_.set_integer_value (section, name,
                                              static_cast<u_int> (value)))
                 {
-                  ACE_OS::fclose (in);
-#if defined (ACE_HAS_ALLOC_HOOKS)
-                  ACE_Allocator::instance()->free(buffer);
-#else
-                  delete [] buffer;
-#endif /* ACE_HAS_ALLOC_HOOKS */
                   return -4;
                 }
             }
@@ -187,6 +190,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
                               u_char[length],
                               -1);
 #endif /* ACE_HAS_ALLOC_HOOKS */
+              std::unique_ptr<u_char[], ACE_Config_Import_Export_Details::Buffer_Deleter> data_owner {data};
               u_char* out = data;
               ACE_TCHAR* inb = end + 4;
               ACE_TCHAR* endptr {};
@@ -200,22 +204,8 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
                 }
               if (config_.set_binary_value (section, name, data, length))
                 {
-                  ACE_OS::fclose (in);
-#if defined (ACE_HAS_ALLOC_HOOKS)
-                  ACE_Allocator::instance()->free(data);
-                  ACE_Allocator::instance()->free(buffer);
-#else
-                  delete [] data;
-                  delete [] buffer;
-#endif /* ACE_HAS_ALLOC_HOOKS */
                   return -4;
                 }
-              else
-#if defined (ACE_HAS_ALLOC_HOOKS)
-                ACE_Allocator::instance()->free(data);
-#else
-                delete [] data;
-#endif /* ACE_HAS_ALLOC_HOOKS */
             }
           else
             {
@@ -232,34 +222,13 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
           int rc = process_previous_line_format (buffer, section);
           if (rc != 0)
             {
-              ACE_OS::fclose (in);
-#if defined (ACE_HAS_ALLOC_HOOKS)
-              ACE_Allocator::instance()->free(buffer);
-#else
-              delete [] buffer;
-#endif /* ACE_HAS_ALLOC_HOOKS */
               return rc;
             }
         }             // end if maybe old format
     }                 // end while fgets
 
-  if (ferror (in))
-    {
-      ACE_OS::fclose (in);
-#if defined (ACE_HAS_ALLOC_HOOKS)
-      ACE_Allocator::instance()->free(buffer);
-#else
-      delete [] buffer;
-#endif /* ACE_HAS_ALLOC_HOOKS */
-      return -1;
-    }
-
-  ACE_OS::fclose (in);
-#if defined (ACE_HAS_ALLOC_HOOKS)
-  ACE_Allocator::instance()->free(buffer);
-#else
-  delete [] buffer;
-#endif /* ACE_HAS_ALLOC_HOOKS */
+  if (ferror (in.get ()))
+    return -1;
   return 0;
 }
 
