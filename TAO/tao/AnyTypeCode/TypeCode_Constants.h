@@ -103,7 +103,10 @@ namespace CORBA
   TAO_SYSTEM_EXCEPTION(ACTIVITY_REQUIRED); \
   TAO_SYSTEM_EXCEPTION(THREAD_CANCELLED);
 
-  /// TypeCode constants for system exceptions.
+  /**
+   * @name TypeCode constants for system exceptions
+   */
+  //@{
 #define TAO_SYSTEM_EXCEPTION(name) \
   extern TAO_AnyTypeCode_Export TypeCode_ptr const _tc_ ## name
   TAO_SYSTEM_EXCEPTION_LIST

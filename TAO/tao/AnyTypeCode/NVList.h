@@ -95,8 +95,13 @@ namespace CORBA
     NamedValue &operator= (NamedValue const &) = delete;
     NamedValue &operator= (NamedValue &&) = delete;
 
+    /// @name Reference counting
+    /// @{
+
     ULong _incr_refcount ();
     ULong _decr_refcount ();
+
+    /// @}
 
     // Useful for template programming.
     using _ptr_type = NamedValue_ptr;
@@ -186,15 +191,21 @@ namespace CORBA
     static NVList * _duplicate (NVList *);
     static NVList * _nil ();
 
+    /// @name Reference counting
+    /// @{
+
     ULong _incr_refcount ();
     ULong _decr_refcount ();
+
+    /// @}
 
     NVList (NVList const &) = delete;
     NVList (NVList &&) = delete;
     NVList &operator= (NVList const &) = delete;
     NVList &operator= (NVList &&) = delete;
 
-    /// TAO extensions.
+    /// @name TAO extensions
+    /// @{
 
     /**
      * Set the incoming CDR stream, this is used by TAO to perform lazy
@@ -226,6 +237,8 @@ namespace CORBA
      * GIOP 1.2).
      */
     Boolean _lazy_has_arguments () const;
+
+    /// @}
 
     // Useful for template programming.
     using _ptr_type = NVList_ptr;
