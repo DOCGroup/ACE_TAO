@@ -1,11 +1,10 @@
 // -*- C++ -*-
-//=============================================================================
 /**
  * @file PolicyList_Destroyer.h
  *
  * @author Carlos O'Ryan <coryan@atdesk.com>
  */
-//=============================================================================
+
 #ifndef TAO_UTILS_POLICYLIST_DESTROYER_H
 #define TAO_UTILS_POLICYLIST_DESTROYER_H
 #include /**/ "ace/pre.h"
@@ -33,10 +32,9 @@ namespace TAO
       : public CORBA::PolicyList
     {
     public:
-      PolicyList_Destroyer(CORBA::ULong length_hint);
-      ~PolicyList_Destroyer() noexcept;
+      explicit PolicyList_Destroyer (CORBA::ULong length_hint);
+      ~PolicyList_Destroyer () noexcept;
 
-    private:
       PolicyList_Destroyer (PolicyList_Destroyer const &) = delete;
       PolicyList_Destroyer &operator= (PolicyList_Destroyer const &) = delete;
       PolicyList_Destroyer (PolicyList_Destroyer &&) = delete;

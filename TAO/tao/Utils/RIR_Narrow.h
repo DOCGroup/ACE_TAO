@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file RIR_Narrow.h
  *
  * @author Carlos O'Ryan <coryan@atdesk.com>
  */
-//=============================================================================
 
 #ifndef TAO_UTILS_RIR_NARROW_H
 #define TAO_UTILS_RIR_NARROW_H
@@ -34,7 +32,7 @@ namespace TAO
      * @brief Helper class to obtain an initial reference and narrow it
      *        to the proper object reference.
      */
-    template<class T> class RIR_Narrow
+    template <class T> class RIR_Narrow
     {
     public:
       using _ptr_type = typename T::_ptr_type;
@@ -54,7 +52,6 @@ namespace TAO
     };
   } // namespace Utils
 } // namespace TAO
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

@@ -1,6 +1,3 @@
-// = AUTHOR
-//    Sumedh Mungee <sumedh@cs.wustl.edu>
-
 #include "tao/Utils/ORB_Manager.h"
 #include "tao/Utils/PolicyList_Destroyer.h"
 
@@ -8,27 +5,25 @@
 #include "tao/PortableServer/IdAssignmentPolicyC.h"
 #include "tao/PortableServer/LifespanPolicyC.h"
 
-
 #include "tao/ORBInitializer_Registry.h"
 
 #include "ace/Log_Msg.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// constructor
 TAO_ORB_Manager::TAO_ORB_Manager (CORBA::ORB_ptr orb,
                                   PortableServer::POA_ptr poa,
                                   PortableServer::POAManager_ptr poa_manager)
-  : orb_ (CORBA::ORB::_duplicate(orb)),
-    poa_ (PortableServer::POA::_duplicate(poa)),
-    poa_manager_ (PortableServer::POAManager::_duplicate(poa_manager))
+  : orb_ (CORBA::ORB::_duplicate (orb)),
+    poa_ (PortableServer::POA::_duplicate (poa)),
+    poa_manager_ (PortableServer::POAManager::_duplicate (poa_manager))
 {
 }
 
 int
 TAO_ORB_Manager::init (int &argc,
                        ACE_TCHAR *argv[],
-                       const char *orb_name)
+                       char const *orb_name)
 {
   if (CORBA::is_nil (this->orb_.in ()))
     {
@@ -38,7 +33,7 @@ TAO_ORB_Manager::init (int &argc,
   if (CORBA::is_nil (this->poa_.in ()))
     {
       // Get the POA from the ORB.
-      CORBA::Object_var poa_object =
+      CORBA::Object_var const poa_object =
         this->orb_->resolve_initial_references (TAO_OBJID_ROOTPOA);
 
       if (CORBA::is_nil (poa_object.in ()))
@@ -61,10 +56,10 @@ TAO_ORB_Manager::init (int &argc,
 
 #if !defined (CORBA_E_MICRO)
 int
-TAO_ORB_Manager::init_child_poa (int& argc,
+TAO_ORB_Manager::init_child_poa (int &argc,
                                  ACE_TCHAR **argv,
-                                 const char *poa_name,
-                                 const char *orb_name)
+                                 char const *poa_name,
+                                 char const *orb_name)
 {
   // Check to see if root poa has to be created.
   if (this->init (argc, argv, orb_name) == -1)
@@ -94,8 +89,6 @@ TAO_ORB_Manager::init_child_poa (int& argc,
 }
 #endif /* CORBA_E_MICRO */
 
-// Activate POA manager.
-
 int
 TAO_ORB_Manager::activate_poa_manager ()
 {
@@ -103,14 +96,12 @@ TAO_ORB_Manager::activate_poa_manager ()
   return 0;
 }
 
-// Activate servant in the POA.
-
 char *
 TAO_ORB_Manager::activate (PortableServer::Servant servant)
 {
-  PortableServer::ObjectId_var id = this->poa_->activate_object (servant);
+  PortableServer::ObjectId_var const id = this->poa_->activate_object (servant);
 
-  CORBA::Object_var obj = this->poa_->id_to_reference (id.in ());
+  CORBA::Object_var const obj = this->poa_->id_to_reference (id.in ());
 
   CORBA::String_var str = this->orb_->object_to_string (obj.in ());
 
@@ -118,53 +109,51 @@ TAO_ORB_Manager::activate (PortableServer::Servant servant)
 }
 
 void
-TAO_ORB_Manager::deactivate (const char *id)
+TAO_ORB_Manager::deactivate (char const *id)
 {
-  CORBA::Object_var object = this->orb_->string_to_object (id);
+  CORBA::Object_var const object = this->orb_->string_to_object (id);
 
-  PortableServer::ObjectId_var object_id =
+  PortableServer::ObjectId_var const object_id =
     this->poa_->reference_to_id (object.in ());
 
   this->poa_->deactivate_object (object_id.in ());
 }
 
 #if !defined (CORBA_E_MICRO)
-// Activate the object with the object_name under the child POA.
+/// Activate the object with the object name under the child POA.
 char *
-TAO_ORB_Manager::activate_under_child_poa (const char *object_name,
+TAO_ORB_Manager::activate_under_child_poa (char const *object_name,
                                            PortableServer::Servant servant)
 {
   if (object_name == nullptr)
     TAOLIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("\n(%P|%t) TAO_ORB_Manager::register: ")
                        ACE_TEXT ("object_name is null!")),
-                      0);
+                      nullptr);
 
-  PortableServer::ObjectId_var id =
+  PortableServer::ObjectId_var const id =
     PortableServer::string_to_ObjectId (object_name);
 
   this->child_poa_->activate_object_with_id (id.in (), servant);
 
-  CORBA::Object_var obj = this->child_poa_->id_to_reference (id.in ());
+  CORBA::Object_var const obj = this->child_poa_->id_to_reference (id.in ());
 
   CORBA::String_var str = this->orb_->object_to_string (obj.in ());
 
-  return str._retn();
+  return str._retn ();
 }
 
 void
-TAO_ORB_Manager::deactivate_under_child_poa (const char *id)
+TAO_ORB_Manager::deactivate_under_child_poa (char const *id)
 {
-  CORBA::Object_var object = this->orb_->string_to_object (id);
+  CORBA::Object_var const object = this->orb_->string_to_object (id);
 
-  PortableServer::ObjectId_var object_id =
+  PortableServer::ObjectId_var const object_id =
     this->child_poa_->reference_to_id (object.in ());
 
   this->child_poa_->deactivate_object (object_id.in ());
 }
 #endif /* CORBA_E_MICRO */
-
-// Enter the ORB event loop.
 
 int
 TAO_ORB_Manager::run (ACE_Time_Value &tv)
@@ -179,15 +168,15 @@ TAO_ORB_Manager::run (ACE_Time_Value &tv)
 int
 TAO_ORB_Manager::fini ()
 {
-  this->poa_->destroy (1, 1);
+  this->poa_->destroy (true, true);
 
-  this->child_poa_   = PortableServer::POA::_nil();
-  this->poa_         = PortableServer::POA::_nil();
-  this->poa_manager_ = PortableServer::POAManager::_nil();
+  this->child_poa_   = PortableServer::POA::_nil ();
+  this->poa_         = PortableServer::POA::_nil ();
+  this->poa_manager_ = PortableServer::POAManager::_nil ();
 
   this->orb_->destroy ();
 
-  this->orb_ = CORBA::ORB::_nil();
+  this->orb_ = CORBA::ORB::_nil ();
 
   return 0;
 }
@@ -202,35 +191,32 @@ TAO_ORB_Manager::run ()
   return 0;
 }
 
-// Return the corba orb reference.
-
+/// Return a duplicate of the ORB reference.
 CORBA::ORB_ptr
-TAO_ORB_Manager::orb ()
+TAO_ORB_Manager::orb () const
 {
   return CORBA::ORB::_duplicate (this->orb_.in ());
 }
 
-// Return the root POA reference
+/// Return a duplicate of the root POA reference.
 PortableServer::POA_ptr
-TAO_ORB_Manager::root_poa ()
+TAO_ORB_Manager::root_poa () const
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
-// Return the child POA reference
+/// Return a duplicate of the child POA reference.
 PortableServer::POA_ptr
-TAO_ORB_Manager::child_poa ()
+TAO_ORB_Manager::child_poa () const
 {
   return PortableServer::POA::_duplicate (this->child_poa_.in ());
 }
 
 PortableServer::POAManager_ptr
-TAO_ORB_Manager::poa_manager ()
+TAO_ORB_Manager::poa_manager () const
 {
   return PortableServer::POAManager::_duplicate (this->poa_manager_.in ());
 }
-
-// Destructor.
 
 TAO_ORB_Manager::~TAO_ORB_Manager ()
 {
@@ -238,16 +224,16 @@ TAO_ORB_Manager::~TAO_ORB_Manager ()
     {
       if (!CORBA::is_nil (this->poa_.in ()))
         {
-          this->poa_->destroy (1,1);
+          this->poa_->destroy (true, true);
         }
       if (!CORBA::is_nil (this->orb_.in ()))
         {
           this->orb_->destroy ();
         }
     }
-  catch (const ::CORBA::Exception&)
+  catch (::CORBA::Exception const &)
     {
-      // ignore any exceptions..
+      // Ignore exceptions during destruction.
     }
 }
 
