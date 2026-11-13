@@ -39,7 +39,7 @@ EchoEventConsumer_i::push (RtecEventComm::EventSet const &events)
   if (--this->event_limit_ <= 0)
     {
       this->supplier_->disconnect_push_supplier ();
-      this->orb_->shutdown (0);
+      this->orb_->shutdown (false);
     }
 }
 
