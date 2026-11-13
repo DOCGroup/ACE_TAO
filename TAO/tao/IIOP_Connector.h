@@ -32,6 +32,8 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/Connector.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_IIOP_Endpoint;
@@ -140,6 +142,9 @@ private:
 
   /// The connector initiating connection requests for IIOP.
   TAO_IIOP_BASE_CONNECTOR base_connector_;
+
+  std::unique_ptr<TAO_IIOP_CONNECT_CREATION_STRATEGY> creation_strategy_;
+  std::unique_ptr<TAO_IIOP_CONNECT_CONCURRENCY_STRATEGY> concurrency_strategy_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -122,6 +122,8 @@ TAO_IIOP_Connector::open (TAO_ORB_Core *orb_core)
                       (orb_core->thr_mgr (),
                        orb_core),
                   -1);
+  std::unique_ptr<TAO_IIOP_CONNECT_CREATION_STRATEGY> creation_strategy_owner (
+    connect_creation_strategy);
 
   /// Our activation strategy
   TAO_IIOP_CONNECT_CONCURRENCY_STRATEGY *concurrency_strategy {};
@@ -130,17 +132,23 @@ TAO_IIOP_Connector::open (TAO_ORB_Core *orb_core)
                   TAO_IIOP_CONNECT_CONCURRENCY_STRATEGY (orb_core),
                   -1);
 
-  return this->base_connector_.open (this->orb_core ()->reactor (),
-                                     connect_creation_strategy,
-                                     &this->connect_strategy_,
-                                     concurrency_strategy);
+  std::unique_ptr<TAO_IIOP_CONNECT_CONCURRENCY_STRATEGY> concurrency_strategy_owner (
+    concurrency_strategy);
+
+  int const result = this->base_connector_.open (this->orb_core ()->reactor (),
+                                                 creation_strategy_owner.get (),
+                                                 &this->connect_strategy_,
+                                                 concurrency_strategy_owner.get ());
+  this->creation_strategy_.reset (creation_strategy_owner.release ());
+  this->concurrency_strategy_.reset (concurrency_strategy_owner.release ());
+  return result;
 }
 
 int
 TAO_IIOP_Connector::close ()
 {
-  delete this->base_connector_.concurrency_strategy ();
-  delete this->base_connector_.creation_strategy ();
+  this->concurrency_strategy_.reset ();
+  this->creation_strategy_.reset ();
   return this->base_connector_.close ();
 }
 
