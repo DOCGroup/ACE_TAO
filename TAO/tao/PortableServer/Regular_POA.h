@@ -56,7 +56,7 @@ protected:
 
   char root_key_type () override;
 
-  /// The parent of this POA. A null pointer indicates that this POA is a root.
+  /// Non-owning pointer to this POA's parent; null indicates that it is a root.
   TAO_Root_POA *parent_;
 };
 

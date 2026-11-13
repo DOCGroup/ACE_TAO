@@ -328,7 +328,7 @@ public:
   set_active_object_map (TAO_Active_Object_Map *active_object_map);
 
 protected:
-  /// Pointer to the active map.
+  /// Non-owning back-reference to the active map that owns this strategy.
   TAO_Active_Object_Map *active_object_map_;
 };
 
@@ -454,7 +454,7 @@ public:
   set_active_object_map (TAO_Active_Object_Map *active_object_map);
 
 protected:
-  /// Pointer to the active map.
+  /// Non-owning back-reference to the active map that owns this strategy.
   TAO_Active_Object_Map *active_object_map_;
 };
 
@@ -522,7 +522,7 @@ public:
   set_active_object_map (TAO_Active_Object_Map *active_object_map);
 
 protected:
-  /// Pointer to the active map.
+  /// Non-owning back-reference to the active map that owns this strategy.
   TAO_Active_Object_Map *active_object_map_;
 };
 

@@ -220,6 +220,7 @@ public:
     void object_adapter (TAO_Object_Adapter *oa);
 
   protected:
+    /// Non-owning back-reference to the adapter that owns this strategy.
     TAO_Object_Adapter *object_adapter_ {};
   };
 
@@ -430,8 +431,7 @@ private:
   /// Condition variable for waiting on non-servant upcalls to end.
   TAO_SYNCH_CONDITION non_servant_upcall_condition_;
 
-  /// Pointer to the non-servant upcall in progress.  If no non-servant
-  /// upcall is in progress, this pointer is zero.
+  /// Non-owning pointer to the stack-scoped upcall in progress, if any.
   TAO::Portable_Server::Non_Servant_Upcall *non_servant_upcall_in_progress_ {};
 
   /// Current nesting level of non_servant_upcalls.
@@ -440,11 +440,11 @@ private:
   /// Id of thread making the non-servant upcall.
   ACE_thread_t non_servant_upcall_thread_;
 
-  /// The Root POA
+  /// Reference-counted ownership of the Root POA, released on close/destruction.
   TAO_Root_POA *root_ {};
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
-  /// The POAManager factory.
+  /// Reference-counted ownership of the POA manager factory, released on close/destruction.
   TAO_POAManager_Factory *poa_manager_factory_ {};
 #else
   /// The POAManager object reference.
