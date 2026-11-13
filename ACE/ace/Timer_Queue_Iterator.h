@@ -29,7 +29,7 @@ public:
   void const *act_ {};
 
   /// Flag to check if the timer is recurring.
-  int recurring_timer_ {};
+  bool recurring_timer_ {};
 };
 
 /**
@@ -41,7 +41,6 @@ template <class TYPE>
 class ACE_Timer_Node_T
 {
 public:
-  /// Default constructor
   ACE_Timer_Node_T ();
 
   ACE_Timer_Node_T (ACE_Timer_Node_T const &) = delete;
@@ -51,7 +50,6 @@ public:
 
   ~ACE_Timer_Node_T ();
 
-  /// Useful typedef ..
   using DISPATCH_INFO = ACE_Timer_Node_Dispatch_Info_T<TYPE>;
 
   /// Singly linked list
@@ -70,8 +68,6 @@ public:
             ACE_Timer_Node_T<TYPE> *p,
             ACE_Timer_Node_T<TYPE> *n,
             long timer_id);
-
-  // = Accessors
 
   /// Get the type.
   TYPE &get_type ();
@@ -122,7 +118,7 @@ public:
   /// interface will be complete..
   void get_dispatch_info (ACE_Timer_Node_Dispatch_Info_T <TYPE> &info) const;
 
-  /// Dump the state of an TYPE.
+  /// Dump the state of this timer node.
   void dump () const;
 
   /// Declare the dynamic allocation hooks.
