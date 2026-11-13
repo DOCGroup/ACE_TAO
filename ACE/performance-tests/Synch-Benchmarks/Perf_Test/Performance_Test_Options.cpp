@@ -1,6 +1,12 @@
 #define  ACE_BUILD_SVC_DLL
 #include "Performance_Test_Options.h"
+#include "ace/Log_Msg.h"
+#include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_strings.h"
+#include "ace/Thread.h"
+#if defined (ACE_HAS_TRACE)
+# include "ace/Trace.h"
+#endif
 
 #include <algorithm>
 

@@ -13,6 +13,7 @@
 #include <string>
 #include <vector>
 
+#include "ace/Default_Constants.h"
 #include "ace/Profile_Timer.h"
 #include "ace/Log_Msg.h"
 #include "ace/Thread_Manager.h"
