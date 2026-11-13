@@ -13,6 +13,7 @@
 #include "ace/SString.h"
 #include "ace/OS_NS_stdio.h"
 
+#include <memory>
 #if ! defined (__ACE_INLINE__)
 #include "orbsvcs/Sched/SchedEntry.inl"
 #endif /* __ACE_INLINE__ */
@@ -325,6 +326,33 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
   // conjunction will operate
   ACE_Ordered_MultiSet <Dispatch_Proxy_Iterator *> conj_set;
   ACE_Ordered_MultiSet_Iterator <Dispatch_Proxy_Iterator *> conj_set_iter (conj_set);
+  // The ACE set holds non-owning pointers; this guard owns and deletes them.
+  struct Proxy_Iterator_Set_Cleanup
+  {
+    explicit Proxy_Iterator_Set_Cleanup (
+      ACE_Ordered_MultiSet<Dispatch_Proxy_Iterator *> &set)
+      : set_ (set)
+    {
+    }
+
+    ~Proxy_Iterator_Set_Cleanup ()
+    {
+      ACE_Ordered_MultiSet_Iterator<Dispatch_Proxy_Iterator *> iter (set_);
+      Dispatch_Proxy_Iterator **proxy {};
+      for (iter.first (); iter.done () == 0; iter.advance ())
+        {
+          if (iter.next (proxy) != 0 && proxy != nullptr && *proxy != nullptr)
+            delete *proxy;
+        }
+    }
+
+    Proxy_Iterator_Set_Cleanup (Proxy_Iterator_Set_Cleanup const &) = delete;
+    Proxy_Iterator_Set_Cleanup (Proxy_Iterator_Set_Cleanup &&) = delete;
+    Proxy_Iterator_Set_Cleanup &operator= (Proxy_Iterator_Set_Cleanup const &) = delete;
+    Proxy_Iterator_Set_Cleanup &operator= (Proxy_Iterator_Set_Cleanup &&) = delete;
+
+    ACE_Ordered_MultiSet<Dispatch_Proxy_Iterator *> &set_;
+  } proxy_iterator_cleanup (conj_set);
 
   // Iterate over the dependencies, and for each of the given call
   // type, create a Dispatch_Proxy_Iterator for the caller's dispatch
@@ -348,12 +376,14 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
                                                    frame_size,
                                                    (*link)->number_of_calls ()),
                           -1);
+          std::unique_ptr<Dispatch_Proxy_Iterator> proxy_owner {proxy_ptr};
 
           // If there are no entries in the virtual set, we're done.
           if (proxy_ptr->done ())
             return 0;
           else if (conj_set.insert (proxy_ptr, conj_set_iter) < 0)
             return -1;
+          proxy_owner.release ();
         }
     }
 
