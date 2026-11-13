@@ -114,11 +114,7 @@ ACE_SSL_Context::~ACE_SSL_Context ()
 {
   ACE_TRACE ("ACE_SSL_Context::~ACE_SSL_Context");
 
-  if (this->context_)
-    {
-      ::SSL_CTX_free (this->context_);
-      this->context_ = nullptr;
-    }
+  this->context_.reset ();
 
   ACE_SSL_Context::ssl_library_fini ();
 }
@@ -241,7 +237,7 @@ ACE_SSL_Context::set_mode (int mode)
                             *ACE_Static_Object_Lock::instance (),
                             -1));
 
-  if (this->context_ != nullptr)
+  if (this->context_.get () != nullptr)
     return -1;
 
 #if OPENSSL_VERSION_NUMBER >= 0x10000002
@@ -267,8 +263,8 @@ ACE_SSL_Context::set_mode (int mode)
       break;
     }
 
-  this->context_ = ::SSL_CTX_new (method);
-  if (this->context_ == nullptr)
+  this->context_.reset (::SSL_CTX_new (method));
+  if (this->context_.get () == nullptr)
     return -1;
 
   this->mode_ = mode;
@@ -308,7 +304,7 @@ ACE_SSL_Context::filter_versions (const char* versionlist)
      seplist.find (vlist[pos + 5]) != ACE_CString::npos);
   if (!match)
     {
-      ::SSL_CTX_set_options (this->context_, SSL_OP_NO_SSLv2);
+      ::SSL_CTX_set_options (this->context_.get (), SSL_OP_NO_SSLv2);
     }
 #endif /* SSL_OP_NO_SSLv2 */
 
@@ -319,7 +315,7 @@ ACE_SSL_Context::filter_versions (const char* versionlist)
      seplist.find (vlist[pos + 5]) != ACE_CString::npos);
   if (!match)
     {
-      ::SSL_CTX_set_options (this->context_, SSL_OP_NO_SSLv3);
+      ::SSL_CTX_set_options (this->context_.get (), SSL_OP_NO_SSLv3);
     }
 #endif /* SSL_OP_NO_SSLv3 */
 
@@ -330,7 +326,7 @@ ACE_SSL_Context::filter_versions (const char* versionlist)
      seplist.find (vlist[pos + 5]) != ACE_CString::npos);
   if (!match)
     {
-      ::SSL_CTX_set_options (this->context_, SSL_OP_NO_TLSv1);
+      ::SSL_CTX_set_options (this->context_.get (), SSL_OP_NO_TLSv1);
     }
 #endif /* SSL_OP_NO_TLSv1 */
 
@@ -341,7 +337,7 @@ ACE_SSL_Context::filter_versions (const char* versionlist)
      seplist.find (vlist[pos + 7]) != ACE_CString::npos);
   if (!match)
     {
-      ::SSL_CTX_set_options (this->context_, SSL_OP_NO_TLSv1_1);
+      ::SSL_CTX_set_options (this->context_.get (), SSL_OP_NO_TLSv1_1);
     }
 #endif /* SSL_OP_NO_TLSv1_1 */
 
@@ -352,7 +348,7 @@ ACE_SSL_Context::filter_versions (const char* versionlist)
      seplist.find (vlist[pos + 7]) != ACE_CString::npos);
   if (!match)
     {
-      ::SSL_CTX_set_options (this->context_, SSL_OP_NO_TLSv1_2);
+      ::SSL_CTX_set_options (this->context_.get (), SSL_OP_NO_TLSv1_2);
     }
 #endif /* SSL_OP_NO_TLSv1_2 */
 
@@ -363,7 +359,7 @@ ACE_SSL_Context::filter_versions (const char* versionlist)
       seplist.find(vlist[pos + 7]) != ACE_CString::npos);
   if (!match)
     {
-      ::SSL_CTX_set_options(this->context_, SSL_OP_NO_TLSv1_3);
+      ::SSL_CTX_set_options(this->context_.get (), SSL_OP_NO_TLSv1_3);
     }
 #endif /* SSL_OP_NO_TLSv1_3 */
   return 0;
@@ -459,7 +455,7 @@ ACE_SSL_Context::load_trusted_ca (const char* ca_file,
     }
 
   // NOTE: SSL_CTX_load_verify_locations() returns 0 on error.
-  if (::SSL_CTX_load_verify_locations (this->context_,
+  if (::SSL_CTX_load_verify_locations (this->context_.get (),
                                        ca_file,
                                        ca_dir) <= 0)
     {
@@ -478,7 +474,7 @@ ACE_SSL_Context::load_trusted_ca (const char* ca_file,
       // the CTX; any changes to it by way of these function calls will
       // change the CTX directly.
       STACK_OF (X509_NAME) * cert_names {};
-      cert_names = ::SSL_CTX_get_client_CA_list (this->context_);
+      cert_names = ::SSL_CTX_get_client_CA_list (this->context_.get ());
 
       // Add CAs from both the file and dir, if specified. There should
       // already be a STACK_OF(X509_NAME) in the CTX, but if not, we create
@@ -489,7 +485,7 @@ ACE_SSL_Context::load_trusted_ca (const char* ca_file,
           if (cert_names == nullptr)
             {
               if ((cert_names = ::SSL_load_client_CA_file (ca_file)) != nullptr)
-                ::SSL_CTX_set_client_CA_list (this->context_, cert_names);
+                ::SSL_CTX_set_client_CA_list (this->context_.get (), cert_names);
               else
                 error = true;
             }
@@ -525,7 +521,7 @@ ACE_SSL_Context::load_trusted_ca (const char* ca_file,
                     ACE_SSL_Context::report_error ();
                   return -1;
                 }
-              ::SSL_CTX_set_client_CA_list (this->context_, cert_names);
+              ::SSL_CTX_set_client_CA_list (this->context_.get (), cert_names);
             }
           if (0 == ::SSL_add_dir_cert_subjects_to_stack (cert_names, ca_dir))
             {
@@ -556,7 +552,7 @@ ACE_SSL_Context::private_key (const char *file_name,
 
   this->private_key_ = ACE_SSL_Data_File (file_name, type);
 
-  if (::SSL_CTX_use_PrivateKey_file (this->context_,
+  if (::SSL_CTX_use_PrivateKey_file (this->context_.get (),
                                      this->private_key_.file_name (),
                                      this->private_key_.type ()) <= 0)
     {
@@ -577,7 +573,7 @@ ACE_SSL_Context::verify_private_key ()
 
   this->check_context ();
 
-  if (::SSL_CTX_check_private_key (this->context_) <= 0)
+  if (::SSL_CTX_check_private_key (this->context_.get ()) <= 0)
     {
       if (ACE::debug ())
         ACE_SSL_Context::report_error ();
@@ -600,7 +596,7 @@ ACE_SSL_Context::certificate (const char *file_name,
 
   this->check_context ();
 
-  if (::SSL_CTX_use_certificate_file (this->context_,
+  if (::SSL_CTX_use_certificate_file (this->context_.get (),
                                       this->certificate_.file_name (),
                                       this->certificate_.type ()) <= 0)
     {
@@ -626,7 +622,7 @@ ACE_SSL_Context::certificate (X509* cert)
 
   this->check_context();
 
-  if (::SSL_CTX_use_certificate (this->context_, cert) <= 0)
+  if (::SSL_CTX_use_certificate (this->context_.get (), cert) <= 0)
     {
       if (ACE::debug ())
         ACE_SSL_Context::report_error ();
@@ -652,7 +648,7 @@ ACE_SSL_Context::certificate_chain (const char *file_name, int type)
 
   this->check_context ();
 
-  if (::SSL_CTX_use_certificate_chain_file (this->context_,
+  if (::SSL_CTX_use_certificate_chain_file (this->context_.get (),
                                             this->certificate_.file_name ()) <= 0)
     {
       if (ACE::debug ())
@@ -684,7 +680,7 @@ ACE_SSL_Context::set_verify_peer (int strict, int once, int depth)
   // Set the max certificate depth but later let the verify_callback
   // catch the depth error by adding one to the required depth.
   if (depth > 0)
-    ::SSL_CTX_set_verify_depth (this->context_, depth + 1);
+    ::SSL_CTX_set_verify_depth (this->context_.get (), depth + 1);
 }
 
 int
@@ -812,7 +808,7 @@ ACE_SSL_Context::dh_params (const char *file_name,
         return -1;
       }
 
-    if (::SSL_CTX_set_tmp_dh (this->context_, ret.get ()) < 0)
+    if (::SSL_CTX_set_tmp_dh (this->context_.get (), ret.get ()) < 0)
       {
         this->dh_params_ = ACE_SSL_Data_File ();
         return -1;

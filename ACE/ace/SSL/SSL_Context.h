@@ -27,6 +27,8 @@
 
 #include <openssl/ssl.h>
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_INET_Addr;
@@ -373,12 +375,20 @@ private:
   /// Verify if the context has been initialized or not.
   void check_context ();
 
+  struct SSL_CTX_Deleter
+  {
+    void operator() (SSL_CTX *context) const
+    {
+      ::SSL_CTX_free (context);
+    }
+  };
+
   /// @@ More to document
   void ssl_library_init ();
   void ssl_library_fini ();
 
   /// The SSL_CTX structure
-  SSL_CTX *context_ {};
+  std::unique_ptr<SSL_CTX, SSL_CTX_Deleter> context_ {};
 
   /// Cache the mode so we can answer fast
   int mode_ {-1};
