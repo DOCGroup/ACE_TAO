@@ -28,8 +28,7 @@ namespace TAO
     void create_policy (
         POLICYTYPE *& policy,
         POLICYVALUE &value,
-        CORBA::Any const &val
-        )
+        CORBA::Any const &val)
     {
       if (!(val >>= value))
         throw CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
