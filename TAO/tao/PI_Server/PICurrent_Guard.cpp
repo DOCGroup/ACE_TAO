@@ -16,10 +16,10 @@ TAO::PICurrent_Guard::PICurrent_Guard (TAO_ServerRequest &server_request,
   // This constructor is used on the server side.
 
   // Retrieve the thread scope current (no TSS access incurred yet).
-  CORBA::Object_ptr pi_current_obj =
+  CORBA::Object_ptr const pi_current_obj =
     server_request.orb_core ()->pi_current ();
 
-  TAO::PICurrent *pi_current =
+  TAO::PICurrent * const pi_current =
     dynamic_cast <TAO::PICurrent*> (pi_current_obj);
 
   // If the slot count is zero, there is nothing to copy.  Prevent any
@@ -27,10 +27,10 @@ TAO::PICurrent_Guard::PICurrent_Guard (TAO_ServerRequest &server_request,
   if (pi_current != nullptr && pi_current->slot_count () != 0)
     {
       // Retrieve the request scope current.
-      PICurrent_Impl * rsc = server_request.rs_pi_current ();
+      PICurrent_Impl * const rsc = server_request.rs_pi_current ();
 
       // Retrieve the thread scope current.
-      PICurrent_Impl * tsc = pi_current->tsc ();
+      PICurrent_Impl * const tsc = pi_current->tsc ();
 
       if (tsc_to_rsc)
         {

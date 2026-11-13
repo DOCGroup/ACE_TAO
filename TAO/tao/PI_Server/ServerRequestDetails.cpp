@@ -14,16 +14,16 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
   void
-  ServerRequestDetails::apply_policies (const CORBA::PolicyList &policies)
+  ServerRequestDetails::apply_policies (CORBA::PolicyList const &policies)
   {
     // Flag to check for duplicate ProcessingModePolicy objects in the list.
-    bool processing_mode_applied = false;
+    bool processing_mode_applied {};
 
     CORBA::ULong const plen = policies.length ();
 
-    for (CORBA::ULong i = 0; i < plen; ++i)
+    for (CORBA::ULong i {}; i < plen; ++i)
       {
-        CORBA::Policy_var policy = CORBA::Policy::_duplicate (policies[i]);
+        CORBA::Policy_var const policy = CORBA::Policy::_duplicate (policies[i]);
 
         if (CORBA::is_nil (policy.in ()))
           {
@@ -47,7 +47,7 @@ namespace TAO
             processing_mode_applied = true;
 
             // Narrow the Policy to the ProcessingModePolicy interface.
-            PortableInterceptor::ProcessingModePolicy_var pm_policy =
+            PortableInterceptor::ProcessingModePolicy_var const pm_policy =
                     PortableInterceptor::ProcessingModePolicy::_narrow (
                                                  policy.in ());
 

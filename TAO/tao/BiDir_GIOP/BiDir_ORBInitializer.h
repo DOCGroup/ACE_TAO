@@ -1,12 +1,10 @@
 // -*- C++ -*-
 //
-// ===================================================================
 /**
  *  @file BiDir_ORBInitializer.h
  *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
-// ===================================================================
 #ifndef TAO_BIDIR_ORB_INITIALIZER_H
 #define TAO_BIDIR_ORB_INITIALIZER_H
 

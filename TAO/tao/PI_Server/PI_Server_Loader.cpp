@@ -8,8 +8,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_PI_Server_Loader::~TAO_PI_Server_Loader () = default;
-
 int
 TAO_PI_Server_Loader::init (int, ACE_TCHAR* [])
 {
@@ -36,12 +34,12 @@ TAO_PI_Server_Loader::init (int, ACE_TCHAR* [])
                             ENOMEM),
                           CORBA::COMPLETED_NO));
 
-      PortableInterceptor::ORBInitializer_var orb_initializer =
+      PortableInterceptor::ORBInitializer_var const orb_initializer =
         temp_orb_initializer;
 
       PortableInterceptor::register_orb_initializer (orb_initializer.in ());
     }
-  catch (const ::CORBA::Exception& ex)
+  catch (::CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return -1;
@@ -49,9 +47,6 @@ TAO_PI_Server_Loader::init (int, ACE_TCHAR* [])
 
   return 0;
 }
-
-
-/////////////////////////////////////////////////////////////////////
 
 ACE_FACTORY_DEFINE (TAO_PI_Server, TAO_PI_Server_Loader)
 ACE_STATIC_SVC_DEFINE (TAO_PI_Server_Loader,

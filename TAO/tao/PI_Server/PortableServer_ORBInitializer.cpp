@@ -37,7 +37,7 @@ TAO_PortableServer_ORBInitializer::register_policy_factories (
                         ENOMEM),
                       CORBA::COMPLETED_NO));
 
-  PortableInterceptor::PolicyFactory_var policy_factory = tmp;
+  PortableInterceptor::PolicyFactory_var const policy_factory = tmp;
 
   // Bind the same policy factory to all PortableServer related policy
   // types since a single policy factory is used to create each of the
@@ -65,7 +65,7 @@ TAO_PortableServer_ORBInitializer::register_policy_factories (
         {
           info->register_policy_factory (*i, policy_factory.in ());
         }
-      catch (const ::CORBA::BAD_INV_ORDER& ex)
+      catch (::CORBA::BAD_INV_ORDER const &ex)
         {
           if (ex.minor () == (CORBA::OMGVMCID | 16))
             {

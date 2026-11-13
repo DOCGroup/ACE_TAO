@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Asynch_Invocation.h
  *
  *  @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_MESSAGING_ASYNCH_INVOCATION_H
 #define TAO_MESSAGING_ASYNCH_INVOCATION_H
@@ -22,7 +20,6 @@
 #include "tao/Asynch_Reply_Dispatcher_Base.h"
 #include "ace/Global_Macros.h"
 #include "ace/Auto_Functor.h"
-
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Time_Value;

@@ -71,7 +71,7 @@ TAO_ConnectionTimeoutPolicy::hook (TAO_ORB_Core *orb_core,
           return;
         }
 
-      TAO::ConnectionTimeoutPolicy_var p =
+      TAO::ConnectionTimeoutPolicy_var const p =
         TAO::ConnectionTimeoutPolicy::_narrow (policy.in ());
 
       TimeBase::TimeT const t = p->relative_expiry ();
@@ -85,7 +85,7 @@ TAO_ConnectionTimeoutPolicy::hook (TAO_ORB_Core *orb_core,
 
       if (TAO_debug_level > 0)
         {
-          ACE_UINT64 msecs;
+          ACE_UINT64 msecs {};
           const_cast<ACE_Time_Value const &> (time_value).msec (msecs);
           TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - Connect timeout is ")
@@ -105,8 +105,8 @@ TAO_ConnectionTimeoutPolicy::create (CORBA::Any const &val)
   // Future policy implementors: notice how the following code is
   // exception safe!
 
-  TimeBase::TimeT value;
-  if ((val >>= value) == 0)
+  TimeBase::TimeT value {};
+  if (!(val >>= value))
     throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
 
   TAO_ConnectionTimeoutPolicy *tmp {};
@@ -124,7 +124,7 @@ TAO_ConnectionTimeoutPolicy::clone () const
   TAO_ConnectionTimeoutPolicy *copy {};
   ACE_NEW_RETURN (copy,
                   TAO_ConnectionTimeoutPolicy (*this),
-                  0);
+                  nullptr);
   return copy;
 }
 

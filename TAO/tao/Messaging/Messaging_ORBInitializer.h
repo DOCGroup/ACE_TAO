@@ -1,13 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file     Messaging_ORBInitializer.h
  *
  *  @author  Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_MESSAGING_ORB_INITIALIZER_H
 #define TAO_MESSAGING_ORB_INITIALIZER_H
