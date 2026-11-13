@@ -18,7 +18,7 @@ TAO_OBV_GIOP_Flags::is_value_tag (CORBA::Long tag)
 ACE_INLINE CORBA::Boolean
 TAO_OBV_GIOP_Flags::has_codebase_url (CORBA::Long tag)
 {
-  return (CORBA::Boolean) (tag & Codebase_url);
+  return (tag & Codebase_url) != 0;
 }
 
 ACE_INLINE CORBA::Boolean
@@ -42,7 +42,7 @@ TAO_OBV_GIOP_Flags::has_list_type_info (CORBA::Long tag)
 ACE_INLINE CORBA::Boolean
 TAO_OBV_GIOP_Flags::is_chunked (CORBA::Long tag)
 {
-  return (CORBA::Boolean) (tag & 8);
+  return (tag & 8) != 0;
 }
 
 ACE_INLINE CORBA::Boolean
@@ -68,7 +68,7 @@ TAO_OBV_GIOP_Flags::is_block_size (CORBA::Long value)
 ACE_INLINE CORBA::Boolean
 TAO_OBV_GIOP_Flags::is_end_tag (CORBA::Long tag)
 {
-  return (0x80000000L < (unsigned)tag);
+  return 0x80000000L < static_cast<unsigned> (tag);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
