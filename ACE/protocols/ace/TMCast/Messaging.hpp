@@ -13,6 +13,12 @@ namespace ACE_TMCast
   class Message
   {
   public:
+    Message () = default;
+    Message (Message const&) = delete;
+    Message& operator= (Message const&) = delete;
+    Message (Message&&) = delete;
+    Message& operator= (Message&&) = delete;
+
     virtual ~Message () = default;
   };
 
@@ -42,7 +48,7 @@ namespace ACE_TMCast
 
     ~MessageQueueAutoLock ()
     {
-    q_.unlock ();
+      q_.unlock ();
     }
 
   private:

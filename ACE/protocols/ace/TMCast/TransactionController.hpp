@@ -370,7 +370,7 @@ namespace ACE_TMCast
 
     Protocol::Transaction current_;
 
-    bool initiated_;
+    bool initiated_ {};
 
     unsigned short voting_duration_;
     unsigned short separation_duration_;

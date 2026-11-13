@@ -92,7 +92,7 @@ namespace ACE_TMCast
     Scheduler& operator= (Scheduler const&) = delete;
     Scheduler& operator= (Scheduler&&) = delete;
 
-    virtual ~Scheduler ()
+    ~Scheduler ()
     {
       {
         MessageQueueAutoLock lock (in_control_);
@@ -333,7 +333,7 @@ namespace ACE_TMCast
   class Group::GroupImpl
   {
   public:
-    virtual ~GroupImpl () = default;
+    ~GroupImpl () = default;
 
     GroupImpl (ACE_INET_Addr const& addr, char const* id)
         : send_cond_ (mutex_),

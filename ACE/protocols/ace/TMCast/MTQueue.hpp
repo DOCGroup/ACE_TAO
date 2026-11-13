@@ -131,7 +131,7 @@ namespace ACE_TMCast
              !i.done ();
              i.advance ())
         {
-          ConditionalType** c = nullptr;
+          ConditionalType** c {};
 
           i.next (c);
 
