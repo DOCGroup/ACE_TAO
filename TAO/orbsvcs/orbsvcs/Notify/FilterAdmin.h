@@ -45,11 +45,14 @@ class TAO_Notify_Serv_Export TAO_Notify_FilterAdmin
   TAO_Notify_FilterAdmin &operator= (TAO_Notify_FilterAdmin const &) = delete;
   TAO_Notify_FilterAdmin &operator= (TAO_Notify_FilterAdmin &&) = delete;
 
+  /// @name Matching operations
+  /// @{
   /// See if any of the filters match.
   CORBA::Boolean match (const TAO_Notify_Event::Ptr &event);
 
   /// See if any of the filters match.
   CORBA::Boolean match (const TAO_Notify_Event* event);
+  /// @}
 
   virtual CosNotifyFilter::FilterID add_filter (CosNotifyFilter::Filter_ptr new_filter);
 
