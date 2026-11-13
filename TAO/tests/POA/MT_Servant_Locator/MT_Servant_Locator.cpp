@@ -16,6 +16,8 @@
 #include "tao/PortableServer/ServantLocatorC.h"
 #include "tao/CDR.h"
 
+#include <cstring>
+
 class test_i :
   public virtual POA_test
 {
@@ -121,7 +123,7 @@ Servant_Locator::preinvoke (PortableServer::ObjectId const &oid,
               "(%t) Starting Servant_Locator::preinvoke for %C servant\n",
               name.in ()));
 
-  if (ACE_OS::strcmp (name.in (), "first") == 0)
+  if (std::strcmp (name.in (), "first") == 0)
     {
       second_task.pre_invoke_event_.signal ();
       first_task.pre_invoke_event_.wait ();
@@ -153,7 +155,7 @@ Servant_Locator::postinvoke (PortableServer::ObjectId const &oid,
               "(%t) Starting Servant_Locator::postinvoke for %C servant\n",
               name.in ()));
 
-  if (ACE_OS::strcmp (name.in (), "first") == 0)
+  if (std::strcmp (name.in (), "first") == 0)
     {
       second_task.post_invoke_event_.signal ();
       first_task.post_invoke_event_.wait ();

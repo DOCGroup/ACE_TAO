@@ -1,13 +1,15 @@
 #include "TestC.h"
 #include <iostream>
 #include "ace/Get_Opt.h"
-#include "ace/OS_NS_unistd.h"
 #include "ace/Task.h"
 #include "ace/Thread.h"
 #include "tao/PortableInterceptorC.h"
 #include "tao/PI/PI.h"
 #include "tao/LocalObject.h"
 #include "tao/ORBInitializer_Registry.h"
+
+#include <cstdio>
+#include <cstring>
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int number_of_tries = 5;
@@ -38,7 +40,7 @@ public:
     int offset = get_offset ();
     CORBA::String_var message = CORBA::string_dup( "Hello!");
     char user [100];
-    ACE_OS::snprintf(user, 100, "client %d", offset / 100);
+    std::snprintf (user, sizeof (user), "client %d", offset / 100);
     int try_count = 0;
     for (; try_count < number_of_tries; ++try_count)
       {
@@ -115,7 +117,7 @@ public:
       }
 
     CORBA::String_var op = ri->operation ();
-    if (ACE_OS::strcmp (op.in (), "send_message") != 0)
+    if (std::strcmp (op.in (), "send_message") != 0)
       return;
 
     CORBA::ULong v (0);

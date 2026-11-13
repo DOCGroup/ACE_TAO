@@ -4,6 +4,8 @@
 #include "tao/AnyTypeCode/SystemExceptionA.h"
 #include "tao/DynamicInterface/Server_Request.h"
 
+#include <cstring>
+
 Roundtrip::Roundtrip (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {
@@ -12,14 +14,14 @@ Roundtrip::Roundtrip (CORBA::ORB_ptr orb)
 void
 Roundtrip::invoke (CORBA::ServerRequest_ptr request)
 {
-  if (ACE_OS::strcmp ("shutdown", request->operation ()) == 0)
+  if (std::strcmp ("shutdown", request->operation ()) == 0)
     {
       this->orb_->shutdown (false);
 
       return;
     }
 
-  else if (ACE_OS::strcmp ("_is_a", request->operation ()) == 0)
+  else if (std::strcmp ("_is_a", request->operation ()) == 0)
     {
       CORBA::NVList_ptr list;
       this->orb_->create_list (0, list);
@@ -36,9 +38,9 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request)
       *(nv->value ()) >>= arg;
 
       CORBA::Boolean type_matches = 0;
-      if (ACE_OS::strcmp (arg, "IDL:Test/Roundtrip:1.0") == 0
-          || ACE_OS::strcmp (arg, "IDL:omg.org/CORBA/Object:1.0") == 0
-          || ACE_OS::strcmp (arg, "") == 0)
+      if (std::strcmp (arg, "IDL:Test/Roundtrip:1.0") == 0
+          || std::strcmp (arg, "IDL:omg.org/CORBA/Object:1.0") == 0
+          || std::strcmp (arg, "") == 0)
         type_matches = 1;
 
       CORBA::Any result;
@@ -49,7 +51,7 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request)
       return;
     }
 
-  else if (ACE_OS::strcmp ("test_method", request->operation ()) == 0)
+  else if (std::strcmp ("test_method", request->operation ()) == 0)
     {
       CORBA::NVList_ptr list;
       this->orb_->create_list (0, list);

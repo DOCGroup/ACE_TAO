@@ -6,6 +6,8 @@
 #include "Roundtrip.h"
 #include "tao/DynamicInterface/Server_Request.h"
 
+#include <cstring>
+
 Roundtrip::Roundtrip (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {
@@ -15,13 +17,13 @@ void
 Roundtrip::invoke (CORBA::ServerRequest_ptr request)
 {
   char const *operation = request->operation ();
-  if (ACE_OS::strcmp ("shutdown", operation) == 0)
+  if (std::strcmp ("shutdown", operation) == 0)
     {
       this->orb_->shutdown (false);
 
       return;
     }
-  else if (ACE_OS::strcmp ("_is_a", operation) == 0)
+  else if (std::strcmp ("_is_a", operation) == 0)
     {
       CORBA::NVList_ptr list {};
       this->orb_->create_list (0, list);
@@ -38,9 +40,9 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request)
       *(nv->value ()) >>= arg;
 
       CORBA::Boolean const type_matches =
-        ACE_OS::strcmp (arg, "IDL:Test/Roundtrip:1.0") == 0
-        || ACE_OS::strcmp (arg, "IDL:omg.org/CORBA/Object:1.0") == 0
-        || ACE_OS::strcmp (arg, "") == 0;
+        std::strcmp (arg, "IDL:Test/Roundtrip:1.0") == 0
+        || std::strcmp (arg, "IDL:omg.org/CORBA/Object:1.0") == 0
+        || std::strcmp (arg, "") == 0;
 
       CORBA::Any result;
       result <<= CORBA::Any::from_boolean (type_matches);
@@ -49,7 +51,7 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request)
 
       return;
     }
-  else if (ACE_OS::strcmp ("test_octet_method", operation) == 0)
+  else if (std::strcmp ("test_octet_method", operation) == 0)
     {
       CORBA::NVList_ptr list {};
       this->orb_->create_list (0, list);
@@ -74,7 +76,7 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request)
 
       return;
     }
-  else if (ACE_OS::strcmp ("test_long_method", operation) == 0)
+  else if (std::strcmp ("test_long_method", operation) == 0)
     {
       CORBA::NVList_ptr list {};
       this->orb_->create_list (0, list);
@@ -99,7 +101,7 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request)
 
       return;
     }
-  else if (ACE_OS::strcmp ("test_short_method", operation) == 0)
+  else if (std::strcmp ("test_short_method", operation) == 0)
     {
       CORBA::NVList_ptr list {};
       this->orb_->create_list (0, list);
@@ -124,7 +126,7 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request)
 
       return;
     }
-  else if (ACE_OS::strcmp ("test_char_method", operation) == 0)
+  else if (std::strcmp ("test_char_method", operation) == 0)
     {
       CORBA::NVList_ptr list {};
       this->orb_->create_list (0, list);
@@ -149,7 +151,7 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request)
 
       return;
     }
-  else if (ACE_OS::strcmp ("test_longlong_method", operation) == 0)
+  else if (std::strcmp ("test_longlong_method", operation) == 0)
     {
       CORBA::NVList_ptr list {};
       this->orb_->create_list (0, list);
@@ -174,7 +176,7 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request)
 
       return;
     }
-  else if (ACE_OS::strcmp ("test_double_method", operation) == 0)
+  else if (std::strcmp ("test_double_method", operation) == 0)
     {
       CORBA::NVList_ptr list {};
       this->orb_->create_list (0, list);
