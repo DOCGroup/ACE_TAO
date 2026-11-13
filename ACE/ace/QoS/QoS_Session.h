@@ -26,8 +26,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_SOCK;
 class ACE_QoS_Manager;
 
+/// IPPROTO_UDP or IPPROTO_TCP.
 using ACE_Protocol_ID = int;
-// IPPROTO_UDP or IPPROTO_TCP.
 
 /**
  * @class ACE_QoS_Session

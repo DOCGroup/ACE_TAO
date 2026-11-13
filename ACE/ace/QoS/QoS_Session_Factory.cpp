@@ -29,7 +29,7 @@ ACE_QoS_Session_Factory::~ACE_QoS_Session_Factory ()
   ACE_TRACE ("ACE_QoS_Session_Factory::~ACE_QoS_Session_Factory");
 }
 
-// Create a QoS session of the given type (RAPI or GQoS).
+/// Create a QoS session of the given type (RAPI or GQoS).
 ACE_QoS_Session *
 ACE_QoS_Session_Factory::create_session (ACE_QoS_Session_Type qos_session_type)
 {
@@ -65,7 +65,7 @@ ACE_QoS_Session_Factory::create_session (ACE_QoS_Session_Type qos_session_type)
   return qos_session_owner.release ();
 }
 
-// Destroy the QoS Session.
+/// Destroy the QoS Session.
 int
 ACE_QoS_Session_Factory::destroy_session (ACE_QoS_Session *qos_session)
 {
@@ -77,8 +77,8 @@ ACE_QoS_Session_Factory::destroy_session (ACE_QoS_Session *qos_session)
   return 0;
 }
 
-// Add a session to the set of sessions created by this factory. This is a
-// private method called by the create_session ().
+/// Add a session to the set of sessions created by this factory. This is a
+/// private method called by the create_session ().
 int
 ACE_QoS_Session_Factory::add_session (ACE_QoS_Session *qos_session)
 {
@@ -91,8 +91,8 @@ ACE_QoS_Session_Factory::add_session (ACE_QoS_Session *qos_session)
   return 0;
 }
 
-// Remove a session from the set of sessions created by this factory. This is
-// a private method called by the destroy_session ().
+/// Remove a session from the set of sessions created by this factory. This is
+/// a private method called by the destroy_session ().
 int
 ACE_QoS_Session_Factory::remove_session (ACE_QoS_Session *qos_session)
 {

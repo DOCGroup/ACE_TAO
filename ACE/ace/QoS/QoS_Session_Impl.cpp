@@ -231,7 +231,7 @@ ACE_RAPI_Session::ACE_RAPI_Session ()
   this->src_addr_.reset (source_addr);
 }
 
-// Open a RAPI QoS session [dest IP, dest port, Protocol ID].
+/// Open a RAPI QoS session [dest IP, dest port, Protocol ID].
 int
 ACE_RAPI_Session::open (ACE_INET_Addr const &dest_addr,
                         ACE_Protocol_ID protocol_id)
@@ -268,7 +268,7 @@ ACE_RAPI_Session::open (ACE_INET_Addr const &dest_addr,
   return 0;
 }
 
-// Close the RAPI QoS Session.
+/// Close the RAPI QoS Session.
 int
 ACE_RAPI_Session::close ()
 {
@@ -318,7 +318,7 @@ ACE_RAPI_Session::qos (ACE_SOCK * /* socket */,
   return 0;
 }
 
-// Set sending QoS for this RAPI session.
+/// Set sending QoS for this RAPI session.
 int
 ACE_RAPI_Session::sending_qos (ACE_QoS const &ace_qos)
 {
@@ -419,7 +419,7 @@ ACE_RAPI_Session::sending_qos (ACE_QoS const &ace_qos)
   return 0;
 }
 
-// Set receiving QoS for this RAPI session.
+/// Set receiving QoS for this RAPI session.
 int
 ACE_RAPI_Session::receiving_qos (ACE_QoS const &ace_qos)
 {
@@ -533,10 +533,9 @@ ACE_RAPI_Session::update_qos ()
   return 0;
 }
 
-// Construct a simplified RAPI Sender TSpec object
-// from an ACE_Flow_Spec. Note the form of the TSpec is
-// simplified as against the full bodied IntServ version.
-
+/// Construct a simplified RAPI Sender TSpec object
+/// from an ACE_Flow_Spec. Note the form of the TSpec is
+/// simplified as against the full bodied IntServ version.
 rapi_tspec_t *
 ACE_RAPI_Session::init_tspec_simplified (ACE_Flow_Spec const &flow_spec)
 {
@@ -563,10 +562,9 @@ ACE_RAPI_Session::init_tspec_simplified (ACE_Flow_Spec const &flow_spec)
   return (t_spec);
 }
 
-// Construct a simplified RAPI flowspec object from ACE_Flow_Spec.
-// Note the form of the FlowSpec is simplified as against the
-// full bodied IntServ version.
-
+/// Construct a simplified RAPI flowspec object from ACE_Flow_Spec.
+/// Note the form of the FlowSpec is simplified as against the
+/// full bodied IntServ version.
 rapi_flowspec_t *
 ACE_RAPI_Session::init_flowspec_simplified (ACE_Flow_Spec const &flow_spec)
 {
@@ -626,7 +624,7 @@ ACE_GQoS_Session::ACE_GQoS_Session ()
   ACE_TRACE ("ACE_GQoS_Session::ACE_GQoS_Session");
 }
 
-// Open a GQoS session [dest IP, dest port, Protocol ID].
+/// Open a GQoS session [dest IP, dest port, Protocol ID].
 int
 ACE_GQoS_Session::open (ACE_INET_Addr const &dest_addr,
                         ACE_Protocol_ID protocol_id)
@@ -639,7 +637,7 @@ ACE_GQoS_Session::open (ACE_INET_Addr const &dest_addr,
   return 0;
 }
 
-// Close the GQoS Session.
+/// Close the GQoS Session.
 int
 ACE_GQoS_Session::close ()
 {
@@ -647,7 +645,7 @@ ACE_GQoS_Session::close ()
   return 0;
 }
 
-// Set the QoS for this GQoS session.
+/// Set the QoS for this GQoS session.
 int
 ACE_GQoS_Session::qos (ACE_SOCK *socket,
                        ACE_QoS_Manager *qos_manager,

@@ -43,7 +43,7 @@ public:
 
   ~ACE_QoS_Manager ();
 
-  // Copies hold an independent snapshot of the session pointer set.
+  /// Copies hold an independent snapshot of the session pointer set.
   ACE_QoS_Manager (ACE_QoS_Manager const &) = default;
   ACE_QoS_Manager &operator= (ACE_QoS_Manager const &) = default;
   ACE_QoS_Manager (ACE_QoS_Manager &&) = delete;

@@ -41,7 +41,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_QoS_Export ACE_QoS_Decorator_Base : public ACE_Event_Handler
 {
 public:
-  // Initialization and termination methods.
   ACE_QoS_Decorator_Base () = default;
 
   explicit ACE_QoS_Decorator_Base (ACE_Event_Handler *event_handler);
@@ -139,7 +138,6 @@ struct ACE_QoS_Event_Handler_Deleter
 class ACE_QoS_Export ACE_QoS_Decorator : public ACE_QoS_Decorator_Base
 {
 public:
-  // Initialization and termination methods.
   ACE_QoS_Decorator () = default;
 
   ACE_QoS_Decorator (ACE_Event_Handler *event_handler,

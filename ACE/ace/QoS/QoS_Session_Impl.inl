@@ -9,36 +9,36 @@ ACE_RAPI_Session::~ACE_RAPI_Session ()
   ACE_TRACE ("ACE_RAPI_Session::~ACE_RAPI_Session");
 }
 
-// Returns the QoS for this RAPI session.
+/// Returns the QoS for this RAPI session.
 ACE_INLINE ACE_QoS
 ACE_RAPI_Session::qos () const
 {
   return this->qos_;
 }
 
-// Overloaded method to set the QoS for this session object. Does not
-// interfere with the underlying socket QoS.
+/// Overloaded method to set the QoS for this session object. Does not
+/// interfere with the underlying socket QoS.
 ACE_INLINE void
 ACE_RAPI_Session::qos (ACE_QoS const &ace_qos)
 {
   this->qos_ = ace_qos;
 }
 
-// Get the RAPI session id.
+/// Get the RAPI session id.
 ACE_INLINE int
 ACE_RAPI_Session::session_id () const
 {
   return this->session_id_;
 }
 
-// Set the RAPI session id.
+/// Set the RAPI session id.
 ACE_INLINE void
 ACE_RAPI_Session::session_id (int session_id)
 {
   this->session_id_ = session_id;
 }
 
-// Get the RAPI file desciptor for RSVP events.
+/// Get the RAPI file descriptor for RSVP events.
 ACE_INLINE ACE_HANDLE
 ACE_RAPI_Session::rsvp_events_handle ()
 {
@@ -54,42 +54,42 @@ ACE_RAPI_Session::rsvp_events_handle ()
   return rapi_fd;
 }
 
-// Get the End Point Type (Sender/Receiver/Both).
+/// Get the End Point Type (Sender/Receiver/Both).
 ACE_INLINE ACE_QoS_Session::ACE_End_Point_Type
 ACE_RAPI_Session::flags () const
 {
   return this->flags_;
 }
 
-// Set the End Point Type (Sender/Receiver/Both).
+/// Set the End Point Type (Sender/Receiver/Both).
 ACE_INLINE void
 ACE_RAPI_Session::flags (ACE_End_Point_Type flags)
 {
   this->flags_ = flags;
 }
 
-// Get the destination address for this RAPI session.
+/// Get the destination address for this RAPI session.
 ACE_INLINE ACE_INET_Addr
 ACE_RAPI_Session::dest_addr () const
 {
   return this->dest_addr_;
 }
 
-// Set the destination address for this RAPI session.
+/// Set the destination address for this RAPI session.
 ACE_INLINE void
 ACE_RAPI_Session::dest_addr (ACE_INET_Addr const &dest_addr)
 {
   this->dest_addr_ = dest_addr;
 }
 
-// Get the source port for this RAPI session.
+/// Get the source port for this RAPI session.
 ACE_INLINE u_short
 ACE_RAPI_Session::source_port () const
 {
   return this->source_port_;
 }
 
-// Set the source port for this RAPI session.
+/// Set the source port for this RAPI session.
 ACE_INLINE void
 ACE_RAPI_Session::source_port (u_short source_port)
 {
@@ -109,7 +109,7 @@ ACE_RAPI_Session::source_addr (ACE_INET_Addr *source_addr)
     this->src_addr_.reset (source_addr);
 }
 
-// RAPI version. Returned value = 100 * major-version + minor-version.
+/// RAPI version. Returned value = 100 * major-version + minor-version.
 ACE_INLINE int
 ACE_RAPI_Session::version () const
 {
@@ -124,80 +124,80 @@ ACE_GQoS_Session::~ACE_GQoS_Session ()
   ACE_TRACE ("ACE_GQoS_Session::~ACE_GQoS_Session");
 }
 
-// Returns the QoS for this GQoS session.
+/// Returns the QoS for this GQoS session.
 ACE_INLINE ACE_QoS
 ACE_GQoS_Session::qos () const
 {
   return this->qos_;
 }
 
-// Overloaded method to set the QoS for this session object. Does not
-// interfere with the underlying socket QoS.
+/// Overloaded method to set the QoS for this session object. Does not
+/// interfere with the underlying socket QoS.
 ACE_INLINE void
 ACE_GQoS_Session::qos (ACE_QoS const &ace_qos)
 {
   this->qos_ = ace_qos;
 }
 
-// Get the GQoS session id.
+/// Get the GQoS session id.
 ACE_INLINE int
 ACE_GQoS_Session::session_id () const
 {
   return this->session_id_;
 }
 
-// Set the GQoS session id.
+/// Set the GQoS session id.
 ACE_INLINE void
 ACE_GQoS_Session::session_id (int session_id)
 {
   this->session_id_ = session_id;
 }
 
-// Get the underlying file desciptor for RSVP events.
-// Currently returns 0 because GQoS does not have a special
-// descriptor for QoS events.
+/// Get the underlying file descriptor for RSVP events.
+/// Currently returns 0 because GQoS does not have a special
+/// descriptor for QoS events.
 ACE_INLINE ACE_HANDLE
 ACE_GQoS_Session::rsvp_events_handle ()
 {
   return 0;
 }
 
-// Get the End Point Type (Sender/Receiver/Both).
+/// Get the End Point Type (Sender/Receiver/Both).
 ACE_INLINE ACE_QoS_Session::ACE_End_Point_Type
 ACE_GQoS_Session::flags () const
 {
   return this->flags_;
 }
 
-// Set the End Point Type (Sender/Receiver/Both).
+/// Set the End Point Type (Sender/Receiver/Both).
 ACE_INLINE void
 ACE_GQoS_Session::flags (ACE_End_Point_Type flags)
 {
   this->flags_ = flags;
 }
 
-// Get the destination address for this GQoS session.
+/// Get the destination address for this GQoS session.
 ACE_INLINE ACE_INET_Addr
 ACE_GQoS_Session::dest_addr () const
 {
   return this->dest_addr_;
 }
 
-// Set the destination address for this GQoS session.
+/// Set the destination address for this GQoS session.
 ACE_INLINE void
 ACE_GQoS_Session::dest_addr (ACE_INET_Addr const &dest_addr)
 {
   this->dest_addr_ = dest_addr;
 }
 
-// Get the source port for this RAPI session.
+/// Get the source port for this RAPI session.
 ACE_INLINE u_short
 ACE_GQoS_Session::source_port () const
 {
   return this->source_port_;
 }
 
-// Set the source port for this RAPI session.
+/// Set the source port for this RAPI session.
 ACE_INLINE void
 ACE_GQoS_Session::source_port (u_short source_port)
 {
@@ -217,7 +217,7 @@ ACE_GQoS_Session::source_addr (ACE_INET_Addr *source_addr)
     this->src_addr_.reset (source_addr);
 }
 
-// GQoS version.
+/// GQoS version.
 ACE_INLINE int
 ACE_GQoS_Session::version () const
 {

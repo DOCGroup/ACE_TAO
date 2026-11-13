@@ -10,9 +10,8 @@ ACE_QoS_Manager::ACE_QoS_Manager () = default;
 
 ACE_QoS_Manager::~ACE_QoS_Manager () = default;
 
-// Adds the given session to the list of session objects joined by
-// this socket.
-
+/// Adds the given session to the list of session objects joined by
+/// this socket.
 int
 ACE_QoS_Manager::join_qos_session (ACE_QoS_Session *qos_session)
 {
@@ -24,8 +23,7 @@ ACE_QoS_Manager::join_qos_session (ACE_QoS_Session *qos_session)
   return 0;
 }
 
-// Returns the QoS session set for this socket.
-
+/// Returns the QoS session set for this socket.
 ACE_QoS_Manager::ACE_QOS_SESSION_SET
 ACE_QoS_Manager::qos_session_set () const
 {
