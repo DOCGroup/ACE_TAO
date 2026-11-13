@@ -146,7 +146,7 @@ struct Tester
   Tester () = default;
 };
 
-struct Foo { int y; };
+struct Foo { int y {}; };
 
 int ACE_TMAIN(int,ACE_TCHAR*[])
 {

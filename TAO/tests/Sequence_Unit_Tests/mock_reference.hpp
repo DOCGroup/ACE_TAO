@@ -46,7 +46,12 @@ using mock_reference_out = TAO_Objref_Out_T<mock_reference>;
 class mock_reference
 {
 public:
-  virtual ~mock_reference();
+  virtual ~mock_reference() = default;
+
+  mock_reference (mock_reference const &) = default;
+  mock_reference (mock_reference &&) = delete;
+  mock_reference &operator= (mock_reference const &) = delete;
+  mock_reference &operator= (mock_reference &&) = delete;
 
   using _var_type = mock_reference_var;
   using _out_type = mock_reference_out;
@@ -78,7 +83,7 @@ public:
   }
 
 private:
-  mock_reference ();
+  mock_reference () = delete;
 
   explicit inline mock_reference(int id)
     : id_(id)

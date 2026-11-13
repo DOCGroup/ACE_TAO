@@ -11,7 +11,7 @@
 
 struct Foo
 {
-  int x;
+  int x {};
 };
 
 CORBA::ULong constexpr TEST_INT_MAX = 32;
