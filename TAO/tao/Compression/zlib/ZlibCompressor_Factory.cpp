@@ -38,7 +38,9 @@ Zlib_CompressorFactory::get_compressor (
                   ZlibCompressorMap::value_type (compression_level, compressor)).first;
               }
 
-            compressor = (*it).second.in ();
+            // Assignment from a raw pointer transfers ownership to the var.
+            // Duplicate the map's reference so the local var owns its reference.
+            compressor = ::Compression::Compressor::_duplicate ((*it).second.in ());
           }
         catch (...)
           {
