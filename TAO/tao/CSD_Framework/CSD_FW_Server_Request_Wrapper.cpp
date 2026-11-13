@@ -312,11 +312,12 @@ TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_Operation_Details const *& from,
   TAO_Operation_Details *& from_non_const
     = const_cast <TAO_Operation_Details *&>(from);
 
-  char *cloned_op_name {};
-  ACE_NEW_RETURN (cloned_op_name,
+  char *cloned_op_name_buffer {};
+  ACE_NEW_RETURN (cloned_op_name_buffer,
                   char[from_non_const->opname_len_ + 1],
                   false);
-  std::strncpy (cloned_op_name,
+  std::unique_ptr<char[]> cloned_op_name (cloned_op_name_buffer);
+  std::strncpy (cloned_op_name.get (),
                 from_non_const->opname_,
                 from_non_const->opname_len_);
   cloned_op_name[from_non_const->opname_len_] = '\0';
@@ -324,63 +325,83 @@ TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_Operation_Details const *& from,
   // See if we can clone arguments.  If we can, the user compiled the
   // idl with the clonable arguments option, great.  If not, then
   // use the marshaling technique to copy the arguments
-  TAO::Argument **cloned_args {};
   CORBA::ULong num_cloned_args {};
+  struct Cloned_Arguments_Deleter
+  {
+    CORBA::ULong &count_;
+
+    void operator() (TAO::Argument **args) const noexcept
+    {
+      for (CORBA::ULong i {}; i < this->count_; ++i)
+        delete args[i];
+      delete [] args;
+    }
+  };
+  std::unique_ptr<TAO::Argument *[], Cloned_Arguments_Deleter> cloned_args {
+    nullptr, Cloned_Arguments_Deleter {num_cloned_args}};
+  bool marshal_args {};
   if (from->num_args_ > 0)
     {
-      TAO::Argument * const retval = from->args_[0]->clone ();
-      if (retval != nullptr)
+      TAO::Argument **cloned_args_buffer {};
+      ACE_NEW_RETURN (cloned_args_buffer,
+                      TAO::Argument*[from->num_args_],
+                      false);
+      cloned_args.reset (cloned_args_buffer);
+
+      for (CORBA::ULong i {}; i < from->num_args_; ++i)
         {
-          ACE_NEW_RETURN (cloned_args,
-                          TAO::Argument*[from->num_args_],
-                          false);
-          cloned_args[0] = retval;
-          for (CORBA::ULong i = 1; i < from->num_args_; ++i)
+          TAO::Argument * const cloned_arg = from->args_[i]->clone ();
+          if (cloned_arg == nullptr)
             {
-              cloned_args[i] = from->args_[i]->clone();
+              marshal_args = true;
+              cloned_args.reset ();
+              num_cloned_args = 0;
+              break;
             }
-          num_cloned_args = from->num_args_;
+
+          cloned_args[num_cloned_args++] = cloned_arg;
+        }
+    }
+
+  if (marshal_args)
+    {
+      static constexpr size_t mb_size = 2048;
+      ACE_NEW_RETURN (cdr,
+                      TAO_InputCDR (mb_size),
+                      false);
+
+      // To avoid duplicating and copying the data block, allow the
+      // TAO_OutputCDR to share the data block of TAO_InputCDR's message block.
+      ACE_Message_Block * const mb = const_cast<ACE_Message_Block *> (cdr->start ());
+      TAO_OutputCDR outcdr (mb);
+
+      if (! from_non_const->marshal_args (outcdr))
+        {
+          TAOLIB_ERROR ((LM_ERROR,
+                      ACE_TEXT("(%P|%T) TAO::CSD::FW_Server_Request_Wrapper::")
+                      ACE_TEXT("clone TAO_Operation_Details failed\n")));
+          return false;
+        }
+
+      // The TAO_OutputCDR made a new message block around the data block
+      // held by the message block owned by the TAO_InputCDR.  We need to
+      // make sure that the results of marshaling are propagated back to the
+      // message block in the TAO_InputCDR.
+      ACE_Message_Block const * const begin = outcdr.begin ();
+      if (begin == outcdr.current ())
+        {
+          // A chain was not made, so we can just adjust the read and write
+          // pointers
+          mb->rd_ptr (begin->rd_ptr ());
+          mb->wr_ptr (begin->wr_ptr ());
         }
       else
         {
-          static constexpr size_t mb_size = 2048;
-          ACE_NEW_RETURN (cdr,
-                          TAO_InputCDR (mb_size),
-                          false);
-
-          // To avoid duplicating and copying the data block, allow the
-          // TAO_OutputCDR to share the data block of TAO_InputCDR's message block.
-          ACE_Message_Block * const mb = const_cast<ACE_Message_Block *> (cdr->start ());
-          TAO_OutputCDR outcdr (mb);
-
-          if (! from_non_const->marshal_args (outcdr))
-            {
-              TAOLIB_ERROR ((LM_ERROR,
-                          ACE_TEXT("(%P|%T) TAO::CSD::FW_Server_Request_Wrapper::")
-                          ACE_TEXT("clone TAO_Operation_Details failed\n")));
-              return false;
-            }
-
-          // The TAO_OutputCDR made a new message block around the data block
-          // held by the message block owned by the TAO_InputCDR.  We need to
-          // make sure that the results of marshaling are propagated back to the
-          // message block in the TAO_InputCDR.
-          ACE_Message_Block const * const begin = outcdr.begin ();
-          if (begin == outcdr.current ())
-            {
-              // A chain was not made, so we can just adjust the read and write
-              // pointers
-              mb->rd_ptr (begin->rd_ptr ());
-              mb->wr_ptr (begin->wr_ptr ());
-            }
-          else
-            {
-              // A costly, but necessary, copying of data blocks.  This shouldn't
-              // happen that often assuming that the size of the message block
-              // allocated during the allocation of TAO_InputCDR is "big enough"
-              // for most operation parameters.
-              cdr->reset (begin, outcdr.byte_order ());
-            }
+          // A costly, but necessary, copying of data blocks.  This shouldn't
+          // happen that often assuming that the size of the message block
+          // allocated during the allocation of TAO_InputCDR is "big enough"
+          // for most operation parameters.
+          cdr->reset (begin, outcdr.byte_order ());
         }
     }
 
@@ -389,13 +410,16 @@ TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_Operation_Details const *& from,
   // CSD-TBD: Assert that this->ex_data_ and this->ex_count_ are both == 0
   TAO_Operation_Details *to_non_const {};
   ACE_NEW_RETURN (to_non_const,
-                  TAO_Operation_Details(cloned_op_name,
+                  TAO_Operation_Details(cloned_op_name.get (),
                                         from_non_const->opname_len_,
-                                        cloned_args,
+                                        cloned_args.get (),
                                         num_cloned_args,
                                         false,
                                         nullptr),
                   false);
+  // TAO_Operation_Details stores these raw buffers; this wrapper releases them.
+  cloned_op_name.release ();
+  cloned_args.release ();
 
 
   // DATA MEMBER: const char *opname_;
