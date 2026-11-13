@@ -8,22 +8,23 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/Stats.h"
 #include "ace/Throughput_Stats.h"
+#include <array>
 #include <cstddef>
 #include <cstdio>
 #include <cstring>
 #include <memory>
 
-ACE_TString ior_output_file { ACE_TEXT ("pong.ior") };
-size_t message_size { 64 };
-bool respond { true };
-AVStreams::protocolSpec pong_protocols;
-AVStreams::protocolSpec ping_protocols;
+static ACE_TString ior_output_file { ACE_TEXT ("pong.ior") };
+static size_t message_size { 64 };
+static bool respond { true };
+static AVStreams::protocolSpec pong_protocols;
+static AVStreams::protocolSpec ping_protocols;
 
-ACE_hrtime_t recv_throughput_base {};
-ACE_Throughput_Stats recv_latency;
+static ACE_hrtime_t recv_throughput_base {};
+static ACE_Throughput_Stats recv_latency;
 
-ACE_hrtime_t send_throughput_base {};
-ACE_Throughput_Stats send_latency;
+static ACE_hrtime_t send_throughput_base {};
+static ACE_Throughput_Stats send_latency;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -143,7 +144,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Activated as <%C>\n", ior.in () ));
 
-      // If the ior_output_file exists, output the ior to it
+      // Write the IOR when an output file was specified.
       if (!ior_output_file.empty ())
         {
           using File_Ptr = std::unique_ptr<FILE, int (*) (FILE *)>;
@@ -185,7 +186,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
       ACE_DEBUG ((LM_DEBUG, "Calibrating scale factory . . . "));
-      ACE_High_Res_Timer::global_scale_factor_type gsf =
+      ACE_High_Res_Timer::global_scale_factor_type const gsf =
         ACE_High_Res_Timer::global_scale_factor ();
       ACE_DEBUG ((LM_DEBUG, "done\n"));
 
@@ -204,7 +205,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 // ****************************************************************
 
 Pong_Recv::Pong_Recv ()
-  :  TAO_FlowConsumer ("Pong",
+  : TAO_FlowConsumer ("Pong",
                        pong_protocols,
                        "UNS:pong")
 {
@@ -235,15 +236,15 @@ Pong_Recv_Callback::receive_frame (ACE_Message_Block *frame,
        i != nullptr;
        i = i->cont ())
     {
-      ACE_hrtime_t buf[2];
+      std::array<ACE_hrtime_t, 2> buf;
 
-      if (i->length () < sizeof(buf))
+      if (i->length () < buf.size () * sizeof (buf[0]))
         {
           ACE_DEBUG ((LM_DEBUG, "Unexpected message size\n"));
           return 0;
         }
 
-      std::memcpy (buf, i->rd_ptr (), sizeof(buf));
+      std::memcpy (buf.data (), i->rd_ptr (), buf.size () * sizeof (buf[0]));
 
       if (recv_throughput_base == 0)
         {
@@ -265,7 +266,7 @@ Pong_Recv_Callback::handle_destroy ()
 // ****************************************************************
 
 Ping_Send::Ping_Send ()
-  :  TAO_FlowProducer ("Ping",
+  : TAO_FlowProducer ("Ping",
                        ping_protocols,
                        "UNS:ping")
 {
@@ -309,7 +310,7 @@ Ping_Send_Callback::handle_timeout (void *)
   ACE_hrtime_t const stamp = ACE_OS::gethrtime ();
   std::memcpy (this->frame_.rd_ptr (), &stamp, sizeof(stamp));
 
-  int result = this->protocol_object_->send_frame (&this->frame_);
+  int const result = this->protocol_object_->send_frame (&this->frame_);
   if (result < 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Ping_Send_Callback::handle_timeout - send_frame - %p\n",

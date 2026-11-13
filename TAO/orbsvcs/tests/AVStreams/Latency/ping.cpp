@@ -6,19 +6,20 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/Stats.h"
 #include "ace/Throughput_Stats.h"
+#include <array>
 #include <cstdio>
 #include <cstring>
 #include <memory>
 
-ACE_TString ior_output_file { ACE_TEXT ("ping.ior") };
-bool respond { true };
-AVStreams::protocolSpec ping_protocols;
-AVStreams::protocolSpec pong_protocols;
+static ACE_TString ior_output_file { ACE_TEXT ("ping.ior") };
+static bool respond { true };
+static AVStreams::protocolSpec ping_protocols;
+static AVStreams::protocolSpec pong_protocols;
 
-Pong_Send_Callback pong_callback;
+static Pong_Send_Callback pong_callback;
 
-ACE_hrtime_t recv_base {};
-ACE_Throughput_Stats recv_latency;
+static ACE_hrtime_t recv_base {};
+static ACE_Throughput_Stats recv_latency;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -124,7 +125,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Activated as <%C>\n", ior.in ()));
 
-      // If the ior_output_file exists, output the ior to it
+      // Write the IOR when an output file was specified.
       if (!ior_output_file.empty ())
         {
           using File_Ptr = std::unique_ptr<FILE, int (*) (FILE *)>;
@@ -165,7 +166,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       orb->run ();
 
       ACE_DEBUG ((LM_DEBUG, "Calibrating scale factory . . . "));
-      ACE_High_Res_Timer::global_scale_factor_type gsf =
+      ACE_High_Res_Timer::global_scale_factor_type const gsf =
         ACE_High_Res_Timer::global_scale_factor ();
       ACE_DEBUG ((LM_DEBUG, "done %d\n", gsf));
 
@@ -183,7 +184,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 // ****************************************************************
 
 Ping_Recv::Ping_Recv ()
-  :  TAO_FlowConsumer ("Ping",
+  : TAO_FlowConsumer ("Ping",
                        ping_protocols,
                        "UNS:ping")
 {
@@ -259,7 +260,7 @@ Ping_Recv_Callback::handle_destroy ()
 // ****************************************************************
 
 Pong_Send::Pong_Send ()
-  :  TAO_FlowProducer ("Pong",
+  : TAO_FlowProducer ("Pong",
                        pong_protocols,
                        "UNS:pong")
 {
@@ -293,16 +294,13 @@ Pong_Send_Callback::send_response (ACE_hrtime_t stamp)
 {
   ACE_DEBUG ((LM_DEBUG, "pong send response)\n"));
 
-  ACE_hrtime_t buf[2];
+  std::array<ACE_hrtime_t, 2> buf {stamp, ACE_OS::gethrtime ()};
 
-  ACE_Message_Block mb (reinterpret_cast<char*> (buf),
-                        sizeof(buf));
+  ACE_Message_Block mb (reinterpret_cast<char*> (buf.data ()),
+                        buf.size () * sizeof (buf[0]));
+  mb.wr_ptr (buf.size () * sizeof (buf[0]));
 
-  buf[0] = stamp;
-  buf[1] = ACE_OS::gethrtime ();
-  mb.wr_ptr (sizeof(buf));
-
-  int result = this->protocol_object_->send_frame (&mb);
+  int const result = this->protocol_object_->send_frame (&mb);
   if (result < 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Pong_Send_Callback::send - %p\n",
