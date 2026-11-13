@@ -20,6 +20,11 @@ namespace ACE_RMCast
   class ACE_RMCast_Export Socket
   {
   public:
+    Socket (Socket const&) = delete;
+    Socket& operator= (Socket const&) = delete;
+    Socket (Socket&&) = delete;
+    Socket& operator= (Socket&&) = delete;
+
     virtual
     ~Socket ();
 

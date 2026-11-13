@@ -67,6 +67,11 @@ namespace ACE_RMCast
   struct Profile
   {
   public:
+    Profile (Profile const&) = default;
+    Profile& operator= (Profile const&) = delete;
+    Profile (Profile&&) = delete;
+    Profile& operator= (Profile&&) = delete;
+
     class Header
     {
     public:
@@ -133,10 +138,6 @@ namespace ACE_RMCast
 
     virtual Profile_ptr
     clone_ () = 0;
-
-  private:
-    Profile&
-    operator= (Profile const&) = delete;
 
   public:
     u16
@@ -240,6 +241,10 @@ namespace ACE_RMCast
     using Profiles = ACE_Hash_Map_Manager<u16, Profile_ptr, ACE_Null_Mutex>;
 
   public:
+    Message (Message&&) = delete;
+    Message& operator= (Message const&) = delete;
+    Message& operator= (Message&&) = delete;
+
     Message ()
         : profiles_ (4)
     {
@@ -264,10 +269,6 @@ namespace ACE_RMCast
         profiles_.bind ((*i).ext_id_, (*i).int_id_);
       }
     }
-
-  private:
-    Message&
-    operator= (Message const&);
 
   public:
     bool
@@ -300,7 +301,7 @@ namespace ACE_RMCast
     Profile const*
     find (u16 id) const
     {
-      Profiles::ENTRY* e = nullptr;
+      Profiles::ENTRY* e {};
 
       if (profiles_.find (id, e) == -1) return nullptr;
 
@@ -524,39 +525,48 @@ namespace ACE_RMCast
 
   struct Data : Profile
   {
+    struct Buffer_Deleter
+    {
+      void operator() (char* buffer) const
+      {
+        ::operator delete (buffer);
+      }
+    };
+
+    using Buffer_Ptr = std::unique_ptr<char, Buffer_Deleter>;
+
     static u16 const id;
 
   public:
-    virtual
-    ~Data ()
-    {
-      if (buf_)
-        operator delete (buf_);
-    }
+    ~Data () override = default;
+
+    Data& operator= (Data const&) = delete;
+    Data (Data&&) = delete;
+    Data& operator= (Data&&) = delete;
 
     Data (Header const& h, istream& is)
         : Profile (h),
-          buf_ (nullptr),
+          buf_ {},
           size_ (h.size ()),
           capacity_ (size_)
     {
       if (size_)
       {
-        buf_ = reinterpret_cast<char*> (operator new (capacity_));
-        is.read_char_array (buf_, size_);
+        buf_.reset (static_cast<char*> (::operator new (capacity_)));
+        is.read_char_array (buf_.get (), size_);
       }
     }
 
     Data (void const* buf, size_t s, size_t capacity = 0)
         : Profile (id),
-          buf_ (nullptr),
+          buf_ {},
           size_ (s),
           capacity_ (capacity < size_ ? size_ : capacity)
     {
       if (size_)
       {
-        buf_ = reinterpret_cast<char*> (operator new (capacity_));
-        std::memcpy (buf_, buf, size_);
+        buf_.reset (static_cast<char*> (::operator new (capacity_)));
+        std::memcpy (buf_.get (), buf, size_);
       }
 
       Profile::size (calculate_size ());
@@ -577,14 +587,14 @@ namespace ACE_RMCast
 
     Data (Data const& d)
         : Profile (d),
-          buf_ (nullptr),
+          buf_ {},
           size_ (d.size_),
           capacity_ (d.capacity_)
     {
       if (size_)
       {
-        buf_ = reinterpret_cast<char*> (operator new (capacity_));
-        std::memcpy (buf_, d.buf_, size_);
+        buf_.reset (static_cast<char*> (::operator new (capacity_)));
+        std::memcpy (buf_.get (), d.buf_.get (), size_);
       }
 
       Profile::size (calculate_size ());
@@ -594,13 +604,13 @@ namespace ACE_RMCast
     char const*
     buf () const
     {
-      return buf_;
+      return buf_.get ();
     }
 
     char*
     buf ()
     {
-      return buf_;
+      return buf_.get ();
     }
 
     size_t
@@ -629,16 +639,16 @@ namespace ACE_RMCast
   public:
     void serialize_body (ostream& os) const override
     {
-      os.write_char_array (buf_, size_);
+      os.write_char_array (buf_.get (), size_);
     }
 
     void serialize_body (sstream& ss) const override
     {
-      ss.write_char_array (buf_, size_);
+      ss.write_char_array (buf_.get (), size_);
     }
 
   private:
-    char* buf_;
+    Buffer_Ptr buf_;
     size_t size_;
     size_t capacity_;
   };
@@ -871,7 +881,7 @@ namespace ACE_RMCast
       //
       for (iterator i (this_.begin ()); !i.done (); i.advance ())
       {
-        u64* psn = nullptr;
+        u64* psn {};
         i.next (psn);
         os << *psn;
       }

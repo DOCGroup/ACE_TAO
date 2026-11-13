@@ -11,7 +11,7 @@ namespace ACE_RMCast
   class Parameters
   {
   public:
-    Parameters (
+    explicit Parameters (
       // Loss and reordering simulator.
       //
       bool simulator = false,

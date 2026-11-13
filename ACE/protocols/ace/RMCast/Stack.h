@@ -9,6 +9,11 @@ namespace ACE_RMCast
 {
   struct Out_Element
   {
+    Out_Element (Out_Element const&) = delete;
+    Out_Element& operator= (Out_Element const&) = delete;
+    Out_Element (Out_Element&&) = delete;
+    Out_Element& operator= (Out_Element&&) = delete;
+
     virtual
     ~Out_Element ();
 
@@ -24,12 +29,17 @@ namespace ACE_RMCast
     send (Message_ptr m);
 
   protected:
-    Out_Element* out_;
+    Out_Element* out_ {};
   };
 
 
   struct In_Element
   {
+    In_Element (In_Element const&) = delete;
+    In_Element& operator= (In_Element const&) = delete;
+    In_Element (In_Element&&) = delete;
+    In_Element& operator= (In_Element&&) = delete;
+
     virtual
     ~In_Element ();
 
@@ -45,7 +55,7 @@ namespace ACE_RMCast
     recv (Message_ptr m);
 
   protected:
-    In_Element* in_;
+    In_Element* in_ {};
   };
 
 

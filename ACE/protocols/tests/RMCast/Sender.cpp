@@ -21,7 +21,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
     //FUZZ: disable check_for_lack_ACE_OS
     // Turn on message loss and reordering simulation.
     //
-    ACE_RMCast::Socket socket (addr, false, true);
+    ACE_RMCast::Socket socket (addr, false, ACE_RMCast::Parameters {true});
     //FUZZ: enable check_for_lack_ACE_OS
 
     Message msg {};
