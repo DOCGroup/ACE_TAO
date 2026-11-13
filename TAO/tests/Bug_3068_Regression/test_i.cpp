@@ -87,7 +87,7 @@ Caller::svc ()
     {
       while (true)
         {
-          ACE_DEBUG ((LM_DEBUG, "%t calling, payload len = %d\n",
+          ACE_DEBUG ((LM_DEBUG, "%t calling, payload len = %u\n",
                       payload_.length ()));
           this->cbobj_->callback_method (this->payload_);
           ACE_DEBUG ((LM_DEBUG, "%t callback returned\n"));

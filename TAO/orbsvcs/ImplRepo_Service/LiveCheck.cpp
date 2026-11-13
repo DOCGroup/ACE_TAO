@@ -349,7 +349,7 @@ LiveEntry::validate_ping (bool &want_reping, ACE_Time_Value& next)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) LiveEntry::validate_ping, status ")
-                      ACE_TEXT ("<%C> listeners <%d> server <%C> pid <%d> want_reping <%d> may_ping <%d>\n"),
+                      ACE_TEXT ("<%C> listeners <%B> server <%C> pid <%d> want_reping <%d> may_ping <%d>\n"),
                       status_name (this->liveliness_), this->listeners_.size (),
                       this->server_.c_str(), this->pid_, want_reping, this->may_ping_));
     }
@@ -374,7 +374,7 @@ LiveEntry::validate_ping (bool &want_reping, ACE_Time_Value& next)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) LiveEntry::validate_ping, ")
-                          ACE_TEXT ("status <%C> listeners <%d> ")
+                          ACE_TEXT ("status <%C> listeners <%B> ")
                           ACE_TEXT ("msec <%d> server <%C> pid <%d>\n"),
                           status_name (this->liveliness_), this->listeners_.size (),
                           msec, this->server_.c_str(), this->pid_));
@@ -1049,7 +1049,7 @@ LiveCheck::remove_deferred_servers ()
             {
               ORBSVCS_DEBUG ((LM_DEBUG,
                               ACE_TEXT ("(%P|%t) LiveCheck::remove_deferred_servers ")
-                              ACE_TEXT ("Can't remove <%d> servers because we are still in handle timeout\n"),
+                              ACE_TEXT ("Can't remove <%B> servers because we are still in handle timeout\n"),
                               this->removed_entries_.size ()));
             }
         }

@@ -71,7 +71,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       Two_Objects_Test::Octet_Seq_var const reply_seq = second->twoway_method ();
 
-      ACE_DEBUG ((LM_DEBUG, "Client : length of returned data is %d\n",
+      ACE_DEBUG ((LM_DEBUG, "Client : length of returned data is %u\n",
                      reply_seq->length() ));
 
       second->shutdown ();

@@ -18,7 +18,7 @@ UIPMC_Object_Impl::~UIPMC_Object_Impl ()
   if (this->received_.current_size () == 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("ERROR: expected %d clients but only %d encountered\n"),
+                  ACE_TEXT ("ERROR: expected %d clients but only %B encountered\n"),
                   this->clients_, this->received_.current_size ()));
       ++Number_of_Problems;
       return;
@@ -35,7 +35,7 @@ UIPMC_Object_Impl::~UIPMC_Object_Impl ()
           // So, this is not an error.
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("DEBUG: expected %d messages from '%c' client ")
-                      ACE_TEXT ("but only %d encountered\n"),
+                      ACE_TEXT ("but only %B encountered\n"),
                       this->calls_, Test::ClientIDs[i], count));
           ++Number_of_Problems;
         }
@@ -48,7 +48,7 @@ UIPMC_Object_Impl::process (Test::Octets const &payload)
   if (this->payload_ != payload.length ())
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("ERROR: expected %d but received %d ")
+                  ACE_TEXT ("ERROR: expected %u but received %u ")
                   ACE_TEXT ("sequence length\n"),
                   this->payload_, payload.length ()));
       ++Number_of_Problems;

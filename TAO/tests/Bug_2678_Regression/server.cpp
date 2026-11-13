@@ -32,7 +32,7 @@ Test_impl::shutdown ()
 AnySeq *
 Test_impl::RunTest (AnySeq const &params)
 {
-  ACE_DEBUG ((LM_DEBUG, "RunTest: params.length == %d\n",
+  ACE_DEBUG ((LM_DEBUG, "RunTest: params.length == %u\n",
               params.length ()));
   for (CORBA::ULong count = 0; count < params.length (); ++count)
   {

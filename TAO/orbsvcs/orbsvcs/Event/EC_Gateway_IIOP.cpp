@@ -444,7 +444,7 @@ TAO_EC_Gateway_IIOP::push (RtecEventComm::EventSet const &events)
     ++this->busy_count_;
   }
 
-  // ORBSVCS_DEBUG ((LM_DEBUG, "ECG: %d event(s)\n", events.length ()));
+  // ORBSVCS_DEBUG ((LM_DEBUG, "ECG: %u event(s)\n", events.length ()));
 
   // @@ TODO, there is an extra data copy here, we should do the event
   // modification without it and only compact the necessary events.

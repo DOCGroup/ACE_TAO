@@ -355,7 +355,7 @@ functionality_test_cache (MAP_CACHING_STRATEGY &caching_strategy)
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Number of entries in cache before purging: %d\n"),
+              ACE_TEXT ("Number of entries in cache before purging: %B\n"),
               cache.current_size ()));
 
   run_iterator_cache (cache);
@@ -369,7 +369,7 @@ functionality_test_cache (MAP_CACHING_STRATEGY &caching_strategy)
   run_reverse_iterator_cache (cache);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Number of entries in cache  after purging: %d\n"),
+              ACE_TEXT ("Number of entries in cache  after purging: %B\n"),
               cache.current_size ()));
 }
 
@@ -398,7 +398,7 @@ functionality_test_hash_cache (HASH_MAP_CACHING_STRATEGY &caching_strategy)
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Number of entries in cache before purging: %d\n"),
+              ACE_TEXT ("Number of entries in cache before purging: %B\n"),
               cache.current_size ()));
 
   run_iterator_hash_cache (cache);
@@ -412,7 +412,7 @@ functionality_test_hash_cache (HASH_MAP_CACHING_STRATEGY &caching_strategy)
   run_reverse_iterator_hash_cache (cache);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Number of entries in cache  after purging: %d\n"),
+              ACE_TEXT ("Number of entries in cache  after purging: %B\n"),
               cache.current_size ()));
 }
 

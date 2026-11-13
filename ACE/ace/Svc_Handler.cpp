@@ -487,10 +487,10 @@ ACE_Buffered_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::dump () const
 
   ACE_Buffered_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::dump ();
   ACELIB_DEBUG ((LM_DEBUG,
-              "maximum_buffer_size_ = %d\n",
+              "maximum_buffer_size_ = %B\n",
               this->maximum_buffer_size_));
   ACELIB_DEBUG ((LM_DEBUG,
-              "current_buffer_size_ = %d\n",
+              "current_buffer_size_ = %B\n",
               this->current_buffer_size_));
   if (this->timeoutp_ != 0)
     ACELIB_DEBUG ((LM_DEBUG,

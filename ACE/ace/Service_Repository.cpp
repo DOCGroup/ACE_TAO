@@ -215,7 +215,7 @@ ACE_Service_Repository::close ()
 #ifndef ACE_NLOGGING
   if(ACE::debug ())
     ACELIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("ACE (%P|%t) SR::close - repo=%@, size=%d\n"),
+                ACE_TEXT ("ACE (%P|%t) SR::close - repo=%@, size=%B\n"),
                 this,
                 this->service_array_.size()));
 #endif

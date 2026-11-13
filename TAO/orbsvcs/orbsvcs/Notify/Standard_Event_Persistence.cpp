@@ -75,7 +75,7 @@ Standard_Event_Persistence::init (int argc, ACE_TCHAR *argv[])
       if (TAO_debug_level > 0 || verbose)
       {
         ORBSVCS_DEBUG ((LM_DEBUG,
-          ACE_TEXT ("(%P|%t) Standard_Event_Persistence: Setting -block_size: %d\n"),
+          ACE_TEXT ("(%P|%t) Standard_Event_Persistence: Setting -block_size: %u\n"),
           this->block_size_
         ));
       }

@@ -375,7 +375,7 @@ namespace TAO
             TAOLIB_DEBUG ((LM_INFO,
               ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::bind_i: ")
               ACE_TEXT ("Success Transport[%B] @ hash:index{%d:%d}. ")
-              ACE_TEXT ("Cache size is [%d]\n"),
+              ACE_TEXT ("Cache size is [%B]\n"),
               int_id.transport ()->id (),
               ext_id.hash (),
               ext_id.index (),
@@ -829,7 +829,7 @@ namespace TAO
           {
             TAOLIB_DEBUG ((LM_INFO,
               ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::purge, ")
-              ACE_TEXT ("Cache size after purging is [%d]\n"),
+              ACE_TEXT ("Cache size after purging is [%B]\n"),
               this->current_size ()));
           }
       }

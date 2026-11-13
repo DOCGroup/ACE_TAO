@@ -1003,13 +1003,13 @@ ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::dump () const
       break;
     }
   ACELIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("low_water_mark = %d\n")
-              ACE_TEXT ("high_water_mark = %d\n")
-              ACE_TEXT ("cur_bytes = %d\n")
-              ACE_TEXT ("cur_length = %d\n")
-              ACE_TEXT ("cur_count = %d\n")
-              ACE_TEXT ("head_ = %u\n")
-              ACE_TEXT ("tail_ = %u\n"),
+              ACE_TEXT ("low_water_mark = %B\n")
+              ACE_TEXT ("high_water_mark = %B\n")
+              ACE_TEXT ("cur_bytes = %B\n")
+              ACE_TEXT ("cur_length = %B\n")
+              ACE_TEXT ("cur_count = %B\n")
+              ACE_TEXT ("head_ = %@\n")
+              ACE_TEXT ("tail_ = %@\n"),
               this->low_water_mark_,
               this->high_water_mark_,
               this->cur_bytes_,
@@ -2274,12 +2274,12 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::dump () const
   this->ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::dump ();
 
   ACELIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("pending_head_ = %u\n")
-              ACE_TEXT ("pending_tail_ = %u\n")
-              ACE_TEXT ("late_head_ = %u\n")
-              ACE_TEXT ("late_tail_ = %u\n")
-              ACE_TEXT ("beyond_late_head_ = %u\n")
-              ACE_TEXT ("beyond_late_tail_ = %u\n"),
+              ACE_TEXT ("pending_head_ = %@\n")
+              ACE_TEXT ("pending_tail_ = %@\n")
+              ACE_TEXT ("late_head_ = %@\n")
+              ACE_TEXT ("late_tail_ = %@\n")
+              ACE_TEXT ("beyond_late_head_ = %@\n")
+              ACE_TEXT ("beyond_late_tail_ = %@\n"),
               this->pending_head_,
               this->pending_tail_,
               this->late_head_,

@@ -178,7 +178,7 @@ Ptest::query ()
   if (length != 1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("ERROR: Repository::contents::length: %d")
+                         ACE_TEXT ("ERROR: Repository::contents::length: %u")
                          ACE_TEXT (" while it's expected to be 1\n"),
                          length),
                         -1);
@@ -202,7 +202,7 @@ Ptest::query ()
   if (member_count != 3)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("ERROR: StructDef::members::length: %d")
+                         ACE_TEXT ("ERROR: StructDef::members::length: %u")
                          ACE_TEXT (" while it's expected to be 3\n"),
                          member_count),
                         -1);

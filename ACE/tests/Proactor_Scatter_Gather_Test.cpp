@@ -716,7 +716,7 @@ Writer::handle_read_chunks_chain (ACE_Message_Block *mb,
                                   int type)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Writer::handle_read_chunks_chain - (%s) %d bytes\n"),
+              ACE_TEXT ("Writer::handle_read_chunks_chain - (%s) %B bytes\n"),
               (type == ODD) ? ACE_TEXT ("ODD ") : ACE_TEXT ("EVEN"),
               mb->total_length ()));
 
@@ -1206,7 +1206,7 @@ Sender::initiate_write_stream (ACE_Message_Block &mb)
   split_odd_even_chains (odd_mb, even_mb);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Sender::initiate_write_stream - (ODD ) writev %d\n"),
+              ACE_TEXT ("Sender::initiate_write_stream - (ODD ) writev %B\n"),
               odd_mb->total_length ()));
 
   if (this->ws_[ODD].writev (*odd_mb, odd_mb->total_length ()) == -1)
@@ -1227,7 +1227,7 @@ Sender::initiate_write_stream (ACE_Message_Block &mb)
   if (even_mb)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Sender::initiate_write_stream - (EVEN) writev %d\n"),
+                  ACE_TEXT ("Sender::initiate_write_stream - (EVEN) writev %B\n"),
                   even_mb->total_length ()));
 
       if (this->ws_[EVEN].writev (*even_mb, even_mb->total_length ()) == -1)

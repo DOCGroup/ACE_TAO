@@ -290,12 +290,12 @@ Routing_Slip::forward (TAO_Notify_ProxySupplier* ps, bool filter)
   size_t request_id = delivery_requests_.size ();
 
   if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
-      ACE_TEXT ("(%P|%t) Routing Slip #%d: add Delivery_Request #%d: Forward %s; completed %d of %d\n"),
+      ACE_TEXT ("(%P|%t) Routing Slip #%d: add Delivery_Request #%B: Forward %s; completed %B of %B\n"),
       this->sequence_,
-      static_cast<int> (request_id),
+      request_id,
       filter ? ACE_TEXT ("Filter") : ACE_TEXT ("No Filter"),
-      static_cast<int> (this->complete_requests_),
-      static_cast<int> (this->delivery_requests_.size ())
+      this->complete_requests_,
+      this->delivery_requests_.size ()
       ));
 
   Delivery_Request_Ptr request (new Delivery_Request (this->this_ptr_, request_id));

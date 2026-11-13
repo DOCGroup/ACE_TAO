@@ -1634,7 +1634,7 @@ TAO_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
 
       if (TAO_debug_level > 0)
         ORBSVCS_DEBUG ((LM_DEBUG,
-                    "TAO_StreamEndPoint::connect: flow_spec_length = %d\n",
+                    "TAO_StreamEndPoint::connect: flow_spec_length = %u\n",
                     flow_spec.length ()));
       u_int i;
       for (i=0;i<flow_spec.length ();++i)
@@ -2030,7 +2030,7 @@ TAO_StreamEndPoint::request_connection (AVStreams::StreamEndPoint_ptr /*initiato
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                           "(%P|%t) TAO_StreamEndPoint::request_connection: "
-                          "flowspec has length = %d and the strings are:\n",
+                          "flowspec has length = %u and the strings are:\n",
                           flow_spec.length ()));
         }
 

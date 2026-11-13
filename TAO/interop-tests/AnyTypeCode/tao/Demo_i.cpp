@@ -111,7 +111,7 @@ ATC_Test_i::do_struct (::CORBA::Any const &a)
         }
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("%P: foo1.str = %s, foo2.str = %s, ")
-                  ACE_TEXT ("foo3.str = %s, bars.length() = %d\n"),
+                  ACE_TEXT ("foo3.str = %s, bars.length() = %u\n"),
                   foo1.str.in (), foo2.str.in (), foo3.str.in (), bars.length ()));
 
       if (bars.length() > 0)

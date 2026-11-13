@@ -168,7 +168,7 @@ Identity_Client::run ()
   Load_Balancer::Member_ID_List_var id_list =
     object_group->members ();
   ACE_DEBUG ((LM_DEBUG,
-              "The group contains %d members:\n",
+              "The group contains %u members:\n",
               id_list->length ()));
   for (CORBA::ULong i = 0; i < id_list->length (); ++i)
     ACE_DEBUG ((LM_DEBUG, "%s\n", static_cast<char const*>(id_list[i])));

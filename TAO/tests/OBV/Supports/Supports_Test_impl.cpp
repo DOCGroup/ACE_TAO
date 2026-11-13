@@ -44,7 +44,7 @@ vt_graph_impl::print ()
               "Printing graph data...\n"));
 
   ACE_DEBUG ((LM_DEBUG,
-              "Number of nodes: [%d]\n", nodes_ ().length ()));
+              "Number of nodes: [%u]\n", nodes_ ().length ()));
 
   for (size_t i = 0; i < nodes_ ().length (); i++)
     nodes_ ()[i]->print ();

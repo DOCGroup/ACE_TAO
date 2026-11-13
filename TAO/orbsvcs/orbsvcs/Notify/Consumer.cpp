@@ -470,7 +470,7 @@ TAO_Notify_Consumer::dispatch_pending ()
 {
   if (DEBUG_LEVEL  > 5)
     ORBSVCS_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("Consumer %d dispatching pending events.  Queue size: %d\n"),
+                ACE_TEXT ("Consumer %d dispatching pending events.  Queue size: %B\n"),
                 static_cast<int> (this->proxy ()->id ()),
                 this->pending_events().size ()
                 ));

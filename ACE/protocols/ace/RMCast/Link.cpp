@@ -162,7 +162,7 @@ namespace ACE_RMCast
       for (Message::ProfileIterator i (m->begin ()); !i.done (); i.advance ())
       {
         ACE_ERROR ((LM_ERROR,
-                    "profile id: %d; size: %d\n",
+                    "profile id: %d; size: %B\n",
                     (*i).ext_id_, (*i).int_id_->size ()));
       }
 

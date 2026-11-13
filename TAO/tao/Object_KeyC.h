@@ -91,9 +91,9 @@ namespace TAO
         CORBA::Octet* buffer,
         CORBA::Boolean release = false);
     ObjectKey (const ObjectKey &) = default;
-    ObjectKey (ObjectKey &&) = default;
+    ObjectKey (ObjectKey &&) = delete;
     ObjectKey& operator= (const ObjectKey &) = default;
-    ObjectKey& operator= (ObjectKey &&) = default;
+    ObjectKey& operator= (ObjectKey &&) = delete;
     ~ObjectKey ();
 
     using _var_type = ObjectKey_var;

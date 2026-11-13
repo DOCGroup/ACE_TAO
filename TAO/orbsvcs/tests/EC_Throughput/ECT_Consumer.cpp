@@ -127,7 +127,7 @@ Test_Consumer::push (RtecEventComm::EventSet const& events)
                   this->recv_count_));
     }
 
-  // ACE_DEBUG ((LM_DEBUG, "%d event(s)\n", events.length ()));
+  // ACE_DEBUG ((LM_DEBUG, "%u event(s)\n", events.length ()));
 
   for (CORBA::ULong i {}; i < events.length (); ++i)
     {

@@ -390,7 +390,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::dump () const
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Timer_Hash_T::dump");
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\ntable_size_ = %d"), this->table_size_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\ntable_size_ = %B"), this->table_size_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nearliest_position_ = %d"), this->earliest_position_));
 
   for (size_t i = 0; i < this->table_size_; ++i)

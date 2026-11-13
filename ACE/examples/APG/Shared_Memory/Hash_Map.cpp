@@ -151,7 +151,7 @@ int handle_child ()
   HASH_MAP *map = smap (shmem_allocator.get ());
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%P|%t) Map has %d entries\n"),
+              ACE_TEXT ("(%P|%t) Map has %B entries\n"),
               map->current_size ()));
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("In child, map is located at %@\n"),
@@ -192,7 +192,7 @@ int handle_parent (ACE_TCHAR *cmdLine)
     ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon,
                       coordMutex, -1);
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%P|%t) Map has %d entries\n"),
+                ACE_TEXT ("(%P|%t) Map has %B entries\n"),
                 map->current_size ()));
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("In parent, map is located at %@\n"),
@@ -216,7 +216,7 @@ int handle_parent (ACE_TCHAR *cmdLine)
     // Let's see what's left.
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%P|%t) Parent finished adding, ")
-                ACE_TEXT ("map has %d entries\n"),
+                ACE_TEXT ("map has %B entries\n"),
                 map->current_size ()));
 
     // Have another child try to eat them up.

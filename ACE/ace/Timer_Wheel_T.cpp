@@ -662,7 +662,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::dump () const
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
   ACELIB_DEBUG ((LM_DEBUG,
-    ACE_TEXT ("\nspoke_count_ = %d"), this->spoke_count_));
+    ACE_TEXT ("\nspoke_count_ = %u"), this->spoke_count_));
   ACELIB_DEBUG ((LM_DEBUG,
     ACE_TEXT ("\nresolution_ = %d"), 1 << this->res_bits_));
   ACELIB_DEBUG ((LM_DEBUG,

@@ -156,7 +156,7 @@ Session::receive_payload (Test::Payload const &the_payload)
     {
       ACE_ERROR ((LM_ERROR,
                   "ERROR: (%P|%t) Session::receive_payload, "
-                  "unexpected payload size (%d != %d)\n",
+                  "unexpected payload size (%u != %u)\n",
                   the_payload.length (), this->payload_size_));
     }
 

@@ -109,7 +109,7 @@ TAO_UIPMC_Profile::decode (TAO_InputCDR& cdr)
       // If there is extra data in the profile we are supposed to
       // ignore it, but print a warning just in case...
       ORBSVCS_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - UIPMC_Profile::decode, %d bytes ")
+                  ACE_TEXT ("TAO (%P|%t) - UIPMC_Profile::decode, %B bytes ")
                   ACE_TEXT ("out of %u left after profile data\n"),
                   cdr.length (),
                   encap_len));

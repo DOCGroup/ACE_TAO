@@ -36,7 +36,7 @@ handle_client (ACE_LSOCK_Stream &stream)
 
   ACE_OS::sprintf (buf, "%d", static_cast<int> (ACE_OS::getpid ()));
 
-  ACE_DEBUG ((LM_DEBUG, "(%s, %d) ----------------------------------------\n", buf, std::strlen (buf)));
+  ACE_DEBUG ((LM_DEBUG, "(%s, %B) ----------------------------------------\n", buf, std::strlen (buf)));
 
   // Tell the client to shut down.
   if (stream.send_n (buf, std::strlen (buf)) == -1)

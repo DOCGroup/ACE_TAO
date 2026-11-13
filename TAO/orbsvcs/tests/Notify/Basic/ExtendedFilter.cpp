@@ -206,7 +206,7 @@ ExtendedFilter::print_filters (CosNotifyFilter::FilterAdmin_ptr filter_admin)
 {
   CosNotifyFilter::FilterIDSeq_var filter_seq = filter_admin->get_all_filters ();
 
-  ACE_DEBUG ((LM_DEBUG, "Getting all %d filters...\n", filter_seq->length ()));
+  ACE_DEBUG ((LM_DEBUG, "Getting all %u filters...\n", filter_seq->length ()));
 
   for (CORBA::ULong i = 0; i < filter_seq->length (); ++i)
     {

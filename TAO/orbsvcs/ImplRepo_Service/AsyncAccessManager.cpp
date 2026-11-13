@@ -84,7 +84,7 @@ AsyncAccessManager::report (const char* operation) const
 {
   const Server_Info* si = info_.operator->();
   ORBSVCS_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) AsyncAccessManager(%@:%@)::%C - Server <%C> pid <%d> lastpid <%d> status <%C> running <%d> waiters <%d>\n"),
+                  ACE_TEXT ("(%P|%t) AsyncAccessManager(%@:%@)::%C - Server <%C> pid <%d> lastpid <%d> status <%C> running <%d> waiters <%B>\n"),
                   this, si, operation, info_->ping_id (), info_->pid, this->prev_pid_, status_name (this->status_), this->is_running(), this->rh_list_.size()));
 }
 
@@ -210,7 +210,7 @@ AsyncAccessManager::final_state (bool active)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::final_state - ")
-                      ACE_TEXT ("server <%C> active <%d> status <%C> waiters <%d>\n"),
+                      ACE_TEXT ("server <%C> active <%d> status <%C> waiters <%B>\n"),
                       this, info_->ping_id (), active, status_name (this->status_), this->rh_list_.size()));
     }
   bool const success = this->status_ == ImplementationRepository::AAM_SERVER_READY;
@@ -557,7 +557,7 @@ AsyncAccessManager::notify_child_death (int pid)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) AsyncAccessManager(%@), notify_child_death, server <%C> pid <%d> status <%C> ")
-                      ACE_TEXT ("this info_.pid <%d> prev_pid <%d> waiter count <%d>\n"),
+                      ACE_TEXT ("this info_.pid <%d> prev_pid <%d> waiter count <%B>\n"),
                       this, info_->ping_id (), pid, status_name (status_),
                       this->info_->pid, this->prev_pid_, this->rh_list_.size()));
     }

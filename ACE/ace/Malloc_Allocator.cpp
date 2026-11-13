@@ -336,7 +336,7 @@ ACE_Static_Allocator_Base::dump () const
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\noffset_ = %d"), this->offset_));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nsize_ = %d\n"), this->size_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nsize_ = %B\n"), this->size_));
   ACELIB_HEX_DUMP ((LM_DEBUG, this->buffer_, this->size_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
 

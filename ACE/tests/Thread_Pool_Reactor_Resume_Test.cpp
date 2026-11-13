@@ -329,7 +329,7 @@ worker (void *)
                 ACE_TEXT ("send_n")));
 
   ACE_DEBUG ((LM_DEBUG,
-              "Sent message of length  = %d\n",
+              "Sent message of length  = %B\n",
               ACE_OS::strlen (sbuf)));
   stream.close ();
 

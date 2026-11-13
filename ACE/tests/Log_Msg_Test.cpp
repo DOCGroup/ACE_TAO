@@ -646,7 +646,7 @@ Log_Spec_Verify::log (ACE_Log_Record &log_record)
           // Check if we have a string, exact length could vary
           if (b != log_record.msg_data () && ACE_OS::strlen (b) < 15)
             {
-              ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Test %s failed; expected %d\n"),
+              ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Test %s failed; expected %B\n"),
                           log_record.msg_data (), ACE_OS::strlen (b)));
               ++this->fail_;
             }

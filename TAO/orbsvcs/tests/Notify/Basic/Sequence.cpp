@@ -20,7 +20,7 @@ SequencePushConsumer::push_structured_events (
 
   if (batch.length () > this->test_client_->consumer_batch_size_)
       ACE_DEBUG ((LM_ERROR,
-                  "Error: Received more than max event batch %d\n",
+                  "Error: Received more than max event batch %u\n",
                   batch.length ()));
 
   this->test_client_->on_event_received ();
@@ -271,7 +271,7 @@ Sequence::run_test ()
           batch.length (batch_index); // set the correct length
 
           if (TAO_debug_level)
-            ACE_DEBUG ((LM_DEBUG, "Sending batch with %d events\n", batch.length ()));
+            ACE_DEBUG ((LM_DEBUG, "Sending batch with %u events\n", batch.length ()));
 
           this->supplier_->send_events (batch);
 

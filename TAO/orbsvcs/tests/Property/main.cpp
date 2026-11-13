@@ -282,7 +282,7 @@ TAO_PropertySet_Tester::test_delete_properties ()
   prop_names [2] = CORBA::string_dup ("long_property");
   prop_names [3] = CORBA::string_dup ("float_property");
   ACE_DEBUG ((LM_DEBUG,
-              "Length of sequence %d, Maxlength : %d\n",
+              "Length of sequence %u, Maxlength : %u\n",
               prop_names.length (),
               prop_names.maximum ()));
   property_set_.delete_properties (prop_names);

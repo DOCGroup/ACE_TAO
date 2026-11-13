@@ -70,7 +70,7 @@ ServerServant::CreateExtra (CORBA::ULong length,
                             ServerSequence_out seq)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) Create extra called with length [%d]\n",
+              "(%P|%t) Create extra called with length [%u]\n",
               length));
 
   ACE_NEW_THROW_EX (seq,
@@ -101,7 +101,7 @@ void
 ServerServant::DeleteExtra (ServerSequence const &seq)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) Deleting %d sequences\n",
+              "(%P|%t) Deleting %u sequences\n",
               seq.length ()));
 
   PortableServer::ObjectId_var oid;

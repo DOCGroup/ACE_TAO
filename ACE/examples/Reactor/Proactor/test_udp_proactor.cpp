@@ -192,7 +192,7 @@ Receiver::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
       for (ACE_Message_Block const *msg = result.message_block (); msg != nullptr; msg = msg->cont ())
         { // use msg->length () to get the number of bytes written to the message
           // block.
-          ACE_DEBUG ((LM_DEBUG, "Buf=[size=<%d>", msg->length ()));
+          ACE_DEBUG ((LM_DEBUG, "Buf=[size=<%B>", msg->length ()));
           for (u_long i = 0; i < msg->length (); ++i)
             ACE_DEBUG ((LM_DEBUG,
                         "%c", (msg->rd_ptr ())[i]));

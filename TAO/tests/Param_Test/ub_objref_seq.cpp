@@ -253,8 +253,8 @@ void
 Test_ObjRef_Sequence::print_sequence (const Param_Test::Coffee_Mix &s)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "maximum = %d\n"
-              "length = %d\n",
+              "maximum = %u\n"
+              "length = %u\n",
               s.maximum (),
               s.length ()));
   ACE_DEBUG ((LM_DEBUG, "Elements -\n"));

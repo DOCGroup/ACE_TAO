@@ -45,7 +45,7 @@ Consumer_Handler::handle_input (ACE_HANDLE)
     default:
       ACE_ERROR_RETURN ((LM_ERROR,
                         "(%t) IGNORED: Consumer is erroneously sending input to Consumer_Handler %d\n"
-                        "data size = %d\n",
+                        "data size = %b\n",
                         this->connection_id (),
                         received),
                         0); // Return 0 to identify received data successfully.
@@ -111,7 +111,7 @@ ssize_t
 Consumer_Handler::send (ACE_Message_Block *event)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) sending %d bytes to Consumer %d\n",
+              "(%t) sending %B bytes to Consumer %d\n",
               event->length (),
               this->connection_id ()));
 
@@ -209,7 +209,7 @@ Consumer_Handler::handle_output (ACE_HANDLE)
         default:                // Sent the whole thing
           {
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("Sent message from message Q, Q size = %d\n"),
+                        ACE_TEXT ("Sent message from message Q, Q size = %B\n"),
                         this->msg_queue()->message_count ()));
             break;
           }
@@ -363,7 +363,7 @@ Supplier_Handler::recv (ACE_Message_Block *&forward_addr)
       if (this->msg_frag_->length () < HEADER_SIZE)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "Partial header received: only %d bytes\n",
+                      "Partial header received: only %B bytes\n",
                      this->msg_frag_->length ()));
           // Notify the caller that we didn't get an entire event.
           errno = EWOULDBLOCK;

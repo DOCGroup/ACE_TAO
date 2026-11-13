@@ -804,7 +804,7 @@ Test_ECG::push_consumer (void *consumer_cookie,
       return;
     }
 
-  // ACE_DEBUG ((LM_DEBUG, "%d event(s)\n", events.length ()));
+  // ACE_DEBUG ((LM_DEBUG, "%u event(s)\n", events.length ()));
 
 #if 0
   constexpr int bufsize {128};

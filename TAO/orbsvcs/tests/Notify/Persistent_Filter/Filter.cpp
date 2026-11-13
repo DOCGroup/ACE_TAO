@@ -295,7 +295,7 @@ FilterClient::get_EC ()
 
     if (ids->length () > 0)
     {
-      //ACE_DEBUG ((LM_DEBUG, "(%P|%t)get_EC %d \n", ids->length ()));
+      //ACE_DEBUG ((LM_DEBUG, "(%P|%t)get_EC %u \n", ids->length ()));
       ec_ = notify_factory_->get_event_channel (ids[0]);
 
       ACE_ASSERT (!CORBA::is_nil (ec_.in ()));

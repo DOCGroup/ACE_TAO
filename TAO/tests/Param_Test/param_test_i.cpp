@@ -457,8 +457,8 @@ Param_Test_i::test_coffe_mix (const Param_Test::Coffee_Mix & s1,
 
 #if 0
   ACE_DEBUG ((LM_DEBUG,
-              "maximum = %d\n"
-              "length = %d\n",
+              "maximum = %u\n"
+              "length = %u\n",
               s1.maximum (),
               s1.length ()));
   ACE_DEBUG ((LM_DEBUG, "Elements -\n"));
@@ -498,8 +498,8 @@ Param_Test_i::test_bounded_coffe_mix (const Param_Test::Bounded_Coffee_Mix & s1,
 
 #if 0
   ACE_DEBUG ((LM_DEBUG,
-              "maximum = %d\n"
-              "length = %d\n",
+              "maximum = %u\n"
+              "length = %u\n",
               s1.maximum (),
               s1.length ()));
   ACE_DEBUG ((LM_DEBUG, "Elements -\n"));

@@ -132,7 +132,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                               "DSI_Simpler_Server ====\n"
                               "    x = %d\n"
                               "    i = %d\n"
-                              "    length = %d\n"
+                              "    length = %u\n"
                               "    name = <%C>\n",
                               r,
                               the_out_structure->i,

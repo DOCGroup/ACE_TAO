@@ -171,7 +171,7 @@ run_main (int, ACE_TCHAR *[])
   errors +=
     check64 (ACE_TEXT ("ACE_SWAP_LONG_LONG(0x0123456789abcdef) is %Q%s"), ACE_SWAP_LONG_LONG (test_val_3), 0xefcdab8967452301);
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OS page size: %u\n"),
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OS page size: %d\n"),
               ACE_OS::getpagesize ()));
 
 #if defined (_SC_PAGESIZE)

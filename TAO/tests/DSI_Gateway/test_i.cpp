@@ -22,7 +22,7 @@ Simple_Server_i::test_method (CORBA::Long x,
                   "Simpler_Server_i ====\n"
                   "    x = %d\n"
                   "    i = %d\n"
-                  "    length = %d\n"
+                  "    length = %u\n"
                   "    name = <%s>\n",
                   x,
                   the_in_structure.i,

@@ -750,7 +750,7 @@ build_config_object (ACE_Configuration& cfg)
                             name.c_str (), //0, //ACE_TEXT ("x"),
                             string))
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("error using ACE_TString::c_str() == %d, len == %B\n"),
+                       ACE_TEXT ("error using ACE_TString::c_str() == %s, len == %B\n"),
                        name.c_str(), name.length ()),
                       -17);
 

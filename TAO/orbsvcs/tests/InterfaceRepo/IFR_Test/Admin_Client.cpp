@@ -159,7 +159,7 @@ Admin_Client::array_test ()
   if (this->debug_)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("ArrayDef::length: %d\n"),
+                  ACE_TEXT ("ArrayDef::length: %u\n"),
                   bound));
     }
 
@@ -666,7 +666,7 @@ Admin_Client::alias_test ()
   if (this->debug_)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("AliasDef::type::content_type::length: %d\n"),
+                  ACE_TEXT ("AliasDef::type::content_type::length: %u\n"),
                   length));
     }
 
@@ -693,7 +693,7 @@ Admin_Client::alias_test ()
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("AliasDef::type::content_type::")
-                  ACE_TEXT ("content_type::length: %d\n"),
+                  ACE_TEXT ("content_type::length: %u\n"),
                   length));
     }
 
@@ -903,7 +903,7 @@ Admin_Client::struct_test ()
   if (this->debug_)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("StructDef::type::length: %d\n"),
+                  ACE_TEXT ("StructDef::type::length: %u\n"),
                   length));
     }
 
@@ -1071,7 +1071,7 @@ Admin_Client::struct_test ()
   if (this->debug_)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("\nRepository::contents::length: %d\n"),
+                  ACE_TEXT ("\nRepository::contents::length: %u\n"),
                   length));
     }
 
@@ -1085,7 +1085,7 @@ Admin_Client::struct_test ()
   if (this->debug_)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("StructDef::contents::length: %d\n"),
+                  ACE_TEXT ("StructDef::contents::length: %u\n"),
                   length));
     }
 
@@ -1125,7 +1125,7 @@ Admin_Client::struct_test ()
   if (this->debug_)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("\nRepository::lookup_name::length: %d\n"),
+                  ACE_TEXT ("\nRepository::lookup_name::length: %u\n"),
                   length));
     }
 
@@ -1159,7 +1159,7 @@ Admin_Client::struct_test ()
   if (this->debug_)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("\nRepository::describe_contents::length: %d\n"),
+                  ACE_TEXT ("\nRepository::describe_contents::length: %u\n"),
                   length));
     }
 
@@ -1208,7 +1208,7 @@ Admin_Client::struct_test ()
   if (this->debug_)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("StructDef::contents::length: %d\n"),
+                  ACE_TEXT ("StructDef::contents::length: %u\n"),
                   length));
     }
 
@@ -1701,7 +1701,7 @@ Admin_Client::exception_test ()
   if (this->debug_)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("\nRepository::contents::length: %d\n"),
+                  ACE_TEXT ("\nRepository::contents::length: %u\n"),
                   length));
     }
 
@@ -1715,7 +1715,7 @@ Admin_Client::exception_test ()
   if (this->debug_)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("ExceptionDef::contents::length: %d\n"),
+                  ACE_TEXT ("ExceptionDef::contents::length: %u\n"),
                   length));
     }
 
@@ -1749,7 +1749,7 @@ Admin_Client::exception_test ()
   if (this->debug_)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("\nRepository::lookup_name::length: %d\n"),
+                  ACE_TEXT ("\nRepository::lookup_name::length: %u\n"),
                   length));
     }
 
@@ -1782,7 +1782,7 @@ Admin_Client::exception_test ()
   if (this->debug_)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("\nRepository::describe_contents::length: %d\n"),
+                  ACE_TEXT ("\nRepository::describe_contents::length: %u\n"),
                   length));
     }
 
@@ -2206,7 +2206,7 @@ Admin_Client::interface_test ()
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("\nOperationDef::describe::parameters::")
-                  ACE_TEXT ("length: %d\n"),
+                  ACE_TEXT ("length: %u\n"),
                   length));
     }
 
@@ -2295,7 +2295,7 @@ Admin_Client::interface_test ()
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("\nInterfaceDef::describe_interface::")
-                  ACE_TEXT ("operations::length: %d\n"),
+                  ACE_TEXT ("operations::length: %u\n"),
                   length));
     }
 
@@ -2307,7 +2307,7 @@ Admin_Client::interface_test ()
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("\nInterfaceDef::describe_interface::")
-                  ACE_TEXT ("operations[3]::contexts::length: %d\n"),
+                  ACE_TEXT ("operations[3]::contexts::length: %u\n"),
                   length));
     }
 
@@ -2335,7 +2335,7 @@ Admin_Client::interface_test ()
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("\nInterfaceDef::describe_interface::")
-                  ACE_TEXT ("operations[0]::exceptions::length: %d\n"),
+                  ACE_TEXT ("operations[0]::exceptions::length: %u\n"),
                   length));
     }
 
@@ -2388,7 +2388,7 @@ Admin_Client::interface_test ()
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("\nInterfaceDef::describe::")
-                  ACE_TEXT ("base_interfaces::length: %d\n"),
+                  ACE_TEXT ("base_interfaces::length: %u\n"),
                   length));
     }
 
@@ -2418,7 +2418,7 @@ Admin_Client::interface_test ()
   if (this->debug_)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("\nInterfaceDef::base_interfaces::length: %d\n"),
+                  ACE_TEXT ("\nInterfaceDef::base_interfaces::length: %u\n"),
                   length));
     }
 
@@ -2447,7 +2447,7 @@ Admin_Client::interface_test ()
   if (this->debug_)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("\nInterfaceDef::contents::length: %d\n"),
+                  ACE_TEXT ("\nInterfaceDef::contents::length: %u\n"),
                   length));
     }
 
@@ -2584,7 +2584,7 @@ Admin_Client::move_test ()
   if (this->debug_)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("UnionDef::members::length: %d\n"),
+                  ACE_TEXT ("UnionDef::members::length: %u\n"),
                   length));
     }
 
@@ -2617,7 +2617,7 @@ Admin_Client::move_test ()
   if (this->debug_)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("\nUnionDef::contents::length: %d\n"),
+                  ACE_TEXT ("\nUnionDef::contents::length: %u\n"),
                   length));
     }
 
@@ -2640,7 +2640,7 @@ Admin_Client::move_test ()
   if (this->debug_)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("\nUnionDef::members::length: %d\n"),
+                  ACE_TEXT ("\nUnionDef::members::length: %u\n"),
                   length));
     }
 
@@ -2676,7 +2676,7 @@ Admin_Client::move_test ()
   if (this->debug_)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("\nUnionDef::contents::length: %d\n"),
+                  ACE_TEXT ("\nUnionDef::contents::length: %u\n"),
                   length));
     }
 
@@ -2727,7 +2727,7 @@ Admin_Client::move_test ()
   if (this->debug_)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("\nRepository::contents::length: %d\n"),
+                  ACE_TEXT ("\nRepository::contents::length: %u\n"),
                   length));
     }
 
@@ -2740,7 +2740,7 @@ Admin_Client::move_test ()
   if (this->debug_)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("\nUnionDef::members::length: %d\n"),
+                  ACE_TEXT ("\nUnionDef::members::length: %u\n"),
                   length));
     }
 
@@ -2769,7 +2769,7 @@ Admin_Client::move_test ()
   if (this->debug_)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("\nUnionDef::contents::length: %d\n"),
+                  ACE_TEXT ("\nUnionDef::contents::length: %u\n"),
                   length));
     }
 
@@ -2810,7 +2810,7 @@ Admin_Client::move_test ()
   if (this->debug_)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("\nStructDef::contents::length: %d\n"),
+                  ACE_TEXT ("\nStructDef::contents::length: %u\n"),
                   length));
     }
 
@@ -2849,7 +2849,7 @@ Admin_Client::move_test ()
   if (this->debug_)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("\nStructDef::members::length: %d\n"),
+                  ACE_TEXT ("\nStructDef::members::length: %u\n"),
                   length));
     }
 
@@ -3024,7 +3024,7 @@ Admin_Client::module_test ()
   if (this->debug_)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Repository::lookup_name::length: %d\n"),
+                  ACE_TEXT ("Repository::lookup_name::length: %u\n"),
                   length));
     }
 
@@ -3060,7 +3060,7 @@ Admin_Client::module_test ()
   if (this->debug_)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Repository::lookup_name::length: %d\n"),
+                  ACE_TEXT ("Repository::lookup_name::length: %u\n"),
                   length));
     }
 
@@ -3103,7 +3103,7 @@ Admin_Client::module_test ()
   if (this->debug_)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Repository::lookup_name::length: %d\n"),
+                  ACE_TEXT ("Repository::lookup_name::length: %u\n"),
                   length));
     }
 

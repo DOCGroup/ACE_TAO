@@ -26,7 +26,7 @@ ping (Bug_3647_Regression::Payload const &p)
   if (verbose_)
   {
     ACE_DEBUG ((LM_INFO,
-            "Backend_Impl::ping(%P|%t) - called, payload length = %d\n",
+            "Backend_Impl::ping(%P|%t) - called, payload length = %u\n",
             p.length()));
   }
 }

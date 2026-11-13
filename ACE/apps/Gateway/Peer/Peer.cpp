@@ -361,7 +361,7 @@ Peer_Handler::recv (ACE_Message_Block *&mb)
       if (this->msg_frag_->length () < header_size)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("Partial header received: only %d bytes\n"),
+                      ACE_TEXT ("Partial header received: only %B bytes\n"),
                       this->msg_frag_->length ()));
           // Notify the caller that we didn't get an entire event.
           errno = EWOULDBLOCK;

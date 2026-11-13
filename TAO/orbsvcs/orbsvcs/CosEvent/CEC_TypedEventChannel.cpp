@@ -290,7 +290,7 @@ TAO_CEC_TypedEventChannel::cache_interface_description (char const *interface_)
               if (TAO_debug_level >= 10)
                 {
                   ORBSVCS_DEBUG ((LM_DEBUG,
-                              ACE_TEXT ("***** Operation %C found on interface %C, num params %d *****\n"),
+                              ACE_TEXT ("***** Operation %C found on interface %C, num params %u *****\n"),
                               fid->operations[oper].name.in(),
                               interface_,
                               fid->operations[oper].parameters.length() ));

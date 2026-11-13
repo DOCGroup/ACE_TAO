@@ -214,7 +214,7 @@ TAO_Notify_ETCL_Filter::add_constraints (
 
   if (TAO_debug_level > 0)
       ORBSVCS_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("constraint_length = %d\n"),
+                  ACE_TEXT ("constraint_length = %u\n"),
                   constraint_length));
 
   // Create the list that goes out.

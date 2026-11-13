@@ -97,7 +97,7 @@ TAO_Notify_SequencePushConsumer::dispatch_from_queue (Request_Queue& requests, A
   if (DEBUG_LEVEL > 0)
   {
     ORBSVCS_DEBUG ( (LM_DEBUG,
-      ACE_TEXT ("(%P|%t) SequencePushConsumer dispatch queued requests. queue size:%u\n"),
+      ACE_TEXT ("(%P|%t) SequencePushConsumer dispatch queued requests. queue size:%B\n"),
       requests.size ()));
   }
 

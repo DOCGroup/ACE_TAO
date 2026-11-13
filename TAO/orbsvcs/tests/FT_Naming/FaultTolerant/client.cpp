@@ -1580,7 +1580,7 @@ do_persistence_objectgroup_test (
             if (locations->length () != num_locations)
               {
                 ACE_ERROR ((LM_ERROR,
-                            ACE_TEXT ("ERROR: Expected %d members but got %d ")
+                            ACE_TEXT ("ERROR: Expected %u members but got %u ")
                             ACE_TEXT ("instead\n"),
                             num_locations, locations->length ()));
               }

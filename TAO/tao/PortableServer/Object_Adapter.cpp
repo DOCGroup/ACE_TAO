@@ -976,7 +976,7 @@ TAO_Object_Adapter::Active_Hint_Strategy::bind_persistent_poa (
         this->persistent_poa_system_map_.unbind (name);
       else
         ACE_NEW_RETURN (system_name,
-                        poa_name (std::move(name)),
+                        poa_name (name),
                         -1);
     }
 

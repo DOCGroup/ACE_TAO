@@ -23,7 +23,7 @@ ACE_Control_Block::ACE_Malloc_Header::dump () const
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nnext_block = %@"), (ACE_Malloc_Header *) this->next_block_));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nsize = %d\n"), this->size_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nsize = %B\n"), this->size_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
@@ -36,7 +36,7 @@ ACE_Control_Block::print_alignment_info ()
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("Start ---> ACE_Control_Block::print_alignment_info:\n")));
   ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Sizeof ptr: %d\n")
-              ACE_TEXT ("Sizeof size_t: %d\n")
+              ACE_TEXT ("Sizeof size_t: %B\n")
               ACE_TEXT ("Sizeof long: %d\n")
               ACE_TEXT ("Sizeof double: %d\n")
               ACE_TEXT ("Sizeof ACE_MALLOC_ALIGN: %d\n")

@@ -370,7 +370,7 @@ TAO_SFP_Base::read_fragment (TAO_AV_Transport *transport,
   TAO_SFP_Fragment_Table_Entry *fragment_entry {};
   int result = -1;
 
-  if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"frag_number = %d, frag_size = %d,source_id  = %d sequnce_num = %d\n",
+  if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"frag_number = %u, frag_size = %u,source_id  = %u sequnce_num = %u\n",
               fragment.frag_number,fragment.frag_sz,fragment.source_id,fragment.sequence_num));
 
   ACE_Message_Block *data;
@@ -386,7 +386,7 @@ TAO_SFP_Base::read_fragment (TAO_AV_Transport *transport,
   data->rd_ptr (fragment_len);
   data->wr_ptr (n);
   //  TAO_SFP_Base::dump_buf (data->rd_ptr (),data->length ());
-  if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"length of %dth fragment is: %d\n",
+  if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"length of %uth fragment is: %B\n",
               fragment.frag_number,
               data->length ()));
 
@@ -453,7 +453,7 @@ TAO_SFP_Base::read_fragment (TAO_AV_Transport *transport,
 ACE_Message_Block*
 TAO_SFP_Base::check_all_fragments (TAO_SFP_Fragment_Table_Entry *fragment_entry)
 {
-  if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"table size: %d, num_fragments: %d\n",fragment_entry->fragment_set_.size (),fragment_entry->num_fragments_));
+  if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"table size: %B, num_fragments: %B\n",fragment_entry->fragment_set_.size (),fragment_entry->num_fragments_));
   // check to see if all the frames have been received.
   if (fragment_entry->fragment_set_.size () == fragment_entry->num_fragments_)
     {
@@ -876,7 +876,7 @@ TAO_SFP_Object::send_frame (ACE_Message_Block *frame,
       size_t total_length = 0;
       for (ACE_Message_Block *temp = frame; temp != nullptr; temp = temp->cont ())
         total_length += temp->length ();
-      if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"total_length of frame=%d\n",total_length));
+      if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"total_length of frame=%B\n",total_length));
       if (total_length < (TAO_SFP_MAX_PACKET_SIZE -TAO_SFP_Base::frame_header_len))
         {
           if (frame_info != nullptr)

@@ -175,10 +175,10 @@ Test_Nested_Struct::print_values ()
       ACE_DEBUG ((LM_DEBUG,
                   "\n*=*=*=*=*=*=*=*=*=*=\n"
                   "Element # %d\n"
-                  "in (len = %d): %C\n"
-                  "inout (len = %d): %C\n"
-                  "out (len = %d): %C\n"
-                  "ret (len = %d): %C\n",
+                  "in (len = %u): %C\n"
+                  "inout (len = %u): %C\n"
+                  "out (len = %u): %C\n"
+                  "ret (len = %u): %C\n",
                   i,
                   this->in_.vs.seq.length (),
                   (this->in_.vs.seq.length ()? (const char *)this->in_.vs.seq[i]:"<nul>"),

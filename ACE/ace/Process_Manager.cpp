@@ -87,8 +87,8 @@ ACE_Process_Manager::dump () const
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nmax_process_table_size_ = %d"), this->max_process_table_size_));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\ncurrent_count_ = %d"), this->current_count_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nmax_process_table_size_ = %B"), this->max_process_table_size_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\ncurrent_count_ = %B"), this->current_count_));
 
   for (size_t i = 0; i < this->current_count_; ++i)
     this->process_table_[i].dump ();

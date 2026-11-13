@@ -990,7 +990,7 @@ ACE_WFMO_Reactor_Handler_Repository::dump () const
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
   ACELIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Max size = %d\n"),
+              ACE_TEXT ("Max size = %B\n"),
               this->max_size_));
 
   ACELIB_DEBUG ((LM_DEBUG,

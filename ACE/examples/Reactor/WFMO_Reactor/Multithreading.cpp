@@ -194,7 +194,7 @@ int
 Task_Handler::handle_timeout (ACE_Time_Value const &,
                               void const *arg)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%t) handle_timeout() called: iteration value = %d\n",
+  ACE_DEBUG ((LM_DEBUG, "(%t) handle_timeout() called: iteration value = %B\n",
               size_t (arg)));
   return 0;
 }

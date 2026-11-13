@@ -253,7 +253,7 @@ test_i::oneway_method (CORBA::Long session_id,
   if (TAO_debug_level > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "test_i::oneway_method -> session id = %d iteration = %d payload size = %d\n",
+                  "test_i::oneway_method -> session id = %d iteration = %d payload size = %u\n",
                   session_id,
                   iteration,
                   payload.length ()));
@@ -289,7 +289,7 @@ test_i::twoway_method (CORBA::Long &session_id,
   if (TAO_debug_level > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "test_i::twoway_method -> session id = %d iteration = %d payload size = %d\n",
+                  "test_i::twoway_method -> session id = %d iteration = %d payload size = %u\n",
                   session_id,
                   iteration,
                   payload.length ()));

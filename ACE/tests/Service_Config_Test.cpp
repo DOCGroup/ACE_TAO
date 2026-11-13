@@ -502,7 +502,7 @@ testrepository (int, ACE_TCHAR *[])
     {
       ++error;
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Repository was wrong size %d\n"),
+                  ACE_TEXT ("Repository was wrong size %B\n"),
                   repository.current_size ()));
     }
   repository.insert (&s1);
@@ -510,7 +510,7 @@ testrepository (int, ACE_TCHAR *[])
     {
       ++error;
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Repository was wrong size %d\n"),
+                  ACE_TEXT ("Repository was wrong size %B\n"),
                   repository.current_size ()));
     }
   repository.insert (&s2);
@@ -518,7 +518,7 @@ testrepository (int, ACE_TCHAR *[])
     {
       ++error;
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Repository was wrong size %d\n"),
+                  ACE_TEXT ("Repository was wrong size %B\n"),
                   repository.current_size ()));
     }
   if (repository.remove (ACE_TEXT ("1"), &result) != 0)
@@ -531,7 +531,7 @@ testrepository (int, ACE_TCHAR *[])
     {
       ++error;
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Repository was wrong size %d\n"),
+                  ACE_TEXT ("Repository was wrong size %B\n"),
                   repository.current_size ()));
     }
   if (repository.array ()[1] != nullptr)
@@ -546,7 +546,7 @@ testrepository (int, ACE_TCHAR *[])
     {
       ++error;
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Repository was wrong size %d\n"),
+                  ACE_TEXT ("Repository was wrong size %B\n"),
                   repository.current_size ()));
     }
   repository.remove (ACE_TEXT ("0"), &result);
@@ -562,7 +562,7 @@ testrepository (int, ACE_TCHAR *[])
     {
       ++error;
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Repository was wrong size %d\n"),
+                  ACE_TEXT ("Repository was wrong size %B\n"),
                   repository.current_size ()));
     }
   repository.close ();
@@ -570,7 +570,7 @@ testrepository (int, ACE_TCHAR *[])
     {
       ++error;
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Repository was wrong size %d\n"),
+                  ACE_TEXT ("Repository was wrong size %B\n"),
                   repository.current_size ()));
     }
 }

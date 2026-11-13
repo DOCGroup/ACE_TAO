@@ -69,7 +69,7 @@ TAO_On_Demand_Fragmentation_Strategy::fragment (
       if (TAO_debug_level > 0)
         TAOLIB_DEBUG ((LM_DEBUG,
                     "TAO (%P|%t) - On_Demand_Fragmentation_Strategy::fragment, "
-                    "sending fragment of size %d\n",
+                    "sending fragment of size %B\n",
                     cdr.total_length ()));
 
       // Send the current CDR stream contents through the transport,

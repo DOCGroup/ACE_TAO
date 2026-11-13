@@ -192,7 +192,7 @@ Driver::push_consumer (RtecEventComm::EventSet const& events)
       TAO_ORB_Core_instance ()->orb ()->shutdown ();
     }
 
-  // ACE_DEBUG ((LM_DEBUG, "%d event(s)\n", events.length ()));
+  // ACE_DEBUG ((LM_DEBUG, "%u event(s)\n", events.length ()));
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
   for (CORBA::ULong i {}; i < events.length (); ++i)

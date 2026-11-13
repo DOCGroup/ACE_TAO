@@ -86,12 +86,12 @@ test_server (void *arg)
         }
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("%D Transport data before invocation to server %d: current size: %d\n"),
+                  ACE_TEXT ("%D Transport data before invocation to server %d: current size: %B\n"),
                   server_number,
                   context.orb->orb_core ()->lane_resources ().transport_cache ().current_size ()));
       CORBA::String_var const the_string = hello->get_string ();
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("%D Transport data after invocation to server %d: current size: %d\n"),
+                  ACE_TEXT ("%D Transport data after invocation to server %d: current size: %B\n"),
                   server_number,
                   context.orb->orb_core ()->lane_resources ().transport_cache ().current_size ()));
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%D (%P|%t) - string <%C> returned from server %d\n"),
@@ -185,7 +185,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Error spawning thread 2\n")), 1);
 
       ACE_Thread_Manager::instance ()->wait ();
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%D Transport data when done: current size: %d\n"),
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%D Transport data when done: current size: %B\n"),
                   orb->orb_core ()->lane_resources ().transport_cache ().current_size ()));
       orb->destroy ();
     }

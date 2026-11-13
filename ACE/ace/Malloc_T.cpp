@@ -401,7 +401,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::print_stats () const
        currp = currp->next_block_)
     {
       ACELIB_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) ptr = %@, MALLOC_HEADER units = %d, byte units = %d\n"),
+                  ACE_TEXT ("(%P|%t) ptr = %@, MALLOC_HEADER units = %B, byte units = %B\n"),
                   currp,
                   currp->size_,
                   currp->size_ * sizeof (MALLOC_HEADER)));

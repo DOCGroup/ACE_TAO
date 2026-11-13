@@ -2662,7 +2662,7 @@ TAO_Transport::process_queue_head (TAO_Resume_Handle &rh)
   if (TAO_debug_level > 3)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-         ACE_TEXT ("TAO (%P|%t) - Transport[%B]::process_queue_head, %d enqueued\n"),
+         ACE_TEXT ("TAO (%P|%t) - Transport[%B]::process_queue_head, %u enqueued\n"),
          this->id (), this->incoming_message_queue_.queue_length () ));
     }
 
@@ -2677,7 +2677,7 @@ TAO_Transport::process_queue_head (TAO_Resume_Handle &rh)
         {
           TAOLIB_DEBUG ((LM_DEBUG,
              ACE_TEXT ("TAO (%P|%t) - Transport[%B]::process_queue_head, ")
-             ACE_TEXT ("the size of the queue is [%d]\n"),
+             ACE_TEXT ("the size of the queue is [%u]\n"),
              this->id (),
              this->incoming_message_queue_.queue_length()));
         }

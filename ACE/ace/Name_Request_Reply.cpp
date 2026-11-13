@@ -332,7 +332,7 @@ ACE_Name_Request::dump () const
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Name_Request::dump");
   ACELIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("*******\nlength = %d\n"),
+              ACE_TEXT ("*******\nlength = %u\n"),
               this->length ()));
   ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("message-type = ")));
@@ -547,7 +547,7 @@ ACE_Name_Reply::dump () const
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Name_Reply::dump");
   ACELIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("*******\nlength = %d\nerrnum = %d"),
+              ACE_TEXT ("*******\nlength = %u\nerrnum = %d"),
               this->length (),
               this->errnum ()));
   ACELIB_DEBUG ((LM_DEBUG,

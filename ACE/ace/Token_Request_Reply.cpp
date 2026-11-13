@@ -84,7 +84,7 @@ ACE_Token_Request::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("*******\nlength = %d\ntoken name = %s\nclient id = %s\n"),
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("*******\nlength = %u\ntoken name = %s\nclient id = %s\n"),
              this->length (), this->token_name (), this->client_id ()));
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("type = ")));
 
@@ -164,7 +164,7 @@ void
 ACE_Token_Reply::dump () const
 {
 #if defined (ACE_HAS_DUMP)
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("*******\nlength = %d\nerrnum = %d"),
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("*******\nlength = %u\nerrnum = %d"),
              this->length (), this->errnum ()));
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("arg = %d"), this->arg ()));
 #endif /* ACE_HAS_DUMP */

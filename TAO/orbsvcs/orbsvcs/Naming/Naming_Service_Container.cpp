@@ -100,7 +100,7 @@ ACE_Unbounded_List<T>::dump () const
   ORBSVCS_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ORBSVCS_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nhead_ = %u"), this->head_));
   ORBSVCS_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nhead_->next_ = %u"), this->head_->next_));
-  ORBSVCS_DEBUG ((LM_DEBUG,  ACE_TEXT ("\ncur_size_ = %d\n"), this->cur_size_));
+  ORBSVCS_DEBUG ((LM_DEBUG,  ACE_TEXT ("\ncur_size_ = %B\n"), this->cur_size_));
 
   T *item {};
 #if !defined (ACE_NLOGGING)

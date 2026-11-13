@@ -94,7 +94,7 @@ TAO_Object_Adapter::bind_transient_poa (TAO_Root_POA *poa,
   if (result == 0)
     {
       ACE_NEW_RETURN (system_name,
-                      poa_name (std::move(name)),
+                      poa_name (name),
                       -1);
     }
 

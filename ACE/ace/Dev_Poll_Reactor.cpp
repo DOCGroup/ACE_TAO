@@ -2423,7 +2423,7 @@ ACE_Dev_Poll_Reactor::dump () const
               ACE_TEXT ("initialized_ = %d"),
               this->initialized_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("poll_fd_ = %d"), this->poll_fd_));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("size_ = %u"), this->handler_rep_.size ()));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("size_ = %B"), this->handler_rep_.size ()));
   ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("deactivated_ = %d"),
               this->deactivated_));

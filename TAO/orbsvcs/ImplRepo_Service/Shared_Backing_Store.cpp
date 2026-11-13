@@ -740,7 +740,7 @@ Shared_Backing_Store::sync_load ()
       if (this->opts_.debug() > 5)
         {
           ORBSVCS_DEBUG((LM_INFO,
-                         ACE_TEXT("(%P|%t) sync_load INC_SYNC, %d files\n"),
+                         ACE_TEXT("(%P|%t) sync_load INC_SYNC, %B files\n"),
                          this->sync_files_.size ()));
         }
 
