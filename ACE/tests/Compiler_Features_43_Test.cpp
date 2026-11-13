@@ -59,7 +59,7 @@ struct TAO_DynValue_i : virtual DynamicAny::DynValue, virtual TAO_DynValueCommon
         if (depth < 3) {
             ACE_DEBUG ((LM_DEBUG, ACE_TEXT("    Creating nested member at depth %d\n"), depth + 1));
             try {
-                auto* member = CreateDynAnyUtils<TAO_DynValue_i>::create(trigger_indirection, depth + 1);
+                TAO_DynValue_i* member = CreateDynAnyUtils<TAO_DynValue_i>::create(trigger_indirection, depth + 1);
                 da_members_.push_back(member);
             }
             catch (TAO_DynValue_i* orig) {
@@ -87,7 +87,7 @@ int run_main (int, ACE_TCHAR*[])
   TAO_DynValue_i::cached = nullptr;
   try
   {
-    auto* result = CreateDynAnyUtils<TAO_DynValue_i>::create(true, 0);
+    TAO_DynValue_i* result = CreateDynAnyUtils<TAO_DynValue_i>::create(true, 0);
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Success - returned %@\n"), result));
     delete result;
   }
