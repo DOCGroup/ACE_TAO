@@ -2,7 +2,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_stdlib.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 #if defined (ACE_HAS_TLI)
 constexpr int MAXLINE = 255;
@@ -27,8 +27,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (con.connect (client, ACE_INET_Addr (port, host_name)) == -1)
     ACE_OS::t_error ((char *) host_name), ACE_OS::exit (1);
 
-  ACE_OS::strcpy (buf, ACE_TEXT_ALWAYS_CHAR (emp_num));
-  n = ACE_OS::strlen (buf);
+  std::strcpy (buf, ACE_TEXT_ALWAYS_CHAR (emp_num));
+  n = std::strlen (buf);
 
   if (client.send_n (buf, n) != n)
     ACE_OS::t_error ("client.send error");
@@ -36,7 +36,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (client.recv (buf, MAXLINE) == -1 && t_errno != TLOOK && client.look () != T_DISCONNECT)
     ACE_OS::t_error ("client.recv error");
 
-  if (ACE_OS::strcmp (buf, "ERROR") == 0)
+  if (std::strcmp (buf, "ERROR") == 0)
     ACE_OS::printf ("Employee ID %s not in database\n", emp_num);
   else
     ACE_OS::printf ("Employee name requested is: %s\n", buf);

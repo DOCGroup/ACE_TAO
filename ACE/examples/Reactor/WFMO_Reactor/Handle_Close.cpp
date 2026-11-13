@@ -17,9 +17,9 @@
 #include "ace/WFMO_Reactor.h"
 #include "ace/Select_Reactor.h"
 #include "ace/Pipe.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_main.h"
 #include <memory>
+#include <cstring>
 
 // Use the WFMO_Reactor
 static bool opt_wfmo_reactor {};
@@ -39,7 +39,7 @@ static void
 write_to_pipe (ACE_Pipe &pipe)
 {
   char const *data = "hello";
-  size_t const len = ACE_OS::strlen (data);
+  size_t const len = std::strlen (data);
 
   ssize_t const result = ACE::send (pipe.write_handle (),
                                    data,
