@@ -41,7 +41,6 @@ class TAO_Export TAO_MCAST_Parser : public TAO_IOR_Parser
 public:
   TAO_MCAST_Parser ();
 
-  /// The destructor
   virtual ~TAO_MCAST_Parser ();
 
   /// @name IOR_Parser methods

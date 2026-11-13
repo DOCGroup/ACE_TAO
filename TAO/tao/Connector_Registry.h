@@ -50,10 +50,8 @@ class TAO_InputCDR;
 class TAO_Export TAO_Connector_Registry
 {
 public:
-  ///  Default constructor.
   TAO_Connector_Registry ();
 
-  ///  Default destructor.
   ~TAO_Connector_Registry ();
 
   /// Return the connector bridges

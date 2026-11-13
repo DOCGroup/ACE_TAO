@@ -51,7 +51,6 @@ namespace TAO
     using character_type = charT;
     using s_traits = TAO::details::string_traits_base<character_type>;
 
-    /// Default constructor.
     inline String_var () : ptr_ (0)
     {
     }

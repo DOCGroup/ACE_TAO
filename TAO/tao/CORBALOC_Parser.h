@@ -46,7 +46,6 @@ class TAO_CORBALOC_Parser : public TAO_IOR_Parser
 public:
   TAO_CORBALOC_Parser () = default;
 
-  /// The destructor
   ~TAO_CORBALOC_Parser () override = default;
 
   /// @name IOR_Parser methods

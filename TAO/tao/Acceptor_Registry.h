@@ -59,10 +59,8 @@ using TAO_AcceptorSet = std::vector<std::unique_ptr<TAO_Acceptor>>;
 class TAO_Export TAO_Acceptor_Registry
 {
 public:
-  ///  Default constructor.
   TAO_Acceptor_Registry ();
 
-  ///  Default destructor.
   ~TAO_Acceptor_Registry ();
 
   /// Initialize all registered acceptors.  Return -1 on error.

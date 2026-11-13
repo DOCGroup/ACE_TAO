@@ -56,7 +56,6 @@ public:
   static void dump ();
 
 protected:
-  /// Default constructor.
   TAO_Singleton ();
 
   /// Contained instance.
@@ -95,7 +94,6 @@ public:
   static void dump ();
 
 protected:
-  /// Default constructor.
   TAO_TSS_Singleton ();
 
   TAO_TSS_Singleton (const TAO_TSS_Singleton &) = delete;

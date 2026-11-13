@@ -77,7 +77,6 @@ public:
   using element_traits = ELEMENT_TRAITS;
   using range = range_checking<value_type, true>;
 
-  /// Default constructor.
   generic_sequence()
     : maximum_(allocation_traits::default_maximum())
     , length_(0)

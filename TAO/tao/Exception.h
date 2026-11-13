@@ -188,7 +188,6 @@ namespace CORBA
     /// @}
 
   protected:
-    /// Default constructor.
     Exception () = default;
 
     /// Assignment operator.

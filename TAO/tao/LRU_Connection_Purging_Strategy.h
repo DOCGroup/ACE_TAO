@@ -37,10 +37,8 @@ class TAO_Export TAO_LRU_Connection_Purging_Strategy
   : public TAO_Connection_Purging_Strategy
 {
 public:
-  /// The constructor
   explicit TAO_LRU_Connection_Purging_Strategy (int cache_maximum);
 
-  /// The destructor
   ~TAO_LRU_Connection_Purging_Strategy () override = default;
 
   /// Called when accessing an item from the cache

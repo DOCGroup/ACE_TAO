@@ -56,10 +56,8 @@ namespace TAO
 class TAO_Export TAO_Connector
 {
 public:
-  /// Default constructor.
   explicit TAO_Connector (CORBA::ULong tag);
 
-  /// The destructor.
   virtual ~TAO_Connector ();
 
   TAO_Connector (TAO_Connector const &) = delete;

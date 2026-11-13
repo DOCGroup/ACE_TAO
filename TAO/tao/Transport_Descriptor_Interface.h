@@ -74,7 +74,6 @@ public:
   void set_bidir_flag (CORBA::Boolean flag);
 
 protected:
-  /// Default Constructor
   TAO_Transport_Descriptor_Interface ();
 
   TAO_Transport_Descriptor_Interface (TAO_Endpoint *endpoint,

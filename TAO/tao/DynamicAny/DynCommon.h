@@ -197,21 +197,15 @@ public:
   /// destroy() method.
   void set_flag (DynamicAny::DynAny_ptr component, CORBA::Boolean destroying);
 
-  // Utility functions.
-
   DynamicAny::DynAny_ptr check_component (CORBA::Boolean isValueType = false);
 
   void check_type (CORBA::TypeCode_ptr tc);
 
   static bool is_basic_type_seq (CORBA::TypeCode_ptr tc);
 
-  // Accessors
-
   CORBA::Boolean has_components () const;
   CORBA::Boolean destroyed () const;
   CORBA::Any &the_any ();
-
-  // Mutators
 
   void container_is_destroying (CORBA::Boolean val);
   void ref_to_component (CORBA::Boolean val);

@@ -65,7 +65,6 @@ namespace CORBA
     ACE_CString _info () const override;
 
   protected:
-    /// Default constructor.
     UserException ();
   };
 }

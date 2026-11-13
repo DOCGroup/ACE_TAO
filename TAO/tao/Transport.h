@@ -92,7 +92,6 @@ namespace TAO
   class Drain_Constraints
   {
   public:
-    /// Default constructor
     Drain_Constraints()
       : timeout_(nullptr)
       , block_on_io_(false)

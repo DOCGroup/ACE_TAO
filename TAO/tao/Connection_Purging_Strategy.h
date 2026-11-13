@@ -38,10 +38,8 @@ class TAO_Transport;
 class TAO_Export TAO_Connection_Purging_Strategy
 {
 public:
-  /// The constructor
   explicit TAO_Connection_Purging_Strategy (int cache_maximum);
 
-  /// The destructor
   virtual ~TAO_Connection_Purging_Strategy () = default;
 
   /// Return the maximum number of cache entries

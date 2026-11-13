@@ -136,7 +136,6 @@ namespace CORBA
     CORBA::Exception *_tao_duplicate () const override;
 
   protected:
-    /// Default constructor.
     SystemException ();
 
     /// Assignment operator.

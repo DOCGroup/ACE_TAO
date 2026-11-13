@@ -148,7 +148,6 @@ namespace CORBA
     using _out_type = LocalObject_out;
 
   protected:
-    /// Default constructor.
     /**
      * Make it protected to prevent instantiation of this class.
      */
