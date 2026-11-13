@@ -12,6 +12,9 @@
 #ifndef _COMMAND_PROCESSOR_H
 #define _COMMAND_PROCESSOR_H
 
+#include <memory>
+#include <utility>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -50,7 +53,12 @@ public:
 class URL_Command : public Command
 {
 public:
-  explicit URL_Command (URL *);
+  explicit URL_Command (std::unique_ptr<URL>);
+  ~URL_Command () override;
+  URL_Command (URL_Command const &) = delete;
+  URL_Command &operator= (URL_Command const &) = delete;
+  URL_Command (URL_Command &&) = delete;
+  URL_Command &operator= (URL_Command &&) = delete;
 
   /// Execute the URL command.
   int execute () override;
@@ -58,8 +66,8 @@ public:
   /// Commit suicide.
   int destroy () override;
 private:
-  /// Pointer to the URL.
-  URL *url_;
+  /// URL whose command is being executed.
+  std::unique_ptr<URL> url_;
 };
 
 /**

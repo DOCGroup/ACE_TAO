@@ -39,6 +39,10 @@ public:
   Web_Crawler ();
 
   ~Web_Crawler ();
+  Web_Crawler (Web_Crawler const &) = delete;
+  Web_Crawler &operator= (Web_Crawler const &) = delete;
+  Web_Crawler (Web_Crawler &&) = delete;
+  Web_Crawler &operator= (Web_Crawler &&) = delete;
 
   /// Parses the command-line options and initializes the
   /// <URL_Visitor_Factory>.

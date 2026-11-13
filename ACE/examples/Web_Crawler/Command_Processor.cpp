@@ -8,10 +8,12 @@
 
 Command::~Command () = default;
 
-URL_Command::URL_Command (URL *url)
-  : url_ (url)
+URL_Command::URL_Command (std::unique_ptr<URL> url)
+  : url_ (std::move (url))
 {
 }
+
+URL_Command::~URL_Command () = default;
 
 int
 URL_Command::execute ()
@@ -71,14 +73,14 @@ Command_Processor::destroy ()
 int
 Command_Processor::execute ()
 {
-  Command *command;
+  Command *command {};
   while (!this->url_queue_.is_empty ())
     {
       if (this->url_queue_.dequeue_head (command) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "%p\n", "dequeue_head"),
                           -1);
-      Auto_Destroyer<Command> command_ptr (command);
+      Destroyable_Unique_Ptr<Command> command_ptr (command);
       if (command_ptr->execute () != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "%p\n", "Couldnt execute command"),

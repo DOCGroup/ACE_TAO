@@ -31,13 +31,16 @@
 class URL_Iterator
 {
 public:
-  /// "virtual" destructor.
+  /// @name Iterator operations
+  /// @{
+
   virtual int destroy ();
 
-  // = Iterator methods.
   /// Pass back the next <string> that hasn't been seen yet.  Returns 0
   /// when all items have been seen, else 1.
   virtual int next (ACE_CString &string) = 0;
+
+  /// @}
 
 protected:
   /// C++ destructor.
@@ -54,13 +57,17 @@ class HTML_Body_Iterator : public URL_Iterator
 public:
   HTML_Body_Iterator (URL &url);
 
-  // = Iterator methods.
+  /// @name Iterator methods
+  /// @{
+
   /**
    * Pass back the next <url> that hasn't been seen in the
    * memory-mapped file.  Returns 0 when all items have been seen,
    * else 1.
    */
   int next (ACE_CString &url) override;
+
+  /// @}
 
 private:
   /// HTTP URL that we're iterating over.
@@ -77,13 +84,17 @@ class HTTP_Header_Iterator : public URL_Iterator
 public:
   HTTP_Header_Iterator (URL &url);
 
-  // = Iterator methods.
+  /// @name Iterator methods
+  /// @{
+
   /**
    * Pass back the next <line> that hasn't been seen in the
    * memory-mapped file header.  Returns 0 when we've reached the end
    * of the header.  seen, else 1.
    */
   int next (ACE_CString &line) override;
+
+  /// @}
 
 private:
   /// HTTP URL that we're iterating over.
@@ -106,13 +117,17 @@ class URL_Download_Iterator : public URL_Iterator
 public:
   URL_Download_Iterator (URL &url);
 
-  // = Iterator methods.
+  /// @name Iterator methods
+  /// @{
+
   /**
    * Pass back the next <buffer> data from the stream, where
    * <buffer.size> <= <BUFSIZ> .  Returns 0 when we've reached the end
    * of the header, else 1.
    */
   int next (ACE_CString &buffer) override;
+
+  /// @}
 
 private:
   /// HTTP URL that we're iterating over.

@@ -56,14 +56,21 @@ public:
   /// Returns the <Mem_Map_Stream>.
   virtual Mem_Map_Stream &stream ();
 
-  // = Get/set the reply status.
+  /// @name Reply status
+  /// @{
+
   virtual const URL_Status &reply_status ();
   virtual void reply_status (const URL_Status &);
 
-  // = Get/set the reply status.
+  /// @}
+
+  /// @name Content type
+  /// @{
+
   virtual const ACE_CString &content_type ();
   virtual void content_type (const ACE_CString &);
 
+  /// @}
 
 private:
   /// Reply status of the URL.

@@ -1,9 +1,10 @@
+#include <memory>
+
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "URL_Visitor.h"
 #include "Options.h"
 #include "HTTP_URL.h"
-#include <memory>
 
 const ACE_URL_Addr &
 HTTP_URL::url_addr () const
@@ -22,14 +23,14 @@ HTTP_URL::HTTP_URL (const ACE_URL_Addr &url_addr,
 ssize_t
 HTTP_URL::send_request ()
 {
-  size_t commandsize =
+  const size_t commandsize =
     ACE_OS::strlen (this->url_addr ().get_path_name ())
     + ACE_OS::strlen (this->url_addr ().get_host_name ())
     + 20 // Extra
     + 1 // NUL byte
     + 16; // Protocol filler...
 
-  char *command;
+  char *command {};
   ACE_NEW_RETURN (command,
                   char[commandsize],
                   -1);
@@ -52,7 +53,7 @@ HTTP_URL::send_request ()
                        this->url_addr ().get_host_name ());
 
       // IMP: The length of teh command has to be sent!
-      ssize_t retval =
+      const ssize_t retval =
         this->stream ().send_n (cmd_ptr.get (),
                                 ACE_OS::strlen (cmd_ptr.get ()),
                                 const_cast<ACE_Time_Value *>

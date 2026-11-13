@@ -13,6 +13,8 @@
 #define _URL_VISITOR_H
 #include /**/ "ace/pre.h"
 
+#include <memory>
+
 #include "ace/Strategies_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -46,9 +48,8 @@ public:
   /// Perform the strategy.
   virtual int execute () = 0;
 
+  /// Close down the resources.
   virtual int destroy ();
-
-  // Close down the resources.
 
 protected:
   /// A reference to the URL "context" that we're processing.
@@ -129,7 +130,9 @@ public:
 
   virtual ~URL_Visitation_Strategy_Factory ();
 
-  // = Factory Methods.
+  /// @name Factory methods
+  /// @{
+
   /// Factory Method that makes the header iterator.
   virtual URL_Iterator *make_header_iterator () = 0;
 
@@ -144,6 +147,8 @@ public:
 
   /// Close down the resources.
   virtual int destroy () = 0;
+
+  /// @}
 
 protected:
   /// Stash the URL so we don't have to pass it around.
@@ -160,7 +165,9 @@ class URL_Download_Visitation_Strategy_Factory : public URL_Visitation_Strategy_
 public:
   URL_Download_Visitation_Strategy_Factory (URL *);
 
-  // = Factory Methods.
+  /// @name Factory methods
+  /// @{
+
   /// Factory Method that makes an <HTTP_Header_Iterator>.
   URL_Iterator *make_header_iterator () override;
 
@@ -175,6 +182,8 @@ public:
 
   /// Close down the resources.
   int destroy () override;
+
+  /// @}
 };
 
 /**
@@ -188,7 +197,9 @@ public:
   URL_Validation_Visitation_Strategy_Factory (URL *,
                                               URL_Validation_Visitor &);
 
-  // = Factory Methods.
+  /// @name Factory methods
+  /// @{
+
   /// Factory Method that makes an <HTTP_Header_Iterator>.
   URL_Iterator *make_header_iterator () override;
 
@@ -203,6 +214,8 @@ public:
 
   /// Close down the resources.
   int destroy () override;
+
+  /// @}
 
 private:
   /// Context of the visitor.
@@ -294,6 +307,10 @@ public:
   /// Cleanup the resources.
   URL_Validation_Visitor ();
   int destroy () override;
+  URL_Validation_Visitor (URL_Validation_Visitor const &) = delete;
+  URL_Validation_Visitor &operator= (URL_Validation_Visitor const &) = delete;
+  URL_Validation_Visitor (URL_Validation_Visitor &&) = delete;
+  URL_Validation_Visitor &operator= (URL_Validation_Visitor &&) = delete;
 
   /// Returns a reference to the URL cache.
   URL_CACHE &url_cache ();
@@ -314,13 +331,13 @@ protected:
   NULL_CREATION_STRATEGY creation_strategy_;
   NULL_ACTIVATION_STRATEGY activation_strategy_;
 
-  // Configure the Strategy Connector with a strategy that caches
-  // connection.
-  CACHED_CONNECT_STRATEGY *caching_connect_strategy_;
-
-  STRATEGY_CONNECTOR *strat_connector_;
-
   CACHING_STRATEGY caching_strategy_;
+
+  /// Cached connection strategy used by the connector.
+  std::unique_ptr<CACHED_CONNECT_STRATEGY> caching_connect_strategy_;
+
+  /// Strategy connector used to open URL streams.
+  std::unique_ptr<STRATEGY_CONNECTOR> strat_connector_;
 };
 
 
@@ -354,46 +371,26 @@ protected:
 };
 
 /**
- * @class Auto_Destroyer
+ * @class Destroy_Deleter
  *
  * @brief Simple class that ensures the <destroy> method is called on our
  * <URL_*> objects when they go out of scope.
  *
- * This class is similar to an auto_ptr<> and should be used to
- * simplify blocks of code that must create/destroy pointers to
- * various <URL_*> related strategies and iterators.
+ * Use it as a unique_ptr deleter for objects whose cleanup is
+ * performed by their destroy() operation.
  */
 template <class T>
-class Auto_Destroyer
+struct Destroy_Deleter
 {
-public:
-  explicit Auto_Destroyer (T *t): t_ (t) {}
-  Auto_Destroyer (const Auto_Destroyer &) = delete;
-  Auto_Destroyer (Auto_Destroyer &&) = delete;
-  Auto_Destroyer &operator= (const Auto_Destroyer &) = delete;
-  Auto_Destroyer &operator= (Auto_Destroyer &&) = delete;
-  T *operator-> () const { return this->t_; }
-  T *operator *() const { return this->t_; }
-  T *release ()
+  void operator () (T *ptr) const
   {
-    T *t = this->t_;
-    this->t_ = nullptr;
-    return t;
+    if (ptr != nullptr)
+      ptr->destroy ();
   }
-  void operator= (T *t)
-  {
-    if (this->t_ != nullptr)
-      this->t_->destroy ();
-    this->t_ = t;
-  }
-  ~Auto_Destroyer ()
-  {
-    if (this->t_ != nullptr)
-      t_->destroy ();
-  }
-private:
-  T *t_;
 };
+
+template <class T>
+using Destroyable_Unique_Ptr = std::unique_ptr<T, Destroy_Deleter<T>>;
 
 #include /**/ "ace/post.h"
 #endif /* _URL_VISITOR_H */

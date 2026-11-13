@@ -61,11 +61,16 @@ public:
 
   virtual ~Mem_Map_Stream ();
 
-  // = Accessor.
+  /// @name Accessor
+  /// @{
+
   /// Returns the underlying <ACE_SOCK_Stream>.
   ACE_SOCK_Stream &stream ();
 
-  // = I/O methods.
+  /// @}
+
+  /// @name I/O methods
+  /// @{
 
   /// Send <size> bytes in <buf> to the connected peer.  This is a
   /// completely unbuffered call.
@@ -150,6 +155,8 @@ public:
                                     CACHED_CONNECT_STRATEGY;*/
 
   Svc_Handler *svc_handler ();
+
+  /// @}
 
 private:
   /**

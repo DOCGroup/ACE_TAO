@@ -101,11 +101,12 @@ public:
   /// Commit suicide.
   int destroy ();
 private:
-  /// Our path name.
+  /// Manually owned ACE_OS::strdup() allocation, released with
+  /// ACE_OS::free().
   ACE_TCHAR *path_name_;
 
-  /// The dynamically address string that's used for the
-  /// <addr_to_string> method.
+  /// Manually owned buffer used by addr_to_string(); managed with ACE_OS
+  /// allocation calls.
   ACE_TCHAR *addr_string_;
 
   /// Current length of the <addr_string_>

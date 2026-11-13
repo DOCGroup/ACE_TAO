@@ -67,15 +67,23 @@ public:
   /// <connect> calls to broken servers.
   const ACE_Time_Value *timeout () const;
 
-  // = Get/set the <Command_Processor>.
+  /// @name Command processor
+  /// @{
+
   Command_Processor *command_processor () const;
   void command_processor (Command_Processor *);
 
-  // = Get/set the <URL_Visitor>.
+  /// @}
+
+  /// @name URL visitor
+  /// @{
+
   URL_Visitor *visitor () const;
   void visitor (URL_Visitor *);
 
-  // Get the handle_limit.
+  /// @}
+
+  /// Get the handle limit.
   int handle_limit () const;
 private:
   /// Are we recursving.

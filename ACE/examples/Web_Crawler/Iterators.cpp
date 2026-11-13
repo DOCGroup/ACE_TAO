@@ -21,7 +21,7 @@ int
 HTML_Body_Iterator::next (ACE_CString &url)
 {
   size_t len = BUFSIZ;
-  const char *buf;
+  const char *buf {};
   ACE_CString buffer;
   int href_index = 0;
 

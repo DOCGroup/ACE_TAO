@@ -6,8 +6,8 @@
 #include "ace/OS_Memory.h"
 
 ACE_URL_Addr::ACE_URL_Addr ()
-  : path_name_ (nullptr),
-    addr_string_ (nullptr),
+  : path_name_ {},
+    addr_string_ {},
     addr_string_len_ (0)
 {
 }
@@ -78,8 +78,8 @@ int
 ACE_URL_Addr::string_to_addr (const ACE_TCHAR *s,
                               int /* address_family */)
 {
-  int result;
-  ACE_TCHAR *t;
+  int result {};
+  ACE_TCHAR *t {};
 
   // Need to make a duplicate since we'll be overwriting the string.
   ACE_ALLOCATOR_RETURN (t,
@@ -126,8 +126,8 @@ ACE_URL_Addr::string_to_addr (const ACE_TCHAR *s,
 
 ACE_URL_Addr::ACE_URL_Addr (const ACE_URL_Addr &addr)
   : ACE_INET_Addr (),
-    path_name_ (0),
-    addr_string_ (0),
+    path_name_ {},
+    addr_string_ {},
     addr_string_len_ (0)
 {
   if (this->set (addr) == -1)
@@ -199,7 +199,7 @@ ACE_URL_Addr::ACE_URL_Addr (const ACE_TCHAR *host_name,
                             u_short port)
   : ACE_INET_Addr (port, host_name),
     path_name_ (ACE_OS::strdup (path_name)),
-    addr_string_ (0),
+    addr_string_ {},
     addr_string_len_ (0)
 {
 }
