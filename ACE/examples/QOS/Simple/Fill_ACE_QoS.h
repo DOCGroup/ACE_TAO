@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef FILL_ACE_QOS_H
 #define FILL_ACE_QOS_H
 
@@ -19,10 +18,10 @@
 #include "ace/OS_QoS.h"
 
 #include <memory>
+#include <vector>
 
 /**
  * @class Fill_ACE_QoS
- TITLE
  * This class helps users to add new flow specs and provides
  * utility functions for filling up the flow specs for simplex/duplex
  * sessions.
@@ -30,9 +29,6 @@
 class Fill_ACE_QoS
 {
 public:
-  using FLOW_SPEC_HASH_MAP = ACE_Hash_Map_Manager<ACE_CString, ACE_Flow_Spec *, ACE_Null_Mutex>;
-
-  //Initialization and termination methods.
   Fill_ACE_QoS ();
   Fill_ACE_QoS (Fill_ACE_QoS const &) = delete;
   Fill_ACE_QoS (Fill_ACE_QoS &&) = delete;
@@ -57,18 +53,23 @@ public:
                        ACE_CString const &recv_flow_name,
                        ACE_CString const &send_flow_name);
 
-  /// Returns the hash map of flowspecs indexed by flowspec name.
-  FLOW_SPEC_HASH_MAP& map ();
+  /// Add an owned flow specification indexed by its name.
+  int bind_flow_spec (ACE_CString const &name,
+                      std::unique_ptr<ACE_Flow_Spec> flow_spec);
 
 private:
+  using FLOW_SPEC_HASH_MAP =
+    ACE_Hash_Map_Manager<ACE_CString, ACE_Flow_Spec *, ACE_Null_Mutex>;
+
   // The Service Provider is currently set to NULL for all ACE_QoS.
-  static const iovec iov_;
+  static iovec const iov_;
 
   // A NO_TRAFFIC flow spec. Senders set the receiving qos to this
   // while the receivers set the sending qos to this.
   std::unique_ptr<ACE_Flow_Spec> default_traffic_;
 
-  // A list of flowspecs indexed by the flowspec name.
+  // The map uses borrowed pointers; the vector owns the flow specs.
+  std::vector<std::unique_ptr<ACE_Flow_Spec>> flow_specs_;
   FLOW_SPEC_HASH_MAP flow_spec_map_;
 };
 

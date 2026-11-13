@@ -2,7 +2,6 @@
 #include "ace/Log_Msg.h"
 #include "QoS_Signal_Handler.h"
 
-
 QoS_Signal_Handler::QoS_Signal_Handler (ACE_QoS_Session *qos_session)
   : qos_session_ (qos_session)
 {
@@ -10,7 +9,7 @@ QoS_Signal_Handler::QoS_Signal_Handler (ACE_QoS_Session *qos_session)
 
 // Releases the QoS sessions gracefully.
 int
-QoS_Signal_Handler::handle_signal (int signum, siginfo_t *, ucontext_t*)
+QoS_Signal_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
 {
   ACE_DEBUG ((LM_DEBUG,
               "QoS_Signal_Handler::handle_signal\n"));

@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef QOS_UTIL_H
 #define QOS_UTIL_H
 
@@ -16,6 +15,24 @@
 #include "ace/QoS/QoS_Session.h"
 
 #include <memory>
+
+class ACE_QoS_Session_Factory;
+
+struct QoS_Session_Deleter
+{
+  explicit QoS_Session_Deleter (ACE_QoS_Session_Factory &factory)
+    : factory_ (factory)
+  {
+  }
+
+  void operator() (ACE_QoS_Session *session) const;
+
+private:
+  ACE_QoS_Session_Factory &factory_;
+};
+
+using QoS_Session_Ptr =
+  std::unique_ptr<ACE_QoS_Session, QoS_Session_Deleter>;
 
 /**
  * @class QoS_Util
@@ -37,10 +54,9 @@ public:
   // Parse command-line arguments.
   int parse_args ();
 
-  // GET methods.
-  ACE_INET_Addr *mult_session_addr () const;
+  ACE_INET_Addr const &mult_session_addr () const;
 
-  ACE_INET_Addr *dest_addr () const;
+  ACE_INET_Addr const &dest_addr () const;
 
   u_short source_port () const;
 
@@ -50,24 +66,23 @@ public:
 
 private:
   // Command line arguments.
-  int argc_;
-  ACE_TCHAR **argv_;
+  int const argc_;
+  ACE_TCHAR ** const argv_;
 
   // Multicast session address.
-  std::unique_ptr<ACE_INET_Addr> mult_session_addr_;
+  ACE_INET_Addr mult_session_addr_;
 
   // Unicast destination address of the receiver.
-  std::unique_ptr<ACE_INET_Addr> dest_addr_;
+  ACE_INET_Addr dest_addr_;
 
   // Source port for the sender.
   u_short source_port_;
 
   // Protocol.
-  ACE_Protocol_ID protocol_;
+  ACE_Protocol_ID protocol_ {IPPROTO_UDP};
 
   // Multicast Flag.
-  bool multicast_flag_;
+  bool multicast_flag_ {};
 };
 
 #endif /* QOS_UTIL_H */
-
