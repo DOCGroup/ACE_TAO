@@ -333,9 +333,7 @@ TAO_AV_RTCP::rtcp_interval (int members,
 
 
 // TAO_AV_RTCP_Flow_Factory
-TAO_AV_RTCP_Flow_Factory::TAO_AV_RTCP_Flow_Factory ()
-{
-}
+TAO_AV_RTCP_Flow_Factory::TAO_AV_RTCP_Flow_Factory () = default;
 
 TAO_AV_RTCP_Flow_Factory::~TAO_AV_RTCP_Flow_Factory () = default;
 

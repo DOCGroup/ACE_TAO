@@ -4530,7 +4530,7 @@ TAO_Tokenizer::token ()
 }
 
 int
-TAO_Tokenizer::num_tokens ()
+TAO_Tokenizer::num_tokens () const
 {
   return static_cast<int> (this->num_tokens_);
 }
@@ -4539,7 +4539,7 @@ char const *
 TAO_Tokenizer::operator [] (size_t index) const
 {
   if (index >= this->num_tokens_)
-    return 0;
+    return nullptr;
 
   return this->token_array_[index];
 }

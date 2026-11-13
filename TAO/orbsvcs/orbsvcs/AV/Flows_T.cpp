@@ -12,9 +12,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // ------------------------------------------------------------
 
 template <class T_Producer, class T_Consumer>
-TAO_FDev<T_Producer, T_Consumer>::TAO_FDev ()
-{
-}
+TAO_FDev<T_Producer, T_Consumer>::TAO_FDev () = default;
 
 template <class T_Producer, class T_Consumer>
 TAO_FDev<T_Producer, T_Consumer>::TAO_FDev (char const *flowname)
@@ -34,10 +32,7 @@ TAO_FDev<T_Producer, T_Consumer>::TAO_FDev (char const *flowname)
 }
 
 template <class T_Producer, class T_Consumer>
-TAO_FDev<T_Producer, T_Consumer>::~TAO_FDev ()
-{
-  //no-op
-}
+TAO_FDev<T_Producer, T_Consumer>::~TAO_FDev () = default;
 
 template <class T_Producer, class T_Consumer>
 char const *

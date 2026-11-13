@@ -44,7 +44,7 @@ public:
   char *token ();
 
   /// Number of tokens.
-  int num_tokens ();
+  int num_tokens () const;
 
   char const *operator [] (size_t index) const;
 
@@ -324,7 +324,7 @@ public:
 
   TAO_Reverse_FlowSpec_Entry ();
 
-  // constructor to construct an entry from the arguments.
+  /// Constructs an entry from its flow specification fields.
   TAO_Reverse_FlowSpec_Entry (char const *flowname,
                               char const *direction,
                               char const *format_name,
@@ -333,7 +333,7 @@ public:
                               ACE_Addr *address,
                               ACE_Addr *control_address = nullptr);
 
-  // Takes the address in protocol=endpoint form.
+  /// Takes the address in protocol=endpoint form.
   TAO_Reverse_FlowSpec_Entry (char const *flowname,
                               char const *direction,
                               char const *format_name,

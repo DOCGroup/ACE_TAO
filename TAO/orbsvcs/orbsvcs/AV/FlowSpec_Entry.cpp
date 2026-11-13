@@ -401,11 +401,8 @@ TAO_FlowSpec_Entry::get_local_addr_str ()
 // TAO_Forward_FlowSpec_Entry
 //------------------------------------------------------------
 
-TAO_Forward_FlowSpec_Entry::TAO_Forward_FlowSpec_Entry ()
-{
-}
+TAO_Forward_FlowSpec_Entry::TAO_Forward_FlowSpec_Entry () = default;
 
-// constructor to construct the entry from the arguments.
 TAO_Forward_FlowSpec_Entry::TAO_Forward_FlowSpec_Entry (char const *flowname,
                                                         char const *direction,
                                                         char const *format_name ,
@@ -423,7 +420,6 @@ TAO_Forward_FlowSpec_Entry::TAO_Forward_FlowSpec_Entry (char const *flowname,
 {
 }
 
-// constructor to construct the entry from the arguments.
 TAO_Forward_FlowSpec_Entry::TAO_Forward_FlowSpec_Entry (char const *flowname,
                                                         char const *direction,
                                                         char const *format_name ,
@@ -728,11 +724,8 @@ TAO_Forward_FlowSpec_Entry::entry_to_string ()
 // TAO_Reverse_FlowSpec_Entry
 //------------------------------------------------------------
 
-TAO_Reverse_FlowSpec_Entry::TAO_Reverse_FlowSpec_Entry ()
-{
-}
+TAO_Reverse_FlowSpec_Entry::TAO_Reverse_FlowSpec_Entry () = default;
 
-// constructor to construct an entry from the arguments.
 TAO_Reverse_FlowSpec_Entry::TAO_Reverse_FlowSpec_Entry (char const *flowname,
                                                         char const *direction,
                                                         char const *format_name ,
@@ -750,7 +743,6 @@ TAO_Reverse_FlowSpec_Entry::TAO_Reverse_FlowSpec_Entry (char const *flowname,
 {
 }
 
-// constructor to construct an entry from the arguments.
 TAO_Reverse_FlowSpec_Entry::TAO_Reverse_FlowSpec_Entry (char const *flowname,
                                                         char const *direction,
                                                         char const *format_name ,
