@@ -22,8 +22,7 @@ config_file_name ()
   return svc_conf;
 }
 
-// Load dynamic services in a local repository, which
-// initializes its own ORB
+/// Load dynamic services in a local repository, which initializes its own ORB.
 
 int
 testLoadingTwoOrbs (int, ACE_TCHAR *argv[])
@@ -34,7 +33,7 @@ testLoadingTwoOrbs (int, ACE_TCHAR *argv[])
               ACE_TEXT ("Looking for conf file %s\n"),
               config_file_name ()));
 
-  // Process the Service Configurator directives in this test's
+  // Process this test's Service Configurator directives.
   if (new_argv.add (argv) == -1
       || new_argv.add (ACE_TEXT ("-f")) == -1
       || new_argv.add (config_file_name ()) == -1)
@@ -43,7 +42,7 @@ testLoadingTwoOrbs (int, ACE_TCHAR *argv[])
       return -1;
     }
 
-  if (ACE_Service_Config::instance ()->open (new_argv.argc (),
+  if (ACE_Service_Config::current ()->open (new_argv.argc (),
                                               new_argv.argv ()) == -1)
     {
       if (errno == ENOENT)

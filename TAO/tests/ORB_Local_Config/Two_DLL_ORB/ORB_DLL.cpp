@@ -1,8 +1,6 @@
 // -*- C++ -*-
 #include "ORB_DLL.h"
 #include "ace/Service_Config.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_strings.h"
 
 #include "ace/Arg_Shifter.h"
 #include "ace/Log_Msg.h"
@@ -40,12 +38,16 @@ Service_Config_ORB_DLL::init (int argc, ACE_TCHAR *argv[])
     }
 
   if (this->worker_type_ == Worker_Type::unspecified)
-    ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) You must specify -c(lient) or -s(erver) argument. Aborting."), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("(%P|%t) You must specify -c(lient) or -s(erver).\n")),
+                      -1);
 
+  // ACE_NEW_RETURN needs a raw output pointer; argv_ takes ownership below.
   ACE_ARGV *tmp {};
   ACE_NEW_RETURN (tmp, ACE_ARGV (argc, argv), -1);
   this->argv_.reset (tmp);
 
+  // ACE_NEW_RETURN needs a raw output pointer; worker_ takes ownership below.
   Abstract_Worker *worker {};
   if (this->worker_type_ == Worker_Type::server)
     ACE_NEW_RETURN (worker, Server_Worker, -1);
@@ -65,7 +67,9 @@ Service_Config_ORB_DLL::init (int argc, ACE_TCHAR *argv[])
   // loaded.
   return this->activate ();
 #else
-  ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) Threading support is required for this test. Aborting.")), -1);
+  ACE_ERROR_RETURN ((LM_ERROR,
+                     ACE_TEXT ("(%P|%t) Threading support is required for this test.\n")),
+                    -1);
 #endif /* ACE_HAS_THREADS */
 }
 
@@ -76,24 +80,24 @@ Service_Config_ORB_DLL::svc ()
   ACE_ASSERT (this->argv_ != nullptr);
 
   try
-  {
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%P|%t) %@ %s is active, argv[%d]=\'%s\'\n"),
-                this,
-                this->worker_->kind (),
-                this->argv_->argc (),
-                this->argv_->buf ()));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P|%t) %@ %s is active, argv[%d]=\'%s\'\n"),
+                  this,
+                  this->worker_->kind (),
+                  this->argv_->argc (),
+                  this->argv_->buf ()));
 
-    int const ret = this->worker_->test_main (this->argv_->argc (),
-                                              this->argv_->argv ());
+      int const ret = this->worker_->test_main (this->argv_->argc (),
+                                                this->argv_->argv ());
 
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%P|%t) %@ %s bows out - so long, cruel world! (%d)\n"),
-                this,
-                this->worker_->kind (),
-                ret));
-    return ret;
-  }
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P|%t) %@ %s bows out - so long, cruel world! (%d)\n"),
+                  this,
+                  this->worker_->kind (),
+                  ret));
+      return ret;
+    }
   catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception (ACE_TEXT ("Failure:"));

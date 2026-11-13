@@ -5,15 +5,13 @@
 
 #include "TestS.h"
 
-/// Implement the Test::Hello interface
+/// @brief Implements the Test::Hello interface.
 class Hello
   : public virtual POA_Test::Hello
 {
 public:
-  /// Constructor
   explicit Hello (CORBA::ORB_ptr orb);
 
-  // = The skeleton methods
   char *get_string () override;
 
   void shutdown () override;

@@ -7,7 +7,6 @@
 Client_Worker::Client_Worker ()
   : Abstract_Worker (ACE_TEXT ("file://test.ior"))
 {
-  //  ACE_DEBUG ((LM_DEBUG, "(%P|%t) %@ Client::<ctor>\n", this));
 }
 
 ACE_TCHAR const *
@@ -47,8 +46,9 @@ Client_Worker::test_main (int argc, ACE_TCHAR *argv[])
                            ACE_TEXT ("(%P|%t) Could not parse the arguments\n")),
                           1);
 
-      // Doing this dance to allow the server some time to come up.
-      for (int attempts_left = 5; attempts_left > 0; --attempts_left)
+      // Retry while the server is starting or has not published its IOR.
+      bool success {};
+      for (int attempts_left = 5; attempts_left > 0 && !success; --attempts_left)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) Client is ready to proceed - awaiting the server ...\n")));
@@ -86,13 +86,11 @@ Client_Worker::test_main (int argc, ACE_TCHAR *argv[])
                           the_string.in ()));
 
               hello->shutdown ();
-
-              attempts_left = 0; // We're done here!
-
+              success = true;
             }
           catch (CORBA::TRANSIENT const& ex)
             {
-              if (!attempts_left)
+              if (attempts_left == 1)
                 throw;
 
               ex._tao_print_exception ("Temporary problem encountered");
@@ -106,14 +104,19 @@ Client_Worker::test_main (int argc, ACE_TCHAR *argv[])
             {
               ex._tao_print_exception ("Unexpected CORBA exception caught");
 
-              if (!attempts_left)
+              if (attempts_left == 1)
                 throw;
 
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) Pausing for a while.\n")));
               ACE_OS::sleep (5);
             }
-      }
+        }
+
+      if (!success)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("(%P|%t) Client failed to contact the server\n")),
+                          1);
 
       orb->shutdown (false);
 

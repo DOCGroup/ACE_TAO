@@ -25,7 +25,7 @@
 #include "ace/String_Base.h"
 #include "tao/ORB.h"
 
-///
+/// @brief Common interface for server and client test workers.
 class Abstract_Worker
 {
 public:
@@ -44,9 +44,7 @@ protected:
   ACE_TString ior_file_;
 };
 
-/**
- * A server kind of test
- */
+/// @brief Runs the server side of the test.
 class Server_Worker : public Abstract_Worker
 {
 public:
@@ -59,9 +57,7 @@ private:
   int parse_args (int argc, ACE_TCHAR *argv[]);
 };
 
-/**
- * A client kind of test
- */
+/// @brief Runs the client side of the test.
 class Client_Worker : public Abstract_Worker
 {
 public:
@@ -84,7 +80,6 @@ class Service_Config_ORB_DLL_Export Service_Config_ORB_DLL
   : public ACE_Task_Base
 {
 public:
-  /// Constructor.
   Service_Config_ORB_DLL ();
   ~Service_Config_ORB_DLL () override;
 

@@ -12,7 +12,6 @@ Server_Worker::Server_Worker ()
 {
 }
 
-//
 ACE_TCHAR const *
 Server_Worker::kind () const
 {
