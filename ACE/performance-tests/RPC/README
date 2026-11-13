@@ -2,4 +2,4 @@
   Measure latency over RPC, run as:
 
 $ server
-$ client -n <samples> -k host
+$ client -h <host> -i <iterations>
