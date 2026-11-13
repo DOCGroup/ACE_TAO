@@ -68,13 +68,9 @@ namespace TAO
         }
 
       ACE_NEW_RETURN (item, TAO_Protocol_Item (name), -1);
-      // If the TAO_Protocol_Item retains ownership of the
-      // TAO_Protocol_Factory then we used an auto_ptr<> above, so
-      // release the TAO_Protocol_Factory from it.  Otherwise, we
-      // obtained the TAO_Protocol_Factory from the Service
-      // Configurator so an auto_ptr<> wasn't used since the Service
-      // Configurator retains ownership, hence there was no need to
-      // use an auto_ptr<> in this method.
+      // The protocol item takes ownership of a locally created factory.
+      // A factory obtained from the Service Configurator remains owned by
+      // the Configurator.
       item->factory ((transfer_ownership ?
                       safe_protocol_factory.release () :
                       protocol_factory),

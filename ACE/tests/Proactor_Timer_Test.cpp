@@ -302,14 +302,9 @@ run_main (int argc, ACE_TCHAR *[])
       // precision for a 1 second timer is beyond me ...  I think it
       // is a cut&paste error.
       //
-      // The use of std::unique_ptr<> is optional, ACE uses dangerous memory
-      // management idioms everywhere, I thought I could demonstrate how
-      // to do it right in at least one test.  Notice the lack of
-      // ACE_NEW_RETURN, that monstrosity has no business in proper C++
-      // code ...
       using Timer_Queue = ACE_Timer_Heap_T<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall, ACE_MT_SYNCH::RECURSIVE_MUTEX, ACE_FPointer_Time_Policy>;
 
-      std::unique_ptr<Timer_Queue> tq(new Timer_Queue);
+      std::unique_ptr<Timer_Queue> tq = std::make_unique<Timer_Queue> ();
       // ... notice how the policy is in the derived timer queue type.
       // The abstract timer queue does not have a time policy ...
       tq->set_time_policy(&ACE_High_Res_Timer::gettimeofday_hr);
@@ -317,8 +312,7 @@ run_main (int argc, ACE_TCHAR *[])
       // Proactor does *not* copy the timers, it just deletes the
       // existing timer queue ....
       r->timer_queue(tq.get());
-      // ... the Proactor has assumed ownership, release the
-      // auto_ptr<> ...
+      // The proactor takes ownership of the timer queue.
       tq.release();
     }
 
