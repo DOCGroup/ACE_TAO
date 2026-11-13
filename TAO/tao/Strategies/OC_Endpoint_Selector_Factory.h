@@ -50,7 +50,7 @@ class TAO_Strategies_Export TAO_OC_Endpoint_Selector_Factory
 public:
   TAO_OC_Endpoint_Selector_Factory ();
 
-  ~TAO_OC_Endpoint_Selector_Factory () override = default;
+  ~TAO_OC_Endpoint_Selector_Factory () override;
 
   int init (int argc, ACE_TCHAR *argv[]) override;
 

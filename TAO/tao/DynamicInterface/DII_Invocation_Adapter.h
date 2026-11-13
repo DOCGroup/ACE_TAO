@@ -54,6 +54,8 @@ namespace TAO
     public Invocation_Adapter
   {
   public:
+    DII_Invocation_Adapter () = delete;
+
     /// The only constructor used by the IDL compiler and only way to
     /// create this adapter.
     /**

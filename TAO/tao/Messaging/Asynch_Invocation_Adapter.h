@@ -56,6 +56,8 @@ namespace TAO
     : public Invocation_Adapter
   {
   public:
+    Asynch_Invocation_Adapter () = delete;
+
     Asynch_Invocation_Adapter (
         CORBA::Object *target,
         Argument **args,
