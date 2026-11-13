@@ -39,7 +39,7 @@ class TAO_PI_Export TAO_ProcessingModePolicy
     public ::CORBA::LocalObject
 {
 public:
-  TAO_ProcessingModePolicy (PortableInterceptor::ProcessingMode mode);
+  explicit TAO_ProcessingModePolicy (PortableInterceptor::ProcessingMode mode);
 
   PortableInterceptor::ProcessingMode processing_mode () override;
 
