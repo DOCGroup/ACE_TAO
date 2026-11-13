@@ -31,21 +31,21 @@ Time_impl::get_gmt ()
 // ______________________________________________________
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
       // Initialize orb
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
       // Get reference to Root POA.
-      CORBA::Object_var obj
+      CORBA::Object_var const obj
         = orb->resolve_initial_references ("RootPOA");
-      PortableServer::POA_var poa
+      PortableServer::POA_var const poa
         = PortableServer::POA::_narrow (obj.in ());
 
       // Activate POA manager
-      PortableServer::POAManager_var mgr
+      PortableServer::POAManager_var const mgr
         = poa->the_POAManager ();
       mgr->activate ();
 
@@ -53,8 +53,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       Time_impl time_servant {};
 
       // Write its stringified reference to stdout
-      Time_var tm = time_servant._this ();
-      CORBA::String_var str = orb->object_to_string (tm.in ());
+      Time_var const tm = time_servant._this ();
+      CORBA::String_var const str = orb->object_to_string (tm.in ());
       std::cout << str.in () << std::endl;
 
       // Accept requests

@@ -14,7 +14,7 @@
 #include <iostream>
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -26,10 +26,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       // Initialize orb
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
       // Destringify argv[1]
-      CORBA::Object_var obj = orb->string_to_object (argv[1]);
+      CORBA::Object_var const obj = orb->string_to_object (argv[1]);
       if (CORBA::is_nil (obj.in ()))
         {
           std::cerr << "Nil Time reference" << std::endl;
@@ -37,7 +37,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       // Narrow
-      Time_var tm = Time::_narrow (obj.in ());
+      Time_var const tm = Time::_narrow (obj.in ());
 
       if (CORBA::is_nil (tm.in ()))
         {
