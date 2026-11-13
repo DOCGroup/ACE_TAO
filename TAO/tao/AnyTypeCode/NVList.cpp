@@ -203,21 +203,18 @@ CORBA::NVList::add_element (CORBA::Flags flags)
   // allocate a new NamedValue
   CORBA::NamedValue_ptr nv {};
   ACE_NEW_THROW_EX (nv, CORBA::NamedValue, CORBA::NO_MEMORY ());
-  std::unique_ptr<CORBA::NamedValue, void (*) (CORBA::NamedValue *)> nv_owner (
-    nv,
-    [] (CORBA::NamedValue *value) { value->_decr_refcount (); });
+  CORBA::NamedValue_var nv_owner (nv);
 
   // Set the flags and add it to the list.
   nv->flags_ = flags;
 
-  if (this->values_.enqueue_tail (nv) == -1)
+  if (this->values_.enqueue_tail (nv_owner.in ()) == -1)
     {
       return nullptr;
     }
 
-  nv_owner.release ();
   ++this->max_;
-  return nv; // success
+  return nv_owner._retn ();
 }
 
 // return the item at location n
