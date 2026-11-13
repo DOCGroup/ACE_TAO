@@ -60,7 +60,7 @@ ACE_SOCK_Dgram_Mcast_QoS::open (ACE_INET_Addr const &addr,
                       reuse_addr) == -1)
     return -1;
 
-  return this->open_i (addr, 0, reuse_addr);
+  return this->open_i (addr, nullptr, reuse_addr);
 }
 
 int
@@ -159,7 +159,7 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe_ifs (ACE_INET_Addr const &mcast_addr,
   // Otherwise, do it like everyone else...
 
   // Create multicast request.
-  if (this->make_multicast_ifaddr (0,
+  if (this->make_multicast_ifaddr (nullptr,
                                    mcast_addr,
                                    net_if) == -1)
     return -1;
