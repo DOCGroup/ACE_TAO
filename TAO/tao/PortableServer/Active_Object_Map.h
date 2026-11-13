@@ -253,7 +253,20 @@ public:
   static size_t system_id_size_;
 
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
-  ACE::Monitor_Control::Size_Monitor *monitor_;
+  struct Size_Monitor_Deleter
+  {
+    void operator() (ACE::Monitor_Control::Size_Monitor *monitor) const
+    {
+      if (monitor != nullptr)
+        {
+          monitor->remove_from_registry ();
+          monitor->remove_ref ();
+        }
+    }
+  };
+
+  // remove_ref() owns the final destruction after registry removal.
+  std::unique_ptr<ACE::Monitor_Control::Size_Monitor, Size_Monitor_Deleter> monitor_;
 #endif /* TAO_HAS_MONITOR_POINTS==1 */
 };
 

@@ -320,8 +320,11 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
   this->user_id_map_ = std::move(new_user_id_map);
 
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
-  ACE_NEW (this->monitor_,
-           ACE::Monitor_Control::Size_Monitor);
+  ACE::Monitor_Control::Size_Monitor *monitor {};
+  ACE_NEW_THROW_EX (monitor,
+                    ACE::Monitor_Control::Size_Monitor,
+                    CORBA::NO_MEMORY ());
+  this->monitor_.reset (monitor);
 #endif /* TAO_HAS_MONITOR_POINTS==1 */
 }
 
@@ -337,11 +340,6 @@ TAO_Active_Object_Map::~TAO_Active_Object_Map ()
       user_id_map::value_type const map_entry = *iterator;
       delete map_entry.second ();
     }
-
-#if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
-  this->monitor_->remove_from_registry ();
-  this->monitor_->remove_ref ();
-#endif /* TAO_HAS_MONITOR_POINTS==1 */
 }
 
 bool
