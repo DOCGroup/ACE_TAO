@@ -51,6 +51,9 @@ public:
   /// Return the underlying I/O handle.
   ACE_HANDLE get_handle () const;
 
+  /// @name Message block send and receive
+  /// @{
+
   /// Send a message through the message queue.  Returns -1 on error,
   /// else 0.
   int send (ACE_Message_Block *mb_p,
@@ -60,6 +63,11 @@ public:
   /// 0.
   int recv (ACE_Message_Block *&mb_p,
             ACE_Time_Value *timeout  = nullptr);
+
+  /// @}
+
+  /// @name Character buffer send and receive
+  /// @{
 
   /// Send a buffer of @a n bytes through the message queue.  Returns -1
   /// on error, else number of bytes sent.
@@ -84,6 +92,8 @@ public:
   ssize_t recv_n (char *buffer,
                   size_t n,
                   ACE_Time_Value *timeout = nullptr);
+
+  /// @}
 
   /// Perform control operations on the UPIPE_Stream.
   int control (int cmd, void *val) const;

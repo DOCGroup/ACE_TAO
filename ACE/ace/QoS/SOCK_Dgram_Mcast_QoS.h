@@ -45,6 +45,9 @@ public:
   ACE_SOCK_Dgram_Mcast_QoS (ACE_SOCK_Dgram_Mcast_QoS &&) = delete;
   ACE_SOCK_Dgram_Mcast_QoS &operator= (ACE_SOCK_Dgram_Mcast_QoS &&) = delete;
 
+  /// @name Multicast group management
+  /// @{
+
   /**
    * This is a QoS-enabled method for joining a multicast group, which
    * passes <qos_params> via <ACE_OS::join_leaf>.  The network
@@ -77,6 +80,11 @@ public:
                  u_long flags = 0,
                  ACE_QoS_Session *qos_session = nullptr);
 
+  /// @}
+
+  /// @name Data transfer
+  /// @{
+
   /// Send <buffer_count> worth of @a buffers to @a addr using overlapped
   /// I/O (uses <WSASentTo>).  Returns 0 on success.
   ssize_t send (iovec const buffers[],
@@ -94,6 +102,8 @@ public:
                 int flags,
                 ACE_OVERLAPPED *overlapped,
                 ACE_OVERLAPPED_COMPLETION_FUNC func) const;
+
+  /// @}
 
   /// Returns the QoS manager for this socket.
   ACE_QoS_Manager qos_manager ();

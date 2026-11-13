@@ -63,11 +63,16 @@ class ACE_ETCL_Export ETCL_Literal_Constraint
 public:
   ETCL_Literal_Constraint () = default;
 
+  /// @name Constructors for literal values
+  /// @{
+
   explicit ETCL_Literal_Constraint (ACE_CDR::ULong uinteger);
   explicit ETCL_Literal_Constraint (ACE_CDR::Long integer);
   explicit ETCL_Literal_Constraint (ACE_CDR::Boolean boolean);
   explicit ETCL_Literal_Constraint (ACE_CDR::Double doub);
   explicit ETCL_Literal_Constraint (char const *str);
+
+  /// @}
 
   ETCL_Literal_Constraint (ETCL_Literal_Constraint const &lit);
   ETCL_Literal_Constraint (ETCL_Literal_Constraint &&) = delete;

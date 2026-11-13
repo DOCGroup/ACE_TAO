@@ -56,6 +56,9 @@ public:
   /// rendezvous point.
   int remove ();
 
+  /// @name Passive connection acceptance
+  /// @{
+
   /**
    * Accept a new data transfer connection.  A @a timeout of 0 means
    * block forever, a @a timeout of {0, 0} means poll.  @a restart == 1
@@ -66,6 +69,8 @@ public:
               ACE_Time_Value *timeout = nullptr,
               bool restart = true,
               bool reset_new_handle = false);
+
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;
