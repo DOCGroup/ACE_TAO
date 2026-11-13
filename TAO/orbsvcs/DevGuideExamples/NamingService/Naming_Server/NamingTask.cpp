@@ -18,7 +18,7 @@ void NamingTask::waitInit ()
 
 void NamingTask::end ()
 {
-  orb_->shutdown (0);
+  orb_->shutdown (false);
   this->wait ();
 }
 
@@ -39,8 +39,8 @@ int NamingTask::svc ()
       if (naming.init (orb_.in (),
                        poa.in (),
                        ACE_DEFAULT_MAP_SIZE,
-                       0,
-                       0) == 0)
+                       nullptr,
+                       false) == 0)
         {
           std::cout << "The Naming Service Task is ready." << std::endl;
           this->initialized_.store (true, std::memory_order_release);
