@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file     AbstractBase_T.h
  *
  *  @author  Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_ABSTRACTBASE_T_H
 #define TAO_ABSTRACTBASE_T_H

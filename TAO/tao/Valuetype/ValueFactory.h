@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file     ValueFactory.h
  *
  *  @author  Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
  */
-//=============================================================================
 
 #ifndef TAO_VALUEFACTORY_H
 #define TAO_VALUEFACTORY_H
@@ -124,7 +122,6 @@ TAO_END_VERSIONED_NAMESPACE_DECL
       VALUETYPE::_tao_obv_static_repository_id (),\
                                    factory.in ()); \
     if (prev_factory != nullptr) prev_factory->_remove_ref (); }
-
 
 #include /**/ "ace/post.h"
 

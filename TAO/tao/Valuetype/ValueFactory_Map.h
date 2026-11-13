@@ -1,13 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file     ValueFactory_Map.h
  *
  *  @author  Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
  */
-//=============================================================================
-
 
 #ifndef TAO_VALUEFACTORY_MAP_H
 #define TAO_VALUEFACTORY_MAP_H

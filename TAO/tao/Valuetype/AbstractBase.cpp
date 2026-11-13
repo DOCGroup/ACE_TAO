@@ -167,7 +167,7 @@ operator<< (TAO_OutputCDR &strm, CORBA::AbstractBase_ptr const abs)
             }
 
           // STRING, a type ID hint
-          if ((strm << stubobj->type_id.in ()) == 0)
+          if (!(strm << stubobj->type_id.in ()))
             {
               return false;
             }
@@ -176,7 +176,7 @@ operator<< (TAO_OutputCDR &strm, CORBA::AbstractBase_ptr const abs)
 
           CORBA::ULong const profile_count = mprofile.profile_count ();
 
-          if ((strm << profile_count) == 0)
+          if (!(strm << profile_count))
             {
               return false;
             }
@@ -205,12 +205,12 @@ operator<< (TAO_OutputCDR &strm, CORBA::AbstractBase_ptr const abs)
           CORBA::ULong const value_tag = TAO_OBV_GIOP_Flags::Value_tag_base
                                          | TAO_OBV_GIOP_Flags::Type_info_single;
 
-          if ((strm.write_ulong (value_tag)) == 0)
+          if (!strm.write_ulong (value_tag))
             {
               return false;
             }
 
-          if ((strm << abs->_tao_obv_repository_id ()) == 0)
+          if (!(strm << abs->_tao_obv_repository_id ()))
             {
               return false;
             }
@@ -227,7 +227,7 @@ operator>> (TAO_InputCDR &strm, CORBA::AbstractBase_ptr &abs)
 {
   abs = nullptr;
   CORBA::Boolean discriminator {false};
-  ACE_InputCDR::to_boolean tb (discriminator);
+  ACE_InputCDR::to_boolean const tb (discriminator);
   TAO_ORB_Core *orb_core {};
 
   if (strm >> tb)
@@ -261,7 +261,7 @@ operator>> (TAO_InputCDR &strm, CORBA::AbstractBase_ptr &abs)
           CORBA::String_var repo_id_stream;
 
           // It would be more efficient not to copy the string)
-          if (strm.read_string (repo_id_stream.inout ()) == 0)
+          if (!strm.read_string (repo_id_stream.inout ()))
             {
               return false;
             }
@@ -402,8 +402,6 @@ CORBA::AbstractBase::create_object (TAO_Stub *stub)
 
   return CORBA::Object::_nil ();
 }
-
-// ================== Typecode initializations ==================
 
 namespace TAO
 {
