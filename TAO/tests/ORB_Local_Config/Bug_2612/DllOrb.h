@@ -1,7 +1,5 @@
-/*
- * @author Iliyan jeliazkov <iliyan@ociweb.com>
- * @author Lothar Werzinger <lothar@tradescape.biz>
- */
+/// @author Iliyan Jeliazkov <iliyan@ociweb.com>
+/// @author Lothar Werzinger <lothar@tradescape.biz>
 
 #ifndef DllOrb_h
 #define DllOrb_h
@@ -16,18 +14,14 @@
 
 #include <memory>
 
-/** The CORBA ORB as a dynamic loadable module.
-  *
-  */
+/// CORBA ORB hosted in a dynamically loaded service module.
 class DllOrb_Export DllOrb
   : public ACE_Task_Base
 {
 public:
-  /// Default constructor.
   explicit DllOrb (int nthreads = 1);
 
-  /// Destructor.
-  ~DllOrb () noexcept;
+  ~DllOrb () noexcept override;
 
   DllOrb (DllOrb const &) = delete;
   DllOrb (DllOrb &&) = delete;

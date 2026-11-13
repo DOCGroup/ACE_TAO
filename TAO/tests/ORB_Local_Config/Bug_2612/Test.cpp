@@ -1,7 +1,5 @@
-/*
- * @author Iliyan jeliazkov <iliyan@ociweb.com>
- * @author Lothar Werzinger <lothar@tradescape.biz>
- */
+/// @author Iliyan Jeliazkov <iliyan@ociweb.com>
+/// @author Lothar Werzinger <lothar@tradescape.biz>
 
 #include "ace/Service_Config.h"
 #include "tao/corba.h"

@@ -1,7 +1,5 @@
-/*
- * @author Iliyan jeliazkov <iliyan@ociweb.com>
- * @author Lothar Werzinger <lothar@tradescape.biz>
- */
+/// @author Iliyan Jeliazkov <iliyan@ociweb.com>
+/// @author Lothar Werzinger <lothar@tradescape.biz>
 
 #include "ace/Arg_Shifter.h"
 #include "ace/OS_NS_unistd.h"
@@ -57,7 +55,7 @@ int DllOrb::init (int argc, ACE_TCHAR *argv[])
     if (CORBA::is_nil (this->mv_orb_.in ()))
       return -1;
 
-    CORBA::Object_var poa_object (
+    CORBA::Object_var const poa_object (
       this->mv_orb_->resolve_initial_references ("RootPOA"));
 
     this->mv_root_poa_ = PortableServer::POA::_narrow (poa_object.in ());
