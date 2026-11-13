@@ -9,21 +9,21 @@ class FP_DT_Creator: public DT_Creator
 public:
   FP_DT_Creator ();
 
-  virtual CORBA::Policy_ptr sched_param (int importance) override;
+  CORBA::Policy_ptr sched_param (int importance) override;
 
   //virtual Task* task ();
-  virtual Thread_Task* create_thr_task (int importance,
+  Thread_Task* create_thr_task (int importance,
                                         time_t start_time,
                                         int load,
                                         int iter,
                                         int dist,
                                         char *job_name) override;
 
-  virtual void yield (time_t suspend_time,
+  void yield (time_t suspend_time,
                       Thread_Task* task) override;
 
-  virtual void wait () override;
-  virtual int total_load () override;
+  void wait () override;
+  int total_load () override;
 };
 
 

@@ -36,7 +36,7 @@ class DT_Test :public ACE_Task <ACE_SYNCH>
 
   protected:
   /// task svc
-  virtual int svc () override;
+  int svc () override;
 
 
  private:

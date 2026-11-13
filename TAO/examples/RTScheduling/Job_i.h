@@ -41,7 +41,7 @@ class RTSCHEDTESTLIB_Export Job_i : public POA_Job
   const ACE_CString& poa ();
 
   /// = inteface Job method implementation.
-  virtual void work (CORBA::ULong work,
+  void work (CORBA::ULong work,
          CORBA::Short importance) override;
 
   virtual void post_work (int guid,
@@ -49,7 +49,7 @@ class RTSCHEDTESTLIB_Export Job_i : public POA_Job
 
   void dump_stats ();
 
-  virtual void shutdown () override;
+  void shutdown () override;
 
   int guid ();
 
