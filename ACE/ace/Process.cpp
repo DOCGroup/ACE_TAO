@@ -145,11 +145,11 @@ ACE_Process::spawn (ACE_Process_Options &options)
   void* env_buf = options.env_buf ();
   DWORD flags = options.creation_flags ();
 # if defined (ACE_HAS_WCHAR) && !defined (ACE_USES_WCHAR)
-  wchar_t* wenv_buf {};
+  std::unique_ptr<wchar_t[]> wenv_buf;
   if (options.use_unicode_environment ())
     {
-      wenv_buf = this->convert_env_buffer (options.env_buf ());
-      env_buf = wenv_buf;
+      wenv_buf.reset (this->convert_env_buffer (options.env_buf ()));
+      env_buf = wenv_buf.get ();
       flags |= CREATE_UNICODE_ENVIRONMENT;
     }
 # endif
@@ -182,11 +182,6 @@ ACE_Process::spawn (ACE_Process_Options &options)
                                                   options.startup_info (),
                                                   &this->process_info_);
     }
-
-# if defined (ACE_HAS_WCHAR) && !defined (ACE_USES_WCHAR)
-  if (options.use_unicode_environment ())
-    delete wenv_buf;
-# endif
 
   if (fork_result)
     {
