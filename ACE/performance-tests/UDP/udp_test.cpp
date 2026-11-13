@@ -16,19 +16,14 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_ctype.h"
-#include "ace/OS_NS_arpa_inet.h"
-#include "ace/OS_NS_string.h"
-#include "ace/os_include/os_netdb.h"
 #include "ace/OS_NS_unistd.h"
 
 #include <array>
+#include <cmath>
+#include <cstring>
 #include <memory>
 #include <string>
 #include <vector>
-
-// FUZZ: disable check_for_math_include
-#include <math.h>
 
 // Global variables (evil).
 static constexpr u_short DEFPORT = 5050;
@@ -42,7 +37,7 @@ static std::array<char, MAXPKTSZ> RxBuf {};
 static ACE_TCHAR *const *cmd {};
 static std::basic_string<ACE_TCHAR> datafile;
 
-static ACE_UINT32 nsamples {DEFITERATIONS};
+static int nsamples {DEFITERATIONS};
 static int usdelay {DEFINTERVAL};
 static int bufsz {DEFPKTSZ};
 static int window {DEFWINDOWSZ};
@@ -51,9 +46,7 @@ static bool logfile {};
 static bool server {};
 static bool client {};
 static bool use_reactor {};
-ACE_hrtime_t max_allow {};
-ACE_hrtime_t total_ltime {};
-ACE_hrtime_t ltime {};
+static ACE_hrtime_t max_allow {};
 
 static void
 usage ()
@@ -82,9 +75,9 @@ public:
   Client (ACE_INET_Addr const &addr,
           ACE_INET_Addr const &remote_addr);
 
-  ~Client () override = default;
+  ~Client () override;
 
-  // = Override <ACE_Event_Handler> methods.
+  /// Overrides ACE_Event_Handler methods.
   ACE_HANDLE get_handle () const override;
   int handle_input (ACE_HANDLE) override;
   int handle_close (ACE_HANDLE handle,
@@ -134,6 +127,11 @@ Client::Client (ACE_INET_Addr const &addr,
     }
 }
 
+Client::~Client ()
+{
+  this->endpoint_.close ();
+}
+
 ACE_HANDLE
 Client::get_handle () const
 {
@@ -143,21 +141,21 @@ Client::get_handle () const
 int
 Client::handle_input (ACE_HANDLE)
 {
-  std::array<char, BUFSIZ> buf {};
+  std::array<char, MAXPKTSZ> buf {};
   ACE_INET_Addr from_addr;
 
   ssize_t const n = endpoint_.recv (buf.data (), buf.size (), from_addr);
 
   if (n == -1)
-    ACE_ERROR ((LM_ERROR,
-                "%p\n",
-                "handle_input"));
-  else
-    ACE_DEBUG ((LM_DEBUG,
-                "(%P|%t) buf of size %d = %*s\n",
-                n,
-                n,
-                buf.data ()));
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "handle_input"),
+                      -1);
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) buf of size %d = %*s\n",
+              static_cast<int> (n),
+              static_cast<int> (n),
+              buf.data ()));
 
   return 0;
 }
@@ -186,7 +184,6 @@ Client::get_response (char *buf, size_t len)
 int
 Client::run ()
 {
-  int ndist {};
   int i {};
   int j {};
   int n {};
@@ -208,7 +205,7 @@ Client::run ()
   ACE_hrtime_t psum {};
   ACE_hrtime_t sum {};
   ACE_hrtime_t max {};
-  ACE_hrtime_t min = (ACE_hrtime_t) (u_int) -1;
+  ACE_hrtime_t min {};
   using File_Ptr = std::unique_ptr<FILE, int (*) (FILE *)>;
   File_Ptr sumfp {nullptr, ACE_OS::fclose};
   File_Ptr distfp {nullptr, ACE_OS::fclose};
@@ -216,11 +213,11 @@ Client::run ()
   pid_t const pid = ACE_OS::getpid ();
   int seq {};
 
-  ACE_OS::memset (sbuf, 0, bufsz);
-  ACE_OS::memset (rbuf, 0, bufsz);
+  std::memset (sbuf, 0, bufsz);
+  std::memset (rbuf, 0, bufsz);
 
-  ACE_OS::memcpy (sbuf, &pid, sizeof (pid));
-  ACE_OS::memcpy (sbuf + sizeof (int), &seq, sizeof (seq));
+  std::memcpy (sbuf, std::addressof (pid), sizeof pid);
+  std::memcpy (sbuf + sizeof pid, std::addressof (seq), sizeof seq);
 
   ACE_DEBUG ((LM_DEBUG,
               "PID = %d, Starting SEQ = %d\n",
@@ -231,10 +228,15 @@ Client::run ()
   std::vector<ACE_hrtime_t> samples (nsamples);
 
   for (i = -1, seq = 0, j = 0;
-       i < (ACE_INT32) nsamples;
+       i < nsamples;
        ++seq, ++i, ++j, timer.reset ())
     {
-      ACE_OS::memcpy (sbuf + sizeof (int), &seq, sizeof (seq));
+      std::memcpy (sbuf + sizeof pid, std::addressof (seq), sizeof seq);
+      if (i >= 0 && usdelay > 0)
+        {
+          ACE_Time_Value const delay {0, usdelay};
+          ACE_OS::sleep (delay);
+        }
       timer.start ();
       if (this->send (sbuf, bufsz) <= 0)
         ACE_ERROR_RETURN ((LM_ERROR, "(%P) %p\n", "send"), -1);
@@ -251,11 +253,11 @@ Client::run ()
 
       timer.elapsed_time (sample);     // in nanoseconds.
 
-      if (i < 0 )
+      if (i < 0)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Ignoring first sample of %u usecs\n",
-                       (ACE_UINT32) (sample)));
+                       static_cast<ACE_UINT32> (sample)));
           continue;
         }
       else if (max_allow > 0  &&  sample > max_allow)
@@ -263,8 +265,8 @@ Client::run ()
           ACE_DEBUG ((LM_DEBUG, "Sample # %i = "
                       "%u msec is over the limit (%u)!\n",
                       i,
-                      (ACE_UINT32) (sample / (ACE_UINT32) 1000000),
-                      (ACE_UINT32) (max_allow / (ACE_UINT32) 1000000)));
+                      static_cast<ACE_UINT32> (sample / 1000000),
+                      static_cast<ACE_UINT32> (max_allow / 1000000)));
 
           if (tracking_last_over)
             {
@@ -286,20 +288,25 @@ Client::run ()
       samples[i] = sample;
       sum += sample;
 
-      if (min == (ACE_hrtime_t) (u_int) -1)
-        {
-          min = sample;
-          minindx = i;
-        }
-      if (sample > max)
+      if (i == 0)
         {
           max = sample;
           maxindx = i;
-        }
-      if (sample < min)
-        {
           min = sample;
           minindx = i;
+        }
+      else
+        {
+          if (sample > max)
+            {
+              max = sample;
+              maxindx = i;
+            }
+          if (sample < min)
+            {
+              min = sample;
+              minindx = i;
+            }
         }
 
       if (VERBOSE)
@@ -310,14 +317,14 @@ Client::run ()
               ACE_DEBUG ((LM_DEBUG,
                           "(%i) Partial (running) mean %u usecs\n",
                           i + 1,
-                          (ACE_UINT32) (psum / (ACE_UINT32) (1000 * 500))));
+                          static_cast<ACE_UINT32> (psum / (1000 * 500))));
               j = 0;
               psum = 0;
             }
         }
     }
 
-  sample_mean = ((double) ACE_U64_TO_U32 (sum)) / (double) nsamples;
+  sample_mean = static_cast<double> (sum) / static_cast<double> (nsamples);
 
   if (logfile)
     {
@@ -355,17 +362,17 @@ Client::run ()
         }
     }
 
-  window = window * 1000; // convert to nsec.
-  ndist = (int)((max-min) / window) + 1;
+  ACE_hrtime_t const window_ns {static_cast<ACE_hrtime_t> (window) * 1000};
+  int const ndist {static_cast<int> ((max - min) / window_ns) + 1};
   std::vector<u_int> dist (ndist);
 
-  for (i = 0; i < (ACE_INT32) nsamples; i++)
+  for (i = 0; i < nsamples; ++i)
     {
-      std_dev += ((double) ACE_U64_TO_U32 (samples[i]) - sample_mean) *
-        ((double) ACE_U64_TO_U32 (samples[i]) - sample_mean);
-      d = (int)((samples[i] - min)/window);
+      double const difference {static_cast<double> (samples[i]) - sample_mean};
+      std_dev += difference * difference;
+      d = static_cast<int> ((samples[i] - min) / window_ns);
 
-      if (d < 0 || d > ndist)
+      if (d < 0 || d >= ndist)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "\nError indexing into dist array %d (%d)\n\n",
@@ -373,7 +380,7 @@ Client::run ()
                       ndist));
           ACE_OS::exit (1);
         }
-      dist[d] += 1;
+      ++dist[d];
       if (logfile)
         ACE_OS::fprintf (sampfp.get (),
                          "%u\n",
@@ -383,20 +390,20 @@ Client::run ()
   if (logfile)
     {
       ACE_hrtime_t tmp;
-      tmp = min + (window / 2);
+      tmp = min + (window_ns / 2);
 
-      for (i = 0; i < ndist; i++)
+      for (i = 0; i < ndist; ++i)
         {
           ACE_OS::fprintf (distfp.get (),
                            "%u %d\n",
-                           (ACE_UINT32) (tmp / (ACE_UINT32) 1000),
+                           static_cast<ACE_UINT32> (tmp / 1000),
                            dist[i]);
-          tmp += window;
+          tmp += window_ns;
         }
     }
 
-  std_dev = (double) sqrt (std_dev / (double) (nsamples - 1.0));
-  std_err = (double) std_dev / sqrt ((double) nsamples);
+  std_dev = std::sqrt (std_dev / static_cast<double> (nsamples - 1));
+  std_err = std_dev / std::sqrt (static_cast<double> (nsamples));
 
   ACE_DEBUG ((LM_DEBUG,
               "\nResults for %i samples (usec):\n"
@@ -407,9 +414,9 @@ Client::run ()
               "\tStandard Error = %f\n",
               nsamples,
               sample_mean / 1000.0,
-              (u_int) (max / (ACE_UINT32) 1000),
+              static_cast<u_int> (max / 1000),
               maxindx,
-              (u_int) (min / (ACE_UINT32) 1000),
+              static_cast<u_int> (min / 1000),
               minindx,
               std_dev / 1000.0,
               std_err / 1000.0));
@@ -434,9 +441,9 @@ Client::run ()
                        "\tStandard Error = %f\n",
                        nsamples,
                        sample_mean / 1000.0,
-                       (ACE_UINT32) (max / (ACE_UINT32) 1000),
+                       static_cast<ACE_UINT32> (max / 1000),
                        maxindx,
-                       (ACE_UINT32) (min / (ACE_UINT32) 1000),
+                       static_cast<ACE_UINT32> (min / 1000),
                        minindx,
                        std_dev / 1000.0,
                        std_err / 1000.0);
@@ -449,7 +456,7 @@ int
 Client::shutdown ()
 {
   char const buf = 'S';
-  int const n = endpoint_.send (&buf, 1u, remote_addr_);
+  int const n = endpoint_.send (std::addressof (buf), 1u, remote_addr_);
 
   if (use_reactor)
     {
@@ -466,11 +473,11 @@ Client::shutdown ()
 class Server : public ACE_Event_Handler
 {
 public:
-  Server (ACE_INET_Addr const &addr);
+  explicit Server (ACE_INET_Addr const &addr);
 
-  ~Server () override = default;
+  ~Server () override;
 
-  // = Override <ACE_Event_Handler> methods.
+  /// Overrides ACE_Event_Handler methods.
   ACE_HANDLE get_handle () const override;
   int handle_input (ACE_HANDLE) override;
   int handle_close (ACE_HANDLE handle,
@@ -488,7 +495,7 @@ private:
 };
 
 Server::Server (ACE_INET_Addr const &addr)
-  :  endpoint_ (addr)
+  : endpoint_ (addr)
 {
   if (use_reactor)
     {
@@ -500,6 +507,11 @@ Server::Server (ACE_INET_Addr const &addr)
     }
 }
 
+Server::~Server ()
+{
+  this->endpoint_.close ();
+}
+
 ACE_HANDLE
 Server::get_handle () const
 {
@@ -509,15 +521,16 @@ Server::get_handle () const
 int
 Server::handle_input (ACE_HANDLE)
 {
-  std::array<char, BUFSIZ> buf {};
+  std::array<char, MAXPKTSZ> buf {};
   ACE_INET_Addr from_addr;
 
   ssize_t const n = endpoint_.recv (buf.data (), buf.size (), from_addr);
 
   if (n == -1)
-    ACE_DEBUG ((LM_ERROR,
-                "%p\n",
-                "handle_input: recv"));
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "handle_input: recv"),
+                      -1);
 
   // Send the message back as the response.
   if (endpoint_.send (buf.data (), n, from_addr) == n)
@@ -576,7 +589,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   while ((c = getopt ()) != -1)
     {
   //FUZZ: enable check_for_lack_ACE_OS
-      switch ((char) c)
+      switch (static_cast<char> (c))
         {
         case 'x':
           max_allow = ACE_OS::atoi (getopt.opt_arg ());
@@ -598,9 +611,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         case 'b':
           bufsz = ACE_OS::atoi (getopt.opt_arg ());
 
-          if (bufsz <= 0)
+          if (bufsz <= 0 || bufsz > MAXPKTSZ)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "\nBuffer size must be greater than 0!\n\n"),
+                               "\nBuffer size must be between 1 and %d!\n\n",
+                               MAXPKTSZ),
                               1);
           break;
         case 'n':
@@ -624,7 +638,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         case 'I':
           usdelay = ACE_OS::atoi (getopt.opt_arg ());
 
-          if (usdelay == 0)
+          if (usdelay <= 0)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "%s: bad usdelay: %s\n",
                                argv[0],
@@ -671,39 +685,29 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       else
         {
           // Handle input in the current thread.
-          while (server.handle_input (0) != 1)
+          int result {};
+          while ((result = server.handle_input (0)) == 0)
             {
               continue;
             }
+          if (result == -1)
+            return 1;
         }
     }
   else
     {
-      if ((u_int) bufsz < sizeof (ACE_hrtime_t))
+      if (static_cast<size_t> (bufsz) < sizeof (pid_t) + sizeof (int))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "\nbufsz must be >= %d\n",
-                           sizeof (ACE_hrtime_t)),
+                           "\nbufsz must be >= %B\n",
+                           sizeof (pid_t) + sizeof (int)),
                           1);
       ACE_INET_Addr remote_addr;
 
-      if (ACE_OS::ace_isdigit(argv[getopt.opt_ind ()][0]))
-        {
-          if (remote_addr.set (dstport,
-                               (ACE_UINT32) ACE_OS::inet_addr
-                                 (ACE_TEXT_ALWAYS_CHAR(argv[getopt.opt_ind ()]))) == -1)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "invalid IP address: %s\n",
-                               argv[getopt.opt_ind ()]),
-                              1);
-        }
-      else
-        {
-          if (remote_addr.set (dstport, argv[getopt.opt_ind ()]) == -1)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "invalid IP address: %s\n",
-                               argv[getopt.opt_ind ()]),
-                              1);
-        }
+      if (remote_addr.set (dstport, argv[getopt.opt_ind ()]) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "invalid IP address: %s\n",
+                           argv[getopt.opt_ind ()]),
+                          1);
       ++getopt.opt_ind ();
 
       Client client (addr, remote_addr);
@@ -716,8 +720,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   dstport,
                   so_bufsz));
 
-      client.run ();
-      client.shutdown ();
+      int const run_status = client.run ();
+      int const shutdown_status = client.shutdown ();
+      if (run_status == -1 || shutdown_status == -1)
+        return 1;
     }
 
   return 0;
