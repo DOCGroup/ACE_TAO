@@ -2,6 +2,7 @@
 // ****************************************************************
 
 #include "ace/OS_NS_string.h"
+#include <memory>
 
 ACE_INLINE
 ACE_URL_Addr::ACE_URL_Addr (const ACE_URL_Addr& address)
@@ -13,7 +14,7 @@ ACE_URL_Addr::ACE_URL_Addr (const ACE_URL_Addr& address)
 ACE_INLINE ACE_URL_Addr&
 ACE_URL_Addr::operator= (const ACE_URL_Addr& address)
 {
-  if (this == &address)
+  if (this == std::addressof (address))
     return *this;
 
   this->set (address);
@@ -43,7 +44,7 @@ ACE_URL_Addr::hash () const
 ACE_INLINE ACE_HTTP_Addr&
 ACE_HTTP_Addr::operator= (const ACE_HTTP_Addr& rhs)
 {
-  if (this == &rhs)
+  if (this == std::addressof (rhs))
     return *this;
 
   this->set (rhs);
@@ -85,7 +86,7 @@ ACE_HTTP_Addr::get_query () const
 ACE_INLINE ACE_FTP_Addr&
 ACE_FTP_Addr::operator= (const ACE_FTP_Addr& rhs)
 {
-  if (this == &rhs)
+  if (this == std::addressof (rhs))
     return *this;
 
   this->set (rhs);
@@ -127,7 +128,7 @@ ACE_FTP_Addr::get_inet_address () const
 ACE_INLINE ACE_Mailto_Addr&
 ACE_Mailto_Addr::operator= (const ACE_Mailto_Addr& rhs)
 {
-  if (this == &rhs)
+  if (this == std::addressof (rhs))
     return *this;
 
   this->set (rhs);
