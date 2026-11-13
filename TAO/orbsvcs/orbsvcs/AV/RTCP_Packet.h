@@ -8,6 +8,8 @@
 #include "tao/orbconf.h"
 #include "tao/Versioned_Namespace.h"
 
+#include <memory>
+
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -71,7 +73,7 @@ protected:
   RTCP_Common_Header chd_;
 
   /// Buffer to hold byte representation of the RTCP packet.
-  char *packet_data_ {};
+  std::unique_ptr<char[]> packet_data_ {};
 
   /// Used to create the byte representation of the RTCP packet.
   /// Defined in child class.
@@ -122,7 +124,7 @@ private:
   void build_packet () override;
 
   /// List of synchronization source ids that are leaving the session.
-  ACE_UINT32 *ssrc_list_ {};
+  std::unique_ptr<ACE_UINT32[]> ssrc_list_ {};
 
   /// The number of ssrc's that are leaving the session (1 for non-mixers).
   unsigned char ssrc_list_length_ {};

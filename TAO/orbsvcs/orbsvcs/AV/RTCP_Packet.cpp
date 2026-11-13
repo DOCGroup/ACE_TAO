@@ -3,7 +3,9 @@
 #include "orbsvcs/AV/RTCP_Packet.h"
 #include "orbsvcs/AV/RTP.h"
 
+#include <cerrno>
 #include <cstring>
+#include <new>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -41,7 +43,7 @@ RTCP_Packet::get_packet_data(char **buffer, ACE_UINT16 &length)
   // buildPacket creates a snapshot of the RTCP packet in the buffer pktData
   this->build_packet ();
 
-  *buffer = this->packet_data_;
+  *buffer = this->packet_data_.get ();
 }
 
 int
@@ -80,8 +82,12 @@ RTCP_BYE_Packet::RTCP_BYE_Packet(ACE_UINT32 *ssrc_list,
 
   if (length)
     {
-      ACE_NEW (this->ssrc_list_,
-               ACE_UINT32[length]);
+      this->ssrc_list_.reset (new (std::nothrow) ACE_UINT32[length]);
+      if (!this->ssrc_list_)
+        {
+          errno = ENOMEM;
+          return;
+        }
 
       this->ssrc_list_length_ = length;
 
@@ -119,8 +125,12 @@ RTCP_BYE_Packet::RTCP_BYE_Packet(char* buffer, int *len)
   // The common part of the header is initialized in the parent.
   index=4;
 
-  ACE_NEW (this->ssrc_list_,
-           ACE_UINT32[this->chd_.count_]);
+  this->ssrc_list_.reset (new (std::nothrow) ACE_UINT32[this->chd_.count_]);
+  if (!this->ssrc_list_)
+    {
+      errno = ENOMEM;
+      return;
+    }
   this->ssrc_list_length_ = this->chd_.count_;
 
   // Store the source ids of the sources leaving the session
@@ -149,13 +159,7 @@ RTCP_BYE_Packet::RTCP_BYE_Packet(char* buffer, int *len)
 
 //==============================================================================
 
-RTCP_BYE_Packet::~RTCP_BYE_Packet()
-{
-  if (this->ssrc_list_)
-    delete []this->ssrc_list_;
-  if (this->packet_data_)
-    delete []this->packet_data_;
-}
+RTCP_BYE_Packet::~RTCP_BYE_Packet() = default;
 
 //==============================================================================
 
@@ -179,7 +183,7 @@ RTCP_BYE_Packet::packet_size()
 void
 RTCP_BYE_Packet::ssrc_list(ACE_UINT32 **ssrc_list, unsigned char &length)
 {
-  *ssrc_list = this->ssrc_list_;
+  *ssrc_list = this->ssrc_list_.get ();
   length = this->ssrc_list_length_;
 }
 
@@ -201,11 +205,12 @@ RTCP_BYE_Packet::build_packet()
   unsigned int index;
   unsigned int i;
 
-  if (this->packet_data_)
-    delete []this->packet_data_;
-
-  ACE_NEW (this->packet_data_,
-           char[this->packet_size()]);
+  this->packet_data_.reset (new (std::nothrow) char[this->packet_size ()]);
+  if (!this->packet_data_)
+    {
+      errno = ENOMEM;
+      return;
+    }
 
   index = 0;
   this->packet_data_[index] = static_cast<char> ((this->chd_.ver_ << 6) |
@@ -341,9 +346,6 @@ RTCP_RR_Packet::~RTCP_RR_Packet()
           delete prev;
         }
     }
-
-  if (this->packet_data_)
-    delete []this->packet_data_;
 }
 
 //==============================================================================
@@ -363,11 +365,12 @@ RTCP_RR_Packet::build_packet()
   int index;
   RR_Block *local_block_ptr;
 
-  if (this->packet_data_)
-    delete []this->packet_data_;
-
-  ACE_NEW (this->packet_data_,
-           char [this->packet_size ()]);
+  this->packet_data_.reset (new (std::nothrow) char[this->packet_size ()]);
+  if (!this->packet_data_)
+    {
+      errno = ENOMEM;
+      return;
+    }
 
   index = 0;
   this->packet_data_[index] = static_cast<char> ((this->chd_.ver_ << 6) |
@@ -574,9 +577,6 @@ RTCP_SDES_Packet::~RTCP_SDES_Packet()
       cp = cp->next_;
       delete cpprev;
     }
-
-  if (this->packet_data_)
-    delete []this->packet_data_;
 }
 
 //==============================================================================
@@ -803,11 +803,12 @@ RTCP_SDES_Packet::build_packet()
   sdesItem_t *ip; // pointer to item
   int index, i;
 
-  if (this->packet_data_)
-    delete this->packet_data_;
-
-  ACE_NEW (this->packet_data_,
-           char[this->packet_size()]);
+  this->packet_data_.reset (new (std::nothrow) char[this->packet_size ()]);
+  if (!this->packet_data_)
+    {
+      errno = ENOMEM;
+      return;
+    }
 
   index = 0;
   this->packet_data_[index] = static_cast<char> ((chd_.ver_ << 6) |
@@ -1074,9 +1075,6 @@ RTCP_SR_Packet::~RTCP_SR_Packet()
           delete prev;
         }
     }
-
-  if (this->packet_data_)
-    delete []this->packet_data_;
 }
 
 //==============================================================================
@@ -1096,11 +1094,12 @@ void RTCP_SR_Packet::build_packet()
   int index = 0;
   RR_Block *local_block_ptr;
 
-  if (this->packet_data_)
-    delete []this->packet_data_;
-
-  ACE_NEW (this->packet_data_,
-           char[this->packet_size()]);
+  this->packet_data_.reset (new (std::nothrow) char[this->packet_size ()]);
+  if (!this->packet_data_)
+    {
+      errno = ENOMEM;
+      return;
+    }
 
   this->packet_data_[index] = static_cast<char> ((this->chd_.ver_ << 6) |
                                                  (this->chd_.pad_ << 5) |
