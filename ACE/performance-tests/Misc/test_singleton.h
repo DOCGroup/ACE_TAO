@@ -11,6 +11,10 @@ class DC_Singleton
 {
 public:
   DC_Singleton () = default;
+  DC_Singleton (DC_Singleton const&) = delete;
+  DC_Singleton& operator= (DC_Singleton const&) = delete;
+  DC_Singleton (DC_Singleton&&) = delete;
+  DC_Singleton& operator= (DC_Singleton&&) = delete;
   void svc () {}
   static DC_Singleton *instance ();
 
