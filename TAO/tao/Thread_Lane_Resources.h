@@ -149,6 +149,13 @@ public:
   //@}
 
 private:
+  struct Allocator_Deleter
+  {
+    void operator() (ACE_Allocator *allocator) const;
+  };
+
+  using Allocator_Ptr = std::unique_ptr<ACE_Allocator, Allocator_Deleter>;
+
   /// Checks if the acceptor registry has been created.
   bool has_acceptor_registry_been_created () const;
 
@@ -181,31 +188,31 @@ private:
 
   /// @name The allocators for the input CDR streams.
   //@{
-  ACE_Allocator *input_cdr_dblock_allocator_;
-  ACE_Allocator *input_cdr_buffer_allocator_;
-  ACE_Allocator *input_cdr_msgblock_allocator_;
+  Allocator_Ptr input_cdr_dblock_allocator_ {};
+  Allocator_Ptr input_cdr_buffer_allocator_ {};
+  Allocator_Ptr input_cdr_msgblock_allocator_ {};
   //@}
 
   /// @name The allocators for the buffering messages in the transport.
   //@{
-  ACE_Allocator *transport_message_buffer_allocator_;
+  Allocator_Ptr transport_message_buffer_allocator_ {};
   //@}
 
   /// @name The allocators for the output CDR streams.
   //@{
-  ACE_Allocator *output_cdr_dblock_allocator_;
-  ACE_Allocator *output_cdr_buffer_allocator_;
-  ACE_Allocator *output_cdr_msgblock_allocator_;
+  Allocator_Ptr output_cdr_dblock_allocator_ {};
+  Allocator_Ptr output_cdr_buffer_allocator_ {};
+  Allocator_Ptr output_cdr_msgblock_allocator_ {};
   //@}
 
   /// @name The allocators for AMH.
   //@{
-  ACE_Allocator *amh_response_handler_allocator_;
+  Allocator_Ptr amh_response_handler_allocator_ {};
   //@}
 
   /// @name The allocators for AMI.
   //@{
-  ACE_Allocator *ami_response_handler_allocator_;
+  Allocator_Ptr ami_response_handler_allocator_ {};
   //@}
 };
 

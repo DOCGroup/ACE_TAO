@@ -9,6 +9,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/Transport_Descriptor_Interface.h"
 
+#include "ace/Malloc_Base.h"
 #include "ace/Reactor.h"
 #include <utility>
 
@@ -19,16 +20,7 @@ TAO_Thread_Lane_Resources::TAO_Thread_Lane_Resources (
     TAO_New_Leader_Generator *new_leader_generator)
   : orb_core_ (orb_core),
     leader_follower_ (nullptr),
-    new_leader_generator_ (new_leader_generator),
-    input_cdr_dblock_allocator_ (nullptr),
-    input_cdr_buffer_allocator_ (nullptr),
-    input_cdr_msgblock_allocator_ (nullptr),
-    transport_message_buffer_allocator_ (nullptr),
-    output_cdr_dblock_allocator_ (nullptr),
-    output_cdr_buffer_allocator_ (nullptr),
-    output_cdr_msgblock_allocator_ (nullptr),
-    amh_response_handler_allocator_ (nullptr),
-    ami_response_handler_allocator_ (nullptr)
+    new_leader_generator_ (new_leader_generator)
 {
   // Create the transport cache.
   TAO::Transport_Cache_Manager *transport_cache {};
@@ -46,6 +38,17 @@ TAO_Thread_Lane_Resources::TAO_Thread_Lane_Resources (
 }
 
 TAO_Thread_Lane_Resources::~TAO_Thread_Lane_Resources () = default;
+
+void
+TAO_Thread_Lane_Resources::Allocator_Deleter::operator() (
+    ACE_Allocator *allocator) const
+{
+  if (allocator != nullptr)
+    {
+      allocator->remove ();
+      delete allocator;
+    }
+}
 
 TAO::Transport_Cache_Manager &
 TAO_Thread_Lane_Resources::transport_cache ()
@@ -178,12 +181,12 @@ TAO_Thread_Lane_Resources::input_cdr_dblock_allocator ()
 
       if (this->input_cdr_dblock_allocator_ == nullptr)
         {
-          this->input_cdr_dblock_allocator_ =
-            this->resource_factory ()->input_cdr_dblock_allocator ();
+          this->input_cdr_dblock_allocator_.reset (
+            this->resource_factory ()->input_cdr_dblock_allocator ());
         }
     }
 
-  return this->input_cdr_dblock_allocator_;
+  return this->input_cdr_dblock_allocator_.get ();
 }
 
 ACE_Allocator*
@@ -196,12 +199,12 @@ TAO_Thread_Lane_Resources::input_cdr_buffer_allocator ()
 
       if (this->input_cdr_buffer_allocator_ == nullptr)
         {
-          this->input_cdr_buffer_allocator_ =
-            this->resource_factory ()->input_cdr_buffer_allocator ();
+          this->input_cdr_buffer_allocator_.reset (
+            this->resource_factory ()->input_cdr_buffer_allocator ());
         }
     }
 
-  return this->input_cdr_buffer_allocator_;
+  return this->input_cdr_buffer_allocator_.get ();
 }
 
 ACE_Allocator*
@@ -214,12 +217,12 @@ TAO_Thread_Lane_Resources::input_cdr_msgblock_allocator ()
 
       if (this->input_cdr_msgblock_allocator_ == nullptr)
         {
-          this->input_cdr_msgblock_allocator_ =
-            this->resource_factory ()->input_cdr_msgblock_allocator ();
+          this->input_cdr_msgblock_allocator_.reset (
+            this->resource_factory ()->input_cdr_msgblock_allocator ());
         }
     }
 
-  return this->input_cdr_msgblock_allocator_;
+  return this->input_cdr_msgblock_allocator_.get ();
 }
 
 ACE_Allocator*
@@ -232,12 +235,12 @@ TAO_Thread_Lane_Resources::transport_message_buffer_allocator ()
 
       if (this->transport_message_buffer_allocator_ == nullptr)
         {
-          this->transport_message_buffer_allocator_ =
-            this->resource_factory ()->input_cdr_dblock_allocator ();
+          this->transport_message_buffer_allocator_.reset (
+            this->resource_factory ()->input_cdr_dblock_allocator ());
         }
     }
 
-  return this->transport_message_buffer_allocator_;
+  return this->transport_message_buffer_allocator_.get ();
 }
 
 ACE_Allocator*
@@ -250,12 +253,12 @@ TAO_Thread_Lane_Resources::output_cdr_dblock_allocator ()
 
       if (this->output_cdr_dblock_allocator_ == nullptr)
         {
-          this->output_cdr_dblock_allocator_ =
-            this->resource_factory ()->output_cdr_dblock_allocator ();
+          this->output_cdr_dblock_allocator_.reset (
+            this->resource_factory ()->output_cdr_dblock_allocator ());
         }
     }
 
-  return this->output_cdr_dblock_allocator_;
+  return this->output_cdr_dblock_allocator_.get ();
 }
 
 ACE_Allocator*
@@ -268,12 +271,12 @@ TAO_Thread_Lane_Resources::output_cdr_buffer_allocator ()
 
       if (this->output_cdr_buffer_allocator_ == nullptr)
         {
-          this->output_cdr_buffer_allocator_ =
-            this->resource_factory ()->output_cdr_buffer_allocator ();
+          this->output_cdr_buffer_allocator_.reset (
+            this->resource_factory ()->output_cdr_buffer_allocator ());
         }
     }
 
-  return this->output_cdr_buffer_allocator_;
+  return this->output_cdr_buffer_allocator_.get ();
 }
 
 ACE_Allocator*
@@ -286,12 +289,12 @@ TAO_Thread_Lane_Resources::output_cdr_msgblock_allocator ()
 
       if (this->output_cdr_msgblock_allocator_ == nullptr)
         {
-          this->output_cdr_msgblock_allocator_ =
-            this->resource_factory ()->output_cdr_msgblock_allocator ();
+          this->output_cdr_msgblock_allocator_.reset (
+            this->resource_factory ()->output_cdr_msgblock_allocator ());
         }
     }
 
-  return this->output_cdr_msgblock_allocator_;
+  return this->output_cdr_msgblock_allocator_.get ();
 }
 
 ACE_Allocator*
@@ -304,12 +307,12 @@ TAO_Thread_Lane_Resources::amh_response_handler_allocator ()
 
       if (this->amh_response_handler_allocator_ == nullptr)
         {
-          this->amh_response_handler_allocator_ =
-            this->resource_factory ()->amh_response_handler_allocator ();
+          this->amh_response_handler_allocator_.reset (
+            this->resource_factory ()->amh_response_handler_allocator ());
         }
     }
 
-  return this->amh_response_handler_allocator_;
+  return this->amh_response_handler_allocator_.get ();
 }
 
 ACE_Allocator*
@@ -322,12 +325,12 @@ TAO_Thread_Lane_Resources::ami_response_handler_allocator ()
 
       if (this->ami_response_handler_allocator_ == nullptr)
         {
-          this->ami_response_handler_allocator_ =
-            this->resource_factory ()->ami_response_handler_allocator ();
+          this->ami_response_handler_allocator_.reset (
+            this->resource_factory ()->ami_response_handler_allocator ());
         }
     }
 
-  return this->ami_response_handler_allocator_;
+  return this->ami_response_handler_allocator_.get ();
 }
 
 int
@@ -390,68 +393,15 @@ TAO_Thread_Lane_Resources::finalize ()
   // Delete all the allocators here.. They shouldnt be done earlier,
   // lest some of the contents in the above, say reactor or acceptor
   // may use memory from the pool..
-  if (this->input_cdr_dblock_allocator_ != nullptr)
-    {
-      this->input_cdr_dblock_allocator_->remove ();
-      delete this->input_cdr_dblock_allocator_;
-      this->input_cdr_dblock_allocator_ = nullptr;
-    }
-
-  if (this->input_cdr_buffer_allocator_ != nullptr)
-    {
-      this->input_cdr_buffer_allocator_->remove ();
-      delete this->input_cdr_buffer_allocator_;
-      this->input_cdr_buffer_allocator_ = nullptr;
-    }
-
-  if (this->input_cdr_msgblock_allocator_ != nullptr)
-    {
-      this->input_cdr_msgblock_allocator_->remove ();
-      delete this->input_cdr_msgblock_allocator_;
-      this->input_cdr_msgblock_allocator_ = nullptr;
-    }
-
-  if (this->transport_message_buffer_allocator_ != nullptr)
-    {
-      this->transport_message_buffer_allocator_->remove ();
-      delete this->transport_message_buffer_allocator_;
-      this->transport_message_buffer_allocator_ = nullptr;
-    }
-
-  if (this->output_cdr_dblock_allocator_ != nullptr)
-    {
-      this->output_cdr_dblock_allocator_->remove ();
-      delete this->output_cdr_dblock_allocator_;
-      this->output_cdr_dblock_allocator_ = nullptr;
-    }
-
-  if (this->output_cdr_buffer_allocator_ != nullptr)
-    {
-      this->output_cdr_buffer_allocator_->remove ();
-      delete this->output_cdr_buffer_allocator_;
-      this->output_cdr_buffer_allocator_ = nullptr;
-    }
-
-  if (this->output_cdr_msgblock_allocator_ != nullptr)
-    {
-      this->output_cdr_msgblock_allocator_->remove ();
-      delete this->output_cdr_msgblock_allocator_;
-      this->output_cdr_msgblock_allocator_ = nullptr;
-    }
-
-  if (this->amh_response_handler_allocator_ != nullptr)
-    {
-      this->amh_response_handler_allocator_->remove ();
-      delete this->amh_response_handler_allocator_;
-      this->amh_response_handler_allocator_ = nullptr;
-    }
-
-  if (this->ami_response_handler_allocator_ != nullptr)
-    {
-      this->ami_response_handler_allocator_->remove ();
-      delete this->ami_response_handler_allocator_;
-      this->ami_response_handler_allocator_ = nullptr;
-    }
+  this->input_cdr_dblock_allocator_.reset ();
+  this->input_cdr_buffer_allocator_.reset ();
+  this->input_cdr_msgblock_allocator_.reset ();
+  this->transport_message_buffer_allocator_.reset ();
+  this->output_cdr_dblock_allocator_.reset ();
+  this->output_cdr_buffer_allocator_.reset ();
+  this->output_cdr_msgblock_allocator_.reset ();
+  this->amh_response_handler_allocator_.reset ();
+  this->ami_response_handler_allocator_.reset ();
 }
 
 void
