@@ -61,8 +61,6 @@ ACE_Strategy_Scheduler::assign_priorities (
   // Start with happy status.
   ACE_DynScheduler::status_t status = SUCCEEDED;
 
-  RtecScheduler::Scheduling_Anomaly *anomaly {};
-
   // Start with the highest OS priority in the given range and work downward:
   // if we run out of values to assign, return an error.
   int current_OS_priority = maximum_priority_;
@@ -123,16 +121,14 @@ ACE_Strategy_Scheduler::assign_priorities (
                    : status;
 
           // Log the anomaly.
-          anomaly =
-            create_anomaly (ST_INSUFFICIENT_THREAD_PRIORITY_LEVELS);
-          if (anomaly != nullptr)
-            {
-              anomaly_set.insert (anomaly);
-            }
-          else
+          std::unique_ptr<RtecScheduler::Scheduling_Anomaly> anomaly_owner {
+            create_anomaly (ST_INSUFFICIENT_THREAD_PRIORITY_LEVELS)};
+          if (anomaly_owner == nullptr
+              || anomaly_set.insert (anomaly_owner.get ()) < 0)
             {
               return ST_VIRTUAL_MEMORY_EXHAUSTED;
             }
+          anomaly_owner.release ();
         }
         else
         {
@@ -174,16 +170,14 @@ ACE_Strategy_Scheduler::assign_priorities (
           status = ACE_DynScheduler::ST_INVALID_PRIORITY_ORDERING;
 
           // Log the anomaly.
-          anomaly =
-            create_anomaly (ST_INVALID_PRIORITY_ORDERING);
-          if (anomaly != nullptr)
-            {
-              anomaly_set.insert (anomaly);
-            }
-          else
+          std::unique_ptr<RtecScheduler::Scheduling_Anomaly> anomaly_owner {
+            create_anomaly (ST_INVALID_PRIORITY_ORDERING)};
+          if (anomaly_owner == nullptr
+              || anomaly_set.insert (anomaly_owner.get ()) < 0)
             {
               return ST_VIRTUAL_MEMORY_EXHAUSTED;
             }
+          anomaly_owner.release ();
     }
 
     // Set OS priority of the current dispatch entry.
@@ -207,7 +201,6 @@ ACE_Strategy_Scheduler::assign_subpriorities (
   ACE_Unbounded_Set<RtecScheduler::Scheduling_Anomaly *> &anomaly_set)
 {
   ACE_DynScheduler::status_t status { ACE_DynScheduler::SUCCEEDED };
-  RtecScheduler::Scheduling_Anomaly *anomaly {};
 
   // Start subpriority levels and element counts at 1, set level values in
   // the first entry, increment the static subpriority level.
@@ -314,16 +307,14 @@ ACE_Strategy_Scheduler::assign_subpriorities (
                   status = ST_INVALID_PRIORITY_ORDERING;
 
                   // Log the anomaly.
-                  anomaly =
-                    create_anomaly (ST_INVALID_PRIORITY_ORDERING);
-                  if (anomaly != nullptr)
-                    {
-                      anomaly_set.insert (anomaly);
-                    }
-                  else
+                  std::unique_ptr<RtecScheduler::Scheduling_Anomaly> anomaly_owner {
+                    create_anomaly (ST_INVALID_PRIORITY_ORDERING)};
+                  if (anomaly_owner == nullptr
+                      || anomaly_set.insert (anomaly_owner.get ()) < 0)
                     {
                       return ST_VIRTUAL_MEMORY_EXHAUSTED;
                     }
+                  anomaly_owner.release ();
             }
             break;
           }
@@ -340,16 +331,14 @@ ACE_Strategy_Scheduler::assign_subpriorities (
               status = ACE_DynScheduler::ST_INVALID_PRIORITY_ORDERING;
 
               // Log the anomaly.
-              anomaly =
-                create_anomaly (ST_INVALID_PRIORITY_ORDERING);
-              if (anomaly != nullptr)
-                {
-                  anomaly_set.insert (anomaly);
-                }
-              else
+              std::unique_ptr<RtecScheduler::Scheduling_Anomaly> anomaly_owner {
+                create_anomaly (ST_INVALID_PRIORITY_ORDERING)};
+              if (anomaly_owner == nullptr
+                  || anomaly_set.insert (anomaly_owner.get ()) < 0)
                 {
                   return ST_VIRTUAL_MEMORY_EXHAUSTED;
                 }
+              anomaly_owner.release ();
         }
 
         dispatches [i]->dynamic_subpriority (dynamic_subpriority_level);
@@ -369,16 +358,14 @@ ACE_Strategy_Scheduler::assign_subpriorities (
         status = ACE_DynScheduler::ST_INVALID_PRIORITY_ORDERING;
 
         // Log the anomaly.
-        anomaly =
-          create_anomaly (ST_INVALID_PRIORITY_ORDERING);
-        if (anomaly != nullptr)
-          {
-            anomaly_set.insert (anomaly);
-          }
-        else
+        std::unique_ptr<RtecScheduler::Scheduling_Anomaly> anomaly_owner {
+          create_anomaly (ST_INVALID_PRIORITY_ORDERING)};
+        if (anomaly_owner == nullptr
+            || anomaly_set.insert (anomaly_owner.get ()) < 0)
           {
             return ST_VIRTUAL_MEMORY_EXHAUSTED;
           }
+        anomaly_owner.release ();
     }
   }
 
