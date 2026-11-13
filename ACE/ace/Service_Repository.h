@@ -87,8 +87,6 @@ public:
   /// Delete the dynamically allocated Singleton.
   static void close_singleton ();
 
-  // = Search structure operations (all acquire locks as necessary).
-
   /// Insert a new service record.  Returns -1 when the service repository
   /// is full and 0 on success.
   int insert (ACE_Service_Type const *sr);
@@ -98,7 +96,7 @@ public:
    * suspended entries.
    *
    * @param name The name of the service to search for.
-   * @param srp  Optional; if not 0, it is a pointer to a location
+   * @param srp  Optional; if not nullptr, it is a pointer to a location
    *             to receive the ACE_Service_Type pointer for the
    *             located service. Meaningless if this method
    *             returns -1.
@@ -113,14 +111,11 @@ public:
             ACE_Service_Type const **srp = nullptr,
             bool ignore_suspended = true) const;
 
-  /// Remove an existing service record. If @a sr == 0, the service record
-  /// is deleted before control is returned to the caller. If @a sr != 0,
-  /// the service's record is removed from the repository, but not deleted;
-  /// *sr receives the service record pointer and the caller is responsible
-  /// for properly disposing of it.
+  /// Remove an existing service record. If @a sr is nullptr, the record is
+  /// deleted before return. Otherwise, the record is returned through @a sr
+  /// and the caller is responsible for disposing of it.
   int remove (ACE_TCHAR const name[], ACE_Service_Type **sr = nullptr);
 
-  // = Liveness control
   /// Resume a service record.
   int resume (ACE_TCHAR const name[], ACE_Service_Type const **srp = nullptr);
 
@@ -155,7 +150,7 @@ protected:
    * @param slot         Receives the position index of the service if it
    *                     is found. Contents are meaningless if this method
    *                     returns -1.
-   * @param srp          Optional; if not 0, it is a pointer to a location
+   * @param srp          Optional; if not nullptr, it is a pointer to a location
    *                     to receive the ACE_Service_Type pointer for the
    *                     located service. Meaningless if this method
    *                     returns -1.
@@ -234,9 +229,6 @@ public:
 
   ~ACE_Service_Repository_Iterator ();
 
-
-public:
-  // = Iteration methods.
 
   /// Pass back the @a next_item that hasn't been seen in the repository.
   /// Returns 0 when all items have been seen, else 1.

@@ -12,6 +12,8 @@
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_string.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Service_Repository)
@@ -21,7 +23,7 @@ ACE_Service_Repository *ACE_Service_Repository::svc_rep_ {};
 
 /// Controls whether the Service_Repository is deleted when we shut
 /// down (we can only delete it safely if we created it)!
-bool ACE_Service_Repository::delete_svc_rep_ = false;
+bool ACE_Service_Repository::delete_svc_rep_ {};
 
 void
 ACE_Service_Repository::dump () const
@@ -63,7 +65,7 @@ ACE_Service_Repository::instance (ACE_Service_Repository *s)
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
                             *ACE_Static_Object_Lock::instance (), nullptr));
 
-  ACE_Service_Repository *t = ACE_Service_Repository::svc_rep_;
+  ACE_Service_Repository * const t = ACE_Service_Repository::svc_rep_;
   // We can't safely delete it since we don't know who created it!
   ACE_Service_Repository::delete_svc_rep_ = false;
 
@@ -115,7 +117,7 @@ ACE_Service_Repository::fini ()
   ACE_TRACE ("ACE_Service_Repository::fini");
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_, -1);
 
-  int retval = 0;
+  int retval {};
   // Do not be tempted to use the prefix decrement operator.  Use
   // postfix decrement operator since the index is unsigned and may
   // wrap around the 0
@@ -126,7 +128,7 @@ ACE_Service_Repository::fini ()
   {
     for (size_t i = this->service_array_.size (); i-- != 0;)
     {
-      ACE_Service_Type *s =
+      ACE_Service_Type * const s =
         const_cast<ACE_Service_Type *> (this->service_array_[i]);
       if (s == nullptr)
         ACELIB_DEBUG ((LM_DEBUG,
@@ -142,7 +144,7 @@ ACE_Service_Repository::fini ()
   for (size_t i = this->service_array_.size (); i-- != 0;)
   {
     // <fini> the services in reverse order.
-    ACE_Service_Type *s =
+    ACE_Service_Type * const s =
       const_cast<ACE_Service_Type *> (this->service_array_[i]);
 
     if (s != nullptr &&
@@ -174,7 +176,7 @@ ACE_Service_Repository::fini ()
   for (size_t i = this->service_array_.size (); i-- != 0;)
   {
     // <fini> the services in reverse order.
-    ACE_Service_Type *s =
+    ACE_Service_Type * const s =
       const_cast<ACE_Service_Type *> (this->service_array_[i]);
 
     if (s != nullptr &&
@@ -223,7 +225,7 @@ ACE_Service_Repository::close ()
   for (size_t i = this->service_array_.size(); i-- != 0; )
     {
       // Delete services in reverse order.
-      ACE_Service_Type *s =
+      ACE_Service_Type * const s =
         const_cast<ACE_Service_Type *> (this->service_array_[i]);
 
 #ifndef ACE_NLOGGING
@@ -299,7 +301,7 @@ ACE_Service_Repository::find_i (ACE_TCHAR const name[],
         *srp = (*iter).second;
 
       if (ignore_suspended
-          && (*iter).second->active () == 0)
+          && !(*iter).second->active ())
         return -2;
 
       return 0;
@@ -320,15 +322,16 @@ ACE_Service_Repository::relocate_i (size_t begin,
                                     size_t end,
                                     ACE_DLL const &adll)
 {
-  ACE_SHLIB_HANDLE new_handle = adll.get_handle (0);
+  ACE_SHLIB_HANDLE const new_handle = adll.get_handle (0);
 
   for (size_t i = begin; i < end; ++i)
     {
-      ACE_Service_Type *type =
+      ACE_Service_Type * const type =
         const_cast<ACE_Service_Type *> (this->service_array_[i]);
 
-      ACE_SHLIB_HANDLE old_handle = (type == nullptr) ? ACE_SHLIB_INVALID_HANDLE
-                                                : type->dll ().get_handle (0);
+      ACE_SHLIB_HANDLE const old_handle =
+        (type == nullptr) ? ACE_SHLIB_INVALID_HANDLE
+                          : type->dll ().get_handle (0);
 
 #ifndef ACE_NLOGGING
       if (ACE::debug ())
@@ -380,7 +383,7 @@ ACE_Service_Repository::find (ACE_TCHAR const name[],
 {
   ACE_TRACE ("ACE_Service_Repository::find");
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_, -1);
-  size_t ignore_location = 0;
+  size_t ignore_location {};
   return this->find_i (name, ignore_location, srp, ignore_suspended);
 }
 
@@ -393,9 +396,10 @@ ACE_Service_Repository::insert (ACE_Service_Type const *sr)
 {
   ACE_TRACE ("ACE_Service_Repository::insert");
 
-  size_t i = 0;
+  size_t i {};
   int return_value = -1;
   ACE_Service_Type const *s {};
+  std::unique_ptr<ACE_Service_Type const> replaced_service {};
 
   // Establish scope for locking while manipulating the service
   // storage
@@ -410,6 +414,7 @@ ACE_Service_Repository::insert (ACE_Service_Type const *sr)
     if (s != nullptr)
       {
         this->service_array_[i] = sr;
+        replaced_service.reset (s);
       }
     else
       {
@@ -440,9 +445,9 @@ ACE_Service_Repository::insert (ACE_Service_Type const *sr)
                 sr->active ()));
 #endif
 
-  // If necessary, delete but outside the lock. (s may be 0, but
+  // If necessary, delete outside the lock. (s may be nullptr, but
   // that's okay, too)
-  delete s;
+  replaced_service.reset ();
 
   if (return_value == -1)
     ACE_OS::last_error (ENOSPC);
@@ -458,8 +463,8 @@ ACE_Service_Repository::resume (ACE_TCHAR const name[],
   ACE_TRACE ("ACE_Service_Repository::resume");
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_, -1);
 
-  size_t i = 0;
-  if (-1 == this->find_i (name, i, srp, 0))
+  size_t i {};
+  if (-1 == this->find_i (name, i, srp, false))
     return -1;
 
   return this->service_array_[i]->resume ();
@@ -473,8 +478,8 @@ ACE_Service_Repository::suspend (ACE_TCHAR const name[],
 {
   ACE_TRACE ("ACE_Service_Repository::suspend");
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_, -1);
-  size_t i = 0;
-  if (-1 == this->find_i (name, i, srp, 0))
+  size_t i {};
+  if (-1 == this->find_i (name, i, srp, false))
     return -1;
 
   return this->service_array_[i]->suspend ();
@@ -488,19 +493,18 @@ int
 ACE_Service_Repository::remove (ACE_TCHAR const name[], ACE_Service_Type **ps)
 {
   ACE_TRACE ("ACE_Service_Repository::remove");
-  ACE_Service_Type *s {};
+  ACE_Service_Type *removed_service {};
   {
     ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_, -1);
 
     // Not found!?
-    if (this->remove_i (name, &s) == -1)
+    if (this->remove_i (name, &removed_service) == -1)
       return -1;
   }
 
+  std::unique_ptr<ACE_Service_Type> removed_service_owner (removed_service);
   if (ps != nullptr)
-    *ps = s;
-  else
-    delete s;
+    *ps = removed_service_owner.release ();
   return 0;
 }
 
@@ -527,7 +531,7 @@ ACE_Service_Repository::remove (ACE_TCHAR const name[], ACE_Service_Type **ps)
 int
 ACE_Service_Repository::remove_i (ACE_TCHAR const name[], ACE_Service_Type **ps)
 {
-  size_t i = 0;
+  size_t i {};
   if (-1 == this->find_i (name, i, nullptr, false))
     return -1;    // Not found
 
