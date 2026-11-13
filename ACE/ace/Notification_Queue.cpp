@@ -6,6 +6,8 @@
 
 #include "ace/Guard_T.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Notification_Queue_Node)
@@ -76,14 +78,14 @@ ACE_Notification_Queue::allocate_more_buffers()
   ACE_NEW_RETURN (temp,
                   ACE_Notification_Queue_Node[ACE_REACTOR_NOTIFICATION_ARRAY_SIZE],
                   -1);
+  std::unique_ptr<ACE_Notification_Queue_Node[]> safe_temp (temp);
 
   if (this->alloc_queue_.enqueue_head (temp) == -1)
-    {
-      delete [] temp;
-      return -1;
-    }
+    return -1;
 
-  for (size_t i = 0; i < ACE_REACTOR_NOTIFICATION_ARRAY_SIZE; ++i)
+  safe_temp.release ();
+
+  for (size_t i {}; i < ACE_REACTOR_NOTIFICATION_ARRAY_SIZE; ++i)
     {
       free_queue_.push_front(temp + i);
     }
