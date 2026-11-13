@@ -48,6 +48,7 @@
 
 #include <cstring>
 #include <cstdio>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -536,12 +537,13 @@ TAO_AV_RTCP_Callback::send_report (int bye)
   TAO_AV_RTCP_Object *rtcp_prot_obj = dynamic_cast<TAO_AV_RTCP_Object*> (this->protocol_object_);
   ACE_UINT32 my_ssrc = rtcp_prot_obj->ssrc ();
 
-  RTCP_Packet *cp;
+  std::unique_ptr<RTCP_Packet> cp;
+  RTCP_Packet *raw_cp {};
   RTCP_SDES_Packet sdes;
   ACE_CString value = "";
   ACE_CString note = "";
   unsigned char sdes_type = 0;
-  RTCP_BYE_Packet *bye_packet {};  // only used for bye
+  std::unique_ptr<RTCP_BYE_Packet> bye_packet;  // only used for bye
   ACE_UINT32 ssrc_list[1];          // only used for bye
 
   // get an iterator for the incoming channels.
@@ -587,7 +589,7 @@ TAO_AV_RTCP_Callback::send_report (int bye)
       ACE_UINT32 rtp_ts = ACE_Utils::truncate_cast<ACE_UINT32> (
                             unix_now.sec () * 8000 + unix_now.usec () / 125 +
                             this->timestamp_offset_);
-      ACE_NEW_RETURN(cp,
+      ACE_NEW_RETURN(raw_cp,
                      RTCP_SR_Packet (my_ssrc,
                                      ntp_now.upper,
                                      ntp_now.lower,
@@ -596,13 +598,15 @@ TAO_AV_RTCP_Callback::send_report (int bye)
                                      this->output_.octets_sent (),
                                      blocks),
                      -1);
+      cp.reset (raw_cp);
     }
   else
     {
-      ACE_NEW_RETURN(cp,
+      ACE_NEW_RETURN(raw_cp,
                      RTCP_RR_Packet (my_ssrc,
                                      blocks),
                      -1);
+      cp.reset (raw_cp);
     }
 
   /*
@@ -667,11 +671,13 @@ TAO_AV_RTCP_Callback::send_report (int bye)
     {
       ssrc_list[0] = rtcp_prot_obj->ssrc ();
 
-      ACE_NEW_RETURN (bye_packet,
+      RTCP_BYE_Packet *raw_bye_packet {};
+      ACE_NEW_RETURN (raw_bye_packet,
                       RTCP_BYE_Packet(ssrc_list,
                                       sizeof(ssrc_list)/sizeof(ssrc_list[0]),
                                       "Got bored."),
                       -1);
+      bye_packet.reset (raw_bye_packet);
     }
   else
     {
@@ -707,10 +713,6 @@ TAO_AV_RTCP_Callback::send_report (int bye)
   this->protocol_object_->send_frame (&mb);
 
   this->packet_size_ = cp_length + sdes_length + bye_length;
-
-  delete cp;
-  if (bye_packet)
-    delete bye_packet;
 
   return 0;
 }
