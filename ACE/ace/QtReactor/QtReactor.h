@@ -129,7 +129,8 @@ public:
 
     void qapplication (QApplication *qapp);
 
-    // = Timer operations.
+    /// @name Timer operations
+    //@{
     long schedule_timer (ACE_Event_Handler *handler,
         void const *arg,
         ACE_Time_Value const &delay_time,
@@ -141,6 +142,7 @@ public:
     int cancel_timer (long timer_id,
         void const **arg = nullptr,
         int dont_call_handle_close = 1) override;
+    //@}
 
 protected:
     /// Register a single @a handler.
@@ -178,10 +180,8 @@ protected:
     void create_notifiers_for_handle (ACE_HANDLE handle);
     void destroy_notifiers_for_handle (ACE_HANDLE handle);
 
-    // Wait for Qt events to occur
-
-    /// Some Qt stuff that we need to have
-    QApplication *qapp_ {}; // Borrowed from the application owner.
+    /// Borrowed from the application owner.
+    QApplication *qapp_ {};
 
     /// Typedef of a map.
     using MAP = ACE_Map_Manager<ACE_HANDLE, QSocketNotifier *, ACE_Null_Mutex>;
@@ -196,7 +196,8 @@ protected:
     MAP exception_notifier_;
 
     /// The timer class that would provide timer-signals & single-shot timers
-    QTimer *qtime_ {}; // Owned timer, recreated when the next timeout changes.
+    /// Owned timer, recreated when the next timeout changes.
+    QTimer *qtime_ {};
 
 private:
     /// This method ensures there's an Qt timeout for the first timeout
