@@ -728,41 +728,12 @@ ACE_Process_Options::ACE_Process_Options (bool inherit_environment,
                                           size_t env_buf_len,
                                           size_t max_env_args,
                                           size_t max_cmdline_args)
-  :
-    inherit_environment_ (inherit_environment),
-    creation_flags_ (0),
-    avoid_zombies_ (0),
-#if defined (ACE_WIN32)
-    environment_inherited_ (0),
-    process_attributes_ (0),
-    thread_attributes_ (0),
-    user_token_ (ACE_INVALID_HANDLE),
-    close_user_token_ (false),
-#else /* ACE_WIN32 */
-    stdin_ (ACE_INVALID_HANDLE),
-    stdout_ (ACE_INVALID_HANDLE),
-    stderr_ (ACE_INVALID_HANDLE),
-    ruid_ ((uid_t) -1),
-    euid_ ((uid_t) -1),
-    rgid_ ((gid_t) -1),
-    egid_ ((gid_t) -1),
-#endif /* ACE_WIN32 */
-    handle_inheritance_ (true),
-    set_handles_called_ (0),
-    environment_buf_index_ (0),
-    environment_argv_index_ (0),
-    environment_buf_ (nullptr),
+  : inherit_environment_ (inherit_environment),
     environment_buf_len_ (env_buf_len),
     max_environment_args_ (max_env_args),
     max_environ_argv_index_ (max_env_args - 1),
-    command_line_argv_calculated_ (false),
-    command_line_buf_ (nullptr),
-    command_line_copy_ (nullptr),
     command_line_buf_len_ (command_line_buf_len),
-    max_command_line_args_ (max_cmdline_args),
-    command_line_argv_ (nullptr),
-    process_group_ (ACE_INVALID_PID),
-    use_unicode_environment_ (false)
+    max_command_line_args_ (max_cmdline_args)
 {
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_ALLOCATOR (command_line_buf_,
@@ -813,7 +784,7 @@ ACE_Process_Options::inherit_environment ()
   // Ensure only once execution.
   if (environment_inherited_)
     return;
-  environment_inherited_ = 1;
+  environment_inherited_ = true;
 
   // Get the existing environment.
   ACE_TCHAR *existing_environment {};
@@ -1046,7 +1017,7 @@ ACE_Process_Options::set_handles (ACE_HANDLE std_in,
                                   ACE_HANDLE std_out,
                                   ACE_HANDLE std_err)
 {
-  this->set_handles_called_ = 1;
+  this->set_handles_called_ = true;
 #if defined (ACE_WIN32)
 
   // Tell the new process to use our std handles.
@@ -1131,7 +1102,7 @@ ACE_Process_Options::release_handles ()
       stdout_ = ACE_INVALID_HANDLE;
       stderr_ = ACE_INVALID_HANDLE;
 #endif /* ACE_WIN32 */
-      set_handles_called_ = 0;
+      set_handles_called_ = false;
     }
 }
 
