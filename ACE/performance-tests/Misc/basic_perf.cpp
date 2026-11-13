@@ -23,12 +23,12 @@
 
 #include <memory>
 
-static const char usage [] = "[-? |\n"
+static constexpr char usage [] = "[-? |\n"
                              "            [-i <iterations> [1000000]]";
 
 // These are global.  They appear to bust the CPU cache, on an Ultra 2
 // w/Sun C++ 4.2.
-static u_int iterations = 1000000;
+static u_int iterations {1000000};
 Foo foo;
 Foo_v foo_v;
 
@@ -52,13 +52,13 @@ inline
 double
 per_iteration (const ACE_hrtime_t elapsed /* nanoseconds */)
 {
-  double ms_per_iteration = (double) ACE_CU64_TO_CU32 (elapsed) / 1000.0 /
-                            (double) iterations;
+  double const us_per_iteration = static_cast<double> (elapsed) / 1000.0 /
+                                  static_cast<double> (iterations);
 
   // Don't print out "-0.000" or "-0.001" . . .
-  return -0.002 < ms_per_iteration  &&  ms_per_iteration < 0.0
+  return -0.002 < us_per_iteration  &&  us_per_iteration < 0.0
            ?  0.0
-           :  ms_per_iteration;
+           :  us_per_iteration;
 }
 
 
@@ -81,7 +81,7 @@ public:
   void print_iteration_time (const char *message);
 
 protected:
-  ACE_hrtime_t elapsed_time_;
+  ACE_hrtime_t elapsed_time_ {};
 
   void start_timing ()
   {
@@ -97,7 +97,7 @@ protected:
 
 private:
   ACE_High_Res_Timer &timer_;
-  ACE_hrtime_t empty_iteration_time_;
+  ACE_hrtime_t const empty_iteration_time_;
 
   Basic_Test () = delete;
   Basic_Test (Basic_Test const &) = delete;
@@ -108,8 +108,7 @@ private:
 
 Basic_Test::Basic_Test (ACE_High_Res_Timer &timer,
                         ACE_hrtime_t empty_iteration_time)
-  : elapsed_time_ (0),
-    timer_ (timer),
+  : timer_ (timer),
     empty_iteration_time_ (empty_iteration_time)
 {
 }
@@ -139,7 +138,10 @@ Basic_Test::print_iteration_time (const char *message)
 class Empty_Iteration_Test : public Basic_Test
 {
 public:
-  Empty_Iteration_Test (ACE_High_Res_Timer &timer) : Basic_Test (timer, 0) {}
+  explicit Empty_Iteration_Test (ACE_High_Res_Timer &timer)
+    : Basic_Test (timer, ACE_hrtime_t {})
+  {
+  }
   ~Empty_Iteration_Test () override = default;
 
   void run () override;
@@ -479,11 +481,11 @@ Virtual_Member_Call_Test::run ()
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 static
-unsigned int
+int
 get_options (int argc, ACE_TCHAR *argv [])
 {
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("i:?"));
-  int opt;
+  int opt {};
 
   while ((opt = get_opt ()) != EOF)
     {
@@ -491,9 +493,9 @@ get_options (int argc, ACE_TCHAR *argv [])
         {
         case 'i':
           {
-            int temp = ACE_OS::atoi (get_opt.opt_arg ());
+            int const temp = ACE_OS::atoi (get_opt.opt_arg ());
             if (temp > 0)
-              iterations = (u_int) temp;
+              iterations = static_cast<u_int> (temp);
             else
               {
                 ACE_DEBUG ((LM_ERROR, "%s: number of iterations must be > 0\n",
@@ -504,11 +506,10 @@ get_options (int argc, ACE_TCHAR *argv [])
           }
         case '?':
           ACE_DEBUG ((LM_INFO, "usage: %s %s\n", argv [0], usage));
-          ACE_OS::exit (0);
-          break;
+          return 2;
         default:
           ACE_DEBUG ((LM_ERROR, "%s: unknown arg, %c\n", argv [0],
-                                (char) opt));
+                                static_cast<char> (opt)));
           ACE_DEBUG ((LM_ERROR, "usage: %s %s\n", argv [0], usage));
           return 1;
         }
@@ -538,12 +539,13 @@ get_options (int argc, ACE_TCHAR *argv [])
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  if (get_options (argc, argv))
-    ACE_OS::exit (-1);
+  int const option_status = get_options (argc, argv);
+  if (option_status != 0)
+    return option_status == 2 ? 0 : 1;
 
-  ACE_utsname name;
+  ACE_utsname name {};
 
-  if (ACE_OS::uname (&name) != -1)
+  if (ACE_OS::uname (std::addressof (name)) != -1)
     ACE_DEBUG ((LM_INFO, "%s (%s), %s %s at %T\n",
                 name.nodename, name.machine, name.sysname, name.release));
 
@@ -555,7 +557,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   // Calculate the time for an "empty iteration", and subtract it
   // from each test time.
-  ACE_hrtime_t iteration_time;
+  ACE_hrtime_t iteration_time {};
 
   Empty_Iteration_Test empty_iteration_test (timer);
   empty_iteration_test.run ();

@@ -48,11 +48,14 @@
 #include "ace/Log_Msg.h"
 #include "ace/Profile_Timer.h"
 #include "ace/OS_main.h"
+#include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_Thread.h"
+
+#include <memory>
 
 #if defined (ACE_HAS_THREADS)
 
-static const int DEFAULT_ITERATIONS = 100000000;
+static constexpr int DEFAULT_ITERATIONS = 100000000;
 
 // A thread mutex that doesn't use virtual functions.
 class Thread_Mutex
@@ -65,28 +68,32 @@ public:
 
 private:
   ACE_mutex_t mutex_;
+  Thread_Mutex (Thread_Mutex const &) = delete;
+  Thread_Mutex &operator= (Thread_Mutex const &) = delete;
+  Thread_Mutex (Thread_Mutex &&) = delete;
+  Thread_Mutex &operator= (Thread_Mutex &&) = delete;
 };
 
 Thread_Mutex::Thread_Mutex ()
 {
-  ACE_OS::mutex_init (&this->mutex_);
+  ACE_OS::mutex_init (std::addressof (this->mutex_));
 }
 
 Thread_Mutex::~Thread_Mutex ()
 {
-  ACE_OS::mutex_destroy (&this->mutex_);
+  ACE_OS::mutex_destroy (std::addressof (this->mutex_));
 }
 
 inline int
 Thread_Mutex::acquire ()
 {
-  return ACE_OS::mutex_lock (&this->mutex_);
+  return ACE_OS::mutex_lock (std::addressof (this->mutex_));
 }
 
 inline int
 Thread_Mutex::release ()
 {
-  return ACE_OS::mutex_unlock (&this->mutex_);
+  return ACE_OS::mutex_unlock (std::addressof (this->mutex_));
 }
 
 // Base class for mutex, declares pure virtual functions.
@@ -96,6 +103,14 @@ public:
   virtual ~Mutex_Base () = default;
   virtual int acquire () = 0;
   virtual int release () = 0;
+
+  Mutex_Base (Mutex_Base const &) = delete;
+  Mutex_Base &operator= (Mutex_Base const &) = delete;
+  Mutex_Base (Mutex_Base &&) = delete;
+  Mutex_Base &operator= (Mutex_Base &&) = delete;
+
+protected:
+  Mutex_Base () = default;
 };
 
 // Subclass for threaded mutex, defines virtual functions.
@@ -109,40 +124,46 @@ public:
 
 private:
   ACE_mutex_t mutex_;
+  Thread_Mutex_Derived (Thread_Mutex_Derived const &) = delete;
+  Thread_Mutex_Derived &operator= (Thread_Mutex_Derived const &) = delete;
+  Thread_Mutex_Derived (Thread_Mutex_Derived &&) = delete;
+  Thread_Mutex_Derived &operator= (Thread_Mutex_Derived &&) = delete;
 };
 
 Thread_Mutex_Derived::Thread_Mutex_Derived ()
 {
-  ACE_OS::mutex_init (&this->mutex_);
+  ACE_OS::mutex_init (std::addressof (this->mutex_));
 }
 
 Thread_Mutex_Derived::~Thread_Mutex_Derived ()
 {
-  ACE_OS::mutex_destroy (&this->mutex_);
+  ACE_OS::mutex_destroy (std::addressof (this->mutex_));
 }
 
 inline int
 Thread_Mutex_Derived::acquire ()
 {
-  return ACE_OS::mutex_lock (&this->mutex_);
+  return ACE_OS::mutex_lock (std::addressof (this->mutex_));
 }
 
 inline int
 Thread_Mutex_Derived::release ()
 {
-  return ACE_OS::mutex_unlock (&this->mutex_);
+  return ACE_OS::mutex_unlock (std::addressof (this->mutex_));
 }
 
 static Thread_Mutex thread_mutex;
 static Thread_Mutex_Derived thread_mutex_derived;
-static Mutex_Base *mutex_base = &thread_mutex_derived;
+// Non-owning base-class view of the static derived mutex.
+static Mutex_Base *const mutex_base {std::addressof (thread_mutex_derived)};
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Profile_Timer timer;
-  int iterations = argc > 1 ? ACE_OS::atoi (argv[1]) : DEFAULT_ITERATIONS;
-  int i;
+  int const iterations {argc > 1 ? ACE_OS::atoi (argv[1]) : DEFAULT_ITERATIONS};
+  if (iterations <= 0)
+    ACE_ERROR_RETURN ((LM_ERROR, "Iterations must be greater than 0\n"), 1);
 
   ACE_DEBUG ((LM_DEBUG, "iterations = %d\n", iterations));
 
@@ -151,7 +172,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Test the thread mutex (which doesn't use inheritance or dynamic
   // binding).
 
-  for (i = 0; i < iterations; i++)
+  for (int i {}; i < iterations; ++i)
     {
       thread_mutex.acquire ();
       thread_mutex.release ();
@@ -168,7 +189,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               et.real_time, et.user_time, et.system_time));
 
   ACE_DEBUG ((LM_DEBUG, "time per call = %f usecs\n",
-             (et.real_time / double (iterations)) * 1000000));
+             (et.real_time / static_cast<double> (iterations)) * 1000000));
 
   // Test the thread mutex derived (which does use inheritance or
   // dynamic binding).  Note that we call this via an instance of the
@@ -177,7 +198,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   timer.start ();
 
-  for (i = 0; i < iterations; i++)
+  for (int i {}; i < iterations; ++i)
     {
       thread_mutex_derived.acquire ();
       thread_mutex_derived.release ();
@@ -192,7 +213,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
              et.real_time, et.user_time, et.system_time));
 
   ACE_DEBUG ((LM_DEBUG, "time per call = %f usecs\n",
-             (et.real_time / double (iterations)) * 1000000));
+             (et.real_time / static_cast<double> (iterations)) * 1000000));
 
   // Test the thread mutex derived (which does use inheritance or
   // dynamic binding).  Note that we call this via a pointer to the
@@ -202,7 +223,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   timer.start ();
 
-  for (i = 0; i < iterations; i++)
+  for (int i {}; i < iterations; ++i)
     {
       mutex_base->acquire ();
       mutex_base->release ();
@@ -217,7 +238,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
              et.real_time, et.user_time, et.system_time));
 
   ACE_DEBUG ((LM_DEBUG, "time per call = %f usecs\n",
-             (et.real_time / double (iterations)) * 1000000));
+             (et.real_time / static_cast<double> (iterations)) * 1000000));
   return 0;
 }
 #else

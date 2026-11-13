@@ -34,11 +34,9 @@
 
 #include "test_singleton.h"
 
-#include <new>
-
 #if defined (ACE_HAS_THREADS)
 
-static const int DEFAULT_ITERATIONS = 100000000;
+static constexpr int DEFAULT_ITERATIONS = 100000000;
 
 class Mutex_Singleton
 {
@@ -63,14 +61,7 @@ Mutex_Singleton::instance ()
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, Mutex_Singleton::lock_, nullptr);
 
   if (!Mutex_Singleton::instance_)
-    {
-      Mutex_Singleton::instance_.reset (new (std::nothrow) Mutex_Singleton);
-      if (!Mutex_Singleton::instance_)
-        {
-          errno = ENOMEM;
-          return nullptr;
-        }
-    }
+    Mutex_Singleton::instance_ = std::make_unique<Mutex_Singleton> ();
 
   return Mutex_Singleton::instance_.get ();
 }
@@ -89,14 +80,7 @@ DC_Singleton::instance ()
 
       // Perform the Double-Check.
       if (!DC_Singleton::instance_)
-        {
-          DC_Singleton::instance_.reset (new (std::nothrow) DC_Singleton);
-          if (!DC_Singleton::instance_)
-            {
-              errno = ENOMEM;
-              return nullptr;
-            }
-        }
+        DC_Singleton::instance_ = std::make_unique<DC_Singleton> ();
     }
 
   return DC_Singleton::instance_.get ();
@@ -108,8 +92,9 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Profile_Timer timer;
-  int iterations = argc > 1 ? ACE_OS::atoi (argv[1]) : DEFAULT_ITERATIONS;
-  int i;
+  int const iterations {argc > 1 ? ACE_OS::atoi (argv[1]) : DEFAULT_ITERATIONS};
+  if (iterations <= 0)
+    ACE_ERROR_RETURN ((LM_ERROR, "Iterations must be greater than 0\n"), 1);
 
   ACE_DEBUG ((LM_DEBUG, "iterations = %d\n", iterations));
 
@@ -118,7 +103,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   timer.start ();
 
-  for (i = 0; i < iterations; i++)
+  for (int i {}; i < iterations; ++i)
     My_Singleton::instance ()->svc ();
 
   timer.stop ();
@@ -132,14 +117,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               et.real_time, et.user_time, et.system_time));
 
   ACE_DEBUG ((LM_DEBUG, "time per call = %f usecs\n",
-              (et.real_time / double (iterations)) * 1000000));
+              (et.real_time / static_cast<double> (iterations)) * 1000000));
 
   // Test the hand-coded Singleton performance (which uses
   // Double-Checked Locking).
 
   timer.start ();
 
-  for (i = 0; i < iterations; i++)
+  for (int i {}; i < iterations; ++i)
     DC_Singleton::instance ()->svc ();
 
   timer.stop ();
@@ -151,14 +136,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               et.real_time, et.user_time, et.system_time));
 
   ACE_DEBUG ((LM_DEBUG, "time per call = %f usecs\n",
-              (et.real_time / double (iterations)) * 1000000));
+              (et.real_time / static_cast<double> (iterations)) * 1000000));
 
   // Test the Mutex_Singleton implementation (which does not use
   // Double-Checked Locking).
 
   timer.start ();
 
-  for (i = 0; i < iterations; i++)
+  for (int i {}; i < iterations; ++i)
     Mutex_Singleton::instance ()->svc ();
 
   timer.stop ();
@@ -170,7 +155,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               et.real_time, et.user_time, et.system_time));
 
   ACE_DEBUG ((LM_DEBUG, "time per call = %f usecs\n",
-              (et.real_time / double (iterations)) * 1000000));
+              (et.real_time / static_cast<double> (iterations)) * 1000000));
 
   return 0;
 }

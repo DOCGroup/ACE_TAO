@@ -12,10 +12,10 @@
  *
  *        -n ###: Specify number of iteration in tens.  If this
  *                option is not specified, the default is
- *                MULTIPLY_FACTOR * (100 iterations,) which is
+ *                multiply_factor * (100 iterations,) which is
  *                equivalent to -n 10.
  *
- *        -l ###: Specify MULTIPLY_FACTOR.  Default is 10.
+ *        -l ###: Specify the multiply factor.  Default is 10.
  *
  *           *-p: Measure the performance of forking a child process
  *                and exec an "empty" program.  This test uses
@@ -59,16 +59,16 @@
 
 #define  ACE_STOP_SIGN  ACE_OS::sleep (0)
 
-#define MAX_NO_ITERATION  10000
+static constexpr size_t MAX_NO_ITERATION = 10000;
 #if defined (ACE_WIN32)
 #define SUBPROGRAM ACE_TEXT ("date.exe")
 #else
 #define SUBPROGRAM ACE_TEXT ("date")
 #endif
 
-size_t MULTIPLY_FACTOR = 10;
+static size_t multiply_factor {10};
 using Profiler = double (*) (size_t);
-static bool do_exec_after_fork = false;
+static bool do_exec_after_fork {};
 
 /// do nothing thread function
 #if defined (ACE_HAS_WTHREADS)
@@ -93,17 +93,17 @@ prof_ace_process (size_t iteration)
 
       popt.command_line (SUBPROGRAM);
 
-      iteration *= MULTIPLY_FACTOR;
+      iteration *= multiply_factor;
 
       if (!do_exec_after_fork)
         popt.creation_flags (ACE_Process_Options::NO_EXEC);
 
       ACE_Profile_Timer ptimer;
       ACE_Profile_Timer::ACE_Elapsed_Time et;
-      double time = 0;
+      double time {};
       pid_t result;
 
-      for (size_t c = 0; c < iteration; c++)
+      for (size_t c = 0; c < iteration; ++c)
         {
           ACE_STOP_SIGN;
           ptimer.start ();
@@ -135,11 +135,11 @@ prof_fork (size_t iteration)
     {
       ACE_Profile_Timer ptimer;
       ACE_Profile_Timer::ACE_Elapsed_Time et;
-      double time = 0;
+      double time {};
 
-      iteration *= MULTIPLY_FACTOR;
+      iteration *= multiply_factor;
 
-      for (size_t i = 0; i < iteration; i++)
+      for (size_t i = 0; i < iteration; ++i)
         {
           ACE_STOP_SIGN;
           ptimer.start ();
@@ -176,18 +176,18 @@ prof_native_thread (size_t iteration)
     {
       ACE_Profile_Timer ptimer;
       ACE_Profile_Timer::ACE_Elapsed_Time et;
-      double time = 0;
+      double time {};
 
-      for (size_t i = 0; i < iteration; i++)
+      for (size_t i = 0; i < iteration; ++i)
         {
           ACE_STOP_SIGN;
           ptimer.start ();
-          for (size_t j = 0; j < MULTIPLY_FACTOR; j++)
+          for (size_t j = 0; j < multiply_factor; ++j)
             {
 #if defined (ACE_HAS_WTHREADS)
               if (::CreateThread (nullptr,
                                   0,
-                                  LPTHREAD_START_ROUTINE (ace_empty),
+                                  ace_empty,
                                   nullptr,
                                   CREATE_SUSPENDED,
                                   nullptr) == nullptr)
@@ -199,7 +199,7 @@ prof_native_thread (size_t iteration)
           ptimer.elapsed_time (et);
           time += et.real_time;
         }
-      iteration *= MULTIPLY_FACTOR;
+      iteration *= multiply_factor;
       return time / iteration;
     }
   else
@@ -218,15 +218,15 @@ prof_ace_os_thread (size_t iteration)
     {
       ACE_Profile_Timer ptimer;
       ACE_Profile_Timer::ACE_Elapsed_Time et;
-      double time = 0;
+      double time {};
 
-      for (size_t i = 0; i < iteration; i++)
+      for (size_t i = 0; i < iteration; ++i)
         {
           ACE_STOP_SIGN;
           ptimer.start ();
 
-          for (size_t j = 0; j < MULTIPLY_FACTOR; j++)
-            if (ACE_OS::thr_create ((ACE_THR_FUNC) ace_empty,
+          for (size_t j = 0; j < multiply_factor; ++j)
+            if (ACE_OS::thr_create (ace_empty,
                                     nullptr,
                                     THR_SUSPENDED,
                                     nullptr) == -1)
@@ -236,7 +236,7 @@ prof_ace_os_thread (size_t iteration)
           ptimer.elapsed_time (et);
           time += et.real_time;
         }
-      iteration *= MULTIPLY_FACTOR;
+      iteration *= multiply_factor;
       return time / iteration;
     }
   else
@@ -255,15 +255,15 @@ prof_tm_thread (size_t iteration)
     {
       ACE_Profile_Timer ptimer;
       ACE_Profile_Timer::ACE_Elapsed_Time et;
-      double time = 0;
+      double time {};
 
-      for (size_t i = 0; i < iteration; i++)
+      for (size_t i = 0; i < iteration; ++i)
         {
           ACE_STOP_SIGN;
           ptimer.start ();
 
-          if (ACE_Thread_Manager::instance ()->spawn_n (MULTIPLY_FACTOR,
-                                                        (ACE_THR_FUNC) ace_empty,
+          if (ACE_Thread_Manager::instance ()->spawn_n (multiply_factor,
+                                                        ace_empty,
                                                         nullptr,
                                                         THR_SUSPENDED) == -1)
             ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "CreateThread"), -1);
@@ -272,7 +272,7 @@ prof_tm_thread (size_t iteration)
           ptimer.elapsed_time (et);
           time += et.real_time;
         }
-      iteration *= MULTIPLY_FACTOR;
+      iteration *= multiply_factor;
       return time / iteration;
     }
   else
@@ -292,14 +292,14 @@ prof_mutex_base (size_t iteration)
     {
       ACE_Profile_Timer ptimer;
       ACE_Profile_Timer::ACE_Elapsed_Time et;
-      double time = 0;
+      double time {};
 
-      for (size_t i = 0; i < iteration; i++)
+      for (size_t i = 0; i < iteration; ++i)
         {
           ACE_STOP_SIGN;
           ptimer.start ();
 
-          for (size_t j=0; j < MULTIPLY_FACTOR; j++)
+          for (size_t j = 0; j < multiply_factor; ++j)
             {
               plain.acquire ();
               plain.release ();
@@ -309,7 +309,7 @@ prof_mutex_base (size_t iteration)
           ptimer.elapsed_time (et);
           time += et.real_time;
         }
-      iteration *= MULTIPLY_FACTOR;
+      iteration *= multiply_factor;
       return time / iteration;
     }
   else
@@ -324,20 +324,30 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("n:l:pftahmxe"));
-  int c;
-  size_t iteration = 10;
+  int c {};
+  size_t iteration {10};
   Profiler profiler {};
   char const *profile_name {};
 
-  while ((c=get_opt ()) != -1)
+  while ((c = get_opt ()) != -1)
     {
       switch (c)
         {
         case 'n':
-          iteration = ACE_OS::atoi (get_opt.opt_arg ());
+          {
+            int const value = ACE_OS::atoi (get_opt.opt_arg ());
+            if (value <= 0)
+              ACE_ERROR_RETURN ((LM_ERROR, "The iteration count must be positive.\n"), 1);
+            iteration = static_cast<size_t> (value);
+          }
           break;
         case 'l':
-          MULTIPLY_FACTOR = static_cast<size_t> (ACE_OS::atoi (get_opt.opt_arg ()));
+          {
+            int const value = ACE_OS::atoi (get_opt.opt_arg ());
+            if (value <= 0)
+              ACE_ERROR_RETURN ((LM_ERROR, "The multiply factor must be positive.\n"), 1);
+            multiply_factor = static_cast<size_t> (value);
+          }
           break;
         case 'p':                       // test ACE_Process.spawn ()
           profiler = prof_ace_process;
@@ -374,15 +384,17 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
         }
     }
 
-  if (profiler == nullptr)
-    ACE_ERROR_RETURN ((LM_ERROR, "Usage: childbirth_time {-p|-f|-t|-a|-m|-x} [-n ###] [-L ###] [-h] [-e]\n"), 1);
+  if (profiler == nullptr || profile_name == nullptr)
+    ACE_ERROR_RETURN ((LM_ERROR, "Usage: childbirth_time {-p|-f|-t|-a|-m|-x} [-n ###] [-l ###] [-h] [-e]\n"), 1);
+  else if (iteration > MAX_NO_ITERATION / multiply_factor)
+    ACE_ERROR_RETURN ((LM_ERROR, "Requested iteration count exceeds the supported maximum.\n"), 1);
   else
     {
       double time = profiler (iteration);
       if (time > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    "Average performance of %d iterations of %C: %.0f usec\n",
-                    iteration * MULTIPLY_FACTOR, profile_name, time * 1e6));
+                    "Average performance of %B iterations of %s: %.0f usec\n",
+                    iteration * multiply_factor, profile_name, time * 1e6));
     }
   return 0;
 }

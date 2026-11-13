@@ -19,34 +19,54 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
 
+#include <array>
+#include <cstdio>
 #include <cstring>
 #include <memory>
 
 #define ACE_NS_MAX_ENTRIES 4000
 
-static char name[BUFSIZ];
-static char value[BUFSIZ];
-static char type[BUFSIZ];
+static std::array<char, BUFSIZ> name {};
+static std::array<char, BUFSIZ> value {};
+static std::array<char, BUFSIZ> type {};
+
+struct ACE_String_Deleter
+{
+  void operator() (char *string) const
+  {
+    ACE::strdelete (string);
+  }
+};
+
+using ACE_String_Unique_Ptr = std::unique_ptr<char, ACE_String_Deleter>;
+
+static void
+format_entry (std::array<char, BUFSIZ> &buffer,
+              char const *prefix,
+              int value)
+{
+  std::snprintf (buffer.data (), buffer.size (), "%s%d", prefix, value);
+}
 
 //FUZZ: disable check_for_lack_ACE_OS
 void
-bind (ACE_Naming_Context *ns_context, int result)
+bind (ACE_Naming_Context *const ns_context, int const result)
 {
 //FUZZ: enable check_for_lack_ACE_OS
 
   // do the binds
-  for (int i = 1; i <= ACE_NS_MAX_ENTRIES; i++)
+  for (int i = 1; i <= ACE_NS_MAX_ENTRIES; ++i)
     {
       if (i % 50 == 0)
         ACE_DEBUG ((LM_DEBUG, "."));
-      ACE_OS::sprintf (name, "%s%d", "name", i);
-      ACE_NS_WString w_name (name);
+      format_entry (name, "name", i);
+      ACE_NS_WString w_name (name.data ());
 
-      ACE_OS::sprintf (value, "%s%d", "value", i);
-      ACE_NS_WString w_value (value);
+      format_entry (value, "value", i);
+      ACE_NS_WString w_value (value.data ());
 
-      ACE_OS::sprintf (type, "%s%d", "type", i);
-      if (ns_context->bind (w_name, w_value, type) != result) {
+      format_entry (type, "type", i);
+      if (ns_context->bind (w_name, w_value, type.data ()) != result) {
         ACE_ERROR ((LM_ERROR, "bind failed!"));
       }
     }
@@ -54,30 +74,30 @@ bind (ACE_Naming_Context *ns_context, int result)
 }
 
 void
-rebind (ACE_Naming_Context *ns_context, int result)
+rebind (ACE_Naming_Context *const ns_context, int const result)
 {
   // do the rebinds
-  for (int i = 1; i <= ACE_NS_MAX_ENTRIES; i++)
+  for (int i = 1; i <= ACE_NS_MAX_ENTRIES; ++i)
     {
-      ACE_OS::sprintf (name, "%s%d", "name", i);
-      ACE_NS_WString w_name (name);
-      ACE_OS::sprintf (value, "%s%d", "value", -i);
-      ACE_NS_WString w_value (value);
-      ACE_OS::sprintf (type, "%s%d", "type", -i);
-      if (ns_context->rebind (w_name, w_value, type) != result) {
+      format_entry (name, "name", i);
+      ACE_NS_WString w_name (name.data ());
+      format_entry (value, "value", -i);
+      ACE_NS_WString w_value (value.data ());
+      format_entry (type, "type", -i);
+      if (ns_context->rebind (w_name, w_value, type.data ()) != result) {
         ACE_ERROR ((LM_ERROR, "rebind failed!"));
       }
     }
 }
 
 void
-unbind (ACE_Naming_Context *ns_context, int result)
+unbind (ACE_Naming_Context *const ns_context, int const result)
 {
   // do the unbinds
-  for (int i = 1; i <= ACE_NS_MAX_ENTRIES; i++)
+  for (int i = 1; i <= ACE_NS_MAX_ENTRIES; ++i)
     {
-      ACE_OS::sprintf (name, "%s%d", "name", i);
-      ACE_NS_WString w_name (name);
+      format_entry (name, "name", i);
+      ACE_NS_WString w_name (name.data ());
       if (ns_context->unbind (w_name) != result) {
         ACE_ERROR ((LM_ERROR, "unbind failed!"));
       }
@@ -85,35 +105,39 @@ unbind (ACE_Naming_Context *ns_context, int result)
 }
 
 void
-find (ACE_Naming_Context *ns_context, int sign, int result)
+find (ACE_Naming_Context *const ns_context,
+      int const sign,
+      int const result)
 {
-  char temp_val[BUFSIZ];
-  char temp_type[BUFSIZ];
+  std::array<char, BUFSIZ> temp_val {};
+  std::array<char, BUFSIZ> temp_type {};
 
   // do the finds
-  for (int i = 1; i <= ACE_NS_MAX_ENTRIES; i++)
+  for (int i = 1; i <= ACE_NS_MAX_ENTRIES; ++i)
     {
-      ACE_OS::sprintf (name, "%s%d", "name", i);
-      ACE_NS_WString w_name (name);
+      format_entry (name, "name", i);
+      ACE_NS_WString w_name (name.data ());
 
       ACE_NS_WString w_value;
       char *raw_type_out {};
 
       if (sign == 1)
         {
-          ACE_OS::sprintf (temp_val, "%s%d", "value", i);
-          ACE_OS::sprintf (temp_type, "%s%d", "type", i);
+          format_entry (temp_val, "value", i);
+          format_entry (temp_type, "type", i);
         }
       else
         {
-          ACE_OS::sprintf (temp_val, "%s%d", "value", -i);
-          ACE_OS::sprintf (temp_type, "%s%d", "type", -i);
+          format_entry (temp_val, "value", -i);
+          format_entry (temp_type, "type", -i);
         }
 
-      ACE_NS_WString val (temp_val);
+      ACE_NS_WString val (temp_val.data ());
 
-      int resolve_result = ns_context->resolve (w_name, w_value, raw_type_out);
-      std::unique_ptr<char[]> type_out (raw_type_out);
+      int const resolve_result = ns_context->resolve (w_name,
+                                                      w_value,
+                                                      raw_type_out);
+      ACE_String_Unique_Ptr type_out {raw_type_out};
       if (resolve_result != result) {
         ACE_ERROR ((LM_ERROR, "resolved failed!"));
       }
@@ -121,28 +145,30 @@ find (ACE_Naming_Context *ns_context, int sign, int result)
       ACE_UNUSED_ARG (resolve_result); // To avoid compile warning
                                        // with ACE_NDEBUG.
 
-      if (w_value.char_rep ())
+      ACE_String_Unique_Ptr value_out {w_value.char_rep ()};
+      if (value_out)
         {
           ACE_DEBUG ((LM_DEBUG, "Name: %s\tValue: %s\tType: %s\n",
-                      name, w_value.char_rep (), type_out.get ()));
+                      name.data (), value_out.get (), type_out.get ()));
           ACE_ASSERT (w_value == val);
           if (type_out)
             {
-              ACE_ASSERT (std::strcmp (type_out.get (), temp_type) == 0);
+              ACE_ASSERT (std::strcmp (type_out.get (), temp_type.data ()) == 0);
             }
         }
     }
 }
 
-void do_testing (int argc, ACE_TCHAR *argv[], int light)
+void
+do_testing (int argc, ACE_TCHAR *argv[], bool const light)
 {
   ACE_Profile_Timer timer;
 
   ACE_Naming_Context ns_context;
-  ACE_Name_Options *name_options = ns_context.name_options ();
+  ACE_Name_Options *const name_options = ns_context.name_options ();
   name_options->parse_args (argc, argv);
 
-  if (light == 0)  // Use SYNC
+  if (!light)  // Use SYNC
     {
       name_options->database (ACE::basename (name_options->process_name (),
                                              ACE_DIRECTORY_SEPARATOR_CHAR));
@@ -150,11 +176,12 @@ void do_testing (int argc, ACE_TCHAR *argv[], int light)
     }
   else  // Use NO-SYNC
     {
-      const ACE_TCHAR *p = ACE::basename (name_options->process_name (),
-                                          ACE_DIRECTORY_SEPARATOR_CHAR);
-      ACE_TCHAR s[5 /* strlen ("light") */ + MAXNAMELEN + 1];
-      ACE_OS::sprintf (s, ACE_TEXT("light%s"), p);
-      name_options->database (s);
+      ACE_TCHAR const *const p = ACE::basename (
+        name_options->process_name (),
+        ACE_DIRECTORY_SEPARATOR_CHAR);
+      std::array<ACE_TCHAR, 5 + MAXNAMELEN + 1> database_name {};
+      ACE_OS::sprintf (database_name.data (), ACE_TEXT("light%s"), p);
+      name_options->database (database_name.data ());
       ns_context.open (ACE_Naming_Context::PROC_LOCAL, 1);
     }
 
@@ -164,11 +191,11 @@ void do_testing (int argc, ACE_TCHAR *argv[], int light)
   timer.start ();
 
   //FUZZ: disable check_for_lack_ACE_OS
-  bind (&ns_context, 0);
+  bind (std::addressof (ns_context), 0);
   //FUZZ: enable check_for_lack_ACE_OS
 
   ACE_DEBUG ((LM_DEBUG, "Unbinding\n"));
-  unbind (&ns_context, 0);
+  unbind (std::addressof (ns_context), 0);
   timer.stop ();
 
   ACE_Profile_Timer::ACE_Elapsed_Time et;
@@ -184,10 +211,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // Do testing with SYNC on
   ACE_DEBUG ((LM_DEBUG, "SYNC is ON\n"));
-  do_testing (argc, argv, 0);
+  do_testing (argc, argv, false);
 
   // Do testing with SYNC off
   ACE_DEBUG ((LM_DEBUG, "SYNC is OFF\n"));
-  do_testing (argc, argv, 1);
+  do_testing (argc, argv, true);
   return 0;
 }
