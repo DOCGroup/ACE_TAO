@@ -741,7 +741,7 @@ public:
   /// Default constructor.
   ACE_Refcounted_Hash_Recyclable ();
 
-  ACE_Refcounted_Hash_Recyclable (const T &t,
+  ACE_Refcounted_Hash_Recyclable (T const &t,
                                   long refcount = 0,
                                   ACE_Recyclable_State state = ACE_RECYCLABLE_UNKNOWN);
 

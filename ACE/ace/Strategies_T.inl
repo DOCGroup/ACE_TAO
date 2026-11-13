@@ -84,7 +84,7 @@ ACE_Reactive_Strategy<SVC_HANDLER>::ACE_Reactive_Strategy (ACE_Reactor *reactor,
 template <class SVC_HANDLER> ACE_INLINE
 ACE_Reactive_Strategy<SVC_HANDLER>::ACE_Reactive_Strategy (int flags)
   : ACE_Concurrency_Strategy<SVC_HANDLER> (flags),
-    reactor_ (0),
+    reactor_ {},
     mask_ (ACE_Event_Handler::NULL_MASK)
 {
   ACE_TRACE ("ACE_Reactive_Strategy<SVC_HANDLER>::ACE_Reactive_Strategy");
@@ -110,7 +110,7 @@ ACE_Thread_Strategy<SVC_HANDLER>::ACE_Thread_Strategy (ACE_Thread_Manager *thr_m
 template <class SVC_HANDLER> ACE_INLINE
 ACE_Thread_Strategy<SVC_HANDLER>::ACE_Thread_Strategy (int flags)
   : ACE_Concurrency_Strategy<SVC_HANDLER> (flags),
-    thr_mgr_ (0),
+    thr_mgr_ {},
     thr_flags_ (0),
     n_threads_ (1)
 {
@@ -159,7 +159,7 @@ ACE_Schedule_All_Reactive_Strategy<SVC_HANDLER>::ACE_Schedule_All_Reactive_Strat
 {
   ACE_TRACE ("ACE_Schedule_All_Reactive_Strategy<SVC_HANDLER>::ACE_Schedule_All_Reactive_Strategy");
 
-  if (scheduler == 0 || scheduler->reactor () == 0)
+  if (scheduler == nullptr || scheduler->reactor () == nullptr)
     this->reactor_ = ACE_Reactor::instance ();
   else
     this->reactor_ = scheduler->reactor ();
@@ -172,7 +172,7 @@ ACE_Schedule_All_Threaded_Strategy<SVC_HANDLER>::ACE_Schedule_All_Threaded_Strat
 {
   ACE_TRACE ("ACE_Schedule_All_Threaded_Strategy<SVC_HANDLER>::ACE_Schedule_All_Threaded_Strategy");
 
-  if (scheduler == 0 || scheduler->thr_mgr () == 0)
+  if (scheduler == nullptr || scheduler->thr_mgr () == nullptr)
     this->thr_mgr_ = ACE_Thread_Manager::instance ();
   else
     this->thr_mgr_ = scheduler->thr_mgr ();
@@ -183,12 +183,12 @@ ACE_Refcounted_Hash_Recyclable<T>::ACE_Refcounted_Hash_Recyclable ()
   : ACE_Refcountable_T<ACE_Null_Mutex> (0),
     ACE_Hashable (),
     ACE_Recyclable (ACE_RECYCLABLE_UNKNOWN),
-    t_ ()
+    t_ {}
 {
 }
 
 template <class T> ACE_INLINE
-ACE_Refcounted_Hash_Recyclable<T>::ACE_Refcounted_Hash_Recyclable (const T &t,
+ACE_Refcounted_Hash_Recyclable<T>::ACE_Refcounted_Hash_Recyclable (T const &t,
                                                                    long refcount,
                                                                    ACE_Recyclable_State state)
   : ACE_Refcountable_T<ACE_Null_Mutex> (refcount),

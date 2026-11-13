@@ -521,7 +521,7 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::~ACE_Cach
        iterator.next (entry);
        iterator.advance ())
     {
-      entry->int_id_->recycler (0, 0);
+      entry->int_id_->recycler (nullptr, nullptr);
       entry->int_id_->close ();
     }
 }
@@ -659,7 +659,7 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::check_hin
       if (possible_entry->ext_id_.decrement () == 0)
         {
           // If refcount goes to zero, close down the svc_handler
-          possible_entry->int_id_->recycler (0, 0);
+          possible_entry->int_id_->recycler (nullptr, nullptr);
           possible_entry->int_id_->close ();
           this->purge_i (possible_entry);
         }
@@ -1157,7 +1157,7 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::cleanup_h
   if (entry->ext_id_.recycle_state () == ACE_RECYCLABLE_CLOSED &&
       refcount == 0)
     {
-      entry->int_id_->recycler (0, 0);
+      entry->int_id_->recycler (nullptr, nullptr);
       entry->int_id_->close ();
       this->purge_i (entry);
     }
