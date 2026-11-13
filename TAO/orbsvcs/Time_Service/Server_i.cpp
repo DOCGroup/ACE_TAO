@@ -206,14 +206,19 @@ Server_i::init (int argc,
       // Get the orb.
       this->orb_ = this->orb_manager_.orb ();
 
-      // Initialize Naming Service.
-      this->init_naming_service ();
+      // Initialize Naming Service. The server can still be used through
+      // its IOR file when no Naming Service is available.
+      int const naming_service_result = this->init_naming_service ();
+      if (naming_service_result != 0 && !this->ior_output_file_)
+        return -1;
 
       // Create the server object.
-      this->create_server ();
+      if (this->create_server () != 0)
+        return -1;
 
-      // Register the server object with the Naming Service.
-      this->register_server ();
+      // Register the server object when the Naming Service is available.
+      if (naming_service_result == 0 && this->register_server () != 0)
+        return -1;
     }
   catch (CORBA::Exception const &ex)
     {
