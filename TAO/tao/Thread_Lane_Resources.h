@@ -53,6 +53,11 @@ public:
       TAO_ORB_Core &orb_core,
       TAO_New_Leader_Generator *new_leader_generator = nullptr);
 
+  TAO_Thread_Lane_Resources (TAO_Thread_Lane_Resources const &) = delete;
+  TAO_Thread_Lane_Resources (TAO_Thread_Lane_Resources &&) = delete;
+  TAO_Thread_Lane_Resources &operator= (TAO_Thread_Lane_Resources const &) = delete;
+  TAO_Thread_Lane_Resources &operator= (TAO_Thread_Lane_Resources &&) = delete;
+
   ~TAO_Thread_Lane_Resources ();
 
   /// Does @a mprofile belong to us?
@@ -163,7 +168,7 @@ private:
   std::unique_ptr<TAO_Connector_Registry> connector_registry_ {};
 
   /// Transport cache.
-  TAO::Transport_Cache_Manager *transport_cache_;
+  std::unique_ptr<TAO::Transport_Cache_Manager> transport_cache_ {};
 
   /// The leader/followers management class for this lane.
   TAO_Leader_Follower *leader_follower_;

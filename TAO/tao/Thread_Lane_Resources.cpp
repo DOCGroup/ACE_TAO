@@ -18,7 +18,6 @@ TAO_Thread_Lane_Resources::TAO_Thread_Lane_Resources (
     TAO_ORB_Core &orb_core,
     TAO_New_Leader_Generator *new_leader_generator)
   : orb_core_ (orb_core),
-    transport_cache_ (nullptr),
     leader_follower_ (nullptr),
     new_leader_generator_ (new_leader_generator),
     input_cdr_dblock_allocator_ (nullptr),
@@ -32,7 +31,8 @@ TAO_Thread_Lane_Resources::TAO_Thread_Lane_Resources (
     ami_response_handler_allocator_ (nullptr)
 {
   // Create the transport cache.
-  ACE_NEW (this->transport_cache_,
+  TAO::Transport_Cache_Manager *transport_cache {};
+  ACE_NEW (transport_cache,
            TAO::Transport_Cache_Manager (
             *this->leader_follower ().reactor (),
             orb_core.resource_factory ()->purge_percentage (),
@@ -42,6 +42,7 @@ TAO_Thread_Lane_Resources::TAO_Thread_Lane_Resources (
             orb_core.orbid (),
             orb_core.resource_factory ()->transport_idle_timeout (),
             orb_core.resource_factory ()->transport_idle_scan_interval ()));
+  this->transport_cache_.reset (transport_cache);
 }
 
 TAO_Thread_Lane_Resources::~TAO_Thread_Lane_Resources () = default;
@@ -381,8 +382,7 @@ TAO_Thread_Lane_Resources::finalize ()
       (*handler)->transport ()->remove_reference ();
     }
 
-  delete this->transport_cache_;
-  this->transport_cache_ = nullptr;
+  this->transport_cache_.reset ();
 
   delete this->leader_follower_;
   this->leader_follower_ = nullptr;
