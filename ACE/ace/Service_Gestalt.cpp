@@ -817,12 +817,12 @@ ACE_Service_Gestalt::get_xml_svc_conf (ACE_DLL &xmldll)
                        ACE_TEXT("ACE_Service_Config::get_xml_svc_conf")),
                       0);
 
-  void * foo = xmldll.symbol (ACE_TEXT ("_ACEXML_create_XML_Svc_Conf_Object"));
+  void * const foo = xmldll.symbol (ACE_TEXT ("_ACEXML_create_XML_Svc_Conf_Object"));
   intptr_t const temp_p = reinterpret_cast<intptr_t> (foo);
 
-  ACE_XML_Svc_Conf::Factory factory = reinterpret_cast<ACE_XML_Svc_Conf::Factory> (temp_p);
+  ACE_XML_Svc_Conf::Factory const factory = reinterpret_cast<ACE_XML_Svc_Conf::Factory> (temp_p);
 
-  if (factory == 0)
+  if (factory == nullptr)
     ACELIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("ACE (%P|%t) Unable to resolve factory: %p\n"),
                        xmldll.error ()),
@@ -1048,14 +1048,14 @@ ACE_Service_Gestalt::open_i (const ACE_TCHAR program_name[],
   if (!ignore_default_svc_conf_file)
     {
       bool add_default = true;
-      bool has_files = this->svc_conf_file_queue_ &&
+      bool const has_files = this->svc_conf_file_queue_ &&
         !this->svc_conf_file_queue_->is_empty ();
-      bool has_cmdline = this->svc_queue_ && !this->svc_queue_->is_empty ();
+      bool const has_cmdline = this->svc_queue_ && !this->svc_queue_->is_empty ();
       if (has_files || has_cmdline)
         {
           // check if default file is already listed
           ACE_TString *sptr {};
-          ACE_TString default_svc_conf (ACE_DEFAULT_SVC_CONF);
+          ACE_TString const default_svc_conf (ACE_DEFAULT_SVC_CONF);
 
           for (ACE_SVC_QUEUE_ITERATOR iter (*this->svc_conf_file_queue_);
                iter.next (sptr) != 0 && add_default;
@@ -1066,7 +1066,7 @@ ACE_Service_Gestalt::open_i (const ACE_TCHAR program_name[],
 
           if (add_default)
             {
-              FILE *fp = ACE_OS::fopen (ACE_DEFAULT_SVC_CONF, ACE_TEXT ("r"));
+              FILE * const fp = ACE_OS::fopen (ACE_DEFAULT_SVC_CONF, ACE_TEXT ("r"));
               if (fp != nullptr)
                 ACE_OS::fclose(fp);
               else
@@ -1098,7 +1098,7 @@ ACE_Service_Gestalt::open_i (const ACE_TCHAR program_name[],
       result = this->process_directives ();
       if (result != -1)
         {
-          int temp = this->process_commandline_directives ();
+          int const temp = this->process_commandline_directives ();
           if (temp == -1)
             result = -1;
           else result += temp;
@@ -1251,7 +1251,7 @@ ACE_Service_Gestalt::process_directives (bool )
        iter.next (sptr) != 0;
        iter.advance ())
     {
-      int result = this->process_file (sptr->fast_rep ());
+      int const result = this->process_file (sptr->fast_rep ());
       if (result < 0)
         return result;
       failed += result;
