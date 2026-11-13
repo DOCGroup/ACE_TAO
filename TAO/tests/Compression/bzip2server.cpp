@@ -122,7 +122,7 @@ test_compression (CORBA::ULong const nelements,
       succeed = true;
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Compression worked with bzip2, original "
-                            "size %d, compressed size %d\n"),
+                            "size %B, compressed size %B\n"),
                   mytest.length (), myout.length ()));
     }
   return succeed;
