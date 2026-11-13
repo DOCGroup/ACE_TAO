@@ -14,6 +14,7 @@
 #include "ace/os_include/net/os_if.h"
 
 #include <cstring>
+#include <memory>
 
 #if defined (ACE_HAS_IPV6)
 #  include "ace/Guard_T.h"
@@ -473,13 +474,14 @@ get_ip_interfaces_win32 (size_t &count,
 
 # if defined (ACE_HAS_IPV6) && defined (SIO_ADDRESS_LIST_QUERY)
 
-  LPSOCKET_ADDRESS_LIST v6info;
-  char *buffer;
+  LPSOCKET_ADDRESS_LIST v6info {};
+  char *buffer_raw {};
   DWORD buflen = sizeof (SOCKET_ADDRESS_LIST) + (63 * sizeof (SOCKET_ADDRESS));
-  ACE_NEW_RETURN (buffer,
+  ACE_NEW_RETURN (buffer_raw,
                   char[buflen],
                   -1);
-  v6info = reinterpret_cast<LPSOCKET_ADDRESS_LIST> (buffer);
+  std::unique_ptr<char[]> buffer (buffer_raw);
+  v6info = reinterpret_cast<LPSOCKET_ADDRESS_LIST> (buffer.get ());
 
   // Get an (overlapped) DGRAM socket to test with.
   // If it fails only return IPv4 interfaces.
@@ -501,9 +503,11 @@ get_ip_interfaces_win32 (size_t &count,
     }
 # endif /* ACE_HAS_IPV6 */
 
-  ACE_NEW_RETURN (addrs,
+  ACE_INET_Addr *addr_array {};
+  ACE_NEW_RETURN (addr_array,
                   ACE_INET_Addr[n_interfaces + n_v6_interfaces],
                   -1);
+  std::unique_ptr<ACE_INET_Addr[]> safe_addr_array (addr_array);
 
   // Now go through the list and transfer the good ones to the list of
   // because they're down or don't have an IP address.
@@ -522,7 +526,7 @@ get_ip_interfaces_win32 (size_t &count,
         continue;
 
       // Set the address for the caller.
-      addrs[count].set(addrp, sizeof(sockaddr_in));
+      addr_array[count].set(addrp, sizeof(sockaddr_in));
       ++count;
     }
 
@@ -541,18 +545,16 @@ get_ip_interfaces_win32 (size_t &count,
         continue;
 
       // Set the address for the caller.
-      addrs[count].set(reinterpret_cast<struct sockaddr_in *> (addr6p), sizeof(sockaddr_in6));
+      addr_array[count].set(reinterpret_cast<struct sockaddr_in *> (addr6p), sizeof(sockaddr_in6));
       ++count;
     }
 
-  delete [] buffer; // Clean up
 # endif /* ACE_HAS_IPV6 */
 
   if (count == 0)
-    {
-      delete [] addrs;
-      addrs = 0;
-    }
+    return 0;
+
+  addrs = safe_addr_array.release ();
 
   return 0;
 }
@@ -569,6 +571,8 @@ get_ip_interfaces_getifaddrs (size_t &count,
 
   if (::getifaddrs (&ifap) != 0)
     return -1;
+  std::unique_ptr<struct ifaddrs, decltype (&::freeifaddrs)> safe_ifap (
+    ifap, ::freeifaddrs);
 
   // Count number of interfaces.
   size_t num_ifs = 0;
@@ -576,9 +580,11 @@ get_ip_interfaces_getifaddrs (size_t &count,
     ++num_ifs;
 
   // Now create and initialize output array.
-  ACE_NEW_RETURN (addrs,
+  ACE_INET_Addr *addr_array {};
+  ACE_NEW_RETURN (addr_array,
                   ACE_INET_Addr[num_ifs],
                   -1); // caller must free
+  std::unique_ptr<ACE_INET_Addr[]> safe_addr_array (addr_array);
 
   // Pull the address out of each INET interface.  Not every interface
   // is for IP, so be careful to count properly.  When setting the
@@ -606,7 +612,7 @@ get_ip_interfaces_getifaddrs (size_t &count,
           // address, skip those...
           if (addr->sin_addr.s_addr != INADDR_ANY)
             {
-              addrs[count].set ((u_short) 0,
+              addr_array[count].set ((u_short) 0,
                                 addr->sin_addr.s_addr,
                                 0);
               ++count;
@@ -621,7 +627,7 @@ get_ip_interfaces_getifaddrs (size_t &count,
           // Skip the ANY address
           if (!IN6_IS_ADDR_UNSPECIFIED(&addr->sin6_addr))
             {
-              addrs[count].set(reinterpret_cast<struct sockaddr_in *> (addr),
+              addr_array[count].set(reinterpret_cast<struct sockaddr_in *> (addr),
                                sizeof(sockaddr_in6));
               ++count;
             }
@@ -629,7 +635,7 @@ get_ip_interfaces_getifaddrs (size_t &count,
 # endif /* ACE_HAS_IPV6 */
     }
 
-  ::freeifaddrs (ifap);
+  addrs = safe_addr_array.release ();
 
   return 0;
 }
@@ -718,9 +724,11 @@ ACE::get_ip_interfaces (size_t &count, ACE_INET_Addr *&addrs)
 
   // Now create and initialize output array.
 
-  ACE_NEW_RETURN (addrs,
+  ACE_INET_Addr *addr_array {};
+  ACE_NEW_RETURN (addr_array,
                   ACE_INET_Addr[num_ifs],
                   -1); // caller must free
+  std::unique_ptr<ACE_INET_Addr[]> safe_addr_array (addr_array);
 
   struct IFREQ *pcur = p_ifs.get ();
   size_t num_ifs_found = ifcfg.IFC_LEN / sizeof (struct IFREQ); // get the number of returned ifs
@@ -759,7 +767,7 @@ ACE::get_ip_interfaces (size_t &count, ACE_INET_Addr *&addrs)
               if (addr->sin_family == AF_INET6)
                 addrlen = static_cast<int> (sizeof (struct sockaddr_in6));
 #  endif
-              addrs[count].set (addr, addrlen);
+              addr_array[count].set (addr, addrlen);
               ++count;
             }
         }
@@ -817,7 +825,7 @@ ACE::get_ip_interfaces (size_t &count, ACE_INET_Addr *&addrs)
           if (res0->ai_family == AF_INET6 &&
                 !IN6_IS_ADDR_UNSPECIFIED (&reinterpret_cast<sockaddr_in6 *> (res0->ai_addr)->sin6_addr))
             {
-              addrs[count].set(reinterpret_cast<sockaddr_in *> (res0->ai_addr), res0->ai_addrlen);
+              addr_array[count].set(reinterpret_cast<sockaddr_in *> (res0->ai_addr), res0->ai_addrlen);
               ++count;
             }
           ACE_OS::freeaddrinfo (res0);
@@ -826,6 +834,7 @@ ACE::get_ip_interfaces (size_t &count, ACE_INET_Addr *&addrs)
     }
 # endif /* ACE_HAS_IPV6 && !ACE_LACKS_FSCANF */
 
+  addrs = safe_addr_array.release ();
   return 0;
 #else
   ACE_UNUSED_ARG (count);
