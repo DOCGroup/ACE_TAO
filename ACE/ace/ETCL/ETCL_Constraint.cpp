@@ -1,5 +1,6 @@
 // -*- C++ -*-
 #include "ace/ACE.h"
+#include <memory>
 
 #include "ace/ETCL/ETCL_Constraint.h"
 #include "ace/ETCL/ETCL_Constraint_Visitor.h"
@@ -94,7 +95,7 @@ ETCL_Literal_Constraint::operator ACE_CDR::Boolean () const
 void
 ETCL_Literal_Constraint::operator= (ETCL_Literal_Constraint const &co)
 {
-  if (this != &co)
+  if (this != std::addressof (co))
     this->op_ = ETCL_Literal_Constraint::copy_value (co.op_);
 }
 

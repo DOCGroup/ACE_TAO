@@ -1323,7 +1323,7 @@ ACE_InputCDR::ACE_InputCDR (ACE_InputCDR::Transfer_Contents x)
 ACE_InputCDR&
 ACE_InputCDR::operator= (const ACE_InputCDR& rhs)
 {
-  if (this != &rhs)
+  if (this != std::addressof (rhs))
     {
       this->start_.data_block (rhs.start_.data_block ()->duplicate ());
       this->start_.rd_ptr (rhs.start_.rd_ptr ());

@@ -1,4 +1,5 @@
 #include "ace/CDR_Base.h"
+#include <memory>
 
 #if !defined (__ACE_INLINE__)
 # include "ace/CDR_Base.inl"
@@ -654,7 +655,7 @@ ACE_CDR::LongDouble::assign (const ACE_CDR::LongDouble::NativeImpl& rhs)
 ACE_CDR::LongDouble&
 ACE_CDR::LongDouble::assign (const ACE_CDR::LongDouble& rhs)
 {
-  if (this != &rhs)
+  if (this != std::addressof (rhs))
     *this = rhs;
   return *this;
 }

@@ -2,6 +2,7 @@
 #define ACE_UNBOUNDED_QUEUE_CPP
 
 #include "ace/Unbounded_Queue.h"
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -56,7 +57,7 @@ ACE_Unbounded_Queue<T>::operator= (ACE_Unbounded_Queue<T> const &us)
 {
   //   ACE_TRACE ("ACE_Unbounded_Queue<T>::operator=");
 
-  if (this != &us)
+  if (this != std::addressof (us))
     {
       this->delete_nodes ();
       this->copy_nodes (us);

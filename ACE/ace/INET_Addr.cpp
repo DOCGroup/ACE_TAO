@@ -1,5 +1,6 @@
 // Defines the Internet domain address family address format.
 #include "ace/INET_Addr.h"
+#include <memory>
 
 #if !defined (__ACE_INLINE__)
 #include "ace/INET_Addr.inl"
@@ -178,7 +179,7 @@ ACE_INET_Addr::ACE_INET_Addr ()
 ACE_INET_Addr &
 ACE_INET_Addr::operator= (const ACE_INET_Addr& rhs)
 {
-  if (this != &rhs)
+  if (this != std::addressof (rhs))
     this->set (rhs);
   return *this;
 }

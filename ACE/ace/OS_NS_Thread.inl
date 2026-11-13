@@ -1,5 +1,6 @@
 // -*- C++ -*-
 #include "ace/OS_NS_macros.h"
+#include <memory>
 // for timespec_t, perhaps move it to os_time.h
 #include "ace/Time_Value.h"
 #include "ace/OS_NS_sys_mman.h"
@@ -3501,7 +3502,7 @@ ACE_INLINE
 ACE_Thread_ID&
 ACE_Thread_ID::operator= (const ACE_Thread_ID &id)
 {
-  if (this != &id)
+  if (this != std::addressof (id))
     {
       this->thread_id_ = id.thread_id_;
       this->thread_handle_ = id.thread_handle_;

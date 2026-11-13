@@ -37,7 +37,7 @@ namespace ACE_Utils
   const UUID &
   UUID::operator = (const UUID & rhs)
   {
-    if (this != &rhs)
+    if (this != std::addressof (rhs))
       {
         // Reset the string version of the UUID a string version
         // exist, and the UUID is not equal to the old UUID.

@@ -1,4 +1,5 @@
 #include "ace/FILE_Addr.h"
+#include <memory>
 #include "ace/Lib_Find.h"
 #include "ace/Log_Category.h"
 #include "ace/OS_NS_stdlib.h"
@@ -86,7 +87,7 @@ ACE_FILE_Addr::set (const ACE_TCHAR *filename)
 ACE_FILE_Addr &
 ACE_FILE_Addr::operator= (const ACE_FILE_Addr &sa)
 {
-  if (this != &sa)
+  if (this != std::addressof (sa))
     this->set (sa);
   return *this;
 }

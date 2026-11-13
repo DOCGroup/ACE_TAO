@@ -2,6 +2,7 @@
 #define ACE_UNBOUNDED_SET_EX_CPP
 
 #include "ace/Unbounded_Set.h"
+#include <memory>
 #include "ace/Malloc_Base.h"
 #include "ace/Log_Category.h"
 
@@ -184,7 +185,7 @@ ACE_Unbounded_Set_Ex<T, C>::operator= (ACE_Unbounded_Set_Ex<T, C> const &us)
 {
   ACE_TRACE ("ACE_Unbounded_Set_Ex<T, C>::operator=");
 
-  if (this != &us)
+  if (this != std::addressof (us))
     {
       this->delete_nodes ();
       this->copy_nodes (us);

@@ -218,7 +218,7 @@ ACE_Unbounded_Stack<T>::operator= (const ACE_Unbounded_Stack<T> &s)
 {
   //  ACE_TRACE ("ACE_Unbounded_Stack<T>::operator=");
 
-  if (this != &s)
+  if (this != std::addressof (s))
     {
       this->delete_all_nodes ();
       this->copy_all_nodes (s);
@@ -687,7 +687,7 @@ ACE_Double_Linked_List<T>::ACE_Double_Linked_List (const ACE_Double_Linked_List<
 template <class T> void
 ACE_Double_Linked_List<T>::operator= (const ACE_Double_Linked_List<T> &cx)
 {
-  if (this != &cx)
+  if (this != std::addressof (cx))
     {
       this->delete_nodes ();
       this->copy_nodes (cx);
@@ -909,7 +909,7 @@ ACE_Fixed_Set<T, ACE_SIZE>::operator= (const ACE_Fixed_Set<T, ACE_SIZE> &fs)
 {
   ACE_TRACE ("ACE_Fixed_Set<T>::operator=");
 
-  if (this != &fs)
+  if (this != std::addressof (fs))
     {
       this->cur_size_ = fs.cur_size_;
 
@@ -1230,7 +1230,7 @@ ACE_Bounded_Set<T>::operator= (const ACE_Bounded_Set<T> &bs)
 {
   ACE_TRACE ("ACE_Bounded_Set<T>::operator=");
 
-  if (this != &bs)
+  if (this != std::addressof (bs))
     {
       if (this->max_size_ < bs.cur_size_)
         {
@@ -1505,7 +1505,7 @@ ACE_Ordered_MultiSet<T>::operator= (const ACE_Ordered_MultiSet<T> &us)
 {
   ACE_TRACE ("ACE_Ordered_MultiSet<T>::operator=");
 
-  if (this != &us)
+  if (this != std::addressof (us))
     {
       this->delete_nodes ();
       this->copy_nodes (us);

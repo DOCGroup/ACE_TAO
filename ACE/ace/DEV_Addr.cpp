@@ -1,4 +1,5 @@
 #include "ace/DEV_Addr.h"
+#include <memory>
 #if !defined (__ACE_INLINE__)
 #include "ace/DEV_Addr.inl"
 #endif /* __ACE_INLINE__ */
@@ -92,7 +93,7 @@ ACE_DEV_Addr::operator= (ACE_DEV_Addr const &sa)
 {
   ACE_TRACE ("ACE_DEV_Addr::operator=");
 
-  if (this != &sa)
+  if (this != std::addressof (sa))
     this->set (sa);
 
   return *this;

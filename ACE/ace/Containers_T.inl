@@ -1,4 +1,5 @@
 // -*- C++ -*-
+#include <memory>
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class T> ACE_INLINE bool
@@ -288,7 +289,7 @@ ACE_Array<T>::operator= (const ACE_Array<T> &s)
 {
   // Check for "self-assignment".
 
-  if (this != &s)
+  if (this != std::addressof (s))
     this->ACE_Array_Base<T>::operator= (s);
 }
 

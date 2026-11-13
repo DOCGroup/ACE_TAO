@@ -2,6 +2,7 @@
 #define ACE_ARRAY_BASE_CPP
 
 #include "ace/Array_Base.h"
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -82,7 +83,7 @@ ACE_Array_Base<T>::operator= (ACE_Array_Base<T> const &s)
 {
   // Check for "self-assignment".
 
-  if (this != &s)
+  if (this != std::addressof (s))
     {
       if (this->max_size_ < s.size ())
         {

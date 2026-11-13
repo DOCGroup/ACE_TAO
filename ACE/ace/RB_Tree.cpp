@@ -2,6 +2,7 @@
 #define ACE_RB_TREE_CPP
 
 #include "ace/Global_Macros.h"
+#include <memory>
 #include "ace/RB_Tree.h"
 #include "ace/SString.h"
 
@@ -107,7 +108,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::operator = (const ACE_RB_Tr
   ACE_TRACE ("ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::operator =");
   ACE_WRITE_GUARD (ACE_LOCK, ace_mon, this->lock_);
 
-  if (this != &rbt)
+  if (this != std::addressof (rbt))
     {
       // Clear out the existing tree.
       close_i ();
@@ -1137,7 +1138,7 @@ template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> void
 ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::operator= (const ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &iter)
 {
   ACE_TRACE ("ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::operator=");
-  if (this != &iter)
+  if (this != std::addressof (iter))
     {
       tree_ = iter.tree_;
       node_ = iter.node_;

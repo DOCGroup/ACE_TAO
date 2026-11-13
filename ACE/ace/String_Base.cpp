@@ -328,7 +328,7 @@ ACE_String_Base<ACE_CHAR_T>::operator= (const ACE_String_Base<ACE_CHAR_T> &s)
   ACE_TRACE ("ACE_String_Base<ACE_CHAR_T>::operator=");
 
   // Check for self-assignment.
-  if (this != &s)
+  if (this != std::addressof (s))
     {
       this->set (s.rep_, s.len_, true);
     }

@@ -1,5 +1,6 @@
 // Name_Space.cpp
 #include "ace/Name_Space.h"
+#include <memory>
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdlib.h"
 
@@ -49,7 +50,7 @@ ACE_Name_Binding::operator = (const ACE_Name_Binding &s)
 {
   ACE_TRACE ("ACE_Name_Binding::operator =");
 
-  if (this != &s)
+  if (this != std::addressof (s))
     {
 #if defined (ACE_HAS_ALLOC_HOOKS)
       ACE_Allocator::instance()->free ((void *) this->type_);

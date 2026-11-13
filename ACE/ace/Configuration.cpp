@@ -60,7 +60,7 @@ ACE_Configuration_Section_Key::ACE_Configuration_Section_Key (const ACE_Configur
 ACE_Configuration_Section_Key&
 ACE_Configuration_Section_Key::operator= (const ACE_Configuration_Section_Key& rhs)
 {
-  if (this != &rhs)
+  if (this != std::addressof (rhs))
     {
       if (key_)
         key_->dec_ref ();
@@ -1054,7 +1054,7 @@ ACE_Configuration_Value_IntId::ACE_Configuration_Value_IntId (const ACE_Configur
 
 ACE_Configuration_Value_IntId& ACE_Configuration_Value_IntId::operator= (const ACE_Configuration_Value_IntId& rhs)
 {
-  if (this != &rhs)
+  if (this != std::addressof (rhs))
     {
       type_ = rhs.type_;
       data_ = rhs.data_;
@@ -1081,7 +1081,7 @@ ACE_Configuration_ExtId::ACE_Configuration_ExtId (const ACE_Configuration_ExtId&
 
 ACE_Configuration_ExtId& ACE_Configuration_ExtId::operator= (const ACE_Configuration_ExtId& rhs)
 {
-  if (this != &rhs)
+  if (this != std::addressof (rhs))
     name_ = rhs.name_;
 
   return *this;
@@ -1131,7 +1131,7 @@ ACE_Configuration_Section_IntId::ACE_Configuration_Section_IntId (const ACE_Conf
 ACE_Configuration_Section_IntId&
 ACE_Configuration_Section_IntId::operator= (const ACE_Configuration_Section_IntId& rhs)
 {
-  if (this != &rhs)
+  if (this != std::addressof (rhs))
     {
       value_hash_map_ = rhs.value_hash_map_;
       section_hash_map_ = rhs.section_hash_map_;
