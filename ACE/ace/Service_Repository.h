@@ -87,6 +87,9 @@ public:
   /// Delete the dynamically allocated Singleton.
   static void close_singleton ();
 
+  /// @name Service table operations
+  /// @{
+
   /// Insert a new service record.  Returns -1 when the service repository
   /// is full and 0 on success.
   int insert (ACE_Service_Type const *sr);
@@ -116,11 +119,18 @@ public:
   /// and the caller is responsible for disposing of it.
   int remove (ACE_TCHAR const name[], ACE_Service_Type **sr = nullptr);
 
+  /// @}
+
+  /// @name Liveness control
+  /// @{
+
   /// Resume a service record.
   int resume (ACE_TCHAR const name[], ACE_Service_Type const **srp = nullptr);
 
   /// Suspend a service record.
   int suspend (ACE_TCHAR const name[], ACE_Service_Type const **srp = nullptr);
+
+  /// @}
 
   /// Return the current size of the repository.
   size_t current_size () const;
@@ -229,6 +239,8 @@ public:
 
   ~ACE_Service_Repository_Iterator ();
 
+  /// @name Iteration methods
+  /// @{
 
   /// Pass back the @a next_item that hasn't been seen in the repository.
   /// Returns 0 when all items have been seen, else 1.
@@ -240,6 +252,8 @@ public:
   /// Move forward by one element in the repository.  Returns 0 when all the
   /// items in the set have been seen, else 1.
   int advance ();
+
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;

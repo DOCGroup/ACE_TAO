@@ -308,6 +308,9 @@ public:
 
   using size_type = map_type::size_type;
 
+  /// @name Handler table operations
+  /// @{
+
   /// Default "do-nothing" constructor.
   ACE_Select_Reactor_Handler_Repository (ACE_Select_Reactor_Impl &);
 
@@ -343,6 +346,11 @@ public:
   /// Remove all the <ACE_HANDLE, ACE_Event_Handler> tuples.
   int unbind_all ();
 
+  /// @}
+
+  /// @name Handle validation
+  /// @{
+
   // Check the @a handle to make sure it's a valid @c ACE_HANDLE that
   // is within the range of legal handles (i.e., >= 0 && < max_size_).
   bool invalid_handle (ACE_HANDLE handle);
@@ -352,11 +360,18 @@ public:
   // @c max_handlep1_).
   bool handle_in_range (ACE_HANDLE handle);
 
+  /// @}
+
+  /// @name Repository accessors
+  /// @{
+
   /// Returns the current table size.
   size_type size () const;
 
   /// Maximum ACE_HANDLE value, plus 1.
   max_handlep1_type max_handlep1 () const;
+
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;
@@ -405,6 +420,9 @@ public:
   explicit ACE_Select_Reactor_Handler_Repository_Iterator (
     ACE_Select_Reactor_Handler_Repository const * s);
 
+  /// @name Iteration methods
+  /// @{
+
   /// Pass back the @a next_item that hasn't been seen in the Set.
   /// Returns @c false when all items have been seen, else @c true.
   bool next (ACE_Event_Handler* & next_item);
@@ -415,6 +433,8 @@ public:
   /// Move forward by one element in the set.  Returns @c false when
   /// all the items in the set have been seen, else @c true.
   bool advance ();
+
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;

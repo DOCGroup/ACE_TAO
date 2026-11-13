@@ -63,6 +63,9 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
+  /// @name Service management
+  /// @{
+
   /// Trigger a reconfiguration of the Service Configurator by
   /// re-reading its local <svc.conf> file.
   virtual int reconfigure_services ();
@@ -71,22 +74,39 @@ protected:
   /// information back to the client.
   virtual int list_services ();
 
+  /// @}
+
+  /// @name Dynamic linking hooks
+  /// @{
+
   int init (int argc, ACE_TCHAR *argv[]) override;
   int info (ACE_TCHAR **info_string, size_t length) const override;
   int fini () override;
 
+  /// @}
+
+  /// @name Scheduling hooks
+  /// @{
+
   int suspend () override;
   int resume () override;
+
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;
 
   int open (const ACE_INET_Addr &sia);
 
+  /// @name Demultiplexing hooks
+  /// @{
+
   ACE_HANDLE get_handle () const override;
   int handle_input (ACE_HANDLE fd) override;
   int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask) override;
   int handle_signal (int signum, siginfo_t *, ucontext_t *) override;
+
+  /// @}
 
   /// Handle one request.
   virtual void process_request (ACE_TCHAR *request);
