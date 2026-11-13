@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef SENDER_QOS_EVENT_HANDLER_H
 #define SENDER_QOS_EVENT_HANDLER_H
 
@@ -17,6 +16,7 @@
 #include "ace/INET_Addr.h"
 #include "ace/QoS/SOCK_Dgram_Mcast_QoS.h"
 #include "ace/QoS/QoS_Session.h"
+#include "Fill_ACE_QoS.h"
 
 //#define MY_DEFPORT 5001
 //#define DEFAULT_MULTICASTGROUP "234.5.6.7"
@@ -24,18 +24,16 @@
 class Sender_QoS_Event_Handler : public ACE_Event_Handler
 {
 public:
-  /// Constructor.
   Sender_QoS_Event_Handler () = delete;
 
-  /// Constructor.
   Sender_QoS_Event_Handler (ACE_SOCK_Dgram_Mcast_QoS &dgram_mcast_qos,
-                            ACE_QoS_Session *qos_session);
+                            ACE_QoS_Session *qos_session,
+                            Fill_ACE_QoS &flow_spec_list);
   Sender_QoS_Event_Handler (Sender_QoS_Event_Handler const &) = delete;
   Sender_QoS_Event_Handler (Sender_QoS_Event_Handler &&) = delete;
   Sender_QoS_Event_Handler &operator= (Sender_QoS_Event_Handler const &) = delete;
   Sender_QoS_Event_Handler &operator= (Sender_QoS_Event_Handler &&) = delete;
 
-  /// Destructor.
   ~Sender_QoS_Event_Handler () override = default;
 
   /// Override this to return the handle of the Dgram_Mcast
@@ -50,6 +48,8 @@ private:
   /// Borrowed socket; the caller keeps it alive for the handler's lifetime.
   ACE_SOCK_Dgram_Mcast_QoS &dgram_mcast_qos_;
   ACE_QoS_Session *qos_session_ {};
+  /// Borrowed owner; the QoS session keeps pointers to its flow specs.
+  Fill_ACE_QoS &flow_spec_list_;
 };
 
 #endif  /* SENDER_QOS_EVENT_HANDLER_H */

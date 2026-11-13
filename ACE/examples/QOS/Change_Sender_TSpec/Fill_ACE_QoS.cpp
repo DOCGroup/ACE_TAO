@@ -1,8 +1,9 @@
 // Fill_ACE_QoS.cpp
 #include "Fill_ACE_QoS.h"
 
+#include <utility>
 
-const iovec Fill_ACE_QoS::iov_ = {0, 0};
+iovec const Fill_ACE_QoS::iov_ = {nullptr, 0};
 
 Fill_ACE_QoS::Fill_ACE_QoS ()
   : default_traffic_ (std::make_unique<ACE_Flow_Spec> (
@@ -23,9 +24,9 @@ int
 Fill_ACE_QoS::fill_simplex_receiver_qos (ACE_QoS &ace_qos,
                                          ACE_CString const &recv_flow_name)
 {
-  ACE_Flow_Spec *recv_flow_spec = nullptr;
+  ACE_Flow_Spec *recv_flow_spec {};
 
-  if (this->map ().find (recv_flow_name, recv_flow_spec) != 0)
+  if (this->flow_spec_map_.find (recv_flow_name, recv_flow_spec) != 0)
     ACE_ERROR_RETURN ((LM_DEBUG,
                        "Unable to find a FlowSpec with name %s",
                        recv_flow_name.c_str ()),
@@ -37,14 +38,13 @@ Fill_ACE_QoS::fill_simplex_receiver_qos (ACE_QoS &ace_qos,
   return 0;
 }
 
-
 int
 Fill_ACE_QoS::fill_simplex_sender_qos (ACE_QoS &ace_qos,
                                        ACE_CString const &send_flow_name)
 {
-  ACE_Flow_Spec *send_flow_spec = nullptr;
+  ACE_Flow_Spec *send_flow_spec {};
 
-  if (this->map ().find (send_flow_name, send_flow_spec) != 0)
+  if (this->flow_spec_map_.find (send_flow_name, send_flow_spec) != 0)
     ACE_ERROR_RETURN ((LM_DEBUG,
                        "Unable to find a FlowSpec with name %s",
                        send_flow_name.c_str ()),
@@ -62,16 +62,16 @@ Fill_ACE_QoS::fill_duplex_qos (ACE_QoS &ace_qos,
                                ACE_CString const &recv_flow_name,
                                ACE_CString const &send_flow_name)
 {
-  ACE_Flow_Spec *send_flow_spec = nullptr;
-  ACE_Flow_Spec *recv_flow_spec = nullptr;
+  ACE_Flow_Spec *send_flow_spec {};
+  ACE_Flow_Spec *recv_flow_spec {};
 
-  if (this->map ().find (recv_flow_name, recv_flow_spec) != 0)
+  if (this->flow_spec_map_.find (recv_flow_name, recv_flow_spec) != 0)
     ACE_ERROR_RETURN ((LM_DEBUG,
                        "Unable to find a FlowSpec with name %s",
                        recv_flow_name.c_str ()),
                       -1);
 
-  if (this->map ().find (send_flow_name, send_flow_spec) != 0)
+  if (this->flow_spec_map_.find (send_flow_name, send_flow_spec) != 0)
     ACE_ERROR_RETURN ((LM_DEBUG,
                        "Unable to find a FlowSpec with name %s",
                        send_flow_name.c_str ()),
@@ -84,9 +84,19 @@ Fill_ACE_QoS::fill_duplex_qos (ACE_QoS &ace_qos,
   return 0;
 }
 
-Fill_ACE_QoS::FLOW_SPEC_HASH_MAP&
-Fill_ACE_QoS::map ()
+int
+Fill_ACE_QoS::rebind_flow_spec (ACE_CString const &name,
+                                std::unique_ptr<ACE_Flow_Spec> flow_spec)
 {
-  return this->flow_spec_map_;
+  if (flow_spec == nullptr)
+    return -1;
+
+  ACE_Flow_Spec * const flow_spec_ptr = flow_spec.get ();
+  this->flow_specs_.push_back (std::move (flow_spec));
+  int const result = this->flow_spec_map_.rebind (name, flow_spec_ptr);
+  if (result == -1)
+    this->flow_specs_.pop_back ();
+
+  return result == -1 ? -1 : 0;
 }
 
