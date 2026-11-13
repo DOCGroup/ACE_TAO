@@ -8,8 +8,7 @@
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Scheduler_Factory.h"
 
-// This program dumps the results of one scheduling in a C++ file.
-
+/// Dumps the results of one scheduling run as C++ source code.
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
