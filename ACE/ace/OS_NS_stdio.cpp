@@ -292,12 +292,12 @@ ACE_OS::tempnam (const wchar_t *dir, const wchar_t *pfx)
   // ACE_OS::tempnam returns a pointer to a malloc()-allocated space.
   // Convert that string to wide-char and free() the original.
   wchar_t *wname {};
-  if (name != 0)
+  if (name != nullptr)
     {
-      size_t namelen = ACE_OS::strlen (name) + 1;
+      size_t const namelen = ACE_OS::strlen (name) + 1;
       wname = reinterpret_cast<wchar_t *>
         (ACE_OS::malloc (namelen * sizeof (wchar_t)));
-      if (wname != 0)
+      if (wname != nullptr)
         ACE_OS::strcpy (wname, ACE_Ascii_To_Wide (name).wchar_rep ());
       ACE_OS::free (name);
     }
