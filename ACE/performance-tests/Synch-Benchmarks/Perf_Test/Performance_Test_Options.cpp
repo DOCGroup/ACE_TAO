@@ -185,13 +185,13 @@ Performance_Test_Options::parse_args (int argc, ACE_TCHAR *argv[])
 
   if (this->do_print_summary ())
     ACE_DEBUG ((LM_INFO,
-                  "%8d = total iterations\n"
-                  "%8d = logical connections\n"
-                  "%8d = physical connections\n"
-                  "%8d = message_size\n"
+                  "%8B = total iterations\n"
+                  "%8B = logical connections\n"
+                  "%8B = physical connections\n"
+                  "%8B = message_size\n"
                   "%8d = calculated checksum\n"
                   "%8d = perform xdr conversion\n"
-                  "%8d = number of LWPs requested\n"
+                  "%8B = number of LWPs requested\n"
                   "%8d = number of LWPs used\n",
                   this->iterations (),
                   this->logical_connections (),
@@ -203,15 +203,15 @@ Performance_Test_Options::parse_args (int argc, ACE_TCHAR *argv[])
                ACE_Thread::getconcurrency ()));
   else if (this->verbose ())
     ACE_DEBUG ((LM_INFO,
-                "%8d = total iterations\n"
-                "%8d = logical connections\n"
-                "%8d = physical connections\n"
-                "%8d = thread count\n"
-                "%8d = low water mark\n"
-                "%8d = high water mark\n"
-                "%8d = message_size\n"
-                "%8d = initial queue length\n"
-                "%8d = consecutive ports\n"
+                "%8B = total iterations\n"
+                "%8B = logical connections\n"
+                "%8B = physical connections\n"
+                "%8B = thread count\n"
+                "%8B = low water mark\n"
+                "%8B = high water mark\n"
+                "%8B = message_size\n"
+                "%8B = initial queue length\n"
+                "%8B = consecutive ports\n"
                 "%8d = calculated checksum\n"
                 "%8d = perform xdr conversion\n"
                 "%8d = zero-copy driver\n"
@@ -223,7 +223,7 @@ Performance_Test_Options::parse_args (int argc, ACE_TCHAR *argv[])
                 "%8d = THR_DETACHED\n"
                 "%8d = THR_BOUND\n"
                 "%8d = THR_NEW_LWP\n"
-                "%8d = sleep time\n",
+                "%8B = sleep time\n",
                 this->iterations (),
                 this->logical_connections (),
                 this->physical_connections (),
@@ -273,7 +273,7 @@ Performance_Test_Options::print_results ()
     {
 #if defined (ACE_HAS_PRUSAGE_T)
       ACE_DEBUG ((LM_INFO,
-                  "\n%8d PEs\n"
+                  "\n%8B PEs\n"
                   "%8.2f Mbit/sec\n"
                   "%8d (voluntary context switches)\n"
                   "%8d (involuntary context switches)\n"
@@ -297,7 +297,7 @@ Performance_Test_Options::print_results ()
                   ACE_Thread::getconcurrency ()));
 #elif defined (ACE_HAS_GETRUSAGE) && !defined (ACE_WIN32)
       ACE_DEBUG ((LM_INFO,
-                  "\n%8d PEs\n"
+                  "\n%8B PEs\n"
                   "%8.2f Mbit/sec\n"
                   "%8d (voluntary context switches)\n"
                   "%8d (involuntary context switches)\n"
@@ -320,7 +320,7 @@ Performance_Test_Options::print_results ()
 #elif defined (ACE_HAS_GETRUSAGE) && defined (ACE_WIN32)
       // Need more stuff for Win32.
       ACE_DEBUG ((LM_INFO,
-                  "\n%8d PEs\n"
+                  "\n%8B PEs\n"
                   "%8.2f Mbit/sec\n"
                   "%8d (number of LWPs)\n",
                   this->thr_count (),

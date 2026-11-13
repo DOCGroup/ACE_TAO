@@ -81,12 +81,12 @@ Performance_Test::post_run_test ()
               (performance_test_options.t_flags () & THR_BOUND) ? "THR_BOUND"    : "Not Bound",
               (performance_test_options.t_flags () & THR_NEW_LWP)  ? "THR_NEW_LWP"  : "No New_LWP",
               this->orig_n_lwps_, this->n_lwps_, ACE_Thread::getconcurrency ()));
-  int const count = performance_test_options.count ();
+  size_t const count = performance_test_options.count ();
   float const rate = static_cast<float> (count)
     / static_cast<float> (performance_test_options.sleep_time ());
 
   ACE_DEBUG ((LM_DEBUG,
-              "to count = %d\nrate = %.3f ops/sec, per operation = %.2f usec\n",
+              "to count = %B\nrate = %.3f ops/sec, per operation = %.2f usec\n",
               count,
               rate,
               (1.0e6 / rate) / synch_count));
