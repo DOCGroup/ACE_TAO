@@ -221,10 +221,10 @@ private:
   /// Factor out code from bind() and rebind().
   int shared_bind (const ACE_NS_WString &name,
                    const ACE_NS_WString &value,
-                   const char *type, int rebind);
+                   const char *type, bool rebind);
   int shared_bind_i (const ACE_NS_WString &name,
                      const ACE_NS_WString &value,
-                     const char *type, int rebind);
+                     const char *type, bool rebind);
 
   /// Allocate the appropriate type of map manager that stores the
   /// key/value binding.

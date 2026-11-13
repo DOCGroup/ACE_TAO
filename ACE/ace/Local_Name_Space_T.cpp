@@ -117,7 +117,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::shared_bind (
   const ACE_NS_WString &name,
   const ACE_NS_WString &value,
   const char *type,
-  int rebind)
+  bool rebind)
 {
   // Note that we *must* use structured exception handling here
   // because (1) we may need to commit virtual memory pages and (2)
@@ -138,7 +138,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::shared_bind_i (
   const ACE_NS_WString &name,
   const ACE_NS_WString &value,
   const char *type,
-  int rebind)
+  bool rebind)
 {
   ACE_TRACE ("ACE_Local_Name_Space::shared_bind_i");
   const size_t name_len = (name.length () + 1) * sizeof (ACE_WCHAR_T);
@@ -166,7 +166,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::shared_bind_i (
       ACE_NS_Internal new_internal (new_value, new_type);
       int result = -1;
 
-      if (rebind == 0)
+      if (!rebind)
         {
           // Do a normal bind.  This will fail if there's already an
           // <new_internal> with the same name.
@@ -265,7 +265,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::bind (
   ACE_TRACE ("ACE_Local_Name_Space::bind");
   ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
 
-  return this->shared_bind (name, value, type, 0);
+  return this->shared_bind (name, value, type, false);
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
@@ -277,7 +277,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::rebind (
   ACE_TRACE ("ACE_Local_Name_Space::rebind");
   ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
 
-  return this->shared_bind (name, value, type, 1);
+  return this->shared_bind (name, value, type, true);
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
