@@ -543,8 +543,8 @@ ACE_Service_Gestalt::initialize (const ACE_Service_Type_Factory *stf,
   // services must be registered *after* the dynamic service that
   // loads them, so that their finalization is complete *before*
   // finalizing the dynamic service.
-  ACE_Service_Type_Dynamic_Guard dummy (*this->repo_,
-                                        stf->name ());
+  ACE_Service_Type_Dynamic_Guard const dummy (*this->repo_,
+                                              stf->name ());
 
   // make_service_type() is doing the dynamic loading and also runs
   // any static initializers
@@ -740,7 +740,7 @@ ACE_Service_Gestalt::process_directive_i (const ACE_Static_Svc_Descriptor &ssd,
   // constructor in ACE_Service_Type. Note that, in cases where we are
   // called from a static initializer which is part of a DLL, there is
   // not enough information about the actuall DLL in this context.
-  ACE_DLL tmp_dll;
+  ACE_DLL const tmp_dll;
 
   ACE_NEW_RETURN (service_type,
                   ACE_Service_Type (ssd.name_,
@@ -789,7 +789,7 @@ ACE_Service_Gestalt::process_directives_i (ACE_Svc_Conf_Param *param)
   // this instance will own both the DLL and those static services,
   // which implies that their finalization will be performed in the
   // correct order, i.e. prior to finalizing the DLL
-  ACE_Service_Config_Guard guard (this);
+  ACE_Service_Config_Guard const guard (this);
 
   ::ace_yyparse (param);
 
@@ -853,8 +853,8 @@ ACE_Service_Gestalt::process_file (const ACE_TCHAR file[])
 
   // Register a dummy service as a forward decl, using the file name as name.
   // The entry will be automaticaly removed once the thread exits this block.
-  ACE_Service_Type_Dynamic_Guard recursion_guard (*this->repo_,
-                                                  file);
+  ACE_Service_Type_Dynamic_Guard const recursion_guard (*this->repo_,
+                                                        file);
 
   /*
    * @TODO: Test with ACE_USES_CLASSIC_SVC_CONF turned off!
@@ -986,10 +986,10 @@ ACE_Service_Gestalt::open_i (const ACE_TCHAR program_name[],
   this->no_static_svcs_ = ignore_static_svcs;
 
   // Record the current log setting upon entering this thread.
-  u_long old_process_mask = log_msg->priority_mask
+  u_long const old_process_mask = log_msg->priority_mask
     (ACE_Log_Msg::PROCESS);
 
-  u_long old_thread_mask = log_msg->priority_mask
+  u_long const old_thread_mask = log_msg->priority_mask
     (ACE_Log_Msg::THREAD);
 
 #ifndef ACE_NLOGGING
@@ -1109,7 +1109,7 @@ ACE_Service_Gestalt::open_i (const ACE_TCHAR program_name[],
   // into <open_i>.
   {
     // Make sure to save/restore errno properly.
-    ACE_Errno_Guard error (errno);
+    ACE_Errno_Guard const error (errno);
 
     if (!ignore_debug_flag)
       {
