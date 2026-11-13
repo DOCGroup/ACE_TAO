@@ -50,6 +50,9 @@ public:
 
   ~TAO_SCIOP_Connector () override = default;
 
+  /// @name TAO_Connector methods
+  /// See Transport_Connector.h for their documentation.
+  /// @{
   int open (TAO_ORB_Core *orb_core) override;
   int close () override;
   TAO_Profile *create_profile (TAO_InputCDR &cdr) override;
@@ -57,8 +60,8 @@ public:
   int check_prefix (char const *endpoint) override;
 
   char object_key_delimiter () const override;
+  /// @}
 
-public:
   using TAO_SCIOP_CONNECT_CONCURRENCY_STRATEGY =
     TAO_Connect_Concurrency_Strategy<TAO_SCIOP_Connection_Handler>;
 
@@ -72,18 +75,20 @@ public:
                                                            ACE_SOCK_SEQPACK_CONNECTOR>;
 
 protected:
+  /// @name Protected TAO_Connector methods
+  /// See Transport_Connector.h for their documentation.
+  /// @{
   int set_validate_endpoint (TAO_Endpoint *ep) override;
 
   TAO_Transport *make_connection (TAO::Profile_Transport_Resolver *r,
                                   TAO_Transport_Descriptor_Interface &desc,
                                   ACE_Time_Value *timeout = nullptr) override;
 
-  /// More TAO_Connector methods, please check the documentation on
-  /// Transport_Connector.h
   TAO_Profile *make_profile () override;
 
   /// Cancel the passed cvs handler from the connector
   int cancel_svc_handler (TAO_Connection_Handler *svc_handler) override;
+  /// @}
 
 private:
   TAO_SCIOP_Connector (TAO_SCIOP_Connector const &) = delete;
