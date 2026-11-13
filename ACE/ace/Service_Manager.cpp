@@ -22,21 +22,11 @@ ACE_Service_Manager::dump () const
 #endif /* ACE_HAS_DUMP */
 }
 
-// Static variables.
-
-u_short ACE_Service_Manager::DEFAULT_PORT_ = 10000;
-
 ACE_Service_Manager::ACE_Service_Manager ()
-  : debug_ (false),
-    signum_ (SIGHUP)
-{
-  ACE_TRACE ("ACE_Service_Manager::ACE_Service_Manager");
-}
+  = default;
 
 ACE_Service_Manager::~ACE_Service_Manager ()
-{
-  ACE_TRACE ("ACE_Service_Manager::~ACE_Service_Manager");
-}
+  = default;
 
 int
 ACE_Service_Manager::suspend ()
@@ -58,7 +48,7 @@ ACE_Service_Manager::open (const ACE_INET_Addr &sia)
   ACE_TRACE ("ACE_Service_Manager::open");
 
   // Reuse the listening address, even if it's already in use!
-  if (this->acceptor_.open (sia, 1) == -1)
+  if (this->acceptor_.open (sia, true) == -1)
     {
       return -1;
     }
@@ -103,9 +93,9 @@ ACE_Service_Manager::init (int argc, ACE_TCHAR *argv[])
   ACE_INET_Addr local_addr (ACE_Service_Manager::DEFAULT_PORT_);
 
   //FUZZ: disable check_for_lack_ACE_OS
-  ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("dp:s:"), 0); // Start at argv[0]
+  ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("dp:"), 0); // Start at argv[0]
 
-  for (int c; (c = getopt ()) != -1; )
+  for (int c {}; (c = getopt ()) != -1; )
   //FUZZ: enable check_for_lack_ACE_OS
      switch (c)
        {
@@ -114,9 +104,6 @@ ACE_Service_Manager::init (int argc, ACE_TCHAR *argv[])
          break;
        case 'p':
          local_addr.set ((u_short) ACE_OS::atoi (getopt.opt_arg ()));
-         break;
-       case 's':
-         this->signum_ = ACE_OS::atoi (getopt.opt_arg ());
          break;
        default:
          break;
@@ -153,18 +140,16 @@ ACE_Service_Manager::fini ()
 {
   ACE_TRACE ("ACE_Service_Manager::fini");
 
-  int retv = 0;
+  if (this->get_handle () == ACE_INVALID_HANDLE)
+    return 0;
 
-  if (this->get_handle () != ACE_INVALID_HANDLE)
-    {
-      retv =
-        ACE_Reactor::instance ()->remove_handler (
-          this,
-          ACE_Event_Handler::ACCEPT_MASK | ACE_Event_Handler::DONT_CALL);
+  int const retv =
+    ACE_Reactor::instance ()->remove_handler (
+      this,
+      ACE_Event_Handler::ACCEPT_MASK | ACE_Event_Handler::DONT_CALL);
 
-      this->handle_close (ACE_INVALID_HANDLE,
-                          ACE_Event_Handler::NULL_MASK);
-    }
+  this->handle_close (ACE_INVALID_HANDLE,
+                      ACE_Event_Handler::NULL_MASK);
 
   return retv;
 }
@@ -189,9 +174,9 @@ int
 ACE_Service_Manager::list_services ()
 {
   ACE_TRACE ("ACE_Service_Manager::list_services");
-  ACE_Service_Repository_Iterator sri (*ACE_Service_Repository::instance (), 0);
+  ACE_Service_Repository_Iterator sri (*ACE_Service_Repository::instance (), false);
 
-  for (const ACE_Service_Type *sr;
+  for (ACE_Service_Type const *sr {};
        sri.next (sr) != 0;
        sri.advance ())
     {
@@ -220,7 +205,7 @@ ACE_Service_Manager::list_services ()
 
       if (len > 0)
         {
-          ssize_t n = this->client_stream_.send_n (buf, len);
+          ssize_t const n = this->client_stream_.send_n (buf, len);
 
           if (n <= 0 && errno != EPIPE)
             {
@@ -234,18 +219,13 @@ ACE_Service_Manager::list_services ()
   return 0;
 }
 
-// Trigger a reconfiguration of the Service Configurator via its
-// svc.conf file.
+/// Trigger a reconfiguration of the Service Configurator via its
+/// svc.conf file.
 
 int
 ACE_Service_Manager::reconfigure_services ()
 {
   ACE_TRACE ("ACE_Service_Manager::reconfigure_services");
-
-#if 0
-// Send ourselves a signal!  ACE_OS::kill (ACE_OS::getpid (),
-// this->signum_);
-#endif /* 0 */
 
   // Flag the main event loop that a reconfiguration should occur.
   // The next trip through the <ACE_Reactor::run_event_loop> should
@@ -258,11 +238,11 @@ ACE_Service_Manager::reconfigure_services ()
                                                         sizeof ("done\n")));
 }
 
-// isolate the request-processing code
+// Isolate the request-processing code.
 void
 ACE_Service_Manager::process_request (ACE_TCHAR *request)
 {
-  ACE_TRACE("ACE_Service_Manager::process_request");
+  ACE_TRACE ("ACE_Service_Manager::process_request");
   ACE_TCHAR *p;
 
   // Kill trailing newlines.
@@ -280,7 +260,7 @@ ACE_Service_Manager::process_request (ACE_TCHAR *request)
       // Return a list of the configured services.
       this->list_services ();
     }
-  else if (ACE_OS::strcmp (request, ACE_TEXT ("reconfigure") )== 0)
+  else if (ACE_OS::strcmp (request, ACE_TEXT ("reconfigure")) == 0)
     {
       // Trigger a reconfiguration by re-reading the local <svc.conf> file.
       this->reconfigure_services ();
@@ -296,8 +276,7 @@ ACE_Service_Manager::process_request (ACE_TCHAR *request)
   // Additional management services may be handled here...
 }
 
-// Accept new connection from client and carry out the service they
-// request.
+/// Accept a new client connection and carry out the requested service.
 
 int
 ACE_Service_Manager::handle_input (ACE_HANDLE)
@@ -309,13 +288,13 @@ ACE_Service_Manager::handle_input (ACE_HANDLE)
   // created handle. This is because the newly created handle will
   // inherit the properties of the listen handle, including its event
   // associations.
-  bool reset_new_handle =
+  bool const reset_new_handle =
     ACE_Reactor::instance ()->uses_event_associations ();
 
   if (this->acceptor_.accept (this->client_stream_, // stream
                               nullptr, // remote address
                               nullptr, // timeout
-                              1, // restart
+                              true, // restart
                               reset_new_handle  // reset new handler
                               ) == -1)
     {
@@ -354,7 +333,7 @@ ACE_Service_Manager::handle_input (ACE_HANDLE)
   // '\n' or '\r' is found in the buffer, otherwise the buffer
   // contains an incomplete string.
 
-  int error;
+  int error {};
 
   do
     {
