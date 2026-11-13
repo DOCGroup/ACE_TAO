@@ -139,7 +139,7 @@ void
 ACE_TPQ_Entry::operator= (const ACE_TPQ_Entry& rhs)
 {
   ACE_TRACE ("ACE_TPQ_Entry::operator=");
-  if (&rhs == this)
+  if (std::addressof (rhs) == this)
     return;
   this->proxy_ = rhs.proxy ();
   this->nesting_level_ = rhs.nesting_level ();

@@ -5,6 +5,7 @@
 #include "tao/debug.h"
 
 #include <algorithm>
+#include <memory>
 #include <new>
 //#define DEBUG_LEVEL 9
 #ifndef DEBUG_LEVEL
@@ -169,7 +170,7 @@ TAO_Notify_EventTypeSeq::insert_seq (const TAO_Notify_EventTypeSeq& event_type_s
 void
 TAO_Notify_EventTypeSeq::remove_seq (const TAO_Notify_EventTypeSeq& event_type_seq)
 {
-  if (&event_type_seq == this)
+  if (std::addressof (event_type_seq) == this)
     {
       this->clear ();
       return;

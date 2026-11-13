@@ -3,6 +3,7 @@
 #include "global_extern.h"
 #include "utl_scope.h"
 
+#include <memory>
 #include <string>
 
 AST_Annotation_Appls::AST_Annotation_Appls () = default;
@@ -23,7 +24,7 @@ AST_Annotation_Appls::add (AST_Annotation_Appl *appl)
 void
 AST_Annotation_Appls::add (AST_Annotation_Appls const &other)
 {
-  if (this == &other)
+  if (this == std::addressof (other))
     {
       AST_Annotation_Appl_Ptrs const original (vector_);
       vector_.insert (vector_.end (), original.begin (), original.end ());

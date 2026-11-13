@@ -26,7 +26,7 @@ ACE_URL_Record::~ACE_URL_Record ()
 ACE_INLINE bool
 ACE_URL_Record::operator== (const ACE_URL_Record &rhs) const
 {
-  return this == &rhs || *this->id_ == *rhs.id_;
+  return this == std::addressof (rhs) || *this->id_ == *rhs.id_;
 }
 
 ACE_INLINE bool

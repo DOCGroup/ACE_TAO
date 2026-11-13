@@ -8,6 +8,8 @@
 
 #include "orbsvcs/Naming/Entries.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_IntId::TAO_IntId ()
@@ -38,7 +40,7 @@ void
 TAO_IntId::operator= (TAO_IntId const &rhs)
 {
   // check for self assignment.
-  if (&rhs == this)
+  if (std::addressof (rhs) == this)
     return;
 
   type_ = rhs.type_;
@@ -86,7 +88,7 @@ void
 TAO_ExtId::operator= (TAO_ExtId const &rhs)
 {
   // Check for self assignment.
-  if (&rhs == this)
+  if (std::addressof (rhs) == this)
     return;
 
   id_ = rhs.id_;

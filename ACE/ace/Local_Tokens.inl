@@ -238,7 +238,7 @@ ACE_INLINE void
 ACE_Token_Name::operator= (const ACE_Token_Name &rhs)
 {
   ACE_TRACE ("ACE_Token_Name::operator=");
-  if (&rhs != this)
+  if (std::addressof (rhs) != this)
   {
     this->name (rhs.name ());
   }

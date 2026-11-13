@@ -57,7 +57,7 @@ ACE_Bounded_Stack<T>::operator= (const ACE_Bounded_Stack<T> &s)
 {
   ACE_TRACE ("ACE_Bounded_Stack<T>::operator=");
 
-  if (&s != this)
+  if (std::addressof (s) != this)
     {
       if (this->size_ < s.size_)
         {
@@ -115,7 +115,7 @@ ACE_Fixed_Stack<T, ACE_SIZE>::operator= (const ACE_Fixed_Stack<T, ACE_SIZE> &s)
 {
   ACE_TRACE ("ACE_Fixed_Stack<T, ACE_SIZE>::operator=");
 
-  if (&s != this)
+  if (std::addressof (s) != this)
     {
       this->top_ = s.top_;
 

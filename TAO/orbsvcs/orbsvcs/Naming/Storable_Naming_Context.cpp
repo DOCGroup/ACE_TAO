@@ -47,7 +47,7 @@ void
 TAO_Storable_IntId::operator= (TAO_Storable_IntId const &rhs)
 {
   // check for self assignment.
-  if (&rhs == this)
+  if (std::addressof (rhs) == this)
     return;
 
   type_ = rhs.type_;
@@ -78,7 +78,7 @@ void
 TAO_Storable_ExtId::operator= (TAO_Storable_ExtId const &rhs)
 {
   // Check for self assignment.
-  if (&rhs == this)
+  if (std::addressof (rhs) == this)
     return;
 
   id_ = rhs.id_;

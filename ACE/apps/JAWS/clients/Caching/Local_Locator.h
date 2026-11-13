@@ -15,6 +15,8 @@
 #include "URL_Locator.h"
 #include "ace/Containers.h"
 
+#include <memory>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */

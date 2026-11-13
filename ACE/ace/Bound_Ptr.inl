@@ -164,7 +164,7 @@ ACE_Strong_Bound_Ptr<X, ACE_LOCK>::operator = (const ACE_Strong_Bound_Ptr<X, ACE
 {
   // This will work if &r == this, by first increasing the ref count, but
   // why go through all that?
-  if (&rhs == this)
+  if (std::addressof (rhs) == this)
     return;
 
   COUNTER *new_counter = rhs.counter_;
@@ -181,7 +181,7 @@ ACE_Strong_Bound_Ptr<X, ACE_LOCK>::operator = (const ACE_Weak_Bound_Ptr<X, ACE_L
 {
   // This will work if &r == this, by first increasing the ref count, but
   // why go through all that?
-  if (&rhs == this)
+  if (std::addressof (rhs) == this)
     return;
 
   COUNTER *new_counter = rhs.counter_;

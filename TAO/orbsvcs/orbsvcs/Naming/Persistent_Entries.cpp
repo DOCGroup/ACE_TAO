@@ -10,6 +10,7 @@
 #include "ace/SString.h"
 
 #include <cstring>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -40,7 +41,7 @@ void
 TAO_Persistent_IntId::operator= (TAO_Persistent_IntId const &rhs)
 {
   // check for self assignment.
-  if (&rhs == this)
+  if (std::addressof (rhs) == this)
     return;
 
   type_ = rhs.type_;
@@ -75,7 +76,7 @@ void
 TAO_Persistent_ExtId::operator= (TAO_Persistent_ExtId const &rhs)
 {
   // Check for self assignment.
-  if (&rhs == this)
+  if (std::addressof (rhs) == this)
     return;
 
   id_ = rhs.id_;
@@ -145,7 +146,7 @@ void
 TAO_Persistent_Index_IntId::operator= (TAO_Persistent_Index_IntId const &rhs)
 {
   // check for self assignment.
-  if (&rhs == this)
+  if (std::addressof (rhs) == this)
     return;
 
   counter_ = rhs.counter_;
@@ -175,7 +176,7 @@ void
 TAO_Persistent_Index_ExtId::operator= (TAO_Persistent_Index_ExtId const &rhs)
 {
   // Check for self assignment.
-  if (&rhs == this)
+  if (std::addressof (rhs) == this)
     return;
 
   poa_id_ = rhs.poa_id_;
