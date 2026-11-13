@@ -257,16 +257,19 @@ ACE_SSL_Asynch_Stream::open (ACE_Handler & handler,
                                this->proactor_) != 0)
     return -1;
 
-  this->bio_ = ACE_SSL_make_BIO (this);
+  std::unique_ptr<BIO, decltype(&::BIO_free)> bio (
+    ACE_SSL_make_BIO (this),
+    ::BIO_free);
 
-  if (this->bio_ == nullptr)
+  if (bio == nullptr)
     ACELIB_ERROR_RETURN
       ((LM_ERROR,
         ACE_TEXT ("(%P|%t) ACE_SSL_Asynch_Stream::open() %p\n"),
         ACE_TEXT ("- cannot allocate new BIO structure")),
        -1);
 
-  ::SSL_set_bio (this->ssl_.get (), this->bio_, this->bio_);
+  ::SSL_set_bio (this->ssl_.get (), bio.get (), bio.get ());
+  bio.release ();
 
   switch (this->type_)
     {

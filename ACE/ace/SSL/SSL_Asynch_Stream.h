@@ -416,9 +416,6 @@ protected:
   /// Flag ensures that post_connection_check() is called at most one time.
   bool handshake_complete_ {};
 
-  /// The BIO implementation
-  BIO *bio_ {};
-
   /// The real streams which work under the ssl connection.
   /// BIO performs I/O via this streams
   enum BIO_Flag  // internal IO flags
