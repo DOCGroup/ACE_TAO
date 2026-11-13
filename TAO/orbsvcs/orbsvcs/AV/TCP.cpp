@@ -231,7 +231,6 @@ TAO_AV_TCP_Object::send_frame (char const *buf,
   return result;
 }
 
-
 TAO_AV_TCP_Object::TAO_AV_TCP_Object (TAO_AV_Callback *callback,
                                       TAO_AV_Transport *transport)
   :TAO_AV_Protocol_Object (callback,transport)
@@ -448,7 +447,6 @@ TAO_AV_TCP_Base_Acceptor::make_svc_handler (TAO_AV_TCP_Flow_Handler *&handler)
   return 0;
 }
 
-
 //------------------------------------------------------------
 // TAO_AV_TCP_Acceptor
 //------------------------------------------------------------
@@ -562,7 +560,6 @@ TAO_AV_TCP_Acceptor::open_default (TAO_Base_StreamEndPoint *endpoint,
                                      *address,
                                      entry);
 
-
   if (result < 0)
     ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        "TAO_AV_TCP_Acceptor::open failed"),
@@ -585,7 +582,6 @@ TAO_AV_TCP_Acceptor::open_default (TAO_Base_StreamEndPoint *endpoint,
 
   return 0;
 }
-
 
 int
 TAO_AV_TCP_Acceptor::close ()

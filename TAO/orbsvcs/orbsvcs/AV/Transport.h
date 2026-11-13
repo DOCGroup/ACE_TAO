@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_AV_TRANSPORT_H
 #define TAO_AV_TRANSPORT_H
 #include /**/ "ace/pre.h"

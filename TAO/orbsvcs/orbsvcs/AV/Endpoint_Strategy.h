@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_AV_ENDPOINT_STRATEGY_H
 #define TAO_AV_ENDPOINT_STRATEGY_H
 #include /**/ "ace/pre.h"
@@ -118,7 +117,6 @@ protected:
   pid_t pid_ {-1};
 };
 
-
 // ----------------------------------------------------------------------
 
 /**
@@ -168,7 +166,6 @@ protected:
   /// Creates a "B" type stream endpoint, and a vdev
   int create_B (AVStreams::StreamEndPoint_B_ptr &stream_endpoint,
                 AVStreams::VDev_ptr &vdev) override;
-
 
   /// Gets the object reference of the "B" type streamendpoint.
   int get_stream_endpoint () override;

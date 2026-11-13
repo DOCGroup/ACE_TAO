@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_AV_UDP_H
 #define TAO_AV_UDP_H
 
@@ -281,7 +280,6 @@ ACE_FACTORY_DECLARE (TAO_AV, TAO_AV_UDP_Flow_Factory)
 
 ACE_STATIC_SVC_DECLARE (TAO_AV_UDP_Factory)
 ACE_FACTORY_DECLARE (TAO_AV, TAO_AV_UDP_Factory)
-
 
 #if defined(__ACE_INLINE__)
 #include "orbsvcs/AV/UDP.inl"

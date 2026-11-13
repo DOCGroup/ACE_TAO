@@ -5,7 +5,6 @@
 #include "tao/debug.h"
 #include "ace/Dynamic_Service.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO_AV_Flow_Protocol_Factory

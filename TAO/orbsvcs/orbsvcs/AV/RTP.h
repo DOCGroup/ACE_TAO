@@ -34,7 +34,6 @@
  * SUCH DAMAGE.
  */
 
-
 //=============================================================================
 /**
  *  @file   RTP.h
@@ -51,7 +50,6 @@
 #include "orbsvcs/AV/Protocol_Factory.h"
 
 #include "ace/Service_Config.h"
-
 
 #define RTP_PT_BVC              22      /* Berkeley video codec */
 
@@ -96,7 +94,6 @@
 #define RTP_P   0x2000  /* Padding is present */
 #define RTP_X   0x1000  /* Extension Header is present */
 
-
 #define RTCP_PT_SR      200     /* sender report */
 #define RTCP_PT_RR      201     /* receiver report */
 #define RTCP_PT_SDES    202     /* source description */
@@ -115,7 +112,6 @@
 #define RTCP_SDES_MIN   1
 
 #define RTP_SEQ_MOD (1<<16)
-
 
 /*
  * Parameters controling the RTCP report rate timer.
@@ -387,7 +383,6 @@ protected:
 
   bool connection_gone_ {};
 };
-
 
 /**
  * @class TAO_AV_RTP_Flow_Factory

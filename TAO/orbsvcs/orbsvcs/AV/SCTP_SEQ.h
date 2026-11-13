@@ -298,7 +298,6 @@ ACE_FACTORY_DECLARE (TAO_AV, TAO_AV_SCTP_SEQ_Flow_Factory)
 ACE_STATIC_SVC_DECLARE (TAO_AV_SCTP_SEQ_Factory)
 ACE_FACTORY_DECLARE (TAO_AV, TAO_AV_SCTP_SEQ_Factory)
 
-
 #endif // ACE_HAS_SCTP
 
 #include /**/ "ace/post.h"

@@ -6,8 +6,6 @@
  */
 //=============================================================================
 
-
-#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/sfp.h"
@@ -47,14 +45,12 @@ TAO_AV_QoS::convert (AVStreams::streamQoS &/*network_qos*/)
   return -1;
 }
 
-
 // ----------------------------------------------------------------------
 // AV_Null_MediaCtrl
 // ----------------------------------------------------------------------
 AV_Null_MediaCtrl::AV_Null_MediaCtrl () = default;
 
 AV_Null_MediaCtrl::~AV_Null_MediaCtrl () = default;
-
 
 // ----------------------------------------------------------------------
 // TAO_Basic_StreamCtrl
@@ -64,7 +60,6 @@ TAO_Basic_StreamCtrl::TAO_Basic_StreamCtrl ()
   :flow_count_ (0)
 {
 }
-
 
 // Stop the transfer of data of the stream
 // Empty the_spec means apply operation to all flows
@@ -410,7 +405,6 @@ TAO_StreamCtrl::TAO_StreamCtrl ()
 
 TAO_StreamCtrl::~TAO_StreamCtrl () = default;
 
-
 // Stop the transfer of data of the stream
 // Empty the_spec means apply operation to all flows
 void
@@ -593,7 +587,6 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
               this->vdev_a_->define_property ("Related_StreamEndpoint",
                                               streamendpoint_a_any);
 
-
               CORBA::Any mmdevice_a_any;
               mmdevice_a_any <<= a_party;
               this->vdev_a_->define_property ("Related_MMDevice",
@@ -661,7 +654,6 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
               streamendpoint_b_any <<= this->sep_b_.in ();
               this->vdev_b_->define_property ("Related_StreamEndpoint",
                                               streamendpoint_b_any);
-
 
               CORBA::Any mmdevice_b_any;
               mmdevice_b_any <<= b_party;
@@ -842,7 +834,6 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
                                        this->vdev_a_.in (),
                                        the_qos,
                                        the_flows);
-
 
               // Now connect the streams together. This will
               // establish the connection
@@ -1198,7 +1189,6 @@ TAO_StreamCtrl::modify_QoS (AVStreams::streamQoS &new_qos,
   ORBSVCS_DEBUG ((LM_DEBUG,
               "TAO_StreamCtrl::modify_QoS\n"));
 
-
   if (this->mcastconfigif_ != nullptr)
     {
       // call modify_Qos on the root VDev which is the mcast configif.
@@ -1237,7 +1227,6 @@ TAO_StreamCtrl::modify_QoS (AVStreams::streamQoS &new_qos,
           if (TAO_debug_level > 0)
             ORBSVCS_DEBUG ((LM_DEBUG,
                         "TAO_StreamCtrl::modify_QoS\n"));
-
 
           for (u_int i {}; i < flowspec.length (); ++i)
             {
@@ -1336,7 +1325,6 @@ TAO_MCastConfigIf::configure (CosPropertyService::Property const &a_configuratio
       return;
     }
 }
-
 
 void
 TAO_MCastConfigIf::set_initial_configuration (CosPropertyService::Properties const &initial)
@@ -1483,7 +1471,6 @@ TAO_Base_StreamEndPoint::protocol_object_set ()
   this->protocol_object_set_ = true;
 }
 
-
 bool
 TAO_Base_StreamEndPoint::is_protocol_object_set () const
 {
@@ -1543,7 +1530,6 @@ TAO_StreamEndPoint::TAO_StreamEndPoint ()
   if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG, "TAO_StreamEndPoint::TAO_StreamEndPoint::mcast_addr = %s", this->mcast_addr_.c_str ()));
   //  this->handle_open ();
 }
-
 
 CORBA::Boolean
 TAO_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
@@ -1628,7 +1614,6 @@ TAO_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
           this->qos ().set (network_qos);
         }
 
-
       AVStreams::flowSpec flow_spec (the_spec);
       this->handle_preconnect (flow_spec);
 
@@ -1658,10 +1643,8 @@ TAO_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
                                                                 TAO_AV_Core::TAO_AV_ENDPOINT_A,
                                                                 flow_spec);
 
-
       if (result < 0)
         ORBSVCS_ERROR_RETURN ((LM_ERROR, "%N:%l TAO_AV_Core::init_forward_flows failed\n"), 0);
-
 
       AVStreams::StreamEndPoint_var streamendpoint = this->_this ();
 
@@ -2165,7 +2148,6 @@ TAO_StreamEndPoint::set_protocol_restriction (AVStreams::protocolSpec const &pro
   return 1;
 }
 
-
 void
 TAO_StreamEndPoint::disconnect (AVStreams::flowSpec const &the_spec)
 {
@@ -2185,7 +2167,6 @@ TAO_StreamEndPoint::set_FPStatus (AVStreams::flowSpec const &/*the_spec*/,
   // @@Naga: We should call set_FPStatus on all the protocol objects.
 }
 
-
 CORBA::Object_ptr
 TAO_StreamEndPoint::get_fep (char const *flow_name)
 {
@@ -2199,16 +2180,14 @@ TAO_StreamEndPoint::get_fep (char const *flow_name)
 char*
 TAO_StreamEndPoint::add_fep_i_add_property (AVStreams::FlowEndPoint_ptr fep)
 {
-  ACE_CString flow_name;
+  std::string flow_name;
 
   try
     {
       // exception implies the flow name is not defined and is system
       // generated.
       flow_name = "flow";
-      char tmp[255];
-      std::sprintf (tmp, "%u", this->flow_num_++);
-      flow_name += tmp;
+      flow_name += std::to_string (this->flow_num_++);
 
       CORBA::Any flowname_any;
       flowname_any <<= flow_name.c_str ();
@@ -2220,7 +2199,7 @@ TAO_StreamEndPoint::add_fep_i_add_property (AVStreams::FlowEndPoint_ptr fep)
       ex._tao_print_exception ("TAO_StreamEndPoint::add_fep");
       return 0;
     }
-  return ACE_OS::strdup( flow_name.c_str () );
+  return CORBA::string_dup (flow_name.c_str ());
 }
 
 char*
@@ -2281,7 +2260,6 @@ TAO_StreamEndPoint::add_fep (CORBA::Object_ptr fep_obj)
   return flow_name._retn ();
 }
 
-
 void
 TAO_StreamEndPoint::remove_fep (char const *flow_name)
 {
@@ -2330,7 +2308,6 @@ TAO_StreamEndPoint::set_negotiator (AVStreams::Negotiator_ptr new_negotiator)
     }
 }
 
-
 // Sets the public key used for this streamendpoint.
 void
 TAO_StreamEndPoint::set_key (char const *flow_name,
@@ -2338,12 +2315,16 @@ TAO_StreamEndPoint::set_key (char const *flow_name,
 {
   try
     {
+      if (flow_name == nullptr)
+        {
+          ORBSVCS_ERROR ((LM_ERROR, "TAO_StreamEndPoint::set_key: flow_name is null\n"));
+          return;
+        }
       this->key_ = the_key;
       CORBA::Any PublicKey;
       PublicKey <<= the_key;
-      char PublicKey_property [BUFSIZ];
-      std::sprintf (PublicKey_property, "%s_PublicKey", flow_name);
-      this->define_property (PublicKey_property,
+      std::string const PublicKey_property = std::string (flow_name) + "_PublicKey";
+      this->define_property (PublicKey_property.c_str (),
                              PublicKey);
     }
   catch (CORBA::Exception const &ex)
@@ -2397,7 +2378,6 @@ TAO_StreamEndPoint::~TAO_StreamEndPoint ()
           //        }
     }
 }
-
 
 // ----------------------------------------------------------------------
 // TAO_StreamEndPoint_A
@@ -2754,12 +2734,10 @@ TAO_VDev::set_peer (AVStreams::StreamCtrl_ptr the_ctrl,
       if (TAO_debug_level > 0)
         ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t) TAO_VDev::set_peer: called\n"));
 
-
       CORBA::Any anyval;
       anyval <<= the_peer_dev;
       this->define_property ("Related_VDev",
                              anyval);
-
 
       this->streamctrl_ = AVStreams::StreamCtrl::_duplicate (the_ctrl);
       this->peer_ = AVStreams::VDev::_duplicate (the_peer_dev);
@@ -2817,12 +2795,14 @@ TAO_VDev::set_format (char const *flowName,
   try
     {
       if (flowName == nullptr || format_name == nullptr)
-        ORBSVCS_ERROR ((LM_ERROR, "TAO_VDev::set_format: flowName or format_name is null\n"));
-      char format_property [BUFSIZ];
-      std::sprintf (format_property, "%s_currFormat", flowName);
+        {
+          ORBSVCS_ERROR ((LM_ERROR, "TAO_VDev::set_format: flowName or format_name is null\n"));
+          return;
+        }
+      std::string const format_property = std::string (flowName) + "_currFormat";
       CORBA::Any format;
       format <<= format_name;
-      this->define_property (format_property,
+      this->define_property (format_property.c_str (),
                              format);
     }
   catch (CORBA::Exception const &ex)
@@ -2841,12 +2821,14 @@ TAO_VDev::set_dev_params (char const *flowName,
   try
     {
       if (flowName == nullptr)
-        ORBSVCS_ERROR ((LM_ERROR, "TAO_VDev::set_dev_params:flowName is null\n"));
-      char devParams_property[BUFSIZ];
-      std::sprintf (devParams_property, "%s_devParams", flowName);
+        {
+          ORBSVCS_ERROR ((LM_ERROR, "TAO_VDev::set_dev_params:flowName is null\n"));
+          return;
+        }
+      std::string const devParams_property = std::string (flowName) + "_devParams";
       CORBA::Any devParams;
       devParams <<= new_params;
-      this->define_property (devParams_property,
+      this->define_property (devParams_property.c_str (),
                              devParams);
     }
   catch (CORBA::Exception const &ex)
@@ -2904,7 +2886,6 @@ TAO_VDev::~TAO_VDev () = default;
 // ----------------------------------------------------------------------
 // TAO_MMDevice
 // ----------------------------------------------------------------------
-
 
 TAO_MMDevice::TAO_MMDevice (TAO_AV_Endpoint_Strategy *endpoint_strategy)
   : endpoint_strategy_ (endpoint_strategy),
@@ -3156,7 +3137,6 @@ TAO_MMDevice::create_A (AVStreams::StreamCtrl_ptr streamctrl,
   return sep_a;
 }
 
-
 AVStreams::StreamEndPoint_B_ptr
 TAO_MMDevice::create_B (AVStreams::StreamCtrl_ptr streamctrl,
                         AVStreams::VDev_out the_vdev,
@@ -3183,7 +3163,6 @@ TAO_MMDevice::create_B (AVStreams::StreamCtrl_ptr streamctrl,
   return sep_b;
 }
 
-
 // destroys the streamendpoint and the Vdev.
 void
 TAO_MMDevice::destroy (AVStreams::StreamEndPoint_ptr /* the_ep */,
@@ -3200,19 +3179,16 @@ TAO_MMDevice::destroy (AVStreams::StreamEndPoint_ptr /* the_ep */,
 char *
 TAO_MMDevice::add_fdev_i (AVStreams::FDev_ptr fdev)
 {
-  char* tmp;
-  ACE_NEW_RETURN (tmp,
-                  char[64],
-                  0);
-  CORBA::String_var flow_name = tmp;
+  std::string flow_name;
 
   try
     {
       // exception implies the flow name is not defined and is system
       // generated.
-      std::sprintf (tmp, "flow%d", flow_num_++);
+      flow_name = "flow";
+      flow_name += std::to_string (this->flow_num_++);
       CORBA::Any flowname_any;
-      flowname_any <<= flow_name.in ();
+      flowname_any <<= flow_name.c_str ();
       fdev->define_property ("Flow", flowname_any);
     }
   catch (CORBA::Exception const &ex)
@@ -3220,7 +3196,7 @@ TAO_MMDevice::add_fdev_i (AVStreams::FDev_ptr fdev)
       ex._tao_print_exception ("TAO_MMDevice::add_fdev");
       return 0;
     }
-  return flow_name._retn ();
+  return CORBA::string_dup (flow_name.c_str ());
 }
 
 // Adds the fdev object to the MMDevice.
@@ -3237,7 +3213,6 @@ TAO_MMDevice::add_fdev (CORBA::Object_ptr fdev_obj)
       if (CORBA::is_nil (fdev.in ()))
           return 0;
 
-
       flow_name_any = fdev->get_property_value ("Flow");
 
       char const *tmp {};
@@ -3250,11 +3225,9 @@ TAO_MMDevice::add_fdev (CORBA::Object_ptr fdev_obj)
         this->add_fdev_i (fdev.in ());
     }
 
-
   // Add it to the sequence of flowNames supported.
   // put the flowname and the fdev in a hashtable.
   ACE_CString fdev_name_key ( flow_name.in () );
-
 
   if ( (this->fdev_map_.bind (fdev_name_key, fdev )) != 0)
     throw AVStreams::streamOpFailed ();
@@ -3562,30 +3535,30 @@ TAO_FlowConnection::connect (AVStreams::FlowProducer_ptr producer,
                                flow_producer,
                                the_qos);
 
-      char *consumer_address =
+      CORBA::String_var consumer_address =
         flow_consumer->go_to_listen (the_qos,
-                                     0, // false for is_mcast
+                                     false,
                                      flow_producer,
                                      this->fp_name_.inout ());
 
-      if (std::strcmp (consumer_address, "") == 0)
+      if (consumer_address.in () == nullptr || consumer_address.in ()[0] == '\0')
         {
           // Consumer is not willing to listen, so try the producer.
           consumer_address = flow_producer->go_to_listen (the_qos,
-                                                          0, // false for is_mcast
+                                                          false,
                                                           flow_consumer,
                                                           this->fp_name_.inout ());
           flow_consumer->connect_to_peer (the_qos,
-                                          consumer_address,
+                                          consumer_address.in (),
                                           this->fp_name_.inout ());
           // @@ Naga: We have to find means to set the reverse channel for the producer.
           // Its broken in the point-to_point case for UDP.
         }
       else
         {
-          if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG, "TAO_FlowConnection::connect_to_peer addres: %s", consumer_address));
+          if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG, "TAO_FlowConnection::connect_to_peer addres: %s", consumer_address.in ()));
           flow_producer->connect_to_peer (the_qos,
-                                          consumer_address,
+                                          consumer_address.in (),
                                           this->fp_name_.inout ());
         }
     }
@@ -3595,7 +3568,6 @@ TAO_FlowConnection::connect (AVStreams::FlowProducer_ptr producer,
     }
   return 1;
 }
-
 
 CORBA::Boolean
 TAO_FlowConnection::disconnect ()
@@ -3847,7 +3819,6 @@ TAO_FlowEndPoint::open (char const *flowname,
   return 0;
 }
 
-
 int
 TAO_FlowEndPoint::set_flowname (char const *flowname)
 {
@@ -3874,7 +3845,6 @@ TAO_FlowEndPoint::unlock ()
 {
   this->lock_ = false;
 }
-
 
 void
 TAO_FlowEndPoint::destroy ()
@@ -4114,17 +4084,17 @@ TAO_FlowEndPoint::go_to_listen_i (TAO_FlowSpec_Entry::Role role,
                                   AVStreams::FlowEndPoint_ptr peer_fep,
                                   char *& flowProtocol)
 {
-  char direction [BUFSIZ];
+  char const *direction {};
   switch (role)
     {
     case TAO_FlowSpec_Entry::TAO_AV_PRODUCER:
-      std::strcpy (direction, "IN");
+      direction = "IN";
       break;
     case TAO_FlowSpec_Entry::TAO_AV_CONSUMER:
-      std::strcpy (direction, "OUT");
+      direction = "OUT";
       break;
     default:
-      break;
+      ORBSVCS_ERROR_RETURN ((LM_ERROR, "TAO_FlowEndPoint::go_to_listen_i: invalid flow role\n"), 0);
     }
   AVStreams::protocolSpec my_protocol_spec, peer_protocol_spec;
   AVStreams::protocolSpec const *temp_protocols {};
@@ -4182,17 +4152,16 @@ TAO_FlowEndPoint::go_to_listen_i (TAO_FlowSpec_Entry::Role role,
                                               this->flow_spec_set_);
         if (result < 0)
           return 0;
-        char *listen_address = entry->get_local_addr_str ();
-        char *address;
-        ACE_NEW_RETURN (address,
-                        char [BUFSIZ],
-                        0);
-        std::sprintf (address, "%s=%s", listen_protocol.in (), listen_address);
-        return address;
+        CORBA::String_var listen_address (entry->get_local_addr_str ());
+        if (listen_address.in () == nullptr)
+          return nullptr;
+        std::string address = listen_protocol.in ();
+        address += '=';
+        address += listen_address.in ();
+        return CORBA::string_dup (address.c_str ());
       }
   return 0;
 }
-
 
 CORBA::Boolean
 TAO_FlowEndPoint::connect_to_peer_i (TAO_FlowSpec_Entry::Role role,
@@ -4200,17 +4169,17 @@ TAO_FlowEndPoint::connect_to_peer_i (TAO_FlowSpec_Entry::Role role,
                                      char const *address,
                                      char const *use_flow_protocol)
 {
-  char direction [BUFSIZ];
+  char const *direction {};
   switch (role)
     {
     case TAO_FlowSpec_Entry::TAO_AV_PRODUCER:
-      std::strcpy (direction, "IN");
+      direction = "IN";
       break;
     case TAO_FlowSpec_Entry::TAO_AV_CONSUMER:
-      std::strcpy (direction, "OUT");
+      direction = "OUT";
       break;
     default:
-      break;
+      ORBSVCS_ERROR_RETURN ((LM_ERROR, "TAO_FlowEndPoint::connect_to_peer_i: invalid flow role\n"), 0);
     }
   TAO_Forward_FlowSpec_Entry *entry;
   ACE_NEW_RETURN (entry,
@@ -4237,7 +4206,6 @@ TAO_FlowEndPoint::set_protocol_object (char const * /*flowname*/,
 {
   return 0;
 }
-
 
 // ------------------------------------------------------------
 // TAO_FlowProducer class
@@ -4387,7 +4355,6 @@ TAO_FlowProducer::set_source_id (CORBA::Long source_id)
 // TAO_FlowConsumer
 // ------------------------------------------------------------
 
-
 TAO_FlowConsumer::TAO_FlowConsumer () = default;
 
 TAO_FlowConsumer::TAO_FlowConsumer (char const *flowname,
@@ -4466,7 +4433,6 @@ TAO_Tokenizer::clear_tokens ()
     }
   this->num_tokens_ = 0;
 }
-
 
 int
 TAO_Tokenizer::parse (char const *string, char delimiter)

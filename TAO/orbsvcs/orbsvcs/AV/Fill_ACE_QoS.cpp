@@ -2,7 +2,6 @@
 
 #if defined (ACE_HAS_RAPI) || defined (ACE_HAS_WINSOCK2_GQOS)
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 const iovec Fill_ACE_QoS::iov_ {};
@@ -33,7 +32,6 @@ Fill_ACE_QoS::fill_simplex_receiver_qos (ACE_QoS &ace_qos,
 
   return 0;
 }
-
 
 int
 Fill_ACE_QoS::fill_simplex_sender_qos (ACE_QoS &ace_qos,

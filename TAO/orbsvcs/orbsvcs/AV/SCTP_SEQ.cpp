@@ -181,7 +181,6 @@ TAO_AV_SCTP_SEQ_Base_Acceptor::acceptor_open (TAO_AV_SCTP_SEQ_Acceptor *acceptor
       local_ip_addr[i] = ip_addr.get_ip_address ();
     }
 
-
   ACE_Multihomed_INET_Addr multi_addr;
   multi_addr.set (local_addr.get_port_number (),
                   local_addr.get_ip_address (),
@@ -322,7 +321,6 @@ TAO_AV_SCTP_SEQ_Acceptor::open_default (TAO_Base_StreamEndPoint *endpoint,
                                               *address,
                                               entry);
 
-
   if (result < 0)
     ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        "TAO_AV_SCTP_SEQ_Acceptor::open failed"),
@@ -345,7 +343,6 @@ TAO_AV_SCTP_SEQ_Acceptor::open_default (TAO_Base_StreamEndPoint *endpoint,
 
   return 0;
 }
-
 
 int
 TAO_AV_SCTP_SEQ_Acceptor::close ()
@@ -503,7 +500,6 @@ TAO_AV_SCTP_SEQ_Connector::connect (TAO_FlowSpec_Entry *entry,
                     0,
                     entry->num_peer_sec_addrs ());
 
-
   int result = this->connector_.connector_connect (handler,
                                                    remote_multi_addr,
                                                    local_addr);
@@ -560,11 +556,9 @@ TAO_AV_SCTP_SEQ_Connector::close ()
 // TAO_AV_SCTP_SEQ_Protocol_Factory
 //------------------------------------------------------------
 
-
 TAO_AV_SCTP_SEQ_Factory::TAO_AV_SCTP_SEQ_Factory () = default;
 
 TAO_AV_SCTP_SEQ_Factory::~TAO_AV_SCTP_SEQ_Factory () = default;
-
 
 int
 TAO_AV_SCTP_SEQ_Factory::match_protocol (char const *protocol_string)
@@ -597,7 +591,6 @@ TAO_AV_SCTP_SEQ_Factory::make_connector ()
                   0);
   return connector;
 }
-
 
 int
 TAO_AV_SCTP_SEQ_Factory::init (int, ACE_TCHAR *[])
@@ -646,7 +639,6 @@ TAO_AV_SCTP_SEQ_Object::send_frame (char const *buf,
   int result = this->transport_->send (buf, len, 0);
   return result;
 }
-
 
 TAO_AV_SCTP_SEQ_Object::TAO_AV_SCTP_SEQ_Object (TAO_AV_Callback *callback,
                                                 TAO_AV_Transport *transport)
@@ -819,7 +811,6 @@ TAO_AV_SCTP_SEQ_Flow_Handler::handle_timeout (ACE_Time_Value const &tv,
 {
   return TAO_AV_Flow_Handler::handle_timeout (tv,arg);
 }
-
 
 //------------------------------------------------------------
 // TAO_AV_SCTP_SEQ_Flow_Factory

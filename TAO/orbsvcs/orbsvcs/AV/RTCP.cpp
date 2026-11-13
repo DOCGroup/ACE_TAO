@@ -226,7 +226,6 @@ TAO_AV_RTCP::alloc_srcid (ACE_UINT32 addr)
 */
 }
 
-
 double
 TAO_AV_RTCP::rtcp_interval (int members,
                             int senders,
@@ -321,7 +320,6 @@ TAO_AV_RTCP::rtcp_interval (int members,
   return t * ((double)ACE_OS::rand()/max_rand + 0.5);
 //  return t * (drand48() + 0.5);
 }
-
 
 // TAO_AV_RTCP_Flow_Factory
 TAO_AV_RTCP_Flow_Factory::TAO_AV_RTCP_Flow_Factory () = default;

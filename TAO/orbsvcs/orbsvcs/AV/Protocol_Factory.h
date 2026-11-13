@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_AV_PROTOCOL_FACTORY_T_H
 #define TAO_AV_PROTOCOL_FACTORY_T_H
 #include /**/ "ace/pre.h"

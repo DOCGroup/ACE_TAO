@@ -311,7 +311,6 @@ RTP_Packet::get_packet_data (char **packet, ACE_UINT16 &length)
   length = this->packet_size_;
 }
 
-
 // TAO_AV_RTP_Object
 
 int
@@ -619,7 +618,6 @@ TAO_AV_RTP_Object::send_frame (char const *,
 {
   return 0;
 }
-
 
 TAO_AV_RTP_Object::TAO_AV_RTP_Object (TAO_AV_Callback *callback,
                                       TAO_AV_Transport *transport)

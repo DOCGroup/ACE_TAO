@@ -310,7 +310,6 @@ TAO_AV_UDP_Transport::recv (iovec *iov,
   return handler_->get_socket ()->recv (iov,this->peer_addr_,0,timeout);
 }
 
-
 //------------------------------------------------------------
 // TAO_AV_UDP_Acceptor
 //------------------------------------------------------------
@@ -685,7 +684,6 @@ TAO_AV_UDP_Connector::connect (TAO_FlowSpec_Entry *entry,
                           local_control_addr->addr_to_string (buf, BUFSIZ);
                         }
 
-
                       if (entry->control_address () == nullptr)
                         {
                           ACE_NEW_RETURN (this->control_inet_address_,
@@ -1020,7 +1018,6 @@ TAO_AV_UDP_Object::destroy ()
 
   return 0;
 }
-
 
 //------------------------------------------------------------
 // TAO_AV_UDP_Flow_Factory

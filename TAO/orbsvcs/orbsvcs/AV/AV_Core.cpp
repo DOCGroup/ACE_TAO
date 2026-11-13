@@ -144,7 +144,6 @@ TAO_AV_Core::reactor ()
   return this->reactor_;
 }
 
-
 int
 TAO_AV_Core::init (CORBA::ORB_ptr orb,
                    PortableServer::POA_ptr poa)
@@ -223,7 +222,6 @@ TAO_AV_Core::init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
       else
         flow_set.insert (entry);
     } //End of For Loop
-
 
   int result = -1;
   switch (direction)
@@ -809,7 +807,6 @@ TAO_AV_Core::init_transport_factories ()
   TAO_AV_TransportFactorySetItor end = this->transport_factories_.end ();
   TAO_AV_TransportFactorySetItor factory = this->transport_factories_.begin ();
 
-
   if (factory == end)
     {
       if (TAO_debug_level > 0)
@@ -1136,7 +1133,6 @@ TAO_AV_Core::get_control_flowname(char const *flowname)
 
   return flowname;
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

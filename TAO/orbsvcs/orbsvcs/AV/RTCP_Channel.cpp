@@ -51,7 +51,6 @@ RTCP_Channel_In::updateStatistics(RTP_Packet* dataPkt)
   unsigned int samples_per_sec;
   double samples_per_usec;
 
-
   switch (dataPkt->pt())
   {
     case RTP_PT_PCMU:
@@ -80,7 +79,6 @@ RTCP_Channel_In::updateStatistics(RTP_Packet* dataPkt)
             ((double)(current_time.usec () -
                 (double)this->init_local_time_.usec ()) * samples_per_usec)  +
             this->init_time_stamp_);
-
 
   // jitter calc from RFC 1889 app a.8
   transit = arrival - dataPkt->ts ();
@@ -222,7 +220,6 @@ RTCP_Channel_In::recv_rtp_packet(ACE_Message_Block *mb,
                 "RTCP_Channel_In::recvDataPacket - invalid RTP packet\n"));
 }
 
-
 RR_Block *
 RTCP_Channel_In::getRRBlock()
 {
@@ -272,7 +269,6 @@ RTCP_Channel_In::getRRBlock()
     local_block_ptr->fraction_ = 0;
   else
     local_block_ptr->fraction_ = (lost_interval << 8) / expected_interval;
-
 
   local_block_ptr->last_seq_ = extended_max;
 

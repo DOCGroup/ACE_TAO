@@ -25,7 +25,6 @@ TAO_AV_Transport_Item::factory (TAO_AV_Transport_Factory *factory)
   this->factory_ = factory;
 }
 
-
 //------------------------------------------------------------
 // TAO_AV_Flow_Protocol_Item
 //------------------------------------------------------------

@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_AV_DEFAULT_RESOURCE_FACTORY_H
 #define TAO_AV_DEFAULT_RESOURCE_FACTORY_H
 #include /**/ "ace/pre.h"

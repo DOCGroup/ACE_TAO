@@ -52,7 +52,6 @@ using Flow_Handler_Map = ACE_Hash_Map_Manager <ACE_CString, TAO_AV_Flow_Handler*
 using Flow_Handler_Map_Entry = ACE_Hash_Map_Entry <ACE_CString, TAO_AV_Flow_Handler*>;
 using Flow_Handler_Map_Iterator = ACE_Hash_Map_Iterator <ACE_CString, TAO_AV_Flow_Handler*, ACE_Null_Mutex>;
 
-
 class TAO_AV_Export AV_Null_MediaCtrl
   : public virtual POA_Null_MediaCtrl
 {
@@ -123,7 +122,6 @@ public:
 
 protected:
   ~TAO_Basic_StreamCtrl () override;
-
 
   /// The Virtual Devices for this stream
   AVStreams::VDev_var vdev_a_;
@@ -359,14 +357,12 @@ public:
   /// converts the application level QoS to Network-level QoS.
   int convert (AVStreams::streamQoS &network_qos);
 
-
 protected:
   /// Stream Qos.
   AVStreams::streamQoS stream_qos_;
 
   ACE_Hash_Map_Manager<ACE_CString,AVStreams::QoS,ACE_Null_Mutex> qos_map_;
 };
-
 
 // Forward declarations.
 class TAO_AV_TCP_Flow_Handler;
@@ -837,7 +833,6 @@ public:
   /// pushes an event , to be handled by the application.
   void push_event (AVStreams::streamEvent const &the_event) override;
 
-
   /// connect 2 Flow Devices.
   CORBA::Boolean connect_devs (AVStreams::FDev_ptr a_party,
                                AVStreams::FDev_ptr b_party,
@@ -920,7 +915,6 @@ public:
   /// unlock the flow endpoint for subsequent use.
   void unlock () override;
 
-
   /// destroy this flow.
   void destroy () override;
 
@@ -967,7 +961,6 @@ public:
                                  AVStreams::MCastConfigIf_ptr a_mcastconfigif,
                                  AVStreams::QoS &the_qos) override;
 
-
   /**
    * This should be implemented in both the FlowProducer and consumer and hence is
    * pure virtual since we need to know the role of the flowendpoint to create appropriate
@@ -999,7 +992,6 @@ public:
                                  CORBA::Boolean is_mcast,
                                  AVStreams::FlowEndPoint_ptr peer,
                                  char *& flowProtocol);
-
 
 protected:
   /// The related streamendpoint.
@@ -1079,7 +1071,6 @@ public:
                        CORBA::Boolean_out is_met,
                        char const *address,
                        char const *use_flow_protocol) override;
-
 
   /// sets the public key  to be used for encryption of the data.
   void set_key (AVStreams::key const &the_key) override;

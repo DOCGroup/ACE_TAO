@@ -8,11 +8,9 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_AV_QOS_UDP_H
 #define TAO_AV_QOS_UDP_H
 #include /**/ "ace/pre.h"
-
 
 #include "ace/config-all.h"
 
@@ -180,7 +178,6 @@ public:
 
   virtual int activate_svc_handler (TAO_AV_UDP_QoS_Flow_Handler *handler);
 
-
 protected:
   TAO_Base_StreamEndPoint *endpoint_ {};
   TAO_FlowSpec_Entry *entry_ {};
@@ -289,7 +286,6 @@ ACE_FACTORY_DECLARE (TAO_AV, TAO_AV_UDP_QoS_Flow_Factory)
 
 ACE_STATIC_SVC_DECLARE (TAO_AV_UDP_QoS_Factory)
 ACE_FACTORY_DECLARE (TAO_AV, TAO_AV_UDP_QoS_Factory)
-
 
 #if defined(__ACE_INLINE__)
 #include "orbsvcs/AV/QoS_UDP.inl"

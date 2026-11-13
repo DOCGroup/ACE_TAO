@@ -1,14 +1,12 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/AV/sfp.h"
 #include "tao/debug.h"
 #include "ace/ARGV.h"
 #include "ace/OS_NS_strings.h"
 
 #include <cstring>
-#include <cstdio>
+#include <string>
 #include <cstdlib>
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -34,7 +32,6 @@ operator< (TAO_SFP_Fragment_Node const &left,
 {
   return left.fragment_info_.frag_number < right.fragment_info_.frag_number;
 }
-
 
 //------------------------------------------------------------
 // TAO_SFP_Base
@@ -437,7 +434,6 @@ TAO_SFP_Base::read_fragment (TAO_AV_Transport *transport,
       fragment_entry->num_fragments_ = fragment.frag_number + 1;
     }
 
-
   state.frame_block_ = check_all_fragments (fragment_entry);
   if (state.frame_block_ != nullptr)
     {
@@ -715,7 +711,6 @@ TAO_SFP_Base::read_start_message (TAO_AV_Transport *transport,
     }
   return 0;
 }
-
 
 int
 TAO_SFP_Base::read_start_reply_message (TAO_AV_Transport *transport,
@@ -1032,7 +1027,6 @@ TAO_SFP_Object::send_frame (char const * /*buf*/,
   return 0;
 }
 
-
 ACE_Message_Block*
 TAO_SFP_Object::get_fragment (ACE_Message_Block *&mb,
                               size_t initial_len,
@@ -1111,9 +1105,8 @@ TAO_SFP_Consumer_Object::TAO_SFP_Consumer_Object (TAO_AV_Callback *callback,
   if (this->max_credit_ > 0)
     {
       sfp_options = "sfp:1.0:credit=";
-      char buf[10];
-      std::sprintf (buf, "%d", this->max_credit_);
-      sfp_options += buf;
+      std::string const credit = std::to_string (this->max_credit_);
+      sfp_options += credit.c_str ();
     }
 }
 

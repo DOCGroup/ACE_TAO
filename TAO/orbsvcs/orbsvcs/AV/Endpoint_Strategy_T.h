@@ -59,7 +59,6 @@ protected:
   /// can override this
   virtual int make_mediactrl (T_MediaCtrl *&media_ctrl);
 
-
   char* activate_with_poa (PortableServer::Servant servant);
 
   CORBA::ORB_var orb_;

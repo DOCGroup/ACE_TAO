@@ -11,7 +11,6 @@
 
 #include <cstdio>
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // ----------------------------------------------------------------------
@@ -91,7 +90,6 @@ TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activ
   return str._retn ();
 }
 
-
 // Activate VDev into the POA
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 int
@@ -122,7 +120,6 @@ TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activ
   return 0;
 }
 
-
 // Activate the media_controller
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 int
@@ -140,7 +137,6 @@ TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activ
         = media_ctrl_servant_->_this ();
 
       anyval <<= media_ctrl_obj_.in();
-
 
      this->vdev_->define_property ("Related_MediaCtrl",
                                    anyval);
@@ -187,7 +183,6 @@ TAO_AV_Endpoint_Reactive_Strategy<T_StreamEndpoint, T_VDev, T_MediaCtrl>::make_m
   return 0;
 }
 
-
 // ----------------------------------------------------------------------
 
 // ----------------------------------------------------------------------
@@ -198,11 +193,9 @@ template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::
   TAO_AV_Endpoint_Reactive_Strategy_A () = default;
 
-
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::
   ~TAO_AV_Endpoint_Reactive_Strategy_A () = default;
-
 
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 int
@@ -257,7 +250,6 @@ TAO_AV_Endpoint_Reactive_Strategy_A <T_StreamEndpoint, T_VDev, T_MediaCtrl>::act
 // TAO_AV_Endpoint_Reactive_Strategy_B
 // ----------------------------------------------------------------------
 
-
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 TAO_AV_Endpoint_Reactive_Strategy_B <T_StreamEndpoint, T_VDev, T_MediaCtrl>::
   TAO_AV_Endpoint_Reactive_Strategy_B () = default;
@@ -265,7 +257,6 @@ TAO_AV_Endpoint_Reactive_Strategy_B <T_StreamEndpoint, T_VDev, T_MediaCtrl>::
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 TAO_AV_Endpoint_Reactive_Strategy_B <T_StreamEndpoint, T_VDev, T_MediaCtrl>::
   ~TAO_AV_Endpoint_Reactive_Strategy_B () = default;
-
 
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 int
@@ -631,7 +622,6 @@ TAO_AV_Child_Process<T_StreamEndpoint, T_VDev, T_MediaCtrl>::make_mediactrl (T_M
                   -1);
   return 0;
 }
-
 
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 int

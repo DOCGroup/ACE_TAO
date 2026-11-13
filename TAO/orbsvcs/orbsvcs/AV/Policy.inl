@@ -21,7 +21,6 @@ TAO_AV_SSRC_Policy::value ()
   return this->ssrc_;
 }
 
-
 ACE_INLINE void
 TAO_AV_SSRC_Policy::value (CORBA::ULong ssrc)
 {
@@ -42,7 +41,6 @@ TAO_AV_Payload_Type_Policy::value ()
 {
   return this->payload_type_;
 }
-
 
 // TAO_AV_RTCP_Sdes_Policy
 ACE_INLINE TAO_AV_RTCP_Sdes &

@@ -93,7 +93,6 @@ TAO_AV_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-
 // ****************************************************************
 
 ACE_STATIC_SVC_DEFINE (TAO_AV_Default_Resource_Factory,

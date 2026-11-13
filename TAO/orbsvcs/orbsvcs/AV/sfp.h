@@ -26,7 +26,6 @@
 #include "ace/SOCK_Dgram.h"
 #include "ace/INET_Addr.h"
 
-
 #define TAO_SFP_MAGIC_NUMBER_LEN 4
 #define TAO_SFP_MESSAGE_TYPE_OFFSET 5
 #define TAO_SFP_WRITEV_MAX 128

@@ -28,7 +28,6 @@ TAO_AV_QoS::set (AVStreams::streamQoS &stream_qos)
   return 0;
 }
 
-
 ACE_INLINE
 int
 TAO_AV_QoS::get_flow_qos (char const *flowname,

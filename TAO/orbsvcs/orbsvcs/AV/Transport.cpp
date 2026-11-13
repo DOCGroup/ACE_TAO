@@ -22,7 +22,6 @@
 #include "orbsvcs/AV/Transport.inl"
 #endif /* __ACE_INLINE__ */
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 //------------------------------------------------------------
@@ -525,7 +524,6 @@ TAO_AV_Flow_Handler::schedule_timer ()
   return 0;
 }
 
-
 int
 TAO_AV_Flow_Handler::cancel_timer ()
 {
@@ -534,7 +532,6 @@ TAO_AV_Flow_Handler::cancel_timer ()
   else
     return 0;
 }
-
 
 int
 TAO_AV_Flow_Handler::stop (TAO_FlowSpec_Entry::Role role)

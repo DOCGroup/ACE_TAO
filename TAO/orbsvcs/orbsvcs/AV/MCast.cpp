@@ -22,7 +22,6 @@ TAO_AV_UDP_MCast_Flow_Handler::TAO_AV_UDP_MCast_Flow_Handler ()
 
 TAO_AV_UDP_MCast_Flow_Handler::~TAO_AV_UDP_MCast_Flow_Handler () = default;
 
-
 int
 TAO_AV_UDP_MCast_Flow_Handler::handle_input (ACE_HANDLE /*fd*/)
 {
@@ -74,7 +73,6 @@ TAO_AV_UDP_MCast_Transport::close ()
 {
   return 0;
 }
-
 
 ACE_Addr*
 TAO_AV_UDP_MCast_Transport::get_peer_addr ()
@@ -173,7 +171,6 @@ TAO_AV_UDP_MCast_Transport::mtu ()
 {
   return ACE_MAX_DGRAM_SIZE;
 }
-
 
 ssize_t
 TAO_AV_UDP_MCast_Transport::recv (char *buf,

@@ -132,7 +132,6 @@ TAO_FlowSpec_Entry::flowname () const
   return this->flowname_.c_str();
 }
 
-
 ACE_INLINE
 int
 TAO_FlowSpec_Entry::set_peer_addr (ACE_Addr *peer_addr)

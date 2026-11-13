@@ -3,7 +3,6 @@
 //------------------------------------------------------------
 
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/AV/FlowSpec_Entry.h"
 #include "orbsvcs/AV/Protocol_Factory.h"
 
@@ -11,8 +10,8 @@
 
 #include "ace/OS_NS_strings.h"
 
-#include <cstdio>
 #include <cstdlib>
+#include <string>
 
 #if !defined (__ACE_INLINE__)
 #include "orbsvcs/AV/FlowSpec_Entry.inl"
@@ -211,7 +210,6 @@ TAO_FlowSpec_Entry::parse_address (char const *address,
             }
           else addr += protocol_tokenizer[1];
 
-
           switch (this->protocol_)
             {
             case TAO_AV_Core::TAO_AV_SFP_UDP:
@@ -390,7 +388,7 @@ TAO_FlowSpec_Entry::get_local_addr_str ()
         inet_addr->addr_to_string (buf,BUFSIZ);
         ACE_CString cstring (ACE_TEXT_ALWAYS_CHAR(buf), 0, false);
 
-        return cstring.rep ();
+        return CORBA::string_dup (cstring.c_str ());
       }
     default:
       ORBSVCS_ERROR_RETURN ((LM_ERROR,"Address family not supported"),0);
@@ -460,7 +458,6 @@ TAO_Forward_FlowSpec_Entry::parse (char const *flowSpec_entry)
   if (tokenizer [TAO_AV_PEER_ADDR] != nullptr)
     {
       ACE_INET_Addr *addr {};
-
 
       if (this->protocol_ == TAO_AV_Core::TAO_AV_SCTP_SEQ)
         {
@@ -584,7 +581,6 @@ TAO_Forward_FlowSpec_Entry::entry_to_string ()
       address_str = this->carrier_protocol_;
     }
 
-
   if ( (this->address_ != nullptr) &&
        (this->control_address_ == nullptr) &&
        (ACE_OS::strncasecmp (this->flow_protocol_.c_str(), "RTP", 3) == 0))
@@ -618,7 +614,6 @@ TAO_Forward_FlowSpec_Entry::entry_to_string ()
           break;
         }
     }
-
 
   if (this->peer_addr_ != nullptr)
     {
@@ -691,9 +686,8 @@ TAO_Forward_FlowSpec_Entry::entry_to_string ()
         }
 
       address_str += ";";
-      char port_str[10];
-      std::sprintf (port_str, "%u", control_port);
-      address_str += port_str;
+      std::string const port_str = std::to_string (control_port);
+      address_str += port_str.c_str ();
     }
 
   this->entry_  = this->flowname_;
@@ -798,7 +792,6 @@ TAO_Reverse_FlowSpec_Entry::parse (char const *flowSpec_entry)
   return 0;
 }
 
-
 char const *
 TAO_Reverse_FlowSpec_Entry::entry_to_string ()
 {
@@ -852,7 +845,6 @@ TAO_Reverse_FlowSpec_Entry::entry_to_string ()
     {
       u_short control_port = 0;
 
-
       switch (this->protocol_)
         {
         case TAO_AV_Core::TAO_AV_SFP_UDP:
@@ -876,9 +868,8 @@ TAO_Reverse_FlowSpec_Entry::entry_to_string ()
         }
 
       address_str += ";";
-      char port_str[10];
-      std::sprintf (port_str, "%u", control_port);
-      address_str += port_str;
+      std::string const port_str = std::to_string (control_port);
+      address_str += port_str.c_str ();
     }
 
   this->entry_ = this->flowname_;

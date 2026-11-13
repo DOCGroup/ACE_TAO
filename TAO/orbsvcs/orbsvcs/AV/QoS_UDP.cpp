@@ -31,9 +31,9 @@ FillQoSParams (ACE_QoS_Params &qos_params,
                ACE_QoS* qos)
 {
   qos_params.callee_data (iov);
-  qos_params.caller_data (0);
+  qos_params.caller_data (nullptr);
   qos_params.socket_qos (qos);
-  qos_params.group_socket_qos (0);
+  qos_params.group_socket_qos (nullptr);
   qos_params.flags (ACE_JL_BOTH);
 
   return 0;
@@ -108,7 +108,6 @@ TAO_AV_UDP_QoS_Session_Helper::open_qos_session (TAO_AV_UDP_QoS_Flow_Handler *ha
   FillQoSParams (qos_params,
                  0,
                  ace_qos);
-
 
   // Create a QoS Session Factory.
   ACE_QoS_Session_Factory session_factory;
@@ -418,7 +417,6 @@ TAO_AV_UDP_QoS_Flow_Handler::change_qos (AVStreams::QoS new_qos)
       this->translate (new_qos.QoSParams,
                        ace_flow_spec);
 
-
       if (this->qos_session_->flags () == ACE_QoS_Session::ACE_QOS_SENDER)
         {
           if (fill_ace_qos.fill_simplex_sender_qos (*ace_qos,
@@ -488,7 +486,6 @@ TAO_AV_UDP_QoS_Flow_Handler::set_remote_address (ACE_Addr *address)
                   buf));
     }
 
-
   ACE_INET_Addr *inet_addr =
     dynamic_cast<ACE_INET_Addr*> (address);
 
@@ -528,7 +525,6 @@ TAO_AV_UDP_QoS_Flow_Handler::set_remote_address (ACE_Addr *address)
     }
   return transport->set_remote_address (*inet_addr);
 }
-
 
 ACE_HANDLE
 TAO_AV_UDP_QoS_Flow_Handler::get_handle () const
@@ -722,7 +718,6 @@ TAO_AV_UDP_QoS_Transport::send (iovec const *iov,
                    bytes_sent));
   }
 
-
   return bytes_sent;
 }
 
@@ -754,7 +749,6 @@ TAO_AV_UDP_QoS_Transport::recv (iovec *iov,
 {
   return handler_->get_socket ()->recv (iov,this->peer_addr_,0,timeout);
 }
-
 
 //------------------------------------------------------------
 // TAO_AV_UDP_Acceptor
@@ -801,7 +795,6 @@ TAO_AV_UDP_QoS_Acceptor::open (TAO_Base_StreamEndPoint *endpoint,
   this->av_core_ = av_core;
   this->endpoint_ = endpoint;
   this->entry_ = entry;
-
 
   this->flow_protocol_factory_ = factory;
   this->flowname_ = entry->flowname ();
@@ -859,7 +852,6 @@ TAO_AV_UDP_QoS_Acceptor::open_default (TAO_Base_StreamEndPoint *endpoint,
   return 0;
 }
 
-
 int
 TAO_AV_UDP_QoS_Acceptor::open_i (ACE_INET_Addr *inet_addr)
 {
@@ -882,12 +874,10 @@ TAO_AV_UDP_QoS_Acceptor::open_i (ACE_INET_Addr *inet_addr)
                  0,
                  ace_qos);
 
-
   TAO_AV_UDP_QoS_Flow_Handler* handler;
   ACE_NEW_RETURN (handler,
                   TAO_AV_UDP_QoS_Flow_Handler,
                   -1);
-
 
   TAO_AV_Flow_Handler *flow_handler {};
   flow_handler = handler;
@@ -1122,7 +1112,6 @@ TAO_AV_UDP_QoS_Connector::open (TAO_Base_StreamEndPoint *endpoint,
 //    return 0;
 //  }
 
-
 int
 TAO_AV_UDP_QoS_Connector::connect (TAO_FlowSpec_Entry *entry,
                                    TAO_AV_Transport *&transport,
@@ -1185,7 +1174,6 @@ TAO_AV_UDP_QoS_Connector::connect (TAO_FlowSpec_Entry *entry,
                       -1);
 
   result = handler->get_socket ()->get_local_addr (*local_addr);
-
 
   ACE_INET_Addr *session_addr {};
   if (this->entry_->role () == TAO_FlowSpec_Entry::TAO_AV_CONSUMER)
@@ -1415,7 +1403,6 @@ TAO_AV_UDP_QoS_Factory::init (int /* argc */,
   return 0;
 }
 
-
 //------------------------------------------------------------
 // TAO_AV_UDP_Flow_Factory
 //------------------------------------------------------------
@@ -1452,7 +1439,6 @@ TAO_AV_UDP_QoS_Flow_Factory::make_protocol_object (TAO_FlowSpec_Entry *entry,
   TAO_AV_Callback *callback {};
   endpoint->get_callback (entry->flowname (),
                           callback);
-
 
   TAO_AV_UDP_Object *object {};
   ACE_NEW_RETURN (object,
