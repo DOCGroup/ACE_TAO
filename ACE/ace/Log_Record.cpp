@@ -61,6 +61,16 @@ namespace
       ACE_TEXT ("LM_UNK(010000000000)"),
       ACE_TEXT ("LM_UNK(020000000000)")
     };
+
+  void
+  free_verbose_msg (ACE_TCHAR *buffer)
+  {
+#if defined (ACE_HAS_ALLOC_HOOKS)
+    ACE_Allocator::instance ()->free (buffer);
+#else
+    delete [] buffer;
+#endif /* ACE_HAS_ALLOC_HOOKS */
+  }
 }
 
 const ACE_TCHAR *
@@ -303,19 +313,22 @@ ACE_Log_Record::print (const ACE_TCHAR host_name[],
 #else
       ACE_NEW_RETURN (verbose_msg, ACE_TCHAR[MAXVERBOSELOGMSGLEN], -1);
 #endif /* ACE_HAS_ALLOC_HOOKS */
+      std::unique_ptr<ACE_TCHAR[], void (*) (ACE_TCHAR *)> safe_verbose_msg (
+        verbose_msg, free_verbose_msg);
 
-      int result = this->format_msg (host_name, verbose_flag, verbose_msg,
+      int result = this->format_msg (host_name, verbose_flag,
+                                     safe_verbose_msg.get (),
                                      MAXVERBOSELOGMSGLEN);
 
       if (result == 0)
         {
           if (fp != nullptr)
             {
-              int const verbose_msg_len =
-                static_cast<int> (ACE_OS::strlen (verbose_msg));
+              int const verbose_msg_len = static_cast<int> (
+                ACE_OS::strlen (safe_verbose_msg.get ()));
               int const fwrite_result = ACE_OS::fprintf (fp,
                                                          ACE_TEXT ("%") ACE_TEXT_PRIs,
-                                                         verbose_msg);
+                                                         safe_verbose_msg.get ());
               // We should have written everything
               if (fwrite_result != verbose_msg_len)
                 result = -1;
@@ -323,12 +336,6 @@ ACE_Log_Record::print (const ACE_TCHAR host_name[],
                 ACE_OS::fflush (fp);
             }
         }
-
-#if defined (ACE_HAS_ALLOC_HOOKS)
-      ACE_Allocator::instance()->free(verbose_msg);
-#else
-      delete [] verbose_msg;
-#endif /* ACE_HAS_ALLOC_HOOKS */
 
       return result;
     }
@@ -406,18 +413,18 @@ ACE_Log_Record::print (const ACE_TCHAR host_name[],
     {
       ACE_TCHAR* verbose_msg {};
       ACE_NEW_RETURN (verbose_msg, ACE_TCHAR[MAXVERBOSELOGMSGLEN], -1);
+      std::unique_ptr<ACE_TCHAR[]> safe_verbose_msg (verbose_msg);
 
-      int const result = this->format_msg (host_name, verbose_flag, verbose_msg,
+      int const result = this->format_msg (host_name, verbose_flag,
+                                           safe_verbose_msg.get (),
                                            MAXVERBOSELOGMSGLEN);
 
       if (result == 0)
         {
           // Since ostream expects only chars, we cannot pass wchar_t's
-          s << ACE_TEXT_ALWAYS_CHAR (verbose_msg);
+          s << ACE_TEXT_ALWAYS_CHAR (safe_verbose_msg.get ());
           s.flush ();
         }
-
-      delete [] verbose_msg;
 
       return result;
     }
