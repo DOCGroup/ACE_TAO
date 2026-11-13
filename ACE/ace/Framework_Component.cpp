@@ -24,7 +24,7 @@ ACE_Framework_Component::~ACE_Framework_Component ()
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Framework_Repository)
 
-sig_atomic_t ACE_Framework_Repository::shutting_down_ = 0;
+sig_atomic_t ACE_Framework_Repository::shutting_down_ {};
 
 // Pointer to the Singleton instance.
 ACE_Framework_Repository *ACE_Framework_Repository::repository_ {};
@@ -69,14 +69,13 @@ ACE_Framework_Repository::close ()
     {
       // Delete components in reverse order.
       for (int i = this->current_size_ - 1; i >= 0; --i)
-        if (this->component_vector_[i])
+        if (this->component_vector_[i] != nullptr)
           {
-            ACE_Framework_Component *s =
-              const_cast<ACE_Framework_Component *> (
-                this->component_vector_[i]);
+            ACE_Framework_Component * const component =
+              this->component_vector_[i];
 
             this->component_vector_[i] = nullptr;
-            delete s;
+            delete component;
           }
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
@@ -138,7 +137,7 @@ ACE_Framework_Repository::register_component (ACE_Framework_Component *fc)
 
   // Check to see if it's already registered
   for (i = 0; i < this->current_size_; ++i)
-    if (this->component_vector_[i] &&
+    if (this->component_vector_[i] != nullptr &&
         fc->this_ == this->component_vector_[i]->this_)
       {
         ACELIB_ERROR_RETURN ((LM_ERROR,
@@ -164,7 +163,7 @@ ACE_Framework_Repository::remove_component (const ACE_TCHAR *name)
   int i;
 
   for (i = 0; i < this->current_size_; ++i)
-    if (this->component_vector_[i] &&
+    if (this->component_vector_[i] != nullptr &&
         ACE_OS::strcmp (this->component_vector_[i]->name_, name) == 0)
       {
         delete this->component_vector_[i];
@@ -197,7 +196,7 @@ ACE_Framework_Repository::remove_dll_components_i (const ACE_TCHAR *dll_name)
   int retval = -1;
 
   for (i = 0; i < this->current_size_; ++i)
-    if (this->component_vector_[i] &&
+    if (this->component_vector_[i] != nullptr &&
         ACE_OS::strcmp (this->component_vector_[i]->dll_name_, dll_name) == 0)
       {
           if (ACE::debug ())

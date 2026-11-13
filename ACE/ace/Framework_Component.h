@@ -160,8 +160,7 @@ private:
   /// Actually removes the dll components, must be called with locks held.
   int remove_dll_components_i (const ACE_TCHAR *dll_name);
 
-  /// Compact component_vector_ after components have been removed__maintains
-  /// order.
+  /// Compact component_vector_ after components have been removed while maintaining order.
   void compact ();
 
 private:
