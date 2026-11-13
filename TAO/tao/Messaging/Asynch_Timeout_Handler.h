@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Asynch_Timeout_Handler.h
  *
@@ -8,8 +7,6 @@
  *
  *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
  */
-//=============================================================================
-
 
 #ifndef TAO_ASYNCH_TIMEOUT_HANDLER_H
 #define TAO_ASYNCH_TIMEOUT_HANDLER_H
@@ -61,13 +58,13 @@ public:
   /// Cancel this timer, remove it from the reactor
   virtual void cancel ();
 
-  /// The transport mux strategy dispatching the reply
+  /// Borrowed transport mux strategy dispatching the reply while scheduled.
   TAO_Transport_Mux_Strategy *tms_ {};
 
   /// Remember the ID of the request.
   CORBA::ULong request_id_ {};
 
-  /// Our reactor
+  /// Non-owning reactor pointer; the reactor outlives this handler.
   ACE_Reactor *reactor_;
 };
 

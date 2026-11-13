@@ -74,7 +74,7 @@ TAO_RelativeRoundtripTimeoutPolicy::hook (TAO_ORB_Core *orb_core,
           return;
         }
 
-      Messaging::RelativeRoundtripTimeoutPolicy_var p =
+      Messaging::RelativeRoundtripTimeoutPolicy_var const p =
         Messaging::RelativeRoundtripTimeoutPolicy::_narrow (policy.in ());
 
       TimeBase::TimeT const t = p->relative_expiry ();
@@ -88,7 +88,7 @@ TAO_RelativeRoundtripTimeoutPolicy::hook (TAO_ORB_Core *orb_core,
 
       if (TAO_debug_level > 0)
         {
-          ACE_UINT64 msecs;
+          ACE_UINT64 msecs {};
           const_cast<ACE_Time_Value const &> (time_value).msec (msecs);
           TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - Request timeout is ")
@@ -107,8 +107,8 @@ TAO_RelativeRoundtripTimeoutPolicy::create (CORBA::Any const &val)
 {
   // Future policy implementors: notice how the following code is
   // exception safe!
-  TimeBase::TimeT value;
-  if ((val >>= value) == 0)
+  TimeBase::TimeT value {};
+  if (!(val >>= value))
     throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
 
   TAO_RelativeRoundtripTimeoutPolicy *tmp {};
@@ -126,7 +126,7 @@ TAO_RelativeRoundtripTimeoutPolicy::clone () const
   TAO_RelativeRoundtripTimeoutPolicy *copy {};
   ACE_NEW_RETURN (copy,
                   TAO_RelativeRoundtripTimeoutPolicy (*this),
-                  0);
+                  nullptr);
   return copy;
 }
 
@@ -233,7 +233,7 @@ TAO_Sync_Scope_Policy::hook (TAO_ORB_Core *orb_core,
           scope = orb_core->default_sync_scope ();
           return;
         }
-      Messaging::SyncScopePolicy_var p =
+      Messaging::SyncScopePolicy_var const p =
         Messaging::SyncScopePolicy::_narrow (policy.in ());
 
       if (CORBA::is_nil (p.in ()))
@@ -255,8 +255,8 @@ TAO_Sync_Scope_Policy::hook (TAO_ORB_Core *orb_core,
 CORBA::Policy_ptr
 TAO_Sync_Scope_Policy::create (CORBA::Any const &val)
 {
-  Messaging::SyncScope synchronization;
-  if ((val >>= synchronization) == 0)
+  Messaging::SyncScope synchronization {};
+  if (!(val >>= synchronization))
     throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
 
   TAO_Sync_Scope_Policy *servant {};
@@ -273,7 +273,7 @@ TAO_Sync_Scope_Policy::clone () const
   TAO_Sync_Scope_Policy *copy {};
   ACE_NEW_RETURN (copy,
                   TAO_Sync_Scope_Policy (*this),
-                  0);
+                  nullptr);
   return copy;
 }
 

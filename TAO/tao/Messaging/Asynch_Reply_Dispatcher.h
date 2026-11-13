@@ -1,11 +1,9 @@
-//=============================================================================
 /**
  *  @file    Asynch_Reply_Dispatcher.h
  *
  *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_ASYNCH_REPLY_DISPATCHER_H
 #define TAO_ASYNCH_REPLY_DISPATCHER_H
@@ -65,7 +63,7 @@ private:
   /// Reply Handler passed in the Asynchronous Invocation.
   Messaging::ReplyHandler_var reply_handler_;
 
-  /// Timeout Handler in case of AMI timeouts
+  /// The reference to the timeout handler retained by this dispatcher.
   TAO_Asynch_Timeout_Handler *timeout_handler_ {};
 };
 

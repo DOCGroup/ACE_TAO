@@ -159,7 +159,7 @@ TAO_Asynch_Reply_Dispatcher::connection_closed ()
       if (!CORBA::is_nil (this->reply_handler_.in ()))
         {
           // Generate a fake exception....
-          CORBA::COMM_FAILURE comm_failure (0, CORBA::COMPLETED_MAYBE);
+          CORBA::COMM_FAILURE const comm_failure (0, CORBA::COMPLETED_MAYBE);
 
           TAO_OutputCDR out_cdr;
 
@@ -218,7 +218,7 @@ TAO_Asynch_Reply_Dispatcher::reply_timed_out ()
       if (!CORBA::is_nil (this->reply_handler_.in ()))
         {
           // Generate a fake exception....
-          CORBA::TIMEOUT timeout_failure (
+          CORBA::TIMEOUT const timeout_failure (
             CORBA::SystemException::_tao_minor_code (
                 TAO_TIMEOUT_RECV_MINOR_CODE,
                 ETIME),

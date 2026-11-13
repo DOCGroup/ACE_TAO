@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Connection_Timeout_Policy_i.h
  *
  *  @author Balachandran Natarajan (bala@cs.wustl.edu)
  */
-//=============================================================================
 
 #ifndef TAO_CONNECTION_TIMEOUT_POLICY_I_H
 #define TAO_CONNECTION_TIMEOUT_POLICY_I_H
@@ -27,12 +25,11 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-
 #if (TAO_HAS_CONNECTION_TIMEOUT_POLICY == 1)
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-/*
+/**
  * @class TAO_ConnectionTimeoutPolicy
  *
  * @brief TAO::ConnectionTimeoutPolicy implementation
@@ -66,7 +63,6 @@ public:
   /// Returns a copy of <this>.
   virtual TAO_ConnectionTimeoutPolicy *clone () const;
 
-  // = The TAO::ConnectionTinoutPolicy methods
   TimeBase::TimeT relative_expiry () override;
 
   CORBA::PolicyType policy_type () override;

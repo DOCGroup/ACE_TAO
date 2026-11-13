@@ -1,13 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    AMI_Arguments_Converter_Impl.h
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
 #ifndef TAO_AMI_ARGUMENTS_CONVERTER_IMPL_H
 #define TAO_AMI_ARGUMENTS_CONVERTER_IMPL_H
 

@@ -42,7 +42,7 @@ CORBA::Policy_ptr
 TAO_Buffering_Constraint_Policy::create (CORBA::Any const &val)
 {
   TAO::BufferingConstraint const *buffering_constraint {};
-  if ((val >>= buffering_constraint) == 0)
+  if (!(val >>= buffering_constraint))
     throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
 
   TAO_Buffering_Constraint_Policy *servant {};
@@ -53,14 +53,13 @@ TAO_Buffering_Constraint_Policy::create (CORBA::Any const &val)
   return servant;
 }
 
-
 TAO_Buffering_Constraint_Policy *
 TAO_Buffering_Constraint_Policy::clone () const
 {
   TAO_Buffering_Constraint_Policy *copy {};
   ACE_NEW_RETURN (copy,
                   TAO_Buffering_Constraint_Policy (*this),
-                  0);
+                  nullptr);
   return copy;
 }
 
