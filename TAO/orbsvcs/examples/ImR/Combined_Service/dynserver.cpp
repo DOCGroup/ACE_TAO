@@ -50,7 +50,7 @@ public:
   {
     if (!is_nil (orb_.in ()))
       {
-        orb_->shutdown (1);
+        orb_->shutdown (true);
         this->wait ();
       }
   }
