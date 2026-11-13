@@ -37,7 +37,7 @@ Locator_NT_Service::handle_control (DWORD control_code)
     {
       report_status (SERVICE_STOP_PENDING);
       TAO_ORB_Core_instance ()->reactor ()->end_reactor_event_loop ();
-      TAO_ORB_Core_instance ()->orb ()->shutdown (1);
+      TAO_ORB_Core_instance ()->orb ()->shutdown (true);
     }
   else
     {
