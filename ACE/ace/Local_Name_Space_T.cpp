@@ -12,6 +12,7 @@
 #include "ace/OS_NS_regex.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
+#include <cstring>
 #include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -617,7 +618,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_types_i (
   char *pattern_rep = pattern.char_rep ();
 
   // Check for wildcard case first.
-  if (ACE_OS::strcmp ("", pattern_rep) == 0)
+  if (std::strcmp ("", pattern_rep) == 0)
     ACE_ALLOCATOR_RETURN (compiled_regexp,
                           ACE_OS::strdup (""),
                           -1);
@@ -642,13 +643,13 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_types_i (
       const char *type = map_entry->int_id_.type ();
 
       // Everything matches the wildcard.
-      if (ACE_OS::strcmp ("", pattern_rep) == 0
+      if (std::strcmp ("", pattern_rep) == 0
 #if defined (ACE_HAS_REGEX)
           || ACE_OS::step (type, compiled_regexp) != 0)
 #else
         // If we don't have regular expressions just use strstr() for
         // substring matching.
-        || ACE_OS::strstr (type, compiled_regexp) != nullptr)
+        || std::strstr (type, compiled_regexp) != nullptr)
 #endif /* ACE_HAS_REGEX */
 
         {
@@ -748,7 +749,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_type_entries_i (
   char *pattern_rep = pattern.char_rep ();
 
   // Check for wildcard case first.
-  if (ACE_OS::strcmp ("", pattern_rep) == 0)
+  if (std::strcmp ("", pattern_rep) == 0)
     compiled_regexp = ACE_OS::strdup ("");
   else
     // Compile the regular expression (the 0's cause ACE_OS::compile
@@ -767,13 +768,13 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_type_entries_i (
       // Get the type.
       const char *type = map_entry->int_id_.type ();
 
-      if (ACE_OS::strcmp ("", pattern_rep) == 0 // Everything matches
+      if (std::strcmp ("", pattern_rep) == 0 // Everything matches
                                                 // the wildcard.
 #if defined (ACE_HAS_REGEX)
           || ACE_OS::step (type, compiled_regexp) != 0)
 #else /* If we don't have regular expressions just use strstr() for
          substring matching. */
-        || ACE_OS::strstr (type, compiled_regexp) != nullptr)
+        || std::strstr (type, compiled_regexp) != nullptr)
 #endif /* ACE_HAS_REGEX */
         {
           ACE_Name_Binding entry (map_entry->ext_id_,
