@@ -528,9 +528,13 @@ ACE_DynScheduler::lookup_config_info (Preemption_Priority priority,
 void
 ACE_DynScheduler::reset ()
 {
-  // if the schedule is up to date, free resources
-  // and mark schedule as not being up to date
-  if (up_to_date_)
+  // Free resources from both completed and partially built schedules.
+  if (up_to_date_ || task_entries_ != nullptr ||
+      ordered_task_entries_ != nullptr || thread_delineators_ != nullptr ||
+      ordered_thread_dispatch_entries_ != nullptr ||
+      dispatch_entries_ != nullptr || config_info_entries_ != nullptr ||
+      expanded_dispatches_ != nullptr || ordered_dispatch_entries_ != nullptr ||
+      timeline_ != nullptr)
   {
     delete [] task_entries_;
     task_entries_ = nullptr;
@@ -1247,6 +1251,9 @@ ACE_DynScheduler::update_priority_level_params ()
 ACE_DynScheduler::status_t
 ACE_DynScheduler::setup_task_entries ()
 {
+  // Clear a previous complete or partially built schedule.
+  reset ();
+
   // store number of tasks, based on registrations
   tasks (static_cast<u_int> (rt_info_entries_.size ()));
 
@@ -1255,9 +1262,6 @@ ACE_DynScheduler::setup_task_entries ()
   {
     return ST_NO_TASKS_REGISTERED;
   }
-
-  // clear the decks of any previous scheduling information
-  reset ();
 
   // allocate new table of task entries (wrappers for rt_infos)
   size_t task_count = tasks ();
@@ -1453,9 +1457,17 @@ ACE_DynScheduler::identify_threads (ACE_CString & unresolved_locals,
                                          task_entries_ [i]),
                          ST_VIRTUAL_MEMORY_EXHAUSTED);
 
-          if ((task_entries_ [i].dispatches ().insert (Dispatch_Entry_Link (*dispatch_ptr)) < 0) ||
-              (dispatch_entries_->insert (dispatch_ptr) < 0) ||
-                          (thread_delineators_->insert (dispatch_ptr) < 0))
+          std::unique_ptr<Dispatch_Entry> dispatch_owner (dispatch_ptr);
+          if (dispatch_entries_->insert (dispatch_ptr) < 0)
+          {
+            return ST_VIRTUAL_MEMORY_EXHAUSTED;
+          }
+          // The dispatch set owns the entry; the task and thread sets index it.
+          dispatch_owner.release ();
+
+          if (task_entries_ [i].dispatches ().insert (
+                Dispatch_Entry_Link (*dispatch_ptr)) < 0 ||
+              thread_delineators_->insert (dispatch_ptr) < 0)
           {
             return ST_VIRTUAL_MEMORY_EXHAUSTED;
           }
@@ -1794,9 +1806,15 @@ ACE_DynScheduler::create_timeline ()
                         ordered_dispatch_entries_[i]->task_entry (),
                         ordered_dispatch_entries_[i]),
         ST_VIRTUAL_MEMORY_EXHAUSTED);
+      std::unique_ptr<Dispatch_Entry> dispatch_owner (new_dispatch_entry);
 
       // add the new dispatch entry to the set of expanded dispatches
-      expanded_dispatches_->insert (new_dispatch_entry);
+      if (expanded_dispatches_->insert (new_dispatch_entry) < 0)
+      {
+        return ST_VIRTUAL_MEMORY_EXHAUSTED;
+      }
+      // The expanded-dispatch set owns this entry; the timeline links it.
+      dispatch_owner.release ();
 
       // schedule the new dispatch entry into the timeline
       status = schedule_timeline_entry (*new_dispatch_entry, reschedule_queue);
