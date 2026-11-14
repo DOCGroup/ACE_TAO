@@ -1,50 +1,50 @@
 // -*- C++ -*-
 interface Grid
 {
-  // = TITLE
-  //   Create a <Grid> of type <name>
+  /// Creates a Grid of the specified type.
 
+  /// Height of the grid.
   attribute short height;
-  // Height of the grid.
 
+  /// Width of the grid.
   attribute short width;
-  // Width of the grid.
 
   exception RANGE_ERROR
     {
-      // = TITLE
-      // The range of parameter values do not fall in the expected
-      // range.
+      /// The range of parameter values does not fall in the expected range.
     };
 
-  // = Constants for LOCATIONS and VALUE.
+  /// @name Constants for locations and values
+  /// @{
   const short DEFAULT_LOCATION = 1;
   const short DEFAULT_VALUE = 100;
+  /// @}
 
+  /// Sets the element [n,m] of the grid to value.
   void set (in short n, in short m, in long value)
     raises (RANGE_ERROR);
-  // Set the element [n,m] of the grid, to value.
 
+  /// Returns the element [n,m] of the grid.
   long get (in short n, in short m)
     raises (RANGE_ERROR);
-  // Return element [n,m] of the grid.
 
+  /// Destroys the grid.
   void destroy ();
-  // Destroy the grid.
 };
 
 interface Grid_Factory
 {
-  // = TITLE
-  //   Factory that creates a <Grid>
+  /// Factory that creates a Grid.
 
-  // = Default height and width for a <Grid>.
+  /// @name Default Grid dimensions
+  /// @{
   const short DEFAULT_HEIGHT = 10;
   const short DEFAULT_WIDTH = 10;
+  /// @}
 
+  /// Returns a new Grid instance.
   Grid make_grid (in short height, in short width);
-  // Returns a new <Grid> instance.
 
+  /// Shuts down the application.
   oneway void shutdown ();
-  // Shutdown the application.
 };
