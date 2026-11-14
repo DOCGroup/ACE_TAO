@@ -29,7 +29,8 @@
 #include "tao/PI_Server/ServerRequestInterceptorC.h"
 #include "tao/CDR.h"
 #include "tao/ORB_Core.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
@@ -119,28 +120,12 @@ PortableInterceptor::ServerRequestInterceptor::_tao_release (ServerRequestInterc
 }
 
 ::CORBA::Boolean
-PortableInterceptor::ServerRequestInterceptor::_is_a (
-    const char *value)
-
+PortableInterceptor::ServerRequestInterceptor::_is_a (char const *value)
 {
-  if (
-      !ACE_OS::strcmp (
-          value,
-          "IDL:omg.org/PortableInterceptor/Interceptor:1.0"
-        ) ||
-      !ACE_OS::strcmp (
-          value,
-          "IDL:omg.org/PortableInterceptor/ServerRequestInterceptor:1.0"
-        ) ||
-      !ACE_OS::strcmp (
-          value,
-          "IDL:omg.org/CORBA/LocalObject:1.0"
-        ) ||
-      !ACE_OS::strcmp (
-          value,
-          "IDL:omg.org/CORBA/Object:1.0"
-        )
-    )
+  if (std::strcmp (value, "IDL:omg.org/PortableInterceptor/Interceptor:1.0") == 0 ||
+      std::strcmp (value, "IDL:omg.org/PortableInterceptor/ServerRequestInterceptor:1.0") == 0 ||
+      std::strcmp (value, "IDL:omg.org/CORBA/LocalObject:1.0") == 0 ||
+      std::strcmp (value, "IDL:omg.org/CORBA/Object:1.0") == 0)
     {
       return true; // success using local knowledge
     }

@@ -28,7 +28,8 @@
 
 #include "tao/PI/PolicyFactoryC.h"
 #include "tao/CDR.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
@@ -116,22 +117,11 @@ PortableInterceptor::PolicyFactory::_tao_release (PolicyFactory_ptr obj)
 }
 
 ::CORBA::Boolean
-PortableInterceptor::PolicyFactory::_is_a (const char *value)
+PortableInterceptor::PolicyFactory::_is_a (char const *value)
 {
-  if (
-      !ACE_OS::strcmp (
-          value,
-          "IDL:omg.org/PortableInterceptor/PolicyFactory:1.0"
-        ) ||
-      !ACE_OS::strcmp (
-          value,
-          "IDL:omg.org/CORBA/LocalObject:1.0"
-        ) ||
-      !ACE_OS::strcmp (
-          value,
-          "IDL:omg.org/CORBA/Object:1.0"
-        )
-    )
+  if (std::strcmp (value, "IDL:omg.org/PortableInterceptor/PolicyFactory:1.0") == 0 ||
+      std::strcmp (value, "IDL:omg.org/CORBA/LocalObject:1.0") == 0 ||
+      std::strcmp (value, "IDL:omg.org/CORBA/Object:1.0") == 0)
     {
       return true; // success using local knowledge
     }

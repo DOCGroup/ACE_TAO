@@ -28,7 +28,8 @@
 
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/CDR.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -138,22 +139,11 @@ RTCORBA::ProtocolProperties::_tao_release (ProtocolProperties_ptr obj)
 }
 
 ::CORBA::Boolean
-RTCORBA::ProtocolProperties::_is_a (const char *value)
+RTCORBA::ProtocolProperties::_is_a (char const *value)
 {
-  if (
-      !ACE_OS::strcmp (
-          value,
-          "IDL:omg.org/RTCORBA/ProtocolProperties:1.0"
-        ) ||
-      !ACE_OS::strcmp (
-          value,
-          "IDL:omg.org/CORBA/LocalObject:1.0"
-        ) ||
-      !ACE_OS::strcmp (
-          value,
-          "IDL:omg.org/CORBA/Object:1.0"
-        )
-    )
+  if (std::strcmp (value, "IDL:omg.org/RTCORBA/ProtocolProperties:1.0") == 0 ||
+      std::strcmp (value, "IDL:omg.org/CORBA/LocalObject:1.0") == 0 ||
+      std::strcmp (value, "IDL:omg.org/CORBA/Object:1.0") == 0)
     {
       return true; // success using local knowledge
     }
