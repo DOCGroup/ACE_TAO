@@ -290,7 +290,7 @@ operator<< (std::ostream &strm, CORBA::Any const &)
 
 #endif /* GEN_OSTREAM_OPS */
 
-// Insertion of the special basic types.
+/// Insertion of the special basic types.
 
 void
 CORBA::Any::operator<<= (CORBA::Any::from_boolean b)
@@ -354,7 +354,7 @@ CORBA::Any::operator<<= (CORBA::Any::from_wstring ws)
                ws.bound_);
 }
 
-// Insertion of the other basic types.
+/// Insertion of the other basic types.
 
 namespace CORBA
 {
@@ -412,7 +412,7 @@ operator<<= (CORBA::Any &any, CORBA::LongDouble ld)
   TAO::Any_Basic_Impl::insert (any, CORBA::_tc_longdouble, std::addressof (ld));
 }
 
-// Insertion of Any - copying.
+/// Insertion of Any - copying.
 void
 operator<<= (CORBA::Any &any, CORBA::Any const &a)
 {
@@ -423,7 +423,7 @@ operator<<= (CORBA::Any &any, CORBA::Any const &a)
       a);
 }
 
-// Insertion of Any - non-copying.
+/// Insertion of Any - non-copying.
 void
 operator<<= (CORBA::Any &any, CORBA::Any *a)
 {
@@ -433,7 +433,7 @@ operator<<= (CORBA::Any &any, CORBA::Any *a)
                                             a);
 }
 
-// Insertion of TypeCode - copying.
+/// Insertion of TypeCode - copying.
 void
 operator<<= (CORBA::Any &any, CORBA::TypeCode_ptr tc)
 {
@@ -441,7 +441,7 @@ operator<<= (CORBA::Any &any, CORBA::TypeCode_ptr tc)
   any <<= std::addressof (dup);
 }
 
-// Insertion of TypeCode - non-copying.
+/// Insertion of TypeCode - non-copying.
 void
 operator<<= (CORBA::Any &any, CORBA::TypeCode_ptr * tc)
 {
@@ -452,7 +452,7 @@ operator<<= (CORBA::Any &any, CORBA::TypeCode_ptr * tc)
       *tc);
 }
 
-// Insertion of CORBA object - copying.
+/// Insertion of CORBA object - copying.
 void
 operator<<= (CORBA::Any &any, CORBA::Object_ptr const obj)
 {
@@ -460,7 +460,7 @@ operator<<= (CORBA::Any &any, CORBA::Object_ptr const obj)
   any <<= std::addressof (dup);
 }
 
-// Insertion of CORBA object - non-copying.
+/// Insertion of CORBA object - non-copying.
 void
 operator<<= (CORBA::Any &any, CORBA::Object_ptr *objptr)
 {
@@ -470,8 +470,8 @@ operator<<= (CORBA::Any &any, CORBA::Object_ptr *objptr)
                                           *objptr);
 }
 
-// These are copying versions for unbounded (w)strings. They are not inlined,
-// to avoid use in Any.inl before definition in ORB.inl.
+/// These are copying versions for unbounded (w)strings. They are not inlined,
+/// to avoid use in Any.inl before definition in ORB.inl.
 
 void
 operator<<= (CORBA::Any &any, char const *s)

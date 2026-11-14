@@ -88,7 +88,7 @@ operator<<= (CORBA::Any &any, CORBA::Exception const &exception)
       exception);
 }
 
-// Insertion of CORBA::Exception - non-copying.
+/// Insertion of CORBA::Exception - non-copying.
 void
 operator<<= (CORBA::Any &any, CORBA::Exception *exception)
 {
@@ -100,6 +100,5 @@ operator<<= (CORBA::Any &any, CORBA::Exception *exception)
 }
 
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL
