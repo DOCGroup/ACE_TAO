@@ -1,6 +1,5 @@
 // file      : Receiver.cpp
 // author    : Boris Kolpackov <boris@kolpackov.net>
-#include "ace/Vector_T.h"
 #include "ace/Log_Msg.h"
 #include "ace/Basic_Types.h"
 #include "ace/OS_NS_errno.h"
@@ -12,7 +11,9 @@
 
 #include "Protocol.h"
 
-using Status_List = ACE_Vector<unsigned char, ACE_VECTOR_DEFAULT_SIZE>;
+#include <vector>
+
+using Status_List = std::vector<unsigned char>;
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv [])
@@ -35,15 +36,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
       expected_msg.payload[i] = static_cast<unsigned short> (i);
     }
 
-  Status_List received (message_count);
-  Status_List damaged (message_count);
-  Status_List duplicate (message_count);
-  for (size_t i {}; i < message_count; ++i)
-    {
-      received.push_back (0);
-      damaged.push_back (0);
-      duplicate.push_back (0);
-    }
+  Status_List received (message_count, 0);
+  Status_List damaged (message_count, 0);
+  Status_List duplicate (message_count, 0);
 
   Message msg {};
   bool first { true };
@@ -112,34 +107,25 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
   size_t damaged_count {};
   size_t duplicate_count {};
 
-  for (Status_List::Iterator i (received); !i.done (); i.advance ())
+  for (unsigned char entry : received)
     {
-      unsigned char *entry {};
-      i.next (entry);
-
-      if (*entry == 0)
+      if (entry == 0)
         {
           ++lost_count;
         }
     }
 
-  for (Status_List::Iterator i (damaged); !i.done (); i.advance ())
+  for (unsigned char entry : damaged)
     {
-      unsigned char *entry {};
-      i.next (entry);
-
-      if (*entry == 1)
+      if (entry == 1)
         {
           ++damaged_count;
         }
     }
 
-  for (Status_List::Iterator i (duplicate); !i.done (); i.advance ())
+  for (unsigned char entry : duplicate)
     {
-      unsigned char *entry {};
-      i.next (entry);
-
-      if (*entry == 1)
+      if (entry == 1)
         {
           ++duplicate_count;
         }
