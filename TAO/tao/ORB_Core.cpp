@@ -819,7 +819,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
 
           FILE* output_stream = ACE_OS::fopen (file_name, ACE_TEXT ("a"));
 
-          ACE_LOG_MSG->msg_ostream (output_stream, 1);
+          ACE_LOG_MSG->msg_ostream (output_stream, true);
 
 #else /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
@@ -843,7 +843,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
 
           if (!output_stream->bad ())
             {
-              ACE_LOG_MSG->msg_ostream (output_stream, 1);
+              ACE_LOG_MSG->msg_ostream (output_stream, true);
             }
 
 #endif /* ACE_LACKS_IOSTREAM_TOTALLY */

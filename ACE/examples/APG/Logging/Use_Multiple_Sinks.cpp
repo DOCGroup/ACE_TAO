@@ -19,7 +19,7 @@ int ACE_TMAIN (int, ACE_TCHAR *argv[])
   ACE_DEBUG
     ((LM_DEBUG, ACE_TEXT ("%IThis goes to STDERR & syslog\n")));
 
-  ACE_LOG_MSG->msg_ostream (output.get (), 0);
+  ACE_LOG_MSG->msg_ostream (output.get (), false);
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("%IThis will go to STDERR, ")

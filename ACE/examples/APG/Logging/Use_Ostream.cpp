@@ -15,7 +15,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   */
   // Listing 2 code/ch03
   std::unique_ptr<ofstream> output {std::make_unique<ofstream> ("ostream.output.test")};
-  ACE_LOG_MSG->msg_ostream (output.get (), 1);
+  ACE_LOG_MSG->msg_ostream (output.get (), true);
   // Ownership transfers to ACE_Log_Msg.
   output.release ();
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);

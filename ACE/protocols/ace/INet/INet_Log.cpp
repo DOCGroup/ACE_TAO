@@ -40,7 +40,7 @@ namespace ACE
 
             FILE* output_stream = ACE_OS::fopen (filename.c_str (), ACE_TEXT ("a"));
 
-            ACE_LOG_MSG->msg_ostream (output_stream, 1);
+            ACE_LOG_MSG->msg_ostream (output_stream, true);
 
 #else /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
@@ -55,7 +55,7 @@ namespace ACE
 
                 if (!output_stream->bad ())
                   {
-                    ACE_LOG_MSG->msg_ostream (output_stream, 1);
+                    ACE_LOG_MSG->msg_ostream (output_stream, true);
                   }
               }
 
