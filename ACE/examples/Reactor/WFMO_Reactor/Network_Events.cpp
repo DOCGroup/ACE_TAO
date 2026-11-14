@@ -33,7 +33,6 @@
 class Network_Handler : public ACE_Event_Handler
 {
 public:
-  /// Default constructor
   explicit Network_Handler (ACE_SOCK_Stream &s);
 
   int handle_input (ACE_HANDLE handle) override;
@@ -112,8 +111,6 @@ Network_Handler::handle_close (ACE_HANDLE handle,
 class Network_Listener : public ACE_Event_Handler
 {
 public:
-  /// Default constructor
-  /// Default constructor
   Network_Listener ();
   ~Network_Listener () override;
 

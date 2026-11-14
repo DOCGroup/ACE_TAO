@@ -32,7 +32,6 @@
 class Object_B_Server
 {
 public:
-  /// Default constructor
   Object_B_Server () = default;
 
   ~Object_B_Server () = default;

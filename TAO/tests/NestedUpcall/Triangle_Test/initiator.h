@@ -34,7 +34,6 @@
 class Initiator_Server
 {
 public:
-  /// Default constructor
   Initiator_Server () = default;
 
   ~Initiator_Server ();

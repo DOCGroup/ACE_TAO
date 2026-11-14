@@ -82,7 +82,6 @@ class Timer_Queue_Test_Driver
 public:
   Timer_Queue_Test_Driver () = default;
 
-  /// Default destructor
   virtual ~Timer_Queue_Test_Driver () = default;
 
   Timer_Queue_Test_Driver (Timer_Queue_Test_Driver const &) = delete;

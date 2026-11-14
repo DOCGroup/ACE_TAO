@@ -32,10 +32,8 @@
 class Object_A_Server
 {
 public:
-  /// Default constructor
   Object_A_Server () = default;
 
-  /// Destructor
   ~Object_A_Server () = default;
 
   Object_A_Server (Object_A_Server const &) = delete;

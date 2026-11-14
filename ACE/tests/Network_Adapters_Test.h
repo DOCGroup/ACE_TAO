@@ -33,7 +33,6 @@
 class Echo_Handler : public ACE_Event_Handler
 {
 public:
-  /// Default constructor
   Echo_Handler ();
 
   virtual ~Echo_Handler ();

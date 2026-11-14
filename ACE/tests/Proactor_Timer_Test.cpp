@@ -34,7 +34,6 @@ static int    odd = 0;
 class Time_Handler : public ACE_Handler
 {
 public:
-  /// Default constructor
   Time_Handler ();
 
   /// Handle the timeout.

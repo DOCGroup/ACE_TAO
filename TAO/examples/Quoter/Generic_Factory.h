@@ -30,7 +30,6 @@
 class Quoter_Generic_Factory_Server
 {
 public:
-  /// Default constructor
   Quoter_Generic_Factory_Server () = default;
 
   ~Quoter_Generic_Factory_Server ();

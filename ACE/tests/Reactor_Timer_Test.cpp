@@ -28,7 +28,6 @@ static int odd = 0;
 class Time_Handler : public ACE_Event_Handler
 {
 public:
-  /// Default constructor
   Time_Handler ();
 
   /// Handle the timeout.

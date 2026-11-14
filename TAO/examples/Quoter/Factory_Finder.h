@@ -31,7 +31,6 @@
 class Quoter_Factory_Finder_Server
 {
 public:
-  /// Default constructor
   Quoter_Factory_Finder_Server () = default;
 
   ~Quoter_Factory_Finder_Server ();

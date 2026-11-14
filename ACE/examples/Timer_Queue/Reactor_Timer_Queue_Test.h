@@ -119,7 +119,6 @@ public:
    */
   Reactor_Timer_Queue_Test_Driver ();
 
-  /// Default destructor
   ~Reactor_Timer_Queue_Test_Driver () override;
 
   /// Prints the menu of options.
