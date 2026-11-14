@@ -159,7 +159,7 @@ const ACE_TCHAR *cmdline_format = ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE
 
 ACE_CString order;
 
-ACE_Atomic_Op<ACE_SYNCH_MUTEX, int> running_tasks = 0;
+ACE_Atomic_Op<ACE_SYNCH_MUTEX, int> running_tasks {0};
 
 class Process_Task : public ACE_Task<ACE_SYNCH>
 {

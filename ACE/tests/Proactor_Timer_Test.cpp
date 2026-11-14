@@ -307,7 +307,8 @@ run_main (int argc, ACE_TCHAR *[])
       std::unique_ptr<Timer_Queue> tq = std::make_unique<Timer_Queue> ();
       // ... notice how the policy is in the derived timer queue type.
       // The abstract timer queue does not have a time policy ...
-      tq->set_time_policy(&ACE_High_Res_Timer::gettimeofday_hr);
+      ACE_FPointer_Time_Policy const time_policy (&ACE_High_Res_Timer::gettimeofday_hr);
+      tq->set_time_policy (time_policy);
       // ... and then the timer queue is replaced.  Strangely, the
       // Proactor does *not* copy the timers, it just deletes the
       // existing timer queue ....

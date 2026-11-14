@@ -45,7 +45,7 @@ namespace {
   // Extra debug messages
   int opt_debug = 0;
 
-  ACE_Atomic_Op<ACE_Thread_Mutex, int> reactor_thread_nr = 0;
+  ACE_Atomic_Op<ACE_Thread_Mutex, int> reactor_thread_nr {0};
 
   // Class to collect and report on data handling for each test pass.
   struct Result_Set {

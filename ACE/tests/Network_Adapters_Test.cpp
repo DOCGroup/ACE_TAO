@@ -1032,7 +1032,8 @@ run_main (int argc, ACE_TCHAR *argv[])
     std::make_unique<ACE_Timer_Heap_Variable_Time_Source> ();
   // ... notice how the policy is in the derived timer queue type.
   // The abstract timer queue does not have a time policy ...
-  tq->set_time_policy(&ACE_High_Res_Timer::gettimeofday_hr);
+  ACE_FPointer_Time_Policy const time_policy (&ACE_High_Res_Timer::gettimeofday_hr);
+  tq->set_time_policy (time_policy);
   // ... and then the timer queue is replaced.  Strangely, the reactor
   // does *not* copy the timers, it just deletes the existing timer
   // queue ....
