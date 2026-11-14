@@ -3,6 +3,7 @@
 #define STUBFAULTANALYZER_H
 #include /**/ <ace/pre.h>
 #include <ace/ACE.h>
+#include <string>
 #include <vector>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -28,15 +29,13 @@
 class  StubFaultAnalyzer
 {
 public:
-  /**
-   * Default constructor.
-   */
-  StubFaultAnalyzer ();
+  StubFaultAnalyzer () = default;
+  StubFaultAnalyzer (StubFaultAnalyzer const &) = delete;
+  StubFaultAnalyzer &operator= (StubFaultAnalyzer const &) = delete;
+  StubFaultAnalyzer (StubFaultAnalyzer &&) = delete;
+  StubFaultAnalyzer &operator= (StubFaultAnalyzer &&) = delete;
 
-  /**
-   * destructor.
-   */
-  ~StubFaultAnalyzer ();
+  ~StubFaultAnalyzer () = default;
 
   /**
    * Parse command line arguments.
@@ -95,28 +94,28 @@ private:
   ACE_CString identity_;
 
   /**
-   * a file to write to to signal "ready"
+   * A file to write to to signal "ready".
    */
-  const ACE_TCHAR * readyFile_;
+  std::basic_string<ACE_TCHAR> readyFile_;
 
   /**
-   * The detector's IOR  (-d option)
+   * The detector's IOR (-d option).
    */
-  const ACE_TCHAR * detector_ior_;
+  std::basic_string<ACE_TCHAR> detector_ior_;
 
   ::FT::FaultDetectorFactory_var factory_;
 
   /**
    * The notifier's IOR (-n option)
    */
-  const ACE_TCHAR * notifier_ior_;
+  std::basic_string<ACE_TCHAR> notifier_ior_;
 
   ::FT::FaultNotifier_var notifier_;
 
   /**
-   * A collection of files containing replica IORs
+   * Replica IOR strings from the -r options.
    */
-  std::vector<char const *> replicaIORs;
+  std::vector<std::string> replicaIORs;
 
   std::vector<FT::PullMonitorable_var> replicas_;
 
