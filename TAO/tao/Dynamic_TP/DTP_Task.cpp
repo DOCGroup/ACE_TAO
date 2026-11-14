@@ -340,7 +340,7 @@ TAO_DTP_Task::svc ()
                   {
                     wait_state = this->thread_idle_time_.sec () == 0
                       ? this->work_available_.wait ()
-                      : this->work_available_.wait (&tmp_sec);
+                      : this->work_available_.wait (std::addressof (tmp_sec));
                   }
                 // Check for timeout
                 if (this->shutdown_)

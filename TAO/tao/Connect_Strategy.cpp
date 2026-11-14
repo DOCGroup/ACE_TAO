@@ -4,6 +4,8 @@
 #include "tao/Connection_Handler.h"
 #include "tao/LF_Multi_Event.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Connect_Strategy::TAO_Connect_Strategy (TAO_ORB_Core *orb_core)
@@ -44,7 +46,7 @@ int
 TAO_Connect_Strategy::poll (TAO_LF_Multi_Event *mev)
 {
   ACE_Time_Value zero (ACE_Time_Value::zero);
-  return this->wait_i (mev, mev->base_transport (), &zero);
+  return this->wait_i (mev, mev->base_transport (), std::addressof (zero));
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

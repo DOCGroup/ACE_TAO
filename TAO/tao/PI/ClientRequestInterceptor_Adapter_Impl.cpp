@@ -13,6 +13,8 @@
 #include "tao/ORB_Core_TSS_Resources.h"
 #include "tao/PortableInterceptorC.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -28,7 +30,7 @@ namespace TAO
 
     try
       {
-        TAO_ClientRequestInfo ri (&invocation);
+        TAO_ClientRequestInfo ri (std::addressof (invocation));
 
         for (size_t i {}; i < this->interceptor_list_.size (); ++i)
           {
@@ -37,7 +39,7 @@ namespace TAO
 
             if (registered.details_.should_be_processed (is_remote_request))
               {
-                registered.interceptor_->send_request (&ri);
+                registered.interceptor_->send_request (std::addressof (ri));
               }
 
             // The starting interception point completed successfully.
@@ -64,7 +66,7 @@ namespace TAO
     // they were pushed onto the stack since this is an "ending"
     // interception point.
 
-    TAO_ClientRequestInfo ri (&invocation);
+    TAO_ClientRequestInfo ri (std::addressof (invocation));
 
     // Unwind the stack.
     size_t const len = invocation.stack_size ();
@@ -82,7 +84,7 @@ namespace TAO
 
         if (registered.details_.should_be_processed (is_remote_request))
           {
-            registered.interceptor_->receive_reply (&ri);
+            registered.interceptor_->receive_reply (std::addressof (ri));
           }
       }
 
@@ -105,7 +107,7 @@ namespace TAO
     // interception point.
     try
       {
-        TAO_ClientRequestInfo ri (&invocation);
+        TAO_ClientRequestInfo ri (std::addressof (invocation));
 
         // Unwind the flow stack.
         size_t const len = invocation.stack_size ();
@@ -123,7 +125,7 @@ namespace TAO
 
             if (registered.details_.should_be_processed (is_remote_request))
               {
-                registered.interceptor_->receive_exception (&ri);
+                registered.interceptor_->receive_exception (std::addressof (ri));
               }
           }
       }
@@ -143,7 +145,7 @@ namespace TAO
         // drops to zero, i.e., once each interceptor has been invoked.
         // This prevents infinite recursion from occuring.
 
-        invocation.exception (&ex);
+        invocation.exception (std::addressof (ex));
 
         this->receive_exception (invocation);
 
@@ -174,7 +176,7 @@ namespace TAO
 
     try
       {
-        TAO_ClientRequestInfo ri (&invocation);
+        TAO_ClientRequestInfo ri (std::addressof (invocation));
 
         // Unwind the stack.
         size_t const len = invocation.stack_size ();
@@ -192,7 +194,7 @@ namespace TAO
 
           if (registered.details_.should_be_processed (is_remote_request))
             {
-              registered.interceptor_->receive_other (&ri);
+              registered.interceptor_->receive_other (std::addressof (ri));
             }
         }
       }
@@ -212,7 +214,7 @@ namespace TAO
         // drops to zero, i.e., once each interceptor has been invoked.
         // This prevents infinite recursion from occuring.
 
-        invocation.exception (&ex);
+        invocation.exception (std::addressof (ex));
 
         this->receive_exception (invocation);
 

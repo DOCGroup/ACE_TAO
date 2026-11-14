@@ -19,6 +19,8 @@
 #include "tao/ORB_Core.h"
 #include "tao/SystemException.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
@@ -313,7 +315,7 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
               private_connection_descriptor_property.init
                 (static_cast<long> (reinterpret_cast<ptrdiff_t> (r.stub ())));
               rt_transport_descriptor.insert
-                (&private_connection_descriptor_property);
+                (std::addressof (private_connection_descriptor_property));
             }
 
           if (match_bands)
@@ -322,11 +324,11 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
                 (min_priority, max_priority);
 
               rt_transport_descriptor.insert
-                (&banded_connection_descriptor_property);
+                (std::addressof (banded_connection_descriptor_property));
             }
 
           // Check if the invocation has completed.
-          if (r.try_connect (&rt_transport_descriptor, val))
+          if (r.try_connect (std::addressof (rt_transport_descriptor), val))
             return 1;
         }
 

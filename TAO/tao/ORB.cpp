@@ -176,7 +176,7 @@ CORBA::ORB::run ()
 void
 CORBA::ORB::run (ACE_Time_Value &tv)
 {
-  this->run (&tv);
+  this->run (std::addressof (tv));
 }
 
 void
@@ -196,7 +196,7 @@ CORBA::ORB::perform_work ()
 void
 CORBA::ORB::perform_work (ACE_Time_Value &tv)
 {
-  this->perform_work (&tv);
+  this->perform_work (std::addressof (tv));
 }
 
 void
