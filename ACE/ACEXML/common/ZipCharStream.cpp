@@ -3,11 +3,7 @@
 #include "ACEXML/common/ZipCharStream.h"
 #include "ace/ACE.h"
 
-ACEXML_ZipCharStream::ACEXML_ZipCharStream ()
-  : filename_ (nullptr), encoding_ (nullptr), size_ (0), infile_ (nullptr), pos_ (0),
-    limit_ (0)
-{
-}
+ACEXML_ZipCharStream::ACEXML_ZipCharStream () = default;
 
 ACEXML_ZipCharStream::~ACEXML_ZipCharStream ()
 {
@@ -15,19 +11,16 @@ ACEXML_ZipCharStream::~ACEXML_ZipCharStream ()
 }
 
 int
-ACEXML_ZipCharStream::open (const ACEXML_Char *name)
+ACEXML_ZipCharStream::open (ACEXML_Char const *name)
 {
-  delete[] this->filename_;
-  this->filename_ = nullptr;
-
-  delete[] this->encoding_;
-  this->encoding_ = nullptr;
+  this->filename_.reset ();
+  this->encoding_.reset ();
 
   this->infile_ = zzip_fopen (name, ACE_TEXT ("r"));
   if (this->infile_ == nullptr)
     return -1;
 
-  this->filename_ = ACE::strnew (ACE::basename (name));
+  this->filename_.reset (ACE::strnew (ACE::basename (name)));
   return this->determine_encoding();
 }
 
@@ -42,16 +35,12 @@ ACEXML_ZipCharStream::determine_encoding ()
     ;
   if (i < 4)
     return -1;
-  const ACEXML_Char* temp = ACEXML_Encoding::get_encoding (input);
+  ACEXML_Char const *temp = ACEXML_Encoding::get_encoding (input);
   if (temp == nullptr)
     return -1;
   else
     {
-      if (this->encoding_ != nullptr)
-        delete [] this->encoding_;
-      this->encoding_ = ACE::strnew (temp);
-  //     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("File's encoding is %s\n"),
-//                   this->encoding_));
+      this->encoding_.reset (ACE::strnew (temp));
     }
 
   // Move over the byte-order-mark if present.
@@ -99,10 +88,8 @@ ACEXML_ZipCharStream::close ()
       zzip_close (this->infile_);
       this->infile_ = nullptr;
     }
-  delete[] this->filename_;
-  this->filename_ = nullptr;
-  delete[] this->encoding_;
-  this->encoding_ = nullptr;
+  this->filename_.reset ();
+  this->encoding_.reset ();
   this->size_ = 0;
   this->pos_ = 0;
   this->limit_ = 0;
@@ -188,26 +175,26 @@ ACEXML_ZipCharStream::peek ()
 #endif /* ACE_USES_WCHAR */
 }
 
-const ACEXML_Char*
+ACEXML_Char const *
 ACEXML_ZipCharStream::getEncoding ()
 {
-  return this->encoding_;
+  return this->encoding_.get ();
 }
 
-const ACEXML_Char*
+ACEXML_Char const *
 ACEXML_ZipCharStream::getSystemId ()
 {
-  return this->filename_;
+  return this->filename_.get ();
 }
 
 #if defined (ACE_USES_WCHAR)
 int
-ACEXML_ZipCharStream::get_i (ACEXML_Char& ch)
+ACEXML_ZipCharStream::get_i (ACEXML_Char &ch)
 {
-  if (ACE_OS::strcmp (this->encoding_, ACE_TEXT ("UTF-8")) == 0)
+  if (ACE_OS::strcmp (this->encoding_.get (), ACE_TEXT ("UTF-8")) == 0)
     return this->getchar_i (ch);
 
-  int BE = (ACE_OS::strcmp (this->encoding_,
+  int BE = (ACE_OS::strcmp (this->encoding_.get (),
                             ACE_TEXT ("UTF-16BE")) == 0) ? 1 : 0;
   ACEXML_Char input[2];
   int i = 0;
@@ -226,12 +213,12 @@ int
 ACEXML_ZipCharStream::peek_i ()
 {
   // If we are reading a UTF-8 encoded file, just use the plain unget.
-  if (ACE_OS::strcmp (this->encoding_, ACE_TEXT ("UTF-8")) == 0)
+  if (ACE_OS::strcmp (this->encoding_.get (), ACE_TEXT ("UTF-8")) == 0)
     return this->peekchar_i();
 
   // Peek into the stream. This reads two characters off the stream, keeps
   // it in peek_.
-  int BE = (ACE_OS::strcmp (this->encoding_,
+  int BE = (ACE_OS::strcmp (this->encoding_.get (),
                             ACE_TEXT ("UTF-16BE")) == 0) ? 1 : 0;
 
   ACEXML_Char input[2];

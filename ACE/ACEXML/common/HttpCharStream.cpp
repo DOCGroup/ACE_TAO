@@ -4,6 +4,8 @@
 #include "ace/OS_NS_string.h"
 #include "ace/Truncate.h"
 #include <cstring>
+#include <new>
+#include <string>
 
 #include "ACEXML/common/HttpCharStream.h"
 #include "ACEXML/common/Encoding.h"
@@ -30,23 +32,43 @@ int
 ACEXML_HttpCharStream::open (ACEXML_Char const *url)
 {
   this->close ();
+  if (url == nullptr)
+    return -1;
   this->url_.reset (ACE::strnew (url));
+  if (!this->url_)
+    {
+      this->close ();
+      errno = ENOMEM;
+      return -1;
+    }
 
-  ACEXML_URL_Addr *url_addr {};
-  ACE_NEW_RETURN (url_addr, ACEXML_URL_Addr, -1);
-  this->url_addr_.reset (url_addr);
-  ACEXML_Mem_Map_Stream *stream {};
-  ACE_NEW_RETURN (stream, ACEXML_Mem_Map_Stream, -1);
-  this->stream_.reset (stream);
+  this->url_addr_.reset (new (std::nothrow) ACEXML_URL_Addr);
+  if (!this->url_addr_)
+    {
+      this->close ();
+      errno = ENOMEM;
+      return -1;
+    }
+  this->stream_.reset (new (std::nothrow) ACEXML_Mem_Map_Stream);
+  if (!this->stream_)
+    {
+      this->close ();
+      errno = ENOMEM;
+      return -1;
+    }
 
   if (this->url_addr_->string_to_addr (this->url_.get ()) == -1) {
     this->close();
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "cannot convert URL"), -1);
   }
 
-  Connector *connector {};
-  ACE_NEW_RETURN (connector, Connector (nullptr, ACE_NONBLOCK), -1);
-  this->connector_.reset (connector);
+  this->connector_.reset (new (std::nothrow) Connector (nullptr, ACE_NONBLOCK));
+  if (!this->connector_)
+    {
+      this->close ();
+      errno = ENOMEM;
+      return -1;
+    }
 
   if (this->stream_->open (this->connector_.get (), *this->url_addr_) == -1) {
     this->close();
@@ -265,29 +287,30 @@ ACEXML_HttpCharStream::get_url (size_t& len)
 int
 ACEXML_HttpCharStream::send_request ()
 {
-  char * const path = ACE::strnew (ACE_TEXT_ALWAYS_CHAR (this->url_addr_->get_path_name()));
-  std::unique_ptr<char[]> path_ptr (path);
-  size_t commandsize = std::strlen (path)
+  std::string const path (ACE_TEXT_ALWAYS_CHAR (this->url_addr_->get_path_name()));
+  size_t const commandsize = path.length ()
                        + std::strlen (this->url_addr_->get_host_name ())
                        + 20     // Extra
                        + 1      // NUL byte
                        + 16 ;   // Protocol filler...
 
-  char *command {};
-  ACE_NEW_RETURN (command, char[commandsize], -1);
+  std::unique_ptr<char[]> command {
+    new (std::nothrow) char[commandsize]};
+  if (!command)
+    {
+      errno = ENOMEM;
+      return -1;
+    }
 
-  // Ensure that the <command> memory is deallocated.
-  std::unique_ptr<char[]> cmd_ptr (command);
-
-  int bytes = ACE_OS::sprintf (command, "GET %s HTTP/1.0\r\n", path);
-  bytes += ACE_OS::sprintf (&command[bytes], "Host: %s\r\n",
+  int bytes = ACE_OS::sprintf (command.get (), "GET %s HTTP/1.0\r\n", path.c_str ());
+  bytes += ACE_OS::sprintf (command.get () + bytes, "Host: %s\r\n",
                             this->url_addr_->get_host_name ());
-  bytes += ACE_OS::sprintf (&command[bytes], "\r\n");
+  bytes += ACE_OS::sprintf (command.get () + bytes, "\r\n");
 
   ACE_Time_Value tv (ACE_DEFAULT_TIMEOUT);
 
   // Send the command to the connected server.
-  int retval = static_cast<int> (this->stream_->send_n (command, bytes, &tv));
+  int retval = static_cast<int> (this->stream_->send_n (command.get (), bytes, &tv));
   if (retval <= 0)
     return -1;
   return retval;

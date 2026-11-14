@@ -4,6 +4,7 @@
 #include "ACEXML/common/FileCharStream.h"
 #include "ACEXML/common/HttpCharStream.h"
 #include <memory>
+#include <new>
 
 #ifdef USE_ZZIP
 #include "ACEXML/common/ZipCharStream.h"
@@ -20,9 +21,13 @@ ACEXML_StreamFactory::create_stream (ACEXML_Char const *uri)
     }
   else if (ACE_OS::strstr (uri, ACE_TEXT ("http://")) != nullptr)
     {
-      ACEXML_HttpCharStream *raw_stream {};
-      ACE_NEW_RETURN (raw_stream, ACEXML_HttpCharStream, nullptr);
-      std::unique_ptr<ACEXML_HttpCharStream> hstream (raw_stream);
+      std::unique_ptr<ACEXML_HttpCharStream> hstream {
+        new (std::nothrow) ACEXML_HttpCharStream};
+      if (!hstream)
+        {
+          errno = ENOMEM;
+          return nullptr;
+        }
       if (hstream->open (uri) != -1)
         return hstream.release ();
     }
@@ -30,18 +35,26 @@ ACEXML_StreamFactory::create_stream (ACEXML_Char const *uri)
     {
       if (ACE_OS::strstr (uri, ACE_TEXT ("file://")) != nullptr)
         uri += 7; // Skip over file://
-      ACEXML_FileCharStream *raw_stream {};
-      ACE_NEW_RETURN (raw_stream, ACEXML_FileCharStream, nullptr);
-      std::unique_ptr<ACEXML_FileCharStream> fstream (raw_stream);
+      std::unique_ptr<ACEXML_FileCharStream> fstream {
+        new (std::nothrow) ACEXML_FileCharStream};
+      if (!fstream)
+        {
+          errno = ENOMEM;
+          return nullptr;
+        }
       if (fstream->open (uri) != -1)
         return fstream.release ();
 #ifdef USE_ZZIP
       else
         {
           fstream.reset ();
-          ACEXML_ZipCharStream *raw_zip_stream {};
-          ACE_NEW_RETURN (raw_zip_stream, ACEXML_ZipCharStream, nullptr);
-          std::unique_ptr<ACEXML_ZipCharStream> zstream (raw_zip_stream);
+          std::unique_ptr<ACEXML_ZipCharStream> zstream {
+            new (std::nothrow) ACEXML_ZipCharStream};
+          if (!zstream)
+            {
+              errno = ENOMEM;
+              return nullptr;
+            }
           if (zstream->open (uri) != -1)
             return zstream.release ();
         }

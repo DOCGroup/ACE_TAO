@@ -1,6 +1,7 @@
 #include "ACEXML/common/URL_Addr.h"
 
 #include <memory>
+#include <new>
 
 #if !defined (__ACEXML_INLINE__)
 #include "ACEXML/common/URL_Addr.inl"
@@ -101,11 +102,15 @@ ACEXML_URL_Addr::string_to_addr (const ACEXML_Char* s,
   size_t host_len = url - s;
   host_len -= http_len;
 
-  ACEXML_Char *host_name {};
-  ACE_NEW_RETURN (host_name, ACEXML_Char[host_len + 1], -1);
-  ACE_OS::strncpy (host_name, s + http_len, host_len);
+  std::unique_ptr<ACEXML_Char[]> host_name {
+    new (std::nothrow) ACEXML_Char[host_len + 1]};
+  if (!host_name)
+    {
+      errno = ENOMEM;
+      return -1;
+    }
+  ACE_OS::strncpy (host_name.get (), s + http_len, host_len);
   host_name[host_len] = '\0';
-  std::unique_ptr<ACEXML_Char[]> cleanup_host_name (host_name);
 
   // Get the port number (if any)
   unsigned short port = ACE_DEFAULT_HTTP_PORT;
@@ -117,7 +122,7 @@ ACEXML_URL_Addr::string_to_addr (const ACEXML_Char* s,
     }
 
   // Set the addr
-  int result = this->ACE_INET_Addr::set (port, host_name);
+  int result = this->ACE_INET_Addr::set (port, host_name.get ());
 
   if (result == -1)
     return -1;

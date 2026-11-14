@@ -1,11 +1,14 @@
 // -*- C++ -*-
 
 #include "ACEXML/common/Transcode.h"
+#include "ACEXML/common/XML_Codecs.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_main.h"
+#include "ace/OS_NS_string.h"
 #include <array>
 #include <cstddef>
 #include <cstring>
+#include <memory>
 
 void dump_utf16 (ACEXML_UTF16 const *data, size_t len)
 {
@@ -55,6 +58,20 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_DEBUG ((LM_DEBUG, "Restored UTF16 string:\n"));
   dump_utf16 (after.data (), x);
   ACE_DEBUG ((LM_DEBUG, "\n\n"));
+
+  size_t encoded_len {};
+  std::unique_ptr<ACEXML_Char[]> encoded {
+    ACEXML_Base64::encode (ACE_TEXT ("A"), &encoded_len)};
+  if (!encoded || encoded_len != 5 ||
+      ACE_OS::strcmp (encoded.get (), ACE_TEXT ("QQ==\n")) != 0)
+    return 1;
+
+  size_t decoded_len {};
+  std::unique_ptr<ACEXML_Char[]> base64_decoded {
+    ACEXML_Base64::decode (encoded.get (), &decoded_len)};
+  if (!base64_decoded || decoded_len != 1 ||
+      base64_decoded[0] != static_cast<ACEXML_Char> ('A'))
+    return 1;
 
   return 0;
 }

@@ -1,9 +1,10 @@
 // -*- C++ -*-
 
-#include "ace/OS_Memory.h"
+#include "ace/OS_Errno.h"
 #include "ace/OS_NS_string.h"
 #include "ACEXML/common/XML_Codecs.h"
 #include <memory>
+#include <new>
 
 ACEXML_Char*
 ACEXML_Base64::encode (const ACEXML_Char* input,
@@ -13,19 +14,20 @@ ACEXML_Base64::encode (const ACEXML_Char* input,
     return nullptr;
   size_t len = ACE_OS::strlen (input);
 
-  ACE_Byte *buf {};
-  ACE_NEW_RETURN (buf,
-                  ACE_Byte[len],
-                  nullptr);
-  std::unique_ptr<ACE_Byte[]> cleanup_buf (buf);
+  std::unique_ptr<ACE_Byte[]> buf {new (std::nothrow) ACE_Byte[len + 1]};
+  if (!buf)
+    {
+      errno = ENOMEM;
+      return nullptr;
+    }
 
   for (size_t i = 0; i < len; ++i)
-    buf[i] = (ACE_Byte)input[i];
+    buf[i] = static_cast<ACE_Byte> (input[i]);
   buf[len] = 0;
 
   size_t encode_len = 0;
   std::unique_ptr<ACE_Byte[]> encoded_buf (
-    ACE_Base64::encode (buf, len, &encode_len));
+    ACE_Base64::encode (buf.get (), len, &encode_len));
 
   if (encoded_buf == nullptr)
     return nullptr;
@@ -52,23 +54,22 @@ ACEXML_Base64::decode (const ACEXML_Char* input,
 
   size_t len = ACE_OS::strlen (input);
 
-  ACE_Byte *buf {};
-
-  ACE_NEW_RETURN (buf,
-                  ACE_Byte[len],
-                  nullptr);
-
-  std::unique_ptr<ACE_Byte[]> cleanup (buf);
+  std::unique_ptr<ACE_Byte[]> buf {new (std::nothrow) ACE_Byte[len + 1]};
+  if (!buf)
+    {
+      errno = ENOMEM;
+      return nullptr;
+    }
 
   for (size_t i = 0; i < len; ++i)
-    buf[i] = (ACE_Byte)input[i];
+    buf[i] = static_cast<ACE_Byte> (input[i]);
 
   buf[len] = 0;
 
   size_t decode_len = 0;
 
   std::unique_ptr<ACE_Byte[]> decoded_buf (
-    ACE_Base64::decode (buf, &decode_len));
+    ACE_Base64::decode (buf.get (), &decode_len));
 
   if (decoded_buf == nullptr)
     return nullptr;
