@@ -344,7 +344,7 @@ TAO_AV_RTP_Object::handle_input ()
   ACE_Addr *addr = this->transport_->get_peer_addr ();
 
   if(this->control_object_)
-    this->control_object_->handle_control_input (&this->frame_, *addr);
+    this->control_object_->handle_control_input (std::addressof (this->frame_), *addr);
 
   // Get payload that has been converted to host byte order
   char *data_ptr;
@@ -352,14 +352,16 @@ TAO_AV_RTP_Object::handle_input ()
   RTP_Packet rtp_packet(this->frame_.rd_ptr (),
                         static_cast<int> (this->frame_.length ()));
 
-  rtp_packet.get_frame_info (&frame_info);
+  rtp_packet.get_frame_info (std::addressof (frame_info));
   rtp_packet.get_payload(&data_ptr, length);
 
   this->frame_.rd_ptr (this->frame_.base ());
   std::memcpy (this->frame_.rd_ptr (), data_ptr, length);
   this->frame_.wr_ptr (this->frame_.rd_ptr() + length);
 
-  this->callback_->receive_frame (&this->frame_, &frame_info, *addr);
+  this->callback_->receive_frame (std::addressof (this->frame_),
+                                  std::addressof (frame_info),
+                                  *addr);
 
   return 0;
 }
@@ -476,13 +478,13 @@ TAO_AV_RTP_Object::send_frame (ACE_Message_Block *frame,
   ACE_Message_Block mb (data_ptr, data_length);
   mb.wr_ptr (data_length);
 
-  result = this->transport_->send (&mb);
+  result = this->transport_->send (std::addressof (mb));
   if (result < 0)
     ORBSVCS_ERROR_RETURN ( (LM_ERROR,"TAO_AV_RTP::send_frame failed\n"),result);
 
   TAO_AV_RTCP_Object *rtcp_prot_obj = dynamic_cast<TAO_AV_RTCP_Object*> (this->control_object_);
   if (rtcp_prot_obj)
-    rtcp_prot_obj->handle_control_output (&mb);
+    rtcp_prot_obj->handle_control_output (std::addressof (mb));
 
   return 0;
 }

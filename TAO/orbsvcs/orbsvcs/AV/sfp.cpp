@@ -228,12 +228,12 @@ TAO_SFP_Base::read_frame (TAO_AV_Transport *transport,
           {
             // read the frame info.
             ACE_Message_Block frame_info_mb (message_len-frame_header_len+ACE_CDR::MAX_ALIGNMENT);
-            ACE_CDR::mb_align (&frame_info_mb);
+            ACE_CDR::mb_align (std::addressof (frame_info_mb));
             frame_info_mb.copy (message_block->rd_ptr (),
                                 message_block->length ());
             // print the buffer.
             //          this->dump_buf (message_block->rd_ptr (),16);
-            TAO_InputCDR frame_info_cdr (&frame_info_mb,byte_order);
+            TAO_InputCDR frame_info_cdr (std::addressof (frame_info_mb), byte_order);
             frame_info_cdr >> state.frame_;
             if (TAO_debug_level > 0)
               ORBSVCS_DEBUG ((LM_DEBUG,

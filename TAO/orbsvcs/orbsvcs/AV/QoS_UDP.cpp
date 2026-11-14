@@ -11,6 +11,7 @@
 #include "ace/OS_NS_strings.h"
 
 #include <cstring>
+#include <memory>
 
 #if !defined (__ACE_INLINE__)
 #include "orbsvcs/AV/QoS_UDP.inl"
@@ -58,7 +59,7 @@ TAO_AV_UDP_QoS_Session_Helper::set_qos (ACE_Flow_Spec &ace_flow_spec,
   if (handler->flowspec_entry ()->role () == TAO_FlowSpec_Entry::TAO_AV_PRODUCER)
     {
       if (fill_ace_qos.fill_simplex_sender_qos (*ace_qos,
-                                                &ace_flow_spec) !=0)
+                                                std::addressof (ace_flow_spec)) !=0)
         ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            "Unable to fill simplex sender qos (%N|%l)\n"),
                           -1);
@@ -70,7 +71,7 @@ TAO_AV_UDP_QoS_Session_Helper::set_qos (ACE_Flow_Spec &ace_flow_spec,
   else if (handler->flowspec_entry ()->role () == TAO_FlowSpec_Entry::TAO_AV_CONSUMER)
     {
       if (fill_ace_qos.fill_simplex_receiver_qos (*ace_qos,
-                                                  &ace_flow_spec) !=0)
+                                                  std::addressof (ace_flow_spec)) !=0)
         ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            "Unable to fill simplex receiver qos (%N|%l)\n"),
                           -1);
@@ -85,7 +86,7 @@ TAO_AV_UDP_QoS_Session_Helper::set_qos (ACE_Flow_Spec &ace_flow_spec,
   // Set the QoS for the session. Replaces the ioctl () call that
   // was being made previously.
   if (handler->qos_session ()->qos (handler->get_socket (),
-                                    &qos_manager,
+                                    std::addressof (qos_manager),
                                     *ace_qos) == -1)
     ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        "Unable to set QoS (%N|%l)\n"),
@@ -846,7 +847,7 @@ TAO_AV_UDP_QoS_Acceptor::open_default (TAO_Base_StreamEndPoint *endpoint,
               "(%N,%l) ADDRESS IS %s:%d\n",
               buf, qos_acceptor_addr_.get_port_number() ));
 
-  int result = this->open_i (&qos_acceptor_addr_);
+  int result = this->open_i (std::addressof (qos_acceptor_addr_));
   if (result < 0)
     return result;
   return 0;

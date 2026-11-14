@@ -5,6 +5,7 @@
 #include "tao/debug.h"
 
 #include <cstring>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -214,7 +215,7 @@ RTCP_Channel_In::recv_rtp_packet(ACE_Message_Block *mb,
 
   // make sure the packet is valid
   if (data_packet.is_valid ())
-    this->updateStatistics(&data_packet);
+    this->updateStatistics (std::addressof (data_packet));
   else
     ORBSVCS_DEBUG ((LM_DEBUG,
                 "RTCP_Channel_In::recvDataPacket - invalid RTP packet\n"));
