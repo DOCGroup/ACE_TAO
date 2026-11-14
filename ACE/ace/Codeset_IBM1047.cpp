@@ -130,7 +130,7 @@ ACE_IBM1047_ISO8859::read_string (ACE_InputCDR& in,
           return false;
         }
 
-      if (this->read_char_array (in, &x[0], len))
+      if (this->read_char_array (in, x.data (), len))
       {
         x.resize (len-1); // drop terminating '\0' read from stream
         return true;
@@ -271,7 +271,7 @@ ACE_ISO8859_IBM1047::read_string (ACE_InputCDR& in,
           return false;
         }
 
-      if (this->read_char_array (in, &x[0], len))
+      if (this->read_char_array (in, x.data (), len))
       {
         x.resize (len-1); // drop terminating '\0' read from stream
         return true;
