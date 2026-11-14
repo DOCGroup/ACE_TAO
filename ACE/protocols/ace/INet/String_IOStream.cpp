@@ -99,7 +99,7 @@ namespace ACE
                 length = this->string_ref_->length () - this->rd_ptr_;
               }
             std::memmove (buffer,
-                          &(*this->string_ref_)[this->rd_ptr_],
+                          this->string_ref_->c_str () + this->rd_ptr_,
                           length * sizeof (char_type));
             this->rd_ptr_ += length;
             n = ACE_Utils::truncate_cast<int> (length);
