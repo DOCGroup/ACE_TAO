@@ -649,14 +649,14 @@ namespace ACE
           {
             return false;
           }
-        u_short port = addr.get_port_number ();
+        u_short const port = addr.get_port_number ();
         // can we use the RFC 2428 extensions?
         if (this->session ()->supports_ftp_extensions ())
           {
             arg << '|'
                 << (addr.get_type () == AF_INET ? '1' : '2')
                 << '|'
-                << (&ip_buf[0])
+                << ip_buf
                 << '|'
                 << port
                 << '|';
