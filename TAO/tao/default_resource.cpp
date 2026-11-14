@@ -784,25 +784,22 @@ TAO_Default_Resource_Factory::allocate_reactor_impl () const
 ACE_Reactor *
 TAO_Default_Resource_Factory::get_reactor ()
 {
-  ACE_Reactor *reactor {};
-  ACE_NEW_RETURN (reactor,
+  ACE_Reactor *raw_reactor {};
+  ACE_NEW_RETURN (raw_reactor,
                   ACE_Reactor (this->allocate_reactor_impl (), true),
                   nullptr);
+  std::unique_ptr<ACE_Reactor> reactor (raw_reactor);
 
   if (reactor->initialized () == 0)
     {
-      // backup timer queue
-      ACE_Timer_Queue *tmq = reactor->timer_queue ();
-      // clean up reactor
-      delete reactor;
-      reactor = nullptr;
-      // clean up timer queue in case it was created by time policy
-      this->destroy_timer_queue (tmq);
+      ACE_Timer_Queue * const timer_queue = reactor->timer_queue ();
+      reactor.reset ();
+      this->destroy_timer_queue (timer_queue);
+      return nullptr;
     }
-  else
-    this->dynamically_allocated_reactor_ = true;
 
-  return reactor;
+  this->dynamically_allocated_reactor_ = true;
+  return reactor.release ();
 }
 
 void
@@ -810,12 +807,10 @@ TAO_Default_Resource_Factory::reclaim_reactor (ACE_Reactor *reactor)
 {
   if (this->dynamically_allocated_reactor_)
     {
-      // backup timer queue
-      ACE_Timer_Queue *tmq = reactor->timer_queue ();
-      // clean up reactor
-      delete reactor;
-      // clean up timer queue in case it was created by time policy
-      this->destroy_timer_queue (tmq);
+      ACE_Timer_Queue * const timer_queue = reactor->timer_queue ();
+      std::unique_ptr<ACE_Reactor> reactor_owner (reactor);
+      reactor_owner.reset ();
+      this->destroy_timer_queue (timer_queue);
     }
 }
 
