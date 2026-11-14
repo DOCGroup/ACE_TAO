@@ -12,9 +12,7 @@
 
 class ACE_Svc_Export Timer_Service_1 : public ACE_Service_Object
 {
-  // = TITLE
-  //   Demonstrates a simple timer service that can be configured
-  //   statically.
+  /// Demonstrates a simple timer service that can be configured statically.
 public:
   Timer_Service_1 ();
   Timer_Service_1 (Timer_Service_1 const &) = delete;
@@ -22,29 +20,31 @@ public:
   Timer_Service_1 &operator= (Timer_Service_1 const &) = delete;
   Timer_Service_1 &operator= (Timer_Service_1 &&) = delete;
 
+  /// Initialization hook.
   int init (int argc, ACE_TCHAR *argv[]) override;
-  // Initialization hook.
 
+  /// Timeout hook.
   int handle_timeout (const ACE_Time_Value &,
                       const void *) override;
-  // Timeout hook.
 
+  /// Close hook.
   int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override;
-  // Close hook.
 
 protected:
+  /// Identifies this service instance.
   std::basic_string<ACE_TCHAR> name_ { ACE_TEXT ("Timer_Service_1") };
-  // Keep track of which service this is!
 
 private:
-  static constexpr int TIMEOUT { 4 }; // Wait 4 seconds between timeouts
-  static constexpr int MAX_TIMEOUTS { 10 }; // Don't timeout for more than 10 times.
+  /// Seconds between timeouts.
+  static constexpr int TIMEOUT { 4 };
+  /// Maximum number of timeouts.
+  static constexpr int MAX_TIMEOUTS { 10 };
 
+  /// Maximum number of timeouts before shutting down the test.
   int max_timeouts_ { MAX_TIMEOUTS };
-  // Maximum number of timeouts before shutting down the test.
 
+  /// Current number of timeouts.
   int cur_timeouts_ {};
-  // Current number of timeouts.
 };
 
 class ACE_Svc_Export Timer_Service_2 : public Timer_Service_1
