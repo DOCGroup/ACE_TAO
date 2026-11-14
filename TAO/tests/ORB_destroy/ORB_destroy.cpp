@@ -1,3 +1,13 @@
+//=============================================================================
+/**
+ *  @file     ORB_destroy.cpp
+ *
+ *   Simple ORB destruction test.
+ *
+ *  @author  Irfan Pyarali <irfan@cs.wustl.edu>
+ */
+//=============================================================================
+
 #include <array>
 
 #include "tao/ORB.h"

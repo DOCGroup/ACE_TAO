@@ -1,3 +1,4 @@
+/// @author Sumedh Mungee <sumedh@cs.wustl.edu>
 #include "tao/Utils/ORB_Manager.h"
 #include "tao/Utils/PolicyList_Destroyer.h"
 
