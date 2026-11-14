@@ -730,7 +730,8 @@ TAO::Storable_FlatFileFactory::is_nfs (std::string const &directory)
           return ret;
         }
       char *pos = rpath + rootlen;
-      *pos++ = '/';
+      *pos = '/';
+      ++pos;
       std::strcpy (pos, directory.c_str ());
       dir = rpath;
     }
