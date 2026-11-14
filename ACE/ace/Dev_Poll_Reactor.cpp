@@ -310,7 +310,7 @@ ACE_Dev_Poll_Reactor_Notify::dispatch_notify (ACE_Notification_Buffer &buffer)
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor_Notify::dispatch_notify");
 
-  // If eh == 0 then another thread is unblocking the
+  // If eh is nullptr then another thread is unblocking the
   // ACE_Dev_Poll_Reactor to update the ACE_Dev_Poll_Reactor's
   // internal structures.  Otherwise, we need to dispatch the
   // appropriate handle_* method on the ACE_Event_Handler
