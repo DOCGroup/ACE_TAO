@@ -84,8 +84,8 @@ public:
   /**
    * Shut down.  Invoke the destroy() methods on the orb and poa.
    *
-   * @retval -1 Failure
    * @retval 0 Success
+   * @throw CORBA::Exception if destroying the POA or ORB fails.
    */
   int fini ();
 

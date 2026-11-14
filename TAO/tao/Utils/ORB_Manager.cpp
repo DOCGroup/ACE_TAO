@@ -183,33 +183,24 @@ TAO_ORB_Manager::fini ()
   this->poa_manager_ = PortableServer::POAManager::_nil ();
   this->orb_         = CORBA::ORB::_nil ();
 
-  int result = 0;
-
   if (!CORBA::is_nil (poa.in ()))
     {
       try
         {
           poa->destroy (true, true);
         }
-      catch (::CORBA::Exception const &)
+      catch (...)
         {
-          result = -1;
+          if (!CORBA::is_nil (orb.in ()))
+            orb->destroy ();
+          throw;
         }
     }
 
   if (!CORBA::is_nil (orb.in ()))
-    {
-      try
-        {
-          orb->destroy ();
-        }
-      catch (::CORBA::Exception const &)
-        {
-          result = -1;
-        }
-    }
+    orb->destroy ();
 
-  return result;
+  return 0;
 }
 
 int
@@ -255,7 +246,7 @@ TAO_ORB_Manager::~TAO_ORB_Manager ()
     {
       this->fini ();
     }
-  catch (::CORBA::Exception const &)
+  catch (...)
     {
       // Ignore exceptions during destruction.
     }
