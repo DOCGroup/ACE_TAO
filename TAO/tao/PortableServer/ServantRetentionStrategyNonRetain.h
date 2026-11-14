@@ -114,6 +114,7 @@ namespace TAO
       TAO_Active_Object_Map * get_active_object_map() const override;
 
     protected:
+      /// Non-owning back-reference set by the POA during strategy initialization.
       TAO_Root_POA *poa_ {};
       std::atomic<std::uint32_t> sys_id_count_ { 0 };
     };

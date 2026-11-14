@@ -50,7 +50,7 @@ using TAO_Collocated_Skeleton = void (*) (
  */
 struct TAO_operation_db_entry
 {
-  /// Operation name
+  /// Non-owning operation-name string supplied by the operation table.
   char const * opname;
 
   /// Remote/thru-POA skeleton pointer

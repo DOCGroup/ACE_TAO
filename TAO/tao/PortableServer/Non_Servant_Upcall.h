@@ -53,6 +53,7 @@ namespace TAO
     protected:
       TAO_Object_Adapter &object_adapter_;
       TAO_Root_POA &poa_;
+      /// Non-owning link to the previous stack-scoped nested upcall.
       Non_Servant_Upcall *previous_;
     };
   }

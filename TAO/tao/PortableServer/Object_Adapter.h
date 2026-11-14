@@ -392,6 +392,7 @@ public:
   protected:
     CORBA::ULong size_;
     CORBA::ULong position_;
+    /// Non-owning view into the folded POA name being iterated.
     const CORBA::Octet *folded_buffer_;
     CORBA::ULong last_separator_;
   };

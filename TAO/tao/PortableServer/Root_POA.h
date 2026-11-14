@@ -713,6 +713,8 @@ protected:
   PortableServer::AdapterActivator_var adapter_activator_;
 #endif /* TAO_HAS_MINIMUM_POA == 0 !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) */
 
+  /// The child map holds a reference on each bound POA, released as the
+  /// child is destroyed.
   using CHILDREN = ACE_Hash_Map_Manager_Ex<
         ACE_CString, TAO_Root_POA *,
         ACE_Hash<ACE_CString>,
@@ -754,6 +756,8 @@ public:
 
   struct Key_To_Object_Params
   {
+    /// Borrowed arguments for the synchronous invoke_key_to_object path.
+    /// The caller-owned values must remain valid until that call returns.
     PortableServer::ObjectId_var *system_id_ {};
     const char *type_id_ {};
     TAO_ServantBase *servant_ {};
@@ -818,12 +822,10 @@ private:
   TAO_POA_Static_Resources ();
 
 private:
-  /// The singleton instance.
+  /// Lazily created singleton, explicitly deleted by fini().
   static TAO_POA_Static_Resources* instance_;
 
-  /// Mostly unused variable whose sole purpose is to enforce
-  /// the instantiation of a TAO_POA_Static_Resources instance
-  /// at initialization time.
+  /// Non-owning reference that forces singleton initialization at load time.
   static TAO_POA_Static_Resources* initialization_reference_;
 };
 
