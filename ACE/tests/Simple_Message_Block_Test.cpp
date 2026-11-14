@@ -16,8 +16,10 @@
 #include "ace/Message_Block.h"
 #include "ace/Synch_Traits.h"
 #include "ace/Lock_Adapter_T.h"
-#include "ace/OS_NS_string.h"
 #include "ace/Thread_Mutex.h"
+
+#include <cstring>
+#include <memory>
 
 int
 run_main (int, ACE_TCHAR *[])
@@ -31,7 +33,7 @@ run_main (int, ACE_TCHAR *[])
 
   {
     // Checks normal heap deletes.
-    ACE_Message_Block *mb = nullptr;
+    ACE_Message_Block *mb {};
 
     ACE_NEW_RETURN (mb, ACE_Message_Block, -1);
     mb->release ();
@@ -42,13 +44,13 @@ run_main (int, ACE_TCHAR *[])
     ACE_Message_Block mb1 (1024);
     ACE_Message_Block mb2 (1024);
 
-    mb1.cont (&mb2);
+    mb1.cont (std::addressof (mb2));
   }
 
   {
     // Checks continuation of message blocks on the heap.
-    ACE_Message_Block *mb1;
-    ACE_Message_Block *mb2;
+    ACE_Message_Block *mb1 {};
+    ACE_Message_Block *mb2 {};
 
     ACE_NEW_RETURN (mb1, ACE_Message_Block (1024), -1);
     ACE_NEW_RETURN (mb2, ACE_Message_Block (1024), -1);
@@ -60,7 +62,7 @@ run_main (int, ACE_TCHAR *[])
   // Same set of tests but with locking_strategy set.
   {
     ACE_Lock_Adapter <ACE_SYNCH_MUTEX> mutex;
-    ACE_Lock *lock = &mutex;
+    ACE_Lock * const lock = std::addressof (mutex);
 
     {
       // Checks normal stack deletes.
@@ -70,7 +72,7 @@ run_main (int, ACE_TCHAR *[])
 
     {
       // Checks normal heap deletes.
-      ACE_Message_Block *mb = nullptr;
+      ACE_Message_Block *mb {};
       ACE_NEW_RETURN (mb, ACE_Message_Block, -1);
       mb->locking_strategy (lock);
       mb->release ();
@@ -84,14 +86,14 @@ run_main (int, ACE_TCHAR *[])
 
       mb1.locking_strategy (lock);
 
-      mb1.cont (&mb2);
+      mb1.cont (std::addressof (mb2));
     }
 
     {
       // Checks continuation of message blocks on the heap with one
       // lock strategy.
-      ACE_Message_Block *mb1;
-      ACE_Message_Block *mb2;
+      ACE_Message_Block *mb1 {};
+      ACE_Message_Block *mb2 {};
 
       ACE_NEW_RETURN (mb1, ACE_Message_Block (1024), -1);
       ACE_NEW_RETURN (mb2, ACE_Message_Block (1024), -1);
@@ -111,14 +113,14 @@ run_main (int, ACE_TCHAR *[])
       mb1.locking_strategy (lock);
       mb2.locking_strategy (lock);
 
-      mb1.cont (&mb2);
+      mb1.cont (std::addressof (mb2));
     }
 
     {
       // Checks continuation of message blocks on the heap with two
       // lock strategy
-      ACE_Message_Block *mb1;
-      ACE_Message_Block *mb2;
+      ACE_Message_Block *mb1 {};
+      ACE_Message_Block *mb2 {};
 
       ACE_NEW_RETURN (mb1, ACE_Message_Block (1024), -1);
       ACE_NEW_RETURN (mb2, ACE_Message_Block (1024), -1);
@@ -134,11 +136,11 @@ run_main (int, ACE_TCHAR *[])
       // Checks continuation of message blocks on the heap with two
       // lock strategy where the second one is a duplicate of the
       // first
-      ACE_Message_Block *mb1;
+      ACE_Message_Block *mb1 {};
       ACE_NEW_RETURN (mb1, ACE_Message_Block (1024), -1);
       mb1->locking_strategy (lock);
 
-      ACE_Message_Block *mb2 = mb1->duplicate ();
+      ACE_Message_Block * const mb2 = mb1->duplicate ();
 
       mb1->cont (mb2);
       mb1->release ();
@@ -152,14 +154,14 @@ run_main (int, ACE_TCHAR *[])
     ACE_Lock_Adapter <ACE_SYNCH_MUTEX> lock1;
     ACE_Lock_Adapter <ACE_SYNCH_MUTEX> lock2;
 
-    ACE_Message_Block *mb1;
-    ACE_Message_Block *mb2;
+    ACE_Message_Block *mb1 {};
+    ACE_Message_Block *mb2 {};
 
     ACE_NEW_RETURN (mb1, ACE_Message_Block (1024), -1);
     ACE_NEW_RETURN (mb2, ACE_Message_Block (1024), -1);
 
-    mb1->locking_strategy (&lock1);
-    mb2->locking_strategy (&lock2);
+    mb1->locking_strategy (std::addressof (lock1));
+    mb2->locking_strategy (std::addressof (lock2));
 
     mb1->cont (mb2);
     mb1->release ();
@@ -168,26 +170,26 @@ run_main (int, ACE_TCHAR *[])
   {
     // Checks failure of copy when "virtual" allocation (using mark)
     // is too small
-    char message[]="abcdefghijklmnop";
-    ACE_Message_Block mb1 (ACE_OS::strlen (message) + 1);
-    ACE_Message_Block mb2 (ACE_OS::strlen (message) + 1);
+    char const message[] = "abcdefghijklmnop";
+    ACE_Message_Block mb1 (std::strlen (message) + 1);
+    ACE_Message_Block mb2 (std::strlen (message) + 1);
 
     // Resize mb2 so that we mark for use less than the allocated buffer
-    if (mb2.size (ACE_OS::strlen (message) + 1 - 10) == -1)
+    if (mb2.size (std::strlen (message) + 1 - 10) == -1)
       {
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) Resize test failed ..\n")));
       }
 
     // We expect this to succeed
-    if (mb1.copy (message, ACE_OS::strlen (message) + 1) == -1)
+    if (mb1.copy (message, std::strlen (message) + 1) == -1)
       {
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) Copy test failed ..\n")));
       }
 
     // We expect this to fail
-    if (mb2.copy (message, ACE_OS::strlen (message) + 1) != -1)
+    if (mb2.copy (message, std::strlen (message) + 1) != -1)
       {
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) Copy test succeeded when it should have failed ..\n")));
