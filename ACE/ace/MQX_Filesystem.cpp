@@ -460,7 +460,7 @@ MQX_Filesystem::stat (const char * path, ACE_stat *statbuf)
   MFS_SEARCH_PARAM search;
   search.ATTRIBUTE = MFS_SEARCH_ANY;
   char tmppath[ACE_MQX_ABS_PATH_SIZE];
-  strcpy (&tmppath[0], path);
+  strcpy (tmppath, path);
   search.WILDCARD = &tmppath[fs_name_len];
   MFS_SEARCH_DATA search_results;
   search.SEARCH_DATA_PTR = &search_results;

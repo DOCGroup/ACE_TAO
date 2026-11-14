@@ -88,7 +88,7 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset, size_t num_frame
   size_t starting_frame =
     determine_starting_frame (INITIAL_FRAME, starting_frame_offset);
 
-  stack_size = ::backtrace (&stack[0], sizeof(stack)/sizeof(stack[0]));
+  stack_size = ::backtrace (stack, sizeof(stack)/sizeof(stack[0]));
   if (stack_size != 0)
     {
       stack_syms = ::backtrace_symbols (stack, stack_size);
@@ -98,7 +98,7 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset, size_t num_frame
            ++i, --num_frames)
         {
           // this could be more efficient by remembering where we left off in buf_
-          char *symp = &stack_syms[i][0];
+          char *symp = stack_syms[i];
           while (this->buflen_ < SYMBUFSIZ - 2 && *symp != '\0')
             {
               this->buf_[this->buflen_++] = *symp++;

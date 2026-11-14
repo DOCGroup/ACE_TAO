@@ -165,7 +165,7 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
     }
 
   ifc.ifc_len = sizeof(ifr_buf);
-  ifc.ifc_req = &ifr_buf[0];
+  ifc.ifc_req = ifr_buf;
 
   if (ACE_OS::ioctl (handle, SIOCGIFCONF, &ifc) < 0)
     {

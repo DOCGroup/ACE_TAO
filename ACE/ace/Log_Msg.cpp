@@ -2901,8 +2901,8 @@ ACE_Log_Msg::log_hexdump (ACE_Log_Priority log_priority,
   if (msg_buf.size() == 0)
     return -1;
 
-  ACE_TCHAR* end_ptr = &msg_buf[0] + total_buffer_size;
-  ACE_TCHAR* wr_ptr = &msg_buf[0];
+  ACE_TCHAR* end_ptr = msg_buf.end ();
+  ACE_TCHAR* wr_ptr = msg_buf.begin ();
   msg_buf[0] = 0; // in case size = 0
 
   if (text)
@@ -2943,7 +2943,7 @@ ACE_Log_Msg::log_hexdump (ACE_Log_Priority log_priority,
                              this->getpid ());
 
   log_record.category(category);
-  log_record.msg_data(&msg_buf[0]);
+  log_record.msg_data (msg_buf.begin ());
 
   this->log (log_record, false);
   return 0;
