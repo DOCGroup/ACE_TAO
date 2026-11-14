@@ -4,6 +4,8 @@
 
 #include "tao/TSS_Resources.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Policy_Current_Impl &
@@ -12,7 +14,7 @@ TAO_Policy_Current::implementation (TAO_Policy_Current_Impl &current)
   TAO_TSS_Resources * const tss = TAO_TSS_Resources::instance ();
 
   TAO_Policy_Current_Impl *old = tss->policy_current_;
-  tss->policy_current_ = &current;
+  tss->policy_current_ = std::addressof (current);
   return *old;
 }
 

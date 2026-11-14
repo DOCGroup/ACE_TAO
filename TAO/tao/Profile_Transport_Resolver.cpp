@@ -19,6 +19,8 @@
 #include "tao/ORB_Time_Policy.h"
 #include "ace/CORBA_macros.h"
 
+#include <memory>
+
 #if !defined (__ACE_INLINE__)
 # include "tao/Profile_Transport_Resolver.inl"
 #endif /* __ACE_INLINE__ */
@@ -139,12 +141,12 @@ namespace TAO
 
     if (has_con_timeout && !this->blocked_)
       {
-        timeout = &connection_timeout;
+        timeout = std::addressof (connection_timeout);
       }
     else if (has_con_timeout)
       {
         if (timeout == nullptr || connection_timeout < *timeout)
-          timeout = &connection_timeout;
+          timeout = std::addressof (connection_timeout);
         else
           has_con_timeout = false;
       }

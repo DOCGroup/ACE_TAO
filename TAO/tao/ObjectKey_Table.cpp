@@ -7,6 +7,7 @@
 #endif /* ! __ACE_INLINE__ */
 
 #include <cstring>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -56,7 +57,7 @@ TAO::ObjectKey_Table::destroy ()
           TABLE::ENTRY &ent = (*start);
 
           ent.item ()->decr_refcount ();
-          this->table_.unbind (&ent);
+          this->table_.unbind (std::addressof (ent));
         }
     }
 

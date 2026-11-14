@@ -11,6 +11,8 @@
 #include "tao/SystemException.h"
 #include "ace/Service_Config.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -48,7 +50,7 @@ namespace TAO
     ACE_Time_Value *max_wait_time {};
 
     if (this->get_timeout (tmp_wait_time))
-      max_wait_time = &tmp_wait_time;
+      max_wait_time = std::addressof (tmp_wait_time);
 
     Invocation_Status s = TAO_INVOKE_START;
 

@@ -1,5 +1,7 @@
 #include "tao/ORB_Time_Policy.h"
 
+#include <memory>
+
 #if !defined (__ACE_INLINE__)
 # include "tao/ORB_Time_Policy.inl"
 #endif /* ! __ACE_INLINE__ */
@@ -9,7 +11,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
   ACE_Time_Policy_T<ACE_Default_Time_Policy> ORB_Time_Policy::default_policy_;
-  ACE_Dynamic_Time_Policy_Base const * ORB_Time_Policy::active_policy_ = &ORB_Time_Policy::default_policy_;
+  ACE_Dynamic_Time_Policy_Base const * ORB_Time_Policy::active_policy_ =
+    std::addressof (ORB_Time_Policy::default_policy_);
 
   void ORB_Time_Policy::set_time_policy (ACE_Dynamic_Time_Policy_Base const * pol)
   {
@@ -21,7 +24,7 @@ namespace TAO
 
   void ORB_Time_Policy::reset_time_policy ()
   {
-    active_policy_ = &default_policy_;
+      active_policy_ = std::addressof (default_policy_);
   }
 }
 

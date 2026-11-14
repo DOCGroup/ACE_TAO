@@ -17,6 +17,8 @@
 #include "ace/Service_Config.h"
 #include "ace/Truncate.h"
 
+#include <memory>
+
 #if !defined (__ACE_INLINE__)
 # include "tao/Invocation_Adapter.inl"
 #endif /* __ACE_INLINE__ */
@@ -65,7 +67,7 @@ namespace TAO
     ACE_Time_Value tmp_wait_time = ACE_Time_Value::zero;
     if (this->get_timeout (stub, tmp_wait_time))
       {
-        max_wait_time= &tmp_wait_time;
+      max_wait_time = std::addressof (tmp_wait_time);
       }
 
     TAO::Invocation_Retry_State retry_state (*stub);
@@ -97,7 +99,7 @@ namespace TAO
                                      details,
                                      effective_target,
                                      max_wait_time,
-                                     &retry_state);
+                                     std::addressof (retry_state));
           }
         else
           {

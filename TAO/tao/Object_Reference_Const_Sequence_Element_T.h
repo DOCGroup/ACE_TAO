@@ -10,6 +10,8 @@
  */
 #include "tao/Basic_Types.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -28,7 +30,7 @@ public:
 public:
   object_reference_const_sequence_element(
       value_type const & e, CORBA::Boolean release)
-    : element_(&e)
+    : element_(std::addressof (e))
     , release_(release)
   {
   }

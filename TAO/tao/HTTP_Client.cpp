@@ -6,6 +6,8 @@
 #include "ace/Truncate.h"
 #include "tao/debug.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
@@ -23,7 +25,7 @@ TAO_HTTP_Client::read (ACE_Message_Block *mb)
 {
   // Create a HTTP_Client Reader
   TAO_HTTP_Reader HTTP_reader (mb, this->filename_.c_str ());
-  TAO_HTTP_Handler *brp = &HTTP_reader;
+  TAO_HTTP_Handler *brp = std::addressof (HTTP_reader);
 
   // Connect to the server
   if (connector_.connect (brp, this->inet_addr_) == -1)

@@ -5,10 +5,12 @@
 
 #include "ace/Dynamic_Service.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Thread_Lane_Resources_Manager::TAO_Thread_Lane_Resources_Manager (TAO_ORB_Core &orb_core)
-  : orb_core_ (&orb_core),
+  : orb_core_ (std::addressof (orb_core)),
     lf_strategy_ (orb_core.resource_factory ()->create_lf_strategy ())
 {
 }

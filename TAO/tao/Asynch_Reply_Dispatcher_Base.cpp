@@ -8,6 +8,8 @@
 #include "tao/Asynch_Reply_Dispatcher_Base.inl"
 #endif /* __ACE_INLINE__ */
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Asynch_Reply_Dispatcher_Base::TAO_Asynch_Reply_Dispatcher_Base (
@@ -21,7 +23,7 @@ TAO_Asynch_Reply_Dispatcher_Base::TAO_Asynch_Reply_Dispatcher_Base (
          orb_core->locking_strategy (),
          ACE_Message_Block::DONT_DELETE,
          orb_core->input_cdr_dblock_allocator ()),
-    reply_cdr_ (&db_,
+    reply_cdr_ (std::addressof (db_),
                 ACE_Message_Block::MB_DATA,
                 TAO_ENCAP_BYTE_ORDER,
                 TAO_DEF_GIOP_MAJOR,

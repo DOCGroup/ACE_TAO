@@ -17,7 +17,9 @@
 #include "tao/Base_Transport_Property.h"
 
 #include "ace/OS_NS_string.h"
+
 #include <cstring>
+#include <memory>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Transport_Connector.inl"
@@ -302,7 +304,7 @@ TAO_Connector::parallel_connect (TAO::Profile_Transport_Resolver *r,
     {
       TAO_Base_Transport_Property desc2 (ep, false);
       size_t busy_count {};
-      if (tcm.find_transport (&desc2, base_transport, busy_count) ==
+      if (tcm.find_transport (std::addressof (desc2), base_transport, busy_count) ==
           TAO::Transport_Cache_Manager::CACHE_FOUND_AVAILABLE)
         {
           if (TAO_debug_level)
@@ -402,7 +404,7 @@ TAO_Connector::wait_for_transport (TAO::Profile_Transport_Resolver *r,
       if (timeout == nullptr && !r->blocked_connect ())
         {
           ACE_Time_Value tv (0, 500);
-          result = this->active_connect_strategy_->wait (transport, &tv);
+          result = this->active_connect_strategy_->wait (transport, std::addressof (tv));
         }
       else
         result = this->active_connect_strategy_->wait (transport, timeout);
@@ -718,7 +720,7 @@ TAO_Connector::wait_for_connection_completion (
     {
       TAO::Transport_Cache_Manager &tcm =
         this->orb_core ()->lane_resources ().transport_cache ();
-      result = tcm.cache_transport (&desc, transport);
+      result = tcm.cache_transport (std::addressof (desc), transport);
       if (result == -1)
       {
         if (TAO_debug_level > 2)
@@ -769,7 +771,7 @@ TAO_Connector::wait_for_connection_completion (
 
       TAO::Transport_Cache_Manager &tcm =
         this->orb_core ()->lane_resources ().transport_cache ();
-      result = tcm.cache_transport (&desc, transport, TAO::ENTRY_CONNECTING);
+      result = tcm.cache_transport (std::addressof (desc), transport, TAO::ENTRY_CONNECTING);
 
       if (result != -1)
         {

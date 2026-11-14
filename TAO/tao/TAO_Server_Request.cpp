@@ -51,8 +51,8 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_GIOP_Message_Base *mesg_base,
                                       TAO_Transport *transport,
                                       TAO_ORB_Core *orb_core)
   : mesg_base_ (mesg_base),
-    incoming_ (&input),
-    outgoing_ (&output),
+    incoming_ (std::addressof (input)),
+    outgoing_ (std::addressof (output)),
     response_expected_ (false),
     orb_core_ (orb_core),
     profile_ (orb_core),
@@ -81,7 +81,7 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_GIOP_Message_Base *mesg_base,
     operation_ (CORBA::string_dup (operation)),
     operation_len_ (operation == nullptr ? 0 : std::strlen (operation)),
     release_operation_ (true),
-    outgoing_ (&output),
+    outgoing_ (std::addressof (output)),
     response_expected_ (response_expected),
     deferred_reply_ (deferred_reply),
     orb_core_ (orb_core),
@@ -110,7 +110,7 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_ORB_Core * orb_core,
     orb_core_ (orb_core),
     profile_ (orb_core),
     requesting_principal_ (nullptr),
-    operation_details_ (&details),
+    operation_details_ (std::addressof (details)),
     argument_flag_ (false)
 #if TAO_HAS_INTERCEPTORS == 1
   , pi_reply_status_ (-1)
@@ -348,7 +348,7 @@ TAO_ServerRequest::tao_send_reply_exception (CORBA::Exception const &ex)
       // Make a default reply status
 
       // Check whether we are able to downcast the exception
-      if (CORBA::SystemException::_downcast (&ex) != nullptr)
+      if (CORBA::SystemException::_downcast (std::addressof (ex)) != nullptr)
         {
           reply_params.reply_status (GIOP::SYSTEM_EXCEPTION);
         }
@@ -382,7 +382,7 @@ TAO_ServerRequest::tao_send_reply_exception (CORBA::Exception const &ex)
                             gv.major,
                             gv.minor);
 
-      this->transport_->assign_translators (nullptr, &output);
+      this->transport_->assign_translators (nullptr, std::addressof (output));
 
       try
         {
@@ -463,7 +463,7 @@ TAO_ServerRequest::send_cached_reply (CORBA::OctetSeq &s)
                         gv.major,
                         gv.minor);
 
-  this->transport_->assign_translators (nullptr, &output);
+  this->transport_->assign_translators (nullptr, std::addressof (output));
 
   // A copy of the reply parameters
   TAO_Pluggable_Reply_Params_Base reply_params;
