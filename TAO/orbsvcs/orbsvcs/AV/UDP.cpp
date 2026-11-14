@@ -318,8 +318,12 @@ TAO_AV_UDP_Acceptor::TAO_AV_UDP_Acceptor () = default;
 
 TAO_AV_UDP_Acceptor::~TAO_AV_UDP_Acceptor ()
 {
-  if (this->flow_component_ == TAO_AV_Core::TAO_AV_CONTROL)
-    delete this->entry_->control_handler ();
+  if (this->entry_ != nullptr &&
+      this->flow_component_ == TAO_AV_Core::TAO_AV_CONTROL)
+    {
+      delete this->entry_->control_handler ();
+      this->entry_->control_handler (nullptr);
+    }
 }
 
 int
