@@ -1,5 +1,4 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/AV/default_resource.h"
 
 #include "tao/ORB_Core.h"
@@ -12,7 +11,7 @@ TAO_AV_Default_Resource_Factory::TAO_AV_Default_Resource_Factory ()
 {
   if (TAO_debug_level > 0)
     ORBSVCS_DEBUG ((LM_DEBUG,
-                "TAO_AV_Default_Resource_Factory::TAO_AV_Default_Resource_Factory %d\n"));
+                "TAO_AV_Default_Resource_Factory::TAO_AV_Default_Resource_Factory\n"));
 }
 
 TAO_AV_Default_Resource_Factory::~TAO_AV_Default_Resource_Factory ()
