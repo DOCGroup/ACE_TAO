@@ -55,7 +55,8 @@ public:
   /// Set the percentage of entries to purge.
   virtual void purge_percent (double percentage) = 0;
 
-  // = Strategy related Operations
+  /// @name Strategy-related operations
+  /// @{
 
   /// This method acts as a notification about the CONTAINERs bind
   /// method call.
@@ -81,6 +82,7 @@ public:
   /// method call
   virtual int notify_rebind (int result,
                              const ATTRIBUTES &attr) = 0;
+  /// @}
 
   /// Purge the cache.
   virtual CACHING_UTILITY &caching_utility () = 0;
@@ -129,7 +131,8 @@ public:
   /// Set the percentage of entries to purge.
   void purge_percent (double percentage) override;
 
-  // = Strategy related Operations
+  /// @name Strategy-related operations
+  /// @{
 
   /// This method acts as a notification about the CONTAINERs bind
   /// method call.
@@ -155,6 +158,7 @@ public:
   /// method call
   int notify_rebind (int result,
                      const ATTRIBUTES &attr) override;
+  /// @}
 
   /// Accessor to the implementation.
   IMPLEMENTATION &implementation ();
@@ -202,10 +206,13 @@ template <class ATTRIBUTES, class CACHING_UTILITY>
 class ACE_LRU_Caching_Strategy
 {
 public:
-  // Traits.
+  /// @name Traits
+  /// @{
   using CACHING_ATTRIBUTES = ATTRIBUTES;
+  /// @}
 
-  // = Initialisation and termination.
+  /// @name Initialization and termination
+  /// @{
 
   /**
    * The <container> is the map in which the entries reside.  The
@@ -215,8 +222,10 @@ public:
    * set to 10%.
    */
   ACE_LRU_Caching_Strategy ();
+  /// @}
 
-  // = Operations of the strategy.
+  /// @name Strategy operations
+  /// @{
 
   /// Accessor method for the timer attributes.
   ATTRIBUTES attributes ();
@@ -226,8 +235,10 @@ public:
 
   /// Set the percentage of entries to purge.
   void purge_percent (double percentage);
+  /// @}
 
-  // =  Strategy related Operations
+  /// @name Strategy-related operations
+  /// @{
 
   /// This method acts as a notification about the CONTAINERs bind
   /// method call.
@@ -253,6 +264,7 @@ public:
   /// method call
   int notify_rebind (int result,
                      const ATTRIBUTES &attr);
+  /// @}
 
   /// Purge the cache.
   CACHING_UTILITY &caching_utility ();
@@ -302,10 +314,13 @@ template <class ATTRIBUTES, class CACHING_UTILITY>
 class ACE_LFU_Caching_Strategy
 {
 public:
-  // Traits.
+  /// @name Traits
+  /// @{
   using CACHING_ATTRIBUTES = ATTRIBUTES;
+  /// @}
 
-  // = Initialisation and termination methods.
+  /// @name Initialization and termination methods
+  /// @{
 
   /**
    * The <container> is the map in which the entries reside.  The
@@ -315,8 +330,10 @@ public:
    * set to 10%.
    */
   ACE_LFU_Caching_Strategy ();
+  /// @}
 
-  // = Strategy methods.
+  /// @name Strategy methods
+  /// @{
 
   /// Access the attributes.
   ATTRIBUTES attributes ();
@@ -326,8 +343,10 @@ public:
 
   /// Set the percentage of entries to purge.
   void purge_percent (double percentage);
+  /// @}
 
-  // =  Strategy related Operations
+  /// @name Strategy-related operations
+  /// @{
 
   /// This method acts as a notification about the CONTAINERs bind
   /// method call.
@@ -352,6 +371,7 @@ public:
   /// method call
   int notify_rebind (int result,
                      const ATTRIBUTES &attr);
+  /// @}
 
   /// Purge the cache.
   CACHING_UTILITY &caching_utility ();
@@ -397,7 +417,8 @@ class ACE_FIFO_Caching_Strategy
 public:
   using CACHING_ATTRIBUTES = ATTRIBUTES;
 
-  // = Initialisation and termination.
+  /// @name Initialization and termination
+  /// @{
 
   /**
    * The <container> is the map in which the entries reside.  The
@@ -407,8 +428,10 @@ public:
    * set to 10%.
    */
   ACE_FIFO_Caching_Strategy ();
+  /// @}
 
-  // = Strategy methods.
+  /// @name Strategy methods
+  /// @{
 
   /// Accessor method.
   ATTRIBUTES attributes ();
@@ -418,8 +441,10 @@ public:
 
   /// Set the percentage of entries to purge.
   void purge_percent (double percentage);
+  /// @}
 
-  // =  Strategy related Operations
+  /// @name Strategy-related operations
+  /// @{
 
   /// Notification for an item getting bound into the cache.
   int notify_bind (int result,
@@ -443,6 +468,7 @@ public:
   /// Notification for an item getting bound again into the cache.
   int notify_rebind (int result,
                      const ATTRIBUTES &attr);
+  /// @}
 
   /// Purge the cache.
   CACHING_UTILITY &caching_utility ();
@@ -482,10 +508,14 @@ template<class ATTRIBUTES, class CACHING_UTILITY>
 class ACE_Null_Caching_Strategy
 {
 public:
-  // = Traits.
+  /// @name Traits
+  /// @{
   using CACHING_ATTRIBUTES = ATTRIBUTES;
+  /// @}
 
-  // = Strategy methods. All are NO_OP methods!!!
+  /// @name Strategy methods
+  /// These methods are all no-ops.
+  /// @{
 
   /// Accessor method.
   ATTRIBUTES attributes ();
@@ -495,8 +525,10 @@ public:
 
   /// Set the percentage of entries to purge.
   void purge_percent (double percentage);
+  /// @}
 
-  // =  Strategy related Operations
+  /// @name Strategy-related operations
+  /// @{
 
   /// Notification for an item getting bound into the cache.
   int notify_bind (int result,
@@ -520,6 +552,7 @@ public:
   /// Notification for an item getting bound again into the cache.
   int notify_rebind (int result,
                      const ATTRIBUTES &attr);
+  /// @}
 
   /// Purge the cache.
   CACHING_UTILITY &caching_utility ();
