@@ -47,9 +47,9 @@ public:
   /// Default constructor.
   ACE_Token_Handler (ACE_Thread_Manager * = nullptr);
 
-  // = Accessor and mutator methods.
+  /// @name Remote operations exported to a client.
+  /// @{
 
-  // = Remote operations "exported" to a client.
   /**
    * Try to acquire the token.
    * Precondition: client *may* hold the token already (i.e.,
@@ -82,10 +82,12 @@ public:
   /// Called by TS_[Mutex,RLock,WLock] when we are waiting and acquire
   /// the mutex.
   void token_acquired (ACE_TPQ_Entry *);
+  /// @}
 
 protected:
-  // = Low level routines for framing requests, dispatching
-  // operations, and returning replies.
+  /// @name Low-level routines for framing requests, dispatching operations,
+  /// and returning replies.
+  /// @{
 
   /// Our connection has been closed.
   virtual int abandon (int send_error);
@@ -99,15 +101,22 @@ protected:
 
   /// Create and send a reply to the client.
   virtual int send_reply (ACE_UINT32 errnum);
+  /// @}
 
-  // = Demultiplexing hooks.
+  /// @name Demultiplexing hooks.
+  /// @{
+
   /// Callback method invoked by the <ACE_Reactor> when client events
   /// arrive.
   virtual int handle_input (ACE_HANDLE);
+  /// @}
 
-  // = Timer hook.
+  /// @name Timer hook.
+  /// @{
+
   /// Enable clients to limit the amount of time they wait for a token.
   virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg);
+  /// @}
 
   /// return a proxy for the calling client_id and token name.
   ACE_Token_Proxy *get_proxy ();
@@ -135,16 +144,13 @@ private:
   ACE_Token_Reply token_reply_;
 };
 
-// = DESCRIPTION of ACE_TS_* classes:
-//     When Tokens are released, waiting token proxies are notified
-//     when the releasing thread calls token_acquired on the waiting
-//     proxy.  The Token Server specializes ACE_Token_Proxy to
-//     redefine the implementation of token_acquired.  When
-//     token_acquired is called, the Token_Handler can then send the
-//     response back over the socket connection to unblock the
-//     client side.
-//     Since only the Token_Handler uses ACE_TS_Mutex, we've moved
-//     the definition to the .cpp file.
+/**
+ * The token server mutex classes specialize ACE_Token_Proxy so that
+ * releasing a token notifies waiting clients.  When a waiting proxy
+ * acquires the token, the Token_Handler sends a response over the socket
+ * connection to unblock the client.  ACE_TS_Mutex is defined in this file
+ * because only the Token_Handler uses it.
+ */
 
 /**
  * @class ACE_TS_Mutex

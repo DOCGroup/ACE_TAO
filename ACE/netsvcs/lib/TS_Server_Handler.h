@@ -46,14 +46,18 @@ protected:
   /// Must be allocated dynamically.
   ~ACE_TS_Server_Handler ();
 
-  // = Helper routines for the operations exported to clients.
+  /// @name Helper routines for the operations exported to clients.
+  /// @{
 
   /// Give up waiting (e.g., when a timeout occurs or a client shuts
   /// down unexpectedly).
   virtual int abandon ();
 
-  // = Low level routines for framing requests, dispatching
-  // operations, and returning replies.
+  /// @}
+
+  /// @name Low-level routines for framing requests, dispatching operations,
+  /// and returning replies.
+  /// @{
 
   /// Receive, frame, and decode the client's request.
   virtual int recv_request ();
@@ -64,18 +68,25 @@ protected:
 
   /// Special kind of reply
   virtual int send_request (ACE_Time_Request &);
+  /// @}
 
-  // = Demultiplexing hooks.
+  /// @name Demultiplexing hooks.
+  /// @{
+
   /// Return the underlying <ACE_HANDLE>.
   virtual ACE_HANDLE get_handle () const override;
 
   /// Callback method invoked by the <ACE_Reactor> when client events
   /// arrive.
   virtual int handle_input (ACE_HANDLE) override;
+  /// @}
 
-  // = Timer hook.
+  /// @name Timer hook.
+  /// @{
+
   /// Enable clients to limit the amount of time they wait.
   virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg) override;
+  /// @}
 
 private:
   /// Cache request from the client.

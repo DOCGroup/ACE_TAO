@@ -92,10 +92,8 @@ public:
   void dump () const;
 
 private:
-  // = The 5 fields in the <Transfer> struct are transmitted to the server.
-  // The remaining 2 fields are not tranferred -- they are used only on
-  // the server-side to simplify lookups.
-
+  /// The 5 fields in Transfer are transmitted to the server. The remaining
+  /// 2 fields are used only on the server side to simplify lookups.
   struct Transfer
   {
     /// Type of the request (i.e., <TIME_UPDATE>)

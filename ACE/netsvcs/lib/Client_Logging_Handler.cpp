@@ -417,61 +417,64 @@ ACE_Client_Logging_Handler::send (ACE_Log_Record &log_record)
   return 0;
 }
 
+/**
+ * This factory creates connections with the Server_Logging_Acceptor.  It
+ * contains the service-specific methods that cannot easily be factored into
+ * ACE_Acceptor.
+ */
 class ACE_Client_Logging_Acceptor : public ACE_Acceptor<ACE_Client_Logging_Handler, LOGGING_ACCEPTOR>
 {
-  // = TITLE
-  //     This factory creates connections with the
-  //     <Server_Logging_Acceptor>.
-  //
-  // = DESCRIPTION
-  //     This class contains the service-specific methods that can't
-  //     easily be factored into the <ACE_Acceptor>.
 public:
   ACE_Client_Logging_Acceptor ();
 
 protected:
-  // = Dynamic linking hooks.
+  /// @name Dynamic linking hooks.
+  /// @{
+
+  /// Called when service is linked.
   virtual int init (int argc, ACE_TCHAR *argv[]) override;
-  // Called when service is linked.
 
+  /// Called when service is unlinked.
   virtual int fini () override;
-  // Called when service is unlinked.
 
+  /// Called to determine info about the service.
   virtual int info (ACE_TCHAR **strp, size_t length) const override;
-  // Called to determine info about the service.
 
+  /// Factory that always returns the handler_.
   virtual int make_svc_handler (ACE_Client_Logging_Handler *&sh) override;
-  // Factory that always returns the <handler_>.
+  /// @}
 
-  // = Scheduling hooks.
+  /// @name Scheduling hooks.
+  /// @{
+
   virtual int suspend () override;
   virtual int resume () override;
+  /// @}
 
 private:
+  /// Parse svc.conf arguments.
   int parse_args (int argc, ACE_TCHAR *argv[]);
-  // Parse svc.conf arguments.
 
+  /// Host where the logging server is located.
   const ACE_TCHAR *server_host_;
-  // Host where the logging server is located.
 
+  /// Port number where the logging server is listening for connections.
   u_short server_port_;
-  // Port number where the logging server is listening for
-  // connections.
 
+  /// Address to connect to the server logging daemon.
   ACE_INET_Addr server_addr_;
-  // Address to connect to the server logging daemon.
 
+  /// Local IP/port number to use for the connection to the server logging
+  /// daemon.
   ACE_INET_Addr local_addr_;
-  // Local IP/port number to use for the connection to the server logging
-  // daemon.
 
+  /// Communication endpoint where the client logging daemon listens for
+  /// connections from clients.
   const ACE_TCHAR *logger_key_;
-  // Communication endpoint where the client logging daemon will
-  // listen for connections from clients.
 
+  /// Singleton handler that receives messages from clients and forwards
+  /// them to the server.
   ACE_Client_Logging_Handler *handler_;
-  // Pointer to the singleton handler that receives messages from
-  // clients and forwards to the server.
 };
 
 int

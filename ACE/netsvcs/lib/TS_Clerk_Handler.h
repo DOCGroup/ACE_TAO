@@ -68,27 +68,37 @@ public:
   ACE_TS_Clerk_Handler (ACE_TS_Clerk_Processor *processor = nullptr,
                         ACE_INET_Addr &addr = (ACE_INET_Addr &) ACE_Addr::sap_any);
 
-  // = Set/get the current state
+  /// @name State accessors.
+  /// @{
+
   enum State
   {
-    IDLE = 1,      // Prior to initialization.
-    CONNECTING,    // During connection establishment.
-    ESTABLISHED,   // Connection is established and active.
-    DISCONNECTING, // In the process of disconnecting.
-    FAILED         // Connection has failed.
+    /// Prior to initialization.
+    IDLE = 1,
+    /// During connection establishment.
+    CONNECTING,
+    /// Connection is established and active.
+    ESTABLISHED,
+    /// In the process of disconnecting.
+    DISCONNECTING,
+    /// Connection has failed.
+    FAILED
   };
 
-  // = Set/get the current state.
   State state ();
   void state (State);
 
-  // = Set/get the current retry timeout delay.
+  /// @}
+
+  /// @name Retry timeout accessors.
+  /// @{
+
   long timeout ();
   void timeout (long);
 
-  // = Set/get the maximum retry timeout delay.
   long max_timeout ();
   void max_timeout (long);
+  /// @}
 
   /// Activate this instance of the <ACE_TS_Clerk_Handler>
   /// (called by the <ACE_TS_Clerk_Processor>).
@@ -125,8 +135,8 @@ protected:
 
   enum
     {
+      /// 5 minutes is the maximum timeout.
       MAX_RETRY_TIMEOUT = 300
-      // 5 minutes is the maximum timeout.
     };
 
 private:
@@ -189,7 +199,9 @@ public:
                            ACE_Synch_Options &);
 
 protected:
-  // = Dynamic linking hooks.
+  /// @name Dynamic linking hooks.
+  /// @{
+
   /// Called when service is linked.
   virtual int init (int argc, ACE_TCHAR *argv[]) override;
 
@@ -198,10 +210,14 @@ protected:
 
   /// Called to determine info about the service.
   virtual int info (ACE_TCHAR **strp, size_t length) const override;
+  /// @}
 
-  // = Scheduling hooks.
+  /// @name Scheduling hooks.
+  /// @{
+
   virtual int suspend () override;
   virtual int resume () override;
+  /// @}
 
 private:
   /// Parse svc.conf arguments.

@@ -48,7 +48,7 @@ ACE_Time_Request::size () const
   return sizeof (this->transfer_);
 }
 
-// = Set/get the type of the message.
+/// Set or get the message type.
 ACE_INT32
 ACE_Time_Request::msg_type () const
 {
@@ -63,7 +63,7 @@ ACE_Time_Request::msg_type (ACE_INT32 t)
   this->transfer_.msg_type_ = t;
 }
 
-// = Set/get the blocking semantics.
+/// Set or get whether the request blocks indefinitely.
 ACE_UINT32
 ACE_Time_Request::block_forever () const
 {
@@ -78,7 +78,7 @@ ACE_Time_Request::block_forever (ACE_UINT32 bs)
   this->transfer_.block_forever_ = bs;
 }
 
-// = Set/get the timeout.
+/// Set or get the timeout.
 ACE_Time_Value
 ACE_Time_Request::timeout () const
 {
@@ -95,7 +95,7 @@ ACE_Time_Request::timeout (const ACE_Time_Value& timeout)
   this->transfer_.usec_timeout_ = timeout.usec ();
 }
 
-// = Set/get the time
+/// Set or get the time.
 time_t
 ACE_Time_Request::time () const
 {

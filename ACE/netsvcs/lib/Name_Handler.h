@@ -64,14 +64,18 @@ public:
   virtual int open (void * = nullptr) override;
 
 protected:
-  // = Helper routines for the operations exported to clients.
+  /// @name Helper routines for the operations exported to clients.
+  /// @{
 
   /// Give up waiting (e.g., when a timeout occurs or a client shuts
   /// down unexpectedly).
   virtual int abandon ();
 
-  // = Low level routines for framing requests, dispatching
-  // operations, and returning replies.
+  /// @}
+
+  /// @name Low-level routines for framing requests, dispatching operations,
+  /// and returning replies.
+  /// @{
 
   /// Receive, frame, and decode the client's request.
   virtual int recv_request ();
@@ -86,8 +90,11 @@ protected:
 
   /// Special kind of reply
   virtual int send_request (ACE_Name_Request &);
+  /// @}
 
-  // = Demultiplexing hooks.
+  /// @name Demultiplexing hooks.
+  /// @{
+
   /// Return the underlying <ACE_HANDLE>.
   virtual ACE_HANDLE get_handle () const override;
 
@@ -95,9 +102,14 @@ protected:
   /// arrive.
   virtual int handle_input (ACE_HANDLE) override;
 
-  // = Timer hook.
+  /// @}
+
+  /// @name Timer hook.
+  /// @{
+
   /// Enable clients to limit the amount of time they wait for a name.
   virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg) override;
+  /// @}
 
   /// Ensure dynamic allocation...
   ~ACE_Name_Handler ();
@@ -108,16 +120,16 @@ private:
 
   struct LIST_ENTRY
   {
+    /// A member function pointer that performs the appropriate
+    /// operation (e.g., LIST_NAMES, LIST_VALUES, or LIST_TYPES).
     LIST_OP operation_;
-    // A member function pointer that performs the appropriate
-    // operation (e.g., LIST_NAMES, LIST_VALUES, or LIST_TYPES).
 
+    /// A member function pointer that serves as a factory to create a
+    /// request that is passed back to the client.
     REQUEST request_factory_;
-    // A member function pointer that serves as a factory to create a
-    // request that is passed back to the client.
 
+    /// Name of the operation we're dispatching (used for debugging).
     const char *description_;
-    // Name of the operation we're dispatching (used for debugging).
   };
 
   /// This is the table of pointers to functions that we use to
