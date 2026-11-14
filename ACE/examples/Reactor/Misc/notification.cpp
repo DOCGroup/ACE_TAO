@@ -13,15 +13,13 @@ constexpr size_t MAX_ITERATIONS = 10000;
 
 class Thread_Handler : public ACE_Event_Handler
 {
-  // = TITLE
-  //   Illustrate how the ACE_Reactor's thread-safe event notification
-  //   mechanism works.
-  //
-  // = DESCRIPTION
-  //   Handle timeouts in the main thread via the ACE_Reactor and I/O
-  //   events in a separate thread.  Just before the separate I/O
-  //   thread exits it notifies the ACE_Reactor in the main thread
-  //   using the ACE_Reactor's notification mechanism.
+  /**
+   * @brief Illustrates the ACE_Reactor thread-safe notification mechanism.
+   *
+   * Timeouts are handled in the main thread and I/O events in a separate
+   * thread. Before the I/O thread exits, it notifies the main thread's
+   * ACE_Reactor.
+   */
 public:
   Thread_Handler (long delay,
                   long interval,
@@ -38,45 +36,47 @@ public:
   Thread_Handler &operator= (Thread_Handler const &) = delete;
   Thread_Handler &operator= (Thread_Handler &&) = delete;
 
+  /// Handles signals.
   int handle_signal (int signum, siginfo_t * = nullptr, ucontext_t * = nullptr) override;
-  // Handle signals.
 
+  /// Prints data from the main thread.
   int handle_exception (ACE_HANDLE) override;
-  // Print data from main thread.
 
+  /// Prints data from the main thread.
   int handle_output (ACE_HANDLE) override;
-  // Print data from main thread.
 
+  /// Handles timeout events in the main thread.
   int handle_timeout (ACE_Time_Value const &, void const *) override;
-  // Handle timeout events in the main thread.
 
+  /// Handles general notification messages to the Reactor.
   int handle_input (ACE_HANDLE) override;
-  // General notification messages to the Reactor.
 
+  /// Performs notifications.
   virtual int notify (ACE_Time_Value *tv = nullptr);
-  // Perform notifications.
 
+  /// Handles I/O events in a separate thread.
   virtual int svc ();
-  // Handle I/O events in a separate threads.
 
 private:
+  /// Bridges the C thread API to the C++ thread entry point.
   static void *svc_run (void *);
-  // Glues C++ to C thread library functions.
 
+  /// ID passed to the Thread_Handler constructor.
   size_t id_ {};
-  // ID passed in by Thread_Handler constructor.
 
   size_t iterations_ {};
 
+  /// Shutdown flag.
   static sig_atomic_t shutdown_;
-  // Shutting down.
 
-  // = Timing variables.
-  // Delay factor for timer-driven I/O.
+  /// @name Timing variables
+  /// @{
+  /// Delay factor for timer-driven I/O.
   static ACE_Time_Value delay_;
 
-  // Interval factor for Event_Handler timer.
+  /// Interval factor for the Event_Handler timer.
   static ACE_Time_Value interval_;
+  /// @}
 };
 
 // Shutdown flag.

@@ -160,11 +160,10 @@ Sig_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
   return 0;
 }
 
+/// Illustrates that the ACE_Reactor can handle signals, STDIO, and timeouts
+/// using the same mechanisms.
 class STDIN_Handler : public ACE_Event_Handler
 {
-  // = TITLE
-  //   This class illustrates that the ACE_Reactor can handle signals,
-  //   STDIO, and timeouts using the same mechanisms.
 public:
   STDIN_Handler ();
   ~STDIN_Handler () override;
