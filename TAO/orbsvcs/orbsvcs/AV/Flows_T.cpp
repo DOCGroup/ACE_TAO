@@ -86,7 +86,7 @@ TAO_FDev<T_Producer, T_Consumer>::make_producer (AVStreams::FlowConnection_ptr /
     {
       // Activate the producer implementation under the Root POA.
       T_Producer *producer_i {};
-      ACE_NEW_RETURN (producer_i, T_Producer, 0);
+      ACE_NEW_RETURN (producer_i, T_Producer, nullptr);
       this->producer_list_.insert_tail (producer_i);
       producer = producer_i->_this ();
     }
@@ -110,8 +110,8 @@ TAO_FDev<T_Producer, T_Consumer>::make_consumer (AVStreams::FlowConnection_ptr /
   try
     {
       // Activate the consumer implementation under the Root POA.
-  T_Consumer *consumer_i {};
-      ACE_NEW_RETURN (consumer_i, T_Consumer, 0 );
+      T_Consumer *consumer_i {};
+      ACE_NEW_RETURN (consumer_i, T_Consumer, nullptr);
 
       this->consumer_list_.insert_tail (consumer_i);
       consumer = consumer_i->_this ();

@@ -371,7 +371,7 @@ TAO_AV_UDP_Acceptor::open (TAO_Base_StreamEndPoint *endpoint,
                     buf));
     }
 
-  int result = this->open_i (inet_addr, 0);
+  int result = this->open_i (inet_addr, false);
 
   if (result < 0)
     return result;
@@ -404,7 +404,7 @@ TAO_AV_UDP_Acceptor::open_default (TAO_Base_StreamEndPoint *endpoint,
       this->address_.reset (address);
     }
 
-  int result = this->open_i (this->address_.get (), 1);
+  int result = this->open_i (this->address_.get (), true);
   if (result < 0)
     return result;
 
@@ -454,7 +454,7 @@ TAO_AV_UDP_Acceptor::open_i (ACE_INET_Addr *inet_addr,
 
           local_addr->set (local_addr->get_port_number (),
                            local_addr->get_host_name (),
-                           1,
+                           true,
                            local_addr->get_type ());
 
           if (is_default_addr)
@@ -995,7 +995,7 @@ int
 TAO_AV_UDP_Object::send_frame (char const *buf,
                                size_t len)
 {
-  int const result = this->transport_->send (buf, len, 0);
+  int const result = this->transport_->send (buf, len, nullptr);
   if (result < 0)
     return result;
   return 0;

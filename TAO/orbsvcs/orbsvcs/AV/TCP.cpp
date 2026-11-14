@@ -227,7 +227,7 @@ int
 TAO_AV_TCP_Object::send_frame (char const *buf,
                                size_t len)
 {
-  int result = this->transport_->send (buf, len, 0);
+  int result = this->transport_->send (buf, len, nullptr);
   return result;
 }
 
