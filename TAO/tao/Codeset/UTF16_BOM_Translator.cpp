@@ -196,7 +196,7 @@ TAO_UTF16_BOM_Translator::read_wstring (ACE_InputCDR &cdr,
               return false;
             }
 
-          if (this->read_wchar_array_i (cdr, &x[0], len, true))
+          if (this->read_wchar_array_i (cdr, x.data (), len, true))
             {
               // Since reading the array may have adjusted the length,
               // shrink to fit
@@ -215,7 +215,7 @@ TAO_UTF16_BOM_Translator::read_wstring (ACE_InputCDR &cdr,
               return false;
             }
 
-          if (this->read_wchar_array (cdr, &x[0], len))
+          if (this->read_wchar_array (cdr, x.data (), len))
             {
               x.resize (len-1); // drop terminating zero wchar read from stream
               return true;
