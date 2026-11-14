@@ -41,37 +41,35 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_IBM1047_ISO8859 : public ACE_Char_Codeset_Translator
 {
 public:
-  /// A do nothing constructor.
-  ACE_IBM1047_ISO8859 ()= default;
+  ACE_IBM1047_ISO8859 () = default;
 
-  /// Virtual destruction
-  virtual ~ACE_IBM1047_ISO8859 () = default;
+  ~ACE_IBM1047_ISO8859 () override = default;
 
-  // = Documented in $ACE_ROOT/ace/CDR_Stream.h
-  virtual ACE_CDR::Boolean read_char (ACE_InputCDR &,
-                                      ACE_CDR::Char &);
-  virtual ACE_CDR::Boolean read_string (ACE_InputCDR &,
-                                        ACE_CDR::Char *&);
-  virtual ACE_CDR::Boolean read_string (ACE_InputCDR &,
-                                        std::string &);
-  virtual ACE_CDR::Boolean read_char_array (ACE_InputCDR &,
-                                            ACE_CDR::Char *,
-                                            ACE_CDR::ULong);
-  virtual ACE_CDR::Boolean write_char (ACE_OutputCDR &,
-                                       ACE_CDR::Char);
-  virtual ACE_CDR::Boolean write_string (ACE_OutputCDR &,
-                                         ACE_CDR::ULong,
-                                         const ACE_CDR::Char *);
-  virtual ACE_CDR::Boolean write_char_array (ACE_OutputCDR &,
-                                             const ACE_CDR::Char *,
-                                             ACE_CDR::ULong);
+  /// Documented in $ACE_ROOT/ace/CDR_Stream.h.
+  ACE_CDR::Boolean read_char (ACE_InputCDR &,
+                              ACE_CDR::Char &) override;
+  ACE_CDR::Boolean read_string (ACE_InputCDR &,
+                                ACE_CDR::Char *&) override;
+  ACE_CDR::Boolean read_string (ACE_InputCDR &,
+                                std::string &) override;
+  ACE_CDR::Boolean read_char_array (ACE_InputCDR &,
+                                    ACE_CDR::Char *,
+                                    ACE_CDR::ULong) override;
+  ACE_CDR::Boolean write_char (ACE_OutputCDR &,
+                               ACE_CDR::Char) override;
+  ACE_CDR::Boolean write_string (ACE_OutputCDR &,
+                                 ACE_CDR::ULong,
+                                 const ACE_CDR::Char *) override;
+  ACE_CDR::Boolean write_char_array (ACE_OutputCDR &,
+                                     const ACE_CDR::Char *,
+                                     ACE_CDR::ULong) override;
 
   /// Return the native codeset ID as defined in the OSF code and character
   /// set registry, 0x10020417
-  virtual ACE_CDR::ULong ncs ();
+  ACE_CDR::ULong ncs () override;
   /// Return the translated codeset ID as defined in the OSF code and character
   /// set registry, 0x00010001
-  virtual ACE_CDR::ULong tcs ();
+  ACE_CDR::ULong tcs () override;
 };
 
 /**
@@ -86,37 +84,35 @@ public:
 class ACE_Export ACE_ISO8859_IBM1047 : public ACE_Char_Codeset_Translator
 {
 public:
-  /// A do nothing constructor.
   ACE_ISO8859_IBM1047 () = default;
 
-  /// Virtual destruction
-  virtual ~ACE_ISO8859_IBM1047 () = default;
+  ~ACE_ISO8859_IBM1047 () override = default;
 
-  // = Documented in $ACE_ROOT/ace/CDR_Stream.h
-  virtual ACE_CDR::Boolean read_char (ACE_InputCDR &,
-                                      ACE_CDR::Char &);
-  virtual ACE_CDR::Boolean read_string (ACE_InputCDR &,
-                                        ACE_CDR::Char *&);
-  virtual ACE_CDR::Boolean read_string (ACE_InputCDR &,
-                                        std::string &);
-  virtual ACE_CDR::Boolean read_char_array (ACE_InputCDR &,
-                                            ACE_CDR::Char *,
-                                            ACE_CDR::ULong);
-  virtual ACE_CDR::Boolean write_char (ACE_OutputCDR &,
-                                       ACE_CDR::Char);
-  virtual ACE_CDR::Boolean write_string (ACE_OutputCDR &,
-                                         ACE_CDR::ULong,
-                                         const ACE_CDR::Char *);
-  virtual ACE_CDR::Boolean write_char_array (ACE_OutputCDR &,
-                                             const ACE_CDR::Char *,
-                                             ACE_CDR::ULong);
+  /// Documented in $ACE_ROOT/ace/CDR_Stream.h.
+  ACE_CDR::Boolean read_char (ACE_InputCDR &,
+                              ACE_CDR::Char &) override;
+  ACE_CDR::Boolean read_string (ACE_InputCDR &,
+                                ACE_CDR::Char *&) override;
+  ACE_CDR::Boolean read_string (ACE_InputCDR &,
+                                std::string &) override;
+  ACE_CDR::Boolean read_char_array (ACE_InputCDR &,
+                                    ACE_CDR::Char *,
+                                    ACE_CDR::ULong) override;
+  ACE_CDR::Boolean write_char (ACE_OutputCDR &,
+                               ACE_CDR::Char) override;
+  ACE_CDR::Boolean write_string (ACE_OutputCDR &,
+                                 ACE_CDR::ULong,
+                                 const ACE_CDR::Char *) override;
+  ACE_CDR::Boolean write_char_array (ACE_OutputCDR &,
+                                     const ACE_CDR::Char *,
+                                     ACE_CDR::ULong) override;
 
   /// Return the native codeset ID as defined in the OSF code and character
   /// set registry, 0x00010001
-  virtual ACE_CDR::ULong ncs ();
+  ACE_CDR::ULong ncs () override;
   /// Return the translated codeset ID as defined in the OSF code and character
   /// set registry, 0x10020417
-  virtual ACE_CDR::ULong tcs ();
+  ACE_CDR::ULong tcs () override;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
