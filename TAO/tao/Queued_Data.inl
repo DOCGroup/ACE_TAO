@@ -1,12 +1,14 @@
 // -*- C++ -*-
 //
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /*static*/
 ACE_INLINE void
 TAO_Queued_Data::replace_data_block (ACE_Message_Block &mb)
 {
-  size_t const newsize = ACE_CDR::total_length (&mb, 0) + ACE_CDR::MAX_ALIGNMENT;
+  size_t const newsize = ACE_CDR::total_length (std::addressof (mb), 0) + ACE_CDR::MAX_ALIGNMENT;
 
   ACE_Data_Block *db = mb.data_block ()->clone_nocopy ();
 
@@ -14,7 +16,7 @@ TAO_Queued_Data::replace_data_block (ACE_Message_Block &mb)
     return;
 
   ACE_Message_Block tmp (db);
-  ACE_CDR::mb_align (&tmp);
+  ACE_CDR::mb_align (std::addressof (tmp));
 
   tmp.copy (mb.rd_ptr (), mb.length());
   mb.data_block (tmp.data_block ()->duplicate ());

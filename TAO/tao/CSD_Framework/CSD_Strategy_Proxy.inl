@@ -1,4 +1,6 @@
 // -*- C++ -*-
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
@@ -11,7 +13,7 @@ TAO::CSD::Strategy_Proxy::dispatch_request
   if (this->strategy_impl_ == nullptr)
     {
       // This is the "default" strategy implementation.
-      upcall.servant()->_dispatch(server_request, &upcall);
+      upcall.servant()->_dispatch(server_request, std::addressof (upcall));
     }
   else
     {

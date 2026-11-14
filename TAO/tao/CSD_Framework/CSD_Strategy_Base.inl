@@ -1,6 +1,8 @@
 // -*- C++ -*-
 #include "tao/debug.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
@@ -57,7 +59,7 @@ TAO::CSD::Strategy_Base::dispatch_request
       case DISPATCH_DEFERRED:
         // Perform the "default" dispatching strategy logic for this request
         // right now, using the current thread.
-        upcall.servant()->_dispatch(server_request, &upcall);
+        upcall.servant()->_dispatch(server_request, std::addressof (upcall));
         break;
 
       default:

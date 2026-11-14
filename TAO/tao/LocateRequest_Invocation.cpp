@@ -1,5 +1,7 @@
 // -*- C++ -*-
 #include "tao/LocateRequest_Invocation.h"
+
+#include <memory>
 #include "tao/Profile_Transport_Resolver.h"
 #include "tao/operation_details.h"
 #include "tao/Stub.h"
@@ -153,7 +155,7 @@ namespace TAO
     TAO_InputCDR &cdr = rd.reply_cdr ();
 
     // Set the translators
-    this->resolver_.transport ()->assign_translators (&cdr, nullptr);
+    this->resolver_.transport ()->assign_translators (std::addressof (cdr), nullptr);
 
     switch (rd.locate_reply_status ())
       {

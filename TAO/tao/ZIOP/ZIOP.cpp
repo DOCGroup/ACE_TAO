@@ -1,6 +1,8 @@
 #include "tao/ZIOP/ZIOP_ORBInitializer.h"
 #include "tao/ZIOP/ZIOP_Policy_Validator.h"
 #include "tao/ZIOP/ZIOP.h"
+
+#include <memory>
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 #include "tao/ORBInitializer_Registry.h"
@@ -236,7 +238,7 @@ TAO_ZIOP_Loader::decompress (ACE_Data_Block **db, TAO_Queued_Data& qd,
                                   false);
               // change it into a GIOP message..
               mb.base ()[0] = 0x47;
-              ACE_CDR::mb_align (&mb);
+              ACE_CDR::mb_align (std::addressof (mb));
 
               if (TAO_debug_level > 9)
                 {  // we're only logging ZIOP messages. Log datablock before it's
@@ -516,7 +518,7 @@ TAO_ZIOP_Loader::complete_compression (Compression::Compressor_ptr compressor,
   if (low_value <= original_data_length)
     {
       CORBA::OctetSeq output;
-      CORBA::OctetSeq input (original_data_length, &mb);
+      CORBA::OctetSeq input (original_data_length, std::addressof (mb));
       output.length (original_data_length);
 
       if (!this->compress (compressor, input, output))

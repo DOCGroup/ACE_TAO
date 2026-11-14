@@ -1,5 +1,7 @@
 // -*- C++ -*-
 #include "tao/GIOP_Message_Generator_Parser_12.h"
+
+#include <memory>
 #include "tao/GIOPC.h"
 #include "tao/GIOP_Utils.h"
 #include "tao/GIOP_Message_Locate_Header.h"
@@ -291,7 +293,7 @@ TAO_GIOP_Message_Generator_Parser_12::parse_request_header (
   if (req_service_info.length() > 0)
     {
       request.orb_core ()->service_context_registry ().
-        process_service_contexts (req_service_info, *(request.transport ()), &request);
+        process_service_contexts (req_service_info, *(request.transport ()), std::addressof (request));
     }
 
   if (input.length () > 0)
