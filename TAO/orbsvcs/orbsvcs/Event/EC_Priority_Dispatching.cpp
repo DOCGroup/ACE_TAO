@@ -10,6 +10,7 @@
 #include "ace/Sched_Params.h"
 
 #include <cstdio>
+#include <memory>
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -69,7 +70,7 @@ TAO_EC_Priority_Dispatching::activate ()
         }
 
       this->tasks_[i] = std::make_unique<TAO_EC_Dispatching_Task> (
-        &this->thread_manager_);
+        std::addressof (this->thread_manager_));
 
       // @@ Query the scheduler to obtain the priority...
       long flags = THR_BOUND | THR_SCHED_FIFO;

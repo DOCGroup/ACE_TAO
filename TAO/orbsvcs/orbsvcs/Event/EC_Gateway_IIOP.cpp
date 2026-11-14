@@ -9,6 +9,8 @@
 
 #include "ace/Dynamic_Service.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Gateway_IIOP::TAO_EC_Gateway_IIOP ()
@@ -536,7 +538,7 @@ TAO_EC_Gateway_IIOP::shutdown ()
       PortableServer::POA_var poa =
         this->supplier_._default_POA ();
       PortableServer::ObjectId_var id =
-        poa->servant_to_id (&this->supplier_);
+        poa->servant_to_id (std::addressof (this->supplier_));
       poa->deactivate_object (id.in ());
       this->supplier_is_active_ = false;
     }
@@ -546,7 +548,7 @@ TAO_EC_Gateway_IIOP::shutdown ()
       PortableServer::POA_var poa =
         this->consumer_._default_POA ();
       PortableServer::ObjectId_var id =
-        poa->servant_to_id (&this->consumer_);
+        poa->servant_to_id (std::addressof (this->consumer_));
       poa->deactivate_object (id.in ());
       this->consumer_is_active_ = false;
     }

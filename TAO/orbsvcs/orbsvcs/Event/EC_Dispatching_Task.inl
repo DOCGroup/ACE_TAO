@@ -1,4 +1,6 @@
 // -*- C++ -*-
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
@@ -32,7 +34,7 @@ TAO_EC_Dispatching_Task (ACE_Thread_Manager *thr_manager, TAO_EC_Queue_Full_Serv
      the_queue_ (TAO_EC_QUEUE_HWM, TAO_EC_QUEUE_LWM),
      queue_full_service_object_ (so)
 {
-  this->msg_queue (&this->the_queue_);
+  this->msg_queue (std::addressof (this->the_queue_));
 }
 
 #ifdef ACE_WIN32_VC14

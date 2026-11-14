@@ -1,7 +1,7 @@
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Event/EC_MT_Dispatching.h"
 
-
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -16,7 +16,7 @@ TAO_EC_MT_Dispatching::TAO_EC_MT_Dispatching (int nthreads,
      force_activate_ (force_activate != 0),
      task_(nullptr, service_object)
 {
-  this->task_.open (&this->thread_manager_);
+  this->task_.open (std::addressof (this->thread_manager_));
 }
 
 void

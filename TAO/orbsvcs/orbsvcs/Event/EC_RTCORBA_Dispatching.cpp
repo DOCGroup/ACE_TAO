@@ -1,7 +1,7 @@
 #include "orbsvcs/Event/EC_RTCORBA_Dispatching.h"
 #include "tao/RTCORBA/Priority_Mapping.h"
 
-
+#include <memory>
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_RTCORBA_Dispatching::
@@ -17,7 +17,7 @@ TAO_EC_RTCORBA_Dispatching::
   ACE_NEW (tasks, TAO_EC_Dispatching_Task[number_lanes]);
   this->tasks_.reset (tasks);
   for (CORBA::ULong i {}; i != this->lanes_.length (); ++i)
-    this->tasks_[i].thr_mgr (&this->thread_manager_);
+    this->tasks_[i].thr_mgr (std::addressof (this->thread_manager_));
 }
 
 TAO_EC_RTCORBA_Dispatching::~TAO_EC_RTCORBA_Dispatching () = default;
@@ -51,7 +51,7 @@ TAO_EC_RTCORBA_Dispatching::shutdown ()
   for (CORBA::ULong i {}; i != this->lanes_.length (); ++i)
     {
       int nthreads =
-        this->thread_manager_.num_threads_in_task (&this->tasks_[i]);
+        this->thread_manager_.num_threads_in_task (std::addressof (this->tasks_[i]));
       if (nthreads <= 0)
         continue;
       for (int j {}; j != nthreads; ++j)

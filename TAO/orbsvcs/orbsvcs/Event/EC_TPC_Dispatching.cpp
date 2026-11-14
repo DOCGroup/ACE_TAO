@@ -3,6 +3,7 @@
 #include "orbsvcs/Event/EC_Defaults.h"
 
 #include <ace/Dynamic_Service.h>
+#include <memory>
 
 #if !defined(TAO_EC_TPC_DISPATCHING_DEFAULT_MAP_SIZE)
 #define TAO_EC_TPC_DISPATCHING_DEFAULT_MAP_SIZE 32
@@ -46,7 +47,7 @@ TAO_EC_TPC_Dispatching::add_consumer (RtecEventComm::PushConsumer_ptr consumer)
     ORBSVCS_DEBUG ((LM_DEBUG, "EC (%P|%t) TPC_Dispatching::add_consumer(%@)\n", pc.in()));
 
   TAO_EC_Dispatching_Task* dtask =
-    new TAO_EC_TPC_Dispatching_Task (&this->thread_manager_,
+    new TAO_EC_TPC_Dispatching_Task (std::addressof (this->thread_manager_),
                                      this->queue_full_service_object_);
 
   if (TAO_EC_TPC_debug_level > 0)

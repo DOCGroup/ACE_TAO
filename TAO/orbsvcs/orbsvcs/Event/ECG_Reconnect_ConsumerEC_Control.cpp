@@ -4,6 +4,7 @@
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
 
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -166,7 +167,7 @@ TAO_ECG_Reconnect_ConsumerEC_Control::activate ()
         // Schedule the timer after these policies has been set, because the
         // handle_timeout uses these policies, if done in front, the channel
         // can crash when the timeout expires before initiazation is ready.
-        timer_id_ = this->reactor_->schedule_timer (&this->adapter_,
+        timer_id_ = this->reactor_->schedule_timer (std::addressof (this->adapter_),
                                                     nullptr,
                                                     this->rate_,
                                                     this->rate_);

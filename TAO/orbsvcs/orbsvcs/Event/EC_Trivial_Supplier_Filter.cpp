@@ -6,6 +6,7 @@
 #include "orbsvcs/Event/EC_Scheduling_Strategy.h"
 #include "orbsvcs/Event/EC_ProxyConsumer.h" // @@ MSVC 6 bug
 
+#include <memory>
 
 // ****************************************************************
 
@@ -90,7 +91,7 @@ TAO_EC_Supplier_Filter*
 TAO_EC_Trivial_Supplier_Filter_Builder::create (
     RtecEventChannelAdmin::SupplierQOS&)
 {
-  return &this->filter_;
+  return std::addressof (this->filter_);
 }
 
 void
