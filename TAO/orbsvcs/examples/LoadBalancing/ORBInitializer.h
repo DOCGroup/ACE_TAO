@@ -57,11 +57,11 @@ public:
    * Methods required by the PortableInterceptor::ORBInitializer
    * interface.
    */
-  //@{
+  /// @{
   void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
   void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
-  //@}
+  /// @}
 
   /// Return a reference to the LoadAlert object.
   TAO_LB_LoadAlert & load_alert ();
