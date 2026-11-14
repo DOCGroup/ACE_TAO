@@ -46,9 +46,10 @@ Zlib_CompressorFactory::get_compressor (
           }
         catch (...)
           {
-            TAOLIB_ERROR_RETURN ((LM_ERROR,
-                                  ACE_TEXT ("(%P | %t) ERROR: ZlibCompressor - Unable to create Zlib Compressor at level [%d].\n"),
-                                  int (compression_level)), nullptr);
+            TAOLIB_ERROR ((LM_ERROR,
+                           ACE_TEXT ("(%P | %t) ERROR: ZlibCompressor - Unable to create Zlib Compressor at level [%d].\n"),
+                           int (compression_level)));
+            return nullptr;
           }
 
     }
