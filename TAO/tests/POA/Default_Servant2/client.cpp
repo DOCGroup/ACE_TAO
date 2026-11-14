@@ -18,6 +18,8 @@
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <cstring>
+
 struct Client_Options
 {
   ACE_TCHAR const *ior_file {};
@@ -106,9 +108,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       File::Descriptor_var fd = file_system->open (ACE_TEXT_ALWAYS_CHAR (options.filename),
                                                    O_CREAT | O_RDWR);
 
-      int const message_length = ACE_OS::strlen (options.message) + 1;
+      int const message_length = std::strlen (ACE_TEXT_ALWAYS_CHAR (options.message)) + 1;
       CORBA::Octet *buffer = File::Descriptor::DataBuffer::allocbuf (message_length);
-      ACE_OS::strcpy (reinterpret_cast<char *> (buffer), ACE_TEXT_ALWAYS_CHAR (options.message));
+      std::strcpy (reinterpret_cast<char *> (buffer), ACE_TEXT_ALWAYS_CHAR (options.message));
       File::Descriptor::DataBuffer data_sent (message_length, message_length, buffer, 1);
 
       // write the message to the file

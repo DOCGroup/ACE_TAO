@@ -2,7 +2,9 @@
 #include "ace/Array_Base.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_math.h"
-#include "ace/OS_NS_stdlib.h"
+
+#include <cstdlib>
+#include <cstring>
 
 using ULong_Array = ACE_Array_Base<CORBA::ULong>;
 
@@ -62,7 +64,7 @@ get_priority_bands (const char *test_type,
       if (result == 0 || result == EOF)
         break;
 
-      working_string += ACE_OS::strlen (working_string);
+      working_string += std::strlen (working_string);
       working_string += 1;
 
       result = ::sscanf (working_string,
@@ -71,7 +73,7 @@ get_priority_bands (const char *test_type,
       if (result == 0 || result == EOF)
         break;
 
-      working_string += ACE_OS::strlen (working_string);
+      working_string += std::strlen (working_string);
       working_string += 1;
 
       if (debug)
@@ -157,7 +159,7 @@ get_values (const char *test_type,
       // sscanf with "%ul" doesn't seem to work properly on HP-UX.  So,
       // we will use strtoul instead.
       char *endptr {};
-      values[i] = ACE_OS::strtoul (working_string, &endptr, 10);
+      values[i] = std::strtoul (working_string, &endptr, 10);
 
       if (endptr != working_string && *endptr != '\0')
         {
@@ -165,7 +167,7 @@ get_values (const char *test_type,
           break;
         }
 
-      working_string += ACE_OS::strlen (working_string);
+      working_string += std::strlen (working_string);
       working_string += 1;
 
       if (debug)
