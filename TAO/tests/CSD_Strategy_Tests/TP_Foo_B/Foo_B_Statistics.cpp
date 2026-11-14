@@ -1,6 +1,8 @@
 #include "Foo_B_Statistics.h"
 #include "Foo_B_ClientEngine.h"
 
+#include <cstring>
+
 extern const char* ONEWAY_ARG_TEST_STR;
 extern CORBA::Boolean special_value;
 
@@ -157,7 +159,7 @@ Foo_B_Statistics::actual_vs_expected()
               {
                 unsigned client_id;
                 sscanf (this->actual_in_string_[i][k].c_str(), "%u %s", &client_id, buffer);
-                if (ACE_OS::strcmp (buffer, ONEWAY_ARG_TEST_STR) != 0)
+                if (std::strcmp (buffer, ONEWAY_ARG_TEST_STR) != 0)
                   {
                     ACE_ERROR((LM_ERROR, "(%P|%t)Foo_B_Statistics::actual_vs_expected  "
                       "actual_in_string_[%u][%u]=%s\n",

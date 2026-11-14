@@ -21,6 +21,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "orbsvcs/Naming/FaultTolerant/nsgroup_svc.h"
 
+#include <cstring>
 #include <iostream>
 
 #if defined (_MSC_VER)
@@ -1443,7 +1444,7 @@ do_persistence_objectgroup_test (
                            loc[0].id.in(),
                            the_string.in ()));
 
-              if ( ACE_OS::strcmp (the_string.in (), loc[0].id.in()) != 0 ) {
+              if (std::strcmp (the_string.in (), loc[0].id.in ()) != 0) {
                 ACE_ERROR_RETURN ((LM_ERROR,
                                    ACE_TEXT ("ERROR: object group member at %C reports %C\n\n"),
                                    loc[0].id.in(),

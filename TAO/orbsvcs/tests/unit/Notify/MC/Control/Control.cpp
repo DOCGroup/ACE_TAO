@@ -3,6 +3,8 @@
 #include "orbsvcs/Notify/MonitorControl/Control.h"
 #include "tao/Exception.h"
 
+#include <cstring>
+
 #if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 
 static ACE_CString command;
@@ -18,7 +20,7 @@ public:
   virtual bool execute (const char* cmd)
   {
     command = cmd;
-    return (ACE_OS::strcmp (cmd, TAO_NS_CONTROL_SHUTDOWN) == 0);
+    return std::strcmp (cmd, TAO_NS_CONTROL_SHUTDOWN) == 0;
   }
 };
 

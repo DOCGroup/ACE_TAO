@@ -10,7 +10,6 @@
 //=========================================================================
 
 #include "ace/Log_Msg.h"
-#include "ace/OS_NS_string.h"
 #include "tao/ORB.h"
 #include "tao/Environment.h"
 #include "tao/SystemException.h"
@@ -18,6 +17,8 @@
 #include "tao/Stub.h"
 #include "tao/Profile.h"
 #include "tao/IIOP_Profile.h"
+
+#include <cstring>
 
 #ifndef FRANKS_ASSERT
 #define FRANKS_ASSERT(X) \
@@ -36,7 +37,7 @@ is_endpoint (TAO_Profile *profile, char const *host, unsigned short port)
     unsigned short   endpoint_port = iiop_endpoint->port();
 
     bool const retval =
-      ACE_OS::strcmp (endpoint_host, host) == 0
+      std::strcmp (endpoint_host, host) == 0
       && endpoint_port == port;
 
     return retval;
@@ -58,7 +59,7 @@ equal_endpoint (TAO_Profile *profile, TAO_Profile *other)
     unsigned short   other_endpoint_port = other_iiop_endpoint->port();
 
     bool const retval =
-      ACE_OS::strcmp (endpoint_host, other_endpoint_host) == 0
+      std::strcmp (endpoint_host, other_endpoint_host) == 0
       && endpoint_port == other_endpoint_port;
 
     return retval;

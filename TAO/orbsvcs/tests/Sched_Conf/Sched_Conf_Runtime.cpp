@@ -3,13 +3,13 @@
 
 #include "ace/Sched_Params.h"
 #include "ace/Get_Opt.h"
-#include "ace/OS_NS_string.h"
 #include "tao/corba.h"
 
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Scheduler_Factory.h"
 #include "orbsvcs/Naming/Naming_Server.h"
 
+#include <cstring>
 #include <memory>
 
 #include "Sched_Conf_Runtime.h"
@@ -63,8 +63,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             runtime_scheduler->get (infos [i].handle));
 
           ACE_ASSERT (rt_info != nullptr);
-          ACE_ASSERT (ACE_OS::strcmp (rt_info->entry_point,
-                                      infos [i].entry_point) == 0);
+          ACE_ASSERT (std::strcmp (rt_info->entry_point,
+                                   infos [i].entry_point) == 0);
           ACE_ASSERT (rt_info->handle ==
             infos [i].handle);
           ACE_ASSERT (rt_info->worst_case_execution_time ==
