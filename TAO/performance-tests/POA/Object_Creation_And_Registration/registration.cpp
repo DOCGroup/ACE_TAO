@@ -167,7 +167,7 @@ reverse_map_effectiveness (test_i const *servants,
     {
       u_long const hash_index =
         ACE_Utils::truncate_cast<u_long> (
-          reinterpret_cast<intptr_t> (&servants[i])) % active_object_map_size;
+          reinterpret_cast<intptr_t> (std::addressof (servants[i]))) % active_object_map_size;
       hash_counter[hash_index]++;
     }
 
@@ -299,7 +299,7 @@ child_poa_testing (PortableServer::POA_ptr root_poa,
     for (u_long i = 0; i < options.iterations; ++i)
       {
         child_poa->activate_object_with_id (object_ids[i].in (),
-                                            &servants[i]);
+                                            std::addressof (servants[i]));
       }
   }
 
@@ -356,7 +356,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         for (u_long i = 0; i < options.iterations; ++i)
           {
             PortableServer::ObjectId_var id =
-              root_poa->activate_object (&servants[i]);
+              root_poa->activate_object (std::addressof (servants[i]));
             CORBA::Object_var object = root_poa->id_to_reference (id.in ());
             objects[i] = test::_narrow (object.in ());
           }
@@ -370,7 +370,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
         for (u_long i = 0; i < options.iterations; ++i)
           {
-            object_ids[i] = root_poa->servant_to_id (&servants[i]);
+            object_ids[i] = root_poa->servant_to_id (std::addressof (servants[i]));
           }
       }
 
