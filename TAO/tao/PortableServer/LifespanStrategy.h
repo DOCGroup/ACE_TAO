@@ -74,6 +74,7 @@ namespace TAO
         char const *type_id) const = 0;
 
     protected:
+      /// Non-owning back-reference set by the POA during strategy initialization.
       TAO_Root_POA *poa_ {};
     };
   } /* namespace Portable_Server */

@@ -112,6 +112,8 @@ namespace TAO
       Active_Policy_Strategies *_retn ();
 
     private:
+      /// Non-owning pointer to the POA member whose strategies are cleaned
+      /// up if construction fails; this guard never deletes the POA member.
       Active_Policy_Strategies *ptr_ {};
     };
   }

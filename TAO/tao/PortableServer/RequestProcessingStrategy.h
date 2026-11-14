@@ -91,6 +91,7 @@ namespace TAO
         TAO::Portable_Server::Servant_Upcall const &servant_upcall) = 0;
 
     protected:
+      /// Non-owning back-reference set by the POA during strategy initialization.
       TAO_Root_POA *poa_ {};
     };
   }

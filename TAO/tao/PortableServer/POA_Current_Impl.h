@@ -141,7 +141,7 @@ namespace TAO
       POA_Current_Impl &operator= (POA_Current_Impl &&) = delete;
 
     protected:
-      /// The POA implementation invoking an upcall
+      /// Non-owning POA pointer, kept alive for the duration of this upcall.
       ::TAO_Root_POA *poa_ {};
 
       /// In order to avoid memory allocations, we will populate
@@ -155,7 +155,7 @@ namespace TAO
        */
       PortableServer::ObjectId object_id_;
 
-      /// The object key of the current context.
+      /// Non-owning object-key reference supplied for the current upcall.
       TAO::ObjectKey const *object_key_ {};
 
       /// The servant for the current upcall.
@@ -164,13 +164,13 @@ namespace TAO
       /// The priority for the current upcall.
       CORBA::Short priority_ {TAO_INVALID_PRIORITY};
 
-      /// Current previous from <this>.
+      /// Non-owning link to the previous stack-scoped current context.
       POA_Current_Impl *previous_current_impl_ {};
 
       /// Is setup complete?
       bool setup_done_ {};
 
-      /// Pointer to tss resources.
+      /// Non-owning pointer to the thread-specific resources singleton.
       TAO_TSS_Resources *tss_resources_ {};
     };
   }

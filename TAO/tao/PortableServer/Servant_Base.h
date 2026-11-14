@@ -204,8 +204,8 @@ protected:
   /// Reference counter.
   std::atomic<std::uint32_t> ref_count_ {1};
 
-  /// The operation table for this servant.  It is initialized by the
-  /// most derived class.
+  /// Non-owning operation-table pointer supplied by the most-derived class;
+  /// its lifetime must exceed the servant's.
   TAO_Operation_Table * optable_;
 };
 

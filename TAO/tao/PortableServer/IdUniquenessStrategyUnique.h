@@ -38,6 +38,7 @@ namespace TAO
       bool allow_multiple_activations () const override;
 
     private:
+      /// Non-owning back-reference set by the POA during strategy initialization.
       TAO_Root_POA *poa_ {};
     };
   }

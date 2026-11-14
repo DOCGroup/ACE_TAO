@@ -182,10 +182,14 @@ namespace TAO
       void upcall_cleanup ();
 
     protected:
+      /// Non-owning adapter pointer obtained from the ORB core.
       TAO_Object_Adapter *object_adapter_ {};
 
+      /// Non-owning POA pointer resolved for the duration of this upcall.
       ::TAO_Root_POA *poa_ {};
 
+      /// Borrowed servant selected for this upcall; request processing manages
+      /// its lifetime.
       PortableServer::Servant servant_ {};
 
       State state_ {INITIAL_STAGE};
@@ -193,22 +197,23 @@ namespace TAO
       CORBA::Octet system_id_buf_[TAO_POA_OBJECT_ID_BUF_SIZE];
       PortableServer::ObjectId system_id_;
 
+      /// Non-owning object-ID pointer supplied by the request-processing path.
       PortableServer::ObjectId const *user_id_ {};
 
       POA_Current_Impl current_context_;
 
   #if (TAO_HAS_MINIMUM_POA == 0)
 
-      /// Servant Locator's cookie
+      /// Borrowed Servant Locator cookie passed back to postinvoke.
       void *cookie_ {};
 
-      /// Operation name for this current.
+      /// Non-owning operation-name string supplied for this upcall.
       char const *operation_ {};
 
   #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
-      /// Pointer to the entry in the TAO_Active_Object_Map corresponding
-      /// to the servant for this request.
+      /// Non-owning pointer to the active-map entry corresponding to this
+      /// servant; the active object map controls its lifetime.
       TAO_Active_Object_Map_Entry *active_object_map_entry_ {};
 
       /// Preinvoke data for the upcall.
