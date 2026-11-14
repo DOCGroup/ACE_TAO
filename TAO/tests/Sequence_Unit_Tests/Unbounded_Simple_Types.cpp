@@ -7,7 +7,10 @@
  * @author Carlos O'Ryan
  */
 #include "tao/Unbounded_Value_Sequence_T.h"
+#include "tao/LongSeqC.h"
 #include "ace/Log_Msg.h"
+
+#include <utility>
 
 struct Foo
 {
@@ -65,6 +68,26 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
       Foo_sequence u;
       Foo_sequence const v(32);
       u = v;
+
+      CORBA::LongSeq idl_source (4);
+      idl_source.length (2);
+      idl_source[0] = 3;
+      idl_source[1] = 7;
+
+      CORBA::Long * const idl_buffer = idl_source.get_buffer ();
+      CORBA::LongSeq idl_moved (std::move (idl_source));
+      if (idl_moved.get_buffer () != idl_buffer
+          || idl_moved[0] != 3
+          || idl_moved[1] != 7)
+        return 1;
+
+      CORBA::LongSeq idl_move_assigned;
+      CORBA::Long * const idl_move_buffer = idl_moved.get_buffer ();
+      idl_move_assigned = std::move (idl_moved);
+      if (idl_move_assigned.get_buffer () != idl_move_buffer
+          || idl_move_assigned[0] != 3
+          || idl_move_assigned[1] != 7)
+        return 1;
     }
   catch (const ::CORBA::Exception &)
     {
