@@ -149,12 +149,12 @@ public:
   using lock_type = ACE_LOCK;
   using ENTRY = ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>;
 
-  // = ACE-style iterator typedefs.
+  /// ACE-style iterator typedefs.
   using ITERATOR = ACE_Hash_Multi_Map_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
   using CONST_ITERATOR = ACE_Hash_Multi_Map_Const_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
   using REVERSE_ITERATOR = ACE_Hash_Multi_Map_Reverse_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
 
-  // = STL-style iterator typedefs.
+  /// STL-style iterator typedefs.
   using iterator = ACE_Hash_Multi_Map_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
   using const_iterator = ACE_Hash_Multi_Map_Const_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
   using reverse_iterator = ACE_Hash_Multi_Map_Reverse_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
@@ -404,7 +404,7 @@ public:
   /// Dump the state of an object.
   void dump () const;
 
-  // = STL styled iterator factory functions.
+  /// STL styled iterator factory functions.
 
   /// Return forward iterator.
   ACE_Hash_Multi_Map_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> begin ();
@@ -418,7 +418,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  // = The following methods do the actual work.
+  /// The following methods do the actual work.
 
   /// Returns 1 if @a id1 == @a id2, else 0.  This is defined as a
   /// separate method to facilitate template specialization.
@@ -428,7 +428,7 @@ protected:
   /// separate method to facilitate template specialization.
   u_long hash (const EXT_ID &ext_id);
 
-  // = These methods assume locks are held by private methods.
+  /// These methods assume locks are held by private methods.
 
   /// Performs bind.  Must be called with locks held.
   int bind_i (const EXT_ID &ext_id,
@@ -604,7 +604,7 @@ public:
   ACE_Hash_Multi_Map_Iterator_Base (ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
                                     int head);
 
-  // = ITERATION methods.
+  /// ITERATION methods.
 
   /// Pass back the @a next_entry that hasn't been seen in the Set.
   /// Returns 0 when all items have been seen, else 1.
@@ -670,7 +670,7 @@ public:
   ACE_Hash_Multi_Map_Const_Iterator_Base (const ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
                                           int head);
 
-  // = ITERATION methods.
+  /// ITERATION methods.
 
   /// Pass back the @a next_entry that hasn't been seen in the Set.
   /// Returns 0 when all items have been seen, else 1.
@@ -738,7 +738,7 @@ public:
   ACE_Hash_Multi_Map_Iterator (ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
                                int tail = 0);
 
-  // = Iteration methods.
+  /// Iteration methods.
   /// Move forward by one element in the set.  Returns 0 when all the
   /// items in the set have been seen, else 1.
   int advance ();
@@ -746,7 +746,7 @@ public:
   /// Dump the state of an object.
   void dump () const;
 
-  // = STL styled iteration, compare, and reference functions.
+  /// STL styled iteration, compare, and reference functions.
 
   /// Prefix advance.
   ACE_Hash_Multi_Map_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &operator++ ();
@@ -783,7 +783,7 @@ public:
   ACE_Hash_Multi_Map_Const_Iterator (const ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
                                      int tail = 0);
 
-  // = Iteration methods.
+  /// Iteration methods.
   /// Move forward by one element in the set.  Returns 0 when all the
   /// items in the set have been seen, else 1.
   int advance ();
@@ -791,7 +791,7 @@ public:
   /// Dump the state of an object.
   void dump () const;
 
-  // = STL styled iteration, compare, and reference functions.
+  /// STL styled iteration, compare, and reference functions.
 
   /// Prefix advance.
   ACE_Hash_Multi_Map_Const_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &operator++ ();
@@ -836,7 +836,7 @@ public:
                                       const EXT_ID &ext_id,
                                       int tail = 0);
 
-  // = STL styled iteration, compare, and reference functions.
+  /// STL styled iteration, compare, and reference functions.
 
   /// Prefix advance.
   ACE_Hash_Multi_Map_Bucket_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &operator++ ();
@@ -903,7 +903,7 @@ public:
   ACE_Hash_Multi_Map_Reverse_Iterator (ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
                                        int head = 0);
 
-  // = Iteration methods.
+  /// Iteration methods.
   /// Move forward by one element in the set.  Returns 0 when all the
   /// items in the set have been seen, else 1.
   int advance ();
@@ -911,7 +911,7 @@ public:
   /// Dump the state of an object.
   void dump () const;
 
-  // = STL styled iteration, compare, and reference functions.
+  /// STL styled iteration, compare, and reference functions.
 
   /// Prefix reverse.
   ACE_Hash_Multi_Map_Reverse_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &operator++ ();
