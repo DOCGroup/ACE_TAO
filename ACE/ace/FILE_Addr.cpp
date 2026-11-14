@@ -111,7 +111,8 @@ ACE_FILE_Addr::addr_to_string (ACE_TCHAR *s, size_t len) const
 void *
 ACE_FILE_Addr::get_addr () const
 {
-  return (void *)&this->filename_;
+  return const_cast<void *> (
+    static_cast<void const *> (std::addressof (this->filename_)));
 }
 
 void

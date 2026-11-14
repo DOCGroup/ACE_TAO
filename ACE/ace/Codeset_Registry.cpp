@@ -12,6 +12,7 @@
 #include "ace/OS_Memory.h"
 
 #include <cstring>
+#include <memory>
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Codeset_Registry.inl"
@@ -28,7 +29,7 @@ ACE_Codeset_Registry::locale_to_registry_i (const ACE_CString &locale,
   registry_entry const *element {};
   for (size_t i {}; element == nullptr && i < num_registry_entries_; ++i)
     if (std::strcmp (registry_db_[i].loc_name_, locale.c_str ()) == 0)
-      element = &registry_db_[i];
+      element = std::addressof (registry_db_[i]);
   if (element == nullptr)
     return 0;
   codeset_id = element->codeset_id_;
@@ -56,7 +57,7 @@ ACE_Codeset_Registry::registry_to_locale_i (ACE_CDR::ULong codeset_id,
   registry_entry const *element {};
   for (size_t i {}; element == nullptr && i < num_registry_entries_; ++i)
     if (codeset_id == registry_db_[i].codeset_id_)
-      element = &registry_db_[i];
+      element = std::addressof (registry_db_[i]);
   if (element == nullptr)
     return 0;
   locale.set (element->loc_name_);
@@ -84,9 +85,9 @@ ACE_Codeset_Registry::is_compatible_i (ACE_CDR::ULong codeset_id,
   for (size_t i {}; (lhs == nullptr || rhs == nullptr) && i < num_registry_entries_; ++i)
     {
       if (codeset_id == registry_db_[i].codeset_id_)
-        lhs = &registry_db_[i];
+        lhs = std::addressof (registry_db_[i]);
       if (other == registry_db_[i].codeset_id_)
-        rhs = &registry_db_[i];
+        rhs = std::addressof (registry_db_[i]);
     }
 
   if (lhs == nullptr || rhs == nullptr)
