@@ -25,20 +25,17 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class  Object_Group_Factory_i :
+/**
+ * Implements the Load_Balancer::Object_Group_Factory interface.
+ *
+ * This implementation uses two ACE_Hash_Map_Manager objects to store
+ * Group_ID to Object_Group associations for all load balancing groups
+ * created by this factory. One map tracks random groups, and the other
+ * tracks round-robin groups.
+ */
+class Object_Group_Factory_i :
   public virtual POA_Load_Balancer::Object_Group_Factory
 {
-  // = TITLE
-  //    This class implements Load_Balancer::Object_Group_Factory idl
-  //    interface.
-  //
-  // = DESCRIPTION
-  //    This implementation uses two <ACE_Hash_Map_Manager>s
-  //    to store <Group_ID> to <Object_Group> associations for all
-  //    load balancing groups created by this factory (one map keeps
-  //    track of all random groups, and the other keeps track of all
-  //    round robin groups).
-  //
 public:
   Object_Group_Factory_i () = default;
 
@@ -48,8 +45,6 @@ public:
   Object_Group_Factory_i (Object_Group_Factory_i &&) = delete;
   Object_Group_Factory_i &operator= (Object_Group_Factory_i const &) = delete;
   Object_Group_Factory_i &operator= (Object_Group_Factory_i &&) = delete;
-
-  // = Load_Balancer::Object_Group_Factory idl methods.
 
   /**
    * Creates an <Object_Group> that resolves requests for arbitrary
@@ -92,8 +87,8 @@ public:
    */
   Load_Balancer::Group_List * random_groups () override;
 
-  // = Implementation detail methods.
-
+  /// @name Implementation details
+  /// @{
   /**
    * This method is invoked by an <Object_Group> with group id <id> when it
    * is being destroyed.  The method removes entry corresponding to
@@ -104,10 +99,11 @@ public:
    * and <round_robin_groups> methods.
    */
   void remove_group (std::string const &id, bool random);
+  /// @}
 
 private:
-  // = Helper methods.
-
+  /// @name Helper methods
+  /// @{
   /**
    * This function factors out common code in <make_round_robin> and
    * <make_random>.  Creates a random <Object_Group> if <random> parameter is
@@ -123,6 +119,7 @@ private:
    * round robin groups if it is false.
    */
   Load_Balancer::Group_List * list_groups (bool random);
+  /// @}
 
   /// Typedef for ease of use: hash map associating group ids to
   /// <Object_Group> references.
@@ -137,19 +134,16 @@ private:
   HASH_MAP rr_groups_;
 };
 
+/**
+ * Partially implements the Load_Balancer::Object_Group interface.
+ *
+ * resolve() is the only abstract method. Subclasses define it to implement
+ * a load-balancing policy; other methods can be overridden as needed. This
+ * class factors out code shared by Object_Group implementations with
+ * different policies.
+ */
 class Object_Group_i : public virtual POA_Load_Balancer::Object_Group
 {
-  // = TITLE
-  //    This abstract class partially implements
-  //    Load_Balancer::Object_Group idl interface.
-  //
-  // = DESCRIPTION
-  //   <Resolve> is the only abstract method - subclasses should
-  //   define it in order to implement an appropriate load balancing
-  //   policy.  Other methods can be overridden as needed.  This class
-  //   factors out code common to <Object_Group> implementations with
-  //   different load balancing policies.
-  //
 public:
   Object_Group_i (char const * id,
                   Object_Group_Factory_i * my_factory);
@@ -160,8 +154,6 @@ public:
   Object_Group_i (Object_Group_i &&) = delete;
   Object_Group_i &operator= (Object_Group_i const &) = delete;
   Object_Group_i &operator= (Object_Group_i &&) = delete;
-
-  // = Load_Balancer::Object_Group idl methods.
 
   /// Get group's id.
   char * id () override;

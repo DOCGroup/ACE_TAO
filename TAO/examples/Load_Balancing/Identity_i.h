@@ -14,11 +14,10 @@
 
 #include "IdentityS.h"
 
+/// Implements the Identity.idl interface.
 class Identity_i :
   public virtual POA_Identity
 {
-  // = TITLE
-  //    This class implements Identity.idl interface.
 public:
   /// Constructor - initializes the name of this object.
   explicit Identity_i (char const *name);
