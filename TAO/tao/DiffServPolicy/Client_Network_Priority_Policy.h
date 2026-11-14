@@ -72,11 +72,16 @@ public:
 
   void destroy () override;
 
-  // Return the cached policy type for this policy.
+  /// Return the cached policy type for this policy.
   TAO_Cached_Policy_Type _tao_cached_type () const override;
 
-  // Returns the scope at which this policy can be applied. See orbconf.h.
+  /// Returns the scope at which this policy can be applied. See orbconf.h.
   TAO_Policy_Scope _tao_scope () const override;
+
+  TAO_Client_Network_Priority_Policy (TAO_Client_Network_Priority_Policy &&) = delete;
+  TAO_Client_Network_Priority_Policy &operator= (
+    TAO_Client_Network_Priority_Policy const &) = delete;
+  TAO_Client_Network_Priority_Policy &operator= (TAO_Client_Network_Priority_Policy &&) = delete;
 
 private:
   TAO::DiffservCodepoint request_diffserv_codepoint_ {};
