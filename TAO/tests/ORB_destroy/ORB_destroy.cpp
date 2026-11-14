@@ -151,10 +151,19 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   ACE_TCHAR orb_name[] = ACE_TEXT ("ORB_Manager_fini");
   ACE_TCHAR *manager_argv[] = {orb_name, nullptr};
   int manager_argc = 1;
-  if (orb_manager.init (manager_argc, manager_argv) != 0
-      || orb_manager.fini () != 0
-      || orb_manager.fini () != 0)
-    return 1;
+  try
+    {
+      if (orb_manager.init (manager_argc, manager_argv,
+                            "ORB_Manager_fini") != 0
+          || orb_manager.fini () != 0
+          || orb_manager.fini () != 0)
+        return 1;
+    }
+  catch (CORBA::Exception const &ex)
+    {
+      ex._tao_print_exception ("Exception raised");
+      return 1;
+    }
 
   return 0;
 }
