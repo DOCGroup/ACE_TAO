@@ -6,16 +6,10 @@
 
 #include <memory>
 
+/// Helper class for the server implementation.
 class Server_i
 {
-  // = TITLE
-  //     Server_i
-  //
-  // = DESCRIPTION
-  //     Helper class for the server implementation.
-
 public:
-  // = Constructor and destructor.
   Server_i () = default;
   ~Server_i () = default;
 
@@ -24,34 +18,31 @@ public:
   Server_i& operator= (Server_i const&) = delete;
   Server_i& operator= (Server_i&&) = delete;
 
+  /// Initializes the server multicast.
   int init (int &argc, ACE_TCHAR **argv);
-  // Initialize the server multicast.
 
 private:
-  /// Sets the IOR_Multicast class to listen for multicast requests
-  // for this server.
+  /// Sets the IOR_Multicast class to listen for multicast requests for this server.
   int enable_multicast (char const *ior);
 
   /// Parse the command line arguments.
   int parse_args (int argc, ACE_TCHAR *argv[]);
 
 private:
+  /// Number of command-line arguments.
   int argc_ {};
-  // # of arguments on the command line.
 
+  /// The command-line arguments.
   ACE_TCHAR **argv_ {};
-  // arguments from command line.
 
+  /// The ORB.
   CORBA::ORB_var orb_ {};
-  // ORB
 
+  /// The IOR multicast event handler.
   std::unique_ptr<TAO_IOR_Multicast> ior_multicast_ {};
-  // The ior_multicast event handler.
 
+  /// Multicast address to listen for requests for this server.
   CORBA::String_var mcast_address_ {};
-  // Address of the multicast address where to listen for requests for */
-  // the server. */
-
 };
 
 #endif /* SERVER_I_H */

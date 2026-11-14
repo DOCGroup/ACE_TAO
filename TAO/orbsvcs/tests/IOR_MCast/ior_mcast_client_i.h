@@ -3,15 +3,9 @@
 #define IOR_MCAST_CLIENT_I_H
 
 #include "MCastC.h"
+/// Helper class for the client that uses the multicast IOR type to obtain a reference to the server.
 class ior_mcast_Client_i
 {
-  // = TITLE
-  //     ior_mcast_client_i.h
-  //
-  // = DESCRIPTION
-  //      Helper class for the client which uses the mcast ior type to
-  //      get reference to the server.
-
 public:
   ior_mcast_Client_i () = default;
   ~ior_mcast_Client_i () = default;
@@ -21,8 +15,8 @@ public:
   ior_mcast_Client_i& operator= (ior_mcast_Client_i const&) = delete;
   ior_mcast_Client_i& operator= (ior_mcast_Client_i&&) = delete;
 
+  /// Initializes the client communication endpoint with the server.
   int init (int &argc, ACE_TCHAR *argv[]);
-  // Initialize the client communication endpoint with the server.
 };
 
 #endif /* IOR_MCAST_CLIENT_I_H */
