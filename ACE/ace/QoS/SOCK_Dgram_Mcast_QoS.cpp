@@ -192,13 +192,13 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe (ACE_INET_Addr const &mcast_addr,
     return -1;
 
   // The following method call only applies to Win32 currently.
-  int result = this->subscribe_ifs (mcast_addr,
-                                    qos_params,
-                                    net_if,
-                                    protocol_family,
-                                    protocol,
-                                    reuse_addr,
-                                    protocolinfo);
+  int const result = this->subscribe_ifs (mcast_addr,
+                                          qos_params,
+                                          net_if,
+                                          protocol_family,
+                                          protocol,
+                                          reuse_addr,
+                                          protocolinfo);
   // Check for the "short-circuit" return value of 1 (for NT).
   if (result != 0)
     return result;
@@ -231,12 +231,12 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe (ACE_INET_Addr const &mcast_addr,
                               -1);
         }
 
-      ip_mreq ret_mreq;
-      this->make_multicast_ifaddr (&ret_mreq, mcast_addr, net_if);
+      ip_mreq ret_mreq {};
+      this->make_multicast_ifaddr (std::addressof (ret_mreq), mcast_addr, net_if);
 
       // XX This is windows stuff only. fredk
       if (ACE_OS::join_leaf (this->get_handle (),
-                             reinterpret_cast<sockaddr const *> (&ret_mreq.IMR_MULTIADDR.s_addr),
+                             reinterpret_cast<sockaddr const *> (std::addressof (ret_mreq.IMR_MULTIADDR.s_addr)),
                              sizeof ret_mreq.IMR_MULTIADDR.s_addr,
                              qos_params) == ACE_INVALID_HANDLE
           && errno != ENOTSUP)
