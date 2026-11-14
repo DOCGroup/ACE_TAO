@@ -56,12 +56,12 @@ public:
   ACE_Hash_Map_With_Allocator (size_t size,
                                ACE_Allocator *alloc);
 
-  // = The following methods are Proxies to the corresponding methods
-  // in ACE_Hash_Map_Manager.  Each method sets the allocator to
-  // the one specified by the invoking entity, and then calls the
-  // corresponding method in ACE_Hash_Map_Manager to do the
-  // actual work.
-
+  /// @name Proxy operations
+  /// The following methods are proxies to the corresponding methods
+  /// in ACE_Hash_Map_Manager. Each method sets the allocator to the
+  /// one specified by the invoking entity, then calls the corresponding
+  /// method in ACE_Hash_Map_Manager to do the actual work.
+  /// @{
   int bind (const EXT_ID &,
             const INT_ID &,
             ACE_Allocator *alloc);
@@ -88,6 +88,7 @@ public:
             ACE_Allocator *alloc);
 
   int close (ACE_Allocator *alloc);
+  /// @}
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

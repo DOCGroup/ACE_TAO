@@ -64,7 +64,8 @@ public:
   ACE_Cache_Map_Manager &operator= (ACE_Cache_Map_Manager const &) = delete;
   ACE_Cache_Map_Manager &operator= (ACE_Cache_Map_Manager &&) = delete;
 
-  // = Traits.
+  /// @name Traits
+  /// @{
   using key_type = KEY;
   using mapped_type = VALUE;
   using map_type = CMAP_TYPE;
@@ -72,17 +73,22 @@ public:
 
   using ITERATOR_IMPLEMENTATION = ITERATOR_IMPL;
   using REVERSE_ITERATOR_IMPLEMENTATION = REVERSE_ITERATOR_IMPL;
+  /// @}
 
   friend class ACE_Cache_Map_Iterator<KEY, VALUE, ITERATOR_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES>;
   friend class ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_ITERATOR_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES>;
 
-  // = ACE-style iterator typedefs.
+  /// @name ACE-style iterator typedefs
+  /// @{
   using ITERATOR = ACMI<KEY, VALUE, ITERATOR_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES>;
   using REVERSE_ITERATOR = ACMRI<KEY, VALUE, REVERSE_ITERATOR_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES>;
+  /// @}
 
-   // = STL-style iterator typedefs.
+  /// @name STL-style iterator typedefs
+  /// @{
   using iterator = ITERATOR;
   using reverse_iterator = REVERSE_ITERATOR;
+  /// @}
 
   /**
    * The actual value mapped to the key in the map. The <attributes>
@@ -199,8 +205,8 @@ public:
   /// Dumps the state of the object.
   void dump () const;
 
-  // = STL styled iterator factory functions.
-
+  /// @name STL-style iterator factory functions
+  /// @{
   /// Return forward iterator.
   ITERATOR begin ();
   ITERATOR end ();
@@ -208,6 +214,7 @@ public:
   /// Return reverse iterator.
   REVERSE_ITERATOR rbegin ();
   REVERSE_ITERATOR rend ();
+  /// @}
 
   /// The map managed by the Cache_Map_Manager.
   CMAP_TYPE &map ();
@@ -238,24 +245,25 @@ template <class KEY, class VALUE, class IMPLEMENTATION, class CACHING_STRATEGY, 
 class ACE_Cache_Map_Iterator
 {
 public:
-  // = Traits.
+  /// @name Traits
+  /// @{
   /// The actual value mapped to the key in the cache. The <attributes>
   /// are used by the strategy and is transparent to the cache user.
   using value_type = ACE_Reference_Pair<KEY, VALUE>;
   using CACHE_VALUE = std::pair <VALUE, ATTRIBUTES>;
+  /// @}
 
-  // = Initialisation and termination methods.
-
+  /// @name Initialization and termination methods
+  /// @{
   ACE_Cache_Map_Iterator (const IMPLEMENTATION &iterator_impl);
-
 
   ACE_Cache_Map_Iterator (const ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &rhs);
 
   virtual ~ACE_Cache_Map_Iterator () = default;
+  /// @}
 
-  // = Iteration methods.
-
-
+  /// @name Iteration methods
+  /// @{
   ACE_Cache_Map_Iterator <KEY, VALUE, IMPLEMENTATION,
                           CACHING_STRATEGY, ATTRIBUTES> &operator=
       (const ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION,
@@ -268,9 +276,10 @@ public:
   /// Returns a reference to the internal element @c this is pointing
   /// to.
   ACE_Reference_Pair<KEY, VALUE> operator* () const;
+  /// @}
 
-  // = STL styled iteration, compare, and reference functions.
-
+  /// @name STL-style iteration, comparison, and reference functions
+  /// @{
   /// Prefix advance
   ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &operator++ ();
 
@@ -286,6 +295,7 @@ public:
   /// Returns the iterator of the internal map in the custody of the
   /// Cache_Map_Manager.
   IMPLEMENTATION &iterator_implementation ();
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;
@@ -311,24 +321,25 @@ template <class KEY, class VALUE, class REVERSE_IMPLEMENTATION, class CACHING_ST
 class ACE_Cache_Map_Reverse_Iterator
 {
 public:
-  // = Traits.
+  /// @name Traits
+  /// @{
   /// The actual value mapped to the key in the cache. The <attributes>
   /// are used by the strategy and is transparent to the cache user.
   using value_type = ACE_Reference_Pair<KEY, VALUE>;
   using CACHE_VALUE = std::pair <VALUE, ATTRIBUTES>;
+  /// @}
 
-  // = Initialisation and termination methods.
-
+  /// @name Initialization and termination methods
+  /// @{
   ACE_Cache_Map_Reverse_Iterator (const REVERSE_IMPLEMENTATION &iterator_impl);
-
 
   ACE_Cache_Map_Reverse_Iterator (const ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &rhs);
 
   ~ACE_Cache_Map_Reverse_Iterator () = default;
+  /// @}
 
-  // = Iteration methods.
-
-
+  /// @name Iteration methods
+  /// @{
   ACE_Cache_Map_Reverse_Iterator <KEY, VALUE, REVERSE_IMPLEMENTATION,
                                   CACHING_STRATEGY, ATTRIBUTES> &operator=
      (const ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION,
@@ -341,9 +352,10 @@ public:
   /// Returns a reference to the internal element @c this is pointing
   /// to.
   ACE_Reference_Pair<KEY, VALUE> operator* () const;
+  /// @}
 
-  // = STL styled iteration, compare, and reference functions.
-
+  /// @name STL-style iteration, comparison, and reference functions
+  /// @{
   /// Prefix advance
   ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &operator++ ();
 
@@ -359,6 +371,7 @@ public:
   /// Returns the iterator of the internal map in the custody of the
   /// Cache_Map_Manager.
   REVERSE_IMPLEMENTATION &iterator_implementation ();
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;
