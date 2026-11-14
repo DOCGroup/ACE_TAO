@@ -12,6 +12,8 @@
 
 #include "tao/ORB.h"
 #include "tao/PortableServer/PortableServer.h"
+#include "tao/Utils/ORB_Manager.h"
+#include "tao/Utils/Server_Main.h"
 
 #include "ace/Log_Msg.h"
 
@@ -165,6 +167,19 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                           "destroy_poa_and_orb_with_funky_poa_manager",
                                           1, 1, 1);
   ACE_ASSERT (result == 0);
+
+  TAO_ORB_Manager orb_manager;
+  ACE_ASSERT (orb_manager.fini () == 0);
+  ACE_ASSERT (orb_manager.fini () == 0);
+
+  TAO::Utils::Server_Main<PortableServer::ServantBase> const null_name_server (nullptr);
+
+  ACE_TCHAR orb_name[] = ACE_TEXT ("ORB_Manager_fini");
+  ACE_TCHAR *manager_argv[] = {orb_name, nullptr};
+  int manager_argc = 1;
+  ACE_ASSERT (orb_manager.init (manager_argc, manager_argv) == 0);
+  ACE_ASSERT (orb_manager.fini () == 0);
+  ACE_ASSERT (orb_manager.fini () == 0);
 
   return result;
 }
