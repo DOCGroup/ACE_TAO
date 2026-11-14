@@ -61,7 +61,7 @@ TAO_UIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
   TAO_UIOP_Endpoint *endpoint = dynamic_cast<TAO_UIOP_Endpoint *> (endpt);
 
   if (endpoint == nullptr)
-    return 0;
+    return false;
 
   return std::strcmp (this->rendezvous_point (),
                       endpoint->rendezvous_point ()) == 0;

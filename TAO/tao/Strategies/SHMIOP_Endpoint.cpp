@@ -160,7 +160,7 @@ TAO_SHMIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
                                                      (other_endpoint);
 
   if (endpoint == nullptr)
-    return 0;
+    return false;
 
   return
     this->port_ == endpoint->port_

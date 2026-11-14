@@ -290,7 +290,7 @@ TAO_DIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
 
   // Make sure we have a TAO_DIOP_Profile.
   if (op == nullptr)
-    return 0;
+    return false;
 
   // Check endpoints equivalence.
   const TAO_DIOP_Endpoint *other_endp = std::addressof (op->endpoint_);

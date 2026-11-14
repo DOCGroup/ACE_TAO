@@ -176,7 +176,7 @@ TAO_DIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
 
   TAO_DIOP_Endpoint *endpoint = dynamic_cast<TAO_DIOP_Endpoint *> (endpt);
   if (endpoint == nullptr)
-    return 0;
+    return false;
 
   return (this->port () == endpoint->port ()
           && std::strcmp (this->host (), endpoint->host ()) == 0);
