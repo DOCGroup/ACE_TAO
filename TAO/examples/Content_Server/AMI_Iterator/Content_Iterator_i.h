@@ -21,19 +21,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/// Implements the Web_Server::Content_Iterator interface using the Iterator
+/// pattern to reduce memory requirements while retrieving data. The server
+/// returns smaller chunks instead of one large chunk.
 class Content_Iterator_i :
   public virtual POA_Web_Server::Content_Iterator
 {
-  // = TITLE
-  //    Implement the Web_Server::Content_Iterator interface.
-  //
-  // = DESCRIPTION
-  //    This class implements the Iterator pattern to minimize memory
-  //    requirements when retrieving data from a content server.
-  //    Rather than retrieving one large chunk of data, this class
-  //    iterates on the server so that smaller chunks of data are
-  //    retrieved.
-
   friend class Iterator_Factory_i;
 public:
   Content_Iterator_i (Content_Iterator_i const&) = delete;

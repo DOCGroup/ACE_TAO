@@ -24,20 +24,14 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/// Handles asynchronous replies from the Content_Iterator on the server.
+///
+/// After handling each reply, this handler makes another asynchronous request
+/// to the Content_Iterator. This keeps data chunks in order and uses
+/// asynchronous method invocations.
 class Iterator_Handler
   : public virtual POA_Web_Server::AMI_Content_IteratorHandler
 {
-  // = TITLE
-  //    The AMI reply handler for replies from the Content_Iterator.
-  //
-  // = DESCRIPTION
-  //    This class handles all asynchronously received replies from
-  //    the Content_Iterator on the server side.  Once a reply is
-  //    handled, another asynchronous request is made to the
-  //    Content_Iterator.  This ensures that chunks of data are
-  //    received in the proper order, and also takes advantage of
-  //    asyncronous method invocations.
-
   /// Dummy friend class declaration to quiet down a warning.
   friend class Iterator_Handler_Friend;
 
