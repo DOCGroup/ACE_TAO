@@ -837,7 +837,7 @@ ECM_Local_Federation::ECM_Local_Federation (ECM_Federation *federation,
 {
   receiver_ = TAO_ECG_UDP_Receiver::create (true);
 
-  this->mcast_eh_ = std::make_unique<TAO_ECG_Mcast_EH> (&*this->receiver_);
+  this->mcast_eh_ = std::make_unique<TAO_ECG_Mcast_EH> (this->receiver_.in ());
   this->subscription_subset_.resize (this->consumer_types ());
 }
 

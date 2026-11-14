@@ -14,6 +14,7 @@
 
 #include <cstdio>
 #include <cstring>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -205,7 +206,7 @@ TAO_Hash_LogRecordStore::remove_i (LOG_RECORD_STORE_ITER iter)
 {
   size_t const size = log_record_size(iter->item ());
 
-  rec_map_.unbind(&*iter);
+  rec_map_.unbind (std::addressof (*iter));
 
   --this->num_records_;
   this->current_size_ -= size;

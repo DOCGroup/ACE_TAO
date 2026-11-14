@@ -205,7 +205,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       PortableServer::Servant_var<TAO_ECG_UDP_Receiver> receiver;
       receiver = TAO_ECG_UDP_Receiver::create();
 
-      TAO_ECG_Mcast_EH mcast_eh (&*receiver);
+      TAO_ECG_Mcast_EH mcast_eh (receiver.in ());
 
       // The event handler uses the ORB reactor to wait for multicast
       // traffic:

@@ -1749,11 +1749,11 @@ UTL_Scope::match_param (UTL_ScopedName *e)
 
   if (for_new_holder)
     {
-      alias_params = &*for_new_holder;
+      alias_params = std::addressof (*for_new_holder);
     }
   else if (alias_params_value)
     {
-      alias_params = &*alias_params_value;
+      alias_params = std::addressof (*alias_params_value);
     }
 
   for (FE_Utils::T_Param_Info const& param_info : *params)
