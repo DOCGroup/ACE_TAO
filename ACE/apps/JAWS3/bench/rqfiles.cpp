@@ -95,7 +95,7 @@ public:
   int handle_timeout (ACE_Time_Value const &, void const *) override
   {
     if (this->number_of_requests_ > 0)
-      this->number_of_requests_--;
+      --this->number_of_requests_;
 
     int tries = 0;
     int result = 0;

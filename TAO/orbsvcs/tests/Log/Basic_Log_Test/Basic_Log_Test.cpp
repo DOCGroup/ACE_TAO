@@ -465,7 +465,7 @@ BasicLog_Test::parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'd':  // debug flag
-        TAO_debug_level++;
+        ++TAO_debug_level;
         break;
       case '?':
       default:

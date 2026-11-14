@@ -112,7 +112,7 @@ Demux_Stats::calculate_avg_latency ()
               sum_servant += time;
               last_servant_time = time;
               items = items + 1;
-              counter++;
+              ++counter;
             }
         }
 
@@ -124,7 +124,7 @@ Demux_Stats::calculate_avg_latency ()
               sum_dispatch += time;
               last_dispatch_time = time;
               ++items;items++;
-              counter++;
+              ++counter;
             }
         }
 
@@ -137,7 +137,7 @@ Demux_Stats::calculate_avg_latency ()
               sum_dynamic += time;
               last_dynamic_time = time;
               ++items;
-              counter++;
+              ++counter;
             }
         }
 
@@ -149,8 +149,8 @@ Demux_Stats::calculate_avg_latency ()
             {
               sum_linear += time;
               last_linear_time = time;
-              items++;
-              counter++;
+              ++items;
+              ++counter;
             }
         }
 
@@ -162,8 +162,8 @@ Demux_Stats::calculate_avg_latency ()
             {
               sum_perfect += time;
               last_perfect_time = time;
-              items++;
-              counter++;
+              ++items;
+              ++counter;
             }
         }
 
@@ -175,8 +175,8 @@ Demux_Stats::calculate_avg_latency ()
             {
               sum_binary += time;
               last_binary_time = time;
-              items++;
-              counter++;
+              ++items;
+              ++counter;
             }
         }
 
@@ -187,8 +187,8 @@ Demux_Stats::calculate_avg_latency ()
             {
               sum_parse += time;
               last_parse_time = time;
-              items++;
-              counter++;
+              ++items;
+              ++counter;
             }
         }
 

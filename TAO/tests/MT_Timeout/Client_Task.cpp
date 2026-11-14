@@ -148,7 +148,7 @@ Client_Task::one_iteration ()
               // *way* off, this is an error.
               if (difference > 10)
                 {
-                  this->too_big_difference_++;
+                  ++this->too_big_difference_;
                   ACE_ERROR ((LM_ERROR,
                               "(%P|%t) Elapsed time = %d, expected %d\n",
                               elapsed_milliseconds, max_milliseconds));

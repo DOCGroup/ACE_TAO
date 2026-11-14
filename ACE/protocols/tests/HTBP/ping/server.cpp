@@ -127,7 +127,7 @@ ACE_TMAIN (int argc , ACE_TCHAR *argv[])
              && (errno == EWOULDBLOCK || errno == ETIME)
              && retrycount > 0)
         {
-          retrycount--;
+          --retrycount;
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) Server: ")
                       ACE_TEXT ("waiting for inbound data, %d tries left\n"),

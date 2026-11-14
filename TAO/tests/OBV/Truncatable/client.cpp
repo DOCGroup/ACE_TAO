@@ -262,7 +262,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
         if (!caught_expected_exception)
           {
-            fail++;
+            ++fail;
             if (verbose)
               ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("faileded\n")));
           }

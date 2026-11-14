@@ -105,7 +105,7 @@ twoway_server (ACE_SSL_SOCK_Stream &stream)
                     "send_n"));
 
       total_bytes += size_t (r_bytes);
-      message_count++;
+      ++message_count;
 
       delete [] request;
       request = nullptr;
@@ -211,7 +211,7 @@ oneway_server (ACE_SSL_SOCK_Stream &stream)
                     "ACE::write_n"));
 
       total_bytes += size_t (r_bytes);
-      message_count++;
+      ++message_count;
 
       delete [] request;
       request = nullptr;

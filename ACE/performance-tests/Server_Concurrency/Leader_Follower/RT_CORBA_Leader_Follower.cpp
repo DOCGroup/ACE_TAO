@@ -69,7 +69,7 @@ Synchronisers::start_synchronization ()
   {
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
 
-    ready_threads ++;
+    ++ready_threads;
 
     if (debug != DEBUGGING_RANGE::DEBUG_NONE)
       {
@@ -110,7 +110,7 @@ Synchronisers::end_synchronization ()
   {
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
 
-    ready_threads ++;
+    ++ready_threads;
 
     if (debug != DEBUGGING_RANGE::DEBUG_NONE)
       {

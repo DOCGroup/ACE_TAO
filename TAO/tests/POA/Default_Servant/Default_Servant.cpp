@@ -103,7 +103,7 @@ test_reference_to_servant_active_object (PortableServer::POA_ptr root_poa)
 
   PortableServer::ObjectId_var const id =
     root_poa->activate_object (&test);
-  expected_refcount++;
+  ++expected_refcount;
 
   CORBA::Object_var const object =
     root_poa->id_to_reference (id.in ());
@@ -191,7 +191,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Register default servant.
       default_servant_poa->set_servant (&test);
-      expected_refcount++;
+      ++expected_refcount;
 
       // Create dummy id.
       PortableServer::ObjectId_var const id =
@@ -204,7 +204,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Invoke id_to_servant(). Should retrieve default servant.
       PortableServer::ServantBase_var servant =
         default_servant_poa->id_to_servant (id.in ());
-      expected_refcount++;
+      ++expected_refcount;
 
       // Assert correctness.
       ACE_ASSERT (&test == servant.in ());
@@ -212,7 +212,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Invoke reference_to_servant(). Should retrieve default servant.
       servant =
         default_servant_poa->reference_to_servant (object.in ());
-      expected_refcount++;
+      ++expected_refcount;
 
       // Assert correctness.
       ACE_ASSERT (&test == servant.in ());

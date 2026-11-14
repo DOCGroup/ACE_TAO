@@ -55,7 +55,7 @@ Notify_Structured_Push_Consumer::push_structured_event (
 {
   ACE_DEBUG ((LM_DEBUG, "-"));
 
-  this->count_++;
+  ++this->count_;
   if (this->count_ > this->max_events_per_consumer_ + 1)
     {
       this->client_.consumer_done (this);

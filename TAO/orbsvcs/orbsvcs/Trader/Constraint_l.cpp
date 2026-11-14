@@ -2182,7 +2182,7 @@ extract_string(const char* total)
         prev_slash = 0;
 
       str[ctr++] = *tmp;
-      tmp++;
+      ++tmp;
     }
 
   str[ctr - 1] = '\0';
@@ -2204,7 +2204,7 @@ trader_strtoull(const char* s, unsigned int base)
 
   if (*s == '+')
     {
-      s++;
+      ++s;
     }
 
   if ((base == 0 || base == 16) &&
@@ -2215,7 +2215,7 @@ trader_strtoull(const char* s, unsigned int base)
     }
   else if ((base == 0 || base == 8) && *s == '0')
     {
-      s++;
+      ++s;
       base = 8;
     }
   else
@@ -2269,7 +2269,7 @@ trader_strtoll(const char* s, unsigned int base)
   if (*s == '-')
     {
       negative = true;
-      s++;
+      ++s;
     }
 
   // Convert the raw text into a CORBA::LongLong

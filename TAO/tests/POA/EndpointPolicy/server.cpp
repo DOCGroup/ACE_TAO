@@ -78,7 +78,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
       }
     else if (ACE_OS::strstr (argv[c], ACE_TEXT ("-ORB")) == argv[c])
       {
-        c++;
+        ++c;
         continue;
       }
     else

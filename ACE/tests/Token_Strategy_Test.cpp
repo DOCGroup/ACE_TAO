@@ -183,7 +183,7 @@ Token_Strategy_Test::svc ()
                 {
                   ACE_DEBUG ((LM_ERROR,
                               ACE_TEXT (" (tid = %t) LIFO: mean greater than std_dev.\n")));
-                  this->errors_++;
+                  ++this->errors_;
                 }
               if (this->strategy_ == ACE_Token::FIFO &&
                   (mean.whole () < std_dev.whole () &&
@@ -191,7 +191,7 @@ Token_Strategy_Test::svc ()
                 {
                   ACE_DEBUG ((LM_ERROR,
                               ACE_TEXT (" (tid = %t) FIFO: mean less than std_dev.\n")));
-                  this->errors_++;
+                  ++this->errors_;
                 }
             }
         }

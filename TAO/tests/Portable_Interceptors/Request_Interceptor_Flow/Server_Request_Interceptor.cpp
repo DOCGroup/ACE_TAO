@@ -26,7 +26,7 @@ Server_Request_Interceptor::receive_request_service_contexts (
 
   if (std::strcmp ("SERVER B", this->name_.in ()) == 0)
     {
-      this->scenario_++;
+      ++this->scenario_;
 
       switch (this->scenario_)
         {
@@ -49,7 +49,7 @@ Server_Request_Interceptor::receive_request_service_contexts (
   ACE_DEBUG ((LM_DEBUG,
               "\n"));
 
-  this->starting_interception_point_count_++;
+  ++this->starting_interception_point_count_;
 }
 
 void
@@ -77,7 +77,7 @@ Server_Request_Interceptor::send_reply (
   if (!server_side)
     return;  // Don't continue if the client side is being tested.
 
-  this->ending_interception_point_count_++;
+  ++this->ending_interception_point_count_;
 
   ACE_DEBUG ((LM_INFO,
               "%C.send_reply",
@@ -130,7 +130,7 @@ Server_Request_Interceptor::send_exception (
   if (!server_side)
     return;  // Don't continue if the client side is being tested.
 
-  this->ending_interception_point_count_++;
+  ++this->ending_interception_point_count_;
 
   ACE_DEBUG ((LM_INFO,
               "%C.send_exception",
@@ -205,7 +205,7 @@ Server_Request_Interceptor::send_other (
   if (!server_side)
     return;  // Don't continue if the client side is being tested.
 
-  this->ending_interception_point_count_++;
+  ++this->ending_interception_point_count_;
 
   ACE_DEBUG ((LM_INFO,
               "%C.send_other",

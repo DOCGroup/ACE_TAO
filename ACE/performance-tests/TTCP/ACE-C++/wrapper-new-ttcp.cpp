@@ -928,6 +928,6 @@ psecs (long l, char *cp)
 int
 Nwrite (ACE_SOCK_Stream &s, void *buf, int count)
 {
-  numCalls++;
+  ++numCalls;
   return s.send (buf, count);
 }

@@ -93,7 +93,7 @@ MyMain::MyMain (int argc, ACE_TCHAR *argv[])
   : s_init_ (false)
   , shutdown_ (false)
 {
-  argc--;
+  --argc;
   for (int p = 1; p <= argc; p++)
   {
     if (ACE_OS::strcmp (argv[p], ACE_TEXT ("-?")) == 0)
@@ -106,7 +106,7 @@ MyMain::MyMain (int argc, ACE_TCHAR *argv[])
     {
       ACE_TCHAR const *s_args = (((p + 1) <= argc) ? argv[p + 1] : nullptr);
       s_init_ = this->init_server (s_args);
-      p++;
+      ++p;
     }
     else if (ACE_OS::strcasecmp (argv[p], ACE_TEXT ("-c")) == 0)
     {
@@ -115,7 +115,7 @@ MyMain::MyMain (int argc, ACE_TCHAR *argv[])
       {
         this->init_client (s_args);
       }
-      p++;
+      ++p;
     }
   }
 }

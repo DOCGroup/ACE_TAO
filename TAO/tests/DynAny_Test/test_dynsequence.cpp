@@ -181,7 +181,7 @@ Test_DynSequence::run_test ()
           if (!compare_string_sequence_elements(i,
                                                 elements, out_elems.in()))
           {
-              error_count_++;
+              ++error_count_;
           }
 
           // To show that calling destroy() on a component does
@@ -212,7 +212,7 @@ Test_DynSequence::run_test ()
                          "  Mismatch after replacing through in/out.\n"
                          "  expected = %C, got = %C\n",
                          replacement, new_str.in()));
-              this->error_count_++;
+              ++this->error_count_;
           }
       }
 
@@ -259,7 +259,7 @@ Test_DynSequence::run_test ()
           LM_DEBUG,
           ACE_TEXT ("DynSequence::_narrow() returned nil\n")
           ));
-        this->error_count_++;
+        ++this->error_count_;
       }
 
       ACE_DEBUG ((
@@ -280,7 +280,7 @@ Test_DynSequence::run_test ()
           LM_DEBUG,
           ACE_TEXT ("DynSequence::_narrow() returned nil\n")
           ));
-        this->error_count_++;
+        ++this->error_count_;
       }
 
       ts[0] = CORBA::string_dup (data.m_string1);

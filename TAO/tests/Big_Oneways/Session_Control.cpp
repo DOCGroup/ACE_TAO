@@ -47,7 +47,7 @@ Session_Control::session_finished (CORBA::Boolean success)
   if (!success)
     this->success_ = false;
 
-  this->session_count_--;
+  --this->session_count_;
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Session_Control::session_finished, "
               "%d sessions to go\n",

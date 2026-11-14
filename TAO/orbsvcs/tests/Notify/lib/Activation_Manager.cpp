@@ -97,7 +97,7 @@ TAO_Notify_Tests_Activation_Manager::_register (TAO_Notify_Tests_Periodic_Suppli
   // Designate application manager as the callback object.
   supplier->task_callback (this);
 
-  active_suppliers_++;
+  ++active_suppliers_;
 }
 
 void
@@ -114,7 +114,7 @@ TAO_Notify_Tests_Activation_Manager::_register (TAO_Notify_Tests_Periodic_Consum
   // Designate application manager as the callback object.
   consumer->task_callback (this);
 
-  active_consumers_++;
+  ++active_consumers_;
 }
 
 void

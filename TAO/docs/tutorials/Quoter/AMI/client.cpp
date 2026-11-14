@@ -57,7 +57,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
         }
 
         stock->sendc_get_price_and_names (handler.in ());
-        request_count++;
+        ++request_count;
       }
       catch (Quoter::Invalid_Stock_Symbol const &) {
         cerr << "Invalid stock symbol <"

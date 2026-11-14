@@ -44,13 +44,13 @@ Chatter::svc ()
      {
        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, request_reply_count_mutex_, -1);
        nrq= nrequests ();
-       nrequests_++;
+       ++nrequests_;
      }
      ACE_DEBUG((LM_INFO,"(%P|%t) Chatter[%d] started for %s\n", nrq, ior_));
      intf_var->ping();
      {
        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, request_reply_count_mutex_, -1);
-       nreplies_++;
+       ++nreplies_;
      }
 
      ACE_DEBUG((LM_INFO,"(%P|%t) Chatter[%d,%d,%d] completed for %s\n", nrq, nrequests_, nreplies_, ior_));

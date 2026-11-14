@@ -77,7 +77,7 @@ CosNaming_Client::parse_args ()
     switch (c)
       {
       case 'd':  // debug flag
-        TAO_debug_level++;
+        ++TAO_debug_level;
         break;
       case 's':
         if (this->test_ == nullptr)

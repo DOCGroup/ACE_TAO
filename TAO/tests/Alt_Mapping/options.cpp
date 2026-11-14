@@ -38,7 +38,7 @@ Options::parse_args (int argc, ACE_TCHAR **argv)
     switch (c)
       {
       case 'd':  // debug flag
-        TAO_debug_level++;
+        ++TAO_debug_level;
         this->debug_ = true;
         break;
 

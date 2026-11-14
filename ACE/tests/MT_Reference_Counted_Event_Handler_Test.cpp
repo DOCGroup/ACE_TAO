@@ -483,7 +483,7 @@ Receiver::handle_input (ACE_HANDLE handle)
       if (this->thr_count () == 0 &&
           this->nested_upcalls_)
         {
-          this->nested_upcalls_level_++;
+          ++this->nested_upcalls_level_;
 
           if (debug)
             ACE_DEBUG ((LM_DEBUG,
@@ -494,7 +494,7 @@ Receiver::handle_input (ACE_HANDLE handle)
             (global_event_loop_thread_variable != nullptr))
             global_event_loop_thread_variable->svc ();
 
-          this->nested_upcalls_level_--;
+          --this->nested_upcalls_level_;
           return 0;
         }
       else

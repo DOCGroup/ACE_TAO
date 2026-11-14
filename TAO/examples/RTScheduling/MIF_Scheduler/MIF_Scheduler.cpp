@@ -104,7 +104,7 @@ void
 MIF_Scheduler::incr_thr_count ()
 {
   lock_.acquire ();
-  wait_++;
+  ++wait_;
   lock_.release ();
 }
 
@@ -125,7 +125,7 @@ MIF_Scheduler::wait ()
 void
 MIF_Scheduler::resume_main ()
 {
-  wait_--;
+  --wait_;
   wait_cond_.signal ();
 }
 

@@ -477,12 +477,12 @@ ACE_HTTP_Addr::string_to_addr (const ACE_TCHAR *address)
     {
       // terminate the host:port substring
       path_start[0] = '\0';
-      path_start++;
+      ++path_start;
       ACE_TCHAR *query_start = ACE_OS::strchr (path_start, '?');
       if (query_start != nullptr)
         {
           query_start[0] = '\0';
-          query_start++;
+          ++query_start;
           ACE_ALLOCATOR_RETURN (this->query_,
                                 ACE_OS::strdup (query_start),
                                 -1);
@@ -498,7 +498,7 @@ ACE_HTTP_Addr::string_to_addr (const ACE_TCHAR *address)
     {
       // terminate the ipaddr.
       port_start[0] = '\0';
-      port_start++;
+      ++port_start;
       this->port_number_ = ACE_OS::atoi (port_start);
     }
 
@@ -756,7 +756,7 @@ ACE_FTP_Addr::string_to_addr (const ACE_TCHAR *address)
     {
       // terminate the host:port substring
       path_start[0] = '\0';
-      path_start++;
+      ++path_start;
       ACE_ALLOCATOR_RETURN (this->path_, ACE_OS::strdup (path_start), -1);
     }
 
@@ -764,7 +764,7 @@ ACE_FTP_Addr::string_to_addr (const ACE_TCHAR *address)
   if (host_start != nullptr)
     {
       host_start[0] = '\0';
-      host_start++;
+      ++host_start;
       ACE_ALLOCATOR_RETURN (this->hostname_,
                             ACE_OS::strdup (host_start),
                             -1);
@@ -772,7 +772,7 @@ ACE_FTP_Addr::string_to_addr (const ACE_TCHAR *address)
       if (pass_start != nullptr)
         {
           pass_start[0] = '\0';
-          pass_start++;
+          ++pass_start;
           ACE_ALLOCATOR_RETURN (this->password_,
                                 ACE_OS::strdup (pass_start),
                                 -1);
@@ -944,12 +944,12 @@ ACE_Mailto_Addr::string_to_addr (const ACE_TCHAR *address)
     {
       // terminate the host:port substring
       host_start[0] = '\0';
-      host_start++;
+      ++host_start;
       ACE_TCHAR *headers_start = ACE_OS::strchr (host_start, '?');
       if (headers_start != nullptr)
         {
           headers_start[0] = '\0';
-          headers_start++;
+          ++headers_start;
           ACE_ALLOCATOR_RETURN (this->headers_,
                                 ACE_OS::strdup (headers_start),
                                 -1);

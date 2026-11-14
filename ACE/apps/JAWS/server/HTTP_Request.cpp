@@ -478,7 +478,7 @@ HTTP_Request::cgi_in_path (char *uri_string, char *&extra_path_info)
 
                 // move past the executable name
                 do
-                  extra_path_info++;
+                  ++extra_path_info;
                 while (*extra_path_info != '/'
                        && *extra_path_info != '?'
                        && *extra_path_info != '\0');
@@ -561,10 +561,10 @@ HTTP_Request::cgi_args_and_env (char *&extra_path_info)
             if (*ptr == '+')
               *ptr = ' ';
             else if (*ptr == '&' || *ptr == '=')
-              count++;
+              ++count;
           while (*++ptr);
 
-          count++;
+          ++count;
 
           if (std::strchr (cgi_question, '='))
             {
@@ -607,7 +607,7 @@ HTTP_Request::path (const char *uri_string)
 
   if (*file_name == '/')
     {
-      file_name++;
+      ++file_name;
       if (*file_name == '~')
         {
           char *ptr = buf;

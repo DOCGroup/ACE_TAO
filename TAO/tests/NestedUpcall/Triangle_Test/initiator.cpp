@@ -58,7 +58,7 @@ Initiator_Server::parse_args ()
     switch (c)
       {
       case 'd':  // debug flag.
-        TAO_debug_level++;
+        ++TAO_debug_level;
         break;
       case 'f': // read the IOR from the file.
         if (this->read_ior (get_opts.opt_arg (), this->object_A_key_) < 0)

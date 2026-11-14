@@ -258,7 +258,7 @@ Task::svc ()
 
           ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
 
-          this->remaining_messages_--;
+          --this->remaining_messages_;
           if (this->remaining_messages_ == 0)
             return 0;
         }

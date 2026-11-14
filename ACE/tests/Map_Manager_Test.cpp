@@ -102,7 +102,7 @@ test_cache_map_manager (size_t table_size,
                         k,
                         (*iter).first (),
                         (*iter).second ()));
-            k--;
+            --k;
           }
 
         ACE_DEBUG ((LM_DEBUG,
@@ -148,7 +148,7 @@ test_cache_map_manager (size_t table_size,
                         k,
                         (*iter).first (),
                         (*iter).second ()));
-            k--;
+            --k;
           }
 
         ACE_DEBUG ((LM_DEBUG,
@@ -230,7 +230,7 @@ test_hash_cache_map_manager (size_t table_size,
                         k,
                         (*iter).first (),
                         (*iter).second ()));
-            k--;
+            --k;
           }
 
         ACE_DEBUG ((LM_DEBUG,
@@ -276,7 +276,7 @@ test_hash_cache_map_manager (size_t table_size,
                         k,
                         (*iter).first (),
                         (*iter).second ()));
-            k--;
+            --k;
           }
 
         ACE_DEBUG ((LM_DEBUG,
@@ -368,7 +368,7 @@ test_active_map_manager (size_t table_size,
                         entry.ext_id_.slot_index (),
                         entry.ext_id_.slot_generation (),
                         entry.int_id_));
-            k--;
+            --k;
           }
 
         ACE_DEBUG ((LM_DEBUG,
@@ -468,7 +468,7 @@ test_hash_map_manager (size_t table_size,
                         k,
                         entry.ext_id_,
                         entry.int_id_));
-            k--;
+            --k;
           }
 
         ACE_DEBUG ((LM_DEBUG,
@@ -489,7 +489,7 @@ test_hash_map_manager (size_t table_size,
                         k,
                         entry->ext_id_,
                         entry->int_id_));
-            k--;
+            --k;
           }
 
         ACE_DEBUG ((LM_DEBUG,
@@ -554,7 +554,7 @@ test_hash_map_manager (size_t table_size,
                         k,
                         entry.ext_id_,
                         entry.int_id_));
-            k--;
+            --k;
           }
 
         ACE_DEBUG ((LM_DEBUG,
@@ -575,7 +575,7 @@ test_hash_map_manager (size_t table_size,
                         k,
                         entry->ext_id_,
                         entry->int_id_));
-            k--;
+            --k;
           }
 
         ACE_DEBUG ((LM_DEBUG,
@@ -673,7 +673,7 @@ test_map_manager (size_t table_size,
                         k,
                         entry.ext_id_,
                         entry.int_id_));
-            k--;
+            --k;
           }
 
         ACE_DEBUG ((LM_DEBUG,
@@ -694,7 +694,7 @@ test_map_manager (size_t table_size,
                         k,
                         entry->ext_id_,
                         entry->int_id_));
-            k--;
+            --k;
           }
 
         ACE_DEBUG ((LM_DEBUG,
@@ -759,7 +759,7 @@ test_map_manager (size_t table_size,
                         k,
                         entry.ext_id_,
                         entry.int_id_));
-            k--;
+            --k;
           }
 
         ACE_DEBUG ((LM_DEBUG,
@@ -780,7 +780,7 @@ test_map_manager (size_t table_size,
                         k,
                         entry->ext_id_,
                         entry->int_id_));
-            k--;
+            --k;
           }
 
         ACE_DEBUG ((LM_DEBUG,

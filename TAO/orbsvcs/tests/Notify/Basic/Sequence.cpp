@@ -264,7 +264,7 @@ Sequence::run_test ()
       qos[0].value <<= (CORBA::Short)prio++;
 
       batch[batch_index] = event;
-      batch_index++;
+      ++batch_index;
 
       if (batch_index == this->supplier_batch_size_)
         {

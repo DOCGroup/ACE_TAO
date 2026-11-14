@@ -57,7 +57,7 @@ consumer (void *args)
       if (result == -1)
         break;
 
-      local_count++;
+      ++local_count;
 
       size_t length = mb->length ();
 

@@ -22,7 +22,7 @@ Load_Balancing_Service::parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'd':  // debug flag.
-        TAO_debug_level++;
+        ++TAO_debug_level;
         break;
       case 'o': // outputs object ior to the specified file.
         this->ior_output_file_.reset (ACE_OS::fopen (get_opts.opt_arg (), "w"));

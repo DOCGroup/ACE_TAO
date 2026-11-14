@@ -46,7 +46,7 @@ MessageLog::register_message_send (int const message_num)
     }
   else
     {
-      this->overdose_sent_++;
+      ++this->overdose_sent_;
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -64,7 +64,7 @@ MessageLog::register_message_recv (int const message_num)
     }
   else
     {
-      this->overdose_received_++;
+      ++this->overdose_received_;
     }
 
   ACE_DEBUG ((LM_DEBUG,

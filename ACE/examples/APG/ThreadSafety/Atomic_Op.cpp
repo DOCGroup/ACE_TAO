@@ -41,7 +41,7 @@ public:
 
         ++item_no;
         buf_[in_.value () % Q_SIZE] = item_no.value ();
-        in_++;
+        ++in_;
 
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Produced %d\n"),
                     item_no.value ()));
@@ -86,7 +86,7 @@ public:
         while (in_.value () - out_.value () == 0);
 
         item = buf_[out_.value () % Q_SIZE];
-        out_++;
+        ++out_;
 
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Consumed %d\n"),
                     item));

@@ -37,7 +37,7 @@ Waiter_Task::svc()
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t|grp_id=%d) waiting for thread cancellation.\n"), this->grp_id ()));
 
-  run_count++;
+  ++run_count;
 
   // wait until canceled
   while (!ACE_Task_Base::thr_mgr ()->testcancel (ACE_OS::thr_self ()))
@@ -46,7 +46,7 @@ Waiter_Task::svc()
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t|grp_id=%d) thread cancelled.\n"), this->grp_id ()));
 
-  run_count--;
+  --run_count;
 
   return 0;
 }

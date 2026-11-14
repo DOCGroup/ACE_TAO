@@ -103,7 +103,7 @@ string normalizePath (string const &dir, char delim, bool toLower)
                   // No action.
                 }
 
-              k--;
+              --k;
 
               for (; buffer[k] != delim; k--)
                 {
@@ -145,7 +145,7 @@ string normalizePath (string const &dir, char delim, bool toLower)
 
   if (buffer[j - 1] == delim)
     {
-      j--;
+      --j;
     }
 
   buffer[j] ='\0';

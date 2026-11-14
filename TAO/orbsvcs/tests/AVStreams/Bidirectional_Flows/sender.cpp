@@ -121,7 +121,7 @@ Sender::parse_args (int argc,
           this->options_.frame_rate = ACE_OS::atoi (opts.opt_arg ());
           break;
         case 'd':
-          TAO_debug_level++;
+          ++TAO_debug_level;
           break;
         default:
           ACE_DEBUG ((LM_DEBUG, "Unknown Option\n"));

@@ -13,7 +13,7 @@ PP_Test_Server::parse_args (int argc, ACE_TCHAR **argv)
     switch (c)
       {
       case 'd':  // debug flag.
-        TAO_debug_level++;
+        ++TAO_debug_level;
         break;
       case 'o': // output the IOR to a file.
         this->ior_output_file_name_ = get_opts.opt_arg ();

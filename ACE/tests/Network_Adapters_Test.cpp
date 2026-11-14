@@ -803,7 +803,7 @@ int
 Repeats_Handler::handle_timeout (ACE_Time_Value const &,
                                  void const *)
 {
-  this->counter_++ ;
+  ++this->counter_;
   if (one_button_test && this->counter_ > 3)
     {
       ACE_OS::raise (SIGINT);

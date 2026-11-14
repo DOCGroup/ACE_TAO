@@ -32,7 +32,7 @@ parse_args (int argc, ACE_TCHAR *argv[], std::basic_string<ACE_TCHAR> &ior_outpu
         ior_output_file = get_opts.opt_arg ();
         break;
       case 'd':
-        TAO_debug_level++;
+        ++TAO_debug_level;
         break;
       case '?':
       default:

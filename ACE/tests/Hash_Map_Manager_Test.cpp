@@ -221,7 +221,7 @@ run_test ()
                     i,
                     entry->ext_id_,
                     entry->int_id_));
-        i++;
+        ++i;
       }
   }
 
@@ -239,7 +239,7 @@ run_test ()
                     i,
                     entry->ext_id_,
                     entry->int_id_));
-        i++;
+        ++i;
       }
   }
 
@@ -273,7 +273,7 @@ run_test ()
                     i,
                     entry->ext_id_,
                     entry->int_id_));
-        i++;
+        ++i;
       }
   }
 

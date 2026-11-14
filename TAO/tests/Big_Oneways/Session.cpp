@@ -58,7 +58,7 @@ Session::svc ()
 
       {
         ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
-        this->active_thread_count_--;
+        --this->active_thread_count_;
         if (this->more_work ())
           {
             return 0;
@@ -119,7 +119,7 @@ Session::start (const Test::Session_List &other_sessions)
             if (this->task_.activate (THR_NEW_LWP | THR_JOINABLE, 1, 1) != -1)
               {
                 this->running_ = true;
-                this->active_thread_count_++;
+                ++this->active_thread_count_;
               }
           }
         catch (CORBA::Exception const &ex)

@@ -84,7 +84,7 @@ CC_Client::parse_args ()
         this->script_file_ = ACE_OS::strdup (get_opts.opt_arg ());
         break;
       case 'd':  // debug flag
-        TAO_debug_level++;
+        ++TAO_debug_level;
         break;
       case 'e':  // debug flag
         run_extended_tests_ = true;
@@ -239,7 +239,7 @@ CC_Client::check_extended_test_params(ACE_TCHAR *params)
           if((*cp)==';')
             {
               state = TAO_ARG;
-              no_of_params++;
+              ++no_of_params;
             }
           else
             if(!ACE_OS::ace_isdigit(*cp))
@@ -249,7 +249,7 @@ CC_Client::check_extended_test_params(ACE_TCHAR *params)
         case TAO_ARG:
           if((*cp)==';')
             {
-              no_of_params++;
+              ++no_of_params;
             }
           break;
 
@@ -261,7 +261,7 @@ CC_Client::check_extended_test_params(ACE_TCHAR *params)
           ACE_ERROR_RETURN((LM_ERROR,
                             "CC_Client::check_extended_test_params\n"), -1);
         }
-      cp++;
+      ++cp;
     }
   if (state==TAO_ERROR) // there was only one character given and it was wrong
     return -1;

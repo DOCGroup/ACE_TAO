@@ -9,7 +9,7 @@ Callback_i::~Callback_i () = default;
 void
 Callback_i::test_method()
 {
-  this->num_callbacks_ ++;
+  ++this->num_callbacks_;
 }
 
 

@@ -350,7 +350,7 @@ run_liveness_test (CORBA::ORB_ptr orb,
     {
       ami_buffering->sendc_receive_data (reply_handler,
                                          payload);
-      send_count++;
+      ++send_count;
 
       CORBA::ULong const receive_count =
         ami_buffering_admin->request_count ();
@@ -450,7 +450,7 @@ run_message_count (CORBA::ORB_ptr orb,
         {
           ami_buffering->sendc_receive_data (reply_handler.in (),
                                              payload);
-          send_count++;
+          ++send_count;
 
           CORBA::ULong const receive_count =
             ami_buffering_admin->request_count ();
@@ -691,7 +691,7 @@ run_timeout_reactive (CORBA::ORB_ptr orb,
         {
           ami_buffering->sendc_receive_data (reply_handler.in (),
                                              payload);
-          send_count++;
+          ++send_count;
         }
       while (1)
         {

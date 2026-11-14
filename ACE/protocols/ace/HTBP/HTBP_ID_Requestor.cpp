@@ -140,7 +140,7 @@ ACE::HTBP::ID_Requestor::get_HTID ()
       if (start == ACE_CString::npos)
         start = 0;
       else
-        start++;
+        ++start;
       ACE::HTBP::ID_Requestor::htid_ = ACE_TEXT_CHAR_TO_TCHAR(answer.substr (start).c_str());
       htid = ACE::HTBP::ID_Requestor::htid_.rep();
     }

@@ -14,7 +14,7 @@ Airplane_Client_i::parse_args ()
     switch (c)
       {
       case 'd':  // debug flag
-        TAO_debug_level++;
+        ++TAO_debug_level;
         break;
       case 'n':  // loop count
         this->loop_count_ = static_cast<size_t> (ACE_OS::atoi (get_opts.opt_arg ()));

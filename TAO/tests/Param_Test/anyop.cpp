@@ -38,7 +38,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           switch (opt)
             {
             case 'd':
-              TAO_debug_level++;
+              ++TAO_debug_level;
               break;
             case 'n':
               n = ACE_OS::atoi (get_opt.opt_arg ());

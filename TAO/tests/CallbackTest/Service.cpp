@@ -61,7 +61,7 @@ Service::call_are_you_there (Test::Callback_ptr callback)
         }
       catch (CORBA::Exception const &)
         {
-          exception_count++;
+          ++exception_count;
         }
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Service, answer = %C\n", outstr.in ()));
@@ -84,7 +84,7 @@ Service::call_test_oneway (Test::Callback_ptr callback)
         }
       catch (CORBA::Exception const &)
         {
-          exception_count++;
+          ++exception_count;
         }
     }
   return exception_count;

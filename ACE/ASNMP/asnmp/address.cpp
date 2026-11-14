@@ -849,7 +849,7 @@ int UdpAddress::parse_address( const char *inaddr)
 
   if (tmp != nullptr) {
     *tmp=0;   // null terminator
-    tmp++;
+    ++tmp;
     port = ACE_OS::atoi( tmp);
   }
 
@@ -1325,7 +1325,7 @@ int IpxAddress::parse_address( const char *inaddr)
   while( *tmp != 0)
     if (((*tmp >= '0') && (*tmp <= '9'))||   // good 0-9
         ((*tmp >= 'a') && (*tmp <= 'f')))    // or a-f
-      tmp++;
+      ++tmp;
     else
       return 0;
 
@@ -1334,7 +1334,7 @@ int IpxAddress::parse_address( const char *inaddr)
   while( *tmp != 0)
     if (((*tmp >= '0') && (*tmp <= '9'))||   // good 0-9
         ((*tmp >= 'a') && (*tmp <= 'f')))    // or a-f
-      tmp++;
+      ++tmp;
     else
       return 0;
 
@@ -1346,7 +1346,7 @@ int IpxAddress::parse_address( const char *inaddr)
     *tmp = *tmp - (char unsigned )'0';
   else
     *tmp = *tmp - (char unsigned) 'a' + (char unsigned) 10;
-  tmp++;
+  ++tmp;
   }
 
   // network id portion
@@ -1362,7 +1362,7 @@ int IpxAddress::parse_address( const char *inaddr)
     *tmp = *tmp - (char unsigned) '0';
   else
     *tmp = *tmp - (char unsigned) 'a'+ (char unsigned) 10;
-  tmp++;
+  ++tmp;
   }
 
   address_buffer[4] = (str2[0]*16)  + str2[1];
@@ -1646,7 +1646,7 @@ int IpxSockAddress::parse_address( const char *inaddr)
    if (tmp != nullptr)
    {
      *tmp=0;   // null terminator
-     tmp++;
+     ++tmp;
      socketid = ACE_OS::atoi( tmp);
    }
    set_socket(socketid);
@@ -1840,9 +1840,9 @@ int MacAddress::parse_address( const char *inaddr)
      if (*tmp != ':')
      {
         temp[i] = *tmp;
-        i++;
+        ++i;
      }
-     tmp++;
+     ++tmp;
   }
   temp[i] = 0;
 
@@ -1855,7 +1855,7 @@ int MacAddress::parse_address( const char *inaddr)
   while( *tmp != 0)
     if (((*tmp >= '0') && (*tmp <= '9'))||   // good 0-9
         ((*tmp >= 'a') && (*tmp <= 'f')))    // or a-f
-      tmp++;
+      ++tmp;
     else
       return 0;
 
@@ -1867,7 +1867,7 @@ int MacAddress::parse_address( const char *inaddr)
     *tmp = *tmp - (char unsigned )'0';
   else
     *tmp = *tmp - (char unsigned) 'a' + (char unsigned) 10;
-  tmp++;
+  ++tmp;
   }
 
   address_buffer[0] =  (temp[0]*16) + temp[1];

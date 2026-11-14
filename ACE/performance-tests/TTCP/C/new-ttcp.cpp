@@ -465,7 +465,7 @@ main (int argc, char *argv[])
                                "%p only sent %d of %d bytes on call %d\n",
                                "ttcp", send_result, total_msg_len, numCalls + 1),
                               -1);
-          numCalls++;
+          ++numCalls;
           nbytes += data_buf_len;
 
           if (recv_n ((char *) &ack, sizeof ack) != sizeof ack)
@@ -511,7 +511,7 @@ main (int argc, char *argv[])
           if (cnt != message_buf->size_)
             ACE_ERROR_RETURN ((LM_ERROR, "recv data failed\n"), -1);
 
-          numCalls++;
+          ++numCalls;
           nbytes += cnt;
 
           if (send_n ((char *) &cnt, sizeof cnt) != sizeof cnt)
@@ -643,7 +643,7 @@ pattern (register char *cp, register int cnt)
   while (cnt-- > 0)
   {
     while (!isprint ((c & 0x7F)))
-      c++;
+      ++c;
     *cp++ = (c++ & 0x7F);
   }
 }
@@ -917,7 +917,7 @@ psecs (long l, register char *cp)
 int
 Nread (ACE_SOCK_Stream &s, void *buf, int count)
 {
-  numCalls++;
+  ++numCalls;
   return (s.recv (buf, count));
 }
 
@@ -927,7 +927,7 @@ Nread (ACE_SOCK_Stream &s, void *buf, int count)
 int
 Nwrite (ACE_SOCK_Stream &s, void *buf, int count)
 {
-  numCalls++;
+  ++numCalls;
   return s.send (buf, count);
 }
 
@@ -959,7 +959,7 @@ mread (int fd, register char *bufp, unsigned n)
   do
     {
       nread = read (fd, bufp, n - count);
-      numCalls++;
+      ++numCalls;
       if (nread < 0)
       {
         perror ("ttcp_mread");

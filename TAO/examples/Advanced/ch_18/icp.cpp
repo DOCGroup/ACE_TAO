@@ -175,7 +175,7 @@ actual_temp (StateMap::const_iterator pos)
     StateMap::const_iterator where = std::find_if (dstate.cbegin (), dstate.cend (),
                                                   ThermostatInSameRoom (pos));
     while (where != dstate.cend ()) {
-        count++;
+        ++count;
         sum += where->second.nominal_temp;
         where = std::find_if (++where, dstate.cend (), ThermostatInSameRoom (pos));
     }

@@ -200,7 +200,7 @@ Client::handle_timeout (const ACE_Time_Value &, const void *)
                              ACE_TEXT ("in ACE_Dev_Poll_Reactor")),
                             -1);
         }
-      this->call_count_++;
+      ++this->call_count_;
       return 0;
     }
   else

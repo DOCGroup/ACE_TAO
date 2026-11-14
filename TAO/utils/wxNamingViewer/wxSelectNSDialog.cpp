@@ -130,7 +130,7 @@ WxSelectNSDialog::WxSelectNSDialog( wxWindow* parent)
           name.c_str(),
           new wxString( value.c_str()));
     }
-    index++;
+    ++index;
   }
 }
 

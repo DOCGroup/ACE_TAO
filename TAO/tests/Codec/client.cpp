@@ -24,7 +24,7 @@ gen_wstring (CORBA::ULong const max_length)
       if (wc)
         {
           buf.get ()[i] = wc;
-          i++;
+          ++i;
         }
     }
 

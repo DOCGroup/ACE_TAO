@@ -42,22 +42,22 @@ Parse_HTTP_Response::init (const char *response)
       char *p = this->response_;
 
       while (*p == ' ' || *p == '\t')
-        p++;
+        ++p;
 
       this->version_ = p++;
 
       while (*p != ' ' && *p != '\t')
-        p++;
+        ++p;
 
       *p++ = '\0';
 
       while (*p == ' ' || *p == '\t')
-        p++;
+        ++p;
 
       this->code_str_ = p;
 
       while (*p && !std::strchr (" \t\r\n", *p))
-        p++;
+        ++p;
 
       *p++ = '\0';
     }

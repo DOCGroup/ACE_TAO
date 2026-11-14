@@ -81,7 +81,7 @@ EC_Counting_Consumer::push (const RtecEventComm::EventSet& events)
       return;
     }
 
-  this->event_count ++;
+  ++this->event_count;
 #if 0
   if (this->event_count % 10 == 0)
     {
@@ -96,7 +96,7 @@ EC_Counting_Consumer::push (const RtecEventComm::EventSet& events)
 void
 EC_Counting_Consumer::disconnect_push_consumer ()
 {
-  this->disconnect_count++;
+  ++this->disconnect_count;
   this->supplier_proxy_ =
     RtecEventChannelAdmin::ProxyPushSupplier::_nil ();
 }

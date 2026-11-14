@@ -22,6 +22,6 @@ Callback_i::response (Test::TimeStamp time_stamp,
   if (this->remaining_samples_ == 0)
     return;
 
-  this->remaining_samples_--;
+  --this->remaining_samples_;
   this->history_.sample (ACE_HRTIME_TO_U64(now) - time_stamp);
 }

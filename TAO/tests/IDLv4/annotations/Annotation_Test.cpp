@@ -14,7 +14,7 @@ Annotation_Test::Annotation_Test (const std::string &name)
     scope_ (0),
     disable_output_ (false)
 {
-  total_test_count_++;
+  ++total_test_count_;
 }
 
 Annotation_Test::~Annotation_Test ()
@@ -58,7 +58,7 @@ Annotation_Test::failed (const std::string &message)
     ACE_TEXT ("Annotation Test: %C: FAILED\nFailed IDL:\n"),
     name_.c_str ()));
   print_idl_with_line_numbers ();
-  failed_test_count_++;
+  ++failed_test_count_;
   failed_ = true;
   throw Failed ();
 }

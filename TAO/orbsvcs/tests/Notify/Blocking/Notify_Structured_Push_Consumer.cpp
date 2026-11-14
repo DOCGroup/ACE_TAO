@@ -73,7 +73,7 @@ Notify_Structured_Push_Consumer::push_structured_event (
   ACE_DEBUG ((LM_DEBUG, "-"));
   ACE_UNUSED_ARG (event);
 
-  this->count_++;
+  ++this->count_;
   if (this->count_ > this->expected_)
     {
       ACE_ERROR ((LM_ERROR,

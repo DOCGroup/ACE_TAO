@@ -192,13 +192,13 @@ Client_Task::svc ()
     }
   catch (CORBA::Exception const &ex)
     {
-      error_count_ ++;
+      ++error_count_;
       ex._tao_print_exception ("Exception caught:");
       return 1;
     }
   catch (...)
     {
-      error_count_ ++;
+      ++error_count_;
       ACE_ERROR ((LM_ERROR, "(%P|%t)Client_Task::svc - caught unknown exception\n"));
       return 1;
     }

@@ -268,7 +268,7 @@ void
 ECT_Throughput::shutdown_consumer ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
-  this->active_count_--;
+  --this->active_count_;
   if (this->active_count_ <= 0)
     {
       ACE_DEBUG ((LM_DEBUG,

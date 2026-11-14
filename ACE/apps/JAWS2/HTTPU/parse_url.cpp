@@ -85,7 +85,7 @@ HTTP_Parse_URL::parse_url ()
   this->parse_host (p);
 
   while (*p == '/')
-    p++;
+    ++p;
 
   if (*p == '\0')
     return;
@@ -111,7 +111,7 @@ HTTP_Parse_URL::parse_scheme (char *&p)
               *p++ = '\0';
               break;
             default:
-              p++;
+              ++p;
               continue;
             }
           break;
@@ -138,7 +138,7 @@ HTTP_Parse_URL::parse_host (char *&p)
       if (*q == '/')
         {
           *q = '\0';
-          q++;
+          ++q;
           break;
         }
       if (*q == ':')
@@ -161,7 +161,7 @@ HTTP_Parse_URL::parse_host (char *&p)
           if (at == nullptr)
             at = q;
         }
-      q++;
+      ++q;
     }
 
   // no user, no port

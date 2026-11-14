@@ -573,7 +573,7 @@ Secondary_Ipaddr_Handler::handle_timeout (ACE_Time_Value const &,
     }
 
   this->schedule_one_sec_timer ();
-  this->state_++;
+  ++this->state_;
   return 0;
 }
 

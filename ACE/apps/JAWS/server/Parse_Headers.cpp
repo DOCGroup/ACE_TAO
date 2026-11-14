@@ -28,8 +28,8 @@ Headers::parse_header_line (char * const header_line)
 
   if (ptr > header_line && ptr[-1] == '\r')
     {
-      ptr--;
-      offset++;
+      --ptr;
+      ++offset;
     }
 
   if (ptr == header_line)
@@ -50,7 +50,7 @@ Headers::parse_header_line (char * const header_line)
   if (header != nullptr && this->map_.mapped (header))
     {
       while (ACE_OS::ace_isspace (*value))
-        value++;
+        ++value;
 
       this->map_[header] = value;
 
@@ -147,7 +147,7 @@ Headers::end_of_line (char *&line, int &offset) const
   if (line > old_line
       && line[-1] == '\r')
     {
-      line--;
+      --line;
       offset = 2;
     }
 

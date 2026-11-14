@@ -148,14 +148,14 @@ Receiver::Receiver ()
     nIOCount ( 0 )
 {
   ACE_GUARD (MyMutex, locker, m_Mtx);
-  nSessions ++ ;
+  ++nSessions;
   ACE_DEBUG ((LM_DEBUG, "Receiver Ctor nSessions=%d\n", nSessions ));
 }
 
 Receiver::~Receiver ()
 {
   ACE_GUARD (MyMutex, locker, m_Mtx);
-  nSessions -- ;
+  --nSessions;
   ACE_OS::closesocket (this->handle_);
   ACE_DEBUG ((LM_DEBUG, "~Receiver Dtor nSessions=%d\n", nSessions ));
 }
@@ -236,7 +236,7 @@ int Receiver::initiate_read_stream ()
                         -1);
     }
 
-  nIOCount++ ;
+  ++nIOCount;
   return 0;
 }
 
@@ -252,7 +252,7 @@ int Receiver::initiate_write_stream (ACE_Message_Block & mb, int nBytes )
                        -1);
     }
 
-  nIOCount++ ;
+  ++nIOCount;
   return 0;
 }
 
@@ -490,7 +490,7 @@ int Sender::initiate_write_stream ()
                        -1);
     }
 
-  nIOCount++ ;
+  ++nIOCount;
   return 0;
 }
 
@@ -520,7 +520,7 @@ int Sender::initiate_read_stream ()
                         -1);
     }
 
-  nIOCount++ ;
+  ++nIOCount;
   return 0;
 }
 

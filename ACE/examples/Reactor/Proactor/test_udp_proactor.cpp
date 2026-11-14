@@ -207,7 +207,7 @@ Receiver::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
   result.message_block ()->release ();
 
   // Note that we are done with the test.
-  done++;
+  ++done;
 }
 
 /**
@@ -361,7 +361,7 @@ Sender::handle_write_dgram (const ACE_Asynch_Write_Dgram::Result &result)
   result.message_block ()->release ();
 
   // Note that we are done with the test.
-  done++;
+  ++done;
 }
 
 static int

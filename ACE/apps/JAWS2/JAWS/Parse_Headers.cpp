@@ -83,7 +83,7 @@ JAWS_Parse_Headers::skipset (const char *set, char *start, char *end)
     {
       if (std::strchr (set, *p) != nullptr)
         break;
-      p++;
+      ++p;
     }
   return p;
 }
@@ -96,7 +96,7 @@ JAWS_Parse_Headers::skipcset (const char *set, char *start, char *end)
     {
       if (std::strchr (set, *p) == nullptr)
         break;
-      p++;
+      ++p;
     }
   return p;
 }
@@ -193,7 +193,7 @@ JAWS_Parse_Headers::parse_header_value (JAWS_Header_Info *info,
       if (*q == '\n')
         {
           info->end_of_line (1);
-          q++;
+          ++q;
         }
       mb.rd_ptr (q);
 
@@ -223,7 +223,7 @@ JAWS_Parse_Headers::parse_header_value (JAWS_Header_Info *info,
           if (*q == '\n')
             break;
           info->append_last_header_value (*q);
-          q++;
+          ++q;
         }
 
       // Need more input
@@ -314,7 +314,7 @@ JAWS_Header_Info::append_last_header_value (char c)
   if (this->last_header_length_ < MAX_HEADER_LENGTH-1)
     {
       this->header_buf_[this->last_header_length_] = c;
-      this->last_header_length_++;
+      ++this->last_header_length_;
       this->header_buf_[this->last_header_length_] = '\0';
     }
 
@@ -341,8 +341,8 @@ JAWS_Header_Info::append_last_header_value (const char *begin, const char *end)
         break;
 
       this->header_buf_[this->last_header_length_] = *begin;
-      this->last_header_length_++;
-      begin++;
+      ++this->last_header_length_;
+      ++begin;
     }
 
   this->header_buf_[this->last_header_length_] = '\0';
@@ -355,7 +355,7 @@ JAWS_Header_Info::reduce_last_header_value ()
 
   if (this->last_header_length_ > 0)
     {
-      this->last_header_length_--;
+      --this->last_header_length_;
       this->header_buf_[this->last_header_length_] = '\0';
     }
 }

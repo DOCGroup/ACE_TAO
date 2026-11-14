@@ -240,7 +240,7 @@ run_test ()
                   ACE_TEXT ("iterating (%d): %s:\n"),
                   i,
                   entry->key ()));
-      i++;
+      ++i;
 
       for (HASH_STRING_VALUE_SET_ITERATOR iter (entry->item ());
            iter != entry->item ().end ();
@@ -308,7 +308,7 @@ run_test ()
                   ACE_TEXT ("reverse iterating (%d): %s\n"),
                   i,
                   entry->key ()));
-      i++;
+      ++i;
 
       for (HASH_STRING_VALUE_SET_ITERATOR iter (entry->item ());
            iter != entry->item ().end ();
@@ -339,7 +339,7 @@ run_test ()
                   ACE_TEXT ("const iterating (%d): %s\n"),
                   i,
                   entry->key ()));
-      i++;
+      ++i;
 
       for (HASH_STRING_VALUE_SET_ITERATOR iter (entry->item ());
            iter != entry->item ().end ();

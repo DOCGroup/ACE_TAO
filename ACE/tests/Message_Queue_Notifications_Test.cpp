@@ -215,7 +215,7 @@ Watermark_Test::producer ()
     {
       this->put_message ();
       this->print_producer_debug_message ();
-      i--;
+      --i;
       if (this->msg_queue ()->is_full ())
         break;
     }

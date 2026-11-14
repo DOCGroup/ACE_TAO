@@ -14,7 +14,7 @@ Identity_Server::parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'd':  // debug flag.
-        TAO_debug_level++;
+        ++TAO_debug_level;
         break;
       case 'i': // ior of the <Object_Group_Factory> object.
         this->group_factory_ior_ = get_opts.opt_arg ();

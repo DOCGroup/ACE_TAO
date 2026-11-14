@@ -148,7 +148,7 @@ count_files ()
         error = 1;
       else
         {
-          i++;
+          ++i;
           ACE_OS::fclose (stream);
         }
 

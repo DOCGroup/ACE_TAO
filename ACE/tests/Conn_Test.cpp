@@ -166,7 +166,7 @@ Svc_Handler::recv_data ()
               if (*t == 'z')
                 t = ACE_ALPHABET;
               else
-                t++;
+                ++t;
             }
 
           if (r_bytes == 0)

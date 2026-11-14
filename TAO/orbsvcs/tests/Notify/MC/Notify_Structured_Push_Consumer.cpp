@@ -87,7 +87,7 @@ Notify_Structured_Push_Consumer::push_structured_event (
   ACE_DEBUG ((LM_DEBUG, "-"));
   static ACE_Time_Value const sleep_time (0, 2000);
 
-  this->count_++;
+  ++this->count_;
 
   if (this->delay_count_ != 0 && this->count_ % this->delay_count_ == 0)
     {

@@ -131,7 +131,7 @@ Receiver::parse_args (int argc,
       switch (c)
         {
         case 'd':
-          TAO_debug_level++;
+          ++TAO_debug_level;
           break;
         default:
           ACE_DEBUG ((LM_DEBUG, "Unknown Option\n"));

@@ -293,7 +293,7 @@ void
 Acceptor::on_new_receiver (Receiver &rcvr)
 {
   ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, this->mutex_);
-  this->sessions_++;
+  ++this->sessions_;
   this->list_receivers_[rcvr.index_] = & rcvr;
   ACE_DEBUG ((LM_DEBUG,
               "Receiver::CTOR sessions_=%d\n",
@@ -305,7 +305,7 @@ Acceptor::on_delete_receiver (Receiver &rcvr)
 {
   ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, this->mutex_);
 
-  this->sessions_--;
+  --this->sessions_;
 
   this->total_snd_ += rcvr.get_total_snd ();
   this->total_rcv_ += rcvr.get_total_rcv ();
@@ -483,7 +483,7 @@ Receiver::handle_input (ACE_HANDLE h)
   int err = 0;
   ssize_t res = this->peer ().recv (mb->rd_ptr (), BUFSIZ-1);
 
-  this->total_r_++;
+  ++this->total_r_;
 
   if (res >= 0)
     {
@@ -572,7 +572,7 @@ Receiver::handle_output (ACE_HANDLE h)
       bytes = mb->length ();
       res = this->peer ().send (mb->rd_ptr (), bytes);
 
-      this->total_w_++;
+      ++this->total_w_;
 
       if (res < 0)
         err = errno ;
@@ -653,7 +653,7 @@ void
 Connector::on_new_sender (Sender & sndr)
 {
   ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, this->mutex_);
-  this->sessions_++;
+  ++this->sessions_;
   this->list_senders_[sndr.index_] = &sndr;
   ACE_DEBUG ((LM_DEBUG,
               "Sender::CTOR sessions_=%d\n",
@@ -665,7 +665,7 @@ Connector::on_delete_sender (Sender & sndr)
 {
   ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, this->mutex_);
 
-  this->sessions_--;
+  --this->sessions_;
   this->total_snd_ += sndr.get_total_snd();
   this->total_rcv_ += sndr.get_total_rcv();
   this->total_w_   += sndr.get_total_w();
@@ -894,7 +894,7 @@ Sender::handle_input (ACE_HANDLE h)
   int     err = 0;
   ssize_t res = this->peer ().recv (mb->rd_ptr (),
                                     BUFSIZ-1);
-  this->total_r_++;
+  ++this->total_r_;
 
   if (res >= 0)
     {
@@ -967,7 +967,7 @@ Sender::handle_output (ACE_HANDLE h)
       bytes = mb->length ();
       res = this->peer ().send (mb->rd_ptr (), bytes);
 
-      this->total_w_++;
+      ++this->total_w_;
 
       if (res < 0)
         err = errno ;

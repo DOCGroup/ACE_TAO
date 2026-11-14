@@ -341,7 +341,7 @@ Twoway_Handler::run ()
                         ACE_TEXT ("send_n")));
         }
       this->total_bytes_ += size_t (r_bytes);
-      this->message_count_++;
+      ++this->message_count_;
 
       delete [] request;
       request = nullptr;
@@ -421,7 +421,7 @@ Oneway_Handler::run ()
                     ACE_TEXT ("ACE::write_n")));
 
       this->total_bytes_ += size_t (r_bytes);
-      this->message_count_++;
+      ++this->message_count_;
       delete [] request;
       request = nullptr;
     }

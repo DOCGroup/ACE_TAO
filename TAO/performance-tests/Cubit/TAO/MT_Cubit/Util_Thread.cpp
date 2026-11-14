@@ -86,7 +86,7 @@ Util_Thread::run_computations ()
         }
 
       this->computation ();
-      this->number_of_computations_++;
+      ++this->number_of_computations_;
     }
 
   return 0;

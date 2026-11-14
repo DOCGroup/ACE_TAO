@@ -914,7 +914,7 @@ int advance_addr (ACE_INET_Addr &addr)
       while (i >= 2 && sin6_addr[i] == 0xff)
         {
           sin6_addr[i] = 0;
-          i--;
+          --i;
         }
 
       if (i >= 2)

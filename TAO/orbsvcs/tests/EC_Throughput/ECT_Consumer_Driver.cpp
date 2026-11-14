@@ -181,7 +181,7 @@ void
 ECT_Consumer_Driver::shutdown_consumer ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
-  this->active_count_--;
+  --this->active_count_;
 }
 
 void

@@ -119,7 +119,7 @@ server (void *)
   while (new_stream.recv (buf, 1) > 0)
     {
       ACE_TEST_ASSERT (*t == buf[0]);
-      t++;
+      ++t;
     }
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("End of connection. Closing handle\n")));
   new_stream.close ();

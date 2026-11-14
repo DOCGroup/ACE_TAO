@@ -325,7 +325,7 @@ Server_Service_Handler::handle_read_stream(
 {
   ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mtx_);
 
-  this->pending_reads_--;
+  --this->pending_reads_;
 
   if (!result.success () || 0 == result.bytes_transferred ())
   {
@@ -392,7 +392,7 @@ Server_Service_Handler::handle_write_stream (
 {
   ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mtx_);
 
-  this->pending_writes_--;
+  --this->pending_writes_;
 
   if (!result.success () || 0 == result.bytes_transferred ())
   {
@@ -499,7 +499,7 @@ Server_Service_Handler::read (ACE_Message_Block &mb, size_t bytes_to_read)
   }
   else
   {
-    this->pending_reads_++;
+    ++this->pending_reads_;
   }
   return ret;
 }
@@ -517,7 +517,7 @@ Server_Service_Handler::write (ACE_Message_Block &mb, size_t bytes_to_write)
   }
   else
   {
-    this->pending_writes_++;
+    ++this->pending_writes_;
   }
   return ret;
 }
@@ -648,11 +648,11 @@ Acceptor::accept (size_t bytes_to_read, const void *act)
   if  (this->cancel_flag_!= 0)
     return -1;
 
-  this->accept_cnt_++;
+  ++this->accept_cnt_;
   int rc = this->ACE_Asynch_Acceptor<Server_Service_Handler>::accept (
     bytes_to_read, act);
   if (rc != 0)
-    this->accept_cnt_--;
+    --this->accept_cnt_;
 
   return rc;
 }
@@ -773,7 +773,7 @@ Client_Service_Handler::handle_read_stream (
 {
   ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mtx_);
 
-  this->pending_reads_--;
+  --this->pending_reads_;
 
   if (!result.success () || 0 == result.bytes_transferred ())
   {
@@ -818,7 +818,7 @@ Client_Service_Handler::handle_read_stream (
   {
     // Read it all
 
-    this->completed_reads_++;
+    ++this->completed_reads_;
 
     result.message_block ().release ();
 
@@ -851,7 +851,7 @@ Client_Service_Handler::handle_write_stream (
 {
   ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mtx_);
 
-  this->pending_writes_--;
+  --this->pending_writes_;
 
   if (!result.success () || 0 == result.bytes_transferred ())
   {
@@ -958,7 +958,7 @@ Client_Service_Handler::read (ACE_Message_Block &mb, size_t bytes_to_read)
   }
   else
   {
-    this->pending_reads_++;
+    ++this->pending_reads_;
   }
   return ret;
 }
@@ -976,7 +976,7 @@ Client_Service_Handler::write (ACE_Message_Block &mb, size_t bytes_to_write)
   }
   else
   {
-    this->pending_writes_++;
+    ++this->pending_writes_;
   }
   return ret;
 }

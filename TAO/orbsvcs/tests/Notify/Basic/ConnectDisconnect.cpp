@@ -64,7 +64,7 @@ ConnectDisconnect::~ConnectDisconnect ()
 void
 ConnectDisconnect::on_entity_destroyed ()
 {
-  this->result_count_++;
+  ++this->result_count_;
 
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG,

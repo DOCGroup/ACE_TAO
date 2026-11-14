@@ -147,14 +147,14 @@ ACE_TMAIN (int, ACE_TCHAR **)
     if (!u_interp.test ("993834343433882",
                         ACE_UINT64_LITERAL (993834343433882)))
       {
-        status++;
+        ++status;
         ACE_ERROR ((LM_ERROR, "ERROR: CORBA::ULongLong test failed.\n"));
       }
 
     Literal_Interpreter<CORBA::LongLong> interp;
     if (!interp.test ("-1879048193", -1879048193))
       {
-        status++;
+        ++status;
         ACE_ERROR ((LM_ERROR, "ERROR: CORBA::LongLong test failed.\n"));
       }
 
@@ -164,7 +164,7 @@ ACE_TMAIN (int, ACE_TCHAR **)
     // unsigned value.
     if (interp.constraint () > u_interp.constraint ())
       {
-        status++;
+        ++status;
         ACE_ERROR ((LM_ERROR, "ERROR: Mixed greater than test 1 failed.\n"));
       }
   }
@@ -172,7 +172,7 @@ ACE_TMAIN (int, ACE_TCHAR **)
     Literal_Interpreter<CORBA::Double> u_interp;
     if (!u_interp.test ("993834343433882.88837719", 993834343433882.88837719))
       {
-        status++;
+        ++status;
         ACE_ERROR ((LM_ERROR, "ERROR: CORBA::Double test 1 failed.\n"));
       }
 
@@ -180,13 +180,13 @@ ACE_TMAIN (int, ACE_TCHAR **)
     if (!interp.test ("-993834343433882.88837719",
                        -993834343433882.88837719))
       {
-        status++;
+        ++status;
         ACE_ERROR ((LM_ERROR, "ERROR: CORBA::Double test 2 failed.\n"));
       }
 
     if (interp.constraint () > u_interp.constraint ())
       {
-        status++;
+        ++status;
         ACE_ERROR ((LM_ERROR, "ERROR: Mixed greater than test 2 failed.\n"));
       }
   }
@@ -194,7 +194,7 @@ ACE_TMAIN (int, ACE_TCHAR **)
     Literal_Interpreter<CORBA::Boolean> interp;
     if (!interp.test ("TRUE", true))
       {
-        status++;
+        ++status;
         ACE_ERROR ((LM_ERROR, "ERROR: CORBA::Boolean test 1 failed.\n"));
       }
   }
@@ -202,7 +202,7 @@ ACE_TMAIN (int, ACE_TCHAR **)
     Literal_Interpreter<CORBA::Boolean> interp;
     if (!interp.test ("FALSE", false))
       {
-        status++;
+        ++status;
         ACE_ERROR ((LM_ERROR, "ERROR: CORBA::Boolean test 2 failed.\n"));
       }
   }
@@ -210,7 +210,7 @@ ACE_TMAIN (int, ACE_TCHAR **)
     Literal_Interpreter<char const *> interp;
     if (!interp.test ("'This is a test'", "This is a test"))
       {
-        status++;
+        ++status;
         ACE_ERROR ((LM_ERROR, "ERROR: const char* test failed.\n"));
       }
   }

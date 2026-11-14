@@ -213,7 +213,7 @@ JAWS_Synch_IO::transmit_file (JAWS_IO_Handler *ioh,
         {
           iov[iovcnt].iov_base = const_cast<char*> (header);
           iov[iovcnt].iov_len =  header_size;
-          iovcnt++;
+          ++iovcnt;
         }
 
       ACE_FILE_Info info;
@@ -222,13 +222,13 @@ JAWS_Synch_IO::transmit_file (JAWS_IO_Handler *ioh,
         {
           iov[iovcnt].iov_base = (char *) cf.mmap ()->addr ();
           iov[iovcnt].iov_len = info.size_;
-          iovcnt++;
+          ++iovcnt;
         }
       if (trailer_size > 0)
         {
           iov[iovcnt].iov_base = const_cast<char*> (trailer);
           iov[iovcnt].iov_len = trailer_size;
-          iovcnt++;
+          ++iovcnt;
         }
       if (ACE_OS::writev (ioh->handle (), iov, iovcnt) < 0)
         {

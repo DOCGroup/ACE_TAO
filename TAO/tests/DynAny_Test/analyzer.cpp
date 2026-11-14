@@ -105,7 +105,7 @@ void DynAnyAnalyzer::analyze (DynamicAny::DynAny_ptr da)
 
         if (da->seek (0) )
           {
-            level_++;
+            ++level_;
 
             do
               {
@@ -130,7 +130,7 @@ void DynAnyAnalyzer::analyze (DynamicAny::DynAny_ptr da)
 
               } while (da->next ());
 
-            level_--;
+            --level_;
           }
       }
       break; // end tk_struct
@@ -157,7 +157,7 @@ void DynAnyAnalyzer::analyze (DynamicAny::DynAny_ptr da)
 
             if (ds->seek (0UL))
               {
-                level_++;
+                ++level_;
 
                 do
                   {
@@ -174,10 +174,10 @@ void DynAnyAnalyzer::analyze (DynamicAny::DynAny_ptr da)
                         analyze (cc.in ());
                       }
 
-                    i++;
+                    ++i;
                   } while (da->next ());
 
-                level_--;
+                --level_;
               }
           }
       }
@@ -193,7 +193,7 @@ void DynAnyAnalyzer::analyze (DynamicAny::DynAny_ptr da)
                         "ARRAY\n"));
           }
 
-        level_++;
+        ++level_;
 
         CORBA::ULong const len =
           dup->length ();
@@ -216,7 +216,7 @@ void DynAnyAnalyzer::analyze (DynamicAny::DynAny_ptr da)
 
             da->next ();
           }
-        level_--;
+        --level_;
       }
       break;
 

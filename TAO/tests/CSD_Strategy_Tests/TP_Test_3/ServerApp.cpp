@@ -153,7 +153,7 @@ ServerApp::collocated_setup()
 
   for (unsigned i = 0; i < this->num_collocated_clients_; i++)
     {
-      client_id ++;
+      ++client_id;
       // Dole out the servant object references in a round-robin fashion.
       unsigned servant_index = i % this->num_servants_;
 

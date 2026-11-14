@@ -103,7 +103,7 @@ Options::read (void *buf, size_t len, size_t &iteration)
       ACE_OS::memcpy (buf,
                       this->message_buf (),
                       len);
-      iteration++;
+      ++iteration;
       return ACE_Utils::truncate_cast<ssize_t> (len);
     }
 }

@@ -66,7 +66,7 @@ Notify_Structured_Push_Consumer::push_structured_event (
   ACE_DEBUG ((LM_DEBUG, "-"));
   static ACE_Time_Value const sl (1, 0);
 
-  this->count_++;
+  ++this->count_;
   if (this->count_ > this->expected_)
   {
     ACE_ERROR ((LM_ERROR,

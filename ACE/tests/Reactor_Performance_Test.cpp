@@ -127,7 +127,7 @@ Read_Handler::handle_close (ACE_HANDLE handle,
   ACE_UNUSED_ARG (close_mask);
 
   // Reduce count.
-  waiting_--;
+  --waiting_;
 
   // If no connections are open.
   if (waiting_ == 0)

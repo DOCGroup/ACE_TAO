@@ -158,7 +158,7 @@ Simple_Event_Handler::handle_input (ACE_HANDLE)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("Simple_Event_Handler::handle_input()\n")));
 
-  this->notifies_--;
+  --this->notifies_;
 
   if (this->notifies_ == 0)
     delete this;
@@ -199,7 +199,7 @@ Event_Loop_Thread::svc ()
 
   while (true)
     {
-      counter++;
+      ++counter;
 
       if (debug)
         ACE_DEBUG ((LM_DEBUG,

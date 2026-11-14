@@ -27,7 +27,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
           switch (argv[i][1])
             {
               case 'o':
-              i++;
+              ++i;
               if (i < argc)
                 ior_output_file = argv[i];
               else
@@ -38,7 +38,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 #if defined (ACE_HAS_THREADS)
               argv[i] = const_cast<ACE_TCHAR*> (ACE_TEXT("-ORBSvcConfDirective"));
 #endif /* ACE_HAS_THREADS */
-              i++;
+              ++i;
               if (i < argc)
 #if defined (ACE_HAS_THREADS)
                 argv[i] = const_cast<ACE_TCHAR*> (ACE_TEXT("static Server_Strategy_Factory "

@@ -973,7 +973,7 @@ RR_Object_Group::unbind (char const *id)
   while (std::strcmp (id, *(iter.next ())))
     {
       iter.advance ();
-      position++;
+      ++position;
     }
   this->allocator_->free (iter.next ());
   iter.remove ();
@@ -982,7 +982,7 @@ RR_Object_Group::unbind (char const *id)
 
   // Update <next_> if necessary to reflect the deletion.
   if (position < next_)
-    this->next_--;
+    --this->next_;
   else if (curr_size == 0)
     this->next_ = 0;
   else if (position == next_)

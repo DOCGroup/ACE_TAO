@@ -156,7 +156,7 @@ Activity::activate_job_list ()
                   "Registered %C with the naming service\n",
                   job_name.c_str ()));
 
-      active_job_count_++;
+      ++active_job_count_;
     } /* while */
 }
 
@@ -217,7 +217,7 @@ Activity::activate_schedule ()
 
       task->job (job.in ());
       task->activate_task (this->barrier_.get (), this->priority_mapping_);
-      active_task_count_++;
+      ++active_task_count_;
 
       ACE_DEBUG ((LM_DEBUG, "Job %C scheduled\n", task->job ()));
     }

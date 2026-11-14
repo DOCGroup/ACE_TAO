@@ -1043,8 +1043,8 @@ Server::initiate_read ()
                         -1);
     }
 
-  this->io_count_++;
-  this->total_r_++;
+  ++this->io_count_;
+  ++this->total_r_;
   return 0;
 }
 
@@ -1076,8 +1076,8 @@ Server::initiate_write (ACE_Message_Block *mb, size_t nbytes)
                        -1);
     }
 
-  this->io_count_++;
-  this->total_w_++;
+  ++this->io_count_;
+  ++this->total_w_;
   return 0;
 }
 
@@ -1526,8 +1526,8 @@ Client::initiate_write ()
                             -1);
         }
 
-      this->io_count_++;
-      this->total_w_++;
+      ++this->io_count_;
+      ++this->total_w_;
       return 0;
     }
 
@@ -1596,8 +1596,8 @@ Client::initiate_write ()
     }
 #endif /* ACE_WIN32 */
 
-  this->io_count_++;
-  this->total_w_++;
+  ++this->io_count_;
+  ++this->total_w_;
   return 0;
 }
 
@@ -1687,8 +1687,8 @@ Client::initiate_read ()
     }
 #endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
 
-  this->io_count_++;
-  this->total_r_++;
+  ++this->io_count_;
+  ++this->total_r_;
   return 0;
 }
 

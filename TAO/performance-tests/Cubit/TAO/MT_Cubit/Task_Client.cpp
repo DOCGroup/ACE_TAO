@@ -693,7 +693,7 @@ Client::cube_octet ()
 {
   try
     {
-      this->call_count_++;
+      ++this->call_count_;
       // Cube an octet.
       CORBA::Octet arg_octet = func (this->num_);
       CORBA::Octet ret_octet = 0;
@@ -712,7 +712,7 @@ Client::cube_octet ()
 
       if (arg_octet != ret_octet)
         {
-          this->error_count_++;
+          ++this->error_count_;
           ACE_ERROR_RETURN ((LM_ERROR,
                              "** cube_octet (%d) (--> %d)\n",
                              arg_octet,
@@ -734,7 +734,7 @@ Client::cube_short ()
 {
   try
     {
-      this->call_count_++;
+      ++this->call_count_;
 
       CORBA::Short arg_short = func (this->num_);
       CORBA::Short ret_short;
@@ -746,7 +746,7 @@ Client::cube_short ()
 
       if (arg_short != ret_short)
         {
-          this->error_count_++;
+          ++this->error_count_;
           ACE_ERROR_RETURN ((LM_ERROR,
                              "** cube_short (%d) (--> %d)\n",
                              arg_short ,
@@ -767,7 +767,7 @@ Client::cube_long ()
 {
   try
     {
-      this->call_count_++;
+      ++this->call_count_;
 
       CORBA::Long arg_long = func (this->num_);
       CORBA::Long ret_long;
@@ -780,7 +780,7 @@ Client::cube_long ()
 
       if (arg_long != ret_long)
         {
-          this->error_count_++;
+          ++this->error_count_;
           ACE_ERROR ((LM_ERROR,
                       "** cube_long (%d) (--> %d)\n",
                       arg_long,
@@ -803,7 +803,7 @@ Client::cube_struct ()
       Cubit::Many arg_struct;
       Cubit::Many ret_struct;
 
-      this->call_count_++;
+      ++this->call_count_;
 
       arg_struct.l = func (this->num_);
       arg_struct.s = func (this->num_);
@@ -821,7 +821,7 @@ Client::cube_struct ()
           || arg_struct.s  != ret_struct.s
           || arg_struct.o  != ret_struct.o )
         {
-          this->error_count_++;
+          ++this->error_count_;
           ACE_ERROR ((LM_ERROR,
                       "**cube_struct error!\n"));
         }
@@ -870,7 +870,7 @@ Client::make_request ()
     {
       try
         {
-          this->call_count_++;
+          ++this->call_count_;
           START_QUANTIFY;
           this->cubit_->noop ();
           STOP_QUANTIFY;
@@ -1017,7 +1017,7 @@ Client::do_test ()
           {
             if (this->ts_->semaphore_->tryacquire () != -1)
               {
-                low_priority_client_count --;
+                --low_priority_client_count;
                 // If all clients are done then break out of loop.
                 if (low_priority_client_count <= 0)
                   break;

@@ -24,7 +24,7 @@ extern CORBA::Short TEST_SECOND;
 void Test_Simple_Test_i::test_method (
     ::CORBA::ULong & error_count)
 {
-  error_count --;
+  --error_count;
 }
 
 Hello::Hello (CORBA::ORB_ptr orb,

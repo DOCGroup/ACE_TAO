@@ -294,7 +294,7 @@ Catior_i::catior (char const * str)
             continue;
           }
 
-        trace_depth_++;
+        ++trace_depth_;
         if (tag == IOP::TAG_INTERNET_IOP)
           {
             continue_decoding = cat_iiop_profile (stream);
@@ -339,7 +339,7 @@ Catior_i::catior (char const * str)
             buffer_ += buf;
             continue_decoding = cat_octet_seq("Profile body", stream);
           }
-        trace_depth_--;
+        --trace_depth_;
       }
   return true;
 }
@@ -937,15 +937,15 @@ Catior_i::cat_tag_ssl_sec_trans (TAO_InputCDR& cdr) {
   indent ();
   ACE_OS::snprintf (buf, bufsize, "target_supports = 0x%x\n", target_supports);
   buffer_ += buf;
-  trace_depth_++;
+  ++trace_depth_;
   cat_security_association(target_supports);
-  trace_depth_--;
+  --trace_depth_;
   indent ();
   ACE_OS::snprintf (buf, bufsize, "target_requires = 0x%x\n", target_requires);
   buffer_ += buf;
-  trace_depth_++;
+  ++trace_depth_;
   cat_security_association(target_requires);
-  trace_depth_--;
+  --trace_depth_;
 
   return true;
 }

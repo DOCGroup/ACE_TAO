@@ -114,7 +114,7 @@ int ClientTask::svc ()
                       ndx, the_string.in (), ndx));
           {
             ACE_GUARD_RETURN (ACE_Mutex, mon, this->lock_, -1);
-            this->replies_++;
+            ++this->replies_;
           }
         }
       catch (CORBA::NO_IMPLEMENT const &)
@@ -124,7 +124,7 @@ int ClientTask::svc ()
                       ndx));
           {
             ACE_GUARD_RETURN (ACE_Mutex, mon, this->lock_, -1);
-            this->nis_++;
+            ++this->nis_;
           }
         }
       catch (CORBA::TRANSIENT const &)
@@ -142,7 +142,7 @@ int ClientTask::svc ()
 
           {
             ACE_GUARD_RETURN (ACE_Mutex, mon, this->lock_, -1);
-            this->exs_++;
+            ++this->exs_;
           }
         }
       break;

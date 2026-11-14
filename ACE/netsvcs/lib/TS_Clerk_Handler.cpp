@@ -367,7 +367,7 @@ ACE_TS_Clerk_Processor::update_time ()
   ACE_UINT32 expected_sequence_num = this->cur_sequence_num_;
 
   // Increment sequence number
-  this->cur_sequence_num_++;
+  ++this->cur_sequence_num_;
 
   int count = 0;
   time_t total_delta = 0;
@@ -388,7 +388,7 @@ ACE_TS_Clerk_Processor::update_time ()
           else if (expected_sequence_num != 0 &&
                    time_info.sequence_num_ == expected_sequence_num)
             {
-              count++;
+              ++count;
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("[%d] Delta time: %d\n"),
                           count, time_info.delta_time_));

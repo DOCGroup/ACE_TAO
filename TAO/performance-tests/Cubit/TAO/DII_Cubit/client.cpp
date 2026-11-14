@@ -232,7 +232,7 @@ DII_Cubit_Client::parse_args ()
     switch (c)
       {
       case 'd':   // debug flag
-        TAO_debug_level++;
+        ++TAO_debug_level;
         break;
       case 'n':   // loop count
         this->loop_count_ = ACE_OS::atoi (opts.opt_arg ());
@@ -361,7 +361,7 @@ DII_Cubit_Client::cube_short_dii ()
 
       req->set_return_type (CORBA::_tc_short);
 
-      this->call_count_++;
+      ++this->call_count_;
 
       req->invoke ();
 
@@ -372,12 +372,12 @@ DII_Cubit_Client::cube_short_dii ()
           ACE_ERROR ((LM_ERROR,
                       "cube_short_dii -- bad results\n"));
 
-          this->error_count_++;
+          ++this->error_count_;
         }
     }
   catch (CORBA::Exception const &ex)
     {
-      this->error_count_++;
+      ++this->error_count_;
       ex._tao_print_exception ("cube_short_dii");
       return;
     }
@@ -399,7 +399,7 @@ DII_Cubit_Client::cube_long_dii ()
 
       req->set_return_type (CORBA::_tc_long);
 
-      this->call_count_++;
+      ++this->call_count_;
 
       req->invoke ();
 
@@ -410,12 +410,12 @@ DII_Cubit_Client::cube_long_dii ()
           ACE_ERROR ((LM_ERROR,
                       "cube_long_dii -- bad results\n"));
 
-            this->error_count_++;
+            ++this->error_count_;
         }
     }
   catch (CORBA::Exception const &ex)
     {
-      this->error_count_++;
+      ++this->error_count_;
       ex._tao_print_exception ("cube_long_dii");
       return;
     }
@@ -439,7 +439,7 @@ DII_Cubit_Client::cube_octet_dii ()
       req->set_return_type (CORBA::_tc_octet);
 
       // Invoke, check for an exception and verify the result.
-      this->call_count_++;
+      ++this->call_count_;
 
       req->invoke ();
 
@@ -451,12 +451,12 @@ DII_Cubit_Client::cube_octet_dii ()
           ACE_ERROR ((LM_ERROR,
                       "cube_octet_dii -- bad results\n"));
 
-          this->error_count_++;
+          ++this->error_count_;
         }
     }
   catch (CORBA::Exception const &ex)
     {
-      this->error_count_++;
+      ++this->error_count_;
       ex._tao_print_exception ("cube_octet_dii");
       return;
     }
@@ -485,7 +485,7 @@ DII_Cubit_Client::cube_union_dii ()
 
       // Invoke, check for an exception and verify the result
 
-      this->call_count_++;
+      ++this->call_count_;
 
       req->invoke ();
 
@@ -500,12 +500,12 @@ DII_Cubit_Client::cube_union_dii ()
           ACE_ERROR ((LM_ERROR,
                       "cube_union_dii -- bad results\n"));
 
-          this->error_count_++;
+          ++this->error_count_;
         }
     }
   catch (CORBA::Exception const &ex)
     {
-      this->error_count_++;
+      ++this->error_count_;
       ex._tao_print_exception ("cube_union_dii");
       return;
     }
@@ -533,7 +533,7 @@ DII_Cubit_Client::cube_struct_dii ()
 
       // Invoke, check for an exception and verify the result.
 
-      this->call_count_++;
+      ++this->call_count_;
 
       req->invoke ();
 
@@ -546,12 +546,12 @@ DII_Cubit_Client::cube_struct_dii ()
           ACE_ERROR ((LM_ERROR,
                       "cube_struct_dii -- bad results\n"));
 
-          this->error_count_++;
+          ++this->error_count_;
         }
     }
   catch (CORBA::Exception const &ex)
     {
-      this->error_count_++;
+      ++this->error_count_;
       ex._tao_print_exception ("cube_struct_dii");
       return;
     }
@@ -580,7 +580,7 @@ DII_Cubit_Client::cube_octet_seq_dii (int length)
 
       // Invoke, check for an exception and verify the result.
 
-      this->call_count_++;
+      ++this->call_count_;
 
       req->invoke ();
 
@@ -592,7 +592,7 @@ DII_Cubit_Client::cube_octet_seq_dii (int length)
           ACE_ERROR ((LM_ERROR,
                       "cube_octet_seq_dii -- bad length\n"));
 
-          this->error_count_++;
+          ++this->error_count_;
         }
 
       // Check for correct value(s).
@@ -601,12 +601,12 @@ DII_Cubit_Client::cube_octet_seq_dii (int length)
           ACE_ERROR ((LM_ERROR,
                       "cube_octet_seq_dii -- bad results\n"));
 
-          this->error_count_++;
+          ++this->error_count_;
         }
     }
   catch (CORBA::Exception const &ex)
     {
-      this->error_count_++;
+      ++this->error_count_;
       ex._tao_print_exception ("cube_octet_seq_dii");
       return;
     }
@@ -635,7 +635,7 @@ DII_Cubit_Client::cube_long_seq_dii (int length)
 
       // Invoke, check for an exception and verify the result.
 
-      this->call_count_++;
+      ++this->call_count_;
 
       req->invoke ();
 
@@ -647,7 +647,7 @@ DII_Cubit_Client::cube_long_seq_dii (int length)
           ACE_ERROR ((LM_ERROR,
                       "cube_long_seq_dii -- bad length\n"));
 
-          this->error_count_++;
+          ++this->error_count_;
         }
 
       // Check for correct value(s).
@@ -656,12 +656,12 @@ DII_Cubit_Client::cube_long_seq_dii (int length)
           ACE_ERROR ((LM_ERROR,
                       "cube_long_seq_dii -- bad results\n"));
 
-          this->error_count_++;
+          ++this->error_count_;
         }
     }
   catch (CORBA::Exception const &ex)
     {
-      this->error_count_++;
+      ++this->error_count_;
       ex._tao_print_exception ("cube_long_seq_dii");
       return;
     }

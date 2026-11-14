@@ -67,7 +67,7 @@ ImR_Utils::stringToEnvList(const ACE_CString& s,
   CORBA::ULong idx {};
   for (pos = s.find ('\n'); pos != ACE_CString::npos; pos = s.find ('\n',pos + 1))
     {
-      idx++;
+      ++idx;
     }
   ret.length (idx);
   if (idx == 0)
@@ -127,7 +127,7 @@ ImR_Utils::stringToPeerList (const ACE_CString& s, CORBA::StringSeq& ret)
   CORBA::ULong idx {};
   for (pos = s.find ('\n'); pos != ACE_CString::npos; pos = s.find ('\n',pos + 1))
     {
-      idx++;
+      ++idx;
     }
   ret.length (idx);
   if (idx == 0)

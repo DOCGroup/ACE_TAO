@@ -27,15 +27,15 @@ class Base
 public:
   Base()
   {
-    constructors++;
+    ++constructors;
   }
   Base(Base const & )
   {
-    constructors++;
+    ++constructors;
   }
   ~Base()
   {
-    destructors++;
+    ++destructors;
   }
 
   static int constructors;

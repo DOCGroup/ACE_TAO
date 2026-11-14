@@ -129,7 +129,7 @@ consumer (void *)
   for (ACE_Message_Block *mb = nullptr;
        c_stream.recv (mb) != -1 && mb->size () != 0;
        mb->release ())
-    received_messages++;
+    ++received_messages;
 
   ACE_OS::time (&currsec);
   time_t secs = (time_t) currsec - start;

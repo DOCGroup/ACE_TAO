@@ -54,7 +54,7 @@ Server<Servant>::parse_args ()
     switch (c)
       {
       case 'd':  // debug flag.
-        TAO_debug_level++;
+        ++TAO_debug_level;
         break;
       case 'o':  // output the IOR to a file.
         this->ior_output_file_.reset (ACE_OS::fopen (get_opts.opt_arg (), "w"));
@@ -206,7 +206,7 @@ Client<InterfaceObj, Var>::parse_args ()
     switch (c)
       {
       case 'd':  // debug flag
-        TAO_debug_level++;
+        ++TAO_debug_level;
         break;
       case 'k':  // ior provide on command line
         {

@@ -95,7 +95,7 @@ int box_test1 (BoxT *valuebox, UT val1, UT val2)
     BoxT *down = BoxT::_downcast (copy);
     if (down == nullptr)
       {
-        fail++;
+        ++fail;
         ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Failure at line %l\n"));
       }
     else
@@ -605,7 +605,7 @@ int test_boxed_sequence ()
       VBseqlong *vbseqlong6 = VBseqlong::_downcast( vbseqlong4->_copy_value());
       if (vbseqlong6 == nullptr)
         {
-          fail++;
+          ++fail;
           ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Failure at line %l\n"));
         }
       else
@@ -791,7 +791,7 @@ int test_boxed_struct ()
     VBfixed_struct1::_downcast (valuebox3->_copy_value ());
   if (valuebox4.in () == nullptr)
     {
-      fail++;
+      ++fail;
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Failure at line %l\n"));
     }
   else

@@ -73,7 +73,7 @@ static Linked_List *linked_list_ptr;
 static int
 find_last ()
 {
-  find_called++;
+  ++find_called;
 
   char search_string[MAX_STRING_SIZE];
   ACE_OS::snprintf (search_string, MAX_STRING_SIZE, "%d", n_entries - 1);
@@ -179,7 +179,7 @@ Reader_Task::svc ()
           {
             //find_last (); try to find something which is not in
             //there
-            upgraded++;
+            ++upgraded;
             continue;
           }
       }
@@ -193,7 +193,7 @@ Reader_Task::svc ()
           ACE_GUARD_RETURN (ACE_Thread_Mutex, g, mutex, 1);
 #endif /* RW_MUTEX */
 
-          not_upgraded++;
+          ++not_upgraded;
           find_last ();
         }
       else if (result == -1 && errno != EBUSY)
@@ -242,7 +242,7 @@ Writer_Task::svc ()
 
       find_last ();
 
-      current_writers--;
+      --current_writers;
     }
 
   // Stop the timer.
@@ -263,7 +263,7 @@ Time_Calculation::report_time (ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time
   this->times_.user_time += elapsed_time.user_time;
   this->times_.system_time += elapsed_time.system_time;
 
-  this->reported_times_++;
+  ++this->reported_times_;
 }
 
 void

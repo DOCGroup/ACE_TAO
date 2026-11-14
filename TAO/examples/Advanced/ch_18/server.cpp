@@ -536,7 +536,7 @@ Controller_impl::find (CCS::Controller::SearchSeq& slist)
                     slist[len].key = slist[i].key;
                     slist[len].device = make_dref (m_poa.in (), where->first);
                 }
-                num_found++;
+                ++num_found;
 
                 // Find next matching device with this key.
                 where = std::find_if (

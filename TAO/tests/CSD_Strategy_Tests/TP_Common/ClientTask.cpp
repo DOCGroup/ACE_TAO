@@ -66,7 +66,7 @@ ClientTask::svc()
     if (exec_ret == false)
       {
         ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, 0);
-        this->failure_count_ ++;
+        ++this->failure_count_;
       }
   }
   catch (const CORBA::Exception& ex)
@@ -75,7 +75,7 @@ ClientTask::svc()
       "ClientTask::svc Caught exception from execute():");
 
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, 0);
-    this->failure_count_ ++;
+    ++this->failure_count_;
   }
   catch (...)
   {
@@ -83,7 +83,7 @@ ClientTask::svc()
                "(%P|%t) ClientTask::svc caught unknown (...) exception "\
                "in execute() " ));
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, 0);
-    this->failure_count_ ++;
+    ++this->failure_count_;
   }
 
   if(this->shutdown_after_done_)

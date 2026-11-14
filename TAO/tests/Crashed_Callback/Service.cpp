@@ -48,7 +48,7 @@ Service::run_test (Test::Crashed_Callback_ptr callback)
     }
 
   /// Increment the number of tests completed
-  this->test_count_++;
+  ++this->test_count_;
 }
 
 size_t
@@ -66,7 +66,7 @@ Service::call_are_you_there (Test::Crashed_Callback_ptr callback)
         }
       catch (CORBA::Exception const&)
         {
-          exception_count++;
+          ++exception_count;
         }
     }
   return exception_count;
@@ -87,7 +87,7 @@ Service::call_test_oneway (Test::Crashed_Callback_ptr callback)
         }
       catch (CORBA::Exception const&)
         {
-          exception_count++;
+          ++exception_count;
         }
     }
   return exception_count;

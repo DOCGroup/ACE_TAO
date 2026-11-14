@@ -111,7 +111,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
           if (elapsed.msec () >= sleep_milliseconds)
             {
-              blocked_calls++;
+              ++blocked_calls;
             }
         }
 

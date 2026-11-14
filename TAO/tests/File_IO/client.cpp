@@ -58,7 +58,7 @@ parse_args (int argc, ACE_TCHAR **argv, Client_Options &options)
     switch (c)
       {
       case 'd':
-        TAO_debug_level++;
+        ++TAO_debug_level;
         break;
       case 'k':
         options.ior_file = get_opts.opt_arg ();

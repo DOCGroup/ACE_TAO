@@ -38,7 +38,7 @@ void
 Server_Request_Interceptor::receive_request_service_contexts (
     PortableInterceptor::ServerRequestInfo_ptr ri)
 {
-  this->request_count_++;
+  ++this->request_count_;
 
   CORBA::Boolean const response_expected =
     ri->response_expected ();

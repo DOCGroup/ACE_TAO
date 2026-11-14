@@ -164,7 +164,7 @@ Handler::handle_input (ACE_HANDLE fd)
                                  sleep_time_in_msec * 1000));
 
   // Keep count.
-  this->number_of_messages_read_++;
+  ++this->number_of_messages_read_;
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Completed handling message %d\n"),

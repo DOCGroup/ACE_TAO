@@ -45,7 +45,7 @@ UDP_i::invoke (char const *client_name,
                           last_request_id + 1,
                           request_id));
 
-              wrong_messages_count_++;
+              ++wrong_messages_count_;
             }
         }
 

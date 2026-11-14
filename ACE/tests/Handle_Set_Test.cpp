@@ -152,7 +152,7 @@ test_boundaries ()
                   handle));
       int const done = set.remove (handle);
       ACE_TEST_ASSERT (done == 0);
-      count++;
+      ++count;
     }
 
   ACE_TEST_ASSERT (count == handle_set.num_set ());
@@ -179,7 +179,7 @@ test_performance (size_t max_handles,
 
       // Only iterate up to <handle_set.max_set ()>.
       while (iter () != ACE_INVALID_HANDLE)
-        count++;
+        ++count;
     }
 
   timer.stop ();

@@ -193,7 +193,7 @@ public:
                 str[++i] = 0;
                 return str;
               }
-            i++;
+            ++i;
           }
         else
           return str;

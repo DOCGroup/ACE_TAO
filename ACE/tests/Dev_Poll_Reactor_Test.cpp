@@ -148,7 +148,7 @@ Client::handle_timeout (const ACE_Time_Value &, const void *)
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("(%t) Expected client timeout occurred at: %T\n")));
 
-  this->call_count_++;
+  ++this->call_count_;
 
   int status = this->handle_output (this->get_handle ());
   if (status == -1 || this->call_count_ > 10)
@@ -265,7 +265,7 @@ Server::handle_timeout (const ACE_Time_Value &,
 //               this->get_handle ()));
 
 
-  this->call_count_++;
+  ++this->call_count_;
 
   if (this->call_count_ > 10)
     {

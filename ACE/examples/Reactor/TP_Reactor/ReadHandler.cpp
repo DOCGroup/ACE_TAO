@@ -68,7 +68,7 @@ int ReadHandler::handle_input(ACE_HANDLE) {
          */
 
         // increase the call counter so the next client request goes to else-if
-        mCallCounter++;
+        ++mCallCounter;
 
         // get the desired size from the client
         // Note: only use the sizeof and pointer to int on compatible
@@ -115,7 +115,7 @@ int ReadHandler::handle_input(ACE_HANDLE) {
 
         // increase the call counter, this read handler should not be called
         // again
-        mCallCounter++;
+        ++mCallCounter;
 
         // receive the data from the client
         if (mStream.recv_n(mData.get (), mDataSize, &connTimeout) != mDataSize) {

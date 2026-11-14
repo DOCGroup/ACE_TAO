@@ -50,22 +50,22 @@ Parse_HTTP_Request::init (const char *request)
       char *p = this->request_;
 
       while (*p == ' ' || *p == '\t')
-        p++;
+        ++p;
 
       method = p++;
 
       while (*p != ' ' && *p != '\t')
-        p++;
+        ++p;
 
       *p++ = '\0';
 
       while (*p == ' ' || *p == '\t')
-        p++;
+        ++p;
 
       this->url_ = p;
 
       while (*p && !std::strchr (" \t\r\n", *p))
-        p++;
+        ++p;
 
       *p++ = '\0';
 
@@ -77,12 +77,12 @@ Parse_HTTP_Request::init (const char *request)
       else
         {
           while (*p == ' ' || *p == '\t')
-            p++;
+            ++p;
 
           this->version_ = p;
 
           while (*p && !std::strchr (" \t\r\n", *p))
-            p++;
+            ++p;
 
           *p++ = '\0';
         }

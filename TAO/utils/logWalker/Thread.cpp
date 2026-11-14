@@ -75,20 +75,20 @@ Thread::pending_local_addr () const
 void
 Thread::handle_request ()
 {
-  this->server_encounters_++;
+  ++this->server_encounters_;
   if (this->pending_.size() > 1)
-    this->nested_++;
+    ++this->nested_;
 }
 
 void
 Thread::enter_wait (PeerProcess *pp)
 {
   this->pending_.push_back (pp);
-  this->client_encounters_++;
+  ++this->client_encounters_;
   if (this->pending_.size() > this->max_depth_)
     this->max_depth_ = this->pending_.size();
   if (this->pending_.size() > 1)
-    this->nested_++;
+    ++this->nested_;
 }
 
 void
@@ -363,7 +363,7 @@ Thread::dump_incidents (ostream &strm, const ACE_Time_Value& relstart)
               break;
             }
           nested_queue.pop_back ();
-          level--;
+          --level;
           prev->dump_finish_line (strm, level, relstart);
         }
       if (nested_queue.size() > 1)

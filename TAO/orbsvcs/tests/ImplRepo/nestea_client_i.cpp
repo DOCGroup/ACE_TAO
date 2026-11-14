@@ -14,7 +14,7 @@ Nestea_Client_i::parse_args ()
     switch (c)
       {
       case 'd':  // debug flag
-        TAO_debug_level++;
+        ++TAO_debug_level;
         break;
       case 'k':  // ior provide on command line
         this->server_key_ = get_opts.opt_arg ();

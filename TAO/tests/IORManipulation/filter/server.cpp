@@ -75,7 +75,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           ACE_ERROR ((LM_ERROR,
                       "ERROR: profiles were not correctly filtered\n"));
-          status++;
+          ++status;
         }
 
       root_poa->destroy (true, true);
@@ -85,7 +85,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
-      status++;
+      ++status;
     }
 
   return status;

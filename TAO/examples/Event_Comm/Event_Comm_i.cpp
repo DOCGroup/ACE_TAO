@@ -291,7 +291,7 @@ Notifier_i::disconnect (char const *reason)
         }
 
       delete me->int_id_;
-      count++;
+      ++count;
     }
 
   this->map_.close ();
@@ -349,7 +349,7 @@ Notifier_i::push (Event_Comm::Event const &event)
               ex._tao_print_exception ("Unexpected exception\n");
               continue;
             }
-          count++;
+          ++count;
         }
     }
 

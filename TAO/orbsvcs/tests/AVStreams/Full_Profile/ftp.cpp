@@ -23,7 +23,7 @@ FTP_Client_Callback::handle_timeout (void *)
           if (std::feof (CLIENT::instance ()->file ()))
             {
               // wait for sometime for the data to be flushed to the other side.
-              this->count_++;
+              ++this->count_;
               if (this->count_ == 2)
                 {
                   ACE_DEBUG ((LM_DEBUG, "handle_timeout:End of file\n"));

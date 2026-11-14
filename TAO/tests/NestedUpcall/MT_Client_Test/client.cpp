@@ -71,7 +71,7 @@ MT_Client::parse_args ()
     switch (c)
       {
       case 'd':  // debug flag
-        TAO_debug_level++;
+        ++TAO_debug_level;
         break;
       case 'f': // read the IOR from the file.
         if ((this->client_number_ % 2) == 0)

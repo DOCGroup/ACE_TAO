@@ -11,7 +11,7 @@ Logger_Server::parse_args ()
     switch (c)
       {
       case 'd':  // debug flag.
-        TAO_debug_level++;
+        ++TAO_debug_level;
         break;
       case 'n':  // Set factory name to cmnd line arg
         service_name_ = get_opts.opt_arg ();

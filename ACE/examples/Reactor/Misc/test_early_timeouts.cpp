@@ -96,7 +96,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
           ACE_Time_Value const early_timeout = expected_ending_time_of_day - ending_time_of_day;
 
           // Increment number of early timers
-          no_of_early_timers++;
+          ++no_of_early_timers;
 
           // Check max early timeout
           if (early_timeout > maximum_early_timeout)

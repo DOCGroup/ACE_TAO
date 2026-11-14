@@ -57,7 +57,7 @@ public:
   int handle_close (ACE_HANDLE, ACE_Reactor_Mask mask) override
   {
     ACE_TEST_ASSERT (mask == ACE_Event_Handler::TIMER_MASK);
-    this->close_count_++;
+    ++this->close_count_;
     return 0;
   }
 

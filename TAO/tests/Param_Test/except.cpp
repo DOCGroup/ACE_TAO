@@ -43,7 +43,7 @@ Test_Exception::dii_req_invoke (CORBA::Request_ptr req)
 {
   try
     {
-      this->in_++;
+      ++this->in_;
       req->add_in_arg ("s1") <<= this->in_;
       req->add_inout_arg ("s2") <<= this->inout_;
       req->add_out_arg ("s3") <<= this->out_;
@@ -243,7 +243,7 @@ Test_Exception::run_sii_test (Param_Test_ptr objref)
 {
   try
     {
-      this->in_++;
+      ++this->in_;
       this->ret_ = objref->test_exception (this->in_,
                                            this->inout_,
                                            this->out_);

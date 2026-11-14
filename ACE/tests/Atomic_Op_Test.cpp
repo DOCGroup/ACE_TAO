@@ -158,10 +158,10 @@ int test (const ACE_TCHAR* type, int iterations)
   diff = ACE_OS::gettimeofday ();
   for (i = 0; i < iterations; ++i)
     {
-      foo--;
-      foo--;
-      foo--;
-      foo--;
+      --foo;
+      --foo;
+      --foo;
+      --foo;
     }
   diff = ACE_OS::gettimeofday () - diff;
   diff.to_usec (usec);
@@ -177,10 +177,10 @@ int test (const ACE_TCHAR* type, int iterations)
   diff = ACE_OS::gettimeofday ();
   for (i = 0; i < iterations; ++i)
     {
-      foo++;
-      foo++;
-      foo++;
-      foo++;
+      ++foo;
+      ++foo;
+      ++foo;
+      ++foo;
     }
   diff = ACE_OS::gettimeofday () - diff;
   diff.to_usec (usec);

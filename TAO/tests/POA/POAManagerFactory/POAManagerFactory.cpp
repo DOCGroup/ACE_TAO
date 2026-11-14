@@ -212,7 +212,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
             if (verbose)
               ACE_DEBUG ((LM_DEBUG, ACE_TEXT("failed\n")));
-            fail++;
+            ++fail;
           }
       }
 
@@ -258,7 +258,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
   catch (CORBA::Exception const &ex)
     {
-      fail++;
+      ++fail;
       if (verbose)
         ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("failed\n")));
       ex._tao_print_exception ("Exception caught");

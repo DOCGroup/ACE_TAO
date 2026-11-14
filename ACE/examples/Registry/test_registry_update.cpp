@@ -110,7 +110,7 @@ update_counter (HKEY predefined,
     // Counter was found
     {
       // increment counter
-      counter++;
+      ++counter;
       // Update
       result = application_context.rebind (counter_name,
                                            object);

@@ -86,7 +86,7 @@ Test_TypeCode::init_parameters (Param_Test_ptr)
   this->out_ = CORBA::TypeCode::_nil ();
   this->ret_ = CORBA::TypeCode::_nil ();
 
-  index++;
+  ++index;
   if (index >= sizeof(tc_table)/sizeof(tc_table[0]))
     index = 0;
 

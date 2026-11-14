@@ -11,7 +11,7 @@ void
 Echo_Callback::echo_payload (Test::Payload const &)
 {
   static int n {};
-  n++;
+  ++n;
   if (n == 30)
     ACE_OS::abort();
 

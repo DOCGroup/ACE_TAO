@@ -116,11 +116,11 @@ Test_Task::handle_input (ACE_HANDLE)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) handle_input\n"));
 
-  this->handled_++;
+  ++this->handled_;
 
   if (this->handled_ == NUM_INVOCATIONS)
     {
-      done_count--;
+      --done_count;
       ACE_DEBUG ((LM_DEBUG,
                   "(%t) handle_input, handled_ = %d, done_count = %d\n",
                   this->handled_, done_count.load ()));

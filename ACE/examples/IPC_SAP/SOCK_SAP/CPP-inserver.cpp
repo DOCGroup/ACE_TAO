@@ -133,7 +133,7 @@ twoway_server (void *arg)
                     "send_n"));
 
       total_bytes += size_t (r_bytes);
-      message_count++;
+      ++message_count;
 
       delete [] request;
       request = nullptr;
@@ -243,7 +243,7 @@ oneway_server (void *arg)
                     "ACE::write_n"));
 
       total_bytes += size_t (r_bytes);
-      message_count++;
+      ++message_count;
 
       delete [] request;
       request = nullptr;

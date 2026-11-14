@@ -940,7 +940,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       switch (opt)
         {
           case 'd':
-            debug++;
+            ++debug;
             break;
           case 'n':
             n = ACE_OS::atoi (get_opt.opt_arg ());

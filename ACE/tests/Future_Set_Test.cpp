@@ -248,7 +248,7 @@ Prime_Scheduler::~Prime_Scheduler ()
 int
 Prime_Scheduler::open (void *)
 {
-  task_count++;
+  ++task_count;
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Prime_Scheduler %s open\n"),
               this->name_));
@@ -264,7 +264,7 @@ Prime_Scheduler::shutdown ()
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Prime_Scheduler %s shutdown\n"),
               this->name_));
-  task_count--;
+  --task_count;
   return 0;
 }
 

@@ -217,7 +217,7 @@ to_name_helper (char *dest, char const *&src, Hint hint)
 
       if (*src == '\\')
         {
-          src++;
+          ++src;
           if (*src == '\0')
             {
               // Case: The very last component
@@ -252,7 +252,7 @@ TAO_Naming_Context::to_name (char const *sn)
       // Make a pass through the Name and count each character
       if (*j == '/')
         {
-          ncomp++;
+          ++ncomp;
         }
       else if (*j == '\\')
         {
@@ -298,7 +298,7 @@ TAO_Naming_Context::to_name (char const *sn)
 
       if (*k == '.')
         {
-          k++;
+          ++k;
           // Assign to kind
           this->to_name_helper (kind, k, HINT_KIND);
         }
@@ -310,12 +310,12 @@ TAO_Naming_Context::to_name (char const *sn)
       n[count].id   = id;
       n[count].kind = kind;
 
-      count++;
+      ++count;
 
       // End
        if (*k == '\0')
          break;
-      k++;
+      ++k;
     }
 
   return new CosNaming::Name (n);

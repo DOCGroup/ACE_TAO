@@ -131,7 +131,7 @@ public:
   // it does print statements within the signal handler.
   int handle_signal (int signum, siginfo_t *, ucontext_t *) override
   {
-    this->count_++;
+    ++this->count_;
     ACE_DEBUG ((LM_DEBUG,
                 "\nsignal %S occurred in Sig_Handler_1 (%s, %d, %d) with count = %d",
                 signum,
@@ -193,7 +193,7 @@ public:
 
   int handle_signal (int signum, siginfo_t *, ucontext_t *) override
   {
-    this->count_++;
+    ++this->count_;
     ACE_DEBUG ((LM_DEBUG,
                 "\nsignal %S occurred in Sig_Handler_2 (%s, %d, %d) with count = %d",
                 signum,

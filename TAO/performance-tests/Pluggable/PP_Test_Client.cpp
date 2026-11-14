@@ -114,7 +114,7 @@ PP_Test_Client::parse_args (int argc, ACE_TCHAR **argv)
         this->only_oneway_ = true;
         break;
       case 'd':  // debug flag
-        TAO_debug_level++;
+        ++TAO_debug_level;
         break;
       case 'n':                 // loop count
         this->loop_count_ = static_cast<CORBA::ULong> (ACE_OS::atoi (get_opts.opt_arg ()));
@@ -167,7 +167,7 @@ PP_Test_Client::send_oneway ()
     {
       ex._tao_print_exception ("from send_oneway");
 
-      this->error_count_++;
+      ++this->error_count_;
     }
 }
 
@@ -185,7 +185,7 @@ PP_Test_Client::send_void ()
     {
       ex._tao_print_exception ("from send_void");
 
-      this->error_count_++;
+      ++this->error_count_;
     }
 }
 

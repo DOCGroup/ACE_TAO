@@ -13,7 +13,7 @@ Cubit_Server::parse_args ()
     switch (c)
       {
       case 'd':  // debug flag.
-        TAO_debug_level++;
+        ++TAO_debug_level;
         break;
 
       case 'f': // output the IOR to a file.

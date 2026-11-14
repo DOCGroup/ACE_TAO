@@ -140,7 +140,7 @@ MyTask::create_proactor ()
       event_.signal ();
     }
 
-  threads_++;
+  ++threads_;
 }
 
 void
@@ -218,14 +218,14 @@ Receiver::Receiver ()
     io_count_ (0)
 {
   ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, mutex_);
-  sessions_++;
+  ++sessions_;
   ACE_DEBUG ((LM_DEBUG, "Receiver Ctor sessions_=%d\n", sessions_));
 }
 
 Receiver::~Receiver ()
 {
   ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, mutex_);
-  sessions_--;
+  --sessions_;
   ACE_OS::closesocket (this->handle_);
   ACE_DEBUG ((LM_DEBUG, "~Receiver Dtor sessions_=%d\n", sessions_));
 }
@@ -288,7 +288,7 @@ Receiver::initiate_read_stream ()
                         -1);
     }
 
-  io_count_++;
+  ++io_count_;
   return 0;
 }
 
@@ -313,7 +313,7 @@ Receiver::initiate_write_stream (ACE_Message_Block &mb, int nbytes)
                        -1);
     }
 
-  io_count_++;
+  ++io_count_;
   return 0;
 }
 
@@ -538,7 +538,7 @@ Sender::initiate_write_stream ()
                       "%p\n",
                       "ACE_Asynch_Write_Stream::write"),
                      -1);
-  io_count_++;
+  ++io_count_;
   return 0;
 }
 
@@ -568,7 +568,7 @@ Sender::initiate_read_stream ()
                         -1);
     }
 
-  io_count_++;
+  ++io_count_;
   return 0;
 }
 
@@ -764,7 +764,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       for (i = 0; i < senders; ++i)
         if (send_list[i]->open (host, port) == 0)
-          rc++;
+          ++rc;
     }
 
   if (rc > 0)

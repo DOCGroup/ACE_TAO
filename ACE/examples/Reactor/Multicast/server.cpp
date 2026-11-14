@@ -145,7 +145,7 @@ Server_Events::handle_timeout (ACE_Time_Value const &,
                   static_cast<char const *> (arg)));
     }
 
-  this->count_++;
+  ++this->count_;
   return 0;
 }
 
@@ -165,7 +165,7 @@ Server_Events::handle_input (ACE_HANDLE)
                              this->remote_addr_);
   if (retcode != -1)
     {
-      total_messages_received_++;
+      ++total_messages_received_;
       total_bytes_received_ += retcode;
       last_sequence_number_ =
         ACE_NTOHL (log_record_->sequence_number);

@@ -886,7 +886,7 @@ ECM_Local_Federation::supplier_timeout (RtecEventComm::PushConsumer_ptr consumer
   ACE_hrtime_t t = ACE_OS::gethrtime ();
   ORBSVCS_Time::hrtime_to_TimeT (s.header.creation_time, t);
 
-  this->event_count_--;
+  --this->event_count_;
 
   if (this->event_count_ < 0)
     {
@@ -899,7 +899,7 @@ ECM_Local_Federation::supplier_timeout (RtecEventComm::PushConsumer_ptr consumer
 
   consumer->push (sent);
 
-  this->send_count_++;
+  ++this->send_count_;
 
   ACE_Time_Value delta = ACE_OS::gettimeofday () -
     this->last_subscription_change_;
@@ -932,7 +932,7 @@ ECM_Local_Federation::consumer_push (ACE_hrtime_t,
     {
       RtecEventComm::Event const& e = event[i];
 
-      this->recv_count_++;
+      ++this->recv_count_;
 
       size_t j {};
       for (; j < this->federation_->consumer_types (); ++j)
@@ -941,12 +941,12 @@ ECM_Local_Federation::consumer_push (ACE_hrtime_t,
           if (type == this->federation_->consumer_ipaddr(j))
             {
               if (this->subscribed_bit (j) == 0)
-                this->unfiltered_count_++;
+                ++this->unfiltered_count_;
               break;
             }
         }
       if (j == this->federation_->consumer_types ())
-        this->invalid_count_++;
+        ++this->invalid_count_;
     }
 }
 

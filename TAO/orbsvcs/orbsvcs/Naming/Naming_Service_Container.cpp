@@ -82,7 +82,7 @@ ACE_Unbounded_List<T>::insert_tail (T const &item)
   // Point the head to the new dummy node.
   this->head_ = temp;
 
-  this->cur_size_++;
+  ++this->cur_size_;
   return 0;
 }
 
@@ -141,7 +141,7 @@ ACE_Unbounded_List<T>::delete_nodes ()
                              this->allocator_->free,
                              ACE_NS_Node,
                              <T>);
-      this->cur_size_--;
+      --this->cur_size_;
     }
 
   // Reset the list to be a circular list with just a dummy node.
@@ -238,7 +238,7 @@ ACE_Unbounded_List<T>::remove (T const &item)
       ACE_NS_Node<T> *temp = curr->next_;
       // Skip over the node that we're deleting.
       curr->next_ = temp->next_;
-      this->cur_size_--;
+      --this->cur_size_;
       ACE_DES_FREE_TEMPLATE (temp,
                              this->allocator_->free,
                              ACE_NS_Node,

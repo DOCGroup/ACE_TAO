@@ -120,7 +120,7 @@ Demux_Test_Client::parse_args ()
     switch (c)
       {
       case 'd':  // debug flag
-        TAO_debug_level++;
+        ++TAO_debug_level;
         break;
       case 'f':
         this->ior_fp_.reset (ACE_OS::fopen (get_opts.opt_arg (), "w"));
@@ -305,7 +305,7 @@ Demux_Test_Client::run_linear_test ()
 
             ACE_hrtime_t const end = ACE_OS::gethrtime ();
 
-            m++;
+            ++m;
             ACE_OS::fprintf (this->result_fp_.get (), "%d %f\n", m,
                              1.0 * ACE_UINT64_DBLCAST_ADAPTER (end - start));
           }

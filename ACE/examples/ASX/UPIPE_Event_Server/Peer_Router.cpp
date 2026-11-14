@@ -182,7 +182,7 @@ Peer_Router<PH, PK>::send_peers (ACE_Message_Block *mb)
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) sending to peer via sd %d\n"),
                     ss->ext_id_));
 
-      iterations++;
+      ++iterations;
       bytes += ss->int_id_->put (data_block);
     }
 

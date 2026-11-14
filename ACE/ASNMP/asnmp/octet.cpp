@@ -439,7 +439,7 @@ int OctetStr::left_comparison (long n, OctetStr const &o) const
             return -1;                          // less than
       if ( smival.value.string.ptr[z] > o.smival.value.string.ptr[z])
             return 1;                           // greater than
-      z++;
+      ++z;
    }
 
    if (( z == 0) &&
@@ -576,10 +576,10 @@ char const *OctetStr::to_string_hex ()
         std::sprintf (buf_ptr, "%c", *bytes);
       else
         std::sprintf (buf_ptr, ".");
-      bytes++;
-      buf_ptr++;
+      ++bytes;
+      ++buf_ptr;
     }
-    cnt++;
+    ++cnt;
 
        /*----------------------------------------------------------*/
        /* this is to make sure that the ASCII displays line up for */

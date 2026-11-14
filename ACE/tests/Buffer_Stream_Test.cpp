@@ -185,7 +185,7 @@ Consumer::svc ()
         {
           output = mb->rd_ptr ();
           ACE_TEST_ASSERT (*c == output[0]);
-          c++;
+          ++c;
         }
       mb->release ();
 

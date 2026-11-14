@@ -135,7 +135,7 @@ Event_Handler::handle_close (ACE_HANDLE,
       break;
     }
 
-  iteration++;
+  ++iteration;
   delete this;
 
   return 0;

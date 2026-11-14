@@ -58,7 +58,7 @@ Generator::gen_string (int max_length)
       if (ACE_OS::ace_isprint (c) && !ACE_OS::ace_isspace (c))
         {
           buf [i] = c;
-          i++;
+          ++i;
         }
     }
 
@@ -86,7 +86,7 @@ Generator::gen_wstring (int max_length)
       if (wc)
         {
           buf[i] = wc;
-          i++;
+          ++i;
         }
     }
 

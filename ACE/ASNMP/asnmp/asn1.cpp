@@ -191,7 +191,7 @@ u_char * asn1::build_int( u_char *data,
   /* mask is 0xFF800000 on a big-endian machine */
   while((((integer & mask) == 0) || ((integer & mask) == mask))
         && intsize > 1){
-    intsize--;
+    --intsize;
     integer <<= 8;
   }
   data = asn1::build_header(data, datalength, type, intsize);
@@ -243,7 +243,7 @@ u_char * asn1::build_unsigned_int( u_char *data,
   if ((u_char)((integer & mask) >> (8 * (sizeof(long) - 1))) & 0x80){
     /* if MSB is set */
     add_null_byte = 1;
-    intsize++;
+    ++intsize;
   }
   /*
    * Truncate "unnecessary" bytes off of the most significant end of this 2's complement integer.
@@ -253,7 +253,7 @@ u_char * asn1::build_unsigned_int( u_char *data,
   mask = u_long (0x1FF) << ((8 * (sizeof(u_long) - 1)) - 1);
   /* mask is 0xFF800000 on a big-endian machine */
   while((((integer & mask) == 0) || ((integer & mask) == mask)) && intsize > 1){
-    intsize--;
+    --intsize;
     integer <<= 8;
   }
   data = asn1::build_header(data, datalength, type, intsize);
@@ -264,7 +264,7 @@ u_char * asn1::build_unsigned_int( u_char *data,
   *datalength -= intsize;
   if (add_null_byte == 1){
     *data++ = '\0';
-    intsize--;
+    --intsize;
   }
   mask = u_long (0xFF) << (8 * (sizeof(u_long) - 1));
   /* mask is 0xFF000000 on a big-endian machine */
@@ -571,7 +571,7 @@ u_char *asn1::parse_objid( u_char *data,
     subidentifier = 0;
     do {        /* shift and add in low order 7 bits */
       subidentifier = (subidentifier << 7) + (*(u_char *)bufp & ~ASN_BIT8);
-      length--;
+      --length;
     } while (*(u_char *)bufp++ & ASN_BIT8);     /* last byte has high bit clear */
     if (subidentifier > (u_long)MAX_SUBID){
       ASNERROR("subidentifier too long");
@@ -917,7 +917,7 @@ u_char * asn1::build_unsigned_int64( u_char *data,
   if ((u_char)((high & mask) >> (8 * (sizeof(long) - 1))) & 0x80){
     /* if MSB is set */
     add_null_byte = 1;
-    intsize++;
+    ++intsize;
   }
   /*
    * Truncate "unnecessary" bytes off of the most significant end of this 2's
@@ -929,7 +929,7 @@ u_char * asn1::build_unsigned_int64( u_char *data,
   /* mask2 is 0xFF800000 on a big-endian machine */
   while((((high & mask2) == 0) || ((high & mask2) == mask2))
         && intsize > 1){
-    intsize--;
+    --intsize;
     high = (high << 8)
       | ((low & mask) >> (8 * (sizeof(long) - 1)));
     low <<= 8;
@@ -942,7 +942,7 @@ u_char * asn1::build_unsigned_int64( u_char *data,
   *datalength -= intsize;
   if (add_null_byte == 1){
     *data++ = '\0';
-    intsize--;
+    --intsize;
   }
   while(intsize--){
     *data++ = (u_char)((high & mask) >> (8 * (sizeof(long) - 1)));

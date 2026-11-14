@@ -19,7 +19,7 @@ void
 Server_Request_Interceptor::receive_request_service_contexts (
     PortableInterceptor::ServerRequestInfo_ptr)
 {
-  this->request_count_++;
+  ++this->request_count_;
 }
 
 void

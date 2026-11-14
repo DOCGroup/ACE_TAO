@@ -406,14 +406,14 @@ RR_Object_Group::unbind (char const *id)
   while (member_id != *(iter.next ()))
     {
       iter.advance ();
-      position++;
+      ++position;
     }
   std::unique_ptr<std::string> const removed_id (iter.next ());
   iter.remove ();
 
   // Update <next_> if necessary to reflect the deletion.
   if (position < next_)
-    next_--;
+    --next_;
 
   else if (position == next_)
     next_ = next_ % (members_.current_size ());

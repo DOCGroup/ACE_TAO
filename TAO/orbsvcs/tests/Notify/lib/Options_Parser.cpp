@@ -139,7 +139,7 @@ TAO_Notify_Tests_Options_Parser::execute (CosNotification::QoSProperties& qos, A
               if (TAO_debug_level > 0)
                 ACE_DEBUG ((LM_DEBUG, "QoS Parser parsed lane: - %d, %d, %d\n",
                             tpl_params.lanes[l_index].lane_priority, tpl_params.lanes[l_index].static_threads, tpl_params.lanes[l_index].dynamic_threads));
-              l_index++;
+              ++l_index;
             }
           else
             break;

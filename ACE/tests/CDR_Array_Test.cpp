@@ -554,7 +554,7 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
                 CDR_Test<T,H>::ttoh (v, rs);
                 ACE_DEBUG ((LM_DEBUG, "Read idata[%d] = %s\n", i, rs));
                 idata[i] = v;
-                i++;
+                ++i;
 #else
                 is >> idata[i++];
                 is >> idata[i++];
@@ -619,7 +619,7 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
                        ACE_TEXT ( "Wrong value at pos %d:" )
                        ACE_TEXT ( " '%C' should be '%C'.\n" ),
                        i, rs, cs));
-            errors++;
+            ++errors;
             if (errors == maxerrors)
               {
                 ACE_ERROR((LM_ERROR,

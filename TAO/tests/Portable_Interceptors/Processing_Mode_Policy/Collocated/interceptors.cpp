@@ -44,7 +44,7 @@ Echo_Client_Request_Interceptor::send_request (
   // Do not count the _is_a calls
   if (std::strcmp (op.in (), "_is_a") != 0)
     {
-      client_interceptor_check_++;
+      ++client_interceptor_check_;
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -80,7 +80,7 @@ Echo_Client_Request_Interceptor::receive_other (
   // Do not count the _is_a calls
   if (std::strcmp (op.in (), "_is_a") != 0)
     {
-      client_interceptor_check_++;
+      ++client_interceptor_check_;
     }
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Client_Request_Interceptor::receive_other "
@@ -97,7 +97,7 @@ Echo_Client_Request_Interceptor::receive_reply (
   // Do not count the _is_a calls
   if (std::strcmp (op.in (), "_is_a") != 0)
     {
-      client_interceptor_check_++;
+      ++client_interceptor_check_;
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -147,7 +147,7 @@ Echo_Client_Request_Interceptor::receive_exception (
   // Do not count the _is_a calls
   if (std::strcmp (op.in (), "_is_a") != 0)
     {
-      client_interceptor_check_++;
+      ++client_interceptor_check_;
     }
 
   CORBA::String_var exception_id =

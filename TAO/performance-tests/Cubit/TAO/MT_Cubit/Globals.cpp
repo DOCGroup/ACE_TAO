@@ -158,10 +158,10 @@ MT_Priority::get_low_priority (u_int num_low_priority,
              (policy, ACE_SCOPE_THREAD);
            priority_iterator.more ();
            priority_iterator.next ())
-        this->num_priorities_++;
+        ++this->num_priorities_;
 
       // 1 priority is exclusive for the high priority client.
-      this->num_priorities_--;
+      --this->num_priorities_;
 
       // Drop the priority, so that the priority of clients will
       // increase with increasing client number.

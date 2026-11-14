@@ -367,7 +367,7 @@ find (CCS::Controller::SearchSeq & slist)
                     slist[len].key = slist[i].key;
                     slist[len].device = where->second->_this ();
                 }
-                num_found++;
+                ++num_found;
 
                 // Find next matching device with this key.
                 where = std::find_if (++where,

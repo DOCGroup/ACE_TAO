@@ -20,7 +20,7 @@ void
 Receiver::receive_data (Test::Payload const &payload)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
-  this->message_count_++;
+  ++this->message_count_;
   this->byte_count_ += payload.length ();
 }
 

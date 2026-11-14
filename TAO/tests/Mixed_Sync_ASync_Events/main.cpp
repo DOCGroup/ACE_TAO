@@ -48,7 +48,7 @@ parse_args (int argc, ACE_TCHAR *argv[], Options &options)
         options.max_count = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'd':
-        TAO_debug_level++;
+        ++TAO_debug_level;
         break;
       case '?':
       default:

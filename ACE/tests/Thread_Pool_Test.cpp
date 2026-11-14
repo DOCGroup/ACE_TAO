@@ -240,7 +240,7 @@ Thread_Pool::test_queue_deactivation_shutdown ()
           if (count == n_iterations)
             n = 1; // Indicate that we need to shut down.
           else
-            count++;
+            ++count;
 
           if (count == 0 || (count % 20 == 0))
             ACE_OS::sleep (1);
@@ -327,7 +327,7 @@ Thread_Pool::test_empty_message_shutdown ()
           if (count == n_iterations)
             n = 1; // Indicate that we need to shut down.
           else
-            count++;
+            ++count;
 
           if (count == 0 || (count % 20 == 0))
             ACE_OS::sleep (1);

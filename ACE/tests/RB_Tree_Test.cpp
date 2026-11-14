@@ -669,7 +669,7 @@ ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_partial_iteration
                     ACE_TEXT ("Partial rev iter, pass %d %p\n"),
                     i,
                     ACE_TEXT ("failure")));
-      part_rev_iter_++;
+      ++part_rev_iter_;
     }
 
   part_fwd_iter_ = ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> (key_array_ [5], stable_tree_);
@@ -683,7 +683,7 @@ ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_partial_iteration
                     ACE_TEXT ("Partial fwd iter, pass %d %p\n"),
                     k,
                     ACE_TEXT ("failure")));
-      part_fwd_iter_++;
+      ++part_fwd_iter_;
     }
 }
 
@@ -762,10 +762,10 @@ ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_post_deletion_ite
                     ACE_TEXT ("failure")));
 
       // Advance each iterator via postfix increment.
-      stable_fwd_iter_++;
-      stable_rev_iter_++;
-      deprecated_fwd_iter_++;
-      deprecated_rev_iter_++;
+      ++stable_fwd_iter_;
+      ++stable_rev_iter_;
+      ++deprecated_fwd_iter_;
+      ++deprecated_rev_iter_;
     }
 
   // Make sure each item in each tree has been visited a second time.

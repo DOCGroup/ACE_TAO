@@ -599,7 +599,7 @@ Log::parse_handler_open_i (bool is_ssl)
   c = std::strstr (c + 1, "on ");
   c += 3;
   if (*c == '[')
-    c++;
+    ++c;
   long handle = std::strtol (c, nullptr, 10);
   PeerProcess *pp = this->thr_->peek_new_connection();
   if (this->conn_waiters_.size() > 0)

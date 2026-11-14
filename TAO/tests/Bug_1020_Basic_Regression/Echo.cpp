@@ -16,7 +16,7 @@ Echo::echo_payload (Test::Payload &)
                      ace_mon,
                      this->mutex_));
 
-  this->abort_counter_--;
+  --this->abort_counter_;
 
   if (this->abort_counter_ == 0)
     {

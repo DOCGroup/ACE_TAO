@@ -39,7 +39,7 @@ Peer_Router_Context::send_peers (ACE_Message_Block *mb)
                     ACE_TEXT ("(%t) sending to peer via handle %d\n"),
                     ss->ext_id_));
 
-      iterations++;
+      ++iterations;
 
       // Increment reference count before sending since the
       // <Peer_Handler> might be running in its own thread of control.
@@ -69,14 +69,14 @@ Peer_Router_Context::bind_peer (ROUTING_KEY key,
 void
 Peer_Router_Context::duplicate ()
 {
-  this->reference_count_++;
+  ++this->reference_count_;
 }
 
 void
 Peer_Router_Context::release ()
 {
   ACE_ASSERT (this->reference_count_ > 0);
-  this->reference_count_--;
+  --this->reference_count_;
 
   if (this->reference_count_ == 0)
     delete this;

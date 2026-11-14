@@ -47,7 +47,7 @@ Log_Wrapper::open (int port, char const *mcast_addr)
 int
 Log_Wrapper::log_message (Log_Priority type, char *message)
 {
-  sequence_number_++;
+  ++sequence_number_;
 
   this->log_msg_.type = type;
   // Casting time() to long will start causing bad results sometime in 2038

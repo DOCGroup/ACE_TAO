@@ -149,7 +149,7 @@ TimeoutClient::send (bool async,
     }
   catch (CORBA::TIMEOUT const &)
     {
-      local_reply_excep_counter_++;
+      ++local_reply_excep_counter_;
 
       // Trap this exception and continue...
       ACE_DEBUG ((LM_DEBUG,

@@ -131,7 +131,7 @@ DT_Creator::init (int argc, ACE_TCHAR *argv [])
             }
           else
             {
-              poa_count++;
+              ++poa_count;
             }
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Job")) == 0)
@@ -147,7 +147,7 @@ DT_Creator::init (int argc, ACE_TCHAR *argv [])
             }
           else
             {
-              job_count++;
+              ++job_count;
             }
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-OutFile"))))

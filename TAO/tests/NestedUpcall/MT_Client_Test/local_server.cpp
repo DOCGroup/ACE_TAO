@@ -69,7 +69,7 @@ MT_Server::parse_args ()
     switch (c)
       {
       case 'd':  // debug flag.
-        TAO_debug_level++;
+        ++TAO_debug_level;
         break;
       case 'f': // The local server thread uses the first server's IOR.
         if (this->read_ior (get_opts.opt_arg ()) < 0)

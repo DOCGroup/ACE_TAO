@@ -379,7 +379,7 @@ AdminProperties::create_suppliers ()
 
           supplier->connect (this->supplier_admin_.in ());
 
-          this->suppliers_connected_count_++;
+          ++this->suppliers_connected_count_;
         }
     }
   catch (CORBA::IMP_LIMIT const &)
@@ -414,7 +414,7 @@ AdminProperties::create_consumers ()
 
           consumer->connect (this->consumer_admin_.in ());
 
-          this->consumers_connected_count_++;
+          ++this->consumers_connected_count_;
         }
     }
   catch (CORBA::IMP_LIMIT const &)

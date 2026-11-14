@@ -792,8 +792,8 @@ Server::initiate_read_stream ()
                         -1);
     }
 
-  this->io_count_++;
-  this->total_r_++;
+  ++this->io_count_;
+  ++this->total_r_;
   return 0;
 }
 
@@ -832,8 +832,8 @@ Server::initiate_write_stream (ACE_Message_Block &mb, size_t nbytes)
                        -1);
     }
 
-  this->io_count_++;
-  this->total_w_++;
+  ++this->io_count_;
+  ++this->total_w_;
   return 0;
 }
 
@@ -1372,8 +1372,8 @@ Client::initiate_write_stream ()
     }
 #endif /* defined (ACE_WIN32) */
 
-  this->io_count_++;
-  this->total_w_++;
+  ++this->io_count_;
+  ++this->total_w_;
   return 0;
 }
 
@@ -1470,8 +1470,8 @@ Client::initiate_read_stream ()
     }
 #endif /* defined (ACE_WIN32) */
 
-  this->io_count_++;
-  this->total_r_++;
+  ++this->io_count_;
+  ++this->total_r_;
   return 0;
 }
 

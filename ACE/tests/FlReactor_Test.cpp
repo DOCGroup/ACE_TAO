@@ -79,7 +79,7 @@ Test_Window::sides (int s)
 void
 Test_Window::incr_sides ()
 {
-  this->sides_++;
+  ++this->sides_;
   if (this->sides_ > 10)
     this->sides_ = 3;
   this->redraw ();

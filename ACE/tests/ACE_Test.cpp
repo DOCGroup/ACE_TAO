@@ -31,7 +31,7 @@ log2_test ()
       if (result != results [i])
         {
           ACE_ERROR ((LM_ERROR, ACE_TEXT ("Log2 error: input %d, output %d, expected %d\n"), values [i], result, results [i]));
-          error_count++;
+          ++error_count;
         }
     }
 

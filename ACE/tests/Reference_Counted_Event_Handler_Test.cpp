@@ -234,7 +234,7 @@ reference_counted_event_handler_test_1 (ACE_Reactor *reactor)
                     ACE_TEXT ("line %l %p\n"),
                     ACE_TEXT ("register pipe write")));
       else
-        events++;
+        ++events;
     }
 
   if (test_timers)
@@ -277,7 +277,7 @@ reference_counted_event_handler_test_1 (ACE_Reactor *reactor)
                     ACE_TEXT ("line %l %p\n"),
                     ACE_TEXT ("schedule_timer")));
       else
-        events++;
+        ++events;
     }
 
   while (events > 0)
@@ -378,7 +378,7 @@ reference_counted_event_handler_test_2 (ACE_Reactor *reactor)
                     ACE_TEXT ("line %l %p\n"),
                     ACE_TEXT ("register pipe write")));
       else
-        events++;
+        ++events;
     }
 
   if (test_timers)
@@ -433,7 +433,7 @@ reference_counted_event_handler_test_2 (ACE_Reactor *reactor)
                     ACE_TEXT ("line %l %p\n"),
                     ACE_TEXT ("schedule_timer")));
       else
-        events++;
+        ++events;
     }
 
   while (events > 0)
@@ -688,7 +688,7 @@ simple_event_handler (ACE_Reactor *reactor)
                     ACE_TEXT ("line %l %p\n"),
                     ACE_TEXT ("register pipe write")));
       else
-        events++;
+        ++events;
     }
 
   if (test_timers)
@@ -741,7 +741,7 @@ simple_event_handler (ACE_Reactor *reactor)
                     ACE_TEXT ("line %l %p\n"),
                     ACE_TEXT ("schedule_timer")));
       else
-        events++;
+        ++events;
     }
 
   while (events > 0)
@@ -809,7 +809,7 @@ Closed_In_Upcall_Event_Handler::handle_input (ACE_HANDLE)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Closed_In_Upcall_Event_Handler::handle_input()\n")));
 
-  this->events_--;
+  --this->events_;
 
   if (0 != this->reactor ()->remove_handler (this->pipe_.read_handle (),
                                              ACE_Event_Handler::ALL_EVENTS_MASK))

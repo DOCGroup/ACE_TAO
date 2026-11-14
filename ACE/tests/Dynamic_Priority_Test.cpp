@@ -160,7 +160,7 @@ order_consumer (void *args)
     if (result == -1)
       break;
 
-    local_count++;
+    ++local_count;
 
     ACE_TEST_ASSERT (*expected == *mb->rd_ptr ());
   }

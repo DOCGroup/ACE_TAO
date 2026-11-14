@@ -104,7 +104,7 @@ consumer (void *)
       UPIPE_Event_Server::Message_Block_Owner message {mb_p};
       if (mb_p->length () > 1)
         {
-          cnt++;
+          ++cnt;
           if (verb)
             {
               cout << " consumer received message !!!!!! "
@@ -181,7 +181,7 @@ supplier (void *dummy)
           return ACE_THR_FUNC_RETURN_NULL;
         }
       message_block.release ();
-      n++;
+      ++n;
     }
 
   ACE_Message_Block *mb_p {};

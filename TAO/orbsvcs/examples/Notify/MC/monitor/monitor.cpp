@@ -297,7 +297,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       ACE_ERROR ((LM_ERROR,
                   "Notification Service Monitor: "
                   "unexpected exception type\n"));
-      status++;
+      ++status;
     }
 
   return status;

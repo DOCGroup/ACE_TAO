@@ -257,7 +257,7 @@ Cubit_Client::parse_args ()
         this->enable_test (test_mask);
         break;
       case 'd':  // debug flag
-        TAO_debug_level++;
+        ++TAO_debug_level;
         break;
       case 'n':                 // loop count
         result = ACE_OS::atoi (get_opts.opt_arg ());
@@ -389,7 +389,7 @@ Cubit_Client::cube_union ()
     {
       Cubit::oneof u;
 
-      this->call_count_++;
+      ++this->call_count_;
 
       u.l (3); // use the long union branch.
 
@@ -409,10 +409,10 @@ Cubit_Client::cube_union ()
       if (u.l () != r.l ())
         {
           ACE_DEBUG ((LM_DEBUG, "** cube_union ERROR\n"));
-          this->error_count_++;
+          ++this->error_count_;
         }
 
-      this->call_count_++;
+      ++this->call_count_;
 
       Cubit::Many cm;
       cm.l = 7;
@@ -439,13 +439,13 @@ Cubit_Client::cube_union ()
           || u.cm ().o != r.cm ().o)
         {
           ACE_DEBUG ((LM_DEBUG, "** cube_union ERROR\n"));
-          this->error_count_++;
+          ++this->error_count_;
         }
     }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("from cube_union");
-      this->error_count_++;
+      ++this->error_count_;
     }
 }
 
@@ -467,7 +467,7 @@ Cubit_Client::cube_short (int i)
       }
 
 
-      this->call_count_++;
+      ++this->call_count_;
 
       if (TAO_debug_level > 2)
         {
@@ -484,13 +484,13 @@ Cubit_Client::cube_short (int i)
                       (CORBA::Short) this->func (i),
                       ret_short));
 
-          this->error_count_++;
+          ++this->error_count_;
         }
     }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("from cube_short");
-      this->error_count_++;
+      ++this->error_count_;
     }
 }
 
@@ -503,12 +503,12 @@ Cubit_Client::cube_oneway (int)
     {
       ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_ONEWAY_START);
       this->cubit_->cube_oneway ();
-      this->call_count_++;
+      ++this->call_count_;
     }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("from cube_oneway");
-      this->error_count_++;
+      ++this->error_count_;
     }
 }
 
@@ -519,12 +519,12 @@ Cubit_Client::cube_void (int)
     {
       ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_VOID_START);
       this->cubit_->cube_void ();
-      this->call_count_++;
+      ++this->call_count_;
     }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("from cube_void");
-      this->error_count_++;
+      ++this->error_count_;
     }
 }
 
@@ -546,7 +546,7 @@ Cubit_Client::cube_octet (int i)
       }
 
 
-      this->call_count_++;
+      ++this->call_count_;
 
       if (TAO_debug_level > 2)
         {
@@ -564,13 +564,13 @@ Cubit_Client::cube_octet (int i)
                       (CORBA::Octet) this->func (i),
                       ret_octet));
 
-          this->error_count_++;
+          ++this->error_count_;
         }
     }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("from cube_octet");
-      this->error_count_++;
+      ++this->error_count_;
     }
 }
 
@@ -592,7 +592,7 @@ Cubit_Client::cube_long (int i)
       }
 
 
-      this->call_count_++;
+      ++this->call_count_;
 
       if (TAO_debug_level > 2)
         {
@@ -613,13 +613,13 @@ Cubit_Client::cube_long (int i)
                       (CORBA::Long) this->func (i),
                       ret_long));
 
-          this->error_count_++;
+          ++this->error_count_;
         }
     }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("from cube_long");
-      this->error_count_++;
+      ++this->error_count_;
     }
 }
 
@@ -633,7 +633,7 @@ Cubit_Client::cube_struct (int i)
       Cubit::Many arg_struct;
       Cubit::Many ret_struct;
 
-      this->call_count_++;
+      ++this->call_count_;
 
       arg_struct.l = this->func (i);
       arg_struct.s = this->func (i);
@@ -663,13 +663,13 @@ Cubit_Client::cube_struct (int i)
         {
           ACE_ERROR ((LM_ERROR, "** cube_struct ERROR\n"));
 
-          this->error_count_++;
+          ++this->error_count_;
         }
     }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("from cube_struct");
-      this->error_count_++;
+      ++this->error_count_;
     }
 }
 
@@ -681,7 +681,7 @@ Cubit_Client::cube_long_sequence (int,
 {
   try
     {
-      this->call_count_++;
+      ++this->call_count_;
 
       Cubit::long_seq input (l);
       input.length (l);
@@ -713,7 +713,7 @@ Cubit_Client::cube_long_sequence (int,
           ACE_ERROR ((LM_ERROR,
                       "** cube sequence, wrong length\n"));
 
-          this->error_count_++;
+          ++this->error_count_;
 
           return;
         }
@@ -732,13 +732,13 @@ Cubit_Client::cube_long_sequence (int,
           ACE_ERROR ((LM_ERROR,
                       "** cube_long_sequence ERROR\n"));
 
-          this->error_count_++;
+          ++this->error_count_;
         }
     }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("from cube_long_sequence");
-      this->error_count_++;
+      ++this->error_count_;
     }
 }
 
@@ -748,7 +748,7 @@ Cubit_Client::cube_octet_sequence (int,
 {
   try
     {
-      this->call_count_++;
+      ++this->call_count_;
 
       ACE_Message_Block mb (l);
       mb.wr_ptr (l);
@@ -797,7 +797,7 @@ Cubit_Client::cube_octet_sequence (int,
           ACE_ERROR ((LM_ERROR,
                       "** cube octet, wrong length\n"));
 
-          this->error_count_++;
+          ++this->error_count_;
 
           return;
         }
@@ -815,13 +815,13 @@ Cubit_Client::cube_octet_sequence (int,
           ACE_ERROR ((LM_ERROR,
                       "** cube_octet ERROR\n"));
 
-          this->error_count_++;
+          ++this->error_count_;
         }
     }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("from cube_octet_sequence");
-      this->error_count_++;
+      ++this->error_count_;
     }
 }
 
@@ -833,7 +833,7 @@ Cubit_Client::cube_many_sequence (int,
 {
   try
     {
-      this->call_count_++;
+      ++this->call_count_;
 
       Cubit::many_seq input (l);
       input.length (l);
@@ -873,7 +873,7 @@ Cubit_Client::cube_many_sequence (int,
           ACE_ERROR ((LM_ERROR,
                       "** cube sequence, wrong length\n"));
 
-          this->error_count_++;
+          ++this->error_count_;
 
           return;
         }
@@ -895,13 +895,13 @@ Cubit_Client::cube_many_sequence (int,
           ACE_ERROR ((LM_ERROR,
                       "** cube_long_sequence ERROR\n"));
 
-          this->error_count_++;
+          ++this->error_count_;
         }
     }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("from cube_many_sequence");
-      this->error_count_++;
+      ++this->error_count_;
     }
 }
 
@@ -912,7 +912,7 @@ Cubit_Client::cube_rti_data (int,
 {
   try
     {
-      this->call_count_++;
+      ++this->call_count_;
 
       Cubit::RtiPacket input;
       input.packetHeader.packetLength = 1; // this is probably redundant
@@ -997,7 +997,7 @@ Cubit_Client::cube_rti_data (int,
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("from cube_rtti_data");
-      this->error_count_++;
+      ++this->error_count_;
     }
 }
 
@@ -1024,7 +1024,7 @@ Cubit_Client::cube_any (int i)
 
       *ret_any >>= ret_long;
 
-      this->call_count_++;
+      ++this->call_count_;
 
       if (TAO_debug_level > 2)
         {
@@ -1043,7 +1043,7 @@ Cubit_Client::cube_any (int i)
                       (CORBA::Long) this->func (i),
                       ret_long, arg_long));
 
-          this->error_count_++;
+          ++this->error_count_;
         }
 
       delete ret_any;
@@ -1051,7 +1051,7 @@ Cubit_Client::cube_any (int i)
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("from cube_any");
-      this->error_count_++;
+      ++this->error_count_;
     }
 }
 
@@ -1066,7 +1066,7 @@ Cubit_Client::cube_any_struct (int i)
       Cubit::Many arg_struct;
       const Cubit::Many * ret_struct = 0;
 
-      this->call_count_++;
+      ++this->call_count_;
 
       arg_struct.l = this->func (i);
       arg_struct.s = this->func (i);
@@ -1100,7 +1100,7 @@ Cubit_Client::cube_any_struct (int i)
           ACE_ERROR ((LM_ERROR, "** cube_any_struct ERROR -- %d should be %d\n",
                       ret_struct->l, arg_struct.l));
 
-          this->error_count_++;
+          ++this->error_count_;
         }
 
       delete ret_any;
@@ -1108,7 +1108,7 @@ Cubit_Client::cube_any_struct (int i)
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("from cube_any_struct");
-      this->error_count_++;
+      ++this->error_count_;
     }
 }
 

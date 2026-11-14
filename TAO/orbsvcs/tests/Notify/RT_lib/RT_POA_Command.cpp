@@ -86,7 +86,7 @@ TAO_Notify_Tests_RT_POA_Command::init (ACE_Arg_Shifter& arg_shifter)
                                         lanes_[l_index].lane_priority,
                                         lanes_[l_index].static_threads,
                                         lanes_[l_index].dynamic_threads));
-                          l_index++;
+                          ++l_index;
                         }
                       else
                         break;
@@ -120,7 +120,7 @@ TAO_Notify_Tests_RT_POA_Command::init (ACE_Arg_Shifter& arg_shifter)
                           if (TAO_debug_level > 0)
                             ACE_DEBUG ((LM_DEBUG, "POA Create: band parsed - %d, %d\n",
                                         bands_[b_index].low, bands_[b_index].high));
-                          b_index++;
+                          ++b_index;
                         }
                       else
                         break;

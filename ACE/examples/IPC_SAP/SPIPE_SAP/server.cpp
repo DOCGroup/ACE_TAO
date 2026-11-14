@@ -70,7 +70,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                 if (handle + 1 == width)
                   {
                     while (poll_array[handle].fd == -1)
-                      handle--;
+                      --handle;
                     width = handle + 1;
                   }
               }

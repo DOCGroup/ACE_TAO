@@ -27,7 +27,7 @@ void
 Echo_Client_Request_Interceptor::send_request (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-  client_interceptor_check_++;
+  ++client_interceptor_check_;
 
   CORBA::String_var op =
     ri->operation ();
@@ -64,7 +64,7 @@ void
 Echo_Client_Request_Interceptor::receive_other (
   PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-  client_interceptor_check_++;
+  ++client_interceptor_check_;
 
   CORBA::String_var op = ri->operation ();
 
@@ -80,7 +80,7 @@ void
 Echo_Client_Request_Interceptor::receive_reply (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-  client_interceptor_check_++;
+  ++client_interceptor_check_;
 
   CORBA::String_var op = ri->operation ();
 
@@ -128,7 +128,7 @@ void
 Echo_Client_Request_Interceptor::receive_exception (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-  client_interceptor_check_++;
+  ++client_interceptor_check_;
 
   CORBA::String_var op = ri->operation ();
 

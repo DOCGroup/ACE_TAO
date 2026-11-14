@@ -311,7 +311,7 @@ Demux_Test_Server::parse_args ()
     switch (c)
       {
       case 'd':  // debug flag
-        TAO_debug_level++;
+        ++TAO_debug_level;
         break;
       case 'f':
         this->ior_fp_.reset (ACE_OS::fopen (get_opts.opt_arg (), "w"));

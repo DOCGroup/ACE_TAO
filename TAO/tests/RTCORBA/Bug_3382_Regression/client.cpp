@@ -163,7 +163,7 @@ Task::svc ()
 
           server->test_method (priority);
 
-          native_priority++;
+          ++native_priority;
         }
 
       // Shut down Server ORB.

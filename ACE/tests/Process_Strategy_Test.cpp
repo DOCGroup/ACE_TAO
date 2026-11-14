@@ -335,7 +335,7 @@ Counting_Service::inc ()
               ACE_TEXT ("(%P|%t) incrementing count from %d to %d\n"),
               count,
               count + 1));
-  count++;
+  ++count;
 
   if (ACE_OS::pwrite (OPTIONS::instance ()->file_lock ().get_handle (),
                       (const void *) &count,

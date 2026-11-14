@@ -431,7 +431,7 @@ ACE::HTBP::Channel::recvv (iovec iov[],
             {
               iov2[ndx].iov_len = iov[i].iov_len - n;
               iov2[ndx].iov_base = (char *)iov[i].iov_base + n;
-              ndx++;
+              ++ndx;
             }
         }
       if (ndx > 0)

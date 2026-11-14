@@ -505,10 +505,10 @@ TAO_IMR_Op_Link::parse (int argc, ACE_TCHAR **argv)
           char *c2 = arg;
           while (c2 != 0)
             {
-              num++;
+              ++num;
               c2 = std::strchr (c2, ',');
               if (c2 != 0)
-                c2++;
+                ++c2;
             }
           num += last;
           this->peers_.length (num);

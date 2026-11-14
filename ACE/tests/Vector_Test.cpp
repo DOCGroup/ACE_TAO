@@ -56,7 +56,7 @@ int run_main (int, ACE_TCHAR *[])
       if (*p_item != iter_count)
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Iter pass %B got %B\n"),
                     iter_count, *p_item));
-      iter_count++;
+      ++iter_count;
       iter.advance();
     }
   if (iter_count != TOP)

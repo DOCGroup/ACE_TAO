@@ -205,7 +205,7 @@ Client_i::parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'd':
-        TAO_debug_level++;
+        ++TAO_debug_level;
         break;
       case 'n':
         this->loop_count_ = static_cast<u_int> (ACE_OS::atoi (get_opts.opt_arg ()));

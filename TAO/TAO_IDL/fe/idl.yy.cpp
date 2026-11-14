@@ -4273,7 +4273,7 @@ idl_atof (char const *s)
       if (*s == '-')
         {
             negexp = 1;
-            s++;
+            ++s;
         }
       else if (*s == '+')
         {

@@ -38,7 +38,7 @@ TP_Logging_Handler::handle_close (ACE_HANDLE handle,
       deferred_close_ = true;
   } else {
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, lock_, -1);
-    queued_count_--;
+    --queued_count_;
     if (queued_count_ == 0) close_now = deferred_close_;
   }
 

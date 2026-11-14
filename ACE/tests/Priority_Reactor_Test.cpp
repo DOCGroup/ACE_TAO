@@ -91,7 +91,7 @@ Read_Handler::open (void *)
   const int max_priority = 15;
 
   this->priority (ACE_Event_Handler::LO_PRIORITY + started_ % max_priority);
-  started_++;
+  ++started_;
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) created svc_handler for handle %d ")
@@ -120,7 +120,7 @@ Read_Handler::handle_input (ACE_HANDLE h)
       if (result != 0)
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) %p\n"),
                     ACE_TEXT ("Read_Handler::handle_input")));
-      waiting_--;
+      --waiting_;
 
       if (waiting_ == 0)
         {

@@ -59,7 +59,7 @@ int TestClient::parseCommands (int argc, ACE_TCHAR *argv[])
         {
           if (*opt == 'h') options_.expect_holding = true;
           else if (*opt == 'n') options_.expect_no_profile = true;
-          opt++;
+          ++opt;
         }
         break;
       }
