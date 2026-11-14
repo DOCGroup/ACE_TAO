@@ -92,7 +92,7 @@ public:
    * timeout/error/EOF, *@a bytes_transferred will contain the number of
    * bytes transferred.
    */
-  //@{
+  /// @{
   /// Try to recv exactly @a len bytes into @a buf from the connected socket.
   ssize_t recv_n (void *buf,
                   size_t len,
@@ -138,9 +138,10 @@ public:
                    const ACE_Time_Value *timeout = nullptr,
                    size_t *bytes_transferred = nullptr) const;
 
-  //@}
+  /// @}
 
-  // = Send/receive ``urgent'' data (see TCP specs...).
+  /// @name Urgent data operations
+  /// @{
   ssize_t send_urg (const void *ptr,
                     size_t len = sizeof (char),
                     const ACE_Time_Value *timeout = nullptr) const;
@@ -148,13 +149,16 @@ public:
   ssize_t recv_urg (void *ptr,
                     size_t len = sizeof (char),
                     const ACE_Time_Value *timeout = nullptr) const;
+  /// @}
 
-  // = Selectively close endpoints.
+  /// @name Selectively close endpoints
+  /// @{
   /// Close down the reader.
   int close_reader ();
 
   /// Close down the writer.
   int close_writer ();
+  /// @}
 
   /**
    * Close down the socket (we need this to make things work correctly
@@ -163,8 +167,10 @@ public:
    */
   int close ();
 
-  // = Meta-type info
+  /// @name Meta-type traits
+  /// @{
   using PEER_ADDR = ACE_INET_Addr;
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;
