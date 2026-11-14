@@ -7,6 +7,7 @@
 #include "tao/ORB_Core.h"
 
 #include <cstring>
+#include <memory>
 
 #if !defined(__ACE_INLINE__)
 #include "orbsvcs/FtRtEvent/Utils/FTEC_Gateway.inl"
@@ -269,7 +270,7 @@ void FTEC_Gateway::push(RtecEventChannelAdmin::ProxyPushConsumer_ptr proxy_consu
   PortableServer::ObjectId_var const object_id =
     impl_->poa->reference_to_id(proxy_consumer);
   FtRtecEventComm::ObjectId **result {};
-  std::memcpy (&result, &object_id[0], sizeof (FtRtecEventComm::ObjectId**));
+  std::memcpy (std::addressof (result), object_id->get_buffer (), sizeof (result));
 
   impl_->ftec->push(**result, data);
 }
@@ -290,7 +291,9 @@ FTEC_Gateway_ConsumerAdmin::obtain_push_supplier ()
 
   FtRtecEventComm::ObjectId local_oid;
   local_oid.length(sizeof(remote_proxy_oid_ptr));
-  std::memcpy (&local_oid[0], &remote_proxy_oid_ptr, sizeof (remote_proxy_oid_ptr));
+  std::memcpy (local_oid.get_buffer (),
+               std::addressof (remote_proxy_oid_ptr),
+               sizeof (remote_proxy_oid_ptr));
 
   RtecEventChannelAdmin::ProxyPushSupplier_ptr result;
   activate_object_with_id(result, impl_->poa.in(),
@@ -316,7 +319,9 @@ FTEC_Gateway_SupplierAdmin::obtain_push_consumer ()
 
   FtRtecEventComm::ObjectId local_oid;
   local_oid.length(sizeof(remote_proxy_oid_ptr));
-  std::memcpy (&local_oid[0], &remote_proxy_oid_ptr, sizeof (remote_proxy_oid_ptr));
+  std::memcpy (local_oid.get_buffer (),
+               std::addressof (remote_proxy_oid_ptr),
+               sizeof (remote_proxy_oid_ptr));
 
   RtecEventChannelAdmin::ProxyPushConsumer_ptr result;
   activate_object_with_id(result, impl_->poa.in(),
@@ -336,7 +341,7 @@ get_remote_oid_ptr(CORBA::ORB_ptr orb)
     current->get_object_id();
 
   FtRtecEventComm::ObjectId **result {};
-  std::memcpy (&result, &object_id[0], sizeof (FtRtecEventComm::ObjectId**));
+  std::memcpy (std::addressof (result), object_id->get_buffer (), sizeof (result));
   return result;
 }
 

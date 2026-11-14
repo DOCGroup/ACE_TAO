@@ -1,6 +1,7 @@
 // -*- C++ -*-
 
 #include <cstring>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO_FtRt
@@ -52,7 +53,7 @@ ACE_INLINE
 void UUID::to_string(ACE_CString& string) const
 {
   string.resize(STRING_LENGTH-1);
-  this->to_string(&string[0]);
+  this->to_string (std::addressof (string[0]));
 }
 }
 TAO_END_VERSIONED_NAMESPACE_DECL

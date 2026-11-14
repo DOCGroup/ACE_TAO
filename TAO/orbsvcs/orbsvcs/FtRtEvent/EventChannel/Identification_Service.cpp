@@ -34,7 +34,7 @@ namespace FTRTEC {
           if (!uuid.is_valid())
             ORBSVCS_ERROR_RETURN((LM_ERROR, "Invalid Object_ID\n"), -1);
           object_id_.length(16);
-          uuid.to_binary(&object_id_[0]);
+          uuid.to_binary(object_id_.get_buffer ());
         }
         --argc; ++argv;
       }
@@ -51,7 +51,7 @@ namespace FTRTEC {
     if (object_id_.length() == 0) {
       // assign an default value for object id
       object_id_.length(16);
-      std::memcpy (&object_id_[0], oid, 16);
+      std::memcpy (object_id_.get_buffer (), oid, 16);
     }
     service = this;
     return 0;
