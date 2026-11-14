@@ -68,7 +68,9 @@ public:
   /// Implicitly destroy the condition variable.
   ~ACE_Condition ();
 
-  // = Lock accessors.
+  /// @name Condition operations.
+  /// @{
+
   /**
    * Block on condition, or until absolute time-of-day has passed.  If
    * @a abstime == 0 use "blocking" <wait> semantics.  Else, if @a abstime
@@ -96,7 +98,11 @@ public:
   /// Signal *all* waiting threads.
   int broadcast ();
 
-  // = Utility methods.
+  /// @}
+
+  /// @name Utility methods.
+  /// @{
+
   /// Explicitly destroy the condition variable.
   int remove ();
 
@@ -105,6 +111,7 @@ public:
 
   /// Dump the state of an object.
   void dump () const;
+  /// @}
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
