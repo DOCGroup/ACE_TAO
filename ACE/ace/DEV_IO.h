@@ -43,7 +43,8 @@ public:
   /// Default constructor.
   ACE_DEV_IO ();
 
-  // = Various send operations.
+  /// @name Send and receive operations
+  /// @{
   /// send upto @a n bytes in @a buf.
   ssize_t send (const void *buf, size_t n) const;
 
@@ -149,24 +150,29 @@ public:
 
   /// Recv @a n bytes via Win32 ReadFile using overlapped I/O.
   ssize_t recv (void *buf, size_t n, ACE_OVERLAPPED *overlapped) const;
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;
 
-  // = The following two methods are no-ops to keep the
-  // ACE_Connector happy.
+  /// @name Connector compatibility accessors
+  /// @{
+  /// These methods are no-ops to keep ACE_Connector happy.
   /// Return the local endpoint address.
   int get_local_addr (ACE_DEV_Addr &) const;
 
   /// Return the address of the remotely connected peer (if there is
   /// one).
   int get_remote_addr (ACE_DEV_Addr &) const;
+  /// @}
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
-  // = Meta-type info
+  /// @name Meta-type traits
+  /// @{
   using PEER_ADDR = ACE_DEV_Addr;
+  /// @}
 
 private:
   /// Address of device we are connected to.

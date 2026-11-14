@@ -33,7 +33,8 @@ public:
   /// Interface for <ioctl>.
   int control (int cmd, void *) const;
 
-  // = Common I/O handle options related to sockets.
+  /// @name Common I/O handle options
+  /// @{
 
   /**
    * Enable asynchronous I/O (ACE_SIGIO), urgent data (ACE_SIGURG),
@@ -48,6 +49,7 @@ public:
    * which is passed as the @a value.
    */
   int disable (int value) const;
+  /// @}
 
   /// Get the underlying handle.
   ACE_HANDLE get_handle () const;
@@ -62,7 +64,8 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  // = Ensure that ACE_IPC_SAP is an abstract base class.
+  /// @name Construction
+  /// @{
   /// Default constructor.
   ACE_IPC_SAP ();
 
@@ -73,6 +76,7 @@ protected:
    * ACE_IPC_SAP pointer/reference.
    */
   ~ACE_IPC_SAP ();
+  /// @}
 
 private:
   /// Underlying I/O handle.

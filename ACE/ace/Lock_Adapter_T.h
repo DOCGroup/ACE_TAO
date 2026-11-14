@@ -38,7 +38,8 @@ class ACE_Lock_Adapter : public ACE_Lock
 public:
   using ACE_LOCK = ACE_LOCKING_MECHANISM;
 
-  // = Initialization/Finalization methods.
+  /// @name Initialization and finalization
+  /// @{
 
   /// Constructor. All locking requests will be forwarded to @a lock.
   ACE_Lock_Adapter (ACE_LOCKING_MECHANISM &lock);
@@ -55,8 +56,10 @@ public:
   ACE_Lock_Adapter &operator= (ACE_Lock_Adapter const &) = delete;
   ACE_Lock_Adapter (ACE_Lock_Adapter &&) = delete;
   ACE_Lock_Adapter &operator= (ACE_Lock_Adapter &&) = delete;
+  /// @}
 
-  // = Lock accessors.
+  /// @name Lock accessors
+  /// @{
   /// Block the thread until the lock is acquired.
   int acquire () override;
 
@@ -87,6 +90,7 @@ public:
   /// Conditionally acquire a write lock.  If the locking mechanism
   /// doesn't support read locks then this just calls acquire().
   int tryacquire_write () override;
+  /// @}
 
   /**
    * Conditionally try to upgrade a lock held for read to a write lock.

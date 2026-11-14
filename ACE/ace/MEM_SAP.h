@@ -129,7 +129,8 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  // = Class initializing methods to create/connect to a shared memory pool.
+  /// @name Shared memory pool initialization
+  /// @{
 
   /**
    * Create a new shm_malloc object.  Return 0 if succeed and -1
@@ -143,6 +144,7 @@ protected:
   /// Close down the share memory pool.  Clean up the
   /// mmap file if we are the last one using it.
   int close_shm_malloc ();
+  /// @}
 
   ACE_HANDLE handle_;
 
