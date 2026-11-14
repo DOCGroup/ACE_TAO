@@ -12,6 +12,8 @@
 #include "tao/RTCORBA/RT_Thread_Lane_Resources_Manager.h"
 #include "ace/Sched_Params.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_RT_ORB::~TAO_RT_ORB () = default;
@@ -26,7 +28,7 @@ TAO_RT_ORB::TAO_RT_ORB (TAO_ORB_Core *orb_core,
     dynamic_thread_time_ (dynamic_thread_time)
 {
   TAO_Thread_Lane_Resources_Manager * const thread_lane_resources_manager =
-    &this->orb_core_->thread_lane_resources_manager ();
+    std::addressof (this->orb_core_->thread_lane_resources_manager ());
 
   TAO_RT_Thread_Lane_Resources_Manager * const rt_thread_lane_resources_manager =
     dynamic_cast <TAO_RT_Thread_Lane_Resources_Manager *> (thread_lane_resources_manager);
@@ -35,7 +37,7 @@ TAO_RT_ORB::TAO_RT_ORB (TAO_ORB_Core *orb_core,
     throw CORBA::INTERNAL ();
 
   this->tp_manager_ =
-    &rt_thread_lane_resources_manager->tp_manager ();
+    std::addressof (rt_thread_lane_resources_manager->tp_manager ());
 }
 
 RTCORBA::Mutex_ptr

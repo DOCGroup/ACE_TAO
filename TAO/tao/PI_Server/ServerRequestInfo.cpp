@@ -107,7 +107,7 @@ TAO::ServerRequestInfo::arguments ()
           (this->server_request_.pi_reply_status () == -1 &&
            (*i)->mode () != CORBA::PARAM_OUT))
         {
-          (*i)->interceptor_value (&parameter.argument);
+          (*i)->interceptor_value (std::addressof (parameter.argument));
         }
     }
 

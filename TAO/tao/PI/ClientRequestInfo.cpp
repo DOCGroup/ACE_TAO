@@ -21,6 +21,8 @@
 
 #include "ace/CORBA_macros.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ClientRequestInfo::TAO_ClientRequestInfo (TAO::Invocation_Base *inv)
@@ -434,7 +436,7 @@ TAO_ClientRequestInfo::parameter_list (Dynamic::ParameterList &param_list)
           (this->invocation_->invoke_status () == TAO::TAO_INVOKE_START &&
            argument->mode () != CORBA::PARAM_OUT))
         {
-          argument->interceptor_value (&p.argument);
+          argument->interceptor_value (std::addressof (p.argument));
         }
     }
 

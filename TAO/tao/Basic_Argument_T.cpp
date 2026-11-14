@@ -37,7 +37,7 @@ TAO::In_Basic_Clonable_Argument_T<S,Insert_Policy>::~In_Basic_Clonable_Argument_
 {
   if (this->is_clone_)
     {
-      S* tmp = const_cast<S*> (&this->x_);
+      S* tmp = const_cast<S*> (std::addressof (this->x_));
       delete tmp;
     }
 }

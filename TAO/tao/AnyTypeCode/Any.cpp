@@ -295,25 +295,25 @@ operator<< (std::ostream &strm, CORBA::Any const &)
 void
 CORBA::Any::operator<<= (CORBA::Any::from_boolean b)
 {
-  TAO::Any_Basic_Impl::insert (*this, CORBA::_tc_boolean, &b.val_);
+  TAO::Any_Basic_Impl::insert (*this, CORBA::_tc_boolean, std::addressof (b.val_));
 }
 
 void
 CORBA::Any::operator<<= (CORBA::Any::from_octet o)
 {
-  TAO::Any_Basic_Impl::insert (*this, CORBA::_tc_octet, &o.val_);
+  TAO::Any_Basic_Impl::insert (*this, CORBA::_tc_octet, std::addressof (o.val_));
 }
 
 void
 CORBA::Any::operator<<= (CORBA::Any::from_char c)
 {
-  TAO::Any_Basic_Impl::insert (*this, CORBA::_tc_char, &c.val_);
+  TAO::Any_Basic_Impl::insert (*this, CORBA::_tc_char, std::addressof (c.val_));
 }
 
 void
 CORBA::Any::operator<<= (CORBA::Any::from_wchar wc)
 {
-  TAO::Any_Basic_Impl::insert (*this, CORBA::_tc_wchar, &wc.val_);
+  TAO::Any_Basic_Impl::insert (*this, CORBA::_tc_wchar, std::addressof (wc.val_));
 }
 
 void
@@ -536,25 +536,25 @@ operator <<= (CORBA::Any &, std::wstring *)
 CORBA::Boolean
 CORBA::Any::operator>>= (CORBA::Any::to_boolean b) const
 {
-  return TAO::Any_Basic_Impl::extract (*this, CORBA::_tc_boolean, &b.ref_);
+  return TAO::Any_Basic_Impl::extract (*this, CORBA::_tc_boolean, std::addressof (b.ref_));
 }
 
 CORBA::Boolean
 CORBA::Any::operator>>= (CORBA::Any::to_octet o) const
 {
-  return TAO::Any_Basic_Impl::extract (*this, CORBA::_tc_octet, &o.ref_);
+  return TAO::Any_Basic_Impl::extract (*this, CORBA::_tc_octet, std::addressof (o.ref_));
 }
 
 CORBA::Boolean
 CORBA::Any::operator>>= (CORBA::Any::to_char c) const
 {
-  return TAO::Any_Basic_Impl::extract (*this, CORBA::_tc_char, &c.ref_);
+  return TAO::Any_Basic_Impl::extract (*this, CORBA::_tc_char, std::addressof (c.ref_));
 }
 
 CORBA::Boolean
 CORBA::Any::operator>>= (CORBA::Any::to_wchar wc) const
 {
-  return TAO::Any_Basic_Impl::extract (*this, CORBA::_tc_wchar, &wc.ref_);
+  return TAO::Any_Basic_Impl::extract (*this, CORBA::_tc_wchar, std::addressof (wc.ref_));
 }
 
 CORBA::Boolean
