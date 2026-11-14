@@ -19,13 +19,11 @@
 #include "tao/PortableServer/ServantActivatorC.h"
 #include "tao/LocalObject.h"
 
+/// This class is used by a POA with USE_SERVANT_MANAGER and RETAIN policy.
 class ServantActivator :
   public virtual PortableServer::ServantActivator,
   public virtual ::CORBA::LocalObject
 {
-  // = TITLE
-  //   This class is used by a POA with USE_SERVANT_MANAGER and
-  //   RETAIN policy.
 public:
   ServantActivator (CORBA::ORB_ptr orb,
                     CORBA::Object_ptr forward_to);

@@ -21,18 +21,16 @@
 #include "ace/DLL.h"
 #include "ace/Log_Msg.h"
 
+/**
+ * This class is used by a POA with USE_SERVANT_MANAGER and NON_RETAIN
+ * policy. It defines the Servant Locator interface of the Servant
+ * Manager and is invoked when the POA has a servant_retention policy
+ * of NON_RETAIN type.
+ */
 class ServantLocator :
   public virtual PortableServer::ServantLocator,
   public virtual ::CORBA::LocalObject
 {
-  // = TITLE
-  //   This class is used by a POA with USE_SERVANT_MANAGER and
-  //   NON_RETAIN policy.
-  //
-  // = DESCRIPTION
-  //   This class defines the Servant Locator interface of the Servant
-  //   Manager. It is invoked when the POA has an USE_SERVANT_MANAGER
-  //   policy and a servant_retention policy of NON_RETAIN type.
 public:
   /**
    * This typedef is used to typecast the void* obtained when finding

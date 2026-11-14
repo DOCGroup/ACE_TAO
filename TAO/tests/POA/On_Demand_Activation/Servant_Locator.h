@@ -17,13 +17,11 @@
 
 #include "tao/ORB.h"
 
+/// This class is used by a POA with USE_SERVANT_MANAGER and NON_RETAIN policy.
 class ServantLocator :
   public virtual PortableServer::ServantLocator,
   public virtual ::CORBA::LocalObject
 {
-  // = TITLE
-  //   This class is used by a POA with USE_SERVANT_MANAGER and
-  //   NON_RETAIN policy.
 public:
   explicit ServantLocator (CORBA::ORB_ptr orb);
 
