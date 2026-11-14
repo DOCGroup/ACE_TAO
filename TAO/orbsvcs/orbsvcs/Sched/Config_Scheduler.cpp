@@ -226,6 +226,29 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
 
   // Construct an unbounded set to hold any scheduling anomalies.
   ACE_Unbounded_Set<RtecScheduler::Scheduling_Anomaly *> anomaly_set;
+  // The scheduler implementation stores owning pointers in this legacy set.
+  // Keep their cleanup scoped here, including when scheduling or copying fails.
+  struct Anomaly_Set_Owner
+  {
+    explicit Anomaly_Set_Owner (
+      ACE_Unbounded_Set<RtecScheduler::Scheduling_Anomaly *> &anomalies)
+      : anomalies_ (anomalies)
+    {
+    }
+
+    ~Anomaly_Set_Owner ()
+    {
+      ACE_Unbounded_Set_Iterator<RtecScheduler::Scheduling_Anomaly *>
+        iter (anomalies_);
+      RtecScheduler::Scheduling_Anomaly **anomaly {};
+      for (iter.first (); iter.next (anomaly); iter.advance ())
+        {
+          delete *anomaly;
+        }
+    }
+
+    ACE_Unbounded_Set<RtecScheduler::Scheduling_Anomaly *> &anomalies_;
+  } anomaly_set_owner (anomaly_set);
 
   // Invoke the imlementation's scheduling method.
   BaseSchedImplType::status_t schedule_status;
@@ -306,9 +329,6 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
 
         // Store the anomaly in the anomaly sequence out parameter
         anomalies[anomaly_index] = **anomaly;
-
-        // Release the anomaly node.
-        delete *anomaly;
     }
 
   switch (severity)
