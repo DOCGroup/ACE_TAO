@@ -151,7 +151,7 @@ public:
   /// The converse of the <String::put> operator.
   virtual ACE_IOStream<STREAM> &operator<< (ACE_IOStream_String &v);
 
-  // = Using the macros to provide get/set operators.
+  /// Use macros to provide get/set operators.
   GETPUT_FUNC_SET (ACE_IOStream<STREAM>)
 
 #  if defined (ACE_LACKS_IOSTREAM_FX)

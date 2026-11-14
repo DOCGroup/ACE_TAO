@@ -50,7 +50,8 @@ public:
   /// Maximum size of a logging message with the verbose headers
   static constexpr int MAXVERBOSELOGMSGLEN = VERBOSE_LEN + MAXLOGMSGLEN;
 
-  // = Initialization
+  /// @name Initialization
+  /// @{
   /**
    * Create a Log_Record and set its priority, time stamp, and
    * process id.
@@ -62,6 +63,7 @@ public:
   ACE_Log_Record (ACE_Log_Priority lp,
                   const ACE_Time_Value &time_stamp,
                   long pid);
+  /// @}
 
   /// Default dtor.
   ~ACE_Log_Record ();

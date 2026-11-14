@@ -96,13 +96,15 @@ public:
   /// file
   ~ACE_Naming_Context () override;
 
-  // = Dynamic initialization hooks.
+  /// @name Dynamic initialization hooks
+  /// @{
   /// Initialize name options and naming context when dynamically
   /// linked.
   int init (int argc, ACE_TCHAR *argv[]) override;
 
   /// Close down the test when dynamically unlinked.
   int fini () override;
+  /// @}
 
   /// Returns information about this context.
   int info (ACE_TCHAR **strp, size_t length) const override;

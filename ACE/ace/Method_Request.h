@@ -51,7 +51,8 @@ public:
   ACE_Method_Request (ACE_Method_Request &&) = delete;
   ACE_Method_Request &operator= (ACE_Method_Request &&) = delete;
 
-  // = Accessors.
+  /// @name Accessors
+  /// @{
   /// Get priority.
   unsigned long priority () const;
 
@@ -67,8 +68,10 @@ public:
    * @sa ACE_Activation_Queue::enqueue
    */
   void priority (unsigned long prio);
+  /// @}
 
-  // = Invocation method (must be overridden by subclasses).
+  /// @name Invocation method (implemented by subclasses)
+  /// @{
   /// Invoked by the scheduler to execute the request.
   /**
    * This method must be implemented by the subclass to perform the
@@ -79,6 +82,7 @@ public:
    *         if needed.
    */
   virtual int call () = 0;
+  /// @}
 
 protected:
   /// The priority of the request.
