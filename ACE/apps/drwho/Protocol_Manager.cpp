@@ -2,6 +2,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_Memory.h"
 #include <cstring>
+#include <memory>
 
 #include "Options.h"
 #include "Protocol_Manager.h"
@@ -14,8 +15,8 @@
 Drwho_Node *
 Protocol_Manager::get_drwho_node (char *key_name, Drwho_Node *&head)
 {
-  Drwho_Node **temp = &head;
-  for (; *temp != nullptr; temp = &(*temp)->next_)
+  Drwho_Node **temp = std::addressof (head);
+  for (; *temp != nullptr; temp = std::addressof ((*temp)->next_))
     if (std::strcmp (key_name,
                      (*temp)->get_login_name ()) == 0)
       break;

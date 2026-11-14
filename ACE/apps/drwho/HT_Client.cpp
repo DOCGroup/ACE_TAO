@@ -2,6 +2,7 @@
 #include "ace/ACE.h"
 #include "ace/OS_Memory.h"
 #include <cstring>
+#include <memory>
 
 // Insert a KEY_NAME into the hash table, if it doesn't already exist
 // there.  What gets returned is a pointer to the node inserted.  Note
@@ -14,11 +15,12 @@ HT_Client::insert (const char *key_name, int max_len)
 
   // This is tricky...
 
-  for (prpp = &this->hash_table[ACE::hash_pjw (key_name) % HASH_TABLE_SIZE];
+  for (prpp = std::addressof (
+         this->hash_table[ACE::hash_pjw (key_name) % HASH_TABLE_SIZE]);
        *prpp != nullptr
          && std::strncmp ((*prpp)->get_login (),
                           key_name, max_len) != 0;
-       prpp = &(*prpp)->next_)
+       prpp = std::addressof ((*prpp)->next_))
     continue;
 
   if (*prpp == nullptr)
