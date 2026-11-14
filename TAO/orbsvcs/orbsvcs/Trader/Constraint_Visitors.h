@@ -339,6 +339,8 @@ private:
   /// simple type as <sequence_type>. Return true in this eventuality.
   CORBA::Boolean sequence_does_contain (CORBA::Any* sequence,
                                         TAO_Literal_Constraint& element);
+  CORBA::Boolean sequence_does_contain (CORBA::Any const* sequence,
+                                        TAO_Literal_Constraint& element);
 
 protected:
   /// The map of property names to their values for a property.

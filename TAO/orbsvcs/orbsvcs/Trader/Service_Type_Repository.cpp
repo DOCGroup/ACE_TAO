@@ -568,19 +568,6 @@ update_type_map (const char *name,
   type->type_struct_.masked = false;
   type->has_subtypes_ = false;
 
-  // Move the prop struct sequences and super type names from the in
-  // params to the internal storage.
-  /*
-  CORBA::ULong pslength = props.length ();
-  CosTradingRepos::ServiceTypeRepository::PropStructSeq* pstructs =
-    const_cast<CosTradingRepos::ServiceTypeRepository::PropStructSeq*> (&props);
-  CosTradingRepos::ServiceTypeRepository::PropStruct* psbuf =
-    pstructs->get_buffer (1);
-  type->type_struct_.props.replace (pslength,
-                                    pslength,
-                                    psbuf,
-                                    1);
-  */
   CORBA::String_var type_name (name);
   int const bind_result = this->type_map_.bind (type_name, type_owner.get ());
   if (bind_result == -1)

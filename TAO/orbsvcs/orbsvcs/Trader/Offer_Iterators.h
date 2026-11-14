@@ -128,7 +128,7 @@ public:
 private:
   /// Structure that stores pointers to offers
   /// to iterate over.
-  std::deque<CosTrading::Offer *> offers_;
+  std::deque<CosTrading::Offer const *> offers_;
 };
 
   // *************************************************************

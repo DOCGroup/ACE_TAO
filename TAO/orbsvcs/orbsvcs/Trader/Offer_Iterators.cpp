@@ -33,7 +33,7 @@ void
 TAO_Query_Only_Offer_Iterator::add_offer (CosTrading::OfferId offer_id,
                                           CosTrading::Offer const* offer)
 {
-  this->offers_.push_back (const_cast<CosTrading::Offer*> (offer));
+  this->offers_.push_back (offer);
   CORBA::string_free (offer_id);
 }
 
@@ -57,7 +57,7 @@ TAO_Query_Only_Offer_Iterator::next_n (CORBA::ULong n,
   // populate the sequence.
   for (CORBA::ULong i {}; i < offers_in_sequence; ++i)
     {
-      CosTrading::Offer* source = this->offers_.front ();
+      CosTrading::Offer const* source = this->offers_.front ();
       this->offers_.pop_front ();
       this->pfilter_.filter_offer (source, (*offer_sequence)[i]);
     }

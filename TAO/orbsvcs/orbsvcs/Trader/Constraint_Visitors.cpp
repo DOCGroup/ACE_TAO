@@ -420,7 +420,7 @@ visit_in(TAO_Binary_Constraint* binary_in)
           if (any != nullptr)
             {
               CORBA::Boolean result =
-                this->sequence_does_contain (const_cast<CORBA::Any*> (any), left_value);
+                this->sequence_does_contain (any, left_value);
 
               this->queue_.dequeue_operand ();
               this->queue_.dequeue_operand ();
@@ -519,6 +519,15 @@ TAO_find_string (CosTradingSequences::StringSeq& sequence,
 CORBA::Boolean
 TAO_Constraint_Evaluator::
 sequence_does_contain (CORBA::Any* sequence,
+                      TAO_Literal_Constraint& element)
+{
+  return this->sequence_does_contain (
+    static_cast<CORBA::Any const*> (sequence), element);
+}
+
+CORBA::Boolean
+TAO_Constraint_Evaluator::
+sequence_does_contain (CORBA::Any const* sequence,
                       TAO_Literal_Constraint& element)
 {
   // Helper method to cast the void* value returned from the sequence

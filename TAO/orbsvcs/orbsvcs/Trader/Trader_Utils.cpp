@@ -1142,8 +1142,7 @@ TAO_Offer_Modifier::affect_change (const CosTrading::PropertySeq& modifies)
       Property_Table::ENTRY* entry {};
       CORBA::String_var prop_name = modifies[i].name.in ();
 
-      CosTrading::Property* prop =
-        const_cast<CosTrading::Property*> (&modifies[i]);
+      CosTrading::Property const* prop = std::addressof (modifies[i]);
       if (this->props_.bind (prop_name, prop, entry) == 1)
         // We need to rebind here.
         entry->int_id_ = prop;
@@ -1163,7 +1162,7 @@ TAO_Offer_Modifier::affect_change (const CosTrading::PropertySeq& modifies)
   // relative ordering.
   for (i = 0; i < original_length; ++i)
     {
-      CosTrading::Property* prop_value {};
+      CosTrading::Property const* prop_value {};
       const char* name = this->offer_->properties[i].name;
       CORBA::String_var prop_name (name);
       if (this->props_.unbind (prop_name, prop_value) == 0)
@@ -1172,7 +1171,7 @@ TAO_Offer_Modifier::affect_change (const CosTrading::PropertySeq& modifies)
 
   for (i = 0; i < merge_length; ++i)
     {
-      CosTrading::Property* prop_value {};
+      CosTrading::Property const* prop_value {};
       const char* name = modifies[i].name;
       CORBA::String_var prop_name (name);
       if (this->props_.unbind (prop_name, prop_value) == 0)
@@ -1380,8 +1379,15 @@ void
 TAO_Property_Filter::filter_offer (CosTrading::Offer* source,
                                    CosTrading::Offer& destination)
 {
+  this->filter_offer (static_cast<CosTrading::Offer const*> (source), destination);
+}
+
+void
+TAO_Property_Filter::filter_offer (CosTrading::Offer const* source,
+                                   CosTrading::Offer& destination)
+{
   Prop_Queue prop_queue;
-  CosTrading::PropertySeq& s_props = source->properties;
+  CosTrading::PropertySeq const& s_props = source->properties;
   CosTrading::PropertySeq& d_props = destination.properties;
   CORBA::ULong length = static_cast<CORBA::ULong> (s_props.length ()),
                elem = 0;
@@ -1408,7 +1414,7 @@ TAO_Property_Filter::filter_offer (CosTrading::Offer* source,
       // sequence.
       length = static_cast<CORBA::ULong> (prop_queue.size ());
       d_props.length (length);
-      for (CosTrading::Property * const prop_ptr : prop_queue)
+      for (CosTrading::Property const *const prop_ptr : prop_queue)
         {
           d_props[elem++] = *prop_ptr;
         }

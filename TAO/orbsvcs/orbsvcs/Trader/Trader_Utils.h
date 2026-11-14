@@ -536,7 +536,7 @@ public:
 
 private:
   using Property_Table = ACE_Hash_Map_Manager_Ex<CORBA::String_var,
-                                                  CosTrading::Property*,
+                                                  CosTrading::Property const*,
                                                   ACE_Hash<CORBA::String_var>,
                                                   ACE_Equal_To<CORBA::String_var>,
                                                   ACE_Null_Mutex>;
@@ -669,9 +669,11 @@ public:
   /// destination offer.
   void filter_offer (CosTrading::Offer* source,
                      CosTrading::Offer& destination);
+  void filter_offer (CosTrading::Offer const* source,
+                     CosTrading::Offer& destination);
 
 private:
-  using Prop_Queue = std::vector<CosTrading::Property*>;
+  using Prop_Queue = std::vector<CosTrading::Property const*>;
 
   TAO_String_Set props_;
   CosTrading::Lookup::HowManyProps policy_;
