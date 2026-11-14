@@ -79,11 +79,9 @@ be_visitor_executor_exh::visit_component (be_component *node)
       << "{" << be_nl
       << "public:" << be_idt_nl;
 
-  os_ << "/// Constructor" << be_nl
-      << lname << "_exec_i ();";
+  os_ << lname << "_exec_i ();";
 
   os_ << be_nl
-      << "/// Destructor" << be_nl
       << "virtual ~" << lname << "_exec_i ();";
 
   os_ << be_nl_2

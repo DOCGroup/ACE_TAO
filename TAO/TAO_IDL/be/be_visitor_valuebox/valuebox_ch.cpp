@@ -165,8 +165,6 @@ be_visitor_valuebox_ch::visit_array (be_array *node)
   // Public copy constructor
   this->emit_copy_constructor ();
 
-  *os << be_nl << "// assignment operator" << be_nl;
-
   // Public assignment operator that takes a const array argument
   this->emit_assignment (node, "", "const ", "");
 
@@ -310,8 +308,6 @@ be_visitor_valuebox_ch::visit_sequence (be_sequence *node)
 
   // Public copy constructor
   this->emit_copy_constructor ();
-
-  *os << be_nl << "// assignment operator" << be_nl;
 
   // Public assignment operator with one argument of type const T&
   this->emit_assignment (node, "", "const ", "&");
@@ -460,8 +456,6 @@ be_visitor_valuebox_ch::visit_structure (be_structure *node)
   // Public copy constructor
   this->emit_copy_constructor ();
 
-  *os << be_nl << "// Assignment operator" << be_nl;
-
   // Public assignment operator with one argument of type const T&
   this->emit_assignment (node, "", "const ", "&");
 
@@ -555,8 +549,6 @@ be_visitor_valuebox_ch::visit_union (be_union *node)
 
   // Public copy constructor
   this->emit_copy_constructor ();
-
-  *os << be_nl << "// Assignment operator" << be_nl;
 
   // Public assignment operator with one argument of type const T&
   this->emit_assignment (node, "", "const ", "&");
@@ -665,8 +657,6 @@ be_visitor_valuebox_ch::emit_for_predef_enum (be_type *node,
 
   // Public copy constructor
   this->emit_copy_constructor ();
-
-  *os << be_nl << "// Assignment operator" << be_nl;
 
   if (is_any)
     { // Public assignment operator with one argument of type const T&

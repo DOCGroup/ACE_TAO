@@ -64,14 +64,12 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
   *os << be_uidt_nl
       << "{" << be_nl
       << "public:" << be_idt_nl
-      << "// Constructor" << be_nl
       <<  be_global->impl_class_prefix () << namebuf
       << be_global->impl_class_suffix () << " ();" << be_nl_2;
 
   if (be_global->gen_copy_ctor () && !node->is_local ())
     {
-      *os << "// Copy Constructor"<<be_nl
-          << be_global->impl_class_prefix () << namebuf
+      *os << be_global->impl_class_prefix () << namebuf
           << be_global->impl_class_suffix () << " ("
           << be_global->impl_class_prefix () << namebuf
           << be_global->impl_class_suffix () << " const &) = default;" << be_nl << be_nl;
@@ -79,15 +77,13 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
 
   if (be_global->gen_assign_op ())
     {
-      *os << "// Copy Assignment" << be_nl
-          << be_global->impl_class_prefix () << namebuf
+      *os << be_global->impl_class_prefix () << namebuf
           << be_global->impl_class_suffix () << "& " << "operator=("
           << be_global->impl_class_prefix () << namebuf
           << be_global->impl_class_suffix () << " const &);" << be_nl_2;
     }
 
-  *os << "// Destructor" << be_nl
-      << "virtual " << "~" << be_global->impl_class_prefix () << namebuf
+  *os << "virtual " << "~" << be_global->impl_class_prefix () << namebuf
       << be_global->impl_class_suffix () << " ();";
 
   // Generate code for elements in the scope (e.g., operations).
