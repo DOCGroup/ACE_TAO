@@ -26,24 +26,17 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/// Implements the Web_Server::Iterator_Factory interface.
+///
+/// This class registers a client-side <Callback> object with the Content
+/// Server, which is implemented by a <Callback_Handler> for each requested
+/// file. register_callback() creates a <Callback_Handler> that pushes data
+/// chunks asynchronously to the client. This allows the Content Server to
+/// service multiple file requests concurrently without application-level
+/// threads.
 class Push_Iterator_Factory_i :
   virtual public POA_Web_Server::Iterator_Factory
 {
-  // = TITLE
-  //    Implement the Web_Server::Iterator_Factory interface.
-  //
-  // = DESCRIPTION
-  //    This class is used to register a client-side <Callback> object
-  //    with the Content Server, which is actually implemented by the
-  //    <Callback_Handler> class for each requested file.
-  //
-  //    The client invokes the register_callback() method in this
-  //    class.  That method then creates a <Callback_Handler> which
-  //    will push chunks of data asynchronously to the client-side
-  //    <Callback> object.  This allows the Content Server to
-  //    concurrently service multiple file requests without the need
-  //    to explicitly use threads at the application level.
-
 public:
   Push_Iterator_Factory_i () = default;
   Push_Iterator_Factory_i (Push_Iterator_Factory_i const&) = delete;

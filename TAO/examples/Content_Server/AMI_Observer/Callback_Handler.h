@@ -22,45 +22,27 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/// Class that asynchronously sends chunks of data to the client-side
+/// <Callback> object and handles all asynchronous replies from it.
+///
+/// The <Push_Iterator_Factory_i> object in the Content Server creates a
+/// <Callback_Handler> instance for each requested file and executes its
+/// run() method. To let the Content Server service other requests while a
+/// file is being sent, run() invokes next_chunk(), which reads the first
+/// chunk and sends it asynchronously to the client-side <Callback> object
+/// using sendc_next_chunk().
+///
+/// The next_chunk() method also handles replies from sendc_next_chunk(). Its
+/// initial invocation starts asynchronous chunk sending; subsequent calls
+/// happen asynchronously. A new chunk is sent only after the client-side
+/// <Callback> replies, which keeps chunks in order. This cycle continues
+/// until the last chunk is sent.
+///
+/// No threads are explicitly created at the application level; concurrency
+/// results from performing all operations asynchronously.
 class Callback_Handler
   : public virtual POA_Web_Server::AMI_CallbackHandler
 {
-  // = TITLE
-  //    Class that asynchronously sends chunks of data to the
-  //    client-side <Callback> object, and handles all asynchronous
-  //    replies emanating from it.
-  //
-  // = DESCRIPTION
-  //    The <Push_Iterator_Factory_i> object in the Content Server
-  //    creates a <Callback_Handler> instance for each requested file,
-  //    and executes the run() method in that instance (in this
-  //    class).  To allow the Content Server to service other requests
-  //    without having to wait for the requested file to be completely
-  //    sent to the client, the run() method in this class issues the
-  //    next_chunk() method, which reads the first chunk of data and
-  //    sends it asynchronously to the client-side <Callback> object
-  //    by issuing a sendc_next_chunk() call.
-  //
-  //    This may seem a bit odd since the next_chunk() method in this
-  //    class is actually the reply handler method for the
-  //    sendc_next_chunk() method.  The next_chunk() method is
-  //    initially invoked as a means to bootstrap the process of
-  //    asynchronously sending chunks of data to the client-side
-  //    <Callback> object.  However, since the next_chunk() method
-  //    actually invokes sendc_next_chunk(), all subsequent calls will
-  //    be performed asynchronously.  This design also guarantees that
-  //    the client-side <Callback> object will receive all chunks of
-  //    data in the proper order since the next chunk of data will not
-  //    be sent until this <Callback_Handler> receives the asynchronous
-  //    reply from the client-side <Callback> object.  Again, that
-  //    asynchronous reply is handled by the next_chunk() method, at
-  //    which point the entire cycle is started again until the last
-  //    chunk of data is sent.
-  //
-  //    Notice that no threads are explicitly created at the
-  //    application level, yet concurrency is achieved due to the fact
-  //    that all operations are performed asynchronously.
-
   /// Dummy friend class declaration to quiet down a warning.
   friend class Callback_Handler_Friend;
 

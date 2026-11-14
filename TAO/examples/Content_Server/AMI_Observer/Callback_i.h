@@ -24,31 +24,25 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// Implement the Web_Server::Callback interface.
+/// @brief Implements the Web_Server::Callback interface.
+///
+/// A <Callback> object implements the Observer pattern. It simply
+/// "watches" while the Content Server pushes chunks of data to it. Once the
+/// Content Server pushes the last chunk of data, the <Callback> object spawns
+/// an external viewer to display the pushed data based on the data content
+/// type returned by the Iterator_Factory::register_callback() method.
+///
+/// Since the server pushes data to the <Callback> object asynchronously, and
+/// since instances of this <Callback> class are registered with the Content
+/// Server asynchronously, there is no guarantee that the metadata containing
+/// the content type will arrive before the content of the file. As such, this
+/// class atomically sets and checks the flags that provide the current
+/// condition of the metadata and content, in case two concurrently running
+/// threads attempt to update the state contained within a given <Callback>
+/// object.
 class Callback_i :
   public virtual POA_Web_Server::Callback
 {
-  // = TITLE
-  //    Implement the Web_Server::Callback interface.
-  //
-  // = DESCRIPTION
-  //    A <Callback> object implements the Observer pattern.  It
-  //    simply "watches" while the Content Server pushes chunks of
-  //    data to itself.  Once the Content Server pushes the last chunk
-  //    of data, the <Callback> object spawns an external viewer to
-  //    display the pushed data based on the data content type
-  //    returned by the Iterator_Factory::register_callback() method.
-  //
-  //    Since the server pushes data to the <Callback> object
-  //    asynchronously, and since instances of this <Callback> class
-  //    are registered with the Content Server asynchronously, there
-  //    is no guarantee that the metadata containing the content type
-  //    will arrive before the content of the file.  As such, this
-  //    class atomically sets and checks the flags that provide the
-  //    current condition of the metadata and content, in case two
-  //    concurrently running threads attempt to update the state
-  //    contained within a given <Callback> object.
-
   /// Dummy friend class declaration to quiet down a warning.
   friend class Callback_i_Friend;
 
