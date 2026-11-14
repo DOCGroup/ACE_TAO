@@ -4,6 +4,7 @@
 #include "ace/Truncate.h"
 #include "ace/os_include/netinet/os_in.h"
 #include "ace/os_include/arpa/os_inet.h"
+#include <memory>
 
 #include "Time_Request_Reply.h"
 
@@ -118,15 +119,17 @@ ACE_Time_Request::encode (void *&buf)
   ACE_TRACE ("ACE_Time_Request::encode");
   // Compute the length *before* doing the marshaling.
 
-  buf = (void *) &this->transfer_;
+  buf = std::addressof (this->transfer_);
   this->transfer_.block_forever_ = ACE_HTONL (this->transfer_.block_forever_);
   this->transfer_.usec_timeout_  = ACE_HTONL (this->transfer_.usec_timeout_);
   this->transfer_.msg_type_      = ACE_HTONL (this->transfer_.msg_type_);
 #if defined (ACE_LITTLE_ENDIAN)
   ACE_UINT64 secs = this->transfer_.sec_timeout_;
-  ACE_CDR::swap_8 ((const char *)&secs, (char *)&this->transfer_.sec_timeout_);
+  ACE_CDR::swap_8 (reinterpret_cast<char const *> (std::addressof (secs)),
+                   reinterpret_cast<char *> (std::addressof (this->transfer_.sec_timeout_)));
   secs = this->transfer_.time_;
-  ACE_CDR::swap_8 ((const char *)&secs, (char *)&this->transfer_.time_);
+  ACE_CDR::swap_8 (reinterpret_cast<char const *> (std::addressof (secs)),
+                   reinterpret_cast<char *> (std::addressof (this->transfer_.time_)));
 #endif
 
   return this->size ();  // Always fixed
@@ -144,9 +147,11 @@ ACE_Time_Request::decode ()
   this->transfer_.msg_type_      = ACE_NTOHL (this->transfer_.msg_type_);
 #if defined (ACE_LITTLE_ENDIAN)
   ACE_UINT64 secs = this->transfer_.sec_timeout_;
-  ACE_CDR::swap_8 ((const char *)&secs, (char *)&this->transfer_.sec_timeout_);
+  ACE_CDR::swap_8 (reinterpret_cast<char const *> (std::addressof (secs)),
+                   reinterpret_cast<char *> (std::addressof (this->transfer_.sec_timeout_)));
   secs = this->transfer_.time_;
-  ACE_CDR::swap_8 ((const char *)&secs, (char *)&this->transfer_.time_);
+  ACE_CDR::swap_8 (reinterpret_cast<char const *> (std::addressof (secs)),
+                   reinterpret_cast<char *> (std::addressof (this->transfer_.time_)));
 #endif
 
   this->time_ = ACE_Utils::truncate_cast<time_t> (this->transfer_.time_);

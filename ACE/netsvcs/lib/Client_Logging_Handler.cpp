@@ -12,6 +12,7 @@
 #include "ace/SString.h"
 #include "ace/INET_Addr.h"
 #include "Client_Logging_Handler.h"
+#include <memory>
 
 ACE_Client_Logging_Handler::ACE_Client_Logging_Handler (ACE_HANDLE output_handle)
   : logging_output_ (output_handle)
@@ -125,7 +126,7 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
   int flags {};
 
   // We've got a framed IPC mechanism, so we can just to a <recv>.
-  ssize_t result = spipe.recv (&header_msg,
+  ssize_t result = spipe.recv (std::addressof (header_msg),
                                (ACE_Str_Buf *) 0,
                                &flags);
 
@@ -228,7 +229,7 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
 
   // We've got a framed IPC mechanism, so we can just do a <recv>.
   result = spipe.recv ((ACE_Str_Buf *) 0,
-                       &payload_msg,
+                       std::addressof (payload_msg),
                        &flags);
 
   if (result < 0 || payload_msg.len != (int)length)

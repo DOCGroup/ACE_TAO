@@ -6,6 +6,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_time.h"
 #include "ace/os_include/os_netdb.h"
+#include <memory>
 
 ACE_TS_Clerk_Handler::ACE_TS_Clerk_Handler (ACE_TS_Clerk_Processor *processor,
                                             ACE_INET_Addr &addr)
@@ -237,7 +238,7 @@ ACE_TS_Clerk_Handler::recv_reply (ACE_Time_Request &reply)
 
   // Since Time_Request messages are fixed size, read the entire
   // message in one go.
-  ssize_t n = this->peer ().recv ((void *) &reply, bytes_expected);
+  ssize_t n = this->peer ().recv (std::addressof (reply), bytes_expected);
 
   if (n != bytes_expected)
     {

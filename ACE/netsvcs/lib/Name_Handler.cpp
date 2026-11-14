@@ -617,7 +617,7 @@ ACE_Name_Handler::naming_context ()
 ACE_Naming_Context *
 ACE_Name_Acceptor::naming_context ()
 {
-  return &naming_context_;
+  return std::addressof (naming_context_);
 }
 
 ACE_Name_Handler::~ACE_Name_Handler ()
