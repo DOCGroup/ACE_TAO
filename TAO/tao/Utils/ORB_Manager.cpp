@@ -175,19 +175,41 @@ TAO_ORB_Manager::run (ACE_Time_Value &tv)
 int
 TAO_ORB_Manager::fini ()
 {
-  if (!CORBA::is_nil (this->poa_.in ()))
-    this->poa_->destroy (true, true);
+  PortableServer::POA_var const poa = this->poa_;
+  CORBA::ORB_var const orb = this->orb_;
 
   this->child_poa_   = PortableServer::POA::_nil ();
   this->poa_         = PortableServer::POA::_nil ();
   this->poa_manager_ = PortableServer::POAManager::_nil ();
+  this->orb_         = CORBA::ORB::_nil ();
 
-  if (!CORBA::is_nil (this->orb_.in ()))
-    this->orb_->destroy ();
+  int result = 0;
 
-  this->orb_ = CORBA::ORB::_nil ();
+  if (!CORBA::is_nil (poa.in ()))
+    {
+      try
+        {
+          poa->destroy (true, true);
+        }
+      catch (::CORBA::Exception const &)
+        {
+          result = -1;
+        }
+    }
 
-  return 0;
+  if (!CORBA::is_nil (orb.in ()))
+    {
+      try
+        {
+          orb->destroy ();
+        }
+      catch (::CORBA::Exception const &)
+        {
+          result = -1;
+        }
+    }
+
+  return result;
 }
 
 int
@@ -231,14 +253,7 @@ TAO_ORB_Manager::~TAO_ORB_Manager ()
 {
   try
     {
-      if (!CORBA::is_nil (this->poa_.in ()))
-        {
-          this->poa_->destroy (true, true);
-        }
-      if (!CORBA::is_nil (this->orb_.in ()))
-        {
-          this->orb_->destroy ();
-        }
+      this->fini ();
     }
   catch (::CORBA::Exception const &)
     {
