@@ -1401,8 +1401,22 @@ ACE_DynScheduler::relate_task_entries_recurse (long &time, Task_Entry &entry)
                                        entry.rt_info ()->dependencies[i].dependency_type),
                       ST_VIRTUAL_MEMORY_EXHAUSTED);
 
-      dependency_entry_ptr->callers ().insert (link);
-      entry.calls ().insert (link);
+      std::unique_ptr<Task_Entry_Link> link_owner (link);
+      int const call_insert_status = entry.calls ().insert (link);
+      if (call_insert_status != 0)
+      {
+        return call_insert_status < 0
+          ? ST_VIRTUAL_MEMORY_EXHAUSTED : ST_BAD_INTERNAL_POINTER;
+      }
+      // The caller entry owns the link; the called entry stores a borrowed link.
+      link_owner.release ();
+      int const caller_insert_status =
+        dependency_entry_ptr->callers ().insert (link);
+      if (caller_insert_status != 0)
+      {
+        return caller_insert_status < 0
+          ? ST_VIRTUAL_MEMORY_EXHAUSTED : ST_BAD_INTERNAL_POINTER;
+      }
 
       // depth first recursion on the newly identified entry
       relate_task_entries_recurse (time, *dependency_entry_ptr);
