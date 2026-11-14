@@ -552,7 +552,7 @@ TAO_Policies::TAO_Policies (TAO_Trader_Base& trader,
       else if (this->policies_[index] != nullptr)
         throw CosTrading::DuplicatePolicyName (pol_name);
       else
-        this->policies_[index] = &policies[j];
+        this->policies_[index] = std::addressof (policies[j]);
     }
 }
 
@@ -1017,7 +1017,7 @@ TAO_Offer_Modifier (const char* type_name,
     {
       CORBA::String_var prop_name =
         static_cast<char const*> (prop_seq[i].name);
-      this->props_.bind (prop_name, &prop_seq[i]);
+      this->props_.bind (prop_name, std::addressof (prop_seq[i]));
     }
 }
 
@@ -1392,7 +1392,7 @@ TAO_Property_Filter::filter_offer (CosTrading::Offer* source,
       for (CORBA::ULong i {}; i < length; ++i)
         {
           if (this->policy_ == CosTrading::Lookup::all)
-            prop_queue.push_back (&s_props[i]);
+            prop_queue.push_back (std::addressof (s_props[i]));
           else
             {
               const char* p_name = s_props[i].name;
@@ -1400,7 +1400,7 @@ TAO_Property_Filter::filter_offer (CosTrading::Offer* source,
 
               // Save those property that match.
               if (find_string (this->props_, prop_name) == 0)
-                prop_queue.push_back (&s_props[i]);
+                prop_queue.push_back (std::addressof (s_props[i]));
             }
         }
 
