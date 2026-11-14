@@ -122,7 +122,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Read back the written message
       File::Descriptor::DataBuffer_var data_received = fd->read (message_length);
 
-      char *result = reinterpret_cast<char *> (&data_received[0]);
+      char const * const result =
+        reinterpret_cast<char const *> (data_received->get_buffer ());
 
       // print the read message
       ACE_DEBUG ((LM_DEBUG, "%C\n",

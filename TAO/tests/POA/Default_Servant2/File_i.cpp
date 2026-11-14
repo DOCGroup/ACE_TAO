@@ -147,10 +147,8 @@ FileImpl::Descriptor::write (const File::Descriptor::DataBuffer &buffer)
 {
   ACE_HANDLE const file_descriptor = this->fd ();
 
-  CORBA::Octet const *data = &buffer[0];
-
   ssize_t const len = ACE_OS::write (file_descriptor,
-                                     data,
+                                     buffer.get_buffer (),
                                      buffer.length ());
   if (len > 0)
     return len;
