@@ -379,25 +379,25 @@ int run_main (int, ACE_TCHAR *[])
         }
 
       // Now we check the operation of get_host_addr(char*,int)
-      const char* haddr = addr.get_host_addr (&hostaddr[0], sizeof(hostaddr));
+      const char* haddr = addr.get_host_addr (hostaddr, sizeof(hostaddr));
       if (haddr != nullptr &&
-          ACE_OS::strcmp (&hostaddr[0], haddr) != 0)
+          ACE_OS::strcmp (hostaddr, haddr) != 0)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("%C failed get_host_addr(char* buf,int) check\n")
                       ACE_TEXT ("buf ['%C'] != return value ['%C']\n"),
                       ipv4_addresses[i],
-                      &hostaddr[0],
+                      hostaddr,
                       haddr));
           status = 1;
         }
-      if (ACE_OS::strcmp (&hostaddr[0], ipv4_addresses[i]) != 0)
+      if (ACE_OS::strcmp (hostaddr, ipv4_addresses[i]) != 0)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("%C failed get_host_addr(char*,int) check\n")
                       ACE_TEXT ("buf ['%C'] != expected value ['%C']\n"),
                       ipv4_addresses[i],
-                      &hostaddr[0],
+                      hostaddr,
                       ipv4_addresses[i]));
           status = 1;
         }

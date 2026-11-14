@@ -87,7 +87,7 @@ run_main (int, ACE_TCHAR *[])
                 ACE_TEXT ("ACE_Task_Base::activate should have succeeded to force addition of new thread.")));
   }
   // we should now have 3 threads in group 'group_id'
-  if (waiter_task.thr_mgr ()->thread_grp_list (group_id, &thread_list[0], MAX_GROUP_THREADS) != 3)
+  if (waiter_task.thr_mgr ()->thread_grp_list (group_id, thread_list, MAX_GROUP_THREADS) != 3)
   {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("Should have found 3 threads in group %d."), group_id));
@@ -124,7 +124,7 @@ run_main (int, ACE_TCHAR *[])
                 ACE_TEXT ("ACE_Task_Base::activate should have succeeded to force addition of new thread.")));
   }
   // we should now have 4 threads in group 'group_id'
-  if (waiter_task.thr_mgr ()->thread_grp_list (group_id, &thread_list[0], MAX_GROUP_THREADS) != 4)
+  if (waiter_task.thr_mgr ()->thread_grp_list (group_id, thread_list, MAX_GROUP_THREADS) != 4)
   {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("Should have found 4 threads in group %d."), group_id));
@@ -139,7 +139,7 @@ run_main (int, ACE_TCHAR *[])
   waiter_task.grp_id (group_id);
 
   // we should still have 4 threads in group with new 'group_id'
-  if (waiter_task.thr_mgr ()->thread_grp_list (group_id, &thread_list[0], MAX_GROUP_THREADS) != 4)
+  if (waiter_task.thr_mgr ()->thread_grp_list (group_id, thread_list, MAX_GROUP_THREADS) != 4)
   {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("Should have found 4 threads in group %d."), group_id));
@@ -177,7 +177,7 @@ run_main (int, ACE_TCHAR *[])
                 ACE_TEXT ("ACE_Task_Base::activate should have succeeded to force addition of new thread.")));
   }
   // we should now have 5 threads in group 'group_id'
-  if (waiter_task.thr_mgr ()->thread_grp_list (group_id, &thread_list[0], MAX_GROUP_THREADS) != 5)
+  if (waiter_task.thr_mgr ()->thread_grp_list (group_id, thread_list, MAX_GROUP_THREADS) != 5)
   {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("Should have found 5 threads in group %d."), group_id));

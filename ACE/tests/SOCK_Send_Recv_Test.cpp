@@ -124,19 +124,19 @@ client (void *arg)
 
   iovec iov[5];
 
-  iov[0].iov_base = reinterpret_cast<char *> (&buffer[0]);
+  iov[0].iov_base = buffer;
   iov[0].iov_len = 50;
 
-  iov[1].iov_base = reinterpret_cast<char *> (&buffer[50]);
+  iov[1].iov_base = buffer + 50;
   iov[1].iov_len = 25;
 
-  iov[2].iov_base = reinterpret_cast<char *> (&buffer[75]);
+  iov[2].iov_base = buffer + 75;
   iov[2].iov_len = 150;
 
-  iov[3].iov_base = reinterpret_cast<char *> (&buffer[225]);
+  iov[3].iov_base = buffer + 225;
   iov[3].iov_len = 29;
 
-  iov[4].iov_base = reinterpret_cast<char *> (&buffer[254]);
+  iov[4].iov_base = buffer + 254;
   iov[4].iov_len = 1;
 
   len = cli_stream.sendv (iov, 5);
@@ -164,7 +164,7 @@ client (void *arg)
   len = cli_stream.recv (4,
                          buffer2,
                          150,
-                         &buffer2[150],
+                         buffer2 + 150,
                          105);
 #endif
   if (len != 255)
@@ -261,13 +261,13 @@ server (void *arg)
   ssize_t len;
   int i;
 
-  iov[0].iov_base = reinterpret_cast<char *> (&buffer[0]);
+  iov[0].iov_base = buffer;
   iov[0].iov_len = 75;
 
-  iov[1].iov_base = reinterpret_cast<char *> (&buffer[75]);
+  iov[1].iov_base = buffer + 75;
   iov[1].iov_len = 100;
 
-  iov[2].iov_base = reinterpret_cast<char *> (&buffer[175]);
+  iov[2].iov_base = buffer + 175;
   iov[2].iov_len = 80;
 
   len = sock_str.recvv_n (iov, 3);
@@ -305,9 +305,9 @@ server (void *arg)
   len = sock_str.send (6,
                        buffer,
                        42,
-                       &buffer[42],
+                       buffer + 42,
                        189,
-                       &buffer[231],
+                       buffer + 231,
                        24);
 #endif
 

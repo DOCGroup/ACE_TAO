@@ -36,6 +36,8 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <memory>
+
 const ACE_TCHAR usage[] = ACE_TEXT ("usage: Message_Queue_Test <number of messages>\n");
 
 using QUEUE = ACE_Message_Queue<ACE_NULL_SYNCH>;
@@ -412,30 +414,30 @@ chained_block_test ()
   // Test enqueueing single and chained blocks and be sure they end up with
   // the proper enqueued block count and sizes. Then be sure they are dequeued
   // in the proper order.
-  b[0].next (&b[1]);
-  b[1].next (&b[2]);
+  b[0].next (std::addressof (b[1]));
+  b[1].next (std::addressof (b[2]));
   // b[3] and b[4] are unchained.
-  b[5].next (&b[6]);
-  b[6].next (&b[7]);
-  b[7].next (&b[8]);
+  b[5].next (std::addressof (b[6]));
+  b[6].next (std::addressof (b[7]));
+  b[7].next (std::addressof (b[8]));
   // b[9] is unchained
-  q.enqueue_tail (&b[3]);
-  q.enqueue_tail (&b[4]);
-  int num = q.enqueue_head (&b[0]);
+  q.enqueue_tail (std::addressof (b[3]));
+  q.enqueue_tail (std::addressof (b[4]));
+  int num = q.enqueue_head (std::addressof (b[0]));
   if (num != 5)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Chained enqueue expected 5; has %d\n"),
                   num));
       status = -1;
     }
-  num = q.enqueue_tail (&b[5]);
+  num = q.enqueue_tail (std::addressof (b[5]));
   if (num != 9)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Chained enqueue expected 9; has %d\n"),
                   num));
       status = -1;
     }
-  num = q.enqueue_tail (&b[9]);
+  num = q.enqueue_tail (std::addressof (b[9]));
   if (num != 10)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Chained enqueue expected 10; has %d\n"),
@@ -468,7 +470,7 @@ chained_block_test ()
                       (int)i, ACE_TEXT ("dequeue_head")));
           status = -1;
         }
-      else if (bp != &b[i])
+      else if (bp != std::addressof (b[i]))
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("Checking chained blocks, pass %d: ")
@@ -551,7 +553,7 @@ single_thread_performance_test (int queue_type = 0)
 
       // For VxWorks Message Queues, the receive block pointer must be
       // assigned.  It will be used by dequeue_head ().
-      receive_block_p[i] = &receive_block[i];
+      receive_block_p[i] = std::addressof (receive_block[i]);
     }
 #endif /* ACE_VXWORKS */
 
@@ -625,7 +627,7 @@ receiver (void *arg)
 
       // For VxWorks Message Queues, the receive block pointer must be
       // assigned.  It will be used by <dequeue_head>.
-      receive_block_p[i] = &receive_block[i];
+      receive_block_p[i] = std::addressof (receive_block[i]);
     }
 #endif /* ACE_VXWORKS */
 

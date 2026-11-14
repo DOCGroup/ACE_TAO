@@ -15,6 +15,8 @@
 #include "ace/Map_T.h"
 #include "ace/Profile_Timer.h"
 
+#include <memory>
+
 #undef THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL
 #define THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL(X) \
   ((X)                                                          \
@@ -51,7 +53,7 @@ functionality_test (TEST_MAP &map,
        ++i)
     {
       original_keys[i].size (sizeof i / sizeof (KEY::TYPE));
-      ACE_OS::memcpy (&original_keys[i][0],
+      ACE_OS::memcpy (std::addressof (original_keys[i][0]),
                       &i,
                       sizeof i);
     }
@@ -94,7 +96,7 @@ functionality_test (TEST_MAP &map,
         // Obtain value from key.
         VALUE original_value;
         ACE_OS::memcpy (&original_value,
-                        &original_key[0],
+                        std::addressof (original_key[0]),
                         sizeof original_value);
 
         // Debugging info.
@@ -133,7 +135,7 @@ functionality_test (TEST_MAP &map,
         // Obtain value from key.
         VALUE original_value;
         ACE_OS::memcpy (&original_value,
-                        &original_key[0],
+                        std::addressof (original_key[0]),
                         sizeof original_value);
 
         // Debugging info.

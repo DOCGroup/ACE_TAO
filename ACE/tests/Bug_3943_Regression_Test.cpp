@@ -783,7 +783,7 @@ Svc_Handler::recv_data ()
       else
         {
           for ( ;
-                ((r_bytes = new_stream.recv(&buffer[0], BUFFER_SIZE)) > 0);
+                ((r_bytes = new_stream.recv (buffer, BUFFER_SIZE)) > 0);
                 total_bytes += r_bytes)
             {
               bool finished = false;

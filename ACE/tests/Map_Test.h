@@ -23,6 +23,8 @@
 #include "ace/Active_Map_Manager.h"
 #include "ace/Containers.h"
 
+#include <memory>
+
 // Key data type.
 using KEY = ACE_Array<char>;
 
@@ -53,7 +55,7 @@ public:
       key.size (counter_key_size + original_size);
 
       // Add new key data.
-      ACE_OS::memcpy (&key[original_size],
+      ACE_OS::memcpy (std::addressof (key[original_size]),
                       &++this->counter_,
                       counter_key_size);
 
@@ -76,7 +78,7 @@ public:
 
       // Copy system key from user key.
       ACE_OS::memcpy (&value,
-                      &key[key.size () - counter_key_size],
+                      std::addressof (key[key.size () - counter_key_size]),
                       sizeof value);
 
       // Return the system key value as the hash value.
@@ -102,7 +104,7 @@ public:
       modified_key.size (active_key_size + original_size);
 
       // Copy active key data into user key.
-      active_key.encode (&modified_key[original_size]);
+      active_key.encode (std::addressof (modified_key[original_size]));
 
       // Success.
       return 0;
@@ -116,7 +118,7 @@ public:
       size_t original_size = modified_key.size () - active_key_size;
 
       // Read off value of index and generation.
-      active_key.decode (&modified_key[original_size]);
+      active_key.decode (std::addressof (modified_key[original_size]));
 
       // Success.
       return 0;
