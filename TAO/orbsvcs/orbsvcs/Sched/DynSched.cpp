@@ -21,6 +21,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+using Scheduler_File_Ptr = std::unique_ptr<FILE, int (*) (FILE *)>;
+
 // compare the DFS finish times of two task entries, order higher time *first*
 extern "C" int compare_entry_finish_times (void const *first, void const *second)
 {
@@ -1833,12 +1835,12 @@ ACE_DynScheduler::output_dispatch_priorities (char const *filename)
 {
   status_t status = UNABLE_TO_OPEN_SCHEDULE_FILE;
 
-  // open the file
-  FILE *file = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(filename), ACE_TEXT("w"));
-  if (file != nullptr)
+  Scheduler_File_Ptr file (
+    ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(filename), ACE_TEXT("w")),
+    ACE_OS::fclose);
+  if (file)
   {
-    status = output_dispatch_priorities (file);
-    ACE_OS::fclose (file);
+    status = output_dispatch_priorities (file.get ());
   }
   else
   {
@@ -1924,12 +1926,12 @@ ACE_DynScheduler::output_dispatch_timeline (char const *filename)
 {
   status_t status = UNABLE_TO_OPEN_SCHEDULE_FILE;
 
-  // open the file
-  FILE *file = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(filename), ACE_TEXT("w"));
-  if (file != nullptr)
+  Scheduler_File_Ptr file (
+    ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(filename), ACE_TEXT("w")),
+    ACE_OS::fclose);
+  if (file)
   {
-    status = output_dispatch_timeline (file);
-    ACE_OS::fclose (file);
+    status = output_dispatch_timeline (file.get ());
   }
   else
   {
@@ -2051,12 +2053,12 @@ ACE_DynScheduler::output_preemption_timeline (char const *filename)
 {
   status_t status = UNABLE_TO_OPEN_SCHEDULE_FILE;
 
-  // open the file
-  FILE *file = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(filename), ACE_TEXT("w"));
-  if (file != nullptr)
+  Scheduler_File_Ptr file (
+    ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(filename), ACE_TEXT("w")),
+    ACE_OS::fclose);
+  if (file)
   {
-    status = output_preemption_timeline (file);
-    ACE_OS::fclose (file);
+    status = output_preemption_timeline (file.get ());
   }
   else
   {
@@ -2140,12 +2142,12 @@ ACE_DynScheduler::output_viewer_timeline (char const *filename)
 {
   status_t status = UNABLE_TO_OPEN_SCHEDULE_FILE;
 
-  // open the file
-  FILE *file = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(filename), ACE_TEXT("w"));
-  if (file != nullptr)
+  Scheduler_File_Ptr file (
+    ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(filename), ACE_TEXT("w")),
+    ACE_OS::fclose);
+  if (file)
   {
-    status = output_dispatch_timeline (file);
-    ACE_OS::fclose (file);
+    status = output_dispatch_timeline (file.get ());
   }
 
   return status;
@@ -2258,7 +2260,7 @@ ACE_DynScheduler::status_t
 ACE_DynScheduler::output_timeline (char const *filename, char const *heading)
 {
   status_t status = SUCCEEDED;
-  FILE *file {};
+  Scheduler_File_Ptr file (nullptr, ACE_OS::fclose);
 
   // bail out if we're not up to date or there is no timeline
   if (!up_to_date_ || timeline_ == nullptr)
@@ -2272,8 +2274,8 @@ ACE_DynScheduler::output_timeline (char const *filename, char const *heading)
   if (status == SUCCEEDED)
   {
     // open the file
-    file = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(filename), ACE_TEXT("w"));
-    if (file == nullptr)
+    file.reset (ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(filename), ACE_TEXT("w")));
+    if (!file)
     {
       status = UNABLE_TO_OPEN_SCHEDULE_FILE;
       ORBSVCS_ERROR ((LM_ERROR,
@@ -2284,7 +2286,7 @@ ACE_DynScheduler::output_timeline (char const *filename, char const *heading)
 
   if ((status == SUCCEEDED) && (heading))
   {
-    if (std::fprintf (file, "%s\n\n", heading) < 0)
+    if (std::fprintf (file.get (), "%s\n\n", heading) < 0)
     {
       status = UNABLE_TO_WRITE_SCHEDULE_FILE;
       ORBSVCS_ERROR ((LM_ERROR,
@@ -2295,27 +2297,22 @@ ACE_DynScheduler::output_timeline (char const *filename, char const *heading)
 
   if (status == SUCCEEDED)
   {
-    status = output_dispatch_priorities (file);
+    status = output_dispatch_priorities (file.get ());
   }
 
   if (status == SUCCEEDED)
   {
-    status = output_dispatch_timeline (file);
+    status = output_dispatch_timeline (file.get ());
   }
 
   if (status == SUCCEEDED)
   {
-    status = output_preemption_timeline (file);
+    status = output_preemption_timeline (file.get ());
   }
 
   if (status == SUCCEEDED)
   {
-    status = output_viewer_timeline (file);
-  }
-
-  if (file != nullptr)
-  {
-    ACE_OS::fclose (file);
+    status = output_viewer_timeline (file.get ());
   }
 
   return status;
