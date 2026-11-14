@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   RLECompressor_Factory.h
  *
  *  @author Derek Dominish  <derek.dominish@dsto.defence.gov.au>
  */
-// ===================================================================
 
 #ifndef TAO_RLECOMPRESSOR_FACTORY_H
 #define TAO_RLECOMPRESSOR_FACTORY_H
@@ -27,22 +25,22 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
     class TAO_RLECOMPRESSOR_Export RLE_CompressorFactory :
-        public ::TAO::CompressorFactory
-    {
-    public:
-        RLE_CompressorFactory();
+    public ::TAO::CompressorFactory
+  {
+  public:
+    RLE_CompressorFactory ();
 
-        ::Compression::Compressor_ptr get_compressor (
-            ::Compression::CompressionLevel = 0) override;
+    ::Compression::Compressor_ptr get_compressor (
+      ::Compression::CompressionLevel = 0) override;
 
-    private:
-        RLE_CompressorFactory (RLE_CompressorFactory const &) = delete;
-        RLE_CompressorFactory &operator= (RLE_CompressorFactory const &) = delete;
-        RLE_CompressorFactory (RLE_CompressorFactory &&) = delete;
-        RLE_CompressorFactory &operator= (RLE_CompressorFactory &&) = delete;
+    RLE_CompressorFactory (RLE_CompressorFactory const &) = delete;
+    RLE_CompressorFactory &operator= (RLE_CompressorFactory const &) = delete;
+    RLE_CompressorFactory (RLE_CompressorFactory &&) = delete;
+    RLE_CompressorFactory &operator= (RLE_CompressorFactory &&) = delete;
 
-        ::Compression::Compressor_var compressor_;
-    };
+  private:
+    ::Compression::Compressor_var compressor_;
+  };
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

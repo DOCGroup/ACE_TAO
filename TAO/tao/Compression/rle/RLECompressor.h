@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   RLECompressor.h
  *
  *  @author Derek Dominish  <derek.dominish@dsto.defence.gov.au>
  */
-// ===================================================================
 
 #ifndef TAO_RLECOMPRESSOR_H
 #define TAO_RLECOMPRESSOR_H
@@ -26,25 +24,24 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-    class TAO_RLECOMPRESSOR_Export RLECompressor : public ::TAO::BaseCompressor
-    {
-    public:
-        RLECompressor(::Compression::CompressorFactory_ptr);
+  class TAO_RLECOMPRESSOR_Export RLECompressor : public ::TAO::BaseCompressor
+  {
+  public:
+    RLECompressor () = delete;
 
-        void compress (
-            ::Compression::Buffer const &source,
-            ::Compression::Buffer &target) override;
+    explicit RLECompressor (::Compression::CompressorFactory_ptr);
 
-        void decompress (
-            ::Compression::Buffer const &source,
-            ::Compression::Buffer &target) override;
+    void compress (::Compression::Buffer const &source,
+                   ::Compression::Buffer &target) override;
 
-    private:
-        RLECompressor (RLECompressor const &) = delete;
-        RLECompressor &operator= (RLECompressor const &) = delete;
-        RLECompressor (RLECompressor &&) = delete;
-        RLECompressor &operator= (RLECompressor &&) = delete;
-    };
+    void decompress (::Compression::Buffer const &source,
+                     ::Compression::Buffer &target) override;
+
+    RLECompressor (RLECompressor const &) = delete;
+    RLECompressor &operator= (RLECompressor const &) = delete;
+    RLECompressor (RLECompressor &&) = delete;
+    RLECompressor &operator= (RLECompressor &&) = delete;
+  };
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
