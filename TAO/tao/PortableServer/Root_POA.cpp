@@ -1759,7 +1759,7 @@ TAO_Root_POA::set_id (TAO_Root_POA *parent)
 
   // Create the buffer for the POA id.
   this->id_.length (buffer_size);
-  CORBA::Octet *buffer = &this->id_[0];
+  CORBA::Octet *buffer = std::addressof (this->id_[0]);
 
   // Keeps track of where the next infomation goes; start at 0 byte.
   CORBA::ULong starting_at {};
