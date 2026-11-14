@@ -1,6 +1,7 @@
 // -*- C++ -*-
 #include "ace/Guard_T.h"
 #include "ace/Log_Category.h"
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -271,7 +272,7 @@ ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::next (ACE_Map_Entry<EXT_ID, INT
 {
   if (this->next_ != this->map_man_->occupied_list_id ())
     {
-      mm = &this->map_man_->search_structure_[this->next_];
+      mm = std::addressof (this->map_man_->search_structure_[this->next_]);
       return 1;
     }
   else
@@ -378,7 +379,7 @@ ACE_Map_Const_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::next (ACE_Map_Entry<EXT_I
 {
   if (this->next_ != this->map_man_->occupied_list_id ())
     {
-      mm = &this->map_man_->search_structure_[this->next_];
+      mm = std::addressof (this->map_man_->search_structure_[this->next_]);
       return 1;
     }
   else

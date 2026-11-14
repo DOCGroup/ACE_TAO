@@ -81,7 +81,7 @@ ACE_Vector_Iterator<T, DEFAULT_SIZE>::next (T *&item)
     }
   else
     {
-      item = &vector_[current_];
+      item = std::addressof (vector_[current_]);
       return 1;
     }
 }

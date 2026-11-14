@@ -382,7 +382,7 @@ template <class T> void
 ACE_Double_Linked_List_Iterator_Base<T>::reset (ACE_Double_Linked_List<T> &dll)
 {
   current_ = 0;
-  dllist_ = &dll;
+  dllist_ = std::addressof (dll);
 }
 
  template <class T> int
@@ -1064,7 +1064,7 @@ ACE_Fixed_Set_Iterator_Base<T, ACE_SIZE>::next_i (T *&item)
       {
         if (!this->s_.search_structure_[this->next_].is_free_)
           {
-            item = &this->s_.search_structure_[this->next_].item_;
+            item = std::addressof (this->s_.search_structure_[this->next_].item_);
             this->advance ();
             return 1;
           }
@@ -1106,7 +1106,7 @@ ACE_Fixed_Set_Iterator<T, ACE_SIZE>::remove (T *&item)
 
   if (!this->s_.search_structure_[this->next_].is_free_)
     {
-      item = &this->s_.search_structure_[this->next_].item_;
+      item = std::addressof (this->s_.search_structure_[this->next_].item_);
       this->s_.remove (*item);
       --(this->iterated_items_);
       return 1;
@@ -1121,7 +1121,7 @@ ACE_Fixed_Set_Iterator<T, ACE_SIZE>::operator* ()
   T *retv {};
 
   if (!this->s_.search_structure_[this->next_].is_free_)
-    retv = &this->s_.search_structure_[this->next_].item_;
+    retv = std::addressof (this->s_.search_structure_[this->next_].item_);
 
   ACE_ASSERT (retv != 0);
 
@@ -1160,7 +1160,7 @@ ACE_Fixed_Set_Const_Iterator<T, ACE_SIZE>::operator* () const
   T const *retv {};
 
   if (!this->s_.search_structure_[this->next_].is_free_)
-    retv = &this->s_.search_structure_[this->next_].item_;
+    retv = std::addressof (this->s_.search_structure_[this->next_].item_);
 
   ACE_ASSERT (retv != 0);
 
@@ -1380,7 +1380,7 @@ ACE_Bounded_Set_Iterator<T>::next (T *&item)
   ACE_TRACE ("ACE_Bounded_Set_Iterator<T>::next");
   if (static_cast<size_t> (this->next_) < this->s_.cur_size_)
     {
-      item = &this->s_.search_structure_[this->next_].item_;
+      item = std::addressof (this->s_.search_structure_[this->next_].item_);
       return 1;
     }
   else
@@ -1445,7 +1445,7 @@ ACE_Unbounded_Stack_Iterator<T>::next (T *&item)
     return 0;
   else
     {
-      item = &this->current_->item_;
+      item = std::addressof (this->current_->item_);
       return 1;
     }
 }
@@ -1769,7 +1769,7 @@ ACE_Ordered_MultiSet_Iterator<T>::next (T *&item) const
   // ACE_TRACE ("ACE_Ordered_MultiSet_Iterator<T>::next");
   if (this->current_)
     {
-      item = &this->current_->item_;
+      item = std::addressof (this->current_->item_);
       return 1;
     }
 
