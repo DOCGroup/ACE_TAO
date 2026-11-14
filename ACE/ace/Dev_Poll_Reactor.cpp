@@ -37,6 +37,7 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Functor_T.h"
 #include <cstring>
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -519,7 +520,7 @@ ACE_Dev_Poll_Reactor::Handler_Repository::find (ACE_HANDLE handle)
       return nullptr;
     }
 
-  tuple = &(this->handlers_[handle]);
+  tuple = std::addressof (this->handlers_[handle]);
   if (tuple->event_handler == nullptr)
     {
       errno = ENOENT;

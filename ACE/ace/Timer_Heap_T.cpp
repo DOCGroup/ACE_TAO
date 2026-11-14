@@ -8,6 +8,7 @@
 #include "ace/Numeric_Limits.h"
 
 #include <cstring>
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -141,14 +142,15 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::ACE_Timer_Heap_T (
 
       // Form the freelist by linking the next_ pointers together.
       for (size_t j = 1; j < size; ++j)
-        this->preallocated_nodes_[j - 1].set_next (&this->preallocated_nodes_[j]);
+        this->preallocated_nodes_[j - 1].set_next (
+          std::addressof (this->preallocated_nodes_[j]));
 
       // Null-terminate the freelist.
       this->preallocated_nodes_[size - 1].set_next (nullptr);
 
       // Assign the freelist pointer to the front of the list.
       this->preallocated_nodes_freelist_ =
-        &this->preallocated_nodes_[0];
+        std::addressof (this->preallocated_nodes_[0]);
     }
 
   ACE_NEW (iterator_,
@@ -617,7 +619,8 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::grow_heap ()
 
       // Link new nodes together (as for original list).
       for (size_t k = 1; k < this->max_size_; ++k)
-        this->preallocated_nodes_[k - 1].set_next (&this->preallocated_nodes_[k]);
+        this->preallocated_nodes_[k - 1].set_next (
+          std::addressof (this->preallocated_nodes_[k]));
 
       // Null-terminate the new list.
       this->preallocated_nodes_[this->max_size_ - 1].set_next (nullptr);
@@ -625,7 +628,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::grow_heap ()
       // Link new array to the end of the existling list.
       if (this->preallocated_nodes_freelist_ == nullptr)
         this->preallocated_nodes_freelist_ =
-          &preallocated_nodes_[0];
+          std::addressof (this->preallocated_nodes_[0]);
       else
         {
           ACE_Timer_Node_T<TYPE> *previous =
@@ -636,7 +639,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::grow_heap ()
                current = current->get_next ())
             previous = current;
 
-          previous->set_next (&this->preallocated_nodes_[0]);
+          previous->set_next (std::addressof (this->preallocated_nodes_[0]));
         }
     }
 
