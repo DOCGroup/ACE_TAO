@@ -59,7 +59,6 @@ Notifier_Handler::notifier (Event_Comm::Notifier *notifier)
     }
 }
 
-// Init function.
 int
 Notifier_Handler::init (int argc,
                         ACE_TCHAR *argv[],

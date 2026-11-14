@@ -3,7 +3,6 @@
 
 #include <memory>
 #include <string>
-#include <string_view>
 
 struct Compiled_Regex_Deleter
 {
@@ -30,29 +29,22 @@ public:
   Consumer_Entry (Consumer_Entry &&) = delete;
   Consumer_Entry &operator= (Consumer_Entry &&) = delete;
 
-  // = Set/get filtering criteria.
   std::string const &criteria () const;
 
-  // = Set/get Event_Comm::Consumer object reference.
   Event_Comm::Consumer *consumer () const;
-  void consumer (Event_Comm::Consumer *);
 
-  // = Set/get the compiled regular expression buffer.
   char *regexp ();
 
 private:
+  /// Filtering criteria associated with the consumer.
   std::string filtering_criteria_;
-  // String containing the filtering criteria.
 
+  /// Compiled representation of the regular expression.
   std::unique_ptr<char, Compiled_Regex_Deleter> compiled_regexp_ {};
-  // Compiled representation of the regular expression (see
-  // regexpr(3g)).
 
+  /// Object reference for the consumer.
   Event_Comm::Consumer_ptr consumer_ {};
-  // Object reference for the <Event_Comm::Consumer>.
 };
-
-// = Set/get filtering criteria.
 
 std::string const &
 Consumer_Entry::criteria () const
@@ -60,18 +52,10 @@ Consumer_Entry::criteria () const
   return this->filtering_criteria_;
 }
 
-// = Set/get Event_Comm::Consumer object reference.
-
 Event_Comm::Consumer *
 Consumer_Entry::consumer () const
 {
   return this->consumer_;
-}
-
-void
-Consumer_Entry::consumer (Event_Comm::Consumer *consumer)
-{
-  this->consumer_ = consumer;
 }
 
 char *
@@ -136,20 +120,15 @@ The filtering criteria will not work.\n"));
 #endif //#ifndef ACE_HAS_REGEX
 }
 
-// Add a new consumer to the table, being careful to check for
-// duplicate entries.  A consumer is considered a duplicate under the
-// following circumstances:
-//
-//   1. It has the same object reference and the same filtering
-//      criteria.
-//   2. It has the same object reference and its filtering criteria is
-//      "" (the wild card).
+/// Adds a new consumer after checking for duplicate entries. A consumer is
+/// considered a duplicate when it has the same object reference and matching
+/// filtering criteria, or when the criteria is empty (the wildcard).
 
 void
 Notifier_i::subscribe (Event_Comm::Consumer_ptr consumer_ref,
                        char const *filtering_criteria)
 {
-  std::string_view const criteria_view (filtering_criteria);
+  std::string const criteria (filtering_criteria);
 
   ACE_DEBUG ((LM_DEBUG,
               "in Notifier_i::subscribe for %x with filtering criteria \"%s\"\n",
@@ -163,9 +142,9 @@ Notifier_i::subscribe (Event_Comm::Consumer_ptr consumer_ref,
   // criteria is different that is good news since we currently don't
   // allow duplicates...  @@ Should duplicates be allowed?
 
-  for (MAP_ENTRY *me = nullptr; mi.next (me) != 0; mi.advance ())
+  for (MAP_ENTRY *me {}; mi.next (me) != 0; mi.advance ())
     {
-      Consumer_Entry *nr_entry = me->int_id_;
+      Consumer_Entry const * const nr_entry = me->int_id_;
 
       // The <_is_equivalent> function checks if objects are the same.
       // NOTE: this call might not behave well on other ORBs since
@@ -174,7 +153,7 @@ Notifier_i::subscribe (Event_Comm::Consumer_ptr consumer_ref,
 
       // Check for a duplicate entry.
       if (consumer_ref->_is_equivalent (me->ext_id_)
-          && (criteria_view.empty () || criteria_view == nr_entry->criteria ()))
+          && (criteria.empty () || criteria == nr_entry->criteria ()))
         {
           // Inform the caller that the <Event_Comm::Consumer> * is
           // already being used.
@@ -186,45 +165,42 @@ Notifier_i::subscribe (Event_Comm::Consumer_ptr consumer_ref,
 
   // If we get this far then we didn't find a duplicate, so add the
   // new entry!
-  Consumer_Entry *nr_entry;
-  ACE_NEW (nr_entry,
-           Consumer_Entry (consumer_ref,
-                           filtering_criteria));
+  std::unique_ptr<Consumer_Entry> nr_entry {
+    new Consumer_Entry (consumer_ref, filtering_criteria)};
 
   // Try to add new <Consumer_Entry> to the map.
-  if (this->map_.bind (nr_entry->consumer(), nr_entry) == -1)
+  if (this->map_.bind (nr_entry->consumer (), nr_entry.get ()) == -1)
     {
-      // Prevent memory leaks.
-      delete nr_entry;
       throw Event_Comm::Notifier::CannotSubscribe (
         "Failed to add Consumer to internal map\n");
     }
+
+  nr_entry.release ();
 }
 
-// Remove a consumer from the table.
+/// Removes a consumer from the table.
 
 void
 Notifier_i::unsubscribe (Event_Comm::Consumer_ptr consumer_ref,
                          char const *filtering_criteria)
 {
-  std::string_view const criteria_view (filtering_criteria);
+  std::string const criteria (filtering_criteria);
 
   ACE_DEBUG ((LM_DEBUG,
               "in Notifier_i::unsubscribe for %x\n",
               consumer_ref));
 
-  Consumer_Entry *nr_entry {};
   MAP_ITERATOR mi (this->map_);
-  bool found = false;
+  bool found {};
 
   // Locate <Consumer_Entry> and free up resources.  @@ Note, we don't
   // properly handle deallocation of KEYS!
 
-  for (MAP_ENTRY *me = nullptr;
+  for (MAP_ENTRY *me {};
        mi.next (me) != 0;
        mi.advance ())
     {
-      nr_entry = me->int_id_;
+      Consumer_Entry *nr_entry = me->int_id_;
 
       // The <_is_equivalent> function checks if objects are the same.
       // NOTE: this call might not behave well on other ORBs since
@@ -233,20 +209,22 @@ Notifier_i::unsubscribe (Event_Comm::Consumer_ptr consumer_ref,
 
       // Look for a match ..
       if (consumer_ref->_is_equivalent (me->ext_id_)
-          && (criteria_view.empty () || criteria_view == nr_entry->criteria ()))
+          && (criteria.empty () || criteria == nr_entry->criteria ()))
         {
           ACE_DEBUG ((LM_DEBUG,
                       "removed entry %x with criteria \"%s\"\n",
                       consumer_ref,
                       filtering_criteria));
-          found = true;
           // @@ This is a hack, we need a better approach!
           if (this->map_.unbind (me->ext_id_,
                                  nr_entry) == -1)
             throw Event_Comm::Notifier::CannotUnsubscribe (
               "Internal map unbind failed.");
           else
-            delete nr_entry;
+            {
+              found = true;
+              std::unique_ptr<Consumer_Entry> owner {nr_entry};
+            }
         }
     }
 
@@ -255,7 +233,7 @@ Notifier_i::unsubscribe (Event_Comm::Consumer_ptr consumer_ref,
       "The Consumer and filtering criteria were not found.");
 }
 
-// Disconnect all the consumers, giving them the <reason>.
+/// Disconnects all consumers, giving them the @a reason.
 
 void
 Notifier_i::disconnect (char const *reason)
@@ -265,17 +243,18 @@ Notifier_i::disconnect (char const *reason)
               reason));
 
   MAP_ITERATOR mi (this->map_);
-  int count = 0;
+  int count {};
 
   // Notify all the consumers, taking into account the filtering
   // criteria.
 
-  for (MAP_ENTRY *me = nullptr;
+  for (MAP_ENTRY *me {};
        mi.next (me) != 0;
        mi.advance ())
     {
-      Event_Comm::Consumer_ptr consumer_ref =
+      Event_Comm::Consumer_ptr const consumer_ref =
         me->ext_id_;
+      std::unique_ptr<Consumer_Entry> const entry {me->int_id_};
 
       ACE_ASSERT (consumer_ref != nullptr);
       ACE_DEBUG ((LM_DEBUG,
@@ -285,12 +264,11 @@ Notifier_i::disconnect (char const *reason)
         {
           consumer_ref->disconnect (reason);
         }
-      catch (CORBA::Exception const &ex)
+      catch (CORBA::Exception const& ex)
         {
           ex._tao_print_exception ("Unexpected exception\n");
         }
 
-      delete me->int_id_;
       ++count;
     }
 
@@ -305,7 +283,7 @@ Notifier_i::disconnect (char const *reason)
                 count));
 }
 
-// Notify all consumers whose filtering criteria match the event.
+/// Notifies all consumers whose filtering criteria match the @a event.
 
 void
 Notifier_i::push (Event_Comm::Event const &event)
@@ -314,18 +292,18 @@ Notifier_i::push (Event_Comm::Event const &event)
               "in Notifier_i::send_notification = %s\n",
               static_cast<char const *> (event.tag_)));
   MAP_ITERATOR mi (this->map_);
-  int count = 0;
+  int count {};
 
   // Notify all the consumers.
 
-  for (MAP_ENTRY *me = nullptr; mi.next (me) != 0; mi.advance ())
+  for (MAP_ENTRY *me {}; mi.next (me) != 0; mi.advance ())
     {
-      Event_Comm::Consumer_ptr consumer_ref = me->int_id_->consumer ();
+      Event_Comm::Consumer_ptr const consumer_ref = me->int_id_->consumer ();
       ACE_ASSERT (consumer_ref != nullptr);
       std::string const &criteria = me->int_id_->criteria ();
 
 #if defined (ACE_HAS_REGEX)
-      char *regexp = me->int_id_->regexp ();
+      char * const regexp = me->int_id_->regexp ();
       ACE_ASSERT (regexp);
 
       // Do a regular expression comparison to determine matching.
@@ -344,7 +322,7 @@ Notifier_i::push (Event_Comm::Event const &event)
             {
               consumer_ref->push (event);
             }
-          catch (CORBA::Exception const &ex)
+          catch (CORBA::Exception const& ex)
             {
               ex._tao_print_exception ("Unexpected exception\n");
               continue;
@@ -362,8 +340,7 @@ Notifier_i::push (Event_Comm::Event const &event)
                 count));
 }
 
-// Inform the <Event_Comm::Consumer> that <event> has
-// occurred.
+/// Informs the @a Consumer that the @a event has occurred.
 
 void
 Consumer_i::push (Event_Comm::Event const &event)
@@ -375,8 +352,7 @@ Consumer_i::push (Event_Comm::Event const &event)
               tmpstr));
 }
 
-// Disconnect the <Event_Comm::Consumer> from the
-// <Event_Comm::Notifier>.
+/// Disconnects the @a Consumer from the @a Notifier.
 
 void
 Consumer_i::disconnect (char const *reason)

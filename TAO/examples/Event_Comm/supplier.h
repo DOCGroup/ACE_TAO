@@ -17,7 +17,6 @@
 class Supplier : public ACE_Event_Handler, public ShutdownCallback
 {
 public:
-  // Initialization and Termination methods.
   Supplier () = default;
 
   ~Supplier () override = default;

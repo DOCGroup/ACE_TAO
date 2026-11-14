@@ -52,7 +52,6 @@ public:
   /// called to shutdown the consumer application.
   void shutdown ();
 
-  // = Accessors
   Event_Comm::Consumer *receiver () const;
   Event_Comm::Notifier *notifier () const;
 

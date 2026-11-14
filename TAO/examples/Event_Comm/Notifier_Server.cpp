@@ -30,8 +30,7 @@ Notifier_Server::close ()
     return 0;
 }
 
-// The naming service is initialized and the naming context as well as
-// the object name is bound to the naming server.
+/// Initializes the naming service and binds the object name to it.
 
 int
 Notifier_Server::init_naming_service ()
@@ -70,7 +69,7 @@ Notifier_Server::init_naming_service ()
   return 0;
 }
 
-// Initialize the server.
+/// Initializes the notifier server.
 int
 Notifier_Server::init (int argc,
                        ACE_TCHAR *argv[])

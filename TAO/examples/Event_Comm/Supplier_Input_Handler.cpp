@@ -47,7 +47,7 @@ Supplier_Input_Handler::initialize (Notifier_Handler *notifier)
   return 0;
 }
 
-// Frame input events and notify <Consumers>.
+/// Frames input events and notifies @a Consumers.
 
 int
 Supplier_Input_Handler::handle_input (ACE_HANDLE)

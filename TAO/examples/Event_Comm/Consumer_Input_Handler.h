@@ -18,7 +18,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// Forward declaration.
 class Consumer_Handler;
 
 /**
@@ -33,7 +32,6 @@ class Consumer_Handler;
 class Consumer_Input_Handler : public ACE_Event_Handler
 {
 public:
-  // Initialization and termination methods.
   Consumer_Input_Handler () = default;
 
   ~Consumer_Input_Handler () override = default;

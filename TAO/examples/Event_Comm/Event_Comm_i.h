@@ -61,8 +61,8 @@ public:
   /// Pass the q event to the <Consumer>.
   void push (Event_Comm::Event const &event) override;
 
-  // Disconnect the <Consumer> from the <Notifier>, giving it the
-  // @a reason.
+  /// Disconnect the @a Consumer from the @a Notifier, giving it the
+  /// @a reason.
   void disconnect (char const *reason) override;
 
   /// Set the Shutdown callback.
@@ -73,7 +73,6 @@ private:
   ShutdownCallback *shutdown_ {};
 };
 
-// Forward reference.
 class Consumer_Entry;
 
 /**
@@ -120,6 +119,8 @@ private:
   using MAP_ENTRY = ACE_Map_Entry <Event_Comm::Consumer_ptr, Consumer_Entry *>;
 
   /// Table that maps a <Event_Comm::Consumer *> to a <Consumer_Entry *>.
+  /// The map stores entry pointers; Notifier_i owns each bound entry and
+  /// deletes it when it is unsubscribed or disconnected.
   MAP_MANAGER map_;
 };
 

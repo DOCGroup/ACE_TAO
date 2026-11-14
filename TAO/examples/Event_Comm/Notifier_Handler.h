@@ -43,7 +43,6 @@ public:
   /// Initialize the client communication endpoint with server.
   int init (int argc, ACE_TCHAR *argv[], ShutdownCallback *shutdown_callback);
 
-  // = Accessors.
   Event_Comm::Notifier *notifier () const;
   void notifier (Event_Comm::Notifier *);
 
