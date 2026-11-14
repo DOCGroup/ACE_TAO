@@ -69,7 +69,9 @@ class SyncLocatorTask
     public virtual CORBA::LocalObject
 {
 public:
-  explicit SyncLocatorTask (CORBA::ORB_ptr orb, std::string const &test_ior);
+  explicit SyncLocatorTask (CORBA::ORB_ptr orb,
+                            std::string const &test_ior,
+                            IORTable::Table_ptr table);
   SyncLocatorTask (SyncLocatorTask const &) = delete;
   SyncLocatorTask (SyncLocatorTask &&) = delete;
   SyncLocatorTask &operator= (SyncLocatorTask const &) = delete;
@@ -80,11 +82,15 @@ public:
 private:
   CORBA::ORB_var orb_;
   std::string test_ior_;
+  IORTable::Table_var table_;
 };
 
 char *
 SyncLocatorTask::locate (char const *id)
 {
+  this->table_->bind ("sync_locator_callback", this->test_ior_.c_str ());
+  this->table_->unbind ("sync_locator_callback");
+
   CORBA::Object_var const fwd_object = this->orb_->string_to_object (this->test_ior_.c_str ());
   CORBA::String_var fwd_string = this->orb_->object_to_string (fwd_object.in ());
 
@@ -96,9 +102,12 @@ SyncLocatorTask::locate (char const *id)
   return fwd_string._retn ();
 }
 
-SyncLocatorTask::SyncLocatorTask (CORBA::ORB_ptr orb, std::string const &test_ior)
+SyncLocatorTask::SyncLocatorTask (CORBA::ORB_ptr orb,
+                                 std::string const &test_ior,
+                                 IORTable::Table_ptr table)
   : orb_ (CORBA::ORB::_duplicate (orb)),
-    test_ior_ (test_ior)
+    test_ior_ (test_ior),
+    table_ (IORTable::Table::_duplicate (table))
 {
 }
 
@@ -164,6 +173,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       CORBA::String_var const test_ior = orb->object_to_string (the_server.in ());
 
+      // Resolve the IORTable before creating a locator so the synchronous
+      // locator can verify that it is called without the table lock held.
+      CORBA::Object_var const ior_table_object =
+        orb->resolve_initial_references (options.ior_table_name.c_str ());
+
+      IORTable::Table_var const local_ior_table =
+        IORTable::Table::_narrow (ior_table_object.in ());
+
       poa_manager->activate ();
 
       // Create task.
@@ -177,7 +194,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       else
         {
           ACE_NEW_RETURN (iorloc_ptr,
-                          SyncLocatorTask (orb.in (), test_ior.in ()),
+                          SyncLocatorTask (orb.in (), test_ior.in (), local_ior_table.in ()),
                           1);
         }
       IORTable::Locator_var const iorloc (iorloc_ptr);
@@ -185,12 +202,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Server - using ior table object: %C\n"),
                   options.ior_table_name.c_str()));
-      // Resolve the IORTable and set the locator
-      CORBA::Object_var const ior_table_object =
-        orb->resolve_initial_references (options.ior_table_name.c_str ());
-
-      IORTable::Table_var const local_ior_table = IORTable::Table::_narrow (ior_table_object.in ());
-
       local_ior_table->set_locator (iorloc.in ());
 
       orb->run ();
