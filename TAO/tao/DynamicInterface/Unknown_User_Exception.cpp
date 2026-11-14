@@ -10,6 +10,8 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_Memory.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::UnknownUserException::UnknownUserException ()
@@ -103,7 +105,7 @@ namespace TAO
     Struct_Field<char const *, CORBA::TypeCode_ptr const *> const
     fields_CORBA_UnknownUserException[] =
       {
-        { "exception", &CORBA::_tc_any }
+        { "exception", std::addressof (CORBA::_tc_any) }
       };
 
     Struct<char const *,
@@ -121,7 +123,7 @@ namespace TAO
 namespace CORBA
 {
   CORBA::TypeCode_ptr const _tc_UnknownUserException =
-    &TAO::TypeCode::tc_UnknownUserException;
+    std::addressof (TAO::TypeCode::tc_UnknownUserException);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

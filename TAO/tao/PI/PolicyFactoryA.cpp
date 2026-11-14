@@ -32,6 +32,8 @@
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/AnyTypeCode/Any_Impl_T.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO_IDL - Generated from
@@ -47,7 +49,7 @@ static TAO::TypeCode::Objref<char const *,
 namespace PortableInterceptor
 {
   ::CORBA::TypeCode_ptr const _tc_PolicyFactory =
-    &_tao_tc_PortableInterceptor_PolicyFactory;
+    std::addressof (_tao_tc_PortableInterceptor_PolicyFactory);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

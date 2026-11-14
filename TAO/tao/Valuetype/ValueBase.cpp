@@ -1415,7 +1415,7 @@ namespace TAO
                                                    tc_value_base_id,
                                                    tc_value_base_name,
                                                    CORBA::VM_NONE,
-                                                   &CORBA::_tc_null,
+                                                   std::addressof (CORBA::_tc_null),
                                                    0,  // Field array
                                                    0); // Field count
 
@@ -1428,7 +1428,7 @@ namespace TAO
                                                    tc_event_base_id,
                                                    tc_event_base_name,
                                                    CORBA::VM_NONE,
-                                                   &CORBA::_tc_null,
+                                                   std::addressof (CORBA::_tc_null),
                                                    0,  // Field array
                                                    0); // Field count
   }
