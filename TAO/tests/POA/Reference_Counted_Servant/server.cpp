@@ -26,7 +26,6 @@ class reference_counted_test_i :
   public virtual test_i
 {
 public:
-  /// Constructor - takes a POA and a value parameter
   reference_counted_test_i (CORBA::ORB_ptr orb,
                             PortableServer::POA_ptr poa);
 

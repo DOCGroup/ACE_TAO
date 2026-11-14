@@ -31,7 +31,6 @@ protected:
 class A_i : public POA_A
 {
 public:
-  // constructor - takes a POA and a value parameter
   A_i (CORBA::Long value,
        PortableServer::POA_ptr poa);
 
@@ -57,7 +56,6 @@ public:
   class B_i : public POA_Outer::B
   {
   public:
-    // constructor - takes a POA and a value parameter
     B_i (CORBA::Long value,
          PortableServer::POA_ptr poa);
 
@@ -83,7 +81,6 @@ public:
     class C_i : public POA_Outer::Inner::C
     {
     public:
-      // constructor - takes a POA and a value parameter
       C_i (CORBA::Long value,
            PortableServer::POA_ptr poa);
 

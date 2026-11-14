@@ -13,7 +13,6 @@
 class test_i : public POA_test
 {
 public:
-  /// Constructor - takes a POA and a value parameter
   test_i (CORBA::ORB_ptr orb,
           PortableServer::POA_ptr poa,
           ACE_thread_t thr_id);

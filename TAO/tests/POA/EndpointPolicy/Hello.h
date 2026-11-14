@@ -16,7 +16,6 @@ public:
   Hello &operator= (Hello const &) = delete;
   Hello &operator= (Hello &&) = delete;
 
-  // = The skeleton methods
   char *get_string () override;
 
   void shutdown () override;

@@ -13,7 +13,6 @@
 class GENERIC_SERVANT_Export test_i : public POA_test
 {
 public:
-  /// Constructor - takes a POA and a value parameter
   test_i (CORBA::ORB_ptr orb,
           PortableServer::POA_ptr poa);
 
