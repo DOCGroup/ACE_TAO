@@ -641,7 +641,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_malloc (size_t nbytes)
 
   // Search the freelist to locate a block of the appropriate size.
 
-  while (1)
+  while (true)
 
     // *Warning* Do not use "continue" within this while-loop.
 

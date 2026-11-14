@@ -688,7 +688,7 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::close ()
   // create a new iterator each time because we remove from the handle
   // set when we cancel the Svc_Handler.
   ACE_HANDLE *handle {};
-  while (1)
+  while (true)
     {
       ACE_Unbounded_Set_Iterator<ACE_HANDLE>
         iterator (this->non_blocking_handles ());

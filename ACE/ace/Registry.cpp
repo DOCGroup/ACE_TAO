@@ -788,7 +788,7 @@ ACE_Registry::Naming_Context::list (Binding_List &list)
   iterator.current_enumeration (iterator.object_iteration_);
 
   long result = 0;
-  while (1)
+  while (true)
     {
       ACE_Registry::Binding binding;
       result = iterator.next_one (binding);

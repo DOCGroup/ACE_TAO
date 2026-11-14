@@ -1749,7 +1749,7 @@ ACE_WFMO_Reactor::ok_to_wait (ACE_Time_Value *max_wait_time,
   // Use WaitForMultipleObjects() to wait for both atomically.
   int timeout = max_wait_time == 0 ? INFINITE : max_wait_time->msec ();
   DWORD result = 0;
-  while (1)
+  while (true)
     {
       result = ::WaitForMultipleObjectsEx (sizeof this->atomic_wait_array_ / sizeof (ACE_HANDLE),
                                            this->atomic_wait_array_,

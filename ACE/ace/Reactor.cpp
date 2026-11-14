@@ -187,7 +187,7 @@ ACE_Reactor::run_reactor_event_loop (REACTOR_EVENT_HOOK eh)
   if (this->reactor_event_loop_done ())
     return 0;
 
-  while (1)
+  while (true)
     {
       int const result = this->implementation_->handle_events ();
 
@@ -210,7 +210,7 @@ ACE_Reactor::run_alertable_reactor_event_loop (REACTOR_EVENT_HOOK eh)
   if (this->reactor_event_loop_done ())
     return 0;
 
-  while (1)
+  while (true)
     {
       int const result = this->implementation_->alertable_handle_events ();
 
@@ -234,7 +234,7 @@ ACE_Reactor::run_reactor_event_loop (ACE_Time_Value &tv,
   if (this->reactor_event_loop_done ())
     return 0;
 
-  while (1)
+  while (true)
     {
       int result = this->implementation_->handle_events (tv);
 

@@ -290,7 +290,7 @@ ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::forward_i ()
 
 #if defined (ACE_HAS_LAZY_MAP_MANAGER)
 
-  while (1)
+  while (true)
     {
       // Go to the next item in the list.
       this->next_ = this->map_man_->search_structure_[this->next_].next ();
@@ -321,7 +321,7 @@ ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::reverse_i ()
 
 #if defined (ACE_HAS_LAZY_MAP_MANAGER)
 
-  while (1)
+  while (true)
     {
       // Go to the prev item in the list.
       this->next_ = this->map_man_->search_structure_[this->next_].prev ();
@@ -397,7 +397,7 @@ ACE_Map_Const_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::forward_i ()
 
 #if defined (ACE_HAS_LAZY_MAP_MANAGER)
 
-  while (1)
+  while (true)
     {
       // Go to the next item in the list.
       this->next_ = this->map_man_->search_structure_[this->next_].next ();
@@ -428,7 +428,7 @@ ACE_Map_Const_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::reverse_i ()
 
 #if defined (ACE_HAS_LAZY_MAP_MANAGER)
 
-  while (1)
+  while (true)
     {
       // Go to the prev item in the list.
       this->next_ = this->map_man_->search_structure_[this->next_].prev ();
@@ -486,7 +486,7 @@ ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::ACE_Map_Iterator (ACE_Map_Manager<EX
       // Start here.
       this->next_ = this->map_man_->occupied_list_.next ();
 
-      while (1)
+      while (true)
         {
           // Stop if we reach the end.
           if (this->done ())
@@ -564,7 +564,7 @@ ACE_Map_Const_Iterator<EXT_ID, INT_ID, ACE_LOCK>::ACE_Map_Const_Iterator (const 
       // Start here.
       this->next_ = this->map_man_->occupied_list_.next ();
 
-      while (1)
+      while (true)
         {
           // Stop if we reach the end.
           if (this->done ())
@@ -642,7 +642,7 @@ ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::ACE_Map_Reverse_Iterator (AC
       // Start here.
       this->next_ = this->map_man_->occupied_list_.prev ();
 
-      while (1)
+      while (true)
         {
           // Stop if we reach the end.
           if (this->done ())

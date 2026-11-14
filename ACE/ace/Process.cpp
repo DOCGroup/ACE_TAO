@@ -938,7 +938,7 @@ ACE_Process_Options::setenv (const ACE_TCHAR *variable_name,
       else
         break;
     }
-  while (1);
+  while (true);
 
   if (retval == -1)
     {
