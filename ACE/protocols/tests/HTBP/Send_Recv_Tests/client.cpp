@@ -143,19 +143,19 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   iovec iov[5];
 
-  iov[0].iov_base = reinterpret_cast<char *> (&buffer[0]);
+  iov[0].iov_base = reinterpret_cast<char *> (buffer);
   iov[0].iov_len = 50;
 
-  iov[1].iov_base = reinterpret_cast<char *> (&buffer[50]);
+  iov[1].iov_base = reinterpret_cast<char *> (buffer + 50);
   iov[1].iov_len = 25;
 
-  iov[2].iov_base = reinterpret_cast<char *> (&buffer[75]);
+  iov[2].iov_base = reinterpret_cast<char *> (buffer + 75);
   iov[2].iov_len = 150;
 
-  iov[3].iov_base = reinterpret_cast<char *> (&buffer[225]);
+  iov[3].iov_base = reinterpret_cast<char *> (buffer + 225);
   iov[3].iov_len = 29;
 
-  iov[4].iov_base = reinterpret_cast<char *> (&buffer[254]);
+  iov[4].iov_base = reinterpret_cast<char *> (buffer + 254);
   iov[4].iov_len = 1;
 
   len = stream.sendv (iov, 5);

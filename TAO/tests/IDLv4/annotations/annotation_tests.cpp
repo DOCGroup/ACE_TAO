@@ -1054,10 +1054,10 @@ annotation_tests ()
     if (member->visibility () != AST_Field::vis_NA)
       {
         char buffer[100];
-        ACE_OS::snprintf (&buffer[0], 100,
+        ACE_OS::snprintf (buffer, 100,
           "struct field visibility is %u, which is not equal to vis_NA",
           static_cast<unsigned> (member->visibility ()));
-        t.failed (&buffer[0]);
+        t.failed (buffer);
       }
   } catch (Failed const &) {}
 

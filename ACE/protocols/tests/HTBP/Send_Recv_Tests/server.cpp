@@ -193,13 +193,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ssize_t len;
   int i;
 
-  iov[0].iov_base = reinterpret_cast<char *> (&buffer[0]);
+  iov[0].iov_base = reinterpret_cast<char *> (buffer);
   iov[0].iov_len = 75;
 
-  iov[1].iov_base = reinterpret_cast<char *> (&buffer[75]);
+  iov[1].iov_base = reinterpret_cast<char *> (buffer + 75);
   iov[1].iov_len = 100;
 
-  iov[2].iov_base = reinterpret_cast<char *> (&buffer[175]);
+  iov[2].iov_base = reinterpret_cast<char *> (buffer + 175);
   iov[2].iov_len = 80;
 
   len = stream.recvv (iov, 3);
