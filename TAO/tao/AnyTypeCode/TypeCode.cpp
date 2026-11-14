@@ -95,8 +95,8 @@ CORBA::TypeCode::equivalent (TypeCode_ptr tc) const
       char const * const this_id = unaliased_this->id ();
       char const * const tc_id = unaliased_tc->id ();
 
-      if (std::strlen (this_id) != 0
-          && std::strlen (tc_id) != 0)
+      if (this_id[0] != '\0'
+          && tc_id[0] != '\0')
         {
           return std::strcmp (this_id, tc_id) == 0;
         }
