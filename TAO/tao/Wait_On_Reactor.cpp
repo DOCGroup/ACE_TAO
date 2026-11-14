@@ -31,7 +31,7 @@ TAO_Wait_On_Reactor::wait (ACE_Time_Value *max_wait_time,
   // Do the event loop, till we fully receive a reply.
   int result {};
 
-  while (1)
+  while (true)
     {
       // Run the event loop.
       result = reactor->handle_events (max_wait_time);

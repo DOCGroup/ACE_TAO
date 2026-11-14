@@ -129,7 +129,7 @@ TAO_CORBALOC_Parser::parse_string (const char * ior, CORBA::ORB_ptr orb)
   TAO_Connector_Registry *conn_reg =
     orb->orb_core ()->connector_registry();
 
-  while (1) { // will loop on comma only.
+  while (true) { // will loop on comma only.
     size_t len {};
     size_t ndx = endpoints.size();
     endpoints.size(ndx+1);

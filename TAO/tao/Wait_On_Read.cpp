@@ -74,7 +74,7 @@ TAO_Wait_On_Read::wait (ACE_Time_Value * max_wait_time,
   // strategies.
   int retval {};
   TAO_Resume_Handle rh;
-  while (1)
+  while (true)
     {
       retval = this->transport_->handle_input (rh, max_wait_time);
 
