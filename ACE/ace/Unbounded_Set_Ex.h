@@ -45,17 +45,20 @@ public:
   /// Type definition of the container type.
   using container_type = ACE_Unbounded_Set_Ex<T, C>;
 
-  // = std::iterator_traits typedefs/traits.
+  /// @name std::iterator_traits typedefs
+  /// @{
   using iterator_category = std::forward_iterator_tag;
   using value_type = typename container_type::value_type;
   using reference = typename container_type::reference;
   using pointer = typename container_type::pointer;
   using difference_type = typename container_type::difference_type;
+  /// @}
 
   explicit ACE_Unbounded_Set_Ex_Iterator (ACE_Unbounded_Set_Ex<T, C> &s,
                                            bool end = false);
 
-  // = Iteration methods.
+  /// @name Iteration methods
+  /// @{
 
   /// Pass back the @a next_item that hasn't been seen in the Set.
   /// Returns 0 when all items have been seen, else 1.
@@ -74,8 +77,10 @@ public:
 
   /// Dump the state of an object.
   void dump () const;
+  /// @}
 
-  // = STL styled iteration, compare, and reference functions.
+  /// @name STL styled iteration, comparison, and reference functions
+  /// @{
 
   /// Postfix advance.
   ACE_Unbounded_Set_Ex_Iterator<T, C> operator++ (int);
@@ -89,6 +94,7 @@ public:
   /// Check if two iterators point to the same position
   bool operator== (const ACE_Unbounded_Set_Ex_Iterator<T, C> &) const;
   bool operator!= (const ACE_Unbounded_Set_Ex_Iterator<T, C> &) const;
+  /// @}
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -112,18 +118,21 @@ class ACE_Unbounded_Set_Ex_Const_Iterator
 public:
   using container_type = ACE_Unbounded_Set_Ex<T, C>;
 
-  // = std::iterator_traits typedefs/traits.
+  /// @name std::iterator_traits typedefs
+  /// @{
   using iterator_category = std::forward_iterator_tag;
   using value_type = typename container_type::const_value_type;
   using reference = typename container_type::const_reference;
   using pointer = typename container_type::const_pointer;
   using difference_type = typename container_type::difference_type;
+  /// @}
 
   explicit ACE_Unbounded_Set_Ex_Const_Iterator (
     ACE_Unbounded_Set_Ex<T, C> const &s,
     bool end = false);
 
-  // = Iteration methods.
+  /// @name Iteration methods
+  /// @{
 
   /// Pass back the @a next_item that hasn't been seen in the Set.
   /// @return Returns 0 when all items have been seen, else 1.
@@ -142,8 +151,10 @@ public:
 
   /// Dump the state of an object.
   void dump () const;
+  /// @}
 
-  // = STL styled iteration, compare, and reference functions.
+  /// @name STL styled iteration, comparison, and reference functions
+  /// @{
 
   /// Postfix advance.
   ACE_Unbounded_Set_Ex_Const_Iterator<T, C> operator++ (int);
@@ -157,6 +168,7 @@ public:
   /// Check if two iterators point to the same position
   bool operator== (const ACE_Unbounded_Set_Ex_Const_Iterator<T, C> &) const;
   bool operator!= (const ACE_Unbounded_Set_Ex_Const_Iterator<T, C> &) const;
+  /// @}
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -213,15 +225,18 @@ public:
   friend class ACE_Unbounded_Set_Ex_Iterator<T, C>;
   friend class ACE_Unbounded_Set_Ex_Const_Iterator<T, C>;
 
-  // Trait definition.
+  /// @name Iterator type aliases
+  /// @{
   using ITERATOR = ACE_Unbounded_Set_Ex_Iterator<T, C>;
   using iterator = ACE_Unbounded_Set_Ex_Iterator<T, C>;
   using CONST_ITERATOR = ACE_Unbounded_Set_Ex_Const_Iterator<T, C>;
   using const_iterator = ACE_Unbounded_Set_Ex_Const_Iterator<T, C>;
   using COMP = C;
   using NODE = ACE_Node<T, C>;
+  /// @}
 
-  // = STL typedefs/traits.
+  /// @name STL typedefs and traits
+  /// @{
   using value_type = T;
   using const_value_type = const T;
   using reference = value_type &;
@@ -229,6 +244,7 @@ public:
   using pointer = value_type *;
   using const_pointer = const_value_type *;
   using difference_type = ptrdiff_t;
+  /// @}
 
   /// Constructor.  Use user specified allocation strategy
   /// if specified.
@@ -250,18 +266,17 @@ public:
    */
   ACE_Unbounded_Set_Ex (ACE_Unbounded_Set_Ex<T, C> const &);
 
-
   /**
    * Perform a deep copy of the rhs into the lhs.
    */
   ACE_Unbounded_Set_Ex<T, C> & operator= (ACE_Unbounded_Set_Ex<T, C> const &);
-
   /**
    * Destroy the nodes of the set.
    */
   ~ACE_Unbounded_Set_Ex ();
 
-  // = Check boundary conditions.
+  /// @name Boundary conditions
+  /// @{
 
   /// Returns @c true if the container is empty, otherwise returns @c false.
   /**
@@ -274,8 +289,10 @@ public:
    * Always returns @c false since the set can never fill up.
    */
   bool is_full () const;
+  /// @}
 
-  // = Classic unordered set operations.
+  /// @name Unordered set operations
+  /// @{
 
   /// Linear insertion of an item.
   /**
@@ -321,12 +338,15 @@ public:
    * Delete the nodes of the set.
    */
   void reset ();
+  /// @}
 
-  // = STL-styled unidirectional iterator factory.
+  /// @name STL styled iterator factory
+  /// @{
   iterator begin ();
   iterator end ();
   const_iterator begin () const;
   const_iterator end () const;
+  /// @}
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
