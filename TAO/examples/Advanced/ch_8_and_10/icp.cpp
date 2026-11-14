@@ -228,7 +228,8 @@ ICP_get (
     } else if (std::strcmp (attr, "nominal_temp") == 0) {
         if (pos->second.type != DeviceType::thermostat)
             return -1;                      // Must be thermostat
-        std::memcpy (value, &pos->second.nominal_temp, (std::min)(len, sizeof(pos->second.nominal_temp)));
+        std::memcpy (value, &pos->second.nominal_temp,
+                     (std::min) (len, sizeof (pos->second.nominal_temp)));
     } else if (std::strcmp (attr, "temperature") == 0) {
         long const temp = actual_temp (pos);
         std::memcpy (value, &temp, (std::min) (len, sizeof (temp)));

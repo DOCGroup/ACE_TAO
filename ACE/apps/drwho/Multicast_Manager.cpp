@@ -122,7 +122,10 @@ Multicast_Manager::get_host_entry (const char *host)
     // Host name.
     hp = ACE_OS::gethostbyname (host);
 
-  return hp == nullptr ? nullptr : static_cast<hostent *> (std::memcpy (&host_entry, hp, sizeof *hp));
+  return hp == nullptr ? nullptr
+    : static_cast<hostent *> (std::memcpy (&host_entry,
+                                           hp,
+                                           sizeof *hp));
 }
 
 // Adds an additional new host to the list of host machines.

@@ -103,7 +103,7 @@ RTCP_BYE_Packet::RTCP_BYE_Packet(ACE_UINT32 *ssrc_list,
       size_t text_length = std::strlen(text);
       if (text_length >= sizeof (this->reason_))
         text_length = sizeof (this->reason_) - 1;
-      std::memcpy(this->reason_, text, text_length);
+      std::memcpy (this->reason_, text, text_length);
       this->reason_length_ = static_cast<unsigned char> (text_length);
     }
   else
@@ -146,7 +146,7 @@ RTCP_BYE_Packet::RTCP_BYE_Packet(char* buffer, int *len)
     {
       this->reason_length_ = buffer[index];
       ++index;
-      std::memcpy(this->reason_, &buffer[index], this->reason_length_);
+      std::memcpy (this->reason_, &buffer[index], this->reason_length_);
       index+=this->reason_length_;
     }
   else
@@ -230,7 +230,7 @@ RTCP_BYE_Packet::build_packet()
     {
       this->packet_data_[index] = this->reason_length_;
       ++index;
-      std::memcpy(&this->packet_data_[index], this->reason_, this->reason_length_);
+      std::memcpy (&this->packet_data_[index], this->reason_, this->reason_length_);
       index += this->reason_length_;
       while (index < this->packet_size())
         {

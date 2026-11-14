@@ -821,7 +821,9 @@ ACE_SOCK_Dgram::make_multicast_ifaddr6 (ipv6_mreq *ret_mreq,
 #endif /* ACE_WIN32 || !ACE_LACKS_IF_NAMETOINDEX */
 
   // now set the multicast address
-  std::memcpy (&lmreq.ipv6mr_multiaddr, &((sockaddr_in6 *) mcast_addr.get_addr ())->sin6_addr, sizeof (in6_addr));
+  std::memcpy (&lmreq.ipv6mr_multiaddr,
+               &((sockaddr_in6 *) mcast_addr.get_addr ())->sin6_addr,
+               sizeof (in6_addr));
 
   // Set return info, if requested.
   if (ret_mreq)

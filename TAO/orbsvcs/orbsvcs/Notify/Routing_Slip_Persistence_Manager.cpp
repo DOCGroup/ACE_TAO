@@ -532,7 +532,7 @@ Routing_Slip_Persistence_Manager::fill_block(Persistent_Storage_Block& psb,
     {
       result = 0;
     }
-    std::memcpy(psb.data() + offset_into_block, data, size_to_copy);
+    std::memcpy (psb.data () + offset_into_block, data, size_to_copy);
   }
   return result;
 }

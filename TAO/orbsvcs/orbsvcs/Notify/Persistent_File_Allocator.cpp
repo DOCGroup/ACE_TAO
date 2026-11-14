@@ -282,7 +282,7 @@ Persistent_File_Allocator::read(Persistent_Storage_Block* psb)
           cached = (queued_block->block_number() == psb->block_number());
         }
         if (cached)
-          std::memcpy(psb->data(), queued_block->data(), this->block_size());
+          std::memcpy (psb->data (), queued_block->data (), this->block_size ());
       }
     }
     if (!cached)

@@ -414,7 +414,9 @@ ACE_MEM_IO::send (const ACE_Message_Block *message_block,
 
       while (message_block != nullptr)
         {
-          std::memcpy (static_cast<char *> (buf->data ()) + n, message_block->rd_ptr (), message_block->length ());
+          std::memcpy (static_cast<char *> (buf->data ()) + n,
+                       message_block->rd_ptr (),
+                       message_block->length ());
           n += message_block->length ();
 
           if (message_block->cont ())
