@@ -9,13 +9,14 @@
 // Dorn <Karlheinz.Dorn@med.siemens.de>.  It was modified to utilize
 // more ACE features by Doug Schmidt <d.schmidt@vanderbilt.edu>.
 
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_main.h"
 #include "ace/Task.h"
 #include "ace/Service_Config.h"
 #include "ace/Truncate.h"
+
+#include <cstdio>
+#include <cstring>
 
 #if defined (ACE_HAS_THREADS)
 
@@ -174,10 +175,8 @@ producer (Thread_Pool &thread_pool)
         {
           static int count = 0;
 
-          ACE_OS::sprintf (mb->rd_ptr (),
-                           "%d\n",
-                           count);
-          n = ACE_Utils::truncate_cast<int> (ACE_OS::strlen (mb->rd_ptr ()));
+          std::snprintf (mb->rd_ptr (), mb->size (), "%d\n", count);
+          n = ACE_Utils::truncate_cast<int> (std::strlen (mb->rd_ptr ()));
 
           if (count == n_iterations)
             n = 1; // Indicate that we need to shut down.

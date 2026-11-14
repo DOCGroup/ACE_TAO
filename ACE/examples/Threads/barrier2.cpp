@@ -8,11 +8,12 @@
 // should work with this flag disabled!  The BARRIER_TYPE is supposed
 // to enable/disable barrier sync on each svc a worker has done.
 
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_main.h"
 #include "ace/Task.h"
 #include "ace/Service_Config.h"
+
+#include <cstring>
 
 #if defined (ACE_HAS_THREADS)
 
@@ -234,10 +235,10 @@ Worker_Task<BARRIER>::input (ACE_Message_Block_Unique_Ptr &message_block)
 
 #if !defined (manual)
   static int l = 0;
-  char str[] = "kalle";
-  ACE_OS::strcpy (mb->rd_ptr (), str);
+  char const str[] = "kalle";
+  std::strcpy (mb->rd_ptr (), str);
 
-  size_t n = ACE_OS::strlen (str);
+  size_t n = std::strlen (str);
 
   if (l == 1000)
     n = 1;
