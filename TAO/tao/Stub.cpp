@@ -125,7 +125,7 @@ TAO_Stub::add_forward_profiles (TAO_MProfile const &mprofiles,
 
   TAO_MProfile *now_pfiles = this->forward_profiles_;
   if (now_pfiles == nullptr)
-    now_pfiles = &this->base_profiles_;
+    now_pfiles = std::addressof (this->base_profiles_);
 
   ACE_NEW (this->forward_profiles_,
            TAO_MProfile (mprofiles));

@@ -10,6 +10,7 @@
 #include "ace/Lock_Adapter_T.h"
 
 #include <cerrno>
+#include <memory>
 #include <new>
 #include <string>
 #include <vector>
@@ -92,7 +93,7 @@ namespace TAO
       {
         ACE_Time_Value const interval (this->idle_scan_interval_);
         this->idle_scan_timer_id_ = this->reactor_.schedule_timer (
-          &this->idle_scanner_, nullptr, interval, interval);
+          std::addressof (this->idle_scanner_), nullptr, interval, interval);
         if (this->idle_scan_timer_id_ == -1)
           {
             if (TAO_debug_level > 0)

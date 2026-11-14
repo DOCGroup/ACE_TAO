@@ -1,4 +1,6 @@
 // -*- C++ -*-
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
@@ -21,7 +23,7 @@ TAO_Tagged_Components::get_code_sets (
 {
   if (this->code_sets_set_ == 1)
     {
-      ci = &this->code_sets_;
+      ci = std::addressof (this->code_sets_);
     }
 
   return this->code_sets_set_;

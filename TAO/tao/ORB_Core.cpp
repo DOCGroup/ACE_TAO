@@ -66,7 +66,6 @@
 #include "ace/OS_NS_string.h"
 #include "ace/Message_Block.h"
 #include <cstring>
-#include <memory>
 #include <string>
 
 #if TAO_HAS_INTERCEPTORS == 1
@@ -3013,7 +3012,7 @@ TAO_ORB_Core::create_input_cdr_data_block (size_t size)
   ACE_Lock* lock_strategy {};
   if (this->resource_factory ()->use_locked_data_blocks ())
     {
-      lock_strategy = &this->data_block_lock_;
+      lock_strategy = std::addressof (this->data_block_lock_);
     }
 
   return this->create_data_block_i (size,

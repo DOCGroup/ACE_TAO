@@ -7,6 +7,7 @@
 #endif /* ! __ACE_INLINE__ */
 
 #include <cstring>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -162,7 +163,7 @@ TAO_Service_Context::get_context (IOP::ServiceId id,
     {
       if (id == this->service_context_[i].context_id)
         {
-          *context = &this->service_context_[i];
+          *context = std::addressof (this->service_context_[i]);
           return 1;
         }
     }

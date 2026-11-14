@@ -11,6 +11,7 @@
 
 #include "ace/Malloc_Base.h"
 #include "ace/Reactor.h"
+#include <memory>
 #include <utility>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -128,7 +129,7 @@ TAO_Thread_Lane_Resources::connector_registry ()
                 CORBA::COMPLETED_NO);
             }
 
-          if (connector_registry->open (&this->orb_core_) != 0)
+          if (connector_registry->open (std::addressof (this->orb_core_)) != 0)
             {
               throw ::CORBA::INITIALIZE (
                 CORBA::SystemException::_tao_minor_code (

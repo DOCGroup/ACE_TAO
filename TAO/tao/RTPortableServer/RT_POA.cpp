@@ -239,14 +239,14 @@ TAO_RT_POA::key_to_stub_i (TAO::ObjectKey const &object_key,
           TAO_Thread_Lane_Resources &resources =
             thread_lane_resources_manager.default_lane_resources ();
 
-          acceptor_registry = &resources.acceptor_registry ();
+          acceptor_registry = std::addressof (resources.acceptor_registry ());
         }
       else
         {
           TAO_Thread_Lane_Resources &resources =
             this->thread_pool_->lanes ().front ()->resources ();
 
-          acceptor_registry = &resources.acceptor_registry ();
+          acceptor_registry = std::addressof (resources.acceptor_registry ());
         }
 
       return

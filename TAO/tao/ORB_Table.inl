@@ -2,6 +2,7 @@
 #include "tao/ORB_Core.h"
 
 #include <algorithm>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -27,7 +28,7 @@ TAO::ORB_Table::end ()
 ACE_INLINE TAO::ORB_Table::Table *
 TAO::ORB_Table::table ()
 {
-  return &this->table_;
+  return std::addressof (this->table_);
 }
 
 ACE_INLINE TAO_SYNCH_MUTEX &

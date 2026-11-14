@@ -15,6 +15,8 @@
 #include "tao/debug.h"
 #include "ace/os_include/os_typeinfo.h"
 
+#include <memory>
+
 #if !defined (__ACE_INLINE__)
 #include "tao/TAO_Singleton.inl"
 #endif /* __ACE_INLINE__ */
@@ -91,7 +93,7 @@ TAO_Singleton<TYPE, ACE_LOCK>::instance ()
         }
     }
 
-  return &singleton->instance_;
+  return std::addressof (singleton->instance_);
 }
 
 template <class TYPE, class ACE_LOCK> void
@@ -183,7 +185,7 @@ TAO_TSS_Singleton<TYPE, ACE_LOCK>::instance ()
         }
     }
 
-  return ACE_TSS_GET (&singleton->instance_, TYPE);
+  return ACE_TSS_GET (std::addressof (singleton->instance_), TYPE);
 }
 
 template <class TYPE, class ACE_LOCK> void
