@@ -73,7 +73,7 @@ TAO_IFR_Client_Adapter_Impl::get_interface_remote (
 {
   TAO::Arg_Traits<CORBA::InterfaceDef>::ret_val _tao_retval;
 
-  std::array<TAO::Argument *, 1> args {{&_tao_retval}};
+  std::array<TAO::Argument *, 1> args {std::addressof (_tao_retval)};
 
   TAO::Invocation_Adapter _tao_call (
       target,
