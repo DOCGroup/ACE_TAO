@@ -1,24 +1,27 @@
 #include "_pch.h"
 
 #include "bankC.h"
+#include "ace/Get_Opt.h"
 
 #include <iostream>
 #include <stdexcept>
-#include "ace/Get_Opt.h"
 
-ACE_TCHAR const *ior = ACE_TEXT ("file://server.ior");
+struct Client_Options
+{
+  ACE_TCHAR const *ior {ACE_TEXT ("file://server.ior")};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c = 0;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
 
       case '?':
@@ -50,7 +53,7 @@ public:
 
   ::CORBA::ValueBase *_copy_value () override
   {
-    ::CORBA::ValueBase *ret_val = nullptr;
+    ::CORBA::ValueBase *ret_val {};
     ACE_NEW_THROW_EX (
       ret_val,
       Person_i (
@@ -78,19 +81,20 @@ public:
 int ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 {
   try {
-    CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+    CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
+    Client_Options options;
 
-    if (parse_args (argc, argv) != 0)
+    if (parse_args (argc, argv, options) != 0)
       return 1;
 
-    CORBA::Object_var obj = orb->string_to_object (ior);
-    Transaction_var trans = Transaction::_narrow (obj.in ());
+    CORBA::Object_var const obj = orb->string_to_object (options.ior);
+    Transaction_var const trans = Transaction::_narrow (obj.in ());
     if (CORBA::is_nil (trans.in ()))
       throw std::runtime_error ("failed to find a valid Transaction IOR");
 
-    Person_var p = new Person_i ("TAOUser", 1000);
+    Person_var const p = new Person_i ("TAOUser", 1000);
 
-    char const *n = p->name ();
+    char const * const n = p->name ();
     double const bal = p->balance () / 100.0;
     std::cout << "Client: Sending person:" << n
               << " starting_balance:$" << bal
@@ -98,20 +102,20 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 
     CORBA::Long const b = trans->update (p.in ());
 
-    while (orb->work_pending()) {
-      orb->perform_work();
+    while (orb->work_pending ()) {
+      orb->perform_work ();
     }
 
-    std::cout << "Client: Ending balance: " << b/100.0 << std::endl;
+    std::cout << "Client: Ending balance: " << b / 100.0 << std::endl;
 
-    orb->destroy();
+    orb->destroy ();
   }
-  catch (CORBA::Exception const &e)
+  catch (CORBA::Exception const& e)
   {
     std::cerr << e << std::endl;
     return 1;
   }
-  catch (std::runtime_error const &e)
+  catch (std::runtime_error const& e)
   {
     std::cerr << e.what() << std::endl;
   }
