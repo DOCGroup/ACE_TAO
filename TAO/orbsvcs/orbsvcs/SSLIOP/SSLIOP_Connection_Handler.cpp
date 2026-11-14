@@ -16,6 +16,8 @@
 #include "ace/os_include/os_netdb.h"
 #include "ace/SSL/SSL_Context.h"
 
+#include <memory>
+
 #if !defined (__ACE_INLINE__)
 # include "orbsvcs/SSLIOP/SSLIOP_Connection_Handler.inl"
 #endif /* ! __ACE_INLINE__ */
@@ -119,7 +121,7 @@ TAO::SSLIOP::Connection_Handler::open (void *)
 #if !defined (ACE_LACKS_TCP_NODELAY)
   if (this->peer ().set_option (ACE_IPPROTO_TCP,
                                 TCP_NODELAY,
-                                (void *) &protocol_properties.no_delay_,
+                                std::addressof (protocol_properties.no_delay_),
                                 sizeof (protocol_properties.no_delay_)) == -1)
     return -1;
 #endif /* ! ACE_LACKS_TCP_NODELAY */
@@ -130,7 +132,7 @@ TAO::SSLIOP::Connection_Handler::open (void *)
       if (this->peer ().
           set_option (SOL_SOCKET,
                       SO_KEEPALIVE,
-                      (void *) &protocol_properties.keep_alive_,
+                      std::addressof (protocol_properties.keep_alive_),
                       sizeof (protocol_properties.keep_alive_)) == -1
           && errno != ENOTSUP)
         {

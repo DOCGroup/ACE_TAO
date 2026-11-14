@@ -9,6 +9,7 @@
 #include "ace/OS_NS_sys_time.h"
 
 #include <cstring>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO_FtRt
@@ -127,7 +128,7 @@ UUID::create (unsigned char *buffer)
   if (node.rand_node.rand1 == 0)
   {
     // initialize the node
-    if (ACE_OS::getmacaddress(&node.mac_address) == -1)
+    if (ACE_OS::getmacaddress (std::addressof (node.mac_address)) == -1)
     {
       node.rand_node.rand1 = ACE_OS::rand_r(&seed);
       node.rand_node.rand2 = (unsigned short) ACE_OS::rand_r(&seed);
