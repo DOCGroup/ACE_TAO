@@ -34,20 +34,16 @@ using ALLOCATOR = ACE_Allocator_Adapter <ACE_Malloc<ACE_MMAP_MEMORY_POOL,
 
 using HASH_MAP = ACE_Hash_Map_With_Allocator<char *, char *>;
 
-class  Object_Group_Factory_i :
+/**
+ * Implements the Load_Balancer::Object_Group_Factory interface.
+ *
+ * This implementation uses two maps to store Group_ID to Object_Group
+ * associations for all load-balancing groups created by the factory. One
+ * map tracks random groups, and the other tracks round-robin groups.
+ */
+class Object_Group_Factory_i :
   public virtual POA_Load_Balancer::Object_Group_Factory
 {
-  // = TITLE
-  //    This class implements Load_Balancer::Object_Group_Factory idl
-  //    interface.
-  //
-  // = DESCRIPTION
-  //    This implementation uses two <ACE_Hash_Map_Manager>s
-  //    to store <Group_ID> to <Object_Group> associations for all
-  //    load balancing groups created by this factory (one map keeps
-  //    track of all random groups, and the other keeps track of all
-  //    round robin groups).
-  //
 public:
   Object_Group_Factory_i (CORBA::ORB_ptr orb,
                           PortableServer::POA_ptr poa);
@@ -59,11 +55,8 @@ public:
   Object_Group_Factory_i &operator= (Object_Group_Factory_i const &) = delete;
   Object_Group_Factory_i &operator= (Object_Group_Factory_i &&) = delete;
 
-  /// Method for the POA that will return the persistent POA_ptr stored
-  /// in here..
+  /// Returns the persistent POA reference stored in this servant.
   PortableServer::POA_ptr _default_POA () override;
-
-  // = Load_Balancer::Object_Group_Factory idl methods.
 
   /**
    * Creates an <Object_Group> that resolves requests for arbitrary
@@ -117,8 +110,8 @@ private:
   /// Our POA
   PortableServer::POA_var poa_;
 
-  // = Helper methods.
-
+  /// @name Helper methods
+  /// @{
   /**
    * This function factors out common code in <make_round_robin> and
    * <make_random>.  Creates a random <Object_Group> if <random> parameter is
@@ -141,6 +134,7 @@ private:
   /// This rolls back the status of the objects in the POA if the
   /// service had failed..
   void update_objects ();
+  /// @}
 
   /// Raw pointer to persistent map storage owned by the memory pool.
   HASH_MAP *random_groups_ {};
@@ -166,21 +160,17 @@ private:
   ACE_Throughput_Stats throughput_;
 };
 
+/**
+ * Partially implements the Load_Balancer::Object_Group interface.
+ *
+ * resolve() is the only abstract method. Subclasses define it to implement
+ * a load-balancing policy; other methods can be overridden as needed. This
+ * class factors out code shared by Object_Group implementations with
+ * different policies.
+ */
 class Object_Group_i
   : public virtual POA_Load_Balancer::Object_Group
-
 {
-  // = TITLE
-  //    This abstract class partially implements
-  //    Load_Balancer::Object_Group idl interface.
-  //
-  // = DESCRIPTION
-  //   <Resolve> is the only abstract method - subclasses should
-  //   define it in order to implement an appropriate load balancing
-  //   policy.  Other methods can be overridden as needed.  This class
-  //   factors out code common to <Object_Group> implementations with
-  //   different load balancing policies.
-  //
 public:
   Object_Group_i (char const *id,
                   PortableServer::POA_ptr poa);
@@ -192,11 +182,8 @@ public:
   Object_Group_i &operator= (Object_Group_i const &) = delete;
   Object_Group_i &operator= (Object_Group_i &&) = delete;
 
-  // Persistent POA
-  // Method for the POA
+  /// Returns the persistent POA used by this servant.
   PortableServer::POA_ptr _default_POA () override;
-
-  // = Load_Balancer::Object_Group idl methods.
 
   /// Get group's id.
   char * id () override;
@@ -254,6 +241,10 @@ protected:
   using LIST = ACE_DLList<char *>;
   using ITERATOR = ACE_DLList_Iterator<char *>;
 
+  /**
+   * Member IDs are stored in both the list and map: the list supports
+   * policy-specific resolve operations, while the map supports lookup by ID.
+   */
   /// These raw pointers refer to map/list structures in the persistent allocator.
   /// They are rebound from the memory map after restart and do not own that storage.
   /// List of ids of all the members of this group.
@@ -261,13 +252,6 @@ protected:
 
   /// Mapping of member_id to obj for all the members of this group.
   HASH_MAP *members_ {};
-
-  // Note, we store information redundantly in this implementation,
-  // i.e., both <member_id_list_> and <members_> store member ids.
-  // However, this redundancy eases/speeds up the implementation of
-  // certain operations.  <member_id_list_> is useful for implementing
-  // variations of <resolve> method to implement different policies.
-  // <members_> is useful for doing id-based look-up.
 
   /// This group's id.
   ACE_CString id_;

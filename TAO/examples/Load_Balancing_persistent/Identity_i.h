@@ -14,11 +14,10 @@
 
 #include "IdentityS.h"
 
+/// Implements the Identity.idl interface.
 class Identity_i :
   public virtual POA_Identity
 {
-  // = TITLE
-  //    This class implements Identity.idl interface.
 public:
   /// Constructor - initializes the name of this object.
   Identity_i (char const *name,
@@ -34,8 +33,7 @@ public:
   /// Returns the name of this object.
   void get_name (CORBA::String_out name) override;
 
-  /// Method for the POA that will return the persistent POA_ptr stored
-  /// in here..
+  /// Returns the persistent POA reference stored in this servant.
   PortableServer::POA_ptr _default_POA () override;
 
 private:
