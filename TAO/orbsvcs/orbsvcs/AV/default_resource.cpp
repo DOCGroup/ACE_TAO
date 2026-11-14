@@ -5,13 +5,15 @@
 #include "tao/debug.h"
 #include "ace/OS_NS_strings.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_AV_Default_Resource_Factory::TAO_AV_Default_Resource_Factory ()
 {
   if (TAO_debug_level > 0)
     ORBSVCS_DEBUG ((LM_DEBUG,
-                "TAO_AV_Default_Resource_Factory::TAO_AV_Default_Resource_Factory\n"));
+                    "TAO_AV_Default_Resource_Factory::TAO_AV_Default_Resource_Factory\n"));
 }
 
 TAO_AV_Default_Resource_Factory::~TAO_AV_Default_Resource_Factory ()
@@ -43,17 +45,16 @@ int
 TAO_AV_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
 {
   if (TAO_debug_level > 0)
-  ORBSVCS_DEBUG ((LM_DEBUG,
-              "TAO_AV_Default_Resource_Factory::init\n"));
+    ORBSVCS_DEBUG ((LM_DEBUG,
+                    "TAO_AV_Default_Resource_Factory::init\n"));
 
-  int curarg = 0;
-
-  for (curarg = 0; curarg < argc; ++curarg)
+  for (int curarg {}; curarg < argc; ++curarg)
     {
       if (ACE_OS::strcasecmp (argv[curarg],
                               ACE_TEXT("-AVTransportFactory")) == 0)
         {
-          TAO_AV_TransportFactorySet *tset = TAO_AV_CORE::instance ()->transport_factories ();
+          TAO_AV_TransportFactorySet * const tset =
+            TAO_AV_CORE::instance ()->transport_factories ();
           ++curarg;
           if (curarg < argc)
             {
@@ -61,17 +62,22 @@ TAO_AV_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
               ACE_NEW_RETURN (item,
                               TAO_AV_Transport_Item (ACE_TEXT_ALWAYS_CHAR(argv[curarg])),
                               -1);
+              std::unique_ptr<TAO_AV_Transport_Item> item_owner (item);
               if (tset->insert (item) == -1)
-                ORBSVCS_ERROR ((LM_ERROR,
-                            ACE_TEXT ("(%P|%t) Unable to add transport factories for %s: %p\n"),
-
-              argv[curarg]));
+                {
+                  ORBSVCS_ERROR ((LM_ERROR,
+                                  ACE_TEXT ("(%P|%t) Unable to add transport factories for %s: %p\n"),
+                                  argv[curarg]));
+                }
+              else
+                item_owner.release ();
             }
         }
       else if (ACE_OS::strcasecmp (argv[curarg],
                                    ACE_TEXT("-AVFlowProtocolFactory")) == 0)
         {
-          TAO_AV_Flow_ProtocolFactorySet *fpset = TAO_AV_CORE::instance ()->flow_protocol_factories ();
+          TAO_AV_Flow_ProtocolFactorySet * const fpset =
+            TAO_AV_CORE::instance ()->flow_protocol_factories ();
           ++curarg;
           if (curarg < argc)
             {
@@ -79,11 +85,15 @@ TAO_AV_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
               ACE_NEW_RETURN (item,
                               TAO_AV_Flow_Protocol_Item (ACE_TEXT_ALWAYS_CHAR(argv[curarg])),
                               -1);
+              std::unique_ptr<TAO_AV_Flow_Protocol_Item> item_owner (item);
               if (fpset->insert (item) == -1)
-                ORBSVCS_ERROR ((LM_ERROR,
-                            ACE_TEXT ("(%P|%t) Unable to add flow protocol factories for %s: %p\n"),
-
-              argv[curarg]));
+                {
+                  ORBSVCS_ERROR ((LM_ERROR,
+                                  ACE_TEXT ("(%P|%t) Unable to add flow protocol factories for %s: %p\n"),
+                                  argv[curarg]));
+                }
+              else
+                item_owner.release ();
             }
         }
     }
