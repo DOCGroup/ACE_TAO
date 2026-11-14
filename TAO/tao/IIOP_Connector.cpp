@@ -224,8 +224,8 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
       return nullptr;
     }
 
-  TAO_IIOP_Connection_Handler **sh_ptr = &svc_handler;
-  TAO_IIOP_Endpoint **ep_ptr = &iiop_endpoint;
+  TAO_IIOP_Connection_Handler **sh_ptr = std::addressof (svc_handler);
+  TAO_IIOP_Endpoint **ep_ptr = std::addressof (iiop_endpoint);
   TAO_LF_Multi_Event mev;
   mev.add_event (svc_handler);
 
