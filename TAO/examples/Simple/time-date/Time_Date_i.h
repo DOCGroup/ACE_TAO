@@ -15,14 +15,10 @@
 
 #include "Time_DateS.h"
 
+/// Implements the Time_Date IDL interface.
 class Time_Date_i
   : public POA_Time_Date
 {
-  // = TITLE
-  //    Time_Date object implementation.
-  //
-  // = DESCRIPTION
-  //    Time_Date object implementation
 public:
   Time_Date_i () = default;
 
