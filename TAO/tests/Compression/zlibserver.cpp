@@ -88,6 +88,33 @@ test_register_nil_compression_factory (
 }
 
 bool
+test_compressor_factories (Compression::CompressionManager_ptr const cm,
+                           CORBA::ULong const expected_count)
+{
+  Compression::CompressorFactorySeq_var const factories = cm->get_factories ();
+  if (factories->length () != expected_count)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%t) ERROR, unexpected compressor factory count\n")));
+      return false;
+    }
+
+  if (expected_count == 1)
+    {
+      Compression::CompressorFactory_ptr const factory = factories.in ()[0];
+      if (CORBA::is_nil (factory)
+          || factory->compressor_id () != Compression::COMPRESSORID_ZLIB)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%t) ERROR, registered compressor factory is incorrect\n")));
+          return false;
+        }
+    }
+
+  return true;
+}
+
+bool
 test_compression (CORBA::ULong const nelements,
                   Compression::CompressionManager_ptr const cm)
 {
@@ -147,11 +174,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                            ACE_TEXT (" (%P|%t) Panic: nil compression manager\n")),
                           1);
 
+      if (!test_compressor_factories (manager.in (), 0))
+        retval = 1;
+
       Compression::CompressorFactory_var const compr_fact =
         new TAO::Zlib_CompressorFactory ();
       manager->register_factory (compr_fact.in ());
 
       if (!test_duplicate_compression_factory (manager.in (), compr_fact.in ()))
+        retval = 1;
+
+      if (!test_compressor_factories (manager.in (), 1))
         retval = 1;
 
       if (!test_register_nil_compression_factory (manager.in ()))

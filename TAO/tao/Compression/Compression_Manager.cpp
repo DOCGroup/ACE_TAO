@@ -109,8 +109,20 @@ namespace TAO
   ::Compression::CompressorFactorySeq *
   CompressionManager::get_factories ()
   {
-    // todo
-    return nullptr;
+    ::Compression::CompressorFactorySeq_var result =
+      new ::Compression::CompressorFactorySeq;
+
+    {
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, nullptr);
+      CORBA::ULong const length = this->factories_.length ();
+      result->length (length);
+
+      for (CORBA::ULong i {}; i < length; ++i)
+        result[i] = ::Compression::CompressorFactory::_duplicate (
+          this->factories_[i]);
+    }
+
+    return result._retn ();
   }
 
 }
