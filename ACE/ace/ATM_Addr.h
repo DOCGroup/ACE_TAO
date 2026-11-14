@@ -66,7 +66,7 @@ public:
   /// Default constructor.
   ACE_ATM_Addr (u_char selector = DEFAULT_SELECTOR);
 
-  /// Copy constructor.
+
   ACE_ATM_Addr (const ACE_ATM_Addr &,
                 u_char selector = DEFAULT_SELECTOR);
 

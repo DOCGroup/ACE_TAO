@@ -174,7 +174,7 @@ ACE_SString::dump () const
 #endif /* ACE_HAS_DUMP */
 }
 
-// Copy constructor.
+
 
 ACE_SString::ACE_SString (const ACE_SString &s)
   : allocator_ (s.allocator_),

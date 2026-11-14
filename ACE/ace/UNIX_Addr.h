@@ -39,7 +39,7 @@ public:
   /// Default constructor.
   ACE_UNIX_Addr ();
 
-  /// Copy constructor.
+
   ACE_UNIX_Addr (const ACE_UNIX_Addr &sa);
 
   ACE_UNIX_Addr& operator= (const ACE_UNIX_Addr&) = default;

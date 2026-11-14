@@ -87,7 +87,7 @@ public:
   /// ACE_WSTRING_TYPE characters. The newly created memory is set memset to 0.
   ACE_NS_WString (size_type len, ACE_Allocator *alloc = nullptr);
 
-  /// Copy constructor.
+
   ACE_NS_WString (const ACE_NS_WString &) = default;
   ACE_NS_WString &operator= (const ACE_NS_WString&) = default;
 
@@ -146,7 +146,7 @@ public:
   /// allocated memory (will NUL terminate the result).
   ACE_SString (const char *s, size_type len, ACE_Allocator *alloc = nullptr);
 
-  /// Copy constructor.
+
   ACE_SString (const ACE_SString &);
 
   /// Constructor that copies @a c into dynamically allocated memory.

@@ -130,7 +130,7 @@ ACE_UNIX_Addr::set (const ACE_UNIX_Addr &sa)
   return 0;
 }
 
-// Copy constructor.
+
 
 ACE_UNIX_Addr::ACE_UNIX_Addr (const ACE_UNIX_Addr &sa)
   : ACE_Addr (AF_UNIX, sa.get_size ())

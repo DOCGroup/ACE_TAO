@@ -311,7 +311,7 @@ ACE_INET_Addr::ACE_INET_Addr (const wchar_t address[], int address_family)
 
 #endif /* ACE_HAS_WCHAR */
 
-// Copy constructor.
+
 
 ACE_INET_Addr::ACE_INET_Addr (const ACE_INET_Addr &sa)
   : ACE_Addr (sa.get_type (), sa.get_size())

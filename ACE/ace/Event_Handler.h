@@ -316,7 +316,7 @@ public:
   /// Construct with a handler.
   ACE_Event_Handler_var (ACE_Event_Handler *p);
 
-  /// Copy constructor.
+
   ACE_Event_Handler_var (const ACE_Event_Handler_var &b);
 
   ~ACE_Event_Handler_var ();

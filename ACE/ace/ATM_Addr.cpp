@@ -58,7 +58,7 @@ ACE_ATM_Addr::ACE_ATM_Addr (u_char selector)
   this->init (selector);
 }
 
-// Copy constructor.
+
 
 ACE_ATM_Addr::ACE_ATM_Addr (const ACE_ATM_Addr &sap,
                             u_char selector)

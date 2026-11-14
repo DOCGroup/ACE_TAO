@@ -141,12 +141,12 @@ public:
 
   ACE_Iterator (ACE_Iterator_Impl<T> *impl);
 
-  /// Copy constructor.
+
   ACE_Iterator (const ACE_Iterator<T> &rhs);
 
   ~ACE_Iterator ();
 
-  /// Assignment operator.
+
   ACE_Iterator<T> &operator= (const ACE_Iterator<T> &rhs);
 
   /// Comparison operators.
@@ -193,12 +193,12 @@ public:
 
   ACE_Reverse_Iterator (ACE_Reverse_Iterator_Impl<T> *impl);
 
-  /// Copy constructor.
+
   ACE_Reverse_Iterator (const ACE_Reverse_Iterator<T> &rhs);
 
   ~ACE_Reverse_Iterator ();
 
-  /// Assignment operator.
+
   ACE_Reverse_Iterator<T> &operator= (const ACE_Reverse_Iterator<T> &rhs);
 
   /**

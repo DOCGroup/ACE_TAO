@@ -36,7 +36,7 @@ public:
   /// Default constructor.
   ACE_MEM_Addr ();
 
-  /// Copy constructor.
+
   ACE_MEM_Addr (const ACE_MEM_Addr &);
 
   ACE_MEM_Addr& operator= (const ACE_MEM_Addr&) = default;

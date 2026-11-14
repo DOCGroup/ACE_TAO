@@ -244,13 +244,13 @@ public:
    */
   ACE_Unbounded_Set_Ex (C const &comparator, ACE_Allocator *alloc = nullptr);
 
-  /// Copy constructor.
+
   /**
    * Initialize this set to be an exact copy of the set provided.
    */
   ACE_Unbounded_Set_Ex (ACE_Unbounded_Set_Ex<T, C> const &);
 
-  /// Assignment operator.
+
   /**
    * Perform a deep copy of the rhs into the lhs.
    */

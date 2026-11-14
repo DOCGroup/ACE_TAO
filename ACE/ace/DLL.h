@@ -79,7 +79,7 @@ public:
                     int open_mode = ACE_DEFAULT_SHLIB_MODE,
                     bool close_handle_on_destruction = true);
 
-  /// Copy constructor.
+
   ACE_DLL (const ACE_DLL &);
 
   /**

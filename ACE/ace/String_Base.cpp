@@ -83,7 +83,7 @@ ACE_String_Base<ACE_CHAR_T>::ACE_String_Base (
   this->set (s, len, release);
 }
 
-// Copy constructor.
+
 
 template <class ACE_CHAR_T>
 ACE_String_Base<ACE_CHAR_T>::ACE_String_Base (const ACE_String_Base<ACE_CHAR_T> &s)

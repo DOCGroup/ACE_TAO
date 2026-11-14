@@ -194,7 +194,7 @@ public:
 
   ACE_RB_Tree (ACE_Allocator *alloc = nullptr);
 
-  /// Copy constructor.
+
   ACE_RB_Tree (const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &rbt);
 
   /// Initialize an RB Tree.
@@ -344,7 +344,7 @@ public:
   /// Returns the current number of nodes in the tree.
   size_t current_size () const;
 
-  /// Assignment operator.
+
   void operator= (const ACE_RB_Tree<EXT_ID,
                   INT_ID,
                   COMPARE_KEYS,
@@ -577,7 +577,7 @@ template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 class ACE_RB_Tree_Iterator_Base
 {
 public:
-  /// Copy constructor.
+
   ACE_RB_Tree_Iterator_Base (const ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &iter);
 
   /// Assignment operator: copies both the tree reference and the position in the tree.

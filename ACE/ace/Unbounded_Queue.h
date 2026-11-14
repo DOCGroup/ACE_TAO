@@ -161,13 +161,13 @@ public:
    */
   explicit ACE_Unbounded_Queue (ACE_Allocator *alloc = nullptr);
 
-  /// Copy constructor.
+
   /**
    * Initialize the queue to be a copy of the provided queue.
    */
   ACE_Unbounded_Queue (ACE_Unbounded_Queue<T> const &);
 
-  /// Assignment operator.
+
   /**
    * Perform a deep copy of rhs.
    */

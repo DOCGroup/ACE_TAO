@@ -581,7 +581,7 @@ public:
 protected:
   ACE_Double_Linked_List_Iterator_Base (const ACE_Double_Linked_List<T> &);
 
-  /// Copy constructor.
+
   ACE_Double_Linked_List_Iterator_Base (const
                                         ACE_Double_Linked_List_Iterator_Base<T>
                                         &iter);
@@ -822,14 +822,14 @@ public:
    */
   ACE_Double_Linked_List (ACE_Allocator *the_allocator = nullptr);
 
-  /// Copy constructor.
+
   /**
    * Create a double linked list that is a copy of the provided
    * parameter.
    */
   ACE_Double_Linked_List (const ACE_Double_Linked_List<T> &);
 
-  /// Assignment operator.
+
   /**
    * Perform a deep copy of the provided list by first deleting the nodes of the
    * lhs and then copying the nodes of the rhs.
@@ -1372,13 +1372,13 @@ public:
    */
   ACE_Fixed_Set ();
 
-  /// Copy constructor.
+
   /**
    * Initializes a set to be a copy of the set parameter.
    */
   ACE_Fixed_Set (const ACE_Fixed_Set<T, ACE_SIZE> &);
 
-  /// Assignment operator.
+
   /**
    * Deep copy of one set to another.
    */
@@ -1573,7 +1573,7 @@ public:
    */
   ACE_Bounded_Set (const ACE_Bounded_Set<T> &);
 
-  /// Assignment operator.
+
   /**
    * The assignment will make a deep copy of the Bounded_Set provided.  If the
    * rhs has more elements than the capacity of the lhs, then the lhs will be
@@ -1770,7 +1770,7 @@ public:
    */
   ACE_Ordered_MultiSet (ACE_Allocator *the_allocator = nullptr);
 
-  /// Copy constructor.
+
   /**
    * Initialize the set to be a copy of the provided set.
    */
@@ -1781,7 +1781,7 @@ public:
    */
   ~ACE_Ordered_MultiSet ();
 
-  /// Assignment operator.
+
   /**
    * Delete the nodes in lhs, and copy the nodes from the rhs.
    */
@@ -1948,7 +1948,7 @@ public:
              const T &default_value,
              ACE_Allocator* alloc = nullptr);
 
-  ///Copy constructor.
+
   /**
    * The copy constructor performs initialization by making an exact
    * copy of the contents of parameter {s}, i.e., *this == s will

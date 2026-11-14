@@ -42,10 +42,10 @@ public:
   /// Default constructor.
   ACE_Name_Binding ();
 
-  /// Copy constructor.
+
   ACE_Name_Binding (const ACE_Name_Binding &);
 
-  /// Assignment operator.
+
   const ACE_Name_Binding& operator= (const ACE_Name_Binding &);
 
   ~ACE_Name_Binding ();

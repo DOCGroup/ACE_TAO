@@ -248,14 +248,14 @@ public:
 
   ACE_Cache_Map_Iterator (const IMPLEMENTATION &iterator_impl);
 
-  /// Copy constructor.
+
   ACE_Cache_Map_Iterator (const ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &rhs);
 
   virtual ~ACE_Cache_Map_Iterator () = default;
 
   // = Iteration methods.
 
-  /// assignment operator.
+
   ACE_Cache_Map_Iterator <KEY, VALUE, IMPLEMENTATION,
                           CACHING_STRATEGY, ATTRIBUTES> &operator=
       (const ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION,
@@ -321,14 +321,14 @@ public:
 
   ACE_Cache_Map_Reverse_Iterator (const REVERSE_IMPLEMENTATION &iterator_impl);
 
-  /// Copy constructor.
+
   ACE_Cache_Map_Reverse_Iterator (const ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &rhs);
 
   ~ACE_Cache_Map_Reverse_Iterator () = default;
 
   // = Iteration methods.
 
-  /// Assignment operator.
+
   ACE_Cache_Map_Reverse_Iterator <KEY, VALUE, REVERSE_IMPLEMENTATION,
                                   CACHING_STRATEGY, ATTRIBUTES> &operator=
      (const ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION,
