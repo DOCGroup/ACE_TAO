@@ -1,12 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file ORB_Destroyer.h
  *
  * @author Marina Spivak <marina@atdesk.com>
  */
-//=============================================================================
+
 #ifndef TAO_UTILS_ORB_DESTROYER_H
 #define TAO_UTILS_ORB_DESTROYER_H
 #include /**/ "ace/pre.h"
@@ -35,7 +34,7 @@ namespace TAO
       using argument = CORBA::ORB_ptr;
 
       /// Destroy the ORB
-      void operator() (CORBA::ORB_ptr orb) noexcept;
+      void operator() (CORBA::ORB_ptr orb) const noexcept;
     };
 
     /**

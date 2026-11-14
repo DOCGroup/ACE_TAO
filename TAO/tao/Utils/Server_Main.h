@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Server_Main.h
  *
@@ -30,8 +29,8 @@
  *
  *  The servant implementation (Xyzzy_i in this case) must implement
  *  the following methods:
- *      Xyzzy_i (); // null constructor
- *      ~Xyzzy_i (); // destructor
+ *      Xyzzy_i ();
+ *      ~Xyzzy_i ();
  *      int parse_args (int argc, ACE_TCHAR * argv[]);
  *      int init (CORBA::ORB_ptr orb );
  *      int idle(int &result);
@@ -42,7 +41,6 @@
  *      idle returns 0 to continue execution; nonzero to exit -- returning "result" from the process
  *      identity provides a string to identify this servant in log messages.
  */
-//=============================================================================
 
 #ifndef TAO_UTILS_SERVANTMAIN_H
 #define TAO_UTILS_SERVANTMAIN_H
@@ -56,6 +54,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/orbconf.h"
+#include <string>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -67,17 +66,17 @@ namespace TAO
     class Server_Main
     {
     public:
-      Server_Main (char const *name);
+      explicit Server_Main (char const *name);
       Server_Main (Server_Main const &) = delete;
       Server_Main (Server_Main &&) = delete;
       Server_Main &operator= (Server_Main const &) = delete;
       Server_Main &operator= (Server_Main &&) = delete;
-      ~Server_Main() = default;
+      ~Server_Main () = default;
 
-      int run (int argc, ACE_TCHAR *argv[]);
+      int run (int argc, ACE_TCHAR *argv[]) const;
 
     private:
-      char const *name_;
+      std::string name_;
     };
   } // namespace UTILS
 } // namespace TAO
