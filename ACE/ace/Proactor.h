@@ -156,6 +156,11 @@ public:
   /// Destruction.
   ~ACE_Proactor ();
 
+  ACE_Proactor (ACE_Proactor const &) = delete;
+  ACE_Proactor (ACE_Proactor &&) = delete;
+  ACE_Proactor &operator= (ACE_Proactor const &) = delete;
+  ACE_Proactor &operator= (ACE_Proactor &&) = delete;
+
   /// Get pointer to a process-wide ACE_Proactor.  @a threads should
   /// be part of another method.
   static ACE_Proactor *instance (size_t threads = 0);
@@ -591,11 +596,6 @@ protected:
 
   /// Mutex to protect work with lists.
   ACE_SYNCH_MUTEX mutex_;
-
-private:
-  /// Deny access since member-wise won't work...
-  ACE_Proactor (const ACE_Proactor &);
-  ACE_Proactor &operator= (const ACE_Proactor &);
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
@@ -620,6 +620,10 @@ public:
   ACE_Proactor (size_t /* number_of_threads */ = 0,
                 Timer_Queue * /* tq */ = 0) {}
   ~ACE_Proactor () {}
+  ACE_Proactor (ACE_Proactor const &) = delete;
+  ACE_Proactor (ACE_Proactor &&) = delete;
+  ACE_Proactor &operator= (ACE_Proactor const &) = delete;
+  ACE_Proactor &operator= (ACE_Proactor &&) = delete;
   int handle_events () { return -1; }
   int handle_events (ACE_Time_Value &) { return -1; }
 

@@ -305,6 +305,11 @@ public:
 
     ~ACE_Name_Node ();
 
+    ACE_Name_Node (ACE_Name_Node const &) = delete;
+    ACE_Name_Node (ACE_Name_Node &&) = delete;
+    ACE_Name_Node &operator= (ACE_Name_Node const &) = delete;
+    ACE_Name_Node &operator= (ACE_Name_Node &&) = delete;
+
     /// Initialize a name node pointer.
     static void init_ptr (ACE_Name_Node **ptr,
                           ACE_Name_Node *init,
@@ -327,9 +332,6 @@ public:
 
     /// Dump the state of the object.
     void dump () const;
-  private:
-    /// Copy constructor.
-    ACE_Name_Node (const ACE_Name_Node &);
   };
 
   /// Print out a bunch of size info for debugging.

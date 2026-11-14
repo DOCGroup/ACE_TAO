@@ -267,6 +267,11 @@ public:
   explicit ACE_Log_Category(const char* name);
   ~ACE_Log_Category();
 
+  ACE_Log_Category (ACE_Log_Category const &) = delete;
+  ACE_Log_Category (ACE_Log_Category &&) = delete;
+  ACE_Log_Category &operator= (ACE_Log_Category const &) = delete;
+  ACE_Log_Category &operator= (ACE_Log_Category &&) = delete;
+
   unsigned int id() const;
   const char* name() const;
 
@@ -282,10 +287,6 @@ public:
 
 private:
   friend class ACE_Log_Category_TSS;
-
-  // disable copying
-  ACE_Log_Category(const ACE_Log_Category&);
-  ACE_Log_Category& operator = (const ACE_Log_Category&);
 
   const char* name_;
   unsigned int id_;
