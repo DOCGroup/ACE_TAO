@@ -106,7 +106,6 @@ public:
   {
   }
 
-  /// Copy constructor
   generic_sequence(generic_sequence const & rhs)
     : maximum_(0)
     , length_(0)
@@ -131,7 +130,6 @@ public:
     swap(tmp);
   }
 
-  /// Assignment operator
   generic_sequence & operator=(generic_sequence const & rhs)
   {
     generic_sequence tmp(rhs);

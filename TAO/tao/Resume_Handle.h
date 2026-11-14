@@ -59,7 +59,6 @@ public:
   /// Allow the users of this class to change the underlying flag.
   void set_flag (TAO_Handle_Resume_Flag fl);
 
-  /// Assignment operator
   TAO_Resume_Handle &operator= (const TAO_Resume_Handle &rhs);
 
   /// Resume the handle in the reactor only if the ORB uses a TP

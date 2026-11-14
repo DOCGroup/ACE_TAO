@@ -49,7 +49,6 @@ public:
   /// Get minor version number
   CORBA::Octet minor_version () const;
 
-  /// Copy constructor
   TAO_GIOP_Message_Version (TAO_GIOP_Message_Version const &) = default;
   TAO_GIOP_Message_Version (TAO_GIOP_Message_Version &&) = default;
 

@@ -45,7 +45,6 @@ public:
   {
   }
 
-  /// Copy constructor
   inline String_Manager_T (const String_Manager_T<charT> &rhs) :
     ptr_ (s_traits::duplicate (rhs.ptr_))
   {

@@ -397,19 +397,12 @@ be_visitor_valuebox_ch::visit_string (be_string *node)
   *os << vb_node->local_name () << " (::CORBA::" << string_type
       << "_var const &var);" << be_nl;
 
-  // Public copy constructor
   this->emit_copy_constructor ();
 
-  *os << "// assignment operators" << be_nl;
-
-  // Public assignment operator with one argument of type char *
   this->emit_assignment (node, "", "", "");
 
-  // Public assignment operator with one argument of type const char *
   this->emit_assignment (node, "", "const ", "");
 
-  // Public assignment operator with one argument of type
-  // const CORBA::String_var&
   *os << vb_node->local_name () << "& operator= (::CORBA::"
       << string_type << "_var const &var);" << be_nl_2;
 
@@ -718,10 +711,7 @@ be_visitor_valuebox_ch::emit_default_constructor () const
   // Retrieve the node being visited by this be_visitor_valuebox_ch.
   be_decl * const vb_node = this->ctx_->node ();
 
-  *os << be_nl_2 << "// Constructors" << be_nl;
-
-  // Public default constructor
-  *os << vb_node->local_name () << " ();" << be_nl;
+  *os << be_nl_2 << vb_node->local_name () << " ();" << be_nl;
 }
 
 void
