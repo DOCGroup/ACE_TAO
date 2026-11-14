@@ -48,6 +48,11 @@ namespace ACE
 
               ~Context ();
 
+              Context (Context const &) = delete;
+              Context (Context &&) = delete;
+              Context &operator= (Context const &) = delete;
+              Context &operator= (Context &&) = delete;
+
               explicit operator bool () const;
 
               bool operator ! () const;
@@ -78,9 +83,6 @@ namespace ACE
 
             private:
               friend class ACE_Singleton<Context, ACE_SYNCH::MUTEX>;
-
-              //Context ();
-              Context (const Context&);
 
               ACE_SSL_Context* ssl_ctx_;
               std::unique_ptr<ACE_SSL_Context> alloc_safe;

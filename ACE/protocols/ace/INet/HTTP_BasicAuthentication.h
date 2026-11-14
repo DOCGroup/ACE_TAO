@@ -60,11 +60,12 @@ namespace ACE
 
               static const char* SCHEME;
 
-            private:
-              // prevent copying
-              BasicAuthentication(const BasicAuthentication&);
-              BasicAuthentication& operator =(BasicAuthentication&);
+              BasicAuthentication (BasicAuthentication const &) = delete;
+              BasicAuthentication (BasicAuthentication &&) = delete;
+              BasicAuthentication &operator= (BasicAuthentication const &) = delete;
+              BasicAuthentication &operator= (BasicAuthentication &&) = delete;
 
+            private:
               ACE_CString user_;
               ACE_CString passwd_;
           };

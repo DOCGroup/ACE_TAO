@@ -64,12 +64,16 @@ public:
   /// send a response pdu to the mgr
   int respond(Pdu& pdu, UdpTarget& tgt);
 
+  sagent (sagent const &) = delete;
+  sagent (sagent &&) = delete;
+  sagent &operator= (sagent const &) = delete;
+  sagent &operator= (sagent &&) = delete;
+
 protected:
   explicit sagent (unsigned short port = DEF_AGENT_PORT);
   ~sagent() override;
 
 private:
-  sagent(const sagent&);
   Pdu pdu_;                     // current input pdu
   UdpTarget tgt_;               //  addr & com strs
 };

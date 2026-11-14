@@ -60,6 +60,11 @@ namespace ACE
 
               ~BasicBidirStreamBuffer () override;
 
+              BasicBidirStreamBuffer (BasicBidirStreamBuffer const &) = delete;
+              BasicBidirStreamBuffer (BasicBidirStreamBuffer &&) = delete;
+              BasicBidirStreamBuffer &operator= (BasicBidirStreamBuffer const &) = delete;
+              BasicBidirStreamBuffer &operator= (BasicBidirStreamBuffer &&) = delete;
+
               int_type overflow (int_type c) override;
               int_type underflow () override;
               int sync () override;
@@ -90,9 +95,6 @@ namespace ACE
               openmode        mode_;
               STREAM_HANDLER *stream_;
               interceptor_type* interceptor_;
-
-              BasicBidirStreamBuffer(const BasicBidirStreamBuffer&);
-              BasicBidirStreamBuffer& operator = (const BasicBidirStreamBuffer&);
           };
 
         /**
@@ -113,9 +115,10 @@ namespace ACE
               BidirStreamBuffer (STREAM_HANDLER* sh, std::streamsize bufsz, openmode mode);
               virtual ~BidirStreamBuffer ();
 
-            private:
-              BidirStreamBuffer(const BidirStreamBuffer&);
-              BidirStreamBuffer& operator = (const BidirStreamBuffer&);
+              BidirStreamBuffer (BidirStreamBuffer const &) = delete;
+              BidirStreamBuffer (BidirStreamBuffer &&) = delete;
+              BidirStreamBuffer &operator= (BidirStreamBuffer const &) = delete;
+              BidirStreamBuffer &operator= (BidirStreamBuffer &&) = delete;
           };
       }
   }
