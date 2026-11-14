@@ -17,115 +17,105 @@
 // Forward declaration.
 class Handler;
 
+/// Creates the oneway or twoway handlers.
 class Handler_Factory
 {
-  // = TITLE
-  //   Creates the oneway or twoway handlers.
 public:
   Handler_Factory ();
 
   ~Handler_Factory ();
 
+  /// Runs the main event loop.
   int handle_events ();
-  // Run the main event loop.
 
 private:
+  /// Initializes the acceptors.
   int init_acceptors ();
-  // Initialize the acceptors.
 
+  /// Creates the requested handler type.
   int create_handler (ACE_SSL_SOCK_Acceptor &acceptor,
                       Handler *(*handler_factory) (ACE_SSL_SOCK_Stream *),
                       const char *handler_type);
-  // Factory that creates the right kind of <Handler>.
 
-  // = Factory functions.
-
+  /// Creates a twoway handler.
   static Handler *make_twoway_handler (ACE_SSL_SOCK_Stream *);
-  // Create a twoway handler.
 
+  /// Creates a oneway handler.
   static Handler *make_oneway_handler (ACE_SSL_SOCK_Stream *);
-  // Create a oneway handler.
 
+  /// Twoway acceptor.
   ACE_SSL_SOCK_Acceptor twoway_acceptor_;
-  // Twoway acceptor factory.
 
+  /// Oneway acceptor.
   ACE_SSL_SOCK_Acceptor oneway_acceptor_;
-  // Oneway acceptor factory.
 };
 
+/// Base class for the oneway and twoway handlers.
 class Handler : public ACE_Svc_Handler<ACE_SSL_SOCK_Stream, ACE_NULL_SYNCH>
 {
-  // = TITLE
-  //   Base class for the oneway and twoway handlers.
-
   friend class Handler_Factory;
-  // The factory has special permission. (to access svc ()).
 
 public:
   //FUZZ: disable check_for_lack_ACE_OS
+  /// Generic initialization method.
   int open (void * = nullptr) override;
-  // Generic initialization method.
 
+  /// Closes down and deletes this handler.
   int close (u_long) override;
-  // Close down and delete this.
   //FUZZ: enable check_for_lack_ACE_OS
 
 protected:
   Handler (ACE_SSL_SOCK_Stream *ssl_stream);
 
+  /// Parses the header and allocates a buffer for subclass run methods.
   int parse_header_and_allocate_buffer (char *&buf,
                                         ACE_INT32 *len);
-  // Implement the generic code that's called from any of the subclass
-  // <run> methods to get the header and the buffer to read the data.
-  // This method factors out common code.
 
+  /// Protocol hook called by the svc template method.
   virtual int run () = 0;
-  // Hook method called by the <svc> template method to do the actual
-  // protocol.  Must be overridden by the subclass.
 
+  /// Entry point into the handler task.
   int svc () override;
-  // Template method entry point into the handler task.
 
+  /// Prints the results.
   virtual void print_results ();
-  // Print the results.
 
+  /// Total bytes received.
   size_t total_bytes_;
-  // Total number of bytes received.
 
+  /// Number of messages received.
   size_t message_count_;
-  // Number of messages received.
 
+  /// Timer for measuring elapsed time.
   ACE_Profile_Timer timer_;
-  // Keeps track of how much time we're using.
 
+  /// Stream used to retain per-connection state.
   ACE_SSL_SOCK_Stream *ssl_stream_;
-  //keep state information for a ssl_stream.
 };
 
+/// Performs the twoway protocol.
 class Twoway_Handler : public Handler
 {
-  // = TITLE
-  //   Performs the twoway protocol.
 public:
   Twoway_Handler (ACE_SSL_SOCK_Stream *ssl_stream);
 
 private:
+  /// Runs the twoway protocol.
   int run () override;
-  // Template Method hook called by <svc>.
 };
 
+/// Performs the oneway protocol.
 class Oneway_Handler : public Handler
 {
-  // = TITLE
 public:
   Oneway_Handler (ACE_SSL_SOCK_Stream *ssl_stream);
 
 private:
+  /// Runs the oneway protocol.
   int run () override;
-  // Template Method hook called by <svc>.
 
+  /// Prints the results.
   void print_results () override;
-  // Print the results.
 };
 
 u_short

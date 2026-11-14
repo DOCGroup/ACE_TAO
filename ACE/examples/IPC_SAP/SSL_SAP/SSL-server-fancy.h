@@ -5,36 +5,35 @@
 #ifndef __ACE_SSL_SERVER_FANCY_H
 #define __ACE_SSL_SERVER_FANCY_H
 
+/// Defines the options for this test.
 class Options
-  // = TITLE
-  //   Define the options for this test.
 {
 public:
   Options ();
 
   ~Options ();
 
+  /// Parses the command-line arguments.
   int parse_args (int argc, ACE_TCHAR *argv[]);
-  // Parse the command-line arguments.
 
+  /// Returns whether verbose mode is enabled.
   int verbose () const;
-  // Are we running in verbose mode?
 
+  /// Returns the listening port.
   u_short port () const;
-  // Port number that we are listening at.
 
+  /// Returns the reply message size.
   int reply_message_len () const;
-  // Size of the reply message.
 
 private:
+  /// Whether verbose mode is enabled.
   int verbose_;
-  // Are we running in verbose mode?
 
+  /// Listening port.
   u_short port_;
-  // Port number we listen at.
 
+  /// Reply message size.
   size_t reply_message_len_;
-  // Size of the reply message.
 };
 
 #endif /* __ACE_SSL_SERVER_FANCY_H */
