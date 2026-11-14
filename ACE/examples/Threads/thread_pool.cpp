@@ -26,35 +26,32 @@ static int n_iterations = 100;
 // Controls whether the input is generated "manually" or automatically.
 static int manual = 0;
 
+/// Defines a thread pool abstraction based on ACE_Task.
 class Thread_Pool : public ACE_Task<ACE_MT_SYNCH>
 {
-  // = TITLE
-  //   Defines a thread pool abstraction based on the <ACE_Task>.
 public:
+  /// Activates n_threads worker threads in the pool.
   Thread_Pool (ACE_Thread_Manager *thr_mgr,
                int n_threads);
-  // Constructor activates <n_threads> in the thread pool.
 
   ~Thread_Pool () override;
-  // Destructor...
 
   Thread_Pool (Thread_Pool const &) = delete;
   Thread_Pool (Thread_Pool &&) = delete;
   Thread_Pool &operator= (Thread_Pool const &) = delete;
   Thread_Pool &operator= (Thread_Pool &&) = delete;
 
+  /// Processes messages until a zero-length shutdown message is received.
   int svc () override;
-  // Iterate <n_iterations> time printing off a message and "waiting"
-  // for all other threads to complete this iteration.
 
+  /// Passes a message to the thread pool.
   int put (ACE_Message_Block *mb,
                    ACE_Time_Value *tv = nullptr) override;
-  // This allows the producer to pass messages to the <Thread_Pool>.
 
 private:
   //FUZZ: disable check_for_lack_ACE_OS
+  /// Closes a worker task.
   int close (u_long) override;
-  // Close hook.
   //FUZZ: enable check_for_lack_ACE_OS
 };
 

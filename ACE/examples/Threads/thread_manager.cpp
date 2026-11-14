@@ -39,7 +39,7 @@ worker (void *arg)
         }
     }
 
-  // Destructor removes thread from Thread_Manager.
+  // Thread_Manager removes this worker when it exits.
   return ACE_THR_FUNC_RETURN_NULL;
 }
 

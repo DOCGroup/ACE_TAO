@@ -20,16 +20,13 @@
 #if defined (ACE_HAS_THREADS)
 static std::atomic<int> amount_of_work {0};
 
+/**
+ * Uses ACE manual-reset events to implement a one-shot pseudo-barrier.
+ *
+ * All waiters after the Nth waiter are allowed to proceed. The event is not
+ * reset afterward. See ACE_Barrier for a reusable barrier.
+ */
 class Pseudo_Barrier
-  // = TITLE
-  //    A barrier class using ACE manual-reset events.
-  //
-  // = DESCRIPTION
-  //    This is *not* a real barrier.
-  //    Pseudo_Barrier is more like a ``one shot'' barrier.
-  //    All waiters after the Nth waiter are allowed to go.
-  //    The barrier does not reset after the Nth waiter.
-  //    For an example of a real barrier, please see class ACE_Barrier.
 {
 public:
   Pseudo_Barrier (u_long count);

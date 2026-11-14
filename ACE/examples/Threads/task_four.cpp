@@ -47,6 +47,7 @@ public:
                 size_t n_tasks,
                 size_t n_threads,
                 size_t n_iterations);
+  /// Creates n_tasks and waits for them to finish.
   int svc () override;
 
   Invoker_Task (Invoker_Task const &) = delete;
@@ -54,15 +55,13 @@ public:
   Invoker_Task &operator= (Invoker_Task const &) = delete;
   Invoker_Task &operator= (Invoker_Task &&) = delete;
 
-  // creats <n_tasks> and wait for them to finish
-
 private:
+  /// Number of tasks to start.
   size_t n_tasks_;
-  // Number of tasks to start.
+  /// Number of threads per task.
   size_t n_threads_;
-  // Number of threads per task.
+  /// Number of iterations per thread.
   size_t n_iterations_;
-  // Number of iterations per thread.
 };
 
 class Worker_Task : public ACE_Task<ACE_MT_SYNCH>
@@ -79,7 +78,7 @@ public:
   Worker_Task &operator= (Worker_Task &&) = delete;
 
   //FUZZ: disable check_for_lack_ACE_OS
-  // Does a small work...
+  /// Performs a small amount of work when activated.
   int open (void * = nullptr) override;
   //FUZZ: enable check_for_lack_ACE_OS
 
@@ -90,7 +89,7 @@ private:
   size_t n_iterations_;
 
   //FUZZ: disable check_for_lack_ACE_OS
-  // = Not needed for this test.
+  /// Not needed for this test.
   int close (u_long) override;
   //FUZZ: enable check_for_lack_ACE_OS
 

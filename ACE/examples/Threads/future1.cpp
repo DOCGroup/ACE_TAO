@@ -239,7 +239,6 @@ Scheduler::svc ()
       // Call it.
       if (mo->call () == -1)
         break;
-      // Destructor automatically deletes it.
     }
 
   /* NOTREACHED */

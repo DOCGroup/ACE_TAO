@@ -19,22 +19,20 @@ public:
                 int n_threads,
                 int n_iterations);
 
-  int svc () override;
-
   Barrier_Task (Barrier_Task const &) = delete;
   Barrier_Task (Barrier_Task &&) = delete;
   Barrier_Task &operator= (Barrier_Task const &) = delete;
   Barrier_Task &operator= (Barrier_Task &&) = delete;
-  // Iterate <n_iterations> time printing off a message and "waiting"
-  // for all other threads to complete this iteration.
+
+  /// Runs each iteration after all worker threads reach the barrier.
+  int svc () override;
 
 private:
+  /// Synchronizes the worker threads on each iteration.
   ACE_Barrier barrier_;
-  // Reference to the tester barrier.  This controls each
-  // iteration of the tester function running in every thread.
 
+  /// Number of iterations to run.
   int n_iterations_;
-  // Number of iterations to run.
 };
 
 Barrier_Task::Barrier_Task (ACE_Thread_Manager *thr_mgr,
