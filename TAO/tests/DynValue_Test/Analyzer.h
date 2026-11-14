@@ -3,6 +3,7 @@
 
 #include "ValueTypes_impl.h"
 #include "tao/DynamicAny/DynAnyFactory.h"
+#include "ace/Array_Base.h"
 
 #include <cstddef>
 #include <vector>
