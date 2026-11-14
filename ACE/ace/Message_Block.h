@@ -62,13 +62,13 @@ public:
 
   enum
   {
-    // = Data and proto
+    /// Data and protocol messages.
     /// Undifferentiated data message
     MB_DATA     = 0x01,
     /// Undifferentiated protocol control
     MB_PROTO    = 0x02,
 
-    // = Control messages
+    /// Control messages.
     /// Line break (regular and priority)
     MB_BREAK    = 0x03,
     /// Pass file pointer
@@ -82,7 +82,7 @@ public:
     /// Set various stream head options
     MB_SETOPTS  = 0x08,
 
-    // = Control messages
+    /// High-priority control messages.
     /// Acknowledge ioctl (high priority; go to head of queue)
     MB_IOCACK   = 0x81,
     /// Negative ioctl acknowledge
@@ -106,7 +106,7 @@ public:
     /// Post an event to an event queue
     MB_PCEVENT  = 0x8b,
 
-    // = Message class masks
+    /// Message class masks.
     /// Normal priority message mask
     MB_NORMAL   = 0x00,
     /// High priority control message mask
@@ -249,7 +249,8 @@ public:
    */
   virtual ~ACE_Message_Block ();
 
-  // = Message Type accessors and mutators.
+  /// @name Message type accessors and mutators
+  /// @{
 
   /// Get type of the message.
   ACE_Message_Type msg_type () const;
@@ -263,8 +264,10 @@ public:
   /// Find out what class of message this is (there are two classes,
   /// @c normal messages and @c high-priority messages).
   ACE_Message_Type msg_class () const;
+  /// @}
 
-  // = Message flag accessors and mutators.
+  /// @name Message flag accessors and mutators
+  /// @{
   /// Bitwise-or the @a more_flags into the existing message flags and
   /// return the new value.
   Message_Flags set_flags (Message_Flags more_flags);
@@ -275,8 +278,10 @@ public:
 
   /// Get the current message flags.
   Message_Flags flags () const;
+  /// @}
 
-  // = Data Block flag accessors and mutators.
+  /// @name Data block flag accessors and mutators
+  /// @{
   /// Bitwise-or the @a more_flags into the existing message flags and
   /// return the new value.
   /** @todo I think the following set of methods could not be used at
@@ -292,6 +297,7 @@ public:
 
   /// Get the current message flags.
   Message_Flags self_flags () const;
+  /// @}
 
   /// Get priority of the message.
   unsigned long msg_priority () const;
@@ -311,7 +317,8 @@ public:
   /// Set absolute time of deadline associated with the message.
   void msg_deadline_time (const ACE_Time_Value &dt);
 
-  // = Deep copy and shallow copy methods.
+  /// @name Deep and shallow copy operations
+  /// @{
 
   /// Return an exact "deep copy" of the message, i.e., create fresh
   /// new copies of all the Data_Blocks and continuations.
@@ -364,8 +371,10 @@ public:
    * pointers before calling release() on them.  Returns @a mb.
    */
   static ACE_Message_Block *release (ACE_Message_Block *mb);
+  /// @}
 
-  // = Operations on Message data
+  /// @name Message data operations
+  /// @{
 
   /**
    * Copies data into this ACE_Message_Block. Data is copied into the
@@ -475,6 +484,8 @@ public:
   /// the <length> of a message.
   void wr_ptr (size_t n);
 
+  /// @}
+
   /** @name Message length and size operations
    *
    * Message length is (wr_ptr - rd_ptr).
@@ -482,7 +493,7 @@ public:
    * Message size is capacity of the message, including data outside
    * the [rd_ptr,wr_ptr] range.
    */
-  //@{
+  /// @{
   /// Get the length of the message
   size_t length () const;
 
@@ -524,9 +535,10 @@ public:
   /// Get the number of bytes available after the <wr_ptr_> in the
   /// top-level Message_Block.
   size_t space () const;
-  //@}
+  /// @}
 
-  // = ACE_Data_Block methods.
+  /// @name Data block accessors
+  /// @{
 
   /**
    * Get a pointer to the data block. Note that the ACE_Message_Block
@@ -547,29 +559,35 @@ public:
   /// Set a new data block pointer. A pointer to the original ACE_Data_Block
   /// is returned, and not released (as it is with <data_block>).
   ACE_Data_Block *replace_data_block (ACE_Data_Block*);
+  /// @}
 
-  // = The continuation field chains together composite messages.
+  /// @name Continuation chain accessors
+  /// @{
   /// Get the continuation field.
   ACE_Message_Block *cont () const;
 
   /// Set the continuation field.
   void cont (ACE_Message_Block *);
+  /// @}
 
-  // = Pointer to the Message_Block directly ahead in the ACE_Message_Queue.
+  /// @name Queue link accessors
+  /// @{
   /// Get link to next message.
   ACE_Message_Block *next () const;
 
   /// Set link to next message.
   void next (ACE_Message_Block *);
 
-  // = Pointer to the Message_Block directly behind in the ACE_Message_Queue.
+  /// Pointer to the Message_Block directly behind in the ACE_Message_Queue.
   /// Get link to prev message.
   ACE_Message_Block *prev () const;
 
   /// Set link to prev message.
   void prev (ACE_Message_Block *);
+  /// @}
 
-  // = The locking strategy prevents race conditions.
+  /// @name Locking and reference counting
+  /// @{
   /// Get the locking strategy.
   ACE_Lock *locking_strategy ();
 
@@ -578,6 +596,7 @@ public:
 
   /// Get the current reference count.
   int reference_count () const;
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;
@@ -586,7 +605,8 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  // = Internal initialization methods.
+  /// @name Internal initialization methods
+  /// @{
   /// Perform the actual initialization.
   ACE_Message_Block (size_t size,
                      ACE_Message_Type type,
@@ -620,6 +640,7 @@ protected:
               ACE_Data_Block *db,
               ACE_Allocator *data_block_allocator,
               ACE_Allocator *message_block_allocator);
+  /// @}
 
   /// Pointer to beginning of next read.
   size_t rd_ptr_;
@@ -638,7 +659,8 @@ protected:
   ACE_Time_Value deadline_time_;
 #endif /* ACE_HAS_TIMED_MESSAGE_BLOCKS */
 
-  // = Links to other ACE_Message_Block *s.
+  /// @name Message block links
+  /// @{
   /// Pointer to next message block in the chain.
   ACE_Message_Block *cont_;
 
@@ -647,6 +669,7 @@ protected:
 
   /// Pointer to previous message in the list.
   ACE_Message_Block *prev_;
+  /// @}
 
   /// Misc flags (e.g., DONT_DELETE and USER_FLAGS).
   ACE_Message_Block::Message_Flags flags_;
@@ -736,7 +759,8 @@ public:
    */
   char *mark () const;
 
-  // = Message size is the total amount of space allocated.
+  /// @name Message size and capacity
+  /// @{
 
   /// Get the total amount of allotted space in the message.  The amount of
   /// allotted space may be less than allocated space.
@@ -748,6 +772,7 @@ public:
 
   /// Get the total amount of allocated space.
   size_t capacity () const;
+  /// @}
 
   /**
    * Return an exact "deep copy" of the message, i.e., create fresh
@@ -780,7 +805,8 @@ public:
    */
   ACE_Data_Block *release (ACE_Lock *lock = nullptr);
 
-  // = Message flag accessors and mutators.
+  /// @name Message flag accessors and mutators
+  /// @{
   /// Bitwise-or the @a more_flags into the existing message flags and
   /// return the new value.
   ACE_Message_Block::Message_Flags set_flags (ACE_Message_Block::Message_Flags more_flags);
@@ -794,8 +820,10 @@ public:
 
   /// Obtain the allocator strategy.
   ACE_Allocator *allocator_strategy () const;
+  /// @}
 
-  // = The locking strategy prevents race conditions.
+  /// @name Locking and reference counting
+  /// @{
   /// Get the locking strategy.
   ACE_Lock *locking_strategy ();
 
@@ -807,6 +835,7 @@ public:
 
   /// Get the current reference count.
   int reference_count () const;
+  /// @}
 
   /// Get the allocator used to create this object
   ACE_Allocator *data_block_allocator () const;
@@ -844,7 +873,8 @@ protected:
   /// Pointer To beginning of message payload.
   char *base_;
 
-  // = Strategies.
+  /// @name Allocation and locking strategies
+  /// @{
   /**
    * Pointer to the allocator defined for this ACE_Data_Block.  Note
    * that this pointer is shared by all owners of this
@@ -859,6 +889,7 @@ protected:
    * shared by all owners of the ACE_Data_Block's data.
    */
   ACE_Lock *locking_strategy_;
+  /// @}
 
   /**
    * Reference count for this ACE_Data_Block, which is used to avoid

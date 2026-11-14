@@ -217,7 +217,7 @@ class ACE_Bounded_Cached_Connect_Strategy
 {
    using CCSEBASE = ACCSE<SVC_HANDLER, _ACE_PEER_CONNECTOR, CACHING_STRATEGY, ATTRIBUTES, MUTEX>;
 
-  // = Typedefs for managing the map
+  /// Typedef for managing the map.
   using REFCOUNTED_HASH_RECYCLABLE_ADDRESS = ARHR<typename _ACE_PEER_CONNECTOR::PEER_ADDR>;
 
 public:
