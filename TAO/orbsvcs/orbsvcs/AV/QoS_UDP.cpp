@@ -379,7 +379,7 @@ TAO_AV_UDP_QoS_Flow_Handler::handle_qos (ACE_HANDLE /*fd*/)
           ACE_QoS ace_qos = this->qos_session_->qos ();
 
           this->qos_session_->qos (this->get_socket (),
-                                   &qos_manager,
+                                   std::addressof (qos_manager),
                                    ace_qos);
         }
     }
@@ -458,7 +458,7 @@ TAO_AV_UDP_QoS_Flow_Handler::change_qos (AVStreams::QoS new_qos)
     this->get_socket ()->qos_manager ();
 
   int result = this->qos_session_->qos (this->get_socket (),
-                                        &qos_manager,
+                                        std::addressof (qos_manager),
                                         *ace_qos);
   if (result != 0)
     return result;

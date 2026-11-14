@@ -74,7 +74,7 @@ TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *data,
         case RTCP_PT_SR:
           {
             RTCP_SR_Packet sr(&buf_ptr[length-more],
-                              &more);
+                              std::addressof (more));
 
             if (!sr.is_valid(first_rtcp_packet))
               ORBSVCS_DEBUG ((LM_DEBUG,
@@ -93,7 +93,7 @@ TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *data,
         case RTCP_PT_RR:
           {
             RTCP_RR_Packet rr(&buf_ptr[length-more],
-                              &more);
+                              std::addressof (more));
 
             if (!rr.is_valid(first_rtcp_packet))
               ORBSVCS_DEBUG ((LM_DEBUG,
@@ -113,7 +113,7 @@ TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *data,
         case RTCP_PT_SDES:
           {
             RTCP_SDES_Packet sdes (&buf_ptr[length-more],
-                                   &more);
+                                   std::addressof (more));
 
             if (!sdes.is_valid(first_rtcp_packet))
               ORBSVCS_DEBUG ((LM_DEBUG,
@@ -127,7 +127,7 @@ TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *data,
         case RTCP_PT_BYE:
           {
             RTCP_BYE_Packet bye (&buf_ptr[length-more],
-                                 &more);
+                                 std::addressof (more));
 
             if (!bye.is_valid(first_rtcp_packet))
               ORBSVCS_DEBUG ((LM_DEBUG,
@@ -138,7 +138,7 @@ TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *data,
             ACE_UINT32 *ssrc_list;
             unsigned char length;
 
-            bye.ssrc_list(&ssrc_list, length);
+            bye.ssrc_list (std::addressof (ssrc_list), length);
 
             for (int i {}; i < length; ++i)
               {
@@ -208,9 +208,10 @@ TAO_AV_RTCP::alloc_srcid (ACE_UINT32 addr)
   ACE_UINT32 r;
   int i;
 
-  MD5Init (&context);
-  MD5Update (&context, string_val, length);
-  MD5Final ((unsigned char*)&digest, &context);
+  MD5Init (std::addressof (context));
+  MD5Update (std::addressof (context), string_val, length);
+  MD5Final (reinterpret_cast<unsigned char *> (std::addressof (digest)),
+            std::addressof (context));
   r=0;
   for (i=0; i<3; ++i)
     r ^= digest.x[i];
@@ -420,11 +421,11 @@ TAO_AV_RTCP_Object::send_frame (char const *,
 TAO_AV_RTCP_Object::TAO_AV_RTCP_Object (TAO_AV_Callback *client_cb,
                                         TAO_AV_RTCP_Callback *&rtcp_cb,
                                         TAO_AV_Transport *transport)
-  : TAO_AV_Protocol_Object (&rtcp_cb_, transport)
+  : TAO_AV_Protocol_Object (std::addressof (rtcp_cb_), transport)
   , client_cb_ (client_cb)
   , ssrc_ (0)
 {
-  rtcp_cb = &this->rtcp_cb_;
+  rtcp_cb = std::addressof (this->rtcp_cb_);
 }
 
 TAO_AV_RTCP_Object::~TAO_AV_RTCP_Object () = default;
@@ -702,10 +703,10 @@ TAO_AV_RTCP_Callback::send_report (int bye)
   ACE_UINT16 cp_length;
   ACE_UINT16 sdes_length;
   ACE_UINT16 bye_length = 0;
-  cp->get_packet_data (&cp_ptr, cp_length);
-  sdes.get_packet_data (&sdes_ptr, sdes_length);
+  cp->get_packet_data (std::addressof (cp_ptr), cp_length);
+  sdes.get_packet_data (std::addressof (sdes_ptr), sdes_length);
   if (bye_packet)
-    bye_packet->get_packet_data(&bye_ptr, bye_length);
+    bye_packet->get_packet_data (std::addressof (bye_ptr), bye_length);
 
   ACE_Message_Block mb (cp_length + sdes_length + bye_length);
 

@@ -352,7 +352,7 @@ TAO_AV_RTP_Object::handle_input ()
                         static_cast<int> (this->frame_.length ()));
 
   rtp_packet.get_frame_info (std::addressof (frame_info));
-  rtp_packet.get_payload(&data_ptr, length);
+  rtp_packet.get_payload (std::addressof (data_ptr), length);
 
   this->frame_.rd_ptr (this->frame_.base ());
   std::memcpy (this->frame_.rd_ptr (), data_ptr, length);
@@ -472,7 +472,7 @@ TAO_AV_RTP_Object::send_frame (ACE_Message_Block *frame,
 
   char *data_ptr;
   ACE_UINT16 data_length;
-  rtp_packet->get_packet_data (&data_ptr, data_length);
+  rtp_packet->get_packet_data (std::addressof (data_ptr), data_length);
 
   ACE_Message_Block mb (data_ptr, data_length);
   mb.wr_ptr (data_length);
@@ -598,7 +598,7 @@ TAO_AV_RTP_Object::send_frame (iovec const *iov,
 
   char *data_ptr;
   ACE_UINT16 data_length;
-  rtp_packet->get_packet_data (&data_ptr, data_length);
+  rtp_packet->get_packet_data (std::addressof (data_ptr), data_length);
 
   iovec send_iov[ACE_IOV_MAX];
   send_iov [0].iov_base = data_ptr;
