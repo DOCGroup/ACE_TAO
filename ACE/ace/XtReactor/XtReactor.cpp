@@ -127,7 +127,7 @@ ACE_XtReactor::InputCallbackProc (XtPointer closure,
                       wait_set.rd_mask_,
                       wait_set.wr_mask_,
                       wait_set.ex_mask_,
-                      &zero) > 0)
+                      std::addressof (zero)) > 0)
     {
       if (wait_set.rd_mask_.is_set (handle))
         dispatch_set.rd_mask_.set_bit (handle);
@@ -155,7 +155,7 @@ ACE_XtReactor::XtWaitForMultipleEvents (int width,
                       temp_set.rd_mask_,
                       temp_set.wr_mask_,
                       temp_set.ex_mask_,
-                      &ACE_Time_Value::zero) == -1)
+                      std::addressof (ACE_Time_Value::zero)) == -1)
     return -1; // Bad file arguments...
 
   // Instead of waiting using <select>, just use the Xt mechanism to
@@ -173,7 +173,7 @@ ACE_XtReactor::XtWaitForMultipleEvents (int width,
                          wait_set.rd_mask_,
                          wait_set.wr_mask_,
                          wait_set.ex_mask_,
-                         &ACE_Time_Value::zero);
+                         std::addressof (ACE_Time_Value::zero));
 }
 
 XtAppContext
@@ -279,10 +279,10 @@ ACE_XtReactor::synchronize_XtInput (ACE_HANDLE handle)
   // resulting mask is used to find out which XtInput mask we need.
 
   // Find existing handler in linked list.
-  ACE_XtReactorID **xt_id = &this->ids_;
+  ACE_XtReactorID **xt_id = std::addressof (this->ids_);
 
   while (*xt_id && (*xt_id)->handle_ != handle)
-    xt_id = &((*xt_id)->next_);
+    xt_id = std::addressof ((*xt_id)->next_);
 
   // Remove existing input handler.
   if (*xt_id)
@@ -311,7 +311,7 @@ ACE_XtReactor::synchronize_XtInput (ACE_HANDLE handle)
       new_id_owner->next_ = this->ids_;
       new_id_owner->handle_ = handle;
       this->ids_ = new_id_owner.release ();
-      xt_id = &this->ids_;
+      xt_id = std::addressof (this->ids_);
     }
 
   // Finally, add input handler.
