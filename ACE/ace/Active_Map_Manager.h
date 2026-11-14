@@ -72,8 +72,8 @@ public:
   bool operator== (const ACE_Active_Map_Manager_Key &rhs) const;
   bool operator!= (const ACE_Active_Map_Manager_Key &rhs) const;
 
-  // = This really should be protected but because of template
-  // friends, they are not.
+  /// These methods are public because the template friend declarations
+  /// require it.
 
   /// Increment the slot_generation number.
   void increment_slot_generation_count ();

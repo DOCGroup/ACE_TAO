@@ -159,7 +159,7 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
-  // = This should be protected but some C++ compilers complain...
+  /// This section is public because some C++ compilers reject protected access.
 public:
 #if defined ACE_HAS_PTHREADS && defined ACE_LACKS_MUTEXATTR_PSHARED
 # define ACE_MUTEX_USE_PROCESS_LOCK

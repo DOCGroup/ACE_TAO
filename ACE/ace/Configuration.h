@@ -575,11 +575,15 @@ public:
   /// ACE_Hash_Map_Manager.
   u_long hash  () const;
 
-  // = Data members.
+  /// @name Stored name
+  /// @{
   const ACE_TCHAR * name_ {};
+  /// @}
 
-  // Accessors
+  /// @name Accessors
+  /// @{
   const ACE_TCHAR *name ();
+  /// @}
 };
 
 using SUBSECTION_MAP = ACE_Hash_Map_With_Allocator<ACE_Configuration_ExtId, int>;
@@ -618,7 +622,8 @@ public:
 
   void free (ACE_Allocator *alloc);
 
-  // = Data members.
+  /// @name Stored value
+  /// @{
 
   /**
    * Points to the string value or binary data or IS the integer
@@ -630,6 +635,7 @@ public:
     u_int      int_;
   }                             data_;
   size_t                        length_;
+  /// @}
 };
 
 using VALUE_MAP = ACE_Hash_Map_With_Allocator<ACE_Configuration_ExtId, ACE_Configuration_Value_IntId>;
@@ -666,10 +672,12 @@ public:
   /// Frees the hash table and all its values
   void free (ACE_Allocator *alloc);
 
-  // = Data Members.
+  /// @name Section maps
+  /// @{
   VALUE_MAP* value_hash_map_;
 
   SUBSECTION_MAP* section_hash_map_;
+  /// @}
 };
 
 using SECTION_MAP = ACE_Hash_Map_With_Allocator<ACE_Configuration_ExtId, ACE_Configuration_Section_IntId>;

@@ -40,7 +40,7 @@ class ACE_Based_Pointer_Repository_Rep;
 class ACE_Export ACE_Based_Pointer_Repository
 {
 public:
-  // = Use ACE_Null_Mutex to allow locking while iterating.
+  /// Uses ACE_Null_Mutex so the repository can be locked while iterating.
 
   ACE_Based_Pointer_Repository ();
   ~ACE_Based_Pointer_Repository ();
@@ -50,7 +50,8 @@ public:
   ACE_Based_Pointer_Repository &operator= (ACE_Based_Pointer_Repository const &) = delete;
   ACE_Based_Pointer_Repository &operator= (ACE_Based_Pointer_Repository &&) = delete;
 
-  // = Search structure methods.
+  /// @name Search structure operations
+  /// @{
   /**
    * Return the appropriate @a base_addr region that contains @a addr.
    * Returns 1 on success and 0 if the @a addr isn't contained in any
@@ -67,6 +68,7 @@ public:
   /// Unbind from the repository the <base_addr> that @a addr is
   /// contained within.
   int unbind (void *addr);
+  /// @}
 
 private:
   /// Use the "Cheshire-Cat" technique to hide the implementation in

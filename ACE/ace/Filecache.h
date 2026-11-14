@@ -219,9 +219,11 @@ private:
   /// The reference to the instance
   static ACE_Filecache *cvf_;
 
-  // = Synchronization variables.
+  /// @name Synchronization variables
+  /// @{
   ACE_SYNCH_RW_MUTEX hash_lock_[ACE_DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE];
   ACE_SYNCH_RW_MUTEX file_lock_[ACE_DEFAULT_VIRTUAL_FILESYSTEM_TABLE_SIZE];
+  /// @}
 };
 
 /**
@@ -259,10 +261,12 @@ public:
   /// Decrement the reference_count_.
   int release ();
 
-  // = error_ accessors
+  /// @name Error accessors
+  /// @{
   int error () const;
   int error (int error_value,
              const ACE_TCHAR *s = ACE_TEXT ("ACE_Filecache_Object"));
+  /// @}
 
   /// filename_ accessor
   const ACE_TCHAR *filename () const;
