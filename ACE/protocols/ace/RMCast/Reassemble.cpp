@@ -53,9 +53,7 @@ namespace ACE_RMCast
 
           Data_ptr& new_data = e->int_id_;
 
-          std::memcpy (new_data->buf () + new_data->size (),
-                       data->buf (),
-                       data->size ());
+          std::memcpy (new_data->buf () + new_data->size (), data->buf (), data->size ());
 
           //std::cerr << "data->size (): " << data->size () << endl
           //          << "new_data->size (): " << new_data->size () << endl

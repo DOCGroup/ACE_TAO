@@ -155,8 +155,7 @@ int wpdu::set_trap_info (snmp_pdu *raw_pdu, Pdu const &pdu) const
     raw_pdu->enterprise_length = (int) rawOid->len;
     ACE_NEW_RETURN(raw_pdu->enterprise,
                    oid[raw_pdu->enterprise_length],-1);
-    std::memcpy (raw_pdu->enterprise, rawOid->ptr,
-                 raw_pdu->enterprise_length * sizeof (oid));
+    std::memcpy (raw_pdu->enterprise, rawOid->ptr, raw_pdu->enterprise_length * sizeof (oid));
   }
 
   TimeTicks timestamp;
@@ -290,8 +289,7 @@ int wpdu::convert_vb_to_smival (Vb &tempvb, SmiVALUE *smival)
       smival->value.oid.len = tmpoid.length();
       ACE_NEW_RETURN(smival->value.oid.ptr,
                 SmiUINT32 [smival->value.oid.len], 1);
-      std::memcpy (smival->value.oid.ptr, smi->ptr,
-                   smival->value.oid.len * sizeof (SmiUINT32));
+      std::memcpy (smival->value.oid.ptr, smi->ptr, smival->value.oid.len * sizeof (SmiUINT32));
     }
     break;
 

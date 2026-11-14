@@ -105,7 +105,7 @@ Dump_Restore::handle_input (ACE_HANDLE)
         std::string hostname;
         unsigned int port {};
         if (input >> hostname >> port
-            && port <= std::numeric_limits<u_short>::max ())
+            && port <= (std::numeric_limits<u_short>::max) ())
           this->set_host (ACE_TEXT_CHAR_TO_TCHAR (hostname.c_str ()),
                           static_cast<u_short> (port));
         break;

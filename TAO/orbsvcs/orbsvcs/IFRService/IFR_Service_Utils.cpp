@@ -1361,9 +1361,7 @@ TAO_IFR_Service_Utils::oid_to_string (PortableServer::ObjectId &oid)
   CORBA::ULong length = oid.length ();
 
   // Copy the data.
-  std::memcpy (oid_string,
-                  oid.get_buffer (),
-                  length);
+  std::memcpy (oid_string, oid.get_buffer (), length);
 
   // Null terminate the string.
   oid_string[length] = '\0';

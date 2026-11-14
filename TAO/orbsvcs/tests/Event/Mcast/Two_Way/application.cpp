@@ -435,9 +435,7 @@ Heartbeat_Application::push (RtecEventComm::EventSet const &events)
 
           this->heartbeats_[size].pid = pid;
           this->heartbeats_[size].total = 1;
-          std::memcpy (this->heartbeats_[size].hostname.data (),
-                       host,
-                       std::strlen (host) + 1);
+          std::memcpy (this->heartbeats_[size].hostname.data (), host, std::strlen (host) + 1);
         }
     }
 }

@@ -42,14 +42,10 @@ Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
           guid.length (sizeof(size_t));
 
           size_t const temp = ++TAO_RTScheduler_Current::guid_counter;
-          std::memcpy (guid.get_buffer (),
-                       &temp,
-                       sizeof(size_t));
+          std::memcpy (guid.get_buffer (), &temp, sizeof(size_t));
 
           size_t id;
-          std::memcpy (&id,
-                       guid.get_buffer (),
-                       guid.length ());
+          std::memcpy (&id, guid.get_buffer (), guid.length ());
 
           if (TAO_debug_level > 0)
             TAOLIB_DEBUG ((LM_DEBUG,
@@ -324,14 +320,10 @@ Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr 
     }
   RTScheduling::Current::IdType guid;
   guid.length (sizeof (size_t));
-  std::memcpy (guid.get_buffer (),
-               guid_var->get_buffer (),
-               sizeof (size_t));
+  std::memcpy (guid.get_buffer (), guid_var->get_buffer (), sizeof (size_t));
 
   size_t id;
-  std::memcpy (&id,
-               guid.get_buffer (),
-               guid.length ());
+  std::memcpy (&id, guid.get_buffer (), guid.length ());
 
   if (TAO_debug_level > 0)
     TAOLIB_DEBUG ((LM_DEBUG,

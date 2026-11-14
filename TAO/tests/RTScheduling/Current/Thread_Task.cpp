@@ -106,9 +106,7 @@ Thread_Task::svc ()
 
       size_t count {};
       RTScheduling::Current::IdType_var const id = this->current_->id ();
-      std::memcpy (&count,
-                   id->get_buffer (),
-                   id->length ());
+      std::memcpy (&count, id->get_buffer (), id->length ());
 
       ACE_DEBUG ((LM_DEBUG,
                   "Starting Distributable Thread %B with 3 nested scheduling segments....\n",

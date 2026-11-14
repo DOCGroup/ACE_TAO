@@ -566,9 +566,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::grow_heap ()
              ACE_Timer_Node_T<TYPE> *[new_size]);
 #endif  /* ACE_HAS_ALLOC_HOOKS */
 
-  std::memcpy (new_heap,
-                  this->heap_,
-                  this->max_size_ * sizeof *new_heap);
+  std::memcpy (new_heap, this->heap_, this->max_size_ * sizeof *new_heap);
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_Allocator::instance ()->free (this->heap_);
@@ -590,9 +588,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::grow_heap ()
            ssize_t[new_size]);
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
-  std::memcpy (new_timer_ids,
-                  this->timer_ids_,
-                  this->max_size_ * sizeof (ssize_t));
+  std::memcpy (new_timer_ids, this->timer_ids_, this->max_size_ * sizeof (ssize_t));
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
   if (this->timer_ids_ != nullptr)

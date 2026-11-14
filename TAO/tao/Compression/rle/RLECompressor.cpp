@@ -55,7 +55,7 @@ namespace TAO
       source.length (),
       target.get_buffer (),
       target.maximum ());
-    if (out_len == std::numeric_limits<ACE_UINT64>::max ())
+    if (out_len == (std::numeric_limits<ACE_UINT64>::max) ())
       {
         throw ::Compression::CompressionException ();
       }
@@ -75,7 +75,7 @@ namespace TAO
       source.length (),
       target.get_buffer (),
       target.maximum ());
-    if (out_len == std::numeric_limits<ACE_UINT64>::max ())
+    if (out_len == (std::numeric_limits<ACE_UINT64>::max) ())
       {
         throw ::Compression::CompressionException ();
       }

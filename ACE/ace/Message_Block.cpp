@@ -86,9 +86,7 @@ ACE_Message_Block::copy (const char *buf, size_t n)
     }
   else
     {
-      (void) std::memcpy (this->wr_ptr (),
-                          buf,
-                          n);
+      (void) std::memcpy (this->wr_ptr (), buf, n);
       this->wr_ptr (n);
       return 0;
     }
@@ -112,9 +110,7 @@ ACE_Message_Block::copy (const char *buf)
     }
   else
     {
-      (void) std::memcpy (this->wr_ptr (),
-                          buf,
-                          buflen);
+      (void) std::memcpy (this->wr_ptr (), buf, buflen);
       this->wr_ptr (buflen);
       return 0;
     }
@@ -221,9 +217,7 @@ ACE_Data_Block::size (size_t length)
                             (char *) this->allocator_strategy_->malloc (length),
                             -1);
 
-      std::memcpy (buf,
-                   this->base_,
-                   this->cur_size_);
+      std::memcpy (buf, this->base_, this->cur_size_);
       if (ACE_BIT_DISABLED (this->flags_,
                             ACE_Message_Block::DONT_DELETE))
         this->allocator_strategy_->free ((void *) this->base_);
@@ -653,9 +647,7 @@ ACE_Message_Block::ACE_Message_Block (ACE_Message_Block const &mb,
       size_t const wr_offset = mb.wr_ptr_ - (start - mb.base ());
 
       // Copy wr_offset amount of data in to <this->data_block>
-      (void) std::memcpy (this->wr_ptr (),
-                          start,
-                          wr_offset);
+      (void) std::memcpy (this->wr_ptr (), start, wr_offset);
 
       // Don't move the write pointer, just leave it to the application
       // to do what it wants
@@ -1123,9 +1115,7 @@ ACE_Data_Block::clone (ACE_Message_Block::Message_Flags mask) const
   // new block by only copying cur_size_ bytes.
   if (nb != nullptr)
     {
-      std::memcpy (nb->base_,
-                   this->base_,
-                   this->cur_size_);
+      std::memcpy (nb->base_, this->base_, this->cur_size_);
     }
 
   return nb;

@@ -265,9 +265,7 @@ JAWS_Asynch_IO::receive_file (const char *filename,
 
   if (result == ACE_Filecache_Handle::ACE_SUCCESS)
     {
-      std::memcpy (handle->address (),
-                   initial_data,
-                   initial_data_length);
+      std::memcpy (handle->address (), initial_data, initial_data_length);
 
       int bytes_to_read = entire_length - initial_data_length;
 

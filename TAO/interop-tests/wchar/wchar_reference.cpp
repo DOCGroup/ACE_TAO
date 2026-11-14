@@ -68,9 +68,7 @@ void
 wchar_reference::assign_warray (short key,
                                 ACE_OS::WChar *warray) const
 {
-  std::memcpy (warray,
-               wchar_reference::ref_warray[key],
-               WARRAY_LENGTH * sizeof (ACE_OS::WChar));
+  std::memcpy (warray, wchar_reference::ref_warray[key], WARRAY_LENGTH * sizeof (ACE_OS::WChar));
 }
 
 ACE_OS::WChar const *

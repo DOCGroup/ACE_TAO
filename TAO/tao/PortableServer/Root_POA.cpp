@@ -1645,9 +1645,7 @@ TAO_Root_POA::parse_key (const TAO::ObjectKey &key,
   else
     {
       // Get the size from the object key.
-      std::memcpy (&poa_name_size,
-                      key_data + starting_at,
-                      sizeof (poa_name_size));
+      std::memcpy (&poa_name_size, key_data + starting_at, sizeof (poa_name_size));
       poa_name_size = ACE_NTOHL (poa_name_size);
 
       starting_at += sizeof (poa_name_size);
@@ -1688,14 +1686,10 @@ TAO_Root_POA::create_object_key (const PortableServer::ObjectId &id)
   CORBA::Octet *buffer = TAO::ObjectKey::allocbuf (buffer_size);
 
   // First copy the POA id into the key.
-  std::memcpy (buffer,
-                  this->id_.get_buffer (),
-                  this->id_.length ());
+  std::memcpy (buffer, this->id_.get_buffer (), this->id_.length ());
 
   // Then copy the object id into the key.
-  std::memcpy (&buffer[this->id_.length ()],
-                  id.get_buffer (),
-                  id.length ());
+  std::memcpy (&buffer[this->id_.length ()], id.get_buffer (), id.length ());
 
   // Create the key, giving the ownership of the buffer to the
   // sequence.
@@ -1765,9 +1759,7 @@ TAO_Root_POA::set_id (TAO_Root_POA *parent)
   CORBA::ULong starting_at {};
 
   // Add the object key prefix.
-  std::memcpy (&buffer[starting_at],
-                  objectkey_prefix,
-                  TAO_OBJECTKEY_PREFIX_SIZE);
+  std::memcpy (&buffer[starting_at], objectkey_prefix, TAO_OBJECTKEY_PREFIX_SIZE);
 
   starting_at += TAO_OBJECTKEY_PREFIX_SIZE;
 
@@ -1792,18 +1784,14 @@ TAO_Root_POA::set_id (TAO_Root_POA *parent)
   if (add_poa_name_length)
     {
       poa_name_length = ACE_HTONL (poa_name_length);
-      std::memcpy (&buffer[starting_at],
-                      &poa_name_length,
-                      sizeof (poa_name_length));
+      std::memcpy (&buffer[starting_at], &poa_name_length, sizeof (poa_name_length));
       starting_at += sizeof (poa_name_length);
     }
 
   // Put the POA name into the key (for non-root POAs).
   if (parent != nullptr)
     {
-      std::memcpy (&buffer[starting_at],
-                      this->system_name_->get_buffer (),
-                      this->system_name_->length ());
+      std::memcpy (&buffer[starting_at], this->system_name_->get_buffer (), this->system_name_->length ());
       starting_at += this->system_name_->length ();
     }
 }
@@ -1850,14 +1838,10 @@ TAO_Root_POA::set_folded_name (TAO_Root_POA *parent)
 
   if (parent != nullptr)
     {
-      std::memcpy (folded_name_buffer,
-                      parent->folded_name ().get_buffer (),
-                      parent_length);
+      std::memcpy (folded_name_buffer, parent->folded_name ().get_buffer (), parent_length);
     }
 
-  std::memcpy (&folded_name_buffer[parent_length],
-                  this->name_.c_str (),
-                  this->name_.length ());
+  std::memcpy (&folded_name_buffer[parent_length], this->name_.c_str (), this->name_.length ());
 
   folded_name_buffer[length - TAO_Root_POA::name_separator_length ()] = TAO_Root_POA::name_separator ();
 }

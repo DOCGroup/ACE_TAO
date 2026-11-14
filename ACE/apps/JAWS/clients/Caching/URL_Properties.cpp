@@ -74,9 +74,7 @@ ACE_WString_Helper::encode (void *buf, const ACE_WString &wstr)
   for (size_t i = 0; i < count; ++i)
     {
       ACE_UINT16 const encoded_value = htons (wstr[i]);
-      std::memcpy (bytes + i * sizeof (encoded_value),
-                   &encoded_value,
-                   sizeof (encoded_value));
+      std::memcpy (bytes + i * sizeof (encoded_value), &encoded_value, sizeof (encoded_value));
     }
   return count * sizeof (ACE_UINT16);
 }
@@ -89,14 +87,11 @@ ACE_WString_Helper::decode (void *buf)
   ACE_UINT16 encoded_value {};
   do
     {
-      std::memcpy (&encoded_value, bytes + count * sizeof (encoded_value),
-                   sizeof (encoded_value));
+      std::memcpy (&encoded_value, bytes + count * sizeof (encoded_value), sizeof (encoded_value));
       if (encoded_value != 0)
         {
           ACE_UINT16 const decoded_value = ntohs (encoded_value);
-          std::memcpy (bytes + count * sizeof (decoded_value),
-                       &decoded_value,
-                       sizeof (decoded_value));
+          std::memcpy (bytes + count * sizeof (decoded_value), &decoded_value, sizeof (decoded_value));
         }
       ++count;
     }

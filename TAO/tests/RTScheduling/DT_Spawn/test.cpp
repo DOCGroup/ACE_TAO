@@ -67,9 +67,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       size_t count {};
       RTScheduling::Current::IdType_var const id = current->id ();
-      std::memcpy (&count,
-                   id->get_buffer (),
-                   id->length ());
+      std::memcpy (&count, id->get_buffer (), id->length ());
 
       ACE_DEBUG ((LM_DEBUG,
                   "The Current DT Guid is %B\n",

@@ -359,9 +359,7 @@ ACE_ARGV_T<CHAR_TYPE>::create_buf_from_queue ()
             {
               len = ACE_OS::strlen (arg->arg_);
               // Copy the argument into buf_
-              std::memcpy (ptr,
-                           arg->arg_,
-                           len * sizeof (CHAR_TYPE));
+              std::memcpy (ptr, arg->arg_, len * sizeof (CHAR_TYPE));
               // Move the pointer down.
               ptr += len;
             }
@@ -371,9 +369,7 @@ ACE_ARGV_T<CHAR_TYPE>::create_buf_from_queue ()
         {
           len = ACE_OS::strlen (arg->arg_);
           // Copy the argument into buf_
-          std::memcpy (ptr,
-                       arg->arg_,
-                       len * sizeof (CHAR_TYPE));
+          std::memcpy (ptr, arg->arg_, len * sizeof (CHAR_TYPE));
           // Move the pointer down.
           ptr += len;
         }

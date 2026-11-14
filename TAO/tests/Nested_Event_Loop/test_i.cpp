@@ -42,9 +42,7 @@ server_i::run_no_ops (client_ptr remote_partner,
       act act_for_iterations (sizeof_pointer_to_iterations);
       act_for_iterations.length (sizeof_pointer_to_iterations);
 
-      std::memcpy (act_for_iterations.get_buffer (),
-                   &pointer_to_iterations,
-                   sizeof_pointer_to_iterations);
+      std::memcpy (act_for_iterations.get_buffer (), &pointer_to_iterations, sizeof_pointer_to_iterations);
 
       CORBA::ULong got_reply {};
 
@@ -54,9 +52,7 @@ server_i::run_no_ops (client_ptr remote_partner,
       act act_for_flag (sizeof_pointer_to_flag);
       act_for_flag.length (sizeof_pointer_to_flag);
 
-      std::memcpy (act_for_flag.get_buffer (),
-                   &pointer_to_flag,
-                   sizeof_pointer_to_flag);
+      std::memcpy (act_for_flag.get_buffer (), &pointer_to_flag, sizeof_pointer_to_flag);
 
       remote_partner->oneway_no_op (act_for_iterations,
                                     act_for_flag);
@@ -75,15 +71,11 @@ server_i::no_op (client_ptr remote_partner,
 {
   CORBA::ULong *pointer_to_iterations {};
 
-  std::memcpy (&pointer_to_iterations,
-               act_for_iterations.get_buffer (),
-               act_for_iterations.length ());
+  std::memcpy (&pointer_to_iterations, act_for_iterations.get_buffer (), act_for_iterations.length ());
 
   CORBA::ULong *pointer_to_flag {};
 
-  std::memcpy (&pointer_to_flag,
-               act_for_flag.get_buffer (),
-               act_for_flag.length ());
+  std::memcpy (&pointer_to_flag, act_for_flag.get_buffer (), act_for_flag.length ());
 
   ACE_DEBUG ((LM_DEBUG,
               "server_i::no_op: iterations = %d\n",

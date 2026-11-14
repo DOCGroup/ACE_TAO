@@ -238,9 +238,7 @@ ACE_Svc_Conf_Lexer::input (ACE_Svc_Conf_Param* param,
             {
               result = max_size;
             }
-          std::memcpy (buf,
-                       param->source.directive + param->buffer->start_,
-                       result);
+          std::memcpy (buf, param->source.directive + param->buffer->start_, result);
           param->buffer->start_ += (result / sizeof (ACE_TCHAR));
         }
       break;

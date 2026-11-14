@@ -990,9 +990,7 @@ ACE_Process_Options::setenv_i (ACE_TCHAR *assignment,
     return -1;
 
   // Copy the new environment string.
-  std::memcpy (environment_buf_ + environment_buf_index_,
-               assignment,
-               len * sizeof (ACE_TCHAR));
+  std::memcpy (environment_buf_ + environment_buf_index_, assignment, len * sizeof (ACE_TCHAR));
 
   // Update the argv array.
   environment_argv_[environment_argv_index_++] = environment_buf_ + environment_buf_index_;

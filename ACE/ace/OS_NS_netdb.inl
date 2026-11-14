@@ -17,9 +17,7 @@
         TYPE ace_result_; \
         ACE_OSCALL (OP, TYPE, ace_result_); \
         if (ace_result_ != FAILVALUE) \
-          std::memcpy (TARGET, \
-                    ace_result_, \
-                    SIZE < sizeof (TYPE) ? SIZE : sizeof (TYPE)); \
+          std::memcpy (TARGET, \ ace_result_, \ SIZE < sizeof (TYPE) ? SIZE : sizeof (TYPE)); \
         ACE_OS::netdb_release (); \
         return ace_result_; \
       } \
@@ -31,9 +29,7 @@
         TYPE ace_result_; \
         ACE_OSCALL(OP,TYPE,ace_result_); \
         if (ace_result_ != FAILVALUE) \
-          std::memcpy (TARGET, \
-                    ace_result_, \
-                    SIZE < sizeof (TYPE) ? SIZE : sizeof (TYPE)); \
+          std::memcpy (TARGET, \ ace_result_, \ SIZE < sizeof (TYPE) ? SIZE : sizeof (TYPE)); \
         return ace_result_; \
   } while(0)
 # endif /* ACE_MT_SAFE && ACE_MT_SAFE != 0 */

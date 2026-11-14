@@ -155,9 +155,7 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::increase_size (u_long size)
 
       if (this->max_size_ > 0)
         {
-          std::memcpy (temp,
-                          this->timeprobes_,
-                          this->max_size_ * sizeof (ACE_timeprobe_t));
+          std::memcpy (temp, this->timeprobes_, this->max_size_ * sizeof (ACE_timeprobe_t));
 
           // Iterates over the array explicitly calling the destructor for
           // each probe instance, then deallocates the memory

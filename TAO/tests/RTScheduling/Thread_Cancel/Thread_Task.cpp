@@ -62,9 +62,7 @@ Thread_Task::svc ()
 
       size_t count {};
       RTScheduling::Current::IdType_var id = this->current_->id ();
-      std::memcpy (&count,
-                   id->get_buffer (),
-                   id->length ());
+      std::memcpy (&count, id->get_buffer (), id->length ());
 
       this->current_->begin_scheduling_segment ("Potter",
                                                 sched_param,

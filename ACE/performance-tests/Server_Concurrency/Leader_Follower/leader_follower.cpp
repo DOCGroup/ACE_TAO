@@ -39,7 +39,7 @@ parse_size (ACE_TCHAR const *argument, size_t &value)
   errno = 0;
   long const parsed = ACE_OS::strtol (argument, &end, 10);
   if (argument == end || *end != ACE_TEXT ('\0') || errno == ERANGE || parsed < 0
-      || static_cast<unsigned long> (parsed) > std::numeric_limits<size_t>::max ())
+      || static_cast<unsigned long> (parsed) > (std::numeric_limits<size_t>::max) ())
     {
       return false;
     }

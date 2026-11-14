@@ -76,9 +76,7 @@ ACE_Obstack_T<ACE_CHAR_T>::request (size_t len)
       if (temp->cur_ != temp->block_)
         {
           size_t datasize = temp->cur_ - temp->block_;
-          std::memcpy (this->curr_->block_,
-                       temp->block_,
-                       datasize);
+          std::memcpy (this->curr_->block_, temp->block_, datasize);
           this->curr_->cur_ = this->curr_->block_ + datasize;
           // Reset the old chunk.
           temp->cur_ = temp->block_;

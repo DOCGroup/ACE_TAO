@@ -85,9 +85,7 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
 
         if (result == 0)
         {
-          std::memcpy (node->node,
-              adapter.adapt.adapter_address,
-              6);
+          std::memcpy (node->node, adapter.adapt.adapter_address, 6);
           return 0;
         }
       }
@@ -145,9 +143,7 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
 
   ACE_OS::close (handle);
 
-  std::memcpy (node->node,
-                  sa->sa_data,
-                  6);
+  std::memcpy (node->node, sa->sa_data, 6);
 
   return 0;
 
@@ -214,9 +210,7 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
 
   ACE_OS::close (handle);
 
-  std::memcpy (node->node,
-                  sa->sa_data,
-                  6);
+  std::memcpy (node->node, sa->sa_data, 6);
 
   return 0;
 
@@ -256,9 +250,7 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
               struct sockaddr_dl* sdl =
                 (struct sockaddr_dl *) &ifr->ifr_addr;
 
-              std::memcpy (node->node,
-                              LLADDR(sdl),
-                              6);
+              std::memcpy (node->node, LLADDR(sdl), 6);
             }
         }
 
@@ -400,7 +392,7 @@ ACE_OS::getaddrinfo_emulation (const char *name, addrinfo **result)
       (*result)[i].ai_addr = (sockaddr *) addr_storage + i;
       (*result)[i].ai_addr->sa_family = AF_INET;
       std::memcpy (&addr_storage[i].sin_addr, host->h_addr_list[i],
-                      (std::min) (size_t (host->h_length), sizeof (in_addr)));
+                   (std::min) (size_t (host->h_length), sizeof (in_addr)));
       if (i < n - 1)
         (*result)[i].ai_next = (*result) + i + 1;
     }

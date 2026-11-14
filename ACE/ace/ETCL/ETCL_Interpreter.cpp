@@ -85,9 +85,7 @@ Lex_String_Input::copy_into (char *buf,
 
   if (n > 0)
     {
-      std::memcpy (buf,
-                   Lex_String_Input::current_,
-                   n);
+      std::memcpy (buf, Lex_String_Input::current_, n);
       Lex_String_Input::current_ += n;
     }
 

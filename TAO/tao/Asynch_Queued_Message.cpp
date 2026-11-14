@@ -39,9 +39,7 @@ TAO_Asynch_Queued_Message::TAO_Asynch_Queued_Message (
        i != nullptr;
        i = i->cont ())
     {
-      std::memcpy (this->buffer_.get () + copy_offset,
-                   i->rd_ptr (),
-                   i->length ());
+      std::memcpy (this->buffer_.get () + copy_offset, i->rd_ptr (), i->length ());
       copy_offset += i->length ();
     }
 }
@@ -124,9 +122,7 @@ TAO_Asynch_Queued_Message::clone (ACE_Allocator *alloc)
                   nullptr);
   std::unique_ptr<char[]> buffer (buf);
 
-  std::memcpy (buffer.get (),
-               this->buffer_.get () + this->offset_,
-               sz);
+  std::memcpy (buffer.get (), this->buffer_.get () + this->offset_, sz);
 
   TAO_Asynch_Queued_Message *qm {};
 

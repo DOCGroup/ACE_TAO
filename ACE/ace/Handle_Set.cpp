@@ -100,9 +100,7 @@ ACE_Handle_Set::ACE_Handle_Set (const fd_set &fd_mask)
 {
   ACE_TRACE ("ACE_Handle_Set::ACE_Handle_Set");
   this->reset ();
-  std::memcpy (&this->mask_,
-               &fd_mask,
-               sizeof this->mask_);
+  std::memcpy (&this->mask_, &fd_mask, sizeof this->mask_);
 #if !defined (ACE_HANDLE_SET_USES_FD_ARRAY)
   this->sync (ACE_Handle_Set::MAXSIZE);
 #if defined (ACE_HAS_BIG_FD_SET)

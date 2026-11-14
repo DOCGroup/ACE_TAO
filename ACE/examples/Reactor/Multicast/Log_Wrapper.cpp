@@ -25,9 +25,7 @@ Log_Wrapper::open (int port, char const *mcast_addr)
   if ((host_info = ACE_OS::gethostbyname (host_data.nodename)) == nullptr)
     return -1;
 
-  std::memcpy (&this->log_msg_.host,
-               host_info->h_addr,
-               host_info->h_length);
+  std::memcpy (&this->log_msg_.host, host_info->h_addr, host_info->h_length);
   this->log_msg_.app_id = ACE_OS::getpid ();
 
   // This starts out initialized to all zeros!

@@ -303,14 +303,10 @@ TAO_RTScheduler_Current_i::begin_scheduling_segment(
       //Generate GUID
       size_t const temp = ++TAO_RTScheduler_Current::guid_counter;
       this->guid_.length (sizeof(size_t));
-      std::memcpy (this->guid_.get_buffer (),
-                   &temp,
-                   sizeof(size_t));
+      std::memcpy (this->guid_.get_buffer (), &temp, sizeof(size_t));
 
       size_t guid {};
-      std::memcpy (&guid,
-                   this->guid_.get_buffer (),
-                   this->guid_.length ());
+      std::memcpy (&guid, this->guid_.get_buffer (), this->guid_.length ());
 
       // Inform the scheduler of the new scheduling segment.
       this->scheduler_->begin_new_scheduling_segment (this->guid_,
@@ -643,9 +639,7 @@ void
 TAO_RTScheduler_Current_i::cancel_thread ()
 {
   size_t guid {};
-  std::memcpy (&guid,
-               this->guid_.get_buffer (),
-               this->guid_.length ());
+  std::memcpy (&guid, this->guid_.get_buffer (), this->guid_.length ());
 
   TAOLIB_DEBUG ((LM_DEBUG,
               "Distributable Thread - %B is cancelled\n",

@@ -646,8 +646,7 @@ ACE_CDR::LongDouble::assign (const ACE_CDR::LongDouble::NativeImpl& rhs)
     }
   else
     {
-      std::memcpy (this->ld,
-                   reinterpret_cast<const char*> (&rhs), sizeof (rhs));
+      std::memcpy (this->ld, reinterpret_cast<const char*> (&rhs), sizeof (rhs));
     }
   return *this;
 }

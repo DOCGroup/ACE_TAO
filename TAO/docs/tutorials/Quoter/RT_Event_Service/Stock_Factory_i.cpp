@@ -63,7 +63,7 @@ Quoter_Stock_Factory_i::load_stock_objects (
          std::getline (std::cin, full_name) &&
          std::cin >> price)
     {
-      std::cin.ignore (std::numeric_limits<std::streamsize>::max (), '\n');
+      std::cin.ignore ((std::numeric_limits<std::streamsize>::max) (), '\n');
 
       Quoter_Stock_i *const stock = new Quoter_Stock_i (symbol,
                                                         full_name,

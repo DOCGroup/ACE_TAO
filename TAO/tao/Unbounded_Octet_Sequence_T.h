@@ -260,18 +260,14 @@ public:
     tmp.length_ = rhs.length_;
     if (rhs.mb_ == nullptr)
       {
-        std::memcpy (tmp.buffer_,
-                     rhs.buffer_,
-                     rhs.length_);
+        std::memcpy (tmp.buffer_, rhs.buffer_, rhs.length_);
       }
     else
       {
         size_t offset {};
         for (ACE_Message_Block const *i = rhs.mb_.get (); i != nullptr; i = i->cont ())
           {
-            std::memcpy (tmp.buffer_ + offset,
-                         i->rd_ptr (),
-                         i->length ());
+            std::memcpy (tmp.buffer_ + offset, i->rd_ptr (), i->length ());
 
             offset += i->length ();
           }

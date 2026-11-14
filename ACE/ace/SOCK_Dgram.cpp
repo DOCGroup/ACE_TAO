@@ -498,10 +498,10 @@ ACE_SOCK_Dgram::recv (iovec iov[],
       for (i = 0; i < n && copyn > 0; ++i)
         {
           std::memcpy (iov[i].iov_base, ptr,
-                          // iov_len is int on some platforms, size_t on others
-                          copyn > (int) iov[i].iov_len
-                            ? (size_t) iov[i].iov_len
-                            : (size_t) copyn);
+                       // iov_len is int on some platforms, size_t on others
+                       copyn > (int) iov[i].iov_len
+                         ? (size_t) iov[i].iov_len
+                         : (size_t) copyn);
           ptr += iov[i].iov_len;
           copyn -= iov[i].iov_len;
         }
@@ -821,9 +821,7 @@ ACE_SOCK_Dgram::make_multicast_ifaddr6 (ipv6_mreq *ret_mreq,
 #endif /* ACE_WIN32 || !ACE_LACKS_IF_NAMETOINDEX */
 
   // now set the multicast address
-  std::memcpy (&lmreq.ipv6mr_multiaddr,
-                  &((sockaddr_in6 *) mcast_addr.get_addr ())->sin6_addr,
-                  sizeof (in6_addr));
+  std::memcpy (&lmreq.ipv6mr_multiaddr, &((sockaddr_in6 *) mcast_addr.get_addr ())->sin6_addr, sizeof (in6_addr));
 
   // Set return info, if requested.
   if (ret_mreq)

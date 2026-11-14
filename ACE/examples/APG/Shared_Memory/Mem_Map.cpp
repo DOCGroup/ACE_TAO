@@ -20,9 +20,7 @@ int ACE_TMAIN (int, ACE_TCHAR *argv[])
                        ACE_MAP_SHARED);
   ACE_ASSERT(destMap.addr () != nullptr);
 
-  std::memcpy (destMap.addr (),
-                  srcMap.addr (),
-                  srcMap.size ());
+  std::memcpy (destMap.addr (), srcMap.addr (), srcMap.size ());
   destMap.sync ();
 
   srcMap.close ();

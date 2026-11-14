@@ -347,9 +347,7 @@ namespace ACE_Utils
 
     if (-1 != result)
       {
-        std::memcpy (node_id,
-                     macaddress.node,
-                     UUID_Node::NODE_ID_SIZE);
+        std::memcpy (node_id, macaddress.node, UUID_Node::NODE_ID_SIZE);
       }
     else
       {
@@ -367,9 +365,7 @@ namespace ACE_Utils
       ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, *lock_);
       uuid_state_.timestamp = time_last_;
 
-      std::memcpy (uuid_state_.node.node_ID (),
-                   node_id,
-                   UUID_Node::NODE_ID_SIZE);
+      std::memcpy (uuid_state_.node.node_ID (), node_id, UUID_Node::NODE_ID_SIZE);
     }
 
     this->is_init_ = true;

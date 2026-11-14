@@ -361,7 +361,7 @@ namespace XSCRT
   inline FundamentalType<signed char>::FundamentalType (XML::Element<C> const &e)
   {
     short const t (Details::parse_numeric<C, short> (e.value ()));
-    if (t < std::numeric_limits<signed char>::min () || t > std::numeric_limits<signed char>::max ())
+    if (t < (std::numeric_limits<signed char>::min) () || t > (std::numeric_limits<signed char>::max) ())
       throw std::out_of_range ("XML byte value is out of range");
     x_ = static_cast<signed char> (t);
   }
@@ -371,7 +371,7 @@ namespace XSCRT
   inline FundamentalType<signed char>::FundamentalType (XML::Attribute<C> const &a)
   {
     short const t (Details::parse_numeric<C, short> (a.value ()));
-    if (t < std::numeric_limits<signed char>::min () || t > std::numeric_limits<signed char>::max ())
+    if (t < (std::numeric_limits<signed char>::min) () || t > (std::numeric_limits<signed char>::max) ())
       throw std::out_of_range ("XML byte value is out of range");
     x_ = static_cast<signed char> (t);
   }
@@ -382,7 +382,7 @@ namespace XSCRT
   inline FundamentalType<unsigned char>::FundamentalType (XML::Element<C> const &e)
   {
     unsigned short const t (Details::parse_numeric<C, unsigned short> (e.value ()));
-    if (t > std::numeric_limits<unsigned char>::max ())
+    if (t > (std::numeric_limits<unsigned char>::max) ())
       throw std::out_of_range ("XML unsignedByte value is out of range");
     x_ = static_cast<unsigned char> (t);
   }
@@ -392,7 +392,7 @@ namespace XSCRT
   inline FundamentalType<unsigned char>::FundamentalType (XML::Attribute<C> const &a)
   {
     unsigned short const t (Details::parse_numeric<C, unsigned short> (a.value ()));
-    if (t > std::numeric_limits<unsigned char>::max ())
+    if (t > (std::numeric_limits<unsigned char>::max) ())
       throw std::out_of_range ("XML unsignedByte value is out of range");
     x_ = static_cast<unsigned char> (t);
   }

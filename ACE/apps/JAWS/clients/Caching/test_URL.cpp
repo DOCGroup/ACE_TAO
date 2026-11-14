@@ -22,9 +22,7 @@ int ACE_TMAIN (int , ACE_TCHAR *[])
 
   size_t const encoded_size = original.encode ();
   std::vector<char> unaligned_buffer (encoded_size + 1);
-  std::memcpy (unaligned_buffer.data () + 1,
-               original.buffer (),
-               encoded_size);
+  std::memcpy (unaligned_buffer.data () + 1, original.buffer (), encoded_size);
 
   ACE_ASSERT (derived.decode (unaligned_buffer.data () + 1) == encoded_size);
   ACE_ASSERT (derived.seq () != nullptr);

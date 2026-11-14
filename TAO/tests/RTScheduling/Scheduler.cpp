@@ -93,9 +93,7 @@ TAO_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr request_
   srv_con.context_id = Client_Interceptor::SchedulingInfo;
   srv_con.context_data.length (sizeof (size_t));
   RTScheduling::Current::IdType_var id = this->current_->id ();
-  std::memcpy (srv_con.context_data.get_buffer (),
-               id->get_buffer (),
-               sizeof (size_t));
+  std::memcpy (srv_con.context_data.get_buffer (), id->get_buffer (), sizeof (size_t));
   request_info->add_request_service_context (srv_con,
                                              0);
 }
@@ -114,9 +112,7 @@ TAO_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr reque
       serv_cxt = request_info->get_request_service_context (Server_Interceptor::SchedulingInfo);
 
       size_t gu_id {};
-      std::memcpy (&gu_id,
-                   serv_cxt->context_data.get_buffer (),
-                   serv_cxt->context_data.length ());
+      std::memcpy (&gu_id, serv_cxt->context_data.get_buffer (), serv_cxt->context_data.length ());
 
       ACE_DEBUG ((LM_DEBUG,
                   "The Guid is %B\n",
@@ -126,9 +122,7 @@ TAO_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr reque
         std::make_unique<RTScheduling::Current::IdType> ();
 
       guid->length (sizeof (size_t));
-      std::memcpy (guid->get_buffer (),
-                   serv_cxt->context_data.get_buffer (),
-                   sizeof (size_t));
+      std::memcpy (guid->get_buffer (), serv_cxt->context_data.get_buffer (), sizeof (size_t));
 
       guid_out = guid.release ();
     }

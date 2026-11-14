@@ -35,7 +35,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
             if (endp == getopt.opt_arg ()
                 || *endp != ACE_TEXT ('\0')
                 || parsed_samples <= 0
-                || parsed_samples > std::numeric_limits<int>::max ())
+                || parsed_samples > (std::numeric_limits<int>::max) ())
               {
                 ACE_DEBUG ((LM_DEBUG,
                             "Iteration count must be a positive integer\n"));

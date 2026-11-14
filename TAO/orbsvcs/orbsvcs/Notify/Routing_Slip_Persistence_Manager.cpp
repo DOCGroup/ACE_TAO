@@ -649,8 +649,7 @@ Routing_Slip_Persistence_Manager::reload_chain(
     if (first_header.serial_number == expected_serial_number)
     {
       // We have to copy the first block because we cache it.
-      std::memcpy(mbptr->wr_ptr(), first_block->data(),
-        block_size);
+      std::memcpy (mbptr->wr_ptr(), first_block->data(), block_size);
       mbptr->rd_ptr(pos);
       mbptr->wr_ptr(pos + first_header.data_size);
       nextptr = first_header.next_overflow;

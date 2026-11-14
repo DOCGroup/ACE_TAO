@@ -74,9 +74,7 @@ TAO_Lex_String_Input::copy_into (char* buf, int max_size)
 
   if (n > 0)
     {
-      std::memcpy (buf,
-                   TAO_Lex_String_Input::current_,
-                   n);
+      std::memcpy (buf, TAO_Lex_String_Input::current_, n);
       TAO_Lex_String_Input::current_ += n;
     }
 

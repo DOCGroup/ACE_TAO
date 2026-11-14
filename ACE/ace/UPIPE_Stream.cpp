@@ -128,9 +128,7 @@ ACE_UPIPE_Stream::recv (char *buffer,
           {
             // The remaining data is not enough.
 
-            std::memcpy ((void *) &buffer[bytes_read],
-                            this->mb_last_->rd_ptr (),
-                            this_len);
+            std::memcpy ((void *) &buffer[bytes_read], this->mb_last_->rd_ptr (), this_len);
             bytes_read += this_len;
             this->mb_last_ = this->mb_last_->release ();   // mb_last_ now 0
             return static_cast<ssize_t> (bytes_read);
@@ -139,9 +137,7 @@ ACE_UPIPE_Stream::recv (char *buffer,
           {
             // The remaining data is at least enough.  If there's
             // more, we'll get it the next time through.
-            std::memcpy (&buffer[bytes_read],
-                            this->mb_last_->rd_ptr (),
-                            n);
+            std::memcpy (&buffer[bytes_read], this->mb_last_->rd_ptr (), n);
             bytes_read += n;
 
             // Advance rd_ptr.

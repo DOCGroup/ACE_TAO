@@ -185,18 +185,16 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
       else
         std::memcpy ((char *) &ip_addr.sin_addr.s_addr,
 # ifdef ACE_HOSTENT_H_ADDR
-                        (char *) hp->ACE_HOSTENT_H_ADDR,
+                     (char *) hp->ACE_HOSTENT_H_ADDR,
 # else
-                        (char *) hp->h_addr,
+                     (char *) hp->h_addr,
 # endif
-                        hp->h_length);
+                     hp->h_length);
     }
   else
     {
       std::memset ((void *) &ip_addr, 0, sizeof ip_addr);
-      std::memcpy ((void *) &ip_addr.sin_addr,
-                      (void*) &host_addr,
-                      sizeof ip_addr.sin_addr);
+      std::memcpy ((void *) &ip_addr.sin_addr, (void*) &host_addr, sizeof ip_addr.sin_addr);
     }
 
 #if !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__) && !defined (__Lynx__)
@@ -217,9 +215,7 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
       struct sockaddr_in if_addr;
 
       // Compare host ip address with interface ip address.
-      std::memcpy (&if_addr,
-                      &ifr->ifr_addr,
-                      sizeof if_addr);
+      std::memcpy (&if_addr, &ifr->ifr_addr, sizeof if_addr);
 
       if (ip_addr.sin_addr.s_addr != if_addr.sin_addr.s_addr)
         continue;
@@ -268,13 +264,9 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
                         ACE_TEXT ("ioctl (get broadaddr)")));
           else
             {
-              std::memcpy (&ip_addr,
-                              &if_req.ifr_broadaddr,
-                              sizeof if_req.ifr_broadaddr);
+              std::memcpy (&ip_addr, &if_req.ifr_broadaddr, sizeof if_req.ifr_broadaddr);
 
-              std::memcpy ((void *) &host_addr,
-                              (void *) &ip_addr.sin_addr,
-                              sizeof host_addr);
+              std::memcpy ((void *) &host_addr, (void *) &ip_addr.sin_addr, sizeof host_addr);
 
               if (handle == ACE_INVALID_HANDLE)
                 ACE_OS::close (s);

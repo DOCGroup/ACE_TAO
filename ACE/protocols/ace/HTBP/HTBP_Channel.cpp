@@ -464,9 +464,7 @@ ACE::HTBP::Channel::recvv (iovec *io_vec,
       ACE_NEW_RETURN (io_vec->iov_base,
                       char[this->leftovers_.length()],-1);
       io_vec->iov_len = this->leftovers_.length();
-      std::memcpy (io_vec->iov_base,
-                      this->leftovers_.rd_ptr (),
-                      io_vec->iov_len);
+      std::memcpy (io_vec->iov_base, this->leftovers_.rd_ptr (), io_vec->iov_len);
       result = io_vec->iov_len;
       this->leftovers_.length(0);
     }

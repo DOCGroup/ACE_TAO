@@ -223,9 +223,7 @@ TAO_CDR_Encaps_Codec::encode_value (CORBA::Any const& data)
            i = i->cont ())
         {
           size_t const len = i->length ();
-          std::memcpy (buf,
-                       i->rd_ptr (),
-                       len);
+          std::memcpy (buf, i->rd_ptr (), len);
           buf += len;
         }
 
@@ -248,9 +246,7 @@ TAO_CDR_Encaps_Codec::decode_value (CORBA::OctetSeq const& data,
   ACE_Message_Block mb (data.length () + 2 * ACE_CDR::MAX_ALIGNMENT);
   ACE_CDR::mb_align (std::addressof (mb));
 
-  std::memcpy (mb.rd_ptr (),
-               data.get_buffer (),
-               data.length ());
+  std::memcpy (mb.rd_ptr (), data.get_buffer (), data.length ());
 
   // @todo How do we check for a type mismatch so that we can
   //       throw a IOP::Codec::TypeMismatch exception?

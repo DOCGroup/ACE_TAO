@@ -66,9 +66,7 @@ Options::init ()
   ACE_UINT32 length =
     ACE_NTOHL (ACE_Utils::truncate_cast<ACE_UINT32> (this->message_len_));
 
-  std::memcpy (this->message_buf_,
-               &length,
-               sizeof length);
+  std::memcpy (this->message_buf_, &length, sizeof length);
 
   std::memset (this->message_buf_ + sizeof (ACE_UINT32),
                'a',
@@ -106,9 +104,7 @@ Options::read (void *buf, size_t len, size_t &iteration)
     return 0;
   else
     {
-      std::memcpy (buf,
-                   this->message_buf (),
-                   len);
+      std::memcpy (buf, this->message_buf (), len);
       ++iteration;
       return ACE_Utils::truncate_cast<ssize_t> (len);
     }

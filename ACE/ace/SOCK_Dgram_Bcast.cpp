@@ -155,11 +155,11 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
       else
         std::memcpy ((char *) &host_addr.sin_addr.s_addr,
 # ifdef ACE_HOSTENT_H_ADDR
-                        (char *) hp->ACE_HOSTENT_H_ADDR,
+                     (char *) hp->ACE_HOSTENT_H_ADDR,
 # else
-                        (char *) hp->h_addr,
+                     (char *) hp->h_addr,
 # endif
-                        hp->h_length);
+                     hp->h_length);
     }
 
 #if !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__) && !defined (ACE_VXWORKS) && !defined(__APPLE__)
@@ -192,9 +192,7 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
         {
           struct sockaddr_in if_addr;
 
-          std::memcpy (&if_addr,
-                          &ifr->ifr_addr,
-                          sizeof if_addr);
+          std::memcpy (&if_addr, &ifr->ifr_addr, sizeof if_addr);
 
           if (host_addr.sin_addr.s_addr != if_addr.sin_addr.s_addr)
             continue;

@@ -195,9 +195,7 @@ ACE_INET_Addr::set (const ACE_INET_Addr &sa)
   else
     {
       // It's ok to make the copy.
-      std::memcpy (&this->inet_addr_,
-                   &sa.inet_addr_,
-                   sa.get_size ());
+      std::memcpy (&this->inet_addr_, &sa.inet_addr_, sa.get_size ());
 
       this->set_type (sa.get_type());
       this->set_size (sa.get_size());
@@ -903,9 +901,7 @@ int ACE_INET_Addr::set_address (const char *ip_addr,
 #endif
         this->inet_addr_.in4_.sin_family = AF_INET;
         this->set_size (sizeof (this->inet_addr_.in4_));
-        std::memcpy (&this->inet_addr_.in4_.sin_addr,
-                     &ip4,
-                     len);
+        std::memcpy (&this->inet_addr_.in4_.sin_addr, &ip4, len);
       }
 #if defined (ACE_HAS_IPV6)
       else if (map == 0)
@@ -917,8 +913,7 @@ int ACE_INET_Addr::set_address (const char *ip_addr,
 #endif
           this->inet_addr_.in4_.sin_family = AF_INET;
           this->set_size (sizeof (this->inet_addr_.in4_));
-          std::memcpy (&this->inet_addr_.in4_.sin_addr,
-                       &ip4, len);
+          std::memcpy (&this->inet_addr_.in4_.sin_addr, &ip4, len);
         }
       // If given an IPv4 address to copy to an IPv6 object, map it to
       // an IPv4-mapped IPv6 address.
@@ -933,9 +928,7 @@ int ACE_INET_Addr::set_address (const char *ip_addr,
           if (ip4 == ACE_HTONL (INADDR_ANY))
             {
               in6_addr const ip6 = in6addr_any;
-              std::memcpy (&this->inet_addr_.in6_.sin6_addr,
-                           &ip6,
-                           sizeof (ip6));
+              std::memcpy (&this->inet_addr_.in6_.sin6_addr, &ip6, sizeof (ip6));
               return 0;
             }
           else
@@ -946,8 +939,7 @@ int ACE_INET_Addr::set_address (const char *ip_addr,
               std::memset (&this->inet_addr_.in6_.sin6_addr, 0, 16);
               this->inet_addr_.in6_.sin6_addr.s6_addr[10] =
                 this->inet_addr_.in6_.sin6_addr.s6_addr[11] = 0xff;
-              std::memcpy
-                (&this->inet_addr_.in6_.sin6_addr.s6_addr[12], &ip4, 4);
+              std::memcpy (&this->inet_addr_.in6_.sin6_addr.s6_addr[12], &ip4, 4);
             }
         }
 #endif /* ACE_HAS_IPV6 */

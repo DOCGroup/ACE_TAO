@@ -86,8 +86,7 @@ void Dynamic_Bitset::resize(Dynamic_Bitset::size_type num_bits, bool value)
 
   if (len > this->buffer_size_) {
     Dynamic_Bitset tmp(num_bits);
-    std::memcpy (tmp.buffer_.get (), this->buffer_.get (),
-                 this->buffer_size_ * BYTES_PER_BLOCK);
+    std::memcpy (tmp.buffer_.get (), this->buffer_.get (), this->buffer_size_ * BYTES_PER_BLOCK);
     block mask = static_cast<block> (-1);
 
     size_type block_pos = this->bit_size_/BITS_PER_BLOCK;

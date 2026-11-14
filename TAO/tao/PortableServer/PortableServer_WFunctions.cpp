@@ -52,9 +52,7 @@ namespace PortableServer
     CORBA::WChar* string = CORBA::wstring_alloc (string_length);
 
     // Copy the data
-    std::memcpy (string,
-                    id.get_buffer (),
-                    id.length ());
+    std::memcpy (string, id.get_buffer (), id.length ());
 
     // Null terminate the string
     string[string_length] = '\0';

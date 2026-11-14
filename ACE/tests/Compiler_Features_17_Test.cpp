@@ -17,7 +17,7 @@ class A
 public:
   A ();
   static constexpr char const* adapter_name = "TAOX11_AnyInsert_Adapter";
-  static constexpr uint32_t bound = std::numeric_limits<uint32_t>::max();
+  static constexpr uint32_t bound = (std::numeric_limits<uint32_t>::max) ();
 };
 
 int

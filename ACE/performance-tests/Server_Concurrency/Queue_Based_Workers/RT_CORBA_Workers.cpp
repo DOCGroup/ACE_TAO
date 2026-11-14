@@ -43,7 +43,7 @@ parse_size (ACE_TCHAR const *argument, size_t &value)
   errno = 0;
   long const parsed = ACE_OS::strtol (argument, &end, 10);
   if (argument == end || *end != ACE_TEXT ('\0') || errno == ERANGE || parsed < 0
-      || static_cast<unsigned long> (parsed) > std::numeric_limits<size_t>::max ())
+      || static_cast<unsigned long> (parsed) > (std::numeric_limits<size_t>::max) ())
     {
       return false;
     }
@@ -481,7 +481,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                         -1);
     }
 
-  if (number_of_messages > std::numeric_limits<size_t>::max () / 2)
+  if (number_of_messages > (std::numeric_limits<size_t>::max) () / 2)
     {
       ACE_ERROR_RETURN ((LM_ERROR, "Message count is too large\n"), -1);
     }

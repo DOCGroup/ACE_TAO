@@ -70,9 +70,8 @@ namespace TAO
 #if (POA_NO_TIMESTAMP == 0)
       // Then copy the timestamp for transient POAs.
       std::memcpy (&buffer[starting_at],
-                      this->creation_time_.creation_time (),
-                      TAO::Portable_Server::Creation_Time::creation_time_length
-                      ());
+                   this->creation_time_.creation_time (),
+                   TAO::Portable_Server::Creation_Time::creation_time_length ());
       starting_at += TAO::Portable_Server::Creation_Time::creation_time_length
         ();
 #endif /* POA_NO_TIMESTAMP */

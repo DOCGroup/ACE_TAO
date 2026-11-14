@@ -2283,9 +2283,7 @@ ACE_InputCDR::clone_from (ACE_InputCDR &cdr)
     }
 
   // Now do the copy
-  (void) std::memcpy (this->start_.wr_ptr (),
-                      cdr.start_.rd_ptr (),
-                      wr_bytes);
+  (void) std::memcpy (this->start_.wr_ptr (), cdr.start_.rd_ptr (), wr_bytes);
 
   // Set the read pointer position to the same point as that was in
   // <incoming> cdr.

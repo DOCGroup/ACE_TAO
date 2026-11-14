@@ -89,12 +89,8 @@ Multicast_Manager::get_next_host_addr (in_addr &host_addr)
         }
 
       ++Multicast_Manager::received_host_count;
-      std::memcpy (&host_addr,
-                   hp->h_addr,
-                   sizeof host_addr);
-      std::memcpy (&Multicast_Manager::current_ptr->host_addr,
-                   hp->h_addr,
-                   sizeof host_addr);
+      std::memcpy (&host_addr, hp->h_addr, sizeof host_addr);
+      std::memcpy (&Multicast_Manager::current_ptr->host_addr, hp->h_addr, sizeof host_addr);
       return 1;
     }
 

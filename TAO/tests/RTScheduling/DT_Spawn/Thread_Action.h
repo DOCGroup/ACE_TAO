@@ -34,9 +34,7 @@ Test_Thread_Action::_cxx_do (CORBA::VoidData data)
 
   size_t count {};
   RTScheduling::Current::IdType_var const id = tmp->current->id ();
-  std::memcpy (&count,
-               id->get_buffer (),
-               id->length ());
+  std::memcpy (&count, id->get_buffer (), id->length ());
 
   ACE_DEBUG ((LM_DEBUG,
               "The spawned DT Guid is %B\n",

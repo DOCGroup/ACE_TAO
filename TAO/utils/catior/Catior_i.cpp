@@ -175,7 +175,7 @@ Catior_i::catiiop (char* string)
   char *port_end {};
   long const parsed_port = std::strtol (string, &port_end, 10);
   if (port_end == string || port_end != cp || parsed_port < 0
-      || parsed_port > std::numeric_limits<CORBA::UShort>::max ())
+      || parsed_port > (std::numeric_limits<CORBA::UShort>::max) ())
     {
       throw CORBA::DATA_CONVERSION ();
     }

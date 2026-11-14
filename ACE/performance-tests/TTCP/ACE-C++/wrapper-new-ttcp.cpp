@@ -175,8 +175,8 @@ parse_int_option (char const *argument, int &value)
   errno = 0;
   long const parsed = std::strtol (argument, &end, 10);
   if (argument == end || *end != '\0' || errno == ERANGE
-      || parsed < std::numeric_limits<int>::min ()
-      || parsed > std::numeric_limits<int>::max ())
+      || parsed < (std::numeric_limits<int>::min) ()
+      || parsed > (std::numeric_limits<int>::max) ())
     return false;
 
   value = static_cast<int> (parsed);
@@ -252,7 +252,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             int parsed_port {};
             if (!parse_int_option (optarg, parsed_port)
                 || parsed_port <= 0
-                || parsed_port > std::numeric_limits<unsigned short>::max ())
+                || parsed_port > (std::numeric_limits<unsigned short>::max) ())
               goto usage;
             port = static_cast<unsigned short> (parsed_port);
           }
@@ -496,7 +496,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                   static_cast<int> (session_control_buf.size_)));
 
       if (session_control_buf.nbuf_ <= 0
-          || session_control_buf.nbuf_ > std::numeric_limits<int>::max ()
+          || session_control_buf.nbuf_ > (std::numeric_limits<int>::max) ()
           || session_control_buf.size_ <= 0
           || session_control_buf.size_ > data_buf_len)
         ACE_ERROR_RETURN ((LM_ERROR, "invalid session control message\n"), -1);

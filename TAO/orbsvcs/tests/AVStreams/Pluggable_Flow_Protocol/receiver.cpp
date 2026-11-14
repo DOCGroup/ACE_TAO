@@ -103,9 +103,7 @@ Receiver::receive_frame (ACE_Message_Block *frame)
     ACE_ERROR_RETURN ((LM_ERROR, "Flushing received frame failed\n"), -1);
 
   ACE_hrtime_t timestamp {};
-  std::memcpy (&timestamp,
-               frame->rd_ptr () + payload_length,
-               sizeof timestamp);
+  std::memcpy (&timestamp, frame->rd_ptr () + payload_length, sizeof timestamp);
   ACE_UINT32 const timestamp_low = ACE_CU64_TO_CU32 (timestamp);
   ACE_DEBUG ((LM_DEBUG,
               "Received frame %B, timestamp low bits %u\n",

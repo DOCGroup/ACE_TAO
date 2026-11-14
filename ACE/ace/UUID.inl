@@ -120,9 +120,7 @@ namespace ACE_Utils
   ACE_INLINE void
   UUID::node (const UUID_Node & node)
   {
-    std::memcpy (&this->uuid_.node_,
-                 node.node_ID (),
-                 UUID_Node::NODE_ID_SIZE);
+    std::memcpy (&this->uuid_.node_, node.node_ID (), UUID_Node::NODE_ID_SIZE);
   }
 
   ACE_INLINE ACE_CString*

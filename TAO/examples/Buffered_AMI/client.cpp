@@ -141,7 +141,7 @@ parse_args (int argc, ACE_TCHAR **argv, Client_Options &options)
       case 't':
         {
           int const interval = ACE_OS::atoi (get_opts.opt_arg ());
-          if (interval < 0 || interval > std::numeric_limits<long>::max () / 1000)
+          if (interval < 0 || interval > (std::numeric_limits<long>::max) () / 1000)
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("Interval must be nonnegative and fit in microseconds.\n")),
                               -1);

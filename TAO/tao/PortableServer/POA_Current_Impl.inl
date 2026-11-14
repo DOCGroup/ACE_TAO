@@ -34,8 +34,7 @@ namespace TAO
           this->object_id_.length (id_size);
 
           // Get the buffer and copy the new object id in it's place.
-          std::memcpy (this->object_id_.get_buffer (),
-                          id.get_buffer (), id_size);
+          std::memcpy (this->object_id_.get_buffer (), id.get_buffer (), id_size);
         }
       else
         {
