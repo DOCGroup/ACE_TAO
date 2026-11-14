@@ -312,7 +312,7 @@ CORBA::NVList::_tao_encode (TAO_OutputCDR &cdr, int flag)
           CORBA::TypeCode_ptr const tc = nv->value ()->_tao_get_typecode ();
           (void) TAO_Marshal_Object::perform_append (tc,
                                                      this->incoming_.get (),
-                                                     &cdr);
+                                                     std::addressof (cdr));
         }
 
       this->incoming_.reset ();
