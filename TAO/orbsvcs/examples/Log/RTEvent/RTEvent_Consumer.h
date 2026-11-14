@@ -22,15 +22,13 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @brief Simple consumer of events.
+ *
+ * Registers for one event type.
+ */
 class Consumer : public POA_RtecEventComm::PushConsumer
 {
-  // = TITLE
-  //   Simple consumer object
-  //
-  // = DESCRIPTION
-  //   This class is a consumer of events.
-  //   It simply registers for one event type.
-  //
 public:
   Consumer () = default;
 
@@ -39,31 +37,28 @@ public:
   Consumer &operator= (Consumer const &) = delete;
   Consumer &operator= (Consumer &&) = delete;
 
+  /// Run the test.
   int run (int argc, ACE_TCHAR *argv[]);
-  // Run the test
 
-  // = The RtecEventComm::PushConsumer methods
-
+  /// The skeleton methods.
   void push (RtecEventComm::EventSet const &events) override;
   void disconnect_push_consumer () override;
-  // The skeleton methods.
 
 private:
+  /// Number of events received.
   CORBA::ULong event_count_ {};
-  // Keep track of the number of events received.
 
+  /// The orb, just a pointer because the ORB does not outlive the run() method.
   CORBA::ORB_ptr orb_ {};
-  // The orb, just a pointer because the ORB does not outlive the
-  // run() method...
 
+  /// Handle to the name service.
   CosNaming::NamingContext_var naming_context_;
-  // Handle to the name service.
 
+  /// The Event Log Factory that generates the events to be consumed.
   RTEventLogAdmin::EventLogFactory_var event_log_factory_;
-  // The Event Log Factory that generates the events to be consumed.
 
+  /// The proxy to which this consumer is connected.
   RtecEventChannelAdmin::ProxyPushSupplier_var supplier_;
-  // The proxy that we are connected to.
 };
 
 #endif /* RTEVENT_CONSUMER_H */
