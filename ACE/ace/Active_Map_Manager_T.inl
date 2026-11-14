@@ -21,7 +21,7 @@ ACE_Active_Map_Manager<T>::bind (ACE_Active_Map_Manager_Key &key,
       key = this->search_structure_[slot_index].ext_id_;
 
       // This is where the user should place the value.
-      internal_value = &this->search_structure_[slot_index].int_id_;
+      internal_value = std::addressof (this->search_structure_[slot_index].int_id_);
 
       // Update the current size.
       ++this->cur_size_;
@@ -74,7 +74,7 @@ ACE_Active_Map_Manager<T>::find (const ACE_Active_Map_Manager_Key &key,
   else
     {
       // This is where the user value is.
-      internal_value = &this->search_structure_[slot_index].int_id_;
+      internal_value = std::addressof (this->search_structure_[slot_index].int_id_);
     }
 
   return 0;

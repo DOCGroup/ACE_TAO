@@ -9,6 +9,8 @@
 
 #include "ace/Malloc_Base.h"
 
+#include <memory>
+
 #if !defined (__ACE_INLINE__)
 #include "ace/Map_Manager.inl"
 #endif /* __ACE_INLINE__ */
@@ -570,12 +572,12 @@ template <class EXT_ID, class INT_ID, class ACE_LOCK> void
 ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::free_search_structure ()
 {
   // Free up the structure.
-  if (this->search_structure_ != 0)
+  if (this->search_structure_ != nullptr)
     {
       for (ACE_UINT32 i = 0; i < this->total_size_; ++i)
         // Explicitly call the destructor.
         {
-          ENTRY *ss = &this->search_structure_[i];
+          ENTRY *ss = std::addressof (this->search_structure_[i]);
           // The "if" second argument results in a no-op instead of
           // deallocation.
           ACE_DES_FREE_TEMPLATE2 (ss, ACE_NOOP,
@@ -584,7 +586,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::free_search_structure ()
 
       // Actually free the memory.
       this->allocator_->free (this->search_structure_);
-      this->search_structure_ = 0;
+      this->search_structure_ = nullptr;
     }
 }
 
