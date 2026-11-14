@@ -75,7 +75,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         return -1;
       }
 
-
     // Activate the POAManager.
     PortableServer::POAManager_var const mgr = poa->the_POAManager ();
     mgr->activate();

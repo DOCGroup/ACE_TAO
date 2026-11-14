@@ -11,7 +11,6 @@ class Manager_Handler
 public:
   Manager_Handler (Test::Manager_ptr manager,
                    Test::Controller_ptr controller);
-  // Constructor
 
   // = The skeleton methods
   void start_workers () override;

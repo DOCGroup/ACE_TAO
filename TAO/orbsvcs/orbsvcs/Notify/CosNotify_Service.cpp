@@ -516,7 +516,6 @@ ACE_STATIC_SVC_DEFINE (TAO_CosNotify_Service,
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
 
-
 ACE_FACTORY_DEFINE (TAO_Notify_Serv, TAO_CosNotify_Service)
 
 /*********************************************************************************************************************/

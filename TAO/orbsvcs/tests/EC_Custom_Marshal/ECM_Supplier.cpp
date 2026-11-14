@@ -15,7 +15,6 @@
 #include "ECM_Data.h"
 #include "ace/OS_NS_errno.h"
 
-
 ECMS_Driver::ECMS_Driver ()
   : suppliers_ {},
     n_suppliers_ (1),

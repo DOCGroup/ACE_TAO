@@ -123,7 +123,6 @@ bool Manager::done () const
   return shutdown_;
 }
 
-
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   Manager tp;

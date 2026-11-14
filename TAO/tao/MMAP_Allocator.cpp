@@ -5,7 +5,6 @@
 #include "ace/Mem_Map.h"
 #include "ace/Default_Constants.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace
@@ -33,7 +32,6 @@ namespace
     /* 0 */ ACE_DEFAULT_FILE_PERMS,
     true); // Generate for each mmap an unqiue pool
 }
-
 
 // Ideally we should open the backing store with shm_open() so that we
 // can avoid creating an on-disk backing store.  An on-disk backing

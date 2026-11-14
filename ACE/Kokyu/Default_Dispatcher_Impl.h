@@ -14,7 +14,6 @@
 
 #include "ace/Task.h"
 
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -62,7 +61,6 @@ namespace Kokyu
   class Shutdown_Task_Command : public Dispatch_Command
   {
   public:
-    /// Constructor
     explicit Shutdown_Task_Command (ACE_Allocator *mb_allocator = nullptr);
 
     /// Command callback

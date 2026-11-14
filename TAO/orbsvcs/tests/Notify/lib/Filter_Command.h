@@ -27,10 +27,8 @@
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Filter_Command : public TAO_Notify_Tests_Command
 {
 public:
-  /// Constructor
   TAO_Notify_Tests_Filter_Command ();
 
-  /// Destructor
   ~TAO_Notify_Tests_Filter_Command ();
 
   /// Parse args and populate options.

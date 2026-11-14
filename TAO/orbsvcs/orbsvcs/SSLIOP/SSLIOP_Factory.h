@@ -50,10 +50,8 @@ namespace TAO
       : public TAO_Protocol_Factory
     {
     public:
-      /// Constructor.
       Protocol_Factory ();
 
-      /// Destructor.
       ~Protocol_Factory () override = default;
 
       // = Service Configurator hooks.

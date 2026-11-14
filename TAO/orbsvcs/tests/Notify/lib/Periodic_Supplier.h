@@ -32,10 +32,8 @@ class TAO_Notify_Tests_Task_Callback;
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Periodic_Supplier : public TAO_Notify_Tests_StructuredPushSupplier, public ACE_Task <ACE_SYNCH>
 {
 public:
-  /// Constructor
   TAO_Notify_Tests_Periodic_Supplier ();
 
-  /// Destructor
   ~TAO_Notify_Tests_Periodic_Supplier ();
 
   /// set the helper callback

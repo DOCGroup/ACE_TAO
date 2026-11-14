@@ -30,7 +30,6 @@ public:
   class Descriptor : public POA_File::Descriptor
   {
   public:
-    /// Constructor
     explicit Descriptor (PortableServer::POA_ptr poa);
 
     Descriptor (Descriptor const &) = delete;

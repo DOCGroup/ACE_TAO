@@ -31,10 +31,8 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_EventChannel_Command : public TAO_Notify_Tests_Command
 {
 public:
-  /// Constructor
   TAO_Notify_Tests_EventChannel_Command ();
 
-  /// Destructor
   virtual ~TAO_Notify_Tests_EventChannel_Command ();
 
   /// Parse args and populate options.

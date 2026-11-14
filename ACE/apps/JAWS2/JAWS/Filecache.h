@@ -57,5 +57,4 @@ private:
   ACE_FILE_IO file_;
 };
 
-
 #endif /* JAWS_FILECACHE_H */

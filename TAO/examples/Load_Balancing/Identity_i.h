@@ -23,7 +23,6 @@ public:
   /// Constructor - initializes the name of this object.
   explicit Identity_i (char const *name);
 
-  /// Destructor.
   ~Identity_i () override = default;
 
   Identity_i (Identity_i const &) = delete;

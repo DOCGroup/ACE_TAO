@@ -25,7 +25,6 @@ namespace FtRtecEventChannelAdmin {
   struct ConsumerAdminState;
 }
 
-
 class TAO_FTEC_Event_Channel_Impl;
 class TAO_FTEC_ProxyPushSupplier;
 /**

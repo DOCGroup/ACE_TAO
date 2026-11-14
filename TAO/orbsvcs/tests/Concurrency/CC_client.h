@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "ace/Get_Opt.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -36,7 +35,6 @@ CC_CommandList *cmdlist;
 extern FILE *ace_cc_yyin;
 // end of parser stuff
 
-
 /**
  * @class CC_Client
  *
@@ -52,7 +50,6 @@ public:
   /// Default constructor.
   CC_Client () = default;
 
-  /// Destructor.
   ~CC_Client ();
   CC_Client (CC_Client const &) = delete;
   CC_Client (CC_Client &&) = delete;

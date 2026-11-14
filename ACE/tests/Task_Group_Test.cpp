@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Atomic_Op.h"
 #include "ace/Task.h"

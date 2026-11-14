@@ -3,7 +3,6 @@
 #include "tao/debug.h"
 #include "MultiTypes.h"
 
-
 //*****************************************************************************************************
 
 MultiTypes_PushConsumer::MultiTypes_PushConsumer (MultiTypes* client)
@@ -70,7 +69,6 @@ MultiTypes::on_received_event (MultiTypes_PushConsumer* consumer)
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "PushConsumer received event #%d\n", any_event_count_.load ()));
 
-
   if (disconnect_on_last_event_ == 1)
   {
     consumer->disconnect ();
@@ -87,7 +85,6 @@ MultiTypes::on_received_event (MultiTypes_StructuredPushConsumer* consumer)
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "StructuredPushConsumer received event #%d\n", struct_event_count_.load ()));
 
-
   if (disconnect_on_last_event_ == 1)
   {
     consumer->disconnect ();
@@ -103,7 +100,6 @@ MultiTypes::on_received_event (MultiTypes_SequencePushConsumer* consumer)
 
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "SequencePushConsumer received event #%d\n", seq_event_count_.load ()));
-
 
   if (disconnect_on_last_event_ == 1)
   {
@@ -156,7 +152,6 @@ MultiTypes::init (int argc,
   any_consumer_->init (root_poa_.in ());
 
   any_consumer_->connect (this->consumer_admin_.in ());
-
 
   sequence_consumer_->init (root_poa_.in ());
 

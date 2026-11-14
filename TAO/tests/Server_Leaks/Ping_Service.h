@@ -10,7 +10,6 @@ class Ping_Service
   : public virtual POA_Test::Ping_Service
 {
 public:
-  /// Constructor
   explicit Ping_Service (CORBA::ORB_ptr orb);
   Ping_Service (Ping_Service const &) = delete;
   Ping_Service (Ping_Service &&) = delete;

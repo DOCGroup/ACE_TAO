@@ -14,7 +14,6 @@ Session::tao_version_ = 220;
 AltAddresses
 Session::alt_addrs_;
 
-
 Session::Session ()
   : split_details_ (false)
 {
@@ -338,7 +337,6 @@ Session::dump ()
   if (this->has_outfile() || this->has_dir())
     delete strm;
 }
-
 
 // iterate over the collection of host processes to associate peer
 // processes via endpoints.

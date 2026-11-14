@@ -4,7 +4,6 @@
  *  @author David Levine
  */
 
-
 #include "ace/Sched_Params.h"
 
 #include "orbsvcs/Sched/Scheduler_Generic.h"
@@ -34,8 +33,6 @@ struct Mode_Entry
 
   Mode_Entry &operator= (Mode_Entry const &) = default;
 };
-
-
 
 Scheduler_Generic::Scheduler_Generic () :
   Scheduler (),
@@ -97,7 +94,6 @@ Scheduler_Generic::lookup_config_info (Preemption_Priority priority,
   }
 }
 
-
 Scheduler::status_t
 Scheduler_Generic::register_task (RT_Info *rt_info [],
                                    u_int number_of_modes,
@@ -151,7 +147,6 @@ Scheduler_Generic::register_task (RT_Info *rt_info [],
   return ret;
 }
 
-
 void
 Scheduler_Generic::init (int minimum_priority,
                           int maximum_priority,
@@ -166,7 +161,6 @@ Scheduler_Generic::init (int minimum_priority,
   timeline_filename_ = timeline_filename;
   config_info_.thread_priority = minimum_priority_;
 }
-
 
 Scheduler::status_t
 Scheduler_Generic::schedule (ACE_Unbounded_Set<Scheduling_Anomaly *> &
@@ -191,7 +185,6 @@ Scheduler_Generic::schedule (ACE_Unbounded_Set<Scheduling_Anomaly *> &
   return status;
 }
 
-
 int
 Scheduler_Generic::priority (handle_t /* handle */,
                              OS_Thread_Priority &priority,
@@ -212,7 +205,6 @@ Scheduler_Generic::priority (handle_t /* handle */,
 
   return 0;
 }
-
 
 void
 Scheduler_Generic::print_schedule ()

@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-
 /**
  *  @file   Linear_Priority_Mapping.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
-
 
 #ifndef TAO_LINEAR_PRIORITY_MAPPING_H
 #define TAO_LINEAR_PRIORITY_MAPPING_H

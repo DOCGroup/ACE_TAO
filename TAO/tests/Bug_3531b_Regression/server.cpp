@@ -70,7 +70,6 @@ public:
   Command &operator= (Command &&) = delete;
 };
 
-
 //////////////////////////////////////////////////////////////////////
 // NOTE: Do *NOT* put the same msg into the msg queue more than once.
 // This will confuse the msg queue and result it in dropping messages
@@ -1050,7 +1049,6 @@ void Test_10 (TAO_ORB_Core *const orb_core)
   wrk1.put (new Shutdown);
   wrk1.wait ();
 }
-
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])

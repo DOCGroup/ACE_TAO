@@ -3,7 +3,6 @@
 #include "tao/debug.h"
 #include "Filter.h"
 
-
 Filter::Filter ()
   : event_count_ (5)
 {
@@ -167,7 +166,6 @@ Filter::print_filters (CosNotifyFilter::FilterAdmin_ptr filter_admin)
         ACE_DEBUG ((LM_DEBUG, " Filter %d\n", filter_seq[i]));
     }
 }
-
 
 void
 Filter::create_EC ()

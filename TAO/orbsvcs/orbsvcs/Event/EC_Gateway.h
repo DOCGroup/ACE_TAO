@@ -21,7 +21,6 @@
 #include "orbsvcs/RtecEventChannelAdminS.h"
 #include "orbsvcs/RtecEventCommS.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**

@@ -43,7 +43,6 @@ public:
 
   ~TAO_EC_Negation_Filter () override;
 
-
   // = The TAO_EC_Filter methods, please check the documentation in
   // TAO_EC_Filter.
   ChildrenIterator begin () const override;

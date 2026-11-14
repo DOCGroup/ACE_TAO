@@ -181,5 +181,4 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include "tao/Storable_Base.inl"
 #endif
 
-
 #endif

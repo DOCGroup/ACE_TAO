@@ -61,7 +61,6 @@ public:
   }
 };
 
-
 class Logging_Event_Handler_WFMO : public Logging_Event_Handler_Ex
 {
 public:
@@ -76,7 +75,6 @@ protected:
 
   ACE_Thread_Mutex lock_; // Serialize threads in thread pool.
 };
-
 
 class Logging_Acceptor_WFMO : public Logging_Acceptor_Ex
 {
@@ -103,7 +101,6 @@ protected:
   }
 };
 
-
 static ACE_THR_FUNC_RETURN event_loop (void *arg) {
   ACE_Reactor *reactor = static_cast<ACE_Reactor *> (arg);
 
@@ -112,9 +109,7 @@ static ACE_THR_FUNC_RETURN event_loop (void *arg) {
   return 0;
 }
 
-
 using Server_Logging_Daemon = Reactor_Logging_Server<Logging_Acceptor_WFMO>;
-
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {

@@ -896,7 +896,6 @@ int ACE_INET_Addr::set_address (const char *ip_addr,
       if (encode)
         ip4 = ACE_HTONL (ip4);
 
-
       if (this->get_type () == AF_INET && map == 0) {
         this->base_set (AF_INET, sizeof (this->inet_addr_.in4_));
 #ifdef ACE_HAS_SOCKADDR_IN_SIN_LEN

@@ -187,7 +187,6 @@ ThrMgr_Task::svc ()
   return 0;
 }
 
-
 // This function tests the task-based record keeping functions.
 static int
 test_task_record_keeping (ACE_Thread_Manager *mgr)

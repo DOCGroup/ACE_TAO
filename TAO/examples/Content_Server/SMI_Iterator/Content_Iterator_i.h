@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-
 //=============================================================================
 /**
  *  @file     Content_Iterator_i.h
@@ -10,7 +9,6 @@
  *  @author  Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================
-
 
 #ifndef CONTENT_ITERATOR_I_H
 #define CONTENT_ITERATOR_I_H
@@ -43,10 +41,8 @@ public:
   Content_Iterator_i& operator= (Content_Iterator_i const&) = delete;
   Content_Iterator_i& operator= (Content_Iterator_i&&) = delete;
 
-  /// Constructor
   Content_Iterator_i (char const *filename, CORBA::ULongLong file_size);
 
-  /// Destructor
   ~Content_Iterator_i () override;
 
   /// This operation returns the next <chunk> of the file starting at

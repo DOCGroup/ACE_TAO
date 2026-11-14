@@ -40,7 +40,6 @@ extern "C"
 #  include /**/ <netinet/in.h>
 #endif /* !ACE_LACKS_NETINET_IN_H */
 
-
 # if !defined (ACE_IPPROTO_TCP)
 #   define ACE_IPPROTO_TCP IPPROTO_TCP
 # endif /* !ACE_IPPROTO_TCP */

@@ -1074,7 +1074,6 @@ ACE_Process_Options::set_handles (ACE_HANDLE std_in,
   return 0; // Success.
 }
 
-
 void
 ACE_Process_Options::release_handles ()
 {

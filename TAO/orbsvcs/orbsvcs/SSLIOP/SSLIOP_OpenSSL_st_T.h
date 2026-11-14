@@ -81,7 +81,6 @@ namespace TAO
       OpenSSL_st_var (T const & st);
       //@}
 
-      /// Destructor
       ~OpenSSL_st_var ();
 
       /**

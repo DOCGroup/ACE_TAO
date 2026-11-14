@@ -26,11 +26,9 @@ class TAO_RTEC_Perf_Export Peer_Base
  : public virtual POA_Federated_Test::Peer
 {
 public:
-  /// Constructor
   Peer_Base (CORBA::ORB_ptr orb,
              RTServer_Setup &rtserver_setup);
 
-  /// Destructor
   ~Peer_Base () override;
 
   //@{

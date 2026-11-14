@@ -7,7 +7,6 @@
 #include "ace/Task.h"
 #include "ace/Service_Config.h"
 
-
 #if defined (ACE_HAS_THREADS)
 
 #include "ace/Task.h"

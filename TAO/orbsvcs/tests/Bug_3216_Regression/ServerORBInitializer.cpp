@@ -4,7 +4,6 @@
 #include "tao/ORB_Constants.h"
 #include "tao/Exception.h"
 
-
 void
 Server_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr)
 {

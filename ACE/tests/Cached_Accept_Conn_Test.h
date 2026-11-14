@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_TESTS_CACHED_ACCEPT_CONN_TEST_H
 #define ACE_TESTS_CACHED_ACCEPT_CONN_TEST_H
 
@@ -85,7 +84,6 @@ template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
 class Accept_Strategy : public ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>
 {
 public:
-  /// Constructor.
   Accept_Strategy (CACHED_CONNECT_STRATEGY &caching_connect_strategy);
 
   /**

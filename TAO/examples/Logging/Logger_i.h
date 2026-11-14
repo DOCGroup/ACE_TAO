@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_ORBSVCS_LOGGER_I_H
 #define TAO_ORBSVCS_LOGGER_I_H
 
@@ -34,10 +33,8 @@ public:
   Logger_i& operator= (Logger_i const&) = delete;
   Logger_i& operator= (Logger_i&&) = delete;
 
-  /// constructor
   explicit Logger_i (char const *name);
 
-  /// destructor
   ~Logger_i () override = default;
 
   /// Writes the <log_rec> to the standard output.
@@ -93,10 +90,8 @@ public:
   Logger_Factory_i& operator= (Logger_Factory_i const&) = delete;
   Logger_Factory_i& operator= (Logger_Factory_i&&) = delete;
 
-  /// Constructor.
   Logger_Factory_i () = default;
 
-  /// Destructor.
   ~Logger_Factory_i () override = default;
 
   /**

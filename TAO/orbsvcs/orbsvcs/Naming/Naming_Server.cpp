@@ -831,7 +831,6 @@ TAO_Naming_Server::operator-> () const
   return ret;
 }
 
-
 TAO_Naming_Server::~TAO_Naming_Server ()
 {
 
@@ -845,7 +844,6 @@ TAO_Naming_Server::~TAO_Naming_Server ()
     }
 #endif /* TAO_HAS_MINIMUM_POA */
 }
-
 
 TAO_Naming_Server::IOR_Bundle *
 TAO_Naming_Server::bundle_at(size_t ndx)
@@ -880,7 +878,6 @@ TAO_Naming_Server::bundle_at(size_t ndx) const
     }
   return &iors_[ndx];
   }
-
 
 int
 TAO_Naming_Server::write(size_t ndx) const
@@ -933,6 +930,5 @@ TAO_Naming_Server::assign (size_t ndx, bool take, CORBA::Object_ptr obj)
   CORBA::String_var ior = this->orb_->object_to_string (b->ref_.in());
   b->ior_ = ior.in();
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

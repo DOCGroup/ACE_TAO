@@ -415,7 +415,6 @@ public:
   /// Register with the reactor via the wait strategy
   bool register_if_necessary ();
 
-
   /// Added event handler to the handlers set.
   /**
    * Called by the cache when the cache is closing.
@@ -1201,7 +1200,6 @@ private:
 
   /// Caller must hold the owning transport cache manager's lock.
   bool is_idle ();
-
 
 private:
   /// Our messaging object.

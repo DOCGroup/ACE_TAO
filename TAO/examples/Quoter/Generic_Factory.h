@@ -33,7 +33,6 @@ public:
   /// Default constructor
   Quoter_Generic_Factory_Server () = default;
 
-  /// Destructor
   ~Quoter_Generic_Factory_Server ();
 
   Quoter_Generic_Factory_Server (Quoter_Generic_Factory_Server const &) = delete;

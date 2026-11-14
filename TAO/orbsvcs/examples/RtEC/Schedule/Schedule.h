@@ -3,9 +3,7 @@
 
 #include "orbsvcs/Scheduler_Factory.h"
 
-
 // There were no scheduling anomalies.
-
 
 static ACE_Scheduler_Factory::POD_RT_Info infos[] = {
 {"Dispatching_Task-250000.us",          1,          0,          0,          0,     250000, (RtecScheduler::Criticality_t) 0, (RtecScheduler::Importance_t) 0,          0,          1,         58,          4,          1, (RtecScheduler::Info_Type_t) 0 , (RtecScheduler::RT_Info_Enabled_Type_t) RtecScheduler::RT_INFO_ENABLED },
@@ -24,14 +22,12 @@ static ACE_Scheduler_Factory::POD_RT_Info infos[] = {
 
 static int infos_size = sizeof(infos)/sizeof(infos[0]);
 
-
 static ACE_Scheduler_Factory::POD_Config_Info configs[] = {
   {          0,         59, (RtecScheduler::Dispatching_Type_t) 2 },
   {          1,         58, (RtecScheduler::Dispatching_Type_t) 2 }
 };
 
 static int configs_size = sizeof(configs)/sizeof(configs[0]);
-
 
 // This sets up Scheduler_Factory to use the runtime version.
 int scheduler_factory_setup =

@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef LOAD_BALANCER_I_H_
 #define LOAD_BALANCER_I_H_
 
@@ -50,18 +49,15 @@ class  Object_Group_Factory_i :
   //    round robin groups).
   //
 public:
-  /// Constructor.
   Object_Group_Factory_i (CORBA::ORB_ptr orb,
                           PortableServer::POA_ptr poa);
 
-  /// Destructor.
   ~Object_Group_Factory_i () override = default;
 
   Object_Group_Factory_i (Object_Group_Factory_i const &) = delete;
   Object_Group_Factory_i (Object_Group_Factory_i &&) = delete;
   Object_Group_Factory_i &operator= (Object_Group_Factory_i const &) = delete;
   Object_Group_Factory_i &operator= (Object_Group_Factory_i &&) = delete;
-
 
   /// Method for the POA that will return the persistent POA_ptr stored
   /// in here..
@@ -79,7 +75,6 @@ public:
   Load_Balancer::Object_Group_ptr make_round_robin (char const *id) override;
 
   void unbind_round_robin (char const *id) override;
-
 
   /**
    * Creates an <Object_Group> that resolves requests for arbitrary
@@ -187,11 +182,9 @@ class Object_Group_i
   //   different load balancing policies.
   //
 public:
-  /// Constructor.
   Object_Group_i (char const *id,
                   PortableServer::POA_ptr poa);
 
-  /// Destructor.
   ~Object_Group_i () override;
 
   Object_Group_i (Object_Group_i const &) = delete;
@@ -283,7 +276,6 @@ protected:
   std::unique_ptr<ALLOCATOR> allocator_;
 };
 
-
 /**
  * @class Random_Object_Group
  *
@@ -293,7 +285,6 @@ protected:
 class Random_Object_Group : public Object_Group_i
 {
 public:
-  /// Constructor.
   Random_Object_Group (char const *id,
                        PortableServer::POA_ptr poa);
 
@@ -316,7 +307,6 @@ public:
 class RR_Object_Group: public Object_Group_i
 {
 public:
-  /// Constructor.
   RR_Object_Group (char const *id,
                    PortableServer::POA_ptr poa);
 

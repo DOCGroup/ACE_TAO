@@ -482,7 +482,6 @@ ACE::strrepl (char *s, char search, char replace)
   return replaced;
 }
 
-
 // Split a string up into 'token'-delimited pieces, ala Perl's
 // "split".
 

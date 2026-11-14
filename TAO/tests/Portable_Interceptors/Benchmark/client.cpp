@@ -45,7 +45,6 @@ parse_args (int argc, ACE_TCHAR *argv[], Options &options)
   return 0;
 }
 
-
 void
 run_test (Test_Interceptors::Secure_Vault_ptr server, int niterations)
 {
@@ -143,7 +142,6 @@ run_test (Test_Interceptors::Secure_Vault_ptr server, int niterations)
   marker.dump_stats (ACE_TEXT ("update records  method  "), gsf,
                      Benchmark_Method::update_records);
 }
-
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])

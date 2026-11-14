@@ -2,7 +2,6 @@
 #include "ace/Log_Msg.h"
 #include "tao/Exception.h"
 
-
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {

@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_MEM_IO_H
 #define ACE_MEM_IO_H
 #include /**/ "ace/pre.h"
@@ -274,7 +273,6 @@ public:
                 size_t n,
                 int flags,
                 const ACE_Time_Value *timeout);
-
 
   /// Dump the state of an object.
   void dump () const;

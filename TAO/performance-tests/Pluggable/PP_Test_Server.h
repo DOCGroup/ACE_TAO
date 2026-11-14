@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef _PP_TEST_SERVER_H
 #define _PP_TEST_SERVER_H
 
@@ -45,7 +44,6 @@ public:
   PP_Test_Server &operator= (PP_Test_Server const &) = delete;
   PP_Test_Server &operator= (PP_Test_Server &&) = delete;
 
-  /// Destructor
   ~PP_Test_Server ();
 
   /// Initialize the server state - parsing arguments, etc.

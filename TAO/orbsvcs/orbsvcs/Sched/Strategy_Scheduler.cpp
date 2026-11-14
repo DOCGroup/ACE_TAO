@@ -4,7 +4,6 @@
  *  @author Chris Gill
  */
 
-
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Sched/Strategy_Scheduler.h"
 #include <new>
@@ -12,13 +11,11 @@
 
 #include <memory>
 
-
 // This is awkward, but it makes MSVC++ happy.
 extern "C"
 {
 using COMP_FUNC = int (*) (void const *, void const *);
 }
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -181,7 +178,6 @@ ACE_Strategy_Scheduler::assign_priorities (
 
   return status;
 }
-
 
 /// Assigns dynamic and static sub-priorities to the sorted dispatch
 /// schedule, according to the strategy's subpriority comparisons.
@@ -388,7 +384,6 @@ ACE_Strategy_Scheduler::minimum_critical_priority ()
   return strategy_.minimum_critical_priority ();
 }
 
-
 /// Schedules a dispatch entry into the timeline being created.
 
 ACE_DynScheduler::status_t
@@ -559,8 +554,6 @@ ACE_Strategy_Scheduler::schedule_timeline_entry (
   return status;
 }
 
-
-
 /// Constructs and returns a scheduler strategized with
 /// an instance of the the parameterized strategy type.
 
@@ -576,8 +569,6 @@ ACE_Strategy_Scheduler_Factory<STRATEGY>::create (RtecScheduler::Preemption_Prio
 
   return the_scheduler;
 }
-
-
 
 ACE_Scheduler_Strategy::ACE_Scheduler_Strategy (
   ACE_DynScheduler::Preemption_Priority minimum_critical_priority)
@@ -654,7 +645,6 @@ ACE_Scheduler_Strategy::static_subpriority_comp (
   }
 }
 
-
 /// Base class supplies default behavior: returns 0
 /// for minimum critical priority number.
 
@@ -664,10 +654,7 @@ ACE_Scheduler_Strategy::minimum_critical_priority ()
   return 0;
 }
 
-
-
 ACE_MUF_Scheduler_Strategy *ACE_MUF_Scheduler_Strategy::instance_ {};
-
 
 /// Returns an instance of the strategy.
 
@@ -708,7 +695,6 @@ ACE_MUF_Scheduler_Strategy::priority_comp (Dispatch_Entry const &first_entry,
   }
 }
 
-
 /// Sorts the dispatch entry pointer array in descending urgency order.
 
 void
@@ -719,7 +705,6 @@ ACE_MUF_Scheduler_Strategy::sort (Dispatch_Entry **dispatch_entries, u_int size)
                  sizeof (Dispatch_Entry *),
                  static_cast<COMP_FUNC> (ACE_MUF_Scheduler_Strategy::sort_function));
 }
-
 
 ACE_MUF_Scheduler_Strategy::ACE_MUF_Scheduler_Strategy (
   ACE_DynScheduler::Preemption_Priority minimum_critical_priority)
@@ -743,7 +728,6 @@ ACE_MUF_Scheduler_Strategy::dynamic_subpriority (Dispatch_Entry &entry,
 
   return (laxity > 0) ? LONG_MAX - laxity : laxity;
 }
-
 
 /// Orders two dispatch entries by ascending laxity: returns -1 if the
 /// first Dispatch_Entry is greater in the order, 0 if they're equivalent,
@@ -777,7 +761,6 @@ ACE_MUF_Scheduler_Strategy::dynamic_subpriority_comp
   }
 }
 
-
 /// Comparison function to pass to qsort.
 
 int
@@ -788,7 +771,6 @@ ACE_MUF_Scheduler_Strategy::sort_function (void const *arg1, void const *arg2)
                       ** static_cast<Dispatch_Entry * const *> (arg2));
 }
 
-
 /// Returns the minimum critical priority number.
 
 ACE_DynScheduler::Preemption_Priority
@@ -796,7 +778,6 @@ ACE_MUF_Scheduler_Strategy::minimum_critical_priority ()
 {
   return minimum_critical_priority_;
 }
-
 
 /// Provides the dispatching queue type for the given dispatch entry.
 
@@ -806,11 +787,7 @@ ACE_MUF_Scheduler_Strategy::dispatch_type (Dispatch_Entry const & /* entry */)
   return RtecScheduler::LAXITY_DISPATCHING;
 }
 
-
-
-
 ACE_RMS_Scheduler_Strategy *ACE_RMS_Scheduler_Strategy::instance_ {};
-
 
 /// Returns an instance of the strategy.
 
@@ -851,7 +828,6 @@ ACE_RMS_Scheduler_Strategy::priority_comp (Dispatch_Entry const &first_entry,
   }
 }
 
-
 /// Sorts the dispatch entry pointer array in descending RMS (rate) order.
 
 void
@@ -863,7 +839,6 @@ ACE_RMS_Scheduler_Strategy::sort (
                  sizeof (Dispatch_Entry *),
                  static_cast<COMP_FUNC> (ACE_RMS_Scheduler_Strategy::sort_function));
 }
-
 
 ACE_RMS_Scheduler_Strategy::ACE_RMS_Scheduler_Strategy (
   ACE_DynScheduler::Preemption_Priority minimum_critical_priority)
@@ -881,7 +856,6 @@ ACE_RMS_Scheduler_Strategy::dynamic_subpriority (
   return 0;
 }
 
-
 /// All tasks in a given priority level have the same dynamic
 /// subpriority under RMS.
 
@@ -893,7 +867,6 @@ ACE_RMS_Scheduler_Strategy::dynamic_subpriority_comp
   return 0;
 }
 
-
 // Comparison function to pass to qsort.
 
 int
@@ -904,7 +877,6 @@ ACE_RMS_Scheduler_Strategy::sort_function (void const *arg1, void const *arg2)
                       ** static_cast<Dispatch_Entry * const *> (arg2));
 }
 
-
 /// Returns minimum critical priority number.
 
 ACE_DynScheduler::Preemption_Priority
@@ -912,7 +884,6 @@ ACE_RMS_Scheduler_Strategy::minimum_critical_priority ()
 {
   return minimum_critical_priority_;
 }
-
 
 /// Provide the dispatching queue type for the given dispatch entry.
 
@@ -922,10 +893,7 @@ ACE_RMS_Scheduler_Strategy::dispatch_type (Dispatch_Entry const & /* entry */)
   return RtecScheduler::STATIC_DISPATCHING;
 }
 
-
-
 ACE_MLF_Scheduler_Strategy *ACE_MLF_Scheduler_Strategy::instance_ {};
-
 
 /// Returns an instance of the strategy.
 
@@ -941,7 +909,6 @@ ACE_MLF_Scheduler_Strategy::instance ()
   return ACE_MLF_Scheduler_Strategy::instance_;
 }
 
-
 /// Just returns 0, as all dispatch entries are of equivalent
 /// static priority under MLF.
 
@@ -951,7 +918,6 @@ ACE_MLF_Scheduler_Strategy::priority_comp (Dispatch_Entry const & /* first_entry
 {
   return 0;
 }
-
 
 /// Sorts the dispatch entry pointer array in ascending laxity order.
 
@@ -964,7 +930,6 @@ ACE_MLF_Scheduler_Strategy::sort (
                  sizeof (Dispatch_Entry *),
                  static_cast<COMP_FUNC> (ACE_MLF_Scheduler_Strategy::sort_function));
 }
-
 
 ACE_MLF_Scheduler_Strategy::ACE_MLF_Scheduler_Strategy (
   ACE_DynScheduler::Preemption_Priority /* minimum_critical_priority */)
@@ -985,7 +950,6 @@ ACE_MLF_Scheduler_Strategy::dynamic_subpriority (Dispatch_Entry &entry,
 
   return (laxity > 0) ? LONG_MAX - laxity : laxity;
 }
-
 
 /// Orders two dispatch entries by ascending laxity: returns -1 if the
 /// first Dispatch_Entry is greater in the order, 0 if they're equivalent,
@@ -1019,7 +983,6 @@ ACE_MLF_Scheduler_Strategy::dynamic_subpriority_comp
   }
 }
 
-
 /// Comparison function to pass to qsort.
 
 int
@@ -1030,7 +993,6 @@ ACE_MLF_Scheduler_Strategy::sort_function (void const *arg1, void const *arg2)
                       ** static_cast<Dispatch_Entry * const *> (arg2));
 }
 
-
 /// Provides the dispatching queue type for the given dispatch entry.
 
 ACE_DynScheduler::Dispatching_Type
@@ -1039,10 +1001,7 @@ ACE_MLF_Scheduler_Strategy::dispatch_type (Dispatch_Entry const & /* entry */)
   return RtecScheduler::LAXITY_DISPATCHING;
 }
 
-
-
 ACE_EDF_Scheduler_Strategy *ACE_EDF_Scheduler_Strategy::instance_ {};
-
 
 /// Returns an instance of the strategy.
 
@@ -1068,7 +1027,6 @@ ACE_EDF_Scheduler_Strategy::priority_comp (Dispatch_Entry const & /* first_entry
   return 0;
 }
 
-
 /// Sort the dispatch entry pointer array in ascending deadline (period) order.
 
 void
@@ -1080,7 +1038,6 @@ ACE_EDF_Scheduler_Strategy::sort (
                  sizeof (Dispatch_Entry *),
                  static_cast<COMP_FUNC> (ACE_EDF_Scheduler_Strategy::sort_function));
 }
-
 
 ACE_EDF_Scheduler_Strategy::ACE_EDF_Scheduler_Strategy (
   ACE_DynScheduler::Preemption_Priority /* minimum_critical_priority */)
@@ -1101,7 +1058,6 @@ ACE_EDF_Scheduler_Strategy::dynamic_subpriority (Dispatch_Entry &entry,
   return (time_to_deadline > 0)
          ? LONG_MAX - time_to_deadline : time_to_deadline;
 }
-
 
 /// Orders two dispatch entries by ascending time to deadline: returns -1 if
 /// the first Dispatch_Entry is greater in the order, 0 if they're equivalent,
@@ -1129,7 +1085,6 @@ ACE_EDF_Scheduler_Strategy::dynamic_subpriority_comp
   }
 }
 
-
 /// Comparison function to pass to qsort.
 
 int
@@ -1148,11 +1103,8 @@ ACE_EDF_Scheduler_Strategy::dispatch_type (Dispatch_Entry const & /* entry */)
   return RtecScheduler::DEADLINE_DISPATCHING;
 }
 
-
-
 ACE_Criticality_Scheduler_Strategy *
 ACE_Criticality_Scheduler_Strategy::instance_ {};
-
 
 /// Returns an instance of the strategy.
 
@@ -1206,7 +1158,6 @@ ACE_Criticality_Scheduler_Strategy::sort (
                  static_cast<COMP_FUNC> (ACE_Criticality_Scheduler_Strategy::sort_function));
 }
 
-
 ACE_Criticality_Scheduler_Strategy::ACE_Criticality_Scheduler_Strategy (
   ACE_DynScheduler::Preemption_Priority minimum_critical_priority)
   :ACE_Scheduler_Strategy (minimum_critical_priority)
@@ -1223,7 +1174,6 @@ ACE_Criticality_Scheduler_Strategy::dynamic_subpriority (
   return 0;
 }
 
-
 /// All tasks in a given priority level have the same dynamic
 /// subpriority under this strategy.
 
@@ -1235,7 +1185,6 @@ ACE_Criticality_Scheduler_Strategy::dynamic_subpriority_comp
   return 0;
 }
 
-
 /// Comparison function to pass to qsort.
 
 int
@@ -1245,7 +1194,6 @@ ACE_Criticality_Scheduler_Strategy::sort_function (void const *arg1, void const 
            sort_comp (** static_cast<Dispatch_Entry * const *> (arg1),
                       ** static_cast<Dispatch_Entry * const *> (arg2));
 }
-
 
 /// Returns minimum critical priority number.
 

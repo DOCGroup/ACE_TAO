@@ -10,7 +10,6 @@ class Callback
   : public virtual POA_Test::Callback
 {
 public:
-  /// Constructor
   explicit Callback (CORBA::ORB_ptr orb);
 
   Callback (Callback const &) = delete;

@@ -26,5 +26,4 @@ private:
   CORBA::ORB_var orb_ {};
 };
 
-
 #endif /* MESSENGERI_H_  */

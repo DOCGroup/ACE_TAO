@@ -29,7 +29,6 @@
 class AddrServer : public POA_RtecUDPAdmin::AddrServer
 {
 public:
-  /// Constructor
   explicit AddrServer (RtecUDPAdmin::UDP_Addr const &addr);
   AddrServer (AddrServer const &) = delete;
   AddrServer (AddrServer &&) = delete;

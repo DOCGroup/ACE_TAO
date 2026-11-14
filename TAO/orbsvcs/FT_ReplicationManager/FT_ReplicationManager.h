@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef FT_REPLICATION_MANAGER_H_
 #define FT_REPLICATION_MANAGER_H_
 
@@ -124,7 +123,6 @@ namespace TAO
      */
     int idle (int & result);
 
-
     /**
      * Identify this fault detector factory.
      * @return a string to identify this object for logging/console message purposes.
@@ -137,7 +135,6 @@ namespace TAO
      * @return String identifying the type id associated with the ObjectGroup.
      */
     char * type_id (PortableGroup::ObjectGroup_ptr object_group);
-
 
   //////////////////////
   // CORBA interface(s)

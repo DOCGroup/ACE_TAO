@@ -14,7 +14,6 @@
 #include "tao/PI/PI.h"
 #include "tao/CSD_ThreadPool/CSD_ThreadPool.h"
 
-
 int
 ServerApp::run (int argc, ACE_TCHAR* argv[])
 {
@@ -186,7 +185,6 @@ ServerApp::run (int argc, ACE_TCHAR* argv[])
   return 0;
 }
 
-
 int
 ServerApp::parse_args (int argc, ACE_TCHAR *argv[])
 {
@@ -216,7 +214,6 @@ ServerApp::parse_args (int argc, ACE_TCHAR *argv[])
 
   return 0;
 }
-
 
 Foo_ptr
 ServerApp::create_foo (PortableServer::POA_ptr poa, char const *servant_name)

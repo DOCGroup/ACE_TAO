@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Select_Reactor.h"
@@ -20,7 +19,6 @@
 #include "Reactor_Timer_Queue_Test.h"
 #include <memory>
 #include <new>
-
 
 void
 Reactor_Timer_Handler::set_timer_id (long tid)

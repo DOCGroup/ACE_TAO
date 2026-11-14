@@ -86,7 +86,6 @@ private:
   ACE_OFF_T min_bytes_ {10 * 1024}; // @@ Nanbor, remove this magic number!!
 };
 
-
 ACE_STATIC_SVC_DECLARE (TAO_SHMIOP_Protocol_Factory)
 ACE_FACTORY_DECLARE (TAO_Strategies, TAO_SHMIOP_Protocol_Factory)
 

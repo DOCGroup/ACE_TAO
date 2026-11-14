@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef INS_I_H
 #define INS_I_H
 
@@ -19,10 +18,8 @@
 class INS_i : public POA_INS
 {
 public:
-  /// Constructor.
   INS_i () = default;
 
-  /// Destructor.
   ~INS_i () override = default;
 
   INS_i (INS_i const &) = delete;
@@ -35,5 +32,4 @@ public:
 };
 
 #endif /* INS_I_H */
-
 

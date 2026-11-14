@@ -31,7 +31,6 @@ class Foo_i : public virtual POA_Foo
 
     void done () override;
 
-
   private:
     std::atomic<CORBA::Long> value_ {};
 

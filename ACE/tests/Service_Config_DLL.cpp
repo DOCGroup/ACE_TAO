@@ -23,7 +23,6 @@ invoke_service_config (void *arg)
 {
   const ACE_TCHAR *directive = reinterpret_cast<const ACE_TCHAR *> (arg);
 
-
   // Process a Service Configurator directive in the current thread.
   if (ACE_Service_Config::process_directive (directive) != 0)
     ACE_ERROR ((LM_ERROR,
@@ -217,7 +216,6 @@ ACE_STATIC_SVC_DEFINE (Test_Object_2_More,
                        ACE_Service_Type::DELETE_THIS
                        | ACE_Service_Type::DELETE_OBJ,
                        0)
-
 
 // -----------------------------------------------------------------
 

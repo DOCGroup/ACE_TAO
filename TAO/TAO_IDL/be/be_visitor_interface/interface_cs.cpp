@@ -91,7 +91,6 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "{" << be_idt_nl
           << "return ";
 
-
       if (node->is_abstract () || c != nullptr)
         {
           *os << "cdr << p;";

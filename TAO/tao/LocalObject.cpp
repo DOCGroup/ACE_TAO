@@ -46,7 +46,6 @@ CORBA::LocalObject::_is_equivalent (CORBA::Object_ptr other_obj)
 
 // TAO's extensions
 
-
 TAO::ObjectKey *
 CORBA::LocalObject::_key ()
 {

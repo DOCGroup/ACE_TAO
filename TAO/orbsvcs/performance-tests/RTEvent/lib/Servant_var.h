@@ -22,7 +22,6 @@ template<class SERVANT>
 class Servant_var
 {
 public:
-  /// Constructor
   /**
    * @param s The contained servant.  The constructor assumes
    * ownership.
@@ -38,7 +37,6 @@ public:
   /// Assignment
   Servant_var<SERVANT>& operator= (SERVANT *s);
 
-  /// Destructor
   ~Servant_var ();
 
   /// Helper method to increase the reference count on a servant.

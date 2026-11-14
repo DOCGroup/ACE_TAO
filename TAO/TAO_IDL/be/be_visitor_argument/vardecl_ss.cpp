@@ -149,7 +149,6 @@ int be_visitor_args_vardecl_ss::visit_interface_fwd (
   return this->emit_common (node);
 }
 
-
 int be_visitor_args_vardecl_ss::visit_valuebox (
   be_valuebox *node)
 {
@@ -399,7 +398,6 @@ be_visitor_args_vardecl_ss::visit_eventtype_fwd (
   return this->visit_valuetype_fwd (node);
 }
 
-
 int
 be_visitor_args_vardecl_ss::emit_common (
   be_type *node)
@@ -435,7 +433,6 @@ be_visitor_args_vardecl_ss::emit_common (
 
   return 0;
 }
-
 
 int
 be_visitor_args_vardecl_ss::emit_common2 (be_type *node)

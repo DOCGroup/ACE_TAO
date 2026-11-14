@@ -15,7 +15,6 @@
 
 #include "test_macros.h"
 
-
 using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO;
 
 CORBA::ULong constexpr MAXIMUM = 32;

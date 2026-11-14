@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "ami_test_i.h"
 #include "tao/debug.h"
 
@@ -68,7 +67,6 @@ AMI_Test_i::shutdown ()
   this->orb_->shutdown (false);
 }
 
-
 CORBA::Long
 AMI_Test_i::yadda ()
 {
@@ -76,7 +74,6 @@ AMI_Test_i::yadda ()
               "%N:%l:(%P:%t):AMI_Test_i::(get_)yadda\n"));
   return yadda_;
 }
-
 
 void
 AMI_Test_i::yadda (CORBA::Long yadda)

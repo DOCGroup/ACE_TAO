@@ -1,7 +1,6 @@
 #include "JAWS/Data_Block.h"
 #include "JAWS/Policy.h"
 
-
 JAWS_Data_Block::JAWS_Data_Block ()
   : ACE_Message_Block (JAWS_DATA_BLOCK_SIZE),
     io_handler_ (nullptr),

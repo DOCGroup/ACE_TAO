@@ -26,7 +26,6 @@ class Server_Request_Interceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   explicit Server_Request_Interceptor (CORBA::ULong request_pass_count);
 
   Server_Request_Interceptor (Server_Request_Interceptor const &) = delete;

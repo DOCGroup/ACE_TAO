@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef ADMINPROPERTIES
 #define ADMINPROPERTIES
 
@@ -38,7 +37,6 @@ protected:
   std::atomic<CORBA::Long> events_received_ {0};
 };
 
-
 /**
  * @class AdminProperties_Task
  *
@@ -49,7 +47,6 @@ protected:
 class AdminProperties_Task : public ACE_Task_Base
 {
 public:
-  /// Constructor.
   AdminProperties_Task ();
 
   /// Init this object.

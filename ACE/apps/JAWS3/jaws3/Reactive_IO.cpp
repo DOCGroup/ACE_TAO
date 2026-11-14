@@ -57,7 +57,6 @@ JAWS_Reactive_IO::send ( ACE_HANDLE handle
   this->send (handle, mb, completer, ACE_Time_Value::zero, act);
 }
 
-
 void
 JAWS_Reactive_IO::recv ( ACE_HANDLE handle
                        , ACE_Message_Block *mb
@@ -83,7 +82,6 @@ JAWS_Reactive_IO::recv ( ACE_HANDLE handle
   rr->open ();
 }
 
-
 void
 JAWS_Reactive_IO::recv ( ACE_HANDLE handle
                        , ACE_Message_Block *mb
@@ -92,7 +90,6 @@ JAWS_Reactive_IO::recv ( ACE_HANDLE handle
 {
   this->recv (handle, mb, completer, ACE_Time_Value::zero, act);
 }
-
 
 void
 JAWS_Reactive_IO::transmit ( ACE_HANDLE handle
@@ -128,7 +125,6 @@ JAWS_Reactive_IO::transmit ( ACE_HANDLE handle
   rt->open ();
 }
 
-
 void
 JAWS_Reactive_IO::transmit ( ACE_HANDLE handle
                            , ACE_HANDLE source
@@ -146,7 +142,6 @@ JAWS_Reactive_IO::transmit ( ACE_HANDLE handle
                  , trailer
                  );
 }
-
 
 void
 JAWS_IO_Reactive_Handler::open ()
@@ -286,7 +281,6 @@ JAWS_IO_Reactive_Handler::handle_exception (ACE_HANDLE handle)
   return -1;
 }
 
-
 int
 JAWS_IO_Reactive_Send::handle_output (ACE_HANDLE handle)
 {
@@ -334,7 +328,6 @@ JAWS_IO_Reactive_Send::handle_output (ACE_HANDLE handle)
   return 0;
 }
 
-
 int
 JAWS_IO_Reactive_Recv::handle_input (ACE_HANDLE handle)
 {
@@ -365,7 +358,6 @@ JAWS_IO_Reactive_Recv::handle_input (ACE_HANDLE handle)
 
   return -1;
 }
-
 
 int
 JAWS_IO_Reactive_Transmit::handle_output (ACE_HANDLE handle)

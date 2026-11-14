@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef FT_REPLICATION_MANAGER_FAULT_ANALYZER_H_
 #define FT_REPLICATION_MANAGER_FAULT_ANALYZER_H_
 
@@ -156,7 +155,6 @@ namespace TAO
       PortableGroup::ObjectGroup_ptr iogr,
       TAO::FT_FaultEventDescriptor & fault_event_desc,
       PortableGroup::ObjectGroup_out new_iogr);
-
 
     // Choose a new primary member for the ObjectGroup.
     // Sets <new_iogr> and returns 0 on success.

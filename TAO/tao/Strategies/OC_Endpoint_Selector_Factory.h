@@ -27,7 +27,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // Forward references
 class TAO_Optimized_Connection_Endpoint_Selector;
 
-
 /**
  * @class TAO_OC_Endpoint_Selector_Factory
  *
@@ -74,7 +73,6 @@ private:
   TAO_OC_Endpoint_Selector_Factory &operator= (
     TAO_OC_Endpoint_Selector_Factory &&) = delete;
 };
-
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_Strategies, TAO_OC_Endpoint_Selector_Factory)
 ACE_FACTORY_DECLARE (TAO_Strategies, TAO_OC_Endpoint_Selector_Factory)

@@ -86,7 +86,6 @@ TAO_LB_ServerRequestInterceptor::receive_request_service_contexts (
           // ServiceContextList.  Any "misbehaving" client can avoid
           // that, in which case no load will ever be shed!
 
-
           // Make sure we get a CORBA::BAD_PARAM for the right
           // reason.
           if (ex.minor () != (CORBA::OMGVMCID | 26))

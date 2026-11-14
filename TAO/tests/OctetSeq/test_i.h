@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_OCTETSEQ_TEST_I_H
 #define TAO_OCTETSEQ_TEST_I_H
 

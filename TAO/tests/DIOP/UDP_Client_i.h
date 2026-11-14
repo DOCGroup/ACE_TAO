@@ -29,7 +29,6 @@ class UDP_Client_i
   //    This class wrapps the client functionality into one class
   //
 public:
-  /// Constructor
   UDP_Client_i (CORBA::ORB_ptr orb,
                 UDP_ptr udp,
                 UDP_ptr udpHandler,
@@ -40,7 +39,6 @@ public:
   UDP_Client_i &operator= (UDP_Client_i const &) = delete;
   UDP_Client_i &operator= (UDP_Client_i &&) = delete;
 
-  /// Destructor
   ~UDP_Client_i () override = default;
 
 private:

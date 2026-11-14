@@ -74,7 +74,6 @@ private:
   bool started_ {};
 };
 
-
 class Supplier_Client : public Notify_Test_Client
 {
 public:
@@ -93,7 +92,6 @@ public:
 private:
   Supplier_Options& options_;
 };
-
 
 int
 Supplier_Client::parse_args (int argc, ACE_TCHAR *argv[])
@@ -125,7 +123,6 @@ Supplier_Client::parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-
 static CosNotifyChannelAdmin::SupplierAdmin_ptr
 create_supplieradmin (CosNotifyChannelAdmin::EventChannel_ptr ec)
 {
@@ -134,10 +131,8 @@ create_supplieradmin (CosNotifyChannelAdmin::EventChannel_ptr ec)
     ec->new_for_suppliers (CosNotifyChannelAdmin::AND_OP,
     adminid);
 
-
   return CosNotifyChannelAdmin::SupplierAdmin::_duplicate (admin.in ());
 }
-
 
 static void
 SendEvent (TAO_Notify_Tests_StructuredPushSupplier* supplier, int id)
@@ -151,7 +146,6 @@ SendEvent (TAO_Notify_Tests_StructuredPushSupplier* supplier, int id)
     CORBA::string_dup("Sequence Notification Push Demo Event");
 
   event.header.fixed_header.event_name = CORBA::string_dup("test event");
-
 
   event.filterable_data.length (1);
   event.filterable_data[0].name = CORBA::string_dup("type");
@@ -183,7 +177,6 @@ create_suppliers (CosNotifyChannelAdmin::SupplierAdmin_ptr admin,
   // The POA owns the servant after connect; return a borrowed pointer for sending events.
   return supplier;
 }
-
 
 // ******************************************************************
 // Main Section

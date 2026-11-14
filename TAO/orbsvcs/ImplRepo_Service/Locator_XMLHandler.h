@@ -62,7 +62,6 @@ public:
   using EnvList = std::vector<EnvVar>;
   using PeerList = std::vector<ACE_CString>;
 
-  /// constructor
   /// @param repo the repo to update based on XML
   Locator_XMLHandler (XML_Backing_Store& repo);
 

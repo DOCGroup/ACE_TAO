@@ -62,7 +62,6 @@ namespace ACE
         return this->streambuf_.stream ();
       }
 
-
     template <ACE_SYNCH_DECL>
     Sock_OStreamBase<ACE_SYNCH_USE>::Sock_OStreamBase(stream_type* stream)
       : Sock_IOSBase<ACE_SYNCH_USE> (stream), std::ostream (Sock_IOSBase<ACE_SYNCH_USE>::rdbuf ())

@@ -35,7 +35,6 @@
 #include "ace/Local_Memory_Pool.h"
 #include "ace/Synch_Traits.h"
 
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */

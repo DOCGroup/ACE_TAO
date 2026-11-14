@@ -253,7 +253,6 @@ JAWS_Parse_Headers::parse_header_value (JAWS_Header_Info *info,
   return 1;
 }
 
-
 JAWS_Header_Info::JAWS_Header_Info ()
   : end_of_headers_ (0),
     end_of_line_ (1),

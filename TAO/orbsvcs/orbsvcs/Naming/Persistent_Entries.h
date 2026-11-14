@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_PERSISTENT_ENTRIES_H
 #define TAO_PERSISTENT_ENTRIES_H
 #include /**/ "ace/pre.h"

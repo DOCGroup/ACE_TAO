@@ -13,4 +13,3 @@ private:
   int maximum_;
 };
 
-

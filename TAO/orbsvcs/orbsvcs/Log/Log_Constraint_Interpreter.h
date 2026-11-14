@@ -45,7 +45,6 @@ public:
    */
   explicit TAO_Log_Constraint_Interpreter (char const * constraints);
 
-  /// Destructor.
   ~TAO_Log_Constraint_Interpreter () override;
 
   /// Returns true if the constraint is evaluated successfully by

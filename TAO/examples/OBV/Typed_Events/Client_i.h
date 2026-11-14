@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #ifndef ECHO_CLIENT_I_H
 #define ECHO_CLIENT_I_H
 
@@ -32,14 +31,12 @@ CORBA::Float random_number (double min, double max);
 class Checkpoint_Client_i
 {
 public:
-  /// Constructor
   Checkpoint_Client_i () = default;
   Checkpoint_Client_i (Checkpoint_Client_i const&) = delete;
   Checkpoint_Client_i (Checkpoint_Client_i&&) = delete;
   Checkpoint_Client_i& operator= (Checkpoint_Client_i const&) = delete;
   Checkpoint_Client_i& operator= (Checkpoint_Client_i&&) = delete;
 
-  /// Destructor
   virtual ~Checkpoint_Client_i () = default;
 
   /// Execute the methods
@@ -49,6 +46,5 @@ private:
   /// Instantiate the checkpoint object.
   Client<Checkpoint, Checkpoint_var> checkpoint;
 };
-
 
 #endif /* TIME_CLIENT_I_H */

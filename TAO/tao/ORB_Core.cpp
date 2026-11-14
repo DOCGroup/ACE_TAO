@@ -1497,7 +1497,6 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
   return 0;
 }
 
-
 int
 TAO_ORB_Core::fini ()
 {
@@ -1671,7 +1670,6 @@ TAO_ORB_Core::gui_resource_factory ()
 {
   return TAO_TSS_Resources::instance ()->gui_resource_factory_.get ();
 }
-
 
 TAO_Thread_Lane_Resources_Manager &
 TAO_ORB_Core::thread_lane_resources_manager ()
@@ -1866,7 +1864,6 @@ TAO_ORB_Core::service_raise_comm_failure (
       errno),
     CORBA::COMPLETED_MAYBE);
 }
-
 
 TAO::Invocation_Status
 TAO_ORB_Core::service_raise_transient_failure (
@@ -2095,7 +2092,6 @@ TAO_ORB_Core::create_object (TAO_Stub *stub)
     {
       x = collocated_orb_core.get ()->adapter_registry ().create_collocated_object (stub, mprofile);
     }
-
 
   if (!x)
     {
@@ -2345,7 +2341,6 @@ TAO_ORB_Core::run (ACE_Time_Value *tv, int perform_work)
 
   return result;
 }
-
 
 void
 TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion)
@@ -2632,7 +2627,6 @@ TAO_ORB_Core::resolve_poa_current_i ()
     }
 }
 
-
 #if TAO_HAS_INTERCEPTORS == 1
 
 void
@@ -2665,7 +2659,6 @@ TAO_ORB_Core::resolve_picurrent_i ()
 }
 
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-
 
 void
 TAO_ORB_Core::resolve_dynanyfactory_i ()
@@ -2983,20 +2976,17 @@ TAO_ORB_Core::output_cdr_buffer_allocator ()
   return this->lane_resources ().output_cdr_buffer_allocator ();
 }
 
-
 ACE_Allocator*
 TAO_ORB_Core::output_cdr_msgblock_allocator ()
 {
   return this->lane_resources ().output_cdr_msgblock_allocator ();
 }
 
-
 ACE_Allocator *
 TAO_ORB_Core::transport_message_buffer_allocator ()
 {
   return this->lane_resources ().transport_message_buffer_allocator ();
 }
-
 
 ACE_Data_Block*
 TAO_ORB_Core::create_input_cdr_data_block (size_t size)

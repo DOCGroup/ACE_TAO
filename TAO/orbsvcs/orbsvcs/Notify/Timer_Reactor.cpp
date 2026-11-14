@@ -3,7 +3,6 @@
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_Timer_Reactor::TAO_Notify_Timer_Reactor ()

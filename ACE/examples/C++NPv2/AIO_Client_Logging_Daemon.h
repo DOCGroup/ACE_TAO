@@ -44,7 +44,6 @@ protected:
   void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result) override;
 };
 
-
 class AIO_Output_Handler
   : public ACE_Task<ACE_NULL_SYNCH>,
     public ACE_Service_Handler {
@@ -88,7 +87,6 @@ protected:
 };
 
 using OUTPUT_HANDLER = ACE_Unmanaged_Singleton<AIO_Output_Handler, ACE_Null_Mutex>;
-
 
 class AIO_CLD_Connector
   : public ACE_Asynch_Connector<AIO_Output_Handler> {

@@ -27,7 +27,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_PSEUDO_VAROUT_T_H
 #define TAO_PSEUDO_VAROUT_T_H
 

@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_IORINTERCEPTOR_ADAPTER_H
 #define TAO_IORINTERCEPTOR_ADAPTER_H
 

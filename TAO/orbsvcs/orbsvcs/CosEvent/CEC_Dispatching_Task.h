@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_CEC_DISPATCHING_TASK_H
 #define TAO_CEC_DISPATCHING_TASK_H
 

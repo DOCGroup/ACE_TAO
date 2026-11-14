@@ -35,7 +35,6 @@ public:
   /// Default constructor
   Object_B_Server () = default;
 
-  /// Destructor
   ~Object_B_Server () = default;
 
   Object_B_Server (Object_B_Server const &) = delete;

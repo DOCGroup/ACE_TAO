@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #include "ace/OS_main.h"
 #include "ace/Service_Config.h"
 #include "ace/Proactor.h"
@@ -32,13 +31,11 @@
 #include "ace/OS_NS_fcntl.h"
 #include <cstring>
 
-
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
   // This only works on Win32 platforms and on Unix platforms supporting
   // POSIX aio calls.
 
 #include "test_proactor.h"
-
 
 // Host that we're connecting to.
 static ACE_TCHAR *host {};
@@ -57,7 +54,6 @@ static int done = 0;
 
 // Size of each initial asynchronous <read> operation.
 static int initial_read_size = BUFSIZ;
-
 
 Receiver::Receiver ()
   : dump_file_ (ACE_INVALID_HANDLE),

@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #include "ace/OS_main.h"
 #include "Driver.h"
 #include "Thread_Timer_Queue_Custom_Handler_Test.h"

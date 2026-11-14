@@ -328,7 +328,6 @@ TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core, ACE_Reactor *reactor)
   return 0;
 }
 
-
 int
 TAO_SHMIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
                                  TAO::ObjectKey &object_key)
@@ -382,7 +381,6 @@ TAO_SHMIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
 
   return 1;
 }
-
 
 CORBA::ULong
 TAO_SHMIOP_Acceptor::endpoint_count ()

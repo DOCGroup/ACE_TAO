@@ -18,7 +18,6 @@
  */
 //=============================================================================
 
-
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_main.h"
 #include "ace/Service_Config.h"

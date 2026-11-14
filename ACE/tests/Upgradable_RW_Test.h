@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_TESTS_UPGRADABLE_RW_TEST_H
 #define ACE_TESTS_UPGRADABLE_RW_TEST_H
 

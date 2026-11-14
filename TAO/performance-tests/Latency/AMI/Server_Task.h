@@ -13,7 +13,6 @@
 class Server_Task : public ACE_Task_Base
 {
 public:
-  /// Constructor
   explicit Server_Task (CORBA::ORB_ptr orb);
   Server_Task (Server_Task const &) = delete;
   Server_Task (Server_Task &&) = delete;

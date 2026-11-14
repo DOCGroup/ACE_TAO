@@ -118,7 +118,6 @@ private:
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-
 #include /**/ "ace/post.h"
 
 #endif /* TAO_THREAD_LANE_RESOURCES_MANAGER_H */

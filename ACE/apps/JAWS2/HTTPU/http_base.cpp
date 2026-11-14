@@ -276,7 +276,6 @@ HTTP_Base::deliver_header_value (JAWS_Header_Data *&data)
   return 0;
 }
 
-
 int
 HTTP_Base::extract_line (ACE_Message_Block &mb)
 {

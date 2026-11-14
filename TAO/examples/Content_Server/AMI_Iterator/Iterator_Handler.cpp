@@ -72,7 +72,6 @@ Iterator_Handler::destroy ()
   this->deactivate ();
 }
 
-
 void
 Iterator_Handler::run (char const *pathname,
                        Web_Server::Iterator_Factory_ptr factory)
@@ -130,7 +129,6 @@ Iterator_Handler::deactivate ()
   // Now deactivate the iterator object.
   poa->deactivate_object (oid.in ());
 }
-
 
 int
 Iterator_Handler::get_viewer (std::string& viewer) const

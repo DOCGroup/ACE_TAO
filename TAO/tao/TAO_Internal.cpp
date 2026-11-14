@@ -516,7 +516,6 @@ TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
         }
     }
 
-
   return status;
 }
 

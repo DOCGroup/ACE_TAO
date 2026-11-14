@@ -50,7 +50,6 @@ protected:
   ACE_Unbounded_Set<AIO_Input_Handler *> clients_;
 };
 
-
 class AIO_Client_Logging_Daemon : public ACE_Task<ACE_NULL_SYNCH> {
 protected:
   ACE_INET_Addr cld_addr_;
@@ -218,7 +217,6 @@ AIO_Input_Handler * AIO_CLD_Acceptor::make_handler () {
 #  define CLD_KEY_FILENAME "cld-key.pem"
 #endif /* !CLD_KEY_FILENAME */
 
-
 int AIO_CLD_Connector::validate_connection
   (const ACE_Asynch_Connect::Result& result,
    const ACE_INET_Addr &remote, const ACE_INET_Addr&) {
@@ -355,5 +353,4 @@ int AIO_Client_Logging_Daemon::fini () {
 #endif /* ACE_WIN32 || ACE_HAS_AIO_CALLS */
 
 ACE_FACTORY_DEFINE (AIO_CLD, AIO_Client_Logging_Daemon)
-
 

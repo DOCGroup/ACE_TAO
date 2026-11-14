@@ -90,7 +90,6 @@ time_interval (const ACE_Time_Value &interval,
   return measured;
 }
 
-
 static u_int const intervals[] =
   {0, 1, 10, 100, 1000, 10000, 100000, 1000000, 4000000}; /*usec*/
 

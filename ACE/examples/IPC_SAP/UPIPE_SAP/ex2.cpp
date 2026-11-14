@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "ace/OS_main.h"
 #include "ace/UPIPE_Connector.h"
 #include "ace/UPIPE_Acceptor.h"

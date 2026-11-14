@@ -16,7 +16,6 @@
 #include "orbsvcs/FtRtEvent/EventChannel/FT_ProxyAdmin_T.h"
 #include "orbsvcs/FtRtEvent/EventChannel/ProxyConsumerStateWorker.h"
 
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -61,7 +60,6 @@ public:
 
   /// destructor...
   ~TAO_FTEC_SupplierAdmin () override = default;
-
 
   // = The RtecEventChannelAdmin::SupplierAdmin methods...
   RtecEventChannelAdmin::ProxyPushConsumer_ptr

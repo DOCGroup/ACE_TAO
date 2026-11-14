@@ -33,7 +33,6 @@ LB_server::run ()
   return 0;
 }
 
-
 int
 LB_server::destroy ()
 {

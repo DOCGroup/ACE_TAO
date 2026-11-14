@@ -69,7 +69,6 @@ ACE_Future_Rep<T>::create ()
    return temp;
  }
 
-
 template <class T> ACE_Future_Rep<T> *
 ACE_Future_Rep<T>::attach (ACE_Future_Rep<T>*& rep)
 {

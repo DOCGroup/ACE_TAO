@@ -16,10 +16,8 @@
 class test_i : public virtual POA_RTTest::test
 {
 public:
-  /// Constructor.
   test_i (CORBA::Short num, CORBA::ORB_ptr orb);
 
-  /// Destructor.
   ~test_i () override = default;
 
   test_i (test_i const &) = delete;

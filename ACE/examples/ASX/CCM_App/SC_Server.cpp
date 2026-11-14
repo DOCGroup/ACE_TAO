@@ -13,7 +13,6 @@ static void end_reactor_event_loop (int, siginfo_t *, ucontext_t *)
   ACE_Reactor::end_event_loop ();
 }
 
-
 class Event_Handler : public ACE_Event_Handler
 {
 public:

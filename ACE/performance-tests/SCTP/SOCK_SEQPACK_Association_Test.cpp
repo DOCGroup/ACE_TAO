@@ -15,7 +15,6 @@
  */
 //=============================================================================
 
-
 #include "ace/SOCK_SEQPACK_Association.h"
 #include "ace/SOCK_SEQPACK_Connector.h"
 #include "ace/INET_Addr.h"
@@ -128,5 +127,4 @@ void dump_names(const ACE_SOCK_SEQPACK_Association& assoc)
                outbuf));
   }
 }
-
 

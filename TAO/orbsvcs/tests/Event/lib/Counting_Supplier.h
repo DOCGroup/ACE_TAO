@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef EC_COUNTING_SUPPLIER_H
 #define EC_COUNTING_SUPPLIER_H
 
@@ -31,7 +30,6 @@
 class EC_Test_Export EC_Counting_Supplier : public POA_RtecEventComm::PushSupplier
 {
 public:
-  /// Constructor
   EC_Counting_Supplier ();
 
   // = The RtecEventComm::PushSupplier methods

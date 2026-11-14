@@ -23,7 +23,6 @@
 
 #include "ace/Service_Object.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Adapter;

@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef OPTIONS_H
 #define OPTIONS_H
 
@@ -39,14 +38,12 @@ public:
     DII
   };
 
-  /// constructor
   Options ();
   Options (Options const &) = delete;
   Options (Options &&) = delete;
   Options &operator= (Options const &) = delete;
   Options &operator= (Options &&) = delete;
 
-  /// destructor
   ~Options () = default;
 
   /// Parses the arguments passed on the command line.

@@ -6,7 +6,6 @@
 #include "ace/INet/HTTP_Status.inl"
 #endif
 
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE

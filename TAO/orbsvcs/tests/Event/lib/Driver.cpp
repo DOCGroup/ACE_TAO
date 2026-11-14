@@ -24,7 +24,6 @@
 #include "Driver.inl"
 #endif /* __ACE_INLINE__ */
 
-
 EC_Driver::EC_Driver ()
   :  n_consumers_ (1),
      consumers_ (0),

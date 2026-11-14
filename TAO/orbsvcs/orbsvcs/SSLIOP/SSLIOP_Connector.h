@@ -52,7 +52,6 @@ namespace TAO
     class Connector : public TAO::IIOP_SSL_Connector
     {
     public:
-      /// Constructor.
       Connector (::Security::QOP qop, bool check_host);
 
       /**

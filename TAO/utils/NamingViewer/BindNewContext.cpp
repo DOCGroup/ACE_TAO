@@ -13,7 +13,6 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CBindNewContext dialog
 
-
 CBindNewContext::CBindNewContext(CWnd* pParent /*=NULL*/)
   : CDialog(CBindNewContext::IDD, pParent)
 {
@@ -23,7 +22,6 @@ CBindNewContext::CBindNewContext(CWnd* pParent /*=NULL*/)
   //}}AFX_DATA_INIT
 }
 
-
 void CBindNewContext::DoDataExchange(CDataExchange* pDX)
 {
   CDialog::DoDataExchange(pDX);
@@ -32,7 +30,6 @@ void CBindNewContext::DoDataExchange(CDataExchange* pDX)
   DDX_Text(pDX, IDC_KIND, m_Kind);
   //}}AFX_DATA_MAP
 }
-
 
 BEGIN_MESSAGE_MAP(CBindNewContext, CDialog)
   //{{AFX_MSG_MAP(CBindNewContext)

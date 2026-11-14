@@ -16,7 +16,6 @@
 class Session;
 class Thread;
 
-
 /*
  * Peer node is an element of the connection list which associates peer
  * processes to the host process by handle. The peer node does not own

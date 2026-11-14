@@ -303,7 +303,6 @@ ACE_Array<T>::operator!= (const ACE_Array<T> &s) const
 
 // ****************************************************************
 
-
 // ****************************************************************
 
 template <class T> ACE_INLINE void
@@ -411,7 +410,6 @@ ACE_DLList_Iterator<T>::dump () const
 #endif /* ACE_HAS_DUMP */
 }
 
-
 template <class T> ACE_INLINE int
 ACE_DLList_Reverse_Iterator<T>::remove ()
 {
@@ -457,7 +455,6 @@ ACE_DLList_Reverse_Iterator<T>::next () const
   ACE_DLList_Node *temp = ACE_Double_Linked_List_Reverse_Iterator <ACE_DLList_Node>::next ();
   return (T *) (temp ? temp->item_ : 0);
 }
-
 
 template <class T> ACE_INLINE void
 ACE_DLList_Reverse_Iterator<T>::dump () const

@@ -58,7 +58,6 @@ public:
   linkDownOid(){*this+=".3";};
 };
 
-
 // SMI LinkUp Oid
 class linkUpOid: public snmpTrapsOid {
 public:
@@ -76,6 +75,5 @@ class egpNeighborLossOid: public snmpTrapsOid {
 public:
   egpNeighborLossOid(){*this+=".6";};
 };
-
 
 #endif // OID_DEF

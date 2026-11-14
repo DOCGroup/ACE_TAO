@@ -25,7 +25,6 @@ TAO_FTEC_Event_Channel::TAO_FTEC_Event_Channel(CORBA::ORB_var orb,
 
 TAO_FTEC_Event_Channel::~TAO_FTEC_Event_Channel() = default;
 
-
 void setup_object_group(TAO_FTEC_Event_Channel* es,
                        CosNaming::NamingContext_ptr naming_context,
                        TAO_FTEC_Event_Channel::MEMBERSHIP membership,
@@ -51,7 +50,6 @@ void setup_object_group(TAO_FTEC_Event_Channel* es,
       }
     }
 }
-
 
 FtRtecEventChannelAdmin::EventChannel_ptr
 TAO_FTEC_Event_Channel::activate(TAO_FTEC_Event_Channel::MEMBERSHIP membership)
@@ -90,7 +88,6 @@ TAO_FTEC_Event_Channel::activate(TAO_FTEC_Event_Channel::MEMBERSHIP membership)
     TAO_EC_Event_Channel_Attributes attr (persistent_poa_.in (),
       persistent_poa_.in ());
 
-
     TAO_FTEC_Event_Channel_Impl* ec {};
     ACE_NEW_THROW_EX (ec,
       TAO_FTEC_Event_Channel_Impl (attr),
@@ -114,14 +111,12 @@ TAO_FTEC_Event_Channel::activate(TAO_FTEC_Event_Channel::MEMBERSHIP membership)
     FtRtecEventChannelAdmin::EventChannel_var result;
     activate_object_with_id(result.out(), persistent_poa_.in(), this, object_id);
 
-
     setup_object_group(this,
                        naming_context.in(),
                        membership,
                        result.in());
   return result._retn();
 }
-
 
 void TAO_FTEC_Event_Channel::set_listener(TAO_FTEC_Become_Primary_Listener* listener)
 {
@@ -140,7 +135,6 @@ void TAO_FTEC_Event_Channel::oneway_set_update (
     ec_impl_->set_update(s);
 }
 
-
 RtecEventChannelAdmin::ConsumerAdmin_ptr
 TAO_FTEC_Event_Channel::for_consumers ()
 {
@@ -152,7 +146,6 @@ TAO_FTEC_Event_Channel::for_suppliers ()
 {
     return ec_impl_->for_suppliers();
 }
-
 
 void
 TAO_FTEC_Event_Channel::set_state (const FTRT::State & s)
@@ -190,7 +183,6 @@ TAO_FTEC_Event_Channel::remove_observer (RtecEventChannelAdmin::Observer_Handle)
 
   //ec_impl_->remove_observer (handle);
 }
-
 
 CORBA::Boolean
 TAO_FTEC_Event_Channel::start (
@@ -239,7 +231,6 @@ TAO_FTEC_Event_Channel::replica_crashed (
   ec_impl_->replica_crashed(location);
 }
 
-
   /// EventChannelFacade Interface
 
 ::FtRtecEventChannelAdmin::ObjectId *
@@ -249,7 +240,6 @@ TAO_FTEC_Event_Channel::connect_push_consumer (
 {
   return ec_impl_->connect_push_consumer(push_consumer, qos);
 }
-
 
 ::FtRtecEventChannelAdmin::ObjectId *
 TAO_FTEC_Event_Channel::connect_push_supplier (

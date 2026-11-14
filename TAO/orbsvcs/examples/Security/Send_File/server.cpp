@@ -3,7 +3,6 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 
-
 ACE_TCHAR const *ior_output_file = nullptr;
 
 int

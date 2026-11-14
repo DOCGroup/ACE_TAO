@@ -26,7 +26,6 @@ class Server_ORBInitializer :
   public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor
   Server_ORBInitializer (int *counter);
 
   void set_poa (PortableServer::POA_ptr poa);

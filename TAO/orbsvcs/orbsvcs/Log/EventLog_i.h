@@ -24,7 +24,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 #include "orbsvcs/DsEventLogAdminS.h"
 #include "orbsvcs/Log/Log_i.h"
 #include "orbsvcs/CosEvent/CEC_EventChannel.h"
@@ -57,7 +56,6 @@ class TAO_EventLog_i :
   public POA_DsEventLogAdmin::EventLog
 {
 public:
-  /// Constructor.
   TAO_EventLog_i (CORBA::ORB_ptr orb,
                   PortableServer::POA_ptr poa,
                   PortableServer::POA_ptr log_poa,
@@ -85,7 +83,6 @@ public:
   CosEventChannelAdmin::SupplierAdmin_ptr for_suppliers () override;
 
 protected:
-  /// Destructor
   /**
    * Protected destructor to enforce proper memory management through
    * reference counting.

@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef PARAM_TEST_BOUNDED_LONG_SEQUENCE_H
 #define PARAM_TEST_BOUNDED_LONG_SEQUENCE_H
 

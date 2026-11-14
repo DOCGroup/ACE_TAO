@@ -48,7 +48,6 @@ Logger_Server::init (int argc,
                        "init_child_poa"),
                       -1);
 
-
   this->orb_manager_.activate_poa_manager ();
 
   // Parse the command line arguments.
@@ -77,7 +76,6 @@ Logger_Server::init (int argc,
 
   return 0;
 }
-
 
 // Initialisation of Naming Service and register IDL_Logger Context
 // and logger_factory object.

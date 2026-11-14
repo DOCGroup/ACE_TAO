@@ -37,9 +37,6 @@ URL::get_filename () const
   return this->filename_;
 }
 
-
-
-
 void cleanup() {
   ACE_OS::unlink(TEMPORARY_FILE_NAME);
   ACE_OS::unlink(INCOMING_FILE_NAME);

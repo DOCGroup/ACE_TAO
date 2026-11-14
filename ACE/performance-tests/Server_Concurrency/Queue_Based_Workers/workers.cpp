@@ -67,7 +67,6 @@ Message_Block::Message_Block (ACE_Data_Block *data_block,
 {
 }
 
-
 using TASK = ACE_Task<ACE_SYNCH>;
 
 class Worker_Task : public TASK

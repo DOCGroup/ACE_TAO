@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "File_i.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_fcntl.h"
@@ -67,7 +66,6 @@ FileImpl::System::open (char const *file_name,
   // Narrow the object reference to a File Descriptor
   File::Descriptor_var fd =
     File::Descriptor::_narrow (obj.in ());
-
 
   return fd._retn ();
 }

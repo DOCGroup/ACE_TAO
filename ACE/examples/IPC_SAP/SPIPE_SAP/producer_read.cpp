@@ -5,8 +5,6 @@
 #include "ace/OS_NS_stdlib.h"
 #include <memory>
 
-
-
 #if defined (ACE_HAS_STREAM_PIPES)
 
 #include "shared.h"

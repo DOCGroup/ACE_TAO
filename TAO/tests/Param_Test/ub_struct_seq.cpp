@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "helper.h"
 
 #include <cstring>
@@ -210,7 +209,6 @@ Test_Struct_Sequence::print_sequence (const Param_Test::StructSeq &s)
                   vs.l, vs.c, vs.s, vs.o, vs.f, vs.b, vs.d));
     }
 }
-
 
 // ************************************************************************
 //               Test_Unbounded_Struct_Sequence

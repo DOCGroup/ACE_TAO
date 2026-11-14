@@ -23,10 +23,8 @@
 class test_i : public virtual POA_TestModule::test
 {
 public:
-  /// Constructor.
   test_i () = default;
 
-  /// Destructor.
   ~test_i () override = default;
 
   test_i (test_i const &) = delete;

@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef HTIOP_ENDPOINT_H
 #define HTIOP_ENDPOINT_H
 #include /**/ "ace/pre.h"
@@ -61,7 +60,6 @@ namespace TAO
                 const char *htid,
                 const ACE::HTBP::Addr &addr);
 
-      /// Constructor.
       Endpoint (const ACE::HTBP::Addr &addr,
                 int use_dotted_decimal_addresses);
 
@@ -70,7 +68,6 @@ namespace TAO
                 CORBA::UShort port,
                 const char *htid);
 
-      /// Destructor.
       ~Endpoint () override;
 
       // = Implementation of abstract TAO_Endpoint methods.  See

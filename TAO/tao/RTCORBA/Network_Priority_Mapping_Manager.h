@@ -6,7 +6,6 @@
  *  @author Yamuna Krishnamurthy (yamuna@oomworks.com)
  */
 
-
 #ifndef TAO_NETWORK_PRIORITY_MAPPING_MANAGER_H
 #define TAO_NETWORK_PRIORITY_MAPPING_MANAGER_H
 #include /**/ "ace/pre.h"
@@ -29,7 +28,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Network_Priority_Mapping_Manager;
 class TAO_Network_Priority_Mapping_Manager_var;
 using TAO_Network_Priority_Mapping_Manager_ptr = TAO_Network_Priority_Mapping_Manager *;
-
 
 namespace RTCORBA
 {

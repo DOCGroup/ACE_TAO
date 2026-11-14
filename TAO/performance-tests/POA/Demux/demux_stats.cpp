@@ -6,7 +6,6 @@
  */
 //=============================================================================
 
-
 #include "ace/Get_Opt.h"
 #include "tao/corba.h"
 #include "demux_test_file.h"
@@ -31,7 +30,6 @@ private :
   int iterations {};
 };
 
-
 // parse command line arguments (if any).
 int
 Demux_Stats::parse_args (int argc_, char * argv_ [])
@@ -50,7 +48,6 @@ Demux_Stats::parse_args (int argc_, char * argv_ [])
 
   return 0;
 }
-
 
 int
 Demux_Stats::calculate_avg_latency ()

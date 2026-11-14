@@ -8,7 +8,6 @@ MessageFactory::~MessageFactory ()
   destructorInvoked_ = 1;
 }
 
-
 CORBA::ValueBase *
 MessageFactory::create_for_unmarshal ()
 {

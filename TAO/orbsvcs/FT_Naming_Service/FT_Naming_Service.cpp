@@ -13,7 +13,6 @@ TAO_FT_Naming_Service::TAO_FT_Naming_Service (int argc, ACE_TCHAR * argv[])
   this->init (argc, argv);
 }
 
-
 // Initialize the state of the TAO_FT_Naming_Service object
 int
 TAO_FT_Naming_Service::init (int argc, ACE_TCHAR * argv[])

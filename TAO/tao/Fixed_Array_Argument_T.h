@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_FIXED_ARRAY_ARGUMENT_T_H
 #define TAO_FIXED_ARRAY_ARGUMENT_T_H
 

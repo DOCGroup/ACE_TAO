@@ -24,7 +24,6 @@ class Hello
   : public virtual POA_Test::Hello
 {
 public:
-  /// Constructor
   Hello (CORBA::ORB_ptr orb,
          ACE_thread_t thr_id);
   Hello (Hello const &) = delete;
@@ -93,7 +92,6 @@ private:
 
   CORBA::ULong error_count_;
 };
-
 
 #include /**/ "ace/post.h"
 #endif /* HELLO_H */

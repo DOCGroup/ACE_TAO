@@ -708,7 +708,6 @@ prep_timer ()
   itime0.it_value.tv_sec = LONG_MAX / 22; /* greatest possible value , itimer() count backwards */
   itime0.it_value.tv_usec = 0;
 
-
   getrusage (RUSAGE_SELF, &ru0);
 
   /* Init REAL Timer */

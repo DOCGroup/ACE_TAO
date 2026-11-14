@@ -37,7 +37,6 @@ Object_Group_Factory_i::_default_POA ()
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
-
 Load_Balancer::Object_Group_ptr
 Object_Group_Factory_i::make_round_robin (char const *id)
 {
@@ -148,7 +147,6 @@ Object_Group_Factory_i::make_random (char const *id)
                            id);
 }
 
-
 void
 Object_Group_Factory_i::unbind_random (char const *id)
 {
@@ -220,7 +218,6 @@ Object_Group_Factory_i::make_group (bool random,
         throw Load_Balancer::duplicate_group ();
     }
 
-
   // As we are sure that it is not in the list go ahead and insert it
   if (random)
     ACE_NEW_THROW_EX (group_servant,
@@ -240,7 +237,6 @@ Object_Group_Factory_i::make_group (bool random,
 
   CORBA::String_var ior =
     this->orb_->object_to_string (group.in ());
-
 
   // Calculate and allocate the memory we need to store this name to
   // object binding.
@@ -275,7 +271,6 @@ Object_Group_Factory_i::make_group (bool random,
                                        this->mem_pool_.get ());
     }
 
-
   // Update the value of flags_
   this->update_flags (random);
 
@@ -292,7 +287,6 @@ Object_Group_Factory_i::make_group (bool random,
 
   return group._retn ();
 }
-
 
 Load_Balancer::Object_Group_ptr
 Object_Group_Factory_i::resolve (char const *id)
@@ -373,7 +367,6 @@ Object_Group_Factory_i::resolve (char const *id)
   Load_Balancer::Object_Group_ptr
     object_group = Load_Balancer::Object_Group::_narrow (objref.in ());
 
-
 #if defined (DOORS_MEASURE_STATS)
   // Grab timestamp again.
   ACE_hrtime_t now = ACE_OS::gethrtime ();
@@ -442,7 +435,6 @@ Object_Group_Factory_i::random_groups ()
 {
   return list_groups (true);
 }
-
 
 void
 Object_Group_Factory_i::update_flags (bool random)
@@ -537,7 +529,6 @@ Object_Group_Factory_i::update_objects ()
 
 }
 
-
 Object_Group_i::Object_Group_i (char const *id,
                                 PortableServer::POA_ptr poa)
   :poa_ (PortableServer::POA::_duplicate (poa)),
@@ -552,7 +543,6 @@ Object_Group_i::Object_Group_i (char const *id,
   this->allocator_.reset (allocator);
 }
 
-
 Object_Group_i::~Object_Group_i ()
 {
   // Need to delete all the items from the member_id_list, to avoid
@@ -566,13 +556,11 @@ Object_Group_i::~Object_Group_i ()
 
 }
 
-
 PortableServer::POA_ptr
 Object_Group_i::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
-
 
 char *
 Object_Group_i::id ()
@@ -634,7 +622,6 @@ Object_Group_i::bind (Load_Balancer::Member const &member)
   std::strcpy (*id_ptr, member.id);
   std::strcpy (ior_ptr, member.obj);
 
-
   // Insert new member into <members_> and check for duplicates/failures.
   int result = this->members_->trybind (*id_ptr,
                                         ior_ptr);
@@ -649,7 +636,6 @@ Object_Group_i::bind (Load_Balancer::Member const &member)
 
   ACE_CString id = dll_name_bind;
   id += this->id ();
-
 
   void *tmp_id_list (nullptr);
 
@@ -730,7 +716,6 @@ Object_Group_i::unbind (char const *id)
       this->member_id_list_ = reinterpret_cast <LIST *> (tmp_id_list);
     }
 
-
   Object_Group_i::ITERATOR iter (*(this->member_id_list_));
 
   while (std::strcmp (id, *(iter.next ())))
@@ -745,7 +730,6 @@ char *
 Object_Group_i::resolve_with_id (char const *id)
 {
   CORBA::String_var ior;
-
 
   if (this->members_->find (const_cast<char *> (id),
                       ior.out (), this->allocator_.get ()) == -1)
@@ -824,7 +808,6 @@ Object_Group_i::read_from_memory ()
         }
     }
 
-
   if (!this->member_id_list_)
     {
       id = dll_name_bind;
@@ -845,7 +828,6 @@ Object_Group_i::read_from_memory ()
     }
 
 }
-
 
 Random_Object_Group::Random_Object_Group (char const *id,
                                           PortableServer::POA_ptr poa)
@@ -909,7 +891,6 @@ RR_Object_Group::resolve ()
 
   // Adjust <next_> for the next invocation.
   next_ = (next_ + 1) % group_size;
-
 
   // Return the object reference corresponding to the found id to the client.
   if (this->members_->find (*id,

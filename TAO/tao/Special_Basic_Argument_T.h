@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_SPECIAL_BASIC_ARGUMENT_T_H
 #define TAO_SPECIAL_BASIC_ARGUMENT_T_H
 

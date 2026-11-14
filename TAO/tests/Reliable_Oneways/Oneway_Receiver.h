@@ -10,7 +10,6 @@ class Oneway_Receiver
   : public virtual POA_Test::Oneway_Receiver
 {
 public:
-  /// Constructor
   explicit Oneway_Receiver (CORBA::ORB_ptr orb);
   Oneway_Receiver (Oneway_Receiver const &) = delete;
   Oneway_Receiver (Oneway_Receiver &&) = delete;

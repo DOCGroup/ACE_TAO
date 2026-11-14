@@ -25,7 +25,6 @@
 #include "tao/Connection_Handler.h"
 #include "tao/Strategies/SHMIOP_Transport.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**

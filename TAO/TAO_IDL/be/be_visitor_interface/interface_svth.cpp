@@ -50,4 +50,3 @@ be_visitor_interface_svth::visit_attribute (be_attribute *node)
   return v.visit_attribute (node);
 }
 
-

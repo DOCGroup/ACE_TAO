@@ -7,7 +7,6 @@
  *  @author  Keith O'Hara, Lockheed Martin ATL
  */
 
-
 #ifndef TAO_SCIOP_FACTORY_H
 #define TAO_SCIOP_FACTORY_H
 #include /**/ "ace/pre.h"
@@ -59,7 +58,6 @@ private:
   TAO_SCIOP_Protocol_Factory (TAO_SCIOP_Protocol_Factory &&) = delete;
   TAO_SCIOP_Protocol_Factory &operator= (TAO_SCIOP_Protocol_Factory &&) = delete;
 };
-
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_Strategies, TAO_SCIOP_Protocol_Factory)
 ACE_FACTORY_DECLARE (TAO_Strategies, TAO_SCIOP_Protocol_Factory)

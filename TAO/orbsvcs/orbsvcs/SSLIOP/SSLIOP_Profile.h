@@ -101,7 +101,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
       void remove_generic_endpoint (TAO_Endpoint *ep) override;
 
     protected:
-      /// Destructor.
       /**
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.

@@ -46,7 +46,6 @@ public:
   Stock_StockNameConsumer_i (Stock_StockBroker_i &context,
                              char const *stock_name);
 
-  /// Destructor.
   ~Stock_StockNameConsumer_i () override = default;
 
   Stock_StockNameConsumer_i (Stock_StockNameConsumer_i const &) = delete;

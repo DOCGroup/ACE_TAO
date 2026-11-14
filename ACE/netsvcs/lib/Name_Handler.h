@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_NAME_HANDLER_H
 #define ACE_NAME_HANDLER_H
 
@@ -27,7 +26,6 @@
 #include "ace/Name_Request_Reply.h"
 #include "ace/Null_Mutex.h"
 #include "ace/svc_export.h"
-
 
 #if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
 template class ACE_Svc_Export ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
@@ -202,6 +200,5 @@ private:
 };
 
 ACE_SVC_FACTORY_DECLARE (ACE_Name_Acceptor)
-
 
 #endif /* ACE_NAME_HANDLER_H */

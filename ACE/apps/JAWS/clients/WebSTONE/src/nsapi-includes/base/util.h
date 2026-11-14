@@ -7,9 +7,7 @@
  * parties.
  */
 
-
 /* ------------------------------------------------------------------------ */
-
 
 /*
  * util.h: A hodge podge of utility functions and standard functions which
@@ -18,7 +16,6 @@
  * Rob McCool
  */
 
-
 #ifndef HTTPD_UTIL_H
 #define HTTPD_UTIL_H
 
@@ -26,9 +23,7 @@
 
 #include <time.h>      /* struct tm */
 
-
 /* ------------------------------ Prototypes ------------------------------ */
-
 
 /*
  * getline scans in buf until it finds a LF or CRLF, storing the string in
@@ -40,7 +35,6 @@
  */
 
 int util_getline(filebuf *buf, int lineno, int maxlen, char *l);
-
 
 /*
  * can_exec returns 1 if you can execute the file described by finfo, and
@@ -91,14 +85,12 @@ void util_env_free(char **env);
  */
 char *util_env_find(char **env, char *name);
 
-
 /*
  * hostname gets the local hostname. Returns NULL if it can't find a FQDN.
  * You are free to realloc or free this string.
  */
 
 char *util_hostname();
-
 
 /*
  * chdir2path changes the current directory to the one that the file
@@ -135,7 +127,6 @@ int util_is_url(char *url);
  */
 
 int util_later_than(struct tm *lms, char *ims);
-
 
 /*
  * util_uri_is_evil returns 1 if a URL has ../ or // in it.

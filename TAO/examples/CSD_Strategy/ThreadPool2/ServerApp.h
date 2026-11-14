@@ -17,7 +17,6 @@ class ServerApp
 
     int run (int argc, ACE_TCHAR *argv[]);
 
-
   private:
     int parse_args (int argc, ACE_TCHAR *argv[]);
     void usage_statement () const;

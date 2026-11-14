@@ -9,7 +9,6 @@
  *  @author Marina Spivak <marina@cs.wustl.edu>
  */
 
-
 #ifndef RT_ENDPOINT_SELECTOR_FACTORY_H
 #define RT_ENDPOINT_SELECTOR_FACTORY_H
 #include /**/ "ace/pre.h"
@@ -69,7 +68,6 @@ ACE_STATIC_SVC_DECLARE_EXPORT (TAO_RTCORBA, RT_Endpoint_Selector_Factory)
 ACE_FACTORY_DECLARE (TAO_RTCORBA, RT_Endpoint_Selector_Factory)
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 

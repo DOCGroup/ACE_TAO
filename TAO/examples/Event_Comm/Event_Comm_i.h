@@ -32,7 +32,6 @@
 class ShutdownCallback
 {
 public:
-  /// Destructor.
   virtual ~ShutdownCallback () = default;
 
   /// This method is to be called to shutdown the application.
@@ -47,10 +46,8 @@ public:
 class Consumer_i : public POA_Event_Comm::Consumer
 {
 public:
-  /// Constructor.
   Consumer_i () = default;
 
-  /// Destructor.
   ~Consumer_i () override = default;
 
   Consumer_i (Consumer_i const &) = delete;

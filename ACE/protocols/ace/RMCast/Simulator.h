@@ -23,5 +23,4 @@ namespace ACE_RMCast
   };
 }
 
-
 #endif  // ACE_RMCAST_SIMULATOR_H

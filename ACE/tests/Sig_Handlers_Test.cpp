@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Reactor.h"
 #include "ace/WFMO_Reactor.h"
@@ -21,7 +20,6 @@
 #include "ace/Signal.h"
 #include "ace/Assert.h"
 #include "ace/SString.h"
-
 
 class Test_SIGINT_Handler : public ACE_Event_Handler
 {

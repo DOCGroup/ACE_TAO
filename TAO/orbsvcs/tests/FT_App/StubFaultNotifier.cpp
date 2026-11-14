@@ -13,11 +13,9 @@ StubFaultNotifier::StubFaultNotifier ()
 {
 }
 
-
 StubFaultNotifier::~StubFaultNotifier ()
 {
 }
-
 
 ::PortableServer::POA_ptr StubFaultNotifier::_default_POA ()
 {
@@ -129,7 +127,6 @@ int StubFaultNotifier::fini ()
   return 0;
 }
 
-
 /**
  * Publish this objects IOR.
  */
@@ -150,7 +147,6 @@ int StubFaultNotifier::init (CORBA::ORB_ptr orb)
   // Get the POA object.
   this->poa_ =
     PortableServer::POA::_narrow (poa_object.in ());
-
 
   if (CORBA::is_nil(this->poa_.in ()))
   {
@@ -213,7 +209,6 @@ int StubFaultNotifier::init (CORBA::ORB_ptr orb)
         ::FT::FaultNotifier_var notifier = ::FT::FaultNotifier::_narrow(this_obj.in ());
         value <<= notifier.in ();
         encoder.add(::FT::FT_NOTIFIER, value);
-
 
         value <<= replica.in ();
         encoder.add(::FT::FT_MONITORABLE, value);
@@ -355,7 +350,6 @@ void StubFaultNotifier::push_structured_fault (
   }
 }
 
-
 void StubFaultNotifier::push_sequence_fault (
     const CosNotification::EventBatch & events)
 {
@@ -371,7 +365,6 @@ void StubFaultNotifier::push_sequence_fault (
   return 0;
 }
 
-
 FT::FaultNotifier::ConsumerId StubFaultNotifier::connect_structured_fault_consumer (
     CosNotifyComm::StructuredPushConsumer_ptr push_consumer,
     CosNotifyFilter::Filter_ptr filter)
@@ -382,7 +375,6 @@ FT::FaultNotifier::ConsumerId StubFaultNotifier::connect_structured_fault_consum
   throw CORBA::NO_IMPLEMENT();
   return 0;
 }
-
 
 FT::FaultNotifier::ConsumerId StubFaultNotifier::connect_sequence_fault_consumer (
     CosNotifyComm::SequencePushConsumer_ptr push_consumer,

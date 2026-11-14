@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "UDP_i.h"
 
 #include "tao/debug.h"
@@ -84,7 +83,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         root_poa->create_lifespan_policy (PortableServer::PERSISTENT);
       policies[1] =
         root_poa->create_id_assignment_policy (PortableServer::USER_ID);
-
 
       PortableServer::POA_var const persistent_poa =
         root_poa->create_POA ("persistent",

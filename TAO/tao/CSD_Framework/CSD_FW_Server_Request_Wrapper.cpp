@@ -67,7 +67,6 @@ TAO::CSD::FW_Server_Request_Wrapper::~FW_Server_Request_Wrapper()
     }
 }
 
-
 // Assumes that the servant argument is not a NULL pointer.
 void
 TAO::CSD::FW_Server_Request_Wrapper::dispatch (
@@ -151,7 +150,6 @@ TAO::CSD::FW_Server_Request_Wrapper::dispatch (
      }
 
 }
-
 
 TAO_ServerRequest*
 TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_ServerRequest*& request)
@@ -292,7 +290,6 @@ TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_ServerRequest*& request)
   return clone_obj;
 }
 
-
 TAO_InputCDR*
 TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_InputCDR*& from)
 {
@@ -302,7 +299,6 @@ TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_InputCDR*& from)
                   nullptr);
   return clone_ptr;
 }
-
 
 bool
 TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_Operation_Details const *& from,
@@ -421,7 +417,6 @@ TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_Operation_Details const *& from,
   cloned_op_name.release ();
   cloned_args.release ();
 
-
   // DATA MEMBER: const char *opname_;
   // DATA MEMBER: CORBA::ULong opname_len_;
   // DATA MEMBER: CORBA::Boolean argument_flag_;
@@ -458,7 +453,6 @@ TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_Operation_Details const *& from,
   return true;
 }
 
-
 void
 TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_Tagged_Profile& from,
                                             TAO_Tagged_Profile& to)
@@ -472,7 +466,6 @@ TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_Tagged_Profile& from,
   to.type_id_              = from.type_id_ == nullptr ? nullptr :
                                CORBA::string_dup (from.type_id_);
 }
-
 
 void
 TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_Service_Context& from,

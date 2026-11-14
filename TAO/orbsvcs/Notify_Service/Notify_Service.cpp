@@ -774,15 +774,12 @@ ACE_STATIC_SVC_DEFINE (TAO_Notify_Service_Driver,
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
 
-
 ACE_FACTORY_DEFINE (TAO_Notify_Service, TAO_Notify_Service_Driver)
-
 
 #if defined (TAO_HAS_NOTIFICATION_MONITOR_CONTROL) && defined (TAO_AS_STATIC_LIBS)
 ACE_STATIC_SVC_REQUIRE(TAO_MC_Notify_Service)
 ACE_STATIC_SVC_REQUIRE(TAO_MonitorAndControl)
 #endif
-
 
 #if defined (TAO_AS_STATIC_LIBS)
 ACE_STATIC_SVC_REQUIRE(ACE_Logging_Strategy)

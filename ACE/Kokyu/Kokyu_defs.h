@@ -108,7 +108,6 @@ namespace Kokyu
     int base_thread_creation_flags_ {THR_NEW_LWP | THR_BOUND | THR_JOINABLE};
   };
 
-
   struct Kokyu_Export QoSDescriptor
   {
     Priority_t preemption_priority_ {};
@@ -140,7 +139,6 @@ namespace Kokyu
 
     void destroy ();
   protected:
-    /// Destructor
     // only inheritance is possible and object should be on heap,
     // since object could be handed over to a different thread.
     virtual ~Dispatch_Command ();

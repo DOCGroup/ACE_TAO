@@ -84,7 +84,6 @@ private:
   bool was_active_;
 };
 
-
 class JAWS_IO_Reactive_Send : public JAWS_IO_Reactive_Handler
 {
   friend class JAWS_Reactive_IO;
@@ -138,7 +137,6 @@ private:
   ACE_Message_Block *mb_;
 };
 
-
 class JAWS_IO_Reactive_Recv : public JAWS_IO_Reactive_Handler
 {
   friend class JAWS_Reactive_IO;
@@ -191,7 +189,6 @@ private:
 private:
   ACE_Message_Block *mb_;
 };
-
 
 class JAWS_IO_Reactive_Transmit : public JAWS_IO_Reactive_Handler
 {

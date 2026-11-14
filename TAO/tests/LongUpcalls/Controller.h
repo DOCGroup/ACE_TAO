@@ -8,7 +8,6 @@ class Controller
 {
 public:
   Controller () = default;
-  // Constructor
 
   void dump_results ();
   // Print out the results and any errors

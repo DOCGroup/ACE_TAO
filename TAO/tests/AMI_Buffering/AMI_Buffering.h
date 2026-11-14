@@ -10,7 +10,6 @@ class AMI_Buffering
   : public virtual POA_Test::AMI_Buffering
 {
 public:
-  /// Constructor
   AMI_Buffering (CORBA::ORB_ptr orb,
                  Test::AMI_Buffering_Admin_ptr admin);
   AMI_Buffering (AMI_Buffering const &) = delete;

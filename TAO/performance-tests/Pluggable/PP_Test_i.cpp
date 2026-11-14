@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #include "tao/Timeprobe.h"
 #include "tao/ORB_Constants.h"
 #include "PP_Test_i.h"
@@ -64,8 +63,6 @@ Pluggable_Test_Factory_i::make_pluggable_test ()
   ACE_FUNCTION_TIMEPROBE (PP_TEST_I_MAKE_PLUGGABLE_START);
   return my_pluggable_test_._this ();
 }
-
-// Constructor
 
 PP_Test_i::PP_Test_i (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))

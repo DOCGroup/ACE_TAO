@@ -7,9 +7,7 @@
  * parties.
  */
 
-
 /* ------------------------------------------------------------------------ */
-
 
 /*
  * shmem.h: Portable abstraction for memory shared among a server's workers
@@ -17,16 +15,13 @@
  * Rob McCool
  */
 
-
 #ifndef _SHMEM_H
 #define _SHMEM_H
 
 #include "netsite.h"
 #include "systems.h"
 
-
 /* --------------------------- Data structures ---------------------------- */
-
 
 #if defined (SHMEM_UNIX_MMAP) || defined (SHMEM_WIN32_MMAP)
 #include "file.h" /* SYS_FILE */
@@ -42,9 +37,7 @@ typedef struct {
     SYS_FILE fd;  /* internal use: file descriptor for region */
 } shmem_s;
 
-
 /* ------------------------------ Prototypes ------------------------------ */
-
 
 /*
  * shmem_alloc allocates a region of shared memory of the given size, using
@@ -70,13 +63,11 @@ typedef struct {
  */
 shmem_s *shmem_alloc(char *name, int size, int expose);
 
-
 /*
  * shmem_free de-allocates the specified region of shared memory.
  */
 void shmem_free(shmem_s *region);
 
 #endif  /* SHMEM_UNIX_MMAP || SHMEM_WIN32_MMAP */
-
 
 #endif

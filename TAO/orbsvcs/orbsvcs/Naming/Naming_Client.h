@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_NAMING_CLIENT_H
 #define TAO_NAMING_CLIENT_H
 #include /**/ "ace/pre.h"

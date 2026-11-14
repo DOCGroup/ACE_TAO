@@ -43,10 +43,8 @@ namespace TAO
     class Current_Impl : public TAO::SL3::SecurityCurrent_Impl
     {
     public:
-      /// Constructor.
       Current_Impl () = default;
 
-      /// Destructor
       ~Current_Impl () override = default;
 
       Current_Impl (Current_Impl const &) = delete;

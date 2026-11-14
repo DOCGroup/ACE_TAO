@@ -112,7 +112,6 @@ public:
   CORBA::ULong _incr_refcnt ();
   CORBA::ULong _decr_refcnt ();
 
-
 protected:
   /// Set the supplier, used by some implementations to change the
   /// policies used when invoking operations on the supplier.

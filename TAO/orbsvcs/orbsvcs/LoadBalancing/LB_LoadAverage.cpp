@@ -161,7 +161,6 @@ TAO_LB_LoadAverage::get_loads (CosLoadBalancing::LoadManager_ptr load_manager,
   return loads._retn ();
 }
 
-
 CORBA::Object_ptr
 TAO_LB_LoadAverage::next_member (
     PortableGroup::ObjectGroup_ptr object_group,

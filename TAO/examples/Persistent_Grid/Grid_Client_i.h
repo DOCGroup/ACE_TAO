@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef GRID_CLIENT_I_H
 #define GRID_CLIENT_I_H
 
@@ -28,10 +27,8 @@
 class Grid_Client_i
 {
 public:
-  /// Constructor
   Grid_Client_i () = default;
 
-  /// Destructor
   ~Grid_Client_i () = default;
 
   Grid_Client_i (Grid_Client_i const&) = delete;

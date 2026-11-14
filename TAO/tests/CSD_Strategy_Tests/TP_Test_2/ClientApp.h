@@ -6,7 +6,6 @@
 #include "tao/ORB.h"
 #include "ace/SString.h"
 
-
 class ClientApp : public TestAppBase
 {
   public:
@@ -39,7 +38,6 @@ class ClientApp : public TestAppBase
 
     void usage_statement();
     int arg_dependency_checks();
-
 
     CORBA::ORB_var      orb_;
     ACE_TString         exe_name_;

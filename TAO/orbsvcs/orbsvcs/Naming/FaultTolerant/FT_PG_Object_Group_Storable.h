@@ -21,7 +21,6 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 /////////////////////////////////
 // Includes needed by this header
 #include "orbsvcs/PortableGroup/PG_Object_Group_Storable.h"

@@ -205,7 +205,6 @@ int handle_parent (ACE_TCHAR *cmdLine)
     addRecords (map, shmem_allocator.get ());
   }
 
-
   {
     ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon,
                       coordMutex, -1);

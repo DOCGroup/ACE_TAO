@@ -42,7 +42,6 @@ parse_args_spec (int argc, ACE_TCHAR *argv[], int help)
   return 0;
 }
 
-
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {

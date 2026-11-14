@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef GRID_I_H
 #define GRID_I_H
 
@@ -32,7 +31,6 @@ class Grid_i;
 class Grid_Factory_i : public POA_Grid_Factory
 {
 public:
-  /// Constructor.
   Grid_Factory_i () = default;
 
   /// Out-of-line because grid_owners_ owns the forward-declared Grid_i.
@@ -77,7 +75,6 @@ private:
   std::vector<std::unique_ptr<Grid_i>> grid_owners_;
 };
 
-
 /**
  * @class Grid_i:
  *
@@ -88,10 +85,8 @@ private:
 class Grid_i: public POA_Grid
 {
 public:
-  /// Constructor.
   Grid_i (CORBA::Short, CORBA::Short, pool_t *);
 
-  /// Destructor
   ~Grid_i () override = default;
 
   Grid_i (Grid_i const&) = delete;
@@ -137,6 +132,5 @@ private:
   /// Borrowed pointer to a pool wrapper kept alive by Grid_Factory_i.
   pool_t *pool_t_ {};
 };
-
 
 #endif /* GRID_I_H */

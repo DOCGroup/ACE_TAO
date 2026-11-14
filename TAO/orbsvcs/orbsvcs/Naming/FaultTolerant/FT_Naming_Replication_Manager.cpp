@@ -173,7 +173,6 @@ TAO_FT_Naming_Replication_Manager::svc ()
   return 0;
 }
 
-
 int
 TAO_FT_Naming_Replication_Manager::handle_exception (ACE_HANDLE )
 {
@@ -439,7 +438,6 @@ TAO_FT_Naming_Replication_Manager::update_peer_registration ()
     }
   return success;
 }
-
 
 bool
 TAO_FT_Naming_Replication_Manager::init_peer ()

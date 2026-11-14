@@ -22,7 +22,6 @@
  */
 //=============================================================================
 
-
 #include "../test_config.h"
 #include <cstring>
 #include "ace/Default_Constants.h"
@@ -395,7 +394,6 @@ Server_Handler::handle_read_stream
   return;
 }
 
-
 int
 Server_Acceptor::open (const ACE_INET_Addr &listen_addr)
 {
@@ -436,7 +434,6 @@ Server_Acceptor::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
   this->acceptor_.close ();
   return 0;
 }
-
 
 static ACE_THR_FUNC_RETURN
 proactor_loop (void *)

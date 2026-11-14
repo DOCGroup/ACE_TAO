@@ -246,7 +246,6 @@ TAO_Naming_Context::to_name (char const *sn)
   // Total length of the unstrigified name
   CORBA::ULong len=0;
 
-
   for (char const *j = sn; *j != '\0'; ++j)
     {
       // Make a pass through the Name and count each character
@@ -268,7 +267,6 @@ TAO_Naming_Context::to_name (char const *sn)
       // In all cases.
       ++len;
     }
-
 
   // Check for InvalidName i.e. Invalid stringified name
   //
@@ -384,7 +382,6 @@ TAO_Naming_Context::to_url (char const *addr,
   /// Compute how many characters will be required for the URL
   size_t no_char =
     TAO_Naming_Context::to_url_validate_and_compute_size (addr, sn);
-
 
   // The 'corbaname:' tag is to be prepended at the starting of the
   // return parameter.

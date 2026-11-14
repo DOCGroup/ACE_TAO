@@ -29,5 +29,4 @@ virtual CORBA::Boolean send_message (
     char *& message);
 };
 
-
 #endif /* MESSENGERI_H_  */

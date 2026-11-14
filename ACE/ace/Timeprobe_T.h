@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_TIMEPROBE_T_H
 #define ACE_TIMEPROBE_T_H
 #include /**/ "ace/pre.h"
@@ -66,7 +65,6 @@ public:
    * ACE_Timeprobe
    */
   using ACE_Timeprobe = ACE_Timeprobe_Ex<ACE_LOCK, ACE_Allocator>;
-
 
   /// We can hold multiple event description tables.
   using EVENT_DESCRIPTIONS = ACE_Unbounded_Set<ACE_Event_Descriptions>;

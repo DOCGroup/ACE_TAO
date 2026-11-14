@@ -8,13 +8,11 @@
  */
 //=============================================================================
 
-
 #ifndef CONSUMER_INPUT_HANDLER_H
 #define CONSUMER_INPUT_HANDLER_H
 
 #include "ace/Service_Config.h"
 #include "ace/Event_Handler.h"
-
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -36,10 +34,8 @@ class Consumer_Input_Handler : public ACE_Event_Handler
 {
 public:
   // Initialization and termination methods.
-  /// Constructor.
   Consumer_Input_Handler () = default;
 
-  /// Destructor.
   ~Consumer_Input_Handler () override = default;
 
   Consumer_Input_Handler (Consumer_Input_Handler const &) = delete;

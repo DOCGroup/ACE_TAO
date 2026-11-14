@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Signal.h"
 #include "ace/Timer_Heap.h"
@@ -19,7 +18,6 @@
 #include "Async_Timer_Queue_Test.h"
 #include <memory>
 #include <new>
-
 
 // Hook method that is called to handle the expiration of a timer.
 int

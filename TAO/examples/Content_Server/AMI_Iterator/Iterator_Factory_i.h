@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef ITERATOR_FACTORY_I_H
 #define ITERATOR_FACTORY_I_H
 

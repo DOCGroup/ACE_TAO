@@ -10,7 +10,6 @@ class Blocking_Sync_None
   : public virtual POA_Test::Blocking_Sync_None
 {
 public:
-  /// Constructor
   explicit Blocking_Sync_None (CORBA::ORB_ptr orb);
   Blocking_Sync_None (Blocking_Sync_None const &) = delete;
   Blocking_Sync_None (Blocking_Sync_None &&) = delete;

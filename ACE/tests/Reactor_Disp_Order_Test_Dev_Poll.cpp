@@ -77,12 +77,10 @@ Handler::Handler (ACE_Reactor &reactor)
     }
 }
 
-
 Handler::~Handler ()
 {
   this->pipe_.close ();
 }
-
 
 ACE_HANDLE
 Handler::get_handle () const

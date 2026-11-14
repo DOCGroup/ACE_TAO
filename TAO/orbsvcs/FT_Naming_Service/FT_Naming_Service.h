@@ -11,13 +11,11 @@
  */
 //==========================================================================
 
-
 #ifndef TAO_FT_NAMING_SERVICE_H
 #define TAO_FT_NAMING_SERVICE_H
 
 #include "tao/ORB.h"
 #include "orbsvcs/Naming/FaultTolerant/FT_Naming_Server.h"
-
 
 /**
  * @class TAO_FT_Naming_Service

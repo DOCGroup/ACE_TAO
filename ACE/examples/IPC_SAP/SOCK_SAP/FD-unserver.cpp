@@ -8,7 +8,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_stdlib.h"
 
-
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
 // ACE_LSOCK Server

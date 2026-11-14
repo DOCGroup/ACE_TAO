@@ -44,7 +44,6 @@ FilterClient::~FilterClient ()
 {
 }
 
-
 int
 FilterClient::parse_args (int argc, ACE_TCHAR *argv[])
 {
@@ -107,7 +106,6 @@ FilterClient::init_supplier (int argc, ACE_TCHAR *argv [])
   create_suppliers ();
 }
 
-
 void
 FilterClient::init_consumer (int argc, ACE_TCHAR *argv [])
 {
@@ -154,7 +152,6 @@ FilterClient::wait_ready ()
   }
 }
 
-
 void
 FilterClient::wait_consumer_complete ()
 {
@@ -182,7 +179,6 @@ FilterClient::wait_consumer_complete ()
     }
   }
 }
-
 
 void
 FilterClient::run_supplier ()
@@ -225,7 +221,6 @@ void
 FilterClient::init_ORB (int& argc, ACE_TCHAR **& argv)
 {
   this->orb_ = CORBA::ORB_init (argc, argv);
-
 
   CORBA::Object_ptr poa_object  =
     this->orb_->resolve_initial_references("RootPOA");
@@ -349,7 +344,6 @@ FilterClient::create_supplieradmin ()
   supplier_admin_->add_filter (sa_filter.in ());
 }
 
-
 void
 FilterClient::get_supplieradmin ()
 {
@@ -369,7 +363,6 @@ FilterClient::get_supplieradmin ()
     = CosNotifyFilter::FilterAdmin::_narrow (supplier_admin_.in ());
   verify_filter (admin, SA_FILTER, MOD_SA_FILTER);
 }
-
 
 void
 FilterClient::create_consumeradmin ()
@@ -453,7 +446,6 @@ FilterClient::get_consumeradmin ()
   verify_filter (admin, CA_FILTER, MOD_CA_FILTER);
 }
 
-
 void
 FilterClient::verify_filter (CosNotifyFilter::FilterAdmin_var& admin,
                              const char* constraint_expr,
@@ -515,7 +507,6 @@ FilterClient::verify_filter (CosNotifyFilter::FilterAdmin_var& admin,
     filter->modify_constraints (ids.in (), infos.in());
   }
 }
-
 
 void
 FilterClient::create_consumers ()
@@ -605,7 +596,6 @@ FilterClient::send_events ()
     }
 }
 
-
 Filter_StructuredPushConsumer::Filter_StructuredPushConsumer (FilterClient* filter, const char* my_name)
   :filter_ (filter),
    my_name_ (my_name)
@@ -665,7 +655,6 @@ Filter_StructuredPushConsumer::push_structured_event
     // number of expected and sent events to verify that things work
     // correctly in an automatic way...
 
-
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("%C received event, %d\n"),
     my_name_.fast_rep (), val));
@@ -684,7 +673,6 @@ Filter_StructuredPushConsumer::disconnect_structured_push_consumer ()
 {
   // No-Op.
 }
-
 
 /*****************************************************************/
 
@@ -750,5 +738,4 @@ Filter_StructuredPushSupplier::disconnect_structured_push_supplier ()
 {
   // No-Op.
 }
-
 

@@ -9,7 +9,6 @@
 #include "orbsvcs/Event/EC_Priority_Scheduling.inl"
 #endif /* __ACE_INLINE__ */
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void

@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef ORT_TEST_IORINTERCEPTOR_H
 #define ORT_TEST_IORINTERCEPTOR_H
 

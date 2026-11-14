@@ -95,7 +95,6 @@ TAO_UIOP_Connector::corbaloc_scan (const char *str, size_t &len)
   return this->make_profile ();
 }
 
-
 int
 TAO_UIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
 {
@@ -290,7 +289,6 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
   return transport;
 }
 
-
 TAO_Profile *
 TAO_UIOP_Connector::create_profile (TAO_InputCDR& cdr)
 {
@@ -320,7 +318,6 @@ TAO_UIOP_Connector::make_profile ()
                         TAO::VMCID,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
-
 
   return profile;
 }

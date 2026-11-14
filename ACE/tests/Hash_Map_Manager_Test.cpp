@@ -12,13 +12,11 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "STL_algorithm_Test_T.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Malloc_T.h"
 #include "ace/Null_Mutex.h"
-
 
 static constexpr size_t STRING_TABLE_ENTRIES = 3 * 2;
 static constexpr size_t MAX_HASH = 6;

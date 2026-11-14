@@ -51,7 +51,6 @@ ACE::HTBP::Environment::initialize (bool use_registry,
         }
     }
 
-
   ACE_Ini_ImpExp *imp_exp {};
   ACE_NEW_RETURN (imp_exp,
                   ACE_Ini_ImpExp (*this->config_),
@@ -124,7 +123,6 @@ ACE::HTBP::Environment::set_htid_url (ACE_TCHAR const* htid_generator_url)
                                           ACE_TEXT("htid_url"),
                                           htid_generator_url);
 }
-
 
 int
 ACE::HTBP::Environment::get_htid_via_proxy (int &via_proxy) const

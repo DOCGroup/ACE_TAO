@@ -12,7 +12,6 @@ ACE_Registry_Name_Space::ACE_Registry_Name_Space (ACE_Name_Options *name_options
                 ACE_TEXT ("ACE_Registry_Name_Space::open")));
 }
 
-
 int
 ACE_Registry_Name_Space::open (ACE_Name_Options *name_options)
 {
@@ -44,7 +43,6 @@ ACE_Registry_Name_Space::open (ACE_Name_Options *name_options)
   return 0;
 }
 
-
 int
 ACE_Registry_Name_Space::bind (const ACE_NS_WString &name,
                                const ACE_NS_WString &value,
@@ -71,7 +69,6 @@ ACE_Registry_Name_Space::bind (const ACE_NS_WString &name,
                               object);
 #endif /* ACE_HAS_WCHAR */
 }
-
 
 int
 ACE_Registry_Name_Space::rebind (const ACE_NS_WString &name,
@@ -100,7 +97,6 @@ ACE_Registry_Name_Space::rebind (const ACE_NS_WString &name,
 #endif /* ACE_USES_WCHAR */
 }
 
-
 int
 ACE_Registry_Name_Space::unbind (const ACE_NS_WString &name)
 {
@@ -110,7 +106,6 @@ ACE_Registry_Name_Space::unbind (const ACE_NS_WString &name)
   return this->context_.unbind (name.char_rep ());
 #endif /* ACE_USES_WCHAR */
 }
-
 
 int
 ACE_Registry_Name_Space::resolve (const ACE_NS_WString &name,
@@ -153,7 +148,6 @@ ACE_Registry_Name_Space::resolve (const ACE_NS_WString &name,
   return 0;
 }
 
-
 int
 ACE_Registry_Name_Space:: list_names (ACE_WSTRING_SET &set,
                                       const ACE_NS_WString &pattern)
@@ -174,7 +168,6 @@ ACE_Registry_Name_Space:: list_names (ACE_WSTRING_SET &set,
     }
   return 0;
 }
-
 
 int
 ACE_Registry_Name_Space::list_values (ACE_WSTRING_SET &set,
@@ -197,7 +190,6 @@ ACE_Registry_Name_Space::list_values (ACE_WSTRING_SET &set,
   return 0;
 }
 
-
 int
 ACE_Registry_Name_Space::list_types (ACE_WSTRING_SET &set,
                                      const ACE_NS_WString &pattern)
@@ -207,7 +199,6 @@ ACE_Registry_Name_Space::list_types (ACE_WSTRING_SET &set,
 
   return 0;
 }
-
 
 int
 ACE_Registry_Name_Space::list_name_entries (ACE_BINDING_SET &set,
@@ -254,7 +245,6 @@ ACE_Registry_Name_Space::list_name_entries (ACE_BINDING_SET &set,
   return 0;
 }
 
-
 int
 ACE_Registry_Name_Space::list_value_entries (ACE_BINDING_SET &set,
                                              const ACE_NS_WString &pattern)
@@ -262,14 +252,12 @@ ACE_Registry_Name_Space::list_value_entries (ACE_BINDING_SET &set,
   return this->list_name_entries (set, pattern);
 }
 
-
 int
 ACE_Registry_Name_Space::list_type_entries (ACE_BINDING_SET &set,
                                             const ACE_NS_WString &pattern)
 {
   return this->list_name_entries (set, pattern);
 }
-
 
 void
 ACE_Registry_Name_Space::dump () const

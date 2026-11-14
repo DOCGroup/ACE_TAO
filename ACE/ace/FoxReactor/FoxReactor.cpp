@@ -109,7 +109,6 @@ ACE_FoxReactor::FoxWaitForMultipleEvents (int width,
                          &zero);
 }
 
-
 long ACE_FoxReactor::onFileEvents (FXObject * /* ob */, FXSelector se, void *handle)
 {
   FXSelector const sel = FXSELTYPE (se);

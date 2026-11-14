@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 /**********************************************************************
         Copyright 1988, 1989, 1991, 1992 by Carnegie Mellon University
 
@@ -56,7 +55,6 @@ typedef unsigned char   oid;
 
 #define MAX_OID_LEN         64  /* max subid's in an oid */
 
-
 // asn.1 values
 #define ASN_BOOLEAN          (0x01)
 #define ASN_INTEGER          (0x02)
@@ -83,7 +81,6 @@ typedef unsigned char   oid;
 #define MAX_NAME_LEN   64
 #define SNMP_VERSION_1 0
 #define SNMP_VERSION_2C 1
-
 
 // defined types (from the SMI, RFC 1065)
 #define SMI_IPADDRESS   (ASN_APPLICATION | 0)
@@ -264,7 +261,6 @@ static unsigned char * build_unsigned_int64( unsigned char *data,
                                          int countersize);
 };
 
-
 // CMU Interface class for SNMPv1, SNMPv2c routines
 /**
  * @class cmu_snmp
@@ -309,7 +305,6 @@ class ASNMP_Export cmu_snmp
                                   int var_val_len,
                                   unsigned char *var_val,
                                   int *listlength);
-
 
 static unsigned char *auth_parse(unsigned char *data,
                                int *length,

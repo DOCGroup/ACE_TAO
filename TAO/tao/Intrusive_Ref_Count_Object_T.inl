@@ -7,7 +7,6 @@ TAO_Intrusive_Ref_Count_Object<OBJ, ACE_LOCK>::TAO_Intrusive_Ref_Count_Object (O
   : obj_ (obj)
 {}
 
-
 template <typename OBJ, typename ACE_LOCK>
 ACE_INLINE OBJ *
 TAO_Intrusive_Ref_Count_Object<OBJ, ACE_LOCK>::get () const

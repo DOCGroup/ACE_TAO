@@ -10,7 +10,6 @@ class BoundSequences
   : public virtual POA_Test::BoundSequences
 {
 public:
-  /// Constructor
   explicit BoundSequences (CORBA::ORB_ptr const orb);
   BoundSequences (BoundSequences const &) = delete;
   BoundSequences (BoundSequences &&) = delete;

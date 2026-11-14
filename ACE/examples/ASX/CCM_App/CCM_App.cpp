@@ -6,7 +6,6 @@
 #include "ace/svc_export.h"
 #include <memory>
 
-
 using MT_Task = ACE_Task<ACE_SYNCH>;
 using MT_Stream = ACE_Stream<ACE_SYNCH>;
 using MT_Module = ACE_Module<ACE_SYNCH>;

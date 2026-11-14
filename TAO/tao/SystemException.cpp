@@ -527,7 +527,6 @@ CORBA::SystemException::_tao_get_omg_exception_description (
       "Priority range too restricted for ORB." // 1
     };
 
-
   static const char *INV_OBJREF_TABLE[] =
     {
       "wchar Code Set support not specified.", // 1

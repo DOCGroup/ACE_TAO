@@ -49,7 +49,6 @@ namespace TAO
      */
     ~FT_FaultNotifier_i () override;
 
-
     /**
      * Parse command line arguments.
      * @param argc traditional C argc
@@ -148,7 +147,6 @@ namespace TAO
      * The CORBA object id assigned to this object.
      */
     PortableServer::ObjectId_var object_id_;
-
 
     /**
      * IOR of this object as assigned by orb.

@@ -42,7 +42,6 @@ Client_Task::validate_connection ()
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Validating connection ..\n")));
 
-
   // Try to setup a connection to the remote server, ignoring all the
   // exceptions that are expected (see bug 189 on why it is so). We
   // could use a a validate_connection for it . But we want this test

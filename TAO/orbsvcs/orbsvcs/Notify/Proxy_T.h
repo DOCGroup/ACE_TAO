@@ -19,7 +19,6 @@
 
 #include "orbsvcs/Notify/Proxy.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**

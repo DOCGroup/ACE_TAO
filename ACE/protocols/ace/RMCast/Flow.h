@@ -35,5 +35,4 @@ namespace ACE_RMCast
   };
 }
 
-
 #endif  // ACE_RMCAST_FLOW_H

@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "helper.h"
 
 #include <cstring>
@@ -69,7 +68,6 @@ int
 Test_Var_Array::init_parameters (Param_Test_ptr)
 {
   Generator *gen = GENERATOR::instance (); // value generator
-
 
   // fill the in_ array
   for (CORBA::ULong i=0; i < Param_Test::DIM2; i++)

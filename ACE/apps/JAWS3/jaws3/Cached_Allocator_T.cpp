@@ -128,5 +128,4 @@ JAWS_TSS_Cached_Allocator<T>::free (void *ptr)
   this->ts_allocator ()->free (ptr);
 }
 
-
 #endif /* JAWS_CACHED_ALLOCATOR_T_CPP */

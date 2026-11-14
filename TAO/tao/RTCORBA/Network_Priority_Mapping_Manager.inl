@@ -134,7 +134,6 @@ TAO_Network_Priority_Mapping_Manager_var::upcast (void *src)
   return *tmp;
 }
 
-
 // Inline operations for class TAO_Network_Priority_Mapping_Manager_out
 
 ACE_INLINE
@@ -218,6 +217,5 @@ TAO_Network_Priority_Mapping_Manager::mapping (RTCORBA::NetworkPriorityMapping *
   if (mapping != this->mapping_.get ())
     this->mapping_.reset (mapping);
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

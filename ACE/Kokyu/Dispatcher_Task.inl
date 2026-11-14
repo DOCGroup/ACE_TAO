@@ -18,7 +18,6 @@ Dispatcher_Task::preemption_priority() const
     return curr_config_info_.preemption_priority_;
 }
 
-
 ACE_INLINE
 ConfigInfo const &
 Dispatcher_Task::get_curr_config_info() const

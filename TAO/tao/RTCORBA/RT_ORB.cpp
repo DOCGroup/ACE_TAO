@@ -52,7 +52,6 @@ TAO_RT_ORB::destroy_mutex (RTCORBA::Mutex_ptr mutex)
   this->mutex_mgr_.destroy_mutex (mutex);
 }
 
-
 RTCORBA::Mutex_ptr
 TAO_RT_ORB::create_named_mutex (char const *name,
                                 CORBA::Boolean_out created_flag)

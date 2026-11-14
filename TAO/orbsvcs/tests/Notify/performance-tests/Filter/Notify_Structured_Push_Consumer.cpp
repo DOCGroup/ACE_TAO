@@ -15,7 +15,6 @@ Notify_Structured_Push_Consumer::Notify_Structured_Push_Consumer (
   this->client_.consumer_start (this);
 }
 
-
 void
 Notify_Structured_Push_Consumer::_connect (
   CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin)
@@ -35,7 +34,6 @@ Notify_Structured_Push_Consumer::_connect (
   proxy_->connect_structured_push_consumer (objref.in ());
 
 }
-
 
 void
 Notify_Structured_Push_Consumer::push_structured_event (

@@ -79,7 +79,6 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   *os << "using " << class_name << "_ptr = "
       << class_name << " *;";
 
-
   if (be_global->gen_direct_collocation ())
     {
       *os << be_nl_2

@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_CORBALOC_PARSER_H
 #define TAO_CORBALOC_PARSER_H
 #include /**/ "ace/pre.h"

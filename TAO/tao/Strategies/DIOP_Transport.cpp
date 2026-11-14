@@ -145,10 +145,8 @@ TAO_DIOP_Transport::handle_input (TAO_Resume_Handle &rh,
                                    ACE_Message_Block::DONT_DELETE,
                                    this->orb_core_->input_cdr_msgblock_allocator ());
 
-
   // Align the message block
   ACE_CDR::mb_align (&message_block);
-
 
   // Read the message into the  message block that we have created on
   // the stack.
@@ -199,7 +197,6 @@ TAO_DIOP_Transport::handle_input (TAO_Resume_Handle &rh,
   return this->process_parsed_messages (&qd, rh);
 }
 
-
 int
 TAO_DIOP_Transport::register_handler ()
 {
@@ -214,7 +211,6 @@ TAO_DIOP_Transport::register_handler ()
   // interested in any network failures, we ignore ICMP messages.
   return 0;
 }
-
 
 int
 TAO_DIOP_Transport::send_request (TAO_Stub *stub,

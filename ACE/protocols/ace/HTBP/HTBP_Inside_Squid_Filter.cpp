@@ -61,7 +61,6 @@ ACE::HTBP::Inside_Squid_Filter::make_request_header (ACE::HTBP::Channel *ch,
                        ACE_TEXT("peer_addr hostname\n")),
                       -1);
 
-
   size_t size =
     std::strlen (format)
     - 12    // subtract out the size of the format specifiers

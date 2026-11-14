@@ -42,7 +42,6 @@ Consumer_Handler::init (int argc,
       this->receiver_ =
         this->receiver_i_._this ();
 
-
       if (this->get_notifier () == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to get the notifier "

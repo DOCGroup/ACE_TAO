@@ -6,7 +6,6 @@
 #include "Receiver_Stats.inl"
 #endif /* __ACE_INLINE__ */
 
-
 void
 Receiver_Stats::accumulate (Receiver_Stats const &rhs)
 {

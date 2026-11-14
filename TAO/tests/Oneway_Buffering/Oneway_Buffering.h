@@ -10,7 +10,6 @@ class Oneway_Buffering
   : public virtual POA_Test::Oneway_Buffering
 {
 public:
-  /// Constructor
   Oneway_Buffering (CORBA::ORB_ptr orb,
                     Test::Oneway_Buffering_Admin_ptr admin);
 

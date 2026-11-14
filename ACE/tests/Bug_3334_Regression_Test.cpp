@@ -17,7 +17,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/Service_Config.h"
 
-
 int
 run_main (int, ACE_TCHAR *argv[])
 {

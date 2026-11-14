@@ -36,7 +36,6 @@ parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior_output_file)
 class ctest_impl : public virtual POA_ctest
 {
 public:
-  /// Constructor
   explicit ctest_impl (CORBA::ORB_ptr orb)
     : orb_ (CORBA::ORB::_duplicate (orb))
   {

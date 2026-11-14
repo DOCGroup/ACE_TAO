@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_IFR_CLIENT_ADAPTER_H
 #define TAO_IFR_CLIENT_ADAPTER_H
 

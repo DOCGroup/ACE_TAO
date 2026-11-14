@@ -96,7 +96,6 @@ ACE_Threading_Helper<ACE_Null_Mutex>::get ()
   */
 using ACE_SERVICE_CONFIG_SINGLETON = ACE_Unmanaged_Singleton<ACE_Service_Config, ACE_SYNCH_RECURSIVE_MUTEX>;
 
-
 /// ctor
 ACE_Service_Config_Guard::ACE_Service_Config_Guard (ACE_Service_Gestalt *psg)
   : saved_ (ACE_Service_Config::current ())
@@ -128,7 +127,6 @@ ACE_Service_Config_Guard::~ACE_Service_Config_Guard ()
                 this,
                 this->saved_->repo_));
 }
-
 
 ACE_ALLOC_HOOK_DEFINE (ACE_Service_Config)
 
@@ -210,7 +208,6 @@ ACE_Service_Config::parse_args_i (int argc, ACE_TCHAR *argv[])
 
   return 0;
 } /* parse_args_i () */
-
 
 int
 ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
@@ -333,7 +330,6 @@ ACE_Service_Config::insert (ACE_Static_Svc_Descriptor* stsd)
   return ACE_Service_Config::instance ()->insert (stsd);
 }
 
-
 // Totally remove <svc_name> from the daemon by removing it from the
 // ACE_Reactor, and unlinking it if necessary.
 int
@@ -365,7 +361,6 @@ ACE_Service_Config::resume (const ACE_TCHAR svc_name[])
   ACE_TRACE ("ACE_Service_Config::resume");
   return ACE_Service_Repository::instance ()->resume (svc_name);
 }
-
 
 ACE_Service_Config::ACE_Service_Config (bool ignore_static_svcs,
                                         size_t size,
@@ -445,7 +440,6 @@ ACE_Service_Config::current (ACE_Service_Gestalt* newcurrent)
   ACE_Service_Config::singleton()->threadkey_.set (newcurrent);
 }
 
-
 #if (ACE_USES_CLASSIC_SVC_CONF == 0)
 ACE_Service_Type *
 ACE_Service_Config::create_service_type  (const ACE_TCHAR *n,
@@ -501,7 +495,6 @@ ACE_Service_Config::create_service_type_impl (const ACE_TCHAR *name,
   return stp;
 }
 
-
 // Signal handling API to trigger dynamic reconfiguration.
 void
 ACE_Service_Config::handle_signal (int sig, siginfo_t *, ucontext_t *)
@@ -555,7 +548,6 @@ ACE_Service_Config::close ()
 
   return 0;
 }
-
 
 int
 ACE_Service_Config::fini_svcs ()

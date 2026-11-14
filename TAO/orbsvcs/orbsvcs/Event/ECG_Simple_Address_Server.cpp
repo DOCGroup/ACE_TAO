@@ -29,7 +29,6 @@ TAO_ECG_Simple_Address_Server::get_addr (
   addr.port = this->addr_.get_port_number ();
 }
 
-
 void
 TAO_ECG_Simple_Address_Server::get_address (RtecEventComm::EventHeader const &,
                                             RtecUDPAdmin::UDP_Address_out addr)
@@ -51,6 +50,5 @@ TAO_ECG_Simple_Address_Server::get_address (RtecEventComm::EventHeader const &,
   v4.port = this->addr_.get_port_number();
   addr.v4_addr (v4);
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

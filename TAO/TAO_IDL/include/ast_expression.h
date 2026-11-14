@@ -244,7 +244,6 @@ public:
 
   explicit AST_Expression (ACE_CDR::Fixed const& f);
 
-  // Destructor.
   virtual ~AST_Expression ();
 
   // Data Accessors.

@@ -26,7 +26,6 @@ public:
   int svc () override;
   int close (u_long) override;
 
-
 private:
   CORBA::ORB_var const orb_;
   unsigned const num_threads_;

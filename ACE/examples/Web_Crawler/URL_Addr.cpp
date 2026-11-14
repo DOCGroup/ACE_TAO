@@ -86,7 +86,6 @@ ACE_URL_Addr::string_to_addr (const ACE_TCHAR *s,
                         ACE_OS::strdup (s),
                         -1);
 
-
   // First split off the path_name.
 
   ACE_TCHAR *path_name = ACE_OS::strchr (t, ACE_TEXT ('/'));

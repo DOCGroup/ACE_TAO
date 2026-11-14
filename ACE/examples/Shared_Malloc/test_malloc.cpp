@@ -15,7 +15,6 @@
 #include <cstdio>
 #include <cstring>
 
-
 static int
 gen_size ()
 {

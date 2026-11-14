@@ -133,7 +133,6 @@ MUF_Scheduler::create_scheduling_parameter (const MUF_Scheduling::SchedulingPara
   return sched_param_policy;
 }
 
-
 void
 MUF_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType &guid,
                                              const char *,
@@ -170,7 +169,6 @@ MUF_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType
               "(%t|%T):MUF_Scheduler::begin_new_scheduling_segment exit\n"));
 #endif
 }
-
 
 void
 MUF_Scheduler::begin_nested_scheduling_segment (const RTScheduling::Current::IdType &guid,
@@ -235,7 +233,6 @@ MUF_Scheduler::end_nested_scheduling_segment (const RTScheduling::Current::IdTyp
                                                          CORBA::Policy_ptr)
 {
 }
-
 
 void
 MUF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
@@ -317,7 +314,6 @@ MUF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
       // Add this context to the service context list.
       ri->add_request_service_context (sc, 0);
     }
-
 
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,
@@ -452,7 +448,6 @@ MUF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
   IOP::ServiceContext sc;
   sc.context_id = Server_Interceptor::SchedulingInfo;
 
-
   CORBA::Long criticality;
   TimeBase::TimeT deadline,exec_time;
 
@@ -483,7 +478,6 @@ MUF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
       MUF_Scheduling::SchedulingParameterPolicy_var sched_param_policy =
         MUF_Scheduling::SchedulingParameterPolicy::_narrow (sched_policy.in ());
       MUF_Scheduling::SchedulingParameter_var sched_param = sched_param_policy->value ();
-
 
       sc_qos.guid.length (guid->length ());
       guid_copy (sc_qos.guid, guid.in ());

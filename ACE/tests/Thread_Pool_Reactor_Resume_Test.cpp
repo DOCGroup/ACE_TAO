@@ -27,7 +27,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
@@ -37,7 +36,6 @@
 #include "ace/Acceptor.h"
 #include "ace/Thread_Manager.h"
 #include "ace/TP_Reactor.h"
-
 
 #if defined (ACE_HAS_THREADS) && !defined ACE_LACKS_ACCEPT
 
@@ -51,7 +49,6 @@ static const ACE_TCHAR *rendezvous = ACE_TEXT ("127.0.0.1:10010");
 
 // Total number of server threads.
 static size_t svr_thrno = ACE_MAX_THREADS;
-
 
 // Default network parameters (MAX_BINDS and system buffers) are too small
 // for full test on some platforms; add platforms that can't handle too many
@@ -344,7 +341,6 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   // Changed the default
   ACE_TP_Reactor sr;
-
 
   ACE_Reactor new_reactor (&sr);
   ACE_Reactor::instance (&new_reactor);

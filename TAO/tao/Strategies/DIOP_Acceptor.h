@@ -8,7 +8,6 @@
  *  @author  Michael Kircher
  */
 
-
 #ifndef TAO_DIOP_ACCEPTOR_H
 #define TAO_DIOP_ACCEPTOR_H
 

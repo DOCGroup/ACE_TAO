@@ -9,7 +9,6 @@
  *  @author  Keith O'Hara, Lockheed Martin ATL
  */
 
-
 #ifndef TAO_SCIOP_ENDPOINT_H
 #define TAO_SCIOP_ENDPOINT_H
 
@@ -128,7 +127,6 @@ private:
   TAO_SCIOP_Endpoint &operator= (TAO_SCIOP_Endpoint const &) = delete;
   TAO_SCIOP_Endpoint (TAO_SCIOP_Endpoint &&) = delete;
   TAO_SCIOP_Endpoint &operator= (TAO_SCIOP_Endpoint &&) = delete;
-
 
   /// String representing the host name.
   CORBA::String_var host_;

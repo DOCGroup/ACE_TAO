@@ -24,7 +24,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-/// Constructor.
 TAO::FT_ReplicationManagerFaultAnalyzer::FT_ReplicationManagerFaultAnalyzer (
   TAO::FT_ReplicationManager * replication_manager)
   : replication_manager_ (replication_manager)
@@ -750,7 +749,6 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::remove_failed_member (
   return result;
 }
 
-
 // Choose a new primary member for the ObjectGroup.
 // Sets <new_iogr> and returns 0 on success.
 // Returns -1 on failure.
@@ -829,7 +827,6 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::add_members (
       PortableGroup::FactoryRegistry_var factory_registry =
         this->replication_manager_->get_factory_registry (
           fake_criteria);
-
 
       // @@ DLW SAYS: we need to find out the role played by this object
       // group so we can use the correct set of factories.

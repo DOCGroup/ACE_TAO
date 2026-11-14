@@ -123,6 +123,5 @@ private:
   TestHandler evh_;
 };
 
-
 #endif /* TAO_MSAE_TEST_I_H */
 

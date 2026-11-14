@@ -42,7 +42,6 @@ class Server_Request_Interceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   Server_Request_Interceptor ();
 
   Server_Request_Interceptor (Server_Request_Interceptor const &) = delete;
@@ -81,7 +80,6 @@ public:
   //@}
 
 protected:
-  /// Destructor.
   ~Server_Request_Interceptor () override = default;
 };
 

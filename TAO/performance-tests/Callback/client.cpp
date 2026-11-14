@@ -27,7 +27,6 @@ static int parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options);
 class Task : public ACE_Task_Base
 {
 public:
-  /// Constructor
   Task (Test::Server_ptr server, int iterations);
   Task (Task const &) = delete;
   Task (Task &&) = delete;

@@ -32,7 +32,6 @@ template<class Client_Type>
 class Low_Priority_Setup
 {
 public:
-  /// Constructor
   Low_Priority_Setup (int consumer_count,
                       int iterations,
                       int use_different_types,

@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 #include "ace/OS_NS_unistd.h"
@@ -91,7 +90,6 @@ private:
   CORBA::ORB_var const orb_;
   Client_State &state_;
 };
-
 
 /**
  * @class Client

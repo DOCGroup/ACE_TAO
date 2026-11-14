@@ -162,12 +162,10 @@ public:
   void create_proxy (TAO_EC_ProxyPushConsumer*&);
   void destroy_proxy (TAO_EC_ProxyPushConsumer*);
 
-
   /// Create and destroy a the collections used to store
   /// ProxyPushSuppliers
   void create_proxy_collection (TAO_EC_ProxyPushSupplier_Collection*&);
   void destroy_proxy_collection (TAO_EC_ProxyPushSupplier_Collection*);
-
 
   /// Create and destroy a the collections used to store
   /// ProxyPushConsumers

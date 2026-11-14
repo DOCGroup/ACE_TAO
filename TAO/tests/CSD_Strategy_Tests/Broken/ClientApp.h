@@ -10,7 +10,6 @@
 #include "tao/ORB.h"
 #include "ace/SString.h"
 
-
 class ClientApp : public TestAppBase
 {
   public:
@@ -24,7 +23,6 @@ class ClientApp : public TestAppBase
     ClientApp (ClientApp &&) = delete;
     ClientApp & operator= (ClientApp const &) = delete;
     ClientApp & operator= (ClientApp &&) = delete;
-
 
   private:
     // These are all called, in order, by the run_i() method.
@@ -52,7 +50,6 @@ class ClientApp : public TestAppBase
 
     PortableServer::POA_ptr create_poa(CORBA::ORB_ptr orb,
                                        const char* poa_name);
-
 
     using ServantListType = ServantList<Callback_i>;
 

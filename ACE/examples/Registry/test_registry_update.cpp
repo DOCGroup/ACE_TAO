@@ -20,7 +20,6 @@
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
-
 // Name for application's naming context
 static ACE_Registry::Name application_context_name;
 
@@ -123,7 +122,6 @@ update_counter (HKEY predefined,
 
   return 0;
 }
-
 
 static void
 setup_names ()

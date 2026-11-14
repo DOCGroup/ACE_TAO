@@ -83,7 +83,6 @@ TAO::Storable_Read_Exception::get_state () const
   return storable_state_;
 }
 
-
 TAO::Storable_Write_Exception::
 Storable_Write_Exception (Storable_Base::Storable_State state,
                           std::string const &file_name)
@@ -97,6 +96,5 @@ TAO::Storable_Write_Exception::get_state () const
 {
   return storable_state_;
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

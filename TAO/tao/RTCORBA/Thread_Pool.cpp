@@ -392,7 +392,6 @@ TAO_Thread_Lane::current_threads () const
                                     this->dynamic_threads_.thr_count ());
 }
 
-
 int
 TAO_Thread_Lane::create_static_threads ()
 {
@@ -581,7 +580,6 @@ TAO_Thread_Pool::shutting_down ()
   for (std::unique_ptr<TAO_Thread_Lane> const &lane : this->lanes_)
     lane->shutting_down ();
 }
-
 
 void
 TAO_Thread_Pool::wait ()

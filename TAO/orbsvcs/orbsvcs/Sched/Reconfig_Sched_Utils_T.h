@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-
 /**
  *  @file    Reconfig_Sched_Utils_T.h
  *
  *  @author  Chris Gill <cdgill@cs.wustl.edu>
  */
-
 
 #ifndef TAO_RECONFIG_SCHED_UTILS_T_H
 #define TAO_RECONFIG_SCHED_UTILS_T_H
@@ -21,7 +19,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 
 /**
  * A base class for scheduler entry visitors that use a
@@ -98,7 +95,6 @@ protected:
   RT_INFO_MAP & rt_info_map_;
 };
 
-
 /**
  * A scheduler entry visitor that marks nodes with DFS start
  * and finish times.
@@ -148,7 +144,6 @@ private:
   /// Keeps track of DFS start and finish times.
   int DFS_time_;
 };
-
 
 /**
  * A scheduler entry visitor that checks for cycles in the graph.
@@ -263,7 +258,6 @@ protected:
                           TAO_Reconfig_Scheduler_Entry &successor,
                           RtecScheduler::Dependency_Info const &di) override;
 };
-
 
 /**
  * A scheduler entry visitor that propagates effective periods and

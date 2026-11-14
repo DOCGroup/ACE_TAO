@@ -34,5 +34,4 @@ private:
   int const divisor_;
 };
 
-
 #endif /* AMH_INNER_H_  */

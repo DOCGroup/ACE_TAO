@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "Servant_Locator.h"
 
 ServantLocator_i::ServantLocator_i (CORBA::ORB_ptr orb)

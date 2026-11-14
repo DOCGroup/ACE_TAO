@@ -10,7 +10,6 @@ class Process_Factory
   : public virtual POA_Test::Process_Factory
 {
 public:
-  /// Constructor
   explicit Process_Factory (CORBA::ORB_ptr orb);
 
   Process_Factory (Process_Factory const &) = delete;

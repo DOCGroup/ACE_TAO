@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-
 //=============================================================================
 /**
  *  @file    NT_Naming_Service.h
@@ -10,7 +9,6 @@
  *  @author John Tucker <jtucker@infoglide.com> and Mike Vitalo <mvitalo@infoglide.com>
  */
 //=============================================================================
-
 
 #ifndef TAO_NT_NAMING_SERVICE_H
 #define TAO_NT_NAMING_SERVICE_H
@@ -92,7 +90,6 @@ public:
 private:
     TAO_NT_Naming_Service &service_;
 };
-
 
 using SERVICE = ACE_Singleton<TAO_NT_Naming_Service, TAO_NT_Naming_Service::MUTEX>;
 

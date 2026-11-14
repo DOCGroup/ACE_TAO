@@ -8,7 +8,6 @@ class Simple_Test_i
   : public virtual POA_simple::SimpleTest_T
 {
 public:
-  /// Constructor
   explicit Simple_Test_i (CORBA::ORB_ptr const orb);
   Simple_Test_i (Simple_Test_i const &) = delete;
   Simple_Test_i (Simple_Test_i &&) = delete;

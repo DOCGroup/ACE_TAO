@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_IFR_REMOVING_VISITOR_H
 #define TAO_IFR_REMOVING_VISITOR_H
 
@@ -31,10 +30,8 @@
 class ifr_removing_visitor : public ifr_visitor
 {
 public:
-  /// Constructor.
   ifr_removing_visitor ();
 
-  /// Destructor.
   ~ifr_removing_visitor () override;
   ifr_removing_visitor (ifr_removing_visitor const &) = delete;
   ifr_removing_visitor (ifr_removing_visitor &&) = delete;

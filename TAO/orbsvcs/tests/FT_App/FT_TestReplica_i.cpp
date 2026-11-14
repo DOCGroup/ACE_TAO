@@ -111,7 +111,6 @@ namespace
      CORBA::COMPLETED_NO);                                         \
     }
 
-
 //////////////////////////////////////////////////
 // class FT_TestReplica_i construction/destruction
 
@@ -134,7 +133,6 @@ FT_TestReplica_i::~FT_TestReplica_i ()
 //  cout << name_.c_str() << '@' << this->factory_->location() << '#' << this->factory_id_ << " Destruct" << endl;
 }
 
-
 void FT_TestReplica_i::suicide(const char * note)
 {
   ACE_OS::fprintf (stdout, "%s@%s#%lu Simulate FAULT_CODE fault: %s\n",
@@ -146,7 +144,6 @@ void FT_TestReplica_i::suicide(const char * note)
 
 /////////////////////////////////////////////////////
 // class FT_TestReplica_i public, non-CORBA interface
-
 
 //static
 const char * FT_TestReplica_i::repository_id()
@@ -187,7 +184,6 @@ PortableServer::ObjectId FT_TestReplica_i::object_id()const
   return this->object_id_.in();
 }
 
-
 /**
  * Initialize this object.
  * @param orbManager our ORB -- we keep var to it.
@@ -212,7 +208,6 @@ int FT_TestReplica_i::init (CORBA::ORB_var & orb, const ACE_TCHAR* file_persiste
   this->poa_ =
     PortableServer::POA::_narrow (poa_object.in ());
 
-
   if (CORBA::is_nil(this->poa_.in ()))
   {
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -224,7 +219,6 @@ int FT_TestReplica_i::init (CORBA::ORB_var & orb, const ACE_TCHAR* file_persiste
     this->poa_->the_POAManager ();
 
   poa_manager->activate ();
-
 
   // Register with the POA.
 
@@ -244,7 +238,6 @@ int FT_TestReplica_i::fini ()
 {
   return 0;
 }
-
 
 /////////////////////////////////////////////////////
 // class FT_TestReplica_i:  PullMonitorable interface
@@ -414,7 +407,6 @@ void FT_TestReplica_i::request_quit()
 {
   this->death_pending_ = FT_TEST::TestReplica::WHILE_IDLE;
 }
-
 
 void FT_TestReplica_i::store(long counter)
 {

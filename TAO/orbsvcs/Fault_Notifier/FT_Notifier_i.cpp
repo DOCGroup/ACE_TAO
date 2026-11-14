@@ -48,7 +48,6 @@
   }                           \
   return /* value goes here */
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::FT_FaultNotifier_i::~FT_FaultNotifier_i ()
@@ -61,7 +60,6 @@ TAO::FT_FaultNotifier_i::~FT_FaultNotifier_i ()
   {
   }
 }
-
 
 int TAO::FT_FaultNotifier_i::idle (int & result)
 {
@@ -91,7 +89,6 @@ int TAO::FT_FaultNotifier_i::idle (int & result)
 
 ////////////////////////////////////////////
 // FT_FaultNotifier_i private methods
-
 
 // TODO: find this a common home
 int TAO::FT_FaultNotifier_i::write_ior ()
@@ -167,7 +164,6 @@ PortableServer::POA_ptr TAO::FT_FaultNotifier_i::_default_POA ()
   return this->poa_.in();
 }
 
-
 void TAO::FT_FaultNotifier_i::_remove_ref ()
 {
   notify_channel_->destroy();
@@ -232,7 +228,6 @@ int TAO::FT_FaultNotifier_i::init (CORBA::ORB_ptr orb )
   this->poa_ =
     PortableServer::POA::_narrow (poa_object.in ());
 
-
   if (CORBA::is_nil(this->poa_.in ()))
   {
     ORBSVCS_ERROR_RETURN ((LM_ERROR,
@@ -255,7 +250,6 @@ int TAO::FT_FaultNotifier_i::init (CORBA::ORB_ptr orb )
     this->poa_->id_to_reference (object_id_.in ());
 
   this->ior_ = this->orb_->object_to_string (this_obj.in ());
-
 
   ////////////////////////////////////////////////
   // Register with coresident Notification Channel

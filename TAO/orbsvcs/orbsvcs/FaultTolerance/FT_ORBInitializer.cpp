@@ -84,7 +84,6 @@ TAO_FT_ORBInitializer::register_server_request_interceptors (
   info->add_server_request_interceptor (server_interceptor.in ());
 }
 
-
 void
 TAO_FT_ORBInitializer::register_client_request_interceptors (
     PortableInterceptor::ORBInitInfo_ptr info)

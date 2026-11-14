@@ -25,7 +25,6 @@ class ServantLocator :
   //   This class is used by a POA with USE_SERVANT_MANAGER and
   //   NON_RETAIN policy.
 public:
-  /// constructor
   explicit ServantLocator (CORBA::ORB_ptr orb);
 
   ServantLocator (ServantLocator const &) = delete;

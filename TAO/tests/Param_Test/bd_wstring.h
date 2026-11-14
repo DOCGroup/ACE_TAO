@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef PARAM_TEST_BOUNDED_WSTRING_H
 #define PARAM_TEST_BOUNDED_WSTRING_H
 

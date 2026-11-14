@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #include "ace/Signal.h"
 
 #include "ace/Service_Config.h"
@@ -33,7 +32,6 @@
 
 #include "ace/Task.h"
 #include "ace/OS_main.h"
-
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
   // This only works on Win32 platforms and on Unix platforms supporting
@@ -71,7 +69,6 @@ static u_short port = ACE_DEFAULT_SERVER_PORT;
 // Size of each initial asynchronous <read> operation.
 static int initial_read_size = BUFSIZ;
 
-
 #define MyMutex ACE_Recursive_Thread_Mutex
 //#define MyMutex ACE_Thread_Mutex
 //#define MyMutex ACE_Null_Mutex
@@ -84,7 +81,6 @@ class MyTask: public ACE_Task<ACE_MT_SYNCH>
 public:
   int svc () override;
 };
-
 
 int MyTask::svc ()
 {
@@ -140,7 +136,6 @@ private:
   static long nSessions ;
 };
 
-
 long Receiver::nSessions = 0 ;
 
 Receiver::Receiver ()
@@ -179,13 +174,11 @@ bool Receiver::check_destroy ()
   return false ;
 }
 
-
 void Receiver::open (ACE_HANDLE handle,
                      ACE_Message_Block &)
 {
   ACE_DEBUG ((LM_DEBUG,
               "%N:%l:Receiver::open called\n"));
-
 
   this->handle_ = handle;
 
@@ -206,7 +199,6 @@ void Receiver::open (ACE_HANDLE handle,
       initiate_read_stream ();
     }
 
-
   check_destroy ();
 }
 
@@ -219,7 +211,6 @@ int Receiver::initiate_read_stream ()
   // <write> data asynchronously to the file.
   ACE_DEBUG ((LM_DEBUG,
               "initiate_read_stream called\n"));
-
 
   ACE_Message_Block *mb {};
   ACE_NEW_RETURN (mb,
@@ -504,7 +495,6 @@ int Sender::initiate_read_stream ()
   ACE_DEBUG ((LM_DEBUG,
               "initiate_read_stream called\n"));
 
-
   ACE_Message_Block *mb {};
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block (BUFSIZ + 1),
@@ -524,7 +514,6 @@ int Sender::initiate_read_stream ()
   return 0;
 }
 
-
 void Sender::handle_write_stream (const ACE_Asynch_Write_Stream::Result
                                   &result)
 {
@@ -534,7 +523,6 @@ void Sender::handle_write_stream (const ACE_Asynch_Write_Stream::Result
   // Reset pointers.
   result.message_block ().rd_ptr (result.message_block ().rd_ptr () -
                                   result.bytes_transferred ());
-
 
   ACE_DEBUG ((LM_DEBUG, "********************\n"));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_to_write",
@@ -679,7 +667,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_Proactor::instance( & Proactor );
 
-
   MyTask  Task1 ;
 
   if (Task1.activate (THR_NEW_LWP, nThreads ) == -1)
@@ -716,7 +703,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       sender.close () ; // disconnect to get reciever error !!!
     }
-
 
   ACE_Thread_Manager * pTM = ACE_Thread_Manager::instance();
 

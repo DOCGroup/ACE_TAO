@@ -18,7 +18,6 @@ class Session
   : public virtual POA_Test::Session
 {
 public:
-  /// Constructor
   Session (Test::Session_Control_ptr control,
            CORBA::ULong payload_size,
            CORBA::ULong thread_count,
@@ -29,7 +28,6 @@ public:
   Session &operator= (Session const &) = delete;
   Session &operator= (Session &&) = delete;
 
-  /// Destructor
   ~Session () override = default;
 
   /// Run one of the experiment threads

@@ -27,7 +27,6 @@
 class Thread_Task : public Periodic_Task
 {
  public:
-  /// Constructor
   Thread_Task () = default;
 
   Thread_Task (Thread_Task const &) = delete;

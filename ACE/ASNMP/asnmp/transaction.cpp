@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #include "ace/Reactor.h"
 #include "asnmp/transaction.h"
 #include <cstring>
@@ -126,12 +125,10 @@ int transaction::handle_timeout (ACE_Time_Value const &,
     return 0;
 }
 
-
 ACE_INET_Addr const &transaction::get_from_addr () const
 {
   return receive_addr_;
 }
-
 
 // return pdu to caller
 int transaction::result (Pdu &pdu, char *comm_str, ACE_INET_Addr *from)
@@ -162,7 +159,6 @@ transaction::transaction (ACE_SOCK_Dgram &io)
   : session_(io)
 {
 }
-
 
 int transaction::send ()
 {

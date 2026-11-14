@@ -11,13 +11,11 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Thread_Manager.h"
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_unistd.h"
-
 
 #if defined (ACE_HAS_THREADS)
 

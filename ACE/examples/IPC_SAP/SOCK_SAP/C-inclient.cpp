@@ -7,7 +7,6 @@
 #include "ace/OS_NS_netdb.h"
 #include "ace/Default_Constants.h"
 
-
 /* BSD socket client */
 
 int

@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Thread.h"
 #include "ace/Acceptor.h"
@@ -115,7 +114,6 @@ operator>> (ACE_SOCK_IOStream & stream, qchar *buf)
 
   return stream;
 }
-
 
 ACE_SOCK_IOStream &
 operator<< (ACE_SOCK_IOStream &stream, qchar *buf)
@@ -260,7 +258,6 @@ client (void *arg = 0)
 
   return 0;
 }
-
 
 // Test the server's ability to receive data from the client and then
 // begin a two-way conversation.

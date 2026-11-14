@@ -23,7 +23,6 @@ ACE::HTBP::Session::inbound (ACE::HTBP::Channel *s)
   this->inbound_ = s;
 }
 
-
 ACE_INLINE
 void
 ACE::HTBP::Session::outbound (ACE::HTBP::Channel *s)

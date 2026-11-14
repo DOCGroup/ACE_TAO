@@ -12,10 +12,8 @@ public:
   TReceiverImplementation& operator= (TReceiverImplementation const&) = delete;
   TReceiverImplementation& operator= (TReceiverImplementation&&) = delete;
 
-  /// Constructor.
   TReceiverImplementation () = default;
 
-  /// Destructor.
   ~TReceiverImplementation () override = default;
 
   void message (char const *msg) override;

@@ -735,7 +735,6 @@ Routing_Slip::enter_state_updating (Routing_Slip_Guard & guard)
   this->rspm_->update (*rs_mb);
 }
 
-
 void
 Routing_Slip::enter_state_changed_while_saving (Routing_Slip_Guard & guard)
 {

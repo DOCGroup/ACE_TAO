@@ -14,7 +14,6 @@ Event_impl::_copy_value ()
   return new Event_impl (this->value_ ());
 }
 
-
 void
 Event_impl::do_print ()
 {

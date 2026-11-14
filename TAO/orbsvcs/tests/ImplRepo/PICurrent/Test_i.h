@@ -15,10 +15,8 @@ class Terminator;
 class  Test_i : public virtual POA_Messenger
 {
 public:
-  //Constructor
   Test_i (Terminator &terminator);
 
-  //Destructor
   virtual ~Test_i ();
 
   virtual CORBA::Boolean send_message (
@@ -31,6 +29,5 @@ private:
 
   Terminator& terminator_;
 };
-
 
 #endif /* TESTI_H_  */

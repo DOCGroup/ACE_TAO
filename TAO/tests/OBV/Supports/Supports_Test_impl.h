@@ -45,7 +45,6 @@ class node_init_impl : public Supports_Test::Node_init
   CORBA::ValueBase *create_for_unmarshal () override;
 };
 
-
 class vt_graph_impl :
   public virtual OBV_Supports_Test::vt_graph,
   public virtual POA_Supports_Test::vt_graph,

@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "Malloc_Test.h"
 
@@ -23,7 +22,6 @@
 #include "ace/RW_Thread_Mutex.h"
 #include "ace/Time_Value.h"
 #include "ace/OS_NS_unistd.h"
-
 
 #if defined (ACE_HAS_PROCESS_SPAWN)
 
@@ -148,7 +146,6 @@ initialize (MALLOC *allocator)
                         allocator->malloc (sizeof (256)),
                         nullptr);
   allocator->free (gap);
-
 
   ACE_ALLOCATOR_RETURN (ptr,
                         allocator->malloc (sizeof (Test_Data)),

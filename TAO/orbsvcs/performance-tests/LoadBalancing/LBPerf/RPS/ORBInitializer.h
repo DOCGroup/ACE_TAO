@@ -43,7 +43,6 @@ class ORBInitializer
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   ORBInitializer () = default;
   ORBInitializer (ORBInitializer const &) = delete;
   ORBInitializer (ORBInitializer &&) = delete;
@@ -79,7 +78,6 @@ private:
   /// Interceptor that counts requests.
   ServerRequestInterceptor *interceptor_ {};
 };
-
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

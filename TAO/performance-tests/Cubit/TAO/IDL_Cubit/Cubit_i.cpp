@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #include "Cubit_Client.h"
 #include "Cubit_i.h"
 #include "RTI_IO.h"
@@ -106,14 +105,10 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (Cubit_i_Timeprobe_Description,
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
-// Constructor
-
 Cubit_Factory_i::Cubit_Factory_i (CORBA::ORB_ptr orb)
   : my_cubit_ (orb)
 {
 }
-
-// Destructor
 
 Cubit_Factory_i::~Cubit_Factory_i ()
 {
@@ -131,14 +126,10 @@ Cubit_Factory_i::set_default_poa (PortableServer::POA_ptr poa)
   this->my_cubit_.set_default_poa (poa);
 }
 
-// Constructor
-
 Cubit_i::Cubit_i (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
-
-// Destructor
 
 Cubit_i::~Cubit_i ()
 {
@@ -418,7 +409,6 @@ void Cubit_i::shutdown ()
 
   this->orb_->shutdown ();
 }
-
 
 void
 Cubit_i::ping ()

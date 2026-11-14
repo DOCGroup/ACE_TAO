@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef NOTIFY_TESTS_FILTER_H
 #define NOTIFY_TESTS_FILTER_H
 

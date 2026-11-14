@@ -67,7 +67,6 @@ TAO_FT_IOGR_Property::set_property (
   return true;
 }
 
-
 CORBA::Boolean
 TAO_FT_IOGR_Property::is_primary_set (
     CORBA::Object_ptr ior)
@@ -77,7 +76,6 @@ TAO_FT_IOGR_Property::is_primary_set (
 
   return false;
 }
-
 
 CORBA::Object_ptr
 TAO_FT_IOGR_Property::get_primary (
@@ -126,7 +124,6 @@ TAO_FT_IOGR_Property::get_primary (
 
   CORBA::Object_var new_obj = temp_obj;
 
-
   // Clean up in case of errors.
   if (CORBA::is_nil (new_obj.in ()))
     {
@@ -139,7 +136,6 @@ TAO_FT_IOGR_Property::get_primary (
 
   return new_obj._retn ();
 }
-
 
 CORBA::Boolean
 TAO_FT_IOGR_Property::set_primary (
@@ -175,7 +171,6 @@ TAO_FT_IOGR_Property::set_primary (
 
   CORBA::ULong const count =
     ior2->_stubobj ()->base_profiles ().profile_count ();
-
 
   for (CORBA::ULong ctr {};
        ctr < count;
@@ -277,10 +272,8 @@ TAO_FT_IOGR_Property::encode_properties (
       buf += i->length ();
     }
 
-
   return status;
 }
-
 
 TAO_Profile *
 TAO_FT_IOGR_Property::get_primary_profile (
@@ -311,7 +304,6 @@ TAO_FT_IOGR_Property::get_primary_profile (
     }
   return nullptr;
 }
-
 
 CORBA::Boolean
 TAO_FT_IOGR_Property::get_tagged_component (

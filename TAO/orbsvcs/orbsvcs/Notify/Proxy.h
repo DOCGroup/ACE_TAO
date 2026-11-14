@@ -93,7 +93,6 @@ public:
   virtual void admin_types_changed (const CosNotification::EventTypeSeq & added,
                                     const CosNotification::EventTypeSeq & removed) = 0;
 
-
   /// Override, TAO_Notify_Object::qos_changed
   void qos_changed (TAO_Notify_QoSProperties const &qos_properties) override;
 

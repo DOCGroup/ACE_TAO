@@ -70,7 +70,6 @@ TAO_FT_ClientORBInitializer::register_policy_factories (
   */
 }
 
-
 void
 TAO_FT_ClientORBInitializer::register_client_request_interceptors (
     PortableInterceptor::ORBInitInfo_ptr info)

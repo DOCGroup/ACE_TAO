@@ -18,7 +18,6 @@
 
 #include "tao/Connection_Purging_Strategy.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**

@@ -251,7 +251,6 @@ ST_AMH_Server::write_ior_to_file (CORBA::String_var const &ior,
   return 0;
 }
 
-
 // ------------------------------------------------------------------------
 //
 static ACE_THR_FUNC_RETURN
@@ -288,7 +287,6 @@ start_client (void *arg)
 
   return ACE_THR_FUNC_RETURN_NULL;
 }
-
 
 // ------------------------------------------------------------------------
 //

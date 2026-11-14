@@ -70,7 +70,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       Test::Hello_var hello =
         Test::Hello::_narrow (object.in ());
 
-
       CORBA::String_var ior =
         orb->object_to_string (hello.in ());
 

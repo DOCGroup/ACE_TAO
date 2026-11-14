@@ -142,7 +142,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               ACE_TEXT("(%P|%t) Server: ")
               ACE_TEXT("received %b\n"),total_recv));
 
-
   ACE_OS::strcpy (buffer,"I hear you !");
   ssize_t n = stream.send (buffer, ACE_OS::strlen (buffer)+1);
   if (n == -1)

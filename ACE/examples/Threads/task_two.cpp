@@ -9,7 +9,6 @@
 #include <atomic>
 #include <memory>
 
-
 #if defined (ACE_HAS_THREADS)
 
 static std::atomic<int> task_count {0};

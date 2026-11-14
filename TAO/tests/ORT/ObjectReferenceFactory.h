@@ -38,7 +38,6 @@ class ObjectReferenceFactory
   , public virtual CORBA::DefaultValueRefCountBase
 {
  public:
-  /// Constructor
   explicit ObjectReferenceFactory (
     PortableInterceptor::ObjectReferenceFactory * old_orf);
 
@@ -62,7 +61,6 @@ class ObjectReferenceFactory
   //@}
 
 protected:
-  /// Destructor
   /**
    * Protected destructor to enforce proper memory management via
    * reference counting.

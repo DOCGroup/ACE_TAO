@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_FTRT_CLIENTORB_INTERCEPTOR_H
 #define TAO_FTRT_CLIENTORB_INTERCEPTOR_H
 

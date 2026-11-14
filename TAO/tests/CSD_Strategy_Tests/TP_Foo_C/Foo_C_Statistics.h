@@ -4,7 +4,6 @@
 #include "CSD_TP_Foo_C_Export.h"
 #include "StatisticsHelper.h"
 
-
 class CSD_TP_Foo_C_Export Foo_C_Statistics
 {
   public:
@@ -23,7 +22,6 @@ class CSD_TP_Foo_C_Export Foo_C_Statistics
     Foo_C_Statistics (Foo_C_Statistics &&) = delete;
     Foo_C_Statistics & operator= (Foo_C_Statistics const &) = delete;
     Foo_C_Statistics & operator= (Foo_C_Statistics &&) = delete;
-
 
   private:
     unsigned num_remote_clients_;

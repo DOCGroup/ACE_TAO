@@ -12,7 +12,6 @@
 #include "ace/Acceptor.h"
 #include "ace/SOCK_Acceptor.h"
 
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
@@ -562,7 +561,6 @@ namespace ACE
           }
         return 0;
       }
-
 
     bool
     ClientRequestHandler::get_passive_address (ACE_INET_Addr& addr)

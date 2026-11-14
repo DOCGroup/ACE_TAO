@@ -107,7 +107,6 @@ TAO_Asynch_Queued_Message::bytes_transferred (size_t &byte_count)
                          this->orb_core_->leader_follower ());
 }
 
-
 TAO_Queued_Message *
 TAO_Asynch_Queued_Message::clone (ACE_Allocator *alloc)
 {

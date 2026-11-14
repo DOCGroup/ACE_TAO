@@ -46,7 +46,6 @@ CompressorIdLevelListPolicy::policy_type ()
   return ZIOP::COMPRESSOR_ID_LEVEL_LIST_POLICY_ID;
 }
 
-
 CompressorIdLevelListPolicy *
 CompressorIdLevelListPolicy::clone () const
 {
@@ -131,7 +130,6 @@ CompressionEnablingPolicy::policy_type ()
   return ZIOP::COMPRESSION_ENABLING_POLICY_ID;
 }
 
-
 CompressionEnablingPolicy *
 CompressionEnablingPolicy::clone () const
 {
@@ -166,7 +164,6 @@ CompressionEnablingPolicy::compression_enabled ()
 {
   return this->value_;
 }
-
 
 TAO_Cached_Policy_Type
 CompressionEnablingPolicy::_tao_cached_type () const
@@ -220,7 +217,6 @@ CompressionLowValuePolicy::policy_type ()
   return ZIOP::COMPRESSION_LOW_VALUE_POLICY_ID;
 }
 
-
 CompressionLowValuePolicy *
 CompressionLowValuePolicy::clone () const
 {
@@ -256,7 +252,6 @@ CompressionLowValuePolicy::low_value ()
   return this->value_;
 }
 
-
 TAO_Cached_Policy_Type
 CompressionLowValuePolicy::_tao_cached_type () const
 {
@@ -289,7 +284,6 @@ CompressionMinRatioPolicy::policy_type ()
   // footprint of the class.
   return ZIOP::COMPRESSION_MIN_RATIO_POLICY_ID;
 }
-
 
 CompressionMinRatioPolicy *
 CompressionMinRatioPolicy::clone () const
@@ -325,7 +319,6 @@ CompressionMinRatioPolicy::ratio ()
 {
   return this->value_;
 }
-
 
 TAO_Cached_Policy_Type
 CompressionMinRatioPolicy::_tao_cached_type () const

@@ -7,9 +7,7 @@
  * parties.
  */
 
-
 /* ------------------------------------------------------------------------ */
-
 
 /*
  * func.h: Handles the function hash table
@@ -26,15 +24,12 @@
 #ifndef FUNC_H
 #define FUNC_H
 
-
 #include "netsite.h"
 #include "base/pblock.h"
 #include "base/session.h"   /* Session structure */
 #include "frame/req.h"      /* Request structure */
 
-
 /* -------------------------- Structure and Type -------------------------- */
-
 
 /*
  * FuncPtr is a pointer to our kind of functions
@@ -55,9 +50,7 @@ struct FuncStruct {
     struct FuncStruct *next;
 };
 
-
 /* --------------------------- Hash definitions --------------------------- */
-
 
 /*
  * This is a primitive hash function. Once more is known about the names of
@@ -67,9 +60,7 @@ struct FuncStruct {
 #define NUM_HASH 20
 #define FUNC_HASH(s) (s[0] % NUM_HASH)
 
-
 /* ------------------------------ Prototypes ------------------------------ */
-
 
 /*
  * func_init reads the static FuncStruct arrays and creates the global

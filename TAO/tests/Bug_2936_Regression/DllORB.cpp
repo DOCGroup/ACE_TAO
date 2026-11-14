@@ -5,15 +5,12 @@
 #include "ace/OS_NS_unistd.h"
 #include "tao/TAO_Singleton_Manager.h"
 
-
 DllORB::DllORB ()
   : failPrePostInit_ (3)
 {
 }
 
-
 DllORB::~DllORB () = default;
-
 
 int
 DllORB::init (int argc, ACE_TCHAR *argv[])
@@ -123,7 +120,6 @@ DllORB::init (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-
 int
 DllORB::fini ()
 {
@@ -198,7 +194,6 @@ DllORB::fini ()
   return 0;
 }
 
-
 int
 DllORB::svc ()
 {
@@ -218,6 +213,5 @@ DllORB::svc ()
 
   return result;
 }
-
 
 ACE_FACTORY_DEFINE (bug2936, DllORB)

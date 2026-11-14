@@ -49,4 +49,3 @@ Messenger_i::send_message (char const *user_name,
   return true;
 }
 
-

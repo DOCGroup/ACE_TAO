@@ -78,7 +78,6 @@ TAO_CEC_Event_Loader::init (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-
 CORBA::Object_ptr
 TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
                                      int argc,
@@ -193,7 +192,6 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
       PortableServer::POAManager_var const poa_manager =
         poa->the_POAManager ();
       poa_manager->activate ();
-
 
       // ****************************************************************
 

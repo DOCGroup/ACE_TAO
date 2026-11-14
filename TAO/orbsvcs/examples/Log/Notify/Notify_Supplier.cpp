@@ -185,7 +185,6 @@ Supplier::run (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-
 void
 Filter_StructuredPushSupplier::connect (
   CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin)

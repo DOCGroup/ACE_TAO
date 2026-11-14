@@ -10,7 +10,6 @@ class Hello
   : public virtual POA_Test::Hello
 {
 public:
-  /// Constructor
   explicit Hello (CORBA::ORB_ptr orb);
 
   Hello (Hello const &) = delete;
@@ -22,7 +21,6 @@ public:
   void method (CORBA::Short count) override;
 
   void set_callback (Test::CallBack_ptr cb) override;
-
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

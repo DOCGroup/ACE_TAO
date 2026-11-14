@@ -4,7 +4,6 @@
 #include "CSD_TP_Foo_B_Export.h"
 #include "StatisticsHelper.h"
 
-
 class CSD_TP_Foo_B_Export Foo_B_Statistics
 {
   public:

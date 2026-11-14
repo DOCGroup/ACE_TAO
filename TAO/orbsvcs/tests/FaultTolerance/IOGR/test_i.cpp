@@ -16,7 +16,6 @@ Simple_Server_i::remote_call ()
               ACE_TEXT ("Print out from process id (%P) hosting the servant\n")));
 }
 
-
 void
 Simple_Server_i::shutdown ()
 {

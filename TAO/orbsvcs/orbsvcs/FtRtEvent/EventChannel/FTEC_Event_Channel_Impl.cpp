@@ -35,7 +35,6 @@ void obtain_push_consumer_and_connect(TAO_FTEC_Event_Channel_Impl* ec,
   RtecEventChannelAdmin::ProxyPushConsumer_var consumer =
     ec->supplier_admin()->obtain();
 
-
   try{
     consumer->connect_push_supplier(push_supplier, qos);
   }
@@ -44,7 +43,6 @@ void obtain_push_consumer_and_connect(TAO_FTEC_Event_Channel_Impl* ec,
     throw;
   }
 }
-
 
 void connect_push_supplier(TAO_FTEC_Event_Channel_Impl* ec,
                            FtRtecEventChannelAdmin::Operation& op)
@@ -78,7 +76,6 @@ void obtain_push_supplier_and_connect(TAO_FTEC_Event_Channel_Impl* ec,
   RtecEventChannelAdmin::ProxyPushSupplier_var supplier =
     ec->consumer_admin()->obtain();
 
-
   try{
     supplier->connect_push_consumer(push_consumer, qos);
   }
@@ -87,7 +84,6 @@ void obtain_push_supplier_and_connect(TAO_FTEC_Event_Channel_Impl* ec,
     throw;
   }
 }
-
 
 void connect_push_consumer(TAO_FTEC_Event_Channel_Impl* ec,
                            FtRtecEventChannelAdmin::Operation& op)
@@ -117,7 +113,6 @@ void disconnect_push_supplier(TAO_FTEC_Event_Channel_Impl* ec,
 
   TAO_FTEC_ProxyPushSupplier* proxy = ec->find_proxy_push_supplier(op.object_id);
 
-
   if (proxy == nullptr) // proxy not found
     throw FTRT::InvalidUpdate();
 
@@ -137,14 +132,12 @@ void disconnect_push_consumer(TAO_FTEC_Event_Channel_Impl* ec,
   proxy->disconnect_push_consumer();
 }
 
-
 void suspend_connection (TAO_FTEC_Event_Channel_Impl* ec,
                          FtRtecEventChannelAdmin::Operation& op)
 {
   PortableServer::POA_var poa= ec->consumer_poa();
 
   TAO_FTEC_ProxyPushSupplier* proxy = ec->find_proxy_push_supplier(op.object_id);
-
 
   if (proxy == nullptr) // proxy not found
     throw FTRT::InvalidUpdate();
@@ -157,13 +150,11 @@ void resume_connection(TAO_FTEC_Event_Channel_Impl* ec,
 {
   TAO_FTEC_ProxyPushSupplier* proxy = ec->find_proxy_push_supplier(op.object_id);
 
-
   if (proxy == nullptr) // proxy not found
     throw FTRT::InvalidUpdate();
 
   proxy->resume_connection();
 }
-
 
 using Set_update_fun = void (*) (TAO_FTEC_Event_Channel_Impl* ec,
                                  FtRtecEventChannelAdmin::Operation& op);
@@ -195,7 +186,6 @@ TAO_FTEC_Event_Channel_Impl::factory()
   return static_cast<TAO_FTEC_Basic_Factory*> (TAO_EC_Event_Channel_Base::factory());
 }
 
-
 /// Start the internal threads (if any), etc.
 /// After this call the EC can be used.
 void
@@ -213,7 +203,6 @@ TAO_FTEC_Event_Channel_Impl::activate_object (
   consumer_admin()->activate(consumer_admin_oid);
 }
 
-
 // = The RtecEventChannelAdmin::EventChannel methods...
 /// The default implementation is:
 ///    this->consumer_admin ()->_this ();
@@ -225,7 +214,6 @@ TAO_FTEC_Event_Channel_Impl::for_consumers ()
   return RtecEventChannelAdmin::ConsumerAdmin::_narrow(obj.in());
 }
 
-
 /// The default implementation is:
 ///    this->supplier_admin ()->_this ();
 RtecEventChannelAdmin::SupplierAdmin_ptr
@@ -235,7 +223,6 @@ TAO_FTEC_Event_Channel_Impl::for_suppliers ()
   obj = IOGR_Maker::instance()->forge_iogr(obj.in());
   return RtecEventChannelAdmin::SupplierAdmin::_narrow(obj.in());
 }
-
 
 ::FtRtecEventChannelAdmin::ObjectId *
 TAO_FTEC_Event_Channel_Impl::connect_push_consumer (
@@ -267,10 +254,8 @@ TAO_FTEC_Event_Channel_Impl::connect_push_consumer (
                                    push_consumer,
                                    qos);
 
-
   return object_id._retn();
 }
-
 
 ::FtRtecEventChannelAdmin::ObjectId *
 TAO_FTEC_Event_Channel_Impl::connect_push_supplier (
@@ -346,7 +331,6 @@ void TAO_FTEC_Event_Channel_Impl::suspend_push_supplier (
   proxy->suspend_connection();
 }
 
-
 void TAO_FTEC_Event_Channel_Impl::resume_push_supplier (
         const FtRtecEventChannelAdmin::ObjectId & oid)
 {
@@ -409,7 +393,6 @@ void TAO_FTEC_Event_Channel_Impl::set_update (const FTRT::State & s)
   }
 }
 
-
 TAO_FTEC_ConsumerAdmin* TAO_FTEC_Event_Channel_Impl::consumer_admin () const
 {
   return static_cast<TAO_FTEC_ConsumerAdmin*> (TAO_EC_Event_Channel_Base::consumer_admin());
@@ -421,7 +404,6 @@ TAO_FTEC_SupplierAdmin* TAO_FTEC_Event_Channel_Impl::supplier_admin () const
 {
   return static_cast<TAO_FTEC_SupplierAdmin*> (TAO_EC_Event_Channel_Base::supplier_admin());
 }
-
 
 TAO_FTEC_ProxyPushSupplier*
 TAO_FTEC_Event_Channel_Impl::find_proxy_push_supplier(const FtRtecEventChannelAdmin::ObjectId& id)

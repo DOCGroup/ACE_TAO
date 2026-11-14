@@ -11,7 +11,6 @@ ACE_TCHAR const * const scpc_loadOrb = ACE_DYNAMIC_SERVICE_DIRECTIVE(
 
 ACE_TCHAR const *const scpc_unloadOrb = ACE_REMOVE_SERVICE_DIRECTIVE ("testDllOrb");
 
-
 ACE_TCHAR const * const scpc_loadPersistentPoa = ACE_DYNAMIC_SERVICE_DIRECTIVE(
   "testPersistentPoa",
   "bug2936",

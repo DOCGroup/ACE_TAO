@@ -139,7 +139,6 @@ create_supplieradmin (CosNotifyChannelAdmin::EventChannel_ptr ec)
   return CosNotifyChannelAdmin::SupplierAdmin::_duplicate (admin.in ());
 }
 
-
 static void
 SendEvents (TAO_Notify_Tests_SequencePushSupplier& supplier,
             int id,
@@ -209,7 +208,6 @@ create_suppliers (CosNotifyChannelAdmin::SupplierAdmin_ptr admin,
   supplier->connect (admin);
   return supplier;
 }
-
 
 // ******************************************************************
 // Main Section

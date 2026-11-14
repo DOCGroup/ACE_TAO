@@ -163,7 +163,6 @@ public:
    */
   int signal_number () const;
 
-
   virtual ~ACE_Asynch_Result ();
 
 protected:
@@ -243,7 +242,6 @@ public:
    *   associated  error  status is set to ECANCELED.
    */
   int cancel ();
-
 
   // = Access methods.
 
@@ -1280,7 +1278,6 @@ public:
     ACE_TRANSMIT_FILE_BUFFERS transmit_buffers_;
   };
 };
-
 
 // Forward declarations
 class ACE_Asynch_Read_Dgram_Result_Impl;

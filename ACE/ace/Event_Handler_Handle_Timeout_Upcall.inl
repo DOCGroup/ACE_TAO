@@ -65,5 +65,4 @@ cancel_timer (ACE_Timer_Queue &,
   return 0;
 }
 
-
 ACE_END_VERSIONED_NAMESPACE_DECL

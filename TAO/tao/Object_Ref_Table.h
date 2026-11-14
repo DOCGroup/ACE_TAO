@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_OBJECT_REF_TABLE_H
 #define TAO_OBJECT_REF_TABLE_H
 

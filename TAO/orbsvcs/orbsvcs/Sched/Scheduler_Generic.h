@@ -6,7 +6,6 @@
  *  @author David Levine
  */
 
-
 #ifndef SCHEDULER_INTERNAL_H
 #define SCHEDULER_INTERNAL_H
 #include /**/ "ace/pre.h"
@@ -116,7 +115,6 @@ private:
 
   /// This protects access to the scheduler during configuration runs.
   LOCK lock_;
-
 
   /// @name Internal scheduler operations
   /// @{

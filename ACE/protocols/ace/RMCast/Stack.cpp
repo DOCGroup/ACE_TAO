@@ -31,7 +31,6 @@ namespace ACE_RMCast
     out_ = nullptr;
   }
 
-
   // In_Element
   //
 

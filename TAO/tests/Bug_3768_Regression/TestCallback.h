@@ -33,7 +33,6 @@ class TestCallback
   : public virtual POA_Test::TestCallback
 {
 public:
-  /// Constructor
   explicit TestCallback (CORBA::ORB_ptr const orb);
   TestCallback (TestCallback const &) = delete;
   TestCallback (TestCallback &&) = delete;

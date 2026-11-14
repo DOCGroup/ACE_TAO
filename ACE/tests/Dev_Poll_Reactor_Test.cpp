@@ -35,7 +35,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_netdb.h"
 
-
 using SVC_HANDLER = ACE_Svc_Handler<ACE_SOCK_Stream, ACE_NULL_SYNCH>;
 
 // ----------------------------------------------------
@@ -60,7 +59,6 @@ public:
 private:
   unsigned int call_count_;
 };
-
 
 class Server : public SVC_HANDLER
 {
@@ -263,7 +261,6 @@ Server::handle_timeout (const ACE_Time_Value &,
 //   ACE_DEBUG ((LM_INFO,
 //               "SERVER HANDLE = %d\n",
 //               this->get_handle ()));
-
 
   ++this->call_count_;
 

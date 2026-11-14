@@ -119,7 +119,6 @@ void ThreadTest::workerThread()
                   ACE_TEXT ("%t Thread finished double acquire.\n")));
     }
 
-
    // Wait for the STOP condition to occur
    m_stopCondition.wait();
    ACE_DEBUG ((LM_DEBUG,

@@ -9,7 +9,6 @@
 #include "ace/Service_Object.h"
 #include "ace/SOCK_Acceptor.h"
 
-
 class Service_Reporter : public ACE_Service_Object {
 public:
   explicit Service_Reporter (ACE_Reactor *r = ACE_Reactor::instance ())

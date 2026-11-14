@@ -20,7 +20,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 class Server_Task : public ACE_Task_Base
 {
 public:
-  /// Constructor
   Server_Task (ACE_TCHAR const *output,
                ACE_TCHAR const *simple_test_output,
                CORBA::ORB_ptr sorb,

@@ -60,7 +60,6 @@ be_visitor_interface_any_op_ch::visit_interface (be_interface *node)
                         -1);
     }
 
-
   node->cli_hdr_any_op_gen (true);
   return 0;
 }

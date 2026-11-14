@@ -134,7 +134,6 @@ TAO_Priority_Mapping_Manager_var::upcast (void *src)
   return *tmp;
 }
 
-
 // Inline operations for class TAO_Priority_Mapping_Manager_out
 
 ACE_INLINE

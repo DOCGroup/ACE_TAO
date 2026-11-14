@@ -43,7 +43,6 @@ class ServantLocator
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   explicit ServantLocator (CORBA::ORB_ptr orb);
 
   ServantLocator (ServantLocator const &) = delete;
@@ -66,7 +65,6 @@ public:
 
   bool error_status_ {};
 protected:
-  /// Destructor.
   ~ServantLocator () override = default;
 
 private:

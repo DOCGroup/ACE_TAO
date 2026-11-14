@@ -8,7 +8,6 @@
  */
 //==========================================================================
 
-
 #ifndef ACE_SV_MESSAGE_H
 #define ACE_SV_MESSAGE_H
 
@@ -52,7 +51,6 @@ protected:
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
-
 
 #if defined (__ACE_INLINE__)
 #include "ace/SV_Message.inl"

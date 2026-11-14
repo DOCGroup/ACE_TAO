@@ -29,7 +29,6 @@ LB_Factory_Server::run ()
   return 0;
 }
 
-
 int
 LB_Factory_Server::destroy ()
 {
@@ -97,7 +96,6 @@ LB_Factory_Server::parse_args (int argc, ACE_TCHAR *argv[])
                            argv[0]),
                           -1);
       }
-
 
   // Indicates successful parsing of the command line
   return 0;

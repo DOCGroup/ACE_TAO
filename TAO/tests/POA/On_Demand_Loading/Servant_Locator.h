@@ -32,7 +32,6 @@ class ServantLocator_i :
   //   Manager. It is invoked when the POA has an USE_SERVANT_MANAGER
   //   policy and a servant_retention policy of NON_RETAIN type.
 public:
-  /// Constructor.
   explicit ServantLocator_i (CORBA::ORB_ptr orb);
 
   ServantLocator_i (ServantLocator_i const &) = delete;

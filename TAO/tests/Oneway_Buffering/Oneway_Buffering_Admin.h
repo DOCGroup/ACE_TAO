@@ -10,7 +10,6 @@ class Oneway_Buffering_Admin
   : public virtual POA_Test::Oneway_Buffering_Admin
 {
 public:
-  /// Constructor
   explicit Oneway_Buffering_Admin (CORBA::ORB_ptr orb);
 
   Oneway_Buffering_Admin (Oneway_Buffering_Admin const &) = delete;

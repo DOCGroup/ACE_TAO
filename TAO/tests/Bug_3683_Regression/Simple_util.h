@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_UTIL_H
 #define TAO_UTIL_H
 
@@ -35,10 +34,8 @@ template <class Servant>
 class Server
 {
 public:
-  /// Constructor.
   Server ();
 
-  /// Destructor.
   ~Server () = default;
 
   /// Initialize the Server state - parsing arguments and waiting.
@@ -96,10 +93,8 @@ template <class ServerInterface>
 class Client
 {
 public:
-  /// Constructor.
   Client () = default;
 
-  /// Destructor.
   ~Client ();
 
   /// Initialize the client communication endpoint with server.

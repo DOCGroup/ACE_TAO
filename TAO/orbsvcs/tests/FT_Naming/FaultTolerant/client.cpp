@@ -35,10 +35,8 @@ class My_Test_Object :
 {
 public:
   My_Test_Object (CORBA::Short id = 0);
-  // Constructor.
 
   ~My_Test_Object ();
-  // Destructor.
 
   // = Interface implementation accessor methods.
 
@@ -139,7 +137,6 @@ do_equivalence_objectgroup_test (
   int c_breadth,
   int c_depth,
   int o_breadth);
-
 
 //==============================================================================
 //
@@ -468,7 +465,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_TEXT ("ERROR: Unable to resolve name servers"));
     return RC_ERROR;
   }
-
 
   return rc;
 }
@@ -1065,7 +1061,6 @@ do_failover_objectgroup_test (
                           RC_ERROR);
     }
 
-
     const ACE_TCHAR * test_group = ACE_TEXT ("test_group");
     const ACE_TCHAR * policy     = ACE_TEXT ("round");
 
@@ -1086,7 +1081,6 @@ do_failover_objectgroup_test (
                    ACE_TEXT ("INFO: Object Group Found In Repository\n")));
     }
 
-
   }
   catch (const CORBA::Exception& ex)
   {
@@ -1097,7 +1091,6 @@ do_failover_objectgroup_test (
 
   return RC_SUCCESS;
 }
-
 
 //==============================================================================
 //
@@ -1190,7 +1183,6 @@ do_persistence_name_test (
         root_context_1->bind (level1, obj1.in ());
         ACE_OS::thr_yield ();
       }
-
 
       // See if the newly bound object is available in the repository
       try {
@@ -1317,7 +1309,6 @@ do_persistence_name_test (
 
   return RC_SUCCESS;
 }
-
 
 /// Persistence ObjectGroup Test
 int
@@ -1730,7 +1721,6 @@ do_equivalence_name_test (
 
     int ns2_count =
       root_context_2->_stubobj ()->base_profiles ().profile_count ();
-
 
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("INFO: ns1ref profile count: %d\n"),
@@ -2206,7 +2196,6 @@ do_equivalence_name_test (
   return RC_SUCCESS;
 }
 
-
 /// Equivalence ObjectGroup Test
 int
 do_equivalence_objectgroup_test (
@@ -2224,7 +2213,6 @@ do_equivalence_objectgroup_test (
   const int RC_SUCCESS =  0;
   const int RC_ERROR   = -1;
   int error_count = 0;
-
 
   FT_Naming::NamingManager_var naming_manager_1;
   FT_Naming::NamingManager_var naming_manager_2;
@@ -2318,7 +2306,6 @@ do_equivalence_objectgroup_test (
     int nm2_count =
       naming_manager_2->_stubobj ()->base_profiles ().profile_count ();
 
-
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("INFO: nm1ref profile count: %d\n"),
                 nm1_count));
@@ -2326,7 +2313,6 @@ do_equivalence_objectgroup_test (
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("INFO: nm2ref profile count: %d\n"),
                 nm2_count));
-
 
     /// Setup 1st NS_group_svc with 1st Naming Manager
     NS_group_svc svc1;

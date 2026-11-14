@@ -19,7 +19,6 @@ TAO_Log_i::log_compaction_interval_ = ACE_Time_Value (60);
 ACE_Time_Value const
 TAO_Log_i::log_flush_interval_ = ACE_Time_Value (5 * 60);
 
-
 TAO_Log_i::TAO_Log_i (CORBA::ORB_ptr orb,
                       TAO_LogMgr_i &logmgr_i,
                       DsLogAdmin::LogMgr_ptr factory,
@@ -59,7 +58,6 @@ TAO_Log_i::init ()
   this->thresholds_ = thresholds.in ();
   this->reset_capacity_alarm_threshold ();
 
-
   // fetch the log QoS from the log record store
   DsLogAdmin::QoSList_var const qos =
     this->recordstore_->get_log_qos ();
@@ -67,14 +65,12 @@ TAO_Log_i::init ()
   // initialize the internal representation.
   this->reset_log_qos (qos.in ());
 
-
   // fetch the week mask from the log record store
   DsLogAdmin::WeekMask_var const week_mask =
     this->recordstore_->get_week_mask ();
 
   // initialize the internal representation
   this->reset_week_mask (week_mask.in ());
-
 
   // fetch the maximum record life from the log record store
   CORBA::ULong const max_record_life =
@@ -935,7 +931,6 @@ TAO_Log_i::get_record_attribute (DsLogAdmin::RecordId id)
                            this->recordstore_->lock (),
                            CORBA::INTERNAL ());
 
-
   return this->recordstore_->get_record_attribute (id);
 }
 
@@ -1313,7 +1308,6 @@ TAO_Log_i::validate_week_mask (DsLogAdmin::WeekMask const & masks)
     }
 }
 
-
 bool
 operator==(DsLogAdmin::CapacityAlarmThresholdList const & rhs,
            DsLogAdmin::CapacityAlarmThresholdList const & lhs)
@@ -1342,7 +1336,6 @@ operator!=(DsLogAdmin::CapacityAlarmThresholdList const & rhs,
 {
   return !(lhs == rhs);
 }
-
 
 bool
 operator==(DsLogAdmin::IntervalsOfDay const & rhs,
@@ -1373,7 +1366,6 @@ operator!=(DsLogAdmin::IntervalsOfDay const & rhs,
   return !(lhs == rhs);
 }
 
-
 bool
 operator==(DsLogAdmin::QoSList const & rhs,
            DsLogAdmin::QoSList const & lhs)
@@ -1403,7 +1395,6 @@ operator!=(DsLogAdmin::QoSList const & rhs,
   return !(lhs == rhs);
 }
 
-
 bool
 operator==(DsLogAdmin::Time24 const & rhs,
            DsLogAdmin::Time24 const & lhs)
@@ -1418,7 +1409,6 @@ operator!=(DsLogAdmin::Time24 const & rhs,
 {
   return !(lhs == rhs);
 }
-
 
 bool
 operator==(DsLogAdmin::Time24Interval const & rhs,
@@ -1435,7 +1425,6 @@ operator!=(DsLogAdmin::Time24Interval const & rhs,
   return !(lhs == rhs);
 }
 
-
 bool
 operator==(DsLogAdmin::TimeInterval const & rhs,
            DsLogAdmin::TimeInterval const & lhs)
@@ -1451,7 +1440,6 @@ operator!=(DsLogAdmin::TimeInterval const & rhs,
   return !(lhs == rhs);
 }
 
-
 bool
 operator==(DsLogAdmin::WeekMaskItem const & rhs,
            DsLogAdmin::WeekMaskItem const & lhs)
@@ -1466,7 +1454,6 @@ operator!=(DsLogAdmin::WeekMaskItem const & rhs,
 {
   return !(lhs == rhs);
 }
-
 
 bool
 operator==(DsLogAdmin::WeekMask const & rhs,

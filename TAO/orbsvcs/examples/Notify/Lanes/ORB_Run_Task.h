@@ -21,7 +21,6 @@
 class TAO_Notify_ORB_Run_Task : public ACE_Task_Base
 {
 public:
-  /// Constructor
   explicit TAO_Notify_ORB_Run_Task (TAO_Notify_ORB_Objects& orb_objects);
   ~TAO_Notify_ORB_Run_Task () override = default;
   TAO_Notify_ORB_Run_Task (TAO_Notify_ORB_Run_Task const&) = delete;

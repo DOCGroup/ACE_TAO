@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef LB_FACTORY_SERVER_H
 #define LB_FACTORY_SERVER_H
 
@@ -39,7 +38,6 @@ struct LB_Factory_Server_Options
 class LB_Factory_Server
 {
 public:
-  /// Constructor
   LB_Factory_Server (int argc, ACE_TCHAR ** argv);
 
   LB_Factory_Server (LB_Factory_Server const &) = delete;

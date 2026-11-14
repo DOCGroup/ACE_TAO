@@ -117,7 +117,6 @@ Cancel_Check::open (void *)
   return 0;
 }
 
-
 /**
  * @class Stack_Size_Check
  *
@@ -215,7 +214,6 @@ Stack_Size_Check::open (void *)
 }
 
 #endif /* ACE_HAS_THREADS */
-
 
 int
 run_main (int, ACE_TCHAR *[])

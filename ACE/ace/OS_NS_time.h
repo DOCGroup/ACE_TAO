@@ -227,7 +227,6 @@ namespace ACE_OS
                           struct tm *res);
 #endif
 
-
   // Get the current time.
   extern ACE_Export
   time_t mktime (struct tm *timeptr);
@@ -286,7 +285,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #else
 #  define ACE_GETHRTIME_NAME ACE_gethrtime
 #endif  /* ACE_HAS_VERSIONED_NAMESPACE == 1 */
-
 
 #if defined (ACE_HAS_INLINED_OSCALLS)
 #  if defined (ACE_INLINE)

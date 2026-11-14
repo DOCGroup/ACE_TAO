@@ -10,7 +10,6 @@ class Manager
 {
 public:
   explicit Manager (CORBA::ORB_ptr orb);
-  // Constructor
 
   // = The skeleton methods
   void start_workers (CORBA::Short worker_count,

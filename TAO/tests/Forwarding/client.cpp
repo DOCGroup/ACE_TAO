@@ -51,7 +51,6 @@ class Worker : public ACE_Task_Base
 {
 public:
   Worker (CORBA::ORB_ptr orb, Client_Options const &options);
-  // Constructor
 
   void run_test ();
   // The actual implementation of the test

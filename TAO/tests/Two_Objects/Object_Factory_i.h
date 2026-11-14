@@ -8,7 +8,6 @@
 
 #include "ace/Auto_Event.h"
 
-
 /// Implement the MTServer::Test interface
 class Object_Factory_i
   : public virtual POA_Two_Objects_Test::Object_Factory

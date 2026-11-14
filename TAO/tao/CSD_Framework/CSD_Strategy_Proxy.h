@@ -24,7 +24,6 @@
 
 #include "tao/CSD_Framework/CSD_Strategy_Base.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ServerRequest;
@@ -68,7 +67,6 @@ namespace TAO
       /// the smart pointer to the custom dispatching strategy object).
       void dispatch_request(TAO_ServerRequest& server_request,
                             TAO::Portable_Server::Servant_Upcall& upcall);
-
 
       /// Event - The POA has been (or is being) activated.
       bool poa_activated_event(TAO_ORB_Core& orb_core);

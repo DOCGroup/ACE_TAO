@@ -133,7 +133,6 @@ TAO_Time_Policy_Manager::destroy_timer_queue (ACE_Timer_Queue *tmq)
   this->time_policy_strategy_->destroy_timer_queue (tmq);
 }
 
-
 ACE_STATIC_SVC_DEFINE (TAO_Time_Policy_Manager,
                        ACE_TEXT ("Time_Policy_Manager"),
                        ACE_SVC_OBJ_T,

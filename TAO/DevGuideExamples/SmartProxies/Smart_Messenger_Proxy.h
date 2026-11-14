@@ -1,6 +1,5 @@
 // Smart_Messenger_Proxy.h
 
-
 #include "MessengerC.h"
 #include "LoggerC.h"
 
@@ -18,7 +17,6 @@ class Smart_Messenger_Proxy_Factory : public TAO_Messenger_Default_Proxy_Factory
   private:
     Logger_var logger_;
 };
-
 
 class Smart_Messenger_Proxy : public TAO_Messenger_Smart_Proxy_Base
 {

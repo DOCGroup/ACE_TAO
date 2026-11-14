@@ -9,7 +9,6 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Signal.h"
 
-
 #if defined (ACE_HAS_THREADS)
 
 extern "C" void

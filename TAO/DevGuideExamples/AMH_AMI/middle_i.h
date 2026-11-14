@@ -48,5 +48,4 @@ private:
   Inner_var inner_;
 };
 
-
 #endif /* MIDDLE_I_H_  */

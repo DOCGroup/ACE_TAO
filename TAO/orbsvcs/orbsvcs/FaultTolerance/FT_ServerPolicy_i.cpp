@@ -9,7 +9,6 @@
 #include "orbsvcs/FaultTolerance/FT_ServerPolicy_i.inl"
 #endif /* __ACE_INLINE__ */
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Boolean
@@ -17,7 +16,6 @@ TAO_FT_Heart_Beat_Enabled_Policy::heartbeat_enabled_policy_value ()
 {
   return this->heartbeat_enabled_value_;
 }
-
 
 CORBA::Policy_ptr
 TAO_FT_Heart_Beat_Enabled_Policy::create (CORBA::Any const &val)
@@ -41,7 +39,6 @@ TAO_FT_Heart_Beat_Enabled_Policy::policy_type ()
 {
   return FT::HEARTBEAT_ENABLED_POLICY;
 }
-
 
 CORBA::Policy_ptr
 TAO_FT_Heart_Beat_Enabled_Policy::copy ()

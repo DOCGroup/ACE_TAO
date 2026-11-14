@@ -21,7 +21,6 @@ operator<< (std::ostream &os,
   return os << p.first << " " << p.second;
 }
 
-
 void
 load_file (Vector &vector,
            char const *filename)

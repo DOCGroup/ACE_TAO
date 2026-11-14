@@ -105,7 +105,6 @@ Vault_Client_Request_Interceptor::receive_exception (
                 exception_id.in ()));
 }
 
-
 //////////////////////////////////  Context /////////////////////////
 
 char *
@@ -179,7 +178,6 @@ Vault_Client_Request_Context_Interceptor::receive_exception (
                 id,
                 exception_id.in ()));
 }
-
 
 ///////////////////////////////////Dynamic ////////////////////////////////////
 
@@ -284,7 +282,6 @@ Vault_Client_Request_Dynamic_Interceptor::receive_exception (
                 exception_id.in ()));
 }
 
-
 //////////////////////////////NOOP///////////////////////////////////////
 
 char *
@@ -343,5 +340,4 @@ Vault_Client_Request_NOOP_Interceptor::receive_exception (
                 id,
                 exception_id.in ()));
 }
-
 

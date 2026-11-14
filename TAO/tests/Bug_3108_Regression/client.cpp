@@ -34,7 +34,6 @@ parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior, int &n_tasks,
   return 0;
 }
 
-
 class Client : public ACE_Task_Base
 {
 public:

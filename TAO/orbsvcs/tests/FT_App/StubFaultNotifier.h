@@ -70,7 +70,6 @@ public:
 
   PortableServer::ObjectId objectId()const;
 
-
   /**
    * Clean house for process shut down.
    */
@@ -78,7 +77,6 @@ public:
 
   ////////////////////////////////
   // CORBA interface FaultNotifier
-
 
   void push_structured_fault (
     CosNotification::StructuredEvent const &event) override;
@@ -148,7 +146,6 @@ private:
    * A collection of files containing replica IORs
    */
   ACE_Vector < const char * > iorReplicaFiles_;
-
 
   ACE_Vector < FT::PullMonitorable_var > replicas_;
   /**

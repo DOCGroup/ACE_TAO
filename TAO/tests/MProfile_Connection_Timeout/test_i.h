@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_MPROFILE_CONNECTION_TIMEOUT_TEST_I_H
 #define TAO_MPROFILE_CONNECTION_TIMEOUT_TEST_I_H
 

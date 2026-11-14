@@ -17,7 +17,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/OS_NS_sys_wait.h"
 #include "ace/OS_NS_unistd.h"
@@ -27,7 +26,6 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Stream.h"
-
 
 // Change to non-zero if test fails
 static int Test_Result = 0;
@@ -44,7 +42,6 @@ static int Test_Result = 0;
 const size_t Test3_Send_Size = 4*1024;
 const size_t Test3_Loops = 10;
 const size_t Test3_Total_Size = Test3_Send_Size * Test3_Loops;
-
 
 void *
 client (void *arg)

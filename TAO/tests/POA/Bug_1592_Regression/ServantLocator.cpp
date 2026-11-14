@@ -47,7 +47,6 @@ ServantLocator::preinvoke (
   return this->servant_.in ();
 }
 
-
 void
 ServantLocator::postinvoke (
     PortableServer::ObjectId const & /* oid */,

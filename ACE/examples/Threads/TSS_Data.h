@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #include "ace/Singleton.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

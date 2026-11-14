@@ -2,7 +2,6 @@
 #include "ace/Read_Buffer.h"
 #include "testC.h"
 
-
 ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
 
 int

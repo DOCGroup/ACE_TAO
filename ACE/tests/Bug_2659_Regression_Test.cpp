@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 
 #include "ace/Log_Msg.h"
@@ -22,7 +21,6 @@
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
 
 bool reactor_task_ready = false;
-
 
 //#define RUN_DEBUG 1
 
@@ -65,7 +63,6 @@ private:
 #define EE_DEBUG(CNAME,MNAME,LOC)
 
 #endif // if defined RUN_DEBUG
-
 
 static void
 handle_signal (int )

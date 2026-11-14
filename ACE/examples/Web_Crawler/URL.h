@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef _URL_H
 #define _URL_H
 
@@ -22,7 +21,6 @@
 #include "URL_Status.h"
 
 #include "ace/SString.h"
-
 
 // Forward declaration.
 class URL_Visitor;

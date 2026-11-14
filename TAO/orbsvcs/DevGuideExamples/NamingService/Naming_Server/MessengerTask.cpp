@@ -81,4 +81,3 @@ int MessengerTask::svc ()
   return -1;
 }
 
-

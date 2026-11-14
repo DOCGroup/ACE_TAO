@@ -12,7 +12,6 @@ class Hello
   : public virtual POA_Test::Hello
 {
 public:
-  /// Constructor
   Hello (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa);
   Hello (Hello const &) = delete;
   Hello (Hello &&) = delete;

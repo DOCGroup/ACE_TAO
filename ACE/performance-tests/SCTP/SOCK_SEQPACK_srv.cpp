@@ -242,7 +242,6 @@ static void run_server (ACE_HANDLE handle)
 
 #endif
 
-
 int ACE_TMAIN (int argc, ACE_TCHAR **argv){
   Options_Manager optsMgr(argc, argv, ACE_TEXT ("server-opts"));
 

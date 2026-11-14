@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TEST_FT_IOGR_CLIENT_I_H
 #define TEST_FT_IOGR_CLIENT_I_H
 

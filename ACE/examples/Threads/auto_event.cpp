@@ -102,7 +102,6 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
 
 ACE_SINGLETON_TEMPLATE_INSTANTIATE(ACE_Singleton, ACE_Auto_Event, ACE_Thread_Mutex);
 
-
 #else
 int
 ACE_TMAIN (int, ACE_TCHAR *[])

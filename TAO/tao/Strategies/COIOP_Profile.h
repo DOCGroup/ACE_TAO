@@ -8,7 +8,6 @@
  *  @author  Johnny Willemsen <jwillemsen@remedy.nl>
  */
 
-
 #ifndef TAO_COIOP_PROFILE_H
 #define TAO_COIOP_PROFILE_H
 

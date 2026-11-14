@@ -27,7 +27,6 @@ StructuredPushSupplier_i::subscription_change (
     ));
 }
 
-
 void
 StructuredPushSupplier_i::disconnect_structured_push_supplier ()
 {
@@ -73,7 +72,6 @@ AnyPushSupplier_i::subscription_change (
     ACE_TEXT ("(%P,%t) Supplier AnyPushSupplier received subscription change\n")
     ));
 }
-
 
 void
 AnyPushSupplier_i::disconnect_push_supplier ()
@@ -130,7 +128,6 @@ ReconnectionCallback_i::~ReconnectionCallback_i ()
   // if the fini method is not called.
 }
 
-
 void
 ReconnectionCallback_i::fini ()
 {
@@ -165,7 +162,6 @@ ReconnectionCallback_i::init (
   this->callback_id_ = registry->register_callback (callback.in ());
   this->id_is_valid_ = true;
 }
-
 
 /////////////////
 // Supplier_Main
@@ -485,7 +481,6 @@ Supplier_Main::reconnect (
     }
   }
 }
-
 
 int
 Supplier_Main::resolve_naming_service ()
@@ -1178,7 +1173,6 @@ int Supplier_Main::run ()
   }
   return result;
 }
-
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])

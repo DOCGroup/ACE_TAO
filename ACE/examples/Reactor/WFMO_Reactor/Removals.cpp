@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "ace/OS_main.h"
 
 #if defined (ACE_WIN32)
@@ -18,7 +17,6 @@
 #include "ace/Reactor.h"
 #include "ace/Service_Config.h"
 #include "ace/Event.h"
-
 
 /**
  * @class Event_Handler

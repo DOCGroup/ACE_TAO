@@ -185,7 +185,6 @@ int testAutoStringFree()
   return 0;
 }
 
-
 int
 run_main (int, ACE_TCHAR *[])
 {

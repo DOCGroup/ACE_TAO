@@ -27,7 +27,6 @@ class Client_Request_Interceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   Client_Request_Interceptor () = default;
 
   Client_Request_Interceptor (Client_Request_Interceptor const &) = delete;

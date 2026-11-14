@@ -71,7 +71,6 @@ Identity_Server::init (int argc,
                                                    this->orb_manager_.poa_manager (),
                                                    policies);
 
-
       // Destroy policy objects
       for (CORBA::ULong i = 0;
            i < policies.length ();
@@ -79,7 +78,6 @@ Identity_Server::init (int argc,
         {
           policies[i]->destroy ();
         }
-
 
     }
   catch (const CORBA::Exception& ex)
@@ -109,7 +107,6 @@ Identity_Server::register_groups ()
                        "problems using the factory ior\n"),
                       -1);
 
-
   // Unbind the previously registered random group.
   try
     {
@@ -131,7 +128,6 @@ Identity_Server::register_groups ()
       ACE_DEBUG ((LM_DEBUG,
                   "(%N | %l) <Unbind> harmless here\n"));
     }
-
 
   // We want to make two groups Random & Round Robin.
   Load_Balancer::Object_Group_var random_group =
@@ -157,7 +153,6 @@ Identity_Server::register_groups ()
   // <Object_Group>s.
   this->create_objects (random_objects_,
                         random_group.in ());
-
 
   this->create_objects (rr_objects_,
                         rr_group.in ());

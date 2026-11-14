@@ -24,7 +24,6 @@
  */
 //=============================================================================
 
-
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
 
@@ -217,7 +216,6 @@ ACE_Less_Than<char *>::operator () (const char *lhs, const char *rhs) const
 {
   return (std::strcmp (lhs, rhs) < 0) ? 1 : 0;
 }
-
 
 #if defined (ACE_HAS_WCHAR)
 

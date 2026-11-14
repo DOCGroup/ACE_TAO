@@ -42,7 +42,6 @@ private:
   Consumer_Options options_;
 };
 
-
 int
 Consumer_Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
@@ -70,7 +69,6 @@ Consumer_Client::parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-
 static CosNotifyChannelAdmin::ConsumerAdmin_ptr
 create_consumeradmin (CosNotifyChannelAdmin::EventChannel_ptr ec)
 {
@@ -80,7 +78,6 @@ create_consumeradmin (CosNotifyChannelAdmin::EventChannel_ptr ec)
 
   return CosNotifyChannelAdmin::ConsumerAdmin::_duplicate (admin.in ());
 }
-
 
 static Notify_Structured_Push_Consumer*
 create_consumers (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,

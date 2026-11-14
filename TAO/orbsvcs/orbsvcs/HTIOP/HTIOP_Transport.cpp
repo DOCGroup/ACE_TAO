@@ -86,7 +86,6 @@ TAO::HTIOP::Transport::recv (char *buf,
       if (errno == EWOULDBLOCK)
         return 0;
 
-
       return -1;
     }
 
@@ -128,7 +127,6 @@ TAO::HTIOP::Transport::register_handler ()
   return r->register_handler (ch->notifier(),
                               ACE_Event_Handler::READ_MASK);
 }
-
 
 int
 TAO::HTIOP::Transport::send_request (TAO_Stub *stub,
@@ -343,7 +341,6 @@ TAO::HTIOP::Transport::get_listen_point (::HTIOP::ListenPointList &lp_list,
     }
   return 1;
 }
-
 
 TAO_Connection_Handler *
 TAO::HTIOP::Transport::invalidate_event_handler_i ()

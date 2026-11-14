@@ -35,4 +35,3 @@ Server_ORBInitializer2::register_server_request_interceptors (
   info->add_server_request_interceptor (server_interceptor.in ());
 }
 
-

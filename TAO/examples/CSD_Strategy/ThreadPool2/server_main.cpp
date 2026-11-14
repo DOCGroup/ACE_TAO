@@ -3,7 +3,6 @@
 #include "tao/Exception.h"
 #include "tao/Environment.h"
 
-
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {

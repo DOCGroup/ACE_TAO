@@ -4,7 +4,6 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/Log_Msg.h"
 
-
 #if defined (ACE_HAS_ATM)
 
 constexpr int MAX_LEAVES = 32;

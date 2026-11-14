@@ -22,11 +22,9 @@ class Sender_i
   : public virtual POA_Test::Sender
 {
 public:
-  /// Constructor
   Sender_i (CORBA::ORB_ptr orb,
             CORBA::ULong no);
 
-  ///Destructor
   ~Sender_i () override;
 
   Sender_i (Sender_i const &) = delete;

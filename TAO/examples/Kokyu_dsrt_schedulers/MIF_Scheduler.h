@@ -69,7 +69,6 @@ public ::CORBA::LocalObject
 
   ~MIF_Scheduler ();
 
-
   MIF_Scheduling::SchedulingParameterPolicy_ptr
     create_scheduling_parameter (
       const MIF_Scheduling::SchedulingParameter & value) override;

@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_CORBANAME_PARSER_H
 #define TAO_CORBANAME_PARSER_H
 
@@ -56,7 +55,6 @@ ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_CORBANAME_Parser)
 ACE_FACTORY_DECLARE (TAO, TAO_CORBANAME_Parser)
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 #endif /* TAO_HAS_CORBANAME_PARSER == 1 */
 

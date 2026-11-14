@@ -8,7 +8,6 @@
 #include "ace/Process_Semaphore.h"
 #include "ace/OS_NS_stdlib.h"
 
-
 static sig_atomic_t done;
 
 extern "C" void

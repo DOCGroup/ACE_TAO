@@ -132,7 +132,6 @@ TAO_CORBANAME_Parser::parse_string (const char *ior, CORBA::ORB_ptr orb)
   return obj;
 }
 
-
 ACE_STATIC_SVC_DEFINE (TAO_CORBANAME_Parser,
                        ACE_TEXT ("CORBANAME_Parser"),
                        ACE_SVC_OBJ_T,

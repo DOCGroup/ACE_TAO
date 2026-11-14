@@ -39,7 +39,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 using TAO_SCIOP_SVC_HANDLER =
   ACE_Svc_Handler<ACE_SOCK_SEQPACK_ASSOCIATION, ACE_NULL_SYNCH>;
 
-
 /**
  * @class TAO_SCIOP_Connection_Handler
  *
@@ -48,7 +47,6 @@ using TAO_SCIOP_SVC_HANDLER =
  * The Connection handler which is common for the Acceptor and
  * the Connector
  */
-
 
 class TAO_Strategies_Export TAO_SCIOP_Connection_Handler
   : public TAO_SCIOP_SVC_HANDLER,

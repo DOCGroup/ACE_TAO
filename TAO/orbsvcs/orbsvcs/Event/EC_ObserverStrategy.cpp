@@ -81,7 +81,6 @@ TAO_EC_Basic_ObserverStrategy::append_observer (
   return this->handle_generator_;
 }
 
-
 void
 TAO_EC_Basic_ObserverStrategy::remove_observer (
        RtecEventChannelAdmin::Observer_Handle handle)
@@ -248,7 +247,6 @@ TAO_EC_Basic_ObserverStrategy::fill_qos (
       qos.publications[count++].event.header = (*i).key ();
     }
 }
-
 
 // ****************************************************************
 

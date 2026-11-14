@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_TS_SERVER_HANDLER_H
 #define ACE_TS_SERVER_HANDLER_H
 

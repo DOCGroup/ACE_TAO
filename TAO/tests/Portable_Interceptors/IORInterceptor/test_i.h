@@ -27,7 +27,6 @@
 class test_i : public virtual POA_FOO::test
 {
 public:
-  /// Constructor.
   explicit test_i (CORBA::ORB_ptr orb);
   test_i (test_i const &) = delete;
   test_i (test_i &&) = delete;

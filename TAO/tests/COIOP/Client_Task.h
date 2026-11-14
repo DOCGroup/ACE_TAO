@@ -10,12 +10,10 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 #include "tao/ORB.h"
 
-
 /// Implement a Task to run the client as a thread
 class Client_Task : public ACE_Task_Base
 {
 public:
-  /// Constructor
   Client_Task (std::basic_string<ACE_TCHAR> const &input,
                CORBA::ORB_ptr corb,
                ACE_Thread_Manager *thr_mgr,

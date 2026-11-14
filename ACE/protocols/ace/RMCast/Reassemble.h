@@ -33,5 +33,4 @@ namespace ACE_RMCast
   };
 }
 
-
 #endif  // ACE_RMCAST_REASSEMBLE_H

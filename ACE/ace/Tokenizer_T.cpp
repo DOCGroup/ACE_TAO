@@ -233,7 +233,6 @@ EXIT_LABEL:
 
 // *************************************************************
 
-
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* ACE_TOKENIZER_T_CPP */

@@ -35,7 +35,6 @@ public:
   /// Default constructor.
   Load_Balancing_Service () = default;
 
-  /// Destructor.
   ~Load_Balancing_Service () = default;
 
   Load_Balancing_Service (Load_Balancing_Service const &) = delete;

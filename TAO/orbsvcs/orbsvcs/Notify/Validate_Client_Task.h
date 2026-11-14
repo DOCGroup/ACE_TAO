@@ -27,7 +27,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Notify_EventChannelFactory;
 
-
 /**
  * @class TAO_Notify_validate_client_Task
  *

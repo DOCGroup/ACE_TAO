@@ -80,7 +80,6 @@ ACE_STATIC_SVC_DEFINE (TAO_EC_Simple_Queue_Full_Action,
                        0)
 ACE_FACTORY_DEFINE (TAO_RTEvent_Serv, TAO_EC_Simple_Queue_Full_Action)
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 bool
 TAO_EC_Queue::is_full_i ()

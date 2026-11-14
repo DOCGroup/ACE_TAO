@@ -18,7 +18,6 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 #include "tao/corbafwd.h"
 #include "tao/Wait_Strategy.h"
 #include "tao/Connection_Handler.h"
@@ -42,21 +41,18 @@ namespace TAO
      * the Connector
      */
 
-
     class HTIOP_Export Connection_Handler : public SVC_HANDLER,
                                             public TAO_Connection_Handler
     {
     public:
       explicit Connection_Handler (ACE_Thread_Manager* t = nullptr);
 
-      /// Constructor.
       explicit Connection_Handler (TAO_ORB_Core *orb_core);
       Connection_Handler (Connection_Handler const&) = delete;
       Connection_Handler (Connection_Handler&&) = delete;
       Connection_Handler& operator= (Connection_Handler const&) = delete;
       Connection_Handler& operator= (Connection_Handler&&) = delete;
 
-      /// Destructor.
       ~Connection_Handler () override;
 
       /// Called by the <Strategy_Acceptor> when the handler is completely
@@ -79,7 +75,6 @@ namespace TAO
                             void *stack[] = nullptr,
                             size_t stack_size[] = nullptr,
                             ACE_thread_t  thread_names[] = nullptr);
-
 
       /// Only used when the handler is turned into an active object by
       /// calling <activate>.  This serves as the event loop in such cases.
@@ -108,7 +103,6 @@ namespace TAO
       ///satisfy the base class interface.
       int set_dscp_codepoint (CORBA::Boolean set_network_priority) override;
       int set_dscp_codepoint (CORBA::Long dscp) override;
-
 
       //@{
       /**

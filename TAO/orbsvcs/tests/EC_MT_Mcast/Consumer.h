@@ -27,7 +27,6 @@ public:
   Consumer (Consumer&&) = delete;
   Consumer& operator= (Consumer const&) = delete;
   Consumer& operator= (Consumer&&) = delete;
-  // Constructor
 
   void connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin);
   // Connect to the Event Channel

@@ -196,7 +196,6 @@ AST_Operation::count_arguments_with_direction (int direction_mask)
   return count;
 }
 
-
 // Return if any argument or the return type is a <native> type.
 bool
 AST_Operation::has_native ()
@@ -266,7 +265,6 @@ AST_Operation::compute_argument_attr ()
                 {
                   this->has_in_arguments_ = true;
                 }
-
 
               AST_Type * const type = dynamic_cast<AST_Type*> (arg->field_type ());
 

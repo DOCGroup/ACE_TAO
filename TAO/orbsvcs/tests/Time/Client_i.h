@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #include "orbsvcs/TimeServiceC.h"
 #include "orbsvcs/Naming/Naming_Client.h"
 

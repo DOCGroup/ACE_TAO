@@ -33,7 +33,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_SCIOP_Endpoint;
 
-
 /**
  * @class TAO_SCIOP_Connector
  *
@@ -119,7 +118,6 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_SCIOP == 1 */
-
 
 #include /**/ "ace/post.h"
 

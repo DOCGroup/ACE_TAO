@@ -79,7 +79,6 @@ public:
   int close_count_;
 };
 
-
 struct Interval_Handler : public ACE_Event_Handler
 {
   Interval_Handler () : trip_count_ (0) { }
@@ -690,7 +689,6 @@ run_main (int argc, ACE_TCHAR *argv[])
                                      ACE_TEXT ("ACE_Timer_Heap (high-res timer)"),
                                      tq_stack),
                   -1);
-
 
   // Create the Timer ID array
   ACE_NEW_RETURN (timer_ids,

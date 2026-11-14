@@ -2083,7 +2083,6 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                     break;
                   }
 
-
                 default:
                   // So, it's not a legit format specifier after all...
                   // Copy from the original % to where we are now, then
@@ -2729,7 +2728,6 @@ ssize_t ACE_Log_Msg::log (const ACE_Log_Formatter &formatter)
 }
 
 #endif /* ACE_LACKS_VA_FUNCTIONS */
-
 
 #if !defined (ACE_WIN32)
 /**

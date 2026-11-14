@@ -9,7 +9,6 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 class  Test_i : public virtual POA_Test
 {
 public:

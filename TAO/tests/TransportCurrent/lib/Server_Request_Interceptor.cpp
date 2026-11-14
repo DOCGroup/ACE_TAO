@@ -60,7 +60,6 @@ namespace Test
     return true;
   }
 
-
   char *
   Server_Request_Interceptor::name ()
   {

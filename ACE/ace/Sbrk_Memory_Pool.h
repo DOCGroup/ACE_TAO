@@ -25,7 +25,6 @@
 #include "ace/ACE.h"
 #include "ace/os_include/sys/os_mman.h"
 
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**

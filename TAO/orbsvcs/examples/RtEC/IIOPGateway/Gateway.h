@@ -24,7 +24,6 @@
 class Gateway
 {
 public:
-  /// Constructor
   Gateway () = default;
   Gateway (Gateway const &) = delete;
   Gateway (Gateway &&) = delete;

@@ -71,7 +71,6 @@ int Logging_Handler::recv_log_record (ACE_Message_Block_Unique_Ptr &mblk)
   return -1;
 }
 
-
 int Logging_Handler::write_log_record (ACE_Message_Block const &mblk)
 {
   // Peer hostname is in the <mblk> and the log record data
@@ -106,7 +105,6 @@ int Logging_Handler::write_log_record (ACE_Message_Block const &mblk)
 
   return ACE_Utils::truncate_cast<int> (mblk.total_length ());
 }
-
 
 int Logging_Handler::log_record ()
 {

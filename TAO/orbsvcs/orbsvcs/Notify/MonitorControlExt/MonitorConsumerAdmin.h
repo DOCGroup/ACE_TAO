@@ -65,11 +65,9 @@ public:
     CosNotifyChannelAdmin::ClientType ctype,
     CosNotifyChannelAdmin::ProxyID_out proxy_id) override;
 
-
   TAO_MonitorEventChannel* get_ec () const;
 
   ACE_CString const &stat_name () const;
-
 
   /// Receive the queue count and store the approximated queue size in
   /// our statistic object.

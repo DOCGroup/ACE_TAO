@@ -12,7 +12,6 @@ class Hello
   : public virtual POA_Test::Hello
 {
 public:
-  /// Constructor
   Hello (CORBA::ORB_ptr orb, bool simulate_crashes);
   Hello (Hello const &) = delete;
   Hello &operator= (Hello const &) = delete;

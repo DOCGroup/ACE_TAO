@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef PERSISTENT_CLIENT_I_H
 #define PERSISTENT_CLIENT_I_H
 
@@ -28,10 +27,8 @@
 class Persistent_Client_i
 {
 public:
-  /// Constructor
   Persistent_Client_i () = default;
 
-  /// Destructor
   ~Persistent_Client_i () = default;
 
   Persistent_Client_i (Persistent_Client_i const&) = delete;

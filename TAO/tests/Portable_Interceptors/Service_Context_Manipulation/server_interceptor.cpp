@@ -77,7 +77,6 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
   ri->add_reply_service_context (scc, 0);
 }
 
-
 void
 Echo_Server_Request_Interceptor::receive_request (
     PortableInterceptor::ServerRequestInfo_ptr)

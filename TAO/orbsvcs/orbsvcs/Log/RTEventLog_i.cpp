@@ -40,7 +40,6 @@ TAO_RTEventLog_i::~TAO_RTEventLog_i ()
   this->event_channel_->destroy ();
 }
 
-
 DsLogAdmin::Log_ptr
 TAO_RTEventLog_i::copy (DsLogAdmin::LogId &id)
 {

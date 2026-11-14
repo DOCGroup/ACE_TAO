@@ -9,7 +9,6 @@
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
 
-
 #ifndef TAO_UIOP_ACCEPTOR_H
 #define TAO_UIOP_ACCEPTOR_H
 

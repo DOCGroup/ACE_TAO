@@ -92,7 +92,6 @@ recursive_union_test (CORBA::ORB_ptr /* orb */,
 template <typename T>
 struct Caller
 {
-  /// Constructor.
   Caller (CORBA::ORB_ptr o, Test::Hello_ptr h)
     : orb (CORBA::ORB::_duplicate (o))
     , hello (Test::Hello::_duplicate (h))

@@ -4,7 +4,6 @@
 #include "TestAppBase.h"
 #include "ace/SString.h"
 
-
 class ServerApp : public TestAppBase
 {
   public:

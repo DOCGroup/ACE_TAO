@@ -6,10 +6,8 @@
  */
 //=============================================================================
 
-
 #include "orbsvcs/Concurrency/CC_LockSetFactory.h"
 #include "orbsvcs/Concurrency/CC_LockSet.h"
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -18,13 +18,11 @@ Foo_B_Statistics::expected(unsigned op_num, unsigned count, In_Value_Type type)
   this->expected_in_value_type_[op_num-1] = type;
 }
 
-
 void
 Foo_B_Statistics::actual(unsigned op_num, unsigned count)
 {
   this->actual_op_count_[op_num-1] += count;
 }
-
 
 void
 Foo_B_Statistics::actual(unsigned op_num, LongVector lv)
@@ -36,7 +34,6 @@ Foo_B_Statistics::actual(unsigned op_num, LongVector lv)
     }
 }
 
-
 void
 Foo_B_Statistics::actual(unsigned op_num, StringVector sv)
 {
@@ -47,13 +44,11 @@ Foo_B_Statistics::actual(unsigned op_num, StringVector sv)
     }
 }
 
-
 void
 Foo_B_Statistics::expected_callbacks (unsigned num_cbs)
 {
   expected_callbacks_ = num_cbs * this->num_collcated_clients_;
 }
-
 
 void
 Foo_B_Statistics::actual_callbacks (unsigned num_cbs)
@@ -61,13 +56,11 @@ Foo_B_Statistics::actual_callbacks (unsigned num_cbs)
   actual_callbacks_ += num_cbs;
 }
 
-
 void
 Foo_B_Statistics::servant_error_count (unsigned error_count)
 {
   this->servant_error_count_ += error_count;
 }
-
 
 bool
 Foo_B_Statistics::actual_vs_expected()

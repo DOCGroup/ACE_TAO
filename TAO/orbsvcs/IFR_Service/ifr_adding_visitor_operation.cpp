@@ -201,7 +201,6 @@ ifr_adding_visitor_operation::visit_argument (AST_Argument *node)
       this->params_[this->index_].type_def =
         CORBA::IDLType::_duplicate (this->ir_current_.in ());
 
-
       switch (node->direction ())
       {
         case AST_Argument::dir_IN:

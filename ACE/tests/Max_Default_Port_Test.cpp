@@ -18,7 +18,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Reactor.h"
 #include "ace/SOCK_Connector.h"
@@ -41,12 +40,10 @@ My_Accept_Handler::My_Accept_Handler (ACE_INET_Addr &addr)
     this->open (addr);
 }
 
-
 My_Accept_Handler::~My_Accept_Handler ()
 {
   this->peer_acceptor_.close ();     // Prevent handle leaks
 }
-
 
 int
 My_Accept_Handler::open (ACE_INET_Addr &addr)
@@ -192,7 +189,6 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_INET_Addr addr (idx);
 
       My_Accept_Handler *eh = new My_Accept_Handler (addr);
-
 
       if ( ACE_Reactor::instance()->register_handler (
                                          eh,

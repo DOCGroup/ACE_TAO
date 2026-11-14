@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_AMI_TEST_I_H
 #define TAO_AMI_TEST_I_H
 
@@ -41,6 +40,5 @@ public:
 private:
   CORBA::ORB_var orb_;
 };
-
 
 #endif /* TAO_AMI_TEST_I_H */

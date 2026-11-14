@@ -9,7 +9,6 @@
  *  @author Yamuna Krishnamurthy (yamuna@oomworks.com)
  */
 
-
 #ifndef TAO_NETWORK_PRIORITY_MAPPING_H
 #define TAO_NETWORK_PRIORITY_MAPPING_H
 #include /**/ "ace/pre.h"
@@ -52,5 +51,4 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_NETWORK_PRIORITY_MAPPING_H */
-
 

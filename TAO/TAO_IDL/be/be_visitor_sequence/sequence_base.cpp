@@ -181,7 +181,6 @@ be_visitor_sequence_base_template_args (be_visitor_context *ctx,
 {
 }
 
-
 be_visitor_sequence_base_template_args::~be_visitor_sequence_base_template_args () = default;
 
 int

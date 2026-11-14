@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_TESTS_PROCESS_STRATEGY_TEST_H
 #define ACE_TESTS_PROCESS_STRATEGY_TEST_H
 
@@ -38,7 +37,6 @@
 class Counting_Service : public ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
 public:
-  /// Constructor.
   Counting_Service (ACE_Thread_Manager * = 0);
 
   /// Hook that is used to initialize the service (called by the
@@ -92,10 +90,8 @@ public:
 class Options : public ACE_Event_Handler
 {
 public:
-  /// Constructor.
   Options ();
 
-  /// Destructor.
   ~Options ();
 
   /// Read command-line arguments and initialize options.

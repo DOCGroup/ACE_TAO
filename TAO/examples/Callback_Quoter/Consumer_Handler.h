@@ -44,7 +44,6 @@ class Consumer_Signal_Handler;
 class Consumer_Handler
 {
 public:
-  /// Constructor.
   Consumer_Handler ();
 
   Consumer_Handler (Consumer_Handler const &) = delete;
@@ -52,7 +51,6 @@ public:
   Consumer_Handler (Consumer_Handler &&) = delete;
   Consumer_Handler &operator= (Consumer_Handler &&) = delete;
 
-  /// Destructor.
   ~Consumer_Handler ();
 
   /// Initialize the client communication with the server.

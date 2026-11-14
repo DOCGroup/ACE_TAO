@@ -33,10 +33,8 @@ class TAO_Notify_Tests_Task_Callback;
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Periodic_Consumer : public TAO_Notify_Tests_StructuredPushConsumer
 {
 public:
-  /// Constructor
   TAO_Notify_Tests_Periodic_Consumer ();
 
-  /// Destructor
   ~TAO_Notify_Tests_Periodic_Consumer ();
 
   /// set the helper callback

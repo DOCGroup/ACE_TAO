@@ -48,10 +48,8 @@ class TAO_Log_Serv_Export TAO_BasicLogFactory_i :
 public:
   //= Initialization and termination code.
 
-  /// Constructor.
   TAO_BasicLogFactory_i ();
 
-  /// Destructor.
   ~TAO_BasicLogFactory_i () override;
 
   /// Activate this servant with the ORB and POA passed in.

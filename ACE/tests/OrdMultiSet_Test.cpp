@@ -12,13 +12,11 @@
  */
 //=============================================================================
 
-
 // Note, for this test the config.h file *must* come first!
 #include "ace/config-all.h"
 
 #include "test_config.h"
 #include "ace/Containers.h"
-
 
 int
 run_main (int, ACE_TCHAR *[])

@@ -31,11 +31,9 @@ private:
   Client_Count_Map received_;
 };
 
-
 class Hello_Impl : public virtual POA_Test::Hello
 {
 public:
-  // Constructor
   Hello_Impl (CORBA::ORB_ptr orb, Test::UIPMC_Object_ptr obj);
 
   // The skeleton methods

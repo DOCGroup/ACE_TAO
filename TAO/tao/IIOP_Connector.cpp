@@ -90,7 +90,6 @@ TAO_IIOP_Connection_Handler_Array_Guard::~TAO_IIOP_Connection_Handler_Array_Guar
 
 //---------------------------------------------------------------------------
 
-
 TAO_IIOP_Connector::~TAO_IIOP_Connector () = default;
 
 TAO_IIOP_Connector::TAO_IIOP_Connector ()
@@ -654,7 +653,6 @@ TAO_IIOP_Connector::complete_connection (int result,
       transport->purge_entry();
       return nullptr;
     }
-
 
 #if defined (INDUCE_BUG_2654_D)
   // at this point the connection handler's close connection will manage

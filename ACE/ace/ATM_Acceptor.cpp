@@ -300,5 +300,4 @@ ACE_ATM_Acceptor::accept (ACE_ATM_Stream &new_sap,
 // Close versioned namespace, if enabled by the user.
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-
 #endif /* ACE_HAS_ATM */

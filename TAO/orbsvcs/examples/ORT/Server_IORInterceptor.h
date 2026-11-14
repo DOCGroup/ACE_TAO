@@ -11,7 +11,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)

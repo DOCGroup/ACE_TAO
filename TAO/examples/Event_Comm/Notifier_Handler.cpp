@@ -99,7 +99,6 @@ Notifier_Handler::init (int argc,
       CORBA::Object_var notifier_obj =
        this->naming_client_->resolve (notifier_ref_name);
 
-
       // The CORBA::Object_var object is downcast to Notifier_var
       // using the <_narrow> method.
       this->notifier_ =

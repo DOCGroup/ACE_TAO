@@ -3,7 +3,6 @@
 
 #include "orbsvcs/Scheduler_Factory.h"
 
-
 // The following scheduling anomalies were detected:
 ERROR: ST_UNRESOLVED_LOCAL_DEPENDENCIES
 ERROR: The following entry points have unresolved local dependencies:
@@ -18,7 +17,6 @@ ERROR: The following entry points have unresolved local dependencies:
 // unresolved_remote_consumer
 // both_unresolved_consumer_1
 // both_unresolved_consumer_2
-
 
 static ACE_Scheduler_Factory::POD_RT_Info infos[] = {
 {"good_supplier", 1, 5000, 5000, 5000, 500000,
@@ -64,13 +62,11 @@ static ACE_Scheduler_Factory::POD_RT_Info infos[] = {
 
 static int infos_size = sizeof(infos)/sizeof(infos[0]);
 
-
 static ACE_Scheduler_Factory::POD_Config_Info configs[] = {
   {          0,         15, (RtecScheduler::Dispatching_Type_t) 2 }
 };
 
 static int configs_size = sizeof(configs)/sizeof(configs[0]);
-
 
 // This sets up Scheduler_Factory to use the runtime version.
 int scheduler_factory_setup =

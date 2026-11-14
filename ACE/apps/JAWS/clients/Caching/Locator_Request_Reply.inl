@@ -97,7 +97,6 @@ ACE_URL_Locator_Reply::num_offers () const
   return this->num_offers_;
 }
 
-
 ACE_INLINE ACE_URL_Offer const *
 ACE_URL_Locator_Reply::offer () const
 {

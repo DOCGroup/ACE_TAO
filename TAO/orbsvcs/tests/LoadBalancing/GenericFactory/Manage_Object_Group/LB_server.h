@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_LOADBALANCING_MANAGE_OBJECT_GROUP_SERVER_H
 #define TAO_LOADBALANCING_MANAGE_OBJECT_GROUP_SERVER_H
 

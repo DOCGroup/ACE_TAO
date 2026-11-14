@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-
 //=============================================================================
 /**
  *  @file    Scheduler_Factory.h
@@ -8,7 +7,6 @@
  *  @author  Chris Gill <cdgill@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef ACE_SCHEDULER_FACTORY_H
 #define ACE_SCHEDULER_FACTORY_H
@@ -83,7 +81,6 @@ public:
     CORBA::Long info_type;
     RtecScheduler::RT_Info_Enabled_Type_t enabled;
   };
-
 
   struct POD_Dependency_Info
   {

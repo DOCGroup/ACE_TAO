@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
@@ -23,7 +22,6 @@
 #include "ace/Task.h"
 #include "ace/Get_Opt.h"
 #include "ace/ACE.h"
-
 
 int number_of_event_loop_threads = 3;
 int number_of_messages = 10;

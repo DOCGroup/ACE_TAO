@@ -37,7 +37,6 @@ public:
   /// Default constructor
   MT_Object_Server () = default;
 
-  /// Destructor
   ~MT_Object_Server () = default;
 
   MT_Object_Server (MT_Object_Server const &) = delete;

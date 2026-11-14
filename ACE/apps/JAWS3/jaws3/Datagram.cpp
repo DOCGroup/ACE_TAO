@@ -5,7 +5,6 @@
 
 #include "jaws3/Datagram.h"
 
-
 JAWS_Datagram::JAWS_Datagram (JAWS_Datagram_Impl *impl)
   : impl_ (impl)
 {

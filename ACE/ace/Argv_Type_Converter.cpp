@@ -99,7 +99,6 @@ ACE_Argv_Type_Converter::initialize ()
     }
 }
 
-
 void
 ACE_Argv_Type_Converter::align_char_with_wchar ()
 {

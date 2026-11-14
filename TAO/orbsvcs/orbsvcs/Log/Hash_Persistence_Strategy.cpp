@@ -7,7 +7,6 @@ TAO_Hash_Persistence_Strategy::TAO_Hash_Persistence_Strategy ()
 {
 }
 
-
 TAO_Hash_Persistence_Strategy::~TAO_Hash_Persistence_Strategy () = default;
 
 TAO_LogStore *

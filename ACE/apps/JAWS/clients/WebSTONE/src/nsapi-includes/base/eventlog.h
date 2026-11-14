@@ -7,9 +7,7 @@
  * parties.
  */
 
-
 /* ------------------------------------------------------------------------ */
-
 
 // EVENTLOG.H
 //
@@ -41,14 +39,4 @@ BOOL CALLBACK ErrorDialogProc(
         UINT message,
         WPARAM wParam,
         LPARAM lParam);
-
-
-
-
-
-
-
-
-
-
 

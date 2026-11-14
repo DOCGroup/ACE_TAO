@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Reactor.h"
@@ -19,7 +18,6 @@
 #include "ace/Dev_Poll_Reactor.h"
 #include "ace/Pipe.h"
 #include "ace/ACE.h"
-
 
 #if defined (ACE_HAS_DEV_POLL) || defined (ACE_HAS_EVENT_POLL)
 
@@ -80,12 +78,10 @@ Handler::Handler (ACE_Reactor &reactor)
     }
 }
 
-
 Handler::~Handler ()
 {
   this->pipe_.close ();
 }
-
 
 ACE_HANDLE
 Handler::get_handle () const

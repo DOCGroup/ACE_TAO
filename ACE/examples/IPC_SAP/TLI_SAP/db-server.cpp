@@ -4,7 +4,6 @@
 #include "ace/TLI_Acceptor.h"
 #include "ace/Thread_Manager.h"
 
-
 #if defined (ACE_HAS_THREADS) && defined (ACE_HAS_TLI)
 
 // Global thread manager.

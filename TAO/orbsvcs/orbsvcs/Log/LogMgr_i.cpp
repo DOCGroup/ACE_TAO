@@ -12,7 +12,6 @@ TAO_LogMgr_i::TAO_LogMgr_i () = default;
 
 TAO_LogMgr_i::~TAO_LogMgr_i () = default;
 
-
 void
 TAO_LogMgr_i::init (CORBA::ORB_ptr orb,
                     PortableServer::POA_ptr poa)
@@ -35,7 +34,6 @@ TAO_LogMgr_i::init (CORBA::ORB_ptr orb,
                                                  poa_manager.in (),
                                                  policies);
   }
-
 
   {
     TAO::Utils::PolicyList_Destroyer policies(2);
@@ -144,13 +142,11 @@ TAO_LogMgr_i::list_logs ()
   return this->logstore_->list_logs ();
 }
 
-
 DsLogAdmin::LogIdList*
 TAO_LogMgr_i::list_logs_by_id ()
 {
   return this->logstore_->list_logs_by_id ();
 }
-
 
 DsLogAdmin::Log_ptr
 TAO_LogMgr_i::find_log (DsLogAdmin::LogId id)
@@ -158,20 +154,17 @@ TAO_LogMgr_i::find_log (DsLogAdmin::LogId id)
   return this->logstore_->find_log (id);
 }
 
-
 TAO_LogRecordStore *
 TAO_LogMgr_i::get_log_record_store (DsLogAdmin::LogId id)
 {
   return this->logstore_->get_log_record_store (id);
 }
 
-
 bool
 TAO_LogMgr_i::exists (DsLogAdmin::LogId id)
 {
   return this->logstore_->exists (id);
 }
-
 
 int
 TAO_LogMgr_i::remove (DsLogAdmin::LogId id)

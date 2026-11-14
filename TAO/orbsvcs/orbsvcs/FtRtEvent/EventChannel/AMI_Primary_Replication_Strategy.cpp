@@ -52,7 +52,6 @@ int AMI_Primary_Replication_Strategy::svc()
     // create POAManager
     mgr_ = root_poa_->the_POAManager();
 
-
     mgr_->activate();
 
     PortableServer::IdUniquenessPolicy_var id_uniqueness_policy =
@@ -109,7 +108,6 @@ AMI_Primary_Replication_Strategy::replicate_request(
    ACE_NEW_THROW_EX(manager,
                     Update_Manager(event, backups.length(), transaction_depth-1, success),
                     CORBA::NO_MEMORY());
-
 
    Request_Context_Repository().set_transaction_depth(0);
 

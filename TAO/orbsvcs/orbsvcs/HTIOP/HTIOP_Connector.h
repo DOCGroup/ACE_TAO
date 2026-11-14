@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef HTIOP_CONNECTOR_H
 #define HTIOP_CONNECTOR_H
 #include /**/ "ace/pre.h"
@@ -67,7 +66,6 @@ namespace TAO
       using CONNECT_CREATION_STRATEGY = TAO_Connect_Creation_Strategy<Connection_Handler>;
 
       /// Initialization and termination methods.
-      /// Constructor.
       /// {@
       explicit Connector (ACE::HTBP::Environment *ht_env);
       Connector (Connector const&) = delete;
@@ -75,11 +73,9 @@ namespace TAO
       Connector& operator= (Connector const&) = delete;
       Connector& operator= (Connector&&) = delete;
 
-      /// Destructor.
       ~Connector () override;
 
       /// @}
-
 
       /// The TAO_Connector methods, please check the documentation on
       /// Transport_Connector.h
@@ -102,7 +98,6 @@ namespace TAO
       TAO_Transport *make_connection (TAO::Profile_Transport_Resolver *r,
                                       TAO_Transport_Descriptor_Interface &desc,
                                       ACE_Time_Value *timeout = nullptr) override;
-
 
       /// More TAO_Connector methods, please check the documentation on
       /// Transport_Connector.h

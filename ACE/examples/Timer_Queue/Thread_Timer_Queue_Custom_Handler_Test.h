@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #ifndef _THREAD_TIMER_QUEUE_TEST_H_
 #define _THREAD_TIMER_QUEUE_TEST_H_
 

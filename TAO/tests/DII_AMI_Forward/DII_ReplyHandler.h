@@ -1,6 +1,5 @@
 // -*-  C++ -*-
 
-
 #ifndef DII_REPLY_HANDLER_H
 #define DII_REPLY_HANDLER_H
 
@@ -26,6 +25,5 @@ public:
 private:
   bool &got_reply_;
 };
-
 
 #endif // DII_REPLY_HANDLER_H

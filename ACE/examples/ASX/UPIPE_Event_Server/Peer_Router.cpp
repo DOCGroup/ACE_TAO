@@ -9,7 +9,6 @@
 #include "Message_Block_Owner.h"
 #include "Options.h"
 
-
 #if defined (ACE_HAS_THREADS)
 
 // Define some short-hand macros to deal with long templates

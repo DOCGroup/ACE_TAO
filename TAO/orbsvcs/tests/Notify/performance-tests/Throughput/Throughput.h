@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef NOTIFY_Throughput_H
 #define NOTIFY_Throughput_H
 
@@ -66,7 +65,6 @@ class Throughput_StructuredPushConsumer
   : public TAO_Notify_Tests_StructuredPushConsumer
 {
 public:
-  /// Constructor.
   explicit Throughput_StructuredPushConsumer (Notify_Throughput& test_client);
 
   Throughput_StructuredPushConsumer (Throughput_StructuredPushConsumer const&) = delete;
@@ -108,10 +106,8 @@ class Throughput_StructuredPushSupplier
     public ACE_Task_Base
 {
 public:
-  /// Constructor.
   explicit Throughput_StructuredPushSupplier (Notify_Throughput& test_client);
 
-  /// Destructor.
   ~Throughput_StructuredPushSupplier () override = default;
 
   Throughput_StructuredPushSupplier (Throughput_StructuredPushSupplier const&) = delete;

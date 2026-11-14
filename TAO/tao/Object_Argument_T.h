@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_OBJECT_ARGUMENT_T_H
 #define TAO_OBJECT_ARGUMENT_T_H
 

@@ -30,7 +30,6 @@
 class Airplane_i: public POA_Paper_Airplane_Server
 {
 public:
-  /// Constructor
   Airplane_i ();
 
   Airplane_i (Airplane_i const &) = delete;
@@ -38,7 +37,6 @@ public:
   Airplane_i (Airplane_i &&) = delete;
   Airplane_i &operator= (Airplane_i &&) = delete;
 
-  /// Destructor
   ~Airplane_i () override = default;
 
   /// Returns a random plane.

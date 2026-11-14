@@ -72,7 +72,6 @@ private:
 #endif /* TAO_HAS_NAMED_RT_MUTEXES == 1 */
 };
 
-
 /**
  * @class TAO_RT_ORB
  *

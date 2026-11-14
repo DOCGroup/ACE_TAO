@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_STORABLE_NAMING_CONTEXT_H
 #define TAO_STORABLE_NAMING_CONTEXT_H
 #include /**/ "ace/pre.h"
@@ -101,7 +100,6 @@ public:
   char const *id ();
   char const *kind ();
 };
-
 
 /**
  * @class TAO_Storable_Bindings_Map
@@ -247,7 +245,6 @@ public:
                               TAO::Storable_Factory *pers_factory,
                               int use_redundancy);
 
-
   /**
    * This operation returns a new naming context implemented by the
    * same naming server in which the operation was invoked.  The
@@ -265,7 +262,6 @@ public:
              CosNaming::BindingList_out &bl,
              CosNaming::BindingIterator_out &bi) override;
 
-
   void rebind (CosNaming::Name const &n,
                CORBA::Object_ptr obj) override;
 
@@ -280,7 +276,6 @@ public:
    */
   void bind (CosNaming::Name const &n,
              CORBA::Object_ptr obj) override;
-
 
   /**
    * This is the version of <bind> specifically for binding naming

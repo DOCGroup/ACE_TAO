@@ -119,7 +119,6 @@ static void report_usage (int const argc, ACE_TCHAR *argv[])
     }
 }
 
-
 class Acceptor : public ACE_Acceptor<Message_Receiver, ACE_SOCK_ACCEPTOR>
 {
 public:

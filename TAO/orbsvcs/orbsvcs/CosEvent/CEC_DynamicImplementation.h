@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_CEC_DYNAMICIMPLEMENTATION_H
 #define TAO_CEC_DYNAMICIMPLEMENTATION_H
 
@@ -17,7 +16,6 @@
 #include "tao/DynamicInterface/Server_Request.h"
 #include "tao/DynamicInterface/Dynamic_Implementation.h"
 #include "tao/ORB.h"
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

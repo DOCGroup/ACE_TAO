@@ -43,7 +43,6 @@ Notify_Test_Client::parse_args (int /*argc*/, ACE_TCHAR *[] /*argv*/)
    return 0;
 }
 
-
 int
 Notify_Test_Client::init_ORB (int argc, ACE_TCHAR *argv[])
 {
@@ -157,7 +156,6 @@ Notify_Test_Client::orb ()
 {
   return this->orb_.in ();
 }
-
 
 PortableServer::POA_ptr
 Notify_Test_Client::root_poa ()

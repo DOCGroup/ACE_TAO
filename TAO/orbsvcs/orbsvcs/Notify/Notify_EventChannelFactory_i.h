@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef NOTIFY_EVENTCHANNELFACTORY_I_H
 #define NOTIFY_EVENTCHANNELFACTORY_I_H
 #include /**/ "ace/pre.h"

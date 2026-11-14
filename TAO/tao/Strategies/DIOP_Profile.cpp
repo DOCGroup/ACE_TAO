@@ -26,7 +26,6 @@ TAO_DIOP_Profile::object_key_delimiter () const
   return TAO_DIOP_Profile::object_key_delimiter_;
 }
 
-
 TAO_DIOP_Profile::TAO_DIOP_Profile (const ACE_INET_Addr &addr,
                                     const TAO::ObjectKey &object_key,
                                     const TAO_GIOP_Message_Version &version,

@@ -773,7 +773,6 @@ ACE_OS::strtoul_emulation (const char *nptr,
 }
 #endif /* ACE_LACKS_STRTOUL */
 
-
 #if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSTOUL)
 unsigned long
 ACE_OS::wcstoul_emulation (const wchar_t *nptr,
@@ -978,7 +977,6 @@ ACE_OS::wcstoll_emulation (const wchar_t *nptr,
   return (acc);
 }
 #endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSTOLL */
-
 
 #if defined (ACE_LACKS_STRTOULL)
 ACE_UINT64

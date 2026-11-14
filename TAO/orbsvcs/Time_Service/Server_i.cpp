@@ -116,7 +116,6 @@ Server_i::create_server ()
   return 0;
 }
 
-
 // Bind the Server in the context 'ServerContext' with the name
 // 'Server:<hostname>'.
 
@@ -228,7 +227,6 @@ Server_i::init (int argc,
 
   return 0;
 }
-
 
 // Run the event loop for ORB.
 

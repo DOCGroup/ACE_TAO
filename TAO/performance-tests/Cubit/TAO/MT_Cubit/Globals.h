@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -176,10 +175,8 @@ using GLOBALS = ACE_Singleton<Globals, ACE_Null_Mutex>;
 class MT_Priority
 {
 public:
-  /// constructor.
   MT_Priority () = default;
 
-  /// Destructor.
   virtual ~MT_Priority () = default;
 
   /// Sets the priority of the high priority thread.

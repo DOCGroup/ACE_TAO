@@ -19,7 +19,6 @@ be_visitor_interface_direct_proxy_impl_ss::visit_interface (
 
   this->ctx_->node (node);
 
-  // Destructor Implementation
   *os << be_nl_2
       << node->full_direct_proxy_impl_name () << "::~"
       << node->direct_proxy_impl_name () << " () = default;" << be_nl_2;

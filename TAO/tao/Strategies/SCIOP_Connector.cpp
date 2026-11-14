@@ -144,7 +144,6 @@ TAO_SCIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
   return transport;
 }
 
-
 TAO_Transport *
 TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
                                         TAO_Transport_Descriptor_Interface &desc,

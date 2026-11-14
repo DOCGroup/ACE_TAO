@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef NOTIFY_SEQUENCEPUSHCONSUMER_H
 #define NOTIFY_SEQUENCEPUSHCONSUMER_H
 #include /**/ "ace/pre.h"

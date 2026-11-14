@@ -83,7 +83,6 @@ Collocation_Test::init (int argc, ACE_TCHAR *argv[])
   id =
     childPOA->activate_object (&this->right_servant_);
 
-
   CORBA::String_var str =
     this->orb_->object_to_string (this->diamond_obj_.in ());
 

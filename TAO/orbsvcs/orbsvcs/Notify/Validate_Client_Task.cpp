@@ -7,7 +7,6 @@
 #include "tao/debug.h"
 #include "ace/Reactor.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_validate_client_Task::
@@ -25,9 +24,7 @@ TAO_Notify_validate_client_Task::
   }
 }
 
-
 TAO_Notify_validate_client_Task::~TAO_Notify_validate_client_Task () = default;
-
 
 int
 TAO_Notify_validate_client_Task::svc ()
@@ -68,7 +65,6 @@ TAO_Notify_validate_client_Task::svc ()
 
   return 0;
 }
-
 
 void
 TAO_Notify_validate_client_Task::shutdown ()

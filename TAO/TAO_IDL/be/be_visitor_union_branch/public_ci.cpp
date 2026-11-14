@@ -600,7 +600,6 @@ be_visitor_union_branch_public_ci::visit_predefined_type (
       << "void" << be_nl
       << bu->name () << "::" << ub->local_name () << " (";
 
-
   AST_PredefinedType::PredefinedType const pt = node->pt ();
 
   if (pt == AST_PredefinedType::PT_pseudo

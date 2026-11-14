@@ -682,7 +682,6 @@ run_timeout (CORBA::ORB_ptr orb,
   if (liveness_test_failed)
     test_failed = 1;
 
-
   return test_failed;
 }
 
@@ -784,7 +783,6 @@ run_timeout_reactive (CORBA::ORB_ptr orb,
 
   if (liveness_test_failed)
     test_failed = 1;
-
 
   return test_failed;
 }

@@ -82,7 +82,6 @@ public:
 
   int idle(int & result);
 
-
   /**
    * Identify this replica factory.
    * @return a string to identify this object for logging/console message purposes.
@@ -197,7 +196,6 @@ private:
    */
 
   ::FT::ReplicationManager_var replication_manager_;
-
 
   /**
    * The factory registry IOR

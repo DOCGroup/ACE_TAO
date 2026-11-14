@@ -3,7 +3,6 @@
 #include "tao/Messaging/Messaging.h"
 #include "tao/Utils/PolicyList_Destroyer.h"
 
-
 int
 parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior,
             ACE_TCHAR const *&loop_forever_ior, bool &shutdown_only)

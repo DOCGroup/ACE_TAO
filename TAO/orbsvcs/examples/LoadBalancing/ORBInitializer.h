@@ -43,7 +43,6 @@ class ORBInitializer
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   ORBInitializer () = default;
   ~ORBInitializer () override = default;
 

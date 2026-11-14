@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "testS.h"
 #include "ace/Get_Opt.h"
 #include <memory>
@@ -106,7 +105,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (object.in ());
-
 
       // Get the POAManager of the RootPOA.
       PortableServer::POAManager_var poa_manager =

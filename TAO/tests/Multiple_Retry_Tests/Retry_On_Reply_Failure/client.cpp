@@ -55,7 +55,6 @@ class Worker : public ACE_Task_Base
 {
 public:
   Worker (CORBA::ORB_ptr orb, ACE_TString const &ior);
-  // Constructor
 
   Worker (Worker const &) = delete;
   Worker (Worker &&) = delete;

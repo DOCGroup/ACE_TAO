@@ -61,7 +61,6 @@ public:
             int ignore_deadlock = 0,
             int debug = 0) override;
 
-
   /**
    * Open a connection with the token server.  This only need be used
    * when the user wishes to explicitly open a connection to check if

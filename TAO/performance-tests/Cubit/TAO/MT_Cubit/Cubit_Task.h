@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef MT_CUBIT_TASK_H
 #define MT_CUBIT_TASK_H
 
@@ -33,7 +32,6 @@
 class Cubit_Task : public ACE_Task<ACE_SYNCH>
 {
 public:
-  /// Constructor.
   Cubit_Task (const ACE_TCHAR *args,
               const char* orbname,
               u_int num_of_objs,

@@ -100,4 +100,3 @@ ACE_FACTORY_DEFINE (TAO, TAO_Default_Thread_Lane_Resources_Manager_Factory)
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-

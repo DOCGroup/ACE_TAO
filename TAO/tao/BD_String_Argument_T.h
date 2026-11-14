@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_BD_STRING_ARGUMENT_T_H
 #define TAO_BD_STRING_ARGUMENT_T_H
 

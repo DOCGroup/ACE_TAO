@@ -7,7 +7,6 @@
 class Server_i : public POA_Test::Server
 {
 public:
-  /// Constructor.
   Server_i () = default;
   Server_i (Server_i const &) = delete;
   Server_i (Server_i &&) = delete;

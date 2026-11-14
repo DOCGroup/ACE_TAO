@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef RECEIVER_QOS_EVENT_HANDLER_H
 #define RECEIVER_QOS_EVENT_HANDLER_H
 
@@ -50,5 +49,4 @@ private:
 };
 
 #endif  /* RECEIVER_QOS_EVENT_HANDLER_H */
-
 

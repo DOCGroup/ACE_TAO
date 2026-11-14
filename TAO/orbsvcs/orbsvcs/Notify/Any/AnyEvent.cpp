@@ -113,7 +113,6 @@ TAO_Notify_AnyEvent_No_Copy::copy () const
   return new_event;
 }
 
-
 /*****************************************************************************/
 
 TAO_Notify_AnyEvent::TAO_Notify_AnyEvent (CORBA::Any const &event)

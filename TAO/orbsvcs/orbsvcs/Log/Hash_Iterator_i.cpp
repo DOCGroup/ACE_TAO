@@ -24,9 +24,7 @@ TAO_Hash_Iterator_i::TAO_Hash_Iterator_i (
 {
 }
 
-
 TAO_Hash_Iterator_i::~TAO_Hash_Iterator_i () = default;
-
 
 DsLogAdmin::RecordList*
 TAO_Hash_Iterator_i::get (CORBA::ULong position, CORBA::ULong how_many)

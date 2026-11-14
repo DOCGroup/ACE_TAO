@@ -6,7 +6,6 @@
  */
 //=============================================================================
 
-
 #include "orbsvcs/Naming/Hash_Naming_Context.h"
 #include "orbsvcs/Naming/nsconf.h"
 

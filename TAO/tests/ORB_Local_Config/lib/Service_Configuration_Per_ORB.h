@@ -63,5 +63,4 @@ private:
   bool const teardown_;
 };
 
-
 #endif /* SERVICE_CONFIGURATION_PER_ORB_H */

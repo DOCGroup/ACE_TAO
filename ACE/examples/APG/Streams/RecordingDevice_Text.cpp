@@ -92,7 +92,6 @@ MessageType *TextListenerAcceptor::record_message (ACE_FILE_Addr &addr)
   return nullptr;
 }
 
-
 // Listing 01 code/ch18
 TextListener::TextListener (TextListenerAcceptor *acceptor)
   : acceptor_(acceptor)

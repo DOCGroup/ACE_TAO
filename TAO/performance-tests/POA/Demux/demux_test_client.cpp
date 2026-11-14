@@ -6,14 +6,12 @@
  */
 //=============================================================================
 
-
 #include "demux_test_client.h"
 #include "tao/debug.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_string.h"
 
-// Constructor
 Demux_Test_Client::Demux_Test_Client ()
   : argc_ (0),
     is_ (Demux_Test_Client::LINEAR),
@@ -86,7 +84,6 @@ Demux_Test_Client::init (int argc, ACE_TCHAR *argv [])
             // now narrow to Demux_Test object
 
             this->demux_test_[i * j] = Demux_Test::_narrow (objref.in ());
-
 
             if (CORBA::is_nil (this->demux_test_[i * j].in ()))
               {

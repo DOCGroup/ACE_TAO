@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Mem_Map.h"
 #include "ace/Lib_Find.h"

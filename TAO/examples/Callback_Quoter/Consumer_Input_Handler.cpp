@@ -85,7 +85,6 @@ Consumer_Input_Handler::register_consumer ()
   this->consumer_handler_->threshold_value_ =
     ACE_OS::atoi (needed_stock_value);
 
-
   try
     {
       // Register with the server.
@@ -136,7 +135,6 @@ Consumer_Input_Handler::quit_consumer_process ()
 {
   // Only if the consumer is registered and wants to shut
   // down, its necessary to unregister and then shutdown.
-
 
   try
     {

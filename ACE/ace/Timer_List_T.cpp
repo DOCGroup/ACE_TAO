@@ -9,7 +9,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 // Default Constructor
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY>
@@ -89,7 +88,6 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::ACE_Timer_List_T (FUNCTO
   ACE_NEW (iterator_, Iterator(*this));
 }
 
-
 // Checks if list is empty.
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> bool
@@ -98,7 +96,6 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::is_empty () const
   ACE_TRACE ("ACE_Timer_List_T::is_empty");
   return this->get_first_i() == nullptr;
 }
-
 
 // Returns earliest time in a non-empty list.
 
@@ -111,7 +108,6 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::earliest_time () const
     return first->get_timer_value ();
   return ACE_Time_Value::zero;
 }
-
 
 // Remove all remaining items in the list.
 
@@ -180,7 +176,6 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::dump () const
 #endif /* ACE_HAS_DUMP */
 }
 
-
 // Reschedule a periodic timer.  This function must be called with the
 // lock held.
 
@@ -190,7 +185,6 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::reschedule (ACE_Timer_No
   ACE_TRACE ("ACE_Timer_List_T::reschedule");
   this->schedule_i(n, n->get_timer_value());
 }
-
 
 // Insert a new handler that expires at time future_time; if interval
 // is > 0, the handler will be reinvoked periodically.
@@ -408,7 +402,6 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::get_first_i () const
     return first;
   return nullptr;
 }
-
 
 // Removes the first node on the list and returns it.
 

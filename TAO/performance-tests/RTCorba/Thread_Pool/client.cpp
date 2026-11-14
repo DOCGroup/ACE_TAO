@@ -526,7 +526,6 @@ Paced_Worker::print_stats (ACE_hrtime_t test_end)
                 made_total_deadlines * 100 / (double) this->history_.max_samples (),
                 made_total_deadlines / to_seconds (test_end - test_start, gsf)));
 
-
   if (do_dump_history)
     {
       this->history_.dump_samples (ACE_TEXT("HISTORY"), gsf);

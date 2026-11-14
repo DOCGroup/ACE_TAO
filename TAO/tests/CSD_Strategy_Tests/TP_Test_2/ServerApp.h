@@ -8,7 +8,6 @@
 #include "tao/CSD_ThreadPool/CSD_TP_Strategy.h"
 #include "ace/SString.h"
 
-
 class ServerApp : public TestAppBase
 {
   public:
@@ -36,7 +35,6 @@ class ServerApp : public TestAppBase
     bool check_validity ();
     void cleanup();
 
-
     // Helper methods used by the methods above.
     int parse_args(int argc, ACE_TCHAR* argv[]);
 
@@ -48,7 +46,6 @@ class ServerApp : public TestAppBase
 
     void usage_statement();
     int arg_dependency_checks();
-
 
     PortableServer::POA_ptr create_poa(CORBA::ORB_ptr orb,
                                        const char* poa_name);

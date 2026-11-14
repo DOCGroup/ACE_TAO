@@ -44,7 +44,6 @@ class FOO_ClientRequestInterceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor
   explicit FOO_ClientRequestInterceptor (IOP::Codec_ptr codec);
   FOO_ClientRequestInterceptor (FOO_ClientRequestInterceptor const &) = delete;
   FOO_ClientRequestInterceptor (FOO_ClientRequestInterceptor &&) = delete;

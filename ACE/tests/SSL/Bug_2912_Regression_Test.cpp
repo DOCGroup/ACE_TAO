@@ -230,7 +230,6 @@ init_ssl ()
   }
 }
 
-
 /**
  * Server's ACE_Service_Handler
  */
@@ -666,7 +665,6 @@ Acceptor::handle_accept (const ACE_Asynch_Accept::Result &result)
 
   --this->accept_cnt_;
 }
-
 
 /**
  * Client's ACE_Service_Handler

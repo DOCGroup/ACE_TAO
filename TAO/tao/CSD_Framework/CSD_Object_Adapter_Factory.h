@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_CSD_OBJECT_ADAPTER_FACTORY_H
 #define TAO_CSD_OBJECT_ADAPTER_FACTORY_H
 #include /**/ "ace/pre.h"
@@ -41,7 +40,6 @@ public:
   int init (int argc,
             ACE_TCHAR* argv[]) override;
 };
-
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_CSD_FW, TAO_CSD_Object_Adapter_Factory)
 ACE_FACTORY_DECLARE (TAO_CSD_FW, TAO_CSD_Object_Adapter_Factory)

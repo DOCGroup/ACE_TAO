@@ -7,7 +7,6 @@
 #include "tao/ORB.h"
 #include "ace/Log_Msg.h"
 
-
 template <typename T>
 struct RefHelper
 {
@@ -53,7 +52,6 @@ struct RefHelper
       }
 
     T_var t_obj = T::_narrow(obj.in());
-
 
     if (CORBA::is_nil(t_obj.in()))
       {

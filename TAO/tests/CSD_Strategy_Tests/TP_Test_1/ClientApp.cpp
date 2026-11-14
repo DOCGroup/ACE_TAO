@@ -5,15 +5,12 @@
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 
-
 ClientApp::ClientApp()
   : TestAppBase("TP_Test_1_Client")
 {
 }
 
-
 ClientApp::~ClientApp() = default;
-
 
 int
 ClientApp::run_i(int argc, ACE_TCHAR* argv[])
@@ -42,7 +39,6 @@ ClientApp::run_i(int argc, ACE_TCHAR* argv[])
 
   return result;
 }
-
 
 int
 ClientApp::parse_args(int argc, ACE_TCHAR* argv[])

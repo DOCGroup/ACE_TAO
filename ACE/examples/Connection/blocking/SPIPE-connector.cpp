@@ -16,7 +16,6 @@ end_reactor_event_loop (int, siginfo_t *, ucontext_t *)
   ACE_Reactor::end_event_loop ();
 }
 
-
 Peer_Handler::Peer_Handler (int iterations)
   : iterations_ (iterations)
 {
@@ -222,7 +221,6 @@ IPC_Client::parse_args (int argc, ACE_TCHAR *argv[])
 
   return 0;
 }
-
 
 #endif /* SPIPE_CONNECTOR */
 

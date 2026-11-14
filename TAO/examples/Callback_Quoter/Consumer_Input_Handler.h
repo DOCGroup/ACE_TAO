@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef CONSUMER_INPUT_HANDLER_H
 #define CONSUMER_INPUT_HANDLER_H
 
@@ -39,7 +38,6 @@ class Consumer_Handler;
 class Consumer_Input_Handler : public ACE_Event_Handler
 {
 public:
-  /// Constructor.
   explicit Consumer_Input_Handler (Consumer_Handler *consumer_handler);
 
   Consumer_Input_Handler (Consumer_Input_Handler const &) = delete;
@@ -80,7 +78,6 @@ enum
   };
 
 protected:
-  /// Destructor.
   ~Consumer_Input_Handler () = default;
 
 private:

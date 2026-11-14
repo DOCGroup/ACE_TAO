@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef NOTIFY_TEST_CLIENT_H
 #define NOTIFY_TEST_CLIENT_H
 

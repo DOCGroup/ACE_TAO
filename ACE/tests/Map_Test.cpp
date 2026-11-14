@@ -10,12 +10,10 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "Map_Test.h"
 #include "ace/Map_T.h"
 #include "ace/Profile_Timer.h"
-
 
 #undef THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL
 #define THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL(X) \

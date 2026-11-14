@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_SINGLETON_H
 #define TAO_SINGLETON_H
 
@@ -26,7 +25,6 @@
 #include /**/ "tao/Versioned_Namespace.h"
 
 #include "ace/Cleanup.h"
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

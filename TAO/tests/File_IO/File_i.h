@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "FileS.h"
 
 /**
@@ -31,14 +30,12 @@ public:
   class Descriptor : public POA_File::Descriptor
   {
   public:
-    /// Constructor
     explicit Descriptor (PortableServer::POA_ptr poa);
     Descriptor (Descriptor const &) = delete;
     Descriptor (Descriptor &&) = delete;
     Descriptor &operator= (Descriptor const &) = delete;
     Descriptor &operator= (Descriptor &&) = delete;
 
-    /// Destructor
     ~Descriptor () override = default;
 
     /// Returns the default POA of this object
@@ -79,7 +76,6 @@ public:
     System &operator= (System const &) = delete;
     System &operator= (System &&) = delete;
 
-    ///Destructor
     ~System () override = default;
 
     ///Returns the default POA of this object

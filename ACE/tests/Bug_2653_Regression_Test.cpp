@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Reactor.h"
@@ -22,7 +21,6 @@
 #include "ace/ACE.h"
 #include "ace/Task.h"
 #include "ace/OS_NS_unistd.h"
-
 
 static const char *message =
 "Hello there! Hope you get this message";

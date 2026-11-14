@@ -11,7 +11,6 @@
 
 #include "argument.h"
 
-
 #include "be_map.h"
 
 // ************************************************************
@@ -452,7 +451,6 @@ int be_visitor_args_arglist::visit_typedef (be_typedef *node)
   return 0;
 }
 
-
 int be_visitor_args_arglist::visit_valuetype (be_valuetype *node)
 {
   return this->emit_common (node);
@@ -499,7 +497,6 @@ int be_visitor_args_arglist::visit_valuebox (be_valuebox *node)
 {
   return this->emit_common (node);
 }
-
 
 int be_visitor_args_arglist::emit_common (be_type *node)
 {

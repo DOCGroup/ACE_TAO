@@ -52,7 +52,6 @@ OrbShutdownTask::svc ()
   return 0;
 }
 
-
 int
 OrbShutdownTask::close (u_long)
 {

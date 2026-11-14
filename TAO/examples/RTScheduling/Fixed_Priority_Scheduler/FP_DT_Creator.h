@@ -26,7 +26,6 @@ public:
   int total_load () override;
 };
 
-
 ACE_STATIC_SVC_DECLARE (FP_DT_Creator)
 ACE_FACTORY_DECLARE (ACE_Local_Service, FP_DT_Creator)
 

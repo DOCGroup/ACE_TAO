@@ -4,7 +4,6 @@
 #include "FooS.h"
 #include <atomic>
 
-
 class Foo_i : public virtual POA_Foo
 {
   public:

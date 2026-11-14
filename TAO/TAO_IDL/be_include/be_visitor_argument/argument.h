@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VISITOR_ARGUMENT_ARGUMENT_H_
 #define _BE_VISITOR_ARGUMENT_ARGUMENT_H_
 

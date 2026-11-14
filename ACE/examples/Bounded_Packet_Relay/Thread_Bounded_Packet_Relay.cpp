@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Condition_T.h"
 #include "ace/Null_Mutex.h"
@@ -50,7 +49,6 @@ Text_Input_Device_Wrapper::modify_device_settings (void *logging)
                       -1);
   return 0;
 }
-
 
 // Creates a new message block, carrying data
 // read from the underlying input device.

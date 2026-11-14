@@ -63,7 +63,6 @@ Server<Servant>::init (char const *servant_name,
                        "init_child_poa"),
                       -1);
 
-
   this->argc_ = argc;
   this->argv_ = argv;
 
@@ -206,7 +205,6 @@ Client<InterfaceObj, Var>::init (char const *name,
   this->argc_ = argc;
   this->argv_ = argv;
 
-
   try
     {
       // Retrieve the ORB.
@@ -222,7 +220,6 @@ Client<InterfaceObj, Var>::init (char const *name,
         {
           CORBA::Object_var server_object =
             this->orb_->string_to_object (this->ior_);
-
 
           if (CORBA::is_nil (server_object.in ()))
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -242,10 +239,8 @@ Client<InterfaceObj, Var>::init (char const *name,
       return -1;
     }
 
-
   return 0;
 }
-
 
 template <class InterfaceObj, class Var> int
 Client<InterfaceObj, Var>::obtain_initial_references ()

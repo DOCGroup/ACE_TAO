@@ -504,7 +504,6 @@ Test_DynUnion::run_test ()
         ++this->error_count_;
       }
 
-
       // if we get here the create_dyn_any worked.
     }
   catch (const CORBA::Exception& ex)

@@ -224,7 +224,6 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           << "return false;"<< be_uidt_nl
           << "}" << be_nl_2;
 
-
       if (!node->opt_accessor () && !node->is_abstract ())
         {
           *os << "::CORBA::Boolean" << be_nl

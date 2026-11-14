@@ -143,7 +143,6 @@ private:
   /// according to changes in consumer subscriptions.
   void update_consumer (RtecEventChannelAdmin::ConsumerQOS const &sub);
 
-
   using Address_Set = ACE_Unbounded_Set<ACE_INET_Addr>;
 
   /// Helpers for updating multicast subscriptions based on changes in

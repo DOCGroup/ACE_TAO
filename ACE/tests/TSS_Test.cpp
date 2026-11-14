@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Guard_T.h"
@@ -21,7 +20,6 @@
 #include "ace/Thread_Mutex.h"
 #include "ace/Signal.h"
 #include "TSS_Test_Errno.h"
-
 
 static u_int errors = 0;
 
@@ -263,7 +261,6 @@ run_main (int, ACE_TCHAR *[])
   delete tss_error;
 
   Errno::deallocate_lock ();
-
 
   if (Errno::created () != Errno::deleted ())
     {

@@ -65,7 +65,6 @@ AdminProperties_Task::svc ()
 
  ACE_DEBUG ((LM_DEBUG, "\n1 supplier sending %d events...\n", event_count));
 
-
  for (int i {}; i < event_count; ++i)
    {
      event.filterable_data[0].value <<= (CORBA::Long)i;
@@ -218,7 +217,6 @@ AdminProperties::create_channel(bool reject)
     CORBA::string_dup (CosNotification::MaxQueueLength);
   this->initial_admin_[0].value <<= this->max_queue_length_;
 
-
   this->initial_admin_[1].name =
     CORBA::string_dup (CosNotification::MaxSuppliers);
   this->initial_admin_[1].value <<= this->max_suppliers_;
@@ -226,7 +224,6 @@ AdminProperties::create_channel(bool reject)
   this->initial_admin_[2].name =
     CORBA::string_dup (CosNotification::MaxConsumers);
   this->initial_admin_[2].value <<= this->max_consumers_;
-
 
   this->initial_admin_[3].name =
     CORBA::string_dup (CosNotification::RejectNewEvents);
@@ -237,7 +234,6 @@ AdminProperties::create_channel(bool reject)
                                                id);
 
   ACE_ASSERT (!CORBA::is_nil (ec_.in ()));
-
 
   CosNotifyChannelAdmin::AdminID adminid;
 

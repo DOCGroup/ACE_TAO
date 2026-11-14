@@ -50,7 +50,6 @@ int sagent::handle_input(ACE_HANDLE fd)
   UdpAddress ra (ACE_TEXT_ALWAYS_CHAR (buf_tmp));
   tgt_.set_address(ra);
 
-
   // process msg here by calling subclass's implementation
   switch (pdu_.get_type()){
   case sNMP_PDU_GET:

@@ -52,10 +52,8 @@ class TAO_RTEventLog_Serv_Export TAO_RTEventLogFactory_i :
 public:
   //= Initialization and termination code.
 
-  /// Constructor.
   TAO_RTEventLogFactory_i ();
 
-  /// Destructor.
   ~TAO_RTEventLogFactory_i () override;
 
   /// Initialise the EventChannel and obtain a

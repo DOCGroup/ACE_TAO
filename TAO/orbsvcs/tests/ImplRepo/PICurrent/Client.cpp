@@ -70,7 +70,6 @@ public:
   }
 };
 
-
 class Client_Req_Int
   : public virtual PortableInterceptor::ClientRequestInterceptor,
     public virtual ::CORBA::LocalObject

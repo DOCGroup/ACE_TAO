@@ -28,10 +28,8 @@
 class Nestea_i: public POA_Nestea_Bookshelf
 {
 public:
-  /// Constructor
   explicit Nestea_i (CORBA::ORB_ptr orb, ACE_TCHAR const *filename = ACE_TEXT ("nestea.dat"));
 
-  /// Destructor
   ~Nestea_i () override = default;
 
   Nestea_i (Nestea_i const &) = delete;

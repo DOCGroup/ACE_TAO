@@ -34,7 +34,6 @@ TAO_Condition<MUTEX>::TAO_Condition ()
   this->cond_.reset (cond);
 }
 
-
 template <class MUTEX>
 TAO_Condition<MUTEX>::~TAO_Condition ()
 {

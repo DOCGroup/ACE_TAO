@@ -12,7 +12,6 @@ class Receiver_i
   : public virtual POA_Receiver
 {
 public:
-  /// Constructor
   Receiver_i ();
   Receiver_i (Receiver_i const &) = delete;
   Receiver_i (Receiver_i &&) = delete;

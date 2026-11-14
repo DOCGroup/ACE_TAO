@@ -162,7 +162,6 @@ public:
   UTL_Scope& operator= (UTL_Scope const&) = delete;
   UTL_Scope& operator= (UTL_Scope&&) = delete;
 
-  // Destructor.
   ~UTL_Scope () override;
 
   // Data Accessors.
@@ -523,7 +522,6 @@ class TAO_IDL_FE_Export UTL_ScopeActiveIterator
 public:
   // Operations.
 
-  // Constructor.
   UTL_ScopeActiveIterator (UTL_Scope *s,
                            UTL_Scope::ScopeIterationKind ik);
 

@@ -40,7 +40,6 @@ template<class Adaptee>
 class TAO_ESF_Busy_Lock_Adapter
 {
 public:
-  /// Constructor
   explicit TAO_ESF_Busy_Lock_Adapter (Adaptee *adaptee);
 
   TAO_ESF_Busy_Lock_Adapter (TAO_ESF_Busy_Lock_Adapter const &) = delete;

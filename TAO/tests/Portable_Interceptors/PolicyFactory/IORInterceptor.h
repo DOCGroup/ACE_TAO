@@ -43,7 +43,6 @@ class IORInterceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor
   IORInterceptor () = default;
   IORInterceptor (IORInterceptor const &) = delete;
   IORInterceptor (IORInterceptor &&) = delete;
@@ -70,7 +69,6 @@ public:
   //@}
 
 protected:
-  /// Destructor.
   /**
    * Protected destructor to enforce proper memory management through
    * the reference counting mechanism.

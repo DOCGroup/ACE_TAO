@@ -195,7 +195,6 @@ POA_Holder::activate (RTCORBA::RTORB_ptr rt_orb, PortableServer::POA_ptr parent_
                                    max_buffered_requests,
                                    max_request_buffer_size);
 
-
       thread_pool_policy = rt_orb->create_threadpool_policy (threadpool_id_1);
 
       ACE_DEBUG ((LM_DEBUG,

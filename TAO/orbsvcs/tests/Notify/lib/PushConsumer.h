@@ -62,10 +62,8 @@ class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_PushConsumer : public TAO_Notify_T
   using Proxy_Traits = Peer_Traits::Proxy_Traits;
 
 public:
-  /// Constructor
   TAO_Notify_Tests_PushConsumer ();
 
-  /// Destructor
   virtual ~TAO_Notify_Tests_PushConsumer ();
 
 protected:

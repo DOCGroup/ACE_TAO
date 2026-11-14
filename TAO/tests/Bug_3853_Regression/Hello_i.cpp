@@ -22,4 +22,3 @@ Demo_HelloWorld_i::shutdown ()
   this->orb_->shutdown (false);
 }
 
-

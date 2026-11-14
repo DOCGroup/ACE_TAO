@@ -62,4 +62,3 @@ Echo_Client_Request_Interceptor::receive_exception (
   ACE_UNUSED_ARG (ri);
 }
 
-

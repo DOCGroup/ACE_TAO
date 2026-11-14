@@ -5,7 +5,6 @@
 #include "URL_Visitor.h"
 #include "Command_Processor.h"
 
-
 URL_Processing_Strategy::URL_Processing_Strategy (URL &url,
                                                   URL_Iterator &iterator)
   : url_ (url),

@@ -21,7 +21,6 @@ class TAO_RTEC_Perf_Export Loopback
  : public virtual POA_Federated_Test::Loopback
 {
 public:
-  /// Constructor
   Loopback (CORBA::Long experiment_id,
             CORBA::Long base_event_type,
             PortableServer::POA_ptr supplier_poa,

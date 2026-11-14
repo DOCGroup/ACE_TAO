@@ -56,7 +56,6 @@ public:
   // see Topology_Loader.h for documentation
   void load (Topology_Object *root) override;
 
-
   /////////////////////////////////////////
   // Override ACEXML_DefaultHandler methods
 

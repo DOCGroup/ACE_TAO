@@ -950,7 +950,6 @@ ACE::recv (ACE_HANDLE handle, size_t n, ...)
 }
 #endif /* ACE_LACKS_VA_FUNCTIONS */
 
-
 ssize_t
 ACE::recvv (ACE_HANDLE handle,
             iovec *iov,

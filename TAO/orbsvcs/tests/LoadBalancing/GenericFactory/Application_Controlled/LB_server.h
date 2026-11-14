@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_LOADBALANCING_APPLICATION_CONTROLLED_SERVER_H
 #define TAO_LOADBALANCING_APPLICATION_CONTROLLED_SERVER_H
 

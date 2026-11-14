@@ -20,7 +20,6 @@ ReplicationManagerFaultConsumerAdapter::ReplicationManagerFaultConsumerAdapter()
 {
 }
 
-
 ReplicationManagerFaultConsumerAdapter::~ReplicationManagerFaultConsumerAdapter()
 {
 }
@@ -30,7 +29,6 @@ size_t ReplicationManagerFaultConsumerAdapter::notifications () const
   // Delegate to the FT_FaultConsumer.
   return this->p_fault_consumer_->notifications ();
 }
-
 
 int ReplicationManagerFaultConsumerAdapter::parse_args (int argc, ACE_TCHAR * argv[])
 {
@@ -345,7 +343,6 @@ int ReplicationManagerFaultConsumerAdapter::fini ()
   // Delegate to the FT_FaultConsumer.
   return this->p_fault_consumer_->fini ();
 }
-
 
 int ReplicationManagerFaultConsumerAdapter::idle(int & result)
 {

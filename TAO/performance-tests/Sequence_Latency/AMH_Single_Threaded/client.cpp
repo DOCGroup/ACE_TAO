@@ -115,7 +115,6 @@ test_sequence (Test::Roundtrip_ptr roundtrip,
                                          stats.samples_count ());
 }
 
-
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {

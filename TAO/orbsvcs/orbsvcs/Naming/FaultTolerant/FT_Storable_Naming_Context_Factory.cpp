@@ -48,5 +48,4 @@ TAO_FT_Storable_Naming_Context_Factory::create_naming_context_impl (
   return context_impl;
 }
 
-
 TAO_END_VERSIONED_NAMESPACE_DECL

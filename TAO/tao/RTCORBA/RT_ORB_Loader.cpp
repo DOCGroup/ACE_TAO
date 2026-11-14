@@ -205,7 +205,6 @@ TAO_RT_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
   return 0;
 }
 
-
 /////////////////////////////////////////////////////////////////////
 
 ACE_FACTORY_DEFINE (TAO_RTCORBA, TAO_RT_ORB_Loader)

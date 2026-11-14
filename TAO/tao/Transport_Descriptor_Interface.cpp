@@ -40,5 +40,4 @@ TAO_Transport_Descriptor_Interface::reset_endpoint (TAO_Endpoint *ep)
   return false;
 }
 
-
 TAO_END_VERSIONED_NAMESPACE_DECL

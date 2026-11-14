@@ -11,9 +11,7 @@ TAO_Hash_LogStore::TAO_Hash_LogStore (TAO_LogMgr_i * logmgr_i)
 {
 }
 
-
 TAO_Hash_LogStore::~TAO_Hash_LogStore () = default;
-
 
 DsLogAdmin::LogList*
 TAO_Hash_LogStore::list_logs ()
@@ -87,7 +85,6 @@ TAO_Hash_LogStore::list_logs_by_id ()
   return list;
 }
 
-
 DsLogAdmin::Log_ptr
 TAO_Hash_LogStore::find_log (DsLogAdmin::LogId id)
 {
@@ -106,7 +103,6 @@ TAO_Hash_LogStore::find_log (DsLogAdmin::LogId id)
     }
 }
 
-
 bool
 TAO_Hash_LogStore::exists (DsLogAdmin::LogId id)
 {
@@ -117,7 +113,6 @@ TAO_Hash_LogStore::exists (DsLogAdmin::LogId id)
 
   return (this->hash_map_.find (id) == 0);
 }
-
 
 int
 TAO_Hash_LogStore::remove (DsLogAdmin::LogId id)
@@ -137,7 +132,6 @@ TAO_Hash_LogStore::remove (DsLogAdmin::LogId id)
 
   return retval;
 }
-
 
 void
 TAO_Hash_LogStore::create (DsLogAdmin::LogFullActionType full_action,
@@ -176,7 +170,6 @@ TAO_Hash_LogStore::create (DsLogAdmin::LogFullActionType full_action,
   recordstore.release ();
 }
 
-
 void
 TAO_Hash_LogStore::create_with_id (DsLogAdmin::LogId id,
                                    DsLogAdmin::LogFullActionType full_action,
@@ -212,7 +205,6 @@ TAO_Hash_LogStore::create_with_id (DsLogAdmin::LogId id,
 
   recordstore.release ();
 }
-
 
 TAO_LogRecordStore *
 TAO_Hash_LogStore::get_log_record_store (DsLogAdmin::LogId id)

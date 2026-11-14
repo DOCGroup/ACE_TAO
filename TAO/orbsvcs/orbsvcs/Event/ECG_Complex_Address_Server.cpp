@@ -117,7 +117,6 @@ TAO_ECG_Complex_Address_Server::add_entry (char const *key,
   return 0;
 }
 
-
 void
 TAO_ECG_Complex_Address_Server::get_addr (
                          RtecEventComm::EventHeader const &header,
@@ -183,7 +182,6 @@ TAO_ECG_Complex_Address_Server::get_address (
   v4.port = src_addr.get_port_number();
   addr.v4_addr (v4);
 }
-
 
 void
 TAO_ECG_Complex_Address_Server::dump_content ()

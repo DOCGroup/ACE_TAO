@@ -69,7 +69,6 @@ private:
   TAO_AMH_DSI_Response_Handler_var resp_;
 };
 
-
 //---------------------------------------------------------------------------
 /**
  * @class ImR_Forwarder
@@ -102,7 +101,6 @@ public:
 
   void invoke_primary_interface(CORBA::ServerRequest_ptr request);
 
-
   void init(CORBA::ORB_ptr orb);
 
 private:
@@ -115,6 +113,5 @@ private:
   /// Variable to save the ORB reference passed to the constr.
   CORBA::ORB_ptr orb_;
 };
-
 
 #endif /* IMR_FORWARDER_H */

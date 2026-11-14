@@ -50,5 +50,4 @@ extern ACE_Service_Object_Type lsp;
 
 #endif /* _HANDLE_L_SPIPE_H */
 
-
 #endif /* ACE_HAS_STREAM_PIPES */

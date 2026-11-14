@@ -66,7 +66,6 @@ namespace
     : public virtual PortableInterceptor::ClientRequestInterceptor,
       public virtual CORBA::LocalObject
   {
-    /// Constructor.
     ClientRequestInterceptor () = default;
     ClientRequestInterceptor (ClientRequestInterceptor const &) = delete;
     ClientRequestInterceptor (ClientRequestInterceptor &&) = delete;
@@ -120,7 +119,6 @@ namespace
     : public virtual PortableInterceptor::ServerRequestInterceptor,
       public virtual CORBA::LocalObject
     {
-      /// Constructor.
       ServerRequestInterceptor () = default;
       ServerRequestInterceptor (ServerRequestInterceptor const &) = delete;
       ServerRequestInterceptor (ServerRequestInterceptor &&) = delete;

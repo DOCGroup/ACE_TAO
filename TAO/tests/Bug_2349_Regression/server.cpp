@@ -81,7 +81,6 @@ foo_i::destroy ()
     ACE_DEBUG ((LM_DEBUG, "Caught correct exception\n"));
 }
 
-
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {

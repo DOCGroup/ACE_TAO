@@ -19,7 +19,6 @@
 
 #include "SLDEX_export.h"
 
-
 class Quit_Handler : public ACE_Event_Handler {
 public:
   Quit_Handler (ACE_Reactor *r) : ACE_Event_Handler (r) {}
@@ -36,7 +35,6 @@ protected:
   // Protected destructor ensures dynamic allocation.
   ~Quit_Handler () override = default;
 };
-
 
 static ACE_THR_FUNC_RETURN controller (void *arg) {
   ACE_Reactor *reactor = static_cast<ACE_Reactor *> (arg);
@@ -66,7 +64,6 @@ static ACE_THR_FUNC_RETURN controller (void *arg) {
 
   return ACE_THR_FUNC_RETURN_NULL;
 }
-
 
 class Server_Shutdown : public ACE_Service_Object {
 public:

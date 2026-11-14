@@ -104,7 +104,6 @@ public:
         return id;
       }
 
-
     this->last_ = now;
     if (id == 0)
       {

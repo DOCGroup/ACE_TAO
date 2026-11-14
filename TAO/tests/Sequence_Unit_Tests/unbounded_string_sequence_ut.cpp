@@ -17,7 +17,6 @@
 
 #include "test_macros.h"
 
-
 using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO;
 
 template<class tested_sequence>
@@ -474,7 +473,6 @@ struct Tester
     FAIL_RETURN_IF_NOT(r.expect(9), r);
     return 0;
   }
-
 
   int test_all()
   {

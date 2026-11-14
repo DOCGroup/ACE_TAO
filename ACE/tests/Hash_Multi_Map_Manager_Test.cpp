@@ -10,11 +10,9 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Hash_Multi_Map_Manager_T.h"
 #include "ace/Null_Mutex.h"
-
 
 using HASH_STRING_MAP = ACE_Hash_Multi_Map_Manager<const ACE_TCHAR *, const ACE_TCHAR *, ACE_Hash<const ACE_TCHAR *>, ACE_Equal_To<const ACE_TCHAR *>, ACE_Null_Mutex>;
 

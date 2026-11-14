@@ -20,7 +20,6 @@ public:
   // This method will create the smart_proxy.
 };
 
-
 class MY_Stub_Export Smart_Diamond_Top_Proxy
   : public virtual Diamond::TAO_Diamond_Top_Smart_Proxy_Base
 {

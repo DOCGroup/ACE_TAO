@@ -9,7 +9,6 @@
 #include "orbsvcs/CosNotifyChannelAdminS.h"
 #include "orbsvcs/CosNotifyCommC.h"
 
-
 struct bug3688_Export TestListener
 :
   public POA_CosNotifyComm::StructuredPushConsumer
@@ -46,6 +45,5 @@ struct bug3688_Export TestListener
 
   std::vector<CORBA::Long> received_data;
 };
-
 
 #endif /* testListener_h */

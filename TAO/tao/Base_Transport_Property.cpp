@@ -21,7 +21,6 @@ TAO_Base_Transport_Property::duplicate ()
   return prop;
 }
 
-
 CORBA::Boolean
 TAO_Base_Transport_Property::is_equivalent
   (const TAO_Transport_Descriptor_Interface *rhs)
@@ -34,7 +33,6 @@ TAO_Base_Transport_Property::is_equivalent
 
   return this->endpoint_->is_equivalent (other_desc->endpoint_);
 }
-
 
 u_long
 TAO_Base_Transport_Property::hash () const

@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_TESTS_TP_REACTOR_TEST_H
 #define ACE_TESTS_TP_REACTOR_TEST_H
 
@@ -25,7 +24,6 @@
 
 const  size_t MAX_SENDERS = 1000;
 const  size_t MAX_RECEIVERS = 1000;
-
 
 // *************************************************************
 //   Receiver and Acceptor
@@ -104,7 +102,6 @@ private:
   void on_delete_receiver (Receiver & rcvr);
 };
 
-
 // *******************************************
 //   Sender
 // *******************************************
@@ -164,7 +161,6 @@ public:
   long get_total_w   () { return this->total_w_; }
   long get_total_r   () { return this->total_r_; }
 
-
   Connector ();
   virtual ~Connector ();
 
@@ -186,6 +182,5 @@ private:
   void on_new_sender (Sender & sndr);
   void on_delete_sender (Sender & sndr);
 };
-
 
 #endif /* ACE_TESTS_TP_REACTOR_TEST_H */

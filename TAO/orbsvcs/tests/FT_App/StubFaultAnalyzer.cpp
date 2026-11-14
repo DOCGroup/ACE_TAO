@@ -13,11 +13,9 @@ StubFaultAnalyzer::StubFaultAnalyzer ()
 {
 }
 
-
 StubFaultAnalyzer::~StubFaultAnalyzer ()
 {
 }
-
 
 int StubFaultAnalyzer::parse_args (int argc, ACE_TCHAR * argv[])
 {
@@ -128,7 +126,6 @@ int StubFaultAnalyzer::init (CORBA::ORB_ptr orb)
     result = -1;
   }
 
-
   //////////////////////////////////
   // register fault consumers
   if (result == 0)
@@ -232,7 +229,6 @@ int StubFaultAnalyzer::init (CORBA::ORB_ptr orb)
   return result;
 }
 
-
 /**
  * Return a string to identify this object for logging/console message purposes.
  */
@@ -250,7 +246,6 @@ int StubFaultAnalyzer::fini ()
   this->batchConsumer_.fini();
   return 0;
 }
-
 
 int StubFaultAnalyzer::idle(int & result)
 {

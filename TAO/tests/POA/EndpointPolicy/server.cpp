@@ -109,7 +109,6 @@ make_ior (CORBA::ORB_ptr orb,
   PortableServer::ObjectId_var oid = poa->activate_object (servant);
   CORBA::Object_var o = poa->id_to_reference (oid.in ());
 
-
   if (host_form == HostNameForm::from_hostname || host_form == HostNameForm::use_localhost)
     {
       CORBA::String_var ior =
@@ -127,7 +126,6 @@ make_ior (CORBA::ORB_ptr orb,
     }
   return 0;
 }
-
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])

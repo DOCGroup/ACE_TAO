@@ -201,7 +201,6 @@ Client(void *arg)
                 ACE_TEXT ("Association.disable (ACE_NONBLOCK)")));
   }
 
-
   if (-1 == Stream.recv_n (&b, 1, &tv, &bytes))
   {
     ACE_ERROR ((LM_ERROR,

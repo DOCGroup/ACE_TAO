@@ -484,11 +484,9 @@ TAO_ExtValueDef_i::describe_ext_value_i ()
                                                     holder);
           fv_desc->attributes[i].defined_in = holder.fast_rep ();
 
-
           this->fill_exceptions (fv_desc->attributes[i].get_exceptions,
                                  attr_key,
                                  "get_excepts");
-
 
           this->fill_exceptions (fv_desc->attributes[i].put_exceptions,
                                  attr_key,

@@ -18,7 +18,6 @@ class bug3688_Export TestBroadcaster
     TestBroadcaster& operator= (TestBroadcaster const&) = delete;
     TestBroadcaster& operator= (TestBroadcaster&&) = delete;
 
-    /// Destructor.
     ~TestBroadcaster () noexcept;
 
     bool connect (
@@ -37,6 +36,5 @@ class bug3688_Export TestBroadcaster
   private:
     CosNotifyChannelAdmin::SequenceProxyPushConsumer_var sequence_proxy_push_consumer {};
 }; /* end of TestBroadcaster */
-
 
 #endif /* testBroadcaster_h */

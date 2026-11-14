@@ -15,7 +15,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
   ACE_Get_Opt get_opts (argc, argv, "o:l:");
   int c;
 
-
   while ((c = get_opts ()) != -1)
     switch (c)
       {
@@ -137,5 +136,4 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   return 0;
 }
-
 

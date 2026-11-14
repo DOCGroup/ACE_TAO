@@ -46,7 +46,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-
 namespace
 {
   PortableInterceptor::SlotId slot_id;
@@ -200,7 +199,6 @@ private:
 
   ORB_var orb_;
 };
-
 
 //
 class ReplicaController : public virtual ServerRequestInterceptor,

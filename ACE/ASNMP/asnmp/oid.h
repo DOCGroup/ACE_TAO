@@ -1,5 +1,4 @@
 
-
 #ifndef OID_CLS_
 #define OID_CLS_
 //=============================================================================
@@ -128,7 +127,6 @@ public:
    * returns 1 , >
    */
   int left_comparison( const unsigned long n, const Oid &o) const;
-
 
   /**
    * compare the n rightmost bytes (right-to-left)

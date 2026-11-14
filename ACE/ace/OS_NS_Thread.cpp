@@ -440,7 +440,6 @@ ACE_TSS_Keys::ACE_TSS_Keys ()
     }
 }
 
-
 void
 ACE_TSS_Keys::find (const u_int key, u_int &word, u_int &bit)
 {

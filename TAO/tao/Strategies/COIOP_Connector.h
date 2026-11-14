@@ -29,7 +29,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Endpoint;
 class TAO_COIOP_Endpoint;
 
-
 /**
  * @class TAO_COIOP_Connector
  *

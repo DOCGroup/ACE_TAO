@@ -9,10 +9,8 @@
  */
 //=============================================================================
 
-
 #include "helper.h"
 #include "multdim_array.h"
-
 
 // ************************************************************************
 //               Test_Multdim_Array
@@ -49,7 +47,6 @@ Test_Multdim_Array::dii_req_invoke (CORBA::Request *req)
   req->set_return_type (Param_Test::_tc_Multdim_Array);
 
   req->invoke ();
-
 
   Param_Test::Multdim_Array_forany forany;
   req->return_value () >>= forany;

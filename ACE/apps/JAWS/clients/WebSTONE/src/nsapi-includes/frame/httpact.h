@@ -7,9 +7,7 @@
  * parties.
  */
 
-
 /* ------------------------------------------------------------------------ */
-
 
 /*
  * httpact.h: Defines the API characteristics for HTTP servers
@@ -17,13 +15,11 @@
  * Rob McCool
  */
 
-
 #ifndef HTTPACT_H
 #define HTTPACT_H
 
 #include "frame/req.h"
 #include "frame/object.h"
-
 
 /* ------------------------------ Constants ------------------------------- */
 
@@ -37,9 +33,7 @@
 #endif
 #endif
 
-
 /* -------------------------- Generic Prototypes -------------------------- */
-
 
 /*
  * directive_name2num will return the position of the abbreviated directive
@@ -50,12 +44,10 @@
 
 int directive_name2num(char *dir);
 
-
 /*
  * directive_num2name returns a string describing directive number num.
  */
 const char *directive_num2name(int num);
-
 
 /*
  * servact_finderror looks through the request's object set to find a
@@ -64,15 +56,12 @@ const char *directive_num2name(int num);
  */
 int servact_finderror(Session *sn, Request *rq);
 
-
 /*
  * Read in and handle one request from the given session
  */
 void servact_handle(Session *sn);
 
-
 /* ----------------------- HTTP specific prototypes ----------------------- */
-
 
 int servact_handle_processed(Session *sn, Request *rq);
 
@@ -83,7 +72,6 @@ int servact_handle_processed(Session *sn, Request *rq);
  */
 char *servact_translate_uri(char *uri, Session *sn);
 
-
 #ifdef MCC_PROXY
 
 /* ----------------------- proxy specific prototypes ---------------------- */
@@ -93,7 +81,6 @@ char *servact_translate_uri(char *uri, Session *sn);
  * function from obj.conf, and if that fails, just calls gethostbyname().
  */
 struct hostent *servact_gethostbyname(char *host, Session *sn, Request *rq);
-
 
 /*
  * Establishes a connection to the specified host and port using
@@ -108,7 +95,6 @@ struct hostent *servact_gethostbyname(char *host, Session *sn, Request *rq);
  * attempt to use the native connect.
  */
 int servact_connect(char *host, int port, Session *sn, Request *rq);
-
 
 #endif  /* ! MCC_PROXY */
 

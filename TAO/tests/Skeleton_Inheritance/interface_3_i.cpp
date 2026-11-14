@@ -64,4 +64,3 @@ interface_3_i::attribute_3 (::CORBA::Short attribute_3)
   ACE_UNUSED_ARG (attribute_3);
 }
 
-

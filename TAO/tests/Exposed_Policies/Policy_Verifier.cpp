@@ -126,7 +126,6 @@ Policy_Verifier::verify_reference (Counter_ptr object,
                       priority
                       ));
 
-
           if (priority != rt_properties.priority ())
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("Priority Value Mismatch.\n")));
@@ -139,7 +138,6 @@ Policy_Verifier::verify_reference (Counter_ptr object,
         {
           RTCORBA::PriorityBandedConnectionPolicy_var const priority_banded_policy =
             RTCORBA::PriorityBandedConnectionPolicy::_narrow (policy_var.in ());
-
 
           if (Policy_Verifier::check_reference (priority_banded_policy.in (),
                                               "Unable to get Priority Banded Policy\n"))
@@ -161,7 +159,6 @@ Policy_Verifier::verify_reference (Counter_ptr object,
                               pb[i].low,
                               pb[i].high
                               ));
-
 
                   if ((band_num == rt_properties.priority_bands ().length ()) &&
                       ((pb[i].low != rt_properties.priority_bands ()[i].low) ||

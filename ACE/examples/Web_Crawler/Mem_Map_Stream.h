@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef _MEM_MAP_STREAM_H
 #define _MEM_MAP_STREAM_H
 #include /**/ "ace/pre.h"
@@ -18,7 +17,6 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
 
 #include "ace/Mem_Map.h"
 #include "ace/SOCK_Connector.h"
@@ -142,7 +140,6 @@ public:
 
   /// Returns 1 if we're at the end of the HTTP stream, else 0.
   virtual int eof () const;
-
 
   /*
   typedef ACE_NOOP_Creation_Strategy<Svc_Handler>

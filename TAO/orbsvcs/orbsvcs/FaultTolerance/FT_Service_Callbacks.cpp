@@ -118,7 +118,6 @@ TAO_FT_Service_Callbacks::is_profile_equivalent (TAO_Profile const* const this_p
           this_cdr.reset_byte_order (static_cast<int> (this_byte_order));
           that_cdr.reset_byte_order (static_cast<int> (that_byte_order));
 
-
           FT::TagFTGroupTaggedComponent this_group_component;
           FT::TagFTGroupTaggedComponent that_group_component;
 
@@ -245,7 +244,6 @@ TAO_FT_Service_Callbacks::is_permanent_forward_condition (CORBA::Object_ptr cons
       return true; /* true */
     }
 }
-
 
 TAO::Invocation_Status
 TAO_FT_Service_Callbacks::raise_comm_failure (

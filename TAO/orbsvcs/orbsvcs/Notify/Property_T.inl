@@ -46,8 +46,6 @@ TAO_Notify_PropertyBase_T<TYPE>:: assign (const TYPE& value)
   this->valid_ = true;
 }
 
-
-
 /******************************************************************************/
 
 template <class TYPE> ACE_INLINE
@@ -62,8 +60,6 @@ TAO_Notify_StructProperty_T<TYPE>::value () const
 {
   return this->value_;
 }
-
-
 
 template <class TYPE> ACE_INLINE CORBA::Boolean
 TAO_Notify_StructProperty_T<TYPE>::is_valid () const

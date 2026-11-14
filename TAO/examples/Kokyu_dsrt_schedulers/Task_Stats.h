@@ -24,14 +24,12 @@
 class Kokyu_DSRT_Schedulers_Export Task_Stats
 {
  public:
-  /// Constructor
   Task_Stats () = default;
   Task_Stats (Task_Stats const &) = delete;
   Task_Stats &operator= (Task_Stats const &) = delete;
   Task_Stats (Task_Stats &&) = delete;
   Task_Stats &operator= (Task_Stats &&) = delete;
 
-  /// Destructor
   ~Task_Stats () = default;
 
   /// Init

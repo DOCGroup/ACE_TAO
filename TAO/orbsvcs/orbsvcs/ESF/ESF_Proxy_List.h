@@ -38,7 +38,6 @@ public:
   /// An alias for the underlying iterator
   using Iterator = typename Implementation::iterator;
 
-  /// Constructor
   TAO_ESF_Proxy_List () = default;
 
   /// Return the first element in the collection, or end() if there

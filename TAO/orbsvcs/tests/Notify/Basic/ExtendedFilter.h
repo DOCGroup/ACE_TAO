@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef NOTIFY_TESTS_EXTENDED_FILTER_H
 #define NOTIFY_TESTS_EXTENDED_FILTER_H
 
@@ -23,7 +22,6 @@
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
-
 
 class ExtendedFilter : public Notify_Test_Client
 {

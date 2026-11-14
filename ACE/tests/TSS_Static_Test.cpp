@@ -13,12 +13,10 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/ACE.h"
 #include "ace/Init_ACE.h"
 #include "ace/Thread.h"
-
 
 #if defined (ACE_HAS_TSS_EMULATION)
 
@@ -44,12 +42,10 @@ Some_Object::Some_Object ()
     }
 }
 
-
 Some_Object::~Some_Object ()
 {
   ACE::fini ();
 }
-
 
 static Some_Object sobject;
 

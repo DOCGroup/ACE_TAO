@@ -13,4 +13,3 @@ int Simple_Server_i::ncalls () const
   return this->ncalls_;
 }
 
-

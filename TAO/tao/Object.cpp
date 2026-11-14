@@ -492,7 +492,6 @@ CORBA::Object::_non_existent ()
   return retval;
 }
 
-
 #if ! defined (CORBA_E_COMPACT) && ! defined (CORBA_E_MICRO)
 CORBA::InterfaceDef_ptr
 CORBA::Object::_get_interface ()
@@ -656,7 +655,6 @@ CORBA::Object::_validate_connection (
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
-
 CORBA::ORB_ptr
 CORBA::Object::_get_orb ()
 {
@@ -803,7 +801,6 @@ CORBA::Object::tao_object_initialize (CORBA::Object *obj)
                       ACE_TEXT ("TAO (%P|%t) ERROR: reference from the ")
                       ACE_TEXT ("CDR stream.\n")));
         }
-
 
       objdata = orb_core->create_stub (obj->ior_->type_id.in (), mp);
     }

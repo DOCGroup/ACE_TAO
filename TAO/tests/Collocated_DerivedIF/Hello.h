@@ -9,7 +9,6 @@
 class HelloAgain : public virtual POA_Test::HelloAgain
 {
 public:
-  /// Constructor
   HelloAgain (CORBA::ORB_ptr orb,
               ACE_thread_t thr_id);
   HelloAgain (HelloAgain const &) = delete;

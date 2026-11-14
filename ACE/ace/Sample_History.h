@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_SAMPLE_HISTORY_H
 #define ACE_SAMPLE_HISTORY_H
 #include /**/ "ace/pre.h"

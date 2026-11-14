@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "ace/Service_Config.h"
 #include "ace/Proactor.h"
 #include "ace/Asynch_IO.h"
@@ -17,7 +16,6 @@
 #include "ace/Message_Block.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_main.h"
-
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
   // This only works on Win32 platforms and on Unix platforms supporting
@@ -77,7 +75,6 @@ private:
   // File size
 };
 
-
 Simple_Tester::Simple_Tester ()
   : input_file_ (ACE_INVALID_HANDLE),
     dump_file_ (ACE_INVALID_HANDLE)
@@ -89,7 +86,6 @@ Simple_Tester::~Simple_Tester ()
   ACE_OS::close (this->input_file_);
   ACE_OS::close (this->dump_file_);
 }
-
 
 int
 Simple_Tester::open ()
@@ -120,14 +116,12 @@ Simple_Tester::open ()
   ACE_DEBUG ((LM_DEBUG,
               "Simple_Tester::open: Files and Asynch Operations opened successfully\n"));
 
-
   // Start an asynchronous read file
   if (this->initiate_read_file () == -1)
     return -1;
 
   return 0;
 }
-
 
 int
 Simple_Tester::initiate_read_file ()

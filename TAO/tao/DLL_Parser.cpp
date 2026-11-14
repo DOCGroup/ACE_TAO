@@ -52,7 +52,6 @@ TAO_DLL_Parser::parse_string (const char *ior,
   return loader->create_object (orb, 0, nullptr);
 }
 
-
 ACE_STATIC_SVC_DEFINE (TAO_DLL_Parser,
                        ACE_TEXT ("DLL_Parser"),
                        ACE_SVC_OBJ_T,

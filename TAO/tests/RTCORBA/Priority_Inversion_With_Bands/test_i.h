@@ -13,7 +13,6 @@ class test_i :
   public POA_test
 {
 public:
-  /// Constructor.
   test_i (CORBA::ORB_ptr orb,
           PortableServer::POA_ptr poa,
           RTCORBA::Priority low_priority,

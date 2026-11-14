@@ -178,5 +178,4 @@ TAO_Notify_FilterAdmin::event_channel (TAO_Notify_EventChannel* ec)
   this->ec_.reset (ec);
 }
 
-
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "ace/OS_main.h"
 
 #include "ace/Log_Msg.h"
@@ -19,7 +18,6 @@
 #include <fstream>
 #include <iostream>
 #endif
-
 
 int
 ACE_TMAIN (int, ACE_TCHAR *[])

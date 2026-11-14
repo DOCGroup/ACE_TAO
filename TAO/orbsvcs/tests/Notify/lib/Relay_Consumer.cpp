@@ -1,6 +1,5 @@
 #include "Relay_Consumer.h"
 
-
 #include "LookupManager.h"
 
 TAO_Notify_Tests_Relay_Consumer::TAO_Notify_Tests_Relay_Consumer (ACE_CString& destination)

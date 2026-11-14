@@ -7,7 +7,6 @@
 
 JAWS_Protocol_State::~JAWS_Protocol_State () = default;
 
-
 JAWS_Protocol_Handler::JAWS_Protocol_Handler ( JAWS_Protocol_State *state
                                              , void *data
                                              )
@@ -18,12 +17,10 @@ JAWS_Protocol_Handler::JAWS_Protocol_Handler ( JAWS_Protocol_State *state
   this->db_.base (reinterpret_cast<char *> (this), 0 /* an infinite queue */);
 }
 
-
 JAWS_Protocol_Handler::~JAWS_Protocol_Handler ()
 {
   this->mb_.replace_data_block (nullptr);
 }
-
 
 int
 JAWS_Protocol_Handler::service ()
@@ -33,7 +30,6 @@ JAWS_Protocol_Handler::service ()
 
   return this->state_->service (this, this->data_);
 }
-
 
 void
 JAWS_Protocol_Handler::event_complete ( const JAWS_Event_Result &result

@@ -34,7 +34,6 @@ public:
   /// Default constructor
   Nestea_Server_i () = default;
 
-  /// Destructor
   ~Nestea_Server_i () = default;
 
   Nestea_Server_i (Nestea_Server_i const &) = delete;

@@ -16,7 +16,6 @@ Peer_Handler_i::request (CORBA::Long retval)
   this->peer_->reply (retval);
 }
 
-
 void
 Peer_Handler_i::request_excep (
     ::Messaging::ExceptionHolder *)

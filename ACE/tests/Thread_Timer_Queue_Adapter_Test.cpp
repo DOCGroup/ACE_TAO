@@ -57,7 +57,6 @@ class CCustomEventHandlerUpcall
         {
         }
 
-        /// Destructor.
         ~CCustomEventHandlerUpcall()
         {
         }

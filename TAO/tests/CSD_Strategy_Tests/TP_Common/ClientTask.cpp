@@ -3,16 +3,13 @@
 #include "AppShutdown.h"
 #include "ace/SString.h"
 
-
 ClientTask::ClientTask(bool shutdown_after_done)
 : shutdown_after_done_(shutdown_after_done),
   failure_count_(0)
 {
 }
 
-
 ClientTask::~ClientTask() = default;
-
 
 void
 ClientTask::add_engine(ClientEngine* engine)
@@ -21,7 +18,6 @@ ClientTask::add_engine(ClientEngine* engine)
   ClientEngine_Handle engine_handle(engine,false);
   this->engines_.push_back(engine_handle);
 }
-
 
 int
 ClientTask::open(void*)
@@ -47,7 +43,6 @@ ClientTask::open(void*)
 
   return 0;
 }
-
 
 int
 ClientTask::svc()

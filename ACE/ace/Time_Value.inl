@@ -441,7 +441,6 @@ namespace std
       return h;
     }
 
-
     ACE_INLINE nanoseconds&
     operator +=(nanoseconds &ns, ACE_Time_Value const &tv)
     {
@@ -489,7 +488,6 @@ namespace std
         duration_cast<hours>(microseconds{tv.usec()});
       return h;
     }
-
 
     ACE_INLINE nanoseconds&
     operator -=(nanoseconds &ns, ACE_Time_Value const &tv)

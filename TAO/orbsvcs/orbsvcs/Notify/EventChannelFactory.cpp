@@ -184,7 +184,6 @@ TAO_Notify_EventChannelFactory::shutdown ()
   return 0;
 }
 
-
 CosNotifyChannelAdmin::EventChannel_ptr
 TAO_Notify_EventChannelFactory::create_named_channel (
     CosNotification::QoSProperties const &initial_qos,
@@ -194,7 +193,6 @@ TAO_Notify_EventChannelFactory::create_named_channel (
 {
   return this->create_channel (initial_qos, initial_admin, id);
 }
-
 
 ::CosNotifyChannelAdmin::EventChannel_ptr TAO_Notify_EventChannelFactory::create_channel (
     CosNotification::QoSProperties const &initial_qos,
@@ -530,7 +528,6 @@ TAO_Notify_EventChannelFactory::activate_self ()
   return this->channel_factory_._retn();
 }
 
-
 TAO_Notify_Object::ID
 TAO_Notify_EventChannelFactory::get_id () const
 {
@@ -543,6 +540,5 @@ TAO_Notify_EventChannelFactory::ec_container()
   ACE_ASSERT( this->ec_container_.get() != nullptr );
   return *ec_container_;
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

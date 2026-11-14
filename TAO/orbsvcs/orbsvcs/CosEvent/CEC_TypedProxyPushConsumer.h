@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_CEC_TYPEDPROXYPUSHCONSUMER_H_
 #define TAO_CEC_TYPEDPROXYPUSHCONSUMER_H_
 #include /**/ "ace/pre.h"

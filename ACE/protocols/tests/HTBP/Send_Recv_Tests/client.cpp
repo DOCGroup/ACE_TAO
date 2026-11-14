@@ -16,7 +16,6 @@
  */
 //=============================================================================
 
-
 #include "ace/HTBP/HTBP_Stream.h"
 #include "ace/HTBP/HTBP_Session.h"
 #include "ace/HTBP/HTBP_ID_Requestor.h"
@@ -218,7 +217,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                     i, buffer2[i], buffer[i]));
         Test_Result = 1;
       }
-
 
   stream.close ();
 

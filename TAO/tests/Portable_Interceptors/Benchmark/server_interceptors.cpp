@@ -87,7 +87,6 @@ Vault_Server_Request_Interceptor::send_other (
   // Do Nothing
 }
 
-
 //////////////////////////////////  Context /////////////////////////
 
 char *

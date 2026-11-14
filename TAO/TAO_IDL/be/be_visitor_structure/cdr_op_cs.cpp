@@ -19,7 +19,6 @@ be_visitor_structure_cdr_op_cs::be_visitor_structure_cdr_op_cs (
 {
 }
 
-
 int
 be_visitor_structure_cdr_op_cs::visit_structure (be_structure *node)
 {

@@ -49,7 +49,6 @@ namespace ACE_RMCast
           if (part->num () == 1)
             ACE_OS::abort ();
 
-
           Data const* data = static_cast<Data const*> (m->find (Data::id));
 
           Data_ptr& new_data = e->int_id_;
@@ -63,7 +62,6 @@ namespace ACE_RMCast
           //          << "new_data->capa (): " << new_data->capacity () << endl;
 
           new_data->size (new_data->size () + data->size ());
-
 
           if (part->num () == part->of ())
           {

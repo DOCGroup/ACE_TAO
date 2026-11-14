@@ -5,7 +5,6 @@
  *  @author Chris Gill
  */
 
-
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Sched/SchedEntry.h"
 #include "ace/SString.h"
@@ -704,18 +703,15 @@ Dispatch_Entry::operator < (Dispatch_Entry const &d) const
           d.task_entry ().rt_info ()->importance) ? true : false;
 }
 
-
 Dispatch_Entry_Link::Dispatch_Entry_Link (Dispatch_Entry &d)
   : dispatch_entry_ (d)
 {
 }
 
-
 Dispatch_Entry_Link::Dispatch_Entry_Link (Dispatch_Entry_Link const &d)
   : dispatch_entry_ (d.dispatch_entry_)
 {
 }
-
 
 Dispatch_Proxy_Iterator::Dispatch_Proxy_Iterator
   (ACE_Ordered_MultiSet <Dispatch_Entry_Link> &set,
@@ -914,7 +910,6 @@ Dispatch_Proxy_Iterator::OS_priority () const
 
   return link->dispatch_entry ().OS_priority ();
 }
-
 
 TimeLine_Entry::TimeLine_Entry (Dispatch_Entry &dispatch_entry,
                                 Time start, Time stop,

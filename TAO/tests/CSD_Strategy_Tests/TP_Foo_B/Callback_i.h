@@ -5,7 +5,6 @@
 #include "CallbackS.h"
 #include "Foo_B_Statistics.h"
 
-
 class CSD_TP_Foo_B_Export Callback_i
                               : public virtual POA_Callback
 {
@@ -23,10 +22,8 @@ class CSD_TP_Foo_B_Export Callback_i
     Callback_i & operator= (Callback_i const &) = delete;
     Callback_i & operator= (Callback_i &&) = delete;
 
-
   private:
      unsigned num_callbacks_ {};
 };
-
 
 #endif

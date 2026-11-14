@@ -52,7 +52,6 @@ public:
   SharedIntfCB& operator= (SharedIntfCB&&) = delete;
 };
 
-
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {

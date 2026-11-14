@@ -26,7 +26,6 @@ class Server_Request_Interceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   Server_Request_Interceptor () = default;
 
   /**
@@ -65,7 +64,6 @@ public:
   Server_Request_Interceptor &operator= (Server_Request_Interceptor &&) = delete;
 
 protected:
-  /// Destructor.
   ~Server_Request_Interceptor () override = default;
 
 private:

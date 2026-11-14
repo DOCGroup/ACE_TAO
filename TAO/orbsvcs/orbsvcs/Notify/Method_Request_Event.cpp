@@ -35,7 +35,6 @@ TAO_Notify_Method_Request_Event::complete ()
   }
 }
 
-
 unsigned long
 TAO_Notify_Method_Request_Event::sequence ()
 {
@@ -57,7 +56,6 @@ TAO_Notify_Method_Request_Event::should_retry ()
 }
 
 /**********************************************************/
-
 
 TAO_Notify_Method_Request_Event_Queueable::TAO_Notify_Method_Request_Event_Queueable (
       const TAO_Notify_Method_Request_Event & prev_request,

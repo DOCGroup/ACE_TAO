@@ -320,7 +320,6 @@ TAO_IFR_Server::create_repository ()
   this->ifr_ior_ =
     this->orb_->object_to_string (repo_ref);
 
-
   CORBA::Object_var table_object =
     this->orb_->resolve_initial_references ("IORTable");
 

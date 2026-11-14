@@ -43,7 +43,6 @@ class ClientRequestInterceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   ClientRequestInterceptor (PortableInterceptor::SlotId slot_id,
                             PortableInterceptor::Current_ptr pi_current);
   ClientRequestInterceptor (ClientRequestInterceptor const &) = delete;

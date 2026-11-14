@@ -73,7 +73,6 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::connect (Admin_Traits_PTR admin_ptr)
                  this->proxy_id_);
 }
 
-
 template <class Peer_Traits>
 void
 TAO_Notify_Tests_Peer_T<Peer_Traits>::connect ()

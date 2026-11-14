@@ -56,7 +56,6 @@ template<class EVENT_CHANNEL, class PROXY, class INTERFACE, class PEER>
 class TAO_ESF_Peer_Admin : public TAO_ESF_Proxy_Admin<EVENT_CHANNEL,PROXY,INTERFACE>
 {
 public:
-  /// Constructor
   explicit TAO_ESF_Peer_Admin (EVENT_CHANNEL *ec);
 
   ~TAO_ESF_Peer_Admin () override = default;

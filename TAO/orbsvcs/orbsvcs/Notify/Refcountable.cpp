@@ -59,7 +59,6 @@ TAO_Notify_Refcountable::diagnostic_dump (char const *title)
 
 #endif /* TAO_NOTIFY_REFCOUNT_DIAGNOSTICS */
 
-
 TAO_Notify_Refcountable::TAO_Notify_Refcountable ()
 {
 }
@@ -85,7 +84,6 @@ TAO_Notify_Refcountable::~TAO_Notify_Refcountable ()
   ACE_ASSERT( refcount == 0 );
   ACE_UNUSED_ARG(refcount);
 }
-
 
 CORBA::ULong
 TAO_Notify_Refcountable::_incr_refcnt ()
@@ -137,12 +135,10 @@ TAO_Notify_Tracker::TAO_Notify_Tracker()
 {
 }
 
-
 TAO_Notify_Tracker::~TAO_Notify_Tracker()
 {
   dump( "destruction" );
 }
-
 
 void
 TAO_Notify_Tracker::dump (char const *title)
@@ -165,14 +161,12 @@ TAO_Notify_Tracker::dump (char const *title)
   last_dump_count_ = current_count;
 }
 
-
 TAO_Notify_Tracker &
 TAO_Notify_Tracker::get_instance ()
 {
   static TAO_Notify_Tracker instance;
   return instance;
 }
-
 
 void
 TAO_Notify_Tracker::add (TAO_Notify_Refcountable *p)
@@ -197,7 +191,6 @@ TAO_Notify_Tracker::add (TAO_Notify_Refcountable *p)
   }
 }
 
-
 void
 TAO_Notify_Tracker::remove (TAO_Notify_Refcountable const *p)
 {
@@ -217,7 +210,6 @@ TAO_Notify_Tracker::remove (TAO_Notify_Refcountable const *p)
     map_.erase( iter );
   }
 }
-
 
 TAO_Notify_Tracker::Entry
 TAO_Notify_Tracker::find (TAO_Notify_Refcountable const *p) const

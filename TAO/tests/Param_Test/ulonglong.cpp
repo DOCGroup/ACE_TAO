@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "helper.h"
 #include "ulonglong.h"
 
@@ -79,7 +78,6 @@ Test_ULongLong::run_sii_test (Param_Test_ptr objref)
       this->ret_ = objref->test_ulonglong (this->in_,
                                            this->inout_,
                                            this->out_);
-
 
       return 0;
     }

@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_LB_MEMBER_LOCATOR_H
 #define TAO_LB_MEMBER_LOCATOR_H
 

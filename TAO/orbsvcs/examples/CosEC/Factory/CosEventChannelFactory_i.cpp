@@ -38,7 +38,6 @@ TAO_CosEventChannelFactory_i::init (PortableServer::POA_ptr poa,
                                 manager,
                                 policy_list);
 
-
   idpolicy->destroy ();
   assignpolicy->destroy ();
   return 0;

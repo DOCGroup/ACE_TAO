@@ -38,7 +38,6 @@ class TAO_Tagged_Components;
 class TAO_Codeset_Translator_Base;
 class TAO_Codeset_Descriptor_Base;
 
-
 // ****************************************************************
 
 /**

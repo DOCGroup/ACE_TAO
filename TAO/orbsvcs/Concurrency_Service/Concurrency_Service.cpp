@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "orbsvcs/Log_Macros.h"
 #include "Concurrency_Service.h"
 
@@ -189,8 +188,6 @@ Concurrency_Service::run ()
                      -1);
   return 0;
 }
-
-// Destructor.
 
 Concurrency_Service::~Concurrency_Service ()
 {

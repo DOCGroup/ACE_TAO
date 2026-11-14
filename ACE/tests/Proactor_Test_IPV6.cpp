@@ -307,7 +307,6 @@ MyTask::start (int num_threads,
   return 0;
 }
 
-
 int
 MyTask::stop ()
 {
@@ -710,7 +709,6 @@ Server::cancel ()
   return;
 }
 
-
 void
 Server::addresses (const ACE_INET_Addr& peer, const ACE_INET_Addr&)
 {
@@ -726,7 +724,6 @@ Server::addresses (const ACE_INET_Addr& peer, const ACE_INET_Addr&)
                 ACE_TEXT ("addr_to_string")));
   return;
 }
-
 
 void
 Server::open (ACE_HANDLE handle, ACE_Message_Block &)
@@ -1070,7 +1067,6 @@ Connector::make_handler ()
   return this->tester_->client_up ();
 }
 
-
 int
 Connector::start (const ACE_INET_Addr& addr, int num)
 {
@@ -1107,7 +1103,6 @@ Connector::start (const ACE_INET_Addr& addr, int num)
     }
   return rc;
 }
-
 
 Client::Client ()
 {
@@ -1199,7 +1194,6 @@ Client::close ()
   return;
 }
 
-
 void
 Client::addresses (const ACE_INET_Addr& peer, const ACE_INET_Addr& local)
 {
@@ -1254,7 +1248,6 @@ Client::addresses (const ACE_INET_Addr& peer, const ACE_INET_Addr& local)
                 ACE_TEXT ("addr_to_string")));
   return;
 }
-
 
 void
 Client::open (ACE_HANDLE handle, ACE_Message_Block &)
@@ -1414,7 +1407,6 @@ Client::initiate_read_stream ()
   mb3->cont (mb4);
   mb4->cont (mb5);
   mb5->cont (mb6);
-
 
   // hide last byte in each message block, reserving it for later to set '\0'
   // for proper printouts

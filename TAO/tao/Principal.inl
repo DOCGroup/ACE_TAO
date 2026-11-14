@@ -20,7 +20,6 @@ CORBA::Principal::_incr_refcount ()
   return ++this->refcount_;
 }
 
-
 ACE_INLINE
 CORBA::Principal *
 CORBA::Principal::_duplicate (CORBA::Principal * x)
@@ -32,7 +31,6 @@ CORBA::Principal::_duplicate (CORBA::Principal * x)
 
   return x;
 }
-
 
 ACE_INLINE
 CORBA::Principal *

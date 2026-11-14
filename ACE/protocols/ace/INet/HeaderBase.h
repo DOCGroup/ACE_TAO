@@ -62,7 +62,6 @@ namespace ACE
 
         using TNVMap = ACE_Ordered_MultiSet<NVPair>;
 
-
         /**
         * @class ACE_INet_HeaderBase
         *

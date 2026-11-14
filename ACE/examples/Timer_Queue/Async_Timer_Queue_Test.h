@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-
 //=============================================================================
 /**
  *  @file    Async_Timer_Queue_Test.h
@@ -11,7 +10,6 @@
  *  @author Douglas C. Schmidt and Sergio Flores-Gaitan
  */
 //=============================================================================
-
 
 #ifndef _ASYNC_TIMER_QUEUE_TEST_H_
 #define _ASYNC_TIMER_QUEUE_TEST_H_

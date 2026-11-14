@@ -9,7 +9,6 @@ static size_t leadin_len_1_5 = 15;
 static const char *size_leadin_1_6 = "GIOP message v1."; //2, ";
 static size_t leadin_len_1_6 = 19;
 
-
 const char *GIOP_Buffer::size_leadin = nullptr;
 size_t GIOP_Buffer::leadin_len {};
 const size_t GIOP_Buffer::giop_header_len = 12;
@@ -101,7 +100,6 @@ struct ReplyHeader_1_0 { // Renamed from ReplyHeader
     };
 
  */
-
 
 //static const size_t target_offset_12 = GIOP_Buffer::giop_header_len + 12;
 

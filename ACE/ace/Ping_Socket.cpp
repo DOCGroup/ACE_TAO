@@ -79,13 +79,11 @@ struct icmp
 
 #endif /* #if ! defined (ACE_WIN32) */
 
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int const ICMP_MIN = 8;  // Minimal size of ICMP packet, header only
 int const ICMP_DATA_LENGTH = 56;  // For ICMP data with Echo request
 ACE_Time_Value const ACE_Ping_Socket::time_default_ (0, 500000);
-
 
 void
 ACE_Ping_Socket::dump () const

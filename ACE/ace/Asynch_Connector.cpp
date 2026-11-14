@@ -209,7 +209,6 @@ ACE_Asynch_Connector<HANDLER>::parse_address (const ACE_Asynch_Connect::Result &
   return;
 }
 
-
 template <class HANDLER> ACE_Asynch_Connect &
 ACE_Asynch_Connector<HANDLER>::asynch_connect ()
 {

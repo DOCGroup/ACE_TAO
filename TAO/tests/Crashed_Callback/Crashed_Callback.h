@@ -10,7 +10,6 @@ class Crashed_Callback
   : public virtual POA_Test::Crashed_Callback
 {
 public:
-  /// Constructor
   Crashed_Callback () = default;
 
   // = The skeleton methods

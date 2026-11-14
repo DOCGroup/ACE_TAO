@@ -15,7 +15,6 @@ class Simple
   : public virtual POA_Test::Simple
 {
 public:
-  /// Constructor
   Simple () = default;
 
   // = The skeleton methods

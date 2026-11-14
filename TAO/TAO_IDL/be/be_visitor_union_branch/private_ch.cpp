@@ -16,7 +16,6 @@
 //  visitor for union_branch in the client header generating the private information
 // **********************************************
 
-// Constructor.
 be_visitor_union_branch_private_ch::be_visitor_union_branch_private_ch (
     be_visitor_context *ctx
   )
@@ -24,7 +23,6 @@ be_visitor_union_branch_private_ch::be_visitor_union_branch_private_ch (
 {
 }
 
-// Destructor.
 be_visitor_union_branch_private_ch::~be_visitor_union_branch_private_ch () = default;
 
 // Visit the union_branch node.

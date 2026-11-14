@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #include "alt_mapping_i.h"
 #include "tao/Codeset/Codeset.h"
 #include "tao/debug.h"

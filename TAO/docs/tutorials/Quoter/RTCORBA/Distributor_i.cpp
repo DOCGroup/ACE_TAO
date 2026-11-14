@@ -99,7 +99,6 @@ StockDistributor_i::provide_quoter_info (::Stock::Cookie *ck)
       if (iter == this->subscribers_list_.end ())
         throw ::Stock::Invalid_Subscription ();
 
-
       StockQuoter_i *const quoter = new StockQuoter_i;
       PortableServer::ServantBase_var owner_transfer (quoter);
       PortableServer::ObjectId_var oid (
@@ -215,7 +214,6 @@ struct Stock_Publisher
   RTCORBA::Current_var rt_current_;
   Stock::StockNames_var sn_;
 };
-
 
 void
 StockDistributor_i::operator () (std::vector <std::string> &stocks)
@@ -362,7 +360,6 @@ StockDistributorHome_i::create ()
 
   return Stock::StockDistributor::_narrow (obj.in ());
 }
-
 
 int
 StockDistributorHome_i::handle_signal (int,

@@ -79,7 +79,6 @@ HTTP_Hdr_Node HTTP_HCodes::A ("<A", "<A %s>");
 HTTP_Hdr_Node HTTP_HCodes::SCRIPT ("<SCRIPT", "<SCRIPT %s>");
 HTTP_Hdr_Node HTTP_HCodes::APPLET ("<APPLET", "<APPLET %s>");
 
-
 const int &HTTP_HCodes::NUM_HEADER_STRINGS
   = HTTP_Header_Nodes_Singleton::instance ()->num_header_strings_;
 

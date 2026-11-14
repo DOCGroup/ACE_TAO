@@ -1821,7 +1821,6 @@ YY_DECL
     {
 #line 236 "fe/idl.ll"
 
-
 #line 1828 "<stdout>"
 
     while ( /*CONSTCOND*/1 )        /* loops until end-of-file is reached */

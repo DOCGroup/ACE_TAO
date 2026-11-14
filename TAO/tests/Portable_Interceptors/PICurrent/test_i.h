@@ -29,7 +29,6 @@
 class test_i : public virtual POA_PICurrentTest::test
 {
 public:
-  /// Constructor.
   test_i (PortableInterceptor::Current_ptr current,
           PortableInterceptor::SlotId id,
           CORBA::ORB_ptr orb);
@@ -38,7 +37,6 @@ public:
   test_i &operator= (test_i const &) = delete;
   test_i &operator= (test_i &&) = delete;
 
-  /// Destructor.
   ~test_i () override = default;
 
   /// Main servant test method.

@@ -16,7 +16,6 @@ class Receiver
   : public virtual POA_Test::Receiver
 {
 public:
-  /// Constructor
   Receiver () = default;
   Receiver (Receiver const &) = delete;
   Receiver (Receiver &&) = delete;

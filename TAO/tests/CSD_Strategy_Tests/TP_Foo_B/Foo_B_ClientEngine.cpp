@@ -149,7 +149,6 @@ Foo_B_ClientEngine::execute()
   return check_validity;
 }
 
-
 void
 Foo_B_ClientEngine::expected_results(Foo_B_Statistics& stats)
 {
@@ -171,7 +170,6 @@ Foo_B_ClientEngine::expected_results(Foo_B_Statistics& stats)
   stats.expected(16, 1, Foo_B_Statistics::FOO_B_STAT_NONE);
   stats.expected_callbacks (1);
 }
-
 
 unsigned
 Foo_B_ClientEngine::expected_callbacks ()

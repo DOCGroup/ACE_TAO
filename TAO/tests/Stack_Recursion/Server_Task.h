@@ -4,7 +4,6 @@
 #include /**/ "ace/pre.h"
 #include "tao/ORB.h"
 
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -16,7 +15,6 @@ class Sender;
 class Server_Task : public ACE_Task_Base
 {
 public:
-  /// Constructor
   Server_Task (CORBA::ORB_ptr orb,
                Sender const *sender,
                ACE_Thread_Manager *thr_mgr);

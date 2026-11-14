@@ -115,7 +115,6 @@ server_main (int argc,
 
       PortableInterceptor::register_orb_initializer (orb_initializer.in ());
 
-
       CORBA::ORB_var const orb = CORBA::ORB_init (argc,
                                                   argv,
                                                   "test_orb");

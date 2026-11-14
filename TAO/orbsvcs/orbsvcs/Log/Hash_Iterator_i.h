@@ -41,7 +41,6 @@ class TAO_Log_Serv_Export TAO_Hash_Iterator_i
   : public TAO_Iterator_i
 {
 public:
-  /// Constructor.
   TAO_Hash_Iterator_i (PortableServer::POA_ptr poa,
                        ACE_Reactor * reactor,
                        TAO_Hash_LogRecordStore * recordstore,
@@ -51,7 +50,6 @@ public:
                        char const * constraint,
                        CORBA::ULong max_rec_list_len);
 
-  /// Destructor.
   ~TAO_Hash_Iterator_i () override;
 
   /// Gets a list of LogRecords.

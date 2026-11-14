@@ -19,7 +19,6 @@ TAO_Resume_Handle::~TAO_Resume_Handle ()
     this->resume_handle ();
 }
 
-
 ACE_INLINE void
 TAO_Resume_Handle::set_flag (TAO_Handle_Resume_Flag fl)
 {

@@ -47,7 +47,6 @@ public:
   StockDistributor_i &operator= (StockDistributor_i const &) = delete;
   StockDistributor_i &operator= (StockDistributor_i &&) = delete;
 
-  /// Destructor
   ~StockDistributor_i () override;
 
   /**
@@ -141,10 +140,8 @@ class  StockQuoter_i
   : public virtual POA_Stock::StockQuoter
 {
 public:
-  /// Constructor.
   StockQuoter_i () = default;
 
-  /// Destructor.
   ~StockQuoter_i () override = default;
 
   StockQuoter_i (StockQuoter_i const &) = delete;
@@ -184,7 +181,6 @@ public:
   StockDistributorHome_i &operator= (StockDistributorHome_i const &) = delete;
   StockDistributorHome_i &operator= (StockDistributorHome_i &&) = delete;
 
-  /// Destructor
   ~StockDistributorHome_i () override;
 
   /**
@@ -209,7 +205,6 @@ private:
   /// The StockDistributor servant created by its home.
   PortableServer::ObjectId_var dist_id_;
 };
-
 
 // Define typedefs for our version of the stock database.
 using Stock_Database_Singleton = ACE_Singleton<Stock_Database<StockDistributor_i>,

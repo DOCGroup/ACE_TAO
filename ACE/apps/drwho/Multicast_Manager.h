@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef _MULTICAST_MANAGER_H
 #define _MULTICAST_MANAGER_H
 

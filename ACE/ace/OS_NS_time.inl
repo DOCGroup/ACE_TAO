@@ -232,7 +232,6 @@ ACE_OS::localtime_r (const unsigned long *clock,
   return ACE_OS::localtime_r (reinterpret_cast<const time_t *>(clock), res);
 }
 
-
 #endif
 
 ACE_INLINE double

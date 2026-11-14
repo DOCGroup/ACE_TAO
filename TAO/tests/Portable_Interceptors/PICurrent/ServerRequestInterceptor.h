@@ -42,7 +42,6 @@ class ServerRequestInterceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   ServerRequestInterceptor (PortableInterceptor::SlotId id,
                             PortableInterceptor::Current_ptr pi_current);
   ServerRequestInterceptor (ServerRequestInterceptor const &) = delete;

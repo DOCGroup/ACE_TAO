@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "Stock_Factory_i.h"
 #include "tao/Utils/PolicyList_Destroyer.h"
 #include "ace/Log_Msg.h"

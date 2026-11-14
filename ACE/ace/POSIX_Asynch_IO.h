@@ -290,7 +290,6 @@ public:
   ~ACE_POSIX_Asynch_Read_Stream () override;
 };
 
-
 /**
  * @class ACE_POSIX_Asynch_Write_Stream_Result
  *
@@ -464,7 +463,6 @@ private:
             int signal_number = 0) override;
 };
 
-
 /**
  * @class ACE_POSIX_Asynch_Write_File_Result
  *
@@ -625,7 +623,6 @@ protected:
   // I/O handle for the new connection.
 };
 
-
 /**
  * @class ACE_POSIX_Asynch_Accept
  *
@@ -767,7 +764,6 @@ protected:
   void connect_handle (ACE_HANDLE handle);
 };
 
-
 /**
  * @class ACE_POSIX_Asynch_Connect
  */
@@ -865,7 +861,6 @@ private:
   /// through the auxillary thread  in the asynch pseudo task.
   ACE_SYNCH_MUTEX lock_;
 };
-
 
 /**
  * @class ACE_POSIX_Asynch_Transmit_File_Result
@@ -992,7 +987,6 @@ public:
 
   ~ACE_POSIX_Asynch_Transmit_File () override;
 };
-
 
 /**
  * @class ACE_POSIX_Asynch_Read_Dgram
@@ -1166,7 +1160,6 @@ protected:
   /// Do-nothing constructor.
   ACE_POSIX_Asynch_Write_Dgram ();
 };
-
 
 /*****************************************************/
 

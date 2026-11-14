@@ -11,7 +11,6 @@ TAO_Persistent_Naming_Context_Factory::TAO_Persistent_Naming_Context_Factory ()
 /// this class goes out of scope, its hash_map remains in persistent storage.
 TAO_Persistent_Naming_Context_Factory::~TAO_Persistent_Naming_Context_Factory () = default;
 
-
 /// Factory method for creating an implementation object for naming contexts
 TAO_Persistent_Naming_Context*
 TAO_Persistent_Naming_Context_Factory::create_naming_context_impl (

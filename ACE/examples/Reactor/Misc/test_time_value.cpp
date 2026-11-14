@@ -4,7 +4,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/Time_Value.h"
 
-
 constexpr int my_abs (int d) { return d > 0 ? d : -d; }
 
 ostream &

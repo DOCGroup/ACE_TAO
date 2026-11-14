@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_UPIPE_STREAM_H
 #define ACE_UPIPE_STREAM_H
 #include /**/ "ace/pre.h"

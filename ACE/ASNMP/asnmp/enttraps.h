@@ -91,7 +91,6 @@ public:
   SnmpSyntax& operator=( SnmpSyntax &val) override { return snmpTrapsOid::operator=(val); }
 };
 
-
 // SMI LinkUp Oid
 /**
  * @class linkUpOid

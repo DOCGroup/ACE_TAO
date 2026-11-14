@@ -202,7 +202,6 @@ private:
   ACE_Static_Node &operator= (ACE_Static_Node &&) = delete;
 };
 
-
 class ACE_Service_Type_Factory;
 
 /**

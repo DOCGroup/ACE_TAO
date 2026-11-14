@@ -57,12 +57,10 @@ namespace FTRTEC {
     return 0;
   }
 
-
   FtRtecEventComm::ObjectId const& Identification_Service::object_id() const
   {
     return object_id_;
   }
-
 
   CosNaming::Name const& Identification_Service::name() const
   {

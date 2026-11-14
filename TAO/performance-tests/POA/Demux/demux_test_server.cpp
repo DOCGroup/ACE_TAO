@@ -6,13 +6,11 @@
  */
 //=============================================================================
 
-
 #include "demux_test_server.h"
 #include "tao/debug.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 
-// Constructor
 Demux_Test_Server::Demux_Test_Server ()
   : argc_ (0),
     num_POAs_ (1),
@@ -123,7 +121,6 @@ Demux_Test_Server::init (int argc, ACE_TCHAR *argv [])
             this->root_poa_->create_id_assignment_policy (PortableServer::SYSTEM_ID);
         }
 
-
       // Choose the LifeSpan Policy. Default is PERSISTENT.
       if (this->use_transient_poas_)
         {
@@ -223,7 +220,6 @@ Demux_Test_Server::init (int argc, ACE_TCHAR *argv [])
                   CORBA::String_var ior = this->orb_->object_to_string
                     (demux_var.in ());
 
-
                   ACE_OS::fprintf (this->ior_fp_.get (), "%s\n", ior.in ());
                 }
               catch (const CORBA::Exception& ex)
@@ -260,10 +256,8 @@ Demux_Test_Server::init (int argc, ACE_TCHAR *argv [])
                   // Get Object reference for demux_test_i impl object.
                   CORBA::Object_var demux_var = demux_test_i_ptr->_this ();
 
-
                   CORBA::String_var ior = this->orb_->object_to_string
                     (demux_var.in ());
-
 
                   ACE_OS::fprintf (this->ior_fp_.get (), "%s\n", ior.in ());
                 }

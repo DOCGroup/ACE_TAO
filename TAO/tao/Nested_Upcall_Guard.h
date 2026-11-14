@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_NESTED_UPCALL_GUARD_H
 #define TAO_NESTED_UPCALL_GUARD_H
 

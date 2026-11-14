@@ -3,8 +3,6 @@
 
 constexpr size_t BIG_LENGTH = 4 * 1024;
 
-// Constructor.
-
 Echo_i::Echo_i (CORBA::ORB_ptr o)
   : orb_ (o)
 {

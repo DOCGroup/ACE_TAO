@@ -24,7 +24,6 @@ testCurrentORBInitializer (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-
 int
 testCurrentLoader (int, char *[])
 {
@@ -69,7 +68,6 @@ testCurrentLoader (int, char *[])
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("testCurrentLoader: OK\n")));
   return 0;
 }
-
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])

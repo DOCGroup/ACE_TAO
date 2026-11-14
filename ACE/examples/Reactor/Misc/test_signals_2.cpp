@@ -94,13 +94,11 @@
     second SIGQUIT we exit and dump core since that's what
     happens with the default disposition for SIGQUIT. */
 
-
 #include "ace/Reactor.h"
 #include "ace/WFMO_Reactor.h"
 #include "ace/Select_Reactor.h"
 #include "ace/Log_Msg.h"
 #include "ace/Signal.h"
-
 
 class Sig_Handler_1 : public ACE_Event_Handler
 {

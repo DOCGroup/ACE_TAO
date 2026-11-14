@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_TESTS_CACHED_CONN_TEST_H
 #define ACE_TESTS_CACHED_CONN_TEST_H
 

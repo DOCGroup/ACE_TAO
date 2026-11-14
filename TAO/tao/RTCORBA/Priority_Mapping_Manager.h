@@ -6,7 +6,6 @@
  *  @author Marina Spivak (marina@cs.wustl.edu)
  */
 
-
 #ifndef TAO_PRIORITY_MAPPING_MANAGER_H
 #define TAO_PRIORITY_MAPPING_MANAGER_H
 #include /**/ "ace/pre.h"
@@ -29,7 +28,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Priority_Mapping_Manager;
 class TAO_Priority_Mapping_Manager_var;
 using TAO_Priority_Mapping_Manager_ptr = TAO_Priority_Mapping_Manager *;
-
 
 /**
  * @class TAO_Priority_Mapping_Manager

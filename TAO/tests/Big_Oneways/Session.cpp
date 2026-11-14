@@ -189,7 +189,6 @@ Session::receive_payload (Test::Payload const &the_payload)
   this->terminate (true);
 }
 
-
 void
 Session::destroy ()
 {

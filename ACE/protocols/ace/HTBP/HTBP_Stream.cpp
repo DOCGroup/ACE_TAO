@@ -36,7 +36,6 @@ ACE::HTBP::Stream::dump () const
 {
 }
 
-
 //---------------------------------------------------------------------------
 // = I/O functions.
 
@@ -338,7 +337,6 @@ ACE::HTBP::Stream::session (ACE::HTBP::Session *s)
   this->session_ = s;
   s->stream (this);
 }
-
 
 ACE_HANDLE
 ACE::HTBP::Stream::get_handle () const

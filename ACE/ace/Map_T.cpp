@@ -94,7 +94,6 @@ ACE_Map_Impl_Reverse_Iterator_Adapter<T, IMPLEMENTATION, ENTRY>::minus_minus ()
   --this->implementation_;
 }
 
-
 template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY>
 ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::~ACE_Map_Impl () = default;
 
@@ -292,7 +291,6 @@ ACE_Active_Map_Manager_Iterator_Adapter<T, VALUE>::clone () const
   return temp;
 }
 
-
 template <class T, class VALUE> int
 ACE_Active_Map_Manager_Iterator_Adapter<T, VALUE>::compare (const ACE_Iterator_Impl<T> &rhs) const
 {
@@ -336,7 +334,6 @@ ACE_Active_Map_Manager_Reverse_Iterator_Adapter<T, VALUE>::clone () const
                   0);
   return temp;
 }
-
 
 template <class T, class VALUE> int
 ACE_Active_Map_Manager_Reverse_Iterator_Adapter<T, VALUE>::compare (const ACE_Reverse_Iterator_Impl<T> &rhs) const
@@ -730,7 +727,6 @@ ACE_Hash_Map_Manager_Ex_Iterator_Adapter<T, KEY, VALUE, HASH_KEY, COMPARE_KEYS>:
   return temp;
 }
 
-
 template <class T, class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS> int
 ACE_Hash_Map_Manager_Ex_Iterator_Adapter<T, KEY, VALUE, HASH_KEY, COMPARE_KEYS>::compare (const ACE_Iterator_Impl<T> &rhs) const
 {
@@ -774,7 +770,6 @@ ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<T, KEY, VALUE, HASH_KEY, COMPAR
                   0);
   return temp;
 }
-
 
 template <class T, class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS> int
 ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<T, KEY, VALUE, HASH_KEY, COMPARE_KEYS>::compare (const ACE_Reverse_Iterator_Impl<T> &rhs) const
@@ -1019,7 +1014,6 @@ ACE_Map_Manager_Iterator_Adapter<T, KEY, VALUE>::clone () const
   return temp;
 }
 
-
 template <class T, class KEY, class VALUE> int
 ACE_Map_Manager_Iterator_Adapter<T, KEY, VALUE>::compare (const ACE_Iterator_Impl<T> &rhs) const
 {
@@ -1062,7 +1056,6 @@ ACE_Map_Manager_Reverse_Iterator_Adapter<T, KEY, VALUE>::clone () const
                   0);
   return temp;
 }
-
 
 template <class T, class KEY, class VALUE> int
 ACE_Map_Manager_Reverse_Iterator_Adapter<T, KEY, VALUE>::compare (const ACE_Reverse_Iterator_Impl<T> &rhs) const

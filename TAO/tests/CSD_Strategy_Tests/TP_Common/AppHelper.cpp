@@ -21,7 +21,6 @@ AppHelper::ref_to_file(CORBA::ORB_ptr    orb,
   ACE_OS::fclose(ior_file);
 }
 
-
 PortableServer::POA_ptr
 AppHelper::create_poa(const char*                    name,
                       PortableServer::POA_ptr        root_poa,
@@ -41,7 +40,6 @@ AppHelper::create_poa(const char*                    name,
 
   return child_poa._retn();
 }
-
 
 CORBA::Object_ptr
 AppHelper::activate_servant(PortableServer::POA_ptr poa,
@@ -63,7 +61,6 @@ AppHelper::activate_servant(PortableServer::POA_ptr poa,
 
   return obj._retn();
 }
-
 
 bool
 AppHelper::validate_connection (CORBA::Object_ptr obj)

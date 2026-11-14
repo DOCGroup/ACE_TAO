@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef FTRT_CLIENTORB_INITIALIZER_H
 #define FTRT_CLIENTORB_INITIALIZER_H
 

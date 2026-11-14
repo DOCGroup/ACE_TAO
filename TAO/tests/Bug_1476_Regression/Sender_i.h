@@ -26,7 +26,6 @@ class Sender_i
 public:
   Sender_i () = default;
 
-  /// Destructor
   ~Sender_i () override = default;
   Sender_i (Sender_i const &) = delete;
   Sender_i &operator= (Sender_i const &) = delete;

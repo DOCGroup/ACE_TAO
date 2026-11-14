@@ -42,7 +42,6 @@ public:
   }
 };
 
-
 class TPC_Logging_Acceptor
   : public ACE_Acceptor<TPC_Logging_Handler, ACE_SOCK_ACCEPTOR> {
 protected:

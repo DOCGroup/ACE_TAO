@@ -44,7 +44,6 @@ ClientInterceptor::send_poll (
   std::cout << "Calling send_poll()." << std::endl;
 }
 
-
 void
 ClientInterceptor::send_request (
                                  PortableInterceptor::ClientRequestInfo_ptr ri)

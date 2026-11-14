@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #include "test_dynsequence.h"
 #include "da_testsC.h"
 #include "data.h"
@@ -216,7 +215,6 @@ Test_DynSequence::run_test ()
           }
       }
 
-
       if (this->error_count_ == 0)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -359,7 +357,6 @@ Test_DynSequence::run_test ()
   ACE_DEBUG ((LM_DEBUG,
               "\n%d errors\n",
               this->error_count_));
-
 
   return !!error_count_;
 }

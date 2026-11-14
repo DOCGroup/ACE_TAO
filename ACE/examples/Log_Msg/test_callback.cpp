@@ -11,13 +11,11 @@
  */
 //=============================================================================
 
-
 #include "ace/OS_main.h"
 #include "ace/Log_Msg.h"
 #include "ace/Log_Msg_Callback.h"
 #include "ace/Log_Record.h"
 #include <cstdio>
-
 
 /**
  * @class Logger

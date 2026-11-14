@@ -526,7 +526,6 @@ TAO_Storable_Naming_Context::make_new_context (
       throw CosNaming::NamingContext::AlreadyBound();
     }
 
-
   result = context->_this ();
 
   // return the address of the new context object so that caller can finish

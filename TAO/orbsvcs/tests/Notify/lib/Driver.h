@@ -86,10 +86,8 @@ private:
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Driver : public TAO_Notify_Tests_Driver_Base
 {
 public:
-  /// Constructor
   TAO_Notify_Tests_Driver ();
 
-  /// Destructor
   ~TAO_Notify_Tests_Driver ();
 
   /// Init

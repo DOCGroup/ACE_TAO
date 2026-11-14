@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #ifndef ECHO_CLIENT_I_H
 #define ECHO_CLIENT_I_H
 
@@ -30,10 +29,8 @@
 class Checkpoint_Client_i
 {
 public:
-  /// Constructor
   Checkpoint_Client_i () = default;
 
-  /// Destructor
   ~Checkpoint_Client_i () = default;
 
   Checkpoint_Client_i (Checkpoint_Client_i const&) = delete;
@@ -48,6 +45,5 @@ private:
   /// Instantiate the checkpoint object.
   Client<Checkpoint, Checkpoint_var> checkpoint;
 };
-
 
 #endif /* TIME_CLIENT_I_H */

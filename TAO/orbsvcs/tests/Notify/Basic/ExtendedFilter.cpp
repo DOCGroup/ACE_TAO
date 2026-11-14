@@ -4,7 +4,6 @@
 #include "ExtendedFilter.h"
 #include "orbsvcs/CosNotifyFilterExtC.h"
 
-
 ExtendedFilter::ExtendedFilter ()
   : event_count_ (5)
 {
@@ -213,7 +212,6 @@ ExtendedFilter::print_filters (CosNotifyFilter::FilterAdmin_ptr filter_admin)
         ACE_DEBUG ((LM_DEBUG, " Filter %d\n", filter_seq[i]));
     }
 }
-
 
 void
 ExtendedFilter::create_EC ()

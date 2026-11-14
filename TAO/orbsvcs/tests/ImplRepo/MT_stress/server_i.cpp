@@ -152,7 +152,6 @@ Server_i::init (int argc, ACE_TCHAR** argv)
       throw;
     }
 
-
   return 0;
 }
 
@@ -179,7 +178,6 @@ Server_i::run ()
       ex._tao_print_exception ("Server_i::run");
       throw;
     }
-
 
   return 0;
 }

@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_TRUNCATABLE_S_IMPL_H
 #define TAO_TRUNCATABLE_S_IMPL_H
 

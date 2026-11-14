@@ -13,7 +13,6 @@
 class  Messenger_i : public virtual POA_Messenger
 {
 public:
-  //Constructor
   Messenger_i () = default;
   Messenger_i (Messenger_i const &) = delete;
   Messenger_i (Messenger_i &&) = delete;
@@ -27,6 +26,5 @@ public:
     char const *subject,
     char *& message) override;
 };
-
 
 #endif /* MESSENGERI_H_  */

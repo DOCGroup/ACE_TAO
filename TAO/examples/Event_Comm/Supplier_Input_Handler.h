@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef SUPPLIER_INPUT_HANDLER_H
 #define SUPPLIER_INPUT_HANDLER_H
 
@@ -35,10 +34,8 @@ class Notifier_Handler;
 class Supplier_Input_Handler : public ACE_Event_Handler
 {
 public:
-  /// Constructor.
   Supplier_Input_Handler () = default;
 
-  /// Destructor.
   ~Supplier_Input_Handler () override;
 
   Supplier_Input_Handler (Supplier_Input_Handler const &) = delete;

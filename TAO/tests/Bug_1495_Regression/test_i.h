@@ -43,7 +43,6 @@ public:
   Bug1495_i (Bug1495_i &&) = delete;
   Bug1495_i &operator= (Bug1495_i &&) = delete;
 
-  // Destructor
   ~Bug1495_i () override = default;
 
   void get_thread_id (Bug1495_Regression::ThreadId_out thread_id) override;
@@ -52,6 +51,5 @@ public:
 private:
   CORBA::ORB_var const orb_;
 };
-
 
 #endif /* TESTI_H_  */

@@ -14,9 +14,7 @@ ClientApp::ClientApp()
 {
 }
 
-
 ClientApp::~ClientApp() = default;
-
 
 int
 ClientApp::run_i(int argc, ACE_TCHAR* argv[])
@@ -45,7 +43,6 @@ ClientApp::run_i(int argc, ACE_TCHAR* argv[])
 
   return result;
 }
-
 
 int
 ClientApp::parse_args(int argc, ACE_TCHAR* argv[])

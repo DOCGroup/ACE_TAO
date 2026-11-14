@@ -162,7 +162,6 @@ TAO_LB_LoadMinimum::get_loads (CosLoadBalancing::LoadManager_ptr load_manager,
   return loads._retn ();
 }
 
-
 CORBA::Object_ptr
 TAO_LB_LoadMinimum::next_member (
     PortableGroup::ObjectGroup_ptr object_group,

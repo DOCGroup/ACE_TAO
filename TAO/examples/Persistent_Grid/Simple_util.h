@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_UTIL_H
 #define TAO_UTIL_H
 
@@ -36,10 +35,8 @@ template <class Servant>
 class Server
 {
 public:
-  /// Constructor.
   Server () = default;
 
-  /// Destructor.
   ~Server () = default;
 
   Server (Server const&) = delete;
@@ -87,7 +84,6 @@ public:
   ACE_TCHAR **argv_ {};
 };
 
-
 // Client Class starts here
 
 /**
@@ -103,10 +99,8 @@ template <class InterfaceObj, class Var>
 class Client
 {
 public:
-  /// Constructor.
   Client () = default;
 
-  /// Destructor.
   ~Client () = default;
 
   Client (Client const&) = delete;

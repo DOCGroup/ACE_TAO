@@ -45,7 +45,6 @@ public:
   /// Default constructor
   Quoter_Server () = default;
 
-  /// Destructor
   ~Quoter_Server ();
 
   Quoter_Server (Quoter_Server const &) = delete;

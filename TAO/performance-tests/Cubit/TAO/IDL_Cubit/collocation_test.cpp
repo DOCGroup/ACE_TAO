@@ -63,7 +63,6 @@ svr_worker (void *arg)
   return nullptr;
 }
 
-
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {

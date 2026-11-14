@@ -17,7 +17,6 @@
 class TAO_RTEC_Perf_Export Implicit_Deactivator
 {
 public:
-  /// Constructor
   /**
    * @param client The client
    */
@@ -25,7 +24,6 @@ public:
   Implicit_Deactivator (Implicit_Deactivator& rhs);
   Implicit_Deactivator& operator= (Implicit_Deactivator& rhs);
 
-  /// Destructor
   ~Implicit_Deactivator ();
 
   /// Assignment operator

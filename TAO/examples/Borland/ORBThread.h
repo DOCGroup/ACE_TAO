@@ -13,10 +13,8 @@ public:
   TORBThread& operator= (TORBThread const&) = delete;
   TORBThread& operator= (TORBThread&&) = delete;
 
-  // Constructor.
   explicit __fastcall TORBThread (CORBA::ORB_ptr orb);
 
-  // Destructor.
   __fastcall ~TORBThread () override;
 
 protected:

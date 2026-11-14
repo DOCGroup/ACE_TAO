@@ -30,7 +30,6 @@ const ACE_Time_Value MAX_CLIENT_TIMEOUT(30);  // 30 secs
 const long NrClients = 10;
 static ACE_Atomic_Op<ACE_Thread_Mutex, long> ClientsLeft (10);
 
-
 class ClientSvcHandler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
 public:
@@ -73,7 +72,6 @@ public:
   int handle_close (ACE_HANDLE handle = ACE_INVALID_HANDLE,
                     ACE_Reactor_Mask mask = 0) override;
 };
-
 
 ClientSvcHandler::ClientSvcHandler (const ACE_INET_Addr &addr, int echo_cnt)
   : ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>(),
@@ -322,7 +320,6 @@ event_loop(void *arg)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%t: reactor loop done; status %d\n"), s));
   return ACE_THR_FUNC_RETURN_NULL;
 }
-
 
 int run_main(int, ACE_TCHAR *[])
 {

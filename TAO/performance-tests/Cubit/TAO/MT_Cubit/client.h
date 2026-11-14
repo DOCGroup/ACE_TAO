@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #include "ace/Task.h"
 #include <memory>
 
@@ -42,10 +41,8 @@ extern "C" STATUS vmeDevCreate (char *);
 class Client_i : public virtual MT_Priority
 {
 public:
-  ///constructor.
   Client_i () = default;
 
-  /// destructor.
   ~Client_i () override;
 
   Client_i (Client_i const &) = delete;

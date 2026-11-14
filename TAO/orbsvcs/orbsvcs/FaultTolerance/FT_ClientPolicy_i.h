@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_FT_CLIENTPOLICY_I_H
 #define TAO_FT_CLIENTPOLICY_I_H
 #include /**/ "ace/pre.h"
@@ -74,7 +73,6 @@ private:
   TimeBase::TimeT request_duration_;
 };
 
-
 /**
  * @class TAO_FT_Heart_Beat_Policy
  *
@@ -136,7 +134,6 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #if defined (__ACE_INLINE__)
 #include "orbsvcs/FaultTolerance/FT_ClientPolicy_i.inl"
 #endif /* __ACE_INLINE__ */
-
 
 #include /**/ "ace/post.h"
 #endif /* TAO_FT_CLIENTPOLICY_I_H */

@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_UPIPE_CONNECTOR_H
 #define ACE_UPIPE_CONNECTOR_H
 #include /**/ "ace/pre.h"

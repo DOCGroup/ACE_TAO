@@ -21,7 +21,6 @@
 #include "tao/TAO_Server_Request.h"
 #include "tao/LocalObject.h"
 
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */

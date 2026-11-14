@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "Servant_Activator.h"
 
 ServantActivator_i::ServantActivator_i (CORBA::ORB_ptr orb)

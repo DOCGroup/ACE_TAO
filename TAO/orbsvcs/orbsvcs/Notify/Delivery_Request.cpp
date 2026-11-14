@@ -77,7 +77,6 @@ Delivery_Request::sequence () const
   return this->routing_slip_->sequence ();
 }
 
-
 bool
 Delivery_Request::should_retry () const
 {

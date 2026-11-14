@@ -10,13 +10,11 @@
  */
 //=============================================================================
 
-
 #include "ami_test_i.h"
 
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_sys_socket.h"
-
 
 const ACE_TCHAR *ior_output_file = 0;
 

@@ -340,7 +340,6 @@ ACE_Message_Block::end () const
   return this->data_block ()->end ();
 }
 
-
 ACE_INLINE void
 ACE_Message_Block::rd_ptr (char *new_ptr)
 {

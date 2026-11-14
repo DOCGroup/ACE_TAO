@@ -161,7 +161,6 @@ nested_recursive_typecode_test (CORBA::ORB_ptr /* orb */, Test::Hello_ptr hello)
 template <typename T>
 struct Caller
 {
-  /// Constructor.
   explicit Caller (CORBA::ORB_ptr const o, Test::Hello_ptr const h)
     : orb (CORBA::ORB::_duplicate (o))
     , hello (Test::Hello::_duplicate (h))

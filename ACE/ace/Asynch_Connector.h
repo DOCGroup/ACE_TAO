@@ -75,7 +75,6 @@ public:
    */
   virtual int cancel ();
 
-
   /**
    * Template method to validate peer before service is opened.
    * This method is called when the connection attempt completes,
@@ -124,7 +123,6 @@ public:
 protected:
   /// This is called when an outstanding accept completes.
   void handle_connect (const ACE_Asynch_Connect::Result &result) override;
-
 
   /// This parses the address from read buffer.
   void parse_address (const ACE_Asynch_Connect::Result &result,

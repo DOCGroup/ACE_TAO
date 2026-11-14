@@ -157,7 +157,6 @@ private:
                                 size_t align,
                                 ACE_CDR::ULong length);
 
-
   ACE_CDR::Boolean write_wchar_array_i (const ACE_CDR::WChar* x,
                                         ACE_CDR::ULong length);
 
@@ -246,7 +245,6 @@ extern ACE_Export ACE_CDR::Boolean operator<< (ACE_SizeCDR &ss,
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* __ACE_INLINE__ */
-
 
 #include /**/ "ace/post.h"
 

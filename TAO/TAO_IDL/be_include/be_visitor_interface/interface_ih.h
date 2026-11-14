@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_INTERFACE_INTERFACE_IH_H_
 #define _BE_INTERFACE_INTERFACE_IH_H_
 

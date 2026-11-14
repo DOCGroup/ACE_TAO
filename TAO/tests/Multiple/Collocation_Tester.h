@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 // -- Custom App. Include --
 #include "MultipleC.h"
 
@@ -22,7 +21,6 @@ struct Quote
   inline static constexpr char right[] = "Hello";
   inline static constexpr char bottom[] = "Previet";
 };
-
 
 class Collocation_Tester
 {
@@ -37,7 +35,6 @@ public:
   // -- Command --
   /// Runs the test.
   void run () const;
-
 
 private:
   // -- Helper Methods --

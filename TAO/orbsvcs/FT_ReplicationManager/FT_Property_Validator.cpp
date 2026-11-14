@@ -31,9 +31,7 @@ TAO::FT_Property_Validator::FT_Property_Validator ()
   this->factories_[0].id = CORBA::string_dup (::FT::FT_FACTORIES);
 }
 
-
 TAO::FT_Property_Validator::~FT_Property_Validator () = default;
-
 
 void
 TAO::FT_Property_Validator::validate_property (

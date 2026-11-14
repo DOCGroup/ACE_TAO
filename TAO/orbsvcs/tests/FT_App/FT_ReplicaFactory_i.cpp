@@ -40,7 +40,6 @@
       ));                     \
     return /* value goes here */
 
-
 static const char * criterion_initial_value = "INITIAL_VALUE";
 
 //////////////////////////////////////////////////////
@@ -83,7 +82,6 @@ FT_ReplicaFactory_i::FT_ReplicaFactory_i ()
 //  ACE_DEBUG((LM_DEBUG, "Elf type_id: %s\n", FT_TEST::_tc_Elf->id() ));
 //  ACE_DEBUG((LM_DEBUG, "Human type_id: %s\n", FT_TEST::_tc_Human->id() ));
 }
-
 
 FT_ReplicaFactory_i::~FT_ReplicaFactory_i ()
 {
@@ -285,7 +283,6 @@ int FT_ReplicaFactory_i::idle (int & result)
 
   return quit;
 }
-
 
 int FT_ReplicaFactory_i::init (CORBA::ORB_ptr orb)
 {
@@ -553,7 +550,6 @@ int FT_ReplicaFactory_i::fini ()
   return 0;
 }
 
-
 void FT_ReplicaFactory_i::remove_replica(CORBA::ULong id, FT_TestReplica_i * replica)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
@@ -648,7 +644,6 @@ CORBA::Object_ptr FT_ReplicaFactory_i::create_object (
   ACE_ERROR ((LM_INFO,
     "Created %s@%C#%d.\n", role, this->location_.c_str (), static_cast<int> (factory_id)
     ));
-
 
   ::CORBA::Object_ptr replica_obj =
     replica->_default_POA()->servant_to_reference(replica);

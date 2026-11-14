@@ -430,7 +430,6 @@ TAO::HTIOP::Acceptor::open_default (TAO_ORB_Core *orb_core,
   if (this->parse_options (options) == -1)
     return -1;
 
-
   unsigned proxy_port {};
   if (this->inside_ == 1 ||
       (this->inside_ == -1 &&
@@ -634,7 +633,6 @@ TAO::HTIOP::Acceptor::dotted_decimal_address (ACE_INET_Addr &addr,
   return 0;
 }
 
-
 int
 TAO::HTIOP::Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
 {
@@ -812,7 +810,6 @@ TAO::HTIOP::Acceptor::object_key (IOP::TaggedProfile &profile,
 
   return 1;
 }
-
 
 int
 TAO::HTIOP::Acceptor::parse_options (const char *str)

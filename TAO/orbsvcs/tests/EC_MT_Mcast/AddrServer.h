@@ -26,7 +26,6 @@ public:
   AddrServer (AddrServer&&) = delete;
   AddrServer& operator= (AddrServer const&) = delete;
   AddrServer& operator= (AddrServer&&) = delete;
-  // Constructor
 
   // = The RtecUDPAdmin::AddrServer methods
   void get_addr (RtecEventComm::EventHeader const& header,

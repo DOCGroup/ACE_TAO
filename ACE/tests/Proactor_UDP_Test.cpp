@@ -301,7 +301,6 @@ MyTask::start (int num_threads,
   return 0;
 }
 
-
 int
 MyTask::stop ()
 {
@@ -1373,7 +1372,6 @@ Connector::start (const ACE_INET_Addr& addr, int num)
   return rc;
 }
 
-
 Client::Client ()
 {
   ACE_ERROR ((LM_ERROR, ACE_TEXT ("Shouldn't use this constructor!\n")));
@@ -1638,7 +1636,6 @@ Client::initiate_read ()
   mb3->cont (mb4);
   mb4->cont (mb5);
   mb5->cont (mb6);
-
 
   // hide last byte in each message block, reserving it for later to set '\0'
   // for proper printouts

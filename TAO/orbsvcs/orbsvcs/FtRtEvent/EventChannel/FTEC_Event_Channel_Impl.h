@@ -48,11 +48,9 @@ public:
     const FtRtecEventComm::ObjectId& supplier_admin_oid,
     const FtRtecEventComm::ObjectId& consumer_admin_oid);
 
-
   // = The RtecEventChannelAdmin::EventChannel methods...
   RtecEventChannelAdmin::ConsumerAdmin_ptr
       for_consumers () override;
-
 
   RtecEventChannelAdmin::SupplierAdmin_ptr
       for_suppliers () override;
@@ -68,7 +66,6 @@ public:
    virtual ::FtRtecEventChannelAdmin::ObjectId * connect_push_consumer (
         RtecEventComm::PushConsumer_ptr push_consumer,
         const RtecEventChannelAdmin::ConsumerQOS & qos);
-
 
     virtual ::FtRtecEventChannelAdmin::ObjectId * connect_push_supplier (
         RtecEventComm::PushSupplier_ptr push_supplier,
@@ -102,7 +99,6 @@ public:
 
   TAO_FTEC_ProxyPushSupplier* find_proxy_push_supplier(const FtRtecEventChannelAdmin::ObjectId& id);
   TAO_FTEC_ProxyPushConsumer* find_proxy_push_consumer(const FtRtecEventChannelAdmin::ObjectId& id);
-
 
   CORBA::Object_var make_iogr(CORBA::Object_ptr obj);
 

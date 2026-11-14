@@ -16,7 +16,6 @@ be_visitor_union_ch::be_visitor_union_ch (be_visitor_context *ctx)
 {
 }
 
-
 int be_visitor_union_ch::visit_union (be_union *node)
 {
   if (node->cli_hdr_gen () || node->imported ())

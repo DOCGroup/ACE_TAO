@@ -122,7 +122,6 @@
  */
 //=============================================================================
 
-
 #include "ace/OS_main.h"
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
@@ -137,7 +136,6 @@
 #include "ace/Service_Config.h"
 #include "ace/Task.h"
 #include "ace/OS_NS_unistd.h"
-
 
 using MT_TASK = ACE_Task<ACE_MT_SYNCH>;
 
@@ -366,7 +364,6 @@ Peer_Handler::handle_write_stream (ACE_Asynch_Write_Stream::Result const &result
 // The remote peer has sent us something.  If it succeeded, print
 // out the message and reinitiate a read.  Otherwise, fail.  In both
 // cases, delete the message sent.
-
 
 void
 Peer_Handler::handle_read_stream (ACE_Asynch_Read_Stream::Result const &result)

@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-
 //=============================================================================
 /**
  *  @file     Iterator_Factory_i.h
@@ -10,7 +9,6 @@
  *  @author  Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================
-
 
 #ifndef ITERATOR_FACTORY_I_H
 #define ITERATOR_FACTORY_I_H

@@ -26,10 +26,8 @@
 class Simple_Handler : public ACE_Event_Handler
 {
 public:
-  /// Constructor
   Simple_Handler(ACE_Reactor * reactor);
 
-  /// Destructor
   ~Simple_Handler() override;
 
   /// Receive (and ignore) the notifications

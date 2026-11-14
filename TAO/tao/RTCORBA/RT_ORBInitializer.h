@@ -6,7 +6,6 @@
  *  @author Ossama Othman <ossama@uci.edu>
  */
 
-
 #ifndef TAO_RT_ORB_INITIALIZER_H
 #define TAO_RT_ORB_INITIALIZER_H
 

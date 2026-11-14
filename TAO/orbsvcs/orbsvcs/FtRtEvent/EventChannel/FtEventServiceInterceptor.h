@@ -50,7 +50,6 @@ private:
   TableImpl table_;
 };
 
-
 class FtEventServiceInterceptor :
   public PortableInterceptor::ServerRequestInterceptor
 {

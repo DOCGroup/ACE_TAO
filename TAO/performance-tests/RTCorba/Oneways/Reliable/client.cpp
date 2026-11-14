@@ -440,7 +440,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::PolicyCurrent_var policy_current =
         CORBA::PolicyCurrent::_narrow (obj.in ());
 
-
       obj = orb->string_to_object (ior);
 
       Test_var server = Test::_narrow (obj.in ());

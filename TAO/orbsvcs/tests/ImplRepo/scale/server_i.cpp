@@ -158,7 +158,6 @@ Server_i::init (int argc, ACE_TCHAR** argv)
     throw;
   }
 
-
   return 0;
 }
 

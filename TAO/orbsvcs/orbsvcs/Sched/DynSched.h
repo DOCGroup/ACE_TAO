@@ -6,7 +6,6 @@
  *  @author Chris Gill
  */
 
-
 #ifndef DYNSCHED_H
 #define DYNSCHED_H
 #include /**/ "ace/pre.h"
@@ -24,7 +23,6 @@
 #include "orbsvcs/Sched/sched_export.h"
 #include "ace/Recursive_Thread_Mutex.h"
 #include <deque>
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -99,8 +97,6 @@ public:
     , UNABLE_TO_WRITE_SCHEDULE_FILE
   };
 
-
-
   virtual ~ACE_DynScheduler ();
 
   ACE_DynScheduler (ACE_DynScheduler const &) = delete;
@@ -119,7 +115,6 @@ public:
   /// Utility function for creating an entry for the
   /// log of anomalies detected during scheduling.
   static Scheduling_Anomaly * create_anomaly (status_t status);
-
 
   /// Initialize the scheduler.
   /**
@@ -199,7 +194,6 @@ public:
 
   /// this prints the entire set of timeline outputs to the specified file
   status_t output_timeline (char const *filename, char const *heading);
-
 
   /// Access a thread priority.
   /**
@@ -285,7 +279,6 @@ protected:
   /// Set the current scheduler status.
   void status (const status_t new_status);
 
-
   /// determine the minimum critical priority number
   virtual Preemption_Priority minimum_critical_priority () = 0;
 
@@ -309,7 +302,6 @@ protected:
   virtual status_t
     schedule_timeline_entry (Dispatch_Entry &dispatch_entry,
                              std::deque<Dispatch_Entry *> &reschedule_queue) = 0;
-
 
   /// The minimum OS thread priority value that the application specified (in
   /// its call to init ()).
@@ -378,7 +370,6 @@ private:
   using Info_Collection_Iterator = ACE_Map_Iterator<EXT, INT, TAO_SYNCH_MUTEX>;
   using Info_Collection_Entry = ACE_Map_Entry<EXT, INT>;
 
-
   /// Create a timeline.
   status_t create_timeline ();
 
@@ -442,7 +433,6 @@ private:
 
   /// calculate utilization, frame size, etc.
   status_t calculate_utilization_params ();
-
 
   /// This protects access to the scheduler during configuration runs.
   LOCK lock_;

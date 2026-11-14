@@ -232,7 +232,6 @@ DT_Creator::register_synch_obj ()
        synch.in ());
 }
 
-
 int
 DT_Creator::activate_root_poa ()
 {
@@ -624,7 +623,6 @@ DT_Creator::~DT_Creator ()
   delete shutdown_lock_;
 }
 
-
 void
 DT_Creator::log_msg (char* msg)
 {
@@ -654,7 +652,6 @@ DT_Creator::base_time (ACE_Time_Value* base_time)
 {
   this->base_time_ = base_time;
 }
-
 
 Synch_i*
 DT_Creator::synch ()

@@ -1012,7 +1012,6 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
                 {
                   ACE_TString fromFileString, originalString;
 
-
                   if (fromFile.get_string_value (fromFileSection,
                                                  valueName.c_str (),
                                                  fromFileString) != 0)
@@ -1438,7 +1437,6 @@ Config_Test::testRegFormat ()
                 ACE_TEXT ("Registry Format Import/Export Works ;-)\n")));
   return rc;
 }
-
 
 // Reads a string value from a configuration object.
 

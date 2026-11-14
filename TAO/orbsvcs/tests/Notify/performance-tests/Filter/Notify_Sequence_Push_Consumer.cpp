@@ -41,7 +41,6 @@ Notify_Sequence_Push_Consumer::_connect (
 
 }
 
-
 void
 Notify_Sequence_Push_Consumer::push_structured_events (
   CosNotification::EventBatch const& events)

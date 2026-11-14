@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_CSD_OBJECT_ADAPTER_H
 #define TAO_CSD_OBJECT_ADAPTER_H
 #include /**/ "ace/pre.h"

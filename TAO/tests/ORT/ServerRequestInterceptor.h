@@ -27,12 +27,10 @@
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PI_Server/PI_Server.h"
 
-
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
-
 
 /**
  * @class ServerRequestInterceptor
@@ -48,7 +46,6 @@ class ServerRequestInterceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   ServerRequestInterceptor (char const *orb_id,
                             PortableServer::Current_ptr poa_current);
 
@@ -96,7 +93,6 @@ private:
    */
   PortableServer::Current_var poa_current_;
 };
-
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

@@ -20,7 +20,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Atomic_Op.h"
 #include "ace/Thread_Manager.h"
@@ -36,7 +35,6 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_unistd.h"
-
 
 const ACE_TCHAR usage[] = ACE_TEXT ("usage: Message_Queue_Test <number of messages>\n");
 
@@ -950,7 +948,6 @@ run_main (int argc, ACE_TCHAR *argv[])
                 ACE_TEXT ("test failed")));
   delete timer;
   timer = nullptr;
-
 
   ACE_END_TEST;
   return status;

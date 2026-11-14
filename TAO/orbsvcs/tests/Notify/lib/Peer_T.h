@@ -40,10 +40,8 @@ class TAO_Notify_Tests_Peer_T : public TAO_Notify_Tests_Peer, public Peer_Traits
   using Admin_Ext_Traits_PTR = typename Admin_Ext_Traits::PTR;
 
 public:
-  /// Constructor
   TAO_Notify_Tests_Peer_T ();
 
-  /// Destructor
   virtual ~TAO_Notify_Tests_Peer_T ();
 
   // Activates this servant with the POA supplied in init.

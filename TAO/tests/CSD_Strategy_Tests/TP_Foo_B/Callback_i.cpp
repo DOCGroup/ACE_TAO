@@ -2,16 +2,13 @@
 
 Callback_i::Callback_i() = default;
 
-
 Callback_i::~Callback_i () = default;
-
 
 void
 Callback_i::test_method()
 {
   ++this->num_callbacks_;
 }
-
 
 void
 Callback_i::gather_stats(Foo_B_Statistics& stats)

@@ -367,7 +367,6 @@ public:
   // Listing 13
 };
 
-
 // Listing 1 code/ch18
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {

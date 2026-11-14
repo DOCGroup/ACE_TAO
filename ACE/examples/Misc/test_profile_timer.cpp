@@ -4,7 +4,6 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_unistd.h"
 
-
 static constexpr int DEFAULT_ITERATIONS = 100000000;
 
 int

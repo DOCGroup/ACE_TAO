@@ -22,7 +22,6 @@ class Control
   /// Stopwatch constructor
   explicit Control (Widget parent);
 
-  /// Destructor
   virtual ~Control () = default;
 
   Control (Control const &) = delete;

@@ -11,7 +11,6 @@
 #include "tao/CSD_ThreadPool/CSD_ThreadPool.h"
 #include <memory>
 
-
 int
 ServerApp::run (int argc, ACE_TCHAR *argv[])
 {
@@ -163,7 +162,6 @@ ServerApp::run (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-
 int
 ServerApp::parse_args (int argc, ACE_TCHAR *argv[])
 {
@@ -219,7 +217,6 @@ ServerApp::parse_args (int argc, ACE_TCHAR *argv[])
 
   return 0;
 }
-
 
 void
 ServerApp::usage_statement () const

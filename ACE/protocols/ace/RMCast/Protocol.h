@@ -228,7 +228,6 @@ namespace ACE_RMCast
     return ss;
   }
 
-
   //
   //
   //
@@ -435,7 +434,6 @@ namespace ACE_RMCast
     Address address_;
   };
 
-
   //
   //
   //
@@ -514,7 +512,6 @@ namespace ACE_RMCast
   private:
     Address address_;
   };
-
 
   //
   //
@@ -653,7 +650,6 @@ namespace ACE_RMCast
     size_t capacity_;
   };
 
-
   //
   //
   //
@@ -719,7 +715,6 @@ namespace ACE_RMCast
     u64 n_;
   };
 
-
   //
   //
   //
@@ -754,7 +749,6 @@ namespace ACE_RMCast
 
       size_t addr_size (ss.total_length ());
 
-
       is >> addr;
       is >> port;
 
@@ -765,7 +759,6 @@ namespace ACE_RMCast
         is >> sn;
         sns_.push_back (sn);
       }
-
 
       address_ = Address (port, addr);
     }
@@ -810,7 +803,6 @@ namespace ACE_RMCast
     {
       return address_;
     }
-
 
     iterator
     begin () /* const */
@@ -937,7 +929,6 @@ namespace ACE_RMCast
       ss << port;
 
       size_t block_size (ss.total_length ());
-
 
       // num_of_blocks = size / block_size
       //
@@ -1077,7 +1068,6 @@ namespace ACE_RMCast
     Map map_;
   };
 
-
   //
   //
   //
@@ -1128,7 +1118,6 @@ namespace ACE_RMCast
     {
     }
   };
-
 
   //
   //
@@ -1213,7 +1202,6 @@ namespace ACE_RMCast
       ss << of_;
       ss << total_size_;
     }
-
 
   private:
     u32 num_;

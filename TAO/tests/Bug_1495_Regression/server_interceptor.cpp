@@ -62,7 +62,6 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
   throw PortableInterceptor::ForwardRequest (this->forward_location_.in ());
 }
 
-
 void
 Echo_Server_Request_Interceptor::receive_request (
     PortableInterceptor::ServerRequestInfo_ptr)

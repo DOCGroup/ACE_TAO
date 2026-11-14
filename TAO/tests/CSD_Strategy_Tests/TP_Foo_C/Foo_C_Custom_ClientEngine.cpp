@@ -2,7 +2,6 @@
 #include "CustomExceptionC.h"
 #include "ace/Log_Msg.h"
 
-
 Foo_C_Custom_ClientEngine::Foo_C_Custom_ClientEngine
                                         (Foo_C_i*               servant,
                                          Foo_C_ptr              objref,
@@ -13,9 +12,7 @@ Foo_C_Custom_ClientEngine::Foo_C_Custom_ClientEngine
 {
 }
 
-
 Foo_C_Custom_ClientEngine::~Foo_C_Custom_ClientEngine() = default;
-
 
 bool
 Foo_C_Custom_ClientEngine::execute()
@@ -40,7 +37,6 @@ Foo_C_Custom_ClientEngine::execute()
     {
       check_validity = false;
     }
-
 
   for (CORBA::Long j = 1; j <= 5; j++)
     {
@@ -100,7 +96,6 @@ Foo_C_Custom_ClientEngine::execute()
 
   return check_validity;
 }
-
 
 void
 Foo_C_Custom_ClientEngine::expected_results(Foo_C_Statistics& stats)

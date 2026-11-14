@@ -25,10 +25,8 @@
 class UDP_i: public POA_UDP
 {
 public:
-  /// Constructor
   UDP_i () = default;
 
-  /// Destructor
   ~UDP_i () override = default;
 
   UDP_i (UDP_i const &) = delete;

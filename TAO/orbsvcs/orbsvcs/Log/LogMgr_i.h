@@ -40,10 +40,8 @@ class TAO_Log_Serv_Export TAO_LogMgr_i
   : public virtual POA_DsLogAdmin::LogMgr
 {
 public:
-  /// Constructor.
   TAO_LogMgr_i ();
 
-  /// Destructor.
   ~TAO_LogMgr_i () override;
 
   /// Lists all log object references.

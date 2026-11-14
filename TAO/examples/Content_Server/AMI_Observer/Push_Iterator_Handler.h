@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef PUSH_ITERATOR_HANDLER_H
 #define PUSH_ITERATOR_HANDLER_H
 

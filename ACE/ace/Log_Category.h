@@ -132,10 +132,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 #endif
 #endif /* ACE_NLOGGING */
 
-
 class ACE_Log_Msg;
 class ACE_Log_Category;
-
 
 /**
  * @class ACE_Log_Category_TSS

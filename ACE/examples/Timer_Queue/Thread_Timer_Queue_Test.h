@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-
 //=============================================================================
 /**
  *  @file    Thread_Timer_Queue_Test.h
@@ -11,7 +10,6 @@
  *  @author Carlos O'Ryan <coryan@cs.wustl.edu> and Sergio Flores-Gaitan <sergio@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef _THREAD_TIMER_QUEUE_TEST_H_
 #define _THREAD_TIMER_QUEUE_TEST_H_

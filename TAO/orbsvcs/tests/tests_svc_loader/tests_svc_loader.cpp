@@ -15,7 +15,6 @@
  */
 //=============================================================================
 
-
 #include "tao/ORB.h"
 #include "tao/Object.h"
 #include "tao/SystemException.h"

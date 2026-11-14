@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #include "ace/Signal.h"
 
 #include "ace/Service_Config.h"
@@ -31,7 +30,6 @@
 #include "ace/streams.h"
 
 #include "ace/Task.h"
-
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
   // This only works on Win32 platforms and on Unix platforms
@@ -781,7 +779,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       for (i = 0; i < senders; ++i)
         send_list[i]->close ();
     }
-
 
   ACE_Thread_Manager *tm =
     ACE_Thread_Manager::instance();

@@ -379,7 +379,6 @@ TAO_Stub::forward_back_one ()
     }
 }
 
-
 // Note that if the repository ID (typeID) is NULL, it will make
 // narrowing rather expensive, though it does ensure that type-safe
 // narrowing code gets thoroughly exercised/debugged!  Without a
@@ -540,7 +539,6 @@ TAO_Stub::marshal (TAO_OutputCDR &cdr)
                   ACE_TEXT ("profile lock this = 0x%x\n"),
                   this));
     }
-
 
       ACE_ASSERT(this->forward_profiles_ !=nullptr);
 

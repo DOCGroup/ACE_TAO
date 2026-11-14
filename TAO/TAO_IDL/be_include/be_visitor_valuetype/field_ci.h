@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VISITOR_VALUETYPE_FIELD_CI_H_
 #define _BE_VISITOR_VALUETYPE_FIELD_CI_H_
 

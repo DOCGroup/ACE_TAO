@@ -76,7 +76,6 @@ namespace Kokyu
     std::unique_ptr<DSRT_Dispatcher_Impl<DSRT_Scheduler_Traits> > dispatcher_impl_;
   };
 
-
   /**
    * @class DSRT_Dispatcher_Factory
    *

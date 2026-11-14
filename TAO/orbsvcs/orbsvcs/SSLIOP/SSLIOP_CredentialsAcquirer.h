@@ -58,7 +58,6 @@ namespace TAO
         public virtual ::CORBA::LocalObject
     {
     public:
-      /// Constructor
       CredentialsAcquirer (TAO::SL3::CredentialsCurator_ptr curator,
                            CORBA::Any const & acquisition_arguments);
 
@@ -87,7 +86,6 @@ namespace TAO
       //@}
 
     protected:
-      /// Destructor
       /**
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.

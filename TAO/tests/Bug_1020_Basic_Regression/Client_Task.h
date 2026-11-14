@@ -14,7 +14,6 @@
 class Client_Task : public ACE_Task_Base
 {
 public:
-  /// Constructor
   explicit Client_Task (CORBA::ORB_ptr orb);
   Client_Task (Client_Task const &) = delete;
   Client_Task &operator= (Client_Task const &) = delete;

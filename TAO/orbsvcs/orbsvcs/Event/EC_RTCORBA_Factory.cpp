@@ -3,7 +3,6 @@
 
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_RTCORBA_Factory::
@@ -13,7 +12,6 @@ TAO_EC_RTCORBA_Factory::
   , lanes_ (lanes)
 {
 }
-
 
 int
 TAO_EC_RTCORBA_Factory::init (int argc, ACE_TCHAR* argv[])

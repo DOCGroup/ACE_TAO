@@ -175,7 +175,6 @@ Session::echo_payload (Test::Payload const &the_payload)
   return retval._retn ();
 }
 
-
 void
 Session::destroy ()
 {

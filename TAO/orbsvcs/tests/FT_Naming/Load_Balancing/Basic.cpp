@@ -49,7 +49,6 @@ Basic::remove_member ()
     }
 }
 
-
 void
 Basic::shutdown ()
 {

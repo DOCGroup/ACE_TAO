@@ -10,7 +10,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_string.h"
 
-
 ACE_INLINE
 Handle_L_SPIPE::Handle_L_SPIPE ()
 {

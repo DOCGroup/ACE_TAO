@@ -25,7 +25,6 @@ HTTP_Parse_URL::~HTTP_Parse_URL ()
     ACE_OS::free (this->url_);
 }
 
-
 void
 HTTP_Parse_URL::init( const char *url )
 {
@@ -55,7 +54,6 @@ HTTP_Parse_URL::init( const char *url )
       this->is_cgi (this->url_path_);
     }
 }
-
 
 void
 HTTP_Parse_URL::parse_url ()

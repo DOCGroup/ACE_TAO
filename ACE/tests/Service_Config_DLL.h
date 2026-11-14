@@ -34,7 +34,6 @@
 class Service_Config_DLL_Export Service_Config_DLL : public ACE_Task_Base
 {
 public:
-  /// Constructor.
   Service_Config_DLL ();
 
   /// Initializes object when dynamic linking occurs.

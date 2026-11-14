@@ -33,5 +33,4 @@ private:
   long retry_attempt_ {};
 };
 
-
 #endif /* MANAGERI_H_  */

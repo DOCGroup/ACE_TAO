@@ -10,14 +10,12 @@ class Peer
   : public virtual POA_Test::Peer
 {
 public:
-  /// Constructor
   explicit Peer (CORBA::ORB_ptr orb);
   Peer (Peer const &) = delete;
   Peer (Peer &&) = delete;
   Peer &operator= (Peer const &) = delete;
   Peer &operator= (Peer &&) = delete;
 
-  /// Destructor
   ~Peer () override = default;
 
   // = The skeleton methods

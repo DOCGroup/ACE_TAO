@@ -9,7 +9,6 @@ class One_Impl
   : public virtual POA_Test::One
 {
 public:
-  /// Constructor
   One_Impl () = default;
   One_Impl (One_Impl const &) = delete;
   One_Impl (One_Impl &&) = delete;
@@ -24,7 +23,6 @@ class Two_Impl
   : public virtual POA_Test::Two
 {
 public:
-  /// Constructor
   Two_Impl () = default;
   Two_Impl (Two_Impl const &) = delete;
   Two_Impl (Two_Impl &&) = delete;
@@ -39,7 +37,6 @@ class Three_Impl
   : public virtual POA_Test::Three
 {
 public:
-  /// Constructor
   Three_Impl () = default;
   Three_Impl (Three_Impl const &) = delete;
   Three_Impl (Three_Impl &&) = delete;

@@ -35,7 +35,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_CDR_H
 #define TAO_CDR_H
 
@@ -375,7 +374,6 @@ public:
                 ACE_CDR::Octet major_version = TAO_DEF_GIOP_MAJOR,
                 ACE_CDR::Octet minor_version = TAO_DEF_GIOP_MINOR,
                 TAO_ORB_Core* orb_core = nullptr);
-
 
   /// Create an input stream from an ACE_Data_Block
   TAO_InputCDR (ACE_Data_Block *data,

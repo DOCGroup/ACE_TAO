@@ -15,7 +15,6 @@
 class Client_Task : public ACE_Task_Base
 {
 public:
-  /// Constructor
   Client_Task (Test::Sender_ptr sender,
                Test::Receiver_ptr us,
                ACE_Thread_Manager *thr_mgr,

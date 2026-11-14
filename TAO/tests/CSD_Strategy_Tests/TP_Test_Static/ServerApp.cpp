@@ -8,7 +8,6 @@
 #include "tao/PI/PI.h"
 #include "tao/CSD_ThreadPool/CSD_ThreadPool.h"
 
-
 ServerApp::ServerApp()
   : TestAppBase ("TP_Test_1_Server"),
     ior_filename_ (ACE_TEXT("test.ior")),
@@ -105,7 +104,6 @@ ServerApp::run_i(int argc, ACE_TCHAR *argv[])
 
   return 0;
 }
-
 
 int
 ServerApp::parse_args (int argc, ACE_TCHAR *argv[])

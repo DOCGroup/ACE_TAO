@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_CEC_SUPPLIERCONTROL_H
 #define TAO_CEC_SUPPLIERCONTROL_H
 

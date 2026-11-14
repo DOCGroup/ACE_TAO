@@ -56,7 +56,6 @@ TAO_Monitor_Init::Initializer ()
   return ACE_Service_Config::process_directive (ace_svc_desc_TAO_Monitor_Init);
 }
 
-
 ACE_STATIC_SVC_DEFINE (TAO_Monitor_Init,
                        ACE_TEXT ("Monitor_Init"),
                        ACE_SVC_OBJ_T,

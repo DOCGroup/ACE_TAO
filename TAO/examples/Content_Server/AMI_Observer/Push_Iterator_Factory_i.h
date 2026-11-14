@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-
 //=============================================================================
 /**
  *  @file     Push_Iterator_Factory_i.h
@@ -10,7 +9,6 @@
  *  @author  Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================
-
 
 #ifndef PUSH_ITERATOR_FACTORY_I_H
 #define PUSH_ITERATOR_FACTORY_I_H

@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VISITOR_SEQUENCE_ANY_OP_CS_H_
 #define _BE_VISITOR_SEQUENCE_ANY_OP_CS_H_
 

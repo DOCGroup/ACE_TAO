@@ -36,7 +36,6 @@ JAWS_IO::JAWS_IO (JAWS_IO_Impl *impl)
 
 JAWS_IO::~JAWS_IO () = default;
 
-
 void
 JAWS_IO::send ( ACE_HANDLE handle
               , ACE_Message_Block *mb
@@ -46,7 +45,6 @@ JAWS_IO::send ( ACE_HANDLE handle
   this->impl_->send (handle, mb, completer, act);
 }
 
-
 void
 JAWS_IO::recv ( ACE_HANDLE handle
               , ACE_Message_Block *mb
@@ -55,7 +53,6 @@ JAWS_IO::recv ( ACE_HANDLE handle
 {
   this->impl_->recv (handle, mb, completer, act);
 }
-
 
 void
 JAWS_IO::transmit ( ACE_HANDLE handle
@@ -68,7 +65,6 @@ JAWS_IO::transmit ( ACE_HANDLE handle
   this->impl_->transmit (handle, source, completer, act, header, trailer);
 }
 
-
 void
 JAWS_IO::send ( ACE_HANDLE handle
               , ACE_Message_Block *mb
@@ -79,7 +75,6 @@ JAWS_IO::send ( ACE_HANDLE handle
   this->impl_->send (handle, mb, completer, tv, act);
 }
 
-
 void
 JAWS_IO::recv ( ACE_HANDLE handle
               , ACE_Message_Block *mb
@@ -89,7 +84,6 @@ JAWS_IO::recv ( ACE_HANDLE handle
 {
   this->impl_->recv (handle, mb, completer, tv, act);
 }
-
 
 void
 JAWS_IO::transmit ( ACE_HANDLE handle

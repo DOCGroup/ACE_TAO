@@ -57,7 +57,6 @@ namespace TAO
     class TAO_SSLIOP_Export Transport : public TAO_Transport
     {
     public:
-      /// Constructor.
       Transport (Connection_Handler *handler,
                  TAO_ORB_Core *orb_core);
 

@@ -29,6 +29,5 @@ ACE_STATIC_SVC_DEFINE(command##_Factory, \
 ACE_FACTORY_DEFINE (export, command##_Factory) \
 \
 
-
 #include /**/ "ace/post.h"
 #endif /* TAO_FACTORIES_DEFINE_H */

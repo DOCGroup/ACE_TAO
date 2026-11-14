@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef _LOG_CLIENT_H
 #define _LOG_CLIENT_H
 
@@ -45,10 +44,8 @@ public:
   Logger_Client& operator= (Logger_Client const&) = delete;
   Logger_Client& operator= (Logger_Client&&) = delete;
 
-  /// Constructor.
   Logger_Client () = default;
 
-  /// Destructor.
   ~Logger_Client () = default;
 
   /// Initialize the client communication endpoint with server.

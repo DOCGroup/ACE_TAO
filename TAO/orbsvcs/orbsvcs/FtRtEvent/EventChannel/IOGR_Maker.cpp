@@ -30,7 +30,6 @@ IOGR_Maker::init(CORBA::ORB_ptr orb)
     maker = this;
 }
 
-
 IOGR_Maker*
 IOGR_Maker::instance()
 {
@@ -47,7 +46,6 @@ IOGR_Maker::merge_iors (TAO_IOP::TAO_IOR_Manipulation::IORList const &list)
     obj = CORBA::Object::_duplicate(list[0]);
   return obj._retn();
 }
-
 
 CORBA::Object_ptr
 IOGR_Maker::make_iogr (TAO_IOP::TAO_IOR_Manipulation::IORList const &list,
@@ -69,7 +67,6 @@ void replace_key(char* ior, char* end_ior,
                 TAO::ObjectKey const &newkey);
 /// the definition of replace_key() is moved
 /// to replace_key.cpp.
-
 
 CORBA::Object_ptr
 IOGR_Maker::forge_iogr(CORBA::Object_ptr obj)
@@ -108,7 +105,6 @@ IOGR_Maker::forge_iogr(CORBA::Object_ptr obj)
     // no longer need to be protected by this point.
     stub = safe_stub.release ();
 
-
     merged =
       iorm_->add_profiles(obj, temp_obj);
   }
@@ -116,7 +112,6 @@ IOGR_Maker::forge_iogr(CORBA::Object_ptr obj)
     merged = CORBA::Object::_duplicate(obj);
 
   set_tag_components(merged.in(), obj, ft_tag_component_);
-
 
   return merged._retn();
 }
@@ -215,7 +210,6 @@ IOGR_Maker::get_ref_version() const
   return ft_tag_component_.object_group_ref_version;
 }
 
-
 void
 IOGR_Maker::set_tag_components(
   CORBA::Object_ptr merged,
@@ -224,7 +218,6 @@ IOGR_Maker::set_tag_components(
 {
     // set the primary
     TAO_FT_IOGR_Property prop (ft_tag_component);
-
 
     prop.remove_primary_tag(merged);
 

@@ -3,7 +3,6 @@
 #include "JAWS/Waiter.h"
 #include "JAWS/IO_Handler.h"
 
-
 JAWS_Waiter::JAWS_Waiter ()
   : iter_ (*this)
 {

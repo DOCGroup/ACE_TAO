@@ -25,10 +25,8 @@
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Direct_Consumer : public TAO_Notify_Tests_Periodic_Consumer
 {
 public:
-  /// Constructor
   TAO_Notify_Tests_Direct_Consumer ();
 
-  /// Destructor
   ~TAO_Notify_Tests_Direct_Consumer ();
 
   /// Connect using options parsed and set initial QoS.

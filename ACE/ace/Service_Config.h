@@ -190,7 +190,6 @@ public:
   bool operator!= (ACE_Static_Svc_Descriptor &) const;
 };
 
-
 /**
  * @class ACE_Threading_Helper
  *
@@ -498,7 +497,6 @@ private:
   // has been refactored to allow multiple service configuration
   // instances (called gestalts). The interfaces, however were retained in for
   // the sake of maintaining source-code compatibility.
-
 
   // = Accessors and mutators for process-wide Singletons.
 

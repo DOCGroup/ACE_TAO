@@ -6,9 +6,7 @@
  *  @author Chris Gill
  */
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 
 /// This is intended for use by the Event Channel, so it can determine the
 /// number of priority dispatch queues to create.

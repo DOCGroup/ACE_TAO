@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #if !defined (PTEST_H)
 #define PTEST_H
 
@@ -32,10 +31,8 @@
 class Ptest
 {
 public:
-  /// Constructor
   Ptest () = default;
 
-  /// Destructor
   ~Ptest () = default;
 
   Ptest (Ptest const&) = delete;

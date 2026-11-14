@@ -80,7 +80,6 @@ JAWS_Synch_IO::send ( ACE_HANDLE handle
     completer->output_complete (io_result, act);
 }
 
-
 void
 JAWS_Synch_IO::send ( ACE_HANDLE handle
                     , ACE_Message_Block *mb
@@ -89,7 +88,6 @@ JAWS_Synch_IO::send ( ACE_HANDLE handle
 {
   this->send (handle, mb, completer, ACE_Time_Value::zero, act);
 }
-
 
 void
 JAWS_Synch_IO::recv ( ACE_HANDLE handle
@@ -129,7 +127,6 @@ JAWS_Synch_IO::recv ( ACE_HANDLE handle
     completer->input_complete (io_result, act);
 }
 
-
 void
 JAWS_Synch_IO::recv ( ACE_HANDLE handle
                     , ACE_Message_Block *mb
@@ -138,7 +135,6 @@ JAWS_Synch_IO::recv ( ACE_HANDLE handle
 {
   this->recv (handle, mb, completer, ACE_Time_Value::zero, act);
 }
-
 
 void
 JAWS_Synch_IO::transmit ( ACE_HANDLE handle
@@ -234,7 +230,6 @@ JAWS_Synch_IO::transmit ( ACE_HANDLE handle
   if (completer)
     completer->input_complete (io_result, act);
 }
-
 
 void
 JAWS_Synch_IO::transmit ( ACE_HANDLE handle

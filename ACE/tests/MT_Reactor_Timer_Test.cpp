@@ -12,12 +12,10 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "MT_Reactor_Timer_Test.h"
 #include "ace/ACE.h"
 #include "ace/OS_NS_unistd.h"
-
 
 #if defined (ACE_HAS_THREADS)
 

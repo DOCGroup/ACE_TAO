@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "orbsvcs/CosConcurrencyControlC.h"
 #include "orbsvcs/CosNamingC.h"
 #include "CC_naming_service.h"

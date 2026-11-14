@@ -16,7 +16,6 @@ ACE_Name_Binding::ACE_Name_Binding ()
   ACE_TRACE ("ACE_Name_Binding::ACE_Name_Binding");
 }
 
-
 ACE_Name_Binding::~ACE_Name_Binding ()
 {
   ACE_TRACE ("ACE_Name_Binding::~ACE_Name_Binding");

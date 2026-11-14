@@ -94,7 +94,6 @@ create_consumeradmin (CosNotifyChannelAdmin::EventChannel_ptr ec)
   return CosNotifyChannelAdmin::ConsumerAdmin::_duplicate (admin.in ());
 }
 
-
 static void
 create_consumers (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
                   Notify_Test_Client& client,

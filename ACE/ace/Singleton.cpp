@@ -511,7 +511,6 @@ ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::name ()
   return this->instance ()->name ();
 }
 
-
 /**********************************************************************/
 
 template <class TYPE> const ACE_TCHAR*

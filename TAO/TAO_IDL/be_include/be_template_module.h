@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_BE_TEMPLATE_MODULE_H
 #define TAO_BE_TEMPLATE_MODULE_H
 

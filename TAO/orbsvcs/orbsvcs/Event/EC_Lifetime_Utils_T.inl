@@ -80,7 +80,6 @@ TAO_EC_Auto_Command<T>::disallow_command ()
   this->allow_command_ = false;
 }
 
-
 //***************************************************************************
 
 template <class T>

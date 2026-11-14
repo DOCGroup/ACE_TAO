@@ -6,7 +6,6 @@
 #include "jaws3/Export.h"
 #include "jaws3/Event_Completer.h"
 
-
 class JAWS_Export JAWS_Protocol_State
 {
   friend class JAWS_Protocol_Handler;
@@ -68,6 +67,5 @@ private:
   ACE_Data_Block db_;
   ACE_Message_Block mb_;
 };
-
 
 #endif /* JAWS_PROTOCOL_HANDLER_H */

@@ -104,7 +104,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       poa_manager->activate ();
 
-
       Server_Task st (orb.in (),
                       ACE_Thread_Manager::instance ());
 

@@ -70,7 +70,6 @@ Notifier_Server::init_naming_service ()
   return 0;
 }
 
-
 // Initialize the server.
 int
 Notifier_Server::init (int argc,

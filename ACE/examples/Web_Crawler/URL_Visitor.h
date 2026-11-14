@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef _URL_VISITOR_H
 #define _URL_VISITOR_H
 #include /**/ "ace/pre.h"
@@ -20,7 +19,6 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
 
 #include "HTTP_URL.h"
 #include "Iterators.h"
@@ -339,7 +337,6 @@ protected:
   /// Strategy connector used to open URL streams.
   std::unique_ptr<STRATEGY_CONNECTOR> strat_connector_;
 };
-
 
 /**
  * @class URL_Download_Visitor

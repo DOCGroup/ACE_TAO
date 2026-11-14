@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_IORMANIP_IIOP_FILTER_H
 #define TAO_IORMANIP_IIOP_FILTER_H
 #include /**/ "ace/pre.h"

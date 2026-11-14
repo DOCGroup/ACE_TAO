@@ -547,7 +547,6 @@ ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::open
     (local_addr, reactor, 0, 0, 0, 0, 0, 0, use_select, reuse_addr);
 }
 
-
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR> int
 ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::open
   (const typename PEER_ACCEPTOR::PEER_ADDR &local_addr,

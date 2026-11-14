@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "helper.h"
 
 #include <cstring>
@@ -258,7 +257,6 @@ Test_ObjRef::print_values ()
       ex._tao_print_exception ("Retrieving Description");
       return;
     }
-
 
   ACE_DEBUG ((LM_DEBUG,
               "\n=*=*=*=*=*=*"

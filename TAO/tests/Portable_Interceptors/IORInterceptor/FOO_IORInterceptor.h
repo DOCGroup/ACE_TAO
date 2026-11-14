@@ -44,7 +44,6 @@ class FOO_IORInterceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor
   explicit FOO_IORInterceptor (IOP::Codec_ptr codec);
   FOO_IORInterceptor (FOO_IORInterceptor const &) = delete;
   FOO_IORInterceptor (FOO_IORInterceptor &&) = delete;

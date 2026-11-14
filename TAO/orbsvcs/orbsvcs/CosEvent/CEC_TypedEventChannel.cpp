@@ -236,7 +236,6 @@ TAO_CEC_TypedEventChannel::clear_ifr_cache ()
   return result;
 }
 
-
 // The function performs a lookup_id of the passed interface in the IFR,
 // and then obtains the FullInterfaceDescription.
 // The base interfaces for the interface are stored on this class.

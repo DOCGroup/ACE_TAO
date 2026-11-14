@@ -294,7 +294,6 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::ACE_Timer_Hash_T
            HASH_ITERATOR (*this));
 }
 
-
 template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET, typename TIME_POLICY>
 ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::ACE_Timer_Hash_T (
   FUNCTOR *upcall_functor,
@@ -340,7 +339,6 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::~ACE_Timer_Hash_
        i < this->table_size_;
        ++i)
     delete this->table_[i];
-
 
   delete [] this->table_;
 }

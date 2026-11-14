@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef POLICY_TESTER_H_
 #define POLICY_TESTER_H_
 
@@ -54,6 +53,5 @@ private:
   std::unique_ptr<RT_Properties> rt_object_properties_ {};
   std::unique_ptr<RT_Properties> rt_poa_properties_ {};
 };
-
 
 #endif /* POLICY_TESTER_H_ */

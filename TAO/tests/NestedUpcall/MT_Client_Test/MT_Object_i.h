@@ -24,10 +24,8 @@
 class MT_Object_i : public POA_MT_Object
 {
 public:
-  /// Constructor.
   MT_Object_i () = default;
 
-  /// Destructor.
   ~MT_Object_i () override = default;
 
   MT_Object_i (MT_Object_i const &) = delete;

@@ -8,7 +8,6 @@
 #define YY_FLEX_MAJOR_VERSION 2
 #define YY_FLEX_MINOR_VERSION 5
 
-
 /* cfront 1.2 defines "c_plusplus" instead of "__cplusplus" */
 #ifdef c_plusplus
 #ifndef __cplusplus
@@ -53,7 +52,6 @@
 #else
 #define yyconst
 #endif
-
 
 #ifdef YY_USE_PROTOS
 #define YY_PROTO(proto) proto
@@ -141,7 +139,6 @@ extern FILE *yyin, *yyout;
  */
 typedef unsigned int yy_size_t;
 
-
 struct yy_buffer_state
 {
   FILE *yy_input_file;
@@ -207,12 +204,10 @@ static YY_BUFFER_STATE yy_current_buffer = 0;
  */
 #define YY_CURRENT_BUFFER yy_current_buffer
 
-
 /* yy_hold_char holds the character lost when yytext is formed. */
 static char yy_hold_char;
 
 static int yy_n_chars;    /* number of characters read into yy_ch_buf */
-
 
 int yyleng;
 
@@ -261,7 +256,6 @@ static void yy_flex_free YY_PROTO(( void * ));
   }
 
 #define YY_AT_BOL() (yy_current_buffer->yy_at_bol)
-
 
 typedef unsigned char YY_CHAR;
 FILE *yyin = (FILE *) 0, *yyout = (FILE *) 0;
@@ -454,7 +448,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
  *  @author Carlos O'Ryan <coryan@uci.edu> based on previous work by Seth Widoff <sbw1@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #include "ace/ETCL/ETCL_Interpreter.h"
 #include "ace/ETCL/ETCL_y.h"
@@ -697,9 +690,7 @@ yy_find_action:
 
     YY_DO_BEFORE_ACTION;
 
-
 do_action:  /* This label is used only to access EOF actions. */
-
 
     switch ( yy_act )
   { /* beginning of action switch */
@@ -1078,7 +1069,6 @@ case YY_STATE_EOF(INITIAL):
     } /* end of scanning one token */
   } /* end of yylex */
 
-
 /* yy_get_next_buffer - try to read in a new buffer
  *
  * Returns a code representing an action:
@@ -1216,7 +1206,6 @@ static int yy_get_next_buffer()
   return ret_val;
   }
 
-
 /* yy_get_previous_state - get the state just before the EOB char was reached */
 
 static yy_state_type yy_get_previous_state()
@@ -1245,7 +1234,6 @@ static yy_state_type yy_get_previous_state()
 
   return yy_current_state;
   }
-
 
 /* yy_try_NUL_trans - try to make a transition on the NUL character
  *
@@ -1317,7 +1305,6 @@ char *yy_bp;
     }
 
   *--yy_cp = (char) c;
-
 
   yytext_ptr = yy_bp;
   yy_hold_char = *yy_cp;
@@ -1394,7 +1381,6 @@ static int input()
   *yy_c_buf_p = '\0'; /* preserve yytext */
   yy_hold_char = *++yy_c_buf_p;
 
-
   return c;
   }
 #endif /* YY_NO_INPUT */
@@ -1403,7 +1389,6 @@ void yyflush_current_buffer ()
 {
   YY_FLUSH_BUFFER;
 }
-
 
 #ifdef YY_USE_PROTOS
 void yyrestart( FILE *input_file )
@@ -1418,7 +1403,6 @@ FILE *input_file;
   yy_init_buffer( yy_current_buffer, input_file );
   yy_load_buffer_state();
   }
-
 
 #ifdef YY_USE_PROTOS
 void yy_switch_to_buffer( YY_BUFFER_STATE new_buffer )
@@ -1449,7 +1433,6 @@ YY_BUFFER_STATE new_buffer;
   yy_did_buffer_switch_on_eof = 1;
   }
 
-
 #ifdef YY_USE_PROTOS
 void yy_load_buffer_state()
 #else
@@ -1461,7 +1444,6 @@ void yy_load_buffer_state()
   yyin = yy_current_buffer->yy_input_file;
   yy_hold_char = *yy_c_buf_p;
   }
-
 
 #ifdef YY_USE_PROTOS
 YY_BUFFER_STATE yy_create_buffer( FILE *file, int size )
@@ -1493,7 +1475,6 @@ int size;
   return b;
   }
 
-
 #ifdef YY_USE_PROTOS
 void yy_delete_buffer( YY_BUFFER_STATE b )
 #else
@@ -1513,7 +1494,6 @@ YY_BUFFER_STATE b;
   yy_flex_free( (void *) b );
   }
 
-
 #ifdef YY_USE_PROTOS
 void yy_init_buffer( YY_BUFFER_STATE b, FILE *file )
 #else
@@ -1521,7 +1501,6 @@ void yy_init_buffer( b, file )
 YY_BUFFER_STATE b;
 FILE *file;
 #endif
-
 
   {
   yy_flush_buffer( b );
@@ -1531,7 +1510,6 @@ FILE *file;
 
   b->yy_is_interactive = file ? (ACE_OS::isatty( ACE_OS::fileno(file) ) > 0) : 0;
   }
-
 
 #ifdef YY_USE_PROTOS
 void yy_flush_buffer( YY_BUFFER_STATE b )
@@ -1561,7 +1539,6 @@ YY_BUFFER_STATE b;
   if ( b == yy_current_buffer )
     yy_load_buffer_state();
   }
-
 
 #ifndef YY_NO_SCAN_BUFFER
 #ifdef YY_USE_PROTOS
@@ -1600,7 +1577,6 @@ yy_size_t size;
   }
 #endif
 
-
 #ifndef YY_NO_SCAN_STRING
 #ifdef YY_USE_PROTOS
 YY_BUFFER_STATE yy_scan_string( yyconst char *yy_str )
@@ -1616,7 +1592,6 @@ yyconst char *yy_str;
   return yy_scan_bytes( yy_str, len );
   }
 #endif
-
 
 #ifndef YY_NO_SCAN_BYTES
 #ifdef YY_USE_PROTOS
@@ -1656,7 +1631,6 @@ int len;
   }
 #endif
 
-
 #ifndef YY_NO_PUSH_STATE
 #ifdef YY_USE_PROTOS
 static void yy_push_state( int new_state )
@@ -1690,7 +1664,6 @@ int new_state;
   }
 #endif
 
-
 #ifndef YY_NO_POP_STATE
 static void yy_pop_state()
   {
@@ -1700,7 +1673,6 @@ static void yy_pop_state()
   BEGIN(yy_start_stack[yy_start_stack_ptr]);
   }
 #endif
-
 
 #ifndef YY_NO_TOP_STATE
 static int yy_top_state()
@@ -1724,7 +1696,6 @@ char msg[];
   ACE_OS::exit( YY_EXIT_FAILURE );
   }
 
-
 /* Redefine yyless() so it works in section 3 code. */
 
 #undef yyless
@@ -1739,7 +1710,6 @@ char msg[];
     yyleng = n; \
     } \
   while ( 0 )
-
 
 /* Internal utility routines. */
 
@@ -1774,7 +1744,6 @@ yyconst char *s;
   return n;
   }
 #endif
-
 
 #ifdef YY_USE_PROTOS
 static void *yy_flex_alloc( yy_size_t size )
@@ -1822,7 +1791,6 @@ int main()
   }
 #endif
 //#line 122 "ETCL/ETCL.ll"
-
 
 const char*
 extract_string(char* str)

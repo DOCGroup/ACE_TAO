@@ -59,7 +59,6 @@ class Prime_Scheduler : public ACE_Task_Base
   friend class Method_Request_name;
   friend class Method_Request_end;
 public:
-  /// Constructor.
   Prime_Scheduler (const ACE_TCHAR *,
                    Prime_Scheduler * = nullptr);
 
@@ -71,7 +70,6 @@ public:
   /// Terminator.
   virtual int shutdown ();
 
-  /// Destructor.
   ~Prime_Scheduler () override;
 
   // = These methods are part of the Active Object Proxy interface.

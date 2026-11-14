@@ -10,7 +10,6 @@ class Process
   : public virtual POA_Test::Process
 {
 public:
-  /// Constructor
   explicit Process (CORBA::ORB_ptr orb);
 
   Process (Process const &) = delete;

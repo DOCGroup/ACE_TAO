@@ -139,7 +139,6 @@ UpcallHandler::cancel_timer (PTimerQueue &,
   return 0;
 }
 
-
 // Listing 3 code/ch20
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {

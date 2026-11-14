@@ -1,5 +1,4 @@
 
-
 //=============================================================================
 /**
  *  @file      client.cpp
@@ -54,10 +53,8 @@ class DII_Cubit_Client
 {
 public:
   // = Constructor and destructor.
-  /// Constructor.
   DII_Cubit_Client () = default;
 
-  /// Destructor.
   ~DII_Cubit_Client () = default;
 
   DII_Cubit_Client (DII_Cubit_Client const &) = delete;

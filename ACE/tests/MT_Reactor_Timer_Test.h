@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_TESTS_MT_REACTOR_TIMER_TEST_H
 #define ACE_TESTS_MT_REACTOR_TIMER_TEST_H
 

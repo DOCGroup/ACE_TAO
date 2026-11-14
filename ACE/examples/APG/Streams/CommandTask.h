@@ -33,5 +33,4 @@ protected:
 };
 // Listing 01
 
-
 #endif /* COMMAND_TASK_H */

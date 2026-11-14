@@ -338,7 +338,6 @@ BasicLog_Test::test_adminState()
   ACE_RETURN(0);
 }
 
-
 int
 BasicLog_Test::test_logSize ()
 {
@@ -445,7 +444,6 @@ BasicLog_Test::test_retrieval (CORBA::ULong /* numberOfRecordsToWrite */)
   return 0;
 }
 
-
 int
 BasicLog_Test::test_query(CORBA::ULong numberOfRecordsToWrite)
 {
@@ -453,7 +451,6 @@ BasicLog_Test::test_query(CORBA::ULong numberOfRecordsToWrite)
     DsLogAdmin::Anys infos(numberOfRecordsToWrite);
     return -1;
 }
-
 
 int
 BasicLog_Test::parse_args (int argc, ACE_TCHAR *argv[])
@@ -585,7 +582,6 @@ BasicLog_Test::test_week_mask ()
   return 0;
 }
 
-
 int BasicLog_Test::delete_records (CORBA::ULongLong /* numberOfRecords */)
 {
   ACE_DEBUG ((LM_INFO,
@@ -629,7 +625,6 @@ BasicLog_Test::test_capacity_alarm_threshold ()
   list.length(0);
 
   basicLog_->set_capacity_alarm_thresholds (list);
-
 
   list.length (1);
   list[0] = 200;

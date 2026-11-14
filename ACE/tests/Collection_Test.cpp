@@ -186,7 +186,6 @@ run_main (int, ACE_TCHAR *[])
     }
   }
 
-
   ACE_END_TEST;
 
   return 0;

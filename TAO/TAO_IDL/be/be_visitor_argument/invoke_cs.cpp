@@ -455,7 +455,6 @@ be_visitor_args_invoke_cs::visit_home (
   return this->visit_interface (node);
 }
 
-
 int be_visitor_args_invoke_cs::emit_common ()
 {
   TAO_OutStream *os = this->ctx_->stream ();

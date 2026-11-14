@@ -31,10 +31,8 @@ template <class Servant>
 class Server
 {
 public:
-  /// Constructor.
   Server () = default;
 
-  /// Destructor.
   ~Server () = default;
 
   Server (Server const&) = delete;
@@ -95,10 +93,8 @@ template <class InterfaceObj, class Var>
 class Client
 {
 public:
-  /// Constructor.
   Client () = default;
 
-  /// Destructor.
   ~Client ();
 
   Client (Client const&) = delete;

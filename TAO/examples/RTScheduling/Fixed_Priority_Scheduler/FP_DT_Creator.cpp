@@ -36,7 +36,6 @@ FP_DT_Creator::sched_param (int importance)
                                           importance);
 }
 
-
 void
 FP_DT_Creator::yield (time_t suspend_time,
                       Thread_Task*)
@@ -63,5 +62,4 @@ ACE_STATIC_SVC_DEFINE(FP_DT_Creator,
                       0)
 
 ACE_FACTORY_DEFINE (ACE_Local_Service, FP_DT_Creator)
-
 

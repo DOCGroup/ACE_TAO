@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_COSEVENTCHANNELFACTORY_I_H
 #define TAO_COSEVENTCHANNELFACTORY_I_H
 

@@ -83,7 +83,6 @@ private:
                                             ACE_CDR::WChar const *x,
                                             ACE_CDR::ULong length);
 
-
   ACE_CDR::Boolean write_wchar_i (ACE_OutputCDR &,
                                   ACE_CDR::WChar ,
                                   bool allow_BOM);

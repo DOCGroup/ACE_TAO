@@ -54,7 +54,6 @@ public:
   /// initialize the ORB et. al.
   int init (int& argc, ACE_TCHAR *argv []);
 
-
   /// Activate the tasks, jobs, poas.
   void run (int argc, ACE_TCHAR *argv[]);
 

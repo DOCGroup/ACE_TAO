@@ -10,13 +10,11 @@
  */
 //=============================================================================
 
-
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 #include "ami_testC.h"
 #include "ami_testS.h"
-
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int nthreads = 5;
@@ -235,7 +233,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                       "(%P|%t) : Exited perform_work loop Received <%d> replies\n",
                       (nthreads*niterations) - number_of_replies));
         }
-
 
       client.thr_mgr ()->wait ();
 

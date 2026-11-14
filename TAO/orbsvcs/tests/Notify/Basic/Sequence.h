@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef NOTIFY_TESTS_SEQUENCE_H
 #define NOTIFY_TESTS_SEQUENCE_H
 
@@ -45,10 +44,8 @@ protected:
 class SequencePushSupplier : public TAO_Notify_Tests_SequencePushSupplier
 {
 public:
-  /// Constructor.
   explicit SequencePushSupplier (Sequence *test_client);
 
-  /// Destructor.
   ~SequencePushSupplier () override;
 
 protected:

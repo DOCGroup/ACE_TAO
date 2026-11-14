@@ -34,7 +34,6 @@ public:
   /// Default constructor
   Airplane_Server_i () = default;
 
-  /// Destructor
   ~Airplane_Server_i () = default;
 
   Airplane_Server_i (Airplane_Server_i const &) = delete;

@@ -16,7 +16,6 @@ be_visitor_valuebox::be_visitor_valuebox (be_visitor_context *ctx)
 {
 }
 
-
 // This method must be overridden by the derived valuebox visitors.
 int
 be_visitor_valuebox::visit_valuebox (be_valuebox *)

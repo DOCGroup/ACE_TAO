@@ -29,7 +29,6 @@ class Policy
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   explicit Policy (CORBA::ULong val);
 
   Policy (Policy const &) = delete;
@@ -47,7 +46,6 @@ public:
   void destroy () override;
 
 protected:
-  /// Destructor.
   /**
    * Protected destructor to enforce proper memory management through
    * the reference counting mechanism.

@@ -1249,7 +1249,6 @@ ifr_adding_visitor::visit_component_fwd (AST_ComponentFwd *node)
               supported_interfaces.length (0);
               CORBA::ComponentIR::ComponentDef_var base_component;
 
-
               if (node->is_defined ())
                 {
                   this->fill_supported_interfaces (supported_interfaces,
@@ -3100,7 +3099,6 @@ ifr_adding_visitor::create_interface_def (AST_Interface *node)
                                bases
                              );
         }
-
 
       node->ifr_added (true);
 

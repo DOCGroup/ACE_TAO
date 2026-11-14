@@ -73,7 +73,6 @@ class Worker : public ACE_Task_Base
 {
 public:
   Worker (CORBA::ORB_ptr orb, Client_Options const &options);
-  // Constructor
 
   // = The Task_Base methods
   int svc () override;
@@ -259,7 +258,6 @@ Worker::svc ()
 
   return 0;
 }
-
 
 int
 Worker::received_ex_kind () const

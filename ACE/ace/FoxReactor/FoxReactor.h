@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_FOXREACTOR_H
 #define ACE_FOXREACTOR_H
 #include /**/ "ace/pre.h"

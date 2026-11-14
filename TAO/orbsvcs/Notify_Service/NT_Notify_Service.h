@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_NT_NOTIFY_SERVICE_H
 #define TAO_NT_NOTIFY_SERVICE_H
 

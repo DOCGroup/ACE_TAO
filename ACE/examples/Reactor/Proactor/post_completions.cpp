@@ -23,7 +23,6 @@
  */
 //=============================================================================
 
-
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_main.h"
 #include "ace/Proactor.h"
@@ -34,7 +33,6 @@
 
 // Keep track of how many completions are still expected.
 static std::atomic<size_t> Completions_To_Go {0};
-
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
 // This only works on Win32 platforms and on Unix platforms supporting

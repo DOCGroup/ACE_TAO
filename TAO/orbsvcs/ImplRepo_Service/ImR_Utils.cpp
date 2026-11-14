@@ -91,7 +91,6 @@ ImR_Utils::stringToEnvList(const ACE_CString& s,
         continue;
       ret[i].name = entry.substr (start, pos - start).c_str();
 
-
       if ((start = entry.find (VALTAG, pos)) == ACE_CString::npos)
         continue;
       start += VALTAG.length ();

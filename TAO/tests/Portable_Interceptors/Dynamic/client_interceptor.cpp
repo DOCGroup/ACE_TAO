@@ -234,4 +234,3 @@ Echo_Client_Request_Interceptor::receive_exception (
               exception_id.in ()));
 }
 
-

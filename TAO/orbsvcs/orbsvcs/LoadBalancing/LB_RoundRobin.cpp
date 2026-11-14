@@ -163,7 +163,6 @@ TAO_LB_RoundRobin::next_member (
                                        locations[index]);
 }
 
-
 void
 TAO_LB_RoundRobin::copy_locations (PortableGroup::Locations_var & locations)
 {
@@ -172,7 +171,6 @@ TAO_LB_RoundRobin::copy_locations (PortableGroup::Locations_var & locations)
   for (CORBA::ULong j {}; j < len; ++j)
     this->last_locations_.push_back (locations[j]);
 }
-
 
 void
 TAO_LB_RoundRobin::analyze_loads (

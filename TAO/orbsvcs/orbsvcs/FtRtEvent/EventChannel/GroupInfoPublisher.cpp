@@ -43,7 +43,6 @@ GroupInfoPublisherBase::successor() const
   return info_->successor;
 }
 
-
 const GroupInfoPublisherBase::BackupList&
 GroupInfoPublisherBase::backups() const
 {

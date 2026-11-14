@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "orbsvcs/CosConcurrencyControlC.h"
 
 #ifndef _CC_TEST_UTILS_H_

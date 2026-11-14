@@ -51,4 +51,3 @@ namespace Test
 
 #endif  /* CLIENT_ORBINITIALIZER_T_H */
 
-

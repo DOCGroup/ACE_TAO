@@ -11,12 +11,10 @@
 
 #include "tao/ORB.h"
 
-
 /// Implement a Task to run the experiments using multiple threads.
 class Client_Task : public ACE_Task_Base
 {
 public:
-  /// Constructor
   Client_Task (CORBA::ORB_ptr orb,
                ACE_Thread_Manager *thr_mgr);
 

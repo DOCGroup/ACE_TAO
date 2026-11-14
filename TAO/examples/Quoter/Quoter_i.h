@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef QUOTER_IMPL_H
 #define QUOTER_IMPL_H
 
@@ -32,7 +31,6 @@ public:
   explicit Quoter_i (bool use_LifeCycle_Service,
                      PortableServer::POA_ptr poa_ptr = nullptr);
 
-  /// Destructor
   ~Quoter_i () override = default;
 
   Quoter_i (Quoter_i const &) = delete;
@@ -78,7 +76,6 @@ public:
   /// Constructor that takes in the number of quoters in the pool.
   Quoter_Factory_i (size_t num, PortableServer::POA_ptr poa_ptr);
 
-  /// Destructor.
   ~Quoter_Factory_i () override = default;
 
   Quoter_Factory_i (Quoter_Factory_i const &) = delete;

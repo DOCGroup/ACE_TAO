@@ -675,7 +675,6 @@ Log::parse_handler_open_i (bool is_ssl)
   //   ACE_DEBUG ((LM_DEBUG,"%d: handler_open: tid %d, local addr = empty\n",
   //               this->offset_, this->thr_->id () ));
 
-
   Transport *trans {};
   if (pp->is_server())
     {

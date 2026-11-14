@@ -138,7 +138,6 @@ ACE_ARGV_T<CHAR_TYPE>::ACE_ARGV_T (int argc,
                                         quote_arg);
 }
 
-
 template <typename CHAR_TYPE>
 ACE_ARGV_T<CHAR_TYPE>::ACE_ARGV_T (CHAR_TYPE *first_argv[],
                                    CHAR_TYPE *second_argv[],
@@ -290,7 +289,6 @@ ACE_ARGV_T<CHAR_TYPE>::~ACE_ARGV_T ()
 #else
       ACE_OS::free (this->argv_[i]);
 #endif /* ACE_HAS_ALLOC_HOOKS */
-
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_Allocator::instance()->free (this->argv_);

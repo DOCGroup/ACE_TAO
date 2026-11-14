@@ -40,7 +40,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h" /* Include first to enable ACE_TEST_ASSERT. */
 #include "ace/Message_Queue.h"
 #include "ace/Thread_Manager.h"
@@ -50,7 +49,6 @@
 #if defined (VXWORKS) || defined (INTEGRITY)
 # include "ace/OS_NS_string.h"
 #endif
-
 
 #if defined (ACE_HAS_TIMED_MESSAGE_BLOCKS)
 enum Test_Type {BEST, WORST, RANDOM};
@@ -208,7 +206,6 @@ order_producer (void *args)
       // at its read pointer position, and adjust the write pointer.
       *mb->wr_ptr () = *c;
       mb->wr_ptr (1);
-
 
       // Enqueue the message block in priority order.
       if (msg_queue->enqueue_prio (mb) == -1)

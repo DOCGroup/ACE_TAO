@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_RB_TREE_H
 #define ACE_RB_TREE_H
 #include /**/ "ace/pre.h"
@@ -226,7 +225,6 @@ public:
   int bind (const EXT_ID &ext_id,
             const INT_ID &int_id,
             ACE_RB_Tree_Node<EXT_ID, INT_ID> *&entry);
-
 
   /**
    * Associate @a ext_id with @a int_id if and only if @a ext_id is not

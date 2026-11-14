@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef RESULTS_H
 #define RESULTS_H
 
@@ -36,7 +35,6 @@ public:
   /// ctor
   Results () = default;
 
-  /// destructor
   ~Results () = default;
 
   /// prints the time stats

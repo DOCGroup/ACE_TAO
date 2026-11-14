@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "CC_test_utils.h"
 #include "CC_naming_service.h"
 #include "ace/Log_Msg.h"

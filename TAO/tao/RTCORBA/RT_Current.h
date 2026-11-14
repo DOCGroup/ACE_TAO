@@ -6,7 +6,6 @@
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
 
-
 #ifndef TAO_RT_CURRENT_H
 #define TAO_RT_CURRENT_H
 #include /**/ "ace/pre.h"

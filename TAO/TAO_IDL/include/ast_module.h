@@ -86,10 +86,8 @@ public:
   AST_Module &operator= (AST_Module &&) = delete;
   static AST_Decl::NodeType const NT;
 
-  // Constructor.
   explicit AST_Module (UTL_ScopedName *n, AST_Module *prev = nullptr);
 
-  // Destructor.
   ~AST_Module () override;
 
   // Cleanup function.

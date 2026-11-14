@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_LB_CLIENT_ORB_INITIALIZER_H
 #define TAO_LB_CLIENT_ORB_INITIALIZER_H
 

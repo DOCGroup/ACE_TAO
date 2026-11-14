@@ -149,7 +149,6 @@ URL_Download_Iterator::next (ACE_CString &buffer)
 
   const char *buf = this->url_.stream ().recv (len);
 
-
   if (buf == nullptr)
     return 0;
   else

@@ -42,7 +42,6 @@ public:
   /// Default constructor.
   Identity_Client () = default;
 
-  /// Destructor.
   ~Identity_Client () = default;
 
   Identity_Client (Identity_Client const &) = delete;

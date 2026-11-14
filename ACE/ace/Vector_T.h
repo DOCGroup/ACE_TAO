@@ -73,7 +73,6 @@ public:
    */
   using Iterator = ACE_Vector_Iterator<T, DEFAULT_SIZE>;
 
-
   /**
    * General constructor.
    *

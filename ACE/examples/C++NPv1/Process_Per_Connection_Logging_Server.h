@@ -35,7 +35,6 @@ private:
   ACE_SOCK_Stream logging_peer_;
 };
 
-
 class Process_Per_Connection_Logging_Server : public Logging_Server
 {
 private:

@@ -27,7 +27,6 @@ class Client_Request_Interceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   Client_Request_Interceptor (char const *orb_id,
                               char const *first_forward_str,
                               char const *second_forward_str);

@@ -10,7 +10,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 #include "tao/ORB.h"
 
-
 /// Implement a Task to run the client as a thread
 class Client_Task : public ACE_Task_Base
 {
@@ -23,7 +22,6 @@ public:
     target
   };
 
-  /// Constructor
   Client_Task (ACE_TCHAR const *input,
                CORBA::ORB_ptr corb,
                SyncMode sync_mode,

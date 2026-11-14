@@ -81,7 +81,6 @@ TAO_SCIOP_Transport::recv (char *buf,
       if (errno == EWOULDBLOCK)
         return 0;
 
-
       return -1;
     }
 

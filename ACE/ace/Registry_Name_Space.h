@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_REGISTRY_NAME_SPACE_H
 #define ACE_REGISTRY_NAME_SPACE_H
 #include /**/ "ace/pre.h"

@@ -14,11 +14,9 @@
  */
 //=============================================================================
 
-
 #include "ace/OS_main.h"
 #include "ace/Service_Config.h"
 #include "ace/Task.h"
-
 
 #if defined (ACE_HAS_THREADS)
 

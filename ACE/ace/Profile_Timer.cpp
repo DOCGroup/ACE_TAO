@@ -315,7 +315,6 @@ ACE_Profile_Timer::get_rusage (ACE_Profile_Timer::Rusage &usage)
   usage = 0;
 }
 
-
 void
 ACE_Profile_Timer::elapsed_rusage (ACE_Profile_Timer::Rusage &usage)
 {

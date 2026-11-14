@@ -675,7 +675,6 @@ ACE_POSIX_Asynch_Write_File::write (ACE_Message_Block &message_block,
 
 // *********************************************************************
 
-
 size_t
 ACE_POSIX_Asynch_Accept_Result::bytes_to_read () const
 {
@@ -1118,7 +1117,6 @@ void ACE_POSIX_Asynch_Connect_Result::connect_handle (ACE_HANDLE handle)
   this->aio_fildes = handle;
 }
 
-
 ACE_POSIX_Asynch_Connect_Result::ACE_POSIX_Asynch_Connect_Result
   (const ACE_Handler::Proxy_Ptr &handler_proxy,
    ACE_HANDLE connect_handle,
@@ -1289,7 +1287,6 @@ ACE_POSIX_Asynch_Connect::connect (ACE_HANDLE connect_handle,
   else
     result = nullptr;
 
-
   return 0;
 }
 
@@ -1420,7 +1417,6 @@ ACE_POSIX_Asynch_Connect::connect_i (ACE_POSIX_Asynch_Connect_Result *result,
 
   ACE_NOTREACHED (return 0);
 }
-
 
 //@@ New method cancel_uncompleted
 // It performs cancellation of all pending requests
@@ -1558,7 +1554,6 @@ ACE_POSIX_Asynch_Connect::handle_output (ACE_HANDLE fd)
   return 0;
 }
 
-
 int
 ACE_POSIX_Asynch_Connect::handle_close (ACE_HANDLE fd, ACE_Reactor_Mask)
 {
@@ -1685,7 +1680,6 @@ ACE_POSIX_Asynch_Transmit_File_Result::complete (size_t bytes_transferred,
 }
 
 ACE_POSIX_Asynch_Transmit_File_Result::~ACE_POSIX_Asynch_Transmit_File_Result () = default;
-
 
 // *********************************************************************
 
@@ -2122,7 +2116,6 @@ ACE_POSIX_Asynch_Read_Dgram_Result::saddr () const
   return (sockaddr *) this->remote_address_->get_addr ();
 }
 
-
 int
 ACE_POSIX_Asynch_Read_Dgram_Result::flags () const
 {
@@ -2220,7 +2213,6 @@ ACE_POSIX_Asynch_Write_Dgram_Result::handle () const
 {
   return this->handle_;
 }
-
 
 ACE_Message_Block*
 ACE_POSIX_Asynch_Write_Dgram_Result::message_block () const

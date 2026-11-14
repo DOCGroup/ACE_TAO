@@ -51,10 +51,8 @@ public:
   /// Constructor - default.
   TAO_NotifyLogFactory_i ();
 
-  /// Constructor.
   explicit TAO_NotifyLogFactory_i (CosNotifyChannelAdmin::EventChannelFactory_ptr ecf);
 
-  /// Destructor.
   ~TAO_NotifyLogFactory_i () override;
 
   /// Activate this servant with the ORB and POA passed in.
@@ -78,7 +76,6 @@ public:
         DsLogAdmin::CapacityAlarmThresholdList const & thresholds,
         CosNotification::QoSProperties const & initial_qos,
         CosNotification::AdminProperties const & initial_admin) override;
-
 
   // = Methods from CosNotifyChannelAdmin::ConsumerAdmin.
   CosNotifyChannelAdmin::AdminID MyID () override;

@@ -57,7 +57,6 @@ AsyncLocatorTask::locate (char const *id)
   throw IORTable::NotFound ();
 }
 
-
 AsyncLocatorTask::AsyncLocatorTask (CORBA::ORB_ptr orb, std::string const &test_ior)
   : orb_ (CORBA::ORB::_duplicate (orb)),
     test_ior_ (test_ior)

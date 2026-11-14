@@ -221,7 +221,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                        ACE_TEXT ("Event_Transceiver constructor failed")),
                        -1);
 
-
   // Run event loop until either the event server shuts down or we get
   // a SIGINT.
   ACE_Reactor::instance ()->run_reactor_event_loop ();

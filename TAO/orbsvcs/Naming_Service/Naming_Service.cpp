@@ -16,7 +16,6 @@ TAO_Naming_Service::TAO_Naming_Service (int argc, ACE_TCHAR * argv[])
   this->init (argc, argv);
 }
 
-
 // Initialize the state of the TAO_Naming_Service object
 int
 TAO_Naming_Service::init (int argc, ACE_TCHAR * argv[])
@@ -196,5 +195,4 @@ TAO_Naming_Service::fini ()
   return 0;
 }
 
-// Destructor.
 TAO_Naming_Service::~TAO_Naming_Service () = default;

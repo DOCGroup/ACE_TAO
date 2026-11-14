@@ -40,7 +40,6 @@ extern TAO_Export ACE_Log_Category TAO_log_category;
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-
 #if defined (ACE_NLOGGING)
 #if !defined (TAOLIB_HEX_DUMP)
 # define TAOLIB_HEX_DUMP(X) do {} while (0)

@@ -6,9 +6,7 @@ Object_Factory_i::Object_Factory_i (CORBA::ORB_ptr orb,
   : orb_ (CORBA::ORB::_duplicate (orb)),
     gateway_poa_ (gateway_poa)
 {
-  /// Constructor
 }
-
 
 CORBA::Object_ptr
 Object_Factory_i::create_object (char const *interface_repository_id,

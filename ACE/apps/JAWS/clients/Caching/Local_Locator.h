@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_LOCAL_LOCATOR_H
 #define ACE_LOCAL_LOCATOR_H
 
@@ -53,7 +52,6 @@ public:
 
   /// Unequal, complement of equal.
   bool operator!= (const ACE_URL_Record &rhs) const;
-
 
 private:
   /// Default ctor.  This is put here to prevent users from

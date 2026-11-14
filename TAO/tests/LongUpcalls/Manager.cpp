@@ -47,7 +47,6 @@ Manager::shutdown ()
   this->orb_->shutdown (false);
 }
 
-
 // ****************************************************************
 
 Worker::Worker (ACE_Thread_Manager *thr_mgr,

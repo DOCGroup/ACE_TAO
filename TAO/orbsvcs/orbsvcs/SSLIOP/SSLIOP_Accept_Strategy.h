@@ -63,7 +63,6 @@ namespace TAO
                                    ACE_SSL_SOCK_Acceptor>
     {
     public:
-      /// Constructor.
       Accept_Strategy (TAO_ORB_Core * orb_core,
                        ACE_Time_Value const & timeout,
                        bool check_host);

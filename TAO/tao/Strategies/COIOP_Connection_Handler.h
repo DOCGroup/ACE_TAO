@@ -28,7 +28,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-
 /**
  * @class TAO_COIOP_Connection_Handler
  *

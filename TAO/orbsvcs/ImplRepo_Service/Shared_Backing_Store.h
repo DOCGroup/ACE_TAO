@@ -165,7 +165,6 @@ private:
   class LocatorListings_XMLHandler : public ACEXML_DefaultHandler
   {
   public:
-    /// constructor
     /// @param dir the directory path to add to the server or activator
     ///        filename
     explicit LocatorListings_XMLHandler(const ACE_TString& dir);

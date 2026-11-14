@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_UPIPE_ACCEPTOR_H
 #define ACE_UPIPE_ACCEPTOR_H
 #include /**/ "ace/pre.h"

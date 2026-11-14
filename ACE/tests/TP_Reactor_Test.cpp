@@ -42,7 +42,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 
 #if defined(ACE_HAS_THREADS)
@@ -209,7 +208,6 @@ MyTask::start (int num_threads)
 
   return 0;
 }
-
 
 int
 MyTask::stop ()
@@ -381,7 +379,6 @@ Receiver::Receiver (Acceptor * acceptor, size_t index)
   if (acceptor_ != nullptr)
     acceptor_->on_new_receiver (*this);
 }
-
 
 Receiver::~Receiver ()
 {
@@ -579,7 +576,6 @@ Receiver::handle_output (ACE_HANDLE h)
       else
         this->total_snd_ += res;
 
-
       if (loglevel == 0 || res <= 0 || err!= 0)
         {
           LogLocker log_lock;
@@ -758,7 +754,6 @@ Sender::Sender (Connector* connector, size_t index)
 
   ACE_OS::snprintf (send_buf_, 1024, "%s", data);
 }
-
 
 Sender::~Sender ()
 {
@@ -1013,7 +1008,6 @@ Sender::handle_output (ACE_HANDLE h)
 
   return check_destroy ();
 }
-
 
 // *************************************************************
 //   Configuration helpers

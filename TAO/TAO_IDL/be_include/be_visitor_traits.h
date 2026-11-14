@@ -48,5 +48,4 @@ public:
   int visit_typedef (be_typedef *node) override;
 };
 
-
 #endif // TAO_BE_VISITOR_TRAITS_H

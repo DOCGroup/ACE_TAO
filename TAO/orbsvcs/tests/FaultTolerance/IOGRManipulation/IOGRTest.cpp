@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "tao/ORB.h"
 #include "orbsvcs/FT_CORBA_ORBC.h"
 #include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
@@ -131,7 +130,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       TAO_FT_IOGR_Property tmp_prop;
 
       retval = tmp_prop.get_tagged_component (merged.in (), ftc);
-
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Testing for tagged component\n"));

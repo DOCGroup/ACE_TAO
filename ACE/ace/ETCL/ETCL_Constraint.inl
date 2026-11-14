@@ -13,7 +13,6 @@ ETCL_Identifier::value () const
   return this->string_.c_str ();
 }
 
-
 // ****************************************************************
 
 ACE_INLINE

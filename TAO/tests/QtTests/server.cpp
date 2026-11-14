@@ -12,7 +12,6 @@
 #include <QtGui/qslider.h>
 #include "ace/OS_NS_stdio.h"
 
-
 const ACE_TCHAR *ior_output_file = 0;
 
 int

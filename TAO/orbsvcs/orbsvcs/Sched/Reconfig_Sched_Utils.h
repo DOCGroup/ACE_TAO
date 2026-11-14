@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-
 /**
  *  @file    Reconfig_Sched_Utils.h
  *
  *  @author  Chris Gill <cdgill@cs.wustl.edu>
  */
-
 
 #ifndef TAO_RECONFIG_SCHED_UTILS_H
 #define TAO_RECONFIG_SCHED_UTILS_H
@@ -59,7 +57,6 @@ struct TAO_RTSched_Export TAO_RT_Info_Ex
   virtual RtecScheduler::RT_Info_Enabled_Type_t enabled_state () const;
 };
 
-
 /**
  * An implementation class used to wrap available operation descriptors.
  * Each operation may have one or more tuples describing different rates,
@@ -89,7 +86,6 @@ struct TAO_RTSched_Export TAO_RT_Info_Tuple
   /// Index of the tuple in the operation's ordered available rates.
   u_long rate_index {};
 };
-
 
 /**
  * @class TAO_Reconfig_Scheduler_Entry
@@ -384,7 +380,6 @@ private:
   */
 };
 
-
 /**
  * @class TAO_Reconfig_Sched_Entry_Visitor
  *
@@ -402,7 +397,6 @@ public:
   /// Visit a Reconfig Scheduler Entry.
   virtual int visit (TAO_Reconfig_Scheduler_Entry &) = 0;
 };
-
 
 /**
  * A scheduler entry visitor that resets nodes.

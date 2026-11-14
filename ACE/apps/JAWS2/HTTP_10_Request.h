@@ -5,7 +5,6 @@
 #include "HTTPU/http_request.h"
 #include <string>
 
-
 class JAWS_HTTP_10_Request : public HTTP_Request, public HTTP_HCodes
 {
 public:

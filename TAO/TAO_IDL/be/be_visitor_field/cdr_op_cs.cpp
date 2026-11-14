@@ -393,7 +393,6 @@ be_visitor_field_cdr_op_cs::visit_eventtype_fwd (be_eventtype_fwd *node)
   return this->visit_valuetype_fwd (node);
 }
 
-
 int
 be_visitor_field_cdr_op_cs::emit_valuetype_common ()
 {
@@ -437,7 +436,6 @@ be_visitor_field_cdr_op_cs::emit_valuetype_common ()
 
   return 0;
 }
-
 
 // Visit predefined type.
 int
@@ -1094,7 +1092,6 @@ be_visitor_cdr_op_field_decl::visit_array (be_array *node)
 
   return 0;
 }
-
 
 int
 be_visitor_cdr_op_field_decl::visit_typedef (be_typedef *node)

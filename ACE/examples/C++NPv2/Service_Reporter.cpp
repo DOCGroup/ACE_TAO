@@ -36,7 +36,6 @@ int Service_Reporter::init (int argc, ACE_TCHAR *argv[]) {
             ACE_Event_Handler::ACCEPT_MASK);
 }
 
-
 int Service_Reporter::handle_input (ACE_HANDLE) {
   ACE_SOCK_Stream peer_stream;
   acceptor_.accept (peer_stream);
@@ -76,7 +75,6 @@ int Service_Reporter::handle_input (ACE_HANDLE) {
   return 0;
 }
 
-
 int Service_Reporter::info (ACE_TCHAR **bufferp,
                             size_t length) const {
   ACE_INET_Addr local_addr;
@@ -95,13 +93,11 @@ int Service_Reporter::info (ACE_TCHAR **bufferp,
   return ACE_Utils::truncate_cast<int> (ACE_OS::strlen (*bufferp));
 }
 
-
 int Service_Reporter::suspend ()
 { return reactor ()->suspend_handler (this); }
 
 int Service_Reporter::resume ()
 { return reactor ()->resume_handler (this); }
-
 
 int Service_Reporter::fini () {
   reactor ()->remove_handler

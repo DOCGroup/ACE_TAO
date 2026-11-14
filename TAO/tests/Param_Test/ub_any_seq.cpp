@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "helper.h"
 
 #include <cstring>
@@ -182,7 +181,6 @@ Test_AnySeq::reset_parameters ()
 
   return 0;
 }
-
 
 int
 Test_AnySeq::run_sii_test (Param_Test_ptr objref)

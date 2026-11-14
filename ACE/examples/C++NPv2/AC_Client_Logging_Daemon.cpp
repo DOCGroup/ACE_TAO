@@ -30,7 +30,6 @@
 
 #include <openssl/ssl.h>
 
-
 class AC_CLD_Acceptor
   : public ACE_Acceptor<AC_Input_Handler, ACE_SOCK_ACCEPTOR> {
 public:
@@ -293,7 +292,6 @@ int AC_Input_Handler::handle_close (ACE_HANDLE handle,
 
 int AC_CLD_Acceptor::make_svc_handler (AC_Input_Handler *&sh)
 { sh = &input_handler_; return 0; }
-
 
 int AC_CLD_Acceptor::handle_close (ACE_HANDLE,
                                    ACE_Reactor_Mask) {

@@ -123,7 +123,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
     ex._tao_print_exception ("A CORBA Exception occurred.");
   }
 
-
   return 0;
 }
 

@@ -42,7 +42,6 @@ class Request_Interceptor
   : public virtual PortableInterceptor::Interceptor
 {
 public:
-  /// Constructor.
   explicit Request_Interceptor (char const *name);
 
   Request_Interceptor (Request_Interceptor const &) = delete;

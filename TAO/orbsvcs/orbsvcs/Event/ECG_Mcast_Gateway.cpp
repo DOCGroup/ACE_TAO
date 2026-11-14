@@ -34,7 +34,6 @@ TAO_ECG_Mcast_Gateway::init_svcs ()
     insert (&ace_svc_desc_TAO_ECG_Mcast_Gateway);
 }
 
-
 int
 TAO_ECG_Mcast_Gateway::fini ()
 {
@@ -114,7 +113,6 @@ TAO_ECG_Mcast_Gateway::init (int argc, ACE_TCHAR* argv[])
               arg_shifter.consume_arg ();
             }
         }
-
 
       else if (ACE_OS::strcasecmp (arg, ACE_TEXT ("-ECGHandler")) == 0)
         {

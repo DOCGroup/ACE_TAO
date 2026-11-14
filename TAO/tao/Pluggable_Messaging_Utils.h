@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_PLUGGABLE_MESSAGING_UTILS_H
 #define TAO_PLUGGABLE_MESSAGING_UTILS_H
 

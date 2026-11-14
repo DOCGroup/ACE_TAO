@@ -11,13 +11,11 @@ class Coordinator
   : public virtual POA_Test::Coordinator
 {
 public:
-  /// Constructor
   explicit Coordinator (CORBA::ULong peer_count);
   Coordinator (Coordinator const &) = delete;
   Coordinator (Coordinator &&) = delete;
   Coordinator &operator= (Coordinator const &) = delete;
   Coordinator &operator= (Coordinator &&) = delete;
-
 
   /// Check if all the peers have registered already
   bool has_all_peers () const;

@@ -13,7 +13,6 @@
 
 #include "ace/SString.h"
 
-
 //////////////////////
 // Forward references
 
@@ -36,7 +35,6 @@ public:
    * virtual destructor.
    */
   virtual ~StubFaultConsumer ();
-
 
   ::PortableServer::POA_ptr _default_POA () override;
   ::PortableServer::ObjectId objectId()const;
@@ -67,7 +65,6 @@ public:
    * Clean house for process shut down.
    */
   int fini ();
-
 
   size_t notifications() const;
 
@@ -109,7 +106,6 @@ private:
    * The CORBA object id assigned to this object.
    */
   PortableServer::ObjectId_var object_id_;
-
 
   /**
    * A human-readable string to distinguish this from other FaultConsumers.

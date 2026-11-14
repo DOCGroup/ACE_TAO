@@ -41,7 +41,6 @@ parse_args (int argc,
   return 0;
 }
 
-
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {

@@ -24,4 +24,3 @@ private:
   ::Test::Client_var cli_ {};
 };
 
-

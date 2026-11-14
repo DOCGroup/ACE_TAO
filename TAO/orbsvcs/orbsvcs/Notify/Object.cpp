@@ -72,7 +72,6 @@ TAO_Notify_Object::activate (
   return this->poa_->activate_with_id (servant, this->id_);
 }
 
-
 void
 TAO_Notify_Object::deactivate ()
 {
@@ -294,7 +293,6 @@ TAO_Notify_Object::find_qos_property_value (
   // zero on success.  We must convert this to a boolean value.
   return (this->qos_properties_.find (name, value) == 0);
 }
-
 
 void
 TAO_Notify_Object::qos_changed (const TAO_Notify_QoSProperties& /*qos_properties*/)

@@ -5,7 +5,6 @@
  *  @author Marina Spivak (marina@cs.wustl.edu)
  */
 
-
 #ifndef TAO_RT_POLICY_I_H
 #define TAO_RT_POLICY_I_H
 
@@ -100,7 +99,6 @@ private:
   RTCORBA::Priority server_priority_ {};
 };
 
-
 /**
  * @class TAO_ThreadpoolPolicy
  *
@@ -145,7 +143,6 @@ private:
   RTCORBA::ThreadpoolId id_;
 };
 
-
 /**
  * @class TAO_PrivateConnectionPolicy
  *
@@ -185,7 +182,6 @@ protected:
   /// reference counted object.
   ~TAO_PrivateConnectionPolicy () override;
 };
-
 
 /**
  * @class TAO_PriorityBandedConnectionPolicy
@@ -256,7 +252,6 @@ private:
   RTCORBA::PriorityBands priority_bands_;
 };
 
-
 /**
  * @class TAO_ServerProtocolPolicy
  *
@@ -308,7 +303,6 @@ private:
   /// Attribute.
   RTCORBA::ProtocolList protocols_;
 };
-
 
 /**
  * @class TAO_ClientProtocolPolicy
@@ -373,7 +367,6 @@ private:
   RTCORBA::ProtocolList protocols_;
 };
 
-
 /**
  * @class TAO_TCP_Protocol_Properties
  *
@@ -437,7 +430,6 @@ private:
   CORBA::Boolean enable_network_priority_;
 };
 
-
 /**
  * @class TAO_UnixDomain_Protocol_Properties
  *
@@ -490,7 +482,6 @@ private:
   CORBA::Long send_buffer_size_;
   CORBA::Long recv_buffer_size_;
 };
-
 
 /**
  * @class TAO_SharedMemory_Protocol_Properties
@@ -585,7 +576,6 @@ private:
   ACE_CString mmap_lockname_;
 };
 
-
 /**
  * @class TAO_UserDatagram_Protocol_Properties
  *
@@ -631,7 +621,6 @@ private:
 
   CORBA::Boolean enable_network_priority_;
 };
-
 
 /**
  * @class TAO_StreamControl_Protocol_Properties
@@ -696,7 +685,6 @@ private:
   CORBA::Boolean enable_network_priority_;
 };
 
-
 class TAO_RTCORBA_Export TAO_GIOP_Protocol_Properties
   : public RTCORBA::GIOPProtocolProperties,
     public ::CORBA::LocalObject
@@ -716,7 +704,6 @@ protected:
   friend class TAO_Protocol_Properties_Factory;
   TAO_GIOP_Protocol_Properties () = default;
 };
-
 
 class TAO_RTCORBA_Export TAO_Protocol_Properties_Factory
 {

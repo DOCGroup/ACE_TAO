@@ -158,7 +158,6 @@ Logger_Client::init_loggers ()
   return 0;
 }
 
-
 // Execute client example code.
 
 int
@@ -273,7 +272,6 @@ Logger_Client::parse_args ()
   // Indicates successful parsing of command line.
   return 0;
 }
-
 
 void
 Logger_Client::init_record (Logger::Log_Record &newrec,

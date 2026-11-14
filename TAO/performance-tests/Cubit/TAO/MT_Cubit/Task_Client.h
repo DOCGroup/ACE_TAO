@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef TASK_CLIENT_H
 #define TASK_CLIENT_H
 
@@ -60,7 +59,6 @@
 # define CLEAR_QUANTIFY
 #endif /* ! ACE_HAS_QUANTIFY */
 
-
 enum Cubit_Datatypes
 {
   // = The various datatypes the client and the server can exchange.
@@ -98,13 +96,11 @@ using JITTER_ARRAY_ITERATOR = ACE_Unbounded_Queue_Iterator<ACE_timer_t>;
 class Task_State
 {
 public:
-  /// Constructor.
   Task_State ();
 
   /// parses the arguments with the provided argc and argv.
   int parse_args (int argc,ACE_TCHAR **argv);
 
-  /// Destructor
   ~Task_State ();
 
   Task_State (Task_State const &) = delete;
@@ -253,7 +249,6 @@ public:
           ACE_TCHAR **argv,
           u_int id);
 
-  /// destructor.
   ~Client ();
 
   Client (Client const &) = delete;

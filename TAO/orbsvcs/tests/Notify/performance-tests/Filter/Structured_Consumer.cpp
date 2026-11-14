@@ -50,7 +50,6 @@ private:
   Consumer_Options& options_;
 };
 
-
 int
 Consumer_Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
@@ -91,7 +90,6 @@ Consumer_Client::parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-
 static CosNotifyChannelAdmin::ConsumerAdmin_ptr
 create_consumeradmin (CosNotifyChannelAdmin::EventChannel_ptr ec,
                       bool filter_enabled)
@@ -100,7 +98,6 @@ create_consumeradmin (CosNotifyChannelAdmin::EventChannel_ptr ec,
   CosNotifyChannelAdmin::ConsumerAdmin_var admin =
     ec->new_for_consumers (CosNotifyChannelAdmin::AND_OP,
                            adminid);
-
 
   if (filter_enabled)
     {
@@ -127,7 +124,6 @@ create_consumeradmin (CosNotifyChannelAdmin::EventChannel_ptr ec,
 
   return CosNotifyChannelAdmin::ConsumerAdmin::_duplicate (admin.in ());
 }
-
 
 static void
 create_consumers (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,

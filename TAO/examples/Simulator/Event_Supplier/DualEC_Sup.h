@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef DUALEC_SUP_H
 #define DUALEC_SUP_H
 
@@ -37,7 +36,6 @@ struct Schedule_Viewer_Data
   u_long completion_time;
   u_long computation_time;
 };
-
 
 /**
  * @class DualEC_Supplier
@@ -75,7 +73,6 @@ public:
 
   /// Load the scheduling information into memory
   void load_schedule_data ();
-
 
 private:
 /**

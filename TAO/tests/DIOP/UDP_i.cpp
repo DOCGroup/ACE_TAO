@@ -1,6 +1,5 @@
 #include "UDP_i.h"
 
-// Constructor
 UDP_i::UDP_i (CORBA::ORB_ptr o)
   : orb_ (CORBA::ORB::_duplicate (o))
 {

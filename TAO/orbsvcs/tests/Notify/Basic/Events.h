@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef NOTIFY_TESTS_EventS_H
 #define NOTIFY_TESTS_EventS_H
 
@@ -30,7 +29,6 @@ class Events;
 class Event_StructuredPushConsumer : public TAO_Notify_Tests_StructuredPushConsumer
 {
 public:
-  /// Constructor.
   explicit Event_StructuredPushConsumer (Events *test_client);
 
   // = StructuredPushSupplier methods.
@@ -46,10 +44,8 @@ protected:
 class Event_StructuredPushSupplier : public TAO_Notify_Tests_StructuredPushSupplier
 {
 public:
-  /// Constructor.
   explicit Event_StructuredPushSupplier (Events *test_client);
 
-  /// Destructor.
   ~Event_StructuredPushSupplier () override;
 
 protected:

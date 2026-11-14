@@ -7,9 +7,7 @@
  * parties.
  */
 
-
 /* ------------------------------------------------------------------------ */
-
 
 /*
  * pblock.h: Header for Parameter Block handling functions
@@ -47,9 +45,7 @@
 #include <stdio.h>  /* sprintf */
 #include <string.h> /* strlen, strcmp */
 
-
 /* ------------------------------ Structures ------------------------------ */
-
 
 typedef struct {
     char *name,*value;
@@ -65,9 +61,7 @@ typedef struct {
     struct pb_entry **ht;
 } pblock;
 
-
 /* ------------------------------ Prototypes ------------------------------ */
-
 
 /*
  * param_create creates a parameter with the given name and value. If name
@@ -179,11 +173,8 @@ void pblock_copy(pblock *src, pblock *dst);
 
 char **pblock_pb2env(pblock *pb, char **env);
 
-
 /* --------------------------- Internal things ---------------------------- */
 
-
 pb_param *_pblock_fr(char *name, pblock *pb, int remove);
-
 
 #endif

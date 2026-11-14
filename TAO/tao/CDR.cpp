@@ -223,7 +223,6 @@ TAO_OutputCDR::fragment_stream (ACE_CDR::ULong pending_alignment,
   return true;  // Success.
 }
 
-
 int
 TAO_OutputCDR::offset (char* pos)
 {
@@ -257,7 +256,6 @@ TAO_OutputCDR::offset (char* pos)
 
   return offset;
 }
-
 
 // ****************************************************************
 
@@ -311,6 +309,5 @@ TAO_InputCDR::clr_mb_flags( ACE_Message_Block::Message_Flags less_flags )
 {
   return start_.clr_self_flags( less_flags );
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

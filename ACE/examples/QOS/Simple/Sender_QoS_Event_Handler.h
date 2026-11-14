@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef SENDER_QOS_EVENT_HANDLER_H
 #define SENDER_QOS_EVENT_HANDLER_H
 

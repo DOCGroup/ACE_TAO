@@ -54,7 +54,6 @@ Client::init (int argc, ACE_TCHAR *argv[])
       orb_->create_policy (Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
                            any_object);
 
-
     // Timeout with SYNC_SCOPE SYNC_WITH_TRANSPORT
     Messaging::SyncScope sync_with_transport = Messaging::SYNC_WITH_TRANSPORT;
     CORBA::Any sync_with_transport_any;
@@ -65,7 +64,6 @@ Client::init (int argc, ACE_TCHAR *argv[])
       (policy_list, CORBA::SET_OVERRIDE);
     test_obj_transport_timeout_ = Test::_narrow (obj.in ());
     policy_list[1]->destroy ();
-
 
     // Timeout with SYNC_SCOPE SYNC_NONE
     Messaging::SyncScope sync_none = Messaging::SYNC_NONE;
@@ -79,7 +77,6 @@ Client::init (int argc, ACE_TCHAR *argv[])
     test_obj_none_timeout_ = Test::_narrow (obj.in ());
     policy_list[1]->destroy ();
 
-
     // Timeout with TAO specific SYNC_SCOPE SYNC_EAGER_BUFFERING
     //Messaging::SyncScope eager_buffering = TAO::SYNC_EAGER_BUFFERING;
     Messaging::SyncScope eager_buffering = Messaging::SYNC_NONE;
@@ -92,7 +89,6 @@ Client::init (int argc, ACE_TCHAR *argv[])
     test_obj_eager_timeout_ = Test::_narrow (obj.in ());
     policy_list[1]->destroy ();
 
-
     // Timeout with TAO specific SYNC_SCOPE SYNC_DELAYED_BUFFERING
     Messaging::SyncScope delayed_buffering = TAO::SYNC_DELAYED_BUFFERING;
     CORBA::Any delayed_any;
@@ -104,7 +100,6 @@ Client::init (int argc, ACE_TCHAR *argv[])
     test_obj_delayed_timeout_ = Test::_narrow (obj.in ());
     policy_list[1]->destroy ();
 
-
     // Timeout with default SYNC_SCOPE SYNC_WITH_SERVER
     Messaging::SyncScope sync_with_server = Messaging::SYNC_WITH_SERVER;
     CORBA::Any sync_with_server_any;
@@ -115,7 +110,6 @@ Client::init (int argc, ACE_TCHAR *argv[])
       (policy_list, CORBA::SET_OVERRIDE);
     test_obj_server_timeout_ = Test::_narrow (obj.in ());
     policy_list[1]->destroy ();
-
 
     // Timeout with default SYNC_SCOPE (SYNC_WITH_TARGET)
     Messaging::SyncScope sync_with_target = Messaging::SYNC_WITH_TARGET;
@@ -279,7 +273,6 @@ Client::test_oneway_timeout (bool flood)
     }
   }
 
-
   // Timeout with TAO specific SYNC_SCOPE SYNC_EAGER_BUFFERING
   try {
     std::string scope_name ("SYNC_EAGER_BUFFERING");
@@ -441,7 +434,6 @@ Client::test_oneway_timeout (bool flood)
       status = false;
     }
   }
-
 
   // Timeout with default SYNC_SCOPE (SYNC_WITH_TARGET)
   try {

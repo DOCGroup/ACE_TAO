@@ -100,7 +100,6 @@ int TAO_FT_ReplicationManagerController::init (int &argc, ACE_TCHAR *argv[])
   return result;
 }
 
-
 int TAO_FT_ReplicationManagerController::parse_args (int &argc, ACE_TCHAR *argv[])
 {
   int result = 0;

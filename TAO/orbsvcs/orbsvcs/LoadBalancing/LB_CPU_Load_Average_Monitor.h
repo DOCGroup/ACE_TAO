@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_LB_CPU_LOAD_AVERAGE_MONITOR_H
 #define TAO_LB_CPU_LOAD_AVERAGE_MONITOR_H
 

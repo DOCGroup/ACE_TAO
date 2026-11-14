@@ -26,7 +26,6 @@ Callback_i::callback_method ()
     ACE_DEBUG ((LM_DEBUG, "Callback method called\n"));
 }
 
-
 // ****************************************************************
 
 int
@@ -87,7 +86,6 @@ Simple_Server_i::callback_object (Callback_ptr callback)
   // Store the callback object
   this->callback_ = Callback::_duplicate (callback);
 }
-
 
 void
 Simple_Server_i::shutdown ()

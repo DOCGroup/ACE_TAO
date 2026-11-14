@@ -4,7 +4,6 @@
 #include "SequencePushSupplier.inl"
 #endif /* __ACE_INLINE__ */
 
-
 TAO_Notify_Tests_SequencePushSupplier_Traits::TAO_Notify_Tests_SequencePushSupplier_Traits ()
   :type_ (CosNotifyChannelAdmin::SEQUENCE_EVENT)
 {

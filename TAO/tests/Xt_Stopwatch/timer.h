@@ -16,12 +16,10 @@
 class Timer_imp
 {
  public:
-  /// Constructor
   Timer_imp (XtAppContext,
              CORBA::Long,
              Stopwatch_display *);
 
-  /// Destructor
   virtual ~Timer_imp () = default;
 
   Timer_imp (Timer_imp const &) = delete;

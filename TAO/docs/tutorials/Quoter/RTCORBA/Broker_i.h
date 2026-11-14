@@ -41,7 +41,6 @@ public:
   Stock_StockBroker_i &operator= (Stock_StockBroker_i const &) = delete;
   Stock_StockBroker_i &operator= (Stock_StockBroker_i &&) = delete;
 
-  /// Destructor
   ~Stock_StockBroker_i () override;
 
   /**
@@ -118,7 +117,6 @@ public:
   Stock_StockBrokerHome_i &operator= (Stock_StockBrokerHome_i const &) = delete;
   Stock_StockBrokerHome_i &operator= (Stock_StockBrokerHome_i &&) = delete;
 
-  /// Destructor
   ~Stock_StockBrokerHome_i () override;
 
   /**

@@ -66,7 +66,6 @@ private:
   CORBA::ORB_var orb_;
 };
 
-
 /// Ctor
 Worker::Worker (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
@@ -89,7 +88,6 @@ Worker::svc ()
   return 0;
 }
 
-
 /// Main driver
 
 int
@@ -109,7 +107,6 @@ server_main (int argc,
       PortableInterceptor::ORBInitializer_var orb_initializer (temp_initializer);
 
       PortableInterceptor::register_orb_initializer (orb_initializer.in ());
-
 
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,

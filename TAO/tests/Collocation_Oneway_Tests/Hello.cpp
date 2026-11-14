@@ -17,7 +17,6 @@ Hello::onewayTest ()
               "(%P|%t) onewayTest() Upcall in process ..\n"));
 }
 
-
 char *
 Hello::get_string ()
 {

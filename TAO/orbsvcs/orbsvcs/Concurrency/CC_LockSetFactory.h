@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef _CC_LOCKSETFACTORY_H
 #define _CC_LOCKSETFACTORY_H
 

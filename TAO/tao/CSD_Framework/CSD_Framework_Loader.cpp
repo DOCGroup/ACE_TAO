@@ -27,7 +27,6 @@ TAO_CSD_Framework_Loader::init (int, ACE_TCHAR* [])
   return 0;
 }
 
-
 /////////////////////////////////////////////////////////////////////
 
 ACE_FACTORY_DEFINE (TAO_CSD_FW, TAO_CSD_Framework_Loader)

@@ -8,10 +8,8 @@
 
 #include "jaws3/Export.h"
 
-
 class JAWS_IO;
 class JAWS_Event_Completer;
-
 
 class JAWS_Export JAWS_IO_Impl
 // = TITLE
@@ -63,7 +61,6 @@ public:
                         , ACE_Message_Block *trailer = nullptr) = 0;
 };
 
-
 class JAWS_Export JAWS_IO
 {
 public:
@@ -112,7 +109,6 @@ public:
                 , void *act = nullptr
                 , ACE_Message_Block *header = nullptr
                 , ACE_Message_Block *trailer = nullptr);
-
 
 private:
   JAWS_IO_Impl *impl_;

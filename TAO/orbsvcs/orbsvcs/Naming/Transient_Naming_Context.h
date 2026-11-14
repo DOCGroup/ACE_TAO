@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_TRANSIENT_NAMING_CONTEXT_H
 #define TAO_TRANSIENT_NAMING_CONTEXT_H
 #include /**/ "ace/pre.h"
@@ -20,7 +19,6 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

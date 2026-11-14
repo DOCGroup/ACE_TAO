@@ -1295,7 +1295,6 @@ namespace ACE_OS {
   extern ACE_Export
   int lwp_setparams (const ACE_Sched_Params &);
 
-
   //@{ @name A set of wrappers for mutex locks.
 
   extern ACE_Export
@@ -1425,7 +1424,6 @@ namespace ACE_OS {
   int recursive_mutex_unlock (ACE_recursive_thread_mutex_t *m);
 
   //@}
-
 
   //@{ @name A set of wrappers for readers/writer locks.
 
@@ -1694,7 +1692,6 @@ namespace ACE_OS {
   int thr_get_affinity (ACE_hthread_t thr_id,
                         size_t cpu_set_size,
                         cpu_set_t * cpu_mask);
-
 
   /**
    * Set the thread affinity

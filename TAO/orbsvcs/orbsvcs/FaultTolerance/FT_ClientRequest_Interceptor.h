@@ -59,7 +59,6 @@ namespace TAO
     bool clean_flag_ {};
   };
 
-
   /**
    * @class FT_ClientRequest_Interceptor
    *
@@ -76,7 +75,6 @@ namespace TAO
 
     /// Canonical name of the interceptor.
     char * name () override;
-
 
     void destroy () override;
 

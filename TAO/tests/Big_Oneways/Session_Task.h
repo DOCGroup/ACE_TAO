@@ -15,7 +15,6 @@ class Session;
 class Session_Task : public ACE_Task_Base
 {
 public:
-  /// Constructor
   explicit Session_Task (Session *session);
   Session_Task (Session_Task const &) = delete;
   Session_Task &operator= (Session_Task const &) = delete;

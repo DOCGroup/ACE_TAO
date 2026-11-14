@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_REQUEST_DISPATCHER_H
 #define TAO_REQUEST_DISPATCHER_H
 

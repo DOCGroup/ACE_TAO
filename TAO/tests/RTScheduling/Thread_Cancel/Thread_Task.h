@@ -5,7 +5,6 @@
 #include "ace/Task.h"
 #include "tao/ORB.h"
 
-
 class Thread_Task : public ACE_Task <ACE_SYNCH>
 {
  public:

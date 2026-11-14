@@ -186,7 +186,6 @@ Client_Task::is_equal_tree (TreeController *tree1, TreeController *tree2)
   return is_equal_node (tree1->root (), tree2->root ());
 }
 
-
 bool
 Client_Task::is_equal_node (BaseNode *node1, BaseNode *node2)
 {

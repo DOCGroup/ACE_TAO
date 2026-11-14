@@ -14,7 +14,6 @@
 class Client_Task : public ACE_Task_Base
 {
 public:
-  /// Constructor
   Client_Task (Test::Receiver_ptr receiver,
                CORBA::Long event_count,
                CORBA::ULong event_size,

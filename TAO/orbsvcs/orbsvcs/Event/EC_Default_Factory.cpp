@@ -717,7 +717,6 @@ using TAO_EC_Supplier_List_Iterator =
 using TAO_EC_Supplier_RB_Tree_Iterator =
   TAO_ESF_Proxy_RB_Tree<TAO_EC_ProxyPushSupplier>::Iterator;
 
-
 TAO_EC_ProxyPushConsumer_Collection*
 TAO_EC_Default_Factory::create_proxy_push_consumer_collection (TAO_EC_Event_Channel_Base *)
 {

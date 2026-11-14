@@ -163,7 +163,6 @@ public:
   /// types, and priority levels for the dispatching lanes.
   void get_config_info_set (RtecScheduler::Config_Info_Set_out configs) override;
 
-
 private:
 #if defined (TAO_USES_STRATEGY_SCHEDULER)
 

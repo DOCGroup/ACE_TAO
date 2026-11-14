@@ -49,7 +49,6 @@ namespace TAO
   }
 }
 
-
 /**
  * @class TAO_TypeCodeFactory_Adapter
  *

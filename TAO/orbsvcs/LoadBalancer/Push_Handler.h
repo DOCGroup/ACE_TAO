@@ -8,7 +8,6 @@
  */
 //=======================================================================
 
-
 #ifndef TAO_LB_PUSH_HANDLER_H
 #define TAO_LB_PUSH_HANDLER_H
 
@@ -24,7 +23,6 @@
 
 #include "ace/Event_Handler.h"
 
-
 /**
  * @class TAO_LB_Push_Handler
  *
@@ -36,7 +34,6 @@
 class TAO_LB_Push_Handler : public ACE_Event_Handler
 {
 public:
-  /// Constructor
   TAO_LB_Push_Handler (CosLoadBalancing::LoadMonitor_ptr monitor,
                        PortableGroup::Location const & location,
                        CosLoadBalancing::LoadManager_ptr manager);

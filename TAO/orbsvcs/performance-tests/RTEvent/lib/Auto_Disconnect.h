@@ -31,7 +31,6 @@ template<class Client>
 class Auto_Disconnect : public ACE_Utils::Auto_Functor<Client,Disconnect<Client> >
 {
 public:
-  /// Constructor
   /**
    * @param client The client
    */

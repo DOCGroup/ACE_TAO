@@ -32,7 +32,6 @@ public:
   Client_Task &operator= (Client_Task const &) = delete;
   Client_Task &operator= (Client_Task &&) = delete;
 
-  /// Constructor
   Client_Task (int &argc, ACE_TCHAR **argv);
 
   int parse_args ();

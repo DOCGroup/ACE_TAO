@@ -15,7 +15,6 @@
  */
 //=============================================================================
 
-
 #ifndef CACHED_ACCEPT_CONNECTION_TEST
 #define CACHED_ACCEPT_CONNECTION_TEST
 
@@ -181,7 +180,6 @@ Client_Svc_Handler::close (u_long flags)
   return ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::close (flags);
 }
 
-
 Server_Svc_Handler::Server_Svc_Handler (ACE_Thread_Manager *t)
   : ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> (t)
 {
@@ -222,7 +220,6 @@ static int iterations = 2000;
 #else
 static int iterations = 200;
 #endif /* ACE_WIN32 */
-
 
 static int
 cached_connect (STRATEGY_CONNECTOR &con,
@@ -519,6 +516,5 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_END_TEST;
   return 0;
 }
-
 
 #endif /* CACHED_ACCEPT_CONNECTION_TEST */

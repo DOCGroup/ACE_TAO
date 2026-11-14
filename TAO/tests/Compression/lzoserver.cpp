@@ -30,7 +30,6 @@ test_invalid_compression_factory (Compression::CompressionManager_ptr const cm)
   return succeed;
 }
 
-
 bool
 test_duplicate_compression_factory (
   Compression::CompressionManager_ptr const cm,

@@ -89,5 +89,4 @@ ImR_Locator_Loader::run()
     }
 }
 
-
 ACE_FACTORY_DEFINE (Locator, ImR_Locator_Loader)

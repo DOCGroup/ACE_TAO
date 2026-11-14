@@ -47,7 +47,6 @@ enum
   ACE_DATA_BLOCK_CLONE_LEAVE
 };
 
-
 // Setup Timeprobes
 ACE_TIMEPROBE_EVENT_DESCRIPTIONS (ACE_MB_Timeprobe_Description,
                                   ACE_MESSAGE_BLOCK_INIT_I_ENTER);
@@ -1065,7 +1064,6 @@ ACE_Message_Block::duplicate () const
                                                     current->data_block ()->duplicate  (),
                                                     current->data_block ()->data_block_allocator (),
                                                     current->message_block_allocator_));
-
 
       // If allocation failed above, release everything done so far and return NULL
       if (cur_dup == nullptr)

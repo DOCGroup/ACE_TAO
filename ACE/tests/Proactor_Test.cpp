@@ -55,7 +55,6 @@
 
 #include "Proactor_Test.h"
 
-
 // Proactor Type (UNIX only, Win32 ignored)
 using ProactorType = enum { DEFAULT = 0, AIOCB, SIG, CB };
 static ProactorType proactor_type = DEFAULT;
@@ -106,7 +105,6 @@ public:
   virtual ~LogLocker () { ACE_LOG_MSG->release (); }
 };
 
-
 // Function to remove signals from the signal mask.
 static int
 disable_signal (int sigmin, int sigmax)
@@ -140,7 +138,6 @@ disable_signal (int sigmin, int sigmax)
 
   return 0;
 }
-
 
 // *************************************************************
 //  MyTask is ACE_Task resposible for :
@@ -306,7 +303,6 @@ MyTask::start (int num_threads,
   return 0;
 }
 
-
 int
 MyTask::stop ()
 {
@@ -342,7 +338,6 @@ MyTask::svc ()
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) MyTask finished\n")));
   return 0;
 }
-
 
 // TestData collects and reports on test-related transfer and connection
 // statistics.
@@ -602,7 +597,6 @@ TestData::report ()
                 ACE_TEXT ("really do anything. Something is very wrong.\n")));
 }
 
-
 class Acceptor : public ACE_Asynch_Acceptor<Server>
 {
 public:
@@ -710,7 +704,6 @@ Server::cancel ()
   return;
 }
 
-
 void
 Server::addresses (const ACE_INET_Addr& peer, const ACE_INET_Addr&)
 {
@@ -726,7 +719,6 @@ Server::addresses (const ACE_INET_Addr& peer, const ACE_INET_Addr&)
                 ACE_TEXT ("addr_to_string")));
   return;
 }
-
 
 void
 Server::open (ACE_HANDLE handle, ACE_Message_Block &)
@@ -1070,7 +1062,6 @@ Connector::make_handler ()
   return this->tester_->client_up ();
 }
 
-
 int
 Connector::start (const ACE_INET_Addr& addr, int num)
 {
@@ -1106,7 +1097,6 @@ Connector::start (const ACE_INET_Addr& addr, int num)
     }
   return rc;
 }
-
 
 Client::Client ()
 {
@@ -1198,7 +1188,6 @@ Client::close ()
   return;
 }
 
-
 void
 Client::addresses (const ACE_INET_Addr& /* peer */, const ACE_INET_Addr& local)
 {
@@ -1214,7 +1203,6 @@ Client::addresses (const ACE_INET_Addr& /* peer */, const ACE_INET_Addr& local)
                 ACE_TEXT ("addr_to_string")));
   return;
 }
-
 
 void
 Client::open (ACE_HANDLE handle, ACE_Message_Block &)
@@ -1375,7 +1363,6 @@ Client::initiate_read_stream ()
   mb3->cont (mb4);
   mb4->cont (mb5);
   mb5->cont (mb6);
-
 
   // hide last byte in each message block, reserving it for later to set '\0'
   // for proper printouts

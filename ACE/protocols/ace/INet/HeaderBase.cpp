@@ -7,7 +7,6 @@
 
 #include "ace/INet/INet_Log.h"
 
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
@@ -113,7 +112,6 @@ namespace ACE
         return true;
       }
 
-
     void HeaderBase::set (const ACE_CString& name, const ACE_CString& value)
       {
         TNVMap::ITERATOR it (this->header_values_);
@@ -141,7 +139,6 @@ namespace ACE
               }
           }
       }
-
 
     NVPair::NVPair () {}
 

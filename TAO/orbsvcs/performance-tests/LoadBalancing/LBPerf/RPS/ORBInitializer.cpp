@@ -44,7 +44,6 @@ ORBInitializer::post_init (
   info->add_server_request_interceptor (safe_reject_interceptor.in ());
 }
 
-
 TAO_LB_LoadAlert &
 ORBInitializer::load_alert ()
 {

@@ -14,11 +14,9 @@
  */
 //=============================================================================
 
-
 #include "ace/Reactor.h"
 #include "ace/Service_Config.h"
 #include "ace/OS_main.h"
-
 
 /**
  * @class Timeout_Handler

@@ -86,7 +86,6 @@ TAO_Scheduler::end_nested_scheduling_segment (RTScheduling::Current::IdType cons
 {
 }
 
-
 void
 TAO_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr request_info)
 {

@@ -95,4 +95,3 @@ Chatter::farewell ()
    return 0;
 }
 
-

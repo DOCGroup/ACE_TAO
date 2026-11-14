@@ -53,7 +53,6 @@ class TAO_CSD_FW_Export TAO_CSD_Framework_Loader : public ACE_Service_Object
   TAO_CSD_Framework_Loader &operator= (TAO_CSD_Framework_Loader &&) = delete;
 };
 
-
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_CSD_FW, TAO_CSD_Framework_Loader)
 ACE_FACTORY_DECLARE (TAO_CSD_FW, TAO_CSD_Framework_Loader)
 

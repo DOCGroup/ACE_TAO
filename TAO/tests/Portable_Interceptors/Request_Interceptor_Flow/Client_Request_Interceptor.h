@@ -43,7 +43,6 @@ class Client_Request_Interceptor
     public virtual Request_Interceptor
 {
 public:
-  /// Constructor.
   explicit Client_Request_Interceptor (char const *name);
 
   Client_Request_Interceptor (Client_Request_Interceptor const &) = delete;

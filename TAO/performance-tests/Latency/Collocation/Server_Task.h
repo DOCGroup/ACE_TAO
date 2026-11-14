@@ -17,7 +17,6 @@
 class Server_Task : public ACE_Task_Base
 {
 public:
-  /// Constructor
   Server_Task (CORBA::ORB_ptr sorb,
                ACE_Manual_Event &cond,
                ACE_Thread_Manager *thr_mgr);

@@ -43,7 +43,6 @@ Service::run_test (Test::Callback_ptr callback)
   this->orb_->shutdown (false);
 }
 
-
 int
 Service::call_are_you_there (Test::Callback_ptr callback)
 {

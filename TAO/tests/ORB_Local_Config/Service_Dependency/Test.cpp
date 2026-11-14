@@ -169,7 +169,6 @@ testORBInitializer_Registry (int, ACE_TCHAR *[])
     }
 #endif
 
-
   if (glob_size != glob->services_count ())
     {
       ACE_ERROR ((LM_ERROR,
@@ -345,7 +344,6 @@ testServiceDependency (int, ACE_TCHAR *[])
 
   return 0;
 }
-
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])

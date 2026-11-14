@@ -3,7 +3,6 @@
 #include "Options.h"
 #include "Event_Analyzer.h"
 
-
 int
 Event_Analyzer::open (void *)
 {

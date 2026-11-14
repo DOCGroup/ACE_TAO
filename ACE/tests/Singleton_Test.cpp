@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Singleton.h"
 #include <type_traits>
@@ -44,7 +43,6 @@ static_assert (!std::is_copy_constructible<DLL_Singleton>::value);
 static_assert (!std::is_move_constructible<DLL_Singleton>::value);
 static_assert (!std::is_copy_assignable<DLL_Singleton>::value);
 static_assert (!std::is_move_assignable<DLL_Singleton>::value);
-
 
 int
 run_main (int, ACE_TCHAR *[])

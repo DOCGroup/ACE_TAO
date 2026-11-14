@@ -68,7 +68,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv){
     return 1;
   }
 
-
   // Create the address that we want the client to connect to
   ACE_INET_Addr serverAddr(Options_Manager::server_port,
                            Options_Manager::server_host.c_str ());
@@ -258,7 +257,6 @@ ACE_SCTP::HIST runUnmarshalledOctetTest (
 
       / microsec_clock_scale_factor;
 
-
     // record the message latency in the histogram
     ACE_SCTP::record(messageLatency_usec, aceStream_hist);
   }
@@ -279,7 +277,6 @@ ACE_SCTP::HIST runTest(ACE_SOCK_SEQPACK_Association & stream)
   size_t msgLen = 1;
   for (int i = 1; i <= Options_Manager::payload_size_power_of_2; ++i)
     msgLen *= 2;
-
 
   // send a header to the server that contains test parameters
   if (sendHeader(stream) < 0)

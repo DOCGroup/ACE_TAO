@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_CEC_CONSUMERCONTROL_H
 #define TAO_CEC_CONSUMERCONTROL_H
 

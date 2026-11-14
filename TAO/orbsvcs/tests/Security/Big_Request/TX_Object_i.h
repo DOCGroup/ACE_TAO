@@ -30,7 +30,6 @@ public:
   TX_Object_i &operator= (TX_Object_i const &) = delete;
   TX_Object_i &operator= (TX_Object_i &&) = delete;
 
-  // Destructor
   ~TX_Object_i () override = default;
 
   void send (const DataSeq & data) override;

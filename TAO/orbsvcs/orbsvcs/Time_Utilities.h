@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-
 //=============================================================================
 /**
  *  @file    Time_Utilities.h
@@ -8,7 +7,6 @@
  *  @author  David Levine <levine@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef ORBSVCS_TIME_UTILITIES_H
 #define ORBSVCS_TIME_UTILITIES_H
@@ -61,7 +59,6 @@ public:
   static ACE_hrtime_t to_hrtime (TimeBase::TimeT const &t);
   //@}
 
-
   /**
    * @name ACE_Time_Value conversion routines
    */
@@ -81,7 +78,6 @@ public:
 
   /// @brief Convert relative TimeBase::TimeT to a ACE_Time_Value.
   static ACE_Time_Value to_Time_Value (const TimeBase::TimeT &rhs);
-
 
   /// @brief Convert absolute ACE_Time_Value to a TimeBase::TimeT
   static void Absolute_Time_Value_to_TimeT (TimeBase::TimeT &lhs,

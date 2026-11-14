@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef RECONNECTING_CONSUMER_H
 #define RECONNECTING_CONSUMER_H
 

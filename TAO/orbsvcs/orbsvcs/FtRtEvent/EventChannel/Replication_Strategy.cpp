@@ -8,7 +8,6 @@ Replication_Strategy::check_validity()
 {
 }
 
-
 Replication_Strategy*
 Replication_Strategy::make_primary_strategy()
 {

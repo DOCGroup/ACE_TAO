@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "Generic_Factory_i.h"
 #include "QuoterC.h"
 
@@ -18,7 +17,6 @@
 
 #include "ace/Get_Opt.h"
 
-// Constructor
 Quoter_Generic_Factory_i::Quoter_Generic_Factory_i (int debug_level)
   : debug_level_ (debug_level)
 {
@@ -29,7 +27,6 @@ Quoter_Generic_Factory_i::supports (CosLifeCycle::Key const &)
 {
   return false;
 }
-
 
 CosNaming::NamingContext_ptr
 Quoter_Generic_Factory_i::get_naming_context (CosLifeCycle::Key const &factory_key)
@@ -70,7 +67,6 @@ Quoter_Generic_Factory_i::get_naming_context (CosLifeCycle::Key const &factory_k
     }
   return quoterNamingContext_var._retn ();
 }
-
 
 CORBA::Object_ptr
 Quoter_Generic_Factory_i::create_object (CosLifeCycle::Key const &factory_key,

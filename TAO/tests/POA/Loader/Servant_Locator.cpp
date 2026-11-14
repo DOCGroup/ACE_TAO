@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "Servant_Locator.h"
 
 // Initialization.The dllname is used by the Loactor to load it into

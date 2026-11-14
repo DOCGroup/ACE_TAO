@@ -12,13 +12,11 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Stream.h"
 #include "ace/UPIPE_Acceptor.h"
 #include "ace/UPIPE_Connector.h"
 #include "ace/OS_NS_unistd.h"
-
 
 #if defined (ACE_HAS_THREADS) && \
     (defined (ACE_HAS_STREAM_PIPES) || defined (ACE_HAS_WIN32_NAMED_PIPES))

@@ -41,7 +41,6 @@ private:
   const char *format_;
 };
 
-
 class HTTP_HCodes;
 
 class HTTPU_Export HTTP_Header_Nodes : public ACE_RB_Tree<int, const HTTP_Hdr_Node *, ACE_Less_Than<int>, ACE_Null_Mutex>
@@ -151,7 +150,6 @@ public:
   const char *header_token (int name) const;
   const char *header_strings (int name) const;
 };
-
 
 #if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)

@@ -180,7 +180,6 @@ private:
 };
 #endif /* defined(ACE_HAS_WIN32_OVERLAPPED_IO) || defined(ACE_HAS_AIO_CALLS) */
 
-
 class JAWS_Export JAWS_IO_Handler : public JAWS_Abstract_IO_Handler
 {
 public:
@@ -239,7 +238,6 @@ protected:
 class JAWS_Export JAWS_IO_Handler_Factory
 {
 public:
-  /// Destructor
   virtual ~JAWS_IO_Handler_Factory ();
 
   /// This creates a new JAWS_IO_Handler
@@ -259,7 +257,6 @@ using JAWS_Synch_IO_Handler_Factory_Singleton = ACE_Singleton<JAWS_Synch_IO_Hand
 class JAWS_Export JAWS_Asynch_IO_Handler_Factory : public JAWS_IO_Handler_Factory
 {
 public:
-  /// Destructor
   ~JAWS_Asynch_IO_Handler_Factory () override;
 
   /// This creates a new JAWS_IO_Handler

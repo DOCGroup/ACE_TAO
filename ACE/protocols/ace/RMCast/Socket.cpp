@@ -80,7 +80,6 @@ namespace ACE_RMCast
     std::unique_ptr<Link> link_;
   };
 
-
   Socket_Impl::
   Socket_Impl (Address const& a, bool loop, Parameters const& params)
       : loop_ (loop),
@@ -144,7 +143,6 @@ namespace ACE_RMCast
         signal_pipe_.close ();
     }
 
-
   void Socket_Impl::
     send_ (void const* buf, size_t s)
     {
@@ -186,12 +184,10 @@ namespace ACE_RMCast
           return -1; // errno is already set
         }
 
-
       Message_ptr m;
 
       if (queue_.dequeue_head (m) == -1)
         ACE_OS::abort ();
-
 
       if (queue_.is_empty ())
         {
@@ -286,7 +282,6 @@ namespace ACE_RMCast
       return signal_pipe_.read_handle ();
     }
 
-
   void Socket_Impl::recv (Message_ptr m)
     {
       if (m->find (Data::id) != nullptr || m->find (NoData::id) != nullptr)
@@ -331,7 +326,6 @@ namespace ACE_RMCast
             }
         }
     }
-
 
   // Socket
   //

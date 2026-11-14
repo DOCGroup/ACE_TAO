@@ -26,7 +26,6 @@ class Server_ORBInitializer :
   public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor
   explicit Server_ORBInitializer (Interceptor_Type interceptor_type);
 
   Server_ORBInitializer (Server_ORBInitializer const &) = delete;

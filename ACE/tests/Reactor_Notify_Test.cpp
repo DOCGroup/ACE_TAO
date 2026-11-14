@@ -104,15 +104,12 @@ run_quiet_notify_test ()
   return t.result ();
 }
 
-
 class Supplier_Task : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  /// Constructor.
   Supplier_Task (int disable_notify_pipe,
                  const ACE_Time_Value &tv);
 
-  /// Destructor.
   ~Supplier_Task () override;
 
   //FUZZ: disable check_for_lack_ACE_OS
@@ -524,7 +521,6 @@ run_notify_purge_test ()
   status = r->handle_events (t);  // Should be nothing to do, and time out
   return status < 0 ? 1 : 0;     // Return 0 for all ok, else error
 }
-
 
 int
 run_main (int, ACE_TCHAR *[])

@@ -393,7 +393,6 @@ public:
 
   //@}
 
-
   /** @name Water mark (flow control) methods
    */
   //@{
@@ -632,7 +631,6 @@ protected:
 // This typedef is used to get around a compiler bug in g++/vxworks.
 using ACE_DEFAULT_MESSAGE_QUEUE_TYPE = ACE_Message_Queue<ACE_MT_SYNCH>;
 
-
 /**
  * @class ACE_Message_Queue_Iterator
  *
@@ -835,7 +833,6 @@ public:
   int enqueue_head (ACE_Message_Block *new_item,
                     ACE_Time_Value *timeout = nullptr) override;
 
-
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
@@ -950,7 +947,6 @@ public:
                                  u_long static_bit_field_shift = 10,            // 10 low order bits
                                  u_long dynamic_priority_max = 0x3FFFFFUL,      // 2^(22)-1
                                  u_long dynamic_priority_offset =  0x200000UL); // 2^(22-1)
-
 
 #if defined (ACE_VXWORKS)
 

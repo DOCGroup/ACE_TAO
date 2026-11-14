@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_CORBA_LOCALOBJECT_H
 #define TAO_CORBA_LOCALOBJECT_H
 

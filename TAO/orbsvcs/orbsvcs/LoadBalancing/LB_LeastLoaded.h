@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef LB_LEAST_LOADED_H
 #define LB_LEAST_LOADED_H
 
@@ -195,7 +194,6 @@ private:
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 #if defined (__ACE_INLINE__)
 #include "orbsvcs/LoadBalancing/LB_LeastLoaded.inl"

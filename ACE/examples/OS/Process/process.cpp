@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_stdlib.h"
@@ -25,7 +24,6 @@
 #include "ace/Truncate.h"
 #include "ace/Tokenizer_T.h"
 #include <memory>
-
 
 #if defined (ACE_WIN32)
 #define EXEC_NAME ACE_TEXT ("MORE.COM")

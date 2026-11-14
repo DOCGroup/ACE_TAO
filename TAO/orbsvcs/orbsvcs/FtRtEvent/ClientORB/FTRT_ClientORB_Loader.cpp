@@ -83,4 +83,3 @@ ACE_STATIC_SVC_DEFINE (
   | ACE_Service_Type::DELETE_OBJ,
   0)
 
-

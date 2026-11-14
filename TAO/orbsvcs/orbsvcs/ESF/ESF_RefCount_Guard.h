@@ -37,7 +37,6 @@ template<class T>
 class TAO_ESF_RefCount_Guard
 {
 public:
-  /// Constructor
   explicit TAO_ESF_RefCount_Guard (T &refcount);
 
   TAO_ESF_RefCount_Guard (TAO_ESF_RefCount_Guard const &) = delete;
@@ -45,7 +44,6 @@ public:
   TAO_ESF_RefCount_Guard &operator= (TAO_ESF_RefCount_Guard const &) = delete;
   TAO_ESF_RefCount_Guard &operator= (TAO_ESF_RefCount_Guard &&) = delete;
 
-  /// Destructor
   ~TAO_ESF_RefCount_Guard ();
 
 protected:

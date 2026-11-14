@@ -274,7 +274,6 @@ void FTEC_Gateway::push(RtecEventChannelAdmin::ProxyPushConsumer_ptr proxy_consu
   impl_->ftec->push(**result, data);
 }
 
-
 /// FTEC_Gateway_ConsumerAdmin
 
 FTEC_Gateway_ConsumerAdmin::FTEC_Gateway_ConsumerAdmin (FTEC_Gateway_Impl *impl)
@@ -326,7 +325,6 @@ FTEC_Gateway_SupplierAdmin::obtain_push_consumer ()
   return result;
 }
 
-
 FtRtecEventComm::ObjectId**
 get_remote_oid_ptr(CORBA::ORB_ptr orb)
 {
@@ -348,7 +346,6 @@ FTEC_Gateway_ProxyPushSupplier::FTEC_Gateway_ProxyPushSupplier (FTEC_Gateway_Imp
   : impl_ (impl)
 {
 }
-
 
 // = The RtecEventChannelAdmin::ProxyPushSupplier methods...
 void FTEC_Gateway_ProxyPushSupplier::connect_push_consumer (
@@ -386,7 +383,6 @@ FTEC_Gateway_ProxyPushConsumer::FTEC_Gateway_ProxyPushConsumer (FTEC_Gateway_Imp
   : impl_ (impl)
 {
 }
-
 
 // = The RtecEventChannelAdmin::ProxyPushConsumer methods...
 

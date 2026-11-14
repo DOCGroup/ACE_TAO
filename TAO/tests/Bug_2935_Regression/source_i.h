@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef SOURCE_I_H
 #define SOURCE_I_H
 
@@ -42,6 +41,5 @@ private:
   // Number of messages to send (make this configurable)
   unsigned long const counter_ {5};
 };
-
 
 #endif /* SOURCE_I_H */

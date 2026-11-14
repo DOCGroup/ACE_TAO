@@ -103,7 +103,6 @@ namespace TAO
       //@}
 
     protected:
-      /// Destructor
       /**
        * Protected destructor to force deallocation by the reference
        * counting mechanism.

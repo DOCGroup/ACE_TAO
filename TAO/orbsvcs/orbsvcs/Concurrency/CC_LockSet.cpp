@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Concurrency/CC_LockSet.h"
 

@@ -5,7 +5,6 @@
 #include "Supplier_Router.h"
 #include "Message_Block_Owner.h"
 
-
 #if defined (ACE_HAS_THREADS)
 
 using SUPPLIER_FACTORY = Acceptor_Factory<Supplier_Handler, SUPPLIER_KEY>;

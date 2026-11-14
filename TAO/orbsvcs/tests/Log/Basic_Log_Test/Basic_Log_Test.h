@@ -95,7 +95,6 @@ delete_records (CORBA::ULongLong numberOfRecords);
   // 1. destroy the log.
   // 2. attemp to write to log. Should throw exception (?).
 
-
   int test_week_mask();
 
   int test_capacity_alarm_threshold();

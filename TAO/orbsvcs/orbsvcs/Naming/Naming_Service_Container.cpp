@@ -53,7 +53,6 @@ ACE_NS_Node<T>::ACE_NS_Node (ACE_NS_Node<T> const &s)
   // ACE_TRACE ("ACE_NS_Node<T>::ACE_NS_Node");
 }
 
-
 ACE_ALLOC_HOOK_DEFINE(ACE_Unbounded_List)
 
   template <class T> size_t
@@ -261,7 +260,6 @@ ACE_Unbounded_List<T>::end ()
   return ACE_Unbounded_List_Iterator<T> (*this, 1);
 }
 
-
 ACE_ALLOC_HOOK_DEFINE(ACE_Unbounded_List_Iterator)
 
   template <class T> void
@@ -382,6 +380,5 @@ ACE_Unbounded_List<T>::is_full () const
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 #endif /* NS_CONTAINERS_T_CPP */

@@ -204,7 +204,6 @@ LifeCycle::destroy_ec ()
                 "destroyed event channel\n"));
 }
 
-
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {

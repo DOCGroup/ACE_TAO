@@ -86,7 +86,6 @@ Endpoint::is_client () const
   return this->role_ != ER_SERVER;
 }
 
-
 Transport::Transport (const char *addr, bool is_client, size_t offset, const ACE_CString &time)
   : handle_ (0),
     client_endpoint_ (addr, is_client ? ER_CLIENT : ER_SERVER),

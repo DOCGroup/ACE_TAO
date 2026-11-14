@@ -10,7 +10,6 @@ class Session_Factory
   : public virtual POA_Test::Session_Factory
 {
 public:
-  /// Constructor
   Session_Factory (CORBA::ORB_ptr orb,
                    PortableServer::POA_ptr poa);
   Session_Factory (Session_Factory const &) = delete;

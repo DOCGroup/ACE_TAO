@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_SINGLE_READ_TEST_I_H
 #define TAO_SINGLE_READ_TEST_I_H
 

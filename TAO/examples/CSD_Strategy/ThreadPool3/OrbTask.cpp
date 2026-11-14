@@ -59,7 +59,6 @@ OrbTask::open (void *)
   return 0;
 }
 
-
 int
 OrbTask::svc ()
 {
@@ -76,7 +75,6 @@ OrbTask::svc ()
 
   return 0;
 }
-
 
 int
 OrbTask::close (u_long)

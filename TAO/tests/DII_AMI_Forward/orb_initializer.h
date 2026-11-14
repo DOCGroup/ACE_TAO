@@ -11,7 +11,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 class ForwardTest_Request_Interceptor;
 
 // This is to remove "inherits via dominance" warnings from MSVC.
@@ -27,7 +26,6 @@ class Server_ORBInitializer
   , public virtual CORBA::LocalObject
 {
 public:
-  /// Constructor
   Server_ORBInitializer () = default;
   Server_ORBInitializer (Server_ORBInitializer const &) = delete;
   Server_ORBInitializer (Server_ORBInitializer &&) = delete;

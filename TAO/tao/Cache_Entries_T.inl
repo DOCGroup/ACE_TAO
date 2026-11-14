@@ -197,13 +197,11 @@ namespace TAO
     this->transport_property_ = prop;
   }
 
-
   template <typename TRANSPORT_DESCRIPTOR_TYPE> ACE_INLINE CORBA::ULong
   Cache_ExtId_T<TRANSPORT_DESCRIPTOR_TYPE>::index () const
   {
     return this->index_;
   }
-
 
   template <typename TRANSPORT_DESCRIPTOR_TYPE> ACE_INLINE void
   Cache_ExtId_T<TRANSPORT_DESCRIPTOR_TYPE>::index (CORBA::ULong index)

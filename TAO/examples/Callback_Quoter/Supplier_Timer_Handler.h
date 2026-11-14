@@ -45,7 +45,6 @@ public:
   Supplier_Timer_Handler (Supplier_Timer_Handler &&) = delete;
   Supplier_Timer_Handler &operator= (Supplier_Timer_Handler &&) = delete;
 
-  /// Destructor.
   ~Supplier_Timer_Handler () = default;
 
   /// Method which will be called by the Reactor when timeout occurs.

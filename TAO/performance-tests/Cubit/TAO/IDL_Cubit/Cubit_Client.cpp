@@ -106,7 +106,6 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (Cubit_Client_Timeprobe_Description,
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
-
 // Bitmasks for each of the Cubit tests
 #define TAO_ENABLE_CUBIT_VOID              1 << 0
 #define TAO_ENABLE_CUBIT_OCTET             1 << 1
@@ -145,7 +144,6 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (Cubit_Client_Timeprobe_Description,
         TAO_ENABLE_CUBIT_ANY      |  \
         TAO_ENABLE_CUBIT_ANY_STRUCT
 
-// Constructor.
 Cubit_Client::Cubit_Client (int shutdown)
   : cubit_factory_key_ (0),
     loop_count_ (250),
@@ -373,7 +371,6 @@ Cubit_Client::disable_test (u_int mask)
   ACE_SET_BITS (this->test_disable_bitset_, mask);
 }
 
-
 int
 Cubit_Client::check_enabled (u_int mask) const
 {
@@ -401,7 +398,6 @@ Cubit_Client::cube_union ()
         r = this->cubit_->cube_union (u);
       }
 
-
       if (TAO_debug_level > 2)
         ACE_DEBUG ((LM_DEBUG, "cube union ..."));
       u.l (u.l () * u.l () * u.l ()) ;
@@ -426,7 +422,6 @@ Cubit_Client::cube_union ()
 
         r = this->cubit_->cube_union (u);
       }
-
 
       if (TAO_debug_level > 2)
         ACE_DEBUG ((LM_DEBUG, "cube union ..."));
@@ -465,7 +460,6 @@ Cubit_Client::cube_short (int i)
 
         ret_short = cubit_->cube_short (arg_short);
       }
-
 
       ++this->call_count_;
 
@@ -545,7 +539,6 @@ Cubit_Client::cube_octet (int i)
         ret_octet = this->cubit_->cube_octet (arg_octet);
       }
 
-
       ++this->call_count_;
 
       if (TAO_debug_level > 2)
@@ -590,7 +583,6 @@ Cubit_Client::cube_long (int i)
 
         ret_long = this->cubit_->cube_long (arg_long);
       }
-
 
       ++this->call_count_;
 
@@ -645,7 +637,6 @@ Cubit_Client::cube_struct (int i)
 
         ret_struct = this->cubit_->cube_struct (arg_struct);
       }
-
 
       if (TAO_debug_level > 2)
         {
@@ -706,7 +697,6 @@ Cubit_Client::cube_long_sequence (int,
         this->cubit_->cube_long_sequence (input,
                                           vout);
       }
-
 
       if (output->length () != input.length ())
         {
@@ -769,7 +759,6 @@ Cubit_Client::cube_octet_sequence (int,
         }
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
-
       // Just set the first item, otherwise it is hard to compare the
       // results for longer sequences, i.e. more than just marshalling
       // gets in the way.
@@ -790,7 +779,6 @@ Cubit_Client::cube_octet_sequence (int,
         this->cubit_->cube_octet_sequence (input,
                                            vout);
       }
-
 
       if (output->length () != input.length ())
         {
@@ -866,7 +854,6 @@ Cubit_Client::cube_many_sequence (int,
         this->cubit_->cube_many_sequence (input,
                                           vout);
       }
-
 
       if (output->length () != input.length ())
         {
@@ -981,7 +968,6 @@ Cubit_Client::cube_rti_data (int,
                                      vout);
       }
 
-
       if (TAO_debug_level > 0)
 
         {
@@ -1000,7 +986,6 @@ Cubit_Client::cube_rti_data (int,
       ++this->error_count_;
     }
 }
-
 
 // calculate the cube from long contained in an any
 
@@ -1054,7 +1039,6 @@ Cubit_Client::cube_any (int i)
       ++this->error_count_;
     }
 }
-
 
 // Cube the numbers in a struct
 
@@ -1111,7 +1095,6 @@ Cubit_Client::cube_any_struct (int i)
       ++this->error_count_;
     }
 }
-
 
 void
 Cubit_Client::print_stats (const char *call_name,
@@ -1588,7 +1571,6 @@ Cubit_Client::~Cubit_Client ()
   this->orb_ = CORBA::ORB::_nil ();
 }
 
-
 int
 Cubit_Client::init (int argc, ACE_TCHAR **argv)
 {
@@ -1617,7 +1599,6 @@ Cubit_Client::init (int argc, ACE_TCHAR **argv)
           if (this->test_disable_bitset_ != 0)
             this->test_enable_bitset_ &= ~this->test_disable_bitset_;
         }
-
 
       if (this->cubit_factory_key_ == 0)
         {

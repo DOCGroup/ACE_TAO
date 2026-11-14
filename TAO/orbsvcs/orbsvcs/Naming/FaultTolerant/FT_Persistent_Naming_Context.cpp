@@ -29,7 +29,6 @@ TAO_FT_Persistent_Naming_Context::TAO_FT_Persistent_Naming_Context (
 {
 }
 
-
 CORBA::Boolean
 TAO_FT_Persistent_Naming_Context::is_object_group (CORBA::Object_ptr obj) const
 {
@@ -93,6 +92,5 @@ TAO_FT_Persistent_Naming_Context::set_naming_manager_impl (
 {
   naming_manager_impl_ = (mgr_impl);
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

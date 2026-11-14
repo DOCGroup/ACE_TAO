@@ -2,16 +2,13 @@
 #include "OrbTask.h"
 #include "TestAppExceptionC.h"
 
-
 OrbRunner::OrbRunner(CORBA::ORB_ptr orb, unsigned num_orb_threads)
   : orb_(CORBA::ORB::_duplicate(orb)),
     num_orb_threads_(num_orb_threads)
 {
 }
 
-
 OrbRunner::~OrbRunner() = default;
-
 
 void
 OrbRunner::run()

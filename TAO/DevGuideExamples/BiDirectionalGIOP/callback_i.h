@@ -23,5 +23,4 @@ private:
   CORBA::ORB_var orb_;
 };
 
-
 #endif /* CALLBACKI_H_  */

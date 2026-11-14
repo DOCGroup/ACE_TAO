@@ -29,7 +29,6 @@ Test_impl::op1 (
    ov->basic_data (iv->basic_data());
  }
 
-
 void
 Test_impl::op2 (
     ::OBV_TruncatableTest::TValue1 * iv,
@@ -52,7 +51,6 @@ Test_impl::op2 (
   ov->basic_data (iv->basic_data());
   ov->data1 (iv->data1());
 }
-
 
 void
 Test_impl::op3 (
@@ -82,7 +80,6 @@ Test_impl::op3 (
   ov->data4 (iv->data4());
   CORBA::remove_ref(nv);
 }
-
 
 ::OBV_TruncatableTest::BaseValue *
 Test_impl::op4 (
@@ -132,7 +129,6 @@ Test_impl::op4 (
 
   return ov;
 }
-
 
 void
 Test_impl::op5 (CORBA::Any const &val,

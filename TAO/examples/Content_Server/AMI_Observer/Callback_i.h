@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef CALLBACK_I_H
 #define CALLBACK_I_H
 
@@ -59,7 +58,6 @@ public:
   Callback_i& operator= (Callback_i const&) = delete;
   Callback_i& operator= (Callback_i&&) = delete;
 
-  /// Constructor
   explicit Callback_i (std::atomic<int>& request_count);
 
   /// This operation returns the next <chunk> of the file starting at

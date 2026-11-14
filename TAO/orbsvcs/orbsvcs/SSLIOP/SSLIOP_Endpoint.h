@@ -53,11 +53,9 @@ namespace TAO
     public:
       friend class TAO_SSLIOP_Profile;
 
-      /// Constructor
       TAO_SSLIOP_Endpoint (::SSLIOP::SSL const *ssl_component,
                 TAO_IIOP_Endpoint *iiop_endp);
 
-      /// Destructor.
       ~TAO_SSLIOP_Endpoint () override;
 
       /// Need to have an assignment operator since the SSLIOP_Profile class
@@ -215,10 +213,8 @@ namespace TAO
     class TAO_SSLIOP_Export TAO_SSLIOP_Synthetic_Endpoint : public TAO_SSLIOP_Endpoint
     {
     public:
-      /// Constructor
       explicit TAO_SSLIOP_Synthetic_Endpoint (TAO_IIOP_Endpoint *iiop_endp);
 
-      /// Destructor.
       ~TAO_SSLIOP_Synthetic_Endpoint () override = default;
 
       /**

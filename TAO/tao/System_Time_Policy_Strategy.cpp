@@ -37,7 +37,6 @@ ACE_Dynamic_Time_Policy_Base * TAO_System_Time_Policy_Strategy::get_time_policy 
   return &time_policy_;
 }
 
-
 ACE_STATIC_SVC_DEFINE (TAO_System_Time_Policy_Strategy,
                        ACE_TEXT ("TAO_SYSTEM_TIME_POLICY"),
                        ACE_SVC_OBJ_T,

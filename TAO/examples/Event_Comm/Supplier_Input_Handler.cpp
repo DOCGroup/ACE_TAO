@@ -44,7 +44,6 @@ Supplier_Input_Handler::initialize (Notifier_Handler *notifier)
                        "register_stdin_handler"),
                       -1);
 
-
   return 0;
 }
 
@@ -78,7 +77,6 @@ Supplier_Input_Handler::handle_input (ACE_HANDLE)
                   "notifying for event %s\n",
                   buf));
     }
-
 
   if (std::strncmp (buf, "quit", 4) == 0)
     // Tell the main event loop to shutdown.

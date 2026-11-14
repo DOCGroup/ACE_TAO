@@ -40,7 +40,6 @@ class Server_ORBInitializer
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   explicit Server_ORBInitializer (bool & destroy_called);
 
   Server_ORBInitializer (Server_ORBInitializer const &) = delete;

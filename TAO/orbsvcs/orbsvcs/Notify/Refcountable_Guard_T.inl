@@ -37,7 +37,6 @@ TAO_Notify_Refcountable_Guard_T<T>::isSet () const
   return this->t_ != nullptr;
 }
 
-
 template <class T> ACE_INLINE
 T*
 TAO_Notify_Refcountable_Guard_T<T>::operator-> () const
@@ -62,7 +61,6 @@ TAO_Notify_Refcountable_Guard_T<T>::operator = (
   reset( rhs.t_ );
   return *this;
 }
-
 
 template <class T> ACE_INLINE
 void

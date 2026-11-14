@@ -7,7 +7,6 @@
 
 using JAWS_Empty_Message_Block = ACE_Singleton<ACE_Message_Block, ACE_SYNCH_NULL_MUTEX>;
 
-
 template <class CONCURRENCY_IMPL>
 JAWS_Concurrency_Bridge<CONCURRENCY_IMPL>
 ::JAWS_Concurrency_Bridge (CONCURRENCY_IMPL *impl)
@@ -17,20 +16,17 @@ JAWS_Concurrency_Bridge<CONCURRENCY_IMPL>
     this->impl_ = CONCURRENCY_IMPL::instance ();
 }
 
-
 template <class CONCURRENCY_IMPL> int
 JAWS_Concurrency_Bridge<CONCURRENCY_IMPL>::putq (JAWS_Protocol_Handler *ph)
 {
   return this->impl_->putq (ph);
 }
 
-
 template <class CONCURRENCY_IMPL> int
 JAWS_Concurrency_Bridge<CONCURRENCY_IMPL>::getq (JAWS_Protocol_Handler *&ph)
 {
   return this->impl_->getq (ph);
 }
-
 
 template <class CONCURRENCY_IMPL> void
 JAWS_Concurrency_Bridge<CONCURRENCY_IMPL>::shutdown ()

@@ -11,7 +11,6 @@ class Service
   : public virtual POA_Test::Service
 {
 public:
-  /// Constructor
   Service () = default;
 
   /// Dump the results.

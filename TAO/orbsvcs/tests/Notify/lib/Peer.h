@@ -28,10 +28,8 @@
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Peer
 {
 public:
-  /// Constructor
   TAO_Notify_Tests_Peer ();
 
-  /// Destructor
   virtual ~TAO_Notify_Tests_Peer ();
 
   /// Init

@@ -11,7 +11,6 @@
 
 #include "component.h"
 
-
 be_visitor_component::be_visitor_component (be_visitor_context *ctx)
   : be_visitor_interface (ctx)
 {
@@ -359,5 +358,4 @@ be_visitor_component::visit_mirror_port (be_mirror_port *node)
 
   return 0;
 }
-
 

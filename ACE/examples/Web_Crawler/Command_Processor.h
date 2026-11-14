@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef _COMMAND_PROCESSOR_H
 #define _COMMAND_PROCESSOR_H
 
@@ -99,6 +98,5 @@ private:
   // @@ You fill in here...
   ACE_Unbounded_Queue<Command *> url_queue_;
 };
-
 
 #endif /* _COMMAND_PROCESSOR_H */

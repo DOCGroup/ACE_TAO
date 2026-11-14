@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #include "data.h"
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/PortableServer/PortableServer.h"
@@ -47,7 +46,6 @@ Data::Data (CORBA::ORB_var orb)
       CORBA::Object_var obj =
         this->orb_->resolve_initial_references ("RootPOA");
 
-
       if (CORBA::is_nil (obj.in ()))
         {
           ACE_ERROR ((LM_ERROR,
@@ -58,11 +56,9 @@ Data::Data (CORBA::ORB_var orb)
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (obj.in ());
 
-
       // Generate values for the member variables.
      this->m_objref1 =
         root_poa->create_reference ("foo");
-
 
       this->m_objref2 =
         root_poa->create_reference ("foo");

@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "client.h"
 #include "driver.h"
 #include "results.h"
@@ -81,7 +80,6 @@ Driver::init (int argc, ACE_TCHAR **argv)
 
       CORBA::Object_var temp =
         this->orb_->string_to_object (opt->param_test_ior ());
-
 
       if (CORBA::is_nil (temp.in()))
         ACE_ERROR_RETURN ((LM_ERROR,

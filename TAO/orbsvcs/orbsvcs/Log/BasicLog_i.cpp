@@ -25,7 +25,6 @@ TAO_BasicLog_i::copy (DsLogAdmin::LogId_out id)
   DsLogAdmin::BasicLog_var log =
     basicLogFactory->create (DsLogAdmin::halt, 0, id);
 
-
   // Copy the attributes from the log.
   this->copy_attributes (log.in ());
 

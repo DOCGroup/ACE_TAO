@@ -67,7 +67,6 @@ ServerRequestInterceptor::receive_request (
   PortableInterceptor::AdapterName_var name =
     ri->adapter_name ();
 
-
   ACE_DEBUG ((LM_INFO,
               "POA Hierarchy:\n"
               "==============\n"));

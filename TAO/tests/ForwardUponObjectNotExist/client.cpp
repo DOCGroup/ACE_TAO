@@ -59,7 +59,6 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 class Worker : public ACE_Task_Base
 {
 public:
-  /// Constructor
   Worker (CORBA::ORB_ptr orb, Client_Options const &options);
 
   /// The actual implementation of the test

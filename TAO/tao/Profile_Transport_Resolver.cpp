@@ -67,7 +67,6 @@ namespace TAO
       }
   }
 
-
   void
   Profile_Transport_Resolver::resolve (ACE_Time_Value *max_time_val)
   {
@@ -116,7 +115,6 @@ namespace TAO
   {
     return this->try_connect_i (desc, timeout, true);
   }
-
 
   bool
   Profile_Transport_Resolver::try_connect_i (
@@ -224,7 +222,6 @@ namespace TAO
     return is_conn_timeout;
   }
 
-
   void
   Profile_Transport_Resolver::init_inconsistent_policies ()
   {
@@ -238,7 +235,6 @@ namespace TAO
                       CORBA::COMPLETED_NO));
     this->inconsistent_policies_.reset (policies);
   }
-
 
   int
   Profile_Transport_Resolver::find_transport (TAO_Transport_Descriptor_Interface *desc)

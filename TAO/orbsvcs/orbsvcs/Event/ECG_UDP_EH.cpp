@@ -7,7 +7,6 @@
 #include "orbsvcs/Event/ECG_UDP_EH.inl"
 #endif /* __ACE_INLINE__ */
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ECG_UDP_EH::TAO_ECG_UDP_EH (TAO_ECG_Dgram_Handler *recv)

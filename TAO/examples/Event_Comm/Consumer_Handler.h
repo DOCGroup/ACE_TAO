@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef _CONSUMER_HANDLER_H
 #define _CONSUMER_HANDLER_H
 
@@ -33,7 +32,6 @@ class Consumer_Handler
 public:
   Consumer_Handler () = default;
 
-  /// Destructor.
   ~Consumer_Handler () = default;
 
   Consumer_Handler (Consumer_Handler const &) = delete;

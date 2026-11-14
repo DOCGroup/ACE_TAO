@@ -15,7 +15,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE (ACE_ICMP_Socket)
 
-
 void
 ACE_ICMP_Socket::dump () const
 {

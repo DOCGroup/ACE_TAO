@@ -7,7 +7,6 @@
  *  @author  Ossama Othman <ossama@uci.edu>
  */
 
-
 #ifndef TAO_RT_POLICY_FACTORY_H
 #define TAO_RT_POLICY_FACTORY_H
 

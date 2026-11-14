@@ -27,10 +27,8 @@
 class Current_Test_Impl : public virtual POA_Test::Transport::CurrentTest
 {
 public:
-  /// Constructor.
   Current_Test_Impl (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa, int do_collocated_calls = 1);
 
-  /// Destructor.
   ~Current_Test_Impl () override;
 
   Current_Test_Impl (Current_Test_Impl const &) = delete;

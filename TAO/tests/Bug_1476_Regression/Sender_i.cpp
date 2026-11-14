@@ -6,7 +6,6 @@ Sender_i::active_objects (CORBA::ULong no_threads)
   this->active_objects_ = no_threads;
 }
 
-
 void
 Sender_i::send_ready_message ()
 {

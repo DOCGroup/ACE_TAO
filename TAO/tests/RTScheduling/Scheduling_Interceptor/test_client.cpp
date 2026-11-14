@@ -56,7 +56,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
           manager->rtscheduler (&scheduler);
 
-
           CORBA::Object_var object =
             orb->string_to_object (ior.c_str ());
 

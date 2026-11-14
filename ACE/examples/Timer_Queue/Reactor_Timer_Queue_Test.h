@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-
 //=============================================================================
 /**
  *  @file    Reactor_Timer_Queue_Test.h
@@ -11,7 +10,6 @@
  *  @author Nanbor Wang <nw1@cs.wustl.edu> and Sergio Flores-Gaitan <sergio@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef _REACTOR_TIMER_QUEUE_TEST_H_
 #define _REACTOR_TIMER_QUEUE_TEST_H_

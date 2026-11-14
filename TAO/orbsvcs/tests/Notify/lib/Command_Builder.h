@@ -37,7 +37,6 @@ class TAO_Notify_Tests_Command;
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Command_Builder : public ACE_Service_Object
 {
 public:
-  /// Constructor
   TAO_Notify_Tests_Command_Builder ();
 
   TAO_Notify_Tests_Command_Builder (TAO_Notify_Tests_Command_Builder const &) = delete;
@@ -45,7 +44,6 @@ public:
   TAO_Notify_Tests_Command_Builder (TAO_Notify_Tests_Command_Builder &&) = delete;
   TAO_Notify_Tests_Command_Builder &operator=(TAO_Notify_Tests_Command_Builder &&) = delete;
 
-  /// Destructor
   ~TAO_Notify_Tests_Command_Builder ();
 
   /// = Service_Object virtual method overloads.

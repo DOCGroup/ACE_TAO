@@ -17,7 +17,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_NOTIFY_PUSHCONSUMER_H
 #define TAO_NOTIFY_PUSHCONSUMER_H
 #include /**/ "ace/pre.h"

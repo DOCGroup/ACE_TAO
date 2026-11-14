@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_CAPABILITIES_H
 #define ACE_CAPABILITIES_H
 #include /**/ "ace/pre.h"

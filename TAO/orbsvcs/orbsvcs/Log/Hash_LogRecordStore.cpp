@@ -315,7 +315,6 @@ TAO_Hash_LogRecordStore::get_record_attribute (DsLogAdmin::RecordId id)
   return nvlist;
 }
 
-
 int
 TAO_Hash_LogRecordStore::flush ()
 {
@@ -588,7 +587,6 @@ TAO_Hash_LogRecordStore::lock ()
   return lock_;
 }
 
-
 void
 TAO_Hash_LogRecordStore::check_grammar (char const *grammar)
 {
@@ -598,7 +596,6 @@ TAO_Hash_LogRecordStore::check_grammar (char const *grammar)
       std::strcmp (grammar, "EXTENDED_TCL") != 0)
     throw DsLogAdmin::InvalidGrammar ();
 }
-
 
 DsLogAdmin::AdministrativeState
 TAO_Hash_LogRecordStore::get_administrative_state () const
@@ -611,7 +608,6 @@ TAO_Hash_LogRecordStore::set_administrative_state (DsLogAdmin::AdministrativeSta
 {
   this->admin_state_ = state;
 }
-
 
 DsLogAdmin::CapacityAlarmThresholdList*
 TAO_Hash_LogRecordStore::get_capacity_alarm_thresholds () const
@@ -630,7 +626,6 @@ TAO_Hash_LogRecordStore::set_capacity_alarm_thresholds (
 {
   this->thresholds_ = thresholds;
 }
-
 
 DsLogAdmin::ForwardingState
 TAO_Hash_LogRecordStore::get_forwarding_state () const
@@ -655,7 +650,6 @@ TAO_Hash_LogRecordStore::set_interval (DsLogAdmin::TimeInterval const &interval)
 {
   this->interval_ = interval;
 }
-
 
 DsLogAdmin::LogFullActionType
 TAO_Hash_LogRecordStore::get_log_full_action () const

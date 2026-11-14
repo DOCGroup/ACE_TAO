@@ -253,7 +253,6 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::is_empty () const
   return timer_count_ == 0;
 }
 
-
 /**
 * @return First (earliest) node in the wheel_'s earliest_spoke_ list
 */
@@ -434,7 +433,6 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::schedule_i
   p->set_next (n);
 }
 
-
 /**
 * Find the timer node by using the id as a pointer.  Then use set_interval()
 * on the node to update the interval.
@@ -459,7 +457,6 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::reset_interval (long ti
     }
   return -1;
 }
-
 
 /**
 * Goes through every list in the wheel and whenever we find one with the
@@ -537,7 +534,6 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::cancel (TYPE const &typ
 
   return num_canceled;
 }
-
 
 /**
 * Cancels the single timer that is specified by the timer_id.  In this
@@ -684,7 +680,6 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::dump () const
 #endif /* ACE_HAS_DUMP */
 }
 
-
 /**
 * Removes the earliest node and then find the new <earliest_spoke_>
 *
@@ -744,7 +739,6 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::get_first_i () const
     return first;
   return nullptr;
 }
-
 
 /**
 * @return The iterator
@@ -837,13 +831,11 @@ ACE_Timer_Wheel_Iterator_T<TYPE,FUNCTOR,ACE_LOCK,TIME_POLICY>::ACE_Timer_Wheel_I
   this->first();
 }
 
-
 /**
 * Destructor, at this level does nothing.
 */
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY>
 ACE_Timer_Wheel_Iterator_T<TYPE,FUNCTOR,ACE_LOCK,TIME_POLICY>::~ACE_Timer_Wheel_Iterator_T () = default;
-
 
 /**
 * Positions the iterator at the first position in the timing wheel
@@ -858,7 +850,6 @@ ACE_Timer_Wheel_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::first ()
 {
   this->goto_next(0);
 }
-
 
 /**
 * Positions the iterator at the next node.

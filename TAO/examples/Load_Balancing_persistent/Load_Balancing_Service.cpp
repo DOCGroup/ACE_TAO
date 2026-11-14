@@ -6,7 +6,6 @@
  */
 //=============================================================================
 
-
 #include "Load_Balancing_Service.h"
 #include "Load_Balancer_i.h"
 #include "tao/debug.h"
@@ -66,7 +65,6 @@ Load_Balancing_Service::init (int argc, ACE_TCHAR* argv[])
       if (result < 0)
         return result;
 
-
       CORBA::PolicyList policies (2);
       policies.length (2);
 
@@ -81,7 +79,6 @@ Load_Balancing_Service::init (int argc, ACE_TCHAR* argv[])
         this->orb_manager_.root_poa()->create_POA ("persistent",
                                                    this->orb_manager_.poa_manager (),
                                                    policies);
-
 
       // Destroy policy objects
       for (CORBA::ULong i = 0;
@@ -128,7 +125,6 @@ Load_Balancing_Service::init (int argc, ACE_TCHAR* argv[])
     }
   return 0;
 }
-
 
 int
 Load_Balancing_Service::run ()

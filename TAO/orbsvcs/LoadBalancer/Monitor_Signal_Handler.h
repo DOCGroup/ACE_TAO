@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_LB_MONITOR_SIGNAL_HANDLER_H
 #define TAO_LB_MONITOR_SIGNAL_HANDLER_H
 
@@ -19,7 +18,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/CosLoadBalancingC.h"
-
 
 /**
  * @class TAO_LB_Monitor_Signal_Handler
@@ -32,7 +30,6 @@
 class TAO_LB_Monitor_Signal_Handler : public TAO_LB_Signal_Handler
 {
 public:
-  /// Constructor.
   TAO_LB_Monitor_Signal_Handler (
     CORBA::ORB_ptr orb,
     PortableServer::POA_ptr poa,
@@ -56,6 +53,5 @@ private:
   /// Reference to the location the LoadMonitor resides at.
   PortableGroup::Location location_;
 };
-
 
 #endif  /* TAO_LB_MONITOR_SIGNAL_HANDLER_H */

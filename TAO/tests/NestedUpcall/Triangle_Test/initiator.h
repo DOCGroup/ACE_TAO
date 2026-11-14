@@ -37,7 +37,6 @@ public:
   /// Default constructor
   Initiator_Server () = default;
 
-  /// Destructor
   ~Initiator_Server ();
 
   Initiator_Server (Initiator_Server const &) = delete;

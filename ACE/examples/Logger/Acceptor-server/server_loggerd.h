@@ -26,7 +26,6 @@ private:
   u_short port_ {ACE_DEFAULT_SERVER_PORT};
 };
 
-
 class Logging_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 // = TITLE
 //     Receive client message from the remote clients.

@@ -42,7 +42,6 @@ public:
   // Cancel a timer.
 };
 
-
 class JAWS_Export JAWS_Timer
 // = TITLE
 //     Abstraction base class for Timers that corresponds to the LHS of the
@@ -76,6 +75,5 @@ public:
 private:
   JAWS_Timer_Impl *impl_;
 };
-
 
 #endif /* JAWS_TIMER_H */

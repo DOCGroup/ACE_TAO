@@ -222,5 +222,4 @@ TAO_Notify_Admin::validate ()
   this->proxy_container().collection()->for_each(&wrk);
 }
 
-
 TAO_END_VERSIONED_NAMESPACE_DECL

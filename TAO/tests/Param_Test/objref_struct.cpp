@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "helper.h"
 
 #include <cstring>
@@ -145,7 +144,6 @@ Test_Objref_Struct::check_validity ()
       || this->in_.x != this->ret_->x)
     return 0;
 
-
   try
     {
       if (CORBA::is_nil (this->in_.y.in ())
@@ -199,7 +197,6 @@ Test_Objref_Struct::print_values ()
               this->inout_->x,
               this->out_->x,
               this->ret_->x ));
-
 
   try
     {

@@ -87,7 +87,6 @@ TimeoutClient::initialize ()
   return 0;
 }
 
-
 void
 TimeoutClient::send (bool async,
                      unsigned long local_timeout,
@@ -132,7 +131,6 @@ TimeoutClient::send (bool async,
           policy_manager_->set_policy_overrides (policy_list,
                                                  CORBA::SET_OVERRIDE);
         }
-
 
       // Start time measurement at the reply handler
       timeoutHandler_i_.start ();
@@ -184,7 +182,6 @@ TimeoutClient::send (bool async,
     ACE_DEBUG ((LM_DEBUG,
                 " .. done\n"));
 }
-
 
 int
 TimeoutClient::synch_test ()

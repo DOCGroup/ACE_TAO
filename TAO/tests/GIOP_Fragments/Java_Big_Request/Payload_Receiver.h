@@ -13,7 +13,6 @@ class Payload_Receiver
   : public virtual POA_Test::Payload_Receiver
 {
 public:
-  /// Constructor
   Payload_Receiver (CORBA::ORB_ptr orb);
 
   // = The skeleton methods

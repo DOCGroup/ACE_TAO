@@ -51,10 +51,8 @@ namespace TAO
     public:
       explicit Connection_Handler (ACE_Thread_Manager* t = nullptr);
 
-      /// Constructor.
       explicit Connection_Handler (TAO_ORB_Core *orb_core);
 
-      /// Destructor.
       ~Connection_Handler () override;
 
       /**

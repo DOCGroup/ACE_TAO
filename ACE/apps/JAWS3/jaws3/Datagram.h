@@ -67,7 +67,6 @@ public:
   // Use the specified local access point.
 };
 
-
 class JAWS_Export JAWS_Datagram
 {
 public:

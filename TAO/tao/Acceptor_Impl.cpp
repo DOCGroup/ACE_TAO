@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_ACCEPTOR_IMPL_CPP
 #define TAO_ACCEPTOR_IMPL_CPP
 
@@ -214,7 +213,6 @@ TAO_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler (SVC_H
 
   return result;
 }
-
 
 /////////////////////////////////////////////////////////////////////
 

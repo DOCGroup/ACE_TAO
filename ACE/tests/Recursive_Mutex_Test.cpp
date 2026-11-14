@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Get_Opt.h"
 #include "ace/Thread_Manager.h"
@@ -19,7 +18,6 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Recursive_Thread_Mutex.h"
-
 
 #if defined (ACE_HAS_THREADS)
 

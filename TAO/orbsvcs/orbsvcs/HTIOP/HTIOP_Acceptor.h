@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef HTIOP_ACCEPTOR_H
 #define HTIOP_ACCEPTOR_H
 #include /**/ "ace/pre.h"
@@ -64,7 +63,6 @@ namespace TAO
     class HTIOP_Export Acceptor : public TAO_Acceptor
     {
     public:
-      /// Constructor.
       Acceptor (ACE::HTBP::Environment *ht_env,
                 int is_inside);
       Acceptor (Acceptor const&) = delete;
@@ -72,7 +70,6 @@ namespace TAO
       Acceptor& operator= (Acceptor const&) = delete;
       Acceptor& operator= (Acceptor&&) = delete;
 
-      /// Destructor.
       ~Acceptor () override;
 
       /// @@ Helper method for the implementation repository, should go
@@ -174,7 +171,6 @@ namespace TAO
       int create_shared_profile (const TAO::ObjectKey &object_key,
                                  TAO_MProfile &mprofile,
                                  CORBA::Short priority);
-
 
     protected:
       /// Array of ACE::HTBP::Addr instances, each one corresponding to a

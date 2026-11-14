@@ -46,7 +46,6 @@ TAO::ORB_Core_Ref_Counter::ORB_Core_Ref_Counter (::TAO_ORB_Core * core)
 //   ACE_ASSERT (core != 0);
 
   // Note that the TAO_ORB_Core pointer should always be valid in this
-  // constructor.
 
   // Claim ownership.
   (void) this->core_->_incr_refcnt ();

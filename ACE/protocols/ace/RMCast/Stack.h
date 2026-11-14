@@ -32,7 +32,6 @@ namespace ACE_RMCast
     Out_Element* out_ {};
   };
 
-
   struct In_Element
   {
     In_Element (In_Element const&) = delete;
@@ -57,7 +56,6 @@ namespace ACE_RMCast
   protected:
     In_Element* in_ {};
   };
-
 
   struct Element : In_Element, Out_Element
   {

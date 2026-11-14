@@ -2,7 +2,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_string.h"
 
-// Constructor
 test_i::test_i (CORBA::ORB_ptr orb,
                 PortableServer::POA_ptr poa,
                 ACE_thread_t thrid)

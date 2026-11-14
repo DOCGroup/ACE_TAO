@@ -15,7 +15,6 @@
 #include "ace/OS_NS_string.h"
 #include "test_config.h"
 
-
 /*
  * Ultra-basic test of stack trace.
  *
@@ -25,7 +24,6 @@
  * - capture traces with different numbers of frames
  * - capture traces with different numbers of skipped frames
  */
-
 
 struct SomeException
 {

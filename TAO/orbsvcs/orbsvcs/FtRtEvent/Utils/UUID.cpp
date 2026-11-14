@@ -144,7 +144,6 @@ UUID::create (unsigned char *buffer)
     + 30  // Days in November 1583
     + 16)*60*60*24; // Days from 15th October
 
-
   ACE_Time_Value    now = ACE_OS::gettimeofday();
   ACE_UINT64        timestamp = (SecondsToJan1970 + now.sec()) * 10000000 + now.usec() * 10;
 

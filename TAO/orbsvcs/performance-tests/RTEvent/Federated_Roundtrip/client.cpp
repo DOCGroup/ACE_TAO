@@ -25,7 +25,6 @@
 #include "ace/Sched_Params.h"
 #include "ace/Barrier.h"
 
-
 ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 int nthreads {};
 int high_priority_period {};

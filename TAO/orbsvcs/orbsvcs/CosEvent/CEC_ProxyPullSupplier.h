@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_CEC_PROXYPULLSUPPLIER_H
 #define TAO_CEC_PROXYPULLSUPPLIER_H
 

@@ -12,7 +12,6 @@ Server_IORInterceptor::~Server_IORInterceptor ()
   CORBA::release (this->gateway_object_factory_);
 }
 
-
 char *
 Server_IORInterceptor::name ()
 {

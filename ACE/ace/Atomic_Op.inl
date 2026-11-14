@@ -196,7 +196,6 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::value_i ()
   return this->value_;
 }
 
-
 ACE_INLINE
 ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::ACE_Atomic_Op ()
   : value_ (0)
@@ -420,7 +419,6 @@ ACE_Atomic_Op<ACE_Thread_Mutex, int>::operator= (const ACE_Atomic_Op<ACE_Thread_
   return *this;
 }
 
-
 ACE_INLINE
 ACE_Atomic_Op<ACE_Thread_Mutex, unsigned int>::ACE_Atomic_Op () :
   ACE_Atomic_Op_GCC<unsigned int>()
@@ -522,7 +520,6 @@ ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::operator= (const ACE_Atomic_Op<A
   ACE_Atomic_Op_GCC<unsigned long>::operator= (rhs);
   return *this;
 }
-
 
 // The long long intrinsics are not available on PPC
 #if !defined (__powerpc__)

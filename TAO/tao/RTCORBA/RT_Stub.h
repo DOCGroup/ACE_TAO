@@ -49,7 +49,6 @@ public:
 
   ~TAO_RT_Stub () override;
 
-
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
   /**

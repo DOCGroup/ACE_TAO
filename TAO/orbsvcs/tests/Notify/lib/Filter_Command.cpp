@@ -1,7 +1,6 @@
 #include "Filter_Command.h"
 #include "ace/Log_Msg.h"
 
-
 #include "LookupManager.h"
 #include "Name.h"
 

@@ -23,7 +23,6 @@ class Collocated_ORBInitializer :
   public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor
   Collocated_ORBInitializer () = default;
 
   Collocated_ORBInitializer (Collocated_ORBInitializer const &) = delete;

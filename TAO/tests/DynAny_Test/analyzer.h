@@ -47,5 +47,4 @@ private:
   bool debug_ {};
 };
 
-
 #endif // ANALYZER_H

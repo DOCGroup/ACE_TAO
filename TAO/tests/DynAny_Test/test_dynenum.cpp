@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #include "test_dynenum.h"
 #include "da_testsC.h"
 #include "data.h"
@@ -58,7 +57,6 @@ Test_DynEnum::run_test ()
         ACE_DEBUG ((LM_DEBUG,
                   "testing: constructor(Any)/set_as_string/get_as_ulong\n"));
 
-
         DynAnyTests::test_enum te = DynAnyTests::TE_ZEROTH;
         CORBA::Any in_any1;
         in_any1 <<= te;
@@ -90,7 +88,6 @@ Test_DynEnum::run_test ()
             ++this->error_count_;
           }
 
-
         ACE_DEBUG ((LM_DEBUG,
                   "testing: set_as_ulong/get_as_string\n"));
 
@@ -107,7 +104,6 @@ Test_DynEnum::run_test ()
           {
             ++this->error_count_;
           }
-
 
         ACE_DEBUG ((LM_DEBUG,
                   "testing: constructor(TypeCode)/from_any/to_any\n"));

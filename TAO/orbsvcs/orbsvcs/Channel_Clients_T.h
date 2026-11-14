@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-
 //=============================================================================
 /**
  *  @file    Channel_Clients_T.h
@@ -13,7 +12,6 @@
  *  inheritance (which is this root of all evil.)
  */
 //=============================================================================
-
 
 #ifndef ACE_CHANNEL_CLIENTS_T_H
 #define ACE_CHANNEL_CLIENTS_T_H

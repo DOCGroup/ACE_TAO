@@ -62,7 +62,6 @@ TAO_Notify_PushConsumer::init (CosEventComm::PushConsumer_ptr push_consumer)
         this->publish_ =
           CosNotifyComm::NotifyPublish::_unchecked_narrow (obj.in());
 
-
         //--cj verify dispatching ORB
         if (TAO_debug_level >= 10)
           {

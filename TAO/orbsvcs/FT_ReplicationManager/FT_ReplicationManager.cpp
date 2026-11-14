@@ -140,7 +140,6 @@ int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb)
     ));
   }
 
-
   this->orb_ = CORBA::ORB::_duplicate (orb);
 
   // Get the RootPOA.
@@ -148,7 +147,6 @@ int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb)
     TAO_OBJID_ROOTPOA);
   this->poa_ = PortableServer::POA::_narrow (
     poa_obj.in ());
-
 
   // initialize the FactoryRegistry
   this->factory_registry_.init (this->orb_.in (), this->poa_.in ());
@@ -306,7 +304,6 @@ int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb)
   this->properties_support_.set_default_property (FT::FT_CHECKPOINT_INTERVAL, value);
 #endif
 
-
   return result;
 }
 
@@ -316,7 +313,6 @@ int TAO::FT_ReplicationManager::idle (int & result)
   ACE_UNUSED_ARG (result);
   return this->quit_;
 }
-
 
 //public
 int TAO::FT_ReplicationManager::fini ()
@@ -425,7 +421,6 @@ TAO::FT_ReplicationManager::register_fault_notifier_i (
   }
 }
 
-
 // Returns the reference of the Fault Notifier.
 //CORBA
 FT::FaultNotifier_ptr
@@ -437,7 +432,6 @@ TAO::FT_ReplicationManager::get_fault_notifier ()
   }
   return FT::FaultNotifier::_duplicate (this->fault_notifier_.in ());
 }
-
 
 // TAO-specific find factory registry
 //CORBA
@@ -568,7 +562,6 @@ TAO::FT_ReplicationManager::get_properties (
   return result._retn();
 }
 
-
 //////////////////////////////////////////////////////
 // FT::FTObjectGroupManager methods
 
@@ -631,7 +624,6 @@ TAO::FT_ReplicationManager::create_member (
   }
   return result._retn();
 }
-
 
 //CORBA
 PortableGroup::ObjectGroup_ptr
@@ -831,7 +823,6 @@ TAO::FT_ReplicationManager::get_member_ref (
   }
   return result._retn();
 }
-
 
 //////////////////////////////////////////////////////
 // PortableGroup::GenericFactory methods

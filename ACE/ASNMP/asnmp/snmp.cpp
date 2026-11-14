@@ -27,7 +27,6 @@
   derivatives based upon this software code base.
 =====================================================================*/
 
-
 #define INCLUDE_SNMP_ERR_STRINGS_
 
 //----[ snmp++ includes ]----------------------------------------------

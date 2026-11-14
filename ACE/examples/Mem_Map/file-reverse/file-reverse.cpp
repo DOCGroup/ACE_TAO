@@ -6,7 +6,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/Truncate.h"
 
-
 static void
 putline (char const *s)
 {

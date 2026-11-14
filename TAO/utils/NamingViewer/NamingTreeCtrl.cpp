@@ -143,7 +143,6 @@ void CNamingTreeCtrl::ClearChildren(HTREEITEM hItem)
   }
 }
 
-
 #define LISTQUANTUM 40
 
 void CNamingTreeCtrl::ListContext(HTREEITEM hItem)
@@ -351,7 +350,6 @@ void CNamingTreeCtrl::OnDestroy()
   // TODO: Add your message handler code here
   ClearChildren();
 }
-
 
 void CNamingTreeCtrl::OnContextpopupBindnewcontext()
 {

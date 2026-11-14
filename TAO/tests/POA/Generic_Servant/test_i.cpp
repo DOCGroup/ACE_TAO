@@ -2,7 +2,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_string.h"
 
-// Constructor
 test_i::test_i (CORBA::ORB_ptr orb,
                 PortableServer::POA_ptr poa)
   : orb_ (CORBA::ORB::_duplicate (orb)),
@@ -62,7 +61,6 @@ test_i::shutdown ()
   this->orb_->shutdown (false);
 }
 
-
 // This is the point of entry into this library.
 extern "C" GENERIC_SERVANT_Export PortableServer::Servant create_test_i (CORBA::ORB_ptr orb,
                                                                          PortableServer::POA_ptr poa);
@@ -79,7 +77,6 @@ create_test_i (CORBA::ORB_ptr orb,
                   0);
   return servant;
 }
-
 
 extern "C" GENERIC_SERVANT_Export PortableServer::Servant supply_servant (const PortableServer::ObjectId &oid,
                                                                           PortableServer::POA_ptr poa,

@@ -40,7 +40,6 @@ class ClientRequestInterceptor2
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   explicit ClientRequestInterceptor2 (PortableInterceptor::SlotId slot_id);
   ClientRequestInterceptor2 (ClientRequestInterceptor2 const &) = delete;
   ClientRequestInterceptor2 (ClientRequestInterceptor2 &&) = delete;

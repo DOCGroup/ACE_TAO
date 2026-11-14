@@ -118,7 +118,6 @@ private:
   ACEXML_Element_Tree_List_Stack active_list_;
 };
 
-
 #include /**/ "ace/post.h"
 
 #endif /* _ACEXML_DEBUG_ELEMENT_BUILDER_H_ */

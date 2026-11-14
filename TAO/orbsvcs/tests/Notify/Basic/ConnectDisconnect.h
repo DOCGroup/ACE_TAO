@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef NOTIFY_CONNECT_DISCONNECT_H
 #define NOTIFY_CONNECT_DISCONNECT_H
 

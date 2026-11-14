@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "tao/corba.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/AnyTypeCode/Any.h"

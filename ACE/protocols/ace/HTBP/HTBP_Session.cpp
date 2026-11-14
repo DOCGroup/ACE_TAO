@@ -139,7 +139,6 @@ ACE::HTBP::Session::close ()
   return ACE::HTBP::Session::remove_session (this);
 }
 
-
 ACE::HTBP::Channel *
 ACE::HTBP::Session::outbound () const
 {

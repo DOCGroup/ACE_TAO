@@ -621,7 +621,6 @@ TAO_RT_Protocols_Hooks::set_thread_native_priority (
   return 0;
 }
 
-
 ACE_STATIC_SVC_DEFINE (TAO_RT_Protocols_Hooks,
                        ACE_TEXT ("RT_Protocols_Hooks"),
                        ACE_SVC_OBJ_T,

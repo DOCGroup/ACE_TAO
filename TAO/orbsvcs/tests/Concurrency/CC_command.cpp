@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #include "CC_command.h"
 #include "CC_test_utils.h"
 #include "CC_naming_service.h"

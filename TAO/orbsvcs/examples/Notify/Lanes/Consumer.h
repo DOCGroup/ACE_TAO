@@ -26,7 +26,6 @@ class TAO_Notify_Lanes_Consumer
   : public POA_CosNotifyComm::StructuredPushConsumer
 {
 public:
-  /// Constructor
   explicit TAO_Notify_Lanes_Consumer (TAO_Notify_ORB_Objects& orb_objects);
   TAO_Notify_Lanes_Consumer (TAO_Notify_Lanes_Consumer const&) = delete;
   TAO_Notify_Lanes_Consumer& operator= (TAO_Notify_Lanes_Consumer const&) = delete;
@@ -60,7 +59,6 @@ protected:
   std::string event_type_;
 
   // = Methods
-  /// Destructor
   ~TAO_Notify_Lanes_Consumer () override = default;
 
   // = ServantBase operations

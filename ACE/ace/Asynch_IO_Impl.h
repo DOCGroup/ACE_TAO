@@ -487,7 +487,6 @@ protected:
   ACE_Asynch_Accept_Result_Impl () = default;
 };
 
-
 /**
  * @class ACE_Asynch_Connect_Impl
  *
@@ -533,7 +532,6 @@ public:
 protected:
   ACE_Asynch_Connect_Result_Impl () = default;
 };
-
 
 /**
  * @class ACE_Asynch_Transmit_File_Impl
@@ -598,7 +596,6 @@ public:
 protected:
   ACE_Asynch_Transmit_File_Result_Impl () = default;
 };
-
 
 /**
  * @class ACE_Asynch_Read_Dgram_Impl

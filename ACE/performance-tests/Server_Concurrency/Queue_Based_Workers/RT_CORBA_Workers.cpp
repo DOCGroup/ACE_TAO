@@ -58,7 +58,6 @@ Synchronisers::Synchronisers ()
 {
 }
 
-
 int
 Synchronisers::start_synchronization ()
 {
@@ -138,7 +137,6 @@ Synchronisers::end_synchronization ()
         // return to do our work;
         return 0;
       }
-
 
     // If we are not the last thread, let go off the lock
   }
@@ -283,7 +281,6 @@ Input_Task::svc ()
   // Synchronise threads
   (void) this->synch_.start_synchronization ();
 
-
   size_t i {};
   for (i = 0;
        i < (number_of_messages - number_of_workers);
@@ -320,7 +317,6 @@ Input_Task::svc ()
                   "(%t) Sending close messages\n"));
     }
 
-
   // Stop messages
   for (i = 0;
        i < number_of_workers;
@@ -347,7 +343,6 @@ Input_Task::svc ()
         }
       message_owner.release ();
     }
-
 
   (void) this->synch_.end_synchronization ();
   return 0;
@@ -469,7 +464,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-
 /*******************************************************************/
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
@@ -535,7 +529,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   int priority =
     ACE_Sched_Params::priority_max (ACE_SCHED_FIFO);
 
-
   long flags = THR_SCHED_FIFO | THR_SCOPE_PROCESS;
 
   // Create and activate the worker threads
@@ -568,7 +561,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
     }
 
-
   // Activate the input and output threads
   result = input_task.activate (flags,
                                 1,
@@ -577,7 +569,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   if (result != 0)
     return result;
-
 
   // Activate the workers.
   result = output_task.activate (flags,
@@ -588,10 +579,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (result != 0)
     return result;
 
-
   // Wait for all threads to terminate.
   result = ACE_Thread_Manager::instance ()->wait ();
-
 
   ACE_hrtime_t elapsed_time {};
 
@@ -638,6 +627,5 @@ ACE_TMAIN(int, ACE_TCHAR *[])
 
   return 0;
 }
-
 
 #endif /*ACE_HAS_THREADS*/

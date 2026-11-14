@@ -77,7 +77,6 @@ FT_ProxyAdmin<EC_PROXY_ADMIN, Proxy, ProxyInterface, State>::obtain_proxy ()
   return result._retn();
 }
 
-
 template <class EC_PROXY_ADMIN, class Proxy,
           class ProxyInterface, class State>
 void FT_ProxyAdmin<EC_PROXY_ADMIN, Proxy, ProxyInterface, State>::get_state(

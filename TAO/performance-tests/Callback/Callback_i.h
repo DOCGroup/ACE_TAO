@@ -8,7 +8,6 @@
 class Callback_i : public POA_Test::Callback
 {
 public:
-  /// Constructor.
   Callback_i (int expected_samples);
   Callback_i (Callback_i const &) = delete;
   Callback_i (Callback_i &&) = delete;

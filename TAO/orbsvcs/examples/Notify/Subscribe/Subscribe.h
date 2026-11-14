@@ -128,7 +128,6 @@ class Subscribe_StructuredPushConsumer
   //   Consumer for the Subscribe example.
   //
 public:
-  /// Constructor.
   explicit Subscribe_StructuredPushConsumer (Subscribe *subscribe);
   ~Subscribe_StructuredPushConsumer () override = default;
   Subscribe_StructuredPushConsumer (Subscribe_StructuredPushConsumer const &) = delete;
@@ -182,7 +181,6 @@ class Subscribe_StructuredPushSupplier
   //   Supplier for the SUBSCRIBE example.
   //
 public:
-  /// Constructor.
   Subscribe_StructuredPushSupplier () = default;
   ~Subscribe_StructuredPushSupplier () override = default;
   Subscribe_StructuredPushSupplier (Subscribe_StructuredPushSupplier const &) = delete;

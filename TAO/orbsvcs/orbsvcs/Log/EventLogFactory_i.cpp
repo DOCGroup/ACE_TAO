@@ -63,7 +63,6 @@ TAO_EventLogFactory_i::activate (CORBA::ORB_ptr orb,
 {
   TAO_LogMgr_i::init (orb, poa);
 
-
   this->event_channel_ = init (this->poa_.in ());
 
   this->consumer_admin_ =

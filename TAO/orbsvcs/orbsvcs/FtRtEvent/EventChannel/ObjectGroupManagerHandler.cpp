@@ -25,7 +25,6 @@ void ObjectGroupManagerHandler::create_group ()
 {
 }
 
-
 void
 ObjectGroupManagerHandler::create_group_excep (::Messaging::ExceptionHolder *)
 {

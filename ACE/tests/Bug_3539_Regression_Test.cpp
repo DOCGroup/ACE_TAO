@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "TSS_Test_Errno.h"
 #include <memory>

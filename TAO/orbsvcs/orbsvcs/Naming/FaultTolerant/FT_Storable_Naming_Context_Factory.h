@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_FT_STORABLE_NAMING_CONTEXT_FACTORY_H
 #define TAO_FT_STORABLE_NAMING_CONTEXT_FACTORY_H
 #include /**/ "ace/pre.h"

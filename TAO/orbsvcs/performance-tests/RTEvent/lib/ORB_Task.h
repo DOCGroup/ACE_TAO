@@ -23,7 +23,6 @@
 class TAO_RTEC_Perf_Export ORB_Task : public ACE_Task_Base
 {
 public:
-  /// Constructor
   ORB_Task (CORBA::ORB_ptr orb);
 
   /// Run the event loop

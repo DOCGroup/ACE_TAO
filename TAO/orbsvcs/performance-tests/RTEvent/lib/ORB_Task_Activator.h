@@ -22,7 +22,6 @@
 class TAO_RTEC_Perf_Export ORB_Task_Activator : public Task_Activator<ORB_Task>
 {
 public:
-  /// Constructor
   ORB_Task_Activator (int priority,
                       int scheduling_class,
                       int nthreads,

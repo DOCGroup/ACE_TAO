@@ -183,7 +183,6 @@
 #define FD_SETSIZE 1024
 #endif /* FD_SETSIZE */
 
-
 // Windows doesn't like 65536 ;-) If 65536 is specified, it is
 // silently ignored by the OS, i.e., setsockopt does not fail, and you
 // get stuck with the default size of 8k.
@@ -426,7 +425,6 @@
 #if !defined(ACE_HAS_WINSOCK1)
 # define ACE_HAS_WINSOCK1 0
 #endif /* !defined(ACE_HAS_WINSOCK1) */
-
 
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
 # define ACE_HAS_ICMP_SUPPORT 1

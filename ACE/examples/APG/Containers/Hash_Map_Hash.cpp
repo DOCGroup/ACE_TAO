@@ -11,7 +11,6 @@ class Hash_Map :
       ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_Null_Mutex>
 {};
 
-
 class Hash_Map_Example
 {
 public:

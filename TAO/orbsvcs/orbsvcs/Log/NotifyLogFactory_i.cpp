@@ -48,7 +48,6 @@ TAO_NotifyLogFactory_i::activate (CORBA::ORB_ptr orb,
 {
   TAO_LogMgr_i::init (orb, poa);
 
-
   PortableServer::ObjectId_var const oid =
     this->factory_poa_->activate_object (this);
 
@@ -248,7 +247,6 @@ TAO_NotifyLogFactory_i::obtain_push_supplier ()
 {
   return consumer_admin_->obtain_push_supplier ();
 }
-
 
 CosEventChannelAdmin::ProxyPullSupplier_ptr
 TAO_NotifyLogFactory_i::obtain_pull_supplier (

@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_LOCAL_SOCK_CODGRAM_H
 #define ACE_LOCAL_SOCK_CODGRAM_H
 #include /**/ "ace/pre.h"

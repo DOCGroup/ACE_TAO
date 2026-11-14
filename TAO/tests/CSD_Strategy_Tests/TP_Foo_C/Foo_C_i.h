@@ -5,7 +5,6 @@
 #include "Foo_CS.h"
 #include "Foo_C_Statistics.h"
 
-
 class CSD_TP_Foo_C_Export Foo_C_i : public virtual POA_Foo_C
 {
   public:
@@ -38,7 +37,6 @@ class CSD_TP_Foo_C_Export Foo_C_i : public virtual POA_Foo_C
     Foo_C_i (Foo_C_i &&) = delete;
     Foo_C_i & operator= (Foo_C_i const &) = delete;
     Foo_C_i & operator= (Foo_C_i &&) = delete;
-
 
   private:
     LongVector in_values_ [10];

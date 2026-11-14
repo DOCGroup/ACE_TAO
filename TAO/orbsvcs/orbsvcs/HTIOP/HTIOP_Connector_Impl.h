@@ -64,7 +64,6 @@ namespace TAO
       /// Makes HTIOP_Client_Connection_Handlers
       int make_svc_handler (SVC_HANDLER *&sh) override;
 
-
     private:
       /// Pointer to the ORB_Core on which we are activated
       TAO_ORB_Core* orb_core_;
@@ -88,7 +87,6 @@ namespace TAO
       public ACE_Concurrency_Strategy<SVC_HANDLER>
     {
     public:
-      /// Constructor.
       explicit Connect_Concurrency_Strategy (TAO_ORB_Core *orb_core);
       Connect_Concurrency_Strategy (Connect_Concurrency_Strategy const&) = delete;
       Connect_Concurrency_Strategy (Connect_Concurrency_Strategy&&) = delete;

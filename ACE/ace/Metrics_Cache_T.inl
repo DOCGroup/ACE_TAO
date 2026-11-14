@@ -10,7 +10,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 // Class ACE_Metrics_Cache //
 /////////////////////////////
 
-
 template <class ACE_LOCK, class ALLOCATOR>
 ACE_INLINE void
 ACE_Metrics_Cache<ACE_LOCK, ALLOCATOR>::report_enqueue_start (u_long i)
@@ -40,7 +39,6 @@ ACE_Metrics_Cache<ACE_LOCK, ALLOCATOR>::report_enqueue_start (u_long i)
     }
 }
 
-
 template <class ACE_LOCK, class ALLOCATOR>
 ACE_INLINE void
 ACE_Metrics_Cache<ACE_LOCK, ALLOCATOR>::report_enqueue_stop (u_long i)
@@ -64,7 +62,6 @@ ACE_Metrics_Cache<ACE_LOCK, ALLOCATOR>::report_enqueue_stop (u_long i)
 
 }
 
-
 template <class ACE_LOCK, class ALLOCATOR>
 ACE_INLINE void
 ACE_Metrics_Cache<ACE_LOCK, ALLOCATOR>::report_enqueue_suspend (u_long i)
@@ -81,7 +78,6 @@ ACE_Metrics_Cache<ACE_LOCK, ALLOCATOR>::report_enqueue_suspend (u_long i)
     }
 }
 
-
 template <class ACE_LOCK, class ALLOCATOR>
 ACE_INLINE void
 ACE_Metrics_Cache<ACE_LOCK, ALLOCATOR>::report_enqueue_resume (u_long i)
@@ -97,7 +93,6 @@ ACE_Metrics_Cache<ACE_LOCK, ALLOCATOR>::report_enqueue_resume (u_long i)
         timeprobe (ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR>::WORK_RESUME);
     }
 }
-
 
 template <class ACE_LOCK, class ALLOCATOR>
 ACE_INLINE void
@@ -128,7 +123,6 @@ ACE_Metrics_Cache<ACE_LOCK, ALLOCATOR>::report_dequeue_start (u_long i)
     }
 }
 
-
 template <class ACE_LOCK, class ALLOCATOR>
 ACE_INLINE void
 ACE_Metrics_Cache<ACE_LOCK, ALLOCATOR>::report_dequeue_stop (u_long i)
@@ -151,7 +145,6 @@ ACE_Metrics_Cache<ACE_LOCK, ALLOCATOR>::report_dequeue_stop (u_long i)
     }
 }
 
-
 template <class ACE_LOCK, class ALLOCATOR>
 ACE_INLINE void
 ACE_Metrics_Cache<ACE_LOCK, ALLOCATOR>::report_dequeue_suspend (u_long i)
@@ -168,7 +161,6 @@ ACE_Metrics_Cache<ACE_LOCK, ALLOCATOR>::report_dequeue_suspend (u_long i)
     }
 }
 
-
 template <class ACE_LOCK, class ALLOCATOR>
 ACE_INLINE void
 ACE_Metrics_Cache<ACE_LOCK, ALLOCATOR>::report_dequeue_resume (u_long i)
@@ -184,7 +176,6 @@ ACE_Metrics_Cache<ACE_LOCK, ALLOCATOR>::report_dequeue_resume (u_long i)
         timeprobe (ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR>::WORK_RESUME);
     }
 }
-
 
 template <class ACE_LOCK, class ALLOCATOR>
 ACE_INLINE void
@@ -207,7 +198,6 @@ ACE_Metrics_Cache<ACE_LOCK, ALLOCATOR>::reset_base_statistics ()
       probe->reset ();
     }
 }
-
 
 // Flips the supplier and consumer positions.
 

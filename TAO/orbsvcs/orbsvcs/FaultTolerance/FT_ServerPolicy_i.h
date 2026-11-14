@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_FT_SERVERPOLICY_I_H
 #define TAO_FT_SERVERPOLICY_I_H
 #include /**/ "ace/pre.h"
@@ -66,7 +65,6 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #if defined (__ACE_INLINE__)
 #include "orbsvcs/FaultTolerance/FT_ServerPolicy_i.inl"
 #endif /* __ACE_INLINE__ */
-
 
 #include /**/ "ace/post.h"
 #endif /* TAO_FT_SERVERPOLICY_I_H */

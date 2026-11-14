@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_TESTS_BOUND_PTR_TEST_H
 #define ACE_TESTS_BOUND_PTR_TEST_H
 
@@ -47,7 +46,6 @@ class Scheduler : public ACE_Task<ACE_SYNCH>
   friend class Method_Request_print;
   friend class Method_Request_end;
 public:
-  /// Constructor.
   Scheduler ();
 
   /// Initializer.
@@ -56,7 +54,6 @@ public:
   /// Terminator.
   int close (u_long flags = 0) override;
 
-  /// Destructor.
   virtual ~Scheduler ();
 
   // = These methods are part of the Active Object Proxy interface.

@@ -165,7 +165,6 @@ Replicator::svc ()
   return 0;
 }
 
-
 int
 Replicator::handle_exception (ACE_HANDLE )
 {

@@ -9,7 +9,6 @@ TAO_Intrusive_Ref_Count_Base<T>::_add_ref ()
   ++this->refcount_;
 }
 
-
 template <typename T>
 ACE_INLINE
 void

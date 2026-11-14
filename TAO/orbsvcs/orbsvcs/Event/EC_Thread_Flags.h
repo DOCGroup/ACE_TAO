@@ -89,7 +89,6 @@ public:
   */
   long default_priority () const;
 
-
   struct Supported_Flag
   {
     const char* n; /// Flag name, e.g., THR_NEW_LWP

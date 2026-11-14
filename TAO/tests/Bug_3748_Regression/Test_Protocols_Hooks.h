@@ -16,10 +16,8 @@
 class Test_Protocols_Hooks : public TAO_Protocols_Hooks
 {
 public:
-  /// Constructor
   Test_Protocols_Hooks () = default;
 
-  /// Destructor
   ~Test_Protocols_Hooks () override = default;
   Test_Protocols_Hooks (Test_Protocols_Hooks const &) = delete;
   Test_Protocols_Hooks (Test_Protocols_Hooks &&) = delete;

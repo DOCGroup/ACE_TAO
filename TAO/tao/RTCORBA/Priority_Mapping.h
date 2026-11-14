@@ -8,7 +8,6 @@
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
 
-
 #ifndef TAO_PRIORITY_MAPPING_H
 #define TAO_PRIORITY_MAPPING_H
 #include /**/ "ace/pre.h"

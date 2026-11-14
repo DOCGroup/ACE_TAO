@@ -340,7 +340,6 @@ private:
   CORBA::RepositoryIdSeq base_interfaces_;
 };
 
-
 class TAO_Event_Serv_Export TAO_CEC_Param
 {
 public:
@@ -356,7 +355,6 @@ private:
   CORBA::TypeCode_var type_;
   CORBA::Flags direction_;
 };
-
 
 class TAO_Event_Serv_Export TAO_CEC_Operation_Params
 {

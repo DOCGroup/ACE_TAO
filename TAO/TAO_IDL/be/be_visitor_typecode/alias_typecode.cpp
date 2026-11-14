@@ -23,10 +23,8 @@ TAO::be_visitor_alias_typecode::visit_typedef (be_typedef * node)
 {
   be_type * const base = dynamic_cast<be_type*> (node->base_type ());
 
-
   return this->common (node, base, "tk_alias");
 }
-
 
 int
 TAO::be_visitor_alias_typecode::visit_valuebox (be_valuebox * node)
@@ -100,7 +98,6 @@ TAO::be_visitor_alias_typecode::common (be_type * node,
                        ACE_TEXT ("common - problem generating base ")
                        ACE_TEXT ("TypeCode name.\n")),
                        -1);
-
 
   os << "));" << be_uidt_nl
      << be_uidt_nl;

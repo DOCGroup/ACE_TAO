@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_OBJECT_LOADER_LOADER_H
 #define TAO_OBJECT_LOADER_LOADER_H
 

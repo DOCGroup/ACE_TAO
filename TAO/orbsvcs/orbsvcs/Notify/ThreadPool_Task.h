@@ -94,7 +94,6 @@ private:
   TAO_Notify_Timer_Queue::Ptr timer_;
 };
 
-
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"

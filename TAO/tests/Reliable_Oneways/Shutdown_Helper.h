@@ -10,7 +10,6 @@ class Shutdown_Helper
   : public virtual POA_Test::Shutdown_Helper
 {
 public:
-  /// Constructor
   explicit Shutdown_Helper (CORBA::ORB_ptr orb);
   Shutdown_Helper (Shutdown_Helper const &) = delete;
   Shutdown_Helper (Shutdown_Helper &&) = delete;

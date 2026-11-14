@@ -113,7 +113,6 @@ StructuredPushConsumer_i::check_serial_number (CORBA::ULong seq)
   may_discard_ = 0;
 }
 
-
 void
 StructuredPushConsumer_i::push_structured_event (
         CosNotification::StructuredEvent const& notification)
@@ -639,14 +638,12 @@ ReconnectionCallback_i::is_alive ()
   return true;
 }
 
-
 ReconnectionCallback_i::~ReconnectionCallback_i ()
 {
   // normally you would disconnect from registry here, but
   // to simulate a failure, we exit without cleaning up
   // if the fini method is not called.
 }
-
 
 void
 ReconnectionCallback_i::fini ()
@@ -1044,7 +1041,6 @@ Consumer_Main::reconnect (
       ));
   }
 }
-
 
 int
 Consumer_Main::resolve_naming_service ()
@@ -1501,7 +1497,6 @@ Consumer_Main::init_sequence_proxy_supplier ()
   this->sequence_push_consumer_.set_connected(true);
 }
 
-
 void
 Consumer_Main::set_proxy_qos (CosNotifyChannelAdmin::ProxySupplier_ptr proxy)
 {
@@ -1648,7 +1643,6 @@ int Consumer_Main::fini ()
   this->orb_->shutdown ();
   return 0;
 }
-
 
 int Consumer_Main::run ()
 {

@@ -54,7 +54,6 @@ ServerApp::run_i(int argc, ACE_TCHAR* argv[])
                                                     poa_manager.in(),
                                                     policies);
 
-
   // Create the thread pool servant dispatching strategy object, and
   // hold it in a (local) smart pointer variable.
   TAO_Intrusive_Ref_Count_Handle<TAO::CSD::TP_Strategy> csd_strategy =
@@ -119,7 +118,6 @@ ServerApp::run_i(int argc, ACE_TCHAR* argv[])
 
   return 0;
 }
-
 
 int
 ServerApp::parse_args(int argc, ACE_TCHAR* argv[])

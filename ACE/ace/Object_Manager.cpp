@@ -682,7 +682,6 @@ ACE_Object_Manager::get_singleton_lock (ACE_RW_Thread_Mutex *&lock)
                               -1);
               lock = &lock_adapter->object ();
 
-
               // Register the lock for destruction at program
               // termination.  This call will cause us to grab the
               // ACE_Object_Manager::instance ()->internal_lock_
@@ -835,7 +834,6 @@ ACE_Object_Manager::fini ()
 
   return 0;
 }
-
 
 #if !defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
 /**

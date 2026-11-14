@@ -9,7 +9,6 @@
  */
 //=========================================================================
 
-
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
 #include "tao/ORB.h"
@@ -124,7 +123,6 @@ test_forward_permanent (CORBA::ORB_ptr orb)
   profile = stub1->next_profile ();
 
   FRANKS_ASSERT (is_endpoint (profile, "192.168.1.3", 4444));
-
 
   // ----- reached end, next_profile() must yield NULL
 

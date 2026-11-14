@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "be_argument.h"
 #include "be_scope.h"
 #include "be_visitor_scope.h"

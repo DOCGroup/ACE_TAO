@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Task.h"
 #include "ace/Sched_Params.h"

@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "options.h"
 #include "tao/debug.h"
 #include "ace/Read_Buffer.h"
@@ -18,7 +17,6 @@
 #include "ace/OS_NS_fcntl.h"
 #include "ace/Log_Msg.h"
 
-// Constructor.
 Options::Options ()
   : ior_ (CORBA::string_dup ("file://test.ior")),
     test_type_ (Options::NO_TEST),

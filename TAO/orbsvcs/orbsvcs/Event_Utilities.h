@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_EVENT_UTILITIES_H
 #define ACE_EVENT_UTILITIES_H
 
@@ -20,7 +19,6 @@
 #include "orbsvcs/Event/event_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 
 using TAO_EC_Event_Initializer = void (*) (RtecEventComm::Event&);
 

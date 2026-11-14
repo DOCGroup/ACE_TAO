@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #include "ace/OS_main.h"
 
 #if defined (ACE_WIN32)
@@ -24,7 +23,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_time.h"
 #include <memory>
-
 
 static int concurrent_threads = 1;
 static int number_of_handles = static_cast<int> (ACE_Reactor::instance ()->size ());
@@ -80,11 +78,9 @@ parse_args (int argc, ACE_TCHAR **argv)
 class Task_Handler : public ACE_Task<ACE_NULL_SYNCH>
 {
 public:
-  /// Constructor.
   Task_Handler (size_t number_of_handles,
                 size_t concurrent_threads);
 
-  /// Destructor.
   ~Task_Handler () override;
 
   /// Called when object is removed from the ACE_Reactor
@@ -151,7 +147,6 @@ Task_Handler::~Task_Handler ()
 {
   this->reactor (nullptr);
 }
-
 
 int
 Task_Handler::handle_signal (int, siginfo_t *siginfo, ucontext_t *)

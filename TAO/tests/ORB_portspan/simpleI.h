@@ -11,10 +11,8 @@
 class  simple_i : public virtual POA_simple
 {
 public:
-  //Constructor
   simple_i () = default;
 
-  //Destructor
   ~simple_i () override = default;
 
   void test () override;

@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef RECONNECTING_SUPPLIER_H
 #define RECONNECTING_SUPPLIER_H
 
@@ -180,7 +179,6 @@ class Supplier_Main
   StructuredPushSupplier_i structured_push_supplier_;
   CosNotifyComm::StructuredPushSupplier_var structured_push_supplier_ref_;
 
-
   CosNotifyChannelAdmin::SequenceProxyPushConsumer_var sequence_proxy_push_consumer_;
   CosNotifyChannelAdmin::ProxyID sequence_proxy_id_ {};
   SequencePushSupplier_i sequence_push_supplier_;
@@ -195,6 +193,5 @@ class Supplier_Main
 
   bool reconnecting_ {};
 };
-
 
 #endif /* RECONNECTING_SUPPLIER_H */

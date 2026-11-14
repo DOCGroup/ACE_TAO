@@ -55,7 +55,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       child_poa->create_reference_with_id (child_oid.in (),
                                            "IDL:Quoter/Stock_Factory:1.0");
 
-
     // Put the object reference as an IOR string
     CORBA::String_var ior = orb->object_to_string (stock_factory.in ());
 

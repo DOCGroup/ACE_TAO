@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-
 /**
  *  @file   Multi_Priority_Mapping.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Brian Mendel (brian.r.mendel@boeing.com)
  */
-
 
 #ifndef TAO_MULTI_PRIORITY_MAPPING_H
 #define TAO_MULTI_PRIORITY_MAPPING_H

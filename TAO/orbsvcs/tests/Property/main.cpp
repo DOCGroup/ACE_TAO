@@ -31,14 +31,12 @@ public:
   // of TAO_PropertySet.
 
   TAO_PropertySet_Tester () = default;
-  // Constructor.
 
   ~TAO_PropertySet_Tester () = default;
   TAO_PropertySet_Tester (TAO_PropertySet_Tester const&) = delete;
   TAO_PropertySet_Tester& operator= (TAO_PropertySet_Tester const&) = delete;
   TAO_PropertySet_Tester (TAO_PropertySet_Tester&&) = delete;
   TAO_PropertySet_Tester& operator= (TAO_PropertySet_Tester&&) = delete;
-  // Destructor.
 
   int test_define_property ();
   // Defines a char,a short, a long, a float and a string property.
@@ -91,7 +89,6 @@ public:
   TAO_PropertyNamesIterator_Tester& operator= (TAO_PropertyNamesIterator_Tester const&) = delete;
   TAO_PropertyNamesIterator_Tester (TAO_PropertyNamesIterator_Tester&&) = delete;
   TAO_PropertyNamesIterator_Tester& operator= (TAO_PropertyNamesIterator_Tester&&) = delete;
-  // Destructor.
 
   int test_next_one ();
   // Test next one method. Iterate thru all the names in the

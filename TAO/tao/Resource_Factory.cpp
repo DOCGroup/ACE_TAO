@@ -174,7 +174,6 @@ TAO_Resource_Factory::max_muxed_connections () const
   return 0;
 }
 
-
 int
 TAO_Resource_Factory::get_parser_names (char **&, int &)
 {

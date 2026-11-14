@@ -56,7 +56,6 @@ Send_Task::svc ()
               this->iterations_, this->period_in_usecs_,
               this->event_type_));
 
-
   int start_i = 0;
   if (this->iterations_ == 0)
     {

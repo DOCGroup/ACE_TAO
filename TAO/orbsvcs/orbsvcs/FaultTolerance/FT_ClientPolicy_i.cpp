@@ -10,7 +10,6 @@
 #include "orbsvcs/FaultTolerance/FT_ClientPolicy_i.inl"
 #endif /* __ACE_INLINE__ */
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TimeBase::TimeT
@@ -84,7 +83,6 @@ TAO_FT_Request_Duration_Policy::set_time_value (ACE_Time_Value &time_value)
     }
 }
 
-
 /*****************************************************************/
 
 FT::HeartbeatPolicyValue
@@ -97,7 +95,6 @@ TAO_FT_Heart_Beat_Policy::heartbeat_policy_value ()
 
   return val;
 }
-
 
 CORBA::Policy_ptr
 TAO_FT_Heart_Beat_Policy::create (CORBA::Any const &val)
@@ -117,13 +114,11 @@ TAO_FT_Heart_Beat_Policy::create (CORBA::Any const &val)
   return tmp;
 }
 
-
 CORBA::PolicyType
 TAO_FT_Heart_Beat_Policy::policy_type ()
 {
   return FT::HEARTBEAT_POLICY;
 }
-
 
 CORBA::Policy_ptr
 TAO_FT_Heart_Beat_Policy::copy ()

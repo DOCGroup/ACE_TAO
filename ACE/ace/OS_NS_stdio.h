@@ -293,7 +293,6 @@ namespace ACE_OS {
 
   //@}
 
-
   ACE_NAMESPACE_INLINE_FUNCTION
   ACE_HANDLE fileno (FILE *stream);
 

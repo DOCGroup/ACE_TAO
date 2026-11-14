@@ -20,7 +20,6 @@ TAO_NotifyLog_i::TAO_NotifyLog_i (CORBA::ORB_ptr orb,
   CosNotification::QoSProperties const initial_qos;
   CosNotification::AdminProperties const initial_admin;
 
-
   ACE_ASSERT (!CORBA::is_nil (this->notify_factory_.in ()));
 
   this->event_channel_ =
@@ -81,7 +80,6 @@ TAO_NotifyLog_i::copy_with_id (DsLogAdmin::LogId id)
 
   return log._retn ();
 }
-
 
 void
 TAO_NotifyLog_i::destroy ()

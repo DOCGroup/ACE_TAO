@@ -45,7 +45,6 @@ namespace TAO
         public virtual SSLIOP_Credentials
     {
     public:
-      /// Constructor
       ClientCredentials (::X509 * cert, ::EVP_PKEY * evp, ::SSL * ssl);
 
       /**
@@ -91,7 +90,6 @@ namespace TAO
       //@}
 
     protected:
-      /// Destructor
       /**
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.

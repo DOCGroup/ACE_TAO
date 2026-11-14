@@ -19,7 +19,6 @@
 #include "orbsvcs/Event/ECG_Adapters.h"
 #include "ace/SOCK_Dgram_Mcast.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**

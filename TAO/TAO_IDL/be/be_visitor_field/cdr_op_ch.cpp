@@ -19,7 +19,6 @@
 #include "be_visitor_union/union.h"
 #include "be_visitor_union/cdr_op_ch.h"
 
-// Constructor.
 be_visitor_field_cdr_op_ch::be_visitor_field_cdr_op_ch (be_visitor_context *ctx)
   : be_visitor_decl (ctx)
 {

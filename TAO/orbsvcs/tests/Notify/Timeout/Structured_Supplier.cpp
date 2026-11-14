@@ -59,7 +59,6 @@ private:
   bool started_ {};
 };
 
-
 class Supplier_Client : public Notify_Test_Client
 {
 public:
@@ -100,7 +99,6 @@ Supplier_Client::parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-
 static CosNotifyChannelAdmin::SupplierAdmin_ptr
 create_supplieradmin (CosNotifyChannelAdmin::EventChannel_ptr ec)
 {
@@ -110,7 +108,6 @@ create_supplieradmin (CosNotifyChannelAdmin::EventChannel_ptr ec)
 
   return CosNotifyChannelAdmin::SupplierAdmin::_duplicate (admin.in ());
 }
-
 
 static void
 SendEvent (TAO_Notify_Tests_StructuredPushSupplier& supplier, int id)
@@ -159,7 +156,6 @@ create_suppliers (CosNotifyChannelAdmin::SupplierAdmin_ptr admin,
   supplier->offer_change (added, removed);
   return supplier;
 }
-
 
 // ******************************************************************
 // Main Section

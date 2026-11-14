@@ -10,7 +10,6 @@
 #include "orbsvcs/Shutdown_Utilities.h"
 #include "tao/debug.h"
 
-
 class Notify_Service_Shutdown_Functor
   : public Shutdown_Functor
 {

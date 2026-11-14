@@ -4,7 +4,6 @@
  *  @author David Levine
  */
 
-
 #include "orbsvcs/Log_Macros.h"
 #include "ace/Sched_Params.h"
 #include "orbsvcs/Time_Utilities.h"
@@ -13,11 +12,7 @@
 
 #include "ace/Lock_Adapter_T.h"
 
-
-
 ACE_Scheduler *ACE_Scheduler::instance_ {};
-
-
 
 void
 ACE_Scheduler::output (FILE *file, status_t status)
@@ -78,8 +73,6 @@ ACE_Scheduler::output (FILE *file, status_t status)
       ACE_OS::fprintf (file, "UNKNOWN STATUS: %d", status);
   }
 }
-
-
 
 // ************************************************************
 

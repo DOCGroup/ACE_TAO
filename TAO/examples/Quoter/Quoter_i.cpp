@@ -88,8 +88,6 @@ Quoter_Factory_i::create_quoter (char const *)
   return this->quoters_[this->next_quoter_].get ()->_this ();
 }
 
-// Constructor
-
 Quoter_i::Quoter_i (bool use_LifeCycle_Service,
                     PortableServer::POA_ptr poa_ptr)
   : use_LifeCycle_Service_ (use_LifeCycle_Service),

@@ -29,10 +29,8 @@ template <class COMMAND>
 class TAO_Notify_Tests_Command_Factory_T : public TAO_Notify_Tests_Command_Factory, public ACE_Service_Object
 {
 public:
-  /// Constructor
   TAO_Notify_Tests_Command_Factory_T ();
 
-  /// Destructor
   ~TAO_Notify_Tests_Command_Factory_T ();
 
   /// = Service_Object virtual method overloads.

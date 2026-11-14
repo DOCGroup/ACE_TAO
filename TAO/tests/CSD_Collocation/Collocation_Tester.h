@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #if !defined (TAO_COLLOCATION_TEST_H)
 #define TAO_COLLOCATION_TEST_H
 

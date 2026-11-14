@@ -14,14 +14,12 @@
 #include "mondrian.xpm"
 #endif
 
-
 enum {
     menuQuit = 1,
     menuAbout,
     menuCopy,
     buttonSelectNS = IDC_SELECT_NS
 };
-
 
 BEGIN_EVENT_TABLE( WxNamingViewerFrame, wxFrame)
     EVT_MENU( menuQuit,  WxNamingViewerFrame::OnQuit)
@@ -30,7 +28,6 @@ BEGIN_EVENT_TABLE( WxNamingViewerFrame, wxFrame)
     EVT_UPDATE_UI( menuCopy, WxNamingViewerFrame::onUpdateUICopy)
     EVT_BUTTON( buttonSelectNS, WxNamingViewerFrame::onSelectNS)
 END_EVENT_TABLE()
-
 
 WxNamingViewerFrame::WxNamingViewerFrame(
     const wxString& title,
@@ -110,18 +107,15 @@ WxNamingViewerFrame::WxNamingViewerFrame(
   resolve();
 }
 
-
 WxNamingViewerFrame::~WxNamingViewerFrame()
 {
   selectNS->Destroy();
 }
 
-
 void WxNamingViewerFrame::OnQuit( wxCommandEvent& WXUNUSED(event))
 {
   Close( TRUE);
 }
-
 
 void WxNamingViewerFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 {
@@ -136,12 +130,10 @@ void WxNamingViewerFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
        this);
 }
 
-
 void WxNamingViewerFrame::onMenuCopy( wxCommandEvent& WXUNUSED( event))
 {
   tree->copySelectedToClipboard();
 }
-
 
 void WxNamingViewerFrame::onSelectNS( wxCommandEvent& WXUNUSED( event))
 {
@@ -170,18 +162,15 @@ void WxNamingViewerFrame::onSelectNS( wxCommandEvent& WXUNUSED( event))
   }
 }
 
-
 void WxNamingViewerFrame::onUpdateUICopy( wxUpdateUIEvent& event)
 {
   event.Enable( tree->isNodeSelected());
 }
 
-
 void WxNamingViewerFrame::resolve()
 {
   tree->resolve( rootContext.in ());
 }
-
 
 void WxNamingViewerFrame::setDefaultNS()
 {

@@ -260,7 +260,6 @@ namespace CORBA
   using WString_out = TAO::String_out<CORBA::WChar>;
 }
 
-
 # if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 
 TAO_Export ostream &

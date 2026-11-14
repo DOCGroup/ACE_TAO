@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 
@@ -58,10 +57,8 @@ parse_args (int argc,
 class Handler : public POA_A::AMI_AMI_TestHandler
 {
 public:
-  /// Constructor.
   Handler () = default;
 
-  /// Destructor.
   ~Handler () override = default;
   Handler (Handler const &) = delete;
   Handler (Handler &&) = delete;

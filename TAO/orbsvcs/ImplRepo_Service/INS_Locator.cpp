@@ -60,7 +60,6 @@ INS_Locator::async_locate (::IORTable::Locate_ResponseHandler handler,
     }
 }
 
-
 //----------------------------------------------------------------------------------------
 INS_Loc_ResponseHandler::INS_Loc_ResponseHandler (const char *key,
                             ::IORTable::Locate_ResponseHandler handler)

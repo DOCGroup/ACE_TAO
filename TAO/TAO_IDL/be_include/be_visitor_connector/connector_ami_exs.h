@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_CONNECTOR_CONNECTOR_AMI_EXS_H_
 #define _BE_CONNECTOR_CONNECTOR_AMI_EXS_H_
 

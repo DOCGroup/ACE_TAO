@@ -127,7 +127,6 @@ run_thread (void *vp)
                   collection.name ()));
     }
 
-
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) thread finished.\n")));
 

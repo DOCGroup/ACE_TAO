@@ -6,7 +6,6 @@
  *  @author  Johnny Willemsen <jwillemsen@remedy.nl>
  */
 
-
 #ifndef TAO_COIOP_FACTORY_H
 #define TAO_COIOP_FACTORY_H
 
@@ -67,7 +66,6 @@ private:
   TAO_COIOP_Protocol_Factory (TAO_COIOP_Protocol_Factory &&) = delete;
   TAO_COIOP_Protocol_Factory &operator= (TAO_COIOP_Protocol_Factory &&) = delete;
 };
-
 
 ACE_STATIC_SVC_DECLARE (TAO_COIOP_Protocol_Factory)
 ACE_FACTORY_DECLARE (TAO_Strategies, TAO_COIOP_Protocol_Factory)

@@ -57,7 +57,6 @@ class Server_Request_Interceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   Server_Request_Interceptor () = default;
 
   /// Set the references to which requests will be forwarded.
@@ -96,7 +95,6 @@ public:
   //@}
 
 protected:
-  /// Destructor.
   ~Server_Request_Interceptor () override = default;
 
 private:

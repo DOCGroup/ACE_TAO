@@ -27,7 +27,6 @@ TAO_LogActivator::incarnate (PortableServer::ObjectId const & oid,
   return logmgr_i_.create_log_servant (id);
 }
 
-
 void
 TAO_LogActivator::etherealize (PortableServer::ObjectId const &,
                                PortableServer::POA_ptr,

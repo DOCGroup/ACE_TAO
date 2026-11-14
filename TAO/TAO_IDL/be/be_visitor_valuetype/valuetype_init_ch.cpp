@@ -138,7 +138,6 @@ be_visitor_valuetype_init_ch::visit_factory (be_factory *node)
   be_valuetype *vt =
     dynamic_cast<be_valuetype*> (this->ctx_->scope ()->decl ());
 
-
   // STEP I: Generate preambule.
   os << be_nl_2
      << "virtual " << vt->local_name () << "* ";

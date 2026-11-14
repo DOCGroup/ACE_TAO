@@ -53,7 +53,6 @@ class TAO_NotifyLog_Serv_Export TAO_NotifyLog_i :
   public POA_DsNotifyLogAdmin::NotifyLog
 {
 public:
-  /// Constructor.
   TAO_NotifyLog_i (CORBA::ORB_ptr orb,
                    PortableServer::POA_ptr poa,
                    TAO_LogMgr_i &logmgr_i,
@@ -62,7 +61,6 @@ public:
                    TAO_LogNotification * log_notifier,
                    DsLogAdmin::LogId id);
 
-  /// Destructor.
   ~TAO_NotifyLog_i () override;
 
   /// Duplicate the log.

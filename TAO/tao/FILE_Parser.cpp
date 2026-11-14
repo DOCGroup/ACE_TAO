@@ -60,7 +60,6 @@ TAO_FILE_Parser::parse_string (const char *ior, CORBA::ORB_ptr orb)
   return object;
 }
 
-
 ACE_STATIC_SVC_DEFINE (TAO_FILE_Parser,
                        ACE_TEXT ("FILE_Parser"),
                        ACE_SVC_OBJ_T,

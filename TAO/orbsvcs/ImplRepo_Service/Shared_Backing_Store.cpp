@@ -172,7 +172,6 @@ namespace {
     ACE_TString filename_;
   }; // class Lockable_File
 
-
   void
   create_uid (const Options::ImrType repo_type,
               const unsigned int repo_id,
@@ -465,7 +464,6 @@ Shared_Backing_Store::persistent_update (const Server_Info_Ptr& info, bool add)
 
   return 0;
 }
-
 
 int
 Shared_Backing_Store::persistent_update(const Activator_Info_Ptr& info, bool add)

@@ -22,7 +22,6 @@
 
 #include "test_macros.h"
 
-
 using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO;
 
 using tested_sequence = unbounded_object_reference_sequence<mock_reference, mock_reference_var>;

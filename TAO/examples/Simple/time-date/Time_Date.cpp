@@ -15,7 +15,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/Dynamic_Service.h"
 
-
 ACE_Reactor *
 My_Resource_Factory::get_reactor ()
 {

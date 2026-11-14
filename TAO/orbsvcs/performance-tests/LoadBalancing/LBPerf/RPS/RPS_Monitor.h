@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_RPS_MONITOR_H
 #define TAO_RPS_MONITOR_H
 
@@ -32,7 +31,6 @@ class RPS_Monitor
   : public virtual POA_CosLoadBalancing::LoadMonitor
 {
 public:
-  /// Constructor
   explicit RPS_Monitor (ServerRequestInterceptor *interceptor);
   RPS_Monitor (RPS_Monitor const &) = delete;
   RPS_Monitor (RPS_Monitor &&) = delete;
@@ -63,7 +61,6 @@ public:
   //@}
 
 protected:
-  /// Destructor
   /**
    * Protected destructor to enforce proper memory management through
    * reference counting.

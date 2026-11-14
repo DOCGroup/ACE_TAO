@@ -13,7 +13,6 @@ TAO_Stub::reset_base ()
   this->set_profile_in_use_i (base_profiles_.get_next ());
 }
 
-
 ACE_INLINE TAO_SYNCH_MUTEX const &
 TAO_Stub::profile_lock () const
 {
@@ -226,7 +225,6 @@ TAO_Stub::base_profiles (TAO_MProfile const &mprofiles)
       TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - Stub::base_profiles, acquired profile lock this = 0x%x\n"), this));
     }
-
 
   // first reset things so we start from scratch!
 

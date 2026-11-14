@@ -11,7 +11,6 @@ class Coordinator
   : public virtual POA_Test::Coordinator
 {
 public:
-  /// Constructor
   explicit Coordinator (CORBA::ULong peer_count);
   Coordinator (Coordinator const &) = delete;
   Coordinator (Coordinator &&) = delete;

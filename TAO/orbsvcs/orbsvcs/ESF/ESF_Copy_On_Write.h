@@ -61,12 +61,10 @@ template<class COLLECTION, class ITERATOR, class ACE_LOCK>
 class TAO_ESF_Copy_On_Write_Read_Guard
 {
 public:
-  /// Constructor
   using Collection = TAO_ESF_Copy_On_Write_Collection<COLLECTION, ITERATOR>;
   TAO_ESF_Copy_On_Write_Read_Guard (ACE_LOCK &mutex,
                                     Collection *&collection);
 
-  /// Destructor
   ~TAO_ESF_Copy_On_Write_Read_Guard ();
 
   TAO_ESF_Copy_On_Write_Read_Guard (TAO_ESF_Copy_On_Write_Read_Guard const &) = delete;
@@ -95,7 +93,6 @@ template<class COLLECTION, class ITERATOR, ACE_SYNCH_DECL>
 class TAO_ESF_Copy_On_Write_Write_Guard
 {
 public:
-  /// Constructor
   using Collection = TAO_ESF_Copy_On_Write_Collection<COLLECTION, ITERATOR>;
   TAO_ESF_Copy_On_Write_Write_Guard (ACE_SYNCH_MUTEX_T &mutex,
                                      ACE_SYNCH_CONDITION_T &cond,
@@ -103,7 +100,6 @@ public:
                                      bool &writing_flag,
                                      Collection*& collection);
 
-  /// Destructor
   ~TAO_ESF_Copy_On_Write_Write_Guard ();
 
   TAO_ESF_Copy_On_Write_Write_Guard (TAO_ESF_Copy_On_Write_Write_Guard const &) = delete;
@@ -136,12 +132,10 @@ template<class PROXY, class COLLECTION, class ITERATOR, ACE_SYNCH_DECL>
 class TAO_ESF_Copy_On_Write : public TAO_ESF_Proxy_Collection<PROXY>
 {
 public:
-  /// Constructor
   using Read_Guard = TAO_ESF_Copy_On_Write_Read_Guard<COLLECTION, ITERATOR, ACE_SYNCH_MUTEX_T>;
   using Write_Guard = TAO_ESF_Copy_On_Write_Write_Guard<COLLECTION, ITERATOR, ACE_SYNCH_USE>;
   TAO_ESF_Copy_On_Write ();
 
-  /// Destructor
   ~TAO_ESF_Copy_On_Write () override;
 
   TAO_ESF_Copy_On_Write (TAO_ESF_Copy_On_Write const &) = delete;

@@ -28,10 +28,8 @@ class Cubit_i;
 class Cubit_i : public POA_Cubit
 {
 public:
-  /// Constructor
   Cubit_i (CORBA::ORB_ptr orb);
 
-  /// Destructor
   ~Cubit_i () override;
 
   /// Returns the default POA for this servant.
@@ -106,10 +104,8 @@ protected:
 class Cubit_Factory_i: public POA_Cubit_Factory
 {
 public:
-  /// Constructor.
   Cubit_Factory_i (CORBA::ORB_ptr orb);
 
-  /// Destructor.
   ~Cubit_Factory_i () override;
 
   /// Make a cubit object.

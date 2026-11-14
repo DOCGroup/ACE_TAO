@@ -77,4 +77,3 @@ Stats::i_am_done (int id)
   this->init_fini_[(2 * id) + 1].timestamp = ACE_OS::gettimeofday ();
 }
 
-

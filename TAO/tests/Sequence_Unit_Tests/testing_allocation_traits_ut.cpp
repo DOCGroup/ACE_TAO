@@ -16,7 +16,6 @@ try { statement; } catch(...) { \
 
 using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO::details;
 
-
 CORBA::ULong constexpr MAXIMUM = 32;
 
 template<class value_type>

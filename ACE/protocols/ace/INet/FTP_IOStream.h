@@ -57,7 +57,6 @@ namespace ACE
               std::iostream * stream_;
           };
 
-
         /**
         * @class ACE_FTP_IOS
         *

@@ -55,12 +55,10 @@ SCTP_Connector::connect (ACE_SOCK_SEQPACK_Association &new_association,
                                       result);
 }
 
-
 inline void SCTP_Connector::set_heart_beat(int hb)
 {
   heart_beat_ = hb;
 }
-
 
 int SCTP_Fault_Detector::parse_conf(int argc, ACE_TCHAR** argv)
 {

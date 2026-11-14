@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef HTTP_REQUEST_H
 #define HTTP_REQUEST_H
 
@@ -40,7 +39,6 @@ public:
   HTTP_Request &operator= (HTTP_Request const &) = delete;
   HTTP_Request &operator= (HTTP_Request &&) = delete;
 
-  /// Destructor.
   ~HTTP_Request ();
 
   /// parse an incoming request

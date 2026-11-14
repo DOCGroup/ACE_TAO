@@ -2,7 +2,6 @@
 #include "tao/IFR_Client/IFR_BasicC.h"
 #include "tao/TypeCodeFactory/TypeCodeFactory_Adapter_Impl.h"
 
-
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try

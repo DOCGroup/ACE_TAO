@@ -17,7 +17,6 @@
 class Client_Task : public ACE_Task_Base
 {
 public:
-  /// Constructor
   Client_Task (ACE_TString const &input,
                CORBA::ORB_ptr corb,
                ACE_Thread_Manager *thr_mgr);

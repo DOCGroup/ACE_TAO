@@ -136,13 +136,11 @@ HostProcess::find_peer (long h)
   return nullptr;
 }
 
-
 long
 HostProcess::pid () const
 {
   return this->pid_;
 }
-
 
 const ACE_Time_Value &
 HostProcess::start_time () const

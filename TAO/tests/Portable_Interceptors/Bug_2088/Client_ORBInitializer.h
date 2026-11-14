@@ -25,7 +25,6 @@ class Client_ORBInitializer :
   public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor
   Client_ORBInitializer () = default;
 
   Client_ORBInitializer (Client_ORBInitializer const &) = delete;

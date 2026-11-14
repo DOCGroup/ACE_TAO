@@ -55,7 +55,6 @@ class TAO_RTEventLog_Serv_Export TAO_RTEventLog_i :
   public POA_RTEventLogAdmin::EventLog
 {
 public:
-  /// Constructor.
   TAO_RTEventLog_i (CORBA::ORB_ptr orb,
                     PortableServer::POA_ptr poa,
                     PortableServer::POA_ptr log_poa,
@@ -64,7 +63,6 @@ public:
                     TAO_LogNotification * log_notifier,
                     DsLogAdmin::LogId id);
 
-  /// Destructor.
   ~TAO_RTEventLog_i () override;
 
   /// Duplicate the log.

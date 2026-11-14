@@ -36,13 +36,11 @@ bool UUID::operator != (UUID const &other) const
   return !(*this == other);
 }
 
-
 ACE_INLINE
 bool UUID::is_valid() const
 {
   return !this->rep_.timestamp.hi;
 }
-
 
 ACE_INLINE
 void UUID::to_binary(unsigned char *binary_rep) const

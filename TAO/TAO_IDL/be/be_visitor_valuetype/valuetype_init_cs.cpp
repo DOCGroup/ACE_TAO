@@ -87,7 +87,6 @@ be_visitor_valuetype_init_cs::visit_valuetype (be_valuetype *node)
       <<                "::_tao_obv_static_repository_id ();"
       << be_uidt_nl << "}";
 
-
   if (factory_style == be_valuetype::FS_CONCRETE_FACTORY)
     {
       // generate create_for_unmarshal()

@@ -116,7 +116,6 @@ TAO_FixedArray_Var_T<T,T_slice,TAG>::TAO_FixedArray_Var_T (
   : TAO_Array_Var_Base_T<T,T_slice,TAG> (p)
 {}
 
-
 template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
 T_slice *

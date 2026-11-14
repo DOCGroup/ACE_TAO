@@ -5,7 +5,6 @@
  *  @author David Levine
  */
 
-
 #ifndef SCHEDULER_H
 #define SCHEDULER_H
 #include /**/ "ace/pre.h"
@@ -169,7 +168,6 @@ public:
   virtual status_t lookup_config_info (Preemption_Priority priority,
                                        Config_Info* &config_info) = 0;
 
-
   /// Computes the schedule.
   /// This actually generates the files.
   virtual status_t
@@ -241,7 +239,6 @@ public:
                                       OS_Thread_Priority &priority,
                                       Dispatching_Type &d_type);
 
-
 protected:
   ACE_Scheduler () = default;
 
@@ -296,6 +293,5 @@ using Scheduler = ACE_Scheduler;
 
 #include /**/ "ace/post.h"
 #endif /* SCHEDULER_H */
-
 
 // EOF

@@ -16,7 +16,6 @@ Client_Task::svc ()
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Starting client task\n"));
 
-
   // Now get the big replies..
   try
     {

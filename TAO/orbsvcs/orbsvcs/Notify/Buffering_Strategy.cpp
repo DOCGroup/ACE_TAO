@@ -84,15 +84,12 @@ TAO_Notify_Buffering_Strategy::oldest_event ()
   return tv;
 }
 
-
 TAO_Notify_Buffering_Strategy::Tracker::Tracker ()
   : child_ (nullptr)
 {
 }
 
-
 TAO_Notify_Buffering_Strategy::Tracker::~Tracker () = default;
-
 
 void
 TAO_Notify_Buffering_Strategy::Tracker::register_child (TAO_Notify_Buffering_Strategy::Tracker * child)
@@ -120,7 +117,6 @@ TAO_Notify_Buffering_Strategy::Tracker::unregister_child (TAO_Notify_Buffering_S
       this->child_->unregister_child (child);
     }
 }
-
 
 int
 TAO_Notify_Buffering_Strategy::enqueue (TAO_Notify_Method_Request_Queueable* method_request)
@@ -351,6 +347,5 @@ TAO_Notify_Buffering_Strategy::discard (TAO_Notify_Method_Request_Queueable* met
 
   return false;
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_ORB_TABLE_H
 #define TAO_ORB_TABLE_H
 
@@ -26,7 +25,6 @@
 
 #include "ace/Array_Map.h"
 #include "ace/Thread_Mutex.h"
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

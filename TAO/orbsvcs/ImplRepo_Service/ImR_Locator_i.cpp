@@ -1023,7 +1023,6 @@ ImR_Locator_i::force_remove_server
       return;
     }
 
-
   if (!this->get_info_for_name (name, si))
     {
       ex = new ImplementationRepository::NotFound;
@@ -1088,7 +1087,6 @@ ImR_Locator_i::destroy_poa (const ACE_CString &poa_name)
       poa->destroy (etherealize, wait);
     }
 }
-
 
 PortableServer::POA_ptr
 ImR_Locator_i::findPOA (const char* name)

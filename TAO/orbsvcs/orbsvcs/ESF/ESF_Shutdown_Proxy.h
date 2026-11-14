@@ -8,7 +8,6 @@
  *  http://doc.ece.uci.edu/~coryan/EC/index.html
  */
 
-
 #ifndef TAO_ESF_SHUTDOWN_PROXY_H
 #define TAO_ESF_SHUTDOWN_PROXY_H
 

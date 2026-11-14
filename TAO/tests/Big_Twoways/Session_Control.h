@@ -10,7 +10,6 @@ class Session_Control
   : public virtual POA_Test::Session_Control
 {
 public:
-  /// Constructor
   /**
    * @param session_count Number of session objects in the experiment.
    */
@@ -20,7 +19,6 @@ public:
   Session_Control &operator= (Session_Control const &) = delete;
   Session_Control &operator= (Session_Control &&) = delete;
 
-  /// Destructor
   ~Session_Control () override;
 
   /// Return 1 when all sessions have finished

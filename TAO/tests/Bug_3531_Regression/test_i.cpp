@@ -68,7 +68,6 @@ Simple_Server_i::handle_timeout (ACE_Time_Value const &,
   return 0;
 }
 
-
 void
 Simple_Server_i::shutdown ()
 {

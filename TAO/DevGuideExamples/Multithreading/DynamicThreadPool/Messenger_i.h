@@ -34,5 +34,4 @@ public:
   Messenger_i &operator= (Messenger_i &&) = delete;
 };
 
-
 #endif /* MESSENGERI_H_  */

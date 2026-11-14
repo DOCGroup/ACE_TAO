@@ -44,10 +44,8 @@ class TAO_Log_Serv_Export TAO_Iterator_i
     public ACE_Event_Handler
 {
 public:
-  /// Constructor.
   TAO_Iterator_i (PortableServer::POA_ptr poa, ACE_Reactor * reactor);
 
-  /// Destructor.
   ~TAO_Iterator_i () override;
 
   /// Gets a list of LogRecords.

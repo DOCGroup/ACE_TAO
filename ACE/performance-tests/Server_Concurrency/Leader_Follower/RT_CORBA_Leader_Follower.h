@@ -15,7 +15,6 @@
 #include /**/ "ace/pre.h"
 #include "ace/Task.h"
 
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -29,7 +28,6 @@ enum class DEBUGGING_RANGE
   DEBUG_NONE,
   DEBUG
 };
-
 
 /**
  * @class Synchronisers
@@ -67,7 +65,6 @@ private:
   /// A manual event
   ACE_Manual_Event event_;
 };
-
 
 /**
  * @class Leader_Follower_Task

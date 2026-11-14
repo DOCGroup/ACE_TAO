@@ -30,7 +30,6 @@ public:
                                RtecScheduler::RT_Info &info);
   // Registers an RT_Info.
 
-
 #if 0 /* not currently used */
   static void setup_conjunction (RtecScheduler::RT_Info &info,
                                  char const* entry_point);
@@ -47,7 +46,6 @@ public:
                            char const* heading);
   // Creates the schedule, runs timelines.
 };
-
 
 // Initializes an RT_Info.
 
@@ -79,7 +77,6 @@ DynSched_Test::setup_rt_info (RtecScheduler::RT_Info &info,
   info.info_type = RtecScheduler::OPERATION;
   info.volatile_token = 0;
 }
-
 
 // Registers an RT_Info.
 
@@ -127,7 +124,6 @@ DynSched_Test::setup_conjunction (RtecScheduler::RT_Info &info,
   info.volatile_token = 0;
 }
 
-
 // Sets up a disjunction.
 
 void
@@ -154,7 +150,6 @@ DynSched_Test::setup_disjunction (RtecScheduler::RT_Info &info,
   info.volatile_token = 0;
 }
 #endif /* not currently used */
-
 
 // Creates the schedule, runs timelines.
 

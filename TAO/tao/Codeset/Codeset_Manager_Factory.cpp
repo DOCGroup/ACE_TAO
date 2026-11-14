@@ -20,7 +20,6 @@ TAO_Codeset_Manager_Factory::is_default () const
   return false;
 }
 
-
 TAO_Codeset_Manager *
 TAO_Codeset_Manager_Factory::create ()
 {

@@ -23,7 +23,6 @@ Notify_Structured_Push_Consumer::Notify_Structured_Push_Consumer (
   this->client_.consumer_start (this);
 }
 
-
 void
 Notify_Structured_Push_Consumer::_connect (
                 CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin)
@@ -57,7 +56,6 @@ Notify_Structured_Push_Consumer::_connect (
   // give ownership to POA
   this->_remove_ref ();
 }
-
 
 void
 Notify_Structured_Push_Consumer::push_structured_event (

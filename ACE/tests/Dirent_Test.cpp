@@ -17,7 +17,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Dirent.h"
 #include "ace/Dirent_Selector.h"

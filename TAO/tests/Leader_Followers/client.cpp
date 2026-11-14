@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 #include "ace/Task.h"
@@ -138,7 +137,6 @@ public:
           return -1;
         }
 
-
       return 0;
     }
 
@@ -201,7 +199,6 @@ public:
           ex._tao_print_exception ("Exception caught in thread:");
           return -1;
         }
-
 
       return 0;
     }
@@ -276,7 +273,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ex._tao_print_exception ("Exception caught:");
       return -1;
     }
-
 
   return 0;
 }

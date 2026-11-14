@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef LB_LOAD_MINIMUM_H
 #define LB_LOAD_MINIMUM_H
 
@@ -26,7 +25,6 @@
 #include "ace/Synch_Traits.h"
 #include "ace/Thread_Mutex.h"
 #include <memory>
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

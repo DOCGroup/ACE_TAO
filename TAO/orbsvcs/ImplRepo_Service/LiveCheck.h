@@ -193,7 +193,6 @@ class Locator_Export PingReceiver :
   LiveEntry * entry_;
 };
 
-
 //---------------------------------------------------------------------------
 /*
  * @class LC_TimeoutGuard

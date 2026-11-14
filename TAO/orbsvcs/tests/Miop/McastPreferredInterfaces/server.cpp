@@ -3,7 +3,6 @@
 #include "ace/Get_Opt.h"
 #include "orbsvcs/PortableGroup/GOA.h"
 
-
 const ACE_TCHAR *uipmc_url = 0;
 const ACE_TCHAR *ior_output_file = 0;
 

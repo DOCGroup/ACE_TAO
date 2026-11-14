@@ -6,7 +6,6 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Get_Opt.h"
 
-
 #if defined (ACE_HAS_THREADS)
 
 #include "ace/Guard_T.h"

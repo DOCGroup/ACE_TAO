@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "asnmp/wpdu.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
@@ -344,7 +343,6 @@ void wpdu::free_smival_descriptor (SmiVALUE *smival)
   }
   smival->syntax = sNMP_SYNTAX_NULL;
 }
-
 
 iovec const &wpdu::get_buffer () const
 {

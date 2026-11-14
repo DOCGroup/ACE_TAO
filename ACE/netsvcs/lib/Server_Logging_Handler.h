@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_SERVER_LOGGING_HANDLER_H
 #define ACE_SERVER_LOGGING_HANDLER_H
 
@@ -68,7 +67,6 @@ using Synch_Thr_Logging_Handler_Receiver_Acceptor =
   ACE_Server_Logging_Acceptor_T<Synch_Thr_Logging_Handler_Receiver,
                                 Synch_Receiver,
                                 ACE_Schedule_All_Threaded_Strategy<Synch_Thr_Logging_Handler_Receiver> >;
-
 
 // Define external acceptors
 

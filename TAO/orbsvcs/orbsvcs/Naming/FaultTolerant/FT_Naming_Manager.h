@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_FT_NAMING_MANAGER_H
 #define TAO_FT_NAMING_MANAGER_H
 
@@ -263,7 +262,6 @@ public:
   /// managing the object groups.
   void initialize (CORBA::ORB_ptr orb,
                    PortableServer::POA_ptr root_poa);
-
 
   /// Utilizing the load balancing strategy identified by the object
   /// group property, return the next object reference from the object

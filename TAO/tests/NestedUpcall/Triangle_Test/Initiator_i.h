@@ -21,11 +21,9 @@
 class Initiator_i : public POA_Initiator
 {
 public:
-  /// Constructor.
   Initiator_i (Object_A_ptr object_A_ptr,
                   Object_B_ptr object_B_ptr);
 
-  /// Destructor.
   ~Initiator_i () override = default;
 
   Initiator_i (Initiator_i const &) = delete;

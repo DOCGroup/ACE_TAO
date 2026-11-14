@@ -6,13 +6,11 @@
  *  @author  Chris Gill <cdgill@cs.wustl.edu>
  */
 
-
 #ifndef TAO_RECONFIG_SCHEDULER_H
 #define TAO_RECONFIG_SCHEDULER_H
 #include /**/ "ace/pre.h"
 
 #include "ace/config-all.h"
-
 
 #include "ace/Hash_Map_Manager.h"
 #include "ace/RB_Tree.h"

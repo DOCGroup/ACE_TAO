@@ -22,5 +22,4 @@ class  Messenger_i : public virtual POA_Messenger
   void send_message (CORBA::OctetSeq const& user_name) override;
 };
 
-
 #endif /* MESSENGERI_H_  */

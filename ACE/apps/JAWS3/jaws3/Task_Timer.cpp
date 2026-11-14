@@ -8,12 +8,10 @@
 #include "jaws3/Timer_Helpers.h"
 #include <memory>
 
-
 JAWS_Task_Timer::JAWS_Task_Timer ()
 {
   this->timer_queue_.activate ();
 }
-
 
 void
 JAWS_Task_Timer::schedule_timer ( long *timer_id
@@ -40,7 +38,6 @@ JAWS_Task_Timer::schedule_timer ( long *timer_id
     eh.release ();
 }
 
-
 void
 JAWS_Task_Timer::schedule_absolute_timer ( long *timer_id
                                          , const ACE_Time_Value &tv
@@ -63,7 +60,6 @@ JAWS_Task_Timer::schedule_absolute_timer ( long *timer_id
   else
     eh.release ();
 }
-
 
 void
 JAWS_Task_Timer::schedule_interval_timer ( long *timer_id
@@ -90,7 +86,6 @@ JAWS_Task_Timer::schedule_interval_timer ( long *timer_id
   else
     eh.release ();
 }
-
 
 void
 JAWS_Task_Timer::cancel_timer (long timer_id)

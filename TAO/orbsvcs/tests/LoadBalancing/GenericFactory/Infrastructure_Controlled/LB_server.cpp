@@ -33,7 +33,6 @@ LB_server::run ()
   return 0;
 }
 
-
 int
 LB_server::destroy ()
 {
@@ -95,7 +94,6 @@ LB_server::parse_args (int argc, ACE_TCHAR *argv[])
   // Indicates successful parsing of the command line
   return 0;
 }
-
 
 int
 LB_server::start_orb_and_poa ()

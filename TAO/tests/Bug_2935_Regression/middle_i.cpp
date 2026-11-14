@@ -87,7 +87,6 @@ Middle_i::tockCount ()
     }
 }
 
-
 // Shutdown.
 
 void

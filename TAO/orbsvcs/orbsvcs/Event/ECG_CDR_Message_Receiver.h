@@ -204,7 +204,6 @@ private:
                         char * data_buf,
                         TAO_ECG_CDR_Processor *cdr_processor);
 
-
   Request_Map::ENTRY* get_source_entry (const ACE_INET_Addr &from);
 
 private:

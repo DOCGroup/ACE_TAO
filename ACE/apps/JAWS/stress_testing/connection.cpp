@@ -30,7 +30,6 @@ int connection::connect (char const *hostname_opt_port, int tcp_nodelay, int soc
       return 1;
     }
 
-
   // tcp_nodelay processing.
 
   // turn off weird ack things

@@ -88,7 +88,6 @@ TAO_Notify_ProxyPushConsumer::validate ()
   }
 }
 
-
 void
 TAO_Notify_ProxyPushConsumer::load_attrs (TAO_Notify::NVPList const &attrs)
 {

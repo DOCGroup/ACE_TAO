@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "be_valuetype.h"
 #include "be_valuetype_fwd.h"
 #include "be_eventtype.h"

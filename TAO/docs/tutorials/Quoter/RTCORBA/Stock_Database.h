@@ -31,13 +31,11 @@ public:
   /// @param rate The rate at which to perform updates.
   explicit Stock_Database (u_int rate = 1);
 
-  /// Constructor.
   /// @param file The name of a file to read initial stocks and values from.
   explicit Stock_Database (std::string const &file, u_int rate = 1);
 
   using Init_Map = std::map<std::string, unsigned int>;
 
-  /// Constructor
   /// @param stockmap  A map containing stocks and initial values.  An initial value
   /// of 0 will be assigned a random start value.
   explicit Stock_Database (Init_Map const &stockmap, u_int rate = 0);

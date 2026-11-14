@@ -43,7 +43,6 @@ private:
   bool initialized_ {};
 };
 
-
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_RTCORBA, TAO_RT_ORB_Loader)
 ACE_FACTORY_DECLARE (TAO_RTCORBA, TAO_RT_ORB_Loader)
 

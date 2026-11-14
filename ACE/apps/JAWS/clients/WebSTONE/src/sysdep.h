@@ -60,7 +60,6 @@ typedef int                             pid_t;
 typedef unsigned short                  ushort;
 #define MAXPATHLEN                      512
 
-
 #else /* not WIN32 */
 #define NETREAD(sock, buf, len)         read(sock, buf, len)
 #define NETWRITE(sock, buf, len)        write(sock, buf, len)
@@ -89,7 +88,6 @@ typedef int                             SOCKET;
 #define max(a,b)                        (((a) > (b)) ? a : b)
 #endif /* WIN32 */
 
-
 /* function prototypes */
 
 #ifdef WIN32
@@ -107,14 +105,12 @@ extern int      rexec(char **, int, char *, char *, char *, int *);
 #endif
 #endif /* WIN32 */
 
-
 #ifndef HAVE_STRERROR
 /* strerror() is not available on SunOS 4.x and others */
 char *strerror(int errnum);
 
 #endif
 /* strerror() */
-
 
 #ifndef INADDR_NONE
 #define INADDR_NONE -1

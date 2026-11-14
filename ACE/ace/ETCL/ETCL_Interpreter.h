@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef ETCL_INTERPRETER_H
 #define ETCL_INTERPRETER_H
 
@@ -67,7 +66,6 @@ private:
   /// This mutex protects the <build_tree> method from reentrance.
   static ACE_SYNCH_MUTEX parserMutex__;
 };
-
 
 // Functions we need for parsing.
 extern int yyparse ();

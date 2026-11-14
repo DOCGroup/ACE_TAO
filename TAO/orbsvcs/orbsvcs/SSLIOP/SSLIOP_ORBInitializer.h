@@ -50,7 +50,6 @@ namespace TAO
         public virtual ::CORBA::LocalObject
     {
     public:
-      /// Constructor.
       explicit ORBInitializer (::Security::QOP qop);
 
       void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;

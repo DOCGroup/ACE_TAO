@@ -146,7 +146,6 @@ ACE_FlReactor::fl_timeout_proc (void *const reactor)
   self->reset_timeout ();
 }
 
-
 int
 ACE_FlReactor::register_handler_i (ACE_HANDLE handle,
                                    ACE_Event_Handler *handler,

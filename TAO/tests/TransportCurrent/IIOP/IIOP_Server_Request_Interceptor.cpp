@@ -120,7 +120,6 @@ namespace Test {
     endPoints_[requestID] = dummy;
   }
 
-
   /// Checks if all the endpoints, encountered on the way in have been
   /// cleaned on the way out of the interception point
   bool

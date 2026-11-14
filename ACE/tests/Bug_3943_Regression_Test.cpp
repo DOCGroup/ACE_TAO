@@ -236,7 +236,6 @@ namespace {
 using ACCEPTOR = ACE_Oneshot_Acceptor<Svc_Handler, ACE_LOCK_SOCK_Acceptor<ACCEPTOR_LOCKING>>;
 using CONNECTOR = ACE_Connector<Svc_Handler, ACE_SOCK_Connector>;
 
-
 IovecGuard::IovecGuard(const int count, const int slot, const buffer_len max)
   : iovcnt_(count),
     totalBytes_(0)

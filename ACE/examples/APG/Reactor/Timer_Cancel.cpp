@@ -79,7 +79,6 @@ private:
 
 #endif /* ACE_LACKS_UNIX_SIGNALS */
 
-
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_Time_Value initialDelay {3};

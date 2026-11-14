@@ -241,7 +241,6 @@ public:
   Persistent_Test_Begin (CORBA::ORB_ptr orb,
                          FILE * ior_output_file);
 
-  /// Destructor.
   ~Persistent_Test_Begin () override = default;
 
   /// Execute the persistent test (part 1) code.
@@ -276,7 +275,6 @@ public:
   Persistent_Test_End (CORBA::ORB_ptr orb,
                        ACE_TCHAR const *ior);
 
-  /// Destructor.
   ~Persistent_Test_End () override = default;
 
   /// Execute the persistent test (part 2).
@@ -306,10 +304,8 @@ private:
 class CosNaming_Client : public ACE_Task_Base
 {
 public:
-  /// Constructor.
   CosNaming_Client () = default;
 
-  /// Destructor.
   ~CosNaming_Client () = default;
   CosNaming_Client (CosNaming_Client const &) = delete;
   CosNaming_Client (CosNaming_Client &&) = delete;

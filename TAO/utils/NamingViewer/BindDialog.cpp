@@ -12,7 +12,6 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CBindDialog dialog
 
-
 CBindDialog::CBindDialog(bool Context, CORBA::ORB_ptr pORB, CWnd* pParent /*=NULL*/)
   : CDialog(CBindDialog::IDD, pParent)
 {
@@ -25,7 +24,6 @@ CBindDialog::CBindDialog(bool Context, CORBA::ORB_ptr pORB, CWnd* pParent /*=NUL
   m_Context = Context;
 }
 
-
 void CBindDialog::DoDataExchange(CDataExchange* pDX)
 {
   CDialog::DoDataExchange(pDX);
@@ -35,7 +33,6 @@ void CBindDialog::DoDataExchange(CDataExchange* pDX)
   DDX_Text(pDX, IDC_KIND, m_Kind);
   //}}AFX_DATA_MAP
 }
-
 
 BEGIN_MESSAGE_MAP(CBindDialog, CDialog)
   //{{AFX_MSG_MAP(CBindDialog)

@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef RECEIVER_STATS_H
 #define RECEIVER_STATS_H
 #include /**/ "ace/pre.h"

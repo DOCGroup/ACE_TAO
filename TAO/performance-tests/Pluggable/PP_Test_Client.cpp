@@ -50,7 +50,6 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (PP_Test_Client_Timeprobe_Description,
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
-// Constructor.
 PP_Test_Client::PP_Test_Client (bool shutdown)
   : loop_count_ (1),
     shutdown_ (shutdown),

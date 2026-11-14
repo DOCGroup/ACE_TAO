@@ -70,7 +70,6 @@ namespace FTAPP
     StringVec create_roles_;
     StringVec unregister_roles_;
 
-
     CosNaming::NamingContext_var naming_context_;
 
     ::FT::ReplicationManager_var replication_manager_;

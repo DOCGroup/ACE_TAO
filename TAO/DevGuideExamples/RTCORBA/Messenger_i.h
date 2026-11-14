@@ -38,5 +38,4 @@ private:
   RTCORBA::Current_var rt_current_;
 };
 
-
 #endif /* MESSENGERI_H_  */

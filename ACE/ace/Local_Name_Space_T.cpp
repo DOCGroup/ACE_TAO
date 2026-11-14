@@ -301,7 +301,6 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::resolve (
   return result;
 }
 
-
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
 ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::resolve_i (
   const ACE_NS_WString &name,
@@ -395,7 +394,6 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager ()
     }
   return result;
 }
-
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
 ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i ()

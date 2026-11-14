@@ -165,7 +165,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           }
       }
 
-
     //
     // This server is now ready to run.
     // This version does not create an IOR

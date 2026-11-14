@@ -94,7 +94,6 @@ ACE_Locked_Free_List<T, ACE_LOCK>::remove ()
   return temp;
 }
 
-
 // Returns the current size of the free list
 
 template <class T, class ACE_LOCK> size_t

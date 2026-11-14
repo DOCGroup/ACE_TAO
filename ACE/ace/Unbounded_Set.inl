@@ -42,5 +42,4 @@ ACE_Unbounded_Set<T>::ACE_Unbounded_Set (ACE_Allocator *alloc)
 {
 }
 
-
 ACE_END_VERSIONED_NAMESPACE_DECL

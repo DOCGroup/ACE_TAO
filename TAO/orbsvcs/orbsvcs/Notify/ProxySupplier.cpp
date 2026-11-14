@@ -112,7 +112,6 @@ TAO_Notify_ProxySupplier::shutdown ()
   if (this->TAO_Notify_Object::shutdown () == 1)
     return 1;
 
-
   this->disconnect ();
 
   if (this->consumer_.get() != nullptr)

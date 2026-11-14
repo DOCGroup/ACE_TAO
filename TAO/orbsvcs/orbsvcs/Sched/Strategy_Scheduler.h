@@ -6,7 +6,6 @@
  *  @author Chris Gill
  */
 
-
 #ifndef STRATEGY_SCHEDULER_H
 #define STRATEGY_SCHEDULER_H
 #include /**/ "ace/pre.h"
@@ -17,7 +16,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // forward declaration of the abstract base class for scheduler strategies
 class ACE_Scheduler_Strategy;
-
 
 /**
  * @class ACE_Strategy_Scheduler
@@ -68,8 +66,6 @@ private:
 
 };
 
-
-
 /**
  * @class ACE_Strategy_Scheduler_Factory
  *
@@ -86,8 +82,6 @@ public:
   ///   an instance of the the parameterized strategy type.
         static ACE_Strategy_Scheduler * create (RtecScheduler::Preemption_Priority_t minimum_critical_priority);
 };
-
-
 
 /**
  * @class ACE_Scheduler_Strategy
@@ -168,7 +162,6 @@ protected:
   ACE_DynScheduler::Preemption_Priority minimum_critical_priority_;
 };
 
-
 /**
  * @class ACE_MUF_Scheduler_Strategy
  *
@@ -239,7 +232,6 @@ private:
   static ACE_MUF_Scheduler_Strategy *instance_;
 };
 
-
 /**
  * @class ACE_RMS_Scheduler_Strategy
  *
@@ -301,7 +293,6 @@ private:
   /// Instance of the strategy.
   static ACE_RMS_Scheduler_Strategy *instance_;
 };
-
 
 /**
  * @class ACE_MLF_Scheduler_Strategy
@@ -366,7 +357,6 @@ private:
   static ACE_MLF_Scheduler_Strategy *instance_;
 };
 
-
 /**
  * @class ACE_EDF_Scheduler_Strategy
  *
@@ -416,7 +406,6 @@ protected:
     long dynamic_subpriority (Dispatch_Entry &entry,
                               RtecScheduler::Time current_time) override;
 
-
   /**
    * Orders two dispatch entries by ascending time to deadline: returns -1
    *   if the first Dispatch_Entry is greater in the order, 0 if they're
@@ -433,7 +422,6 @@ private:
   /// Instance of the strategy.
   static ACE_EDF_Scheduler_Strategy *instance_;
 };
-
 
 /**
  * @class ACE_Criticality_Scheduler_Strategy
@@ -498,7 +486,6 @@ private:
   /// Instance of the strategy.
   static ACE_Criticality_Scheduler_Strategy *instance_;
 };
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

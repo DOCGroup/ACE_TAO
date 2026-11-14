@@ -40,10 +40,8 @@ namespace TAO
   class IIOP_SSL_Connector : public TAO_IIOP_Connector
   {
   public:
-    /// Constructor.
     IIOP_SSL_Connector ();
 
-    /// Destructor.
     ~IIOP_SSL_Connector () override = default;
 
     int open (TAO_ORB_Core *orb_core) override;

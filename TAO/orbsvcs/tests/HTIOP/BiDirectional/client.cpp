@@ -3,7 +3,6 @@
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
 #include "tao/AnyTypeCode/Any.h"
 
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
 void do_nothing ()
@@ -105,7 +104,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                              ior),
                             1);
         }
-
 
       servant = new Callback_i (orb.in ());
 

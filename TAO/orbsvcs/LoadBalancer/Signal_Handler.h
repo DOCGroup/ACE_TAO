@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_LB_SIGNAL_HANDLER_H
 #define TAO_LB_SIGNAL_HANDLER_H
 
@@ -42,7 +41,6 @@
 class TAO_LB_Signal_Handler : public ACE_Task_Base
 {
 public:
-  /// Constructor.
   TAO_LB_Signal_Handler (CORBA::ORB_ptr orb,
                          PortableServer::POA_ptr poa);
 

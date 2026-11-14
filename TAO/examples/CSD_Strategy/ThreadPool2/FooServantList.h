@@ -8,7 +8,6 @@
 #include <atomic>
 #include <vector>
 
-
 class FooServantList
 {
 public:

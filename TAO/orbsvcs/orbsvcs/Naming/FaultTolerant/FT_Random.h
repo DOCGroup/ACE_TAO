@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef FT_RANDOM_H
 #define FT_RANDOM_H
 
@@ -21,7 +20,6 @@
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/Naming/FaultTolerant/FT_Location_Index_Map.h"
-
 
 #include "orbsvcs/CosLoadBalancingS.h"
 #include "ace/Vector_T.h"

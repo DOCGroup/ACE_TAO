@@ -159,7 +159,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
         test->op1 ("case1", v1.in (), ov1.out (), desc.inout ());
 
-
         VERIFY (! std::strcmp (desc.in (),
                                   "case1: A<-tB, truncate B to A"));
         VERIFY (v1->basic_data () == ov1->basic_data ());
@@ -453,7 +452,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         pretest = fail;
 
         test->op5 (a, "case11", ov1.out (), desc.inout ());
-
 
         VERIFY (! std::strcmp (desc.in (),
                                   "case11: A<-tB, unknown truncatable via Any"));

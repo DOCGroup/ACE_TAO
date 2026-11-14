@@ -15,7 +15,6 @@ ACEXML_Parser_Context::operator!= (ACEXML_Parser_Context const& src) const
           && this->locator_.get () != src.locator_.get ());
 }
 
-
 ACEXML_INLINE ACEXML_InputSource*
 ACEXML_Parser_Context::getInputSource ()
 {

@@ -46,7 +46,6 @@ public:
   /// Default constructor.
   CDR_Test ();
 
-  /// Constructor.
   CDR_Test (ACE_CDR::Char o,
             ACE_CDR::Short s,
             ACE_CDR::Long w,
@@ -343,7 +342,6 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_FILE_Addr filename (ACE_sap_any_cast (ACE_FILE_Addr &));
   if (fn != nullptr)
     filename.set (fn);
-
 
   ACE_FILE_Connector connector;
   ACE_FILE_IO file;

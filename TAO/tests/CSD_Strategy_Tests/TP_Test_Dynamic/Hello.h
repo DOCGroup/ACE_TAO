@@ -10,7 +10,6 @@ class Hello
   : public virtual POA_Test::Hello
 {
 public:
-  /// Constructor
   explicit Hello (CORBA::ORB_ptr orb);
 
   // = The skeleton methods

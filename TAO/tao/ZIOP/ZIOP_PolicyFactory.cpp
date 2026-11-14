@@ -136,6 +136,5 @@ TAO_ZIOP_PolicyFactory::_create_policy (CORBA::PolicyType type)
   throw ::CORBA::PolicyError (CORBA::BAD_POLICY_TYPE);
 }
 
-
 TAO_END_VERSIONED_NAMESPACE_DECL
 

@@ -160,7 +160,6 @@ public:
 
 private:
   /// The instance of the above mapping for the offer provided in the
-  /// constructor.
   TAO_Lookup_Table table_;
 };
 

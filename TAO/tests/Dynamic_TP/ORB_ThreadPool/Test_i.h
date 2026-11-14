@@ -11,7 +11,6 @@
 class Sleeper_i : public virtual POA_Test::Sleeper
 {
 public:
-  /// Constructor
   explicit Sleeper_i (CORBA::ORB_ptr orb);
   Sleeper_i (Sleeper_i const &) = delete;
   Sleeper_i (Sleeper_i &&) = delete;
@@ -27,12 +26,10 @@ private:
   CORBA::ORB_var const orb_;
 };
 
-
 /// Implement the Test::Sleeper interface
 class Middle_i : public virtual POA_Test::Middle
 {
 public:
-  /// Constructor
   Middle_i (CORBA::ORB_ptr orb, Test::Sleeper_ptr sleeper);
   Middle_i (Middle_i const &) = delete;
   Middle_i (Middle_i &&) = delete;

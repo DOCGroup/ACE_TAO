@@ -13,7 +13,6 @@ class EventNode
   : public virtual POA_Test::EventNode
 {
 public:
-  /// Constructor
   EventNode (CORBA::ORB_ptr orb,
              ACE_thread_t thr_id);
   EventNode (EventNode const &) = delete;

@@ -76,7 +76,6 @@ TAO_OperationDef_i::result_i ()
                                             "result",
                                             result_path);
 
-
   TAO_IDLType_i *impl =
     TAO_IFR_Service_Utils::path_to_idltype (result_path,
                                             this->repo_);

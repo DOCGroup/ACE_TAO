@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_LOG_CONSTRAINT_VISITORS_H
 #define TAO_LOG_CONSTRAINT_VISITORS_H
 
@@ -48,7 +47,6 @@ class TAO_Log_Serv_Export TAO_Log_Constraint_Visitor :
   public ETCL_Constraint_Visitor
 {
 public:
-  /// Constructor.
   explicit TAO_Log_Constraint_Visitor (DsLogAdmin::LogRecord const & rec);
 
   /**

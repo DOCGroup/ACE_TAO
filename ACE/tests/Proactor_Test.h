@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_TESTS_PROACTOR_TEST_H
 #define ACE_TESTS_PROACTOR_TEST_H
 

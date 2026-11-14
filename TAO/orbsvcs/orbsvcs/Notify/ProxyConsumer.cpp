@@ -158,7 +158,6 @@ TAO_Notify_ProxyConsumer::shutdown ()
   if (this->TAO_Notify_Object::shutdown () == 1)
     return 1;
 
-
   this->disconnect ();
 
   if (this->supplier_.get() != nullptr)
@@ -178,19 +177,16 @@ TAO_Notify_ProxyConsumer::destroy ()
   // It is not safe to delete the non-refcounted supplier here.
 }
 
-
 ACE_Time_Value
 TAO_Notify_ProxyConsumer::last_ping() const
 {
   return this->last_ping_.value ();
 }
 
-
 void
 TAO_Notify_ProxyConsumer::last_ping(const ACE_Time_Value& tv)
 {
   this->last_ping_ = tv;
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

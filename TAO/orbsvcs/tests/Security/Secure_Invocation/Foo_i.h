@@ -19,7 +19,6 @@
 class Foo_i : public virtual POA_Foo::Bar
 {
 public:
-  /// Constructor.
   Foo_i (CORBA::ORB_ptr,
          SecurityLevel3::SecurityCurrent_ptr current);
   Foo_i (Foo_i const &) = delete;

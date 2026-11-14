@@ -37,5 +37,4 @@ private:
   bool            isHit_ {};
 };
 
-
 #endif /* MESSENGERI_H_  */

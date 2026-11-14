@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_LB_CPU_UTILIZATION_MONITOR_H
 #define TAO_LB_CPU_UTILIZATION_MONITOR_H
 

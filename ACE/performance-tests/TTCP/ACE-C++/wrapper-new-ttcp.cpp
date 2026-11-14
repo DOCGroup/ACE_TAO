@@ -695,7 +695,6 @@ prep_timer ()
   itime0.it_value.tv_sec = 3600;
   itime0.it_value.tv_usec = 0;
 
-
   getrusage (RUSAGE_SELF, std::addressof (ru0));
   std::fprintf (stdout, "\n");
   std::fprintf (stdout, "beginning user time = %lld sec and %lld usec\n",

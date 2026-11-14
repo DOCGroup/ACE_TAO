@@ -35,7 +35,6 @@ private:
   JAWS_HTTP_Data data_;
 };
 
-
 /// Accepts HTTP connections and creates their service handlers.
 class ACE_Svc_Export JAWS_HTTP_Acceptor
   : public ACE_Acceptor<JAWS_HTTP_Service_Handler, ACE_SOCK_ACCEPTOR>

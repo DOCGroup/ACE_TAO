@@ -9,7 +9,6 @@
 #include "jaws3/Protocol_Handler.h"
 #include "jaws3/Options.h"
 
-
 JAWS_TPR_Concurrency::JAWS_TPR_Concurrency ()
   : shutdown_task_ (false)
   , error_ (false)

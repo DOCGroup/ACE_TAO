@@ -70,7 +70,6 @@ public:
    */
   int validAttr () override;
 
-
   /**
    * Dump the content of the attribute definition.
    */
@@ -149,7 +148,6 @@ public:
    */
   int insertAttribute (ACEXML_Attribute_Def_Builder *def) override;
 
-
   /**
    * Dump the content of the attribute definition.
    */
@@ -161,7 +159,6 @@ protected:
   /// Collection of attributes.
   ACEXML_ATT_MAP attributes_;
 };
-
 
 #include /**/ "ace/post.h"
 

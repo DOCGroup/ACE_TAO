@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
 #include "tao/ORB.h"

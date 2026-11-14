@@ -174,7 +174,6 @@ TAO_Notify_Method_Request_Dispatch::unmarshal (
 
 ///////////////////////////////////////////////////////////////////////////////
 
-
 /*******************************************************************/
 
 // Constuct construct from another method request+event

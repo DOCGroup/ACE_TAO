@@ -39,7 +39,6 @@ private:
   // The orb
 };
 
-
 static int
 parse_args (int argc, ACE_TCHAR **argv, Server_Options &options)
 {
@@ -69,7 +68,6 @@ parse_args (int argc, ACE_TCHAR **argv, Server_Options &options)
   // Indicates successful parsing of command line.
   return 0;
 }
-
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
@@ -210,7 +208,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   return 0;
 }
-
 
 // ****************************************************************
 

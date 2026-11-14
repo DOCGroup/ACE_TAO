@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 #include "ami_test_i.h"
@@ -73,7 +72,6 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
   // Indicates successful parsing of the command line
   return 0;
 }
-
 
 /**
  * @class Client

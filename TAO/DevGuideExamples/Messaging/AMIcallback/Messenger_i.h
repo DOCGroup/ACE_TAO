@@ -16,7 +16,6 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 class  Messenger_i : public virtual POA_Messenger
 {
 public:
@@ -45,6 +44,5 @@ private:
   // exception handling
   CORBA::Boolean throw_exception_;
 };
-
 
 #endif /* MESSENGER_IMPL_H_  */

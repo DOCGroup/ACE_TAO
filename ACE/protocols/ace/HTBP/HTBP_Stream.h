@@ -156,7 +156,6 @@ namespace ACE
                     size_t n,
                     ACE_OVERLAPPED *overlapped) const;
 
-
       /// Try to recv exactly <len> bytes into <buf> from the
       /// connected socket.
       ssize_t recv_n (void *buf,

@@ -6,9 +6,7 @@
  *  @author Chris Gill
  */
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 
 /// Returns a pointer to the underlying RT_Info.
 ACE_INLINE Task_Entry::RT_Info *
@@ -108,7 +106,6 @@ Task_Entry::has_unresolved_remote_dependencies () const
   return has_unresolved_remote_dependencies_;
 }
 
-
 /// Sets a flag indicating whether the node has unresolved local dependencies.
 
 ACE_INLINE void
@@ -149,7 +146,6 @@ Task_Entry::dispatches ()
   return dispatches_;
 }
 
-
 ACE_INLINE Task_Entry::Info_Type
 Task_Entry::info_type () const
 {
@@ -169,9 +165,6 @@ Task_Entry::effective_execution_time () const
          ? static_cast<u_long> (worst_case_execution_time * dispatches_.size ())
          : 0;
 }
-
-
-
 
 /// Gets the number of calls of the dependency by the dependant.
 ACE_INLINE CORBA::Long
@@ -199,7 +192,6 @@ Task_Entry_Link::called () const
 {
   return called_;
 }
-
 
 ACE_INLINE u_long
 Dispatch_Entry::dispatch_id () const
@@ -255,7 +247,6 @@ Dispatch_Entry::static_subpriority (Dispatch_Entry::Sub_Priority p)
   static_subpriority_ = p;
 }
 
-
 ACE_INLINE Dispatch_Entry::Time
 Dispatch_Entry::arrival () const
 {
@@ -274,15 +265,12 @@ Dispatch_Entry::task_entry () const
   return task_entry_;
 }
 
-
 /// Gets a pointer to the original dispatch.
 ACE_INLINE Dispatch_Entry *
 Dispatch_Entry::original_dispatch ()
 {
   return original_dispatch_;
 }
-
-
 
 /// Compares dispatch entries.
 ACE_INLINE bool
@@ -291,15 +279,12 @@ Dispatch_Entry_Link::operator < (Dispatch_Entry_Link const &d) const
   return (this->dispatch_entry_ < d.dispatch_entry_);
 }
 
-
 /// Gets a reference to the dispatch entry.
 ACE_INLINE Dispatch_Entry &
 Dispatch_Entry_Link::dispatch_entry () const
 {
   return dispatch_entry_;
 }
-
-
 
 /// Returns 0 if there are more entries to see, and 1 otherwise.
 ACE_INLINE int
@@ -308,15 +293,12 @@ Dispatch_Proxy_Iterator::done () const
   return iter_.done ();
 }
 
-
-
 /// Gets a reference to the dispatch entry.
 ACE_INLINE Dispatch_Entry &
 TimeLine_Entry::dispatch_entry () const
 {
   return dispatch_entry_;
 }
-
 
 /// Gets the time slice start time in 100-nanosecond units.
 ACE_INLINE RtecScheduler::Time
@@ -346,7 +328,6 @@ TimeLine_Entry::deadline () const
   return deadline_;
 }
 
-
 /// Gets the next slice for this dispatch.
 ACE_INLINE TimeLine_Entry *
 TimeLine_Entry::next () const
@@ -375,16 +356,12 @@ TimeLine_Entry::prev (TimeLine_Entry *t)
   prev_ = t;
 }
 
-
 /// Compares time line entries by start time.
 ACE_INLINE bool
 TimeLine_Entry::operator < (TimeLine_Entry const &t) const
 {
   return (start_ < t.start_) ? true : false;
 }
-
-
-
 
 /// Constructs a link for a time line entry.
 ACE_INLINE TimeLine_Entry_Link::TimeLine_Entry_Link (TimeLine_Entry &t)

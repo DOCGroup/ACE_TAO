@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_SERVER_REQUEST_INTERCEPTOR_H
 #define TAO_SERVER_REQUEST_INTERCEPTOR_H
 
@@ -46,7 +45,6 @@ class ServerRequestInterceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   ServerRequestInterceptor ();
   ServerRequestInterceptor (ServerRequestInterceptor const &) = delete;
   ServerRequestInterceptor (ServerRequestInterceptor &&) = delete;
@@ -84,7 +82,6 @@ public:
   CORBA::Long request_count ();
 
 protected:
-  /// Destructor.
   /**
    * Protected destructor to enforce correct memory management via
    * reference counting.
@@ -99,6 +96,5 @@ private:
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
-
 
 #endif  /* TAO_SERVER_REQUEST_INTERCEPTOR_H */

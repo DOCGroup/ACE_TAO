@@ -10,7 +10,6 @@
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_strings.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
@@ -176,7 +175,6 @@ TAO_EC_Sched_Factory::create_filter_builder (TAO_EC_Event_Channel_Base *ec)
 
   return this->TAO_EC_Default_Factory::create_filter_builder (ec);
 }
-
 
 TAO_EC_Timeout_Generator*
 TAO_EC_Sched_Factory::create_timeout_generator (TAO_EC_Event_Channel_Base *ec)

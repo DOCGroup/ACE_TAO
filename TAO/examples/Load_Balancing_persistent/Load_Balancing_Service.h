@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef LOAD_BALANCING_SERVICE_H_
 #define LOAD_BALANCING_SERVICE_H_
 
@@ -33,7 +32,6 @@ public:
   /// Default constructor.
   Load_Balancing_Service () = default;
 
-  /// Destructor.
   ~Load_Balancing_Service () = default;
 
   Load_Balancing_Service (Load_Balancing_Service const &) = delete;

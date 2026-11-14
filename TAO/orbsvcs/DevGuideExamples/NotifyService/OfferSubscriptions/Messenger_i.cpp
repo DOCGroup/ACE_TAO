@@ -114,7 +114,6 @@ CORBA::Boolean Messenger_i::send_message (
   std::cout << "Subject:      " << subject << std::endl;
   std::cout << "Message:      " << message << std::endl;
 
-
   CosNotification::StructuredEvent event;
 
   event.header.fixed_header.event_type.domain_name =

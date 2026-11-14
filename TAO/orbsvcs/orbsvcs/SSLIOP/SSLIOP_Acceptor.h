@@ -44,12 +44,10 @@ namespace TAO
       : public IIOP_SSL_Acceptor
     {
     public:
-      /// Constructor.
       Acceptor (::Security::QOP qop,
                 ACE_Time_Value const & timeout,
                 bool check_host);
 
-      /// Destructor.
       ~Acceptor () override;
 
       using BASE_ACCEPTOR = TAO_Strategy_Acceptor<Connection_Handler, ACE_SSL_SOCK_Acceptor>;

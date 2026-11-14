@@ -12,7 +12,6 @@
 #include "ace/OS_main.h"
 #include "ace/Truncate.h"
 
-
 // Are we running verbosely?
 static int verbose = 0;
 

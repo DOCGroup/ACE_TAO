@@ -55,9 +55,7 @@ private:
   ACE_Unbounded_Queue<ACE_TCHAR *> queue_;
 };
 
-
 // = Underlying implementation class.
-
 
 class JAWS_Config_File_Impl
 {

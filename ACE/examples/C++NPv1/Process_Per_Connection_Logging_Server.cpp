@@ -19,7 +19,6 @@ namespace {
   extern "C" void sigterm_handler (int /* signum */) { /* No-op. */ }
 }
 
-
 Logging_Process::Logging_Process (char const *prog_name,
                                   ACE_SOCK_Stream const &logging_peer)
   : prog_name_ (prog_name),
@@ -60,7 +59,6 @@ Logging_Process::unmanage ()
   // ACE_Process_Manager calls this after it has finished tracking the process.
   delete this;
 }
-
 
 int
 Process_Per_Connection_Logging_Server::handle_connections ()
@@ -123,7 +121,6 @@ Process_Per_Connection_Logging_Server::handle_data (ACE_SOCK_Stream *client)
   return 0;
 }
 
-
 int
 Process_Per_Connection_Logging_Server::run (int argc, char *argv[])
 {
@@ -180,7 +177,6 @@ Process_Per_Connection_Logging_Server::run_worker (int, char *argv[])
   client.close ();
   return 0;
 }
-
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {

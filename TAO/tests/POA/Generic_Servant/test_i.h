@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #include "testS.h"
 
 class GENERIC_SERVANT_Export test_i : public POA_test

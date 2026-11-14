@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Reactor.h"
@@ -268,7 +267,6 @@ test<REACTOR_IMPLEMENTATION>::test (int extra_iterations_needed)
               nullptr,
               extra_iterations_needed);
     }
-
 
   if (test_simple_notify)
     {

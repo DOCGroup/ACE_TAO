@@ -72,7 +72,6 @@ private:
   ACE::HTBP::Stream &stream_;
 };
 
-
 Accept_Handler::Accept_Handler(ACE_SOCK_Acceptor &a)
   :ACE_Event_Handler(),
    acceptor_(a)

@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_LB_LOAD_MANAGER_H
 #define TAO_LB_LOAD_MANAGER_H
 
@@ -33,7 +32,6 @@
 #include "ace/Unbounded_Queue.h"
 #include "ace/Task.h"
 #include "tao/Condition.h"
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -415,7 +413,6 @@ private:
   /// Long timeout for non_exist call. defaults to 5 seconds
   ACE_Time_Value ping_interval_;
 };
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

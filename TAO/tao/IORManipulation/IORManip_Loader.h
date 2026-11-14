@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-
 //=============================================================================
 /**
  *  @file    IORManip_Loader.h
@@ -8,7 +7,6 @@
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
 //=============================================================================
-
 
 #ifndef TAO_IORMANIP_LOADER_H
 #define TAO_IORMANIP_LOADER_H

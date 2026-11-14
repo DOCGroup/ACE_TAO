@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #if !defined (TEST_DYNSEQUENCE_H)
 #define TEST_DYNSEQUENCE_H
 

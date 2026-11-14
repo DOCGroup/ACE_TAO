@@ -115,7 +115,6 @@ TAO_Notify_EventChannel::init (TAO_Notify_EventChannelFactory* ecf
   // ECF.  Lazy evaluation also avoids creating unneded admins.
 }
 
-
 void
 TAO_Notify_EventChannel::init (TAO_Notify::Topology_Parent* parent)
 {
@@ -170,7 +169,6 @@ TAO_Notify_EventChannel::init (TAO_Notify::Topology_Parent* parent)
     TAO_Notify_PROPERTIES::instance()->builder()->build_filter_factory (
     default_poa.in(), this->default_filter_factory_servant_);
 }
-
 
 void
 TAO_Notify_EventChannel::_add_ref ()
@@ -584,7 +582,6 @@ TAO_Notify_EventChannel::find_proxy_supplier (TAO_Notify::IdVec & id_path, size_
   return result;
 }
 
-
 void
 TAO_Notify_EventChannel::reconnect ()
 {
@@ -609,7 +606,6 @@ TAO_Notify_EventChannel::sa_container()
   return *sa_container_;
 }
 
-
 void
 TAO_Notify_EventChannel::validate ()
 {
@@ -619,6 +615,5 @@ TAO_Notify_EventChannel::validate ()
   TAO_Notify::Validate_Worker<TAO_Notify_SupplierAdmin> sa_wrk;
   this->sa_container().collection()->for_each(&sa_wrk);
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

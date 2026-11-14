@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_SERVER_LOGGING_HANDLER_T_H
 #define ACE_SERVER_LOGGING_HANDLER_T_H
 
@@ -24,7 +23,6 @@
 #include "ace/Svc_Handler.h"
 #include "ace/Acceptor.h"
 #include "ace/SString.h"
-
 
 #if !defined (__GNUG__)
 #include "Base_Optimizer.h"
@@ -45,10 +43,8 @@ template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_DECL, class LOG_MESSAGE_RE
 class ACE_Server_Logging_Handler_T : public ACE_Svc_Handler<ACE_PEER_STREAM_2, ACE_SYNCH_USE>
 {
 public:
-  /// Constructor.
   ACE_Server_Logging_Handler_T (ACE_Thread_Manager *,
                                 const LOG_MESSAGE_RECEIVER &receiver );
-
 
   /// Process remote logging records.
   virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE) override;

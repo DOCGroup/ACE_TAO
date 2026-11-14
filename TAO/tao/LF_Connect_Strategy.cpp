@@ -56,5 +56,4 @@ TAO_LF_Connect_Strategy::wait_i (TAO_LF_Event *ev,
   return result;
 }
 
-
 TAO_END_VERSIONED_NAMESPACE_DECL

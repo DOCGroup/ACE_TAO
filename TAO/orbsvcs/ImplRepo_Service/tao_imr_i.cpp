@@ -90,7 +90,6 @@ TAO_IMR_i::init (int argc, ACE_TCHAR **argv)
   return 0;
 }
 
-
 // Go through and figure out which operation we should do.
 
 int
@@ -119,7 +118,6 @@ TAO_IMR_i::parse_args ()
   return this->op_->parse (this->argc_ - 1, this->argv_ + 1);
 }
 
-
 // Print out information about all operations.
 
 void
@@ -139,7 +137,6 @@ TAO_IMR_i::print_usage ()
     "    update        Update an entry in the ImR\n"
     "  where [command-arguments] depend on the command\n"));
 }
-
 
 // Factory for operations
 
@@ -176,7 +173,6 @@ TAO_IMR_Op::make_op (ACE_TCHAR const *op_name)
 
   return nullptr;
 }
-
 
 TAO_IMR_Op::~TAO_IMR_Op ()
 {
@@ -244,7 +240,6 @@ TAO_IMR_Op::display_server_information (const ImplementationRepository::ServerIn
   ORBSVCS_DEBUG ((LM_DEBUG, "  Working Directory: %s\n", info.startup.working_directory.in ()));
   ORBSVCS_DEBUG ((LM_DEBUG, "  Activation Mode: %C\n", act));
   ORBSVCS_DEBUG ((LM_DEBUG, "  Number of retries: %d\n%C", limit - 1, locked_out));
-
 
   for (CORBA::ULong i {}; i < info.startup.environment.length (); ++i)
     ORBSVCS_DEBUG ((LM_DEBUG, "Environment Variable: %C=%C\n",
@@ -852,10 +847,8 @@ TAO_IMR_Op_Register::parse (int argc, ACE_TCHAR **argv)
   return 0;
 }
 
-
 // ============================================================================
 // = Run methods
-
 
 int
 TAO_IMR_Op_Activate::run ()
@@ -1127,7 +1120,6 @@ TAO_IMR_Op_Link::run ()
 
   return TAO_IMR_Op::NORMAL;
 }
-
 
 int
 TAO_IMR_Op_List::run ()

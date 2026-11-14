@@ -1207,7 +1207,6 @@ ACE_Concurrency_Strategy<SVC_HANDLER>::~ACE_Concurrency_Strategy ()
   ACE_TRACE ("ACE_Concurrency_Strategy<SVC_HANDLER>::~ACE_Concurrency_Strategy");
 }
 
-
 template <class SVC_HANDLER> void
 ACE_Concurrency_Strategy<SVC_HANDLER>::dump () const
 {
@@ -1221,7 +1220,6 @@ ACE_Reactive_Strategy<SVC_HANDLER>::~ACE_Reactive_Strategy ()
 {
   ACE_TRACE ("ACE_Reactive_Strategy<SVC_HANDLER>::~ACE_Reactive_Strategy");
 }
-
 
 template <class SVC_HANDLER> void
 ACE_Reactive_Strategy<SVC_HANDLER>::dump () const

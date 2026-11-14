@@ -8,7 +8,6 @@
  */
 //=======================================================================
 
-
 #ifndef TAO_LB_LOAD_ALERT_MAP_H
 #define TAO_LB_LOAD_ALERT_MAP_H
 

@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_TKREACTOR_H
 #define ACE_TKREACTOR_H
 #include /**/ "ace/pre.h"

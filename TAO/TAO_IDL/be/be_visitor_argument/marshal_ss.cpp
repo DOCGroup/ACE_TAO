@@ -12,7 +12,6 @@
 
 #include "argument.h"
 
-
 // ************************************************************************
 // Visitor to generate code for passing argument to the marshal/demarshal
 // routines
@@ -496,7 +495,6 @@ be_visitor_args_marshal_ss::emit_common ()
 
   return 0;
 }
-
 
 int
 be_visitor_args_marshal_ss::emit_common2 (be_type *node)

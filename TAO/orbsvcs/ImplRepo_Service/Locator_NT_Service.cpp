@@ -45,13 +45,11 @@ Locator_NT_Service::handle_control (DWORD control_code)
     }
 }
 
-
 int
 Locator_NT_Service::handle_exception (ACE_HANDLE)
 {
   return 0;
 }
-
 
 /**
  * We do almost the same thing as we do in run_standalone ()

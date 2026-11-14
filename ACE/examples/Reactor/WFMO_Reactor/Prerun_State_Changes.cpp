@@ -9,12 +9,10 @@
  */
 //=============================================================================
 
-
 #include "ace/Reactor.h"
 #include "ace/OS_main.h"
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/Log_Msg.h"
-
 
 /**
  * @class Event_Handler

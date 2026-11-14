@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 //#define ACE_ENABLE_TIMEPROBES
 //#define ACE_MT_TIMEPROBES
 //#define ACE_TSS_TIMEPROBES
@@ -21,7 +20,6 @@
 #include "ace/Null_Mutex.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Timeprobe.h"
-
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 

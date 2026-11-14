@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef PROGRESS_I_H
 #define PROGRESS_I_H
 
@@ -20,7 +19,6 @@
 class Progress_Window : public Fl_Box
 {
 public:
-  /// Constructor
   Progress_Window (int n_peers,
                    int n_iterations,
                    int x, int y,

@@ -4,7 +4,6 @@
  *  @author Chris Gill
  */
 
-
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Sched/DynSched.h"
 #include "ace/Basic_Types.h"
@@ -20,9 +19,7 @@
 #include "orbsvcs/Sched/DynSched.inl"
 #endif /* __ACE_INLINE__ */
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 
 // compare the DFS finish times of two task entries, order higher time *first*
 extern "C" int compare_entry_finish_times (void const *first, void const *second)
@@ -63,7 +60,6 @@ extern "C" int compare_entry_finish_times (void const *first, void const *second
 
   return 0;
 }
-
 
 char const *
 ACE_DynScheduler::status_message (ACE_DynScheduler::status_t status)
@@ -169,7 +165,6 @@ ACE_DynScheduler::anomaly_severity (ACE_DynScheduler::status_t status)
   }
 }
 
-
 /// Utility function for creating an entry for the
 /// log of anomalies detected during scheduling.
 ACE_DynScheduler::Scheduling_Anomaly *
@@ -184,7 +179,6 @@ ACE_DynScheduler::create_anomaly (ACE_DynScheduler::status_t status)
   return anomaly;
 }
 
-
 ACE_DynScheduler::ACE_DynScheduler ()
   // Set the minimum and maximum priority to those for the current platform.
   // This shouldn't be necessary, but UPSingleProcessorOrb::initialize_reactors
@@ -198,13 +192,11 @@ ACE_DynScheduler::ACE_DynScheduler ()
 {
 }
 
-
 ACE_DynScheduler::~ACE_DynScheduler ()
 {
   // release all resources used for the most recent schedule
   reset ();
 }
-
 
 /// Initializes the scheduler.
 void
@@ -271,7 +263,6 @@ ACE_DynScheduler::register_task (RT_Info *rt_info, handle_t &handle)
   return ret;
 }
 
-
 ACE_DynScheduler::status_t
 ACE_DynScheduler::get_rt_info (Object_Name name,
                                RT_Info* &rtinfo)
@@ -318,8 +309,6 @@ ACE_DynScheduler::get_rt_info (Object_Name name,
     }
 }
 
-
-
 /// "priority" is the OS thread priority assigned to the Task with the given
 /// "handle". "subpriority" combines its dynamic and static subpriorities,
 /// and "preemption_prio" is a platform-independent priority queue number,
@@ -361,7 +350,6 @@ int ACE_DynScheduler::priority (
     return -1;
   }
 }
-
 
 int ACE_DynScheduler::number_of_dependencies(RT_Info* rt_info)
 {
@@ -456,7 +444,6 @@ void ACE_DynScheduler::export_to_file (RT_Info& info, FILE* file)
 
 }
 
-
 /// Provides the thread priority and queue type for the given priority level.
 int
 ACE_DynScheduler::dispatch_configuration (Preemption_Priority const & p_priority,
@@ -536,7 +523,6 @@ ACE_DynScheduler::lookup_config_info (Preemption_Priority priority,
   return ST_UNKNOWN_PRIORITY;
 }
 
-
 void
 ACE_DynScheduler::reset ()
 {
@@ -587,7 +573,6 @@ ACE_DynScheduler::reset ()
       delete config_info_entries_;
       config_info_entries_ = nullptr;
     }
-
 
     if (expanded_dispatches_ != nullptr)
     {
@@ -1028,7 +1013,6 @@ ACE_DynScheduler::schedule (
             }
         }
 
-
       temp_status = output_timeline (timeline_filename_, 0);
       if (temp_status != SUCCEEDED)
         {
@@ -1086,7 +1070,6 @@ ACE_DynScheduler::schedule (
     default:
       break;
   }
-
 
   return status_;
 }
@@ -1191,7 +1174,6 @@ ACE_DynScheduler::propagate_dispatches (
   return status;
 }
 
-
 ACE_DynScheduler::status_t
 ACE_DynScheduler::calculate_utilization_params ()
 {
@@ -1240,7 +1222,6 @@ ACE_DynScheduler::calculate_utilization_params ()
   return (1.0 - critical_set_utilization_ > DBL_EPSILON)
     ? SUCCEEDED : ST_UTILIZATION_BOUND_EXCEEDED;
 }
-
 
 void
 ACE_DynScheduler::update_priority_level_params ()
@@ -1302,7 +1283,6 @@ ACE_DynScheduler::setup_task_entries ()
   ACE_NEW_RETURN (config_info_entries_,
                   ACE_Unbounded_Set <Config_Info *>,
                   ST_VIRTUAL_MEMORY_EXHAUSTED);
-
 
   // set up links between rt_info_entries_, task_entries_,
   // and ordered_task_entries_ tables
@@ -1566,7 +1546,6 @@ ACE_DynScheduler::check_dependency_cycles ()
   return return_status;
 }
 
-
 ACE_DynScheduler::status_t
 ACE_DynScheduler::check_dependency_cycles_recurse (Task_Entry &entry)
 {
@@ -1610,7 +1589,6 @@ ACE_DynScheduler::check_dependency_cycles_recurse (Task_Entry &entry)
   return return_status;
 }
 
-
 /// Sets up thread dispatch entries and invokes the internal thread scheduling
 /// method.
 ACE_DynScheduler::status_t
@@ -1628,7 +1606,6 @@ ACE_DynScheduler::schedule_threads (ACE_Unbounded_Set<RtecScheduler::Scheduling_
                   Dispatch_Entry * [threads_],
                   ST_VIRTUAL_MEMORY_EXHAUSTED);
   std::fill_n (ordered_thread_dispatch_entries_, threads_, nullptr);
-
 
   // copy pointers to the thread delineators from the set to the array
   ACE_Unbounded_Set_Iterator <Dispatch_Entry *> iter (*thread_delineators_);
@@ -1718,7 +1695,6 @@ ACE_DynScheduler::store_assigned_info ()
 
   return SUCCEEDED;
 }
-
 
 /// Creates a timeline.
 ACE_DynScheduler::status_t
@@ -1852,7 +1828,6 @@ ACE_DynScheduler::create_timeline ()
   return status;
 }
 
-
 ACE_DynScheduler::status_t
 ACE_DynScheduler::output_dispatch_priorities (char const *filename)
 {
@@ -1875,7 +1850,6 @@ ACE_DynScheduler::output_dispatch_priorities (char const *filename)
 
   return status;
 }
-
 
 ACE_DynScheduler::status_t
 ACE_DynScheduler::output_dispatch_priorities (FILE *file)
@@ -1944,7 +1918,6 @@ ACE_DynScheduler::output_dispatch_priorities (FILE *file)
 
   return SUCCEEDED;
 }
-
 
 ACE_DynScheduler::status_t
 ACE_DynScheduler::output_dispatch_timeline (char const *filename)
@@ -2162,7 +2135,6 @@ ACE_DynScheduler::output_preemption_timeline (FILE *file)
   return SUCCEEDED;
 }
 
-
 ACE_DynScheduler::status_t
 ACE_DynScheduler::output_viewer_timeline (char const *filename)
 {
@@ -2280,7 +2252,6 @@ ACE_DynScheduler::output_viewer_timeline (FILE *file)
 
   return SUCCEEDED;
 }
-
 
 /// Prints the entire set of timeline outputs to the specified file.
 ACE_DynScheduler::status_t

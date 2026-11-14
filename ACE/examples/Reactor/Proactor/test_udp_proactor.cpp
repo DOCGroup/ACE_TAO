@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #include "ace/OS_main.h"
 #include "ace/Proactor.h"
 #include "ace/Asynch_IO.h"
@@ -21,7 +20,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 #include <cstring>
-
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
   // This only works on asynch I/O-capable platforms.
@@ -352,7 +350,6 @@ Sender::handle_write_dgram (const ACE_Asynch_Write_Dgram::Result &result)
   ACE_DEBUG ((LM_DEBUG, "%s = %s\n", "completion_key", result.completion_key ()));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "error", result.error ()));
   ACE_DEBUG ((LM_DEBUG, "********************\n"));
-
 
   ACE_DEBUG ((LM_DEBUG,
               "Sender completed\n"));

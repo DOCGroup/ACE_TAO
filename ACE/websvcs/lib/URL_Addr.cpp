@@ -291,7 +291,6 @@ ACE_HTTP_Addr::url_size (int flags) const
     + (this->path_?ACE_OS::strlen (this->path_):0)
     + (this->query_?ACE_OS::strlen (this->query_):0);
 
-
   if (flags == 0)
     {
       size += sizeof (ACE_TEXT("255.255.255.255"));

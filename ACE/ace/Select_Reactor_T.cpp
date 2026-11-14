@@ -101,7 +101,6 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::initialized ()
   return this->initialized_;
 }
 
-
 template <class ACE_SELECT_REACTOR_TOKEN> int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::owner (ACE_thread_t tid,
                                                        ACE_thread_t *o_id)

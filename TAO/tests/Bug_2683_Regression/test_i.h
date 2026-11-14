@@ -10,7 +10,6 @@
 class ORB_Killer : public ACE_Task_Base
 {
 public:
-  /// Constructor
   explicit ORB_Killer (CORBA::ORB_ptr orb);
   ORB_Killer (ORB_Killer const &) = delete;
   ORB_Killer &operator= (ORB_Killer const &) = delete;
@@ -27,7 +26,6 @@ class test_i
   : public virtual POA_Test::IORTable_Shutdown_Race
 {
 public:
-  /// Constructor
   explicit test_i (ORB_Killer *killer);
   test_i (test_i const &) = delete;
   test_i &operator= (test_i const &) = delete;

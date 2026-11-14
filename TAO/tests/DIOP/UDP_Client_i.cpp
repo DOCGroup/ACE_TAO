@@ -4,7 +4,6 @@
 
 // This is the interface program that accesses the remote object
 
-// Constructor.
 UDP_Client_i::UDP_Client_i (CORBA::ORB_ptr orb,
                             UDP_ptr udp,
                             UDP_ptr udpHandler,

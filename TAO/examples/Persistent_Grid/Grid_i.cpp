@@ -4,8 +4,6 @@
 #include <new>
 #include <utility>
 
-//  Constructor.
-
 Grid_i::Grid_i (CORBA::Short x,
                 CORBA::Short y,
                 pool_t *mem_pool)

@@ -9,7 +9,6 @@
  *  @author Ossama Othman <ossama@uci.edu>
  */
 
-
 #ifndef TAO_UIOP_CONNECTOR_H
 #define TAO_UIOP_CONNECTOR_H
 

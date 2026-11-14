@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef HELPER_H
 #define HELPER_H
 
@@ -21,10 +20,8 @@
 class Generator
 {
 public:
-  /// constructor
   Generator ();
 
-  /// destructor
   ~Generator ();
 
   CORBA::Short gen_short ();

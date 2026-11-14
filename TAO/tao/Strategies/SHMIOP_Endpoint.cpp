@@ -153,7 +153,6 @@ TAO_SHMIOP_Endpoint::duplicate ()
   return endpoint;
 }
 
-
 CORBA::Boolean
 TAO_SHMIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
 {

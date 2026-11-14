@@ -351,7 +351,6 @@ ACE_Double_Linked_List_Iterator_Base<T>::ACE_Double_Linked_List_Iterator_Base (c
   // Do nothing
 }
 
-
 template <class T> T *
 ACE_Double_Linked_List_Iterator_Base<T>::next () const
 {
@@ -364,7 +363,6 @@ ACE_Double_Linked_List_Iterator_Base<T>::next (T *&ptr) const
   ptr = this->not_done ();
   return ptr ? 1 : 0;
 }
-
 
 template <class T> int
 ACE_Double_Linked_List_Iterator_Base<T>::done () const
@@ -511,7 +509,6 @@ ACE_Double_Linked_List_Iterator<T>::operator++ ()
   return *this;
 }
 
-
 // Postfix advance.
 
 template <class T>
@@ -523,7 +520,6 @@ ACE_Double_Linked_List_Iterator<T>::operator++ (int)
   return retv;
 }
 
-
 // Prefix reverse.
 
 template <class T>
@@ -533,7 +529,6 @@ ACE_Double_Linked_List_Iterator<T>::operator-- ()
   this->do_retreat ();
   return *this;
 }
-
 
 // Postfix reverse.
 
@@ -545,7 +540,6 @@ ACE_Double_Linked_List_Iterator<T>::operator-- (int)
   this->do_retreat ();
   return retv;
 }
-
 
 //--------------------------------------------------
 ACE_ALLOC_HOOK_DEFINE_Tc(ACE_Double_Linked_List_Reverse_Iterator)
@@ -618,7 +612,6 @@ ACE_Double_Linked_List_Reverse_Iterator<T>::operator++ ()
   return *this;
 }
 
-
 // Postfix advance.
 
 template <class T>
@@ -630,7 +623,6 @@ ACE_Double_Linked_List_Reverse_Iterator<T>::operator++ (int)
   return retv;
 }
 
-
 // Prefix reverse.
 
 template <class T>
@@ -640,7 +632,6 @@ ACE_Double_Linked_List_Reverse_Iterator<T>::operator-- ()
   this->do_advance ();
   return *this;
 }
-
 
 // Postfix reverse.
 
@@ -652,7 +643,6 @@ ACE_Double_Linked_List_Reverse_Iterator<T>::operator-- (int)
   this->do_advance ();
   return retv;
 }
-
 
 ACE_ALLOC_HOOK_DEFINE_Tc(ACE_Double_Linked_List)
 
@@ -1460,7 +1450,6 @@ ACE_Unbounded_Stack_Iterator<T>::next (T *&item)
     }
 }
 
-
 ACE_ALLOC_HOOK_DEFINE_Tc(ACE_Ordered_MultiSet)
 
   template <class T>
@@ -1499,7 +1488,6 @@ ACE_Ordered_MultiSet<T>::~ACE_Ordered_MultiSet ()
   this->delete_nodes ();
 }
 
-
 template <class T> void
 ACE_Ordered_MultiSet<T>::operator= (const ACE_Ordered_MultiSet<T> &us)
 {
@@ -1511,7 +1499,6 @@ ACE_Ordered_MultiSet<T>::operator= (const ACE_Ordered_MultiSet<T> &us)
       this->copy_nodes (us);
     }
 }
-
 
 template <class T> int
 ACE_Ordered_MultiSet<T>::insert (const T &item)
@@ -1581,7 +1568,6 @@ ACE_Ordered_MultiSet<T>::find (const T &item,
 
   return -1;
 }
-
 
 template <class T> void
 ACE_Ordered_MultiSet<T>::reset ()

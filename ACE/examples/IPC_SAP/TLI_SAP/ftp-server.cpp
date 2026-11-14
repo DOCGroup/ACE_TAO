@@ -4,7 +4,6 @@
 #include "ace/Thread_Manager.h"
 #include "ace/TLI_Acceptor.h"
 
-
 #if defined (ACE_HAS_THREADS) && defined (ACE_HAS_TLI)
 
 ACE_Thread_Manager thr_mgr;

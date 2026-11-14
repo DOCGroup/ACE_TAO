@@ -30,7 +30,6 @@ TAO::CSD::Strategy_Proxy::poa_activated_event(TAO_ORB_Core& orb_core)
     : this->strategy_impl_->poa_activated_event(orb_core);
 }
 
-
 ACE_INLINE
 void
 TAO::CSD::Strategy_Proxy::poa_deactivated_event()

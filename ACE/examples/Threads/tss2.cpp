@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "ace/OS_main.h"
 #include "ace/Thread.h"
 #include "ace/Log_Msg.h"
@@ -19,7 +18,6 @@
 #include "TSS_Obj.h"
 #include "TSS_Task.h"
 #include <memory>
-
 
 #if defined (ACE_HAS_THREADS)
 
@@ -181,7 +179,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 }
 
 ACE_SINGLETON_TEMPLATE_INSTANTIATE(ACE_TSS_Singleton, TSS_Data, ACE_SYNCH_MUTEX);
-
 
 #else
 

@@ -125,7 +125,6 @@ TAO_UIOP_Profile::parse_string_i (const char *string)
                    CORBA::COMPLETED_NO);
     }
 
-
   // Pull off the "rendezvous point" part of the objref
   // Copy the string because we are going to modify it...
   CORBA::String_var copy (string);
@@ -230,7 +229,6 @@ TAO_UIOP_Profile::add_endpoint (TAO_UIOP_Endpoint *endp)
 
   ++this->count_;
 }
-
 
 char *
 TAO_UIOP_Profile::to_string () const

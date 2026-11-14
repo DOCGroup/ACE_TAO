@@ -225,7 +225,6 @@ TAO_EC_Kokyu_Factory::create_filter_builder (TAO_EC_Event_Channel_Base *ec)
   return this->TAO_EC_Default_Factory::create_filter_builder (ec);
 }
 
-
 TAO_EC_Timeout_Generator*
 TAO_EC_Kokyu_Factory::create_timeout_generator (TAO_EC_Event_Channel_Base *ec)
 {

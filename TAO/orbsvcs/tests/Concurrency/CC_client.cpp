@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #include "CC_client.h"
 
 #include "tao/debug.h"
@@ -23,7 +22,6 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_fcntl.h"
 #include <cstring>
-
 
 CC_Client::~CC_Client ()
 {
@@ -384,7 +382,6 @@ CC_Client::init (int argc, ACE_TCHAR **argv)
                                "%s: no lock set factory key specified\n",
                                this->argv_[0]),
                               -1);
-
 
           CORBA::Object_var factory_object =
             this->orb_->string_to_object (this->cc_factory_key_);

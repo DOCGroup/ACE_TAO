@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 inline constexpr unsigned TAO_DEMUX_TEST_MAX_POAS = 100;
 inline constexpr unsigned TAO_DEMUX_TEST_MAX_OBJS = 1000;
 inline constexpr unsigned TAO_DEMUX_TEST_MAX_OPS = 1000;

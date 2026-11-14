@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 // We need this to be able to check for ACE_HAS_ICMP_SUPPORT
 #include "ace/config-all.h"
 #include "test_config.h"
@@ -532,7 +531,6 @@ Echo_Handler::does_echo_test_successful ()
   return 0;
 }
 
-
 Stop_Handler::Stop_Handler (ACE_Reactor * const reactor)
   : counter_ ((counter_sig) 1)
 {
@@ -735,7 +733,6 @@ Stop_Handler::unregister_handler (ACE_Event_Handler *handler)
 
   return 0;
 }
-
 
 Repeats_Handler::Repeats_Handler ()
   : check_handler_ (nullptr),

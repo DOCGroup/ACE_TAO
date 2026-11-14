@@ -25,10 +25,8 @@
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Direct_Supplier : public TAO_Notify_Tests_Periodic_Supplier
 {
 public:
-  /// Constructor
   TAO_Notify_Tests_Direct_Supplier (ACE_CString& target);
 
-  /// Destructor
   ~TAO_Notify_Tests_Direct_Supplier ();
 
   /// Connect using options parsed and set initial QoS.

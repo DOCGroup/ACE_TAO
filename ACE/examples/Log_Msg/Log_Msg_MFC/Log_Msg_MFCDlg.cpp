@@ -96,7 +96,6 @@ BOOL CLog_Msg_MFCDlg::OnInitDialog()
 {
     CDialog::OnInitDialog();
 
-
     // Add "About..." menu item to system menu.
 
     // IDM_ABOUTBOX must be in the system command range.

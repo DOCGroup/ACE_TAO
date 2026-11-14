@@ -183,7 +183,6 @@ TAO_MProfile::add_profiles (TAO_MProfile *pfiles)
   return 0;
 }
 
-
 // the layout for a full list of 7 Profiles.
 //
 // last_ == one past the last valid entry, so if the list has 2
@@ -338,6 +337,5 @@ TAO_MProfile::give_shared_profile (TAO_Profile *pfile)
       }
   return this->give_profile(pfile, 0);
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

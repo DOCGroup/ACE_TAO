@@ -23,7 +23,6 @@
 class Job_i : public POA_Job
 {
  public:
-  /// Constructor
   Job_i () = default;
 
   Job_i (Job_i const &) = delete;

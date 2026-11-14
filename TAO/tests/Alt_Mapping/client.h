@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef ALT_MAPPING_CLIENT_H
 #define ALT_MAPPING_CLIENT_H
 

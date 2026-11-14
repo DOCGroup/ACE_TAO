@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 #include "ami_testS.h"
@@ -65,14 +64,12 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 class Handler : public POA_A::AMI_AMI_TestHandler
 {
 public:
-  /// Constructor.
   Handler (Client_Options const &options, Client_State &state)
     : options_ (options)
     , state_ (state)
   {
   }
 
-  /// Destructor.
   ~Handler () override = default;
   Handler (Handler const &) = delete;
   Handler &operator= (Handler const &) = delete;

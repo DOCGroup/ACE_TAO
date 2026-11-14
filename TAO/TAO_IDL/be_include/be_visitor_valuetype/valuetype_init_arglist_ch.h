@@ -10,10 +10,8 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VISITOR_VALUETYPE_INIT_ARGLIST_CH_H_
 #define _BE_VISITOR_VALUETYPE_INIT_ARGLIST_CH_H_
-
 
 /**
  * @class be_visitor_valuetype_init_arglist_ch

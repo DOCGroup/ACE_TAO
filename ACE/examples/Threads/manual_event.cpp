@@ -17,7 +17,6 @@
 #include "ace/Thread_Manager.h"
 #include <atomic>
 
-
 #if defined (ACE_HAS_THREADS)
 static std::atomic<int> amount_of_work {0};
 

@@ -58,7 +58,6 @@ ACE_STATIC_SVC_DECLARE (TAO_MC_Notify_Service)
 
 #endif
 
-
 #endif /* TAO_HAS_MONITOR_FRAMEWORK==1 */
 
 #include /**/ "ace/post.h"

@@ -29,7 +29,6 @@ TAO::HTIOP::Connect_Creation_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLE
   return 0;
 }
 
-
 ////////////////////////////////////////////////////////////////
 
 template <class SVC_HANDLER>

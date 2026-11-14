@@ -7,14 +7,11 @@
  * parties.
  */
 
-
 /* ------------------------------------------------------------------------ */
-
 
 /*
  * Standard defs for NetSite servers.
  */
-
 
 #ifndef NETSITE_H
 #define NETSITE_H
@@ -48,7 +45,6 @@
 
 /* -------------------------- Memory allocation --------------------------- */
 
-
 /* Later change these to have catastrophic error handling */
 
 #include <stdlib.h>
@@ -57,7 +53,6 @@
 #define FREE(ptr) free((void *)ptr)
 #define STRDUP(str) strdup(str)
 #define REALLOC(ptr,sz) realloc(ptr,sz)
-
 
 /* Not sure where to put this. */
 void magnus_atrestart(void (*fn)(void *), void *data);

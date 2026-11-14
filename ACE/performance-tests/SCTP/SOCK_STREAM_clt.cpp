@@ -72,7 +72,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv){
     return 1;
   }
 
-
   // Create the address that we want the client to connect to
   ACE_INET_Addr serverAddr(Options_Manager::server_port,
                            Options_Manager::server_host.c_str ());
@@ -230,7 +229,6 @@ ACE_SCTP::HIST runUnmarshalledOctetTest (
                         "%p\n",
                         "ACE_OS::gethrtime()"),
                        0);
-
 
     ACE_CDR::ULong msgLenExpressed = ACE_HTONL (msgLen);
     iov[0].iov_base = reinterpret_cast<char *> (&msgLenExpressed);

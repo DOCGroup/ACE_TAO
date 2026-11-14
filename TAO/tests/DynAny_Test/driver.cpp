@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "driver.h"
 #include "test_dynany.h"
 #include "test_dynarray.h"
@@ -74,7 +73,6 @@ Driver::init (int argc, ACE_TCHAR *argv[])
     {
       // Retrieve the underlying ORB
       this->orb_ = CORBA::ORB_init (argc, argv, "local");
-
 
       // Parse command line and verify parameters.
       if (this->parse_args (argc, argv) == -1)

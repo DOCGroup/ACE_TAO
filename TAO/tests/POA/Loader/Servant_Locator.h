@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef SERVANT_LOCATOR_H
 #define SERVANT_LOCATOR_H
 
@@ -53,7 +52,6 @@ public:
                                               PortableServer::POA_ptr,
                                               PortableServer::Servant servant);
 
-  /// Constructor.
   ServantLocator (CORBA::ORB_ptr orb,
                   ACE_TCHAR const *dllname,
                   ACE_TCHAR const *factory_function,

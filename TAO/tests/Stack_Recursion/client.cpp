@@ -57,7 +57,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             1);
         }
 
-
       Client_Task client_task (sender.in (),
                                iterations,
                                1048576,
@@ -77,7 +76,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // shutdown the remote ORB
       sender->shutdown ();
-
 
       orb->destroy ();
     }

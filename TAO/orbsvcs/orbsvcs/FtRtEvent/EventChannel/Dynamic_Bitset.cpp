@@ -25,7 +25,6 @@ Dynamic_Bitset::Dynamic_Bitset(Dynamic_Bitset::size_type size)
 //FUZZ: enable check_for_lack_ACE_OS/
 }
 
-
 Dynamic_Bitset& Dynamic_Bitset::operator = (Dynamic_Bitset const& other)
 {
   Dynamic_Bitset temp(other);
@@ -102,7 +101,6 @@ void Dynamic_Bitset::resize(Dynamic_Bitset::size_type num_bits, bool value)
       mask >>= (BITS_PER_BLOCK-bit_pos);
       tmp.buffer_[block_pos] &= mask;
     }
-
 
     for (size_type i = block_pos +1; i < len; ++i) {
       mask = value ? static_cast<block> (-1) : 0;

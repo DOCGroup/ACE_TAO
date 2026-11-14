@@ -9,9 +9,7 @@
  */
 //=============================================================================
 
-
 #include "QuoterS.h"
-
 
 #ifndef QUOTER_GENERIC_FACTORY_IMPL_H
 #define QUOTER_GENERIC_FACTORY_IMPL_H

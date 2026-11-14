@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #include "ace/Handle_Set.h"
 #include "ace/Pipe.h"
 #include "ace/Log_Msg.h"
@@ -19,7 +18,6 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_sys_select.h"
 #include "ace/Truncate.h"
-
 
 int
 ACE_TMAIN (int, ACE_TCHAR *[])

@@ -24,7 +24,6 @@ class TAO_RTEC_Perf_Export Loopback_Supplier
   : public virtual POA_RtecEventComm::PushSupplier
 {
 public:
-  /// Constructor
   /**
    * The experiment ID is used to configure the supplier ID on the
    * publication.

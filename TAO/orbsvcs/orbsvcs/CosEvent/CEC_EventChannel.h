@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_CEC_EVENTCHANNEL_H
 #define TAO_CEC_EVENTCHANNEL_H
 

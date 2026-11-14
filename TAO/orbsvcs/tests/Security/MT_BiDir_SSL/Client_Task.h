@@ -15,7 +15,6 @@
 class Client_Task : public ACE_Task_Base
 {
 public:
-  /// Constructor
   Client_Task (CORBA::ORB_ptr orb,
                ACE_Thread_Manager *thr_mgr);
   Client_Task (Client_Task const &) = delete;

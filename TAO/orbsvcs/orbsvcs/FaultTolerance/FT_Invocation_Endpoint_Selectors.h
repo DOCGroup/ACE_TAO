@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_FT_INVOCATION_ENDPOINT_SELECTOR_H
 #define TAO_FT_INVOCATION_ENDPOINT_SELECTOR_H
 

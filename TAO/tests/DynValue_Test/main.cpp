@@ -1152,7 +1152,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "..%N:%l Converting from dynamic any back to any\n"));
       myAny_var = dany_base->to_any ();
 
-
       ACE_DEBUG ((LM_DEBUG, "..%N:%l Attempting to extract from this any (without factory)\n"));
       myBaseExtracted= reinterpret_cast<DynValue_Test::BaseValue::_ptr_type> (9);
       if (myAny_var.in () >>= myBaseExtracted)

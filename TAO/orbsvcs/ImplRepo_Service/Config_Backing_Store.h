@@ -121,5 +121,4 @@ private:
 #endif
 };
 
-
 #endif /* CONFIG_BACKING_STORE_H */

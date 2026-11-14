@@ -14,7 +14,6 @@
 class Client_Task : public ACE_Task_Base
 {
 public:
-  /// Constructor
   /**
    * Each Client_Task runs the test for a certain number of
    * iterations, using pre-configured timeouts and sleep times.

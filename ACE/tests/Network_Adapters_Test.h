@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_NETWORK_ADAPTERS_TEST_H
 #define ACE_NETWORK_ADAPTERS_TEST_H
 
@@ -37,7 +36,6 @@ public:
   /// Default constructor
   Echo_Handler ();
 
-  /// Destructor
   virtual ~Echo_Handler ();
 
   /**
@@ -153,7 +151,6 @@ private:
   int connect_to_remote_;
 };
 
-
 /*
  * Class Stop_Handler - the most important class of the process.
  * Knows how to stop all this business.
@@ -207,7 +204,6 @@ private:
 
   ACE_Sig_Set registered_signals_;
 };
-
 
 /*
  * TODO comment

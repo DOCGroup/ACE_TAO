@@ -61,7 +61,6 @@ namespace TAO
       using _var_type = SSLIOP::Credentials_var;
       using _out_type = SSLIOP::Credentials_out;
 
-      /// Constructor
       SSLIOP_Credentials (::X509 * cert, ::EVP_PKEY * evp);
 
       /**
@@ -123,7 +122,6 @@ namespace TAO
       //@}
 
     protected:
-      /// Destructor.
       /**
        * Protected destructor to enforce proper memory management
        * through the reference counting  mechanism.

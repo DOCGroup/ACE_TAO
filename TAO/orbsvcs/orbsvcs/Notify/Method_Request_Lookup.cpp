@@ -156,7 +156,6 @@ TAO_Notify_Method_Request_Lookup::unmarshal (
   return result;
 }
 
-
 /****************************************************************/
 
 TAO_Notify_Method_Request_Lookup_Queueable::TAO_Notify_Method_Request_Lookup_Queueable (
@@ -178,7 +177,6 @@ TAO_Notify_Method_Request_Lookup_Queueable::TAO_Notify_Method_Request_Lookup_Que
   , proxy_guard_ (proxy_consumer)
 {
 }
-
 
 int
 TAO_Notify_Method_Request_Lookup_Queueable::execute ()

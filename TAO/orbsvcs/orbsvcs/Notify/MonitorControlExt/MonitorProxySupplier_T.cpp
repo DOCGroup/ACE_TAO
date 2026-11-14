@@ -129,7 +129,6 @@ TAO_MonitorProxySupplier_T<ProxyPushSupplier>::configure(
   admin_->register_child (this);
 }
 
-
 template <typename ProxyPushSupplier>
 ACE_CString &
 TAO_MonitorProxySupplier_T<ProxyPushSupplier>::queue_item_stat_name()
@@ -137,14 +136,12 @@ TAO_MonitorProxySupplier_T<ProxyPushSupplier>::queue_item_stat_name()
   return this->queue_item_stat_name_;
 }
 
-
 template <typename ProxyPushSupplier>
 ACE_CString &
 TAO_MonitorProxySupplier_T<ProxyPushSupplier>::overflow_stat_name()
 {
   return this->overflow_stat_name_;
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

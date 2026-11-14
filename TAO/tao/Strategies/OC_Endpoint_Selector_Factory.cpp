@@ -82,7 +82,6 @@ TAO_OC_Endpoint_Selector_Factory::get_selector ()
   return this->oc_endpoint_selector_.get ();
 }
 
-
 ACE_STATIC_SVC_DEFINE (TAO_OC_Endpoint_Selector_Factory,
                        ACE_TEXT ("OC_Endpoint_Selector_Factory"),
                        ACE_SVC_OBJ_T,

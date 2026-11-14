@@ -6,7 +6,6 @@
  *  @author Chris Gill <cdgill@cs.wustl.edu>
  */
 
-
 #ifndef SCHEDENTRY_H
 #define SCHEDENTRY_H
 #include /**/ "ace/pre.h"
@@ -24,7 +23,6 @@ class Task_Entry_Link;
 class Dispatch_Entry;
 class Dispatch_Entry_Link;
 class Dispatch_Proxy_Iterator;
-
 
 /**
  * @class Dispatch_Entry_Link
@@ -63,7 +61,6 @@ private:
     /// Dispatch entry to which the smart pointer refers.
   Dispatch_Entry &dispatch_entry_;
 };
-
 
 /**
  * @class Task_Entry
@@ -270,7 +267,6 @@ private:
   ACE_Unbounded_Set <Task_Entry_Link *> callers_;
 };
 
-
 /// Wrapper for dependencies between RT_Infos
 class TAO_RTSched_Export Task_Entry_Link
 {
@@ -316,7 +312,6 @@ private:
   /// the type of call dependency
   Dependency_Type dependency_type_;
 };
-
 
 /**
  * @class Dispatch_Entry
@@ -506,7 +501,6 @@ public:
   OS_Priority OS_priority () const;
   /// @}
 
-
 private:
     /// the number of calls corresponding to each actual dispatch
   u_long number_of_calls_;
@@ -526,7 +520,6 @@ private:
 
   ACE_Ordered_MultiSet_Iterator <Dispatch_Entry_Link> iter_;
 };
-
 
 class TAO_RTSched_Export TimeLine_Entry
 {

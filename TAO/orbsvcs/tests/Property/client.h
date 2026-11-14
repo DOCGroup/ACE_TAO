@@ -33,7 +33,6 @@
 class Client
 {
 public:
-  /// Constructor.
   Client () = default;
   Client (Client const&) = delete;
   Client& operator= (Client const&) = delete;

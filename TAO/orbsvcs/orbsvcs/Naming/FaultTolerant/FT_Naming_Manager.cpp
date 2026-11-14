@@ -57,7 +57,6 @@
   }                           \
   return /* value goes here */
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_FT_Naming_Manager::TAO_FT_Naming_Manager ()
@@ -273,7 +272,6 @@ TAO_FT_Naming_Manager::set_load_balancing_strategy (
   this->set_properties_dynamically (group.in (), properties);
 }
 
-
 bool
 TAO_FT_Naming_Manager::group_name (PortableGroup::ObjectGroup_ptr group,
                                    char*& name)
@@ -476,7 +474,6 @@ TAO_FT_Naming_Manager::add_member (
   METHOD_RETURN (TAO::FT_Naming_Manager::add_member) result._retn ();
 }
 
-
 PortableGroup::ObjectGroup_ptr
 TAO_FT_Naming_Manager::remove_member (
     PortableGroup::ObjectGroup_ptr object_group,
@@ -516,7 +513,6 @@ TAO_FT_Naming_Manager::remove_member (
   }
   return result._retn ();
 }
-
 
 PortableGroup::Locations *
 TAO_FT_Naming_Manager::locations_of_members (
@@ -832,7 +828,6 @@ TAO_FT_Naming_Manager::next_member (PortableGroup::ObjectGroup_ptr object_group)
   else
     return CORBA::Object::_nil();
 }
-
 
 void
 TAO_FT_Naming_Manager::preprocess_properties (PortableGroup::Properties &)

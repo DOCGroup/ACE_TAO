@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #include "Event_Con.h"
 #include "NavWeapC.h"
 #include "orbsvcs/Event_Utilities.h"
@@ -68,7 +67,6 @@ Demo_Consumer::open_consumer (RtecEventChannelAdmin::EventChannel_ptr ec,
                    ORBSVCS_Time::zero (),
                    1,
                    RtecScheduler::OPERATION);
-
 
       // Create the event that we're registering for.
 

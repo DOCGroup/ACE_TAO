@@ -129,7 +129,6 @@ void FTAPP::FT_Creator::usage(FILE* out)const
                         " -n (toggle register iogr with name service (default true))\n");
 }
 
-
 int FTAPP::FT_Creator::init (CORBA::ORB_ptr orb)
 {
   int result = 0;
@@ -152,7 +151,6 @@ int FTAPP::FT_Creator::init (CORBA::ORB_ptr orb)
   {
     result = this->creator_.init (orb);
   }
-
 
   if (result == 0 && this->ns_register_)
   {

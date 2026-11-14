@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_CEC_REACTIVE_PULLING_STRATEGY_H
 #define TAO_CEC_REACTIVE_PULLING_STRATEGY_H
 
@@ -26,7 +25,6 @@
 #include "tao/PolicyC.h"
 
 #include "ace/Event_Handler.h"
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

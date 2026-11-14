@@ -112,7 +112,6 @@ public:
    */
   void unbind (CosNaming::Name const &n) override;
 
-
   /**
    * This operation returns a new naming context implemented by the
    * same naming server in which the operation was invoked.  The

@@ -243,4 +243,3 @@ be_visitor_operation_rettype_return_cs::visit_home (
   return this->visit_interface (node);
 }
 
-

@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef LB_ROUND_ROBIN_H
 #define LB_ROUND_ROBIN_H
 
@@ -24,7 +23,6 @@
 
 #include "orbsvcs/CosLoadBalancingS.h"
 #include <vector>
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

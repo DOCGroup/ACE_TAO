@@ -1,6 +1,5 @@
 #include "orbsvcs/IFRService/RecursDef_i.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 //-----------------------------------------------------------------------------

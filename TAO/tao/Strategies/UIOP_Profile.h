@@ -9,7 +9,6 @@
  *  @author Fred Kuhns <fredk@cs.wustl.edu>
  */
 
-
 #ifndef TAO_UIOP_PROFILE_H
 #define TAO_UIOP_PROFILE_H
 

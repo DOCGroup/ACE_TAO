@@ -28,7 +28,6 @@ template <class ACCEPTOR> int
 Reactor_Logging_Server_Adapter<ACCEPTOR>::fini ()
 { ((ACCEPTOR*)server_)->handle_close (); server_ = nullptr; return 0; }
 
-
 template <class ACCEPTOR> int
 Reactor_Logging_Server_Adapter<ACCEPTOR>::info
   (ACE_TCHAR **bufferp, size_t length) const {
@@ -49,11 +48,9 @@ Reactor_Logging_Server_Adapter<ACCEPTOR>::info
   return ACE_Utils::truncate_cast<int> (ACE_OS::strlen (*bufferp));
 }
 
-
 template <class ACCEPTOR> int
 Reactor_Logging_Server_Adapter<ACCEPTOR>::suspend ()
 { return server_->reactor ()->suspend_handler (server_); }
-
 
 template <class ACCEPTOR> int
 Reactor_Logging_Server_Adapter<ACCEPTOR>::resume ()

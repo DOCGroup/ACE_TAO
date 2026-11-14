@@ -55,7 +55,6 @@ public:
   /// Install the timeout handler
   virtual long schedule_timer (CORBA::ULong , const ACE_Time_Value &) = 0;
 
-
   /// A helper method that can be used by the subclasses
   /**
    * The semantics of this helper method needs careful attention. A

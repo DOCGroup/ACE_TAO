@@ -11,7 +11,6 @@ std::basic_string<ACE_TCHAR> ior_output_file = ACE_TEXT ("server.ior");
 std::string const upper_ior = "corbaloc::127.10.100.4:34999/bogus";
 CORBA::ORB_var orb_;
 
-
 class Worker : public ACE_Task_Base
 {
 public:

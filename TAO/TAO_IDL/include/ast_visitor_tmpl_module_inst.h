@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_AST_VISITOR_TMPL_MODULE_INST_H
 #define TAO_AST_VISITOR_TMPL_MODULE_INST_H
 

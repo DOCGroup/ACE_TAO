@@ -29,10 +29,8 @@ class TAO_Notify_Tests_Periodic_Consumer;
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Periodic_Consumer_Command : public TAO_Notify_Tests_Command
 {
 public:
-  /// Constructor
   TAO_Notify_Tests_Periodic_Consumer_Command ();
 
-  /// Destructor
   ~TAO_Notify_Tests_Periodic_Consumer_Command ();
 
   /// Parse args and populate options.

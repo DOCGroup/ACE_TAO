@@ -14,7 +14,6 @@
 class Server_Task : public ACE_Task_Base
 {
 public:
-  /// Constructor
   Server_Task (ACE_Thread_Manager *thr_mgr,
                CORBA::ORB_ptr orb,
                ACE_Time_Value const& running_time);

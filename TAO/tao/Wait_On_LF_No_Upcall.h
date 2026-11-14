@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_WAIT_ON_LF_NO_UPCALL_H
 #define TAO_WAIT_ON_LF_NO_UPCALL_H
 

@@ -15,7 +15,6 @@ parse_args (int argc, ACE_TCHAR *argv[]);
 class Client_Timer : public ACE_Event_Handler
 {
 public:
-  /// Constructor
   explicit Client_Timer (ACE_Reactor *reactor)
     : ACE_Event_Handler (reactor)
   {

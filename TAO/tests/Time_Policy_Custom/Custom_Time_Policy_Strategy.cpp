@@ -44,7 +44,6 @@ ACE_Dynamic_Time_Policy_Base * Custom_Time_Policy_Strategy::get_time_policy ()
   return &custom_time_policy_;
 }
 
-
 ACE_STATIC_SVC_DEFINE (Custom_Time_Policy_Strategy,
                        ACE_TEXT ("CUSTOM_TIME_POLICY"),
                        ACE_SVC_OBJ_T,

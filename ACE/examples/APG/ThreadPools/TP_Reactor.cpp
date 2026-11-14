@@ -43,9 +43,7 @@ constexpr size_t cli_req_no = 5;
 // Delay before a thread sending the next request (in msec.)
 constexpr int req_delay = 50;
 
-
 using ACCEPTOR = ACE_Strategy_Acceptor<Request_Handler, ACE_SOCK_ACCEPTOR>;
-
 
 Request_Handler::Request_Handler (ACE_Thread_Manager *thr_mgr)
     : ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_MT_SYNCH> (thr_mgr)

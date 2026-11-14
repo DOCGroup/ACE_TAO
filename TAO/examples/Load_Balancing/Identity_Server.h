@@ -36,7 +36,6 @@ public:
   /// Default constructor.
   Identity_Server () = default;
 
-  /// Destructor.
   ~Identity_Server () = default;
 
   Identity_Server (Identity_Server const &) = delete;

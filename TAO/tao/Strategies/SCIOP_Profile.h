@@ -7,7 +7,6 @@
  *  @author  Keith O'Hara, Lockheed Martin ATL
  */
 
-
 #ifndef TAO_SCIOP_PROFILE_H
 #define TAO_SCIOP_PROFILE_H
 

@@ -62,7 +62,6 @@ namespace TAO
       using _var_type = Current_var;
       using _out_type = Current_out;
 
-      /// Constructor.
       explicit Current (TAO_ORB_Core *orb_core);
 
       Current (Current const &) = delete;
@@ -125,7 +124,6 @@ namespace TAO
       //@}
 
     protected:
-      /// Destructor
       ~Current () override = default;
 
       /// Set the TSS SSLIOP::Current implementation.

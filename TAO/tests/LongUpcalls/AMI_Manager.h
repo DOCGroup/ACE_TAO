@@ -9,7 +9,6 @@ class AMI_Manager
 {
 public:
   explicit AMI_Manager (CORBA::ORB_ptr orb);
-  // Constructor
 
   // = The skeleton methods
   void start_workers (CORBA::Short worker_count,
@@ -64,7 +63,6 @@ class Controller_Handler
 public:
   Controller_Handler (TAO_SYNCH_MUTEX *mutex,
                       int *pending_replies);
-  // Constructor
 
   void worker_started () override;
   void worker_started_excep (::Messaging::ExceptionHolder *holder) override;

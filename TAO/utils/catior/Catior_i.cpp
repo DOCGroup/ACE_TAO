@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "Catior_i.h"
 #include "tao/Messaging_PolicyValueC.h"
 #include "tao/Messaging/Messaging_TypesC.h"
@@ -40,7 +39,6 @@ Catior_i::Catior_i()
    buffer_ {}
 {
 }
-
 
 CORBA::Boolean
 Catior_i::decode (const ACE_CString& aString, ACE_CString& output)
@@ -90,7 +88,6 @@ Catior_i::decode (const ACE_CString& aString, ACE_CString& output)
   output = buffer_;
   return b;
 }
-
 
 CORBA::Boolean
 Catior_i::catiiop (char* string)
@@ -588,7 +585,6 @@ Catior_i::cat_ibm_partner_version (TAO_InputCDR& stream) {
 
   return true;
 }
-
 
 CORBA::Boolean
 Catior_i::cat_tao_tag_endpoints (TAO_InputCDR& stream)
@@ -1581,7 +1577,6 @@ Catior_i::cat_sciop_profile (TAO_InputCDR& stream)
       buffer_ += "\n";
     }
 
-
   if (!(str >> port_number))
     return false;
 
@@ -1602,7 +1597,6 @@ Catior_i::cat_sciop_profile (TAO_InputCDR& stream)
 
   return true;
 }
-
 
 CORBA::Boolean
 Catior_i::cat_nsk_profile_helper (TAO_InputCDR& stream,
@@ -1666,7 +1660,6 @@ Catior_i::cat_nsk_profile_helper (TAO_InputCDR& stream,
       buffer_ += "problem decoding file system address\n";
       return true;
     }
-
 
   indent ();
   buffer_ += "FS Address:\t";

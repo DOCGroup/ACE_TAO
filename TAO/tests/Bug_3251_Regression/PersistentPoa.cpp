@@ -58,7 +58,6 @@ int PersistentPoa::init (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-
 int PersistentPoa::fini ()
 {
   try
@@ -79,6 +78,5 @@ int PersistentPoa::fini ()
 
   return 0;
 }
-
 
 ACE_FACTORY_DEFINE (bug_3251, PersistentPoa)

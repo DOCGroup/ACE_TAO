@@ -7,14 +7,12 @@
  */
 //=============================================================================
 
-
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Property/CosPropertyService_i.h"
 #include "ace/ACE.h"
 
 #include <cstring>
 #include <memory>
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -265,7 +263,6 @@ TAO_PropertySetDefFactory::create_initial_propertysetdef (
 // the allowed properties in the Hash Table with *fixed-normal* mode.
 // @@ Need to check for duplicate properties and raise exceptions.
 
-
 TAO_PropertySet::TAO_PropertySet (CosPropertyService::PropertyTypes const &allowed_property_types,
                                   CosPropertyService::Properties const &allowed_properties)
   : allowed_property_types_ (allowed_property_types),
@@ -306,7 +303,6 @@ TAO_PropertySet::TAO_PropertySet (CosPropertyService::PropertyTypes const &allow
 // PropertySetFactory needs this constructor. Store all the initial
 // properies with *normal* modes.
 
-
 TAO_PropertySet::TAO_PropertySet (CosPropertyService::Properties const &initial_properties)
 {
   // Define all the initial properties in the Property Set. All take
@@ -328,7 +324,6 @@ TAO_PropertySet::TAO_PropertySet (CosPropertyService::Properties const &initial_
 // @@ Uses Normal mode as the default mode of properties, We can
 // change this behavior based on the Initial set of allowed modes, if
 // there is anything like that set by the client.
-
 
 void
 TAO_PropertySet::define_property (char const *property_name,
@@ -466,7 +461,6 @@ TAO_PropertySet::is_property_allowed (char const *property_name) const
 // Check for overwriting, duplicate names, void names etc and raise
 // appropriate exceptions.
 
-
 void
 TAO_PropertySet::define_properties (CosPropertyService::Properties const &nproperties)
 {
@@ -543,7 +537,6 @@ TAO_PropertySet::define_properties (CosPropertyService::Properties const &nprope
 // Returns the current number of properties associated with this
 // PropertySet.
 
-
 CORBA::ULong
 TAO_PropertySet::get_number_of_properties ()
 {
@@ -554,7 +547,6 @@ TAO_PropertySet::get_number_of_properties ()
 //  PropertySet. If the PropertySet contains more than <how_many>
 //  property names, then the remaining property names are put into the
 //  PropertyNamesIterator.
-
 
 void
 TAO_PropertySet::get_all_property_names (CORBA::ULong how_many,
@@ -637,7 +629,6 @@ TAO_PropertySet::get_all_property_names (CORBA::ULong how_many,
 
 // Returns the value of a property in the PropertySet.
 
-
 CORBA::Any *
 TAO_PropertySet::get_property_value (char const *property_name)
 {
@@ -666,7 +657,6 @@ TAO_PropertySet::get_property_value (char const *property_name)
 // valid values for all requested property names. If false, then all
 // properties with a value of type tk_void may have failed due to
 // <PropertyNotFound> or <InvalidPropertyName>.
-
 
 CORBA::Boolean
 TAO_PropertySet::get_properties (CosPropertyService::PropertyNames const &property_names,
@@ -718,7 +708,6 @@ TAO_PropertySet::get_properties (CosPropertyService::PropertyNames const &proper
 
   return ret_val;
 }
-
 
 void
 TAO_PropertySet::get_all_properties (CORBA::ULong how_many,
@@ -811,7 +800,6 @@ TAO_PropertySet::get_all_properties (CORBA::ULong how_many,
 
 // Deletes the specified property if it exists from a PropertySet.
 
-
 void
 TAO_PropertySet::delete_property (char const *property_name)
 {
@@ -845,7 +833,6 @@ TAO_PropertySet::delete_property (char const *property_name)
 // Deletes the properties defined in the property_names
 // parameter. This is a batch operation that returns the
 // MultipleExceptions exception if any delete failed.
-
 
 void
 TAO_PropertySet::delete_properties (CosPropertyService::PropertyNames const &property_names)
@@ -908,7 +895,6 @@ TAO_PropertySet::delete_properties (CosPropertyService::PropertyNames const &pro
 // Delete all the properties in the current ProperySet : Delete the
 // properties one by one.
 
-
 CORBA::Boolean
 TAO_PropertySet::delete_all_properties ()
 {
@@ -940,7 +926,6 @@ TAO_PropertySet::delete_all_properties ()
 
 // Returns TRUE if the property is defined in the PropertySet.
 
-
 CORBA::Boolean
 TAO_PropertySet::is_property_defined (char const *property_name)
 {
@@ -951,7 +936,6 @@ TAO_PropertySet::is_property_defined (char const *property_name)
   else
     return false;
 }
-
 
 // Makes default sized hash_table_.
 
@@ -1043,7 +1027,6 @@ TAO_PropertySetDef::define_property_with_mode (char const *property_name,
   CosProperty_Hash_Value hash_value (property_value,
                                      property_mode);
   COSPROPERTY_HASH_ENTRY *entry_ptr {};
-
 
   int const ret = this->hash_table_.bind (hash_key, hash_value, entry_ptr);
 

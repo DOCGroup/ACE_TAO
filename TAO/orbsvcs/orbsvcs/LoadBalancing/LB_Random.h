@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef LB_RANDOM_H
 #define LB_RANDOM_H
 
@@ -19,7 +18,6 @@
 # if !defined (ACE_LACKS_PRAGMA_ONCE)
 #   pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -95,7 +93,6 @@ private:
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 #include /**/ "ace/post.h"
 

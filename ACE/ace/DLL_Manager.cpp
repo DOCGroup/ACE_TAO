@@ -153,7 +153,6 @@ ACE_DLL_Handle::open (const ACE_TCHAR *dll_name,
   return 0;
 }
 
-
 int
 ACE_DLL_Handle::close (int unload)
 {
@@ -452,7 +451,6 @@ ACE_DLL_Handle::open_i (const ACE_TCHAR *dll_name, int open_mode, ERROR_STACK* e
 
 // Pointer to the Singleton instance.
 ACE_DLL_Manager *ACE_DLL_Manager::instance_ {};
-
 
 ACE_DLL_Manager *
 ACE_DLL_Manager::instance (int size)

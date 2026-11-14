@@ -3,7 +3,6 @@
 #include "tao/debug.h"
 #include "ace/OS_NS_time.h"
 
-// Constructor
 Airplane_i::Airplane_i ()
 {
   // Seed the random number generator

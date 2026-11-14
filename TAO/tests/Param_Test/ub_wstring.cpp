@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "helper.h"
 #include "ub_wstring.h"
 #include "ace/OS_NS_wchar.h"

@@ -35,7 +35,6 @@ ACE_Log_Record::category (ACE_Log_Category_TSS* t)
   this->category_ = t;
 }
 
-
 ACE_INLINE ACE_Log_Category_TSS*
 ACE_Log_Record::category () const
 {

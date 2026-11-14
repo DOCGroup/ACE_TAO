@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_IFR_SERVICE_UTILS_T_H
 #define TAO_IFR_SERVICE_UTILS_T_H
 

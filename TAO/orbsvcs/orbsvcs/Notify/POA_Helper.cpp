@@ -74,7 +74,6 @@ TAO_Notify_POA_Helper::set_policy (PortableServer::POA_ptr parent_poa, CORBA::Po
     parent_poa->create_id_assignment_policy (PortableServer::USER_ID);
 }
 
-
 #if !defined (CORBA_E_MICRO)
 void
 TAO_Notify_POA_Helper::set_persistent_policy (PortableServer::POA_ptr parent_poa, CORBA::PolicyList &policy_list)
@@ -88,7 +87,6 @@ TAO_Notify_POA_Helper::set_persistent_policy (PortableServer::POA_ptr parent_poa
     parent_poa->create_id_assignment_policy (PortableServer::USER_ID);
 }
 #endif /* !CORBA_E_MICRO */
-
 
 void
 TAO_Notify_POA_Helper::create_i (
@@ -230,7 +228,6 @@ TAO_Notify_POA_Helper::servant_to_reference (
 {
   return poa_->servant_to_reference (servant);
 }
-
 
 void
 TAO_Notify_POA_Helper::destroy ()

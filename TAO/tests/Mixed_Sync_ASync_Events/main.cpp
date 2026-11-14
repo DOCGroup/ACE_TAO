@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "test_i.h"
 #include "tao/debug.h"
 #include "ace/OS_NS_stdio.h"

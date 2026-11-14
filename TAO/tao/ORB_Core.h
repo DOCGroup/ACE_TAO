@@ -920,7 +920,6 @@ protected:
   int init (int &argc, char *argv[]);
 
   /// Final termination hook, typically called by CORBA::ORB's
-  /// destructor.
   int fini ();
 
   /// Routine that creates a ACE_Data_Block given the lock and allocators.

@@ -7,12 +7,10 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_TEST_IMPL_H
 #define TAO_TEST_IMPL_H
 
 #include "valueboxS.h"
-
 
 class Test_impl : public POA_Test
 {

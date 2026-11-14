@@ -15,7 +15,6 @@
 #include "ace/Null_Semaphore.h"
 #include "ace/Process_Semaphore.h"
 
-
 template<class LOCK>
 class ACE_Svc_Export Baseline_Lock_Test : public Baseline_Test_Base
 {

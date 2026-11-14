@@ -12,7 +12,6 @@
 #include <cstdio>
 #include <memory>
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Priority_Dispatching::TAO_EC_Priority_Dispatching (TAO_EC_Event_Channel_Base *ec)
@@ -125,7 +124,6 @@ TAO_EC_Priority_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
       // @@ Throw something?
       i = 0;
     }
-
 
   this->tasks_[i]->push (proxy, consumer, event);
 }

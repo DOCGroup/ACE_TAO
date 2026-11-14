@@ -131,7 +131,6 @@ TAO_Transport::messaging_object ()
 //********************************************************************
 // codeset related methods
 
-
 ACE_INLINE TAO_Codeset_Translator_Base *
 TAO_Transport::char_translator () const
 {

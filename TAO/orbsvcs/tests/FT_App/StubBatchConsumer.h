@@ -66,7 +66,6 @@ public:
    */
   void fini ();
 
-
 public:
     ////////////////
     // CORBA methods

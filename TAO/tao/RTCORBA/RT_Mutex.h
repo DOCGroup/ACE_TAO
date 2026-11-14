@@ -6,7 +6,6 @@
  *  @author Frank Hunleth <fhunleth@cs.wustl.edu>
  */
 
-
 #ifndef TAO_RT_MUTEX_H
 #define TAO_RT_MUTEX_H
 

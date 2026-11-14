@@ -27,7 +27,6 @@ class test_i
   : public virtual POA_test
 {
 public:
-  /// Constructor.
   explicit test_i (CORBA::ORB_ptr orb);
 
   test_i (test_i const &) = delete;
@@ -41,7 +40,6 @@ public:
   void shutdown () override;
 
 protected:
-  /// Destructor.
   ~test_i () override = default;
 
 private:

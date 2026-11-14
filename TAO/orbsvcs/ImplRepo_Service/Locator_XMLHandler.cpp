@@ -25,7 +25,6 @@ const ACE_TCHAR* Locator_XMLHandler::PID_TAG = ACE_TEXT("pid");
 const ACE_TCHAR* Locator_XMLHandler::KEYNAME_TAG = ACE_TEXT("key_name");
 const ACE_TCHAR* Locator_XMLHandler::ALTKEY_TAG = ACE_TEXT("altkey");
 
-
 Locator_XMLHandler::Locator_XMLHandler (XML_Backing_Store& repo)
   : repo_(repo),
     si_ (0),

@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "options.h"
 #include "tao/debug.h"
 #include "ace/Read_Buffer.h"

@@ -29,7 +29,6 @@
 class Hello
 {
 public:
-  /// Destructor
   virtual ~Hello ()
     {
       ACE_TRACE ("Hello::~Hello");

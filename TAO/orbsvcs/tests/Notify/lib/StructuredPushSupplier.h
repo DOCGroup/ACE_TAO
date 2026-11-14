@@ -63,10 +63,8 @@ class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_StructuredPushSupplier
   using Proxy_Traits = Peer_Traits::Proxy_Traits;
 
 public:
-  /// Constructor
   TAO_Notify_Tests_StructuredPushSupplier ();
 
-  /// Destructor
   virtual ~TAO_Notify_Tests_StructuredPushSupplier ();
 
   /// Send one event.

@@ -21,7 +21,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_Time_Value TAO::Fault_Detector_i::sleep_time_(1,0);
 
-
 /////////////////////////////////////////
 // Fault_Detector_i public static methods
 
@@ -62,7 +61,6 @@ TAO::Fault_Detector_i::~Fault_Detector_i () = default;
 
 ////////////////////////////////////
 // Fault_Detector_i public interface
-
 
 void TAO::Fault_Detector_i::request_quit()
 {
@@ -179,7 +177,6 @@ void TAO::Fault_Detector_i::notify()
       ));
   }
 }
-
 
 /////////////////////////////////////////////////////////
 // Fault_Detector_i private static implementation methods

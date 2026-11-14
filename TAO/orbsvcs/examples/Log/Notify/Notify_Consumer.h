@@ -35,7 +35,6 @@ class Consumer
   //
 public:
   Consumer () = default;
-  // Constructor
 
   Consumer (Consumer const &) = delete;
   Consumer (Consumer &&) = delete;

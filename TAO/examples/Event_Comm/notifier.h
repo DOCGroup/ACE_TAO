@@ -16,10 +16,8 @@
 class Notifier : public ACE_Event_Handler
 {
  public:
-  /// Constructor.
   Notifier (int argc, ACE_TCHAR *argv[]);
 
-  /// Destructor.
   ~Notifier () override;
 
   Notifier (Notifier const &) = delete;

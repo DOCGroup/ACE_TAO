@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Map_Manager.h"
 #include "ace/Hash_Map_Manager.h"
@@ -87,7 +86,6 @@ test_cache_map_manager (size_t table_size,
         ACE_TEST_ASSERT (i == iterations);
       }
 
-
       {
         k = iterations - 1;
 
@@ -109,7 +107,6 @@ test_cache_map_manager (size_t table_size,
                     ACE_TEXT ("\n")));
         ACE_TEST_ASSERT (k == -1);
       }
-
 
       {
         i = 0;
@@ -133,7 +130,6 @@ test_cache_map_manager (size_t table_size,
         ACE_TEST_ASSERT (i == iterations);
       }
 
-
       {
         k = iterations - 1;
 
@@ -155,7 +151,6 @@ test_cache_map_manager (size_t table_size,
                     ACE_TEXT ("\n")));
         ACE_TEST_ASSERT (k == -1);
       }
-
 
     }
 
@@ -215,7 +210,6 @@ test_hash_cache_map_manager (size_t table_size,
         ACE_TEST_ASSERT (i == iterations);
       }
 
-
       {
         k = iterations - 1;
 
@@ -237,7 +231,6 @@ test_hash_cache_map_manager (size_t table_size,
                     ACE_TEXT ("\n")));
         ACE_TEST_ASSERT (k == -1);
       }
-
 
       {
         i = 0;
@@ -261,7 +254,6 @@ test_hash_cache_map_manager (size_t table_size,
         ACE_TEST_ASSERT (i == iterations);
       }
 
-
       {
         k = iterations - 1;
 
@@ -284,7 +276,6 @@ test_hash_cache_map_manager (size_t table_size,
         ACE_TEST_ASSERT (k == -1);
       }
 
-
     }
 
   for (i = 0; i < iterations; ++i)
@@ -302,7 +293,6 @@ test_hash_cache_map_manager (size_t table_size,
     }
   return 0;
 }
-
 
 static int
 test_active_map_manager (size_t table_size,

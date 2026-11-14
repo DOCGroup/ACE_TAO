@@ -49,10 +49,8 @@ class TAO_Notify_Tests_Consumer_T : public TAO_Notify_Tests_Peer_T <Consumer_Tra
   using Admin_Ext_Traits_PTR = typename Admin_Ext_Traits::PTR;
 
 public:
-  /// Constructor
   TAO_Notify_Tests_Consumer_T ();
 
-  /// Destructor
   ~TAO_Notify_Tests_Consumer_T ();
 
   /// For backward compatibility. use <get_proxy> instead.

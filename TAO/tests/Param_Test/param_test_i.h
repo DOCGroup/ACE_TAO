@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef PARAM_TEST_I_H
 #define PARAM_TEST_I_H
 
@@ -18,14 +17,12 @@ class Coffee_i : public POA_Coffee
 
 {
 public:
-  /// constructor
   explicit Coffee_i (const char *name);
   Coffee_i (Coffee_i const &) = delete;
   Coffee_i (Coffee_i &&) = delete;
   Coffee_i & operator= (Coffee_i const &) = delete;
   Coffee_i & operator= (Coffee_i &&) = delete;
 
-  /// destructor
   ~Coffee_i () override;
 
   // =methods for the attribute
@@ -52,7 +49,6 @@ private:
 class Param_Test_i : public POA_Param_Test
 {
 public:
-  /// Constructor
   Param_Test_i (const char *coffee_name,
                 CORBA::ORB_ptr orb);
   Param_Test_i (Param_Test_i const &) = delete;
@@ -60,7 +56,6 @@ public:
   Param_Test_i & operator= (Param_Test_i const &) = delete;
   Param_Test_i & operator= (Param_Test_i &&) = delete;
 
-  /// Destructor
   ~Param_Test_i () override;
 
   /// test for shorts
@@ -253,7 +248,6 @@ public:
                       Param_Test::Multdim_Array_out) override;
 
   void shutdown () override;
-
 
 private:
   /// Remember out ORB.

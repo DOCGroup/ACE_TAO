@@ -66,7 +66,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       IORTable::Table_var ior_table =
         IORTable::Table::_narrow(obj.in());
 
-
       //------- Get NameService Root Context
 
       obj =

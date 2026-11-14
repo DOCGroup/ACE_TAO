@@ -10,7 +10,6 @@ class Hello
   : public virtual POA_Test::Hello
 {
 public:
-  /// Constructor
   Hello () = default;
   Hello (Hello const &) = delete;
   Hello (Hello &&) = delete;

@@ -211,7 +211,6 @@ Notifier_i::shutdown ()
   ACE_DEBUG ((LM_DEBUG,
               "The Callback Quoter server is shutting down...\n"));
 
-
   // Instruct the ORB to shutdown.
   this->orb_->shutdown ();
 }

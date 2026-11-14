@@ -2,7 +2,6 @@
 #include "orbsvcs/CosNamingC.h"
 #include "ace/Get_Opt.h"
 
-
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {

@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #ifndef IDENTITY_CLIENT_H_
 #define IDENTITY_CLIENT_H_
 
@@ -43,7 +42,6 @@ public:
   /// Default constructor.
   Identity_Client () = default;
 
-  /// Destructor.
   ~Identity_Client () = default;
 
   Identity_Client (Identity_Client const &) = delete;

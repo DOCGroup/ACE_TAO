@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_NATIVE_EXCEPTIONS_TEST_I_H
 #define TAO_NATIVE_EXCEPTIONS_TEST_I_H
 

@@ -30,7 +30,6 @@
 #include <orbsvcs/FT_ReplicationManagerC.h>
 #include <ace/Thread_Manager.h>
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /////////////////////
@@ -132,7 +131,6 @@ namespace TAO
      */
     int idle(int & result);
 
-
     /**
      * Identify this fault detector factory.
      * @return a string to identify this object for logging/console message purposes.
@@ -223,7 +221,6 @@ namespace TAO
      * The CORBA object id assigned to this object.
      */
     PortableServer::ObjectId_var objectId_;
-
 
     /**
      * IOR of this object as assigned by orb.

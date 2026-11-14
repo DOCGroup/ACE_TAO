@@ -64,7 +64,6 @@ parse_args (int argc, ACE_TCHAR *argv[], Options &options)
   return 0;
 }
 
-
 /// A helper class to encapsulate a task
 
 class Worker : public ACE_Task_Base
@@ -89,7 +88,6 @@ private:
   bool const use_dii_too_;
 };
 
-
 /// Ctor
 
 Worker::Worker (Test::Transport::CurrentTest_ptr server,
@@ -100,7 +98,6 @@ Worker::Worker (Test::Transport::CurrentTest_ptr server,
   , use_dii_too_ (use_dii_too)
 {
 }
-
 
 /// Test referencing the TC data *inside* the context of a client-side
 /// interceptor
@@ -148,7 +145,6 @@ Worker::svc ()
   return 0;
 }
 
-
 /// The main driver
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
@@ -183,7 +179,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                            ACE_TEXT ("Client (%P|%t) Failure to parse the command line.\n"),
                            options.ior),
                           -1);
-
 
       try
         {

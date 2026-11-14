@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #include "orbsvcs/CosConcurrencyControlC.h"
 #include <memory>
 #include <string>
@@ -34,7 +33,6 @@
 class CC_Command
 {
  public:
-  /// Destructor
   virtual ~CC_Command();
 
   CC_Command (CC_Command const&) = delete;
@@ -83,7 +81,6 @@ class CC_Command
 class CC_Start_Cmd : public CC_Command
 {
  public:
-  /// Constructor
   explicit CC_Start_Cmd (char const* config_file_name);
 
   ~CC_Start_Cmd() override = default;
@@ -109,7 +106,6 @@ private:
 class CC_CreateLockSet_Cmd : public CC_Command
 {
  public:
-  /// Constructor
   explicit CC_CreateLockSet_Cmd (char const* lock_set_name);
 
   ~CC_CreateLockSet_Cmd () override = default;
@@ -134,7 +130,6 @@ private:
 class CC_Lock_Cmd:public CC_Command
 {
  public:
-  /// Constructor.
   CC_Lock_Cmd(char const* lock_set_name,
               CosConcurrencyControl::lock_mode mode);
 
@@ -163,7 +158,6 @@ private:
 class CC_UnLock_Cmd:public CC_Command
 {
  public:
-  /// Constructor.
   CC_UnLock_Cmd(char const* lock_set_name,
                 CosConcurrencyControl::lock_mode mode);
 
@@ -195,7 +189,6 @@ private:
 class CC_TryLock_Cmd:public CC_Command
 {
  public:
-  /// Constructor
   CC_TryLock_Cmd(char const* lock_set_name,
                  CosConcurrencyControl::lock_mode mode);
 
@@ -227,7 +220,6 @@ private:
 class CC_ChangeMode_Cmd:public CC_Command
 {
  public:
-  /// Constructor
   CC_ChangeMode_Cmd (char const* lock_set_name,
                      CosConcurrencyControl::lock_mode held_mode,
                      CosConcurrencyControl::lock_mode new_mode);
@@ -264,10 +256,8 @@ private:
 class CC_Sleep_Cmd:public CC_Command
 {
  public:
-  /// Constructor.
   explicit CC_Sleep_Cmd(int seconds);
 
-  /// Destructor.
   ~CC_Sleep_Cmd() override = default;
 
   /// Executes the command.
@@ -290,10 +280,8 @@ class CC_Sleep_Cmd:public CC_Command
 class CC_Repeat_Cmd:public CC_Command
 {
  public:
-  /// Constructor.
   explicit CC_Repeat_Cmd(int times);
 
-  /// Destructor.
   ~CC_Repeat_Cmd() override = default;
 
   /// Executes the command.
@@ -315,7 +303,6 @@ class CC_Repeat_Cmd:public CC_Command
 class CC_Wait_Cmd:public CC_Command
 {
  public:
-  /// Constructor.
   explicit CC_Wait_Cmd (char const* prompt);
 
   ~CC_Wait_Cmd() override = default;
@@ -340,7 +327,6 @@ private:
 class CC_Excep_Cmd : public CC_Command
 {
  public:
-  /// Constructor.
   explicit CC_Excep_Cmd (char const* excep);
 
   ~CC_Excep_Cmd() override = default;
@@ -368,10 +354,8 @@ private:
 class CC_Dummy_Cmd: public CC_Command
 {
  public:
-  /// Constructor.
   CC_Dummy_Cmd() = default;
 
-  /// Destructor.
   ~CC_Dummy_Cmd() override = default;
 
   /// Executes the command, i.e. does nothing.
@@ -391,7 +375,6 @@ class CC_Dummy_Cmd: public CC_Command
 class CC_Print_Cmd: public CC_Command
 {
 public:
-  /// Constructor.
   explicit CC_Print_Cmd (char const* message);
 
   ~CC_Print_Cmd() override = default;
@@ -416,7 +399,6 @@ private:
 class CC_Lookup_Cmd:public CC_Command
 {
 public:
-  /// Constructor
   explicit CC_Lookup_Cmd (char const* lock_set_name);
 
   ~CC_Lookup_Cmd() override = default;
@@ -442,10 +424,8 @@ private:
 class CC_CommandList
 {
  public:
-  /// Constructor.
   CC_CommandList();
 
-  /// Destructor.
   ~CC_CommandList() = default;
 
   CC_CommandList (CC_CommandList const&) = delete;

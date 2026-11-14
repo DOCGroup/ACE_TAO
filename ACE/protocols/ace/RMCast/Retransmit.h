@@ -85,5 +85,4 @@ namespace ACE_RMCast
   };
 }
 
-
 #endif  // ACE_RMCAST_RETRANSMIT_H

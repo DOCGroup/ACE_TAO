@@ -40,10 +40,8 @@ class  Test_i
   : public virtual POA_Test
 {
 public:
-  // Constructor
   explicit Test_i (CORBA::ORB_ptr const orb);
 
-  // Destructor
   ~Test_i () override = default;
   Test_i (Test_i const &) = delete;
   Test_i (Test_i &&) = delete;
@@ -59,7 +57,6 @@ public:
 private:
   CORBA::ORB_var orb_ {};
 };
-
 
 #endif /* TESTI_H_  */
 

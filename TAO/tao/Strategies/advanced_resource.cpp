@@ -108,7 +108,6 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR **argv)
     }
   this->options_processed_ = 1;
 
-
   // If the default resource factory exists, then disable it.
   // This causes any directives for the "Resource_Factory" to
   // report warnings.
@@ -294,7 +293,6 @@ TAO_Advanced_Resource_Factory::load_default_protocols ()
   return 0;
 }
 
-
 int
 TAO_Advanced_Resource_Factory::init_protocol_factories ()
 {
@@ -377,7 +375,6 @@ TAO_Advanced_Resource_Factory::init_protocol_factories ()
     }
   return 0;
 }
-
 
 TAO_ProtocolFactorySet *
 TAO_Advanced_Resource_Factory::get_protocol_factories ()
@@ -650,7 +647,6 @@ TAO_Advanced_Resource_Factory::report_unsupported_error (const ACE_TCHAR *option
                  ACE_TEXT (" not supported on this platform\n"),
                  option_name));
 }
-
 
 ACE_STATIC_SVC_DEFINE (TAO_Advanced_Resource_Factory,
                        ACE_TEXT ("Advanced_Resource_Factory"),

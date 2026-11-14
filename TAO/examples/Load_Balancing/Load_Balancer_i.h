@@ -40,10 +40,8 @@ class  Object_Group_Factory_i :
   //    round robin groups).
   //
 public:
-  /// Constructor.
   Object_Group_Factory_i () = default;
 
-  /// Destructor.
   ~Object_Group_Factory_i () override = default;
 
   Object_Group_Factory_i (Object_Group_Factory_i const &) = delete;
@@ -153,11 +151,9 @@ class Object_Group_i : public virtual POA_Load_Balancer::Object_Group
   //   different load balancing policies.
   //
 public:
-  /// Constructor.
   Object_Group_i (char const * id,
                   Object_Group_Factory_i * my_factory);
 
-  /// Destructor.
   ~Object_Group_i () override;
 
   Object_Group_i (Object_Group_i const &) = delete;
@@ -254,11 +250,9 @@ protected:
 class Random_Object_Group : public Object_Group_i
 {
 public:
-  /// Constructor.
   Random_Object_Group (char const *id,
                        Object_Group_Factory_i *my_factory);
 
-  /// Destructor.
   ~Random_Object_Group () override = default;
 
   Random_Object_Group (Random_Object_Group const &) = delete;
@@ -288,11 +282,9 @@ public:
 class RR_Object_Group: public Object_Group_i
 {
 public:
-  /// Constructor.
   RR_Object_Group (char const *id,
                    Object_Group_Factory_i *my_factory);
 
-  /// Destructor.
   ~RR_Object_Group () override = default;
 
   RR_Object_Group (RR_Object_Group const &) = delete;

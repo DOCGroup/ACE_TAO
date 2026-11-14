@@ -72,7 +72,6 @@ public:
   {
   }
 
-  /// Destructor.
   ~Handler () override = default;
   Handler (Handler const &) = delete;
   Handler &operator= (Handler const &) = delete;

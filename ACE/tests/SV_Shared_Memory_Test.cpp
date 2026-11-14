@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Malloc_T.h"
 #include "ace/Shared_Memory_Pool.h"

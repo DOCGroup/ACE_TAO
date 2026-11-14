@@ -90,7 +90,6 @@ TAO_RT_Service_Context_Handler::generate_service_context (
   return 0;
 }
 
-
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif

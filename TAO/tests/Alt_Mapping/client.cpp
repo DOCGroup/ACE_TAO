@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef CLIENT_CPP
 #define CLIENT_CPP
 
@@ -60,7 +59,6 @@ Alt_Mapping_Client<T>::run_sii_test ()
                          opname),
                         -1);
     }
-
 
   // Make the calls in a loop.
   for (i = 0; i < opt->loop_count (); i++)

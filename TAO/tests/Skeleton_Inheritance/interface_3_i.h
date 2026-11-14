@@ -9,7 +9,6 @@ class interface_3_i
   : public virtual POA_Skeleton_Inheritance::Interface_3
 {
 public:
-  /// Constructor
   explicit interface_3_i (CORBA::ORB_ptr const orb);
   interface_3_i (interface_3_i const &) = delete;
   interface_3_i (interface_3_i &&) = delete;

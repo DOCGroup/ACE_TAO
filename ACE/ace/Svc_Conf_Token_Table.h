@@ -74,10 +74,6 @@ extern int ace_yydebug;
 
 /* Value type.  */
 
-
-
-
 int ace_yyparse (void *ACE_YYLEX_PARAM);
-
 
 #endif /* !ACE_YY_ACE_YY_SVC_CONF_TOKEN_TABLE_H_INCLUDED  */

@@ -55,7 +55,6 @@ namespace TAO
     {
     public:
       explicit Completion_Handler (ACE_Thread_Manager* t = nullptr);
-      /// Constructor.
       explicit Completion_Handler (TAO_ORB_Core *orb_core,
                                    CORBA::Boolean = false);
       Completion_Handler (Completion_Handler const&) = delete;
@@ -63,7 +62,6 @@ namespace TAO
       Completion_Handler& operator= (Completion_Handler const&) = delete;
       Completion_Handler& operator= (Completion_Handler&&) = delete;
 
-      /// Destructor.
       ~Completion_Handler () override;
 
       /// Called by the <Strategy_Acceptor> when the handler is completely

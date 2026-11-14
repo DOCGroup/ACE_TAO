@@ -104,7 +104,6 @@ TAO_Offer_Importer::perform_directed_queries ()
     }
 }
 
-
 void
 TAO_Offer_Importer::perform_queries_with_policies (
     const TAO_Policy_Creator& policies)

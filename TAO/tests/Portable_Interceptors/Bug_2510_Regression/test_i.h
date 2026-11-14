@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_INTERCEPTOR_TEST_I_H
 #define TAO_INTERCEPTOR_TEST_I_H
 

@@ -195,7 +195,6 @@ TAO_Container_i::lookup_i (char const *search_name)
   u_int kind = 0;
   CORBA::DefinitionKind def_kind = CORBA::dk_none;
 
-
   if (std::strncmp (search_name, "::", 2) == 0)
     {
       // We were given an absolute scoped name.

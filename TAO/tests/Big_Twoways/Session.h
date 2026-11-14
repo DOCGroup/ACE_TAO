@@ -18,7 +18,6 @@ class Session
   : public virtual POA_Test::Session
 {
 public:
-  /// Constructor
   Session (Test::Session_Control_ptr control,
            CORBA::ULong payload_size,
            CORBA::ULong thread_count,

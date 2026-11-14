@@ -12,7 +12,6 @@ class Receiver_i
   : public virtual POA_Receiver
 {
 public:
-  /// Constructor
   Receiver_i () = default;
 
   /// Get the number of events that have been received, local method

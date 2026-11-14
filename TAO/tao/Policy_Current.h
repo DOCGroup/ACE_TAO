@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_POLICY_CURRENT_H
 #define TAO_POLICY_CURRENT_H
 

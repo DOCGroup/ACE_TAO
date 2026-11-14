@@ -5,7 +5,6 @@ class client_i : public POA_client
 public:
   client_i (bool quiet,
             server_ptr s);
-  // Constructor.
 
   void ping (CORBA::UShort time_to_live) override;
 

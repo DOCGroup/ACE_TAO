@@ -22,7 +22,6 @@
 
 using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO;
 
-
 using tested_sequence = unbounded_value_sequence<CORBA::Octet>;
 using tested_element_traits = tested_sequence::element_traits;
 using tested_allocation_traits = tested_sequence::allocation_traits;

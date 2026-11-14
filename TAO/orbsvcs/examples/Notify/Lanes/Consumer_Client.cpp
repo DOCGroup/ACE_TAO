@@ -107,7 +107,6 @@ TAO_Notify_Lanes_Consumer_Client::create_rt_poa () const
   lanes[0].static_threads = 1;
   lanes[0].dynamic_threads = 0;
 
-
   // Create a thread-pool.
   CORBA::ULong const stacksize {};
   CORBA::Boolean const allow_request_buffering {};

@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef _CUSTOM_HANDLER_H_
 #define _CUSTOM_HANDLER_H_
 
@@ -55,7 +54,6 @@ class Custom_Handler
         // messages.
         std::shared_ptr<std::atomic<long>> id_;
 };
-
 
 /// CWorkItemAndParamTupleUpcall
 ///

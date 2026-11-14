@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 
 #include "ace/SString.h"
@@ -61,7 +60,6 @@ insertion_removal_test ()
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("------------- Populating map %u -------------\n"),
                   count));
-
 
       ACE_TString const * word = words;
       for (char const * i = letters;
@@ -177,7 +175,6 @@ insertion_removal_test ()
                          z),
                         false);
     }
-
 
   // Remove range of letters from map.
   static size_t const removed_len = 3;
@@ -408,7 +405,6 @@ reference_count_test ()
 
     ACE_TEST_ASSERT (counted.refcount () == 2);
 
-
     std::pair<Map::iterator, bool> result;
 
     {
@@ -426,7 +422,6 @@ reference_count_test ()
 
       ACE_TEST_ASSERT (result.second);
     }
-
 
     ACE_TEST_ASSERT (counted.refcount () == 4);
 

@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #define ACE_BUILD_SVC_DLL
 #include "ace/Get_Opt.h"
 #include "testC.h"
@@ -84,5 +83,4 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   return 0;
 }
-
 

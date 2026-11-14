@@ -42,7 +42,6 @@ Sender_i::receiver_object (Receiver_ptr recv)
   return this->last_index_;
 }
 
-
 void
 Sender_i::send_message ()
 {

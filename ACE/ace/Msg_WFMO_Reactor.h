@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_MSG_WFMO_REACTOR_H
 #define ACE_MSG_WFMO_REACTOR_H
 #include /**/ "ace/pre.h"

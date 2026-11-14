@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_CEC_TYPEDCONSUMERADMIN_H_
 #define TAO_CEC_TYPEDCONSUMERADMIN_H_
 

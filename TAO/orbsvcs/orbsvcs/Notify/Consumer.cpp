@@ -495,7 +495,6 @@ TAO_Notify_Consumer::dispatch_pending ()
     }
 }
 
-
 // virtual: this is the default, overridden for SequencePushConsumer
 // FUZZ: disable check_for_ACE_Guard
 bool

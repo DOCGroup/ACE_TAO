@@ -39,7 +39,6 @@ TAO_Notify_ConsumerAdmin::get_admin_type_name () const
   return "consumer_admin";
 }
 
-
 TAO_Notify_ConsumerAdmin::~TAO_Notify_ConsumerAdmin () = default;
 
 void
@@ -79,7 +78,6 @@ TAO_Notify_ConsumerAdmin::destroy ()
   this->ec_->remove (this);
   this->proxy_container ().destroy ();
 }
-
 
 TAO_Notify::Topology_Object*
 TAO_Notify_ConsumerAdmin::load_child (ACE_CString const &type,
@@ -219,7 +217,6 @@ void TAO_Notify_ConsumerAdmin::set_qos (CosNotification::QoSProperties const &qo
 {
   this->TAO_Notify_Object::set_qos (qos);
 }
-
 
 CosNotification::QoSProperties*
 TAO_Notify_ConsumerAdmin::get_qos ()

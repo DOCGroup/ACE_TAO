@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "Servant_Locator.h"
 #include "ace/Log_Msg.h"
 #include "testC.h"

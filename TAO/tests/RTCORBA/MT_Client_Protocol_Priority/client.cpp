@@ -33,7 +33,6 @@ public:
   Worker_Thread (Worker_Thread &&) = delete;
   Worker_Thread &operator= (Worker_Thread const &) = delete;
   Worker_Thread &operator= (Worker_Thread &&) = delete;
-  // Constructor.
 
   int svc () override;
   // Do work.

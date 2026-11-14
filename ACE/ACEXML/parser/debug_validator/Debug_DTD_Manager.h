@@ -74,5 +74,4 @@ public:
 
 #include /**/ "ace/post.h"
 
-
 #endif /* _ACEXML_DTD_Manager_H_ */

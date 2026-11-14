@@ -85,7 +85,6 @@ namespace Kokyu
              DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits>&
              found_item);
 
-
     /**
      * Insert an item in the priority queue. If item with same guid is
      * already in the queue, the existing one is deleted and the new
@@ -160,7 +159,6 @@ namespace Kokyu
                   DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits>,
                   More_Eligible_Comparator,
                   ACE_SYNCH_NULL_MUTEX>;
-
 
     using RB_Tree_Dispatch_Item_Node =
       ACE_RB_Tree_Node<DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits>,

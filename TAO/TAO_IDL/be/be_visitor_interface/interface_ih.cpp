@@ -90,7 +90,6 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
       << "virtual " << "~" << be_global->impl_class_prefix () << namebuf
       << be_global->impl_class_suffix () << " ();";
 
-
   // Generate code for elements in the scope (e.g., operations).
   if (this->visit_scope (node) ==  -1)
     {
@@ -100,7 +99,6 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
                          "codegen for scope failed\n"),
                         -1);
     }
-
 
   // Generate the code for the members of the derived classes.
   int const status =
@@ -117,13 +115,11 @@ be_visitor_interface_ih::visit_interface (be_interface *node)
                         -1);
     }
 
-
   *os << be_uidt_nl
       << "};" << be_nl_2;
 
   return 0;
 }
-
 
 // Helper method to generate members within the scope of the base classes.
 int

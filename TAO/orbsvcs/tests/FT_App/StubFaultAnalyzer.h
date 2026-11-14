@@ -120,7 +120,6 @@ private:
 
   ACE_Vector < FT::PullMonitorable_var > replicas_;
 
-
   StubFaultConsumer faultConsumer_;
   StubBatchConsumer batchConsumer_;
 };

@@ -679,7 +679,6 @@ public:
              int priority,
              int signal_number = 0);
 
-
   virtual ~ACE_WIN32_Asynch_Read_File ();
 
   // = Methods belong to ACE_WIN32_Asynch_Operation base class. These
@@ -1194,7 +1193,6 @@ protected:
 
   ACE_HANDLE  connect_handle_;
 };
-
 
 /**
  * @class ACE_WIN32_Asynch_Connect

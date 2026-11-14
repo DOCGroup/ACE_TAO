@@ -11,14 +11,12 @@
  */
 //=============================================================================
 
-
 #include "ace/Task.h"
 #include "ace/Proactor.h"
 #include "ace/WIN32_Proactor.h"
 #include "ace/OS_NS_unistd.h"
 #include <atomic>
 #include <cstring>
-
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
 

@@ -37,4 +37,3 @@ Quoter_Stock_i::get_price_and_names (CORBA::String_out symbol,
   return this->price_;
 }
 
-

@@ -21,12 +21,10 @@ class Receiver_i
   : public virtual POA_Test::Receiver
 {
 public:
-  /// Constructor
   Receiver_i (CORBA::ORB_ptr orb,
               Test::Sender_ptr sender,
               CORBA::ULong iter);
 
-  ///Destructor
   ~Receiver_i () override;
 
   Receiver_i (Receiver_i const &) = delete;

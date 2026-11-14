@@ -37,7 +37,6 @@ using TAO_EC_Supplier_Proxy_Disconnector =
   ACE_Utils::Auto_Functor<RtecEventComm::PushSupplier,
                           TAO_EC_Supplier_Proxy_Disconnect_Functor>;
 
-
 /**
  * @struct TAO_EC_Consumer_Proxy_Disconnect_Functor
  *
@@ -60,7 +59,6 @@ struct TAO_RTEvent_Serv_Export TAO_EC_Consumer_Proxy_Disconnect_Functor
 using TAO_EC_Consumer_Proxy_Disconnector =
   ACE_Utils::Auto_Functor<RtecEventComm::PushConsumer,
                           TAO_EC_Consumer_Proxy_Disconnect_Functor>;
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

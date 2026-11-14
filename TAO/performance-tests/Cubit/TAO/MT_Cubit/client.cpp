@@ -62,8 +62,6 @@ switchHook (WIND_TCB *pOldTcb,    // pointer to old task's WIND_TCB.
 }
 #endif /* ACE_HAS_VXTHREADS */
 
-// Destructor.
-
 Client_i::~Client_i ()
 {
   this->high_priority_client_.reset ();

@@ -12,7 +12,6 @@
 class Client_Task : public ACE_Task_Base
 {
 public:
-  /// Constructor
   Client_Task (Test::Hello_ptr receiver,
                CORBA::ORB_ptr orb,
                ACE_Thread_Manager *thr_mgr);

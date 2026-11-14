@@ -30,7 +30,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
@@ -40,7 +39,6 @@
 #include "ace/Acceptor.h"
 #include "ace/Thread_Manager.h"
 #include "ace/TP_Reactor.h"
-
 
 #if defined (ACE_HAS_THREADS) && !defined ACE_LACKS_ACCEPT
 

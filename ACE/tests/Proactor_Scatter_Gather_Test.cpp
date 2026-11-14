@@ -583,7 +583,6 @@ Acceptor::~Acceptor ()
   this->stop ();
 }
 
-
 void
 Acceptor::stop ()
 {

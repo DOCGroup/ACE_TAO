@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_TESTS_THREAD_POOL_REACTOR_RESUME_TEST_H
 #define ACE_TESTS_THREAD_POOL_REACTOR_RESUME_TEST_H
 

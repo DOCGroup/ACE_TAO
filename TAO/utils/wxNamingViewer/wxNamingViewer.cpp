@@ -47,7 +47,6 @@ int WxNamingViewer::OnExit()
   return 0;
 }
 
-
 bool WxNamingViewer::OnInit()
 {
   ACE::init();

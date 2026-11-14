@@ -120,7 +120,6 @@ private:
   bool destroy_consumer (CosNotifyChannelAdmin::ProxyID id);
   bool destroy_supplier (CosNotifyChannelAdmin::ProxyID id);
 
-
   friend class RemoveConsumerSupplierControl;
   friend class EventChannelConsumersSuppliers;
   friend class EventChannelTimedoutConsumers;

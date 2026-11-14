@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "../test_config.h"
 
 #include "ace/OS_NS_sys_socket.h"
@@ -19,7 +18,6 @@
 
 #include "ami_testC.h"
 #include "ami_testS.h"
-
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int niterations = 5;
@@ -65,10 +63,8 @@ parse_args (int argc, ACE_TCHAR *argv[])
 class Handler : public POA_A::AMI_AMI_TestHandler
 {
 public:
-  /// Constructor.
   Handler () {};
 
-  /// Destructor.
     ~Handler () {};
 
   void foo (CORBA::Long ami_return_val,
@@ -104,7 +100,6 @@ public:
         }
     };
 
-
   void get_yadda (CORBA::Long result)
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -135,7 +130,6 @@ int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("HTIOP_AMI_simple_client"));
-
 
   try
     {
@@ -184,7 +178,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                0,
                                "");
 
-
       // Trigger the DidTheRightThing exception on the server side
       // by sending 0 to it.
       ACE_DEBUG ((LM_DEBUG,
@@ -232,7 +225,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       //while (orb->work_pending())
       //  orb->perform_work ();
-
 
       CORBA::Long number = ami_test_var->foo (l,
                                               l,

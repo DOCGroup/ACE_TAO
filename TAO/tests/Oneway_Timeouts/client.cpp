@@ -231,7 +231,6 @@ namespace
     return Tester::_unchecked_narrow (obj.in ());
   }
 
-
   void set_connect_timeout (ORB_ptr orb)
   {
     if (connect_timeout <= 0)
@@ -246,7 +245,6 @@ namespace
     policy_current->set_policy_overrides (pols, ADD_OVERRIDE);
     pols[0]->destroy ();
   }
-
 
   void set_buffering (ORB_ptr orb)
   {
@@ -266,7 +264,6 @@ namespace
         policy_current->set_policy_overrides (pols, ADD_OVERRIDE);
         pols[0]->destroy ();
       }
-
 
     if (use_buf_constraints)
       {
@@ -300,7 +297,6 @@ namespace
 
   }
 
-
 void reset_buffering (ORB_ptr orb)
 {
   Object_var obj = orb->resolve_initial_references ("PolicyCurrent");
@@ -314,7 +310,6 @@ void reset_buffering (ORB_ptr orb)
   policy_current->set_policy_overrides (pols, ADD_OVERRIDE);
   pols[0]->destroy ();
 }
-
 
 }
 
@@ -459,13 +454,11 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
 
       ACE_DEBUG ((LM_DEBUG,"request loop complete\n"));
 
-
       if (run_orb_delay > 0)
         {
           ACE_Time_Value tv (0, run_orb_delay * 1000);
           ACE_OS::sleep (tv);
         }
-
 
       if (run_orb_time > 0)
         {

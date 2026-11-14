@@ -4,7 +4,6 @@
 #include "tao/debug.h"
 #include "Sequence.h"
 
-
 /***************************************************************************/
 
 SequencePushConsumer::SequencePushConsumer (Sequence *test_client)

@@ -57,7 +57,6 @@ public:
                     size_t target_size,
                     bool strict = true) override;
 
-
   /// This factory helper method determines if the source stream is UTF-8
   /// encoded.  If it is, allocate an ACE_UTF8_Encoding_Converter and
   /// return it.  The caller then owns the allocated object.

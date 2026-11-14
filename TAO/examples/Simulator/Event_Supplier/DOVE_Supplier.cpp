@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "DOVE_Supplier.h"
 #include "tao/ORB_Core.h"
 
@@ -21,8 +20,6 @@
 
 ACE_Scheduler_Factory::POD_RT_Info *
 DOVE_Supplier::pod_rt_info_instance_ {};
-
-// Constructor.
 
 DOVE_Supplier::DOVE_Supplier ()
   : current_connection_params_ (nullptr),
@@ -96,7 +93,6 @@ DOVE_Supplier::connect (char const *MIB_name,
                         -1);
     }
 
-
   // Grab the default RT_Info settings if others were not provided.
   if (pod_rt_info == nullptr)
     {
@@ -169,7 +165,6 @@ DOVE_Supplier::connect (char const *MIB_name,
   return 0;
 }
 
-
 // This method is invoked after all connect calls are done.
 
 void
@@ -184,12 +179,10 @@ DOVE_Supplier::connected ()
     }
 }
 
-
 void
 DOVE_Supplier::disconnect ()
 {
 }
-
 
 void
 DOVE_Supplier::notify (CORBA::Any &message)
@@ -227,7 +220,6 @@ DOVE_Supplier::notify (CORBA::Any &message)
   }
 }
 
-
 // Use the next connection in the list of established connections.
 
 void
@@ -243,7 +235,6 @@ DOVE_Supplier::use_next_connection ()
         connection_params_list_ [current_connection_index_].get ();
     }
 }
-
 
 // Use the previous connection in the list of established connections.
 
@@ -261,7 +252,6 @@ DOVE_Supplier::use_prev_connection ()
         connection_params_list_ [current_connection_index_].get ();
     }
 }
-
 
 // -------------------- Internal Demo Supplier -----------------------------
 
@@ -301,7 +291,6 @@ DOVE_Supplier::get_Scheduler ()
   return 0;
 }
 
-
 int
 DOVE_Supplier::get_EventChannel ()
 {
@@ -333,7 +322,6 @@ DOVE_Supplier::get_EventChannel ()
   return 0;
 }
 
-
 int
 DOVE_Supplier::connect_Supplier ()
 {
@@ -344,7 +332,6 @@ DOVE_Supplier::connect_Supplier ()
       this->current_connection_params_->
         scheduler_var_->
           create (this->current_connection_params_->pod_rt_info_.entry_point);
-
 
     this->current_connection_params_->scheduler_var_->
       set (this->current_connection_params_->rt_info_,
@@ -357,7 +344,6 @@ DOVE_Supplier::connect_Supplier ()
            this->current_connection_params_->pod_rt_info_.quantum,
            this->current_connection_params_->pod_rt_info_.threads,
            static_cast<RtecScheduler::Info_Type_t> (this->current_connection_params_->pod_rt_info_.info_type));
-
 
     // Set the publications to report them to the event channel.
 
@@ -401,7 +387,6 @@ DOVE_Supplier::connect_Supplier ()
 
   return 0;
 }
-
 
 // Access the default rt_info singleton.
 

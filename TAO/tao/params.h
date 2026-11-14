@@ -494,7 +494,6 @@ private:
    */
   ACE_TString poa_factory_directive_;
 
-
   /**
    * Do we need forward invocation to next avaiable profile upon
    * OBJECT_NOT_EXIST exception?

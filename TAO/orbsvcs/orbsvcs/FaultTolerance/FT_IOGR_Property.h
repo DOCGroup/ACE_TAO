@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_FT_IOGR_PROPERTY_H
 #define TAO_FT_IOGR_PROPERTY_H
 #include /**/ "ace/pre.h"

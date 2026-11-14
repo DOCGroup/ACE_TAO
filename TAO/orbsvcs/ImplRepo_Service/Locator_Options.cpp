@@ -365,7 +365,6 @@ Options::init_from_registry ()
   return 0;
 }
 
-
 void
 Options::print_usage () const
 {

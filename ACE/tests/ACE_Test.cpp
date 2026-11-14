@@ -103,7 +103,6 @@ execname_test ()
   return error_count;
 }
 
-
 int
 run_main (int, ACE_TCHAR *[])
 {

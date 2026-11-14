@@ -26,7 +26,6 @@
 class test_i : public virtual POA_hello::GoodDay
 {
 public:
-  /// Constructor.
   test_i (CORBA::Short const num,
           CORBA::ORB_ptr const orb);
   test_i (test_i const &) = delete;
@@ -34,7 +33,6 @@ public:
   test_i &operator= (test_i const &) = delete;
   test_i &operator= (test_i &&) = delete;
 
-  /// Destructor.
   ~test_i () override = default;
 
   /// Return the number assigned to this object.

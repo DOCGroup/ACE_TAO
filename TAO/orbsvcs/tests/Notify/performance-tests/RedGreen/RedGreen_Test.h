@@ -40,7 +40,6 @@ class RedGreen_Test_StructuredPushSupplier;
 class Worker : public ACE_Task_Base
 {
 public:
-  /// Constructor.
   Worker () = default;
 
   Worker (Worker const&) = delete;
@@ -183,7 +182,6 @@ class RedGreen_Test_StructuredPushConsumer
   //   Consumer for the RedGreen_Test example.
   //
 public:
-  /// Constructor.
   explicit RedGreen_Test_StructuredPushConsumer (RedGreen_Test& test_client);
 
   RedGreen_Test_StructuredPushConsumer (RedGreen_Test_StructuredPushConsumer const&) = delete;
@@ -228,7 +226,6 @@ protected:
   ACE_Throughput_Stats throughput_;
 
   // = Methods
-  /// Destructor
   ~RedGreen_Test_StructuredPushConsumer () override = default;
 
   // = NotifyPublish method
@@ -271,7 +268,6 @@ class RedGreen_Test_StructuredPushSupplier
   //   Supplier for the RedGreen_Test example.
   //
 public:
-  /// Constructor.
   explicit RedGreen_Test_StructuredPushSupplier (RedGreen_Test& test_client);
 
   RedGreen_Test_StructuredPushSupplier (RedGreen_Test_StructuredPushSupplier const&) = delete;
@@ -310,7 +306,6 @@ protected:
   ACE_Throughput_Stats throughput_;
 
   // = Protected Methods
-  /// Destructor
   ~RedGreen_Test_StructuredPushSupplier () override = default;
 
   // = NotifyRedGreen_Test

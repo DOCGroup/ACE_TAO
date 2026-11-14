@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #ifndef BE_VISITOR_MAP_BUFFER_TYPE_H_
 #define BE_VISITOR_MAP_BUFFER_TYPE_H_
 

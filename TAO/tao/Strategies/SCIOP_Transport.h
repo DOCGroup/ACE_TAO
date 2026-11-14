@@ -70,7 +70,6 @@ protected:
                 size_t len,
                 ACE_Time_Value const *s = nullptr) override;
 
-
 public:
   /// @todo These methods IMHO should have more meaningful
   /// names. The names seem to indicate nothing.

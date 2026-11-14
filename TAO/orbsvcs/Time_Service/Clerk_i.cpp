@@ -429,7 +429,6 @@ Clerk_i::init (int argc,
       if (this->create_clerk () != 0)
         return -1;
 
-
       // Register the clerk with the Naming Service.
       if (!this->ior_file_provided_)
         {

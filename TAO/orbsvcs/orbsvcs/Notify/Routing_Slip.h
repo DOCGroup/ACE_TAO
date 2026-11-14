@@ -100,7 +100,6 @@ public:
   /// \param filter should consumer-based filtering be applied?
   void dispatch (TAO_Notify_ProxySupplier * proxy_supplier, bool filter);
 
-
   /////////////////////////////////////////
   /// \brief Wait until the event/routing_slip has
   /// been saved at least once.

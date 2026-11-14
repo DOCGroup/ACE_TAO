@@ -93,7 +93,6 @@ ACE::HTBP::Channel::data_consumed() const
   return this->data_consumed_;
 }
 
-
 ACE_INLINE
 const ACE_SOCK_Stream&
 ACE::HTBP::Channel::ace_stream () const

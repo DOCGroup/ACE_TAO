@@ -18,7 +18,6 @@
 #include "orbsvcs/ESF/ESF_Proxy_List.h"
 #include "orbsvcs/ESF/ESF_Copy_On_Write.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class PROXY>
@@ -100,7 +99,6 @@ TAO_Notify_Default_Factory::create (TAO_Notify_EventChannel*& channel,
                     TAO_Notify_EventChannel (),
                     CORBA::NO_MEMORY ());
 }
-
 
 void
 TAO_Notify_Default_Factory::create (TAO_Notify_SupplierAdmin*& admin)

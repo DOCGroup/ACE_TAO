@@ -32,7 +32,6 @@ Smart_Messenger_Proxy_Factory::create_proxy (
   return smart_proxy;
 }
 
-
 Smart_Messenger_Proxy::Smart_Messenger_Proxy (
   Messenger_ptr proxy, Logger_ptr logger)
     : TAO_Smart_Proxy_Base(proxy),

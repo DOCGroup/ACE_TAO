@@ -18,10 +18,8 @@ class Supplier : public ACE_Event_Handler, public ShutdownCallback
 {
 public:
   // Initialization and Termination methods.
-  /// Constructor.
   Supplier () = default;
 
-  /// Destructor.
   ~Supplier () override = default;
 
   Supplier (Supplier const &) = delete;

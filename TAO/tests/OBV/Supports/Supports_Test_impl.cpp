@@ -50,7 +50,6 @@ vt_graph_impl::print ()
     nodes_ ()[i]->print ();
 }
 
-
 /* vt_graph_init_impl - factory operations */
 
 Supports_Test::vt_graph *
@@ -68,7 +67,6 @@ vt_graph_init_impl::create_for_unmarshal ()
   ACE_NEW_RETURN (ret_val, vt_graph_impl, nullptr);
   return ret_val;
 }
-
 
 /* test_impl */
 
@@ -149,7 +147,6 @@ test_impl::finish ()
 {
   this->orb_->shutdown (false);
 }
-
 
 /* node_impl */
 

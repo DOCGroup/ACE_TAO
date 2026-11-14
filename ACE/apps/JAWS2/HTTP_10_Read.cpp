@@ -5,7 +5,6 @@
 #include "JAWS/IO_Handler.h"
 #include "JAWS/Policy.h"
 
-
 // --------------- READ TASK ----------------------
 
 JAWS_HTTP_10_Read_Task::JAWS_HTTP_10_Read_Task ()

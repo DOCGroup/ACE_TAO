@@ -24,7 +24,6 @@ public:
   Identity_i (char const *name,
               PortableServer::POA_ptr poa);
 
-  /// Destructor.
   ~Identity_i () override = default;
 
   Identity_i (Identity_i const &) = delete;

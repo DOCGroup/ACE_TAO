@@ -43,10 +43,8 @@ parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-
 //
 PortableInterceptor::SlotId slot_id {};
-
 
 //
 class StateTransferImpl : public virtual POA_StateTransfer
@@ -90,7 +88,6 @@ public:
 private:
   ORB_var orb_;
 };
-
 
 //
 class ReplicaController : public virtual ServerRequestInterceptor,
@@ -147,7 +144,6 @@ public:
   ReplicaController & operator = (ReplicaController const &) = delete;
   ReplicaController & operator = (ReplicaController &&) = delete;
 };
-
 
 //
 class ORB_Initializer : public virtual ORBInitializer,

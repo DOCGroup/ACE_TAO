@@ -5,7 +5,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Time_Value.h"
 
-
 #if defined (ACE_HAS_TLI)
 
 /* ACE_TLI Client */

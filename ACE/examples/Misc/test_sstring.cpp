@@ -2,7 +2,6 @@
 #include "ace/SString.h"
 #include "ace/Log_Msg.h"
 
-
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {

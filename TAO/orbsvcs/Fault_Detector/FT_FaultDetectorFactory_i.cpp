@@ -42,7 +42,6 @@
       ));                     \
     return /* value goes here */
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 //////////////////////////////////////////////////////
@@ -189,7 +188,6 @@ int TAO::FT_FaultDetectorFactory_i::idle (int & result)
   return quit;
 }
 
-
 int TAO::FT_FaultDetectorFactory_i::init (CORBA::ORB_ptr orb)
 {
   int result = 0;
@@ -207,7 +205,6 @@ int TAO::FT_FaultDetectorFactory_i::init (CORBA::ORB_ptr orb)
   // Get the POA object.
   this->poa_ =
     PortableServer::POA::_narrow (poa_object.in ());
-
 
   if (CORBA::is_nil(this->poa_.in ()))
   {
@@ -352,7 +349,6 @@ int TAO::FT_FaultDetectorFactory_i::fini ()
   }
   return 0;
 }
-
 
 CORBA::ULong TAO::FT_FaultDetectorFactory_i::allocate_id ()
 {

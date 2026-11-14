@@ -32,7 +32,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 
 #include <assert.h>
@@ -79,7 +78,6 @@ void QTestApplication::exec (int msec)
   }
   inherited::exec ();
 }
-
 
 // maximum time for testing QtReactor (msec)
 const int TotalTestTime = 8000;
@@ -523,7 +521,6 @@ int TCPConnectionHandler::totalSent () const
   return totalSent_;
 }
 
-
 /*
    HandlersRegister class implementation
 */
@@ -804,7 +801,6 @@ int HandlersRegister::analyzeTCP () const
 
   return result;
 }
-
 
 /*
    TCPAcceptorHandler class implementation

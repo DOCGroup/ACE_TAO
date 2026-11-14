@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef _CUBIT_SERVER_H
 #define _CUBIT_SERVER_H
 
@@ -43,7 +42,6 @@ public:
   /// Default constructor
   Cubit_Server () = default;
 
-  /// Destructor
   ~Cubit_Server () = default;
 
   Cubit_Server (Cubit_Server const &) = delete;

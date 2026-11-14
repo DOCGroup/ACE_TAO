@@ -127,7 +127,6 @@ TAO_Notify_SupplierAdmin::load_proxy (
   return proxy;
 }
 
-
 void
 TAO_Notify_SupplierAdmin::set_qos (CosNotification::QoSProperties const &qos)
 {
@@ -169,7 +168,6 @@ TAO_Notify_SupplierAdmin::obtain_notification_push_consumer_with_qos (CosNotifyC
   this->self_change ();
   return proxy._retn ();
 }
-
 
 CosEventChannelAdmin::ProxyPushConsumer_ptr
 TAO_Notify_SupplierAdmin::obtain_push_consumer ()
@@ -296,7 +294,6 @@ TAO_Notify_SupplierAdmin::pull_consumers ()
 {
   throw CORBA::NO_IMPLEMENT ();
 }
-
 
 void
 TAO_Notify_SupplierAdmin::validate_qos (CosNotification::QoSProperties const & /*required_qos*/,

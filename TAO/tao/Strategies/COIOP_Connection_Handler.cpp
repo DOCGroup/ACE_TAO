@@ -31,7 +31,6 @@ TAO_COIOP_Connection_Handler::TAO_COIOP_Connection_Handler (ACE_Thread_Manager *
   ACE_ASSERT (false);
 }
 
-
 TAO_COIOP_Connection_Handler::TAO_COIOP_Connection_Handler (TAO_ORB_Core *orb_core)
   : TAO_COIOP_SVC_HANDLER (orb_core->thr_mgr (), nullptr, 0),
     TAO_Connection_Handler (orb_core)
@@ -43,7 +42,6 @@ TAO_COIOP_Connection_Handler::TAO_COIOP_Connection_Handler (TAO_ORB_Core *orb_co
   // store this pointer (indirectly increment ref count)
   this->transport (specific_transport);
 }
-
 
 TAO_COIOP_Connection_Handler::~TAO_COIOP_Connection_Handler ()
 {

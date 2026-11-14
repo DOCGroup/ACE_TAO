@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "server.h"
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
@@ -52,7 +51,6 @@ parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
   // Indicates successful parsing of the command line
   return 0;
 }
-
 
 TimeOfDay
 Time_impl::

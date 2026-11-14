@@ -5,7 +5,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "tao/TAO_Singleton_Manager.h"
 
-
 DllORB::DllORB () = default;
 
 DllORB::~DllORB () = default;
@@ -123,7 +122,6 @@ DllORB::init (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-
 int
 DllORB::fini ()
 {
@@ -203,7 +201,6 @@ DllORB::fini ()
   return 0;
 }
 
-
 int DllORB::svc ()
 {
   mp_barrier_->wait ();
@@ -227,6 +224,5 @@ int DllORB::svc ()
 
   return result;
 }
-
 
 ACE_FACTORY_DEFINE (bug2926, DllORB)

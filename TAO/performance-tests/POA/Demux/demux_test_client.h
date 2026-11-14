@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 // FUZZ: disable check_for_math_include
 
 #include "ace/Get_Opt.h"
@@ -124,6 +123,5 @@ private:
   /// database of operations
   Operation_DB_Entry op_db_[TAO_DEMUX_TEST_MAX_OPS];
 };
-
 
 #endif /* TAO_DEMUX_TEST_CLIENT_H */

@@ -75,13 +75,11 @@ private:
   bool caught_object_not_exist_;
 };
 
-
 int
 parse_args (int argc, ACE_TCHAR* argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "i:t:e:");
   int c;
-
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -161,5 +159,4 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   return 0;
 }
-
 

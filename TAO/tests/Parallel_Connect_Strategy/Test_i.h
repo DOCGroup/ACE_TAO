@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-
 #ifndef TEST_I_H
 #define TEST_I_H
 #include /**/ "ace/pre.h"
@@ -12,7 +11,6 @@ class Hello
   : public virtual POA_Test::Hello
 {
 public:
-  /// Constructor
   explicit Hello (CORBA::ORB_ptr orb);
 
   Hello (Hello const &) = delete;

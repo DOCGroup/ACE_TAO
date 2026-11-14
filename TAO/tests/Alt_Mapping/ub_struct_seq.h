@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef ALT_MAPPING_TEST_UNBOUNED_STRUCT_SEQUENCE_H
 #define ALT_MAPPING_TEST_UNBOUNED_STRUCT_SEQUENCE_H
 

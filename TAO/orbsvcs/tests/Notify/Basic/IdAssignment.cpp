@@ -121,13 +121,11 @@ IdAssignment::create_ec ()
   return id;
 }
 
-
 void
 IdAssignment::destroy_ec(CosNotifyChannelAdmin::ChannelID id)
 {
   CosNotifyChannelAdmin::EventChannel_var ec =
     this->notify_factory_->get_event_channel (id);
-
 
   if (CORBA::is_nil (ec.in()))
     {
@@ -148,7 +146,6 @@ IdAssignment::create_supplier_admin (CosNotifyChannelAdmin::ChannelID channel_id
 
   CosNotifyChannelAdmin::EventChannel_var ec =
     this->notify_factory_->get_event_channel (channel_id);
-
 
   if (CORBA::is_nil (ec.in ()))
     {
@@ -204,7 +201,6 @@ IdAssignment::create_consumer_admin (CosNotifyChannelAdmin::ChannelID channel_id
   return adminid;
 }
 
-
 bool
 IdAssignment::default_consumer_admin_test (CosNotifyChannelAdmin::ChannelID channel_id)
 {
@@ -249,7 +245,6 @@ IdAssignment::default_consumer_admin_test (CosNotifyChannelAdmin::ChannelID chan
 
   return true;
 }
-
 
 bool
 IdAssignment::default_supplier_admin_test (CosNotifyChannelAdmin::ChannelID channel_id)
@@ -296,7 +291,6 @@ IdAssignment::default_supplier_admin_test (CosNotifyChannelAdmin::ChannelID chan
   return true;
 }
 
-
 void
 IdAssignment::destroy_consumer_admin (
     CosNotifyChannelAdmin::ChannelID channel_id,
@@ -304,7 +298,6 @@ IdAssignment::destroy_consumer_admin (
 {
   CosNotifyChannelAdmin::EventChannel_var ec =
     this->notify_factory_->get_event_channel (channel_id);
-
 
   if (CORBA::is_nil (ec.in ()))
     {
@@ -329,7 +322,6 @@ IdAssignment::destroy_consumer_admin (
                 "destroyed consumer admin\n"));
 }
 
-
 void
 IdAssignment::destroy_supplier_admin (
     CosNotifyChannelAdmin::ChannelID channel_id,
@@ -337,7 +329,6 @@ IdAssignment::destroy_supplier_admin (
 {
   CosNotifyChannelAdmin::EventChannel_var ec =
     this->notify_factory_->get_event_channel (channel_id);
-
 
   if (CORBA::is_nil (ec.in ()))
     {
@@ -420,7 +411,6 @@ IdAssignment::run_test()
         }
 
     } // for
-
 
   //******************************************************************************
   // Repeat, but this time destroy the admins explicity.

@@ -48,7 +48,6 @@ TAO_Tagged_Components::known_tag (IOP::ComponentId tag) const
           || tag == IOP::TAG_CODE_SETS);
 }
 
-
 ACE_INLINE bool
 TAO_Tagged_Components::unique_tag (IOP::ComponentId tag) const
 {

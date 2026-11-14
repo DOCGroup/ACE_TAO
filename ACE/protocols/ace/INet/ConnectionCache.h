@@ -96,7 +96,6 @@ namespace ACE
               ConnectionHolder ();
           };
 
-
         /**
         * @class ACE_INet_ConnectionFactory
         *
@@ -117,7 +116,6 @@ namespace ACE
               virtual ConnectionHolder* create_connection (
                   ConnectionKey const& key) const = 0;
           };
-
 
         /**
         * @class ACE_INet_ConnectionCacheValue
@@ -167,7 +165,6 @@ namespace ACE
               /// Borrowed while the cache owns and manages the connection.
               connection_type* connection_ {};
           };
-
 
         /**
         * @class ACE_INet_ConnectionCache
@@ -258,7 +255,6 @@ namespace ACE
               /// Returns true if found, false otherwise.
               bool find_connection (ConnectionKey const& key,
                                     ConnectionCacheValue& cacheval);
-
 
               mutable ACE_SYNCH_MUTEX lock_;
               ACE_SYNCH_CONDITION condition_;

@@ -415,7 +415,6 @@ TAO_Transport::remove_handler ()
                     *this->handler_lock_,
                     false);
 
-
   if (this->event_handler_i ()->reactor () == nullptr)
     {
       return 0;
@@ -1877,7 +1876,6 @@ TAO_Transport::consolidate_process_message (TAO_Queued_Data *q_data,
               return -1;
             }
 
-
           if (this->process_parsed_messages (new_q_data, rh) == -1)
             {
               TAO_Queued_Data::release (new_q_data);
@@ -2057,7 +2055,6 @@ TAO_Transport::handle_input_missing_data (TAO_Resume_Handle &rh,
 
   return 0;
 }
-
 
 int
 TAO_Transport::handle_input_parse_extra_messages (
@@ -2538,7 +2535,6 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
 
    return 0;
 }
-
 
 int
 TAO_Transport::process_parsed_messages (TAO_Queued_Data *qd,

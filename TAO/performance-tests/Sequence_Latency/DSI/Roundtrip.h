@@ -17,7 +17,6 @@ class Roundtrip
   : public virtual PortableServer::DynamicImplementation
 {
 public:
-  /// Constructor
   explicit Roundtrip (CORBA::ORB_ptr orb);
   Roundtrip (Roundtrip const &) = delete;
   Roundtrip (Roundtrip &&) = delete;

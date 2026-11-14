@@ -61,7 +61,6 @@ My_Test_Object::id (CORBA::Short id)
   id_ = id;
 }
 
-
 // This function runs the test.
 
 int
@@ -580,7 +579,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   // TODO: Cleanup namespace
 
-
   // TODO: Create object groups and bind them. Check the replica.
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Redundancy test OK.\n")
@@ -668,7 +666,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     ex._tao_print_exception (ACE_TEXT ("ERROR: Exception during performance test.\n"));
     return -1;
   }
-
 
   return 0;
 }

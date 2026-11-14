@@ -230,7 +230,6 @@ ACE_Registry_ImpExp::export_config (const ACE_TCHAR* filename)
   return result;
 }
 
-
 #if !defined ACE_USES_WCHAR && defined ACE_LACKS_FPUTS
 # define ACE_WRITE_STRING write_string
 namespace
@@ -391,7 +390,6 @@ ACE_Registry_ImpExp::process_previous_line_format (ACE_TCHAR* buffer,
     }
   return 0;
 }                // end read_previous_line_format
-
 
 ACE_Ini_ImpExp::ACE_Ini_ImpExp (ACE_Configuration& config)
     : ACE_Config_ImpExp_Base (config)

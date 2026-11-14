@@ -18,7 +18,6 @@
 class Simple_Window : public Fl_Gl_Window
 {
 public:
-  /// Constructor
   Simple_Window (int x, int y, int w, int h,
                  char const *label = nullptr);
   Simple_Window (Simple_Window const &) = delete;

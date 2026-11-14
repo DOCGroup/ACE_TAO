@@ -32,5 +32,4 @@ private:
   Callback_var callback_;
 };
 
-
 #endif /* SIMPLEI_H_  */

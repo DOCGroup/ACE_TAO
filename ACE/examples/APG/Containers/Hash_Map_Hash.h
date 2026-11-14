@@ -32,7 +32,6 @@ public:
   }
 };
 
-
 // Specialize the equality functor.
 template<>
 class ACE_Equal_To<KeyType>

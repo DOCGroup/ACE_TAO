@@ -15,7 +15,6 @@ class Roundtrip
   : public virtual POA_Test::AMH_Roundtrip
 {
 public:
-  /// Constructor
   explicit Roundtrip (CORBA::ORB_ptr orb);
   Roundtrip (const Roundtrip &) = delete;
   Roundtrip (Roundtrip &&) = delete;

@@ -49,7 +49,6 @@ class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Activation_Manager : public TAO_No
   using TAO_Notify_Tests_PeriodicConsumer_Entry = ACE_Hash_Map_Entry<ACE_CString, TAO_Notify_Tests_Periodic_Consumer*>;
 
 public:
-  /// Constructor
   TAO_Notify_Tests_Activation_Manager ();
 
   TAO_Notify_Tests_Activation_Manager (TAO_Notify_Tests_Activation_Manager const &) = delete;
@@ -57,7 +56,6 @@ public:
   TAO_Notify_Tests_Activation_Manager (TAO_Notify_Tests_Activation_Manager &&) = delete;
   TAO_Notify_Tests_Activation_Manager &operator=(TAO_Notify_Tests_Activation_Manager &&) = delete;
 
-  /// Destructor
   virtual ~TAO_Notify_Tests_Activation_Manager ();
 
   /// Interface impl.

@@ -8,7 +8,6 @@
  */
 //==========================================================================
 
-
 #ifndef ACE_THROUGHPUT_STATS_H
 #define ACE_THROUGHPUT_STATS_H
 

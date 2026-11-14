@@ -8,7 +8,6 @@
  *  @author  Johnny Willemsen <jwillemsen@remedy.nl>
  */
 
-
 #ifndef TAO_COIOP_ENDPOINT_H
 #define TAO_COIOP_ENDPOINT_H
 #include /**/ "ace/pre.h"
@@ -67,7 +66,6 @@ public:
   /// Return a hash value for this object.
   CORBA::ULong hash () override;
   //@}
-
 
   /// Return a pointer to the host string.  This object maintains
   /// ownership of this string.

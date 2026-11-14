@@ -32,7 +32,6 @@ public:
 
 using IncidentList = std::vector<Incident>;
 
-
 class Log
 {
 public:

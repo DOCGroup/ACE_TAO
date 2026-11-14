@@ -70,7 +70,6 @@ public:
     TAO_Notify_EventChannelFactory &ecf,
     TAO_InputCDR & cdr);
 
-
 protected:
   /// Execute the dispatch operation.
   int execute_i ();

@@ -21,7 +21,6 @@
 class sum_server_i : public virtual POA_ORT::sum_server
 {
  public:
-  /// Constructor
   sum_server_i () = default;
   sum_server_i (sum_server_i const &) = delete;
   sum_server_i (sum_server_i &&) = delete;

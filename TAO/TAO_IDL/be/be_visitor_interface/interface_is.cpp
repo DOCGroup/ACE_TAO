@@ -104,7 +104,6 @@ be_visitor_interface_is::visit_interface (be_interface *node)
   return 0;
 }
 
-
 // Helper method to generate the members in the scope of the base classes.
 int
 be_visitor_interface_is::method_helper (be_interface *derived,

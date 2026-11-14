@@ -10,7 +10,6 @@ class LongDoubleTest
   : public virtual POA_Test::LongDoubleTest
 {
 public:
-  /// Constructor
   explicit LongDoubleTest (CORBA::ORB_ptr orb);
   LongDoubleTest (LongDoubleTest const &) = delete;
   LongDoubleTest (LongDoubleTest &&) = delete;

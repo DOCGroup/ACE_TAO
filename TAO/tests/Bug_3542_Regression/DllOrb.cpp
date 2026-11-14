@@ -161,5 +161,4 @@ DllOrb::svc ()
   return 0;
 }
 
-
 ACE_FACTORY_DEFINE (bug_3542, DllOrb)

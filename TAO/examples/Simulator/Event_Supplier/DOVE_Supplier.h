@@ -32,10 +32,8 @@
 class DOVE_Supplier
 {
 public:
-  /// Constructor.
   DOVE_Supplier ();
 
-  /// Destructor.
   ~DOVE_Supplier () = default;
 
   DOVE_Supplier (DOVE_Supplier const &) = delete;

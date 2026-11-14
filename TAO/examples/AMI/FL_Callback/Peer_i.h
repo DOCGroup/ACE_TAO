@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef PEER_I_H
 #define PEER_I_H
 
@@ -45,10 +44,8 @@ private:
 class Peer_i : public POA_Peer
 {
 public:
-  /// Constructor
   Peer_i ();
 
-  /// Destructor
   ~Peer_i () override = default;
 
   Peer_i (Peer_i const &) = delete;

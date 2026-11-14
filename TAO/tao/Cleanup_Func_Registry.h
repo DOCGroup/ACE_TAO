@@ -75,7 +75,6 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 # include "tao/Cleanup_Func_Registry.inl"
 #endif  /* __ACE_INLINE__ */
 
-
 #include /**/ "ace/post.h"
 
 #endif  /* TAO_CLEANUP_FUNC_REGISTRY_H */

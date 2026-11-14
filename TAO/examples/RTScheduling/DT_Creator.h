@@ -105,5 +105,4 @@ class RTSCHEDTESTLIB_Export DT_Creator : public ACE_Service_Object
   PortableServer::Servant_var<Synch_i> synch_;
 };
 
-
 #endif /*DT_CREATOR_H*/

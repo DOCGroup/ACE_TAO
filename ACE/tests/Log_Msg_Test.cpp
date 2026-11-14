@@ -446,7 +446,6 @@ test_acelib_category()
     ++failed;
   }
 
-
   if (failed == 0) {
     ACE_DEBUG((LM_DEBUG, "All ace lib category log passed\n"));
   }
@@ -548,7 +547,6 @@ test_ostream ()
   // Make sure to NUL-terminate this turkey!
   buffer[size] = '\0';
 
-
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("%C"),
               buffer));
@@ -571,7 +569,6 @@ test_ostream ()
 
   return 0;
 }
-
 
 // For testing the format specifiers, a class is defined as a callback
 // mechanism. It will get the formatted messages and check them for

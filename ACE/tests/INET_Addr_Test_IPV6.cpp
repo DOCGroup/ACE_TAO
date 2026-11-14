@@ -103,7 +103,6 @@ static bool check_both_families()
 }
 #endif /* ACE_HAS_IPV6 */
 
-
 int run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("INET_Addr_Test_IPV6"));

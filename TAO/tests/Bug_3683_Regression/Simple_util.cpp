@@ -9,7 +9,6 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_fcntl.h"
 
-// Constructor.
 template <class Servant>
 Server<Servant>::Server ()
 {

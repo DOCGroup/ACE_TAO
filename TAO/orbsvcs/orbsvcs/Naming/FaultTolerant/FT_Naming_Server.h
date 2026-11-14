@@ -47,7 +47,6 @@ public:
   bool iors_;
 };
 
-
 /**
  * @class TAO_FT_Naming_Server
  *

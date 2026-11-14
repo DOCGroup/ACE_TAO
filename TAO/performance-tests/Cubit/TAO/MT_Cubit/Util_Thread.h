@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef UTIL_THREAD_H
 #define UTIL_THREAD_H
 
@@ -24,7 +23,6 @@
 class Util_Thread : public ACE_Task<ACE_NULL_SYNCH>
 {
 public:
-  /// Constructor.
   Util_Thread (Task_State *,
                ACE_Thread_Manager *thr_mgr);
 

@@ -14,7 +14,6 @@
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
-
 // Indentation while printing names
 static constexpr u_long INDENTATION_LEVEL = 3;
 
@@ -53,7 +52,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-
 // Print contents of <naming_context>
 static int
 print_naming_context (ACE_Registry::Naming_Context &naming_context,
@@ -87,7 +85,6 @@ print_naming_context (ACE_Registry::Naming_Context &naming_context,
   return 0;
 }
 
-
 // Print an object with <name>
 static void
 print_object (const ACE_TString &name,
@@ -97,7 +94,6 @@ print_object (const ACE_TString &name,
   ::indent (indentation);
   cout << name << endl;
 }
-
 
 // Print an context with <name> and <parent>
 static void
@@ -125,7 +121,6 @@ print_context (ACE_Registry::Naming_Context &parent,
         ACE_ERROR ((LM_ERROR, "%p\n", "print_naming_context failed"));
     }
 }
-
 
 // Pretty formating
 static void

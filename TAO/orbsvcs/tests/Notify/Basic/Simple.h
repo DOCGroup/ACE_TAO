@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef NOTIFY_TESTS_SIMPLE_H
 #define NOTIFY_TESTS_SIMPLE_H
 
@@ -31,7 +30,6 @@ class Simple_Test;
 class Event_AnyPushConsumer : public TAO_Notify_Tests_PushConsumer
 {
 public:
-  /// Constructor.
   explicit Event_AnyPushConsumer (Simple_Test *test_client);
 
   // = PushSupplier methods
@@ -46,10 +44,8 @@ protected:
 class Event_AnyPushSupplier : public TAO_Notify_Tests_PushSupplier
 {
 public:
-  /// Constructor.
   explicit Event_AnyPushSupplier (Simple_Test *test_client);
 
-  /// Destructor.
   ~Event_AnyPushSupplier () override;
 
 protected:

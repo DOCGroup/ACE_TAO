@@ -402,7 +402,6 @@ be_sequence::accept (be_visitor *visitor)
   return visitor->visit_sequence (this);
 }
 
-
 std::string
 be_sequence::instance_name () const
 {

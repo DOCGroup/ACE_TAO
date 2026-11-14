@@ -20,7 +20,6 @@ public:
   /// Stopwatch_display constructor
   explicit Stopwatch_display (Widget parent);
 
-  /// Destructor
   virtual ~Stopwatch_display () = default;
 
   Stopwatch_display (Stopwatch_display const &) = delete;

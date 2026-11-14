@@ -44,7 +44,6 @@ private:
   Consumer_Options options_;
 };
 
-
 int
 Consumer_Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
@@ -79,7 +78,6 @@ Consumer_Client::parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-
 static CosNotifyChannelAdmin::ConsumerAdmin_ptr
 create_consumeradmin (CosNotifyChannelAdmin::EventChannel_ptr ec)
 {
@@ -88,10 +86,8 @@ create_consumeradmin (CosNotifyChannelAdmin::EventChannel_ptr ec)
     ec->new_for_consumers (CosNotifyChannelAdmin::AND_OP,
     adminid);
 
-
   return CosNotifyChannelAdmin::ConsumerAdmin::_duplicate (admin.in ());
 }
-
 
 using Consumers = std::array<Notify_Structured_Push_Consumer*, max_consumers>;
 

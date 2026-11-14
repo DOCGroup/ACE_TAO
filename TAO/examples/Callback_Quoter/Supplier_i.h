@@ -41,7 +41,6 @@ class Supplier_Timer_Handler;
 class Supplier
 {
 public:
-  /// Constructor.
   Supplier () = default;
 
   Supplier (Supplier const &) = delete;
@@ -49,7 +48,6 @@ public:
   Supplier (Supplier &&) = delete;
   Supplier &operator= (Supplier &&) = delete;
 
-  /// Destructor.
   ~Supplier ();
 
   /// Execute  the daemon.

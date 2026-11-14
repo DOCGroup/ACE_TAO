@@ -53,7 +53,6 @@ Sender::get_event_count ()
   return this->message_count_;
 }
 
-
 void
 Sender::ping ()
 {

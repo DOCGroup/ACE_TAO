@@ -27,5 +27,4 @@ TAO_Notify_Consumer::pending_count ()
   return this->pending_events_->size();
 }
 
-
 TAO_END_VERSIONED_NAMESPACE_DECL

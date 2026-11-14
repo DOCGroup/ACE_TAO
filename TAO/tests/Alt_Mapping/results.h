@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef RESULTS_H
 #define RESULTS_H
 
@@ -36,7 +35,6 @@ public:
   /// ctor
   Results ();
 
-  /// destructor
   ~Results () = default;
   Results (Results const &) = delete;
   Results (Results &&) = delete;

@@ -35,10 +35,8 @@ namespace Test
     , public virtual ::CORBA::LocalObject
   {
   public:
-    /// Constructor.
     IIOP_Server_Request_Interceptor (char const *orbid, TEST test);
 
-    /// Destructor.
     ~IIOP_Server_Request_Interceptor () override = default;
 
     IIOP_Server_Request_Interceptor (IIOP_Server_Request_Interceptor const &) = delete;

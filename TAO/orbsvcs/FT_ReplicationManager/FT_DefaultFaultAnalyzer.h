@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #ifndef FT_DEFAULT_FAULT_ANALYZER_H_
 #define FT_DEFAULT_FAULT_ANALYZER_H_
 

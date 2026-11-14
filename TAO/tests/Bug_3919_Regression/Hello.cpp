@@ -18,7 +18,6 @@ Hello::get_any (CORBA::Any const & the_any)
   return retval;
 }
 
-
 void
 Hello::shutdown ()
 {

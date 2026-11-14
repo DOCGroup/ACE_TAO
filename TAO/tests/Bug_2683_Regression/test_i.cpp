@@ -18,7 +18,6 @@ test_i::shutdown ()
   this->killer_->activate ();
 }
 
-
 ORB_Killer::ORB_Killer (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {

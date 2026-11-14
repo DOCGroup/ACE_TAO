@@ -78,7 +78,6 @@ get_object_id(CORBA::Any_var a)
   return result;
 }
 
-
 FtRtecEventChannelAdmin::ObjectId_var
 Request_Context_Repository::get_object_id()
 {
@@ -164,7 +163,6 @@ Request_Context_Repository::set_sequence_number(
   pic->set_slot(seq_num_slot, a);
 }
 
-
 FTRT::SequenceNumber
 Request_Context_Repository::get_sequence_number()
 {
@@ -224,7 +222,6 @@ Request_Context_Repository::set_transaction_depth(
   a <<= depth;
   pic->set_slot(transaction_depth_slot,a);
 }
-
 
 FTRT::TransactionDepth
 Request_Context_Repository::get_transaction_depth(

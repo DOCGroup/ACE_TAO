@@ -5,7 +5,6 @@
 #include "Options.h"
 #include "Message_Block_Owner.h"
 
-
 #if defined (ACE_HAS_THREADS)
 
 using CONSUMER_FACTORY = Acceptor_Factory<Consumer_Handler, CONSUMER_KEY>;
@@ -58,7 +57,6 @@ Consumer_Router::close (u_long)
   this->msg_queue ()->deactivate();
   return 0;
 }
-
 
 // Handle incoming messages in a separate thread..
 

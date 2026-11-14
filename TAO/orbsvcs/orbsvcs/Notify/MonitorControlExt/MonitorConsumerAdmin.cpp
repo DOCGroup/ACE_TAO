@@ -181,7 +181,6 @@ TAO_MonitorConsumerAdmin::update_queue_count (size_t count)
     }
 }
 
-
 void
 TAO_MonitorConsumerAdmin::count_queue_overflow (
   bool local_overflow,
@@ -212,7 +211,6 @@ TAO_MonitorConsumerAdmin::stat_name () const
   return stat_name_;
 }
 
-
 void
 TAO_MonitorConsumerAdmin::destroy ()
 {
@@ -238,7 +236,6 @@ TAO_MonitorConsumerAdmin::remove ()
 
   // We don't own queue_size_, so we must not delete it
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef ECHO_I_H
 #define ECHO_I_H
 
@@ -29,10 +28,8 @@
 class Echo_i : public POA_Echo
 {
 public:
-  /// Constructor.
   Echo_i () = default;
 
-  /// Destructor.
   ~Echo_i () override = default;
   Echo_i (Echo_i const &) = delete;
   Echo_i (Echo_i &&) = delete;

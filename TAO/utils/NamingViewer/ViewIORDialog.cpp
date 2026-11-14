@@ -13,7 +13,6 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // ViewIORDialog dialog
 
-
 ViewIORDialog::ViewIORDialog(CORBA::ORB_ptr pORB, CORBA::Object_ptr pObject, CWnd* pParent /*=NULL*/)
   : CDialog(ViewIORDialog::IDD, pParent)
 {
@@ -30,7 +29,6 @@ ViewIORDialog::ViewIORDialog(CORBA::ORB_ptr pORB, CORBA::Object_ptr pObject, CWn
   m_IOR = IOR;
 }
 
-
 void ViewIORDialog::DoDataExchange(CDataExchange* pDX)
 {
   CDialog::DoDataExchange(pDX);
@@ -40,7 +38,6 @@ void ViewIORDialog::DoDataExchange(CDataExchange* pDX)
   DDX_Text(pDX, IDC_IOR, m_IOR);
   //}}AFX_DATA_MAP
 }
-
 
 BEGIN_MESSAGE_MAP(ViewIORDialog, CDialog)
   //{{AFX_MSG_MAP(ViewIORDialog)

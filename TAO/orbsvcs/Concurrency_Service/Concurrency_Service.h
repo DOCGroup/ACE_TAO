@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef _CONCURRENCY_SERVICE_H
 #define _CONCURRENCY_SERVICE_H
 
@@ -45,7 +44,6 @@ public:
   Concurrency_Service (int argc,
                        ACE_TCHAR **argv);
 
-  /// Destructor.
   ~Concurrency_Service ();
 
   /// Initialize the Concurrency Service with the arguments.

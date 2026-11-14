@@ -29,13 +29,11 @@ class UDP_PerformanceClient
   //    This class wrapps the client functionality into one class
   //
 public:
-  /// Constructor
   UDP_PerformanceClient (CORBA::ORB_ptr orb,
                          UDP_ptr udp,
                          UDP_i &udpHandler,
                          ACE_UINT32 burst_messages);
 
-  /// Destructor
   ~UDP_PerformanceClient () override = default;
 
   UDP_PerformanceClient (UDP_PerformanceClient const &) = delete;

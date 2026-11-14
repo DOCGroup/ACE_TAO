@@ -37,6 +37,5 @@
 #  define TAO_NAMING_CONTEXT_INDEX "Naming_Context_Index"
 #endif /* ! TAO_NAMING_CONTEXT_INDEX */
 
-
 #include /**/ "ace/post.h"
 #endif /*TAO_NAMESERVICE_CONF_H*/

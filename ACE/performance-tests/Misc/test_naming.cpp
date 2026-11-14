@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "ace/OS_main.h"
 #include "ace/ACE.h"
 #include "ace/SString.h"
@@ -204,7 +203,6 @@ do_testing (int argc, ACE_TCHAR *argv[], bool const light)
   ACE_DEBUG ((LM_DEBUG, "real time = %f secs, user time = %f secs, system time = %f secs\n",
               et.real_time, et.user_time, et.system_time));
 }
-
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])

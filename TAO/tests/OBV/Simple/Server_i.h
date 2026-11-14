@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef ECHO_I_H
 #define ECHO_I_H
 
@@ -20,10 +19,8 @@
 class Checkpoint_i : public POA_Checkpoint
 {
 public:
-  /// Constructor.
   Checkpoint_i () = default;
 
-  /// Destructor.
   ~Checkpoint_i () override = default;
 
   Checkpoint_i (Checkpoint_i const&) = delete;

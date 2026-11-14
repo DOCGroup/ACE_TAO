@@ -325,7 +325,6 @@ Server_i::run ()
       // requests.
       poa_manager_->activate ();
 
-
       // Run the ORB.
       orb_->run ();
     }

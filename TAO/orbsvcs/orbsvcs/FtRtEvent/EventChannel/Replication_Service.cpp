@@ -91,7 +91,6 @@ namespace FTRTEC
     return 0;
   }
 
-
   void Replication_Service::become_primary()
   {
     TAO_FTRTEC::Log(3, ACE_TEXT("become_primary\n"));
@@ -110,7 +109,6 @@ namespace FTRTEC
   {
     replication_strategy->check_validity();
   }
-
 
   void Replication_Service::replicate_request(
     FtRtecEventChannelAdmin::Operation const& update,
@@ -137,7 +135,6 @@ namespace FTRTEC
         state[i] = base[i];
       }
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
-
 
     replication_strategy->replicate_request(
       state,

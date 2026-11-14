@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #if !defined (LATENCY_QUERY_CLIENT_H)
 #define LATENCY_QUERY_CLIENT_H
 

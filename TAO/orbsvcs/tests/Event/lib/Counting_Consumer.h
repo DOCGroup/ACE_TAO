@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef EC_COUNTING_CONSUMER_H
 #define EC_COUNTING_CONSUMER_H
 
@@ -30,7 +29,6 @@
 class EC_Test_Export EC_Counting_Consumer : public POA_RtecEventComm::PushConsumer
 {
 public:
-  /// Constructor
   EC_Counting_Consumer (const char* name);
 
   /// Simple connect/disconnect methods..

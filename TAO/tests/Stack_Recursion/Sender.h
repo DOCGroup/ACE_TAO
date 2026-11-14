@@ -13,7 +13,6 @@ class Sender
   : public virtual POA_Test::Sender
 {
 public:
-  /// Constructor
   explicit Sender (CORBA::ORB_ptr orb);
   Sender (Sender const &) = delete;
   Sender (Sender &&) = delete;

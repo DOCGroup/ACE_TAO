@@ -27,7 +27,6 @@ TAO_CSD_Strategy_Repository::find (std::string const &name)
   return CSD_Framework::Strategy::_nil();
 }
 
-
 int
 TAO_CSD_Strategy_Repository::add_strategy (std::string const &name,
                                            CSD_Framework::Strategy_ptr strat)

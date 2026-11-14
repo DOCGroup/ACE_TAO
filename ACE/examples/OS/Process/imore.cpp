@@ -15,7 +15,6 @@
  */
 //=============================================================================
 
-
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_unistd.h"
@@ -28,7 +27,6 @@
 #include "ace/Process.h"
 #include "ace/Signal.h"
 #include <memory>
-
 
 #if defined (ACE_WIN32)
 static ACE_TCHAR const *const executable = ACE_TEXT ("MORE.COM");

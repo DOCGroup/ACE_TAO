@@ -41,7 +41,6 @@ struct mif_scheduler_traits
   };
 };
 
-
 class MyTask : public ACE_Task_Base
 {
 public:
@@ -119,9 +118,6 @@ int MyTask::svc ()
   dispatcher_->cancel_schedule (this->guid_);
   return 0;
 }
-
-
-
 
 int ACE_TMAIN (int, ACE_TCHAR **)
 {

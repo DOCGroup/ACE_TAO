@@ -9,13 +9,11 @@ Foo_i::Foo_i (unsigned num_clients)
              num_clients));
 }
 
-
 void
 Foo_i::op1 ()
 {
   this->count_op1_.fetch_add (1, std::memory_order_relaxed);
 }
-
 
 void
 Foo_i::op2 (CORBA::Long value)
@@ -24,14 +22,12 @@ Foo_i::op2 (CORBA::Long value)
   this->value_.store (value, std::memory_order_relaxed);
 }
 
-
 CORBA::Long
 Foo_i::op3 ()
 {
   this->count_op3_.fetch_add (1, std::memory_order_relaxed);
   return this->value_.load (std::memory_order_relaxed);
 }
-
 
 void
 Foo_i::op4 (CORBA::Long value)
@@ -47,13 +43,11 @@ Foo_i::op4 (CORBA::Long value)
     }
 }
 
-
 void
 Foo_i::op5 ()
 {
   this->count_op5_.fetch_add (1, std::memory_order_relaxed);
 }
-
 
 void
 Foo_i::done ()

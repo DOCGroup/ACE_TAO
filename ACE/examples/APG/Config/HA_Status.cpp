@@ -27,7 +27,6 @@ private:
   ACE_INET_Addr listen_addr_ {};
 };
 
-
 int
 HA_Status::init (int argc, ACE_TCHAR *argv[])
 {

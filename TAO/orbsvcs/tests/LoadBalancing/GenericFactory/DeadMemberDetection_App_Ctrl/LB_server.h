@@ -45,7 +45,6 @@ struct LB_Server_Options
 class LB_server
 {
 public:
-  /// Constructor
   LB_server (int &argc, ACE_TCHAR **&argv, LB_Server_Options &options);
 
   LB_server (LB_server const &) = delete;

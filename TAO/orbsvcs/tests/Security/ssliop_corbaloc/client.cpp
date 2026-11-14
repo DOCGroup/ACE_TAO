@@ -27,10 +27,8 @@ class My_Test_Object :
   public virtual POA_Test_Object
 {
 public:
-  /// Constructor.
   explicit My_Test_Object (CORBA::Short id = 0);
 
-  /// Destructor.
   ~My_Test_Object () override = default;
 
   // = Interface implementation accessor methods.

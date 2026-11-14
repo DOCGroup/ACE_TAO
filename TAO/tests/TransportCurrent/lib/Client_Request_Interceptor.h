@@ -33,7 +33,6 @@ namespace Test
   /// different traits implementations
   using TEST = int (*) (CORBA::ORB_ptr);
 
-
   /**
    * @class Client_Request_Interceptor
    *
@@ -51,7 +50,6 @@ namespace Test
       public virtual ::CORBA::LocalObject
   {
  public:
-    /// Constructor.
     Client_Request_Interceptor (char const *orb_id,
                                 TEST test);
 

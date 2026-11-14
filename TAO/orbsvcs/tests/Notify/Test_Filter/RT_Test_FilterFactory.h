@@ -33,7 +33,6 @@ class TAO_RT_Test_Filter_Export TAO_Notify_Tests_RT_Test_FilterFactory
   , public virtual TAO_Notify_FilterFactory
 {
 public:
-  /// Constructor
   TAO_Notify_Tests_RT_Test_FilterFactory () = default;
   TAO_Notify_Tests_RT_Test_FilterFactory (TAO_Notify_Tests_RT_Test_FilterFactory const&) = delete;
   TAO_Notify_Tests_RT_Test_FilterFactory (TAO_Notify_Tests_RT_Test_FilterFactory&&) = delete;

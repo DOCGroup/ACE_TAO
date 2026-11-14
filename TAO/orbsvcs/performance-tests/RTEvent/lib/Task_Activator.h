@@ -22,7 +22,6 @@ template<class Task>
 class Task_Activator
 {
 public:
-  /// Constructor
   /**
    * @todo If we were to define a generic ACE class for this then we
    *       should certainly change the constructor.  For example, we
@@ -55,7 +54,6 @@ public:
   Task_Activator &operator= (Task_Activator const &) = delete;
   Task_Activator &operator= (Task_Activator &&) = delete;
 
-  /// Destructor
   /**
    * Wait until the task terminates before returning, this is useful
    * in programs that need to guarantee that the task object is not

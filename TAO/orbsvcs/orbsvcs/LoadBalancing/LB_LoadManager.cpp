@@ -546,7 +546,6 @@ TAO_LB_LoadManager::add_member (
   return ret._retn ();
 }
 
-
 PortableGroup::ObjectGroup_ptr
 TAO_LB_LoadManager::remove_member (
     PortableGroup::ObjectGroup_ptr object_group,
@@ -556,7 +555,6 @@ TAO_LB_LoadManager::remove_member (
     this->object_group_manager_.remove_member (object_group,
                                                the_location);
 }
-
 
 PortableGroup::Locations *
 TAO_LB_LoadManager::locations_of_members (
@@ -616,7 +614,6 @@ TAO_LB_LoadManager::create_object (
 {
 //   this->initialize ();
 
-
   PortableGroup::Criteria new_criteria (the_criteria);
   this->preprocess_properties (new_criteria);
 
@@ -624,7 +621,6 @@ TAO_LB_LoadManager::create_object (
     this->generic_factory_.create_object (type_id,
                                           new_criteria,
                                           factory_creation_id);
-
 
   return obj;
 }
@@ -1106,7 +1102,6 @@ TAO_LB_LoadManager::make_strategy (const CosLoadBalancing::StrategyInfo * info)
 //   this->poa_->deactivate_object ();
 // }
 
-
 int
 TAO_LB_LoadManager::svc ()
 {
@@ -1127,6 +1122,5 @@ TAO_LB_LoadManager::svc ()
 
   return 0;
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

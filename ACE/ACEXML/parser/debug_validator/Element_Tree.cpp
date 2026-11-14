@@ -62,5 +62,4 @@ ACEXML_Element_Tree_List_Node::dump ()
 
 ACE_ALLOC_HOOK_DEFINE (ACEXML_Element_Tree_List_Node)
 
-
 ACE_ALLOC_HOOK_DEFINE (ACEXML_Element_Tree_List_Stack)

@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #include "test_dynstruct.h"
 #include "da_testsC.h"
 #include "data.h"
@@ -189,7 +188,6 @@ Test_DynStruct::run_test ()
       ACE_DEBUG ((LM_DEBUG,
                   "testing: constructor(TypeCode alias)/from_any/to_any\n"));
 
-
       DynAnyTests::test_struct const* ts_out2 {};
       CORBA::Any_var out_any2 ;
       DynamicAny::DynStruct_var ftc2;
@@ -242,7 +240,6 @@ Test_DynStruct::run_test ()
         {
           ++this->error_count_;
         }
-
 
       ACE_DEBUG ((LM_DEBUG,
                   "testing: current_member_name/current_member_kind\n"));

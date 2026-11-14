@@ -133,7 +133,6 @@ MIF_Scheduler::create_scheduling_parameter (const MIF_Scheduling::SchedulingPara
   return sched_param_policy;
 }
 
-
 void
 MIF_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType& guid,
                                              const char *,
@@ -233,7 +232,6 @@ MIF_Scheduler::end_nested_scheduling_segment (
 {
 }
 
-
 void
 MIF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
 {
@@ -302,7 +300,6 @@ MIF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
       // Add this context to the service context list.
       ri->add_request_service_context (sc, 0);
     }
-
 
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,

@@ -1,6 +1,5 @@
 #include "RT_CORBA_Leader_Follower.h"
 
-
 #if defined (ACE_HAS_THREADS)
 
 // We need the following only if we have threads enabled..
@@ -59,7 +58,6 @@ Synchronisers::Synchronisers ()
     event_ ()
 {
 }
-
 
 int
 Synchronisers::start_synchronization ()
@@ -142,7 +140,6 @@ Synchronisers::end_synchronization ()
 
   return 0;
 }
-
 
 /*******************************************************************/
 

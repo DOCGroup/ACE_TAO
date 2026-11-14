@@ -23,7 +23,6 @@
 #include "ace/ACE.h"
 #include "ace/Barrier.h"
 
-
 #if defined (ACE_HAS_THREADS)
 
 class Token_Strategy_Test : public ACE_Task<ACE_MT_SYNCH>
@@ -71,7 +70,6 @@ private:
   Token_Strategy_Test (const Token_Strategy_Test &) = delete;
   Token_Strategy_Test &operator= (const Token_Strategy_Test &) = delete;
 };
-
 
 Token_Strategy_Test::Token_Strategy_Test (ACE_Token::QUEUEING_STRATEGY strategy, int threads, int invocations)
   : threads_ (threads < 5 ? 5 : threads), // need at least 5 threads to satisfy test conditions.
@@ -124,7 +122,6 @@ Token_Strategy_Test::svc ()
   int current = this->active_.value ();
   ACE_Auto_IncDec<ACE_Atomic_Op<ACE_Thread_Mutex, int> > active_counter (this->active_);
   this->barrier_.wait ();
-
 
   //ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (tid = %t) starting loop\n")));
   for (int i = 0; i < this->invocations_; i++)
@@ -198,7 +195,6 @@ Token_Strategy_Test::svc ()
     }
   return 0;
 }
-
 
 int run_test (ACE_Token::QUEUEING_STRATEGY strategy, int threads = 5,
               int invocations = 10)

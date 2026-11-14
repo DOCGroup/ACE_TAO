@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #include "ace/Get_Opt.h"
 #include "ace/Reactor.h"
 #include "ace/WFMO_Reactor.h"
@@ -207,7 +206,6 @@ public:
 protected:
   ACE_Pipe &pipe_;
 };
-
 
 //
 // Selection of which reactor should get created

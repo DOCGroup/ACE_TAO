@@ -260,7 +260,6 @@ JAWS_Asynch_IO_Handler_Factory::destroy_io_handler (JAWS_IO_Handler *handler)
     }
 }
 
-
 JAWS_Asynch_IO_Handler::JAWS_Asynch_IO_Handler (JAWS_Asynch_IO_Handler_Factory *factory)
   : JAWS_IO_Handler (factory),
     handler_ (0)

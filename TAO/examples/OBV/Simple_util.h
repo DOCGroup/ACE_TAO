@@ -32,7 +32,6 @@ template <class Servant>
 class Server
 {
 public:
-  /// Constructor.
   Server () = default;
 
   Server (Server const &) = delete;
@@ -40,7 +39,6 @@ public:
   Server (Server &&) = delete;
   Server &operator= (Server &&) = delete;
 
-  /// Destructor.
   ~Server () = default;
 
   /// Initialize the Server state - parsing arguments and waiting.
@@ -93,7 +91,6 @@ template <class InterfaceObj, class Var>
 class Client
 {
 public:
-  /// Constructor.
   Client () = default;
 
   Client (Client const &) = delete;
@@ -101,7 +98,6 @@ public:
   Client (Client &&) = delete;
   Client &operator= (Client &&) = delete;
 
-  /// Destructor.
   ~Client () = default;
 
   /// Initialize the client communication endpoint with server.

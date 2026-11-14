@@ -24,5 +24,4 @@ private:
   CORBA::ORB_var orb_;
 };
 
-
 #endif /* MESSENGERSHUTDOWNTIMER_H_  */

@@ -88,7 +88,6 @@ ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR>::~ACE_Metrics_Timeprobe ()
     }
 }
 
-
 // Returns true if a timeprobe matches the passed id.
 
 template <class ACE_LOCK, class ALLOCATOR>
@@ -136,14 +135,12 @@ ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR>::probe_id () const
   return id_;
 }
 
-
 template <class ACE_LOCK, class ALLOCATOR>
 void
 ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR>::probe_id (u_int id)
 {
   id_ = id;
 }
-
 
 // Flush the ACE metrics timeprobe into shared memory.
 
@@ -152,7 +149,6 @@ ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR>::
 flush_ACE_Metrics_Timeprobe ()
 {
 }
-
 
 /////////////////////////////
 // Class ACE_Metrics_Cache //
@@ -188,7 +184,6 @@ ACE_Metrics_Cache<ACE_LOCK, ALLOCATOR>::allocator ()
          ? alloc
          : ACE_Singleton<ALLOCATOR, ACE_LOCK>::instance ();
 }
-
 
 // Flush the ACE metrics cache into shared memory.
 

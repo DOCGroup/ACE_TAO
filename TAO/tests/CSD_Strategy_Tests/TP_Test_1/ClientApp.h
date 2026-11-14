@@ -4,7 +4,6 @@
 #include "TestAppBase.h"
 #include "ace/SString.h"
 
-
 class ClientApp : public TestAppBase
 {
   public:
@@ -18,7 +17,6 @@ class ClientApp : public TestAppBase
     ClientApp (ClientApp &&) = delete;
     ClientApp & operator= (ClientApp const &) = delete;
     ClientApp & operator= (ClientApp &&) = delete;
-
 
   private:
     int parse_args(int argc, ACE_TCHAR* argv[]);

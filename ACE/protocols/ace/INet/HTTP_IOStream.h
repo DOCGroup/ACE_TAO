@@ -65,7 +65,6 @@ namespace ACE
               policy_type * policy_;
           };
 
-
         /**
         * @class ACE_HTTP_IOS
         *

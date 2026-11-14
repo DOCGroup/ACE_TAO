@@ -136,7 +136,6 @@ Fixed_Priority_Scheduler::create_segment_scheduling_parameter (
   return segment_sched_param_policy;
 }
 
-
 void
 Fixed_Priority_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType& guid,
                                              const char *,
@@ -236,7 +235,6 @@ Fixed_Priority_Scheduler::end_nested_scheduling_segment (const RTScheduling::Cur
 {
 }
 
-
 void
 Fixed_Priority_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
 {
@@ -306,7 +304,6 @@ Fixed_Priority_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_p
       // Add this context to the service context list.
       ri->add_request_service_context (sc, 0);
     }
-
 
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,

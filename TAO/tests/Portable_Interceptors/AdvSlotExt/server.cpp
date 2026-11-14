@@ -47,7 +47,6 @@ using namespace PortableInterceptor;
 //
 PortableInterceptor::SlotId slot_id;
 
-
 //
 class StateTransferImpl: public virtual POA_StateTransfer
 {
@@ -85,7 +84,6 @@ public:
 private:
   ORB_var orb_;
 };
-
 
 //
 class ReplicaController: public virtual ServerRequestInterceptor,
@@ -165,7 +163,6 @@ public:
   }
   PortableInterceptor::Current_var pi_current_;
 };
-
 
 //
 class ORB_Initializer : public virtual ORBInitializer,

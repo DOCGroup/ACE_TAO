@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef SUPPLIER_INPUT_HANDLER_H
 #define SUPPLIER_INPUT_HANDLER_H
 
@@ -37,7 +36,6 @@
 class Notifier_Input_Handler : public ACE_Event_Handler
 {
 public:
-  /// Constructor.
   Notifier_Input_Handler () = default;
 
   Notifier_Input_Handler (Notifier_Input_Handler const &) = delete;
@@ -45,7 +43,6 @@ public:
   Notifier_Input_Handler (Notifier_Input_Handler &&) = delete;
   Notifier_Input_Handler &operator= (Notifier_Input_Handler &&) = delete;
 
-  /// Destructor.
   ~Notifier_Input_Handler ();
 
   /// Initialize the Notifier who plays the role of the server here.

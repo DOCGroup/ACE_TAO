@@ -6,7 +6,6 @@
 #include <cstdio>
 #include <ctime>
 
-
 #if defined (ACE_HAS_STREAM_PIPES)
 
 int

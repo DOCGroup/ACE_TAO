@@ -9,7 +9,6 @@
 #include "tao/PI/PI.h"
 #include "tao/CSD_ThreadPool/CSD_ThreadPool.h"
 
-
 ClientApp::ClientApp()
 : TestAppBase("TP_Test_3_Client"),
   client_task_ (true), // shutdown orb after client is done.
@@ -22,9 +21,7 @@ ClientApp::ClientApp()
 {
 }
 
-
 ClientApp::~ClientApp() = default;
-
 
 int
 ClientApp::run_i(int argc, ACE_TCHAR* argv[])
@@ -53,7 +50,6 @@ ClientApp::run_i(int argc, ACE_TCHAR* argv[])
   return this->check_validity () ? 0 : -1;
 }
 
-
 int
 ClientApp::init(int argc, ACE_TCHAR* argv[])
 {
@@ -74,14 +70,12 @@ ClientApp::init(int argc, ACE_TCHAR* argv[])
   return 0;
 }
 
-
 void
 ClientApp::poa_setup()
 {
   this->poa_ = this->create_poa(this->orb_.in(),
                                 "ChildPoa");
 }
-
 
 void
 ClientApp::csd_setup()
@@ -95,7 +89,6 @@ ClientApp::csd_setup()
       throw TestAppException();
     }
 }
-
 
 void
 ClientApp::client_setup()
@@ -115,7 +108,6 @@ ClientApp::client_setup()
   this->client_task_.add_engine(engine.in());
 }
 
-
 void
 ClientApp::poa_activate()
 {
@@ -123,7 +115,6 @@ ClientApp::poa_activate()
     = this->poa_->the_POAManager();
   poa_manager->activate();
 }
-
 
 void
 ClientApp::run_clients()
@@ -134,7 +125,6 @@ ClientApp::run_clients()
     }
 }
 
-
 void
 ClientApp::run_orb_event_loop()
 {
@@ -142,7 +132,6 @@ ClientApp::run_orb_event_loop()
   orb_runner.run();
   TheAppShutdown->wait ();
 }
-
 
 PortableServer::POA_ptr
 ClientApp::create_poa(CORBA::ORB_ptr orb, const char* poa_name)
@@ -170,12 +159,10 @@ ClientApp::create_poa(CORBA::ORB_ptr orb, const char* poa_name)
   return poa._retn();
 }
 
-
 void
 ClientApp::cleanup()
 {
 }
-
 
 int
 ClientApp::parse_args(int argc, ACE_TCHAR* argv[])
@@ -240,7 +227,6 @@ ClientApp::usage_statement()
              this->exe_name_.c_str()));
 }
 
-
 int
 ClientApp::arg_dependency_checks()
 {
@@ -263,7 +249,6 @@ ClientApp::arg_dependency_checks()
   return 0;
 }
 
-
 int
 ClientApp::set_arg(unsigned&   value,
                    const ACE_TCHAR* arg,
@@ -285,7 +270,6 @@ ClientApp::set_arg(unsigned&   value,
   value = tmp;
   return 0;
 }
-
 
 bool
 ClientApp::check_validity ()

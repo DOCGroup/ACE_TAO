@@ -5,7 +5,6 @@
 #include "ace/CORBA_macros.h"
 #include "tao/Environment.h"
 
-
 class ClientApp
 {
   public:
@@ -17,7 +16,6 @@ class ClientApp
     ClientApp & operator= (ClientApp &&) = delete;
 
     int run (int argc, ACE_TCHAR *argv[]);
-
 
   private:
     int parse_args (int argc, ACE_TCHAR *argv[]);

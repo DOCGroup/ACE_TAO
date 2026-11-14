@@ -46,7 +46,6 @@ Iterator_Factory_i::get_iterator (char const *pathname,
         throw Web_Server::Error_Result (500);
     }
 
-
   // Activate the Content_Iterator object.
   Web_Server::Content_Iterator_var iterator =
     iterator_servant->_this ();

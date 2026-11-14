@@ -3,7 +3,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 
-
 int
 ClientApp::run (int argc, ACE_TCHAR *argv[])
 {
@@ -75,7 +74,6 @@ ClientApp::run (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-
 int
 ClientApp::parse_args (int argc, ACE_TCHAR *argv[])
 {
@@ -105,7 +103,6 @@ ClientApp::parse_args (int argc, ACE_TCHAR *argv[])
 
   return 0;
 }
-
 
 void
 ClientApp::usage_statement () const

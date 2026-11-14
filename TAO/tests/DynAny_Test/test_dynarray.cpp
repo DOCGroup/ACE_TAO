@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #include "test_dynarray.h"
 #include "da_testsC.h"
 #include "data.h"
@@ -110,7 +109,6 @@ Test_DynArray::run_test ()
       in_any2 <<= DynAnyTests::test_array_forany (ta);
 
       ftc1->from_any (in_any2);
-
 
       analyzer.analyze (ftc1.in ());
 

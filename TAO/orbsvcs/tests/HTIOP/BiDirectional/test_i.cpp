@@ -9,7 +9,6 @@
 #include "test_i.inl"
 #endif /* __ACE_INLINE__ */
 
-
 void
 Callback_i::shutdown ()
 {
@@ -23,7 +22,6 @@ Callback_i::callback_method ()
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "Callback method called\n"));
 }
-
 
 // ****************************************************************
 
@@ -73,7 +71,6 @@ Simple_Server_i::call_client ()
 
   return 0;
 }
-
 
 void
 Simple_Server_i::shutdown ()

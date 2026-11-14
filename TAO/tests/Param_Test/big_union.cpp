@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "helper.h"
 
 #include <cstring>
@@ -244,7 +243,6 @@ Test_Big_Union::check_validity ()
       ACE_DEBUG ((LM_DEBUG, "mismatch of discriminators\n"));
       return 0;
     }
-
 
   switch (this->in_._d ())
     {

@@ -57,7 +57,6 @@ CORBA::Boolean TAO_FTEC_Group_Manager::start (
   return true;
 }
 
-
 void TAO_FTEC_Group_Manager::create_group (
     const FTRT::ManagerInfoList & info_list,
     CORBA::ULong object_group_ref_version)
@@ -291,7 +290,6 @@ void TAO_FTEC_Group_Manager::connection_closed()
   // do not use referere here, because the the value pointed by the pointer to
   // crashed_location will be repliaced by its successor.
   FTRT::Location crashed_location = impl_->info_list[impl_->my_position-1].the_location;
-
 
   if (impl_->my_position > 1) {
     // if I am not the new primary, tell the new primary

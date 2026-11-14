@@ -35,7 +35,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-
 TAO_Codeset_Parameters::TAO_Codeset_Parameters ()
   : translators_ ()
   , native_ ()
@@ -130,7 +129,6 @@ TAO_Default_Resource_Factory::TAO_Default_Resource_Factory ()
     TAO_Resource_Factory::TAO_LAZY;
 #endif /*TAO_USE_LAZY_RESOURCE_USAGE_STRATEGY*/
 
-
 }
 
 TAO_Default_Resource_Factory::~TAO_Default_Resource_Factory ()
@@ -152,7 +150,6 @@ TAO_Default_Resource_Factory::~TAO_Default_Resource_Factory ()
 
   delete [] this->parser_names_;
 }
-
 
 int
 TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
@@ -603,7 +600,6 @@ TAO_Default_Resource_Factory::add_to_ior_parser_names (const char *curarg)
   return 0;
 }
 
-
 // This is virtual and protected...
 int
 TAO_Default_Resource_Factory::load_default_protocols ()
@@ -813,7 +809,6 @@ TAO_Default_Resource_Factory::reclaim_reactor (ACE_Reactor *reactor)
       this->destroy_timer_queue (timer_queue);
     }
 }
-
 
 using LOCKED_MALLOC = ACE_Malloc<ACE_LOCAL_MEMORY_POOL, TAO_SYNCH_MUTEX>;
 using LOCKED_ALLOCATOR_POOL = ACE_Allocator_Adapter<LOCKED_MALLOC>;
@@ -1027,7 +1022,6 @@ TAO_Default_Resource_Factory::max_muxed_connections () const
   return this->max_muxed_connections_;
 }
 
-
 ACE_Lock *
 TAO_Default_Resource_Factory::create_cached_connection_lock ()
 {
@@ -1196,7 +1190,6 @@ TAO_Default_Resource_Factory::codeset_manager()
                     ACE_TEXT (" - unable to create codeset manager.\n")));
       return nullptr;
     }
-
 
   std::unique_ptr<TAO_Codeset_Manager> safemgr (mgr);
 

@@ -49,7 +49,6 @@ private:
   // The ORB
 };
 
-
 static int
 parse_args (int argc,
             ACE_TCHAR *argv[],

@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef HTTP_HANDLER_H
 #define HTTP_HANDLER_H
 
@@ -69,7 +68,6 @@ protected:
   HTTP_Handler (JAWS_IO &io,
                 HTTP_Handler_Factory &factory);
 
-  /// Destructor
   ~HTTP_Handler () override;
 
   /// This method is called by the framework when there is a timeout.
@@ -132,7 +130,6 @@ private:
 class HTTP_Handler_Factory
 {
 public:
-  /// Destructor
   virtual ~HTTP_Handler_Factory () = default;
   HTTP_Handler_Factory () = default;
   HTTP_Handler_Factory (HTTP_Handler_Factory const &) = delete;

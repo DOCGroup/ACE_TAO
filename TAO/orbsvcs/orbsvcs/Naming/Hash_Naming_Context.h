@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_HASH_NAMING_CONTEXT_H
 #define TAO_HASH_NAMING_CONTEXT_H
 

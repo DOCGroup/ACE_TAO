@@ -156,7 +156,6 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
   struct ifconf ifc;
   struct ifreq ifr_buf[32];
 
-
   ACE_HANDLE handle =
     ACE_OS::socket (AF_INET, SOCK_DGRAM, 0);
 
@@ -164,7 +163,6 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
     {
       return -1;
     }
-
 
   ifc.ifc_len = sizeof(ifr_buf);
   ifc.ifc_req = &ifr_buf[0];

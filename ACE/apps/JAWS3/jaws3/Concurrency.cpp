@@ -14,9 +14,7 @@
 #include "jaws3/THYBRID_Concurrency.h"
 #include "jaws3/Options.h"
 
-
 using JAWS_Empty_Message_Block = ACE_Singleton<ACE_Message_Block, ACE_SYNCH_NULL_MUTEX>;
-
 
 int
 JAWS_Concurrency_Impl::svc ()
@@ -39,7 +37,6 @@ JAWS_Concurrency_Impl::svc ()
 
   return 0;
 }
-
 
 JAWS_Concurrency_Bridge<JAWS_Concurrency_Impl>
 ::JAWS_Concurrency_Bridge (JAWS_Concurrency_Impl *impl)
@@ -65,7 +62,6 @@ JAWS_Concurrency_Bridge<JAWS_Concurrency_Impl>
     }
 }
 
-
 int
 JAWS_Concurrency_Bridge<JAWS_Concurrency_Impl>
 ::putq (JAWS_Protocol_Handler *ph)
@@ -73,14 +69,12 @@ JAWS_Concurrency_Bridge<JAWS_Concurrency_Impl>
   return this->impl_->putq (ph);
 }
 
-
 int
 JAWS_Concurrency_Bridge<JAWS_Concurrency_Impl>
 ::getq (JAWS_Protocol_Handler *&ph)
 {
   return this->impl_->getq (ph);
 }
-
 
 void
 JAWS_Concurrency_Bridge<JAWS_Concurrency_Impl>::shutdown ()

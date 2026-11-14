@@ -38,7 +38,6 @@
 #include "ace/Asynch_Connector.h"
 #include "ace/Time_Value.h"
 
-
 // How long are our fake serial I/O frames?
 #define FILE_FRAME_SIZE 16
 
@@ -350,7 +349,6 @@ FileIOHandler::handle_time_out(const ACE_Time_Value & /*tv*/, const void * /*act
     };
   }
 }
-
 
 int
 run_main(int /*argc*/, ACE_TCHAR * /*argv*/[])

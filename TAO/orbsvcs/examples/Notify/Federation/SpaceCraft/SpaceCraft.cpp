@@ -134,7 +134,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                            consumer_admin.in (),
                            channel->default_supplier_admin ());
 
-
     // Create the Channel <=> Constellation gate.
     //
     ACE_INET_Addr const constellation_addr ("224.1.1.1:10000");

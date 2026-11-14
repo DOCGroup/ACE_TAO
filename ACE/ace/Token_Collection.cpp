@@ -121,7 +121,6 @@ ACE_Token_Collection::acquire (const ACE_TCHAR *token_name,
   return temp->acquire (notify, sleep_hook, options);
 }
 
-
 int
 ACE_Token_Collection::tryacquire (const ACE_TCHAR *token_name,
                                   void (*sleep_hook)(void *))
@@ -254,7 +253,6 @@ ACE_Token_Collection::~ACE_Token_Collection ()
       // COLLECTION::ENTRYs goes away.
     }
 }
-
 
 // This method doesn't mean anything for a collection.
 ACE_Token_Proxy *

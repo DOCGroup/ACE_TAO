@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_IOR_MANIPULATION_H
 #define TAO_IOR_MANIPULATION_H
 

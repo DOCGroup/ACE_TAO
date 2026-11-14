@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_BE_VISITOR_FIELD_H
 #define TAO_BE_VISITOR_FIELD_H
 

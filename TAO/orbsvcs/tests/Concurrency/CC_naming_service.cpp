@@ -10,10 +10,8 @@
  */
 //=============================================================================
 
-
 #include "CC_naming_service.h"
 #include "ace/Log_Msg.h"
-
 
 CC_naming_service::CC_naming_service (CORBA::ORB_ptr orb)
 {

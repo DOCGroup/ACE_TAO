@@ -12,11 +12,9 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Atomic_Op.h"
 #include "ace/Task.h"
-
 
 #if defined (ACE_HAS_THREADS)
 #include "ace/Lock_Adapter_T.h"
@@ -176,7 +174,6 @@ Thread_Pool::open (void *)
 }
 
 #endif /* ACE_HAS_THREADS */
-
 
 int
 run_main (int, ACE_TCHAR *[])

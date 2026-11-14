@@ -40,7 +40,6 @@ Roundtrip::test_double_method (const Test::double_load &,
   return send_time;
 }
 
-
 Test::Timestamp
 Roundtrip::test_short_method (const Test::short_load &,
                               Test::Timestamp send_time)

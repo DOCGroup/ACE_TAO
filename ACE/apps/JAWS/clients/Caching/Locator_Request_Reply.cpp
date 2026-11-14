@@ -221,7 +221,6 @@ ACE_URL_Locator_Request::decode (void *buffer)
   return total_length;
 }
 
-
 size_t
 ACE_URL_Locator_Request::size ()
 {

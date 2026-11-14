@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_DEFAULT_CLIENT_H
 #define TAO_DEFAULT_CLIENT_H
 

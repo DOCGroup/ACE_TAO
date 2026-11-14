@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef CONSUMER_H
 #define CONSUMER_H
 
@@ -33,7 +32,6 @@
 class Consumer : public POA_RtecEventComm::PushConsumer
 {
 public:
-  /// Constructor
   Consumer () = default;
   Consumer (Consumer const &) = delete;
   Consumer (Consumer &&) = delete;

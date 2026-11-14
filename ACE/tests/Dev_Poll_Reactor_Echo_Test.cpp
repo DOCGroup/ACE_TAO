@@ -60,7 +60,6 @@ private:
   unsigned int call_count_;
 };
 
-
 class Server : public SVC_HANDLER
 {
 public:

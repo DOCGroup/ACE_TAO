@@ -31,7 +31,6 @@ int Logging_Server::run (int argc, char *argv[])
   ACE_NOTREACHED (return 0;)
 }
 
-
 int Logging_Server::open (u_short logger_port)
 {
   ACE_INET_Addr server_addr;
@@ -43,7 +42,6 @@ int Logging_Server::open (u_short logger_port)
   // Start listening, enable reuse of listen address for quick restarts.
   return acceptor_.open (server_addr, 1);
 }
-
 
 int Logging_Server::make_log_file (ACE_FILE_IO &logging_file,
                                    ACE_SOCK_Stream const *logging_peer)

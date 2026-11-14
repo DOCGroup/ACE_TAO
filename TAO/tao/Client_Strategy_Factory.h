@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_CLIENT_STRATEGY_FACTORY_H
 #define TAO_CLIENT_STRATEGY_FACTORY_H
 

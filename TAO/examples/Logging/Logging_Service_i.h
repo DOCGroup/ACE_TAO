@@ -1,5 +1,4 @@
 
-
 //=============================================================================
 /**
  *  @file    Logging_Service_i.h
@@ -10,7 +9,6 @@
  *  @author Nagarajan Surendran <naga@cs.wustl.edu> Matthew Braun <mjb2@cec.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef _LOG_SERVER_H
 #define _LOG_SERVER_H
@@ -47,10 +45,8 @@ public:
   Logger_Server& operator= (Logger_Server const&) = delete;
   Logger_Server& operator= (Logger_Server&&) = delete;
 
-  /// Constructor.
   Logger_Server () = default;
 
-  /// Destructor.
   ~Logger_Server () = default;
 
   /// Initialize the Logger_Server state - parsing arguments and ...

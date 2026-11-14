@@ -66,5 +66,4 @@ TAO_FT_Round_Robin::next_location (
   return true;
 }
 
-
 TAO_END_VERSIONED_NAMESPACE_DECL

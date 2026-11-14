@@ -41,7 +41,6 @@ Client_Task::svc ()
   return 0;
 }
 
-
 void
 Client_Task::validate_connections ()
 {

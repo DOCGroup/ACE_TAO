@@ -1,6 +1,5 @@
 #include "../lib/Factories_Define.h"
 
-
 #include "rt_notify_test_export.h"
 #include "../lib/Name.h"
 #include "../lib/Command_Factory_T.h"

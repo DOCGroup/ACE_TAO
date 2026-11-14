@@ -16,7 +16,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/LOCK_SOCK_Acceptor.h"
@@ -34,7 +33,6 @@
 #include "ace/OS_NS_sys_wait.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/os_include/os_netdb.h"
-
 
 static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 

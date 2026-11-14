@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_FT_CLIENTPOLICY_FACTORY_H
 #define TAO_FT_CLIENTPOLICY_FACTORY_H
 
@@ -55,7 +54,6 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
-
 
 #include /**/ "ace/post.h"
 

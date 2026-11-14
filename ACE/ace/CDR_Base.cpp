@@ -750,7 +750,6 @@ ACE_CDR::LongDouble::operator ACE_CDR::LongDouble::NativeImpl () const
 }
 #endif /* NONNATIVE_LONGDOUBLE */
 
-
 // ACE_CDR::Fixed
 
 ACE_CDR::Fixed ACE_CDR::Fixed::from_integer (ACE_CDR::LongLong val)

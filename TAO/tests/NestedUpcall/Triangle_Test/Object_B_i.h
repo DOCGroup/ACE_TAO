@@ -21,10 +21,8 @@
 class Object_B_i : public POA_Object_B
 {
 public:
-  /// Constructor.
   Object_B_i () = default;
 
-  /// Destructor.
   ~Object_B_i () override = default;
 
   Object_B_i (Object_B_i const &) = delete;

@@ -40,7 +40,6 @@ TAO_Log_Constraint_Visitor::TAO_Log_Constraint_Visitor (DsLogAdmin::LogRecord co
   val_id <<= static_cast<ACE_UINT32> (rec.id);
   this->property_lookup_.bind (ACE_CString("id", 0, false), val_id);
 
-
   CORBA::Any val_time;
   val_time <<= static_cast<ACE_UINT32> (rec.time);
   this->property_lookup_.bind (ACE_CString ("time", 0, false), val_time);
@@ -1101,7 +1100,6 @@ TAO_Log_Constraint_Visitor::array_does_contain (
           return false;
         }
 
-
       TAO_DynArray_i dyn_array;
       dyn_array.init (*any);
 
@@ -1275,6 +1273,5 @@ TAO_Log_Constraint_Visitor::simple_type_match (int expr_type,
 
   return true;
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

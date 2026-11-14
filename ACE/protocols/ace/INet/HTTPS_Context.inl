@@ -84,7 +84,6 @@ namespace ACE
         Context::ssl_depth_ = depth;
       }
 
-
   }
 }
 

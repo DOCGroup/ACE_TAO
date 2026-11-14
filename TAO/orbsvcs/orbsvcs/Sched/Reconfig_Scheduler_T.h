@@ -6,7 +6,6 @@
  *  @author  Chris Gill <cdgill@cs.wustl.edu>
  */
 
-
 #ifndef TAO_RECONFIG_SCHEDULER_T_H
 #define TAO_RECONFIG_SCHEDULER_T_H
 #include /**/ "ace/pre.h"
@@ -236,7 +235,6 @@ public:
   /// number, types, and priority levels for the dispatching lanes.
   void get_config_info_set (RtecScheduler::Config_Info_Set_out configs) override;
 
-
   /// Provides the thread priority and queue type for the given priority level.
   void dispatch_configuration (RtecScheduler::Preemption_Priority_t p_priority,
                                        RtecScheduler::OS_Priority& o_priority,
@@ -407,7 +405,6 @@ protected:
                                               RtecScheduler::Dependency_Type_t dependency_type,
                                               RtecScheduler::Dependency_Enabled_Type_t enabled);
 
-
   /// This method installs a dependency in a dependency set map.
   virtual void map_dependency_i
                  (RtecScheduler::handle_t key,
@@ -445,7 +442,6 @@ protected:
   /// rate tuples.
   void perform_admission_i ();
 
-
   /**
    * Traverses criticality dependency graph, assigning a topological
    * ordering.  Resets DFS map entries, do DFS traversal, constructs
@@ -453,10 +449,8 @@ protected:
    */
   void crit_dfs_traverse_i ();
 
-
   /// Propagates criticalities.
   void propagate_criticalities_i ();
-
 
   /// Propagates effective execution time and period, sets total frame size.
   void propagate_characteristics_i ();
@@ -474,7 +468,6 @@ protected:
   /// Compute utilization, set last feasible priority.
 /* WSOA merge - commented out
   virtual void compute_utilization_i ();
-
 
   /// Helper method to give an RT_Info some reasonable default values
   /// Protected class members.
@@ -586,7 +579,6 @@ protected:
   /// synchronize updates and accesses to scheduling information.
   ACE_LOCK mutex_;
 };
-
 
 template <class ARRAY_ELEMENT_TYPE> void
 maintain_scheduling_array (ARRAY_ELEMENT_TYPE ** & current_ptr_array,

@@ -262,7 +262,6 @@ ACE_TS_Clerk_Handler::recv_reply (ACE_Time_Request &reply)
   return 0;
 }
 
-
 int
 ACE_TS_Clerk_Handler::send_request (ACE_UINT32 sequence_num, ACE_Time_Info &time_info)
 {
@@ -421,7 +420,6 @@ ACE_TS_Clerk_Processor::update_time ()
               (int)(*(this->system_time_.delta_time_))));
   return 0;
 }
-
 
 int
 ACE_TS_Clerk_Processor::fini ()

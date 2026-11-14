@@ -14,7 +14,6 @@
 #include "ace/Arg_Shifter.h"
 #include "test_config.h"
 
-
 int
 run_main (int, ACE_TCHAR *[])
 {

@@ -33,7 +33,6 @@ OrbShutdownTask::open (void *)
   return 0;
 }
 
-
 int
 OrbShutdownTask::svc ()
 {
@@ -52,7 +51,6 @@ OrbShutdownTask::svc ()
 
   return 0;
 }
-
 
 int
 OrbShutdownTask::close (u_long)

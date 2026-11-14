@@ -30,7 +30,6 @@ class Server_ORBInitializer :
   public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   explicit Server_ORBInitializer (CORBA::ULong request_pass_count);
 
   Server_ORBInitializer (Server_ORBInitializer const &) = delete;

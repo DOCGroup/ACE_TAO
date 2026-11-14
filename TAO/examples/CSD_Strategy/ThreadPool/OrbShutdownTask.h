@@ -28,7 +28,6 @@ public:
   int svc () override;
   int close (u_long) override;
 
-
 private:
   CORBA::ORB_var orb_;
 };

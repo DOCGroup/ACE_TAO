@@ -8,7 +8,6 @@
 #include "ace/OS_NS_errno.h"
 #include "ace/Default_Constants.h"
 
-
 /* BSD socket server. */
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])

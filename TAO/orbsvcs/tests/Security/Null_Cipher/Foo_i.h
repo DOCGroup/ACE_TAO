@@ -18,7 +18,6 @@
 class Foo_i : public virtual POA_Foo
 {
 public:
-  /// Constructor.
   explicit Foo_i (CORBA::ORB_ptr);
 
   void shutdown () override;

@@ -17,7 +17,6 @@ be_visitor_union_any_op_ch::be_visitor_union_any_op_ch (
 {
 }
 
-
 int
 be_visitor_union_any_op_ch::visit_union (be_union *node)
 {

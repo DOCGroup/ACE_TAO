@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "testC.h"
 #include "Smart_Proxy_Impl.h"
 #include "tao/debug.h"
@@ -53,7 +52,6 @@ class Marker
   ACE_Throughput_Stats throughput_;
 };
 
-
 static int
 parse_args (Options &options, int argc, ACE_TCHAR *argv[])
 {
@@ -83,7 +81,6 @@ parse_args (Options &options, int argc, ACE_TCHAR *argv[])
       }
   return 0;
 }
-
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])

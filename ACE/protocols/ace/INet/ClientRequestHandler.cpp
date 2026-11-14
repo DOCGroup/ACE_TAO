@@ -5,7 +5,6 @@
 #include "ace/INet/ClientRequestHandler.inl"
 #endif
 
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE

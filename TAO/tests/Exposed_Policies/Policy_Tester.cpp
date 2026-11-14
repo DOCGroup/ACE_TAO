@@ -108,7 +108,6 @@ Policy_Tester::check_reference (CORBA::Object_ptr object,
   return true;
 }
 
-
 int
 Policy_Tester::create_objects ()
 {
@@ -198,7 +197,6 @@ Policy_Tester::create_objects ()
   // Now we create an object that overrides some of the policies
   // set at the POA level.
 
-
   // Create a Corba Object reference, using the policies
   // set at the POA level.
 
@@ -219,7 +217,6 @@ Policy_Tester::create_objects ()
   if (!check_reference (over_object.in(),
                         "Unable to create Object!\n"))
     return -1;
-
 
   CORBA::String_var const o_ior =
     this->orb_->object_to_string (over_object.in ());

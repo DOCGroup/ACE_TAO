@@ -79,7 +79,6 @@ public:
   ~Logging_Client () { logging_peer_.close (); }
 };
 
-
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   u_short const logger_port = argc > 1 ? ACE_OS::atoi (argv[1]) : 0;

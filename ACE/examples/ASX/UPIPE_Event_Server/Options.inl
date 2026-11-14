@@ -5,7 +5,6 @@
 // inline, not ACE_INLINE.
 // FUZZ: disable check_for_inline
 
-
 inline void
 Options::supplier_port (std::basic_string<ACE_TCHAR> const &port)
 {

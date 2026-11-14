@@ -13,7 +13,6 @@
 class Messenger_i : public virtual POA_Messenger
 {
 public:
-  // Constructor
   Messenger_i (CORBA::ORB_var orb);
 
   Messenger_i (Messenger_i const &) = delete;

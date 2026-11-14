@@ -10,7 +10,6 @@ StubFaultConsumer::StubFaultConsumer ()
 {
 }
 
-
 StubFaultConsumer::~StubFaultConsumer ()
 {
 }
@@ -29,7 +28,6 @@ size_t StubFaultConsumer::notifications () const
 {
   return this->notifications_;
 }
-
 
 int StubFaultConsumer::parse_args (int argc, ACE_TCHAR * argv[])
 {
@@ -161,7 +159,6 @@ int StubFaultConsumer::init (CORBA::ORB_ptr orb,
   this->notifier_ = notifier;
   this->identity_ = "StubFaultConsumer";
 
-
   // Use the ROOT POA for now
   CORBA::Object_var poa_object =
     this->orb_->resolve_initial_references (TAO_OBJID_ROOTPOA);
@@ -222,7 +219,6 @@ int StubFaultConsumer::fini ()
   return 0;
 }
 
-
 int StubFaultConsumer::idle(int & result)
 {
   ACE_UNUSED_ARG(result);
@@ -265,7 +261,6 @@ void StubFaultConsumer::push_structured_event(
       property_name,
       value
       ));
-
 
 //    int todo_finish_decode;
   }

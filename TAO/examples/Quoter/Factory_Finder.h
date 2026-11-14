@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "ace/Get_Opt.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -35,7 +34,6 @@ public:
   /// Default constructor
   Quoter_Factory_Finder_Server () = default;
 
-  /// Destructor
   ~Quoter_Factory_Finder_Server ();
 
   Quoter_Factory_Finder_Server (Quoter_Factory_Finder_Server const &) = delete;

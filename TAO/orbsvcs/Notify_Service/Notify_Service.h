@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef NOTIFY_SERVICE_H
 #define NOTIFY_SERVICE_H
 #include /**/ "ace/pre.h"
@@ -92,10 +91,8 @@ class TAO_Notify_Service_Export TAO_Notify_Service_Driver : public ACE_Service_O
 friend class LoggingWorker;
 
 public:
-  /// Constructor.
   TAO_Notify_Service_Driver ();
 
-  /// Destructor.
   ~TAO_Notify_Service_Driver () override;
 
   /// Initializes the Service.

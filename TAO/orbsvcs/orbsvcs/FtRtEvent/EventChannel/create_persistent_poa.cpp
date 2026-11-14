@@ -26,7 +26,6 @@ PortableServer::POA_var create_persistent_poa(PortableServer::POA_var root_poa,
   // create the child POA
   result = root_poa->create_POA(name, mgr.in(), policy_list);
 
-
   return result;
 }
 

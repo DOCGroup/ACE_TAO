@@ -13,7 +13,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-
 ACE_Time_Value TAO_Optimized_Connection_Endpoint_Selector::timeout_;
 
 TAO_Optimized_Connection_Endpoint_Selector::
@@ -116,7 +115,6 @@ TAO_Optimized_Connection_Endpoint_Selector::select_endpoint
         }
       while (stub->next_profile_retry () != 0);
     }
-
 
   // at this point, we do not have an existing transport, so we must
   // reset the profile list and try establishing connections via the

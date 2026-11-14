@@ -146,7 +146,6 @@ MIF_Scheduler::create_segment_scheduling_parameter (CORBA::Short importance)
   return segment_policy;
 }
 
-
 void
 MIF_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType &/*guid*/,
                                              const char *,
@@ -160,7 +159,6 @@ MIF_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType
                   guid->get_buffer (),
                   guid->length ());
 
-
   MIF_Scheduling::SegmentSchedulingParameterPolicy_var sched_param =
     MIF_Scheduling::SegmentSchedulingParameterPolicy::_narrow (sched_policy);
 
@@ -170,7 +168,6 @@ MIF_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType
     ACE_DEBUG ((LM_DEBUG,
                 "%t MIF_Scheduler::begin_scheduling_segment - Importance %d\n",
                 desired_priority));
-
 
   if (desired_priority != 100)
     {
@@ -410,7 +407,6 @@ MIF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr reque
                   "MIF_Scheduler::receive_request %B\n",
                   gu_id));
 
-
       CORBA::OctetSeq int_buf (sizeof (long));
       int_buf.length (int_buf.maximum ());
       int i = sizeof (long);
@@ -501,7 +497,6 @@ MIF_Scheduler::send_other (PortableInterceptor::ServerRequestInfo_ptr)
                       guid->get_buffer (),
                       guid->length ());
 
-
       ACE_DEBUG ((LM_DEBUG,
                   "MIF_Scheduler::send_other %B\n",
                   count));
@@ -547,7 +542,6 @@ MIF_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_ptr)
                 "MIF_Scheduler::receive_reply Guid = %B Imp = %d\n",
                 gu_id,
                 importance));
-
 
   DT* new_dt;
   ACE_NEW (new_dt,

@@ -565,7 +565,6 @@ Test_DynAny::run_test ()
           ++this->error_count_;
         }
 
-
       ACE_DEBUG ((LM_DEBUG,
                   "testing: constructor(TypeCode)/from_any/to_any\n"));
 
@@ -590,7 +589,6 @@ Test_DynAny::run_test ()
         {
           ++this->error_count_;
         }
-
 
       fa2->destroy ();
       ftc2->destroy ();
@@ -636,7 +634,6 @@ Test_DynAny::run_test ()
         {
           ++this->error_count_;
         }
-
 
       ACE_DEBUG ((LM_DEBUG,
                   "testing: constructor(TypeCode)/from_any/to_any\n"));
@@ -716,16 +713,13 @@ Test_DynAny::run_test ()
       // is not equal for different values
       good = good && !fa4->equal(fa6.in ());
 
-
       CORBA::Any in7;
       in7 <<= data.m_shortseq1;
       DynamicAny::DynAny_var fa7 =
         dynany_factory->create_dyn_any (in7);
 
-
       // is equal to identical sequence, not self
       good = good && fa4->equal(fa7.in ());
-
 
       if (good)
         {

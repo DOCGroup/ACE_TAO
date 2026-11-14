@@ -16,7 +16,6 @@ be_visitor_valuebox_cs::be_visitor_valuebox_cs (be_visitor_context *ctx)
 {
 }
 
-
 int
 be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
 {
@@ -120,7 +119,6 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
       << "{" << be_idt_nl
       << "return true;" << be_uidt_nl
       << "}" << be_nl_2;
-
 
   if (be_global->any_support ())
     {
@@ -370,7 +368,6 @@ be_visitor_valuebox_cs::visit_enum (be_enum *)
   return 0;
 }
 
-
 int
 be_visitor_valuebox_cs::visit_interface (be_interface *)
 {
@@ -495,7 +492,6 @@ be_visitor_valuebox_cs::visit_sequence (be_sequence *node)
     }
 
   *os << be_nl << "::CORBA::ULong length," << be_nl;
-
 
   if (bt->accept (&bt_visitor) == -1)
     {

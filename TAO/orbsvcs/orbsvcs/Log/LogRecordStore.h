@@ -36,7 +36,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Log_Serv_Export TAO_LogRecordStore
 {
 public:
-  /// Destructor.
   virtual ~TAO_LogRecordStore ();
 
   /// Initialization.
@@ -44,7 +43,6 @@ public:
 
   /// Close the record store.
   virtual int close () = 0;
-
 
   // = Log Parameters
 
@@ -119,7 +117,6 @@ public:
   virtual void
     set_week_mask (DsLogAdmin::WeekMask const &masks) = 0;
 
-
   // = LogRecordStore status methods
 
   /// Gets the current size of the log data.
@@ -129,7 +126,6 @@ public:
   /// Get the number of records in the log right now.
   virtual CORBA::ULongLong
     get_n_records () = 0;
-
 
   // = LogRecordStore gauge
 
@@ -141,7 +137,6 @@ public:
   /// Resets the "gauge" to 0
   virtual void
     reset_gauge() = 0;
-
 
   // = Record logging, retrieval, update and removal methods.
 
@@ -176,7 +171,6 @@ public:
   virtual int
     flush () = 0;
 
-
   /// Returns all records in the log that match the given constraint
   /// <c>.
   virtual DsLogAdmin::RecordList*
@@ -205,7 +199,6 @@ public:
   virtual CORBA::ULong
     delete_records_by_id (DsLogAdmin::RecordIdList const &ids) = 0;
 
-
   virtual CORBA::ULong
     remove_old_records () = 0;
 
@@ -213,9 +206,7 @@ public:
   virtual ACE_SYNCH_RW_MUTEX &lock () = 0;
 
 protected:
-  /// Constructor.
   TAO_LogRecordStore ();
-
 
 private:
   TAO_LogRecordStore (TAO_LogRecordStore const &) = delete;

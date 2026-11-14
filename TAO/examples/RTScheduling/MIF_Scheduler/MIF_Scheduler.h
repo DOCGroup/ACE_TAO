@@ -58,7 +58,6 @@ public ::CORBA::LocalObject
 
   ~MIF_Scheduler ();
 
-
   MIF_Scheduling::SegmentSchedulingParameterPolicy_ptr
     create_segment_scheduling_parameter (CORBA::Short segment_priority) override;
 

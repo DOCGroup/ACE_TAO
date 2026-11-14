@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Multihomed_INET_Addr.h"
@@ -93,7 +92,6 @@ int run_main (int, ACE_TCHAR *[])
   // Run the test with a varying number of secondary addresses
   for (i = 0; i <= num_secondaries; ++i)  {
     /****** Clear the in_out array and test subject ******/
-
 
     // Clear the in_out array by setting every port to 0 and every
     // address to 1
@@ -184,9 +182,7 @@ int run_main (int, ACE_TCHAR *[])
         status = 1;
     }
 
-
     /**** Test set (u_short, const char[], int, int, const char *([]), size_t) ****/
-
 
     addr.set(port,
              primary_dotted_decimal,
@@ -284,9 +280,7 @@ int run_main (int, ACE_TCHAR *[])
       status = 1;
     }
 
-
     /****** Clear the in_out array and test subject AGAIN ******/
-
 
     // Clear the in_out array by setting every port to 0 and every
     // address to 1
@@ -357,7 +351,6 @@ int run_main (int, ACE_TCHAR *[])
                     num_secondaries));
         status = 1;
     }
-
 
     /**** Test set (u_short, ACE_UINT32, int, const ACE_UINT32 *, size_t) ****/
 

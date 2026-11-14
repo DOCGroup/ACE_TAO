@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #ifndef UDP_I_H
 #define UDP_I_H
 
@@ -33,10 +32,8 @@
 class UDP_i: public POA_UDP
 {
 public:
-  /// Constructor
   UDP_i (CORBA::ORB_ptr o);
 
-  /// Destructor
   ~UDP_i () override = default;
   UDP_i (UDP_i const &) = delete;
   UDP_i (UDP_i &&) = delete;

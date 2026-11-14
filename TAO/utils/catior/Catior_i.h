@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #include "catior_export.h"
 #include "ace/String_Base.h"
 #include "ace/SStringfwd.h"
@@ -34,7 +33,6 @@ public:
 private:
   // These methods used to be functions in catior.cpp
   CORBA::Boolean catiiop (char* string);
-
 
   CORBA::Boolean catior (char const* str);
 

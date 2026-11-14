@@ -26,5 +26,3 @@ int copier(connection in);
 #define TEMPORARY_FILE_NAME "/tmp/sumedh.web.tmp"
 #endif
 
-
-

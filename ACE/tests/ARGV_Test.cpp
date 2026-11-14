@@ -19,7 +19,6 @@
 #include "ace/Argv_Type_Converter.h"
 #include "test_config.h"
 
-
 static void
 consume_arg (int argc, ACE_TCHAR *argv[])
 {

@@ -19,7 +19,6 @@ Gateway_i (CORBA::ORB_ptr orb,
   : orb_ (orb),
     poa_current_ (poa_current)
 {
-  /// Constructor
 }
 
 void

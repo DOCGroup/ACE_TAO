@@ -3,7 +3,6 @@
 #include "tao/debug.h"
 #include "ConnectDisconnect.h"
 
-
 #define CD_IMPLEMENT_ENTITY(X)\
 \
 CD_##X::CD_##X (ConnectDisconnect* cd, int id) \

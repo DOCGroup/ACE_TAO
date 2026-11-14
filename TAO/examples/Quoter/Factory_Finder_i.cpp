@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "Factory_Finder_i.h"
 #include "QuoterC.h"
 
@@ -18,7 +17,6 @@
 
 #include "ace/Get_Opt.h"
 
-// Constructor
 Quoter_Factory_Finder_i::Quoter_Factory_Finder_i (int debug_level)
   : debug_level_ (debug_level)
 {

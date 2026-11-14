@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_NAMING_STORABLE_H
 #define TAO_NAMING_STORABLE_H
 

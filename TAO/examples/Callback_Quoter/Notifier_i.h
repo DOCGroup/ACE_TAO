@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef NOTIFIER_I_H
 #define NOTIFIER_I_H
 
@@ -39,10 +38,8 @@
 class Notifier_i : public POA_Notifier
 {
 public:
-  /// Constructor.
   Notifier_i () = default;
 
-  /// Destructor.
   ~Notifier_i () override;
 
   Notifier_i (Notifier_i const &) = delete;
@@ -58,7 +55,6 @@ public:
 
   /// Remove the consumer object.
   void unregister_callback (Callback_Quoter::Consumer_ptr consumer_handler) override;
-
 
   /// Get the market status.
   void market_status (char const *stock_name, CORBA::Long stock_value) override;

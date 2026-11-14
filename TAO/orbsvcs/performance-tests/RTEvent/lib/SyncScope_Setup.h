@@ -22,13 +22,11 @@
 class TAO_RTEC_Perf_Export SyncScope_Setup
 {
 public:
-  /// Constructor
   SyncScope_Setup (CORBA::ORB_ptr orb);
 
   SyncScope_Setup (CORBA::ORB_ptr orb,
                    Messaging::SyncScope value);
 
-  /// Destructor
   /**
    * It is a no-op, but it shuts up g++
    */

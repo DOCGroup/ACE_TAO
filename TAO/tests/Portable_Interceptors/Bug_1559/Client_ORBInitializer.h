@@ -25,7 +25,6 @@ class Client_ORBInitializer :
   public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor
   Client_ORBInitializer () = default;
 
   void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;

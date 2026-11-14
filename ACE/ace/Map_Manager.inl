@@ -733,5 +733,4 @@ ACE_Map_Const_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::operator* () const
   return *retv;
 }
 
-
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef NOTIFY_FILTER_CLIENT_H
 #define NOTIFY_FILTER_CLIENT_H
 
@@ -37,10 +36,8 @@ class Filter_StructuredPushSupplier;
 class FilterClient
 {
  public:
-  /// Constructor
   FilterClient ();
 
-  /// Destructor
   ~FilterClient ();
 
   /// Init the Client.
@@ -164,7 +161,6 @@ class FilterClient
 class Filter_StructuredPushConsumer : public POA_CosNotifyComm::StructuredPushConsumer
 {
 public:
-  /// Constructor.
   Filter_StructuredPushConsumer (FilterClient* filter, const char *my_name);
 
   /// Connect the Consumer to the EventChannel.
@@ -190,7 +186,6 @@ protected:
   CosNotifyChannelAdmin::ProxyID proxy_supplier_id_;
 
   // = Methods
-  /// Destructor
   virtual ~Filter_StructuredPushConsumer ();
 
   // = NotifyPublish method
@@ -217,7 +212,6 @@ protected:
 class Filter_StructuredPushSupplier : public POA_CosNotifyComm::StructuredPushSupplier
 {
 public:
-  /// Constructor.
   Filter_StructuredPushSupplier (const char* my_name);
 
   /// Connect the Supplier to the EventChannel.
@@ -242,7 +236,6 @@ protected:
   CosNotifyChannelAdmin::ProxyID proxy_consumer_id_;
 
   // = Protected Methods
-  /// Destructor
   virtual ~Filter_StructuredPushSupplier ();
 
   // = NotifySubscribe

@@ -129,7 +129,6 @@ private:
                                       TAO_LF_Multi_Event *mev,
                                       ACE_Time_Value *timeout = nullptr);
 
-
   /// Return the remote endpoint, a helper function
   TAO_IIOP_Endpoint *remote_endpoint (TAO_Endpoint *ep);
 

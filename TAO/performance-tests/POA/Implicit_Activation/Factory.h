@@ -15,7 +15,6 @@ class Factory
   : public virtual POA_Test::Factory
 {
 public:
-  /// Constructor
   explicit Factory (CORBA::ORB_ptr orb);
 
   // = The skeleton methods

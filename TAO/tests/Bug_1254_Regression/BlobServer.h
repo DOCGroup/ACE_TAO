@@ -9,7 +9,6 @@ class BlobServerImpl
   : public virtual POA_BlobServer
 {
 public:
-  /// Constructor
   explicit BlobServerImpl (CORBA::ORB_ptr orb);
   BlobServerImpl (BlobServerImpl const &) = delete;
   BlobServerImpl &operator= (BlobServerImpl const &) = delete;

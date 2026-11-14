@@ -127,7 +127,6 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::close (SVC_HANDLER *&sh)
   return true;
 }
 
-
 template <typename SVC_HANDLER> int
 ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_timeout
 (const ACE_Time_Value &tv,
@@ -149,7 +148,6 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_timeout
 
   return retval;
 }
-
 
 template <typename SVC_HANDLER> int
 ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_input (ACE_HANDLE)
@@ -827,7 +825,6 @@ ACE_Strategy_Connector<SVC_HANDLER, PEER_CONNECTOR>::open
                       -1);
       this->delete_creation_strategy_ = true;
     }
-
 
   // Initialize the accept strategy.
 

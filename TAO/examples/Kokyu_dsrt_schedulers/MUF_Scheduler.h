@@ -85,7 +85,6 @@ public ::CORBA::LocalObject
 
   ~MUF_Scheduler ();
 
-
   MUF_Scheduling::SchedulingParameterPolicy_ptr
     create_scheduling_parameter (
       const MUF_Scheduling::SchedulingParameter & value) override;

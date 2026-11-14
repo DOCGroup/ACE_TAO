@@ -36,12 +36,10 @@ namespace ACE_TMCast
   //
   class Terminate : public virtual Message {};
 
-
   //
   //
   //
   class Failure : public virtual Message {};
-
 
   //
   //
@@ -326,7 +324,6 @@ namespace ACE_TMCast
     TransactionController transaction_controller_;
   };
 
-
   //
   //
   //
@@ -477,7 +474,6 @@ namespace ACE_TMCast
 
     MessageQueue& out_data_;
   };
-
 
   // Group
   //

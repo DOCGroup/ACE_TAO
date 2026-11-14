@@ -29,7 +29,6 @@ be_visitor_operation_svs::visit_operation (be_operation *node)
 
   os_ << be_nl_2;
 
-
   if (this->ctx_->state () == TAO_CodeGen::TAO_ROOT_SVTS)
     {
       os_ << "template <typename BASE, typename EXEC, typename CONTEXT>"

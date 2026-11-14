@@ -64,7 +64,6 @@ private:
   std::unique_ptr<TAO_IMR_Op> op_;
 };
 
-
 /**
  * @class TAO_IMR_Op
  *
@@ -88,7 +87,6 @@ public:
   /// Factory.
   static TAO_IMR_Op *make_op (ACE_TCHAR const *op_name);
 
-  /// Destructor.
   virtual ~TAO_IMR_Op ();
 
   /// Parse arguments.
@@ -112,7 +110,6 @@ protected:
   ImplementationRepository::Administration_ptr imr_;
   bool quiet_;
 };
-
 
 /**
  * @class TAO_IMR_Op_Activate
@@ -154,7 +151,6 @@ protected:
   void print_usage ();
 };
 
-
 /**
  * @class TAO_IMR_Op_IOR
  *
@@ -180,7 +176,6 @@ protected:
   ACE_TString filename_;
 };
 
-
 /**
  * @class TAO_IMR_Op_Kill
  *
@@ -201,7 +196,6 @@ protected:
   ACE_CString server_name_;
   int signum_;
 };
-
 
 /**
  * @class TAO_IMR_Op_Link
@@ -224,7 +218,6 @@ protected:
 
   CORBA::StringSeq peers_;
 };
-
 
 /**
  * @class TAO_IMR_Op_List
@@ -266,7 +259,6 @@ protected:
   void display_server_information (const ImplementationRepository::ServerInformation &info);
 };
 
-
 /**
  * @class TAO_IMR_Op_Remove
  *
@@ -288,7 +280,6 @@ protected:
   bool force_ {};
   int signum_;
 };
-
 
 /**
  * @class TAO_IMR_Op_Shutdown

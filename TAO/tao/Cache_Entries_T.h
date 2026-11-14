@@ -125,7 +125,6 @@ namespace TAO
     bool is_connected_;
   };
 
-
   /**
    * @class Cache_ExtId_T
    *

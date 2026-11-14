@@ -4,7 +4,6 @@
 #include "URL_Visitor_Factory.h"
 #include "Web_Crawler.h"
 
-
 Web_Crawler::~Web_Crawler () = default;
 
 Web_Crawler::Web_Crawler ()

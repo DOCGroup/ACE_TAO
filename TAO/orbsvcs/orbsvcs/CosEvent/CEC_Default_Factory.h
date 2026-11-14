@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_CEC_DEFAULT_FACTORY_H
 #define TAO_CEC_DEFAULT_FACTORY_H
 

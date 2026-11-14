@@ -78,7 +78,6 @@ void Map_Example::iterate_forward ()
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
 }
 
-
 void Map_Example::iterate_reverse ()
 {
   ACE_TRACE ("Map_Example::iterate_reverse");

@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_CEC_PULLING_STRATEGY_H
 #define TAO_CEC_PULLING_STRATEGY_H
 

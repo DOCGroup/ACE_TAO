@@ -7,9 +7,7 @@
  * parties.
  */
 
-
 /* ------------------------------------------------------------------------ */
-
 
 /*
  * systhr.h: Abstracted threading mechanisms
@@ -74,7 +72,6 @@ SYS_THREAD systhread_attach();
  */
 void systhread_terminate(SYS_THREAD thr);
 
-
 /*
  * systhread_sleep puts the calling thread to sleep for the given number
  * of milliseconds.
@@ -101,7 +98,6 @@ void systhread_init(char *name);
 #elif defined(THREAD_WIN32)
 #define systhread_timerset(usec) (void)(usec)
 #endif
-
 
 /*
  * newkey allocates a new integer id for thread-private data. Use this

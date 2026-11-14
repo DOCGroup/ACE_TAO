@@ -16,7 +16,6 @@
  */
 //=============================================================================
 
-
 #include "ace/HTBP/HTBP_Stream.h"
 #include "ace/HTBP/HTBP_Session.h"
 #include "ace/HTBP/HTBP_ID_Requestor.h"
@@ -268,7 +267,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   stream.close ();
 
   peer_acceptor.close ();
-
 
   if (len != 255)
     {

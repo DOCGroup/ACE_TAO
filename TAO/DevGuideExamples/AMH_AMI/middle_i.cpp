@@ -42,7 +42,6 @@ Asynch_Middle_i::get_the_answer (AMH_MiddleResponseHandler_ptr _tao_rh,
   // forwards the reply.
 }
 
-
 //------------------------------------------------------------------------
 
 Middle_i::Middle_i (Inner_ptr inner)

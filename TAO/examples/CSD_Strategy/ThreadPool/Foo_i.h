@@ -6,7 +6,6 @@
 #include "tao/Environment.h"
 #include <atomic>
 
-
 class Foo_i : public virtual POA_Foo
 {
   public:
@@ -28,7 +27,6 @@ class Foo_i : public virtual POA_Foo
     void op5 () override;
 
     void done () override;
-
 
   private:
     std::atomic<CORBA::Long> value_ {};

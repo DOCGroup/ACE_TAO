@@ -34,7 +34,6 @@ CachedRequestTable::update (ACE_CString const &client_id,
   return -1;
 }
 
-
 void
 CachedRequestTable::get_result (ACE_CString const &client_id,
                                 CORBA::Any& result)
@@ -43,7 +42,6 @@ CachedRequestTable::get_result (ACE_CString const &client_id,
   if (table_.find (client_id, entry) == 0)
     result = entry->int_id_.result;
 }
-
 
 void
 CachedRequestTable::get_state (FtRtecEventChannelAdmin::CachedOptionResults &state)
@@ -93,7 +91,6 @@ retrieve_ft_request_context(
     throw CORBA::BAD_PARAM ();
 
   cdr.reset_byte_order (static_cast<int> (byte_order));
-
 
   if (!(cdr >> ft_request_service_context))
     throw CORBA::BAD_PARAM ();
@@ -158,7 +155,6 @@ get_sequence_number_context(
   return result;
 }
 
-
 namespace {
 FtEventServiceInterceptor *interceptor {};
 }
@@ -190,7 +186,6 @@ FtEventServiceInterceptor::receive_request_service_contexts (
   PortableInterceptor::ServerRequestInfo_ptr)
 {
 }
-
 
 void
 FtEventServiceInterceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri)
@@ -269,7 +264,6 @@ void
 FtEventServiceInterceptor::send_other (PortableInterceptor::ServerRequestInfo_ptr)
 {
 }
-
 
 void
 FtEventServiceInterceptor::get_state(FtRtecEventChannelAdmin::CachedOptionResults& state)

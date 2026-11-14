@@ -2,7 +2,6 @@
 #define TEST_H
 #include /**/ "ace/pre.h"
 
-
 #include "FP_Scheduler.h"
 #include "ace/Sched_Params.h"
 #include "tao/ORB_Core.h"
@@ -37,7 +36,6 @@ class DT_Test :public ACE_Task <ACE_SYNCH>
   protected:
   /// task svc
   int svc () override;
-
 
  private:
   /// = Policies

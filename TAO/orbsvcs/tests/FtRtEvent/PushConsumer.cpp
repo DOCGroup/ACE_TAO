@@ -24,7 +24,6 @@ PushConsumer_impl::push (RtecEventComm::EventSet const &event)
     }
 }
 
-
 void
 PushConsumer_impl::disconnect_push_consumer ()
 {

@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #include "ace/OS_NS_sys_time.h"
 #include "BPR_Drivers.h"
 
@@ -438,7 +437,6 @@ Bounded_Packet_Relay::queue_hwm () const
   return queue_hwm_;
 }
 
-
 // Set high water mark for relay queue.
 
 void
@@ -462,7 +460,6 @@ Bounded_Packet_Relay::queue_lwm (ACE_UINT32 lwm)
 {
   queue_lwm_ = lwm;
 }
-
 
 // Returns string corresponding to current status.
 

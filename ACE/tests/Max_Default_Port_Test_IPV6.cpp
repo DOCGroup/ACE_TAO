@@ -149,7 +149,6 @@ run_main (int argc, ACE_TCHAR *argv[])
 
       My_Accept_Handler *eh = new My_Accept_Handler (addr);
 
-
       if ( ACE_Reactor::instance()->register_handler (
                                          eh,
                                          ACE_Event_Handler::ACCEPT_MASK) == -1)

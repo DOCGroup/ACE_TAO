@@ -66,13 +66,11 @@ private:
     LOUD}
     verbose_;
 
-
   StringVec replica_iors_;
   size_t replica_pos_;
   const char * replica_name_;
   FT_TEST::TestReplica_var replica_;
 };
-
 
 FTClientMain::FTClientMain ()
   : inFile_ (nullptr)
@@ -518,7 +516,6 @@ int FTClientMain::next_replica ()
   return result;
 }
 
-
 int FTClientMain::run ()
 {
   int result = 0;
@@ -598,7 +595,6 @@ int FTClientMain::run ()
   }
   return result;
 }
-
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])

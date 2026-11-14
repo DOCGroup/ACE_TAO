@@ -72,7 +72,6 @@ TAO_UIOP_Protocol_Factory::requires_explicit_endpoint () const
   return 1;
 }
 
-
 ACE_STATIC_SVC_DEFINE (TAO_UIOP_Protocol_Factory,
                        ACE_TEXT ("UIOP_Factory"),
                        ACE_SVC_OBJ_T,
@@ -84,6 +83,5 @@ ACE_STATIC_SVC_DEFINE (TAO_UIOP_Protocol_Factory,
 ACE_FACTORY_DEFINE (TAO_Strategies, TAO_UIOP_Protocol_Factory)
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 #endif  /* TAO_HAS_UIOP == 1 */

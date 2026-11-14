@@ -60,7 +60,6 @@ public:
    */
   int fini ();
 
-
   size_t notifications() const;
 
   /////////////////

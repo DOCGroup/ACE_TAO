@@ -10,7 +10,6 @@ class Sleep_Service
   : public virtual POA_Test::Sleep_Service
 {
 public:
-  /// Constructor
   explicit Sleep_Service (CORBA::ORB_ptr orb);
   ~Sleep_Service () override = default;
 

@@ -15,10 +15,7 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
-
-
 
 #include "ace/FlReactor/FlReactor.h"
 #include "ace/Event_Handler.h"
@@ -40,7 +37,6 @@
 class Test_Window : public Fl_Gl_Window
 {
 public:
-  /// Constructor
   Test_Window (int x, int y, int w, int h,
                const char * l = nullptr);
 

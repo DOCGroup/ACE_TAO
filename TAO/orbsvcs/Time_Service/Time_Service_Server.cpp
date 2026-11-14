@@ -2,7 +2,6 @@
 #include "Server_i.h"
 #include "ace/OS_main.h"
 
-
 // This is the main driver program for the Time Service server.
 
 int

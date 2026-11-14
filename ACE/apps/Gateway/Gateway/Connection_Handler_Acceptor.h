@@ -33,7 +33,6 @@ class Event_Channel;
 class Connection_Handler_Acceptor : public ACE_Acceptor<Connection_Handler, ACE_SOCK_ACCEPTOR>
 {
 public:
-  /// Constructor.
   Connection_Handler_Acceptor (Event_Channel &,
                                char connection_role);
   Connection_Handler_Acceptor (Connection_Handler_Acceptor const &) = delete;

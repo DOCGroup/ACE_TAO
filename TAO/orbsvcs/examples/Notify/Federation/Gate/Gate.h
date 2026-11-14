@@ -59,7 +59,6 @@ private:
   void
   push_structured_event (CosNotification::StructuredEvent const& e) override;
 
-
   void
   disconnect_structured_push_consumer () override;
 

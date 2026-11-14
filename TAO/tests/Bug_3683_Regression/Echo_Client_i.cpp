@@ -25,7 +25,6 @@ Echo_Client_i::parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-
 int
 Echo_Client_i::run (char const *name,
                     int argc,

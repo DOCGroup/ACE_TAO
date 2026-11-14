@@ -4,7 +4,6 @@
 #include "StructuredPushSupplier.inl"
 #endif /* __ACE_INLINE__ */
 
-
 TAO_Notify_Tests_StructuredPushSupplier_Traits::TAO_Notify_Tests_StructuredPushSupplier_Traits ()
   :type_ (CosNotifyChannelAdmin::STRUCTURED_EVENT)
 {

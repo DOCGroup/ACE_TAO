@@ -23,7 +23,6 @@ Factory::create_object (
                     Simple (this->id_, this->pong_delay_),
                     CORBA::NO_MEMORY ());
 
-
   PortableServer::ServantBase_var safe_servant = servant;
 
   CORBA::ULong tmp_fcid = this->fcid_;

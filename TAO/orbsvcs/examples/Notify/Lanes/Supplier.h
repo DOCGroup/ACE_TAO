@@ -24,7 +24,6 @@ class TAO_Notify_Lanes_Supplier
   : public POA_CosNotifyComm::StructuredPushSupplier
 {
 public:
-  /// Constructor.
   explicit TAO_Notify_Lanes_Supplier (TAO_Notify_ORB_Objects& orb_objects);
   TAO_Notify_Lanes_Supplier (TAO_Notify_Lanes_Supplier const&) = delete;
   TAO_Notify_Lanes_Supplier& operator= (TAO_Notify_Lanes_Supplier const&) = delete;
@@ -53,7 +52,6 @@ protected:
   /// Send one event.
   void send_event (CosNotification::StructuredEvent const& event);
 
-  /// Destructor
   ~TAO_Notify_Lanes_Supplier () override = default;
 
   // = NotifySubscribe

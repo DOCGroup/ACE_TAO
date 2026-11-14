@@ -318,7 +318,6 @@ TAO::HTIOP::Profile::to_string () const
   return buf;
 }
 
-
 const char *
 TAO::HTIOP::Profile::prefix ()
 {

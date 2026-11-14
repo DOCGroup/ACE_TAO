@@ -60,7 +60,6 @@ OrbTask::open(void*)
   return 0;
 }
 
-
 int
 OrbTask::svc()
 {

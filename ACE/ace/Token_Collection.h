@@ -161,7 +161,6 @@ public:
              ACE_Synch_Options &options =
              ACE_Synch_Options::defaults) override;
 
-
   /// Renew the token corresponding to @a token_name.  The other
   /// parameters are passed to <token>::renew.
   virtual int renew (const ACE_TCHAR *token_name,
@@ -178,7 +177,6 @@ public:
    */
   int release (ACE_Synch_Options &options =
                ACE_Synch_Options::defaults) override;
-
 
   /// Release the token corresponding to <token_name>.  The other
   /// parameters are passed to <token>::release.

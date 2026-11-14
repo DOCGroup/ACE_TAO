@@ -107,7 +107,6 @@ EDF_Scheduler::create_scheduling_parameter (const EDF_Scheduling::SchedulingPara
   return sched_param_policy;
 }
 
-
 void
 EDF_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType &guid,
                                              const char *,
@@ -145,7 +144,6 @@ EDF_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType
               "(%t|%T):EDF_Scheduler::begin_new_scheduling_segment exit\n"));
 #endif
 }
-
 
 void
 EDF_Scheduler::begin_nested_scheduling_segment (const RTScheduling::Current::IdType &guid,
@@ -222,7 +220,6 @@ EDF_Scheduler::end_nested_scheduling_segment (const RTScheduling::Current::IdTyp
                   guid.length ());
   DSUI_EVENT_LOG (EDF_SCHED_FAM, END_NESTED_SCHED_SEGMENT, int_guid, 0, 0);
 }
-
 
 void
 EDF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
@@ -304,7 +301,6 @@ EDF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
   // Add this context to the service context list.
   ri->add_request_service_context (sc, 0);
 
-
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t|%T): send_request : ")
@@ -339,11 +335,9 @@ EDF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
 
   DSUI_EVENT_LOG (EDF_SCHED_FAM, ENTER_SERVER_SCHED_TIME, 0, 0, 0);
 
-
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG, "(%t|%T):entered EDF_Scheduler::receive_request\n"));
 #endif
-
 
   CORBA::String_var operation = ri->operation ();
 
@@ -401,7 +395,6 @@ EDF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
       ACE_OS::memcpy (&int_guid,
                       guid.get_buffer (),
                       guid.length ());
-
 
 #ifdef KOKYU_DSRT_LOGGING
       ACE_DEBUG ((LM_DEBUG,
@@ -487,7 +480,6 @@ EDF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
   IOP::ServiceContext sc;
   sc.context_id = Server_Interceptor::SchedulingInfo;
 
-
   CORBA::Long importance;
   TimeBase::TimeT deadline;
 
@@ -515,7 +507,6 @@ EDF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
       EDF_Scheduling::SchedulingParameterPolicy_var sched_param_policy =
         EDF_Scheduling::SchedulingParameterPolicy::_narrow (sched_policy);
       EDF_Scheduling::SchedulingParameter_var sched_param = sched_param_policy->value ();
-
 
       sc_qos.guid.length (guid->length ());
       guid_copy (sc_qos.guid, guid.in ());

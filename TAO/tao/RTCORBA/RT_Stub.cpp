@@ -169,7 +169,6 @@ TAO_RT_Stub::get_cached_policy (TAO_Cached_Policy_Type type)
   return this->TAO_Stub::get_cached_policy (type);
 }
 
-
 TAO_Stub *
 TAO_RT_Stub::set_policy_overrides (CORBA::PolicyList const & policies,
                                    CORBA::SetOverrideType set_add)

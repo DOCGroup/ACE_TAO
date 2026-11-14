@@ -37,7 +37,6 @@ int TAO::Object_Group_Creator::set_factory_registry (PortableGroup::FactoryRegis
   return CORBA::is_nil (this->registry_.in ()) ? -1 : 0 ;
 }
 
-
 int TAO::Object_Group_Creator::init (CORBA::ORB_ptr orb)
 {
   int result = 0;
@@ -115,7 +114,6 @@ int TAO::Object_Group_Creator::unregister_role (const char * role)
   return result;
 }
 
-
 int TAO::Object_Group_Creator::create_detector_for_replica (
   CORBA::Object_ptr replica,
   const char * role,
@@ -184,7 +182,6 @@ int TAO::Object_Group_Creator::create_detector_for_replica (
   }
   return result;
 }
-
 
 CORBA::Object_ptr TAO::Object_Group_Creator::create_infrastructure_managed_group (
     const char * type_id)
@@ -404,7 +401,6 @@ CORBA::Object_ptr TAO::Object_Group_Creator::create_group (
 
   return group._retn ();
 }
-
 
 int TAO::Object_Group_Creator::fini ()
 {

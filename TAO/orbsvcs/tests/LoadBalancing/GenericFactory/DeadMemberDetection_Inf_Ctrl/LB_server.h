@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef LB_SERVER_H
 #define LB_SERVER_H
 
@@ -39,7 +38,6 @@ struct LB_Server_Options
 class LB_server
 {
 public:
-  /// Constructor
   LB_server (int argc, ACE_TCHAR ** argv);
 
   LB_server (LB_server const &) = delete;

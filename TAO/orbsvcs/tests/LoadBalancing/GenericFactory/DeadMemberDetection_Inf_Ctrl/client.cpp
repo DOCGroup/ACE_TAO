@@ -47,7 +47,6 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
   return 0;
 }
 
-
 static int dead_member_rr_test (CORBA::ORB_ptr orb,
                                 Client_Options const &options,
                                 Test::Simple_ptr direct_simple)
@@ -116,7 +115,6 @@ static int dead_member_rr_test (CORBA::ORB_ptr orb,
 
   return status;
 }
-
 
 static int hang_member_rr_test (CORBA::ORB_ptr orb,
                                 Client_Options const &options,
@@ -203,7 +201,6 @@ static int hang_member_rr_test (CORBA::ORB_ptr orb,
   return status;
 }
 
-
 static int dead_member_rand_test (CORBA::ORB_ptr orb,
                                  Client_Options const &options,
                                  Test::Simple_ptr /*direct_simple*/)
@@ -276,7 +273,6 @@ static int dead_member_rand_test (CORBA::ORB_ptr orb,
 
   return status;
 }
-
 
 static int hang_member_rand_test (CORBA::ORB_ptr orb,
                                  Client_Options const &options,
@@ -369,7 +365,6 @@ static int hang_member_rand_test (CORBA::ORB_ptr orb,
 
   return status;
 }
-
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])

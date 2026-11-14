@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_CEC_REACTIVE_CONSUMERCONTROL_H
 #define TAO_CEC_REACTIVE_CONSUMERCONTROL_H
 
@@ -29,7 +28,6 @@
 #include "tao/ORB.h"
 
 #include "ace/Event_Handler.h"
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

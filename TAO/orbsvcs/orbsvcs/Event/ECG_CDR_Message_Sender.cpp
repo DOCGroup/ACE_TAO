@@ -9,7 +9,6 @@
 #include "orbsvcs/Event/ECG_CDR_Message_Sender.inl"
 #endif /* __ACE_INLINE__ */
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
@@ -172,7 +171,6 @@ TAO_ECG_CDR_Message_Sender::send_message  (const TAO_OutputCDR &cdr,
   // ACE_ASSERT (fragment_id == fragment_count);
 }
 
-
 void
 TAO_ECG_CDR_Message_Sender::send_fragment (const ACE_INET_Addr &addr,
                                            CORBA::ULong request_id,
@@ -200,7 +198,6 @@ TAO_ECG_CDR_Message_Sender::send_fragment (const ACE_INET_Addr &addr,
   cdr.write_ulong (fragment_id);
   cdr.write_ulong (fragment_count);
   CORBA::Octet padding[4];
-
 
   // MRH
   if (checksum_)
@@ -265,7 +262,6 @@ TAO_ECG_CDR_Message_Sender::send_fragment (const ACE_INET_Addr &addr,
       ORBSVCS_DEBUG ((LM_WARNING, "EOF on send of mcast fragment (%m).\n"));
     }
 }
-
 
 CORBA::ULong
 TAO_ECG_CDR_Message_Sender::compute_fragment_count (ACE_Message_Block const *begin,

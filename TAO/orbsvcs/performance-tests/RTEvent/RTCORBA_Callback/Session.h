@@ -10,7 +10,6 @@ class Session
   : public virtual POA_Test::Session
 {
 public:
-  /// Constructor
   Session (Test::Callback_ptr cb,
            PortableServer::POA_ptr poa);
   Session (Session const &) = delete;

@@ -22,7 +22,6 @@
 #include "ace/Task.h"
 #include "Test_i.h"
 
-
 /**
  * @class Test_Server_Module
  *

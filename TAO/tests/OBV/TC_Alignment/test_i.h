@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_OBV_TC_ALIGNMENT_TEST_I_H
 #define TAO_OBV_TC_ALIGNMENT_TEST_I_H
 

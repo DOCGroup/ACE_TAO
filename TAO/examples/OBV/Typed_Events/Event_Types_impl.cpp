@@ -507,7 +507,6 @@ Criterion_List_impl::is_critical (Event *e)
       // We know that c has an Event part.
       Event *e_c = Event::_downcast (c);
 
-
       // A criterion is applied if the origin id is matching the event.
       // A null id flags that it should be applied to all events.
 

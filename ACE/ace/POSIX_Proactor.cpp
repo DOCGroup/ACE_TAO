@@ -37,7 +37,6 @@ public:
 
   ~ACE_POSIX_Wakeup_Completion () override;
 
-
   /// This method calls the <handler>'s <handle_wakeup> method.
   void complete (size_t bytes_transferred = 0,
                          int success = 1,
@@ -145,7 +144,6 @@ ACE_POSIX_Proactor::create_asynch_read_stream_result
   return implementation;
 }
 
-
 ACE_Asynch_Write_Stream_Impl *
 ACE_POSIX_Proactor::create_asynch_write_stream ()
 {
@@ -180,7 +178,6 @@ ACE_POSIX_Proactor::create_asynch_write_stream_result
                   nullptr);
   return implementation;
 }
-
 
 ACE_Asynch_Read_File_Impl *
 ACE_POSIX_Proactor::create_asynch_read_file ()
@@ -221,7 +218,6 @@ ACE_POSIX_Proactor::create_asynch_read_file_result
   return implementation;
 }
 
-
 ACE_Asynch_Write_File_Impl *
 ACE_POSIX_Proactor::create_asynch_write_file ()
 {
@@ -260,7 +256,6 @@ ACE_POSIX_Proactor::create_asynch_write_file_result
                   nullptr);
   return implementation;
 }
-
 
 ACE_Asynch_Read_Dgram_Impl *
 ACE_POSIX_Proactor::create_asynch_read_dgram ()
@@ -302,7 +297,6 @@ ACE_POSIX_Proactor::create_asynch_read_dgram_result
   return implementation;
 }
 
-
 ACE_Asynch_Write_Dgram_Impl *
 ACE_POSIX_Proactor::create_asynch_write_dgram ()
 {
@@ -342,7 +336,6 @@ ACE_POSIX_Proactor::create_asynch_write_dgram_result
   return implementation;
 }
 
-
 ACE_Asynch_Accept_Impl *
 ACE_POSIX_Proactor::create_asynch_accept ()
 {
@@ -381,7 +374,6 @@ ACE_POSIX_Proactor::create_asynch_accept_result
   return implementation;
 }
 
-
 ACE_Asynch_Connect_Impl *
 ACE_POSIX_Proactor::create_asynch_connect ()
 {
@@ -413,7 +405,6 @@ ACE_POSIX_Proactor::create_asynch_connect_result
                   nullptr);
   return implementation;
 }
-
 
 ACE_Asynch_Transmit_File_Impl *
 ACE_POSIX_Proactor::create_asynch_transmit_file ()
@@ -525,7 +516,6 @@ ACE_POSIX_Proactor::get_impl_type ()
 {
   return PROACTOR_POSIX;
 }
-
 
 /**
  * @class ACE_AIOCB_Notify_Pipe_Manager
@@ -656,7 +646,6 @@ ACE_AIOCB_Notify_Pipe_Manager::~ACE_AIOCB_Notify_Pipe_Manager ()
      ACE_OS::closesocket (h);
 }
 
-
 int
 ACE_AIOCB_Notify_Pipe_Manager::notify ()
 {
@@ -702,7 +691,6 @@ ACE_AIOCB_Notify_Pipe_Manager::handle_read_stream
                 ACE_TEXT ("%N:%l:(%P | %t):%p\n"),
                 ACE_TEXT ("ACE_AIOCB_Notify_Pipe_Manager::handle_read_stream:")
                 ACE_TEXT ("Read from pipe failed")));
-
 
   // 2. Do the upcalls
   // this->posix_aiocb_proactor_->process_result_queue ();
@@ -762,7 +750,6 @@ ACE_POSIX_AIOCB_Proactor::get_impl_type ()
 {
   return PROACTOR_AIOCB;
 }
-
 
 int
 ACE_POSIX_AIOCB_Proactor::close ()
@@ -841,7 +828,6 @@ int ACE_POSIX_AIOCB_Proactor::delete_result_aiocb_list ()
 
           char * op = (aiocb_list_[ai]->aio_lio_opcode == LIO_WRITE )?
             "WRITE":"READ" ;
-
 
           ACELIB_ERROR ((LM_ERROR,
                       ACE_TEXT("slot=%d op=%s status=%d xfercnt=%d %s\n"),
@@ -1012,7 +998,6 @@ ACE_POSIX_AIOCB_Proactor::putq_result (ACE_POSIX_Asynch_Result *result)
 ACE_POSIX_Asynch_Result * ACE_POSIX_AIOCB_Proactor::getq_result ()
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, nullptr));
-
 
   ACE_POSIX_Asynch_Result* result {};
 
@@ -1198,7 +1183,6 @@ ACE_POSIX_AIOCB_Proactor::find_completed_aio (int &error_status,
   return asynch_result;
 }
 
-
 int
 ACE_POSIX_AIOCB_Proactor::start_aio (ACE_POSIX_Asynch_Result *result,
                                      ACE_POSIX_Proactor::Opcode op)
@@ -1360,7 +1344,6 @@ ACE_POSIX_AIOCB_Proactor::start_aio_i (ACE_POSIX_Asynch_Result *result)
   return ret_val;
 }
 
-
 int
 ACE_POSIX_AIOCB_Proactor::start_deferred_aio ()
 {
@@ -1510,7 +1493,6 @@ ACE_POSIX_AIOCB_Proactor::cancel_aiocb (ACE_POSIX_Asynch_Result * result)
   else // (rc == AIO_NOTCANCELED)
     return 2;
 }
-
 
 // *********************************************************************
 
@@ -1743,7 +1725,6 @@ ACE_POSIX_SIG_Proactor::setup_signal_handler (int signal_number) const
   return 0;
 }
 
-
 int
 ACE_POSIX_SIG_Proactor::block_signals () const
 {
@@ -1907,7 +1888,6 @@ ACE_POSIX_Asynch_Timer::complete (size_t       /* bytes_transferred */,
   if (handler != nullptr)
     handler->handle_time_out (this->time_, this->act ());
 }
-
 
 // *********************************************************************
 

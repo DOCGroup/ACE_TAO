@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef CEC_COUNTING_CONSUMER_H
 #define CEC_COUNTING_CONSUMER_H
 

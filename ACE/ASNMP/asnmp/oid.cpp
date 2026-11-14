@@ -53,7 +53,6 @@ SmiUINT32 Oid::get_syntax()
   return sNMP_SYNTAX_OID;
 }
 
-
 //=============[Oid::Oid( const char *dotted_string ]=====================
 // constructor using a dotted string
 //
@@ -94,7 +93,6 @@ Oid::Oid( const char * dotted_oid_string, size_t size)
     set_invalid();
 }
 
-
 //=============[Oid::Oid( const Oid &oid) ]================================
 // constructor using another oid object
 //
@@ -114,7 +112,6 @@ Oid::Oid ( const Oid &oid)
               &smival.value.oid, byte_counter);
   }
 }
-
 
 //=============[Oid::Oid( const unsigned long *raw_oid, int oid_len) ]====
 // constructor using raw numeric form
@@ -143,7 +140,6 @@ Oid::~Oid()
   set_invalid ();
 }
 
-
 //=============[Oid::operator = const char * dotted_string ]==============
 // assignment to a string operator overloaded
 //
@@ -162,7 +158,6 @@ void Oid::set_data( const char *dotted_oid_string)
   if (StrToOid( (char *) dotted_oid_string, &smival.value.oid, byte_counter) <0)
     set_invalid();
 }
-
 
 //=============[Oid:: operator = const Oid &oid ]==========================
 // assignment to another oid object overloaded
@@ -362,7 +357,6 @@ void Oid::set_data( const unsigned long *raw_oid, const size_t oid_len)
   init_value(raw_oid, oid_len);
 }
 
-
 //===============[Oid::len ]================================================
 // return the len of the oid
 size_t Oid::length() const
@@ -552,7 +546,6 @@ int Oid::suboid(Oid& new_oid, size_t start, size_t how_many)
   return 0;
 }
 
-
 //=============[Oid::StrToOid( char *string, SmiLPOID dst) ]==============
 // convert a string to an oid
 int Oid::StrToOid( const char *string, SmiLPOID dstOid, size_t& how_many)
@@ -603,7 +596,6 @@ int Oid::StrToOid( const char *string, SmiLPOID dstOid, size_t& how_many)
     ++index;  // bump the counter
   }
 
-
   // get some space for the real oid
   ACE_NEW_RETURN(dstOid->ptr, SmiUINT32[ index], -1);
   // copy in the temp data
@@ -615,7 +607,6 @@ int Oid::StrToOid( const char *string, SmiLPOID dstOid, size_t& how_many)
   how_many = index;
   return 0;
 }
-
 
 //===============[Oid::OidCopy( source, destination) ]====================
 // Copy an oid, return bytes copied
@@ -636,7 +627,6 @@ int Oid::OidCopy( SmiLPOID srcOid, SmiLPOID dstOid, size_t& how_many_bytes)
 
   return 0;
 }
-
 
 //===============[Oid::left_comparison( n, Oid) ]=================================
 // compare the n leftmost values of two oids ( left-to_right )
@@ -688,7 +678,6 @@ int Oid::left_comparison( const unsigned long n, const Oid &o) const
 
 }
 
-
 //===============[Oid::left_comparison( n, Oid) ]=================================
 // compare the n rightmost bytes (right-to-left)
 // returns 0, equal
@@ -722,7 +711,6 @@ int Oid::right_comparison( const unsigned long n, const Oid &o) const
    return 0;   // they are equal
 
 }
-
 
 //================[ Oid::valid() ]========================================
 // is the Oid object valid
@@ -775,7 +763,6 @@ int Oid::OidToStr( SmiLPOID srcOid, unsigned long size,
   how_many_bytes = totLen + 1;
   return 0;
 }
-
 
 //================[ general Value = operator ]========================
 SnmpSyntax& Oid::operator=( SnmpSyntax &val)

@@ -241,7 +241,6 @@ be_visitor_facet_ami_exs::gen_reply_handler_class ()
   if (this->sync_)
     return 0;
 
-
   std::string const suffix = "_reply_handler";
   UTL_Scope *s = this->iface_->defined_in ();
   AST_Decl *scope = ScopeAsDecl (s);
@@ -752,5 +751,4 @@ Facet_AMI_Exec_Op_Attr_Generator::emit (be_interface * /*derived_interface*/,
 {
   return visitor_->visit_scope (base_interface);
 }
-
 

@@ -1,7 +1,6 @@
 #include "ECM_Data.h"
 #include "tao/CDR.h"
 
-
 CORBA::Boolean
 operator<< (TAO_OutputCDR& cdr, ECM_Data& x)
 {

@@ -8,7 +8,6 @@ TAO_FT_Endpoint_Selector_Factory::TAO_FT_Endpoint_Selector_Factory () = default;
 
 TAO_FT_Endpoint_Selector_Factory::~TAO_FT_Endpoint_Selector_Factory () = default;
 
-
 TAO_Invocation_Endpoint_Selector *
 TAO_FT_Endpoint_Selector_Factory::get_selector ()
 {

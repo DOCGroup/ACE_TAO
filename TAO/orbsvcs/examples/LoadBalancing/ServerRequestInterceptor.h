@@ -46,7 +46,6 @@ class ServerRequestInterceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   ServerRequestInterceptor () = default;
 
   ServerRequestInterceptor (ServerRequestInterceptor const &) = delete;
@@ -85,7 +84,6 @@ public:
   CORBA::Long request_count ();
 
 protected:
-  /// Destructor.
   /**
    * Protected destructor to enforce correct memory management via
    * reference counting.

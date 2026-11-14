@@ -25,7 +25,6 @@
 class TAO_RTEC_Perf_Export Client_Group
 {
 public:
-  /// Constructor
   /**
    * We need a default constructor because this class is often used in
    * arrays.

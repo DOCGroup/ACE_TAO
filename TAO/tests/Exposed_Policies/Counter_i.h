@@ -9,14 +9,12 @@
  */
 //=============================================================================
 
-
 #ifndef COUNTER_I_H_
 #define COUNTER_I_H_
 
 // -- App. Specific Include --
 #include "CounterS.h"
 #include "Policy_Tester.h"
-
 
 class Counter_Servant : public POA_Counter
 {

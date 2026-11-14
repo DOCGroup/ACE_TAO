@@ -73,7 +73,6 @@ int run_main (int, ACE_TCHAR *[])
 
     ACE_END_TEST;
 
-
     // ACE::fini() destroys the SC (unmanaged) singleton ...
     // Next time we ask for one, it will be a different instance.
     ACE::fini ();

@@ -10,7 +10,6 @@ class Startup_Callback
   : public virtual POA_Test::Startup_Callback
 {
 public:
-  /// Constructor
   Startup_Callback () = default;
 
   Startup_Callback (Startup_Callback const &) = delete;

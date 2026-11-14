@@ -27,7 +27,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 class TAO_RTEC_Perf_Export Send_Task : public ACE_Task_Base
 {
 public:
-  /// Constructor
   Send_Task ();
 
   /// This is for compilers that are a PITA complaining that we are
@@ -70,6 +69,5 @@ private:
   TAO_SYNCH_MUTEX mutex_;
   bool stop_ {};
 };
-
 
 #endif /* TAO_PERF_RTEC_SEND_TASK_H */

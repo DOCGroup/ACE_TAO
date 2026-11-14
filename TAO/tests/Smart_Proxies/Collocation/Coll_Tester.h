@@ -20,7 +20,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 class Collocation_Test
 {
 public:

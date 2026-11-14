@@ -157,7 +157,6 @@ ImR_DSI_Forwarder::invoke_primary_interface(CORBA::ServerRequest_ptr )
   // no impl
 }
 
-
 //--------------------------------------------------------------------
 
 ImR_DSI_ResponseHandler::ImR_DSI_ResponseHandler (const char *key,

@@ -27,7 +27,6 @@ TAO_RTEventLogFactory_i::init (CORBA::ORB_ptr orb,
 {
   TAO_LogMgr_i::init (orb, poa);
 
-
   PortableServer::POA_var const defPOA =
     this->_default_POA ();
 
@@ -51,7 +50,6 @@ TAO_RTEventLogFactory_i::init (CORBA::ORB_ptr orb,
     poa_->id_to_reference (oidec.in ());
 
   this->event_channel_ = RtecEventChannelAdmin::EventChannel::_narrow (objec.in ());
-
 
   this->consumer_admin_ = this->event_channel_->for_consumers();
 

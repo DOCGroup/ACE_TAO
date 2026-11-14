@@ -53,5 +53,4 @@ private:
 #   include "HTTPU/parse_http_response.inl"
 # endif /* ACE_HAS_INLINED_OSCALLS */
 
-
 #endif /* !defined (HTTPU_PARSE_HTTP_RESPONSE_H) */

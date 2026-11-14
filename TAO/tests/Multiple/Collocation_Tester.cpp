@@ -97,7 +97,6 @@ Collocation_Tester::test_right () const
   return failure;
 }
 
-
 int
 Collocation_Tester::test_left () const
 {
@@ -136,7 +135,6 @@ Collocation_Tester::test_left () const
 
   return failure;
 }
-
 
 int
 Collocation_Tester::test_bottom () const

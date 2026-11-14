@@ -43,7 +43,6 @@ ACE_High_Res_Timer::hrtime_to_tv (ACE_Time_Value &tv,
 #endif
 }
 
-
 ACE_INLINE ACE_Time_Value
 ACE_High_Res_Timer::gettimeofday (const ACE_OS::ACE_HRTimer_Op op)
 {
@@ -73,7 +72,6 @@ ACE_High_Res_Timer::gettimeofday_hr ()
 {
   return ACE_High_Res_Timer::gettimeofday ();
 }
-
 
 ACE_INLINE ACE_hrtime_t
 ACE_High_Res_Timer::gettime (const ACE_OS::ACE_HRTimer_Op op)

@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef CEC_COUNTING_SUPPLIER_H
 #define CEC_COUNTING_SUPPLIER_H
 

@@ -11,7 +11,6 @@ class HelloWorld
   : public virtual POA_Test::HelloWorld
 {
 public:
-  /// Constructor.
   HelloWorld () = default;
   HelloWorld (HelloWorld const &) = delete;
   HelloWorld (HelloWorld &&) = delete;

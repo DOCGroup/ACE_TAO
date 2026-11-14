@@ -10,7 +10,6 @@ class Service
   : public virtual POA_Test::Service
 {
 public:
-  /// Constructor
   explicit Service (CORBA::ORB_ptr orb);
   Service (Service const &) = delete;
   Service &operator= (Service const &) = delete;

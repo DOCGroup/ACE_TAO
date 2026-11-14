@@ -26,7 +26,6 @@ Incoming_Message_Stack::push (TAO_Queued_Data *data)
   this->top_ = data;
 }
 
-
 /// @return 0 for success, -1 for an empty stack.
 ACE_INLINE int
 Incoming_Message_Stack::pop (TAO_Queued_Data *&data)

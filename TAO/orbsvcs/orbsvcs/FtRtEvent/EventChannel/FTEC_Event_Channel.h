@@ -62,7 +62,6 @@ public:
    */
   void set_listener(TAO_FTEC_Become_Primary_Listener* listener);
 
-
   /// RtecEventChannelAdmin::EventChannel Interface
 
   RtecEventChannelAdmin::ConsumerAdmin_ptr
@@ -112,7 +111,6 @@ public:
   void set_update (const FTRT::State & s) override;
 
   void oneway_set_update (const FTRT::State & s) override;
-
 
   CORBA::Boolean start (
         FTRT::FaultListener_ptr listener,

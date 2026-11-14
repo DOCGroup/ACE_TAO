@@ -609,7 +609,6 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast::unsubscribe_ifs");
 
-
   if (ACE_BIT_ENABLED (this->opts_, OPT_NULLIFACE_ALL)
       && net_if == nullptr)
     {
@@ -783,7 +782,6 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
 
   return 0;
 }
-
 
 int
 ACE_SOCK_Dgram_Mcast::leave (const ACE_INET_Addr &mcast_addr,

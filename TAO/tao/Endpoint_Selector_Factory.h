@@ -35,7 +35,6 @@ namespace CORBA
 
 class TAO_Invocation_Endpoint_Selector;
 
-
 // ****************************************************************
 
 /**

@@ -17,7 +17,6 @@ be_visitor_valuebox_ci::be_visitor_valuebox_ci (be_visitor_context *ctx)
 {
 }
 
-
 int
 be_visitor_valuebox_ci::visit_valuebox (be_valuebox *node)
 {
@@ -266,7 +265,6 @@ be_visitor_valuebox_ci::visit_string (be_string *node)
       << "this->_pd_value = val;" << be_uidt_nl
       << "}" << be_nl_2;
 
-
   // Public constructor with one argument of type const CORBA::String_var&
   *os << "ACE_INLINE" << be_nl
       << vb_node->name () << "::" << vb_node->local_name ()
@@ -504,7 +502,6 @@ be_visitor_valuebox_ci::visit_union (be_union *node)
       ctx.node (vb_node);
     }
 
-
   // Retrieve the disriminant type.
   be_type * const bt = dynamic_cast<be_type*> (node->disc_type ());
 
@@ -515,7 +512,6 @@ be_visitor_valuebox_ci::visit_union (be_union *node)
                          "bad disciminant type\n"),
                         -1);
     }
-
 
   // Generate modifier and accessor for discriminant
   *os << "ACE_INLINE void" << be_nl
@@ -533,7 +529,6 @@ be_visitor_valuebox_ci::visit_union (be_union *node)
 
   return 0;
 }
-
 
 int
 be_visitor_valuebox_ci::emit_for_predef_enum (be_type *node,
@@ -723,7 +718,6 @@ be_visitor_valuebox_ci::emit_copy_constructor_alloc (be_decl *node) const
       << "}" << be_nl_2;
 }
 
-
 void
 be_visitor_valuebox_ci::emit_assignment (be_decl *node,
                                          std::string const& type_suffix)
@@ -765,7 +759,6 @@ be_visitor_valuebox_ci::emit_assignment_alloc (be_decl *node) const
       << "return *this;" << be_uidt_nl
       << "}" << be_nl_2;
 }
-
 
 void
 be_visitor_valuebox_ci::emit_accessor_modifier (be_decl *node) const

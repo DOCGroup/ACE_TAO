@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_FT_PERSISTENT_NAMING_CONTEXT_FACTORY_H
 #define TAO_FT_PERSISTENT_NAMING_CONTEXT_FACTORY_H
 #include /**/ "ace/pre.h"

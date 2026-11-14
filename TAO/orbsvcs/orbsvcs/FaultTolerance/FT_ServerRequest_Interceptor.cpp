@@ -106,7 +106,6 @@ namespace TAO
     if (!(cdr >> fgvsc))
       throw CORBA::BAD_PARAM (CORBA::OMGVMCID | 28, CORBA::COMPLETED_NO);
 
-
     if (fgvsc.object_group_ref_version >
         this->object_group_ref_version_)
       {
@@ -175,7 +174,6 @@ namespace TAO
 
     this->iogr_ =
       this->orb_->string_to_object (obj.in ());
-
 
     // @@ This exception is a hack to let the RM know that we have
     // received and updated the IOGR. We will add a special minor code

@@ -62,7 +62,6 @@ public:
   CORBA::ULong hash_ft (TAO_Profile * const p,
                         CORBA::ULong const m) override;
 
-
   /// Verify condition for  permanent forward is given,
   /// both parameters must provide group attributes.
   CORBA::Boolean is_permanent_forward_condition (

@@ -54,7 +54,6 @@ namespace TAO
   class IIOP_SSL_Transport : public TAO_IIOP_Transport
   {
   public:
-    /// Constructor.
     IIOP_SSL_Transport (IIOP_SSL_Connection_Handler *handler,
                         TAO_ORB_Core *orb_core);
 

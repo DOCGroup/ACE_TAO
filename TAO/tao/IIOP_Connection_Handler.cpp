@@ -21,7 +21,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-
 #ifdef TAO_LOG_CH_REF_COUNTS
 ACE_Event_Handler::Reference_Count
 TAO_IIOP_Connection_Handler::add_reference ()
@@ -56,7 +55,6 @@ TAO_IIOP_Connection_Handler::remove_reference ()
 }
 #endif /*TAO_LOG_CH_REF_COUNTS*/
 
-
 TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_IIOP_SVC_HANDLER (t, nullptr , nullptr),
     TAO_Connection_Handler (nullptr),
@@ -69,7 +67,6 @@ TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (ACE_Thread_Manager *t)
   // instantiate it anyway.
   ACE_ASSERT (0);
 }
-
 
 TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (
   TAO_ORB_Core *orb_core)
@@ -422,7 +419,6 @@ TAO_IIOP_Connection_Handler::handle_output (ACE_HANDLE handle)
 
   return result;
 }
-
 
 int
 TAO_IIOP_Connection_Handler::handle_timeout (ACE_Time_Value const &,

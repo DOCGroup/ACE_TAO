@@ -120,7 +120,6 @@ FP_Task::perform_task ()
     {
       job_->work (this->load_, this->importance_);
 
-
       for (int j = 0; j < this->iter_; j++)
         {
           ACE_Time_Value run_time = ACE_OS::gettimeofday () - *base_time_;
@@ -134,7 +133,6 @@ FP_Task::perform_task ()
               if (TAO_debug_level > 0)
                 ACE_DEBUG ((LM_DEBUG,
                             "Waiting on count down\n"));
-
 
               ACE::is_prime (prime_number,
                              2,

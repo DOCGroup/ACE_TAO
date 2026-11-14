@@ -12,7 +12,6 @@
 #include "jaws3/TPOOL_Concurrency.h"
 #include "jaws3/TPR_Concurrency.h"
 
-
 ACE_THR_FUNC_RETURN
 JAWS_Signal_Task_function (void *)
 {
@@ -50,7 +49,6 @@ JAWS_Signal_Task_function (void *)
 
   return 0;
 }
-
 
 JAWS_Signal_Task::JAWS_Signal_Task ()
 {

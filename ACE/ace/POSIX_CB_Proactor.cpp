@@ -68,7 +68,6 @@ ACE_POSIX_CB_Proactor::notify_completion (int sig_num)
   return this->sema_.release();
 }
 
-
 ssize_t
 ACE_POSIX_CB_Proactor::allocate_aio_slot (ACE_POSIX_Asynch_Result *result)
 {

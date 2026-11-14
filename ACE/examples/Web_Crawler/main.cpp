@@ -10,12 +10,10 @@
  */
 //=============================================================================
 
-
 #include "ace/OS_main.h"
 #include "ace/Signal.h"
 #include "Web_Crawler.h"
 #include "Options.h"
-
 
 void sig_handler (int)
 {
@@ -37,5 +35,4 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   else
     return 0;
 }
-
 

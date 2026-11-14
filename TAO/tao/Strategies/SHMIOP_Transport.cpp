@@ -116,7 +116,6 @@ TAO_SHMIOP_Transport::handle_input (TAO_Resume_Handle &rh,
   // messages, compensate shrink due to alignment
   char buf [TAO_MAXBUFSIZE + ACE_CDR::MAX_ALIGNMENT];
 
-
 #if defined (ACE_INITIALIZE_MEMORY_BEFORE_USE)
   (void) std::memset (buf,
                       '\0',
@@ -136,7 +135,6 @@ TAO_SHMIOP_Transport::handle_input (TAO_Resume_Handle &rh,
   ACE_Message_Block message_block (&db,
                                    ACE_Message_Block::DONT_DELETE,
                                    this->orb_core_->input_cdr_msgblock_allocator ());
-
 
   // Align the message block
   ACE_CDR::mb_align (&message_block);
@@ -259,7 +257,6 @@ TAO_SHMIOP_Transport::handle_input (TAO_Resume_Handle &rh,
 
   return 0;
 }
-
 
 int
 TAO_SHMIOP_Transport::send_request (TAO_Stub *stub,

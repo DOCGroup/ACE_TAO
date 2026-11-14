@@ -8,7 +8,6 @@
  *  @author  Nanbor Wang <nanbor@cs.wustl.edu>
  */
 
-
 #ifndef TAO_SHMIOP_PROFILE_H
 #define TAO_SHMIOP_PROFILE_H
 
@@ -68,7 +67,6 @@ public:
 
   /// Destructor is to be called only through <_decr_refcnt>.
   ~TAO_SHMIOP_Profile ();
-
 
   /// Template methods, please see Profile.h for documentation.
   char *to_string () const override;

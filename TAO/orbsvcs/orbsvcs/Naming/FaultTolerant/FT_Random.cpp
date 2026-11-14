@@ -39,5 +39,4 @@ TAO_FT_Random::next_location (
   return true;
 }
 
-
 TAO_END_VERSIONED_NAMESPACE_DECL

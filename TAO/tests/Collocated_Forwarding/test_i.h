@@ -14,7 +14,6 @@
 class test_i : public virtual POA_Collocated_ForwardRequestTest::test
 {
 public:
-  /// Constructor.
   explicit test_i (CORBA::Short id);
 
   test_i (test_i const &) = delete;

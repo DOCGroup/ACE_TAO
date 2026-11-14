@@ -10,4 +10,3 @@ Test_i::server_pid ()
   return ACE_OS::getpid ();
 }
 
-

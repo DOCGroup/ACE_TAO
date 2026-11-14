@@ -47,7 +47,6 @@ TAO_CSD_Object_Adapter_Factory::init (int /* argc */, ACE_TCHAR * /* argv */ [])
   return 0;
 }
 
-
 ACE_FACTORY_DEFINE (TAO_CSD_FW, TAO_CSD_Object_Adapter_Factory)
 ACE_STATIC_SVC_DEFINE (TAO_CSD_Object_Adapter_Factory,
                        ACE_TEXT ("TAO_CSD_Object_Adapter_Factory"),

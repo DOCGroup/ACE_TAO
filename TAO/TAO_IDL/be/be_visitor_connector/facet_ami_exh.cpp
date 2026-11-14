@@ -67,7 +67,6 @@ be_visitor_facet_ami_exh::visit_provides (be_provides *node)
             -1);
    }
 
-
   if (this->gen_facet_executor_class () == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -288,7 +287,6 @@ be_visitor_facet_ami_exh::gen_facet_executor_class ()
       << "virtual ~" << iface_name << suffix
       << " ();";
 
-
   std::string handler_str (
     ScopeAsDecl (this->iface_->defined_in ())->full_name ());
   handler_str += "::";
@@ -314,7 +312,6 @@ be_visitor_facet_ami_exh::gen_facet_executor_class ()
      sync_iface->get_insert_queue ().clear ();
      sync_iface->get_del_queue ().clear ();
      sync_iface->get_insert_queue ().push_back (sync_iface);
-
 
      Facet_AMI_ExecH_Op_Attr_Generator op_attr_gen (this);
      int const status =

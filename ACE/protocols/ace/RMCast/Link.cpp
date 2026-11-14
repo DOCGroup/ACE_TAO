@@ -30,7 +30,6 @@ namespace ACE_RMCast
   {
     ACE_OS::srand (static_cast<unsigned int> (ACE_OS::time (nullptr)));
 
-
     rsock_.set_option (IP_MULTICAST_LOOP, 0);
     // rsock_.set_option (IP_MULTICAST_TTL, 0);
 
@@ -62,7 +61,6 @@ namespace ACE_RMCast
       ACE_OS::perror ("connect: ");
       ACE_OS::abort ();
     }
-
 
     ssock_.get_local_addr (self_);
 
@@ -205,7 +203,6 @@ namespace ACE_RMCast
         ACE_Time_Value t (params_.tick ());
         ssize_t r = rsock_.recv (data, 4, addr, MSG_PEEK, &t);
 
-
         // Check for cancellation request.
         //
         {
@@ -225,7 +222,6 @@ namespace ACE_RMCast
           break;
         }
       }
-
 
       if (size != 4 || addr == self_)
       {

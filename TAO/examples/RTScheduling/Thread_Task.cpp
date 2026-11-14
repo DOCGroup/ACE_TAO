@@ -89,7 +89,6 @@ Thread_Task::perform_task ()
   return 0;
 }
 
-
 const char*
 Thread_Task::job ()
 {

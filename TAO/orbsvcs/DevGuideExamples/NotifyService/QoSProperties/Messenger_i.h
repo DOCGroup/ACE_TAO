@@ -26,6 +26,3 @@ private:
 
 #endif
 
-
-
-

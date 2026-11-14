@@ -64,7 +64,6 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
           << "}" << be_nl_2;
     }
 
-  // Destructor.
   *os << node->full_obv_skel_name () << "::~";
   if (! node->is_nested ())
     {

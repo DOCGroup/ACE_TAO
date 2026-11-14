@@ -128,7 +128,6 @@ private:
 static int
 TAO_Requires_ZIOP_Initializer = TAO_ZIOP_Loader::Initializer ();
 
-
 ACE_STATIC_SVC_DECLARE (TAO_ZIOP_Loader)
 ACE_FACTORY_DECLARE (TAO_ZIOP, TAO_ZIOP_Loader)
 
@@ -140,5 +139,4 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_ZIOP_H */
-
 

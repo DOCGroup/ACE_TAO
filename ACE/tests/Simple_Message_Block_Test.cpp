@@ -12,14 +12,12 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Message_Block.h"
 #include "ace/Synch_Traits.h"
 #include "ace/Lock_Adapter_T.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Thread_Mutex.h"
-
 
 int
 run_main (int, ACE_TCHAR *[])

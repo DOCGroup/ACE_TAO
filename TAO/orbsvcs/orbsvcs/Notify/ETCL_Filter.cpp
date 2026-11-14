@@ -17,9 +17,7 @@ TAO_Notify_Constraint_Expr::TAO_Notify_Constraint_Expr ()
 {
 }
 
-
 TAO_Notify_Constraint_Expr::~TAO_Notify_Constraint_Expr () = default;
-
 
 void
 TAO_Notify_Constraint_Expr::save_persistent (
@@ -39,7 +37,6 @@ TAO_Notify_Constraint_Expr::save_persistent (
   }
 }
 
-
 void
 TAO_Notify_Constraint_Expr::load_attrs(
   TAO_Notify::NVPList const &attrs)
@@ -51,7 +48,6 @@ TAO_Notify_Constraint_Expr::load_attrs(
     this->constr_expr.constraint_expr = CORBA::string_dup (expr);
   }
 }
-
 
 TAO_Notify::Topology_Object*
 TAO_Notify_Constraint_Expr::load_child (
@@ -84,14 +80,12 @@ TAO_Notify_Constraint_Expr::load_child (
   return result;
 }
 
-
 void
 TAO_Notify_Constraint_Expr::release ()
 {
   delete this;
   //@@ inform factory
 }
-
 
 TAO_Notify_ETCL_Filter::TAO_Notify_ETCL_Filter (PortableServer::POA_ptr poa,
                                                 const char *constraint_grammar,
@@ -101,7 +95,6 @@ TAO_Notify_ETCL_Filter::TAO_Notify_ETCL_Filter (PortableServer::POA_ptr poa,
    grammar_ (constraint_grammar)
 {
 }
-
 
 TAO_Notify_ETCL_Filter::~TAO_Notify_ETCL_Filter ()
 {
@@ -159,7 +152,6 @@ TAO_Notify_ETCL_Filter::add_constraint_i (CosNotifyFilter::ConstraintID cnstr_id
   return notify_constr_expr;
 }
 
-
 void
 TAO_Notify_ETCL_Filter::add_constraint_i
         (const CosNotifyFilter::ConstraintInfo& constraint,
@@ -201,7 +193,6 @@ TAO_Notify_ETCL_Filter::add_constraint_i
 
   auto_expr.release ();
 }
-
 
 CosNotifyFilter::ConstraintInfoSeq*
 TAO_Notify_ETCL_Filter::add_constraints (
@@ -510,7 +501,6 @@ TAO_Notify_ETCL_Filter::get_callbacks ()
   throw CORBA::NO_IMPLEMENT ();
 }
 
-
 void
 TAO_Notify_ETCL_Filter::save_persistent (TAO_Notify::Topology_Saver &saver)
 {
@@ -544,14 +534,12 @@ TAO_Notify_ETCL_Filter::save_persistent (TAO_Notify::Topology_Saver &saver)
   }
 }
 
-
 void
 TAO_Notify_ETCL_Filter::release ()
 {
   delete this;
   //@@ inform factory
 }
-
 
 void
 TAO_Notify_ETCL_Filter::load_attrs(TAO_Notify::NVPList const &attrs)
@@ -596,6 +584,5 @@ TAO_Notify_ETCL_Filter::load_child (ACE_CString const &type,
   }
   return result;
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

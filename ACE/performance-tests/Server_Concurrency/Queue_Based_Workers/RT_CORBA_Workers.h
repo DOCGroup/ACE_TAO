@@ -75,7 +75,6 @@ private:
   ACE_Manual_Event event_;
 };
 
-
 /**************************************************************/
 /**
  * @class Input_Task
@@ -134,7 +133,6 @@ private:
   /// Our referance to Synchronisers
   Synchronisers &synch_;
 };
-
 
 /**************************************************************/
 /**

@@ -81,7 +81,6 @@ send_echo (TO_TYPE ctype, CORBA::ORB_ptr orb,
     }
 }
 
-
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");

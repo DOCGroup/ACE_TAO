@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_DSI_GATEWAY_TEST_I_H
 #define TAO_DSI_GATEWAY_TEST_I_H
 

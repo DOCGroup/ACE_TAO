@@ -27,10 +27,8 @@
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_ConsumerAdmin_Command  : public TAO_Notify_Tests_Command
 {
 public:
-  /// Constructor
   TAO_Notify_Tests_ConsumerAdmin_Command ();
 
-  /// Destructor
   ~TAO_Notify_Tests_ConsumerAdmin_Command ();
 
   /// Parse args and populate options.

@@ -10,7 +10,6 @@
 #include "tao/Codeset_Manager.h"
 #include "tao/CDR.h"
 
-
 #if !defined(__ACE_INLINE__)
 #include "tao/Strategies/DIOP_Acceptor.inl"
 #endif /* __ACE_INLINE__ */

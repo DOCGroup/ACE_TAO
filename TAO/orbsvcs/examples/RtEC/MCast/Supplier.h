@@ -29,7 +29,6 @@
 class Supplier : public POA_RtecEventComm::PushSupplier
 {
 public:
-  /// Constructor
   Supplier () = default;
   Supplier (Supplier const &) = delete;
   Supplier (Supplier &&) = delete;

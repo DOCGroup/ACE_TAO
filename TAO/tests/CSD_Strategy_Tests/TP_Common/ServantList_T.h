@@ -53,7 +53,6 @@ private:
   ServantRecordVector servant_records_;
 };
 
-
 #include "ServantList_T.cpp"
 #endif /* SERVANTLIST_T_H */
 

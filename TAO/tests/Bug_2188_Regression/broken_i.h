@@ -71,14 +71,12 @@ private:
 
   CORBA::Char char_ {};
 public:
-  //Constructor
   ArrayTest_i ();
   ArrayTest_i (ArrayTest_i const &) = delete;
   ArrayTest_i &operator= (ArrayTest_i const &) = delete;
   ArrayTest_i (ArrayTest_i &&) = delete;
   ArrayTest_i &operator= (ArrayTest_i &&) = delete;
 
-  //Destructor
   ~ArrayTest_i () override;
 
   ::LongArray_slice * longArrayOp (

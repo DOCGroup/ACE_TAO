@@ -6,7 +6,6 @@
  *  @author Fred Kuhns <fredk@cs.wustl.edu>Ossama Othman <othman@cs.wustl.edu>
  */
 
-
 #ifndef TAO_UIOP_FACTORY_H
 #define TAO_UIOP_FACTORY_H
 
@@ -66,7 +65,6 @@ private:
   TAO_UIOP_Protocol_Factory (TAO_UIOP_Protocol_Factory &&) = delete;
   TAO_UIOP_Protocol_Factory &operator= (TAO_UIOP_Protocol_Factory &&) = delete;
 };
-
 
 ACE_STATIC_SVC_DECLARE (TAO_UIOP_Protocol_Factory)
 ACE_FACTORY_DECLARE (TAO_Strategies, TAO_UIOP_Protocol_Factory)

@@ -23,7 +23,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // Forward references
 class TAO_Optimized_Connection_Endpoint_Selector;
 
-
 /**
  * @class TAO_OC_Endpoint_Selector_Loader
  *
@@ -45,7 +44,6 @@ public:
 static int
 TAO_Requires_OC_Endpoint_Selector_Loader =
   TAO_OC_Endpoint_Selector_Loader::init ();
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

@@ -35,5 +35,4 @@ public:
     char const *message) override;
 };
 
-
 #endif /* AMH_MESSENGERI_H_  */

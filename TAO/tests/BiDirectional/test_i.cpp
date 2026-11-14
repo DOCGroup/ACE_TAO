@@ -23,7 +23,6 @@ Callback_i::callback_method ()
     ACE_DEBUG ((LM_DEBUG, "Callback method called\n"));
 }
 
-
 // ****************************************************************
 
 CORBA::Long
@@ -73,7 +72,6 @@ Simple_Server_i::call_client ()
 
   return 0;
 }
-
 
 void
 Simple_Server_i::shutdown ()

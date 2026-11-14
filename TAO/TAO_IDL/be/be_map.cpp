@@ -233,7 +233,6 @@ be_map::accept (be_visitor *visitor)
   return visitor->visit_map (this);
 }
 
-
 std::string
 be_map::instance_name () const
 {

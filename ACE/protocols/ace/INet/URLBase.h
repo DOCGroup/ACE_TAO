@@ -186,7 +186,6 @@ namespace ACE
               u_short port_;
           };
 
-
         /**
         * @class ACE_INet_URL_INetAuthBase
         *

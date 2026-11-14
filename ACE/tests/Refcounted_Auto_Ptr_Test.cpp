@@ -70,7 +70,6 @@ class Scheduler : public ACE_Task<ACE_SYNCH>
   friend class Method_Request_print;
   friend class Method_Request_end;
 public:
-  /// Constructor.
   Scheduler ();
 
   //FUZZ: disable check_for_lack_ACE_OS
@@ -81,7 +80,6 @@ public:
   int close (u_long flags = 0) override;
   //FUZZ: enable check_for_lack_ACE_OS
 
-  /// Destructor.
   ~Scheduler () override;
 
   // = These methods are part of the Active Object Proxy interface.
@@ -268,7 +266,6 @@ Scheduler::print (Printer_var &printer)
 static int n_loops = 10;
 
 #endif /* ACE_HAS_THREADS */
-
 
 // This will be used in a single thread to test the reset and release
 // methods. See Bugzilla #1925 for history.

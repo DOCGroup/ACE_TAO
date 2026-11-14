@@ -23,7 +23,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 #include "orbsvcs/DsEventLogAdminS.h"
 #include "orbsvcs/Log/Log_i.h"
 #include "orbsvcs/CosEvent/CEC_EventChannel.h"
@@ -53,10 +52,8 @@ class TAO_EventLogFactory_i;
 class TAO_Event_LogConsumer : public virtual POA_CosEventComm::PushConsumer
 {
 public:
-  /// Constructor.
   explicit TAO_Event_LogConsumer (TAO_EventLog_i * log);
 
-  /// Destructor.
   ~TAO_Event_LogConsumer () override;
 
   /// Connect to EventLog.

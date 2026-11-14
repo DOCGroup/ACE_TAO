@@ -60,7 +60,6 @@ private:
   void release () override;
 };
 
-
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)

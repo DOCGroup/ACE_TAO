@@ -134,7 +134,6 @@ TAO_PriorityModelPolicy::_tao_scope () const
                           TAO_POLICY_POA_SCOPE);
 }
 
-
 TAO_ThreadpoolPolicy::TAO_ThreadpoolPolicy (RTCORBA::ThreadpoolId id)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
@@ -211,7 +210,6 @@ TAO_ThreadpoolPolicy::_tao_scope () const
                           TAO_POLICY_POA_SCOPE);
 }
 
-
 TAO_PrivateConnectionPolicy::TAO_PrivateConnectionPolicy (TAO_PrivateConnectionPolicy const &)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
@@ -268,7 +266,6 @@ TAO_PrivateConnectionPolicy::_tao_scope () const
                           TAO_POLICY_THREAD_SCOPE |
                           TAO_POLICY_ORB_SCOPE);
 }
-
 
 TAO_PriorityBandedConnectionPolicy::TAO_PriorityBandedConnectionPolicy (RTCORBA::PriorityBands const &bands)
   : ::CORBA::Object ()
@@ -370,7 +367,6 @@ TAO_PriorityBandedConnectionPolicy::priority_bands_rep ()
   return this->priority_bands_;
 }
 
-
 TAO_ServerProtocolPolicy::TAO_ServerProtocolPolicy (RTCORBA::ProtocolList const &protocols)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
@@ -458,7 +454,6 @@ TAO_ServerProtocolPolicy::protocols_rep ()
 {
   return protocols_;
 }
-
 
 TAO_ClientProtocolPolicy::TAO_ClientProtocolPolicy (RTCORBA::ProtocolList const &protocols)
   : ::CORBA::Object ()
@@ -602,7 +597,6 @@ TAO_ClientProtocolPolicy::protocols_rep ()
   return protocols_;
 }
 
-
 TAO_TCP_Protocol_Properties::TAO_TCP_Protocol_Properties (CORBA::Long send_buffer_size,
                                                           CORBA::Long recv_buffer_size,
                                                           CORBA::Boolean keep_alive,
@@ -717,7 +711,6 @@ TAO_TCP_Protocol_Properties::_tao_decode (TAO_InputCDR &in_cdr)
           (in_cdr.read_boolean (this->no_delay_)));
 }
 
-
 TAO_UnixDomain_Protocol_Properties::TAO_UnixDomain_Protocol_Properties
 (CORBA::Long send_buffer_size,
  CORBA::Long recv_buffer_size)
@@ -764,7 +757,6 @@ TAO_UnixDomain_Protocol_Properties::_tao_decode (TAO_InputCDR &in_cdr)
           && (in_cdr >> this->recv_buffer_size_));
 }
 
-
 TAO_SharedMemory_Protocol_Properties::TAO_SharedMemory_Protocol_Properties (CORBA::Long send_buffer_size,
                                                                             CORBA::Long recv_buffer_size,
                                                                             CORBA::Boolean keep_alive,
@@ -783,7 +775,6 @@ TAO_SharedMemory_Protocol_Properties::TAO_SharedMemory_Protocol_Properties (CORB
     mmap_lockname_ (mmap_lockname)
 {
 }
-
 
 CORBA::Long
 TAO_SharedMemory_Protocol_Properties::send_buffer_size ()
@@ -921,7 +912,6 @@ TAO_SharedMemory_Protocol_Properties::_tao_decode (TAO_InputCDR &in_cdr)
           (in_cdr >> this->mmap_lockname_));
 }
 
-
 TAO_UserDatagram_Protocol_Properties::TAO_UserDatagram_Protocol_Properties (
   CORBA::Long send_buffer_size,
   CORBA::Long recv_buffer_size,
@@ -979,7 +969,6 @@ TAO_UserDatagram_Protocol_Properties::_tao_decode (TAO_InputCDR &)
 {
   return true;
 }
-
 
 TAO_StreamControl_Protocol_Properties::TAO_StreamControl_Protocol_Properties (CORBA::Long send_buffer_size,
                                                                               CORBA::Long recv_buffer_size,
@@ -1095,7 +1084,6 @@ TAO_StreamControl_Protocol_Properties::_tao_decode (TAO_InputCDR &in_cdr)
           (in_cdr.read_boolean (this->no_delay_)));
 }
 
-
 CORBA::Boolean
 TAO_GIOP_Protocol_Properties::_tao_encode (TAO_OutputCDR &)
 {
@@ -1107,7 +1095,6 @@ TAO_GIOP_Protocol_Properties::_tao_decode (TAO_InputCDR &)
 {
   return true;
 }
-
 
 RTCORBA::ProtocolProperties *
 TAO_Protocol_Properties_Factory::create_transport_protocol_property (IOP::ProfileId id,

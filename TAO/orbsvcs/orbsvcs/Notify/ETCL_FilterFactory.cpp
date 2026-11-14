@@ -92,7 +92,6 @@ TAO_Notify_ETCL_FilterFactory::create_filter (const char *constraint_grammar)
   return this->create_filter (constraint_grammar, id, filter);
 }
 
-
 CosNotifyFilter::Filter_ptr
 TAO_Notify_ETCL_FilterFactory::create_filter (
   const char *constraint_grammar,
@@ -183,7 +182,6 @@ TAO_Notify_ETCL_FilterFactory::remove_filter (
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-
 void
 TAO_Notify_ETCL_FilterFactory::save_persistent (TAO_Notify::Topology_Saver &saver)
 {
@@ -208,7 +206,6 @@ TAO_Notify_ETCL_FilterFactory::save_persistent (TAO_Notify::Topology_Saver &save
 
   saver.end_object(0, "filter_factory");
 }
-
 
 TAO_Notify::Topology_Object*
 TAO_Notify_ETCL_FilterFactory::load_child (ACE_CString const &type,
@@ -241,7 +238,6 @@ TAO_Notify_ETCL_FilterFactory::load_child (ACE_CString const &type,
   return result;
 }
 
-
 void
 TAO_Notify_ETCL_FilterFactory::release ()
 {
@@ -249,13 +245,11 @@ TAO_Notify_ETCL_FilterFactory::release ()
   //@@ inform factory
 }
 
-
 TAO_Notify_Object::ID
 TAO_Notify_ETCL_FilterFactory::get_filter_id (CosNotifyFilter::Filter_ptr filter)
 {
   return this->find_filter_id(filter);
 }
-
 
 CosNotifyFilter::Filter_ptr
 TAO_Notify_ETCL_FilterFactory::get_filter (TAO_Notify_Object::ID const &id)
@@ -268,7 +262,6 @@ TAO_Notify_ETCL_FilterFactory::get_filterid (CosNotifyFilter::Filter_ptr filter)
 {
   return (CosNotifyFilter::FilterID) this->find_filter_id(filter);
 }
-
 
 CosNotifyFilter::Filter_ptr
 TAO_Notify_ETCL_FilterFactory::get_filter (CosNotifyFilter::FilterID id)
@@ -320,6 +313,5 @@ TAO_Notify_ETCL_FilterFactory::find_filter_id (CosNotifyFilter::Filter_ptr filte
   throw CORBA::INTERNAL ();
   return 0;
 }
-
 
 ACE_FACTORY_DEFINE (TAO_Notify_Serv, TAO_Notify_ETCL_FilterFactory)

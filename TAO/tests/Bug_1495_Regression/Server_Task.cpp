@@ -14,7 +14,6 @@
 
 #include <memory>
 
-
 Server_Task::Server_Task (ACE_TCHAR const *output,
                           CORBA::ORB_ptr sorb,
                           ACE_Manual_Event &me,
@@ -25,7 +24,6 @@ Server_Task::Server_Task (ACE_TCHAR const *output,
   , sorb_ (CORBA::ORB::_duplicate (sorb))
 {
 }
-
 
 int
 Server_Task::svc ()
@@ -108,5 +106,4 @@ Server_Task::svc ()
 
   return 0;
 }
-
 

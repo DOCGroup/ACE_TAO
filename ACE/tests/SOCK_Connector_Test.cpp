@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/OS_NS_string.h"
 #include "ace/INET_Addr.h"
@@ -213,7 +212,6 @@ fail_no_listener_nonblocking ()
   return status;
 }
 
-
 // This test tries to hit a port that's listening.  Echo (7) is pretty
 // popular.  Just in case, though, it won't report a failure if it
 // gets "refused" (no listener) since the real fixed bug this is
@@ -312,5 +310,4 @@ run_main (int, ACE_TCHAR *[])
   ACE_END_TEST;
   return status;
 }
-
 

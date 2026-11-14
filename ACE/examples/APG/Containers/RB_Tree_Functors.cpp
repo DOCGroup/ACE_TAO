@@ -35,7 +35,6 @@ private:
   Tree<KeyType, DataElement*> tree_;
 };
 
-
 int Tree_Example::run ()
 {
   ACE_TRACE ("Tree_Example::run");

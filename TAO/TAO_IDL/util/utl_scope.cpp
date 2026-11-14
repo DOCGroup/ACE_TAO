@@ -129,7 +129,6 @@ UTL_Scope::UTL_Scope (AST_Decl::NodeType nt)
 {
 }
 
-// Destructor.
 UTL_Scope::~UTL_Scope ()
 {
   for (UTL_ScopeActiveIterator iter (this, IK_both);
@@ -1973,7 +1972,6 @@ UTL_Scope::iter_lookup_by_name_local (AST_Decl *d,
 
 // UTL_SCOPE_ACTIVE_ITERATOR
 
-// Constructor.
 UTL_ScopeActiveIterator::UTL_ScopeActiveIterator (
     UTL_Scope *s,
     UTL_Scope::ScopeIterationKind i

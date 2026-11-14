@@ -35,7 +35,6 @@ void activate (T & obj_ref,
                PortableServer::ServantBase * servant,
                TAO_EC_Object_Deactivator & object_deactivator);
 
-
 //***************************************************************************
 
 /**
@@ -71,7 +70,6 @@ private:
   T command_;
   bool allow_command_;
 };
-
 
 //***************************************************************************
 

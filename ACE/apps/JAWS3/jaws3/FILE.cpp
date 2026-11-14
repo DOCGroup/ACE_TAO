@@ -9,7 +9,6 @@
 
 #include "jaws3/FILE.h"
 
-
 JAWS_FILE::JAWS_FILE ()
   : map_ ()
   , can_map_ (false)
@@ -67,7 +66,6 @@ JAWS_FILE::mem_map (int length,
 
   return this->map_.get ();
 }
-
 
 ACE_Mem_Map *
 JAWS_FILE::map () const

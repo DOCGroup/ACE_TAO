@@ -17,7 +17,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VISITOR_VALUEBOX_FIELD_CH_H_
 #define _BE_VISITOR_VALUEBOX_FIELD_CH_H_
 

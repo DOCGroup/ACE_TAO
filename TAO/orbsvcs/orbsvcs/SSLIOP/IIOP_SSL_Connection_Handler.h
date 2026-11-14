@@ -45,11 +45,9 @@ namespace TAO
   class IIOP_SSL_Connection_Handler : public TAO_IIOP_Connection_Handler
   {
   public:
-    /// Constructor.
     explicit IIOP_SSL_Connection_Handler (ACE_Thread_Manager* t = nullptr);
     explicit IIOP_SSL_Connection_Handler (TAO_ORB_Core *orb_core);
 
-    /// Destructor.
     ~IIOP_SSL_Connection_Handler () override = default;
   };
 

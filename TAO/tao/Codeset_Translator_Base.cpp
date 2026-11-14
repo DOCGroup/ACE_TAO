@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #include "tao/Codeset_Translator_Base.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

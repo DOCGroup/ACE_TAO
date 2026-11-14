@@ -48,7 +48,6 @@ private:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-
 #include /**/ "ace/post.h"
 
 #endif /* TAO_ECHO_CLIENT_ORB_INITIALIZER_H */

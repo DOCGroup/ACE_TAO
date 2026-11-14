@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "testS.h"
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/ORB_Core.h"
@@ -146,7 +145,6 @@ print_stats (ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time,
     ACE_ERROR ((LM_ERROR,
                 "\tNo time stats printed.  Zero iterations or error occurred.\n"));
 }
-
 
 //
 // Measures how well the reverse hash map works.

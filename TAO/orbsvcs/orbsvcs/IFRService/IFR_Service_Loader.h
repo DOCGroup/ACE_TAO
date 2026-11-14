@@ -59,7 +59,6 @@ private:
   TAO_IFR_Service_Loader &operator= (TAO_IFR_Service_Loader &&) = delete;
 };
 
-
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_FACTORY_DECLARE (TAO_IFRService, TAO_IFR_Service_Loader)

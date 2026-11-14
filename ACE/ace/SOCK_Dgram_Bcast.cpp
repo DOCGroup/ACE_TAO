@@ -162,7 +162,6 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
                         hp->h_length);
     }
 
-
 #if !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__) && !defined (ACE_VXWORKS) && !defined(__APPLE__)
   for (int n = ifc.ifc_len / sizeof (struct ifreq) ; n > 0;
        --n, ++ifr)

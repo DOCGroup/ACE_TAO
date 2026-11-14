@@ -14,7 +14,6 @@
 class Client_Task : public ACE_Task_Base
 {
 public:
-  /// Constructor
   Client_Task (Test::Process_Factory_ptr process_Factory,
                int const iterations);
 

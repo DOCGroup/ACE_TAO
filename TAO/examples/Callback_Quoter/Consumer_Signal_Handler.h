@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef CONSUMER_SIGNAL_HANDLER_H
 #define CONSUMER_SIGNAL_HANDLER_H
 

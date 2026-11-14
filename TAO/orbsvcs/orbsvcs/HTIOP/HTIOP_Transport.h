@@ -58,7 +58,6 @@ namespace TAO
     class HTIOP_Export Transport : public TAO_Transport
     {
     public:
-      /// Constructor.
       Transport (Connection_Handler *handler,
                  TAO_ORB_Core *orb_core);
       Transport (Transport const&) = delete;
@@ -88,7 +87,6 @@ namespace TAO
                             const ACE_Time_Value *s = nullptr) override;
 
       int register_handler () override;
-
 
     public:
       /// @@TODO: These methods IMHO should have more meaningful

@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef FT_FAULT_EVENT_DESCRIPTOR_H_
 #define FT_FAULT_EVENT_DESCRIPTOR_H_
 

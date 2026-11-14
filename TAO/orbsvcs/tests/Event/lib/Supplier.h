@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef EC_SUPPLIER_H
 #define EC_SUPPLIER_H
 
@@ -144,7 +143,6 @@ private:
 class EC_Supplier_Task : public ACE_Task_Base
 {
 public:
-  /// Constructor
   EC_Supplier_Task (EC_Supplier* supplier,
                     EC_Driver* driver,
                     void* cookie,

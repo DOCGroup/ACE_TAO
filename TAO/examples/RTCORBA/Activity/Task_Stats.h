@@ -41,10 +41,8 @@ using BASE_TIME = ACE_Singleton<Base_Time, TAO_SYNCH_MUTEX>;
 class Task_Stats
 {
  public:
-  /// Constructor
   explicit Task_Stats (size_t max_samples);
 
-  /// Destructor
   ~Task_Stats () = default;
 
   Task_Stats (Task_Stats const &) = delete;

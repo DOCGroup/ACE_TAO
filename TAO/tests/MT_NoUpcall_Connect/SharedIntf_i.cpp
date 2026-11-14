@@ -42,7 +42,6 @@ Test_Idl_SharedIntf_i::do_upcall ()
    policy_manager_->set_policy_overrides (policy_list,
                                           CORBA::SET_OVERRIDE);
 
-
    CORBA::Object_var const upper_obj = this->orb_->string_to_object (this->upper_ior_.c_str ());
    Test_Idl::SharedIntf_var const upper = Test_Idl::SharedIntf::_narrow (upper_obj.in ());
    upper->ping ();

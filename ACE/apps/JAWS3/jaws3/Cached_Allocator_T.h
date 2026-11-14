@@ -56,7 +56,6 @@ private:
   // Maintain a cached memory free list.
 };
 
-
 template <class T>
 class JAWS_TSS_Cached_Allocator : public ACE_New_Allocator
 // = TITLE

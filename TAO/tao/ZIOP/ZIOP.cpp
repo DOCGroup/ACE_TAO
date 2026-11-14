@@ -393,7 +393,6 @@ TAO_ZIOP_Loader::check_min_ratio (::Compression::CompressionRatio const &this_ra
   return allow_compression;
 }
 
-
 bool
 TAO_ZIOP_Loader::get_compressor_details (
                         ::Compression::CompressorIdLevelList *list,

@@ -6,7 +6,6 @@
  *  @author  Michael Kircher
  */
 
-
 #ifndef TAO_DIOP_FACTORY_H
 #define TAO_DIOP_FACTORY_H
 
@@ -67,7 +66,6 @@ private:
   TAO_DIOP_Protocol_Factory (TAO_DIOP_Protocol_Factory &&) = delete;
   TAO_DIOP_Protocol_Factory &operator= (TAO_DIOP_Protocol_Factory &&) = delete;
 };
-
 
 ACE_STATIC_SVC_DECLARE (TAO_DIOP_Protocol_Factory)
 ACE_FACTORY_DECLARE (TAO_Strategies, TAO_DIOP_Protocol_Factory)

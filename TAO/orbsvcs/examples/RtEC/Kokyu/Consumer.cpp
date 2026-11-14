@@ -1,6 +1,5 @@
 #include "Consumer.h"
 
-
 void
 Consumer::push (RtecEventComm::EventSet const &events)
 {

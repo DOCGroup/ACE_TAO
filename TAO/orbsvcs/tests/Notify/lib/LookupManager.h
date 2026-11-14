@@ -35,10 +35,8 @@ class TAO_Notify_Tests_Priority_Mapping;
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_LookupManager
 {
 public:
-  /// Constructor
   TAO_Notify_Tests_LookupManager ();
 
-  /// Destructor
   ~TAO_Notify_Tests_LookupManager ();
 
   /// Init

@@ -6,7 +6,6 @@ class test_i :
 public POA_test
 {
 public:
-  /// Constructor.
   explicit test_i (CORBA::ORB_ptr orb);
   test_i (test_i const &) = delete;
   test_i &operator= (test_i const &) = delete;

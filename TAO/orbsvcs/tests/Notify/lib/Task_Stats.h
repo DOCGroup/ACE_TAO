@@ -42,10 +42,8 @@ using BASE_TIME = ACE_Singleton<Base_Time, TAO_SYNCH_MUTEX>;
 class TAO_NOTIFY_TEST_Export Task_Stats
 {
  public:
-  /// Constructor
   Task_Stats ();
 
-  /// Destructor
   ~Task_Stats ();
 
   Task_Stats (Task_Stats const &) = delete;

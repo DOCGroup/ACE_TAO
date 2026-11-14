@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef HTIOP_ACCEPTOR_IMPL_H
 #define HTIOP_ACCEPTOR_IMPL_H
 #include /**/ "ace/pre.h"
@@ -61,7 +60,6 @@ namespace TAO
     class Accept_Strategy : public ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>
     {
     public:
-      /// Constructor.
       explicit Accept_Strategy (TAO_ORB_Core *orb_core);
       Accept_Strategy (Accept_Strategy const&) = delete;
       Accept_Strategy (Accept_Strategy&&) = delete;
@@ -94,7 +92,6 @@ namespace TAO
     class Concurrency_Strategy : public ACE_Concurrency_Strategy<SVC_HANDLER>
     {
     public:
-      /// Constructor.
       explicit Concurrency_Strategy (TAO_ORB_Core *orb_core);
       Concurrency_Strategy (Concurrency_Strategy const&) = delete;
       Concurrency_Strategy (Concurrency_Strategy&&) = delete;

@@ -11,7 +11,6 @@ class Roundtrip_Handler
   : public virtual POA_Test::AMI_RoundtripHandler
 {
 public:
-  /// Constructor
   explicit Roundtrip_Handler (int expected_callbacks);
   Roundtrip_Handler (Roundtrip_Handler const &) = delete;
   Roundtrip_Handler (Roundtrip_Handler &&) = delete;

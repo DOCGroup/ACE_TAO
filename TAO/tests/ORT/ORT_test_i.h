@@ -11,12 +11,10 @@
  */
 //=============================================================================
 
-
 #ifndef ORT_TEST_I_H
 #define ORT_TEST_I_H
 
 #include "ORT_testS.h"
-
 
 class ORT_test_i : public virtual POA_ObjectReferenceTemplate::ORT_test
 {
@@ -35,6 +33,5 @@ public:
 private:
   CORBA::ORB_var orb_;
 };
-
 
 #endif  /* ORT_TEST_I_H */

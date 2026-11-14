@@ -46,10 +46,8 @@ namespace Test
       public virtual ::CORBA::LocalObject
   {
   public:
-    /// Constructor.
     Server_Request_Interceptor (char const *orb_id, TEST test);
 
-    /// Destructor.
     ~Server_Request_Interceptor () override;
 
     Server_Request_Interceptor (Server_Request_Interceptor const &) = delete;

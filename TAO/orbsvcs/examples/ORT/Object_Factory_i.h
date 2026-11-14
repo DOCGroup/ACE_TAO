@@ -21,7 +21,6 @@
 class Object_Factory_i : public virtual POA_Gateway::Object_Factory
 {
  public:
-  /// Constructor
   Object_Factory_i (CORBA::ORB_ptr orb,
                     PortableServer::POA_ptr gateway_poa);
   Object_Factory_i (Object_Factory_i const &) = delete;

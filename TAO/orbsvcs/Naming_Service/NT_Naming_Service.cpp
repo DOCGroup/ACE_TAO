@@ -25,7 +25,6 @@ AutoFinalizer::~AutoFinalizer ()
   ORBSVCS_DEBUG ((LM_DEBUG, "Reported service stoped\n"));
 }
 
-
 TAO_NT_Naming_Service::TAO_NT_Naming_Service () = default;
 
 TAO_NT_Naming_Service::~TAO_NT_Naming_Service ()

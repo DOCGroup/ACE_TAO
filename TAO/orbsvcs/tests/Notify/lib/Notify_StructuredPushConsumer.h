@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef NOTIFY_STRUCTUREDPUSHCONSUMER_H
 #define NOTIFY_STRUCTUREDPUSHCONSUMER_H
 #include /**/ "ace/pre.h"

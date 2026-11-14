@@ -26,7 +26,6 @@
  */
 //=============================================================================
 
-
 #include "ace/Message_Block.h"
 #include "ace/Log_Msg.h"
 #include "ace/os_include/os_aio.h"
@@ -113,7 +112,6 @@ setup_signal_handler (int signal_number)
                       -1);
   return 0;
 }
-
 
 static int
 issue_aio_calls ()

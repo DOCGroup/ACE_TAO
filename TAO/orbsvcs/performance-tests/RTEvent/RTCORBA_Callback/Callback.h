@@ -22,7 +22,6 @@ class Callback
 
 {
 public:
-  /// Constructor
   Callback (int iterations,
             PortableServer::POA_ptr poa);
   Callback (Callback const &) = delete;

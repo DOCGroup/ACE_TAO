@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #ifndef _THREAD_BOUNDED_PACKET_RELAY_H_
 #define _THREAD_BOUNDED_PACKET_RELAY_H_
 
@@ -243,7 +242,6 @@ public:
   // = Trait for command accessible entry points.
 
   using ACTION = int (BPR_Handler_Base::*) (void *);
-
 
   BPR_Handler_Base (Bounded_Packet_Relay &relay,
                     Thread_Timer_Queue &queue);

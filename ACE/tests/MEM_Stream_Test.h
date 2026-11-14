@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_TESTS_MEM_STREAM_TEST_H
 #define ACE_TESTS_MEM_STREAM_TEST_H
 

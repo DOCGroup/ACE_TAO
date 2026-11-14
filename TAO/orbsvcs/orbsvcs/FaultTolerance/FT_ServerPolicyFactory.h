@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_FT_SERVERPOLICY_FACTORY_H
 #define TAO_FT_SERVERPOLICY_FACTORY_H
 

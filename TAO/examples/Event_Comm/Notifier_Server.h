@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef _NOTIFIER_SERVER_H
 #define _NOTIFIER_SERVER_H
 
@@ -26,10 +25,8 @@
 class Notifier_Server
 {
 public:
-  /// Constructor.
   Notifier_Server () = default;
 
-  /// Destructor.
   ~Notifier_Server () = default;
 
   Notifier_Server (Notifier_Server const &) = delete;

@@ -40,7 +40,6 @@ namespace TAO_Notify
     return this->topology_parent_;
   }
 
-
   Topology_Object *
   Topology_Object::load_child (const ACE_CString & /*type*/,
     CORBA::Long /* id */,

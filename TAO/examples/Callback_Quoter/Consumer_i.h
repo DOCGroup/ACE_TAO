@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef CONSUMER_I_H
 #define CONSUMER_I_H
 #include "ConsumerS.h"
@@ -28,7 +27,6 @@
 class Consumer_i : public POA_Callback_Quoter::Consumer
 {
 public:
-  /// Constructor.
   Consumer_i () = default;
 
   Consumer_i (Consumer_i const &) = delete;
@@ -36,7 +34,6 @@ public:
   Consumer_i (Consumer_i &&) = delete;
   Consumer_i &operator= (Consumer_i &&) = delete;
 
-  /// Destructor.
   ~Consumer_i () = default;
 
   /// Gets the stock information from the Notifier.

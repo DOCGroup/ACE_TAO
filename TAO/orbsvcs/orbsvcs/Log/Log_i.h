@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_TLS_LOG_I_H
 #define TAO_TLS_LOG_I_H
 
@@ -47,14 +46,12 @@ class TAO_LogMgr_i;
 class TAO_Log_Serv_Export TAO_Log_i : public virtual POA_DsLogAdmin::Log
 {
 public:
-  /// Constructor.
   TAO_Log_i (CORBA::ORB_ptr orb,
              TAO_LogMgr_i & logmgr_i,
              DsLogAdmin::LogMgr_ptr factory,
              DsLogAdmin::LogId id,
              TAO_LogNotification *log_notifier);
 
-  /// Destructor.
   ~TAO_Log_i () override;
 
   /// Initlialize the Log.
@@ -170,7 +167,6 @@ public:
 
   /// Delete records matching ids in <ids>
   CORBA::ULong delete_records_by_id (DsLogAdmin::RecordIdList const & ids) override;
-
 
   /// Write records to the log storage.
   void write_records (DsLogAdmin::Anys const & records) override;

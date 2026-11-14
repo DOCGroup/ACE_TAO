@@ -141,7 +141,6 @@ TAO::HTIOP::Connector::make_connection (TAO::Profile_Transport_Resolver *,
   if (htiop_endpoint == nullptr)
     return nullptr;
 
-
   ACE::HTBP::Session_Id_t session_id;
   ACE_TString proxy_host;
   unsigned proxy_port;
@@ -299,7 +298,6 @@ TAO::HTIOP::Connector::make_connection (TAO::Profile_Transport_Resolver *,
   return transport;
 }
 
-
 int
 TAO::HTIOP::Connector::cancel_svc_handler (
   TAO_Connection_Handler * svc_handler)
@@ -314,7 +312,6 @@ TAO::HTIOP::Connector::cancel_svc_handler (
 
   return -1;
 }
-
 
 /**
  * @brief Create a profile and initialize it based on the

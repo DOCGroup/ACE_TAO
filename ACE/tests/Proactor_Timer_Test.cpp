@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Trace.h"
 
@@ -80,7 +79,6 @@ private:
   int repeat_secs_;
   int expirations_;
 };
-
 
 Time_Handler::Time_Handler ()
   : timer_id_ (-1)
@@ -280,7 +278,6 @@ test_cancel_repeat_timer ()
   // handler should be deleted by its own handle_time_out().
   return;
 }
-
 
 // If any command line arg is given, run the test with high res timer
 // queue. Else run it normally.

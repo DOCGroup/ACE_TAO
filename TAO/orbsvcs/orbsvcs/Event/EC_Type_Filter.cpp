@@ -1,6 +1,5 @@
 #include "orbsvcs/Event/EC_Type_Filter.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Type_Filter::TAO_EC_Type_Filter (RtecEventComm::EventHeader const &header)

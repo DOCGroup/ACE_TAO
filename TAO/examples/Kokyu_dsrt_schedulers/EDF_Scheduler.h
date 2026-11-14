@@ -68,7 +68,6 @@ public ::CORBA::LocalObject
 
   ~EDF_Scheduler ();
 
-
   EDF_Scheduling::SchedulingParameterPolicy_ptr
     create_scheduling_parameter (
       EDF_Scheduling::SchedulingParameter const &value) override;

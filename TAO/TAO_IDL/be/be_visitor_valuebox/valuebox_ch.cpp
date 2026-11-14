@@ -21,7 +21,6 @@ be_visitor_valuebox_ch::be_visitor_valuebox_ch (be_visitor_context *ctx)
 {
 }
 
-
 int
 be_visitor_valuebox_ch::visit_valuebox (be_valuebox *node)
 {
@@ -151,7 +150,6 @@ be_visitor_valuebox_ch::visit_valuebox (be_valuebox *node)
   return 0;
 }
 
-
 int
 be_visitor_valuebox_ch::visit_array (be_array *node)
 {
@@ -207,20 +205,17 @@ be_visitor_valuebox_ch::visit_array (be_array *node)
   return 0;
 }
 
-
 int
 be_visitor_valuebox_ch::visit_enum (be_enum *node)
 {
   return this->emit_for_predef_enum (node, "", false);
 }
 
-
 int
 be_visitor_valuebox_ch::visit_interface (be_interface *node)
 {
   return this->emit_for_predef_enum (node, "_ptr", false);
 }
-
 
 int
 be_visitor_valuebox_ch::visit_predefined_type (be_predefined_type *node)
@@ -230,7 +225,6 @@ be_visitor_valuebox_ch::visit_predefined_type (be_predefined_type *node)
     "",
     node->pt () == AST_PredefinedType::PT_any);
 }
-
 
 int
 be_visitor_valuebox_ch::visit_sequence (be_sequence *node)
@@ -362,7 +356,6 @@ be_visitor_valuebox_ch::visit_sequence (be_sequence *node)
   return 0;
 }
 
-
 int
 be_visitor_valuebox_ch::visit_string (be_string *node)
 {
@@ -459,7 +452,6 @@ be_visitor_valuebox_ch::visit_string (be_string *node)
   return 0;
 }
 
-
 int
 be_visitor_valuebox_ch::visit_structure (be_structure *node)
 {
@@ -538,7 +530,6 @@ be_visitor_valuebox_ch::visit_structure (be_structure *node)
   return 0;
 }
 
-
 int
 be_visitor_valuebox_ch::visit_typedef (be_typedef *node)
 {
@@ -556,7 +547,6 @@ be_visitor_valuebox_ch::visit_typedef (be_typedef *node)
 
   return 0;
 }
-
 
 int
 be_visitor_valuebox_ch::visit_union (be_union *node)
@@ -659,7 +649,6 @@ be_visitor_valuebox_ch::visit_union (be_union *node)
 
   return 0;
 }
-
 
 int
 be_visitor_valuebox_ch::emit_for_predef_enum (be_type *node,
@@ -820,7 +809,6 @@ be_visitor_valuebox_ch::emit_accessor_modifier (be_decl *node) const
   *os << "void" << " _value (" << node->full_name () << " const &val);"
       << be_nl_2;
 }
-
 
 void
 be_visitor_valuebox_ch::emit_boxed_member_var (be_decl *node,

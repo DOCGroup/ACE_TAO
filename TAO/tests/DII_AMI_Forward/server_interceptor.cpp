@@ -72,7 +72,6 @@ ForwardTest_Request_Interceptor::receive_request_service_contexts (
     }
 }
 
-
 void
 ForwardTest_Request_Interceptor::receive_request (
     PortableInterceptor::ServerRequestInfo_ptr)

@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Multihomed_INET_Addr.h"
@@ -64,7 +63,6 @@ int run_main (int argc, ACE_TCHAR *argv[])
 
   for (i = 0; i <= num_secondaries; ++i) {
     /**** Test set (u_short, const char[], int, int, const char *([]), size_t) ****/
-
 
     addr.set(port,
              primary_ipv6,

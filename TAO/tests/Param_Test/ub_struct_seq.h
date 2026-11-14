@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef PARAM_TEST_UNBOUNED_STRUCT_SEQUENCE_H
 #define PARAM_TEST_UNBOUNED_STRUCT_SEQUENCE_H
 
@@ -78,7 +77,6 @@ private:
   Param_Test::StructSeq_var ret_;
 };
 
-
 class Test_Unbounded_Struct_Sequence
 {
 public:
@@ -137,6 +135,5 @@ private:
   /// return value
   Param_Test::PathSpec_var ret_;
 };
-
 
 #endif /* PARAM_TEST_UNBOUNED_STRUCT_SEQUENCE_H */

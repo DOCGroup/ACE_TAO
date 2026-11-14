@@ -137,11 +137,9 @@ Handle_Events::Handle_Events (u_short udp_port,
     ACE_OS::perror ("can't register events"), ACE_OS::exit (1);
 }
 
-
 // This method handles multicast requests..
 // These requests are of the following form:
 // command (arguments)
-
 
 // currently only one is supported (and indeed needed :-)) http_tester
 // arguments

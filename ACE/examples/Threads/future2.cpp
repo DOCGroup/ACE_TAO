@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_unistd.h"
@@ -154,7 +153,6 @@ private:
   Scheduler * const scheduler_ {}; // Non-owning; its owner outlives the queued request.
   ACE_Future<std::string> future_result_;
 };
-
 
 Method_Request_name::Method_Request_name (Scheduler *new_scheduler,
                                          ACE_Future<std::string> &new_result)

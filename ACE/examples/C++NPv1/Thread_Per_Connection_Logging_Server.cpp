@@ -18,7 +18,6 @@ namespace {
   extern "C" void sigterm_handler (int /* signum */) { /* No-op. */ }
 }
 
-
 ACE_THR_FUNC_RETURN Thread_Per_Connection_Logging_Server::run_svc (void *arg)
 {
   std::unique_ptr<Thread_Args> thread_args (static_cast<Thread_Args *> (arg));
@@ -27,7 +26,6 @@ ACE_THR_FUNC_RETURN Thread_Per_Connection_Logging_Server::run_svc (void *arg)
   thread_args->logging_peer_.close ();
   return ACE_THR_FUNC_RETURN_NULL; // Return value is ignored
 }
-
 
 int
 Thread_Per_Connection_Logging_Server::handle_connections ()
@@ -53,7 +51,6 @@ Thread_Per_Connection_Logging_Server::handle_connections ()
   return 0;
 }
 
-
 int
 Thread_Per_Connection_Logging_Server::handle_data (ACE_SOCK_Stream *client)
 {
@@ -78,7 +75,6 @@ Thread_Per_Connection_Logging_Server::handle_data (ACE_SOCK_Stream *client)
   log_file.close ();
   return 0;
 }
-
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {

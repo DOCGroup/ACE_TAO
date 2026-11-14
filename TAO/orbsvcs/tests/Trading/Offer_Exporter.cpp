@@ -150,7 +150,6 @@ TAO_Offer_Exporter::export_offers_to_all ()
     }
 }
 
-
 void
 TAO_Offer_Exporter::withdraw_offers ()
 {

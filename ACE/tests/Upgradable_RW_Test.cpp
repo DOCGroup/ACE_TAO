@@ -12,12 +12,10 @@
  */
 //=============================================================================
 
-
 #include "Upgradable_RW_Test.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Atomic_Op.h"
-
 
 #if defined (ACE_HAS_THREADS)
 
@@ -434,7 +432,6 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Number of times, that find was called: %d\n"),
               find_called));
-
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT (" (%t) exiting main thread\n")));

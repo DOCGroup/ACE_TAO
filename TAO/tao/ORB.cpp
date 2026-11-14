@@ -285,7 +285,6 @@ CORBA::ORB::create_operation_list (CORBA::OperationDef_ptr opDef,
   adapter->create_operation_list (this, opDef, result);
 }
 
-
 void
 CORBA::ORB::create_environment (CORBA::Environment_ptr &environment)
 {
@@ -1057,7 +1056,6 @@ CORBA::ORB::check_shutdown ()
     }
 }
 
-
 CORBA::ORB_ptr
 CORBA::ORB::_tao_make_ORB (TAO_ORB_Core * orb_core)
 {
@@ -1179,7 +1177,6 @@ namespace TAO
                ENOTSUP),
              CORBA::COMPLETED_NO);
         }
-
 
       // Unknown value
       if (TAO_debug_level > 0)

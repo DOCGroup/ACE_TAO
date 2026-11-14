@@ -14,7 +14,6 @@
 #include "orbsvcs/Concurrency/Concurrency_Loader.h"
 #include "ace/Dynamic_Service.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int

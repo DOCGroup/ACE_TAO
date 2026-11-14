@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Naming/FaultTolerant/FT_Naming_Server.h"
 #include "orbsvcs/Naming/Naming_Server.h"
@@ -57,7 +56,6 @@ constexpr ACE_TCHAR const *primary_replica_ior_filename =
 
 constexpr ACE_TCHAR const *backup_replica_ior_filename =
   ACE_TEXT ("ns_replica_backup.ior");
-
 
 TAO_FTNS_Notifier::TAO_FTNS_Notifier (TAO_FT_Naming_Server &owner, bool iors)
   : owner_ (owner),
@@ -179,7 +177,6 @@ TAO_FT_Naming_Server::update_iors (FT_Naming::ReplicaInfo const &iors)
   }
   this->orb_->orb_core ()->reactor ()->notify (&this->ior_notifier_);
 }
-
 
 int
 TAO_FT_Naming_Server::init_with_orb (int argc,
@@ -318,7 +315,6 @@ TAO_FT_Naming_Server::init_naming_manager_with_orb (int, ACE_TCHAR *[], CORBA::O
       if (write (size_t(GROUP)) != 0)
         return -1;
 
-
       this->naming_manager_.initialize (this->orb_.in (),
                                         this->naming_manager_poa_.in ());
     }
@@ -415,7 +411,6 @@ TAO_FT_Naming_Server::no_replica ()
       this->recover_iors ();
     }
 }
-
 
 int
 TAO_FT_Naming_Server::parse_args (int argc,
@@ -591,7 +586,6 @@ TAO_FT_Naming_Server::parse_args (int argc,
                           -1);
       }
 
-
   if ((f_opt_used && (u_opt_used || r_opt_used)) || (u_opt_used && r_opt_used))
     ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("ERROR: Only one persistence option ")
@@ -667,7 +661,6 @@ TAO_FT_Naming_Server::fini ()
   // Specific FT_Naming cleanup
   naming_manager_poa_ = PortableServer::POA::_nil ();
   iors_[GROUP].ref_ =  FT_Naming::NamingManager::_nil ();
-
 
   // Invoke the base class fini
   return TAO_Naming_Server::fini ();

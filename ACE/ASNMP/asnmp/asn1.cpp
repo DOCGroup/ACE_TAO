@@ -100,7 +100,6 @@ u_char * asn1::parse_int(u_char *data,
   return bufp;
 }
 
-
 /*
  * parse_unsigned_int - pulls an u_long out of an ASN int type.
  *  On entry, datalength is input as the number of valid bytes following
@@ -152,7 +151,6 @@ u_char * asn1::parse_unsigned_int( u_char *data,
   *intp = value;
   return bufp;
 }
-
 
 /*
  * build_int - builds an ASN object containing an integer.
@@ -208,7 +206,6 @@ u_char * asn1::build_int( u_char *data,
   }
   return data;
 }
-
 
 /*
  * build_unsigned_int - builds an ASN object containing an integer.
@@ -275,7 +272,6 @@ u_char * asn1::build_unsigned_int( u_char *data,
   return data;
 }
 
-
 /*
  * parse_string - pulls an octet string out of an ASN octet string type.
  *  On entry, datalength is input as the number of valid bytes following
@@ -322,7 +318,6 @@ u_char * asn1::parse_string( u_char     *data,
   return bufp + asn_length;
 }
 
-
 /*
  * build_string - Builds an ASN octet string object containing the input string.
  *  On entry, datalength is input as the number of valid bytes following
@@ -356,7 +351,6 @@ u_char * asn1::build_string( u_char *data,
   *datalength -= strlength;
   return data + strlength;
 }
-
 
 /*
  * parse_header - interprets the ID and length of the current object.
@@ -709,7 +703,6 @@ u_char *asn1::parse_null(u_char *data,
   return bufp + asn_length;
 }
 
-
 /*
  * build_null - Builds an ASN null object.
  *  On entry, datalength is input as the number of valid bytes following
@@ -783,7 +776,6 @@ u_char *asn1::parse_bitstring( u_char *data,
   return bufp + asn_length;
 }
 
-
 /*
  * build_bitstring - Builds an ASN bit string object containing the
  * input string.
@@ -819,7 +811,6 @@ u_char *asn1::build_bitstring( u_char *data,
   *datalength -= strlength;
   return data + strlength;
 }
-
 
 /*
  * parse_unsigned_int64 - pulls a 64 bit u_long out of an ASN int
@@ -879,7 +870,6 @@ u_char * asn1::parse_unsigned_int64(u_char *data,
   cp->high = high;
   return bufp;
 }
-
 
 /*
  * build_unsigned_int64 - builds an ASN object containing a 64 bit integer.
@@ -953,7 +943,6 @@ u_char * asn1::build_unsigned_int64( u_char *data,
   return data;
 }
 
-
 // create a pdu
 struct snmp_pdu * cmu_snmp::pdu_create( int command)
 {
@@ -997,7 +986,6 @@ void cmu_snmp::free_pdu( struct snmp_pdu *pdu)
   // release up pdu itself
   delete pdu;
 }
-
 
 // add a null var to a pdu
 void cmu_snmp::add_var(struct snmp_pdu *pdu,
@@ -1079,7 +1067,6 @@ void cmu_snmp::add_var(struct snmp_pdu *pdu,
                        (unsigned) vars->val_len);
       }
       break;
-
 
     case sNMP_SYNTAX_TIMETICKS:
     case sNMP_SYNTAX_CNTR32:
@@ -1171,7 +1158,6 @@ u_char *cmu_snmp::auth_build( u_char *data,
 
   return (u_char *)data;
 }
-
 
 // build a variable binding
 u_char * cmu_snmp::build_var_op(u_char *data, oid * var_name,
@@ -1272,7 +1258,6 @@ u_char * cmu_snmp::build_var_op(u_char *data, oid * var_name,
                      dummyLen);
   return data;
 }
-
 
 // serialize the pdu
 int cmu_snmp::build( struct snmp_pdu *pdu, u_char *packet,
@@ -1513,7 +1498,6 @@ cmu_snmp::parse_var_op( u_char *data, oid *var_name,
   *listlength -= (int)(data - var_op_start);
   return data;
 }
-
 
 // build a pdu from a data and length
 int cmu_snmp::parse( struct snmp_pdu *pdu,

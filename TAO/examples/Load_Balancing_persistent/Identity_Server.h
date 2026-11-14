@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef IDENTITY_SERVER_H_
 #define IDENTITY_SERVER_H_
 
@@ -37,7 +36,6 @@ public:
   /// Default constructor.
   Identity_Server () = default;
 
-  /// Destructor.
   ~Identity_Server () = default;
 
   Identity_Server (Identity_Server const &) = delete;
@@ -54,7 +52,6 @@ public:
 
   int register_groups ();
 
-
   /// Run the server.
   int run ();
 
@@ -67,7 +64,6 @@ private:
    */
   void create_objects (size_t number_of_objects,
                        Load_Balancer::Object_Group_ptr group);
-
 
   /// The ORB manager.
   TAO_ORB_Manager orb_manager_;

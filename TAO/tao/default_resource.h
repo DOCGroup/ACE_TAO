@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_DEFAULT_RESOURCE_H
 #define TAO_DEFAULT_RESOURCE_H
 

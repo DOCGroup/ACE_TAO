@@ -206,7 +206,6 @@ namespace TAO
     return;
   }
 
-
   void
     FT_ClientRequest_Interceptor::group_version_context (
     PortableInterceptor::ClientRequestInfo_ptr ri,

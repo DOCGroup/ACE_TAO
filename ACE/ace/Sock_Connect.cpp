@@ -641,7 +641,6 @@ get_ip_interfaces_getifaddrs (size_t &count,
 }
 #endif // ACE_WIN32 || ACE_HAS_GETIFADDRS
 
-
 // return an array of all configured IP interfaces on this host, count
 // rc = 0 on success (count == number of interfaces else -1 caller is
 // responsible for calling delete [] on parray

@@ -7,7 +7,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 class Top_i : public POA_Diamond::Top
 {
 public:

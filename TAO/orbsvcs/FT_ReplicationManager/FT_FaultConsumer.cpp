@@ -185,7 +185,6 @@ size_t TAO::FT_FaultConsumer::notifications () const
   return this->notifications_;
 }
 
-
 ///////////////////
 // CORBA operations
 

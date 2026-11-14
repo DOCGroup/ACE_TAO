@@ -33,7 +33,6 @@
 class Supplier : public POA_RtecEventComm::PushSupplier
 {
 public:
-  /// Constructor
   Supplier (RtecEventComm::EventSourceID id,
             RtecEventChannelAdmin::ProxyPushConsumer_ptr const consumer_proxy);
   Supplier (Supplier const &) = delete;
@@ -66,7 +65,6 @@ private:
 class Timeout_Consumer : public POA_RtecEventComm::PushConsumer
 {
 public:
-  /// Constructor
   explicit Timeout_Consumer (Supplier *supplier_impl);
   Timeout_Consumer (Timeout_Consumer const &) = delete;
   Timeout_Consumer (Timeout_Consumer &&) = delete;

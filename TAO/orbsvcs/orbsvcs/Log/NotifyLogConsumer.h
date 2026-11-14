@@ -51,7 +51,6 @@ class TAO_Notify_LogConsumer :
   public virtual POA_CosNotifyComm::PushConsumer
 {
 public:
-  /// Constructor.
   explicit TAO_Notify_LogConsumer (TAO_NotifyLog_i * log);
 
   /// Connect to NotifyLog.
@@ -61,7 +60,6 @@ public:
   virtual void disconnect ();
 
 protected:
-  /// Destructor.
   ~TAO_Notify_LogConsumer () override;
 
   // = NotifyPublish method

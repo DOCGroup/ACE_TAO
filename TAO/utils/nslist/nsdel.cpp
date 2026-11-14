@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "tao/AnyTypeCode/Any.h"

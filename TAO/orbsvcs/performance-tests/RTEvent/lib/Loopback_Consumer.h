@@ -23,7 +23,6 @@ class TAO_RTEC_Perf_Export Loopback_Consumer
 
 {
 public:
-  /// Constructor
   Loopback_Consumer (CORBA::Long experiment_id,
                      CORBA::Long event_type,
                      Loopback_Supplier *supplier,

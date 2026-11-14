@@ -25,7 +25,6 @@ int TP_Logging_Handler::handle_input (ACE_HANDLE) {
   } else return -1;
 }
 
-
 int
 TP_Logging_Handler::handle_close (ACE_HANDLE handle,
                                   ACE_Reactor_Mask) {
@@ -46,7 +45,6 @@ TP_Logging_Handler::handle_close (ACE_HANDLE handle,
     return Logging_Event_Handler::handle_close ();
   return 0;
 }
-
 
 int TP_Logging_Task::svc () {
   for (ACE_Message_Block *log_blk; getq (log_blk) != -1; ) {

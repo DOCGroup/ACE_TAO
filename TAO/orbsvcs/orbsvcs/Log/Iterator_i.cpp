@@ -18,7 +18,6 @@ TAO_Iterator_i::TAO_Iterator_i (PortableServer::POA_ptr poa,
      }
 }
 
-
 TAO_Iterator_i::~TAO_Iterator_i ()
 {
   // cancel timer
@@ -27,7 +26,6 @@ TAO_Iterator_i::~TAO_Iterator_i ()
       this->reactor_->cancel_timer (this->timer_id_);
     }
 }
-
 
 void
 TAO_Iterator_i::destroy ()
@@ -40,7 +38,6 @@ TAO_Iterator_i::destroy ()
   this->poa_->deactivate_object (oid.in ());
   return;
 }
-
 
 int
 TAO_Iterator_i::handle_timeout (ACE_Time_Value const &, void const *)

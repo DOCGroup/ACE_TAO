@@ -11,7 +11,6 @@
 class Client_Task : public ACE_Task_Base
 {
 public:
-  /// Constructor
   Client_Task (ACE_TCHAR const *data_type,
                int size,
                Test::Roundtrip_ptr roundtrip,

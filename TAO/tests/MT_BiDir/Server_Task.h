@@ -22,7 +22,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 class Server_Task : public ACE_Task_Base
 {
 public:
-  /// Constructor
   Server_Task (Sender_i *s,
                ACE_Manual_Event &event,
                int no_iterations,

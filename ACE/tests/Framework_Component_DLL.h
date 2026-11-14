@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_TESTS_FRAMEWORK_COMPONENT_DLL_H
 #define ACE_TESTS_FRAMEWORK_COMPONENT_DLL_H
 

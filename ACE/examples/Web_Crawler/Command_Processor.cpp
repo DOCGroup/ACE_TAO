@@ -5,7 +5,6 @@
 #include "Command_Processor.h"
 #include "URL_Visitor.h"
 
-
 Command::~Command () = default;
 
 URL_Command::URL_Command (std::unique_ptr<URL> url)

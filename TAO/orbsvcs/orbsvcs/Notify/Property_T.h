@@ -77,7 +77,6 @@ protected:
   CORBA::Boolean valid_ {};
 };
 
-
 /*******************************************************************************/
 /**
  * @class TAO_Notify_Property_T

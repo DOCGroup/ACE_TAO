@@ -31,7 +31,6 @@ TAO_EventLog_i::~TAO_EventLog_i ()
   this->event_channel_->destroy ();
 }
 
-
 DsLogAdmin::Log_ptr
 TAO_EventLog_i::copy (DsLogAdmin::LogId &id)
 {
@@ -62,7 +61,6 @@ TAO_EventLog_i::copy_with_id (DsLogAdmin::LogId id)
   return log._retn ();
 }
 
-
 void
 TAO_EventLog_i::destroy ()
 {
@@ -89,7 +87,6 @@ TAO_EventLog_i::activate ()
   this->my_log_consumer_ = new TAO_Event_LogConsumer (this);
   this->my_log_consumer_->connect (consumer_admin.in ());
 }
-
 
 CosEventChannelAdmin::ConsumerAdmin_ptr
 TAO_EventLog_i::for_consumers ()

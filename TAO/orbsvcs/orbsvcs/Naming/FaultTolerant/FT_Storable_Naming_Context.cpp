@@ -113,7 +113,6 @@ TAO_FT_Storable_Naming_Context::stale (bool is_stale)
   this->stale_ = is_stale;
 }
 
-
 bool
 TAO_FT_Storable_Naming_Context::stale ()
 {

@@ -3,16 +3,13 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_unistd.h"
 
-
 AppShutdown::AppShutdown()
   : num_clients_(0),
     num_clients_shutdown_(0)
 {
 }
 
-
 AppShutdown::~AppShutdown() = default;
-
 
 void
 AppShutdown::init(CORBA::ORB_ptr orb,
@@ -33,13 +30,11 @@ AppShutdown::init(CORBA::ORB_ptr orb,
     }
 }
 
-
 void
 AppShutdown::wait ()
 {
   this->orb_shutdown_task_.wait();
 }
-
 
 void
 AppShutdown::client_done()
@@ -66,7 +61,6 @@ AppShutdown::client_done()
         }
     }
 }
-
 
 AppShutdown*
 AppShutdown::instance ()

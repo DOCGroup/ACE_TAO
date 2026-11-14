@@ -24,6 +24,5 @@ private:
   CORBA::ORB_var const orb_;
 };
 
-
 #include /**/ "ace/post.h"
 #endif /*REPLY_HANDLER_H*/

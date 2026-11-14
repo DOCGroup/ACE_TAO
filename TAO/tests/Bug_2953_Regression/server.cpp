@@ -230,7 +230,6 @@ write_iorfile (ACE_TCHAR const *ior_output_file, char const *ior)
   return 0;
 }
 
-
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {

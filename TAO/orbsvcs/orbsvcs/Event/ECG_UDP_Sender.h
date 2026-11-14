@@ -86,7 +86,6 @@ private:
   RtecEventChannelAdmin::ProxyPushSupplier_var proxy_;
 };
 
-
 /**
  * @class TAO_ECG_UDP_Sender
  *

@@ -17,7 +17,6 @@ class Sender_i
   : public virtual POA_Sender
 {
 public:
-  /// Constructor
   Sender_i (CORBA::ULong no_clients,
             ACE_Manual_Event &event);
 

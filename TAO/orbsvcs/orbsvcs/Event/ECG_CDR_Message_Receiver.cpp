@@ -202,7 +202,6 @@ TAO_ECG_CDR_Message_Receiver::Requests::get_request (CORBA::ULong request_id)
   return this->fragmented_requests_.get () + index;
 }
 
-
 void
 TAO_ECG_CDR_Message_Receiver::Requests::purge_requests (
                                             CORBA::ULong purge_first,

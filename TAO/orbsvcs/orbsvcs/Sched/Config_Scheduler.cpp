@@ -420,7 +420,6 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
   ORBSVCS_DEBUG ((LM_DEBUG, "Dump done.\n"));
 }
 
-
 /// Provides the thread priority and queue type for the given priority level.
 void ACE_Config_Scheduler::dispatch_configuration (RtecScheduler::Preemption_Priority_t p_priority,
                                                    RtecScheduler::OS_Priority& priority,
@@ -434,7 +433,6 @@ void ACE_Config_Scheduler::dispatch_configuration (RtecScheduler::Preemption_Pri
       // TODO: throw something.
     }
 }
-
 
 /// Returns the last priority number assigned to an operation in the schedule.
 /// The number returned is one less than the total number of scheduled

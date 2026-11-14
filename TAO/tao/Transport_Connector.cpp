@@ -273,7 +273,6 @@ TAO_Connector::make_parallel_connection (TAO::Profile_Transport_Resolver *,
   return nullptr;
 }
 
-
 TAO_Transport*
 TAO_Connector::parallel_connect (TAO::Profile_Transport_Resolver *r,
                                  TAO_Transport_Descriptor_Interface *desc,
@@ -796,7 +795,6 @@ TAO_Connector::wait_for_connection_completion (
                               ACE_TEXT("transport [%B], wait done result = %d\n"),
                               transport->id (), result));
                 }
-
 
               // There are three possibilities when wait() returns: (a)
               // connection succeeded; (b) connection failed; (c) wait()

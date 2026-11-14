@@ -18,7 +18,6 @@ class Receiver
   : public POA_Test::Receiver
 {
 public:
-  /// Constructor
   explicit Receiver (CORBA::ORB_ptr orb);
   Receiver (Receiver const &) = delete;
   Receiver (Receiver &&) = delete;

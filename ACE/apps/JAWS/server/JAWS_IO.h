@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef JAWS_IO_H
 #define JAWS_IO_H
 
@@ -25,7 +24,6 @@ class ACE_Message_Block;
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 class JAWS_IO_Handler;
-
 
 /**
  * @class JAWS_IO
@@ -88,7 +86,6 @@ protected:
 class JAWS_IO_Handler
 {
 public:
-  /// Destructor.
   virtual ~JAWS_IO_Handler () = default;
 
   /// This method is called by the IO class when new client data shows
@@ -239,7 +236,6 @@ protected:
 };
 
 #endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
-
 
 //-------------------Adding SYNCH IO no Caching
 

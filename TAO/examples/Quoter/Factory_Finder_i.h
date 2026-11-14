@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "QuoterS.h"
 
 #ifndef QUOTER_FACTORY_FINDER_IMPL_H

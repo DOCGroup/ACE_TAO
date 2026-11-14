@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef DOORS_DEMUX_TEST_SERVER_H
 #define DOORS_DEMUX_TEST_SERVER_H
 
@@ -103,6 +102,5 @@ private:
   /// to persistent POAs.
   bool use_transient_poas_;
 };
-
 
 #endif /* DOORS_DEMUX_TEST_SERVER_H */

@@ -494,7 +494,6 @@ MCT_Event_Handler::~MCT_Event_Handler ()
   mcast_.close ();
 }
 
-
 ACE_SOCK_Dgram_Mcast *
 MCT_Event_Handler::mcast ()
 {
@@ -526,7 +525,6 @@ MCT_Event_Handler::find (const char *buf)
 
   return -1;
 }
-
 
 int
 MCT_Event_Handler::join (const ACE_INET_Addr &mcast_addr,

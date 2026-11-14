@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_BIDIRECTIONAL_TEST_I_H
 #define TAO_BIDIRECTIONAL_TEST_I_H
 
@@ -40,7 +39,6 @@ private:
   bool going_ {};
   CORBA::OctetSeq payload_;
 };
-
 
 /**
  * @class Callback_i

@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VISITOR_TYPEDEF_TYPEDEF_H_
 #define _BE_VISITOR_TYPEDEF_TYPEDEF_H_
 

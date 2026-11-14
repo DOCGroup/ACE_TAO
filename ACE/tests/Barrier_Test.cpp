@@ -10,11 +10,9 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Barrier.h"
 #include "ace/Thread_Manager.h"
-
 
 #if defined (ACE_HAS_THREADS)
 

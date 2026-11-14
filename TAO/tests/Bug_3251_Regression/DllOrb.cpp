@@ -74,7 +74,6 @@ DllOrb::init (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-
 int
 DllOrb::fini ()
 {
@@ -115,7 +114,6 @@ DllOrb::fini ()
   return 0;
 }
 
-
 int
 DllOrb::svc ()
 {
@@ -154,6 +152,5 @@ DllOrb::svc ()
 
   return 0;
 } /* end of DllOrb::svc () */
-
 
 ACE_FACTORY_DEFINE (bug_3251, DllOrb)

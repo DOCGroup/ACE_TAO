@@ -9,7 +9,6 @@ public:
   client_i (client_i &&) = delete;
   client_i &operator= (client_i const &) = delete;
   client_i &operator= (client_i &&) = delete;
-  // Constructor.
 
   void ping (CORBA::UShort time_to_live) override;
 

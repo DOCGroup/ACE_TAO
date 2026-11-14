@@ -58,4 +58,3 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include /**/ "ace/post.h"
 #endif /* TAO_ZIOP_POLICY_VALIDATOR_H_ */
 
-

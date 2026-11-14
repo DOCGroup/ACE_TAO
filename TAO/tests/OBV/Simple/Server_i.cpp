@@ -37,7 +37,6 @@ Checkpoint_i::orb (CORBA::ORB_ptr o)
 //
 // Is there any general solution with faulty reference counting ?
 
-
 void
 Checkpoint_i::put_event (Event *event)
 {

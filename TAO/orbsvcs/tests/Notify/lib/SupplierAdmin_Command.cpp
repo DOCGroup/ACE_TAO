@@ -1,6 +1,5 @@
 #include "SupplierAdmin_Command.h"
 
-
 #include "LookupManager.h"
 #include "Name.h"
 #include "Options_Parser.h"

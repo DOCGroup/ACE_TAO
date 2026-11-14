@@ -65,7 +65,6 @@ ACEXML_Svcconf_Parser::parse_file (ACE_TCHAR const file[])
   return 0;
 }
 
-
 int
 ACEXML_Svcconf_Parser::parse_string (ACE_TCHAR const str[])
 {

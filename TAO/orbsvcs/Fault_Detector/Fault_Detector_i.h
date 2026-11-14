@@ -15,7 +15,6 @@
  */
 //=============================================================================
 
-
 #ifndef FAULT_DETECTOR_I_H_
 #define FAULT_DETECTOR_I_H_
 #include /**/ <ace/pre.h>
@@ -26,7 +25,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include <ace/Manual_Event.h>
-
 
 #include "orbsvcs/FT_NotifierC.h"
 #include "orbsvcs/FT_ReplicaC.h"

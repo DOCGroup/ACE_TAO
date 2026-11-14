@@ -457,7 +457,6 @@ protected:
   static void intrusive_remove_ref (ACE_Service_Gestalt*);
 }; /* class ACE_Service_Gestalt */
 
-
 /**
  * @class ACE_Service_Type_Dynamic_Guard
  *
@@ -504,7 +503,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #if defined (__ACE_INLINE__)
 #include "ace/Service_Gestalt.inl"
 #endif /* __ACE_INLINE__ */
-
 
 #include /**/ "ace/post.h"
 

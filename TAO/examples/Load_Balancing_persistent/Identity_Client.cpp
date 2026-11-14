@@ -6,7 +6,6 @@
  */
 //=============================================================================
 
-
 #include "Identity_Client.h"
 #include "IdentityC.h"
 #include "Load_BalancerC.h"

@@ -49,7 +49,6 @@ main_orb (void *arg)
   return ACE_THR_FUNC_RETURN_NULL;
 }
 
-
 int
 ACE_TMAIN (int, ACE_TCHAR * [])
 {

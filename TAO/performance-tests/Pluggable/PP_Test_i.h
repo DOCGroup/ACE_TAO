@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef _PP_TEST_I_H
 #define _PP_TEST_I_H
 
@@ -25,14 +24,12 @@
 class PP_Test_i : public POA_Pluggable_Test
 {
 public:
-  /// Constructor
   explicit PP_Test_i (CORBA::ORB_ptr orb);
   PP_Test_i (PP_Test_i const &) = delete;
   PP_Test_i (PP_Test_i &&) = delete;
   PP_Test_i &operator= (PP_Test_i const &) = delete;
   PP_Test_i &operator= (PP_Test_i &&) = delete;
 
-  /// Destructor
   ~PP_Test_i () = default;
 
   /// Test a oneway call.
@@ -59,14 +56,12 @@ protected:
 class Pluggable_Test_Factory_i: public POA_Pluggable_Test_Factory
 {
 public:
-  /// Constructor.
   explicit Pluggable_Test_Factory_i (CORBA::ORB_ptr orb);
   Pluggable_Test_Factory_i (Pluggable_Test_Factory_i const &) = delete;
   Pluggable_Test_Factory_i (Pluggable_Test_Factory_i &&) = delete;
   Pluggable_Test_Factory_i &operator= (Pluggable_Test_Factory_i const &) = delete;
   Pluggable_Test_Factory_i &operator= (Pluggable_Test_Factory_i &&) = delete;
 
-  /// Destructor.
   ~Pluggable_Test_Factory_i () = default;
 
   /// Make a Pluggable Test object.

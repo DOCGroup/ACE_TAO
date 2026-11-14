@@ -5,7 +5,6 @@
 
 #include "ace/Time_Value.h"
 
-
 namespace ACE_RMCast
 {
   class Parameters
@@ -102,6 +101,5 @@ namespace ACE_RMCast
     size_t addr_map_size_;
   };
 }
-
 
 #endif  // ACE_RMCAST_PARAMETERS_H

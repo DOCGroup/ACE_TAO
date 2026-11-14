@@ -74,7 +74,6 @@ public:
   }
   //FUZZ: enable check_for_lack_ACE_OS
 
-
   CORBA::Object_ptr resolve () override
   {
     return CORBA::Object::_duplicate (obj_.in ());
@@ -108,7 +107,6 @@ parse_args (int argc,
       }
   return 0;
 }
-
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])

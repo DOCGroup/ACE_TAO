@@ -90,7 +90,6 @@ namespace TAO
     ::PortableGroup::FactoryInfos_var detector_infos_;
     CORBA::String_var detector_type_id_;
 
-
     /**
      * bool: true if we have a real replication manager
      */

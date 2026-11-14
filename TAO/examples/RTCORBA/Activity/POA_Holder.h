@@ -24,7 +24,6 @@
 class POA_Holder
 {
  public:
-  /// Constructor
   POA_Holder () = default;
 
   POA_Holder (POA_Holder const &) = delete;

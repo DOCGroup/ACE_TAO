@@ -246,7 +246,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-
       CORBA::Object_var poa_object =
         orb->resolve_initial_references ("RootPOA");
 
@@ -294,7 +293,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       CosLoadBalancing::LoadAlert_var load_alert =
         alert_servant._this ();
-
 
       CORBA::String_var ior =
         orb->object_to_string (roundtrip.in ());

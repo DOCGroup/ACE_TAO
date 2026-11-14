@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Get_Opt.h"
 #include "ace/Timer_Queue.h"
@@ -22,7 +21,6 @@
 #include "ace/Recursive_Thread_Mutex.h"
 #include "ace/Null_Mutex.h"
 #include "ace/OS_NS_unistd.h"
-
 
 static int debug = 0;
 static const char *one_second_timeout = "one second timeout";

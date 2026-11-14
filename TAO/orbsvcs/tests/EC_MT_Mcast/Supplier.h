@@ -26,7 +26,6 @@ public:
   Supplier (Supplier&&) = delete;
   Supplier& operator= (Supplier const&) = delete;
   Supplier& operator= (Supplier&&) = delete;
-  // Constructor
 
   void connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin);
   // Connect to the event channel

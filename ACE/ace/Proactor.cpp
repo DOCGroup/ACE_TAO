@@ -806,7 +806,6 @@ ACE_Proactor::implementation () const
   return this->implementation_;
 }
 
-
 ACE_Asynch_Read_Stream_Impl *
 ACE_Proactor::create_asynch_read_stream ()
 {
@@ -882,7 +881,6 @@ ACE_Proactor::create_asynch_read_stream_result
      priority,
      signal_number);
 }
-
 
 ACE_Asynch_Write_Stream_Result_Impl *
 ACE_Proactor::create_asynch_write_stream_result

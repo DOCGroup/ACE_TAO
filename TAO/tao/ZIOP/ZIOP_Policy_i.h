@@ -191,4 +191,3 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include /**/ "ace/post.h"
 #endif /* TAO_BIDIR_POLICY_I_H */
 
-

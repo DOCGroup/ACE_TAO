@@ -20,7 +20,6 @@ be_scope::be_scope ()
 {
 }
 
-// Constructor.
 be_scope::be_scope (AST_Decl::NodeType type)
   : UTL_Scope (type)
 {

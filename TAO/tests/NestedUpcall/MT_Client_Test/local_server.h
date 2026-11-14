@@ -43,7 +43,6 @@ public:
   /// Default constructor
   MT_Server () = default;
 
-  /// Destructor
   ~MT_Server ();
 
   MT_Server (MT_Server const &) = delete;

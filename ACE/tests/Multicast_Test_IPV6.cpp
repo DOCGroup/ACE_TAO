@@ -506,7 +506,6 @@ MCT_Event_Handler::~MCT_Event_Handler ()
     }
 }
 
-
 ACE_SOCK_Dgram_Mcast *
 MCT_Event_Handler::mcast ()
 {
@@ -538,7 +537,6 @@ MCT_Event_Handler::find (const char *buf)
 
   return -1;
 }
-
 
 int
 MCT_Event_Handler::join (const ACE_INET_Addr &mcast_addr,
@@ -835,7 +833,6 @@ int producer (MCT_Config &config)
                     ACE_TEXT ("Can't set IPV6_MULTICAST_LOOP")));
     }
 #endif /* ACE_HAS_IPV6 */
-
 
   int iterations = config.iterations ();
   // we add an extra 5 groups for noise.

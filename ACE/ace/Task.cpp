@@ -227,7 +227,6 @@ ACE_Task_Base::cleanup (void *object, void *)
   // t is undefined here. close() could have deleted it.
 }
 
-
 #if defined (ACE_HAS_SIG_C_FUNC)
 extern "C" void
 ACE_Task_Base_cleanup (void *object, void *)

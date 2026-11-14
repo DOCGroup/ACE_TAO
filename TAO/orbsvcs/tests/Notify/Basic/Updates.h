@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef NOTIFY_TESTS_UPDATES_H
 #define NOTIFY_TESTS_UPDATES_H
 
@@ -28,7 +27,6 @@ class Updates;
 class Updates_StructuredPushConsumer : public TAO_Notify_Tests_StructuredPushConsumer
 {
 public:
-  /// Constructor.
   explicit Updates_StructuredPushConsumer (Updates *test_client);
 
   /// Offer change is conveyed here.
@@ -44,10 +42,8 @@ protected:
 class Updates_StructuredPushSupplier : public TAO_Notify_Tests_StructuredPushSupplier
 {
 public:
-  /// Constructor.
   explicit Updates_StructuredPushSupplier (Updates *test_client);
 
-  /// Destructor.
   ~Updates_StructuredPushSupplier () override;
 
   /// Subscription change is conveyed here.

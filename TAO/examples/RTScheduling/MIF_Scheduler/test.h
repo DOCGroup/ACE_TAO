@@ -26,11 +26,9 @@ class DT_Test //:public ACE_Task <ACE_SYNCH>
 
   int activate_task ();
 
-
 /*   protected: */
 /*   /// task svc */
 /*   virtual int svc (); */
-
 
  private:
   /// = Policies

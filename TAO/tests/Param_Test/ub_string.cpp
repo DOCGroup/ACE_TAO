@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "helper.h"
 
 #include <cstring>
@@ -81,7 +80,6 @@ int
 Test_Unbounded_String::init_parameters (Param_Test_ptr)
 {
   Generator *gen = GENERATOR::instance (); // value generator
-
 
   // release any previously occupied values
   CORBA::string_free (this->in_);

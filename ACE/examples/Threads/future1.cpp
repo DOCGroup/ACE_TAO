@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_main.h"
@@ -124,7 +123,6 @@ Method_Request_work::~Method_Request_work ()
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) Method_Request_work will be deleted.\n"));
 }
-
 
 int
 Method_Request_work::call ()
@@ -254,7 +252,6 @@ Scheduler::end ()
   if (this->enqueue (std::make_unique<Method_Request_end> ()) == -1)
     ACE_ERROR ((LM_ERROR, "(%t) failed to enqueue end request\n"));
 }
-
 
 // Here's where the Work takes place.
 u_long

@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef _NOTIFIER_HANDLER_H
 #define _NOTIFIER_HANDLER_H
 
@@ -34,7 +33,6 @@ public:
   /// Service.
   Notifier_Handler () = default;
 
-  /// Destructor.
   ~Notifier_Handler () = default;
 
   Notifier_Handler (Notifier_Handler const &) = delete;

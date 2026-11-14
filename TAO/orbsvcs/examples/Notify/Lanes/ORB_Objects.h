@@ -23,7 +23,6 @@
 class TAO_Notify_ORB_Objects
 {
 public:
-  /// Constructor
   TAO_Notify_ORB_Objects () = default;
   ~TAO_Notify_ORB_Objects () = default;
   TAO_Notify_ORB_Objects (TAO_Notify_ORB_Objects const&) = delete;

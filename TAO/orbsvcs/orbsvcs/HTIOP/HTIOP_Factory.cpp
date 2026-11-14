@@ -137,7 +137,6 @@ TAO::HTIOP::Protocol_Factory::requires_explicit_endpoint () const
   return 0;
 }
 
-
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DEFINE (TAO_HTIOP_Protocol_Factory,
@@ -147,7 +146,6 @@ ACE_STATIC_SVC_DEFINE (TAO_HTIOP_Protocol_Factory,
                        ACE_Service_Type::DELETE_THIS |
                        ACE_Service_Type::DELETE_OBJ,
                        0)
-
 
 // Since the actual class instantiated by the factory is scoped inside a
 // namespace, this macro is used in place of ACE_FACTORY_DEFINE, athough

@@ -78,12 +78,10 @@ public:
   // Default Constructor.
 
   explicit Identifier (std::string const& s);
-  // Constructor.
 
   Identifier (Identifier const &other);
 
   virtual ~Identifier ();
-  // Destructor.
 
   // Operations
 

@@ -40,7 +40,6 @@ client_thread (void *data)
     }
   // Send the request now.
 
-
   ACE_Profile_Timer throughput_timer, latency_timer;
   throughput_timer.start();
   latency_timer.start();
@@ -150,7 +149,6 @@ driver (char const *id, int total_num, float requests_sec,
   Client_Parameters::stats.reset ();
   return 0;
 }
-
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {

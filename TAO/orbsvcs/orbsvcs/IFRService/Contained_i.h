@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-
 //=============================================================================
 /**
  *  @file    Contained_i.h
@@ -10,7 +9,6 @@
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef TAO_CONTAINED_I_H
 #define TAO_CONTAINED_I_H
@@ -142,7 +140,6 @@ private:
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

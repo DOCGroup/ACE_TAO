@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef HTIOP_FACTORY_H
 #define HTIOP_FACTORY_H
 #include /**/ "ace/pre.h"

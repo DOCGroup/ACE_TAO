@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "NonBlocking_Conn_Test.h"
 #include "ace/Connector.h"

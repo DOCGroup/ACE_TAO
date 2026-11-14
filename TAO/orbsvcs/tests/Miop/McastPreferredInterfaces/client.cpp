@@ -2,7 +2,6 @@
 #include "ace/Get_Opt.h"
 #include "TestC.h"
 
-
 const ACE_TCHAR *ior_server = 0;
 
 int

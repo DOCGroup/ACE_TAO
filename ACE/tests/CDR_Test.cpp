@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Get_Opt.h"
 #include <memory>
@@ -20,7 +19,6 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_wchar.h"
-
 
 static int n = 4096;
 static int nloops = 100;
@@ -782,7 +780,6 @@ CDR_Test_Types::test_get_placeholder (ACE_InputCDR &cdr) const
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("test_get (char) failed\n")),
                       1);
-
 
   if (cdr.read_longlong (xll) == 0)
     ACE_ERROR_RETURN ((LM_ERROR,

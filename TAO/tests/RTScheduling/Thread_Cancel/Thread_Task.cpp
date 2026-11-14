@@ -66,7 +66,6 @@ Thread_Task::svc ()
                    id->get_buffer (),
                    id->length ());
 
-
       this->current_->begin_scheduling_segment ("Potter",
                                                 sched_param,
                                                 implicit_sched_param);
@@ -77,7 +76,6 @@ Thread_Task::svc ()
       this->current_->begin_scheduling_segment ("Harry",
                                                 sched_param,
                                                 implicit_sched_param);
-
 
       {
         ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
@@ -99,7 +97,6 @@ Thread_Task::svc ()
 
       this->current_->end_scheduling_segment (name);
       //  End - Nested Scheduling Segment
-
 
       this->current_->end_scheduling_segment (name);
       //  End - Nested Scheduling Segment

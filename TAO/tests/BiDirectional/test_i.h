@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_BIDIRECTIONAL_TEST_I_H
 #define TAO_BIDIRECTIONAL_TEST_I_H
 

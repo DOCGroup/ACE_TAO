@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef OPTIONS_H
 #define OPTIONS_H
 
@@ -73,10 +72,8 @@ public:
     DII
   };
 
-  /// constructor
   Options ();
 
-  /// destructor
   ~Options ();
 
   /// Parses the arguments passed on the command line.

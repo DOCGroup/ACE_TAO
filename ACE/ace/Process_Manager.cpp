@@ -50,7 +50,6 @@ sigchld_nop (int, siginfo_t *, ucontext_t *)
 }
 #endif /* ACE_WIN32 */
 
-
 ACE_ALLOC_HOOK_DEFINE(ACE_Process_Manager)
 
 // Singleton instance.

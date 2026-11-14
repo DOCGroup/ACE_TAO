@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef HTIOP_PROFILE_H
 #define HTIOP_PROFILE_H
 #include /**/ "ace/pre.h"

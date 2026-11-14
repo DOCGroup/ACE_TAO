@@ -214,7 +214,6 @@ be_visitor_field_ch::visit_valuetype_fwd (be_valuetype_fwd *node)
   return this->emit_common (node);
 }
 
-
 int
 be_visitor_field_ch::emit_common (be_type *node)
 {

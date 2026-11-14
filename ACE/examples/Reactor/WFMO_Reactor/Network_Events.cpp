@@ -22,7 +22,6 @@
  */
 //=============================================================================
 
-
 #include "ace/Reactor.h"
 #include "ace/WFMO_Reactor.h"
 #include "ace/INET_Addr.h"
@@ -30,7 +29,6 @@
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_main.h"
-
 
 class Network_Handler : public ACE_Event_Handler
 {

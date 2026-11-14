@@ -45,10 +45,8 @@ class TAO_EventLog_Serv_Export TAO_EventLogNotification :
   public POA_CosEventComm::PushSupplier
 {
 public:
-  /// Constructor.
   explicit TAO_EventLogNotification (CosEventChannelAdmin::EventChannel_ptr event_channel);
 
-  /// Destructor.
   ~TAO_EventLogNotification () override;
 
   /// The skeleton methods.
@@ -61,7 +59,6 @@ protected:
 
   /// Send the event on the event channel.
   void send_notification (CORBA::Any const & any) override;
-
 
 private:
   TAO_EventLogNotification (TAO_EventLogNotification const &) = delete;
