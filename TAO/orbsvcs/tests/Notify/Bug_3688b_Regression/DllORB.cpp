@@ -110,7 +110,7 @@ DllORB::fini ()
 {
   try
     {
-      this->poa_manager_->deactivate (1, 1);
+      this->poa_manager_->deactivate (true, true);
       this->poa_manager_ = PortableServer::POAManager::_nil ();
       ACE_OS::sleep (ACE_Time_Value (0, 500));
       this->orb_->shutdown (true);

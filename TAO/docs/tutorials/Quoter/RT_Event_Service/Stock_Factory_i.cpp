@@ -30,7 +30,7 @@ Quoter_Stock_Factory_i::destroy_stock_objects ()
   if (CORBA::is_nil (poa))
     return;
 
-  poa->destroy (1, 1);
+  poa->destroy (true, true);
   this->stock_factory_poa_ = PortableServer::POA::_nil ();
 }
 

@@ -157,7 +157,7 @@ ServerApp::run (int argc, ACE_TCHAR *argv[])
   ACE_OS::sleep (2);
 
   // Tear-down the root poa and orb.
-  root_poa->destroy (1, 1);
+  root_poa->destroy (true, true);
   orb->destroy ();
 
   return 0;

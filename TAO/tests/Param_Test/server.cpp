@@ -147,7 +147,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       good_poa->destroy (true, true);
 
-      oa_ptr->destroy (1, 1);
+      oa_ptr->destroy (true, true);
     }
   catch (const CORBA::SystemException& sysex)
     {

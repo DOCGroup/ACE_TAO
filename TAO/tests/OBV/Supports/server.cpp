@@ -117,7 +117,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->run ();
 
-      root_poa->destroy (0, 0);
+      root_poa->destroy (false, false);
 
       orb->destroy ();
 

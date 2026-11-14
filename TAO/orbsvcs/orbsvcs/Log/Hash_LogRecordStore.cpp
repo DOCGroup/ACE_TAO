@@ -78,7 +78,7 @@ TAO_Hash_LogRecordStore::TAO_Hash_LogRecordStore (
 
 TAO_Hash_LogRecordStore::~TAO_Hash_LogRecordStore ()
 {
-  this->iterator_poa_->destroy (1, 0);
+  this->iterator_poa_->destroy (true, false);
 }
 
 int

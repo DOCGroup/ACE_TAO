@@ -96,7 +96,7 @@ int DllOrb::fini ()
   try
     {
 #if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) && !defined (TAO_HAS_MINIMUM_POA)
-      this->mv_poa_manager_->deactivate (1, 1);
+      this->mv_poa_manager_->deactivate (true, true);
 #endif
       this->mv_poa_manager_ = PortableServer::POAManager::_nil ();
 

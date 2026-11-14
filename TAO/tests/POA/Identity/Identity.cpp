@@ -513,17 +513,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                  forth_poa.in (),
                  perform_deactivation_test);
 
-      first_poa->destroy (1,
-                          1);
+      first_poa->destroy (true,
+                          true);
 
-      second_poa->destroy (1,
-                           1);
+      second_poa->destroy (true,
+                           true);
 
-      third_poa->destroy (1,
-                          1);
+      third_poa->destroy (true,
+                          true);
 
-      forth_poa->destroy (1,
-                          1);
+      forth_poa->destroy (true,
+                          true);
 
       create_poas (root_poa.in (),
                    PortableServer::PERSISTENT,

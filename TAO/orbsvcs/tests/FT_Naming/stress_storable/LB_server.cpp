@@ -16,7 +16,7 @@ LB_server::destroy ()
 {
   try
     {
-      this->root_poa_->destroy (1, 1);
+      this->root_poa_->destroy (true, true);
 
       this->orb_->destroy ();
     }

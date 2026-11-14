@@ -53,7 +53,7 @@ Ping_Death_Request_Interceptor::receive_request_service_contexts (
     }
   try
     {
-      this->poa_->destroy (1,1);
+      this->poa_->destroy (true,true);
     }
   catch (const CORBA::Exception &ex)
     {

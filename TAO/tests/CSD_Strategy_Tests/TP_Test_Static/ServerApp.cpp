@@ -93,7 +93,7 @@ ServerApp::run_i(int argc, ACE_TCHAR *argv[])
   ACE_DEBUG((LM_DEBUG,
              "(%P|%t) ServerApp is destroying the Root POA.\n"));
 
-  root_poa->destroy(1, 1);
+  root_poa->destroy(true, true);
 
   ACE_DEBUG((LM_DEBUG,
              "(%P|%t) ServerApp is destroying the ORB.\n"));

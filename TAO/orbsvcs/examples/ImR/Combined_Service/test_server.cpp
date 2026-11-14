@@ -92,7 +92,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("test_server: Shutting down...\n")));
 
-    root_poa->destroy (1, 1);
+    root_poa->destroy (true, true);
     orb->destroy ();
   } catch (CORBA::Exception const &e) {
     e._tao_print_exception ("TestServer::init()");

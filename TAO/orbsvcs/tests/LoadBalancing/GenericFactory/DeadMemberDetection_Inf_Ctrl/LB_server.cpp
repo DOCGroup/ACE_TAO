@@ -41,7 +41,7 @@ LB_server::destroy ()
     {
       this->lm_->delete_object (this->fcid_.in ());
 
-      this->root_poa_->destroy (1, 1);
+      this->root_poa_->destroy (true, true);
 
       this->orb_->destroy ();
     }

@@ -63,10 +63,10 @@ int PersistentPoa::fini ()
 {
   try
   {
-    mv_poaManager->deactivate (1, 1);
+    mv_poaManager->deactivate (true, true);
     mv_poaManager = PortableServer::POAManager::_nil ();
 
-    mv_thisPOA->destroy (1, 1);
+    mv_thisPOA->destroy (true, true);
     mv_thisPOA = PortableServer::POA::_nil ();
   }
   catch (...)

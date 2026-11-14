@@ -178,7 +178,7 @@ Airplane_Server_i::run ()
 
       ACE_Time_Value const tv_end = ACE_OS::gettimeofday ();
 
-      this->root_poa_->destroy (1, 1);
+      this->root_poa_->destroy (true, true);
       this->orb_->destroy ();
 
       if (tv_end - tv_start > tv - ACE_Time_Value (5))

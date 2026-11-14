@@ -122,8 +122,8 @@ EC_Master::run (int argc, ACE_TCHAR* argv[])
           }
       }
 
-      this->root_poa_->destroy (1,
-                                1);
+      this->root_poa_->destroy (true,
+                                true);
 
       this->orb_->destroy ();
    }

@@ -762,7 +762,7 @@ TAO_Naming_Server::fini ()
   try
     {
       if (!CORBA::is_nil (this->ns_poa_.in ()))
-        this->ns_poa_->destroy (1, 1);
+        this->ns_poa_->destroy (true, true);
     }
   catch (CORBA::Exception const &)
     {

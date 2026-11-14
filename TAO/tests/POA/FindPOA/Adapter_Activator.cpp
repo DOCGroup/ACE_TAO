@@ -30,7 +30,7 @@ Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
     }
   catch (::CORBA::Exception const &)
     {
-      (void) child->destroy (1, 1);
+      (void) child->destroy (true, true);
 
       return false;
     }

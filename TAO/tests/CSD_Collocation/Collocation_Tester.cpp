@@ -20,7 +20,7 @@ Collocation_Test::Collocation_Test ()
 void
 Collocation_Test::shutdown ()
 {
-  this->root_poa_->destroy (1, 1);
+  this->root_poa_->destroy (true, true);
   this->orb_->destroy ();
 }
 

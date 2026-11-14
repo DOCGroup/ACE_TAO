@@ -295,7 +295,7 @@ ImR_Activator_i::fini ()
 
       this->process_mgr_.close ();
 
-      this->root_poa_->destroy (1, 1);
+      this->root_poa_->destroy (true, true);
 
       if (! CORBA::is_nil (this->locator_.in ()) && this->registration_token_ != 0)
         {

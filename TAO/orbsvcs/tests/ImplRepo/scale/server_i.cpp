@@ -187,7 +187,7 @@ Server_i::run ()
 
     this->orb_->run ();
 
-    this->root_poa_->destroy(1, 1);
+    this->root_poa_->destroy(true, true);
     this->orb_->destroy();
   }
   catch (const CORBA::Exception& ex)

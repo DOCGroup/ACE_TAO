@@ -126,7 +126,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     worker.wait ();
 
-    rootPOA->destroy (1, 1);
+    rootPOA->destroy (true, true);
     orb->destroy ();
   }
   catch (const CORBA::Exception &ex)

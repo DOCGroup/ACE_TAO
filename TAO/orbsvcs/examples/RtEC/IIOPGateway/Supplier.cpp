@@ -114,7 +114,7 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
       poa->deactivate_object (id.in ());
 
       // Destroy the POA
-      poa->destroy (1, 0);
+      poa->destroy (true, false);
     }
   catch (CORBA::Exception const &ex)
     {

@@ -25,7 +25,7 @@ Quoter_Stock_Factory_i::destroy_stock_objects ()
 {
   if (!CORBA::is_nil (this->stock_factory_poa_.in ()))
     {
-      this->stock_factory_poa_->destroy (1, 1);
+      this->stock_factory_poa_->destroy (true, true);
       this->stock_factory_poa_ = PortableServer::POA::_nil ();
     }
 }

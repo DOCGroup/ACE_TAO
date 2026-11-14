@@ -182,7 +182,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         orb_thr.wait ();
       }
 
-      root_goa->destroy (1, 1);
+      root_goa->destroy (true, true);
 
       orb->destroy ();
     }

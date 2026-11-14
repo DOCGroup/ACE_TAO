@@ -148,8 +148,8 @@ TAO_IFR_Server::fini ()
 {
   try
     {
-      this->root_poa_->destroy (1,
-                                1);
+      this->root_poa_->destroy (true,
+                                true);
     }
   catch (CORBA::Exception const &ex)
     {

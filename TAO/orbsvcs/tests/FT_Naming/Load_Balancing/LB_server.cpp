@@ -20,7 +20,7 @@ LB_server::destroy ()
     {
       this->naming_manager_->delete_object_group ("Basic Group");
 
-      this->root_poa_->destroy (1, 1);
+      this->root_poa_->destroy (true, true);
 
       this->orb_->destroy ();
     }

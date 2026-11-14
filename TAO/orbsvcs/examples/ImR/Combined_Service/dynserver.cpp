@@ -124,7 +124,7 @@ DynServer_Loader::fini ()
     runner_->end ();
     runner_.reset ();
 
-    root_poa_->destroy (1, 1);
+    root_poa_->destroy (true, true);
     orb_->destroy ();
 
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("dynserver: shut down successfully.\n")));

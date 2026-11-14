@@ -141,7 +141,7 @@ test_i::create_POA ()
 void
 test_i::destroy_POA ()
 {
-  this->child_poa_->destroy (1, 0);
+  this->child_poa_->destroy (true, false);
 }
 
 static int

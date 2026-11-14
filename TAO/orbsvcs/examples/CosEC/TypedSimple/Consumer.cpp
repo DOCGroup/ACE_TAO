@@ -102,7 +102,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("...ORB shutdown\n")));
 
       // Destroy the POA
-      poa->destroy (1, 0);
+      poa->destroy (true, false);
 
       // Destroy the ORB
       orb->destroy ();

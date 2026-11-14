@@ -140,7 +140,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       table->bind (base.c_str (), test_ior.in ());
 
       runner->wait ();
-      root_poa->destroy(1,1);
+      root_poa->destroy(true,true);
       orb->destroy();
     }
   catch(const CORBA::Exception& ex)

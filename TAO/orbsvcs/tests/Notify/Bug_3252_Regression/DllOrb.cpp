@@ -79,13 +79,13 @@ DllOrb::fini ()
 {
   try
   {
-    mv_poaManager_->deactivate (1, 1);
+    mv_poaManager_->deactivate (true, true);
     mv_poaManager_ = PortableServer::POAManager::_nil ();
 
     // attempt to protect against sporadic BAD_INV_ORDER exceptions
     ACE_OS::sleep (ACE_Time_Value (0, 500));
 
-    mv_rootPOA_->destroy (1, 1);
+    mv_rootPOA_->destroy (true, true);
 
       mv_rootPOA_ = PortableServer::POA::_nil ();
     mv_orb_->shutdown (true);

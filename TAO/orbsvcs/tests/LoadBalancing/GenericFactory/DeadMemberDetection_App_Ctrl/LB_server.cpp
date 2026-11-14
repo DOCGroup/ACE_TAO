@@ -20,7 +20,7 @@ LB_server::destroy ()
         this->lm_->delete_object (this->fcid_.in ());
 
       if (!CORBA::is_nil (this->root_poa_.in ()))
-        this->root_poa_->destroy (1, 1);
+        this->root_poa_->destroy (true, true);
 
       if (!CORBA::is_nil (this->orb_.in ()))
         this->orb_->destroy ();

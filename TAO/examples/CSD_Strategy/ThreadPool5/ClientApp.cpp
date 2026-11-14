@@ -138,7 +138,7 @@ ClientApp::run (int argc, ACE_TCHAR* argv[])
              "(%P|%t) ClientApp is destroying the Root POA.\n"));
 
   // Tear-down the root poa and orb.
-  root_poa->destroy(1, 1);
+  root_poa->destroy(true, true);
 
   ACE_DEBUG((LM_DEBUG,
              "(%P|%t) ClientApp is destroying the ORB.\n"));

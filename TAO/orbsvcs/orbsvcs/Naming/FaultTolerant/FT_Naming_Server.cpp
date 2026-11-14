@@ -625,7 +625,7 @@ TAO_FT_Naming_Server::fini ()
   try
     {
       if (!CORBA::is_nil (this->naming_manager_poa_.in ()))
-        this->naming_manager_poa_->destroy (1, 1);
+        this->naming_manager_poa_->destroy (true, true);
       this->naming_manager_poa_ = PortableServer::POA::_nil ();
     }
   catch (CORBA::Exception const &)

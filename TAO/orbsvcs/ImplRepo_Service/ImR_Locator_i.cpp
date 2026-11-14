@@ -366,7 +366,7 @@ ImR_Locator_i::fini ()
       if (debug_ > 1)
         ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) ImR: Shutting down...\n")));
 
-      this->root_poa_->destroy (1, 1);
+      this->root_poa_->destroy (true, true);
 
       this->orb_->destroy ();
 

@@ -50,7 +50,7 @@ int ACE_DLL_TAO_Service::fini ()
   {
     this->orb_->shutdown (true);
 
-    this->root_poa_->destroy (1, 1);
+    this->root_poa_->destroy (true, true);
     this->orb_->destroy ();
   }
   catch (CORBA::Exception const &ex)

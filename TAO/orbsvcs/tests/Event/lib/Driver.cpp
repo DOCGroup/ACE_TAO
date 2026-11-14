@@ -144,7 +144,7 @@ EC_Driver::run_cleanup ()
   this->cleanup_consumers ();
   this->cleanup_ec ();
 
-  this->root_poa_->destroy (1, 1);
+  this->root_poa_->destroy (true, true);
   this->root_poa_ = PortableServer::POA::_nil ();
 
   this->orb_->destroy ();
