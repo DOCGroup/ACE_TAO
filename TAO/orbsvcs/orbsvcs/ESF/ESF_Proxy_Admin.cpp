@@ -7,6 +7,8 @@
 
 #include "orbsvcs/ESF/ESF_Shutdown_Proxy.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class EVENT_CHANNEL, class PROXY, class INTERFACE>
@@ -48,7 +50,7 @@ TAO_ESF_Proxy_Admin<EVENT_CHANNEL,PROXY,INTERFACE>::shutdown ()
 {
   TAO_ESF_Shutdown_Proxy<PROXY> worker;
 
-  this->collection_->for_each (&worker);
+  this->collection_->for_each (std::addressof (worker));
 // Cannot happen, just following the discipline.
 
   this->collection_->shutdown ();
