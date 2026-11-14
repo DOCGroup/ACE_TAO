@@ -9,6 +9,8 @@
 #include "ace/TLI_Acceptor.h"
 #include "Handle_Thr_Stream.h"
 
+#include <cstring>
+
 #if defined (ACE_HAS_THREADS)
 
 #include "ace/OS_NS_time.h"
@@ -159,7 +161,7 @@ CLI_Stream<PR_ST_2>::svc ()
                    login_name,
                    ACE_TEXT_ALWAYS_CHAR (ACE_OS::ctime ((const time_t *) &t)));
 
-  if (this->peer ().send_n (buf, ACE_OS::strlen (buf) + 1) == -1)
+  if (this->peer ().send_n (buf, std::strlen (buf) + 1) == -1)
     return -1;
 
   ACE_DEBUG ((LM_DEBUG, "(%t) sent reply %s", buf));
