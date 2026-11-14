@@ -3,6 +3,8 @@
 #include "ace/INET_Addr.h"
 #include "ace/os_include/os_netdb.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class ACCEPTOR, class CONNECTOR, class DETECTION_HANDLER>
@@ -10,7 +12,7 @@ int
 Fault_Detector_T<ACCEPTOR, CONNECTOR, DETECTION_HANDLER>::init_acceptor()
 {
   typename CONNECTOR::PEER_ADDR listen_addr;
-  if (acceptor_.open(listen_addr, &reactor_task_.reactor_) != 0)
+  if (acceptor_.open(listen_addr, std::addressof (reactor_task_.reactor_)) != 0)
     ORBSVCS_ERROR_RETURN((LM_ERROR, "Connot open acceptor\n"), -1);
 
   if (acceptor_.acceptor().get_local_addr(listen_addr) !=0)
@@ -39,7 +41,7 @@ Fault_Detector_T<ACCEPTOR, CONNECTOR, DETECTION_HANDLER>::connect(
     DETECTION_HANDLER* handler {};
     ACE_NEW_RETURN(handler, DETECTION_HANDLER(listener_), 0) ;
 
-    handler->reactor(&reactor_task_.reactor_);
+    handler->reactor(std::addressof (reactor_task_.reactor_));
     ORBSVCS_DEBUG((LM_DEBUG, "connecting to %s\n", location[0].id.in()));
 
     int result = connector_.connect(handler->peer(), prev_addr);

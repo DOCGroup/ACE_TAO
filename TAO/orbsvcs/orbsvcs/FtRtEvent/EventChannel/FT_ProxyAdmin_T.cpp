@@ -2,6 +2,8 @@
 #include "orbsvcs/FtRtEvent/EventChannel/Replication_Service.h"
 #include "tao/PortableServer/POAC.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class EC_PROXY_ADMIN, class Proxy,
@@ -101,7 +103,7 @@ void FT_ProxyAdmin<EC_PROXY_ADMIN, Proxy, ProxyInterface, State>::set_state(
       proxy_ior = admin_->obtain();
 
     using Skeleton = typename Proxy::Skeleton;
-    void const* temp = &proxy_state.object_id;
+    void const* temp = std::addressof (proxy_state.object_id);
     PortableServer::ObjectId const* oid =
       reinterpret_cast<PortableServer::ObjectId const*> (temp);
     PortableServer::Servant const servant =

@@ -5,6 +5,7 @@
 #include "ace/OS_NS_strings.h"
 
 #include <cstring>
+#include <memory>
 #include <string>
 #include <cstdlib>
 
@@ -207,7 +208,7 @@ TAO_SFP_Base::read_frame (TAO_AV_Transport *transport,
     ORBSVCS_ERROR_RETURN ((LM_ERROR,"SFP::handle_input -peek"),0);
   else if (n != message_len)
     ORBSVCS_ERROR_RETURN ((LM_ERROR,"SFP::read_simple_frame:message truncated\n"),0);
-  message_block = &state.static_frame_;
+  message_block = std::addressof (state.static_frame_);
   // print the buffer.
   //      this->dump_buf (message,n);
   // skip over the frame header.
@@ -1128,7 +1129,7 @@ TAO_SFP_Consumer_Object::handle_input ()
       this->callback_->receive_frame (this->state_.frame_block_,
                                       frame_info);
       // Now release the memory for the frame.
-      if (this->state_.frame_block_ != &this->state_.static_frame_)
+      if (this->state_.frame_block_ != std::addressof (this->state_.static_frame_))
         {
           ACE_Message_Block *temp {};
           for (temp = this->state_.frame_block_;

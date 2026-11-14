@@ -35,14 +35,13 @@ CachedRequestTable::update (ACE_CString const &client_id,
 }
 
 
-CORBA::Any
-CachedRequestTable::get_result (ACE_CString const &client_id)
+void
+CachedRequestTable::get_result (ACE_CString const &client_id,
+                                CORBA::Any& result)
 {
   TableImpl::ENTRY *entry {};
-  if (table_.find(client_id, entry)) {
-    return entry->int_id_.result;
-  }
-  return CORBA::Any();
+  if (table_.find (client_id, entry) == 0)
+    result = entry->int_id_.result;
 }
 
 
@@ -215,8 +214,8 @@ FtEventServiceInterceptor::receive_request (PortableInterceptor::ServerRequestIn
 
     CORBA::Any cached_result;
     if (!is_new_request)  {
-      cached_result =
-        request_table_.get_result(ft_request_service_context.client_id.in());
+      request_table_.get_result (ft_request_service_context.client_id.in (),
+                                 cached_result);
     }
 
     Request_Context_Repository().set_cached_result(ri, cached_result);

@@ -42,7 +42,7 @@ public:
   int update (ACE_CString const& client_id,
               CORBA::Long retention_id,
               CORBA::Any const&);
-  CORBA::Any get_result (ACE_CString const& client_id);
+  void get_result (ACE_CString const& client_id, CORBA::Any& result);
   void get_state (FtRtecEventChannelAdmin::CachedOptionResults& state);
   void set_state (FtRtecEventChannelAdmin::CachedOptionResults const& state);
 private:
