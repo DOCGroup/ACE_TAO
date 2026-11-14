@@ -37,7 +37,8 @@ class ACE_NS_WString;
 class ACE_Export ACE_NS_String
 {
 public:
-  // = Initialization.
+  /// @name Initialization
+  /// @{
   /// Default "no-op" constructor.
   ACE_NS_String ();
 
@@ -48,6 +49,7 @@ public:
 
   /// Converts an ACE_NS_WString to an ACE_NS_String;
   ACE_NS_String (const ACE_NS_WString &);
+  /// @}
 
   ~ACE_NS_String ();
 

@@ -61,10 +61,11 @@ class ACE_Name_Space_Map : public MAP_MANAGER
 public:
   ACE_Name_Space_Map (ALLOCATOR *alloc);
 
-  // = The following methods are Proxies to the underlying methods
-  // provided by ACE_Hash_Map_Manager.  When they are called, they
-  // acquire the lock, set the allocator to the one specific to this
-  // process, and then call down to perform the intended operation.
+  /** @name Map operation proxies
+   * These methods acquire the lock, set the allocator for this process, and
+   * call the corresponding ACE_Hash_Map_Manager operation.
+   */
+  /// @{
   int bind (const ACE_NS_String &,
             const ACE_NS_Internal &,
             ALLOCATOR *alloc);
@@ -84,6 +85,7 @@ public:
             ALLOCATOR *alloc);
 
   int close (ALLOCATOR *alloc);
+  /// @}
 };
 
 /**
@@ -212,7 +214,6 @@ public:
   void dump () const override;
   virtual void dump_i () const;
 
-  // = I just know this is going to cause problems on some platform...
   using ALLOCATOR = ACE_Allocator_Adapter<ACE_Malloc<_ACE_MEM_POOL, ACE_LOCK>>;
 
   ACE_ALLOC_HOOK_DECLARE;

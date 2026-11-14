@@ -119,7 +119,8 @@ public:
    */
   int close (int flags = M_DELETE_NONE);
 
-  // = ACE_Task manipulation routines
+  /// @name ACE_Task manipulation routines
+  /// @{
   /// Get the writer task.
   ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *writer ();
 
@@ -146,20 +147,25 @@ public:
 
   /// Set and get pointer to sibling ACE_Task in an ACE_Module
   ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *sibling (ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *orig);
+  /// @}
 
-  // = Identify the module
+  /// @name Module identity
+  /// @{
   /// Get the module name.
   ACE_TCHAR const *name () const;
 
   /// Set the module name.
   void name (ACE_TCHAR const *);
+  /// @}
 
-  // = Argument to the Tasks.
+  /// @name Task argument
+  /// @{
   /// Get the argument passed to the tasks.
   void *arg () const;
 
   /// Set the argument passed to the tasks.
   void arg (void *);
+  /// @}
 
   /// Link to other modules in the ustream stack
   void link (ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *m);

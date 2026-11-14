@@ -98,7 +98,8 @@ public:
 
   // Return the type represented by this MysteryOperand.
 
-  // = Boolean operators.
+  /// @name Boolean operators
+  /// @{
 
   bool
   operator< (ETCL_Literal_Constraint const &rhs);
@@ -117,8 +118,10 @@ public:
 
   bool
   operator!= (ETCL_Literal_Constraint const &rhs);
+  /// @}
 
-  // = Arithmetic operators.
+  /// @name Arithmetic operators
+  /// @{
 
   ETCL_Literal_Constraint
   operator+ (ETCL_Literal_Constraint const &rhs);
@@ -132,9 +135,10 @@ public:
   ETCL_Literal_Constraint
   operator/ (ETCL_Literal_Constraint const &rhs);
 
-  // Unary minus.
+  /// Unary minus.
   ETCL_Literal_Constraint
   operator- ();
+  /// @}
 
   /// Ensure both operands are of the same simple numeric type.
   virtual Literal_Type
@@ -169,8 +173,10 @@ public:
   /// Get the value
   char const *value () const;
 
-  // = The Constraint methods.
+  /// @name Constraint visitor method
+  /// @{
   int accept (ETCL_Constraint_Visitor *visitor) override;
+  /// @}
 
 private:
   /// The value
