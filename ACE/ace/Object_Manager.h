@@ -361,8 +361,9 @@ private:
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 public:
-  // = The <get_singleton_lock> accessors are for internal
-  // use by ACE_Singleton _only_.
+  /// @name Internal singleton lock accessors
+  /// Used only by ACE_Singleton.
+  /// @{
 
   /**
    * Accesses an ACE_Null_Mutex to be used for construction of
@@ -391,6 +392,7 @@ public:
    * argument, on success; returns -1 on failure.
    */
   static int get_singleton_lock (ACE_Recursive_Thread_Mutex *&);
+  /// @}
 
   /**
    * Accesses a readers/writer ACE_RW_Thread_Mutex to be used for

@@ -294,7 +294,8 @@ public:
             u_long options_flags = ACE_DEFAULT_LOG_FLAGS,
             const ACE_TCHAR *logger_key = nullptr);
 
-  // = Set/get the options flags.
+  /// @name Options flag accessors
+  /// @{
 
   /**
    * Enable the bits in the logger's options flags.
@@ -310,6 +311,7 @@ public:
    * Return the bits in the logger's options flags.
    */
   u_long flags ();
+  /// @}
 
   /** @name Allow apps to acquire and release internal synchronization
    *        lock
@@ -318,20 +320,21 @@ public:
    * implementation. By exporting the lock, applications can hold the
    * lock atomically over a number of calls to ACE_Log_Msg.
    */
-  //@{
+  /// @{
   /// Acquire the internal lock.
   int acquire ();
 
   /// Release the internal lock.
   int release ();
-  //@}
+  /// @}
 
   /// Call after doing a @c fork() to resynchronize the process id and
   /// @c program_name_ variables.
   void sync (const ACE_TCHAR *program_name);
 
-  // = Set/get methods.  Note that these are non-static and thus will
-  // be thread-specific.
+  /// @name Thread-specific accessors
+  /// These accessors are non-static and thread-specific.
+  /// @{
 
   /// Set the result of the operation status (by convention, -1 means
   /// error).
@@ -445,6 +448,7 @@ public:
 
   /// Query tracing status on a per-thread basis...
   bool tracing_enabled () const;
+  /// @}
 
   using MASK_TYPE = enum
   {
@@ -452,7 +456,8 @@ public:
     THREAD = 1
   };
 
-  // = Get/set the priority mask.
+  /// @name Priority mask accessors
+  /// @{
   /// Get the current ACE_Log_Priority mask.
   u_long priority_mask (MASK_TYPE = THREAD);
 
@@ -479,6 +484,7 @@ public:
                             const wchar_t *,
                             ...);
 #endif /* ACE_USES_WCHAR */
+  /// @}
 
   /// Optimize reading of the pid (avoids a system call if the value is
   /// cached...).
@@ -693,7 +699,9 @@ private:
   /// Always timestamp?
   int timestamp_;
 
-  // = The following fields are *not* kept in thread-specific storage.
+  /// @name Process-wide state
+  /// These fields are not kept in thread-specific storage.
+  /// @{
 
   // We only want one instance for the entire process!
 
@@ -727,6 +735,7 @@ private:
    * Priority mask to use for each new instance
    */
   static u_long default_priority_mask_;
+  /// @}
 
   /// Anonymous struct since there will only be one instance.  This
   /// struct keeps information stored away in case we actually end up
@@ -755,9 +764,11 @@ private:
 
   //friend void ACE_OS::cleanup_tss (const u_int);
 
-  // = Disallow these operations.
+  /// @name Disabled copy operations
+  /// @{
   ACE_Log_Msg &operator= (const ACE_Log_Msg &);
   ACE_Log_Msg (const ACE_Log_Msg &);
+  /// @}
 };
 
 #ifdef ACE_LACKS_VA_FUNCTIONS

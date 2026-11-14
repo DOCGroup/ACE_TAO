@@ -65,7 +65,8 @@ public:
   int close_read ();
   int close_write ();
 
-  // = Accessors.
+  /// @name Pipe accessors
+  /// @{
 
   /**
    * This is the "read" side of the pipe.  Note, however, that
@@ -80,6 +81,7 @@ public:
    * bi-directional.
    */
   ACE_HANDLE write_handle () const;
+  /// @}
 
   /// Dump the state of the object.
   void dump () const;
