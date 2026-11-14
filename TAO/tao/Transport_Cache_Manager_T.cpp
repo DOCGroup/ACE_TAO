@@ -206,7 +206,7 @@ namespace TAO
       for (HASH_MAP_ITER iter = this->cache_map_.begin ();
            iter != this->cache_map_.end ();)
         {
-          HASH_MAP_ENTRY * const entry = &(*iter);
+          HASH_MAP_ENTRY * const entry = std::addressof (*iter);
           transport_type * const transport = entry->int_id_.transport ();
           ++iter;
 
@@ -905,7 +905,7 @@ namespace TAO
 
             for (int i {}; i < current_size; ++i)
               {
-                sorted_set[i] = &(*iter);
+                sorted_set[i] = std::addressof (*iter);
                 ++iter;
               }
 

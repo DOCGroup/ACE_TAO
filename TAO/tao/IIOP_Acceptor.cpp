@@ -1164,7 +1164,7 @@ TAO_IIOP_Acceptor::parse_options (char const *str)
       else if (end != options.npos)
         {
           argv_base[j] = options.substring (begin, end - begin);
-          argv[j] = &argv_base[j];
+          argv[j] = std::addressof (argv_base[j]);
           begin = end + 1;
         }
       else
