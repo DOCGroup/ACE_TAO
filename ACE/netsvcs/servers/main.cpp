@@ -9,6 +9,7 @@
 #include "Token_Handler.h"
 #include "Server_Logging_Handler.h"
 #include <array>
+#include <memory>
 
 static void
 end_event_loop_handler (int, siginfo_t *, ucontext_t *)
@@ -27,7 +28,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // up to before this call - if the user specified -b (be a daemon),
   // all handles will be closed, including the Reactor's pipe.
 
-  if (ACE_Service_Config::open (argc, argv, ACE_DEFAULT_LOGGER_KEY, 1, 0, 1) == -1)
+  if (ACE_Service_Config::open (argc, argv, ACE_DEFAULT_LOGGER_KEY, true, false, true) == -1)
     {
       if (errno != ENOENT)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -40,10 +41,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             ACE_LOG_MSG->priority_mask (~LM_DEBUG,
                                         ACE_Log_Msg::PROCESS);
 
-          // Calling ACE_SVC_INVOKE to create a new Service_Object.
-          // Stash the newly created Service_Object into an
-          // ACE_Service_Object_Ptr which is an <auto_ptr> specialized
-          // for ACE_Service_Object.
+          // Create each statically linked service under scoped ownership;
+          // ACE_Service_Object_Ptr calls fini() and deletes it on scope exit.
 
           std::array<ACE_TCHAR *, 3> l_argv {};
           ACE_TCHAR name_port[] =
@@ -143,7 +142,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           sig_set.sig_add (SIGINT);
           sig_set.sig_add (SIGQUIT);
           if (ACE_Reactor::instance ()->register_handler (sig_set,
-                                                          &sa) == -1)
+                                                          std::addressof (sa)) == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                 ACE_TEXT ("%p\n"),
@@ -158,8 +157,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               ACE_Reactor::instance ()->remove_handler (sig_set);
             }
 
-          // Destructors of ACE_Service_Object_Ptr's automagically
-          // call fini().
+          // Scope exit calls fini() and deletes each service.
         }
     }
   else // Use dynamic linking.
@@ -175,7 +173,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Register ourselves to receive signals so we can shut down
       // gracefully.
-      if (ACE_Reactor::instance ()->register_handler (sig_set, &sa) == -1)
+      if (ACE_Reactor::instance ()->register_handler (sig_set,
+                                                       std::addressof (sa)) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                             ACE_TEXT ("%p\n"),
