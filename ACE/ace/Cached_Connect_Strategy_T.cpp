@@ -13,6 +13,8 @@
 #include "ace/Thread_Manager.h"
 #include "ace/WFMO_Reactor.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE_Tcoccc (ACE_Cached_Connect_Strategy_Ex)
@@ -495,7 +497,7 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
       if (addr.subject () != search_addr.subject ())
         continue;
 
-      entry = &(*iterator);
+      entry = std::addressof (*iterator);
 
       //
       // Update the caching attributes directly since we don't do a

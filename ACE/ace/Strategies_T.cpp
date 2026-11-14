@@ -17,6 +17,8 @@
 #include "ace/OS_Errno.h"
 #include "ace/Svc_Handler.h"
 
+#include <memory>
+
 #if !defined (__ACE_INLINE__)
 #include "ace/Strategies_T.inl"
 #endif /* __ACE_INLINE__ */
@@ -1186,7 +1188,7 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::find (
       if (addr.subject () != search_addr.subject ())
         continue;
 
-      entry = &(*iterator);
+      entry = std::addressof (*iterator);
       return 0;
     }
 

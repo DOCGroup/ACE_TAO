@@ -11,6 +11,8 @@
 #include "ace/OS_Memory.h"
 #include "ace/Recyclable.h"
 
+#include <memory>
+
 //////////////////////////////////////////////////////////////////////////////
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -89,8 +91,8 @@ ACE_Pair_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::minimum (
   ITERATOR iter = container.begin ();
   ITERATOR end = container.end ();
   ATTRIBUTES min = (*iter).int_id_.second;
-  key_to_remove = &(*iter).ext_id_;
-  value_to_remove = &(*iter).int_id_;
+  key_to_remove = std::addressof ((*iter).ext_id_);
+  value_to_remove = std::addressof ((*iter).int_id_);
 
   // The iterator moves thru the container searching for the entry
   // with the lowest ATTRIBUTES.
@@ -102,8 +104,8 @@ ACE_Pair_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::minimum (
         {
           // Ah! an item with lower ATTTRIBUTES...
           min = (*iter).int_id_.second;
-          key_to_remove = &(*iter).ext_id_;
-          value_to_remove = &(*iter).int_id_;
+          key_to_remove = std::addressof ((*iter).ext_id_);
+          value_to_remove = std::addressof ((*iter).int_id_);
         }
     }
 }
@@ -207,8 +209,8 @@ ACE_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUT
           if (!found)
             {
               min = (*iter).int_id_.second;
-              key_to_remove = &(*iter).ext_id_;
-              value_to_remove = &(*iter).int_id_;
+              key_to_remove = std::addressof ((*iter).ext_id_);
+              value_to_remove = std::addressof ((*iter).int_id_);
               found = true;
             }
           else
@@ -217,8 +219,8 @@ ACE_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUT
               if (min > (*iter).int_id_.second)
                 {
                   min = (*iter).int_id_.second;
-                  key_to_remove = &(*iter).ext_id_;
-                  value_to_remove = &(*iter).int_id_;
+                  key_to_remove = std::addressof ((*iter).ext_id_);
+                  value_to_remove = std::addressof ((*iter).int_id_);
                 }
             }
         }
@@ -331,8 +333,8 @@ ACE_Refcounted_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATO
           if (!found)
             {
               min = (*iter).int_id_.second ();
-              key_to_remove = &(*iter).ext_id_;
-              value_to_remove = &(*iter).int_id_;
+              key_to_remove = std::addressof ((*iter).ext_id_);
+              value_to_remove = std::addressof ((*iter).int_id_);
               found = true;
             }
           else
@@ -341,8 +343,8 @@ ACE_Refcounted_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATO
               if (min > (*iter).int_id_.second ())
                 {
                   min = (*iter).int_id_.second ();
-                  key_to_remove = &(*iter).ext_id_;
-                  value_to_remove = &(*iter).int_id_;
+                  key_to_remove = std::addressof ((*iter).ext_id_);
+                  value_to_remove = std::addressof ((*iter).int_id_);
                 }
             }
         }
@@ -419,8 +421,8 @@ ACE_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::minimu
   ITERATOR iter = container.begin ();
   ITERATOR end = container.end ();
   ATTRIBUTES min = (*iter).int_id_->caching_attributes ();
-  key_to_remove = &(*iter).ext_id_;
-  value_to_remove = &(*iter).int_id_;
+  key_to_remove = std::addressof ((*iter).ext_id_);
+  value_to_remove = std::addressof ((*iter).int_id_);
 
   // The iterator moves thru the container searching for the entry
   // with the lowest ATTRIBUTES.
@@ -433,8 +435,8 @@ ACE_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::minimu
         {
           // Ah! an item with lower ATTTRIBUTES...
           min = (*iter).int_id_->caching_attributes ();
-          key_to_remove = &(*iter).ext_id_;
-          value_to_remove = &(*iter).int_id_;
+          key_to_remove = std::addressof ((*iter).ext_id_);
+          value_to_remove = std::addressof ((*iter).int_id_);
         }
     }
 }

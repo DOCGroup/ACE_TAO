@@ -179,7 +179,7 @@ ACE_Hash_Map_Manager_Ex<EXT_ID,
                                    COMPARE_KEYS,
                                    ACE_LOCK>::iterator pos)
 {
-  return this->unbind (&(*pos));
+  return this->unbind (std::addressof (*pos));
 }
 
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> ACE_INLINE int
