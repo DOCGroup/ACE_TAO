@@ -19,7 +19,7 @@ TAO_Offer_Exporter (CosTrading::Lookup_ptr lookup_if,
 
 TAO_Offer_Exporter::~TAO_Offer_Exporter ()
 {
-  for (std::unique_ptr<TAO_Dynamic_Property> const &property : this->clean_up_)
+  for (TAO_Dynamic_Property *const property : this->clean_up_)
     {
       property->destroy ();
     }
@@ -373,12 +373,12 @@ TAO_Offer_Exporter::create_offers ()
           ulong_seq[j] = counter * 10000;
         }
 
-      this->clean_up_.push_back (
-        std::make_unique<TAO_Simple_Dynamic_Property<TAO_Trader_Test::StringSeq>> (std::move (string_seq)));
-      TAO_Dynamic_Property *const user_queue = this->clean_up_.back ().get ();
-      this->clean_up_.push_back (
-        std::make_unique<TAO_Simple_Dynamic_Property<TAO_Trader_Test::ULongSeq>> (std::move (ulong_seq)));
-      TAO_Dynamic_Property *const file_sizes = this->clean_up_.back ().get ();
+      TAO_Dynamic_Property *const user_queue =
+        new TAO_Simple_Dynamic_Property<TAO_Trader_Test::StringSeq> (std::move (string_seq));
+      this->clean_up_.push_back (user_queue);
+      TAO_Dynamic_Property *const file_sizes =
+        new TAO_Simple_Dynamic_Property<TAO_Trader_Test::ULongSeq> (std::move (ulong_seq));
+      this->clean_up_.push_back (file_sizes);
 
       CosTradingDynamic::DynamicProp *const dp_user_queue = user_queue->construct_dynamic_prop
         (TT_Info::PLOTTER_PROPERTY_NAMES[TT_Info::PLOTTER_USER_QUEUE],
@@ -432,12 +432,12 @@ TAO_Offer_Exporter::create_offers ()
           ulong_seq[j] = counter * 10000;
         }
 
-      this->clean_up_.push_back (
-        std::make_unique<TAO_Simple_Dynamic_Property<TAO_Trader_Test::StringSeq>> (std::move (string_seq)));
-      TAO_Dynamic_Property *const user_queue = this->clean_up_.back ().get ();
-      this->clean_up_.push_back (
-        std::make_unique<TAO_Simple_Dynamic_Property<TAO_Trader_Test::ULongSeq>> (std::move (ulong_seq)));
-      TAO_Dynamic_Property *const file_sizes = this->clean_up_.back ().get ();
+      TAO_Dynamic_Property *const user_queue =
+        new TAO_Simple_Dynamic_Property<TAO_Trader_Test::StringSeq> (std::move (string_seq));
+      this->clean_up_.push_back (user_queue);
+      TAO_Dynamic_Property *const file_sizes =
+        new TAO_Simple_Dynamic_Property<TAO_Trader_Test::ULongSeq> (std::move (ulong_seq));
+      this->clean_up_.push_back (file_sizes);
 
       CosTradingDynamic::DynamicProp *const dp_user_queue = user_queue->construct_dynamic_prop
         (TT_Info::PRINTER_PROPERTY_NAMES[TT_Info::PLOTTER_USER_QUEUE],
@@ -482,9 +482,9 @@ TAO_Offer_Exporter::create_offers ()
       std::string const name = "File System #" + std::to_string (i);
       std::string const description = name + " is a File System. It stores stuff.";
 
-      this->clean_up_.push_back (
-        std::make_unique<TAO_Simple_Dynamic_Property<CORBA::ULong>> (i * 4434343));
-      TAO_Dynamic_Property *const space_left = this->clean_up_.back ().get ();
+      TAO_Dynamic_Property *const space_left =
+        new TAO_Simple_Dynamic_Property<CORBA::ULong> (i * 4434343);
+      this->clean_up_.push_back (space_left);
 
       CosTradingDynamic::DynamicProp *const dp_space_left = space_left->construct_dynamic_prop
         (TT_Info::FILESYSTEM_PROPERTY_NAMES[TT_Info::SPACE_REMAINING],

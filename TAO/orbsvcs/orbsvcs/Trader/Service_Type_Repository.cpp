@@ -420,11 +420,8 @@ validate_properties (Prop_Map &prop_map,
       else
         {
           CORBA::String_var prop_name (n);
-          CosTradingRepos::ServiceTypeRepository::PropStruct *prop_val =
-            const_cast<CosTradingRepos::ServiceTypeRepository::PropStruct *> (&props[i]);
-
           if (prop_map.bind (prop_name,
-                             prop_val) == 1)
+                             props[i]) == 1)
             throw CosTrading::DuplicatePropertyName (n);
         }
     }
@@ -499,14 +496,14 @@ validate_inheritance (Prop_Map &prop_map,
           CORBA::String_var prop_name (super_props[j].name);
 
           if (prop_map.bind (prop_name,
-                             &super_props[j],
+                             super_props[j],
                              existing_prop) == 1)
             {
               // If already there, check that it is compatible with
               // properties of other types. Value Types have to be the
               // same.
               const CosTradingRepos::ServiceTypeRepository::PropStruct &property_in_map =
-                *existing_prop->int_id_;
+                existing_prop->int_id_;
 
               CORBA::TypeCode_ptr prop_type = property_in_map.value_type.in ();
               int compare {};

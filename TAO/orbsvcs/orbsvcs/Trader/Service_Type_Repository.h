@@ -194,8 +194,9 @@ private:
     CORBA::Boolean has_subtypes_ {};
   };
 
+  // Store property values because inherited property sequences are temporary.
   using Prop_Map = ACE_Hash_Map_Manager_Ex<CORBA::String_var,
-                                           CosTradingRepos::ServiceTypeRepository::PropStruct*,
+                                           CosTradingRepos::ServiceTypeRepository::PropStruct,
                                            ACE_Hash<CORBA::String_var>,
                                            ACE_Equal_To<CORBA::String_var>,
                                            ACE_Null_Mutex>;

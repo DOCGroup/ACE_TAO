@@ -9,6 +9,7 @@
 #include "ace/OS_NS_unistd.h"
 
 #include <cstring>
+#include <memory>
 #include <new>
 #include <utility>
 
@@ -633,7 +634,7 @@ order_merged_sequence (TAO_Preference_Interpreter& pref_inter,
 
   // Order the sequence.
   for (j = 0; j < length; ++j)
-    pref_inter.order_offer (&target_buf[j]);
+    pref_inter.order_offer (std::addressof (target_buf[j]));
   //pref_inter.order_offer (&offers[j]);
 
   // Reallocate the sequence.

@@ -5,7 +5,6 @@
 #include "Simple_Dynamic.h"
 #include "ttest_export.h"
 
-#include <memory>
 #include <vector>
 
 /// Tests the Trading Service's Register interface.
@@ -48,7 +47,9 @@ private:
   /// Export offers through the supplied Register interface.
   void export_to (CosTrading::Register_ptr reg);
 
-  using DP_Queue = std::vector<std::unique_ptr<TAO_Dynamic_Property>>;
+  // Non-owning aliases: destroy() deactivates each servant and lets the POA
+  // release its final reference, which deletes the servant.
+  using DP_Queue = std::vector<TAO_Dynamic_Property *>;
 
   /// Whether the user requested verbose output.
   CORBA::Boolean verbose_;
