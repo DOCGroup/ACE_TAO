@@ -1126,20 +1126,15 @@ TAO_SFP_Consumer_Object::handle_input ()
     this->callback_->handle_destroy ();
   if (this->state_.is_complete ())
     {
-      this->callback_->receive_frame (this->state_.frame_block_,
-                                      frame_info);
-      // Now release the memory for the frame.
-      if (this->state_.frame_block_ != std::addressof (this->state_.static_frame_))
+      ACE_Message_Block * const frame_block = this->state_.frame_block_;
+      ACE_Message_Block_Unique_Ptr frame_block_owner;
+      if (frame_block != std::addressof (this->state_.static_frame_))
         {
-          ACE_Message_Block *temp {};
-          for (temp = this->state_.frame_block_;
-               temp != nullptr;
-               temp = temp->cont ())
-            {
-              temp->release ();
-              delete temp;
-            }
+          this->state_.frame_block_ = nullptr;
+          frame_block_owner.reset (frame_block);
         }
+      this->callback_->receive_frame (frame_block,
+                                      frame_info);
       this->state_.reset ();
     }
   return 0;
