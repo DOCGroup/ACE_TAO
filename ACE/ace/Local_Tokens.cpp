@@ -6,6 +6,8 @@
 #include "ace/Token_Manager.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <memory>
+
 #if !defined (__ACE_INLINE__)
 #include "ace/Local_Tokens.inl"
 #endif /* __ACE_INLINE__ */
@@ -46,7 +48,7 @@ ACE_Token_Proxy_Queue *
 ACE_Tokens::waiters ()
 {
   ACE_TRACE ("ACE_Tokens::waiters");
-  return &this->waiters_;
+  return std::addressof (this->waiters_);
 }
 
 int

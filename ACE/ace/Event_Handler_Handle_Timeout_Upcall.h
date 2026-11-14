@@ -14,6 +14,8 @@
 
 #include "ace/Timer_Queuefwd.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Time_Value;

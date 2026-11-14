@@ -1,5 +1,7 @@
 #include "ace/QtReactor/QtReactor.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE (ACE_QtReactor)
@@ -275,9 +277,10 @@ ACE_QtReactor::bit_ops (ACE_HANDLE handle,
     return -1;
 
   // disable or enable the notifiers based on handle_set and mask
-  int const enable_flag = &handle_set == &this->suspend_set_
+  int const enable_flag = std::addressof (handle_set)
+    == std::addressof (this->suspend_set_)
     ? 0
-    : &handle_set == &this->wait_set_
+    : std::addressof (handle_set) == std::addressof (this->wait_set_)
       ? 1
       : -1;
   if (enable_flag == -1)

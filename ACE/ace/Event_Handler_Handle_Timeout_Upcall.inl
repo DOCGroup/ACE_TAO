@@ -29,7 +29,7 @@ preinvoke (ACE_Timer_Queue &,
     {
       event_handler->add_reference ();
 
-      upcall_act = &this->requires_reference_counting_;
+      upcall_act = std::addressof (this->requires_reference_counting_);
     }
 
   return 0;
@@ -44,7 +44,7 @@ postinvoke (ACE_Timer_Queue & /* timer_queue */,
             ACE_Time_Value const & /* cur_time */,
             void const *upcall_act)
 {
-  if (upcall_act == &this->requires_reference_counting_)
+  if (upcall_act == std::addressof (this->requires_reference_counting_))
     {
       event_handler->remove_reference ();
     }

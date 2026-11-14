@@ -18,6 +18,8 @@
 #include "ace/OS_NS_sys_select.h"
 #include "ace/OS_NS_sys_stat.h"
 
+#include <memory>
+
 // For timer_queue_
 #include "ace/Recursive_Thread_Mutex.h"
 
@@ -58,10 +60,12 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::any_ready_i
     + this->ready_set_.ex_mask_.num_set ();
 
   // number_ready > 0 meaning there are handles in the ready_set
-  // &wait_set != &(this->ready_set_) means that we need to copy
+  // std::addressof (wait_set) != std::addressof (this->ready_set_)
+  // means that we need to copy
   // the handles from the ready_set to the wait set because the
   // wait_set_ doesn't contain all the handles in the ready_set_
-  if (number_ready > 0 && &wait_set != &(this->ready_set_))
+  if (number_ready > 0 && std::addressof (wait_set)
+      != std::addressof (this->ready_set_))
     {
       wait_set.rd_mask_ = this->ready_set_.rd_mask_;
       wait_set.wr_mask_ = this->ready_set_.wr_mask_;
