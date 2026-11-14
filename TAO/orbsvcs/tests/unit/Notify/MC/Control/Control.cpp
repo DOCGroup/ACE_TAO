@@ -17,7 +17,7 @@ public:
   {
   }
 
-  virtual bool execute (const char* cmd)
+  bool execute (const char* cmd) override
   {
     command = cmd;
     return std::strcmp (cmd, TAO_NS_CONTROL_SHUTDOWN) == 0;
