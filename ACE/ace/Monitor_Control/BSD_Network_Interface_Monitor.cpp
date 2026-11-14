@@ -88,7 +88,7 @@ namespace ACE
           ifdr.ifr_data = reinterpret_cast<caddr_t> (&if_data);
           std::strncpy (ifdr.ifr_name, ifa->ifa_name, IFNAMSIZ - 1);
 #else
-          std::strncpy (ifdr.ifdr_name, ifa->ifa_name, sizeof (ifdr));
+          std::strncpy (ifdr.ifdr_name, ifa->ifa_name, sizeof (ifdr.ifdr_name) - 1);
 #endif
           if (ioctl (fd, SIOCGIFDATA, &ifdr) == -1)
             {
