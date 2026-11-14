@@ -145,7 +145,7 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
   , connection_closed_on_read_ (false)
   , char_translator_ (nullptr)
   , wchar_translator_ (nullptr)
-  , tcs_set_ (0)
+  , tcs_set_ (false)
   , first_request_ (true)
 #if TAO_HAS_SENDFILE == 1
     // The ORB has been configured to use the MMAP allocator, meaning

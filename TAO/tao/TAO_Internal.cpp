@@ -996,7 +996,7 @@ namespace
               {
                 // Later, replace all of these
                 // warning this turns on a daemon.
-                ACE::debug (1);
+                ACE::debug (true);
               }
 
             arg_shifter.consume_arg ();

@@ -240,7 +240,7 @@ TAO_CORBALOC_Parser::make_canonical (const char *ior,
   if (ior[0] != ':' && std::strncmp (ior, iiop_token, iiop_token_len) != 0)
     {
       canonical_endpoint.set (separator+1,
-                              prot_addr_len - (separator - ior) - 1,1);
+                              prot_addr_len - (separator - ior) - 1,true);
       return;
     }
 

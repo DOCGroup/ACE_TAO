@@ -96,7 +96,7 @@ TAO_Tagged_Profile::unmarshall_object_key_i (TAO_InputCDR &input)
       this->object_key_.replace (key_length,
                                  key_length,
                                  reinterpret_cast<CORBA::Octet *> (input.rd_ptr ()),
-                                 0);
+                                 false);
       input.skip_bytes (key_length);
 
       this->object_key_extracted_ = true;

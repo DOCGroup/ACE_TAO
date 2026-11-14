@@ -264,7 +264,7 @@ TAO_GIOP_Message_Generator_Parser_12::parse_request_header (
       // here!
       request.operation (input.rd_ptr (),
                          length - 1,
-                         0 /* TAO_ServerRequest does NOT own string */);
+                         false /* TAO_ServerRequest does NOT own string */);
       hdr_status = input.skip_bytes (length);
     }
 

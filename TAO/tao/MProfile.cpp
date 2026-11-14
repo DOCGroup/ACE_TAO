@@ -243,9 +243,9 @@ TAO_MProfile::is_equivalent (const TAO_MProfile *rhs)
   for (TAO_PHandle h1 {}; h1 < this->last_; ++h1)
     for (TAO_PHandle h2 {}; h2 < rhs->last_; ++h2)
       if (this->pfiles_[h1]->is_equivalent (rhs->pfiles_[h2]))
-        return 1;
+        return true;
 
-  return 0;
+  return false;
 }
 
 CORBA::ULong

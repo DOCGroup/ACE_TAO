@@ -1160,7 +1160,7 @@ TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
       TAO::ObjectKey tmp_key (locate_request.object_key ().length (),
                               locate_request.object_key ().length (),
                               locate_request.object_key ().get_buffer (),
-                              0);
+                              false);
 
       // Set it to an error state
       parse_error = 1;
