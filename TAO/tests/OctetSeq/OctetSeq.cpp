@@ -22,6 +22,7 @@
 #include <cstddef>
 #include <cstring>
 #include <memory>
+#include <utility>
 
 struct Options
 {
@@ -85,6 +86,45 @@ test_read_char (TAO_InputCDR &cdr,
   if (!(cdr >> cs))
     return -1;
   return 0;
+}
+
+static bool
+test_octet_sequence_copy_move ()
+{
+  Test::OctetSeq original (4);
+  original.length (4);
+  for (CORBA::ULong i = 0; i != original.length (); ++i)
+    original[i] = static_cast<CORBA::Octet> (i + 1);
+
+  Test::OctetSeq copied (original);
+  Test::OctetSeq copy_assigned (2);
+  copy_assigned.length (2);
+  copy_assigned = original;
+
+  for (CORBA::ULong i = 0; i != original.length (); ++i)
+    if (copied[i] != original[i] || copy_assigned[i] != original[i])
+      return false;
+
+  copied[0] = 42;
+  if (original[0] != 1 || copy_assigned[0] != 1)
+    return false;
+
+  Test::OctetSeq moved (std::move (original));
+  if (original.length () != 0 || moved.length () != 4)
+    return false;
+
+  Test::OctetSeq move_assigned (2);
+  move_assigned.length (2);
+  move_assigned = std::move (copied);
+  if (copied.length () != 0 || move_assigned.length () != 4)
+    return false;
+
+  for (CORBA::ULong i = 0; i != moved.length (); ++i)
+    if (moved[i] != i + 1 ||
+        move_assigned[i] != (i == 0 ? 42 : i + 1))
+      return false;
+
+  return true;
 }
 
 using Writer = int (*) (TAO_OutputCDR &cdr, char *buf, size_t bufsize);
@@ -217,6 +257,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Options options {};
       if (parse_args (argc, argv, options) != 0)
         return 1;
+
+      if (!test_octet_sequence_copy_move ())
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Octet sequence copy/move test failed\n"),
+                          1);
 
       ACE_DEBUG ((LM_DEBUG, "Running:\n"
                   "  low: %d\n"
