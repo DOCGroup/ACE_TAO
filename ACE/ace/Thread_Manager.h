@@ -173,7 +173,7 @@ public:
   ACE_Thread_Descriptor_Base ();
   ~ACE_Thread_Descriptor_Base () override;
 
-  // = We need the following operators to make Borland happy.
+  /// Borland requires these comparison operators.
 
   /// Equality operator.
   bool operator== (const ACE_Thread_Descriptor_Base &rhs) const;
@@ -234,12 +234,14 @@ class ACE_Export ACE_Thread_Descriptor : public ACE_Thread_Descriptor_Base
 public:
   ACE_Thread_Descriptor ();
 
-  // = Accessor methods.
+  /// @name Thread identity accessors
+  /// @{
   /// Unique thread id.
   ACE_thread_t self () const;
 
   /// Unique handle to thread (used by Win32).
   void self (ACE_hthread_t &);
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;
@@ -778,7 +780,7 @@ public:
    * Suspend/resume is not supported on all platforms. For example, Pthreads
    * does not support these functions.
    */
-  //@{
+  /// @{
   /// Suspend all threads
   int suspend_all ();
 
@@ -809,9 +811,10 @@ public:
    */
   int testresume (ACE_thread_t t_id);
 
-  //@}
+  /// @}
 
-  // = Send signals to one or more threads without blocking.
+  /// @name Send signals to threads without blocking
+  /// @{
   /**
    * Send @a signum to all stopped threads.  Not supported on platforms
    * that do not have advanced signal support, such as Win32.
@@ -827,8 +830,11 @@ public:
    * that do not have advanced signal support, such as Win32.
    */
   int kill_grp (int grp_id, int signum);
+  /// @}
 
-  // = Cancel methods, which provides a cooperative thread-termination mechanism (will not block).
+  /// @name Cooperative thread cancellation
+  /// These methods do not block.
+  /// @{
   /**
    * Cancel's all the threads.
    */
@@ -857,6 +863,7 @@ public:
    * Thread_Manager.
    */
   int testterminate (ACE_thread_t t_id);
+  /// @}
 
   /// Set group ids for a particular thread id.
   int set_grp (ACE_thread_t,
@@ -869,7 +876,7 @@ public:
   /**
    * @name Task-related operations
    */
-  //@{
+  /// @{
   /**
    * Block until there are no more threads running in a specified task.
    * This method will not wait for either detached or daemon threads;
@@ -907,10 +914,11 @@ public:
    */
   int cancel_task (ACE_Task_Base *task, int async_cancel = 0);
 
-  //@}
+  /// @}
 
-  // = Collect thread handles in the thread manager.  Notice that
-  //   the collected information is just a snapshot.
+  /// @name Thread and task queries
+  /// Collected thread handles are only a snapshot.
+  /// @{
   /// Check if the thread is managed by the thread manager.  Return true if
   /// the thread is found, false otherwise.
   int hthread_within (ACE_hthread_t handle);
@@ -1084,9 +1092,11 @@ public:
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
+  /// @}
 
 protected:
-  // = Accessors for ACE_Thread_Descriptors.
+  /// @name Thread descriptor accessors
+  /// @{
   /**
    * Get a pointer to the calling thread's own thread_descriptor.
    * This must be called from a spawn thread.  This function will
@@ -1101,6 +1111,7 @@ protected:
   /// Return a pointer to the thread's Thread_Descriptor,
   /// 0 if fail.
   ACE_Thread_Descriptor *hthread_descriptor (ACE_hthread_t);
+  /// @}
 
   /// Create a new thread (must be called with locks held).
   int spawn_i (ACE_THR_FUNC func,
@@ -1156,8 +1167,9 @@ protected:
   /// Remove all threads from the table.
   void remove_thr_all ();
 
-  // = The following four methods implement a simple scheme for
-  // operating on a collection of threads atomically.
+  /// @name Atomic thread-table operations
+  /// These methods operate on a collection of threads atomically.
+  /// @{
 
   /**
    * Efficiently check whether @a thread is in a particular @a state.
@@ -1207,6 +1219,7 @@ protected:
 
   /// Setting the static ACE_TSS_TYPE (ACE_Thread_Exit) *thr_exit_ pointer.
   static int set_thr_exit (ACE_TSS_TYPE (ACE_Thread_Exit) *ptr);
+  /// @}
 
   /**
    * Keeping a list of thread descriptors within the thread manager.
@@ -1231,7 +1244,8 @@ protected:
   /// being closed, reset otherwise.
   int automatic_wait_;
 
-  // = ACE_Thread_Mutex and condition variable for synchronizing termination.
+  /// @name Termination synchronization
+  /// @{
 #if defined (ACE_HAS_THREADS)
   /// Serialize access to the zero_cond_.
   ACE_Thread_Mutex lock_;
@@ -1239,6 +1253,7 @@ protected:
   /// Keep track of when there are no more threads.
   ACE_Condition_Thread_Mutex zero_cond_;
 #endif /* ACE_HAS_THREADS */
+  /// @}
 
   ACE_Locked_Free_List<ACE_Thread_Descriptor, ACE_SYNCH_MUTEX> thread_desc_freelist_;
 
