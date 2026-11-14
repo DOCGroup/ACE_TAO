@@ -34,15 +34,15 @@ TAO::Any_Impl::marshal (TAO_OutputCDR &cdr)
       // the type we are marshaling NOT the
       // typecode of the base pointer that may
       // have been inserted into the any.
-      if ((cdr << TAO_ORB_Core_instance ()
-                  ->valuetype_adapter()
-                  ->derived_type (vb)) == 0)
+      if (!(cdr << TAO_ORB_Core_instance ()
+                    ->valuetype_adapter()
+                    ->derived_type (vb)))
         {
           return false;
         }
     }
   // Otherwise send the typecode of the inserted type.
-  else if ((cdr << this->type_) == 0)
+  else if (!(cdr << this->type_))
     {
       return false;
     }
