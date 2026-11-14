@@ -18,6 +18,7 @@
 #include /**/ "ace/pre.h"
 #include "ace/ACE.h"
 #include <string>
+#include <vector>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -26,7 +27,6 @@
 #include <orbsvcs/FT_NotifierS.h>
 #include <orbsvcs/FT_ReplicationManagerC.h>
 #include <orbsvcs/Notify/Notify_EventChannelFactory_i.h>
-#include <ace/Vector_T.h>
 
 /////////////////////
 // Forward references
@@ -200,7 +200,7 @@ namespace TAO
       ProxyInfo & operator= (ProxyInfo const &) = default;
     };
 
-    using ProxyInfoVec = ACE_Vector<ProxyInfo>;
+    using ProxyInfoVec = std::vector<ProxyInfo>;
 
     ProxyInfoVec proxy_infos_;
 

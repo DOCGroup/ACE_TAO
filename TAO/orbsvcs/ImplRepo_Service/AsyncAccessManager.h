@@ -8,10 +8,11 @@
 #ifndef IMR_ASYNCACCESSMANAGER_H_
 #define IMR_ASYNCACCESSMANAGER_H_
 
+#include <vector>
+
 #include "locator_export.h"
 
 #include "ImR_ActivatorS.h" // ImR_Activator_AMIS.h
-#include "ace/Vector_T.h"
 #include "ace/SString.h"
 
 #include "Forwarder.h"
@@ -97,7 +98,7 @@ class Locator_Export AsyncAccessManager
   ImR_ResponseHandler *remove_on_death_rh_;
   ImR_Locator_i &locator_;
   PortableServer::POA_var poa_;
-  ACE_Vector<ImR_ResponseHandler *> rh_list_;
+  std::vector<ImR_ResponseHandler *> rh_list_;
 
   ImplementationRepository::AAM_Status status_;
 

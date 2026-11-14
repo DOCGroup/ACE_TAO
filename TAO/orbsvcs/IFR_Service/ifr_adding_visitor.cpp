@@ -2,6 +2,7 @@
 #include <cstdint>
 #include <memory>
 #include <string>
+#include <vector>
 
 #include "orbsvcs/Log_Macros.h"
 #include "ast_argument.h"
@@ -52,8 +53,6 @@
 #include "ifr_adding_visitor_union.h"
 
 #include "tao/IFR_Client/IFR_ComponentsC.h"
-
-#include "ace/Vector_T.h"
 
 static bool
 append_wide_codepoint (std::uint32_t codepoint,
@@ -3965,7 +3964,7 @@ ifr_adding_visitor::fill_initializers (CORBA::ExtInitializerSeq &result,
 {
   result.length (0);
   AST_Decl *item {};
-  ACE_Vector<AST_Factory *> factories;
+  std::vector<AST_Factory *> factories;
 
   for (UTL_ScopeActiveIterator v_iter (node,
                                        UTL_Scope::IK_decls);

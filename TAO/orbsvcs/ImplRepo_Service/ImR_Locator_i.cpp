@@ -18,8 +18,9 @@
 
 #include "ace/ARGV.h"
 #include "ace/OS_NS_sys_time.h"
-#include "ace/Vector_T.h"
 #include "ace/Task.h"
+
+#include <vector>
 
 /// We want to give shutdown a little more time to work, so that we
 /// can guarantee to the tao_imr utility that it has shutdown. The tao_imr
@@ -289,7 +290,7 @@ ImR_Locator_i::shutdown
     }
   if (activators != 0 && this->repository_->activators ().current_size () > 0)
     {
-      ACE_Vector<ImplementationRepository::Activator_var> acts;
+      std::vector<ImplementationRepository::Activator_var> acts;
       Locator_Repository::AIMap::ENTRY* entry {};
       Locator_Repository::AIMap::ITERATOR it (this->repository_->activators ());
       for (;it.next (entry) != 0; it.advance ())

@@ -478,7 +478,7 @@ FT::FaultNotifier::ConsumerId TAO::FT_FaultNotifier_i::connect_structured_fault_
   if (looking)
   {
     info_pos = this->proxy_infos_.size ();
-    this->proxy_infos_.push_back(ProxyInfo());
+    this->proxy_infos_.emplace_back ();
   }
 
   ///////////////////////////////////////
@@ -540,7 +540,7 @@ FT::FaultNotifier::ConsumerId TAO::FT_FaultNotifier_i::connect_sequence_fault_co
   if (looking)
   {
     info_pos = this->proxy_infos_.size ();
-    this->proxy_infos_.push_back(ProxyInfo());
+    this->proxy_infos_.emplace_back ();
   }
 
   ///////////////////////////////////////
