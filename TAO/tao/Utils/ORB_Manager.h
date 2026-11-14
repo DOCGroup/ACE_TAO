@@ -50,10 +50,10 @@ public:
    *                     If pointer is nullptr, a new POAManager is created
    *                     internally in the init() call.
    */
-  explicit TAO_ORB_Manager (CORBA::ORB_ptr orb = CORBA::ORB::_nil(),
-                            PortableServer::POA_ptr poa = PortableServer::POA::_nil(),
-                            PortableServer::POAManager_ptr poa_manager =
-                              PortableServer::POAManager::_nil());
+  TAO_ORB_Manager (CORBA::ORB_ptr orb = CORBA::ORB::_nil(),
+                   PortableServer::POA_ptr poa = PortableServer::POA::_nil(),
+                   PortableServer::POAManager_ptr poa_manager =
+                     PortableServer::POAManager::_nil());
 
   /**
    * Initialize the ORB/root POA, using the supplied command line
