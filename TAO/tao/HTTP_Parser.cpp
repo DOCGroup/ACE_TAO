@@ -24,9 +24,10 @@ bool
 TAO_HTTP_Parser::match_prefix (char const *nior_string) const
 {
   std::basic_string<ACE_TCHAR> const ior_string = ACE_TEXT_CHAR_TO_TCHAR (nior_string);
+  size_t const prefix_length = ACE_OS::strlen (::file_prefix);
   return (ACE_OS::strncmp (ior_string.c_str (),
                            ::file_prefix,
-                           sizeof (::file_prefix) - 1) == 0);
+                           prefix_length) == 0);
 }
 
 CORBA::Object_ptr
@@ -36,8 +37,8 @@ TAO_HTTP_Parser::parse_string (char const *nior,
   // Skip the prefix, we know it is there because this method in only
   // called if <match_prefix> returns 1.
   std::basic_string<ACE_TCHAR> const ior = ACE_TEXT_CHAR_TO_TCHAR (nior);
-  ACE_TCHAR const * const http_url =
-    ior.c_str () + sizeof (::file_prefix) + 1;
+  size_t const prefix_length = ACE_OS::strlen (::file_prefix);
+  ACE_TCHAR const * const http_url = ior.c_str () + prefix_length + 2;
 
   std::basic_string<ACE_TCHAR> hostname;
   std::basic_string<ACE_TCHAR> filename;
