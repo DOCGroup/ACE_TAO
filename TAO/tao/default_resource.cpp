@@ -225,15 +225,20 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
         ++curarg;
         if (curarg < argc)
           {
-            TAO_Protocol_Item *item {};
-            ACE_NEW_RETURN (item,
+            TAO_Protocol_Item *raw_item {};
+            ACE_NEW_RETURN (raw_item,
                             TAO_Protocol_Item (ACE_TEXT_ALWAYS_CHAR(argv[curarg])),
                             -1);
-            if (pset->insert (item) == -1)
-              TAOLIB_ERROR ((LM_ERROR,
-                          ACE_TEXT ("(%P|%t) Unable to add protocol factories ")
-                          ACE_TEXT ("for %s: %m\n"),
-                          argv[curarg]));
+            std::unique_ptr<TAO_Protocol_Item> item (raw_item);
+            if (pset->insert (item.get ()) == -1)
+              {
+                TAOLIB_ERROR ((LM_ERROR,
+                            ACE_TEXT ("(%P|%t) Unable to add protocol factories ")
+                            ACE_TEXT ("for %s: %m\n"),
+                            argv[curarg]));
+              }
+            else
+              item.release ();
           }
       }
 

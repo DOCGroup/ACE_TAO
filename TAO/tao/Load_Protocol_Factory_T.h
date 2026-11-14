@@ -35,7 +35,7 @@ namespace TAO
       TAO_Protocol_Factory *protocol_factory {};
       std::unique_ptr<TAO_Protocol_Factory> safe_protocol_factory;
 
-      TAO_Protocol_Item *item {};
+      TAO_Protocol_Item *raw_item {};
 
       // If a protocol factory is obtained from the Service
       // Configurator then do not transfer ownership to the
@@ -67,7 +67,8 @@ namespace TAO
           transfer_ownership = false;
         }
 
-      ACE_NEW_RETURN (item, TAO_Protocol_Item (name), -1);
+      ACE_NEW_RETURN (raw_item, TAO_Protocol_Item (name), -1);
+      std::unique_ptr<TAO_Protocol_Item> item (raw_item);
       // The protocol item takes ownership of a locally created factory.
       // A factory obtained from the Service Configurator remains owned by
       // the Configurator.
@@ -76,20 +77,19 @@ namespace TAO
                       protocol_factory),
                       transfer_ownership);
 
-      if (protocol_set.insert (item) == -1)
+      if (protocol_set.insert (item.get ()) == -1)
         {
           TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT("TAO (%P|%t) Unable to add ")
                       ACE_TEXT("<%C> to protocol factory set.\n"),
                       item->protocol_name ().c_str ()));
 
-          delete item;
-
           if (transfer_ownership == false)
             delete protocol_factory;
 
           return -1;
         }
+      item.release ();
 
       if (TAO_debug_level > 0)
         {
