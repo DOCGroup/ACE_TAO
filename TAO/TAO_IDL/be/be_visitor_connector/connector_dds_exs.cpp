@@ -13,6 +13,8 @@
 #include "ast_typedef.h"
 #include "ast_native.h"
 
+#include <memory>
+
 be_visitor_connector_dds_exs::be_visitor_connector_dds_exs (
       be_visitor_context *ctx)
   : be_visitor_connector_dds_ex_base (ctx)
@@ -79,7 +81,7 @@ be_visitor_connector_dds_exs::visit_connector (be_connector *node)
                                  ACE_TEXT ("template param fetch failed\n ")),
                                 -1);
             }
-          param = &(*this->t_params_)[slot - 1];
+          param = std::addressof ((*this->t_params_)[slot - 1]);
 
           if (d->node_type () == AST_Decl::NT_typedef)
             {
