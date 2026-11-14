@@ -59,14 +59,15 @@ namespace
   class NestedNamingContexts
   {
   public:
-    static void add (CosNaming::NamingContext_ptr const nc)
+    explicit NestedNamingContexts (CosNaming::NamingContext_ptr const nc)
+      :pnc(nc), pNext(pBottom)
     {
-      (void) new NestedNamingContexts( nc ); // This is not a leak (see constructor)
+      pBottom = this;
     }
 
-    static void remove ()
+    ~NestedNamingContexts ()
     {
-      delete pBottom;
+      pBottom = this->pNext;
     }
 
     static size_t hasBeenSeen (CosNaming::NamingContext_ptr const nc)
@@ -88,17 +89,6 @@ namespace
     CosNaming::NamingContext_ptr const
       pnc; // This level's Naming Context
     NestedNamingContexts const *const pNext; // Next highest level
-
-    explicit NestedNamingContexts (CosNaming::NamingContext_ptr const nc)
-      :pnc(nc), pNext(pBottom) // Adds the old list to this!
-    {
-      this->pBottom= this; // Doesn't leak this (it's the new start)
-    }
-
-    ~NestedNamingContexts ()
-    {
-      this->pBottom= this->pNext; // this node removed from list.
-    }
 
     NestedNamingContexts (NestedNamingContexts const &) = delete;
     NestedNamingContexts (NestedNamingContexts &&) = delete;
@@ -306,7 +296,7 @@ namespace
     CosNaming::BindingIterator_var it;
     CosNaming::BindingList_var bl;
 
-    NestedNamingContexts::add (nc);
+    NestedNamingContexts current (nc);
     nc->list (max_bindings, bl, it);
 
     show_chunk (nc, bl.in (), level);
@@ -323,8 +313,6 @@ namespace
 
         it->destroy ();
       }
-
-    NestedNamingContexts::remove ();
   }
 
   //==========================================================================
