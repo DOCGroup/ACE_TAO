@@ -35,7 +35,8 @@ ServantLocator::preinvoke (PortableServer::ObjectId const &oid,
 
   if (std::strstr (s.in (), "test") != nullptr)
     {
-      std::unique_ptr<test_i> servant (new test_i (this->orb_.in (), poa));
+      std::unique_ptr<test_i> servant =
+        std::make_unique<test_i> (this->orb_.in (), poa);
 
       // Return the servant as the cookie, used as a check when
       // postinvoke is called on this ServantLocator.

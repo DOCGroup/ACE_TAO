@@ -34,7 +34,8 @@ ServantActivator::incarnate (PortableServer::ObjectId const &oid,
 
   if (std::strstr (s.in (), "test") != nullptr)
     {
-      std::unique_ptr<test_i> servant (new test_i (this->orb_.in (), poa));
+      std::unique_ptr<test_i> servant =
+        std::make_unique<test_i> (this->orb_.in (), poa);
       // The POA takes ownership of the newly created servant.
       return servant.release ();
     }
