@@ -156,7 +156,8 @@ private:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
-  // = Encapsulate reference count and object lifetime of instances.
+  /// @name Reference-counted representation management
+  /// @{
 
   /// Allocate a new ACE_Future_Rep<T> instance, returning NULL if it
   /// cannot be created.
@@ -189,6 +190,7 @@ private:
    * Precondition (rep != 0 && new_rep != 0)
    */
   static void assign (ACE_Future_Rep<T> *&rep, ACE_Future_Rep<T> *new_rep);
+  /// @}
 
   /// Is result available?
   int ready () const;
@@ -206,9 +208,11 @@ private:
   /// Keep a list of ACE_Future_Observers unread by client's reader thread.
   OBSERVER_COLLECTION observer_collection_;
 
-  // = Condition variable and mutex that protect the <value_>.
+  /// @name Result synchronization
+  /// @{
   mutable ACE_SYNCH_RECURSIVE_MUTEX value_ready_mutex_;
   mutable ACE_SYNCH_RECURSIVE_CONDITION value_ready_;
+  /// @}
 
 private:
   ACE_Future_Rep ();

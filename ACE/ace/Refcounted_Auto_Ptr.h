@@ -141,7 +141,8 @@ private:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
-  // = Encapsulate reference count and object lifetime of instances.
+  /// @name Reference-counted representation management
+  /// @{
 
   /// Allocate a new ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> instance,
   /// returning NULL if it cannot be created.
@@ -163,6 +164,7 @@ private:
   ///
   /// Precondition (rep != 0)
   static void detach (ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> *&rep);
+  /// @}
 
   /// Pointer to the result.
   std::unique_ptr<X> ptr_;
@@ -171,7 +173,6 @@ private:
   mutable ACE_Atomic_Op<ACE_LOCK, long> ref_count_;
 
 private:
-  // = Constructor and destructor private.
   ACE_Refcounted_Auto_Ptr_Rep (X *p = nullptr);
   ~ACE_Refcounted_Auto_Ptr_Rep ();
 };

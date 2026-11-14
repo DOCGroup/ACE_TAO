@@ -32,7 +32,7 @@ template <class T1, class T2>
 class ACE_Reference_Pair
 {
 public:
-  // = Traits.
+  /// Type aliases.
   using first_type = T1;
   using second_type = T2;
 

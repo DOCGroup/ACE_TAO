@@ -70,7 +70,8 @@ class ACE_Reverse_Lock : public ACE_Lock
 public:
   using ACE_LOCK = ACE_LOCKING_MECHANISM;
 
-  // = Initialization/Finalization methods.
+  /// @name Initialization and finalization
+  /// @{
 
   /// Constructor. All locking requests will be forwarded to @a lock.
   ACE_Reverse_Lock (ACE_LOCKING_MECHANISM &lock,
@@ -79,8 +80,10 @@ public:
   /// Destructor. If <lock_> was not passed in by the user, it will be
   /// deleted.
   ~ACE_Reverse_Lock () override = default;
+  /// @}
 
-  // = Lock accessors.
+  /// @name Lock operations
+  /// @{
   /// Release the lock.
   int acquire () override;
 
@@ -107,6 +110,7 @@ public:
 
   /// Explicitly destroy the lock.
   int remove () override;
+  /// @}
 
 private:
   /// The concrete locking mechanism that all the methods delegate to.
