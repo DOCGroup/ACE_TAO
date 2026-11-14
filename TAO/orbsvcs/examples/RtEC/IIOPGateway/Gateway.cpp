@@ -109,7 +109,7 @@ Gateway::run (int argc, ACE_TCHAR* argv[])
       poa->deactivate_object (gateway_oid.in ());
 
       // Destroy the POA
-      poa->destroy (1, {});
+      poa->destroy (true, false);
     }
   catch (CORBA::Exception const &ex)
     {

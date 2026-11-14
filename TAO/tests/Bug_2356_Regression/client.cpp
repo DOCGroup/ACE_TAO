@@ -173,8 +173,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ami_test_var->shutdown ();
 
-      poa_var->destroy (1,  // ethernalize objects
-                        0); // wait for completion
+      poa_var->destroy (true,  // ethernalize objects
+                        false); // wait for completion
 
       orb->destroy ();
       return handler.result ();
