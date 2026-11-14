@@ -184,11 +184,11 @@ int util_itoa(int i, char *a);
 
 #include <stdarg.h>
 
-int util_vsprintf(char *s, register char *fmt, va_list args);
+int util_vsprintf(char *s, char *fmt, va_list args);
 int util_sprintf(char *s, char *fmt, ...);
 
 /* These routines perform bounds checks. */
-int util_vsnprintf(char *s, int n, register char *fmt, va_list args);
+int util_vsnprintf(char *s, int n, char *fmt, va_list args);
 int util_snprintf(char *s, int n, char *fmt, ...);
 
 #endif

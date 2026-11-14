@@ -182,17 +182,17 @@ double cput, realt;         /* user, real time (seconds) */
 
 void err (char *s);
 void mes (char *s);
-void pattern (register char *cp, register int cnt);
+void pattern (char *cp, int cnt);
 char *outfmt (double b);
-static void getrusage (int ignored, register struct rusage *ru);
+static void getrusage (int ignored, struct rusage *ru);
 void prep_timer ();
 double read_timer (char *str, int len);
-static void prusage (register struct rusage *r0, struct rusage *r1, struct timeval *e, struct timeval *b, char *outp);
+static void prusage (struct rusage *r0, struct rusage *r1, struct timeval *e, struct timeval *b, char *outp);
 static void tvadd (struct timeval *tsum, struct timeval *t0, struct timeval *t1);
 static void tvsub (struct timeval *tdiff, struct timeval *t1, struct timeval *t0);
-static void psecs (long l, register char *cp);
+static void psecs (long l, char *cp);
 void delay (int us);
-int mread (int fd, register char *bufp, unsigned n);
+int mread (int fd, char *bufp, unsigned n);
 int Nread (ACE_SOCK_Stream &s, void *buf, int count);
 int Nwrite (ACE_SOCK_Stream &s, void *buf, int count);
 
@@ -636,9 +636,9 @@ mes (char *s)
 }
 
 void
-pattern (register char *cp, register int cnt)
+pattern (char *cp, int cnt)
 {
-  register char c;
+  char c;
   c = 0;
   while (cnt-- > 0)
   {
@@ -683,7 +683,7 @@ static struct rusage ru0;       /* Resource utilization at the start */
 #if defined(SYSV)
 /*ARGSUSED */
 static void
-getrusage (int ignored, register struct rusage *ru)
+getrusage (int ignored, struct rusage *ru)
 {
   struct tms buf;
 
@@ -757,13 +757,13 @@ read_timer (char *str, int len)
 }
 
 static void
-prusage (register struct rusage *r0, struct rusage *r1,
+prusage (struct rusage *r0, struct rusage *r1,
          struct timeval *e, struct timeval *b, char *outp)
 {
   struct timeval tdiff;
-  register time_t t;
-  register char *cp;
-  register int i;
+  time_t t;
+  char *cp;
+  int i;
   int ms;
 
   t = (r1->ru_utime.tv_sec - r0->ru_utime.tv_sec) * 100 +
@@ -886,9 +886,9 @@ tvsub (struct timeval *tdiff, struct timeval *t1, struct timeval *t0)
 }
 
 static void
-psecs (long l, register char *cp)
+psecs (long l, char *cp)
 {
-  register int i;
+  int i;
 
   i = l / 3600;
   if (i)
@@ -950,10 +950,10 @@ delay (int us)
  * grouping as it is written with.  Written by Robert S. Miles, BRL.
  */
 int
-mread (int fd, register char *bufp, unsigned n)
+mread (int fd, char *bufp, unsigned n)
 {
-  register unsigned count = 0;
-  register int nread;
+  unsigned count = 0;
+  int nread;
 
   do
     {
