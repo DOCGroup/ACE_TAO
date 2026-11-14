@@ -62,7 +62,7 @@ ACE_QtReactor::reopen_notification_pipe ()
       // fd_set, so reset it manually
       this->wait_set_.rd_mask_.reset ();
 
-      this->notify_handler_->open (this, 0);
+      this->notify_handler_->open (this, false);
     }
 #endif /* ACE_MT_SAFE */
 }
