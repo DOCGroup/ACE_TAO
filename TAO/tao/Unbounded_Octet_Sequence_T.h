@@ -209,7 +209,9 @@ public:
       (len == rhs.length()
        && (len == 0
            ? true
-           : std::memcmp (&lhs[0], &rhs[0], len) == 0));
+           : std::memcmp (std::addressof (lhs[0]),
+                          std::addressof (rhs[0]),
+                          len) == 0));
   }
 
   inline bool operator!= (unbounded_value_sequence const &rhs) const

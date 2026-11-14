@@ -1688,7 +1688,7 @@ TAO_Root_POA::create_object_key (const PortableServer::ObjectId &id)
   CORBA::Octet *buffer = TAO::ObjectKey::allocbuf (buffer_size);
 
   // First copy the POA id into the key.
-  std::memcpy (&buffer[0],
+  std::memcpy (buffer,
                   this->id_.get_buffer (),
                   this->id_.length ());
 
@@ -1766,7 +1766,7 @@ TAO_Root_POA::set_id (TAO_Root_POA *parent)
 
   // Add the object key prefix.
   std::memcpy (&buffer[starting_at],
-                  &objectkey_prefix[0],
+                  objectkey_prefix,
                   TAO_OBJECTKEY_PREFIX_SIZE);
 
   starting_at += TAO_OBJECTKEY_PREFIX_SIZE;

@@ -683,7 +683,7 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
 {
   if (key.length() < TAO_Root_POA::TAO_OBJECTKEY_PREFIX_SIZE
       || std::memcmp (key.get_buffer (),
-                         &TAO_Root_POA::objectkey_prefix[0],
+                         TAO_Root_POA::objectkey_prefix,
                          TAO_Root_POA::TAO_OBJECTKEY_PREFIX_SIZE) != 0)
     {
       return TAO_Adapter::DS_MISMATCHED_KEY;
@@ -908,7 +908,7 @@ TAO_Object_Adapter::get_collocated_servant (const TAO_MProfile &mp)
 
       if (objkey->length() < TAO_Root_POA::TAO_OBJECTKEY_PREFIX_SIZE
           || std::memcmp (objkey->get_buffer (),
-                             &TAO_Root_POA::objectkey_prefix[0],
+                             TAO_Root_POA::objectkey_prefix,
                              TAO_Root_POA::TAO_OBJECTKEY_PREFIX_SIZE) != 0)
         continue;
 
