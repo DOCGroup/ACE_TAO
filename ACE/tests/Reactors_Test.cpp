@@ -57,7 +57,7 @@ private:
 // Static data member initialization.
 int Test_Task::task_count_ = 0;
 
-static ACE_Atomic_Op<ACE_Thread_Mutex, int> done_count = MAX_TASKS * 2;
+static ACE_Atomic_Op<ACE_Thread_Mutex, int> done_count {MAX_TASKS * 2};
 static ACE_Recursive_Thread_Mutex recursive_lock;
 
 Test_Task::Test_Task ()
