@@ -5,7 +5,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Collocation_Test coll_test;
 
-  int result = 0;
+  int result {};
   try
     {
       result = coll_test.init (argc, argv);

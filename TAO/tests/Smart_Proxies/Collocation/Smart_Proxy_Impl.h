@@ -1,4 +1,3 @@
-//
 #ifndef SMART_PROXY_IMPL_H
 #define SMART_PROXY_IMPL_H
 
@@ -15,9 +14,8 @@ public:
   Smart_Diamond_Top_Factory &operator= (Smart_Diamond_Top_Factory const &) = delete;
   Smart_Diamond_Top_Factory &operator= (Smart_Diamond_Top_Factory &&) = delete;
 
+  /// Create the smart proxy.
   Diamond::Top_ptr create_proxy (Diamond::Top_ptr proxy) override;
-
-  // This method will create the smart_proxy.
 };
 
 class MY_Stub_Export Smart_Diamond_Top_Proxy
@@ -30,10 +28,7 @@ public:
   Smart_Diamond_Top_Proxy &operator= (Smart_Diamond_Top_Proxy const &) = delete;
   Smart_Diamond_Top_Proxy &operator= (Smart_Diamond_Top_Proxy &&) = delete;
 
+  /// Intercept the shape call and log its result.
   char * shape () override;
-  // Smartify the method call!
-
-  // Dont need to add any extra functionality into shutdown()
-  // hence neednt define it.
 };
 #endif /*SMART_PROXY_IMPL_H*/

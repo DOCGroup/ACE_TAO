@@ -16,10 +16,9 @@ public:
   Top_i (Top_i &&) = delete;
   Top_i &operator= (Top_i const &) = delete;
   Top_i &operator= (Top_i &&) = delete;
-  // Ctor and dtor.
 
-  char* shape () override;
-  // Return the shape of this object (interface.)
+  /// Return the shape of this interface.
+  char * shape () override;
 };
 
 class Diamond_Export Left_i : public POA_Diamond::Left
@@ -31,13 +30,12 @@ public:
   Left_i (Left_i &&) = delete;
   Left_i &operator= (Left_i const &) = delete;
   Left_i &operator= (Left_i &&) = delete;
-  // Ctor, dtor.
 
+  /// Return the shape of this interface.
   char * shape () override;
-  // Return the shape of this object (interface.)
 
+  /// Return the color of this interface.
   char * color () override;
-  // Return the color of this object (interface.)
 
   CORBA::Long combine (CORBA::Long first,
                        CORBA::Long &second,
@@ -53,13 +51,12 @@ public:
   Right_i (Right_i &&) = delete;
   Right_i &operator= (Right_i const &) = delete;
   Right_i &operator= (Right_i &&) = delete;
-  // Ctor, dtor.
 
+  /// Return the shape of this interface.
   char * shape () override;
-  // Return the shape of this object (interface.)
 
+  /// Return the width of the object.
   CORBA::Long width () override;
-  // Return the width of the stuff.
 };
 
 class Diamond_Export Buttom_i : public POA_Diamond::Buttom
@@ -71,23 +68,22 @@ public:
   Buttom_i (Buttom_i &&) = delete;
   Buttom_i &operator= (Buttom_i const &) = delete;
   Buttom_i &operator= (Buttom_i &&) = delete;
-  // Ctor, dtor.
 
+  /// Return the shape of this interface.
   char * shape () override;
-  // Return the shape of this object (interface.)
 
+  /// Return the color of this interface.
   char * color () override;
-  // Return the color of this object (interface.)
 
   CORBA::Long combine (CORBA::Long first,
                        CORBA::Long &second,
                        CORBA::Long_out third) override;
 
+  /// Return the width of the object.
   CORBA::Long width () override;
-  // Return the width of the stuff.
 
+  /// Return the name of the object.
   char * name () override;
-  // Return the name of the object.
 };
 
 #endif /* TAO_DIAMOND_I_H */

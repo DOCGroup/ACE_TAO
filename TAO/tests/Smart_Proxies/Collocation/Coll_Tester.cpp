@@ -1,18 +1,27 @@
-//============================================================================
-//
-//  =FILENAME
-//     Collocation_Test.h
-//
-//  =DESCRIPTION
-//     Server class to perform testing of TAO's collocation mechanism.
-//
-//  =AUTHOR
-//     Nanbor Wang
-//
-//=============================================================================
+/**
+ * @file Coll_Tester.cpp
+ * @brief Implements the collocation test.
+ * @author Nanbor Wang
+ */
 
 #include "Coll_Tester.h"
 #include "Smart_Proxy_Impl.h"
+#include <memory>
+
+Collocation_Test::~Collocation_Test ()
+{
+  if (!CORBA::is_nil (this->root_poa_.in ()))
+    {
+      try
+        {
+          this->root_poa_->destroy (true, true);
+        }
+      catch (CORBA::Exception const &ex)
+        {
+          ex._tao_print_exception ("Unable to destroy RootPOA");
+        }
+    }
+}
 
 int
 Collocation_Test::init (int argc, ACE_TCHAR *argv[])
@@ -31,14 +40,18 @@ Collocation_Test::init (int argc, ACE_TCHAR *argv[])
     this->root_poa_->the_POAManager ();
 
   // Activate the diamond servant and its base classes under RootPOA.
-  PortableServer::ObjectId_var id = this->root_poa_->activate_object (&this->top_servant_);
-  id = this->root_poa_->activate_object (&this->diamond_servant_);
+  PortableServer::ObjectId_var id =
+    this->root_poa_->activate_object (std::addressof (this->top_servant_));
+  id = this->root_poa_->activate_object (
+    std::addressof (this->diamond_servant_));
 
   // We only care about the most derived class here.
   this->diamond_obj_ = this->root_poa_->id_to_reference (id.in ());
 
-  id = this->root_poa_->activate_object (&this->left_servant_);
-  id = this->root_poa_->activate_object (&this->right_servant_);
+  id = this->root_poa_->activate_object (
+    std::addressof (this->left_servant_));
+  id = this->root_poa_->activate_object (
+    std::addressof (this->right_servant_));
 
   CORBA::String_var str =
     this->orb_->object_to_string (this->diamond_obj_.in ());
