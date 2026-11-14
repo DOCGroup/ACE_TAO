@@ -22,6 +22,8 @@
 
 #include "ace/Malloc_Base.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE_Tc5(ACE_Hash_Multi_Map_Manager)
@@ -106,8 +108,10 @@ ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::cr
   // list with the dummy node in the front serving as the anchor of
   // the list.
   for (size_t i {}; i < size; ++i)
-    new (&this->table_[i]) ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> (&this->table_[i],
-                                                                     &this->table_[i]);
+    new (std::addressof (this->table_[i]))
+      ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> (
+        std::addressof (this->table_[i]),
+        std::addressof (this->table_[i]));
   return 0;
 }
 
@@ -156,7 +160,7 @@ ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::cl
       for (size_t i {}; i < this->total_size_; ++i)
         {
           // Destroy the dummy entry.
-          ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *entry = &this->table_[i];
+          ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *entry = std::addressof (this->table_[i]);
 
           // The second argument results in a no-op instead of
           // deallocation.
@@ -185,7 +189,7 @@ ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::un
   for (size_t i {}; i < this->total_size_; ++i)
     {
       for (ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *temp_ptr = this->table_[i].next_;
-           temp_ptr != &this->table_[i];
+           temp_ptr != std::addressof (this->table_[i]);
            )
         {
           ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *hold_ptr = temp_ptr;
@@ -197,8 +201,8 @@ ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::un
         }
 
       // Restore the sentinel.
-      this->table_[i].next_ = &this->table_[i];
-      this->table_[i].prev_ = &this->table_[i];
+      this->table_[i].next_ = std::addressof (this->table_[i]);
+      this->table_[i].prev_ = std::addressof (this->table_[i]);
     }
 
   this->cur_size_ = 0;
@@ -228,7 +232,7 @@ ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::bi
       entry = new (ptr) ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> (ext_id,
                                                                   int_id_set,
                                                                   this->table_[loc].next_,
-                                                                  &this->table_[loc]);
+                                                                  std::addressof (this->table_[loc]));
       this->table_[loc].next_ = entry;
       entry->next_->prev_ = entry;
       ++this->cur_size_;
@@ -267,7 +271,7 @@ ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::bi
       entry = new (ptr) ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> (ext_id,
                                                                   int_id_set,
                                                                   this->table_[loc].next_,
-                                                                  &this->table_[loc]);
+                                                                  std::addressof (this->table_[loc]));
       this->table_[loc].next_ = entry;
       entry->next_->prev_ = entry;
       ++this->cur_size_;
@@ -296,7 +300,7 @@ ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::tr
       entry = new (ptr) ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> (ext_id,
                                                                   int_id_set,
                                                                   this->table_[loc].next_,
-                                                                  &this->table_[loc]);
+                                                                  std::addressof (this->table_[loc]));
       this->table_[loc].next_ = entry;
       entry->next_->prev_ = entry;
       ++this->cur_size_;
@@ -378,10 +382,10 @@ ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::sh
 
   ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *temp = this->table_[loc].next_;
 
-  while (temp != &this->table_[loc] && this->equal (temp->ext_id_, ext_id) == 0)
+  while (temp != std::addressof (this->table_[loc]) && this->equal (temp->ext_id_, ext_id) == 0)
     temp = temp->next_;
 
-  if (temp == &this->table_[loc])
+  if (temp == std::addressof (this->table_[loc]))
     {
       errno = ENOENT;
       return -1;
@@ -477,12 +481,12 @@ ACE_Hash_Multi_Map_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOC
     return 0;
 
   this->next_ = this->next_->next_;
-  if (this->next_ == &this->map_man_->table_[this->index_])
+  if (this->next_ == std::addressof (this->map_man_->table_[this->index_]))
     {
       while (++this->index_ < static_cast<ssize_t> (this->map_man_->total_size_))
         {
           this->next_ = this->map_man_->table_[this->index_].next_;
-          if (this->next_ != &this->map_man_->table_[this->index_])
+          if (this->next_ != std::addressof (this->map_man_->table_[this->index_]))
             break;
         }
     }
@@ -506,12 +510,12 @@ ACE_Hash_Multi_Map_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOC
     return 0;
 
   this->next_ = this->next_->prev_;
-  if (this->next_ == &this->map_man_->table_[this->index_])
+  if (this->next_ == std::addressof (this->map_man_->table_[this->index_]))
     {
       while (--this->index_ >= 0)
         {
           this->next_ = this->map_man_->table_[this->index_].prev_;
-          if (this->next_ != &this->map_man_->table_[this->index_])
+          if (this->next_ != std::addressof (this->map_man_->table_[this->index_]))
             break;
         }
     }
@@ -549,12 +553,12 @@ ACE_Hash_Multi_Map_Const_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, A
     return 0;
 
   this->next_ = this->next_->next_;
-  if (this->next_ == &this->map_man_->table_[this->index_])
+  if (this->next_ == std::addressof (this->map_man_->table_[this->index_]))
     {
       while (++this->index_ < (ssize_t) this->map_man_->total_size_)
         {
           this->next_ = this->map_man_->table_[this->index_].next_;
-          if (this->next_ != &this->map_man_->table_[this->index_])
+          if (this->next_ != std::addressof (this->map_man_->table_[this->index_]))
             break;
         }
     }
@@ -578,12 +582,12 @@ ACE_Hash_Multi_Map_Const_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, A
     return 0;
 
   this->next_ = this->next_->prev_;
-  if (this->next_ == &this->map_man_->table_[this->index_])
+  if (this->next_ == std::addressof (this->map_man_->table_[this->index_]))
     {
       while (--this->index_ >= 0)
         {
           this->next_ = this->map_man_->table_[this->index_].prev_;
-          if (this->next_ != &this->map_man_->table_[this->index_])
+          if (this->next_ != std::addressof (this->map_man_->table_[this->index_]))
             break;
         }
     }
