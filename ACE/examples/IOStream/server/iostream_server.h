@@ -17,15 +17,13 @@
 
 using ACE_SOCK_IOStream = ACE_IOStream<ACE_SOCK_Stream>;
 
+/**
+ * @brief Extends ACE_Svc_Handler for the iostream/SOCK_Stream hybrid.
+ *
+ * The handler follows the usual pattern until @c handle_input, where it
+ * uses the iostream characteristics of its peer.
+ */
 class Handler : public ACE_Svc_Handler<ACE_SOCK_IOStream, ACE_NULL_SYNCH>
-  // = TITLE
-  //     Extend the <ACE_Svc_Handler> template to do our bidding.
-  //
-  // = DESCRIPTION
-  //     Create an <ACE_Svc_Handler> object based on our
-  //     iostream/SOCK_Stream hybrid.  All of this is fairly standard
-  //     until we get to the <handle_input> where we begin using the
-  //     iostream characteristics of the peer.
 {
 public:
   Handler ();
@@ -35,11 +33,15 @@ public:
   Handler &operator= (Handler &&) = delete;
   ~Handler () override;
 
-  // = <Svc_Handler> hooks.
+  /// @name Svc_Handler hooks
+  /// @{
   int open (void *) override;
+  /// @}
 
-  // = <Event_Handler> hooks.
+  /// @name Event_Handler hooks
+  /// @{
   int handle_input (ACE_HANDLE) override;
+  /// @}
 };
 
 #endif /* ACE_LACKS_ACE_IOSTREAM */
