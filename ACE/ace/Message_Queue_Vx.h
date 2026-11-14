@@ -67,7 +67,6 @@ public:
                         size_t max_message_length,
                         ACE_Notification_Strategy * = nullptr);
 
-  // Create a message queue with all the defaults.
   /// Create a message queue with all the defaults.
   virtual int open (size_t max_messages,
                     size_t max_message_length,
@@ -79,7 +78,8 @@ public:
   /// Close down the message queue and release all resources.
   virtual ~ACE_Message_Queue_Vx ();
 
-  // = Queue statistic methods.
+  /// @name Queue statistics
+  /// @{
   /**
    * Number of total bytes on the queue, i.e., sum of the message
    * block sizes.
@@ -96,9 +96,10 @@ public:
    * Number of total messages on the queue.
    */
   virtual size_t message_count ();
+  /// @}
 
-  // = Manual changes to these stats (used when queued message blocks
-  // change size or lengths).
+  /// @name Manual queue-statistic updates
+  /// @{
   /**
    * New value of the number of total bytes on the queue, i.e., sum of
    * the message block sizes.
@@ -110,8 +111,10 @@ public:
    * of the message block lengths.
    */
   virtual void message_length (size_t new_length);
+  /// @}
 
-  // = Flow control routines
+  /// @name Flow control
+  /// @{
 
   /// Get high watermark.
   virtual size_t high_water_mark ();
@@ -124,8 +127,7 @@ public:
 
   /// Set low watermark.
   virtual void low_water_mark (size_t lwm);
-
-  // = Activation control methods.
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;
@@ -162,18 +164,18 @@ protected:
   /// deadline time.
   virtual int dequeue_deadline_i (ACE_Message_Block *&dequeued);
 
-  // = Check the boundary conditions (assumes locks are held).
+  /// @name Queue boundary conditions
+  /// @{
   /// True if queue is full, else false.
   virtual bool is_full_i ();
 
   /// True if queue is empty, else false.
   virtual bool is_empty_i ();
+  /// @}
 
-  // = Implementation of public <activate>/<deactivate> methods above.
-
-  // These methods assume locks are held.
-
-  // = Helper methods to factor out common #ifdef code.
+  /// @name Queue synchronization helpers
+  /// @{
+  /// These methods assume the queue locks are held.
   /// Wait for the queue to become non-full.
   virtual int wait_not_full_cond (ACE_Time_Value *tv);
 
@@ -188,6 +190,7 @@ protected:
 
   /// Access the underlying msgQ.
   MSG_Q_ID msgq ();
+  /// @}
 
 private:
   ACE_Message_Queue_Vx (const ACE_Message_Queue_Vx &) = delete;

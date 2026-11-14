@@ -63,7 +63,8 @@ public:
   /// Close down the message queue and release all resources.
   virtual ~ACE_Message_Queue_NT ();
 
-  // = Enqueue and dequeue methods.
+  /// @name Enqueue and dequeue methods
+  /// @{
 
   /**
    * Enqueue an ACE_Message_Block * at the end of the queue.
@@ -84,8 +85,10 @@ public:
                             ACE_Time_Value *timeout = nullptr);
   virtual int dequeue (ACE_Message_Block *&first_item,
                        ACE_Time_Value *timeout = nullptr);
+  /// @}
 
-  // = Check if queue is full/empty.
+  /// @name Queue boundary conditions
+  /// @{
   /**
    * Always return false.
    */
@@ -96,8 +99,10 @@ public:
    * only transient.
    */
   virtual bool is_empty ();
+  /// @}
 
-  // = Queue statistic methods (transient.)
+  /// @name Queue statistics
+  /// @{
   /**
    * Number of total bytes on the queue, i.e., sum of the message
    * block sizes.
@@ -114,9 +119,10 @@ public:
    * Number of total messages on the queue.
    */
   virtual size_t message_count ();
+  /// @}
 
-  // = Manual changes to these stats (used when queued message blocks
-  // change size or lengths).
+  /// @name Manual queue-statistic updates
+  /// @{
   /**
    * New value of the number of total bytes on the queue, i.e., sum of
    * the message block sizes.
@@ -128,11 +134,13 @@ public:
    * of the message block lengths.
    */
   virtual void message_length (size_t new_length);
+  /// @}
 
   /// Get the max concurrent thread number.
   virtual DWORD max_threads ();
 
-  // = Activation control methods.
+  /// @name Queue activation control
+  /// @{
 
   /**
    * Deactivate the queue and wake up all threads waiting on the queue
@@ -163,14 +171,15 @@ public:
   /// Returns true if the state of the queue is <DEACTIVATED>,
   /// but false if the queue's is <ACTIVATED> or <PULSED>.
   virtual int deactivated ();
+  /// @}
 
-  // = Not currently implemented...
+  /// @name Unsupported operations
+  /// @{
   int peek_dequeue_head (ACE_Message_Block *&first_item,
                          ACE_Time_Value *timeout = nullptr);
   ACE_Notification_Strategy *notification_strategy ();
   void notification_strategy (ACE_Notification_Strategy *s);
-
-  // = Notification hook.
+  /// @}
 
   /// Dump the state of an object.
   virtual void dump () const;
@@ -188,7 +197,8 @@ private:
   void operator= (ACE_Message_Queue_NT &&) = delete;
 
 private:
-  // = Internal states.
+  /// @name Internal state
+  /// @{
 
   /// Maximum threads that can be released (and run) concurrently.
   DWORD max_cthrs_;
@@ -214,6 +224,7 @@ private:
 
   /// Underlying NT IoCompletionPort.
   ACE_HANDLE completion_port_;
+  /// @}
 };
 #endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
 
