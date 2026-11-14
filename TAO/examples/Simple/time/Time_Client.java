@@ -1,18 +1,8 @@
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/examples/Simple/time
-//
-// = FILENAME
-//    Time_Client.java
-//
-// = DESCRIPTION
-//    This class implements a Java client interface to the Time example.
-//
-// = AUTHOR
-//   Martin Krumpolec <krumpo@pobox.sk>
-//
-// ============================================================================
+/**
+ * @file Time_Client.java
+ * @brief Java client for the Time example.
+ * @author Martin Krumpolec <krumpo@pobox.sk>
+ */
 
 import JACE.Misc.GetOpt;
 import org.omg.CosNaming.*;
