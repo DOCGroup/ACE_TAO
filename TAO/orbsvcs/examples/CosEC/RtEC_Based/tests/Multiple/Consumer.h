@@ -30,7 +30,6 @@
 class Consumer : public POA_CosEventComm::PushConsumer, public Multiple
 {
 public:
-  // = Initializatiopn and termination methods.
   Consumer () = default;
   Consumer (Consumer const &) = delete;
   Consumer (Consumer &&) = delete;
@@ -59,7 +58,6 @@ public:
   /// disconnect the consumer from the EC.
   void disconnect_push_consumer () override;
 
-  // = CosEC_Multiple methods.
   /// Parse the command line options.
   int parse_args (int argc, ACE_TCHAR *argv []) override;
 

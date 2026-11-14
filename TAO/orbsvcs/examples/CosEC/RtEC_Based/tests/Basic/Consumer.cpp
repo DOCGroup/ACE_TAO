@@ -4,7 +4,6 @@
 void
 Consumer::open (CosEventChannelAdmin::EventChannel_ptr const event_channel)
 {
-  // = Connect as a consumer.
   this->consumer_admin_ =
     event_channel->for_consumers ();
 }

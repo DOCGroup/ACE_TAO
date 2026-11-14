@@ -5,14 +5,13 @@
 
 #include <array>
 
+/**
+ * @brief A simple client to test the CosEC factory.
+ *
+ * Test client for the CosEC factory.
+ */
 class FactoryClient
 {
-  // = TITLE
-  //   A simple client to test the CosEC factory
-  //
-  // = DESCRIPTION
-  //   Test Client for the CosEC factory.
-
 public:
   FactoryClient () = default;
 
@@ -22,52 +21,51 @@ public:
   FactoryClient &operator= (FactoryClient const &) = delete;
   FactoryClient &operator= (FactoryClient &&) = delete;
 
+  /// Initializes the ORB.
   void init_ORB (int argc, ACE_TCHAR *argv []);
-  // Initializes the ORB.
 
+  /// Gets hold of a running naming service.
   void resolve_naming_service ();
-  // Try to get hold of a running naming service.
 
+  /// Resolves the factory from the Naming service.
   void resolve_factory ();
-  // Try to resolve the factory from the Naming service.
 
+  /// Creates a local factory and sets <factory_>.
   CosEventChannelFactory::ChannelFactory_ptr
   create_factory ();
-  // Create a local Factory and also set the <factory_>.
 
+  /// Runs tests to check if the factory behaves correctly.
   void run_test ();
-  // Runs a couple of tests to check if the factory behaves correctly.
 
 protected:
+  /// Creates a channel.
   CosEventChannelAdmin::EventChannel_ptr
       create_channel (char const *channel_id,
                      CosEventChannelFactory::ChannelFactory_ptr factory);
-  // Create a channel.
 
+  /// Destroys a channel.
   void destroy_channel (char const *channel_id);
-  // Destroy the channel.
 
+  /// Finds a channel by ID.
   void find_channel (char const *channel_id);
-  // Find a channel.
 
+  /// Finds the ID of a channel.
   void find_channel_id (CosEventChannelAdmin::EventChannel_ptr channel);
-  // Find a channel.
 
-  // = Protected Data members.
+  /// The name of the factory registered with the naming service.
   char const *const factory_name_ {"CosEC_Factory"};
-  // The name of the factory registered with the naming service.
 
+  /// The ORB used by this client.
   CORBA::ORB_var orb_ {};
-  // The ORB that we use.
 
+  /// Handle to the name service.
   CosNaming::NamingContext_var naming_context_ {};
-  // Handle to the name service.
 
+  /// Object resolved from the naming service.
   CosEventChannelFactory::ChannelFactory_var factory_ {};
-  // object from naming service.
 
+  /// Whether to use the naming service.
   bool use_naming_service_ {};
-  // flag to indicate if the naming service should be used.
 };
 
 void

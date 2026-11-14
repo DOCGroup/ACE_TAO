@@ -34,8 +34,6 @@ public:
   /// Run the test
   int run (int argc, ACE_TCHAR* argv[]);
 
-  // = The CosEventComm::PushSupplier methods
-
   /// The skeleton methods.
   void disconnect_push_supplier () override;
 };

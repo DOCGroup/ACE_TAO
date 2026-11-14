@@ -11,16 +11,14 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+/**
+ * @brief Adapts a Cos PushConsumer for use by the Rtec ProxyPushSupplier.
+ *
+ * The wrapper presents the Cos PushConsumer as an Rtec PushConsumer.
+ */
 class TAO_CosEC_PushConsumerWrapper :
   public POA_RtecEventComm::PushConsumer
 {
-  // = TITLE
-  //   Wrapper class for the Rtec PushConsumer.
-  //
-  // = DESCRIPTION
-  //   The Rtec ProxyPushSupplier uses a Rtec PushConsumer.  This
-  //   class wraps the Cos PushConsumer to make it look like a Rtec
-  //   PushConsumer.
 public:
   explicit TAO_CosEC_PushConsumerWrapper (CosEventComm::PushConsumer_ptr consumer);
 
@@ -29,15 +27,15 @@ public:
   TAO_CosEC_PushConsumerWrapper (TAO_CosEC_PushConsumerWrapper &&) = delete;
   TAO_CosEC_PushConsumerWrapper &operator= (TAO_CosEC_PushConsumerWrapper const &) = delete;
   TAO_CosEC_PushConsumerWrapper &operator= (TAO_CosEC_PushConsumerWrapper &&) = delete;
+  /// Receives data supplied by the RT Event Channel.
   void push (RtecEventComm::EventSet const &data) override;
-  // This method is called by the RTEvent Channel to supply data.
 
+  /// Disconnects the consumer from the event channel.
   void disconnect_push_consumer () override;
-  // Disconnects the consumer from the event channel.
 
 private:
+  /// The Cos PushConsumer being proxied.
   CosEventComm::PushConsumer_var consumer_;
-  // The Cos PushConsumer that we're proxying for.
 };
 
 #if defined(_MSC_VER)

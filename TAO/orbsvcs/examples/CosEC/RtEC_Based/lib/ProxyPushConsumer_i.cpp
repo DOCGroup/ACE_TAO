@@ -12,16 +12,14 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+/**
+ * @brief Adapts a Cos PushSupplier for use by the Rtec ProxyPushConsumer.
+ *
+ * The wrapper presents the Cos PushSupplier as an Rtec PushSupplier.
+ */
 class TAO_CosEC_PushSupplierWrapper :
   public virtual POA_RtecEventComm::PushSupplier
 {
-  // = TITLE
-  //   A Wrapper for the Rtec PushSupplier.
-  //
-  // = DESCRIPTION
-  //   The Rtec ProxyPushConsumer uses a Rtec PushSupplier.  This
-  //   class wraps the Cos PushSupplier to make it look like a Rtec
-  //   PushSupplier.
 public:
   explicit TAO_CosEC_PushSupplierWrapper (CosEventComm::PushSupplier_ptr supplier);
 
@@ -30,8 +28,8 @@ public:
   TAO_CosEC_PushSupplierWrapper (TAO_CosEC_PushSupplierWrapper &&) = delete;
   TAO_CosEC_PushSupplierWrapper &operator= (TAO_CosEC_PushSupplierWrapper const &) = delete;
   TAO_CosEC_PushSupplierWrapper &operator= (TAO_CosEC_PushSupplierWrapper &&) = delete;
+  /// Disconnects the push supplier.
   void disconnect_push_supplier () override;
-  // Disconnects the push supplier.
 
 private:
   // @@ Pradeep: are you sure you want to go through the CORBA
@@ -40,8 +38,8 @@ private:
   // can use remote CosPushSuppliers), but suffers some performance
   // penalty: do you need the extra flexibility? Can you use it? [I
   // suspect the answers are "not" for both]
+  /// The Cos PushSupplier being proxied.
   CosEventComm::PushSupplier_var supplier_;
-  // The Cos PushSupplier that we're proxying for.
 };
 
 #if defined(_MSC_VER)

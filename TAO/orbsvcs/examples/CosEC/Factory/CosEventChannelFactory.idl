@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    CosEventChannelFactory.idl
@@ -7,74 +6,49 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_COSEVENTCHANNELFACTORY_IDL
 #define TAO_COSEVENTCHANNELFACTORY_IDL
 
 #include "orbsvcs/CosEventChannelAdmin.idl"
 
+/// Module that describes the Channel Factory.
 module CosEventChannelFactory
 {
-  // = TITLE
-  //   Module that describes the Channel Factory.
-  //
-  exception DuplicateChannel
-  {
-    // = TITLE
-    //    This exception is raised to indicate that a specified
-    //    channel already exists.
-  };
+  /// Raised when a specified channel already exists.
+  exception DuplicateChannel {};
 
-  exception NoSuchChannel
-  {
-    // = TITLE
-    //   This exception is raised to indicate that a specified
-    //   channel does not exist.
-  };
+  /// Raised when a specified channel does not exist.
+  exception NoSuchChannel {};
 
-  exception BindFailed
-  {
-    // = TITLE
-    //    This exception is raised to indicate that the EventChannel
-    //    could not be registered with the naming service.
-  };
+  /// Raised when an EventChannel cannot be registered with the naming service.
+  exception BindFailed {};
 
+  /**
+   * @brief Creates, destroys, and locates CosEventChannels.
+   */
   interface ChannelFactory
   {
-    // = TITLE
-    //   Interface definition of the ChannelFactory.
-    //
-    // = DESCRIPTION
-    //   The ChannelFactory is used to create,destroy and
-    //   locate CosEventChannels.
-
+    /**
+     * Creates a CosEventChannel given a channel ID. DuplicateChannel is raised
+     * if it already exists. BindFailed is raised if registration with the
+     * naming service fails.
+     */
     CosEventChannelAdmin::EventChannel create (
       in string channel_id,
       in boolean store_in_naming_service) raises (DuplicateChannel, BindFailed);
-    // Creates a CosEventChannel given a channel id.
-    // The DuplicateChannel exception is raised if the channel
-    // already exists.
-    // BindFailed is raised if we failed to register the newly created channel
-    // with the naming service.
 
+    /// Destroys the channel with the given ID; raises NoSuchChannel if absent.
     void destroy (
        in string channel_id,
        in boolean unbind_from_naming_service) raises (NoSuchChannel);
-    // Destroys the channel specified by the channel id.
-    // If the channel does not exist then the NoSuchChannel exception
-    // is raised.
 
+    /// Finds the channel with the given ID; raises NoSuchChannel if absent.
     CosEventChannelAdmin::EventChannel find (
        in string channel_id) raises (NoSuchChannel);
-    // Finds an EventChannel given the channel id.
-    // If the channel does not exist then the NoSuchChannel exception
-    // is raised.
 
+    /// Returns the ID for a channel; raises NoSuchChannel if absent.
     string find_channel_id (
        in CosEventChannelAdmin::EventChannel channel) raises (NoSuchChannel);
-   // Returns a channel id given a reference to it.
-   // If the channel does not exist then the NoSuchChannel exception
-   // is raised.
   };
 };
 

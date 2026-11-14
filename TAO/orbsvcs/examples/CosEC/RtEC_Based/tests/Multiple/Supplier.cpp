@@ -36,7 +36,6 @@ Supplier::parse_args (int argc, ACE_TCHAR *argv [])
 void
 Supplier::open (CosEventChannelAdmin::EventChannel_ptr event_channel)
 {
-  // = Connect as a consumer.
   this->supplier_admin_ =
     event_channel->for_suppliers ();
 }

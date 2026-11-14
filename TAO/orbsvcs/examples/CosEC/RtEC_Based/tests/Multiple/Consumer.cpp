@@ -37,7 +37,6 @@ Consumer::parse_args (int argc, ACE_TCHAR *argv [])
 void
 Consumer::open (CosEventChannelAdmin::EventChannel_ptr event_channel)
 {
-  // = Connect as a consumer.
   this->consumer_admin_ =
     event_channel->for_consumers ();
 }

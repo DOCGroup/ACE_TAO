@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef RTEC_BASED_COSEC_H
 #define RTEC_BASED_COSEC_H
 
@@ -56,7 +55,6 @@ class RtEC_Based_CosEC : public CosEC_ServantBase
   void shutdown ();
 
 protected:
-  // = Methods from CosEC_ServantBase
   /// Create a local rtec.
   POA_RtecEventChannelAdmin::EventChannel_ptr create_rtec () override;
 
@@ -75,7 +73,6 @@ protected:
   /// Locate a rtec.
   void locate_rtec ();
 
-  // = Data members
   /// The name we use to register with the Naming Service.
   std::basic_string<ACE_TCHAR> service_name {ACE_TEXT ("CosEventService")};
 

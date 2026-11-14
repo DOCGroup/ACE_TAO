@@ -20,19 +20,15 @@
 #include "ConsumerAdmin_i.h"
 #include "SupplierAdmin_i.h"
 
+/**
+ * @brief Implements the standard Cos EventChannel interface.
+ *
+ * This implementation delegates its responsibilities to corresponding
+ * objects from TAO's Real-time Event Channel.
+ */
 class TAO_RTEC_COSEC_Export TAO_CosEC_EventChannel_i :
   public virtual POA_CosEventChannelAdmin::EventChannel
 {
-  // = TITLE
-  //   class TAO_CosEC_EventChannel_i implements the standard Cos EventChannel
-  //   interface.
-  //
-  // = DESCRIPTION
-  //   This Cos EventChannel implementation is based on TAO's
-  //   Real-time Event Channel.  This TAO_CosEC_EventChannel_i implementation
-  //   delegates all its responsibility to corresponding objects from
-  //   the real-time implementation.
-  //
 public:
   TAO_CosEC_EventChannel_i ();
 

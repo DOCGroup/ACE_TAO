@@ -21,22 +21,17 @@
 
 class TAO_CosEC_PushSupplierWrapper;
 
+/**
+ * @brief Implements the Cos ProxyPushConsumer interface using the Rtec
+ * ProxyPushConsumer.
+ *
+ * The Rtec push method receives an EventSet whose EventHeader is initialized
+ * from the first publication in the SupplierQOS; this implementation assumes
+ * that publications[0] is initialized.
+ */
 class TAO_RTEC_COSEC_Export TAO_CosEC_ProxyPushConsumer_i :
   public virtual POA_CosEventChannelAdmin::ProxyPushConsumer
 {
-  // = TITLE
-  //   class TAO_CosEC_ProxyPushConsumer_i implements the ProxyPushConsumer
-  //   interface.
-  //
-  // = DESCRIPTION
-  //   This implementation of the ProxyPushConsumer uses the
-  //   RtecEventChannelAdmin::ProxyPushConsumer.
-  //
-  //   NOTE:  RtecEventChannelAdmin::ProxyPushConsumer::push method is
-  //   passed a RtecEventComm::EventSet.The <EventHeader> field in that is
-  //   initialized using the  the 1st <publications> from the <SupplierQOS>.
-  //   so we assume that publications[0] is initialized.
-  //
 public:
   TAO_CosEC_ProxyPushConsumer_i (RtecEventChannelAdmin::SupplierQOS const &qos,
                                  RtecEventChannelAdmin::ProxyPushConsumer_ptr proxypushconsumer);

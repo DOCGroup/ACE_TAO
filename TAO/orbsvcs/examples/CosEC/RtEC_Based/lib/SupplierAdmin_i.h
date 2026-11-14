@@ -19,15 +19,13 @@
 #include "orbsvcs/CosEventChannelAdminC.h"
 #include "ProxyPushConsumer_i.h"
 
+/**
+ * @brief Implements the Cos SupplierAdmin interface using the Rtec
+ * SupplierAdmin.
+ */
 class TAO_RTEC_COSEC_Export TAO_CosEC_SupplierAdmin_i :
   public virtual POA_CosEventChannelAdmin::SupplierAdmin
 {
-  // = TITLE
-  //   class TAO_CosEC_SupplierAdmin_i implements the SupplierAdmin interface.
-  //
-  // = DESCRIPTION
-  //   This COS-compliant implementation of the SupplierAdmin uses
-  //   TAO's RtecEventChannelAdmin::SupplierAdmin.
 public:
   TAO_CosEC_SupplierAdmin_i ();
 

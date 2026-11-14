@@ -19,15 +19,13 @@
 #include "orbsvcs/CosEventChannelAdminS.h"
 #include "ProxyPushSupplier_i.h"
 
+/**
+ * @brief Implements the Cos ConsumerAdmin interface using the Rtec
+ * ConsumerAdmin.
+ */
 class TAO_RTEC_COSEC_Export TAO_CosEC_ConsumerAdmin_i :
   public virtual POA_CosEventChannelAdmin::ConsumerAdmin
 {
-  // = TITLE
-  //   class TAO_CosEC_ConsumerAdmin_i implements the ConsumerAdmin interface.
-  //
-  // = DESCRIPTION
-  //   This implementation of the ConsumerAdmin uses the
-  //   RtecEventChannelAdmin::ConsumerAdmin.
 public:
   TAO_CosEC_ConsumerAdmin_i ();
 

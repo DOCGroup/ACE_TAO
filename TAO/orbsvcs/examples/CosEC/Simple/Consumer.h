@@ -34,8 +34,6 @@ public:
   /// Run the test
   int run (int argc, ACE_TCHAR* argv[]);
 
-  // = The CosEventComm::PushConsumer methods
-
   /// The skeleton methods.
   void push (CORBA::Any const &event) override;
   void disconnect_push_consumer () override;

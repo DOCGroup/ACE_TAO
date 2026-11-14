@@ -19,17 +19,11 @@
 #include "orbsvcs/CosEventChannelAdminS.h"
 #include "Multiple.h"
 
+/// A simple PushSupplier that connects to CosEC and sends events.
 class Supplier : public POA_CosEventComm::PushSupplier,
                  public Multiple
 {
-  // = TITLE
-  //   Supplier
-  //
-  // = DESCRIPTION
-  //   The Supplier is a simple Push Supplier that connects to
-  //   the CosEC and sends events to it.
 public:
-  // = Initializatiopn and termination methods.
   Supplier () = default;
   Supplier (Supplier const &) = delete;
   Supplier (Supplier &&) = delete;
@@ -56,7 +50,6 @@ public:
   /// Sends the events to the EC.
   void run ();
 
-  // = Multiple methods.
   /// Parses the command line arguments.
   int parse_args (int argc, ACE_TCHAR *argv []) override;
 private:

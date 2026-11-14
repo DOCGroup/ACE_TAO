@@ -19,14 +19,11 @@
 #include "tao/PortableServer/PortableServer.h"
 #include <string>
 
+/**
+ * @brief Base class for suppliers and consumers using the Cos Event Service.
+ */
 class Multiple
 {
-  // = TITLE
-  //   class Multiple
-  //
-  // = DESCRIPTION
-  //   Base class for suppliers and consumers to send/receive events
-  //   via the Cos Event Service.
 public:
   Multiple () = default;
   Multiple (Multiple const &) = delete;

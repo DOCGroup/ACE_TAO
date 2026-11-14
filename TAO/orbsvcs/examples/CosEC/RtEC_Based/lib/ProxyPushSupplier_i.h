@@ -21,15 +21,13 @@
 
 class TAO_CosEC_PushConsumerWrapper;
 
+/**
+ * @brief Implements the Cos ProxyPushSupplier interface using the Rtec
+ * ProxyPushSupplier.
+ */
 class TAO_RTEC_COSEC_Export TAO_CosEC_ProxyPushSupplier_i :
   public POA_CosEventChannelAdmin::ProxyPushSupplier
 {
-  // = TITLE
-  //   class ProxyPushSupplier-i implements the ProxyPushConsumer interface.
-  //
-  // = DESCRIPTION
-  //   This implementation of the ProxyPushSupplier uses the
-  //   RtecEventChannelAdmin::ProxyPushSupplier.
 public:
   TAO_CosEC_ProxyPushSupplier_i (RtecEventChannelAdmin::ConsumerQOS const &qos,
                                  RtecEventChannelAdmin::ProxyPushSupplier_ptr pps);

@@ -22,15 +22,15 @@
 
 class TAO_CosEC_EventChannel_i;
 
+/**
+ * @brief Generic servant base for CosEC applications.
+ *
+ * Contains the member data and methods needed to create and manage a CosEC
+ * servant. Clients can derive from this class to create servants.
+ */
 class TAO_RTEC_COSEC_Export CosEC_ServantBase :
   public virtual POA_CosEventChannelAdmin::EventChannel
 {
-  // = TITLE
-  //   A generic servant base class.
-  // = DESCRIPTION
-  //   This class contains all the member data and methods required to
-  //   create and manage a CosEC servant.
-  //   Clients can derive from this class and create servants.
  public:
   CosEC_ServantBase ();
 
@@ -62,7 +62,6 @@ class TAO_RTEC_COSEC_Export CosEC_ServantBase :
   /// Deactivates the CosEC and friends with the POA.
   void deactivate ();
 
-  // =  POA_CosEventChannelAdmin::EventChannel methods.
   CosEventChannelAdmin::ConsumerAdmin_ptr for_consumers () override;
 
   CosEventChannelAdmin::SupplierAdmin_ptr for_suppliers () override;
@@ -71,7 +70,6 @@ class TAO_RTEC_COSEC_Export CosEC_ServantBase :
   void destroy () override;
 
  protected:
-  // = RtEC creation, activation and deactivation methods.
   /// Create a local rtec.
   virtual POA_RtecEventChannelAdmin::EventChannel_ptr create_rtec ();
 
@@ -81,7 +79,6 @@ class TAO_RTEC_COSEC_Export CosEC_ServantBase :
   /// Deactivates the rtec.
   virtual void deactivate_rtec ();
 
-  // = CosEC creation, activation and deactivation methods.
   /// Create a local cosec.
   TAO_CosEC_EventChannel_i*
   create_cosec ();
@@ -102,8 +99,6 @@ class TAO_RTEC_COSEC_Export CosEC_ServantBase :
                          ACE_ConsumerQOS_Factory &consumer_qos,
                          ACE_TCHAR *eventTypeIds,
                          ACE_TCHAR *eventSourceIds);
-
-  // = Protected Data members.
 
   /// The poa that we use to activate ourselves.
   PortableServer::POA_var thispoa_;

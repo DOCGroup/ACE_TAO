@@ -57,7 +57,6 @@ public:
             char const *child_poa_name,
             CosNaming::NamingContext_ptr naming = CosNaming::NamingContext::_nil ());
 
-  // = CosEventChannelFactory::ChannelFactory methods.
   CosEventChannelAdmin::EventChannel_ptr create (char const *channel_id,
                                                   CORBA::Boolean store_in_naming_service) override;
 
