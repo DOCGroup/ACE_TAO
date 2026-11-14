@@ -69,16 +69,16 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                                       -1);
                     }
 
-                    CosNaming::Name *name =
+                    CosNaming::Name_var name =
                       naming_context->to_name (ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ()));
 
                     try
                       {
-                        server_object = naming_context->resolve (*name);
-                          if (CORBA::is_nil (server_object.in ()))
+                        server_object = naming_context->resolve (name.in ());
+                        if (CORBA::is_nil (server_object.in ()))
                           {
                             ACE_ERROR_RETURN ((LM_ERROR,
-                                  "name is not resolved to a valid object\n"),
+                                               "name is not resolved to a valid object\n"),
                                               -1);
                           }
                       }
