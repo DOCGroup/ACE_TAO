@@ -134,6 +134,8 @@
 #include "orbsvcs/AV/FlowSpec_Entry.h"
 #include "orbsvcs/AV/MCast.h"
 
+#include <array>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 //------------------------------------------------------------
@@ -323,14 +325,14 @@ public:
 
 private:
   /// Local buffer to hold the RTP packet.
-  char packet_[RTP_MTU];
+  std::array<char, RTP_MTU> packet_;
 
   /// Local buffer to hold the contributing source list with the values stored
   /// in host byte order.
-  ACE_UINT32 host_byte_order_csrc_list_[15];
+  std::array<ACE_UINT32, 15> host_byte_order_csrc_list_;
 
   /// Local buffer to hold the payload with the values stored in host byte order.
-  char host_byte_order_payload_[RTP_MTU];
+  std::array<char, RTP_MTU> host_byte_order_payload_;
 
   /// The number of bytes in the header extension - 0 if no extension.
   unsigned int extension_bytes_ {};

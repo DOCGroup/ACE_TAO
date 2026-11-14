@@ -33,7 +33,6 @@
  */
 
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/AV/RTP.h"
 #include "orbsvcs/AV/RTCP.h"
 
@@ -54,7 +53,7 @@ RTP_Packet::RTP_Packet(char* buffer, int length)
   // skip the standard header info
   int index = 12;
 
-  std::memcpy(this->packet_, buffer, length);
+  std::memcpy (this->packet_.data (), buffer, length);
 
   for (int j {}; j < (int)this->cc(); ++j)
     {
@@ -154,7 +153,7 @@ RTP_Packet::RTP_Packet(unsigned char padding,
       index+=4;
     }
 
-    std::memcpy (this->host_byte_order_payload_, data, data_size);
+    std::memcpy (this->host_byte_order_payload_.data (), data, data_size);
 
   this->payload_size_ = data_size;
 
@@ -293,21 +292,21 @@ RTP_Packet::is_valid ()
 void
 RTP_Packet::get_csrc_list (ACE_UINT32 **csrc_list, ACE_UINT16 &length)
 {
-  *csrc_list = this->host_byte_order_csrc_list_;
+  *csrc_list = this->host_byte_order_csrc_list_.data ();
   length = static_cast<ACE_UINT16> (this->cc ());
 }
 
 void
 RTP_Packet::get_payload (char **payload, ACE_UINT16 &length)
 {
-  *payload = this->host_byte_order_payload_ ;
+  *payload = this->host_byte_order_payload_.data ();
   length = this->payload_size_;
 }
 
 void
 RTP_Packet::get_packet_data (char **packet, ACE_UINT16 &length)
 {
-  *packet = this->packet_;
+  *packet = this->packet_.data ();
   length = this->packet_size_;
 }
 
