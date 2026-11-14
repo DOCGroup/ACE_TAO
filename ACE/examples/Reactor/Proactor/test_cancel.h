@@ -7,41 +7,34 @@
 
 #include "ace/Asynch_IO.h"
 
+/**
+ * @brief Receives network data and writes it to a file.
+ *
+ * ACE_Asynch_Acceptor creates this class when a new connection arrives.
+ */
 class Receiver : public ACE_Service_Handler
 {
-  // = TITLE
-  //
-  //     Receiver
-  //
-  // = DESCRIPTION
-  //
-  //     The class will be created by ACE_Asynch_Acceptor when new
-  //     connections arrive.  This class will then receive data from
-  //     the network connection and dump it to a file.
-
 public:
   Receiver ();
   ~Receiver () override;
 
+  /// Called after a new connection has been accepted.
   void open (ACE_HANDLE handle,
              ACE_Message_Block &message_block) override;
-  // This is called after the new connection has been accepted.
 
 protected:
-  // These methods are called by the framework
-
+  /// Reads data from the socket asynchronously.
   void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result) override;
-  // This is called when asynchronous read from the socket complete
 
 private:
+  /// Asynchronous reader for the socket.
   ACE_Asynch_Read_Stream rs_;
-  // rs (read stream): for reading from a socket
 
+  /// Message block used for reading from the stream.
   ACE_Message_Block mb_;
-  // Message block to read from the stream.
 
+  /// Handle for I/O with the remote peer.
   ACE_HANDLE handle_;
-  // Handle for IO to remote peer
 };
 
 #endif /* _TEST_CANCEL_H */
