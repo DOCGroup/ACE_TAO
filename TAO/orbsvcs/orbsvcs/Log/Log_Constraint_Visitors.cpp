@@ -103,7 +103,7 @@ TAO_Log_Constraint_Visitor::visit_identifier (ETCL_Identifier *ident)
     {
       if (any.impl() != nullptr)
         {
-          this->queue_.emplace_front (&any);
+          this->queue_.emplace_front (std::addressof (any));
           return_value = 0;
         }
     }
@@ -398,7 +398,7 @@ TAO_Log_Constraint_Visitor::visit_component_assoc (
 
   if (comp == nullptr)
     {
-      TAO_ETCL_Literal_Constraint const result (&any);
+      TAO_ETCL_Literal_Constraint const result (std::addressof (any));
       this->queue_.push_front (result);
       return 0;
     }
