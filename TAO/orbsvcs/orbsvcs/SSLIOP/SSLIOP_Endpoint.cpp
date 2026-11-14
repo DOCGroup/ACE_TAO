@@ -8,6 +8,7 @@
 #include "tao/debug.h"
 
 #include <cstring>
+#include <memory>
 
 #if !defined (__ACE_INLINE__)
 # include "orbsvcs/SSLIOP/SSLIOP_Endpoint.inl"
@@ -174,7 +175,7 @@ TAO_SSLIOP_Endpoint::duplicate ()
   // @@ We need to set the priority of the newly formed endpoint. It
   // shouldnt be a problem as long as SSL is not used with RTCORBA.
   ACE_NEW_RETURN (endpoint,
-                  TAO_SSLIOP_Endpoint (&this->ssl_component_,
+                  TAO_SSLIOP_Endpoint (std::addressof (this->ssl_component_),
                                          nullptr),
                   nullptr);
 

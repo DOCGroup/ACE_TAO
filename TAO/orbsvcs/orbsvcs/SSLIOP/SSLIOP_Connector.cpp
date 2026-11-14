@@ -68,7 +68,7 @@ TAO::SSLIOP::Connector::open (TAO_ORB_Core *orb_core)
 
   return this->base_connector_.open (r,
                                      connect_creation_strategy,
-                                     &this->connect_strategy_,
+                                     std::addressof (this->connect_strategy_),
                                      concurrency_strategy);
 }
 

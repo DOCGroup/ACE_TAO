@@ -13,6 +13,8 @@
 #include "tao/Transport_Descriptor_Interface.h"
 #include "ace/Strategies_T.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::IIOP_SSL_Connector::IIOP_SSL_Connector ()
@@ -48,7 +50,7 @@ TAO::IIOP_SSL_Connector::open (TAO_ORB_Core *orb_core)
 
   return this->base_connector_.open (this->orb_core ()->reactor (),
                                      connect_creation_strategy,
-                                     &this->connect_strategy_,
+                                     std::addressof (this->connect_strategy_),
                                      concurrency_strategy);
 }
 
