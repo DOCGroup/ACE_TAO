@@ -14,6 +14,7 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/Message_Block.h"
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
