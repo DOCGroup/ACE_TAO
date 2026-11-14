@@ -12,8 +12,8 @@
 #define GRID_I_H
 
 #include "GridS.h"
-#include "ace/Vector_T.h"
 #include <memory>
+#include <vector>
 
 /**
  * @class Grid_i:
@@ -109,7 +109,7 @@ public:
 
 private:
   /// This container is here only for proper clean up.
-  using GridsHolder = ACE_Vector<PortableServer::ServantBase_var>;
+  using GridsHolder = std::vector<PortableServer::ServantBase_var>;
   GridsHolder grids_holder_;
 
   /// ORB pointer.
