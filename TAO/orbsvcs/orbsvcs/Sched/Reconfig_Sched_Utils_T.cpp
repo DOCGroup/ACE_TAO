@@ -30,9 +30,9 @@ TAO_RSE_Dependency_Visitor
 {
 }
 
-// Visit a Reconfig Scheduler Entry.  This method calls protected hook
-// methods that can be overridden by derived classes, according to the
-// Template Method design pattern.
+/// Visit a Reconfig Scheduler Entry.  This method calls protected hook
+/// methods that can be overridden by derived classes, according to the
+/// Template Method design pattern.
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
@@ -153,9 +153,9 @@ visit (TAO_Reconfig_Scheduler_Entry &rse)
   return 0;
 }
 
-// Tests whether or not any conditional actions should be taken for
-// the entry.  Returns 0 if the actions should be applied, 1 if the
-// entry should be left alone, and -1 if an error occurred.
+/// Tests whether or not any conditional actions should be taken for
+/// the entry.  Returns 0 if the actions should be applied, 1 if the
+/// entry should be left alone, and -1 if an error occurred.
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
@@ -167,8 +167,8 @@ precondition (TAO_Reconfig_Scheduler_Entry &rse)
     : 0;
 }
 
-// Performs an action on the entry prior to visiting any of
-// its successors.  Returns 0 on success and -1 on error.
+/// Performs an action on the entry prior to visiting any of
+/// its successors.  Returns 0 on success and -1 on error.
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
@@ -178,8 +178,8 @@ prefix_action (TAO_Reconfig_Scheduler_Entry & /* rse */)
   return 0;
 }
 
-// Performs an action on a successor entry prior to visiting
-// it.  Returns 0 on success and -1 on error.
+/// Performs an action on a successor entry prior to visiting
+/// it.  Returns 0 on success and -1 on error.
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
@@ -191,8 +191,8 @@ pre_recurse_action (TAO_Reconfig_Scheduler_Entry & /* entry */,
   return 0;
 }
 
-// Performs an action on the entry after visiting all of
-// its successors.  Returns 0 on success and -1 on error.
+/// Performs an action on the entry after visiting all of
+/// its successors.  Returns 0 on success and -1 on error.
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
@@ -213,9 +213,9 @@ TAO_RSE_DFS_Visitor
 {
 }
 
-// Makes sure the entry has not previously been visited in forward DFS.
-// Returns 0 if the actions should be applied, 1 if the entry
-// should be left alone, and -1 if an error occurred.
+/// Makes sure the entry has not previously been visited in forward DFS.
+/// Returns 0 if the actions should be applied, 1 if the entry
+/// should be left alone, and -1 if an error occurred.
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_DFS_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
@@ -232,9 +232,9 @@ precondition (TAO_Reconfig_Scheduler_Entry &rse)
     : result;
 }
 
-// Marks entry as forward visited and sets its forward DFS start
-// time, prior to visiting any of its successors.  Returns 0 on
-// success and -1 on error.
+/// Marks entry as forward visited and sets its forward DFS start
+/// time, prior to visiting any of its successors.  Returns 0 on
+/// success and -1 on error.
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_DFS_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
@@ -245,8 +245,8 @@ prefix_action (TAO_Reconfig_Scheduler_Entry &rse)
   return 0;
 }
 
-// Marks whether or not successor is a thread delineator prior to
-// visiting it.  Returns 0 on success and -1 on error.
+/// Marks whether or not successor is a thread delineator prior to
+/// visiting it.  Returns 0 on success and -1 on error.
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_DFS_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
@@ -266,9 +266,9 @@ pre_recurse_action (TAO_Reconfig_Scheduler_Entry & /* entry */,
   return 0;
 }
 
-// Marks entry as forward finished and sets its forward DFS finish
-// time, after all of its successors have been visited.  Returns 0
-// on success and -1 on error.
+/// Marks entry as forward finished and sets its forward DFS finish
+/// time, after all of its successors have been visited.  Returns 0
+/// on success and -1 on error.
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_DFS_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
@@ -291,7 +291,7 @@ TAO_RSE_SCC_Visitor
 {
 }
 
-// Accessor for number of cycles detected in traversal.
+/// Accessor for number of cycles detected in traversal.
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_SCC_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
@@ -300,8 +300,8 @@ number_of_cycles ()
   return this->number_of_cycles_;
 }
 
-// Accessor for whether or not the recursion is within a previously
-// detected cycle.
+/// Accessor for whether or not the recursion is within a previously
+/// detected cycle.
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> bool
 TAO_RSE_SCC_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
@@ -310,8 +310,8 @@ in_a_cycle ()
   return this->in_a_cycle_;
 }
 
-// Mutator for whether or not the recursion is within a previously
-// detected cycle.
+/// Mutator for whether or not the recursion is within a previously
+/// detected cycle.
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 TAO_RSE_SCC_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
@@ -337,10 +337,10 @@ unconditional_action (TAO_Reconfig_Scheduler_Entry &rse)
 }
 */
 
-// Makes sure the entry has not previously been visited in the
-// reverse DFS (call graph transpose) direction.  Returns 0 if
-// the actions should be applied, 1 if the entry should be left
-// alone, and -1 if an error occurred.
+/// Makes sure the entry has not previously been visited in the
+/// reverse DFS (call graph transpose) direction.  Returns 0 if
+/// the actions should be applied, 1 if the entry should be left
+/// alone, and -1 if an error occurred.
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_SCC_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
@@ -357,9 +357,9 @@ precondition (TAO_Reconfig_Scheduler_Entry &rse)
     : 1;
 }
 
-// Marks reverse status as visited and sets reverse start time for
-// entry, prior to visiting any of its successors.  Returns 0 on
-// success and -1 on error.
+/// Marks reverse status as visited and sets reverse start time for
+/// entry, prior to visiting any of its successors.  Returns 0 on
+/// success and -1 on error.
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_SCC_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
@@ -370,13 +370,13 @@ prefix_action (TAO_Reconfig_Scheduler_Entry &rse)
   return 0;
 }
 
-// Checks reverse status of each successor.  For any that have not
-// been previously visited, it complains about the entry and
-// successor being part of a cycle, stores the fact that a cycle was
-// detected, and maintains a count of the total number of cycles
-// (strongly connected components).  Returns 0 on success and -1 on
-// an error (finding a cycle is not considered an error, at least as
-// far as this method is concerned).
+/// Checks reverse status of each successor.  For any that have not
+/// been previously visited, it complains about the entry and
+/// successor being part of a cycle, stores the fact that a cycle was
+/// detected, and maintains a count of the total number of cycles
+/// (strongly connected components).  Returns 0 on success and -1 on
+/// an error (finding a cycle is not considered an error, at least as
+/// far as this method is concerned).
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_SCC_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
@@ -487,7 +487,7 @@ TAO_RSE_Forward_Propagation_Visitor
 {
 }
 
-// Accessor for number of nodes with unresolved local dependencies.
+/// Accessor for number of nodes with unresolved local dependencies.
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_Forward_Propagation_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
@@ -496,7 +496,7 @@ unresolved_locals ()
   return this->unresolved_locals_;
 }
 
-// Mutator for number of nodes with unresolved local dependencies.
+/// Mutator for number of nodes with unresolved local dependencies.
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 TAO_RSE_Forward_Propagation_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
@@ -505,7 +505,7 @@ unresolved_locals (int i)
   this->unresolved_locals_ = i;
 }
 
-// Accessor for number of nodes with unresolved remote dependencies.
+/// Accessor for number of nodes with unresolved remote dependencies.
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_Forward_Propagation_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
@@ -514,7 +514,7 @@ unresolved_remotes ()
   return this->unresolved_remotes_;
 }
 
-// Mutator for number of nodes with unresolved remote dependencies.
+/// Mutator for number of nodes with unresolved remote dependencies.
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 TAO_RSE_Forward_Propagation_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
@@ -523,7 +523,7 @@ unresolved_remotes (int i)
   this->unresolved_remotes_ = i;
 }
 
-// Accessor for number of nodes with thread specification errors.
+/// Accessor for number of nodes with thread specification errors.
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_Forward_Propagation_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
@@ -532,7 +532,7 @@ thread_specification_errors ()
   return this->thread_specification_errors_;
 }
 
-// Mutator for number of nodes with thread specification errors.
+/// Mutator for number of nodes with thread specification errors.
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 TAO_RSE_Forward_Propagation_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
@@ -541,11 +541,11 @@ thread_specification_errors (int i)
   this->thread_specification_errors_ = i;
 }
 
-// Tests the entry for possibly having unresolved remote or local
-// dependencies prior to visiting any of its successors, and also
-// checks for thread specification errors.  Returns 0 on success and
-// -1 on error (having unresolved dependencies or thread specification
-// problems is not considered an error, at least for this method).
+/// Tests the entry for possibly having unresolved remote or local
+/// dependencies prior to visiting any of its successors, and also
+/// checks for thread specification errors.  Returns 0 on success and
+/// -1 on error (having unresolved dependencies or thread specification
+/// problems is not considered an error, at least for this method).
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_Forward_Propagation_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
@@ -600,8 +600,8 @@ prefix_action (TAO_Reconfig_Scheduler_Entry &rse)
   return 0;
 }
 
-// Propagates effective period from entry to successor prior to
-// visiting successor.  Returns 0 on success and -1 on error.
+/// Propagates effective period from entry to successor prior to
+/// visiting successor.  Returns 0 on success and -1 on error.
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_Forward_Propagation_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
@@ -701,10 +701,10 @@ TAO_RSE_Priority_Visitor (RtecScheduler::handle_t handles,
 {
 }
 
-// Visit a RT_Info tuple.  This method assigns a priority and
-// subpriority value to each tuple.  Priorities are assigned in
-// increasing numeric order, with lower numbers corresponding to
-// higher priorities.
+/// Visit a RT_Info tuple.  This method assigns a priority and
+/// subpriority value to each tuple.  Priorities are assigned in
+/// increasing numeric order, with lower numbers corresponding to
+/// higher priorities.
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_Priority_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::visit (TAO_Reconfig_Scheduler_Entry &rse)
@@ -787,9 +787,9 @@ TAO_RSE_Priority_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::visit (TAO_Reconfig
   return result;
 }
 
-// Finishes scheduler entry priority assignment by iterating over the
-// remaining entries in the last subpriority level, and adjusting
-// their subpriorities.
+/// Finishes scheduler entry priority assignment by iterating over the
+/// remaining entries in the last subpriority level, and adjusting
+/// their subpriorities.
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_Priority_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::finish ()
 {
@@ -817,11 +817,11 @@ TAO_Tuple_Admission_Visitor (CORBA::Double const & critical_utilization_threshol
 {
 }
 
-// Visit a Reconfig Scheduler Entry.  This method
-// determines the utilization by the entry, and
-// adds it to the critical or non-critical utilization,
-// depending on whether or not the strategy says the
-// operation is critical.
+/// Visit a Reconfig Scheduler Entry.  This method
+/// determines the utilization by the entry, and
+/// adds it to the critical or non-critical utilization,
+/// depending on whether or not the strategy says the
+/// operation is critical.
 
 template <class RECONFIG_SCHED_STRATEGY> int
 TAO_Tuple_Admission_Visitor<RECONFIG_SCHED_STRATEGY>::visit (TAO_RT_Info_Tuple &t)
@@ -882,7 +882,7 @@ TAO_Tuple_Admission_Visitor<RECONFIG_SCHED_STRATEGY>::visit (TAO_RT_Info_Tuple &
   return 0;
 }
 
-// Accessor for utilization by critical operations.
+/// Accessor for utilization by critical operations.
 
 template <class RECONFIG_SCHED_STRATEGY> CORBA::Double
 TAO_Tuple_Admission_Visitor<RECONFIG_SCHED_STRATEGY>::critical_utilization ()
@@ -890,7 +890,7 @@ TAO_Tuple_Admission_Visitor<RECONFIG_SCHED_STRATEGY>::critical_utilization ()
   return this->critical_utilization_;
 }
 
-// Accessor for utilization by noncritical operations.
+/// Accessor for utilization by noncritical operations.
 
 template <class RECONFIG_SCHED_STRATEGY> CORBA::Double
 TAO_Tuple_Admission_Visitor<RECONFIG_SCHED_STRATEGY>::noncritical_utilization ()
@@ -904,7 +904,7 @@ TAO_Tuple_Admission_Visitor<RECONFIG_SCHED_STRATEGY>::total_critical_utilization
   return this->total_critical_utilization_;
 }
 
-// Accessor for utilization by noncritical operations.
+/// Accessor for utilization by noncritical operations.
 
 template <class RECONFIG_SCHED_STRATEGY> CORBA::Double
 TAO_Tuple_Admission_Visitor<RECONFIG_SCHED_STRATEGY>::total_noncritical_utilization ()
@@ -912,7 +912,7 @@ TAO_Tuple_Admission_Visitor<RECONFIG_SCHED_STRATEGY>::total_noncritical_utilizat
   return this->total_noncritical_utilization_;
 }
 
-// Accessor for utilization threshold for critical operations.
+/// Accessor for utilization threshold for critical operations.
 
 template <class RECONFIG_SCHED_STRATEGY> CORBA::Double
 TAO_Tuple_Admission_Visitor<RECONFIG_SCHED_STRATEGY>::critical_utilization_threshold ()
@@ -920,7 +920,7 @@ TAO_Tuple_Admission_Visitor<RECONFIG_SCHED_STRATEGY>::critical_utilization_thres
   return this->critical_utilization_threshold_;
 }
 
-// Accessor for utilization by noncritical operations.
+/// Accessor for utilization by noncritical operations.
 
 template <class RECONFIG_SCHED_STRATEGY> CORBA::Double
 TAO_Tuple_Admission_Visitor<RECONFIG_SCHED_STRATEGY>::noncritical_utilization_threshold ()

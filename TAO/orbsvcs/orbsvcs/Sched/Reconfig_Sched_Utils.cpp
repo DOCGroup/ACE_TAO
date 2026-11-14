@@ -37,8 +37,8 @@ TAO_RT_Info_Ex::TAO_RT_Info_Ex ()
   volatile_token = 0;
 }
 
-// Constructor from an RT_Info
-// (Also serves as a copy constructor)
+/// Constructor from an RT_Info
+/// (Also serves as a copy constructor)
 
 TAO_RT_Info_Ex::TAO_RT_Info_Ex (RtecScheduler::RT_Info const &info)
 {
@@ -80,8 +80,8 @@ TAO_RT_Info_Ex::operator = (RtecScheduler::RT_Info const &info)
   enabled = info.enabled;
 }
 
-// Resets all data members to initial (invalid) values, and removes
-// tuples corresponding to the reset flags.
+/// Resets all data members to initial (invalid) values, and removes
+/// tuples corresponding to the reset flags.
 
 void
 TAO_RT_Info_Ex::reset (u_long reset_flags)
@@ -134,8 +134,8 @@ TAO_RT_Info_Ex::enabled_state () const
   return this->enabled;
 }
 
-// Constructor from an RT_Info.
-// (Also serves as a copy constructor)
+/// Constructor from an RT_Info.
+/// (Also serves as a copy constructor)
 
 TAO_RT_Info_Tuple::TAO_RT_Info_Tuple (RtecScheduler::RT_Info const &info)
   : TAO_RT_Info_Ex (info)
@@ -173,7 +173,7 @@ TAO_Reconfig_Scheduler_Entry::
   this->remove_tuples (ORIGINAL | PROPAGATED);
 }
 
-// Removes all tuples from the entry.
+/// Removes all tuples from the entry.
 
 void
 TAO_Reconfig_Scheduler_Entry::
@@ -214,8 +214,8 @@ remove_tuples (u_long tuple_flags)
     }
 }
 
-// Adds a new tuple to the entry and updates the
-// rate indices and mean rate for the tuples.
+/// Adds a new tuple to the entry and updates the
+/// rate indices and mean rate for the tuples.
 
 int
 TAO_Reconfig_Scheduler_Entry::
@@ -282,7 +282,7 @@ insert_tuple (TAO_RT_Info_Tuple &tuple,
     }
 }
 
-// Updates a matching tuple.
+/// Updates a matching tuple.
 
 int
 TAO_Reconfig_Scheduler_Entry::
@@ -326,7 +326,7 @@ update_tuple (TAO_RT_Info_Ex &info,
   return 0;
 }
 
-// Registers tuples into the passed tuple pointer array.
+/// Registers tuples into the passed tuple pointer array.
 int
 TAO_Reconfig_Scheduler_Entry::
 register_tuples (TAO_RT_Info_Tuple ** tuple_ptr_array,
@@ -357,7 +357,7 @@ register_tuples (TAO_RT_Info_Tuple ** tuple_ptr_array,
   return 0;
 }
 
-// Accessor for original RT_Info data.
+/// Accessor for original RT_Info data.
 
 TAO_RT_Info_Ex &
 TAO_Reconfig_Scheduler_Entry::orig_rt_info_data ()
@@ -365,7 +365,7 @@ TAO_Reconfig_Scheduler_Entry::orig_rt_info_data ()
   return orig_rt_info_data_;
 }
 
-// Mutator for stored original RT_Info data.
+/// Mutator for stored original RT_Info data.
 
 void
 TAO_Reconfig_Scheduler_Entry::orig_rt_info_data (TAO_RT_Info_Ex &data)
@@ -383,7 +383,7 @@ TAO_Reconfig_Scheduler_Entry::orig_rt_info_data (TAO_RT_Info_Ex &data)
   this->orig_rt_info_data_.enabled = data.enabled;
 }
 
-// Accessor for actual RT_Info pointer.
+/// Accessor for actual RT_Info pointer.
 
 TAO_RT_Info_Ex *
 TAO_Reconfig_Scheduler_Entry::
@@ -392,7 +392,7 @@ actual_rt_info ()
   return this->actual_rt_info_;
 }
 
-// Mutator for actual RT_Info pointer.
+/// Mutator for actual RT_Info pointer.
 
 void
 TAO_Reconfig_Scheduler_Entry::actual_rt_info (TAO_RT_Info_Ex *rt_info)
@@ -400,7 +400,7 @@ TAO_Reconfig_Scheduler_Entry::actual_rt_info (TAO_RT_Info_Ex *rt_info)
   this->actual_rt_info_ = rt_info;
 }
 
-// Accessor for when the node was discovered in forward DFS traversal.
+/// Accessor for when the node was discovered in forward DFS traversal.
 
 long
 TAO_Reconfig_Scheduler_Entry::fwd_discovered () const
@@ -408,7 +408,7 @@ TAO_Reconfig_Scheduler_Entry::fwd_discovered () const
   return this->fwd_discovered_;
 }
 
-// Mutator for when the node was discovered in forward DFS traversal.
+/// Mutator for when the node was discovered in forward DFS traversal.
 
 void
 TAO_Reconfig_Scheduler_Entry::fwd_discovered (long l)
@@ -416,7 +416,7 @@ TAO_Reconfig_Scheduler_Entry::fwd_discovered (long l)
   this->fwd_discovered_ = l;
 }
 
-// Accessor for when the node was discovered in reverse DFS traversal.
+/// Accessor for when the node was discovered in reverse DFS traversal.
 
 long
 TAO_Reconfig_Scheduler_Entry::rev_discovered () const
@@ -424,7 +424,7 @@ TAO_Reconfig_Scheduler_Entry::rev_discovered () const
   return this->rev_discovered_;
 }
 
-// Mutator for when the node was discovered in reverse DFS traversal.
+/// Mutator for when the node was discovered in reverse DFS traversal.
 
 void
 TAO_Reconfig_Scheduler_Entry::rev_discovered (long l)
@@ -432,7 +432,7 @@ TAO_Reconfig_Scheduler_Entry::rev_discovered (long l)
   this->rev_discovered_ = l;
 }
 
-// Accessor for when the node was finished in forward DFS traversal.
+/// Accessor for when the node was finished in forward DFS traversal.
 
 long
 TAO_Reconfig_Scheduler_Entry::fwd_finished () const
@@ -440,7 +440,7 @@ TAO_Reconfig_Scheduler_Entry::fwd_finished () const
   return this->fwd_finished_;
 }
 
-// Mutator for when the node was finished in forward DFS traversal.
+/// Mutator for when the node was finished in forward DFS traversal.
 
 void
 TAO_Reconfig_Scheduler_Entry::fwd_finished (long l)
@@ -448,7 +448,7 @@ TAO_Reconfig_Scheduler_Entry::fwd_finished (long l)
   this->fwd_finished_ = l;
 }
 
-// Accessor for when the node was finished in reverse DFS traversal.
+/// Accessor for when the node was finished in reverse DFS traversal.
 
 long
 TAO_Reconfig_Scheduler_Entry::rev_finished () const
@@ -456,7 +456,7 @@ TAO_Reconfig_Scheduler_Entry::rev_finished () const
   return this->rev_finished_;
 }
 
-// Mutator for when the node was finished in reverse DFS traversal.
+/// Mutator for when the node was finished in reverse DFS traversal.
 
 void
 TAO_Reconfig_Scheduler_Entry::rev_finished (long l)
@@ -464,7 +464,7 @@ TAO_Reconfig_Scheduler_Entry::rev_finished (long l)
   this->rev_finished_ = l;
 }
 
-// Accessor for forward DFS traversal status of the node.
+/// Accessor for forward DFS traversal status of the node.
 
 TAO_Reconfig_Scheduler_Entry::DFS_Status
 TAO_Reconfig_Scheduler_Entry::fwd_dfs_status () const
@@ -472,7 +472,7 @@ TAO_Reconfig_Scheduler_Entry::fwd_dfs_status () const
   return this->fwd_dfs_status_;
 }
 
-// Mutator for forward DFS traversal status of the node.
+/// Mutator for forward DFS traversal status of the node.
 
 void
 TAO_Reconfig_Scheduler_Entry::
@@ -481,7 +481,7 @@ fwd_dfs_status (TAO_Reconfig_Scheduler_Entry::DFS_Status ds)
   this->fwd_dfs_status_ = ds;
 }
 
-// Accessor for DFS traversal status of the node.
+/// Accessor for DFS traversal status of the node.
 
 TAO_Reconfig_Scheduler_Entry::DFS_Status
 TAO_Reconfig_Scheduler_Entry::rev_dfs_status () const
@@ -489,7 +489,7 @@ TAO_Reconfig_Scheduler_Entry::rev_dfs_status () const
   return this->rev_dfs_status_;
 }
 
-// Mutator for DFS traversal status of the node.
+/// Mutator for DFS traversal status of the node.
 
 void
 TAO_Reconfig_Scheduler_Entry::
@@ -498,8 +498,8 @@ rev_dfs_status (TAO_Reconfig_Scheduler_Entry::DFS_Status ds)
   this->rev_dfs_status_ = ds;
 }
 
-// Accessor for flag indicating whether node is a thread
-// delineator.
+/// Accessor for flag indicating whether node is a thread
+/// delineator.
 
 bool
 TAO_Reconfig_Scheduler_Entry::is_thread_delineator () const
@@ -507,8 +507,8 @@ TAO_Reconfig_Scheduler_Entry::is_thread_delineator () const
   return this->is_thread_delineator_;
 }
 
-// Mutator for flag indicating whether node is a thread
-// delineator.
+/// Mutator for flag indicating whether node is a thread
+/// delineator.
 
 void
 TAO_Reconfig_Scheduler_Entry::is_thread_delineator (bool value)
@@ -516,8 +516,8 @@ TAO_Reconfig_Scheduler_Entry::is_thread_delineator (bool value)
   this->is_thread_delineator_ = value;
 }
 
-// Accessor for flag indicating whether node has unresolved remote
-// dependencies.
+/// Accessor for flag indicating whether node has unresolved remote
+/// dependencies.
 
 bool
 TAO_Reconfig_Scheduler_Entry::
@@ -526,8 +526,8 @@ has_unresolved_remote_dependencies () const
   return this->has_unresolved_remote_dependencies_;
 }
 
-// Mutator for flag indicating whether node has unresolved remote
-// dependencies.
+/// Mutator for flag indicating whether node has unresolved remote
+/// dependencies.
 
 void
 TAO_Reconfig_Scheduler_Entry::has_unresolved_remote_dependencies (bool value)
@@ -535,8 +535,8 @@ TAO_Reconfig_Scheduler_Entry::has_unresolved_remote_dependencies (bool value)
   this->has_unresolved_remote_dependencies_ = value;
 }
 
-// Accessor for flag indicating whether node has unresolved local
-// dependencies.
+/// Accessor for flag indicating whether node has unresolved local
+/// dependencies.
 
 bool
 TAO_Reconfig_Scheduler_Entry::has_unresolved_local_dependencies () const
@@ -544,8 +544,8 @@ TAO_Reconfig_Scheduler_Entry::has_unresolved_local_dependencies () const
   return this->has_unresolved_local_dependencies_;
 }
 
-// Mutator for flag indicating whether node has unresolved local
-// dependencies.
+/// Mutator for flag indicating whether node has unresolved local
+/// dependencies.
 
 void
 TAO_Reconfig_Scheduler_Entry::has_unresolved_local_dependencies (bool value)
@@ -554,7 +554,7 @@ TAO_Reconfig_Scheduler_Entry::has_unresolved_local_dependencies (bool value)
 }
 
 /* WSOA merge - commented out
-// Accessor for effective period of corresponding RT_Info.
+/// Accessor for effective period of corresponding RT_Info.
 
 RtecScheduler::Period_t
 TAO_Reconfig_Scheduler_Entry::
@@ -563,7 +563,7 @@ effective_period ()
   return this->effective_period_;
 }
 
-// Mutator for effective period of corresponding RT_Info.
+/// Mutator for effective period of corresponding RT_Info.
 
 void
 TAO_Reconfig_Scheduler_Entry::
@@ -572,7 +572,7 @@ effective_period (RtecScheduler::Period_t p)
   this->effective_period_ = p;
 }
 
-// Accessor for effective execution time of corresponding RT_Info.
+/// Accessor for effective execution time of corresponding RT_Info.
 
 CORBA::Long
 TAO_Reconfig_Scheduler_Entry::
@@ -581,7 +581,7 @@ effective_exec_multiplier ()
   return this->effective_exec_multiplier_;
 }
 
-// Mutator for effective execution time of corresponding RT_Info.
+/// Mutator for effective execution time of corresponding RT_Info.
 
 void
 TAO_Reconfig_Scheduler_Entry::
@@ -593,8 +593,8 @@ effective_exec_multiplier (CORBA::Long l)
 
 TAO_Reconfig_Sched_Entry_Visitor::~TAO_Reconfig_Sched_Entry_Visitor () = default;
 
-// Resets the fields in the entry to pre-DFS traversal states.
-// Returns 0 on success and -1 on error.
+/// Resets the fields in the entry to pre-DFS traversal states.
+/// Returns 0 on success and -1 on error.
 
 int
 TAO_RSE_Reset_Visitor::visit (TAO_Reconfig_Scheduler_Entry &rse)
@@ -638,7 +638,7 @@ TAO_RSE_Reset_Visitor::visit (TAO_Reconfig_Scheduler_Entry &rse)
   return 0;
 }
 
-// Accessor for effective execution time of corresponding RT_Info.
+/// Accessor for effective execution time of corresponding RT_Info.
 
 RtecScheduler::Time
 TAO_Reconfig_Scheduler_Entry::aggregate_exec_time ()
@@ -646,7 +646,7 @@ TAO_Reconfig_Scheduler_Entry::aggregate_exec_time ()
   return this->aggregate_exec_time_;
 }
 
-// Mutator for effective execution time of corresponding RT_Info.
+/// Mutator for effective execution time of corresponding RT_Info.
 
 void
 TAO_Reconfig_Scheduler_Entry::aggregate_exec_time (RtecScheduler::Time t)
@@ -654,80 +654,80 @@ TAO_Reconfig_Scheduler_Entry::aggregate_exec_time (RtecScheduler::Time t)
   this->aggregate_exec_time_ = t;
 }
 
-// Accessor for the sum of periods for tuples directly associated
-// with the entry.
+/// Accessor for the sum of periods for tuples directly associated
+/// with the entry.
 RtecScheduler::Period_t
 TAO_Reconfig_Scheduler_Entry::orig_tuple_period_sum ()
 {
   return orig_tuple_period_sum_;
 }
 
-// Mutator for the sum of periods for tuples directly associated
-// with the entry.
+/// Mutator for the sum of periods for tuples directly associated
+/// with the entry.
 void
 TAO_Reconfig_Scheduler_Entry::orig_tuple_period_sum (RtecScheduler::Period_t p)
 {
   orig_tuple_period_sum_ = p;
 }
 
-// Accessor for the sum of periods for tuples propagated via
-// dependencies on other entries.
+/// Accessor for the sum of periods for tuples propagated via
+/// dependencies on other entries.
 RtecScheduler::Period_t
 TAO_Reconfig_Scheduler_Entry::prop_tuple_period_sum ()
 {
   return prop_tuple_period_sum_;
 }
 
-// Mutator for the sum of periods for tuples propagated via
-// dependencies on other entries.
+/// Mutator for the sum of periods for tuples propagated via
+/// dependencies on other entries.
 void
 TAO_Reconfig_Scheduler_Entry::prop_tuple_period_sum (RtecScheduler::Period_t p)
 {
   prop_tuple_period_sum_ = p;
 }
 
-//  Accessor for the number of tuples directly associated with the
-//  entry.
+///  Accessor for the number of tuples directly associated with the
+///  entry.
 u_int
 TAO_Reconfig_Scheduler_Entry::orig_tuple_count ()
 {
   return orig_tuple_count_;
 }
 
-//  Mutator for the number of tuples directly associated with the
-//  entry.
+///  Mutator for the number of tuples directly associated with the
+///  entry.
 void
 TAO_Reconfig_Scheduler_Entry::orig_tuple_count (u_int c)
 {
   orig_tuple_count_ = c;
 }
 
-// Accessor for the number of tuples propagated via dependencies on
-// other entries.
+/// Accessor for the number of tuples propagated via dependencies on
+/// other entries.
 u_int
 TAO_Reconfig_Scheduler_Entry::prop_tuple_count ()
 {
   return prop_tuple_count_;
 }
 
-// Mutator for the number of tuples propagated via dependencies on
-// other entries.
+/// Mutator for the number of tuples propagated via dependencies on
+/// other entries.
 void
 TAO_Reconfig_Scheduler_Entry::prop_tuple_count (u_int c)
 {
   prop_tuple_count_ = c;
 }
 
-// Accessor for the set of tuples directly associated with the
-// entry.
+/// Accessor for the set of tuples directly associated with the
+/// entry.
 TUPLE_SET &
 TAO_Reconfig_Scheduler_Entry::orig_tuple_subset ()
 {
   return orig_tuple_subset_;
 }
 
-// Accessor for the set of tuples propagated via dependencies on
-// other entries.
+/// Accessor for the set of tuples propagated via dependencies on
+/// other entries.
 TUPLE_SET &
 TAO_Reconfig_Scheduler_Entry::prop_tuple_subset ()
 {
@@ -746,7 +746,7 @@ TAO_Reconfig_Scheduler_Entry::current_admitted_tuple (TAO_RT_Info_Tuple * t)
   current_admitted_tuple_ = t;
 }
 
-// Accessor for flag indicating whether or not node is enabled.
+/// Accessor for flag indicating whether or not node is enabled.
 
 RtecScheduler::RT_Info_Enabled_Type_t
 TAO_Reconfig_Scheduler_Entry::enabled_state () const
@@ -754,7 +754,7 @@ TAO_Reconfig_Scheduler_Entry::enabled_state () const
   return this->enabled_;
 }
 
-// Mutator for flag indicating whether or not node is enabled.
+/// Mutator for flag indicating whether or not node is enabled.
 
 void
 TAO_Reconfig_Scheduler_Entry::
@@ -765,8 +765,8 @@ enabled_state (RtecScheduler::RT_Info_Enabled_Type_t et)
 
 TAO_RT_Info_Tuple_Visitor::~TAO_RT_Info_Tuple_Visitor () = default;
 
-// Ordering function to compare the DFS finish times of
-// two RT_Info_Tuples
+/// Ordering function to compare the DFS finish times of
+/// two RT_Info_Tuples
 int
 TAO_Reconfig_Sched_Strategy_Base::comp_tuple_finish_times (void const *first, void const *second)
 {
@@ -789,9 +789,9 @@ TAO_Reconfig_Sched_Strategy_Base::comp_tuple_finish_times (void const *first, vo
   return TAO_Reconfig_Sched_Strategy_Base::comp_entry_finish_times(first_entry,second_entry);
 }
 
-// Ordering function to compare the DFS finish times of
-// two task entries, so qsort orders these in topological
-// order, with the higher times *first*
+/// Ordering function to compare the DFS finish times of
+/// two task entries, so qsort orders these in topological
+/// order, with the higher times *first*
 int
 TAO_Reconfig_Sched_Strategy_Base::comp_entry_finish_times (void const *first, void const *second)
 {
@@ -859,9 +859,9 @@ TAO_Reconfig_Sched_Strategy_Base::is_critical (TAO_RT_Info_Tuple &t)
          t.criticality == RtecScheduler::VERY_HIGH_CRITICALITY;
 }
 
-// Compares two entries by subpriority alone.  Returns -1 if the first
-// one is higher, 0 if they're the same, and 1 if the second one is
-// higher.
+/// Compares two entries by subpriority alone.  Returns -1 if the first
+/// one is higher, 0 if they're the same, and 1 if the second one is
+/// higher.
 
 int
 TAO_Reconfig_Sched_Strategy_Base::compare_subpriority (TAO_Reconfig_Scheduler_Entry &lhs,
@@ -904,10 +904,10 @@ TAO_Reconfig_Sched_Strategy_Base::compare_subpriority (TAO_Reconfig_Scheduler_En
   return 0;
 }
 
-// Ordering function used to qsort an array of TAO_RT_Info_Tuple
-// pointers into a total <priority, subpriority> ordering.  Returns -1
-// if the first one is higher, 0 if they're the same, and 1 if the
-// second one is higher.
+/// Ordering function used to qsort an array of TAO_RT_Info_Tuple
+/// pointers into a total <priority, subpriority> ordering.  Returns -1
+/// if the first one is higher, 0 if they're the same, and 1 if the
+/// second one is higher.
 
 int
 TAO_MUF_FAIR_Reconfig_Sched_Strategy::total_priority_comp (void const *s, void const *t)
@@ -955,10 +955,10 @@ TAO_MUF_FAIR_Reconfig_Sched_Strategy::total_priority_comp (void const *s, void c
     }
 }
 
-// Ordering function used to qsort an array of RT_Info_Tuple
-// pointers into a total ordering for admission control.  Returns
-// -1 if the first one is higher, 0 if they're the same, and 1 if
-// the second one is higher.
+/// Ordering function used to qsort an array of RT_Info_Tuple
+/// pointers into a total ordering for admission control.  Returns
+/// -1 if the first one is higher, 0 if they're the same, and 1 if
+/// the second one is higher.
 
 int
 TAO_MUF_FAIR_Reconfig_Sched_Strategy::total_admission_comp (void const *s,
@@ -1032,8 +1032,8 @@ TAO_MUF_FAIR_Reconfig_Sched_Strategy::total_admission_comp (void const *s,
   return 0;
 }
 
-// Compares two RT_Info entries by priority alone.  Returns -1 if the
-// first one is higher, 0 if they're the same, and 1 if the second one is higher.
+/// Compares two RT_Info entries by priority alone.  Returns -1 if the
+/// first one is higher, 0 if they're the same, and 1 if the second one is higher.
 
 int
 TAO_MUF_FAIR_Reconfig_Sched_Strategy::compare_priority (TAO_Reconfig_Scheduler_Entry &lhs,
@@ -1055,8 +1055,8 @@ TAO_MUF_FAIR_Reconfig_Sched_Strategy::compare_priority (TAO_Reconfig_Scheduler_E
   return 0;
 }
 
-// Compares two RT_Info tuples by priority alone.  Returns -1 if the
-// first one is higher, 0 if they're the same, and 1 if the second one is higher.
+/// Compares two RT_Info tuples by priority alone.  Returns -1 if the
+/// first one is higher, 0 if they're the same, and 1 if the second one is higher.
 
 int
 TAO_MUF_FAIR_Reconfig_Sched_Strategy::compare_priority (TAO_RT_Info_Tuple &lhs,
@@ -1076,8 +1076,8 @@ TAO_MUF_FAIR_Reconfig_Sched_Strategy::compare_priority (TAO_RT_Info_Tuple &lhs,
   return 0;
 }
 
-// Fills in a static dispatch configuration for a priority level, based
-// on the operation characteristics of a representative scheduling entry.
+/// Fills in a static dispatch configuration for a priority level, based
+/// on the operation characteristics of a representative scheduling entry.
 
 int
 TAO_MUF_FAIR_Reconfig_Sched_Strategy::assign_config (RtecScheduler::Config_Info &info,
@@ -1094,10 +1094,10 @@ TAO_MUF_FAIR_Reconfig_Sched_Strategy::assign_config (RtecScheduler::Config_Info 
   return 0;
 }
 
-// Ordering function used to qsort an array of TAO_RT_Info_Tuple
-// pointers into a total <priority, subpriority> ordering.  Returns -1
-// if the first one is higher, 0 if they're the same, and 1 if the
-// second one is higher.
+/// Ordering function used to qsort an array of TAO_RT_Info_Tuple
+/// pointers into a total <priority, subpriority> ordering.  Returns -1
+/// if the first one is higher, 0 if they're the same, and 1 if the
+/// second one is higher.
 
 int
 TAO_RMS_FAIR_Reconfig_Sched_Strategy::total_priority_comp (void const *s, void const *t)
@@ -1147,10 +1147,10 @@ TAO_RMS_FAIR_Reconfig_Sched_Strategy::total_priority_comp (void const *s, void c
     }
 }
 
-// Ordering function used to qsort an array of RT_Info_Tuple
-// pointers into a total ordering for admission control.  Returns
-// -1 if the first one is higher, 0 if they're the same, and 1 if
-// the second one is higher.
+/// Ordering function used to qsort an array of RT_Info_Tuple
+/// pointers into a total ordering for admission control.  Returns
+/// -1 if the first one is higher, 0 if they're the same, and 1 if
+/// the second one is higher.
 
 int
 TAO_RMS_FAIR_Reconfig_Sched_Strategy::total_admission_comp (void const *s,
@@ -1225,8 +1225,8 @@ TAO_RMS_FAIR_Reconfig_Sched_Strategy::total_admission_comp (void const *s,
   return 0;
 }
 
-// Compares two RT_Info entries by criticality alone.  Returns -1 if the
-// first one is higher, 0 if they're the same, and 1 if the second one is higher.
+/// Compares two RT_Info entries by criticality alone.  Returns -1 if the
+/// first one is higher, 0 if they're the same, and 1 if the second one is higher.
 
 int
 TAO_RMS_FAIR_Reconfig_Sched_Strategy::compare_criticality(TAO_Reconfig_Scheduler_Entry &lhs,
@@ -1238,8 +1238,8 @@ TAO_RMS_FAIR_Reconfig_Sched_Strategy::compare_criticality(TAO_Reconfig_Scheduler
   return 0;
 }
 
-// Compares two RT_Info entries by criticality alone.  Returns -1 if the
-// first one is higher, 0 if they're the same, and 1 if the second one is higher.
+/// Compares two RT_Info entries by criticality alone.  Returns -1 if the
+/// first one is higher, 0 if they're the same, and 1 if the second one is higher.
 int
 TAO_RMS_FAIR_Reconfig_Sched_Strategy::compare_criticality(TAO_RT_Info_Tuple &,
                                                      TAO_RT_Info_Tuple &)
@@ -1248,8 +1248,8 @@ TAO_RMS_FAIR_Reconfig_Sched_Strategy::compare_criticality(TAO_RT_Info_Tuple &,
   return 0;
 }
 
-// Compares two RT_Info entries by priority alone.  Returns -1 if the
-// first one is higher, 0 if they're the same, and 1 if the second one is higher.
+/// Compares two RT_Info entries by priority alone.  Returns -1 if the
+/// first one is higher, 0 if they're the same, and 1 if the second one is higher.
 
 int
 TAO_RMS_FAIR_Reconfig_Sched_Strategy::compare_priority (TAO_Reconfig_Scheduler_Entry &lhs,
@@ -1269,8 +1269,8 @@ TAO_RMS_FAIR_Reconfig_Sched_Strategy::compare_priority (TAO_Reconfig_Scheduler_E
   return 0;
 }
 
-// Compares two RT_Info tuples by priority alone.  Returns -1 if the
-// first one is higher, 0 if they're the same, and 1 if the second one is higher.
+/// Compares two RT_Info tuples by priority alone.  Returns -1 if the
+/// first one is higher, 0 if they're the same, and 1 if the second one is higher.
 
 int
 TAO_RMS_FAIR_Reconfig_Sched_Strategy::compare_priority (TAO_RT_Info_Tuple &lhs,
@@ -1290,8 +1290,8 @@ TAO_RMS_FAIR_Reconfig_Sched_Strategy::compare_priority (TAO_RT_Info_Tuple &lhs,
   return 0;
 }
 
-// Fills in a static dispatch configuration for a priority level, based
-// on the operation characteristics of a representative scheduling entry.
+/// Fills in a static dispatch configuration for a priority level, based
+/// on the operation characteristics of a representative scheduling entry.
 
 int
 TAO_RMS_FAIR_Reconfig_Sched_Strategy::assign_config (RtecScheduler::Config_Info &info,
@@ -1308,10 +1308,10 @@ TAO_RMS_FAIR_Reconfig_Sched_Strategy::assign_config (RtecScheduler::Config_Info 
   return 0;
 }
 
-// Ordering function used to qsort an array of TAO_RT_Info_Tuple
-// pointers into a total <priority, subpriority> ordering.  Returns -1
-// if the first one is higher, 0 if they're the same, and 1 if the
-// second one is higher.
+/// Ordering function used to qsort an array of TAO_RT_Info_Tuple
+/// pointers into a total <priority, subpriority> ordering.  Returns -1
+/// if the first one is higher, 0 if they're the same, and 1 if the
+/// second one is higher.
 
 int
 TAO_RMS_MLF_Reconfig_Sched_Strategy::total_priority_comp (void const *s, void const *t)
@@ -1361,10 +1361,10 @@ TAO_RMS_MLF_Reconfig_Sched_Strategy::total_priority_comp (void const *s, void co
     }
 }
 
-// Ordering function used to qsort an array of RT_Info_Tuple
-// pointers into a total ordering for admission control.  Returns
-// -1 if the first one is higher, 0 if they're the same, and 1 if
-// the second one is higher.
+/// Ordering function used to qsort an array of RT_Info_Tuple
+/// pointers into a total ordering for admission control.  Returns
+/// -1 if the first one is higher, 0 if they're the same, and 1 if
+/// the second one is higher.
 
 int
 TAO_RMS_MLF_Reconfig_Sched_Strategy::total_admission_comp (void const *s,
@@ -1439,8 +1439,8 @@ TAO_RMS_MLF_Reconfig_Sched_Strategy::total_admission_comp (void const *s,
   return 0;
 }
 
-// Compares two RT_Info entries by criticality alone.  Returns -1 if the
-// first one is higher, 0 if they're the same, and 1 if the second one is higher.
+/// Compares two RT_Info entries by criticality alone.  Returns -1 if the
+/// first one is higher, 0 if they're the same, and 1 if the second one is higher.
 
 int
 TAO_RMS_MLF_Reconfig_Sched_Strategy::compare_criticality(TAO_Reconfig_Scheduler_Entry &lhs,
@@ -1462,8 +1462,8 @@ TAO_RMS_MLF_Reconfig_Sched_Strategy::compare_criticality(TAO_Reconfig_Scheduler_
     }
 }
 
-// Compares two RT_Info entries by criticality alone.  Returns -1 if the
-// first one is higher, 0 if they're the same, and 1 if the second one is higher.
+/// Compares two RT_Info entries by criticality alone.  Returns -1 if the
+/// first one is higher, 0 if they're the same, and 1 if the second one is higher.
 int
 TAO_RMS_MLF_Reconfig_Sched_Strategy::compare_criticality(TAO_RT_Info_Tuple &lhs,
                                                              TAO_RT_Info_Tuple &rhs)
@@ -1482,8 +1482,8 @@ TAO_RMS_MLF_Reconfig_Sched_Strategy::compare_criticality(TAO_RT_Info_Tuple &lhs,
     }
 }
 
-// Compares two RT_Info entries by priority alone.  Returns -1 if the
-// first one is higher, 0 if they're the same, and 1 if the second one is higher.
+/// Compares two RT_Info entries by priority alone.  Returns -1 if the
+/// first one is higher, 0 if they're the same, and 1 if the second one is higher.
 
 int
 TAO_RMS_MLF_Reconfig_Sched_Strategy::compare_priority (TAO_Reconfig_Scheduler_Entry &lhs,
@@ -1514,8 +1514,8 @@ TAO_RMS_MLF_Reconfig_Sched_Strategy::compare_priority (TAO_Reconfig_Scheduler_En
   return 0;
 }
 
-// Compares two RT_Info tuples by priority alone.  Returns -1 if the
-// first one is higher, 0 if they're the same, and 1 if the second one is higher.
+/// Compares two RT_Info tuples by priority alone.  Returns -1 if the
+/// first one is higher, 0 if they're the same, and 1 if the second one is higher.
 
 int
 TAO_RMS_MLF_Reconfig_Sched_Strategy::compare_priority (TAO_RT_Info_Tuple &lhs,
@@ -1550,8 +1550,8 @@ TAO_RMS_MLF_Reconfig_Sched_Strategy::compare_priority (TAO_RT_Info_Tuple &lhs,
   return 0;
 }
 
-// Fills in a static dispatch configuration for a priority level, based
-// on the operation characteristics of a representative scheduling entry.
+/// Fills in a static dispatch configuration for a priority level, based
+/// on the operation characteristics of a representative scheduling entry.
 
 int
 TAO_RMS_MLF_Reconfig_Sched_Strategy::assign_config (RtecScheduler::Config_Info &info,
