@@ -43,7 +43,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
       // Cache all transports in the cache
       for (size_t i = 0; i < transport_max; ++i)
         {
-          my_cache.cache_transport (&mytdi[i], &mytransport[i]);
+          my_cache.cache_transport (std::addressof (mytdi[i]),
+                                    std::addressof (mytransport[i]));
           mytransport[i].purging_order (i);
         }
 
