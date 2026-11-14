@@ -33,6 +33,8 @@
 #include "ace/Task.h"
 #include "ace/OS_main.h"
 
+#include <cstring>
+
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
   // This only works on Win32 platforms and on Unix platforms supporting
   // POSIX aio calls.
@@ -396,7 +398,7 @@ Sender::Sender ()
   :nIOCount ( 0 )
 {
   // Moment of inspiration... :-)
-  this->welcome_message_.init (data, ACE_OS::strlen (data));
+  this->welcome_message_.init (data, std::strlen (data));
 }
 
 Sender::~Sender ()
@@ -469,7 +471,7 @@ int Sender::initiate_write_stream ()
 
   welcome_message_.rd_ptr( welcome_message_.base ());
   welcome_message_.wr_ptr( welcome_message_.base ());
-  welcome_message_.wr_ptr (ACE_OS::strlen (data));
+  welcome_message_.wr_ptr (std::strlen (data));
 
   if (this->ws_.write (welcome_message_,
                        welcome_message_.length ()
