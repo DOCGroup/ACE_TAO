@@ -8,10 +8,9 @@
 #include "ace/Svc_Handler.h"
 #include <string>
 
+/// Keeps track of the options.
 class Options
 {
-  // = TITLE
-  //     Keeps track of the options.
 public:
   Options () = default;
   Options (Options const &) = delete;
@@ -26,15 +25,14 @@ private:
   u_short port_ {ACE_DEFAULT_SERVER_PORT};
 };
 
+/**
+ * @brief Receives messages from remote clients.
+ *
+ * This class demonstrates how to receive messages from remote clients using
+ * the notification mechanisms in the ACE_Reactor. It also illustrates how
+ * to use the ACE_Reactor timer mechanisms.
+ */
 class Logging_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
-// = TITLE
-//     Receive client message from the remote clients.
-//
-// = DESCRIPTION
-//     This class demonstrates how to receive messages from remote
-//     clients using the notification mechanisms in the
-//     <ACE_Reactor>.  In addition, it also illustrates how to
-//     utilize the <ACE_Reactor> timer mechanisms, as well.
 {
 public:
   Logging_Handler () = default;
@@ -43,18 +41,22 @@ public:
   Logging_Handler &operator= (Logging_Handler const &) = delete;
   Logging_Handler &operator= (Logging_Handler &&) = delete;
 
-  // = Hooks for opening and closing handlers.
+  /// @name Hooks for opening and closing handlers
+  /// @{
   int open (void *) override;
+  /// @}
 
 protected:
-  // = Demultiplexing hooks.
+  /// @name Demultiplexing hooks
+  /// @{
   int handle_input (ACE_HANDLE) override;
   int handle_timeout (ACE_Time_Value const &tv,
                       void const *arg) override;
+  /// @}
 
 private:
+  /// Host we are connected to.
   std::string peer_name_;
-  // Host we are connected to.
 };
 
 #endif /* __SERVER_LOGGERD_H */
