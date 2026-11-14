@@ -1,5 +1,6 @@
 #include "test_config.h"
 
+#include "ace/Monitor_Admin.h"
 #include "ace/Monitor_Base.h"
 #include "ace/Monitor_Point_Registry.h"
 
@@ -39,6 +40,9 @@ run_main (int, ACE_TCHAR* [])
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
   char const* const name = "Monitor_Point_Registry_Test_Point";
   Monitor_Point_Registry* const registry = Monitor_Point_Registry::instance ();
+  Monitor_Admin admin;
+
+  ACE_TEST_ASSERT (!admin.monitor_point (nullptr, ACE_Time_Value::zero));
 
   Test_Monitor* registered {};
   ACE_NEW_RETURN (registered, Test_Monitor (name), -1);

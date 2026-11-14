@@ -50,8 +50,14 @@ namespace ACE
     Monitor_Admin::monitor_point (Monitor_Base* monitor_point,
                                   const ACE_Time_Value& time)
     {
-      /// This call checks for a null monitor_point.
-      bool good_reg_add =
+      if (monitor_point == nullptr)
+        {
+          ACELIB_ERROR_RETURN ((LM_ERROR,
+                                "registration of null monitor failed\n"),
+                               false);
+        }
+
+      bool const good_reg_add =
         Monitor_Point_Registry::instance ()->add (monitor_point);
 
       if (!good_reg_add)

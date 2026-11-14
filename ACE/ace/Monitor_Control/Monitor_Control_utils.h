@@ -52,6 +52,11 @@ create_os_monitor (char const* name = nullptr,
       ACE_VERSIONED_NAMESPACE_NAME::MC_ADMINMANAGER>::instance (
         "MC_ADMINMANAGER");
 
+  if (mgr == nullptr)
+    {
+      return {};
+    }
+
   char const* const working_name =
     (name == nullptr ? OS_MP_TYPE::default_name () : name);
 
