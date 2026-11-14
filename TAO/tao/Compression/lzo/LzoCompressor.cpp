@@ -72,7 +72,7 @@ LzoCompressor::decompress (
                                  source.length (),
                                  reinterpret_cast <unsigned char*>(target.get_buffer ()),
                                  &max_length,
-                                 0);
+                                 nullptr);
 
   if (retval != LZO_E_OK)
     {
