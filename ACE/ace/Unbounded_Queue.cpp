@@ -247,7 +247,7 @@ ACE_Unbounded_Queue<T>::get (T *&item, size_t slot) const
 
   if (i < this->cur_size_)
     {
-      item = &curr->item_;
+      item = std::addressof (curr->item_);
       return 0;
     }
   else
@@ -365,7 +365,7 @@ ACE_Unbounded_Queue_Const_Iterator<T>::next (T *&item)
     return 0;
   else
     {
-      item = &this->current_->item_;
+      item = std::addressof (this->current_->item_);
       return 1;
     }
 }
@@ -420,7 +420,7 @@ ACE_Unbounded_Queue_Iterator<T>::next (T *&item)
     return 0;
   else
     {
-      item = &this->current_->item_;
+      item = std::addressof (this->current_->item_);
       return 1;
     }
 }

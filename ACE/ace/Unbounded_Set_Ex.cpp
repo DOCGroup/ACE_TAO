@@ -330,7 +330,7 @@ ACE_Unbounded_Set_Ex_Iterator<T, C>::next (T *&item)
     return 0;
   else
     {
-      item = &this->current_->item_;
+      item = std::addressof (this->current_->item_);
       return 1;
     }
 }
@@ -437,7 +437,7 @@ ACE_Unbounded_Set_Ex_Const_Iterator<T, C>::next (T *&item)
     return 0;
   else
     {
-      item = &this->current_->item_;
+      item = std::addressof (this->current_->item_);
       return 1;
     }
 }

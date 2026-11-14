@@ -649,7 +649,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::insert_i (const EXT_ID &k, 
               // If the node was successfully inserted, set its
               // parent, rebalance the tree, color the root black, and
               // return a pointer to the inserted item.
-              INT_ID *item = &(current->right ()->item ());
+              INT_ID *item = std::addressof (current->right ()->item ());
               current->right ()->parent (current);
               RB_rebalance (current->right ());
               root_->color (ACE_RB_Tree_Node_Base::BLACK);
@@ -683,7 +683,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::insert_i (const EXT_ID &k, 
               // If the node was successfully inserted, set its
               // parent, rebalance the tree, color the root black, and
               // return a pointer to the inserted item.
-              INT_ID *item = &current->left ()->item ();
+              INT_ID *item = std::addressof (current->left ()->item ());
               current->left ()->parent (current);
               RB_rebalance (current->left ());
               root_->color (ACE_RB_Tree_Node_Base::BLACK);
