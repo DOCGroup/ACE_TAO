@@ -111,75 +111,76 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   result = test_with_regular_poa_manager (argc, argv,
                                           "destroy_nothing_with_poa_manager",
                                           0, 0);
-  ACE_ASSERT (result == 0);
+  ACE_TEST_ASSERT (result == 0);
 
   result = test_with_regular_poa_manager (argc, argv,
                                           "destroy_poa_with_poa_manager",
                                           0, 1);
-  ACE_ASSERT (result == 0);
+  ACE_TEST_ASSERT (result == 0);
 
   result = test_with_regular_poa_manager (argc, argv,
                                           "destroy_orb_with_poa_manager",
                                           1, 0);
-  ACE_ASSERT (result == 0);
+  ACE_TEST_ASSERT (result == 0);
 
   result = test_with_regular_poa_manager (argc, argv,
                                           "destroy_poa_and_orb_with_poa_manager",
                                           1, 1);
-  ACE_ASSERT (result == 0);
+  ACE_TEST_ASSERT (result == 0);
 
   result = test_with_funky_poa_manager   (argc, argv,
                                           "destroy_nothing_without_poa_manager",
                                           0, 0, 0);
-  ACE_ASSERT (result == 0);
+  ACE_TEST_ASSERT (result == 0);
 
   result = test_with_funky_poa_manager   (argc, argv,
                                           "destroy_poa_without_poa_manager",
                                           0, 1, 0);
-  ACE_ASSERT (result == 0);
+  ACE_TEST_ASSERT (result == 0);
 
   result = test_with_funky_poa_manager   (argc, argv,
                                           "destroy_orb_without_poa_manager",
                                           1, 0, 0);
-  ACE_ASSERT (result == 0);
+  ACE_TEST_ASSERT (result == 0);
 
   result = test_with_funky_poa_manager   (argc, argv,
                                           "destroy_poa_and_orb_without_poa_manager",
                                           1, 1, 0);
-  ACE_ASSERT (result == 0);
+  ACE_TEST_ASSERT (result == 0);
 
   result = test_with_funky_poa_manager   (argc, argv,
                                           "destroy_nothing_with_funky_poa_manager",
                                           0, 0, 1);
-  ACE_ASSERT (result == 0);
+  ACE_TEST_ASSERT (result == 0);
 
   result = test_with_funky_poa_manager   (argc, argv,
                                           "destroy_poa_with_funky_poa_manager",
                                           0, 1, 1);
-  ACE_ASSERT (result == 0);
+  ACE_TEST_ASSERT (result == 0);
 
   result = test_with_funky_poa_manager   (argc, argv,
                                           "destroy_orb_with_funky_poa_manager",
                                           1, 0, 1);
-  ACE_ASSERT (result == 0);
+  ACE_TEST_ASSERT (result == 0);
 
   result = test_with_funky_poa_manager   (argc, argv,
                                           "destroy_poa_and_orb_with_funky_poa_manager",
                                           1, 1, 1);
-  ACE_ASSERT (result == 0);
+  ACE_TEST_ASSERT (result == 0);
 
   TAO_ORB_Manager orb_manager;
-  ACE_ASSERT (orb_manager.fini () == 0);
-  ACE_ASSERT (orb_manager.fini () == 0);
+  if (orb_manager.fini () != 0 || orb_manager.fini () != 0)
+    return 1;
 
   TAO::Utils::Server_Main<PortableServer::ServantBase> const null_name_server (nullptr);
 
   ACE_TCHAR orb_name[] = ACE_TEXT ("ORB_Manager_fini");
   ACE_TCHAR *manager_argv[] = {orb_name, nullptr};
   int manager_argc = 1;
-  ACE_ASSERT (orb_manager.init (manager_argc, manager_argv) == 0);
-  ACE_ASSERT (orb_manager.fini () == 0);
-  ACE_ASSERT (orb_manager.fini () == 0);
+  if (orb_manager.init (manager_argc, manager_argv) != 0
+      || orb_manager.fini () != 0
+      || orb_manager.fini () != 0)
+    return 1;
 
-  return result;
+  return 0;
 }
