@@ -38,7 +38,8 @@ class ACE_Unbounded_Queue_Iterator
 public:
   explicit ACE_Unbounded_Queue_Iterator (ACE_Unbounded_Queue<T> &q, int end = 0);
 
-  // = Iteration methods.
+  /// @name Iteration methods
+  /// @{
 
   /// Pass back the @a next_item that hasn't been seen in the queue.
   /// Returns 0 when all items have been seen, else 1.
@@ -60,6 +61,7 @@ public:
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
+  /// @}
 
 private:
   /// Pointer to the current node in the iteration.
@@ -82,7 +84,8 @@ public:
     ACE_Unbounded_Queue<T> const &q,
     int end = 0);
 
-  // = Iteration methods.
+  /// @name Iteration methods
+  /// @{
 
   /// Pass back the @a next_item that hasn't been seen in the queue.
   /// Returns 0 when all items have been seen, else 1.
@@ -104,6 +107,7 @@ public:
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
+  /// @}
 
 private:
   /// Pointer to the current node in the iteration.
@@ -150,9 +154,11 @@ public:
   friend class ACE_Unbounded_Queue_Iterator<T>;
   friend class ACE_Unbounded_Queue_Const_Iterator<T>;
 
-  // Trait definition.
+  /// @name Iterator type aliases
+  /// @{
   using ITERATOR = ACE_Unbounded_Queue_Iterator<T>;
   using CONST_ITERATOR = ACE_Unbounded_Queue_Const_Iterator<T>;
+  /// @}
 
   /// Construction.  Use user specified allocation strategy
   /// if specified.
@@ -161,12 +167,10 @@ public:
    */
   explicit ACE_Unbounded_Queue (ACE_Allocator *alloc = nullptr);
 
-
   /**
    * Initialize the queue to be a copy of the provided queue.
    */
   ACE_Unbounded_Queue (ACE_Unbounded_Queue<T> const &);
-
 
   /**
    * Perform a deep copy of rhs.
@@ -178,7 +182,8 @@ public:
    */
   ~ACE_Unbounded_Queue ();
 
-  // = Check boundary conditions.
+  /// @name Boundary checks
+  /// @{
 
   /// Returns true if the container is empty, otherwise returns false.
   /**
@@ -191,8 +196,10 @@ public:
    * The queue cannot be full, so it always returns 0.
    */
   bool is_full () const;
+  /// @}
 
-  // = Classic queue operations.
+  /// @name Queue operations
+  /// @{
 
   /// Adds @a new_item to the tail of the queue.  Returns 0 on success,
   /// -1 on failure.
@@ -214,8 +221,10 @@ public:
    * Remove an item from the head of the queue.
    */
   int dequeue_head (T &item);
+  /// @}
 
-  // = Additional utility methods.
+  /// @name Utility methods
+  /// @{
 
   /// Reset the ACE_Unbounded_Queue to be empty and release all its
   /// dynamically allocated resources.
@@ -246,13 +255,16 @@ public:
    * Return the size of the queue.
    */
   size_t size () const;
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;
 
-  // = STL-styled unidirectional iterator factory.
+  /// @name STL-style iterator factory
+  /// @{
   ACE_Unbounded_Queue_Iterator<T> begin ();
   ACE_Unbounded_Queue_Iterator<T> end ();
+  /// @}
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
