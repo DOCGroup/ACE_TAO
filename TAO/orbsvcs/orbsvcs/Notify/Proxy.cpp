@@ -12,6 +12,8 @@
 #include "orbsvcs/Notify/POA_Helper.h"
 #include "orbsvcs/Notify/Topology_Saver.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_Proxy::TAO_Notify_Proxy () = default;
@@ -166,11 +168,11 @@ TAO_Notify_Proxy::load_child (ACE_CString const &type, CORBA::Long id,
     // since we initialized our subscribed types to everything
     // in the constructor. we have to clear it out first.
     this->subscribed_types_.clear ();
-    result = &this->subscribed_types_;
+    result = std::addressof (this->subscribed_types_);
   }
   else if (type == "filter_admin")
   {
-    result = & this->filter_admin_;
+    result = std::addressof (this->filter_admin_);
   }
   return result;
 }

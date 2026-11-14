@@ -11,6 +11,8 @@
 #include "orbsvcs/Notify/QoSProperties.h"
 #include "orbsvcs/Notify/Properties.h"
 
+#include <memory>
+
 #include "orbsvcs/Time_Utilities.h"
 
 #include "tao/debug.h"
@@ -701,7 +703,7 @@ TAO_Notify_Consumer::dispatch_updates_i (const CosNotification::EventTypeSeq& ad
 TAO_SYNCH_MUTEX*
 TAO_Notify_Consumer::proxy_lock ()
 {
-  return &this->proxy_->lock_;
+  return std::addressof (this->proxy_->lock_);
 }
 
 TAO_Notify_ProxySupplier*

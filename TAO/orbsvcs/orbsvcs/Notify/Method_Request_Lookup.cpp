@@ -17,6 +17,8 @@
 #include "tao/debug.h"
 #include "tao/CDR.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_Method_Request_Lookup::TAO_Notify_Method_Request_Lookup (
@@ -64,7 +66,7 @@ int TAO_Notify_Method_Request_Lookup::execute_i ()
   if (TAO_debug_level > 1)
     ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT("Notify (%P|%t) Proxyconsumer %x filter ")
                           ACE_TEXT("eval result = %d\n"),
-                          &this->proxy_consumer_ , val));
+                          std::addressof (this->proxy_consumer_), val));
 
   // Filter failed - do nothing.
   if (!val)

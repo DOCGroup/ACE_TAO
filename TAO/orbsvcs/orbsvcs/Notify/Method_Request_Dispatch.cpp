@@ -9,6 +9,7 @@
 #include "tao/debug.h"
 #include "tao/CDR.h"
 
+#include <memory>
 #include <string>
 
 #ifndef DEBUG_LEVEL
@@ -71,7 +72,7 @@ int TAO_Notify_Method_Request_Dispatch::execute_i ()
         ORBSVCS_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("Notify (%P|%t) Proxysupplier %x filter ")
                     ACE_TEXT ("eval result = %d\n"),
-          &this->proxy_supplier_ , val));
+          std::addressof (this->proxy_supplier_), val));
 
       // Filter failed - do nothing.
       if (!val)

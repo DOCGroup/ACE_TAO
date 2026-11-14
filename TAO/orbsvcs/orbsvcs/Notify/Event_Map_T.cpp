@@ -7,6 +7,8 @@
 #include "orbsvcs/Notify/Properties.h"
 #include "orbsvcs/Notify/Factory.h"
 
+#include <memory>
+
 #if ! defined (__ACE_INLINE__)
 #include "orbsvcs/Notify/Event_Map_T.inl"
 #endif /* __ACE_INLINE__ */
@@ -54,7 +56,7 @@ TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::insert (PROXY* proxy, const TAO_Notify_
 
   if (event_type.is_special () == 1)
     {
-      entry = &this->broadcast_entry_;
+      entry = std::addressof (this->broadcast_entry_);
 
       result = 0;
     }
@@ -100,7 +102,7 @@ TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::remove (PROXY* proxy, const TAO_Notify_
 
   if (event_type.is_special () == 1)
     {
-      entry = &this->broadcast_entry_;
+      entry = std::addressof (this->broadcast_entry_);
 
       entry->disconnected (proxy);
     }

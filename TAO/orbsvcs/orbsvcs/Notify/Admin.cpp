@@ -21,6 +21,8 @@
 #include "orbsvcs/Notify/ConsumerAdmin.h"
 #include "orbsvcs/Notify/SupplierAdmin.h"
 
+#include <memory>
+
 #include "tao/debug.h"
 
 //#define DEBUG_LEVEL 9
@@ -192,7 +194,7 @@ TAO_Notify_Admin::load_child (ACE_CString const &type,
       // since we initialized our subscribed types to everything
       // in the constructor. we have to clear it out first.
       this->subscribed_types_.clear ();
-      result = &this->subscribed_types_;
+      result = std::addressof (this->subscribed_types_);
     }
   else if (type == "filter_admin")
     {

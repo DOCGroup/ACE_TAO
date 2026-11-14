@@ -5,6 +5,7 @@
 #include "ace/Truncate.h"
 
 #include <cstring>
+#include <memory>
 #include <new>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -757,7 +758,7 @@ Routing_Slip_Persistence_Manager::write_first_routing_slip_block(
 void
 Routing_Slip_Persistence_Manager::dllist_push_back()
 {
-  insert_before (&this->factory_->root());
+  insert_before (std::addressof (this->factory_->root()));
 }
 
 void

@@ -1,5 +1,7 @@
 #include "orbsvcs/Notify/Notify_Constraint_Visitors.h"
 
+#include <memory>
+
 #include "ace/ETCL/ETCL_y.h"
 
 #include "tao/ETCL/TAO_ETCL_Constraint.h"
@@ -714,7 +716,7 @@ TAO_Notify_Constraint_Visitor::visit_component (
         }
       case REMAINDER_OF_BODY:
         {
-          TAO_ETCL_Literal_Constraint rob (&this->remainder_of_body_);
+          TAO_ETCL_Literal_Constraint rob (std::addressof (this->remainder_of_body_));
           this->queue_.enqueue_head (rob);
           return 0;
         }

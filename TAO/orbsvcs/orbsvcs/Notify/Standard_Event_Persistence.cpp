@@ -6,6 +6,8 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/Truncate.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
@@ -201,7 +203,7 @@ Standard_Event_Persistence_Factory::get_preallocated_pointer(
 Persistent_File_Allocator*
 Standard_Event_Persistence_Factory::allocator()
 {
-  return &this->allocator_;
+  return std::addressof (this->allocator_);
 }
 
 Routing_Slip_Persistence_Manager &
