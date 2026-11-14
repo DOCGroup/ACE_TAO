@@ -696,33 +696,24 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
       else if (nullptr != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBPreferIPV6Interfaces"))))
         {
-          int const prefer_ipv6_interfaces = ACE_OS::atoi (current_arg);
-          if (prefer_ipv6_interfaces)
-            this->orb_params ()->prefer_ipv6_interfaces (true);
-          else
-            this->orb_params ()->prefer_ipv6_interfaces (false);
+          this->orb_params ()->prefer_ipv6_interfaces (
+            ACE_OS::atoi (current_arg) != 0);
 
           arg_shifter.consume_arg ();
         }
       else if (nullptr != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBConnectIPV6Only"))))
         {
-          int const connect_ipv6_only = ACE_OS::atoi (current_arg);
-          if (connect_ipv6_only)
-            this->orb_params ()->connect_ipv6_only (true);
-          else
-            this->orb_params ()->connect_ipv6_only (false);
+          this->orb_params ()->connect_ipv6_only (
+            ACE_OS::atoi (current_arg) != 0);
 
           arg_shifter.consume_arg ();
         }
       else if (nullptr != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBUseIPV6LinkLocal"))))
         {
-          int const use_ipv6_link_local = ACE_OS::atoi (current_arg);
-          if (use_ipv6_link_local)
-            this->orb_params ()->use_ipv6_link_local (true);
-          else
-            this->orb_params ()->use_ipv6_link_local (false);
+          this->orb_params ()->use_ipv6_link_local (
+            ACE_OS::atoi (current_arg) != 0);
 
           arg_shifter.consume_arg ();
         }

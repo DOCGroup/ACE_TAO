@@ -1084,7 +1084,7 @@ namespace TAO
     ACE_Arg_Shifter arg_shifter (command_line.get_argc (),
                                  command_line.get_TCHAR_argv ());
 
-    size_t opt_len = ACE_OS::strlen (orb_opt);
+    size_t const opt_len = ACE_OS::strlen (orb_opt);
 
     bool found {};
     while (arg_shifter.is_anything_left ())
