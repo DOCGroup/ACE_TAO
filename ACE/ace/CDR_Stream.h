@@ -981,8 +981,8 @@ public:
    */
   const ACE_Message_Block* start () const;
 
-  // = The following functions are useful to read the contents of the
-  //   CDR stream from a socket or file.
+  /// @name Reading the stream from a socket or file
+  /// @{
 
   /**
    * Grow the internal buffer, reset @c rd_ptr to the first byte in
@@ -1005,6 +1005,7 @@ public:
 
   /// Steal the contents from the current CDR.
   ACE_Message_Block *steal_contents ();
+  /// @}
 
   /// Steal the contents of @a cdr and make a shallow copy into this
   /// stream.

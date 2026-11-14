@@ -105,7 +105,6 @@ public:
   /// Round up to the chunk size required by the operation system
   size_t round_to_chunk_size (size_t nbytes);
 
-  // = Don't need this methods here ...
   int sync (ssize_t = -1, int = MS_SYNC);
   int sync (void *, size_t, int = MS_SYNC);
   int protect (ssize_t = -1, int = PROT_RDWR);

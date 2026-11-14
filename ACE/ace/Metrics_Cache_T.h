@@ -130,7 +130,8 @@ public:
   ACE_Metrics_Cache (ACE_Metrics_Cache &&) = delete;
   ACE_Metrics_Cache &operator= (ACE_Metrics_Cache &&) = delete;
 
-  // = Dispatching metrics.
+  /// @name Dispatch metrics
+  /// @{
 
   /// Report start, stop, suspend, and resume times of a dispatch
   /// enqueue: stores data metrics on the supplier side.
@@ -154,6 +155,7 @@ public:
 
   /// Flush the ACE metrics cache into shared memory.
   void flush_ACE_Metrics_Cache ();
+  /// @}
 
   /// Set the enable state for metrics collection.
   void metrics_enabled (bool enabled);
@@ -167,7 +169,8 @@ protected:
   /// the singleton allocator in the current process is used.
   ALLOCATOR * allocator ();
 
-  // = Implementation members.
+  /// @name Implementation members
+  /// @{
 
   /// Number of probes in each supplier/consumer set.
   u_long probe_set_size_ {};
@@ -183,6 +186,7 @@ protected:
   /// Names for the probes.
   char ** enqueue_names_ {};
   char ** dequeue_names_ {};
+  /// @}
 
   /// Index from which probe events are being consumed.
   /// for WSOA, it's the data being sent to the logger

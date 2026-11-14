@@ -58,14 +58,17 @@ public:
   /// Shutdown the timer.
   ~ACE_Profile_Timer ();
 
-  // = Timer methods.
+  /// @name Timer operations
+  /// @{
   /// Activate the timer.
   int start ();
 
   /// Stop the timer.
   int stop ();
+  /// @}
 
-  // = Resource utilization methods.
+  /// @name Resource utilization
+  /// @{
   /// Compute the time elapsed between calls to @c start() and @c stop().
   int elapsed_time (ACE_Elapsed_Time &et);
 
@@ -81,6 +84,7 @@ public:
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
+  /// @}
 
 private:
   /// Compute how much time has elapsed.
