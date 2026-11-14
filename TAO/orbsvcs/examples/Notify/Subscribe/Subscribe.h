@@ -76,7 +76,6 @@ public:
   /// send the events.
   void send_events ();
 
-  // = Data Members
   /// Reference to the root poa.
   PortableServer::POA_var root_poa_ {};
 
@@ -117,16 +116,12 @@ public:
   std::atomic_bool done_ {};
 };
 
-/*****************************************************************/
+/**
+ * @brief Consumer for the Subscribe example.
+ */
 class Subscribe_StructuredPushConsumer
   : public POA_CosNotifyComm::StructuredPushConsumer
 {
-  // = TITLE
-  //   Subscribe_StructuredPushConsumer
-  //
-  // = DESCRIPTION
-  //   Consumer for the Subscribe example.
-  //
 public:
   explicit Subscribe_StructuredPushConsumer (Subscribe *subscribe);
   ~Subscribe_StructuredPushConsumer () override = default;
@@ -145,10 +140,9 @@ public:
   /// Accessor for the Proxy that we're connected to.
   CosNotifyChannelAdmin::StructuredProxyPushSupplier_ptr get_proxy_supplier ();
 
-  // public data member for evaluating the results of subscription.
+  /// Public data member for evaluating the results of subscription.
   CosNotification::EventTypeSeq expected_subscription_ {};
 protected:
-  // = Data members
   /// The proxy that we are connected to.
   CosNotifyChannelAdmin::StructuredProxyPushSupplier_var proxy_supplier_ {};
 
@@ -158,28 +152,20 @@ protected:
   /// callback <done>
   Subscribe *subscribe_ {};
 
-  // = Methods
-  // = NotifyPublish method
   void offer_change (CosNotification::EventTypeSeq const &added,
                      CosNotification::EventTypeSeq const &removed) override;
 
-  // = StructuredPushSupplier methods
   void push_structured_event (CosNotification::StructuredEvent const &notification) override;
 
   void disconnect_structured_push_consumer () override;
 };
 
-/*****************************************************************/
-
+/**
+ * @brief Supplier for the Subscribe example.
+ */
 class Subscribe_StructuredPushSupplier
   : public POA_CosNotifyComm::StructuredPushSupplier
 {
-  // = TITLE
-  //   Subscribe_StructuredPushSupplier
-  //
-  // = DESCRIPTION
-  //   Supplier for the SUBSCRIBE example.
-  //
 public:
   Subscribe_StructuredPushSupplier () = default;
   ~Subscribe_StructuredPushSupplier () override = default;
@@ -199,19 +185,15 @@ public:
   void send_event (CosNotification::StructuredEvent const &event);
 
 protected:
-  // = Data members
   /// The proxy that we are connected to.
   CosNotifyChannelAdmin::StructuredProxyPushConsumer_var proxy_consumer_ {};
 
   /// This supplier's id.
   CosNotifyChannelAdmin::ProxyID proxy_consumer_id_ {};
 
-  // = Protected Methods
-  // = NotifySubscribe
   void subscription_change (CosNotification::EventTypeSeq const &added,
                             CosNotification::EventTypeSeq const &removed) override;
 
-  // = StructuredPushSupplier method
   void disconnect_structured_push_supplier () override;
 };
 

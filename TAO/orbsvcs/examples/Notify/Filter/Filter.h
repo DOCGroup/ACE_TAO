@@ -78,7 +78,6 @@ class FilterClient
   /// send the events.
   void send_events ();
 
-  // = Data Members
   /// Reference to the root poa.
   PortableServer::POA_var root_poa_ {};
 
@@ -125,17 +124,12 @@ class FilterClient
   std::atomic_bool done_ {};
 };
 
-/*****************************************************************/
+/**
+ * @brief Consumer for the Filter example.
+ */
 class Filter_StructuredPushConsumer
   : public POA_CosNotifyComm::StructuredPushConsumer
 {
-  // = TITLE
-  //   Filter_StructuredPushConsumer
-  //
-  // = DESCRIPTION
-  //   Consumer for the Filter example.
-  //
-
  public:
   Filter_StructuredPushConsumer (FilterClient *filter, char const *my_name);
   Filter_StructuredPushConsumer (Filter_StructuredPushConsumer const &) = delete;
@@ -151,8 +145,6 @@ class Filter_StructuredPushConsumer
   void disconnect ();
 
 protected:
-  // = Data members
-
   /// The callback for <done>
   FilterClient *filter_ {};
 
@@ -165,30 +157,22 @@ protected:
   /// The proxy_supplier id.
   CosNotifyChannelAdmin::ProxyID proxy_supplier_id_ {};
 
-  // = Methods
   ~Filter_StructuredPushConsumer () override = default;
 
-  // = NotifyPublish method
   void offer_change (CosNotification::EventTypeSeq const &added,
                      CosNotification::EventTypeSeq const &removed) override;
 
-  // = StructuredPushSupplier methods
   void push_structured_event (CosNotification::StructuredEvent const &notification) override;
 
   void disconnect_structured_push_consumer () override;
 };
 
-/*****************************************************************/
-
+/**
+ * @brief Supplier for the Filter example.
+ */
 class Filter_StructuredPushSupplier
   : public POA_CosNotifyComm::StructuredPushSupplier
 {
-  // = TITLE
-  //   Filter_StructuredPushSupplier
-  //
-  // = DESCRIPTION
-  //   Supplier for the filter example.
-  //
  public:
   explicit Filter_StructuredPushSupplier (char const *my_name);
   Filter_StructuredPushSupplier (Filter_StructuredPushSupplier const &) = delete;
@@ -207,7 +191,6 @@ class Filter_StructuredPushSupplier
   void send_event (CosNotification::StructuredEvent const &event);
 
 protected:
-  // = Data members
   /// The name of this consumer.
   ACE_CString my_name_ {};
 
@@ -217,14 +200,11 @@ protected:
   /// This supplier's id.
   CosNotifyChannelAdmin::ProxyID proxy_consumer_id_ {};
 
-  // = Protected Methods
   ~Filter_StructuredPushSupplier () override = default;
 
-  // = NotifySubscribe
   void subscription_change (CosNotification::EventTypeSeq const &added,
                             CosNotification::EventTypeSeq const &removed) override;
 
-  // = StructuredPushSupplier method
   void disconnect_structured_push_supplier () override;
 };
 
