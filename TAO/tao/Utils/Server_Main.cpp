@@ -28,6 +28,12 @@ TAO::Utils::Server_Main<SERVANT>::Server_Main (std::string const &name)
 }
 
 template <typename SERVANT>
+TAO::Utils::Server_Main<SERVANT>::Server_Main (char const *name)
+  : Server_Main (name != nullptr ? std::string (name) : std::string {})
+{
+}
+
+template <typename SERVANT>
 int
 TAO::Utils::Server_Main<SERVANT>::run (int argc, ACE_TCHAR *argv[]) const
 {
