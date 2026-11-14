@@ -1,7 +1,10 @@
- // This example tests the features of the <ACE_SOCK_Acceptor>,
-// <ACE_SOCK_Stream>, and <ACE_Svc_Handler> classes.  If the platform
-// supports threads it uses a thread-per-connection concurrency model.
-// Otherwise, it uses a single-threaded iterative server model.
+/**
+ * @file CPP-inserver-fancy.cpp
+ *
+ * Tests ACE_SOCK_Acceptor, ACE_SOCK_Stream, and ACE_Svc_Handler. On
+ * threaded platforms, it uses a thread-per-connection model; otherwise,
+ * it uses a single-threaded iterative server model.
+ */
 
 #include "ace/OS_main.h"
 #include "ace/SOCK_Acceptor.h"
@@ -16,111 +19,108 @@
 // Forward declaration.
 class Handler;
 
+/// Creates handlers for the one-way and two-way protocols.
 class Handler_Factory
 {
-  // = TITLE
-  //   Creates the oneway or twoway handlers.
 public:
   Handler_Factory ();
 
   ~Handler_Factory ();
 
+  /// Runs the main event loop.
   int handle_events ();
-  // Run the main event loop.
 
 private:
+  /// Initializes the acceptors.
   int init_acceptors ();
-  // Initialize the acceptors.
 
+  /// Creates the requested handler type.
   int create_handler (ACE_SOCK_Acceptor &acceptor,
                       Handler *(*handler_factory) (ACE_HANDLE),
                       const char *handler_type);
-  // Factory that creates the right kind of <Handler>.
 
-  // = Factory functions.
+  /// @name Handler factories
+  /// @{
+  /// Creates a two-way handler.
   static Handler *make_twoway_handler (ACE_HANDLE);
-  // Create a twoway handler.
 
+  /// Creates a one-way handler.
   static Handler *make_oneway_handler (ACE_HANDLE);
-  // Create a oneway handler.
+  /// @}
 
+  /// Acceptor for two-way connections.
   ACE_SOCK_Acceptor twoway_acceptor_;
-  // Twoway acceptor factory.
 
+  /// Acceptor for one-way connections.
   ACE_SOCK_Acceptor oneway_acceptor_;
-  // Oneway acceptor factory.
 };
 
+/// Base class for the one-way and two-way connection handlers.
 class Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
-  // = TITLE
-  //   Base class for the oneway and twoway handlers.
-
+  /// Grants the factory access to svc().
   friend class Handler_Factory;
-  // The factory has special permission. (to access svc ()).
 
 public:
   //FUZZ: disable check_for_lack_ACE_OS
+  /// Performs generic handler initialization.
   int open (void * = nullptr) override;
-  // Generic initialization method.
 
+  /// Closes and deletes the handler.
   int close (u_long) override;
-  // Close down and delete this.
   //FUZZ: enable check_for_lack_ACE_OS
 
 protected:
   Handler (ACE_HANDLE handle);
 
+  /**
+   * Reads the header and allocates a buffer for the subclass run() methods.
+   * This factors out code shared by all handler protocols.
+   */
   int parse_header_and_allocate_buffer (char *&buf,
                                         ACE_INT32 *len);
-  // Implement the generic code that's called from any of the subclass
-  // <run> methods to get the header and the buffer to read the data.
-  // This method factors out common code.
 
+  /// Implements the protocol for the handler.
   virtual int run () = 0;
-  // Hook method called by the <svc> template method to do the actual
-  // protocol.  Must be overridden by the subclass.
 
+  /// Entry point for the handler task.
   int svc () override;
-  // Template method entry point into the handler task.
 
+  /// Prints the handler statistics.
   virtual void print_results ();
-  // Print the results.
 
+  /// Total number of bytes received.
   size_t total_bytes_;
-  // Total number of bytes received.
 
+  /// Number of messages received.
   size_t message_count_;
-  // Number of messages received.
 
+  /// Tracks elapsed processing time.
   ACE_Profile_Timer timer_;
-  // Keeps track of how much time we're using.
 };
 
+/// Implements the two-way protocol.
 class Twoway_Handler : public Handler
 {
-  // = TITLE
-  //   Performs the twoway protocol.
 public:
   Twoway_Handler (ACE_HANDLE handle);
 
 private:
+  /// Implements the two-way protocol for svc().
   int run () override;
-  // Template Method hook called by <svc>.
 };
 
 class Oneway_Handler : public Handler
 {
-  // = TITLE
 public:
   Oneway_Handler (ACE_HANDLE handle);
 
 private:
+  /// Implements the one-way protocol for svc().
   int run () override;
-  // Template Method hook called by <svc>.
 
+  /// Prints one-way handler statistics.
   void print_results () override;
-  // Print the results.
 };
 
 u_short
@@ -181,7 +181,6 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-// Options Singleton.
 using OPTIONS = ACE_Singleton<Options, ACE_SYNCH_RECURSIVE_MUTEX>;
 
 Handler::Handler (ACE_HANDLE handle)
@@ -275,8 +274,7 @@ Twoway_Handler::Twoway_Handler (ACE_HANDLE handle)
 {
 }
 
-// Function entry point into the twoway server task.
-
+/// Runs the two-way server task.
 int
 Twoway_Handler::run ()
 {
@@ -366,8 +364,7 @@ Oneway_Handler::print_results ()
               ((et.user_time + et.system_time) / (double) this->message_count_) * ACE_ONE_SECOND_IN_USECS));
 }
 
-// Function entry point into the oneway server task.
-
+/// Runs the one-way server task.
 int
 Oneway_Handler::run ()
 {
@@ -418,16 +415,14 @@ Oneway_Handler::run ()
   return 0;
 }
 
-// Create a twoway handler.
-
+/// Creates a two-way handler.
 Handler *
 Handler_Factory::make_twoway_handler (ACE_HANDLE handle)
 {
   return new Twoway_Handler (handle);
 }
 
-// Create a oneway handler.
-
+/// Creates a one-way handler.
 Handler *
 Handler_Factory::make_oneway_handler (ACE_HANDLE handle)
 {
@@ -508,8 +503,7 @@ Handler_Factory::~Handler_Factory ()
   this->oneway_acceptor_.close ();
 }
 
-// Run the main event loop.
-
+/// Runs the main event loop.
 int
 Handler_Factory::handle_events ()
 {

@@ -1,8 +1,10 @@
-// This tests the features of the <ACE_SOCK_Connector> and
-// <ACE_SOCK_Stream> classes.  In addition, it can be used to test the
-// oneway and twoway latency and throughput at the socket-level.  This
-// is useful as a baseline to compare against ORB-level performance
-// for the same types of data.
+/**
+ * @file CPP-inclient.cpp
+ *
+ * Tests ACE_SOCK_Connector and ACE_SOCK_Stream. It can also measure
+ * one-way and two-way socket latency and throughput as a baseline for
+ * ORB-level performance with the same data.
+ */
 
 #include "CPP-inclient.h"
 
@@ -42,7 +44,6 @@ Options::~Options ()
   delete [] this->message_buf_;
 }
 
-// Options Singleton.
 using OPTIONS = ACE_Singleton<Options, ACE_SYNCH_RECURSIVE_MUTEX>;
 
 int
@@ -225,8 +226,7 @@ Options::shared_client_test (u_short port,
   ACE_MT (this->barrier_->wait ());
   return buf;
 }
-// Static function entry point to the oneway client service.
-
+/// Runs the one-way client service.
 void *
 Options::oneway_client_test (void *)
 {
@@ -280,8 +280,7 @@ Options::oneway_client_test (void *)
   return reinterpret_cast<void *> (result);
 }
 
-// Static function entry point to the twoway client service.
-
+/// Runs the two-way client service.
 void *
 Options::twoway_client_test (void *)
 {
