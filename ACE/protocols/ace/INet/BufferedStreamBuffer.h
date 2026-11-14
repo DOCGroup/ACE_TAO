@@ -59,6 +59,11 @@ namespace ACE
 
               ~BasicBufferedStreamBuffer () override;
 
+              BasicBufferedStreamBuffer (BasicBufferedStreamBuffer const&) = delete;
+              BasicBufferedStreamBuffer& operator= (BasicBufferedStreamBuffer const&) = delete;
+              BasicBufferedStreamBuffer (BasicBufferedStreamBuffer&&) = delete;
+              BasicBufferedStreamBuffer& operator= (BasicBufferedStreamBuffer&&) = delete;
+
               int_type overflow (int_type c) override;
               int_type underflow () override;
               int sync () override;
@@ -82,10 +87,7 @@ namespace ACE
               std::streamsize bufsize_;
               std::unique_ptr<char_type[]> buffer_;
               typename std::basic_ios<ACE_CHAR_T, TR>::openmode mode_;
-              interceptor_type* interceptor_;
-
-              BasicBufferedStreamBuffer(const BasicBufferedStreamBuffer&);
-              BasicBufferedStreamBuffer& operator = (const BasicBufferedStreamBuffer&);
+              interceptor_type* interceptor_; // Non-owning; configured by set_interceptor().
           };
 
         /// char specialization

@@ -2,9 +2,9 @@
 #define ACE_BUFFERED_STREAM_BUFFER_CPP
 
 #include "ace/INet/BufferedStreamBuffer.h"
-#include "ace/OS_Memory.h"
 
 #include <cstring>
+#include <new>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -20,9 +20,9 @@ namespace ACE
         mode_ (mode),
         interceptor_ (nullptr)
       {
-        char_type* p {};
-        ACE_NEW_NORETURN (p, char_type [bufsz]);
-        this->buffer_.reset (p);
+        this->buffer_.reset (new (std::nothrow) char_type [bufsz]);
+        if (!this->buffer_)
+          throw std::bad_alloc ();
 
         this->setg (this->buffer_.get () + 4,
                     this->buffer_.get () + 4,

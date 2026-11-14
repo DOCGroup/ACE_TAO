@@ -2,9 +2,9 @@
 #define ACE_IOS_BIDIR_STREAM_BUFFER_CPP
 
 #include "ace/INet/BidirStreamBuffer.h"
-#include "ace/OS_Memory.h"
 
 #include <cstring>
+#include <new>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -22,14 +22,14 @@ namespace ACE
         stream_ (sh),
         interceptor_ (nullptr)
       {
-        this->stream_->add_reference ();
+        this->read_buffer_.reset (new (std::nothrow) char_type [bufsz]);
+        if (!this->read_buffer_)
+          throw std::bad_alloc ();
+        this->write_buffer_.reset (new (std::nothrow) char_type [bufsz]);
+        if (!this->write_buffer_)
+          throw std::bad_alloc ();
 
-        char_type* p {};
-        ACE_NEW_NORETURN (p, char_type [bufsz]);
-        this->read_buffer_.reset (p);
-        p = nullptr;
-        ACE_NEW_NORETURN (p, char_type [bufsz]);
-        this->write_buffer_.reset (p);
+        this->stream_->add_reference ();
 
         this->reset_buffers ();
       }

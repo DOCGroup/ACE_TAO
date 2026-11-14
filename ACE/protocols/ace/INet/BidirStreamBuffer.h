@@ -94,8 +94,8 @@ namespace ACE
               std::unique_ptr<char_type[]> read_buffer_;
               std::unique_ptr<char_type[]> write_buffer_;
               openmode        mode_;
-              STREAM_HANDLER *stream_;
-              interceptor_type* interceptor_;
+              STREAM_HANDLER *stream_; // Retained with the handler's ACE reference count.
+              interceptor_type* interceptor_; // Non-owning; configured by set_interceptor().
           };
 
         /**
