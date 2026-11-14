@@ -48,8 +48,8 @@ ACE_OutputCDR::ACE_OutputCDR (size_t size,
      wchar_translator_ (nullptr)
 
 {
-  ACE_CDR::mb_align (&this->start_);
-  this->current_ = &this->start_;
+  ACE_CDR::mb_align (std::addressof (this->start_));
+  this->current_ = std::addressof (this->start_);
 
 #if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
   ACE_NEW (this->monitor_,
@@ -91,8 +91,8 @@ ACE_OutputCDR::ACE_OutputCDR (char *data,
      wchar_translator_ (nullptr)
 {
   // We cannot trust the buffer to be properly aligned
-  ACE_CDR::mb_align (&this->start_);
-  this->current_ = &this->start_;
+  ACE_CDR::mb_align (std::addressof (this->start_));
+  this->current_ = std::addressof (this->start_);
 
 #if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
   ACE_NEW (this->monitor_,
@@ -123,8 +123,8 @@ ACE_OutputCDR::ACE_OutputCDR (ACE_Data_Block *data_block,
      wchar_translator_ (nullptr)
 {
   // We cannot trust the buffer to be properly aligned
-  ACE_CDR::mb_align (&this->start_);
-  this->current_ = &this->start_;
+  ACE_CDR::mb_align (std::addressof (this->start_));
+  this->current_ = std::addressof (this->start_);
 
 #if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
   ACE_NEW (this->monitor_,
@@ -152,8 +152,8 @@ ACE_OutputCDR::ACE_OutputCDR (ACE_Message_Block *data,
      wchar_translator_ (nullptr)
 {
   // We cannot trust the buffer to be properly aligned
-  ACE_CDR::mb_align (&this->start_);
-  this->current_ = &this->start_;
+  ACE_CDR::mb_align (std::addressof (this->start_));
+  this->current_ = std::addressof (this->start_);
 
 #if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
   ACE_NEW (this->monitor_,
@@ -988,7 +988,7 @@ int
 ACE_OutputCDR::consolidate ()
 {
   // Optimize by only doing something if we need to
-  if (this->current_ != &this->start_)
+  if (this->current_ != std::addressof (this->start_))
     {
       // Set the number of bytes in the top-level block, reallocating
       // if necessary.  The rd_ptr and wr_ptr remain at the original offsets
@@ -1021,7 +1021,7 @@ ACE_OutputCDR::consolidate ()
       // current_ and current_is_writable_ to reflect the single used block.
       ACE_Message_Block::release (cont);
       this->start_.cont (nullptr);
-      this->current_ = &this->start_;
+      this->current_ = std::addressof (this->start_);
       this->current_is_writable_ = true;
     }
 
@@ -1032,7 +1032,7 @@ ACE_Message_Block*
 ACE_OutputCDR::find (char* loc)
 {
   ACE_Message_Block* mb {};
-  for (mb = &this->start_; mb != nullptr; mb = mb->cont ())
+  for (mb = std::addressof (this->start_); mb != nullptr; mb = mb->cont ())
   {
     if (loc <= mb->wr_ptr () && loc >= mb->rd_ptr ())
     {
@@ -1361,7 +1361,7 @@ ACE_InputCDR::ACE_InputCDR (const ACE_OutputCDR& rhs,
     char_translator_ (rhs.char_translator_),
     wchar_translator_ (rhs.wchar_translator_)
 {
-  ACE_CDR::mb_align (&this->start_);
+  ACE_CDR::mb_align (std::addressof (this->start_));
   for (const ACE_Message_Block *i = rhs.begin ();
        i != rhs.end ();
        i = i->cont ())
@@ -2091,10 +2091,10 @@ ACE_InputCDR::skip_bytes (size_t len)
 int
 ACE_InputCDR::grow (size_t newsize)
 {
-  if (ACE_CDR::grow (&this->start_, newsize) == -1)
+  if (ACE_CDR::grow (std::addressof (this->start_), newsize) == -1)
     return -1;
 
-  ACE_CDR::mb_align (&this->start_);
+  ACE_CDR::mb_align (std::addressof (this->start_));
   this->start_.wr_ptr (newsize);
 
 #if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
@@ -2112,7 +2112,7 @@ ACE_InputCDR::reset (const ACE_Message_Block* data,
                      int byte_order)
 {
   this->reset_byte_order (byte_order);
-  ACE_CDR::consolidate (&this->start_, data);
+  ACE_CDR::consolidate (std::addressof (this->start_), data);
 
 #if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
   this->monitor_->receive (this->start_.total_size ());
@@ -2256,7 +2256,7 @@ ACE_InputCDR::clone_from (ACE_InputCDR &cdr)
   size_t rd_bytes = rd_ptr - nrd_ptr;
   size_t wr_bytes = wr_ptr - nwr_ptr;
 
-  ACE_CDR::mb_align (&this->start_);
+  ACE_CDR::mb_align (std::addressof (this->start_));
 
   ACE_Data_Block *db = this->start_.data_block ();
 
@@ -2276,7 +2276,7 @@ ACE_InputCDR::clone_from (ACE_InputCDR &cdr)
       db = this->start_.replace_data_block (db);
 
       // Align the start_ message block.
-      ACE_CDR::mb_align (&this->start_);
+      ACE_CDR::mb_align (std::addressof (this->start_));
 
       // Clear the DONT_DELETE flag if it has been set
       this->start_.clr_self_flags (ACE_Message_Block::DONT_DELETE);
@@ -2321,7 +2321,7 @@ ACE_InputCDR::steal_contents ()
   // off.
   this->start_.clr_self_flags (ACE_Message_Block::DONT_DELETE);
 
-  ACE_CDR::mb_align (&this->start_);
+  ACE_CDR::mb_align (std::addressof (this->start_));
 
 #if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
   this->monitor_->receive (this->start_.total_size ());

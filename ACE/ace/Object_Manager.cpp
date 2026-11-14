@@ -13,6 +13,7 @@
 #include "ace/Sig_Adapter.h"
 #include "ace/Framework_Component.h"
 #include "ace/DLL_Manager.h"
+#include <memory>
 #include "ace/Atomic_Op.h"
 #include "ace/OS_NS_sys_time.h"
 
@@ -546,7 +547,7 @@ ACE_Object_Manager::get_singleton_lock (ACE_Thread_Mutex *&lock)
               ACE_NEW_RETURN (lock_adapter,
                               ACE_Cleanup_Adapter<ACE_Thread_Mutex>,
                               -1);
-              lock = &lock_adapter->object ();
+              lock = std::addressof (lock_adapter->object ());
 
               // Register the lock for destruction at program
               // termination.  This call will cause us to grab the
@@ -596,7 +597,7 @@ ACE_Object_Manager::get_singleton_lock (ACE_Mutex *&lock)
               ACE_NEW_RETURN (lock_adapter,
                               ACE_Cleanup_Adapter<ACE_Mutex>,
                               -1);
-              lock = &lock_adapter->object ();
+              lock = std::addressof (lock_adapter->object ());
 
               // Register the lock for destruction at program
               // termination.  This call will cause us to grab the
@@ -680,7 +681,7 @@ ACE_Object_Manager::get_singleton_lock (ACE_RW_Thread_Mutex *&lock)
               ACE_NEW_RETURN (lock_adapter,
                               ACE_Cleanup_Adapter<ACE_RW_Thread_Mutex>,
                               -1);
-              lock = &lock_adapter->object ();
+              lock = std::addressof (lock_adapter->object ());
 
               // Register the lock for destruction at program
               // termination.  This call will cause us to grab the

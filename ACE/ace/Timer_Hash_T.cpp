@@ -192,7 +192,7 @@ ACE_Timer_Hash_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::first (
       // Check for an empty entry
       if (!this->timer_hash_.table_[this->position_]->is_empty ())
         {
-          this->iter_ = &this->timer_hash_.table_[this->position_]->iter ();
+          this->iter_ = std::addressof (this->timer_hash_.table_[this->position_]->iter ());
           this->iter_->first ();
           return;
         }
@@ -221,7 +221,7 @@ ACE_Timer_Hash_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::next ()
           // Check for an empty entry
           if (!this->timer_hash_.table_[this->position_]->is_empty ())
             {
-              this->iter_ = &this->timer_hash_.table_[this->position_]->iter ();
+              this->iter_ = std::addressof (this->timer_hash_.table_[this->position_]->iter ());
               this->iter_->first ();
               return;
             }

@@ -1,4 +1,5 @@
 #include "ace/Barrier.h"
+#include <memory>
 
 #if defined (ACE_HAS_THREADS)
 
@@ -68,8 +69,8 @@ ACE_Barrier::ACE_Barrier (unsigned int count,
     sub_barrier_2_ (count, lock_, name, arg)
 {
   ACE_TRACE ("ACE_Barrier::ACE_Barrier");
-  this->sub_barrier_[0] = &this->sub_barrier_1_;
-  this->sub_barrier_[1] = &this->sub_barrier_2_;
+  this->sub_barrier_[0] = std::addressof (this->sub_barrier_1_);
+  this->sub_barrier_[1] = std::addressof (this->sub_barrier_2_);
 }
 
 int

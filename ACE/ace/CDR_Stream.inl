@@ -1,6 +1,7 @@
 // -*- C++ -*-
 #include "ace/OS_NS_string.h"
 #include "ace/OS_Memory.h"
+#include <memory>
 
 #include <cstring>
 
@@ -212,9 +213,9 @@ ACE_OutputCDR::~ACE_OutputCDR ()
 ACE_INLINE void
 ACE_OutputCDR::reset ()
 {
-  this->current_ = &this->start_;
+  this->current_ = std::addressof (this->start_);
   this->current_is_writable_ = true;
-  ACE_CDR::mb_align (&this->start_);
+  ACE_CDR::mb_align (std::addressof (this->start_));
 
 #if !defined (ACE_LACKS_CDR_ALIGNMENT)
   this->current_alignment_ = 0;
@@ -616,7 +617,7 @@ ACE_OutputCDR::get_version (ACE_CDR::Octet &major, ACE_CDR::Octet &minor)
 ACE_INLINE const ACE_Message_Block*
 ACE_OutputCDR::begin () const
 {
-  return &this->start_;
+  return std::addressof (this->start_);
 }
 
 ACE_INLINE const ACE_Message_Block*
@@ -1267,7 +1268,7 @@ ACE_InputCDR::adjust (size_t size,
 ACE_INLINE const ACE_Message_Block*
 ACE_InputCDR::start () const
 {
-  return &this->start_;
+  return std::addressof (this->start_);
 }
 
 ACE_INLINE bool

@@ -1,4 +1,5 @@
 #include "ace/Token.h"
+#include <memory>
 
 #if !defined (__ACE_INLINE__)
 # include "ace/Token.inl"
@@ -126,20 +127,20 @@ ACE_Token::ACE_Token_Queue::insert_entry (ACE_Token::ACE_Token_Queue_Entry &entr
   if (this->head_ == nullptr)
     {
       // No other threads - just add me
-      this->head_ = &entry;
-      this->tail_ = &entry;
+      this->head_ = std::addressof (entry);
+      this->tail_ = std::addressof (entry);
     }
   else if (requeue_position == -1)
     {
       // Insert at the end of the queue.
-      this->tail_->next_ = &entry;
-      this->tail_ = &entry;
+      this->tail_->next_ = std::addressof (entry);
+      this->tail_ = std::addressof (entry);
     }
   else if (requeue_position == 0)
     {
       // Insert at head of queue.
       entry.next_ = this->head_;
-      this->head_ = &entry;
+      this->head_ = std::addressof (entry);
     }
   else
     // Insert in the middle of the queue somewhere.
@@ -153,9 +154,9 @@ ACE_Token::ACE_Token_Queue::insert_entry (ACE_Token::ACE_Token_Queue_Entry &entr
       entry.next_ = insert_after->next_;
 
       if (entry.next_ == nullptr)
-        this->tail_ = &entry;
+        this->tail_ = std::addressof (entry);
 
-      insert_after->next_ = &entry;
+      insert_after->next_ = std::addressof (entry);
     }
 }
 
@@ -222,8 +223,8 @@ ACE_Token::shared_acquire (void (*sleep_hook_func)(void *),
 
   // Which queue we should end up in...
   ACE_Token_Queue *queue = (op_type == ACE_Token::READ_TOKEN
-                            ? &this->readers_
-                            : &this->writers_);
+                            ? std::addressof (this->readers_)
+                            : std::addressof (this->writers_));
 
   // Allocate queue entry on stack.  This works since we don't exit
   // this method's activation record until we've got the token.
@@ -374,7 +375,7 @@ ACE_Token::renew (int requeue_position,
   // Determine which queue should this thread go to.
   ACE_Token::ACE_Token_Queue *this_threads_queue =
     this->in_use_ == ACE_Token::READ_TOKEN ?
-    &this->readers_ : &this->writers_;
+    std::addressof (this->readers_) : std::addressof (this->writers_);
 
   ACE_Token::ACE_Token_Queue_Entry my_entry (this->lock_,
                                              this->owner_);
@@ -519,12 +520,12 @@ ACE_Token::wakeup_next_waiter ()
   if (this->writers_.head_ != nullptr)
     {
       this->in_use_ = ACE_Token::WRITE_TOKEN;
-      queue = &this->writers_;
+      queue = std::addressof (this->writers_);
     }
   else
     {
       this->in_use_ = ACE_Token::READ_TOKEN;
-      queue = &this->readers_;
+      queue = std::addressof (this->readers_);
     }
 
   // Wake up waiter and make it runable.

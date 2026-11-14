@@ -4,6 +4,7 @@
 #include "ace/OS_NS_signal.h"
 #include "ace/OS_NS_pwd.h"
 #include "ace/OS_NS_string.h"
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -182,7 +183,7 @@ ACE_Process_Options::get_process_attributes () const
 ACE_INLINE LPSECURITY_ATTRIBUTES
 ACE_Process_Options::set_process_attributes ()
 {
-  process_attributes_ = &security_buf1_;
+  process_attributes_ = std::addressof (security_buf1_);
   return process_attributes_;
 }
 
@@ -195,7 +196,7 @@ ACE_Process_Options::get_thread_attributes () const
 ACE_INLINE LPSECURITY_ATTRIBUTES
 ACE_Process_Options::set_thread_attributes ()
 {
-  thread_attributes_ = &security_buf2_;
+  thread_attributes_ = std::addressof (security_buf2_);
   return thread_attributes_;
 }
 
