@@ -1,5 +1,4 @@
 #include "FT_TestReplicaC.h"
-#include <ace/Vector_T.h>
 #include <ace/SString.h>
 #include <ace/Get_Opt.h>
 // FUZZ: disable check_for_streams_include
@@ -9,10 +8,11 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <vector>
 
 class FTClientMain
 {
-  typedef ACE_Vector<ACE_CString> StringVec;
+  using StringVec = std::vector<ACE_CString>;
 public:
   ///////////////////////////
   // construction/destruction

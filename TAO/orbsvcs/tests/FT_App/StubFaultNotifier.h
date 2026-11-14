@@ -3,6 +3,7 @@
 #define STUBFAULTNOTIFIER_H_
 
 #include <ace/ACE.h>
+#include <vector>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -11,7 +12,6 @@
 
 #include <orbsvcs/FT_NotifierS.h>
 #include <orbsvcs/FT_FaultDetectorFactoryC.h>
-#include <ace/Vector_T.h>
 #include <ace/SString.h>
 
 //////////////////////
@@ -145,9 +145,9 @@ private:
   /**
    * A collection of files containing replica IORs
    */
-  ACE_Vector < const char * > iorReplicaFiles_;
+  std::vector<char const *> iorReplicaFiles_;
 
-  ACE_Vector < FT::PullMonitorable_var > replicas_;
+  std::vector<FT::PullMonitorable_var> replicas_;
   /**
    * A name to be used to register with the name service.
    */

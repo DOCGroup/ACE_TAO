@@ -71,7 +71,7 @@ int ReplicationManagerFaultConsumerAdapter::parse_args (int argc, ACE_TCHAR * ar
 
   if(! optionError)
   {
-    if (0 == this->replica_iors_.size())
+    if (this->replica_iors_.empty ())
     {
       ACE_ERROR ((LM_ERROR,
         "-r option is required.\n"

@@ -420,7 +420,7 @@ int FT_ReplicaFactory_i::init (CORBA::ORB_ptr orb)
 
   int identified = 0; // bool
 
-  if (this->roles_.size() > 0)
+  if (!this->roles_.empty ())
   {
     this->identity_ = ACE_TEXT("Factory");
     if (this->location_.length () != 0)

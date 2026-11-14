@@ -105,7 +105,7 @@ FTAPP::FT_Creator::parse_args (int argc, ACE_TCHAR *argv[])
     }
   }
 
-  if ( this->create_roles_.size() == 0 && this->unregister_roles_.size() == 0)
+  if (this->create_roles_.empty () && this->unregister_roles_.empty ())
   {
     //FUZZ: disable check_for_lack_ACE_OS
     ACE_OS::fprintf (stderr, "Creator: neither create (-t) nor kill (-u) specified.  Nothing to do.\n");

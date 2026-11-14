@@ -15,6 +15,7 @@
 #ifndef FT_REPLICAFACTORY_H_
 #define FT_REPLICAFACTORY_H_
 #include <ace/ACE.h>
+#include <vector>
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -25,7 +26,6 @@ class  FT_ReplicaFactory_i;
 
 /////////////////////////////////
 // Includes needed by this header
-#include <ace/Vector_T.h>
 #include "FT_TestReplicaS.h"
 #include <ace/Thread_Manager.h>
 #include <ace/SString.h>
@@ -43,8 +43,8 @@ class  FT_ReplicaFactory_i
 //FT_TEST::ReplicaFactory
   : public virtual POA_PortableGroup::GenericFactory
 {
-  typedef ACE_Vector<FT_TestReplica_i *> ReplicaVec;
-  typedef ACE_Vector<ACE_CString> StringVec;
+  using ReplicaVec = std::vector<FT_TestReplica_i *>;
+  using StringVec = std::vector<ACE_CString>;
 
   //////////////////////
   // non-CORBA interface

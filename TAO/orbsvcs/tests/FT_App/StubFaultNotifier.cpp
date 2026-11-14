@@ -68,7 +68,7 @@ int StubFaultNotifier::parse_args (int argc, ACE_TCHAR * argv[])
 
   if(! optionError)
   {
-    if (iorReplicaFiles_.size() == 0)
+    if (iorReplicaFiles_.empty ())
     {
       ACE_ERROR ((LM_ERROR,
         "-r option is required.\n"
