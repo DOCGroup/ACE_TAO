@@ -14,13 +14,14 @@
 //=============================================================================
 
 #include "test_config.h"
-#include "ace/OS_NS_string.h"
 #include "ace/Reactor.h"
 #include "ace/TP_Reactor.h"
 #include "ace/Pipe.h"
 #include "ace/ACE.h"
 #include "ace/Task.h"
 #include "ace/OS_NS_unistd.h"
+
+#include <cstring>
 
 static const char *message =
 "Hello there! Hope you get this message";
@@ -120,14 +121,14 @@ Handler::handle_input (ACE_HANDLE fd)
   char buffer[BUFSIZ];
   ssize_t result = ACE::recv (fd, buffer, sizeof buffer);
 
-  if (result != ssize_t (ACE_OS::strlen (message)))
+  if (result != ssize_t (std::strlen (message)))
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("Handler recv'd %b bytes; expected %B\n"),
-                result, ACE_OS::strlen (message)));
+                result, std::strlen (message)));
   buffer[result] = '\0';
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Handler::handle_input: %C\n"), buffer));
 
-  if (ACE_OS::strcmp (buffer, message) != 0)
+  if (std::strcmp (buffer, message) != 0)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("Handler text mismatch; received \"%C\"; ")
                 ACE_TEXT ("expected \"%C\"\n"),
@@ -146,10 +147,10 @@ test_for_crash (ACE_Reactor &reactor)
   ssize_t result =
     ACE::send_n (handler.pipe_.write_handle (),
                  message,
-                 ACE_OS::strlen (message));
-  if (result != ssize_t (ACE_OS::strlen (message)))
+                 std::strlen (message));
+  if (result != ssize_t (std::strlen (message)))
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("Handler sent %b bytes; should be %B\n"),
-                result, ACE_OS::strlen (message)));
+                result, std::strlen (message)));
 
   reactor.run_reactor_event_loop ();
 
@@ -177,10 +178,10 @@ test_for_spin (ACE_Reactor &reactor)
   ssize_t result =
     ACE::send_n (handler.pipe_.write_handle (),
                  message,
-                 ACE_OS::strlen (message));
-  if (result != ssize_t (ACE_OS::strlen (message)))
+                 std::strlen (message));
+  if (result != ssize_t (std::strlen (message)))
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("Handler sent %b bytes; should be %B\n"),
-                result, ACE_OS::strlen (message)));
+                result, std::strlen (message)));
 
   reactor.run_reactor_event_loop ();
 
