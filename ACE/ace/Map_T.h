@@ -135,7 +135,7 @@ template <class T>
 class ACE_Iterator
 {
 public:
-  // = Traits.
+  /// Type aliases.
   using value_type = T;
   using implementation = ACE_Iterator_Impl<T>;
 
@@ -187,7 +187,7 @@ template <class T>
 class ACE_Reverse_Iterator
 {
 public:
-  // = Traits.
+  /// Type aliases.
   using value_type = T;
   using implementation = ACE_Reverse_Iterator_Impl<T>;
 
@@ -250,7 +250,7 @@ public:
   ACE_Map &operator= (ACE_Map const &) = delete;
   ACE_Map &operator= (ACE_Map &&) = delete;
 
-  // = Traits.
+  /// Type aliases.
   using key_type = KEY;
   using mapped_type = VALUE;
   using value_type = ACE_Reference_Pair<const KEY, VALUE>;
@@ -393,7 +393,8 @@ public:
   /// Dump the state of an object.
   virtual void dump () const = 0;
 
-  // = STL styled iterator factory functions.
+  /// @name Iterator factories
+  /// @{
 
   /// Return forward iterator.
   iterator begin ();
@@ -402,9 +403,9 @@ public:
   /// Return reverse iterator.
   reverse_iterator rbegin ();
   reverse_iterator rend ();
+  /// @}
 
 protected:
-  // = Protected no-op constructor.
   ACE_Map () = default;
 
   /// Return forward iterator.
@@ -427,7 +428,7 @@ template <class T, class IMPLEMENTATION, class ENTRY>
 class ACE_Map_Impl_Iterator_Adapter : public ACE_Iterator_Impl<T>
 {
 public:
-  // = Traits.
+  /// Type aliases.
   using implementation = IMPLEMENTATION;
 
   ACE_Map_Impl_Iterator_Adapter (const IMPLEMENTATION &impl);
@@ -468,7 +469,7 @@ template <class T, class IMPLEMENTATION, class ENTRY>
 class ACE_Map_Impl_Reverse_Iterator_Adapter : public ACE_Reverse_Iterator_Impl<T>
 {
 public:
-  // = Traits.
+  /// Type aliases.
   using implementation = IMPLEMENTATION;
 
   ACE_Map_Impl_Reverse_Iterator_Adapter (const IMPLEMENTATION &impl);
@@ -514,7 +515,7 @@ public:
   ACE_Map_Impl &operator= (ACE_Map_Impl const &) = delete;
   ACE_Map_Impl &operator= (ACE_Map_Impl &&) = delete;
 
-  // = Traits.
+  /// Type aliases.
   using iterator_impl = ACE_Map_Impl_Iterator_Adapter<typename ACE_Map<KEY, VALUE>::value_type, ITERATOR, ENTRY>;
   using reverse_iterator_impl = ACE_Map_Impl_Reverse_Iterator_Adapter<typename ACE_Map<KEY, VALUE>::value_type, REVERSE_ITERATOR, ENTRY>;
 
@@ -669,7 +670,8 @@ protected:
   /// All implementation details are forwarded to this class.
   IMPLEMENTATION implementation_;
 
-  // = STL styled iterator factory functions.
+  /// @name Iterator factories
+  /// @{
 
   /// Return forward iterator.
   ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *begin_impl () override;
@@ -678,6 +680,7 @@ protected:
   /// Return reverse iterator.
   ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rbegin_impl () override;
   ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rend_impl () override;
+  /// @}
 };
 
 /**
@@ -691,7 +694,7 @@ template <class T, class VALUE>
 class ACE_Active_Map_Manager_Iterator_Adapter : public ACE_Iterator_Impl<T>
 {
 public:
-  // = Traits.
+  /// Type aliases.
   using implementation = typename ACE_Active_Map_Manager<VALUE>::iterator;
 
   ACE_Active_Map_Manager_Iterator_Adapter (const ACE_Map_Iterator<ACE_Active_Map_Manager_Key, VALUE, ACE_Null_Mutex> &impl);
@@ -732,7 +735,7 @@ template <class T, class VALUE>
 class ACE_Active_Map_Manager_Reverse_Iterator_Adapter : public ACE_Reverse_Iterator_Impl<T>
 {
 public:
-  // = Traits.
+  /// Type aliases.
   using implementation = typename ACE_Active_Map_Manager<VALUE>::reverse_iterator;
 
   ACE_Active_Map_Manager_Reverse_Iterator_Adapter (const ACE_Map_Reverse_Iterator<ACE_Active_Map_Manager_Key, VALUE, ACE_Null_Mutex> &impl);
@@ -778,7 +781,7 @@ public:
   ACE_Active_Map_Manager_Adapter &operator= (ACE_Active_Map_Manager_Adapter const &) = delete;
   ACE_Active_Map_Manager_Adapter &operator= (ACE_Active_Map_Manager_Adapter &&) = delete;
 
-  // = Traits.
+  /// Type aliases.
   using expanded_value = std::pair<KEY, VALUE>;
   using iterator_impl = ACE_Active_Map_Manager_Iterator_Adapter<ACE_Reference_Pair<const KEY, VALUE>, expanded_value>;
   using reverse_iterator_impl = ACE_Active_Map_Manager_Reverse_Iterator_Adapter<ACE_Reference_Pair<const KEY, VALUE>, expanded_value>;
@@ -946,7 +949,8 @@ protected:
   /// Adapts between the user key and the Active_Map_Manager_Key.
   KEY_ADAPTER key_adapter_;
 
-  // = STL styled iterator factory functions.
+  /// @name Iterator factories
+  /// @{
 
   /// Return forward iterator.
   ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *begin_impl () override;
@@ -955,6 +959,7 @@ protected:
   /// Return reverse iterator.
   ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rbegin_impl () override;
   ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rend_impl () override;
+  /// @}
 };
 
 /**
@@ -968,7 +973,7 @@ template <class T, class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS>
 class ACE_Hash_Map_Manager_Ex_Iterator_Adapter : public ACE_Iterator_Impl<T>
 {
 public:
-  // = Traits.
+  /// Type aliases.
   using implementation = typename ACE_Hash_Map_Manager_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>::iterator;
 
   ACE_Hash_Map_Manager_Ex_Iterator_Adapter (const ACE_Hash_Map_Iterator_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> &impl);
@@ -1009,7 +1014,7 @@ template <class T, class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS>
 class ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter : public ACE_Reverse_Iterator_Impl<T>
 {
 public:
-  // = Traits.
+  /// Type aliases.
   using implementation = typename ACE_Hash_Map_Manager_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>::reverse_iterator;
 
   ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter (const ACE_Hash_Map_Reverse_Iterator_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> &impl);
@@ -1055,7 +1060,7 @@ public:
   ACE_Hash_Map_Manager_Ex_Adapter &operator= (ACE_Hash_Map_Manager_Ex_Adapter const &) = delete;
   ACE_Hash_Map_Manager_Ex_Adapter &operator= (ACE_Hash_Map_Manager_Ex_Adapter &&) = delete;
 
-  // = Traits.
+  /// Type aliases.
   using iterator_impl = ACE_Hash_Map_Manager_Ex_Iterator_Adapter<ACE_Reference_Pair<const KEY, VALUE>, KEY, VALUE, HASH_KEY, COMPARE_KEYS>;
   using reverse_iterator_impl = ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<ACE_Reference_Pair<const KEY, VALUE>, KEY, VALUE, HASH_KEY, COMPARE_KEYS>;
   using implementation = ACE_Hash_Map_Manager_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>;
@@ -1215,7 +1220,8 @@ protected:
   /// Functor class used for generating key.
   KEY_GENERATOR key_generator_;
 
-  // = STL styled iterator factory functions.
+  /// @name Iterator factories
+  /// @{
 
   /// Return forward iterator.
   ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *begin_impl () override;
@@ -1224,6 +1230,7 @@ protected:
   /// Return reverse iterator.
   ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rbegin_impl () override;
   ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rend_impl () override;
+  /// @}
 };
 
 /**
@@ -1237,7 +1244,7 @@ template <class T, class KEY, class VALUE>
 class ACE_Map_Manager_Iterator_Adapter : public ACE_Iterator_Impl<T>
 {
 public:
-  // = Traits.
+  /// Type aliases.
   using implementation = typename ACE_Map_Manager<KEY, VALUE, ACE_Null_Mutex>::iterator;
 
   ACE_Map_Manager_Iterator_Adapter (const ACE_Map_Iterator<KEY, VALUE, ACE_Null_Mutex> &impl);
@@ -1278,7 +1285,7 @@ template <class T, class KEY, class VALUE>
 class ACE_Map_Manager_Reverse_Iterator_Adapter : public ACE_Reverse_Iterator_Impl<T>
 {
 public:
-  // = Traits.
+  /// Type aliases.
   using implementation = typename ACE_Map_Manager<KEY, VALUE, ACE_Null_Mutex>::reverse_iterator;
 
   ACE_Map_Manager_Reverse_Iterator_Adapter (const ACE_Map_Reverse_Iterator<KEY, VALUE, ACE_Null_Mutex> &impl);
@@ -1324,7 +1331,7 @@ public:
   ACE_Map_Manager_Adapter &operator= (ACE_Map_Manager_Adapter const &) = delete;
   ACE_Map_Manager_Adapter &operator= (ACE_Map_Manager_Adapter &&) = delete;
 
-  // = Traits.
+  /// Type aliases.
   using iterator_impl = ACE_Map_Manager_Iterator_Adapter<ACE_Reference_Pair<const KEY, VALUE>, KEY, VALUE>;
   using reverse_iterator_impl = ACE_Map_Manager_Reverse_Iterator_Adapter<ACE_Reference_Pair<const KEY, VALUE>, KEY, VALUE>;
   using implementation = ACE_Map_Manager<KEY, VALUE, ACE_Null_Mutex>;
@@ -1484,7 +1491,8 @@ protected:
   /// Functor class used for generating key.
   KEY_GENERATOR key_generator_;
 
-  // = STL styled iterator factory functions.
+  /// @name Iterator factories
+  /// @{
 
   /// Return forward iterator.
   ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *begin_impl () override;
@@ -1493,6 +1501,7 @@ protected:
   /// Return reverse iterator.
   ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rbegin_impl () override;
   ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rend_impl () override;
+  /// @}
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
