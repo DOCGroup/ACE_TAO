@@ -1,20 +1,10 @@
-//
-// ============================================================================
-//
-// = FILENAME
-//    IDL_Cubit_Client.java
-//
-// = AUTHOR
-//    Michael Kircher (mk1@cs.wustl.edu)
-//
-// = DESCRIPTION
-//   Connects to the cubit factory, gets a cubit object and
-//   calls the cube_short method on it. The purpose of this
-//   class is to demonstrate how to use the JavaIDL ORB to access
-//   TAO.
-//
-// ============================================================================
-
+/**
+ * @file IDL_Cubit_Client.java
+ * @author Michael Kircher (mk1@cs.wustl.edu)
+ * @brief Connects to the cubit factory, obtains a cubit object, and calls
+ *        its cube_short method to demonstrate accessing TAO with the
+ *        JavaIDL ORB.
+ */
 
 public class IDL_Cubit_Client
 {
