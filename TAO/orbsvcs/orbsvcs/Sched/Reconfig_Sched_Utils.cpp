@@ -88,17 +88,7 @@ TAO_RT_Info_Ex::operator = (RtecScheduler::RT_Info const &info)
 void
 TAO_RT_Info_Ex::reset (u_long reset_flags)
 {
-  // IMPORTANT: among the input arguments, we only reset the period ...
-  // TBD - if execution times etc. can be selected as well, then reset those, e.g.,
-  //
-  // criticality = RtecScheduler::VERY_LOW_CRITICALITY;
-  // worst_case_execution_time = 0;
-  // typical_execution_time = 0;
-  // cached_execution_time = 0;
-  // importance = RtecScheduler::VERY_LOW_IMPORTANCE;
-  // quantum = 0;
-  // threads = 0;
-  // info_type = RtecScheduler::OPERATION;
+  // Only the period is reset among the input scheduling properties.
 
   period = 0;
 
@@ -113,7 +103,6 @@ TAO_RT_Info_Ex::reset (u_long reset_flags)
       ACE_LONGLONG_TO_PTR (TAO_Reconfig_Scheduler_Entry *,
                            volatile_token);
 
-  //ORBSVCS_DEBUG((LM_DEBUG, "Removing Entries for RT_Info: %d, entry_ptr: %x\n", handle, entry_ptr));
   if (entry_ptr != nullptr)
     {
       entry_ptr->remove_tuples (reset_flags);
@@ -177,8 +166,6 @@ TAO_Reconfig_Scheduler_Entry::
 TAO_Reconfig_Scheduler_Entry (TAO_RT_Info_Ex &rt_info)
   : actual_rt_info_ (std::addressof (rt_info)),
     enabled_ (rt_info.enabled)
-  //    effective_exec_multiplier_ (0),  //WSOA merge commented out
-  //  effective_period_ (0)              //WSOA merge commented out
 {
   // Store the RT_Info fields.
   this->orig_rt_info_data (*actual_rt_info_);
@@ -647,13 +634,10 @@ TAO_RSE_Reset_Visitor::visit (TAO_Reconfig_Scheduler_Entry &rse)
   rse.aggregate_exec_time (rse.actual_rt_info ()->worst_case_execution_time);
   rse.current_admitted_tuple (0);
 
-  //WSOA merge - commented out
   // These settings are used for a conservative but
   // efficient approach to estimating utilization:
   // for an exact algorithm using frame merging,
   // other initial settings might be needed.
-  //rse.effective_exec_multiplier (0);
-  //rse.effective_period (0);
 
   return 0;
 }

@@ -153,19 +153,6 @@ visit (TAO_Reconfig_Scheduler_Entry &rse)
   return 0;
 }
 
-// WSOA merge - commented out
-// // Performs an unconditional action when the entry is first reached.
-// // Returns 0 for success, and -1 if an error occurred.
-
-// template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
-// TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-// unconditional_action (TAO_Reconfig_Scheduler_Entry & /* rse */)
-// {
-//   // Default behavior: just return success.
-//   return 0;
-// }
-//
-
 // Tests whether or not any conditional actions should be taken for
 // the entry.  Returns 0 if the actions should be applied, 1 if the
 // entry should be left alone, and -1 if an error occurred.

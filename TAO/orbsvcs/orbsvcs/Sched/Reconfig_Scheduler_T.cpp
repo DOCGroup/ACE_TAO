@@ -1620,7 +1620,6 @@ set_i (TAO_RT_Info_Ex *rt_info,
       TAO_Reconfig_Scheduler_Entry * rse_ptr =
         ACE_LONGLONG_TO_PTR (TAO_Reconfig_Scheduler_Entry *,
                              rt_info->volatile_token);
-//      ORBSVCS_DEBUG((LM_DEBUG, "Updating or inserting tuple for RT_Info: %d, entry_ptr: %x\n", rt_info->handle, rse_ptr));
       if (rse_ptr == nullptr)
         {
           throw RtecScheduler::INTERNAL ();
@@ -1642,10 +1641,6 @@ set_i (TAO_RT_Info_Ex *rt_info,
           // Make sure the new tuple is cleaned up if we exit abruptly.
           std::unique_ptr<TAO_RT_Info_Tuple> tuple_auto_ptr (tuple_ptr);
 
-//          ORBSVCS_DEBUG((LM_DEBUG, "Tuple not found.  Inserting new tuple for RT_Info: %d, entry_ptr: 0x%x, tuple_ptr: 0x%x\n",
-//                     rt_info->handle,
-//                     rse_ptr,
-//                     tuple_ptr));
           // Add the tuple to the entry's original tuple set
           result = rse_ptr->insert_tuple (*tuple_ptr);
           if (result < 0)
