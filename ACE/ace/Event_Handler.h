@@ -91,7 +91,9 @@ public:
   /// Set the I/O handle.
   virtual void set_handle (ACE_HANDLE);
 
-  // = Get/set priority
+  /// @name Priority accessors.
+  /// @{
+
 
   /// Get the priority of the Event_Handler.
   /// @note Priorities run from MIN_PRIORITY (which is the "lowest priority")
@@ -100,6 +102,7 @@ public:
 
   /// Set the priority of the Event_Handler.
   virtual void priority (int priority);
+  /// @}
 
   /// Called when input events occur (e.g., connection or data).
   virtual int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE);
@@ -161,7 +164,9 @@ public:
   virtual int handle_qos (ACE_HANDLE = ACE_INVALID_HANDLE);
   virtual int handle_group_qos (ACE_HANDLE = ACE_INVALID_HANDLE);
 
-  // = Accessors to set/get the various event demultiplexors.
+  /// @name Reactor accessors.
+  /// @{
+
   /// Set the event demultiplexors.
   virtual void reactor (ACE_Reactor *reactor);
 
@@ -170,6 +175,7 @@ public:
 
   /// Get only the reactor's timer related interface.
   virtual ACE_Reactor_Timer_Interface *reactor_timer_interface () const;
+  /// @}
 
   /**
    * Used to read from non-socket ACE_HANDLEs in our own thread to
