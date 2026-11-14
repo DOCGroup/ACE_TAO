@@ -256,17 +256,16 @@ TAO_Property_Evaluator::is_dynamic_property (int index)
   return return_value;
 }
 
-CORBA::Any*
+CORBA::Any const*
 TAO_Property_Evaluator::property_value (int index)
 {
-  CORBA::Any* prop_val {};
+  CORBA::Any const* prop_val {};
   bool const in_cache = this->dp_cache_[index] != nullptr;
 
   bool const dynamic = this->is_dynamic_property (index);
 
   if (!dynamic)
-    prop_val = const_cast<CORBA::Any*> (
-      std::addressof (this->props_[index].value));
+    prop_val = std::addressof (this->props_[index].value);
   else if (this->supports_dp_ && in_cache)
     prop_val = this->dp_cache_[index].get ();
   else if (this->supports_dp_)
@@ -297,9 +296,9 @@ TAO_Property_Evaluator::property_value (int index)
           try
             {
               // Retrieve the value of the dynamic property.
-              prop_val = dp_eval->evalDP(name, type, info);
-
-              this->dp_cache_[index].reset (prop_val);
+              CORBA::Any* dynamic_value = dp_eval->evalDP (name, type, info);
+              this->dp_cache_[index].reset (dynamic_value);
+              prop_val = dynamic_value;
             }
           catch (const CORBA::SystemException&)
             {
@@ -386,11 +385,11 @@ is_dynamic_property(const char* property_name)
   return predicate;
 }
 
-CORBA::Any*
+CORBA::Any const*
 TAO_Property_Evaluator_By_Name::property_value (const char* property_name)
 {
   int index {};
-  CORBA::Any* prop_value {};
+  CORBA::Any const* prop_value {};
   CORBA::String_var prop_name (property_name);
 
   // If the property name is in the map, delegate evaluation to our

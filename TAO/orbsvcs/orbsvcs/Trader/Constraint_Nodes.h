@@ -218,7 +218,7 @@ class TAO_Trading_Serv_Export TAO_Literal_Constraint : public TAO_Constraint
 public:
   TAO_Literal_Constraint ();
 
-  explicit TAO_Literal_Constraint (CORBA::Any* any);
+  explicit TAO_Literal_Constraint (CORBA::Any const* any);
   explicit TAO_Literal_Constraint (CORBA::ULongLong uinteger);
   explicit TAO_Literal_Constraint (CORBA::LongLong integer);
   explicit TAO_Literal_Constraint (CORBA::Boolean boolean);
@@ -314,7 +314,7 @@ public:
   union
   {
     char* str_;
-    CORBA::Any_ptr any_;
+    CORBA::Any const* any_;
     CORBA::ULongLong uinteger_;
     CORBA::LongLong integer_;
     CORBA::Boolean bool_;

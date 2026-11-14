@@ -293,9 +293,9 @@ TAO_Literal_Constraint (const TAO_Literal_Constraint& lit)
 }
 
 TAO_Literal_Constraint::
-TAO_Literal_Constraint (CORBA::Any* any)
+TAO_Literal_Constraint (CORBA::Any const* any)
 {
-  CORBA::Any& any_ref = *any;
+  CORBA::Any const& any_ref = *any;
   CORBA::TypeCode_var type = any_ref.type ();
   // @@ No where to throw exception back.
   CORBA::TCKind corba_type = CORBA::tk_null;

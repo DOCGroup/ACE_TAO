@@ -72,7 +72,7 @@ public:
     * CosTradingDynamic::DPEvalFailure exception on failure. If the
     * property index is undefined, the method returns a null pointer.
     */
-  CORBA::Any* property_value(int index);
+  CORBA::Any const* property_value(int index);
 
   /**
    * Returns the type of the property whose index is @a index. If the
@@ -96,8 +96,8 @@ protected:
 
   /**
    * Keep ownership of dynamically allocated Any values retrieved from
-   * dynamic properties. property_value() returns borrowed pointers, so
-   * callers do not need to decide whether the result should be freed.
+   * dynamic properties. property_value() returns borrowed const pointers,
+   * so callers do not need to decide whether the result should be freed.
    */
   std::unique_ptr<std::unique_ptr<CORBA::Any>[]> dp_cache_;
 
@@ -147,7 +147,7 @@ public:
     * TAO_Property_Evaluator, except property_value first discovers the
     * index through a string matching lookup.
     */
-  CORBA::Any* property_value(const char* property_name);
+  CORBA::Any const* property_value(const char* property_name);
 
   /**
    * This method is identical to its counterpart in

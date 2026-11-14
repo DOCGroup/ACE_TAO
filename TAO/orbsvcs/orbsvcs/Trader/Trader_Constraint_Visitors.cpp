@@ -30,7 +30,7 @@ visit_property (TAO_Property_Constraint* literal)
 
   if (this->props_.find (prop_name, prop_index) == 0)
     {
-      CORBA::Any* value {};
+      CORBA::Any const* value {};
       // Retrieve the value of the property from the Property_Evaluator
       try
         {

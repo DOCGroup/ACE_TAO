@@ -833,20 +833,9 @@ _cxx_export (CORBA::Object_ptr reference,
   // to their types and strength.
   this->validate_properties (type, type_struct.ptr (), properties);
 
-  // CORBA::ULong plength = properties.length ();
   ACE_NEW_THROW_EX (offer, CosTrading::Offer, CORBA::NO_MEMORY ());
 
-  // No copying, no memory leaks. Violates the "in" parameter semantics
-  // when this object is colocated with the client, however.
-  //  CosTrading::PropertySeq* hack_seq =
-  //    const_cast<CosTrading::PropertySeq*> (&properties);
-  //  CosTrading::Property* pbuf = hack_seq->get_buffer (1);
-
-  //  CosTrading::PropertySeq* hack_seq =
-  //    const_cast<CosTrading::PropertySeq*> (&properties);
-  //  CosTrading::Property* pbuf = hack_seq->get_buffer (0);
-  //  offer->properties.replace (plength, plength, pbuf, 0);
-  //  offer->properties._allocate_buffer (plength);
+  // Copy the properties so the offer owns its sequence independently.
   offer->properties = properties;
   offer->reference = reference->_duplicate (reference);
 

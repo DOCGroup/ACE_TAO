@@ -146,7 +146,7 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
   for (int length = prop_seq.length (), k = 0; k < length; k++)
     {
       CORBA::ULong seq_length = 0, i= 0;
-      CORBA::Any* value {};
+      CORBA::Any const* value {};
       CORBA::TypeCode_ptr tc {};
       ACE_DEBUG ((LM_DEBUG, "%-15s: ", prop_seq[k].name.in ()));
       try
