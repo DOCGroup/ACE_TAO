@@ -413,7 +413,7 @@ TAO::SSLIOP::Connection_Handler::process_listen_point_list (
       TAO_Base_Transport_Property prop (&endpoint);
 
       // Mark the connection as bidirectional
-      prop.set_bidir_flag (1);
+      prop.set_bidir_flag (true);
 
       // The property for this handler has changed. Recache the
       // handler with this property
