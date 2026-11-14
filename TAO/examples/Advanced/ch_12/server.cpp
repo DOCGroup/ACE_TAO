@@ -10,12 +10,17 @@
 //=============================================================================
 
 #include <algorithm>
+#include <cstdlib>
 #include <cstring>
 #include <fstream>
 #include <iostream>
+#include <memory>
 #include <sstream>
 #include <string>
 
+#include "ace/Get_Opt.h"
+#include "ace/Log_Msg.h"
+#include "ace/OS_NS_stdio.h"
 #include "server.h"
 #include "icp.h"
 
@@ -25,6 +30,29 @@
 // #include <iostream.h>
 
 constexpr char Controller_oid[] = "Controller";
+
+struct Options
+{
+  ACE_TCHAR const *ior_output_file {ACE_TEXT ("chapter_test.ior")};
+};
+
+static int
+parse_args (int argc, ACE_TCHAR *argv[], Options &options)
+{
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:"));
+  int option {};
+  while ((option = get_opts ()) != -1)
+    {
+      if (option == 'o')
+        options.ior_output_file = get_opts.opt_arg ();
+      else
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("usage: %s [-o <iorfile>]\n"),
+                           argv[0]),
+                          -1);
+    }
+  return 0;
+}
 
 static void
 check_icp_status (int status)
@@ -78,7 +106,7 @@ make_dref (PortableServer::POA_ptr poa, CCS::AssetType anum)
   // Make a new reference.
   CORBA::Object_var obj
     = poa->create_reference_with_id (oid.in (), rep_id);
-  return CCS::Thermometer::_unchecked_narrow (obj.in ());
+  return CCS::Thermometer::_narrow (obj.in ());
 }
 
 Controller_impl *Thermometer_impl::m_ctrl {};  // static member
@@ -342,8 +370,8 @@ Controller_impl::
   try
     {
       check_icp_status (ICP_set (anum, "location", loc));
-      CCS::Thermometer_var result = make_dref (m_poa.in (), anum);
       add_impl (anum, nullptr);
+      CCS::Thermometer_var result = make_dref (m_poa.in (), anum);
       return result._retn ();
     }
   catch (...)
@@ -368,6 +396,7 @@ create_thermostat (CCS::AssetType anum,
   try
     {
       check_icp_status (ICP_set (anum, "location", loc));
+      add_impl (anum, nullptr);
       if  (ICP_set (anum, "nominal_temp", &temp) != 0)
         {
           // If ICP_set () failed, read this thermostat's minimum
@@ -383,10 +412,9 @@ create_thermostat (CCS::AssetType anum,
         }
 
       CORBA::Object_var const obj = make_dref (m_poa.in (), anum);
-      CCS::Thermostat_var result = CCS::Thermostat::_unchecked_narrow (obj.in ());
+      CCS::Thermostat_var result = CCS::Thermostat::_narrow (obj.in ());
       if (CORBA::is_nil (result.in ()))
         throw CORBA::INTERNAL ();
-      add_impl (anum, nullptr);
       return result._retn ();
     }
   catch (...)
@@ -450,7 +478,7 @@ change (CCS::Controller::ThermostatSeq const& tlist,
           // to the errors sequence.
           CORBA::ULong const len = ec.errors.length ();
           ec.errors.length (len + 1);
-          ec.errors[len].tmstat_ref = tlist[i].in ();
+          ec.errors[len].tmstat_ref = CCS::Thermostat::_duplicate (tlist[i].in ());
           ec.errors[len].info = bt.details;
         }
     }
@@ -620,6 +648,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Initialize orb
       orb = CORBA::ORB_init (argc, argv);
 
+      Options options;
+      if (parse_args (argc, argv, options) != 0)
+        return 1;
+
       // Get reference to Root POA.
       CORBA::Object_var obj
         = orb->resolve_initial_references ("RootPOA");
@@ -646,7 +678,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Create a controller and set static m_ctrl member
       // for thermostats and thermometers.
-      Controller_impl ctrl_servant (ccs_poa.in (), "/tmp/CCS_assets");
+      char const * const asset_file = std::getenv ("CCS_ASSETS");
+      Controller_impl ctrl_servant (ccs_poa.in (),
+                                    asset_file == nullptr ? "/tmp/CCS_assets" : asset_file);
       Thermometer_impl::m_ctrl = &ctrl_servant;
 
       // Create a reference for the controller and
@@ -655,9 +689,18 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         = PortableServer::string_to_ObjectId (Controller_oid);
       obj = ccs_poa->create_reference_with_id (oid.in (), "IDL:acme.com/CCS/Controller:1.0");
 
-      // Write a reference for the controller to stdout.
+      // Write a reference for the controller to the output file.
       CORBA::String_var str = orb->object_to_string (obj.in ());
-      std::cout << str.in () << std::endl << std::endl;
+      {
+        std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+          ACE_OS::fopen (options.ior_output_file, "w"), ACE_OS::fclose);
+        if (!output_file)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Cannot open IOR output file %s\n"),
+                             options.ior_output_file),
+                            1);
+        ACE_OS::fprintf (output_file.get (), "%s", str.in ());
+      }
 
       // Instantiate the servant locator for devices.
       PortableServer::ServantManager_var locator =

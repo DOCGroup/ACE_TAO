@@ -381,4 +381,11 @@ ICP_Persist::
 }
 
 // Instantiate a single global instance of the class.
-static ICP_Persist mydb ("/tmp/CCS_DB");
+static char const *
+database_file ()
+{
+  char const * const configured_file = std::getenv ("CCS_DB");
+  return configured_file == nullptr ? "/tmp/CCS_DB" : configured_file;
+}
+
+static ICP_Persist mydb (database_file ());
