@@ -33,6 +33,8 @@
 #include "ace/Task.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
+
+#include <cstring>
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_unistd.h"
 
@@ -825,8 +827,8 @@ prio_test ()
               mb1p->rd_ptr (),
               mb2p->rd_ptr ()));
 
-  if (ACE_OS::strcmp (mb1p->rd_ptr (), S1) == 0
-      && ACE_OS::strcmp (mb2p->rd_ptr (), S2) == 0)
+  if (std::strcmp (mb1p->rd_ptr (), S1) == 0
+      && std::strcmp (mb2p->rd_ptr (), S2) == 0)
     status = 0;
   else
     status = 1;

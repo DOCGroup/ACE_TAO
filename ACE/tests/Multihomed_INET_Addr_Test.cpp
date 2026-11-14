@@ -17,6 +17,8 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_arpa_inet.h"
 
+#include <cstring>
+
 int run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Multihomed_INET_Addr_Test"));
@@ -202,7 +204,7 @@ int run_main (int, ACE_TCHAR *[])
     }
 
     // Check the primary address
-    if (0 != ACE_OS::strcmp (addr.get_host_addr(), primary_dotted_decimal))
+    if (0 != std::strcmp (addr.get_host_addr(), primary_dotted_decimal))
       {
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("%C failed get_host_addr() check\n")
@@ -371,7 +373,7 @@ int run_main (int, ACE_TCHAR *[])
     }
 
     // Check the primary address
-    if (0 != ACE_OS::strcmp (addr.get_host_addr(), primary_dotted_decimal))
+    if (0 != std::strcmp (addr.get_host_addr(), primary_dotted_decimal))
       {
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("%C failed second get_ip_address() check\n")

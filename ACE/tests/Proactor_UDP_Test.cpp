@@ -36,6 +36,8 @@
 #include "ace/Sock_Connect.h"
 #include "ace/os_include/netinet/os_tcp.h"
 
+#include <cstring>
+
 #include "ace/Atomic_Op.h"
 #include "ace/Synch_Traits.h"
 
@@ -1165,7 +1167,7 @@ Server::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
 
         // If client says we're done, ack it; we're done reading.
         size_t to_send = result.bytes_transferred ();
-        if (ACE_OS::strcmp (mb->rd_ptr (), close_req_msg) == 0)
+        if (std::strcmp (mb->rd_ptr (), close_req_msg) == 0)
           {
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("(%t) Server %d saw close request; ack\n"),
@@ -1937,7 +1939,7 @@ Client::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
 
         // If we've closed and the server acked, we're done.
         if (this->stop_writing_ &&
-            ACE_OS::strcmp (mb->rd_ptr (), close_ack_msg) == 0)
+            std::strcmp (mb->rd_ptr (), close_ack_msg) == 0)
           {
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("(%t) Client %d recvd close-ack\n"),

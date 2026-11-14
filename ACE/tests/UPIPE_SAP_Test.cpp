@@ -17,6 +17,7 @@
 #include "ace/UPIPE_Acceptor.h"
 #include "ace/UPIPE_Connector.h"
 #include "ace/OS_NS_unistd.h"
+#include <cstring>
 
 #if defined (ACE_HAS_THREADS) && \
     (defined (ACE_HAS_STREAM_PIPES) || defined (ACE_HAS_WIN32_NAMED_PIPES))
@@ -51,7 +52,7 @@ connector (void *)
   if (c_stream.recv (mb) == -1)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) error connector recv\n")));
 
-  ACE_TEST_ASSERT (ACE_OS::strcmp (mb->rd_ptr (), "thanks") == 0);
+  ACE_TEST_ASSERT (std::strcmp (mb->rd_ptr (), "thanks") == 0);
 
   // Free up the memory block.
   mb->release ();
@@ -79,7 +80,7 @@ connector (void *)
 
   conbuf[i] = '\0';
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) conbuf = %s\n"), conbuf));
-  ACE_TEST_ASSERT (ACE_OS::strcmp (conbuf, "this is the acceptor response!") == 0);
+  ACE_TEST_ASSERT (std::strcmp (conbuf, "this is the acceptor response!") == 0);
 
   c_stream.close ();
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) exiting thread\n")));
@@ -101,7 +102,7 @@ acceptor (void *args)
   if (s_stream.recv (mb) == -1)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) acceptor recv failed\n")));
 
-  ACE_TEST_ASSERT (ACE_OS::strcmp (mb->rd_ptr (), "hello") == 0);
+  ACE_TEST_ASSERT (std::strcmp (mb->rd_ptr (), "hello") == 0);
 
   mb->wr_ptr (mb->rd_ptr ());
   mb->copy ("thanks");
@@ -115,8 +116,8 @@ acceptor (void *args)
   if (s_stream.recv (s_buf, sizeof (s_buf)) == -1)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) acceptor recv failed\n")));
   else
-    ACE_TEST_ASSERT (ACE_OS::strcmp (s_buf,
-                                "This string is sent by connector as a buffer") == 0);
+    ACE_TEST_ASSERT (std::strcmp (s_buf,
+                                  "This string is sent by connector as a buffer") == 0);
 
   const char svr_response[] = "this is the acceptor response!";
   ACE_OS::strcpy (s_buf, svr_response);

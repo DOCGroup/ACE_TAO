@@ -19,6 +19,7 @@
 #include "test_config.h"
 #include "ace/Thread_Manager.h"
 
+#include <cstring>
 #include <memory>
 #include "ace/Message_Queue.h"
 #include "ace/Synch_Traits.h"
@@ -646,7 +647,7 @@ int queue_priority_test (ACE_Message_Queue_Ex<User_Class, ACE_SYNCH>& q)
     }
   else
     {
-      if (ACE_OS::strcmp (b->message (), "first") != 0)
+      if (std::strcmp (b->message (), "first") != 0)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("First dequeued was %C\n"),
@@ -661,7 +662,7 @@ int queue_priority_test (ACE_Message_Queue_Ex<User_Class, ACE_SYNCH>& q)
     }
   else
     {
-      if (ACE_OS::strcmp (b->message (), "second") != 0)
+      if (std::strcmp (b->message (), "second") != 0)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("Second dequeued was %C\n"),
@@ -676,7 +677,7 @@ int queue_priority_test (ACE_Message_Queue_Ex<User_Class, ACE_SYNCH>& q)
     }
   else
     {
-      if (ACE_OS::strcmp (b->message (), "third") != 0)
+      if (std::strcmp (b->message (), "third") != 0)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("Third dequeued was %C\n"),
@@ -691,7 +692,7 @@ int queue_priority_test (ACE_Message_Queue_Ex<User_Class, ACE_SYNCH>& q)
     }
   else
     {
-      if (ACE_OS::strcmp (b->message (), "fourth") != 0)
+      if (std::strcmp (b->message (), "fourth") != 0)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("Fourth dequeued was %C\n"),
@@ -777,7 +778,7 @@ int queue_iterator_test (ACE_Message_Queue_Ex<User_Class, ACE_SYNCH>& q)
       ++counter;
       if (counter == 1)
       {
-        if (ACE_OS::strcmp (b->message (), "first") != 0)
+        if (std::strcmp (b->message (), "first") != 0)
         {
           ACE_ERROR ((LM_ERROR, ACE_TEXT ("First message was %C\n"), b->message ()));
           ++status;
@@ -785,7 +786,7 @@ int queue_iterator_test (ACE_Message_Queue_Ex<User_Class, ACE_SYNCH>& q)
       }
       else if (counter == 4)
       {
-        if (ACE_OS::strcmp (b->message (), "fourth") != 0)
+        if (std::strcmp (b->message (), "fourth") != 0)
         {
           ACE_ERROR ((LM_ERROR, ACE_TEXT ("Fourth message was %C\n"), b->message ()));
           ++status;

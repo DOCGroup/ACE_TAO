@@ -26,6 +26,8 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_signal.h"
 #include "ace/Timer_Heap.h"
+
+#include <cstring>
 #include <memory>
 
 #include "Network_Adapters_Test.h"
@@ -894,7 +896,7 @@ is_ip_address_local (char const * const ip_to_bind)
 
   for (size_t j = 0; j < how_many; ++j)
     {
-      if (!ACE_OS::strcmp (the_addr_array[j].get_host_addr (), ip_to_bind))
+      if (!std::strcmp (the_addr_array[j].get_host_addr (), ip_to_bind))
         {
           return 0;
         }

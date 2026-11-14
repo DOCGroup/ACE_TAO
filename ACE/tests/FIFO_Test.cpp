@@ -25,6 +25,8 @@
 #include "ace/Thread.h"
 #include "ace/Thread_Manager.h"
 
+#include <cstring>
+
 #if !defined (ACE_LACKS_MKFIFO)
 
 static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
@@ -116,7 +118,7 @@ server (void *arg)
                        expect, recv_count, ACE_TEXT ("recv")),
                       0);
   buf[recv_count] = '\0';
-  if (ACE_OS::strcmp (buf, ACE_ALPHABET) != 0)
+  if (std::strcmp (buf, ACE_ALPHABET) != 0)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) Recv 1 expected alphabet; got %s\n"),
                 buf));
@@ -162,7 +164,7 @@ server (void *arg)
                        expect, recv_count, ACE_TEXT ("recv")),
                       0);
   buf[recv_count] = '\0';
-  if (ACE_OS::strcmp (buf, ACE_ALPHABET) != 0)
+  if (std::strcmp (buf, ACE_ALPHABET) != 0)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) Recv 3 expected alphabet; got %s\n"),
                 buf));

@@ -19,6 +19,8 @@
 #include "ace/OS_NS_sys_utsname.h"
 #include "ace/OS_NS_netdb.h"
 
+#include <cstring>
+
 #if defined(ACE_LACKS_GETHOSTENT) || defined(ACE_LACKS_SETHOSTENT) || defined(ACE_LACKS_ENDHOSTENT)
 #  define MISSING_HOSTENT_FUNCTIONS
 #endif
@@ -102,16 +104,16 @@ find_another_host (ACE_TCHAR other_host[])
       // an infinite loop on Linux --mas 03-08-2001
       while ((h = gethostent ()) != nullptr)
         {
-          if (ACE_OS::strcmp (h->h_name, ACE_TEXT_ALWAYS_CHAR (ACE_DEFAULT_SERVER_HOST)) == 0)
+          if (std::strcmp (h->h_name, ACE_TEXT_ALWAYS_CHAR (ACE_DEFAULT_SERVER_HOST)) == 0)
             continue;
 
-          if (ACE_OS::strcmp (h->h_name, "loopback") == 0)
+          if (std::strcmp (h->h_name, "loopback") == 0)
             continue;
 
           // If not me.
-          if (ACE_OS::strcmp
+          if (std::strcmp
                 (h->h_name, ACE_TEXT_ALWAYS_CHAR (other_host)) != 0
-              && ACE_OS::strcmp (h->h_name, un.nodename) != 0)
+              && std::strcmp (h->h_name, un.nodename) != 0)
             {
                ACE_OS::strcpy (candidate[candidate_count].host_name,
                                ACE_TEXT_CHAR_TO_TCHAR (h->h_name));
