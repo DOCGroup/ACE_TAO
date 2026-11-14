@@ -20,6 +20,8 @@
 #include "ace/Vector_T.h"
 #include "ace/Basic_Types.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_UIPMC_Mcast_Connection_Handler::TAO_UIPMC_Mcast_Connection_Handler (
@@ -335,11 +337,11 @@ TAO_UIPMC_Mcast_Connection_Handler::add_transport_to_cache ()
   TAO_UIPMC_Endpoint endpoint (addr);
 
   // Construct a property object
-  TAO_Base_Transport_Property prop (&endpoint);
+  TAO_Base_Transport_Property prop (std::addressof (endpoint));
 
   // Add the handler to Cache
   return this->orb_core ()->lane_resources ()
-          .transport_cache ().cache_transport (&prop,
+          .transport_cache ().cache_transport (std::addressof (prop),
                                                this->transport ());
 }
 
