@@ -1,45 +1,25 @@
 // -*- C++ -*-
 
-//
-// ============================================================================
-//
-// = DESCRIPTION
-//   This test attempts to communicate several Event Channels UDP
-//   using multicast.
-//   The test reads a configuration file that describe what events are
-//   received by each "Federation".   The user must provide, on the
-//   command line, which federations are present on each process
-//   (these are called the "Local Federations").
-//   The test also creates one supplier for each federation, the
-//   supplier can send an event of any possible type described in the
-//   file.
-
-// = HOW
-//   The test creates one UDP_Sender for each remote federation,
-//   this is a PushConsumer that sends the events using UDP
-//   multicast.
-//   Notice that there is still a win in using multicast because
-//   multiple copies of the federation may be present.
-//   To receive the event the test creates one UDP_Receiver for each
-//   local federation, it joins to the right multicast groups and
-//   pushes the events it receives, acting as a PushSupplier.
-//
-//   The UDP_Receiversfederation suppliers  Mcast packets as local events
-//   could observe the changes in the local subscriptions and use that
-//   to join or leave the multicast groups.
-//   To demostrate this the test will need to reconfigure its
-//   subscription list every so often (a few seconds seems like a good
-//   idea).
-//
-// = TODO
-//
-//   It is unfortunate that the test must know before-hand the remote
-//   consumer interests.  It would be really simple to use a better
-//   strategy: the test could "observe" changes in the remote EC
-//   subscription list, it could then modify its local consumers
-//   subscriptions.
-//
-// ============================================================================
+/// @file EC_Mcast.h
+/// Test communication between UDP Event Channels using multicast.
+///
+/// The test reads a configuration file describing the events received by
+/// each federation. Each process is given its local federations on the
+/// command line and creates one supplier for each federation.
+///
+/// @par How it works
+/// A UDP sender for each remote federation sends events by multicast as a
+/// PushConsumer. A UDP receiver for each local federation joins the relevant
+/// multicast groups and pushes received events as a PushSupplier. Multicast
+/// avoids sending multiple copies when a federation has multiple processes.
+///
+/// Local subscription changes could be used to join or leave multicast
+/// groups. Demonstrating this would require periodically reconfiguring the
+/// subscription list.
+///
+/// @todo The test currently needs advance knowledge of remote consumer
+/// interests. It could instead observe changes to remote Event Channel
+/// subscriptions and update its local consumer subscriptions.
 
 #ifndef EC_MCAST_H
 #define EC_MCAST_H
@@ -69,19 +49,14 @@
 
 class ECM_Driver;
 
+/// Configuration and addresses for a federation in the test.
+/// A federation is an application distributed across processes. Its possible
+/// publications and subscriptions are known in advance, though the active
+/// publications and subscriptions may change dynamically. A federation may
+/// run in multiple processes, and a process may participate in multiple
+/// federations.
 class ECM_Federation
 {
-  // = DESCRIPTION
-  //   The test reads a configuration file where it obtains the data
-  //   about each "federation". A federation is some application,
-  //   distributed over several processes.  The potential set of
-  //   publications and the potential set of subscriptions is known
-  //   beforehand, but the actual publications (or subscriptions) may
-  //   change dynamically.
-  //   As stated above the federation may be present in more than one
-  //   process, but also a process may participate in more than one
-  //   federation.
-  //
 public:
   ECM_Federation (std::string name,
                   CORBA::UShort mcast_port,
@@ -92,43 +67,43 @@ public:
   ECM_Federation& operator= (ECM_Federation const&) = delete;
   ECM_Federation& operator= (ECM_Federation&&) = delete;
 
+  /// Returns the federation name.
   char const* name () const;
-  // The name of the federation....
 
+  /// Returns the multicast port used to receive messages.
   CORBA::UShort mcast_port () const;
-  // The port used by this federation to receive mcast messages.
 
+  /// Returns the number of event types published by this federation.
   size_t supplier_types () const;
-  // The number of different event types published by this federation.
 
+  /// Returns the multicast address name for supplier event type @a i.
   char const* supplier_name (size_t i) const;
-  // The name (mcast addr in A.B.C.D format) of the event type <i>
 
+  /// Returns the host-byte-order IP address for supplier event type @a i.
   CORBA::ULong supplier_ipaddr (size_t i) const;
-  // The ipaddr (in host byte order) of the event type <i>
 
+  /// Returns the number of event types consumed by this federation.
   size_t consumer_types () const;
-  // The number of different event types consumed by this federation.
 
+  /// Returns the multicast address name for consumer event type @a i.
   char const* consumer_name (size_t i) const;
-  // The name (mcast addr in A.B.C.D format) of the event type <i>
 
+  /// Returns the host-byte-order IP address for consumer event type @a i.
   CORBA::ULong consumer_ipaddr (size_t i) const;
-  // The ipaddr (in host byte order) of the event type <i>
 
+  /// Connects the UDP sender to the Event Channel.
   void open (TAO_ECG_UDP_Out_Endpoint *endoint,
              RtecEventChannelAdmin::EventChannel_ptr ec);
-  // Connect the UDP sender to the EC.
 
+  /// Closes the UDP sender and disconnects it from the Event Channel.
   void close ();
-  // Close the UDP sender, disconnect from the EC
 
+  /// Returns the sender's local address.
   int sender_local_addr (ACE_INET_Addr& addr);
-  // Return the sender local address
 
+  /// Returns the address server that maps event headers (type, source) to
+  /// UDP addresses (IP address, port).
   RtecUDPAdmin::AddrServer_ptr addr_server ();
-  // This address server can be used to convert event headers
-  // (type,source) to UDP addresses (ipaddr,port)
 
 private:
   std::string name_;
@@ -140,29 +115,21 @@ private:
   std::vector<std::string> consumer_names_;
   std::vector<CORBA::ULong> consumer_ipaddr_;
 
+  /// Sender servant.
   PortableServer::Servant_var<TAO_ECG_UDP_Sender> sender_;
-  // The sender
 
+  /// Resolves event headers (type, source) to UDP addresses (IP address,
+  /// port).
   TAO_EC_Simple_AddrServer addr_server_;
-  // Resolve event headers (type,source) to UDP addresses
-  // (ipaddr,port)
 };
 
 class ECM_Local_Federation;
 
+/// Helper that simulates an application acting as an event supplier.
+/// It receives Event Channel timeout events and delegates to
+/// ECM_Local_Federation, which may reconfigure subscriptions or send events.
 class ECM_Supplier : public POA_RtecEventComm::PushSupplier
 {
-  //
-  // = TITLE
-  //   Helper class to simulate an application acting as an event
-  //   supplier.
-  //
-  // = DESCRIPTION
-  //   This class connects as a consumer for timeouts in the EC. On
-  //   every timeout it delegates on the ECM_Local_Federation class,
-  //   usually this results in some reconfiguration and/or some events
-  //   sent.
-  //
 public:
   explicit ECM_Supplier (ECM_Local_Federation* federation);
   ECM_Supplier (ECM_Supplier const&) = delete;
@@ -170,55 +137,48 @@ public:
   ECM_Supplier& operator= (ECM_Supplier const&) = delete;
   ECM_Supplier& operator= (ECM_Supplier&&) = delete;
 
+  /// Connects the supplier to the Event Channel.
   void open (char const* name,
              RtecEventChannelAdmin::EventChannel_ptr event_channel);
-  // This method connects the supplier to the EC.
 
+  /// Disconnects from the Event Channel.
   void close ();
-  // Disconnect from the EC.
 
+  /// Connects as a consumer to start receiving events.
   void activate (RtecEventChannelAdmin::EventChannel_ptr event_channel,
                  RtecEventComm::Time interval);
-  // Connect as a consumer to start receiving events.
 
+  /// Returns the supplier ID.
   RtecEventComm::EventSourceID supplier_id () const;
-  // The supplier ID.
 
+  /// Handles callbacks for the consumer role.
   void push (RtecEventComm::EventSet const& events);
   void disconnect_push_consumer ();
-  // Implement the callbacks for our consumer personality.
 
-  // = The POA_RtecEventComm::PushSupplier methods.
+  /// Receives disconnect callbacks for the supplier role.
   void disconnect_push_supplier () override;
 
 private:
+  /// Borrowed; ECM_Driver owns the local federation.
   ECM_Local_Federation* federation_;
-  // Borrowed; ECM_Driver owns the local federation.
 
+  /// ID generated from the supplier name.
   RtecEventComm::EventSourceID supplier_id_;
-  // We generate an id based on the name....
 
+  /// Proxy used to supply events to the Event Channel.
   RtecEventChannelAdmin::ProxyPushConsumer_var consumer_proxy_;
-  // We talk to the EC (as a supplier) using this proxy.
 
+  /// Consumer adapter used to receive Event Channel timeout events.
   ACE_PushConsumer_Adapter<ECM_Supplier> consumer_;
-  // We also connect to the EC as a consumer so we can receive the
-  // timeout events.
 
+  /// Proxy used to receive events from the Event Channel.
   RtecEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_;
-  // We talk to the EC (as a supplier) using this proxy.
 };
 
+/// Helper that simulates an application acting as an event consumer.
+/// The Event Channel delegates received events to ECM_Local_Federation.
 class ECM_Consumer : public POA_RtecEventComm::PushConsumer
 {
-  //
-  // = TITLE
-  //   Helper class to simulate an application acting as an event
-  //   consumer.
-  //
-  // = DESCRIPTION
-  //   This class connects as an event consumer to the EC.  The events
-  //   are actually handled by the ECM_Local_Federation.
 public:
   explicit ECM_Consumer (ECM_Local_Federation* federation);
   ECM_Consumer (ECM_Consumer const&) = delete;
@@ -226,40 +186,36 @@ public:
   ECM_Consumer& operator= (ECM_Consumer const&) = delete;
   ECM_Consumer& operator= (ECM_Consumer&&) = delete;
 
+  /// Connects the consumer to the Event Channel.
   void open (char const* name,
              RtecEventChannelAdmin::EventChannel_ptr event_channel,
              unsigned int *seed);
-  // This method connects the consumer to the EC.
 
+  /// Disconnects from the Event Channel.
   void close ();
-  // Disconnect from the EC.
 
   void connect (unsigned int *seed);
+  /// Disconnects from the supplier without closing or forgetting it.
   void disconnect ();
-  // Disconnect from the supplier, but do not forget about it or close
-  // it.
 
-  // = The POA_RtecEventComm::PushComsumer methods.
+  /// Receives callbacks for the PushConsumer role.
   void push (RtecEventComm::EventSet const& events) override;
   void disconnect_push_consumer () override;
 
 private:
+  /// Borrowed; ECM_Driver owns the local federation.
   ECM_Local_Federation* federation_;
-  // Borrowed; ECM_Driver owns the local federation.
 
+  /// Proxy used to receive events from the Event Channel.
   RtecEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_;
-  // We talk to the EC using this proxy.
 
+  /// Consumer admin used to connect to the Event Channel.
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin_;
-  // We talk to the EC using this proxy.
 };
 
+/// Represents a federation running in this process.
 class ECM_Local_Federation
 {
-  // = DESCRIPTION
-  //   This class is used to represent a federation that is actually
-  //   running in this process.
-  //
 public:
   ECM_Local_Federation (ECM_Federation *federation,
                         ECM_Driver *driver);
@@ -269,43 +225,44 @@ public:
   ECM_Local_Federation& operator= (ECM_Local_Federation&&) = delete;
   ~ECM_Local_Federation () = default;
 
+  /// Connects the supplier and consumer.
   void open (int event_count,
              RtecEventChannelAdmin::EventChannel_ptr event_channel);
-  // Connect both the supplier and the consumer.
 
+  /// Disconnects the supplier and consumer from the Event Channel.
   void close ();
-  // Disconnect everybody from the EC
 
+  /// Activates the supplier.
   void activate (RtecEventChannelAdmin::EventChannel_ptr event_channel,
                  RtecEventComm::Time interval);
-  // Activate the supplier
 
+  /// Called when the supplier is ready to send another event.
   void supplier_timeout (RtecEventComm::PushConsumer_ptr consumer);
-  // The supplier is ready to send a new event.
 
+  /// Called when the consumer receives an event.
   void consumer_push (ACE_hrtime_t arrival,
                       RtecEventComm::EventSet const& event);
-  // The consumer just received an event.
 
+  /// Returns the federation description.
   ECM_Federation const* federation () const;
-  // The federation description.
 
+  /// Connects the UDP receiver to the Event Channel.
   void open_receiver (RtecEventChannelAdmin::EventChannel_ptr ec,
                       TAO_ECG_Refcounted_Endpoint ignore_from);
-  // Connect the UDP receiver to the EC.
 
+  /// Closes the UDP receiver and disconnects it from the Event Channel.
   void close_receiver ();
-  // Close the UDP receiver, disconnect from the EC
 
+  /// Reports the results to the user.
   void dump_results () const;
-  // Report the results back to the user...
 
+  /// Sets the subscription bit for event type @a i.
   void subscribed_bit (size_t i, CORBA::Boolean x);
+  /// Returns the subscription bit for event type @a i.
   CORBA::Boolean subscribed_bit (size_t i) const;
-  // Set&Get the subscribed bit; this defines the subset of events
-  // that we actually publish.
 
-  // = Delegate on the federation description
+  /// @name Accessors delegated to the federation description
+  /// @{
   char const* name () const;
   CORBA::UShort mcast_port () const;
   size_t supplier_types () const;
@@ -314,81 +271,68 @@ public:
   size_t consumer_types () const;
   char const* consumer_name (size_t i) const;
   CORBA::ULong consumer_ipaddr (size_t i) const;
+  /// @}
 
 private:
+  /// Borrowed; ECM_Driver owns the federation description.
   ECM_Federation* federation_;
-  // Borrowed; ECM_Driver owns the federation description.
 
+  /// Borrowed; ECM_Driver owns this local federation.
   ECM_Driver *driver_;
-  // Borrowed; ECM_Driver owns this local federation.
 
+  /// Supplier and consumer helpers that forward events to the federation.
   ECM_Consumer consumer_;
   ECM_Supplier supplier_;
-  // The supplier and consumer helper classes, other than
-  // initialization this classes only forward events to the
-  // Federation.
 
-  // Collect statistics
+  /// @name Collected statistics
+  /// @{
 
+  /// Number of messages received.
   CORBA::ULong recv_count_;
-  // Messages received.
 
+  /// Number of received messages that were not properly filtered.
   CORBA::ULong unfiltered_count_;
-  // Messages received that were not properly filtered.
 
+  /// Number of received messages not destined for this federation.
   CORBA::ULong invalid_count_;
-  // Message received that could *not* be destined to this federation,
-  // yet they were received.
 
+  /// Number of messages sent.
   CORBA::ULong send_count_;
-  // Messages sent.
+  /// @}
 
+  /// Number of messages to send before stopping the simulation.
   int event_count_;
-  // How many messages will we send before stop the simulation.
 
+  /// Last time the publication changed, to avoid changing it too often.
   ACE_Time_Value last_subscription_change_;
-  // The last time we changed our publication, so we don't change too
-  // often.
 
+  /// Reads events and pushes them into the Event Channel; it can receive
+  /// events from multiple Event Handlers.
   PortableServer::Servant_var<TAO_ECG_UDP_Receiver> receiver_;
-  // This object reads the events and pushes them into the EC. Notice
-  // that it can receive events from multiple Event Handlers.
 
+  /// Receives reactor callbacks when multicast events arrive and forwards
+  /// them to the receiver for processing and dispatch.
+  /// @todo More event handlers may be needed to handle operating-system
+  /// limits on the number of multicast groups per socket.
   std::unique_ptr<TAO_ECG_Mcast_EH> mcast_eh_;
-  // The event handler, it receives callbacks from the reactor
-  // whenever an event is available in some of the multicast groups,
-  // it then forwards to the <mcast_recv_> object for processing and
-  // dispatching of the event.
-  // @@ TODO Eventually we may need several of this objects to handle
-  // OS limitations on the number of multicast groups per socket.
 
+  /// Seed for the random number generator.
   unsigned int seed_;
-  // The seed for a random number generator.
 
+  /// Average period between subscription changes, in microseconds.
   CORBA::ULong subscription_change_period_;
-  // The (average) period between subscription changes, in usecs
 
+  /// Event types to which this federation is subscribed.
   std::vector<CORBA::Boolean> subscription_subset_;
-  // The events we are actually subscribed to.
 };
 
+/// Demonstrates the UDP Gateways and their companion classes.
+/// The test runs several processes, each with an Event Channel and multiple
+/// colocated consumers and suppliers. The Event Channels communicate using
+/// multicast. The test exercises multicast, dynamic QoS changes for the UDP
+/// receiver and sender, and efficient use of operating-system resources.
 class ECM_Driver
 {
-  //
-  // = TITLE
-  //   Demonstrate the use of the UDP Gateways.
-  //
-  // = DESCRIPTION
-  //   This class is design to exercise several features of the UDP
-  //   Gateways and its companion classes.
-  //   We create a set of processes, each running one EC, with
-  //   multiple consumers and suppliers colocated with the EC.
-  //   The ECs communicate among themselves using multicast.
-  //   The test thus show how to use multicast, change the local
-  //   ECG_UDP_Receiver and ECG_UDP_Sender QoS specifications
-  //   dynamically, how to economically use the OS resources to
-  //   receive and send multicast messages, etc.
-  //
 public:
   ECM_Driver () = default;
   ~ECM_Driver () = default;
@@ -398,104 +342,100 @@ public:
   ECM_Driver& operator= (ECM_Driver&&) = delete;
 
   enum {
+    /// Maximum number of events to send on each federation.
     MAX_EVENTS = 1024,
-    // Maximum number of events to send on each Federation.
 
+    /// Maximum number of federations running on one process.
     MAX_LOCAL_FEDERATIONS = 16,
-    // Maximum number of federations running on a single process
 
+    /// Maximum number of federations in the simulation.
     MAX_FEDERATIONS = 128
-    // Maximum number of federations in the simulation
   };
 
+  /// Runs the test and reads its configuration files.
   int run (int argc, ACE_TCHAR* argv[]);
-  // Run the test, read all the configuration files, etc.
 
+  /// Called when a federation completes; exits the test when all have
+  /// finished.
   void federation_has_shutdown (ECM_Local_Federation *federation);
-  // One of the federations has completed its simulation, once all of
-  // them finish the test exists.
 
 private:
+  /// Connects the federations to the Event Channel.
   void open_federations (RtecEventChannelAdmin::EventChannel_ptr ec);
-  // Connect the federations to the EC.
 
+  /// Activates all federations.
   void activate_federations (RtecEventChannelAdmin::EventChannel_ptr ec);
-  // Activate all the federations
 
+  /// Disconnects federations from the Event Channel and deactivates them.
   void close_federations ();
-  // Close the federations, i.e. disconnect from the EC, deactivate
-  // the objects, etc.
 
+  /// Connects all senders so they can start multicasting events.
   void open_senders (RtecEventChannelAdmin::EventChannel_ptr ec);
-  // Connect all the senders, so we can start multicasting events.
 
+  /// Connects all receivers so they can accept multicast events.
   void open_receivers (RtecEventChannelAdmin::EventChannel_ptr ec);
-  // Connect all the receivers, thus we accept events arriving through
-  // multicast.
 
+  /// Closes all senders and cleans up their resources.
   void close_senders ();
-  // Close all the senders to cleanup resources.
 
+  /// Closes all receivers and cleans up their resources.
   void close_receivers ();
-  // Close all the receivers to cleanup resources.
 
+  /// Parses command-line arguments.
   int parse_args (int argc, ACE_TCHAR* argv[]);
-  // parse the command line arguments
 
+  /// Parses the configuration file.
   int parse_config_file ();
-  // parse the command line arguments
 
+  /// Parses one list of names in the federation definition.
   int parse_name_list (FILE *file,
                        size_t count,
                        std::vector<std::string> &names,
                        char const *error_msg);
-  // parse one of the lists of names in the federation definition.
 
+  /// Skips blank characters in the file.
   int skip_blanks (FILE* file,
                    char const* error_msg);
-  // skip the blanks in the file.
 
+  /// Dumps results to standard output.
   void dump_results ();
-  // Dump the results to the standard output.
 
 private:
+  /// Interval between generated events, in microseconds.
   int event_period_ {250000};
-  // The events are generated using this interval, in microseconds.
 
+  /// Number of events suppliers send.
   int event_count_ {100};
-  // How many events will the suppliers send
 
+  /// Name of the configuration file.
   ACE_TString config_filename_ {};
-  // The name of the file where we read the configuration.
 
+  /// Name of the file where the process stores its process ID.
   ACE_TString pid_filename_ {};
-  // The name of a file where the process stores its pid
 
+  /// ORB kept alive longer than the federations that use it.
   CORBA::ORB_var orb_ {};
-  // The ORB, so it outlives the federations that use it.
 
+  /// Socket shared by all federations to send multicast events.
   TAO_ECG_UDP_Out_Endpoint endpoint_;
-  // This socket is shared by all the federations to send multicast events.
 
+  /// Total number of federations in which this process participates.
   size_t all_federations_count_ {};
-  // The total number of federations we belong to.
 
+  /// All federations outlive the local federations that borrow them.
   std::array<std::unique_ptr<ECM_Federation>, MAX_FEDERATIONS> all_federations_ {};
-  // All federations outlive the local federations that borrow them.
 
+  /// Number of federations running in this process.
   size_t local_federations_count_ {};
-  // How many federations are running in this process (or, if you
-  // prefer, in how many federations does this process participate).
 
+  /// Local federations.
   std::array<std::unique_ptr<ECM_Local_Federation>, MAX_LOCAL_FEDERATIONS> local_federations_ {};
-  // The local federations.
 
+  /// Names of the local federations.
   std::array<std::string, MAX_LOCAL_FEDERATIONS> local_names_ {};
-  // The names of the local federations.
 
+  /// Tracks active federations so the test can shut down after all finish.
   std::atomic<CORBA::ULong> federations_running_ {0};
-  // Keep track of how many federations are active so we can shutdown
-  // once they are all destroyed.
 };
 
 #if defined (__ACE_INLINE__)
