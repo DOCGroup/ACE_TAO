@@ -112,7 +112,7 @@ protected:
   int mode_;
 
   /// Pointer to the first node in the freelist.
-  T *free_list_;
+  T *free_list_ {};
 
   /// Low water mark.
   size_t lwm_;
@@ -124,7 +124,7 @@ protected:
   size_t inc_;
 
   /// Keeps track of the size of the list.
-  size_t size_;
+  size_t size_ {};
 
   /// Synchronization variable for ACE_Timer_Queue.
   ACE_LOCK mutex_;
