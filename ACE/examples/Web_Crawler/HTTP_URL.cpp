@@ -6,6 +6,8 @@
 #include "Options.h"
 #include "HTTP_URL.h"
 
+#include <cstring>
+
 const ACE_URL_Addr &
 HTTP_URL::url_addr () const
 {
@@ -44,7 +46,7 @@ HTTP_URL::send_request ()
 
   // Send the GET command to the connected server.
   if (this->stream ().send_n (cmd_ptr.get (),
-                              ACE_OS::strlen (cmd_ptr.get ()),
+                              std::strlen (cmd_ptr.get ()),
                               const_cast<ACE_Time_Value *>
                                 (OPTIONS::instance ()->timeout ()))  > 0)
     {
@@ -55,7 +57,7 @@ HTTP_URL::send_request ()
       // IMP: The length of teh command has to be sent!
       const ssize_t retval =
         this->stream ().send_n (cmd_ptr.get (),
-                                ACE_OS::strlen (cmd_ptr.get ()),
+                                std::strlen (cmd_ptr.get ()),
                                 const_cast<ACE_Time_Value *>
                                   (OPTIONS::instance ()->timeout ()));
       this->stream ().svc_handler ()->idle (0);
