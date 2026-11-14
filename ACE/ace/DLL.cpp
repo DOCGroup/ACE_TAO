@@ -44,8 +44,6 @@ ACE_DLL::ACE_DLL (const ACE_DLL &rhs)
     this->error ()));
 }
 
-// Assignment operator
-
 ACE_DLL &
 ACE_DLL::operator= (const ACE_DLL &rhs)
 {

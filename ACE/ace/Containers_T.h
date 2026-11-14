@@ -92,7 +92,6 @@ public:
    */
   ACE_Bounded_Stack (const ACE_Bounded_Stack<T> &s);
 
-  /// Assignment operator
   /**
    * Perform a deep copy operation using the Bounded_Stack parameter.  If the
    * capacity of the lhs isn't sufficient for the rhs, then the underlying data
@@ -1957,7 +1956,6 @@ public:
    */
   ACE_Array (const ACE_Array<T> &s);
 
-  ///Assignment operator
   /**
    * Assignment operator performs an assignment by making an exact
    * copy of the contents of parameter {s}, i.e., *this == s will

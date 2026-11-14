@@ -559,7 +559,6 @@ public:
 
   ~ACE_Configuration_ExtId () = default;
 
-  /// Assignment operator
   ACE_Configuration_ExtId& operator= (const ACE_Configuration_ExtId& rhs);
 
   /// Equality comparison operator (must match name_).
@@ -614,7 +613,6 @@ public:
 
   ~ACE_Configuration_Value_IntId () = default;
 
-  /// Assignment operator
   ACE_Configuration_Value_IntId& operator= (
     const ACE_Configuration_Value_IntId& rhs);
 
@@ -662,7 +660,6 @@ public:
 
   ~ACE_Configuration_Section_IntId () = default;
 
-  /// Assignment operator
   ACE_Configuration_Section_IntId& operator= (
     const ACE_Configuration_Section_IntId& rhs);
 

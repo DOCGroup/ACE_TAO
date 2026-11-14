@@ -92,7 +92,6 @@ public:
   /// Default constructor
   ACE_At_Thread_Exit ();
 
-  /// The destructor
   virtual ~ACE_At_Thread_Exit ();
 
   /// At_Thread_Exit has the ownership?

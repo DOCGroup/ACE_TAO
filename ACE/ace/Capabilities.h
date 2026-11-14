@@ -133,10 +133,8 @@ class ACE_Export ACE_Capabilities
 public:
   using CAPABILITIES_MAP = ACE_Hash_Map_Manager_Ex<ACE_TString, ACE_CapEntry *, ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_Null_Mutex>;
 
-  /// The Constructor
   ACE_Capabilities ();
 
-  /// The Destructor
   ~ACE_Capabilities();
 
 public:
