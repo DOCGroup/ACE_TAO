@@ -9,6 +9,7 @@
 
 #include "ace/Stream_Modules.h"
 #include "ace/OS_NS_string.h"
+#include <memory>
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Stream.inl"
@@ -499,7 +500,7 @@ template <ACE_SYNCH_DECL, class TIME_POLICY> int
 ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::link_i (ACE_Stream<ACE_SYNCH_USE, TIME_POLICY> &us)
 {
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::link_i");
-  this->linked_us_ = &us;
+  this->linked_us_ = std::addressof (us);
   // Make sure the other side is also linked to us!
   us.linked_us_ = this;
 

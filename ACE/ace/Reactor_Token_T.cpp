@@ -1,5 +1,6 @@
 #include "ace/Log_Category.h"
 #include "ace/Reactor_Token_T.h"
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -21,7 +22,7 @@ template <class ACE_TOKEN_TYPE>
 ACE_Reactor_Token_T<ACE_TOKEN_TYPE>::ACE_Reactor_Token_T
   (ACE_Reactor_Impl &r,
    int s_queue)
-    : reactor_ (&r)
+    : reactor_ (std::addressof (r))
 {
   ACE_TRACE ("ACE_Reactor_Token_T::ACE_Reactor_Token");
 
@@ -52,7 +53,7 @@ ACE_Reactor_Token_T<ACE_TOKEN_TYPE>::reactor ()
 template <class ACE_TOKEN_TYPE> void
 ACE_Reactor_Token_T<ACE_TOKEN_TYPE>::reactor (ACE_Reactor_Impl &reactor)
 {
-  this->reactor_ = &reactor;
+  this->reactor_ = std::addressof (reactor);
 }
 
 // Used to wakeup the reactor.

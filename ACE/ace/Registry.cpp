@@ -1,4 +1,5 @@
 #include "ace/Registry.h"
+#include <memory>
 
 #if defined (ACE_WIN32)
 
@@ -758,7 +759,7 @@ ACE_Registry::Binding_Iterator::Binding_Iterator ()
 void
 ACE_Registry::Binding_Iterator::reset ()
 {
-  this->current_enumeration_ = &this->iteration_complete_;
+  this->current_enumeration_ = std::addressof (this->iteration_complete_);
   this->iteration_complete_.reset ();
   this->object_iteration_.reset ();
   this->context_iteration_.reset ();
@@ -823,7 +824,7 @@ ACE_Registry::Binding_Iterator::destroy ()
 void
 ACE_Registry::Binding_Iterator::naming_context (Naming_Context &naming_context)
 {
-  this->naming_context_ = &naming_context;
+  this->naming_context_ = std::addressof (naming_context);
 }
 
 ACE_Registry::Naming_Context &
@@ -836,7 +837,7 @@ ACE_Registry::Binding_Iterator::naming_context ()
 void
 ACE_Registry::Binding_Iterator::current_enumeration (Iteration_State &current_enumeration)
 {
-  this->current_enumeration_ = &current_enumeration;
+  this->current_enumeration_ = std::addressof (current_enumeration);
 }
 
 ACE_Registry::Binding_Iterator::Iteration_State &

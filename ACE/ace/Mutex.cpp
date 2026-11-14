@@ -1,4 +1,5 @@
 #include "ace/Mutex.h"
+#include <memory>
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Mutex.inl"
@@ -126,7 +127,7 @@ ACE_Mutex::ACE_Mutex (int type, const ACE_TCHAR *name,
           this->lockname_ = un;
         }
 
-      this->process_lock_ = &this->process_sema_;
+      this->process_lock_ = std::addressof (this->process_sema_);
       if (ACE_OS::sema_init (&this->process_sema_, 1 /*mutex unlocked*/,
                              USYNC_PROCESS, this->lockname_) != 0)
         ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),

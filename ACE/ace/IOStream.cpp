@@ -7,6 +7,7 @@
 
 #  include "ace/OS_NS_errno.h"
 #  include "ace/OS_Memory.h"
+#  include <memory>
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -95,7 +96,7 @@ ACE_Streambuf::recv_timeout (ACE_Time_Value *tv)
   if (tv)
     {
       recv_timeout_value_ = *tv;
-      recv_timeout_ = &recv_timeout_value_;
+      recv_timeout_ = std::addressof (recv_timeout_value_);
     }
   else
     recv_timeout_ = 0;

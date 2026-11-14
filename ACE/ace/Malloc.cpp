@@ -7,6 +7,7 @@
 #include "ace/Object_Manager.h"
 #include "ace/Malloc_Base.h"
 #include "ace/OS_NS_string.h"
+#include <memory>
 
 #include <cstring>
 
@@ -82,7 +83,7 @@ ACE_Control_Block::dump () const
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nMalloc Header:\n")));
   for (ACE_Malloc_Header *nexth = ((ACE_Malloc_Header *)this->freep_)->next_block_;
-       nexth != 0 && nexth != &this->base_;
+       nexth != 0 && nexth != std::addressof (this->base_);
        nexth = nexth->next_block_)
     nexth->dump ();
 

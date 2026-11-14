@@ -11,6 +11,7 @@
 
 #include "ace/Object_Manager.h"
 #include "ace/Process_Mutex.h"
+#include <memory>
 
 #include <cstring>
 
@@ -83,7 +84,7 @@ ACE_PI_Control_Block::dump () const
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nMalloc Header:\n")));
   for (ACE_Malloc_Header *nexth = ((ACE_Malloc_Header *)this->freep_)->next_block_;
-       nexth != nullptr && nexth != &this->base_;
+       nexth != nullptr && nexth != std::addressof (this->base_);
        nexth = nexth->next_block_)
     nexth->dump ();
 

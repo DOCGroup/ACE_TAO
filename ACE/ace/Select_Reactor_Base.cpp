@@ -1,4 +1,5 @@
 #include "ace/Select_Reactor_Base.h"
+#include <memory>
 #include "ace/Reactor.h"
 #include "ace/Thread.h"
 #include "ace/SOCK_Acceptor.h"
@@ -175,7 +176,7 @@ ACE_Select_Reactor_Handler_Repository::find_eh (ACE_HANDLE handle)
 #if defined (ACE_SELECT_REACTOR_BASE_USES_HASH_MAP)
   this->event_handlers_.find (handle, pos);
 #else
-  map_type::iterator const tmp = &this->event_handlers_[handle];
+  map_type::iterator const tmp = std::addressof (this->event_handlers_[handle]);
 
   if (*tmp != nullptr)
     pos = tmp;

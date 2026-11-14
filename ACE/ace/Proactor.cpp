@@ -28,6 +28,7 @@
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Auto_Event.h"
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -288,7 +289,7 @@ ACE_Proactor_Handle_Timeout_Upcall::proactor (ACE_Proactor &proactor)
 {
   if (this->proactor_ == nullptr)
     {
-      this->proactor_ = &proactor;
+      this->proactor_ = std::addressof (proactor);
       return 0;
     }
   else
