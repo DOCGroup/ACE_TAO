@@ -21,6 +21,7 @@
 
 #include <cstdio>
 #include <memory>
+#include <new>
 #include <string>
 
 #if !defined (__ACE_INLINE__)
@@ -4416,7 +4417,6 @@ TAO_FlowConsumer::connect_to_peer (AVStreams::QoS & the_qos,
 // TAO_Tokenizer
 //------------------------------------------------------------
 TAO_Tokenizer::TAO_Tokenizer (char const *string, char delimiter)
-  : token_array_ (10, nullptr, nullptr)
 {
   this->parse (string, delimiter);
 }
@@ -4429,11 +4429,7 @@ TAO_Tokenizer::~TAO_Tokenizer ()
 void
 TAO_Tokenizer::clear_tokens ()
 {
-  for (size_t i {}; i < this->num_tokens_; ++i)
-    {
-      CORBA::string_free (this->token_array_[i]);
-      this->token_array_[i] = nullptr;
-    }
+  this->token_array_.clear ();
   this->num_tokens_ = 0;
 }
 
@@ -4443,39 +4439,30 @@ TAO_Tokenizer::parse (char const *string, char delimiter)
   this->clear_tokens ();
   this->count_ = 0;
 
-  ACE_CString new_string (string);
-  u_int pos {};
-  ACE_CString::size_type slash_pos = 0;
-  u_int count {};
-  while (pos < new_string.length ())
+  try
     {
-      slash_pos = new_string.find (delimiter, pos);
-      ACE_CString substring;
-      if (slash_pos != new_string.npos)
+      std::string const input (string);
+      size_t pos {};
+      while (pos < input.length ())
         {
-          substring = new_string.substring (pos,
-                                            slash_pos - pos);
-          pos = slash_pos + 1;
-        }
-      else
-        {
-          substring = new_string.substring (pos);
-          pos = static_cast<int> (new_string.length ());
-        }
-      char *token = CORBA::string_dup (substring.c_str ());
-      int result = this->token_array_.set (token, count);
-      if (result == -1)
-        {
-          this->token_array_.size (this->token_array_.size ()*2);
-          result = this->token_array_.set (token, count);
-          if (result == -1)
+          size_t const delimiter_pos = input.find (delimiter, pos);
+          if (delimiter_pos != std::string::npos)
             {
-              CORBA::string_free (token);
-              ORBSVCS_ERROR_RETURN ((LM_ERROR, "TAO_Tokenizer::parse error"), -1);
+              this->token_array_.emplace_back (
+                input.substr (pos, delimiter_pos - pos));
+              pos = delimiter_pos + 1;
             }
+          else
+            {
+              this->token_array_.emplace_back (input.substr (pos));
+              pos = input.length ();
+            }
+          this->num_tokens_ = this->token_array_.size ();
         }
-      ++count;
-      this->num_tokens_ = count;
+    }
+  catch (std::bad_alloc const &)
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR, "TAO_Tokenizer::parse error"), -1);
     }
   return 0;
 }
@@ -4484,7 +4471,8 @@ char*
 TAO_Tokenizer::token ()
 {
   if (count_ < num_tokens_)
-    return CORBA::string_dup (this->token_array_[this->count_++]);
+    return CORBA::string_dup (
+      this->token_array_[this->count_++].c_str ());
   else
     return nullptr;
 }
@@ -4501,7 +4489,7 @@ TAO_Tokenizer::operator [] (size_t index) const
   if (index >= this->num_tokens_)
     return nullptr;
 
-  return this->token_array_[index];
+  return this->token_array_[index].c_str ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -15,7 +15,6 @@
 #include "orbsvcs/AV/AV_export.h"
 #include "orbsvcs/AV/AV_Core.h"
 #include "ace/Addr.h"
-#include "ace/Containers.h"
 #include "ace/SString.h"
 
 #include <memory>
@@ -53,7 +52,7 @@ public:
 protected:
   void clear_tokens ();
 
-  ACE_Array<char*> token_array_;
+  std::vector<std::string> token_array_ {};
   size_t count_ {};
   size_t num_tokens_ {};
 };
