@@ -75,7 +75,7 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
       if (possible_entry->ext_id_.decrement () == 0)
         {
           // If refcount goes to zero, close down the svc_handler
-          possible_entry->int_id_.first->recycler (0, 0);
+          possible_entry->int_id_.first->recycler (nullptr, nullptr);
           possible_entry->int_id_.first->close ();
           this->purge_i (possible_entry);
         }
@@ -84,7 +84,7 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
       found = 0;
 
       // Reset hint
-      sh = 0;
+      sh = nullptr;
     }
 
   // If hint is not closed, see if it is connected to the correct
@@ -124,7 +124,7 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
 
       // If <sh> is not connected to the correct address or is busy,
       // we will not use it.
-      sh = 0;
+      sh = nullptr;
     }
 
   if (found)
@@ -168,7 +168,7 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
       if (sh->close () == -1)
         return -1;
 
-      sh = 0;
+      sh = nullptr;
 
       // Cycle it once again..
     }
@@ -322,7 +322,7 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
   CONNECTION_CACHE_ENTRY *entry {};
 
   // Check if the user passed a hint svc_handler
-  if (sh != 0)
+  if (sh != nullptr)
     {
       int result = this->check_hint_i (sh,
                                        remote_addr,
@@ -446,7 +446,7 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
   if (entry->ext_id_.recycle_state () == ACE_RECYCLABLE_CLOSED &&
       refcount == 0)
     {
-      entry->int_id_.first->recycler (0, 0);
+      entry->int_id_.first->recycler (nullptr, nullptr);
       entry->int_id_.first->close ();
       this->purge_i (entry);
     }
@@ -529,14 +529,14 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
   typename CONNECTION_CACHE::ITERATOR iter = this->connection_cache_.begin ();
   while (iter != this->connection_cache_.end ())
     {
-      if ((*iter).second () != 0)
+      if ((*iter).second () != nullptr)
         {
           // save entry for future use
           CONNECTION_CACHE_ENTRY *entry = (CONNECTION_CACHE_ENTRY *)
             (*iter).second ()->recycling_act ();
 
           // close handler
-          (*iter).second ()->recycler (0, 0);
+          (*iter).second ()->recycler (nullptr, nullptr);
           (*iter).second ()->close ();
 
           // remember next iter
@@ -607,10 +607,10 @@ ACE_Bounded_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_S
           // close the svc_handler down.
           if (sh->close () == -1)
             {
-              ACE_ASSERT (0);
+          ACE_ASSERT (false);
               return -1;
             }
-          sh = 0;
+          sh = nullptr;
           // and rotate once more...
         }
       else if ((state_result == -1) && (errno == ETIME))
@@ -623,7 +623,7 @@ ACE_Bounded_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_S
           // being recycled.
           if (this->prepare_for_recycling (sh) == -1)
             {
-              ACE_ASSERT (0);
+          ACE_ASSERT (false);
               return -1;
             }
 
@@ -631,7 +631,7 @@ ACE_Bounded_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_S
         }
       else  // some other return value or error...
         {
-          ACE_ASSERT (0); // just to see it coming
+          ACE_ASSERT (false); // just to see it coming
 
           ACELIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%t)ACE_Bounded_Cached_Connect_Strategy<>::")
