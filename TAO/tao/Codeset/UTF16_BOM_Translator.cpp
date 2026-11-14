@@ -1,15 +1,11 @@
 // -*- C++ -*-
-// ============================================================================
-//    Manages the transformation between native and transmitted UTF-16. It is
-//    Required because transmitted UTF-16 may carry a byte order marker (BOM)
-//    that is not part of the data contents. If no BOM is present, then the
-//    serialized UTF-16 data is big-endian, regardless of the byte order of
-//    the containing encapsulation.
-//
-// AUTHOR
-//    Phil Mesnier <mesnier_p@ociweb.com>
-//
-// ============================================================================
+/// Manages the transformation between native and transmitted UTF-16. It is
+/// required because transmitted UTF-16 may carry a byte order marker (BOM)
+/// that is not part of the data contents. If no BOM is present, then the
+/// serialized UTF-16 data is big-endian, regardless of the byte order of
+/// the containing encapsulation.
+///
+/// @author Phil Mesnier <mesnier_p@ociweb.com>
 
 #include "tao/Codeset/UTF16_BOM_Translator.h"
 #include "ace/OS_Memory.h"
