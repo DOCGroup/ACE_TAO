@@ -53,7 +53,9 @@ class ACE_Handle_Set;
  */
 namespace ACE
 {
-  // = ACE version information.
+  /// @name ACE version information.
+  /// @{
+
   /// e.g., the "6" in ACE 6.3.4
   extern ACE_Export u_int major_version ();
 
@@ -68,7 +70,11 @@ namespace ACE
   /// Returns 0 for "stable" (non-micro) releases.
   extern ACE_Export u_int beta_version ();
 
-  // = C++ compiler version information.
+  /// @}
+
+  /// @name C++ compiler version information.
+  /// @{
+
   /// E.g., the "SunPro C++" in SunPro C++ 4.32.0
   extern ACE_Export const ACE_TCHAR * compiler_name ();
 
@@ -80,6 +86,7 @@ namespace ACE
 
   /// E.g., the "0" in SunPro C++ 4.32.0
   extern ACE_Export u_int compiler_beta_version ();
+  /// @}
 
   /// Check if error indicates the process being out of handles (file
   /// descriptors).
@@ -143,7 +150,7 @@ namespace ACE
    * argument will result in @c send getting called on Win32
    * platforms, and @c write getting called on non-Win32 platforms.
    */
-  //@{
+  /// @{
   extern ACE_Export ssize_t recv (ACE_HANDLE handle,
                                   void *buf,
                                   size_t len,
@@ -322,7 +329,7 @@ namespace ACE
                                     const ACE_Time_Value *timeout = nullptr,
                                     size_t *bytes_transferred = nullptr);
 
-  // = File system I/O functions (these don't support timeouts).
+  /// File system I/O functions (these don't support timeouts).
 
   ACE_NAMESPACE_INLINE_FUNCTION
   ssize_t read_n (ACE_HANDLE handle,
@@ -352,7 +359,7 @@ namespace ACE
                                       const iovec *iov,
                                       int iovcnt,
                                       size_t *bytes_transferred = nullptr);
-  //@}
+  /// @}
 
   /**
    * Wait up to @a timeout amount of time to passively establish a
@@ -390,7 +397,9 @@ namespace ACE
    */
   extern ACE_Export int max_handles ();
 
-  // = String functions
+  /// @name String functions.
+  /// @{
+
   /**
    * Return a dynamically allocated duplicate of @a str, substituting
    * the environment variable if @c str[0] @c == @c '$'.  Note that
@@ -436,6 +445,7 @@ namespace ACE
   ACE_NAMESPACE_INLINE_FUNCTION bool isdotdir (const wchar_t *s);
 
 #endif /* ACE_HAS_WCHAR */
+  /// @}
 
   /**
    * On Windows, determines if a specified pathname ends with ".exe"
@@ -543,7 +553,9 @@ namespace ACE
     bool close_all_handles = ACE_DEFAULT_CLOSE_ALL_HANDLES,
     const ACE_TCHAR program_name[] = ACE_TEXT ("<unknown>"));
 
-  // = Miscellaneous functions.
+  /// @name Miscellaneous functions.
+  /// @{
+
   /// Rounds the request to a multiple of the page size.
   extern ACE_Export size_t round_to_pagesize (size_t len);
 
@@ -679,9 +691,14 @@ namespace ACE
   /// Convert a hex character to its byte representation.
   ACE_NAMESPACE_INLINE_FUNCTION u_char hex2byte (ACE_TCHAR c);
 
-  // = Set/get the debug level.
+  /// @}
+
+  /// @name Debug level accessors.
+  /// @{
+
   extern ACE_Export bool debug ();
   extern ACE_Export void debug (bool onoff);
+  /// @}
 
   /// Wrapper facade for @c select that uses @c ACE_Handle_Sets.
   extern ACE_Export int select (int width,
@@ -758,9 +775,8 @@ namespace ACE
   //   These functions aren't meant to be used internally, so they are
   //   not exported.
 
-  //
-  // = Recv_n helpers
-  //
+  /// @name Receive helpers.
+  /// @{
 
   ACE_NAMESPACE_INLINE_FUNCTION ssize_t recv_i (ACE_HANDLE handle,
                                                 void *buf,
@@ -818,9 +834,10 @@ namespace ACE
                                        const ACE_Time_Value *timeout,
                                        size_t *bytes_transferred);
 
-  //
-  // = Send_n helpers
-  //
+  /// @}
+
+  /// @name Send helpers.
+  /// @{
 
   ACE_NAMESPACE_INLINE_FUNCTION ssize_t send_i (ACE_HANDLE handle,
                                                 const void *buf,
@@ -877,6 +894,7 @@ namespace ACE
                                        int iovcnt,
                                        const ACE_Time_Value *timeout,
                                        size_t *bytes_transferred);
+  /// @}
 }
 
 // Close versioned namespace, if enabled by the user.
