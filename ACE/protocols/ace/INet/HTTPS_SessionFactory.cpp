@@ -46,7 +46,7 @@ namespace ACE
         SessionHolder_Impl* session_holder {};
         ACE_NEW_RETURN (session_holder,
                         SessionHolder_Impl (),
-                        0);
+                        nullptr);
         std::unique_ptr<SessionHolder_Impl> session_safe_ref (session_holder);
 
         (*session_holder)->set_host (ikey.host (), ikey.port ());
@@ -61,7 +61,7 @@ namespace ACE
             return session_safe_ref.release ();
           }
 
-        return 0;
+        return nullptr;
       }
 
   }

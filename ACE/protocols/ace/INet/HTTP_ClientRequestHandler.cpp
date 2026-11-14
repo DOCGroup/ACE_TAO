@@ -87,7 +87,7 @@ namespace ACE
         SessionHolder_Impl* session_holder {};
         ACE_NEW_RETURN (session_holder,
                         SessionHolder_Impl (),
-                        0);
+                        nullptr);
         std::unique_ptr<SessionHolder_Impl> session_safe_ref (session_holder);
 
         (*session_holder)->set_host (ikey.host (), ikey.port ());
@@ -102,7 +102,7 @@ namespace ACE
             return session_safe_ref.release ();
           }
 
-        return 0;
+        return nullptr;
       }
 
     ClientRequestHandler::HttpConnectionKey::HttpConnectionKey (
@@ -148,13 +148,13 @@ namespace ACE
                             HttpConnectionKey (this->host (), this->port (),
                                                this->proxy_target_host_,
                                                this->proxy_target_port_),
-                            0);
+                            nullptr);
           }
         else
           {
             ACE_NEW_RETURN (k,
                             HttpConnectionKey (this->host (), this->port ()),
-                            0);
+                            nullptr);
           }
         return k;
       }

@@ -169,7 +169,7 @@ namespace ACE
               }
           }
 
-        return 0;
+        return nullptr;
       }
 
 #if defined (ACE_HAS_WCHAR)
@@ -408,9 +408,9 @@ namespace ACE
         authenticator_ptr auth;
         if (URL_INetAuthBase::authenticators_.unbind (auth_id, auth) == 0)
           {
-            auth.release ();
+            return auth.release ();
           }
-        return 0;
+        return nullptr;
       }
 
     bool URL_INetAuthBase::authenticate (AuthenticationBase& authentication)
