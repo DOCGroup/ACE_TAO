@@ -259,38 +259,40 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
 }
 
 TT_Parse_Args::TT_Parse_Args (int& argc, ACE_TCHAR** argv)
-  : federated_ (0),
-    quiet_ (0),
-    ior_ (0)
+  : federated_ (false),
+    quiet_ (false),
+    ior_ (nullptr)
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
   while (arg_shifter.is_anything_left ())
     {
-      const ACE_TCHAR *current_arg = arg_shifter.get_current ();
+      ACE_TCHAR const * const current_arg = arg_shifter.get_current ();
 
       if (ACE_OS::strcmp (current_arg, ACE_TEXT("-f")) == 0 ||
           ACE_OS::strcmp (current_arg, ACE_TEXT("-federate")) == 0)
         {
           arg_shifter.consume_arg ();
-          this->federated_ = 1;
+          this->federated_ = true;
         }
       else if (ACE_OS::strcmp (current_arg, ACE_TEXT("-q")) == 0 ||
                ACE_OS::strcmp (current_arg, ACE_TEXT("-quiet")) == 0)
         {
           arg_shifter.consume_arg ();
-          this->quiet_ = 1;
+          this->quiet_ = true;
         }
       else if (ACE_OS::strcmp (current_arg, ACE_TEXT("-i")) == 0 ||
                ACE_OS::strcmp (current_arg, ACE_TEXT("-iorfile")) == 0)
         {
           arg_shifter.consume_arg ();
           FILE* ior_file {};
+          bool close_ior_file {};
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* file_name = arg_shifter.get_current ();
-              ior_file = ACE_OS::fopen (file_name, "r");
+              ACE_TCHAR const * const file_name = arg_shifter.get_current ();
+              ior_file = ACE_OS::fopen (file_name, ACE_TEXT ("r"));
+              close_ior_file = ior_file != nullptr;
 
               if (ior_file == nullptr)
                 ACE_ERROR ((LM_ERROR,
@@ -304,7 +306,7 @@ TT_Parse_Args::TT_Parse_Args (int& argc, ACE_TCHAR** argv)
 
           if (ior_file != nullptr)
             {
-              ACE_Read_Buffer read_buffer (ior_file, 1);
+              ACE_Read_Buffer read_buffer (ior_file, close_ior_file);
               this->ior_ = read_buffer.read ();
             }
           else
@@ -326,13 +328,13 @@ TT_Parse_Args::~TT_Parse_Args ()
   alloc->free (this->ior_);
 }
 
-int
+bool
 TT_Parse_Args::federated () const
 {
   return this->federated_;
 }
 
-int
+bool
 TT_Parse_Args::quiet () const
 {
   return this->quiet_;

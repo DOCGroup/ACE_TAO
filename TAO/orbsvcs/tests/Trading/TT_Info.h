@@ -191,16 +191,16 @@ class TAO_TTest_Export TT_Parse_Args
   ~TT_Parse_Args ();
 
   /// Whether the test should exercise federated trading features.
-  int federated () const;
+  bool federated () const;
 
   /// Whether to limit output to essential test information.
-  int quiet () const;
+  bool quiet () const;
 
   /// Explicit IOR supplied by the user, or null if none was supplied.
   char* ior () const;
 
   private:
-  int federated_, quiet_;
+  bool federated_, quiet_;
   char* ior_;
 };
 
