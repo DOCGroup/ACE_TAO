@@ -144,8 +144,9 @@ namespace ACE
         ClientRequestHandler* rh = this->create_default_request_handler ();
         if (rh)
           {
-            rh->handle_open_request (*this);
-            return URLStream (rh);
+            URLStream stream (rh);
+            stream.request_handler_->handle_open_request (*this);
+            return stream;
           }
         else
           return URLStream (nullptr);

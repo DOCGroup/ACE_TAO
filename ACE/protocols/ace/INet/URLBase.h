@@ -19,6 +19,7 @@
 #include "ace/INet/AuthenticationBase.h"
 #include "ace/INet/ClientRequestHandler.h"
 #include <iosfwd>
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -55,10 +56,8 @@ namespace ACE
               explicit URLStream (ClientRequestHandler& rh);
               explicit URLStream (ClientRequestHandler* rh);
 
-              using TRequestHandlerRef = ACE_Refcounted_Auto_Ptr<ClientRequestHandler, ACE_Null_Mutex>;
-
-              TRequestHandlerRef request_handler_ref_;
-              ClientRequestHandler* request_handler_;
+              std::shared_ptr<ClientRequestHandler> request_handler_ref_; // Owns handlers created by open().
+              ClientRequestHandler* request_handler_; // May observe a caller-owned handler.
           };
 
         /**
