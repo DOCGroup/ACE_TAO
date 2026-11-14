@@ -8,6 +8,7 @@
 #endif /* __ACE_INLINE__ */
 
 #include <cstring>
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -69,7 +70,7 @@ ACE_Handle_Set::dump () const
 // because there are 2 bits enabled in the value 5, i.e., it's
 // 101 in binary.
 
-const char ACE_Handle_Set::nbits_[256] =
+char const ACE_Handle_Set::nbits_[256] =
 {
   0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 4,
   1, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 4, 3, 4, 4, 5,
@@ -88,19 +89,17 @@ const char ACE_Handle_Set::nbits_[256] =
   3, 4, 4, 5, 4, 5, 5, 6, 4, 5, 5, 6, 5, 6, 6, 7,
   4, 5, 5, 6, 5, 6, 6, 7, 5, 6, 6, 7, 6, 7, 7, 8};
 
-// Constructor, initializes the bitmask to all 0s.
-
 ACE_Handle_Set::ACE_Handle_Set ()
 {
   ACE_TRACE ("ACE_Handle_Set::ACE_Handle_Set");
   this->reset ();
 }
 
-ACE_Handle_Set::ACE_Handle_Set (const fd_set &fd_mask)
+ACE_Handle_Set::ACE_Handle_Set (fd_set const &fd_mask)
 {
   ACE_TRACE ("ACE_Handle_Set::ACE_Handle_Set");
   this->reset ();
-  std::memcpy (&this->mask_, &fd_mask, sizeof this->mask_);
+  std::memcpy (std::addressof (this->mask_), std::addressof (fd_mask), sizeof this->mask_);
 #if !defined (ACE_HANDLE_SET_USES_FD_ARRAY)
   this->sync (ACE_Handle_Set::MAXSIZE);
 #if defined (ACE_HAS_BIG_FD_SET)
@@ -190,7 +189,7 @@ ACE_Handle_Set::sync (ACE_HANDLE max)
 {
   ACE_TRACE ("ACE_Handle_Set::sync");
 #if !defined (ACE_HANDLE_SET_USES_FD_ARRAY)
-  fd_mask *maskp = (fd_mask *)(this->mask_.fds_bits);
+  fd_mask * const maskp = reinterpret_cast<fd_mask *> (this->mask_.fds_bits);
   this->size_ = 0;
 
   for (int i = ACE_DIV_BY_WORDSIZE (max - 1);
@@ -211,17 +210,14 @@ ACE_Handle_Set::set_max (ACE_HANDLE current_max)
 {
   ACE_TRACE ("ACE_Handle_Set::set_max");
 #if !defined(ACE_HANDLE_SET_USES_FD_ARRAY)
-  fd_mask * maskp = (fd_mask *)(this->mask_.fds_bits);
+  fd_mask * const maskp = reinterpret_cast<fd_mask *> (this->mask_.fds_bits);
 
   if (this->size_ == 0)
     this->max_handle_ = ACE_INVALID_HANDLE;
   else
     {
-      int i;
-
-      for (i = ACE_DIV_BY_WORDSIZE (current_max - 1);
-           maskp[i] == 0;
-           --i)
+      int i = ACE_DIV_BY_WORDSIZE (current_max - 1);
+      for (; maskp[i] == 0; --i)
         continue;
       this->max_handle_ = ACE_MULT_BY_WORDSIZE (i);
       for (fd_mask val = maskp[i];
@@ -271,7 +267,7 @@ ACE_Handle_Set_Iterator::operator () ()
 
 #elif !defined (ACE_HAS_BIG_FD_SET) /* !ACE_HANDLE_SET_USES_FD_ARRAY */
   // No sense searching further than the max_handle_ + 1;
-  ACE_HANDLE maxhandlep1 = this->handles_.max_handle_ + 1;
+  ACE_HANDLE const maxhandlep1 = this->handles_.max_handle_ + 1;
 
   // HP-UX 11 plays some games with the fd_mask type - fd_mask is
   // defined as an int_32t, but the fds_bits is an array of longs.
@@ -283,7 +279,7 @@ ACE_Handle_Set_Iterator::operator () ()
   // the FD_* macros to get the bits right.  On all other systems,
   // this amounts to practically a NOP, since this is what would have
   // been done anyway, without all this type jazz.
-  fd_mask * maskp = (fd_mask *)(this->handles_.mask_.fds_bits);
+  fd_mask * const maskp = reinterpret_cast<fd_mask *> (this->handles_.mask_.fds_bits);
 
   if (this->handle_index_ >= maxhandlep1)
     // We've seen all the handles we're interested in seeing for this
@@ -291,7 +287,7 @@ ACE_Handle_Set_Iterator::operator () ()
     return ACE_INVALID_HANDLE;
   else
     {
-      ACE_HANDLE result = this->handle_index_;
+      ACE_HANDLE const result = this->handle_index_;
 
       // Increment the iterator and advance to the next bit in this
       // word.
@@ -399,7 +395,7 @@ ACE_Handle_Set_Iterator::operator () ()
 #endif /* ACE_HANDLE_SET_USES_FD_ARRAY */
 }
 
-ACE_Handle_Set_Iterator::ACE_Handle_Set_Iterator (const ACE_Handle_Set &hs)
+ACE_Handle_Set_Iterator::ACE_Handle_Set_Iterator (ACE_Handle_Set const &hs)
   : handles_ (hs),
 #if !defined (ACE_HAS_BIG_FD_SET) || defined (ACE_HANDLE_SET_USES_FD_ARRAY)
     handle_index_ (0),
@@ -415,9 +411,9 @@ ACE_Handle_Set_Iterator::ACE_Handle_Set_Iterator (const ACE_Handle_Set &hs)
   ACE_TRACE ("ACE_Handle_Set_Iterator::ACE_Handle_Set_Iterator");
 #if !defined (ACE_HANDLE_SET_USES_FD_ARRAY) && !defined (ACE_HAS_BIG_FD_SET)
   // No sense searching further than the max_handle_ + 1;
-  ACE_HANDLE maxhandlep1 = this->handles_.max_handle_ + 1;
+  ACE_HANDLE const maxhandlep1 = this->handles_.max_handle_ + 1;
 
-  fd_mask *maskp = (fd_mask *)(this->handles_.mask_.fds_bits);
+  fd_mask * const maskp = reinterpret_cast<fd_mask *> (this->handles_.mask_.fds_bits);
 
   // Loop until we've found the first non-zero bit or we run past the
   // <maxhandlep1> of the bitset.
@@ -471,9 +467,9 @@ ACE_Handle_Set_Iterator::reset_state ()
 
 #if !defined (ACE_HANDLE_SET_USES_FD_ARRAY) && !defined (ACE_HAS_BIG_FD_SET)
   // No sense searching further than the max_handle_ + 1;
-  ACE_HANDLE maxhandlep1 = this->handles_.max_handle_ + 1;
+  ACE_HANDLE const maxhandlep1 = this->handles_.max_handle_ + 1;
 
-  fd_mask *maskp = (fd_mask *)(this->handles_.mask_.fds_bits);
+  fd_mask * const maskp = reinterpret_cast<fd_mask *> (this->handles_.mask_.fds_bits);
 
   // Loop until we've found the first non-zero bit or we run past the
   // <maxhandlep1> of the bitset.
