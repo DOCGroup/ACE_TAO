@@ -170,7 +170,7 @@ TAO_Thread_Lane::TAO_Thread_Lane (TAO_Thread_Pool &pool,
     dynamic_threads_ (*this),
     new_thread_generator_ (*this),
     resources_ (pool.manager ().orb_core (),
-                &new_thread_generator_),
+                std::addressof (new_thread_generator_)),
     lifespan_ (lifespan),
     dynamic_thread_time_ (dynamic_thread_time)
 {
