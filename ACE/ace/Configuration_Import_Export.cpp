@@ -216,15 +216,16 @@ ACE_Registry_ImpExp::export_config (const ACE_TCHAR* filename)
     }
   int result = -1;
 
-  FILE* out = ACE_OS::fopen (filename, ACE_TEXT ("w"));
+  std::unique_ptr<FILE, int (*) (FILE *)> out {
+    ACE_OS::fopen (filename, ACE_TEXT ("w")), ACE_OS::fclose};
   if (out)
     {
       result = this->export_section (config_.root_section (),
                                      ACE_TEXT (""),
-                                     out);
+                                     out.get ());
       // The data may have been buffered and will be flush on close,
       // so we need to check that the close succeeds.
-      if (ACE_OS::fclose (out) < 0)
+      if (ACE_OS::fclose (out.release ()) < 0)
         result = -7;
     }
   return result;
@@ -405,14 +406,15 @@ ACE_Ini_ImpExp::import_config (const ACE_TCHAR* filename)
       errno = EINVAL;
       return -1;
     }
-  FILE* in = ACE_OS::fopen (filename, ACE_TEXT ("r"));
+  std::unique_ptr<FILE, int (*) (FILE *)> in {
+    ACE_OS::fopen (filename, ACE_TEXT ("r")), ACE_OS::fclose};
   if (!in)
     return -1;
 
   // @@ Make this a dynamic size!
   ACE_TCHAR buffer[4096];
   ACE_Configuration_Section_Key section;
-  while (ACE_OS::fgets (buffer, sizeof buffer, in))
+  while (ACE_OS::fgets (buffer, sizeof buffer, in.get ()))
     {
       ACE_TCHAR *line = this->squish (buffer);
       // Check for a comment and blank line
@@ -427,7 +429,6 @@ ACE_Ini_ImpExp::import_config (const ACE_TCHAR* filename)
           ACE_TCHAR* end = ACE_OS::strrchr (line, ACE_TEXT (']'));
           if (!end)
             {
-              ACE_OS::fclose (in);
               return -3;
             }
           *end = 0;
@@ -437,7 +438,6 @@ ACE_Ini_ImpExp::import_config (const ACE_TCHAR* filename)
                                    section,
                                    true))
             {
-              ACE_OS::fclose (in);
               return -3;
             }
 
@@ -448,7 +448,6 @@ ACE_Ini_ImpExp::import_config (const ACE_TCHAR* filename)
       ACE_TCHAR *end = ACE_OS::strchr (line, ACE_TEXT ('='));
       if (end == nullptr)                            // No '='
         {
-          ACE_OS::fclose (in);
           return -3;
         }
       *end++ = '\0';
@@ -456,7 +455,6 @@ ACE_Ini_ImpExp::import_config (const ACE_TCHAR* filename)
 #if 0
       if (ACE_OS::strlen (name) == 0)          // No name; just an '='
         {
-          ACE_OS::fclose (in);
           return -3;
         }
 #endif
@@ -478,19 +476,12 @@ ACE_Ini_ImpExp::import_config (const ACE_TCHAR* filename)
         }
 
       if (config_.set_string_value (section, name, value))
-        {
-          ACE_OS::fclose (in);
-          return -4;
-        }
+        return -4;
     }             // end while fgets
 
-  if (ferror (in))
-    {
-      ACE_OS::fclose (in);
-      return -1;
-    }
+  if (ferror (in.get ()))
+    return -1;
 
-  ACE_OS::fclose (in);
   return 0;
 }
 
@@ -507,15 +498,16 @@ ACE_Ini_ImpExp::export_config (const ACE_TCHAR* filename)
     }
   int result = -1;
 
-  FILE* out = ACE_OS::fopen (filename, ACE_TEXT ("w"));
+  std::unique_ptr<FILE, int (*) (FILE *)> out {
+    ACE_OS::fopen (filename, ACE_TEXT ("w")), ACE_OS::fclose};
   if (out)
     {
       result = this->export_section (config_.root_section (),
                                      ACE_TEXT (""),
-                                     out);
+                                     out.get ());
       // The data may have been buffered and will be flush on close,
       // so we need to check that the close succeeds.
-      if (ACE_OS::fclose (out) < 0)
+      if (ACE_OS::fclose (out.release ()) < 0)
         result = -7;
     }
   return result;
