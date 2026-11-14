@@ -44,10 +44,8 @@ namespace ACE
       Monitor_Point_Auto_Query &operator= (Monitor_Point_Auto_Query const &) = delete;
       Monitor_Point_Auto_Query &operator= (Monitor_Point_Auto_Query &&) = delete;
 
-      /// Default constructor
       Monitor_Point_Auto_Query ();
 
-      /// Override of ACE base class method.
       int handle_timeout (ACE_Time_Value const& current,
                           void const* monitor_query) override;
     };

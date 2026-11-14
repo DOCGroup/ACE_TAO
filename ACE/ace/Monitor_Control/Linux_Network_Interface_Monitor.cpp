@@ -14,14 +14,6 @@ namespace ACE
 {
   namespace Monitor_Control
   {
-    struct Monitor_Control_File_Closer
-    {
-      void operator() (FILE *file) const
-      {
-        (void) std::fclose (file);
-      }
-    };
-
     Linux_Network_Interface_Monitor::Linux_Network_Interface_Monitor (
       char const *scan_format)
       : scan_format_ (scan_format)
@@ -33,8 +25,9 @@ namespace ACE
     Linux_Network_Interface_Monitor::update_i ()
     {
       char buf[1024] {};
-      std::unique_ptr<FILE, Monitor_Control_File_Closer> fp (
-        ACE_OS::fopen (ACE_TEXT ("/proc/net/dev"), ACE_TEXT ("r")));
+      std::unique_ptr<FILE, int (*) (FILE *)> fp (
+        ACE_OS::fopen (ACE_TEXT ("/proc/net/dev"), ACE_TEXT ("r")),
+        ACE_OS::fclose);
 
       if (fp == nullptr)
         {
@@ -89,8 +82,9 @@ namespace ACE
       /// from subsequent readings to get bytes sent since we started
       /// monitoring.
       char buf[1024] {};
-      std::unique_ptr<FILE, Monitor_Control_File_Closer> fp (
-        ACE_OS::fopen (ACE_TEXT ("/proc/net/dev"), ACE_TEXT ("r")));
+      std::unique_ptr<FILE, int (*) (FILE *)> fp (
+        ACE_OS::fopen (ACE_TEXT ("/proc/net/dev"), ACE_TEXT ("r")),
+        ACE_OS::fclose);
 
       if (fp == nullptr)
         {
