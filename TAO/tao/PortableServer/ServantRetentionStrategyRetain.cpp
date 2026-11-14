@@ -111,7 +111,7 @@ namespace TAO
           // parameter of TRUE, incoming requests are rejected.
 
           // Else mark entry as closed...
-          active_object_map_entry->deactivated_ = 1;
+          active_object_map_entry->deactivated_ = true;
         }
     }
 
@@ -407,7 +407,7 @@ namespace TAO
               // state may change by the time we get the lock again.
               // Therefore, indicate to the caller that all conditions
               // need to be checked again.
-              wait_occurred_restart_call = 1;
+              wait_occurred_restart_call = true;
 
               ++this->waiting_servant_deactivation_;
 

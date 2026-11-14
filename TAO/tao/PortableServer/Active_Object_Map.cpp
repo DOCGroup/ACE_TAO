@@ -780,11 +780,11 @@ TAO_Multiple_Id_Strategy::remaining_activations (
 
       if (entry->servant_ == servant)
         {
-          return 1;
+          return true;
         }
     }
 
-  return 0;
+  return false;
 }
 #endif
 
