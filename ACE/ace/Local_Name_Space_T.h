@@ -114,6 +114,11 @@ public:
   ACE_Local_Name_Space (ACE_Naming_Context::Context_Scope_Type scope_in,
                         ACE_Name_Options *name_options);
 
+  ACE_Local_Name_Space (ACE_Local_Name_Space const &) = delete;
+  ACE_Local_Name_Space &operator= (ACE_Local_Name_Space const &) = delete;
+  ACE_Local_Name_Space (ACE_Local_Name_Space &&) = delete;
+  ACE_Local_Name_Space &operator= (ACE_Local_Name_Space &&) = delete;
+
   /**
    * Specifies the scope of this namespace, opens and memory-maps the
    * associated file (if accessible) or contacts the dedicated name
