@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   Compressor_Factory.h
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-// ===================================================================
 
 #ifndef TAO_COMPRESSOR_FACTORY_H
 #define TAO_COMPRESSOR_FACTORY_H
@@ -31,20 +29,20 @@ namespace TAO
     public virtual ::CORBA::LocalObject
   {
   public:
-    CompressorFactory (::Compression::CompressorId compressor_id);
+    explicit CompressorFactory (::Compression::CompressorId compressor_id);
 
     ::Compression::CompressorId compressor_id () override;
 
     ::Compression::Compressor_ptr get_compressor
       (::Compression::CompressionLevel compression_level) override = 0;
 
-  private:
-    ::Compression::CompressorId const compressor_id_;
-
     CompressorFactory (CompressorFactory const &) = delete;
     CompressorFactory &operator= (CompressorFactory const &) = delete;
     CompressorFactory (CompressorFactory &&) = delete;
     CompressorFactory &operator= (CompressorFactory &&) = delete;
+
+  private:
+    ::Compression::CompressorId const compressor_id_;
   };
 }
 
