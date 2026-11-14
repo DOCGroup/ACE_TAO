@@ -72,6 +72,7 @@ namespace ACE
 
               void close ();
 
+              stream_type& stream ();
               const stream_type& stream () const;
 
             protected:

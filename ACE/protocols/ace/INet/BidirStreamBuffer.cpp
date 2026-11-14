@@ -109,6 +109,13 @@ namespace ACE
       }
 
     template <class ACE_CHAR_T, class STREAM_HANDLER, class TR>
+    STREAM_HANDLER&
+    BasicBidirStreamBuffer<ACE_CHAR_T, STREAM_HANDLER, TR>::stream ()
+      {
+        return *this->stream_;
+      }
+
+    template <class ACE_CHAR_T, class STREAM_HANDLER, class TR>
     const STREAM_HANDLER&
     BasicBidirStreamBuffer<ACE_CHAR_T, STREAM_HANDLER, TR>::stream () const
       {

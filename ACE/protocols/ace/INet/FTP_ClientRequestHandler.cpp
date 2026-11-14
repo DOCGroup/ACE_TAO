@@ -356,12 +356,12 @@ namespace ACE
             if (std::unique_ptr<stream_type> old_stream (
                   dynamic_cast<stream_type*> (this->in_data_stream_.set_stream (nullptr)));
                 old_stream != nullptr)
-              const_cast<connection_type&> (old_stream->stream ()).remove_reference ();
+              old_stream->stream ().remove_reference ();
 
             if (std::unique_ptr<stream_type> old_stream (
                   dynamic_cast<stream_type*> (this->out_data_stream_.set_stream (nullptr)));
                 old_stream != nullptr)
-              const_cast<connection_type&> (old_stream->stream ()).remove_reference ();
+              old_stream->stream ().remove_reference ();
 
             this->transfer_active_ = false;
 
@@ -383,12 +383,12 @@ namespace ACE
             if (std::unique_ptr<stream_type> old_stream (
                   dynamic_cast<stream_type*> (this->in_data_stream_.set_stream (nullptr)));
                 old_stream != nullptr)
-              const_cast<connection_type&> (old_stream->stream ()).remove_reference ();
+              old_stream->stream ().remove_reference ();
 
             if (std::unique_ptr<stream_type> old_stream (
                   dynamic_cast<stream_type*> (this->out_data_stream_.set_stream (nullptr)));
                 old_stream != nullptr)
-              const_cast<connection_type&> (old_stream->stream ()).remove_reference ();
+              old_stream->stream ().remove_reference ();
 
             this->transfer_active_ = false;
 

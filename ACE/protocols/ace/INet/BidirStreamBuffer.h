@@ -69,6 +69,7 @@ namespace ACE
               int_type underflow () override;
               int sync () override;
 
+              STREAM_HANDLER& stream ();
               const STREAM_HANDLER& stream () const;
 
               void close_stream ();
