@@ -176,9 +176,11 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  // = The following three methods define the Acceptor's strategies
-  // for creating, accepting, and activating SVC_HANDLER's,
-  // respectively.
+  /** @name Acceptor strategy bridge methods
+   * These methods define how the Acceptor creates, accepts, and activates
+   * SVC_HANDLER instances.
+   */
+  /// @{
 
   /**
    * Bridge method for creating a SVC_HANDLER.  The default is to
@@ -208,8 +210,10 @@ protected:
    * multi-processing).
    */
   virtual int activate_svc_handler (SVC_HANDLER *svc_handler);
+  /// @}
 
-  // = Demultiplexing hooks.
+  /// @name Demultiplexing hooks
+  /// @{
   /// Perform termination activities when {this} is removed from the
   /// {reactor}.
   int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
@@ -218,8 +222,10 @@ protected:
   /// Accepts all pending connections from clients, and creates and
   /// activates SVC_HANDLERs.
   int handle_input (ACE_HANDLE) override;
+  /// @}
 
-  // = Dynamic linking hooks.
+  /// @name Dynamic linking hooks
+  /// @{
   /// Default version does no work and returns -1.  Must be overloaded
   /// by application developer to do anything meaningful.
   int init (int argc, ACE_TCHAR *argv[]) override;
@@ -229,14 +235,17 @@ protected:
 
   /// Default version returns address info in {buf}.
   int info (ACE_TCHAR **buf, size_t) const override;
+  /// @}
 
 public:
-  // = Service management hooks.
+  /// @name Service management hooks
+  /// @{
   /// This method calls {Reactor::suspend}.
   int suspend () override;
 
   /// This method calls {Reactor::resume}.
   int resume () override;
+  /// @}
 
 protected:
   /// Concrete factory for accepting connections from clients...
@@ -280,18 +289,19 @@ class ACE_Strategy_Acceptor
   : public ACE_Acceptor <SVC_HANDLER, PEER_ACCEPTOR>
 {
 public:
-  // Useful STL-style traits.
+  /// @name Strategy types
+  /// @{
   using creation_strategy_type = ACE_Creation_Strategy<SVC_HANDLER>;
   using accept_strategy_type = ACE_Accept_Strategy<SVC_HANDLER, PEER_ACCEPTOR>;
   using concurrency_strategy_type = ACE_Concurrency_Strategy<SVC_HANDLER>;
   using scheduling_strategy_type = ACE_Scheduling_Strategy<SVC_HANDLER>;
   using base_type = ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>;
 
-  // = Define some useful (old style) traits.
   using CREATION_STRATEGY = ACE_Creation_Strategy<SVC_HANDLER>;
   using ACCEPT_STRATEGY = ACE_Accept_Strategy<SVC_HANDLER, PEER_ACCEPTOR>;
   using CONCURRENCY_STRATEGY = ACE_Concurrency_Strategy<SVC_HANDLER>;
   using SCHEDULING_STRATEGY = ACE_Scheduling_Strategy<SVC_HANDLER>;
+  /// @}
 
   /// Default constructor.
   ACE_Strategy_Acceptor (const ACE_TCHAR service_name[] = nullptr,
@@ -391,7 +401,8 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
-  // = Service management hooks.
+  /// @name Service management hooks
+  /// @{
 
   /// This method delegates to the {Scheduling_Strategy}'s {suspend}
   /// method.
@@ -400,6 +411,7 @@ public:
   /// This method delegates to the {Scheduling_Strategy}'s {resume}
   /// method.
   int resume () override;
+  /// @}
 
 protected:
   /// Calls {handle_close} when dynamically unlinked.
@@ -408,9 +420,11 @@ protected:
   /// Default version returns address info in {buf}.
   int info (ACE_TCHAR **buf, size_t) const override;
 
-  // = The following three methods define the {Acceptor}'s strategies
-  // for creating, accepting, and activating {SVC_HANDLER}'s,
-  // respectively.
+  /** @name Strategy bridge methods
+   * These methods define how the Acceptor creates, accepts, and activates
+   * SVC_HANDLER instances.
+   */
+  /// @{
 
   /**
    * Bridge method for creating a {SVC_HANDLER}.  The strategy for
@@ -442,8 +456,10 @@ protected:
    * multi-processing).
    */
   int activate_svc_handler (SVC_HANDLER *svc_handler) override;
+  /// @}
 
-  // = Demultiplexing hooks.
+  /// @name Demultiplexing hooks
+  /// @{
   /// Perform termination activities when {this} is removed from the
   /// {Reactor}.
   int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
@@ -451,11 +467,12 @@ protected:
 
   /// Handle SIGINT.
   int handle_signal (int signum, siginfo_t *, ucontext_t *) override;
+  /// @}
 
-  // = These data members are "logically private" but are put in the
-  // protected part in case subclasses want to access them.
-
-  // = Strategy objects.
+  /** @name Strategy objects
+   * These members are logically private but protected for subclass access.
+   */
+  /// @{
 
   /// Creation strategy for an Acceptor.
   CREATION_STRATEGY *creation_strategy_;
@@ -484,8 +501,10 @@ protected:
   /// true if {Acceptor} created the scheduling strategy and thus should
   /// delete it, else false.
   bool delete_scheduling_strategy_;
+  /// @}
 
-  // = Service information objects.
+  /// @name Service information
+  /// @{
 
   /// Name of the service.
   ACE_TCHAR *service_name_;
@@ -496,6 +515,7 @@ protected:
   /// Address that the {Strategy_Acceptor} uses to listen for
   /// connections.
   typename PEER_ACCEPTOR::PEER_ADDR service_addr_;
+  /// @}
 };
 
 /**
@@ -566,7 +586,8 @@ public:
   /// Close down the {Oneshot_Acceptor}.
   ~ACE_Oneshot_Acceptor () override;
 
-  // = Explicit factory operation.
+  /// @name Explicit factory operation
+  /// @{
   /// Create a {SVC_HANDLER}, accept the connection into the
   /// {SVC_HANDLER}, and activate the {SVC_HANDLER}.
   virtual int accept (SVC_HANDLER * = nullptr,
@@ -574,6 +595,7 @@ public:
                       const ACE_Synch_Options &synch_options = ACE_Synch_Options::defaults,
                       bool restart = true,
                       bool reset_new_handle = false);
+  /// @}
 
   /// Cancel a oneshot acceptor that was started asynchronously.
   virtual int cancel ();
@@ -612,7 +634,8 @@ protected:
                      bool restart,
                      bool reset_new_handle);
 
-  // = Demultiplexing hooks.
+  /// @name Demultiplexing hooks
+  /// @{
   /// Returns the listening acceptor's {ACE_HANDLE}.
   ACE_HANDLE get_handle () const override;
 
@@ -628,8 +651,10 @@ protected:
   /// Called when an acceptor times out...
   int handle_timeout (const ACE_Time_Value &tv,
                               const void *arg) override;
+  /// @}
 
-  // = Dynamic linking hooks.
+  /// @name Dynamic linking hooks
+  /// @{
   /// Default version does no work and returns -1.  Must be overloaded
   /// by application developer to do anything meaningful.
   int init (int argc, ACE_TCHAR *argv[]) override;
@@ -640,8 +665,10 @@ protected:
 
   /// Default version returns address info in {buf}.
   int info (ACE_TCHAR **, size_t) const override;
+  /// @}
 
-  // = Service management hooks.
+  /// @name Service management hooks
+  /// @{
   /// Default version does no work and returns -1.  Must be overloaded
   /// by application developer to do anything meaningful.
   int suspend () override;
@@ -649,6 +676,7 @@ protected:
   /// Default version does no work and returns -1.  Must be overloaded
   /// by application developer to do anything meaningful.
   int resume () override;
+  /// @}
 
 private:
   /**
