@@ -29,6 +29,8 @@
 #include "tao/Wait_Strategy.h"
 #include "ace/os_include/os_netdb.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_SCIOP_Connection_Handler::TAO_SCIOP_Connection_Handler (ACE_Thread_Manager *t)
@@ -126,7 +128,7 @@ TAO_SCIOP_Connection_Handler::open (void*)
 #if !defined (ACE_LACKS_TCP_NODELAY)
   if (this->peer ().set_option (IPPROTO_SCTP,
                                 SCTP_NODELAY,
-                                (void *) &protocol_properties.no_delay_,
+                                std::addressof (protocol_properties.no_delay_),
                                 sizeof (protocol_properties.no_delay_)) == -1)
     return -1;
 #endif /* ! ACE_LACKS_TCP_NODELAY */
@@ -152,7 +154,7 @@ TAO_SCIOP_Connection_Handler::open (void*)
           result = this->peer ().set_option (
             IPPROTO_IPV6,
             IPV6_UNICAST_HOPS,
-            (void *) &hop_limit,
+            std::addressof (hop_limit),
             sizeof (hop_limit));
         }
       else
@@ -168,7 +170,7 @@ TAO_SCIOP_Connection_Handler::open (void*)
           result = this->peer ().set_option (
             IPPROTO_IP,
             IP_TTL,
-            (void *) &hop_limit,
+            std::addressof (hop_limit),
             sizeof (hop_limit));
         }
 

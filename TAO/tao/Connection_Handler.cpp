@@ -11,6 +11,8 @@
 #include "ace/os_include/sys/os_socket.h"
 #include "ace/Svc_Handler.h"
 
+#include <memory>
+
 #if !defined (__ACE_INLINE__)
 #include "tao/Connection_Handler.inl"
 #endif /* __ACE_INLINE__ */
@@ -53,7 +55,7 @@ TAO_Connection_Handler::set_socket_option (ACE_SOCK &sock,
   if (snd_size != 0
       && sock.set_option (SOL_SOCKET,
                           SO_SNDBUF,
-                          (void *) &snd_size,
+                          std::addressof (snd_size),
                           sizeof (snd_size)) == -1)
   {
     if (TAO_debug_level)
@@ -71,7 +73,7 @@ TAO_Connection_Handler::set_socket_option (ACE_SOCK &sock,
   if (rcv_size != 0
       && sock.set_option (SOL_SOCKET,
                           SO_RCVBUF,
-                          (void *) &rcv_size,
+                          std::addressof (rcv_size),
                           sizeof (int)) == -1)
   {
       if (TAO_debug_level)

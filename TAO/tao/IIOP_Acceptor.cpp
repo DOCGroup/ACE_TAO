@@ -19,6 +19,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <algorithm>
+#include <memory>
 #include <new>
 #include <vector>
 
@@ -516,7 +517,7 @@ TAO_IIOP_Acceptor::open_i (ACE_INET_Addr const &addr,
     int on = 1;
     if (this->base_acceptor_.acceptor ().set_option (IPPROTO_IPV6,
                                                      IPV6_V6ONLY,
-                                                     (void *) &on,
+                                                     std::addressof (on),
                                                      sizeof (on)) == -1)
       {
         TAOLIB_ERROR ((LM_ERROR,

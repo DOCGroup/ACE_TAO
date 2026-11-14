@@ -186,7 +186,7 @@ TAO_IIOP_Connection_Handler::open (void*)
 #if !defined (ACE_LACKS_TCP_NODELAY)
   if (this->peer ().set_option (ACE_IPPROTO_TCP,
                                 TCP_NODELAY,
-                                (void *) &protocol_properties.no_delay_,
+                                std::addressof (protocol_properties.no_delay_),
                                 sizeof (protocol_properties.no_delay_)) == -1)
     return -1;
 #endif /* ! ACE_LACKS_TCP_NODELAY */
@@ -196,7 +196,7 @@ TAO_IIOP_Connection_Handler::open (void*)
       if (this->peer ().
           set_option (SOL_SOCKET,
                       SO_KEEPALIVE,
-                      (void *) &protocol_properties.keep_alive_,
+                      std::addressof (protocol_properties.keep_alive_),
                       sizeof (protocol_properties.keep_alive_)) == -1
           && errno != ENOTSUP)
         {
@@ -210,7 +210,7 @@ TAO_IIOP_Connection_Handler::open (void*)
       if (this->peer ().
           set_option (SOL_SOCKET,
                       SO_DONTROUTE,
-                      (void *) &protocol_properties.dont_route_,
+                      std::addressof (protocol_properties.dont_route_),
                       sizeof (protocol_properties.dont_route_)) == -1
           && errno != ENOTSUP)
         {
@@ -240,7 +240,7 @@ TAO_IIOP_Connection_Handler::open (void*)
           result = this->peer ().set_option (
             IPPROTO_IPV6,
             IPV6_UNICAST_HOPS,
-            (void *) &hop_limit,
+            std::addressof (hop_limit),
             sizeof (hop_limit));
         }
       else
@@ -256,7 +256,7 @@ TAO_IIOP_Connection_Handler::open (void*)
           result = this->peer ().set_option (
             IPPROTO_IP,
             IP_TTL,
-            (void *) &hop_limit,
+            std::addressof (hop_limit),
             sizeof (hop_limit));
         }
 
@@ -387,7 +387,7 @@ TAO_IIOP_Connection_Handler::close_connection ()
 #endif
       if (this->peer ().set_option(SOL_SOCKET,
                                    SO_LINGER,
-                                   (void*) &lval,
+                                   std::addressof (lval),
                                    sizeof (lval)) == -1)
         {
           if (TAO_debug_level)
@@ -663,7 +663,7 @@ TAO_IIOP_Connection_Handler::abort ()
 
   if (this->peer ().set_option(SOL_SOCKET,
                                SO_LINGER,
-                               (void*) &lval,
+                               std::addressof (lval),
                                sizeof (lval)) == -1)
     {
       if (TAO_debug_level)

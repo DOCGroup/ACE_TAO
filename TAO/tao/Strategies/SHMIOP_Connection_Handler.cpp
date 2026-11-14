@@ -18,6 +18,8 @@
 #include "ace/os_include/netinet/os_tcp.h"
 #include "ace/os_include/os_netdb.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_SHMIOP_Connection_Handler::TAO_SHMIOP_Connection_Handler (ACE_Thread_Manager *t)
@@ -113,7 +115,7 @@ TAO_SHMIOP_Connection_Handler::open (void*)
 #if !defined (ACE_LACKS_TCP_NODELAY)
   if (this->peer ().set_option (ACE_IPPROTO_TCP,
                                 TCP_NODELAY,
-                                (void *) &protocol_properties.no_delay_,
+                                std::addressof (protocol_properties.no_delay_),
                                 sizeof (protocol_properties.no_delay_)) == -1)
     return -1;
 
