@@ -68,7 +68,7 @@ public:
     ~Handler () {};
 
   void foo (CORBA::Long ami_return_val,
-            CORBA::Long out_l)
+            CORBA::Long out_l) override
     {
       if (debug)
         {
@@ -79,7 +79,7 @@ public:
         }
     };
 
-  void foo_excep (::Messaging::ExceptionHolder * excep_holder)
+  void foo_excep (::Messaging::ExceptionHolder * excep_holder) override
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <foo_excep> called:\n"
@@ -100,26 +100,26 @@ public:
         }
     };
 
-  void get_yadda (CORBA::Long result)
+  void get_yadda (CORBA::Long result) override
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <get_yadda> called: result <%d>\n",
                   result));
     };
 
-  void get_yadda_excep (::Messaging::ExceptionHolder *)
+  void get_yadda_excep (::Messaging::ExceptionHolder *) override
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <get_yadda_excep> called:\n"));
     };
 
-  void set_yadda ()
+  void set_yadda () override
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <set_yadda> called:\n"));
     };
 
-  void set_yadda_excep (::Messaging::ExceptionHolder *)
+  void set_yadda_excep (::Messaging::ExceptionHolder *) override
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <set_yadda_excep> called:\n"));
