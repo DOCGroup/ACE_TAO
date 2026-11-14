@@ -1,8 +1,12 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_pwd.h"
 #include "ace/OS_NS_ctype.h"
+#include "ace/OS_NS_unistd.h"
 #include "File_Manager.h"
+#include <cstdio>
+#include <cstdlib>
 #include <cstring>
+#include <memory>
 #include <string>
 
 File_Manager::File_Manager () = default;
@@ -65,39 +69,46 @@ File_Manager::get_login_and_real_name (const char *&login_name, const char *&rea
 int
 File_Manager::open_passwd_file ()
 {
-  char *filename = const_cast<char *> ("passwd-XXXXXX");
+  char filename[] = "passwd-XXXXXX";
   ACE_HANDLE f = ACE_OS::mkstemp (filename);
-  FILE *fp = ACE_OS::fdopen (f, "w");
-
-  if (fp == nullptr)
+  if (f == ACE_INVALID_HANDLE)
     return -1;
 
-  passwd *pwent;
+  {
+    using File_Ptr = std::unique_ptr<std::FILE, int (*) (std::FILE *)>;
+    File_Ptr const fp (ACE_OS::fdopen (f, "w"), std::fclose);
 
-  for (ACE_OS::setpwent ();
-       (pwent = ACE_OS::getpwent ()) != nullptr; )
-    if (*pwent->pw_gecos != '\0')
+    if (!fp)
       {
-        char *cp = std::strchr (pwent->pw_gecos, ',');
-
-        if (cp != nullptr)
-          *cp = '\0';
-
-        ACE_OS::fprintf (fp,
-                         "%-8.8s %s\n",
-                         pwent->pw_name,
-                         pwent->pw_gecos);
-        ++this->number_of_friends;
+        ACE_OS::close (f);
+        return -1;
       }
 
-  ACE_OS::endpwent ();
+    passwd *pwent;
 
-  ACE_OS::fclose (fp);
+    for (ACE_OS::setpwent ();
+         (pwent = ACE_OS::getpwent ()) != nullptr; )
+      if (*pwent->pw_gecos != '\0')
+        {
+          char *cp = std::strchr (pwent->pw_gecos, ',');
+
+          if (cp != nullptr)
+            *cp = '\0';
+
+          std::fprintf (fp.get (),
+                        "%-8.8s %s\n",
+                        pwent->pw_name,
+                        pwent->pw_gecos);
+          ++this->number_of_friends;
+        }
+
+    ACE_OS::endpwent ();
+  }
 
   if (this->mmap_.map (filename) == -1)
     return -1;
 
-  this->buffer_ptr = (char *) this->mmap_.addr ();
+  this->buffer_ptr = static_cast<char *> (this->mmap_.addr ());
 
   this->buffer_size = this->mmap_.size ();
   this->current_ptr = this->buffer_ptr;
@@ -120,7 +131,7 @@ File_Manager::open_friends_file (const char *filename)
     pathname = filename;
   else
     {
-      const char *home = ACE_OS::getenv ("HOME");
+      char const * const home = std::getenv ("HOME");
       if (home != nullptr)
         {
           directory = home;
@@ -135,7 +146,7 @@ File_Manager::open_friends_file (const char *filename)
   if (this->mmap_.map (pathname) == -1)
     return -1;
 
-  this->buffer_ptr = (char *) this->mmap_.addr ();
+  this->buffer_ptr = static_cast<char *> (this->mmap_.addr ());
 
   this->buffer_size = this->mmap_.size ();
   this->current_ptr = this->buffer_ptr;
