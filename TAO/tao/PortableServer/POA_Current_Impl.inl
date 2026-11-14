@@ -2,6 +2,7 @@
 #include "tao/SystemException.h"
 
 #include <cstring>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -63,7 +64,7 @@ namespace TAO
     ACE_INLINE void
     POA_Current_Impl::object_key (const TAO::ObjectKey &key)
     {
-      this->object_key_ = &key;
+      this->object_key_ = std::addressof (key);
     }
 
     ACE_INLINE const TAO::ObjectKey &

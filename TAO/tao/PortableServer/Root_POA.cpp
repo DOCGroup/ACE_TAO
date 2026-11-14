@@ -2491,7 +2491,7 @@ TAO_Root_POA::Key_To_Object_Params::set (PortableServer::ObjectId_var &system_id
                                          CORBA::Short priority,
                                          bool indirect)
 {
-  this->system_id_ = &system_id;
+  this->system_id_ = std::addressof (system_id);
   this->type_id_ = type_id;
   this->servant_ = servant;
   this->collocated_ = collocated;
