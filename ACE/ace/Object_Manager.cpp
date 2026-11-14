@@ -305,7 +305,7 @@ ACE_Object_Manager::init ()
                   DWORD dwRelativeAddr = dwNewEntryAddr - dwOrgEntryAddr;
 
                   newJump[ 0 ] = 0xE9;  // JMP absolute
-                  ACE_OS::memcpy (&newJump[ 1 ], &dwRelativeAddr, sizeof (pNewFunc));
+                  ACE_OS::memcpy (newJump + 1, &dwRelativeAddr, sizeof (pNewFunc));
                   SIZE_T bytesWritten;
                   WriteProcessMemory (
                     GetCurrentProcess (),

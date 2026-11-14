@@ -1971,7 +1971,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                 case 'Q':
                   {
                     const ACE_TCHAR *fmt = ACE_UINT64_FORMAT_SPECIFIER;
-                    ACE_OS::strcpy (fp, &fmt[1]);    // Skip leading %
+                    ACE_OS::strcpy (fp, fmt + 1);    // Skip leading %
                     if (can_check)
                       this_len = ACE_OS::snprintf (bp, bspace,
                                                    format,
@@ -1987,7 +1987,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                 case 'q':
                    {
                      const ACE_TCHAR *fmt = ACE_INT64_FORMAT_SPECIFIER;
-                     ACE_OS::strcpy (fp, &fmt[1]);    // Skip leading %
+                     ACE_OS::strcpy (fp, fmt + 1);    // Skip leading %
                      if (can_check)
                        this_len = ACE_OS::snprintf (bp, bspace,
                                                     format,
@@ -2003,7 +2003,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                 case 'b':
                   {
                     const ACE_TCHAR *fmt = ACE_SSIZE_T_FORMAT_SPECIFIER;
-                    ACE_OS::strcpy (fp, &fmt[1]);    // Skip leading %
+                    ACE_OS::strcpy (fp, fmt + 1);    // Skip leading %
                   }
                   if (can_check)
                     this_len = ACE_OS::snprintf (bp, bspace,
@@ -2019,7 +2019,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                 case 'B':
                   {
                     const ACE_TCHAR *fmt = ACE_SIZE_T_FORMAT_SPECIFIER;
-                    ACE_OS::strcpy (fp, &fmt[1]);    // Skip leading %
+                    ACE_OS::strcpy (fp, fmt + 1);    // Skip leading %
                   }
                   if (can_check)
                     this_len = ACE_OS::snprintf (bp, bspace,
@@ -2039,7 +2039,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                     if (sizeof (time_t) == 8)
                       fmt = ACE_INT64_FORMAT_SPECIFIER;
 
-                    ACE_OS::strcpy (fp, &fmt[1]);    // Skip leading %
+                    ACE_OS::strcpy (fp, fmt + 1);    // Skip leading %
                   }
                   if (can_check)
                     this_len = ACE_OS::snprintf (bp, bspace,

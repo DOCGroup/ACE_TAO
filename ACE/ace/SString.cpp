@@ -331,7 +331,7 @@ ACE_SString::substring (size_type offset,
   if (length == npos || count > (this->len_ - offset))
     count = len_ - offset;
 
-  return ACE_SString (&rep_[offset], count, this->allocator_);
+  return ACE_SString (this->rep_ + offset, count, this->allocator_);
 }
 
 // ************************************************************

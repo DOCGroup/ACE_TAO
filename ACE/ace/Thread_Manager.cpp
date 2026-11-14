@@ -748,13 +748,13 @@ ACE_Thread_Manager::spawn_n (size_t n,
                          args,
                          flags,
                          nullptr,
-                         thread_handles == nullptr ? nullptr : &thread_handles[i],
+                         thread_handles == nullptr ? nullptr : thread_handles + i,
                          priority,
                          grp_id,
                          stack == nullptr ? nullptr : stack[i],
                          stack_size == nullptr ? ACE_DEFAULT_THREAD_STACKSIZE : stack_size[i],
                          task,
-                         thr_name == nullptr ? nullptr : &thr_name [i]) == -1)
+                         thr_name == nullptr ? nullptr : thr_name + i) == -1)
         return -1;
     }
 
@@ -790,14 +790,14 @@ ACE_Thread_Manager::spawn_n (ACE_thread_t thread_ids[],
       if (this->spawn_i (func,
                          args,
                          flags,
-                         thread_ids == nullptr ? nullptr : &thread_ids[i],
-                         thread_handles == nullptr ? nullptr : &thread_handles[i],
+                         thread_ids == nullptr ? nullptr : thread_ids + i,
+                         thread_handles == nullptr ? nullptr : thread_handles + i,
                          priority,
                          grp_id,
                          stack == nullptr ? nullptr : stack[i],
                          stack_size == nullptr ? ACE_DEFAULT_THREAD_STACKSIZE : stack_size[i],
                          task,
-                         thr_name == nullptr ? nullptr : &thr_name [i]) == -1)
+                         thr_name == nullptr ? nullptr : thr_name + i) == -1)
         return -1;
     }
 

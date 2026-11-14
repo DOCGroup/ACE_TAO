@@ -605,7 +605,7 @@ ACE_OutputCDR::write_wchar_array_i (const ACE_CDR::WChar *x,
             else
               {
                 ACE_CDR::UShort sx = static_cast<ACE_CDR::UShort> (x[i]);
-                ACE_CDR::swap_2 (reinterpret_cast<char *> (&sx), &buf[i * 2]);
+                ACE_CDR::swap_2 (reinterpret_cast<char *> (&sx), buf + i * 2);
               }
 #endif /* ACE_ENABLE_SWAP_ON_WRITE */
         }
@@ -1889,7 +1889,7 @@ ACE_InputCDR::read_wchar_array_i (ACE_CDR::WChar* x,
             else
               {
                 ACE_CDR::UShort sx;
-                ACE_CDR::swap_2 (&buf[i * 2], reinterpret_cast<char *> (&sx));
+                ACE_CDR::swap_2 (buf + i * 2, reinterpret_cast<char *> (&sx));
                 x[i] = static_cast<ACE_CDR::WChar> (sx);
               }
 #endif /* ACE_DISABLE_SWAP_ON_READ */

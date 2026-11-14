@@ -168,8 +168,8 @@ ACE_IBM1047_ISO8859::write_char (ACE_OutputCDR& out,
 {
   return
     this->write_1 (out,
-                   reinterpret_cast<const ACE_CDR::Octet*> (
-                     &from_IBM1047[static_cast<unsigned char> (x)]));
+                   reinterpret_cast<ACE_CDR::Octet const *> (
+                     from_IBM1047 + static_cast<unsigned char> (x)));
 }
 
 ACE_CDR::Boolean
@@ -309,8 +309,8 @@ ACE_ISO8859_IBM1047::write_char (ACE_OutputCDR &out,
 {
   return
     this->write_1 (out,
-                   reinterpret_cast<const ACE_CDR::Octet *> (
-                     &to_IBM1047[static_cast<unsigned char> (x)]));
+                   reinterpret_cast<ACE_CDR::Octet const *> (
+                     to_IBM1047 + static_cast<unsigned char> (x)));
 }
 
 ACE_CDR::Boolean

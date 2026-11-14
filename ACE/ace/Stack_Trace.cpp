@@ -47,7 +47,7 @@ ACE_Stack_Trace::ACE_Stack_Trace (ssize_t starting_frame_offset, size_t num_fram
 const char*
 ACE_Stack_Trace::c_str () const
 {
-  return &this->buf_[0];
+  return this->buf_;
 }
 
 #if defined(__GLIBC__) || defined(ACE_HAS_EXECINFO_H) || defined(VXWORKS) || \
@@ -65,7 +65,7 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset, size_t num_frame
 {
   ACE_UNUSED_ARG (starting_frame_offset);
   ACE_UNUSED_ARG (num_frames);
-  std::strcpy (&this->buf_[0], UNABLE_TO_GET_TRACE);
+  std::strcpy (this->buf_, UNABLE_TO_GET_TRACE);
 }
 
 #elif (defined(__GLIBC__) || defined(ACE_HAS_EXECINFO_H))
@@ -111,7 +111,7 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset, size_t num_frame
     }
   else
     {
-      std::strcpy (&this->buf_[0], UNABLE_TO_GET_TRACE);
+      std::strcpy (this->buf_, UNABLE_TO_GET_TRACE);
     }
 }
 #elif defined(VXWORKS) && !defined(__RTP__)
@@ -165,15 +165,15 @@ ACE_Stack_Trace_Add_Frame_To_Buf (INSTR *caller,
   if (nargs == -1)
     nargs = 0;
 
-  len += ACE_OS::sprintf (&buf[len], "%p: %p (", caller, func);
+  len += ACE_OS::sprintf (buf + len, "%p: %p (", caller, func);
   for (int i = 0; i < nargs; ++i)
     {
       if (i != 0)
-        len += ACE_OS::sprintf (&buf[len], ", ");
-      len += ACE_OS::sprintf(&buf[len], "0x" ACE_VX_ARG_FORMAT, args[i]);
+        len += ACE_OS::sprintf (buf + len, ", ");
+      len += ACE_OS::sprintf (buf + len, "0x" ACE_VX_ARG_FORMAT, args[i]);
     }
 
-  len += ACE_OS::sprintf(&buf[len], ")\n");
+  len += ACE_OS::sprintf (buf + len, ")\n");
 }
 
 void
@@ -189,7 +189,7 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset,
   size_t starting_frame =
     determine_starting_frame (INITIAL_FRAME, starting_frame_offset);
 
-  ACE_Stack_Trace_stackstate state (&this->buf_[0], this->buflen_,
+  ACE_Stack_Trace_stackstate state (this->buf_, this->buflen_,
                                     num_frames, starting_frame);
 
   REG_SET regs;
@@ -316,7 +316,7 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset,
 void
 ACE_Stack_Trace::generate_trace (ssize_t, size_t)
 {
-      std::strcpy (&this->buf_[0], "<stack traces unsupported on Win64 unless "
+      std::strcpy (this->buf_, "<stack traces unsupported on Win64 unless "
     "ACE is built with _WIN32_WINNT set to 0x501 or above>");
 }
 
@@ -580,14 +580,14 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset,
   size_t starting_frame =
     determine_starting_frame (INITIAL_FRAME, starting_frame_offset);
 
-  cs_operate (&add_frame_to_buf, &this->buf_[0], starting_frame, num_frames);
+  cs_operate (&add_frame_to_buf, this->buf_, starting_frame, num_frames);
 }
 
 #else // Unsupported platform
 void
 ACE_Stack_Trace::generate_trace (ssize_t, size_t)
 {
-  std::strcpy (&this->buf_[0], UNSUPPORTED);
+  std::strcpy (this->buf_, UNSUPPORTED);
 }
 #endif
 

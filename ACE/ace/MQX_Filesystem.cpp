@@ -402,7 +402,7 @@ MQX_Filesystem::get_file (int fd)
 {
   for (int i = 0; i < FOPEN_MAX; ++i)
     {
-      if (files_[i].fd == fd) return &files_[i];
+      if (files_[i].fd == fd) return files_ + i;
     }
   errno = EBADF;
   return 0;
@@ -461,7 +461,7 @@ MQX_Filesystem::stat (const char * path, ACE_stat *statbuf)
   search.ATTRIBUTE = MFS_SEARCH_ANY;
   char tmppath[ACE_MQX_ABS_PATH_SIZE];
   strcpy (tmppath, path);
-  search.WILDCARD = &tmppath[fs_name_len];
+  search.WILDCARD = tmppath + fs_name_len;
   MFS_SEARCH_DATA search_results;
   search.SEARCH_DATA_PTR = &search_results;
   int mqx_error = _io_ioctl (fs, IO_IOCTL_FIND_FIRST_FILE, (uint32_t *) &search);

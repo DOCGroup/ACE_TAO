@@ -116,19 +116,19 @@ ACE_Process::spawn (ACE_Process_Options &options)
 #   pragma GCC diagnostic ignored "-Wformat"
 #   pragma GCC diagnostic ignored "-Wformat-extra-args"
 #  endif /* __GNUC__ */
-          curr_len += ACE_OS::sprintf (&cmd_line_buf[curr_len],
+          curr_len += ACE_OS::sprintf (cmd_line_buf + curr_len,
                                        ACE_TEXT (" +H %I64p"),
                                        h);
 #  if defined (__GNUC__)
 #   pragma GCC diagnostic pop
 #  endif /* __GNUC__ */
 # else
-          curr_len += ACE_OS::sprintf (&cmd_line_buf[curr_len],
+          curr_len += ACE_OS::sprintf (cmd_line_buf + curr_len,
                                        ACE_TEXT (" +H %p"),
                                        h);
 # endif  /* ACE_WIN64 */
 #else
-          curr_len += ACE_OS::sprintf (&cmd_line_buf[curr_len],
+          curr_len += ACE_OS::sprintf (cmd_line_buf + curr_len,
                                        ACE_TEXT (" +H %d"),
                                        h);
 #endif /* ACE_WIN32 */

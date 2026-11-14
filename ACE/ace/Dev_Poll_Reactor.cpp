@@ -267,7 +267,7 @@ ACE_Dev_Poll_Reactor_Notify::read_notify_pipe (ACE_HANDLE handle,
           // doesn't work we're in big trouble since the input stream
           // won't be aligned correctly.  I'm not sure quite what to
           // do at this point.  It's probably best just to return -1.
-          if (ACE::recv (handle, &read_p[n], remainder) <= 0)
+          if (ACE::recv (handle, read_p + n, remainder) <= 0)
             return -1;
         }
 

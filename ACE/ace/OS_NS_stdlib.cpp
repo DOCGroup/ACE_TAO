@@ -111,9 +111,9 @@ ACE_OS::strenvdup (const ACE_TCHAR *str)
   if ((start = ACE_OS::strchr (str, ACE_TEXT ('$'))) != nullptr)
     {
       ACE_TCHAR buf[ACE_DEFAULT_ARGV_BUFSIZ];
-      size_t var_len = ACE_OS::strcspn (&start[1],
+      size_t var_len = ACE_OS::strcspn (start + 1,
         ACE_TEXT ("$~!#%^&*()-+=\\|/?,.;:'\"`[]{} \t\n\r"));
-      ACE_OS::strncpy (buf, &start[1], var_len);
+      ACE_OS::strncpy (buf, start + 1, var_len);
       buf[var_len++] = ACE_TEXT ('\0');
 #  if defined (ACE_WIN32)
       // Always use the ACE_TCHAR for Windows.
@@ -155,7 +155,7 @@ ACE_OS::strenvdup (const ACE_TCHAR *str)
           p += var_len;
           *p = ACE_TEXT ('\0');
         }
-      ACE_OS::strcpy (p, &start[var_len]);
+      ACE_OS::strcpy (p, start + var_len);
       return buf_p;
     }
   else

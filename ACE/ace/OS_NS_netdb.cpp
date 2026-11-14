@@ -32,6 +32,7 @@
 
 #include <algorithm>
 #include <cstring>
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -175,7 +176,7 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
   struct ifreq* ifr {};
   for (int i=0; i< numif ;++i)
     {
-      ifr = &ifr_buf[i];
+      ifr = ifr_buf + i;
 
       // get device flags
       if (ACE_OS::ioctl (handle, SIOCGIFFLAGS, ifr) < 0)
@@ -345,7 +346,7 @@ ACE_OS::getaddrinfo_emulation (const char *name, addrinfo **result)
         case NO_RECOVERY:
           return EAI_FAIL;
         case ENOTSUP:
-          if (ACE_OS::inet_aton (name, (in_addr *) &buffer[0]) != 0)
+          if (ACE_OS::inet_aton (name, reinterpret_cast<in_addr *> (buffer)) != 0)
             {
               host = &entry;
               entry.h_length = sizeof (in_addr);
@@ -391,7 +392,7 @@ ACE_OS::getaddrinfo_emulation (const char *name, addrinfo **result)
       (*result)[i].ai_addrlen = sizeof (sockaddr_in);
       (*result)[i].ai_addr = (sockaddr *) addr_storage + i;
       (*result)[i].ai_addr->sa_family = AF_INET;
-      std::memcpy (&addr_storage[i].sin_addr, host->h_addr_list[i],
+      std::memcpy (std::addressof (addr_storage[i].sin_addr), host->h_addr_list[i],
                    (std::min) (size_t (host->h_length), sizeof (in_addr)));
       if (i < n - 1)
         (*result)[i].ai_next = (*result) + i + 1;

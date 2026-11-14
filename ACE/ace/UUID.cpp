@@ -189,12 +189,12 @@ namespace ACE_Utils
                    &time_hi_and_version,
                    &clock_seq_hi_and_reserved,
                    &clock_seq_low,
-                   &node[0],
-                   &node[1],
-                   &node[2],
-                   &node[3],
-                   &node[4],
-                   &node[5]
+                   std::addressof (node[0]),
+                   std::addressof (node[1]),
+                   std::addressof (node[2]),
+                   std::addressof (node[3]),
+                   std::addressof (node[4]),
+                   std::addressof (node[5])
                    );
 #else
           ::sscanf (
@@ -205,12 +205,12 @@ namespace ACE_Utils
                    &time_hi_and_version,
                    &clock_seq_hi_and_reserved,
                    &clock_seq_low,
-                   &node[0],
-                   &node[1],
-                   &node[2],
-                   &node[3],
-                   &node[4],
-                   &node[5]
+                   std::addressof (node[0]),
+                   std::addressof (node[1]),
+                   std::addressof (node[2]),
+                   std::addressof (node[3]),
+                   std::addressof (node[4]),
+                   std::addressof (node[5])
                    );
 #endif /* ACE_HAS_TR24731_2005_CRT */
 
@@ -233,12 +233,12 @@ namespace ACE_Utils
                     &time_hi_and_version,
                     &clock_seq_hi_and_reserved,
                     &clock_seq_low,
-                    &node[0],
-                    &node[1],
-                    &node[2],
-                    &node[3],
-                    &node[4],
-                    &node[5],
+                    std::addressof (node[0]),
+                    std::addressof (node[1]),
+                    std::addressof (node[2]),
+                    std::addressof (node[3]),
+                    std::addressof (node[4]),
+                    std::addressof (node[5]),
                     thr_pid_buf,
                     BUFSIZ
                     );
@@ -250,12 +250,12 @@ namespace ACE_Utils
                     &time_hi_and_version,
                     &clock_seq_hi_and_reserved,
                     &clock_seq_low,
-                    &node[0],
-                    &node[1],
-                    &node[2],
-                    &node[3],
-                    &node[4],
-                    &node[5],
+                    std::addressof (node[0]),
+                    std::addressof (node[1]),
+                    std::addressof (node[2]),
+                    std::addressof (node[3]),
+                    std::addressof (node[4]),
+                    std::addressof (node[5]),
                     thr_pid_buf
                     );
 #endif /* ACE_HAS_TR24731_2005_CRT */

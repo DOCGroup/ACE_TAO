@@ -794,7 +794,7 @@ ACE_OS::pipe (ACE_HANDLE fds[])
   ACE_NOTSUP_RETURN (-1);
 # elif defined (ACE_WIN32)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL
-                        (::CreatePipe (&fds[0], &fds[1], 0, 0),
+                        (::CreatePipe (fds, fds + 1, 0, 0),
                          ace_result_), int, -1);
 # else
   return ::pipe (fds);

@@ -508,7 +508,7 @@ get_ip_interfaces_win32 (size_t &count,
       LPINTERFACE_INFO lpii;
       struct sockaddr_in *addrp {};
 
-      lpii = &info[i];
+      lpii = info + i;
       if (!(lpii->iiFlags & IFF_UP))
         continue;
 

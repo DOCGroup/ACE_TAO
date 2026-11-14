@@ -116,7 +116,7 @@ ACE_TLI::set_option (int level, int option, void *optval, int optlen)
   opthdr->level = level;
   opthdr->name  = option;
   opthdr->len   = req.opt.len;   // We only request one option at a time.
-  ACE_OS::memcpy (&opthdr[1], optval, optlen);
+  ACE_OS::memcpy (opthdr + 1, optval, optlen);
   return ACE_OS::t_optmgmt (this->get_handle (), &req, &ret);
 #else
   ACE_UNUSED_ARG (level);
@@ -167,7 +167,7 @@ ACE_TLI::get_option (int level, int option, void *optval, int &optlen)
         }
       else
         {
-          ACE_OS::memcpy (optval, &opthdr[1], optlen);
+          ACE_OS::memcpy (optval, opthdr + 1, optlen);
           return 0;
         }
     }
