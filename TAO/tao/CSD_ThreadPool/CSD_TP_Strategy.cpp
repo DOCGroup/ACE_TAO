@@ -7,6 +7,7 @@
 #include "tao/CSD_ThreadPool/CSD_TP_Collocated_Synch_With_Server_Request.h"
 #include "ace/Trace.h"
 #include "tao/ORB_Core.h"
+#include <memory>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/CSD_ThreadPool/CSD_TP_Strategy.inl"
@@ -51,7 +52,7 @@ TAO::CSD::TP_Strategy::poa_activated_event_i(TAO_ORB_Core& orb_core)
 {
   this->task_.thr_mgr(orb_core.thr_mgr());
   // Activates the worker threads, and waits until all have been started.
-  return (this->task_.open(&(this->num_threads_)) == 0);
+  return (this->task_.open (std::addressof (this->num_threads_)) == 0);
 }
 
 void

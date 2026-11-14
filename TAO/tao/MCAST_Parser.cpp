@@ -14,6 +14,7 @@
 #include "ace/Truncate.h"
 #include <cstdlib>
 #include <cstring>
+#include <memory>
 
 #if !defined(__ACE_INLINE__)
 #include "tao/MCAST_Parser.inl"
@@ -254,7 +255,7 @@ TAO_MCAST_Parser::multicast_query (char* & buf,
               // Accept reply connection from server.
               if (acceptor.accept (stream,
                                    nullptr,
-                                   &tv) == -1)
+                                   std::addressof (tv)) == -1)
                 {
                   if (TAO_debug_level > 0)
                     {
@@ -273,7 +274,7 @@ TAO_MCAST_Parser::multicast_query (char* & buf,
                   result = stream.recv_n (&ior_len,
                                           sizeof ior_len,
                                           0,
-                                          &tv);
+                                          std::addressof (tv));
                   if (result != (ssize_t)sizeof (ior_len))
                     {
                       if (TAO_debug_level > 0)
@@ -312,7 +313,7 @@ TAO_MCAST_Parser::multicast_query (char* & buf,
                           result = stream.recv_n (buf,
                                                   ior_len,
                                                   0,
-                                                  &tv);
+                                                  std::addressof (tv));
                           if (result == -1)
                             TAOLIB_ERROR ((LM_ERROR,
                                         ACE_TEXT ( "%p\n"),

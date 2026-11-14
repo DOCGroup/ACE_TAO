@@ -469,7 +469,7 @@ TAO_IIOP_Connector::complete_connection (int result,
       desc.reset_endpoint (ep_list[count-1]);
       TAO::Transport_Cache_Manager &tcm =
         this->orb_core ()->lane_resources ().transport_cache ();
-      if (tcm.cache_transport (&desc, transport) == -1)
+      if (tcm.cache_transport (std::addressof (desc), transport) == -1)
         {
           // Cache is full, so close the connection again
           sh_list[count-1]->close ();
@@ -619,7 +619,7 @@ TAO_IIOP_Connector::complete_connection (int result,
   if (count > 1 && desc.reset_endpoint (iiop_endpoint))
     {
       retval = this->orb_core ()->
-        lane_resources ().transport_cache ().cache_transport (&desc,
+        lane_resources ().transport_cache ().cache_transport (std::addressof (desc),
                                                               transport);
     }
 

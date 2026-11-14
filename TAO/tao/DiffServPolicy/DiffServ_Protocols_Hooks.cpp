@@ -8,6 +8,7 @@
 #include "tao/SystemException.h"
 #include "tao/DiffServPolicy/Client_Network_Priority_Policy.h"
 #include "ace/OS_NS_string.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -24,7 +25,7 @@ TAO_DS_Network_Priority_Protocols_Hooks::get_dscp_codepoint (
   CORBA::Long dscp_codepoint {};
   IOP::ServiceContext const *context {};
 
-  if (sc.get_context (IOP::REP_NWPRIORITY, &context) == 1)
+  if (sc.get_context (IOP::REP_NWPRIORITY, std::addressof (context)) == 1)
     {
       TAO_InputCDR cdr (reinterpret_cast
                         <char const *>
