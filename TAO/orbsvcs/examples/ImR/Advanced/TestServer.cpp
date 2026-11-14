@@ -14,6 +14,7 @@
 #include "ace/Get_Opt.h"
 
 #include <cstddef>
+#include <cstring>
 #include <cstdlib>
 #include <fstream>
 #include <iostream>
@@ -78,7 +79,7 @@ string normalizePath (string const &dir, char delim, bool toLower)
               if (i == begin) // relative start
                 {
                   string const curDir = getWorkingPath ();
-                  ACE_OS::strncpy (buffer, curDir.c_str (), sizeof (buffer));
+                  std::strncpy (buffer, curDir.c_str (), sizeof (buffer));
                   j = curDir.length();
                 }
               else
@@ -92,7 +93,7 @@ string normalizePath (string const &dir, char delim, bool toLower)
               if (i == begin) // relative start
                 {
                   string const curDir = getWorkingPath ();
-                  ACE_OS::strncpy (buffer, curDir.c_str (), sizeof (buffer));
+                  std::strncpy (buffer, curDir.c_str (), sizeof (buffer));
                   j = curDir.length();
                 }
 

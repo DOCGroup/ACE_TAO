@@ -5,6 +5,8 @@
 #include "Client_Request_Interceptor.h"
 #include "Client_ORBInitializer.h"
 
+#include <cstring>
+
 namespace Test
 {
   Client_Request_Interceptor::Client_Request_Interceptor (char const *orb_id,
@@ -85,9 +87,9 @@ namespace Test
       ++this->requestID_;
     }
 
-    CORBA::ULong string_len = ACE_OS::strlen (temp) + 1;
+    CORBA::ULong const string_len = std::strlen (temp) + 1;
     CORBA::Octet *buf = CORBA::OctetSeq::allocbuf (string_len);
-    ACE_OS::strcpy (reinterpret_cast <char *> (buf), temp);
+    std::memcpy (reinterpret_cast<char *> (buf), temp, string_len);
 
     sc.context_data.replace (string_len, string_len, buf, 1);
 
