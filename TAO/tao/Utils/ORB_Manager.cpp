@@ -192,7 +192,15 @@ TAO_ORB_Manager::fini ()
       catch (...)
         {
           if (!CORBA::is_nil (orb.in ()))
-            orb->destroy ();
+            {
+              try
+                {
+                  orb->destroy ();
+                }
+              catch (...)
+                {
+                }
+            }
           throw;
         }
     }

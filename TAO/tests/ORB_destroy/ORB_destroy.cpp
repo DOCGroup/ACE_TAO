@@ -67,19 +67,26 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       return 1;
 
   TAO_ORB_Manager orb_manager;
-  if (orb_manager.fini () != 0 || orb_manager.fini () != 0)
-    return 1;
-
   // Check that Server_Main can be constructed with a null name.
   TAO::Utils::Server_Main<PortableServer::ServantBase> const null_name_server (nullptr);
 
   ACE_TCHAR orb_name[] = ACE_TEXT ("ORB_Manager_fini");
   ACE_TCHAR *manager_argv[] = {orb_name, nullptr};
   int manager_argc = 1;
-  if (orb_manager.init (manager_argc, manager_argv) != 0
-      || orb_manager.fini () != 0
-      || orb_manager.fini () != 0)
-    return 1;
+  try
+    {
+      if (orb_manager.fini () != 0 || orb_manager.fini () != 0
+          || orb_manager.init (manager_argc, manager_argv,
+                               "ORB_Manager_fini") != 0
+          || orb_manager.fini () != 0
+          || orb_manager.fini () != 0)
+        return 1;
+    }
+  catch (CORBA::Exception const &ex)
+    {
+      ex._tao_print_exception ("Exception raised");
+      return 1;
+    }
 
   return 0;
 }
