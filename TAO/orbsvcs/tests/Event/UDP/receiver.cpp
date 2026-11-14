@@ -11,6 +11,8 @@
 #include "ace/OS_NS_unistd.h"
 #include "TestC.h"
 
+#include <memory>
+
 static ACE_TCHAR const* udp_mcast_address =
     ACE_TEXT (ACE_DEFAULT_MULTICAST_ADDR) ACE_TEXT(":10001");
 
@@ -155,7 +157,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // To receive events we need to setup an event handler:
       PortableServer::Servant_var<TAO_ECG_UDP_Receiver> receiver =
         TAO_ECG_UDP_Receiver::create();
-      TAO_ECG_Mcast_EH mcast_eh (&(*receiver));
+      TAO_ECG_Mcast_EH mcast_eh (std::addressof (*receiver));
 
       // The event handler uses the ORB reactor to wait for multicast
       // traffic:
