@@ -153,8 +153,10 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
-  // = Meta-type info
+  /// @name Meta-type information
+  /// @{
   using PEER_ADDR = ACE_FILE_Addr;
+  /// @}
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

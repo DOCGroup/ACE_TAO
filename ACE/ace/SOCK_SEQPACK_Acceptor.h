@@ -115,7 +115,8 @@ public:
   /// Default dtor.
   ~ACE_SOCK_SEQPACK_Acceptor ();
 
-  // = Passive connection <accept> methods.
+  /// @name Passive connection accept methods
+  /// @{
   /**
    * Accept a new ACE_SOCK_SEQPACK_Association connection.  A @a timeout of 0
    * means block forever, a @a timeout of {0, 0} means poll.  <restart>
@@ -131,9 +132,13 @@ public:
               bool restart = true,
               bool reset_new_handle = false) const;
 
-  // = Meta-type info
+  /// @}
+
+  /// @name Meta-type information
+  /// @{
   using PEER_ADDR = ACE_Multihomed_INET_Addr;
   using PEER_STREAM = ACE_SOCK_SEQPACK_Association;
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;

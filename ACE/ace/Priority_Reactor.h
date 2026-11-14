@@ -55,7 +55,8 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  // = Dispatching methods.
+  /// @name Dispatching methods
+  /// @{
 
   /// We simply override this function to implement the priority
   /// dispatching.
@@ -65,6 +66,7 @@ protected:
                                ACE_Handle_Set &dispatch_mask,
                                ACE_Handle_Set &ready_mask,
                                ACE_EH_PTMF callback) override;
+  /// @}
 
 private:
   /// A small helper to initialize the bucket.

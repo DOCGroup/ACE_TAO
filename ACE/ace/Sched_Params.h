@@ -73,27 +73,33 @@ public:
   /// Termination.
   ~ACE_Sched_Params ();
 
-  // = Get/Set methods:
-
-  // = Get/Set policy
+  /// @name Policy accessors
+  /// @{
   Policy policy () const;
   void policy (const Policy);
+  /// @}
 
-  // = Get/Set priority.
+  /// @name Priority accessors
+  /// @{
   ACE_Sched_Priority priority () const;
   void priority (const ACE_Sched_Priority);
+  /// @}
 
-  // = Get/Set scope.
+  /// @name Scope accessors
+  /// @{
   int scope () const;
   void scope(const int);
+  /// @}
 
-  // = Get/Set quantum.
+  /// @name Quantum accessors
+  /// @{
   const ACE_Time_Value &quantum () const;
   void quantum (const ACE_Time_Value &);
+  /// @}
 
-  // = Accessors for OS-specific priorities.
-  // These return priority values for ACE_SCHED_OTHER if the Policy value
-  // is invalid.
+  /// @name Accessors for OS-specific priorities
+  /// These return priority values for ACE_SCHED_OTHER if the policy is invalid.
+  /// @{
   static int priority_min (const Policy,
                            const int scope = ACE_SCOPE_THREAD);
   static int priority_max (const Policy,
@@ -120,6 +126,7 @@ public:
   static int previous_priority (const Policy,
                                 const int priority,
                                 const int scope = ACE_SCOPE_THREAD);
+  /// @}
 
 private:
   /// Scheduling policy.
