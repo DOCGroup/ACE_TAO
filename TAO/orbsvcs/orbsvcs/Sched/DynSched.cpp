@@ -644,6 +644,20 @@ ACE_DynScheduler::schedule (
   status_t temp_status = SUCCEEDED;
   Scheduling_Anomaly *anomaly {};
   ACE_CString unresolved_locals (""), unresolved_remotes ("");
+  auto add_anomaly = [&anomaly_set] (status_t anomaly_status)
+    -> Scheduling_Anomaly *
+  {
+    std::unique_ptr<Scheduling_Anomaly> anomaly_owner (
+      create_anomaly (anomaly_status));
+    if (anomaly_owner == nullptr ||
+        anomaly_set.insert (anomaly_owner.get ()) != 0)
+    {
+      return nullptr;
+    }
+
+    // The anomaly set owns the pointer; the returned pointer is borrowed.
+    return anomaly_owner.release ();
+  };
 
   if (up_to_date_)
   {
@@ -662,12 +676,8 @@ ACE_DynScheduler::schedule (
   if (status_ != SUCCEEDED)
     {
       // Create an anomaly, add it to anomaly set
-      anomaly = create_anomaly (status_);
-      if (anomaly != nullptr)
-        {
-          anomaly_set.insert (anomaly);
-        }
-      else
+      anomaly = add_anomaly (status_);
+      if (anomaly == nullptr)
         {
           return ST_VIRTUAL_MEMORY_EXHAUSTED;
         }
@@ -691,12 +701,8 @@ ACE_DynScheduler::schedule (
   if (temp_status != SUCCEEDED)
     {
       // Create an anomaly, add it to anomaly set
-      anomaly = create_anomaly (temp_status);
-      if (anomaly != nullptr)
-        {
-          anomaly_set.insert (anomaly);
-        }
-      else
+      anomaly = add_anomaly (temp_status);
+      if (anomaly == nullptr)
         {
           return ST_VIRTUAL_MEMORY_EXHAUSTED;
         }
@@ -820,54 +826,60 @@ ACE_DynScheduler::schedule (
     if (unresolved_locals.length () > 0)
       {
         // Create an anomaly, add it to anomaly set
-        anomaly = create_anomaly (ST_UNRESOLVED_LOCAL_DEPENDENCIES);
-        if (anomaly != nullptr)
-          {
-            anomaly_set.insert (anomaly);
-          }
-        else
+        anomaly = add_anomaly (ST_UNRESOLVED_LOCAL_DEPENDENCIES);
+        if (anomaly == nullptr)
           {
             return ST_VIRTUAL_MEMORY_EXHAUSTED;
           }
 
-        ACE_NEW_RETURN (anomaly, ACE_DynScheduler::Scheduling_Anomaly,
+        ACE_DynScheduler::Scheduling_Anomaly *detail_anomaly {};
+        ACE_NEW_RETURN (detail_anomaly,
+                        ACE_DynScheduler::Scheduling_Anomaly,
                         ST_VIRTUAL_MEMORY_EXHAUSTED);
+        std::unique_ptr<Scheduling_Anomaly> detail_owner (detail_anomaly);
 
         ACE_CString temp_str ("The following entry points have "
                             "unresolved local dependencies:\n");
         temp_str += unresolved_locals;
 
-        anomaly->severity =
+        detail_anomaly->severity =
           anomaly_severity (ST_UNRESOLVED_LOCAL_DEPENDENCIES);
-        anomaly->description = temp_str.c_str ();
-        anomaly_set.insert (anomaly);
+        detail_anomaly->description = temp_str.c_str ();
+        if (anomaly_set.insert (detail_anomaly) != 0)
+        {
+          return ST_VIRTUAL_MEMORY_EXHAUSTED;
+        }
+        detail_owner.release ();
       }
 
     // log anomalies for unresolved remote dependencies
     if (unresolved_remotes.length () > 0)
       {
         // Create an anomaly, add it to anomaly set
-        anomaly = create_anomaly (ST_UNRESOLVED_REMOTE_DEPENDENCIES);
-        if (anomaly != nullptr)
-          {
-            anomaly_set.insert (anomaly);
-          }
-        else
+        anomaly = add_anomaly (ST_UNRESOLVED_REMOTE_DEPENDENCIES);
+        if (anomaly == nullptr)
           {
             return ST_VIRTUAL_MEMORY_EXHAUSTED;
           }
 
-        ACE_NEW_RETURN (anomaly, ACE_DynScheduler::Scheduling_Anomaly,
+        ACE_DynScheduler::Scheduling_Anomaly *detail_anomaly {};
+        ACE_NEW_RETURN (detail_anomaly,
+                        ACE_DynScheduler::Scheduling_Anomaly,
                         ST_VIRTUAL_MEMORY_EXHAUSTED);
+        std::unique_ptr<Scheduling_Anomaly> detail_owner (detail_anomaly);
 
         ACE_CString temp_str ("The following entry points have "
                               "unresolved remote dependencies:\n");
         temp_str += unresolved_remotes;
 
-        anomaly->severity =
+        detail_anomaly->severity =
           anomaly_severity (ST_UNRESOLVED_REMOTE_DEPENDENCIES);
-        anomaly->description = temp_str.c_str ();
-        anomaly_set.insert (anomaly);
+        detail_anomaly->description = temp_str.c_str ();
+        if (anomaly_set.insert (detail_anomaly) != 0)
+        {
+          return ST_VIRTUAL_MEMORY_EXHAUSTED;
+        }
+        detail_owner.release ();
       }
 
   // invoke the internal dispatch scheduling method of the strategy
@@ -904,12 +916,8 @@ ACE_DynScheduler::schedule (
   if (temp_status != SUCCEEDED)
     {
       // Create an anomaly, add it to anomaly set
-      anomaly = create_anomaly (temp_status);
-      if (anomaly != nullptr)
-        {
-          anomaly_set.insert (anomaly);
-        }
-      else
+      anomaly = add_anomaly (temp_status);
+      if (anomaly == nullptr)
         {
           return ST_VIRTUAL_MEMORY_EXHAUSTED;
         }
@@ -943,12 +951,8 @@ ACE_DynScheduler::schedule (
   if (temp_status != SUCCEEDED)
     {
       // Create an anomaly, add it to anomaly set
-      anomaly = create_anomaly (temp_status);
-      if (anomaly != nullptr)
-        {
-          anomaly_set.insert (anomaly);
-        }
-      else
+      anomaly = add_anomaly (temp_status);
+      if (anomaly == nullptr)
         {
           return ST_VIRTUAL_MEMORY_EXHAUSTED;
         }
@@ -985,12 +989,8 @@ ACE_DynScheduler::schedule (
       if (temp_status != SUCCEEDED)
         {
           // Create an anomaly, add it to anomaly set
-          anomaly = create_anomaly (temp_status);
-          if (anomaly != nullptr)
-            {
-              anomaly_set.insert (anomaly);
-            }
-          else
+          anomaly = add_anomaly (temp_status);
+          if (anomaly == nullptr)
             {
               return ST_VIRTUAL_MEMORY_EXHAUSTED;
             }
@@ -1023,12 +1023,8 @@ ACE_DynScheduler::schedule (
       if (temp_status != SUCCEEDED)
         {
           // Create an anomaly, add it to anomaly set
-          anomaly = create_anomaly (temp_status);
-          if (anomaly != nullptr)
-            {
-              anomaly_set.insert (anomaly);
-            }
-          else
+          anomaly = add_anomaly (temp_status);
+          if (anomaly == nullptr)
             {
               return ST_VIRTUAL_MEMORY_EXHAUSTED;
             }
@@ -1090,6 +1086,20 @@ ACE_DynScheduler::propagate_dispatches (
   frame_size_ = 1;
   status_t status = SUCCEEDED;
   Scheduling_Anomaly * anomaly {};
+  auto add_anomaly = [&anomaly_set] (status_t anomaly_status)
+    -> Scheduling_Anomaly *
+  {
+    std::unique_ptr<Scheduling_Anomaly> anomaly_owner (
+      ACE_DynScheduler::create_anomaly (anomaly_status));
+    if (anomaly_owner == nullptr ||
+        anomaly_set.insert (anomaly_owner.get ()) != 0)
+    {
+      return nullptr;
+    }
+
+    // The anomaly set owns the pointer; the returned pointer is borrowed.
+    return anomaly_owner.release ();
+  };
 
   // iterate through the ordered_task_entries_ array in order
   // from highest DFS finishing time to lowest, so that every
@@ -1103,12 +1113,8 @@ ACE_DynScheduler::propagate_dispatches (
     {
       case Task_Entry::INTERNAL_ERROR :
         // Create an anomaly, add it to anomaly set
-        anomaly = create_anomaly (ST_BAD_INTERNAL_POINTER);
-        if (anomaly != nullptr)
-          {
-            anomaly_set.insert (anomaly);
-          }
-        else
+        anomaly = add_anomaly (ST_BAD_INTERNAL_POINTER);
+        if (anomaly == nullptr)
           {
             return ST_VIRTUAL_MEMORY_EXHAUSTED;
           }
@@ -1120,12 +1126,8 @@ ACE_DynScheduler::propagate_dispatches (
           {
             status = TWO_WAY_DISJUNCTION;
           }
-        anomaly = create_anomaly (TWO_WAY_DISJUNCTION);
-        if (anomaly != nullptr)
-          {
-            anomaly_set.insert (anomaly);
-          }
-        else
+        anomaly = add_anomaly (TWO_WAY_DISJUNCTION);
+        if (anomaly == nullptr)
           {
             return ST_VIRTUAL_MEMORY_EXHAUSTED;
           }
@@ -1136,12 +1138,8 @@ ACE_DynScheduler::propagate_dispatches (
           {
             status = TWO_WAY_CONJUNCTION;
           }
-        anomaly = create_anomaly (TWO_WAY_CONJUNCTION);
-        if (anomaly != nullptr)
-          {
-            anomaly_set.insert (anomaly);
-          }
-        else
+        anomaly = add_anomaly (TWO_WAY_CONJUNCTION);
+        if (anomaly == nullptr)
           {
             return ST_VIRTUAL_MEMORY_EXHAUSTED;
           }
@@ -1152,12 +1150,8 @@ ACE_DynScheduler::propagate_dispatches (
           {
             status = UNRECOGNIZED_INFO_TYPE;
           }
-        anomaly = create_anomaly (UNRECOGNIZED_INFO_TYPE);
-        if (anomaly != nullptr)
-          {
-            anomaly_set.insert (anomaly);
-          }
-        else
+        anomaly = add_anomaly (UNRECOGNIZED_INFO_TYPE);
+        if (anomaly == nullptr)
           {
             return ST_VIRTUAL_MEMORY_EXHAUSTED;
           }
