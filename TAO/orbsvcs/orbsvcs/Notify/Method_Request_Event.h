@@ -34,10 +34,10 @@ class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Event
 {
 public:
   /// Construct from event
-  TAO_Notify_Method_Request_Event (const TAO_Notify_Event *);
+  explicit TAO_Notify_Method_Request_Event (const TAO_Notify_Event *);
 
   /// Construct from a delivery request
-  TAO_Notify_Method_Request_Event (
+  explicit TAO_Notify_Method_Request_Event (
     const TAO_Notify::Delivery_Request_Ptr & delivery_request);
 
   /// Construct from another Method Request
@@ -46,7 +46,6 @@ public:
     const TAO_Notify_Event * event);
 
 public:
-  /// Destructor
   virtual ~TAO_Notify_Method_Request_Event ();
 
   const TAO_Notify_Event * event() const;
@@ -74,18 +73,16 @@ class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Event_Queueable
   , public TAO_Notify_Method_Request_Event
 {
 public:
-  /// Constructor
   /// Not the event_var is passed as a separate parameter to avoid throwing
   /// exceptions from the constructor if it's necessary to copy the event.
   TAO_Notify_Method_Request_Event_Queueable (
     const TAO_Notify_Method_Request_Event & prev_request,
     const TAO_Notify_Event::Ptr & event);
 
-  TAO_Notify_Method_Request_Event_Queueable (
+  explicit TAO_Notify_Method_Request_Event_Queueable (
     TAO_Notify::Delivery_Request_Ptr & request);
 
-  /// Destructor
-  virtual ~TAO_Notify_Method_Request_Event_Queueable ();
+  ~TAO_Notify_Method_Request_Event_Queueable () override = default;
 
   /// satisfy the pure virtual method.  Should never be called.
   int execute () override;

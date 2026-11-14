@@ -10,34 +10,29 @@
 
 #include "ace/OS_NS_dirent.h"
 #include "ace/OS_NS_stdlib.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/OS_NS_ctype.h"
 #include "ace/Log_Msg.h"
+#include <cstring>
+#include <utility>
 
 #include "Library.h"
 
-MPC_Generator::MPC_Generator (const ACE_CString& libname)
-  : mpcfile_(),
-    libname_(libname),
-    mpcfilename_()
+MPC_Generator::MPC_Generator (ACE_CString const &libname)
+  : libname_ (libname)
 {
   mpcfilename_ = libname_ + "_subset.mpc";
 }
 
-MPC_Generator::~MPC_Generator ()
-{
-}
-
 void
-MPC_Generator::write_file (const ACE_CString& file)
+MPC_Generator::write_file (ACE_CString const &file)
 {
   mpcfile_ << "    " << file << ".cpp" << endl;
 }
 
 void
-MPC_Generator::write_prolog (const ACE_CString& path)
+MPC_Generator::write_prolog (ACE_CString const &path)
 {
   ACE_CString fname (path + "/" + mpcfilename_);
   ACE_DEBUG ((LM_DEBUG, "writing file %s\n",fname.c_str()));
@@ -86,7 +81,7 @@ MPC_Generator::write_projectinfo()
 }
 
 //-----------------------------------------------------------------------------
-MPC_ACE_Dep_Lib::MPC_ACE_Dep_Lib (const ACE_CString& libname)
+MPC_ACE_Dep_Lib::MPC_ACE_Dep_Lib (ACE_CString const &libname)
   : MPC_Generator(libname)
 {}
 
@@ -105,7 +100,7 @@ MPC_ACE_Dep_Lib::write_projectinfo()
 }
 
 //-----------------------------------------------------------------------------
-MPC_TAO_Lib::MPC_TAO_Lib (const ACE_CString& libname)
+MPC_TAO_Lib::MPC_TAO_Lib (ACE_CString const &libname)
   : MPC_ACE_Dep_Lib(libname)
 {}
 
@@ -124,7 +119,7 @@ MPC_TAO_Lib::write_projectinfo()
 }
 
 //-----------------------------------------------------------------------------
-MPC_TAO_Dep_Lib::MPC_TAO_Dep_Lib (const ACE_CString& libname)
+MPC_TAO_Dep_Lib::MPC_TAO_Dep_Lib (ACE_CString const &libname)
   : MPC_TAO_Lib(libname)
 {}
 
@@ -155,52 +150,32 @@ MPC_TAO_Dep_Lib::write_projectinfo()
 
 //-----------------------------------------------------------------------------
 
-Library::Library (const char *name)
-  : name_(name),
-    path_(),
-    num_modules_(0),
-    num_exports_(0),
-    num_extrefs_(0),
-    modules_(0),
-    exported_(0),
-    mpcfile_(0)
+Library::Library (ACE_TCHAR const *name)
+  : name_ (name),
+    exported_ (0)
 {
   if (name_ == "ACE")
-    mpcfile_ = new MPC_Generator(name_);
+    mpcfile_ = std::make_unique<MPC_Generator> (name_);
   else if (name_.find ("ACE_") == 0)
-    mpcfile_ = new MPC_ACE_Dep_Lib (name_);
+    mpcfile_ = std::make_unique<MPC_ACE_Dep_Lib> (name_);
   else if (name_ == "TAO")
-    mpcfile_ = new MPC_TAO_Lib (name_);
+    mpcfile_ = std::make_unique<MPC_TAO_Lib> (name_);
   else
-    mpcfile_ = new MPC_TAO_Dep_Lib (name_);
-}
-
-Library::~Library ()
-{
-  delete mpcfile_;
-  int i;
-
-  for (i = 0; i < num_modules_; delete modules_[i++])
-    {
-      // No action.
-    }
-
-  delete [] modules_;
+    mpcfile_ = std::make_unique<MPC_TAO_Dep_Lib> (name_);
 }
 
 void
-Library::set_path (const char *p)
+Library::set_path (ACE_TCHAR const *p)
 {
-  char abspath[1000];
-  ACE_OS::memset (abspath,0,1000);
-  ssize_t abspathlen = ACE_OS::readlink(p,abspath,999);
+  char abspath[1000] {};
+  ssize_t const abspathlen = ACE_OS::readlink (p, abspath, sizeof abspath - 1);
   ACE_CString path (p);
   if (abspathlen > 0) {
-    abspath[abspathlen] = 0;
+    abspath[abspathlen] = '\0';
     path = abspath;
   }
 
-  ACE_CString::size_type pathsep = path.rfind('/');
+  ACE_CString::size_type const pathsep = path.rfind('/');
 
   if (pathsep == ACE_CString::npos) {
     path_ = ".";
@@ -209,29 +184,29 @@ Library::set_path (const char *p)
   }
 }
 
-const ACE_CString &
+ACE_CString const &
 Library::name () const
 {
   return name_;
 }
 
-int
+bool
 Library::has_modules () const
 {
-  return num_modules_ > 0;
+  return !modules_.empty ();
 }
 
 extern "C" {
 static int
-selector (const dirent *d)
+selector (dirent const *d)
 {
-  return ACE_OS::strstr (d->d_name, ACE_TEXT (".o")) != 0;
+  return std::strstr (d->d_name, ".o") != nullptr;
 }
 
 static int
-comparator (const dirent **d1, const dirent **d2)
+comparator (dirent const **d1, dirent const **d2)
 {
-  return ACE_OS::strcmp ((*d1)->d_name, (*d2)->d_name);
+  return std::strcmp ((*d1)->d_name, (*d2)->d_name);
 }
 
 } /* extern "C" */
@@ -239,65 +214,66 @@ comparator (const dirent **d1, const dirent **d2)
 void
 Library::load_modules ()
 {
-  ACE_CString subdir = path_ + "/.shobj";
+  ACE_CString const subdir = path_ + "/.shobj";
 
-  struct dirent **dent;
-  num_modules_ = ACE_OS::scandir(ACE_TEXT_CHAR_TO_TCHAR (subdir.c_str()),
-                                 &dent,selector,comparator);
+  struct dirent **dent {};
+  int const num_modules = ACE_OS::scandir (ACE_TEXT_CHAR_TO_TCHAR (subdir.c_str ()),
+                                           &dent, selector, comparator);
 
-  if (num_modules_ > 0) {
-    modules_ = new Obj_Module * [num_modules_];
-    for (int i = 0; i < num_modules_; i++) {
-      ACE_CString ent_name (ACE_TEXT_ALWAYS_CHAR (dent[i]->d_name));
-      modules_[i] = new Obj_Module(ent_name);
-      modules_[i]->add_source (ACE_CString(subdir + "/" + ent_name).c_str());
-      ACE_OS::free(dent[i]);
-    };
+  if (num_modules < 0)
+    return;
+
+  modules_.clear ();
+  for (size_t i = 0; i < static_cast<size_t> (num_modules); ++i) {
+    ACE_CString const ent_name (ACE_TEXT_ALWAYS_CHAR (dent[i]->d_name));
+    std::unique_ptr<Obj_Module> module = std::make_unique<Obj_Module> (ent_name);
+    module->add_source (ACE_CString (subdir + "/" + ent_name).c_str ());
+    modules_.push_back (std::move (module));
+    ACE_OS::free (dent[i]);
   }
 
-  if (num_modules_ > -1)
-    ACE_OS::free(dent);
+  ACE_OS::free (dent);
 }
 
 void
 Library::resolve (Sig_List &undefs)
 {
-  if (num_modules_ < 1)
+  if (modules_.empty ())
     return;
 
-  for (const Signature *uname = undefs.first();
-       undefs.hasmore();
-       uname = undefs.next()) {
-    if (exported_.index_of(uname) != -1) {
-      undefs.remove_current();
+  for (Signature const *uname = undefs.first ();
+       undefs.hasmore ();
+       uname = undefs.next ()) {
+    if (exported_.find_and_mark_used (uname)) {
+      undefs.remove_current ();
     }
     else
-      for (int i = 0; i < num_modules_; i++)
-        if (modules_[i]->extref() == 0 &&
-            modules_[i]->exports().index_of(uname) != -1)
+      for (size_t i = 0; i < modules_.size (); ++i)
+        if (modules_[i]->extref () == 0 &&
+            modules_[i]->exports ().find_and_mark_used (uname))
           {
-            undefs.remove_current();
-            exported_.add (modules_[i]->exports());
-            for (const Signature *needed = modules_[i]->imports().first();
-                 modules_[i]->imports().hasmore();
-                 needed = modules_[i]->imports().next())
-              if (exported_.index_of(needed) == -1)
-                undefs.add (needed->name());
-            modules_[i]->add_extref();
-            num_extrefs_++;
+            undefs.remove_current ();
+            exported_.add (modules_[i]->exports ());
+            for (Signature const *needed = modules_[i]->imports ().first ();
+                 modules_[i]->imports ().hasmore ();
+                 needed = modules_[i]->imports ().next ())
+              if (!exported_.find_and_mark_used (needed))
+                undefs.add (needed->name ());
+            modules_[i]->add_extref ();
+            ++num_extrefs_;
             break;
           }
   }
 }
 
 void
-Library::write_export_list (int show_ref_counts)
+Library::write_export_list (bool show_ref_counts)
 {
-  if (num_modules_ < 1)
+  if (modules_.empty ())
     return;
 
-  ACE_CString excludedfilename = path_ + "/excluded_modules";
-  ACE_CString rcpath = path_ + "/usage_metrics";
+  ACE_CString const excludedfilename = path_ + "/excluded_modules";
+  ACE_CString const rcpath = path_ + "/usage_metrics";
 
   ofstream exclusions (excludedfilename.c_str());
   if (!exclusions) {
@@ -305,43 +281,42 @@ Library::write_export_list (int show_ref_counts)
   }
 
   if (show_ref_counts) {
-    ACE_DEBUG ((LM_DEBUG, "Making directory %s\n",rcpath.c_str()));
-    if (ACE_OS::mkdir(ACE_TEXT_CHAR_TO_TCHAR (rcpath.c_str())) == -1 &&
+    ACE_DEBUG ((LM_DEBUG, "Making directory %s\n", rcpath.c_str ()));
+    if (ACE_OS::mkdir (ACE_TEXT_CHAR_TO_TCHAR (rcpath.c_str ())) == -1 &&
         errno != EEXIST)
       ACE_ERROR ((LM_ERROR, "%p\n", "mkdir"));
   }
 
-  ACE_DEBUG ((LM_DEBUG,"%s: %d out of %d modules required\n",
-              name_.c_str(), num_extrefs_, num_modules_));
+  ACE_DEBUG ((LM_DEBUG, "%s: %B out of %B modules required\n",
+              name_.c_str (), num_extrefs_, modules_.size ()));
 
-  mpcfile_->write_prolog(path_);
+  mpcfile_->write_prolog (path_);
 
-  for (int i = 0; i < num_modules_ ; i++)
-    if (modules_[i]->extref()) {
+  for (size_t i = 0; i < modules_.size (); ++i)
+    if (modules_[i]->extref ()) {
       if (show_ref_counts) {
-        ACE_CString fname = rcpath + "/" +  modules_[i]->name();
-        ofstream countfile (fname.c_str());
+        ACE_CString const fname = rcpath + "/" + modules_[i]->name ();
+        ofstream countfile (fname.c_str ());
         countfile << "Exported symbols:" << endl;
-        for (const Signature *sig = modules_[i]->exports().first();
-             modules_[i]->exports().hasmore();
-             sig = modules_[i]->exports().next())
+        for (Signature const *sig = modules_[i]->exports ().first ();
+             modules_[i]->exports ().hasmore ();
+             sig = modules_[i]->exports ().next ())
           {
-            countfile.width(5);
-            countfile << sig->used_count() << " " << sig->name() << endl;
+            countfile.width (5);
+            countfile << sig->used_count () << " " << sig->name () << endl;
           }
         countfile << "\nImported symbols:" << endl;
-        for (const Signature *n_sig = modules_[i]->imports().first();
-             modules_[i]->imports().hasmore();
-             n_sig = modules_[i]->imports().next())
-          countfile << n_sig->name() << endl;
+        for (Signature const *n_sig = modules_[i]->imports ().first ();
+             modules_[i]->imports ().hasmore ();
+             n_sig = modules_[i]->imports ().next ())
+          countfile << n_sig->name () << endl;
       }
-      mpcfile_->write_file(modules_[i]->name().substring(0,modules_[i]->name().length()-2));
+      mpcfile_->write_file (modules_[i]->name ().substring (0, modules_[i]->name ().length () - 2));
     } else {
-      //      const char * modname = modules_[i]->name().c_str();
       exclusions
-        << modules_[i]->name().substring(0,modules_[i]->name().length()-2)
+        << modules_[i]->name ().substring (0, modules_[i]->name ().length () - 2)
         << endl;
     }
 
-  mpcfile_->write_epilog();
+  mpcfile_->write_epilog ();
 }

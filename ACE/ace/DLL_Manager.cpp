@@ -117,7 +117,7 @@ ACE_DLL_Handle::open (const ACE_TCHAR *dll_name,
           this->get_dll_names (dll_name, dll_names);
 #endif
 
-          ACE_TString *name = nullptr;
+          ACE_TString *name {};
           for (ACE_Array_Iterator<ACE_TString> name_iter (dll_names);
                name_iter.next (name); name_iter.advance ())
             {
@@ -152,7 +152,6 @@ ACE_DLL_Handle::open (const ACE_TCHAR *dll_name,
                 this->refcount_));
   return 0;
 }
-
 
 int
 ACE_DLL_Handle::close (int unload)
@@ -451,8 +450,7 @@ ACE_DLL_Handle::open_i (const ACE_TCHAR *dll_name, int open_mode, ERROR_STACK* e
 /******************************************************************/
 
 // Pointer to the Singleton instance.
-ACE_DLL_Manager *ACE_DLL_Manager::instance_ = nullptr;
-
+ACE_DLL_Manager *ACE_DLL_Manager::instance_ {};
 
 ACE_DLL_Manager *
 ACE_DLL_Manager::instance (int size)
@@ -521,8 +519,8 @@ ACE_DLL_Manager::open_dll (const ACE_TCHAR *dll_name,
 {
   ACE_TRACE ("ACE_DLL_Manager::open_dll");
 
-  ACE_DLL_Handle *temp_handle = nullptr;
-  ACE_DLL_Handle *dll_handle = nullptr;
+  ACE_DLL_Handle *temp_handle {};
+  ACE_DLL_Handle *dll_handle {};
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, nullptr));
     dll_handle = this->find_dll (dll_name);
@@ -571,7 +569,7 @@ int
 ACE_DLL_Manager::close_dll (const ACE_TCHAR *dll_name)
 {
   ACE_TRACE ("ACE_DLL_Manager::close_dll");
-  ACE_DLL_Handle *handle = nullptr;
+  ACE_DLL_Handle *handle {};
 
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, 0));
@@ -612,7 +610,7 @@ ACE_DLL_Manager::unload_policy (u_long unload_policy)
           ACE_BIT_ENABLED (old_policy, ACE_DLL_UNLOAD_POLICY_PER_DLL) &&
           ACE_BIT_DISABLED (this->unload_policy_, ACE_DLL_UNLOAD_POLICY_PER_DLL) ))
       {
-        for (int i = this->current_size_ - 1; i >= 0; i--)
+        for (int i = this->current_size_ - 1; i >= 0; --i)
           {
             if (this->handle_vector_[i] &&
                 this->handle_vector_[i]->refcount () == 0)
@@ -626,7 +624,7 @@ ACE_DLL_Manager::open (int size)
 {
   ACE_TRACE ("ACE_DLL_Manager::open");
 
-  ACE_DLL_Handle **temp = nullptr;
+  ACE_DLL_Handle **temp {};
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_ALLOCATOR_RETURN (temp,
@@ -653,7 +651,7 @@ ACE_DLL_Manager::close ()
   if (this->handle_vector_ != nullptr)
     {
       // Delete components in reverse order.
-      for (int i = this->current_size_ - 1; i >= 0; i--)
+      for (int i = this->current_size_ - 1; i >= 0; --i)
         {
           if (this->handle_vector_[i])
             {
@@ -682,7 +680,7 @@ ACE_DLL_Manager::find_dll (const ACE_TCHAR *dll_name) const
 {
   ACE_TRACE ("ACE_DLL_Manager::find_dll");
 
-  for (int i = 0; i < this->current_size_; i++)
+  for (int i = 0; i < this->current_size_; ++i)
     if (this->handle_vector_[i] &&
         ACE_OS::strcmp (this->handle_vector_[i]->dll_name (), dll_name) == 0)
       {
@@ -715,7 +713,7 @@ ACE_DLL_Manager::unload_dll (ACE_DLL_Handle *dll_handle, int force_unload)
               using dll_unload_policy = int (*)();
 
               void * const unload_policy_ptr =
-                dll_handle->symbol (ACE_TEXT ("_get_dll_unload_policy"), 1);
+                dll_handle->symbol (ACE_TEXT ("_get_dll_unload_policy"), true);
               intptr_t const temp_p = reinterpret_cast<intptr_t> (unload_policy_ptr);
 
               dll_unload_policy const the_policy =

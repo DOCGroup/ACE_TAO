@@ -5,7 +5,6 @@
 #include "ace/Mem_Map.h"
 #include "ace/Default_Constants.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace
@@ -24,16 +23,15 @@ namespace
   ACE_MMAP_Memory_Pool_Options const the_pool_options (
     ACE_DEFAULT_BASE_ADDR,
     ACE_MMAP_Memory_Pool_Options::ALWAYS_FIXED,
-    0, // No need to sync
+    false, // No need to sync
     the_default_buf_size,
     MAP_SHARED, // Written data must be reflected in the backing store
                 // file in order for sendfile() to be able to read it.
-    1,
+    true,
     0,
     /* 0 */ ACE_DEFAULT_FILE_PERMS,
     true); // Generate for each mmap an unqiue pool
 }
-
 
 // Ideally we should open the backing store with shm_open() so that we
 // can avoid creating an on-disk backing store.  An on-disk backing

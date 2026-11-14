@@ -1,43 +1,43 @@
 /* -*- C++ -*- */
 interface Cubit
 {
-  // = TITLE
-  //    Defines an interface that encapsulates operations that cube
-  //    numbers.
-  //
-  // = DESCRIPTION
-  //    This interface encapsulates operations that cube
-  //    octets, shorts, longs, structs and unions.
+  /// Defines an interface that encapsulates operations that cube numbers.
+  ///
+  /// This interface encapsulates operations that cube octets, shorts,
+  /// longs, structs, and unions.
 
+  /// Test the basic latency of a nil oneway operation.
   oneway void cube_oneway ();
-  // Test the basic latency of a nil oneway operation.
 
+  /// Test the basic latency of a nil operation.
   void cube_void ();
-  // Test the basic latency of a nil operation.
 
+  /// Cube an octet.
   octet cube_octet (in octet o);
-  // cube an octet
 
+  /// Cube a short.
   short cube_short (in short s);
-  // cube a short
 
+  /// Cube a long.
   long  cube_long (in long l);
-  // cube a long
 
   struct Many
   {
-    octet o;            // + 3 bytes padding (normally) ...
+    /// Octet member, normally followed by three bytes of padding.
+    octet o;
     long l;
-    short s;            // + 2 bytes padding (normally) ...
+    /// Short member, normally followed by two bytes of padding.
+    short s;
   };
 
+  /// Cube a struct.
   Many cube_struct (in Many values);
-  // Cube a struct
 
   any cube_any(in any value);
 
   any cube_any_struct(in any value);
 
+  /// Enumeration of the different elements in a union.
   enum discrim
   {
     e_0th,
@@ -45,12 +45,10 @@ interface Cubit
     e_2nd,
     e_3rd
   };
-  // Enumeration of the different elements in a union.
-
+  /// Union of different types. Its members are easy to interpret: no
+  /// padding is needed between the discriminant and the value.
   union oneof switch (discrim)
     {
-      // this is an easy union to interpret; no padding
-      // is needed between discriminant and value.
     case e_0th:
       octet o;
     case e_1st:
@@ -63,32 +61,31 @@ interface Cubit
       // default:
       // Many cm;
     };
-  // Union of different types.
-
+  /// Cube a union.
   oneof cube_union (in oneof values);
-  // cube a union.
 
   typedef sequence<long> long_seq;
+  /// Cube several longs.
   void cube_long_sequence (in long_seq input,
                            out long_seq output);
-  // Cube several longs.
 
   typedef sequence<octet> octet_seq;
+  /// Cube an octet sequence.
   void cube_octet_sequence (in octet_seq input, out octet_seq output);
-  // Cube an octet sequence.
 
   typedef sequence<Many> many_seq;
+  /// Cube several Many values.
   void cube_many_sequence (in many_seq input,
                            out many_seq output);
-  // Cube several manys.
 
+  /// Shut down the application.
   oneway void shutdown ();
-  // shutdown the application.
 
-  // = The following types provide a torture-test for structs.
+  /// The following types provide a torture test for structs.
   struct RtiPacketHeader
   {
-    unsigned long packetLength; // this is probably redundant
+    /// Packet length; this field is probably redundant.
+    unsigned long packetLength;
     unsigned short federationHandle;
     unsigned long channelHandle;
     unsigned long packetColor;
@@ -110,7 +107,8 @@ interface Cubit
   typedef sequence<HandleValuePair> HandleValuePairSeq;
   struct RtiObjectUpdateMessageHeader
   {
-    unsigned long updateLength; // probably redundant
+    /// Update length; this field is probably redundant.
+    unsigned long updateLength;
     unsigned long updateTag;
     unsigned long objectHandle;
     double timestamp;
@@ -127,7 +125,7 @@ interface Cubit
   struct RtiInteractionMessageHeader
   {
     unsigned long updateLength;
-    // similar to object update
+    /// Remaining fields are similar to the object update header.
   };
 
   union MessageUnion switch(MessageHeaderTypes)
@@ -148,15 +146,12 @@ interface Cubit
   void cube_rti_data (in RtiPacket input,
                       out RtiPacket output);
 
-  // A work around for problems with SHMIOP since this test uses
-  // this.
+  /// Work around problems with SHMIOP, which this test uses.
   void ping ();
 };
 
 interface Cubit_Factory
 {
-  // = TITLE
-  //    Creates Cubit objects.
-
+  /// Creates Cubit objects.
   Cubit make_cubit ();
 };

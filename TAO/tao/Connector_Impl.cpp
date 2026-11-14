@@ -35,7 +35,6 @@ TAO_Connect_Creation_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLER *&sh)
   return 0;
 }
 
-
 ////////////////////////////////////////////////////////////////
 
 template <class SVC_HANDLER>

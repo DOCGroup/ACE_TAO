@@ -14,7 +14,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 //----------------------------------------------------------------------------
 /**
  * @class ImR_ResponseHandler

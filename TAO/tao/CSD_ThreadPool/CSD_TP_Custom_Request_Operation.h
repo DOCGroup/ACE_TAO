@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    CSD_TP_Custom_Request_Operation.h
  *
  *  @author  Tim Bradley <bradley_t@ociweb.com>
  */
-//=============================================================================
-
 #ifndef TAO_CSD_TP_CUSTOM_REQUEST_OPERATION_H
 #define TAO_CSD_TP_CUSTOM_REQUEST_OPERATION_H
 
@@ -34,7 +30,6 @@ namespace TAO
     using TP_Custom_Request_Operation_Handle =
       TAO_Intrusive_Ref_Count_Handle<TP_Custom_Request_Operation>;
 
-
     /**
      * @class TP_Custom_Request_Operation
      *
@@ -51,9 +46,7 @@ namespace TAO
                       : public TAO_Intrusive_Ref_Count_Base<TAO_SYNCH_MUTEX>
     {
     public:
-      /// Virtual Destructor.
-      virtual ~TP_Custom_Request_Operation();
-
+      ~TP_Custom_Request_Operation() override = default;
       /// Invoked by a worker thread to perform the operation.
       void execute();
 
@@ -66,20 +59,19 @@ namespace TAO
       /// is useful for chaining.
       PortableServer::Servant servant();
 
+      TP_Custom_Request_Operation (TP_Custom_Request_Operation const &) = delete;
+      TP_Custom_Request_Operation &operator= (TP_Custom_Request_Operation const &) = delete;
+      TP_Custom_Request_Operation (TP_Custom_Request_Operation &&) = delete;
+      TP_Custom_Request_Operation &operator= (TP_Custom_Request_Operation &&) = delete;
+
     protected:
-      /// Constructor.
       explicit TP_Custom_Request_Operation(PortableServer::Servant servant);
 
       virtual void execute_i() = 0;
       virtual void cancel_i() = 0;
 
     private:
-      TP_Custom_Request_Operation (TP_Custom_Request_Operation const &) = delete;
-      TP_Custom_Request_Operation &operator= (TP_Custom_Request_Operation const &) = delete;
-      TP_Custom_Request_Operation (TP_Custom_Request_Operation &&) = delete;
-      TP_Custom_Request_Operation &operator= (TP_Custom_Request_Operation &&) = delete;
-
-      PortableServer::ServantBase_var servant_;
+      PortableServer::ServantBase_var const servant_;
     };
   }
 }

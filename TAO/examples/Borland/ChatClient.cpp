@@ -33,7 +33,7 @@ WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     {
       Application->ShowException (&exception);
     }
-  catch (const CORBA::Exception &exception)
+  catch (CORBA::Exception const& exception)
     {
       ShowMessage (String ("CORBA exception: ") + exception._rep_id ());
     }
@@ -45,5 +45,4 @@ WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
   return 0;
 }
 //---------------------------------------------------------------------------
-
 

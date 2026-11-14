@@ -1,16 +1,8 @@
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = DESCRIPTION
-//    This simple test exercises and illustrates use of ACE value-added
-//    functions.
-//
-// = AUTHOR
-//    Steve Huston <shuston@riverace.com>
-//
-// ============================================================================
+/// @file ACE_Test.cpp
+/// This simple test exercises and illustrates use of ACE value-added
+/// functions.
+///
+/// @author Steve Huston <shuston@riverace.com>
 
 #include "test_config.h"
 
@@ -31,7 +23,7 @@ log2_test ()
       if (result != results [i])
         {
           ACE_ERROR ((LM_ERROR, ACE_TEXT ("Log2 error: input %d, output %d, expected %d\n"), values [i], result, results [i]));
-          error_count++;
+          ++error_count;
         }
     }
 
@@ -102,7 +94,6 @@ execname_test ()
 
   return error_count;
 }
-
 
 int
 run_main (int, ACE_TCHAR *[])

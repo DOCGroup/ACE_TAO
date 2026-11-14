@@ -4,11 +4,10 @@
 #include "tao/Environment.h"
 #include "tao/Exception.h"
 
-
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_LOG_MSG->priority_mask(LM_TRACE     |
+  ACE_LOG_MSG->priority_mask (LM_TRACE     |
                              LM_DEBUG     |
                              LM_INFO      |
                              LM_NOTICE    |
@@ -23,10 +22,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   try
   {
-    int ret = app.run(argc,argv);
-    return ret == 1 ? 0 : ret;
+    int const result = app.run (argc, argv);
+    return result == 1 ? 0 : result;
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
   {
      ex._tao_print_exception ("Caught exception:");
   }

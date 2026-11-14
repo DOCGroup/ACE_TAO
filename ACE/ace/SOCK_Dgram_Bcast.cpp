@@ -2,10 +2,11 @@
 
 #include "ace/Log_Category.h"
 #include "ace/ACE.h"
-#include "ace/OS_NS_string.h"
 #include "ace/os_include/net/os_if.h"
 #include "ace/OS_NS_netdb.h"
 #include "ace/OS_Memory.h"
+
+#include <cstring>
 #if defined (ACE_HAS_ALLOC_HOOKS)
 # include "ace/Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
@@ -152,19 +153,18 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
       if (hp == nullptr)
         return -1;
       else
-        ACE_OS::memcpy ((char *) &host_addr.sin_addr.s_addr,
+        std::memcpy ((char *) &host_addr.sin_addr.s_addr,
 # ifdef ACE_HOSTENT_H_ADDR
-                        (char *) hp->ACE_HOSTENT_H_ADDR,
+                     (char *) hp->ACE_HOSTENT_H_ADDR,
 # else
-                        (char *) hp->h_addr,
+                     (char *) hp->h_addr,
 # endif
-                        hp->h_length);
+                     hp->h_length);
     }
-
 
 #if !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__) && !defined (ACE_VXWORKS) && !defined(__APPLE__)
   for (int n = ifc.ifc_len / sizeof (struct ifreq) ; n > 0;
-       n--, ifr++)
+       --n, ++ifr)
 #else
   /*
      There are addresses longer than sizeof (struct sockaddr) eg. IPv6
@@ -179,7 +179,7 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
           (nbytes -= sizeof (ifr->ifr_name) + ifr->ifr_addr.sa_len,
             ifr = (struct ifreq *)
               ((caddr_t) &ifr->ifr_addr + ifr->ifr_addr.sa_len)) :
-          (nbytes -= sizeof (struct ifreq), ifr++)))
+          (nbytes -= sizeof (struct ifreq), ++ifr)))
 #endif /* !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__) && !defined (ACE_VXWORKS) && !defined(__APPLE__) */
     {
 #if defined (__QNX__) || defined (ACE_VXWORKS)
@@ -192,9 +192,7 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
         {
           struct sockaddr_in if_addr;
 
-          ACE_OS::memcpy (&if_addr,
-                          &ifr->ifr_addr,
-                          sizeof if_addr);
+          std::memcpy (&if_addr, &ifr->ifr_addr, sizeof if_addr);
 
           if (host_addr.sin_addr.s_addr != if_addr.sin_addr.s_addr)
             continue;
@@ -320,7 +318,7 @@ ACE_SOCK_Dgram_Bcast::send (const void *buf,
       else
         total_bytes += bytes_sent;
 
-      iterations++;
+      ++iterations;
     }
 
   return iterations == 0 ? 0 : total_bytes / iterations;

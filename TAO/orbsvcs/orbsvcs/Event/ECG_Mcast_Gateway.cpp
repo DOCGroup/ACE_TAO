@@ -34,7 +34,6 @@ TAO_ECG_Mcast_Gateway::init_svcs ()
     insert (&ace_svc_desc_TAO_ECG_Mcast_Gateway);
 }
 
-
 int
 TAO_ECG_Mcast_Gateway::fini ()
 {
@@ -44,7 +43,7 @@ TAO_ECG_Mcast_Gateway::fini ()
 int
 TAO_ECG_Mcast_Gateway::init (int argc, ACE_TCHAR* argv[])
 {
-  int result = 0;
+  int result {};
 
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
@@ -58,7 +57,7 @@ TAO_ECG_Mcast_Gateway::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, ACE_TEXT ("receiver")) == 0)
                 this->service_type_ = ECG_MCAST_RECEIVER;
               else if (ACE_OS::strcasecmp (opt, ACE_TEXT ("sender")) == 0)
@@ -84,7 +83,7 @@ TAO_ECG_Mcast_Gateway::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, ACE_TEXT ("basic")) == 0)
                 this->address_server_type_ = ECG_ADDRESS_SERVER_BASIC;
               else if (ACE_OS::strcasecmp (opt, ACE_TEXT ("source")) == 0)
@@ -115,14 +114,13 @@ TAO_ECG_Mcast_Gateway::init (int argc, ACE_TCHAR* argv[])
             }
         }
 
-
       else if (ACE_OS::strcasecmp (arg, ACE_TEXT ("-ECGHandler")) == 0)
         {
           arg_shifter.consume_arg ();
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, ACE_TEXT ("basic")) == 0)
                 this->handler_type_ = ECG_HANDLER_BASIC;
               else if (ACE_OS::strcasecmp (opt, ACE_TEXT ("complex")) == 0)
@@ -148,7 +146,7 @@ TAO_ECG_Mcast_Gateway::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               unsigned long tmp = ACE_OS::strtoul (opt, nullptr, 0) & 0xff;
               this->ttl_value_ = static_cast<u_char> (tmp);
               arg_shifter.consume_arg ();
@@ -282,7 +280,7 @@ TAO_ECG_Mcast_Gateway::validate_configuration ()
 TAO_ECG_Refcounted_Endpoint
 TAO_ECG_Mcast_Gateway::init_endpoint ()
 {
-  TAO_ECG_UDP_Out_Endpoint* endpoint = nullptr;
+  TAO_ECG_UDP_Out_Endpoint* endpoint {};
   TAO_ECG_Refcounted_Endpoint refendpoint;
 
   // Try to allocate a new endpoint from the heap
@@ -374,7 +372,7 @@ TAO_ECG_Mcast_Gateway::init_address_server ()
   else if (this->address_server_type_ == ECG_ADDRESS_SERVER_SOURCE)
     {
       PortableServer::Servant_var<TAO_ECG_Complex_Address_Server> impl =
-        TAO_ECG_Complex_Address_Server::create (1);
+        TAO_ECG_Complex_Address_Server::create (true);
       if (!impl.in ())
         return nullptr;
 
@@ -388,7 +386,7 @@ TAO_ECG_Mcast_Gateway::init_address_server ()
   else if (this->address_server_type_ == ECG_ADDRESS_SERVER_TYPE)
     {
       PortableServer::Servant_var<TAO_ECG_Complex_Address_Server> impl =
-        TAO_ECG_Complex_Address_Server::create (0);
+        TAO_ECG_Complex_Address_Server::create (false);
       if (!impl.in ())
         return nullptr;
 
@@ -423,7 +421,7 @@ TAO_ECG_Mcast_Gateway::init_handler (TAO_ECG_Dgram_Handler *receiver,
 
   if (this->handler_type_ == ECG_HANDLER_BASIC)
     {
-      TAO_ECG_Simple_Mcast_EH * h = nullptr;
+      TAO_ECG_Simple_Mcast_EH * h {};
       ACE_NEW_RETURN (h,
                       TAO_ECG_Simple_Mcast_EH (receiver),
                       handler);
@@ -436,7 +434,7 @@ TAO_ECG_Mcast_Gateway::init_handler (TAO_ECG_Dgram_Handler *receiver,
 
   else if (this->handler_type_ == ECG_HANDLER_COMPLEX)
     {
-      TAO_ECG_Mcast_EH * h = nullptr;
+      TAO_ECG_Mcast_EH * h {};
       ACE_NEW_RETURN (h,
                       TAO_ECG_Mcast_EH (receiver, nic),
                       handler);
@@ -449,7 +447,7 @@ TAO_ECG_Mcast_Gateway::init_handler (TAO_ECG_Dgram_Handler *receiver,
 
   else if (this->handler_type_ == ECG_HANDLER_UDP)
     {
-      TAO_ECG_UDP_EH * h = nullptr;
+      TAO_ECG_UDP_EH * h {};
       ACE_NEW_RETURN (h,
                       TAO_ECG_UDP_EH (receiver),
                       handler);

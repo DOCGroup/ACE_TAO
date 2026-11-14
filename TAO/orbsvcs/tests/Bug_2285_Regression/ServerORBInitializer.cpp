@@ -4,7 +4,6 @@
 #include "tao/ORB_Constants.h"
 #include "tao/Exception.h"
 
-
 void
 Server_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr)
@@ -29,10 +28,9 @@ Server_ORBInitializer::register_server_request_interceptors (
                     TAO249_ServerRequest_Interceptor,
                     CORBA::NO_MEMORY ());
 
+  // The ServerRequestInterceptor_var adopts the ACE_NEW_THROW_EX allocation.
   PortableInterceptor::ServerRequestInterceptor_var
     server_interceptor = sri;
 
   info->add_server_request_interceptor (server_interceptor.in ());
 }
-
-

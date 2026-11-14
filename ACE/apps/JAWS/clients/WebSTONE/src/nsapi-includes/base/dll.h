@@ -7,9 +7,7 @@
  * parties.
  */
 
-
 /* ------------------------------------------------------------------------ */
-
 
 /*
  * dll.h: Handle dynamically linked libraries
@@ -25,7 +23,6 @@
 #if defined(DLL_CAPABLE)
 
 /* --------------------------- Data structures ---------------------------- */
-
 
 #if defined(USE_NSPR)
 #include <nspr/prlink.h>
@@ -43,9 +40,7 @@ typedef shl_t DLHANDLE;  /* HP_SHL */
 typedef HINSTANCE DLHANDLE; /* WIN32 */
 #endif
 
-
 /* ------------------------------ Prototypes ------------------------------ */
-
 
 /*
  * dll_open loads the library at the given path into memory, and returns
@@ -63,7 +58,6 @@ typedef HINSTANCE DLHANDLE; /* WIN32 */
 #elif defined(DLL_WIN32)
 DLHANDLE dll_open(char *libfn);
 #endif
-
 
 /*
  * dll_findsym looks for a symbol with the given name in the library
@@ -83,7 +77,6 @@ void *dll_findsym(DLHANDLE dlp, char *name);
 #define dll_findsym(dlp, name) GetProcAddress(dlp, name)
 #endif
 
-
 /*
  * dll_error returns a string describing the last error on the given handle
  */
@@ -100,7 +93,6 @@ void *dll_findsym(DLHANDLE dlp, char *name);
 #define dll_error(dlp) system_errmsg(0)
 #endif
 
-
 /*
  * dll_close closes the previously opened library given by handle
  */
@@ -116,7 +108,6 @@ int dll_close(void *arg);
 #elif defined(DLL_WIN32)
 #define dll_close FreeLibrary
 #endif
-
 
 #endif /* DLL_CAPABLE */
 #endif

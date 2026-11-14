@@ -7,9 +7,7 @@
  * parties.
  */
 
-
 /* ------------------------------------------------------------------------ */
-
 
 /*
  * conf.h: Deals with the server configuration file.
@@ -21,7 +19,6 @@
  *
  * Rob McCool
  */
-
 
 #ifndef CONF_H
 #define CONF_H
@@ -38,13 +35,11 @@
 
 /* ------------------------------ Constants ------------------------------- */
 
-
 /* The longest line in the configuration file */
 #define CONF_MAXLEN 16384
 
 #define LF 10
 #define CR 13
-
 
 #if defined(DAEMON_ANY)
 #ifdef MCC_PROXY
@@ -58,9 +53,7 @@
 #define DEFAULT_POOL_MAX 50
 #endif
 
-
 /* ------------------------------- Globals -------------------------------- */
-
 
 #ifndef CONF_C
 
@@ -125,9 +118,7 @@ extern char *admin_email;
 
 #endif
 
-
 /* ------------------------------ Prototypes ------------------------------ */
-
 
 /*
  * conf_init reads the given configuration file and sets any non-default
@@ -141,7 +132,6 @@ char *conf_init(char *cfn);
  */
 
 void conf_terminate();
-
 
 /*
  * conf_vars2daemon transfers these globals to a daemon structure

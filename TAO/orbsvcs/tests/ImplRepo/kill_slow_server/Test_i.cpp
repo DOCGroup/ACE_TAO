@@ -14,4 +14,3 @@ Test_i::terminate ()
   exit (0);
 }
 
-

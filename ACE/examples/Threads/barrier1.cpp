@@ -6,34 +6,32 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Service_Config.h"
 
-
 #if defined (ACE_HAS_THREADS)
 
+/// Holds the arguments passed to each test thread.
 struct Tester_Args
-  // = TITLE
-  //     These arguments are passed into each test thread.
 {
   Tester_Args (ACE_Barrier &tb, int i)
     : tester_barrier_ (tb),
       n_iterations_ (i) {}
 
+  /// Synchronizes each iteration across all test threads.
   ACE_Barrier &tester_barrier_;
-  // Reference to the tester barrier.  This controls each miteration of
-  // the tester function running in every thread.
 
+  /// Number of iterations to run.
   int n_iterations_;
-  // Number of iterations to run.
 };
 
 // Iterate <n_iterations> time printing off a message and "waiting"
 // for all other threads to complete this iteration.
 
-static void *
-tester (Tester_Args *args)
+static ACE_THR_FUNC_RETURN
+tester (void *arg)
 {
+  Tester_Args * const args = static_cast<Tester_Args *> (arg);
   for (int iterations = 1;
        iterations <= args->n_iterations_;
-       iterations++)
+       ++iterations)
     {
       ACE_DEBUG ((LM_DEBUG, "(%t) in iteration %d\n", iterations));
 
@@ -41,7 +39,7 @@ tester (Tester_Args *args)
       args->tester_barrier_.wait ();
     }
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 // Default number of threads to spawn.
@@ -60,8 +58,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   Tester_Args args (tester_barrier, n_iterations);
 
   if (ACE_Thread_Manager::instance ()->spawn_n
-      (int(n_threads), ACE_THR_FUNC (tester),
-       (void *) &args, THR_NEW_LWP | THR_DETACHED) == -1)
+      (n_threads, tester,
+       &args, THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn_n"), 1);
 
   // Wait for all the threads to reach their exit point.

@@ -20,7 +20,6 @@ be_visitor_sequence_cs::be_visitor_sequence_cs (be_visitor_context *ctx)
 {
 }
 
-
 int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
 {
   // First create a name for ourselves.
@@ -126,12 +125,10 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
                            -1);
         }
 
-
       *os << " (max) {}" << be_uidt;
     }
 
   /// If we are using std::vector, we can't implement this
-  /// constructor.
   if (!be_global->alt_mapping () || !node->unbounded ())
     {
       // Constructor with the buffer

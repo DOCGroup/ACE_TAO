@@ -7,15 +7,14 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 class Top_i : public POA_Diamond::Top
 {
 public:
   Top_i ();
-  ~Top_i ();
+  ~Top_i () override;
   // Ctor and dtor.
 
-  virtual char * shape ();
+  char * shape () override;
   // Return the shape of this object (interface.)
 };
 
@@ -23,13 +22,13 @@ class Left_i : public POA_Diamond::Left
 {
 public:
   Left_i ();
-  ~Left_i ();
+  ~Left_i () override;
   // Ctor, dtor.
 
-  virtual char * shape ();
+  char * shape () override;
   // Return the shape of this object (interface.)
 
-  virtual char * color ();
+  char * color () override;
   // Return the color of this object (interface.)
 };
 
@@ -37,16 +36,16 @@ class Right_i : public POA_Diamond::Right
 {
 public:
   Right_i ();
-  ~Right_i ();
+  ~Right_i () override;
   // Ctor, dtor.
 
-  virtual char * shape ();
+  char * shape () override;
   // Return the shape of this object (interface.)
 
   virtual char * color ();
   // Return the color of this object (interface.)
 
-  virtual CORBA::Long width ();
+  CORBA::Long width () override;
   // Return the width of the stuff.
 };
 
@@ -54,19 +53,19 @@ class Buttom_i : public POA_Diamond::Buttom
 {
 public:
   Buttom_i ();
-  ~Buttom_i ();
+  ~Buttom_i () override;
   // Ctor, dtor.
 
-  virtual char * shape ();
+  char * shape () override;
   // Return the shape of this object (interface.)
 
-  virtual char * color ();
+  char * color () override;
   // Return the color of this object (interface.)
 
-  virtual CORBA::Long width ();
+  CORBA::Long width () override;
   // Return the width of the stuff.
 
-  virtual char * name ();
+  char * name () override;
   // Return the name of the object.
 };
 

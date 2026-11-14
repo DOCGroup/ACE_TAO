@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -22,9 +21,12 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Get_Opt.h"
+#include "ace/Barrier.h"
 #include "ace/Sched_Params.h"
 #include "ace/Singleton.h"
 #include "ace/Condition_Thread_Mutex.h"
+
+#include <memory>
 
 #include "tao/orbconf.h"
 
@@ -87,10 +89,6 @@ argv = force_argv;
 // A constant to avoid the utility thread blocking the machine and to
 // bound its  number of computations.
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-class ACE_Barrier;
-ACE_END_VERSIONED_NAMESPACE_DECL
-
 /**
  * @class Globals
  *
@@ -107,6 +105,11 @@ public:
   /// parse the arguments.
   int parse_args (int argc, ACE_TCHAR **argv);
 
+  Globals (Globals const &) = delete;
+  Globals (Globals &&) = delete;
+  Globals &operator= (Globals const &) = delete;
+  Globals &operator= (Globals &&) = delete;
+
   /**
    * Enables fifo scheduling.
    * Returns 0 on success, 1 if insufficient permission, or -1
@@ -117,31 +120,31 @@ public:
 
   /// Thread creation flags.  Must call sched_fifo_init () before
   /// accessing.
-  long thr_create_flags;
+  long thr_create_flags {};
 
   /// Default thread priority, used for the high thread priority.
   /// Must call sched_fifo_init () before accessing.
-  int default_priority;
+  int default_priority {};
 
   /// endpoint to be used for ORB_init.
-  ACE_TCHAR endpoint[BUFSIZ];
+  ACE_TCHAR endpoint[BUFSIZ] {};
 
   /// file name to read/write the iors of the servants.
-  ACE_TCHAR *ior_file;
+  std::unique_ptr<ACE_TCHAR[]> ior_file {};
 
   /// number of objects per servant thread.
-  u_int num_of_objs;
+  u_int num_of_objs {2};
 
   ///  thread_per_rate test flag.
-  u_int thread_per_rate;
+  u_int thread_per_rate {};
 
   /// flag to use multiple priorities for the low priority servants
   /// instead of one priority.
-  u_int use_multiple_priority;
+  u_int use_multiple_priority {};
 
   /// ready flag used by the high priority thread to wake up the low
   /// priority threads after it's parsed the arguments.
-  int ready_;
+  int ready_ {};
 
   /// mutex for the condition variable.
   TAO_SYNCH_MUTEX ready_mtx_;
@@ -152,11 +155,11 @@ public:
 
   /// Barrier for the multiple servants to synchronize after binding to
   /// the orb.
-  ACE_Barrier *barrier_;
+  std::unique_ptr<ACE_Barrier> barrier_ {};
 };
 
 // Make the globals a Singleton.
-typedef ACE_Singleton<Globals,ACE_Null_Mutex> GLOBALS;
+using GLOBALS = ACE_Singleton<Globals, ACE_Null_Mutex>;
 
 /**
  * @class MT_Priority
@@ -172,11 +175,9 @@ typedef ACE_Singleton<Globals,ACE_Null_Mutex> GLOBALS;
 class MT_Priority
 {
 public:
-  /// constructor.
-  MT_Priority ();
+  MT_Priority () = default;
 
-  /// Destructor.
-  virtual ~MT_Priority ();
+  virtual ~MT_Priority () = default;
 
   /// Sets the priority of the high priority thread.
   virtual ACE_Sched_Priority get_high_priority ();
@@ -195,7 +196,7 @@ public:
 
 protected:
   /// Number of priorities used.
-  u_int num_priorities_;
+  u_int num_priorities_ {};
 
   /**
    * Granularity of the assignment of the priorities.  Some OSs have
@@ -203,7 +204,7 @@ protected:
    * with this mechanism we assign priorities to groups of threads
    * when there are more threads than priorities.
    */
-  u_int grain_;
+  u_int grain_ {};
 };
 
 #endif /* GLOBALS_H */

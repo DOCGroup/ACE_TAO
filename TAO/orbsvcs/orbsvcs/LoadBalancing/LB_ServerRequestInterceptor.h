@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_LB_SERVER_REQUEST_INTERCEPTOR_H
 #define TAO_LB_SERVER_REQUEST_INTERCEPTOR_H
 
@@ -49,8 +48,7 @@ class TAO_LoadBalancing_Export TAO_LB_ServerRequestInterceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
-  TAO_LB_ServerRequestInterceptor (TAO_LB_LoadAlert & load_alert);
+  explicit TAO_LB_ServerRequestInterceptor (TAO_LB_LoadAlert & load_alert);
 
   /**
    * @name Methods Required by the ServerRequestInterceptor
@@ -77,7 +75,6 @@ public:
   //@}
 
 protected:
-  /// Destructor.
   /**
    * Protected destructor to enforce correct memory management via
    * reference counting.

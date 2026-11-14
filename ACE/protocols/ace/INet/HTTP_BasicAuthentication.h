@@ -33,16 +33,14 @@ namespace ACE
         class ACE_INET_Export BasicAuthentication
           {
             public:
-              /// Constructor
               BasicAuthentication();
 
               /// Constructor. Sets user id and password.
               BasicAuthentication(const ACE_CString& user, const ACE_CString& passwd);
 
               /// Constructor. Decodes cedentials from request (if any).
-              BasicAuthentication(const Request& request);
+              explicit BasicAuthentication(const Request& request);
 
-              /// Destructor
               virtual ~BasicAuthentication();
 
               /// Set user id.
@@ -62,11 +60,12 @@ namespace ACE
 
               static const char* SCHEME;
 
-            private:
-              // prevent copying
-              BasicAuthentication(const BasicAuthentication&);
-              BasicAuthentication& operator =(BasicAuthentication&);
+              BasicAuthentication (BasicAuthentication const &) = delete;
+              BasicAuthentication (BasicAuthentication &&) = delete;
+              BasicAuthentication &operator= (BasicAuthentication const &) = delete;
+              BasicAuthentication &operator= (BasicAuthentication &&) = delete;
 
+            private:
               ACE_CString user_;
               ACE_CString passwd_;
           };

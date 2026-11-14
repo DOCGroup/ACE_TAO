@@ -51,7 +51,6 @@ namespace CORBA
 class TAO_Notify_Serv_Export TAO_Notify_Service : public ACE_Service_Object
 {
 public:
-  /// Destructor.
   virtual ~TAO_Notify_Service ();
 
   /// Load an implementation of the TAO_Notify_Service based on which
@@ -59,7 +58,7 @@ public:
   static TAO_Notify_Service* load_default ();
 
   /// Init the service from configurator
-  virtual int init (int argc, ACE_TCHAR *argv[]) = 0;
+  int init (int argc, ACE_TCHAR *argv[]) override = 0;
 
   /// Init the service.
   virtual void init_service (CORBA::ORB_ptr orb) = 0;

@@ -269,7 +269,6 @@ class ACE_Export ACE_QoS
 #endif /* ACE_HAS_WINSOCK2 */
 {
 public:
-  /// Constructor
   ACE_QoS ();
 
   /// Get the flow spec for data sending.
@@ -399,7 +398,7 @@ public:
    * passed back to the application as a condition function parameter,
    * i.e., it is an Asynchronous Completion Token (ACT).
    */
-  ACE_Accept_QoS_Params (ACE_QOS_CONDITION_FUNC qos_condition_callback = 0,
+  ACE_Accept_QoS_Params (ACE_QOS_CONDITION_FUNC qos_condition_callback = nullptr,
                          unsigned long callback_data = 0);
 
   /// Get QoS condition callback.

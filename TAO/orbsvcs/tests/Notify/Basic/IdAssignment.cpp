@@ -23,7 +23,7 @@ IdAssignment::parse_args (int argc,
 {
     ACE_Arg_Shifter arg_shifter (argc, argv);
 
-    const ACE_TCHAR *current_arg = 0;
+    ACE_TCHAR const *current_arg {};
 
     while (arg_shifter.is_anything_left ())
     {
@@ -121,13 +121,11 @@ IdAssignment::create_ec ()
   return id;
 }
 
-
 void
 IdAssignment::destroy_ec(CosNotifyChannelAdmin::ChannelID id)
 {
   CosNotifyChannelAdmin::EventChannel_var ec =
     this->notify_factory_->get_event_channel (id);
-
 
   if (CORBA::is_nil (ec.in()))
     {
@@ -148,7 +146,6 @@ IdAssignment::create_supplier_admin (CosNotifyChannelAdmin::ChannelID channel_id
 
   CosNotifyChannelAdmin::EventChannel_var ec =
     this->notify_factory_->get_event_channel (channel_id);
-
 
   if (CORBA::is_nil (ec.in ()))
     {
@@ -204,7 +201,6 @@ IdAssignment::create_consumer_admin (CosNotifyChannelAdmin::ChannelID channel_id
   return adminid;
 }
 
-
 bool
 IdAssignment::default_consumer_admin_test (CosNotifyChannelAdmin::ChannelID channel_id)
 {
@@ -249,7 +245,6 @@ IdAssignment::default_consumer_admin_test (CosNotifyChannelAdmin::ChannelID chan
 
   return true;
 }
-
 
 bool
 IdAssignment::default_supplier_admin_test (CosNotifyChannelAdmin::ChannelID channel_id)
@@ -296,16 +291,13 @@ IdAssignment::default_supplier_admin_test (CosNotifyChannelAdmin::ChannelID chan
   return true;
 }
 
-
 void
 IdAssignment::destroy_consumer_admin (
     CosNotifyChannelAdmin::ChannelID channel_id,
-    CosNotifyChannelAdmin::AdminID admin_id
-  )
+    CosNotifyChannelAdmin::AdminID admin_id)
 {
   CosNotifyChannelAdmin::EventChannel_var ec =
     this->notify_factory_->get_event_channel (channel_id);
-
 
   if (CORBA::is_nil (ec.in ()))
     {
@@ -330,16 +322,13 @@ IdAssignment::destroy_consumer_admin (
                 "destroyed consumer admin\n"));
 }
 
-
 void
 IdAssignment::destroy_supplier_admin (
     CosNotifyChannelAdmin::ChannelID channel_id,
-    CosNotifyChannelAdmin::AdminID admin_id
-  )
+    CosNotifyChannelAdmin::AdminID admin_id)
 {
   CosNotifyChannelAdmin::EventChannel_var ec =
     this->notify_factory_->get_event_channel (channel_id);
-
 
   if (CORBA::is_nil (ec.in ()))
     {
@@ -364,15 +353,15 @@ IdAssignment::destroy_supplier_admin (
 void
 IdAssignment::run_test()
 {
-  CosNotifyChannelAdmin::ChannelID* ec_id = 0;
+  CosNotifyChannelAdmin::ChannelID *ec_id {};
   ACE_NEW (ec_id,
            CosNotifyChannelAdmin::ChannelID [this->ec_count_]);
 
-  CosNotifyChannelAdmin::AdminID* consumer_admin_id = 0;
+  CosNotifyChannelAdmin::AdminID *consumer_admin_id {};
   ACE_NEW (consumer_admin_id,
            CosNotifyChannelAdmin::AdminID [this->consumer_admin_count_]);
 
-  CosNotifyChannelAdmin::AdminID* supplier_admin_id = 0;
+  CosNotifyChannelAdmin::AdminID *supplier_admin_id {};
   ACE_NEW (supplier_admin_id,
            CosNotifyChannelAdmin::AdminID [this->supplier_admin_count_]);
 
@@ -422,7 +411,6 @@ IdAssignment::run_test()
         }
 
     } // for
-
 
   //******************************************************************************
   // Repeat, but this time destroy the admins explicity.
@@ -500,7 +488,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       test.run_test ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Error: ");
       return 1;

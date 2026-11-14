@@ -18,17 +18,17 @@ TAO_FT_Random::next_location (
   PortableGroup::Locations_var locations =
     naming_manager->locations_of_members (object_group);
 
-  const CORBA::ULong len = locations->length ();
+  CORBA::ULong const len = locations->length ();
 
   // No locations exist, so we can't get the next one
   if (len == 0)
     return false;
 
-  CORBA::ULong i = 0;
+  CORBA::ULong i {};
   if (len > 1)
     {
       // Prevent integer arithmetic overflow.
-      double flen = static_cast<double> (len);
+      double const flen = static_cast<double> (len);
       do
         {
           i = static_cast<CORBA::ULong> (flen * ACE_OS::rand () / (RAND_MAX + 1.0));
@@ -38,6 +38,5 @@ TAO_FT_Random::next_location (
   location = locations[i];
   return true;
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

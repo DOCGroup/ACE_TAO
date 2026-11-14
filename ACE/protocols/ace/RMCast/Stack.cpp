@@ -12,10 +12,7 @@ namespace ACE_RMCast
   }
 
   Out_Element::
-  Out_Element ()
-      : out_ (0)
-  {
-  }
+  Out_Element () = default;
 
   void Out_Element::
   out_start (Out_Element* out)
@@ -31,9 +28,8 @@ namespace ACE_RMCast
   void Out_Element::
   out_stop ()
   {
-    out_ = 0;
+    out_ = nullptr;
   }
-
 
   // In_Element
   //
@@ -44,10 +40,7 @@ namespace ACE_RMCast
   }
 
   In_Element::
-  In_Element ()
-      : in_ (0)
-  {
-  }
+  In_Element () = default;
 
   void In_Element::
   in_start (In_Element* in)
@@ -63,6 +56,6 @@ namespace ACE_RMCast
   void In_Element::
   in_stop ()
   {
-    in_ = 0;
+    in_ = nullptr;
   }
 }

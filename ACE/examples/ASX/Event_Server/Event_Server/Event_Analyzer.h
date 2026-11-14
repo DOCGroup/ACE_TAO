@@ -11,31 +11,42 @@
 #include "ace/Module.h"
 #include "ace/Task.h"
 
+/**
+ * @class Event_Analyzer
+ * @brief Forwards received ACE_Message_Blocks to the neighboring stream module.
+ *
+ * In a full event service, application-specific processing would be done in
+ * this class's put() or svc() method.
+ */
 class Event_Analyzer : public ACE_Task<ACE_SYNCH>
 {
-  // = TITLE
-  //     This class forwards all the <ACE_Message_Block>s it receives
-  //     onto its neighboring Module in the Stream.
-  //
-  // = DESCRIPTION
-  //     In a "real" event service, application-specific processing
-  //     would be done in the <put> (or <svc>) method in this class.
 public:
-  virtual int open (void *a = 0);
-  virtual int close (u_long flags = 0);
+  Event_Analyzer () = default;
+  Event_Analyzer (Event_Analyzer const &) = delete;
+  Event_Analyzer (Event_Analyzer &&) = delete;
+  Event_Analyzer &operator= (Event_Analyzer const &) = delete;
+  Event_Analyzer &operator= (Event_Analyzer &&) = delete;
 
-  virtual int put (ACE_Message_Block *msg,
-                   ACE_Time_Value * = 0);
-  // Entry point into this task.
+  int open (void *a = nullptr) override;
+  int close (u_long flags = 0) override;
 
-  // Dynamic linking hooks (not used).
-  virtual int init (int argc, ACE_TCHAR *argv[]);
-  virtual int fini ();
-  virtual int info (ACE_TCHAR **info_string,
-                    size_t length) const;
+  /// Entry point into this task.
+  int put (ACE_Message_Block *msg,
+           ACE_Time_Value * = nullptr) override;
+
+  /// @name Dynamic linking hooks
+  /// @{
+
+  int init (int argc, ACE_TCHAR *argv[]) override;
+  int fini () override;
+  int info (ACE_TCHAR **info_string,
+            size_t length) const override;
+
+  /// @}
+
 private:
+  /// Process watermark control messages.
   virtual int control (ACE_Message_Block *);
-  // Implements the watermark control processing.
 };
 
 #endif /* _EVENT_ANALYZER_H */

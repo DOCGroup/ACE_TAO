@@ -33,13 +33,13 @@ Echo_Client_Request_Interceptor::send_poll (PortableInterceptor::ClientRequestIn
 void
 Echo_Client_Request_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-  bool catched_exception = false;
+  bool catched_exception {};
   try
     {
       PortableInterceptor::ReplyStatus rstatus = ri->reply_status ();
       ACE_UNUSED_ARG (rstatus);
     }
-  catch (const ::CORBA::BAD_INV_ORDER& ex)
+  catch (::CORBA::BAD_INV_ORDER const& ex)
     {
       // BAD_INV_ORDER should be thrown with minor code 14
       catched_exception = (ex.minor () == (CORBA::OMGVMCID | 14));
@@ -71,9 +71,10 @@ Echo_Client_Request_Interceptor::send_request (PortableInterceptor::ClientReques
                       "(%P|%t) All parameters not available\n"));
         }
 
-      CORBA::ULong first = 0, second = 1; // If you dont understand
-                                          // why this is  done, then
-                                          // try changing it.
+      CORBA::ULong const first {};
+      CORBA::ULong const second {1}; // If you dont understand
+                                     // why this is  done, then
+                                     // try changing it.
       if (paramlist[first].mode != CORBA::PARAM_IN ||
           paramlist[second].mode != CORBA::PARAM_OUT)
         {
@@ -81,7 +82,7 @@ Echo_Client_Request_Interceptor::send_request (PortableInterceptor::ClientReques
                       "(%P|%t) ERROR in the extracted argument list\n"));
         }
 
-      CORBA::Long param = 0;
+      CORBA::Long param {};
       paramlist[first].argument >>= param;
 
       if (param != 10)
@@ -137,9 +138,10 @@ Echo_Client_Request_Interceptor::receive_reply (PortableInterceptor::ClientReque
                       "(%P|%t) All parameters not available\n"));
         }
 
-      CORBA::ULong first = 0, second = 1; // If you dont understand
-                                          // why this is  done, then
-                                          // try changing it.
+      CORBA::ULong const first {};
+      CORBA::ULong const second {1}; // If you dont understand
+                                     // why this is  done, then
+                                     // try changing it.
       if (paramlist[first].mode != CORBA::PARAM_IN ||
           paramlist[second].mode != CORBA::PARAM_OUT)
         {
@@ -148,7 +150,7 @@ Echo_Client_Request_Interceptor::receive_reply (PortableInterceptor::ClientReque
                       "(%P|%t) ERROR in the extracted argument list\n"));
         }
 
-      CORBA::Long param = 0;
+      CORBA::Long param {};
       paramlist[first].argument >>= param;
 
       if (param != 10)
@@ -160,7 +162,7 @@ Echo_Client_Request_Interceptor::receive_reply (PortableInterceptor::ClientReque
                       "arguments\n"));
         }
 
-      const char *str = 0;
+      char const *str {};
 
       paramlist[second].argument >>= str;
 
@@ -180,8 +182,8 @@ Echo_Client_Request_Interceptor::receive_reply (PortableInterceptor::ClientReque
     {
       Dynamic::ParameterList_var paramlist = ri->arguments ();
 
-      CORBA::Long param1, param2, result;
-      CORBA::ULong i = 0;  // index -- explicitly used to avoid
+      CORBA::Long param1 {}, param2 {}, result {};
+      CORBA::ULong i {};  // index -- explicitly used to avoid
                            // overloaded operator ambiguity.
       paramlist[i++].argument >>= param1;
       paramlist[i].argument >>= param2;
@@ -201,7 +203,7 @@ Echo_Client_Request_Interceptor::receive_reply (PortableInterceptor::ClientReque
     {
       CORBA::Any_var a = ri->result ();
 
-      const Test_Interceptors::Visual::VarLenStruct * v = nullptr;
+      Test_Interceptors::Visual::VarLenStruct const * v {};
 
       (a.in ()) >>= v;
 
@@ -231,5 +233,4 @@ Echo_Client_Request_Interceptor::receive_exception (
               "Exception ID = %C\n",
               exception_id.in ()));
 }
-
 

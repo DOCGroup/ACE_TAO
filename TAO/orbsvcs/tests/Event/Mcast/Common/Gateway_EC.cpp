@@ -6,28 +6,29 @@
 #include "ace/Dynamic_Service.h"
 #include "ace/OS_NS_stdio.h"
 
+#include <memory>
+
 Gateway_EC::Gateway_EC ()
-  : ec_ior_file_ (ACE_TEXT("gateway-ec.ior"))
+  : ec_ior_file_ (ACE_TEXT ("gateway-ec.ior"))
 {
 }
 
 int
-Gateway_EC::check_for_nil (CORBA::Object_ptr obj, const char *message)
+Gateway_EC::check_for_nil (CORBA::Object_ptr obj, char const* message)
 {
   if (CORBA::is_nil (obj))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "ERROR: Object reference <%s> is nil\n",
                        message),
                       -1);
-  else
-    return 0;
+  return 0;
 }
 
 int
 Gateway_EC::parse_args (int argc, ACE_TCHAR *argv [])
 {
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("i:"));
-  int opt;
+  int opt {};
 
   while ((opt = get_opt ()) != EOF)
     {
@@ -59,17 +60,17 @@ Gateway_EC::write_ior_file (CORBA::ORB_ptr orb,
   CORBA::String_var str;
   str = orb->object_to_string (ec);
 
-  FILE *output_file= ACE_OS::fopen (this->ec_ior_file_, "w");
-  if (output_file == 0)
+  std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+    ACE_OS::fopen (this->ec_ior_file_.c_str (), "w"), ACE_OS::fclose);
+  if (!output_file)
     {
       ACE_ERROR ((LM_ERROR,
                   "Cannot open output file for writing IOR: %s",
-                  this->ec_ior_file_));
+                  this->ec_ior_file_.c_str ()));
       throw CORBA::INTERNAL ();
     }
 
-  ACE_OS::fprintf (output_file, "%s", str.in ());
-  ACE_OS::fclose (output_file);
+  ACE_OS::fprintf (output_file.get (), "%s", str.in ());
 }
 
 int
@@ -80,7 +81,7 @@ Gateway_EC::run (int argc, ACE_TCHAR ** argv)
   // Mcast gateway configuration.
   TAO_ECG_Mcast_Gateway::init_svcs ();
 
-  TAO_EC_ORB_Holder orb_destroyer;
+  TAO_EC_ORB_Holder orb_destroyer {};
 
   try
     {
@@ -103,7 +104,7 @@ Gateway_EC::run (int argc, ACE_TCHAR ** argv)
       manager->activate ();
 
       // Set up EC.
-      PortableServer::Servant_var<EC_Wrapper> ec_wrapper (EC_Wrapper::create ());
+      PortableServer::Servant_var<EC_Wrapper> ec_wrapper {EC_Wrapper::create ()};
       if (!ec_wrapper.in ())
         return -1;
 
@@ -123,8 +124,8 @@ Gateway_EC::run (int argc, ACE_TCHAR ** argv)
 
       // Set up multicast components.
       // Obtain mcast gateway from service configurator.
-      TAO_ECG_Mcast_Gateway * gateway = 0;
-      gateway =
+      // The service configurator owns this non-owning pointer.
+      TAO_ECG_Mcast_Gateway* const gateway =
         ACE_Dynamic_Service<TAO_ECG_Mcast_Gateway>::instance ("ECG_Mcast_Gateway");
 
       if (!gateway)
@@ -136,7 +137,7 @@ Gateway_EC::run (int argc, ACE_TCHAR ** argv)
       // Run server.
       orb->run ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Unexpected Exception in Gateway EC:");
     }

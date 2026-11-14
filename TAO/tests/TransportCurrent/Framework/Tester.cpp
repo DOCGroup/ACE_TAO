@@ -9,15 +9,15 @@ using namespace TAO;
 int
 test_transport_current (Transport::Current_ptr tc)
 {
-  CORBA::Long id = tc->id ();
+  CORBA::Long const id = tc->id ();
 
-  TAO::CounterT bs = tc->bytes_sent ();
+  TAO::CounterT const bs = tc->bytes_sent ();
 
-  TAO::CounterT br = tc->bytes_received ();
+  TAO::CounterT const br = tc->bytes_received ();
 
-  TAO::CounterT rs = tc->messages_sent ();
+  TAO::CounterT const rs = tc->messages_sent ();
 
-  TAO::CounterT rr = tc->messages_received ();
+  TAO::CounterT const rr = tc->messages_received ();
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Tester (%P|%t) Transport [%q] - Sent/Received [bytes=%q/%q, messages=%q/%q]\n"),

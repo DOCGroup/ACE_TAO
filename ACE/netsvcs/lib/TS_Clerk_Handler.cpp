@@ -247,7 +247,7 @@ ACE_TS_Clerk_Handler::recv_reply (ACE_Time_Request &reply)
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("****************** recv_reply returned -1\n")));
           ACE_FALLTHROUGH;
         default:
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p got %d bytes, expected %d bytes\n"),
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p got %b bytes, expected %b bytes\n"),
                       ACE_TEXT ("recv failed"), n, bytes_expected));
           ACE_FALLTHROUGH;
         case 0:
@@ -261,7 +261,6 @@ ACE_TS_Clerk_Handler::recv_reply (ACE_Time_Request &reply)
                        ACE_TEXT ("decode failed")), -1);
   return 0;
 }
-
 
 int
 ACE_TS_Clerk_Handler::send_request (ACE_UINT32 sequence_num, ACE_Time_Info &time_info)
@@ -328,7 +327,7 @@ ACE_TS_Clerk_Processor::alloc ()
   ACE_TRACE ("ACE_TS_Clerk_Processor::alloc");
   ACE_NEW (this->shmem_, ALLOCATOR (this->poolname_));
 
-  void *temp = 0;
+  void *temp {};
 
   // Only create the state if it doesn't already exist.
   if (this->shmem_->find (ACE_DEFAULT_TIME_SERVER_STR, temp) ==  -1)
@@ -367,14 +366,14 @@ ACE_TS_Clerk_Processor::update_time ()
   ACE_UINT32 expected_sequence_num = this->cur_sequence_num_;
 
   // Increment sequence number
-  this->cur_sequence_num_++;
+  ++this->cur_sequence_num_;
 
   int count = 0;
   time_t total_delta = 0;
   ACE_Time_Info time_info;
 
   //  Call send_request() on all handlers
-  ACE_TS_Clerk_Handler **handler = 0;
+  ACE_TS_Clerk_Handler **handler {};
 
   for (HANDLER_SET_ITERATOR set_iterator (this->handler_set_);
        set_iterator.next (handler) != 0;
@@ -388,7 +387,7 @@ ACE_TS_Clerk_Processor::update_time ()
           else if (expected_sequence_num != 0 &&
                    time_info.sequence_num_ == expected_sequence_num)
             {
-              count++;
+              ++count;
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("[%d] Delta time: %d\n"),
                           count, time_info.delta_time_));
@@ -422,7 +421,6 @@ ACE_TS_Clerk_Processor::update_time ()
   return 0;
 }
 
-
 int
 ACE_TS_Clerk_Processor::fini ()
 {
@@ -433,7 +431,7 @@ ACE_TS_Clerk_Processor::fini ()
     ACE_Reactor::instance ()->cancel_timer (this->timer_id_);
 
   // Destroy all the handlers
-  ACE_TS_Clerk_Handler **handler = 0;
+  ACE_TS_Clerk_Handler **handler {};
 
   for (HANDLER_SET_ITERATOR set_iterator (this->handler_set_);
        set_iterator.next (handler) != 0;
@@ -482,7 +480,7 @@ ACE_TS_Clerk_Processor::init (int argc, ACE_TCHAR *argv[])
     ? ACE_Synch_Options::asynch : ACE_Synch_Options::synch;
 
   // Now set up connections to all servers
-  ACE_TS_Clerk_Handler **handler = 0;
+  ACE_TS_Clerk_Handler **handler {};
 
   for (HANDLER_SET_ITERATOR set_iterator (this->handler_set_);
        set_iterator.next (handler) != 0;

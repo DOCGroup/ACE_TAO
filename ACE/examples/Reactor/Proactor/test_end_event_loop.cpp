@@ -15,7 +15,6 @@
  */
 //=============================================================================
 
-
 #include "ace/OS_NS_unistd.h"
 #include "ace/Proactor.h"
 #include "ace/Task.h"
@@ -36,12 +35,10 @@
 class My_Task: public ACE_Task <ACE_NULL_SYNCH>
 {
 public:
-  // Constructor.
   My_Task ()
     : time_flag_ (0)
     {}
 
-  /// Destructor.
   ~My_Task () override = default;
 
   //FUZZ: disable check_for_lack_ACE_OS

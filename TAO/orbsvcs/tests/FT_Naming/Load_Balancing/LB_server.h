@@ -9,23 +9,26 @@
  */
 //=============================================================================
 
+#ifndef FT_NAMING_LOAD_BALANCING_LB_SERVER_H
+#define FT_NAMING_LOAD_BALANCING_LB_SERVER_H
 
 #include "orbsvcs/FT_NamingManagerC.h"
 #include "orbsvcs/PortableGroupC.h"
 #include "tao/PortableServer/PortableServer.h"
-#include "ace/Get_Opt.h"
 #include "orbsvcs/Naming/Naming_Client.h"
 
-// Forward Declaration of the kind of servant we would like to handle
-// by the server.
 class Basic;
+
+struct LB_Server_Options
+{
+  ACE_TString ior_output_file { ACE_TEXT ("obj.ior") };
+};
 
 /**
  * @class LB_server
  *
  * @brief Encapsulate the test in class.
  *
- * TODO:  Fix description
  * This is a class used to retrieve the NamingManager reference and
  * create the Object Group.  Servants add themselves to the object
  * group and the object group reference is published to the clients.
@@ -35,59 +38,55 @@ class Basic;
 class LB_server
 {
 public:
-  /// Constructor
   LB_server (int argc, ACE_TCHAR **argv);
 
-  /// destroys NamingManager, ORB and POA.
+  LB_server (LB_server const &) = delete;
+  LB_server &operator= (LB_server const &) = delete;
+  LB_server (LB_server &&) = delete;
+  LB_server &operator= (LB_server &&) = delete;
+
+  /// Destroy the Naming Manager, ORB, and POA.
   int destroy ();
 
-  /// start the ORB.
+  /// Start the ORB and connect to the naming services.
   int start_orb_and_poa ();
 
-  /// Get the NamingManager Interface.
-  int init (int argc, ACE_TCHAR **argv);
-
-  /// Create the Object Group using the Load Manager Reference.
+  /// Create the object group using the Naming Manager.
   int create_object_group ();
 
-  /// register the servants with the object group.
-  int register_servant (Basic *servant, const char *loc);
+  /// Register a servant with the object group.
+  int register_servant (Basic *servant, char const *loc);
 
   /// obtain the name service facade
-  TAO_Naming_Client& name_svc ();
+  TAO_Naming_Client &name_svc ();
 
-  /// for servants to register to the initialised ORB.
-  CORBA::ORB_ptr orb ();
+  /// Return the ORB used by this server.
+  CORBA::ORB_ptr orb () const;
 
-  /// for servants to get the reference for object_group.
-  CORBA::Object_ptr object_group ();
+  /// Return the current object group reference.
+  CORBA::Object_ptr object_group () const;
 
-  /// for servants to get the reference for object_group.
-  FT_Naming::NamingManager_ptr naming_manager ();
-
-private:
-    int parse_args (int, ACE_TCHAR **);
+  /// Return the Naming Manager reference.
+  FT_Naming::NamingManager_ptr naming_manager () const;
 
 private:
-  /// Load Manager
+  int parse_args (int argc, ACE_TCHAR *argv[]);
+
+  int write_ior_to_file (char const *ior);
+
+  /// Naming Manager
   FT_Naming::NamingManager_var naming_manager_;
 
   /// Object Group.
   CORBA::Object_var object_group_;
 
-  /// factory id for the object group.
-  PortableGroup::GenericFactory::FactoryCreationId_var fcid_;
-
-  /// Used to force the creation of the object group only once.
-  static int called_once_;
-
-  /// write the IOR to a file so that it can be read later.
-  int write_ior_to_file (const char *);
-
   CORBA::ORB_var orb_;
   int argc_;
+  // Borrowed from main for ORB_init.
   ACE_TCHAR **argv_;
   PortableServer::POA_var root_poa_;
-  const ACE_TCHAR *ior_output_file_;
+  LB_Server_Options options_;
   TAO_Naming_Client name_svc_;
 };
+
+#endif /* FT_NAMING_LOAD_BALANCING_LB_SERVER_H */

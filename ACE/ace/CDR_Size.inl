@@ -1,6 +1,8 @@
 // -*- C++ -*-
 #include "ace/OS_NS_string.h"
 
+#include <cstring>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
@@ -30,7 +32,6 @@ ACE_SizeCDR::total_length () const
 {
   return this->size_;
 }
-
 
 // Encode the CDR stream.
 
@@ -125,7 +126,7 @@ ACE_SizeCDR::write_string (const ACE_CDR::Char *x)
   if (x != 0)
     {
       const ACE_CDR::ULong len =
-        static_cast<ACE_CDR::ULong> (ACE_OS::strlen (x));
+        static_cast<ACE_CDR::ULong> (std::strlen (x));
       return this->write_string (len, x);
     }
   return this->write_string (0, 0);
@@ -287,7 +288,6 @@ ACE_SizeCDR::write_float_array (const ACE_CDR::Float *x,
                             length);
 }
 
-
 ACE_INLINE ACE_CDR::Boolean
 ACE_SizeCDR::write_double_array (const ACE_CDR::Double *x,
                                    ACE_CDR::ULong length)
@@ -308,9 +308,7 @@ ACE_SizeCDR::write_longdouble_array (const ACE_CDR::LongDouble* x,
                             length);
 }
 
-
 // ****************************************************************
-
 
 ACE_INLINE ACE_CDR::Boolean
 operator<< (ACE_SizeCDR &ss, ACE_CDR::Char x)
@@ -464,7 +462,7 @@ operator<< (ACE_SizeCDR &ss, ACE_OutputCDR::from_string x)
 
   if (x.val_ != 0)
     {
-      len = static_cast<ACE_CDR::ULong> (ACE_OS::strlen (x.val_));
+      len = static_cast<ACE_CDR::ULong> (std::strlen (x.val_));
     }
 
   ss.write_string (len, x.val_);
@@ -484,6 +482,5 @@ operator<< (ACE_SizeCDR &ss, ACE_OutputCDR::from_wstring x)
   ss.write_wstring (len, x.val_);
   return (ss.good_bit () && (!x.bound_ || len <= x.bound_));
 }
-
 
 ACE_END_VERSIONED_NAMESPACE_DECL

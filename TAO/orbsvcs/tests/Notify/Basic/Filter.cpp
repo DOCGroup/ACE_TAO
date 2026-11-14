@@ -3,7 +3,6 @@
 #include "tao/debug.h"
 #include "Filter.h"
 
-
 Filter::Filter ()
   : event_count_ (5)
 {
@@ -136,7 +135,7 @@ Filter::add_filter (CosNotifyFilter::FilterAdmin_ptr filter_admin)
 
   ACE_ASSERT (!CORBA::is_nil (filter.in ()));
 
-  const char* test_filter_string = "A > B";
+  char const *test_filter_string = "A > B";
 
   CosNotifyFilter::ConstraintExpSeq constraint_list (1);
   constraint_list.length (1);
@@ -160,14 +159,13 @@ Filter::print_filters (CosNotifyFilter::FilterAdmin_ptr filter_admin)
 {
   CosNotifyFilter::FilterIDSeq_var filter_seq = filter_admin->get_all_filters ();
 
-  ACE_DEBUG ((LM_DEBUG, "Getting all %d filters...\n", filter_seq->length ()));
+  ACE_DEBUG ((LM_DEBUG, "Getting all %u filters...\n", filter_seq->length ()));
 
   for (CORBA::ULong i = 0; i < filter_seq->length (); ++i)
     {
         ACE_DEBUG ((LM_DEBUG, " Filter %d\n", filter_seq[i]));
     }
 }
-
 
 void
 Filter::create_EC ()
@@ -200,7 +198,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       events.run_test ();
     }
-  catch (const CORBA::Exception& se)
+  catch (CORBA::Exception const &se)
     {
       se._tao_print_exception ("Error: ");
       return 1;

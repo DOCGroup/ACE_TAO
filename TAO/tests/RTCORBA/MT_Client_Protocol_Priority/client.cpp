@@ -10,6 +10,8 @@
 #include "../check_supported_priorities.cpp"
 #include "tao/Strategies/advanced_resource.h"
 
+#include <cstdio>
+
 class Worker_Thread : public ACE_Task_Base
 {
   // = TITLE
@@ -25,80 +27,91 @@ public:
   Worker_Thread (CORBA::ORB_ptr orb,
                  Test_ptr server,
                  CORBA::ULong protocol_type,
+                 int iterations,
                  ACE_Barrier *barrier);
-  // Constructor.
+  Worker_Thread (Worker_Thread const &) = delete;
+  Worker_Thread (Worker_Thread &&) = delete;
+  Worker_Thread &operator= (Worker_Thread const &) = delete;
+  Worker_Thread &operator= (Worker_Thread &&) = delete;
 
-  virtual int svc ();
+  int svc () override;
   // Do work.
 
 private:
-  CORBA::ORB_ptr orb_;
-  // ORB.
+  CORBA::ORB_ptr const orb_;
+  // Borrowed ORB reference. The owning Task outlives this worker.
 
-  Test_ptr server_;
-  // The server.
+  Test_ptr const server_;
+  // Borrowed server reference. The owning Task outlives this worker.
 
   CORBA::ULong protocol_type_;
   // Protocol for ClientProtocolPolicy.
 
-  ACE_Barrier *synchronizer_;
+  int iterations_;
+  // Number of server invocations to make.
+
+  ACE_Barrier * const synchronizer_;
   // Mechanism for synchronization with other worker threads.
 };
 
 // ****************************************************************
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
-int iterations = 100;
-CORBA::Short priority1 = -1;
-CORBA::Short priority2 = -1;
-CORBA::ULong protocol1 = 1413566210;
-CORBA::ULong protocol2 = 0;
+struct Client_Options
+{
+  ACE_TCHAR const *ior { ACE_TEXT("file://test.ior") };
+  int iterations { 100 };
+  CORBA::Short priority1 { -1 };
+  CORBA::Short priority2 { -1 };
+  CORBA::ULong protocol1 { 1413566210 };
+  CORBA::ULong protocol2 {};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:a:b:e:f:n:"));
-  int c, result;
+  int c {};
+  int result {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'n':
-        iterations = ACE_OS::atoi (get_opts.opt_arg ());
+        options.iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'o':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
       case 'a':
-        result = ::sscanf (ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ()),
-                           "%hd",
-                           &priority1);
+        result = std::sscanf (ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ()),
+                              "%hd",
+                              &options.priority1);
         if (result == 0 || result == EOF)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to process <-a> option"),
                             -1);
         break;
       case 'b':
-        result = ::sscanf (ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ()),
-                           "%hd",
-                           &priority2);
+        result = std::sscanf (ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ()),
+                              "%hd",
+                              &options.priority2);
         if (result == 0 || result == EOF)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to process <-b> option"),
                             -1);
         break;
       case 'e':
-        result = ::sscanf (ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ()),
-                           "%u",
-                           &protocol1);
+        result = std::sscanf (ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ()),
+                              "%u",
+                              &options.protocol1);
         if (result == 0 || result == EOF)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to process <-e> option"),
                             -1);
         break;
       case 'f':
-        result = ::sscanf (ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ()),
-                           "%u",
-                           &protocol2);
+        result = std::sscanf (ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ()),
+                              "%u",
+                              &options.protocol2);
         if (result == 0 || result == EOF)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to process <-f> option"),
@@ -119,8 +132,8 @@ parse_args (int argc, ACE_TCHAR *argv[])
                           -1);
       }
 
-  if (priority1 < 0
-      || priority2 < 0)
+  if (options.priority1 < 0
+      || options.priority2 < 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Valid thread priorities must be specified.\n"
                        "See README for command-line options.\n"),
@@ -129,32 +142,41 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-check_for_nil (CORBA::Object_ptr obj, const char *msg)
+check_for_nil (CORBA::Object_ptr obj, char const *msg)
 {
   if (CORBA::is_nil (obj))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "ERROR: Object reference <%C> is nil\n",
                        msg),
                       -1);
-  else
-    return 0;
+
+  return 0;
 }
 
 class Task : public ACE_Task_Base
 {
 public:
   Task (ACE_Thread_Manager &thread_manager,
-        CORBA::ORB_ptr orb);
+        CORBA::ORB_ptr orb,
+        Client_Options const &options);
+  Task (Task const &) = delete;
+  Task (Task &&) = delete;
+  Task &operator= (Task const &) = delete;
+  Task &operator= (Task &&) = delete;
 
-  int svc ();
+  int svc () override;
 
-  CORBA::ORB_var orb_;
+private:
+  CORBA::ORB_var const orb_;
+  Client_Options const options_;
 };
 
 Task::Task (ACE_Thread_Manager &thread_manager,
-            CORBA::ORB_ptr orb)
+            CORBA::ORB_ptr orb,
+            Client_Options const &options)
   : ACE_Task_Base (&thread_manager),
-    orb_ (CORBA::ORB::_duplicate (orb))
+    orb_ (CORBA::ORB::_duplicate (orb)),
+    options_ (options)
 {
 }
 
@@ -166,26 +188,27 @@ Task::svc ()
       // Priority Mapping Manager.
       CORBA::Object_var object =
         this->orb_->resolve_initial_references ("PriorityMappingManager");
-      RTCORBA::PriorityMappingManager_var mapping_manager =
+      RTCORBA::PriorityMappingManager_var const mapping_manager =
         RTCORBA::PriorityMappingManager::_narrow (object.in ());
       if (check_for_nil (mapping_manager.in (), "Mapping Manager") == -1)
         return -1;
 
-      RTCORBA::PriorityMapping *pm =
+      // The mapping manager owns this mapping object.
+      RTCORBA::PriorityMapping * const pm =
         mapping_manager->mapping ();
 
       // RTCurrent.
       object =
         this->orb_->resolve_initial_references ("RTCurrent");
-      RTCORBA::Current_var current =
+      RTCORBA::Current_var const current =
         RTCORBA::Current::_narrow (object.in ());
       if (check_for_nil (current.in (), "RTCurrent") == -1)
         return -1;
 
       // Obtain Test object reference.
       object =
-        this->orb_->string_to_object (ior);
-      Test_var server = Test::_narrow (object.in ());
+        this->orb_->string_to_object (this->options_.ior);
+      Test_var const server = Test::_narrow (object.in ());
       if (check_for_nil (server.in (), "Test object") == -1)
         return -1;
 
@@ -194,13 +217,13 @@ Task::svc ()
       CORBA::Policy_var policy =
         server->_get_policy (RTCORBA::PRIORITY_MODEL_POLICY_TYPE);
 
-      RTCORBA::PriorityModelPolicy_var priority_policy =
+      RTCORBA::PriorityModelPolicy_var const priority_policy =
         RTCORBA::PriorityModelPolicy::_narrow (policy.in ());
 
       if (check_for_nil (priority_policy.in (), "PriorityModelPolicy") == -1)
         return -1;
 
-      RTCORBA::PriorityModel priority_model =
+      RTCORBA::PriorityModel const priority_model =
         priority_policy->priority_model ();
       if (priority_model != RTCORBA::CLIENT_PROPAGATED)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -210,7 +233,7 @@ Task::svc ()
 
       // Spawn two worker threads.
       ACE_Barrier thread_barrier (2);
-      int flags  =
+      long const flags =
         THR_NEW_LWP |
         THR_JOINABLE |
         this->orb_->orb_core ()->orb_params ()->thread_creation_flags ();
@@ -218,14 +241,15 @@ Task::svc ()
       // Worker 1.
       Worker_Thread worker1 (this->orb_.in (),
                              server.in (),
-                             protocol1,
+                             this->options_.protocol1,
+                             this->options_.iterations,
                              &thread_barrier);
 
-      CORBA::Short native_priority1 = 0;
-      if (pm->to_native (priority1, native_priority1) == 0)
+      CORBA::Short native_priority1 {};
+      if (pm->to_native (this->options_.priority1, native_priority1) == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot convert corba priority %d to native priority\n",
-                           priority1),
+                           this->options_.priority1),
                           -1);
 
       if (worker1.activate (flags,
@@ -238,14 +262,15 @@ Task::svc ()
       // Worker 2.
       Worker_Thread worker2 (this->orb_.in (),
                              server.in (),
-                             protocol2,
+                             this->options_.protocol2,
+                             this->options_.iterations,
                              &thread_barrier);
 
-      CORBA::Short native_priority2 = 0;
-      if (pm->to_native (priority2, native_priority2) == 0)
+      CORBA::Short native_priority2 {};
+      if (pm->to_native (this->options_.priority2, native_priority2) == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot convert corba priority %d to native priority\n",
-                           priority2),
+                           this->options_.priority2),
                           -1);
 
       if (worker2.activate (flags,
@@ -260,10 +285,10 @@ Task::svc ()
 
       // Testing over.  Shut down the server.
       ACE_DEBUG ((LM_DEBUG, "Client threads finished\n"));
-      current->the_priority (priority1);
+      current->the_priority (this->options_.priority1);
       server->shutdown ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "Unexpected exception in MT_Client_Protocol_Priority test client:");
@@ -278,14 +303,16 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
+      Client_Options options;
+
       // Initialize the ORB, resolve references and parse arguments.
 
       // ORB.
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
       // Parse arguments.
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, options) != 0)
         return -1;
 
       // Make sure we can support multiple priorities that are required
@@ -298,18 +325,19 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Create task.
       Task task (thread_manager,
-                 orb.in ());
+                 orb.in (),
+                 options);
 
       // Task activation flags.
-      long flags =
+      long const flags =
         THR_NEW_LWP |
         THR_JOINABLE |
         orb->orb_core ()->orb_params ()->thread_creation_flags ();
 
       // Activate task.
-      int result =
+      int const activate_result =
         task.activate (flags);
-      if (result == -1)
+      if (activate_result == -1)
         {
           if (errno == EPERM)
             {
@@ -326,11 +354,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       // Wait for task to exit.
-      result =
+      int const wait_result =
         thread_manager.wait ();
-      ACE_ASSERT (result != -1);
+      ACE_ASSERT (wait_result != -1);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "Unexpected exception in MT_Client_Protocol_Priority test client:");
@@ -345,10 +373,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 Worker_Thread::Worker_Thread (CORBA::ORB_ptr orb,
                               Test_ptr server,
                               CORBA::ULong protocol_type,
+                              int iterations,
                               ACE_Barrier *thread_barrier)
   : orb_ (orb),
     server_ (server),
     protocol_type_ (protocol_type),
+    iterations_ (iterations),
     synchronizer_ (thread_barrier)
 {
 }
@@ -361,14 +391,14 @@ Worker_Thread::svc ()
       // RTORB.
       CORBA::Object_var object =
         this->orb_->resolve_initial_references ("RTORB");
-      RTCORBA::RTORB_var rt_orb = RTCORBA::RTORB::_narrow (object.in ());
+      RTCORBA::RTORB_var const rt_orb = RTCORBA::RTORB::_narrow (object.in ());
       if (check_for_nil (rt_orb.in (), "RTORB") == -1)
         return 0;
 
       // PolicyCurrent.
       object =
         this->orb_->resolve_initial_references ("PolicyCurrent");
-      CORBA::PolicyCurrent_var policy_current =
+      CORBA::PolicyCurrent_var const policy_current =
         CORBA::PolicyCurrent::_narrow (object.in ());
       if (check_for_nil (policy_current.in (), "PolicyCurrent")
           == -1)
@@ -377,7 +407,7 @@ Worker_Thread::svc ()
       object =
         this->orb_->resolve_initial_references ("RTCurrent");
 
-      RTCORBA::Current_var current =
+      RTCORBA::Current_var const current =
         RTCORBA::Current::_narrow (object.in ());
 
       // We need to set the client thread CORBA priority
@@ -403,13 +433,13 @@ Worker_Thread::svc ()
       // Wait for other threads.
       this->synchronizer_->wait ();
 
-      for (int i = 0; i < iterations; ++i)
+      for (int i = 0; i < this->iterations_; ++i)
         {
           // Invoke method.
           this->server_->test_method ();
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Worker Thread exception:");
     }

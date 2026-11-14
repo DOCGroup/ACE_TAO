@@ -1,47 +1,34 @@
 // -*- C++ -*-
 // File: SO_Group.cpp
 
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Log_Msg.h"
 #include "ace/Process.h"
 #include "ace/Pipe.h"
+#include <utility>
 
 #include "Library.h"
 #include "SO_Group.h"
+#include <cstring>
 
 SO_Group::SO_Group ()
   : undef_wrapper_ ("nothing"),
-    undefs_(undef_wrapper_.imports()),
-    libs_ (0),
-    max_libs_ (128),
-    num_libs_(0)
+    undefs_ (undef_wrapper_.imports())
 {
-  libs_ = new Library*[max_libs_];
-}
-
-SO_Group::~SO_Group ()
-{
-  for (int i = 0; i < num_libs_; delete libs_[i++])
-    {
-      // No action.
-    }
-
-  delete [] libs_;
 }
 
 void
-SO_Group::add_executable (const char * path)
+SO_Group::add_executable (char const *path)
 {
   ACE_Process proc;
   ACE_Process_Options opts;
 
-  ACE_HANDLE pipe[2];
+  ACE_HANDLE pipe[2] {};
   ACE_Pipe io(pipe);
 
   opts.set_handles (ACE_STDIN,pipe[1]);
 
-  int result = opts.command_line ("ldd %s",path);
+  int const result = opts.command_line ("ldd %s",path);
   // Prevent compiler warning about "unused variable" if ACE_ASSERT is
   // an empty macro.
   ACE_UNUSED_ARG (result);
@@ -52,15 +39,14 @@ SO_Group::add_executable (const char * path)
     ACE_DEBUG ((LM_DEBUG, "%p\n", "close"));
   opts.release_handles();
 
-  const int max_line_length = 1000;
-  char line[max_line_length];
+  size_t constexpr max_line_length = 1000;
+  char line[max_line_length] {};
 
   while (true)
   {
-    ACE_OS::memset (line,0,max_line_length);
     int len = 0;
     int nread = 0;
-    int bogus = 0;
+    bool bogus = false;
 
     // Skip initial whitespace.
     while ((nread = ACE_OS::read (pipe[0], line,1)) == 1
@@ -80,9 +66,9 @@ SO_Group::add_executable (const char * path)
     while ((nread = ACE_OS::read (pipe[0], line + len, 1)) == 1
            && (line[len] != ' '))
       {
-        if (! bogus && ++len == max_line_length)
+        if (!bogus && ++len == max_line_length)
           {
-            bogus = 1;
+            bogus = true;
             break;
           }
       }
@@ -92,29 +78,28 @@ SO_Group::add_executable (const char * path)
         break;
       }
 
-    line[len] = 0;
-    char * dot = ACE_OS::strchr (line,'.');
+    line[len] = '\0';
+    char * const dot = std::strchr (line, '.');
 
-    if (dot != 0)
+    if (dot != nullptr)
       {
-        *dot = 0;
+        *dot = '\0';
       }
 
-    char * libname = line + 3; // skip over "lib"
+    char * const libname = line + 3; // skip over "lib"
 
     // check to see if this is a new library
-    int found = 0;
+    bool found = false;
 
-    for (int i = 0; !found && i < num_libs_; ++i)
+    for (size_t i = 0; !found && i < libs_.size (); ++i)
       {
-        found = (libs_[i]->name() == libname);
+        found = libs_[i]->name() == libname;
       }
 
     if (!found)
     {
-      Library *nlib = new Library(libname);
-      ACE_OS::memset (line,0,max_line_length);
-
+      std::unique_ptr<Library> nlib = std::make_unique<Library> (
+        ACE_TEXT_CHAR_TO_TCHAR (libname));
       // Skip over '=> '.
       if (ACE_OS::read (pipe[0], line, 3) != 3)
         {
@@ -127,9 +112,9 @@ SO_Group::add_executable (const char * path)
       while ((nread = ACE_OS::read(pipe[0],line + len,1)) == 1 &&
              (line[len] != ' '))
         {
-          if (! bogus && ++len == max_line_length)
+          if (!bogus && ++len == max_line_length)
             {
-              bogus = 1;
+              bogus = true;
               break;
             }
         }
@@ -139,10 +124,9 @@ SO_Group::add_executable (const char * path)
           break;
         }
 
-      line[len] = 0;
+      line[len] = '\0';
       nlib->set_path (line);
-      libs_[num_libs_++] = nlib;
-      ACE_ASSERT (num_libs_ < max_libs_); // grow max libs?
+      libs_.push_back (std::move (nlib));
     }
 
     // Skip the rest of the line.
@@ -160,7 +144,7 @@ SO_Group::add_executable (const char * path)
   proc.wait ();
   ACE_OS::close (pipe[0]);
 
-  undef_wrapper_.add_source(path,1);
+  undef_wrapper_.add_source (path, true);
   // now do the ldd, iterate over the results to add new libs, etc.
 }
 
@@ -170,33 +154,27 @@ SO_Group::analize ()
   for (int passcount = 0; undefs_.modified (); ++passcount)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "pass %d, undef count = %d\n",
+                  "pass %d, undef count = %B\n",
                   passcount,
                   undefs_.size ()));
 
-      for (int i = 0; i < num_libs_; libs_[i++]->resolve (undefs_))
-        {
-          // No action.
-        }
+      for (size_t i = 0; i < libs_.size (); ++i)
+        libs_[i]->resolve (undefs_);
     }
 }
 
 void
 SO_Group::write_results ()
 {
-  for (int i = 0; i < num_libs_; libs_[i++]->write_export_list (1))
-    {
-      // No action.
-    }
+  for (size_t i = 0; i < libs_.size (); ++i)
+    libs_[i]->write_export_list (true);
 }
 
 void
 SO_Group::load_modules ()
 {
-  for (int i = 0; i < num_libs_; libs_[i++]->load_modules ())
-    {
-      // No action.
-    }
+  for (size_t i = 0; i < libs_.size (); ++i)
+    libs_[i]->load_modules ();
 }
 
 void
@@ -204,7 +182,7 @@ SO_Group::list_libs ()
 {
   ACE_DEBUG ((LM_DEBUG, "Libs subject to analysis:\n"));
 
-  for (int i = 0; i < num_libs_; ++i)
+  for (size_t i = 0; i < libs_.size (); ++i)
   {
     if (libs_[i]->has_modules ())
       {
@@ -212,8 +190,3 @@ SO_Group::list_libs ()
       }
   }
 }
-
-
-
-
-

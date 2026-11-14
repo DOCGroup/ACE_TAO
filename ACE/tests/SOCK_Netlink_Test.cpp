@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 
 #ifdef ACE_HAS_NETLINK
@@ -28,7 +27,6 @@
 #include "ace/OS_NS_time.h"
 
 #include <linux/rtnetlink.h>
-
 
 /**
  * NETLINK SOCKET INTERFACE is a socket API communication
@@ -111,7 +109,6 @@
  };
 */
 
-
 // The global config params
 //
 static int one_button_test = 0;
@@ -174,7 +171,6 @@ struct Inet_Prefix
   ACE_UINT32 data[4];
 };
 
-
 /**
  * Contains header netlink message header of a type nlmsghdr with a
  * following request type dependent controlling structure, which is for
@@ -189,7 +185,6 @@ struct Netlink_Request
   char            buf_[256];
 };
 
-
 /**
  * The handler first is trying to delete an ip-address, further
  * to add the ip and, if successful to cleanup the address.
@@ -197,10 +192,8 @@ struct Netlink_Request
 class Secondary_Ipaddr_Handler : public ACE_Event_Handler
 {
 public:
-  // Default constructor
   Secondary_Ipaddr_Handler ();
 
-  // Destructor
   ~Secondary_Ipaddr_Handler () override;
 
   //FUZZ: disable check_for_lack_ACE_OS
@@ -575,7 +568,7 @@ Secondary_Ipaddr_Handler::handle_timeout (ACE_Time_Value const &,
     }
 
   this->schedule_one_sec_timer ();
-  this->state_++;
+  ++this->state_;
   return 0;
 }
 

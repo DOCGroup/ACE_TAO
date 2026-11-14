@@ -47,7 +47,7 @@ namespace TAO
     TAO_InputCDR &strm,
     std::vector<T> &target)
   {
-    ::CORBA::ULong new_length = 0;
+    ::CORBA::ULong new_length {};
 
     if (! (strm >> new_length))
       {
@@ -63,7 +63,7 @@ namespace TAO
     tmp.reserve (new_length);
     T tmp_elem;
 
-    for ( ::CORBA::ULong i = 0; i < new_length; ++i)
+    for ( ::CORBA::ULong i {}; i < new_length; ++i)
       {
         if (! (strm >> tmp_elem))
           {
@@ -110,7 +110,7 @@ namespace TAO
     TAO_InputCDR &strm,
     std::vector<typename T::_ptr_type> &target)
   {
-    ::CORBA::ULong new_length = 0;
+    ::CORBA::ULong new_length {};
 
     if (! (strm >> new_length))
       {
@@ -126,7 +126,7 @@ namespace TAO
     tmp.reserve (new_length);
     typename T::_ptr_type tmp_elem = T::_nil ();
 
-    for ( ::CORBA::ULong i = 0; i < new_length; ++i)
+    for ( ::CORBA::ULong i {}; i < new_length; ++i)
       {
         if (! (strm >> tmp_elem))
           {
@@ -181,7 +181,7 @@ namespace TAO
     const std::vector<typename T_forany::_slice_type *> &source)
   {
     using array_traits = TAO::Array_Traits<T_forany>;
-    ::CORBA::ULong new_length = 0;
+    ::CORBA::ULong new_length {};
 
     if (! (strm >> new_length))
       {
@@ -196,7 +196,7 @@ namespace TAO
     std::vector<typename T_forany::_slice_type *> tmp_vec;
     tmp_vec.reserve (new_length);
 
-    for ( ::CORBA::ULong i = 0; i < new_length; ++i)
+    for ( ::CORBA::ULong i {}; i < new_length; ++i)
       {
         T_forany tmp_array (array_traits::alloc ());
         bool const _tao_marshal_flag = (strm >> tmp_array);

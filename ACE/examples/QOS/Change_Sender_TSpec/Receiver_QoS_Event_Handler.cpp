@@ -8,27 +8,14 @@
  */
 //=============================================================================
 
-
 #include "Receiver_QoS_Event_Handler.h"
 #include "ace/Log_Msg.h"
-#include "ace/SString.h"
-#include "Fill_ACE_QoS.h"
 
-// Constructor.
-Receiver_QoS_Event_Handler::Receiver_QoS_Event_Handler ()
-{
-}
-
-Receiver_QoS_Event_Handler::Receiver_QoS_Event_Handler (const ACE_SOCK_Dgram_Mcast_QoS
-                                                        &dgram_mcast_qos,
-                                                        ACE_QoS_Session *qos_session)
+Receiver_QoS_Event_Handler::Receiver_QoS_Event_Handler (
+  ACE_SOCK_Dgram_Mcast_QoS &dgram_mcast_qos,
+  ACE_QoS_Session *qos_session)
   : dgram_mcast_qos_ (dgram_mcast_qos),
     qos_session_ (qos_session)
-{
-}
-
-// Destructor.
-Receiver_QoS_Event_Handler::~Receiver_QoS_Event_Handler ()
 {
 }
 
@@ -44,21 +31,17 @@ Receiver_QoS_Event_Handler::get_handle () const
 int
 Receiver_QoS_Event_Handler::handle_input (ACE_HANDLE)
 {
-  char buf[BUFSIZ];
+  char buf[BUFSIZ + 1] {};
 
   iovec iov;
   iov.iov_base = buf;
   iov.iov_len = BUFSIZ;
 
-  ACE_OS::memset (iov.iov_base,
-                  0,
-                  BUFSIZ);
-
   ACE_DEBUG ((LM_DEBUG,
               "Inside handle_input () of Receiver_QoS_Event_Handler ()\n"));
 
   // Receive message from multicast group.
-  ssize_t result =
+  ssize_t const result =
     this->dgram_mcast_qos_.recv (&iov,
                                  1,
                                  this->remote_addr_);
@@ -99,7 +82,7 @@ Receiver_QoS_Event_Handler::handle_qos (ACE_HANDLE fd)
                 " Updating QOS succeeds.\n"));
 
   // Now proactively query the QoS object for QoS.
-  ACE_QoS ace_get_qos = this->qos_session_->qos ();
+  ACE_QoS const ace_get_qos = this->qos_session_->qos ();
 
   ACE_DEBUG ((LM_DEBUG,
               "\nReceiving Flowspec :\t\t\tSending Flowspec :\n\n"
@@ -128,11 +111,5 @@ Receiver_QoS_Event_Handler::handle_qos (ACE_HANDLE fd)
               ace_get_qos.receiving_flowspec ()->minimum_policed_size (),
               ace_get_qos.sending_flowspec ()->minimum_policed_size ()));
 
-
-return 0;
+  return 0;
 }
-
-
-
-
-

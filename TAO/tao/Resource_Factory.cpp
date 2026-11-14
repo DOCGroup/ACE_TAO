@@ -5,27 +5,21 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Protocol_Item::TAO_Protocol_Item (const ACE_CString &name)
-  : name_ (name),
-    factory_ (nullptr),
-    factory_owner_ (0)
+TAO_Protocol_Item::TAO_Protocol_Item (std::string const &name)
+  : name_ (name)
 {
 }
 
-TAO_Protocol_Item::~TAO_Protocol_Item ()
-{
-  if (this->factory_owner_ == 1)
-    delete this->factory_;
-}
+TAO_Protocol_Item::~TAO_Protocol_Item () = default;
 
-const ACE_CString &
-TAO_Protocol_Item::protocol_name ()
+std::string const &
+TAO_Protocol_Item::protocol_name () const
 {
   return this->name_;
 }
 
 TAO_Protocol_Factory *
-TAO_Protocol_Item::factory ()
+TAO_Protocol_Item::factory () const
 {
   return this->factory_;
 }
@@ -34,8 +28,17 @@ void
 TAO_Protocol_Item::factory (TAO_Protocol_Factory *factory,
                             int owner)
 {
+  if (owner == 1)
+    {
+      if (this->owned_factory_.get () != factory)
+        this->owned_factory_.reset (factory);
+    }
+  else if (this->owned_factory_.get () != factory)
+    {
+      this->owned_factory_.reset ();
+    }
+
   this->factory_ = factory;
-  this->factory_owner_ = owner;
 }
 
 // **********************************************************************
@@ -170,7 +173,6 @@ TAO_Resource_Factory::max_muxed_connections () const
 {
   return 0;
 }
-
 
 int
 TAO_Resource_Factory::get_parser_names (char **&, int &)

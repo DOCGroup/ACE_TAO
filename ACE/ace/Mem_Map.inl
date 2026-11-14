@@ -46,7 +46,7 @@ ACE_Mem_Map::map (size_t length,
   ACE_TRACE ("ACE_Mem_Map::map");
   // If we're already mapped at a particular location then try to
   // remap the file using the same base address.
-  if (addr == 0 && this->base_addr_ != 0 && this->base_addr_ != MAP_FAILED)
+  if (addr == nullptr && this->base_addr_ != nullptr && this->base_addr_ != MAP_FAILED)
     {
       share |= MAP_FIXED;
       addr = this->base_addr_;
@@ -181,7 +181,6 @@ ACE_Mem_Map::protect (size_t len, int prot)
   ACE_TRACE ("ACE_Mem_Map::protect");
   return ACE_OS::mprotect (this->base_addr_, len, prot);
 }
-
 
 // Change the protection of all the pages of the mapped region to <prot>
 // starting at <this->base_addr_>.

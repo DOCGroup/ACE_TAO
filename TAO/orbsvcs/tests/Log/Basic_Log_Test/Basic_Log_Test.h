@@ -24,16 +24,18 @@ class BasicLog_Test
    //  This class exercises various methods of the DsLogAdmin::BasicLog
    //  interface.
  public:
-  enum
-  { MAX_LOG_SIZE = 8192 };
+  static constexpr CORBA::ULongLong MAX_LOG_SIZE = 8192;
 
-  BasicLog_Test();
-  // constructor
+  BasicLog_Test () = default;
 
   ~BasicLog_Test();
-  // destructor
 
-  int init(int argc, ACE_TCHAR *argv[]);
+  BasicLog_Test (BasicLog_Test const &) = delete;
+  BasicLog_Test (BasicLog_Test &&) = delete;
+  BasicLog_Test &operator= (BasicLog_Test const &) = delete;
+  BasicLog_Test &operator= (BasicLog_Test &&) = delete;
+
+  int init (int argc, ACE_TCHAR *argv[]);
 
   int
   test_CreateLog(CORBA::ULongLong maxSize = MAX_LOG_SIZE);
@@ -93,17 +95,11 @@ delete_records (CORBA::ULongLong numberOfRecords);
   // 1. destroy the log.
   // 2. attemp to write to log. Should throw exception (?).
 
-
   int test_week_mask();
 
   int test_capacity_alarm_threshold();
 
 private:
-  // not implemented
-
-  BasicLog_Test(const BasicLog_Test&);
-  BasicLog_Test& operator=(const BasicLog_Test&);
-
   int
     init_factory ();
 
@@ -126,27 +122,20 @@ private:
     destroy_log();
   // destroys the is log is it exists
 
-  int argc_;
-  ACE_TCHAR **argv_;
-  // command line
-
-  char* logServiceIor_;
-
-  DsLogAdmin::BasicLog_var basicLog_;
+  DsLogAdmin::BasicLog_var basicLog_ {};
   // the log used for all of the test
 
-  DsLogAdmin::BasicLogFactory_var factory_;
+  DsLogAdmin::BasicLogFactory_var factory_ {};
   // pointer to logging factory
 
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
   // pointer to the ORB
 
-  CosNaming::NamingContext_var naming_context_;
+  CosNaming::NamingContext_var naming_context_ {};
   // naming context
 
-  static const char* basic_log_factory_name_;
-
-  static const char* naming_service_name_;
+  static constexpr char basic_log_factory_name_[] = "BasicLogFactory";
+  static constexpr char naming_service_name_[] = "NameService";
   // strings for log factory and naming service
 };
 

@@ -27,8 +27,12 @@ class Client_Request_Interceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
-  Client_Request_Interceptor ();
+  Client_Request_Interceptor () = default;
+
+  Client_Request_Interceptor (Client_Request_Interceptor const &) = delete;
+  Client_Request_Interceptor (Client_Request_Interceptor &&) = delete;
+  Client_Request_Interceptor &operator= (Client_Request_Interceptor const &) = delete;
+  Client_Request_Interceptor &operator= (Client_Request_Interceptor &&) = delete;
 
   /**
    * @name Methods Required by the Client Request Interceptor
@@ -40,24 +44,24 @@ public:
    */
   //@{
   /// Return the name of this ClientRequestinterceptor.
-  virtual char * name ();
+  char * name () override;
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual void send_request (
-      PortableInterceptor::ClientRequestInfo_ptr ri);
+  void send_request (
+      PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void send_poll (
-      PortableInterceptor::ClientRequestInfo_ptr ri);
+  void send_poll (
+      PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_reply (
-      PortableInterceptor::ClientRequestInfo_ptr ri);
+  void receive_reply (
+      PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_exception (
-      PortableInterceptor::ClientRequestInfo_ptr ri);
+  void receive_exception (
+      PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_other (
-      PortableInterceptor::ClientRequestInfo_ptr ri);
+  void receive_other (
+      PortableInterceptor::ClientRequestInfo_ptr ri) override;
   //@}
 
   CORBA::ULong request_count () const;
@@ -66,9 +70,9 @@ public:
 
 private:
   /// The number of requests intercepted by this interceptor.
-  CORBA::ULong request_count_;
+  CORBA::ULong request_count_ {};
 
-  CORBA::ULong receive_exception_count_;
+  CORBA::ULong receive_exception_count_ {};
 };
 
 #if defined(_MSC_VER)

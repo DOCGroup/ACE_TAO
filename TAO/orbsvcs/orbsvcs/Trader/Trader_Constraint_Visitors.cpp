@@ -9,12 +9,13 @@ TAO_Trader_Constraint_Evaluator (CosTrading::Offer* offer,
 {
   this->props_.close ();
   this->props_.open ();
-  int length = offer->properties.length ();
+  int const length = offer->properties.length ();
 
   // Create a map of property names to their values.
-  for (int i = 0; i < length; i++)
+  for (int i {}; i < length; ++i)
     {
-      CORBA::String_var name = (const char*) offer->properties[i].name;
+      CORBA::String_var name =
+        static_cast<char const*> (offer->properties[i].name);
       this->props_.bind (name, i);
     }
 }
@@ -25,11 +26,11 @@ visit_property (TAO_Property_Constraint* literal)
 {
   int return_value = -1, prop_index = 0;
   // Handle case where property is not, in fact, mapped to a value
-  CORBA::String_var prop_name ((const char*) literal->name ());
+  CORBA::String_var prop_name (static_cast<char const*> (literal->name ()));
 
   if (this->props_.find (prop_name, prop_index) == 0)
     {
-      CORBA::Any* value = nullptr;
+      CORBA::Any const* value {};
       // Retrieve the value of the property from the Property_Evaluator
       try
         {
@@ -42,7 +43,7 @@ visit_property (TAO_Property_Constraint* literal)
 
       if (value != nullptr)
         {
-          this->queue_.enqueue_head (TAO_Literal_Constraint (value));
+          this->queue_.push_front (TAO_Literal_Constraint (value));
           return_value = 0;
         }
     }
@@ -56,22 +57,20 @@ TAO_Trader_Constraint_Validator
 {
   const CosTradingRepos::ServiceTypeRepository::PropStructSeq& prop_seq =
     type_struct.props;
-  int length = prop_seq.length ();
+  int const length = prop_seq.length ();
 
   // Create a map of the service type properties to their types.
-  for (int i = 0; i < length; i++)
+  for (int i {}; i < length; ++i)
     {
       CORBA::TypeCode_ptr corba_type =
         CORBA::TypeCode::_duplicate (prop_seq[i].value_type.in ());
 
-      CORBA::String_var prop_name_str = (const char*) prop_seq[i].name;
+      CORBA::String_var prop_name_str = static_cast<char const*> (prop_seq[i].name);
       this->type_map_.bind (prop_name_str, corba_type);
     }
 }
 
 TAO_Trader_Constraint_Validator::
-~TAO_Trader_Constraint_Validator ()
-{
-}
+~TAO_Trader_Constraint_Validator () = default;
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -6,7 +6,7 @@
 #include "HTTP_10.h"
 
 #include "HTTP_10_Request.h"
-
+#include <cstring>
 
 // --------------- WRITE TASK ----------------------
 
@@ -91,7 +91,7 @@ JAWS_HTTP_10_Write_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
     }
   else
     {
-      if (ACE_OS::strcmp (info->version (), "HTTP/0.9") == 0)
+      if (std::strcmp (info->version (), "HTTP/0.9") == 0)
         io->transmit_file (handler,
                            info->path (),
                            "",

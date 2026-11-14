@@ -32,7 +32,6 @@ private:
   int _destructorCalled;
 };
 
-
 class Test_Module : public ACE_Module<ACE_SYNCH>
 {
 public:
@@ -48,7 +47,6 @@ public:
 private:
   Test_Task _writerTask, _readerTask;
 };
-
 
 int
 run_main (int, ACE_TCHAR *[])

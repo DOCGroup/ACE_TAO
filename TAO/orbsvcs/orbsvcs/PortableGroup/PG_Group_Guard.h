@@ -1,13 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file  PG_Group_Guard.h
  *
  * @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_PG_GROUP_GUARD_H
 #define TAO_PG_GROUP_GUARD_H
@@ -46,14 +43,17 @@ class TAO_PG_ObjectGroupManager;
 class TAO_PG_Group_Guard
 {
 public:
-  /// Constructor.
-  TAO_PG_Group_Guard (TAO_PG_GenericFactory & generic_factory,
-                      TAO_PG_Factory_Set & factory_set,
-                      TAO_PG_ObjectGroupManager & group_manager,
-                      const PortableServer::ObjectId & oid);
+  TAO_PG_Group_Guard (TAO_PG_GenericFactory &generic_factory,
+                      TAO_PG_Factory_Set &factory_set,
+                      TAO_PG_ObjectGroupManager &group_manager,
+                      PortableServer::ObjectId const &oid);
 
-  /// Destructor.
   ~TAO_PG_Group_Guard ();
+
+  TAO_PG_Group_Guard (TAO_PG_Group_Guard const &) = delete;
+  TAO_PG_Group_Guard (TAO_PG_Group_Guard &&) = delete;
+  TAO_PG_Group_Guard &operator= (TAO_PG_Group_Guard const &) = delete;
+  TAO_PG_Group_Guard &operator= (TAO_PG_Group_Guard &&) = delete;
 
   /// Relinquish cleanup responsibility.
   void release ();
@@ -74,11 +74,11 @@ private:
   /// Reference to the ObjectId that is the map key necessary to
   /// unbind the corresponding object group map entry from the map
   /// upon destruction.
-  const PortableServer::ObjectId & oid_;
+  PortableServer::ObjectId const & oid_;
 
   /// Flag that dictates whether or not the destructor will perform
   /// cleanup.
-  bool released_;
+  bool released_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

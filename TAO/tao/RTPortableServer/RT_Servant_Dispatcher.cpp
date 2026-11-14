@@ -19,8 +19,7 @@
 
 #include "tao/RTCORBA/Thread_Pool.h"
 
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
+#include <string>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -29,13 +28,12 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
   TAO_Root_POA &poa,
   CORBA::Short servant_priority,
   TAO_ServerRequest &req,
-  TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &pre_invoke_state
-  )
+  TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &pre_invoke_state)
 {
-  TAO_Service_Context &request_service_context = req.request_service_context ();
+  TAO_Service_Context const &request_service_context = req.request_service_context ();
   TAO_Service_Context &reply_service_context = req.reply_service_context ();
 
-  TAO_Thread_Pool *thread_pool =
+  TAO_Thread_Pool * const thread_pool =
     static_cast <TAO_Thread_Pool *> (poa.thread_pool ());
 
   if (thread_pool != nullptr &&
@@ -48,11 +46,11 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
       if (TAO_debug_level > 0)
         {
           // Get the ORB_Core's TSS resources.
-          TAO_ORB_Core_TSS_Resources *tss =
+          TAO_ORB_Core_TSS_Resources * const tss =
             poa.orb_core ().get_tss_resources ();
 
           /// Get the lane attribute in TSS.
-          TAO_Thread_Lane *lane =
+          TAO_Thread_Lane * const lane =
             static_cast<TAO_Thread_Lane *> (tss->lane_);
 
           ACE_ASSERT (lane->pool ().id () ==
@@ -72,11 +70,11 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
     }
 
   // Remember current thread's priority.
-  TAO_Protocols_Hooks *tph = poa.orb_core ().get_protocols_hooks ();
+  TAO_Protocols_Hooks * const tph = poa.orb_core ().get_protocols_hooks ();
 
   if (tph != nullptr)
     {
-      char const *priority_model = nullptr;
+      char const *priority_model {};
       RTCORBA::Priority target_priority = TAO_INVALID_PRIORITY;
 
       // NOT_SPECIFIED PriorityModel processing.
@@ -94,14 +92,14 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
 
           // Attempt to extract client-propagated priority from the
           // ServiceContextList of the request.
-          IOP::ServiceContext const *context = nullptr;
+          IOP::ServiceContext const *context {};
 
           if (request_service_context.get_context (IOP::RTCorbaPriority,
                                                    &context) == 1)
             {
               // Extract the target priority
               TAO_InputCDR cdr (reinterpret_cast
-                                <const char*>
+                                <char const *>
                                  (context->context_data.get_buffer ()),
                                 context->context_data.length ());
               CORBA::Boolean byte_order;
@@ -133,16 +131,13 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
           target_priority = servant_priority;
         }
 
-      char thread_pool_id[BUFSIZ];
+      std::string thread_pool_id {};
       if (TAO_debug_level > 0)
         {
           if (thread_pool == nullptr)
-            ACE_OS::strcpy (thread_pool_id,
-                            "default thread pool");
+            thread_pool_id = "default thread pool";
           else
-            ACE_OS::sprintf (thread_pool_id,
-                             "thread pool %d",
-                             thread_pool->id ());
+            thread_pool_id = "thread pool " + std::to_string (thread_pool->id ());
         }
 
       // Target priority is invalid.
@@ -165,7 +160,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
                           ACE_TEXT ("original thread CORBA/native priority %d/%d ")
                           ACE_TEXT ("not changed\n"),
                           priority_model,
-                          thread_pool_id,
+                          thread_pool_id.c_str (),
                           pre_invoke_state.original_CORBA_priority_,
                           pre_invoke_state.original_native_priority_));
 
@@ -178,7 +173,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
                           ACE_TEXT ("original thread CORBA/native priority ")
                           ACE_TEXT ("not changed\n"),
                           priority_model,
-                          thread_pool_id));
+                          thread_pool_id.c_str ());
 
     #endif /* ACE_HAS_THREADS */
 
@@ -215,7 +210,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
                               ACE_TEXT ("(%P|%t): original thread CORBA/native priority %d/%d ")
                               ACE_TEXT ("temporarily changed to CORBA/native priority %d/%d\n"),
                               priority_model,
-                              thread_pool_id,
+                              thread_pool_id.c_str (),
                               pre_invoke_state.original_CORBA_priority_,
                               pre_invoke_state.original_native_priority_,
                               target_priority,
@@ -232,7 +227,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
                               ACE_TEXT ("(%P|%t): original thread CORBA/native priority %d/%d ")
                               ACE_TEXT ("is the same as the target priority\n"),
                               priority_model,
-                              thread_pool_id,
+                              thread_pool_id.c_str (),
                               pre_invoke_state.original_CORBA_priority_,
                               pre_invoke_state.original_native_priority_));
                 }
@@ -240,7 +235,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
         }
     }
 
-  TAO_Network_Priority_Protocols_Hooks *nph =
+  TAO_Network_Priority_Protocols_Hooks * const nph =
     poa.orb_core ().get_network_priority_protocols_hooks ();
 
   if (nph != nullptr)
@@ -249,13 +244,13 @@ TAO_RT_Servant_Dispatcher::pre_invoke_remote_request (
     }
   else if (tph != nullptr)
     {
-      CORBA::Policy_var policy =
+      CORBA::Policy_var const policy =
         poa.policies ().get_cached_policy (
           TAO_CACHED_POLICY_RT_SERVER_PROTOCOL);
-      CORBA::Boolean set_server_network_priority =
+      CORBA::Boolean const set_server_network_priority =
         tph->set_server_network_priority (
           req.transport ()->tag (), policy.in ());
-      TAO_Connection_Handler *connection_handler =
+      TAO_Connection_Handler * const connection_handler =
         req.transport ()->connection_handler ();
       connection_handler->set_dscp_codepoint (set_server_network_priority);
     }
@@ -266,7 +261,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_collocated_request (TAO_Root_POA &poa,
                                                           CORBA::Short servant_priority,
                                                           TAO::Portable_Server::Servant_Upcall::Pre_Invoke_State &pre_invoke_state)
 {
-  TAO_Thread_Pool *thread_pool =
+  TAO_Thread_Pool * const thread_pool =
     static_cast <TAO_Thread_Pool *> (poa.thread_pool ());
 
   if (thread_pool == nullptr || thread_pool->with_lanes ())
@@ -294,7 +289,7 @@ TAO_RT_Servant_Dispatcher::pre_invoke_collocated_request (TAO_Root_POA &poa,
   //
 
   // Remember current thread's priority.
-  TAO_Protocols_Hooks *tph = poa.orb_core ().get_protocols_hooks ();
+  TAO_Protocols_Hooks * const tph = poa.orb_core ().get_protocols_hooks ();
 
   if (tph != nullptr)
     {
@@ -331,7 +326,7 @@ TAO_RT_Servant_Dispatcher::post_invoke (TAO_Root_POA &poa,
         {
           // Reset the priority of the current thread back to its original
           // value.
-          TAO_Protocols_Hooks *tph = poa.orb_core ().get_protocols_hooks ();
+          TAO_Protocols_Hooks * const tph = poa.orb_core ().get_protocols_hooks ();
 
           if (tph != nullptr)
             {
@@ -342,7 +337,7 @@ TAO_RT_Servant_Dispatcher::post_invoke (TAO_Root_POA &poa,
                                                 CORBA::COMPLETED_NO);
             }
         }
-      catch (const ::CORBA::Exception& ex)
+      catch (::CORBA::Exception const &ex)
         {
           // Eat up the exception.
           ex._tao_print_exception (
@@ -354,21 +349,21 @@ TAO_RT_Servant_Dispatcher::post_invoke (TAO_Root_POA &poa,
 }
 
 TAO_Root_POA *
-TAO_RT_Servant_Dispatcher::create_Root_POA (const ACE_CString &name,
+TAO_RT_Servant_Dispatcher::create_Root_POA (ACE_CString const &name,
                                             PortableServer::POAManager_ptr poa_manager,
-                                            const TAO_POA_Policy_Set &policies,
+                                            TAO_POA_Policy_Set const &policies,
                                             ACE_Lock &lock,
                                             TAO_SYNCH_MUTEX &thread_lock,
                                             TAO_ORB_Core &orb_core,
                                             TAO_Object_Adapter *object_adapter)
 {
-  TAO_RT_POA *poa = nullptr;
+  TAO_RT_POA *poa {};
 
   ACE_NEW_THROW_EX (poa,
                     TAO_RT_POA (name,
                                 poa_manager,
                                 policies,
-                                0,
+                                nullptr,
                                 lock,
                                 thread_lock,
                                 orb_core,

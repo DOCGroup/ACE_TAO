@@ -7,14 +7,10 @@
 #include "Peer.h"
 
 Peer_Handler::Peer_Handler ()
-  : connection_id_ (-1),  // Maybe it's better than 0.
-    msg_frag_ (0),
-    total_bytes_ (0)
 {
   // Set the high water mark of the <ACE_Message_Queue>.  This is used
   // to exert flow control.
   this->msg_queue ()->high_water_mark (Options::instance ()->max_queue_size ());
-  first_time_ = 1;  // It will be first time to open Peer_Handler.
 }
 
 // Upcall from the <ACE_Acceptor::handle_input> that turns control
@@ -46,7 +42,7 @@ Peer_Handler::open (void *a)
   // Schedule the time between disconnects.  This should really be a
   // "tunable" parameter.
   if (ACE_Reactor::instance ()->schedule_timer
-      (this, 0, timeout) == -1)
+      (this, nullptr, timeout) == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("%p\n"),
                 ACE_TEXT ("schedule_timer")));
@@ -71,7 +67,7 @@ Peer_Handler::transmit (ACE_Message_Block *mb,
                         size_t n,
                         int event_type)
 {
-  Event *event = (Event *) mb->rd_ptr ();
+  Event * const event = reinterpret_cast<Event *> (mb->rd_ptr ());
 
   // Initialize the header.
   new (&event->header_) Event_Header (n,
@@ -108,22 +104,23 @@ Peer_Handler::transmit (ACE_Message_Block *mb,
 int
 Peer_Handler::transmit_stdin ()
 {
-  // If return value is -1, then first_time_ must be reset to 1.
-  int result = 0;
+  // If return value is -1, then first_time_ must be reset to true.
+  int result {};
   if (this->connection_id_ != -1)
     {
-      ACE_Message_Block *mb = 0;
+      ACE_Message_Block *message_block {};
 
-      ACE_NEW_RETURN (mb,
+      ACE_NEW_RETURN (message_block,
                       ACE_Message_Block (sizeof (Event)),
                       -1);
+      ACE_Message_Block_Unique_Ptr message (message_block);
 
       // Cast the message block payload into an <Event> pointer.
-      Event *event = (Event *) mb->rd_ptr ();
+      Event * const event = reinterpret_cast<Event *> (message->rd_ptr ());
 
-      ssize_t n = ACE_OS::read (ACE_STDIN,
-                                event->data_,
-                                sizeof event->data_);
+      ssize_t const n = ACE_OS::read (ACE_STDIN,
+                                     event->data_,
+                                     sizeof event->data_);
       switch (n)
         {
         case 0:
@@ -135,38 +132,27 @@ Peer_Handler::transmit_stdin ()
           ACE_Reactor::instance ()->remove_handler
             (ACE_STDIN,
              ACE_Event_Handler::DONT_CALL | ACE_Event_Handler::READ_MASK);
-          mb->release ();
-          result = 0; //
           break;
-          /* NOTREACHED */
         case -1:
-          mb->release ();
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("%p\n"),
                       ACE_TEXT ("read")));
-          result = 0; //
           break;
-          /* NOTREACHED */
         default:
-          // Do not return directly, save the return value.
-          result = this->transmit (mb, n, ROUTING_EVENT);
+          result = this->transmit (message.release (), n, ROUTING_EVENT);
           break;
-          /* NOTREACHED */
         }
-
-      // Do not return at here, but at exit of function.
-      /*return 0;*/
     }
   else
-  {
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Must transmit over an opened channel.\n")));
-    result = -1; // Save return value at here, return at exit of function.
-  }
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Must transmit over an opened channel.\n")));
+      result = -1;
+    }
   // If transmit error, the stdin-thread will be cancelled, so should
-  // reset first_time_ to 1, which will register_stdin_handler again.
+  // reset first_time_ to true, which will register_stdin_handler again.
   if (result == -1)
-    first_time_ = 1;
+    first_time_ = true;
 
   return result;
 }
@@ -224,7 +210,7 @@ Peer_Handler::nonblk_put (ACE_Message_Block *mb)
 int
 Peer_Handler::handle_output (ACE_HANDLE)
 {
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb {};
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("in handle_output\n")));
@@ -321,7 +307,7 @@ Peer_Handler::send (ACE_Message_Block *mb)
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("sent %d bytes, total bytes sent = %d\n"),
+              ACE_TEXT ("sent %b bytes, total bytes sent = %d\n"),
               n,
               this->total_bytes_));
   return n;
@@ -332,18 +318,22 @@ Peer_Handler::send (ACE_Message_Block *mb)
 int
 Peer_Handler::recv (ACE_Message_Block *&mb)
 {
-  if (this->msg_frag_ == 0)
-    // No existing fragment...
-    ACE_NEW_RETURN (this->msg_frag_,
-                    ACE_Message_Block (sizeof (Event)),
-                    -1);
+  if (this->msg_frag_ == nullptr)
+    {
+      // No existing fragment...
+      ACE_Message_Block *fragment {};
+      ACE_NEW_RETURN (fragment,
+                      ACE_Message_Block (sizeof (Event)),
+                      -1);
+      this->msg_frag_.reset (fragment);
+    }
 
-  Event *event = (Event *) this->msg_frag_->rd_ptr ();
-  ssize_t header_received = 0;
+  Event * const event = reinterpret_cast<Event *> (this->msg_frag_->rd_ptr ());
+  ssize_t header_received {};
 
-  const size_t HEADER_SIZE = sizeof (Event_Header);
-  ssize_t header_bytes_left_to_read =
-    HEADER_SIZE - this->msg_frag_->length ();
+  size_t const header_size = sizeof (Event_Header);
+  ssize_t const header_bytes_left_to_read =
+    header_size - this->msg_frag_->length ();
 
   if (header_bytes_left_to_read > 0)
     {
@@ -358,9 +348,9 @@ Peer_Handler::recv (ACE_Message_Block *&mb)
                       ACE_TEXT ("%p\n"),
                       ACE_TEXT ("Recv error during header read")));
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("attempted to read %d bytes\n"),
+                      ACE_TEXT ("attempted to read %b bytes\n"),
                       header_bytes_left_to_read));
-          this->msg_frag_ = this->msg_frag_->release ();
+          this->msg_frag_.reset ();
           return header_received;
         }
 
@@ -368,10 +358,10 @@ Peer_Handler::recv (ACE_Message_Block *&mb)
       this->msg_frag_->wr_ptr (header_received);
 
       // At this point we may or may not have the ENTIRE header.
-      if (this->msg_frag_->length () < HEADER_SIZE)
+      if (this->msg_frag_->length () < header_size)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("Partial header received: only %d bytes\n"),
+                      ACE_TEXT ("Partial header received: only %B bytes\n"),
                       this->msg_frag_->length ()));
           // Notify the caller that we didn't get an entire event.
           errno = EWOULDBLOCK;
@@ -403,11 +393,11 @@ Peer_Handler::recv (ACE_Message_Block *&mb)
   // <event->header_.len_> we complete the
   // <data_bytes_left_to_read>...
 
-  ssize_t data_bytes_left_to_read =
+  ssize_t const data_bytes_left_to_read =
     ssize_t (event->header_.len_ - (msg_frag_->wr_ptr () - event->data_));
 
   // peer().recv() should not be called when data_bytes_left_to_read is 0.
-  ssize_t data_received = !data_bytes_left_to_read ? 0 :
+  ssize_t const data_received = !data_bytes_left_to_read ? 0 :
     this->peer ().recv (this->msg_frag_->wr_ptr (),
                         data_bytes_left_to_read);
 
@@ -422,10 +412,10 @@ Peer_Handler::recv (ACE_Message_Block *&mb)
       ACE_FALLTHROUGH;
     case 0: // Premature EOF.
       if (data_bytes_left_to_read)
-      {
-      this->msg_frag_ = this->msg_frag_->release ();
-      return 0;
-      }
+        {
+          this->msg_frag_.reset ();
+          return 0;
+        }
       ACE_FALLTHROUGH;
     default:
       // Set the write pointer at 1 past the end of the event.
@@ -442,10 +432,7 @@ Peer_Handler::recv (ACE_Message_Block *&mb)
           // Set the read pointer to the beginning of the event.
           this->msg_frag_->rd_ptr (this->msg_frag_->base ());
 
-          mb = this->msg_frag_;
-
-          // Reset the pointer to indicate we've got an entire event.
-          this->msg_frag_ = 0;
+          mb = this->msg_frag_.release ();
         }
 
       ACE_DEBUG ((LM_DEBUG,
@@ -537,7 +524,7 @@ Peer_Handler::await_connection_id ()
 
       // Next time in await_connection_id(), I'll don't call
       // register_stdin_handler().
-      first_time_ = 0;
+      first_time_ = false;
     }
   return 0;
 }
@@ -545,18 +532,21 @@ Peer_Handler::await_connection_id ()
 int
 Peer_Handler::subscribe ()
 {
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *message_block {};
 
-  ACE_NEW_RETURN (mb,
+  ACE_NEW_RETURN (message_block,
                   ACE_Message_Block (sizeof (Event)),
                   -1);
+  ACE_Message_Block_Unique_Ptr message (message_block);
 
-  Subscription *subscription =
-    (Subscription *) ((Event *) mb->rd_ptr ())->data_;
+  Event * const event = reinterpret_cast<Event *> (message->rd_ptr ());
+  Subscription * const subscription =
+    reinterpret_cast<Subscription *> (event->data_);
   subscription->connection_id_ =
     Options::instance ()->connection_id ();
 
-  return this->transmit (mb, sizeof *subscription, SUBSCRIPTION_EVENT);
+  return this->transmit (message.release (), sizeof *subscription,
+                         SUBSCRIPTION_EVENT);
 }
 
 // Action that receives events from the Gateway.
@@ -564,9 +554,10 @@ Peer_Handler::subscribe ()
 int
 Peer_Handler::await_events ()
 {
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb {};
 
-  ssize_t n = this->recv (mb);
+  ssize_t const n = this->recv (mb);
+  ACE_Message_Block_Unique_Ptr message (mb);
 
   switch (n)
     {
@@ -590,8 +581,8 @@ Peer_Handler::await_events ()
         // We got a valid event, so let's process it now!  At the
         // moment, we just print out the event contents...
 
-        Event *event = (Event *) mb->rd_ptr ();
-        this->total_bytes_ += mb->length ();
+        Event * const event = reinterpret_cast<Event *> (message->rd_ptr ());
+        this->total_bytes_ += message->length ();
 
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("route id = %d, cur len = %d, total len = %d\n"),
@@ -603,7 +594,6 @@ Peer_Handler::await_events ()
                       ACE_TEXT ("data_ = %*s\n"),
                       event->header_.len_ - 2,
                       event->data_));
-        mb->release ();
         return 0;
       }
     }
@@ -612,8 +602,8 @@ Peer_Handler::await_events ()
 // Periodically send events via ACE_Reactor timer mechanism.
 
 int
-Peer_Handler::handle_timeout (const ACE_Time_Value &,
-                              const void *)
+Peer_Handler::handle_timeout (ACE_Time_Value const &,
+                              void const *)
 {
   // Shut down the handler.
   return this->handle_close ();
@@ -692,16 +682,13 @@ Peer_Acceptor::start (u_short port)
   return 0;
 }
 
-Peer_Acceptor::Peer_Acceptor ()
-  : peer_handler_ (0)
-{
-}
+Peer_Acceptor::Peer_Acceptor () = default;
 
 int
 Peer_Acceptor::close ()
 {
   // Will trigger a delete.
-  if (this->peer_handler_ != 0)
+  if (this->peer_handler_ != nullptr)
     this->peer_handler_->destroy ();
 
   // Close down the base class.
@@ -753,8 +740,8 @@ Peer_Connector::open_connector (Peer_Handler *&peer_handler,
 int
 Peer_Connector::open (ACE_Reactor *, int)
 {
-  this->supplier_peer_handler_ = 0;
-  this->consumer_peer_handler_ = 0;
+  this->supplier_peer_handler_ = nullptr;
+  this->consumer_peer_handler_ = nullptr;
 
   if (Options::instance ()->enabled (Options::SUPPLIER_CONNECTOR)
       && this->open_connector (this->supplier_peer_handler_,
@@ -811,7 +798,7 @@ Peer_Factory::info (ACE_TCHAR **strp, size_t length) const
   ACE_OS::strcat
     (buf, ACE_TEXT ("/tcp # Gateway traffic generator and data sink\n"));
 
-  if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
+  if (*strp == nullptr && (*strp = ACE_OS::strdup (buf)) == nullptr)
     return -1;
   else
     ACE_OS::strncpy (*strp, buf, length);

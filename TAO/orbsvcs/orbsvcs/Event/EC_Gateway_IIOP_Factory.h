@@ -41,7 +41,7 @@ class TAO_RTEvent_Serv_Export TAO_EC_Gateway_IIOP_Factory
 {
 public:
   TAO_EC_Gateway_IIOP_Factory ();
-  virtual ~TAO_EC_Gateway_IIOP_Factory () override;
+  ~TAO_EC_Gateway_IIOP_Factory () override = default;
 
   TAO_EC_Gateway_IIOP_Factory (TAO_EC_Gateway_IIOP_Factory const &) = delete;
   TAO_EC_Gateway_IIOP_Factory (TAO_EC_Gateway_IIOP_Factory &&) = delete;
@@ -50,8 +50,8 @@ public:
 
   /// The Service_Object entry points.
   //@{
-  virtual int init (int argc, ACE_TCHAR* argv[]) override;
-  virtual int fini () override;
+  int init (int argc, ACE_TCHAR* argv[]) override;
+  int fini () override;
   //@}
 
   /// Helper function to register the Gateway into the service
@@ -74,8 +74,8 @@ public:
 private:
   /// Helper for agrument parsing.  Prints out an error message about
   /// unsupported option value.
-  void unsupported_option_value (const ACE_TCHAR * option_name,
-                                 const ACE_TCHAR * option_value);
+  void unsupported_option_value (ACE_TCHAR const *option_name,
+                                 ACE_TCHAR const *option_value);
 
 protected:
   /// Use this ORB to locate global resources.

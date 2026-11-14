@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_LB_LOAD_ALERT_H
 #define TAO_LB_LOAD_ALERT_H
 
@@ -28,7 +27,6 @@ class TAO_LoadBalancing_Export TAO_LB_LoadAlert
   : public virtual POA_CosLoadBalancing::LoadAlert
 {
 public:
-  /// Constructor.
   TAO_LB_LoadAlert ();
 
   /**
@@ -56,17 +54,16 @@ public:
   TAO_LB_LoadAlert & operator= (TAO_LB_LoadAlert &&) = delete;
 
 // protected:
-  /// Destructor.
   /**
    * Protected destructor to enforce correct memory management via
    * reference counting.
    */
-  ~TAO_LB_LoadAlert () override;
+  ~TAO_LB_LoadAlert () override = default;
 
 private:
   /// Has this LoadAlert servant been alerted of a high load condition
   /// by the LoadManager?
-  CORBA::Boolean alerted_;
+  CORBA::Boolean alerted_ {};
 
   /// Lock used to synchronized access to the LoadAlert state.
   mutable TAO_SYNCH_MUTEX lock_;

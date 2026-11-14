@@ -17,7 +17,6 @@ class Roundtrip
   : public virtual PortableServer::DynamicImplementation
 {
 public:
-  /// Constructor
   Roundtrip (CORBA::ORB_ptr orb);
 
   // = The DSI methods

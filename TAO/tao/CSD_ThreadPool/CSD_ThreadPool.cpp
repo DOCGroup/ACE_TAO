@@ -9,16 +9,15 @@
 #include "tao/ORBInitializer_Registry.h"
 #include "tao/ORB_Core.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
 TAO_CSD_ThreadPool::init ()
 {
-  static int initialized {};
-  if (initialized == 1)
+  static bool initialized {};
+  if (initialized)
     return 0;
-  initialized = 1;
+  initialized = true;
 
   TAO_CSD_Framework_Loader::static_init();
 
@@ -59,14 +58,13 @@ TAO_CSD_ThreadPool::init ()
       PortableInterceptor::register_orb_initializer (
           dll_initializer.in ());
     }
-  catch (const ::CORBA::Exception& ex)
+  catch (::CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "Unexpected exception caught while "
         "initializing the CSD Framework");
       return 1;
     }
-
 
   return ACE_Service_Config::process_directive (
             ace_svc_desc_TAO_CSD_TP_Strategy_Factory);

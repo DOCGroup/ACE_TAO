@@ -2,11 +2,13 @@
 #include "testS.h"
 #include "tao/PortableServer/Root_POA.h"
 #include "ace/OS_NS_stdio.h"
+#include <memory>
+#include <string>
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT("ior");
-static int done = 0;
+static std::basic_string<ACE_TCHAR> ior_output_file = ACE_TEXT ("ior");
+static bool done {};
 
-void
+[[noreturn]] void
 throw_exception ()
 {
   throw 1;
@@ -16,25 +18,29 @@ class test_i :
   public POA_test
 {
 public:
-  test_i (CORBA::ORB_ptr orb);
+  explicit test_i (CORBA::ORB_ptr orb);
+  test_i (test_i const &) = delete;
+  test_i (test_i &&) = delete;
+  test_i & operator= (test_i const &) = delete;
+  test_i & operator= (test_i &&) = delete;
 
-  void normal_method ();
+  void normal_method () override;
 
-  void unknown_exception_in_method ();
+  void unknown_exception_in_method () override;
 
-  void unknown_exception_during_deactivation ();
+  void unknown_exception_during_deactivation () override;
 
-  void _add_ref ();
-  void _remove_ref ();
+  void _add_ref () override;
+  void _remove_ref () override;
 
-  CORBA::ORB_var orb_;
-
-  int reference_count_;
+private:
+  CORBA::ORB_var const orb_;
+  // The test's manual count deliberately deletes the servant and throws on the last release.
+  int reference_count_ {1};
 };
 
 test_i::test_i (CORBA::ORB_ptr orb)
-  : orb_ (CORBA::ORB::_duplicate (orb)),
-    reference_count_ (1)
+  : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
@@ -63,10 +69,10 @@ test_i::unknown_exception_during_deactivation ()
   ACE_DEBUG ((LM_DEBUG,
               "test_i::unknown_exception_during_deactivation() called\n"));
 
-  PortableServer::POA_var poa =
+  PortableServer::POA_var const poa =
     this->_default_POA ();
 
-  PortableServer::ObjectId_var id =
+  PortableServer::ObjectId_var const id =
     poa->servant_to_id (this);
 
   poa->deactivate_object (id.in ());
@@ -103,13 +109,18 @@ class test_factory_i :
   public POA_test_factory
 {
 public:
-  test_factory_i (CORBA::ORB_ptr orb);
+  explicit test_factory_i (CORBA::ORB_ptr orb);
+  test_factory_i (test_factory_i const &) = delete;
+  test_factory_i (test_factory_i &&) = delete;
+  test_factory_i & operator= (test_factory_i const &) = delete;
+  test_factory_i & operator= (test_factory_i &&) = delete;
 
-  test_ptr create_test ();
+  test_ptr create_test () override;
 
-  void shutdown ();
+  void shutdown () override;
 
-  CORBA::ORB_var orb_;
+private:
+  CORBA::ORB_var const orb_;
 };
 //FUZZ: enable check_for_lack_ACE_OS
 
@@ -121,6 +132,7 @@ test_factory_i::test_factory_i (CORBA::ORB_ptr orb)
 test_ptr
 test_factory_i::create_test ()
 {
+  // The servant var below takes ownership of this newly allocated servant.
   test_i *servant =
     new test_i (this->orb_.in ());
 
@@ -150,7 +162,7 @@ test_factory_i::shutdown ()
   ACE_DEBUG ((LM_DEBUG,
               "factory_i::shutdown() called\n"));
 
-  done = 1;
+  done = true;
   this->orb_->shutdown (false);
 }
 
@@ -158,7 +170,7 @@ int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -181,60 +193,60 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,argv);
+      CORBA::ORB_var const orb =
+        CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var poa_object =
+      CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
       if (parse_args (argc, argv) != 0)
         return -1;
 
       {
-        test_factory_i *servant =
-          new test_factory_i (orb.in ());
+        test_factory_i *servant = new test_factory_i (orb.in ());
 
+        // Transfer local reference ownership to the servant var while the POA registers it.
         PortableServer::ServantBase_var safe_servant (servant);
         ACE_UNUSED_ARG (safe_servant);
 
-        PortableServer::ObjectId_var id_act =
+        PortableServer::ObjectId_var const id_act =
           root_poa->activate_object (servant);
 
-        CORBA::Object_var object = root_poa->id_to_reference (id_act.in ());
+        CORBA::Object_var const object = root_poa->id_to_reference (id_act.in ());
 
-        test_factory_var test_factory =
+        test_factory_var const test_factory =
           test_factory::_narrow (object.in ());
 
-        CORBA::String_var ior =
+        CORBA::String_var const ior =
           orb->object_to_string (test_factory.in ());
 
-        FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
-        if (output_file == 0)
+        std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+          ACE_OS::fopen (ior_output_file.c_str (), "w"), ACE_OS::fclose);
+        if (!output_file)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Cannot open output file for writing IOR: %s",
-                             ior_output_file),
+                             ior_output_file.c_str ()),
                             -1);
-        ACE_OS::fprintf (output_file, "%s", ior.in ());
-        ACE_OS::fclose (output_file);
+        ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
       }
 
       poa_manager->activate ();
 
-      TAO_Root_POA *tao_poa = dynamic_cast <TAO_Root_POA*> (root_poa.in ());
+      TAO_Root_POA * const tao_poa = dynamic_cast<TAO_Root_POA *> (root_poa.in ());
 
       while (!done)
         {
-          CORBA::ULong outstanding_requests =
+          CORBA::ULong const outstanding_requests =
             tao_poa->outstanding_requests ();
 
           ACE_DEBUG ((LM_DEBUG,

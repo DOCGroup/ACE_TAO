@@ -9,15 +9,10 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_fcntl.h"
 
-// Constructor.
 template <class Servant>
 Server<Servant>::Server ()
-  : servant_ (0)
-  , ior_output_file_ (0)
-  , naming_ (0)
-  , ins_ (0)
 {
-  Servant *tmp = 0;
+  Servant *tmp {};
   ACE_NEW_THROW_EX (tmp,
                     Servant (),
                     CORBA::NO_MEMORY ());
@@ -37,13 +32,13 @@ Server<Servant>::parse_args ()
     switch (c)
       {
       case 'd':  // debug flag.
-        TAO_debug_level++;
+        ++TAO_debug_level;
         break;
       case 'o':  // output the IOR to a file.
         this->ior_output_file_ = get_opts.opt_arg ();
         break;
       case 'n': //Use naming service
-        this->naming_ = 1;
+        this->naming_ = true;
         break;
       case 'i': // For Testing the InterOperable Naming Service.
         this->ins_ = get_opts.opt_arg ();
@@ -70,7 +65,7 @@ Server<Servant>::parse_args ()
 // the ORB. Ignore this method if you are not testing for
 // the InterOperable Naming Service.
 template <class Servant> int
-Server<Servant>::test_for_ins (const char *ior)
+Server<Servant>::test_for_ins (char const *ior)
 {
   CORBA::ORB_var orb = this->orb_manager_.orb ();
 
@@ -96,7 +91,7 @@ Server<Servant>::test_for_ins (const char *ior)
 
       adapter->bind (ACE_TEXT_ALWAYS_CHAR (this->ins_), ior);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("ERROR: test_for_ins failed\n");
       return -1;
@@ -107,7 +102,7 @@ Server<Servant>::test_for_ins (const char *ior)
 
 // Initialize the server.
 template <class Servant> int
-Server<Servant>::init (const char *servant_name,
+Server<Servant>::init (char const *servant_name,
                        int argc,
                        ACE_TCHAR *argv[])
 {
@@ -134,7 +129,7 @@ Server<Servant>::init (const char *servant_name,
   // Stash our ORB pointer for later reference.
   this->servant_->orb (orb.in ());
 
-  if (this->naming_ == 1)
+  if (this->naming_)
     {
       // Call naming service
       if (this->register_name (servant_name) == -1)
@@ -176,7 +171,7 @@ Server<Servant>::init (const char *servant_name,
           ACE_OS::fclose (fh);
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("\tException in activation of POA");
       return -1;
@@ -198,7 +193,7 @@ Server<Servant>::run ()
 }
 
 template <class Servant> int
-Server<Servant>::register_name (const char *name)
+Server<Servant>::register_name (char const *name)
 {
   CORBA::ORB_var orb = this->orb_manager_.orb ();
 
@@ -231,7 +226,7 @@ Server<Servant>::register_name (const char *name)
                               -1);
         }
     }
-  catch (const CosNaming::NamingContext::AlreadyBound&)
+  catch (CosNaming::NamingContext::AlreadyBound const &)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("Unable to bind %C\n"),
@@ -240,14 +235,6 @@ Server<Servant>::register_name (const char *name)
     }
 
   return 0;
-}
-
-// Constructor.
-template <class ServerInterface>
-Client<ServerInterface>::Client ()
-  : ior_ ("")
-  , do_shutdown_ (0)
-{
 }
 
 // Reads the Server ior from a file
@@ -295,13 +282,13 @@ Client<ServerInterface>::parse_args ()
     switch (c)
       {
       case 'd':  // debug flag
-        TAO_debug_level++;
+        ++TAO_debug_level;
         break;
       case 'k':  // ior provide on command line
         this->ior_ = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ());
         break;
       case 'n': // Use naming service
-        this->naming_ = 1;
+        this->naming_ = true;
         break;
       case 'f': // read the IOR from the file.
         result = this->read_ior (get_opts.opt_arg ());
@@ -313,7 +300,7 @@ Client<ServerInterface>::parse_args ()
                             -1);
         break;
       case 'x': // read the flag for shutting down
-        this->do_shutdown_ = 1;
+        this->do_shutdown_ = true;
         break;
       case 'h':  // display help for use of the client.
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -340,7 +327,7 @@ Client<ServerInterface>::~Client ()
 }
 
 template <class ServerInterface> int
-Client<ServerInterface>::init (const char *name,
+Client<ServerInterface>::init (char const *name,
                                int argc,
                                ACE_TCHAR **argv)
 {
@@ -374,7 +361,7 @@ Client<ServerInterface>::init (const char *name,
                                 -1);
             }
         }
-      else if (this->naming_ == 1)
+      else if (this->naming_)
         {
           // No IOR specified. Use the Naming Service
           ACE_DEBUG((LM_DEBUG,
@@ -388,7 +375,7 @@ Client<ServerInterface>::init (const char *name,
                            ACE_TEXT ("no ior or naming options  specified\n")),
                           -1);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Client_i::init");
       return -1;
@@ -398,7 +385,7 @@ Client<ServerInterface>::init (const char *name,
 }
 
 template <class ServerInterface> int
-Client<ServerInterface>::obtain_initial_references (const char *name)
+Client<ServerInterface>::obtain_initial_references (char const *name)
 {
   try
     {
@@ -424,7 +411,7 @@ Client<ServerInterface>::obtain_initial_references (const char *name)
                             -1);
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Client::obtain_initial_references");
       return -1;
@@ -444,7 +431,7 @@ template <class ServerInterface> void
 Client<ServerInterface>::do_shutdown (int flag)
 {
   // Fills the flag
-  this->do_shutdown_ = flag;
+  this->do_shutdown_ = flag != 0;
 }
 
 #endif /* SIMPLE_UTIL_C */

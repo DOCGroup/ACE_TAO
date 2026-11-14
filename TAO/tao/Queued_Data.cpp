@@ -5,6 +5,8 @@
 #include "ace/Log_Msg.h"
 #include "ace/Malloc_Base.h"
 
+#include <memory>
+
 #if !defined (__ACE_INLINE__)
 # include "tao/Queued_Data.inl"
 #endif /* __ACE_INLINE__ */
@@ -34,15 +36,15 @@ clone_mb_nocopy_size (ACE_Message_Block *mb, size_t span_size)
   size_t const aligned_size = ACE_CDR::first_size (span_size + ACE_CDR::MAX_ALIGNMENT);
 
   // Get the allocators
-  ACE_Allocator *data_allocator = nullptr;
-  ACE_Allocator *data_block_allocator = nullptr;
-  ACE_Allocator *message_block_allocator = nullptr;
+  ACE_Allocator *data_allocator {};
+  ACE_Allocator *data_block_allocator {};
+  ACE_Allocator *message_block_allocator {};
   mb->access_allocators (data_allocator,
                          data_block_allocator,
                          message_block_allocator);
 
   // Create a new Message Block
-  ACE_Message_Block *nb = nullptr;
+  ACE_Message_Block *nb {};
   ACE_NEW_MALLOC_RETURN (nb,
                          static_cast<ACE_Message_Block*> (
                                          message_block_allocator->malloc (
@@ -77,7 +79,7 @@ TAO_Queued_Data::make_queued_data (ACE_Allocator *message_buffer_alloc,
                                    ACE_Data_Block *db)
 {
   // Get a node for the queue..
-  TAO_Queued_Data *qd = nullptr;
+  TAO_Queued_Data *qd {};
 
   if (message_buffer_alloc)
     {
@@ -95,19 +97,22 @@ TAO_Queued_Data::make_queued_data (ACE_Allocator *message_buffer_alloc,
                       nullptr);
     }
 
+  std::unique_ptr<TAO_Queued_Data, void (*) (TAO_Queued_Data *)> qd_guard (
+    qd, &TAO_Queued_Data::release);
+
   // Providing an ACE_Data_Block indicates that the caller wants
   // an aligned ACE_Message_Block added to the TAO_Queued_Data.
   if (db != nullptr)
     {
-      // If this allocation fails, the TAO_Queued_Data will be leaked.
+      ACE_Message_Block *mb {};
       if (input_cdr_alloc == nullptr)
-        ACE_NEW_RETURN (qd->msg_block_,
+        ACE_NEW_RETURN (mb,
                         ACE_Message_Block (db,
                                            0,
                                            input_cdr_alloc),
                         nullptr);
       else
-        ACE_NEW_MALLOC_RETURN (qd->msg_block_,
+        ACE_NEW_MALLOC_RETURN (mb,
                                static_cast<ACE_Message_Block*> (
                                  input_cdr_alloc->malloc (sizeof (ACE_Message_Block))),
                                ACE_Message_Block (db,
@@ -115,10 +120,13 @@ TAO_Queued_Data::make_queued_data (ACE_Allocator *message_buffer_alloc,
                                                   input_cdr_alloc),
                                nullptr);
 
-      ACE_CDR::mb_align (qd->msg_block_);
+      ACE_Message_Block_Unique_Ptr mb_guard {mb};
+      ACE_CDR::mb_align (mb_guard.get ());
+      qd->msg_block_owner_.reset (mb_guard.release ());
+      qd->msg_block_ = qd->msg_block_owner_.get ();
     }
 
-  return qd;
+  return qd_guard.release ();
 }
 
 /*static*/
@@ -126,7 +134,8 @@ void
 TAO_Queued_Data::release (TAO_Queued_Data *qd)
 {
   //// TODO
-  ACE_Message_Block::release (qd->msg_block_);
+  qd->msg_block_owner_.reset ();
+  qd->msg_block_ = nullptr;
 
   if (qd->allocator_)
     {
@@ -144,13 +153,12 @@ TAO_Queued_Data::release (TAO_Queued_Data *qd)
         {
           // This debug is for testing purposes!
           TAOLIB_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) - Queued_Data[%d]::release\n",
-                      "Using global pool for releasing\n"));
+                         "TAO (%P|%t) - Queued_Data::release\n"
+                         "Using global pool for releasing\n"));
         }
       delete qd;
     }
 }
-
 
 TAO_Queued_Data *
 TAO_Queued_Data::duplicate (TAO_Queued_Data &sqd)
@@ -161,15 +169,13 @@ TAO_Queued_Data::duplicate (TAO_Queued_Data &sqd)
   // @@ todo: Theoretically this should be within the Message Block,
   // but we dont have much scope to do this in that mess. Probably in
   // the next stage of MB rewrite we should be okay
-  ACE_Message_Block::Message_Flags fl =
-    sqd.msg_block_->self_flags ();
+  ACE_Message_Block::Message_Flags fl = sqd.msg_block_->self_flags ();
 
   if (ACE_BIT_ENABLED (fl,
                        ACE_Message_Block::DONT_DELETE))
     (void) TAO_Queued_Data::replace_data_block (*sqd.msg_block_);
 
-
-  TAO_Queued_Data *qd = nullptr;
+  TAO_Queued_Data *qd {};
 
   if (sqd.allocator_)
     {
@@ -188,8 +194,8 @@ TAO_Queued_Data::duplicate (TAO_Queued_Data &sqd)
     {
       // This debug is for testing purposes!
       TAOLIB_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - Queued_Data[%d]::duplicate\n",
-                  "Using global pool for allocation\n"));
+                     "TAO (%P|%t) - Queued_Data::duplicate\n"
+                     "Using global pool for allocation\n"));
     }
 
   ACE_NEW_RETURN (qd,
@@ -207,8 +213,7 @@ TAO_Queued_Data::consolidate ()
     {
       // Create a message block big enough to hold the entire chain
       ACE_Message_Block *dest = clone_mb_nocopy_size (
-                                      this->msg_block_,
-                                      this->msg_block_->total_length ());
+        this->msg_block_, this->msg_block_->total_length ());
 
       if (nullptr == dest)
         {
@@ -222,15 +227,14 @@ TAO_Queued_Data::consolidate ()
       // Reset the cont() parameter.  We have cloned the message
       // block but not the chain as we will no longer have chain.
       dest->cont (nullptr);
+      ACE_Message_Block_Unique_Ptr dest_guard {dest};
 
       // Use ACE_CDR to consolidate the chain for us
       ACE_CDR::consolidate (dest, this->msg_block_);
 
-      // free the original message block chain
-      this->msg_block_->release ();
-
-      // Set the message block to the new consolidated message block
-      this->msg_block_ = dest;
+      // Replace the original message block chain with the consolidated block.
+      this->msg_block_owner_.reset (dest_guard.release ());
+      this->msg_block_ = this->msg_block_owner_.get ();
       this->state_.more_fragments (false);
     }
 

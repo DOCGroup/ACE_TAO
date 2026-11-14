@@ -17,22 +17,24 @@
 #include "tao/CDR.h"
 #include "ace/Log_Msg.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include <new>
+#include <cerrno>
 
-template<class NCS_TO_TCS>
-TAO_Codeset_Translator_Factory_T<NCS_TO_TCS>::~TAO_Codeset_Translator_Factory_T ()
-{
-  delete translator_;
-}
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class NCS_TO_TCS>
 int
 TAO_Codeset_Translator_Factory_T<NCS_TO_TCS>::init (int argc, ACE_TCHAR* argv[])
 {
-  this->TAO_Codeset_Translator_Factory::init (argc,argv);
-  ACE_NEW_RETURN (translator_,NCS_TO_TCS,-1);
-  if( TAO_debug_level > 0 )
-    TAOLIB_DEBUG((LM_DEBUG, "TAO_Codeset_Translator_Factory_T<NCS_TO_TCS>::init() entered\n"));
+  this->TAO_Codeset_Translator_Factory::init (argc, argv);
+  this->translator_.reset (new (std::nothrow) NCS_TO_TCS);
+  if (!this->translator_)
+    {
+      errno = ENOMEM;
+      return -1;
+    }
+  if (TAO_debug_level > 0)
+    TAOLIB_DEBUG ((LM_DEBUG, "TAO_Codeset_Translator_Factory_T<NCS_TO_TCS>::init() entered\n"));
   return 0;
 }
 
@@ -42,37 +44,37 @@ template<class NCS_TO_TCS>
 CONV_FRAME::CodeSetId
 TAO_Codeset_Translator_Factory_T<NCS_TO_TCS>::ncs () const
 {
-  return this->translator_->ncs();
+  return this->translator_->ncs ();
 }
 
 template<class NCS_TO_TCS>
 CONV_FRAME::CodeSetId
 TAO_Codeset_Translator_Factory_T<NCS_TO_TCS>::tcs () const
 {
-  return this->translator_->tcs();
+  return this->translator_->tcs ();
 }
 
-// Assign either a reference to teh existing translator or a new translator
-// for input CDR streams
+/// Assign either a reference to the existing translator or a new translator
+/// for input CDR streams
 template<class NCS_TO_TCS>
 void
 TAO_Codeset_Translator_Factory_T<NCS_TO_TCS>::assign (TAO_InputCDR *cdr) const
 {
-  if (cdr)
+  if (cdr != nullptr)
     {
-      this->assign_i(cdr,this->translator_);
+      this->assign_i (cdr, this->translator_.get ());
     }
 }
 
-// Assign either a reference to teh existing translator or a new translator
-// for input CDR streams
+/// Assign either a reference to the existing translator or a new translator
+/// for input CDR streams
 template<class NCS_TO_TCS>
 void
 TAO_Codeset_Translator_Factory_T<NCS_TO_TCS>::assign (TAO_OutputCDR *cdr) const
 {
-  if (cdr)
+  if (cdr != nullptr)
     {
-      this->assign_i(cdr,this->translator_);
+      this->assign_i (cdr, this->translator_.get ());
     }
 }
 

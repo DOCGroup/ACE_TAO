@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_IIOP_SSL_TRANSPORT_H
 #define TAO_IIOP_SSL_TRANSPORT_H
 
@@ -55,12 +54,11 @@ namespace TAO
   class IIOP_SSL_Transport : public TAO_IIOP_Transport
   {
   public:
-    /// Constructor.
     IIOP_SSL_Transport (IIOP_SSL_Connection_Handler *handler,
                         TAO_ORB_Core *orb_core);
 
     /// Default destructor.
-    ~IIOP_SSL_Transport () override;
+    ~IIOP_SSL_Transport () override = default;
 
     /** @name Overridden Template Methods
      *

@@ -12,6 +12,9 @@
 #include "ace/Dynamic_Service.h"
 #include "ace/Truncate.h"
 
+#include <cstring>
+#include <vector>
+
 #ifndef __ACE_INLINE__
 # include "tao/AnyTypeCode/Value_TypeCode.inl"
 #endif  /* !__ACE_INLINE__ */
@@ -61,14 +64,9 @@ TAO::TypeCode::Value<StringType,
   if (!success)
     return false;
 
-  Value_Field<StringType, TypeCodeType> const * const begin =
-    &this->fields_[0];
-  Value_Field<StringType, TypeCodeType> const * const end =
-    begin + this->nfields_;
-
-  for (Value_Field<StringType, TypeCodeType> const * i = begin; i != end; ++i)
+  for (CORBA::ULong i {}; i < this->nfields_; ++i)
     {
-      Value_Field<StringType, TypeCodeType> const & field = *i;
+      Value_Field<StringType, TypeCodeType> const & field = this->fields_[i];
 
       if (!(enc << Traits<StringType>::get_string (field.name))
           || !marshal (enc,
@@ -114,7 +112,7 @@ template <typename StringType,
           typename TypeCodeType,
           class FieldArrayType,
           class RefCountPolicy>
-const TypeCodeType&
+TypeCodeType const &
 TAO::TypeCode::Value<StringType,
                      TypeCodeType,
                      FieldArrayType,
@@ -127,7 +125,7 @@ template <typename StringType,
           typename TypeCodeType,
           class FieldArrayType,
           class RefCountPolicy>
-const FieldArrayType&
+FieldArrayType const &
 TAO::TypeCode::Value<StringType,
                      TypeCodeType,
                      FieldArrayType,
@@ -157,7 +155,7 @@ TAO::TypeCode::Value<StringType,
   if (tc_type_modifier != this->type_modifier_)
     return false;
 
-  CORBA::TypeCode_var rhs_concrete_base_type =
+  CORBA::TypeCode_var const rhs_concrete_base_type =
     tc->concrete_base_type ();
 
   CORBA::Boolean const equal_concrete_base_types =
@@ -172,7 +170,7 @@ TAO::TypeCode::Value<StringType,
   if (tc_nfields != this->nfields_)
     return false;
 
-  for (CORBA::ULong i = 0; i < this->nfields_; ++i)
+  for (CORBA::ULong i {}; i < this->nfields_; ++i)
     {
       Value_Field<StringType, TypeCodeType> const & lhs_field =
         this->fields_[i];
@@ -221,7 +219,7 @@ TAO::TypeCode::Value<StringType,
   if (tc_type_modifier != this->type_modifier_)
     return false;
 
-  CORBA::TypeCode_var rhs_concrete_base_type =
+  CORBA::TypeCode_var const rhs_concrete_base_type =
     tc->concrete_base_type ();
 
   CORBA::Boolean const equivalent_concrete_base_types =
@@ -239,7 +237,7 @@ TAO::TypeCode::Value<StringType,
   if (tc_nfields != this->nfields_)
     return false;
 
-  for (CORBA::ULong i = 0; i < this->nfields_; ++i)
+  for (CORBA::ULong i {}; i < this->nfields_; ++i)
     {
       Value_Field<StringType, TypeCodeType> const & lhs_field =
         this->fields_[i];
@@ -277,7 +275,7 @@ TAO::TypeCode::Value<StringType,
                      FieldArrayType,
                      RefCountPolicy>::get_compact_typecode_i () const
 {
-  ACE_Array_Base<Value_Field<CORBA::String_var, CORBA::TypeCode_var> >
+  std::vector<Value_Field<CORBA::String_var, CORBA::TypeCode_var> >
     tc_fields (this->nfields_);
 
   if (this->nfields_ > 0)
@@ -287,7 +285,7 @@ TAO::TypeCode::Value<StringType,
 
       static char const empty_name[] = "";
 
-      for (CORBA::ULong i = 0; i < this->nfields_; ++i)
+      for (CORBA::ULong i {}; i < this->nfields_; ++i)
         {
           // Member names will be stripped, i.e. not embedded within
           // the compact TypeCode.

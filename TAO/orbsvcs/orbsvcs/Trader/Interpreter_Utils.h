@@ -1,10 +1,8 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file   Interpreter_Utils.h
  */
-//=============================================================================
 
 #ifndef TAO_INTERPRETER_UTILS_H
 #define TAO_INTERPRETER_UTILS_H
@@ -15,7 +13,7 @@
 #include "ace/Null_Mutex.h"
 #include "ace/Functor.h"
 #include "ace/ACE.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/CORBA_String.h"
@@ -43,7 +41,7 @@ public:
   int operator () (CORBA::String_var const& lhs,
                    CORBA::String_var const& rhs) const
   {
-    return ACE_OS::strcmp (lhs.in (), rhs.in ()) < 0;
+    return std::strcmp (lhs.in (), rhs.in ()) < 0;
   }
 };
 
@@ -54,7 +52,7 @@ public:
   int operator () (CORBA::String_var const& lhs,
                    CORBA::String_var const& rhs) const
   {
-    return ACE_OS::strcmp (lhs.in (), rhs.in ()) == 0;
+    return std::strcmp (lhs.in (), rhs.in ()) == 0;
   }
 };
 
@@ -76,9 +74,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // TAO_Sequence_Extracter_Base
 // *************************************************************
 
+/// Static methods used by the TAO_Sequence_Extracter class.
 class TAO_Sequence_Extracter_Base
-// = TITLE
-//   Static methods used by the TAO_Sequence_Extracter class.
 {
 public:
   static CORBA::TCKind sequence_type (CORBA::TypeCode* code);

@@ -43,11 +43,14 @@ class TAO_Notify_Serv_Export TAO_Notify_ThreadPool_Task
   friend class TAO_Notify_Method_Request_Shutdown;
 
 public:
-  /// Constructor
   TAO_Notify_ThreadPool_Task ();
 
-  /// Destructor
-  virtual ~TAO_Notify_ThreadPool_Task ();
+  TAO_Notify_ThreadPool_Task (TAO_Notify_ThreadPool_Task const &) = delete;
+  TAO_Notify_ThreadPool_Task (TAO_Notify_ThreadPool_Task &&) = delete;
+  TAO_Notify_ThreadPool_Task &operator= (TAO_Notify_ThreadPool_Task const &) = delete;
+  TAO_Notify_ThreadPool_Task &operator= (TAO_Notify_ThreadPool_Task &&) = delete;
+
+  ~TAO_Notify_ThreadPool_Task () override;
 
   /// Call the base class init
   int init (int argc, ACE_TCHAR **argv) override;
@@ -79,18 +82,17 @@ protected:
 
 private:
   /// Release
-  virtual void release ();
+  void release () override;
 
   /// The buffering strategy to use.
   std::unique_ptr<TAO_Notify_Buffering_Strategy> buffering_strategy_;
 
   /// Shutdown
-  bool shutdown_;
+  bool shutdown_ {};
 
   /// The Queue based timer.
   TAO_Notify_Timer_Queue::Ptr timer_;
 };
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

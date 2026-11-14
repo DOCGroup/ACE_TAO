@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_wait.h"
@@ -23,7 +22,6 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Handle_Set.h"
-
 
 static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 
@@ -140,7 +138,7 @@ server (void *arg)
           while ((r_bytes = new_stream.recv (buf, 1)) > 0)
             {
               ACE_TEST_ASSERT (*t == buf[0]);
-              t++;
+              ++t;
             }
 
           if (r_bytes == 0)

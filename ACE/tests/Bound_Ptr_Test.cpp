@@ -242,7 +242,6 @@ Method_Request_end::call ()
   return -1;
 }
 
-// Constructor
 // Associates the activation queue with this task's message queue,
 // allowing easy access to the message queue for shutting it down
 // when it's time to stop this object's service threads.
@@ -252,8 +251,6 @@ Scheduler::Scheduler ()
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Scheduler created\n")));
 }
-
-// Destructor
 
 Scheduler::~Scheduler ()
 {
@@ -335,7 +332,6 @@ int
 run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Bound_Ptr_Test"));
-
 
   // =========================================================================
   // The following test uses the ACE_Strong_Bound_Ptr in a single

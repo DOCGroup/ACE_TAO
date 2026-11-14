@@ -15,41 +15,31 @@ send_events (RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer)
   events[0].header.type = EVENT_TYPE;
   events[0].header.source = SOURCE_ID;
 
-  for (int i = 0; i < 100; ++i)
+  for (int i {}; i < 100; ++i)
     {
       consumer->push (events);
     }
 }
 
 int
-check_for_nil (CORBA::Object_ptr obj, const char *message)
+check_for_nil (CORBA::Object_ptr obj, char const *message)
 {
   if (CORBA::is_nil (obj))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "ERROR: Object reference <%s> is nil\n",
                        message),
                       -1);
-  else
-    return 0;
-}
-
-int
-parse_args (int /*argc*/, ACE_TCHAR ** /*argv*/)
-{
   return 0;
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
       // Initialize ORB and parse args.
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
-
-      if (parse_args (argc, argv) == -1)
-        return 1;
 
       // Obtain reference to EC.
       CORBA::Object_var obj =
@@ -81,7 +71,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ec->destroy ();
     }
 
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception in Supplier:");
       return 1;

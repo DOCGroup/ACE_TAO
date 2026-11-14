@@ -11,7 +11,11 @@
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 
-static const char the_prefix[] = "htiop";
+#include <cstdlib>
+#include <cstring>
+#include <memory>
+
+static constexpr char the_prefix[] = "htiop";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -66,7 +70,7 @@ TAO::HTIOP::Profile::~Profile ()
 {
   // Clean up the list of endpoints since we own it.
   // Skip the head, since it is not dynamically allocated.
-  TAO_Endpoint *tmp = nullptr;
+  TAO_Endpoint *tmp {};
 
   for (TAO_Endpoint *next = this->endpoint ()->next ();
        next != nullptr;
@@ -113,7 +117,7 @@ TAO::HTIOP::Profile::parse_string_i (const char *ior)
   // Pull off the "hostname:port#token/" part of the objref
   // Copy the string because we are going to modify it...
 
-  const char *okd = ACE_OS::strchr (ior, this->object_key_delimiter_);
+  const char *okd = std::strchr (ior, this->object_key_delimiter_);
 
   if (okd == nullptr || okd == ior)
     {
@@ -126,9 +130,9 @@ TAO::HTIOP::Profile::parse_string_i (const char *ior)
     }
 
   // Length of host string.
-  CORBA::ULong length_host = 0;
+  CORBA::ULong length_host {};
 
-  const char *cp_pos = ACE_OS::strchr (ior, ':');  // Look for a port
+  const char *cp_pos = std::strchr (ior, ':');  // Look for a port
 
   if (cp_pos == ior)
     {
@@ -146,11 +150,11 @@ TAO::HTIOP::Profile::parse_string_i (const char *ior)
 
       CORBA::String_var tmp = CORBA::string_alloc (length_port);
 
-      ACE_OS::strncpy (tmp.inout (), cp_pos + 1, length_port);
+      std::strncpy (tmp.inout (), cp_pos + 1, length_port);
       tmp[length_port] = '\0';
 
       this->endpoint_.port_ =
-        static_cast<CORBA::UShort> (ACE_OS::atoi (tmp.in ()));
+        static_cast<CORBA::UShort> (std::atoi (tmp.in ()));
 
       length_host = cp_pos - ior;
     }
@@ -160,12 +164,12 @@ TAO::HTIOP::Profile::parse_string_i (const char *ior)
   CORBA::String_var tmp = CORBA::string_alloc (length_host);
 
   // Skip the trailing '/'
-  ACE_OS::strncpy (tmp.inout (), ior, length_host);
+  std::strncpy (tmp.inout (), ior, length_host);
   tmp[length_host] = '\0';
 
   this->endpoint_.host_ = tmp._retn ();
 
-  if (ACE_OS::strcmp (this->endpoint_.host_.in (), "") == 0)
+  if (std::strcmp (this->endpoint_.host_.in (), "") == 0)
     {
       ACE::HTBP::Addr host_addr;
 
@@ -214,8 +218,8 @@ TAO::HTIOP::Profile::do_is_equivalent (const TAO_Profile *other_profile)
     return 0;
 
   // Check endpoints equivalence.
-  const TAO::HTIOP::Endpoint *other_endp = &op->endpoint_;
-  for (TAO::HTIOP::Endpoint *endp = &this->endpoint_;
+  const TAO::HTIOP::Endpoint *other_endp = std::addressof (op->endpoint_);
+  for (TAO::HTIOP::Endpoint *endp = std::addressof (this->endpoint_);
        endp != nullptr;
        endp = endp->next_)
     {
@@ -232,8 +236,8 @@ CORBA::ULong
 TAO::HTIOP::Profile::hash (CORBA::ULong max)
 {
   // Get the hashvalue for all endpoints.
-  CORBA::ULong hashval = 0;
-  for (TAO::HTIOP::Endpoint *endp = &this->endpoint_;
+  CORBA::ULong hashval {};
+  for (TAO::HTIOP::Endpoint *endp = std::addressof (this->endpoint_);
        endp != nullptr;
        endp = endp->next_)
     {
@@ -258,7 +262,7 @@ TAO::HTIOP::Profile::hash (CORBA::ULong max)
 TAO_Endpoint*
 TAO::HTIOP::Profile::endpoint ()
 {
-  return &this->endpoint_;
+  return std::addressof (this->endpoint_);
 }
 
 CORBA::ULong
@@ -273,7 +277,7 @@ TAO::HTIOP::Profile::add_endpoint (TAO::HTIOP::Endpoint *endp)
   endp->next_ = this->endpoint_.next_;
   this->endpoint_.next_ = endp;
 
-  this->count_++;
+  ++this->count_;
 }
 
 char *
@@ -285,21 +289,21 @@ TAO::HTIOP::Profile::to_string () const
 
   size_t buflen = (8 /* "corbaloc" */ +
                    1 /* colon separator */ +
-                   ACE_OS::strlen (::the_prefix) +
+                   std::strlen (::the_prefix) +
                    1 /* colon separator */ +
                    1 /* major version */ +
                    1 /* decimal point */ +
                    1 /* minor version */ +
                    1 /* `@' character */ +
-                   ACE_OS::strlen (this->endpoint_.host ()) +
+                   std::strlen (this->endpoint_.host ()) +
                    1 /* colon separator */ +
                    5 /* port number */ +
                    1 /* object key separator */ +
-                   ACE_OS::strlen (key.in ()));
+                   std::strlen (key.in ()));
 
   char * buf = CORBA::string_alloc (static_cast<CORBA::ULong> (buflen));
 
-  static const char digits [] = "0123456789";
+  static constexpr char digits [] = "0123456789";
 
   ACE_OS::sprintf (buf,
                    "corbaloc:%s:%c.%c@%s:%d%c%s",
@@ -313,7 +317,6 @@ TAO::HTIOP::Profile::to_string () const
 
   return buf;
 }
-
 
 const char *
 TAO::HTIOP::Profile::prefix ()
@@ -367,8 +370,8 @@ TAO::HTIOP::Profile::encode_endpoints ()
   HTIOPEndpointSequence endpoints;
   endpoints.length (this->count_);
 
-  const TAO::HTIOP::Endpoint *endpoint = &this->endpoint_;
-  for (CORBA::ULong i = 0;
+  const TAO::HTIOP::Endpoint *endpoint = std::addressof (this->endpoint_);
+  for (CORBA::ULong i {};
        i < this->count_;
        ++i)
     {
@@ -384,7 +387,7 @@ TAO::HTIOP::Profile::encode_endpoints ()
   if ((out_cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)) == 0
       || (out_cdr << endpoints) == 0)
     return -1;
-  size_t length = out_cdr.total_length ();
+  size_t const length = out_cdr.total_length ();
 
   IOP::TaggedComponent tagged_component;
   tagged_component.tag = TAO_TAG_ENDPOINTS;
@@ -397,7 +400,7 @@ TAO::HTIOP::Profile::encode_endpoints ()
        iterator = iterator->cont ())
     {
       size_t i_length = iterator->length ();
-      ACE_OS::memcpy (buf, iterator->rd_ptr (), i_length);
+      std::memcpy (buf, iterator->rd_ptr (), i_length);
 
       buf += i_length;
     }
@@ -447,7 +450,7 @@ TAO::HTIOP::Profile::decode_endpoints ()
            i > 0;
            --i)
         {
-          TAO::HTIOP::Endpoint *endpoint = nullptr;
+          TAO::HTIOP::Endpoint *endpoint {};
           ACE_NEW_RETURN (endpoint,
                           TAO::HTIOP::Endpoint (endpoints[i].host,
                                               endpoints[i].port,

@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #include "ace/Signal.h"
 
 #include "ace/Service_Config.h"
@@ -34,6 +33,7 @@
 #include "ace/Task.h"
 #include "ace/OS_main.h"
 
+#include <cstring>
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
   // This only works on Win32 platforms and on Unix platforms supporting
@@ -56,7 +56,7 @@ int PrintSigMask ();
 #define  COUT(X)  cout << X ; cout.flush ();
 
 // Host that we're connecting to.
-static ACE_TCHAR *host = 0;
+static ACE_TCHAR *host {};
 
 // duplex mode: ==0 half-duplex
 //              !=0 full duplex
@@ -71,7 +71,6 @@ static u_short port = ACE_DEFAULT_SERVER_PORT;
 // Size of each initial asynchronous <read> operation.
 static int initial_read_size = BUFSIZ;
 
-
 #define MyMutex ACE_Recursive_Thread_Mutex
 //#define MyMutex ACE_Thread_Mutex
 //#define MyMutex ACE_Null_Mutex
@@ -82,9 +81,8 @@ static int initial_read_size = BUFSIZ;
 class MyTask: public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  int svc () ;
+  int svc () override;
 };
-
 
 int MyTask::svc ()
 {
@@ -111,21 +109,21 @@ public:
   //FUZZ: disable check_for_lack_ACE_OS
   /// This is called after the new connection has been accepted.
   ///FUZZ: enable check_for_lack_ACE_OS
-  virtual void open (ACE_HANDLE handle,
-                     ACE_Message_Block &message_block);
+  void open (ACE_HANDLE handle,
+             ACE_Message_Block &message_block) override;
 
 protected:
   // These methods are called by the framework
 
   /// This is called when asynchronous <read> operation from the socket
   /// complete.
-  virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result
-                                   &result);
+  void handle_read_stream (const ACE_Asynch_Read_Stream::Result
+                           &result) override;
 
   /// This is called when an asynchronous <write> to the file
   /// completes.
-  virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result
-                                    &result);
+  void handle_write_stream (const ACE_Asynch_Write_Stream::Result
+                            &result) override;
 
 private:
   int  initiate_read_stream  ();
@@ -140,7 +138,6 @@ private:
   static long nSessions ;
 };
 
-
 long Receiver::nSessions = 0 ;
 
 Receiver::Receiver ()
@@ -148,14 +145,14 @@ Receiver::Receiver ()
     nIOCount ( 0 )
 {
   ACE_GUARD (MyMutex, locker, m_Mtx);
-  nSessions ++ ;
+  ++nSessions;
   ACE_DEBUG ((LM_DEBUG, "Receiver Ctor nSessions=%d\n", nSessions ));
 }
 
 Receiver::~Receiver ()
 {
   ACE_GUARD (MyMutex, locker, m_Mtx);
-  nSessions -- ;
+  --nSessions;
   ACE_OS::closesocket (this->handle_);
   ACE_DEBUG ((LM_DEBUG, "~Receiver Dtor nSessions=%d\n", nSessions ));
 }
@@ -179,13 +176,11 @@ bool Receiver::check_destroy ()
   return false ;
 }
 
-
 void Receiver::open (ACE_HANDLE handle,
                      ACE_Message_Block &)
 {
   ACE_DEBUG ((LM_DEBUG,
               "%N:%l:Receiver::open called\n"));
-
 
   this->handle_ = handle;
 
@@ -206,7 +201,6 @@ void Receiver::open (ACE_HANDLE handle,
       initiate_read_stream ();
     }
 
-
   check_destroy ();
 }
 
@@ -220,8 +214,7 @@ int Receiver::initiate_read_stream ()
   ACE_DEBUG ((LM_DEBUG,
               "initiate_read_stream called\n"));
 
-
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb {};
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block (BUFSIZ + 1),
                   -1);
@@ -236,7 +229,7 @@ int Receiver::initiate_read_stream ()
                         -1);
     }
 
-  nIOCount++ ;
+  ++nIOCount;
   return 0;
 }
 
@@ -252,7 +245,7 @@ int Receiver::initiate_write_stream (ACE_Message_Block & mb, int nBytes )
                        -1);
     }
 
-  nIOCount++ ;
+  ++nIOCount;
   return 0;
 }
 
@@ -367,19 +360,17 @@ public:
   int open (const ACE_TCHAR *host, u_short port);
   void close ();
 
-  ACE_HANDLE handle () const;
-  void handle (ACE_HANDLE);
+  ACE_HANDLE handle () const override;
+  void handle (ACE_HANDLE) override;
 
 protected:
 // These methods are called by the framework
 
 /// This is called when asynchronous reads from the socket complete
-virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result
-&result);
+void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result) override;
 
 /// This is called when asynchronous writes from the socket complete
-virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result
-&result);
+void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result) override;
 
 private:
 int initiate_read_stream ();
@@ -407,7 +398,7 @@ Sender::Sender ()
   :nIOCount ( 0 )
 {
   // Moment of inspiration... :-)
-  this->welcome_message_.init (data, ACE_OS::strlen (data));
+  this->welcome_message_.init (data, std::strlen (data));
 }
 
 Sender::~Sender ()
@@ -480,7 +471,7 @@ int Sender::initiate_write_stream ()
 
   welcome_message_.rd_ptr( welcome_message_.base ());
   welcome_message_.wr_ptr( welcome_message_.base ());
-  welcome_message_.wr_ptr (ACE_OS::strlen (data));
+  welcome_message_.wr_ptr (std::strlen (data));
 
   if (this->ws_.write (welcome_message_,
                        welcome_message_.length ()
@@ -492,7 +483,7 @@ int Sender::initiate_write_stream ()
                        -1);
     }
 
-  nIOCount++ ;
+  ++nIOCount;
   return 0;
 }
 
@@ -506,8 +497,7 @@ int Sender::initiate_read_stream ()
   ACE_DEBUG ((LM_DEBUG,
               "initiate_read_stream called\n"));
 
-
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb {};
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block (BUFSIZ + 1),
                   -1);
@@ -522,10 +512,9 @@ int Sender::initiate_read_stream ()
                         -1);
     }
 
-  nIOCount++ ;
+  ++nIOCount;
   return 0;
 }
-
 
 void Sender::handle_write_stream (const ACE_Asynch_Write_Stream::Result
                                   &result)
@@ -536,7 +525,6 @@ void Sender::handle_write_stream (const ACE_Asynch_Write_Stream::Result
   // Reset pointers.
   result.message_block ().rd_ptr (result.message_block ().rd_ptr () -
                                   result.bytes_transferred ());
-
 
   ACE_DEBUG ((LM_DEBUG, "********************\n"));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_to_write",
@@ -568,7 +556,7 @@ void Sender::handle_write_stream (const ACE_Asynch_Write_Stream::Result
     }
 
   {
-    ACE_GUARD_RETURN (MyMutex, locker, m_Mtx);
+    ACE_GUARD (MyMutex, locker, m_Mtx);
     --nIOCount;
   }
 }
@@ -681,7 +669,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_Proactor::instance( & Proactor );
 
-
   MyTask  Task1 ;
 
   if (Task1.activate (THR_NEW_LWP, nThreads ) == -1)
@@ -718,7 +705,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       sender.close () ; // disconnect to get reciever error !!!
     }
-
 
   ACE_Thread_Manager * pTM = ACE_Thread_Manager::instance();
 

@@ -9,7 +9,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_stdlib.h"
 
-
 #if defined (ACE_HAS_SYSV_IPC) && !defined(ACE_LACKS_SYSV_SHMEM)
 
 // Must be global for signal Message...
@@ -27,18 +26,18 @@ handler (int)
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  long pid = long (ACE_OS::getpid ());
+  long const pid = static_cast<long> (ACE_OS::getpid ());
   Message_Block recv_msg (SRV_ID);
   Message_Block send_msg (0,
                           pid,
-                          ACE_OS::cuserid (static_cast<char *> (0)),
+                          ACE_OS::cuserid (static_cast<char *> (nullptr)),
                           "I received your message.");
 
   // Register a signal handler.
-  ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
+  ACE_Sig_Action sa (handler, SIGINT);
   ACE_UNUSED_ARG (sa);
 
-  for (;;)
+  while (true)
     {
       if (ace_sv_message_queue.recv (recv_msg,
                                      sizeof (Message_Data),

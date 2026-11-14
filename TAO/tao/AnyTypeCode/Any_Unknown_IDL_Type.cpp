@@ -9,7 +9,9 @@
 #include "tao/debug.h"
 
 #include "ace/Dynamic_Service.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -18,7 +20,7 @@ TAO::Unknown_IDL_Type::~Unknown_IDL_Type () = default;
 TAO::Unknown_IDL_Type::LOCK const
 TAO::Unknown_IDL_Type::lock_i ()
 {
-  static LOCK base_lock_ (new ACE_Lock_Adapter<TAO_SYNCH_MUTEX>());
+  static LOCK const base_lock_ (new ACE_Lock_Adapter<TAO_SYNCH_MUTEX>());
   return base_lock_;
 }
 
@@ -62,8 +64,8 @@ TAO::Unknown_IDL_Type::marshal_value (TAO_OutputCDR & cdr)
 
       TAO::traverse_status const status =
         TAO_Marshal_Object::perform_append (this->type_,
-                                            &for_reading,
-                                            &cdr);
+                                            std::addressof (for_reading),
+                                            std::addressof (cdr));
 
       if (status != TAO::TRAVERSE_CONTINUE)
         {
@@ -78,7 +80,7 @@ TAO::Unknown_IDL_Type::marshal_value (TAO_OutputCDR & cdr)
   return true;
 }
 
-const void *
+void const *
 TAO::Unknown_IDL_Type::value () const
 {
   return this->cdr_.start ();
@@ -114,7 +116,7 @@ TAO::Unknown_IDL_Type::_tao_decode (TAO_InputCDR & cdr)
 
   // Skip over the next argument.
   TAO::traverse_status const status =
-    TAO_Marshal_Object::perform_skip (this->type_, &cdr);
+    TAO_Marshal_Object::perform_skip (this->type_, std::addressof (cdr));
 
   if (status != TAO::TRAVERSE_CONTINUE)
     {
@@ -133,7 +135,7 @@ TAO::Unknown_IDL_Type::_tao_decode (TAO_InputCDR & cdr)
 
   ACE_Message_Block new_mb (size + 2 * ACE_CDR::MAX_ALIGNMENT);
 
-  ACE_CDR::mb_align (&new_mb);
+  ACE_CDR::mb_align (std::addressof (new_mb));
   ptrdiff_t offset = ptrdiff_t (begin) % ACE_CDR::MAX_ALIGNMENT;
 
   if (offset < 0)
@@ -144,9 +146,9 @@ TAO::Unknown_IDL_Type::_tao_decode (TAO_InputCDR & cdr)
   new_mb.rd_ptr (offset);
   new_mb.wr_ptr (offset + size);
 
-  ACE_OS::memcpy (new_mb.rd_ptr (), begin, size);
+  std::memcpy (new_mb.rd_ptr (), begin, size);
 
-  this->cdr_.reset (&new_mb, cdr.byte_order ());
+  this->cdr_.reset (std::addressof (new_mb), cdr.byte_order ());
   this->cdr_.char_translator (cdr.char_translator ());
   this->cdr_.wchar_translator (cdr.wchar_translator ());
 
@@ -156,8 +158,8 @@ TAO::Unknown_IDL_Type::_tao_decode (TAO_InputCDR & cdr)
 
   // Take over the GIOP version, the input cdr can have a different
   // version then our current GIOP version.
-  ACE_CDR::Octet major_version;
-  ACE_CDR::Octet minor_version;
+  ACE_CDR::Octet major_version {};
+  ACE_CDR::Octet minor_version {};
   cdr.get_version (major_version, minor_version);
   this->cdr_.set_version (major_version, minor_version);
 }
@@ -259,7 +261,7 @@ TAO::Unknown_IDL_Type::to_abstract_base (CORBA::AbstractBase_ptr & obj) const
 
       TAO_Valuetype_Adapter * const adapter =
         orb_core->valuetype_adapter ();
-      CORBA::Boolean ret = adapter->stream_to_abstract_base (for_reading, obj);
+      CORBA::Boolean const ret = adapter->stream_to_abstract_base (for_reading, obj);
 
       return ret;
     }

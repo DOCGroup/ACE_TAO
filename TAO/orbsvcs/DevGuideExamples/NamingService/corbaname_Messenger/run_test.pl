@@ -52,7 +52,7 @@ print "Start Messenger Server \n";
 $SRV = $srv->CreateProcess ("MessengerServer", "-ORBdebuglevel $debug_level ".
                                                "-o $srv_msfile ".
                                                "-ORBInitRef NameService=iiop://$TARGETHOSTNAME:$def_port/NameService");
-$SRV->Spawn();
+$SRV_status = $SRV->Spawn();
 if ($SRV_status != 0) {
     print STDERR "ERROR: Messenger Server returned $SRV_status\n";
     $SRV->Kill (); $SRV->TimedWait (1);
@@ -94,7 +94,7 @@ foreach $o (@corbaname_clients) {
     $test_number++;
 
     print "======================================\n";
-    print "Finish Test $test_number: $clients_comments[$test_number]\n";
+    print "Finish Test $test_number: $clients_comments[$test_number - 1]\n";
     print "             $MessengerClient $o\n";
     print "======================================\n\n";
 }

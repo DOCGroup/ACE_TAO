@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_CEC_TYPEDPROXYPUSHCONSUMER_H_
 #define TAO_CEC_TYPEDPROXYPUSHCONSUMER_H_
 #include /**/ "ace/pre.h"
@@ -23,6 +22,8 @@
 
 #include "orbsvcs/ESF/ESF_Worker.h"
 #include "orbsvcs/CosEvent/event_serv_export.h"
+
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -37,13 +38,17 @@ public:
   using _ptr_type = CosTypedEventChannelAdmin::TypedProxyPushConsumer_ptr;
   using _var_type = CosTypedEventChannelAdmin::TypedProxyPushConsumer_var;
 
-  /// Constructor
   TAO_CEC_TypedProxyPushConsumer (
       TAO_CEC_TypedEventChannel* typed_event_channel,
-      const ACE_Time_Value &timeout);
+      ACE_Time_Value const &timeout);
 
-  /// Destructor
   ~TAO_CEC_TypedProxyPushConsumer () override;
+
+  TAO_CEC_TypedProxyPushConsumer (TAO_CEC_TypedProxyPushConsumer const &) = delete;
+  TAO_CEC_TypedProxyPushConsumer (TAO_CEC_TypedProxyPushConsumer &&) = delete;
+  TAO_CEC_TypedProxyPushConsumer &operator= (
+      TAO_CEC_TypedProxyPushConsumer const &) = delete;
+  TAO_CEC_TypedProxyPushConsumer &operator= (TAO_CEC_TypedProxyPushConsumer &&) = delete;
 
   /// Activate in the POA
   virtual void activate (
@@ -71,7 +76,7 @@ public:
 
   void push (CORBA::Any const &event) override;
 
-  virtual void invoke (const TAO_CEC_TypedEvent& typed_event);
+  virtual void invoke (TAO_CEC_TypedEvent const &typed_event);
 
   void disconnect_push_consumer () override;
 
@@ -99,22 +104,16 @@ protected:
   (CosEventComm::PushSupplier_ptr pre);
 
 private:
-  TAO_CEC_TypedProxyPushConsumer (TAO_CEC_TypedProxyPushConsumer const &) = delete;
-  TAO_CEC_TypedProxyPushConsumer (TAO_CEC_TypedProxyPushConsumer &&) = delete;
-  TAO_CEC_TypedProxyPushConsumer &operator= (
-      TAO_CEC_TypedProxyPushConsumer const &) = delete;
-  TAO_CEC_TypedProxyPushConsumer &operator= (TAO_CEC_TypedProxyPushConsumer &&) = delete;
-
   /// The typed supplier admin, used for activation and memory management.
-  TAO_CEC_TypedEventChannel* typed_event_channel_;
+  TAO_CEC_TypedEventChannel* typed_event_channel_ {};
 
   ACE_Time_Value timeout_;
 
   /// The locking strategy.
-  ACE_Lock* lock_;
+  ACE_Lock* lock_ {};
 
   /// The reference count.
-  CORBA::ULong refcount_;
+  CORBA::ULong refcount_ { 1 };
 
   /// The typed supplier -- use apply_policy() instead of assigning directly to
   /// typed_supplier_.  This will keep typed_supplier_ and
@@ -125,14 +124,13 @@ private:
   CosEventComm::PushSupplier_var nopolicy_typed_supplier_;
 
   /// The DSI impl
-  TAO_CEC_DynamicImplementationServer* dsi_impl_;
+  std::unique_ptr<TAO_CEC_DynamicImplementationServer> dsi_impl_;
 
   /// The DSI Portable Server OID
   PortableServer::ObjectId_var oid_;
 
-  /// If the flag is not zero then we are connected, notice that the
-  /// supplier can be nil.
-  int connected_;
+  /// Whether the proxy is connected. The supplier can be nil.
+  bool connected_ {};
 
   /// Store the default POA.
   PortableServer::POA_var default_POA_;
@@ -153,14 +151,12 @@ private:
 class TAO_Event_Serv_Export TAO_CEC_TypedProxyPushConsumer_Guard
 {
 public:
-  /// Constructor
   TAO_CEC_TypedProxyPushConsumer_Guard (
       ACE_Lock *lock,
       CORBA::ULong &refcount,
       TAO_CEC_TypedEventChannel *ec,
       TAO_CEC_TypedProxyPushConsumer *proxy);
 
-  /// Destructor
   ~TAO_CEC_TypedProxyPushConsumer_Guard ();
 
   TAO_CEC_TypedProxyPushConsumer_Guard (TAO_CEC_TypedProxyPushConsumer_Guard const &) = delete;
@@ -186,9 +182,8 @@ private:
   /// The proxy whose lifetime is controlled by the reference count
   TAO_CEC_TypedProxyPushConsumer *proxy_;
 
-  /// This flag is set to 1 if the reference count was successfully
-  /// acquired.
-  int locked_;
+  /// Whether the reference count was successfully acquired.
+  bool locked_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

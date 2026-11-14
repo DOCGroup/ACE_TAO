@@ -5,18 +5,16 @@
 
 #include "TestS.h"
 
-/// Implement the Test::Hello interface
+/// @brief Implements the Test::Hello interface.
 class Hello
   : public virtual POA_Test::Hello
 {
 public:
-  /// Constructor
-  Hello (CORBA::ORB_ptr orb);
+  explicit Hello (CORBA::ORB_ptr orb);
 
-  // = The skeleton methods
-  virtual char * get_string ();
+  char *get_string () override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

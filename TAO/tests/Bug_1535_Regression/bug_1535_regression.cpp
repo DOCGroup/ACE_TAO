@@ -20,7 +20,7 @@ create_persistent_POA (PortableServer::POA_ptr parent,
     parent->create_implicit_activation_policy (
       PortableServer::NO_IMPLICIT_ACTIVATION);
 
-  PortableServer::POAManager_var mgr =
+  PortableServer::POAManager_var const mgr =
     parent->the_POAManager ();
 
   return parent->create_POA (name,
@@ -38,11 +38,10 @@ test_create_object_before_servant_reactivation (
     create_persistent_POA (root_poa,
                           "T1");
 
-
-  PortableServer::ObjectId_var oid =
+  PortableServer::ObjectId_var const oid =
     PortableServer::string_to_ObjectId ("TestServant");
 
-  char const * id = _tc_Test->id ();
+  char const * const id = _tc_Test->id ();
 
   CORBA::Object_var object =
     persistent_poa->create_reference_with_id (
@@ -57,7 +56,7 @@ test_create_object_before_servant_reactivation (
       return;
     }
 
-  CORBA::String_var ior =
+  CORBA::String_var const ior =
     orb->object_to_string (object.in ());
 
   // Now destroy the POA...
@@ -94,10 +93,10 @@ test_create_object_before_POA_reactivation (
     create_persistent_POA (root_poa,
                            "T2");
 
-  PortableServer::ObjectId_var oid =
+  PortableServer::ObjectId_var const oid =
     PortableServer::string_to_ObjectId ("TestServant");
 
-  char const * id = _tc_Test->id ();
+  char const * const id = _tc_Test->id ();
 
   CORBA::Object_var object =
     persistent_poa->create_reference_with_id (oid.in (),
@@ -110,7 +109,7 @@ test_create_object_before_POA_reactivation (
       return;
     }
 
-  CORBA::String_var ior =
+  CORBA::String_var const ior =
     orb->object_to_string (object.in ());
 
   // Now destroy the POA...
@@ -143,24 +142,24 @@ test_no_implicit_activation (
 
   Hello myhello (persistent_poa.in ());
 
-  bool succeed = false;
+  bool succeed {};
   try
     {
       // Implicit activation should fail
-      Test_var myservant =
+      Test_var const myservant =
           myhello._this ();
     }
-  catch (const PortableServer::POA::WrongPolicy& )
+  catch (PortableServer::POA::WrongPolicy const &)
     {
       succeed = true;
     }
-  catch (const PortableServer::POA::ServantNotActive& )
+  catch (PortableServer::POA::ServantNotActive const &)
     {
       // This is now the case when looking at the corba spec, raised
       // an issue 10522 about this
       succeed = true;
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
     }
 
@@ -176,21 +175,21 @@ test_no_implicit_activation (
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc,
                          argv);
 
       TAO::Utils::ORB_Destroyer orb_destroyer (orb.in ());
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         TAO::Utils::RIR_Narrow<PortableServer::POA>::narrow (orb.in (),
                                                              "RootPOA");
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
       poa_manager->activate ();
@@ -203,7 +202,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       test_no_implicit_activation (root_poa.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught a CORBA exception\n");
       return 1;

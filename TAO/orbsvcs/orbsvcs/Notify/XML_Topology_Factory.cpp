@@ -1,13 +1,12 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/XML_Topology_Factory.h"
 #include "orbsvcs/Notify/XML_Saver.h"
 #include "orbsvcs/Notify/XML_Loader.h"
 
 #include "tao/debug.h"
 #include "ace/OS_NS_strings.h"
-//#include "ace/Service_Object.h"
 
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -15,57 +14,49 @@ namespace TAO_Notify
 {
   const char TOPOLOGY_ID_NAME[] = "TopologyID";
 
-  XML_Topology_Factory::XML_Topology_Factory()
-    : save_base_path_ (ACE_TEXT("./Notification_Service_Topology"))
-    , load_base_path_ (ACE_TEXT("./Notification_Service_Topology"))
-    , backup_count_ (2)
-    , timestamp_ (true)
-  {
-  }
+  XML_Topology_Factory::XML_Topology_Factory () = default;
 
   // virtual
-  XML_Topology_Factory::~XML_Topology_Factory ()
-  {
-  }
+  XML_Topology_Factory::~XML_Topology_Factory () = default;
 
   // virtual
   Topology_Saver*
   XML_Topology_Factory::create_saver ()
   {
-    XML_Saver *saver = nullptr;
+    XML_Saver *saver {};
 
-    ACE_NEW_RETURN (saver, XML_Saver (this->timestamp_), 0);
+    ACE_NEW_RETURN (saver, XML_Saver (this->timestamp_), nullptr);
+    std::unique_ptr<XML_Saver> saver_guard (saver);
 
-    if (! saver->open ( this->save_base_path_.c_str (), this->backup_count_))
+    if (! saver_guard->open (this->save_base_path_.c_str (), this->backup_count_))
     {
-      delete saver;
-      saver = nullptr;
+      return nullptr;
     }
-    return static_cast<Topology_Saver *> (saver);
+    return saver_guard.release ();
   }
 
   // virtual
   Topology_Loader*
   XML_Topology_Factory::create_loader()
   {
-    XML_Loader *loader = nullptr;
-    ACE_NEW_NORETURN(loader, XML_Loader);
+    XML_Loader *loader {};
+    ACE_NEW_RETURN (loader, XML_Loader, nullptr);
+    std::unique_ptr<XML_Loader> loader_guard (loader);
 
-    if (! loader->open(this->load_base_path_))
+    if (! loader_guard->open (this->load_base_path_))
     {
-      delete loader;
-      loader = nullptr;
+      return nullptr;
     }
-    return static_cast<Topology_Loader *> (loader);
+    return loader_guard.release ();
   }
 
   // virtual
   int
   XML_Topology_Factory::init (int argc, ACE_TCHAR *argv[])
   {
-    int result = 0;
-    bool verbose = false;
-    for (int narg = 0; narg < argc; ++narg)
+    int result {};
+    bool verbose {};
+    for (int narg {}; narg < argc; ++narg)
     {
       ACE_TCHAR * av = argv[narg];
       if (ACE_OS::strcasecmp (av, ACE_TEXT("-v")) == 0)
@@ -118,7 +109,7 @@ namespace TAO_Notify
         if (TAO_debug_level > 0 || verbose)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
-            ACE_TEXT ("(%P|%t) XML_TopologyFactory: Setting -file_count: %d\n"),
+            ACE_TEXT ("(%P|%t) XML_TopologyFactory: Setting -file_count: %B\n"),
             this->backup_count_
           ));
         }

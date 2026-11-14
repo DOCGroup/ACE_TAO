@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Indirected_Type_TypeCode.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author Martin Corino
  */
-//=============================================================================
 
 #ifndef TAO_INDIRECTED_TYPE_TYPECODE_H
 #define TAO_INDIRECTED_TYPE_TYPECODE_H
@@ -44,7 +42,6 @@ namespace TAO
       : public CORBA::TypeCode
     {
     public:
-      /// Constructor.
       Indirected_Type (CORBA::TCKind kind,
                        char const * id);
 
@@ -59,15 +56,20 @@ namespace TAO
        *
        * @see @c CORBA::TypeCode
        */
-      //@{
+      /// @{
       bool tao_marshal_kind (TAO_OutputCDR & cdr) const override;
       bool tao_marshal (TAO_OutputCDR & cdr, CORBA::ULong offset) const override;
       void tao_duplicate () override;
       void tao_release () override;
-      //@}
+      /// @}
 
       /// Setter for recursive reference.
       void set_recursive_tc (CORBA::TypeCode_ptr);
+
+      Indirected_Type (Indirected_Type const &) = delete;
+      Indirected_Type (Indirected_Type &&) = delete;
+      Indirected_Type &operator= (Indirected_Type const &) = delete;
+      Indirected_Type &operator= (Indirected_Type &&) = delete;
 
     protected:
       /**
@@ -78,7 +80,7 @@ namespace TAO
        *
        * @see @c CORBA::TypeCode
        */
-      //@{
+      /// @{
       CORBA::Boolean equal_i (CORBA::TypeCode_ptr tc) const override;
       CORBA::Boolean equivalent_i (CORBA::TypeCode_ptr tc) const override;
       CORBA::TypeCode_ptr get_compact_typecode_i () const override;
@@ -87,7 +89,7 @@ namespace TAO
       CORBA::ULong member_count_i () const override;
       char const * member_name_i (CORBA::ULong index) const override;
       CORBA::TypeCode_ptr member_type_i (CORBA::ULong index) const override;
-      //@}
+      /// @}
 
       /**
        * @name @c TAO CORBA::TypeCode Template Methods
@@ -97,11 +99,11 @@ namespace TAO
        *
        * @see @c CORBA::TypeCode
        */
-      //@{
+      /// @{
       CORBA::Any * member_label_i (CORBA::ULong index) const override;
       CORBA::TypeCode_ptr discriminator_type_i () const override;
       CORBA::Long default_index_i () const override;
-      //@}
+      /// @}
 
       /**
        * @name @c TAO CORBA::TypeCode Template Methods
@@ -111,14 +113,14 @@ namespace TAO
        *
        * @see @c CORBA::TypeCode
        */
-      //@{
+      /// @{
       CORBA::Visibility member_visibility_i (CORBA::ULong index) const override;
       CORBA::ValueModifier type_modifier_i () const override;
       CORBA::TypeCode_ptr concrete_base_type_i () const override;
-      //@}
+      /// @}
 
     private:
-      //@{
+      /// @{
       /// Typecode id
       CORBA::String_var id_;
 
@@ -131,13 +133,12 @@ namespace TAO
       /// Reference counter
       unsigned long refcount_ {1};
 
-      //@}
+      /// @}
     };
   }  // End namespace TypeCode
 }  // End namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 #ifdef __ACE_INLINE__
 # include "tao/AnyTypeCode/Indirected_Type_TypeCode.inl"

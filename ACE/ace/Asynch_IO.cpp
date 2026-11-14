@@ -24,7 +24,7 @@ ACE_Asynch_Result::act () const
   return this->implementation ()->act ();
 }
 
-int
+bool
 ACE_Asynch_Result::success () const
 {
   return this->implementation ()->success ();
@@ -698,7 +698,6 @@ ACE_Asynch_Accept::Result::implementation () const
   return this->implementation_;
 }
 
-
 // *********************************************************************
 
 ACE_Asynch_Connect::ACE_Asynch_Connect ()
@@ -781,7 +780,6 @@ ACE_Asynch_Connect::Result::connect_handle () const
 {
   return this->implementation ()->connect_handle ();
 }
-
 
 ACE_Asynch_Connect_Result_Impl *
 ACE_Asynch_Connect::Result::implementation () const
@@ -1170,7 +1168,6 @@ ACE_Service_Handler::open (ACE_HANDLE,
 {
 }
 
-
 // ************************************************************
 
 ACE_Asynch_Read_Dgram::ACE_Asynch_Read_Dgram ()
@@ -1281,7 +1278,6 @@ ACE_Asynch_Read_Dgram::Result::implementation () const
 }
 
 // ************************************************************
-
 
 ACE_Asynch_Write_Dgram::ACE_Asynch_Write_Dgram ()
   : implementation_ (nullptr)

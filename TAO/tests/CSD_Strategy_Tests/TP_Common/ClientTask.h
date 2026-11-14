@@ -18,19 +18,24 @@
 class CSD_TP_Test_Export ClientTask : public ACE_Task_Base
 {
 public:
-  ClientTask(bool shutdown_after_done = false);
-  virtual ~ClientTask();
+  explicit ClientTask (bool shutdown_after_done = false);
+  ~ClientTask () override;
 
   void add_engine(ClientEngine* engine);
 
-  virtual int open(void* arg = 0);
-  virtual int svc();
-  virtual int close(u_long);
+  int open(void* arg = nullptr) override;
+  int svc() override;
+  int close(u_long) override;
 
   unsigned failure_count () const;
 
+  ClientTask (ClientTask const &) = delete;
+  ClientTask (ClientTask &&) = delete;
+  ClientTask & operator= (ClientTask const &) = delete;
+  ClientTask & operator= (ClientTask &&) = delete;
+
 private:
-  typedef ACE_Vector<ClientEngine_Handle> EngineVector;
+  using EngineVector = ACE_Vector<ClientEngine_Handle>;
 
   TAO_SYNCH_MUTEX lock_;
   EngineVector engines_;

@@ -25,7 +25,6 @@ using Repository_Ptr = ACE_Strong_Bound_Ptr<Locator_Repository, ACE_Null_Mutex>;
 class UpdateableServerInfo
 {
 public:
-  /// Constructor
   /// @param repo the repo to report updates to
   /// @param name the name of the server to retrieve
   /// @param pid an optional process id to further discriminate the server
@@ -33,7 +32,6 @@ public:
                        const ACE_CString& name,
                        int pid = 0);
 
-  /// Constructor
   /// @param repo the repo to report updates to
   /// @param si an already retrieved Server_Info_Ptr
   /// @param reset_start_count controls the reset of the start count value

@@ -1,90 +1,108 @@
 #include "LB_server.h"
 #include "Basic.h"
 
+#include <array>
+#include <string>
+
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  LB_server lb_server (argc, argv);
+
   try
     {
-      const char *location1 = "MyLocation 1";
-      const char *location2 = "MyLocation 2";
-      const char *location3 = "MyLocation 3";
-      const char *location4 = "MyLocation 4";
-      const char *location5 = "MyLocation 5";
-      const char *location6 = "MyLocation 6";
-
-      LB_server lb_server (argc, argv);
+      std::array<std::string, 6> const locations {{
+        "MyLocation 1",
+        "MyLocation 2",
+        "MyLocation 3",
+        "MyLocation 4",
+        "MyLocation 5",
+        "MyLocation 6"
+      }};
 
       if (lb_server.start_orb_and_poa () == -1)
-        return 1;
+        {
+          (void) lb_server.destroy ();
+          return 1;
+        }
 
       if (lb_server.create_object_group () == -1)
-        return 1;
+        {
+          (void) lb_server.destroy ();
+          return 1;
+        }
 
-      Basic *basic_servant1;
-      Basic *basic_servant2;
-      Basic *basic_servant3;
-      Basic *basic_servant4;
-      Basic *basic_servant5;
-      Basic *basic_servant6;
+      // ServantBase_var takes ownership; these raw pointers are borrowed aliases.
+      Basic *basic_servant1 {};
+      Basic *basic_servant2 {};
+      Basic *basic_servant3 {};
+      Basic *basic_servant4 {};
+      Basic *basic_servant5 {};
+      Basic *basic_servant6 {};
 
       ACE_NEW_RETURN (basic_servant1,
                       Basic (lb_server.object_group (),
                              lb_server.load_manager (),
                              lb_server.orb (),
-                             location1),
+                             locations[0]),
                       1);
-      PortableServer::ServantBase_var owner_transfer1(basic_servant1);
+      PortableServer::ServantBase_var owner_transfer1 (basic_servant1);
 
       ACE_NEW_RETURN (basic_servant2,
                       Basic (lb_server.object_group (),
                              lb_server.load_manager (),
                              lb_server.orb (),
-                             location2),
+                             locations[1]),
                       1);
-      PortableServer::ServantBase_var owner_transfer2(basic_servant2);
+      PortableServer::ServantBase_var owner_transfer2 (basic_servant2);
 
       ACE_NEW_RETURN (basic_servant3,
                       Basic (lb_server.object_group (),
                              lb_server.load_manager (),
                              lb_server.orb (),
-                             location3),
+                             locations[2]),
                       1);
-      PortableServer::ServantBase_var owner_transfer3(basic_servant3);
+      PortableServer::ServantBase_var owner_transfer3 (basic_servant3);
 
       ACE_NEW_RETURN (basic_servant4,
                       Basic (lb_server.object_group (),
                              lb_server.load_manager (),
                              lb_server.orb (),
-                             location4),
+                             locations[3]),
                       1);
-      PortableServer::ServantBase_var owner_transfer4(basic_servant4);
+      PortableServer::ServantBase_var owner_transfer4 (basic_servant4);
 
       ACE_NEW_RETURN (basic_servant5,
                       Basic (lb_server.object_group (),
                              lb_server.load_manager (),
                              lb_server.orb (),
-                             location5),
+                             locations[4]),
                       1);
-      PortableServer::ServantBase_var owner_transfer5(basic_servant5);
+      PortableServer::ServantBase_var owner_transfer5 (basic_servant5);
 
       ACE_NEW_RETURN (basic_servant6,
                       Basic (lb_server.object_group (),
                              lb_server.load_manager (),
                              lb_server.orb (),
-                             location6),
+                             locations[5]),
                       1);
-      PortableServer::ServantBase_var owner_transfer6(basic_servant6);
+      PortableServer::ServantBase_var owner_transfer6 (basic_servant6);
 
-      if (lb_server.register_servant (basic_servant1, location1) == -1
-          || lb_server.register_servant (basic_servant2, location2) == -1
-          || lb_server.register_servant (basic_servant3, location3) == -1
-          || lb_server.register_servant (basic_servant4, location4) == -1
-          || lb_server.register_servant (basic_servant5, location5) == -1
-          || lb_server.register_servant (basic_servant6, location6) == -1)
+      std::array<Basic *, 6> const servants {{
+        basic_servant1,
+        basic_servant2,
+        basic_servant3,
+        basic_servant4,
+        basic_servant5,
+        basic_servant6
+      }};
+      for (size_t i {}; i != servants.size (); ++i)
         {
-          (void) lb_server.destroy ();
-          return 1;
+          if (lb_server.register_servant (servants[i], locations[i]) == -1)
+            {
+              (void) lb_server.destroy ();
+              return 1;
+            }
         }
 
       lb_server.orb ()->run ();
@@ -94,9 +112,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (lb_server.destroy () == -1)
         return 1;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("lb_server exception");
+      (void) lb_server.destroy ();
       return 1;
     }
 

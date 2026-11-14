@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_PROVIDESDEF_I_H
 #define TAO_PROVIDESDEF_I_H
 
@@ -67,5 +66,4 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #endif /* _MSC_VER */
 
 #endif /* TAO_PROVIDESDEF_I_H */
-
 

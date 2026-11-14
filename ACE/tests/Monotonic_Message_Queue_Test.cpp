@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Reactor.h"
 #include "ace/Timer_Queue.h"
@@ -139,7 +138,6 @@ MyTask::start (int num_threads)
 
   return 0;
 }
-
 
 int
 MyTask::stop ()

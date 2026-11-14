@@ -23,6 +23,7 @@
 #include "tao/MProfile.h"
 #include "tao/ORB_Core_Auto_Ptr.h"
 #include <atomic>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -70,11 +71,11 @@ public:
 
   virtual CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type);
 
-  virtual TAO_Stub* set_policy_overrides (const CORBA::PolicyList & policies,
+  virtual TAO_Stub *set_policy_overrides (CORBA::PolicyList const &policies,
                                           CORBA::SetOverrideType set_add);
 
   virtual CORBA::PolicyList *get_policy_overrides (
-    const CORBA::PolicyTypeSeq & types);
+    CORBA::PolicyTypeSeq const &types);
 #endif
 
   /// Return the queueing strategy to be used in by the transport.
@@ -99,17 +100,16 @@ public:
   // Our Constructors ...
 
   /// Construct from a repository ID and a list of profiles.
-  TAO_Stub (const char *repository_id,
-            const TAO_MProfile &profiles,
+  TAO_Stub (char const *repository_id,
+            TAO_MProfile const &profiles,
             TAO_ORB_Core *orb_core);
 
-  // = Memory management.
   void _incr_refcnt ();
   void _decr_refcnt ();
 
   /// Return the Profile lock. This lock can be used at places where
   /// profiles need to be edited.
-  const TAO_SYNCH_MUTEX& profile_lock () const;
+  TAO_SYNCH_MUTEX const &profile_lock () const;
 
   /// Manage the base (non-forwarded) profiles.
   /// Returns a pointer to the profile_in_use object.  This object
@@ -117,7 +117,7 @@ public:
   TAO_Profile *profile_in_use ();
 
   /// Return the ObjectKey
-  const TAO::ObjectKey &object_key () const;
+  TAO::ObjectKey const &object_key () const;
 
   /**
    * Copy of the profile list, user must free memory when done.
@@ -127,13 +127,13 @@ public:
   TAO_MProfile *make_profiles ();
 
   /// Obtain a reference to the basic profile set.
-  const TAO_MProfile& base_profiles () const;
+  TAO_MProfile const &base_profiles () const;
 
   /// Obtain a reference to the basic profile set.
   TAO_MProfile& base_profiles ();
 
   /// Obtain a pointer to the forwarded profile set
-  const TAO_MProfile *forward_profiles () const;
+  TAO_MProfile const *forward_profiles () const;
 
   /// Obtain a pointer to the forwarded profile set
   TAO_MProfile *forward_profiles ();
@@ -177,7 +177,7 @@ public:
 
   /// Initialize the base_profiles_ and set profile_in_use_ to
   /// reference the first profile.
-  TAO_Profile *base_profiles (const TAO_MProfile& mprofiles);
+  TAO_Profile *base_profiles (TAO_MProfile const &mprofiles);
 
   /**
    * THREAD SAFE.
@@ -192,8 +192,8 @@ public:
    * Updates the profile in use to be the first profile of
    * the newly set forward target.
    */
-  void add_forward_profiles (const TAO_MProfile &mprofiles,
-                             const CORBA::Boolean permanent_forward = false);
+  void add_forward_profiles (TAO_MProfile const &mprofiles,
+                             CORBA::Boolean permanent_forward = false);
 
   /**
    * THREAD SAFE
@@ -259,7 +259,7 @@ public:
    * This flag indicates whether the stub code should make use of the
    * collocation opportunities that are available to the ORB.
    */
-  CORBA::Boolean optimize_collocation_objects () const;
+  bool optimize_collocation_objects () const;
 
   /// Needed to avoid copying forward_profiles for thread safety
   CORBA::Boolean marshal (TAO_OutputCDR&);
@@ -299,13 +299,14 @@ private:
   TAO_Profile *next_forward_profile ();
 
   /// THREAD-SAFE Create the IOR info
-  int get_profile_ior_info (TAO_MProfile &profile, IOP::IOR *&ior_info);
+  void get_profile_ior_info (TAO_MProfile &profile,
+                             std::unique_ptr<IOP::IOR> &ior_info);
 
 private:
-  TAO_Stub (const TAO_Stub &) = delete;
+  TAO_Stub (TAO_Stub const &) = delete;
   TAO_Stub (TAO_Stub &&) = delete;
-  TAO_Stub &operator = (const TAO_Stub &) = delete;
-  TAO_Stub &operator = (TAO_Stub &&) = delete;
+  TAO_Stub &operator= (TAO_Stub const &) = delete;
+  TAO_Stub &operator= (TAO_Stub &&) = delete;
 
 protected:
   /// Automatically manage the ORB_Core reference count
@@ -379,7 +380,7 @@ protected:
 
   /// The policy overrides in this object, if nil then use the default
   /// policies.
-  TAO_Policy_Set *policies_;
+  std::unique_ptr<TAO_Policy_Set> policies_;
 
   /**
    * The ior info. This is needed for GIOP 1.2, as the clients could
@@ -389,10 +390,10 @@ protected:
    * when they receive an exception. This info is for the base
    * profiles that this class stores
    */
-  IOP::IOR *ior_info_;
+  std::unique_ptr<IOP::IOR> ior_info_;
 
   /// Forwarded IOR info
-  IOP::IOR *forwarded_ior_info_;
+  std::unique_ptr<IOP::IOR> forwarded_ior_info_;
 
   /// TRUE if we want to take advantage of collocation optimization in
   /// this ORB.
@@ -401,7 +402,7 @@ protected:
    * reason for caching this helps our generated code, notably the
    * stubs to be decoupled from ORB_Core. Please do not move it away.
    */
-  CORBA::Boolean const collocation_opt_;
+  bool const collocation_opt_;
 
   /// True if forwarding request upon some specific exceptions
   /// (e.g. OBJECT_NOT_EXIST) already happened.

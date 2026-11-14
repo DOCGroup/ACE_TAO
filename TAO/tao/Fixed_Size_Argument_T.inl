@@ -1,4 +1,6 @@
 // -*- C++ -*-
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename S,
@@ -6,7 +8,7 @@ template<typename S,
 ACE_INLINE
 TAO::In_Fixed_Size_Argument_T<S,Insert_Policy>::
 In_Fixed_Size_Argument_T (S const & x)
-  : x_ (&x)
+  : x_ (std::addressof (x))
 {
 }
 
@@ -34,7 +36,7 @@ template<typename S,
 ACE_INLINE
 TAO::Inout_Fixed_Size_Argument_T<S,Insert_Policy>::
 Inout_Fixed_Size_Argument_T (S & x)
-  : x_ (&x)
+  : x_ (std::addressof (x))
 {}
 
 template<typename S,

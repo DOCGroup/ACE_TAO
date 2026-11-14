@@ -9,6 +9,8 @@
 
 #include "ace/Malloc_Base.h"
 
+#include <memory>
+
 #if !defined (__ACE_INLINE__)
 #include "ace/Map_Manager.inl"
 #endif /* __ACE_INLINE__ */
@@ -490,7 +492,7 @@ template <class EXT_ID, class INT_ID, class ACE_LOCK> int
 ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::resize_i (ACE_UINT32 new_size)
 {
   ACE_UINT32 i;
-  ENTRY *temp = nullptr;
+  ENTRY *temp {};
 
   // Allocate new memory.
   ACE_ALLOCATOR_RETURN (temp,
@@ -512,7 +514,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::resize_i (ACE_UINT32 new_size)
     new (&(temp[i])) ENTRY (this->search_structure_[i]);
 
   // Construct the new elements.
-  for (i = this->total_size_; i < new_size; i++)
+  for (i = this->total_size_; i < new_size; ++i)
     {
       // Call the constructor for each element in the array using
       // operator placement new.  Note that this requires a default
@@ -570,12 +572,12 @@ template <class EXT_ID, class INT_ID, class ACE_LOCK> void
 ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::free_search_structure ()
 {
   // Free up the structure.
-  if (this->search_structure_ != 0)
+  if (this->search_structure_ != nullptr)
     {
-      for (ACE_UINT32 i = 0; i < this->total_size_; i++)
+      for (ACE_UINT32 i = 0; i < this->total_size_; ++i)
         // Explicitly call the destructor.
         {
-          ENTRY *ss = &this->search_structure_[i];
+          ENTRY *ss = std::addressof (this->search_structure_[i]);
           // The "if" second argument results in a no-op instead of
           // deallocation.
           ACE_DES_FREE_TEMPLATE2 (ss, ACE_NOOP,
@@ -584,7 +586,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::free_search_structure ()
 
       // Actually free the memory.
       this->allocator_->free (this->search_structure_);
-      this->search_structure_ = 0;
+      this->search_structure_ = nullptr;
     }
 }
 
@@ -609,8 +611,8 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("total_size_ = %d"), this->total_size_));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\ncur_size_ = %d"), this->cur_size_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("total_size_ = %u"), this->total_size_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\ncur_size_ = %u"), this->cur_size_));
   this->allocator_->dump ();
   this->lock_.dump ();
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));

@@ -15,6 +15,8 @@
 #include "tao/debug.h"
 #include "ace/os_include/os_typeinfo.h"
 
+#include <memory>
+
 #if !defined (__ACE_INLINE__)
 #include "tao/TAO_Singleton.inl"
 #endif /* __ACE_INLINE__ */
@@ -67,7 +69,7 @@ TAO_Singleton<TYPE, ACE_LOCK>::instance ()
           // Obtain a lock from the ACE_Object_Manager.  The pointer
           // is static, so we only obtain one per TAO_Singleton
           // instantiation.
-          static ACE_LOCK *lock = nullptr;
+          static ACE_LOCK *lock {};
           if (ACE_Object_Manager::get_singleton_lock (lock) != 0)
             // Failed to acquire the lock!
             return 0;
@@ -84,14 +86,14 @@ TAO_Singleton<TYPE, ACE_LOCK>::instance ()
               TAO_Singleton_Manager::at_exit (singleton, 0,
                                               typeid (TYPE).name ());
 #else
-              TAO_Singleton_Manager::at_exit (singleton, &lock,
+              TAO_Singleton_Manager::at_exit (singleton, std::addressof (lock),
                                               typeid (TYPE).name());
             }
 #endif /* ACE_MT_SAFE */
         }
     }
 
-  return &singleton->instance_;
+  return std::addressof (singleton->instance_);
 }
 
 template <class TYPE, class ACE_LOCK> void
@@ -162,7 +164,7 @@ TAO_TSS_Singleton<TYPE, ACE_LOCK>::instance ()
           // Obtain a lock from the ACE_Object_Manager.  The pointer
           // is static, so we only obtain one per TAO_Singleton
           // instantiation.
-          static ACE_LOCK *lock = nullptr;
+          static ACE_LOCK *lock {};
           if (ACE_Object_Manager::get_singleton_lock (lock) != 0)
             // Failed to acquire the lock!
             return 0;
@@ -183,7 +185,7 @@ TAO_TSS_Singleton<TYPE, ACE_LOCK>::instance ()
         }
     }
 
-  return ACE_TSS_GET (&singleton->instance_, TYPE);
+  return ACE_TSS_GET (std::addressof (singleton->instance_), TYPE);
 }
 
 template <class TYPE, class ACE_LOCK> void

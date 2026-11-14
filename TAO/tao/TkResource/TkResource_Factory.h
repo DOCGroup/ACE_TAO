@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   TkResource_Factory.h
  *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  *  @author Marek Brudka <mbrudka@aster.pl>
  */
-//=============================================================================
 #ifndef TAO_TKRESOURCE_FACTORY_H
 #define TAO_TKRESOURCE_FACTORY_H
 #include /**/ "ace/pre.h"
@@ -37,19 +35,19 @@ namespace TAO
   class TAO_TkResource_Export TkResource_Factory : public GUIResource_Factory
   {
   public:
-    TkResource_Factory ();
+    TkResource_Factory () = default;
+
+    TkResource_Factory (TkResource_Factory const &) = delete;
+    TkResource_Factory &operator= (TkResource_Factory const &) = delete;
+    TkResource_Factory (TkResource_Factory &&) = delete;
+    TkResource_Factory &operator= (TkResource_Factory &&) = delete;
 
   protected:
     /// Create or obtain current reactor implementation
     ACE_Reactor_Impl *reactor_impl () override;
 
   private:
-    TkResource_Factory (TkResource_Factory const &) = delete;
-    TkResource_Factory &operator= (TkResource_Factory const &) = delete;
-    TkResource_Factory (TkResource_Factory &&) = delete;
-    TkResource_Factory &operator= (TkResource_Factory &&) = delete;
-
-    /// Reactor created by this factory.
+    /// Raw pointer cached while ACE_Reactor owns the implementation.
     ACE_TkReactor *reactor_impl_ {};
   };
 }

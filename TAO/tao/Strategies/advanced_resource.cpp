@@ -79,7 +79,8 @@ TAO_Advanced_Resource_Factory::TAO_Advanced_Resource_Factory ()
 
 TAO_Advanced_Resource_Factory::~TAO_Advanced_Resource_Factory ()
 {
-  TAO_ProtocolFactorySetItor end = this->protocol_factories_.end ();
+  // The resource factory owns the protocol factories registered in this set.
+  TAO_ProtocolFactorySetItor const end = this->protocol_factories_.end ();
 
   for (TAO_ProtocolFactorySetItor iterator =
          this->protocol_factories_.begin ();
@@ -107,7 +108,6 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR **argv)
     }
   this->options_processed_ = 1;
 
-
   // If the default resource factory exists, then disable it.
   // This causes any directives for the "Resource_Factory" to
   // report warnings.
@@ -122,7 +122,7 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR **argv)
 
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
-  ACE_TCHAR const *current_arg = nullptr;
+  ACE_TCHAR const *current_arg {};
   while (arg_shifter.is_anything_left ())
     {
       if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT ("-ORBReactorRegistry")) == 0)
@@ -132,7 +132,7 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR **argv)
                                 ACE_TEXT ("-ORBReactorRegistry no longer supported\n")),
                                 -1);
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-ORBReactorLock"))))
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-ORBReactorLock"))) != nullptr)
         {
           TAOLIB_DEBUG ((LM_DEBUG,
                          ACE_TEXT ("TAO_Advanced_Resource_Factory - obsolete -ORBReactorLock ")
@@ -145,7 +145,7 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR **argv)
 
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-ORBReactorType"))))
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-ORBReactorType"))) != nullptr)
         {
           if (ACE_OS::strcasecmp (current_arg, ACE_TEXT ("select_mt")) == 0)
             this->reactor_type_ = TAO_REACTOR_SELECT_MT;
@@ -189,7 +189,7 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR **argv)
 
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-ORBInputCDRAllocator"))))
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-ORBInputCDRAllocator"))) != nullptr)
         {
           if (ACE_OS::strcasecmp (current_arg, ACE_TEXT ("null")) == 0)
             {
@@ -208,7 +208,7 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR **argv)
 
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-ORBAMHResponseHandlerAllocator"))))
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-ORBAMHResponseHandlerAllocator"))) != nullptr)
         {
           if (ACE_OS::strcasecmp (current_arg, ACE_TEXT ("null")) == 0)
             {
@@ -225,7 +225,7 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR **argv)
 
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-ORBAMIResponseHandlerAllocator"))))
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-ORBAMIResponseHandlerAllocator"))) != nullptr)
         {
           if (ACE_OS::strcasecmp (current_arg, ACE_TEXT ("null")) == 0)
             {
@@ -242,7 +242,7 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR **argv)
 
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-ORBReactorThreadQueue"))))
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-ORBReactorThreadQueue"))) != nullptr)
         {
           if (ACE_OS::strcasecmp (current_arg, ACE_TEXT ("LIFO")) == 0)
             this->threadqueue_type_ = TAO_THREAD_QUEUE_LIFO;
@@ -292,7 +292,6 @@ TAO_Advanced_Resource_Factory::load_default_protocols ()
 
   return 0;
 }
-
 
 int
 TAO_Advanced_Resource_Factory::init_protocol_factories ()
@@ -352,9 +351,9 @@ TAO_Advanced_Resource_Factory::init_protocol_factories ()
       return 0;
     }
 
-  for (; factory != end; factory++)
+  for (; factory != end; ++factory)
     {
-      const ACE_CString &name = (*factory)->protocol_name ();
+      std::string const &name = (*factory)->protocol_name ();
 
       (*factory)->factory (
         ACE_Dynamic_Service<TAO_Protocol_Factory>::instance (name.c_str ()));
@@ -377,7 +376,6 @@ TAO_Advanced_Resource_Factory::init_protocol_factories ()
   return 0;
 }
 
-
 TAO_ProtocolFactorySet *
 TAO_Advanced_Resource_Factory::get_protocol_factories ()
 {
@@ -387,7 +385,7 @@ TAO_Advanced_Resource_Factory::get_protocol_factories ()
 ACE_Reactor_Impl *
 TAO_Advanced_Resource_Factory::allocate_reactor_impl () const
 {
-  ACE_Reactor_Impl *impl = nullptr;
+  ACE_Reactor_Impl *impl {};
 
   /*
    * Hook for specializing the Reactor implementation in TAO.
@@ -406,7 +404,7 @@ TAO_Advanced_Resource_Factory::allocate_reactor_impl () const
                                    0,
                                    nullptr,
                                    this->reactor_mask_signals_),
-                      0);
+                      nullptr);
       break;
 
     case TAO_REACTOR_SELECT_ST:
@@ -418,7 +416,7 @@ TAO_Advanced_Resource_Factory::allocate_reactor_impl () const
                                              0,
                                              nullptr,
                                              this->reactor_mask_signals_),
-                      0);
+                      nullptr);
       break;
 
     case TAO_REACTOR_WFMO:
@@ -478,7 +476,7 @@ using NULL_LOCK_ALLOCATOR = ACE_Allocator_Adapter<NULL_LOCK_MALLOC>;
 ACE_Allocator *
 TAO_Advanced_Resource_Factory::input_cdr_dblock_allocator ()
 {
-  ACE_Allocator *allocator = nullptr;
+  ACE_Allocator *allocator {};
   switch (this->cdr_allocator_type_)
     {
     case TAO_ALLOCATOR_NULL_LOCK:
@@ -496,7 +494,7 @@ TAO_Advanced_Resource_Factory::input_cdr_dblock_allocator ()
 ACE_Allocator *
 TAO_Advanced_Resource_Factory::input_cdr_buffer_allocator ()
 {
-  ACE_Allocator *allocator = nullptr;
+  ACE_Allocator *allocator {};
   switch (this->cdr_allocator_type_)
     {
     case TAO_ALLOCATOR_NULL_LOCK:
@@ -514,7 +512,7 @@ TAO_Advanced_Resource_Factory::input_cdr_buffer_allocator ()
 ACE_Allocator *
 TAO_Advanced_Resource_Factory::input_cdr_msgblock_allocator ()
 {
-  ACE_Allocator *allocator = nullptr;
+  ACE_Allocator *allocator {};
   switch (this->cdr_allocator_type_)
     {
     case TAO_ALLOCATOR_NULL_LOCK:
@@ -533,7 +531,7 @@ TAO_Advanced_Resource_Factory::input_cdr_msgblock_allocator ()
 ACE_Allocator *
 TAO_Advanced_Resource_Factory::amh_response_handler_allocator ()
 {
-  ACE_Allocator *allocator = nullptr;
+  ACE_Allocator *allocator {};
   switch (this->amh_response_handler_allocator_lock_type_)
     {
     case TAO_ALLOCATOR_NULL_LOCK:
@@ -551,7 +549,7 @@ TAO_Advanced_Resource_Factory::amh_response_handler_allocator ()
 ACE_Allocator *
 TAO_Advanced_Resource_Factory::ami_response_handler_allocator ()
 {
-  ACE_Allocator *allocator = nullptr;
+  ACE_Allocator *allocator {};
   switch (this->ami_response_handler_allocator_lock_type_)
     {
     case TAO_ALLOCATOR_NULL_LOCK:
@@ -576,7 +574,7 @@ TAO_Advanced_Resource_Factory::input_cdr_allocator_type_locked ()
 TAO_Connection_Purging_Strategy *
 TAO_Advanced_Resource_Factory::create_purging_strategy ()
 {
-  TAO_Connection_Purging_Strategy *strategy = nullptr;
+  TAO_Connection_Purging_Strategy *strategy {};
 
   switch (this->connection_purging_type_)
     {
@@ -613,7 +611,7 @@ TAO_Advanced_Resource_Factory::create_purging_strategy ()
 TAO_LF_Strategy *
 TAO_Advanced_Resource_Factory::create_lf_strategy ()
 {
-  TAO_LF_Strategy *strategy = nullptr;
+  TAO_LF_Strategy *strategy {};
 
   if (this->reactor_type_ == TAO_REACTOR_SELECT_ST)
     {
@@ -650,9 +648,6 @@ TAO_Advanced_Resource_Factory::report_unsupported_error (const ACE_TCHAR *option
                  option_name));
 }
 
-
-// ****************************************************************
-
 ACE_STATIC_SVC_DEFINE (TAO_Advanced_Resource_Factory,
                        ACE_TEXT ("Advanced_Resource_Factory"),
                        ACE_SVC_OBJ_T,
@@ -661,5 +656,4 @@ ACE_STATIC_SVC_DEFINE (TAO_Advanced_Resource_Factory,
                        0)
 ACE_FACTORY_DEFINE (TAO_Strategies, TAO_Advanced_Resource_Factory)
 
-// ****************************************************************
 TAO_END_VERSIONED_NAMESPACE_DECL

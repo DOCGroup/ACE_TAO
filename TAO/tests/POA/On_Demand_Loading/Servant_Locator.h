@@ -18,22 +18,24 @@
 #include "tao/PortableServer/ServantLocatorC.h"
 #include "tao/LocalObject.h"
 
+/**
+ * This class is used by a POA with USE_SERVANT_MANAGER and NON_RETAIN
+ * policy. It defines the Servant Locator interface of the Servant
+ * Manager and is invoked when the POA has a servant_retention policy
+ * of NON_RETAIN type.
+ */
 class ServantLocator_i :
   public virtual PortableServer::ServantLocator,
   public virtual ::CORBA::LocalObject
 
 {
-  // = TITLE
-  //   This class is used by a POA with USE_SERVANT_MANAGER and
-  //   NON_RETAIN policy.
-  //
-  // = DESCRIPTION
-  //   This class defines the Servant Locator interface of the Servant
-  //   Manager. It is invoked when the POA has an USE_SERVANT_MANAGER
-  //   policy and a servant_retention policy of NON_RETAIN type.
 public:
-  /// Constructor.
-  ServantLocator_i (CORBA::ORB_ptr orb);
+  explicit ServantLocator_i (CORBA::ORB_ptr orb);
+
+  ServantLocator_i (ServantLocator_i const &) = delete;
+  ServantLocator_i &operator= (ServantLocator_i const &) = delete;
+  ServantLocator_i (ServantLocator_i &&) = delete;
+  ServantLocator_i &operator= (ServantLocator_i &&) = delete;
 
   /**
    * This method is invoked by a POA whenever it receives a request
@@ -46,10 +48,10 @@ public:
    * servant. The cookie helps in marking the servant. This marking is
    * useful while destroying the servant.
    */
-  virtual PortableServer::Servant preinvoke (const PortableServer::ObjectId &oid,
-                                             PortableServer::POA_ptr adapter,
-                                             const char *operation,
-                                             PortableServer::ServantLocator::Cookie &the_cookie);
+  PortableServer::Servant preinvoke (PortableServer::ObjectId const &oid,
+                                     PortableServer::POA_ptr adapter,
+                                     char const *operation,
+                                     PortableServer::ServantLocator::Cookie &the_cookie) override;
 
   /**
    * This method is invoked whenever a test servant completes a
@@ -59,16 +61,17 @@ public:
    * appropriate servant is destroyed by verifying the cookie.Again
    * this method is invoked per client request.
    */
-  virtual void postinvoke (const PortableServer::ObjectId &oid,
-                           PortableServer::POA_ptr adapter,
-                           const char *operation,
-                           PortableServer::ServantLocator::Cookie the_cookie,
-                           PortableServer::Servant the_servant);
+  void postinvoke (PortableServer::ObjectId const &oid,
+                   PortableServer::POA_ptr adapter,
+                   char const *operation,
+                   PortableServer::ServantLocator::Cookie the_cookie,
+                   PortableServer::Servant the_servant) override;
 
   /// Returns an ObjectId when given an dll name and the factory method
   /// to be invoked in the dll.
-  PortableServer::ObjectId_var create_dll_object_id (const char *dllname,
-                                                     const char *factory_function);
+  PortableServer::ObjectId_var create_dll_object_id (char const *dllname,
+                                                     char const *factory_function);
+
 private:
   /**
    * The <ServantManager_i> object that provides utility methods.  The

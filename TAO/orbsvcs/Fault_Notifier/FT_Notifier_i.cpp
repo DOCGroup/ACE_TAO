@@ -16,6 +16,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 #include "tao/debug.h"
+#include <memory>
 
 // Use this macro at the beginning of CORBA methods
 // to aid in debugging.
@@ -47,38 +48,8 @@
   }                           \
   return /* value goes here */
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Implementation skeleton constructor
-TAO::FT_FaultNotifier_i::FT_FaultNotifier_i ()
-  : orb_ (nullptr)
-  , poa_ (nullptr)
-  , object_id_ (nullptr)
-  , ior_output_file_(nullptr)
-  , ns_name_(nullptr)
-  , naming_context_ (nullptr)
-  , this_name_ (1)
-  , rm_register_ (1)
-  , replication_manager_ (nullptr)
-  , registered_ (0)
-  , identity_ ("")
-  , proxy_infos_ (0)
-  , consumer_connects_(0)
-  , consumer_disconnects_(0)
-  , notify_channel_ (nullptr)
-  , filter_factory_ (nullptr)
-  , supplier_admin_ (nullptr)
-  , consumer_admin_ (nullptr)
-  , structured_proxy_push_consumer_ (nullptr)
-  , sequence_proxy_push_consumer_ (nullptr)
-  , quit_on_idle_(0)
-  , quitting_(0)
-  , gone_(0)
-{
-}
-
-// Implementation skeleton destructor
 TAO::FT_FaultNotifier_i::~FT_FaultNotifier_i ()
 {
   try
@@ -90,20 +61,19 @@ TAO::FT_FaultNotifier_i::~FT_FaultNotifier_i ()
   }
 }
 
-
-int TAO::FT_FaultNotifier_i::idle(int &result)
+int TAO::FT_FaultNotifier_i::idle (int & result)
 {
-  static unsigned long linger = 0;
-  ACE_UNUSED_ARG(result);
-  if (gone_)
+  static unsigned long linger {};
+  ACE_UNUSED_ARG (result);
+  if (this->gone_)
   {
-    if ( linger == 0)
+    if (linger == 0)
     {
       ORBSVCS_ERROR ((LM_ERROR,
         "FaultNotifier (%P|%t) Begin linger.\n"
       ));
     }
-    if(++linger > 5)//10)
+    if (++linger > 5)
     {
       ORBSVCS_ERROR ((LM_ERROR,
         "FaultNotifier (%P|%t) idle returnning gone\n"
@@ -120,25 +90,21 @@ int TAO::FT_FaultNotifier_i::idle(int &result)
 ////////////////////////////////////////////
 // FT_FaultNotifier_i private methods
 
-
 // TODO: find this a common home
-int TAO::FT_FaultNotifier_i::write_ior()
+int TAO::FT_FaultNotifier_i::write_ior ()
 {
-  int result = -1;
-  FILE* out = ACE_OS::fopen (this->ior_output_file_, "w");
+  std::unique_ptr<FILE, int (*) (FILE *)> out (
+    ACE_OS::fopen (this->ior_output_file_.c_str (), ACE_TEXT ("w")), ACE_OS::fclose);
   if (out)
   {
-    ACE_OS::fprintf (out, "%s", this->ior_.in ());
-    ACE_OS::fclose (out);
-    result = 0;
+    ACE_OS::fprintf (out.get (), "%s", this->ior_.in ());
+    return 0;
   }
-  else
-  {
-    ORBSVCS_ERROR ((LM_ERROR,
-      "%T %n (%P|%t) Open failed for %s\n", ior_output_file_
-    ));
-  }
-  return result;
+
+  ORBSVCS_ERROR ((LM_ERROR,
+    ACE_TEXT ("%T %n (%P|%t) Open failed for %s\n"), this->ior_output_file_.c_str ()
+  ));
+  return -1;
 }
 
 //////////////////////////////////////////////////////
@@ -147,7 +113,7 @@ int TAO::FT_FaultNotifier_i::write_ior()
 int TAO::FT_FaultNotifier_i::parse_args (int argc, ACE_TCHAR * argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:rq"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
   {
@@ -165,7 +131,7 @@ int TAO::FT_FaultNotifier_i::parse_args (int argc, ACE_TCHAR * argv[])
       }
       case 'q':
       {
-        this->quit_on_idle_ = 1;
+        this->quit_on_idle_ = true;
         break;
       }
       case '?':
@@ -188,16 +154,15 @@ int TAO::FT_FaultNotifier_i::parse_args (int argc, ACE_TCHAR * argv[])
   return 0;
 }
 
-const char * TAO::FT_FaultNotifier_i::identity () const
+char const * TAO::FT_FaultNotifier_i::identity () const
 {
-  return this->identity_.c_str();
+  return this->identity_.c_str ();
 }
 
 PortableServer::POA_ptr TAO::FT_FaultNotifier_i::_default_POA ()
 {
   return this->poa_.in();
 }
-
 
 void TAO::FT_FaultNotifier_i::_remove_ref ()
 {
@@ -206,15 +171,15 @@ void TAO::FT_FaultNotifier_i::_remove_ref ()
   ORBSVCS_ERROR ((LM_ERROR,
     "FaultNotifier (%P|%t) _remove_ref setting gone\n"
   ));
-  this->gone_ = 1;
+  this->gone_ = true;
 }
 
 int TAO::FT_FaultNotifier_i::fini ()
 {
-  if (this->ior_output_file_ != nullptr)
+  if (!this->ior_output_file_.empty ())
   {
-    ACE_OS::unlink (this->ior_output_file_);
-    this->ior_output_file_ = nullptr;
+    ACE_OS::unlink (this->ior_output_file_.c_str ());
+    this->ior_output_file_.clear ();
   }
   if (this->ns_name_ != nullptr && this->naming_context_.in() != nullptr)
   {
@@ -240,7 +205,7 @@ int TAO::FT_FaultNotifier_i::fini ()
       // RM may be down.
     }
 
-    this->registered_ = 0;
+    this->registered_ = false;
   }
   return 0;
 }
@@ -262,7 +227,6 @@ int TAO::FT_FaultNotifier_i::init (CORBA::ORB_ptr orb )
   // Get the POA object.
   this->poa_ =
     PortableServer::POA::_narrow (poa_object.in ());
-
 
   if (CORBA::is_nil(this->poa_.in ()))
   {
@@ -287,7 +251,6 @@ int TAO::FT_FaultNotifier_i::init (CORBA::ORB_ptr orb )
 
   this->ior_ = this->orb_->object_to_string (this_obj.in ());
 
-
   ////////////////////////////////////////////////
   // Register with coresident Notification Channel
   CosNotifyChannelAdmin::EventChannelFactory_var notify_factory =
@@ -306,14 +269,14 @@ int TAO::FT_FaultNotifier_i::init (CORBA::ORB_ptr orb )
 
   this->supplier_admin_ = this->notify_channel_->default_supplier_admin ();
 
-  ::CosNotifyChannelAdmin::ProxyID proxyId = 0;
+  ::CosNotifyChannelAdmin::ProxyID proxy_id {};
 
   //////////////////////
   // structured producer
   ::CosNotifyChannelAdmin::ProxyConsumer_var consumer
     = this->supplier_admin_->obtain_notification_push_consumer (
       ::CosNotifyChannelAdmin::STRUCTURED_EVENT,
-      proxyId);
+      proxy_id);
 
   structured_proxy_push_consumer_
     = ::CosNotifyChannelAdmin::StructuredProxyPushConsumer::_narrow(consumer.in ());
@@ -335,7 +298,7 @@ int TAO::FT_FaultNotifier_i::init (CORBA::ORB_ptr orb )
   consumer
     = this->supplier_admin_->obtain_notification_push_consumer (
       ::CosNotifyChannelAdmin::SEQUENCE_EVENT,
-      proxyId);
+      proxy_id);
 
   this->sequence_proxy_push_consumer_
     = ::CosNotifyChannelAdmin::SequenceProxyPushConsumer::_narrow(consumer.in ());
@@ -383,7 +346,7 @@ int TAO::FT_FaultNotifier_i::init (CORBA::ORB_ptr orb )
           ORBSVCS_DEBUG ((LM_DEBUG,
             "FaultNotifier registered with ReplicationManager.\n"
             ));
-          this->registered_ = 1;
+          this->registered_ = true;
         }
         else
         {
@@ -413,13 +376,13 @@ int TAO::FT_FaultNotifier_i::init (CORBA::ORB_ptr orb )
   // Set up and ready for action
   // publish our IOR
 
-  if(result == 0)
+  if (result == 0)
   {
-    if (this->ior_output_file_ != nullptr)
+    if (!this->ior_output_file_.empty ())
     {
       this->identity_ = "file:";
-      this->identity_ += ACE_TEXT_ALWAYS_CHAR(this->ior_output_file_);
-      result = write_ior();
+      this->identity_ += ACE_TEXT_ALWAYS_CHAR (this->ior_output_file_.c_str ());
+      result = this->write_ior ();
     }
   }
 
@@ -461,8 +424,7 @@ int TAO::FT_FaultNotifier_i::init (CORBA::ORB_ptr orb )
 // CORBA METHODS
 
 void TAO::FT_FaultNotifier_i::push_structured_fault (
-    CosNotification::StructuredEvent const & event
-  )
+    CosNotification::StructuredEvent const & event)
 {
   METHOD_ENTRY(TAO::FT_FaultNotifier_i::push_structured_fault);
 
@@ -472,8 +434,7 @@ void TAO::FT_FaultNotifier_i::push_structured_fault (
 }
 
 void TAO::FT_FaultNotifier_i::push_sequence_fault (
-    CosNotification::EventBatch const & events
-  )
+    CosNotification::EventBatch const & events)
 {
   METHOD_ENTRY(TAO::FT_FaultNotifier_i::push_sequence_fault);
 
@@ -483,8 +444,7 @@ void TAO::FT_FaultNotifier_i::push_sequence_fault (
 }
 
 ::CosNotifyFilter::Filter_ptr TAO::FT_FaultNotifier_i::create_subscription_filter (
-    char const * constraint_grammar
-  )
+    char const * constraint_grammar)
 {
   METHOD_ENTRY(TAO::FT_FaultNotifier_i::create_subscription_filter);
   ACE_UNUSED_ARG (constraint_grammar); //@@todo
@@ -496,8 +456,7 @@ void TAO::FT_FaultNotifier_i::push_sequence_fault (
 
 FT::FaultNotifier::ConsumerId TAO::FT_FaultNotifier_i::connect_structured_fault_consumer (
     CosNotifyComm::StructuredPushConsumer_ptr push_consumer,
-    CosNotifyFilter::Filter_ptr filter
-  )
+    CosNotifyFilter::Filter_ptr filter)
 {
   METHOD_ENTRY(TAO::FT_FaultNotifier_i::connect_structured_fault_consumer);
 
@@ -505,27 +464,28 @@ FT::FaultNotifier::ConsumerId TAO::FT_FaultNotifier_i::connect_structured_fault_
   // find a ProxyInfo entry
   // use the first nil entry or a new entry if no nils found
 
-  size_t infoPos = 0;
-  int looking = 1;
-  for ( size_t pos = 0; looking && pos < this->proxy_infos_.size (); ++pos)
+  size_t info_pos {};
+  bool looking = true;
+  for (size_t pos = 0; looking && pos < this->proxy_infos_.size (); ++pos)
   {
     ProxyInfo & pi = this->proxy_infos_[pos];
     if (CORBA::is_nil(pi.proxyVar_.in ()))
     {
-      infoPos = pos;
-      looking = 0;
+      info_pos = pos;
+      looking = false;
     }
   }
   if (looking)
   {
-    infoPos = this->proxy_infos_.size();
-    this->proxy_infos_.push_back(ProxyInfo());
+    info_pos = this->proxy_infos_.size ();
+    this->proxy_infos_.emplace_back ();
   }
 
   ///////////////////////////////////////
   // Assign an ID, populate the ProxyInfo
-  FT::FaultNotifier::ConsumerId result = infoPos;
-  ProxyInfo & info = this->proxy_infos_[infoPos];
+  FT::FaultNotifier::ConsumerId const result =
+    static_cast<FT::FaultNotifier::ConsumerId> (info_pos);
+  ProxyInfo & info = this->proxy_infos_[info_pos];
   info.proxyVar_
       = this->consumer_admin_->obtain_notification_push_supplier (
       ::CosNotifyChannelAdmin::STRUCTURED_EVENT,
@@ -559,35 +519,35 @@ FT::FaultNotifier::ConsumerId TAO::FT_FaultNotifier_i::connect_structured_fault_
 
 FT::FaultNotifier::ConsumerId TAO::FT_FaultNotifier_i::connect_sequence_fault_consumer (
     CosNotifyComm::SequencePushConsumer_ptr push_consumer,
-    CosNotifyFilter::Filter_ptr filter
-  )
+    CosNotifyFilter::Filter_ptr filter)
 {
   METHOD_ENTRY(TAO::FT_FaultNotifier_i::connect_sequence_fault_consumer);
   /////////////////////////
   // find a ProxyInfo entry
   // use the first nil entry or a new entry if no nils found
 
-  size_t infoPos = 0;
-  int looking = 1;
-  for ( size_t pos = 0; looking && pos < this->proxy_infos_.size (); ++pos)
+  size_t info_pos {};
+  bool looking = true;
+  for (size_t pos = 0; looking && pos < this->proxy_infos_.size (); ++pos)
   {
     ProxyInfo & pi = this->proxy_infos_[pos];
     if (CORBA::is_nil(pi.proxyVar_.in ()))
     {
-      infoPos = pos;
-      looking = 0;
+      info_pos = pos;
+      looking = false;
     }
   }
   if (looking)
   {
-    infoPos = this->proxy_infos_.size();
-    this->proxy_infos_.push_back(ProxyInfo());
+    info_pos = this->proxy_infos_.size ();
+    this->proxy_infos_.emplace_back ();
   }
 
   ///////////////////////////////////////
   // Assign an ID, populate the ProxyInfo
-  FT::FaultNotifier::ConsumerId result = infoPos;
-  ProxyInfo & info = this->proxy_infos_[infoPos];
+  FT::FaultNotifier::ConsumerId const result =
+    static_cast<FT::FaultNotifier::ConsumerId> (info_pos);
+  ProxyInfo & info = this->proxy_infos_[info_pos];
   info.proxyVar_
     = this->consumer_admin_->obtain_notification_push_supplier (
       ::CosNotifyChannelAdmin::SEQUENCE_EVENT,
@@ -618,12 +578,11 @@ FT::FaultNotifier::ConsumerId TAO::FT_FaultNotifier_i::connect_sequence_fault_co
 }
 
 void TAO::FT_FaultNotifier_i::disconnect_consumer (
-    FT::FaultNotifier::ConsumerId connection
-  )
+    FT::FaultNotifier::ConsumerId connection)
 {
   METHOD_ENTRY(TAO::FT_FaultNotifier_i::disconnect_consumer);
 
-  size_t index = static_cast<size_t> (connection);
+  size_t const index = static_cast<size_t> (connection);
   if (index < this->proxy_infos_.size())
   {
     ProxyInfo & info = this->proxy_infos_[index];
@@ -676,7 +635,7 @@ void TAO::FT_FaultNotifier_i::disconnect_consumer (
         static_cast<unsigned int> (this->consumer_disconnects_)
         ));
       this->poa_->deactivate_object (this->object_id_.in ());
-      this->quitting_ = 1;
+      this->quitting_ = true;
     }
   }
 
@@ -685,22 +644,7 @@ void TAO::FT_FaultNotifier_i::disconnect_consumer (
 
 CORBA::Boolean TAO::FT_FaultNotifier_i::is_alive ()
 {
-  METHOD_RETURN(TAO::FT_FaultNotifier_i::is_alive) 1;
-}
-
-//////////////
-// ProxyInfo
-
-TAO::FT_FaultNotifier_i::ProxyInfo::ProxyInfo ()
-  : proxyId_ (0)
-  , proxyVar_ (::CosNotifyChannelAdmin::ProxySupplier::_nil())
-{
-}
-
-TAO::FT_FaultNotifier_i::ProxyInfo::ProxyInfo (ProxyInfo const & rhs)
-  : proxyId_ (rhs.proxyId_)
-  , proxyVar_ (rhs.proxyVar_)
-{
+  METHOD_RETURN(TAO::FT_FaultNotifier_i::is_alive) true;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

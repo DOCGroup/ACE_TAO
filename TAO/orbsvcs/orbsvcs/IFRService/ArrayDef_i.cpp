@@ -191,8 +191,7 @@ TAO_ArrayDef_i::element_type_def_i (CORBA::IDLType_ptr element_type_def)
 }
 
 void
-TAO_ArrayDef_i::destroy_element_type (
-  )
+TAO_ArrayDef_i::destroy_element_type ()
 {
   ACE_TString element_path;
   this->repo_->config ()->get_string_value (this->section_key_,

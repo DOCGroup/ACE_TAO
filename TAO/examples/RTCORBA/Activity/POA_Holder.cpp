@@ -2,23 +2,17 @@
 #include "tao/debug.h"
 #include "ace/Log_Msg.h"
 
-POA_Holder::POA_Holder ()
-  : priority_model_ (RTCORBA::CLIENT_PROPAGATED),
-    server_priority_ (0)
-{
-}
-
 int
 POA_Holder::init (ACE_Arg_Shifter& arg_shifter)
 {
-  const ACE_TCHAR *current_arg = 0;
+  ACE_TCHAR const *current_arg {};
 
   POA_name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ()); // Read the name of the POA
   arg_shifter.consume_arg ();
 
   while (arg_shifter.is_anything_left ())
     {
-      if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-PriorityModel"))))
+      if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-PriorityModel"))) != nullptr)
         {
           if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("CLIENT")) == 0)
             priority_model_ = RTCORBA::CLIENT_PROPAGATED;
@@ -29,7 +23,7 @@ POA_Holder::init (ACE_Arg_Shifter& arg_shifter)
           server_priority_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Lanes"))))
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Lanes"))) != nullptr)
         {
           int lanecount = ACE_OS::atoi (current_arg);
           lanes_.length (lanecount);
@@ -60,13 +54,13 @@ POA_Holder::init (ACE_Arg_Shifter& arg_shifter)
                               lanes_[l_index].lane_priority,
                               lanes_[l_index].static_threads,
                               lanes_[l_index].dynamic_threads));
-                  l_index++;
+                  ++l_index;
                 }
               else
                 break;
             } /* while -- lane values */
         } /* if -Lanes */
-      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Bands"))))
+      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Bands"))) != nullptr)
         {
           int bandcount = ACE_OS::atoi (current_arg);
           bands_.length (bandcount);
@@ -91,7 +85,7 @@ POA_Holder::init (ACE_Arg_Shifter& arg_shifter)
                   //if (TAO_debug_level > 0)
                   ACE_DEBUG ((LM_DEBUG, "band parsed - %d, %d\n",
                               bands_[b_index].low, bands_[b_index].high));
-                  b_index++;
+                  ++b_index;
                 }
               else
                 break;
@@ -138,10 +132,10 @@ POA_Holder::activate (RTCORBA::RTORB_ptr rt_orb, PortableServer::POA_ptr parent_
     {
       // Create a thread-pool.
       CORBA::ULong stacksize = 0;
-      CORBA::Boolean allow_request_buffering = 0;
+      CORBA::Boolean allow_request_buffering = false;
       CORBA::ULong max_buffered_requests = 0;
       CORBA::ULong max_request_buffer_size = 0;
-      CORBA::Boolean allow_borrowing = 0;
+      CORBA::Boolean allow_borrowing = false;
       // CORBA::ULong static_threads = 1;
       // CORBA::ULong dynamic_threads = 0;
 
@@ -153,7 +147,6 @@ POA_Holder::activate (RTCORBA::RTORB_ptr rt_orb, PortableServer::POA_ptr parent_
                                               allow_request_buffering,
                                               max_buffered_requests,
                                               max_request_buffer_size);
-
 
       // Create a thread-pool policy.
       lanes_policy =

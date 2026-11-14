@@ -3,7 +3,6 @@
 #include "tao/debug.h"
 #include "Updates.h"
 
-
 Updates_StructuredPushConsumer::Updates_StructuredPushConsumer (Updates *test_client)
   : test_client_ (test_client)
 {
@@ -11,9 +10,8 @@ Updates_StructuredPushConsumer::Updates_StructuredPushConsumer (Updates *test_cl
 
 void
 Updates_StructuredPushConsumer::offer_change (
-        const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed
-      )
+        CosNotification::EventTypeSeq const &added,
+        CosNotification::EventTypeSeq const &removed)
 {
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "StructuredPushConsumer::offer_change invoked:\n"));
@@ -33,9 +31,8 @@ Updates_StructuredPushSupplier::~Updates_StructuredPushSupplier ()
 
 void
 Updates_StructuredPushSupplier::subscription_change (
-    const CosNotification::EventTypeSeq & added,
-    const CosNotification::EventTypeSeq & removed
-  )
+    CosNotification::EventTypeSeq const &added,
+    CosNotification::EventTypeSeq const &removed)
 {
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "StructuredPushSupplier::subscription_change invoked:\n"));
@@ -108,8 +105,8 @@ Updates::create_EC ()
 }
 
 void
-Updates::types_changed (const CosNotification::EventTypeSeq & added,
-                        const CosNotification::EventTypeSeq & removed)
+Updates::types_changed (CosNotification::EventTypeSeq const &added,
+                        CosNotification::EventTypeSeq const &removed)
 {
   if (TAO_debug_level)
     {
@@ -127,7 +124,7 @@ Updates::types_changed (const CosNotification::EventTypeSeq & added,
 }
 
 void
-Updates::print_event_types (const CosNotification::EventTypeSeq &types)
+Updates::print_event_types (CosNotification::EventTypeSeq const &types)
 {
   for (CORBA::ULong i = 0; i < types.length (); ++i)
     {
@@ -136,7 +133,7 @@ Updates::print_event_types (const CosNotification::EventTypeSeq &types)
 }
 
 void
-Updates::add_type (CosNotification::EventTypeSeq& type_seq, const char* type)
+Updates::add_type (CosNotification::EventTypeSeq &type_seq, char const *type)
 {
   // Make space.
   int index = type_seq.length ();
@@ -419,7 +416,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       updates.run_test ();
     }
-  catch (const CORBA::SystemException& se)
+  catch (CORBA::SystemException const &se)
     {
       se._tao_print_exception ("Error: ");
       return 1;

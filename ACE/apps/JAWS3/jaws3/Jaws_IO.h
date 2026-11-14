@@ -8,72 +8,66 @@
 
 #include "jaws3/Export.h"
 
-
 class JAWS_IO;
 class JAWS_Event_Completer;
 
-
+/// I/O interface for the implementation classes on the right-hand side of
+/// the Bridge pattern.
 class JAWS_Export JAWS_IO_Impl
-// = TITLE
-//     IO inteface for the implementation classes on the RHS of the
-//     Bridge Pattern.
 {
 public:
-  virtual ~JAWS_IO_Impl () {}
+  virtual ~JAWS_IO_Impl () = default;
 
-  // = Regular IO methods.
+  /// @name Regular I/O methods
+  /// @{
 
   virtual void send ( ACE_HANDLE handle
                     , ACE_Message_Block *mb
                     , JAWS_Event_Completer *completer
-                    , void *act = 0
-                    ) = 0;
+                    , void *act = nullptr) = 0;
 
   virtual void recv ( ACE_HANDLE handle
                     , ACE_Message_Block *mb
                     , JAWS_Event_Completer *completer
-                    , void *act = 0
-                    ) = 0;
+                    , void *act = nullptr) = 0;
 
   virtual void transmit ( ACE_HANDLE handle
                         , ACE_HANDLE source
                         , JAWS_Event_Completer *completer
-                        , void *act = 0
-                        , ACE_Message_Block *header = 0
-                        , ACE_Message_Block *trailer = 0
-                        ) = 0;
+                        , void *act = nullptr
+                        , ACE_Message_Block *header = nullptr
+                        , ACE_Message_Block *trailer = nullptr) = 0;
 
-  // = Timed IO methods.
+  /// @}
+  /// @name Timed I/O methods
+  /// @{
 
   virtual void send ( ACE_HANDLE handle
                     , ACE_Message_Block *mb
                     , JAWS_Event_Completer *completer
                     , const ACE_Time_Value &tv
-                    , void *act = 0
-                    ) = 0;
+                    , void *act = nullptr) = 0;
 
   virtual void recv ( ACE_HANDLE handle
                     , ACE_Message_Block *mb
                     , JAWS_Event_Completer *completer
                     , const ACE_Time_Value &tv
-                    , void *act = 0
-                    ) = 0;
+                    , void *act = nullptr) = 0;
 
   virtual void transmit ( ACE_HANDLE handle
                         , ACE_HANDLE source
                         , JAWS_Event_Completer *completer
                         , const ACE_Time_Value &tv
-                        , void *act = 0
-                        , ACE_Message_Block *header = 0
-                        , ACE_Message_Block *trailer = 0
-                        ) = 0;
+                        , void *act = nullptr
+                        , ACE_Message_Block *header = nullptr
+                        , ACE_Message_Block *trailer = nullptr) = 0;
+  /// @}
 };
-
 
 class JAWS_Export JAWS_IO
 {
 public:
-  JAWS_IO (JAWS_IO_Impl *impl = 0);
+  explicit JAWS_IO (JAWS_IO_Impl *impl = nullptr);
 
   ~JAWS_IO ();
 
@@ -85,46 +79,39 @@ public:
   void send ( ACE_HANDLE handle
             , ACE_Message_Block *mb
             , JAWS_Event_Completer *completer
-            , void *act = 0
-            );
+            , void *act = nullptr);
 
   void recv ( ACE_HANDLE handle
             , ACE_Message_Block *mb
             , JAWS_Event_Completer *completer
-            , void *act = 0
-            );
+            , void *act = nullptr);
 
   void transmit ( ACE_HANDLE handle
                 , ACE_HANDLE source
                 , JAWS_Event_Completer *completer
-                , void *act = 0
-                , ACE_Message_Block *header = 0
-                , ACE_Message_Block *trailer = 0
-                );
+                , void *act = nullptr
+                , ACE_Message_Block *header = nullptr
+                , ACE_Message_Block *trailer = nullptr);
 
   void send ( ACE_HANDLE handle
             , ACE_Message_Block *mb
             , JAWS_Event_Completer *completer
             , const ACE_Time_Value &tv
-            , void *act = 0
-            );
+            , void *act = nullptr);
 
   void recv ( ACE_HANDLE handle
             , ACE_Message_Block *mb
             , JAWS_Event_Completer *completer
             , const ACE_Time_Value &tv
-            , void *act = 0
-            );
+            , void *act = nullptr);
 
   void transmit ( ACE_HANDLE handle
                 , ACE_HANDLE source
                 , JAWS_Event_Completer *completer
                 , const ACE_Time_Value &tv
-                , void *act = 0
-                , ACE_Message_Block *header = 0
-                , ACE_Message_Block *trailer = 0
-                );
-
+                , void *act = nullptr
+                , ACE_Message_Block *header = nullptr
+                , ACE_Message_Block *trailer = nullptr);
 
 private:
   JAWS_IO_Impl *impl_;

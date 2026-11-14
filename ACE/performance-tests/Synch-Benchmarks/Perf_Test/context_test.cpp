@@ -7,20 +7,25 @@
 class ACE_Svc_Export Context_Test : public Benchmark_Performance
 {
 public:
-  virtual int svc ();
+  Context_Test () = default;
+  Context_Test (Context_Test const &) = delete;
+  Context_Test (Context_Test &&) = delete;
+  Context_Test &operator= (Context_Test const &) = delete;
+  Context_Test &operator= (Context_Test &&) = delete;
+  int svc () override;
 };
 
 int
 Context_Test::svc ()
 {
-  int ni = this->thr_id ();
+  int const ni = this->thr_id ();
 
   synch_count = 1;
 
   while (!this->done ())
     {
       ACE_Thread::yield ();
-      performance_test_options.thr_work_count[ni]++;
+      ++performance_test_options.thr_work_count[ni];
     }
 
   /* NOTREACHED */

@@ -10,11 +10,11 @@
  */
 //=============================================================================
 
-
 #ifndef _BINARY_SEARCH_H
 #define _BINARY_SEARCH_H
 
 #include "Search_Struct.h"
+#include <memory>
 
 /**
  * @class Binary_Search
@@ -27,8 +27,12 @@ public:
   /// Initialize the values for the iterators...
   Binary_Search ();
 
-  /// Destructor.
-  virtual ~Binary_Search ();
+  ~Binary_Search () override;
+
+  Binary_Search (Binary_Search const &) = delete;
+  Binary_Search &operator= (Binary_Search const &) = delete;
+  Binary_Search (Binary_Search &&) = delete;
+  Binary_Search &operator= (Binary_Search &&) = delete;
 
   /**
    * Returns the next friend in the sequence of sorted friends.  Note
@@ -36,7 +40,7 @@ public:
    * iterator interface to include an "initialize" and "next"
    * function!
    */
-  virtual Protocol_Record *get_next_entry ();
+  Protocol_Record *get_next_entry () override;
 
   /**
    * An iterator, similar to Binary_Search::get_next_friend, though in
@@ -45,29 +49,28 @@ public:
    * we skip over entries that don't have any hosts associated with
    * them.
    */
-  virtual Protocol_Record *get_each_entry ();
+  Protocol_Record *get_each_entry () override;
 
   /**
    * This function is used to merge the <key_name> from server
    * <host_name> into the sorted list of userids kept on the client's
    * side.
    */
-  virtual Protocol_Record *insert (const char *key_name,
-                                   int max_len = MAXUSERIDNAMELEN) = 0;
+  Protocol_Record *insert (char const *key_name,
+                                   int max_len = MAXUSERIDNAMELEN) override = 0;
 
   /// This function is passed to qsort to perform the comparison
   /// between login names for two friends.
-  static int name_compare (const void *, const void *);
+  static int name_compare (void const *, void const *);
 
 protected:
-  Protocol_Record **current_ptr_;
-  int current_index_;
+  /// Borrowed iterator into sorted_record_.
+  Protocol_Record **current_ptr_ {};
+  int current_index_ {};
 
-  Protocol_Record *protocol_record_;
-  Protocol_Record **sorted_record_;
+  std::unique_ptr<Protocol_Record[]> protocol_record_;
+  std::unique_ptr<Protocol_Record *[]> sorted_record_;
 
-  const char *buffer_;
-  int buffer_size_;
 };
 
 #endif /* _BINARY_SEARCH_H */

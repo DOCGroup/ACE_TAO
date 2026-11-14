@@ -21,15 +21,21 @@
 class Event_Handler : public ACE_Event_Handler
 {
 public:
-  int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
+  Event_Handler () = default;
+  Event_Handler (Event_Handler const &) = delete;
+  Event_Handler (Event_Handler &&) = delete;
+  Event_Handler &operator= (Event_Handler const &) = delete;
+  Event_Handler &operator= (Event_Handler &&) = delete;
 
-  int handle_timeout (const ACE_Time_Value &tv, const void *arg = 0);
+  int handle_signal (int signum, siginfo_t * = nullptr, ucontext_t * = nullptr) override;
+
+  int handle_timeout (ACE_Time_Value const &tv, void const *arg = nullptr) override;
 
   ACE_Auto_Event handle_;
-  int iterations_;
+  int iterations_ {};
 };
 
-static Event_Handler *global_event_handler;
+static Event_Handler *global_event_handler {};
 
 static void WINAPI
 apc_callback (DWORD)
@@ -40,7 +46,7 @@ apc_callback (DWORD)
   global_event_handler->handle_.signal ();
 }
 
-void
+static void
 queue_apc ()
 {
   DWORD result = ::QueueUserAPC (reinterpret_cast<PAPCFUNC> (&apc_callback),
@@ -67,8 +73,8 @@ Event_Handler::handle_signal (int, siginfo_t *, ucontext_t *)
 }
 
 int
-Event_Handler::handle_timeout (const ACE_Time_Value &,
-                               const void *)
+Event_Handler::handle_timeout (ACE_Time_Value const &,
+                               void const *)
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%t) timeout occurred @ %T\n"));

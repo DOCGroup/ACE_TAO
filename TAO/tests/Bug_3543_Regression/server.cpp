@@ -2,16 +2,14 @@
 #include "ace/Get_Opt.h"
 #include "tao/ORB.h"
 
-const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
-
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'k':
         ior = get_opts.opt_arg ();
@@ -33,7 +31,10 @@ parse_args (int argc, ACE_TCHAR *argv[])
 class ServerImpl : public POA_MasterClient::Server
 {
 public:
-  ServerImpl (CORBA::ORB_ptr orb) : orb_ (CORBA::ORB::_duplicate (orb)) {}
+  explicit ServerImpl (CORBA::ORB_ptr orb)
+    : orb_ (CORBA::ORB::_duplicate (orb))
+  {
+  }
   ServerImpl (ServerImpl const &) = delete;
   ServerImpl (ServerImpl &&) = delete;
   ServerImpl &operator= (ServerImpl const &) = delete;
@@ -46,38 +47,40 @@ public:
     this->orb_->shutdown (false);
   }
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 };
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
-      if (parse_args (argc, argv) != 0)
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
+      ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
+      if (parse_args (argc, argv, ior) != 0)
         return 1;
 
-      CORBA::Object_var poa_object = orb->resolve_initial_references ("RootPOA");
-      PortableServer::POA_var root_poa = PortableServer::POA::_narrow (poa_object.in ());
-      PortableServer::POAManager_var poa_manager = root_poa->the_POAManager ();
+      CORBA::Object_var const poa_object = orb->resolve_initial_references ("RootPOA");
+      PortableServer::POA_var const root_poa = PortableServer::POA::_narrow (poa_object.in ());
+      PortableServer::POAManager_var const poa_manager = root_poa->the_POAManager ();
 
-      ServerImpl *hello_impl = nullptr;
+      ServerImpl *hello_impl {};
       ACE_NEW_RETURN (hello_impl,
                       ServerImpl (orb.in ()),
                       1);
+      // ServantBase_var takes ownership of this pointer.
       PortableServer::ServantBase_var owner_transfer (hello_impl);
 
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         root_poa->activate_object (hello_impl);
 
-      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+      CORBA::Object_var const object = root_poa->id_to_reference (id.in ());
 
-      MasterClient::Server_var vserver = MasterClient::Server::_narrow (object.in ());
+      MasterClient::Server_var const vserver = MasterClient::Server::_narrow (object.in ());
 
-      CORBA::Object_var tmp = orb->string_to_object (ior);
+      CORBA::Object_var const tmp = orb->string_to_object (ior);
 
-      MasterClient::Master_var vmaster = MasterClient::Master::_narrow (tmp.in ());
+      MasterClient::Master_var const vmaster = MasterClient::Master::_narrow (tmp.in ());
 
       poa_manager->activate ();
 

@@ -11,9 +11,8 @@
 
 using SENDER = ACE_Unmanaged_Singleton<Sender, ACE_Null_Mutex>;
 
-
 int
-Sender_StreamEndPoint::get_callback (const char *,
+Sender_StreamEndPoint::get_callback (char const *,
                                      TAO_AV_Callback *&callback)
 {
   // Create and return the sender application callback to AVStreams
@@ -23,7 +22,7 @@ Sender_StreamEndPoint::get_callback (const char *,
 }
 
 int
-Sender_StreamEndPoint::set_protocol_object (const char *,
+Sender_StreamEndPoint::set_protocol_object (char const *,
                                             TAO_AV_Protocol_Object *object)
 {
   // Set the sender protocol object corresponding to the transport
@@ -33,21 +32,9 @@ Sender_StreamEndPoint::set_protocol_object (const char *,
 }
 
 Sender::Sender ()
-  : sender_mmdevice_ (0),
-    streamctrl_ (0),
-    frame_count_ (0),
-    filename_ (ACE_TEXT ("input")),
-    input_file_ (0),
-    protocol_ (ACE_TEXT ("UDP")),
-    frame_rate_ (30.0),
-    mb_ (1000),
-    address_ (0),
-    peer_address_ (0),
-    local_sec_addrs_ (0),
-    peer_sec_addrs_ (0),
-    num_local_sec_addrs_ (0),
-    num_peer_sec_addrs_ (0),
-    max_frame_count_ (20)
+  : input_file_ (nullptr, ACE_OS::fclose),
+    options_ (),
+    mb_ (1000)
 {
 }
 
@@ -66,30 +53,30 @@ Sender::parse_args (int argc,
   // Parse command line arguments
   ACE_Get_Opt opts (argc, argv, ACE_TEXT("f:p:r:dl:a:s:b:"));
 
-  int c;
-  while ((c= opts ()) != -1)
+  int c {};
+  while ((c = opts ()) != -1)
     {
       switch (c)
         {
         case 'f':
-          this->filename_ = opts.opt_arg ();
+          this->options_.filename = opts.opt_arg ();
           break;
         case 'p':
-          this->protocol_ = opts.opt_arg ();
+          this->options_.protocol = opts.opt_arg ();
           break;
         case 'r':
-          this->frame_rate_ = (double)ACE_OS::atoi (opts.opt_arg ());
+          this->options_.frame_rate = static_cast<double> (ACE_OS::atoi (opts.opt_arg ()));
           break;
         case 'd':
-          TAO_debug_level++;
+          ++TAO_debug_level;
           break;
         case 'b':
-          mb_.size (ACE_OS::atoi (opts.opt_arg ()));
+          this->options_.buffer_size = ACE_OS::atoi (opts.opt_arg ());
           break;
         case 's':
           {
-            max_frame_count_ = (long) ACE_OS::atoi (opts.opt_arg ());
-            if (max_frame_count_ > 1000000)
+            this->options_.max_frame_count = ACE_OS::atoi (opts.opt_arg ());
+            if (this->options_.max_frame_count > 1000000)
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "Max Frame Count should be < 10^6\n"),
                                 -1);
@@ -97,35 +84,31 @@ Sender::parse_args (int argc,
           }
         case 'l':
           {
-            TAO_Tokenizer addr_token (ACE_TEXT_ALWAYS_CHAR(opts.opt_arg ()), ',');
-            this->address_ = CORBA::string_dup (addr_token [0]);
-            num_local_sec_addrs_ = addr_token.num_tokens () - 1;
-            if (num_local_sec_addrs_ != 0)
-              ACE_NEW_RETURN (local_sec_addrs_, char* [num_local_sec_addrs_], -1);
-            for (int j = 1; j <= num_local_sec_addrs_; j++)
+            TAO_Tokenizer addr_token (ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ()), ',');
+            this->options_.address = addr_token [0];
+            this->options_.local_sec_addrs.clear ();
+            for (int j = 1; j < addr_token.num_tokens (); ++j)
               {
                 ACE_DEBUG ((LM_DEBUG,
                             "adding addresses to sequence %s\n",
                             addr_token [j]));
 
-                local_sec_addrs_ [j-1] =  CORBA::string_dup (addr_token [j]);
+                this->options_.local_sec_addrs.emplace_back (addr_token [j]);
               }
           }
           break;
         case 'a':
           {
-            TAO_Tokenizer addr_token (ACE_TEXT_ALWAYS_CHAR(opts.opt_arg ()), ',');
-            this->peer_address_ = CORBA::string_dup (addr_token [0]);
-            num_peer_sec_addrs_ = addr_token.num_tokens () - 1;
-            if (num_peer_sec_addrs_ != 0)
-              ACE_NEW_RETURN (peer_sec_addrs_, char* [num_peer_sec_addrs_], -1);
-            for (int j = 1; j <= num_peer_sec_addrs_; j++)
+            TAO_Tokenizer addr_token (ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ()), ',');
+            this->options_.peer_address = addr_token [0];
+            this->options_.peer_sec_addrs.clear ();
+            for (int j = 1; j < addr_token.num_tokens (); ++j)
               {
                 ACE_DEBUG ((LM_DEBUG,
                             "adding addresses to sequence %s\n",
                             addr_token [j]));
 
-                peer_sec_addrs_ [j-1] =  CORBA::string_dup (addr_token [j]);
+                this->options_.peer_sec_addrs.emplace_back (addr_token [j]);
               }
           }
           break;
@@ -185,15 +168,19 @@ Sender::init (int argc,
   if (result != 0)
     return result;
 
-  // Open file to read.
-  this->input_file_ =
-    ACE_OS::fopen (this->filename_.c_str (),
-                   "rb");
+  if (this->options_.buffer_size <= 0)
+    ACE_ERROR_RETURN ((LM_ERROR, "Buffer size must be positive\n"), -1);
 
-  if (this->input_file_ == nullptr)
+  this->mb_.size (this->options_.buffer_size);
+
+  // Open file to read.
+  this->input_file_.reset (
+    ACE_OS::fopen (this->options_.filename.c_str (), ACE_TEXT ("rb")));
+
+  if (!this->input_file_)
     ACE_ERROR_RETURN ((LM_DEBUG,
-                       "Cannot open input file %s\n",
-                       this->filename_.c_str () ),
+                       ACE_TEXT ("Cannot open input file %s\n"),
+                       this->options_.filename.c_str ()),
                       -1);
   else
     ACE_DEBUG ((LM_DEBUG,
@@ -207,16 +194,15 @@ Sender::init (int argc,
                        "(%P|%t) Error binding to the naming service\n"),
                       -1);
 
-
   // Initialize the  QoS
   AVStreams::streamQoS_var the_qos (new AVStreams::streamQoS);
 
   // Set the address of the ftp client.
   ACE_INET_Addr addr;
-  char buf [BUFSIZ];
+  char buf [BUFSIZ] {};
 
-  if (address_ != nullptr)
-    addr.set (address_);
+  if (!this->options_.address.empty ())
+    addr.set (this->options_.address.c_str ());
   else
     {
       ACE_OS::hostname (buf,
@@ -230,12 +216,12 @@ Sender::init (int argc,
                                     "IN",
                                     "USER_DEFINED",
                                     "",
-                                    ACE_TEXT_ALWAYS_CHAR (this->protocol_.c_str ()),
+                                    ACE_TEXT_ALWAYS_CHAR (this->options_.protocol.c_str ()),
                                     &addr);
 
   ACE_INET_Addr peer_addr;
-  if (peer_address_ != nullptr)
-    peer_addr.set (peer_address_);
+  if (!this->options_.peer_address.empty ())
+    peer_addr.set (this->options_.peer_address.c_str ());
   else
     {
       ACE_OS::hostname (buf,
@@ -246,9 +232,8 @@ Sender::init (int argc,
 
   entry.set_peer_addr (&peer_addr);
 
-  entry.set_local_sec_addr (local_sec_addrs_, num_local_sec_addrs_);
-
-  entry.set_peer_sec_addr (peer_sec_addrs_, num_peer_sec_addrs_);
+  entry.set_local_sec_addrs (this->options_.local_sec_addrs);
+  entry.set_peer_sec_addrs (this->options_.peer_sec_addrs);
 
   AVStreams::flowSpec flow_spec (1);
   flow_spec.length (1);
@@ -274,7 +259,7 @@ Sender::init (int argc,
     this->streamctrl_;
 
   // Bind/Connect the sender and receiver MMDevices.
-  CORBA::Boolean bind_result =
+  CORBA::Boolean const bind_result =
     this->streamctrl_->bind_devs (mmdevice.in (),
                                   this->receiver_mmdevice_.in (),
                                   the_qos.inout (),
@@ -296,13 +281,13 @@ Sender::pace_data ()
   ACE_Time_Value inter_frame_time;
 
   // The time between two consecutive frames.
-  inter_frame_time.set (1.0 / this->frame_rate_);
+  inter_frame_time.set (1.0 / this->options_.frame_rate);
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "Frame Rate = %f / second\n"
                 "Inter Frame Time = %d (msec)\n",
-                this->frame_rate_,
+                this->options_.frame_rate,
                 inter_frame_time.msec ()));
 
   try
@@ -310,18 +295,16 @@ Sender::pace_data ()
       // The time taken for sending a frame and preparing for the next frame
       ACE_High_Res_Timer elapsed_timer;
 
-      int buffer_size = mb_.size ();
-
       // Continue to send data till the file is read to the end.
-      while (frame_count_ < max_frame_count_)
+      while (this->frame_count_ < this->options_.max_frame_count)
         {
           // Read from the file into a message block.
-          int n = ACE_OS::fread (this->mb_.wr_ptr (),
-                                 1,
-                                 this->mb_.size (),
-                                 this->input_file_);
+          size_t const n = ACE_OS::fread (this->mb_.wr_ptr (),
+                                               1,
+                                               this->mb_.size (),
+                                               this->input_file_.get ());
 
-          if (n < 0)
+          if (std::ferror (this->input_file_.get ()))
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Sender::pace_data fread failed\n"),
                               -1);
@@ -331,8 +314,7 @@ Sender::pace_data ()
               // At end of file break the loop and end the sender.
               if (TAO_debug_level > 0)
                 ACE_DEBUG ((LM_DEBUG,"End of file\n"));
-
-              // ACE_OS::rewind (this->input_file_);
+              break;
             }
 
           this->mb_.wr_ptr (n);
@@ -347,7 +329,7 @@ Sender::pace_data ()
               elapsed_timer.stop ();
 
               // Get the time elapsed after sending the previous frame.
-              ACE_Time_Value elapsed_time;
+              ACE_Time_Value elapsed_time {};
               elapsed_timer.elapsed_time (elapsed_time);
 
               if (TAO_debug_level > 0)
@@ -378,34 +360,33 @@ Sender::pace_data ()
           elapsed_timer.start ();
 
           // Send frame.
-          int result =
+          int const result =
             this->protocol_object_->send_frame (&this->mb_);
 
           if (result < 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "send failed:%p",
-                               "Sender::pace_data send\n"),
-                              -1);
-
-          ACE_DEBUG ((LM_DEBUG,
-                      "Sender::pace_data frame %d was sent successfully %d\n",
-                      ++this->frame_count_,
-                      buffer_size));
+            ACE_ERROR_RETURN ((LM_ERROR, "Sender::pace_data send failed\n"), -1);
 
           ++this->frame_count_;
+          ACE_DEBUG ((LM_DEBUG,
+                      "Sender::pace_data frame %d was sent successfully %B\n",
+                      this->frame_count_,
+                      n));
 
           // Reset the message block.
           this->mb_.reset ();
         } // end while
+
+      // Let the receiver consume queued frames before closing the flow.
+      ACE_OS::sleep (ACE_Time_Value (1));
 
       // File reading is complete, destroy the stream.
       AVStreams::flowSpec stop_spec;
       this->streamctrl_->destroy (stop_spec);
 
       // Shut the orb down.
-      TAO_AV_CORE::instance ()->orb ()->shutdown (0);
+      TAO_AV_CORE::instance ()->orb ()->shutdown (false);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Sender::pace_data Failed\n");
       return -1;
@@ -416,6 +397,7 @@ Sender::pace_data ()
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  int result {};
   try
     {
       CORBA::ORB_var orb =
@@ -438,19 +420,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                       root_poa.in ());
 
       // Initialize the Sender.
-      int result = 0;
       result = SENDER::instance ()->init (argc,
                                           argv);
 
       if (result < 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Sender::init failed\n"),
-                          -1);
+        ACE_ERROR ((LM_ERROR,
+                    "Sender::init failed\n"));
+      else
+        // Start sending data.
+        result = SENDER::instance ()->pace_data ();
 
-      // Start sending data.
-      result = SENDER::instance ()->pace_data ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Sender Failed\n");
       return -1;
@@ -458,9 +439,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   SENDER::close ();  // Explicitly finalize the Unmanaged_Singleton.
 
-  return 0;
+  return result;
 }
 
 #if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
-template ACE_Unmanaged_Singleton<Sender, ACE_Null_Mutex> *ACE_Unmanaged_Singleton<Sender, ACE_Null_Mutex>::singleton_;
+template ACE_Unmanaged_Singleton<Sender, ACE_Null_Mutex> *
+ACE_Unmanaged_Singleton<Sender, ACE_Null_Mutex>::singleton_;
 #endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */

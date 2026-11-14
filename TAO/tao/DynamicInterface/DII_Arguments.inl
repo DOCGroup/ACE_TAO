@@ -15,8 +15,6 @@ namespace TAO
     return this->byte_order_;
   }
 
-  // ===================================================================
-
   ACE_INLINE
   NVList_Argument::NVList_Argument (CORBA::NVList_ptr x, bool lazy_eval)
     : x_ (x)

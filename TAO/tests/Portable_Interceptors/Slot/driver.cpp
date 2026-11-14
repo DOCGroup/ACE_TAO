@@ -3,23 +3,28 @@
 #include "tao/LocalObject.h"
 #include "tao/ORBInitializer_Registry.h"
 
-PortableInterceptor::SlotId slot_id;
+PortableInterceptor::SlotId slot_id {};
 
 class ORB_Initializer : public virtual PortableInterceptor::ORBInitializer,
                         public virtual ::CORBA::LocalObject
 {
 public:
-  virtual void
-  pre_init (PortableInterceptor::ORBInitInfo_ptr)
+  ORB_Initializer () = default;
+
+  void pre_init (PortableInterceptor::ORBInitInfo_ptr) override
   {
   }
 
-  virtual void
-  post_init (PortableInterceptor::ORBInitInfo_ptr info)
+  void post_init (PortableInterceptor::ORBInitInfo_ptr info) override
   {
     slot_id = info->allocate_slot_id ();
     ACE_DEBUG ((LM_DEBUG, "Allocated slot with id %d.\n", slot_id));
   }
+
+  ORB_Initializer (ORB_Initializer const &) = delete;
+  ORB_Initializer (ORB_Initializer &&) = delete;
+  ORB_Initializer & operator = (ORB_Initializer const &) = delete;
+  ORB_Initializer & operator = (ORB_Initializer &&) = delete;
 };
 
 int
@@ -27,21 +32,22 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
   {
-    PortableInterceptor::ORBInitializer_var orb_initializer = new ORB_Initializer ();
+    PortableInterceptor::ORBInitializer_var const orb_initializer (new ORB_Initializer ());
     PortableInterceptor::register_orb_initializer (orb_initializer.in ());
 
-    CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+    CORBA::ORB_var const orb (CORBA::ORB_init (argc, argv));
 
-    CORBA::Object_var pic_obj = orb->resolve_initial_references ("PICurrent");
-    PortableInterceptor::Current_var pic (
+    CORBA::Object_var const pic_obj (orb->resolve_initial_references ("PICurrent"));
+    PortableInterceptor::Current_var const pic (
       PortableInterceptor::Current::_narrow (pic_obj.in ()));
 
-    CORBA::Any in;
-    in <<= CORBA::ULong (1);
+    CORBA::Any in {};
+    CORBA::ULong constexpr slot_value {1};
+    in <<= slot_value;
     pic->set_slot (slot_id, in);
 
-    CORBA::ULong v (0);
-    CORBA::Any_var out = pic->get_slot (slot_id);
+    CORBA::ULong v {};
+    CORBA::Any_var const out (pic->get_slot (slot_id));
     out >>= v;
 
     if (v != 1)
@@ -57,7 +63,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_ERROR ((LM_ERROR, "ERROR: Caught InvalidSlot exception.\n"));
       return 1;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

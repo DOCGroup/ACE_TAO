@@ -10,7 +10,7 @@
 #include "tao/CORBA_String.h"
 #include "ace/Log_Msg.h"
 
-typedef TAO::unbounded_basic_string_sequence<char> s_sequence;
+using s_sequence = TAO::unbounded_basic_string_sequence<char>;
 
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
@@ -47,7 +47,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
       b.replace(64, 0, s_sequence::allocbuf(64), true);
 
       char const * const * x = d.get_buffer();
-      if (x != 0)
+      if (x != nullptr)
       {
         s_sequence::freebuf(a.get_buffer(true));
       }
@@ -60,7 +60,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 
       s_sequence e(c);
 
-      CORBA::String_var w(const_cast<char const*>("World"));
+      CORBA::String_var const w(const_cast<char const*>("World"));
       try
         {
           e[0] = w;

@@ -23,10 +23,8 @@
 class TAO_RTEC_Perf_Export EC_Destroyer
 {
 public:
-  /// Constructor
   EC_Destroyer (RtecEventChannelAdmin::EventChannel_ptr ec);
 
-  /// Destructor
   /**
    * @todo This method could benefit from the error logging described
    * in Servant_var.cpp

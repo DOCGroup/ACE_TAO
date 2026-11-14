@@ -10,16 +10,15 @@
 ReplicationManagerFaultConsumerAdapter::ReplicationManagerFaultConsumerAdapter()
   : orb_(CORBA::ORB::_nil())
   , quit_(0)
-  , readyFile_(0)
-  , detector_ior_(0)
+  , readyFile_ (nullptr)
+  , detector_ior_ (nullptr)
   , factory_(FT::FaultDetectorFactory::_nil())
-  , notifier_ior_(0)
+  , notifier_ior_ (nullptr)
   , notifier_(FT::FaultNotifier::_nil())
-  , p_fault_consumer_(0)
+  , p_fault_consumer_ (nullptr)
   , consumer_servant_(0)
 {
 }
-
 
 ReplicationManagerFaultConsumerAdapter::~ReplicationManagerFaultConsumerAdapter()
 {
@@ -30,7 +29,6 @@ size_t ReplicationManagerFaultConsumerAdapter::notifications () const
   // Delegate to the FT_FaultConsumer.
   return this->p_fault_consumer_->notifications ();
 }
-
 
 int ReplicationManagerFaultConsumerAdapter::parse_args (int argc, ACE_TCHAR * argv[])
 {
@@ -73,14 +71,14 @@ int ReplicationManagerFaultConsumerAdapter::parse_args (int argc, ACE_TCHAR * ar
 
   if(! optionError)
   {
-    if (0 == this->replica_iors_.size())
+    if (this->replica_iors_.empty ())
     {
       ACE_ERROR ((LM_ERROR,
         "-r option is required.\n"
         ));
       optionError = -1;
     }
-    if (0 == this->detector_ior_)
+    if (this->detector_ior_ == nullptr)
     {
       ACE_ERROR ((LM_ERROR,
         "-d option is required.\n"
@@ -174,7 +172,7 @@ int ReplicationManagerFaultConsumerAdapter::init (
   ));
 
   ACE_NEW_RETURN (this->p_fault_consumer_, TAO::FT_FaultConsumer (), -1);
-  if (this->p_fault_consumer_ != 0)
+  if (this->p_fault_consumer_ != nullptr)
   {
     this->consumer_servant_ = this->p_fault_consumer_;
   }
@@ -193,7 +191,7 @@ int ReplicationManagerFaultConsumerAdapter::init (
     poa_obj.in());
 
   // Create a fault analyzer.
-  TAO::FT_FaultAnalyzer * analyzer = 0;
+  TAO::FT_FaultAnalyzer *analyzer {};
   ACE_NEW_RETURN (analyzer, TAO::FT_DefaultFaultAnalyzer (), -1);
 
   // Initialize the FaultConsumer.
@@ -234,8 +232,8 @@ int ReplicationManagerFaultConsumerAdapter::init (
     // create a fault detector for each replica
     size_t replicaCount = this->replica_iors_.size();
     ACE_DEBUG ((LM_DEBUG,
-      ACE_TEXT ("Number of replicas being monitored: (%u)\n"),
-      static_cast<unsigned int> (replicaCount)
+      ACE_TEXT ("Number of replicas being monitored: (%B)\n"),
+      replicaCount
     ));
     for (size_t nRep = 0; result == 0 && nRep < replicaCount; ++nRep)
     {
@@ -293,7 +291,7 @@ int ReplicationManagerFaultConsumerAdapter::init (
         PortableGroup::Criteria_var criteria;
         ACE_NEW_NORETURN (criteria,
           PortableGroup::Criteria);
-        if (criteria.ptr() == 0)
+        if (criteria.ptr() == nullptr)
         {
           ACE_ERROR_RETURN ((
             LM_ERROR,
@@ -315,7 +313,7 @@ int ReplicationManagerFaultConsumerAdapter::init (
     }
 
     // Signal that we are ready to go.
-    if (result == 0 && this->readyFile_ != 0)
+    if (result == 0 && this->readyFile_ != nullptr)
     {
       FILE* ready = ACE_OS::fopen (this->readyFile_, "w");
       if (ready)
@@ -345,7 +343,6 @@ int ReplicationManagerFaultConsumerAdapter::fini ()
   // Delegate to the FT_FaultConsumer.
   return this->p_fault_consumer_->fini ();
 }
-
 
 int ReplicationManagerFaultConsumerAdapter::idle(int & result)
 {

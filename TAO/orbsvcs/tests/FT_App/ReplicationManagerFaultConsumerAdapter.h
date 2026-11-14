@@ -3,6 +3,7 @@
 #define REPLICATION_MANAGER_FAULT_CONSUMER_ADAPTER_H
 #include /**/ <ace/pre.h>
 #include <ace/ACE.h>
+#include <vector>
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -10,7 +11,6 @@
 #include <orbsvcs/FT_ReplicationManager/FT_FaultConsumer.h>
 #include <orbsvcs/FT_NotifierC.h>
 #include <orbsvcs/FT_FaultDetectorFactoryC.h>
-#include <ace/Vector_T.h>
 #include <ace/SString.h>
 
 /////////////////////
@@ -59,7 +59,6 @@ public:
    * Clean house for process shut down.
    */
   int fini ();
-
 
   size_t notifications() const;
 
@@ -113,12 +112,12 @@ private:
   /**
    * A collection of replica IORs
    */
-  ACE_Vector < const char * > replica_iors_;
+  std::vector<char const *> replica_iors_;
 
   /**
    * A collection of replica references.
    */
-  ACE_Vector < FT::PullMonitorable_var > replicas_;
+  std::vector<FT::PullMonitorable_var> replicas_;
 
   /**
    * A file from which the notifier's IOR should be read.

@@ -22,8 +22,8 @@
  */
 //=============================================================================
 
-
 #include "../test_config.h"
+#include <cstring>
 #include "ace/Default_Constants.h"
 #include "ace/OS_NS_signal.h"
 #include "ace/OS_NS_string.h"
@@ -56,7 +56,7 @@ public:
   //FUZZ: enable check_for_lack_ACE_OS
 
 private:
-  virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result);
+  void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result) override;
 
 private:
   size_t                  msgs_sent_;
@@ -78,7 +78,7 @@ public:
   //FUZZ: enable check_for_lack_ACE_OS
 
 private:
-  virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result);
+  void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result) override;
 
 private:
   size_t                  msgs_rcvd_;
@@ -94,13 +94,13 @@ public:
   //FUZZ: enable check_for_lack_ACE_OS
 
   // Get the I/O handle.
-  virtual ACE_HANDLE get_handle () const;
+  ACE_HANDLE get_handle () const override;
 
   // Called when a new connection is ready to accept.
-  virtual int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE);
+  int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE) override;
 
-  virtual int handle_close (ACE_HANDLE handle,
-                            ACE_Reactor_Mask close_mask);
+  int handle_close (ACE_HANDLE handle,
+                    ACE_Reactor_Mask close_mask) override;
 
 private:
   ACE_SSL_SOCK_Acceptor acceptor_;
@@ -145,9 +145,9 @@ disable_signal (int sigmin, int sigmax)
 # if defined (ACE_LACKS_PTHREAD_THR_SIGSETMASK)
   // In multi-threaded application this is not POSIX compliant
   // but let's leave it just in case.
-  if (ACE_OS::sigprocmask (SIG_BLOCK, &signal_set, 0) != 0)
+  if (ACE_OS::sigprocmask (SIG_BLOCK, &signal_set, nullptr) != 0)
 # else
-  if (ACE_OS::thr_sigsetmask (SIG_BLOCK, &signal_set, 0) != 0)
+  if (ACE_OS::thr_sigsetmask (SIG_BLOCK, &signal_set, nullptr) != 0)
 # endif /* ACE_LACKS_PTHREAD_THR_SIGSETMASK */
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Error: (%P|%t): %p\n"),
@@ -372,7 +372,7 @@ Server_Handler::handle_read_stream
   size_t test_string_len = ACE_OS::strlen (test_string);
   while (b.length () >= test_string_len)
     {
-      if (0 != ACE_OS::strncmp (b.rd_ptr (), test_string, test_string_len))
+      if (0 != std::strncmp (b.rd_ptr (), test_string, test_string_len))
         ACE_ERROR_BREAK ((LM_ERROR,
                           ACE_TEXT ("(%t) Read string: %C; expected: %C\n"),
                           b.rd_ptr (),
@@ -393,7 +393,6 @@ Server_Handler::handle_read_stream
     }
   return;
 }
-
 
 int
 Server_Acceptor::open (const ACE_INET_Addr &listen_addr)
@@ -421,7 +420,7 @@ Server_Acceptor::handle_input (ACE_HANDLE)
                        ACE_TEXT ("(%t) %p\n"),
                        ACE_TEXT ("accept")),
                       -1);
-  Server_Handler *new_handler = 0;
+  Server_Handler *new_handler = nullptr;
   ACE_NEW_RETURN (new_handler, Server_Handler, -1);
   if (new_handler->open (new_stream.get_handle ()) != 0)
     delete new_handler;
@@ -435,7 +434,6 @@ Server_Acceptor::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
   this->acceptor_.close ();
   return 0;
 }
-
 
 static ACE_THR_FUNC_RETURN
 proactor_loop (void *)
@@ -479,7 +477,7 @@ start_clients (void *)
           continue;
         }
 
-      Client_Handler *new_handler = 0;
+      Client_Handler *new_handler = nullptr;
       ACE_NEW_RETURN (new_handler, Client_Handler, (ACE_THR_FUNC_RETURN)-1);
       if (new_handler->open (stream.get_handle ()) != 0)
         {

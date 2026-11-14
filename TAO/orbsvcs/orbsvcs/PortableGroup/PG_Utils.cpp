@@ -6,7 +6,7 @@
 #include "tao/Tagged_Components.h"
 #include "tao/CDR.h"
 
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -17,8 +17,8 @@ namespace TAO
       PortableGroup::ObjectGroup *ior,
       PortableGroup::TagGroupTaggedComponent &tg)
   {
-    if (ior->_stubobj () == 0)
-      return 0;
+    if (ior->_stubobj () == nullptr)
+      return false;
 
     // We need to apply the property for every profile in the IOR
     TAO_MProfile &tmp_pfiles =
@@ -35,7 +35,7 @@ namespace TAO
       PG_Utils::encode_properties (cdr,
                                    tg);
 
-    if (retval == 0)
+    if (!retval)
       return retval;
 
     // Get the length of the CDR stream
@@ -48,21 +48,21 @@ namespace TAO
     CORBA::Octet *buf =
       tagged_components.component_data.get_buffer ();
 
-    for (const ACE_Message_Block *i = cdr.begin ();
-         i != 0;
+    for (ACE_Message_Block const *i = cdr.begin ();
+         i != nullptr;
          i = i->cont ())
       {
-        ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());
+        std::memcpy (buf, i->rd_ptr (), i->length ());
         buf += i->length ();
       }
-    const IOP::TaggedComponent &tmp_tc = tagged_components;
+    IOP::TaggedComponent const &tmp_tc = tagged_components;
 
     // Get the profile count.
     CORBA::ULong count =
       ior->_stubobj ()->base_profiles ().profile_count ();
 
     // Go through every profile and set the TaggedComponent field
-    for (CORBA::ULong p_idx = 0; p_idx < count ; ++p_idx)
+    for (CORBA::ULong p_idx {}; p_idx < count ; ++p_idx)
       {
         // Get the tagged components in the profile
         TAO_Tagged_Components &tag_comp =
@@ -74,7 +74,7 @@ namespace TAO
       }
 
     // Success
-    return 1;
+    return true;
   }
 
   /*static*/ CORBA::Boolean
@@ -82,7 +82,7 @@ namespace TAO
       PortableGroup::ObjectGroup *ior,
       PortableGroup::TagGroupTaggedComponent &tg)
   {
-    if (ior->_stubobj () == 0)
+    if (ior->_stubobj () == nullptr)
       return false;
 
     TAO_MProfile &mprofile =
@@ -95,21 +95,22 @@ namespace TAO
     CORBA::ULong count =
       mprofile.profile_count ();
 
-    for (CORBA::ULong i = 0;
+    for (CORBA::ULong i {};
          i < count;
-         i++)
+         ++i)
       {
         // Get the Tagged Components
-        const TAO_Tagged_Components &pfile_tagged =
+        TAO_Tagged_Components const &pfile_tagged =
           mprofile.get_profile (i)->tagged_components ();
 
         // Look for the primary
         if (pfile_tagged.get_component (tc) == 1)
           {
-            TAO_InputCDR cdr (reinterpret_cast<const char*> (tc.component_data.get_buffer ()),
-                            tc.component_data.length ());
+            TAO_InputCDR cdr (
+              reinterpret_cast<char const *> (tc.component_data.get_buffer ()),
+              tc.component_data.length ());
 
-            CORBA::Boolean byte_order;
+            CORBA::Boolean byte_order {};
 
             cdr >> ACE_InputCDR::to_boolean (byte_order);
 

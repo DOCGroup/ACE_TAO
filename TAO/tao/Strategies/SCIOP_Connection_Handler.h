@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   SCIOP_Connection_Handler.h
  *
  *  @author  Jason Cohen, Lockheed Martin ATL  <jcohen@atl.lmco.com>
  *  @author  Keith O'Hara, Lockheed Martin ATL
  */
-// ===================================================================
 
 #ifndef TAO_SCIOP_CONNECTION_HANDLER_H
 #define TAO_SCIOP_CONNECTION_HANDLER_H
@@ -41,8 +39,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 using TAO_SCIOP_SVC_HANDLER =
   ACE_Svc_Handler<ACE_SOCK_SEQPACK_ASSOCIATION, ACE_NULL_SYNCH>;
 
-// ****************************************************************
-
 /**
  * @class TAO_SCIOP_Connection_Handler
  *
@@ -52,7 +48,6 @@ using TAO_SCIOP_SVC_HANDLER =
  * the Connector
  */
 
-
 class TAO_Strategies_Export TAO_SCIOP_Connection_Handler
   : public TAO_SCIOP_SVC_HANDLER,
     public TAO_Connection_Handler
@@ -60,10 +55,8 @@ class TAO_Strategies_Export TAO_SCIOP_Connection_Handler
 public:
   explicit TAO_SCIOP_Connection_Handler (ACE_Thread_Manager *t = nullptr);
 
-  /// Constructor.
   explicit TAO_SCIOP_Connection_Handler (TAO_ORB_Core *orb_core);
 
-  /// Destructor.
   ~TAO_SCIOP_Connection_Handler ();
 
   //@{
@@ -111,7 +104,6 @@ protected:
   /**
    * @name TAO_Connection Handler overloads
    */
-  //  void handle_close_i ();
   int release_os_resources () override;
   int handle_write_ready (ACE_Time_Value const *timeout) override;
   //@}

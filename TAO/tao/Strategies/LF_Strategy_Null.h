@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file LF_Strategy_Null.h
  *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_LF_STRATEGY_NULL_H
 #define TAO_LF_STRATEGY_NULL_H
@@ -30,7 +28,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Strategies_Export TAO_LF_Strategy_Null : public TAO_LF_Strategy
 {
 public:
-  /// Constructor
   TAO_LF_Strategy_Null () = default;
 
   //@{

@@ -6,7 +6,6 @@
 #include "orbsvcs/Event/EC_Null_Scheduling.inl"
 #endif /* __ACE_INLINE__ */
 
-
 void
 TAO_EC_Null_Scheduling::add_proxy_supplier_dependencies (
       TAO_EC_ProxyPushSupplier *,
@@ -19,7 +18,7 @@ TAO_EC_Null_Scheduling::schedule_event (const RtecEventComm::EventSet &event,
                                         TAO_EC_ProxyPushConsumer *,
                                         TAO_EC_Supplier_Filter *filter)
 {
-  for (CORBA::ULong j = 0; j < event.length (); ++j)
+  for (CORBA::ULong j {}; j < event.length (); ++j)
     {
       const RtecEventComm::Event& e = event[j];
       RtecEventComm::Event* buffer =

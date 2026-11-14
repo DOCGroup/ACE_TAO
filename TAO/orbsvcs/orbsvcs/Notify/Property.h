@@ -21,16 +21,14 @@
 #include "tao/orbconf.h"
 #include "tao/TimeBaseC.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-template <class LOCK, class TYPE> class ACE_Atomic_Op;
-ACE_END_VERSIONED_NAMESPACE_DECL
+#include <atomic>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class TYPE> class TAO_Notify_Property_T;
 template <class TYPE> class TAO_Notify_StructProperty_T;
 
-using TAO_Notify_Atomic_Property_Long = ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Long>;
+using TAO_Notify_Atomic_Property_Long = std::atomic<CORBA::Long>;
 using TAO_Notify_Property_Long = TAO_Notify_Property_T<CORBA::Long>;
 using TAO_Notify_Property_ULong = TAO_Notify_Property_T<CORBA::ULong>;
 using TAO_Notify_Property_Short = TAO_Notify_Property_T<CORBA::Short>;

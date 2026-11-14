@@ -2,7 +2,6 @@
 #define TEST_H
 #include /**/ "ace/pre.h"
 
-
 #include "FP_Scheduler.h"
 #include "ace/Sched_Params.h"
 #include "tao/ORB_Core.h"
@@ -19,7 +18,7 @@ class DT_Test :public ACE_Task <ACE_SYNCH>
 
   void check_supported_priorities ();
 
-  int init (int argc, ACE_TCHAR *argv []);
+  int init (int argc, ACE_TCHAR *argv []) override;
 
   void run (int argc, ACE_TCHAR *argv []);
 
@@ -36,8 +35,7 @@ class DT_Test :public ACE_Task <ACE_SYNCH>
 
   protected:
   /// task svc
-  virtual int svc ();
-
+  int svc () override;
 
  private:
   /// = Policies
@@ -55,7 +53,7 @@ class DT_Test :public ACE_Task <ACE_SYNCH>
   PortableServer::POA_var root_poa_;
 };
 
-typedef ACE_Singleton <DT_Test, TAO_SYNCH_MUTEX> DT_TEST;
+using DT_TEST = ACE_Singleton <DT_Test, TAO_SYNCH_MUTEX>;
 
 #include /**/ "ace/post.h"
 #endif /*TEST_H*/

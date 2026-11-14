@@ -5,35 +5,38 @@
 #include "Server_Request_Interceptor.h"
 #include "tao/ORBInitializer_Registry.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/SString.h"
 #include "CrashPoint.h"
+#include <memory>
 
-const ACE_TCHAR *ior_file = 0;
-int number = 0;
+struct Options
+{
+  ACE_TString ior_file { ACE_TEXT ("test.ior") };
+  short crash_point {};
+  int number {};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:c:n:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:c:n:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'o':
-        ior_file = get_opts.opt_arg ();
+        options.ior_file = get_opts.opt_arg ();
         break;
       case 'c':
-        crash_point = ACE_OS::atoi (get_opts.opt_arg ());
+        options.crash_point = static_cast<short> (ACE_OS::atoi (get_opts.opt_arg ()));
         break;
       case 'n':
-        number = ACE_OS::atoi (get_opts.opt_arg ());
+        options.number = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Usage:  %s "
-                           "-o <IOR> "
-                           "-c <CrashPoint> "
-                           "-n <server number>\n",
+                           ACE_TEXT ("Usage: %s -o <IOR> -c <CrashPoint> -n <server number>\n"),
                            argv[0]),
                           -1);
       }
@@ -42,12 +45,13 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  Options options;
   try
     {
 #if TAO_HAS_INTERCEPTORS == 1
-      Server_ORBInitializer *temp_initializer = 0;
+      Server_ORBInitializer *temp_initializer {};
       ACE_NEW_RETURN (temp_initializer,
                       Server_ORBInitializer,
                       -1);  // No exceptions yet!
@@ -65,7 +69,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
+                           ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
                           1);
 
       PortableServer::POA_var root_poa =
@@ -74,11 +78,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
 
-      if (::parse_args (argc, argv) != 0)
+      if (::parse_args (argc, argv, options) != 0)
         return -1;
 
-      test_i *test_impl;
-      ACE_NEW_RETURN (test_impl, test_i (number, orb.in ()), 1);
+      crash_point = options.crash_point;
+
+      test_i *test_impl {};
+      ACE_NEW_RETURN (test_impl, test_i (options.number, orb.in ()), 1);
+      // The servant var assumes ownership of the ACE_NEW allocation.
       PortableServer::ServantBase_var owner_transfer (test_impl);
 
       PortableServer::ObjectId_var id =
@@ -92,15 +99,17 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::String_var ior =
         orb->object_to_string (test.in ());
 
-      FILE *output_file= ACE_OS::fopen (ior_file, "w");
-      if (output_file == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file <%s> for writing "
-                           "IOR: %s",
-                           ior.in ()),
-                          1);
-      ACE_OS::fprintf (output_file, "%s", ior.in ());
-      ACE_OS::fclose (output_file);
+      {
+        std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+          ACE_OS::fopen (options.ior_file.c_str (), ACE_TEXT ("w")), ACE_OS::fclose);
+        if (!output_file)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Cannot open output file <%s> for writing IOR: %C"),
+                             options.ior_file.c_str (),
+                             ior.in ()),
+                            1);
+        ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
+      }
 
       poa_manager->activate ();
 
@@ -111,9 +120,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
 
-      ACE_DEBUG ((LM_DEBUG, "Event loop finished.\n"));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Event loop finished.\n")));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return -1;

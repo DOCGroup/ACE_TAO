@@ -7,7 +7,9 @@
 #include "tao/Compression/Compression.h"
 #include "tao/Compression/rle/RLECompressor_Factory.h"
 
-#include <memory>
+#include <array>
+#include <cstddef>
+#include <cstring>
 
 /* This test produces the following output (RLECompressor)
 
@@ -138,7 +140,7 @@ TAO::RLECompression Ratio = 0.352185 : 1
 */
 
 // constants for Test256
-const ACE_Byte test256_array[] = {
+constexpr ACE_Byte test256_array[] = {
     '0',0,0,0,0,0,0,0,0,0,0,0,0,0,0,'0',
     0,'1',0,0,0,0,0,0,0,0,0,0,0,0,'1',0,
     0,0,'2',0,0,0,0,0,0,0,0,0,0,'2',0,0,
@@ -156,26 +158,39 @@ const ACE_Byte test256_array[] = {
     0,'E',0,0,0,0,0,0,0,0,0,0,0,0,'E',0,
     'F',0,0,0,0,0,0,0,0,0,0,0,0,0,0,'F'
 };
-const size_t BUFF_256_SIZE      = sizeof(test256_array);
+constexpr size_t BUFF_256_SIZE = sizeof(test256_array);
 
 // constants for Test128
-const size_t BUFF_128_SIZE      = 128U;
-const ACE_Byte comp_128_out[]   = {0xFF, 0x00};
+constexpr size_t BUFF_128_SIZE = 128U;
+constexpr ACE_Byte comp_128_out[] = {0xFF, 0x00};
 // constants for Test129
-const size_t BUFF_129_SIZE      = 129U;
-const ACE_Byte comp_129B_char   = 'x';
-const ACE_Byte comp_129A_out[]  = {0xFF, 0x00, 0x00, 0x00};
-const ACE_Byte comp_129B_out[]  = {0xFF, 0x00, 0x00, comp_129B_char};
+constexpr size_t BUFF_129_SIZE = 129U;
+constexpr ACE_Byte comp_129B_char = 'x';
+constexpr ACE_Byte comp_129A_out[] = {0xFF, 0x00, 0x00, 0x00};
+constexpr ACE_Byte comp_129B_out[] = {0xFF, 0x00, 0x00, comp_129B_char};
 
 struct HRTimer : ACE_High_Res_Timer
 {
-    const ACE_TCHAR* msg_;
-    HRTimer(const ACE_TCHAR* msg) : msg_(msg) {
-        this->reset(); this->start();
+    explicit HRTimer (ACE_TCHAR const *msg) : msg_ (msg)
+    {
+      this->reset ();
+      this->start ();
     }
-    ~HRTimer() {
-        this->stop(); this->print_ave(this->msg_, 1);
+
+    HRTimer (HRTimer const &) = delete;
+    HRTimer (HRTimer &&) = delete;
+    HRTimer &operator= (HRTimer const &) = delete;
+    HRTimer &operator= (HRTimer &&) = delete;
+
+    ~HRTimer ()
+    {
+      this->stop ();
+      this->print_ave (this->msg_, 1);
     }
+
+  private:
+    // The caller passes static ACE_TEXT messages; this pointer is non-owning.
+    ACE_TCHAR const *msg_;
 };
 
 static int init_compressor(::CORBA::ORB_ptr orb)
@@ -204,7 +219,8 @@ static int init_compressor(::CORBA::ORB_ptr orb)
     return 0;
 }
 
-static int  test256_compressor(const ::Compression::Compressor_var &compressor)
+static int
+test256_compressor (::Compression::Compressor_var const& compressor)
 {
     ACE_DEBUG((LM_INFO, ACE_TEXT("\n****---> TEST256 (Compress/Expand Data)\n")));
 
@@ -220,7 +236,7 @@ static int  test256_compressor(const ::Compression::Compressor_var &compressor)
                     ));
 
     ::CORBA::ULong  in_len = static_cast< CORBA::ULong>(sizeof(test256_array));
-    const ::CORBA::Octet* in_buf = reinterpret_cast<const CORBA::Octet*>(test256_array);
+    ::CORBA::Octet const* in_buf = reinterpret_cast<::CORBA::Octet const*> (test256_array);
 
     ::Compression::Buffer in_data(in_len, in_len, const_cast<CORBA::Octet*>(in_buf), false);
 
@@ -247,7 +263,7 @@ static int  test256_compressor(const ::Compression::Compressor_var &compressor)
     }
 
     // Make sure we got back the original OK.
-    if (ACE_OS::memcmp( in_data.get_buffer(), decomp_out.get_buffer(), in_data.length()))
+    if (std::memcmp (in_data.get_buffer (), decomp_out.get_buffer (), in_data.length ()))
     {
         ACE_ERROR_RETURN((LM_ERROR,
             ACE_TEXT("ERROR: Did not Compress/Decompress (test256) correctly.\n")),-1);
@@ -256,7 +272,8 @@ static int  test256_compressor(const ::Compression::Compressor_var &compressor)
     ACE_ERROR_RETURN((LM_INFO, ACE_TEXT("****---> END TEST256 - OK!\n")), 0);
 }
 
-static int  testArray_compressor(const ::Compression::Compressor_var &compressor)
+static int
+testArray_compressor (::Compression::Compressor_var const& compressor)
 {
     ACE_DEBUG((LM_INFO, ACE_TEXT("\n****---> TESTArray (Compress/Expand on Progressive Boundaries)\n")));
 
@@ -265,59 +282,63 @@ static int  testArray_compressor(const ::Compression::Compressor_var &compressor
             ACE_TEXT("ERROR: nil Compressor.\n")),-1);
     }
 
-    struct COMP_RESULT {
-        Compression::Buffer out; // We compress to this buffer
+    struct COMP_RESULT
+    {
+        int out_max;             // Maximum compressed buffer length
         int len;                 // We expect this compressed Length
-        ACE_Byte hex[16];        // We expect this compressed Data
-    } comp_result[] = {
-        /*00*/ { Compression::Buffer (0), 0,
-                 {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00}},
-        /*01*/ { Compression::Buffer (2), 2,
-                 {0x00,0x41,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00}}, //".A"
-        /*02*/ { Compression::Buffer (3), 3,
-                 {0x01,0x41,0x42,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00}}, //".AB"
-        /*03*/ { Compression::Buffer (4), 4,
-                 {0x00,0x41,0x81,0x42,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00}}, //".A.B"
-        /*04*/ { Compression::Buffer (6), 6,
-                 {0x00,0x41,0x81,0x42,0x00,0x43,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00}}, //".A.B.C"
-        /*05*/ { Compression::Buffer (6), 6,
-                 {0x00,0x41,0x81,0x42,0x81,0x43,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00}}, //".A.B.C"
-        /*06*/ { Compression::Buffer (6), 6,
-                 {0x00,0x41,0x81,0x42,0x82,0x43,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00}}, //".A.B.C"
-        /*07*/ { Compression::Buffer (8), 8,
-                 {0x00,0x41,0x81,0x42,0x82,0x43,0x00,0x44,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00}}, //".A.B.C.D"
-        /*08*/ { Compression::Buffer (8), 8,
-                 {0x00,0x41,0x81,0x42,0x82,0x43,0x81,0x44,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00}}, //".A.B.C.D"
-        /*09*/ { Compression::Buffer (10), 10,
-                 {0x00,0x41,0x81,0x42,0x82,0x43,0x81,0x44,0x00,0x45,0x00,0x00,0x00,0x00,0x00,0x00}}, //".A.B.C.D.E"
-        /*10*/ { Compression::Buffer (11), 11,
-                 {0x00,0x41,0x81,0x42,0x82,0x43,0x81,0x44,0x01,0x45,0x46,0x00,0x00,0x00,0x00,0x00}}, //".A.B.C.D.EF"
-        /*11*/ { Compression::Buffer (12), 12,
-                 {0x00,0x41,0x81,0x42,0x82,0x43,0x81,0x44,0x02,0x45,0x46,0x47,0x00,0x00,0x00,0x00}}, //".A.B.C.D.EFG"
-        /*12*/ { Compression::Buffer (13), 13,
-                 {0x00,0x41,0x81,0x42,0x82,0x43,0x81,0x44,0x03,0x45,0x46,0x47,0x48,0x00,0x00,0x00}}, //".A.B.C.D.EFGH"
-        /*13*/ { Compression::Buffer (14), 14,
-                 {0x00,0x41,0x81,0x42,0x82,0x43,0x81,0x44,0x04,0x45,0x46,0x47,0x48,0x49,0x00,0x00}}, //".A.B.C.D.EFGHI"
-        /*14*/ { Compression::Buffer (15), 15,
-                 {0x00,0x41,0x81,0x42,0x82,0x43,0x81,0x44,0x05,0x45,0x46,0x47,0x48,0x49,0x4A,0x00}}, //".A.B.C.D.EFGHIJ"
-        /*15*/ { Compression::Buffer (16), 16,
-               {0x00,0x41,0x81,0x42,0x82,0x43,0x81,0x44,0x04,0x45,0x46,0x47,0x48,0x49,0x81,0x4A}}, //".A.B.C.D.EFGHI.J"
-        /*16*/ { Compression::Buffer (16), 16,
-               {0x00,0x41,0x81,0x42,0x82,0x43,0x81,0x44,0x04,0x45,0x46,0x47,0x48,0x49,0x82,0x4A}}, //".A.B.C.D.EFGHI.J"
+        std::array<ACE_Byte, 16> hex; // We expect this compressed Data
     };
+    std::array<COMP_RESULT, 17> const comp_result {{
+        /*00*/ { 0, 0,
+                 {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00}},
+        /*01*/ { 2, 2,
+                 {0x00,0x41,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00}}, //".A"
+        /*02*/ { 3, 3,
+                 {0x01,0x41,0x42,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00}}, //".AB"
+        /*03*/ { 4, 4,
+                 {0x00,0x41,0x81,0x42,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00}}, //".A.B"
+        /*04*/ { 6, 6,
+                 {0x00,0x41,0x81,0x42,0x00,0x43,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00}}, //".A.B.C"
+        /*05*/ { 6, 6,
+                 {0x00,0x41,0x81,0x42,0x81,0x43,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00}}, //".A.B.C"
+        /*06*/ { 6, 6,
+                 {0x00,0x41,0x81,0x42,0x82,0x43,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00}}, //".A.B.C"
+        /*07*/ { 8, 8,
+                 {0x00,0x41,0x81,0x42,0x82,0x43,0x00,0x44,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00}}, //".A.B.C.D"
+        /*08*/ { 8, 8,
+                 {0x00,0x41,0x81,0x42,0x82,0x43,0x81,0x44,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00}}, //".A.B.C.D"
+        /*09*/ { 10, 10,
+                 {0x00,0x41,0x81,0x42,0x82,0x43,0x81,0x44,0x00,0x45,0x00,0x00,0x00,0x00,0x00,0x00}}, //".A.B.C.D.E"
+        /*10*/ { 11, 11,
+                 {0x00,0x41,0x81,0x42,0x82,0x43,0x81,0x44,0x01,0x45,0x46,0x00,0x00,0x00,0x00,0x00}}, //".A.B.C.D.EF"
+        /*11*/ { 12, 12,
+                 {0x00,0x41,0x81,0x42,0x82,0x43,0x81,0x44,0x02,0x45,0x46,0x47,0x00,0x00,0x00,0x00}}, //".A.B.C.D.EFG"
+        /*12*/ { 13, 13,
+                 {0x00,0x41,0x81,0x42,0x82,0x43,0x81,0x44,0x03,0x45,0x46,0x47,0x48,0x00,0x00,0x00}}, //".A.B.C.D.EFGH"
+        /*13*/ { 14, 14,
+                 {0x00,0x41,0x81,0x42,0x82,0x43,0x81,0x44,0x04,0x45,0x46,0x47,0x48,0x49,0x00,0x00}}, //".A.B.C.D.EFGHI"
+        /*14*/ { 15, 15,
+                 {0x00,0x41,0x81,0x42,0x82,0x43,0x81,0x44,0x05,0x45,0x46,0x47,0x48,0x49,0x4A,0x00}}, //".A.B.C.D.EFGHIJ"
+        /*15*/ { 16, 16,
+               {0x00,0x41,0x81,0x42,0x82,0x43,0x81,0x44,0x04,0x45,0x46,0x47,0x48,0x49,0x81,0x4A}}, //".A.B.C.D.EFGHI.J"
+        /*16*/ { 16, 16,
+               {0x00,0x41,0x81,0x42,0x82,0x43,0x81,0x44,0x04,0x45,0x46,0x47,0x48,0x49,0x82,0x4A}}, //".A.B.C.D.EFGHI.J"
+    }};
 
-    char comp_data[] = "ABBCCCDDEFGHIJJJ";  // Test String with compressor run switching
+    char const comp_data[] = "ABBCCCDDEFGHIJJJ";  // Test String with compressor run switching
 
     ACE_HEX_DUMP((LM_INFO, comp_data, (sizeof(comp_data) - 1), ACE_TEXT("Compression Data")));
 
-    for (unsigned i = 0; i < sizeof(comp_data); i++) {
-        COMP_RESULT &result = comp_result[i]; // Get A reference to our result for testing output
+    for (size_t i = 0; i < comp_result.size (); i++) {
+        COMP_RESULT const &result = comp_result[i]; // Get a reference to our result for testing output
 
-        Compression::Buffer in_data(i, i, reinterpret_cast<CORBA::Octet*>(comp_data), false), &out_data = result.out;
+        Compression::Buffer in_data (
+          i, i, const_cast<CORBA::Octet *> (reinterpret_cast<CORBA::Octet const *> (comp_data)), false);
+        Compression::Buffer out_data (result.out_max);
 
         compressor->compress(in_data, out_data);
 
-        const char *out_ptr = reinterpret_cast<const char*>(out_data.get_buffer());
+        char const *out_ptr = reinterpret_cast<char const *>(out_data.get_buffer());
         int out_len         = int(out_data.length());
 
         if (out_len > 0) { // We expect out_len == 0 when i == 0.
@@ -328,11 +349,11 @@ static int  testArray_compressor(const ::Compression::Compressor_var &compressor
 
         // Now Make sure all is good and we can also expand back to what we had
         if (out_len == result.len) {    // Expected result length?
-            if (ACE_OS::memcmp(out_ptr, result.hex, out_len) == 0) { // Make sure its what we expected
+            if (std::memcmp (out_ptr, result.hex.data (), out_len) == 0) { // Make sure its what we expected
                 Compression::Buffer out_buf(i);     // Set maximum out space (exactly -> Ignored by TAO)
                 compressor->decompress(out_data, out_buf);
                 if (out_buf.length() == i) {        // Make sure we got our length back
-                    if (ACE_OS::memcmp(comp_data, out_buf.get_buffer(), i) == 0) {
+                    if (std::memcmp (comp_data, out_buf.get_buffer (), i) == 0) {
                         continue; // It is what we expected.
                     }
                 }
@@ -345,7 +366,8 @@ static int  testArray_compressor(const ::Compression::Compressor_var &compressor
     ACE_ERROR_RETURN((LM_INFO, ACE_TEXT("****---> END TESTArray - OK!\n")), 0);
 }
 
-static int  test128_compressor(const ::Compression::Compressor_var &compressor)
+static int
+test128_compressor (::Compression::Compressor_var const& compressor)
 {
     ACE_DEBUG((LM_INFO, ACE_TEXT("\n****---> TEST128 (Compress Boundary)\n")));
 
@@ -354,18 +376,16 @@ static int  test128_compressor(const ::Compression::Compressor_var &compressor)
             ACE_TEXT("ERROR: nil Compressor.\n")),-1);
     }
 
-    std::unique_ptr<ACE_Byte[]> buff_128(new ACE_Byte[BUFF_128_SIZE]);
-
-    ACE_OS::memset(buff_128.get(), 0, BUFF_128_SIZE);  // Set Buffer to zero.
+    std::array<ACE_Byte, BUFF_128_SIZE> buff_128 {};
 
     ACE_HEX_DUMP((  LM_INFO,
-                    reinterpret_cast<const char*>(buff_128.get()),
+                    reinterpret_cast<char const *> (buff_128.data ()),
                     BUFF_128_SIZE,
                     ACE_TEXT("Original (test128) Buffer")
                     ));
 
-    ::CORBA::ULong  in_len = static_cast< CORBA::ULong>(BUFF_128_SIZE);
-    ::CORBA::Octet* in_buf = reinterpret_cast<CORBA::Octet*>(buff_128.get());
+    ::CORBA::ULong const in_len = static_cast<::CORBA::ULong> (BUFF_128_SIZE);
+    ::CORBA::Octet * const in_buf = buff_128.data ();
 
     ::Compression::Buffer in_data(in_len, in_len, in_buf, false);
 
@@ -385,7 +405,7 @@ static int  test128_compressor(const ::Compression::Compressor_var &compressor)
                     ));
 
     if (comp_out.length() != sizeof(comp_128_out)  // Size must equal
-        || ACE_OS::memcmp(comp_out.get_buffer(), comp_128_out, comp_out.length()))
+        || std::memcmp (comp_out.get_buffer (), comp_128_out, comp_out.length ()))
     {
         ACE_ERROR_RETURN((LM_ERROR,
             ACE_TEXT("ERROR: Did not Compress/Decompress (test128) correctly.\n")),-1);
@@ -399,7 +419,7 @@ static int  test128_compressor(const ::Compression::Compressor_var &compressor)
     }
 
     // Make sure we got back the original OK.
-    if (ACE_OS::memcmp( in_data.get_buffer(), decomp_out.get_buffer(), in_data.length()))
+    if (std::memcmp (in_data.get_buffer (), decomp_out.get_buffer (), in_data.length ()))
     {
         ACE_ERROR_RETURN((LM_ERROR,
             ACE_TEXT("ERROR: Did not Compress/Decompress (test128) correctly.\n")),-1);
@@ -408,7 +428,8 @@ static int  test128_compressor(const ::Compression::Compressor_var &compressor)
     ACE_ERROR_RETURN((LM_INFO, ACE_TEXT("****---> END TEST128 - OK!\n")), 0);
 }
 
-static int  test129A_compressor(const ::Compression::Compressor_var &compressor)
+static int
+test129A_compressor (::Compression::Compressor_var const& compressor)
 {
     ACE_DEBUG((LM_INFO, ACE_TEXT("\n****---> TEST129A (Compress Boundary Extended)\n")));
 
@@ -417,18 +438,16 @@ static int  test129A_compressor(const ::Compression::Compressor_var &compressor)
             ACE_TEXT("ERROR: nil Compressor.\n")),-1);
     }
 
-    const std::unique_ptr<ACE_Byte[]> buff_129(new ACE_Byte[BUFF_129_SIZE]);
-
-    ACE_OS::memset(buff_129.get(), 0, BUFF_129_SIZE);  // Set Buffer to zero.
+    std::array<ACE_Byte, BUFF_129_SIZE> buff_129 {};
 
     ACE_HEX_DUMP((  LM_INFO,
-                    reinterpret_cast<const char*>(buff_129.get()),
+                    reinterpret_cast<char const *> (buff_129.data ()),
                     BUFF_129_SIZE,
                     ACE_TEXT("Original (test129A) Buffer")
                     ));
 
-    ::CORBA::ULong  in_len = static_cast< CORBA::ULong>(BUFF_129_SIZE);
-    ::CORBA::Octet* in_buf = reinterpret_cast< CORBA::Octet*>(buff_129.get());
+    ::CORBA::ULong const in_len = static_cast<::CORBA::ULong> (BUFF_129_SIZE);
+    ::CORBA::Octet * const in_buf = buff_129.data ();
 
     ::Compression::Buffer in_data(in_len, in_len, in_buf, false);
 
@@ -448,7 +467,7 @@ static int  test129A_compressor(const ::Compression::Compressor_var &compressor)
                 ));
 
     if (comp_out.length() != sizeof(comp_129A_out)  // Size must equal
-        || ACE_OS::memcmp(comp_out.get_buffer(), comp_129A_out, comp_out.length()))
+        || std::memcmp (comp_out.get_buffer (), comp_129A_out, comp_out.length ()))
     {
         ACE_ERROR_RETURN((LM_ERROR,
             ACE_TEXT("ERROR: Did not Compress/Decompress (test129A) correctly.\n")),-1);
@@ -462,7 +481,7 @@ static int  test129A_compressor(const ::Compression::Compressor_var &compressor)
     }
 
     // Make sure we got back the original OK.
-    if (ACE_OS::memcmp( in_data.get_buffer(), decomp_out.get_buffer(), in_data.length()))
+    if (std::memcmp (in_data.get_buffer (), decomp_out.get_buffer (), in_data.length ()))
     {
         ACE_ERROR_RETURN((LM_ERROR,
             ACE_TEXT("ERROR: Did not Compress/Decompress (test129A) correctly.\n")),-1);
@@ -471,7 +490,8 @@ static int  test129A_compressor(const ::Compression::Compressor_var &compressor)
     ACE_ERROR_RETURN((LM_INFO, ACE_TEXT("****---> END TEST129A - OK!\n")), 0);
 }
 
-static int  test129B_compressor(const ::Compression::Compressor_var &compressor)
+static int
+test129B_compressor (::Compression::Compressor_var const& compressor)
 {
     ACE_DEBUG((LM_INFO, ACE_TEXT("\n****---> TEST129B (Compress Boundary NonExtend)\n")));
 
@@ -480,20 +500,18 @@ static int  test129B_compressor(const ::Compression::Compressor_var &compressor)
             ACE_TEXT("ERROR: nil Compressor.\n")),-1);
     }
 
-    const std::unique_ptr<ACE_Byte[]> buff_129(new ACE_Byte[BUFF_129_SIZE]);
+    std::array<ACE_Byte, BUFF_129_SIZE> buff_129 {};
 
-    ACE_OS::memset(buff_129.get(), 0, BUFF_129_SIZE);  // Set Buffer to zero.
-
-    buff_129.get()[128] = comp_129B_char; // Add a non Repeat Character
+    buff_129[128] = comp_129B_char; // Add a non Repeat Character
 
     ACE_HEX_DUMP((  LM_INFO,
-                    reinterpret_cast<const char*>(buff_129.get()),
+                    reinterpret_cast<char const *> (buff_129.data ()),
                     BUFF_129_SIZE,
                     ACE_TEXT("Original (test129B) Buffer")
                     ));
 
-    ::CORBA::ULong  in_len = static_cast< CORBA::ULong>(BUFF_129_SIZE);
-    ::CORBA::Octet* in_buf = reinterpret_cast< CORBA::Octet*>(buff_129.get());
+    ::CORBA::ULong const in_len = static_cast<::CORBA::ULong> (BUFF_129_SIZE);
+    ::CORBA::Octet * const in_buf = buff_129.data ();
 
     ::Compression::Buffer in_data(in_len, in_len, in_buf, false);
 
@@ -513,7 +531,7 @@ static int  test129B_compressor(const ::Compression::Compressor_var &compressor)
                 ));
 
     if (comp_out.length() != sizeof(comp_129B_out)  // Size must equal
-        || ACE_OS::memcmp(comp_out.get_buffer(), comp_129B_out, comp_out.length()))
+        || std::memcmp (comp_out.get_buffer (), comp_129B_out, comp_out.length ()))
     {
         ACE_ERROR_RETURN((LM_ERROR,
             ACE_TEXT("ERROR: Did not Compress/Decompress (test129B) correctly.\n")),-1);
@@ -527,7 +545,7 @@ static int  test129B_compressor(const ::Compression::Compressor_var &compressor)
     }
 
     // Make sure we got back the original OK.
-    if (ACE_OS::memcmp( in_data.get_buffer(), decomp_out.get_buffer(), in_data.length()))
+    if (std::memcmp (in_data.get_buffer (), decomp_out.get_buffer (), in_data.length ()))
     {
         ACE_ERROR_RETURN((LM_ERROR,
             ACE_TEXT("ERROR: Did not Compress/Decompress (test129B) correctly.\n")),-1);
@@ -564,16 +582,26 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
         if (::CORBA::is_nil(rleCompressor.in())) {
             ACE_ERROR_RETURN((LM_ERROR, ACE_TEXT("ERROR: Unable to locate TAO::RLECompressor - exiting.\n")),-1);
-        } else if (test256_compressor(rleCompressor) == -1) {
-            ACE_ERROR_RETURN((LM_ERROR, ACE_TEXT("ERROR: TAO::RLECompressor reported an error (test256) - exiting.\n")),-1);
-        } else if (testArray_compressor(rleCompressor) == -1) {
-            ACE_ERROR_RETURN((LM_ERROR, ACE_TEXT("ERROR: TAO::RLECompressor reported an error (testArray) - exiting.\n")),-1);
-        } else if (test128_compressor(rleCompressor) == -1) {
-            ACE_ERROR_RETURN((LM_ERROR, ACE_TEXT("ERROR: TAO::RLECompressor reported an error (test128) - exiting.\n")),-1);
-        } else if (test129A_compressor(rleCompressor) == -1) {
-            ACE_ERROR_RETURN((LM_ERROR, ACE_TEXT("ERROR: TAO::RLECompressor reported an error (test129A) - exiting.\n")),-1);
-        } else if (test129B_compressor(rleCompressor) == -1) {
-            ACE_ERROR_RETURN((LM_ERROR, ACE_TEXT("ERROR: TAO::RLECompressor reported an error (test129B) - exiting.\n")),-1);
+        } else if (test256_compressor (rleCompressor) == -1) {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("ERROR: TAO::RLECompressor reported an error (test256) - exiting.\n")),
+                              -1);
+        } else if (testArray_compressor (rleCompressor) == -1) {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("ERROR: TAO::RLECompressor reported an error (testArray) - exiting.\n")),
+                              -1);
+        } else if (test128_compressor (rleCompressor) == -1) {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("ERROR: TAO::RLECompressor reported an error (test128) - exiting.\n")),
+                              -1);
+        } else if (test129A_compressor (rleCompressor) == -1) {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("ERROR: TAO::RLECompressor reported an error (test129A) - exiting.\n")),
+                              -1);
+        } else if (test129B_compressor (rleCompressor) == -1) {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("ERROR: TAO::RLECompressor reported an error (test129B) - exiting.\n")),
+                              -1);
         }
 
         ACE_DEBUG((LM_INFO, ACE_TEXT("\n********* END TEST RLE ************\n")));
@@ -584,7 +612,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         ACE_DEBUG((LM_INFO, ACE_TEXT("TAO::RLECompression Ratio = %f : 1\n"), tao_ratio));
 
         orb->shutdown ();
-    } catch (const CORBA::Exception& ex) {
+    } catch (CORBA::Exception const& ex) {
         ex._tao_print_exception ("RLECompressorTest: UNEXPECTED exception - ");
         return -1;
     }

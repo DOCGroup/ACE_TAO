@@ -43,7 +43,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_DUMP_H
 #define ACE_DUMP_H
 #include /**/ "ace/pre.h"
@@ -68,7 +67,6 @@ public:
   friend class ACE_ODB;
   friend class ACE_Dumpable_Ptr;
 
-  /// Constructor.
   ACE_Dumpable (const void *);
 
   /// This pure virtual method must be filled in by a subclass.
@@ -135,7 +133,7 @@ private:
   struct Tuple
   {
     /// Pointer to the object that is registered.
-    const void *this_;
+    const void *this_ {};
 
     /// Smart pointer to the ACE_Dumpable object associated with this_.
     /// This uses an ACE_Dumpable_Ptr, instead of a bare pointer, to
@@ -145,9 +143,7 @@ private:
     /// subobject corresponding to the base class is destroyed (hence
     /// on destruction of the subobject its handle won't exist anymore
     /// and we'll have to check for that).
-    const ACE_Dumpable_Ptr dumper_;
-
-    Tuple () : this_ (0), dumper_(0) {}
+    const ACE_Dumpable_Ptr dumper_ {};
   };
 
   /// Singleton instance of this class.
@@ -158,7 +154,7 @@ private:
   Tuple object_table_[ACE_ODB::MAX_TABLE_SIZE];
 
   /// Current size of <object_table_>.
-  int current_size_;
+  int current_size_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

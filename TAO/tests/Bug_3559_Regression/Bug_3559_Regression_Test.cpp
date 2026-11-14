@@ -3,65 +3,61 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/ACE.h"
+#include <memory>
+#include <string>
 #include <vector>
 
-ACE_TCHAR const *log_file_;
-
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&log_file)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("l:"));
+  int option {};
 
-  int c {};
-
-  while ((c = get_opts ()) != -1)
+  while ((option = get_opts ()) != -1)
     {
-      switch (c)
+      switch (option)
       {
         case 'l':
-          log_file_ = get_opts.opt_arg ();
-          return 0;
+          log_file = get_opts.opt_arg ();
+          break;
+        default:
+          return 1;
       }
     }
-  return 1;
+  return log_file == nullptr ? 1 : 0;
 }
 
-
 int
-check_logging ()
+check_logging (ACE_TCHAR const *log_file)
 {
-  ACE_TCHAR buf[1024];
-  FILE *fp = ACE_OS::fopen (log_file_,
-                            ACE_TEXT ("r"));
+  ACE_TCHAR buf[1024] {};
+  std::unique_ptr<FILE, int (*) (FILE *)> file (ACE_OS::fopen (log_file, ACE_TEXT ("r")), ACE_OS::fclose);
 
-  if (fp == nullptr)
+  if (!file)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("error opening log file %s\n"),
-                  log_file_));
+                  log_file));
       return 1;
     }
 
-
-  while (ACE_OS::fgets (buf, sizeof (buf), fp) != nullptr)
+  while (ACE_OS::fgets (buf, sizeof (buf), file.get ()) != nullptr)
     {
       ///When verbose is on, a line contains a timestamp and a @ character
       if (ACE_OS::strchr (buf, ACE_TEXT('@')) != nullptr)
         {
           ACE_DEBUG ((LM_DEBUG,
                      ACE_TEXT ("Test OK, a timestamp was found\n")));
-          (void) ACE_OS::fclose (fp);
           return 0;
         }
     }
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("Test failed, no timestamp found in log\n")));
-  (void) ACE_OS::fclose (fp);
   return 1;
 }
 
 int
-check_flags (u_long flags, int verbose)
+check_flags (u_long const flags, int const verbose)
 {
   int result {};
   switch (verbose)
@@ -102,11 +98,10 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int result {};
-  int const extra_argc = 25;
-
+  ACE_TCHAR const *log_file {};
   try
     {
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, log_file) != 0)
       {
         ACE_ERROR ((LM_ERROR,
                    ACE_TEXT ("Usage:\n\n")
@@ -115,78 +110,71 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         return 1;
       }
 
-      for (int verbose = 0; verbose < 3; verbose++)
+      for (int verbose {}; verbose < 3; ++verbose)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("Start ORB_init with ORBVerboseLogging=%d\n"),
                       verbose));
 
-          std::vector<ACE_TCHAR *> extra (extra_argc);
-          extra[0] = ACE::strnew (ACE_TEXT ("-ORBCDRTradeoff"));
-          extra[1] = ACE::strnew (ACE_TEXT ("2048"));
-          extra[2] = ACE::strnew (ACE_TEXT ("-ORBCollocation"));
-          extra[3] = ACE::strnew (ACE_TEXT ("per-orb"));
-          extra[4] = ACE::strnew (ACE_TEXT ("-ORBDebug"));
-          extra[5] = ACE::strnew (ACE_TEXT ("-ORBDebugLevel"));
-          extra[6] = ACE::strnew (ACE_TEXT ("10"));
-          extra[7] = ACE::strnew (ACE_TEXT ("-ORBDefaultInitRef"));
-          extra[8] = ACE::strnew (ACE_TEXT ("corbaloc::localhost:4177"));
-          extra[9] = ACE::strnew (ACE_TEXT ("-ORBDottedDecimalAddresses"));
-          extra[10] = ACE::strnew (ACE_TEXT ("1"));
-          extra[11] = ACE::strnew (ACE_TEXT ("-ORBId"));
-          extra[12] = ACE::strnew (ACE_TEXT ("Client"));
-          extra[13] = ACE::strnew (ACE_TEXT ("-ORBListenEndpoints"));
-          extra[14] = ACE::strnew (ACE_TEXT ("iiop://:4178"));
-          extra[15] = ACE::strnew (ACE_TEXT ("-ORBLogFile"));
-          ACE_NEW_RETURN (extra[16],
-                          ACE_TCHAR[ACE_OS::strlen(log_file_) + 1],
-                          -1);
-          ACE_OS::sprintf (extra[16], ACE_TEXT("%s"), log_file_);
-          extra[17] = ACE::strnew (ACE_TEXT ("-ORBNegotiateCodesets"));
-          extra[18] = ACE::strnew (ACE_TEXT ("0"));
-          extra[19] = ACE::strnew (ACE_TEXT ("-ORBNodelay"));
-          extra[20] = ACE::strnew (ACE_TEXT ("1"));
-          extra[21] = ACE::strnew (ACE_TEXT ("-ORBSvcConfDirective"));
-          extra[22] = ACE::strnew (ACE_TEXT ("\"static Client_Strategy_Factory '-ORBWaitStrategy mt_noupcall'\""));
-          extra[23] = ACE::strnew (ACE_TEXT ("-ORBVerboseLogging"));
-          ACE_NEW_RETURN (extra[24],
-                          ACE_TCHAR[2],
-                          -1);
-          ACE_OS::sprintf (extra[24], ACE_TEXT ("%d"), verbose);
+          std::vector<std::basic_string<ACE_TCHAR>> extra;
+          extra.emplace_back (ACE_TEXT ("-ORBCDRTradeoff"));
+          extra.emplace_back (ACE_TEXT ("2048"));
+          extra.emplace_back (ACE_TEXT ("-ORBCollocation"));
+          extra.emplace_back (ACE_TEXT ("per-orb"));
+          extra.emplace_back (ACE_TEXT ("-ORBDebug"));
+          extra.emplace_back (ACE_TEXT ("-ORBDebugLevel"));
+          extra.emplace_back (ACE_TEXT ("10"));
+          extra.emplace_back (ACE_TEXT ("-ORBDefaultInitRef"));
+          extra.emplace_back (ACE_TEXT ("corbaloc::localhost:4177"));
+          extra.emplace_back (ACE_TEXT ("-ORBDottedDecimalAddresses"));
+          extra.emplace_back (ACE_TEXT ("1"));
+          extra.emplace_back (ACE_TEXT ("-ORBId"));
+          extra.emplace_back (ACE_TEXT ("Client"));
+          extra.emplace_back (ACE_TEXT ("-ORBListenEndpoints"));
+          extra.emplace_back (ACE_TEXT ("iiop://:4178"));
+          extra.emplace_back (ACE_TEXT ("-ORBLogFile"));
+          extra.emplace_back (log_file);
+          extra.emplace_back (ACE_TEXT ("-ORBNegotiateCodesets"));
+          extra.emplace_back (ACE_TEXT ("0"));
+          extra.emplace_back (ACE_TEXT ("-ORBNodelay"));
+          extra.emplace_back (ACE_TEXT ("1"));
+          extra.emplace_back (ACE_TEXT ("-ORBSvcConfDirective"));
+          extra.emplace_back (ACE_TEXT ("\"static Client_Strategy_Factory '-ORBWaitStrategy mt_noupcall'\""));
+          extra.emplace_back (ACE_TEXT ("-ORBVerboseLogging"));
+          std::basic_string<ACE_TCHAR> const verbose_arg (
+            1, static_cast<ACE_TCHAR> ('0' + verbose));
+          extra.emplace_back (verbose_arg);
 
-          std::vector<ACE_TCHAR *> largv (argc + extra_argc);
-          for (int i = 0; i < argc; ++i)
-            largv[i] = argv[i];
+          std::vector<ACE_TCHAR *> largv;
+          largv.reserve (argc + extra.size ());
+          for (int index {}; index < argc; ++index)
+            largv.push_back (argv[index]);
 
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("server adding args: ")));
-          for (int i = 0; i < extra_argc; ++i)
+          for (std::basic_string<ACE_TCHAR> &arg : extra)
             {
-              ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%s "), extra[i]));
-              largv[argc+i] = extra[i];
+              ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%s "), arg.c_str ()));
+              largv.push_back (arg.data ());
             }
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
 
-          int orb_argc = argc + extra_argc;
+          int orb_argc = static_cast<int> (largv.size ());
+          std::string const orb_name = "VERBOSE_LOGGING_TEST_" + std::to_string (verbose);
 
-          ACE_TCHAR orb_name[25];
-          ACE_OS::sprintf (orb_name, ACE_TEXT ("VERBOSE_LOGGING_TEST_%d"), verbose);
+          {
+            CORBA::ORB_var const orb = CORBA::ORB_init (orb_argc, largv.data (), orb_name.c_str ());
 
-          CORBA::ORB_var orb = CORBA::ORB_init (orb_argc, largv.data (), orb_name);
+            u_long const log_flags = ACE_LOG_MSG->flags ();
 
-          u_long const log_flags = ACE_LOG_MSG->flags ();
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("log flags %d verbose: %d\n"),
+                        log_flags, verbose));
 
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("log flags %d verbose: %d\n"),
-                      log_flags, verbose));
+            result += check_flags (log_flags, verbose);
 
-          result += check_flags (log_flags, verbose);
-
-          orb->destroy ();
-          orb = CORBA::ORB::_nil ();
+            orb->destroy ();
+          }
           ACE_LOG_MSG->restart ();
-
-          for (int i = 0; i < extra_argc; ++i)
-            ACE::strdelete (extra[i]);
         }
     }
   catch (CORBA::Exception const &ex)
@@ -195,7 +183,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       return 1;
     }
 
-  result += check_logging ();
+  result += check_logging (log_file);
 
   if (result == 0)
     ACE_DEBUG ((LM_DEBUG,

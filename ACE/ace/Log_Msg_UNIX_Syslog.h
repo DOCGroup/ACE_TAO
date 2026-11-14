@@ -34,10 +34,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Log_Msg_UNIX_Syslog : public ACE_Log_Msg_Backend
 {
 public:
-  /// Constructor
   ACE_Log_Msg_UNIX_Syslog () = default;
 
-  /// Destructor
   ~ACE_Log_Msg_UNIX_Syslog () override;
 
   /// Open a new event log.

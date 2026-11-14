@@ -11,16 +11,14 @@ TAO_IORInterceptor_Adapter_Factory_Impl::~TAO_IORInterceptor_Adapter_Factory_Imp
 TAO_IORInterceptor_Adapter *
 TAO_IORInterceptor_Adapter_Factory_Impl::create ()
 {
-  TAO_IORInterceptor_Adapter_Impl *nia = nullptr;
+  // Ownership transfers to TAO_ORB_Core, which calls destroy_interceptors().
+  TAO_IORInterceptor_Adapter_Impl *nia {};
   ACE_NEW_THROW_EX (nia,
                     TAO_IORInterceptor_Adapter_Impl (),
                     CORBA::NO_MEMORY ());
 
   return nia;
 }
-
-
-// *********************************************************************
 
 // Initialization and registration of dynamic service object.
 

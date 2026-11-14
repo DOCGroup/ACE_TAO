@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef EC_MT_DISCONNECT_H
 #define EC_MT_DISCONNECT_H
 
@@ -24,9 +23,13 @@ public:
   /// Create the task...
   Task (RtecEventChannelAdmin::EventChannel_ptr ec,
         int use_callbacks);
+  Task (Task const &) = delete;
+  Task &operator= (Task const &) = delete;
+  Task (Task &&) = delete;
+  Task &operator= (Task &&) = delete;
 
   // = Check the ACE_Task_Base documentation.
-  int svc ();
+  int svc () override;
 
   /// Run a single iteration of the test
   void run_iteration ();

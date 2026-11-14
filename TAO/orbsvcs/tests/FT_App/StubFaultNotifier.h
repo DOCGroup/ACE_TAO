@@ -3,6 +3,7 @@
 #define STUBFAULTNOTIFIER_H_
 
 #include <ace/ACE.h>
+#include <vector>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -11,7 +12,6 @@
 
 #include <orbsvcs/FT_NotifierS.h>
 #include <orbsvcs/FT_FaultDetectorFactoryC.h>
-#include <ace/Vector_T.h>
 #include <ace/SString.h>
 
 //////////////////////
@@ -66,10 +66,9 @@ public:
   int idle(int &result);
 
   // override virtuals
-::PortableServer::POA_ptr _default_POA ();
+  ::PortableServer::POA_ptr _default_POA () override;
 
   PortableServer::ObjectId objectId()const;
-
 
   /**
    * Clean house for process shut down.
@@ -79,30 +78,29 @@ public:
   ////////////////////////////////
   // CORBA interface FaultNotifier
 
+  void push_structured_fault (
+    CosNotification::StructuredEvent const &event) override;
 
-  virtual void push_structured_fault (
-      const CosNotification::StructuredEvent & event);
+  void push_sequence_fault (
+    CosNotification::EventBatch const &events) override;
 
-  virtual void push_sequence_fault (
-    const CosNotification::EventBatch & events);
+  ::CosNotifyFilter::Filter_ptr create_subscription_filter (
+    char const *constraint_grammar) override;
 
-  virtual ::CosNotifyFilter::Filter_ptr create_subscription_filter (
-    const char * constraint_grammar);
-
-  virtual FT::FaultNotifier::ConsumerId connect_structured_fault_consumer (
+  FT::FaultNotifier::ConsumerId connect_structured_fault_consumer (
     CosNotifyComm::StructuredPushConsumer_ptr push_consumer,
-    CosNotifyFilter::Filter_ptr filter);
+    CosNotifyFilter::Filter_ptr filter) override;
 
-  virtual FT::FaultNotifier::ConsumerId connect_sequence_fault_consumer (
+  FT::FaultNotifier::ConsumerId connect_sequence_fault_consumer (
     CosNotifyComm::SequencePushConsumer_ptr push_consumer,
-    CosNotifyFilter::Filter_ptr filter);
+    CosNotifyFilter::Filter_ptr filter) override;
 
-  virtual void disconnect_consumer (
-    FT::FaultNotifier::ConsumerId connection);
+  void disconnect_consumer (
+    FT::FaultNotifier::ConsumerId connection) override;
 
   //////////////////////////////////////////
   // CORBA interface PullMonitorable methods
-  virtual CORBA::Boolean is_alive ();
+  CORBA::Boolean is_alive () override;
 
   /////////////////
   // Implementation
@@ -147,10 +145,9 @@ private:
   /**
    * A collection of files containing replica IORs
    */
-  ACE_Vector < const char * > iorReplicaFiles_;
+  std::vector<char const *> iorReplicaFiles_;
 
-
-  ACE_Vector < FT::PullMonitorable_var > replicas_;
+  std::vector<FT::PullMonitorable_var> replicas_;
   /**
    * A name to be used to register with the name service.
    */

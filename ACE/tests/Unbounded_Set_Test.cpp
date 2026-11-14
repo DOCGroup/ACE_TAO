@@ -32,7 +32,7 @@ size_t count_const_set (const ACE_Unbounded_Set<MyNode>& cubs)
 {
   size_t number_of_elements = 0;
   for (ACE_Unbounded_Set<MyNode>::const_iterator ci (cubs); !ci.done(); ci++)
-    number_of_elements++;
+    ++number_of_elements;
   return number_of_elements;
 }
 
@@ -164,7 +164,7 @@ run_main (int, ACE_TCHAR *[])
         if (n.k % 2 == 1)
           {
             r = ubs2.remove (n);
-            deleted++;
+            ++deleted;
           }
       }
     if (ubs2.size () + deleted != ubs.size())

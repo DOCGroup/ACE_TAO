@@ -17,12 +17,12 @@ static std::string ior = "StockDistributor.ior";
 static std::string distributor_name = "StockDistributor";
 
 // The default rate, which sends data out once per second.
-CORBA::Long rate = 1;
+static CORBA::Long rate = 1;
 
-u_int update_freq = 1;
+static u_int update_freq = 1;
 
 // A flag that indicates use of the Naming Service.
-bool use_naming = false;
+static bool use_naming = false;
 
 static int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -71,11 +71,11 @@ set_distributor_reference (CORBA::ORB_ptr orb,
   if (use_naming)
     {
       // Naming Service related operations
-      CORBA::Object_var naming_context_object =
-        orb->resolve_initial_references ("NameService");
+      CORBA::Object_var naming_context_object (
+        orb->resolve_initial_references ("NameService"));
 
-      CosNaming::NamingContext_var naming_context =
-        CosNaming::NamingContext::_narrow (naming_context_object.in ());
+      CosNaming::NamingContext_var naming_context (
+        CosNaming::NamingContext::_narrow (naming_context_object.in ()));
 
       // Initialize the Naming Sequence
       CosNaming::Name name (1);
@@ -89,9 +89,10 @@ set_distributor_reference (CORBA::ORB_ptr orb,
           // Register the servant with the Naming Service
           naming_context->bind (name, obj);
         }
-      catch (CosNaming::NamingContext::AlreadyBound &)
+      catch (CosNaming::NamingContext::AlreadyBound const &)
         {
-          ACE_DEBUG ((LM_DEBUG, "%s already bound, rebinding....\n",
+          ACE_DEBUG ((LM_DEBUG,
+                      "%s already bound, rebinding....\n",
                       distributor_name.c_str ()));
           naming_context->rebind (name, obj);
         }
@@ -101,9 +102,9 @@ set_distributor_reference (CORBA::ORB_ptr orb,
       // Write the object reference for the <stock_distributor> to a
       // file so the <StockBroker> can read it when it's
       // bootstrapping.
-      CORBA::String_var str = orb->object_to_string (obj);
+      CORBA::String_var str (orb->object_to_string (obj));
       FILE *output_file = ACE_OS::fopen (ior.c_str (), "w");
-      if (output_file == 0)
+      if (output_file == nullptr)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open output file for writing IOR: %s\n",
                            ior.c_str ()),
@@ -121,7 +122,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   try
     {
       // Initialize the ORB.
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var orb (CORBA::ORB_init (argc, argv));
 
       // This call MUST come after ORB_init(), which may need to
       // extract -ORB options first.
@@ -129,17 +130,17 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         return 1;
 
       // Get the RootPOA.
-      CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
-      PortableServer::POA_var poa = PortableServer::POA::_narrow (obj.in ());
+      CORBA::Object_var obj (orb->resolve_initial_references ("RootPOA"));
+      PortableServer::POA_var poa (PortableServer::POA::_narrow (obj.in ()));
 
       // Activate the POAManager.
-      PortableServer::POAManager_var mgr = poa->the_POAManager ();
+      PortableServer::POAManager_var mgr (poa->the_POAManager ());
       mgr->activate ();
 
       // Create the factory object. Create a <Stock::StockDistributor>.
       StockDistributorHome_i stock_distributor_home (orb.in ());
 
-      Stock::StockDistributor_var stock_distributor = stock_distributor_home.create ();
+      Stock::StockDistributor_var stock_distributor (stock_distributor_home.create ());
 
       if (CORBA::is_nil (stock_distributor.in ()))
         ACE_ERROR_RETURN ((LM_DEBUG,
@@ -168,7 +169,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       poa->destroy (true, true);
       orb->destroy ();
     }
-  catch (const CORBA::Exception &ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Admin: ");
 

@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VISITOR_OPERATION_OPERATION_AMI_HANDLER_REPLY_STUB_OPERATION_CS_H_
 #define _BE_VISITOR_OPERATION_OPERATION_AMI_HANDLER_REPLY_STUB_OPERATION_CS_H_
 

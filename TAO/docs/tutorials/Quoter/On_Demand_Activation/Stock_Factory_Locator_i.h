@@ -9,20 +9,25 @@
 class Quoter_Stock_Factory_Locator_i : public PortableServer::ServantLocator
 {
  public:
-  Quoter_Stock_Factory_Locator_i (CORBA::ORB_ptr orb);
+  explicit Quoter_Stock_Factory_Locator_i (CORBA::ORB_ptr orb);
 
   // Preinvoke function
-  virtual PortableServer::Servant preinvoke (const PortableServer::ObjectId &oid,
-                                             PortableServer::POA_ptr poa,
-                                             const char * operation,
-                                             void * & cookie);
+  PortableServer::Servant preinvoke (PortableServer::ObjectId const &oid,
+                                     PortableServer::POA_ptr poa,
+                                     char const *operation,
+                                     void *&cookie) override;
 
   // Postinvoke function
-  virtual void postinvoke (const PortableServer::ObjectId & oid,
-                           PortableServer::POA_ptr poa,
-                           const char * operation,
-                           void * cookie,
-                           PortableServer::Servant servant);
+  void postinvoke (PortableServer::ObjectId const &oid,
+                   PortableServer::POA_ptr poa,
+                   char const *operation,
+                   void *cookie,
+                   PortableServer::Servant servant) override;
+
+  Quoter_Stock_Factory_Locator_i (Quoter_Stock_Factory_Locator_i const &) = delete;
+  Quoter_Stock_Factory_Locator_i (Quoter_Stock_Factory_Locator_i &&) = delete;
+  Quoter_Stock_Factory_Locator_i &operator= (Quoter_Stock_Factory_Locator_i const &) = delete;
+  Quoter_Stock_Factory_Locator_i &operator= (Quoter_Stock_Factory_Locator_i &&) = delete;
 
  private:
   CORBA::ORB_var orb_;

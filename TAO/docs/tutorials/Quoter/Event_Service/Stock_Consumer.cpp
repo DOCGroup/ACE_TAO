@@ -1,11 +1,6 @@
-
 #include "Stock_Consumer.h"
 #include "QuoterC.h"
 #include "ace/streams.h"
-
-Stock_Consumer::Stock_Consumer ()
-{
-}
 
 void
 Stock_Consumer::connect (CosEventChannelAdmin::EventChannel_ptr event_channel)
@@ -28,10 +23,10 @@ Stock_Consumer::disconnect ()
 }
 
 void
-Stock_Consumer::push (const CORBA::Any& data)
+Stock_Consumer::push (CORBA::Any const &data)
 {
   const Quoter::Event *event {};
-  if ((data >>= event) == 0)
+  if (!(data >>= event))
     return; // Invalid event
 
   cout << "The new price for one stock in \""

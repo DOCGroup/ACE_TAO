@@ -7,7 +7,6 @@
 #include "orbsvcs/Event/ECG_UDP_EH.inl"
 #endif /* __ACE_INLINE__ */
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ECG_UDP_EH::TAO_ECG_UDP_EH (TAO_ECG_Dgram_Handler *recv)
@@ -16,12 +15,8 @@ TAO_ECG_UDP_EH::TAO_ECG_UDP_EH (TAO_ECG_Dgram_Handler *recv)
   ACE_ASSERT (this->receiver_);
 }
 
-TAO_ECG_UDP_EH::~TAO_ECG_UDP_EH ()
-{
-}
-
 int
-TAO_ECG_UDP_EH::open (const ACE_INET_Addr& ipaddr,
+TAO_ECG_UDP_EH::open (ACE_INET_Addr const &ipaddr,
                       int reuse_addr)
 {
   // Check that we haven't been closed already.
@@ -55,7 +50,7 @@ TAO_ECG_UDP_EH::shutdown ()
   if (!this->receiver_)
     return -1;
 
-  int result = 0;
+  int result {};
   if (this->reactor ())
     {
       result = this->reactor ()->remove_handler (this->dgram_.get_handle (),

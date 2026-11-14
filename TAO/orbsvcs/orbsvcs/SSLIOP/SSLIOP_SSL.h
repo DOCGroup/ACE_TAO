@@ -26,7 +26,6 @@
 #include <openssl/ssl.h>
 #include <openssl/crypto.h>
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO

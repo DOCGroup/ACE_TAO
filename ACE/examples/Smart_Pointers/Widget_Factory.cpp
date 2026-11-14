@@ -10,7 +10,7 @@
 #include "Widget_Factory.h"
 #include "Widget_Impl.h"
 
-Widget *Widget_Factory::create_widget ()
+std::unique_ptr<Widget> Widget_Factory::create_widget ()
 {
-  return new Widget_Impl;
+  return std::make_unique<Widget_Impl> ();
 }

@@ -13,6 +13,7 @@
 #include "ace/Sig_Adapter.h"
 #include "ace/Framework_Component.h"
 #include "ace/DLL_Manager.h"
+#include <memory>
 #include "ace/Atomic_Op.h"
 #include "ace/OS_NS_sys_time.h"
 
@@ -62,7 +63,7 @@ LPTOP_LEVEL_EXCEPTION_FILTER WINAPI ACEdisableSetUnhandledExceptionFilter (
 #endif // ACE_DISABLE_WIN32_ERROR_WINDOWS
 
 // Singleton pointer.
-ACE_Object_Manager *ACE_Object_Manager::instance_ = nullptr;
+ACE_Object_Manager *ACE_Object_Manager::instance_ {};
 
 void *ACE_Object_Manager::preallocated_object[
   ACE_Object_Manager::ACE_PREALLOCATED_OBJECTS] = { nullptr };
@@ -99,11 +100,11 @@ void *ACE_Object_Manager::preallocated_array[
     }
 # define ACE_DELETE_PREALLOCATED_OBJECT(TYPE, ID)\
     ACE_CLEANUP_DESTROYER_NAME (\
-      (ACE_Cleanup_Adapter<TYPE> *) preallocated_object[ID], 0);\
-    preallocated_object[ID] = 0;
+      (ACE_Cleanup_Adapter<TYPE> *) preallocated_object[ID], nullptr);\
+    preallocated_object[ID] = nullptr;
 # define ACE_DELETE_PREALLOCATED_ARRAY(TYPE, ID, COUNT)\
     delete (ACE_Cleanup_Adapter<TYPE[COUNT]> *) preallocated_array[ID];\
-    preallocated_array[ID] = 0;
+    preallocated_array[ID] = nullptr;
 #endif /* ACE_HAS_STATIC_PREALLOCATION */
 
 #if !defined (ACE_LACKS_ACE_SVCCONF)
@@ -304,7 +305,7 @@ ACE_Object_Manager::init ()
                   DWORD dwRelativeAddr = dwNewEntryAddr - dwOrgEntryAddr;
 
                   newJump[ 0 ] = 0xE9;  // JMP absolute
-                  ACE_OS::memcpy (&newJump[ 1 ], &dwRelativeAddr, sizeof (pNewFunc));
+                  ACE_OS::memcpy (newJump + 1, &dwRelativeAddr, sizeof (pNewFunc));
                   SIZE_T bytesWritten;
                   WriteProcessMemory (
                     GetCurrentProcess (),
@@ -421,7 +422,7 @@ ACE_Object_Manager::instance ()
 
   if (instance_ == nullptr)
     {
-      ACE_Object_Manager *instance_pointer = nullptr;
+      ACE_Object_Manager *instance_pointer {};
 
       ACE_NEW_RETURN (instance_pointer,
                       ACE_Object_Manager,
@@ -542,11 +543,11 @@ ACE_Object_Manager::get_singleton_lock (ACE_Thread_Mutex *&lock)
 
           if (lock == nullptr)
             {
-              ACE_Cleanup_Adapter<ACE_Thread_Mutex> *lock_adapter = nullptr;
+              ACE_Cleanup_Adapter<ACE_Thread_Mutex> *lock_adapter {};
               ACE_NEW_RETURN (lock_adapter,
                               ACE_Cleanup_Adapter<ACE_Thread_Mutex>,
                               -1);
-              lock = &lock_adapter->object ();
+              lock = std::addressof (lock_adapter->object ());
 
               // Register the lock for destruction at program
               // termination.  This call will cause us to grab the
@@ -592,11 +593,11 @@ ACE_Object_Manager::get_singleton_lock (ACE_Mutex *&lock)
 
           if (lock == nullptr)
             {
-              ACE_Cleanup_Adapter<ACE_Mutex> *lock_adapter = nullptr;
+              ACE_Cleanup_Adapter<ACE_Mutex> *lock_adapter {};
               ACE_NEW_RETURN (lock_adapter,
                               ACE_Cleanup_Adapter<ACE_Mutex>,
                               -1);
-              lock = &lock_adapter->object ();
+              lock = std::addressof (lock_adapter->object ());
 
               // Register the lock for destruction at program
               // termination.  This call will cause us to grab the
@@ -676,12 +677,11 @@ ACE_Object_Manager::get_singleton_lock (ACE_RW_Thread_Mutex *&lock)
 
           if (lock == nullptr)
             {
-              ACE_Cleanup_Adapter<ACE_RW_Thread_Mutex> *lock_adapter = nullptr;
+              ACE_Cleanup_Adapter<ACE_RW_Thread_Mutex> *lock_adapter {};
               ACE_NEW_RETURN (lock_adapter,
                               ACE_Cleanup_Adapter<ACE_RW_Thread_Mutex>,
                               -1);
-              lock = &lock_adapter->object ();
-
+              lock = std::addressof (lock_adapter->object ());
 
               // Register the lock for destruction at program
               // termination.  This call will cause us to grab the
@@ -836,7 +836,6 @@ ACE_Object_Manager::fini ()
   return 0;
 }
 
-
 #if !defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
 /**
  * @class ACE_Object_Manager_Manager
@@ -890,7 +889,7 @@ static ACE_Object_Manager_Manager ACE_Object_Manager_Manager_instance;
 // This is global so that it doesn't have to be declared in the header
 // file.  That would cause nasty circular include problems.
 using ACE_Static_Object_Lock_Type = ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex>;
-static ACE_Static_Object_Lock_Type *ACE_Static_Object_Lock_lock = nullptr;
+static ACE_Static_Object_Lock_Type *ACE_Static_Object_Lock_lock {};
 
 // ACE_SHOULD_MALLOC_STATIC_OBJECT_LOCK isn't (currently) used by ACE.
 // But, applications may find it useful for avoiding recursive calls

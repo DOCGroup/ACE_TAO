@@ -10,50 +10,30 @@
  */
 //=============================================================================
 
-
 #include "interop_wcharC.h"
 #include "wchar_reference.h"
 
 #include "ace/Get_Opt.h"
-#include "ace/Argv_Type_Converter.h"
 
-const int WCHAR_TO_SERVER         = 0x00000001;
-const int WSTRING_TO_SERVER       = 0x00000002;
-const int WARRAY_TO_SERVER        = 0x00000004;
-const int ANY_WCHAR_TO_SERVER     = 0x00000008;
-const int WSTRING_EXCEPTION       = 0x00000010;
-const int WCHAR_FROM_SERVER       = 0x00000020;
-const int WSTRING_FROM_SERVER     = 0x00000040;
-const int WARRAY_FROM_SERVER      = 0x00000080;
-const int ANY_WCHAR_FROM_SERVER   = 0x00000100;
-const int ANY_WSTRING_TO_SERVER   = 0x00000200;
-const int ANY_WSTRING_FROM_SERVER = 0x00000400;
-const int ANY_WSTRING_ECHO        = 0x00000800;
-const int WSTRUCTSEQ_FROM_SERVER  = 0x00001000;
-const int WSTRUCTSEQ_TO_SERVER    = 0x00002000;
-const int NUL_WSTRING_TO_SERVER   = 0x00004000;
-const int TBD_16 = 0x00008000; // update ALL_TESTS if this is defined
-const int TBD_15 = 0x00010000; // update ALL_TESTS if this is defined
-const int TBD_14 = 0x00020000; // update ALL_TESTS if this is defined
-const int TBD_13 = 0x00040000; // update ALL_TESTS if this is defined
-const int TBD_12 = 0x00080000; // update ALL_TESTS if this is defined
-const int TBD_11 = 0x00100000; // update ALL_TESTS if this is defined
-const int TBD_10 = 0x00200000; // update ALL_TESTS if this is defined
-const int TBD_9  = 0x00400000; // update ALL_TESTS if this is defined
-const int TBD_8  = 0x00800000; // update ALL_TESTS if this is defined
-const int TBD_7  = 0x01000000; // update ALL_TESTS if this is defined
-const int TBD_6  = 0x02000000; // update ALL_TESTS if this is defined
-const int TBD_5  = 0x04000000; // update ALL_TESTS if this is defined
-const int TBD_4  = 0x08000000; // update ALL_TESTS if this is defined
-const int TBD_3  = 0x10000000; // update ALL_TESTS if this is defined
-const int TBD_2  = 0x20000000; // update ALL_TESTS if this is defined
-const int TBD_1  = 0x40000000; // update ALL_TESTS if this is defined
-const int TBD_0  = 0x80000000; // update ALL_TESTS if this is defined
-
-const int ALL_TESTS = 0x00007FFF;
+constexpr int WCHAR_TO_SERVER         = 0x00000001;
+constexpr int WSTRING_TO_SERVER       = 0x00000002;
+constexpr int WARRAY_TO_SERVER        = 0x00000004;
+constexpr int ANY_WCHAR_TO_SERVER     = 0x00000008;
+constexpr int WSTRING_EXCEPTION       = 0x00000010;
+constexpr int WCHAR_FROM_SERVER       = 0x00000020;
+constexpr int WSTRING_FROM_SERVER     = 0x00000040;
+constexpr int WARRAY_FROM_SERVER      = 0x00000080;
+constexpr int ANY_WCHAR_FROM_SERVER   = 0x00000100;
+constexpr int ANY_WSTRING_TO_SERVER   = 0x00000200;
+constexpr int ANY_WSTRING_FROM_SERVER = 0x00000400;
+constexpr int ANY_WSTRING_ECHO        = 0x00000800;
+constexpr int WSTRUCTSEQ_FROM_SERVER  = 0x00001000;
+constexpr int WSTRUCTSEQ_TO_SERVER    = 0x00002000;
+constexpr int NUL_WSTRING_TO_SERVER   = 0x00004000;
+constexpr int ALL_TESTS              = 0x00007FFF;
 
 // The length of this array determines which tests are run for "all tests"
-const char * test_name[] =
+constexpr char const *test_name[] =
   {
     "wchar_to_server",
     "wstring_to_server",
@@ -72,160 +52,158 @@ const char * test_name[] =
     "nul_wstring_to_server"
   };
 
-const int LAST_TEST = sizeof (test_name) / sizeof (test_name[0]);
-const ACE_TCHAR *ior = ACE_TEXT("file://IOR");
-int tests_to_run = 0;
-int verbose = 0;
-int kill_server = 0;
-int data_set = 0;
+constexpr int LAST_TEST = sizeof (test_name) / sizeof (test_name[0]);
+ACE_TCHAR const *ior = ACE_TEXT ("file://IOR");
+int tests_to_run {};
+bool verbose {};
+bool kill_server {};
+int data_set {};
 
 #if defined (ACE_HAS_WCHAR) || defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
-
 wchar_reference ref;
 
 void
 assign_wstruct (short key, interop::wstruct & ws)
 {
-    ws.st_char = ref.get_wchar(key);
-    ws.st_string = CORBA::wstring_dup(ref.get_wstring(key));
-    ref.assign_warray(key, ws.st_array);
-    ws.st_any <<= CORBA::wstring_dup(ref.get_wstring(key));
+  ws.st_char = ref.get_wchar (key);
+  ws.st_string = CORBA::wstring_dup (ref.get_wstring (key));
+  ref.assign_warray (key, ws.st_array);
+  ws.st_any <<= CORBA::wstring_dup (ref.get_wstring (key));
 }
 
-
-CORBA::Boolean
+bool
 run_one_test (interop::WChar_Passer_ptr server,
               int test_num)
 {
   switch (test_num)
     {
     case WCHAR_TO_SERVER:
-      return server->wchar_to_server (ref.get_wchar(data_set), data_set);
+      return server->wchar_to_server (ref.get_wchar (data_set), data_set);
     case WSTRING_TO_SERVER:
-      return server->wstring_to_server (ref.get_wstring(data_set), data_set);
+      return server->wstring_to_server (ref.get_wstring (data_set), data_set);
     case WARRAY_TO_SERVER:
-      return server->warray_to_server (ref.get_warray(data_set), data_set);
+      return server->warray_to_server (ref.get_warray (data_set), data_set);
     case ANY_WCHAR_TO_SERVER:
       {
         CORBA::Any a;
-        a <<= CORBA::Any::from_wchar(ref.get_wchar(data_set));
-        return server->any_to_server (a,data_set);
+        a <<= CORBA::Any::from_wchar (ref.get_wchar (data_set));
+        return server->any_to_server (a, data_set);
       }
     case WSTRING_EXCEPTION:
       {
         try
           {
-            server->exception_test(data_set);
+            server->exception_test (data_set);
           }
-        catch (const interop::WChar_Passer::WStringException& e)
+        catch (interop::WChar_Passer::WStringException const &e)
           {
-            return ref.match_except (data_set,e.why.in());
+            return ref.match_except (data_set, e.why.in ());
           }
         break;
       }
     case WCHAR_FROM_SERVER:
       {
-        CORBA::WChar wc = server->wchar_from_server (data_set);
-        return ref.match_wchar (data_set,wc);
+        CORBA::WChar const wc = server->wchar_from_server (data_set);
+        return ref.match_wchar (data_set, wc);
       }
     case WSTRING_FROM_SERVER:
       {
-        CORBA::WString_var ws =
+        CORBA::WString_var const ws =
           server->wstring_from_server (data_set);
-        return ref.match_wstring (data_set,ws.in());
+        return ref.match_wstring (data_set, ws.in ());
       }
     case WARRAY_FROM_SERVER:
       {
-        interop::warray_var wa =
+        interop::warray_var const wa =
           server->warray_from_server (data_set);
-        return ref.match_warray (data_set,wa.in());
+        return ref.match_warray (data_set, wa.in ());
       }
     case ANY_WCHAR_FROM_SERVER:
       {
-        CORBA::WChar wc;
-        CORBA::Any_var test = server->any_from_server (data_set,
-                                                       interop::is_wchar);
+        CORBA::WChar wc {};
+        CORBA::Any_var const test = server->any_from_server (data_set,
+                                                             interop::is_wchar);
         if (test >>= CORBA::Any::to_wchar(wc))
           {
-            return ref.match_wchar (data_set,wc);
+            return ref.match_wchar (data_set, wc);
           }
-        return 0;
+        return false;
       }
     case ANY_WSTRING_TO_SERVER:
       {
         CORBA::Any a;
-        a <<= ref.get_wstring(data_set);
-        return server->any_to_server (a,data_set);
+        a <<= ref.get_wstring (data_set);
+        return server->any_to_server (a, data_set);
       }
     case ANY_WSTRING_FROM_SERVER:
       {
-        const CORBA::WChar *ws {};
-        CORBA::Any_var test = server->any_from_server (data_set,
-                                                       interop::is_wstring);
+        CORBA::WChar const *ws {};
+        CORBA::Any_var const test = server->any_from_server (data_set,
+                                                             interop::is_wstring);
         if (test >>= ws)
           {
-            return ref.match_wstring (data_set,ws);
+            return ref.match_wstring (data_set, ws);
           }
-        return 0;
+        return false;
       }
     case ANY_WSTRING_ECHO:
       {
         CORBA::Any a;
-        a <<= ref.get_wstring(data_set);
-        const CORBA::WChar *ws {};
-        CORBA::Any_var test = server->any_echo (a);
+        a <<= ref.get_wstring (data_set);
+        CORBA::WChar const *ws {};
+        CORBA::Any_var const test = server->any_echo (a);
         if (test >>= ws)
           {
-            return ref.match_wstring (data_set,ws);
+            return ref.match_wstring (data_set, ws);
           }
-        return 0;
+        return false;
       }
     case WSTRUCTSEQ_FROM_SERVER:
       {
-        interop::wstructseq_var wsList =
-          server->wstructseq_from_server(data_set);
-        int result = 1;
+        interop::wstructseq_var const wsList =
+          server->wstructseq_from_server (data_set);
+        bool result = true;
 
-        for (CORBA::ULong i = 0; i < wsList->length(); i++)
+        for (CORBA::ULong i = 0; i < wsList->length (); ++i)
           result &= ref.match_wstring (data_set,
-                                       wsList[i].st_string.in());
+                                       wsList[i].st_string.in ());
 
         return result;
       }
     case WSTRUCTSEQ_TO_SERVER:
       {
         interop::wstructseq_var wsList = new interop::wstructseq;
-        wsList->length(5);
-        for (CORBA::ULong i = 0; i < wsList->length(); ++i)
-        {
-          assign_wstruct(data_set, (*wsList)[i]);
-        }
-        return server->wstructseq_to_server(wsList.in(), data_set);
+        wsList->length (5);
+        for (CORBA::ULong i = 0; i < wsList->length (); ++i)
+          {
+            assign_wstruct (data_set, (*wsList)[i]);
+          }
+        return server->wstructseq_to_server (wsList.in (), data_set);
       }
     case NUL_WSTRING_TO_SERVER:
       return server->wstring_to_server (L"", -1);
     default:
       break;
     }
-  return 0;
+  return false;
 }
 
-short
+bool
 run_tests (interop::WChar_Passer_ptr server)
 {
-  short successes = 0;
-  short numtests = 0;
+  int successes {};
+  int numtests {};
   ref.set_verbose (verbose);
-  int t = 1;
-  for (int i = 0; i < LAST_TEST; i++, t <<= 1)
+  int t {1};
+  for (int i = 0; i < LAST_TEST; ++i, t <<= 1)
     if ((tests_to_run & t) == t)
       {
-        CORBA::Boolean result = run_one_test (server,t);
+        bool const result = run_one_test (server, t);
         ++numtests;
         if (result) ++successes;
         if (verbose)
           ACE_DEBUG ((LM_DEBUG, "%s[%d] %s\n",
-                      test_name[i],data_set,
+                      test_name[i], data_set,
                       (result ? "passed" : "failed")));
       }
   if (verbose)
@@ -239,7 +217,7 @@ int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:t:vx"));
-  int c;
+  int c {};
   while ((c = get_opts ()) != -1)
     switch (c)
       {
@@ -247,19 +225,22 @@ parse_args (int argc, ACE_TCHAR *argv[])
         ior = get_opts.opt_arg ();
         break;
       case 't':
-        {
-          int tnum = ACE_OS::atoi(get_opts.opt_arg());
+    {
+      int const tnum = ACE_OS::atoi (get_opts.opt_arg ());
           if (tnum >= 0 && tnum < LAST_TEST)
             tests_to_run |= (1 << tnum);
           else
-            ACE_ERROR_RETURN ((LM_ERROR,"test %d is out of range\n",tnum),-1);
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "test %d is out of range\n",
+                             tnum),
+                            -1);
           break;
         }
       case 'v':
-        verbose = 1;
+        verbose = true;
         break;
       case 'x':
-        kill_server = 1;
+        kill_server = true;
         break;
       case '?':
       default:
@@ -286,7 +267,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN( int argc, ACE_TCHAR *argv[] )
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
 #if (!defined ACE_HAS_WCHAR) && (!defined ACE_HAS_XPG4_MULTIBYTE_CHAR)
   ACE_UNUSED_ARG (argc);
@@ -294,45 +275,36 @@ ACE_TMAIN( int argc, ACE_TCHAR *argv[] )
   ACE_ERROR_RETURN ((LM_ERROR,ACE_TEXT ("This test requires wchar support\n")),0);
 #else
   try
-  {
-    // Initialize orb
-    CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
-    if (parse_args(argc, argv) == -1)
-      return 0;
-
-    // Destringify ior
-    CORBA::Object_var obj = orb->string_to_object(ior);
-    if( CORBA::is_nil( obj.in() ) )
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "arg is not a valid ior sting"),
-                        -1);
-
-    // Narrow
-    interop::WChar_Passer_var server =
-      interop::WChar_Passer::_narrow( obj.in());
-
-    if( CORBA::is_nil( server.in() ))
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "arg is not a interop::WChar_Passer reference\n"),
-                        -1);
-
-    short result = run_tests (server.in());
-    CORBA::String_var server_orb =
-      server->orb_name();
-    ACE_ERROR ((LM_ERROR,
-                "wchar_interop test (TAO client, %C server) %C\n",
-                server_orb.in(),
-                (result ? "passed" : "failed")));
-    if (kill_server)
     {
-      server->shutdown();
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
+      if (parse_args (argc, argv) == -1)
+        return 0;
+
+      CORBA::Object_var const obj = orb->string_to_object (ior);
+      if (CORBA::is_nil (obj.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR, "arg is not a valid IOR string"), -1);
+
+      interop::WChar_Passer_var const server =
+        interop::WChar_Passer::_narrow (obj.in ());
+      if (CORBA::is_nil (server.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "arg is not an interop::WChar_Passer reference\n"),
+                          -1);
+
+      bool const result = run_tests (server.in ());
+      CORBA::String_var const server_orb = server->orb_name ();
+      ACE_ERROR ((LM_ERROR,
+                  "wchar_interop test (TAO client, %C server) %C\n",
+                  server_orb.in (),
+                  (result ? "passed" : "failed")));
+      if (kill_server)
+        server->shutdown ();
     }
-  }
-  catch (const CORBA::Exception& ex)
-  {
-    ex._tao_print_exception ("Uncaught CORBA exception: ");
-    return 1;
-  }
+  catch (CORBA::Exception const &ex)
+    {
+      ex._tao_print_exception ("Uncaught CORBA exception: ");
+      return 1;
+    }
   return 0;
 #endif
 }

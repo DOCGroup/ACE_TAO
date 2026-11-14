@@ -4,6 +4,7 @@
 #include "tao/CSD_Framework/CSD_Strategy_Base.h"
 
 #include "ace/Dynamic_Service.h"
+#include <memory>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/CSD_Framework/CSD_POA.inl"
@@ -11,10 +12,9 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Implementation skeleton constructor
-TAO_CSD_POA::TAO_CSD_POA (const String &name,
+TAO_CSD_POA::TAO_CSD_POA (String const &name,
                           PortableServer::POAManager_ptr poa_manager,
-                          const TAO_POA_Policy_Set &policies,
+                          TAO_POA_Policy_Set const &policies,
                           TAO_Root_POA *parent,
                           ACE_Lock &lock,
                           TAO_SYNCH_MUTEX &thread_lock,
@@ -29,17 +29,14 @@ TAO_CSD_POA::TAO_CSD_POA (const String &name,
                    orb_core,
                    object_adapter)
 {
-  ACE_NEW_THROW_EX (this->sds_proxy_,
+  TAO::CSD::Strategy_Proxy *sds_proxy {};
+  ACE_NEW_THROW_EX (sds_proxy,
                     TAO::CSD::Strategy_Proxy (),
                     CORBA::NO_MEMORY ());
+  this->sds_proxy_.reset (sds_proxy);
 }
 
-
-// Implementation skeleton destructor
-TAO_CSD_POA::~TAO_CSD_POA ()
-{
-  delete this->sds_proxy_;
-}
+TAO_CSD_POA::~TAO_CSD_POA () = default;
 
 void TAO_CSD_POA::set_csd_strategy (::CSD_Framework::Strategy_ptr strategy)
 {
@@ -51,16 +48,16 @@ void TAO_CSD_POA::set_csd_strategy (::CSD_Framework::Strategy_ptr strategy)
 }
 
 TAO_Root_POA *
-TAO_CSD_POA::new_POA (const String &name,
+TAO_CSD_POA::new_POA (String const &name,
                       PortableServer::POAManager_ptr poa_manager,
-                      const TAO_POA_Policy_Set &policies,
+                      TAO_POA_Policy_Set const &policies,
                       TAO_Root_POA *parent,
                       ACE_Lock &lock,
                       TAO_SYNCH_MUTEX &thread_lock,
                       TAO_ORB_Core &orb_core,
                       TAO_Object_Adapter *object_adapter)
 {
-  TAO_CSD_POA *poa = nullptr;
+  TAO_CSD_POA *poa {};
 
   ACE_NEW_THROW_EX (poa,
                     TAO_CSD_POA (name,
@@ -72,21 +69,22 @@ TAO_CSD_POA::new_POA (const String &name,
                              orb_core,
                              object_adapter),
                     CORBA::NO_MEMORY ());
+  std::unique_ptr<TAO_CSD_POA> poa_owner {poa};
 
-  TAO_CSD_Strategy_Repository *repo =
+  TAO_CSD_Strategy_Repository * const repo =
     ACE_Dynamic_Service<TAO_CSD_Strategy_Repository>::instance ("TAO_CSD_Strategy_Repository");
 
-  if (repo)
+  if (repo != nullptr)
     {
-      CSD_Framework::Strategy_var strategy = repo->find (name);
+      CSD_Framework::Strategy_var const strategy = repo->find (std::string (name.c_str ()));
 
       if (! ::CORBA::is_nil (strategy.in ()))
         {
-          poa->set_csd_strategy (strategy.in ());
+          poa_owner->set_csd_strategy (strategy.in ());
         }
     }
 
-  return poa;
+  return poa_owner.release ();
 }
 
 void TAO_CSD_POA::poa_activated_hook ()
@@ -100,13 +98,13 @@ void TAO_CSD_POA::poa_deactivated_hook ()
 }
 
 void TAO_CSD_POA::servant_activated_hook (PortableServer::Servant servant,
-                                          const PortableServer::ObjectId& oid)
+                                          PortableServer::ObjectId const &oid)
 {
   this->sds_proxy_->servant_activated_event (servant, oid);
 }
 
 void TAO_CSD_POA::servant_deactivated_hook (PortableServer::Servant servant,
-                                 const PortableServer::ObjectId& oid)
+                                 PortableServer::ObjectId const &oid)
 {
   this->sds_proxy_->servant_deactivated_event (servant, oid);
 }

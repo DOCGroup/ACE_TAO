@@ -2,19 +2,22 @@
 #include "ace/Get_Opt.h"
 #include "ace/Thread_Manager.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+struct Options
+{
+  ACE_TCHAR const *ior {ACE_TEXT ("file://test.ior")};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
 
       case '?':
@@ -52,28 +55,29 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
 
-      if (parse_args (argc, argv) != 0)
+      Options options;
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
-      CORBA::Object_var tmp =
-        orb->string_to_object(ior);
+      CORBA::Object_var const tmp =
+        orb->string_to_object (options.ior);
 
-      Test::Coordinator_var coordinator =
-        Test::Coordinator::_narrow(tmp.in ());
+      Test::Coordinator_var const coordinator =
+        Test::Coordinator::_narrow (tmp.in ());
 
       if (CORBA::is_nil (coordinator.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
                              "Nil coordinator reference <%s>\n",
-                             ior),
+                             options.ior),
                             1);
         }
 
-      Peer *peer_impl = 0;
+      Peer *peer_impl {};
       ACE_NEW_RETURN (peer_impl,
                       Peer (orb.in ()),
                       1);
-      PortableServer::ServantBase_var peer_owner_transfer(peer_impl);
+      PortableServer::ServantBase_var peer_owner_transfer (peer_impl);
 
       PortableServer::ObjectId_var id =
         root_poa->activate_object (peer_impl);
@@ -96,7 +100,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

@@ -1,5 +1,4 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Time/TAO_UTO.h"
 #include "orbsvcs/Time/TAO_TIO.h"
 #include "orbsvcs/Time/TAO_Time_Service_Server.h"
@@ -10,24 +9,13 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Constructor.
-TAO_Time_Service_Server::TAO_Time_Service_Server ()
-{
-}
-
-// Destructor.
-TAO_Time_Service_Server::~TAO_Time_Service_Server ()
-= default;
-
-// This method returns the current system time and an estimate of
-// inaccuracy in a UTO.
-
+/// Returns the current system time and an estimate of inaccuracy in a UTO.
 CosTime::UTO_ptr
 TAO_Time_Service_Server::universal_time ()
 {
-  TAO_UTO * uto = nullptr;
+  TAO_UTO * uto {};
 
-  TimeBase::TimeT timestamp;
+  TimeBase::TimeT timestamp {};
   ORBSVCS_Time::Absolute_Time_Value_to_TimeT(timestamp, ACE_OS::gettimeofday());
 
   // Return the local time of the system as a UTO.
@@ -45,24 +33,21 @@ TAO_Time_Service_Server::universal_time ()
   return uto->_this ();
 }
 
-// This method returns the current time in a UTO only if the time can
-// be guaranteed to have been obtained securely.  This method is not
-// implemented currently.
-
+/// Returns a UTO for the current time only when it can be guaranteed to
+/// have been obtained securely. This operation is not implemented.
 CosTime::UTO_ptr
 TAO_Time_Service_Server::secure_universal_time ()
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
-// This creates a new UTO based on the given parameters.
-
+/// Creates a new UTO from the given parameters.
 CosTime::UTO_ptr
 TAO_Time_Service_Server::new_universal_time (TimeBase::TimeT time,
                                              TimeBase::InaccuracyT inaccuracy,
                                              TimeBase::TdfT tdf)
 {
-  TAO_UTO * uto = nullptr;
+  TAO_UTO * uto {};
 
   ACE_NEW_THROW_EX (uto,
                     TAO_UTO (time,
@@ -74,12 +59,11 @@ TAO_Time_Service_Server::new_universal_time (TimeBase::TimeT time,
   return uto->_this ();
 }
 
-// This creates a new UTO given a time in the UtcT form.
-
+/// Creates a new UTO from a UtcT value.
 CosTime::UTO_ptr
 TAO_Time_Service_Server::uto_from_utc (TimeBase::UtcT const & utc)
 {
-  TAO_UTO * uto = nullptr;
+  TAO_UTO * uto {};
 
   ACE_NEW_THROW_EX (uto,
                     TAO_UTO (utc.time,
@@ -91,13 +75,12 @@ TAO_Time_Service_Server::uto_from_utc (TimeBase::UtcT const & utc)
   return uto->_this ();
 }
 
-// This creates a new TIO with the given parameters.
-
+/// Creates a new TIO from the given interval bounds.
 CosTime::TIO_ptr
 TAO_Time_Service_Server::new_interval (TimeBase::TimeT lower,
                                        TimeBase::TimeT upper)
 {
-  TAO_TIO * tio = nullptr;
+  TAO_TIO * tio {};
 
   ACE_NEW_THROW_EX (tio,
                     TAO_TIO (lower,

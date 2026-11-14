@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Object_Adapter_Factory.h
  *
  *  @author Irfan Pyarali
  */
-//=============================================================================
-
 #ifndef TAO_OBJECT_ADAPTER_FACTORY_H
 #define TAO_OBJECT_ADAPTER_FACTORY_H
 
@@ -34,8 +30,7 @@ public:
   TAO_Object_Adapter_Factory (TAO_Object_Adapter_Factory &&) = delete;
   TAO_Object_Adapter_Factory &operator= (TAO_Object_Adapter_Factory &&) = delete;
 
-  // = The TAO_Adapter_Factory methods, please read tao/Adapter.h for
-  // details.
+  /// TAO_Adapter_Factory methods are documented in tao/Adapter.h.
   TAO_Adapter *create (TAO_ORB_Core *orb_core) override;
 };
 

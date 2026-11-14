@@ -29,8 +29,12 @@ class ACE_Export ACE_Connection_Recycling_Strategy
 public:
   ACE_Connection_Recycling_Strategy ();
 
-  /// Virtual Destructor
   virtual ~ACE_Connection_Recycling_Strategy () = default;
+
+  ACE_Connection_Recycling_Strategy (ACE_Connection_Recycling_Strategy const &) = delete;
+  ACE_Connection_Recycling_Strategy &operator= (ACE_Connection_Recycling_Strategy const &) = delete;
+  ACE_Connection_Recycling_Strategy (ACE_Connection_Recycling_Strategy &&) = delete;
+  ACE_Connection_Recycling_Strategy &operator= (ACE_Connection_Recycling_Strategy &&) = delete;
 
   /// Remove from cache.
   virtual int purge (const void *recycling_act) = 0;
@@ -50,7 +54,7 @@ public:
   /// Mark as closed.(non-locking version)
   virtual int mark_as_closed_i (const void *recycling_act) = 0;
 
-  /// Cleanup hint and reset @a act_holder to zero if @a act_holder != 0.
+  /// Cleanup hint and reset @a act_holder to nullptr if @a act_holder is not nullptr.
   virtual int cleanup_hint (const void *recycling_act,
                             void **act_holder = nullptr) = 0;
 };

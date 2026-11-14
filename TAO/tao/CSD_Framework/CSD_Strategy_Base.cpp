@@ -38,7 +38,7 @@ TAO::CSD::Strategy_Base::apply_to (PortableServer::POA_ptr poa)
 
   // The POA is a local interface (IDL terminology), and thus we know that
   // we can downcast the POA_ptr to its (TAO) implementation type.
-  TAO_CSD_POA *poa_impl = dynamic_cast<TAO_CSD_POA*> (poa);
+  TAO_CSD_POA * const poa_impl = dynamic_cast<TAO_CSD_POA*> (poa);
 
   if (poa_impl == nullptr)
     {
@@ -69,13 +69,13 @@ TAO::CSD::Strategy_Base::apply_to (PortableServer::POA_ptr poa)
     }
 
   // Set the CSD Strategy_Base on the strategy proxy object owned by the POA.
-  bool strategy_set = false;
+  bool strategy_set {};
   try
     {
       poa_impl->set_csd_strategy (this);
       strategy_set = true;
     }
-  catch (const ::CORBA::Exception&)
+  catch (::CORBA::Exception const &)
     {
     }
 
@@ -98,20 +98,18 @@ TAO::CSD::Strategy_Base::apply_to (PortableServer::POA_ptr poa)
   return true;
 }
 
-
 void
 TAO::CSD::Strategy_Base::servant_activated_event_i
                                 (PortableServer::Servant ,
-                                 const PortableServer::ObjectId&)
+                                 PortableServer::ObjectId const &)
 {
   // do nothing.
 }
 
-
 void
 TAO::CSD::Strategy_Base::servant_deactivated_event_i
                                 (PortableServer::Servant,
-                                 const PortableServer::ObjectId&)
+                                 PortableServer::ObjectId const &)
 {
   // do nothing.
 }

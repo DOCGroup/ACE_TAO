@@ -58,10 +58,8 @@ public:
   using _var_type = RtecEventChannelAdmin::ProxyPushConsumer_var;
   using _ptr_type = RtecEventChannelAdmin::ProxyPushConsumer_ptr;
 
-  /// constructor...
-  TAO_EC_ProxyPushConsumer (TAO_EC_Event_Channel_Base* event_channel);
+  explicit TAO_EC_ProxyPushConsumer (TAO_EC_Event_Channel_Base* event_channel);
 
-  /// destructor...
   virtual ~TAO_EC_ProxyPushConsumer ();
 
   /// Activate in the POA
@@ -113,7 +111,6 @@ public:
   /// Increment and decrement the reference count.
   CORBA::ULong _incr_refcnt ();
   CORBA::ULong _decr_refcnt ();
-
 
 protected:
   /// Set the supplier, used by some implementations to change the
@@ -181,13 +178,11 @@ private:
 class TAO_RTEvent_Serv_Export TAO_EC_ProxyPushConsumer_Guard
 {
 public:
-  /// Constructor
   TAO_EC_ProxyPushConsumer_Guard (ACE_Lock *lock,
                                   CORBA::ULong &refcount,
                                   TAO_EC_Event_Channel_Base *ec,
                                   TAO_EC_ProxyPushConsumer *proxy);
 
-  /// Destructor
   ~TAO_EC_ProxyPushConsumer_Guard ();
 
   TAO_EC_ProxyPushConsumer_Guard (TAO_EC_ProxyPushConsumer_Guard const &) = delete;

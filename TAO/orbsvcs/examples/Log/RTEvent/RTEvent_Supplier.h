@@ -21,37 +21,36 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @brief Simple supplier of events.
+ *
+ * Publishes one event type.
+ */
 class Supplier : public POA_RtecEventComm::PushSupplier
 {
-  // = TITLE
-  //   Simple supplier object
-  //
-  // = DESCRIPTION
-  //   This class is a supplier of events.
-  //   It simply publishes one event type.
-  //
 public:
-  Supplier ();
-  // Constructor
+  Supplier () = default;
 
-  int run (int argc, ACE_TCHAR* argv[]);
-  // Run the test
+  Supplier (Supplier const &) = delete;
+  Supplier (Supplier &&) = delete;
+  Supplier &operator= (Supplier const &) = delete;
+  Supplier &operator= (Supplier &&) = delete;
 
-  // = The RtecEventComm::PushSupplier methods
+  /// Run the test.
+  int run (int argc, ACE_TCHAR *argv[]);
 
-  virtual void disconnect_push_supplier ();
-  // The skeleton methods.
+  /// The skeleton method.
+  void disconnect_push_supplier () override;
 
 private:
-  // = Data Members
+  /// Handle to the name service.
   CosNaming::NamingContext_var naming_context_;
-  // Handle to the name service.
 
+  /// The Event Log Factory that generates the events to be consumed.
   RTEventLogAdmin::EventLogFactory_var event_log_factory_;
-  // The Event Log Factory that generates the events to be consumed.
 
+  /// The proxy to which this supplier is connected.
   RtecEventChannelAdmin::ProxyPushConsumer_var consumer_;
-  // The proxy that we are connected to.
 };
 
 #endif /* RTEVENT_SUPPLIER_H */

@@ -56,10 +56,7 @@ Gen_Perf::compute_disjoint_union (char *set1, char *set2, char *set3)
 
   while (*set1 && *set2)
     if (*set1 == *set2)
-      {
-        ++set1;
-        ++set2;
-      }
+      ++set1, ++set2;
     else
       {
         *set3 = *set1 < *set2 ? *set1++ : *set2++;
@@ -129,7 +126,7 @@ Gen_Perf::hash (List_Node *key_node)
 inline int
 Gen_Perf::affects_prev (char c, List_Node *curr)
 {
-  std::size_t const index = Vectors::character_index (c);
+  size_t const index = Vectors::character_index (c);
   int const original_char = Vectors::asso_values[index];
   int total_iterations = 0;
 

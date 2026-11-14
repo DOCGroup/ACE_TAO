@@ -35,10 +35,8 @@ namespace TAO
   class FT_Property_Validator : public TAO_PG_Default_Property_Validator
   {
   public:
-    /// Constructor.
     FT_Property_Validator ();
 
-    /// Destructor.
     ~FT_Property_Validator () override;
 
     /// Validate the given properties.  Throw an exception when the

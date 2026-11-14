@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    COIOP_Connector.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author  Johnny Willemsen <jwillemsen@remedy.nl>
  */
-//=============================================================================
 
 #ifndef TAO_COIOP_CONNECTOR_H
 #define TAO_COIOP_CONNECTOR_H
@@ -31,8 +29,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Endpoint;
 class TAO_COIOP_Endpoint;
 
-// ****************************************************************
-
 /**
  * @class TAO_COIOP_Connector
  *
@@ -45,11 +41,9 @@ class TAO_COIOP_Endpoint;
 class TAO_Strategies_Export TAO_COIOP_Connector : public TAO_Connector
 {
 public:
-  /// Constructor.
   TAO_COIOP_Connector ();
 
-  /// Destructor.
-  ~TAO_COIOP_Connector () = default;
+  ~TAO_COIOP_Connector () override = default;
 
   /**
    * @name The TAO_Connector Methods

@@ -5,16 +5,15 @@
 
 #include <iostream>
 #include <fstream>
-#include <fstream>
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT ("server.ior");
+ACE_TCHAR const *ior_output_file = ACE_TEXT ("server.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c;
+  int c = 0;
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -36,8 +35,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-void write_ior(const char* ior) {
-  std::ofstream out(ACE_TEXT_ALWAYS_CHAR(ior_output_file));
+void write_ior (char const *ior)
+{
+  std::ofstream out (ACE_TEXT_ALWAYS_CHAR (ior_output_file));
   out << ior;
 }
 
@@ -51,19 +51,19 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      MessageFactory::register_new_factory(* orb.in());
+      MessageFactory::register_new_factory (*orb.in ());
 
-      CORBA::Object_var obj = orb->resolve_initial_references("RootPOA");
-      PortableServer::POA_var poa = PortableServer::POA::_narrow(obj.in());
+      CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
+      PortableServer::POA_var poa = PortableServer::POA::_narrow (obj.in ());
 
-      PortableServer::POAManager_var poaman = poa->the_POAManager();
+      PortableServer::POAManager_var poaman = poa->the_POAManager ();
 
       PortableServer::Servant_var<Messenger_i> svt = new Messenger_i;
 
-      PortableServer::ObjectId_var id = poa->activate_object(svt.in());
-      obj = poa->id_to_reference(id.in());
-      CORBA::String_var ior = orb->object_to_string(obj.in());
-      write_ior(ior.in());
+      PortableServer::ObjectId_var id = poa->activate_object (svt.in ());
+      obj = poa->id_to_reference (id.in ());
+      CORBA::String_var ior = orb->object_to_string (obj.in ());
+      write_ior (ior.in ());
 
       std::cout << "Starting server." << std::endl;
 
@@ -74,7 +74,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       poa->destroy(true, true);
       orb->destroy();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

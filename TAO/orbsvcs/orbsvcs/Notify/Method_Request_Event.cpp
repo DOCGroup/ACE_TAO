@@ -9,6 +9,8 @@ TAO_Notify_Method_Request_Event::TAO_Notify_Method_Request_Event (
 {
 }
 
+TAO_Notify_Method_Request_Event::~TAO_Notify_Method_Request_Event () = default;
+
 TAO_Notify_Method_Request_Event::TAO_Notify_Method_Request_Event (
       const TAO_Notify::Delivery_Request_Ptr & request)
   : event_ (request->event ().get ())
@@ -24,10 +26,6 @@ TAO_Notify_Method_Request_Event::TAO_Notify_Method_Request_Event (
 {
 }
 
-TAO_Notify_Method_Request_Event::~TAO_Notify_Method_Request_Event()
-{
-}
-
 void
 TAO_Notify_Method_Request_Event::complete ()
 {
@@ -36,7 +34,6 @@ TAO_Notify_Method_Request_Event::complete ()
     this->delivery_request_->complete ();
   }
 }
-
 
 unsigned long
 TAO_Notify_Method_Request_Event::sequence ()
@@ -60,7 +57,6 @@ TAO_Notify_Method_Request_Event::should_retry ()
 
 /**********************************************************/
 
-
 TAO_Notify_Method_Request_Event_Queueable::TAO_Notify_Method_Request_Event_Queueable (
       const TAO_Notify_Method_Request_Event & prev_request,
       const TAO_Notify_Event::Ptr& event)
@@ -73,12 +69,9 @@ TAO_Notify_Method_Request_Event_Queueable::TAO_Notify_Method_Request_Event_Queue
 TAO_Notify_Method_Request_Event_Queueable::TAO_Notify_Method_Request_Event_Queueable (
     TAO_Notify::Delivery_Request_Ptr & request)
   : TAO_Notify_Method_Request_Queueable (request->event ().get ())
-  , TAO_Notify_Method_Request_Event (request, request->event ().get ())
+  , TAO_Notify_Method_Request_Event (
+      TAO_Notify_Method_Request_Event (request), request->event ().get ())
   , event_var_ (request->event ())
-{
-}
-
-TAO_Notify_Method_Request_Event_Queueable::~TAO_Notify_Method_Request_Event_Queueable ()
 {
 }
 

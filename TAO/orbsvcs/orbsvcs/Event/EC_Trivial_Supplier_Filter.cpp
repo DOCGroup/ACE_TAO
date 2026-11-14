@@ -6,6 +6,7 @@
 #include "orbsvcs/Event/EC_Scheduling_Strategy.h"
 #include "orbsvcs/Event/EC_ProxyConsumer.h" // @@ MSVC 6 bug
 
+#include <memory>
 
 // ****************************************************************
 
@@ -48,7 +49,7 @@ TAO_EC_Trivial_Supplier_Filter::shutdown ()
 }
 
 void
-TAO_EC_Trivial_Supplier_Filter::push (const RtecEventComm::EventSet& event,
+TAO_EC_Trivial_Supplier_Filter::push (RtecEventComm::EventSet const &event,
                                       TAO_EC_ProxyPushConsumer *consumer)
 {
   TAO_EC_Scheduling_Strategy* scheduling_strategy =
@@ -60,7 +61,7 @@ TAO_EC_Trivial_Supplier_Filter::push (const RtecEventComm::EventSet& event,
 
 void
 TAO_EC_Trivial_Supplier_Filter::push_scheduled_event (RtecEventComm::EventSet &event,
-                                                      const TAO_EC_QOS_Info &event_info)
+                                                      TAO_EC_QOS_Info const &event_info)
 {
   TAO_EC_Filter_Worker worker (event, event_info);
   this->event_channel_->for_each_consumer (&worker);
@@ -90,7 +91,7 @@ TAO_EC_Supplier_Filter*
 TAO_EC_Trivial_Supplier_Filter_Builder::create (
     RtecEventChannelAdmin::SupplierQOS&)
 {
-  return &this->filter_;
+  return std::addressof (this->filter_);
 }
 
 void

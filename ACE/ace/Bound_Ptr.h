@@ -16,6 +16,8 @@
 
 #include /**/ "ace/config-all.h"
 
+#include <memory>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -129,7 +131,6 @@ public:
     COUNTER::attach_strong (this->counter_);
   }
 
-  /// Destructor.
   ~ACE_Strong_Bound_Ptr ();
 
   /// Assignment operator that binds @c this and @a r to the same object.
@@ -259,7 +260,6 @@ public:
   /// Constructor binds @c this and @a r to the same object.
   ACE_Weak_Bound_Ptr (const ACE_Strong_Bound_Ptr<X, ACE_LOCK> &r);
 
-  /// Destructor.
   ~ACE_Weak_Bound_Ptr ();
 
   /// Assignment operator that binds @c this and @a r to the same object.

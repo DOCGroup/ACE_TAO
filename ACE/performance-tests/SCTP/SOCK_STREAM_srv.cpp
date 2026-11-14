@@ -7,6 +7,10 @@
 #include "ace/CDR_Stream.h"
 #include "ace/Truncate.h"
 
+#include <memory>
+#include <new>
+#include <utility>
+
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
@@ -31,27 +35,49 @@ extern "C" {
 // class that manages setting of options
 #include "Options_Manager.h"
 
+template <typename STREAM>
+struct Stream_Deleter
+{
+  void operator() (STREAM * stream) const
+  {
+    if (stream != nullptr)
+      {
+        stream->close ();
+        delete stream;
+      }
+  }
+};
+
+using Stream_Ptr = std::unique_ptr<ACE_SOCK_Stream,
+                                   Stream_Deleter<ACE_SOCK_Stream>>;
+
 // structure to bundle arguments for thread functions
-struct ArgStruct {
-  ACE_SOCK_Stream * stream;
-  ACE_CDR::ULong numIters;
+struct ArgStruct
+{
+  ArgStruct () = default;
+  ArgStruct (ArgStruct const &) = delete;
+  ArgStruct (ArgStruct &&) = delete;
+  ArgStruct &operator= (ArgStruct const &) = delete;
+  ArgStruct &operator= (ArgStruct &&) = delete;
+
+  Stream_Ptr stream;
+  ACE_CDR::ULong numIters {};
 };
 
 // thread function that serves the client for the UnMarshalled Octet
 // test
 static ACE_THR_FUNC_RETURN unmarshalledOctetServer (void *arg){
   // unbundle the arguments
-  ArgStruct * args = reinterpret_cast<ArgStruct *> (arg);
-  ACE_SOCK_Stream * dataModeStream = args->stream;
+  std::unique_ptr<ArgStruct> args (static_cast<ArgStruct *> (arg));
+  ACE_SOCK_Stream * const dataModeStream = args->stream.get ();
   ACE_CDR::ULong numIterations = args->numIters;
-  delete args;
 
   // serve the client for numIterations synchronous invocations
   do {
     // READ A MESSAGE FROM THE CLIENT
 
     size_t bt;
-    ACE_CDR::ULong msgBufSize=0;
+    ACE_CDR::ULong msgBufSize {};
     // read the size of the buffer to follow
     if ((dataModeStream->recv_n(&msgBufSize, ACE_CDR::LONG_SIZE, 0, &bt)) == -1)
       ACE_ERROR_RETURN((LM_ERROR,
@@ -61,35 +87,31 @@ static ACE_THR_FUNC_RETURN unmarshalledOctetServer (void *arg){
     msgBufSize = ACE_NTOHL(msgBufSize);
 
     // allocate the buffer for the message payload
-    ACE_CDR::Octet * msgBuf = 0;
-    ACE_NEW_RETURN(msgBuf,
-                   ACE_CDR::Octet[msgBufSize],
-                   0);
+    std::unique_ptr<ACE_CDR::Octet[]> msgBuf (
+      new (std::nothrow) ACE_CDR::Octet[msgBufSize]);
+    if (!msgBuf)
+      {
+        errno = ENOMEM;
+        return 0;
+      }
 
     // read the buffer
-    if ((dataModeStream->recv_n(msgBuf, msgBufSize, 0, &bt)) == -1)
+    if ((dataModeStream->recv_n(msgBuf.get (), msgBufSize, 0, &bt)) == -1)
       ACE_ERROR_RETURN((LM_ERROR,
                         ACE_TEXT ("%p\n"),
                         ACE_TEXT ("recv_n")),
                        0);
 
-    // clean up the allocated buffer
-    delete[] msgBuf;
-
     // SEND A REPLY TO THE CLIENT
 
     // send back a 2 byte reply
-    ACE_CDR::Short reply;
+    ACE_CDR::Short reply {};
     if ((dataModeStream->send_n(&reply, ACE_CDR::SHORT_SIZE, 0, &bt)) == -1)
       ACE_ERROR_RETURN((LM_ERROR,
                         ACE_TEXT ("%p\n"),
                         ACE_TEXT ("send_n")),
                        0);
   } while (--numIterations);
-
-  // close and destroy the stream
-  dataModeStream->close();
-  delete dataModeStream;
 
   return 0;
 }
@@ -101,7 +123,7 @@ static void run_server (ACE_HANDLE handle)
   ACE_INET_Addr cli_addr;
   // create a new stream and initialized with the handle returned by
   // accept
-  ACE_SOCK_Stream * dataModeStream = new ACE_SOCK_Stream;
+  Stream_Ptr dataModeStream (new ACE_SOCK_Stream);
   dataModeStream->set_handle (handle);
 
   // Make sure we're not in non-blocking mode.
@@ -152,12 +174,13 @@ static void run_server (ACE_HANDLE handle)
 
   // hdr bufSize is hardcoded to 8 bytes
   // (4 for a CDR-encoded boolean and 4 for a CDR-encoded ULong)
-  ACE_CDR::ULong hdrBufSize = 8;
+  ACE_CDR::ULong const hdrBufSize = 8;
   // allocate a raw buffer large enough to receive the header and be
   // properly aligned for the CDR decoding.
-  ACE_CDR::Char * hdrBuf= new ACE_CDR::Char[hdrBufSize+ACE_CDR::MAX_ALIGNMENT];
+  std::unique_ptr<ACE_CDR::Char[]> hdrBuf (
+    new ACE_CDR::Char[hdrBufSize + ACE_CDR::MAX_ALIGNMENT]);
   // align the raw buffer before reading data into it.
-  char * hdrBuf_a = ACE_ptr_align_binary(hdrBuf, ACE_CDR::MAX_ALIGNMENT);
+  char * hdrBuf_a = ACE_ptr_align_binary(hdrBuf.get (), ACE_CDR::MAX_ALIGNMENT);
 
   size_t bt;
   // read the header
@@ -173,11 +196,19 @@ static void run_server (ACE_HANDLE handle)
   // remains valid while it is in scope.
   ACE_InputCDR hdrCDR(hdrBuf_a, hdrBufSize);
 
-  ACE_CDR::Boolean byteOrder;
+  ACE_CDR::Boolean byteOrder {};
   ACE_CDR::ULong numIterations;
 
   // extract the data
   hdrCDR >> ACE_InputCDR::to_boolean (byteOrder);
+  if (!hdrCDR.good_bit()){
+    ACE_ERROR((LM_ERROR,
+               ACE_TEXT ("%p\n"),
+               ACE_TEXT ("hdrCDR")));
+
+    return;
+  }
+
   hdrCDR.reset_byte_order(byteOrder);
   hdrCDR >> numIterations;
 
@@ -194,25 +225,24 @@ static void run_server (ACE_HANDLE handle)
               ACE_TEXT ("(%P|%t) Test for %u iterations\n"),
               numIterations));
 
-  // deallocate the header buffer
-  delete[] hdrBuf;
-
   // bundle up the arguments
-  ArgStruct * args = new ArgStruct;
-  args->stream = dataModeStream;
+  std::unique_ptr<ArgStruct> args = std::make_unique<ArgStruct> ();
+  args->stream = std::move (dataModeStream);
   args->numIters = numIterations;
 
 #if defined (ACE_HAS_THREADS)
   // Spawn a new thread and run the new connection in that thread of
   // control using the <server> function as the entry point.
   if (ACE_Thread_Manager::instance ()->spawn (unmarshalledOctetServer,
-                                              reinterpret_cast<void *> (args),
+                                              args.get (),
                                               THR_DETACHED) == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) %p\n"),
                 ACE_TEXT ("spawn")));
+  else
+    args.release ();
 #else
-  (*unmarshalledOctetServer) (reinterpret_cast<void *> (args));
+  (*unmarshalledOctetServer) (args.release ());
 #endif /* ACE_HAS_THREADS */
 
 }

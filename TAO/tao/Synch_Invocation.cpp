@@ -21,8 +21,9 @@
 #endif /*TAO_HAS_INTERCEPTORS */
 
 #include <memory>
-#include "ace/OS_NS_string.h"
 #include "tao/ORB_Time_Policy.h"
+
+#include <cstring>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Synch_Invocation.inl"
@@ -35,27 +36,27 @@ namespace
   int
   excep_for_type (const char *tid)
   {
-    if (ACE_OS::strcmp (tid, "IDL:omg.org/CORBA/TRANSIENT:1.0") == 0)
+    if (std::strcmp (tid, "IDL:omg.org/CORBA/TRANSIENT:1.0") == 0)
       {
         return TAO::FOE_TRANSIENT;
       }
-    else if (ACE_OS::strcmp (tid, "IDL:omg.org/CORBA/COMM_FAILURE:1.0") == 0)
+    else if (std::strcmp (tid, "IDL:omg.org/CORBA/COMM_FAILURE:1.0") == 0)
       {
         return TAO::FOE_COMM_FAILURE;
       }
-    else if (ACE_OS::strcmp (tid, "IDL:omg.org/CORBA/OBJECT_NOT_EXIST:1.0") == 0)
+    else if (std::strcmp (tid, "IDL:omg.org/CORBA/OBJECT_NOT_EXIST:1.0") == 0)
       {
         return TAO::FOE_OBJECT_NOT_EXIST;
       }
-    else if (ACE_OS::strcmp (tid, "IDL:omg.org/CORBA/INV_OBJREF:1.0") == 0)
+    else if (std::strcmp (tid, "IDL:omg.org/CORBA/INV_OBJREF:1.0") == 0)
       {
         return TAO::FOE_INV_OBJREF;
       }
-    else if (ACE_OS::strcmp (tid, "IDL:omg.org/CORBA/OBJ_ADAPTER:1.0") == 0)
+    else if (std::strcmp (tid, "IDL:omg.org/CORBA/OBJ_ADAPTER:1.0") == 0)
       {
         return TAO::FOE_OBJ_ADAPTER;
       }
-    else if (ACE_OS::strcmp (tid, "IDL:omg.org/CORBA/NO_RESPONSE:1.0") == 0)
+    else if (std::strcmp (tid, "IDL:omg.org/CORBA/NO_RESPONSE:1.0") == 0)
       {
         return TAO::FOE_NO_RESPONSE;
       }
@@ -269,7 +270,7 @@ namespace TAO
     catch ( ::CORBA::Exception& ex)
       {
         PortableInterceptor::ReplyStatus const status =
-          this->handle_any_exception (&ex);
+          this->handle_any_exception (std::addressof (ex));
 
         if (status == PortableInterceptor::LOCATION_FORWARD ||
             status == PortableInterceptor::TRANSPORT_RETRY)
@@ -425,7 +426,7 @@ namespace TAO
     TAO_InputCDR &cdr = rd.reply_cdr ();
 
     // Set the translators
-    this->resolver_.transport ()->assign_translators (&cdr, nullptr);
+    this->resolver_.transport ()->assign_translators (std::addressof (cdr), nullptr);
 
     // At this point it can be assumed that the GIOP/whatever protocol
     // header and the reply header are already handled.  Further it
@@ -489,7 +490,7 @@ namespace TAO
           // We have received a message with a request to change the
           // addressing mode. First let us read the mode that the
           // server/agent asks for.
-          CORBA::Short addr_mode = 0;
+          CORBA::Short addr_mode {};
 
           if (cdr.read_short (addr_mode) == 0)
             {
@@ -605,16 +606,16 @@ namespace TAO
         throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_MAYBE);
       }
 
-    CORBA::ULong minor = 0;
-    CORBA::ULong completion = 0;
+    CORBA::ULong minor {};
+    CORBA::ULong completion {};
 
     if (!(cdr >> minor) || !(cdr >> completion))
       {
         throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_MAYBE);
       }
 
-    bool retry_on_exception = false;
-    bool do_forward = false;
+    bool retry_on_exception {};
+    bool do_forward {};
 
     const TAO_ORB_Parameters *orb_params = this->stub ()->orb_core ()->orb_params ();
 
@@ -887,7 +888,7 @@ namespace TAO
     catch ( ::CORBA::Exception& ex)
       {
         PortableInterceptor::ReplyStatus const status =
-          this->handle_any_exception (&ex);
+          this->handle_any_exception (std::addressof (ex));
 
         if (status == PortableInterceptor::LOCATION_FORWARD ||
             status == PortableInterceptor::TRANSPORT_RETRY)

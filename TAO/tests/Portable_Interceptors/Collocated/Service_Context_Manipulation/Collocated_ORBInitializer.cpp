@@ -1,10 +1,6 @@
 #include "Collocated_ORBInitializer.h"
 #include "interceptors.h"
-#include "ace/OS_NS_string.h"
-
-Collocated_ORBInitializer::Collocated_ORBInitializer ()
-{
-}
+#include <cstring>
 
 void
 Collocated_ORBInitializer::pre_init (
@@ -19,10 +15,10 @@ Collocated_ORBInitializer::post_init (
   CORBA::String_var orb_id =
     info->orb_id ();
 
-  if (!ACE_OS::strcmp (orb_id.in (), "client_orb"))
+  if (std::strcmp (orb_id.in (), "client_orb") == 0)
     {
-      PortableInterceptor::ClientRequestInterceptor_ptr interceptor =
-        PortableInterceptor::ClientRequestInterceptor::_nil ();
+      // The var below takes ownership of this ACE_NEW allocation.
+      PortableInterceptor::ClientRequestInterceptor_ptr interceptor {};
 
       // Install the Echo client request interceptor
       ACE_NEW_THROW_EX (interceptor,
@@ -35,10 +31,10 @@ Collocated_ORBInitializer::post_init (
       info->add_client_request_interceptor (client_interceptor.in ());
     }
 
-  else if (!ACE_OS::strcmp (orb_id.in (), "server_orb"))
+  else if (std::strcmp (orb_id.in (), "server_orb") == 0)
     {
-      PortableInterceptor::ServerRequestInterceptor_ptr interceptor =
-        PortableInterceptor::ServerRequestInterceptor::_nil ();
+      // The var below takes ownership of this ACE_NEW allocation.
+      PortableInterceptor::ServerRequestInterceptor_ptr interceptor {};
 
       // Install the Echo server request interceptor
       ACE_NEW_THROW_EX (interceptor,
@@ -49,10 +45,5 @@ Collocated_ORBInitializer::post_init (
         server_interceptor = interceptor;
 
       info->add_server_request_interceptor (server_interceptor.in ());
-    }
-
-  else
-    {
-      //Throw exception?
     }
 }

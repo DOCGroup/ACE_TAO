@@ -19,6 +19,8 @@
 #include "tao/ORB_Core.h"
 #include "tao/SystemException.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
@@ -41,7 +43,7 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint (
           if (this->endpoint_from_profile (*r, val) == 1)
             return;
         }
-      while (r->stub ()->next_profile_retry () != 0);
+      while (r->stub ()->next_profile_retry ());
 
       // If we get here, we completely failed to find an endpoint
       // that we know how to use. We used to throw an exception
@@ -80,7 +82,7 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint_based_on_client_protocol_po
     RTCORBA::ProtocolList &client_protocols,
     ACE_Time_Value *val)
 {
-  CORBA::Boolean valid_profile_found = false;
+  CORBA::Boolean valid_profile_found {};
 
   // Even though cycling through all the protocols is the correct
   // things to do to find a match, starting from the start of the
@@ -89,16 +91,16 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint_based_on_client_protocol_po
   // problems with the profile management in TAO which are documented
   // in bugzilla bugs 1237, 1238, and 1239.  Once the above problems
   // are fixed, this behavior should be fixed to do the right thing.
-  for (CORBA::ULong protocol_index = 0;
+  for (CORBA::ULong protocol_index {};
        protocol_index < client_protocols.length ();
        ++protocol_index)
     {
       // Find the profiles that match the current protocol.
-      TAO_Profile *profile = nullptr;
-      TAO_MProfile &mprofile = (r.stub ()->forward_profiles() == 0) ?
+      TAO_Profile *profile {};
+      TAO_MProfile &mprofile = (r.stub ()->forward_profiles() == nullptr) ?
         r.stub ()->base_profiles () : *r.stub ()->forward_profiles();
 
-      for (TAO_PHandle i = 0;
+      for (TAO_PHandle i {};
            i < mprofile.profile_count ();
            ++i)
         {
@@ -145,7 +147,7 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
     ACE_Time_Value *val)
 {
   // Narrow to the RT Stub.
-  TAO_RT_Stub *rt_stub = dynamic_cast <TAO_RT_Stub *> (r.stub ());
+  TAO_RT_Stub * const rt_stub = dynamic_cast <TAO_RT_Stub *> (r.stub ());
 
   if (!rt_stub)
     throw CORBA::INTERNAL ();
@@ -159,12 +161,12 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
     TAO_RT_Endpoint_Utils::policy (
       TAO_CACHED_POLICY_RT_PRIORITY_BANDED_CONNECTION, r);
 
-  bool all_endpoints_are_valid = false;
-  bool match_priority = false;
-  bool match_bands = false;
-  CORBA::Short client_thread_priority = 0;
-  CORBA::Short min_priority = 0;
-  CORBA::Short max_priority = 0;
+  bool all_endpoints_are_valid {};
+  bool match_priority {};
+  bool match_bands {};
+  CORBA::Short client_thread_priority {};
+  CORBA::Short min_priority {};
+  CORBA::Short max_priority {};
 
   // If the priority model policy is not set.
   if (CORBA::is_nil (priority_model_policy.in ()))
@@ -172,7 +174,7 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
       // Bands without priority model do not make sense.
       if (!CORBA::is_nil (bands_policy.in ()))
         {
-          CORBA::PolicyList *p = r.inconsistent_policies ();
+          CORBA::PolicyList * const p = r.inconsistent_policies ();
           if (p)
             {
               p->length (1);
@@ -190,13 +192,13 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
   else
     {
       // Get the protocol hooks.
-      TAO_Protocols_Hooks *protocol_hooks =
+      TAO_Protocols_Hooks * const protocol_hooks =
         r.stub ()->orb_core ()->get_protocols_hooks ();
 
       if (protocol_hooks != nullptr)
         {
-          CORBA::Short server_priority = 0;
-          CORBA::Boolean is_client_propagated = false;
+          CORBA::Short server_priority {};
+          CORBA::Boolean is_client_propagated {};
 
           // Check the priority model policy to see if it is client
           // propagated.
@@ -239,7 +241,7 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
               else
                 {
                   // Check which band range we fall in.
-                  bool in_range = false;
+                  bool in_range {};
                   protocol_hooks->get_selector_bands_policy_hook (
                     bands_policy.in (),
                     client_thread_priority,
@@ -250,7 +252,7 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
                   // If priority doesn't fall into any of the bands.
                   if (!in_range)
                     {
-                      CORBA::PolicyList *p = r.inconsistent_policies ();
+                      CORBA::PolicyList * const p = r.inconsistent_policies ();
                       if (p)
                         {
                           p->length (2);
@@ -276,7 +278,7 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
   while (ep != nullptr)
     {
       // Get the priority of the endpoint.
-      CORBA::Short endpoint_priority = ep->priority ();
+      CORBA::Short const endpoint_priority = ep->priority ();
 
       // If <all_endpoints_are_valid> or match the priority of the
       // client thread or match the priority of the band or
@@ -313,7 +315,7 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
               private_connection_descriptor_property.init
                 (static_cast<long> (reinterpret_cast<ptrdiff_t> (r.stub ())));
               rt_transport_descriptor.insert
-                (&private_connection_descriptor_property);
+                (std::addressof (private_connection_descriptor_property));
             }
 
           if (match_bands)
@@ -322,11 +324,11 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
                 (min_priority, max_priority);
 
               rt_transport_descriptor.insert
-                (&banded_connection_descriptor_property);
+                (std::addressof (banded_connection_descriptor_property));
             }
 
           // Check if the invocation has completed.
-          if (r.try_connect (&rt_transport_descriptor, val))
+          if (r.try_connect (std::addressof (rt_transport_descriptor), val))
             return 1;
         }
 

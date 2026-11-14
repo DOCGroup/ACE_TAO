@@ -9,8 +9,6 @@
  *  @author MA.  Used with permission of Addison-Wesley.Modified for TAO by Mike Moran <mm4@cs.wustl.edu>
  */
 //=============================================================================
-
-
 #ifndef server_HH_
 #define server_HH_
 
@@ -19,7 +17,14 @@
 class Time_impl : public virtual POA_Time
 {
 public:
-  virtual TimeOfDay get_gmt ();
+  Time_impl () = default;
+
+  Time_impl (Time_impl const&) = delete;
+  Time_impl (Time_impl&&) = delete;
+  Time_impl& operator= (Time_impl const&) = delete;
+  Time_impl& operator= (Time_impl&&) = delete;
+
+  TimeOfDay get_gmt () override;
 };
 
 #endif /* server_HH_ */

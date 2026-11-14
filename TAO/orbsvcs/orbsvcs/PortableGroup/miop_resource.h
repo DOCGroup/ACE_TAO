@@ -1,13 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   miop_resource.h
  *
  *  @author Vladimir Zykov <vz@prismtech.com>
  */
-//=============================================================================
-
 
 #ifndef TAO_MIOP_RESOURCE_H
 #define TAO_MIOP_RESOURCE_H
@@ -26,6 +23,8 @@
 #include "ace/Service_Object.h"
 #include "ace/Service_Config.h"
 #include "ace/Time_Value.h"
+
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -48,10 +47,8 @@ class TAO_PortableGroup_Export TAO_MIOP_Resource_Factory
   : public ACE_Service_Object
 {
 public:
-  /// Constructor.
   TAO_MIOP_Resource_Factory ();
 
-  /// Destructor.
   ~TAO_MIOP_Resource_Factory () override;
 
   TAO_MIOP_Resource_Factory (TAO_MIOP_Resource_Factory const &) = delete;
@@ -110,7 +107,8 @@ private:
 
   int fragments_cleanup_bound_;
 
-  mutable TAO_PG::Fragments_Cleanup_Strategy *fragments_cleanup_strategy_;
+  mutable std::unique_ptr<TAO_PG::Fragments_Cleanup_Strategy>
+    fragments_cleanup_strategy_;
 
   /// Maximum number of fragments.
   u_long max_fragments_;

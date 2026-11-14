@@ -16,15 +16,14 @@ TAO_Incoming_Message_Queue::~TAO_Incoming_Message_Queue ()
   CORBA::ULong const sz = this->size_;
 
   // Delete all the nodes left behind
-  for (CORBA::ULong i = 0;
+  for (CORBA::ULong i {};
        i < sz;
        ++i)
     {
-      TAO_Queued_Data *qd = this->dequeue_head ();
+      TAO_Queued_Data * const qd = this->dequeue_head ();
       TAO_Queued_Data::release (qd);
     }
 }
-
 
 TAO_Queued_Data *
 TAO_Incoming_Message_Queue::dequeue_head ()
@@ -63,7 +62,7 @@ TAO_Incoming_Message_Queue::dequeue_tail ()
   // Put the head in tmp.
   head->next (this->last_added_->next ());
 
-  TAO_Queued_Data *ret_qd = this->last_added_;
+  TAO_Queued_Data * const ret_qd = this->last_added_;
 
   this->last_added_ = head;
 
@@ -71,7 +70,7 @@ TAO_Incoming_Message_Queue::dequeue_tail ()
   if (--this->size_ == 0)
     this->last_added_ = nullptr;
 
- return ret_qd;
+  return ret_qd;
 }
 
 int

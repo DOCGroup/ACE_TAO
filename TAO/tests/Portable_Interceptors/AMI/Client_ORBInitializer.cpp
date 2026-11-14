@@ -7,10 +7,6 @@
 #include "Client_ORBInitializer.h"
 #include "Client_Interceptor.h"
 
-Client_ORBInitializer::Client_ORBInitializer ()
-{
-}
-
 void
 Client_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr)

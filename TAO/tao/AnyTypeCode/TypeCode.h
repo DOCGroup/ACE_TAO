@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    TypeCode.h
  *
@@ -10,7 +9,6 @@
  *  @author DOC group at Vanderbilt University, Washington University
  *          and the University of California at Irvine.
  */
-//=============================================================================
 
 #ifndef TAO_TYPECODE_H
 #define TAO_TYPECODE_H
@@ -67,18 +65,17 @@ namespace CORBA
     class TAO_AnyTypeCode_Export Bounds : public UserException
     {
     public:
-      /// Constructor.
       Bounds ();
 
       static Bounds * _downcast (CORBA::Exception * ex);
       static CORBA::Exception * _alloc ();
 
-      virtual CORBA::Exception * _tao_duplicate () const;
+      CORBA::Exception * _tao_duplicate () const override;
 
-      virtual void _raise () const;
+      void _raise () const override;
 
-      virtual void _tao_encode (TAO_OutputCDR & cdr) const;
-      virtual void _tao_decode (TAO_InputCDR & cdr);
+      void _tao_encode (TAO_OutputCDR & cdr) const override;
+      void _tao_decode (TAO_InputCDR & cdr) override;
     };
 
     /**
@@ -98,12 +95,12 @@ namespace CORBA
       static BadKind * _downcast (CORBA::Exception * ex);
       static CORBA::Exception * _alloc ();
 
-      virtual CORBA::Exception * _tao_duplicate () const;
+      CORBA::Exception * _tao_duplicate () const override;
 
-      virtual void _raise () const;
+      void _raise () const override;
 
-      virtual void _tao_encode (TAO_OutputCDR & cdr) const;
-      virtual void _tao_decode (TAO_InputCDR & cdr);
+      void _tao_encode (TAO_OutputCDR & cdr) const override;
+      void _tao_decode (TAO_InputCDR & cdr) override;
     };
 
     static CORBA::TypeCode_ptr const _tc_Bounds;
@@ -119,7 +116,7 @@ namespace CORBA
      */
     static CORBA::TypeCode_ptr _duplicate (CORBA::TypeCode_ptr tc);
 
-    /// Returns a NULL typecode.
+    /// Returns a null TypeCode.
     static CORBA::TypeCode_ptr _nil ();
 
     /**
@@ -136,7 +133,7 @@ namespace CORBA
      * pattern, not the C++ feature) listed below in the @c protected
      * block.
      */
-    //@{
+    /// @{
     /// Equality of two @c TypeCodes.
     /**
      * @return @c true if and only if the set of legal operations is
@@ -370,7 +367,7 @@ namespace CORBA
      *         @c CORBA::TypeCode::_nil() if no concrete base exists.
      */
     TypeCode_ptr concrete_base_type () const;
-    //@}
+    /// @}
 
     /// Marshal the @c TypeCode @c TCKind.
     /**
@@ -421,10 +418,8 @@ namespace CORBA
     using _out_type = CORBA::TypeCode_out;
 
   protected:
-    /// Constructor.
     explicit TypeCode (CORBA::TCKind kind);
 
-    /// Destructor.
     /**
      * Protected destructor to enforce proper memory management
      * through the reference counting mechanism.
@@ -447,7 +442,7 @@ namespace CORBA
      * @c TypeCodes which is why their template method "@c _i"
      * counterparts are pure virtual.
      */
-    //@{
+    /// @{
     virtual Boolean equal_i (TypeCode_ptr tc) const = 0;
     virtual Boolean equivalent_i (TypeCode_ptr tc) const = 0;
     virtual TypeCode_ptr get_compact_typecode_i () const = 0;
@@ -467,21 +462,20 @@ namespace CORBA
     virtual Visibility member_visibility_i (ULong index) const;
     virtual ValueModifier type_modifier_i () const;
     virtual TypeCode_ptr concrete_base_type_i () const;
-    //@}
+    /// @}
 
   private:
     // Prevent copying and assignment.
     TypeCode (TypeCode const &) = delete;
-    void operator= (TypeCode const &) = delete;
+    TypeCode &operator= (TypeCode const &) = delete;
     TypeCode (TypeCode &&) = delete;
-    void operator= (TypeCode &&) = delete;
+    TypeCode &operator= (TypeCode &&) = delete;
 
   protected:
     /// The kind of TypeCode.
     TCKind const kind_;
   };
 }  // End namespace CORBA
-
 
 TAO_AnyTypeCode_Export CORBA::Boolean
 operator<< (TAO_OutputCDR & cdr, const CORBA::TypeCode_ptr tc);
@@ -528,8 +522,6 @@ namespace TAO
    */
   TAO_AnyTypeCode_Export
   CORBA::TCKind unaliased_kind (CORBA::TypeCode_ptr tc);
-
-  // ---------------------------------------------------------------
 
   // Used in generated code if CORBA::TypeCode is an argument or
   // return type.

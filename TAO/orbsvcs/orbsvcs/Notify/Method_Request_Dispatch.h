@@ -38,7 +38,7 @@ class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Dispatch
 {
 public:
   /// an arbitrary code (Octet) to identify this delivery method type in persistent storage
-  enum {persistence_code = 1};
+  static constexpr int persistence_code = 1;
 
   /// Constuct from event
   TAO_Notify_Method_Request_Dispatch (
@@ -62,15 +62,13 @@ public:
     bool filtering);
 
 public:
-  /// Destructor
-  virtual ~TAO_Notify_Method_Request_Dispatch ();
+  ~TAO_Notify_Method_Request_Dispatch () override;
 
   /// Static method used to reconstruct a Method Request Dispatch
   static TAO_Notify_Method_Request_Dispatch_Queueable * unmarshal (
     TAO_Notify::Delivery_Request_Ptr & delivery_request,
     TAO_Notify_EventChannelFactory &ecf,
     TAO_InputCDR & cdr);
-
 
 protected:
   /// Execute the dispatch operation.
@@ -111,8 +109,7 @@ public:
     TAO_Notify_ProxySupplier* proxy_supplier,
     bool filtering);
 
-  /// Destructor
-  virtual ~TAO_Notify_Method_Request_Dispatch_Queueable ();
+  ~TAO_Notify_Method_Request_Dispatch_Queueable () override = default;
 
   /// Execute the Request
   int execute () override;
@@ -140,8 +137,7 @@ public:
     TAO_Notify_ProxySupplier* proxy_supplier,
     bool filtering);
 
-  /// Destructor
-  virtual ~TAO_Notify_Method_Request_Dispatch_No_Copy ();
+  ~TAO_Notify_Method_Request_Dispatch_No_Copy () override = default;
 
   /// Execute the Request
   int execute () override;

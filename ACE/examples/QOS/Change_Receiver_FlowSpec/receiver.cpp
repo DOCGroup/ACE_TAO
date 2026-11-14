@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #define QOSEVENT_MAIN
 
 #include "ace/QoS/QoS_Session.h"
@@ -30,25 +29,6 @@
 // flowing from sender to receiver, different flowspecs are filled in
 // depending upon whether this application is acting as a sender or
 // receiver.
-
-
-// This function fills up the ACE_QoS_Params with the supplied iovec
-// and ACE_QoS.
-
-int
-FillQoSParams (ACE_QoS_Params &qos_params,
-               iovec* iov,
-               ACE_QoS* qos)
-{
-  qos_params.callee_data (iov);
-  qos_params.caller_data (0);
-  qos_params.socket_qos (qos);
-  qos_params.group_socket_qos (0);
-  qos_params.flags (ACE_JL_BOTH);
-
-  return 0;
-}
-
 int
 ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 {
@@ -62,37 +42,28 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
   // This is a multicast application.
   if (qos_util.multicast_flag ())
     {
-       Fill_ACE_QoS  fill_ace_qos;
+       Fill_ACE_QoS fill_ace_qos;
 
        // The application adds the flow specs that it wants into the
        // Fill_ACE_QoS. The Fill_ACE_QoS indexes the flow specs by the
        // flow spec names. Here the new flowspec being added is g_711.
-       ACE_CString g_711 ("g_711");
+       ACE_CString const g_711 ("g_711");
 
-       switch (fill_ace_qos.map ().bind (g_711,
-                                         new ACE_Flow_Spec (9200,
-                                                            708,
-                                                            18400,
-                                                            0,
-                                                            0,
-                                                            ACE_SERVICETYPE_CONTROLLEDLOAD,
-                                                            368,
-                                                            368,
-                                                            25,
-                                                            1)))
-         {
-         case 1 :
-           ACE_ERROR_RETURN ((LM_ERROR,
-                              "Unable to bind the new flow spec\n"
-                              "The Flow Spec name already exists\n"),
-                             -1);
-           break;
-         case -1 :
-           ACE_ERROR_RETURN ((LM_ERROR,
-                              "Unable to bind the new flow spec\n"),
-                             -1);
-           break;
-         }
+       if (fill_ace_qos.rebind_flow_spec (
+             g_711,
+             std::make_unique<ACE_Flow_Spec> (9200,
+                                              708,
+                                              18400,
+                                              0,
+                                              0,
+                                              ACE_SERVICETYPE_CONTROLLEDLOAD,
+                                              368,
+                                              368,
+                                              25,
+                                              1)) != 0)
+         ACE_ERROR_RETURN ((LM_ERROR,
+                            "Unable to bind the new flow spec\n"),
+                           -1);
 
        ACE_DEBUG ((LM_DEBUG,
                    "g_711 Flow Spec bound successfully\n"));
@@ -100,7 +71,7 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
        // This is a receiver. So we fill in the receiving QoS parameters.
        ACE_QoS ace_qos_receiver;
        if (fill_ace_qos.fill_simplex_receiver_qos (ace_qos_receiver,
-                                                   g_711) !=0)
+                                                   g_711) != 0)
          ACE_ERROR_RETURN ((LM_ERROR,
                             "Unable to fill simplex receiver qos\n"),
                            -1);
@@ -114,27 +85,29 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
       // Multicast Session Address specified by user at command line.
       // If this address is not specified,
       // <localhost:ACE_DEFAULT_MULTICAST_PORT> is assumed.
-      ACE_INET_Addr mult_addr (*(qos_util.mult_session_addr ()));
+      ACE_INET_Addr const mult_addr (qos_util.mult_session_addr ());
 
       // Fill the ACE_QoS_Params to be passed to the <ACE_OS::join_leaf>
       // through subscribe.
 
-      ACE_QoS_Params qos_params;
-      FillQoSParams (qos_params, 0, &ace_qos_receiver);
+      ACE_QoS_Params const qos_params (nullptr,
+                                       nullptr,
+                                       &ace_qos_receiver,
+                                       nullptr,
+                                       ACE_JL_BOTH);
 
       // Create a QoS Session Factory.
       ACE_QoS_Session_Factory session_factory;
 
-      // Ask the factory to create a QoS session.
-      ACE_QoS_Session *qos_session =
-        session_factory.create_session ();
-
-      // Create a destination address for the QoS session. The same
-      // address should be used for the subscribe call later. A copy
-      // is made below only to distinguish the two usages of the dest
-      // address.
-
-      ACE_INET_Addr dest_addr (mult_addr);
+      // Ask the factory to create a QoS session. This could be RAPI or
+      // GQoS based on the parameter passed.
+      QoS_Session_Ptr qos_session (
+        session_factory.create_session (),
+        QoS_Session_Deleter (session_factory));
+      if (qos_session == nullptr)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Unable to create the QoS session\n"),
+                          -1);
 
       // A QoS session is defined by the 3-tuple [DestAddr, DestPort,
       // Protocol]. Initialize the QoS session.
@@ -165,16 +138,16 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
       if (dgram_mcast_qos.subscribe (mult_addr,
                                      qos_params,
                                      1,
-                                     0,
+                                     nullptr,
                                      AF_INET,
                                      // ACE_FROM_PROTOCOL_INFO,
                                      0,
-                                     0, // ACE_Protocol_Info,
+                                     nullptr, // ACE_Protocol_Info,
                                      0,
                                      ACE_OVERLAPPED_SOCKET_FLAG
                                      | ACE_FLAG_MULTIPOINT_C_LEAF
                                      | ACE_FLAG_MULTIPOINT_D_LEAF,
-                                     qos_session) == -1)
+                                     qos_session.get ()) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Error in subscribe\n"),
                           -1);
@@ -184,7 +157,7 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 
       int nIP_TTL = 25;
       char achInBuf [BUFSIZ];
-      u_long dwBytes;
+      u_long dwBytes {};
 
       // Should this be abstracted into QoS objects ?? Doesnt seem to have
       // to do anything directly with QoS.
@@ -195,15 +168,15 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
                          achInBuf, // Out buffer.
                          BUFSIZ, // Length of Out buffer.
                          &dwBytes, // bytes returned.
-                         0, // Overlapped.
-                         0) == -1) // Func.
+                         nullptr, // Overlapped.
+                         nullptr) == -1) // Func.
         ACE_ERROR ((LM_ERROR,
                     "Error in Multicast scope ACE_OS::ioctl()\n"));
       else
         ACE_DEBUG ((LM_DEBUG,
                     "Setting TTL with Multicast scope ACE_OS::ioctl call succeeds\n"));
 
-      int bFlag = 0;
+      int bFlag {};
 
       // Should this be abstracted into QoS objects ?? Doesnt seem to have
       // to do anything directly with QoS.
@@ -214,8 +187,8 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
                          achInBuf, // Out buffer.
                          BUFSIZ, // Length of Out buffer.
                          &dwBytes, // bytes returned.
-                         0, // Overlapped.
-                         0) == -1) // Func.
+                         nullptr, // Overlapped.
+                         nullptr) == -1) // Func.
         ACE_ERROR ((LM_ERROR,
                     "Error in Loopback ACE_OS::ioctl()\n"));
       else
@@ -241,7 +214,7 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 
       // Register a signal handler that helps to gracefully close the
       // open QoS sessions.
-      QoS_Signal_Handler qos_signal_handler (qos_session);
+      QoS_Signal_Handler qos_signal_handler (qos_session.get ());
 
       // Register the usual SIGINT signal handler with the Reactor for
       // the application to gracefully release the QoS session and
@@ -254,11 +227,12 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 
       // Handler to process QoS and Data events for the reciever.
       Receiver_QoS_Event_Handler qos_event_handler (dgram_mcast_qos,
-                                                    qos_session);
+                                                    qos_session.get (),
+                                                    fill_ace_qos);
 
       // Decorate the above handler with QoS functionality.
       ACE_QoS_Decorator qos_decorator (&qos_event_handler,
-                                       qos_session);
+                                       qos_session.get ());
 
       // Initialize the Decorator.
       if (qos_decorator.init () != 0)
@@ -274,7 +248,6 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
                            "Error in registering the Decorator with the Reactor\n"),
                           -1);
 
-
       // Start the event loop.
       ACE_DEBUG ((LM_DEBUG,
                   "Running the Event Loop ...\n"));
@@ -289,5 +262,3 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
                 "Specify a -m option for multicast application\n"));
   return 0;
 }
-
-

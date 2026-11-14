@@ -20,11 +20,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_OutputCDR;
-
 
 /**
  * @class TAO_Null_Fragmenation_Strategy
@@ -46,9 +44,11 @@ public:
 
 private:
   TAO_Null_Fragmentation_Strategy (TAO_Null_Fragmentation_Strategy const &) = delete;
-  void operator= (TAO_Null_Fragmentation_Strategy const &) = delete;
+  TAO_Null_Fragmentation_Strategy &operator= (
+    TAO_Null_Fragmentation_Strategy const &) = delete;
   TAO_Null_Fragmentation_Strategy (TAO_Null_Fragmentation_Strategy &&) = delete;
-  void operator= (TAO_Null_Fragmentation_Strategy &&) = delete;
+  TAO_Null_Fragmentation_Strategy &operator= (
+    TAO_Null_Fragmentation_Strategy &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -23,10 +23,8 @@ class Handler_Factory
   //   Creates the oneway or twoway handlers.
 public:
   Handler_Factory ();
-  // Constructor.
 
   ~Handler_Factory ();
-  // Destructor.
 
   int handle_events ();
   // Run the main event loop.
@@ -65,16 +63,15 @@ class Handler : public ACE_Svc_Handler<ACE_SSL_SOCK_Stream, ACE_NULL_SYNCH>
 
 public:
   //FUZZ: disable check_for_lack_ACE_OS
-  virtual int open (void * = nullptr);
+  int open (void * = nullptr) override;
   // Generic initialization method.
 
-  virtual int close (u_long);
+  int close (u_long) override;
   // Close down and delete this.
   //FUZZ: enable check_for_lack_ACE_OS
 
 protected:
   Handler (ACE_SSL_SOCK_Stream *ssl_stream);
-  // Constructor.
 
   int parse_header_and_allocate_buffer (char *&buf,
                                         ACE_INT32 *len);
@@ -86,7 +83,7 @@ protected:
   // Hook method called by the <svc> template method to do the actual
   // protocol.  Must be overridden by the subclass.
 
-  virtual int svc ();
+  int svc () override;
   // Template method entry point into the handler task.
 
   virtual void print_results ();
@@ -111,7 +108,6 @@ class Twoway_Handler : public Handler
   //   Performs the twoway protocol.
 public:
   Twoway_Handler (ACE_SSL_SOCK_Stream *ssl_stream);
-  // Constructor.
 
 private:
   int run () override;
@@ -123,7 +119,6 @@ class Oneway_Handler : public Handler
   // = TITLE
 public:
   Oneway_Handler (ACE_SSL_SOCK_Stream *ssl_stream);
-  // Constructor.
 
 private:
   int run () override;
@@ -346,7 +341,7 @@ Twoway_Handler::run ()
                         ACE_TEXT ("send_n")));
         }
       this->total_bytes_ += size_t (r_bytes);
-      this->message_count_++;
+      ++this->message_count_;
 
       delete [] request;
       request = nullptr;
@@ -426,7 +421,7 @@ Oneway_Handler::run ()
                     ACE_TEXT ("ACE::write_n")));
 
       this->total_bytes_ += size_t (r_bytes);
-      this->message_count_++;
+      ++this->message_count_;
       delete [] request;
       request = nullptr;
     }

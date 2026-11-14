@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-
 //=============================================================================
 /**
  *  @file    URL_Properties.h
@@ -9,11 +8,11 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_URL_PROPERTIES_H
 #define ACE_URL_PROPERTIES_H
 
 #include "ace/SString.h"
+#include "ace/svc_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -62,44 +61,41 @@ class ACE_Svc_Export ACE_URL_Property
 {
 public:
   /// Create a new property.
-  ACE_URL_Property (const char *name = 0,
-                    const char *value=0);
+  explicit ACE_URL_Property (char const *name = nullptr,
+                             char const *value = nullptr);
 
   /// Create a new property using wchar strings.  This is mostly used
   /// to support DBCS or UNICODE.
-  ACE_URL_Property (const ACE_UINT16 *name,
-                    const ACE_UINT16 *value);
+  ACE_URL_Property (ACE_UINT16 const *name,
+                    ACE_UINT16 const *value);
 
-  /// Copy constructor.
-  ACE_URL_Property (const ACE_URL_Property &p);
+  ACE_URL_Property (ACE_URL_Property const &) = default;
 
-  /// Destructor.
-  ~ACE_URL_Property ();
+  ~ACE_URL_Property () = default;
 
-  /// Assignment operator.
-  ACE_URL_Property &operator= (const ACE_URL_Property &rhs);
+  ACE_URL_Property &operator= (ACE_URL_Property const &) = default;
 
   /// Equals operator.
-  bool operator== (const ACE_URL_Property &rhs) const;
+  bool operator== (ACE_URL_Property const &rhs) const;
 
   /// Inequality operator.
-  bool operator!= (const ACE_URL_Property &rhs) const;
+  bool operator!= (ACE_URL_Property const &rhs) const;
 
   // = Query property name.
   ACE_WString &name_rep ();
-  const ACE_WString &name () const;
+  ACE_WString const &name () const;
 
   // = Set property name.
-  void name (const ACE_UINT16 *n);
-  void name (const char *n);
+  void name (ACE_UINT16 const *n);
+  void name (char const *n);
 
   // = Query property value.
   ACE_WString &value_rep ();
-  const ACE_WString &value () const;
+  ACE_WString const &value () const;
 
   // = Set property value.
-  void value (const ACE_UINT16 *v);
-  void value (const char *v);
+  void value (ACE_UINT16 const *v);
+  void value (char const *v);
 
   // = Helper functions for encoding and decoding.
   /// Returns memory size (in bytes) required to encode this object.
@@ -117,10 +113,10 @@ public:
 
 protected:
   /// Property name pointer.
-  ACE_WString name_;
+  ACE_NS_WString name_;
 
   /// Property value.
-  ACE_WString value_;
+  ACE_NS_WString value_;
 } ;
 
 using ACE_URL_Property_Seq = ACE_Array<ACE_URL_Property>;
@@ -140,37 +136,34 @@ class ACE_Svc_Export ACE_URL_Offer
 {
 public:
   /// Create an offer.
-  ACE_URL_Offer (const size_t size = 1, const char *url = 0);
+  explicit ACE_URL_Offer (size_t size = 1, char const *url = nullptr);
 
-  /// Copy ctor.
-  ACE_URL_Offer (const ACE_URL_Offer &o);
+  ACE_URL_Offer (ACE_URL_Offer const &) = default;
 
-  /// Default destructor.
-  ~ACE_URL_Offer ();
+  ~ACE_URL_Offer () = default;
 
-  /// Assignment operator.
-  ACE_URL_Offer &operator= (const ACE_URL_Offer &rhs);
+  ACE_URL_Offer &operator= (ACE_URL_Offer const &) = default;
 
   /// Equality operator.
-  bool operator== (const ACE_URL_Offer &rhs) const;
+  bool operator== (ACE_URL_Offer const &rhs) const;
 
   /// Inequality operator.
-  bool operator!= (const ACE_URL_Offer &rhs) const;
+  bool operator!= (ACE_URL_Offer const &rhs) const;
 
   // = Get URL string.
   ACE_WString &url_rep ();
-  const ACE_WString &url () const;
+  ACE_WString const &url () const;
 
   // = Set URL.
-  void url (const char *url);
-  void url (const ACE_UINT16 *url);
+  void url (char const *url);
+  void url (ACE_UINT16 const *url);
 
   /// Get properties of this offer.
   ACE_URL_Property_Seq &url_properties ();
 
   /// Set properties of this offer.  This operation virtually get a
   /// copy of the passed in prop.
-  void url_properties (const ACE_URL_Property_Seq &prop);
+  void url_properties (ACE_URL_Property_Seq const &prop);
 
   // = Helper functions for encoding and decoding.
   /// Returns memory size (in bytes) required to encode this object.
@@ -188,7 +181,7 @@ public:
 
 protected:
   /// URL of this offer.
-  ACE_WString url_;
+  ACE_NS_WString url_;
 
   /// Properties associate with this offer.
   ACE_URL_Property_Seq prop_;

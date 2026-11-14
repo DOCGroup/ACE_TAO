@@ -94,7 +94,7 @@ MIF_Task::perform_task ()
       static CORBA::ULong prime_number = 9619;
       CORBA::Policy_var sched_param;
       sched_param = dt_creator_->sched_param (this->importance_);
-      const char * name = 0;
+      char const *name {};
 
       for (int i = 0; i < this->iter_; i++)
         {

@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "Generic_Factory_i.h"
 #include "QuoterC.h"
 
@@ -18,26 +17,19 @@
 
 #include "ace/Get_Opt.h"
 
-// Constructor
 Quoter_Generic_Factory_i::Quoter_Generic_Factory_i (int debug_level)
-: debug_level_ (debug_level)
-{
-}
-
-// Destructor.
-Quoter_Generic_Factory_i::~Quoter_Generic_Factory_i ()
+  : debug_level_ (debug_level)
 {
 }
 
 CORBA::Boolean
-Quoter_Generic_Factory_i::supports (const CosLifeCycle::Key &)
+Quoter_Generic_Factory_i::supports (CosLifeCycle::Key const &)
 {
-  return 0;
+  return false;
 }
 
-
 CosNaming::NamingContext_ptr
-Quoter_Generic_Factory_i::get_naming_context (const CosLifeCycle::Key &factory_key)
+Quoter_Generic_Factory_i::get_naming_context (CosLifeCycle::Key const &factory_key)
 {
   CosNaming::NamingContext_var quoterNamingContext_var;
   try
@@ -69,17 +61,16 @@ Quoter_Generic_Factory_i::get_naming_context (const CosLifeCycle::Key &factory_k
       quoterNamingContext_var =
         CosNaming::NamingContext::_narrow (quoterNamingObj_var.in ());
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       throw CosLifeCycle::NoFactory (factory_key);
     }
   return quoterNamingContext_var._retn ();
 }
 
-
 CORBA::Object_ptr
-Quoter_Generic_Factory_i::create_object (const CosLifeCycle::Key &factory_key,
-                                         const CosLifeCycle::Criteria &)
+Quoter_Generic_Factory_i::create_object (CosLifeCycle::Key const &factory_key,
+                                         CosLifeCycle::Criteria const &)
 {
   Stock::Quoter_var quoter_var;
   try
@@ -135,7 +126,7 @@ Quoter_Generic_Factory_i::create_object (const CosLifeCycle::Key &factory_key,
       if (this->debug_level_ > 1)
         ACE_DEBUG ((LM_DEBUG, "Generic_Factory: Return an object reference to a new object.\n"));
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       throw CosLifeCycle::NoFactory (factory_key);
     }

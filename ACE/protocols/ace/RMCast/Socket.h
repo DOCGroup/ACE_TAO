@@ -12,7 +12,6 @@
 #include "RMCast_Export.h"
 #include "Parameters.h"
 
-
 namespace ACE_RMCast
 {
   class Socket_Impl;
@@ -20,6 +19,11 @@ namespace ACE_RMCast
   class ACE_RMCast_Export Socket
   {
   public:
+    Socket (Socket const&) = delete;
+    Socket& operator= (Socket const&) = delete;
+    Socket (Socket&&) = delete;
+    Socket& operator= (Socket&&) = delete;
+
     virtual
     ~Socket ();
 
@@ -34,7 +38,6 @@ namespace ACE_RMCast
     virtual void
     send (void const* buf, size_t s);
 
-
     // Block if message is not available. Upon successful completion
     // return the next message. Otherwise return -1 and errno set to
     // indicate the error. ENOENT indicates that the sender does not
@@ -45,7 +48,6 @@ namespace ACE_RMCast
 
     virtual ssize_t
     recv (void* buf, size_t s, ACE_INET_Addr& from);
-
 
     // Block for up to <timeout> until message is available. Upon
     // successful completion return the next message. Otherwise
@@ -62,7 +64,6 @@ namespace ACE_RMCast
           ACE_Time_Value const& timeout,
           ACE_INET_Addr& from);
 
-
     // Block if message is not available. Upon successful completion
     // return the size of the next message. Otherwise return -1 and
     // errno set to indicate the error. ENOENT indicates that the
@@ -70,7 +71,6 @@ namespace ACE_RMCast
     //
     virtual ssize_t
     size ();
-
 
     // Block for up to <timeout> until message is available. Upon
     // successful completion return the size of the next message.
@@ -92,6 +92,5 @@ namespace ACE_RMCast
     std::unique_ptr<Socket_Impl> impl_;
   };
 }
-
 
 #endif  // ACE_RMCAST_SOCKET_H

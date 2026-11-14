@@ -47,7 +47,7 @@
 
 /* compare two strings with max length, ignoring case */
 int mystrincmp(const char *str1, const char *str2, int len) {
-    register int diff;
+    int diff;
 
     while (*str1 && *str2 && len--) {
         if (diff = UPPER(*str1) - UPPER(*str2))

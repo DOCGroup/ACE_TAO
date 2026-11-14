@@ -16,5 +16,4 @@ private:
   JAWS_Concurrency_Base *concurrency_;
 };
 
-
 #endif /* !defined (HTTP_POLICY_H) */

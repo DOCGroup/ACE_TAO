@@ -7,12 +7,16 @@
 class MessengerTask : public ACE_Task_Base
 {
 public:
-  MessengerTask();
-  virtual int svc();
+  MessengerTask ();
+  int svc () override;
 
-  void end();
+  MessengerTask (MessengerTask const &) = delete;
+  MessengerTask (MessengerTask &&) = delete;
+  MessengerTask &operator= (MessengerTask const &) = delete;
+  MessengerTask &operator= (MessengerTask &&) = delete;
+
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 };
 
 #endif

@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 // We need this to be able to check for ACE_HAS_ICMP_SUPPORT
 #include "ace/config-all.h"
 #include "test_config.h"
@@ -27,6 +26,8 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_signal.h"
 #include "ace/Timer_Heap.h"
+
+#include <cstring>
 #include <memory>
 
 #include "Network_Adapters_Test.h"
@@ -333,7 +334,7 @@ Echo_Handler::dispatch_echo_checks (int first_call)
             ACE_ERROR
               ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) Echo_Handler::dispatch_echo_checks - ")
-                ACE_TEXT ("failed for this->remote_addrs_[%d].\n"),
+                ACE_TEXT ("failed for this->remote_addrs_[%B].\n"),
                 i));
         }
     }
@@ -481,7 +482,7 @@ Echo_Handler::handle_timeout (ACE_Time_Value const &,
 
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) Echo_Handler::handle_timeout - ")
-                      ACE_TEXT ("this->success_status_[%d] is not zero. ")
+                      ACE_TEXT ("this->success_status_[%B] is not zero. ")
                       ACE_TEXT ("Need to proceed echo-checks.\n"), i));
           break;
         }
@@ -531,7 +532,6 @@ Echo_Handler::does_echo_test_successful ()
     }
   return 0;
 }
-
 
 Stop_Handler::Stop_Handler (ACE_Reactor * const reactor)
   : counter_ ((counter_sig) 1)
@@ -736,7 +736,6 @@ Stop_Handler::unregister_handler (ACE_Event_Handler *handler)
   return 0;
 }
 
-
 Repeats_Handler::Repeats_Handler ()
   : check_handler_ (nullptr),
     seconds_timer_ (60),
@@ -803,7 +802,7 @@ int
 Repeats_Handler::handle_timeout (ACE_Time_Value const &,
                                  void const *)
 {
-  this->counter_++ ;
+  ++this->counter_;
   if (one_button_test && this->counter_ > 3)
     {
       ACE_OS::raise (SIGINT);
@@ -885,7 +884,7 @@ is_ip_address_local (char const * const ip_to_bind)
 
   // debugging messages
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("is_ip_address_local () - there are %d interfaces\n"),
+              ACE_TEXT ("is_ip_address_local () - there are %B interfaces\n"),
               how_many));
 
   for (size_t i = 0; i < how_many; ++i)
@@ -897,7 +896,7 @@ is_ip_address_local (char const * const ip_to_bind)
 
   for (size_t j = 0; j < how_many; ++j)
     {
-      if (!ACE_OS::strcmp (the_addr_array[j].get_host_addr (), ip_to_bind))
+      if (!std::strcmp (the_addr_array[j].get_host_addr (), ip_to_bind))
         {
           return 0;
         }
@@ -1028,21 +1027,17 @@ run_main (int argc, ACE_TCHAR *argv[])
   // timer.  Why does this test require such precision for a 1 second
   // timer is beyond me ...  I think it is a cut&paste error.
   //
-  // The use of auto_ptr<> is optional, ACE uses dangerous memory
-  // management idioms everywhere, I thought I could demonstrate how
-  // to do it right in at least one test.  Notice the lack of
-  // ACE_NEW_RETURN, that monstrosity has no business in proper C++
-  // code ...
-  std::unique_ptr<ACE_Timer_Heap_Variable_Time_Source> tq(
-      new ACE_Timer_Heap_Variable_Time_Source);
+  std::unique_ptr<ACE_Timer_Heap_Variable_Time_Source> tq =
+    std::make_unique<ACE_Timer_Heap_Variable_Time_Source> ();
   // ... notice how the policy is in the derived timer queue type.
   // The abstract timer queue does not have a time policy ...
-  tq->set_time_policy(&ACE_High_Res_Timer::gettimeofday_hr);
+  ACE_FPointer_Time_Policy const time_policy (&ACE_High_Res_Timer::gettimeofday_hr);
+  tq->set_time_policy (time_policy);
   // ... and then the timer queue is replaced.  Strangely, the reactor
   // does *not* copy the timers, it just deletes the existing timer
   // queue ....
   main_reactor->timer_queue(tq.get());
-  // ... the reactor does not assume ownership
+  // The reactor borrows this timer queue; tq keeps it alive through the test.
 
   /**
    * Stop_Handler's is supposed to stop the activity of all

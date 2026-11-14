@@ -50,7 +50,6 @@ struct bounded_array_allocation_traits
 } // namespace details
 } // namespace TAO
 
-
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif // guard_unbounded_array_allocation_traits_hpp

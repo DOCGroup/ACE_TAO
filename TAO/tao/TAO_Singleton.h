@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_SINGLETON_H
 #define TAO_SINGLETON_H
 
@@ -26,7 +25,6 @@
 #include /**/ "tao/Versioned_Namespace.h"
 
 #include "ace/Cleanup.h"
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -50,13 +48,12 @@ public:
 
   /// Cleanup method, used by @c ace_cleanup_destroyer to destroy the
   /// singleton.
-  virtual void cleanup (void *param = nullptr);
+  void cleanup (void *param = nullptr) override;
 
   /// Dump the state of the object.
   static void dump ();
 
 protected:
-  /// Default constructor.
   TAO_Singleton ();
 
   /// Contained instance.
@@ -89,13 +86,12 @@ public:
 
   /// Cleanup method, used by @c ace_cleanup_destroyer to destroy the
   /// singleton.
-  virtual void cleanup (void *param = nullptr);
+  void cleanup (void *param = nullptr) override;
 
   /// Dump the state of the object.
   static void dump ();
 
 protected:
-  /// Default constructor.
   TAO_TSS_Singleton ();
 
   TAO_TSS_Singleton (const TAO_TSS_Singleton &) = delete;

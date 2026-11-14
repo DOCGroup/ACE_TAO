@@ -11,24 +11,14 @@
 // TITLE, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT,
 // COMPATIBILITY, AND SECURITY OR ACCURACY.*
 //
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    SOCK_SEQPACK_SCTP_Test.cpp
-//
-// = DESCRIPTION
-//    Performs several tests on the ACE_SOCK_SEQPACK_Connector,
-//    ACE_SOCK_SEQPACK_Acceptor, and ACE_SOCK_SEQPACK_Association classes
-//    specifically for SCTP using the loopback interface.  Attempts to
-//    replicate behavior of SOCK_Test.cpp, but integrating IPv6 tests
-//    directly.
-//
-// = AUTHOR
-//    Dave Craig <dwc@qualcomm.com>
-//
+/// @file SOCK_SEQPACK_SCTP_Test.cpp
+/// Performs several tests on the ACE_SOCK_SEQPACK_Connector,
+/// ACE_SOCK_SEQPACK_Acceptor, and ACE_SOCK_SEQPACK_Association classes
+/// specifically for SCTP using the loopback interface.  Attempts to
+/// replicate behavior of SOCK_Test.cpp, but integrating IPv6 tests
+/// directly.
+///
+/// @author Dave Craig <dwc@qualcomm.com>
 
 #include "test_config.h"
 #include "ace/OS_NS_unistd.h"
@@ -200,7 +190,6 @@ Client(void *arg)
                 ACE_TEXT ("(%P|%t) %p\n"),
                 ACE_TEXT ("Association.disable (ACE_NONBLOCK)")));
   }
-
 
   if (-1 == Stream.recv_n (&b, 1, &tv, &bytes))
   {

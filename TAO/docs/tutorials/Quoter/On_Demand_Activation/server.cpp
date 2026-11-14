@@ -37,7 +37,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
                        policies);
 
     // Destroy the policy objects
-    for (CORBA::ULong i = 0; i != policies.length (); ++i) {
+    for (CORBA::ULong i {}; i != policies.length (); ++i) {
       policies[i]->destroy ();
     }
 
@@ -55,7 +55,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       child_poa->create_reference_with_id (child_oid.in (),
                                            "IDL:Quoter/Stock_Factory:1.0");
 
-
     // Put the object reference as an IOR string
     CORBA::String_var ior = orb->object_to_string (stock_factory.in ());
 
@@ -68,7 +67,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
     poa->destroy (true, true);
     orb->destroy ();
   }
-  catch (const CORBA::Exception &) {
+  catch (CORBA::Exception const &) {
     cerr << "CORBA exception raised!" << endl;
   }
   return 0;

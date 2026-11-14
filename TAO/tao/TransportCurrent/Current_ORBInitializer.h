@@ -1,13 +1,10 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    Current_ORBInitializer.h
  *
  *  @author Iliyan Jeliazkov <iliyan@ociweb.com>
  */
-//=============================================================================
-
 
 #ifndef CURRENT_ORBINITIALIZER_H
 #define CURRENT_ORBINITIALIZER_H
@@ -31,11 +28,16 @@ namespace TAO
       : public Current_ORBInitializer_Base
     {
     public:
-      Current_ORBInitializer (const ACE_TCHAR* id);
+      explicit Current_ORBInitializer (ACE_TCHAR const *id);
+
+      Current_ORBInitializer (Current_ORBInitializer const &) = delete;
+      Current_ORBInitializer &operator= (Current_ORBInitializer const &) = delete;
+      Current_ORBInitializer (Current_ORBInitializer &&) = delete;
+      Current_ORBInitializer &operator= (Current_ORBInitializer &&) = delete;
 
     protected:
       TAO::Transport::Current_ptr
-      make_current_instance (TAO_ORB_Core* c, size_t s) override;
+      make_current_instance (TAO_ORB_Core *c, size_t s) override;
     };
   }
 }

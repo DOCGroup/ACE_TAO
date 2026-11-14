@@ -16,11 +16,10 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_EndpointPolicy_Factory::TAO_EndpointPolicy_Factory (TAO_ORB_Core * orb_core)
+TAO_EndpointPolicy_Factory::TAO_EndpointPolicy_Factory (TAO_ORB_Core *orb_core)
   : orb_core_ (orb_core)
 {
 }
-
 
 CORBA::Policy_ptr
 TAO_EndpointPolicy_Factory::create_policy (
@@ -29,15 +28,14 @@ TAO_EndpointPolicy_Factory::create_policy (
 {
   if (type == EndpointPolicy::ENDPOINT_POLICY_TYPE)
     {
-      EndpointPolicy::EndpointList const* endpoint_list = nullptr;
+      // This pointer aliases the sequence stored in the supplied Any.
+      EndpointPolicy::EndpointList const *endpoint_list {};
       if (!(value >>= endpoint_list))
         throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
 
-      TAO_Acceptor_Registry & registry =
+      TAO_Acceptor_Registry const& registry =
         this->orb_core_->lane_resources ().acceptor_registry ();
 
-      TAO_Acceptor ** const acceptors_begin = registry.begin ();
-      TAO_Acceptor ** const acceptors_end = registry.end ();
       CORBA::ULong const num_eps = endpoint_list->length ();
 
       // need to count the protocol types offered by the acceptors
@@ -45,27 +43,24 @@ TAO_EndpointPolicy_Factory::create_policy (
       // there are more than one protocol available to the ORB.
 
       CORBA::ULong last_known_prot = 0xFFFFFFFF; // tag = 0 is IIOP
-      int prot_count = 0;
-      for (TAO_Acceptor** acceptor = acceptors_begin;
-           acceptor != acceptors_end;
-           ++acceptor)
+      int prot_count {};
+      for (std::unique_ptr<TAO_Acceptor> const &acceptor : registry.acceptors ())
         {
-          if ((*acceptor)->tag () != last_known_prot)
+          if (acceptor->tag () != last_known_prot)
             {
-              last_known_prot = (*acceptor)->tag ();
+              last_known_prot = acceptor->tag ();
               ++prot_count;
             }
         }
-
 
       // The endpoint list in the value is validated to ensure that
       // at least one endpoint in the list matches an endpoint the
       // ORB is listening on.
 
-      bool found_one = false;
-      for (CORBA::ULong idx = 0; !found_one && idx < num_eps; ++idx)
+      bool found_one {};
+      for (CORBA::ULong idx {}; !found_one && idx < num_eps; ++idx)
         {
-          CORBA::ULong prot_tag = (*endpoint_list)[idx]->protocol_tag();
+          CORBA::ULong const prot_tag = (*endpoint_list)[idx]->protocol_tag();
 
           TAO_Endpoint_Value_Impl const * const evi =
             dynamic_cast <TAO_Endpoint_Value_Impl const *> (
@@ -74,12 +69,10 @@ TAO_EndpointPolicy_Factory::create_policy (
           if (evi == nullptr)
             continue;
 
-          for (TAO_Acceptor** acceptor = acceptors_begin;
-               !found_one && acceptor != acceptors_end;
-               ++acceptor)
+          for (std::unique_ptr<TAO_Acceptor> const &acceptor : registry.acceptors ())
             {
-              if ((*acceptor)->tag () == prot_tag)
-                found_one = evi->validate_acceptor (*acceptor, prot_count > 1);
+              if (!found_one && acceptor->tag () == prot_tag)
+                found_one = evi->validate_acceptor (acceptor.get (), prot_count > 1);
             }
         }
 
@@ -89,7 +82,7 @@ TAO_EndpointPolicy_Factory::create_policy (
       if (!found_one)
         throw ::CORBA::PolicyError (CORBA::UNSUPPORTED_POLICY_VALUE);
 
-      TAO_EndpointPolicy_i *tmp = nullptr;
+      TAO_EndpointPolicy_i *tmp {};
       ACE_NEW_THROW_EX (tmp,
                         TAO_EndpointPolicy_i (*endpoint_list),
                         CORBA::NO_MEMORY (TAO::VMCID,
@@ -100,6 +93,5 @@ TAO_EndpointPolicy_Factory::create_policy (
   else
     throw ::CORBA::PolicyError (CORBA::BAD_POLICY_TYPE);
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

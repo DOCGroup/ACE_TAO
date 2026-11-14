@@ -10,9 +10,7 @@ namespace ACE
       {
       }
 
-    SSL_PasswordCallback::~SSL_PasswordCallback ()
-      {
-      }
+    SSL_PasswordCallback::~SSL_PasswordCallback () = default;
 
   }
 }

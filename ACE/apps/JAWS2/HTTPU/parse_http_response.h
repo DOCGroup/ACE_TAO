@@ -12,8 +12,12 @@
 class HTTPU_Export Parse_HTTP_Response
 {
 public:
-  Parse_HTTP_Response (const char *response = 0);
+  explicit Parse_HTTP_Response (char const *response = nullptr);
   ~Parse_HTTP_Response ();
+  Parse_HTTP_Response (Parse_HTTP_Response const &) = delete;
+  Parse_HTTP_Response (Parse_HTTP_Response &&) = delete;
+  Parse_HTTP_Response &operator= (Parse_HTTP_Response const &) = delete;
+  Parse_HTTP_Response &operator= (Parse_HTTP_Response &&) = delete;
 
   void init (const char *response);
 
@@ -27,8 +31,8 @@ public:
 
   enum { HTTPU_OK, NO_MEMORY, BAD_RESPONSE };
 
+  /// Return HTTPU_OK on success or an error code.
   int error () const;
-  // 0 -> ok
 
 private:
   int code_;
@@ -36,6 +40,7 @@ private:
   int major_version_;
   int minor_version_;
   char *version_;
+  /// Owns the buffer; code_str_ and version_ point into it.
   char *response_;
   int error_;
 };
@@ -47,6 +52,5 @@ private:
 #   define ACE_INLINE inline
 #   include "HTTPU/parse_http_response.inl"
 # endif /* ACE_HAS_INLINED_OSCALLS */
-
 
 #endif /* !defined (HTTPU_PARSE_HTTP_RESPONSE_H) */

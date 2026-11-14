@@ -8,12 +8,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::SSLIOP::Current::Current (TAO_ORB_Core *orb_core)
-  : tss_slot_ (0),
-    orb_core_ (orb_core)
-{
-}
-
-TAO::SSLIOP::Current::~Current ()
+  : orb_core_ (orb_core)
 {
 }
 
@@ -22,7 +17,7 @@ TAO::SSLIOP::Current::get_peer_certificate ()
 {
   TAO::SSLIOP::Current_Impl *impl = this->implementation ();
 
-  // If the implementation pointer returned from TSS is zero, then
+  // If the implementation pointer returned from TSS is null, then
   // we're not in the middle of a request or an upcall.  Throw an
   // exception to indicate that.
   if (impl == nullptr)
@@ -30,7 +25,7 @@ TAO::SSLIOP::Current::get_peer_certificate ()
 
   // A valid value must always be returned, so instantiate a sequence
   // regardless of whether or not it is populated with certificates.
-  ::SSLIOP::ASN_1_Cert *c = nullptr;
+  ::SSLIOP::ASN_1_Cert *c {};
   ACE_NEW_THROW_EX (c,
                     ::SSLIOP::ASN_1_Cert,
                     CORBA::NO_MEMORY (
@@ -52,7 +47,7 @@ TAO::SSLIOP::Current::get_peer_certificate_chain ()
 {
   TAO::SSLIOP::Current_Impl *impl = this->implementation ();
 
-  // If the implementation pointer returned from TSS is zero, then
+  // If the implementation pointer returned from TSS is null, then
   // we're not in the middle of a request or an upcall.  Throw an
   // exception to indicate that.
   if (impl == nullptr)
@@ -60,7 +55,7 @@ TAO::SSLIOP::Current::get_peer_certificate_chain ()
 
   // A valid value must always be returned, so instantiate a sequence
   // regardless of whether or not it is populated with certificates.
-  ::SSLIOP::SSL_Cert *c = nullptr;
+  ::SSLIOP::SSL_Cert *c {};
   ACE_NEW_THROW_EX (c,
                     ::SSLIOP::SSL_Cert,
                     CORBA::NO_MEMORY (
@@ -80,7 +75,7 @@ TAO::SSLIOP::Current::get_peer_certificate_chain ()
 CORBA::Boolean
 TAO::SSLIOP::Current::no_context ()
 {
-  return (this->implementation () == nullptr ? true : false);
+  return this->implementation () == nullptr;
 }
 
 void
@@ -126,7 +121,7 @@ TAO::SSLIOP::Current::_duplicate (TAO::SSLIOP::Current_ptr obj)
   return obj;
 }
 
-const char *
+char const *
 TAO::SSLIOP::Current::_interface_repository_id () const
 {
   return "IDL:TAO/SSLIOP/Current:1.0";

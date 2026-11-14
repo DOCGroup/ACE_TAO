@@ -5,6 +5,8 @@
 
 #if defined (ACE_COMPILE_TIMEPROBES)
 
+#include <cstring>
+
 #include "ace/Metrics_Cache.h"
 
 #if !defined (__ACE_INLINE__)
@@ -31,21 +33,20 @@ ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR>::ACE_Metrics_Timeprobe (u_int id,
                                                                    const char *name,
                                                                    u_long size)
   :
-    ACE_Timeprobe<ACE_LOCK> (size),
-    id_ (id),
-    name_ (0)
+    ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR> (size),
+    id_ (id)
 {
-  if (name == 0)
+  if (name == nullptr)
     {
       name = "";
     }
 
-  char * name_tmp = nullptr;
+  char * name_tmp {};
   ACE_NEW_MALLOC_ARRAY (name_tmp,
-                        (char *) this->allocator ()->malloc (ACE_OS::strlen(name)+1),
+                        (char *) this->allocator ()->malloc (std::strlen (name) + 1),
                         char,
-                        ACE_OS::strlen(name)+1);
-  ACE_OS::memcpy (name_tmp, name, ACE_OS::strlen (name)+1);
+                        std::strlen (name) + 1);
+  std::memcpy (name_tmp, name, std::strlen (name) + 1);
   name_ = name_tmp;
 
   this->event_descriptions (event_description_strings,
@@ -59,20 +60,19 @@ ACE_Metrics_Timeprobe (ALLOCATOR *alloc,
                        const char *name,
                        u_long size)
   : ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR> (size),
-    id_ (id),
-    name_ (0)
+    id_ (id)
 {
-  if (name == 0)
+  if (name == nullptr)
     {
       name = "";
     }
 
-  char * name_tmp = nullptr;
+  char * name_tmp {};
   ACE_NEW_MALLOC_ARRAY (name_tmp,
-                        (char *) alloc->malloc(ACE_OS::strlen(name)+1),
+                        (char *) alloc->malloc (std::strlen (name) + 1),
                         char,
-                        ACE_OS::strlen(name)+1);
-  ACE_OS::memcpy (name_tmp, name, ACE_OS::strlen (name)+1);
+                        std::strlen (name) + 1);
+  std::memcpy (name_tmp, name, std::strlen (name) + 1);
   name_ = name_tmp;
 
   this->event_descriptions (event_description_strings,
@@ -82,46 +82,45 @@ ACE_Metrics_Timeprobe (ALLOCATOR *alloc,
 template <class ACE_LOCK, class ALLOCATOR>
 ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR>::~ACE_Metrics_Timeprobe ()
 {
-   if (name_)
+   if (name_ != nullptr)
     {
          this->allocator ()->free ((void*) name_);
     }
 }
 
-
 // Returns true if a timeprobe matches the passed id.
 
 template <class ACE_LOCK, class ALLOCATOR>
-int
+bool
 ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR>::is_event (const ACE_Metrics_Timeprobe<ACE_LOCK,
                                                       ALLOCATOR>::
                                                       ACE_METRICS_TIMEPROBE_DATA_TYPE &t,
                                                       ACE_Metrics_Timeprobe<ACE_LOCK,
                                                       ALLOCATOR>::
-                                                      event_id id)
+                                                      event_id id) const
 {
-  return (t.event_.event_number_ ==  (u_long) id) ? 1 : 0;
+  return t.event_.event_number_ == static_cast<u_long> (id);
 }
 
 template <class ACE_LOCK, class ALLOCATOR>
 const char *
-ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR>::probe_name ()
+ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR>::probe_name () const
 {
    return name_;
 }
 
 template <class ACE_LOCK, class ALLOCATOR>
 void
-ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR>::probe_name (char * name)
+ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR>::probe_name (const char *name)
 {
-  char * name_tmp = nullptr;
+  char * name_tmp {};
   ACE_NEW_MALLOC_ARRAY (name_tmp,
-                        (char *) this->allocator ()->malloc (ACE_OS::strlen(name)+1),
+                        (char *) this->allocator ()->malloc (std::strlen (name) + 1),
                         char,
-                        ACE_OS::strlen(name)+1);
-  ACE_OS::memcpy (name_tmp, name, ACE_OS::strlen (name)+1);
+                        std::strlen (name) + 1);
+  std::memcpy (name_tmp, name, std::strlen (name) + 1);
 
-  if (name_)
+  if (name_ != nullptr)
   {
      this->allocator ()->free (name_);
   }
@@ -131,11 +130,10 @@ ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR>::probe_name (char * name)
 
 template <class ACE_LOCK, class ALLOCATOR>
 u_int
-ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR>::probe_id ()
+ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR>::probe_id () const
 {
   return id_;
 }
-
 
 template <class ACE_LOCK, class ALLOCATOR>
 void
@@ -143,7 +141,6 @@ ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR>::probe_id (u_int id)
 {
   id_ = id;
 }
-
 
 // Flush the ACE metrics timeprobe into shared memory.
 
@@ -153,29 +150,18 @@ flush_ACE_Metrics_Timeprobe ()
 {
 }
 
-
 /////////////////////////////
 // Class ACE_Metrics_Cache //
 /////////////////////////////
-
-
-// Constructor.
 
 template <class ACE_LOCK, class ALLOCATOR>
 ACE_Metrics_Cache<ACE_LOCK, ALLOCATOR>::
 ACE_Metrics_Cache (u_long table_size,
                    u_long,
                    ALLOCATOR *alloc)
-  : probe_set_size_ (0),
-    enqueue_names_ (0),
-    dequeue_names_ (0),
-    consumer_index_ (0),
-    supplier_index_ (1),
-    table_size_ (table_size),
+  : table_size_ (table_size),
     interval_start_ (ACE_Time_Value::zero),
     interval_end_ (ACE_Time_Value::zero),
-    interval_initialized_ (0),
-    metrics_enabled_(1),
     allocator_ (alloc)
 {
   // Initialize probe and count arrays.
@@ -184,14 +170,6 @@ ACE_Metrics_Cache (u_long table_size,
   // is set before any of its static methods are used
   ACE_High_Res_Timer::global_scale_factor ();
 
-  enqueue_count_ [0] = 0;
-  enqueue_count_ [1] = 0;
-  dequeue_count_ [0] = 0;
-  dequeue_count_ [1] = 0;
-  enqueue_probes_ [0] = 0;
-  enqueue_probes_ [1] = 0;
-  dequeue_probes_ [0] = 0;
-  dequeue_probes_ [1] = 0;
 }
 
 // Obtain an allocator pointer correctly thunked for the current
@@ -206,7 +184,6 @@ ACE_Metrics_Cache<ACE_LOCK, ALLOCATOR>::allocator ()
          ? alloc
          : ACE_Singleton<ALLOCATOR, ACE_LOCK>::instance ();
 }
-
 
 // Flush the ACE metrics cache into shared memory.
 

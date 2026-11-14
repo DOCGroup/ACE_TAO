@@ -5,6 +5,7 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/Task.h"
+#include "ace/SString.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -20,29 +21,27 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 class Server_Task : public ACE_Task_Base
 {
 public:
-  /// Constructor
-  Server_Task (const ACE_TCHAR *output,
+  Server_Task (ACE_TCHAR const *output,
                CORBA::ORB_ptr sorb,
                ACE_Manual_Event &me,
                ACE_Thread_Manager *thr_mgr);
+  Server_Task (Server_Task const &) = delete;
+  Server_Task (Server_Task &&) = delete;
+  Server_Task &operator= (Server_Task const &) = delete;
+  Server_Task &operator= (Server_Task &&) = delete;
 
   /// Thread entry point
-  int svc ();
-
-  /// The status of the svc loop
-  int status () const;
+  int svc () override;
 
 private:
   /// Output file for IOR
-  const ACE_TCHAR *output_;
+  ACE_TString output_;
 
   /// Manual event to wake up the main thread to create a client
   /// thread.
   ACE_Manual_Event &me_;
 
   CORBA::ORB_var sorb_;
-
-  int status_;
 };
 
 #include /**/ "ace/post.h"

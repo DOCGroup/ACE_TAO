@@ -9,32 +9,39 @@
 class Connection_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
 public:
-  // Initialize the <Connection_Handler> and make it an Active Object.
-  virtual int open (void *);
+  Connection_Handler () = default;
+  ~Connection_Handler () override = default;
+  Connection_Handler (Connection_Handler const &) = delete;
+  Connection_Handler (Connection_Handler &&) = delete;
+  Connection_Handler &operator= (Connection_Handler const &) = delete;
+  Connection_Handler &operator= (Connection_Handler &&) = delete;
 
-  // Terminate the <Connection_Handler>.
-  virtual int close (u_long);
+  /// Initializes the handler and makes it an active object.
+  int open (void *) override;
 
-  // Run the <Connection_Handler>'s main event loop.
-  virtual int svc ();
+  /// Terminates the handler.
+  int close (u_long) override;
+
+  /// Runs the handler's main event loop.
+  int svc () override;
 
 protected:
-  // Signal the Active Object to stop when called.
-  virtual int handle_close (ACE_HANDLE,
-                            ACE_Reactor_Mask);
+  /// Signals the active object to stop when called.
+  int handle_close (ACE_HANDLE,
+                    ACE_Reactor_Mask) override;
 
-  // Handle input from the client.
-  virtual int handle_input (ACE_HANDLE);
+  /// Handles input from the client.
+  int handle_input (ACE_HANDLE) override;
 
-  // Handle timeouts.
-  virtual int handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg);
+  /// Handles timeouts.
+  int handle_timeout (const ACE_Time_Value &tv,
+                      const void *arg) override;
 
-  // Handle signal.
-  virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);
+  /// Handles a signal.
+  int handle_signal (int signum, siginfo_t *, ucontext_t *) override;
 
-  // Keeps track of whether we're done.
-  sig_atomic_t finished_;
+  /// Tracks whether the handler's event loop should finish.
+  sig_atomic_t finished_ {};
 };
 
 #endif /* ACE_CONNECTION_HANDLER_H */

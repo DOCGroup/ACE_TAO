@@ -9,7 +9,6 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Signal.h"
 
-
 #if defined (ACE_HAS_THREADS)
 
 extern "C" void
@@ -18,10 +17,11 @@ handler (int signum)
   ACE_DEBUG ((LM_DEBUG, "(%t) received signal %d\n", signum));
 }
 
-static void *
-worker (intptr_t iterations)
+static ACE_THR_FUNC_RETURN
+worker (void *arg)
 {
-  for (intptr_t i = 0; i < iterations; i++)
+  intptr_t const iterations = reinterpret_cast<intptr_t> (arg);
+  for (intptr_t i = 0; i < iterations; ++i)
     {
       if ((i % 1000) == 0)
         {
@@ -39,12 +39,12 @@ worker (intptr_t iterations)
         }
     }
 
-  // Destructor removes thread from Thread_Manager.
-  return nullptr;
+  // Thread_Manager removes this worker when it exits.
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
-static const int DEFAULT_THREADS = ACE_DEFAULT_THREADS;
-static const intptr_t DEFAULT_ITERATIONS = 100000;
+static constexpr int DEFAULT_THREADS = ACE_DEFAULT_THREADS;
+static constexpr intptr_t DEFAULT_ITERATIONS = 100000;
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
@@ -64,7 +64,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_Thread_Manager *thr_mgr = ACE_Thread_Manager::instance ();
 
   int grp_id = thr_mgr->spawn_n (n_threads,
-                                 ACE_THR_FUNC (worker),
+                                 worker,
                                  reinterpret_cast<void *> (n_iterations),
                                  THR_NEW_LWP | THR_DETACHED);
 

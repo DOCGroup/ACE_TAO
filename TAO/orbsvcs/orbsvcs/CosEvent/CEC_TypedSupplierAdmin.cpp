@@ -47,10 +47,11 @@ TAO_CEC_TypedSupplierAdmin::shutdown ()
 
 CosTypedEventChannelAdmin::TypedProxyPushConsumer_ptr
 TAO_CEC_TypedSupplierAdmin::obtain_typed_push_consumer (
-    const char * supported_interface)
+    char const *supported_interface)
 
 {
-  int result = this->typed_event_channel_->supplier_register_supported_interface (supported_interface);
+  int const result =
+    this->typed_event_channel_->supplier_register_supported_interface (supported_interface);
 
   if (result == -1)
     {
@@ -62,7 +63,7 @@ TAO_CEC_TypedSupplierAdmin::obtain_typed_push_consumer (
 
 CosEventChannelAdmin::ProxyPullConsumer_ptr
 TAO_CEC_TypedSupplierAdmin::obtain_typed_pull_consumer (
-    const char * /* uses_interface */)
+    char const * /* uses_interface */)
 
 {
   throw CosTypedEventChannelAdmin::NoSuchImplementation ();

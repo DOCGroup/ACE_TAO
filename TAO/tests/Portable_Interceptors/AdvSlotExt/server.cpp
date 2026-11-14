@@ -7,10 +7,12 @@
 
 #include "ace/OS_NS_stdio.h"
 #include "ace/Get_Opt.h"
+#include <cstring>
+#include <memory>
 
 #include "StateTransferS.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT ("test.ior");
+ACE_TCHAR const *ior_output_file = ACE_TEXT ("test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -45,23 +47,21 @@ using namespace PortableInterceptor;
 //
 PortableInterceptor::SlotId slot_id;
 
-
 //
 class StateTransferImpl: public virtual POA_StateTransfer
 {
 public:
-  StateTransferImpl (ORB_ptr orb)
+  explicit StateTransferImpl (ORB_ptr orb)
       : orb_ (ORB::_duplicate (orb))
   {
   }
 
-  virtual Short
-  number ()
+  Short number () override
   {
     // Prepare state update.
     //
     Any state;
-    CORBA::Long number = 5;
+    CORBA::Long const number {5};
     state <<= number;
 
     Object_var obj (orb_->resolve_initial_references ("PICurrent"));
@@ -74,8 +74,7 @@ public:
   }
 
   //FUZZ: disable check_for_lack_ACE_OS
-  virtual void
-  shutdown ()
+  void shutdown () override
   {
     ACE_DEBUG ((LM_DEBUG, "Server is shutting down.\n"));
     this->orb_->shutdown (false);
@@ -86,56 +85,50 @@ private:
   ORB_var orb_;
 };
 
-
 //
 class ReplicaController: public virtual ServerRequestInterceptor,
                          public virtual ::CORBA::LocalObject
 {
 public:
-  ReplicaController (PortableInterceptor::Current_ptr pi_current)
+  explicit ReplicaController (PortableInterceptor::Current_ptr pi_current)
    : pi_current_ (PortableInterceptor::Current::_duplicate (pi_current))
   {
   }
 
-  virtual char*
-  name ()
+  char * name () override
   {
     return string_dup ("ReplicaController");
   }
 
-  virtual void
-  destroy ()
+  void destroy () override
   {
   }
 
 #if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
-  virtual void
-  tao_ft_interception_point (ServerRequestInfo_ptr, OctetSeq_out)
+  void tao_ft_interception_point (ServerRequestInfo_ptr, OctetSeq_out) override
   {
   }
 #endif /*TAO_HAS_EXTENDED_FT_INTERCEPTORS*/
 
-  virtual void
-  receive_request_service_contexts (ServerRequestInfo_ptr)
+  void receive_request_service_contexts (ServerRequestInfo_ptr) override
   {
   }
 
-  virtual void
-  receive_request (ServerRequestInfo_ptr ri)
+  void receive_request (ServerRequestInfo_ptr ri) override
   {
     Any state;
-    CORBA::Long number = 5;
+    CORBA::Long const number {5};
     state <<= number;
 
     // After we have set things to TSC, change the value in RSC, at this
     // moment no copy should be done anymore.
     pi_current_->set_slot (slot_id, state);
-    CORBA::Long number6 = 6;
+    CORBA::Long const number6 {6};
     state <<= number6;
     ri->set_slot (slot_id, state);
 
     Any_var state_get (pi_current_->get_slot (slot_id));
-    CORBA::Long n (0);
+    CORBA::Long n {};
     state_get >>= n;
 
     if (n == 5)
@@ -144,16 +137,15 @@ public:
       ACE_ERROR ((LM_ERROR, "ERROR: State value is incorrectly %d.\n", n));
   }
 
-  virtual void
-  send_reply (ServerRequestInfo_ptr ri)
+  void send_reply (ServerRequestInfo_ptr ri) override
   {
     CORBA::String_var op = ri->operation ();
 
-    if (ACE_OS::strcmp (op.in (), "number") != 0)
+    if (std::strcmp (op.in (), "number") != 0)
       return; // Don't mess with PICurrent if not invoking test method.
 
     Any_var state (ri->get_slot (slot_id));
-    CORBA::Long n (0);
+    CORBA::Long n {};
     state >>= n;
 
     if (n == 5)
@@ -162,31 +154,26 @@ public:
       ACE_ERROR ((LM_ERROR, "ERROR: State value is incorrectly %d.\n", n));
   }
 
-  virtual void
-  send_exception (ServerRequestInfo_ptr)
+  void send_exception (ServerRequestInfo_ptr) override
   {
   }
 
-  virtual void
-  send_other (ServerRequestInfo_ptr)
+  void send_other (ServerRequestInfo_ptr) override
   {
   }
   PortableInterceptor::Current_var pi_current_;
 };
-
 
 //
 class ORB_Initializer : public virtual ORBInitializer,
                         public virtual ::CORBA::LocalObject
 {
 public:
-  virtual void
-  pre_init (ORBInitInfo_ptr)
+  void pre_init (ORBInitInfo_ptr) override
   {
   }
 
-  virtual void
-  post_init (ORBInitInfo_ptr info)
+  void post_init (ORBInitInfo_ptr info) override
   {
     slot_id = info->allocate_slot_id ();
     ACE_DEBUG ((LM_DEBUG, "Allocated slot with id %d.\n", slot_id));
@@ -241,25 +228,23 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       poa_manager->activate ();
 
-
       // Dump the ior.
       //
-      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == 0)
       {
-        ACE_ERROR_RETURN ((LM_ERROR,
-                          "Cannot open output file <%s> for writing "
-                          "IOR: %s",
-                          ior_output_file,
-                          ior.in ()),
-                          1);
+        std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+          ACE_OS::fopen (ior_output_file, "w"), ACE_OS::fclose);
+        if (!output_file)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot open output file <%s> for writing "
+                             "IOR: %s",
+                             ior_output_file,
+                             ior.in ()),
+                            1);
+
+        ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
       }
 
-      ACE_OS::fprintf (output_file, "%s", ior.in ());
-      ACE_OS::fclose (output_file);
-
       ACE_DEBUG ((LM_DEBUG, "Server is ready, IOR is in '%s'\n", ior_output_file));
-
 
       // Run the ORB event loop.
       //
@@ -270,7 +255,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Event loop finished.\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    UIOP_Connector.h
  *
@@ -9,8 +8,6 @@
  *  @author Fred Kuhns <fredk@cs.wustl.edu>
  *  @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_UIOP_CONNECTOR_H
 #define TAO_UIOP_CONNECTOR_H
@@ -32,6 +29,8 @@
 #include "tao/Resource_Factory.h"
 #include "tao/Connector_Impl.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_UIOP_Endpoint;
@@ -52,8 +51,7 @@ public:
    */
   TAO_UIOP_Connector ();
 
-  /// Destructor
-  ~TAO_UIOP_Connector () override;
+  ~TAO_UIOP_Connector () override = default;
 
   /**
    * @name The TAO_Connector Methods
@@ -121,6 +119,9 @@ private:
 
   /// The connector initiating connection requests for UIOP.
   TAO_UIOP_BASE_CONNECTOR base_connector_;
+
+  std::unique_ptr<TAO_UIOP_CONNECT_CREATION_STRATEGY> creation_strategy_;
+  std::unique_ptr<TAO_UIOP_CONNECT_CONCURRENCY_STRATEGY> concurrency_strategy_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

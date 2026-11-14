@@ -8,21 +8,16 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_Reactive_Task::TAO_Notify_Reactive_Task ()
-  :timer_ (0)
-{
-}
+TAO_Notify_Reactive_Task::TAO_Notify_Reactive_Task () = default;
 
-TAO_Notify_Reactive_Task::~TAO_Notify_Reactive_Task ()
-{
-}
+TAO_Notify_Reactive_Task::~TAO_Notify_Reactive_Task () = default;
 
 void
 TAO_Notify_Reactive_Task::init ()
 {
   ACE_ASSERT (this->timer_.get() == nullptr);
 
-  TAO_Notify_Timer_Reactor* timer = nullptr;
+  TAO_Notify_Timer_Reactor* timer {};
   ACE_NEW_THROW_EX (timer,
                     TAO_Notify_Timer_Reactor (),
                     CORBA::NO_MEMORY ());

@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file   tcp_test.cpp
@@ -8,7 +7,6 @@
  *  @author Based on udp_test by Fred Kuhns and David L. LevineModified by Carlos O'Ryan and Nanbor Wang.
  */
 //=============================================================================
-
 
 #include "ace/Reactor.h"
 #include "ace/Select_Reactor.h"
@@ -32,38 +30,41 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <array>
+#include <cstring>
+#include <memory>
+
 // FUZZ: disable check_for_math_include
 #include <math.h>
 
 // Global variables (evil).
-static const u_short DEFPORT = 5050;
-static const int MAXPKTSZ = 65536;
-static const int DEFPKTSZ = 64;
-static const int DEFITERATIONS = 1000;
-static const int DEFINTERVAL = 0;
-static const int DEFAULT_THRNO = 10;
+static constexpr u_short DEFPORT = 5050;
+static constexpr int MAXPKTSZ = 65536;
+static constexpr int DEFPKTSZ = 64;
+static constexpr int DEFITERATIONS = 1000;
+static constexpr int DEFINTERVAL = 0;
+static constexpr int DEFAULT_THRNO = 10;
 
-static char sbuf[MAXPKTSZ];
-static char rbuf[MAXPKTSZ];
+static std::array<char, MAXPKTSZ> sbuf {};
+static std::array<char, MAXPKTSZ> rbuf {};
 
-static int usdelay = DEFINTERVAL;
-static int bufsz = DEFPKTSZ;
-static int VERBOSE = 0;
-static int dump_history = 0;
-static int svr_thrno = DEFAULT_THRNO;
-static int server = 0;
-static int client = 0;
-static int nsamples = DEFITERATIONS;
-static int so_bufsz = 0;
-static u_int use_reactor = 0;
-static int usecs = 0;
-
-enum {
-  SELECT = 1,
-    TP,
-    WFMO
+static int bufsz {DEFPKTSZ};
+static bool VERBOSE {};
+static bool dump_history {};
+static int svr_thrno {DEFAULT_THRNO};
+static bool server {};
+static bool client {};
+static int nsamples {DEFITERATIONS};
+static int so_bufsz {};
+static int usdelay {DEFINTERVAL};
+enum class Reactor_Type
+{
+  NONE,
+  SELECT,
+  TP,
+  WFMO
 };
-
+static Reactor_Type use_reactor {Reactor_Type::NONE};
 
 static void
 usage ()
@@ -92,19 +93,19 @@ usage ()
 class Client : public ACE_Event_Handler
 {
 public:
-  Client (const ACE_INET_Addr &remote_addr);
+  explicit Client (ACE_INET_Addr const &remote_addr);
 
-  virtual ~Client ();
+  ~Client () override;
 
-  // = Override <ACE_Event_Handler> methods.
-  virtual ACE_HANDLE get_handle () const;
-  virtual int handle_input (ACE_HANDLE);
-  virtual int handle_close (ACE_HANDLE handle,
-                            ACE_Reactor_Mask close_mask);
+  /// Overrides ACE_Event_Handler methods.
+  ACE_HANDLE get_handle () const override;
+  int handle_input (ACE_HANDLE) override;
+  int handle_close (ACE_HANDLE handle,
+                    ACE_Reactor_Mask close_mask) override;
 
   //FUZZ: disable check_for_lack_ACE_OS
   /// Send the <buf> to the server.
-  int send (const char *buf, size_t len);
+  int send (char const *buf, size_t len);
   //FUZZ: enable check_for_lack_ACE_OS
 
   /// Wait for the response.
@@ -126,11 +127,13 @@ private:
   ACE_INET_Addr remote_addr_;
 
   Client () = delete;
-  Client (const Client &) = delete;
-  Client &operator= (const Client &) = delete;
+  Client (Client const &) = delete;
+  Client &operator= (Client const &) = delete;
+  Client (Client &&) = delete;
+  Client &operator= (Client &&) = delete;
 };
 
-Client::Client (const ACE_INET_Addr &remote_addr)
+Client::Client (ACE_INET_Addr const &remote_addr)
   : remote_addr_ (remote_addr)
 {
   ACE_SOCK_Connector connector;
@@ -140,7 +143,7 @@ Client::Client (const ACE_INET_Addr &remote_addr)
                   "connect failed"));
     }
 
-  if (use_reactor)
+  if (use_reactor != Reactor_Type::NONE)
     {
       if (ACE_Reactor::instance ()->register_handler
           (this, ACE_Event_Handler::READ_MASK) == -1)
@@ -151,6 +154,7 @@ Client::Client (const ACE_INET_Addr &remote_addr)
 
 Client::~Client ()
 {
+  this->endpoint_.close ();
 }
 
 ACE_HANDLE
@@ -162,9 +166,9 @@ Client::get_handle () const
 int
 Client::handle_input (ACE_HANDLE)
 {
-  char buf[BUFSIZ];
+  std::array<char, BUFSIZ> buf {};
 
-  ssize_t n = this->endpoint_.recv (buf, sizeof buf);
+  ssize_t const n {this->endpoint_.recv (buf.data (), buf.size ())};
 
   if (n == -1)
     ACE_ERROR ((LM_ERROR,
@@ -173,9 +177,9 @@ Client::handle_input (ACE_HANDLE)
   else
     ACE_DEBUG ((LM_DEBUG,
                 "(%P|%t) buf of size %d = %*s\n",
-                n,
-                n,
-                buf));
+                static_cast<int> (n),
+                static_cast<int> (n),
+                buf.data ()));
 
   return 0;
 }
@@ -189,7 +193,7 @@ Client::handle_close (ACE_HANDLE,
 }
 
 int
-Client::send (const char *buf, size_t len)
+Client::send (char const *buf, size_t len)
 {
   return this->endpoint_.send (buf, len);
 }
@@ -203,39 +207,37 @@ Client::get_response (char *buf, size_t len)
 int
 Client::run ()
 {
-  ACE_OS::memset (sbuf, 0, bufsz);
-  ACE_OS::memset (rbuf, 0, bufsz);
+  std::memset (sbuf.data (), 0, bufsz);
+  std::memset (rbuf.data (), 0, bufsz);
 
-  for (int j = 0; j != 100; ++j)
+  for (int j {}; j != 100; ++j)
     {
-      if (this->send (sbuf, bufsz) <= 0)
+      if (this->send (sbuf.data (), bufsz) <= 0)
         ACE_ERROR_RETURN ((LM_ERROR, "(%P) %p\n", "send"), -1);
 
-      //      ssize_t n;
-      if ((this->get_response (rbuf, bufsz)) <= 0)
+      if (this->get_response (rbuf.data (), bufsz) <= 0)
         ACE_ERROR_RETURN ((LM_ERROR, "(%P) %p\n", "get_response"), -1);
     }
 
   ACE_Sample_History history (nsamples);
 
-  ACE_hrtime_t test_start = ACE_OS::gethrtime ();
-  for (int i = 0; i != nsamples; ++i)
+  ACE_hrtime_t const test_start {ACE_OS::gethrtime ()};
+  for (int i {}; i != nsamples; ++i)
     {
-      if (usecs != 0)
+      if (usdelay != 0)
         {
-          ACE_Time_Value tv (0, usecs);
+          ACE_Time_Value const tv {0, usdelay};
           ACE_OS::sleep (tv);
         }
 
-      ACE_hrtime_t start = ACE_OS::gethrtime ();
-      if (this->send (sbuf, bufsz) <= 0)
+      ACE_hrtime_t const start {ACE_OS::gethrtime ()};
+      if (this->send (sbuf.data (), bufsz) <= 0)
         ACE_ERROR_RETURN ((LM_ERROR, "(%P) %p\n", "send"), -1);
 
-      //      ssize_t n;
-      if ((this->get_response (rbuf, bufsz)) <= 0)
+      if ((this->get_response (rbuf.data (), bufsz)) <= 0)
         ACE_ERROR_RETURN ((LM_ERROR, "(%P) %p\n", "get_response"), -1);
 
-      ACE_hrtime_t end = ACE_OS::gethrtime ();
+      ACE_hrtime_t const end {ACE_OS::gethrtime ()};
 
       history.sample (end - start);
 
@@ -245,10 +247,10 @@ Client::run ()
                       "Send %d / %d events\n", i, nsamples));
         }
     }
-  ACE_hrtime_t test_end = ACE_OS::gethrtime ();
+  ACE_hrtime_t const test_end {ACE_OS::gethrtime ()};
 
-  ACE_High_Res_Timer::global_scale_factor_type gsf =
-    ACE_High_Res_Timer::global_scale_factor ();
+  ACE_High_Res_Timer::global_scale_factor_type const gsf {
+    ACE_High_Res_Timer::global_scale_factor ()};
 
   if (dump_history)
     {
@@ -263,17 +265,16 @@ Client::run ()
                                          test_end - test_start,
                                          latency.samples_count ());
 
-
   return 0;
 }
 
 int
 Client::shutdown ()
 {
-  const char buf = 'S';
-  int n = this->endpoint_.send (&buf, 1u);
+  char const buf {'S'};
+  int const n {static_cast<int> (this->endpoint_.send (std::addressof (buf), 1u))};
 
-  if (use_reactor)
+  if (use_reactor != Reactor_Type::NONE)
     {
       if (ACE_Reactor::instance ()->remove_handler
           (this, ACE_Event_Handler::READ_MASK) == -1)
@@ -290,26 +291,28 @@ Client::shutdown ()
 class Server : public ACE_Event_Handler
 {
 public:
-  Server (const ACE_INET_Addr &addr);
+  explicit Server (ACE_INET_Addr const &addr);
 
-  virtual ~Server ();
+  ~Server () override;
 
-  // = Override <ACE_Event_Handler> methods.
-  virtual ACE_HANDLE get_handle () const;
-  virtual int handle_input (ACE_HANDLE);
-  virtual int handle_close (ACE_HANDLE handle,
-                            ACE_Reactor_Mask close_mask);
+  /// Overrides ACE_Event_Handler methods.
+  ACE_HANDLE get_handle () const override;
+  int handle_input (ACE_HANDLE) override;
+  int handle_close (ACE_HANDLE handle,
+                    ACE_Reactor_Mask close_mask) override;
 
 private:
   /// Receives datagrams.
   ACE_SOCK_Stream endpoint_;
 
   Server () = delete;
-  Server (const Server &) = delete;
-  Server &operator= (const Server &) = delete;
+  Server (Server const &) = delete;
+  Server &operator= (Server const &) = delete;
+  Server (Server &&) = delete;
+  Server &operator= (Server &&) = delete;
 };
 
-Server::Server (const ACE_INET_Addr &addr)
+Server::Server (ACE_INET_Addr const &addr)
 {
   ACE_SOCK_Acceptor acceptor;
 
@@ -323,7 +326,7 @@ Server::Server (const ACE_INET_Addr &addr)
     ACE_ERROR ((LM_ERROR, "Server::Server %p\n",
                 "accept failed"));
 
-  if (use_reactor)
+  if (use_reactor != Reactor_Type::NONE)
     {
       if (ACE_Reactor::instance ()->register_handler
           (this,
@@ -337,8 +340,8 @@ Server::Server (const ACE_INET_Addr &addr)
     {
       if (this->endpoint_.set_option (SOL_SOCKET,
                                       SO_SNDBUF,
-                                      (void *) &so_bufsz,
-                                      sizeof (so_bufsz)) == -1
+                                      std::addressof (so_bufsz),
+                                      static_cast<int> (sizeof so_bufsz)) == -1
           && errno != ENOTSUP)
         {
           ACE_ERROR ((LM_ERROR, "Server::Server: SO_SNDBUF %p\n",
@@ -351,8 +354,8 @@ Server::Server (const ACE_INET_Addr &addr)
     {
       if (this->endpoint_.set_option (SOL_SOCKET,
                                       SO_RCVBUF,
-                                      (void *) &so_bufsz,
-                                      sizeof (so_bufsz)) == -1
+                                      std::addressof (so_bufsz),
+                                      static_cast<int> (sizeof so_bufsz)) == -1
                && errno != ENOTSUP)
         {
           ACE_ERROR ((LM_ERROR, "Server::Server: SO_RCVBUF %p\n",
@@ -379,21 +382,22 @@ Server::get_handle () const
 int
 Server::handle_input (ACE_HANDLE)
 {
-  char buf[BUFSIZ];
+  std::array<char, BUFSIZ> buf {};
 
-  ssize_t n = this->endpoint_.recv (buf, bufsz);
+  ssize_t const n {this->endpoint_.recv (buf.data (), bufsz)};
 
   if (n == -1)
-    ACE_DEBUG ((LM_ERROR,
-                "%p\n",
-                "handle_input: recv"));
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "handle_input: recv"),
+                      -1);
 
   // Send the message back as the response.
-  if (this->endpoint_.send (buf, n) == n)
+  if (this->endpoint_.send (buf.data (), n) == n)
     {
       if (n == 1 && buf[0] == 'S')
         {
-          if (!use_reactor)
+          if (use_reactor == Reactor_Type::NONE)
             {
               // Indicate done by returning 1.
               return 1;
@@ -443,27 +447,21 @@ thread_pool_worker (void *)
 }
 
 int
-run_server (ACE_INET_Addr &addr)
+run_server (ACE_INET_Addr const &addr)
 {
-  if (use_reactor)
+  if (use_reactor != Reactor_Type::NONE)
     {
-      ACE_Reactor *new_reactor = 0;
+      std::unique_ptr<ACE_Reactor_Impl> implementation {};
 
       switch (use_reactor)
         {
-        case SELECT:
-          {
-            ACE_Select_Reactor *sr = new ACE_Select_Reactor ();
-            new_reactor = new ACE_Reactor (sr, 1);
-          }
+        case Reactor_Type::SELECT:
+          implementation = std::make_unique<ACE_Select_Reactor> ();
           break;
-        case TP:
-          {
-            ACE_TP_Reactor *sr = new ACE_TP_Reactor ();
-            new_reactor = new ACE_Reactor (sr, 1);
-          }
+        case Reactor_Type::TP:
+          implementation = std::make_unique<ACE_TP_Reactor> ();
           break;
-        case WFMO:
+        case Reactor_Type::WFMO:
 #if defined (ACE_WIN32)
 
 #else
@@ -472,12 +470,16 @@ run_server (ACE_INET_Addr &addr)
         default:
           ACE_ERROR_RETURN ((LM_ERROR, "Invalid reactor type selected\n"), -1);
         }
-      ACE_Reactor::instance (new_reactor, 1);
+
+      std::unique_ptr<ACE_Reactor> new_reactor {
+        std::make_unique<ACE_Reactor> (implementation.get (), true)};
+      implementation.release ();
+      ACE_Reactor::instance (new_reactor.release (), true);
     }
 
   Server server (addr);
 
-  if (!use_reactor)
+  if (use_reactor == Reactor_Type::NONE)
     {
       // Handle input in the current thread.
       // This is actually equivalent to thread-per-connection model.
@@ -488,16 +490,16 @@ run_server (ACE_INET_Addr &addr)
     {
       switch (use_reactor)
         {
-        case SELECT:
+        case Reactor_Type::SELECT:
           // Run the reactor event loop.
           ACE_Reactor::run_event_loop ();
           break;
-        case TP:
+        case Reactor_Type::TP:
           ACE_Thread_Manager::instance ()->spawn_n (svr_thrno,
                                                     thread_pool_worker);
           ACE_Thread_Manager::instance ()->wait ();
           break;
-        case WFMO:
+        case Reactor_Type::WFMO:
           break;
         default:
           break; // won't happen here.
@@ -510,10 +512,11 @@ run_server (ACE_INET_Addr &addr)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int c, dstport = DEFPORT;
-  int priority =
-    (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
-     + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
+  int c {};
+  int dstport {DEFPORT};
+  int const min_priority {ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)};
+  int const max_priority {ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)};
+  int priority {(min_priority + max_priority) / 2};
   priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
                                               priority);
   // Enable FIFO scheduling, e.g.
@@ -539,11 +542,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       switch ((char) c)
         {
         case 'v':
-          VERBOSE = 1;
+          VERBOSE = true;
           break;
 
         case 'h':
-          dump_history = 1;
+          dump_history = true;
           break;
 
         case 'm':
@@ -569,16 +572,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           break;
 
         case 'a':
-          use_reactor = SELECT;
+          use_reactor = Reactor_Type::SELECT;
           break;
 
         case 'x':
-          use_reactor = TP;
+          use_reactor = Reactor_Type::TP;
           break;
 
         case 'w':
 #if defined (ACE_WIN32)
-          use_reactor = WFMO;
+          use_reactor = Reactor_Type::WFMO;
           break;
 #else
           ACE_ERROR_RETURN ((LM_ERROR, "WFMO_Reactor is not supported\n"), -1);
@@ -624,12 +627,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           break;
 
         case 'c':
-          server = 0;
-          client = 1;
+          server = false;
+          client = true;
           break;
         case 's':
-          client = 0;
-          server = 1;
+          client = false;
+          server = true;
           break;
         default:
           usage ();
@@ -637,7 +640,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
     }
 
-  if ((get_opt.opt_ind () >= argc && client != 0) || argc == 1)
+  if ((get_opt.opt_ind () >= argc && client) || argc == 1)
     {
       usage ();
       return 1;
@@ -650,10 +653,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       return run_server (addr);
     }
 
-  if ((u_int) bufsz < sizeof (ACE_hrtime_t))
+  if (static_cast<size_t> (bufsz) < sizeof (ACE_hrtime_t))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "\nbufsz must be >= %d\n",
+                         "\nbufsz must be >= %B\n",
                          sizeof (ACE_hrtime_t)),
                         1);
     }
@@ -662,9 +665,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   if (ACE_OS::ace_isdigit(argv[get_opt.opt_ind ()][0]))
     {
-      if (remote_addr.set (ACE_HTONS(dstport),
-                           (ACE_UINT32) ACE_OS::inet_addr
-                           (ACE_TEXT_ALWAYS_CHAR(argv[get_opt.opt_ind ()])), 0) == -1)
+      ACE_UINT32 const ip_address {
+        static_cast<ACE_UINT32> (
+          ACE_OS::inet_addr (
+            ACE_TEXT_ALWAYS_CHAR (argv[get_opt.opt_ind ()])))};
+      if (remote_addr.set (ACE_HTONS (dstport), ip_address, 0) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "invalid IP address: %s\n",
                            argv[get_opt.opt_ind ()]),
@@ -678,7 +683,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                            argv[get_opt.opt_ind ()]),
                           1);
     }
-  get_opt.opt_ind ()++;
+  ++get_opt.opt_ind ();
 
   ACE_DEBUG ((LM_DEBUG, "Connecting to %s:%d\n",
               remote_addr.get_host_name (),

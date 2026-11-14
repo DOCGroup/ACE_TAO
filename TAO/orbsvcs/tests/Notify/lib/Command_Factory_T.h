@@ -29,18 +29,16 @@ template <class COMMAND>
 class TAO_Notify_Tests_Command_Factory_T : public TAO_Notify_Tests_Command_Factory, public ACE_Service_Object
 {
 public:
-  /// Constructor
   TAO_Notify_Tests_Command_Factory_T ();
 
-  /// Destructor
   ~TAO_Notify_Tests_Command_Factory_T ();
 
   /// = Service_Object virtual method overloads.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
-  virtual int fini ();
+  int init (int argc, ACE_TCHAR *argv[]) override;
+  int fini () override;
 
   /// Create the <COMMAND> command.
-  TAO_Notify_Tests_Command* create ();
+  TAO_Notify_Tests_Command* create () override;
 };
 
 #include "Command_Factory_T.cpp"

@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file ObjectReferenceTemplate_i.h
  *
@@ -9,7 +8,6 @@
  *
  * @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
 
 #ifndef TAO_OBJECT_REFERENCE_TEMPLATE_I_H
 #define TAO_OBJECT_REFERENCE_TEMPLATE_I_H
@@ -23,6 +21,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/ObjRefTemplate/Default_ORTC.h"
+#include <string>
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -53,9 +52,8 @@ namespace TAO
       public virtual CORBA::DefaultValueRefCountBase
   {
   public:
-    /// Constructor
-    ObjectReferenceTemplate (const char *server_id,
-                             const char *orb_id,
+    ObjectReferenceTemplate (std::string const &server_id,
+                             std::string const &orb_id,
                              PortableInterceptor::AdapterName *adapter_name,
                              PortableServer::POA_ptr poa);
     ::CORBA::ValueBase *_copy_value () override;
@@ -82,26 +80,25 @@ namespace TAO
      */
     //@{
     CORBA::Object_ptr make_object (
-      const char * repository_id,
-      const PortableInterceptor::ObjectId & id) override;
+      char const *repository_id,
+      PortableInterceptor::ObjectId const &id) override;
     //@}
 
-  protected:
-    /// Destructor
-    /**
-     * Protected destructor to enforce proper memory management via
-     * reference counting.
-     */
-    ~ObjectReferenceTemplate () override;
-
-  private:
     ObjectReferenceTemplate (ObjectReferenceTemplate const &) = delete;
     ObjectReferenceTemplate &operator= (ObjectReferenceTemplate const &) = delete;
     ObjectReferenceTemplate (ObjectReferenceTemplate &&) = delete;
     ObjectReferenceTemplate &operator= (ObjectReferenceTemplate &&) = delete;
 
-    const char *server_id_;
-    const char *orb_id_;
+  protected:
+    /**
+     * Protected destructor to enforce proper memory management via
+     * reference counting.
+     */
+    ~ObjectReferenceTemplate () override = default;
+
+  private:
+    std::string server_id_;
+    std::string orb_id_;
     PortableInterceptor::AdapterName_var adapter_name_;
     PortableServer::POA_var poa_;
   };

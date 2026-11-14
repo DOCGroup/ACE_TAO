@@ -1,6 +1,6 @@
 #include "tao/PortableServer/PortableServer_WFunctions.h"
 
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -14,15 +14,15 @@ namespace PortableServer
     // We DO NOT include the zero terminator, as this is simply an
     // artifact of the way strings are stored in C.
     //
-    u_int string_length = ACE_OS::wslen (string);
+    u_int const string_length = ACE_OS::wslen (string);
 
-    CORBA::ULong buffer_size = string_length * sizeof (CORBA::WChar);
+    CORBA::ULong const buffer_size = string_length * sizeof (CORBA::WChar);
 
     // Create the buffer for the Id
-    CORBA::Octet *buffer = PortableServer::ObjectId::allocbuf (buffer_size);
+    CORBA::Octet * const buffer = PortableServer::ObjectId::allocbuf (buffer_size);
 
     // Copy contents
-    ACE_OS::memcpy (buffer, string, buffer_size);
+    std::memcpy (buffer, string, buffer_size);
 
     // Create a new ID
     PortableServer::ObjectId *id {};
@@ -30,7 +30,7 @@ namespace PortableServer
                     PortableServer::ObjectId (buffer_size,
                                               buffer_size,
                                               buffer,
-                                              1),
+                                              true),
                     nullptr);
 
     return id;
@@ -46,15 +46,13 @@ namespace PortableServer
     // Allocate an extra slot if the id's length is not "aligned" on a
     // CORBA::WChar.
     if (id.length () % sizeof (CORBA::WChar))
-      string_length++;
+      ++string_length;
 
     // Create space - note that this method adds + 1 for the '\0'.
     CORBA::WChar* string = CORBA::wstring_alloc (string_length);
 
     // Copy the data
-    ACE_OS::memcpy (string,
-                    id.get_buffer (),
-                    id.length ());
+    std::memcpy (string, id.get_buffer (), id.length ());
 
     // Null terminate the string
     string[string_length] = '\0';

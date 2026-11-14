@@ -8,7 +8,6 @@
  * thread for the Bug1492_Regression test.
  */
 
-
 #ifndef BUG1492_REGRESSION_CLIENT_TASK_H
 #define BUG1492_REGRESSION_CLIENT_TASK_H
 
@@ -22,7 +21,6 @@
 class Client_Task : public ACE_Task_Base
 {
  public:
-  /// Constructor
   Client_Task (ACE_TCHAR const *input,
                CORBA::ORB_ptr corb,
                ACE_Thread_Manager *thr_mgr);
@@ -35,13 +33,12 @@ class Client_Task : public ACE_Task_Base
   int svc () override;
 
 private:
-  /// File to read in the remote IOR.
-  ACE_TCHAR const *input_;
+  /// Borrowed command-line path; argv outlives this task.
+  ACE_TCHAR const * const input_;
 
   /// Client ORB.
-  CORBA::ORB_var corb_;
+  CORBA::ORB_var const corb_;
 };
-
 
 #include /**/ "ace/post.h"
 #endif /* BUG1492_REGRESSION_CLIENT_TASK_H */

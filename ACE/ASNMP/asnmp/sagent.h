@@ -56,20 +56,24 @@ public:
   virtual int handle_set( Pdu &pdu, UdpTarget &target) = 0;
 
   /// new pdu received from mgr (reactor calls this)
-  virtual int handle_input(ACE_HANDLE);
+  int handle_input(ACE_HANDLE) override;
 
   /// retrieve io descriptor (reactor uses this)
-  virtual ACE_HANDLE get_handle() const;
+  ACE_HANDLE get_handle() const override;
 
   /// send a response pdu to the mgr
   int respond(Pdu& pdu, UdpTarget& tgt);
 
+  sagent (sagent const &) = delete;
+  sagent (sagent &&) = delete;
+  sagent &operator= (sagent const &) = delete;
+  sagent &operator= (sagent &&) = delete;
+
 protected:
-  sagent(unsigned short port = DEF_AGENT_PORT);
-  virtual ~sagent();
+  explicit sagent (unsigned short port = DEF_AGENT_PORT);
+  ~sagent() override;
 
 private:
-  sagent(const sagent&);
   Pdu pdu_;                     // current input pdu
   UdpTarget tgt_;               //  addr & com strs
 };

@@ -22,7 +22,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
       // --------------------------------------------------------
@@ -30,8 +30,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // that we can stringify it later
       // --------------------------------------------------------
 
-      CORBA::Object_var object = orb->string_to_object (IOR);
-      CORBA::String_var object_ref_str = orb->object_to_string (object.in ());
+      CORBA::Object_var const object = orb->string_to_object (IOR);
+      CORBA::String_var const object_ref_str = orb->object_to_string (object.in ());
       if (object_ref_str.in () == nullptr)
         {
           ACE_DEBUG ((LM_ERROR,
@@ -46,9 +46,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       "ORB_object_to_string test passed with TAO test IOR."));
         }
 
-      object = orb->string_to_object (ORBIT2_IOR);
-      object_ref_str = orb->object_to_string (object.in ());
-      if (object_ref_str.in () == nullptr)
+      CORBA::Object_var const orbit2_object = orb->string_to_object (ORBIT2_IOR);
+      CORBA::String_var const orbit2_object_ref_str = orb->object_to_string (orbit2_object.in ());
+      if (orbit2_object_ref_str.in () == nullptr)
         {
           ACE_DEBUG ((LM_ERROR,
                       "\n"
@@ -64,7 +64,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       ACE_DEBUG ((LM_ERROR,

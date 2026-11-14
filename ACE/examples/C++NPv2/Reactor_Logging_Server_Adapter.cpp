@@ -11,23 +11,14 @@
 #include "Reactor_Logging_Server_Adapter.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdio.h"
-#include <memory>
 
 template <class ACCEPTOR> int
 Reactor_Logging_Server_Adapter<ACCEPTOR>::init (int argc,
                                                 ACE_TCHAR *argv[]) {
-  int i;
-  char **array = nullptr;
-  ACE_NEW_RETURN (array, char*[argc], -1);
-  std::unique_ptr<char *[]> char_argv (array);
-
-  for (i = 0; i < argc; ++i)
-    char_argv[i] = ACE::strnew (ACE_TEXT_ALWAYS_CHAR (argv[i]));
   ACE_NEW_NORETURN (server_, Reactor_Logging_Server<ACCEPTOR>
-                               (i, char_argv.get (),
+                               (argc, argv,
                                 ACE_Reactor::instance ()));
-  for (i = 0; i < argc; ++i) ACE::strdelete (char_argv[i]);
-  return server_ == 0 ? -1 : 0;
+  return server_ == nullptr ? -1 : 0;
 }
 
 // NOTE! The (ACCEPTOR*) cast below is NOT technically necessary, but it
@@ -35,8 +26,7 @@ Reactor_Logging_Server_Adapter<ACCEPTOR>::init (int argc,
 // handle_close().
 template <class ACCEPTOR> int
 Reactor_Logging_Server_Adapter<ACCEPTOR>::fini ()
-{ ((ACCEPTOR*)server_)->handle_close (); server_ = 0; return 0; }
-
+{ ((ACCEPTOR*)server_)->handle_close (); server_ = nullptr; return 0; }
 
 template <class ACCEPTOR> int
 Reactor_Logging_Server_Adapter<ACCEPTOR>::info
@@ -58,11 +48,9 @@ Reactor_Logging_Server_Adapter<ACCEPTOR>::info
   return ACE_Utils::truncate_cast<int> (ACE_OS::strlen (*bufferp));
 }
 
-
 template <class ACCEPTOR> int
 Reactor_Logging_Server_Adapter<ACCEPTOR>::suspend ()
 { return server_->reactor ()->suspend_handler (server_); }
-
 
 template <class ACCEPTOR> int
 Reactor_Logging_Server_Adapter<ACCEPTOR>::resume ()

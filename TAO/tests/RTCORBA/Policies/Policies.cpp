@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file     Policies.cpp
@@ -10,7 +9,6 @@
  *  @author  Irfan Pyarali
  */
 //=============================================================================
-
 
 #include "tao/ORB.h"
 #include "tao/RTCORBA/RTCORBA.h"
@@ -27,10 +25,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var object =
+      CORBA::Object_var const object =
         orb->resolve_initial_references ("RTORB");
 
-      RTCORBA::RTORB_var rtorb =
+      RTCORBA::RTORB_var const rtorb =
         RTCORBA::RTORB::_narrow (object.in ());
 
       /*
@@ -61,105 +59,105 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       */
 
       {
-        RTCORBA::ThreadpoolId poolid = 0;
+        RTCORBA::ThreadpoolId const poolid {};
 
-        RTCORBA::ThreadpoolPolicy_var policy1 =
+        RTCORBA::ThreadpoolPolicy_var const policy1 =
           rtorb->create_threadpool_policy (poolid);
 
         CORBA::Any policy_value;
         policy_value <<= poolid;
 
-        CORBA::Policy_var policy =
+        CORBA::Policy_var const policy =
           orb->create_policy (RTCORBA::THREADPOOL_POLICY_TYPE,
                               policy_value);
 
-        RTCORBA::ThreadpoolPolicy_var policy2 =
+        RTCORBA::ThreadpoolPolicy_var const policy2 =
           RTCORBA::ThreadpoolPolicy::_narrow (policy.in ());
 
         ACE_ASSERT (policy1->threadpool () == policy2->threadpool ());
       }
 
       {
-        RTCORBA::ProtocolList empty_protocols;
+        RTCORBA::ProtocolList const empty_protocols;
 
-        RTCORBA::ServerProtocolPolicy_var policy1 =
+        RTCORBA::ServerProtocolPolicy_var const policy1 =
           rtorb->create_server_protocol_policy (empty_protocols);
 
         CORBA::Any policy_value;
         policy_value <<= empty_protocols;
 
-        CORBA::Policy_var policy =
+        CORBA::Policy_var const policy =
           orb->create_policy (RTCORBA::SERVER_PROTOCOL_POLICY_TYPE,
                               policy_value);
 
-        RTCORBA::ServerProtocolPolicy_var policy2 =
+        RTCORBA::ServerProtocolPolicy_var const policy2 =
           RTCORBA::ServerProtocolPolicy::_narrow (policy.in ());
 
-        RTCORBA::ProtocolList_var protocols1 =
+        RTCORBA::ProtocolList_var const protocols1 =
           policy1->protocols ();
-        RTCORBA::ProtocolList_var protocols2 =
+        RTCORBA::ProtocolList_var const protocols2 =
           policy2->protocols ();
 
         ACE_ASSERT (protocols1->length () == protocols2->length ());
       }
 
       {
-        RTCORBA::ProtocolList empty_protocols;
+        RTCORBA::ProtocolList const empty_protocols;
 
-        RTCORBA::ClientProtocolPolicy_var policy1 =
+        RTCORBA::ClientProtocolPolicy_var const policy1 =
           rtorb->create_client_protocol_policy (empty_protocols);
 
         CORBA::Any policy_value;
         policy_value <<= empty_protocols;
 
-        CORBA::Policy_var policy =
+        CORBA::Policy_var const policy =
           orb->create_policy (RTCORBA::CLIENT_PROTOCOL_POLICY_TYPE,
                               policy_value);
 
-        RTCORBA::ClientProtocolPolicy_var policy2 =
+        RTCORBA::ClientProtocolPolicy_var const policy2 =
           RTCORBA::ClientProtocolPolicy::_narrow (policy.in ());
 
-        RTCORBA::ProtocolList_var protocols1 =
+        RTCORBA::ProtocolList_var const protocols1 =
           policy1->protocols ();
-        RTCORBA::ProtocolList_var protocols2 =
+        RTCORBA::ProtocolList_var const protocols2 =
           policy2->protocols ();
 
         ACE_ASSERT (protocols1->length () == protocols2->length ());
       }
 
       {
-        RTCORBA::PrivateConnectionPolicy_var policy1 =
+        RTCORBA::PrivateConnectionPolicy_var const policy1 =
           rtorb->create_private_connection_policy ();
 
         CORBA::Any policy_value;
 
-        CORBA::Policy_var policy =
+        CORBA::Policy_var const policy =
           orb->create_policy (RTCORBA::PRIVATE_CONNECTION_POLICY_TYPE,
                               policy_value);
 
-        RTCORBA::PrivateConnectionPolicy_var policy2 =
+        RTCORBA::PrivateConnectionPolicy_var const policy2 =
           RTCORBA::PrivateConnectionPolicy::_narrow (policy.in ());
       }
 
       {
-        RTCORBA::PriorityBands empty_priority_bands;
+        RTCORBA::PriorityBands const empty_priority_bands;
 
-        RTCORBA::PriorityBandedConnectionPolicy_var policy1 =
+        RTCORBA::PriorityBandedConnectionPolicy_var const policy1 =
           rtorb->create_priority_banded_connection_policy (empty_priority_bands);
 
         CORBA::Any policy_value;
         policy_value <<= empty_priority_bands;
 
-        CORBA::Policy_var policy =
+        CORBA::Policy_var const policy =
           orb->create_policy (RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE,
                               policy_value);
 
-        RTCORBA::PriorityBandedConnectionPolicy_var policy2 =
+        RTCORBA::PriorityBandedConnectionPolicy_var const policy2 =
           RTCORBA::PriorityBandedConnectionPolicy::_narrow (policy.in ());
 
-        RTCORBA::PriorityBands_var priority_bands1 =
+        RTCORBA::PriorityBands_var const priority_bands1 =
           policy1->priority_bands ();
-        RTCORBA::PriorityBands_var priority_bands2 =
+        RTCORBA::PriorityBands_var const priority_bands2 =
           policy2->priority_bands ();
 
         ACE_ASSERT (priority_bands1->length () == priority_bands2->length ());
@@ -171,7 +169,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught");
       return -1;

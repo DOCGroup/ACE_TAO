@@ -1,7 +1,6 @@
 #include "Foo_C_cust_op4.h"
 #include "Foo_C_i.h"
 
-
 Foo_C_cust_op4::Foo_C_cust_op4(Foo_C_i* servant, long arg)
   : TAO::CSD::TP_Custom_Request_Operation(servant),
     arg_(arg),
@@ -33,13 +32,11 @@ Foo_C_cust_op4::~Foo_C_cust_op4()
   }
 }
 
-
 void
 Foo_C_cust_op4::execute_i()
 {
   this->servant_->cust_op4(this->arg_);
 }
-
 
 void
 Foo_C_cust_op4::cancel_i()

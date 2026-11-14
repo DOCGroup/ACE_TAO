@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file     UIPMC_Mcast_Transport.h
  *
  *  @author Vladimir Zykov <vz@prismtech.com>
  */
-//=============================================================================
 
 #ifndef TAO_UIPMC_MCAST_TRANSPORT_H
 #define TAO_UIPMC_MCAST_TRANSPORT_H
@@ -23,6 +21,7 @@
 #include "ace/SOCK_Stream.h"
 #include "ace/Svc_Handler.h"
 #include "ace/Refcountable_T.h"
+#include <deque>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -52,12 +51,15 @@ public:
                                TAO_PG::UIPMC_Recv_Packet *,
                                ACE_SYNCH_NULL_MUTEX>;
 
-  /// Constructor.
   TAO_UIPMC_Mcast_Transport (TAO_UIPMC_Mcast_Connection_Handler *handler,
                              TAO_ORB_Core *orb_core);
 
-  /// Default destructor.
   ~TAO_UIPMC_Mcast_Transport () override;
+
+  TAO_UIPMC_Mcast_Transport (TAO_UIPMC_Mcast_Transport const &) = delete;
+  TAO_UIPMC_Mcast_Transport (TAO_UIPMC_Mcast_Transport &&) = delete;
+  TAO_UIPMC_Mcast_Transport & operator= (TAO_UIPMC_Mcast_Transport const &) = delete;
+  TAO_UIPMC_Mcast_Transport & operator= (TAO_UIPMC_Mcast_Transport &&) = delete;
 
   /// Look for the documentation in Transport.h.
   int handle_input (TAO_Resume_Handle &rh,
@@ -135,7 +137,7 @@ private:
   TAO_SYNCH_MUTEX recv_lock_;
 
   /// Complete packets.
-  using Packets_Queue = ACE_Unbounded_Queue<TAO_PG::UIPMC_Recv_Packet *>;
+  using Packets_Queue = std::deque<TAO_PG::UIPMC_Recv_Packet *>;
   Packets_Queue complete_;
 
   /// A lock for access synchronization to complete queue.

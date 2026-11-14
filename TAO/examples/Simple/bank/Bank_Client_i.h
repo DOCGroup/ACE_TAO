@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef BANK_CLIENT_I_H
 #define BANK_CLIENT_I_H
 
@@ -28,14 +27,17 @@
 class Bank_Client_i
 {
 public:
-  /// Constructor
-  Bank_Client_i ();
+  Bank_Client_i () = default;
 
-  /// Destructor
-  ~Bank_Client_i ();
+  ~Bank_Client_i () = default;
+
+  Bank_Client_i (Bank_Client_i const &) = delete;
+  Bank_Client_i &operator= (Bank_Client_i const &) = delete;
+  Bank_Client_i (Bank_Client_i &&) = delete;
+  Bank_Client_i &operator= (Bank_Client_i &&) = delete;
 
   /// Execute the methods.
-  int run (const char *, int, ACE_TCHAR *[]);
+  int run (char const *, int, ACE_TCHAR *[]);
 
 private:
   /// Method that calls all the test functions

@@ -11,6 +11,8 @@
 #include "tao/RTCORBA/Thread_Pool.h"
 #include "tao/Profile.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Boolean
@@ -22,16 +24,16 @@ TAO_RT_Collocation_Resolver::is_collocated (CORBA::Object_ptr object) const
     return false;
 
   // Get the orb core.
-  TAO_ORB_Core *orb_core = object->_stubobj ()->servant_orb_var ()->orb_core ();
+  TAO_ORB_Core * const orb_core = object->_stubobj ()->servant_orb_var ()->orb_core ();
 
   // Lookup the target POA.  Note that Object Adapter lock is held
   // until <servant_upcall> dies.
   TAO::Portable_Server::Servant_Upcall servant_upcall (orb_core);
-  TAO_Root_POA *poa =
+  TAO_Root_POA * const poa =
     servant_upcall.lookup_POA (object->_stubobj ()->object_key ());
 
   // Get the thread pool associated with this POA.
-  TAO_Thread_Pool *target_thread_pool =
+  TAO_Thread_Pool * const target_thread_pool =
     static_cast <TAO_Thread_Pool *> (poa->thread_pool ());
 
   // If the target POA does not have a dedicated thread pool, then all
@@ -40,19 +42,19 @@ TAO_RT_Collocation_Resolver::is_collocated (CORBA::Object_ptr object) const
     return true;
 
   /// Get the ORB_Core's TSS resources.
-  TAO_ORB_Core_TSS_Resources &tss =
+  TAO_ORB_Core_TSS_Resources const &tss =
     *orb_core->get_tss_resources ();
 
   // Get the lane for this thread.
-  TAO_Thread_Lane *current_thread_lane =
+  TAO_Thread_Lane * const current_thread_lane =
     static_cast <TAO_Thread_Lane *> (tss.lane_);
 
-  TAO_Thread_Pool *current_thread_pool = nullptr;
+  TAO_Thread_Pool *current_thread_pool {};
 
   // If we don't have a lane, we don't have a pool.
-  if (current_thread_lane)
+  if (current_thread_lane != nullptr)
     current_thread_pool =
-      &current_thread_lane->pool ();
+      std::addressof (current_thread_lane->pool ());
 
   // If the pools don't match, then the current thread belongs to a
   // different pool than POA.  Therefore, this object is not
@@ -73,7 +75,7 @@ TAO_RT_Collocation_Resolver::is_collocated (CORBA::Object_ptr object) const
   // Grab the priority model used by the POA.  Note that this cannot
   // be NOT_SPECIFIED because NOT_SPECIFIED is not allowed with thread
   // pool with lanes.
-  TAO::Portable_Server::Cached_Policies::PriorityModel priority_model =
+  TAO::Portable_Server::Cached_Policies::PriorityModel const priority_model =
     poa->priority_model ();
 
   // If the policy is CLIENT_PROPAGATED, then we are collocated
@@ -99,7 +101,6 @@ TAO_RT_Collocation_Resolver::is_collocated (CORBA::Object_ptr object) const
   else
     return false;
 }
-
 
 ACE_STATIC_SVC_DEFINE (TAO_RT_Collocation_Resolver,
                        ACE_TEXT ("RT_Collocation_Resolver"),

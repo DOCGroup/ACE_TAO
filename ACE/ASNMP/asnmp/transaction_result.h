@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 class transaction;
 class ASNMP_Export transaction_result
 {

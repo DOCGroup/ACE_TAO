@@ -11,41 +11,22 @@
 #include "ace/OS_NS_time.h"
 #include <iostream>
 
-// Implementation skeleton constructor
-Messenger_i::Messenger_i ()
-  {
-  }
-
-// Implementation skeleton destructor
-Messenger_i::~Messenger_i ()
-  {
-  }
-
-CORBA::Boolean Messenger_i::send_message (
-    char const * user_name,
-    char const * subject,
-    char *& message
-  )
-
-  {
-    //Add your implementation here
-    std::cerr << "Message from: " << user_name << std::endl;
-    std::cerr << "Subject:      " << subject << std::endl;
-    std::cerr << "Message:      " << message << std::endl;
-    return 1;
-  }
-
-char * Messenger_i::get_time (
-
-  )
-
+CORBA::Boolean
+Messenger_i::send_message (char const *user_name,
+                           char const *subject,
+                           char *&message)
 {
-  time_t thetime;
-  struct tm * timeinfo;
+  std::cerr << "Message from: " << user_name << std::endl;
+  std::cerr << "Subject:      " << subject << std::endl;
+  std::cerr << "Message:      " << message << std::endl;
+  return true;
+}
 
-  ACE_OS::time(&thetime);
-  timeinfo = ACE_OS::localtime(&thetime);
-  char *timestring = CORBA::string_dup(ACE_OS::asctime(timeinfo));
+char *Messenger_i::get_time ()
+{
+  time_t current_time {};
+  ACE_OS::time (&current_time);
+  struct tm const * const time_info = ACE_OS::localtime (&current_time);
 
-  return timestring;
+  return CORBA::string_dup (ACE_OS::asctime (time_info));
 }

@@ -29,16 +29,13 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_POSIX_Wakeup_Completion : public ACE_POSIX_Asynch_Result
 {
 public:
-  /// Constructor.
   ACE_POSIX_Wakeup_Completion (const ACE_Handler::Proxy_Ptr &handler_proxy,
                                const void *act = nullptr,
                                ACE_HANDLE event = ACE_INVALID_HANDLE,
                                int priority = 0,
                                int signal_number = ACE_SIGRTMIN);
 
-  /// Destructor.
   ~ACE_POSIX_Wakeup_Completion () override;
-
 
   /// This method calls the <handler>'s <handle_wakeup> method.
   void complete (size_t bytes_transferred = 0,
@@ -115,7 +112,7 @@ ACE_POSIX_Proactor::get_handle () const
 ACE_Asynch_Read_Stream_Impl *
 ACE_POSIX_Proactor::create_asynch_read_stream ()
 {
-  ACE_Asynch_Read_Stream_Impl *implementation = nullptr;
+  ACE_Asynch_Read_Stream_Impl *implementation {};
   ACE_NEW_RETURN (implementation,
                   ACE_POSIX_Asynch_Read_Stream (this),
                   nullptr);
@@ -147,11 +144,10 @@ ACE_POSIX_Proactor::create_asynch_read_stream_result
   return implementation;
 }
 
-
 ACE_Asynch_Write_Stream_Impl *
 ACE_POSIX_Proactor::create_asynch_write_stream ()
 {
-  ACE_Asynch_Write_Stream_Impl *implementation = nullptr;
+  ACE_Asynch_Write_Stream_Impl *implementation {};
   ACE_NEW_RETURN (implementation,
                   ACE_POSIX_Asynch_Write_Stream (this),
                   nullptr);
@@ -183,11 +179,10 @@ ACE_POSIX_Proactor::create_asynch_write_stream_result
   return implementation;
 }
 
-
 ACE_Asynch_Read_File_Impl *
 ACE_POSIX_Proactor::create_asynch_read_file ()
 {
-  ACE_Asynch_Read_File_Impl *implementation = nullptr;
+  ACE_Asynch_Read_File_Impl *implementation {};
   ACE_NEW_RETURN (implementation,
                   ACE_POSIX_Asynch_Read_File (this),
                   nullptr);
@@ -223,11 +218,10 @@ ACE_POSIX_Proactor::create_asynch_read_file_result
   return implementation;
 }
 
-
 ACE_Asynch_Write_File_Impl *
 ACE_POSIX_Proactor::create_asynch_write_file ()
 {
-  ACE_Asynch_Write_File_Impl *implementation = nullptr;
+  ACE_Asynch_Write_File_Impl *implementation {};
   ACE_NEW_RETURN (implementation,
                   ACE_POSIX_Asynch_Write_File (this),
                   nullptr);
@@ -263,11 +257,10 @@ ACE_POSIX_Proactor::create_asynch_write_file_result
   return implementation;
 }
 
-
 ACE_Asynch_Read_Dgram_Impl *
 ACE_POSIX_Proactor::create_asynch_read_dgram ()
 {
-    ACE_Asynch_Read_Dgram_Impl *implementation = nullptr;
+    ACE_Asynch_Read_Dgram_Impl *implementation {};
     ACE_NEW_RETURN (implementation,
                     ACE_POSIX_Asynch_Read_Dgram (this),
                     nullptr);
@@ -287,7 +280,7 @@ ACE_POSIX_Proactor::create_asynch_read_dgram_result
    int priority ,
    int signal_number)
 {
-  ACE_Asynch_Read_Dgram_Result_Impl *implementation=nullptr;
+  ACE_Asynch_Read_Dgram_Result_Impl *implementation {};
   ACE_NEW_RETURN (implementation,
                   ACE_POSIX_Asynch_Read_Dgram_Result(handler_proxy,
                                                      handle,
@@ -304,11 +297,10 @@ ACE_POSIX_Proactor::create_asynch_read_dgram_result
   return implementation;
 }
 
-
 ACE_Asynch_Write_Dgram_Impl *
 ACE_POSIX_Proactor::create_asynch_write_dgram ()
 {
-        ACE_Asynch_Write_Dgram_Impl *implementation = nullptr;
+        ACE_Asynch_Write_Dgram_Impl *implementation {};
         ACE_NEW_RETURN (implementation,
                         ACE_POSIX_Asynch_Write_Dgram (this),
                         nullptr);
@@ -328,7 +320,7 @@ ACE_POSIX_Proactor::create_asynch_write_dgram_result
    int priority ,
    int signal_number)
 {
-  ACE_Asynch_Write_Dgram_Result_Impl *implementation=nullptr;
+  ACE_Asynch_Write_Dgram_Result_Impl *implementation {};
   ACE_NEW_RETURN (implementation,
                   ACE_POSIX_Asynch_Write_Dgram_Result(handler_proxy,
                                                       handle,
@@ -344,11 +336,10 @@ ACE_POSIX_Proactor::create_asynch_write_dgram_result
   return implementation;
 }
 
-
 ACE_Asynch_Accept_Impl *
 ACE_POSIX_Proactor::create_asynch_accept ()
 {
-  ACE_Asynch_Accept_Impl *implementation = nullptr;
+  ACE_Asynch_Accept_Impl *implementation {};
   ACE_NEW_RETURN (implementation,
                   ACE_POSIX_Asynch_Accept (this),
                   nullptr);
@@ -383,11 +374,10 @@ ACE_POSIX_Proactor::create_asynch_accept_result
   return implementation;
 }
 
-
 ACE_Asynch_Connect_Impl *
 ACE_POSIX_Proactor::create_asynch_connect ()
 {
-  ACE_Asynch_Connect_Impl *implementation = nullptr;
+  ACE_Asynch_Connect_Impl *implementation {};
   ACE_NEW_RETURN (implementation,
                   ACE_POSIX_Asynch_Connect (this),
                   nullptr);
@@ -416,11 +406,10 @@ ACE_POSIX_Proactor::create_asynch_connect_result
   return implementation;
 }
 
-
 ACE_Asynch_Transmit_File_Impl *
 ACE_POSIX_Proactor::create_asynch_transmit_file ()
 {
-  ACE_Asynch_Transmit_File_Impl *implementation = nullptr;
+  ACE_Asynch_Transmit_File_Impl *implementation {};
   ACE_NEW_RETURN (implementation,
                   ACE_POSIX_Asynch_Transmit_File (this),
                   nullptr);
@@ -507,9 +496,9 @@ ACE_POSIX_Proactor::application_specific_code (ACE_POSIX_Asynch_Result *asynch_r
 int
 ACE_POSIX_Proactor::post_wakeup_completions (int how_many)
 {
-  ACE_POSIX_Wakeup_Completion *wakeup_completion = nullptr;
+  ACE_POSIX_Wakeup_Completion *wakeup_completion {};
 
-  for (int ci = 0; ci < how_many; ci++)
+  for (int ci = 0; ci < how_many; ++ci)
     {
       ACE_NEW_RETURN
         (wakeup_completion,
@@ -527,7 +516,6 @@ ACE_POSIX_Proactor::get_impl_type ()
 {
   return PROACTOR_POSIX;
 }
-
 
 /**
  * @class ACE_AIOCB_Notify_Pipe_Manager
@@ -563,7 +551,6 @@ public:
   /// <application_specific_code>
   ACE_AIOCB_Notify_Pipe_Manager (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor);
 
-  /// Destructor.
   ~ACE_AIOCB_Notify_Pipe_Manager () override;
 
   /// Send the result pointer through the notification pipe.
@@ -659,7 +646,6 @@ ACE_AIOCB_Notify_Pipe_Manager::~ACE_AIOCB_Notify_Pipe_Manager ()
      ACE_OS::closesocket (h);
 }
 
-
 int
 ACE_AIOCB_Notify_Pipe_Manager::notify ()
 {
@@ -705,7 +691,6 @@ ACE_AIOCB_Notify_Pipe_Manager::handle_read_stream
                 ACE_TEXT ("%N:%l:(%P | %t):%p\n"),
                 ACE_TEXT ("ACE_AIOCB_Notify_Pipe_Manager::handle_read_stream:")
                 ACE_TEXT ("Read from pipe failed")));
-
 
   // 2. Do the upcalls
   // this->posix_aiocb_proactor_->process_result_queue ();
@@ -755,7 +740,6 @@ ACE_POSIX_AIOCB_Proactor::ACE_POSIX_AIOCB_Proactor (size_t max_aio_operations,
   // provide correct calls for virtual functions !!!
 }
 
-// Destructor.
 ACE_POSIX_AIOCB_Proactor::~ACE_POSIX_AIOCB_Proactor ()
 {
   this->close();
@@ -766,7 +750,6 @@ ACE_POSIX_AIOCB_Proactor::get_impl_type ()
 {
   return PROACTOR_AIOCB;
 }
-
 
 int
 ACE_POSIX_AIOCB_Proactor::close ()
@@ -798,7 +781,7 @@ int ACE_POSIX_AIOCB_Proactor::create_result_aiocb_list ()
                   -1);
 
   // Initialize the array.
-  for (size_t ai = 0; ai < this->aiocb_list_max_size_; ai++)
+  for (size_t ai = 0; ai < this->aiocb_list_max_size_; ++ai)
     {
       aiocb_list_[ai] = nullptr;
       result_list_[ai] = nullptr;
@@ -816,13 +799,13 @@ int ACE_POSIX_AIOCB_Proactor::delete_result_aiocb_list ()
 
   // Try to cancel all uncompleted operations; POSIX systems may have
   // hidden system threads that still can work with our aiocbs!
-  for (ai = 0; ai < aiocb_list_max_size_; ai++)
+  for (ai = 0; ai < aiocb_list_max_size_; ++ai)
     if (this->aiocb_list_[ai] != nullptr)  // active operation
       this->cancel_aiocb (result_list_[ai]);
 
   int num_pending = 0;
 
-  for (ai = 0; ai < aiocb_list_max_size_; ai++)
+  for (ai = 0; ai < aiocb_list_max_size_; ++ai)
     {
       if (this->aiocb_list_[ai] == nullptr ) //  not active operation
         continue;
@@ -837,7 +820,7 @@ int ACE_POSIX_AIOCB_Proactor::delete_result_aiocb_list ()
       //don't delete uncompleted AIOCB's
       if (flg_completed == 0)  // not completed !!!
         {
-          num_pending++;
+          ++num_pending;
 #if 0
           char * errtxt = ACE_OS::strerror (error_status);
           if (errtxt == 0)
@@ -845,7 +828,6 @@ int ACE_POSIX_AIOCB_Proactor::delete_result_aiocb_list ()
 
           char * op = (aiocb_list_[ai]->aio_lio_opcode == LIO_WRITE )?
             "WRITE":"READ" ;
-
 
           ACELIB_ERROR ((LM_ERROR,
                       ACE_TEXT("slot=%d op=%s status=%d xfercnt=%d %s\n"),
@@ -1017,8 +999,7 @@ ACE_POSIX_Asynch_Result * ACE_POSIX_AIOCB_Proactor::getq_result ()
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, nullptr));
 
-
-  ACE_POSIX_Asynch_Result* result = nullptr;
+  ACE_POSIX_Asynch_Result* result {};
 
   if (this->result_queue_.dequeue_head (result) != 0)
     return nullptr;
@@ -1036,12 +1017,12 @@ ACE_POSIX_Asynch_Result * ACE_POSIX_AIOCB_Proactor::getq_result ()
 int ACE_POSIX_AIOCB_Proactor::clear_result_queue ()
 {
   int ret_val = 0;
-  ACE_POSIX_Asynch_Result* result = nullptr;
+  ACE_POSIX_Asynch_Result* result {};
 
   while ((result = this->getq_result ()) != nullptr)
     {
       delete result;
-      ret_val++;
+      ++ret_val;
     }
 
   return ret_val;
@@ -1050,7 +1031,7 @@ int ACE_POSIX_AIOCB_Proactor::clear_result_queue ()
 int ACE_POSIX_AIOCB_Proactor::process_result_queue ()
 {
   int ret_val = 0;
-  ACE_POSIX_Asynch_Result* result = nullptr;
+  ACE_POSIX_Asynch_Result* result {};
 
   while ((result = this->getq_result ()) != nullptr)
     {
@@ -1060,7 +1041,7 @@ int ACE_POSIX_AIOCB_Proactor::process_result_queue ()
              nullptr,  // No completion key.
              result->error());   //0, No error.
 
-      ret_val++;
+      ++ret_val;
     }
 
   return ret_val;
@@ -1106,7 +1087,7 @@ ACE_POSIX_AIOCB_Proactor::handle_events_i (u_long milli_seconds)
       int error_status = 0;
       size_t transfer_count = 0;
 
-      for (;; retval++)
+      for (;; ++retval)
         {
           ACE_POSIX_Asynch_Result *asynch_result =
             find_completed_aio (error_status,
@@ -1164,12 +1145,12 @@ ACE_POSIX_AIOCB_Proactor::find_completed_aio (int &error_status,
 
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->mutex_, nullptr));
 
-  ACE_POSIX_Asynch_Result *asynch_result = nullptr;
+  ACE_POSIX_Asynch_Result *asynch_result {};
 
   if (num_started_aio_ == 0)  // save time
     return nullptr;
 
-  for (; count > 0; index++ , count--)
+  for (; count > 0; ++index, --count)
     {
       if (index >= aiocb_list_max_size_) // like a wheel
         index = 0;
@@ -1189,11 +1170,11 @@ ACE_POSIX_AIOCB_Proactor::find_completed_aio (int &error_status,
 
   aiocb_list_[index] = nullptr;
   result_list_[index] = nullptr;
-  aiocb_list_cur_size_--;
+  --aiocb_list_cur_size_;
 
-  num_started_aio_--;  // decrement count active aios
-  index++;             // for next iteration
-  count--;             // for next iteration
+  --num_started_aio_;  // decrement count active aios
+  ++index;              // for next iteration
+  --count;              // for next iteration
 
   this->start_deferred_aio ();
   //make attempt to start deferred AIO
@@ -1201,7 +1182,6 @@ ACE_POSIX_AIOCB_Proactor::find_completed_aio (int &error_status,
 
   return asynch_result;
 }
-
 
 int
 ACE_POSIX_AIOCB_Proactor::start_aio (ACE_POSIX_Asynch_Result *result,
@@ -1251,7 +1231,7 @@ ACE_POSIX_AIOCB_Proactor::start_aio (ACE_POSIX_Asynch_Result *result,
   size_t index = static_cast<size_t> (slot);
 
   result_list_[index] = result;   //Store result ptr anyway
-  aiocb_list_cur_size_++;
+  ++aiocb_list_cur_size_;
 
   ret_val = start_aio_i (result);
   switch (ret_val)
@@ -1261,7 +1241,7 @@ ACE_POSIX_AIOCB_Proactor::start_aio (ACE_POSIX_Asynch_Result *result,
       return 0;
 
     case 1:     // OS AIO queue overflow
-      num_deferred_aiocb_ ++;
+      ++num_deferred_aiocb_;
       return 0;
 
     default:    // Invalid request, there is no point
@@ -1269,7 +1249,7 @@ ACE_POSIX_AIOCB_Proactor::start_aio (ACE_POSIX_Asynch_Result *result,
     }
 
   result_list_[index] = nullptr;
-  aiocb_list_cur_size_--;
+  --aiocb_list_cur_size_;
   return -1;
 }
 
@@ -1295,7 +1275,7 @@ ACE_POSIX_AIOCB_Proactor::allocate_aio_slot (ACE_POSIX_Asynch_Result *result)
     }
   else  //try to find free slot as usual, but starting from 1
     {
-      for (i= 1; i < this->aiocb_list_max_size_; i++)
+      for (i= 1; i < this->aiocb_list_max_size_; ++i)
         if (result_list_[i] == nullptr)
           break;
     }
@@ -1324,7 +1304,7 @@ ACE_POSIX_AIOCB_Proactor::start_aio_i (ACE_POSIX_Asynch_Result *result)
   ACE_TRACE ("ACE_POSIX_AIOCB_Proactor::start_aio_i");
 
   int ret_val;
-  const ACE_TCHAR *ptype = nullptr;
+  ACE_TCHAR const *ptype {};
 
   // Start IO
   // The following aio_ptr anathema is required to work around a bug in
@@ -1364,7 +1344,6 @@ ACE_POSIX_AIOCB_Proactor::start_aio_i (ACE_POSIX_Asynch_Result *result)
   return ret_val;
 }
 
-
 int
 ACE_POSIX_AIOCB_Proactor::start_deferred_aio ()
 {
@@ -1383,7 +1362,7 @@ ACE_POSIX_AIOCB_Proactor::start_deferred_aio ()
 
   size_t i = 0;
 
-  for (i= 0; i < this->aiocb_list_max_size_; i++)
+  for (i= 0; i < this->aiocb_list_max_size_; ++i)
     if (result_list_[i] !=nullptr       // check for
        && aiocb_list_[i]  ==nullptr)     // deferred AIO
       break;
@@ -1403,7 +1382,7 @@ ACE_POSIX_AIOCB_Proactor::start_deferred_aio ()
     {
     case 0 :    //started OK , decrement count of deferred AIOs
       aiocb_list_[i] = result;
-      num_deferred_aiocb_ --;
+      --num_deferred_aiocb_;
       return 0;
 
     case 1 :
@@ -1453,7 +1432,7 @@ ACE_POSIX_AIOCB_Proactor::cancel_aio (ACE_HANDLE handle)
 
     size_t ai = 0;
 
-    for (ai = 0; ai < this->aiocb_list_max_size_; ai++)
+    for (ai = 0; ai < this->aiocb_list_max_size_; ++ai)
       {
         if (this->result_list_[ai] == nullptr)    // Skip empty slot
           continue;
@@ -1467,12 +1446,12 @@ ACE_POSIX_AIOCB_Proactor::cancel_aio (ACE_HANDLE handle)
 
         if (this->aiocb_list_[ai] == nullptr)  // Canceling a deferred operation
           {
-            num_cancelled++;
-            this->num_deferred_aiocb_--;
+            ++num_cancelled;
+            --this->num_deferred_aiocb_;
 
             this->aiocb_list_[ai] = nullptr;
             this->result_list_[ai] = nullptr;
-            this->aiocb_list_cur_size_--;
+            --this->aiocb_list_cur_size_;
 
             asynch_result->set_error (ECANCELED);
             asynch_result->set_bytes_transferred (0);
@@ -1484,7 +1463,7 @@ ACE_POSIX_AIOCB_Proactor::cancel_aio (ACE_HANDLE handle)
             int rc_cancel = this->cancel_aiocb (asynch_result);
 
             if (rc_cancel == 0)    //notification in the future
-              num_cancelled++;     //it is OS responsiblity
+              ++num_cancelled;     //it is OS responsiblity
           }
       }
 
@@ -1514,7 +1493,6 @@ ACE_POSIX_AIOCB_Proactor::cancel_aiocb (ACE_POSIX_Asynch_Result * result)
   else // (rc == AIO_NOTCANCELED)
     return 2;
 }
-
 
 // *********************************************************************
 
@@ -1567,7 +1545,7 @@ ACE_POSIX_SIG_Proactor::ACE_POSIX_SIG_Proactor (const sigset_t signal_set,
   // the signal set we use, and also set up its process signal action
   // to allow signal info to be passed into sigwait/sigtimedwait.
   int member = 0;
-  for (int si = ACE_SIGRTMIN; si <= ACE_SIGRTMAX; si++)
+  for (int si = ACE_SIGRTMIN; si <= ACE_SIGRTMAX; ++si)
     {
       member = sigismember (&signal_set,
                             si);
@@ -1669,7 +1647,7 @@ ACE_POSIX_SIG_Proactor::create_asynch_timer
       int si;
       for (si = ACE_SIGRTMAX;
            (is_member == 0) && (si >= ACE_SIGRTMIN);
-           si--)
+           --si)
         {
           is_member = sigismember (&this->RT_completion_signals_,
                                    si);
@@ -1747,7 +1725,6 @@ ACE_POSIX_SIG_Proactor::setup_signal_handler (int signal_number) const
   return 0;
 }
 
-
 int
 ACE_POSIX_SIG_Proactor::block_signals () const
 {
@@ -1760,7 +1737,7 @@ ACE_POSIX_SIG_Proactor::allocate_aio_slot (ACE_POSIX_Asynch_Result *result)
   size_t i = 0;
 
   //try to find free slot as usual, starting from 0
-  for (i = 0; i < this->aiocb_list_max_size_; i++)
+  for (i = 0; i < this->aiocb_list_max_size_; ++i)
     if (result_list_[i] == nullptr)
       break;
 
@@ -1852,7 +1829,7 @@ ACE_POSIX_SIG_Proactor::handle_events_i (const ACE_Time_Value *timeout)
   int ret_que = 0;
 
   if (flg_aio)
-    for (;; ret_aio++)
+    for (;; ++ret_aio)
       {
         ACE_POSIX_Asynch_Result *asynch_result =
           find_completed_aio (error_status,
@@ -1911,7 +1888,6 @@ ACE_POSIX_Asynch_Timer::complete (size_t       /* bytes_transferred */,
   if (handler != nullptr)
     handler->handle_time_out (this->time_, this->act ());
 }
-
 
 // *********************************************************************
 

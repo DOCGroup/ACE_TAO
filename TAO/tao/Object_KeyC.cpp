@@ -201,7 +201,7 @@ TAO::ObjectKey::demarshal_key (TAO::ObjectKey &key,
       // of the stream. (See bug 58.)
       if (_tao_seq_len > strm.length ())
         {
-          return 0;
+          return false;
         }
 
       // Set the length of the sequence.
@@ -210,7 +210,7 @@ TAO::ObjectKey::demarshal_key (TAO::ObjectKey &key,
       // If length is 0 we return true.
       if (0 >= _tao_seq_len)
         {
-          return 1;
+          return true;
         }
 
       // Retrieve all the elements.
@@ -221,7 +221,7 @@ TAO::ObjectKey::demarshal_key (TAO::ObjectKey &key,
         key.replace (_tao_seq_len, strm.start ());
         key.mb ()->wr_ptr (key.mb()->rd_ptr () + _tao_seq_len);
         strm.skip_bytes (_tao_seq_len);
-        return 1;
+        return true;
       }
       return strm.read_octet_array (key.get_buffer (),
                                     _tao_seq_len);
@@ -230,7 +230,7 @@ TAO::ObjectKey::demarshal_key (TAO::ObjectKey &key,
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
 
     }
-  return 0;
+  return false;
 }
 
 #endif /* end #if !defined */
@@ -243,16 +243,14 @@ TAO::ObjectKey::demarshal_key (TAO::ObjectKey &key,
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
-    const TAO::ObjectKey &_tao_sequence
-  )
+    const TAO::ObjectKey &_tao_sequence)
 {
   return TAO::marshal_sequence(strm, _tao_sequence);
 }
 
 CORBA::Boolean operator>> (
     TAO_InputCDR &strm,
-    TAO::ObjectKey &_tao_sequence
-  )
+    TAO::ObjectKey &_tao_sequence)
 {
   return TAO::demarshal_sequence(strm, _tao_sequence);
 }

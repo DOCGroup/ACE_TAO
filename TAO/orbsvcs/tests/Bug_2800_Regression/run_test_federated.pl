@@ -8,15 +8,9 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
-use Cwd;
 
 $status = 0;
 $debug_level = '0';
-$quiet = 0;
-
-if ($ARGV[0] eq '-q') {
-    $quiet = 1;
-}
 
 foreach $i (@ARGV) {
     if ($i eq '-debug') {

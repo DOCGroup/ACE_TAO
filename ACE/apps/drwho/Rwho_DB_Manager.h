@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef _RWHO_DB_MANAGER_H
 #define _RWHO_DB_MANAGER_H
 
@@ -38,8 +37,8 @@ public:
 private:
   ACE_Dirent rwho_dir;
   whod host_data;
-  int number_of_users;
-  int current_user;
+  int number_of_users {};
+  int current_user {};
   const int WHOD_HEADER_SIZE;
   char original_pathname[MAXPATHLEN + 1];
   const char *rwho_dir_name;

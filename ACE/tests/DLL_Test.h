@@ -29,7 +29,6 @@
 class Hello
 {
 public:
-  /// Destructor
   virtual ~Hello ()
     {
       ACE_TRACE ("Hello::~Hello");
@@ -64,7 +63,7 @@ public:
 
   virtual ~Child ();
 
-  virtual void test ();
+  void test () override;
 };
 
 #endif /* ACE_TESTS_DLL_TEST_H */

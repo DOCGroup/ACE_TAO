@@ -16,10 +16,8 @@
 class Test_Protocols_Hooks : public TAO_Protocols_Hooks
 {
 public:
-  /// Constructor
   Test_Protocols_Hooks () = default;
 
-  /// Destructor
   ~Test_Protocols_Hooks () override = default;
   Test_Protocols_Hooks (Test_Protocols_Hooks const &) = delete;
   Test_Protocols_Hooks (Test_Protocols_Hooks &&) = delete;
@@ -68,8 +66,7 @@ public:
   CORBA::Long get_dscp_codepoint () override;
 
   void get_selector_hook (CORBA::Policy *model_policy,
-                          CORBA::Boolean
-                          &is_client_propagated,
+                          CORBA::Boolean &is_client_propagated,
                           CORBA::Short &server_priority) override;
 
   void get_selector_bands_policy_hook (CORBA::Policy *bands_policy,

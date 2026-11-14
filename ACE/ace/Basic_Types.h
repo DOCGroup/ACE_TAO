@@ -515,7 +515,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #  define ACE_UINT64_DBLCAST_ADAPTER(n) (n)
 #endif /* ! ACE_WIN32 && */
 
-
 // The number of bytes in a float.
 # ifndef ACE_SIZEOF_FLOAT
 #   if FLT_MAX_EXP == 128

@@ -1,17 +1,15 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_pwd.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_ctype.h"
+#include "ace/OS_NS_unistd.h"
 #include "File_Manager.h"
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <memory>
+#include <string>
 
-File_Manager::File_Manager ()
-  : number_of_friends (0),
-    max_key_length (0),
-    buffer_ptr (0),
-    current_ptr (0),
-    buffer_size (0)
-{
-}
+File_Manager::File_Manager () = default;
 
 // Either opens the friends file (if FILENAME is not a NULL pointer)
 // or opens up the password file.  In either case, the number of
@@ -20,7 +18,7 @@ File_Manager::File_Manager ()
 int
 File_Manager::open_file (const char *filename)
 {
-  return filename == 0
+  return filename == nullptr
     ? this->open_passwd_file ()
     : this->open_friends_file (filename);
 }
@@ -37,14 +35,14 @@ File_Manager::get_login_and_real_name (const char *&login_name, const char *&rea
   // Skip to the end of the login name.
 
   while (ACE_OS::ace_isalnum (*buf_ptr))
-    buf_ptr++;
+    ++buf_ptr;
 
   *buf_ptr++ = '\0';
 
   // Now skip over white space to *start* of real name!
 
   while (ACE_OS::ace_isspace (*buf_ptr) || *buf_ptr == '\0')
-    buf_ptr++;
+    ++buf_ptr;
 
   real_name = buf_ptr;
 
@@ -55,13 +53,13 @@ File_Manager::get_login_and_real_name (const char *&login_name, const char *&rea
 
   for (char *tmp_ptr = buf_ptr - 1;
        ACE_OS::ace_isspace (*tmp_ptr);
-       tmp_ptr--)
+       --tmp_ptr)
     *tmp_ptr = '\0';
 
   // Skip over consecutive blank lines.
 
   while (*buf_ptr == '\n')
-    buf_ptr++;
+    ++buf_ptr;
 
   this->current_ptr = buf_ptr;
 }
@@ -71,39 +69,46 @@ File_Manager::get_login_and_real_name (const char *&login_name, const char *&rea
 int
 File_Manager::open_passwd_file ()
 {
-  char *filename = const_cast<char *> ("passwd-XXXXXX");
+  char filename[] = "passwd-XXXXXX";
   ACE_HANDLE f = ACE_OS::mkstemp (filename);
-  FILE *fp = ACE_OS::fdopen (f, "w");
-
-  if (fp == 0)
+  if (f == ACE_INVALID_HANDLE)
     return -1;
 
-  passwd *pwent;
+  {
+    using File_Ptr = std::unique_ptr<std::FILE, int (*) (std::FILE *)>;
+    File_Ptr const fp (ACE_OS::fdopen (f, "w"), std::fclose);
 
-  for (ACE_OS::setpwent ();
-       (pwent = ACE_OS::getpwent ()) != 0; )
-    if (*pwent->pw_gecos != '\0')
+    if (!fp)
       {
-        char *cp = ACE_OS::strchr (pwent->pw_gecos, ',');
-
-        if (cp != 0)
-          *cp = '\0';
-
-        ACE_OS::fprintf (fp,
-                         "%-8.8s %s\n",
-                         pwent->pw_name,
-                         pwent->pw_gecos);
-        this->number_of_friends++;
+        ACE_OS::close (f);
+        return -1;
       }
 
-  ACE_OS::endpwent ();
+    passwd *pwent;
 
-  ACE_OS::fclose (fp);
+    for (ACE_OS::setpwent ();
+         (pwent = ACE_OS::getpwent ()) != nullptr; )
+      if (*pwent->pw_gecos != '\0')
+        {
+          char *cp = std::strchr (pwent->pw_gecos, ',');
+
+          if (cp != nullptr)
+            *cp = '\0';
+
+          std::fprintf (fp.get (),
+                        "%-8.8s %s\n",
+                        pwent->pw_name,
+                        pwent->pw_gecos);
+          ++this->number_of_friends;
+        }
+
+    ACE_OS::endpwent ();
+  }
 
   if (this->mmap_.map (filename) == -1)
     return -1;
 
-  this->buffer_ptr = (char *) this->mmap_.addr ();
+  this->buffer_ptr = static_cast<char *> (this->mmap_.addr ());
 
   this->buffer_size = this->mmap_.size ();
   this->current_ptr = this->buffer_ptr;
@@ -116,25 +121,24 @@ File_Manager::open_passwd_file ()
 int
 File_Manager::open_friends_file (const char *filename)
 {
-  char directory[MAXPATHLEN];
-  const char *pathname = directory;
+  std::string directory;
+  const char *pathname = filename;
 
   // See if we've got a filename or a pathname (i.e., directory/filename).
 
-  if (ACE_OS::strrchr (filename, '/') != 0)
+  if (std::strrchr (filename, '/') != nullptr)
     // We've got a complete pathname.
     pathname = filename;
   else
     {
-      directory[0] = '\0';
-
-      const char *home = ACE_OS::getenv ("HOME");
-      if (home != 0)
+      char const * const home = std::getenv ("HOME");
+      if (home != nullptr)
         {
-          ACE_OS::strcat (directory, home);
-          ACE_OS::strcat (directory, "/");
+          directory = home;
+          directory += '/';
         }
-      ACE_OS::strcat (directory, filename);
+      directory += filename;
+      pathname = directory.c_str ();
     }
 
   // Do the mmap'ing.
@@ -142,7 +146,7 @@ File_Manager::open_friends_file (const char *filename)
   if (this->mmap_.map (pathname) == -1)
     return -1;
 
-  this->buffer_ptr = (char *) this->mmap_.addr ();
+  this->buffer_ptr = static_cast<char *> (this->mmap_.addr ());
 
   this->buffer_size = this->mmap_.size ();
   this->current_ptr = this->buffer_ptr;
@@ -154,7 +158,7 @@ File_Manager::open_friends_file (const char *filename)
        ;)
     if (*--cp == '\n')
       {
-        this->number_of_friends++;
+        ++this->number_of_friends;
 
         // Skip consecutive newlines.
         while (cp[-1] == '\n')

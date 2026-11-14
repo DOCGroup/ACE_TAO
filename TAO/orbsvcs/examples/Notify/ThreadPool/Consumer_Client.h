@@ -10,7 +10,6 @@
 
 #include /**/ "ace/pre.h"
 #include "ace/Task.h"
-#include "ace/SString.h"
 
 #include "ORB_Objects.h"
 #include "tao/RTCORBA/RTCORBA.h"
@@ -25,23 +24,24 @@ class TAO_Notify_ThreadPool_Consumer;
 class TAO_Notify_ThreadPool_Consumer_Client  : public ACE_Task_Base
 {
 public:
-  /// Constructor
-  TAO_Notify_ThreadPool_Consumer_Client (TAO_Notify_ORB_Objects& orb_objects);
+  explicit TAO_Notify_ThreadPool_Consumer_Client (TAO_Notify_ORB_Objects& orb_objects);
 
-  /// Destructor
-  ~TAO_Notify_ThreadPool_Consumer_Client ();
+  TAO_Notify_ThreadPool_Consumer_Client (TAO_Notify_ThreadPool_Consumer_Client const&) = delete;
+  TAO_Notify_ThreadPool_Consumer_Client (TAO_Notify_ThreadPool_Consumer_Client&&) = delete;
+  TAO_Notify_ThreadPool_Consumer_Client& operator= (TAO_Notify_ThreadPool_Consumer_Client const&) = delete;
+  TAO_Notify_ThreadPool_Consumer_Client& operator= (TAO_Notify_ThreadPool_Consumer_Client&&) = delete;
+
+  ~TAO_Notify_ThreadPool_Consumer_Client () override = default;
 
   /// Init
   void _init ();
 
   /// Run
-  void run ();
-
   /// Parse Args
   int parse_args (int argc, ACE_TCHAR *argv[]);
 
   /// The thread entry point.
-  virtual int svc ();
+  int svc () override;
 
   /// Dump stats.
   void dump_stats ();
@@ -51,25 +51,19 @@ protected:
   PortableServer::POA_ptr create_rt_poa ();
 
   /// ORB Objects.
-  TAO_Notify_ORB_Objects orb_objects_;
+  TAO_Notify_ORB_Objects& orb_objects_;
 
-  /// Lock to serialize internal state.
-  TAO_SYNCH_MUTEX lock_;
+  // The POA retains ownership of this servant after implicit activation.
+  TAO_Notify_ThreadPool_Consumer* consumer_ {};
 
-  /// Count how many consumers are done
-  int consumer_done_count_;
+  struct Options
+  {
+    int proxy_supplier_thread_count {};
+    int max_events {10};
+    long delay {};
+  };
 
-  /// The Consumer.
-  TAO_Notify_ThreadPool_Consumer* consumer_;
-
-  /// ProxySuppler Thread count.
-  int proxy_supplier_thread_count_;
-
-  /// Max events that we expect to receive.
-  int max_events_;
-
-  /// Delay in ms
-  long delay_;
+  Options options_ {};
 };
 
 #include /**/ "ace/post.h"

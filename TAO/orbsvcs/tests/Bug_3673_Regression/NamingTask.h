@@ -1,10 +1,12 @@
-#ifndef NAMINGTASK_H
-#define NAMINGTASK_H
+#ifndef TAO_ORBSVCS_TESTS_BUG_3673_REGRESSION_NAMING_TASK_H
+#define TAO_ORBSVCS_TESTS_BUG_3673_REGRESSION_NAMING_TASK_H
 
 #include "tao/CORBA_String.h"
 #include "tao/ORB.h"
 #include "ace/Task.h"
 #include "ace/Synch_Traits.h"
+
+#include <atomic>
 
 class NamingTask : public ACE_Task_Base
 {
@@ -20,12 +22,12 @@ public:
   void waitInit ();
   void end ();
 
-  char const *ior ();
+  char const *ior () const;
 
 private:
-  CORBA::ORB_var orb_;
-  bool initialized_;
-  CORBA::String_var ior_;
+  CORBA::ORB_var orb_ {};
+  std::atomic<bool> initialized_ { false };
+  CORBA::String_var ior_ {};
 };
 
-#endif
+#endif /* TAO_ORBSVCS_TESTS_BUG_3673_REGRESSION_NAMING_TASK_H */

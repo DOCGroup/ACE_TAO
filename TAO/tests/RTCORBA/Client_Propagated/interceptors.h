@@ -23,29 +23,34 @@ class Client_Request_Interceptor
   /// Client-side interceptor.  Verifies presence of RTCORBA priority
   /// context in the reply messages.
 public:
-  Client_Request_Interceptor (const char *orb_id);
+  explicit Client_Request_Interceptor (char const *orb_id);
   // ctor.
 
-  virtual ~Client_Request_Interceptor ();
+  ~Client_Request_Interceptor () override = default;
   // dtor.
 
-  virtual char * name ();
+  char * name () override;
   // Canonical name of the interceptor.
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr);
+  void send_poll (PortableInterceptor::ClientRequestInfo_ptr) override;
 
-  virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri);
+  void send_request (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri);
+  void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_other (PortableInterceptor::ClientRequestInfo_ptr);
+  void receive_other (PortableInterceptor::ClientRequestInfo_ptr) override;
 
-  virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri);
+  void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
 private:
-  const char *myname_;
+  Client_Request_Interceptor (Client_Request_Interceptor const &) = delete;
+  Client_Request_Interceptor &operator= (Client_Request_Interceptor const &) = delete;
+  Client_Request_Interceptor (Client_Request_Interceptor &&) = delete;
+  Client_Request_Interceptor &operator= (Client_Request_Interceptor &&) = delete;
+
+  char const * const myname_;
 
   CORBA::String_var orb_id_;
   // The ID of the ORB where this interceptor was created, usually
@@ -53,7 +58,6 @@ private:
 
   CORBA::ORB_var orb_;
 };
-
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

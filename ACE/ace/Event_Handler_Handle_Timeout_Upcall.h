@@ -14,6 +14,8 @@
 
 #include "ace/Timer_Queuefwd.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Time_Value;
@@ -31,36 +33,35 @@ class ACE_Export ACE_Event_Handler_Handle_Timeout_Upcall
 public:
   ACE_Event_Handler_Handle_Timeout_Upcall () = default;
 
-  /// Destructor.
   ~ACE_Event_Handler_Handle_Timeout_Upcall () = default;
 
   /// This method is called when a timer is registered.
   int registration (ACE_Timer_Queue &timer_queue,
                     ACE_Event_Handler *handler,
-                    const void *arg);
+                    void const *arg);
 
   /// This method is called before the timer expires.
   int preinvoke (ACE_Timer_Queue &timer_queue,
                  ACE_Event_Handler *handler,
-                 const void *arg,
+                 void const *arg,
                  int recurring_timer,
-                 const ACE_Time_Value &cur_time,
-                 const void *&upcall_act);
+                 ACE_Time_Value const &cur_time,
+                 void const *&upcall_act);
 
   /// This method is called when the timer expires.
   int timeout (ACE_Timer_Queue &timer_queue,
                ACE_Event_Handler *handler,
-               const void *arg,
+               void const *arg,
                int recurring_timer,
-               const ACE_Time_Value &cur_time);
+               ACE_Time_Value const &cur_time);
 
   /// This method is called after the timer expires.
   int postinvoke (ACE_Timer_Queue &timer_queue,
                   ACE_Event_Handler *handler,
-                  const void *arg,
+                  void const *arg,
                   int recurring_timer,
-                  const ACE_Time_Value &cur_time,
-                  const void *upcall_act);
+                  ACE_Time_Value const &cur_time,
+                  void const *upcall_act);
 
   /// This method is called when a handler is cancelled
   int cancel_type (ACE_Timer_Queue &timer_queue,
@@ -78,20 +79,20 @@ public:
   /// the timer is still contained in it
   int deletion (ACE_Timer_Queue &timer_queue,
                 ACE_Event_Handler *handler,
-                const void *arg);
+                void const *arg);
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  ACE_Event_Handler_Handle_Timeout_Upcall (const ACE_Event_Handler_Handle_Timeout_Upcall &) = delete;
+  ACE_Event_Handler_Handle_Timeout_Upcall (ACE_Event_Handler_Handle_Timeout_Upcall const &) = delete;
   ACE_Event_Handler_Handle_Timeout_Upcall (ACE_Event_Handler_Handle_Timeout_Upcall &&) = delete;
-  ACE_Event_Handler_Handle_Timeout_Upcall &operator= (const ACE_Event_Handler_Handle_Timeout_Upcall &) = delete;
+  ACE_Event_Handler_Handle_Timeout_Upcall &operator= (ACE_Event_Handler_Handle_Timeout_Upcall const &) = delete;
   ACE_Event_Handler_Handle_Timeout_Upcall &operator= (ACE_Event_Handler_Handle_Timeout_Upcall &&) = delete;
 
   /// Flag indicating that reference counting is required for this
   /// event handler upcall.
-  int requires_reference_counting_ {0};
+  bool requires_reference_counting_ {false};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

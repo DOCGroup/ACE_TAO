@@ -23,7 +23,7 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::ACE_NonBlocking_Connect_Handler (A
                                                                                long id)
   : connector_ (connector),
     svc_handler_ (sh),
-    cleanup_svc_handler_ (0),
+    cleanup_svc_handler_ (nullptr),
     timer_id_ (id)
 {
   ACE_TRACE ("ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::ACE_NonBlocking_Connect_Handler");
@@ -31,7 +31,7 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::ACE_NonBlocking_Connect_Handler (A
   this->reference_counting_policy ().value
     (ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
 
-  if (this->svc_handler_ != 0 &&
+  if (this->svc_handler_ != nullptr &&
       this->svc_handler_->reference_counting_policy ().value () ==
         ACE_Event_Handler::Reference_Counting_Policy::ENABLED)
     {
@@ -127,7 +127,6 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::close (SVC_HANDLER *&sh)
   return true;
 }
 
-
 template <typename SVC_HANDLER> int
 ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_timeout
 (const ACE_Time_Value &tv,
@@ -136,20 +135,19 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_timeout
   // This method is called if a connection times out before completing.
   ACE_TRACE ("ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_timeout");
 
-  SVC_HANDLER *svc_handler = nullptr;
+  SVC_HANDLER *svc_handler {};
   int const retval = this->close (svc_handler) ? 0 : -1;
 
   // Forward to the SVC_HANDLER the <arg> that was passed in as a
   // magic cookie during ACE_Connector::connect().  This gives the
   // SVC_HANDLER an opportunity to take corrective action (e.g., wait
   // a few milliseconds and try to reconnect again.
-  if (svc_handler != 0 && svc_handler->handle_timeout (tv, arg) == -1)
+  if (svc_handler != nullptr && svc_handler->handle_timeout (tv, arg) == -1)
     svc_handler->handle_close (svc_handler->get_handle (),
                                ACE_Event_Handler::TIMER_MASK);
 
   return retval;
 }
-
 
 template <typename SVC_HANDLER> int
 ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_input (ACE_HANDLE)
@@ -158,11 +156,11 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_input (ACE_HANDLE)
   // establishment.
   ACE_TRACE ("ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_input");
 
-  SVC_HANDLER *svc_handler = nullptr;
+  SVC_HANDLER *svc_handler {};
   int const retval = this->close (svc_handler) ? 0 : -1;
 
   // Close Svc_Handler.
-  if (svc_handler != 0)
+  if (svc_handler != nullptr)
     {
       svc_handler->close (NORMAL_CLOSE_OPERATION);
     }
@@ -192,10 +190,10 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_output (ACE_HANDLE handle)
 
   // Grab the connector ref before smashing ourselves in close().
   ACE_Connector_Base<SVC_HANDLER> &connector = this->connector_;
-  SVC_HANDLER *svc_handler = nullptr;
+  SVC_HANDLER *svc_handler {};
   int const retval = this->close (svc_handler) ? 0 : -1;
 
-  if (svc_handler != 0)
+  if (svc_handler != nullptr)
     {
       connector.initialize_svc_handler (handle, svc_handler);
     }
@@ -235,7 +233,7 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::make_svc_handler (SVC_HANDLER *&sh)
 {
   ACE_TRACE ("ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::make_svc_handler");
 
-  if (sh == 0)
+  if (sh == nullptr)
     ACE_NEW_RETURN (sh,
                     SVC_HANDLER,
                     -1);
@@ -251,11 +249,11 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::activate_svc_handler (SVC_HANDLER *s
 {
   ACE_TRACE ("ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::activate_svc_handler");
   // No errors initially
-  bool error = false;
+  bool error {};
 
   // See if we should enable non-blocking I/O on the <svc_handler>'s
   // peer.
-  if (ACE_BIT_ENABLED (this->flags_, ACE_NONBLOCK) != 0)
+  if (ACE_BIT_ENABLED (this->flags_, ACE_NONBLOCK))
     {
       if (svc_handler->peer ().enable (ACE_NONBLOCK) == -1)
         error = true;
@@ -406,8 +404,8 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::connect_i
   if (this->make_svc_handler (sh) == -1)
     return -1;
 
-  ACE_Time_Value *timeout = nullptr;
-  int const use_reactor = synch_options[ACE_Synch_Options::USE_REACTOR];
+  ACE_Time_Value *timeout {};
+  bool const use_reactor = synch_options[ACE_Synch_Options::USE_REACTOR] != 0;
 
   if (use_reactor)
     timeout = const_cast<ACE_Time_Value *> (&ACE_Time_Value::zero);
@@ -415,7 +413,7 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::connect_i
     timeout = const_cast<ACE_Time_Value *> (synch_options.time_value ());
 
   int result;
-  if (sh_copy == 0)
+  if (sh_copy == nullptr)
     result = this->connect_svc_handler (sh,
                                         remote_addr,
                                         timeout,
@@ -445,7 +443,7 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::connect_i
       // ACE_NonBlocking_Connect_Handler with the ACE_Reactor so that
       // it will call us back when the connection is complete or we
       // timeout, whichever comes first...
-      if (sh_copy == 0)
+      if (sh_copy == nullptr)
         result = this->nonblocking_connect (sh, synch_options);
       else
         result = this->nonblocking_connect (*sh_copy, synch_options);
@@ -463,12 +461,12 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::connect_i
       ACE_Errno_Guard error (errno);
       // Make sure to close down the service handler to avoid handle
       // leaks.
-      if (sh_copy == 0)
+      if (sh_copy == nullptr)
         {
-          if (sh)
+          if (sh != nullptr)
             sh->close (CLOSE_DURING_NEW_CONNECTION);
         }
-      else if (*sh_copy)
+      else if (*sh_copy != nullptr)
         (*sh_copy)->close (CLOSE_DURING_NEW_CONNECTION);
     }
 
@@ -483,9 +481,9 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::connect_n
  ACE_TCHAR *failed_svc_handlers,
  const ACE_Synch_Options &synch_options)
 {
-  int result = 0;
+  int result {};
 
-  for (size_t i = 0; i < n; i++)
+  for (size_t i {}; i < n; ++i)
     {
       if (this->connect (sh[i], remote_addrs[i], synch_options) == -1
           && !(synch_options[ACE_Synch_Options::USE_REACTOR]
@@ -522,10 +520,10 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::cancel (SVC_HANDLER *sh)
   NBCH *nbch =
     dynamic_cast<NBCH *> (handler);
 
-  if (nbch == 0)
+  if (nbch == nullptr)
     return -1;
 
-  SVC_HANDLER *tmp_sh = nullptr;
+  SVC_HANDLER *tmp_sh {};
 
   if (nbch->close (tmp_sh) == false)
     return -1;
@@ -541,7 +539,7 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::nonblocking_connect
   ACE_TRACE ("ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::nonblocking_connect");
 
   // Must have a valid Reactor for non-blocking connects to work.
-  if (this->reactor () == 0)
+  if (this->reactor () == nullptr)
     return -1;
 
   // Register the pending SVC_HANDLER so that it can be activated
@@ -549,8 +547,8 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::nonblocking_connect
 
   ACE_HANDLE handle = sh->get_handle ();
   long timer_id = -1;
-  ACE_Time_Value *tv = nullptr;
-  NBCH *nbch = nullptr;
+  ACE_Time_Value *tv {};
+  NBCH *nbch {};
 
   ACE_NEW_RETURN (nbch,
                   NBCH (*this,
@@ -687,8 +685,8 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::close ()
   // Go through all the non-blocking handles.  It is necessary to
   // create a new iterator each time because we remove from the handle
   // set when we cancel the Svc_Handler.
-  ACE_HANDLE *handle = nullptr;
-  while (1)
+  ACE_HANDLE *handle {};
+  while (true)
     {
       ACE_Unbounded_Set_Iterator<ACE_HANDLE>
         iterator (this->non_blocking_handles ());
@@ -710,7 +708,7 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::close ()
       // find_handler() incremented handler's refcount; ensure it's decremented
       ACE_Event_Handler_var safe_handler (handler);
       NBCH *nbch = dynamic_cast<NBCH *> (handler);
-      if (nbch == 0)
+      if (nbch == nullptr)
         {
           ACELIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("%t: Connector::close h %d handler %@ ")
@@ -787,7 +785,7 @@ ACE_Strategy_Connector<SVC_HANDLER, PEER_CONNECTOR>::open (ACE_Reactor *r,
                                                                  int flags)
 {
   ACE_TRACE ("ACE_Strategy_Connector<SVC_HANDLER, PEER_CONNECTOR>::open");
-  return this->open (r, 0, 0, 0, flags);
+  return this->open (r, nullptr, nullptr, nullptr, flags);
 }
 
 template <typename SVC_HANDLER, typename PEER_CONNECTOR> int
@@ -809,40 +807,39 @@ ACE_Strategy_Connector<SVC_HANDLER, PEER_CONNECTOR>::open
   // Initialize the creation strategy.
 
   // First we decide if we need to clean up.
-  if (this->creation_strategy_ != 0 &&
+  if (this->creation_strategy_ != nullptr &&
       this->delete_creation_strategy_ &&
-      cre_s != 0)
+      cre_s != nullptr)
     {
       delete this->creation_strategy_;
       this->creation_strategy_ = nullptr;
       this->delete_creation_strategy_ = false;
     }
 
-  if (cre_s != 0)
+  if (cre_s != nullptr)
     this->creation_strategy_ = cre_s;
-  else if (this->creation_strategy_ == 0)
+  else if (this->creation_strategy_ == nullptr)
     {
       ACE_NEW_RETURN (this->creation_strategy_,
-                      CREATION_STRATEGY (0, r),
+                      CREATION_STRATEGY (nullptr, r),
                       -1);
       this->delete_creation_strategy_ = true;
     }
 
-
   // Initialize the accept strategy.
 
-  if (this->connect_strategy_ != 0 &&
+  if (this->connect_strategy_ != nullptr &&
       this->delete_connect_strategy_ &&
-      conn_s != 0)
+      conn_s != nullptr)
     {
       delete this->connect_strategy_;
       this->connect_strategy_ = nullptr;
       this->delete_connect_strategy_ = false;
     }
 
-  if (conn_s != 0)
+  if (conn_s != nullptr)
     this->connect_strategy_ = conn_s;
-  else if (this->connect_strategy_ == 0)
+  else if (this->connect_strategy_ == nullptr)
     {
       ACE_NEW_RETURN (this->connect_strategy_,
                       CONNECT_STRATEGY,
@@ -852,18 +849,18 @@ ACE_Strategy_Connector<SVC_HANDLER, PEER_CONNECTOR>::open
 
   // Initialize the concurrency strategy.
 
-  if (this->concurrency_strategy_ != 0 &&
+  if (this->concurrency_strategy_ != nullptr &&
       this->delete_concurrency_strategy_ &&
-      con_s != 0)
+      con_s != nullptr)
     {
       delete this->concurrency_strategy_;
       this->concurrency_strategy_ = nullptr;
       this->delete_concurrency_strategy_ = false;
     }
 
-  if (con_s != 0)
+  if (con_s != nullptr)
     this->concurrency_strategy_ = con_s;
-  else if (this->concurrency_strategy_ == 0)
+  else if (this->concurrency_strategy_ == nullptr)
     {
       ACE_NEW_RETURN (this->concurrency_strategy_,
                       CONCURRENCY_STRATEGY,

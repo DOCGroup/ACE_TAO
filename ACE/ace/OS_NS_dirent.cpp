@@ -1,6 +1,5 @@
 #include "ace/OS_NS_dirent.h"
 
-
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # include "ace/OS_NS_dirent.inl"
 #endif /* ACE_HAS_INLINED_OSCALLS */
@@ -48,7 +47,7 @@ ACE_OS::opendir_emulation (const ACE_TCHAR *filename)
 #    define INVALID_FILE_ATTRIBUTES 0xFFFFFFFF
 #  endif
 
-  ACE_DIR *dir = nullptr;
+  ACE_DIR *dir {};
   ACE_TCHAR extra[3] = {0,0,0};
 
    // Check if filename is a directory.
@@ -174,8 +173,8 @@ ACE_OS::scandir_emulation (const ACE_TCHAR *dirname,
   else if (namelist == 0)
     return -1;
 
-  ACE_DIRENT **vector = nullptr;
-  ACE_DIRENT *dp = nullptr;
+  ACE_DIRENT **vector {};
+  ACE_DIRENT *dp {};
   int arena_size = 0;
   int nfiles = 0;
   int fail = 0;
@@ -190,7 +189,7 @@ ACE_OS::scandir_emulation (const ACE_TCHAR *dirname,
       // If we get here, we have a dirent that the user likes.
       if (nfiles == arena_size)
         {
-          ACE_DIRENT **newv = nullptr;
+          ACE_DIRENT **newv {};
           int new_arena_size;
           if (arena_size == 0)
             new_arena_size = 10;

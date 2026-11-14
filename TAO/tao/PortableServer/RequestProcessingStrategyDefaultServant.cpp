@@ -68,7 +68,7 @@ namespace TAO
           // other threads will not be able to make progress since
           // <Object_Adapter::non_servant_upcall_in_progress_> has been
           // set.
-          Non_Servant_Upcall non_servant_upcall (*this->poa_);
+          Non_Servant_Upcall const non_servant_upcall (*this->poa_);
           ACE_UNUSED_ARG (non_servant_upcall);
 
           servant->_add_ref ();
@@ -103,7 +103,7 @@ namespace TAO
       TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
       bool & /*wait_occurred_restart_call*/)
     {
-      PortableServer::Servant servant = nullptr;
+      PortableServer::Servant servant {};
 
       servant = this->poa_->find_servant (system_id,
                                           servant_upcall,
@@ -174,7 +174,7 @@ namespace TAO
       if (servant)
         {
           // ATTENTION: Trick locking here, see class header for details
-          Non_Servant_Upcall non_servant_upcall (*this->poa_);
+          Non_Servant_Upcall const non_servant_upcall (*this->poa_);
           ACE_UNUSED_ARG (non_servant_upcall);
 
           try

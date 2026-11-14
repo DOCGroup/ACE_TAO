@@ -92,7 +92,6 @@ public:
   /// Default constructor
   ACE_At_Thread_Exit ();
 
-  /// The destructor
   virtual ~ACE_At_Thread_Exit ();
 
   /// At_Thread_Exit has the ownership?
@@ -130,7 +129,6 @@ protected:
 class ACE_Export ACE_At_Thread_Exit_Func : public ACE_At_Thread_Exit
 {
 public:
-   /// Constructor
    ACE_At_Thread_Exit_Func (void *object,
                             ACE_CLEANUP_FUNC func,
                             void *param = nullptr);

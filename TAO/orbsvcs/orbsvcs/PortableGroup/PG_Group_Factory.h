@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file  PG_Group_Factory.h
  *
  * @author Dale Wilson <wilson_d@ociweb.com>
  * @author Byron Harris <harrisb@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_PG_GROUP_FACTORY_H
 #define TAO_PG_GROUP_FACTORY_H
@@ -29,6 +27,7 @@
 #include "ace/ACE.h"
 #include "ace/Hash_Map_Manager.h"
 
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -73,11 +72,14 @@ namespace TAO
        TAO_SYNCH_MUTEX>;
 
   public:
-    /// Constructor.
     PG_Group_Factory ();
 
-    /// Destructor.
     virtual ~PG_Group_Factory ();
+
+    PG_Group_Factory (PG_Group_Factory const &) = delete;
+    PG_Group_Factory (PG_Group_Factory &&) = delete;
+    PG_Group_Factory & operator= (PG_Group_Factory const &) = delete;
+    PG_Group_Factory & operator= (PG_Group_Factory &&) = delete;
 
     void init (
       CORBA::ORB_ptr orb,
@@ -85,9 +87,9 @@ namespace TAO
       PortableGroup::FactoryRegistry_ptr factory_registry);
 
     TAO::PG_Object_Group * create_group (
-        const char * type_id,
-        const PortableGroup::Criteria & the_criteria,
-        const TAO::PG_Property_Set_var & typeid_properties);
+        char const * type_id,
+        PortableGroup::Criteria const & the_criteria,
+        TAO::PG_Property_Set_var const & typeid_properties);
 
     void delete_group (PortableGroup::ObjectGroup_ptr object_group);
 
@@ -95,7 +97,7 @@ namespace TAO
 
     PortableGroup::ObjectGroups *
     groups_at_location (
-        const PortableGroup::Location & the_location);
+        PortableGroup::Location const & the_location);
 
     /**
      * return all groups in the factory
@@ -140,7 +142,7 @@ namespace TAO
      * @return bool true if found
      */
     int find_group_with_name (
-      const char* group_name,
+      char const * group_name,
       ::TAO::PG_Object_Group *& group);
 
     /**
@@ -171,10 +173,10 @@ namespace TAO
       PortableGroup::FactoryRegistry_ptr factory_registry,
       TAO::PG_Object_Group_Manipulator & manipulator,
       CORBA::Object_ptr empty_group,
-      const PortableGroup::TagGroupTaggedComponent & tagged_component,
-      const char * type_id,
-      const PortableGroup::Criteria & the_criteria,
-      const TAO::PG_Property_Set_var & type_properties,
+      PortableGroup::TagGroupTaggedComponent const & tagged_component,
+      char const * type_id,
+      PortableGroup::Criteria const & the_criteria,
+      TAO::PG_Property_Set_var const & type_properties,
       TAO::Storable_Factory & storable_factory);
 
     /**
@@ -188,9 +190,9 @@ namespace TAO
       TAO::PG_Object_Group_Manipulator & manipulator,
       TAO::Storable_Factory & storable_factory);
 
-    bool use_persistence_;
+    bool use_persistence_ {};
 
-    PG_Group_List_Store * list_store_ {};
+    std::unique_ptr<PG_Group_List_Store> list_store_;
 
   private:
     CORBA::ORB_var orb_;
@@ -203,7 +205,7 @@ namespace TAO
 
     ::TAO::PG_Object_Group_Manipulator manipulator_;
 
-    const char * domain_id_;
+    char const * const domain_id_;
 
     /**
      * If persistence is being used, update the map as
@@ -216,8 +218,8 @@ namespace TAO
     ///// Support for object group persistent /////
 
     // Lazily read groups from store
-    bool groups_read_;
-    Storable_Factory * storable_factory_ {};
+    bool groups_read_ {};
+    std::unique_ptr<Storable_Factory> storable_factory_;
   };
 } // namespace TAO
 

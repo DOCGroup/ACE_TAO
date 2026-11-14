@@ -19,7 +19,6 @@
 #include "orbsvcs/CosNotificationC.h"
 #include "orbsvcs/Notify/Topology_Object.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -33,13 +32,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Notify_Serv_Export TAO_Notify_EventType : public TAO_Notify::Topology_Savable
 {
 public:
-  /// Constructor
   TAO_Notify_EventType ();
   TAO_Notify_EventType (const char* domain_name, const char* type_name);
-  TAO_Notify_EventType (const CosNotification::EventType& event_type);
-  // Constructor
+  explicit TAO_Notify_EventType (const CosNotification::EventType& event_type);
+  TAO_Notify_EventType (const TAO_Notify_EventType& event_type);
 
-  /// Destructor
   virtual ~TAO_Notify_EventType ();
 
   /// hash value
@@ -51,11 +48,13 @@ public:
   /// Assignment operator.
   TAO_Notify_EventType& operator=(const TAO_Notify_EventType& event_type);
 
-  /// == operator
+  /// @name Comparison operators
+  /// @{
   bool operator==(const TAO_Notify_EventType& notify_event_type) const;
 
   /// != operator
   bool operator!=(const TAO_Notify_EventType& notify_event_type) const;
+  /// @}
 
   /// Return the special event type.
   static TAO_Notify_EventType special ();
@@ -74,7 +73,7 @@ public:
 
   // TAO_Notify::Topology_Object
 
-  virtual void save_persistent (TAO_Notify::Topology_Saver& saver);
+  void save_persistent (TAO_Notify::Topology_Saver& saver) override;
 
 protected:
   friend class TAO_Notify_Constraint_Interpreter;
@@ -88,12 +87,14 @@ protected:
   bool domain_is_wildcard (const char* domain) const;
   bool type_is_wildcard (const char* type) const;
 
-  // = Data Members
+  /// @name Data members
+  /// @{
   /// The event_type that we're decorating.
   CosNotification::EventType event_type_;
 
   /// The hash value computed.
   u_long hash_value_;
+  /// @}
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

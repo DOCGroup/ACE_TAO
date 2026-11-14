@@ -6,15 +6,14 @@
 #include "ace/Service_Config.h"
 #include "ace/Argv_Type_Converter.h"
 #include "ace/Get_Opt.h"
-
-
-const ACE_TCHAR *ior_file = ACE_TEXT("test.ior");
+#include "ace/SString.h"
+#include <memory>
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TString &ior_file)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -33,9 +32,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-Test_Server_Module::~Test_Server_Module ()
-{
-}
+Test_Server_Module::~Test_Server_Module () = default;
 
 int
 Test_Server_Module::init (int argc, ACE_TCHAR *argv[])
@@ -51,7 +48,7 @@ Test_Server_Module::init (int argc, ACE_TCHAR *argv[])
   // (dangling) references to instances of objects created by this
   // module and destroyed by this object when it is dynamically
   // unloaded.
-  int register_with_object_manager = 0;
+  int const register_with_object_manager {};
 
   if (TAO_Singleton_Manager::instance ()->init (
         register_with_object_manager) == -1)
@@ -60,7 +57,6 @@ Test_Server_Module::init (int argc, ACE_TCHAR *argv[])
                        "failed."),
                       -1);  // No CORBA exceptions available yet, so
                             // return an error status.
-
 
   // -----------------------------------------------------------------
   // Boilerplate CORBA/TAO server-side ORB initialization code.
@@ -80,10 +76,8 @@ Test_Server_Module::init (int argc, ACE_TCHAR *argv[])
       new_argv[0] = CORBA::string_dup ("dummy");
 
       // Copy the remaining arguments into the new argument vector.
-      for (int i = new_argc - argc, j = 0;
-           j < argc;
-           ++i, ++j)
-        new_argv[i] = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(argv[j]));
+      for (int i = 1; i < new_argc; ++i)
+        new_argv[i] = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (argv[i - 1]));
 
       // Initialize the ORB.
       this->orb_ = CORBA::ORB_init (new_argc,
@@ -93,7 +87,7 @@ Test_Server_Module::init (int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (this->orb_.in ()))
         return -1;
 
-      CORBA::Object_var poa_object =
+      CORBA::Object_var const poa_object =
         this->orb_->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
@@ -109,15 +103,16 @@ Test_Server_Module::init (int argc, ACE_TCHAR *argv[])
       this->poa_manager_->activate ();
 
       ACE_Argv_Type_Converter converter (new_argc, new_argv.get_buffer ());
-      if (::parse_args (new_argc, converter.get_TCHAR_argv ()) != 0)
+      ACE_TString ior_file {ACE_TEXT ("test.ior")};
+      if (::parse_args (new_argc, converter.get_TCHAR_argv (), ior_file) != 0)
         return -1;
 
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         this->poa_->activate_object (&servant_);
 
-      CORBA::Object_var obj = this->poa_->id_to_reference (id.in ());
+      CORBA::Object_var const obj = this->poa_->id_to_reference (id.in ());
 
-      CORBA::String_var ior =
+      CORBA::String_var const ior =
         this->orb_->object_to_string (obj.in ());
 
       ACE_DEBUG ((LM_DEBUG,
@@ -125,19 +120,18 @@ Test_Server_Module::init (int argc, ACE_TCHAR *argv[])
                   ior.in ()));
 
       // Write IOR to a file.
-      FILE *output_file= ACE_OS::fopen (ior_file, "w");
-      if (output_file == 0)
+      std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+        ACE_OS::fopen (ior_file.c_str (), ACE_TEXT ("w")), ACE_OS::fclose);
+      if (!output_file)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file <%s> for writing "
-                           "IOR: %s",
-                           ior.in ()),
+                           ACE_TEXT ("Cannot open output file <%s> for writing IOR\n"),
+                           ior_file.c_str ()),
                           1);
-      ACE_OS::fprintf (output_file, "%s", ior.in ());
-      ACE_OS::fclose (output_file);
+      ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
 
       this->servant_.orb (this->orb_.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (ACE_TEXT ("Test_Server_Module::init"));
       return -1;
@@ -159,8 +153,7 @@ Test_Server_Module::init (int argc, ACE_TCHAR *argv[])
 int
 Test_Server_Module::fini ()
 {
-  ACE_DEBUG ((LM_INFO,
-              "Server is being finalized.\n"));
+  ACE_DEBUG ((LM_INFO, "Server is being finalized.\n"));
 
   // ------------------------------------------------------------
   // Pre-Test_Server_Module termination steps.
@@ -201,7 +194,7 @@ Test_Server_Module::svc ()
           this->orb_->destroy ();
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (ACE_TEXT ("Test_Server_Module::svc"));
       return -1;
@@ -209,7 +202,6 @@ Test_Server_Module::svc ()
 
   return 0;
 }
-
 
 ACE_STATIC_SVC_DEFINE (Test_Server_Module,
                        ACE_TEXT ("Test_Server_Module"),

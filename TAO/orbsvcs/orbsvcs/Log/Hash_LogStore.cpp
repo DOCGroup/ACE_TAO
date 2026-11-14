@@ -6,14 +6,12 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Hash_LogStore::TAO_Hash_LogStore (TAO_LogMgr_i * logmgr_i)
-  : next_id_ (0),
+  : next_id_ {},
     logmgr_i_ (logmgr_i)
 {
 }
 
-
 TAO_Hash_LogStore::~TAO_Hash_LogStore () = default;
-
 
 DsLogAdmin::LogList*
 TAO_Hash_LogStore::list_logs ()
@@ -26,7 +24,7 @@ TAO_Hash_LogStore::list_logs ()
   DsLogAdmin::LogList* list;
 
   // Figure out the length of the list.
-  CORBA::ULong len = static_cast<CORBA::ULong> (hash_map_.current_size ());
+  CORBA::ULong const len = static_cast<CORBA::ULong> (hash_map_.current_size ());
 
   // Allocate the list of <len> length.
   ACE_NEW_THROW_EX (list,
@@ -39,9 +37,9 @@ TAO_Hash_LogStore::list_logs ()
   HASHMAP::ITERATOR iter (hash_map_);
 
   // Iterate over and populate the list.
-  HASHMAP::ENTRY *hash_entry = nullptr;
+  HASHMAP::ENTRY *hash_entry {};
 
-  for (CORBA::ULong i = 0; i < len; i++)
+  for (CORBA::ULong i {}; i < len; ++i)
     {
       iter.next (hash_entry);
       iter.advance ();
@@ -62,7 +60,7 @@ TAO_Hash_LogStore::list_logs_by_id ()
   DsLogAdmin::LogIdList* list;
 
   // Figure out the length of the list.
-  CORBA::ULong len = static_cast<CORBA::ULong> (hash_map_.current_size ());
+  CORBA::ULong const len = static_cast<CORBA::ULong> (hash_map_.current_size ());
 
   // Allocate the list of <len> length.
   ACE_NEW_THROW_EX (list,
@@ -75,9 +73,9 @@ TAO_Hash_LogStore::list_logs_by_id ()
   HASHMAP::ITERATOR iter (hash_map_);
 
   // Iterate over and populate the list.
-  HASHMAP::ENTRY *hash_entry = nullptr;
+  HASHMAP::ENTRY *hash_entry {};
 
-  for (CORBA::ULong i = 0; i < len; i++)
+  for (CORBA::ULong i {}; i < len; ++i)
     {
       iter.next (hash_entry);
       iter.advance ();
@@ -86,7 +84,6 @@ TAO_Hash_LogStore::list_logs_by_id ()
 
   return list;
 }
-
 
 DsLogAdmin::Log_ptr
 TAO_Hash_LogStore::find_log (DsLogAdmin::LogId id)
@@ -106,7 +103,6 @@ TAO_Hash_LogStore::find_log (DsLogAdmin::LogId id)
     }
 }
 
-
 bool
 TAO_Hash_LogStore::exists (DsLogAdmin::LogId id)
 {
@@ -118,7 +114,6 @@ TAO_Hash_LogStore::exists (DsLogAdmin::LogId id)
   return (this->hash_map_.find (id) == 0);
 }
 
-
 int
 TAO_Hash_LogStore::remove (DsLogAdmin::LogId id)
 {
@@ -127,9 +122,9 @@ TAO_Hash_LogStore::remove (DsLogAdmin::LogId id)
                             lock_,
                             CORBA::INTERNAL ());
 
-  TAO_Hash_LogRecordStore *recordstore = nullptr;
+  TAO_Hash_LogRecordStore *recordstore {};
 
-  int retval = this->hash_map_.unbind (id, recordstore);
+  int const retval = this->hash_map_.unbind (id, recordstore);
   if (retval == 0)
     {
       delete recordstore;
@@ -137,7 +132,6 @@ TAO_Hash_LogStore::remove (DsLogAdmin::LogId id)
 
   return retval;
 }
-
 
 void
 TAO_Hash_LogStore::create (DsLogAdmin::LogFullActionType full_action,
@@ -156,7 +150,7 @@ TAO_Hash_LogStore::create (DsLogAdmin::LogFullActionType full_action,
     ;
   id_out = id;
 
-  TAO_Hash_LogRecordStore *impl = nullptr;
+  TAO_Hash_LogRecordStore *impl {};
   ACE_NEW_THROW_EX (impl,
                     TAO_Hash_LogRecordStore (this->logmgr_i_,
                                              id,
@@ -175,7 +169,6 @@ TAO_Hash_LogStore::create (DsLogAdmin::LogFullActionType full_action,
 
   recordstore.release ();
 }
-
 
 void
 TAO_Hash_LogStore::create_with_id (DsLogAdmin::LogId id,
@@ -193,7 +186,7 @@ TAO_Hash_LogStore::create_with_id (DsLogAdmin::LogId id,
       throw DsLogAdmin::LogIdAlreadyExists ();
     }
 
-  TAO_Hash_LogRecordStore *impl = nullptr;
+  TAO_Hash_LogRecordStore *impl {};
   ACE_NEW_THROW_EX (impl,
                     TAO_Hash_LogRecordStore (this->logmgr_i_,
                                              id,
@@ -213,7 +206,6 @@ TAO_Hash_LogStore::create_with_id (DsLogAdmin::LogId id,
   recordstore.release ();
 }
 
-
 TAO_LogRecordStore *
 TAO_Hash_LogStore::get_log_record_store (DsLogAdmin::LogId id)
 {
@@ -222,7 +214,7 @@ TAO_Hash_LogStore::get_log_record_store (DsLogAdmin::LogId id)
                            lock_,
                            CORBA::INTERNAL ());
 
-  TAO_Hash_LogRecordStore *recordstore = nullptr;
+  TAO_Hash_LogRecordStore *recordstore {};
 
   if (hash_map_.find (id, recordstore) != 0)
     {

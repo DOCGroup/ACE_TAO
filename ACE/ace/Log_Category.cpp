@@ -1,7 +1,8 @@
 #include "ace/Log_Msg.h"
 #include "ace/Log_Category.h"
-#include "ace/Atomic_Op.h"
 #include "ace/OS_NS_Thread.h"
+#include "ace/Guard_T.h"
+#include <atomic>
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Log_Category.inl"
@@ -48,7 +49,7 @@ ACE_Log_Category::~ACE_Log_Category()
 
   if (this->id_ > 0)
     {
-      void *temp = nullptr;
+      void *temp {};
       if (ACE_OS::thr_getspecific (this->key_, &temp) == -1)
         {
           return; // This should not happen!
@@ -82,7 +83,7 @@ ACE_Log_Category::per_thr_obj()
     // make sure we only create the key once!
     if (this->id_ == 0)
       {
-        static ACE_Atomic_Op<ACE_Thread_Mutex, unsigned int> log_category_id_assigner(1);
+        static std::atomic<unsigned int> log_category_id_assigner {1};
         id_ = log_category_id_assigner++; // for atomic integers, post increment is more efficient
 
         if (ACE_OS::thr_keycreate (&this->key_,
@@ -91,7 +92,7 @@ ACE_Log_Category::per_thr_obj()
       }
   }
 
-  void *temp = nullptr;
+  void *temp {};
   if (ACE_OS::thr_getspecific (this->key_, &temp) == -1)
     {
       return nullptr; // This should not happen!

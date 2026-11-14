@@ -8,9 +8,11 @@
  */
 //=============================================================================
 
-
 #ifndef _COMMAND_PROCESSOR_H
 #define _COMMAND_PROCESSOR_H
+
+#include <memory>
+#include <utility>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -50,17 +52,21 @@ public:
 class URL_Command : public Command
 {
 public:
-  /// Constructor.
-  URL_Command (URL *);
+  explicit URL_Command (std::unique_ptr<URL>);
+  ~URL_Command () override;
+  URL_Command (URL_Command const &) = delete;
+  URL_Command &operator= (URL_Command const &) = delete;
+  URL_Command (URL_Command &&) = delete;
+  URL_Command &operator= (URL_Command &&) = delete;
 
   /// Execute the URL command.
-  virtual int execute ();
+  int execute () override;
 
   /// Commit suicide.
-  int destroy ();
+  int destroy () override;
 private:
-  /// Pointer to the URL.
-  URL *url_;
+  /// URL whose command is being executed.
+  std::unique_ptr<URL> url_;
 };
 
 /**
@@ -92,6 +98,5 @@ private:
   // @@ You fill in here...
   ACE_Unbounded_Queue<Command *> url_queue_;
 };
-
 
 #endif /* _COMMAND_PROCESSOR_H */

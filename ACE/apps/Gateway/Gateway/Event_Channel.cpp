@@ -5,9 +5,7 @@
 #include "ace/OS_NS_sys_select.h"
 #include "ace/Signal.h"
 
-Event_Channel::~Event_Channel ()
-{
-}
+Event_Channel::~Event_Channel () = default;
 
 #if defined (_MSC_VER)
 #  pragma warning (push)
@@ -43,13 +41,13 @@ Event_Channel::compute_performance_statistics ()
                   "(%t) suspending all threads..."));
     }
 
-  size_t total_bytes_in = 0;
-  size_t total_bytes_out = 0;
+  size_t total_bytes_in {};
+  size_t total_bytes_out {};
 
   // Iterate through the connection map summing up the number of bytes
   // sent/received.
 
-  for (CONNECTION_MAP_ENTRY *me = 0;
+  for (CONNECTION_MAP_ENTRY *me {};
        cmi.next (me) != 0;
        cmi.advance ())
     {
@@ -62,7 +60,7 @@ Event_Channel::compute_performance_statistics ()
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) after %d seconds, \ntotal_bytes_in = %d\ntotal_bytes_out = %d\n",
+              "(%t) after %d seconds, \ntotal_bytes_in = %B\ntotal_bytes_out = %B\n",
               Options::instance ()->performance_window (),
               total_bytes_in,
               total_bytes_out));
@@ -91,13 +89,12 @@ Event_Channel::compute_performance_statistics ()
                   "(%t) resuming all threads..."));
     }
 
-
   return 0;
 }
 
 int
-Event_Channel::handle_timeout (const ACE_Time_Value &,
-                               const void *)
+Event_Channel::handle_timeout (ACE_Time_Value const &,
+                               void const *)
 {
   // This is called periodically to compute performance statistics.
   return this->compute_performance_statistics ();
@@ -153,7 +150,7 @@ Event_Channel::subscription_event (ACE_Message_Block *data)
 
   for (ACE_INT32 i = 0;
        i < subscription->total_consumers_;
-       i++)
+       ++i)
     ACE_DEBUG ((LM_DEBUG,
                 "(%t) consumers_[%d] = %d\n",
                 i,
@@ -164,7 +161,7 @@ void
 Event_Channel::routing_event (Event_Key *forwarding_address,
                               ACE_Message_Block *data)
 {
-  Consumer_Dispatch_Set *dispatch_set = 0;
+  Consumer_Dispatch_Set *dispatch_set {};
 
   // Initialize the <dispatch_set> to points to the set of Consumers
   // associated with this forwarding address.
@@ -193,7 +190,7 @@ Event_Channel::routing_event (Event_Key *forwarding_address,
           // multi-threaded configuration.
           data->locking_strategy (Options::instance ()->locking_strategy ());
 
-          for (Connection_Handler **connection_handler = 0;
+          for (Connection_Handler **connection_handler {};
                dsi.next (connection_handler) != 0;
                dsi.advance ())
             {
@@ -232,7 +229,7 @@ Event_Channel::routing_event (Event_Key *forwarding_address,
 
 int
 Event_Channel::initiate_connection_connection (Connection_Handler *connection_handler,
-                                               int sync_directly)
+                                               bool sync_directly)
 {
   ACE_Synch_Options synch_options;
 
@@ -279,7 +276,7 @@ Event_Channel::complete_connection_connection (Connection_Handler *connection_ha
 
   // Send the connection id to the peerd.
 
-  ssize_t const n = connection_handler->peer ().send ((const void *) &id,
+  ssize_t const n = connection_handler->peer ().send (&id,
                                                 sizeof id);
 
   if (n != (ssize_t) sizeof id)
@@ -350,7 +347,7 @@ Event_Channel::initiate_connector ()
       // Iterate through the Consumer Map connecting all the
       // Connection_Handlers.
 
-      for (CONNECTION_MAP_ENTRY *me = 0;
+      for (CONNECTION_MAP_ENTRY *me {};
            cmi.next (me) != 0;
            cmi.advance ())
         {
@@ -429,7 +426,7 @@ Event_Channel::close (u_long)
 
     // Iterate over all the handlers and shut them down.
 
-    for (CONNECTION_MAP_ENTRY *me = 0; // It's safe to reset me to 0.
+    for (CONNECTION_MAP_ENTRY *me {}; // It's safe to reset me to nullptr.
          cmi.next (me) != 0;
          cmi.advance ())
       {
@@ -462,7 +459,7 @@ Event_Channel::close (u_long)
   {
     CONNECTION_MAP_ITERATOR cmi (this->connection_map_);
 
-    for (CONNECTION_MAP_ENTRY *me = 0; // It's safe to reset me to 0.
+    for (CONNECTION_MAP_ENTRY *me {}; // It's safe to reset me to nullptr.
          cmi.next (me) != 0;
          cmi.advance ())
       {
@@ -520,10 +517,10 @@ Event_Channel::bind_proxy (Connection_Handler *connection_handler)
 }
 
 int
-Event_Channel::subscribe (const Event_Key &event_addr,
-                          Consumer_Dispatch_Set *cds)
+Event_Channel::subscribe (Event_Key const &event_addr,
+                          std::unique_ptr<Consumer_Dispatch_Set> cds)
 {
-  int result = this->efd_.bind (event_addr, cds);
+  int result = this->efd_.bind (event_addr, cds.get ());
 
   // Bind with consumer map, keyed by peer address.
   switch (result)
@@ -542,7 +539,8 @@ Event_Channel::subscribe (const Event_Key &event_addr,
                         -1);
       /* NOTREACHED */
     case 0:
-      // Success.
+      // The discriminator now owns the dispatch set.
+      cds.release ();
       return 0;
     default:
       ACE_ERROR_RETURN ((LM_DEBUG,

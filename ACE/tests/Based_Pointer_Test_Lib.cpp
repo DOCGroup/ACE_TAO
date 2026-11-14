@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "ace/ACE.h"
 #include "ace/svc_export.h"
 #include "ace/Based_Pointer_Repository.h"

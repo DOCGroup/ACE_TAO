@@ -18,14 +18,17 @@
 #include "ace/Service_Object.h"
 #include "ace/Arg_Shifter.h"
 
+#include <memory>
+#include <vector>
+
 class Activity;
 class Periodic_Task;
 class Job_i;
 class POA_Holder;
 
-typedef POA_Holder** POA_LIST;
-typedef Periodic_Task** TASK_LIST;
-typedef Job_i** JOB_LIST;
+using POA_LIST = std::vector<std::unique_ptr<POA_Holder>>;
+using TASK_LIST = std::vector<std::unique_ptr<Periodic_Task>>;
+using JOB_LIST = std::vector<Job_i *>;
 
 /**
  * @class Builder
@@ -36,34 +39,39 @@ class Builder : public ACE_Service_Object
 {
  public:
   Builder ();
-  ~Builder ();
+  ~Builder () override;
+
+  Builder (Builder const &) = delete;
+  Builder (Builder &&) = delete;
+  Builder &operator= (Builder const &) = delete;
+  Builder &operator= (Builder &&) = delete;
 
   /// = Service_Object virtual method overloads.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
-  virtual int fini ();
+  int init (int argc, ACE_TCHAR *argv[]) override;
+  int fini () override;
 
   /// = List access
-  int poa_list (POA_LIST& poa_list);
-  int task_list (TASK_LIST& task_list);
-  int job_list (JOB_LIST &job_list);
+  POA_LIST const &poa_list () const;
+  TASK_LIST const &task_list () const;
+  JOB_LIST const &job_list () const;
 
  protected:
   /// Number of POA's declared
   int poa_count_;
 
-  /// The list of POA's.
+  /// Owns the POA_Holder objects.
   POA_LIST poa_list_;
 
   /// Number of Tasks's declared
   int task_count_;
 
-  /// The list of Tasks.
+  /// Owns the task objects.
   TASK_LIST task_list_;
 
   /// Number of Jobs's declared
   int job_count_;
 
-  /// The list of Jobs
+  /// Borrowed job pointers; servants are activated and owned by their POAs.
   JOB_LIST job_list_;
 };
 

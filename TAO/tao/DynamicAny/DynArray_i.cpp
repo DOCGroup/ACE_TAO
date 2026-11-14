@@ -9,9 +9,9 @@
 
 #include "tao/CDR.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include <memory>
 
-TAO_DynArray_i::~TAO_DynArray_i () = default;
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_DynArray_i::TAO_DynArray_i (CORBA::Boolean allow_truncation)
   : TAO_DynCommon (allow_truncation)
@@ -32,9 +32,9 @@ TAO_DynArray_i::init_common ()
 void
 TAO_DynArray_i::init (const CORBA::Any & any)
 {
-  CORBA::TypeCode_var tc = any.type ();
+  CORBA::TypeCode_var const tc = any.type ();
 
-  CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc.in ());
+  CORBA::TCKind const kind = TAO_DynAnyFactory::unalias (tc.in ());
 
   if (kind != CORBA::tk_array)
     {
@@ -43,7 +43,7 @@ TAO_DynArray_i::init (const CORBA::Any & any)
 
   this->type_ = tc;
 
-  CORBA::ULong numfields = this->get_tc_length (tc.in ());
+  CORBA::ULong const numfields = this->get_tc_length (tc.in ());
   // Resize the array.
   this->da_members_.size (numfields);
 
@@ -67,17 +67,17 @@ TAO_DynArray_i::init (const CORBA::Any & any)
   else
     {
       impl->marshal_value (out);
-      TAO_InputCDR tmp_in (out);
+      TAO_InputCDR const tmp_in (out);
       cdr = tmp_in;
     }
 
-  CORBA::TypeCode_var field_tc =
+  CORBA::TypeCode_var const field_tc =
     this->get_element_type ();
 
-  for (CORBA::ULong i = 0; i < numfields; ++i)
+  for (CORBA::ULong i {}; i < numfields; ++i)
     {
       CORBA::Any field_any;
-      TAO::Unknown_IDL_Type *field_unk = nullptr;
+      TAO::Unknown_IDL_Type *field_unk {};
       TAO_InputCDR unk_in (cdr);
       ACE_NEW (field_unk,
                TAO::Unknown_IDL_Type (field_tc.in (), unk_in));
@@ -92,14 +92,14 @@ TAO_DynArray_i::init (const CORBA::Any & any)
           this->allow_truncation_ );
 
       // Move to the next field in the CDR stream.
-      (void) TAO_Marshal_Object::perform_skip (field_tc.in (), &cdr);
+      (void) TAO_Marshal_Object::perform_skip (field_tc.in (), std::addressof (cdr));
     }
 }
 
 void
 TAO_DynArray_i::init (CORBA::TypeCode_ptr tc)
 {
-  CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc);
+  CORBA::TCKind const kind = TAO_DynAnyFactory::unalias (tc);
 
   if (kind != CORBA::tk_array)
     {
@@ -108,16 +108,16 @@ TAO_DynArray_i::init (CORBA::TypeCode_ptr tc)
 
   this->type_ = CORBA::TypeCode::_duplicate (tc);
 
-  CORBA::ULong numfields = this->get_tc_length (tc);
+  CORBA::ULong const numfields = this->get_tc_length (tc);
 
   // Resize the array.
   this->da_members_.size (numfields);
 
   this->init_common ();
 
-  CORBA::TypeCode_var elemtype = this->get_element_type ();
+  CORBA::TypeCode_var const elemtype = this->get_element_type ();
 
-  for (CORBA::ULong i = 0; i < numfields; ++i)
+  for (CORBA::ULong i {}; i < numfields; ++i)
     {
       // Recursively initialize each element.
       this->da_members_[i] =
@@ -163,9 +163,6 @@ TAO_DynArray_i::get_tc_length (CORBA::TypeCode_ptr tc)
 
   return tctmp->length ();
 }
-
-// ****************************************************************
-
 TAO_DynArray_i *
 TAO_DynArray_i::_narrow (CORBA::Object_ptr _tao_objref)
 {
@@ -176,9 +173,6 @@ TAO_DynArray_i::_narrow (CORBA::Object_ptr _tao_objref)
 
   return dynamic_cast<TAO_DynArray_i *> (_tao_objref);
 }
-
-// ****************************************************************
-
 DynamicAny::AnySeq *
 TAO_DynArray_i::get_elements ()
 {
@@ -187,9 +181,9 @@ TAO_DynArray_i::get_elements ()
       throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
-  CORBA::ULong length = static_cast<CORBA::ULong> (this->da_members_.size ());
+  CORBA::ULong const length = static_cast<CORBA::ULong> (this->da_members_.size ());
 
-  DynamicAny::AnySeq *elements = nullptr;
+  DynamicAny::AnySeq *elements {};
   ACE_NEW_THROW_EX (elements,
                     DynamicAny::AnySeq (length),
                     CORBA::NO_MEMORY ());
@@ -200,7 +194,7 @@ TAO_DynArray_i::get_elements ()
   CORBA::Any_var tmp;
 
   // Initialize each Any.
-  for (CORBA::ULong i = 0; i < length; i++)
+  for (CORBA::ULong i {}; i < length; ++i)
     {
       tmp = this->da_members_[i]->to_any ();
 
@@ -226,13 +220,13 @@ TAO_DynArray_i::set_elements (DynamicAny::AnySeq const& value)
     }
 
   CORBA::TypeCode_var value_tc;
-  CORBA::TypeCode_var element_type = this->get_element_type ();
+  CORBA::TypeCode_var const element_type = this->get_element_type ();
 
-  for (CORBA::ULong i = 0; i < length; i++)
+  for (CORBA::ULong i {}; i < length; ++i)
     {
       // Check each arg element for type match.
       value_tc = value[i].type ();
-      CORBA::Boolean equivalent =
+      CORBA::Boolean const equivalent =
         value_tc->equivalent (element_type.in ());
 
       if (equivalent)
@@ -260,7 +254,7 @@ TAO_DynArray_i::get_elements_as_dyn_any ()
       throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
-  DynamicAny::DynAnySeq *retval = nullptr;
+  DynamicAny::DynAnySeq *retval {};
   ACE_NEW_THROW_EX (retval,
                     DynamicAny::DynAnySeq (this->component_count_),
                     CORBA::NO_MEMORY ());
@@ -268,11 +262,11 @@ TAO_DynArray_i::get_elements_as_dyn_any ()
   retval->length (this->component_count_);
   DynamicAny::DynAnySeq_var safe_retval (retval);
 
-  for (CORBA::ULong i = 0; i < this->component_count_; ++i)
+  for (CORBA::ULong i {}; i < this->component_count_; ++i)
     {
       // A deep copy is made only by copy() (CORBA 2.4.2 section 9.2.3.6).
       // Set the flag so the caller can't destroy.
-      this->set_flag (this->da_members_[i].in (), 0);
+      this->set_flag (this->da_members_[i].in (), false);
 
       safe_retval[i] =
         DynamicAny::DynAny::_duplicate (this->da_members_[i].in ());
@@ -283,33 +277,31 @@ TAO_DynArray_i::get_elements_as_dyn_any ()
 
 void
 TAO_DynArray_i::set_elements_as_dyn_any (
-    const DynamicAny::DynAnySeq & values
+    const DynamicAny::DynAnySeq & values)
 
-  )
 {
   if (this->destroyed_)
     {
       throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
-  CORBA::ULong length = static_cast<CORBA::ULong> (this->da_members_.size ());
+  CORBA::ULong const length = static_cast<CORBA::ULong> (this->da_members_.size ());
 
   if (values.length () != length)
     {
       throw DynamicAny::DynAny::InvalidValue ();
     }
 
-  CORBA::TypeCode_var element_type = this->get_element_type ();
+  CORBA::TypeCode_var const element_type = this->get_element_type ();
 
   CORBA::TypeCode_var val_type;
   CORBA::Boolean equivalent;
 
-  for (CORBA::ULong i = 0; i < length; ++i)
+  for (CORBA::ULong i {}; i < length; ++i)
     {
       val_type = values[i]->type ();
 
       equivalent = val_type->equivalent (element_type.in ());
-
 
       if (equivalent)
         {
@@ -321,9 +313,6 @@ TAO_DynArray_i::set_elements_as_dyn_any (
         }
     }
 }
-
-// ****************************************************************
-
 void
 TAO_DynArray_i::from_any (const CORBA::Any& any)
 {
@@ -332,8 +321,8 @@ TAO_DynArray_i::from_any (const CORBA::Any& any)
       throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
-  CORBA::TypeCode_var tc = any.type ();
-  CORBA::Boolean equivalent = this->type_.in ()->equivalent (tc.in ());
+  CORBA::TypeCode_var const tc = any.type ();
+  CORBA::Boolean const equivalent = this->type_.in ()->equivalent (tc.in ());
 
   if (equivalent)
     {
@@ -355,25 +344,25 @@ TAO_DynArray_i::from_any (const CORBA::Any& any)
       else
         {
           impl->marshal_value (out);
-          TAO_InputCDR tmp_in (out);
+          TAO_InputCDR const tmp_in (out);
           cdr = tmp_in;
         }
 
-      CORBA::ULong length = static_cast<CORBA::ULong> (this->da_members_.size ());
-      CORBA::ULong arg_length = this->get_tc_length (tc.in ());
+      CORBA::ULong const length = static_cast<CORBA::ULong> (this->da_members_.size ());
+      CORBA::ULong const arg_length = this->get_tc_length (tc.in ());
 
       if (length != arg_length)
         {
           throw DynamicAny::DynAny::TypeMismatch ();
         }
 
-      CORBA::TypeCode_var field_tc = this->get_element_type ();
+      CORBA::TypeCode_var const field_tc = this->get_element_type ();
 
-      for (CORBA::ULong i = 0; i < arg_length; ++i)
+      for (CORBA::ULong i {}; i < arg_length; ++i)
         {
           CORBA::Any field_any;
           TAO_InputCDR unk_in (cdr);
-          TAO::Unknown_IDL_Type *field_unk = nullptr;
+          TAO::Unknown_IDL_Type *field_unk {};
           ACE_NEW (field_unk,
                    TAO::Unknown_IDL_Type (field_tc.in (), unk_in));
           field_any.replace (field_unk);
@@ -387,7 +376,7 @@ TAO_DynArray_i::from_any (const CORBA::Any& any)
               this->allow_truncation_ );
 
           // Move to the next field in the CDR stream.
-          (void) TAO_Marshal_Object::perform_skip (field_tc.in (), &cdr);
+          (void) TAO_Marshal_Object::perform_skip (field_tc.in (), std::addressof (cdr));
         }
 
       this->current_position_ = arg_length ? 0 : -1;
@@ -406,13 +395,13 @@ TAO_DynArray_i::to_any ()
       throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
-  CORBA::TypeCode_var field_tc = this->get_element_type ();
+  CORBA::TypeCode_var const field_tc = this->get_element_type ();
 
   TAO_OutputCDR out_cdr;
   CORBA::Any_var field_any;
-  size_t length = this->da_members_.size ();
+  size_t const length = this->da_members_.size ();
 
-  for (size_t i = 0; i < length; ++i)
+  for (size_t i {}; i < length; ++i)
     {
       // Recursive step.
       field_any = this->da_members_[i]->to_any ();
@@ -434,7 +423,7 @@ TAO_DynArray_i::to_any ()
       else
         {
           field_impl->marshal_value (field_out);
-          TAO_InputCDR tmp_in (field_out);
+          TAO_InputCDR const tmp_in (field_out);
           field_cdr = tmp_in;
         }
 
@@ -445,12 +434,12 @@ TAO_DynArray_i::to_any ()
 
   TAO_InputCDR in_cdr (out_cdr);
 
-  CORBA::Any_ptr retval = nullptr;
+  CORBA::Any_ptr retval {};
   ACE_NEW_THROW_EX (retval,
                     CORBA::Any,
                     CORBA::NO_MEMORY ());
 
-  TAO::Unknown_IDL_Type *unk = nullptr;
+  TAO::Unknown_IDL_Type *unk {};
   ACE_NEW_THROW_EX (unk,
                     TAO::Unknown_IDL_Type (this->type_.in (),
                                            in_cdr),
@@ -468,9 +457,9 @@ TAO_DynArray_i::equal (DynamicAny::DynAny_ptr rhs)
       throw ::CORBA::OBJECT_NOT_EXIST ();
     }
 
-  CORBA::TypeCode_var tc = rhs->type ();
+  CORBA::TypeCode_var const tc = rhs->type ();
 
-  CORBA::Boolean equivalent = tc->equivalent (this->type_.in ());
+  CORBA::Boolean const equivalent = tc->equivalent (this->type_.in ());
 
   if (!equivalent)
     {
@@ -480,7 +469,7 @@ TAO_DynArray_i::equal (DynamicAny::DynAny_ptr rhs)
   DynamicAny::DynAny_var tmp;
   CORBA::Boolean member_equal;
 
-  for (CORBA::ULong i = 0; i < this->component_count_; ++i)
+  for (CORBA::ULong i {}; i < this->component_count_; ++i)
     {
       rhs->seek (static_cast<CORBA::Long> (i));
 
@@ -509,14 +498,14 @@ TAO_DynArray_i::destroy ()
   if (!this->ref_to_component_ || this->container_is_destroying_)
     {
       // Do a deep destroy.
-      for (CORBA::ULong i = 0; i < this->component_count_; ++i)
+      for (CORBA::ULong i {}; i < this->component_count_; ++i)
         {
-          this->set_flag (da_members_[i].in (), 1);
+          this->set_flag (da_members_[i].in (), true);
 
           this->da_members_[i]->destroy ();
         }
 
-      this->destroyed_ = 1;
+      this->destroyed_ = true;
     }
 }
 
@@ -533,9 +522,9 @@ TAO_DynArray_i::current_component ()
       return DynamicAny::DynAny::_nil ();
     }
 
-  CORBA::ULong index = static_cast<CORBA::ULong> (this->current_position_);
+  CORBA::ULong const index = static_cast<CORBA::ULong> (this->current_position_);
 
-  this->set_flag (this->da_members_[index].in (), 0);
+  this->set_flag (this->da_members_[index].in (), false);
 
   return DynamicAny::DynAny::_duplicate (this->da_members_[index].in ());
 }

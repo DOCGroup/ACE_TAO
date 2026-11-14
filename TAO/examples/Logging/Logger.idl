@@ -9,110 +9,103 @@
 typedef string<TAO_MAXLOGMSGLEN> TAO_log_string;
 interface Logger
 {
-  // = TITLE
-  //   Used to log messages to a logging server.
-  //
-  // = DESCRIPTION
-  //   This implementation provides a CORBA wrapper around the
-  //   <ACE_Log_Msg> mechanism.
+  /// Logs messages to a server through a CORBA wrapper around
+  /// ACE_Log_Msg.
 
   enum Log_Priority
   {
-
+    /// Shutdown the logger.
     LM_SHUTDOWN,
-    // Shutdown the logger
 
+    /// Messages indicating function-calling sequence.
     LM_TRACE,
-    // Messages indicating function-calling sequence
 
+    /// Messages containing information normally useful only for debugging.
     LM_DEBUG,
-    // Messages that contain information normally of use only when
-    // debugging a program
 
+    /// Informational messages.
     LM_INFO,
-    // Informational messages
 
+    /// Conditions that are not errors but may require special handling.
     LM_NOTICE,
-    // Conditions that are not error conditions, but that may require
-    // special handling
 
+    /// Warning messages.
     LM_WARNING,
-    // Warning messages
 
+    /// Initialize the logger.
     LM_STARTUP,
-    // Initialize the logger
 
+    /// Error messages.
     LM_ERROR,
-    // Error messages
 
+    /// Critical conditions, such as hard device errors.
     LM_CRITICAL,
-    // Critical conditions, such as hard device errors
 
+    /// A condition that should be corrected immediately, such as a
+    /// corrupted system database.
     LM_ALERT,
-    // A condition that should be corrected immediately, such as a
-    // corrupted system database
 
+    /// A panic condition, normally broadcast to all users.
     LM_EMERGENCY,
-    // A panic condition.  This is normally broadcast to all users
 
+    /// In ACE_Log_Priority, LM_MAX aliases LM_EMERGENCY rather than being
+    /// a distinct tag, which is invalid IDL syntax; TAO adjusts for this.
     LM_MAX
-    // In <ACE_Log_Priority>, LM_MAX is aliased to LM_EMERGENCY rather than
-    // being a distinct tag, but that is invalid IDL syntax.  We
-    // adjust for this internally.
   };
 
   enum Verbosity_Level
   {
+    /// Display messages in a verbose manner.
     VERBOSE,
-    // Display messages in a verbose manner.
 
+    /// Display messages only when they can change between calls.
     VERBOSE_LITE,
-    // Display messages in a less verbose manner (i.e., only print
-    // information that can change between calls).
 
+    /// Do not display messages; retain them in thread-specific storage.
     SILENT
-    // Do not print messages at all (just leave in thread-specific
-    // storage for later inspection).
   };
 
   struct Log_Record
   {
-    Log_Priority type;       // Type of logging message.
-    long time;               // Timestamp of the sender.
-    long app_id;             // Process id of the sender.
-    long host_addr;          // IP address of the sender.
-    TAO_log_string msg_data; // The logging message.
+    /// Type of logging message.
+    Log_Priority type;
+    /// Timestamp of the sender.
+    long time;
+    /// Process ID of the sender.
+    long app_id;
+    /// IP address of the sender.
+    long host_addr;
+    /// Logging message.
+    TAO_log_string msg_data;
   };
 
+  /// Transmits a Log_Record to the logging server.
   oneway void log (in Log_Record log_rec);
-  // Transmit a Log_Record to the logging server.
 
+  /// Logs a message with a verbosity level that may differ from the
+  /// configured verbosity level.
   oneway void logv (in Log_Record log_rec,
                     in Verbosity_Level level);
-  // Log a message with a specific Verbosity level which may be
-  // differeny from the <verbosity_level>
 
+  /// Like log(), but waits until the logger receives the message.
   void log_twoway (in Log_Record log_rec);
-  // Like log (), but twoway such that applications will block until
-  // log messages are received by the logger
 
+  /// Like logv(), but waits until the logger receives the message.
   void logv_twoway (in Log_Record log_rec,
                     in Verbosity_Level level);
-  // Like logv (), but twoway for the same reason as logv_twoway ()
 
+  /// Changes the verbosity level, controlling how much information the
+  /// server displays.
   oneway void verbosity (in Verbosity_Level level);
-  // Change the state of the <verbosity_level>.  This controls how
-  // much logging information is displayed by the server.
 };
 
 interface Logger_Factory
 {
-  // = TITLE
-  //   Create a <Logger> of type <name>.
+  /// Creates a Logger of the specified name.
 
+  /// Returns a new Logger if name is unique, or the existing Logger
+  /// with that name.
   Logger make_logger (in string name);
-  // Returns a new <Logger> instance if <name> is unique, or retuns a
-  // previously created instance of that name
 };
 
 #endif /* TAO_LOGGER_IDL */

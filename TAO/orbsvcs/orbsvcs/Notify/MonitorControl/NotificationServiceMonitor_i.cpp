@@ -1,10 +1,11 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/MonitorControl/NotificationServiceMonitor_i.h"
 
 #include "tao/Monitor/Monitor_Impl.h"
 #include "ace/Monitor_Point_Registry.h"
 #include "ace/Monitor_Base.h"
+
+#include <memory>
 
 #if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 
@@ -26,19 +27,19 @@ NotificationServiceMonitor_i::get_statistic_names ()
     Monitor_Point_Registry::instance ()->names ();
   CORBA::ULong the_length = static_cast <CORBA::ULong> (name_list.size ());
 
-  Monitor::NameList* the_names = nullptr;
+  Monitor::NameList* the_names {};
   ACE_NEW_RETURN (the_names,
                   Monitor::NameList (the_length),
-                  0);
+                  nullptr);
   Monitor::NameList_var safe_names = the_names;
   the_names->length (the_length);
-  CORBA::ULong i = 0;
+  CORBA::ULong i {};
 
   for (Monitor_Control_Types::NameList::Iterator iter (name_list);
        !iter.done ();
        iter.advance (), ++i)
     {
-      ACE_CString* tmp = nullptr;
+      ACE_CString* tmp {};
       iter.next (tmp);
       safe_names[i] = tmp->c_str ();
     }
@@ -62,12 +63,13 @@ NotificationServiceMonitor_i::get_statistic (const char* name)
       throw CosNotification::NotificationServiceMonitorControl::InvalidName (invalid);
     }
 
-  Monitor::Data* data = nullptr;
+  Monitor::Data* data {};
   ACE_NEW_THROW_EX (data,
                     Monitor::Data,
                     CORBA::NO_MEMORY ());
-  this->get_data (registry, name, *data);
-  return data;
+  std::unique_ptr<Monitor::Data> safe_data (data);
+  this->get_data (registry, name, *safe_data);
+  return safe_data.release ();
 }
 
 Monitor::DataList*
@@ -84,16 +86,16 @@ NotificationServiceMonitor_i::get_statistics (const Monitor::NameList& names)
     }
 
   CORBA::ULong const length = names.length ();
-  Monitor::DataList* data = nullptr;
+  Monitor::DataList* data {};
   ACE_NEW_RETURN (data,
                   Monitor::DataList (
                     length),
-                  0);
+                  nullptr);
   std::unique_ptr<Monitor::DataList> safe_data (data);
 
   data->length (length);
 
-  for (CORBA::ULong i = 0; i < length; ++i)
+  for (CORBA::ULong i {}; i < length; ++i)
     {
       this->get_data (registry, names[i], (*data)[i]);
     }
@@ -112,20 +114,21 @@ NotificationServiceMonitor_i::get_and_clear_statistics (
   // It is technically possible for the list of statistics names
   // to change at this point.  So, I'm bypassing the call to
   // clear_statistics() to avoid a possible exception.
-  CORBA::ULong length = names.length();
+  CORBA::ULong const length = names.length ();
+  std::unique_ptr<Monitor::DataList> safe_data (data);
   Monitor_Point_Registry* registry = Monitor_Point_Registry::instance ();
 
-  for (CORBA::ULong i = 0; i < length; ++i)
+  for (CORBA::ULong i {}; i < length; ++i)
     {
-      Monitor_Base* statistic = registry->get (names[i].in ());
+      Monitor_Base* const statistic = registry->get (names[i].in ());
 
-      if (statistic != 0)
+      if (statistic != nullptr)
         {
           statistic->clear ();
         }
     }
 
-  return data;
+  return safe_data.release ();
 }
 
 void
@@ -144,11 +147,11 @@ NotificationServiceMonitor_i::clear_statistics (
 
   CORBA::ULong const length = names.length ();
 
-  for (CORBA::ULong i = 0; i < length; ++i)
+  for (CORBA::ULong i {}; i < length; ++i)
     {
-      Monitor_Base* statistic = registry->get (names[i].in ());
+      Monitor_Base* const statistic = registry->get (names[i].in ());
 
-      if (statistic != 0)
+      if (statistic != nullptr)
         {
           statistic->clear ();
         }
@@ -197,7 +200,7 @@ NotificationServiceMonitor_i::send_control_command (const char* name,
   // The control object execution should only return false when the
   // command given does not correspond to one that is supported by the
   // control object.
-  if (control == 0 || !control->execute (cmd))
+  if (control == nullptr || !control->execute (cmd))
     {
       Monitor::NameList invalid (1);
       invalid.length (1);
@@ -224,19 +227,14 @@ NotificationServiceMonitor_i::get_data (
   // Get the statistic by name.
   Monitor_Base* monitor = registry->get (name);
 
-  if (monitor == 0)
+  if (monitor == nullptr)
     {
       // At the time that the list of names were acquired, this
       // statistic was available.  However, we have failed to
       // retrieve it.  The only reason that could happen is if
       // some one removed the statistic from the registry.
-      Monitor::Numeric num;
-      num.count = 0;
-      num.average = 0;
-      num.sum_of_squares = 0;
-      num.minimum = 0;
-      num.maximum = 0;
-      num.last = 0;
+      Monitor::Numeric num {};
+      data.data_union.num (num);
     }
   else
     {
@@ -252,12 +250,12 @@ NotificationServiceMonitor_i::get_invalid_names (
 {
   invalid.length (0);
 
-  CORBA::ULong ilength = 0;
+  CORBA::ULong ilength {};
   CORBA::ULong const length  = names.length ();
 
-  for (CORBA::ULong i = 0; i < length; ++i)
+  for (CORBA::ULong i {}; i < length; ++i)
     {
-      if (registry->get (names[i].in ()) == 0)
+      if (registry->get (names[i].in ()) == nullptr)
         {
           if (TAO_debug_level > 7)
             {

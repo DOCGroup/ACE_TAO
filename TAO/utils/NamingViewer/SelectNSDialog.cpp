@@ -17,7 +17,6 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CSelectNSDialog dialog
 
-
 CSelectNSDialog::CSelectNSDialog(CWnd* pParent /*=NULL*/)
   : CDialog(CSelectNSDialog::IDD, pParent)
 {
@@ -27,7 +26,6 @@ CSelectNSDialog::CSelectNSDialog(CWnd* pParent /*=NULL*/)
   m_pConfig = 0;
 }
 
-
 void CSelectNSDialog::DoDataExchange(CDataExchange* pDX)
 {
   CDialog::DoDataExchange(pDX);
@@ -35,7 +33,6 @@ void CSelectNSDialog::DoDataExchange(CDataExchange* pDX)
   DDX_Control(pDX, IDC_SERVERS, m_Servers);
   //}}AFX_DATA_MAP
 }
-
 
 BEGIN_MESSAGE_MAP(CSelectNSDialog, CDialog)
   //{{AFX_MSG_MAP(CSelectNSDialog)

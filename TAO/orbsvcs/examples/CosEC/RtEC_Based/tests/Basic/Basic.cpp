@@ -3,7 +3,7 @@
 #include "CosEvent_Utilities.h"
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Basic basic;
 
@@ -15,28 +15,18 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       basic.shutdown ();
     }
-  catch (const CORBA::UserException& ue)
+  catch (CORBA::UserException const &ue)
     {
-      ue._tao_print_exception ("CosEC_Basic user exception: ");
+      ue._tao_print_exception (ACE_TEXT ("CosEC_Basic user exception: "));
       return 1;
     }
-  catch (const CORBA::SystemException& se)
+  catch (CORBA::SystemException const &se)
     {
-      se._tao_print_exception ("CosEC_Basic system exception: ");
+      se._tao_print_exception (ACE_TEXT ("CosEC_Basic system exception: "));
       return 1;
     }
 
   return 0;
-}
-
-Basic::Basic ()
-{
-  // No-Op.
-}
-
-Basic::~Basic ()
-{
-  // No-Op.
 }
 
 void
@@ -48,22 +38,22 @@ Basic::init (int argc, ACE_TCHAR *argv[])
 }
 
 void
-Basic::init_ORB  (int argc, ACE_TCHAR *argv [])
+Basic::init_ORB (int argc, ACE_TCHAR *argv[])
 {
   this->orb_ = CORBA::ORB_init (argc, argv);
 
-  CORBA::Object_var poa_object  =
-    this->orb_->resolve_initial_references("RootPOA");
+  CORBA::Object_var const poa_object =
+    this->orb_->resolve_initial_references ("RootPOA");
 
   if (CORBA::is_nil (poa_object.in ()))
     ACE_ERROR ((LM_ERROR,
-                " (%P|%t) Unable to initialize the POA.\n"));
+                ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")));
 
-  root_poa_ =
+  this->root_poa_ =
     PortableServer::POA::_narrow (poa_object.in ());
 
-  PortableServer::POAManager_var poa_manager =
-    root_poa_->the_POAManager ();
+  PortableServer::POAManager_var const poa_manager =
+    this->root_poa_->the_POAManager ();
 
   poa_manager->activate ();
 }
@@ -71,19 +61,19 @@ Basic::init_ORB  (int argc, ACE_TCHAR *argv [])
 void
 Basic::init_CosEC ()
 {
-  CosEC_ServantBase *ec = 0;
+  CosEC_ServantBase *ec {};
 
   ACE_NEW_THROW_EX (ec,
                     CosEC_ServantBase (),
                     CORBA::NO_MEMORY ());
 
-  PortableServer::ServantBase_var ec_var (ec);
+  PortableServer::ServantBase_var const ec_var (ec);
 
   ec->init (this->root_poa_.in(),
             this->root_poa_.in(),
-            0,0,0);
+            nullptr, nullptr, nullptr);
 
-  int retval = ec->activate ();
+  int const retval = ec->activate ();
 
   if (retval == -1)
     throw CORBA::UNKNOWN ();
@@ -100,11 +90,10 @@ void
 Basic::run ()
 {
   // Create an Any type to pass to the Cos EC.
-  CORBA::Any any;
-  any <<= (CORBA::Long)50;
+  CORBA::Any any {};
+  any <<= static_cast<CORBA::Long> (50);
 
-  this->consumer_.open (this->cos_ec_.in (),
-                        this->orb_.in ());
+  this->consumer_.open (this->cos_ec_.in ());
 
   this->consumer_.connect ();
 

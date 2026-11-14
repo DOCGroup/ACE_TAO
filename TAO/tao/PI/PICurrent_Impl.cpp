@@ -1,4 +1,5 @@
 #include "tao/PI/PICurrent_Impl.h"
+#include <memory>
 
 #if TAO_HAS_INTERCEPTORS == 1
 
@@ -23,7 +24,7 @@ TAO::PICurrent_Impl::get_slot (PortableInterceptor::SlotId identifier)
 
   // The active slot table should never be a lazy copy of itself!
   if ( (nullptr != this->lazy_copy_)
-      && (&this->lazy_copy_->current_slot_table () == &this->slot_table_))
+      && (std::addressof (this->lazy_copy_->current_slot_table ()) == std::addressof (this->slot_table_)))
   {
     if (TAO_debug_level > 0)
       TAOLIB_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) Lazy copy of self detected at %N,%l\n")));
@@ -32,7 +33,7 @@ TAO::PICurrent_Impl::get_slot (PortableInterceptor::SlotId identifier)
 
   // Get the slot table that is currently active
   PICurrent_Impl::Table & table = this->current_slot_table ();
-  CORBA::Any * any = nullptr;
+  CORBA::Any * any {};
 
   if (identifier < table.size ())
     {
@@ -63,7 +64,7 @@ TAO::PICurrent_Impl::get_slot (PortableInterceptor::SlotId identifier)
 
 void
 TAO::PICurrent_Impl::set_slot (PortableInterceptor::SlotId identifier,
-                               const CORBA::Any & data)
+                               CORBA::Any const &data)
 {
   // No need to check validity of SlotId.  It is validated before this
   // method is invoked.
@@ -84,7 +85,7 @@ TAO::PICurrent_Impl::set_slot (PortableInterceptor::SlotId identifier,
       && this->slot_table_.size (identifier + 1) != 0)
     throw ::CORBA::INTERNAL ();
 
-  this->slot_table_[identifier] = CORBA::Any (data);
+  this->slot_table_[identifier] = data;
 }
 
 void
@@ -95,7 +96,7 @@ TAO::PICurrent_Impl::take_lazy_copy (
   // copying from. (If it is the same as before OR it would ultimately be
   // the same table, we are already correctly setup and we do nothing.)
   if ( (p != this->lazy_copy_)
-      && ((nullptr == p) || (&p->current_slot_table () != &this->current_slot_table ()))
+      && ((nullptr == p) || (std::addressof (p->current_slot_table ()) != std::addressof (this->current_slot_table ())))
       )
     {
       // Break any existing ties that another PICurrent has with our table
@@ -175,7 +176,7 @@ TAO::PICurrent_Impl::push ()
 {
   if (this->orb_core_) // We have a stack to adjust
     {
-      TAO::PICurrent_Impl *const currentHead =
+      TAO::PICurrent_Impl * const currentHead =
         static_cast<TAO::PICurrent_Impl *> (
           this->orb_core_->get_tss_resource (this->tss_slot_));
       if (!currentHead->push_)
@@ -201,7 +202,7 @@ TAO::PICurrent_Impl::pop ()
 {
   if (this->orb_core_) // We have a stack to adjust
     {
-      TAO::PICurrent_Impl *const currentHead =
+      TAO::PICurrent_Impl * const currentHead =
         static_cast<TAO::PICurrent_Impl *> (
           this->orb_core_->get_tss_resource (this->tss_slot_));
       if (currentHead->pop_)

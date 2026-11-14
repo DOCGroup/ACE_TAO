@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VISITOR_MODULE_ANY_OP_H_
 #define _BE_VISITOR_MODULE_ANY_OP_H_
 

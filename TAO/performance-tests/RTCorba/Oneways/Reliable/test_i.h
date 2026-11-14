@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_RELIABLE_TEST_I_H
 #define TAO_RELIABLE_TEST_I_H
 

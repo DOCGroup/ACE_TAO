@@ -7,7 +7,6 @@
 #include "tao/debug.h"
 #include "ace/Reactor.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_validate_client_Task::
@@ -16,8 +15,7 @@ TAO_Notify_validate_client_Task::
                                 TAO_Notify_EventChannelFactory *ecf)
   : delay_ (delay),
     interval_ (interval),
-    ecf_ (ecf),
-    shutdown_ (false)
+    ecf_ (ecf)
 {
   if (this->activate (THR_NEW_LWP | THR_JOINABLE, 1) == -1)
   {
@@ -26,11 +24,7 @@ TAO_Notify_validate_client_Task::
   }
 }
 
-
-TAO_Notify_validate_client_Task::~TAO_Notify_validate_client_Task ()
-{
-}
-
+TAO_Notify_validate_client_Task::~TAO_Notify_validate_client_Task () = default;
 
 int
 TAO_Notify_validate_client_Task::svc ()
@@ -71,7 +65,6 @@ TAO_Notify_validate_client_Task::svc ()
 
   return 0;
 }
-
 
 void
 TAO_Notify_validate_client_Task::shutdown ()

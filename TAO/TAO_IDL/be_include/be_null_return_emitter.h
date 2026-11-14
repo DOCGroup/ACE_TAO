@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_BE_NULL_RETURN_EMITTER_H
 #define TAO_BE_NULL_RETURN_EMITTER_H
 
@@ -31,7 +30,6 @@ private:
   be_visitor_context *ctx_;
   TAO_OutStream &os_;
 };
-
 
 #endif // if !defined
 

@@ -9,12 +9,13 @@
  */
 //=============================================================================
 
-
 #include "client.h"
 #include "driver.h"
 #include "results.h"
 #include "tests.h"
 #include "ace/Get_Opt.h"
+
+#include <cstring>
 
 // This function runs the test (main program)
 int
@@ -48,15 +49,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-// constructor
-Driver::Driver ()
-{
-}
-
-Driver::~Driver ()
-{
-}
-
 // initialize the driver
 int
 Driver::init (int argc, ACE_TCHAR **argv)
@@ -70,7 +62,7 @@ Driver::init (int argc, ACE_TCHAR **argv)
 
   try
     {
-      ACE_OS::strcpy (exception_string, "ORB Initialization");
+      std::strcpy (exception_string, "ORB Initialization");
 
       // Retrieve the underlying ORB
       this->orb_ = CORBA::ORB_init (argc,
@@ -84,11 +76,10 @@ Driver::init (int argc, ACE_TCHAR **argv)
                            "parse_args failed\n"),
                           -1);
       // Retrieve a Param_Test object reference
-      ACE_OS::strcpy (exception_string,"ORB::string_to_object() failed.");
+      std::strcpy (exception_string,"ORB::string_to_object() failed.");
 
       CORBA::Object_var temp =
         this->orb_->string_to_object (opt->param_test_ior ());
-
 
       if (CORBA::is_nil (temp.in()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -97,7 +88,7 @@ Driver::init (int argc, ACE_TCHAR **argv)
                           -1);
 
       // Get the object reference
-      ACE_OS::strcpy (exception_string,"Param_Test::_narrow () failed.");
+      std::strcpy (exception_string,"Param_Test::_narrow () failed.");
 
       this->objref_ = Param_Test::_narrow (temp.in());
     }

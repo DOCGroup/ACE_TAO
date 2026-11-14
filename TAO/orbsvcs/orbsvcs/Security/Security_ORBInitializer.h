@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_SECURITY_ORB_INITIALIZER_H
 #define TAO_SECURITY_ORB_INITIALIZER_H
 
@@ -34,7 +33,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-/// Security ORB initializer.
 namespace TAO
 {
   namespace Security

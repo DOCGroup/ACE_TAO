@@ -9,22 +9,15 @@
 
 #include "Messenger_i.h"
 #include <iostream>
-// Implementation skeleton constructor
 Messenger_i::Messenger_i (CORBA::ORB_ptr orb)
   : orb_(CORBA::ORB::_duplicate(orb))
 {
 }
 
-// Implementation skeleton destructor
-Messenger_i::~Messenger_i ()
-{
-}
-
 CORBA::Boolean Messenger_i::send_message (
-    const char * user_name,
-    const char * subject,
-    char *& message
-  )
+    char const *user_name,
+    char const *subject,
+    char *&message)
 {
   std::cout << "Message from: " << user_name << std::endl;
   std::cout << "Subject:      " << subject << std::endl;

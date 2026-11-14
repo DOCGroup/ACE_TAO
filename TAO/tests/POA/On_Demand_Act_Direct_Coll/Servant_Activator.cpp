@@ -10,10 +10,9 @@
  */
 //=============================================================================
 
-
 #include "Servant_Activator.h"
 #include "test_i.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 ServantActivator::ServantActivator (CORBA::ORB_ptr orb,
                                     ACE_thread_t thrid)
@@ -25,31 +24,27 @@ ServantActivator::ServantActivator (CORBA::ORB_ptr orb,
 }
 
 PortableServer::Servant
-ServantActivator::incarnate (const PortableServer::ObjectId &oid,
+ServantActivator::incarnate (PortableServer::ObjectId const &oid,
                              PortableServer::POA_ptr poa)
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("ServantActivator::incarnate\n")));
   // Convert ObjectId to String.
-  CORBA::String_var s = PortableServer::ObjectId_to_string (oid);
+  CORBA::String_var const s = PortableServer::ObjectId_to_string (oid);
 
   // If ObjectId string has a test substring, create and return a
   // test_i.
 
-  if (ACE_OS::strstr (s.in (), "test") != 0)
-    return new test_i (this->orb_.in (), poa, this->thr_id_);
-  else
-    {
-      throw CORBA::OBJECT_NOT_EXIST ();
-    }
+  if (std::strstr (s.in (), "test") == nullptr)
+    throw CORBA::OBJECT_NOT_EXIST ();
+  return new test_i (this->orb_.in (), poa, this->thr_id_);
 }
 
-
 void
-ServantActivator::etherealize (const PortableServer::ObjectId &,
-                               PortableServer::POA_ptr ,
+ServantActivator::etherealize (PortableServer::ObjectId const &,
+                               PortableServer::POA_ptr,
                                PortableServer::Servant servant,
-                               CORBA::Boolean ,
+                               CORBA::Boolean,
                                CORBA::Boolean remaining_activations)
 {
   ACE_DEBUG ((LM_DEBUG,

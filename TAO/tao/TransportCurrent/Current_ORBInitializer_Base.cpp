@@ -8,13 +8,11 @@ namespace TAO
 {
   namespace Transport
   {
-    Current_ORBInitializer_Base::Current_ORBInitializer_Base(const ACE_TCHAR* id)
+    Current_ORBInitializer_Base::Current_ORBInitializer_Base (
+      ACE_TCHAR const *id)
       : id_ (id)
     {
-      // do nothing
     }
-
-    Current_ORBInitializer_Base::~Current_ORBInitializer_Base () = default;
 
     void
     Current_ORBInitializer_Base::pre_init (
@@ -37,7 +35,7 @@ namespace TAO
 
       // Reserve a TSS slot in the ORB core internal TSS resources for the
       // thread-specific portion of the Current object.
-      size_t tss_slot = tao_info->allocate_tss_slot_id (0);
+      size_t const tss_slot = tao_info->allocate_tss_slot_id (nullptr);
 
       // Create the Current
       Current_var current (this->make_current_instance (tao_info->orb_core (),
@@ -51,7 +49,6 @@ namespace TAO
     Current_ORBInitializer_Base::post_init (
       PortableInterceptor::ORBInitInfo_ptr)
     {
-      // do nothing
     }
 
   }
@@ -59,5 +56,4 @@ namespace TAO
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
 

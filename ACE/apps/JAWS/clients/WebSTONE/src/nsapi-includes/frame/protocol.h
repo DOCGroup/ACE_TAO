@@ -7,9 +7,7 @@
  * parties.
  */
 
-
 /* ------------------------------------------------------------------------ */
-
 
 /*
  * protocol.h: Switch which protocol we're speaking.
@@ -18,7 +16,6 @@
  *
  * Rob McCool
  */
-
 
 #ifdef MCC_HTTPD
 #include "http.h"

@@ -22,25 +22,28 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 class Server_Task : public ACE_Task_Base
 {
 public:
-  /// Constructor
-  Server_Task (Sender_i *s,
+  Server_Task (Sender_i &sender,
                ACE_Manual_Event &event,
                int no_iterations,
                CORBA::ORB_ptr orb,
                ACE_Thread_Manager *thr_mgr);
+  Server_Task (Server_Task const &) = delete;
+  Server_Task (Server_Task &&) = delete;
+  Server_Task &operator= (Server_Task const &) = delete;
+  Server_Task &operator= (Server_Task &&) = delete;
 
   /// Thread entry point
-  int svc ();
+  int svc () override;
 
 private:
-  /// The sender object
-  Sender_i *sender_;
+  /// The sender object, whose lifetime is managed by the POA.
+  Sender_i &sender_;
 
   /// The synchronizer
   ACE_Manual_Event &event_;
 
   /// Number of messages that needs to be sent
-  int no_iterations_;
+  int const no_iterations_;
 
   /// The ORB on which we run..
   CORBA::ORB_var orb_;

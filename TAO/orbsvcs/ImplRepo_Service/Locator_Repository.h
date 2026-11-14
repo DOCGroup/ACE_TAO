@@ -86,8 +86,7 @@ public:
     const CORBA::Long token,
     const ACE_CString& ior = ACE_CString(""),
     ImplementationRepository::Activator_ptr act =
-      ImplementationRepository::Activator::_nil()
-    );
+      ImplementationRepository::Activator::_nil());
 
   /// Update the associated information.
   int update_server (const Server_Info_Ptr& info);
@@ -192,20 +191,20 @@ public:
   virtual ~No_Backing_Store();
 
   /// indicate the persistence mode for the repository
-  virtual const ACE_TCHAR* repo_mode() const;
+  const ACE_TCHAR* repo_mode() const override;
 
 private:
   /// perform repo mode specific initialization (no-op)
-  virtual int init_repo(PortableServer::POA_ptr imr_poa);
+  int init_repo(PortableServer::POA_ptr imr_poa) override;
 
   /// perform server persistent update (no-op)
-  virtual int persistent_update(const Server_Info_Ptr& info, bool add);
+  int persistent_update(const Server_Info_Ptr& info, bool add) override;
 
   /// perform activator persistent update (no-op)
-  virtual int persistent_update(const Activator_Info_Ptr& info, bool add);
+  int persistent_update(const Activator_Info_Ptr& info, bool add) override;
 
   /// perform persistent remove (no-op)
-  virtual int persistent_remove(const ACE_CString& name, bool activator);
+  int persistent_remove(const ACE_CString& name, bool activator) override;
 };
 
 #endif /* LOCATOR_REPOSITORY_H */

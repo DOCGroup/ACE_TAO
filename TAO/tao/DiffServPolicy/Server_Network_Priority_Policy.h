@@ -1,12 +1,7 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   Server_Network_Priority_Policy.h
  */
-//=============================================================================
-
-
 #ifndef TAO_SERVER_NETWORK_PRIORITY_POLICY_H
 #define TAO_SERVER_NETWORK_PRIORITY_POLICY_H
 
@@ -44,18 +39,15 @@ class TAO_DiffServPolicy_Export TAO_Server_Network_Priority_Policy
     public ::CORBA::LocalObject
 {
 public:
-  /// default constructor.
   TAO_Server_Network_Priority_Policy () = default;
 
-  /// Constructor.
   TAO_Server_Network_Priority_Policy (
-     TAO::DiffservCodepoint const& request_diffserv_codepoint,
-     TAO::DiffservCodepoint const& reply_diffserv_codepoint,
-     TAO::NetworkPriorityModel &network_priority_model);
+    TAO::DiffservCodepoint const &request_diffserv_codepoint,
+    TAO::DiffservCodepoint const &reply_diffserv_codepoint,
+    TAO::NetworkPriorityModel &network_priority_model);
 
-  /// Copy constructor.
   TAO_Server_Network_Priority_Policy (
-     TAO_Server_Network_Priority_Policy const& rhs);
+    TAO_Server_Network_Priority_Policy const &rhs);
 
   /// Returns a copy of <this>.
   TAO_Server_Network_Priority_Policy *clone () const;
@@ -72,7 +64,7 @@ public:
 
   void network_priority_model (TAO::NetworkPriorityModel npm) override;
 
-  static CORBA::Policy_ptr create (CORBA::Any const& val);
+  static CORBA::Policy_ptr create (CORBA::Any const &val);
 
   CORBA::PolicyType policy_type () override;
 
@@ -80,10 +72,10 @@ public:
 
   void destroy () override;
 
-  // Return the cached policy type for this policy.
+  /// Return the cached policy type for this policy.
   TAO_Cached_Policy_Type _tao_cached_type () const override;
 
-  // Returns the scope at which this policy can be applied. See orbconf.h.
+  /// Returns the scope at which this policy can be applied. See orbconf.h.
   TAO_Policy_Scope _tao_scope () const override;
 
   /// This method writes a CDR representation of the object state.
@@ -92,11 +84,15 @@ public:
   /// This method reads the object state from a CDR representation.
   CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr) override;
 
+  TAO_Server_Network_Priority_Policy (TAO_Server_Network_Priority_Policy &&) = delete;
+  TAO_Server_Network_Priority_Policy &operator= (
+    TAO_Server_Network_Priority_Policy const &) = delete;
+  TAO_Server_Network_Priority_Policy &operator= (TAO_Server_Network_Priority_Policy &&) = delete;
+
 protected:
   ~TAO_Server_Network_Priority_Policy () override;
 
 private:
-  /// The attributes
   TAO::DiffservCodepoint request_diffserv_codepoint_ {};
   TAO::DiffservCodepoint reply_diffserv_codepoint_ {};
   TAO::NetworkPriorityModel network_priority_model_ {TAO::NO_NETWORK_PRIORITY};

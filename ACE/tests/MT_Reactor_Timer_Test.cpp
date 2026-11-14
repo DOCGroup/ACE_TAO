@@ -12,12 +12,10 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "MT_Reactor_Timer_Test.h"
 #include "ace/ACE.h"
 #include "ace/OS_NS_unistd.h"
-
 
 #if defined (ACE_HAS_THREADS)
 
@@ -320,7 +318,7 @@ run_main (int, ACE_TCHAR *[])
   if (events < ACE_MAX_TIMERS + 2)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("expected %d events, got %d instead\n"),
+                  ACE_TEXT ("expected %d events, got %B instead\n"),
                   ACE_MAX_TIMERS + 2,
                   events));
     }

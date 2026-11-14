@@ -8,21 +8,19 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::CSD::TP_Strategy_Factory::~TP_Strategy_Factory () = default;
-
 int
 TAO::CSD::TP_Strategy_Factory::init (int argc,
                                      ACE_TCHAR* argv[])
 {
   ACE_TRACE ("TAO::CSD::TP_Strategy_Factory::init");
 
-  static int initialized {};
+  static bool initialized {};
 
   // Only allow initialization once.
   if (initialized)
     return 0;
 
-  initialized = 1;
+  initialized = true;
   TAO_CSD_Strategy_Repository *repo =
     ACE_Dynamic_Service<TAO_CSD_Strategy_Repository>::instance
       (ACE_TEXT ("TAO_CSD_Strategy_Repository"));
@@ -45,19 +43,19 @@ TAO::CSD::TP_Strategy_Factory::init (int argc,
       return -1;
     }
 
-  repo->init(0,0);
+  repo->init (0, nullptr);
 
   // Parse any service configurator parameters.
-  for (int curarg = 0; curarg < argc; curarg++)
+  for (int curarg {}; curarg < argc; ++curarg)
     {
       if (ACE_OS::strcasecmp (argv[curarg],
                               ACE_TEXT("-CSDtp")) == 0)
         {
-          ACE_CString poa_name;
-          unsigned long num_threads = 1;
-          bool serialize_servants = true;
+          std::string poa_name;
+          unsigned long num_threads {1};
+          bool serialize_servants {true};
 
-          curarg++;
+          ++curarg;
           if (curarg >= argc)
             {
               return -1;
@@ -89,11 +87,11 @@ TAO::CSD::TP_Strategy_Factory::init (int argc,
             }
 
           // Create the ThreadPool strategy for each named poa.
-          TP_Strategy *strategy = nullptr;
+          TP_Strategy *strategy {};
           ACE_NEW_RETURN (strategy,
                           TP_Strategy (num_threads, serialize_servants),
                           -1);
-          CSD_Framework::Strategy_var objref = strategy;
+          CSD_Framework::Strategy_var const objref = strategy;
           repo->add_strategy (poa_name, strategy);
         }
       else

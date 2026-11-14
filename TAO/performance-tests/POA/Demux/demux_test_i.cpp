@@ -3,14 +3,6 @@
 #include "demux_test_i.h"
 #include "tao/ORB_Core.h"
 
-// ctor
-Demux_Test_i::Demux_Test_i ()
-{}
-
-// dtor
-Demux_Test_i::~Demux_Test_i ()
-{}
-
 void Demux_Test_i::M302 ()
 {
 }

@@ -20,9 +20,7 @@ ACE_Arg_Shifter_T<CHAR_TYPE>::ACE_Arg_Shifter_T (int &argc,
     total_size_ (argc),
     temp_ (const_cast<CHAR_TYPE **> (temp)),
     argv_ (const_cast<CHAR_TYPE **> (argv)),
-    current_index_ (0),
-    back_ (argc - 1),
-    front_ (0)
+    back_ (argc - 1)
 {
   this->init ();
 }
@@ -35,9 +33,7 @@ ACE_Arg_Shifter_T<CHAR_TYPE>::ACE_Arg_Shifter_T (int &argc,
     total_size_ (argc),
     temp_ (temp),
     argv_ (argv),
-    current_index_ (0),
-    back_ (argc - 1),
-    front_ (0)
+    back_ (argc - 1)
 {
   this->init ();
 }
@@ -47,22 +43,26 @@ void
 ACE_Arg_Shifter_T<CHAR_TYPE>::init ()
 {
   // If not provided with one, allocate a temporary array.
-  if (this->temp_ == 0)
+  if (this->temp_ == nullptr)
+    {
 #if defined (ACE_HAS_ALLOC_HOOKS)
-    this->temp_ = reinterpret_cast<CHAR_TYPE **>
-      (ACE_Allocator::instance ()->malloc (sizeof (CHAR_TYPE*) * this->total_size_));
+      this->temp_ = reinterpret_cast<CHAR_TYPE **>
+        (ACE_Allocator::instance ()->malloc (sizeof (CHAR_TYPE*) * this->total_size_));
 #else
-    ACE_NEW (this->temp_,
-             CHAR_TYPE *[this->total_size_]);
+      ACE_NEW (this->temp_,
+               CHAR_TYPE *[this->total_size_]);
 #endif /* ACE_HAS_ALLOC_HOOKS */
-  if (this->temp_ != 0)
+      this->owns_temp_ = this->temp_ != nullptr;
+    }
+
+  if (this->temp_ != nullptr)
     {
       // Fill the temporary array.
       this->argc_ = 0;
-      for (int i = 0; i < this->total_size_; i++)
+      for (int i {}; i < this->total_size_; ++i)
         {
           this->temp_[i] = this->argv_[i];
-          this->argv_[i] = 0;
+          this->argv_[i] = nullptr;
         }
     }
   else
@@ -77,19 +77,21 @@ template <typename CHAR_TYPE>
 ACE_Arg_Shifter_T<CHAR_TYPE>::~ACE_Arg_Shifter_T ()
 {
   // Delete the temporary vector.
+  if (this->owns_temp_)
+    {
 #if defined (ACE_HAS_ALLOC_HOOKS)
-  if (this->temp_)
-    ACE_Allocator::instance ()->free (this->temp_);
+      ACE_Allocator::instance ()->free (this->temp_);
 #else
-  delete [] temp_;
+      delete [] this->temp_;
 #endif /* ACE_HAS_ALLOC_HOOKS */
+    }
 }
 
 template <typename CHAR_TYPE>
 CHAR_TYPE const *
 ACE_Arg_Shifter_T<CHAR_TYPE>::get_current () const
 {
-  CHAR_TYPE const *retval = nullptr;
+  CHAR_TYPE const *retval {};
 
   if (this->is_anything_left ())
     retval = this->temp_[current_index_];
@@ -101,17 +103,14 @@ template <typename CHAR_TYPE>
 CHAR_TYPE const *
 ACE_Arg_Shifter_T<CHAR_TYPE>::get_the_parameter (CHAR_TYPE const *flag)
 {
-  // the return 0's abound because this method
-  // would otherwise be a deep if { } else { }
-
   // check to see if any arguments still exist
   if (!this->is_anything_left())
-    return 0;
+    return nullptr;
 
   // check to see if the flag is the argument
   int const offset = this->cur_arg_strncasecmp (flag);
   if (offset == -1)
-    return 0;
+    return nullptr;
 
   if (offset == 0)
     {
@@ -119,7 +118,7 @@ ACE_Arg_Shifter_T<CHAR_TYPE>::get_the_parameter (CHAR_TYPE const *flag)
 
       if (!this->is_parameter_next())
         {
-          return 0;
+          return nullptr;
         }
     }
   // the parameter is in the middle somewhere...
@@ -133,13 +132,13 @@ ACE_Arg_Shifter_T<CHAR_TYPE>::cur_arg_strncasecmp (CHAR_TYPE const *flag)
   if (!this->is_anything_left ())
     return -1;
 
-  const size_t flag_length = ACE_OS::strlen (flag);
-  CHAR_TYPE const *arg = this->temp_[this->current_index_];
+  size_t const flag_length = ACE_OS::strlen (flag);
+  CHAR_TYPE const * const arg = this->temp_[this->current_index_];
 
   if (ACE_OS::strncasecmp (arg, flag, flag_length) != 0)
     return -1;
 
-  const size_t arg_length = ACE_OS::strlen (arg);
+  size_t const arg_length = ACE_OS::strlen (arg);
   size_t remaining = flag_length;
   while (remaining < arg_length && arg[remaining] == CHAR_TYPE (' '))
     ++remaining;
@@ -150,12 +149,12 @@ template <typename CHAR_TYPE>
 int
 ACE_Arg_Shifter_T<CHAR_TYPE>::consume_arg (int number)
 {
-  int retval = 0;
+  int retval {};
 
   // Stick knowns at the end of the vector (consumed).
   if (this->is_anything_left() >= number)
     {
-      for (int i = 0, j = this->back_ - (number - 1);
+      for (int i {}, j {this->back_ - (number - 1)};
            i < number;
            ++i, ++j, ++this->current_index_)
         this->argv_[j] = this->temp_[this->current_index_];
@@ -171,14 +170,14 @@ template <typename CHAR_TYPE>
 int
 ACE_Arg_Shifter_T<CHAR_TYPE>::ignore_arg (int number)
 {
-  int retval = 0;
+  int retval {};
 
   // Keep unknowns at the head of the vector.
   if (this->is_anything_left () >= number)
     {
-      for (int i = 0;
+      for (int i {};
            i < number;
-           i++, this->current_index_++, this->front_++)
+           ++i, ++this->current_index_, ++this->front_)
         this->argv_[this->front_] = this->temp_[this->current_index_];
 
       retval = 1;
@@ -196,7 +195,7 @@ ACE_Arg_Shifter_T<CHAR_TYPE>::is_anything_left () const
 }
 
 template <typename CHAR_TYPE>
-int
+bool
 ACE_Arg_Shifter_T<CHAR_TYPE>::is_option_next () const
 {
   return this->is_anything_left () &&
@@ -204,7 +203,7 @@ ACE_Arg_Shifter_T<CHAR_TYPE>::is_option_next () const
 }
 
 template <typename CHAR_TYPE>
-int
+bool
 ACE_Arg_Shifter_T<CHAR_TYPE>::is_parameter_next () const
 {
   return this->is_anything_left ()

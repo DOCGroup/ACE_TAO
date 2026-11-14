@@ -17,6 +17,8 @@
 #include "tao/Acceptor_Registry.h"
 #include "tao/Thread_Lane_Resources.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::SSLIOP::Transport::Transport (
@@ -24,10 +26,6 @@ TAO::SSLIOP::Transport::Transport (
   TAO_ORB_Core *orb_core)
   : TAO_Transport (IOP::TAG_INTERNET_IOP, orb_core),
     connection_handler_ (handler)
-{
-}
-
-TAO::SSLIOP::Transport::~Transport ()
 {
 }
 
@@ -47,7 +45,7 @@ int
 TAO::SSLIOP::Transport::handle_input (TAO_Resume_Handle &rh,
                                       ACE_Time_Value *max_wait_time)
 {
-  int result = 0;
+  int result {};
 
   // Set up the SSLIOP::Current object.
   TAO::SSLIOP::State_Guard ssl_state_guard (this->connection_handler_, result);
@@ -62,7 +60,7 @@ ssize_t
 TAO::SSLIOP::Transport::send (iovec *iov,
                               int iovcnt,
                               size_t &bytes_transferred,
-                              const ACE_Time_Value *max_wait_time)
+                              ACE_Time_Value const *max_wait_time)
 {
   ssize_t const retval =
     this->connection_handler_->peer ().sendv (iov, iovcnt, max_wait_time);
@@ -76,7 +74,7 @@ TAO::SSLIOP::Transport::send (iovec *iov,
 ssize_t
 TAO::SSLIOP::Transport::recv (char *buf,
                               size_t len,
-                              const ACE_Time_Value *max_wait_time)
+                              ACE_Time_Value const *max_wait_time)
 {
   ssize_t const n = this->connection_handler_->peer ().recv (buf,
                                                              len,
@@ -187,7 +185,6 @@ TAO::SSLIOP::Transport::tear_listen_point_list (TAO_InputCDR &cdr)
   return this->connection_handler_->process_listen_point_list (listen_list);
 }
 
-
 void
 TAO::SSLIOP::Transport::set_bidir_context_info (
   TAO_Operation_Details &opdetails)
@@ -196,19 +193,14 @@ TAO::SSLIOP::Transport::set_bidir_context_info (
   TAO_Acceptor_Registry &ar =
     this->orb_core ()->lane_resources ().acceptor_registry ();
 
-  // Get the first acceptor in the registry
-  TAO_AcceptorSetIterator acceptor = ar.begin ();
-
   IIOP::ListenPointList listen_point_list;
 
-  for (;
-       acceptor != ar.end ();
-       acceptor++)
+  for (std::unique_ptr<TAO_Acceptor> const& acceptor : ar.acceptors ())
     {
       // Check whether it is a IIOP acceptor
-      if ((*acceptor)->tag () == this->tag ())
+      if (acceptor->tag () == this->tag ())
         {
-          if (this->get_listen_point (listen_point_list, *acceptor) == -1)
+          if (this->get_listen_point (listen_point_list, acceptor.get ()) == -1)
             {
               ORBSVCS_ERROR ((LM_ERROR,
                           "TAO (%P|%t) - SSLIOP_Transport::set_bidir_info, ",
@@ -232,7 +224,6 @@ TAO::SSLIOP::Transport::set_bidir_context_info (
   return;
 }
 
-
 int
 TAO::SSLIOP::Transport::get_listen_point (
   IIOP::ListenPointList &listen_point_list,
@@ -246,14 +237,14 @@ TAO::SSLIOP::Transport::get_listen_point (
 
   // Get the array of IIOP (not SSLIOP!) endpoints serviced by the
   // SSLIOP_Acceptor.
-  const ACE_INET_Addr *endpoint_addr = ssliop_acceptor->endpoints ();
+  ACE_INET_Addr const *endpoint_addr = ssliop_acceptor->endpoints ();
 
   // Get the count
   size_t const count = ssliop_acceptor->endpoint_count ();
 
   // The SSL port is stored in the SSLIOP::SSL component associated
   // with the SSLIOP_Acceptor.
-  const ::SSLIOP::SSL &ssl = ssliop_acceptor->ssl_component ();
+  ::SSLIOP::SSL const &ssl = ssliop_acceptor->ssl_component ();
 
   // Get the local address of the connection
   ACE_INET_Addr local_addr;
@@ -289,16 +280,16 @@ TAO::SSLIOP::Transport::get_listen_point (
 #if defined (ACE_HAS_IPV6)
   // If this is an IPv6 decimal linklocal address containing a scopeid than
   // remove the scopeid from the information being sent.
-  const char *cp_scope = nullptr;
+  char const *cp_scope {};
   if (local_addr.get_type () == PF_INET6 &&
-        (cp_scope = ACE_OS::strchr (local_interface.in (), '%')) != nullptr)
+        (cp_scope = std::strchr (local_interface.in (), '%')) != nullptr)
     {
       CORBA::ULong len = cp_scope - local_interface.in ();
       local_interface[len] = '\0';
     }
 #endif /* ACE_HAS_IPV6 */
 
-  for (size_t index = 0; index < count; ++index)
+  for (size_t index {}; index < count; ++index)
     {
       // Make sure port numbers are equal so the following comparison
       // only concerns the IP(v4/v6) address.

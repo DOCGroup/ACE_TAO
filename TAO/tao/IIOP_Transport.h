@@ -50,12 +50,10 @@ class TAO_Adapter;
 class TAO_Export TAO_IIOP_Transport : public TAO_Transport
 {
 public:
-  /// Constructor.
   TAO_IIOP_Transport (TAO_IIOP_Connection_Handler *handler,
                       TAO_ORB_Core *orb_core);
 
 protected:
-  /// Destructor
   /**
    * Protected destructor to enforce proper memory management through
    * the reference counting mechanism.
@@ -119,10 +117,14 @@ private:
   /// endpoints in the @a acceptor
   int get_listen_point (IIOP::ListenPointList &listen_point_list,
                         TAO_Acceptor *acceptor);
-private:
+  TAO_IIOP_Transport (TAO_IIOP_Transport const &) = delete;
+  TAO_IIOP_Transport &operator= (TAO_IIOP_Transport const &) = delete;
+  TAO_IIOP_Transport (TAO_IIOP_Transport &&) = delete;
+  TAO_IIOP_Transport &operator= (TAO_IIOP_Transport &&) = delete;
+
   /// The connection service handler used for accessing lower layer
-  /// communication protocols.
-  TAO_IIOP_Connection_Handler *connection_handler_;
+  /// communication protocols. This transport does not own the handler.
+  TAO_IIOP_Connection_Handler * const connection_handler_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

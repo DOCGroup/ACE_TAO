@@ -54,7 +54,6 @@ test_setenv ()
   return status;
 }
 
-
 int
 check_temp_file (const ACE_TString &tmpfilename)
 {

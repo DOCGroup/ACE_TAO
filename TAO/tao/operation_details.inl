@@ -3,34 +3,25 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-TAO_Operation_Details::TAO_Operation_Details (const char *name,
-                                              const CORBA::ULong len,
+TAO_Operation_Details::TAO_Operation_Details (char const *name,
+                                              CORBA::ULong len,
                                               TAO::Argument **args,
-                                              const CORBA::ULong num,
-                                              const CORBA::Boolean has_in_args,
-                                              const TAO::Exception_Data *data,
-                                              const CORBA::ULong count)
+                                              CORBA::ULong num,
+                                              CORBA::Boolean has_in_args,
+                                              TAO::Exception_Data const *data,
+                                              CORBA::ULong count)
   : opname_ (name)
     , opname_len_ (len)
-    , request_id_ (0)
-    , response_flags_ (0)
-    , addressing_mode_ (TAO_Target_Specification::Key_Addr)
     , args_ (args)
     , num_args_ (num)
     , has_in_args_ (has_in_args)
     , ex_data_ (data)
     , ex_count_ (count)
-    , use_stub_args_ (args ? true : false)
-#if TAO_HAS_INTERCEPTORS == 1
-    , ft_expiration_time_ (0)
-    , ft_retention_id_ (0)
-#endif /*TAO_HAS_INTERCEPTORS == 1*/
-    , cac_ (0)
-    , reply_dispatcher_ (0)
+    , use_stub_args_ (args != nullptr)
 {
 }
 
-ACE_INLINE const char*
+ACE_INLINE char const *
 TAO_Operation_Details::opname () const
 {
   return this->opname_;
@@ -58,9 +49,9 @@ TAO_Operation_Details::in_argument_flag () const
 ACE_INLINE CORBA::Boolean
 TAO_Operation_Details::in_argument_flag () const
 {
-  for (CORBA::ULong i = 1; i < this->num_args_ && !this->has_in_args_; i++)
+  for (CORBA::ULong i = 1; i < this->num_args_ && !this->has_in_args_; ++i)
     {
-      if (dynamic_cast<TAO::InArgument *>(args_[i]) != 0 ||
+      if (dynamic_cast<TAO::InArgument *>(args_[i]) != nullptr ||
           dynamic_cast<TAO::InoutArgument *>(args_[i]))
         {
           return true;
@@ -76,7 +67,7 @@ TAO_Operation_Details::request_service_context ()
   return this->request_service_info_;
 }
 
-ACE_INLINE const TAO_Service_Context &
+ACE_INLINE TAO_Service_Context const &
 TAO_Operation_Details::request_service_context () const
 {
   return this->request_service_info_;
@@ -88,7 +79,7 @@ TAO_Operation_Details::request_service_info ()
   return this->request_service_context ().service_info ();
 }
 
-ACE_INLINE const IOP::ServiceContextList &
+ACE_INLINE IOP::ServiceContextList const &
 TAO_Operation_Details::request_service_info () const
 {
   return this->request_service_context ().service_info ();
@@ -100,7 +91,7 @@ TAO_Operation_Details::reply_service_context ()
   return this->reply_service_info_;
 }
 
-ACE_INLINE const TAO_Service_Context &
+ACE_INLINE TAO_Service_Context const &
 TAO_Operation_Details::reply_service_context () const
 {
   return this->reply_service_info_;
@@ -112,7 +103,7 @@ TAO_Operation_Details::reply_service_info ()
   return this->reply_service_context ().service_info ();
 }
 
-ACE_INLINE const IOP::ServiceContextList &
+ACE_INLINE IOP::ServiceContextList const &
 TAO_Operation_Details::reply_service_info () const
 {
   return this->reply_service_context ().service_info ();
@@ -255,6 +246,5 @@ TAO_Operation_Details::reply_dispatcher (TAO_Reply_Dispatcher *rd)
 {
   this->reply_dispatcher_ = rd;
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

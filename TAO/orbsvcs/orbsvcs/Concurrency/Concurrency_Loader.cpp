@@ -14,16 +14,7 @@
 #include "orbsvcs/Concurrency/Concurrency_Loader.h"
 #include "ace/Dynamic_Service.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-TAO_Concurrency_Loader::TAO_Concurrency_Loader ()
-{
-}
-
-TAO_Concurrency_Loader::~TAO_Concurrency_Loader ()
-{
-}
 
 int
 TAO_Concurrency_Loader::init (int argc, ACE_TCHAR *argv[])
@@ -38,7 +29,7 @@ TAO_Concurrency_Loader::init (int argc, ACE_TCHAR *argv[])
       CORBA::Object_var object =
         this->create_object (orb.in (), argc, argv);
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // @@ Should we log this???
       return -1;

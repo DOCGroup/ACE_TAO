@@ -3,11 +3,6 @@
 #include "Server_ORBInitializer.h"
 #include "server_interceptor.h"
 
-Server_ORBInitializer::Server_ORBInitializer ()
-  : server_interceptor_ (nullptr)
-{
-}
-
 void
 Server_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr)
@@ -24,14 +19,14 @@ Server_ORBInitializer::post_init (
                     Echo_Server_Request_Interceptor,
                     CORBA::NO_MEMORY ());
 
-  PortableInterceptor::ServerRequestInterceptor_var interceptor =
+  PortableInterceptor::ServerRequestInterceptor_var const interceptor =
     this->server_interceptor_;
 
   info->add_server_request_interceptor (interceptor.in ());
 }
 
 Echo_Server_Request_Interceptor *
-Server_ORBInitializer::server_interceptor ()
+Server_ORBInitializer::server_interceptor () const
 {
   return this->server_interceptor_;
 }

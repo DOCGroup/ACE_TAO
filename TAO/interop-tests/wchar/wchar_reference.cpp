@@ -14,73 +14,71 @@
 
 #include "wchar_reference.h"
 #include "ace/Log_Msg.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
+#include <cwchar>
 
 #if defined (ACE_HAS_WCHAR) || defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
 
-ACE_OS::WChar
+ACE_OS::WChar const
 wchar_reference::ref_wchar[NUM_KEYS] =
   {1234};
 
-const ACE_OS::WChar *
+ACE_OS::WChar const *
 wchar_reference::ref_wstring[NUM_KEYS] =
   {L"have a nice day"};
 
 ACE_OS::WChar
-wchar_reference::ref_warray[NUM_KEYS][10] =
+wchar_reference::ref_warray[NUM_KEYS][WARRAY_LENGTH] =
   { {L'a',L'A',L'!',L'1',L'4',L'[',L'?',L'%',L'X',L'E'} };
 
-const ACE_OS::WChar *
+ACE_OS::WChar const *
 wchar_reference::ref_except[NUM_KEYS] =
   {L"TEST EXCEPTION"};
 
-wchar_reference::wchar_reference(int v)
-  : verbose_ (v)
+wchar_reference::wchar_reference (bool verbose)
+  : verbose_ (verbose)
 {
 }
 
 void
-wchar_reference::set_verbose(int v)
+wchar_reference::set_verbose (bool verbose)
 {
-  this->verbose_ = v;
+  this->verbose_ = verbose;
 }
 
 ACE_OS::WChar
-wchar_reference::get_wchar (short key)
+wchar_reference::get_wchar (short key) const
 {
   return wchar_reference::ref_wchar[key];
 }
 
-const ACE_OS::WChar *
-wchar_reference::get_wstring (short key)
+ACE_OS::WChar const *
+wchar_reference::get_wstring (short key) const
 {
   return wchar_reference::ref_wstring[key];
 }
 
 ACE_OS::WChar *
-wchar_reference::get_warray (short key)
+wchar_reference::get_warray (short key) const
 {
   return wchar_reference::ref_warray[key];
 }
 
 void
 wchar_reference::assign_warray (short key,
-                                ACE_OS::WChar *warray)
+                                ACE_OS::WChar *warray) const
 {
-  ACE_OS::memcpy(warray,
-                 wchar_reference::ref_warray[key],
-                 10*(sizeof(ACE_OS::WChar))
-                 );
+  std::memcpy (warray, wchar_reference::ref_warray[key], WARRAY_LENGTH * sizeof (ACE_OS::WChar));
 }
 
-const ACE_OS::WChar *
-wchar_reference::get_except (short key)
+ACE_OS::WChar const *
+wchar_reference::get_except (short key) const
 {
   return wchar_reference::ref_except[key];
 }
 
-int
-wchar_reference::match_wchar (short key, ACE_OS::WChar test)
+bool
+wchar_reference::match_wchar (short key, ACE_OS::WChar test) const
 {
   if (verbose_)
     ACE_DEBUG ((LM_DEBUG,
@@ -89,111 +87,116 @@ wchar_reference::match_wchar (short key, ACE_OS::WChar test)
   return wchar_reference::ref_wchar[key] == test;
 }
 
-int
-wchar_reference::match_wstring (short key, const ACE_OS::WChar *test)
+bool
+wchar_reference::match_wstring (short key, ACE_OS::WChar const *test) const
 {
   if (key == -1)
     {
       if (verbose_)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT("match_wstring: expecting nul string, ")
-                    ACE_TEXT("got string length %d\n"),
-                    ACE_OS::strlen (test)));
-      return (ACE_OS::strlen (test) == 0);
+                    ACE_TEXT("got string length %B\n"),
+                    std::wcslen (test)));
+      return std::wcslen (test) == 0;
     }
   if (verbose_)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT("match_wstring: expecting %W, got %W for key %d\n"),
                 wchar_reference::ref_wstring[key],test,key));
-  return ACE_OS::strcmp(wchar_reference::ref_wstring[key],test) == 0;
+  return std::wcscmp (wchar_reference::ref_wstring[key], test) == 0;
 }
 
-int
-wchar_reference::match_warray (short key, const ACE_OS::WChar *test)
+bool
+wchar_reference::match_warray (short key, ACE_OS::WChar const *test) const
 {
   if (verbose_)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT("match_warray: key %d\n"),key));
-  for (int i = 0; i < 10; i++)
+  for (size_t i = 0; i < WARRAY_LENGTH; ++i)
     {
       if (verbose_)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT("  expecting[%d] %x, got %x\n"),
+                    ACE_TEXT("  expecting[%B] %x, got %x\n"),
                     i, wchar_reference::ref_warray[key][i],
                     test[i]));
       if (wchar_reference::ref_warray[key][i] != test[i])
-        return 0;
+        return false;
     }
-  return 1;
+  return true;
 }
 
-int
-wchar_reference::match_except(short key, const ACE_OS::WChar *test)
+bool
+wchar_reference::match_except (short key, ACE_OS::WChar const *test) const
 {
   if (verbose_)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT("match_except: expecting %W, got %W for key %d\n"),
                 wchar_reference::ref_except[key],test,key));
-  return ACE_OS::strcmp(wchar_reference::ref_except[key],test) == 0;
+  return std::wcscmp (wchar_reference::ref_except[key], test) == 0;
 }
 #else // ACE_HAS_WCHAR
-wchar_reference::wchar_reference(int v)
-  : verbose_ (v)
+wchar_reference::wchar_reference (bool verbose)
+  : verbose_ (verbose)
 {
 }
 
 void
-wchar_reference::set_verbose(int v)
+wchar_reference::set_verbose (bool verbose)
 {
-  this->verbose_ = v;
+  this->verbose_ = verbose;
 }
 
 ACE_OS::WChar
-wchar_reference::get_wchar (short )
+wchar_reference::get_wchar (short) const
 {
-  return 0;
+  return {};
 }
 
-const ACE_OS::WChar *
-wchar_reference::get_wstring (short )
+ACE_OS::WChar const *
+wchar_reference::get_wstring (short) const
 {
-  return 0;
+  return {};
 }
 
 ACE_OS::WChar *
-wchar_reference::get_warray (short )
+wchar_reference::get_warray (short) const
 {
-  return 0;
+  return {};
 }
 
 void
-wchar_reference::assign_warray (short ,
-                                ACE_OS::WChar *)
+wchar_reference::assign_warray (short, ACE_OS::WChar *) const
 {
 }
 
-const ACE_OS::WChar *
-wchar_reference::get_except (short )
+ACE_OS::WChar const *
+wchar_reference::get_except (short) const
 {
-  return 0;
+  return {};
 }
 
-int
-wchar_reference::match_wchar (short , ACE_OS::WChar )
+bool
+wchar_reference::match_wchar (short, ACE_OS::WChar) const
 {
-  return 0;
+  return false;
 }
 
-int
-wchar_reference::match_wstring (short , const ACE_OS::WChar *)
+bool
+wchar_reference::match_wstring (short, ACE_OS::WChar const *) const
 {
-  return 0;
+  return false;
 }
 
-int
-wchar_reference::match_warray (short , const ACE_OS::WChar *)
+bool
+wchar_reference::match_warray (short, ACE_OS::WChar const *) const
 {
-  return 0;
+  return false;
+}
+
+bool
+wchar_reference::match_except (short, ACE_OS::WChar const *) const
+{
+  return false;
 }
 
 #endif // ACE_HAS_WCHAR

@@ -17,7 +17,7 @@
 class Visual_i : public POA_Test_Interceptors::Visual
 {
 public:
-  Visual_i (CORBA::ORB_ptr orb);
+  explicit Visual_i (CORBA::ORB_ptr orb);
 
   CORBA::Long calculate (CORBA::Long one, CORBA::Long two) override;
 

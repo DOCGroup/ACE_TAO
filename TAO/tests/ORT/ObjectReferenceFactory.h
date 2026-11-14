@@ -38,11 +38,15 @@ class ObjectReferenceFactory
   , public virtual CORBA::DefaultValueRefCountBase
 {
  public:
-  /// Constructor
-  ObjectReferenceFactory (
+  explicit ObjectReferenceFactory (
     PortableInterceptor::ObjectReferenceFactory * old_orf);
 
-  virtual ::CORBA::ValueBase *_copy_value ();
+  ObjectReferenceFactory (ObjectReferenceFactory const &) = delete;
+  ObjectReferenceFactory &operator= (ObjectReferenceFactory const &) = delete;
+  ObjectReferenceFactory (ObjectReferenceFactory &&) = delete;
+  ObjectReferenceFactory &operator= (ObjectReferenceFactory &&) = delete;
+
+  ::CORBA::ValueBase *_copy_value () override;
 
   /**
    * @name PortableInterceptor::ObjectReferenceFactory Methods
@@ -51,18 +55,17 @@ class ObjectReferenceFactory
    * PortableInterceptor::ObjectReferenceFactory interface.
    */
   //@{
-  virtual CORBA::Object_ptr make_object (
-      const char *repository_id,
-      const PortableInterceptor::ObjectId & id);
+  CORBA::Object_ptr make_object (
+      char const *repository_id,
+      PortableInterceptor::ObjectId const &id) override;
   //@}
 
 protected:
-  /// Destructor
   /**
    * Protected destructor to enforce proper memory management via
    * reference counting.
    */
-  ~ObjectReferenceFactory ();
+  ~ObjectReferenceFactory () override;
 
 private:
   /// The old ObjectReferenceFactory used to create object references.

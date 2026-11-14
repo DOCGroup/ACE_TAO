@@ -26,14 +26,13 @@ class Server_ORBInitializer :
   public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor
   Server_ORBInitializer (int *counter);
 
   void set_poa (PortableServer::POA_ptr poa);
 
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
+  void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
+  void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
 private:
   int *counter_;

@@ -10,9 +10,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <typename TIME_POLICY>
-ACE_Time_Policy_T<TIME_POLICY>::~ACE_Time_Policy_T ()
-{
-}
+ACE_Time_Policy_T<TIME_POLICY>::~ACE_Time_Policy_T () = default;
 
 template <typename TIME_POLICY> ACE_Time_Value_T<ACE_Delegating_Time_Policy>
 ACE_Time_Policy_T<TIME_POLICY>::gettimeofday () const

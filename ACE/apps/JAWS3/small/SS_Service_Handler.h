@@ -12,22 +12,23 @@
 
 #include "SS_Data.h"
 
+/**
+ * Handles a request for the small server and selects its protocol state.
+ *
+ * This class initializes the protocol handler with the state and data used
+ * by the underlying framework.
+ */
 class TeraSS_Service_Handler
   : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
   , public JAWS_Protocol_Handler
-// = TITLE
-//     The Small Server service handler.
-//
-// = DESCRIPTION
-//     This class is responsible for initializing the JAWS_Protocol_Handler
-//     with the correct state and data so that the Small Server can
-//     be properly serviced by the underlying framework.
-//
-//     This class should perhaps be factored out into a template so that
-//     there is less programming effort.
 {
 public:
   TeraSS_Service_Handler ();
+
+  TeraSS_Service_Handler (TeraSS_Service_Handler const &) = delete;
+  TeraSS_Service_Handler (TeraSS_Service_Handler &&) = delete;
+  TeraSS_Service_Handler &operator= (TeraSS_Service_Handler const &) = delete;
+  TeraSS_Service_Handler &operator= (TeraSS_Service_Handler &&) = delete;
 
   int open (void *);
 
@@ -37,16 +38,9 @@ private:
   TeraSS_Data data_;
 };
 
+/// Accepts connections for the small server.
 class ACE_Svc_Export TeraSS_Acceptor
   : public ACE_Acceptor<TeraSS_Service_Handler, ACE_SOCK_ACCEPTOR>
-// = TITLE
-//     The Small Server acceptor.
-//
-// = DESCRIPTION
-//     The role of this class is to serve the acceptor role in the
-//     acceptor pattern.  It interacts with the Reactor to perform
-//     accepts asynchronously.  Upon completion, the service handler
-//     is created.
 {
 public:
   int init (int argc, ACE_TCHAR *argv[]);

@@ -1,14 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file     SCIOP_Profile.h
  *
  *  @author  Jason Cohen, Lockheed Martin ATL  <jcohen@atl.lmco.com>
  *  @author  Keith O'Hara, Lockheed Martin ATL
  */
-//=============================================================================
-
 
 #ifndef TAO_SCIOP_PROFILE_H
 #define TAO_SCIOP_PROFILE_H
@@ -64,7 +61,6 @@ public:
                     TAO_GIOP_Message_Version const &version,
                     TAO_ORB_Core *orb_core);
 
-  /// Profile constructor, default.
   explicit TAO_SCIOP_Profile (TAO_ORB_Core *orb_core);
 
   /// Destructor is to be called only through <_decr_refcnt>.

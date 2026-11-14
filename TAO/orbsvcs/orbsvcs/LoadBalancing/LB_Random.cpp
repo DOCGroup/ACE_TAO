@@ -31,7 +31,7 @@ TAO_LB_Random::name ()
 CosLoadBalancing::Properties *
 TAO_LB_Random::get_properties ()
 {
-  CosLoadBalancing::Properties * props = nullptr;
+  CosLoadBalancing::Properties * props {};
   ACE_NEW_THROW_EX (props,
                     CosLoadBalancing::Properties,
                     CORBA::NO_MEMORY (
@@ -116,7 +116,7 @@ TAO_LB_Random::_tao_next_member (
   //       addition to the fact that the lower order bits should be as
   //       random as the higher order bits.
 
-  CORBA::ULong i = 0;
+  CORBA::ULong i {};
   if (len > 1)
     {
       // Prevent integer arithmetic overflow.

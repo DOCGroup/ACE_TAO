@@ -20,7 +20,7 @@ Segment_Sched_Param_Policy::value (RTCORBA::Priority value)
 CORBA::Policy_ptr
 Segment_Sched_Param_Policy::copy ()
 {
-  Segment_Sched_Param_Policy *copy = 0;
+  Segment_Sched_Param_Policy *copy {};
   ACE_NEW_THROW_EX (copy,
                     Segment_Sched_Param_Policy,
                     CORBA::NO_MEMORY ());
@@ -78,7 +78,6 @@ Fixed_Priority_Scheduler::create_segment_scheduling_parameter (RTCORBA::Priority
   return segment_policy;
 }
 
-
 void
 Fixed_Priority_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType &,
                                                         const char *,
@@ -124,7 +123,6 @@ Fixed_Priority_Scheduler::end_nested_scheduling_segment (const RTScheduling::Cur
 {
 }
 
-
 void
 Fixed_Priority_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr request_info)
 {
@@ -138,7 +136,6 @@ Fixed_Priority_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_p
               "Request thread priority is %d %d\n",
               priority,
               ACE_DEFAULT_THREAD_PRIORITY));
-
 
   RTScheduling::Current::IdType_var guid = this->current_->id ();
   IOP::ServiceContext* srv_con = new IOP::ServiceContext;
@@ -176,10 +173,9 @@ Fixed_Priority_Scheduler::receive_request (PortableInterceptor::ServerRequestInf
 
       DT_TEST::instance ()->dt_creator ()->log_msg (ACE_TEXT_ALWAYS_CHAR(msg));
 
-      RTScheduling::Current::IdType* guid = 0;
+      RTScheduling::Current::IdType *guid {};
       ACE_NEW (guid,
                RTScheduling::Current::IdType);
-
 
       // Generate GUID.
       guid->length (sizeof(size_t));
@@ -190,7 +186,7 @@ Fixed_Priority_Scheduler::receive_request (PortableInterceptor::ServerRequestInf
 
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    "Receive request The Guid is %d\n",
+                    "Receive request The Guid is %B\n",
                     gu_id));
 
       guid_out.ptr () = guid;

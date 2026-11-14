@@ -2,14 +2,14 @@ namespace Kokyu
 {
 
 ACE_INLINE
-int Dispatcher_Impl::init (const Dispatcher_Attributes& attr)
+int Dispatcher_Impl::init (Dispatcher_Attributes const &attr)
 {
   return init_i (attr);
 }
 
 ACE_INLINE
-int Dispatcher_Impl::dispatch (const Dispatch_Command* cmd,
-                               const QoSDescriptor& qos_info)
+int Dispatcher_Impl::dispatch (Dispatch_Command const *cmd,
+                               QoSDescriptor const &qos_info)
 {
   return dispatch_i (cmd, qos_info);
 }

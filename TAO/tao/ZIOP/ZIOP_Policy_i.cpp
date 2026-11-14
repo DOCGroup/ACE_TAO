@@ -4,6 +4,8 @@
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -23,7 +25,7 @@ CompressorIdLevelListPolicy::CompressorIdLevelListPolicy ()
   , ::CORBA::Policy ()
   , ::ZIOP::CompressorIdLevelListPolicy ()
   , ::CORBA::LocalObject ()
-  , value_ (0)
+  , value_ {}
 {
 }
 
@@ -44,21 +46,20 @@ CompressorIdLevelListPolicy::policy_type ()
   return ZIOP::COMPRESSOR_ID_LEVEL_LIST_POLICY_ID;
 }
 
-
 CompressorIdLevelListPolicy *
 CompressorIdLevelListPolicy::clone () const
 {
-  CompressorIdLevelListPolicy *copy = nullptr;
+  CompressorIdLevelListPolicy *copy {};
   ACE_NEW_RETURN (copy,
                   CompressorIdLevelListPolicy (*this),
-                  0);
+                  nullptr);
   return copy;
 }
 
 CORBA::Policy_ptr
 CompressorIdLevelListPolicy::copy ()
 {
-  CompressorIdLevelListPolicy *tmp = nullptr;
+  CompressorIdLevelListPolicy *tmp {};
   ACE_NEW_THROW_EX (tmp, CompressorIdLevelListPolicy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
@@ -74,7 +75,7 @@ CompressorIdLevelListPolicy::destroy ()
 ::Compression::CompressorIdLevelList *
 CompressorIdLevelListPolicy::compressor_ids ()
 {
-  return &this->value_;
+  return std::addressof (this->value_);
 }
 
 TAO_Cached_Policy_Type
@@ -129,14 +130,13 @@ CompressionEnablingPolicy::policy_type ()
   return ZIOP::COMPRESSION_ENABLING_POLICY_ID;
 }
 
-
 CompressionEnablingPolicy *
 CompressionEnablingPolicy::clone () const
 {
-  CompressionEnablingPolicy *copy = nullptr;
+  CompressionEnablingPolicy *copy {};
   ACE_NEW_RETURN (copy,
                   CompressionEnablingPolicy (*this),
-                  0);
+                  nullptr);
   return copy;
 }
 
@@ -146,7 +146,7 @@ CompressionEnablingPolicy::copy ()
   // Future policy implementors: notice how the following code is
  // exception safe!
 
-  CompressionEnablingPolicy *tmp = nullptr;
+  CompressionEnablingPolicy *tmp {};
   ACE_NEW_THROW_EX (tmp, CompressionEnablingPolicy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
@@ -164,7 +164,6 @@ CompressionEnablingPolicy::compression_enabled ()
 {
   return this->value_;
 }
-
 
 TAO_Cached_Policy_Type
 CompressionEnablingPolicy::_tao_cached_type () const
@@ -218,14 +217,13 @@ CompressionLowValuePolicy::policy_type ()
   return ZIOP::COMPRESSION_LOW_VALUE_POLICY_ID;
 }
 
-
 CompressionLowValuePolicy *
 CompressionLowValuePolicy::clone () const
 {
-  CompressionLowValuePolicy *copy = nullptr;
+  CompressionLowValuePolicy *copy {};
   ACE_NEW_RETURN (copy,
                   CompressionLowValuePolicy (*this),
-                  0);
+                  nullptr);
   return copy;
 }
 
@@ -235,7 +233,7 @@ CompressionLowValuePolicy::copy ()
   // Future policy implementors: notice how the following code is
  // exception safe!
 
-  CompressionLowValuePolicy *tmp = nullptr;
+  CompressionLowValuePolicy *tmp {};
   ACE_NEW_THROW_EX (tmp, CompressionLowValuePolicy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
@@ -253,7 +251,6 @@ CompressionLowValuePolicy::low_value ()
 {
   return this->value_;
 }
-
 
 TAO_Cached_Policy_Type
 CompressionLowValuePolicy::_tao_cached_type () const
@@ -288,14 +285,13 @@ CompressionMinRatioPolicy::policy_type ()
   return ZIOP::COMPRESSION_MIN_RATIO_POLICY_ID;
 }
 
-
 CompressionMinRatioPolicy *
 CompressionMinRatioPolicy::clone () const
 {
-  CompressionMinRatioPolicy *copy = nullptr;
+  CompressionMinRatioPolicy *copy {};
   ACE_NEW_RETURN (copy,
                   CompressionMinRatioPolicy (*this),
-                  0);
+                  nullptr);
   return copy;
 }
 
@@ -305,7 +301,7 @@ CompressionMinRatioPolicy::copy ()
   // Future policy implementors: notice how the following code is
  // exception safe!
 
-  CompressionMinRatioPolicy *tmp = nullptr;
+  CompressionMinRatioPolicy *tmp {};
   ACE_NEW_THROW_EX (tmp, CompressionMinRatioPolicy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
@@ -323,7 +319,6 @@ CompressionMinRatioPolicy::ratio ()
 {
   return this->value_;
 }
-
 
 TAO_Cached_Policy_Type
 CompressionMinRatioPolicy::_tao_cached_type () const

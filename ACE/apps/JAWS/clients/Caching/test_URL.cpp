@@ -1,4 +1,7 @@
 #include "Locator_Request_Reply.h"
+#include "ace/Assert.h"
+#include <cstring>
+#include <vector>
 
 int ACE_TMAIN (int , ACE_TCHAR *[])
 {
@@ -17,9 +20,15 @@ int ACE_TMAIN (int , ACE_TCHAR *[])
   original.dump ();
   derived.dump ();
 
-  original.encode ();
+  size_t const encoded_size = original.encode ();
+  std::vector<char> unaligned_buffer (encoded_size + 1);
+  std::memcpy (unaligned_buffer.data () + 1, original.buffer (), encoded_size);
 
-  derived.decode ((void*) original.buffer ());
+  ACE_ASSERT (derived.decode (unaligned_buffer.data () + 1) == encoded_size);
+  ACE_ASSERT (derived.seq () != nullptr);
+  ACE_ASSERT (derived.seq ()->size () == ouch1.size ());
+  for (size_t i = 0; i < ouch1.size (); ++i)
+    ACE_ASSERT ((*derived.seq ())[i] == ouch1[i]);
 
   derived.dump ();
 

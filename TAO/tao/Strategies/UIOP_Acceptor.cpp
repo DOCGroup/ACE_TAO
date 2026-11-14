@@ -15,6 +15,9 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <cstring>
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_UIOP_Acceptor::TAO_UIOP_Acceptor ()
@@ -30,9 +33,9 @@ TAO_UIOP_Acceptor::~TAO_UIOP_Acceptor ()
   // strategies.
   this->close ();
 
-  delete this->creation_strategy_;
-  delete this->concurrency_strategy_;
-  delete this->accept_strategy_;
+  this->creation_strategy_.reset ();
+  this->concurrency_strategy_.reset ();
+  this->accept_strategy_.reset ();
 }
 
 int
@@ -62,12 +65,12 @@ TAO_UIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
   if (this->base_acceptor_.acceptor ().get_local_addr (addr) == -1)
     return 0;
 
-  int count = mprofile.profile_count ();
+  int const count = mprofile.profile_count ();
   if ((mprofile.size () - count) < 1
       && mprofile.grow (count + 1) == -1)
     return -1;
 
-  TAO_UIOP_Profile *pfile = nullptr;
+  TAO_UIOP_Profile *pfile {};
   ACE_NEW_RETURN (pfile,
                   TAO_UIOP_Profile (addr,
                                     object_key,
@@ -103,11 +106,11 @@ TAO_UIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
                                           TAO_MProfile &mprofile,
                                           CORBA::Short priority)
 {
-  TAO_Profile *pfile = nullptr;
-  TAO_UIOP_Profile *uiop_profile = nullptr;
+  TAO_Profile *pfile {};
+  TAO_UIOP_Profile *uiop_profile {};
 
   // First see if <mprofile> already contains a UIOP profile.
-  for (TAO_PHandle i = 0; i != mprofile.profile_count (); ++i)
+  for (TAO_PHandle i {}; i != mprofile.profile_count (); ++i)
     {
       pfile = mprofile.get_profile (i);
       if (pfile->tag () == TAO_TAG_UIOP_PROFILE)
@@ -133,7 +136,7 @@ TAO_UIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
       if (this->base_acceptor_.acceptor ().get_local_addr (addr) == -1)
         return 0;
 
-      TAO_UIOP_Endpoint *endpoint = nullptr;
+      TAO_UIOP_Endpoint *endpoint {};
       ACE_NEW_RETURN (endpoint,
                       TAO_UIOP_Endpoint (addr),
                       -1);
@@ -144,7 +147,7 @@ TAO_UIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
     }
 }
 
-int
+bool
 TAO_UIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 {
   const TAO_UIOP_Endpoint *endp =
@@ -152,12 +155,12 @@ TAO_UIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 
   // Make sure the dynamically cast pointer is valid.
   if (endp == nullptr)
-    return 0;
+    return false;
 
   // For UNIX Files this is relatively cheap.
   ACE_UNIX_Addr address;
   if (this->base_acceptor_.acceptor ().get_local_addr (address) == -1)
-    return 0;
+    return false;
 
   return endp->object_addr () == address;
 }
@@ -219,7 +222,7 @@ TAO_UIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
   if (this->parse_options (options) == -1)
     return -1;
 
-  ACE_Auto_String_Free tempname (ACE_OS::tempnam (0, "TAO"));
+  ACE_Auto_String_Free const tempname (ACE_OS::tempnam (0, "TAO"));
 
   if (tempname.get () == nullptr)
     return -1;
@@ -232,17 +235,23 @@ int
 TAO_UIOP_Acceptor::open_i (const char *rendezvous,
                            ACE_Reactor *reactor)
 {
-  ACE_NEW_RETURN (this->creation_strategy_,
+  TAO_UIOP_CREATION_STRATEGY *creation_strategy {};
+  ACE_NEW_RETURN (creation_strategy,
                   TAO_UIOP_CREATION_STRATEGY (this->orb_core_),
                   -1);
+  this->creation_strategy_.reset (creation_strategy);
 
-  ACE_NEW_RETURN (this->concurrency_strategy_,
+  TAO_UIOP_CONCURRENCY_STRATEGY *concurrency_strategy {};
+  ACE_NEW_RETURN (concurrency_strategy,
                   TAO_UIOP_CONCURRENCY_STRATEGY (this->orb_core_),
                   -1);
+  this->concurrency_strategy_.reset (concurrency_strategy);
 
-  ACE_NEW_RETURN (this->accept_strategy_,
+  TAO_UIOP_ACCEPT_STRATEGY *accept_strategy {};
+  ACE_NEW_RETURN (accept_strategy,
                   TAO_UIOP_ACCEPT_STRATEGY (this->orb_core_),
                   -1);
+  this->accept_strategy_.reset (accept_strategy);
 
   ACE_UNIX_Addr addr;
 
@@ -250,9 +259,9 @@ TAO_UIOP_Acceptor::open_i (const char *rendezvous,
 
   if (this->base_acceptor_.open (addr,
                                  reactor,
-                                 this->creation_strategy_,
-                                 this->accept_strategy_,
-                                 this->concurrency_strategy_) == -1)
+                                 this->creation_strategy_.get (),
+                                 this->accept_strategy_.get (),
+                                 this->concurrency_strategy_.get ()) == -1)
     {
       // Don't unlink an existing rendezvous point since it may be in
       // use by another UIOP server/client.
@@ -315,15 +324,15 @@ TAO_UIOP_Acceptor::rendezvous_point (ACE_UNIX_Addr &addr,
 
   addr.set (rendezvous);
 
-  const size_t length = ACE_OS::strlen (addr.get_path_name ());
+  const size_t length = std::strlen (addr.get_path_name ());
 
   // Check if rendezvous point was truncated by ACE_UNIX_Addr since
   // most UNIX domain socket rendezvous points can only be less than
   // 108 characters long.
-  if (length < ACE_OS::strlen (rendezvous))
+  if (length < std::strlen (rendezvous))
     TAOLIB_DEBUG ((LM_WARNING,
                 "TAO (%P|%t) - UIOP rendezvous point was truncated to <%s>\n"
-                "since it was longer than %d characters long.\n",
+                "since it was longer than %B characters long.\n",
                 addr.get_path_name (),
                 length));
 }
@@ -346,8 +355,8 @@ TAO_UIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
                     profile.profile_data.length ());
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
-  CORBA::Octet major = 0;
-  CORBA::Octet minor = 0;
+  CORBA::Octet major {};
+  CORBA::Octet minor {};
 
   // Read the version. We just read it here. We don't *do any*
   // processing.
@@ -364,18 +373,17 @@ TAO_UIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
       return -1;
     }
 
-  char *rendezvous = nullptr;
+  char *rendezvous {};
 
   // Get rendezvous_point
-  if (cdr.read_string (rendezvous) == 0)
+  int const read_result = cdr.read_string (rendezvous);
+  std::unique_ptr<char[]> const rendezvous_owner (rendezvous);
+  if (read_result == 0)
     {
       TAOLIB_ERROR ((LM_ERROR, "error decoding UIOP rendezvous_point"));
 
       return -1;
     }
-
-  // delete the rendezvous point. We don't do any processing.
-  delete [] rendezvous;
 
   // ... and object key.
   if ((cdr >> object_key) == 0)
@@ -407,7 +415,7 @@ TAO_UIOP_Acceptor::parse_options (const char *str)
 
   // Only check for endpoints after the protocol specification and
   // before the object key.
-  for (size_t i = 0; i < len; ++i)
+  for (size_t i {}; i < len; ++i)
     if (options[i] == option_delimiter)
       ++option_count;
 
@@ -419,10 +427,10 @@ TAO_UIOP_Acceptor::parse_options (const char *str)
   //    `option1=foo'
   //    `option2=bar'
 
-  ACE_CString::size_type begin = 0;
-  ACE_CString::size_type end = 0;
+  ACE_CString::size_type begin {};
+  ACE_CString::size_type end {};
 
-  for (CORBA::ULong j = 0; j < option_count; ++j)
+  for (CORBA::ULong j {}; j < option_count; ++j)
     {
       if (j < option_count - 1)
         end = options.find (option_delimiter, begin);
@@ -435,7 +443,7 @@ TAO_UIOP_Acceptor::parse_options (const char *str)
                           -1);
       else if (end != ACE_CString::npos)
         {
-          ACE_CString opt =
+          ACE_CString const opt =
             options.substring (begin, end - begin);
 
           ACE_CString::size_type const slot = opt.find ("=");
@@ -449,7 +457,7 @@ TAO_UIOP_Acceptor::parse_options (const char *str)
                               -1);
 
           const ACE_CString name (opt.substring (0, slot));
-          ACE_CString value = opt.substring (slot + 1);
+          ACE_CString const value = opt.substring (slot + 1);
 
           begin = end + 1;
 

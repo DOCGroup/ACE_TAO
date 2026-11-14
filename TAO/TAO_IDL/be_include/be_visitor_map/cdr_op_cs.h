@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VISITOR_MAP_CDR_OP_CS_H_
 #define _BE_VISITOR_MAP_CDR_OP_CS_H_
 

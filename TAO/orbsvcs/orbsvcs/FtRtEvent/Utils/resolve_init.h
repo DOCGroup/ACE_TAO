@@ -10,10 +10,6 @@
 #define RESOVLE_INIT_H
 
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Log_Macros.h"
 #include "tao/Versioned_Namespace.h"
 
 #include "tao/ORB.h"
@@ -21,52 +17,43 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-template<class T>
+template <class T>
 typename T::_ptr_type
 resolve_init (CORBA::ORB_ptr orb,
-              const char *id)
+              char const *id)
 {
-    typename T::_var_type ref;
-    CORBA::Object_var     obj;
-    try
+  typename T::_var_type ref {};
+  CORBA::Object_var obj {};
+  try
     {
-      CORBA::Object_var obj;
-      obj = orb->resolve_initial_references(id);
-
-      ref = T::_narrow(obj.in());
+      obj = orb->resolve_initial_references (id);
+      ref = T::_narrow (obj.in ());
     }
-
-    catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
-      ORBSVCS_ERROR((
-                  LM_ERROR,
-                  " (%P|%t) Unable to initialize %s.\n",
-              id
-            ));
-      if (!CORBA::is_nil(obj.in()))
-        ORBSVCS_ERROR((
-                    LM_ERROR,
-                    "    due to narrowing problem\n"
-              ));
+      ORBSVCS_ERROR ((LM_ERROR,
+                      " (%P|%t) Unable to initialize %s.\n",
+                      id));
+      if (!CORBA::is_nil (obj.in ()))
+        ORBSVCS_ERROR ((LM_ERROR, "    due to narrowing problem\n"));
       throw;
     }
 
-    return ref._retn();
+  return ref._retn ();
 }
 
 #ifdef TAO_Naming_Export
-template<class T>
+template <class T>
 typename T::_ptr_type
 resolve (CosNaming::NamingContext_ptr context,
-         const CosNaming::Name &id)
+         CosNaming::Name const &id)
 {
-    CORBA::Object_var obj;
-    obj = context->resolve(id);
+  CORBA::Object_var obj (context->resolve (id));
 
-    ACE_ASSERT(!CORBA::is_nil(obj.in()));
+  ACE_ASSERT (!CORBA::is_nil (obj.in ()));
 
-    typename T::_var_type ref = T::_narrow(obj.in());
-    return ref._retn();
+  typename T::_var_type ref = T::_narrow (obj.in ());
+  return ref._retn ();
 }
 #endif
 

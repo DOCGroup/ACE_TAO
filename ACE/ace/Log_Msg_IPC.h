@@ -49,10 +49,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Log_Msg_IPC : public ACE_Log_Msg_Backend
 {
 public:
-  /// Constructor
   ACE_Log_Msg_IPC () = default;
 
-  /// Destructor
   ~ACE_Log_Msg_IPC () override;
 
   /// Open a new connection

@@ -11,6 +11,8 @@
 #include "tao/SystemException.h"
 #include "ace/Service_Config.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -45,10 +47,10 @@ namespace TAO
     ACE_Service_Config_Guard scg (stub->orb_core ()->configuration ());
 
     ACE_Time_Value tmp_wait_time;
-    ACE_Time_Value *max_wait_time = nullptr;
+    ACE_Time_Value *max_wait_time {};
 
     if (this->get_timeout (tmp_wait_time))
-      max_wait_time = &tmp_wait_time;
+      max_wait_time = std::addressof (tmp_wait_time);
 
     Invocation_Status s = TAO_INVOKE_START;
 
@@ -109,7 +111,7 @@ namespace TAO
   bool
   LocateRequest_Invocation_Adapter::get_timeout (ACE_Time_Value &timeout)
   {
-    bool has_timeout = false;
+    bool has_timeout {};
     this->target_->orb_core ()->call_timeout_hook (this->target_->_stubobj (),
                                                    has_timeout,
                                                    timeout);
@@ -125,9 +127,9 @@ namespace TAO
   {
     // The object pointer has to be changed to a TAO_Stub pointer
     // in order to obtain the profiles.
-    TAO_Stub *stubobj = nullptr;
+    TAO_Stub *stubobj {};
 
-    bool nil_forward_ref = false;
+    bool nil_forward_ref {};
     if (CORBA::is_nil (effective_target.in ()))
       nil_forward_ref = true;
     else

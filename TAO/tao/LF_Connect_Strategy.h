@@ -38,10 +38,8 @@ class TAO_LF_Event;
 class TAO_Export TAO_LF_Connect_Strategy : public TAO_Connect_Strategy
 {
 public:
-  /// Constructor
   TAO_LF_Connect_Strategy (TAO_ORB_Core *orb, bool no_upcall);
 
-  /// Destructor
   ~TAO_LF_Connect_Strategy () override;
 
   /**

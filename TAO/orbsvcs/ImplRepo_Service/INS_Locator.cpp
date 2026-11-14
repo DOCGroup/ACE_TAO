@@ -48,7 +48,7 @@ INS_Locator::async_locate (::IORTable::Locate_ResponseHandler handler,
   ACE_CString full (object_key);
   if (this->imr_locator_.split_key (full, key, si))
     {
-      ImR_ResponseHandler *rh = nullptr;
+      ImR_ResponseHandler *rh {};
       ACE_NEW (rh, INS_Loc_ResponseHandler (key.c_str(), handler));
       this->imr_locator_.activate_server_by_info (si, rh);
     }
@@ -59,7 +59,6 @@ INS_Locator::async_locate (::IORTable::Locate_ResponseHandler handler,
                                               CORBA::COMPLETED_NO));
     }
 }
-
 
 //----------------------------------------------------------------------------------------
 INS_Loc_ResponseHandler::INS_Loc_ResponseHandler (const char *key,

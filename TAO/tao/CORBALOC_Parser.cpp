@@ -11,13 +11,12 @@
 #include "tao/Protocol_Factory.h"
 #include "tao/debug.h"
 #include "tao/SystemException.h"
-#include "ace/Vector_T.h"
 #include "ace/INET_Addr.h"
-#include "ace/OS_NS_string.h"
 #include "ace/Truncate.h"
 
 #include "ace/os_include/os_netdb.h"
 
+#include <memory>
 #if !defined(__ACE_INLINE__)
 #include "tao/CORBALOC_Parser.inl"
 #endif /* __ACE_INLINE__ */
@@ -37,9 +36,9 @@ bool
 TAO_CORBALOC_Parser::match_prefix (const char *ior_string) const
 {
   // Check if the prefix is 'corbaloc:' and return the result.
-  return (ACE_OS::strncmp (ior_string,
-                           prefix,
-                           prefix_len) == 0);
+  return (std::strncmp (ior_string,
+                        prefix,
+                        prefix_len) == 0);
 }
 
 CORBA::Object_ptr
@@ -76,7 +75,7 @@ TAO_CORBALOC_Parser::parse_string_rir_helper (const char * ior,
   const char *objkey = ior + rir_token_len;
   if (*objkey == '/') // there is an explicit object key, which may
                       // validly be null.
-    objkey++;
+    ++objkey;
 
   CORBA::Object_var rir_obj =
     orb->resolve_initial_references (*objkey == '\0' ? "NameService" : objkey);
@@ -111,7 +110,7 @@ TAO_CORBALOC_Parser::parse_string (const char * ior, CORBA::ORB_ptr orb)
   ior += std::strlen(prefix);
 
   //  First check for rir
-  if (ACE_OS::strncmp (ior,rir_token,rir_token_len) == 0)
+  if (std::strncmp (ior, rir_token, rir_token_len) == 0)
     return this->parse_string_rir_helper (ior,orb);
 
   // set up space for parsed endpoints. there will be at least 1, and
@@ -130,23 +129,22 @@ TAO_CORBALOC_Parser::parse_string (const char * ior, CORBA::ORB_ptr orb)
   TAO_Connector_Registry *conn_reg =
     orb->orb_core ()->connector_registry();
 
-  while (1) { // will loop on comma only.
-    size_t len = 0;
+  while (true) { // will loop on comma only.
+    size_t len {};
     size_t ndx = endpoints.size();
     endpoints.size(ndx+1);
-    bool uiop_compatible = false;
-    TAO_ConnectorSetIterator conn_iter = nullptr;
-    for (conn_iter = conn_reg->begin();
-         conn_iter != conn_reg->end() &&
-           endpoints[ndx].profile_ == nullptr;
-         conn_iter ++)
+    bool uiop_compatible {};
+    for (std::unique_ptr<TAO_Connector> const& connector : *conn_reg)
       {
+        if (endpoints[ndx].profile_ != nullptr)
+          break;
+
         endpoints[ndx].profile_ =
-          (*conn_iter)->corbaloc_scan(ior,len);
+          connector->corbaloc_scan(ior,len);
 
         if (endpoints[ndx].profile_)
           {
-            endpoints[ndx].obj_key_sep_ = (*conn_iter)->object_key_delimiter();
+            endpoints[ndx].obj_key_sep_ = connector->object_key_delimiter();
             uiop_compatible = (endpoints[ndx].obj_key_sep_ == '|');
             this->make_canonical (ior,len,endpoints[ndx].prot_addr_);
             ior += len;
@@ -201,7 +199,7 @@ TAO_CORBALOC_Parser::parse_string (const char * ior, CORBA::ORB_ptr orb)
   // mix them together to get the mprofile.
   TAO_MProfile mprofile (ACE_Utils::truncate_cast<CORBA::ULong> (endpoints.size()));
 
-  for (size_t i = 0; i < endpoints.size(); i++)
+  for (size_t i {}; i < endpoints.size(); ++i)
     {
       ACE_CString full_ep = endpoints[i].prot_addr_ +
         endpoints[i].obj_key_sep_ +
@@ -221,7 +219,7 @@ TAO_CORBALOC_Parser::parse_string (const char * ior, CORBA::ORB_ptr orb)
           if (TAO_debug_level)
             TAOLIB_ERROR ((LM_ERROR,
                         ACE_TEXT("TAO (%P|%t) - TAO_CORBALOC_Parser::parse_string ")
-                        ACE_TEXT("mprofile.give_profile failed for i = %d\n"),
+                        ACE_TEXT("mprofile.give_profile failed for i = %B\n"),
                         i));
           throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 10, CORBA::COMPLETED_NO);
         }
@@ -239,10 +237,10 @@ TAO_CORBALOC_Parser::make_canonical (const char *ior,
   const char *separator = std::strchr (ior, ':');
 
   // A special case for handling iiop
-  if (ior[0] != ':' && ACE_OS::strncmp (ior,iiop_token,iiop_token_len) != 0)
+  if (ior[0] != ':' && std::strncmp (ior, iiop_token, iiop_token_len) != 0)
     {
       canonical_endpoint.set (separator+1,
-                              prot_addr_len - (separator - ior) - 1,1);
+                              prot_addr_len - (separator - ior) - 1,true);
       return;
     }
 
@@ -252,7 +250,7 @@ TAO_CORBALOC_Parser::make_canonical (const char *ior,
   separator = std::strchr (addr_base,'@');
   if (separator != nullptr && separator < addr_tail)
     {
-      canonical_endpoint.set (addr_base,(separator - addr_base)+1,1);
+      canonical_endpoint.set (addr_base,(separator - addr_base)+1,true);
       addr_base = separator + 1;
     }
   else
@@ -294,14 +292,14 @@ TAO_CORBALOC_Parser::make_canonical (const char *ior,
   if (separator != nullptr && separator < addr_tail)
     {
       // we have a port number
-      raw_host.set (addr_base, (separator - addr_base), 1);
-      raw_port.set (separator, (addr_tail - separator), 1);
+      raw_host.set (addr_base, (separator - addr_base), true);
+      raw_port.set (separator, (addr_tail - separator), true);
     }
   else
     {
       // we must default port #
       if (addr_base < addr_tail)
-        raw_host.set (addr_base, (addr_tail - addr_base),1);
+        raw_host.set (addr_base, (addr_tail - addr_base), true);
       raw_port.set (":2809");
     }
 

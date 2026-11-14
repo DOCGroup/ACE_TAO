@@ -11,7 +11,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/LocalObject.h"
-#include "server_interceptor.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
@@ -26,21 +25,15 @@ class Server_ORBInitializer :
   public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor
-  Server_ORBInitializer ();
+  Server_ORBInitializer () = default;
 
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
+  Server_ORBInitializer (Server_ORBInitializer const &) = delete;
+  Server_ORBInitializer (Server_ORBInitializer &&) = delete;
+  Server_ORBInitializer &operator= (Server_ORBInitializer const &) = delete;
+  Server_ORBInitializer &operator= (Server_ORBInitializer &&) = delete;
 
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
-
-  /// Return the created server request interceptor.  Only valid after
-  /// post_init(), i.e. ORB_init(), has been called.
-  Echo_Server_Request_Interceptor * server_interceptor ();
-
-private:
-  /// Pointer to the server request interceptor.  ORB is responsible
-  /// for storage.
-  Echo_Server_Request_Interceptor * server_interceptor_;
+  void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
+  void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 };
 
 #if defined(_MSC_VER)

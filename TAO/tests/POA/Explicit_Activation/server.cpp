@@ -9,25 +9,30 @@
  */
 //=============================================================================
 
-
 #include "ace/Get_Opt.h"
-#include "ace/SString.h"
 #include "test_i.h"
 #include "ace/OS_NS_stdio.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT ("ior");
+#include <cstring>
+#include <memory>
+#include <string>
+
+struct Server_Options
+{
+  ACE_TCHAR const *ior_output_file { ACE_TEXT ("ior") };
+};
 
 static int
-parse_args (int argc, ACE_TCHAR **argv)
+parse_args (int argc, ACE_TCHAR **argv, Server_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("f:"));
-  int c;
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'f':
-        ior_output_file = get_opts.opt_arg ();
+        options.ior_output_file = get_opts.opt_arg ();
         break;
 
       case '?':
@@ -45,72 +50,24 @@ parse_args (int argc, ACE_TCHAR **argv)
 }
 
 static int
-write_iors_to_file (const char *first_ior,
-                    const char *second_ior,
-                    const char *third_ior)
+write_ior_to_file (std::basic_string<ACE_TCHAR> const &file_name,
+                   char const *ior)
 {
-  ACE_TCHAR ior_output_file_1[BUFSIZ];
-  ACE_TCHAR ior_output_file_2[BUFSIZ];
-  ACE_TCHAR ior_output_file_3[BUFSIZ];
-
-  ACE_OS::sprintf (ior_output_file_1, ACE_TEXT("%s_1"), ior_output_file);
-  ACE_OS::sprintf (ior_output_file_2, ACE_TEXT("%s_2"), ior_output_file);
-  ACE_OS::sprintf (ior_output_file_3, ACE_TEXT("%s_3"), ior_output_file);
-
-  FILE *output_file_1 = ACE_OS::fopen (ior_output_file_1, "w");
-  FILE *output_file_2 = ACE_OS::fopen (ior_output_file_2, "w");
-  FILE *output_file_3 = ACE_OS::fopen (ior_output_file_3, "w");
-
-  if (output_file_1 == 0 ||
-      output_file_2 == 0 ||
-      output_file_3 == 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "Cannot open output files for writing IORs: %s, %s %s\n",
-                       ior_output_file_1,
-                       ior_output_file_2,
-                       ior_output_file_3),
+  std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+    ACE_OS::fopen (file_name.c_str (), "w"), ACE_OS::fclose);
+  if (!output_file)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Cannot open output file for writing IOR: %s\n",
+                       ACE_TEXT_ALWAYS_CHAR (file_name.c_str ())),
                       -1);
 
-  u_int result = 0;
-
-  result = ACE_OS::fprintf (output_file_1,
-                            "%s",
-                            first_ior);
-
-  ACE_OS::fclose (output_file_1);
-
-  if (result != ACE_OS::strlen (first_ior))
+  int const result = ACE_OS::fprintf (output_file.get (), "%s", ior);
+  if (result <= 0 || static_cast<size_t> (result) != std::strlen (ior))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "ACE_OS::fprintf failed while writing %C to %s\n",
-                       first_ior,
-                       ior_output_file_1),
+                       ior,
+                       ACE_TEXT_ALWAYS_CHAR (file_name.c_str ())),
                       -1);
-
-  result = ACE_OS::fprintf (output_file_2,
-                            "%s",
-                            second_ior);
-
-  ACE_OS::fclose (output_file_2);
-
-  if (result != ACE_OS::strlen (second_ior))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "ACE_OS::fprintf failed while writing %C to %s\n",
-                       second_ior,
-                       ior_output_file_2),
-                      -1);
-
-  result = ACE_OS::fprintf (output_file_3,
-                            "%s",
-                            third_ior);
-
-  ACE_OS::fclose (output_file_3);
-
-  if (result != ACE_OS::strlen (third_ior))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "ACE_OS::fprintf failed while writing %C to %s\n",
-                       third_ior,
-                       ior_output_file_3),
-                      -1);
-
 
   return 0;
 }
@@ -124,7 +81,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      int result = parse_args (argc, argv);
+      Server_Options options;
+      int const result = parse_args (argc, argv, options);
       if (result != 0)
         return result;
 
@@ -157,9 +115,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         root_poa->create_thread_policy (PortableServer::ORB_CTRL_MODEL);
 
       // Create the firstPOA under the RootPOA.
-      ACE_CString name = "firstPOA";
       PortableServer::POA_var first_poa =
-        root_poa->create_POA (name.c_str (),
+        root_poa->create_POA ("firstPOA",
                               poa_manager.in (),
                               policies);
 
@@ -170,9 +127,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         root_poa->create_thread_policy (PortableServer::SINGLE_THREAD_MODEL);
 
       // Create the secondPOA under the firstPOA.
-      name = "secondPOA";
       PortableServer::POA_var second_poa =
-        first_poa->create_POA (name.c_str (),
+        first_poa->create_POA ("secondPOA",
                                poa_manager.in (),
                                policies);
 
@@ -223,16 +179,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       //   Object create_reference_with_id (in ObjectId oid, in CORBA::RepositoryId intf );
       // This operation creates an object reference that encapsulates the
       // specified Object Id and interface repository Id values.
-      /*
-        PortableServer::ObjectId_var third_oid =
-        PortableServer::string_to_ObjectId ("thirdtest");
-      */
-
       // This will test how the POA handles a user given ID
       PortableServer::ObjectId_var third_oid =
         PortableServer::string_to_ObjectId ("third test");
 
-      third_oid[5] = (CORBA::Octet) '\0';
+      third_oid[5] = static_cast<CORBA::Octet> ('\0');
 
       CORBA::Object_var third_test =
         second_poa->create_reference_with_id (third_oid.in (),
@@ -254,10 +205,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   second_ior.in (),
                   third_ior.in ()));
 
-      int write_result =
-        write_iors_to_file (first_ior.in (),
-                            second_ior.in (),
-                            third_ior.in ());
+      std::basic_string<ACE_TCHAR> ior_file_1 (options.ior_output_file);
+      std::basic_string<ACE_TCHAR> ior_file_2 (options.ior_output_file);
+      std::basic_string<ACE_TCHAR> ior_file_3 (options.ior_output_file);
+      ior_file_1 += ACE_TEXT ("_1");
+      ior_file_2 += ACE_TEXT ("_2");
+      ior_file_3 += ACE_TEXT ("_3");
+
+      int write_result = write_ior_to_file (ior_file_1, first_ior.in ());
+      if (write_result == 0)
+        write_result = write_ior_to_file (ior_file_2, second_ior.in ());
+      if (write_result == 0)
+        write_result = write_ior_to_file (ior_file_3, third_ior.in ());
       if (write_result != 0)
         return write_result;
 
@@ -273,7 +232,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught");
       return -1;

@@ -5,50 +5,47 @@
 #include "tao/Strategies/advanced_resource.h"
 #include "tao/Monitor/Monitor.h"
 
-const ACE_TCHAR *monitor_ior = ACE_TEXT ("file://monitor.ior");
-::Monitor::NameList* monitor_point = 0;
-bool mp_clear = false;
-int n_iterations = 1;
-ACE_Time_Value sleep_time = ACE_Time_Value (1);
-const ACE_TCHAR * filter = ACE_TEXT ("");
+struct Monitor_Client_Options
+{
+  ACE_TCHAR const * monitor_ior {ACE_TEXT ("file://monitor.ior")};
+  Monitor::NameList monitor_points;
+  bool clear {};
+  int iterations {1};
+  ACE_Time_Value sleep_time {1};
+  ACE_TCHAR const * filter {ACE_TEXT ("")};
+};
 
-int
-parse_args (int argc, ACE_TCHAR *argv[])
+static int
+parse_args (int argc, ACE_TCHAR *argv[], Monitor_Client_Options& options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:p:ci:s:f:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'f':
-        filter = get_opts.opt_arg ();
+        options.filter = get_opts.opt_arg ();
         break;
       case 'k':
-        monitor_ior = get_opts.opt_arg ();
+        options.monitor_ior = get_opts.opt_arg ();
         break;
       case 'p':
         {
-          if (monitor_point == 0)
-            {
-              ACE_NEW_THROW_EX (monitor_point,
-                                ::Monitor::NameList,
-                                CORBA::NO_MEMORY ());
-            }
-
-          monitor_point->length (monitor_point->length () + 1);
-          (*monitor_point)[monitor_point->length () - 1] =
-            CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ()));
+          CORBA::ULong const length = options.monitor_points.length ();
+          options.monitor_points.length (length + 1);
+          options.monitor_points[length] =
+            CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ()));
           break;
         }
       case 'c':
-        mp_clear = true;
+        options.clear = true;
         break;
       case 'i':
-        n_iterations = ACE_OS::atoi (get_opts.opt_arg ());
+        options.iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 's':
-        sleep_time.set(ACE_OS::atoi (get_opts.opt_arg ()), 0);
+        options.sleep_time.set (ACE_OS::atoi (get_opts.opt_arg ()), 0);
         break;
       case '?':
       default:
@@ -69,22 +66,22 @@ parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      Monitor_Client_Options options;
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, options) != 0)
         {
           return 1;
         }
 
       /// Get the MC object reference that the client has exposed.
       CORBA::Object_var obj =
-        orb->string_to_object (monitor_ior);
+        orb->string_to_object (options.monitor_ior);
 
       if (CORBA::is_nil (obj.in ()))
         {
@@ -102,47 +99,48 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                              -1);
         }
 
-      if (monitor_point != 0)
+      if (options.monitor_points.length () != 0)
         {
           /// Access the monitor's value a few times and watch it grow.
-          for (int i = 0; i < n_iterations; ++i)
+          for (int i {}; i < options.iterations; ++i)
             {
               Monitor::DataList_var data;
 
-              if (mp_clear)
+              if (options.clear)
                 {
-                  data = monitor->get_and_clear_statistics (*monitor_point);
+                  data = monitor->get_and_clear_statistics (options.monitor_points);
                 }
               else
                 {
-                  data = monitor->get_statistics (*monitor_point);
+                  data = monitor->get_statistics (options.monitor_points);
                 }
 
-              for (CORBA::ULong index = 0; index < data->length (); ++index)
+              for (CORBA::ULong index {}; index < data->length (); ++index)
                 {
                   ACE_DEBUG ((LM_DEBUG, "MP <%C>:\n", data[index].itemname.in ()));
-                  Monitor::Data dlist = data[index];
+                  Monitor::Data const &dlist = data[index];
 
                   if (dlist.data_union._d() == Monitor::DATA_TEXT)
                   {
-                    for (CORBA::ULong valueindex = 0;
+                    for (CORBA::ULong valueindex {};
                          valueindex < dlist.data_union.num().dlist.length ();
                          ++valueindex)
                     {
-                      Monitor::DataValue d = dlist.data_union.num().dlist[valueindex];
+                      Monitor::DataValue const &d =
+                        dlist.data_union.num ().dlist[valueindex];
                       ACE_DEBUG ((LM_DEBUG, "\t value <%A>:\n", d.value));
                     }
                   }
                 }
 
-              ACE_OS::sleep (sleep_time);
+              ACE_OS::sleep (options.sleep_time);
             }
         }
       else
         {
-          Monitor::NameList_var list = monitor->get_statistic_names (ACE_TEXT_ALWAYS_CHAR (filter));
+          Monitor::NameList_var list = monitor->get_statistic_names (ACE_TEXT_ALWAYS_CHAR (options.filter));
 
-          for (CORBA::ULong index = 0; index < list->length (); ++index)
+          for (CORBA::ULong index {}; index < list->length (); ++index)
             {
               ACE_DEBUG ((LM_DEBUG, "MP: <%C>\n", list[index].in ()));
             }
@@ -150,7 +148,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception &ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Monitor_client: Exception caught:");
       return 1;

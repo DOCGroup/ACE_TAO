@@ -249,7 +249,6 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
           << ";";
     }
 
-  // Protected destructor.
   *os << be_nl_2
       << "~" << node->local_name () << " () override = default;";
 

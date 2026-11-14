@@ -8,16 +8,19 @@
 class  Inner_callback_i : public virtual POA_AMI_InnerHandler
 {
 public:
-  //Constructor
   Inner_callback_i (PortableServer::POA_ptr p,
                     AMH_MiddleResponseHandler_ptr rh);
 
-  //Destructor
-  virtual ~Inner_callback_i();
+  ~Inner_callback_i () override;
 
-  virtual void answer (const char * ami_return_val);
+  void answer (char const *ami_return_val) override;
 
-  virtual void answer_excep (Messaging::ExceptionHolder * excep_holder);
+  void answer_excep (Messaging::ExceptionHolder *excep_holder) override;
+
+  Inner_callback_i (Inner_callback_i const &) = delete;
+  Inner_callback_i (Inner_callback_i &&) = delete;
+  Inner_callback_i &operator= (Inner_callback_i const &) = delete;
+  Inner_callback_i &operator= (Inner_callback_i &&) = delete;
 
 private:
   PortableServer::POA_var poa_;

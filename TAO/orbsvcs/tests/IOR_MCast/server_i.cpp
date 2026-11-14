@@ -8,26 +8,11 @@
 #include "tao/debug.h"
 
 #include "ace/Get_Opt.h"
-#include "ace/Read_Buffer.h"
-
-Server_i::Server_i ()
-  : argc_ (0),
-    argv_ (nullptr),
-    orb_ (),
-    ior_multicast_ (nullptr),
-    service_ior_ (),
-    mcast_address_ ()
-{
-}
-
-Server_i::~Server_i ()
-{
-  delete this->ior_multicast_;
-}
+#include <new>
 
 int
-Server_i::init (int& argc,
-                ACE_TCHAR** argv)
+Server_i::init (int &argc,
+                ACE_TCHAR **argv)
 {
   this->argc_ = argc;
   this->argv_ = argv;
@@ -39,33 +24,33 @@ Server_i::init (int& argc,
         CORBA::ORB_init (this->argc_, this->argv_);
 
       // Get a reference to the RootPOA.
-      CORBA::Object_var poa_object =
+      CORBA::Object_var const poa_object =
         this->orb_->resolve_initial_references ("RootPOA");
 
       // Narrow down to the correct reference.
-      PortableServer::POA_var poa =
+      PortableServer::POA_var const poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
       // Set a POA Manager.
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         poa->the_POAManager ();
 
       // Activate the POA Manager.
       poa_manager->activate ();
 
-      CORBA::String_var ior;
+      CORBA::String_var ior {};
 
       // Create the servant
       MCast_Server_i server_i;
 
       // Activate it to obtain the reference
-      MCast::Server_var mcast_server =
+      MCast::Server_var const mcast_server =
         server_i._this ();
 
-      CORBA::Object_var table_object =
+      CORBA::Object_var const table_object =
         this->orb_->resolve_initial_references ("IORTable");
 
-      IORTable::Table_var adapter =
+      IORTable::Table_var const adapter =
         IORTable::Table::_narrow (table_object.in ());
 
       if (CORBA::is_nil (adapter.in ()))
@@ -97,7 +82,7 @@ Server_i::init (int& argc,
       poa->destroy (true, true);
       this->orb_->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("client");
       return 1;
@@ -107,20 +92,20 @@ Server_i::init (int& argc,
 }
 
 int
-Server_i::enable_multicast (char const* ior)
+Server_i::enable_multicast (char const *ior)
 {
   if (this->parse_args (this->argc_, this->argv_) != 0)
     return -1;
 
   // Get reactor instance from TAO.
-  ACE_Reactor* reactor =
+  ACE_Reactor * const reactor =
     this->orb_->orb_core ()->reactor ();
 
   // Instantiate a handler which will handle client requests for the
   // bootstrappable service, received on the multicast port.
-  ACE_NEW_RETURN (this->ior_multicast_,
-                  TAO_IOR_Multicast (),
-                  -1);
+  this->ior_multicast_.reset (new (std::nothrow) TAO_IOR_Multicast);
+  if (!this->ior_multicast_)
+    return -1;
 
   if (this->ior_multicast_->init (ior,
                                   this->mcast_address_.in (),
@@ -128,7 +113,7 @@ Server_i::enable_multicast (char const* ior)
     return -1;
 
   // Register event handler for the ior multicast.
-  if (reactor->register_handler (this->ior_multicast_,
+  if (reactor->register_handler (this->ior_multicast_.get (),
                                  ACE_Event_Handler::READ_MASK) == -1)
     {
       if (TAO_debug_level > 0)
@@ -141,10 +126,10 @@ Server_i::enable_multicast (char const* ior)
 }
 
 int
-Server_i::parse_args (int argc, ACE_TCHAR* argv[])
+Server_i::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("a:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)

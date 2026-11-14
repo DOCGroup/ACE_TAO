@@ -30,14 +30,17 @@ class ACE_Log_Record;
 class MFC_Log  :  public virtual ACE_Log_Msg_Callback
 {
 public:
-  /// Constructor
-  MFC_Log();
+  MFC_Log () = default;
 
   /// method called by ACE_Log_Msg to log an event
-  void log(ACE_Log_Record& log_record);
+  void log (ACE_Log_Record &log_record) override;
 
-  /// destructor
-  virtual ~MFC_Log();
+  ~MFC_Log () override = default;
+
+  MFC_Log (MFC_Log const &) = delete;
+  MFC_Log (MFC_Log &&) = delete;
+  MFC_Log &operator= (MFC_Log const &) = delete;
+  MFC_Log &operator= (MFC_Log &&) = delete;
 };
 
 #endif /* MFC_LOG_H */

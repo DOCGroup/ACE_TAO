@@ -2,8 +2,7 @@
 #include "TX_Object_i.h"
 
 TX_Object_i::TX_Object_i (CORBA::ORB_ptr orb)
-  : orb_ (CORBA::ORB::_duplicate (orb)),
-    data_ ()
+  : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 

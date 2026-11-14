@@ -11,7 +11,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_time.h"
 #include <iostream>
-// Implementation skeleton constructor
 Messenger_i::Messenger_i (unsigned int seconds_to_wait,
                           CORBA::Boolean throw_exception)
   : seconds_to_wait_(seconds_to_wait)
@@ -19,17 +18,11 @@ Messenger_i::Messenger_i (unsigned int seconds_to_wait,
 {
 }
 
-// Implementation skeleton destructor
-Messenger_i::~Messenger_i ()
-{
-}
-
-CORBA::Boolean Messenger_i::send_message (
-  const char * user_name,
-  const char * subject,
-  char *& message,
-  CORBA::Long_out time_sent
-  )
+CORBA::Boolean
+Messenger_i::send_message (char const *user_name,
+                           char const *subject,
+                           char *&message,
+                           CORBA::Long_out time_sent)
 {
   if (throw_exception_)
   {
@@ -55,5 +48,4 @@ CORBA::Boolean Messenger_i::send_message (
   // We will assume the message has been sent, so return true
   return true;
 }
-
 

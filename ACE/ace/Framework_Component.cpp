@@ -24,10 +24,10 @@ ACE_Framework_Component::~ACE_Framework_Component ()
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Framework_Repository)
 
-sig_atomic_t ACE_Framework_Repository::shutting_down_ = 0;
+sig_atomic_t ACE_Framework_Repository::shutting_down_ {};
 
 // Pointer to the Singleton instance.
-ACE_Framework_Repository *ACE_Framework_Repository::repository_ = nullptr;
+ACE_Framework_Repository *ACE_Framework_Repository::repository_ {};
 
 ACE_Framework_Repository::~ACE_Framework_Repository ()
 {
@@ -40,7 +40,7 @@ ACE_Framework_Repository::open (int size)
 {
   ACE_TRACE ("ACE_Framework_Repository::open");
 
-  ACE_Framework_Component **temp = nullptr;
+  ACE_Framework_Component **temp {};
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_ALLOCATOR_RETURN (temp,
@@ -68,15 +68,14 @@ ACE_Framework_Repository::close ()
   if (this->component_vector_ != nullptr)
     {
       // Delete components in reverse order.
-      for (int i = this->current_size_ - 1; i >= 0; i--)
-        if (this->component_vector_[i])
+      for (int i = this->current_size_ - 1; i >= 0; --i)
+        if (this->component_vector_[i] != nullptr)
           {
-            ACE_Framework_Component *s =
-              const_cast<ACE_Framework_Component *> (
-                this->component_vector_[i]);
+            ACE_Framework_Component * const component =
+              this->component_vector_[i];
 
             this->component_vector_[i] = nullptr;
-            delete s;
+            delete component;
           }
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
@@ -137,8 +136,8 @@ ACE_Framework_Repository::register_component (ACE_Framework_Component *fc)
   int i;
 
   // Check to see if it's already registered
-  for (i = 0; i < this->current_size_; i++)
-    if (this->component_vector_[i] &&
+  for (i = 0; i < this->current_size_; ++i)
+    if (this->component_vector_[i] != nullptr &&
         fc->this_ == this->component_vector_[i]->this_)
       {
         ACELIB_ERROR_RETURN ((LM_ERROR,
@@ -163,8 +162,8 @@ ACE_Framework_Repository::remove_component (const ACE_TCHAR *name)
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
   int i;
 
-  for (i = 0; i < this->current_size_; i++)
-    if (this->component_vector_[i] &&
+  for (i = 0; i < this->current_size_; ++i)
+    if (this->component_vector_[i] != nullptr &&
         ACE_OS::strcmp (this->component_vector_[i]->name_, name) == 0)
       {
         delete this->component_vector_[i];
@@ -196,8 +195,8 @@ ACE_Framework_Repository::remove_dll_components_i (const ACE_TCHAR *dll_name)
   int i;
   int retval = -1;
 
-  for (i = 0; i < this->current_size_; i++)
-    if (this->component_vector_[i] &&
+  for (i = 0; i < this->current_size_; ++i)
+    if (this->component_vector_[i] != nullptr &&
         ACE_OS::strcmp (this->component_vector_[i]->dll_name_, dll_name) == 0)
       {
           if (ACE::debug ())
@@ -271,7 +270,6 @@ ACE_Framework_Repository::dump () const
 }
 
 ACE_Framework_Repository::ACE_Framework_Repository (int size)
-  : current_size_ (0)
 {
   ACE_TRACE ("ACE_Framework_Repository::ACE_Framework_Repository");
 

@@ -18,17 +18,18 @@
 #include "tao/Basic_Types.h"
 #include "tao/CDR.h"
 
+#include <utility>
+
 using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO;
 
-
-typedef unbounded_value_sequence<CORBA::Octet> tested_sequence;
-typedef tested_sequence::element_traits tested_element_traits;
-typedef tested_sequence::allocation_traits tested_allocation_traits;
-typedef details::range_checking<CORBA::Octet,true> range;
+using tested_sequence = unbounded_value_sequence<CORBA::Octet>;
+using tested_element_traits = tested_sequence::element_traits;
+using tested_allocation_traits = tested_sequence::allocation_traits;
+using range = details::range_checking<CORBA::Octet,true>;
 
 struct Tester
 {
-  typedef tested_sequence::value_type value_type;
+  using value_type = tested_sequence::value_type;
 
   int test_copy_constructor_from_ulong()
   {
@@ -43,7 +44,7 @@ struct Tester
       CHECK_EQUAL(CORBA::ULong(8), x.length());
       CHECK_EQUAL(true, x.release());
 
-      tested_sequence y(x);
+      tested_sequence const y(x);
       FAIL_RETURN_IF_NOT(a.expect(1), a);
       CHECK_EQUAL(CORBA::ULong(16), y.maximum());
       CHECK_EQUAL(CORBA::ULong(8), y.length());
@@ -79,12 +80,53 @@ struct Tester
     return 0;
   }
 
+  int test_move_constructor()
+  {
+    tested_sequence source (8);
+    source.length (4);
+    source[0] = 1;
+    source[1] = 4;
+    source[2] = 9;
+    source[3] = 16;
+    value_type * const buffer = source.get_buffer ();
+
+    tested_sequence destination (std::move (source));
+
+    CHECK_EQUAL (buffer, destination.get_buffer ());
+    CHECK_EQUAL (CORBA::ULong (8), destination.maximum ());
+    CHECK_EQUAL (CORBA::ULong (4), destination.length ());
+    CHECK_EQUAL (CORBA::Octet (1), destination[0]);
+    CHECK_EQUAL (CORBA::Octet (16), destination[3]);
+    return 0;
+  }
+
+  int test_move_assignment()
+  {
+    tested_sequence source (8);
+    source.length (4);
+    source[0] = 1;
+    source[1] = 4;
+    source[2] = 9;
+    source[3] = 16;
+    value_type * const buffer = source.get_buffer ();
+    tested_sequence destination (2);
+
+    destination = std::move (source);
+
+    CHECK_EQUAL (buffer, destination.get_buffer ());
+    CHECK_EQUAL (CORBA::ULong (8), destination.maximum ());
+    CHECK_EQUAL (CORBA::ULong (4), destination.length ());
+    CHECK_EQUAL (CORBA::Octet (1), destination[0]);
+    CHECK_EQUAL (CORBA::Octet (16), destination[3]);
+    return 0;
+  }
+
   int test_ulong_constructor()
   {
     expected_calls a(tested_allocation_traits::allocbuf_calls);
     expected_calls f(tested_allocation_traits::freebuf_calls);
     {
-      tested_sequence x(16);
+      tested_sequence const x(16);
 
       CHECK_EQUAL(CORBA::ULong(16), x.maximum());
       CHECK_EQUAL(CORBA::ULong(0), x.length());
@@ -368,11 +410,13 @@ struct Tester
 
   int test_all()
   {
-    int status = 0;
+    int status {};
 
     status += this->test_ulong_constructor();
     status += this->test_copy_constructor_from_ulong();
     status += this->test_assignment_from_ulong();
+    status += this->test_move_constructor();
+    status += this->test_move_assignment();
     status += this->test_exception_in_ulong_constructor();
     status += this->test_set_length_less_than_maximum();
     status += this->test_set_length_more_than_maximum();
@@ -389,12 +433,12 @@ struct Tester
     return status;
   }
 
-  Tester() {}
+  Tester () = default;
 };
 
 int ACE_TMAIN(int,ACE_TCHAR*[])
 {
-  int status = 0;
+  int status {};
   try
     {
       {
@@ -403,7 +447,7 @@ int ACE_TMAIN(int,ACE_TCHAR*[])
       }
 
       {
-        typedef value_sequence_tester<tested_sequence,tested_allocation_traits> common;
+        using common = value_sequence_tester<tested_sequence,tested_allocation_traits>;
         common tester;
         status += tester.test_all ();
       }

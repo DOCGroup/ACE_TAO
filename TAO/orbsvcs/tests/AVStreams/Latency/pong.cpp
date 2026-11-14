@@ -8,27 +8,29 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/Stats.h"
 #include "ace/Throughput_Stats.h"
+#include <array>
+#include <cstddef>
+#include <cstdio>
+#include <cstring>
+#include <memory>
 
-ACE_TCHAR const *ior_output_file = ACE_TEXT ("pong.ior");
-char const *protocol = "RTP/UDP";
-int milliseconds = 100;
-size_t message_size = 64;
-bool respond = true;
-AVStreams::protocolSpec pong_protocols;
-AVStreams::protocolSpec ping_protocols;
+static ACE_TString ior_output_file { ACE_TEXT ("pong.ior") };
+static size_t message_size { 64 };
+static bool respond { true };
+static AVStreams::protocolSpec pong_protocols;
+static AVStreams::protocolSpec ping_protocols;
 
-ACE_hrtime_t recv_throughput_base = 0;
-ACE_Throughput_Stats recv_latency;
+static ACE_hrtime_t recv_throughput_base {};
+static ACE_Throughput_Stats recv_latency;
 
-ACE_hrtime_t send_throughput_base = 0;
-ACE_Throughput_Stats send_latency;
-
+static ACE_hrtime_t send_throughput_base {};
+static ACE_Throughput_Stats send_latency;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("xo:s:r:t:b:d"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("xo:s:r:b:d"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -39,7 +41,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
       case 'r':
         {
-          CORBA::ULong l = ping_protocols.length ();
+          CORBA::ULong const l = ping_protocols.length ();
           ping_protocols.length (l + 1);
           ping_protocols[l] = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ()));
         }
@@ -47,30 +49,30 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
       case 's':
         {
-          CORBA::ULong l = pong_protocols.length ();
+          CORBA::ULong const l = pong_protocols.length ();
           pong_protocols.length (l + 1);
           pong_protocols[l] = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ()));
         }
         break;
 
-      case 't':
-        milliseconds = ACE_OS::atoi (get_opts.opt_arg ());
-        break;
-
       case 'b':
-        message_size = ACE_OS::atoi (get_opts.opt_arg ());
-        if (message_size < sizeof(ACE_hrtime_t))
+        {
+          int const requested_message_size = ACE_OS::atoi (get_opts.opt_arg ());
+          if (requested_message_size < static_cast<int> (sizeof(ACE_hrtime_t)))
           {
             ACE_DEBUG ((LM_DEBUG, "Invalid message size\n"));
             message_size = 64;
           }
+          else
+            message_size = static_cast<size_t> (requested_message_size);
+        }
         break;
 
       case 'x':
         respond = false;
         break;
       case 'd':
-        TAO_debug_level++;
+        ++TAO_debug_level;
         break;
 
       case '?':
@@ -80,12 +82,10 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            "-o <iorfile> "
                            "-r <protocol=addr> "
                            "-s <protocol=addr> "
-                           "-t <milliseconds> "
                            "\n",
                            argv [0]),
                           -1);
       }
-
 
   // If no protocols are specified use the default...
   if (pong_protocols.length () == 0)
@@ -103,14 +103,15 @@ parse_args (int argc, ACE_TCHAR *argv[])
   // Indicates successful parsing of the command line
   return 0;
 }
-
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-      parse_args (argc, argv);
+      int const result = parse_args (argc, argv);
+      if (result != 0)
+        return result;
 
       CORBA::Object_var obj
         = orb->resolve_initial_references ("RootPOA");
@@ -126,15 +127,14 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       TAO_AV_CORE::instance ()->init (orb.in (),
                                       poa.in ());
 
-      Reactive_Strategy *reactive_strategy = nullptr;
-      ACE_NEW_RETURN (reactive_strategy,
-                      Reactive_Strategy,
-                      1);
+      std::unique_ptr<Reactive_Strategy> reactive_strategy =
+        std::make_unique<Reactive_Strategy> ();
       reactive_strategy->init (orb.in (), poa.in ());
-      TAO_MMDevice *mmdevice_impl = nullptr;
+      TAO_MMDevice *mmdevice_impl {};
       ACE_NEW_RETURN (mmdevice_impl,
-                      TAO_MMDevice (reactive_strategy),
+                      TAO_MMDevice (reactive_strategy.get ()),
                       1);
+      PortableServer::ServantBase_var safe_mmdevice = mmdevice_impl;
 
       AVStreams::MMDevice_var mmdevice =
         mmdevice_impl->_this ();
@@ -144,28 +144,31 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Activated as <%C>\n", ior.in () ));
 
-      // If the ior_output_file exists, output the ior to it
-      if (ior_output_file != nullptr)
+      // Write the IOR when an output file was specified.
+      if (!ior_output_file.empty ())
         {
-          FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
-          if (output_file == nullptr)
+          using File_Ptr = std::unique_ptr<FILE, int (*) (FILE *)>;
+          File_Ptr output_file (ACE_OS::fopen (ior_output_file.c_str (), ACE_TEXT ("w")),
+                                std::fclose);
+          if (!output_file)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Cannot open output file %s for writing IOR: %C",
-                               ior_output_file,
+                               ior_output_file.c_str (),
                                ior.in ()),
                               1);
-          ACE_OS::fprintf (output_file, "%s", ior.in ());
-          ACE_OS::fclose (output_file);
+          std::fprintf (output_file.get (), "%s", ior.in ());
         }
 
-      Pong_Recv_FDev *pong_fdev_impl = nullptr;
+      Pong_Recv_FDev *pong_fdev_impl {};
       ACE_NEW_RETURN (pong_fdev_impl,
                       Pong_Recv_FDev ("Pong"),
                       1);
-      Ping_Send_FDev *ping_fdev_impl = nullptr;
+      PortableServer::ServantBase_var safe_pong_fdev = pong_fdev_impl;
+      Ping_Send_FDev *ping_fdev_impl {};
       ACE_NEW_RETURN (ping_fdev_impl,
                       Ping_Send_FDev ("Ping"),
                       1);
+      PortableServer::ServantBase_var safe_ping_fdev = ping_fdev_impl;
 
       AVStreams::FDev_var ping_fdev =
         ping_fdev_impl->_this ();
@@ -183,7 +186,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
       ACE_DEBUG ((LM_DEBUG, "Calibrating scale factory . . . "));
-      ACE_High_Res_Timer::global_scale_factor_type gsf =
+      ACE_High_Res_Timer::global_scale_factor_type const gsf =
         ACE_High_Res_Timer::global_scale_factor ();
       ACE_DEBUG ((LM_DEBUG, "done\n"));
 
@@ -191,7 +194,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       send_latency.dump_results (ACE_TEXT("Send"), gsf);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;
@@ -199,21 +202,19 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   return 0;
 }
-
 // ****************************************************************
 
 Pong_Recv::Pong_Recv ()
-  :  TAO_FlowConsumer ("Pong",
+  : TAO_FlowConsumer ("Pong",
                        pong_protocols,
                        "UNS:pong")
 {
 }
 
 int
-Pong_Recv::get_callback (const char *,
+Pong_Recv::get_callback (char const *,
                          TAO_AV_Callback *&callback)
 {
-  // ACE_DEBUG ((LM_DEBUG,"Pong_Recv::get_callback\n"));
   callback = &this->callback_;
   return 0;
 }
@@ -221,7 +222,6 @@ Pong_Recv::get_callback (const char *,
 int
 Pong_Recv_Callback::handle_stop ()
 {
-  // ACE_DEBUG ((LM_DEBUG,"Pong_Recv_Callback::stop"));
   TAO_AV_CORE::instance ()->orb ()->shutdown ();
   return 0;
 }
@@ -231,22 +231,20 @@ Pong_Recv_Callback::receive_frame (ACE_Message_Block *frame,
                                    TAO_AV_frame_info *,
                                    ACE_Addr const &)
 {
-  // ACE_DEBUG ((LM_DEBUG,"Pong_Recv_Callback::receive_frame\n"));
-
-  ACE_hrtime_t now = ACE_OS::gethrtime ();
+  ACE_hrtime_t const now = ACE_OS::gethrtime ();
   for (ACE_Message_Block const *i = frame;
        i != nullptr;
-       i = frame->cont ())
+       i = i->cont ())
     {
-      ACE_hrtime_t buf[2];
+      std::array<ACE_hrtime_t, 2> buf;
 
-      if (frame->length () < sizeof(buf))
+      if (i->length () < buf.size () * sizeof (buf[0]))
         {
           ACE_DEBUG ((LM_DEBUG, "Unexpected message size\n"));
           return 0;
         }
 
-      ACE_OS::memcpy (buf, i->rd_ptr (), sizeof(buf));
+      std::memcpy (buf.data (), i->rd_ptr (), buf.size () * sizeof (buf[0]));
 
       if (recv_throughput_base == 0)
         {
@@ -268,26 +266,23 @@ Pong_Recv_Callback::handle_destroy ()
 // ****************************************************************
 
 Ping_Send::Ping_Send ()
-  :  TAO_FlowProducer ("Ping",
+  : TAO_FlowProducer ("Ping",
                        ping_protocols,
                        "UNS:ping")
 {
 }
 
 int
-Ping_Send::get_callback (const char *,
+Ping_Send::get_callback (char const *,
                          TAO_AV_Callback *&callback)
 {
-  // ACE_DEBUG ((LM_DEBUG,"Ping_Send::get_callback\n"));
   callback = &this->callback_;
   return 0;
 }
 
 Ping_Send_Callback::Ping_Send_Callback ()
-  :count_ (0)
+  : timeout_ (2)
 {
-  this->timeout_ = ACE_Time_Value (2);
-
   this->frame_.size (message_size);
   this->frame_.wr_ptr (message_size);
 }
@@ -302,7 +297,7 @@ Ping_Send_Callback::get_timeout (ACE_Time_Value *&tv,
 int
 Ping_Send_Callback::handle_timeout (void *)
 {
-  this->count_++;
+  ++this->count_;
 
   ACE_DEBUG ((LM_DEBUG, "Ping timeout frame %d\n", this->count_));
 
@@ -312,10 +307,10 @@ Ping_Send_Callback::handle_timeout (void *)
       return 0;
     }
 
-  ACE_hrtime_t stamp = ACE_OS::gethrtime ();
-  ACE_OS::memcpy (this->frame_.rd_ptr (), &stamp, sizeof(stamp));
+  ACE_hrtime_t const stamp = ACE_OS::gethrtime ();
+  std::memcpy (this->frame_.rd_ptr (), &stamp, sizeof(stamp));
 
-  int result = this->protocol_object_->send_frame (&this->frame_);
+  int const result = this->protocol_object_->send_frame (&this->frame_);
   if (result < 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Ping_Send_Callback::handle_timeout - send_frame - %p\n",
@@ -326,15 +321,9 @@ Ping_Send_Callback::handle_timeout (void *)
     {
       send_throughput_base = stamp;
     }
-  ACE_hrtime_t now = ACE_OS::gethrtime ();
+  ACE_hrtime_t const now = ACE_OS::gethrtime ();
   send_latency.sample (now - send_throughput_base,
                        now - stamp);
 
-  return 0;
-}
-
-int
-Ping_Send_Callback::handle_end_stream ()
-{
   return 0;
 }

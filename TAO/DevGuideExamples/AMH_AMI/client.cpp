@@ -4,20 +4,23 @@
 
 #include <iostream>
 
-const ACE_TCHAR *ior_file = ACE_TEXT ("file://middle.ior");
-
-int
-parse_args (int argc, ACE_TCHAR *argv[])
+struct Client_Options
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  ACE_TString ior_file {ACE_TEXT ("file://middle.ior")};
+};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+static int
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
+{
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
+  int option;
+
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'k':
-          ior_file = get_opts.opt_arg ();
-          break;
+        options.ior_file = get_opts.opt_arg ();
+        break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -33,44 +36,41 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
 int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
-  try {
-    // Initialize the ORB.
-    CORBA::ORB_var orb = CORBA::ORB_init( argc, argv );
-
-    if (parse_args (argc, argv) != 0)
+  try
+    {
+      CORBA::ORB_var const orb (CORBA::ORB_init (argc, argv));
+      Client_Options options;
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
-    // Read and destringify the Asynch_Except_Demo object's IOR.
-    CORBA::Object_var obj = orb->string_to_object(ACE_TEXT_ALWAYS_CHAR(ior_file));
-    if( CORBA::is_nil( obj.in() ) ) {
-      std::cerr << "Could not get middle IOR." << std::endl;
+      CORBA::Object_var const object (orb->string_to_object (
+        ACE_TEXT_ALWAYS_CHAR (options.ior_file.c_str ())));
+      if (CORBA::is_nil (object.in ()))
+        {
+          std::cerr << "Could not get middle IOR." << std::endl;
+          return 1;
+        }
+
+      Middle_var const middle (Middle::_narrow (object.in ()));
+      if (CORBA::is_nil (middle.in ()))
+        {
+          std::cerr << "IOR was not a Middle object reference." << std::endl;
+          return 1;
+        }
+
+      CORBA::String_var const question (CORBA::string_dup (
+        "How much wood would a woodchuck chuck, if a woodchuck could chuck wood?"));
+      std::cout << "Question is: " << question.in () << std::endl;
+
+      CORBA::String_var const answer (middle->get_the_answer (question.in ()));
+      std::cout << "Answer is: " << answer.in () << std::endl;
+      orb->destroy ();
+    }
+  catch (CORBA::Exception const &ex)
+    {
+      std::cerr << "CORBA exception: " << ex << std::endl;
       return 1;
     }
 
-    // Narrow the IOR to a Asycnh_Except_Demo object reference.
-    Middle_var mid =  Middle::_narrow( obj.in() );
-    if( CORBA::is_nil( mid.in() ) ) {
-      std::cerr << "IOR was not an middle object reference." << std::endl;
-      return 1;
-    }
-
-    CORBA::String_var question =
-      CORBA::string_dup ("How much wood would a woodchuck chuck, if a woodchuck could chuck wood?");
-
-    std::cout << "Question is: " << question.in() << std::endl;
-
-
-    //  trigger the exception via AMI call
-    CORBA::String_var answer =
-      mid->get_the_answer (question.in());
-
-    std::cout << "Answer is: " << answer.in() << std::endl;
-
-    return 0;
-  }
-  catch(const CORBA::Exception& ex) {
-    std::cerr << "CORBA exception: " << ex << std::endl;
-  }
-
-  return 1;
+  return 0;
 }

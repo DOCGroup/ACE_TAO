@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Basic_SArguments.h
  *
  *  @authors Jeff Parsons and Carlos O'Ryan
  */
-//=============================================================================
-
 #ifndef TAO_BASIC_SARGUMENTS_H
 #define TAO_BASIC_SARGUMENTS_H
 

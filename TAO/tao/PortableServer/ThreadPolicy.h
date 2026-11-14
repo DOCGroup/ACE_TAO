@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file ThreadPolicy.h
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
 #ifndef TAO_PORTABLESERVER_THREADPOLICY_H
 #define TAO_PORTABLESERVER_THREADPOLICY_H
 #include /**/ "ace/pre.h"
@@ -41,7 +37,7 @@ namespace TAO
         public virtual ::CORBA::LocalObject
     {
     public:
-      ThreadPolicy (::PortableServer::ThreadPolicyValue value);
+      explicit ThreadPolicy (::PortableServer::ThreadPolicyValue value);
 
       CORBA::Policy_ptr copy () override;
 

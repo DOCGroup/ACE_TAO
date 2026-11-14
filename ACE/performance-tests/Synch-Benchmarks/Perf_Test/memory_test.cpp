@@ -1,31 +1,37 @@
 #define  ACE_BUILD_SVC_DLL
 #include "ace/OS_NS_string.h"
-#include "ace/Log_Msg.h"
 #include "Performance_Test_Options.h"
 #include "Benchmark_Performance.h"
+
+#include <memory>
 
 #if defined (ACE_HAS_THREADS)
 
 class ACE_Svc_Export Memory_Test : public Benchmark_Performance
 {
 public:
-  virtual int svc ();
+  Memory_Test () = default;
+  Memory_Test (Memory_Test const &) = delete;
+  Memory_Test (Memory_Test &&) = delete;
+  Memory_Test &operator= (Memory_Test const &) = delete;
+  Memory_Test &operator= (Memory_Test &&) = delete;
+  int svc () override;
 };
 
 int
 Memory_Test::svc ()
 {
-  int ni = this->thr_id ();
-  size_t length = performance_test_options.msg_size ();
-  char *from  = new char[length];
-  char *to    = new char[length];
+  int const ni = this->thr_id ();
+  size_t const length = performance_test_options.msg_size ();
+  std::unique_ptr<char[]> from = std::make_unique<char[]> (length);
+  std::unique_ptr<char[]> to = std::make_unique<char[]> (length);
 
   synch_count = 1;
 
   while (!this->done ())
     {
-      ACE_OS::memcpy (to, from, length);
-      performance_test_options.thr_work_count[ni]++;
+      ACE_OS::memcpy (to.get (), from.get (), length);
+      ++performance_test_options.thr_work_count[ni];
     }
   /* NOTREACHED */
   return 0;

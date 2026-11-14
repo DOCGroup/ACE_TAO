@@ -3,16 +3,13 @@
 /**
  * @file    id_map.hpp
  *
- * This file contains the ID_Map class which has the responsibility of linking
- * XML IDREF objects to their XML ID counterparts.  In the output files, this
- * means that a <IDREF name>_ptr() will return a pointer to the identified
- * object.
+ * This file contains the ID_Map class which links XML IDREF objects to their
+ * XML ID counterparts. In the output files, this means that a <IDREF
+ * name>_ptr() call returns a pointer to the identified object.
  *
- * Exception NULL_PTR_Entry is thrown when a program attempts to add a NULL_PTR
- * to either the id_map or idref_map.
- *
- * Exception Unresolved_IDREF is thrown if an element in an XML document attempts
- * to reference an ID that does not exist.
+ * NULL_PTR_Entry is thrown when a null pointer is added to either map.
+ * Unresolved_IDREF is thrown when an XML document references an ID that does
+ * not exist.
  *
  * @author Jason R. Cody <jason.r.cody@vanderbilt.edu; jason.r.cody@gmail.com>
  */
@@ -21,133 +18,118 @@
 #ifndef _ID_MAP_H
 #define _ID_MAP_H
 
-//ID_Map makes use of the Types::idref_ data member to set it to the appropriate
-//object created during parsing
-#include "ace/XML_Utils/XMLSchema/Types.hpp"
-
-//The ID_Map is a Thread Specific Storage element.
 #include "ace/TSS_T.h"
 #include "ace/ace_wchar.h"
+#include "ace/XML_Utils/XMLSchema/Types.hpp"
+
+#include <map>
+#include <string>
 
 /**
-* @class ID_Map
-*
-* @brief A class that handles the mapping of IDREF objects to objects with the
-*  respective ID.
-*/
+ * @class ID_Map
+ * @brief Maps XML IDs and IDREFs to their corresponding XML objects.
+ *
+ * The stored XSCRT::Type pointers are non-owning. The parsed XML object graph
+ * owns those objects and must outlive this map.
+ */
 class ID_Map
 {
- public:
-  //Trait to allow for ease of thread specific storage.
+public:
   using TSS_ID_Map = ACE_TSS<ID_Map>;
-  using id_iterator = std::map<std::basic_string<ACE_TCHAR>, XSCRT::Type*>::iterator;
-  using idref_iterator = std::multimap<std::basic_string<ACE_TCHAR>, XSCRT::Type*>::iterator;
-  using ID_MAP = std::map<std::basic_string<ACE_TCHAR>, XSCRT::Type*>;
-  using IDREF_MAP = std::multimap<std::basic_string<ACE_TCHAR>, XSCRT::Type*>;
+  using String = std::basic_string<ACE_TCHAR>;
+  using ID_MAP = std::map<String, XSCRT::Type *>;
+  using IDREF_MAP = std::multimap<String, XSCRT::Type *>;
+  using id_iterator = ID_MAP::const_iterator;
+  using idref_iterator = IDREF_MAP::const_iterator;
 
-
-  //Exception Classes
-  //NULL_PTR_Entry thrown when a NULL PTR is added to the
-  //ID_Map
   class NULL_PTR_Entry {};
 
-  //Unresolved_IDREF thrown when there are IDREF's in the
-  //XML document.
-  class Unresolved_IDREF {
-    public:
-      explicit Unresolved_IDREF(const std::basic_string<ACE_TCHAR> &a_message) : message(a_message)
-      {}
-      ~Unresolved_IDREF() = default;
-      std::basic_string<ACE_TCHAR> get_message ()
-      {
-        return message;
-      }
-      private:
-        std::basic_string<ACE_TCHAR> message;
+  class Unresolved_IDREF
+  {
+  public:
+    explicit Unresolved_IDREF (String const &message)
+      : message_ (message)
+    {
+    }
+
+    String const &get_message () const
+    {
+      return this->message_;
+    }
+
+  private:
+    String message_;
   };
 
-  //Only a default constructor and destructor are needed
-  //Constructor
   ID_Map () = default;
+  ID_Map (ID_Map const &) = delete;
+  ID_Map &operator= (ID_Map const &) = delete;
+  ID_Map (ID_Map &&) = delete;
+  ID_Map &operator= (ID_Map &&) = delete;
 
-  //Destructor
-  ~ID_Map () = default;
-
-  // Add an ID to the ID map
-  void add_id (const std::basic_string<ACE_TCHAR>& id, XSCRT::Type *obj_ref)
+  void add_id (String const &id, XSCRT::Type *obj_ref)
   {
-    if (obj_ref)
+    if (obj_ref != nullptr)
     {
       this->id_map_.try_emplace (id, obj_ref);
     }
     else
     {
-      throw NULL_PTR_Entry();
+      throw NULL_PTR_Entry ();
     }
   }
 
-  // Add an IDREF to the IDREF map
-  void add_idref (const std::basic_string<ACE_TCHAR>& idref, XSCRT::Type *obj_ref)
+  void add_idref (String const &idref, XSCRT::Type *obj_ref)
   {
-    if (obj_ref)
+    if (obj_ref != nullptr)
     {
-        this->idref_map_.emplace (idref, obj_ref);
+      this->idref_map_.emplace (idref, obj_ref);
     }
     else
     {
-      throw NULL_PTR_Entry();
+      throw NULL_PTR_Entry ();
     }
   }
 
-  void resolve_single_idref (const std::basic_string<ACE_TCHAR>& idref, ::XSCRT::Type * element)
+  void resolve_single_idref (String const &idref, XSCRT::Type *element) const
   {
-      ID_Map::id_iterator id_iter = this->id_map_.find(idref);
-      if (id_iter != this->id_map_.end())
-      {
-        element->set_idref(idref, id_iter->second);
-      }
-      else
-      {
-        throw Unresolved_IDREF(idref);
-      }
+    ID_MAP::const_iterator const id_iter = this->id_map_.find (idref);
+    if (id_iter != this->id_map_.end ())
+    {
+      element->set_idref (idref, id_iter->second);
+    }
+    else
+    {
+      throw Unresolved_IDREF (idref);
+    }
   }
 
-  //Sets the referencing elements XSCRT::Type::idref_ to point to the
-  //referenced element.
-  //Note: The pointer is of type "XSCRT::Type*"
-  void resolve_idref ()
+  void resolve_idref () const
   {
     for (IDREF_MAP::value_type const &idref_entry : this->idref_map_)
     {
-      //Find the ID that matches the IDREF element
-      ID_Map::id_iterator id_iter = this->id_map_.find(idref_entry.first);
-      if (id_iter != this->id_map_.end())
+      ID_MAP::const_iterator const id_iter = this->id_map_.find (idref_entry.first);
+      if (id_iter != this->id_map_.end ())
       {
-        // Add the IDREF identifier and the reference to the
-        // identified object
-        std::basic_string<ACE_TCHAR> temp_id = id_iter->first;
-        idref_entry.second->set_idref(temp_id, id_iter->second);
+        idref_entry.second->set_idref (id_iter->first, id_iter->second);
       }
       else
       {
-        throw Unresolved_IDREF(idref_entry.first);
+        throw Unresolved_IDREF (idref_entry.first);
       }
     }
   }
 
   void reset ()
   {
-    id_map_.clear ();
-    idref_map_.clear ();
+    this->id_map_.clear ();
+    this->idref_map_.clear ();
   }
 
 private:
-  /// Maps the ID string to the element with the
-  /// ID attribute
+  // Both maps borrow pointers from the parsed XML object graph.
   ID_MAP id_map_;
-  /// Multimap that maps the IDREF string to the
-  /// element with the IDREF attribute
   IDREF_MAP idref_map_;
 };
 
-#endif /* _ID_MAP_HPP */
+#endif /* _ID_MAP_H */

@@ -28,23 +28,23 @@ int ACE_SEH_Default_Exception_Handler (void *)
 #if defined (ACE_HAS_ALLOC_HOOKS)
 # define ACE_OS_PREALLOCATE_OBJECT(TYPE, ID)\
     {\
-      TYPE *obj_p = nullptr;\
+      TYPE *obj_p {};\
       ACE_ALLOCATOR_RETURN (obj_p, static_cast<TYPE *>(ACE_Allocator::instance()->malloc(sizeof(TYPE))), -1); \
       preallocated_object[ID] = (void *) obj_p;\
     }
 # define ACE_OS_DELETE_PREALLOCATED_OBJECT(TYPE, ID)\
     ACE_Allocator::instance()->free (preallocated_object[ID]);     \
-    preallocated_object[ID] = 0;
+    preallocated_object[ID] = nullptr;
 #else
 # define ACE_OS_PREALLOCATE_OBJECT(TYPE, ID)\
     {\
-      TYPE *obj_p = nullptr;\
+      TYPE *obj_p {};\
       ACE_NEW_RETURN (obj_p, TYPE, -1);\
       preallocated_object[ID] = (void *) obj_p;\
     }
 # define ACE_OS_DELETE_PREALLOCATED_OBJECT(TYPE, ID)\
     delete (TYPE *) preallocated_object[ID];\
-    preallocated_object[ID] = 0;
+    preallocated_object[ID] = nullptr;
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 ACE_Object_Manager_Base::ACE_Object_Manager_Base ()
@@ -468,10 +468,8 @@ ACE_OS_Object_Manager::shutting_down ()
 class ACE_OS_Object_Manager_Manager
 {
 public:
-  /// Constructor.
   ACE_OS_Object_Manager_Manager ();
 
-  /// Destructor.
   ~ACE_OS_Object_Manager_Manager ();
 
 private:

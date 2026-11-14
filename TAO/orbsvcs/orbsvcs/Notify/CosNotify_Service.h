@@ -32,31 +32,34 @@ class TAO_Notify_EventChannelFactory;
 class TAO_Notify_Serv_Export TAO_CosNotify_Service : public TAO_Notify_Service
 {
 public:
-  /// Constructor
   TAO_CosNotify_Service ();
 
-  /// Destructor
-  virtual ~TAO_CosNotify_Service ();
+  ~TAO_CosNotify_Service () override;
+
+  TAO_CosNotify_Service (TAO_CosNotify_Service const &) = delete;
+  TAO_CosNotify_Service (TAO_CosNotify_Service &&) = delete;
+  TAO_CosNotify_Service &operator= (TAO_CosNotify_Service const &) = delete;
+  TAO_CosNotify_Service &operator= (TAO_CosNotify_Service &&) = delete;
 
   /// Init the service from configurator
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
   /// Init the service from driver
-  virtual void init_service (CORBA::ORB_ptr orb);
+  void init_service (CORBA::ORB_ptr orb) override;
 
-  virtual int fini ();
+  int fini () override;
 
   /// separate dispatching orb init
-  virtual void init_service2 (CORBA::ORB_ptr orb, CORBA::ORB_ptr dispatching_orb);
+  void init_service2 (CORBA::ORB_ptr orb, CORBA::ORB_ptr dispatching_orb) override;
 
   /// Finalize the service.
-  virtual void finalize_service (
-    CosNotifyChannelAdmin::EventChannelFactory_ptr factory);
+  void finalize_service (
+    CosNotifyChannelAdmin::EventChannelFactory_ptr factory) override;
 
   /// Create the Channel Factory.
-  virtual CosNotifyChannelAdmin::EventChannelFactory_ptr create (
+  CosNotifyChannelAdmin::EventChannelFactory_ptr create (
     PortableServer::POA_ptr default_POA,
-    const char* factory_name = "EventChannelFactory");
+    char const *factory_name = "EventChannelFactory") override;
 
   /// Called by the factory when it is destroyed.
   virtual void remove (TAO_Notify_EventChannelFactory* ecf);

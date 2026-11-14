@@ -4,19 +4,20 @@
 #include "ace/Service_Config.h"
 #include "ace/Log_Msg.h"
 
-ACE_TCHAR const * const scpc_loadOrb = ACE_DYNAMIC_SERVICE_DIRECTIVE(
+ACE_TCHAR const * const scpc_loadOrb = ACE_DYNAMIC_SERVICE_DIRECTIVE (
   "testDllOrb",
   "Bug_3542",
   "_make_DllOrb",
-  "testDllOrb -ORBDebugLevel 0 -ORBId testDllOrb -NumThreads 2 -ORBDottedDecimalAddresses 1 -ORBCollocationStrategy thru_poa"
-);
+  "testDllOrb -ORBDebugLevel 0 -ORBId testDllOrb -NumThreads 2 "
+  "-ORBDottedDecimalAddresses 1 -ORBCollocationStrategy thru_poa");
 
-ACE_TCHAR const * const scpc_unloadOrb = ACE_REMOVE_SERVICE_DIRECTIVE("testDllOrb");
+ACE_TCHAR const * const scpc_unloadOrb = ACE_REMOVE_SERVICE_DIRECTIVE ("testDllOrb");
 
 int
 ACE_TMAIN (int, ACE_TCHAR **)
 {
-  int result = 0;
+  constexpr int number_of_iterations {1000};
+  int result {};
 #if 0
   ACE_Service_Config serviceConfig;
 
@@ -44,11 +45,11 @@ ACE_TMAIN (int, ACE_TCHAR **)
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("(%P|%t) serviceConfig.open done\n")));
 #endif
 
-  for (int cnt = 0; cnt < 1000; ++cnt)
+  for (int iteration {}; iteration < number_of_iterations; ++iteration)
     {
-      ACE_DEBUG ((LM_INFO, ACE_TEXT ("(%P|%t) Loading ORB cnt = %d\n"), cnt));
+      ACE_DEBUG ((LM_INFO, ACE_TEXT ("(%P|%t) Loading ORB iteration = %d\n"), iteration));
       result = ACE_Service_Config::process_directive (scpc_loadOrb);
-      if (0 != result)
+      if (result != 0)
         {
           ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) Error loading ORB failed (%d)\n"), result));
           return result;
@@ -56,7 +57,7 @@ ACE_TMAIN (int, ACE_TCHAR **)
       ACE_DEBUG ((LM_INFO, ACE_TEXT ("(%P|%t) Loading ORB done\n")));
 
       result = ACE_Service_Config::process_directive (scpc_unloadOrb);
-      if (0 != result)
+      if (result != 0)
         {
           ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) Error unloading ORB failed (%d)\n"), result));
           return result;

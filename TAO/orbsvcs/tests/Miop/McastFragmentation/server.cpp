@@ -182,7 +182,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         orb_thr.wait ();
       }
 
-      root_goa->destroy (1, 1);
+      root_goa->destroy (true, true);
 
       orb->destroy ();
     }
@@ -192,11 +192,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       return -1;
     }
 
-  if (Number_of_Problems.value ())
+  u_long const problem_count = Number_of_Problems.load ();
+  if (problem_count)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("\nServer finished with *Possibly* %u PROBLEMS.\n"),
-                  Number_of_Problems.value ()));
+                  problem_count));
       return 1;
     }
 

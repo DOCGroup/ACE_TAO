@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-
 //=============================================================================
 /**
  *  @file     Iterator_Factory_i.h
@@ -11,11 +10,12 @@
  */
 //=============================================================================
 
-
 #ifndef ITERATOR_FACTORY_I_H
 #define ITERATOR_FACTORY_I_H
 
 #include "Web_ServerS.h"
+
+#include <string>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -39,24 +39,29 @@ class Content_Iterator_i;
 class Iterator_Factory_i : virtual public POA_Web_Server::Iterator_Factory
 {
 public:
+  Iterator_Factory_i () = default;
+  Iterator_Factory_i (Iterator_Factory_i const&) = delete;
+  Iterator_Factory_i (Iterator_Factory_i&&) = delete;
+  Iterator_Factory_i& operator= (Iterator_Factory_i const&) = delete;
+  Iterator_Factory_i& operator= (Iterator_Factory_i&&) = delete;
+
   /**
    * This factory method returns a <Content_Iterator> that can be used
    * to read the <contents> associated with <pathname> one ``chunk''
    * at a time.  The <metadata> reports information about the
    * <contents>.
    */
-  virtual void get_iterator (const char *pathname,
-                             Web_Server::Content_Iterator_out contents,
-                             Web_Server::Metadata_Type_out metadata);
+  void get_iterator (char const *pathname,
+                     Web_Server::Content_Iterator_out contents,
+                     Web_Server::Metadata_Type_out metadata) override;
 
   /// Set the file modification date in the metadata structure.
-  int modification_date (ACE_stat *file_status,
-                         Web_Server::Metadata_Type_out metadata);
+  int modification_date (ACE_stat const& file_status,
+                         Web_Server::Metadata_Type& metadata);
 
   /// Set the type of file content in the metadata structure.
-  int content_type (const char *filename,
-                    Web_Server::Metadata_Type_out metadata);
+  int content_type (std::string const& filename,
+                    Web_Server::Metadata_Type& metadata);
 };
-
 
 #endif  /* ITERATOR_FACTORY_I_H */

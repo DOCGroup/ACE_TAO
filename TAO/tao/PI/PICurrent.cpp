@@ -11,6 +11,8 @@
 #include "tao/TAO_Server_Request.h"
 #include "ace/CORBA_macros.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::PICurrent::PICurrent (TAO_ORB_Core &orb_core)
@@ -28,7 +30,7 @@ TAO::PICurrent::get_slot (PortableInterceptor::SlotId identifier)
 
 void
 TAO::PICurrent::set_slot (PortableInterceptor::SlotId identifier,
-                         const CORBA::Any &data)
+                         CORBA::Any const &data)
 {
   this->check_validity (identifier);
 
@@ -54,7 +56,7 @@ TAO::PICurrent::tsc ()
   if (!impl)
   {
     ACE_NEW_THROW_EX (impl,
-                      TAO::PICurrent_Impl (&this->orb_core_, this->tss_slot_),
+                      TAO::PICurrent_Impl (std::addressof (this->orb_core_), this->tss_slot_),
                       CORBA::NO_MEMORY (
                         CORBA::SystemException::_tao_minor_code (
                           TAO::VMCID,
@@ -68,7 +70,7 @@ TAO::PICurrent::tsc ()
 }
 
 void
-TAO::PICurrent::check_validity (const PortableInterceptor::SlotId &identifier)
+TAO::PICurrent::check_validity (PortableInterceptor::SlotId const &identifier)
 {
   // If the slot_count is zero, no initialization has been done (if there are
   // no slots, then the PICurrent_impl object is not created as there is no

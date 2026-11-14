@@ -14,10 +14,8 @@
 class Options
 {
 public:
-  // Constructor.
   Options ();
 
-  // Destructor.
   ~Options ();
 
   // Parse the command-line arguments.

@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    CSD_ThreadPool.h
  *
  *  @author  Tim Bradley <bradley_t@ociweb.com>
  */
-//=============================================================================
-
 #ifndef TAO_CSD_THREADPOOL_H
 #define TAO_CSD_THREADPOOL_H
 
@@ -15,7 +11,6 @@
 
 #include "tao/CSD_ThreadPool/CSD_TP_Export.h"
 #include "tao/Versioned_Namespace.h"
-
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #include "ace/Signal.h"
 
 #include "ace/Service_Config.h"
@@ -32,6 +31,7 @@
 
 #include "ace/Task.h"
 
+#include <cstring>
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
   // This only works on Win32 platforms and on Unix platforms
@@ -63,7 +63,7 @@ static int proactor_type = 0;
 static int max_aio_operations = 0;
 
 // Host that we're connecting to.
-static ACE_TCHAR *host = 0;
+static ACE_TCHAR *host {};
 
 // number of Senders instances
 static int senders = 1;
@@ -87,9 +87,9 @@ static u_short port = ACE_DEFAULT_SERVER_PORT;
 class MyTask: public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  MyTask () : threads_ (0), proactor_ (0) {}
+  MyTask () : threads_ (0), proactor_ {} {}
 
-  int svc ();
+  int svc () override;
   void waitready () { event_.wait (); }
 
 private:
@@ -115,7 +115,7 @@ MyTask::create_proactor ()
 
 #elif defined (ACE_HAS_AIO_CALLS)
 
-      ACE_POSIX_Proactor *proactor = 0;
+      ACE_POSIX_Proactor *proactor {};
 
       switch (proactor_type)
         {
@@ -140,7 +140,7 @@ MyTask::create_proactor ()
       event_.signal ();
     }
 
-  threads_++;
+  ++threads_;
 }
 
 void
@@ -182,8 +182,8 @@ public:
   //FUZZ: disable check_for_lack_ACE_OS
   /// This is called after the new connection has been accepted.
   ///FUZZ: enable check_for_lack_ACE_OS
-  virtual void open (ACE_HANDLE handle,
-                     ACE_Message_Block &message_block);
+  void open (ACE_HANDLE handle,
+             ACE_Message_Block &message_block) override;
 
   static long get_number_sessions () { return sessions_; }
 
@@ -192,11 +192,11 @@ protected:
 
   /// This is called when asynchronous <read> operation from the socket
   /// complete.
-  virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result);
+  void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result) override;
 
   /// This is called when an asynchronous <write> to the file
   /// completes.
-  virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result);
+  void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result) override;
 
 private:
   int  initiate_read_stream ();
@@ -218,14 +218,14 @@ Receiver::Receiver ()
     io_count_ (0)
 {
   ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, mutex_);
-  sessions_++;
+  ++sessions_;
   ACE_DEBUG ((LM_DEBUG, "Receiver Ctor sessions_=%d\n", sessions_));
 }
 
 Receiver::~Receiver ()
 {
   ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, mutex_);
-  sessions_--;
+  --sessions_;
   ACE_OS::closesocket (this->handle_);
   ACE_DEBUG ((LM_DEBUG, "~Receiver Dtor sessions_=%d\n", sessions_));
 }
@@ -273,7 +273,7 @@ Receiver::initiate_read_stream ()
 {
   ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, locker, mutex_, -1);
 
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb {};
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block (BUFSIZ + 1),
                   -1);
@@ -288,7 +288,7 @@ Receiver::initiate_read_stream ()
                         -1);
     }
 
-  io_count_++;
+  ++io_count_;
   return 0;
 }
 
@@ -313,7 +313,7 @@ Receiver::initiate_write_stream (ACE_Message_Block &mb, int nbytes)
                        -1);
     }
 
-  io_count_++;
+  ++io_count_;
   return 0;
 }
 
@@ -421,17 +421,17 @@ public:
   int open (const ACE_TCHAR *host, u_short port);
   void close ();
 
-  ACE_HANDLE handle () const;
-  virtual void handle (ACE_HANDLE);
+  ACE_HANDLE handle () const override;
+  void handle (ACE_HANDLE) override;
 
 protected:
   // These methods are called by the framework
 
   /// This is called when asynchronous reads from the socket complete
-  virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result);
+  void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result) override;
 
   /// This is called when asynchronous writes from the socket complete
-  virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result);
+  void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result) override;
 
 private:
   int initiate_read_stream ();
@@ -459,7 +459,7 @@ Sender::Sender ()
   : io_count_ (0)
 {
   // Moment of inspiration... :-)
-  this->welcome_message_.init (data, ACE_OS::strlen (data));
+  this->welcome_message_.init (data, std::strlen (data));
 }
 
 Sender::~Sender ()
@@ -530,7 +530,7 @@ Sender::initiate_write_stream ()
 
   welcome_message_.rd_ptr(welcome_message_.base ());
   welcome_message_.wr_ptr(welcome_message_.base ());
-  welcome_message_.wr_ptr (ACE_OS::strlen (data));
+  welcome_message_.wr_ptr (std::strlen (data));
 
   if (this->ws_.write (welcome_message_,
                        welcome_message_.length ()) == -1)
@@ -538,7 +538,7 @@ Sender::initiate_write_stream ()
                       "%p\n",
                       "ACE_Asynch_Write_Stream::write"),
                      -1);
-  io_count_++;
+  ++io_count_;
   return 0;
 }
 
@@ -553,7 +553,7 @@ Sender::initiate_read_stream ()
   ACE_DEBUG ((LM_DEBUG,
               "initiate_read_stream called\n"));
 
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb {};
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block (BUFSIZ + 1),
                   -1);
@@ -568,7 +568,7 @@ Sender::initiate_read_stream ()
                         -1);
     }
 
-  io_count_++;
+  ++io_count_;
   return 0;
 }
 
@@ -764,7 +764,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       for (i = 0; i < senders; ++i)
         if (send_list[i]->open (host, port) == 0)
-          rc++;
+          ++rc;
     }
 
   if (rc > 0)
@@ -781,7 +781,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       for (i = 0; i < senders; ++i)
         send_list[i]->close ();
     }
-
 
   ACE_Thread_Manager *tm =
     ACE_Thread_Manager::instance();

@@ -1,12 +1,11 @@
+#include <atomic>
+
 #include "TestS.h"
 
 class Client : public POA_Test::Client
 {
 public:
-  Client ()
-    : POA_Test::Client (),
-      reply_count_ {}
-  {}
+  Client () = default;
   ~Client () override = default;
 
   Client (Client const &) = delete;
@@ -16,9 +15,9 @@ public:
 
   void reply (char const *msg) override;
 
-  int reply_count () { return this->reply_count_; }
+  int reply_count () const { return this->reply_count_.load (); }
 
 private:
-  int reply_count_;
+  std::atomic<int> reply_count_ {};
 };
 

@@ -9,20 +9,24 @@ class Messenger_Locator_i : public PortableServer::ServantLocator,
           public CORBA::LocalObject
 {
  public:
-  Messenger_Locator_i();
+  Messenger_Locator_i () = default;
+  ~Messenger_Locator_i () override = default;
 
-  // Preinvoke function
-  virtual PortableServer::Servant preinvoke (const PortableServer::ObjectId &oid,
-                                             PortableServer::POA_ptr poa,
-                                             const char * operation,
-                                             void * & cookie);
+  Messenger_Locator_i (Messenger_Locator_i const &) = delete;
+  Messenger_Locator_i (Messenger_Locator_i &&) = delete;
+  Messenger_Locator_i &operator= (Messenger_Locator_i const &) = delete;
+  Messenger_Locator_i &operator= (Messenger_Locator_i &&) = delete;
 
-  // Postinvoke function
-  virtual void postinvoke (const PortableServer::ObjectId & oid,
-                           PortableServer::POA_ptr poa,
-                           const char * operation,
-                           void * cookie,
-                           PortableServer::Servant servant);
+  PortableServer::Servant preinvoke (PortableServer::ObjectId const &oid,
+                                     PortableServer::POA_ptr poa,
+                                     char const *operation,
+                                     void *&cookie) override;
+
+  void postinvoke (PortableServer::ObjectId const &oid,
+                   PortableServer::POA_ptr poa,
+                   char const *operation,
+                   void *cookie,
+                   PortableServer::Servant servant) override;
 };
 
 #endif

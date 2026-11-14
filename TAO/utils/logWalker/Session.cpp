@@ -6,12 +6,13 @@
 #include "ace/SString.h"
 #include "ace/OS_NS_sys_stat.h"
 
+#include <cstring>
+
 long
 Session::tao_version_ = 220;
 
 AltAddresses
 Session::alt_addrs_;
-
 
 Session::Session ()
   : split_details_ (false)
@@ -73,8 +74,8 @@ Session::add_process (HostProcess *proc)
 void
 Session::alternate_address (const char *addrspec)
 {
-  const char *equal = ACE_OS::strchr(addrspec,'=');
-  if (equal == 0)
+  const char *equal = std::strchr (addrspec, '=');
+  if (equal == nullptr)
    return;
   ACE_CString name (addrspec,(equal - addrspec));
   ACE_CString value (equal+1);
@@ -97,13 +98,13 @@ Session::is_equivalent (const ACE_CString &primary,
 void
 Session::default_service (const char *addrspec)
 {
-   const char *equal = ACE_OS::strchr(addrspec,'=');
-  if (equal == 0)
+   const char *equal = std::strchr (addrspec, '=');
+  if (equal == nullptr)
     return;
   ACE_CString name (addrspec,(equal - addrspec));
   Endpoint ep (equal+1);
 
-  static long next_def_pid = 0;
+  static long next_def_pid {};
   --next_def_pid;
   HostProcess *hp = new HostProcess ("defaulted",next_def_pid);
   hp->proc_name(name);
@@ -115,11 +116,11 @@ Session::default_service (const char *addrspec)
 HostProcess *
 Session::find_process (long pid)
 {
-  Processes::ENTRY *entry = 0;
+  Processes::ENTRY *entry {};
   if (this->processes_.find(pid,entry) == 0)
     return entry->item();
   else
-    return 0;
+    return nullptr;
 }
 
 HostProcess *
@@ -133,14 +134,14 @@ Session::find_host_i (const Endpoint &endpoint, bool server)
       if (entry->item()->has_endpoint(endpoint, server))
         return entry->item();
     }
-  return 0;
+  return nullptr;
 }
 
 HostProcess *
 Session::find_host (const Endpoint &endpoint, bool server)
 {
   HostProcess *result = find_host_i (endpoint, server);
-  if (result != 0)
+  if (result != nullptr)
     return result;
 
   Endpoint test (endpoint);
@@ -150,7 +151,7 @@ Session::find_host (const Endpoint &endpoint, bool server)
       test.host_ = alternate;
       return find_host_i (test, server);
     }
-  return 0;
+  return nullptr;
 }
 
 void
@@ -185,7 +186,7 @@ Session::stream_for ( ostream *oldstream, HostProcess *hp, const char *sub, cons
     {
       ACE_CString outname = this->base_dir_;
 
-      if (oldstream == 0 && hp == 0)
+      if (oldstream == nullptr && hp == nullptr)
         {
           if (ACE_OS::mkdir(outname.c_str()) != 0 && errno != EEXIST)
             ACE_ERROR ((LM_ERROR,
@@ -194,7 +195,7 @@ Session::stream_for ( ostream *oldstream, HostProcess *hp, const char *sub, cons
         }
       delete oldstream;
       outname += ACE_DIRECTORY_SEPARATOR_CHAR;
-      if (hp != 0)
+      if (hp != nullptr)
         {
           outname += hp->proc_name();
           if (ACE_OS::mkdir(outname.c_str()) != 0 && errno != EEXIST)
@@ -204,8 +205,8 @@ Session::stream_for ( ostream *oldstream, HostProcess *hp, const char *sub, cons
 
           outname += ACE_DIRECTORY_SEPARATOR_CHAR;
         }
-      outname += (sub == 0) ? "summary.txt" : sub;
-      if (detail != 0)
+      outname += (sub == nullptr) ? "summary.txt" : sub;
+      if (detail != nullptr)
         {
           if (ACE_OS::mkdir(outname.c_str()) != 0 && errno != EEXIST)
             ACE_ERROR ((LM_ERROR,
@@ -218,7 +219,7 @@ Session::stream_for ( ostream *oldstream, HostProcess *hp, const char *sub, cons
       return new ofstream (outname.c_str());
     }
 
-  if (oldstream != 0)
+  if (oldstream != nullptr)
     return oldstream;
   if (this->has_outfile())
     return new ofstream(this->outfile_.c_str());
@@ -230,7 +231,7 @@ void
 Session::dump ()
 {
   bool single = !this->has_dir();
-  ostream *strm = this->stream_for(0);
+      ostream *strm = this->stream_for (nullptr);
   // report session metrics
 
   if (single)
@@ -336,7 +337,6 @@ Session::dump ()
   if (this->has_outfile() || this->has_dir())
     delete strm;
 }
-
 
 // iterate over the collection of host processes to associate peer
 // processes via endpoints.

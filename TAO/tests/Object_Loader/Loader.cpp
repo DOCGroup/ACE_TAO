@@ -1,10 +1,6 @@
 #include "Loader.h"
 #include "Test_i.h"
 
-Loader::Loader ()
-{
-}
-
 CORBA::Object_ptr
 Loader::create_object (CORBA::ORB_ptr orb,
                        int,
@@ -23,19 +19,21 @@ Loader::create_object (CORBA::ORB_ptr orb,
 
       mgr->activate ();
 
-      Test_i *test = 0;
+      Test_i *test {};
       ACE_NEW_RETURN (test, Test_i (poa.in ()),
                       CORBA::Object::_nil ());
 
       PortableServer::ObjectId_var id =
         poa->activate_object (test);
 
+      // The POA owns an active servant reference. Keep the local reference
+      // until the object reference has been created.
       PortableServer::ServantBase_var tmp = test;
       obj = test->_this ();
 
       return obj._retn ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
     }
   return CORBA::Object::_nil ();

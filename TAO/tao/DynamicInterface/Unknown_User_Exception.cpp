@@ -10,6 +10,8 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_Memory.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::UnknownUserException::UnknownUserException ()
@@ -20,26 +22,21 @@ CORBA::UnknownUserException::UnknownUserException ()
 
 CORBA::UnknownUserException::UnknownUserException (CORBA::Any &ex)
   : CORBA::UserException ("IDL:omg.org/CORBA/UnknownUserException:1.0",
-                         "UnknownUserException")
+                         "UnknownUserException"),
+    exception_ (std::make_unique<CORBA::Any> (ex))
 {
-  ACE_NEW (this->exception_,
-           CORBA::Any (ex));
 }
 
 CORBA::UnknownUserException::UnknownUserException (
     CORBA::UnknownUserException const& e
   )
   : CORBA::UserException (e._rep_id (),
-                         e._name ())
+                         e._name ()),
+    exception_ (std::make_unique<CORBA::Any> (*e.exception_))
 {
-  ACE_NEW (this->exception_,
-           CORBA::Any (*e.exception_));
 }
 
-CORBA::UnknownUserException::~UnknownUserException ()
-{
-  delete this->exception_;
-}
+CORBA::UnknownUserException::~UnknownUserException () = default;
 
 CORBA::Any &
 CORBA::UnknownUserException::exception ()
@@ -68,7 +65,7 @@ CORBA::UnknownUserException::_raise () const
 CORBA::Exception *
 CORBA::UnknownUserException::_tao_duplicate () const
 {
-  CORBA::Exception *result = nullptr;
+  CORBA::Exception *result {};
   ACE_NEW_RETURN (
       result,
       CORBA::UnknownUserException (*this),
@@ -108,7 +105,7 @@ namespace TAO
     Struct_Field<char const *, CORBA::TypeCode_ptr const *> const
     fields_CORBA_UnknownUserException[] =
       {
-        { "exception", &CORBA::_tc_any }
+        { "exception", std::addressof (CORBA::_tc_any) }
       };
 
     Struct<char const *,
@@ -126,7 +123,7 @@ namespace TAO
 namespace CORBA
 {
   CORBA::TypeCode_ptr const _tc_UnknownUserException =
-    &TAO::TypeCode::tc_UnknownUserException;
+    std::addressof (TAO::TypeCode::tc_UnknownUserException);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

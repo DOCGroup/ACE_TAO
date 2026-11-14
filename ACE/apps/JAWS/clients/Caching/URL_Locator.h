@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-
 //=============================================================================
 /**
  *  @file    URL_Locator.h
@@ -8,7 +7,6 @@
  *  @author Nanbor Wang
  */
 //=============================================================================
-
 
 #ifndef ACE_URL_LOCATOR_H
 #define ACE_URL_LOCATOR_H
@@ -72,7 +70,6 @@ public:
   /// Human readable error status.
   static const char * const err_name[];
 
-  /// Default destructor.
   virtual ~ACE_URL_Locator () = 0;
 
   /**
@@ -100,9 +97,9 @@ public:
 
   /// Modify a previously registered offer.
   virtual int modify_offer (const ACE_WString &offer_id,
-                            const ACE_WString *url = 0,
-                            const ACE_URL_Property_Seq *del = 0,
-                            const ACE_URL_Property_Seq *modify = 0) = 0;
+                            const ACE_WString *url = nullptr,
+                            const ACE_URL_Property_Seq *del = nullptr,
+                            const ACE_URL_Property_Seq *modify = nullptr) = 0;
 
   /// Provide a human readable error status.
   virtual const char *error_status ();

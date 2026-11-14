@@ -2,10 +2,10 @@
 #include "ace/Get_Opt.h"
 #include "orbsvcs/AV/Protocol_Factory.h"
 
-typedef ACE_Unmanaged_Singleton<Distributer, ACE_Null_Mutex> DISTRIBUTER;
+using DISTRIBUTER = ACE_Unmanaged_Singleton<Distributer, ACE_Null_Mutex>;
 
 int
-Distributer_Sender_StreamEndPoint::get_callback (const char *,
+Distributer_Sender_StreamEndPoint::get_callback (char const *,
                                                  TAO_AV_Callback *&callback)
 {
   // Create and return the sender application callback to AVStreams
@@ -15,7 +15,7 @@ Distributer_Sender_StreamEndPoint::get_callback (const char *,
 }
 
 int
-Distributer_Sender_StreamEndPoint::set_protocol_object (const char *flowname,
+Distributer_Sender_StreamEndPoint::set_protocol_object (char const *flowname,
                                                         TAO_AV_Protocol_Object *object)
 {
   Connection_Manager &connection_manager =
@@ -32,7 +32,7 @@ Distributer_Sender_StreamEndPoint::set_protocol_object (const char *flowname,
 }
 
 int
-Distributer_Receiver_StreamEndPoint::get_callback (const char *,
+Distributer_Receiver_StreamEndPoint::get_callback (char const *,
                                                    TAO_AV_Callback *&callback)
 {
   // Create and return the receiver application callback to AVStreams
@@ -41,15 +41,10 @@ Distributer_Receiver_StreamEndPoint::get_callback (const char *,
   return 0;
 }
 
-Distributer_Receiver_Callback::Distributer_Receiver_Callback ()
-  : frame_count_ (1)
-{
-}
-
 int
 Distributer_Receiver_Callback::receive_frame (ACE_Message_Block *frame,
                                               TAO_AV_frame_info *,
-                                              const ACE_Addr &)
+                                              ACE_Addr const &)
 {
   // Upcall from the AVStreams when there is data to be received from
   // the sender.
@@ -90,18 +85,6 @@ Distributer_Receiver_Callback::handle_destroy ()
   return 0;
 }
 
-Distributer::Distributer ()
-  : sender_name_ ("sender")
-  , distributer_name_ ("distributer")
-  , done_ (0)
-  , addr_file_ (ACE_TEXT ("addr_file"))
-{
-}
-
-Distributer::~Distributer ()
-{
-}
-
 Connection_Manager &
 Distributer::connection_manager ()
 {
@@ -114,19 +97,19 @@ Distributer::parse_args (int argc, ACE_TCHAR *argv[])
   // Parse command line arguments
   ACE_Get_Opt opts (argc, argv, ACE_TEXT("s:r:a:"));
 
-  int c;
-  while ((c= opts ()) != -1)
+  int c {};
+  while ((c = opts ()) != -1)
     {
       switch (c)
         {
         case 'a':
-          this->addr_file_ = opts.opt_arg ();
+          this->options_.addr_file = opts.opt_arg ();
           break;
         case 's':
-          this->sender_name_ = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
+          this->options_.sender_name = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
           break;
         case 'r':
-          this->distributer_name_ = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
+          this->options_.distributer_name = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
           break;
         default:
           ACE_DEBUG ((LM_DEBUG,"Unknown Option\n"));
@@ -135,7 +118,6 @@ Distributer::parse_args (int argc, ACE_TCHAR *argv[])
     }
   return 0;
 }
-
 
 int
 Distributer::init (int argc, ACE_TCHAR *argv[])
@@ -165,37 +147,42 @@ Distributer::init (int argc, ACE_TCHAR *argv[])
   if (result != 0)
     return result;
 
-  this->connection_manager_.load_ep_addr (ACE_TEXT_ALWAYS_CHAR (this->addr_file_.c_str ()));
+  this->connection_manager_.load_ep_addr (
+    ACE_TEXT_ALWAYS_CHAR (this->options_.addr_file.c_str ()));
 
-  ACE_NEW_RETURN (this->distributer_sender_mmdevice_,
+  TAO_MMDevice *sender_mmdevice_servant {};
+  ACE_NEW_RETURN (sender_mmdevice_servant,
                   TAO_MMDevice (&this->sender_endpoint_strategy_),
                   -1);
 
   // Servant Reference Counting to manage lifetime
   PortableServer::ServantBase_var safe_sender_mmdevice =
-    this->distributer_sender_mmdevice_;
+    sender_mmdevice_servant;
 
   AVStreams::MMDevice_var distributer_sender_mmdevice =
-    this->distributer_sender_mmdevice_->_this ();
+    sender_mmdevice_servant->_this ();
 
-  ACE_NEW_RETURN (this->distributer_receiver_mmdevice_,
+  TAO_MMDevice *receiver_mmdevice_servant {};
+  ACE_NEW_RETURN (receiver_mmdevice_servant,
                   TAO_MMDevice (&this->receiver_endpoint_strategy_),
                   -1);
 
+  PortableServer::ServantBase_var safe_receiver_mmdevice =
+    receiver_mmdevice_servant;
 
   AVStreams::MMDevice_var distributer_receiver_mmdevice =
-    this->distributer_receiver_mmdevice_->_this ();
+    receiver_mmdevice_servant->_this ();
 
   // Bind to receivers.
-  this->connection_manager_.bind_to_receivers (this->distributer_name_,
+  this->connection_manager_.bind_to_receivers (this->options_.distributer_name,
                                                distributer_sender_mmdevice.in ());
 
   // Connect to receivers
   this->connection_manager_.connect_to_receivers (distributer_sender_mmdevice.in ());
 
   // Bind to sender.
-  this->connection_manager_.bind_to_sender (this->sender_name_,
-                                            this->distributer_name_,
+  this->connection_manager_.bind_to_sender (this->options_.sender_name,
+                                            this->options_.distributer_name,
                                             distributer_receiver_mmdevice.in ());
 
   // Connect to sender.
@@ -204,14 +191,14 @@ Distributer::init (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-int
+bool
 Distributer::done () const
 {
   return this->done_;
 }
 
 void
-Distributer::done (int done)
+Distributer::done (bool done)
 {
   this->done_ = done;
 }
@@ -256,7 +243,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Hack for now....
       ACE_OS::sleep (1);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("main");
       return -1;
@@ -268,5 +255,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 }
 
 #if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
-template ACE_Unmanaged_Singleton<Distributer, ACE_Null_Mutex> *ACE_Unmanaged_Singleton<Distributer, ACE_Null_Mutex>::singleton_;
+template ACE_Unmanaged_Singleton<Distributer, ACE_Null_Mutex> *
+  ACE_Unmanaged_Singleton<Distributer, ACE_Null_Mutex>::singleton_;
 #endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */

@@ -11,12 +11,13 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Multihomed_INET_Addr.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_arpa_inet.h"
+
+#include <cstring>
 
 int run_main (int, ACE_TCHAR *[])
 {
@@ -93,7 +94,6 @@ int run_main (int, ACE_TCHAR *[])
   // Run the test with a varying number of secondary addresses
   for (i = 0; i <= num_secondaries; ++i)  {
     /****** Clear the in_out array and test subject ******/
-
 
     // Clear the in_out array by setting every port to 0 and every
     // address to 1
@@ -178,15 +178,13 @@ int run_main (int, ACE_TCHAR *[])
     } else {
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("Failed get_num_secondary_addresses check\n")
-                    ACE_TEXT ("%d != %d\n"),
+                    ACE_TEXT ("%B != %d\n"),
                     returned_num_secondaries,
                     num_secondaries));
         status = 1;
     }
 
-
     /**** Test set (u_short, const char[], int, int, const char *([]), size_t) ****/
-
 
     addr.set(port,
              primary_dotted_decimal,
@@ -206,7 +204,7 @@ int run_main (int, ACE_TCHAR *[])
     }
 
     // Check the primary address
-    if (0 != ACE_OS::strcmp (addr.get_host_addr(), primary_dotted_decimal))
+    if (0 != std::strcmp (addr.get_host_addr(), primary_dotted_decimal))
       {
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("%C failed get_host_addr() check\n")
@@ -284,9 +282,7 @@ int run_main (int, ACE_TCHAR *[])
       status = 1;
     }
 
-
     /****** Clear the in_out array and test subject AGAIN ******/
-
 
     // Clear the in_out array by setting every port to 0 and every
     // address to 1
@@ -358,7 +354,6 @@ int run_main (int, ACE_TCHAR *[])
         status = 1;
     }
 
-
     /**** Test set (u_short, ACE_UINT32, int, const ACE_UINT32 *, size_t) ****/
 
     addr.set(port,
@@ -378,7 +373,7 @@ int run_main (int, ACE_TCHAR *[])
     }
 
     // Check the primary address
-    if (0 != ACE_OS::strcmp (addr.get_host_addr(), primary_dotted_decimal))
+    if (0 != std::strcmp (addr.get_host_addr(), primary_dotted_decimal))
       {
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("%C failed second get_ip_address() check\n")

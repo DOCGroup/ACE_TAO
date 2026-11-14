@@ -393,7 +393,6 @@ namespace ACE_Utils
     }
   };
 
-
   // -----------------------------------------------------
   /**
    * @struct Noop_Truncator

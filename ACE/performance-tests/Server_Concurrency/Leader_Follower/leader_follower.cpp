@@ -7,28 +7,46 @@
 #include "ace/Sched_Params.h"
 #include "ace/Profile_Timer.h"
 #include "../Latency_Stats.h"
+#include <cerrno>
+#include <limits>
 
-static size_t number_of_messages = 100;
-static size_t message_size = 100;
-static size_t number_of_threads = 10;
-static size_t burst_size = 10;
-static size_t timeout_between_bursts = 1;
+static size_t number_of_messages {100};
+static size_t message_size {100};
+static size_t number_of_threads {10};
+static size_t burst_size {10};
+static size_t timeout_between_bursts {1};
 
-static size_t leader_available = 0;
-static size_t messages_in_this_burst = 0;
-static size_t total_messages_consumed = 0;
-static size_t burst = 1;
+static bool leader_available {};
+static size_t messages_in_this_burst {};
+static size_t total_messages_consumed {};
+static size_t burst {1};
 
-static ACE_hrtime_t start_of_burst;
+static ACE_hrtime_t start_of_burst {};
 
-enum DEBUGGING_RANGE
+enum class DEBUGGING_RANGE
 {
-  DEBUG_NONE = 0,
-  DEFAULT = 1,
-  PRINT_INDIVIDUAL_LATENCY = 2
+  DEBUG_NONE,
+  DEFAULT,
+  PRINT_INDIVIDUAL_LATENCY
 };
 
-static DEBUGGING_RANGE debug = DEBUG_NONE;
+static DEBUGGING_RANGE debug {DEBUGGING_RANGE::DEBUG_NONE};
+
+static bool
+parse_size (ACE_TCHAR const *argument, size_t &value)
+{
+  ACE_TCHAR *end {};
+  errno = 0;
+  long const parsed = ACE_OS::strtol (argument, &end, 10);
+  if (argument == end || *end != ACE_TEXT ('\0') || errno == ERANGE || parsed < 0
+      || static_cast<unsigned long> (parsed) > (std::numeric_limits<size_t>::max) ())
+    {
+      return false;
+    }
+
+  value = static_cast<size_t> (parsed);
+  return true;
+}
 
 using TASK = ACE_Task<ACE_SYNCH>;
 
@@ -37,7 +55,7 @@ class Leader_Follower_Task : public TASK
 public:
   Leader_Follower_Task (ACE_SYNCH_MUTEX &mutex,
                         ACE_SYNCH_CONDITION &condition);
-  int svc ();
+  int svc () override;
 
   size_t messages_consumed_;
   ACE_SYNCH_MUTEX &mutex_;
@@ -45,6 +63,12 @@ public:
 
   Latency_Stats latency_stats_;
   Throughput_Stats throughput_stats_;
+
+private:
+  Leader_Follower_Task (Leader_Follower_Task const &) = delete;
+  Leader_Follower_Task &operator= (Leader_Follower_Task const &) = delete;
+  Leader_Follower_Task (Leader_Follower_Task &&) = delete;
+  Leader_Follower_Task &operator= (Leader_Follower_Task &&) = delete;
 };
 
 Leader_Follower_Task::Leader_Follower_Task (ACE_SYNCH_MUTEX &mutex,
@@ -66,7 +90,7 @@ Leader_Follower_Task::svc ()
         // Wait until there is no leader.
         while (leader_available)
           {
-            int result = this->condition_.wait ();
+            int const result = this->condition_.wait ();
             if (result == -1)
               {
                 ACE_ERROR_RETURN ((LM_ERROR,
@@ -77,7 +101,7 @@ Leader_Follower_Task::svc ()
           }
 
         // I am the leader.
-        leader_available = 1;
+        leader_available = true;
 
         //
         // We are letting go of the leader follower lock before going
@@ -90,18 +114,14 @@ Leader_Follower_Task::svc ()
       // since we are the only leader.
       //
 
-      int exit_loop = 0;
-      if (number_of_messages == 0)
-        {
-          exit_loop = 1;
-        }
-      else
+      bool const exit_loop = number_of_messages == 0;
+      if (!exit_loop)
         {
           if (messages_in_this_burst == burst_size)
             {
               ++burst;
               messages_in_this_burst = 0;
-              ACE_Time_Value tv (0, timeout_between_bursts);
+              ACE_Time_Value const tv (0, timeout_between_bursts);
               ACE_OS::sleep (tv);
             }
 
@@ -121,10 +141,10 @@ Leader_Follower_Task::svc ()
           // Local counter.
           ++this->messages_consumed_;
 
-          if (debug)
+          if (debug != DEBUGGING_RANGE::DEBUG_NONE)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "(%t) burst %d: message %d; overall message %d; message for this thread %d\n",
+                          "(%t) burst %B: message %B; overall message %B; message for this thread %B\n",
                           burst,
                           messages_in_this_burst,
                           total_messages_consumed,
@@ -136,7 +156,7 @@ Leader_Follower_Task::svc ()
         ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
 
         // I am no longer the leader.
-        leader_available = 0;
+        leader_available = false;
 
         // Wake up a follower.
         this->condition_.signal ();
@@ -156,20 +176,20 @@ Leader_Follower_Task::svc ()
             {
               // Eat a little CPU
               /* takes about 40.2 usecs on a 167 MHz Ultra2 */
-              u_long n = 11UL;
+              u_long const n = 11UL;
               ACE::is_prime (n, 2, n / 2);
             }
 
           //
           // Record stats for this message.
           //
-          ACE_hrtime_t latency_from_start_of_burst =
+          ACE_hrtime_t const latency_from_start_of_burst =
             ACE_OS::gethrtime () - start_of_burst;
           this->latency_stats_.sample (latency_from_start_of_burst);
 
           this->throughput_stats_.sample ();
 
-          if (debug >= PRINT_INDIVIDUAL_LATENCY)
+          if (debug >= DEBUGGING_RANGE::PRINT_INDIVIDUAL_LATENCY)
             {
               ACE_DEBUG ((LM_DEBUG,
                           "(%t) latency from start of burst: %Q\n",
@@ -185,29 +205,53 @@ static int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("m:s:w:b:t:d:"));
-  int c;
+  int c {};
 
   while ((c = get_opt ()) != -1)
     {
       switch (c)
         {
         case 'm':
-          number_of_messages = ACE_OS::atoi (get_opt.opt_arg ());
+          if (!parse_size (get_opt.opt_arg (), number_of_messages))
+            {
+              ACE_ERROR_RETURN ((LM_ERROR, "Invalid message count\n"), -1);
+            }
           break;
         case 's':
-          message_size = ACE_OS::atoi (get_opt.opt_arg ());
+          if (!parse_size (get_opt.opt_arg (), message_size))
+            {
+              ACE_ERROR_RETURN ((LM_ERROR, "Invalid message size\n"), -1);
+            }
           break;
         case 'w':
-          number_of_threads = ACE_OS::atoi (get_opt.opt_arg ());
+          if (!parse_size (get_opt.opt_arg (), number_of_threads)
+              || number_of_threads == 0)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR, "Thread count must be positive\n"), -1);
+            }
           break;
         case 'b':
-          burst_size = ACE_OS::atoi (get_opt.opt_arg ());
+          if (!parse_size (get_opt.opt_arg (), burst_size) || burst_size == 0)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR, "Burst size must be positive\n"), -1);
+            }
           break;
         case 't':
-          timeout_between_bursts = ACE_OS::atoi (get_opt.opt_arg ());
+          if (!parse_size (get_opt.opt_arg (), timeout_between_bursts))
+            {
+              ACE_ERROR_RETURN ((LM_ERROR, "Invalid timeout\n"), -1);
+            }
           break;
         case 'd':
-          debug = static_cast<DEBUGGING_RANGE> (ACE_OS::atoi (get_opt.opt_arg ()));
+          {
+            size_t parsed_debug {};
+            if (!parse_size (get_opt.opt_arg (), parsed_debug)
+                || parsed_debug > static_cast<size_t> (DEBUGGING_RANGE::PRINT_INDIVIDUAL_LATENCY))
+              {
+                ACE_ERROR_RETURN ((LM_ERROR, "Invalid debug level\n"), -1);
+              }
+            debug = static_cast<DEBUGGING_RANGE> (parsed_debug);
+          }
           break;
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -229,11 +273,13 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int result = parse_args (argc, argv);
-  if (result != 0)
+  int const parse_result = parse_args (argc, argv);
+  if (parse_result != 0)
     {
-      return result;
+      return parse_result;
     }
+
+  int result {};
 
   move_to_rt_class ();
   ACE_High_Res_Timer::calibrate ();
@@ -242,7 +288,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_SYNCH_CONDITION condition (mutex);
 
   // Leader Followers.
-  Leader_Follower_Task **leader_followers = 0;
+  // Keep task construction inside the timed section; this benchmark measures
+  // task creation and activation as well as message handling.
+  Leader_Follower_Task **leader_followers {};
   ACE_NEW_RETURN (leader_followers,
                   Leader_Follower_Task *[number_of_threads],
                   -1);
@@ -257,7 +305,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   long flags = THR_BOUND | THR_SCHED_FIFO;
 
   // Create and activate them.
-  size_t i = 0;
+  size_t i {};
   for (i = 0; i < number_of_threads; ++i)
     {
       ACE_NEW_RETURN (leader_followers[i],
@@ -299,7 +347,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       latency.accumulate (leader_followers[i]->latency_stats_);
       throughput.accumulate (leader_followers[i]->throughput_stats_);
-      ACE_DEBUG ((LM_DEBUG, "Thread[%d]: ", i));
+      ACE_DEBUG ((LM_DEBUG, "Thread[%B]: ", i));
       leader_followers[i]->throughput_stats_.dump_results (ACE_TEXT(""), ACE_TEXT(""));
     }
 

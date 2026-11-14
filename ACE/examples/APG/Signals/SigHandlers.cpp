@@ -6,17 +6,20 @@
 class MySignalHandler : public ACE_Event_Handler
 {
 public:
-  MySignalHandler (int signum) : signum_(signum)
+  explicit MySignalHandler (int signum) : signum_ (signum)
   { }
 
-  ~MySignalHandler () override = default;
+  MySignalHandler (MySignalHandler const &) = delete;
+  MySignalHandler (MySignalHandler &&) = delete;
+  MySignalHandler &operator= (MySignalHandler const &) = delete;
+  MySignalHandler &operator= (MySignalHandler &&) = delete;
 
   int handle_signal (int signum, siginfo_t * = nullptr, ucontext_t * = nullptr) override
   {
     ACE_TRACE ("MySignalHandler::handle_signal");
 
     // Make sure the right handler was called back..
-    ACE_ASSERT(signum == this->signum_);
+    ACE_ASSERT (signum == this->signum_);
 
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%d occurred\n"), signum));
 

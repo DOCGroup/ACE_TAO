@@ -6,14 +6,13 @@
 #define LOG_WALKER_PEER_OBJECT_H
 
 #include "ace/SString.h"
-#include "ace/Unbounded_Queue.h"
 #include "ace/streams.h"
+#include <vector>
 
 class PeerProcess;
 class Invocation;
 
-using Invocations = ACE_Unbounded_Queue<Invocation *>;
-using InvocationIter = ACE_Unbounded_Queue_Iterator<Invocation *>;
+using Invocations = std::vector<Invocation *>;
 
 class PeerObject
 {

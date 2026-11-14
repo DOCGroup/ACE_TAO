@@ -13,6 +13,8 @@
 
 #include /**/ "ace/pre.h"
 
+#include <memory>
+
 #include "ace/Hash_Map_Manager_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -97,11 +99,10 @@ public:
 
   virtual ~ACE_Creation_Strategy ();
 
-  // = Factory method.
   /**
    * Create a SVC_HANDLER with the appropriate creation strategy.  The
    * default behavior of this method is to make a new SVC_HANDLER if
-   * @a sh == 0 (passing in the Thread_Manager), else @a sh is
+   * @a sh == nullptr (passing in the Thread_Manager), else @a sh is
    * unchanged.  Returns -1 on failure, else 0.
    */
   virtual int make_svc_handler (SVC_HANDLER *&sh);
@@ -138,16 +139,20 @@ public:
   // Useful STL-style traits.
   using base_type = ACE_Creation_Strategy<SVC_HANDLER>;
 
-  ACE_Singleton_Strategy (SVC_HANDLER * = 0,
+  ACE_Singleton_Strategy (SVC_HANDLER * = nullptr,
                           ACE_Thread_Manager * = nullptr);
   int open (SVC_HANDLER *,
             ACE_Thread_Manager * = nullptr);
-  virtual ~ACE_Singleton_Strategy ();
+  ~ACE_Singleton_Strategy () override;
 
-  // = Factory method.
+  ACE_Singleton_Strategy (ACE_Singleton_Strategy const &) = delete;
+  ACE_Singleton_Strategy &operator= (ACE_Singleton_Strategy const &) = delete;
+  ACE_Singleton_Strategy (ACE_Singleton_Strategy &&) = delete;
+  ACE_Singleton_Strategy &operator= (ACE_Singleton_Strategy &&) = delete;
+
   /// Create a Singleton SVC_HANDLER by always returning the same
   /// SVC_HANDLER.  Returns -1 on failure, else 0.
-  virtual int make_svc_handler (SVC_HANDLER *&);
+  int make_svc_handler (SVC_HANDLER *&) override;
 
   /// Dump the state of an object.
   void dump () const;
@@ -176,8 +181,6 @@ public:
   // Useful STL-style traits.
   using base_type = ACE_Creation_Strategy<SVC_HANDLER>;
 
-  // = Intialization and termination methods.
-
   /// "Do-nothing" constructor.
   ACE_DLL_Strategy ();
 
@@ -197,10 +200,9 @@ public:
             ACE_Service_Repository *,
             ACE_Thread_Manager * = nullptr);
 
-  // = Factory method.
   /// Create a SVC_HANDLER by dynamically linking it from a DLL.
   /// Returns -1 on failure, else 0.
-  virtual int make_svc_handler (SVC_HANDLER *&);
+  int make_svc_handler (SVC_HANDLER *&) override;
 
   /// Dump the state of an object.
   void dump () const;
@@ -247,10 +249,8 @@ public:
   using handler_type = SVC_HANDLER;
   using stream_type = typename SVC_HANDLER::stream_type;
 
-  /// Constructor
   ACE_Concurrency_Strategy (int flags = 0);
 
-  // = Factory method.
   /**
    * Activate the @a svc_handler with an appropriate concurrency
    * strategy.  The default behavior of this method is to activate the
@@ -291,7 +291,6 @@ public:
   // Useful STL-style traits.
   using base_type = ACE_Concurrency_Strategy<SVC_HANDLER>;
 
-  // = Intialization and termination methods.
   /// "Do-nothing constructor"
   ACE_Reactive_Strategy (int flags = 0);
 
@@ -305,14 +304,12 @@ public:
                     ACE_Reactor_Mask = ACE_Event_Handler::READ_MASK,
                     int flags = 0);
 
-  /// Destructor.
-  virtual ~ACE_Reactive_Strategy ();
+  ~ACE_Reactive_Strategy () override;
 
-  // = Factory method.
   /// Activate the @a svc_handler by registering it with the <Reactor>
   /// and then calling it's <open> hook.
-  virtual int activate_svc_handler (SVC_HANDLER *svc_handler,
-                                    void *arg = nullptr);
+  int activate_svc_handler (SVC_HANDLER *svc_handler,
+                            void *arg = nullptr) override;
 
   /// Dump the state of an object.
   void dump () const;
@@ -350,7 +347,6 @@ public:
   // Useful STL-style traits.
   using base_type = ACE_Concurrency_Strategy<SVC_HANDLER>;
 
-  // = Intialization and termination methods.
   /// "Do-nothing constructor"
   ACE_Thread_Strategy (int flags = 0);
 
@@ -366,17 +362,16 @@ public:
                     int n_threads = 1,
                     int flags = 0);
 
-  virtual ~ACE_Thread_Strategy ();
+  ~ACE_Thread_Strategy () override;
 
-  // = Factory method.
   /**
    * Activate the @a svc_handler with an appropriate concurrency
    * strategy.  This method activates the SVC_HANDLER by first calling
    * its <open> method and then calling its <activate> method to turn
    * it into an active object.
    */
-  virtual int activate_svc_handler (SVC_HANDLER *svc_handler,
-                                    void *arg = nullptr);
+  int activate_svc_handler (SVC_HANDLER *svc_handler,
+                            void *arg = nullptr) override;
 
   /// Dump the state of an object.
   void dump () const;
@@ -416,8 +411,6 @@ public:
   // Useful STL-style traits.
   using base_type = ACE_Concurrency_Strategy<SVC_HANDLER>;
 
-  // = Intialization and termination methods.
-
   /// Initialize the strategy.  If @a avoid_zombies is non-0 then set a
   /// flag to ACE::fork() to avoid zombies.
   ACE_Process_Strategy (size_t n_processes = 1,
@@ -432,17 +425,16 @@ public:
                     ACE_Reactor * = nullptr,
                     int avoid_zombies = 0);
 
-  virtual ~ACE_Process_Strategy ();
+  ~ACE_Process_Strategy () override;
 
-  // = Factory method.
   /**
    * Activate the @a svc_handler with an appropriate concurrency
    * strategy.  This method activates the SVC_HANDLER by first forking
    * and then calling the @c open() method of the SVC_HANDLER in the
    * child.
    */
-  virtual int activate_svc_handler (SVC_HANDLER *svc_handler,
-                                    void *arg = nullptr);
+  int activate_svc_handler (SVC_HANDLER *svc_handler,
+                            void *arg = nullptr) override;
 
   /// Dump the state of an object.
   void dump () const;
@@ -511,7 +503,6 @@ public:
 
   virtual ~ACE_Accept_Strategy ();
 
-  // = Factory method.
   /// The default behavior delegates to the <accept> method of the
   /// PEER_ACCEPTOR.
   virtual int accept_svc_handler (SVC_HANDLER *);
@@ -563,7 +554,6 @@ public:
 
   virtual ~ACE_Connect_Strategy ();
 
-  // = Factory method.
   /// The default behavior delegates to the <connect> method of the
   /// <PEER_CONNECTOR::connect>.
   virtual int connect_svc_handler (SVC_HANDLER *&sh,
@@ -618,19 +608,20 @@ public:
   using handler_type = SVC_HANDLER;
   using stream_type = typename SVC_HANDLER::stream_type;
 
-  /// Constructor
-  ACE_Scheduling_Strategy (SVC_HANDLER * = 0);
+  ACE_Scheduling_Strategy (SVC_HANDLER * = nullptr);
 
-  /// Destructor
   virtual ~ACE_Scheduling_Strategy ();
 
-  // = Scheduling methods
+  /// @name Scheduling methods
+  /// @{
 
   /// Suspend hook.
   virtual int suspend ();
 
   /// Resume hook.
   virtual int resume ();
+
+  /// @}
 
   /// Dump the state of the object.
   virtual void dump () const;
@@ -653,19 +644,21 @@ public:
   // Useful STL-style traits.
   using base_type = ACE_Scheduling_Strategy<SVC_HANDLER>;
 
-  /// Constructor
-  ACE_Schedule_All_Reactive_Strategy (SVC_HANDLER * = 0);
+  ACE_Schedule_All_Reactive_Strategy (SVC_HANDLER * = nullptr);
 
-  // = Scheduling methods
+  /// @name Scheduling methods
+  /// @{
 
   /// Suspend hook.
-  virtual int suspend ();
+  int suspend () override;
 
   /// Resume hook.
-  virtual int resume ();
+  int resume () override;
+
+  /// @}
 
   /// Dump the state of the object.
-  virtual void dump () const;
+  void dump () const override;
 
 protected:
   /// Reactor
@@ -689,19 +682,21 @@ public:
   // Useful STL-style traits.
   using base_type = ACE_Scheduling_Strategy<SVC_HANDLER>;
 
-  /// Constructor
-  ACE_Schedule_All_Threaded_Strategy (SVC_HANDLER * = 0);
+  ACE_Schedule_All_Threaded_Strategy (SVC_HANDLER * = nullptr);
 
-  // = Scheduling methods
+  /// @name Scheduling methods
+  /// @{
 
   /// Suspend hook.
-  virtual int suspend ();
+  int suspend () override;
 
   /// Resume hook.
-  virtual int resume ();
+  int resume () override;
+
+  /// @}
 
   /// Dump the state of the object.
-  virtual void dump () const;
+  void dump () const override;
 
 protected:
   /// Thread Manager
@@ -727,7 +722,7 @@ public:
   using base_type = ACE_Creation_Strategy<SVC_HANDLER>;
 
   /// This is a no-op.
-  virtual int make_svc_handler (SVC_HANDLER *&);
+  int make_svc_handler (SVC_HANDLER *&) override;
 };
 
 /**
@@ -749,10 +744,9 @@ public:
   // Useful STL-style traits.
   using base_type = ACE_Concurrency_Strategy<SVC_HANDLER>;
 
-  // = Factory method.
   /// This is a no-op.
-  virtual int activate_svc_handler (SVC_HANDLER *svc_handler,
-                                    void *arg = nullptr);
+  int activate_svc_handler (SVC_HANDLER *svc_handler,
+                            void *arg = nullptr) override;
 };
 
 template <class T>
@@ -764,12 +758,10 @@ public:
   /// Default constructor.
   ACE_Refcounted_Hash_Recyclable ();
 
-  /// Constructor.
-  ACE_Refcounted_Hash_Recyclable (const T &t,
+  ACE_Refcounted_Hash_Recyclable (T const &t,
                                   long refcount = 0,
                                   ACE_Recyclable_State state = ACE_RECYCLABLE_UNKNOWN);
 
-  /// Destructor
   ~ACE_Refcounted_Hash_Recyclable () override;
 
   /// Compares two instances.
@@ -808,26 +800,26 @@ public:
   using concurrency_strategy_type = ACE_Concurrency_Strategy<SVC_HANDLER>;
   using recycling_strategy_type = ACE_Recycling_Strategy<SVC_HANDLER>;
 
-  // = Define some useful (old style) traits.
   using CREATION_STRATEGY = ACE_Creation_Strategy<SVC_HANDLER>;
   using CONCURRENCY_STRATEGY = ACE_Concurrency_Strategy<SVC_HANDLER>;
   using RECYCLING_STRATEGY = ACE_Recycling_Strategy<SVC_HANDLER>;
 
-  // = Super class
   using CONNECT_STRATEGY = ACE_Connect_Strategy<SVC_HANDLER, _ACE_PEER_CONNECTOR>;
-
 
   using SELF = ACE_Cached_Connect_Strategy<SVC_HANDLER, _ACE_PEER_CONNECTOR, MUTEX>;
 
-  /// Constructor
   ACE_Cached_Connect_Strategy (ACE_Creation_Strategy<SVC_HANDLER> *cre_s = nullptr,
                                ACE_Concurrency_Strategy<SVC_HANDLER> *con_s = nullptr,
                                ACE_Recycling_Strategy<SVC_HANDLER> *rec_s = nullptr,
                                MUTEX *mutex = nullptr,
                                bool delete_lock = false);
 
-  /// Destructor
   ~ACE_Cached_Connect_Strategy () override;
+
+  ACE_Cached_Connect_Strategy (ACE_Cached_Connect_Strategy const &) = delete;
+  ACE_Cached_Connect_Strategy &operator= (ACE_Cached_Connect_Strategy const &) = delete;
+  ACE_Cached_Connect_Strategy (ACE_Cached_Connect_Strategy &&) = delete;
+  ACE_Cached_Connect_Strategy &operator= (ACE_Cached_Connect_Strategy &&) = delete;
 
   /// This methods allow you to change the strategies used by the
   /// cached connector.
@@ -901,11 +893,13 @@ public:
    */
   int mark_as_closed_i (const void *recycling_act) override;
 
-  /// Cleanup hint and reset <*act_holder> to zero if <act_holder != 0>.
+  /// Cleanup hint and reset <*act_holder> to nullptr if <act_holder != nullptr>.
   int cleanup_hint (const void *recycling_act,
                             void **act_holder = nullptr) override;
 
-  // = Traits for managing the map
+  /// @name Connection cache types
+  /// @{
+
   using REFCOUNTED_HASH_RECYCLABLE_ADDRESS = ARHR<typename _ACE_PEER_CONNECTOR::PEER_ADDR>;
   using CONNECTION_MAP = ACE_Hash_Map_Manager_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDRESS, SVC_HANDLER *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>, ACE_Null_Mutex>;
 
@@ -914,12 +908,41 @@ public:
 
   using REVERSE_MUTEX = ACE_Reverse_Lock<MUTEX>;
 
-  // = Strategy accessors
+  /// @}
+
+  /// @name Strategy accessors
+  /// @{
+
   virtual ACE_Creation_Strategy<SVC_HANDLER> *creation_strategy () const;
   virtual ACE_Recycling_Strategy<SVC_HANDLER> *recycling_strategy () const;
   virtual ACE_Concurrency_Strategy<SVC_HANDLER> *concurrency_strategy () const;
 
+  /// @}
+
 protected:
+  /// Owns internally created strategies; externally supplied strategies
+  /// are borrowed.
+  struct strategy_deleter
+  {
+    bool owned {};
+
+    template <class STRATEGY>
+    void operator() (STRATEGY *strategy) const
+    {
+      if (this->owned)
+        delete strategy;
+    }
+  };
+
+  using creation_strategy_ptr =
+    std::unique_ptr<CREATION_STRATEGY, strategy_deleter>;
+  using concurrency_strategy_ptr =
+    std::unique_ptr<CONCURRENCY_STRATEGY, strategy_deleter>;
+  using recycling_strategy_ptr =
+    std::unique_ptr<RECYCLING_STRATEGY, strategy_deleter>;
+  using mutex_ptr = std::unique_ptr<MUTEX, strategy_deleter>;
+  using reverse_mutex_ptr = std::unique_ptr<REVERSE_MUTEX>;
+
   /// Creates a new connection.
   virtual int new_connection (SVC_HANDLER *&sh,
                               const ACE_PEER_CONNECTOR_ADDR &remote_addr,
@@ -946,11 +969,13 @@ protected:
   /// Get <recycle_state> (non-locking version).
   virtual ACE_Recyclable_State recycle_state_i (const void *recycling_act) const;
 
-  /// Cleanup hint and reset <*act_holder> to zero if <act_holder != 0>.
+  /// Cleanup hint and reset <*act_holder> to nullptr if <act_holder != nullptr>.
   virtual int cleanup_hint_i (const void *recycling_act,
                               void **act_holder);
 
-  // = Helpers
+  /// @name Internal cache operations
+  /// @{
+
   int check_hint_i (SVC_HANDLER *&sh,
                     const ACE_PEER_CONNECTOR_ADDR &remote_addr,
                     ACE_Time_Value *timeout,
@@ -981,40 +1006,30 @@ protected:
     int perms,
     int &found);
 
+  /// @}
+
   /// Table that maintains the cache of connected SVC_HANDLERs.
   CONNECTION_MAP connection_map_;
 
-  /// Mutual exclusion for this object.
-  MUTEX *lock_;
+  /// @name Owned strategy objects
+  /// @{
 
-  /// Mutual exclusion for this object.
-  bool delete_lock_;
+  /// Mutex ownership follows its conditional deleter.
+  mutex_ptr lock_;
 
-  /// Reverse lock.
-  REVERSE_MUTEX *reverse_lock_;
+  /// Reverse lock owned by this strategy.
+  reverse_mutex_ptr reverse_lock_;
 
-  // = Strategy objects.
+  /// Creation strategy for an <Connector>; ownership follows its deleter.
+  creation_strategy_ptr creation_strategy_;
 
-  /// Creation strategy for an <Connector>.
-  CREATION_STRATEGY *creation_strategy_;
+  /// Concurrency strategy for an <Connector>; ownership follows its deleter.
+  concurrency_strategy_ptr concurrency_strategy_;
 
-  /// true if <Connector> created the creation strategy and thus should
-  /// delete it, else false.
-  bool delete_creation_strategy_;
+  /// Recycling strategy for an <Connector>; ownership follows its deleter.
+  recycling_strategy_ptr recycling_strategy_;
 
-  /// Concurrency strategy for an <Connector>.
-  CONCURRENCY_STRATEGY *concurrency_strategy_;
-
-  /// true if <Connector> created the concurrency strategy and thus should
-  /// delete it, else false.
-  bool delete_concurrency_strategy_;
-
-  /// Recycling strategy for an <Connector>.
-  RECYCLING_STRATEGY *recycling_strategy_;
-
-  /// true if <Connector> created the recycling strategy and thus should
-  /// delete it, else false.
-  bool delete_recycling_strategy_;
+  /// @}
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

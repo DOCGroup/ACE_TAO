@@ -1,14 +1,15 @@
 // -*- C++ -*-
 //
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO_GIOP_Locate_Request_Header::TAO_GIOP_Locate_Request_Header (
   TAO_InputCDR &msg,
   TAO_ORB_Core *orb)
-  : request_id_ (0),
-    profile_ (orb),
-    incoming_ (&msg)
+  : profile_ (orb),
+    incoming_ (std::addressof (msg))
 {
 }
 
@@ -24,7 +25,7 @@ TAO_GIOP_Locate_Request_Header::request_id () const
   return this->request_id_;
 }
 
-ACE_INLINE const TAO::ObjectKey &
+ACE_INLINE TAO::ObjectKey const &
 TAO_GIOP_Locate_Request_Header::object_key () const
 {
   return this->profile_.object_key ();

@@ -4,6 +4,9 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <atomic>
+#include <cstring>
+
 #define NOTIFY_FACTORY_NAME "NotifyEventChannelFactory"
 #define NAMING_SERVICE_NAME "NameService"
 #define CA_FILTER "threshold < 20"
@@ -18,7 +21,7 @@ int EVENTS_EXPECTED_TO_RECEIVE = 9*4;  // 2 consumers get the same events from 2
 #define DOMAIN_NAME "*"
 #define TYPE_NAME "*"
 
-ACE_Atomic_Op <TAO_SYNCH_MUTEX, int> g_result_count = 0;
+std::atomic<int> g_result_count {0};
 
 FilterClient::FilterClient ()
   :consumer_1 (0),
@@ -40,7 +43,6 @@ FilterClient::FilterClient ()
 FilterClient::~FilterClient ()
 {
 }
-
 
 int
 FilterClient::parse_args (int argc, ACE_TCHAR *argv[])
@@ -104,7 +106,6 @@ FilterClient::init_supplier (int argc, ACE_TCHAR *argv [])
   create_suppliers ();
 }
 
-
 void
 FilterClient::init_consumer (int argc, ACE_TCHAR *argv [])
 {
@@ -151,7 +152,6 @@ FilterClient::wait_ready ()
   }
 }
 
-
 void
 FilterClient::wait_consumer_complete ()
 {
@@ -180,7 +180,6 @@ FilterClient::wait_consumer_complete ()
   }
 }
 
-
 void
 FilterClient::run_supplier ()
 {
@@ -199,7 +198,7 @@ FilterClient::run_consumer ()
 {
   this->wait_ready ();
 
-  if (g_result_count != EVENTS_EXPECTED_TO_RECEIVE)
+  if (g_result_count.load (std::memory_order_relaxed) != EVENTS_EXPECTED_TO_RECEIVE)
     { // if we still need to wait for events, run the orb.
       while (!this->done_)
         if (this->orb_->work_pending ())
@@ -222,7 +221,6 @@ void
 FilterClient::init_ORB (int& argc, ACE_TCHAR **& argv)
 {
   this->orb_ = CORBA::ORB_init (argc, argv);
-
 
   CORBA::Object_ptr poa_object  =
     this->orb_->resolve_initial_references("RootPOA");
@@ -292,7 +290,7 @@ FilterClient::get_EC ()
 
     if (ids->length () > 0)
     {
-      //ACE_DEBUG ((LM_DEBUG, "(%P|%t)get_EC %d \n", ids->length ()));
+      //ACE_DEBUG ((LM_DEBUG, "(%P|%t)get_EC %u \n", ids->length ()));
       ec_ = notify_factory_->get_event_channel (ids[0]);
 
       ACE_ASSERT (!CORBA::is_nil (ec_.in ()));
@@ -346,7 +344,6 @@ FilterClient::create_supplieradmin ()
   supplier_admin_->add_filter (sa_filter.in ());
 }
 
-
 void
 FilterClient::get_supplieradmin ()
 {
@@ -366,7 +363,6 @@ FilterClient::get_supplieradmin ()
     = CosNotifyFilter::FilterAdmin::_narrow (supplier_admin_.in ());
   verify_filter (admin, SA_FILTER, MOD_SA_FILTER);
 }
-
 
 void
 FilterClient::create_consumeradmin ()
@@ -450,7 +446,6 @@ FilterClient::get_consumeradmin ()
   verify_filter (admin, CA_FILTER, MOD_CA_FILTER);
 }
 
-
 void
 FilterClient::verify_filter (CosNotifyFilter::FilterAdmin_var& admin,
                              const char* constraint_expr,
@@ -483,7 +478,7 @@ FilterClient::verify_filter (CosNotifyFilter::FilterAdmin_var& admin,
     // only used to validate assert, which is
     // compiled out for nondebug builds.
     ACE_ASSERT (id != 0);
-    ACE_ASSERT (ACE_OS::strcmp (infos[index].constraint_expression.constraint_expr.in (), constraint_expr) == 0);
+    ACE_ASSERT (std::strcmp (infos[index].constraint_expression.constraint_expr.in (), constraint_expr) == 0);
 
     CosNotification::EventTypeSeq& events = infos[index].constraint_expression.event_types;
     ACE_UNUSED_ARG (events);
@@ -491,8 +486,8 @@ FilterClient::verify_filter (CosNotifyFilter::FilterAdmin_var& admin,
     // compiled out for nondebug builds.
     ACE_ASSERT (events.length () == 1);
 
-    ACE_ASSERT (ACE_OS::strcmp (events[0].domain_name.in (), DOMAIN_NAME) == 0);
-    ACE_ASSERT (ACE_OS::strcmp (events[0].type_name.in (), TYPE_NAME) == 0);
+    ACE_ASSERT (std::strcmp (events[0].domain_name.in (), DOMAIN_NAME) == 0);
+    ACE_ASSERT (std::strcmp (events[0].type_name.in (), TYPE_NAME) == 0);
   }
 
   if (modify_constraint_)
@@ -512,7 +507,6 @@ FilterClient::verify_filter (CosNotifyFilter::FilterAdmin_var& admin,
     filter->modify_constraints (ids.in (), infos.in());
   }
 }
-
 
 void
 FilterClient::create_consumers ()
@@ -602,7 +596,6 @@ FilterClient::send_events ()
     }
 }
 
-
 Filter_StructuredPushConsumer::Filter_StructuredPushConsumer (FilterClient* filter, const char* my_name)
   :filter_ (filter),
    my_name_ (my_name)
@@ -662,15 +655,16 @@ Filter_StructuredPushConsumer::push_structured_event
     // number of expected and sent events to verify that things work
     // correctly in an automatic way...
 
-
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("%C received event, %d\n"),
     my_name_.fast_rep (), val));
 
     ACE_DEBUG ((LM_DEBUG,
-    ACE_TEXT ("event count %d\n"), g_result_count.value ()));
+                ACE_TEXT ("event count %d\n"),
+                g_result_count.load (std::memory_order_relaxed)));
 
-    if (++g_result_count == EVENTS_EXPECTED_TO_RECEIVE)
+    if (g_result_count.fetch_add (1, std::memory_order_relaxed) + 1 ==
+        EVENTS_EXPECTED_TO_RECEIVE)
       this->filter_->done (); // all events received, we're done.
 }
 
@@ -679,7 +673,6 @@ Filter_StructuredPushConsumer::disconnect_structured_push_consumer ()
 {
   // No-Op.
 }
-
 
 /*****************************************************************/
 
@@ -745,5 +738,4 @@ Filter_StructuredPushSupplier::disconnect_structured_push_supplier ()
 {
   // No-Op.
 }
-
 

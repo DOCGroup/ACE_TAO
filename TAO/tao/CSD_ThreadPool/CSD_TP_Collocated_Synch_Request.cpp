@@ -7,9 +7,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::CSD::TP_Collocated_Synch_Request::~TP_Collocated_Synch_Request () = default;
-
-
 void
 TAO::CSD::TP_Collocated_Synch_Request::dispatch_i()
 {
@@ -17,17 +14,19 @@ TAO::CSD::TP_Collocated_Synch_Request::dispatch_i()
     {
       this->do_dispatch();
     }
-  catch (const ::CORBA::Exception& ex)
+  catch (::CORBA::Exception const &ex)
     {
       // We need to save off a copy of the exception.
-      this->exception_ = ex._tao_duplicate();
+      this->exception_.reset (ex._tao_duplicate ());
     }
   catch (...)
     {
-      ACE_NEW (this->exception_ ,
+      CORBA::UNKNOWN *exception {};
+      ACE_NEW (exception,
                CORBA::UNKNOWN (CORBA::SystemException::_tao_minor_code
                                  (TAO_UNHANDLED_SERVER_CXX_EXCEPTION, 0),
                                   CORBA::COMPLETED_MAYBE));
+      this->exception_.reset (exception);
     }
 
   this->synch_helper_.dispatched();

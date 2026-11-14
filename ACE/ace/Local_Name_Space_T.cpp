@@ -8,10 +8,12 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Local_Name_Space.h"
+#include "ace/Malloc_Base.h"
 #include "ace/Guard_T.h"
 #include "ace/OS_NS_regex.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
+#include <cstring>
 #include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -116,12 +118,12 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::shared_bind (
   const ACE_NS_WString &name,
   const ACE_NS_WString &value,
   const char *type,
-  int rebind)
+  bool rebind)
 {
   // Note that we *must* use structured exception handling here
   // because (1) we may need to commit virtual memory pages and (2)
   // C++ exception handling doesn't support resumption.
-  int result = 0;
+  int result {};
   ACE_SEH_TRY
     {
       result = this->shared_bind_i (name, value, type, rebind);
@@ -137,7 +139,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::shared_bind_i (
   const ACE_NS_WString &name,
   const ACE_NS_WString &value,
   const char *type,
-  int rebind)
+  bool rebind)
 {
   ACE_TRACE ("ACE_Local_Name_Space::shared_bind_i");
   const size_t name_len = (name.length () + 1) * sizeof (ACE_WCHAR_T);
@@ -156,8 +158,8 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::shared_bind_i (
       ACE_WCHAR_T *name_rep = (ACE_WCHAR_T *) (ptr + value_len);
       char *new_type = (char *) (ptr + value_len + name_len);
 
-      std::unique_ptr<ACE_WCHAR_T[]> name_urep (name.rep ());
-      std::unique_ptr<ACE_WCHAR_T[]> value_urep (value.rep ());
+      std::unique_ptr<ACE_WCHAR_T[], ACE_Array_Deleter<ACE_WCHAR_T>> name_urep (name.rep ());
+      std::unique_ptr<ACE_WCHAR_T[], ACE_Array_Deleter<ACE_WCHAR_T>> value_urep (value.rep ());
       ACE_NS_String new_name (name_rep, name_urep.get (), name_len);
       ACE_NS_String new_value (value_rep, value_urep.get (), value_len);
 
@@ -165,13 +167,13 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::shared_bind_i (
       ACE_NS_Internal new_internal (new_value, new_type);
       int result = -1;
 
-      if (rebind == 0)
+      if (!rebind)
         {
           // Do a normal bind.  This will fail if there's already an
           // <new_internal> with the same name.
           result = this->name_space_map_->bind (new_name,
                                                 new_internal,
-                                                this->allocator_);
+                                                this->allocator_.get ());
 
           if (result == 1)
             {
@@ -191,7 +193,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::shared_bind_i (
 
           result = this->name_space_map_->rebind (new_name, new_internal,
                                                   old_name, old_internal,
-                                                  this->allocator_);
+                                                  this->allocator_.get ());
           if (result == 1)
             {
               // Free up the memory we allocated in shared_bind().
@@ -222,7 +224,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::unbind (
   // Note that we *must* use structured exception handling here
   // because (1) we may need to commit virtual memory pages and (2)
   // C++ exception handling doesn't support resumption.
-  int result = 0;
+  int result {};
   ACE_SEH_TRY
     {
       result = this->unbind_i (name);
@@ -244,7 +246,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::unbind_i (
   ACE_NS_Internal ns_internal;
   if (this->name_space_map_->unbind (ns_name,
                                      ns_internal,
-                                     this->allocator_) != 0)
+                                     this->allocator_.get ()) != 0)
     return -1;
 
   // Free up the memory we allocated in shared_bind().  Note that this
@@ -264,7 +266,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::bind (
   ACE_TRACE ("ACE_Local_Name_Space::bind");
   ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
 
-  return this->shared_bind (name, value, type, 0);
+  return this->shared_bind (name, value, type, false);
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
@@ -276,7 +278,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::rebind (
   ACE_TRACE ("ACE_Local_Name_Space::rebind");
   ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
 
-  return this->shared_bind (name, value, type, 1);
+  return this->shared_bind (name, value, type, true);
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
@@ -288,7 +290,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::resolve (
   // Note that we *must* use structured exception handling here
   // because (1) we may need to commit virtual memory pages and (2)
   // C++ exception handling doesn't support resumption.
-  int result = 0;
+  int result {};
   ACE_SEH_TRY
     {
       result = this->resolve_i (name, value, type);
@@ -298,7 +300,6 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::resolve (
     }
   return result;
 }
-
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
 ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::resolve_i (
@@ -315,7 +316,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::resolve_i (
 
   if (this->name_space_map_->find (ns_name,
                                    ns_internal,
-                                   this->allocator_) != 0)
+                                   this->allocator_.get ()) != 0)
     return -1;
 
   // Calls conversion operator and then calls the ACE_NS_WString
@@ -331,7 +332,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::resolve_i (
   size_t len = ACE_OS::strlen (ns_internal.type ());
   // Makes a copy here. Caller needs to call delete to free up
   // memory.
-  char *new_type = nullptr;
+  char *new_type {};
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_ALLOCATOR_RETURN (new_type,
                         static_cast<char*>(ACE_Allocator::instance()->malloc(sizeof(char) * (len + 1))),
@@ -359,9 +360,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::open (
 
 template <ACE_MEM_POOL_1, class ACE_LOCK>
 ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Local_Name_Space ()
-  : allocator_ (0),
-    name_space_map_ (0),
-    name_options_ (nullptr)
+  : name_options_ (nullptr)
 {
   ACE_TRACE ("ACE_Local_Name_Space::ACE_Local_Name_Space");
 }
@@ -370,24 +369,11 @@ template <ACE_MEM_POOL_1, class ACE_LOCK>
 ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Local_Name_Space (
   ACE_Naming_Context::Context_Scope_Type scope_in,
   ACE_Name_Options *name_options)
-  : allocator_ (0),
-    name_space_map_ (0),
-    name_options_ (name_options),
-    lock_ (0)
+  : name_options_ (name_options)
 {
   ACE_TRACE ("ACE_Local_Name_Space::ACE_Local_Name_Space");
   if (this->open (scope_in) == -1)
     ACELIB_ERROR ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("ACE_Local_Name_Space::ACE_Local_Name_Space")));
-}
-
-template <ACE_MEM_POOL_1, class ACE_LOCK>
-ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::~ACE_Local_Name_Space ()
-{
-  ACE_TRACE ("ACE_Local_Name_Space::~ACE_Local_Name_Space");
-
-  // Remove the map.
-  delete this->allocator_;
-  delete this->lock_;
 }
 
 ACE_ALLOC_HOOK_DEFINE_Tcc(ACE_Local_Name_Space)
@@ -398,7 +384,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager ()
   // Note that we *must* use structured exception handling here
   // because (1) we may need to commit virtual memory pages and (2)
   // C++ exception handling doesn't support resumption.
-  int result = 0;
+  int result {};
   ACE_SEH_TRY
     {
       result = this->create_manager_i ();
@@ -408,7 +394,6 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager ()
     }
   return result;
 }
-
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
 ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i ()
@@ -469,19 +454,23 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i ()
                    length - ACE_OS::strlen (ACE_TEXT ("backing_store_")));
 
   // Create the allocator with the appropriate options.
-  ACE_NEW_RETURN (this->allocator_,
+  ALLOCATOR *allocator {};
+  ACE_NEW_RETURN (allocator,
                   ALLOCATOR (this->context_file_,
                              lock_name_for_backing_store,
                              &options), -1);
+  this->allocator_.reset (allocator);
 
   if (ACE_LOG_MSG->op_status ())
     ACELIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Allocator::Allocator\n")),
                       -1);
 
-  ACE_NEW_RETURN (this->lock_,
+  ACE_LOCK *lock {};
+  ACE_NEW_RETURN (lock,
                   ACE_LOCK (lock_name_for_local_name_space),
                   -1);
+  this->lock_.reset (lock);
 
 #if !defined (ACE_LACKS_ACCESS)
   // Now check if the backing store has been created successfully
@@ -491,7 +480,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i ()
                       -1);
 #endif /* ACE_LACKS_ACCESS */
 
-  void *ns_map = nullptr;
+  void *ns_map {};
 
   // This is the easy case since if we find the Name Server Map
   // Manager we know it's already initialized.
@@ -527,7 +516,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i ()
 
           // Initialize the map into its memory location (e.g., shared memory).
           this->name_space_map_ =
-            new (ns_map) ACE_Name_Space_Map <ALLOCATOR> (this->allocator_);
+            new (ns_map) ACE_Name_Space_Map <ALLOCATOR> (this->allocator_.get ());
 
           if (this->allocator_->bind (ACE_NAME_SERVER_MAP, ns_map) == -1)
             ACELIB_ERROR_RETURN ((LM_ERROR,
@@ -622,16 +611,15 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_types_i (
   MAP_MANAGER::ITERATOR map_iterator (*this->name_space_map_);
   MAP_MANAGER::ENTRY *map_entry;
 
-  char *compiled_regexp = nullptr;
+  char *compiled_regexp {};
 
   // Note that char_rep() allocates memory so we need to delete it
   char *pattern_rep = pattern.char_rep ();
+  bool const wildcard = pattern_rep == nullptr || pattern_rep[0] == '\0';
 
   // Check for wildcard case first.
-  if (ACE_OS::strcmp ("", pattern_rep) == 0)
-    ACE_ALLOCATOR_RETURN (compiled_regexp,
-                          ACE_OS::strdup (""),
-                          -1);
+  if (wildcard)
+    compiled_regexp = ACE_OS::strdup ("");
   else
     // Compile the regular expression (the 0's cause ACE_OS::compile
     // to allocate space).
@@ -643,6 +631,16 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_types_i (
   compiled_regexp = pattern_rep;
 #endif /* ACE_HAS_REGEX */
 
+  if (compiled_regexp == nullptr)
+    {
+#if defined (ACE_HAS_ALLOC_HOOKS)
+      ACE_Allocator::instance ()->free (pattern_rep);
+#else
+      delete [] pattern_rep;
+#endif /* ACE_HAS_ALLOC_HOOKS */
+      return -1;
+    }
+
   int result = 1;
 
   for (map_entry = nullptr;
@@ -653,13 +651,13 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_types_i (
       const char *type = map_entry->int_id_.type ();
 
       // Everything matches the wildcard.
-      if (ACE_OS::strcmp ("", pattern_rep) == 0
+      if (wildcard
 #if defined (ACE_HAS_REGEX)
           || ACE_OS::step (type, compiled_regexp) != 0)
 #else
         // If we don't have regular expressions just use strstr() for
         // substring matching.
-        || ACE_OS::strstr (type, compiled_regexp) != nullptr)
+        || std::strstr (type, compiled_regexp) != nullptr)
 #endif /* ACE_HAS_REGEX */
 
         {
@@ -754,12 +752,13 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_type_entries_i (
   MAP_MANAGER::ITERATOR map_iterator (*this->name_space_map_);
   MAP_MANAGER::ENTRY *map_entry;
 
-  char *compiled_regexp = nullptr;
+  char *compiled_regexp {};
   // Note that char_rep() allocates memory so we need to delete it
   char *pattern_rep = pattern.char_rep ();
+  bool const wildcard = pattern_rep == nullptr || pattern_rep[0] == '\0';
 
   // Check for wildcard case first.
-  if (ACE_OS::strcmp ("", pattern_rep) == 0)
+  if (wildcard)
     compiled_regexp = ACE_OS::strdup ("");
   else
     // Compile the regular expression (the 0's cause ACE_OS::compile
@@ -771,6 +770,18 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_type_entries_i (
   compiled_regexp = pattern_rep;
 #endif /* ACE_HAS_REGEX */
 
+  if (compiled_regexp == nullptr)
+    {
+#if defined (ACE_HAS_ALLOC_HOOKS)
+      ACE_Allocator::instance ()->free (pattern_rep);
+#else
+      delete [] pattern_rep;
+#endif /* ACE_HAS_ALLOC_HOOKS */
+      return -1;
+    }
+
+  int result = 0;
+
   for (map_entry = nullptr;
        map_iterator.next (map_entry) != 0;
        map_iterator.advance ())
@@ -778,13 +789,12 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_type_entries_i (
       // Get the type.
       const char *type = map_entry->int_id_.type ();
 
-      if (ACE_OS::strcmp ("", pattern_rep) == 0 // Everything matches
-                                                // the wildcard.
+      if (wildcard // Everything matches the wildcard.
 #if defined (ACE_HAS_REGEX)
           || ACE_OS::step (type, compiled_regexp) != 0)
 #else /* If we don't have regular expressions just use strstr() for
          substring matching. */
-        || ACE_OS::strstr (type, compiled_regexp) != nullptr)
+        || std::strstr (type, compiled_regexp) != nullptr)
 #endif /* ACE_HAS_REGEX */
         {
           ACE_Name_Binding entry (map_entry->ext_id_,
@@ -792,7 +802,10 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_type_entries_i (
                                   map_entry->int_id_.type ());
 
           if (set.insert (entry) == -1)
-            return -1;
+            {
+              result = -1;
+              break;
+            }
         }
     }
 #if defined (ACE_HAS_REGEX)
@@ -804,7 +817,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_type_entries_i (
 #else
   delete [] pattern_rep;  // delete pattern_rep;
 #endif /* ACE_HAS_ALLOC_HOOKS */
-  return 0;
+  return result;
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> void
@@ -851,7 +864,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_names (
   // Note that we *must* use structured exception handling here
   // because (1) we may need to commit virtual memory pages and (2)
   // C++ exception handling doesn't support resumption.
-  int result = 0;
+  int result {};
   ACE_SEH_TRY
     {
       result = this->list_names_i (set, pattern);
@@ -870,7 +883,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_values (
   // Note that we *must* use structured exception handling here
   // because (1) we may need to commit virtual memory pages and (2)
   // C++ exception handling doesn't support resumption.
-  int result = 0;
+  int result {};
   ACE_SEH_TRY
     {
       result = this->list_values_i (set, pattern);
@@ -889,7 +902,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_types (
   // Note that we *must* use structured exception handling here
   // because (1) we may need to commit virtual memory pages and (2)
   // C++ exception handling doesn't support resumption.
-  int result = 0;
+  int result {};
   ACE_SEH_TRY
     {
       result = this->list_types_i (set, pattern);
@@ -908,7 +921,7 @@ ACE_Local_Name_Space <ACE_MEM_POOL_2, ACE_LOCK>::list_name_entries (
   // Note that we *must* use structured exception handling here
   // because (1) we may need to commit virtual memory pages and (2)
   // C++ exception handling doesn't support resumption.
-  int result = 0;
+  int result {};
   ACE_SEH_TRY
     {
       result = this->list_name_entries_i (set, pattern);
@@ -927,7 +940,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_value_entries (
   // Note that we *must* use structured exception handling here
   // because (1) we may need to commit virtual memory pages and (2)
   // C++ exception handling doesn't support resumption.
-  int result = 0;
+  int result {};
   ACE_SEH_TRY
     {
       result = this->list_value_entries_i (set, pattern);
@@ -946,7 +959,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_type_entries (
   // Note that we *must* use structured exception handling here
   // because (1) we may need to commit virtual memory pages and (2)
   // C++ exception handling doesn't support resumption.
-  int result = 0;
+  int result {};
   ACE_SEH_TRY
     {
       result = this->list_type_entries_i (set, pattern);

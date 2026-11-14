@@ -18,6 +18,8 @@
 #include "ace/streams.h"
 #include "ace/OS_NS_stdio.h"
 
+#include <array>
+
 //////////////////
 // TestReplica_i
 
@@ -109,7 +111,6 @@ namespace
      CORBA::COMPLETED_NO);                                         \
     }
 
-
 //////////////////////////////////////////////////
 // class FT_TestReplica_i construction/destruction
 
@@ -122,7 +123,7 @@ FT_TestReplica_i::FT_TestReplica_i (FT_ReplicaFactory_i * factory, const char * 
   , orb_ (0)
   , poa_ (0)
   , object_id_ (0)
-  , name_persistent_storage (0)
+  , name_persistent_storage (nullptr)
 {
 //  cout << name_.c_str() << '@' << this->factory_->location() << '#' << this->factory_id_ << " Construct" << endl;
 }
@@ -131,7 +132,6 @@ FT_TestReplica_i::~FT_TestReplica_i ()
 {
 //  cout << name_.c_str() << '@' << this->factory_->location() << '#' << this->factory_id_ << " Destruct" << endl;
 }
-
 
 void FT_TestReplica_i::suicide(const char * note)
 {
@@ -144,7 +144,6 @@ void FT_TestReplica_i::suicide(const char * note)
 
 /////////////////////////////////////////////////////
 // class FT_TestReplica_i public, non-CORBA interface
-
 
 //static
 const char * FT_TestReplica_i::repository_id()
@@ -185,7 +184,6 @@ PortableServer::ObjectId FT_TestReplica_i::object_id()const
   return this->object_id_.in();
 }
 
-
 /**
  * Initialize this object.
  * @param orbManager our ORB -- we keep var to it.
@@ -210,7 +208,6 @@ int FT_TestReplica_i::init (CORBA::ORB_var & orb, const ACE_TCHAR* file_persiste
   this->poa_ =
     PortableServer::POA::_narrow (poa_object.in ());
 
-
   if (CORBA::is_nil(this->poa_.in ()))
   {
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -222,7 +219,6 @@ int FT_TestReplica_i::init (CORBA::ORB_var & orb, const ACE_TCHAR* file_persiste
     this->poa_->the_POAManager ();
 
   poa_manager->activate ();
-
 
   // Register with the POA.
 
@@ -242,7 +238,6 @@ int FT_TestReplica_i::fini ()
 {
   return 0;
 }
-
 
 /////////////////////////////////////////////////////
 // class FT_TestReplica_i:  PullMonitorable interface
@@ -315,8 +310,7 @@ void FT_TestReplica_i::set_state (const FT::State & s)
 void FT_TestReplica_i::tao_update_object_group (
     const char * iogr,
     PortableGroup::ObjectGroupRefVersion version,
-    CORBA::Boolean is_primary
-  )
+    CORBA::Boolean is_primary)
 {
   ACE_UNUSED_ARG (iogr);
   ACE_UNUSED_ARG (version);
@@ -414,37 +408,33 @@ void FT_TestReplica_i::request_quit()
   this->death_pending_ = FT_TEST::TestReplica::WHILE_IDLE;
 }
 
-
 void FT_TestReplica_i::store(long counter)
 {
-  FILE * f = ACE_OS::fopen(this->name_persistent_storage, "w");
-  if(f != 0)
+  FILE *f = ACE_OS::fopen(this->name_persistent_storage, "w");
+  if (f != nullptr)
   {
-    unsigned char* buffer = 0;
-    ACE_NEW (buffer, unsigned char [sizeof(long)]);
+    std::array<unsigned char, sizeof (long)> buffer {};
     storeLong(buffer, 0, counter);
-    ACE_OS::fwrite(buffer, 1, sizeof(long), f);
+    ACE_OS::fwrite(buffer.data (), 1, sizeof (long), f);
     ACE_OS::fclose(f);
     if (this->verbose_)
     {
       ACE_OS::fprintf (stdout, "%s@%s#%lu :%ld\n",
                        name_.c_str(), this->factory_->location(), this->factory_id_, counter);
     }
-    delete[] buffer;
-    buffer = 0;
   }
 }
 
 long FT_TestReplica_i::load ()
 {
   long counter = 0;
-  FILE * f = ACE_OS::fopen(this->name_persistent_storage,"r");
-  if(f != 0)
+  FILE *f = ACE_OS::fopen(this->name_persistent_storage, "r");
+  if (f != nullptr)
   {
-    unsigned char buffer[sizeof(long)];
-    ACE_OS::fread(buffer, 1, sizeof(long), f);
+    std::array<unsigned char, sizeof (long)> buffer {};
+    ACE_OS::fread(buffer.data (), 1, sizeof (long), f);
     ACE_OS::fclose(f);
-    counter = loadLong<unsigned char *>(buffer, 0);
+    counter = loadLong (buffer, 0);
   }
   return counter;
 }

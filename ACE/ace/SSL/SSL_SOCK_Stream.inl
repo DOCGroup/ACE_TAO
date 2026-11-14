@@ -7,7 +7,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_INLINE void
 ACE_SSL_SOCK_Stream::set_handle (ACE_HANDLE fd)
 {
-  if (this->ssl_ == 0 || fd == ACE_INVALID_HANDLE)
+  if (this->ssl_.get () == nullptr || fd == ACE_INVALID_HANDLE)
     {
       this->ACE_SSL_SOCK::set_handle (ACE_INVALID_HANDLE);
       return;
@@ -15,9 +15,9 @@ ACE_SSL_SOCK_Stream::set_handle (ACE_HANDLE fd)
   else
     {
 #if defined (ACE_WIN32)
-      (void) ::SSL_set_fd (this->ssl_, static_cast<int>((intptr_t)fd));
+      (void) ::SSL_set_fd (this->ssl_.get (), static_cast<int>((intptr_t)fd));
 #else
-      (void) ::SSL_set_fd (this->ssl_, fd);
+      (void) ::SSL_set_fd (this->ssl_.get (), fd);
 #endif
       this->ACE_SSL_SOCK::set_handle (fd);
       this->stream_.set_handle (fd);
@@ -39,11 +39,11 @@ ACE_SSL_SOCK_Stream::send_i (const void *buf,
       ACE_NOTSUP_RETURN (-1);
     }
 
-  int const bytes_sent = ::SSL_write (this->ssl_,
+  int const bytes_sent = ::SSL_write (this->ssl_.get (),
                                       static_cast<const char *> (buf),
                                       ACE_Utils::truncate_cast<int> (n));
 
-  switch (::SSL_get_error (this->ssl_, bytes_sent))
+  switch (::SSL_get_error (this->ssl_.get (), bytes_sent))
     {
     case SSL_ERROR_NONE:
       return bytes_sent;
@@ -57,7 +57,7 @@ ACE_SSL_SOCK_Stream::send_i (const void *buf,
     case SSL_ERROR_ZERO_RETURN:
       // The peer has notified us that it is shutting down via the SSL
       // "close_notify" message so we need to shutdown, too.
-      (void) ::SSL_shutdown (this->ssl_);
+      (void) ::SSL_shutdown (this->ssl_.get ());
 
       return bytes_sent;
 
@@ -105,13 +105,13 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
   ACE_TRACE ("ACE_SSL_SOCK_Stream::recv_i");
 
   // NOTE: Caller must provide thread-synchronization.
-  int bytes_read = 0;
+  int bytes_read {};
   ACE_HANDLE const handle = this->get_handle ();
 
   // Value for current I/O mode (blocking/non-blocking)
-  int val = 0;
+  int val {};
 
-  if (timeout != 0)
+  if (timeout != nullptr)
     ACE::record_and_set_non_blocking_mode (handle,
                                            val);
 
@@ -119,8 +119,8 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
   // has been consumed. If there is remaining data in the SSL buffers
   // the socket won't "select" even though SSL_read would complete.
   // See "SSL and TLS" by Rescorla section 8.9 for more info.
-  bool peeking = false;
-  bool retry = false;
+  bool peeking {};
+  bool retry {};
   if (flags)
     {
       if (ACE_BIT_ENABLED (flags, MSG_PEEK))
@@ -138,19 +138,19 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
       retry = false;
       if (peeking)
         {
-          bytes_read = ::SSL_peek (this->ssl_,
+          bytes_read = ::SSL_peek (this->ssl_.get (),
                                    static_cast<char *> (buf),
                                    ACE_Utils::truncate_cast<int> (n));
         }
       else
         {
-          bytes_read = ::SSL_read (this->ssl_,
+          bytes_read = ::SSL_read (this->ssl_.get (),
                                    static_cast<char *> (buf),
                                    ACE_Utils::truncate_cast<int> (n));
         }
 
-      int const status = ::SSL_get_error (this->ssl_, bytes_read);
-      int substat = 0;
+      int const status = ::SSL_get_error (this->ssl_.get (), bytes_read);
+      int substat {};
       switch (status)
         {
         case SSL_ERROR_NONE:
@@ -158,7 +158,7 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
 
         case SSL_ERROR_WANT_READ:
         case SSL_ERROR_WANT_WRITE:
-          if (timeout == 0)
+          if (timeout == nullptr)
             {
               errno = EWOULDBLOCK;
               bytes_read = -1;
@@ -184,7 +184,7 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
 
           // The peer has notified us that it is shutting down via the SSL
           // "close_notify" message so we need to shutdown, too.
-          (void) ::SSL_shutdown (this->ssl_);
+          (void) ::SSL_shutdown (this->ssl_.get ());
 
           break;
 
@@ -212,7 +212,7 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
         }
     } while (retry);
 
-  if (timeout != 0)
+  if (timeout != nullptr)
     ACE::restore_non_blocking_mode (handle, val);
   return bytes_read;
 }
@@ -222,7 +222,7 @@ ACE_SSL_SOCK_Stream::recv (void *buf,
                            size_t n,
                            int flags) const
 {
-  return this->recv_i (buf, n, flags, 0);
+  return this->recv_i (buf, n, flags, nullptr);
 }
 
 ACE_INLINE ssize_t
@@ -240,7 +240,7 @@ ACE_SSL_SOCK_Stream::recv (void *buf,
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::recv");
 
-  return this->recv_i (buf, n, 0, 0);
+  return this->recv_i (buf, n, 0, nullptr);
 }
 
 ACE_INLINE ssize_t
@@ -314,21 +314,21 @@ ACE_SSL_SOCK_Stream::close ()
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::close");
 
-  if (this->ssl_ == 0 || this->get_handle () == ACE_INVALID_HANDLE)
+  if (this->ssl_.get () == nullptr || this->get_handle () == ACE_INVALID_HANDLE)
     return 0;  // SSL_SOCK_Stream was never opened.
 
   // SSL_shutdown() returns 1 on successful shutdown of the SSL
   // connection, not 0.
-  int const status = ::SSL_shutdown (this->ssl_);
+  int const status = ::SSL_shutdown (this->ssl_.get ());
 
-  switch (::SSL_get_error (this->ssl_, status))
+  switch (::SSL_get_error (this->ssl_.get (), status))
     {
     case SSL_ERROR_NONE:
       // Reset the SSL object to allow another connection to be made
       // using this ACE_SSL_SOCK_Stream instance.  This prevents the
       // previous SSL session state from being associated with the new
       // SSL session/connection.
-      ::SSL_clear (this->ssl_);
+      ::SSL_clear (this->ssl_.get ());
       this->set_handle (ACE_INVALID_HANDLE);
       return this->stream_.close ();
 
@@ -361,7 +361,7 @@ ACE_SSL_SOCK_Stream::peer ()
 ACE_INLINE SSL *
 ACE_SSL_SOCK_Stream::ssl () const
 {
-  return this->ssl_;
+  return this->ssl_.get ();
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -41,7 +41,9 @@
 #include "ace/Lock_Adapter_T.h"
 #include "ace/TSS_T.h"
 #include "ace/Service_Config.h"
+
 #include <atomic>
+#include <string>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Data_Block;
@@ -162,8 +164,12 @@ class TAO_Export TAO_ORB_Core
                                          ACE_TCHAR *argv[],
                                          const char *);
 public:
-  /// Constructor.
   TAO_ORB_Core (const char* id, ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> g);
+
+  TAO_ORB_Core (TAO_ORB_Core const &) = delete;
+  TAO_ORB_Core (TAO_ORB_Core &&) = delete;
+  TAO_ORB_Core &operator= (TAO_ORB_Core const &) = delete;
+  TAO_ORB_Core &operator= (TAO_ORB_Core &&) = delete;
 
   /// Accessor for the ORB parameters.
   TAO_ORB_Parameters *orb_params ();
@@ -244,8 +250,8 @@ public:
 
   /// Set/get the collocation flags
   //@{
-  void optimize_collocation_objects (CORBA::Boolean opt);
-  CORBA::Boolean optimize_collocation_objects () const;
+  void optimize_collocation_objects (bool opt);
+  bool optimize_collocation_objects () const;
 
   void use_global_collocation (CORBA::Boolean opt);
   CORBA::Boolean use_global_collocation () const;
@@ -348,7 +354,7 @@ public:
 
   /// See if we have a collocated address, if yes, return the POA
   /// associated with the address.
-  int is_collocated (const TAO_MProfile& mprofile);
+  bool is_collocated (const TAO_MProfile& mprofile);
 
   /// This allocator is always TSS and has no locks. It is intended
   /// for allocating the ACE_Data_Blocks used in *outgoing* CDR
@@ -919,7 +925,6 @@ protected:
   int init (int &argc, char *argv[]);
 
   /// Final termination hook, typically called by CORBA::ORB's
-  /// destructor.
   int fini ();
 
   /// Routine that creates a ACE_Data_Block given the lock and allocators.
@@ -991,12 +996,6 @@ protected:
                                    const TAO_MProfile& mprofile);
 
 private:
-  /// The ORB Core should not be copied.
-  //@{
-  TAO_ORB_Core(const TAO_ORB_Core&);
-  void operator=(const TAO_ORB_Core&);
-  //@}
-
   /// Obtain and cache the ior table object reference.
   void resolve_ior_table_i ();
 
@@ -1094,13 +1093,13 @@ protected:
   TAO::ObjectKey_Table object_key_table_;
 
   /// The ORBid for this ORB.
-  char *orbid_;
+  std::string orbid_;
 
   /// Handle to the factory for resource information..
   TAO_Resource_Factory *resource_factory_;
 
   /// The server_id_ that was passed via -ORBServerId option
-  ACE_CString server_id_;
+  std::string server_id_;
 
   /// Handle to the factory for Client-side strategies.
   TAO_Client_Strategy_Factory *client_factory_;
@@ -1124,7 +1123,7 @@ protected:
 
   /// TRUE if we want to take advantage of collocation optimization in
   /// this ORB.
-  CORBA::Boolean opt_for_collocation_;
+  bool opt_for_collocation_;
 
   /// TRUE if we want to consider all ORBs in this address space
   /// collocated.
@@ -1298,7 +1297,7 @@ public:
   /**
    * Name of the network_priority_protocols_hooks that needs to be instantiated.
   */
-  ACE_CString network_priority_protocols_hooks_name_;
+  std::string network_priority_protocols_hooks_name_;
 
   /// The hook to be set for the ConnectionTimeoutPolicy
   TAO_ORB_Core::Timeout_Hook connection_timeout_hook_;
@@ -1309,7 +1308,7 @@ public:
    * linked, the set_resource_factory will be called to set the value
    * to be "Advanced_Resource_Factory".
    */
-  ACE_CString resource_factory_name_;
+  std::string resource_factory_name_;
 
   /**
    * Name of the service object for DII request creation that needs
@@ -1317,7 +1316,7 @@ public:
    * TAO_DynamicInterface is linked, dynamic_adapter_name() will be
    * called to set the value to "Concrete_Dynamic_Adapter".
    */
-  ACE_CString dynamic_adapter_name_;
+  std::string dynamic_adapter_name_;
 
   /**
    * Name of the service object for functions that make calls on
@@ -1325,7 +1324,7 @@ public:
    * If TAO_IFR_CLient is linked, ifr_client_adapter_name() will be
    * called to set the value to "Concrete_IFR_Client_Adapter".
    */
-  ACE_CString ifr_client_adapter_name_;
+  std::string ifr_client_adapter_name_;
 
   /**
    * Name of the service object used by the ORB create_*_tc functions.
@@ -1334,7 +1333,7 @@ public:
    * function typecodefactory_adapter_name() will be called to set
    * the value to "Concrete_TypeCodeFactory_Adapter".
    */
-  ACE_CString typecodefactory_adapter_name_;
+  std::string typecodefactory_adapter_name_;
 
   /**
    * Name of the factory object used to adapt function calls on
@@ -1344,7 +1343,7 @@ public:
    * function iorinterceptor_adapter_factory_name() will be called to set
    * the value to "Concrete_IORInterceptor_Adapter_Factory".
    */
-  ACE_CString iorinterceptor_adapter_factory_name_;
+  std::string iorinterceptor_adapter_factory_name_;
 
   /**
    * Name of the factory object used to adapt function calls on
@@ -1354,13 +1353,12 @@ public:
    * function valuetype_adapter_factory_name() will be called to set
    * the value to "Concrete_Valuetype_Adapter_Factory".
    */
-  ACE_CString valuetype_adapter_factory_name_;
+  std::string valuetype_adapter_factory_name_;
 
   /// An alternative hook to be set for the ConnectionTimeoutPolicy
   TAO_ORB_Core::Timeout_Hook alt_connection_timeout_hook_;
 
 //private:
-  /// Constructor.
   TAO_ORB_Core_Static_Resources ();
   TAO_ORB_Core_Static_Resources& operator= (const TAO_ORB_Core_Static_Resources&);
 

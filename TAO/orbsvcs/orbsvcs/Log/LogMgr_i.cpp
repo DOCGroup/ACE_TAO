@@ -4,21 +4,13 @@
 #include "tao/Utils/PolicyList_Destroyer.h"
 #include "orbsvcs/Log/Hash_Persistence_Strategy.h"
 #include "orbsvcs/Log/LogStore.h"
-#include "ace/OS_NS_stdio.h"
+#include <cstdio>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_LogMgr_i::TAO_LogMgr_i ()
-  : logstore_ (nullptr)
-{
-}
+TAO_LogMgr_i::TAO_LogMgr_i () = default;
 
-
-TAO_LogMgr_i::~TAO_LogMgr_i ()
-{
-  delete logstore_;
-}
-
+TAO_LogMgr_i::~TAO_LogMgr_i () = default;
 
 void
 TAO_LogMgr_i::init (CORBA::ORB_ptr orb,
@@ -27,7 +19,7 @@ TAO_LogMgr_i::init (CORBA::ORB_ptr orb,
   this->orb_ = CORBA::ORB::_duplicate (orb);
   this->poa_ = PortableServer::POA::_duplicate (poa);
 
-  PortableServer::POAManager_var poa_manager =
+  PortableServer::POAManager_var const poa_manager =
     this->poa_->the_POAManager ();
 
   {
@@ -42,7 +34,6 @@ TAO_LogMgr_i::init (CORBA::ORB_ptr orb,
                                                  poa_manager.in (),
                                                  policies);
   }
-
 
   {
     TAO::Utils::PolicyList_Destroyer policies(2);
@@ -70,7 +61,7 @@ TAO_LogMgr_i::init (CORBA::ORB_ptr orb,
   }
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT)
-  PortableServer::ServantActivator *servant_activator = nullptr;
+  PortableServer::ServantActivator *servant_activator {};
 
   ACE_NEW_THROW_EX (servant_activator,
                     TAO_LogActivator (*this),
@@ -80,23 +71,23 @@ TAO_LogMgr_i::init (CORBA::ORB_ptr orb,
 #endif
 
   // Load Log Strategy
-  TAO_Log_Persistence_Strategy *strategy_ = nullptr;
-
-  strategy_ =
+  TAO_Log_Persistence_Strategy * strategy =
     ACE_Dynamic_Service<TAO_Log_Persistence_Strategy>::instance ("Log_Persistence");
-  if (strategy_ == nullptr)
-    {
-      strategy_ = new TAO_Hash_Persistence_Strategy;
-    }
 
-  logstore_ = strategy_->create_log_store (this);
+  if (strategy == nullptr)
+    {
+      TAO_Hash_Persistence_Strategy fallback;
+      this->logstore_.reset (fallback.create_log_store (this));
+    }
+  else
+    this->logstore_.reset (strategy->create_log_store (this));
 }
 
 PortableServer::ObjectId *
 TAO_LogMgr_i::create_objectid (DsLogAdmin::LogId id)
 {
   char buf[32];
-  ACE_OS::sprintf(buf, "%lu", static_cast<unsigned long>(id));
+  std::sprintf (buf, "%lu", static_cast<unsigned long> (id));
 
   PortableServer::ObjectId_var oid =
         PortableServer::string_to_ObjectId(buf);
@@ -107,12 +98,12 @@ TAO_LogMgr_i::create_objectid (DsLogAdmin::LogId id)
 DsLogAdmin::Log_ptr
 TAO_LogMgr_i::create_log_reference (DsLogAdmin::LogId id)
 {
-  PortableServer::ObjectId_var oid =
+  PortableServer::ObjectId_var const oid =
     this->create_objectid (id);
-  CORBA::RepositoryId_var intf =
+  CORBA::RepositoryId_var const intf =
     this->create_repositoryid ();
 
-  CORBA::Object_var obj =
+  CORBA::Object_var const obj =
     this->log_poa_->create_reference_with_id (oid.in (),
                 intf.in ());
 
@@ -128,15 +119,15 @@ TAO_LogMgr_i::create_log_reference (DsLogAdmin::LogId id)
 DsLogAdmin::Log_ptr
 TAO_LogMgr_i::create_log_object (DsLogAdmin::LogId id)
 {
-  PortableServer::ServantBase *servant = nullptr;
+  PortableServer::ServantBase *servant {};
 
   servant = create_log_servant (id);
 
-  PortableServer::ServantBase_var safe_servant = servant;
+  PortableServer::ServantBase_var const safe_servant = servant;
   // Transfer ownership to the POA.
 
   // Obtain ObjectId
-  PortableServer::ObjectId_var oid = this->create_objectid (id);
+  PortableServer::ObjectId_var const oid = this->create_objectid (id);
 
   // Register with the poa
   this->log_poa_->activate_object_with_id (oid.in (),
@@ -151,13 +142,11 @@ TAO_LogMgr_i::list_logs ()
   return this->logstore_->list_logs ();
 }
 
-
 DsLogAdmin::LogIdList*
 TAO_LogMgr_i::list_logs_by_id ()
 {
   return this->logstore_->list_logs_by_id ();
 }
-
 
 DsLogAdmin::Log_ptr
 TAO_LogMgr_i::find_log (DsLogAdmin::LogId id)
@@ -165,20 +154,17 @@ TAO_LogMgr_i::find_log (DsLogAdmin::LogId id)
   return this->logstore_->find_log (id);
 }
 
-
 TAO_LogRecordStore *
 TAO_LogMgr_i::get_log_record_store (DsLogAdmin::LogId id)
 {
   return this->logstore_->get_log_record_store (id);
 }
 
-
 bool
 TAO_LogMgr_i::exists (DsLogAdmin::LogId id)
 {
   return this->logstore_->exists (id);
 }
-
 
 int
 TAO_LogMgr_i::remove (DsLogAdmin::LogId id)

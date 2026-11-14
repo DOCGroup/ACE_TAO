@@ -6,9 +6,9 @@
 #include "ace/Guard_T.h"
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_stdio.h"
+#include <cstring>
 
-// = Static initialization.
-const char *const
+char const *const
 HTTP_Helper::months_[12]=
 {
   "Jan", "Feb", "Mar", "Apr", "May", "Jun",
@@ -17,7 +17,7 @@ HTTP_Helper::months_[12]=
 
 char const *HTTP_Helper::alphabet_ = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
-char * HTTP_Helper::date_string_ = 0;
+char * HTTP_Helper::date_string_ = nullptr;
 ACE_SYNCH_MUTEX HTTP_Helper::mutex_;
 
 ACE_SYNCH_MUTEX HTTP_Status_Code::lock_;
@@ -29,7 +29,7 @@ HTTP_Helper::HTTP_mktime (const char *httpdate)
 {
   char *buf;
 
-  ACE_NEW_RETURN (buf, char[ACE_OS::strlen (httpdate) + 1], (time_t) -1);
+  ACE_NEW_RETURN (buf, char[std::strlen (httpdate) + 1], (time_t) -1);
 
   // Make spaces in the date be semi-colons so we can parse robustly
   // with sscanf.
@@ -108,19 +108,19 @@ HTTP_Helper::HTTP_mktime (const char *httpdate)
 const char *
 HTTP_Helper::HTTP_date ()
 {
-  if (HTTP_Helper::date_string_ == 0)
+  if (HTTP_Helper::date_string_ == nullptr)
     {
-      ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, m, HTTP_Helper::mutex_, 0));
+      ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, m, HTTP_Helper::mutex_, nullptr));
 
-      if (HTTP_Helper::date_string_ == 0)
+      if (HTTP_Helper::date_string_ == nullptr)
         {
           // 40 bytes is all I need.
-          ACE_NEW_RETURN (HTTP_Helper::date_string_, char[40], 0);
+          ACE_NEW_RETURN (HTTP_Helper::date_string_, char[40], nullptr);
 
           if (!HTTP_Helper::HTTP_date (HTTP_Helper::date_string_))
             {
               delete [] HTTP_Helper::date_string_;
-              HTTP_Helper::date_string_ = 0;
+              HTTP_Helper::date_string_ = nullptr;
             }
         }
     }
@@ -143,7 +143,7 @@ HTTP_Helper::HTTP_date (char *s)
   char * date_string = s;
 
   if (ACE_OS::time (&tloc) != (time_t) -1
-      && ACE_OS::gmtime_r (&tloc, &tms) != 0)
+      && ACE_OS::gmtime_r (&tloc, &tms) != nullptr)
   {
     ACE_OS::sprintf (date_string,
                      "%s, %2.2d %s %4.4d %2.2d:%2.2d:%2.2d GMT",
@@ -151,7 +151,7 @@ HTTP_Helper::HTTP_date (char *s)
                      tms.tm_year + 1900, tms.tm_hour, tms.tm_min, tms.tm_sec);
   }
   else
-    date_string = 0;
+    date_string = nullptr;
 
   return date_string;
 }
@@ -160,7 +160,7 @@ int
 HTTP_Helper::HTTP_month (const char *month)
 {
   for (size_t i = 0; i < 12; i++)
-    if (ACE_OS::strcmp(month, HTTP_Helper::months_[i]) == 0)
+    if (std::strcmp (month, HTTP_Helper::months_[i]) == 0)
       return i;
 
   return -1;
@@ -207,10 +207,10 @@ HTTP_Helper::HTTP_decode_base64 (char *data)
 {
   char inalphabet[256], decoder[256];
 
-  ACE_OS::memset (inalphabet, 0, sizeof (inalphabet));
-  ACE_OS::memset (decoder, 0, sizeof (decoder));
+  std::memset (inalphabet, 0, sizeof (inalphabet));
+  std::memset (decoder, 0, sizeof (decoder));
 
-  for (int i = ACE_OS::strlen (HTTP_Helper::alphabet_) - 1;
+  for (int i = std::strlen (HTTP_Helper::alphabet_) - 1;
        i >= 0;
        i--)
     {
@@ -233,7 +233,7 @@ HTTP_Helper::HTTP_decode_base64 (char *data)
       if (c > 255 || ! inalphabet[c])
         continue;
       bits += decoder[c];
-      char_count++;
+      ++char_count;
       if (char_count == 4)
         {
           *outdata++ = (bits >> 16);
@@ -253,7 +253,7 @@ HTTP_Helper::HTTP_decode_base64 (char *data)
           ACE_DEBUG ((LM_DEBUG,
                      "base64 encoding incomplete: at least %d bits truncated\n",
                      ((4 - char_count) * 6)));
-            errors++;
+            ++errors;
         }
     }
   else
@@ -264,7 +264,7 @@ HTTP_Helper::HTTP_decode_base64 (char *data)
         case 1:
           ACE_DEBUG ((LM_DEBUG,
                       "base64 encoding incomplete: at least 2 bits missing\n"));
-          errors++;
+          ++errors;
           break;
         case 2:
           *outdata++ = (bits >> 10);
@@ -297,11 +297,11 @@ HTTP_Helper::HTTP_encode_base64 (char *data)
       if (c > (int)ASCII_MAX)
         {
           ACE_DEBUG ((LM_DEBUG, "encountered char > 255 (decimal %d)\n", c));
-          error++;
+          ++error;
           break;
         }
       bits += c;
-      char_count++;
+      ++char_count;
 
       if (char_count == 3)
         {
@@ -336,7 +336,7 @@ HTTP_Helper::HTTP_encode_base64 (char *data)
             }
         }
       *outdata = '\0';
-      ACE_OS::strcpy (data, buf);
+      std::strcpy (data, buf);
     }
 
   return (error ? 0 : data);

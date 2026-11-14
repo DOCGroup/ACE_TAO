@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_CEC_TYPEDSUPPLIERADMIN_H_
 #define TAO_CEC_TYPEDSUPPLIERADMIN_H_
 
@@ -35,11 +34,14 @@ class  TAO_Event_Serv_Export TAO_CEC_TypedSupplierAdmin
   : public POA_CosTypedEventChannelAdmin::TypedSupplierAdmin
 {
 public:
-  /// Constructor
-   TAO_CEC_TypedSupplierAdmin (TAO_CEC_TypedEventChannel* event_channel);
+  explicit TAO_CEC_TypedSupplierAdmin (TAO_CEC_TypedEventChannel* event_channel);
 
-  /// Destructor
   ~TAO_CEC_TypedSupplierAdmin () override = default;
+
+  TAO_CEC_TypedSupplierAdmin (TAO_CEC_TypedSupplierAdmin const &) = delete;
+  TAO_CEC_TypedSupplierAdmin (TAO_CEC_TypedSupplierAdmin &&) = delete;
+  TAO_CEC_TypedSupplierAdmin &operator= (TAO_CEC_TypedSupplierAdmin const &) = delete;
+  TAO_CEC_TypedSupplierAdmin &operator= (TAO_CEC_TypedSupplierAdmin &&) = delete;
 
   /// For each elements call <worker->work()>.
   void for_each (TAO_ESF_Worker<TAO_CEC_TypedProxyPushConsumer> *worker);
@@ -69,11 +71,6 @@ public:
   PortableServer::POA_ptr _default_POA () override;
 
 private:
-  TAO_CEC_TypedSupplierAdmin (TAO_CEC_TypedSupplierAdmin const &) = delete;
-  TAO_CEC_TypedSupplierAdmin (TAO_CEC_TypedSupplierAdmin &&) = delete;
-  TAO_CEC_TypedSupplierAdmin &operator= (TAO_CEC_TypedSupplierAdmin const &) = delete;
-  TAO_CEC_TypedSupplierAdmin &operator= (TAO_CEC_TypedSupplierAdmin &&) = delete;
-
   /// The Event Channel we belong to
   TAO_CEC_TypedEventChannel *typed_event_channel_;
 

@@ -22,7 +22,6 @@ be_visitor_typedef_ch::be_visitor_typedef_ch (be_visitor_context *ctx)
 {
 }
 
-
 int
 be_visitor_typedef_ch::visit_typedef (be_typedef *node)
 {

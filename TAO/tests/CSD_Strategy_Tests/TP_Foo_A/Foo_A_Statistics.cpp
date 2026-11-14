@@ -2,13 +2,10 @@
 #include "Foo_A_ClientEngine.h"
 
 Foo_A_Statistics::Foo_A_Statistics(unsigned num_clients)
-: num_clients_ (num_clients)
+: num_clients_ (num_clients),
+  expected_ {},
+  actual_ {}
 {
-  for (unsigned i = 0; i < 5; i++)
-    {
-      this->expected_[i] = 0;
-      this->actual_[i] = 0;
-    }
 }
 
 void
@@ -17,13 +14,11 @@ Foo_A_Statistics::expected(unsigned op_num, unsigned count)
   this->expected_[op_num-1] = count * this->num_clients_;
 }
 
-
 void
 Foo_A_Statistics::actual(unsigned op_num, unsigned count)
 {
   this->actual_[op_num-1] += count;
 }
-
 
 void
 Foo_A_Statistics::actual_in_values(unsigned op_num, LongVector lv)
@@ -34,7 +29,6 @@ Foo_A_Statistics::actual_in_values(unsigned op_num, LongVector lv)
       this->actual_in_values_[op_num-1].push_back (lv[i]);
     }
 }
-
 
 bool
 Foo_A_Statistics::actual_vs_expected()
@@ -76,5 +70,4 @@ Foo_A_Statistics::actual_vs_expected()
     }
   return true;
 }
-
 

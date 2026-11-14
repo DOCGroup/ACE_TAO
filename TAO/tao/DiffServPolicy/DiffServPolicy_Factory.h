@@ -1,15 +1,10 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file     DiffServPolicy_Factory.h
  *
  *  @author  Jaiganesh Balasubramanian <jai@dre.vanderbilt.edu>
  *  @author  Johnny Willemsen <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
-
 #ifndef TAO_DIFFSERV_POLICY_FACTORY_H
 #define TAO_DIFFSERV_POLICY_FACTORY_H
 
@@ -43,11 +38,10 @@ public:
   TAO_DiffServ_PolicyFactory () = default;
 
   CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
-                                   CORBA::Any const& value) override;
+                                   CORBA::Any const &value) override;
 
   CORBA::Policy_ptr _create_policy (CORBA::PolicyType type) override;
 
-private:
   TAO_DiffServ_PolicyFactory (TAO_DiffServ_PolicyFactory const &) = delete;
   TAO_DiffServ_PolicyFactory &operator= (TAO_DiffServ_PolicyFactory const &) = delete;
   TAO_DiffServ_PolicyFactory (TAO_DiffServ_PolicyFactory &&) = delete;

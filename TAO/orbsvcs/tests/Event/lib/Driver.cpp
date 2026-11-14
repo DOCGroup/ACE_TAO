@@ -24,7 +24,6 @@
 #include "Driver.inl"
 #endif /* __ACE_INLINE__ */
 
-
 EC_Driver::EC_Driver ()
   :  n_consumers_ (1),
      consumers_ (0),
@@ -144,7 +143,7 @@ EC_Driver::run_cleanup ()
   this->cleanup_consumers ();
   this->cleanup_ec ();
 
-  this->root_poa_->destroy (1, 1);
+  this->root_poa_->destroy (true, true);
   this->root_poa_ = PortableServer::POA::_nil ();
 
   this->orb_->destroy ();

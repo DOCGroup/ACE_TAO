@@ -4,7 +4,6 @@
 #include "ace/Log_Msg.h"
 #include "Dump_Restore.h"
 
-
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {

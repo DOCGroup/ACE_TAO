@@ -25,7 +25,7 @@ class ProxySupplierStateWorker
   : public TAO_ESF_Worker<TAO_EC_ProxyPushSupplier>
 {
 public:
-  ProxySupplierStateWorker(FtRtecEventChannelAdmin::ProxySupplierStates& states);
+  explicit ProxySupplierStateWorker(FtRtecEventChannelAdmin::ProxySupplierStates& states);
   ~ProxySupplierStateWorker() override = default;
 
   ProxySupplierStateWorker(ProxySupplierStateWorker const&) = delete;
@@ -36,7 +36,7 @@ public:
   void set_size(size_t size) override;
   void work(TAO_EC_ProxyPushSupplier* object) override;
 private:
-  int index_;
+  int index_ {};
   FtRtecEventChannelAdmin::ProxySupplierStates& supplierStates_;
 };
 

@@ -55,13 +55,11 @@ Foo_B_SimpleClientEngine::execute()
   return check_validity;
 }
 
-
 void
 Foo_B_SimpleClientEngine::expected_results(Foo_B_Statistics& stats)
 {
   stats.expected(7, 1, Foo_B_Statistics::FOO_B_STAT_NONE);
 }
-
 
 unsigned
 Foo_B_SimpleClientEngine::expected_callbacks ()

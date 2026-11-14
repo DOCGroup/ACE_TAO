@@ -1,25 +1,23 @@
 #include "HTTPU/parse_http_request.h"
+#include <cstring>
 
 Parse_HTTP_Request::Parse_HTTP_Request (const char *request)
-  : method_ (0),
+  : method_ {},
     major_version_ (-1),
     minor_version_ (-1),
-    version_ (0),
-    url_ (0),
-    request_ (0),
+    version_ {},
+    url_ {},
+    request_ {},
     error_ (0)
 {
-  if (request != 0)
+  if (request != nullptr)
     this->init (request);
 }
 
 Parse_HTTP_Request::~Parse_HTTP_Request ()
 {
-  if (this->request_)
+  if (this->request_ != nullptr)
     ACE_OS::free (this->request_);
-  this->request_ = 0;
-  this->version_ = 0;
-  this->url_ = 0;
 }
 
 void
@@ -35,7 +33,7 @@ Parse_HTTP_Request::init (const char *request)
   char *method;
 
   this->request_ = ACE_OS::strdup (request);
-  if (this->request_ == 0)
+  if (this->request_ == nullptr)
     {
       this->error_ = NO_MEMORY;
       return;
@@ -52,22 +50,22 @@ Parse_HTTP_Request::init (const char *request)
       char *p = this->request_;
 
       while (*p == ' ' || *p == '\t')
-        p++;
+        ++p;
 
       method = p++;
 
       while (*p != ' ' && *p != '\t')
-        p++;
+        ++p;
 
       *p++ = '\0';
 
       while (*p == ' ' || *p == '\t')
-        p++;
+        ++p;
 
       this->url_ = p;
 
-      while (*p && !ACE_OS::strchr (" \t\r\n", *p))
-        p++;
+      while (*p && !std::strchr (" \t\r\n", *p))
+        ++p;
 
       *p++ = '\0';
 
@@ -79,25 +77,25 @@ Parse_HTTP_Request::init (const char *request)
       else
         {
           while (*p == ' ' || *p == '\t')
-            p++;
+            ++p;
 
           this->version_ = p;
 
-          while (*p && !ACE_OS::strchr (" \t\r\n", *p))
-            p++;
+          while (*p && !std::strchr (" \t\r\n", *p))
+            ++p;
 
           *p++ = '\0';
         }
 
-      if (ACE_OS::strcmp (method, "GET") == 0)
+      if (std::strcmp (method, "GET") == 0)
         this->method_ = &GET;
-      else if (ACE_OS::strcmp (method, "HEAD") == 0)
+      else if (std::strcmp (method, "HEAD") == 0)
         this->method_ = &HEAD;
-      else if (ACE_OS::strcmp (method, "POST") == 0)
+      else if (std::strcmp (method, "POST") == 0)
         this->method_ = &POST;
-      else if (ACE_OS::strcmp (method, "PUT") == 0)
+      else if (std::strcmp (method, "PUT") == 0)
         this->method_ = &PUT;
-      else if (ACE_OS::strcmp (method, "QUIT") == 0)
+      else if (std::strcmp (method, "QUIT") == 0)
         this->method_ = &QUIT;
       else
         {

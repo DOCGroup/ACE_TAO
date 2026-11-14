@@ -23,9 +23,9 @@
 
 #if defined (ACE_HAS_THREADS)
 
-enum DEBUGGING_RANGE
+enum class DEBUGGING_RANGE
 {
-  DEBUG_NONE = 0,
+  DEBUG_NONE,
   DEBUG
 };
 
@@ -63,13 +63,17 @@ public:
   int  end_synchronization ();
 
 private:
+  Synchronisers (Synchronisers const &) = delete;
+  Synchronisers &operator= (Synchronisers const &) = delete;
+  Synchronisers (Synchronisers &&) = delete;
+  Synchronisers &operator= (Synchronisers &&) = delete;
+
   /// The mutex that is used for synchronisation.
   ACE_SYNCH_MUTEX mutex_;
 
   /// A manual event
   ACE_Manual_Event event_;
 };
-
 
 /**************************************************************/
 /**
@@ -87,9 +91,14 @@ public:
               Synchronisers &synch);
 
   /// The thread runs inside this method..
-  int svc ();
+  int svc () override;
 
 private:
+  Input_Task (Input_Task const &) = delete;
+  Input_Task &operator= (Input_Task const &) = delete;
+  Input_Task (Input_Task &&) = delete;
+  Input_Task &operator= (Input_Task &&) = delete;
+
   /// Our referance to Synchronisers
   Synchronisers &synch_;
 };
@@ -110,16 +119,20 @@ public:
               Synchronisers &synch);
 
   /// The thread runs inside this method..
-  int svc ();
+  int svc () override;
 
   /// Need to overload this method to do anything useful..
-  virtual int put (ACE_Message_Block *, ACE_Time_Value * = 0);
+  int put (ACE_Message_Block *, ACE_Time_Value * = nullptr) override;
 
 private:
+  Output_Task (Output_Task const &) = delete;
+  Output_Task &operator= (Output_Task const &) = delete;
+  Output_Task (Output_Task &&) = delete;
+  Output_Task &operator= (Output_Task &&) = delete;
+
   /// Our referance to Synchronisers
   Synchronisers &synch_;
 };
-
 
 /**************************************************************/
 /**
@@ -137,19 +150,23 @@ public:
                Synchronisers &synch);
 
   /// Methods in which the threads run on
-  int svc ();
+  int svc () override;
 
   /// Processed messages
-  int processed ();
+  size_t processed () const;
+
 private:
+  Worker_Task (Worker_Task const &) = delete;
+  Worker_Task &operator= (Worker_Task const &) = delete;
+  Worker_Task (Worker_Task &&) = delete;
+  Worker_Task &operator= (Worker_Task &&) = delete;
+
   /// Our referance to Synchronisers
   Synchronisers &synch_;
 
   /// Number of messages processed by us
   size_t messages_processed_;
 };
-
-
 
 #endif /*ACE_HAS_THREADS*/
 

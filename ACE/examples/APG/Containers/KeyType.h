@@ -6,21 +6,17 @@
 class KeyType
 {
 public:
-  friend bool operator == (const KeyType&, const KeyType&);
+  friend bool operator== (KeyType const &, KeyType const &);
 
   KeyType () = default;
-  KeyType (int i) : val_(i) {}
-  KeyType (const KeyType&) = default;
-  KeyType (KeyType&&) = default;
-  KeyType& operator= (const KeyType&) = default;
-  KeyType& operator= (KeyType&&) = default;
-  operator int() const { return val_; };
+  explicit KeyType (int const i) : val_ (i) {}
+  operator int () const { return this->val_; }
 
 private:
   int val_ {};
 };
 
-bool operator == (const KeyType& a, const KeyType& b)
+inline bool operator== (KeyType const &a, KeyType const &b)
 {
   return (a.val_ == b.val_);
 }

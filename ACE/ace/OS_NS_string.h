@@ -173,7 +173,6 @@ namespace ACE_OS {
   char *strerror_emulation (int errnum);
 #endif /* ACE_LACKS_STRERROR */
 
-
   /// Returns a string describing the signal number passed in the
   /// argument @a signum. If the supplied signal number is out of range,
   /// a string of the form "Unknown signal %d" is used to format the string

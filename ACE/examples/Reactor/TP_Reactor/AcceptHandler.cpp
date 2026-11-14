@@ -62,14 +62,12 @@ int AcceptHandler::handle_input(ACE_HANDLE) {
     ACE_INET_Addr clientAddr;
 
     // create a new ReadHandler
-    ReadHandler *reader = nullptr;
-    ACE_NEW_NORETURN (reader, ReadHandler());
+    ReadHandler *reader_raw {};
+    ACE_NEW_NORETURN (reader_raw, ReadHandler());
+    std::unique_ptr<ReadHandler> reader (reader_raw);
     if (reader == nullptr)
       ACE_ERROR_RETURN((LM_ERROR, ACE_TEXT("%N:%l: Failed to allocate ")
                         ACE_TEXT ("reader. (errno = %i: %m)\n"), ACE_ERRNO_GET), -1);
-
-    // put reader in an unique pointer so we can use ACE_ERROR_RETURN safely
-    std::unique_ptr<ReadHandler> pReader(reader);
 
     // accept the connection using the reader's stream
     if (mAcceptor.accept(reader->getStream(), &clientAddr) == -1)
@@ -77,13 +75,13 @@ int AcceptHandler::handle_input(ACE_HANDLE) {
                     ACE_TEXT ("client connection. (errno = %i: %m)\n"), ACE_ERRNO_GET), -1);
 
     // register the reader with the reactor
-    if (mReactor->register_handler(reader,
+    if (mReactor->register_handler(reader.get (),
             ACE_Event_Handler::READ_MASK) == -1)
       ACE_ERROR_RETURN((LM_ERROR, ACE_TEXT("%N:%l: Failed to register ")
                         ACE_TEXT ("read handler. (errno = %i: %m)\n"), ACE_ERRNO_GET), -1);
 
-    // from now on the read handler takes care of itself
-    pReader.release();
+    // The reactor close callback deletes the registered handler.
+    reader.release ();
 
     return 0; // keep going
 }
@@ -99,6 +97,7 @@ int AcceptHandler::handle_close(ACE_HANDLE, ACE_Reactor_Mask) {
     // no need to distinguish between error during close and normal close
     // since ACE does not evaluate the return value of handle_close()
 
+    // The accept handler owns itself until the reactor closes it.
     delete this;
     return 0;
 }

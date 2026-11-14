@@ -14,6 +14,8 @@
 # include "ace/OS_NS_wchar.h"
 #endif /* ACE_HAS_WCHAR */
 
+#include <cstring>
+
 #if defined (ACE_LACKS_MKTEMP) \
     || defined (ACE_LACKS_MKSTEMP) \
     || defined (ACE_LACKS_REALPATH)
@@ -105,13 +107,13 @@ ACE_OS::getenvstrings ()
 ACE_TCHAR *
 ACE_OS::strenvdup (const ACE_TCHAR *str)
 {
-  const ACE_TCHAR * start = nullptr;
+  const ACE_TCHAR * start {};
   if ((start = ACE_OS::strchr (str, ACE_TEXT ('$'))) != nullptr)
     {
       ACE_TCHAR buf[ACE_DEFAULT_ARGV_BUFSIZ];
-      size_t var_len = ACE_OS::strcspn (&start[1],
+      size_t var_len = ACE_OS::strcspn (start + 1,
         ACE_TEXT ("$~!#%^&*()-+=\\|/?,.;:'\"`[]{} \t\n\r"));
-      ACE_OS::strncpy (buf, &start[1], var_len);
+      ACE_OS::strncpy (buf, start + 1, var_len);
       buf[var_len++] = ACE_TEXT ('\0');
 #  if defined (ACE_WIN32)
       // Always use the ACE_TCHAR for Windows.
@@ -153,7 +155,7 @@ ACE_OS::strenvdup (const ACE_TCHAR *str)
           p += var_len;
           *p = ACE_TEXT ('\0');
         }
-      ACE_OS::strcpy (p, &start[var_len]);
+      ACE_OS::strcpy (p, start + var_len);
       return buf_p;
     }
   else
@@ -200,7 +202,7 @@ ACE_OS::itoa_emulation (int value, char *string, int radix)
 
   while (e > b)
     {
-      char temp = *e;
+      char const temp = *e;
       *e = *b;
       *b = temp;
       ++b;
@@ -233,14 +235,14 @@ ACE_OS::itow_emulation (int value, wchar_t *string, int radix)
   if (value < 0 && radix == 10)
     {
       string[0] = '-';
-      b++;
+      ++b;
     }
 
   // Convert to base <radix>, but in reverse order
 
   while (value != 0)
     {
-      int mod = value % radix;
+      int const mod = value % radix;
       value = value / radix;
 
       *e++ = (mod < 10) ? '0' + mod : 'a' + mod - 10;
@@ -252,7 +254,7 @@ ACE_OS::itow_emulation (int value, wchar_t *string, int radix)
 
   while (e > b)
     {
-      wchar_t temp = *e;
+      wchar_t const temp = *e;
       *e = *b;
       *b = temp;
       ++b;
@@ -771,7 +773,6 @@ ACE_OS::strtoul_emulation (const char *nptr,
 }
 #endif /* ACE_LACKS_STRTOUL */
 
-
 #if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSTOUL)
 unsigned long
 ACE_OS::wcstoul_emulation (const wchar_t *nptr,
@@ -976,7 +977,6 @@ ACE_OS::wcstoll_emulation (const wchar_t *nptr,
   return (acc);
 }
 #endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSTOLL */
-
 
 #if defined (ACE_LACKS_STRTOULL)
 ACE_UINT64
@@ -1253,7 +1253,7 @@ ACE_OS::getprogname_emulation ()
 void
 ACE_OS::setprogname_emulation (const char* progname)
 {
-  const char *p = ACE_OS::strrchr (progname, '/');
+  const char *p = std::strrchr (progname, '/');
   if (p != nullptr)
 #  if defined (ACE_INTEGRITY)
     __progname = const_cast<char*> (p + 1);

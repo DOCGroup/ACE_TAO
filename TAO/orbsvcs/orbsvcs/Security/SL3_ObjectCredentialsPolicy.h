@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_SL3_OBJECT_CREDENTIALS_POLICY_H
 #define TAO_SL3_OBJECT_CREDENTIALS_POLICY_H
 
@@ -27,7 +26,6 @@
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -51,9 +49,13 @@ namespace TAO
         public virtual ::CORBA::LocalObject
     {
     public:
-      /// Constructor
-      ObjectCredentialsPolicy (
-        const SecurityLevel3::OwnCredentialsList & creds);
+      explicit ObjectCredentialsPolicy (
+        SecurityLevel3::OwnCredentialsList const & creds);
+
+      ObjectCredentialsPolicy (ObjectCredentialsPolicy const &) = delete;
+      ObjectCredentialsPolicy (ObjectCredentialsPolicy &&) = delete;
+      ObjectCredentialsPolicy &operator= (ObjectCredentialsPolicy const &) = delete;
+      ObjectCredentialsPolicy &operator= (ObjectCredentialsPolicy &&) = delete;
 
       /**
        * @name SecurityLevel3::ObjectCredentialsPolicy Methods
@@ -72,12 +74,11 @@ namespace TAO
       //@}
 
     protected:
-      /// Destructor
       /**
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.
        */
-      ~ObjectCredentialsPolicy () override;
+      ~ObjectCredentialsPolicy () override = default;
 
     private:
       /// List of POA-specific OwnCredentials.

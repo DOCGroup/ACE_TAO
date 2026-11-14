@@ -35,35 +35,39 @@ class TAO_RTCORBA_Export TAO_RT_Transport_Descriptor
   : public TAO_Transport_Descriptor_Interface
 {
 public:
-  /// Constructor
-  TAO_RT_Transport_Descriptor (TAO_Endpoint *endpoint,
-                               CORBA::Boolean flag = false);
+  explicit TAO_RT_Transport_Descriptor (TAO_Endpoint *endpoint,
+                                        CORBA::Boolean flag = false);
 
-  /// Destructor
   ~TAO_RT_Transport_Descriptor () override;
 
   /// Insert Properties.
   void insert (TAO_RT_Transport_Descriptor_Property *descriptor_property);
 
-  /// = TAO_Transport_Descriptor_Interface methods
-
+  /// @name TAO_Transport_Descriptor_Interface methods
+  /// @{
   /// This call allocates and copies the contents of this class and
   /// returns the pointer
   TAO_Transport_Descriptor_Interface *duplicate () override;
 
   /// Try to determine if this object is same as the <other_prop>.
   CORBA::Boolean is_equivalent (
-      const TAO_Transport_Descriptor_Interface *other_prop) override;
+      TAO_Transport_Descriptor_Interface const *other_prop) override;
 
   /// Generate hash value for our class
   u_long hash () const override;
+  /// @}
 
 private:
-  /// Stack of properties.
+  TAO_RT_Transport_Descriptor (TAO_RT_Transport_Descriptor const &) = delete;
+  TAO_RT_Transport_Descriptor &operator= (TAO_RT_Transport_Descriptor const &) = delete;
+  TAO_RT_Transport_Descriptor (TAO_RT_Transport_Descriptor &&) = delete;
+  TAO_RT_Transport_Descriptor &operator= (TAO_RT_Transport_Descriptor &&) = delete;
+
+  /// Manually linked properties; owned here only when delete_properties_ is true.
   TAO_RT_Transport_Descriptor_Property *property_list_ {};
 
-  /// Flag to delete properties.
-  int delete_properties_;
+  /// Indicates whether this descriptor owns the linked properties.
+  bool delete_properties_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

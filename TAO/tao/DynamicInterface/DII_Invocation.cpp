@@ -16,7 +16,7 @@
 #include "tao/ORB_Constants.h"
 #include "tao/SystemException.h"
 
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 #if TAO_HAS_INTERCEPTORS == 1
 # include "tao/PI/RequestInfo_Util.h"
@@ -98,21 +98,21 @@ namespace TAO
         throw ::CORBA::MARSHAL (TAO::VMCID, CORBA::COMPLETED_YES);
       }
 
-    for (CORBA::ULong i = 0;
+    for (CORBA::ULong i {};
          this->excp_list_ != nullptr && i < this->excp_list_->count ();
-         i++)
+         ++i)
       {
-          CORBA::TypeCode_var tc = this->excp_list_->item (i);
+          CORBA::TypeCode_var const tc = this->excp_list_->item (i);
 
-          char const* xid = tc->id ();
+          char const * const xid = tc->id ();
 
-          if (ACE_OS::strcmp (buf.in (), xid) != 0)
+          if (std::strcmp (buf.in (), xid) != 0)
             {
               continue;
             }
 
           CORBA::Any any;
-          TAO::Unknown_IDL_Type *unk = nullptr;
+          TAO::Unknown_IDL_Type *unk {};
           ACE_NEW_RETURN (unk,
                           TAO::Unknown_IDL_Type (
                               tc.in (),
@@ -142,8 +142,6 @@ namespace TAO
     throw ::CORBA::UNKNOWN (TAO::VMCID, CORBA::COMPLETED_YES);
   }
 
-
-//***************************************************************************
   DII_Deferred_Invocation::DII_Deferred_Invocation (
       CORBA::Object_ptr otarget,
       Profile_Transport_Resolver &resolver,

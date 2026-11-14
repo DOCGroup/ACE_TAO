@@ -16,6 +16,7 @@
 #include "ace/INet/HTTP_Request.h"
 #include "ace/INet/HTTP_Response.h"
 #include "ace/INet/HTTP_IOStream.h"
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -38,7 +39,12 @@ namespace ACE
               SessionBase (u_short port,
                            const ACE_Time_Value& timeout,
                            bool keep_alive = false,
-                           const ACE_Time_Value* alive_timeout = 0);
+                           const ACE_Time_Value* alive_timeout = nullptr);
+
+              SessionBase (SessionBase const&) = delete;
+              SessionBase& operator= (SessionBase const&) = delete;
+              SessionBase (SessionBase&&) = delete;
+              SessionBase& operator= (SessionBase&&) = delete;
 
               virtual ~SessionBase ();
 
@@ -102,21 +108,21 @@ namespace ACE
 
               ACE_CString host_;
               u_short port_;
-              bool proxy_connection_;
+              bool proxy_connection_ {};
               ACE_CString proxy_target_host_;
-              u_short proxy_target_port_;
+              u_short proxy_target_port_ {};
 
-              bool reactive_;
-              IStream* in_stream_;
-              OStream* out_stream_;
+              bool reactive_ {};
+              std::unique_ptr<IStream> in_stream_;
+              std::unique_ptr<OStream> out_stream_;
               ACE_Time_Value http_timeout_;
               ACE_Time_Value keep_alive_timeout_;
               ACE_Time_Value reconnect_timer_;
               ACE_Countdown_Time reconnect_countdown_;
               bool keep_alive_;
-              bool needs_reconnect_;
-              bool cannot_reconnect_;
-              bool expects_response_body_;
+              bool needs_reconnect_ {};
+              bool cannot_reconnect_ {};
+              bool expects_response_body_ {};
           };
       }
   }

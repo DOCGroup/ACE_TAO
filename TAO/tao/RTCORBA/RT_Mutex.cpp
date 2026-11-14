@@ -27,7 +27,7 @@ TAO_RT_Mutex::unlock ()
 CORBA::Boolean
 TAO_RT_Mutex::try_lock (TimeBase::TimeT wait_time)
 {
-  int result;
+  int result {};
 
   if (wait_time == 0)
     // No wait.
@@ -36,11 +36,11 @@ TAO_RT_Mutex::try_lock (TimeBase::TimeT wait_time)
     {
       // Wait for the specified amount of time before giving up.
       // (wait_time units are 100ns.  See TimeBase.pidl)
-      TimeBase::TimeT seconds = wait_time / 10000000u;
-      TimeBase::TimeT microseconds = (wait_time % 10000000u) / 10;
+      TimeBase::TimeT const seconds {wait_time / 10000000u};
+      TimeBase::TimeT const microseconds {(wait_time % 10000000u) / 10};
 
-      ACE_Time_Value relative_time (ACE_U64_TO_U32 (seconds),
-                                    ACE_U64_TO_U32 (microseconds));
+      ACE_Time_Value const relative_time (ACE_U64_TO_U32 (seconds),
+                                          ACE_U64_TO_U32 (microseconds));
 
       ACE_Time_Value absolute_time =
         relative_time +
@@ -50,30 +50,30 @@ TAO_RT_Mutex::try_lock (TimeBase::TimeT wait_time)
     }
 
   if (result == 0)
-    return 1;
+    return true;
   else if (result == -1 &&
            (errno == ETIME ||
             errno == EBUSY))
-    return 0;
+    return false;
   else
     // Some really bad error.
     throw ::CORBA::INTERNAL ();
 }
 
-const char *
+char const *
 TAO_RT_Mutex::name () const
 {
-  return 0;
+  return nullptr;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 #if (TAO_HAS_NAMED_RT_MUTEXES == 1)
-TAO_Named_RT_Mutex::TAO_Named_RT_Mutex (const char *name)
+TAO_Named_RT_Mutex::TAO_Named_RT_Mutex (char const *name)
   : name_ (name)
 {
 }
 
-const char *
+char const *
 TAO_Named_RT_Mutex::name () const
 {
   return this->name_.c_str ();

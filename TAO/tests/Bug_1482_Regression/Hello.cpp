@@ -1,13 +1,6 @@
 #include "Hello.h"
 #include "ace/ACE.h"
 
-Hello::Hello (CORBA::ORB_ptr orb)
-  : orb_ (CORBA::ORB::_duplicate (orb))
-    , mutex_ ()
-    , latest_prime_ (0)
-{
-}
-
 CORBA::ULong
 Hello::next_prime ()
 {
@@ -23,15 +16,15 @@ Hello::next_prime ()
        ind != 400;
        ++ind)
     {
-      CORBA::Short bc = 0;
+      bool is_prime = false;
 
-      while (bc == 0)
+      while (!is_prime)
         {
           ++this->latest_prime_;
           if (ACE::is_prime (this->latest_prime_,
                              2,
                              this->latest_prime_ / 2) == 0)
-            bc = 1;
+            is_prime = true;
         }
     }
 

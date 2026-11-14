@@ -1,13 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   EndpointPolicy.h
  *
  *  @author  Yan Dai <dai_y@ociweb.com>
  */
-//=============================================================================
-
 
 #ifndef TAO_ENDPOINTPOLICY_H
 #define TAO_ENDPOINTPOLICY_H
@@ -31,22 +28,21 @@ class TAO_EndpointPolicy_Export TAO_EndpointPolicy_Initializer
 public:
   TAO_EndpointPolicy_Initializer () = default;
 
+  TAO_EndpointPolicy_Initializer (TAO_EndpointPolicy_Initializer const &) = delete;
+  TAO_EndpointPolicy_Initializer &operator= (TAO_EndpointPolicy_Initializer const &) = delete;
+  TAO_EndpointPolicy_Initializer (TAO_EndpointPolicy_Initializer &&) = delete;
+  TAO_EndpointPolicy_Initializer &operator= (TAO_EndpointPolicy_Initializer &&) = delete;
+
   /// Used to force the initialization of the ORB code.
   static int static_init ();
 
   /// Initialize the Endpoint Policy loader hooks.
   int init (int argc, ACE_TCHAR* []) override;
 
-private:
-  TAO_EndpointPolicy_Initializer (TAO_EndpointPolicy_Initializer const &) = delete;
-  TAO_EndpointPolicy_Initializer &operator= (TAO_EndpointPolicy_Initializer const &) = delete;
-  TAO_EndpointPolicy_Initializer (TAO_EndpointPolicy_Initializer &&) = delete;
-  TAO_EndpointPolicy_Initializer &operator= (TAO_EndpointPolicy_Initializer &&) = delete;
 };
 
 static int
 TAO_Requires_EndpointPolicy_Initializer = TAO_EndpointPolicy_Initializer::static_init ();
-
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_EndpointPolicy, TAO_EndpointPolicy_Initializer)
 ACE_FACTORY_DECLARE (TAO_EndpointPolicy, TAO_EndpointPolicy_Initializer)

@@ -153,7 +153,7 @@ test (ACE_Configuration *config,
             return -14;
           found[2] = 1;
         }
-      index++;
+      ++index;
     }
 
   // Make sure we got three values.
@@ -216,7 +216,7 @@ test (ACE_Configuration *config,
                               -19);
           found[2] = 1;
         }
-      index++;
+      ++index;
     }
 
   if (index != 3 || !found[0] || !found[1] || !found[2])
@@ -750,7 +750,7 @@ build_config_object (ACE_Configuration& cfg)
                             name.c_str (), //0, //ACE_TEXT ("x"),
                             string))
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("error using ACE_TString::c_str() == %d, len == %d\n"),
+                       ACE_TEXT ("error using ACE_TString::c_str() == %s, len == %B\n"),
                        name.c_str(), name.length ()),
                       -17);
 
@@ -1012,7 +1012,6 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
                 {
                   ACE_TString fromFileString, originalString;
 
-
                   if (fromFile.get_string_value (fromFileSection,
                                                  valueName.c_str (),
                                                  fromFileString) != 0)
@@ -1092,7 +1091,7 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
                                            valueName.c_str ());
                 }// end else if values match.
 
-              valueIndex++;
+              ++valueIndex;
             }// end value while loop
 
           // at this point the original should have no values.  look
@@ -1103,7 +1102,7 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
                                               valueIndex,
                                               valueName,
                                               originalType)))
-            valueIndex++;
+            ++valueIndex;
 
           // having a value indicates a mismatch
           rc = valueIndex == 0;
@@ -1438,7 +1437,6 @@ Config_Test::testRegFormat ()
                 ACE_TEXT ("Registry Format Import/Export Works ;-)\n")));
   return rc;
 }
-
 
 // Reads a string value from a configuration object.
 

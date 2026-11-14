@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #ifndef FT_DEFAULT_FAULT_ANALYZER_H_
 #define FT_DEFAULT_FAULT_ANALYZER_H_
 
@@ -38,14 +37,8 @@ namespace TAO
     : public ::TAO::FT_FaultAnalyzer
   {
   public:
-    /**
-    * Default constructor.
-    */
-    FT_DefaultFaultAnalyzer ();
+    FT_DefaultFaultAnalyzer () = default;
 
-    /**
-    * Destructor.
-    */
     ~FT_DefaultFaultAnalyzer () override;
 
   public:
@@ -68,9 +61,7 @@ namespace TAO
     ////////////////////
     // Forbidden methods
   private:
-    /// Copy constructor.
     FT_DefaultFaultAnalyzer (FT_DefaultFaultAnalyzer const &) = delete;
-    /// Assignment operator.
     FT_DefaultFaultAnalyzer (FT_DefaultFaultAnalyzer &&) = delete;
     FT_DefaultFaultAnalyzer & operator= (FT_DefaultFaultAnalyzer const &) = delete;
     FT_DefaultFaultAnalyzer & operator= (FT_DefaultFaultAnalyzer &&) = delete;

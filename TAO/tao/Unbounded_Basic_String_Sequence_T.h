@@ -37,12 +37,10 @@ public:
   using subscript_type = element_type;
   using const_subscript_type = const_value_type;
 
-
   // @copydoc TAO::details::generic_sequence::generic_sequence()
   inline unbounded_basic_string_sequence()
     : impl_()
   {}
-
 
   inline explicit unbounded_basic_string_sequence(CORBA::ULong maximum)
     : impl_(maximum)

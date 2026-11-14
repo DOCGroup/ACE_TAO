@@ -88,7 +88,6 @@ public:
                      const void *arg = nullptr);
 
   /// Initialize the object; arguments are the same as for the
-  /// constructor.
   void set (unsigned long options = 0,
             const ACE_Time_Value &timeout = ACE_Time_Value::zero,
             const void *arg = nullptr);

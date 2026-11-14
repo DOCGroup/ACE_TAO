@@ -46,7 +46,6 @@ public:
   /// Default constructor.
   CDR_Test ();
 
-  /// Constructor.
   CDR_Test (ACE_CDR::Char o,
             ACE_CDR::Short s,
             ACE_CDR::Long w,
@@ -239,7 +238,7 @@ run_test (int write_file,
       ssize_t size = file.recv (&byte_order, 1);
       if (size != 1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Read %d bytes, rather than expected ")
+                           ACE_TEXT ("Read %b bytes, rather than expected ")
                            ACE_TEXT ("1 bytes\n"),
                            size),
                           -1);
@@ -248,8 +247,8 @@ run_test (int write_file,
       size = file.recv (buffer, msgsize);
       if (size != msgsize)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Read %d bytes, rather than expected ")
-                           ACE_TEXT ("%d bytes\n"),
+                           ACE_TEXT ("Read %b bytes, rather than expected ")
+                           ACE_TEXT ("%B bytes\n"),
                            size,
                            msgsize),
                           -1);
@@ -343,7 +342,6 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_FILE_Addr filename (ACE_sap_any_cast (ACE_FILE_Addr &));
   if (fn != nullptr)
     filename.set (fn);
-
 
   ACE_FILE_Connector connector;
   ACE_FILE_IO file;

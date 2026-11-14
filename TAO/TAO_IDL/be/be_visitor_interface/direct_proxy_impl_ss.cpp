@@ -19,7 +19,6 @@ be_visitor_interface_direct_proxy_impl_ss::visit_interface (
 
   this->ctx_->node (node);
 
-  // Destructor Implementation
   *os << be_nl_2
       << node->full_direct_proxy_impl_name () << "::~"
       << node->direct_proxy_impl_name () << " () = default;" << be_nl_2;
@@ -40,8 +39,7 @@ int
 be_visitor_interface_direct_proxy_impl_ss::gen_abstract_ops_helper (
     be_interface *node,
     be_interface *base,
-    TAO_OutStream *os
-  )
+    TAO_OutStream *os)
 {
   if (!base->is_abstract ())
     {

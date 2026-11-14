@@ -115,8 +115,7 @@ Test_Protocols_Hooks::get_selector_bands_policy_hook (
     CORBA::Short,
     CORBA::Short &,
     CORBA::Short &,
-    bool &
-  )
+    bool &)
 {
   // No-op.
 }
@@ -151,8 +150,7 @@ Test_Protocols_Hooks::get_thread_implicit_CORBA_priority (CORBA::Short &)
 int
 Test_Protocols_Hooks::restore_thread_CORBA_and_native_priority (
     CORBA::Short,
-    CORBA::Short
-  )
+    CORBA::Short)
 {
   return -1;
 }

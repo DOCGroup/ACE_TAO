@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_TESTS_PROCESS_STRATEGY_TEST_H
 #define ACE_TESTS_PROCESS_STRATEGY_TEST_H
 
@@ -38,18 +37,17 @@
 class Counting_Service : public ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
 public:
-  /// Constructor.
   Counting_Service (ACE_Thread_Manager * = 0);
 
   /// Hook that is used to initialize the service (called by the
   /// <ACE_Strategy_Acceptor::handle_input> Template Method).
-  virtual int open (void *v);
+  int open (void *v) override;
 
 protected:
   // = Methods invoked via "pointer to method" table entry.
 
   /// Handle the THREAD case.
-  virtual int svc ();
+  int svc () override;
 
   // = Operations corresponding to requests from the client.
   /// Execute the read operation on the file.
@@ -61,29 +59,27 @@ protected:
   // = Hooks called by <Reactor> and <Strategy_Acceptor>.
 
   /// Hook called by the <Reactor> when data arrives from the client.
-  virtual int handle_input (ACE_HANDLE p = ACE_INVALID_HANDLE);
+  int handle_input (ACE_HANDLE p = ACE_INVALID_HANDLE) override;
 
   /// Closing down
-  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-                            ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
+  int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
+                    ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK) override;
 };
 
 class Process_Strategy : public ACE_Process_Strategy<Counting_Service>
 {
 public:
-  // Constructor
   Process_Strategy (size_t n_processes = 1,
                     ACE_Event_Handler *acceptor = 0,
                     ACE_Reactor * = 0,
                     int flags = 0);
 
-  // Destructor
   ~Process_Strategy ();
 
   // Overwrite the process creation method to include connection
   // counting
-  virtual int activate_svc_handler (Counting_Service *svc_handler,
-                                    void *arg = 0);
+  int activate_svc_handler (Counting_Service *svc_handler,
+                            void *arg = 0) override;
 };
 
 /**
@@ -94,10 +90,8 @@ public:
 class Options : public ACE_Event_Handler
 {
 public:
-  /// Constructor.
   Options ();
 
-  /// Destructor.
   ~Options ();
 
   /// Read command-line arguments and initialize options.

@@ -46,7 +46,6 @@
 //------[ SNMP ObjectSyntax Values ]---------------------------------------
 #define sNMP_SYNTAX_SEQUENCE  (aSN_CONTEXT | aSN_CONSTRUCTOR | 0x10)
 
-
 //-------------------------------------------------------------------------
 // These values are used in the "syntax" member
 // of the smiVALUE structure which follows.
@@ -74,7 +73,6 @@
 #define sNMP_SYNTAX_NOSUCHINSTANCE  (aSN_CONTEXT | aSN_PRIMITIVE | 0x01)
 #define sNMP_SYNTAX_ENDOFMIBVIEW    (aSN_CONTEXT | aSN_PRIMITIVE | 0x02)
 
-
 //--------------[ different types of PDU's ]-------------------------------
 #define sNMP_PDU_GET            (aSN_CONTEXT | aSN_CONSTRUCTOR | 0x0)
 #define sNMP_PDU_GETNEXT        (aSN_CONTEXT | aSN_CONSTRUCTOR | 0x1)
@@ -84,7 +82,6 @@
 #define sNMP_PDU_GETBULK    (aSN_CONTEXT | aSN_CONSTRUCTOR | 0x5)
 #define sNMP_PDU_INFORM     (aSN_CONTEXT | aSN_CONSTRUCTOR | 0x6)
 #define sNMP_PDU_TRAP       (aSN_CONTEXT | aSN_CONSTRUCTOR | 0x7)
-
 
 //------[ smi typedefs ]---------------------------------------------------
 // SNMP-related types from RFC1442 (SMI)
@@ -141,5 +138,4 @@ typedef struct {
 } SmiCNTR64,    *SmiLPCNTR64;
 
 #endif // SMIDEF_
-
 

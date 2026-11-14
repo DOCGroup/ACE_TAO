@@ -10,34 +10,35 @@
  */
 //=============================================================================
 
-
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 
 #include "ami_testS.h"
 
-ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
-int shutdown_flag {};
-int debug {};
-int result {};
+#include <cstring>
+#include <string>
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc,
+            ACE_TCHAR *argv[],
+            std::basic_string<ACE_TCHAR> &ior,
+            bool &shutdown_flag,
+            bool &debug)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("dk:x"));
-  int c {};
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("dk:x"));
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'd':
-        debug = 1;
+        debug = true;
         break;
       case 'k':
         ior = get_opts.opt_arg ();
         break;
       case 'x':
-        shutdown_flag = 1;
+        shutdown_flag = true;
         break;
       case '?':
       default:
@@ -56,22 +57,25 @@ parse_args (int argc, ACE_TCHAR *argv[])
 class Handler : public POA_A::AMI_AMI_TestHandler
 {
 public:
-  /// Constructor.
   Handler () = default;
 
-  /// Destructor.
   ~Handler () override = default;
   Handler (Handler const &) = delete;
   Handler (Handler &&) = delete;
   Handler &operator= (Handler const &) = delete;
   Handler &operator= (Handler &&) = delete;
 
-  void get_yadda (CORBA::Long result) override
+  bool test_failed () const
+    {
+      return this->test_failed_;
+    }
+
+  void get_yadda (CORBA::Long value) override
     {
       ACE_ERROR ((LM_ERROR,
                   "Error: Callback method <get_yadda> called: result <%d>\n",
-                  result));
-      result = 1;
+                  value));
+      this->test_failed_ = true;
     };
 
   void get_yadda_excep (::Messaging::ExceptionHolder *excep_holder) override
@@ -91,14 +95,14 @@ public:
               ACE_ERROR ((LM_ERROR,
                           "ERROR: ex.id not 42: %d\n",
                           ex.id));
-              result = 1;
+              this->test_failed_ = true;
             }
-          if (ACE_OS::strcmp (ex.whatDidTheRightThing.in (), "Hello world") != 0)
+          if (std::strcmp (ex.whatDidTheRightThing.in (), "Hello world") != 0)
             {
               ACE_ERROR ((LM_ERROR,
                           "ERROR: ex.whatDidTheRightThing not ok: <%C>\n",
                           ex.whatDidTheRightThing.in ()));
-              result = 1;
+              this->test_failed_ = true;
             }
         }
       catch (CORBA::Exception const &ex)
@@ -113,7 +117,7 @@ public:
     {
       ACE_ERROR ((LM_ERROR,
                   "Error: Callback method <set_yadda> called:\n"));
-      result = 1;
+      this->test_failed_ = true;
     };
 
   void set_yadda_excep (::Messaging::ExceptionHolder *excep_holder) override
@@ -133,14 +137,14 @@ public:
               ACE_ERROR ((LM_ERROR,
                           "ERROR: ex.id not 42: %d\n",
                           ex.id));
-              result = 1;
+              this->test_failed_ = true;
             }
-          if (ACE_OS::strcmp (ex.whatDidTheRightThing.in (), "Hello world") != 0)
+          if (std::strcmp (ex.whatDidTheRightThing.in (), "Hello world") != 0)
             {
               ACE_ERROR ((LM_ERROR,
                           "ERROR: ex.whatDidTheRightThing not ok: <%C>\n",
                           ex.whatDidTheRightThing.in ()));
-              result = 1;
+              this->test_failed_ = true;
             }
         }
       catch (CORBA::Exception const &ex)
@@ -151,12 +155,12 @@ public:
         }
     };
 
-  void get_dadda (CORBA::Long result) override
+  void get_dadda (CORBA::Long value) override
     {
       ACE_ERROR ((LM_ERROR,
                   "Error: Callback method <get_dadda> called: result <%d>\n",
-                  result));
-      result = 1;
+                  value));
+      this->test_failed_ = true;
     };
 
   void get_dadda_excep (::Messaging::ExceptionHolder *excep_holder) override
@@ -176,14 +180,14 @@ public:
               ACE_ERROR ((LM_ERROR,
                           "ERROR: ex.id not 42: %d\n",
                           ex.id));
-              result = 1;
+              this->test_failed_ = true;
             }
-          if (ACE_OS::strcmp (ex.whatDidTheRightThing.in (), "Hello world") != 0)
+          if (std::strcmp (ex.whatDidTheRightThing.in (), "Hello world") != 0)
             {
               ACE_ERROR ((LM_ERROR,
                           "ERROR: ex.whatDidTheRightThing not ok: <%C>\n",
                           ex.whatDidTheRightThing.in ()));
-              result = 1;
+              this->test_failed_ = true;
             }
         }
       catch (CORBA::Exception const &ex)
@@ -203,52 +207,57 @@ public:
   void inout_arg_test_excep (::Messaging::ExceptionHolder *) override
   {
   }
+
+private:
+  bool test_failed_ {};
 };
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  Handler handler;
   try
     {
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb {CORBA::ORB_init (argc, argv)};
 
       CORBA::Object_var object_var =
         orb->resolve_initial_references ("RootPOA");
 
-      PortableServer::POA_var poa_var =
+      PortableServer::POA_var const poa_var =
         PortableServer::POA::_narrow (object_var.in ());
 
-      PortableServer::POAManager_var poa_manager_var =
+      PortableServer::POAManager_var const poa_manager_var =
         poa_var->the_POAManager ();
 
       poa_manager_var->activate ();
 
-      if (parse_args (argc, argv) != 0)
+      std::basic_string<ACE_TCHAR> ior {ACE_TEXT ("file://test.ior")};
+      bool shutdown_flag {};
+      bool debug {};
+      if (parse_args (argc, argv, ior, shutdown_flag, debug) != 0)
         return 1;
 
       // We reuse the object_var smart pointer!
-      object_var = orb->string_to_object (ior);
+      object_var = orb->string_to_object (ior.c_str ());
 
-      A::AMI_Test_var ami_test_var =
+      A::AMI_Test_var const ami_test_var =
         A::AMI_Test::_narrow (object_var.in ());
 
       if (CORBA::is_nil (ami_test_var.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Object reference <%s> is nil.\n",
-                             ior),
+                             ior.c_str ()),
                             1);
         }
 
       // Instantiate the ReplyHandler and register that with the POA.
-      Handler handler;
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         poa_var->activate_object (&handler);
 
-      CORBA::Object_var object = poa_var->id_to_reference (id.in ());
+      CORBA::Object_var const object = poa_var->id_to_reference (id.in ());
 
-      A::AMI_AMI_TestHandler_var the_handler_var =
+      A::AMI_AMI_TestHandler_var const the_handler_var =
         A::AMI_AMI_TestHandler::_narrow (object.in ());
 
       // Begin test of attributes
@@ -276,8 +285,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           ami_test_var->shutdown ();
         }
 
-      poa_var->destroy (1,  // ethernalize objects
-                        0); // wait for completion
+      poa_var->destroy (true,  // ethernalize objects
+                        false); // wait for completion
 
       orb->destroy ();
     }
@@ -287,5 +296,5 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       return 1;
     }
 
-  return result;
+  return handler.test_failed () ? 1 : 0;
 }

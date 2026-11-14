@@ -129,7 +129,6 @@ UTL_Scope::UTL_Scope (AST_Decl::NodeType nt)
 {
 }
 
-// Destructor.
 UTL_Scope::~UTL_Scope ()
 {
   for (UTL_ScopeActiveIterator iter (this, IK_both);
@@ -1749,11 +1748,11 @@ UTL_Scope::match_param (UTL_ScopedName *e)
 
   if (for_new_holder)
     {
-      alias_params = &*for_new_holder;
+      alias_params = std::addressof (*for_new_holder);
     }
   else if (alias_params_value)
     {
-      alias_params = &*alias_params_value;
+      alias_params = std::addressof (*alias_params_value);
     }
 
   for (FE_Utils::T_Param_Info const& param_info : *params)
@@ -1973,7 +1972,6 @@ UTL_Scope::iter_lookup_by_name_local (AST_Decl *d,
 
 // UTL_SCOPE_ACTIVE_ITERATOR
 
-// Constructor.
 UTL_ScopeActiveIterator::UTL_ScopeActiveIterator (
     UTL_Scope *s,
     UTL_Scope::ScopeIterationKind i
@@ -2020,7 +2018,7 @@ UTL_ScopeActiveIterator::item ()
 bool
 UTL_ScopeActiveIterator::is_done ()
 {
-  std::size_t limit =
+  size_t limit =
     (stage == UTL_Scope::IK_decls)
       ? iter_source->pd_decls.size ()
       : iter_source->pd_local_types.size ();

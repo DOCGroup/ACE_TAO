@@ -1,11 +1,10 @@
 /* -*- C++ -*- */
-#include "ace/OS_NS_string.h"
+#include <cstring>
+#include "ace/SV_Message.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "ace/SV_Message.h"
 
 #define MSGSZ 128
 #define SRV_KEY ACE_DEFAULT_SHM_KEY
@@ -14,26 +13,38 @@
 class Message_Data
 {
 public:
-  Message_Data (long p = -1,
-                const char user[] = "",
-                const char text[] = ""): pid_ (p)
+  explicit Message_Data (long p = -1,
+                         char const user[] = "",
+                         char const text[] = "")
+    : pid_ (p)
   {
-    ACE_OS::strncpy (this->username_, user, 9);
-    ACE_OS::strncpy (this->mtext_, text, MSGSZ);
+    // These fixed buffers are the System V message layout.
+    std::strncpy (this->username_, user, sizeof this->username_);
+    this->username_[sizeof this->username_ - 1] = '\0';
+    std::strncpy (this->mtext_, text, sizeof this->mtext_);
+    this->mtext_[sizeof this->mtext_ - 1] = '\0';
   }
 
-  long pid () { return this->pid_; }
+  long pid () const { return this->pid_; }
   void pid (long p) { this->pid_ = p; }
-  char *user () { return this->username_; }
-  void user (char user[]) { ACE_OS::strncpy (this->username_, user, 9); }
-  char *text () { return this->mtext_; }
-  void text (char text[]) { ACE_OS::strncpy (this->mtext_, text, MSGSZ); }
-  int length () { return sizeof *this - sizeof this->mtext_ + ACE_OS::strlen (this->mtext_) + 1; }
+  char const *user () const { return this->username_; }
+  void user (char const user[])
+  {
+    std::strncpy (this->username_, user, sizeof this->username_);
+    this->username_[sizeof this->username_ - 1] = '\0';
+  }
+  char const *text () const { return this->mtext_; }
+  void text (char const text[])
+  {
+    std::strncpy (this->mtext_, text, sizeof this->mtext_);
+    this->mtext_[sizeof this->mtext_ - 1] = '\0';
+  }
+  int length () const { return sizeof *this - sizeof this->mtext_ + std::strlen (this->mtext_) + 1; }
 
 protected:
-  long  pid_;
-  char  username_[9];
-  char  mtext_[MSGSZ];
+  long pid_;
+  char username_[9];
+  char mtext_[MSGSZ];
 };
 
 class Message_Block : public ACE_SV_Message, public Message_Data
@@ -45,12 +56,12 @@ class Message_Block : public ACE_SV_Message, public Message_Data
   //   it relies on inheritance to be "concatenation."
   //
 public:
-  Message_Block (long t,
-                 long p = 0,
-                 const char login[] = "",
-                 const char message[] = "")
-  : ACE_SV_Message (t),
-    Message_Data (p, login, message)
+  explicit Message_Block (long t,
+                          long p = 0,
+                          char const login[] = "",
+                          char const message[] = "")
+    : ACE_SV_Message (t),
+      Message_Data (p, login, message)
   {}
 };
 

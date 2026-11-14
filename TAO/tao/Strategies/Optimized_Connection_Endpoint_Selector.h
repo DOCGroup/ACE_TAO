@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file   Optimized_Connection_Endpoint_Selector.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author Phil Mesnier <mesnier_p@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_OPTIMIZED_CONNECTION_ENDPOINT_SELECTOR_H
 #define TAO_OPTIMIZED_CONNECTION_ENDPOINT_SELECTOR_H
@@ -46,11 +44,9 @@ class TAO_Strategies_Export TAO_Optimized_Connection_Endpoint_Selector
  : public TAO_Default_Endpoint_Selector
 {
 public:
-  /// Constructor.
   explicit TAO_Optimized_Connection_Endpoint_Selector (ACE_Time_Value const &tv);
 
-  /// Destructor.
-  ~TAO_Optimized_Connection_Endpoint_Selector () override;
+  ~TAO_Optimized_Connection_Endpoint_Selector () override = default;
 
   static void hook (TAO_ORB_Core *,
                     TAO_Stub *,

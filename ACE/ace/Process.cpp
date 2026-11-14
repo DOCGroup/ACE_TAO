@@ -18,7 +18,6 @@
 #include "ace/OS_Memory.h"
 #include "ace/Countdown_Time.h"
 #include "ace/Truncate.h"
-#include "ace/Vector_T.h"
 #include "ace/Tokenizer_T.h"
 
 #if defined (ACE_VXWORKS) && defined (__RTP__)
@@ -26,7 +25,11 @@
 # include <taskLib.h>
 #endif
 
+#include <cstring>
+#include <cwchar>
 #include <memory>
+#include <utility>
+#include <vector>
 
 // This function acts as a signal handler for SIGCHLD. We don't really want
 // to do anything with the signal - it's just needed to interrupt a sleep.
@@ -41,11 +44,6 @@ static void sigchld_nop (int, siginfo_t *, ucontext_t *)
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_Process::ACE_Process ()
-  :
-#if !defined (ACE_WIN32)
-  child_id_ (ACE_INVALID_PID),
-#endif /* !defined (ACE_WIN32) */
-  exit_code_ (0)
 {
 #if defined (ACE_WIN32)
   ACE_OS::memset ((void *) &this->process_info_,
@@ -81,7 +79,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
   // Stash the passed/duped handle sets away in this object for later
   // closing if needed or requested. At the same time, figure out which
   // ones to include in command line options if that's needed below.
-  ACE_Handle_Set *set_p = nullptr;
+  ACE_Handle_Set *set_p {};
   if (options.dup_handles (this->dup_handles_))
     set_p = &this->dup_handles_;
   else if (options.passed_handles (this->handles_passed_))
@@ -118,19 +116,19 @@ ACE_Process::spawn (ACE_Process_Options &options)
 #   pragma GCC diagnostic ignored "-Wformat"
 #   pragma GCC diagnostic ignored "-Wformat-extra-args"
 #  endif /* __GNUC__ */
-          curr_len += ACE_OS::sprintf (&cmd_line_buf[curr_len],
+          curr_len += ACE_OS::sprintf (cmd_line_buf + curr_len,
                                        ACE_TEXT (" +H %I64p"),
                                        h);
 #  if defined (__GNUC__)
 #   pragma GCC diagnostic pop
 #  endif /* __GNUC__ */
 # else
-          curr_len += ACE_OS::sprintf (&cmd_line_buf[curr_len],
+          curr_len += ACE_OS::sprintf (cmd_line_buf + curr_len,
                                        ACE_TEXT (" +H %p"),
                                        h);
 # endif  /* ACE_WIN64 */
 #else
-          curr_len += ACE_OS::sprintf (&cmd_line_buf[curr_len],
+          curr_len += ACE_OS::sprintf (cmd_line_buf + curr_len,
                                        ACE_TEXT (" +H %d"),
                                        h);
 #endif /* ACE_WIN32 */
@@ -141,11 +139,11 @@ ACE_Process::spawn (ACE_Process_Options &options)
   void* env_buf = options.env_buf ();
   DWORD flags = options.creation_flags ();
 # if defined (ACE_HAS_WCHAR) && !defined (ACE_USES_WCHAR)
-  wchar_t* wenv_buf = nullptr;
+  std::unique_ptr<wchar_t[]> wenv_buf;
   if (options.use_unicode_environment ())
     {
-      wenv_buf = this->convert_env_buffer (options.env_buf ());
-      env_buf = wenv_buf;
+      wenv_buf.reset (this->convert_env_buffer (options.env_buf ()));
+      env_buf = wenv_buf.get ();
       flags |= CREATE_UNICODE_ENVIRONMENT;
     }
 # endif
@@ -178,11 +176,6 @@ ACE_Process::spawn (ACE_Process_Options &options)
                                                   options.startup_info (),
                                                   &this->process_info_);
     }
-
-# if defined (ACE_HAS_WCHAR) && !defined (ACE_USES_WCHAR)
-  if (options.use_unicode_environment ())
-    delete wenv_buf;
-# endif
 
   if (fork_result)
     {
@@ -233,7 +226,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
   for (i = 0; i < vcount; ++i)
     procargv[i] = ACE_Wide_To_Ascii::convert (wargv[i]);
 
-  char **procenv = nullptr;
+  char **procenv {};
   if (options.inherit_environment ())
     {
       wargv = options.env_argv ();
@@ -393,7 +386,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
         if (!options.handle_inheritance ())
           {
             // Set close-on-exec for all FDs except standard handles
-            for (int i = ACE::max_handles () - 1; i >= 0; i--)
+            for (int i = ACE::max_handles () - 1; i >= 0; --i)
               {
                 if (i == ACE_STDIN || i == ACE_STDOUT || i == ACE_STDERR)
                   continue;
@@ -444,7 +437,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
           {
             // Add the new environment variables to the environment
             // context of the context before doing an <execvp>.
-            for (size_t i = 0; procenv[i] != nullptr; i++)
+            for (size_t i = 0; procenv[i] != nullptr; ++i)
               if (ACE_OS::putenv (procenv[i]) != 0)
                 return ACE_INVALID_PID;
 
@@ -685,7 +678,7 @@ ACE_Process::convert_env_buffer (const char* env) const
 
   // Convert each individual character string to the equivalent wide
   // character string.
-  ACE_Vector<wchar_t*> buffer;
+  std::vector<std::unique_ptr<wchar_t[]>> buffer;
   size_t start = 0;
   size_t i = 0;
   while (true)
@@ -693,36 +686,34 @@ ACE_Process::convert_env_buffer (const char* env) const
       if (env[i] == '\0')
         {
           // Convert the char string to wchar_t
-          wchar_t* str = ACE_Ascii_To_Wide::convert (env + start);
+          std::unique_ptr<wchar_t[]> str (ACE_Ascii_To_Wide::convert (env + start));
 
           // Add the length of the string plus the nul terminator
-          total += ACE_OS::strlen (str) + 1;
+          total += std::wcslen (str.get ()) + 1;
 
           // Save it and set up for the next string
-          buffer.push_back (str);
+          buffer.push_back (std::move (str));
           start = ++i;
           if (env[start] == '\0')
             break;
         }
       else
         {
-          i += ACE_OS::strlen (env + i);
+          i += std::strlen (env + i);
         }
     }
 
   // Copy each string into the buffer leaving a nul terminator between
   // each string and adding a second nul terminator at the end
   start = 0;
-  wchar_t* wenv = new wchar_t[total];
-  size_t length = buffer.size ();
-  for (i = 0; i < length; ++i)
+  std::unique_ptr<wchar_t[]> wenv (new wchar_t[total]);
+  for (i = 0; i < buffer.size (); ++i)
     {
-      ACE_OS::strcpy(wenv + start, buffer[i]);
-      start += ACE_OS::strlen (buffer[i]) + 1;
-      delete [] buffer[i];
+      std::wcscpy (wenv.get () + start, buffer[i].get ());
+      start += std::wcslen (buffer[i].get ()) + 1;
     }
-  wenv[start] = 0;
-  return wenv;
+  wenv[start] = L'\0';
+  return wenv.release ();
 }
 #endif
 
@@ -731,41 +722,12 @@ ACE_Process_Options::ACE_Process_Options (bool inherit_environment,
                                           size_t env_buf_len,
                                           size_t max_env_args,
                                           size_t max_cmdline_args)
-  :
-    inherit_environment_ (inherit_environment),
-    creation_flags_ (0),
-    avoid_zombies_ (0),
-#if defined (ACE_WIN32)
-    environment_inherited_ (0),
-    process_attributes_ (0),
-    thread_attributes_ (0),
-    user_token_ (ACE_INVALID_HANDLE),
-    close_user_token_ (false),
-#else /* ACE_WIN32 */
-    stdin_ (ACE_INVALID_HANDLE),
-    stdout_ (ACE_INVALID_HANDLE),
-    stderr_ (ACE_INVALID_HANDLE),
-    ruid_ ((uid_t) -1),
-    euid_ ((uid_t) -1),
-    rgid_ ((gid_t) -1),
-    egid_ ((gid_t) -1),
-#endif /* ACE_WIN32 */
-    handle_inheritance_ (true),
-    set_handles_called_ (0),
-    environment_buf_index_ (0),
-    environment_argv_index_ (0),
-    environment_buf_ (nullptr),
+  : inherit_environment_ (inherit_environment),
     environment_buf_len_ (env_buf_len),
     max_environment_args_ (max_env_args),
     max_environ_argv_index_ (max_env_args - 1),
-    command_line_argv_calculated_ (false),
-    command_line_buf_ (nullptr),
-    command_line_copy_ (nullptr),
     command_line_buf_len_ (command_line_buf_len),
-    max_command_line_args_ (max_cmdline_args),
-    command_line_argv_ (nullptr),
-    process_group_ (ACE_INVALID_PID),
-    use_unicode_environment_ (false)
+    max_command_line_args_ (max_cmdline_args)
 {
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_ALLOCATOR (command_line_buf_,
@@ -816,27 +778,27 @@ ACE_Process_Options::inherit_environment ()
   // Ensure only once execution.
   if (environment_inherited_)
     return;
-  environment_inherited_ = 1;
+  environment_inherited_ = true;
 
   // Get the existing environment.
-  ACE_TCHAR *existing_environment = nullptr;
+  ACE_TCHAR *existing_environment {};
 #if defined (ACE_HAS_WCHAR) && !defined (ACE_USES_WCHAR)
-  WCHAR *existing_wide_env = nullptr;
-  ACE_Vector<char> temp_narrow_env;
+  WCHAR *existing_wide_env {};
+  std::vector<char> temp_narrow_env;
   if (this->use_unicode_environment_)
     {
       existing_wide_env = ::GetEnvironmentStringsW ();
       for (WCHAR *iter = existing_wide_env; *iter; ++iter)
         {
           ACE_Wide_To_Ascii wta (iter);
-          size_t const len = ACE_OS::strlen (wta.char_rep ());
+          size_t const len = std::strlen (wta.char_rep ());
           size_t const idx = temp_narrow_env.size ();
-          temp_narrow_env.resize (idx + len + 1, 0);
-          ACE_OS::strncpy (&temp_narrow_env[idx], wta.char_rep (), len);
+          temp_narrow_env.resize (idx + len + 1, '\0');
+          std::memcpy (temp_narrow_env.data () + idx, wta.char_rep (), len);
           iter += len;
         }
-      temp_narrow_env.push_back (0);
-      existing_environment = &temp_narrow_env[0];
+      temp_narrow_env.push_back ('\0');
+      existing_environment = temp_narrow_env.data ();
     }
   else
 #endif
@@ -886,7 +848,7 @@ ACE_Process_Options::setenv (ACE_TCHAR *envp[])
     {
       if (this->setenv_i (envp[i], ACE_OS::strlen (envp[i])) == -1)
         return -1;
-      i++;
+      ++i;
     }
 
 #if defined (ACE_WIN32)
@@ -934,7 +896,7 @@ ACE_Process_Options::setenv (const ACE_TCHAR *variable_name,
   // To address the potential buffer overflow,
   // we now allocate the buffer on heap with a variable size.
   size_t const buflen = ACE_OS::strlen (variable_name) + ACE_OS::strlen (format) + 2;
-  ACE_TCHAR *newformat = nullptr;
+  ACE_TCHAR *newformat {};
   ACE_NEW_RETURN (newformat, ACE_TCHAR[buflen], -1);
   std::unique_ptr<ACE_TCHAR[]> safe_newformat (newformat);
 
@@ -951,7 +913,7 @@ ACE_Process_Options::setenv (const ACE_TCHAR *variable_name,
     }
   int retval = 0;
 
-  ACE_TCHAR *stack_buf = nullptr;
+  ACE_TCHAR *stack_buf {};
   ACE_NEW_RETURN (stack_buf, ACE_TCHAR[tmp_buflen], -1);
   std::unique_ptr<ACE_TCHAR[]> safe_stack_buf (stack_buf);
 
@@ -975,7 +937,7 @@ ACE_Process_Options::setenv (const ACE_TCHAR *variable_name,
       else
         break;
     }
-  while (1);
+  while (true);
 
   if (retval == -1)
     {
@@ -1028,9 +990,7 @@ ACE_Process_Options::setenv_i (ACE_TCHAR *assignment,
     return -1;
 
   // Copy the new environment string.
-  ACE_OS::memcpy (environment_buf_ + environment_buf_index_,
-                  assignment,
-                  len * sizeof (ACE_TCHAR));
+  std::memcpy (environment_buf_ + environment_buf_index_, assignment, len * sizeof (ACE_TCHAR));
 
   // Update the argv array.
   environment_argv_[environment_argv_index_++] = environment_buf_ + environment_buf_index_;
@@ -1049,7 +1009,7 @@ ACE_Process_Options::set_handles (ACE_HANDLE std_in,
                                   ACE_HANDLE std_out,
                                   ACE_HANDLE std_err)
 {
-  this->set_handles_called_ = 1;
+  this->set_handles_called_ = true;
 #if defined (ACE_WIN32)
 
   // Tell the new process to use our std handles.
@@ -1111,7 +1071,6 @@ ACE_Process_Options::set_handles (ACE_HANDLE std_in,
   return 0; // Success.
 }
 
-
 void
 ACE_Process_Options::release_handles ()
 {
@@ -1134,7 +1093,7 @@ ACE_Process_Options::release_handles ()
       stdout_ = ACE_INVALID_HANDLE;
       stderr_ = ACE_INVALID_HANDLE;
 #endif /* ACE_WIN32 */
-      set_handles_called_ = 0;
+      set_handles_called_ = false;
     }
 }
 
@@ -1234,7 +1193,7 @@ ACE_Process_Options::command_line (const ACE_TCHAR *format, ...)
 int
 ACE_Process_Options::command_line (const ACE_ANTI_TCHAR *format, ...)
 {
-  ACE_ANTI_TCHAR *anti_clb = nullptr;
+  ACE_ANTI_TCHAR *anti_clb {};
   ACE_NEW_RETURN (anti_clb,
                   ACE_ANTI_TCHAR[this->command_line_buf_len_],
                   -1);

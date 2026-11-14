@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_SSLIOP_OWN_CREDENTIALS_H
 #define TAO_SSLIOP_OWN_CREDENTIALS_H
 
@@ -56,7 +55,6 @@ namespace TAO
       using _var_type = OwnCredentials_var;
       using _out_type = OwnCredentials_out;
 
-      /// Constructor
       OwnCredentials (::X509 *cert, ::EVP_PKEY *evp);
 
       static OwnCredentials_ptr _duplicate (OwnCredentials_ptr obj);
@@ -88,16 +86,14 @@ namespace TAO
       //@}
 
     protected:
-      /// Destructor
       /**
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.
        */
-      ~OwnCredentials ();
+      ~OwnCredentials () override = default;
     };
   } // End SSLIOP namespace
 }  // End TAO namespace
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

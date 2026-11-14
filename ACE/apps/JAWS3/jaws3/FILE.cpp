@@ -9,18 +9,13 @@
 
 #include "jaws3/FILE.h"
 
-
 JAWS_FILE::JAWS_FILE ()
-  : map_ (0)
-  , can_map_ (0)
+  : map_ ()
+  , can_map_ (false)
 {
 }
 
-JAWS_FILE::~JAWS_FILE ()
-{
-  delete this->map_;
-  this->map_ = 0;
-}
+JAWS_FILE::~JAWS_FILE () = default;
 
 ACE_Mem_Map *
 JAWS_FILE::mem_map (int length,
@@ -30,10 +25,10 @@ JAWS_FILE::mem_map (int length,
                     ACE_OFF_T offset,
                     LPSECURITY_ATTRIBUTES sa) const
 {
-  if (this->can_map_ == 0)
-    return 0;
+  if (!this->can_map_)
+    return nullptr;
 
-  JAWS_FILE *mutable_this = (JAWS_FILE *) this;
+  JAWS_FILE *mutable_this = const_cast<JAWS_FILE *> (this);
   return mutable_this->mem_map (length, prot, share, addr, offset, sa);
 }
 
@@ -45,46 +40,41 @@ JAWS_FILE::mem_map (int length,
                     ACE_OFF_T offset,
                     LPSECURITY_ATTRIBUTES sa)
 {
-  if (this->can_map_ == 0)
-    return 0;
+  if (!this->can_map_)
+    return nullptr;
 
-  if (this->map_ == 0)
+  if (this->map_ == nullptr)
     {
-      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, g, this->lock_, 0);
+      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, g, this->lock_, nullptr);
 
-      if (this->map_ == 0)
+      if (this->map_ == nullptr)
         {
-          this->map_ = new ACE_Mem_Map;
-          if (this->map_ != 0)
+          this->map_ = std::make_unique<ACE_Mem_Map> ();
+          int const r = this->map_->map (this->get_handle (),
+                                         static_cast<size_t> (length),
+                                         prot,
+                                         share,
+                                         addr,
+                                         offset,
+                                         sa);
+          if (r < 0)
             {
-              int r = this->map_->map (this->get_handle (),
-                                       static_cast<size_t> (length),
-                                       prot,
-                                       share,
-                                       addr,
-                                       offset,
-                                       sa);
-              if (r < 0)
-                {
-                  delete this->map_;
-                  this->map_ = 0;
-                }
+              this->map_.reset ();
             }
         }
     }
 
-  return this->map_;
+  return this->map_.get ();
 }
-
 
 ACE_Mem_Map *
 JAWS_FILE::map () const
 {
-  return this->map_;
+  return this->map_.get ();
 }
 
 void
-JAWS_FILE::can_map (int flag)
+JAWS_FILE::can_map (bool flag)
 {
-  this->can_map_ = (flag != 0);
+  this->can_map_ = flag;
 }

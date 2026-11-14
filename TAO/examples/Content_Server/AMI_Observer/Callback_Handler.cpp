@@ -5,28 +5,27 @@
 #include "ace/Log_Msg.h"
 #include "Callback_Handler.h"
 
-Callback_Handler::Callback_Handler (const char *pathname,
+#include <memory>
+
+Callback_Handler::Callback_Handler (char const *pathname,
                                     Web_Server::Callback_ptr client_callback)
-  : file_ (ACE_TEXT_CHAR_TO_TCHAR(pathname)),
+  : file_ (ACE_TEXT_CHAR_TO_TCHAR (pathname)),
     file_io_ (),
     callback_ (Web_Server::Callback::_duplicate (client_callback)),
     ami_handler_ (),
-    chunk_ (new Web_Server::Chunk_Type),
-    chunk_index_ (0),
-    last_chunk_ (0)
+    chunk_ ()
 {
-  // Nothing else
-}
-
-Callback_Handler::~Callback_Handler ()
-{
-  // Nothing else
+  Web_Server::Chunk_Type *chunk {};
+  ACE_NEW_THROW_EX (chunk,
+                    Web_Server::Chunk_Type,
+                    CORBA::NO_MEMORY ());
+  this->chunk_ = chunk;
 }
 
 void
 Callback_Handler::next_chunk ()
 {
-  if (this->last_chunk_ == 1)
+  if (this->last_chunk_)
     {
       this->deactivate ();
 
@@ -34,31 +33,27 @@ Callback_Handler::next_chunk ()
     }
 
   // Allocate a buffer for the file being read.
-  CORBA::Octet *buf =
-    Web_Server::Chunk_Type::allocbuf (BUFSIZ);
+  std::unique_ptr<CORBA::Octet, decltype (&Web_Server::Chunk_Type::freebuf)> buf (
+    Web_Server::Chunk_Type::allocbuf (BUFSIZ),
+    &Web_Server::Chunk_Type::freebuf);
 
-  if (buf == 0)
+  if (!buf)
     throw CORBA::NO_MEMORY ();
 
-  ssize_t bytes_read = this->file_io_.recv (buf,
-                                            BUFSIZ);
+  ssize_t const bytes_read = this->file_io_.recv (buf.get (),
+                                                  BUFSIZ);
   if (bytes_read == -1)
-    {
-      Web_Server::Chunk_Type::freebuf (buf);
-
-      throw CORBA::INTERNAL ();
-    }
+    throw CORBA::INTERNAL ();
   else if (bytes_read == 0)
     {
-      Web_Server::Chunk_Type::freebuf (buf);
-      this->last_chunk_ = 1;
+      this->last_chunk_ = true;
     }
   else
     {
-      this->chunk_index_++;
+      ++this->chunk_index_;
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Sending chunk %d from %s of size <%d>\n"),
+                  ACE_TEXT ("Sending chunk %d from %s of size <%b>\n"),
                   this->chunk_index_,
                   this->file_.get_path_name (),
                   bytes_read));
@@ -67,8 +62,8 @@ Callback_Handler::next_chunk ()
       // sequence.  Only replace the amount of data actually read.
       this->chunk_->replace (bytes_read,
                              bytes_read,
-                             buf,
-                             1);  // The sequence releases memory for us.
+                             buf.release (),
+                             true);  // The sequence releases memory for us.
     }
 
   this->callback_->sendc_next_chunk (this->ami_handler_.in (),
@@ -80,7 +75,7 @@ void
 Callback_Handler::next_chunk_excep
   (::Messaging::ExceptionHolder *excep_holder)
 {
-  this->last_chunk_ = 1;
+  this->last_chunk_ = true;
 
   try
     {
@@ -88,7 +83,7 @@ Callback_Handler::next_chunk_excep
 
       excep_holder->raise_exception ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception (
         ACE_TEXT ("Exception occurred during ")
@@ -119,7 +114,7 @@ Callback_Handler::open_file ()
 
   if (connector.connect (this->file_io_,
                          this->file_,
-                         0,
+                         nullptr,
                          ACE_Addr::sap_any,
                          0,
                          O_RDONLY) == -1)

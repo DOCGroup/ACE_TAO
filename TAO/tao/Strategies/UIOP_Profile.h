@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file     UIOP_Profile.h
  *
@@ -9,8 +8,6 @@
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  *  @author Fred Kuhns <fredk@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_UIOP_PROFILE_H
 #define TAO_UIOP_PROFILE_H
@@ -59,14 +56,12 @@ public:
                     TAO_GIOP_Message_Version const &version,
                     TAO_ORB_Core *orb_core);
 
-  /// Profile constructor
   TAO_UIOP_Profile (char const *rendezvous_point,
                     TAO::ObjectKey const &object_key,
                     ACE_UNIX_Addr const &addr,
                     TAO_GIOP_Message_Version const &version,
                     TAO_ORB_Core *orb_core);
 
-  /// Profile constructor, default.
   explicit TAO_UIOP_Profile (TAO_ORB_Core *orb_core);
 
   /// Destructor is to be called only through <_decr_refcnt>.

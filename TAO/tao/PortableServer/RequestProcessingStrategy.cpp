@@ -1,11 +1,7 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    RequestProcessingStrategy.cpp
  */
-//=============================================================================
-
 #include "tao/PortableServer/RequestProcessingStrategy.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

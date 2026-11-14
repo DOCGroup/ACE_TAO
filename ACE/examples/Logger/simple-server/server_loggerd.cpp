@@ -8,11 +8,12 @@
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 #include "ace/Signal.h"
+#include <memory>
 
 #include "Logging_Acceptor.h"
 #include "Reactor_Singleton.h"
 
-static sig_atomic_t finished = 0;
+static sig_atomic_t finished {};
 
 extern "C" void
 handler (int)
@@ -21,25 +22,28 @@ handler (int)
 }
 
 // It doesn't get anymore const than this....
-static const u_short PORT = ACE_DEFAULT_SERVER_PORT;
+static constexpr u_short PORT = ACE_DEFAULT_SERVER_PORT;
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // Register a signal handler.
-  ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
+  ACE_Sig_Action sa (static_cast<ACE_SignalHandler> (handler), SIGINT);
   ACE_UNUSED_ARG (sa);
 
-  Logging_Acceptor *peer_acceptor;
-  ACE_NEW_RETURN (peer_acceptor,
+  // The reactor owns this dynamically allocated acceptor after registration;
+  // handle_close deletes it when the reactor closes the handler.
+  Logging_Acceptor *raw_acceptor {};
+  ACE_NEW_RETURN (raw_acceptor,
                   Logging_Acceptor,
                   1);
+  std::unique_ptr<Logging_Acceptor> peer_acceptor {raw_acceptor};
 
   ACE_INET_Addr addr (PORT);
 
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("p:"));
 
-  for (int c; (c = get_opt ()) != -1; )
+  for (int c {}; (c = get_opt ()) != -1; )
     switch (c)
       {
       case 'p':
@@ -54,11 +58,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("open")),
                       -1);
-  else if (REACTOR::instance ()->register_handler (peer_acceptor,
+  else if (REACTOR::instance ()->register_handler (peer_acceptor.get (),
                                                    ACE_Event_Handler::ACCEPT_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("registering service with ACE_Reactor\n")),
                       -1);
+  peer_acceptor.release ();
 
   // Run forever, performing the logging service.
 

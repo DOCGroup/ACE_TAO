@@ -1,15 +1,18 @@
 #include "FT_TestReplicaC.h"
-#include <ace/Vector_T.h>
 #include <ace/SString.h>
 #include <ace/Get_Opt.h>
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_stdio.h"
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <vector>
 
 class FTClientMain
 {
-  typedef ACE_Vector<ACE_CString> StringVec;
+  using StringVec = std::vector<ACE_CString>;
 public:
   ///////////////////////////
   // construction/destruction
@@ -63,16 +66,14 @@ private:
     LOUD}
     verbose_;
 
-
   StringVec replica_iors_;
   size_t replica_pos_;
   const char * replica_name_;
   FT_TEST::TestReplica_var replica_;
 };
 
-
 FTClientMain::FTClientMain ()
-  : inFile_(0)
+  : inFile_ (nullptr)
   , commandIn_(stdin)
   , verbose_(NORMAL)
   , replica_pos_(0)
@@ -85,7 +86,7 @@ FTClientMain::~FTClientMain ()
   if (this->inFile_)
   {
     ACE_OS::fclose (this->inFile_);
-    this->inFile_ = 0;
+    this->inFile_ = nullptr;
   }
 }
 
@@ -231,10 +232,10 @@ int FTClientMain::pass (
     if (! retry || command.length () == 0 )
     {
       char buffer[1000];
-      char *str_ = ACE_OS::fgets (buffer, sizeof(buffer)-1, this->commandIn_);
+      char *str_ = std::fgets (buffer, sizeof (buffer) - 1, this->commandIn_);
       if ( str_ )
       {
-        str_ = ACE_OS::strrchr (str_, '\n');
+        str_ = std::strrchr (str_, '\n');
         if ( str_ )
           *str_ = '\0';
       }
@@ -247,7 +248,7 @@ int FTClientMain::pass (
       char op = command[0];
       ACE_CString cdr = command.substr(1);
       char * junque;
-      long operand = ACE_OS::strtol(cdr.c_str(),&junque, 10);
+      long operand = std::strtol (cdr.c_str (), &junque, 10);
 
       if (this->verbose_ >= NOISY)
       {
@@ -515,7 +516,6 @@ int FTClientMain::next_replica ()
   return result;
 }
 
-
 int FTClientMain::run ()
 {
   int result = 0;
@@ -595,7 +595,6 @@ int FTClientMain::run ()
   }
   return result;
 }
-
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])

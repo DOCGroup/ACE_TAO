@@ -2,20 +2,17 @@
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 
-static const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
+static ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 // Server IOR.
 
-static int shutdown_server = 0;
+static bool shutdown_server {};
 // Flag to tell server to shutdown.
 
-static CORBA::UShort call_count = 5;
+static CORBA::UShort call_count {5};
 // # of nested calls to be made.
 
-static int quiet = 0;
+static bool quiet {};
 // The test is quiet...
-
-static int number_of_threads = 1;
-// Number of client threads.
 
 class Client_Task
 {
@@ -23,6 +20,11 @@ public:
   Client_Task (client_ptr c,
                server_ptr s);
   int svc ();
+
+  Client_Task (Client_Task const &) = delete;
+  Client_Task (Client_Task &&) = delete;
+  Client_Task &operator= (Client_Task const &) = delete;
+  Client_Task &operator= (Client_Task &&) = delete;
 
 private:
   client_var client_;
@@ -52,7 +54,7 @@ Client_Task::svc ()
 
       return 0;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Client_Task::svc");
       return -1;
@@ -63,26 +65,22 @@ Client_Task::svc ()
 static int
 parse_args (int argc, ACE_TCHAR **argv)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("qxn:k:t:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("qxn:k:"));
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'q':
-        quiet = 1;
+        quiet = true;
         break;
 
       case 'x':
-        shutdown_server = 1;
+        shutdown_server = true;
         break;
 
       case 'n':
         call_count = ACE_OS::atoi (get_opts.opt_arg ());
-        break;
-
-      case 't':
-        number_of_threads = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'k':
@@ -102,7 +100,7 @@ parse_args (int argc, ACE_TCHAR **argv)
                           -1);
       }
 
-  if (ior == 0)
+  if (ior == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%s: no nested up calls server ior specified\n",
                        argv[0]),
@@ -113,13 +111,13 @@ parse_args (int argc, ACE_TCHAR **argv)
 }
 
 int
-ACT_TMAIN (int argc, ACE_TCHAR **argv)
+ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
   try
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-      int result = parse_args (argc, argv);
+      int const result = parse_args (argc, argv);
       if (result != 0)
         return result;
 
@@ -152,8 +150,6 @@ ACT_TMAIN (int argc, ACE_TCHAR **argv)
                                 server.in ());
 
       client_tasks.svc ();
-
-
       if (shutdown_server)
         {
           server->shutdown ();
@@ -161,7 +157,7 @@ ACT_TMAIN (int argc, ACE_TCHAR **argv)
 
       root_poa->destroy (true, true);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("client::main");
       return -1;

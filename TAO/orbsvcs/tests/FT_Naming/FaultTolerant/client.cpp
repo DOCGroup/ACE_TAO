@@ -21,6 +21,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "orbsvcs/Naming/FaultTolerant/nsgroup_svc.h"
 
+#include <cstring>
 #include <iostream>
 
 #if defined (_MSC_VER)
@@ -35,17 +36,15 @@ class My_Test_Object :
 {
 public:
   My_Test_Object (CORBA::Short id = 0);
-  // Constructor.
 
   ~My_Test_Object ();
-  // Destructor.
 
   // = Interface implementation accessor methods.
 
-  void id (CORBA::Short id);
+  void id (CORBA::Short id) override;
   // Sets id.
 
-  CORBA::Short id ();
+  CORBA::Short id () override;
   // Gets id.
 
 private:
@@ -139,7 +138,6 @@ do_equivalence_objectgroup_test (
   int c_breadth,
   int c_depth,
   int o_breadth);
-
 
 //==============================================================================
 //
@@ -468,7 +466,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_TEXT ("ERROR: Unable to resolve name servers"));
     return RC_ERROR;
   }
-
 
   return rc;
 }
@@ -1065,7 +1062,6 @@ do_failover_objectgroup_test (
                           RC_ERROR);
     }
 
-
     const ACE_TCHAR * test_group = ACE_TEXT ("test_group");
     const ACE_TCHAR * policy     = ACE_TEXT ("round");
 
@@ -1086,7 +1082,6 @@ do_failover_objectgroup_test (
                    ACE_TEXT ("INFO: Object Group Found In Repository\n")));
     }
 
-
   }
   catch (const CORBA::Exception& ex)
   {
@@ -1097,7 +1092,6 @@ do_failover_objectgroup_test (
 
   return RC_SUCCESS;
 }
-
 
 //==============================================================================
 //
@@ -1190,7 +1184,6 @@ do_persistence_name_test (
         root_context_1->bind (level1, obj1.in ());
         ACE_OS::thr_yield ();
       }
-
 
       // See if the newly bound object is available in the repository
       try {
@@ -1317,7 +1310,6 @@ do_persistence_name_test (
 
   return RC_SUCCESS;
 }
-
 
 /// Persistence ObjectGroup Test
 int
@@ -1452,7 +1444,7 @@ do_persistence_objectgroup_test (
                            loc[0].id.in(),
                            the_string.in ()));
 
-              if ( ACE_OS::strcmp (the_string.in (), loc[0].id.in()) != 0 ) {
+              if (std::strcmp (the_string.in (), loc[0].id.in ()) != 0) {
                 ACE_ERROR_RETURN ((LM_ERROR,
                                    ACE_TEXT ("ERROR: object group member at %C reports %C\n\n"),
                                    loc[0].id.in(),
@@ -1580,7 +1572,7 @@ do_persistence_objectgroup_test (
             if (locations->length () != num_locations)
               {
                 ACE_ERROR ((LM_ERROR,
-                            ACE_TEXT ("ERROR: Expected %d members but got %d ")
+                            ACE_TEXT ("ERROR: Expected %u members but got %u ")
                             ACE_TEXT ("instead\n"),
                             num_locations, locations->length ()));
               }
@@ -1730,7 +1722,6 @@ do_equivalence_name_test (
 
     int ns2_count =
       root_context_2->_stubobj ()->base_profiles ().profile_count ();
-
 
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("INFO: ns1ref profile count: %d\n"),
@@ -2206,7 +2197,6 @@ do_equivalence_name_test (
   return RC_SUCCESS;
 }
 
-
 /// Equivalence ObjectGroup Test
 int
 do_equivalence_objectgroup_test (
@@ -2224,7 +2214,6 @@ do_equivalence_objectgroup_test (
   const int RC_SUCCESS =  0;
   const int RC_ERROR   = -1;
   int error_count = 0;
-
 
   FT_Naming::NamingManager_var naming_manager_1;
   FT_Naming::NamingManager_var naming_manager_2;
@@ -2318,7 +2307,6 @@ do_equivalence_objectgroup_test (
     int nm2_count =
       naming_manager_2->_stubobj ()->base_profiles ().profile_count ();
 
-
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("INFO: nm1ref profile count: %d\n"),
                 nm1_count));
@@ -2326,7 +2314,6 @@ do_equivalence_objectgroup_test (
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("INFO: nm2ref profile count: %d\n"),
                 nm2_count));
-
 
     /// Setup 1st NS_group_svc with 1st Naming Manager
     NS_group_svc svc1;

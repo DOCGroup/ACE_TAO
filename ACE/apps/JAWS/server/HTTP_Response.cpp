@@ -10,6 +10,9 @@
 #include "HTTP_Helpers.h"
 #include "HTTP_Config.h"
 #include "JAWS_IO.h"
+#include <cstdio>
+#include <cstring>
+#include <memory>
 
 #if defined (ACE_JAWS_BASELINE)
 static char * const EMPTY_HEADER = "";
@@ -18,12 +21,22 @@ static const char * const EMPTY_HEADER = "";
 #endif /* ACE_JAWS_BASELINE */
 
 HTTP_Response::HTTP_Response (JAWS_IO &io, HTTP_Request &request)
-  : io_(io), request_(request)
+  : io_ (io),
+    request_ (request),
+    HTTP_HEADER (nullptr),
+    HTTP_TRAILER (nullptr),
+    HTTP_HEADER_LENGTH (0),
+    HTTP_TRAILER_LENGTH (0)
 {
 }
 
 HTTP_Response::HTTP_Response (HTTP_Request &request, JAWS_IO &io)
-  : io_(io), request_(request)
+  : io_ (io),
+    request_ (request),
+    HTTP_HEADER (nullptr),
+    HTTP_TRAILER (nullptr),
+    HTTP_HEADER_LENGTH (0),
+    HTTP_TRAILER_LENGTH (0)
 {
 }
 
@@ -107,33 +120,43 @@ HTTP_Response::error_response (int status_code, const char *log_message)
     "</html>\n"
     ;
 
-
-  char *buf = 0;
+  char *buf {};
   char buf1[4 * BUFSIZ];
   char buf2[BUFSIZ];
 
-  int length;
+  int length = std::snprintf (buf2,
+                              sizeof buf2,
+                              error_message,
+                              status_code,
+                              HTTP_Status_Code::instance ()[status_code],
+                              log_message == nullptr ? "" : log_message);
   const char *error_header = error_header1;
+
+  if (length < 0)
+    return;
+  if (length >= static_cast<int> (sizeof buf2))
+    length = sizeof buf2 - 1;
 
   if (status_code == HTTP_Status_Code::STATUS_UNAUTHORIZED)
     error_header = error_header2;
 
-  length =
-    ACE_OS::sprintf (buf2, error_message,
-                     status_code, HTTP_Status_Code::instance ()[status_code],
-                     log_message);
-
-  if (this->request_.version () == 0
-      || ACE_OS::strcmp ("HTTP/0.9", this->request_.version ()) == 0)
+  if (this->request_.version () == nullptr
+      || std::strcmp ("HTTP/0.9", this->request_.version ()) == 0)
     buf = buf2;
   else
     {
-      length =
-        ACE_OS::sprintf (buf1, error_header,
-                         this->request_.version(), status_code,
-                         HTTP_Status_Code::instance ()[status_code],
-                         length,
-                         buf2);
+      length = std::snprintf (buf1,
+                              sizeof buf1,
+                              error_header,
+                              this->request_.version (),
+                              status_code,
+                              HTTP_Status_Code::instance ()[status_code],
+                              length,
+                              buf2);
+      if (length < 0)
+        return;
+      if (length >= static_cast<int> (sizeof buf1))
+        length = sizeof buf1 - 1;
       buf = buf1;
     }
 
@@ -143,7 +166,7 @@ HTTP_Response::error_response (int status_code, const char *log_message)
 void
 HTTP_Response::normal_response ()
 {
-  const char *hv = 0;;
+  char const *hv {};
 
   ACE_DEBUG ((LM_DEBUG, " (%t) %s request for %s [%s], version %s\n",
               request_.method (), request_.uri (), request_.path (),
@@ -183,10 +206,10 @@ HTTP_Response::normal_response ()
       // if there is no Authentication: header on the incoming request,
       // deny it
       hv = this->request_.headers ()["Authorization"].value ();
-      if (hv == 0 || *hv == '\0')
+      if (hv == nullptr || *hv == '\0')
         this->error_response (HTTP_Status_Code::STATUS_UNAUTHORIZED,
                               "Unauthorized to use PUT method");
-      else if (ACE_OS::strncmp (hv, "Basic ", 6) != 0)
+      else if (std::strncmp (hv, "Basic ", 6) != 0)
         // ``6'' is the length of the string "Basic "
         this->error_response (HTTP_Status_Code::STATUS_UNAUTHORIZED,
                               "Unknown authorization method");
@@ -195,13 +218,14 @@ HTTP_Response::normal_response ()
           ACE_Mem_Map mmapfile;
           const char *hvv = hv + 6;
           // Skip past the string "Basic "
-          char *buf = new char [ACE_OS::strlen (hv)];
-          char *auth
-            = HTTP_Helper::HTTP_decode_base64 (ACE_OS::strcpy (buf, hvv));
+          std::unique_ptr<char[]> buf (new char[std::strlen (hvv) + 1]);
+          char *auth = HTTP_Helper::HTTP_decode_base64 (
+            std::strcpy (buf.get (), hvv));
 
           if (mmapfile.map (ACE_TEXT ("jaws.auth")) != -1
-              && auth != 0
-              && ACE_OS::strstr((const char *) mmapfile.addr (), auth) != 0)
+              && auth != nullptr
+              && std::strstr (static_cast<char const *> (mmapfile.addr ()), auth)
+                != nullptr)
             this->io_.receive_file (this->request_.path (),
                                     this->request_.data (),
                                     this->request_.data_length (),
@@ -209,7 +233,6 @@ HTTP_Response::normal_response ()
           else
             this->error_response (HTTP_Status_Code::STATUS_UNAUTHORIZED,
                                   "Invalid authorization attempt");
-          delete [] buf;
         }
       break;
 
@@ -218,7 +241,6 @@ HTTP_Response::normal_response ()
                             "Requested method is not implemented.");
     }
 }
-
 
 void
 HTTP_Response::cgi_response ()
@@ -265,13 +287,13 @@ HTTP_Response::cgi_response ()
                         this->request_.query_string ());
 
   if (this->request_.cgi_env ())
-    for (size_t i = 0; this->request_.cgi_env ()[i]; i += 2)
+    for (size_t i = 0; this->request_.cgi_env ()[i] != nullptr; i += 2)
       cgi_options.setenv (ACE_TEXT_CHAR_TO_TCHAR (this->request_.cgi_env ()[i]),
                           ACE_TEXT ("%s"),
                           ACE_TEXT_CHAR_TO_TCHAR (this->request_.cgi_env ()[i+1]));
 
   ACE_TCHAR buf[BUFSIZ];
-  ACE_TCHAR *p = 0, *q = 0;
+  ACE_TCHAR *p {}, *q {};
   ACE_OS::strcpy (buf, ACE_TEXT ("HTTP_"));
   p = q = buf + ACE_OS::strlen (buf);
 
@@ -321,8 +343,8 @@ HTTP_Response::build_headers ()
   // Let's assume this is HTML for now.  Unless the request is CGI,
   // then do not include content-* headers.
 
-  if (this->request_.version () == 0
-      || ACE_OS::strcmp ("HTTP/0.9", this->request_.version ()) == 0)
+  if (this->request_.version () == nullptr
+      || std::strcmp ("HTTP/0.9", this->request_.version ()) == 0)
     {
       HTTP_HEADER = EMPTY_HEADER;
       HTTP_HEADER_LENGTH = 0;
@@ -339,7 +361,7 @@ HTTP_Response::build_headers ()
       char date_ptr [40];
       // 40 bytes is the maximum length needed to store the date
 
-      if (HTTP_Helper::HTTP_date (date_ptr) != 0)
+      if (HTTP_Helper::HTTP_date (date_ptr) != nullptr)
         HTTP_HEADER_LENGTH +=
           ACE_OS::sprintf (HTTP_HEADER+HTTP_HEADER_LENGTH,
                            "Date: %s\r\n", date_ptr);
@@ -374,7 +396,7 @@ HTTP_Response::build_headers ()
       else
         HTTP_HEADER = "HTTP/1.0 200 OK\r\n";
 
-      HTTP_HEADER_LENGTH = ACE_OS::strlen (HTTP_HEADER);
+      HTTP_HEADER_LENGTH = std::strlen (HTTP_HEADER);
 
 #endif /* ACE_JAWS_BASELINE */
     }

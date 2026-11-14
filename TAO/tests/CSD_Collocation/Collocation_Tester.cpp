@@ -20,7 +20,7 @@ Collocation_Test::Collocation_Test ()
 void
 Collocation_Test::shutdown ()
 {
-  this->root_poa_->destroy (1, 1);
+  this->root_poa_->destroy (true, true);
   this->orb_->destroy ();
 }
 
@@ -82,7 +82,6 @@ Collocation_Test::init (int argc, ACE_TCHAR *argv[])
 
   id =
     childPOA->activate_object (&this->right_servant_);
-
 
   CORBA::String_var str =
     this->orb_->object_to_string (this->diamond_obj_.in ());

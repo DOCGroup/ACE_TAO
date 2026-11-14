@@ -37,10 +37,10 @@ namespace TAO
     public:
       using HANDLER_TYPE = handler_type;
       using ALLOC_TYPE = alloc_type;
-      TAO_Buffer_Allocator (alloc_type *allocator);
+      explicit TAO_Buffer_Allocator (alloc_type *allocator);
 
-      virtual handler_type *allocate ();
-      virtual void release (handler_type *ptr);
+      handler_type *allocate () override;
+      void release (handler_type *ptr) override;
     private:
       alloc_type* allocator_;
   };

@@ -85,17 +85,15 @@ namespace ACE_Utils
     /// The size of a binary UUID.
     static constexpr int BINARY_SIZE = 16;
 
-    /// Constructor
     UUID ();
 
 #ifndef ACE_LACKS_SSCANF
     /// Constructs a UUID from a string representation.
-    UUID (const ACE_CString& uuidString);
+    explicit UUID (const ACE_CString& uuidString);
 #endif
 
     UUID (const UUID &right);
 
-    // Destructor
     ~UUID () = default;
 
     ACE_UINT32 time_low () const;
@@ -204,8 +202,12 @@ namespace ACE_Utils
     /// Default constructor.
     UUID_Generator();
 
-    /// Destructor.
     ~UUID_Generator();
+
+    UUID_Generator (UUID_Generator const&) = delete;
+    UUID_Generator& operator = (UUID_Generator const&) = delete;
+    UUID_Generator (UUID_Generator&&) = delete;
+    UUID_Generator& operator = (UUID_Generator&&) = delete;
 
     /// Initialize the UUID generator
     /// @deprecated This method may go away in some future release.
@@ -224,16 +226,15 @@ namespace ACE_Utils
     /// since 00:00:00.00, 15 October 1582.
     using UUID_Time = ACE_UINT64;
 
-    /// The locking strategy prevents multiple generators from accessing
-    /// the UUID_state at the same time. Get the locking strategy.
+    /// Get the lock used to protect UUID state.
     ACE_SYNCH_MUTEX* lock ();
 
-    /// Set a new locking strategy and return the old one.
+    /// Replace the lock. When @a release_lock is true, the generator owns it.
     void lock (ACE_SYNCH_MUTEX* lock, bool release_lock);
 
   private:
     /// The system time when that last uuid was generated.
-    UUID_Time time_last_;
+    UUID_Time time_last_ {};
 
     /// Type to contain the UUID generator persistent state. This will
     /// be kept in memory mapped shared memory
@@ -260,14 +261,16 @@ namespace ACE_Utils
     void get_systemtime( UUID_Time& timeNow);
 
     /// The UUID generator persistent state.
-    UUID_State uuid_state_;
+    UUID_State uuid_state_ {};
 
-    ACE_SYNCH_MUTEX* lock_;
+    /// Owns the default lock or a lock transferred through the setter.
+    std::unique_ptr<ACE_SYNCH_MUTEX> owned_lock_ {};
 
-    bool destroy_lock_;
+    /// Views the active lock, which may be borrowed.
+    ACE_SYNCH_MUTEX* lock_ {};
 
     /// Initialization state of the generator.
-    bool is_init_;
+    bool is_init_ {};
   };
 }
 

@@ -7,14 +7,11 @@
 #include "Performance_Test_Options.h"
 #include "Benchmark_Performance.h"
 
-#include "ace/Service_Repository.h"
+#include "ace/Log_Msg.h"
 #include "ace/Reactor.h"
+#include "ace/Thread_Manager.h"
 
-Performance_Test::Performance_Test ()
-  : n_lwps_ (0),
-    orig_n_lwps_ (0)
-{
-}
+Performance_Test::Performance_Test () = default;
 
 // Initialize and run the benchmarks tests.
 
@@ -31,7 +28,7 @@ Performance_Test::pre_run_test (Benchmark_Base *bb)
 {
   this->orig_n_lwps_ = ACE_Thread::getconcurrency ();
   this->n_lwps_ = performance_test_options.n_lwps ();
-  Benchmark_Performance *bp = (Benchmark_Performance *) bb;
+  Benchmark_Performance * const bp = static_cast<Benchmark_Performance *> (bb);
 
   if (this->n_lwps_ > 0)
     ACE_Thread::setconcurrency (this->n_lwps_);
@@ -41,7 +38,7 @@ Performance_Test::pre_run_test (Benchmark_Base *bb)
       // create suspended threads...
   if (ACE_Thread_Manager::instance ()->spawn_n
       (performance_test_options.thr_count (), ACE_THR_FUNC (bp->svc_run),
-       (void *) bp, performance_test_options.t_flags () | THR_SUSPENDED) == -1)
+       static_cast<void *> (bp), performance_test_options.t_flags () | THR_SUSPENDED) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n%a", "couldn't spawn threads", 1));
   return 0;
 }
@@ -80,17 +77,18 @@ Performance_Test::post_run_test ()
 
   ACE_DEBUG ((LM_DEBUG, "------------------------------------------------------------------------\n"));
   ACE_DEBUG ((LM_DEBUG, "targ 0x%x (%s, %s, %s)\n"
-              "n_lwps_orig = %d, n_lwps_set = %d, n_lwps_end = %d\n",
-              performance_test_options.t_flags (),
+              "n_lwps_orig = %d, n_lwps_set = %B, n_lwps_end = %d\n",
+              static_cast<unsigned int> (performance_test_options.t_flags ()),
               (performance_test_options.t_flags () & THR_DETACHED) ? "THR_DETACHED" : "Not Detached",
               (performance_test_options.t_flags () & THR_BOUND) ? "THR_BOUND"    : "Not Bound",
               (performance_test_options.t_flags () & THR_NEW_LWP)  ? "THR_NEW_LWP"  : "No New_LWP",
               this->orig_n_lwps_, this->n_lwps_, ACE_Thread::getconcurrency ()));
-  int count = performance_test_options.count ();
-  float rate  = count / (float (performance_test_options.sleep_time ()));
+  size_t const count = performance_test_options.count ();
+  float const rate = static_cast<float> (count)
+    / static_cast<float> (performance_test_options.sleep_time ());
 
   ACE_DEBUG ((LM_DEBUG,
-              "to count = %d\nrate = %.3f ops/sec, per operation = %.2f usec\n",
+              "to count = %B\nrate = %.3f ops/sec, per operation = %.2f usec\n",
               count,
               rate,
               (1.0e6 / rate) / synch_count));

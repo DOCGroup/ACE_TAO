@@ -95,7 +95,7 @@ do_restart_test ()
         }
       catch (const CORBA::Exception& ex)
         {
-          attempt--;
+          --attempt;
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("client caught %C during arm, retrying\n"),
                       ex._name ()));

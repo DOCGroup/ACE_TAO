@@ -20,7 +20,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 class Server_Task : public ACE_Task_Base
 {
 public:
-  /// Constructor
   Server_Task (ACE_TCHAR const *output,
                CORBA::ORB_ptr sorb,
                ACE_Manual_Event &me,
@@ -34,7 +33,7 @@ public:
   int svc () override;
 
 private:
-  /// Output file for IOR
+  /// Borrowed from main; the task finishes before the caller's argument storage expires.
   ACE_TCHAR const *output_;
 
   /// Manual event to wake up the main thread to create a client

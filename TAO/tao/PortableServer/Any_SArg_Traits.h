@@ -1,15 +1,10 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Any_SArg_Traits.h
  *
  *  @author Jeff Parsons
  *  @author Ossama Othman
  */
-//=============================================================================
-
-
 #ifndef TAO_ANY_SARG_TRAITS_H
 #define TAO_ANY_SARG_TRAITS_H
 

@@ -8,7 +8,6 @@
 #include "ace/Process_Semaphore.h"
 #include "ace/OS_NS_stdlib.h"
 
-
 static sig_atomic_t done;
 
 extern "C" void
@@ -20,15 +19,15 @@ handler (int)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  const ACE_TCHAR *name = argc == 1 ? ACE_TEXT("hello") : argv[1];
-  int iterations =  argc > 2 ? ACE_OS::atoi (argv[2]) : 100;
+  ACE_TCHAR const * const name = argc == 1 ? ACE_TEXT("hello") : argv[1];
+  int const iterations = argc > 2 ? ACE_OS::atoi (argv[2]) : 100;
 
   ACE_Process_Semaphore pm (1, name);
 
-  ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
+  ACE_Sig_Action sa (handler, SIGINT);
   ACE_UNUSED_ARG (sa);
 
-  for (int i = 0; i < iterations && !done; i++)
+  for (int i = 0; i < iterations && !done; ++i)
     {
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) = acquiring\n"));
       if (pm.acquire () == -1)

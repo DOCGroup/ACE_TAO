@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Continuous_Priority_Mapping.h
  *
  *  @author Irfan Pyarali
  */
-// ===================================================================
 
 #ifndef TAO_CONTINUOUS_PRIORITY_MAPPING_H
 #define TAO_CONTINUOUS_PRIORITY_MAPPING_H
@@ -49,10 +47,8 @@ class TAO_RTCORBA_Export TAO_Continuous_Priority_Mapping
   : public TAO_Priority_Mapping
 {
 public:
-  /// Constructor.
   explicit TAO_Continuous_Priority_Mapping (int policy = ACE_SCHED_OTHER);
 
-  /// Destructor.
   ~TAO_Continuous_Priority_Mapping () override = default;
 
   /// Convert CORBA priority to native priority.

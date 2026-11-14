@@ -27,7 +27,7 @@
 #include "tao/Basic_Types.h"
 
 #include "ace/Dynamic_Service.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/PortableServer/Servant_Base.inl"
@@ -83,11 +83,10 @@ TAO_ServantBase::operator= (const TAO_ServantBase &rhs)
 PortableServer::POA_ptr
 TAO_ServantBase::_default_POA ()
 {
-  CORBA::Object_var object = TAO_ORB_Core_instance ()->root_poa ();
+  CORBA::Object_var const object = TAO_ORB_Core_instance ()->root_poa ();
 
   return PortableServer::POA::_narrow (object.in ());
 }
-
 
 void
 TAO_ServantBase::_is_a_skel (TAO_ServerRequest & server_request,
@@ -152,7 +151,6 @@ TAO_ServantBase::_is_a_thru_poa_skel (TAO_ServerRequest & server_request,
                          );
 }
 
-
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 void
 TAO_ServantBase::_non_existent_skel (TAO_ServerRequest & server_request,
@@ -211,7 +209,6 @@ void TAO_ServantBase::_non_existent_thru_poa_skel (TAO_ServerRequest & server_re
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
                          );
 }
-
 
 # if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 void
@@ -304,7 +301,6 @@ TAO_ServantBase::_component_thru_poa_skel (TAO_ServerRequest & server_request,
 
 # endif /* !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) */
 
-
 void
 TAO_ServantBase::_repository_id_skel (TAO_ServerRequest & server_request,
                                       TAO::Portable_Server::Servant_Upcall* TAO_INTERCEPTOR (servant_upcall),
@@ -369,7 +365,7 @@ CORBA::Boolean
 TAO_ServantBase::_is_a (const char *logical_type_id)
 {
   static char const id[] = "IDL:omg.org/CORBA/Object:1.0";
-  return ACE_OS::strcmp (logical_type_id, id) == 0;
+  return std::strcmp (logical_type_id, id) == 0;
 }
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
@@ -414,7 +410,7 @@ TAO_ServantBase::_repository_id ()
 int
 TAO_ServantBase::_find (const char *opname,
                         TAO_Skeleton& skelfunc,
-                        const size_t length)
+                        size_t const length)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_SERVANT_BASE_FIND_START);
   return this->optable_->find (opname, skelfunc,
@@ -425,7 +421,7 @@ int
 TAO_ServantBase::_find (const char *opname,
                         TAO_Collocated_Skeleton& skelfunc,
                         TAO::Collocation_Strategy st,
-                        const size_t length)
+                        size_t const length)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_SERVANT_BASE_FIND_START);
   return this->optable_->find (opname, skelfunc, st,
@@ -435,13 +431,13 @@ TAO_ServantBase::_find (const char *opname,
 TAO_Stub *
 TAO_ServantBase::_create_stub ()
 {
-  TAO_Stub *stub = nullptr;
+  TAO_Stub *stub {};
 
   TAO::Portable_Server::POA_Current_Impl *poa_current_impl =
     static_cast<TAO::Portable_Server::POA_Current_Impl *>
                     (TAO_TSS_Resources::instance ()->poa_current_impl_);
 
-  CORBA::ORB_ptr servant_orb = nullptr;
+  CORBA::ORB_ptr servant_orb {};
 
   if (poa_current_impl != nullptr && this == poa_current_impl->servant ())
     {
@@ -455,9 +451,9 @@ TAO_ServantBase::_create_stub ()
     }
   else
     {
-      PortableServer::POA_var poa = this->_default_POA ();
+      PortableServer::POA_var const poa = this->_default_POA ();
 
-      CORBA::Object_var object = poa->servant_to_reference (this);
+      CORBA::Object_var const object = poa->servant_to_reference (this);
 
       // Get the stub object
       stub = object->_stubobj ();
@@ -586,15 +582,14 @@ TAO_ServantBase::asynchronous_upcall_dispatch (
 void
 TAO_ServantBase::_add_ref ()
 {
-  ++this->ref_count_;
+  this->ref_count_.fetch_add (1, std::memory_order_relaxed);
 }
 
 void
 TAO_ServantBase::_remove_ref ()
 {
-  CORBA::ULong const new_count = --this->ref_count_;
-
-  if (new_count == 0)
+  // The final decrement acquires prior releases before destroying the servant.
+  if (this->ref_count_.fetch_sub (1, std::memory_order_acq_rel) == 1)
     {
       delete this;
     }
@@ -603,7 +598,7 @@ TAO_ServantBase::_remove_ref ()
 CORBA::ULong
 TAO_ServantBase::_refcount_value () const
 {
-  return this->ref_count_;
+  return this->ref_count_.load (std::memory_order_relaxed);
 }
 
 void

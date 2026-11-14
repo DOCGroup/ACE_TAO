@@ -1,6 +1,9 @@
 // -*- C++ -*-
 #include "ace/OS_NS_string.h"
 #include "ace/OS_Memory.h"
+#include <memory>
+
+#include <cstring>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -210,9 +213,9 @@ ACE_OutputCDR::~ACE_OutputCDR ()
 ACE_INLINE void
 ACE_OutputCDR::reset ()
 {
-  this->current_ = &this->start_;
+  this->current_ = std::addressof (this->start_);
   this->current_is_writable_ = true;
-  ACE_CDR::mb_align (&this->start_);
+  ACE_CDR::mb_align (std::addressof (this->start_));
 
 #if !defined (ACE_LACKS_CDR_ALIGNMENT)
   this->current_alignment_ = 0;
@@ -337,7 +340,7 @@ ACE_OutputCDR::write_string (const ACE_CDR::Char *x)
   if (x)
     {
       ACE_CDR::ULong const len =
-        static_cast<ACE_CDR::ULong> (ACE_OS::strlen (x));
+        static_cast<ACE_CDR::ULong> (std::strlen (x));
       return this->write_string (len, x);
     }
 
@@ -515,7 +518,6 @@ ACE_OutputCDR::write_float_array (const ACE_CDR::Float *x,
                             length);
 }
 
-
 ACE_INLINE ACE_CDR::Boolean
 ACE_OutputCDR::write_double_array (const ACE_CDR::Double *x,
                                    ACE_CDR::ULong length)
@@ -612,11 +614,10 @@ ACE_OutputCDR::get_version (ACE_CDR::Octet &major, ACE_CDR::Octet &minor)
   minor = this->minor_version_;
 }
 
-
 ACE_INLINE const ACE_Message_Block*
 ACE_OutputCDR::begin () const
 {
-  return &this->start_;
+  return std::addressof (this->start_);
 }
 
 ACE_INLINE const ACE_Message_Block*
@@ -772,7 +773,6 @@ ACE_InputCDR::read_char (ACE_CDR::Char &x)
   return this->char_translator_->read_char (*this, x);
 }
 
-
 ACE_INLINE ACE_CDR::Boolean
 ACE_InputCDR::read_short (ACE_CDR::Short &x)
 {
@@ -786,7 +786,6 @@ ACE_InputCDR::read_ushort (ACE_CDR::UShort &x)
   return this->read_2 (&x);
 }
 
-
 ACE_INLINE ACE_CDR::Boolean
 ACE_InputCDR::read_long (ACE_CDR::Long &x)
 {
@@ -794,13 +793,11 @@ ACE_InputCDR::read_long (ACE_CDR::Long &x)
   return this->read_4 (reinterpret_cast<ACE_CDR::ULong*> (temp));
 }
 
-
 ACE_INLINE ACE_CDR::Boolean
 ACE_InputCDR::read_ulong (ACE_CDR::ULong &x)
 {
   return this->read_4 (&x);
 }
-
 
 ACE_INLINE ACE_CDR::Boolean
 ACE_InputCDR::read_longlong (ACE_CDR::LongLong &x)
@@ -1061,7 +1058,6 @@ ACE_InputCDR::read_float_array (ACE_CDR::Float *x,
                            length);
 }
 
-
 ACE_INLINE ACE_CDR::Boolean
 ACE_InputCDR::read_double_array (ACE_CDR::Double *x,
                                  ACE_CDR::ULong length)
@@ -1272,7 +1268,7 @@ ACE_InputCDR::adjust (size_t size,
 ACE_INLINE const ACE_Message_Block*
 ACE_InputCDR::start () const
 {
-  return &this->start_;
+  return std::addressof (this->start_);
 }
 
 ACE_INLINE bool
@@ -1455,7 +1451,7 @@ operator<< (ACE_OutputCDR &os, ACE_OutputCDR::from_string x)
 
   if (x.val_ != 0)
     {
-      len = static_cast<ACE_CDR::ULong> (ACE_OS::strlen (x.val_));
+      len = static_cast<ACE_CDR::ULong> (std::strlen (x.val_));
     }
 
   os.write_string (len, x.val_);
@@ -1617,7 +1613,7 @@ operator>> (ACE_InputCDR &is, ACE_InputCDR::to_string x)
     (is.read_string (const_cast<char *&> (x.val_))
      && is.good_bit ()
      && (!x.bound_
-         || ACE_OS::strlen (x.val_) <= x.bound_));
+         || std::strlen (x.val_) <= x.bound_));
 }
 
 ACE_INLINE ACE_CDR::Boolean
@@ -1773,7 +1769,7 @@ ACE_OutputCDR::append_fixed (ACE_InputCDR &stream)
 ACE_INLINE ACE_CDR::Boolean
 ACE_OutputCDR::append_string (ACE_InputCDR &stream)
 {
-  ACE_CDR::Char *x = nullptr;
+  ACE_CDR::Char *x {};
   ACE_CDR::Boolean const flag =
     (stream.read_string (x) ? this->write_string (x) : false);
 #if defined (ACE_HAS_ALLOC_HOOKS)
@@ -1787,7 +1783,7 @@ ACE_OutputCDR::append_string (ACE_InputCDR &stream)
 ACE_INLINE ACE_CDR::Boolean
 ACE_OutputCDR::append_wstring (ACE_InputCDR &stream)
 {
-  ACE_CDR::WChar *x = nullptr;
+  ACE_CDR::WChar *x {};
   ACE_CDR::Boolean const flag =
     (stream.read_wstring (x) ? this->write_wstring (x) : false);
 #if defined (ACE_HAS_ALLOC_HOOKS)
@@ -1861,7 +1857,6 @@ ACE_InputCDR::wchar_translator () const
 {
   return this->wchar_translator_;
 }
-
 
 ACE_INLINE void
 ACE_InputCDR::char_translator (ACE_Char_Codeset_Translator * ctran)

@@ -29,7 +29,6 @@
 #define MAXTOTALPROCS       MAXCLIENTS          /* overall max # of procs */
 #define MAXPROCSPERNODE     MAXCLIENTS          /* max # of procs/node */
 
-
 #define CONTENT_LENGTH_STRING   "CONTENT-LENGTH:"
 #define OKSTR               "OK"
 #define OKSTRLEN            ((int)strlen(OKSTR))
@@ -39,7 +38,6 @@
 #define READYSTRLEN         ((int)strlen(READYSTR))
 #define ABORTSTR            "ABORT"
 #define ABORTSTRLEN         ((int)strlen(ABORTSTR))
-
 
 #define MAXNUMOFFILES 1     /* max # of files per page */
 #define URL_SIZE            1024
@@ -206,7 +204,6 @@ typedef struct page_list {
     char                *(servername[MAXNUMOFFILES]);
     int                 port_number[MAXNUMOFFILES];
 }page_list_t;
-
 
 /* shared variables */
 extern THREAD FILE *debugfile;

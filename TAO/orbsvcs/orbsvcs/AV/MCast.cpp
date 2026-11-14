@@ -15,21 +15,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 //------------------------------------------------------------
 
 TAO_AV_UDP_MCast_Flow_Handler::TAO_AV_UDP_MCast_Flow_Handler ()
-  : peer_addr_ (nullptr)
-  , dgram_mcast_ (nullptr)
 {
-  ACE_NEW (transport_,
-           TAO_AV_UDP_MCast_Transport (this));
-  ACE_NEW (dgram_mcast_,
-           ACE_SOCK_Dgram_Mcast);
+  this->transport_ = std::make_unique<TAO_AV_UDP_MCast_Transport> (this);
+  this->dgram_mcast_ = std::make_unique<ACE_SOCK_Dgram_Mcast> ();
 }
 
-TAO_AV_UDP_MCast_Flow_Handler::~TAO_AV_UDP_MCast_Flow_Handler ()
-{
-  delete this->transport_;
-  delete this->dgram_mcast_;
-}
-
+TAO_AV_UDP_MCast_Flow_Handler::~TAO_AV_UDP_MCast_Flow_Handler () = default;
 
 int
 TAO_AV_UDP_MCast_Flow_Handler::handle_input (ACE_HANDLE /*fd*/)
@@ -39,8 +30,8 @@ TAO_AV_UDP_MCast_Flow_Handler::handle_input (ACE_HANDLE /*fd*/)
 }
 
 int
-TAO_AV_UDP_MCast_Flow_Handler::handle_timeout (const ACE_Time_Value &tv,
-                                               const void *arg)
+TAO_AV_UDP_MCast_Flow_Handler::handle_timeout (ACE_Time_Value const &tv,
+                                               void const *arg)
 {
   return TAO_AV_Flow_Handler::handle_timeout (tv,arg);
 }
@@ -62,10 +53,7 @@ TAO_AV_UDP_MCast_Flow_Handler::set_peer_addr (ACE_INET_Addr *peer_addr)
 // TAO_AV_UDP_MCast_Transport
 //------------------------------------------------------------
 
-TAO_AV_UDP_MCast_Transport::TAO_AV_UDP_MCast_Transport ()
-  : handler_ (nullptr)
-{
-}
+TAO_AV_UDP_MCast_Transport::TAO_AV_UDP_MCast_Transport () = default;
 
 TAO_AV_UDP_MCast_Transport::TAO_AV_UDP_MCast_Transport (TAO_AV_UDP_MCast_Flow_Handler *handler)
   :handler_ (handler)
@@ -86,7 +74,6 @@ TAO_AV_UDP_MCast_Transport::close ()
   return 0;
 }
 
-
 ACE_Addr*
 TAO_AV_UDP_MCast_Transport::get_peer_addr ()
 {
@@ -101,7 +88,7 @@ TAO_AV_UDP_MCast_Transport::get_local_addr ()
 }
 
 ssize_t
-TAO_AV_UDP_MCast_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value *)
+TAO_AV_UDP_MCast_Transport::send (ACE_Message_Block const *mblk, ACE_Time_Value *)
 {
   // For the most part this was copied from GIOP::send_request and
   // friends.
@@ -111,7 +98,7 @@ TAO_AV_UDP_MCast_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value 
   ssize_t n = 0;
   ssize_t nbytes = 0;
 
-  for (const ACE_Message_Block *i = mblk;
+  for (ACE_Message_Block const *i = mblk;
        i != nullptr;
        i = i->cont ())
     {
@@ -120,7 +107,7 @@ TAO_AV_UDP_MCast_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value 
         {
           iov[iovcnt].iov_base = i->rd_ptr ();
           iov[iovcnt].iov_len  = static_cast<u_long> (i->length ());
-          iovcnt++;
+          ++iovcnt;
 
           // The buffer is full make a OS call.  @@ TODO this should
           // be optimized on a per-platform basis, for instance, some
@@ -130,7 +117,7 @@ TAO_AV_UDP_MCast_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value 
           // we should set ACE_IOV_MAX to that limit.
           if (iovcnt == ACE_IOV_MAX)
             {
-              n = this->handler_->get_mcast_socket ()->send ((const iovec *) iov,
+              n = this->handler_->get_mcast_socket ()->send ((iovec const *) iov,
                                                              iovcnt);
 
               if (n < 1)
@@ -145,7 +132,7 @@ TAO_AV_UDP_MCast_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value 
   // Check for remaining buffers to be sent!
   if (iovcnt != 0)
     {
-      n = this->handler_->get_mcast_socket ()->send ((const iovec *) iov,
+      n = this->handler_->get_mcast_socket ()->send ((iovec const *) iov,
                                                      iovcnt);
       if (n < 1)
         return n;
@@ -157,7 +144,7 @@ TAO_AV_UDP_MCast_Transport::send (const ACE_Message_Block *mblk, ACE_Time_Value 
 }
 
 ssize_t
-TAO_AV_UDP_MCast_Transport::send (const char *buf,
+TAO_AV_UDP_MCast_Transport::send (char const *buf,
                                   size_t len,
                                   ACE_Time_Value *)
 {
@@ -170,7 +157,7 @@ TAO_AV_UDP_MCast_Transport::send (const char *buf,
 }
 
 ssize_t
-TAO_AV_UDP_MCast_Transport::send (const iovec *iov,
+TAO_AV_UDP_MCast_Transport::send (iovec const *iov,
                                   int iovcnt,
                                   ACE_Time_Value *)
 {
@@ -184,7 +171,6 @@ TAO_AV_UDP_MCast_Transport::mtu ()
 {
   return ACE_MAX_DGRAM_SIZE;
 }
-
 
 ssize_t
 TAO_AV_UDP_MCast_Transport::recv (char *buf,

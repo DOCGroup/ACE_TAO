@@ -53,7 +53,6 @@ public:
    */
   void allocate_slots(PortableInterceptor::ORBInitInfo_ptr info);
 
-
   void generate_object_id(FtRtecEventChannelAdmin::ObjectId& object_id);
   void set_object_id(const FtRtecEventChannelAdmin::ObjectId& object_id);
   FtRtecEventChannelAdmin::ObjectId_var get_object_id();

@@ -431,7 +431,7 @@ annotation_tests ()
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Annotation Test Error: %C:\n")
           ACE_TEXT ("expected one annotation on test_seq_t base type, ")
-          ACE_TEXT ("it has %d annotations!\n"),
+          ACE_TEXT ("it has %B annotations!\n"),
           t.name_.c_str (), count));
         t.failed ();
       }
@@ -557,7 +557,7 @@ annotation_tests ()
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Annotation Test Error: %C:\n")
           ACE_TEXT ("expected one annotation on test_union discriminator, ")
-          ACE_TEXT ("it has %d annotations!\n"),
+          ACE_TEXT ("it has %B annotations!\n"),
           t.name_.c_str (), count));
         t.failed ();
       }
@@ -745,7 +745,7 @@ annotation_tests ()
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Annotation Test Error: %C:\n")
           ACE_TEXT ("expected one annotation on struct12Array base type, ")
-          ACE_TEXT ("it has %d annotations!\n"),
+          ACE_TEXT ("it has %B annotations!\n"),
           t.name_.c_str (), count));
         t.failed ();
       }
@@ -1054,10 +1054,10 @@ annotation_tests ()
     if (member->visibility () != AST_Field::vis_NA)
       {
         char buffer[100];
-        ACE_OS::snprintf (&buffer[0], 100,
+        ACE_OS::snprintf (buffer, 100,
           "struct field visibility is %u, which is not equal to vis_NA",
           static_cast<unsigned> (member->visibility ()));
-        t.failed (&buffer[0]);
+        t.failed (buffer);
       }
   } catch (Failed const &) {}
 

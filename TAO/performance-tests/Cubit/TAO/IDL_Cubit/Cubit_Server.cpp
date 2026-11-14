@@ -3,16 +3,6 @@
 #include "tao/debug.h"
 #include "ace/OS_NS_stdio.h"
 
-Cubit_Server::Cubit_Server ()
-  : ior_output_file_ (0),
-    orb_manager_ (),
-    factory_impl_ (0),
-    factory_id_ (),
-    argc_ (0),
-    argv_ (0)
-{
-}
-
 int
 Cubit_Server::parse_args ()
 {
@@ -23,12 +13,12 @@ Cubit_Server::parse_args ()
     switch (c)
       {
       case 'd':  // debug flag.
-        TAO_debug_level++;
+        ++TAO_debug_level;
         break;
 
       case 'f': // output the IOR to a file.
-        this->ior_output_file_ = ACE_OS::fopen (get_opts.opt_arg (), "w");
-        if (this->ior_output_file_ == 0)
+        this->ior_output_file_.reset (ACE_OS::fopen (get_opts.opt_arg (), "w"));
+        if (!this->ior_output_file_)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to open <%s> for writing: %p\n",
                              get_opts.opt_arg (),
@@ -75,14 +65,14 @@ Cubit_Server::init (int argc,
   CORBA::ORB_var orb = this->orb_manager_.orb ();
 
   // Now create the implementations
-  this->factory_impl_ = new Cubit_Factory_i (orb.in ());
+  this->factory_impl_ = std::make_unique<Cubit_Factory_i> (orb.in ());
 
   PortableServer::POA_var root_poa = this->orb_manager_.root_poa ();
   this->factory_impl_->set_default_poa (root_poa.in ());
 
   this->factory_id_ =
     this->orb_manager_.activate_under_child_poa ("factory",
-                                                 this->factory_impl_);
+                                                 this->factory_impl_.get ());
 
   ACE_DEBUG ((LM_DEBUG,
               "The IOR is: <%C>\n",
@@ -90,10 +80,10 @@ Cubit_Server::init (int argc,
 
   if (this->ior_output_file_)
     {
-      ACE_OS::fprintf (this->ior_output_file_,
+      ACE_OS::fprintf (this->ior_output_file_.get (),
                        "%s",
                        this->factory_id_.in ());
-      ACE_OS::fclose (this->ior_output_file_);
+      this->ior_output_file_.reset ();
     }
 
   return 0;
@@ -107,9 +97,4 @@ Cubit_Server::run ()
                        "Cubit_Server::run"),
                       -1);
   return 0;
-}
-
-Cubit_Server::~Cubit_Server ()
-{
-  delete this->factory_impl_;
 }

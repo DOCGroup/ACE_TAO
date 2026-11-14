@@ -6,6 +6,9 @@
 #include "ace/OS_main.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <memory>
+#include <utility>
+
 #include "orbsvcs/Daemon_Utilities.h"
 
 #include "orbsvcs/CosNamingC.h"
@@ -22,8 +25,8 @@
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  bool use_thread_per_consumer = false;
-  for (int i = 0; i < argc; ++i)
+  bool use_thread_per_consumer {};
+  for (int i {}; i < argc; ++i)
     {
       if (ACE_OS::strcmp (argv[i], ACE_TEXT ("-a")) == 0)
         {
@@ -42,15 +45,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-Event_Service::Event_Service () = default;
-
-Event_Service::~Event_Service ()
-{
-  delete this->ec_impl_;
-  this->ec_impl_ = nullptr;
-  delete this->sched_impl_;
-  this->sched_impl_ = nullptr;
-}
+Event_Service::~Event_Service () = default;
 
 int
 Event_Service::run (int argc, ACE_TCHAR *argv[])
@@ -68,17 +63,17 @@ Event_Service::run (int argc, ACE_TCHAR *argv[])
       if (this->parse_args (argc, argv) == -1)
         return 1;
 
-      CORBA::Object_var root_poa_object =
-        this->orb_->resolve_initial_references("RootPOA");
+      CORBA::Object_var const root_poa_object =
+        this->orb_->resolve_initial_references ("RootPOA");
       if (CORBA::is_nil (root_poa_object.in ()))
         ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the root POA.\n"),
                           1);
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (root_poa_object.in ());
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
       poa_manager->activate ();
@@ -87,11 +82,11 @@ Event_Service::run (int argc, ACE_TCHAR *argv[])
       // naming service.
 
       bool const use_name_service = this->bind_to_naming_service_ ||
-                                    this->scheduler_type_ != ES_SCHED_NONE;
+                                    this->scheduler_type_ != Scheduler_Type::none;
 
-      CORBA::Object_var naming_obj;
-      RtecScheduler::Scheduler_var scheduler;
-      CosNaming::NamingContext_var naming_context;
+      CORBA::Object_var naming_obj {};
+      RtecScheduler::Scheduler_var scheduler {};
+      CosNaming::NamingContext_var naming_context {};
 
       if (use_name_service)
         {
@@ -115,12 +110,15 @@ Event_Service::run (int argc, ACE_TCHAR *argv[])
 
       // The old EC always needs a scheduler. If none is
       // specified, we default to a local scheduler
-      if (this->scheduler_type_ == ES_SCHED_LOCAL)
+      if (this->scheduler_type_ == Scheduler_Type::local)
         {
           // Create a local scheduler instance
-          ACE_NEW_RETURN (this->sched_impl_,
+          ACE_Config_Scheduler *sched_impl {};
+          ACE_NEW_RETURN (sched_impl,
                           ACE_Config_Scheduler,
                           1);
+          // Transfer the ACE_NEW_RETURN result to the owning member.
+          this->sched_impl_.reset (sched_impl);
 
           scheduler = this->sched_impl_->_this ();
 
@@ -130,10 +128,10 @@ Event_Service::run (int argc, ACE_TCHAR *argv[])
               naming_context->rebind (schedule_name, scheduler.in ());
             }
         }
-      else if (this->scheduler_type_ == ES_SCHED_GLOBAL)
+      else if (this->scheduler_type_ == Scheduler_Type::global)
         {
           // Get reference to a scheduler from naming service
-          CORBA::Object_var tmp =
+          CORBA::Object_var const tmp =
             naming_context->resolve (schedule_name);
 
           scheduler = RtecScheduler::Scheduler::_narrow (tmp.in ());
@@ -147,25 +145,26 @@ Event_Service::run (int argc, ACE_TCHAR *argv[])
       TAO_EC_Event_Channel_Attributes attr (root_poa.in (),
                                             root_poa.in ());
 
-      if (this->scheduler_type_ != ES_SCHED_NONE)
+      if (this->scheduler_type_ != Scheduler_Type::none)
         {
           attr.scheduler = scheduler.in ();
         }
 
-      TAO_EC_Event_Channel *ec_impl = nullptr;
+      TAO_EC_Event_Channel *ec_impl {};
       ACE_NEW_RETURN (ec_impl,
                       TAO_EC_Event_Channel (attr),
                       1);
-      this->ec_impl_ = ec_impl;
+      // Keep the concrete type until activate() has been called.
+      std::unique_ptr<TAO_EC_Event_Channel> ec_impl_owner (ec_impl);
+      ec_impl_owner->activate ();
+      this->ec_impl_ = std::move (ec_impl_owner);
 
-      ec_impl->activate ();
-
-      RtecEventChannelAdmin::EventChannel_var ec;
+      RtecEventChannelAdmin::EventChannel_var ec {};
 
       // If the object_id_ is empty and we don't use BiDIR GIOP, activate the
       // servant under the default POA, else create a new child POA with
       // the needed policies
-      bool const persistent = ACE_OS::strcmp (this->object_id_.c_str (), "") != 0;
+      bool const persistent = !this->object_id_.empty ();
       if (!persistent && !this->use_bidir_giop_)
         {
           // Notice that we activate *this* object with the POA, but we
@@ -193,7 +192,7 @@ Event_Service::run (int argc, ACE_TCHAR *argv[])
 
           if (this->use_bidir_giop_)
             {
-              CORBA::Any pol;
+              CORBA::Any pol {};
               pol <<= BiDirPolicy::BOTH;
               policies.length (index++);
               policies[index] =
@@ -201,16 +200,14 @@ Event_Service::run (int argc, ACE_TCHAR *argv[])
                                            pol);
             }
 
-          ACE_CString child_poa_name = "childPOA";
-          PortableServer::POA_var child_poa =
+          std::string const child_poa_name = "childPOA";
+          PortableServer::POA_var const child_poa =
             root_poa->create_POA (child_poa_name.c_str (),
                                   poa_manager.in (),
                                   policies);
 
           // Creation of persistentPOA is over. Destroy the Policy objects.
-          for (CORBA::ULong i = 0;
-               i < policies.length ();
-               ++i)
+          for (CORBA::ULong i {}; i < policies.length (); ++i)
             {
               policies[i]->destroy ();
             }
@@ -220,46 +217,46 @@ Event_Service::run (int argc, ACE_TCHAR *argv[])
                                " (%P|%t) Unable to initialize the child POA.\n"),
                               1);
 
-          PortableServer::ObjectId_var ec_object_id =
+          PortableServer::ObjectId_var const ec_object_id =
             PortableServer::string_to_ObjectId (this->object_id_.c_str ());
 
           child_poa->activate_object_with_id (ec_object_id.in (), this);
 
-          CORBA::Object_var ec_obj =
+          CORBA::Object_var const ec_obj =
             child_poa->id_to_reference (ec_object_id.in ());
 
           ec =
             RtecEventChannelAdmin::EventChannel::_narrow (ec_obj.in ());
         }
 
-      CORBA::String_var str =
-         this->orb_->object_to_string (ec.in ());
+      CORBA::String_var const str =
+        this->orb_->object_to_string (ec.in ());
 
-      if (ACE_OS::strcmp (this->ior_file_name_.c_str (), ACE_TEXT("")) != 0)
+      if (!this->ior_file_name_.empty ())
         {
-          FILE *output_file =
-            ACE_OS::fopen (this->ior_file_name_.c_str(),
-                           ACE_TEXT("w"));
+          std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+            ACE_OS::fopen (this->ior_file_name_.c_str (),
+                           ACE_TEXT ("w")),
+            ACE_OS::fclose);
           if (output_file == nullptr)
             ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                "Cannot open output file for writing IOR: %s",
                                this->ior_file_name_.c_str()),
                               1);
-          ACE_OS::fprintf (output_file, "%s", str.in ());
-          ACE_OS::fclose (output_file);
+          ACE_OS::fprintf (output_file.get (), "%s", str.in ());
         }
 
-      if (ACE_OS::strcmp (this->pid_file_name_.c_str (), ACE_TEXT("")) != 0)
+      if (!this->pid_file_name_.empty ())
         {
-          FILE *pidf =
-            ACE_OS::fopen (this->pid_file_name_.c_str(),
-                           ACE_TEXT("w"));
+          std::unique_ptr<FILE, int (*) (FILE *)> pidf (
+            ACE_OS::fopen (this->pid_file_name_.c_str (),
+                           ACE_TEXT ("w")),
+            ACE_OS::fclose);
           if (pidf != nullptr)
             {
-              ACE_OS::fprintf (pidf,
+              ACE_OS::fprintf (pidf.get (),
                                "%ld\n",
                                static_cast<long> (ACE_OS::getpid ()));
-              ACE_OS::fclose (pidf);
             }
         }
 
@@ -294,13 +291,11 @@ Event_Service::run (int argc, ACE_TCHAR *argv[])
         {
           naming_context->unbind (schedule_name);
         }
-
     }
   catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("EC");
     }
-
 
   return 0;
 }
@@ -322,7 +317,7 @@ Event_Service::parse_args (int argc, ACE_TCHAR *argv [])
           // This is processed in main()
           break;
         case 'n':
-          this->service_name_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
+          this->service_name_ = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
           break;
 
         case 'o':
@@ -334,7 +329,7 @@ Event_Service::parse_args (int argc, ACE_TCHAR *argv [])
           break;
 
         case 'q':
-          this->object_id_ = ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ());
+          this->object_id_ = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
           break;
 
         case 'b':
@@ -350,17 +345,17 @@ Event_Service::parse_args (int argc, ACE_TCHAR *argv [])
           // argument, but this is consistent with the EC_Multiple
           // test and also allows for a runtime scheduling service.
 
-          if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_TEXT("global")) == 0)
+          if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_TEXT ("global")) == 0)
             {
-              this->scheduler_type_ = ES_SCHED_GLOBAL;
+              this->scheduler_type_ = Scheduler_Type::global;
             }
-          else if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_TEXT("local")) == 0)
+          else if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_TEXT ("local")) == 0)
             {
-              this->scheduler_type_ = ES_SCHED_LOCAL;
+              this->scheduler_type_ = Scheduler_Type::local;
             }
-          else if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_TEXT("none")) == 0)
+          else if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_TEXT ("none")) == 0)
             {
-              this->scheduler_type_ = ES_SCHED_NONE;
+              this->scheduler_type_ = Scheduler_Type::none;
             }
           else
             {
@@ -368,7 +363,7 @@ Event_Service::parse_args (int argc, ACE_TCHAR *argv [])
                           ACE_TEXT("Unknown scheduling type <%s> ")
                           ACE_TEXT("defaulting to none\n"),
                           get_opt.opt_arg ()));
-              this->scheduler_type_ = ES_SCHED_NONE;
+              this->scheduler_type_ = Scheduler_Type::none;
             }
           break;
 
@@ -392,7 +387,6 @@ Event_Service::parse_args (int argc, ACE_TCHAR *argv [])
 
   return 0;
 }
-
 
 RtecEventChannelAdmin::ConsumerAdmin_ptr
 Event_Service::for_consumers ()

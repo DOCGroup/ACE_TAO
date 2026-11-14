@@ -11,12 +11,12 @@ class ClientInterceptor:
   public virtual PortableInterceptor::ClientRequestInterceptor,
   public virtual ::CORBA::LocalObject
 {
- public:
-  ClientInterceptor (Messenger_var theMessage,
-                     PortableInterceptor::Current_ptr thePic,
-                     PortableInterceptor::SlotId theSlot);
+public:
+  ClientInterceptor (Messenger_var messenger,
+                     PortableInterceptor::Current_ptr current,
+                     PortableInterceptor::SlotId slot);
 
-  ~ClientInterceptor () override;
+  ~ClientInterceptor () override = default;
 
   ClientInterceptor (ClientInterceptor const &) = delete;
   ClientInterceptor (ClientInterceptor &&) = delete;
@@ -38,10 +38,10 @@ class ClientInterceptor:
   void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
  private:
-  char const * myname_;
-  Messenger_var messenger;
-  PortableInterceptor::Current_ptr pic;
-  PortableInterceptor::SlotId slot;
+  char const * const myname_;
+  Messenger_var messenger_;
+  PortableInterceptor::Current_var current_;
+  PortableInterceptor::SlotId slot_ {};
 };
 
 #endif

@@ -7,23 +7,20 @@
  */
 //=============================================================================
 
-
 #include "param_test_i.h"
 
+#include <string>
+
 #include "tao/debug.h"
-#include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_wchar.h"
 #include "ace/OS_NS_string.h"
 
 // ********* class Coffee_i ****************
-// Constructor
 
 Coffee_i::Coffee_i (const char *name)
   : name_ (name)
 {
 }
-
-// Destructor
 
 Coffee_i::~Coffee_i ()
 {
@@ -40,16 +37,13 @@ Coffee_i::description ()
 
 // set attribute
 void
-Coffee_i::description (const Coffee::Desc &description
+Coffee_i::description (Coffee::Desc const & description
  /*env*/)
 {
   this->name_ = CORBA::string_dup (description.name);
 }
 
-
 // ********* class Param_Test_i ****************
-
-// Constructor
 
 Param_Test_i::Param_Test_i (const char *coffee_name,
                             CORBA::ORB_ptr orb)
@@ -57,8 +51,6 @@ Param_Test_i::Param_Test_i (const char *coffee_name,
     obj_ (coffee_name)
 {
 }
-
-// Destructor
 
 Param_Test_i::~Param_Test_i ()
 {
@@ -102,8 +94,9 @@ Param_Test_i::test_unbounded_string (const char *s1,
 {
   char *retstr = CORBA::string_dup (s1);
   s3 = CORBA::string_dup (s1);
-  char *tmp = CORBA::string_alloc (2*ACE_OS::strlen (s2));
-  ACE_OS::sprintf (tmp, "%s%s", s2, s2);
+  std::string doubled (s2);
+  doubled += s2;
+  char *tmp = CORBA::string_dup (doubled.c_str ());
   CORBA::string_free (s2);
   s2 = tmp;
   return retstr;
@@ -119,8 +112,9 @@ Param_Test_i::test_bounded_string (const char *s1,
 {
   char *retstr = CORBA::string_dup (s1);
   s3 = CORBA::string_dup (s1);
-  char *tmp = CORBA::string_alloc (2*ACE_OS::strlen (s2));
-  ACE_OS::sprintf (tmp, "%s%s", s2, s2);
+  std::string doubled (s2);
+  doubled += s2;
+  char *tmp = CORBA::string_dup (doubled.c_str ());
   CORBA::string_free (s2);
   s2 = tmp;
   return retstr;
@@ -374,7 +368,6 @@ Param_Test_i::test_bounded_struct_sequence (const Param_Test::Bounded_StructSeq 
   return ret;
 }
 
-
 Param_Test::PathSpec *
 Param_Test_i::test_unbounded_struct_sequence (const Param_Test::PathSpec & s1,
                                               Param_Test::PathSpec & s2,
@@ -383,7 +376,6 @@ Param_Test_i::test_unbounded_struct_sequence (const Param_Test::PathSpec & s1,
   Param_Test::PathSpec
     *ret = new Param_Test::PathSpec,
     *out = new Param_Test::PathSpec;
-
 
   Param_Test::PathSpec_var rPathSpec = new Param_Test::PathSpec;
   rPathSpec->length(2);
@@ -403,7 +395,6 @@ Param_Test_i::test_unbounded_struct_sequence (const Param_Test::PathSpec & s1,
 
   return ret;
 }
-
 
 // test for array sequences
 Param_Test::ArraySeq *
@@ -454,8 +445,8 @@ Param_Test_i::test_coffe_mix (const Param_Test::Coffee_Mix & s1,
 
 #if 0
   ACE_DEBUG ((LM_DEBUG,
-              "maximum = %d\n"
-              "length = %d\n",
+              "maximum = %u\n"
+              "length = %u\n",
               s1.maximum (),
               s1.length ()));
   ACE_DEBUG ((LM_DEBUG, "Elements -\n"));
@@ -475,7 +466,6 @@ Param_Test_i::test_coffe_mix (const Param_Test::Coffee_Mix & s1,
                   c->_interface_repository_id ()));
     }
 #endif /* 0 */
-
 
   s2 = s1;
   *out = s1;
@@ -495,8 +485,8 @@ Param_Test_i::test_bounded_coffe_mix (const Param_Test::Bounded_Coffee_Mix & s1,
 
 #if 0
   ACE_DEBUG ((LM_DEBUG,
-              "maximum = %d\n"
-              "length = %d\n",
+              "maximum = %u\n"
+              "length = %u\n",
               s1.maximum (),
               s1.length ()));
   ACE_DEBUG ((LM_DEBUG, "Elements -\n"));
@@ -516,7 +506,6 @@ Param_Test_i::test_bounded_coffe_mix (const Param_Test::Bounded_Coffee_Mix & s1,
                   c->_interface_repository_id ()));
     }
 #endif /* 0 */
-
 
   s2 = s1;
   *out = s1;
@@ -707,7 +696,6 @@ Param_Test_i::test_any (const CORBA::Any &a1,
   a2 = a1;
   a3 = new CORBA::Any (a1);
   ret = new CORBA::Any (a1);
-
 
   if (TAO_debug_level > 0)
     {

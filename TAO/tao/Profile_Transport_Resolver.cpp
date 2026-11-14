@@ -19,6 +19,8 @@
 #include "tao/ORB_Time_Policy.h"
 #include "ace/CORBA_macros.h"
 
+#include <memory>
+
 #if !defined (__ACE_INLINE__)
 # include "tao/Profile_Transport_Resolver.inl"
 #endif /* __ACE_INLINE__ */
@@ -43,8 +45,6 @@ namespace TAO
 
         this->transport_->remove_reference ();
       }
-
-    delete this->inconsistent_policies_;
   }
 
   void
@@ -57,7 +57,7 @@ namespace TAO
         // with profile management. This would cover some potential
         // issues that Ossama is working on.  Ossama, please remove
         // them when you are done.
-        TAO_Profile *tmp = this->profile_;
+        TAO_Profile * const tmp = this->profile_;
 
         (void) p->_incr_refcnt ();
         this->profile_ = p;
@@ -69,13 +69,12 @@ namespace TAO
       }
   }
 
-
   void
   Profile_Transport_Resolver::resolve (ACE_Time_Value *max_time_val)
   {
     TAO::ORB_Countdown_Time countdown (max_time_val);
 
-    TAO_Invocation_Endpoint_Selector *es =
+    TAO_Invocation_Endpoint_Selector * const es =
       this->stub_->orb_core ()->endpoint_selector_factory ()->get_selector ();
 
     // Select the endpoint
@@ -119,14 +118,13 @@ namespace TAO
     return this->try_connect_i (desc, timeout, true);
   }
 
-
   bool
   Profile_Transport_Resolver::try_connect_i (
        TAO_Transport_Descriptor_Interface *desc,
        ACE_Time_Value *timeout,
        bool parallel)
   {
-    TAO_Connector_Registry *conn_reg =
+    TAO_Connector_Registry * const conn_reg =
       this->stub_->orb_core ()->connector_registry ();
 
     if (conn_reg == nullptr)
@@ -143,12 +141,12 @@ namespace TAO
 
     if (has_con_timeout && !this->blocked_)
       {
-        timeout = &connection_timeout;
+        timeout = std::addressof (connection_timeout);
       }
     else if (has_con_timeout)
       {
         if (timeout == nullptr || connection_timeout < *timeout)
-          timeout = &connection_timeout;
+          timeout = std::addressof (connection_timeout);
         else
           has_con_timeout = false;
       }
@@ -157,7 +155,7 @@ namespace TAO
         timeout = nullptr;
       }
 
-    TAO_Connector *con = conn_reg->get_connector (desc->endpoint ()->tag ());
+    TAO_Connector * const con = conn_reg->get_connector (desc->endpoint ()->tag ());
     ACE_ASSERT(con != nullptr);
     if (parallel)
       {
@@ -189,7 +187,7 @@ namespace TAO
       {
         // Determine the sync scope (if any)
         Messaging::SyncScope sync_scope;
-        bool has_synchronization = false;
+        bool has_synchronization {};
         this->stub_->orb_core ()->call_sync_scope_hook (this->stub_,
                                                         has_synchronization,
                                                         sync_scope);
@@ -201,7 +199,7 @@ namespace TAO
   bool
   Profile_Transport_Resolver::use_parallel_connect () const
   {
-    TAO_ORB_Core *oc = this->stub_->orb_core();
+    TAO_ORB_Core * const oc = this->stub_->orb_core();
     return (oc->orb_params()->use_parallel_connects()
 #if 0       // it was decided that even with blocked connects
             // parallel connects could be useful, at least for cache
@@ -216,7 +214,7 @@ namespace TAO
   Profile_Transport_Resolver::get_connection_timeout (
     ACE_Time_Value &max_wait_time)
   {
-    bool is_conn_timeout = false;
+    bool is_conn_timeout {};
 
     // Check for the connection timout policy in the ORB
     this->stub_->orb_core ()->connection_timeout (this->stub_,
@@ -226,19 +224,19 @@ namespace TAO
     return is_conn_timeout;
   }
 
-
   void
   Profile_Transport_Resolver::init_inconsistent_policies ()
   {
-    ACE_NEW_THROW_EX (this->inconsistent_policies_,
+    CORBA::PolicyList *policies {};
+    ACE_NEW_THROW_EX (policies,
                       CORBA::PolicyList (0),
                       CORBA::NO_MEMORY (
                       CORBA::SystemException::_tao_minor_code (
                         0,
                         ENOMEM),
                       CORBA::COMPLETED_NO));
+    this->inconsistent_policies_.reset (policies);
   }
-
 
   int
   Profile_Transport_Resolver::find_transport (TAO_Transport_Descriptor_Interface *desc)

@@ -24,9 +24,9 @@ Hello::request_callback (Test::Hello_ptr call_me)
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Making call back !!!\n"));
   try
     {
-      CORBA::String_var result = call_me->get_string ();
+      CORBA::String_var const result = call_me->get_string ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "Exception attempting to callback client obj ref:\n");

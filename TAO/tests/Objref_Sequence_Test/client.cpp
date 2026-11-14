@@ -1,19 +1,23 @@
 #include "TestC.h"
 #include "ace/Get_Opt.h"
+#include <string>
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+struct Options
+{
+  std::basic_string<ACE_TCHAR> ior {ACE_TEXT ("file://test.ior")};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
 
       case '?':
@@ -25,89 +29,63 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
   return 0;
 }
 
-
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  Options options;
   try
     {
-      CORBA::ORB_var orb  =
-        CORBA::ORB_init (argc,
-                         argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) == -1)
+      if (parse_args (argc, argv, options) != 0)
         return -1;
 
-      // Connect to the server
-      CORBA::Object_var tmp =
-        orb->string_to_object(ior);
+      CORBA::Object_var const tmp = orb->string_to_object (options.ior.c_str ());
+      Server_var const server = Server::_narrow (tmp.in ());
 
-      Server_var server = Server::_narrow (tmp.in ());
-
-      // Create object instances
-      // This portion of the test was given by Petr Tuma and am just
-      // leaving it alone -- Bala
-      ServerSequence_var      vServers;
-      ServerSequence_var      vAddition;
-
-      CORBA::ULong iStep;
-      CORBA::ULong iSize, iOldSize, iAddSize;
-      CORBA::ULong iCount;
-
+      // This sequence-growth pattern is part of the regression scenario.
+      ServerSequence_var vServers {};
+      ServerSequence_var vAddition {};
       ACE_NEW_RETURN (vServers,
                       ServerSequence (),
                       -1);
 
-      iSize = 1;
-      iStep = 1;
-      while (iSize <= 50000)
+      CORBA::ULong size = 1;
+      CORBA::ULong step = 1;
+      while (size <= 50000)
         {
-          iOldSize = vServers->length ();
-          iAddSize = iSize - iOldSize;
+          CORBA::ULong const old_size = vServers->length ();
+          CORBA::ULong const add_size = size - old_size;
+          server->CreateExtra (add_size, vAddition.out ());
 
-          server->CreateExtra (iAddSize,
-                               vAddition.out ());
+          vServers->length (size);
+          for (CORBA::ULong count {}; count < add_size; ++count)
+            vServers[old_size + count] = Server::_duplicate (vAddition[count]);
 
+          vAddition = nullptr;
 
-          vServers->length (iSize);
-          for (iCount = 0 ; iCount < iAddSize ; iCount ++)
-            {
-              vServers [iOldSize + iCount] =
-                Server::_duplicate (vAddition [iCount]);
-            };
-
-          vAddition = 0;
-
-          if (iStep * 5 > iSize)
-            {
-              iSize += iStep;
-            }
+          if (step * 5 > size)
+            size += step;
           else
             {
-              iStep *= 10;
-              iSize = iStep;
-            };
-        };
-
-      //------------- End of donated untouched section
+              step *= 10;
+              size = step;
+            }
+        }
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Call delete on the server\n"));
-
       server->DeleteExtra (vServers.in ());
-
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Calling shutdown\n"));
       server->shutdown ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("");
     }
-
   return 0;
 }

@@ -26,7 +26,6 @@ class TAO_RTEC_Perf_Export Consumer
 
 {
 public:
-  /// Constructor
   Consumer (CORBA::Long experiment_id,
             CORBA::Long event_type,
             CORBA::ULong iterations,
@@ -46,9 +45,9 @@ public:
   //@{
   /** @name The RtecEventComm::PushConsumer methods
    */
-  virtual void push (const RtecEventComm::EventSet& events);
-  virtual void disconnect_push_consumer ();
-  virtual PortableServer::POA_ptr _default_POA ();
+  void push (const RtecEventComm::EventSet& events) override;
+  void disconnect_push_consumer () override;
+  PortableServer::POA_ptr _default_POA () override;
   //@}
 
 private:

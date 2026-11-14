@@ -5,7 +5,6 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_unistd.h"
 
-
 #if defined (ACE_HAS_TLI)
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])

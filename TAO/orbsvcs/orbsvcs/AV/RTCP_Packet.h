@@ -8,6 +8,8 @@
 #include "tao/orbconf.h"
 #include "tao/Versioned_Namespace.h"
 
+#include <memory>
+#include <utility>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -46,9 +48,8 @@ public:
   RTCP_Packet();
 
   /// Constructor for incoming RTCP packets.
-  RTCP_Packet(char *buffer);
+  explicit RTCP_Packet(char *buffer);
 
-  /// Destructor
   virtual ~RTCP_Packet();
   RTCP_Packet (RTCP_Packet const &) = delete;
   RTCP_Packet &operator= (RTCP_Packet const &) = delete;
@@ -65,14 +66,14 @@ public:
   /// Checks the validity of an RTCP packet.  RTCP packets can be sent
   /// together in a compound packet and is_first indicates the first packet
   /// in a compound packet
-  int is_valid (char is_first);
+  bool is_valid (bool is_first);
 
 protected:
   /// Header data common to all RTCP packets.
   RTCP_Common_Header chd_;
 
   /// Buffer to hold byte representation of the RTCP packet.
-  char *packet_data_;
+  std::unique_ptr<char[]> packet_data_ {};
 
   /// Used to create the byte representation of the RTCP packet.
   /// Defined in child class.
@@ -92,13 +93,12 @@ public:
   /// and an optional reason for leaving the session.
   RTCP_BYE_Packet (ACE_UINT32 *srcList,
                    unsigned char length,
-                   const char *text = nullptr);
+                   char const *text = nullptr);
 
   /// Constructor for incoming BYE RTCP packets.
   RTCP_BYE_Packet (char *buffer,
                    int *len);
 
-  /// Destructor.
   ~RTCP_BYE_Packet () override;
   RTCP_BYE_Packet (RTCP_BYE_Packet const &) = delete;
   RTCP_BYE_Packet &operator= (RTCP_BYE_Packet const &) = delete;
@@ -114,7 +114,7 @@ public:
                   unsigned char &length);
 
   /// Returns the reason for leaving the session.
-  const char *reason ();
+  char const *reason ();
 
   /// Prints the contents of the packet.
   void dump ();
@@ -124,16 +124,16 @@ private:
   void build_packet () override;
 
   /// List of synchronization source ids that are leaving the session.
-  ACE_UINT32 *ssrc_list_;
+  std::unique_ptr<ACE_UINT32[]> ssrc_list_ {};
 
   /// The number of ssrc's that are leaving the session (1 for non-mixers).
-  unsigned char ssrc_list_length_;
+  unsigned char ssrc_list_length_ {};
 
   /// An optional reason for leaving the session.
-  char reason_[256];
+  char reason_[256] {};
 
   /// The number of bytes in the reason for leaving the session.
-  unsigned char reason_length_;
+  unsigned char reason_length_ {};
 };
 
 /**
@@ -144,6 +144,15 @@ private:
 
 struct RR_Block
 {
+  ~RR_Block ()
+  {
+    while (this->next_)
+      {
+        std::unique_ptr<RR_Block> next = std::move (this->next_->next_);
+        this->next_ = std::move (next);
+      }
+  }
+
   /// The synchronization source id of the source of the data.
   ACE_UINT32 ssrc_;
 
@@ -168,7 +177,7 @@ struct RR_Block
   ACE_UINT32 dlsr_;
 
   /// Link to the next receiver report block.
-  RR_Block *next_;
+  std::unique_ptr<RR_Block> next_ {};
 };
 
 /**
@@ -185,9 +194,8 @@ public:
   RTCP_RR_Packet (char *buffer, int* len);
 
   /// Constructor for outgoing receiver reports.
-  RTCP_RR_Packet (ACE_UINT32 ssrc, RR_Block *blocks);
+  RTCP_RR_Packet (ACE_UINT32 ssrc, std::unique_ptr<RR_Block> blocks);
 
-  /// Destructor.
   ~RTCP_RR_Packet () override;
   RTCP_RR_Packet (RTCP_RR_Packet const &) = delete;
   RTCP_RR_Packet &operator= (RTCP_RR_Packet const &) = delete;
@@ -211,7 +219,7 @@ private:
   ACE_UINT32 ssrc_;
 
   /// A linked list of the receiver report block(s) being sent.
-  RR_Block *rr_;
+  std::unique_ptr<RR_Block> rr_ {};
 };
 
 struct sdesItem_s;
@@ -225,37 +233,32 @@ using sdesItem_t = sdesItem_s;
 
 struct sdesItem_s
 {
+  ~sdesItem_s ()
+  {
+    while (this->next_)
+      {
+        std::unique_ptr<sdesItem_t> next = std::move (this->next_->next_);
+        this->next_ = std::move (next);
+      }
+  }
+
   /// link to next item.
-  sdesItem_t *next_;
+  std::unique_ptr<sdesItem_t> next_ {};
 
   /// Type of item (eg canonical name).
   unsigned char type_;
 
-  union
-  {
-    struct
-    {
-      /// Length of an item (in octets).
-      unsigned char length_;
+  /// Length of a standard item or the private item name, in octets.
+  unsigned char length_ {};
 
-      /// Item text, not null-terminated.
-      char *data_;
-    } standard_;
-    struct
-    {
-      /// Length of the name of an item (in octets).
-      unsigned char name_length_;
+  /// Length of the private item data, in octets.
+  unsigned char data_length_ {};
 
-      /// Length of the item data (in octets).
-      unsigned char data_length_;
+  /// Standard item text or private item name, not null-terminated.
+  std::unique_ptr<char[]> data_ {};
 
-      /// The name of the item, not null-terminated.
-      char *name_;
-
-      /// Item data, not null-terminated.
-      char *data_;
-    } priv_;
-  } info_;
+  /// Private item data, not null-terminated.
+  std::unique_ptr<char[]> priv_data_ {};
 };
 
 struct sdesChunk_s;
@@ -269,14 +272,23 @@ using sdesChunk_t = sdesChunk_s;
  */
 struct sdesChunk_s
 {
+  ~sdesChunk_s ()
+  {
+    while (this->next_)
+      {
+        std::unique_ptr<sdesChunk_t> next = std::move (this->next_->next_);
+        this->next_ = std::move (next);
+      }
+  }
+
   /// Link to next item.
-  sdesChunk_t *next_;
+  std::unique_ptr<sdesChunk_t> next_ {};
 
   /// The synchronization source id that this chunk describes.
   ACE_UINT32 ssrc_;
 
   /// A linked list of items to describe this source.
-  sdesItem_t *item_;
+  std::unique_ptr<sdesItem_t> item_ {};
 };
 
 /**
@@ -294,7 +306,6 @@ public:
   /// Constructor for outgoing SDES packets.
   RTCP_SDES_Packet();
 
-  /// Destructor.
   ~RTCP_SDES_Packet () override;
   RTCP_SDES_Packet (RTCP_SDES_Packet const &) = delete;
   RTCP_SDES_Packet &operator= (RTCP_SDES_Packet const &) = delete;
@@ -308,7 +319,7 @@ public:
   void add_item(ACE_UINT32 ssrc,
                 unsigned char type,
                 unsigned char length,
-                const char* data);
+                char const *data);
 
   /// This will add a private item using the name and data for the ssrc specified.
   /// When the first item for a ssrc is added, a chunk is created.  Subsequent
@@ -316,9 +327,9 @@ public:
   /// for each unique ssrc.
   void add_priv_item(ACE_UINT32 ssrc,
                      unsigned char nameLength,
-                     const char *name,
+                     char const *name,
                      unsigned char dataLength,
-                     const char *data);
+                     char const *data);
 
   /// Returns the size of the packet in bytes.
   unsigned int packet_size () override;
@@ -336,16 +347,17 @@ private:
   void build_packet () override;
 
   /// Add a chunk to the packet.
-  void add_chunk(ACE_UINT32 ssrc);
+  sdesChunk_t *add_chunk (ACE_UINT32 ssrc);
+  sdesItem_t *add_item_node (sdesChunk_t *chunk);
 
   /// The number of chunks contained in this packet.
   /// 1 for end systems, 1+ for mixers
-  unsigned long num_chunks_;
+  unsigned long num_chunks_ {};
 
 //  unsigned long num_items_;
 
   /// A linked list of chunks for this packet (only 1 for non-mixers).
-  sdesChunk_t *chunk_;
+  std::unique_ptr<sdesChunk_t> chunk_ {};
 };
 
 /**
@@ -369,9 +381,8 @@ public:
                  ACE_UINT32 timestamp,
                  ACE_UINT32 pktsSent,
                  ACE_UINT32 octetsSent,
-                 RR_Block *rrBlocks);
+                 std::unique_ptr<RR_Block> rr_blocks);
 
-  /// Destructor
   ~RTCP_SR_Packet () override;
   RTCP_SR_Packet (RTCP_SR_Packet const &) = delete;
   RTCP_SR_Packet &operator= (RTCP_SR_Packet const &) = delete;
@@ -416,7 +427,7 @@ private:
   ACE_UINT32 osent_;
 
   /// A linked list of receiver report blocks.
-  RR_Block *rr_;
+  std::unique_ptr<RR_Block> rr_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

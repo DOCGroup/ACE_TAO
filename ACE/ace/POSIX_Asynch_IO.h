@@ -63,7 +63,7 @@ public:
   const void *act () const override;
 
   /// Did the operation succeed?
-  int success () const override;
+  bool success () const override;
 
   /**
    * This is the ACT associated with the handle on which the
@@ -102,7 +102,6 @@ public:
   /// Post @c this to the Proactor.
   int post_completion (ACE_Proactor_Impl *proactor) override;
 
-  /// Destructor.
   ~ACE_POSIX_Asynch_Result () override;
 
   /// Simulate error value to use in the post_completion ()
@@ -136,7 +135,7 @@ protected:
   size_t bytes_transferred_;
 
   /// Success indicator.
-  int success_;
+  bool success_;
 
   /// ACT associated with handle.
   const void *completion_key_;
@@ -181,10 +180,8 @@ public:
   ACE_POSIX_Proactor * posix_proactor () const;
 
 protected:
-  /// Constructor.
   ACE_POSIX_Asynch_Operation (ACE_POSIX_Proactor *posix_proactor);
 
-  /// Destructor.
   ~ACE_POSIX_Asynch_Operation () override;
 
   // This call is for the POSIX implementation. This method is used by
@@ -258,7 +255,6 @@ protected:
                          const void *completion_key,
                          u_long error) override;
 
-  /// Destructor.
   ~ACE_POSIX_Asynch_Read_Stream_Result () override;
 
   // aiocb::aio_nbytes
@@ -281,7 +277,6 @@ class ACE_Export ACE_POSIX_Asynch_Read_Stream : public virtual ACE_Asynch_Read_S
                                                 public ACE_POSIX_Asynch_Operation
 {
 public:
-  /// Constructor.
   ACE_POSIX_Asynch_Read_Stream (ACE_POSIX_Proactor *posix_proactor);
 
   /// This starts off an asynchronous read.  Upto @a bytes_to_read will
@@ -292,10 +287,8 @@ public:
             int priority,
             int signal_number = 0) override;
 
-  /// Destructor.
   ~ACE_POSIX_Asynch_Read_Stream () override;
 };
-
 
 /**
  * @class ACE_POSIX_Asynch_Write_Stream_Result
@@ -345,7 +338,6 @@ protected:
                          const void *completion_key,
                          u_long error) override;
 
-  /// Destructor.
   ~ACE_POSIX_Asynch_Write_Stream_Result () override;
 
 protected:
@@ -370,7 +362,6 @@ class ACE_Export ACE_POSIX_Asynch_Write_Stream : public virtual ACE_Asynch_Write
                                                  public ACE_POSIX_Asynch_Operation
 {
 public:
-  /// Constructor.
   ACE_POSIX_Asynch_Write_Stream (ACE_POSIX_Proactor *posix_proactor);
 
   /// This starts off an asynchronous write.  Upto @a bytes_to_write
@@ -381,7 +372,6 @@ public:
              int priority,
              int signal_number = 0) override;
 
-  /// Destructor.
   ~ACE_POSIX_Asynch_Write_Stream () override;
 };
 
@@ -420,7 +410,6 @@ protected:
                          const void *completion_key,
                          u_long error) override;
 
-  /// Destructor.
   ~ACE_POSIX_Asynch_Read_File_Result () override;
 };
 
@@ -444,7 +433,6 @@ class ACE_Export ACE_POSIX_Asynch_Read_File : public virtual ACE_Asynch_Read_Fil
                                               public ACE_POSIX_Asynch_Read_Stream
 {
 public:
-  /// Constructor.
   ACE_POSIX_Asynch_Read_File (ACE_POSIX_Proactor *posix_proactor);
 
   /**
@@ -460,7 +448,6 @@ public:
             int priority,
             int signal_number = 0) override;
 
-  /// Destructor.
   ~ACE_POSIX_Asynch_Read_File () override;
 
 private:
@@ -475,7 +462,6 @@ private:
             int priority,
             int signal_number = 0) override;
 };
-
 
 /**
  * @class ACE_POSIX_Asynch_Write_File_Result
@@ -523,7 +509,6 @@ protected:
                          const void *completion_key,
                          u_long error) override;
 
-  /// Destructor.
   ~ACE_POSIX_Asynch_Write_File_Result () override;
 };
 
@@ -539,7 +524,6 @@ class ACE_Export ACE_POSIX_Asynch_Write_File : public virtual ACE_Asynch_Write_F
                                                public ACE_POSIX_Asynch_Write_Stream
 {
 public:
-  /// Constructor.
   ACE_POSIX_Asynch_Write_File (ACE_POSIX_Proactor *posix_proactor);
 
   /**
@@ -555,7 +539,6 @@ public:
              int priority,
              int signal_number = 0) override;
 
-  /// Destructor.
   ~ACE_POSIX_Asynch_Write_File () override;
 
 private:
@@ -624,7 +607,6 @@ protected:
                          const void *completion_key,
                          u_long error) override;
 
-  /// Destructor.
   ~ACE_POSIX_Asynch_Accept_Result () override;
 
   // aiocb::aio_nbytes
@@ -641,7 +623,6 @@ protected:
   // I/O handle for the new connection.
 };
 
-
 /**
  * @class ACE_POSIX_Asynch_Accept
  *
@@ -654,10 +635,8 @@ class ACE_Export ACE_POSIX_Asynch_Accept :
   public ACE_Event_Handler
 {
 public:
-  /// Constructor.
-  ACE_POSIX_Asynch_Accept (ACE_POSIX_Proactor * posix_proactor);
+  explicit ACE_POSIX_Asynch_Accept (ACE_POSIX_Proactor * posix_proactor);
 
-  /// Destructor.
   ~ACE_POSIX_Asynch_Accept () override;
 
  /**
@@ -778,14 +757,12 @@ protected:
                          const void *completion_key,
                          u_long error) override;
 
-  /// Destructor.
   ~ACE_POSIX_Asynch_Connect_Result () override;
 
   // aiocb::aio_filedes
   // I/O handle for the new connection.
   void connect_handle (ACE_HANDLE handle);
 };
-
 
 /**
  * @class ACE_POSIX_Asynch_Connect
@@ -796,10 +773,8 @@ class ACE_Export ACE_POSIX_Asynch_Connect :
   public ACE_Event_Handler
 {
 public:
-  /// Constructor.
-  ACE_POSIX_Asynch_Connect (ACE_POSIX_Proactor * posix_proactor);
+  explicit ACE_POSIX_Asynch_Connect (ACE_POSIX_Proactor * posix_proactor);
 
-  /// Destructor.
   ~ACE_POSIX_Asynch_Connect () override;
 
  /**
@@ -887,7 +862,6 @@ private:
   ACE_SYNCH_MUTEX lock_;
 };
 
-
 /**
  * @class ACE_POSIX_Asynch_Transmit_File_Result
  *
@@ -954,7 +928,6 @@ protected:
                          const void *completion_key,
                          u_long error) override;
 
-  /// Destructor.
   ~ACE_POSIX_Asynch_Transmit_File_Result () override;
 
   /// Network I/O handle.
@@ -988,7 +961,6 @@ class ACE_Export ACE_POSIX_Asynch_Transmit_File : public virtual ACE_Asynch_Tran
                                                   public ACE_POSIX_Asynch_Operation
 {
 public:
-  /// Constructor.
   ACE_POSIX_Asynch_Transmit_File (ACE_POSIX_Proactor *posix_proactor);
 
   /**
@@ -1013,10 +985,8 @@ public:
                      int priority,
                      int signal_number = 0) override;
 
-  /// Destructor.
   ~ACE_POSIX_Asynch_Transmit_File () override;
 };
-
 
 /**
  * @class ACE_POSIX_Asynch_Read_Dgram
@@ -1034,7 +1004,6 @@ class ACE_Export ACE_POSIX_Asynch_Read_Dgram : public virtual ACE_Asynch_Read_Dg
                                                public ACE_POSIX_Asynch_Operation
 {
 public:
-  /// Constructor.
   ACE_POSIX_Asynch_Read_Dgram (ACE_POSIX_Proactor *posix_proactor);
   ~ACE_POSIX_Asynch_Read_Dgram () override;
 
@@ -1120,7 +1089,6 @@ protected:
                          const void *completion_key,
                          u_long error) override;
 
-  /// Destructor.
   ~ACE_POSIX_Asynch_Write_Dgram_Result () override;
 
   /// The number of bytes which were requested at the start of the
@@ -1155,10 +1123,8 @@ class ACE_Export ACE_POSIX_Asynch_Write_Dgram : public virtual ACE_Asynch_Write_
                                                 public ACE_POSIX_Asynch_Operation
 {
 public:
-  /// Constructor.
   ACE_POSIX_Asynch_Write_Dgram (ACE_POSIX_Proactor *posix_proactor);
 
-  /// Destructor
   ~ACE_POSIX_Asynch_Write_Dgram () override;
 
   /** This method queues an asynchronous send.  Up to
@@ -1194,7 +1160,6 @@ protected:
   /// Do-nothing constructor.
   ACE_POSIX_Asynch_Write_Dgram ();
 };
-
 
 /*****************************************************/
 
@@ -1252,7 +1217,6 @@ protected:
                          const void *completion_key,
                          u_long error) override;
 
-  /// Destructor.
   ~ACE_POSIX_Asynch_Read_Dgram_Result () override;
 
   /// Bytes requested when the asynchronous read was initiated.

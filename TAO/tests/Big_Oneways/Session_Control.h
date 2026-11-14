@@ -10,21 +10,19 @@ class Session_Control
   : public virtual POA_Test::Session_Control
 {
 public:
-  /// Constructor
   /**
    * @param session_count Number of session objects in the experiment.
    */
-  Session_Control (CORBA::ULong session_count);
+  explicit Session_Control (CORBA::ULong session_count);
   Session_Control (Session_Control const &) = delete;
   Session_Control (Session_Control &&) = delete;
   Session_Control &operator= (Session_Control const &) = delete;
   Session_Control &operator= (Session_Control &&) = delete;
 
-  /// Destructor
   ~Session_Control () override;
 
   /// Return 1 when all sessions have finished
-  int all_sessions_finished () const;
+  bool all_sessions_finished () const;
 
   // = The skeleton methods
   void session_finished (CORBA::Boolean success) override;
@@ -37,7 +35,7 @@ private:
   CORBA::ULong session_count_;
 
   /// Set to falso if any session reported a failure
-  CORBA::Boolean success_;
+  bool success_ {true};
 };
 
 #include /**/ "ace/post.h"

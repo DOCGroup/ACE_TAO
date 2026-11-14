@@ -1,6 +1,5 @@
 #include "Test_impl.h"
 
-
 Server_impl::Server_impl (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {

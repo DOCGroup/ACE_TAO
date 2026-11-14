@@ -26,15 +26,13 @@
 class test_i : public virtual POA_hello::GoodDay
 {
 public:
-  /// Constructor.
-  test_i (CORBA::Short num,
-          CORBA::ORB_ptr orb);
+  test_i (CORBA::Short const num,
+          CORBA::ORB_ptr const orb);
   test_i (test_i const &) = delete;
   test_i (test_i &&) = delete;
   test_i &operator= (test_i const &) = delete;
   test_i &operator= (test_i &&) = delete;
 
-  /// Destructor.
   ~test_i () override = default;
 
   /// Return the number assigned to this object.
@@ -45,10 +43,10 @@ public:
 
 private:
   /// The number assigned to this object.
-  CORBA::Short number_;
+  CORBA::Short number_ {};
 
   /// Pseudo-reference to the ORB.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 };
 
 #endif  /* TEST_I_H */

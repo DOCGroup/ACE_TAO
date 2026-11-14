@@ -1,10 +1,7 @@
+#include <cstdio>
+
 #include "ftp.h"
 #include "tao/debug.h"
-
-FTP_Client_Callback::FTP_Client_Callback ()
-  :count_ (0)
-{
-}
 
 int
 FTP_Client_Callback::handle_end_stream ()
@@ -17,10 +14,7 @@ void
 FTP_Client_Callback::get_timeout (ACE_Time_Value *&tv,
                                   void *&)
 {
-  ACE_Time_Value *timeout;
-  ACE_NEW (timeout,
-           ACE_Time_Value(2));
-  tv = timeout;
+  tv = &this->timeout_;
 }
 
 int
@@ -30,28 +24,25 @@ FTP_Client_Callback::handle_timeout (void *)
   ACE_DEBUG ((LM_DEBUG,"FTP_Client_Callback::get_frame\n"));
   char *buf = mb.rd_ptr ();
 
-  int n = ACE_OS::fread(buf,1,mb.size (),CLIENT::instance ()->file ());
-  if (n < 0)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,"FTP_Client_Flow_Handler::fread end of file\n"),-1);
-    }
+  size_t const n = std::fread (buf,
+                                    1,
+                                    mb.size (),
+                                    CLIENT::instance ()->file ());
   if (n == 0)
     {
-      if (feof (CLIENT::instance ()->file ()))
+      if (std::feof (CLIENT::instance ()->file ()))
         {
           // wait for sometime for the data to be flushed to the other side.
-          this->count_++;
-          if (this->count_ == 2)
+          if (++this->count_ == 2)
             {
               try
                 {
                   ACE_DEBUG ((LM_DEBUG,"handle_timeout:End of file\n"));
-                  AVStreams::flowSpec stop_spec (1);
                   ACE_DEBUG ((LM_DEBUG, "Just before Orb Shutdown\n"));
-                  TAO_AV_CORE::instance ()->orb ()->shutdown (0);
+                  TAO_AV_CORE::instance ()->orb ()->shutdown (false);
                   return 0;
                 }
-              catch (const CORBA::Exception& ex)
+              catch (CORBA::Exception const &ex)
                 {
                   ex._tao_print_exception (
                     "FTP_Client_Callback::handle_timeout\n");
@@ -65,7 +56,7 @@ FTP_Client_Callback::handle_timeout (void *)
         ACE_ERROR_RETURN ((LM_ERROR,"FTP_Client_Flow_Handler::fread error\n"),-1);
     }
   mb.wr_ptr (n);
-  int result = this->protocol_object_->send_frame (&mb);
+  int const result = this->protocol_object_->send_frame (&mb);
   if (result < 0)
     ACE_ERROR_RETURN ((LM_ERROR,"send failed:%p","FTP_Client_Flow_Handler::send\n"),-1);
   ACE_DEBUG ((LM_DEBUG,"handle_timeout::buffer sent successfully\n"));
@@ -73,26 +64,31 @@ FTP_Client_Callback::handle_timeout (void *)
 }
 
 FTP_Client_Producer::FTP_Client_Producer ()
-  :TAO_FlowProducer ("Data",CLIENT::instance ()->protocols (),CLIENT::instance ()->format ())
+  : TAO_FlowProducer ("Data",
+                      CLIENT::instance ()->protocols (),
+                      CLIENT::instance ()->format ())
 {
 }
 
+FTP_Client_Producer::~FTP_Client_Producer () = default;
+
 int
-FTP_Client_Producer::set_protocol_object (const char *,
+FTP_Client_Producer::set_protocol_object (char const *,
                                           TAO_AV_Protocol_Object *object)
 {
+  if (!this->callback_)
+    return -1;
   this->callback_->set_protocol_object (object);
   return 0;
 }
 
 int
-FTP_Client_Producer::get_callback (const char *,
+FTP_Client_Producer::get_callback (char const *,
                                    TAO_AV_Callback *&callback)
 {
-   ACE_NEW_RETURN (this->callback_,
-                   FTP_Client_Callback,
-                   -1);
-   callback = this->callback_;
+  if (!this->callback_)
+    this->callback_ = std::make_unique<FTP_Client_Callback> ();
+  callback = this->callback_.get ();
    return 0;
 }
 
@@ -101,26 +97,25 @@ Client::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt opts (argc, argv, ACE_TEXT("f:a:p:sd"));
 
-  this->use_sfp_ = 0;
-  int c;
-  while ((c= opts ()) != -1)
+  int c {};
+  while ((c = opts ()) != -1)
     {
       switch (c)
         {
         case 'f':
-          this->filename_ = opts.opt_arg ();
+          this->options_.filename = opts.opt_arg ();
           break;
         case 'a':
-          this->address_ = ACE_OS::strdup (ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ()));
+          this->options_.address = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
           break;
         case 'p':
-          this->protocol_ = ACE_OS::strdup (ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ()));
+          this->options_.protocol = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
           break;
         case 's':
-          this->use_sfp_ = 1;
+          this->options_.use_sfp = true;
           break;
         case 'd':
-          TAO_debug_level++;
+          ++TAO_debug_level;
           break;
         default:
           ACE_DEBUG ((LM_DEBUG,"Unknown option\n"));
@@ -133,13 +128,7 @@ Client::parse_args (int argc, ACE_TCHAR *argv[])
 FILE *
 Client::file ()
 {
-  return this->fp_;
-}
-
-char*
-Client::flowname ()
-{
-  return this->flowname_;
+  return this->fp_.get ();
 }
 
 AVStreams::protocolSpec
@@ -147,44 +136,32 @@ Client::protocols ()
 {
   AVStreams::protocolSpec protocols (1);
   protocols.length (1);
-  char buf [BUFSIZ];
-  ACE_OS::sprintf (buf, "%s=%s", this->protocol_, this->address_);
-  protocols [0] = CORBA::string_dup (buf);
+  std::string const protocol = this->options_.protocol + "=" + this->options_.address;
+  protocols [0] = CORBA::string_dup (protocol.c_str ());
   return protocols;
 }
 
-const char *
+char const *
 Client::format ()
 {
   return "UNS:ftp";
 }
 
-const char *
-Client::address ()
-
-{
-  return this->address_;
-}
-
-TAO_StreamCtrl*
+TAO_StreamCtrl *
 Client::streamctrl ()
 {
   return &this->streamctrl_;
 }
 
 Client::Client ()
-  : client_mmdevice_ (&endpoint_strategy_),
-    fdev_ (0),
-    address_ (ACE_OS::strdup ("224.9.9.2:10002")),
-    fp_ (0),
-    protocol_ (ACE_OS::strdup ("UDP"))
+  : client_mmdevice_ (&endpoint_strategy_)
 {
-  endpoint_strategy_.init (TAO_AV_CORE::instance ()->orb (), TAO_AV_CORE::instance ()->poa ());
+  this->endpoint_strategy_.init (TAO_AV_CORE::instance ()->orb (),
+                                 TAO_AV_CORE::instance ()->poa ());
 }
 
-
 int
-Client::bind_to_server (const char *name)
+Client::bind_to_server (char const *name)
 {
   try
     {
@@ -210,7 +187,7 @@ Client::bind_to_server (const char *name)
                            name),
                           -1);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "Command_Handler::resolve_reference");
@@ -222,9 +199,6 @@ Client::bind_to_server (const char *name)
 int
 Client::init (int argc, ACE_TCHAR *argv[])
 {
-  this->argc_ = argc;
-  this->argv_ = argv;
-
   try
     {
       PortableServer::POAManager_var mgr
@@ -232,23 +206,22 @@ Client::init (int argc, ACE_TCHAR *argv[])
 
       mgr->activate ();
 
-      this->parse_args (this->argc_, this->argv_);
+      if (this->parse_args (argc, argv) != 0)
+        return -1;
 
-      ACE_DEBUG ((LM_DEBUG, "(%N,%l) Parsed Address  %C\n", this->address_));
+      ACE_DEBUG ((LM_DEBUG, "(%N,%l) Parsed Address  %C\n",
+                  this->options_.address.c_str ()));
 
-      ACE_NEW_RETURN (this->fdev_,
+      FTP_Client_FDev *fdev {};
+      ACE_NEW_RETURN (fdev,
                       FTP_Client_FDev,
                       -1);
+      PortableServer::ServantBase_var safe_fdev = fdev;
 
-      ACE_NEW_RETURN (this->flowname_,
-                      char [BUFSIZ],
-                      0);
-      ACE_OS::sprintf (this->flowname_,
-                       "Data");
-      this->fdev_->flowname (this->flowname ());
+      fdev->flowname ("Data");
       AVStreams::MMDevice_var mmdevice = this->client_mmdevice_._this ();
-      AVStreams::FDev_var fdev = this->fdev_->_this ();
-      mmdevice->add_fdev (fdev.in ());
+      AVStreams::FDev_var fdev_ref = fdev->_this ();
+      mmdevice->add_fdev (fdev_ref.in ());
 
       if (this->my_naming_client_.init (TAO_AV_CORE::instance ()->orb ()) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -256,13 +229,12 @@ Client::init (int argc, ACE_TCHAR *argv[])
                            "the TAO_Naming_Client.\n"),
                           -1);
 
-      this->fp_ = ACE_OS::fopen (this->filename_, "r");
-      if (this->fp_ != 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,"file opened successfully\n"));
-        }
+      this->fp_.reset (ACE_OS::fopen (this->options_.filename.c_str (), "r"));
+      if (!this->fp_)
+        ACE_ERROR_RETURN ((LM_ERROR, "ERROR: input file could not be opened\n"), -1);
+      ACE_DEBUG ((LM_DEBUG, "file opened successfully\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Client::init");
       return -1;
@@ -275,23 +247,20 @@ Client::run ()
 {
   try
     {
-      char flow_protocol_str [BUFSIZ];
-      if (this->use_sfp_)
-        ACE_OS::strcpy (flow_protocol_str, "sfp:1.0");
-      else
-        ACE_OS::strcpy (flow_protocol_str, "");
+      char const * const flow_protocol = this->options_.use_sfp ? "sfp:1.0" : "";
       AVStreams::streamQoS_var the_qos (new AVStreams::streamQoS);
       AVStreams::flowSpec flow_spec (1);
       // Bind the client and server mmdevices.
-      ACE_DEBUG ((LM_DEBUG, "(%N,%l) Parsed Address %C\n", this->address_));
-      ACE_INET_Addr *addr = new ACE_INET_Addr(this->address_);
-      TAO_Forward_FlowSpec_Entry entry (this->flowname_,
+      ACE_DEBUG ((LM_DEBUG, "(%N,%l) Parsed Address %C\n",
+                  this->options_.address.c_str ()));
+      ACE_INET_Addr addr (this->options_.address.c_str ());
+      TAO_Forward_FlowSpec_Entry entry ("Data",
                                         "IN",
                                         "USER_DEFINED",
-                                        flow_protocol_str,
-                                        this->protocol_,
-                                        addr);
-      ACE_DEBUG ((LM_DEBUG, "(%N,%l) flowspec: %C\n", entry.entry_to_string() ));
+                                        flow_protocol,
+                                        this->options_.protocol.c_str (),
+                                        &addr);
+      ACE_DEBUG ((LM_DEBUG, "(%N,%l) flowspec: %C\n", entry.entry_to_string ()));
       flow_spec.length (1);
       flow_spec [0] = CORBA::string_dup (entry.entry_to_string ());
 
@@ -330,19 +299,17 @@ Client::run ()
         ACE_ERROR_RETURN ((LM_ERROR,"(%N,%l) streamctrl::bind_devs for mmdevice 2 failed\n"),-1);
       AVStreams::flowSpec start_spec (1);
       start_spec.length (1);
-      start_spec [0] = CORBA::string_dup (this->flowname_);
+      start_spec [0] = CORBA::string_dup ("Data");
       this->streamctrl_.start (start_spec);
-      // Schedule a timer for the for the flow handler.
-      //TAO_AV_CORE::instance ()->run ();
 
-      ACE_Time_Value tv (10000,0);
+      ACE_Time_Value tv (10000, 0);
       TAO_AV_CORE::instance ()->orb ()->run (tv);
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
       ACE_DEBUG ((LM_DEBUG, "Exited the TAO_AV_Core::run\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Client::run");
       return -1;
@@ -366,14 +333,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       TAO_AV_CORE::instance ()->init (orb.in (),
                                       poa.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("server::init");
       return -1;
     }
 
-  int result = 0;
-  result = CLIENT::instance ()->init (argc, argv);
+  int result = CLIENT::instance ()->init (argc, argv);
   if (result < 0)
     ACE_ERROR_RETURN ((LM_ERROR,"client::init failed\n"),1);
   result = CLIENT::instance ()->run ();

@@ -3,20 +3,22 @@
 
 #include "FooC.h"
 #include "orbsvcs/SecurityC.h"
-#include "ace/SString.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
-const char *cert_file = "cacert.pem";
+struct Client_Options
+{
+  ACE_TCHAR const *ior {ACE_TEXT("file://test.ior")};
+};
 
 void
 insecure_invocation_test (CORBA::ORB_ptr orb,
-                          CORBA::Object_ptr obj)
+                          CORBA::Object_ptr obj,
+                          ACE_TCHAR const *ior)
 {
   // Disable protection for this insecure invocation test.
 
-  Security::QOP qop = Security::SecQOPNoProtection;
+  Security::QOP const qop = Security::SecQOPNoProtection;
 
-  CORBA::Any no_protection;
+  CORBA::Any no_protection {};
   no_protection <<= qop;
 
   // Create the Security::QOPPolicy.
@@ -40,8 +42,8 @@ insecure_invocation_test (CORBA::ORB_ptr orb,
   if (CORBA::is_nil (server.in ()))
     {
       ACE_ERROR ((LM_ERROR,
-                  "(%P|%t) ERROR: Object reference <%s> is "
-                  "nil.\n",
+                  ACE_TEXT ("(%P|%t) ERROR: Object reference <%s> is "
+                           "nil.\n"),
                   ior));
 
       throw CORBA::INTERNAL ();
@@ -70,7 +72,8 @@ insecure_invocation_test (CORBA::ORB_ptr orb,
 }
 
 void
-secure_invocation_test (CORBA::Object_ptr object)
+secure_invocation_test (CORBA::Object_ptr object,
+                        ACE_TCHAR const *ior)
 {
   Foo::Bar_var server =
     Foo::Bar::_narrow (object);
@@ -78,8 +81,8 @@ secure_invocation_test (CORBA::Object_ptr object)
   if (CORBA::is_nil (server.in ()))
     {
       ACE_ERROR ((LM_ERROR,
-                  "(%P|%t) ERROR: Object reference <%s> is "
-                  "nil.\n",
+                  ACE_TEXT ("(%P|%t) ERROR: Object reference <%s> is "
+                           "nil.\n"),
                   ior));
 
       throw CORBA::INTERNAL ();
@@ -92,23 +95,21 @@ secure_invocation_test (CORBA::Object_ptr object)
 }
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Usage:  %s "
-                           "-k <ior> "
-                           "\n",
+                           ACE_TEXT ("Usage:  %s -k <ior>\n"),
                            argv [0]),
                           -1);
       }
@@ -117,18 +118,19 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  Client_Options options;
   try
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior);
+        orb->string_to_object (options.ior);
 
       // This test sets creates a Security::QOPPolicy with the
       // Quality-of-Protection set to "no protection."  It then
@@ -136,13 +138,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // then result in a CORBA::NO_PERMISSION exception.
       //
       // The server is not shutdown by this test.
-      insecure_invocation_test (orb.in (), object.in ());
+      insecure_invocation_test (orb.in (), object.in (), options.ior);
 
       // This test uses the default secure SSLIOP settings to securely
       // invoke a method on the server.  No exception should occur.
       //
       // The server *is* shutdown by this test.
-      secure_invocation_test (object.in ());
+      secure_invocation_test (object.in (), options.ior);
 
       orb->destroy ();
     }

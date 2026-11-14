@@ -1,28 +1,30 @@
 #include "TestC.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://obj.ior");
+struct Client_Options
+{
+  // Borrowed from argv for the lifetime of main.
+  ACE_TCHAR const *ior { ACE_TEXT ("file://obj.ior") };
+};
 
-int
-parse_args (int argc, ACE_TCHAR *argv[])
+static int
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
 
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "\n",
-                           argv [0]),
+                           ACE_TEXT ("usage: %s -k <ior>\n"),
+                           argv[0]),
                           -1);
       }
   // Indicates successful parsing of the command line
@@ -34,14 +36,16 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
+      Client_Options options;
+
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object (ior);
+        orb->string_to_object (options.ior);
 
       Test::Simple_var simple =
         Test::Simple::_narrow (tmp.in ());
@@ -49,8 +53,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (simple.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
-                             "Nil Test::Simple reference <%s>\n",
-                             ior),
+                             ACE_TEXT ("Nil Test::Simple reference <%s>\n"),
+                             options.ior),
                             1);
         }
 

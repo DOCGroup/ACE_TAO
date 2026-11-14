@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "recursive_struct.h"
 
 const CORBA::ULong MAX_DEPTH = 5;
@@ -28,7 +27,7 @@ Test_Recursive_Struct::Test_Recursive_Struct ()
 Test_Recursive_Struct::~Test_Recursive_Struct ()
 {
   CORBA::string_free (this->opname_);
-  this->opname_ = 0;
+  this->opname_ = nullptr;
   // the other data members will be freed as they are "_var"s and objects
   // (rather than pointers to objects)
 }
@@ -50,7 +49,7 @@ Test_Recursive_Struct::dii_req_invoke (CORBA::Request *req)
 
   req->invoke ();
 
-  const Param_Test::Recursive_Struct *tmp = 0;
+  Param_Test::Recursive_Struct const *tmp {};
   req->return_value () >>= tmp;
   this->ret_ = new Param_Test::Recursive_Struct (*tmp);
 

@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Get_Opt.h"
 #include "ace/Thread_Manager.h"
@@ -19,7 +18,6 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Recursive_Thread_Mutex.h"
-
 
 #if defined (ACE_HAS_THREADS)
 
@@ -139,7 +137,7 @@ test_timed_wait (int nesting_level,
 
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) = trying timed acquire on ")
-                      ACE_TEXT ("iteration %d\n"),
+                      ACE_TEXT ("iteration %B\n"),
                       i));
 
           ACE_Time_Value delta (1, 0);  // One second timeout
@@ -185,12 +183,12 @@ test_timed_wait (int nesting_level,
           // Now try the standard mutex.
 
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) = trying to acquire on iteration %d\n"),
+                      ACE_TEXT ("(%P|%t) = trying to acquire on iteration %B\n"),
                       i));
           result = rm->acquire ();
           ACE_TEST_ASSERT (result == 0);
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) = acquired on iteration %d\n"),
+                      ACE_TEXT ("(%P|%t) = acquired on iteration %B\n"),
                       i));
 
           // Sleep for a random amount of time between 0 and 2 seconds.
@@ -201,7 +199,7 @@ test_timed_wait (int nesting_level,
           result = rm->release ();
           ACE_TEST_ASSERT (result == 0);
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) = released on iteration %d\n"),
+                      ACE_TEXT ("(%P|%t) = released on iteration %B\n"),
                       i));
 
           // FUZZ: disable check_for_ACE_Guard

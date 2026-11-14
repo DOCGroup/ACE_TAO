@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef PARAM_TEST_FIXED_ARRAY_H
 #define PARAM_TEST_FIXED_ARRAY_H
 

@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef _CM_CLIENT_H
 #define _CM_CLIENT_H
 
@@ -27,22 +26,19 @@
 class CM_Client : public Comm_Manager
 {
 public:
-  /// Constructor.
-  CM_Client ();
+  CM_Client () = default;
+  ~CM_Client () override;
 
-  /// Destructor.
-  virtual ~CM_Client ();
-
-  virtual int mux (char *packet, int &packet_length)   = 0;
-  virtual int demux (char *packet, int &packet_length) = 0;
-  virtual int open (short port_number);
-  virtual int receive (int timeout = 0);
-  virtual int send ();
+  int mux (char *packet, int &packet_length) override = 0;
+  int demux (char *packet, int &packet_length) override = 0;
+  int open (short port_number) override;
+  int receive (int timeout = 0) override;
+  int send () override;
 
 private:
-  fd_set read_fd_;
-  ACE_Time_Value time_out_;
-  ACE_Time_Value *top_;
+  fd_set read_fd_ {};
+  ACE_Time_Value time_out_ {};
+  ACE_Time_Value *top_ {};
 };
 
 #endif /* _CM_CLIENT_H */

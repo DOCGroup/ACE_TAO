@@ -1,13 +1,12 @@
 #include "ECM_Data.h"
 #include "tao/CDR.h"
 
-
 CORBA::Boolean
 operator<< (TAO_OutputCDR& cdr, ECM_Data& x)
 {
   // We are a little careless about error checking in this routine,
   // because one the CDR gets the error bit on it is never disabled.
-  CORBA::ULong count = x.inventory.current_size ();
+  CORBA::ULong const count = x.inventory.current_size ();
   if (cdr << x.description.in ()
       && cdr << count )
     {
@@ -15,7 +14,7 @@ operator<< (TAO_OutputCDR& cdr, ECM_Data& x)
            i != x.inventory.end () && cdr.good_bit ();
            ++i)
         {
-          const ECM_Data::Inventory::ENTRY& v = *i;
+          ECM_Data::Inventory::ENTRY const& v = *i;
           cdr << v.ext_id_;
           cdr << v.int_id_;
         }
@@ -28,16 +27,16 @@ operator>> (TAO_InputCDR& cdr, ECM_Data& x)
 {
   // We are a little careless about error checking in this routine,
   // because one the CDR gets the error bit on it is never disabled.
-  CORBA::ULong count;
+  CORBA::ULong count {};
   if (cdr >> x.description.out ()
       && cdr >> count)
     {
       // ACE_DEBUG ((LM_DEBUG, "Decoding <%d> elements\n", count));
 
-      for (CORBA::ULong i = 0; i < count && cdr.good_bit (); ++i)
+      for (CORBA::ULong i {}; i < count && cdr.good_bit (); ++i)
         {
-          CORBA::ULong ext_id;
-          CORBA::Double int_id;
+          CORBA::ULong ext_id {};
+          CORBA::Double int_id {};
           cdr >> ext_id;
           cdr >> int_id;
           if (cdr.good_bit ())

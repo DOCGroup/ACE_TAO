@@ -27,18 +27,32 @@
 #include "ace/OS_NS_unistd.h"
 #include "tao/debug.h"
 
+#include <cstdio>
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_CEC_Event_Loader::TAO_CEC_Event_Loader () :
-  attributes_ (nullptr)
-  , factory_ (nullptr)
-  , ec_impl_ (nullptr)
-#if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-  , typed_attributes_ (nullptr)
-  , typed_ec_impl_ (nullptr)
-#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
+static void
+write_ior_file (CORBA::ORB_ptr orb,
+                ACE_TCHAR const *filename,
+                CORBA::Object_ptr object)
 {
-  // Constructor
+  std::unique_ptr<FILE, int (*) (FILE *)> file (
+    ACE_OS::fopen (filename, ACE_TEXT ("w")), ACE_OS::fclose);
+  if (file)
+    {
+      CORBA::String_var const ior = orb->object_to_string (object);
+      std::fprintf (file.get (), "%s\n", ior.in ());
+    }
+}
+
+static void
+write_pid_file (ACE_TCHAR const *filename)
+{
+  std::unique_ptr<FILE, int (*) (FILE *)> file (
+    ACE_OS::fopen (filename, ACE_TEXT ("w")), ACE_OS::fclose);
+  if (file)
+    std::fprintf (file.get (), "%ld\n", static_cast<long> (ACE_OS::getpid ()));
 }
 
 int
@@ -47,23 +61,22 @@ TAO_CEC_Event_Loader::init (int argc, ACE_TCHAR *argv[])
   try
     {
       // ORB initialization boiler plate...
-      this->orb_=
+      this->orb_ =
         CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var obj =
+      CORBA::Object_var const obj =
         this->create_object (this->orb_.in (), argc, argv);
 
-      if (CORBA::is_nil (obj.in() ))
+      if (CORBA::is_nil (obj.in ()))
         return -1;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (argv[0]);
       return -1;
     }
   return 0;
 }
-
 
 CORBA::Object_ptr
 TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
@@ -86,18 +99,18 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
       // service and under what name...
       ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("n:o:p:xrtdb"));
       int opt;
-      const ACE_TCHAR *service_name = ACE_TEXT("CosEventService");
-      ACE_TCHAR const *ior_file = nullptr;
-      ACE_TCHAR const *pid_file = nullptr;
-      this->bind_to_naming_service_ = 1;
-      int use_rebind = 0;
-      int disconnect_callbacks = 0;
+      ACE_TCHAR const *service_name = ACE_TEXT ("CosEventService");
+      ACE_TCHAR const *ior_file {};
+      ACE_TCHAR const *pid_file {};
+      this->bind_to_naming_service_ = true;
+      bool use_rebind {};
+      bool disconnect_callbacks {};
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
       // Flag to create a typed event channel
-      int typed_ec = 0;
+      bool typed_ec {};
       // Flag to destroy the event channel on shutdown
-      int destroy = 0;
+      bool destroy {};
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
       while ((opt = get_opt ()) != EOF)
@@ -117,24 +130,24 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
               break;
 
             case 'x':
-              this->bind_to_naming_service_ = 0;
+              this->bind_to_naming_service_ = false;
               break;
 
             case 'r':
-              use_rebind = 1;
+              use_rebind = true;
               break;
 
             case 'b':
-              disconnect_callbacks = 1;
+              disconnect_callbacks = true;
               break;
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
             case 't':
-              typed_ec = 1;
+              typed_ec = true;
               break;
 
             case 'd':
-              destroy = 1;
+              destroy = true;
               break;
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
@@ -172,66 +185,46 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
       // ***************************************************************
 
       // POA initialization and activation ...
-      CORBA::Object_var object =
+      CORBA::Object_var const object =
         orb->resolve_initial_references ("RootPOA");
-      PortableServer::POA_var poa =
+      PortableServer::POA_var const poa =
         PortableServer::POA::_narrow (object.in ());
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         poa->the_POAManager ();
       poa_manager->activate ();
-
 
       // ****************************************************************
 
       // Control the event loop
-      this->terminate_flag_ = 0;
-
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
       if (!typed_ec)
         {
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
       // Create and activate the event service
-      this->attributes_ = new TAO_CEC_EventChannel_Attributes(poa.in (),
-                                                              poa.in ());
+      this->attributes_ = std::make_unique<TAO_CEC_EventChannel_Attributes> (
+        poa.in (),
+        poa.in ());
 
       this->attributes_->disconnect_callbacks = disconnect_callbacks;
 
       this->factory_ = nullptr;
 
-      this->ec_impl_ = new TAO_CEC_EventChannel (*this->attributes_,
-                                                 this->factory_,
-                                                 this->terminate_flag_);
+      this->ec_impl_ = std::make_unique<TAO_CEC_EventChannel> (
+        *this->attributes_,
+        this->factory_,
+        this->terminate_flag_);
 
       this->ec_impl_->activate ();
 
-      CosEventChannelAdmin::EventChannel_var event_channel =
+      CosEventChannelAdmin::EventChannel_var const event_channel =
         this->ec_impl_->_this ();
 
       if (ior_file != nullptr)
-        {
-          CORBA::String_var ior =
-            orb->object_to_string (event_channel.in ());
-
-          FILE *iorf = ACE_OS::fopen (ior_file, ACE_TEXT("w"));
-          if (iorf != nullptr)
-            {
-              ACE_OS::fprintf (iorf, "%s\n", ior.in ());
-              ACE_OS::fclose (iorf);
-            }
-        }
+        write_ior_file (orb, ior_file, event_channel.in ());
 
       if (pid_file != nullptr)
-        {
-          FILE *pidf = ACE_OS::fopen (pid_file, ACE_TEXT("w"));
-          if (pidf != nullptr)
-            {
-              ACE_OS::fprintf (pidf,
-                               "%ld\n",
-                               static_cast<long> (ACE_OS::getpid ()));
-              ACE_OS::fclose (pidf);
-            }
-        }
+        write_pid_file (pid_file);
 
       // ****************************************************************
 
@@ -239,7 +232,7 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
 
       if (this->bind_to_naming_service_)
         {
-          CORBA::Object_var obj =
+          CORBA::Object_var const obj =
             orb->resolve_initial_references ("NameService");
 
           this->naming_context_ =
@@ -277,7 +270,7 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
 
           CORBA::Repository_var interface_repository;
 
-          CORBA::Object_var ifr_obj_var =
+          CORBA::Object_var const ifr_obj_var =
             orb->resolve_initial_references ("InterfaceRepository");
 
           if (CORBA::is_nil(ifr_obj_var.in () ))
@@ -313,52 +306,36 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
             }
 
           // Create and activate the typed event service
-          this->typed_attributes_ = new TAO_CEC_TypedEventChannel_Attributes(poa.in (),
-                                                                             poa.in (),
-                                                                             orb,
-                                                                             interface_repository.in ());
-          if (destroy == 1)
+          this->typed_attributes_ =
+            std::make_unique<TAO_CEC_TypedEventChannel_Attributes> (
+              poa.in (),
+              poa.in (),
+              orb,
+              interface_repository.in ());
+          if (destroy)
             {
-              this->typed_attributes_->destroy_on_shutdown = 1;
+              this->typed_attributes_->destroy_on_shutdown = true;
             }
 
           this->typed_attributes_->disconnect_callbacks = disconnect_callbacks;
 
           this->factory_ = nullptr;
 
-          this->typed_ec_impl_ = new TAO_CEC_TypedEventChannel (*this->typed_attributes_,
-                                                                this->factory_,
-                                                                this->terminate_flag_);
+          this->typed_ec_impl_ = std::make_unique<TAO_CEC_TypedEventChannel> (
+            *this->typed_attributes_,
+            this->factory_,
+            this->terminate_flag_);
 
           this->typed_ec_impl_->activate ();
 
-          CosTypedEventChannelAdmin::TypedEventChannel_var event_channel =
+          CosTypedEventChannelAdmin::TypedEventChannel_var const event_channel =
             this->typed_ec_impl_->_this ();
 
           if (ior_file != nullptr)
-            {
-              CORBA::String_var ior =
-                orb->object_to_string (event_channel.in ());
-
-              FILE *iorf = ACE_OS::fopen (ior_file, ACE_TEXT("w"));
-              if (iorf != nullptr)
-                {
-                  ACE_OS::fprintf (iorf, "%s\n", ior.in ());
-                  ACE_OS::fclose (iorf);
-                }
-            }
+            write_ior_file (orb, ior_file, event_channel.in ());
 
           if (pid_file != nullptr)
-            {
-              FILE *pidf = ACE_OS::fopen (pid_file, ACE_TEXT("w"));
-              if (pidf != nullptr)
-                {
-                  ACE_OS::fprintf (pidf,
-                                   "%ld\n",
-                                   static_cast<long> (ACE_OS::getpid ()));
-                  ACE_OS::fclose (pidf);
-                }
-            }
+            write_pid_file (pid_file);
 
           // ****************************************************************
 
@@ -366,7 +343,7 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
 
           if (this->bind_to_naming_service_)
             {
-              CORBA::Object_var obj =
+              CORBA::Object_var const obj =
                 orb->resolve_initial_references ("NameService");
 
               this->naming_context_ =
@@ -392,7 +369,7 @@ TAO_CEC_Event_Loader::create_object (CORBA::ORB_ptr orb,
 
       // ****************************************************************
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (argv[0]);
       return CORBA::Object::_nil ();
@@ -408,18 +385,18 @@ TAO_CEC_Event_Loader::fini ()
   try
     {
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-      if(this->typed_ec_impl_)
+      if (this->typed_ec_impl_)
         {
           // Release the resources of the Typed Event Channel
           this->typed_ec_impl_->destroy ();
 
           // Deactivate the Typed EC
           // This will raise an exception if destroy == 1
-          PortableServer::POA_var t_poa =
+          PortableServer::POA_var const t_poa =
           this->typed_ec_impl_->_default_POA ();
 
-          PortableServer::ObjectId_var t_id =
-          t_poa->servant_to_id (this->typed_ec_impl_);
+          PortableServer::ObjectId_var const t_id =
+          t_poa->servant_to_id (this->typed_ec_impl_.get ());
 
           t_poa->deactivate_object (t_id.in ());
         }
@@ -430,16 +407,16 @@ TAO_CEC_Event_Loader::fini ()
           this->ec_impl_->destroy ();
 
           // Deactivate the EC
-          PortableServer::POA_var poa =
+          PortableServer::POA_var const poa =
             this->ec_impl_->_default_POA ();
 
-          PortableServer::ObjectId_var id =
-            poa->servant_to_id (this->ec_impl_);
+          PortableServer::ObjectId_var const id =
+            poa->servant_to_id (this->ec_impl_.get ());
 
           poa->deactivate_object (id.in ());
         }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // Do Nothing
     }
@@ -453,14 +430,13 @@ TAO_CEC_Event_Loader::fini ()
         }
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-      // Since we created them, we also have to delete them.
-      delete this->typed_attributes_;
-      delete this->typed_ec_impl_;
+      this->typed_ec_impl_.reset ();
+      this->typed_attributes_.reset ();
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
-      delete this->attributes_;
-      delete this->ec_impl_;
+      this->ec_impl_.reset ();
+      this->attributes_.reset ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // Do Nothing
       return -1;

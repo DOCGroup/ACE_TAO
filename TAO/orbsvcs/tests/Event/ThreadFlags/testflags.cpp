@@ -4,9 +4,10 @@
 
 #include "orbsvcs/Event/EC_Thread_Flags.h"
 #include "ace/Log_Msg.h"
-#include "ace/OS_NS_Thread.h"
-#include "ace/OS_NS_strings.h"
+#include "ace/OS_NS_stdlib.h"
 
+#include <array>
+#include <cstddef>
 
 /*
   Here are the scenarios we need to test:
@@ -22,16 +23,16 @@
  */
 struct ExpectedValues
 {
-  long flags;
-  long scope;
-  long sched;
+  long flags {};
+  long scope {};
+  long sched {};
 
-  ExpectedValues(long f = 0, long sco = 0, long sch = 0)
-    : flags(f)
-    , scope(sco)
-    , sched(sch)
-    {
-    }
+  explicit constexpr ExpectedValues (long f = 0, long sco = 0, long sch = 0)
+    : flags (f),
+      scope (sco),
+      sched (sch)
+  {
+  }
 };
 
 struct ThreadFlagsTest
@@ -42,183 +43,187 @@ struct ThreadFlagsTest
     BOTH = 0x3
   };
 
-  ThreadFlagsTest (const char* sym, How assign, ExpectedValues ev, ExpectedValues which_check);
+  constexpr ThreadFlagsTest (char const *sym, How assign, ExpectedValues ev)
+    : sym_ (sym),
+      assign_ (assign),
+      expected_values_ (ev)
+  {
+  }
+
+  ThreadFlagsTest (ThreadFlagsTest const &) = delete;
+  ThreadFlagsTest &operator= (ThreadFlagsTest const &) = delete;
+  ThreadFlagsTest (ThreadFlagsTest &&) = delete;
+  ThreadFlagsTest &operator= (ThreadFlagsTest &&) = delete;
 
   // Execute the test and pass back an ExpectedValues struct where the
   // values are zero if the values were not as expected or non-zero if
   // they were as expected.  Return value is zero for success, or
   // the bitmask of the "How" version of the test that failed.
-  int runtest(ExpectedValues& results);
+  int runtest (ExpectedValues &results) const;
 
-  const char* sym_;
-  How assign_;
-  ExpectedValues expected_values_;
-  ExpectedValues which_results_to_check_;
+  char const *sym_;
+  How const assign_;
+  ExpectedValues const expected_values_;
 };
 
-ThreadFlagsTest::ThreadFlagsTest (const char* sym,
-                                  How assign,
-                                  ExpectedValues ev,
-                                  ExpectedValues which_check)
-  : sym_(sym)
-  , assign_(assign)
-  , expected_values_(ev)
-  , which_results_to_check_(which_check)
-{
-}
-
 int
-ThreadFlagsTest::runtest (ExpectedValues& results)
+ThreadFlagsTest::runtest (ExpectedValues &results) const
 {
-  int r = 0;
+  int result {};
   if (assign_ & INIT)
     {
-      TAO_EC_Thread_Flags f(sym_);
-      if ( ((results.flags = f.flags()) == expected_values_.flags) &&
-           ((results.scope = f.scope()) == expected_values_.scope) &&
-           ((results.sched = f.sched()) == expected_values_.sched) )
-        ; // we succeeded, do nothing
-      else
-        r |= INIT;
+      TAO_EC_Thread_Flags flags (sym_);
+      results.flags = flags.flags ();
+      results.scope = flags.scope ();
+      results.sched = flags.sched ();
+
+      if (results.flags != expected_values_.flags
+          || results.scope != expected_values_.scope
+          || results.sched != expected_values_.sched)
+        result |= INIT;
     }
   if (assign_ & ASSIGN)
     {
-      TAO_EC_Thread_Flags f;
-      f = sym_;
-      if ( ((results.flags = f.flags()) == expected_values_.flags) &&
-           ((results.scope = f.scope()) == expected_values_.scope) &&
-           ((results.sched = f.sched()) == expected_values_.sched) )
-        ; // we succeeded, do nothing
-      else
-        r |= ASSIGN;
+      TAO_EC_Thread_Flags flags {};
+      flags = sym_;
+      results.flags = flags.flags ();
+      results.scope = flags.scope ();
+      results.sched = flags.sched ();
+
+      if (results.flags != expected_values_.flags
+          || results.scope != expected_values_.scope
+          || results.sched != expected_values_.sched)
+        result |= ASSIGN;
     }
 
-  return r;
+  return result;
 }
 
-// Common things to pass for 'which_check'
-static const ExpectedValues CHECK_ALL(1, 1, 1);
-static const ExpectedValues ONLY_FLAGS(1, 0, 0);
 // ExpectedValues set indicating the default values
-static const ExpectedValues DEFAULTS(0, 0, 0);
+static constexpr ExpectedValues DEFAULTS {};
 
-void
-print_results (int how, ExpectedValues expected, ExpectedValues actuals)
+static void
+print_results (int const how, ExpectedValues const& expected, ExpectedValues const& actuals)
 {
-  const char* op =
+  char const* const op =
     (how == ThreadFlagsTest::INIT) ? "INIT" :
     (how == ThreadFlagsTest::ASSIGN) ? "ASSIGN" :
     (how == ThreadFlagsTest::BOTH) ? "BOTH" :
     "unk?";
 
-  ACE_DEBUG ((LM_DEBUG, "  %s: expected {%x,%x,%x} got {%x,%x,%x}",
+  ACE_DEBUG ((LM_DEBUG, "  %s: expected {%lx,%lx,%lx} got {%lx,%lx,%lx}",
               op,
-              expected.flags, expected.scope, expected.sched,
-              actuals.flags, actuals.scope, actuals.sched));
+              static_cast<unsigned long> (expected.flags),
+              static_cast<unsigned long> (expected.scope),
+              static_cast<unsigned long> (expected.sched),
+              static_cast<unsigned long> (actuals.flags),
+              static_cast<unsigned long> (actuals.scope),
+              static_cast<unsigned long> (actuals.sched)));
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ThreadFlagsTest static_tests[] = {
+  constexpr std::array<ThreadFlagsTest, 22> static_tests {{
     // Test 1
-    ThreadFlagsTest(0, ThreadFlagsTest::BOTH, DEFAULTS, CHECK_ALL),
+    ThreadFlagsTest (nullptr, ThreadFlagsTest::BOTH, DEFAULTS),
     // Test 2
-    ThreadFlagsTest("THR_CANCEL_DISABLE", ThreadFlagsTest::BOTH, ExpectedValues(THR_CANCEL_DISABLE), CHECK_ALL),
-    ThreadFlagsTest("THR_CANCEL_ENABLE", ThreadFlagsTest::BOTH, ExpectedValues(THR_CANCEL_ENABLE), CHECK_ALL),
-    ThreadFlagsTest("THR_CANCEL_DEFERRED", ThreadFlagsTest::BOTH, ExpectedValues(THR_CANCEL_DEFERRED), CHECK_ALL),
-    ThreadFlagsTest("THR_CANCEL_ASYNCHRONOUS", ThreadFlagsTest::BOTH, ExpectedValues(THR_CANCEL_ASYNCHRONOUS), CHECK_ALL),
-    ThreadFlagsTest("THR_BOUND", ThreadFlagsTest::BOTH, ExpectedValues(THR_BOUND), CHECK_ALL),
-    ThreadFlagsTest("THR_NEW_LWP", ThreadFlagsTest::BOTH, ExpectedValues(THR_NEW_LWP), CHECK_ALL),
-    ThreadFlagsTest("THR_DETACHED", ThreadFlagsTest::BOTH, ExpectedValues(THR_DETACHED), CHECK_ALL),
-    ThreadFlagsTest("THR_SUSPENDED", ThreadFlagsTest::BOTH, ExpectedValues(THR_SUSPENDED), CHECK_ALL),
-    ThreadFlagsTest("THR_DAEMON", ThreadFlagsTest::BOTH, ExpectedValues(THR_DAEMON), CHECK_ALL),
-    ThreadFlagsTest("THR_JOINABLE", ThreadFlagsTest::BOTH, ExpectedValues(THR_JOINABLE), CHECK_ALL),
+    ThreadFlagsTest ("THR_CANCEL_DISABLE", ThreadFlagsTest::BOTH,
+                     ExpectedValues (THR_CANCEL_DISABLE)),
+    ThreadFlagsTest ("THR_CANCEL_ENABLE", ThreadFlagsTest::BOTH,
+                     ExpectedValues (THR_CANCEL_ENABLE)),
+    ThreadFlagsTest ("THR_CANCEL_DEFERRED", ThreadFlagsTest::BOTH,
+                     ExpectedValues (THR_CANCEL_DEFERRED)),
+    ThreadFlagsTest ("THR_CANCEL_ASYNCHRONOUS", ThreadFlagsTest::BOTH,
+                     ExpectedValues (THR_CANCEL_ASYNCHRONOUS)),
+    ThreadFlagsTest ("THR_BOUND", ThreadFlagsTest::BOTH, ExpectedValues (THR_BOUND)),
+    ThreadFlagsTest ("THR_NEW_LWP", ThreadFlagsTest::BOTH, ExpectedValues (THR_NEW_LWP)),
+    ThreadFlagsTest ("THR_DETACHED", ThreadFlagsTest::BOTH, ExpectedValues (THR_DETACHED)),
+    ThreadFlagsTest ("THR_SUSPENDED", ThreadFlagsTest::BOTH, ExpectedValues (THR_SUSPENDED)),
+    ThreadFlagsTest ("THR_DAEMON", ThreadFlagsTest::BOTH, ExpectedValues (THR_DAEMON)),
+    ThreadFlagsTest ("THR_JOINABLE", ThreadFlagsTest::BOTH, ExpectedValues (THR_JOINABLE)),
     // Test 3
-    ThreadFlagsTest("THR_SCHED_FIFO", ThreadFlagsTest::BOTH, ExpectedValues(THR_SCHED_FIFO, 0, THR_SCHED_FIFO), CHECK_ALL),
-    ThreadFlagsTest("THR_SCHED_RR", ThreadFlagsTest::BOTH, ExpectedValues(THR_SCHED_RR, 0, THR_SCHED_RR), CHECK_ALL),
-    ThreadFlagsTest("THR_SCHED_DEFAULT", ThreadFlagsTest::BOTH, ExpectedValues(THR_SCHED_DEFAULT, 0, THR_SCHED_DEFAULT), CHECK_ALL),
+    ThreadFlagsTest ("THR_SCHED_FIFO", ThreadFlagsTest::BOTH,
+                     ExpectedValues (THR_SCHED_FIFO, 0, THR_SCHED_FIFO)),
+    ThreadFlagsTest ("THR_SCHED_RR", ThreadFlagsTest::BOTH,
+                     ExpectedValues (THR_SCHED_RR, 0, THR_SCHED_RR)),
+    ThreadFlagsTest ("THR_SCHED_DEFAULT", ThreadFlagsTest::BOTH,
+                     ExpectedValues (THR_SCHED_DEFAULT, 0, THR_SCHED_DEFAULT)),
     // Test 4
-    ThreadFlagsTest("THR_SCOPE_SYSTEM", ThreadFlagsTest::BOTH, ExpectedValues(THR_SCOPE_SYSTEM, THR_SCOPE_SYSTEM, 0), CHECK_ALL),
-    ThreadFlagsTest("THR_SCOPE_PROCESS", ThreadFlagsTest::BOTH, ExpectedValues(THR_SCOPE_PROCESS, THR_SCOPE_PROCESS, 0), CHECK_ALL),
+    ThreadFlagsTest ("THR_SCOPE_SYSTEM", ThreadFlagsTest::BOTH,
+                     ExpectedValues (THR_SCOPE_SYSTEM, THR_SCOPE_SYSTEM, 0)),
+    ThreadFlagsTest ("THR_SCOPE_PROCESS", ThreadFlagsTest::BOTH,
+                     ExpectedValues (THR_SCOPE_PROCESS, THR_SCOPE_PROCESS, 0)),
     // Test 5
-    ThreadFlagsTest("0x0001", ThreadFlagsTest::BOTH, ExpectedValues(1, 0, 0), CHECK_ALL),
+    ThreadFlagsTest ("0x0001", ThreadFlagsTest::BOTH, ExpectedValues (1, 0, 0)),
     // Test 6
-    ThreadFlagsTest("Zaphod|Beeblebrox|THR_BOGUS", ThreadFlagsTest::BOTH, DEFAULTS, CHECK_ALL),
+    ThreadFlagsTest ("Zaphod|Beeblebrox|THR_BOGUS", ThreadFlagsTest::BOTH, DEFAULTS),
     // Test 7
-    ThreadFlagsTest("THR_BOUND|THR_JOINABLE", ThreadFlagsTest::BOTH, ExpectedValues(THR_BOUND|THR_JOINABLE), CHECK_ALL),
-    ThreadFlagsTest("THR_SCHED_FIFO|THR_DAEMON|THR_SCOPE_PROCESS", ThreadFlagsTest::BOTH, ExpectedValues(THR_SCHED_FIFO|THR_DAEMON|THR_SCOPE_PROCESS, THR_SCOPE_PROCESS, THR_SCHED_FIFO), CHECK_ALL),
-    ThreadFlagsTest("THR_SCHED_DEFAULT|THR_SCOPE_SYSTEM|THR_NEW_LWP", ThreadFlagsTest::BOTH, ExpectedValues(THR_SCHED_DEFAULT|THR_SCOPE_SYSTEM|THR_NEW_LWP, THR_SCOPE_SYSTEM, THR_SCHED_DEFAULT), CHECK_ALL),
-    ThreadFlagsTest("THR_NEW_LWP|THR_SCOPE_SYSTEM|THR_JOINABLE|THR_SCHED_FIFO",
-                    ThreadFlagsTest::BOTH,
-                    ExpectedValues(THR_NEW_LWP|THR_SCHED_FIFO|THR_SCOPE_SYSTEM|THR_JOINABLE, THR_SCOPE_SYSTEM, THR_SCHED_FIFO),
-                    CHECK_ALL)
-  };
+    ThreadFlagsTest ("THR_BOUND|THR_JOINABLE", ThreadFlagsTest::BOTH,
+                     ExpectedValues (THR_BOUND|THR_JOINABLE)),
+    ThreadFlagsTest ("THR_SCHED_FIFO|THR_DAEMON|THR_SCOPE_PROCESS", ThreadFlagsTest::BOTH,
+                     ExpectedValues (THR_SCHED_FIFO|THR_DAEMON|THR_SCOPE_PROCESS,
+                                     THR_SCOPE_PROCESS, THR_SCHED_FIFO)),
+    ThreadFlagsTest ("THR_SCHED_DEFAULT|THR_SCOPE_SYSTEM|THR_NEW_LWP", ThreadFlagsTest::BOTH,
+                     ExpectedValues (THR_SCHED_DEFAULT|THR_SCOPE_SYSTEM|THR_NEW_LWP,
+                                     THR_SCOPE_SYSTEM, THR_SCHED_DEFAULT)),
+    ThreadFlagsTest ("THR_NEW_LWP|THR_SCOPE_SYSTEM|THR_JOINABLE|THR_SCHED_FIFO",
+                     ThreadFlagsTest::BOTH,
+                     ExpectedValues (THR_NEW_LWP|THR_SCHED_FIFO|THR_SCOPE_SYSTEM|THR_JOINABLE,
+                                     THR_SCOPE_SYSTEM, THR_SCHED_FIFO))
+  }};
 
-  int returnval = 0;
-  const size_t numtests = sizeof(static_tests)/sizeof(static_tests[0]);
-  if (argc > 1)
+  int returnval {};
+  size_t const numtests = static_tests.size ();
+  size_t const requested_tests = argc > 1
+    ? static_cast<size_t> (argc - 1)
+    : numtests;
+  for (size_t i {}; i < requested_tests; ++i)
     {
-      ACE_TCHAR* which_test = 0;
-      while (0 != (which_test = *++argv))
+      ACE_TCHAR *end {};
+      long const parsed_test = argc > 1
+        ? ACE_OS::strtol (argv[i + 1], &end, 0)
+        : static_cast<long> (i);
+
+      if (argc > 1 && (end == argv[i + 1] || *end != ACE_TEXT ('\0')))
         {
-          size_t testnum = ACE_OS::strtol (which_test, 0, 0);
-          if (testnum < numtests)
-            {
-              ExpectedValues results;
-              ThreadFlagsTest& t = static_tests[testnum];
-              ACE_DEBUG ((LM_DEBUG, "Test #%d for %s...", testnum, t.sym_));
-              int r = t.runtest (results);
-              if (r != 0)
-                {
-                  returnval = 1;
-                  ACE_DEBUG ((LM_DEBUG, "FAILED -- details: "));
-                  if (r & ThreadFlagsTest::INIT)
-                    print_results (ThreadFlagsTest::INIT, t.expected_values_, results);
-
-                  if (r & ThreadFlagsTest::ASSIGN)
-                    print_results (ThreadFlagsTest::ASSIGN, t.expected_values_, results);
-
-                  ACE_DEBUG ((LM_DEBUG, "\n"));
-                }
-              else
-                {
-                  ACE_DEBUG ((LM_DEBUG, "ok.\n"));
-                }
-            }
-          else
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          "%d is not a valid test number\n", testnum));
-            }
-        }
-    }
-  else
-    {
-      for(size_t i = 0; i < numtests; ++i)
-        {
-          ExpectedValues results;
-          ThreadFlagsTest& t = static_tests[i];
-          ACE_DEBUG ((LM_DEBUG, "Test #%d for %s...", i, t.sym_));
-          int r = t.runtest (results);
-          if (r != 0)
-            {
-              returnval = 1;
-              ACE_DEBUG ((LM_DEBUG, "FAILED -- details: "));
-              if (r & ThreadFlagsTest::INIT)
-                print_results (ThreadFlagsTest::INIT, t.expected_values_, results);
-
-              if (r & ThreadFlagsTest::ASSIGN)
-                print_results (ThreadFlagsTest::ASSIGN, t.expected_values_, results);
-
-              ACE_DEBUG ((LM_DEBUG, "\n"));
-            }
-          else
-            {
-              ACE_DEBUG ((LM_DEBUG, "ok.\n"));
-            }
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Invalid test index: %s\n"),
+                      argv[i + 1]));
+          returnval = 1;
+          continue;
         }
 
+      if (parsed_test < 0 || static_cast<size_t> (parsed_test) >= numtests)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Invalid test number\n")));
+          returnval = 1;
+          continue;
+        }
+
+      size_t const test_number = static_cast<size_t> (parsed_test);
+      ExpectedValues results;
+      ThreadFlagsTest const &test = static_tests[test_number];
+      ACE_DEBUG ((LM_DEBUG, "Test #%B for %s...", test_number,
+                  test.sym_ == nullptr ? "(null)" : test.sym_));
+      int const result = test.runtest (results);
+      if (result != 0)
+        {
+          returnval = 1;
+          ACE_DEBUG ((LM_DEBUG, "FAILED -- details: "));
+          if (result & ThreadFlagsTest::INIT)
+            print_results (ThreadFlagsTest::INIT, test.expected_values_, results);
+
+          if (result & ThreadFlagsTest::ASSIGN)
+            print_results (ThreadFlagsTest::ASSIGN, test.expected_values_, results);
+
+          ACE_DEBUG ((LM_DEBUG, "\n"));
+        }
+      else
+        {
+          ACE_DEBUG ((LM_DEBUG, "ok.\n"));
+        }
     }
 
   return returnval;

@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "options.h"
 #include "tao/debug.h"
 #include "ace/Read_Buffer.h"
@@ -18,7 +17,6 @@
 #include "ace/OS_NS_fcntl.h"
 #include "ace/Log_Msg.h"
 
-// Constructor.
 Options::Options ()
   : ior_ (CORBA::string_dup ("file://test.ior")),
     test_type_ (Options::NO_TEST),
@@ -46,7 +44,7 @@ Options::parse_args (int argc, ACE_TCHAR **argv)
     switch (c)
       {
       case 'd':  // debug flag
-        TAO_debug_level++;
+        ++TAO_debug_level;
         this->debug_ = 1;
         break;
 
@@ -186,7 +184,7 @@ Options::read_ior (ACE_TCHAR *filename)
   ACE_Read_Buffer ior_buffer (f_handle, true);
   this->ior_ = ior_buffer.read ();
 
-  if (this->ior_.in () == 0)
+  if (this->ior_.in () == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Unable to allocate memory to read ior: %p\n"),
                       -1);

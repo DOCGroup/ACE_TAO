@@ -8,6 +8,8 @@
 #include "orbsvcs/Event/EC_Event_Channel_Base.h"
 #include "ace/OS_NS_stdio.h"
 
+#include <cstdio>
+
 #if ! defined (__ACE_INLINE__)
 #include "orbsvcs/Event/EC_Kokyu_Filter_Builder.inl"
 #endif /* __ACE_INLINE__ */
@@ -31,19 +33,15 @@ const char* designator (long dsgn)
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_EC_Kokyu_Filter_Builder::~TAO_EC_Kokyu_Filter_Builder ()
-{
-}
-
 TAO_EC_Filter*
 TAO_EC_Kokyu_Filter_Builder::build (
     TAO_EC_ProxyPushSupplier *supplier,
     RtecEventChannelAdmin::ConsumerQOS& qos) const
 {
-  CORBA::ULong i=0,found=0;
-  CORBA::ULong pos = 0;
+  bool found {};
+  CORBA::ULong pos {};
   CORBA::Long npos = -1;
-  int establish_final_consumer_dependency=0;
+  bool establish_final_consumer_dependency {};
 
   CORBA::Object_var tmp =
     this->event_channel_->scheduler ();
@@ -52,7 +50,7 @@ TAO_EC_Kokyu_Filter_Builder::build (
     RtecScheduler::Scheduler::_narrow (tmp.in ());
 
 #ifdef EC_KOKYU_LOGGING
-  for (i=0; i<qos.dependencies.length (); ++i)
+  for (CORBA::ULong i {}; i < qos.dependencies.length (); ++i)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
                   "consumerqos[%d] event.header.type = %s,"
@@ -66,7 +64,7 @@ TAO_EC_Kokyu_Filter_Builder::build (
   //find the first entry which is not a designator. We are going to
   //assume that this entry will have the rt_info of the connecting
   //consumer (ProxyPushSupplier), which is passed into this function.
-  for (i=0; !found && i<qos.dependencies.length (); ++i)
+  for (CORBA::ULong i {}; !found && i < qos.dependencies.length (); ++i)
     {
       switch (qos.dependencies[i].event.header.type)
         {
@@ -77,7 +75,7 @@ TAO_EC_Kokyu_Filter_Builder::build (
         case ACE_ES_BITMASK_DESIGNATOR:
         case ACE_ES_MASKED_TYPE_DESIGNATOR:
         case ACE_ES_NULL_DESIGNATOR:
-          establish_final_consumer_dependency = 1;
+          establish_final_consumer_dependency = true;
           continue;
 
         case ACE_ES_GLOBAL_DESIGNATOR:
@@ -88,7 +86,7 @@ TAO_EC_Kokyu_Filter_Builder::build (
 
         default:
           npos = i;
-          found = 1;
+          found = true;
           break;
         }
     }
@@ -101,7 +99,7 @@ TAO_EC_Kokyu_Filter_Builder::build (
   ORBSVCS_DEBUG ((LM_DEBUG, "consumer rt_info found in consumerqos[%d]\n", npos));
 #endif
 
-  if (npos >= 0 && establish_final_consumer_dependency == 1)
+  if (npos >= 0 && establish_final_consumer_dependency)
     {
       //Hopefully this will have the final consumer's rt_info
       h_final_consumer_rt_info = qos.dependencies[npos].rt_info;
@@ -147,7 +145,7 @@ TAO_EC_Kokyu_Filter_Builder::build (
               " dependency can be established\n"));
 #endif
 
-  if (npos >= 0 && establish_final_consumer_dependency == 1)
+  if (npos >= 0 && establish_final_consumer_dependency)
     {
 #ifdef EC_KOKYU_LOGGING
       ORBSVCS_DEBUG ((LM_DEBUG,
@@ -178,7 +176,7 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
     RtecScheduler::Scheduler_ptr scheduler,
     RtecScheduler::handle_t parent_info) const
 {
-  const RtecEventComm::Event& e = qos.dependencies[pos].event;
+  RtecEventComm::Event const &e = qos.dependencies[pos].event;
 
 #ifdef EC_KOKYU_LOGGING
   ORBSVCS_DEBUG ((LM_DEBUG, "Filter_Builder::In recursive build\n"));
@@ -194,22 +192,22 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
       this->recursive_name (qos, npos,
                             scheduler, name);
 
-      pos++; // Consume the designator
+      ++pos; // Consume the designator
 
-      CORBA::ULong n = this->count_children (qos, pos);
+      CORBA::ULong const n = this->count_children (qos, pos);
 
       RtecBase::handle_t conj_rt_info = parent_info;
 
-      TAO_EC_Filter** children;
-      ACE_NEW_RETURN (children, TAO_EC_Filter*[n], 0);
-      for (CORBA::ULong i = 0; i != n; ++i)
+      TAO_EC_Filter** children {};
+      ACE_NEW_RETURN (children, TAO_EC_Filter*[n], nullptr);
+      for (CORBA::ULong i {}; i != n; ++i)
         {
           children[i] = this->recursive_build (supplier, qos, pos,
                                                scheduler,
                                                conj_rt_info);
         }
 
-      TAO_EC_Kokyu_Filter *filter;
+      TAO_EC_Kokyu_Filter *filter {};
       ACE_NEW_RETURN (filter,
                       TAO_EC_Kokyu_Filter (name.c_str (),
                                            conj_rt_info,
@@ -219,7 +217,7 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
                                            conj_rt_info,
                                            conj_rt_info,
                                            RtecScheduler::CONJUNCTION),
-                      0);
+                      nullptr);
       TAO_EC_QOS_Info qos_info;
       filter->get_qos_info (qos_info);
       // @@
@@ -236,21 +234,21 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
       this->recursive_name (qos, npos,
                             scheduler, name);
 
-      pos++; // Consume the designator
+      ++pos; // Consume the designator
 
       RtecBase::handle_t disj_rt_info = parent_info;
 
-      CORBA::ULong n = this->count_children (qos, pos);
+      CORBA::ULong const n = this->count_children (qos, pos);
 
-      TAO_EC_Filter** children;
-      ACE_NEW_RETURN (children, TAO_EC_Filter*[n], 0);
-      for (CORBA::ULong i = 0; i != n; ++i)
+      TAO_EC_Filter** children {};
+      ACE_NEW_RETURN (children, TAO_EC_Filter*[n], nullptr);
+      for (CORBA::ULong i {}; i != n; ++i)
         {
           children[i] = this->recursive_build (supplier, qos, pos,
                                                scheduler,
                                                disj_rt_info);
         }
-      TAO_EC_Kokyu_Filter *filter;
+      TAO_EC_Kokyu_Filter *filter {};
       ACE_NEW_RETURN (filter,
                       TAO_EC_Kokyu_Filter (name.c_str (),
                                            disj_rt_info,
@@ -260,7 +258,7 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
                                            disj_rt_info,
                                            disj_rt_info,
                                            RtecScheduler::DISJUNCTION),
-                      0);
+                      nullptr);
 
       TAO_EC_QOS_Info qos_info;
       filter->get_qos_info (qos_info);
@@ -282,7 +280,7 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
         RtecBase::handle_t h_consumer_rt_info = qos.dependencies[pos].rt_info;
 
         //build a unique name using the cosumer_rt_info
-        ACE_OS::sprintf (buf, "TIMEOUT:%umsec:%d",
+        std::sprintf (buf, "TIMEOUT:%umsec:%d",
                          static_cast<u_int> ((e.header.creation_time / 10000)),
                          h_consumer_rt_info);
         ACE_CString name = buf;
@@ -296,7 +294,7 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
           static_cast<RtecScheduler::Period_t> (e.header.creation_time);
 
 #if 1 //by VS original code replaced with this
-        RtecScheduler::RT_Info* consumer_rt_info_ptr;
+        RtecScheduler::RT_Info* consumer_rt_info_ptr {};
 
         consumer_rt_info_ptr = scheduler->get (h_consumer_rt_info);
         scheduler->set (qos_info.rt_info,
@@ -316,7 +314,7 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
                                    RtecBase::TWO_WAY_CALL);
 #endif //by VS
 
-        pos++;
+        ++pos;
         return new TAO_EC_Timeout_Filter (this->event_channel_,
                                           supplier,
                                           qos_info,
@@ -327,7 +325,7 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
 #if 1 //added by VS
   else if (e.header.type == ACE_ES_GLOBAL_DESIGNATOR)
     {
-      pos++;
+      ++pos;
       return this->recursive_build (supplier, qos, pos,
                                     scheduler,
                                     parent_info);
@@ -355,8 +353,8 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
 
   ACE_CString name = info->entry_point.in ();
 
-  pos++;
-  TAO_EC_Kokyu_Filter *filter;
+  ++pos;
+  TAO_EC_Kokyu_Filter *filter {};
   ACE_NEW_RETURN (filter,
                   TAO_EC_Kokyu_Filter (name.c_str (),
                                        parent_info,
@@ -365,7 +363,7 @@ TAO_EC_Kokyu_Filter_Builder::recursive_build (
                                        parent_info,
                                        parent_info,
                                        RtecScheduler::OPERATION),
-                  0);
+                  nullptr);
 
   TAO_EC_QOS_Info qos_info;
   filter->get_qos_info (qos_info);
@@ -380,14 +378,14 @@ TAO_EC_Kokyu_Filter_Builder:: recursive_name (
     RtecScheduler::Scheduler_ptr scheduler,
     ACE_CString& name) const
 {
-  const RtecEventComm::Event& e = qos.dependencies[pos].event;
+  RtecEventComm::Event const &e = qos.dependencies[pos].event;
 
   if (e.header.type == ACE_ES_CONJUNCTION_DESIGNATOR)
     {
-      pos++; // Consume the designator
-      CORBA::ULong n = this->count_children (qos, pos);
+      ++pos; // Consume the designator
+      CORBA::ULong const n = this->count_children (qos, pos);
 
-      for (CORBA::ULong i = 0; i != n; ++i)
+      for (CORBA::ULong i {}; i != n; ++i)
         {
           ACE_CString child_name;
           this->recursive_name (qos, pos,
@@ -406,10 +404,10 @@ TAO_EC_Kokyu_Filter_Builder:: recursive_name (
 
   else if (e.header.type == ACE_ES_DISJUNCTION_DESIGNATOR)
     {
-      pos++; // Consume the designator
-      CORBA::ULong n = this->count_children (qos, pos);
+      ++pos; // Consume the designator
+      CORBA::ULong const n = this->count_children (qos, pos);
 
-      for (CORBA::ULong i = 0; i != n; ++i)
+      for (CORBA::ULong i {}; i != n; ++i)
         {
           ACE_CString child_name;
 
@@ -431,17 +429,17 @@ TAO_EC_Kokyu_Filter_Builder:: recursive_name (
            || e.header.type == ACE_ES_EVENT_INTERVAL_TIMEOUT
            || e.header.type == ACE_ES_EVENT_DEADLINE_TIMEOUT)
     {
-      pos++;
+      ++pos;
 
       char buf[64];
-      ACE_OS::sprintf (buf, "TIMEOUT:%umsec",
+      std::sprintf (buf, "TIMEOUT:%umsec",
                        static_cast<u_int> ((e.header.creation_time / 10000)));
       name = buf;
 
       return;
     }
 
-  RtecScheduler::handle_t body_info = qos.dependencies[pos].rt_info;
+  RtecScheduler::handle_t const body_info = qos.dependencies[pos].rt_info;
 
   RtecScheduler::RT_Info_var info =
     scheduler->get (body_info);
@@ -449,7 +447,7 @@ TAO_EC_Kokyu_Filter_Builder:: recursive_name (
   name = info->entry_point.in ();
   name += "#rep";
 
-  pos++;
+  ++pos;
 }
 
 CORBA::ULong
@@ -457,11 +455,11 @@ TAO_EC_Kokyu_Filter_Builder::
     count_children (RtecEventChannelAdmin::ConsumerQOS& qos,
                     CORBA::ULong pos) const
 {
-  CORBA::ULong l = qos.dependencies.length ();
+  CORBA::ULong const l = qos.dependencies.length ();
   CORBA::ULong i;
   for (i = pos; i != l; ++i)
     {
-      const RtecEventComm::Event& e = qos.dependencies[i].event;
+      RtecEventComm::Event const &e = qos.dependencies[i].event;
       if (e.header.type == ACE_ES_CONJUNCTION_DESIGNATOR
           || e.header.type == ACE_ES_DISJUNCTION_DESIGNATOR)
         break;

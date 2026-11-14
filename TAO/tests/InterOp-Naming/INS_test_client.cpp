@@ -1,4 +1,3 @@
-
 #include "INSC.h"
 
 #include "tao/ObjectIdListC.h"
@@ -9,93 +8,76 @@
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int i = 0;
+  int i {};
 
   try
     {
-      // Retrieve a reference to the ORB.
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb (CORBA::ORB_init (argc, argv));
 
       if (argc < 2)
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      "No Name specified to be resolved\n"));
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("No Name specified to be resolved\n")));
           return -1;
         }
 
-      CORBA::Object_var objref;
-
       for (i = 1; i < argc; ++i)
         {
-          if (ACE_OS::strcmp (argv[i], ACE_TEXT("-l")) == 0)
+          if (ACE_OS::strcmp (argv [i], ACE_TEXT ("-l")) == 0)
             {
-              // List initial services
-              CORBA::ORB::ObjectIdList_var list =
-                orb->list_initial_services ();
-
-              size_t length = list->length ();
+              CORBA::ORB::ObjectIdList_var const list (orb->list_initial_services ());
+              size_t const length = list->length ();
 
               if (length > 0)
                 {
-                  ACE_DEBUG ((LM_INFO,
-                              "Listing initial references...\n"));
+                  ACE_DEBUG ((LM_INFO, ACE_TEXT ("Listing initial references...\n")));
 
-                  for (CORBA::ULong n = 0; n < length; ++n)
-                    {
-                      ACE_DEBUG ((LM_DEBUG,
-                                  "  Reference %u: %C\n",
-                                  n,
-                                  static_cast<char const*>(list[n])));
-                    }
+                  for (CORBA::ULong n {}; n < length; ++n)
+                    ACE_DEBUG ((LM_DEBUG,
+                                ACE_TEXT ("  Reference %u: %C\n"),
+                                n,
+                                static_cast<char const *> (list [n])));
                 }
               else
                 {
-                  // We should at least get TAO's initial references,
-                  // such as "RootPOA", "NameService", etc.
                   ACE_ERROR_RETURN ((LM_ERROR,
-                                     "\n"
-                                     "No initial references. "
-                                     "This condition shouldn't happen.\n"),
+                                     ACE_TEXT ("\nNo initial references. "
+                                               "This condition should not happen.\n")),
                                     -1);
                 }
             }
           else
             {
-              objref = orb->resolve_initial_references (ACE_TEXT_ALWAYS_CHAR(argv[i]));
+              CORBA::Object_var const objref (
+                orb->resolve_initial_references (ACE_TEXT_ALWAYS_CHAR (argv [i])));
 
               if (CORBA::is_nil (objref.in ()))
                 ACE_ERROR_RETURN ((LM_ERROR,
-                                   " (%P|%t) Unable to resolve the "
-                                   "given name.\n"),
+                                   ACE_TEXT (" (%P|%t) Unable to resolve the given name.\n")),
                                   -1);
 
-              INS_var server = INS::_narrow (objref.in ());
-
-              CORBA::String_var iorstr =
-                orb->object_to_string (server.in ());
+              INS_var const server (INS::_narrow (objref.in ()));
+              CORBA::String_var const iorstr (orb->object_to_string (server.in ()));
               ACE_DEBUG ((LM_DEBUG,
-                          "Resolved IOR for %s : %C\n",
-                          argv[i],
-                          iorstr.in()));
+                          ACE_TEXT ("Resolved IOR for %s : %C\n"),
+                          argv [i],
+                          iorstr.in ()));
 
-              CORBA::String_var test_ins_result =
-                server->test_ins ();
-
+              CORBA::String_var const test_ins_result (server->test_ins ());
               ACE_DEBUG ((LM_DEBUG,
-                          "\nResult of Remote Call : %C\n",
+                          ACE_TEXT ("\nResult of Remote Call : %C\n"),
                           test_ins_result.in ()));
             }
         }
     }
-  catch (const CORBA::ORB::InvalidName& )
+  catch (CORBA::ORB::InvalidName const &)
     {
-      ACE_DEBUG ((LM_DEBUG, "Cannot resolve <%s>\n", argv[i]));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Cannot resolve <%s>\n"), argv [i]));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception:");
+      return -1;
     }
-
 
   return 0;
 }

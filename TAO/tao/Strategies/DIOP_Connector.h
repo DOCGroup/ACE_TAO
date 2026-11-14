@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    DIOP_Connector.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author  Michael Kircher
  */
-//=============================================================================
 
 #ifndef TAO_DIOP_CONNECTOR_H
 #define TAO_DIOP_CONNECTOR_H
@@ -31,8 +29,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Endpoint;
 class TAO_DIOP_Endpoint;
 
-// ****************************************************************
-
 /**
  * @class TAO_DIOP_Connector
  *
@@ -45,11 +41,9 @@ class TAO_DIOP_Endpoint;
 class TAO_Strategies_Export TAO_DIOP_Connector : public TAO_Connector
 {
 public:
-  /// Constructor.
   TAO_DIOP_Connector ();
 
-  /// Destructor.
-  ~TAO_DIOP_Connector () = default;
+  ~TAO_DIOP_Connector () override = default;
 
   /**
    * @name The TAO_Connector Methods

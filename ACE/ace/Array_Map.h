@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_ARRAY_MAP_H
 #define ACE_ARRAY_MAP_H
 
@@ -119,7 +118,6 @@ public:
   ACE_Array_Map (ACE_Array_Map const & map);
   ACE_Array_Map & operator= (ACE_Array_Map const & map);
 
-  /// Destructor.
   ~ACE_Array_Map ();
 
   /**
@@ -250,7 +248,7 @@ private:
   allocator_type alloc_;
 
   /// Number of elements in the map.
-  size_type size_;
+  size_type size_ {};
 
   /// Current size of underlying array.
   /**

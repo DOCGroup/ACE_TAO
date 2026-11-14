@@ -16,10 +16,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Atomic_Op.h"
 #include "ace/CORBA_macros.h"
 #include "tao/ORB_Constants.h"
 #include "tao/orbconf.h"
+
+#include <atomic>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -37,7 +39,6 @@ class TAO_Notify_Event_Map_Entry_T
 public:
   using COLLECTION = TAO_ESF_Proxy_Collection<PROXY>;
 
-  /// Constructor
   TAO_Notify_Event_Map_Entry_T ();
 
   TAO_Notify_Event_Map_Entry_T (const TAO_Notify_Event_Map_Entry_T &) = delete;
@@ -45,7 +46,6 @@ public:
   TAO_Notify_Event_Map_Entry_T &operator= (const TAO_Notify_Event_Map_Entry_T &) = delete;
   TAO_Notify_Event_Map_Entry_T &operator= (TAO_Notify_Event_Map_Entry_T &&) = delete;
 
-  /// Destructor
   ~TAO_Notify_Event_Map_Entry_T ();
 
   /// Init - Allocates collection
@@ -63,22 +63,24 @@ public:
   /// Count accessor
   int count ();
 
-  ///= Reference counting methods.
-  // Incr the ref count.
+  /// @name Reference-counting methods
+  /// @{
+  /// Increment the reference count.
   CORBA::ULong _incr_refcnt ();
 
-  // Decr the ref count. This object is destroyed when the count is 0.
+  /// Decrement the reference count and destroy this object when it reaches zero.
   CORBA::ULong _decr_refcnt ();
+  /// @}
 
 protected:
   /// The Collection
-  COLLECTION* collection_;
+  std::unique_ptr<COLLECTION> collection_;
 
   /// Count of PROXY's connected in the collection;
-  int count_;
+  int count_ {};
 
   /// Count of users accessing this entry.
-  ACE_Atomic_Op<TAO_SYNCH_MUTEX,int> usage_count_;
+  std::atomic<int> usage_count_ {1};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

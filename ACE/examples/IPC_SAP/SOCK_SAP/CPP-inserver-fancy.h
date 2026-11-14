@@ -1,41 +1,42 @@
-// This file defines the Options class for CPP-inserver-fancy.
-// IBM C++ compiler'd template auto-instantiator needs this in a separate file.
+/**
+ * @file CPP-inserver-fancy.h
+ *
+ * Defines the CPP-inserver-fancy Options class. IBM's C++ template
+ * auto-instantiator requires this class to be in a separate file.
+ */
 
 #ifndef __CPP_INSERVER_FANCY_H
 #define __CPP_INSERVER_FANCY_H
 
+/// Defines the options for the fancy server test.
 class Options
-  // = TITLE
-  //   Define the options for this test.
 {
 public:
   Options ();
-  // Constructor.
 
   ~Options ();
-  // Destructor.
 
+  /// Parses the command-line arguments.
   int parse_args (int argc, ACE_TCHAR *argv[]);
-  // Parse the command-line arguments.
 
+  /// Returns whether verbose output is enabled.
   int verbose () const;
-  // Are we running in verbose mode?
 
+  /// Returns the port on which the server listens.
   u_short port () const;
-  // Port number that we are listening at.
 
+  /// Returns the reply message size.
   int reply_message_len () const;
-  // Size of the reply message.
 
 private:
+  /// Whether verbose output is enabled.
   int verbose_;
-  // Are we running in verbose mode?
 
+  /// Port on which the server listens.
   u_short port_;
-  // Port number we listen at.
 
+  /// Size of the reply message.
   size_t reply_message_len_;
-  // Size of the reply message.
 };
 
 #endif /* __CPP_INSERVER_FANCY_H */

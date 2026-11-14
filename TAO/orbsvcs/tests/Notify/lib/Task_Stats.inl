@@ -36,7 +36,7 @@ Task_Stats::sample (ACE_UINT64 inv_start_time, ACE_UINT64 inv_end_time)
   this->time_inv_[this->samples_count_] = inv_start_time;
   this->time_exec_[this->samples_count_] = inv_end_time;
 
-  this->samples_count_++;
+  ++this->samples_count_;
 
   return 0;
 }

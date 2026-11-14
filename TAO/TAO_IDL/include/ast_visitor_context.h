@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #ifndef AST_VISITOR_CONTEXT_H
 #define AST_VISITOR_CONTEXT_H
 

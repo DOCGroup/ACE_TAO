@@ -37,7 +37,6 @@ be_visitor_root_ci::visit_root (be_root *node)
                         -1);
     }
 
-
   if (this->gen_obv_defns (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,

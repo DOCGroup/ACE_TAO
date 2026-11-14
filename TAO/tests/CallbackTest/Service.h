@@ -10,17 +10,21 @@ class Service
   : public virtual POA_Test::Service
 {
 public:
-  /// Constructor
-  Service (CORBA::ORB_ptr orb);
+  explicit Service (CORBA::ORB_ptr orb);
+
+  Service (Service const &) = delete;
+  Service (Service &&) = delete;
+  Service &operator= (Service const &) = delete;
+  Service &operator= (Service &&) = delete;
 
   /// Dump the results.
   /**
    * In case of failure this exposes any incomplete runs.
    */
-  void dump_results ();
+  void dump_results () const;
 
   // = The skeleton methods
-  virtual void run_test (Test::Callback_ptr callback);
+  void run_test (Test::Callback_ptr callback) override;
 
 private:
   /// Call the are_you_there callback multiple times.
@@ -35,9 +39,8 @@ private:
    */
   int call_test_oneway (Test::Callback_ptr callback);
 
-private:
   /// Count the number of tests executed
-  int test_count_;
+  int test_count_ {};
 
   /// Use an ORB reference to shutdown the application.
   CORBA::ORB_var orb_;

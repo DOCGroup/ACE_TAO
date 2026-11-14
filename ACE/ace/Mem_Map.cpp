@@ -11,6 +11,9 @@
 #include "ace/OS_NS_string.h"
 #include "ace/Log_Category.h"
 #include "ace/Truncate.h"
+
+#include <cstring>
+
 #if defined (ACE_HAS_ALLOC_HOOKS)
 # include "ace/Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
@@ -28,7 +31,7 @@ ACE_Mem_Map::dump () const
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("base_addr_ = %x"), this->base_addr_));
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nfilename_ = %s"), this->filename_));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nlength_ = %d"), this->length_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nlength_ = %B"), this->length_));
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nhandle_ = %d"), this->handle_));
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nfile_mapping_ = %d"), this->file_mapping_));
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nclose_handle_ = %d"), this->close_handle_));
@@ -242,7 +245,7 @@ ACE_Mem_Map::ACE_Mem_Map ()
     close_handle_ (false)
 {
   ACE_TRACE ("ACE_Mem_Map::ACE_Mem_Map");
-  ACE_OS::memset (this->filename_, 0, sizeof this->filename_);
+  std::memset (this->filename_, 0, sizeof this->filename_);
 }
 
 // Map a file specified by FILE_NAME.
@@ -293,9 +296,9 @@ ACE_Mem_Map::ACE_Mem_Map (ACE_HANDLE handle,
 {
   ACE_TRACE ("ACE_Mem_Map::ACE_Mem_Map");
 
-  ACE_OS::memset (this->filename_,
-                  0,
-                  sizeof this->filename_);
+  std::memset (this->filename_,
+               0,
+               sizeof this->filename_);
   if (this->map (handle,
                  len,
                  prot,

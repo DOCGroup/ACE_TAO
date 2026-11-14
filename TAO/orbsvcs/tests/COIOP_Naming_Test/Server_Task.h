@@ -21,7 +21,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 class Server_Task : public ACE_Task_Base
 {
 public:
-  /// Constructor
   Server_Task (CosNaming::NamingContext_ptr root_context,
                CORBA::ORB_ptr sorb,
                ACE_Manual_Event &me,
@@ -36,13 +35,13 @@ public:
   int svc () override;
 
 private:
-  CosNaming::NamingContext_var root_context_;
+  CosNaming::NamingContext_var const root_context_;
 
   /// Manual event to wake up the main thread to create a client
   /// thread.
   ACE_Manual_Event &me_;
 
-  CORBA::ORB_var sorb_;
+  CORBA::ORB_var const sorb_;
 };
 
 #include /**/ "ace/post.h"

@@ -65,7 +65,6 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
 
   if (factory_style == be_valuetype::FS_CONCRETE_FACTORY)
     {
-      // Public constructor.
       os << be_nl
          << node->local_name () << "_init ();";
     }
@@ -108,13 +107,11 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
 
   if (factory_style == be_valuetype::FS_ABSTRACT_FACTORY)
     {
-      // Protected constructor.
       os << be_uidt_nl << be_nl
          << "protected:" << be_idt_nl
          << node->local_name () << "_init ();";
     }
 
-  // Protected virtual destructor.
   os << be_uidt_nl << be_nl
      << "protected:" << be_idt_nl
      << "virtual ~" << node->local_name () << "_init ();"
@@ -137,7 +134,6 @@ be_visitor_valuetype_init_ch::visit_factory (be_factory *node)
 
   be_valuetype *vt =
     dynamic_cast<be_valuetype*> (this->ctx_->scope ()->decl ());
-
 
   // STEP I: Generate preambule.
   os << be_nl_2

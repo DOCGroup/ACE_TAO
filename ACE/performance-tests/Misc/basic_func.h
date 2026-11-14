@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef BASIC_FUNC_H
 #define BASIC_FUNC_H
 
@@ -36,10 +35,8 @@ extern int A,BB,C,D,E,F;
 # define DO_SOMETHING
 #endif /* ACE_HAS_OPTIMIZED_NULL_FUNCTIONS */
 
-
 // An external (global) function.
 void func ();
-
 
 // A class with no virtual functions.
 class Foo
@@ -49,23 +46,21 @@ class Foo
     void func ();
 };
 
-
 // A class with a virtual function.
 class Foo_v
 {
   public:
-    virtual ~Foo_v ();
+    virtual ~Foo_v () = default;
     void inline_func () { DO_SOMETHING }
     void func ();
     virtual void v_func ();
 };
 
-
 // A derived class.
 class Foo_d_v : public Foo_v
 {
   public:
-    virtual void v_func ();
+    void v_func () override;
 };
 
 #endif /* BASIC_FUNC_H */

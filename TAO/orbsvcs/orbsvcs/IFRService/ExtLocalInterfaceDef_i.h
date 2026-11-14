@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-
 //=============================================================================
 /**
  *  @file    ExtLocalInterfaceDef_i.h
@@ -10,7 +9,6 @@
  *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
 //=============================================================================
-
 
 #ifndef TAO_EXTLOCALINTERFACEDEF_I_H
 #define TAO_EXTLOCALINTERFACEDEF_I_H

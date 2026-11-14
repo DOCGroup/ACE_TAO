@@ -1,19 +1,21 @@
+#include <cstdio>
+#include <memory>
+
 #include "Server_i.h"
 #include "tao/Messaging/Messaging.h"
 #include "tao/AnyTypeCode/Any.h"
+#include "tao/Utils/PolicyList_Destroyer.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 
-ACE_TCHAR const *ior_output_file = ACE_TEXT ("test.ior");
-
 int
-parse_args (int argc, ACE_TCHAR * argv[])
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior_output_file)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:"));
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'o':
         ior_output_file = get_opts.opt_arg ();
@@ -28,22 +30,24 @@ parse_args (int argc, ACE_TCHAR * argv[])
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
   return 0;
 }
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 {
+  ACE_TCHAR const *ior_output_file = ACE_TEXT ("test.ior");
   try
     {
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var object =
+      if (parse_args (argc, argv, ior_output_file) != 0)
+        return 1;
+
+      CORBA::Object_var const object =
         orb->resolve_initial_references ("PolicyCurrent");
 
-      CORBA::PolicyCurrent_var policy_current =
+      CORBA::PolicyCurrent_var const policy_current =
         CORBA::PolicyCurrent::_narrow (object.in ());
 
       if (CORBA::is_nil (policy_current.in ()))
@@ -51,23 +55,23 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
           ACE_ERROR ((LM_ERROR, "ERROR: Nil policy current\n"));
           return 1;
         }
-      CORBA::Any scope_as_any;
-      scope_as_any <<= Messaging::SYNC_NONE;
+      {
+        CORBA::Any scope_as_any;
+        scope_as_any <<= Messaging::SYNC_NONE;
 
-      CORBA::PolicyList policies (1);
-      policies.length (1);
-      policies[0] =
-        orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
-                            scope_as_any);
+        TAO::Utils::PolicyList_Destroyer policies (1);
+        policies.length (1);
+        policies[0] =
+          orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
+                              scope_as_any);
 
-      policy_current->set_policy_overrides (policies, CORBA::ADD_OVERRIDE);
+        policy_current->set_policy_overrides (policies, CORBA::ADD_OVERRIDE);
+      }
 
-      policies[0]->destroy ();
-
-      CORBA::Object_var poa_object =
+      CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
@@ -75,35 +79,35 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
                            " (%P|%t) Panic: nil RootPOA\n"),
                           1);
 
-      PortableServer::POAManager_var poa_manager = root_poa->the_POAManager ();
+      PortableServer::POAManager_var const poa_manager = root_poa->the_POAManager ();
 
-      if (parse_args (argc, argv) != 0)
-        return 1;
-
-      Server *server_impl = nullptr;
+      Server *server_impl {};
       ACE_NEW_RETURN (server_impl,
                       Server (orb.in ()),
                       1);
+      // ServantBase_var takes ownership of the raw servant pointer.
       PortableServer::ServantBase_var owner_transfer (server_impl);
 
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         root_poa->activate_object (server_impl);
 
-      object = root_poa->id_to_reference (id.in ());
+      CORBA::Object_var const server_object = root_poa->id_to_reference (id.in ());
 
-      Test::Server_var test_server = Test::Server::_narrow (object.in ());
+      Test::Server_var const test_server = Test::Server::_narrow (server_object.in ());
 
-      CORBA::String_var ior = orb->object_to_string (test_server.in ());
+      CORBA::String_var const ior = orb->object_to_string (test_server.in ());
 
       // Output the IOR to the <ior_output_file>
-      FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == nullptr)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s\n",
-                           ior_output_file),
-                           1);
-      ACE_OS::fprintf (output_file, "%s", ior.in ());
-      ACE_OS::fclose (output_file);
+      {
+        std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+          ACE_OS::fopen (ior_output_file, "w"), ACE_OS::fclose);
+        if (!output_file)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot open output file for writing IOR: %s\n",
+                             ior_output_file),
+                            1);
+        ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
+      }
 
       poa_manager->activate ();
 

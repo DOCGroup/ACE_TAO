@@ -78,8 +78,6 @@ ACE_Token_Acceptor::init (int argc, ACE_TCHAR *argv[])
 
 ACE_SVC_FACTORY_DEFINE (ACE_Token_Acceptor)
 
-// Default constructor.
-
 ACE_Token_Handler::ACE_Token_Handler (ACE_Thread_Manager *tm)
   : ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> (tm),
     collection_ (1),
@@ -106,7 +104,7 @@ ACE_Token_Handler::send_reply (ACE_UINT32 err)
 
   if (n != (ssize_t) len)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p, expected len = %d, actual len = %d\n"),
+                       ACE_TEXT ("%p, expected len = %B, actual len = %b\n"),
                        ACE_TEXT ("send failed"), len, n), -1);
   else
     return 0;
@@ -410,7 +408,7 @@ ACE_Token_Handler::recv_request ()
     case -1:
       ACE_FALLTHROUGH;
     default:
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p got %d bytes, expected %d bytes\n"),
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p got %b bytes, expected %B bytes\n"),
                   ACE_TEXT ("recv failed"), n, sizeof (ACE_UINT32)));
       ACE_FALLTHROUGH;
     case 0:
@@ -426,7 +424,7 @@ ACE_Token_Handler::recv_request ()
         // Do a sanity check on the length of the message.
         if (length > (ssize_t) sizeof this->token_request_)
           {
-            ACE_ERROR ((LM_ERROR, ACE_TEXT ("length %d too long\n"), length));
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("length %b too long\n"), length));
             return this->abandon (1);
           }
 
@@ -439,7 +437,7 @@ ACE_Token_Handler::recv_request ()
         // Subtract off the size of the part we skipped over...
         if (n != (length - (ssize_t) sizeof (ACE_UINT32)))
           {
-            ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p expected %d, got %d\n"),
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p expected %b, got %b\n"),
                         ACE_TEXT ("invalid length"), length, n));
             return this->abandon (1);
           }

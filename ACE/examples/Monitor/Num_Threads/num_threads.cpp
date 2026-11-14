@@ -1,3 +1,6 @@
+#include <cstddef>
+#include <memory>
+
 #include "ace/OS_NS_unistd.h"
 
 #include "ace/Monitor_Control/Monitor_Control.h"
@@ -9,7 +12,13 @@
 class Worker : public ACE_Task_Base
 {
 public:
-  int svc ()
+  Worker () = default;
+  Worker (Worker const &) = delete;
+  Worker (Worker &&) = delete;
+  Worker &operator= (Worker const &) = delete;
+  Worker &operator= (Worker &&) = delete;
+
+  int svc () override
   {
     ACE_OS::sleep (5);
     return 0;
@@ -22,21 +31,29 @@ public:
 class Monitor_Checker : public ACE_Task_Base
 {
 public:
-  int svc ()
+  Monitor_Checker () = default;
+  Monitor_Checker (Monitor_Checker const &) = delete;
+  Monitor_Checker (Monitor_Checker &&) = delete;
+  Monitor_Checker &operator= (Monitor_Checker const &) = delete;
+  Monitor_Checker &operator= (Monitor_Checker &&) = delete;
+
+  int svc () override
   {
     /// Get an instance of the MC service singleton.
-    MC_ADMINMANAGER* mgr =
+    MC_ADMINMANAGER * const mgr =
       ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
+    if (mgr == nullptr)
+      ACE_ERROR_RETURN ((LM_ERROR, "Monitor service is unavailable\n"), -1);
 
     /// Call on the administrator class to look up the desired monitors.
-    ACE::Monitor_Control::Monitor_Base *thread_monitor =
-      mgr->admin ().monitor_point ("OS/System/NumThreads");
+    ACE::Monitor_Control::Monitor_Base_Unique_Ptr const thread_monitor (
+      mgr->admin ().monitor_point ("OS/System/NumThreads"));
 
-    if (thread_monitor != 0)
+    if (thread_monitor != nullptr)
       {
         /// Query each monitor for its data every 2 seconds, and call the
         /// appropriate display function.
-        for (int i = 0; i < 5; ++i)
+        for (size_t i {}; i < 5; ++i)
           {
             ACE_OS::sleep (2);
 
@@ -45,9 +62,7 @@ public:
             MC_Test_Utilities::display_num_threads (data);
           }
 
-        thread_monitor->remove_ref ();
       }
-
     return 0;
   }
 };
@@ -60,27 +75,42 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
   /// Set the timer for # of threads check at 2 sec.
-  Monitor_Base *num_threads_monitor =
-    create_os_monitor<NUM_THREADS_MONITOR> (0, ACE_Time_Value (2));
+  MC_ADMINMANAGER * const mgr =
+    ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
+  if (mgr == nullptr)
+    ACE_ERROR_RETURN ((LM_ERROR, "Monitor service is unavailable\n"), 1);
+
+  ACE::Monitor_Control::Monitor_Base_Unique_Ptr const num_threads_monitor (
+    create_os_monitor<NUM_THREADS_MONITOR> (nullptr, ACE_Time_Value (2)));
+  if (num_threads_monitor == nullptr)
+    ACE_ERROR_RETURN ((LM_ERROR, "Unable to create thread monitor\n"), 1);
 
   /// Runs the reactor's event loop in a separate thread so the timer(s)
   /// can run concurrently with the application.
   START_PERIODIC_MONITORS;
 
   /// Run the monitor checker in a separate thread.
-  Monitor_Checker monitor_checker;
-  monitor_checker.activate ();
+  Monitor_Checker monitor_checker {};
+  if (monitor_checker.activate () == -1)
+    {
+      ACE_ERROR ((LM_ERROR, "Unable to start monitor checker\n"));
+      STOP_PERIODIC_MONITORS;
+      return 1;
+    }
 
   /// Spawn 100 threads, sleep until they finish.
-  Worker worker;
-  worker.activate (THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED, 100);
+  Worker worker {};
+  if (worker.activate (THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED, 100) == -1)
+    {
+      ACE_ERROR ((LM_ERROR, "Unable to start worker threads\n"));
+      STOP_PERIODIC_MONITORS;
+      return 1;
+    }
 
   ACE_OS::sleep (6);
 
   /// End the reactor's event loop, stopping the timer(s).
   STOP_PERIODIC_MONITORS;
-
-  num_threads_monitor->remove_ref ();
 
 #endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
 

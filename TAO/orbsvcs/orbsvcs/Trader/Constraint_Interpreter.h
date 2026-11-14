@@ -1,12 +1,10 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    Constraint_Interpreter.h
  *
  *  @author Seth Widoff <sbw1@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_CONSTRAINT_INTERPRETER_H
 #define TAO_CONSTRAINT_INTERPRETER_H
@@ -18,6 +16,8 @@
 
 #include "orbsvcs/CosTradingS.h"
 #include "orbsvcs/CosTradingReposS.h"
+
+#include <deque>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -55,7 +55,6 @@ public:
   TAO_Constraint_Interpreter (TAO_Constraint_Validator& validator,
                               const char* constraints);
 
-  /// Destructor
   ~TAO_Constraint_Interpreter ();
 
   CORBA::Boolean evaluate (CosTrading::Offer* offer);
@@ -83,6 +82,11 @@ public:
 class TAO_Trading_Serv_Export TAO_Preference_Interpreter : public TAO_Interpreter
 {
 public:
+  TAO_Preference_Interpreter (TAO_Preference_Interpreter const&) = delete;
+  TAO_Preference_Interpreter& operator= (TAO_Preference_Interpreter const&) = delete;
+  TAO_Preference_Interpreter (TAO_Preference_Interpreter&&) = delete;
+  TAO_Preference_Interpreter& operator= (TAO_Preference_Interpreter&&) = delete;
+
   TAO_Preference_Interpreter (const CosTradingRepos::ServiceTypeRepository::TypeStruct& ts,
                               const char* preference);
 
@@ -94,7 +98,6 @@ public:
   TAO_Preference_Interpreter (TAO_Constraint_Validator& validator,
                               const char* preference);
 
-  /// Destructor
   ~TAO_Preference_Interpreter ();
 
   void order_offer (CosTrading::Offer* offer,
@@ -119,7 +122,7 @@ public:
   struct Preference_Info
   {
     /// True if the preference evaluation didn't return an error for this offer.
-    CORBA::Boolean evaluated_;
+    CORBA::Boolean evaluated_ {};
 
     /// The value of the preference evaluation.
     TAO_Literal_Constraint value_;
@@ -131,14 +134,9 @@ public:
     CosTrading::Offer* offer_;
   };
 
-  using Ordered_Offers = ACE_Unbounded_Queue<Preference_Info>;
+  using Ordered_Offers = std::deque<Preference_Info>;
 
 private:
-  TAO_Preference_Interpreter (const TAO_Preference_Interpreter&) = delete;
-  TAO_Preference_Interpreter& operator= (const TAO_Preference_Interpreter&) = delete;
-  TAO_Preference_Interpreter (TAO_Preference_Interpreter&&) = delete;
-  TAO_Preference_Interpreter& operator= (TAO_Preference_Interpreter&&) = delete;
-
   /// The ordered list of offers.
   Ordered_Offers offers_;
 };

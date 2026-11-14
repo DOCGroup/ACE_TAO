@@ -20,11 +20,14 @@
 #include "tao/ORB_Core.h"
 #include "ace/OS_NS_strings.h"
 
-#include <memory>
+#include <cstddef>
+#include <cstring>
 #include <fstream>
+#include <memory>
+#include <utility>
 
-const RtecEventComm::EventSourceID MY_SOURCE_ID  = ACE_ES_EVENT_SOURCE_ANY + 1;
-const RtecEventComm::EventType     MY_EVENT_TYPE = ACE_ES_EVENT_UNDEFINED + 1;
+constexpr RtecEventComm::EventSourceID MY_SOURCE_ID {ACE_ES_EVENT_SOURCE_ANY + 1};
+constexpr RtecEventComm::EventType MY_EVENT_TYPE {ACE_ES_EVENT_UNDEFINED + 1};
 
 // Initialize the ORB.
 
@@ -38,53 +41,53 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     // Initialize the ORB.
     CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-    const ACE_TCHAR *ecname = ACE_TEXT ("EventService");
-    const ACE_TCHAR *address = ACE_TEXT ("localhost");
-    const ACE_TCHAR *iorfile = 0;
-    u_short port = 12345;
-    u_short listenport = 12345;
+    ACE_TCHAR const *ecname = ACE_TEXT ("EventService");
+    ACE_TCHAR const *address = ACE_TEXT ("localhost");
+    ACE_TCHAR const *iorfile {};
+    u_short port {12345};
+    u_short listenport {12345};
 
-    int mcast = 1;
+    bool mcast {true};
 
-    for (int i = 0; argv[i] != 0; i++)
+    for (int i {}; argv[i] != nullptr; ++i)
       {
-        if (ACE_OS::strcasecmp(argv[i], ACE_TEXT ("-ecname")) == 0)
+        if (ACE_OS::strcasecmp (argv[i], ACE_TEXT ("-ecname")) == 0)
           {
-            if (argv[i+1] != 0)
+            if (argv[i + 1] != nullptr)
                 ecname = argv[++i];
             else
               ACE_ERROR_RETURN ((LM_ERROR,  "Missing Event channel name\n"),0);
           }
-        else if (ACE_OS::strcasecmp(argv[i], ACE_TEXT ("-address")) == 0)
+        else if (ACE_OS::strcasecmp (argv[i], ACE_TEXT ("-address")) == 0)
           {
-            if (argv[i+1] != 0)
+            if (argv[i + 1] != nullptr)
               address = argv[++i];
             else
               ACE_ERROR_RETURN ((LM_ERROR, "Missing address\n"),0);
           }
-        else if (ACE_OS::strcasecmp(argv[i], ACE_TEXT ("-port")) == 0)
+        else if (ACE_OS::strcasecmp (argv[i], ACE_TEXT ("-port")) == 0)
           {
-            if (argv[i+1] != 0)
-              port = ACE_OS::atoi(argv[++i]);
+            if (argv[i + 1] != nullptr)
+              port = ACE_OS::atoi (argv[++i]);
             else
               ACE_ERROR_RETURN ((LM_ERROR, "Missing port\n"),0);
           }
-        else if (ACE_OS::strcasecmp(argv[i], ACE_TEXT ("-listenport")) == 0)
+        else if (ACE_OS::strcasecmp (argv[i], ACE_TEXT ("-listenport")) == 0)
           {
-            if (argv[i+1] != 0)
-              listenport = ACE_OS::atoi(argv[++i]);
+            if (argv[i + 1] != nullptr)
+              listenport = ACE_OS::atoi (argv[++i]);
             else
               ACE_ERROR_RETURN ((LM_ERROR, "Missing port\n"), 0);
           }
-        else if (ACE_OS::strcasecmp(argv[i], ACE_TEXT ("-iorfile")) == 0)
+        else if (ACE_OS::strcasecmp (argv[i], ACE_TEXT ("-iorfile")) == 0)
           {
-            if (argv[i+1] != 0)
+            if (argv[i + 1] != nullptr)
               iorfile = argv[++i];
              else
               ACE_ERROR_RETURN ((LM_ERROR, "Missing ior file\n"), 0);
           }
-        else if (ACE_OS::strcasecmp(argv[i], ACE_TEXT ("-udp")) == 0)
-          mcast = 0;
+        else if (ACE_OS::strcasecmp (argv[i], ACE_TEXT ("-udp")) == 0)
+          mcast = false;
       }
 
     // Get the POA
@@ -97,34 +100,34 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     TAO_EC_Event_Channel_Attributes attributes (poa.in (), poa.in ());
     TAO_EC_Event_Channel ec_impl (attributes);
     ec_impl.activate ();
-    PortableServer::ObjectId_var oid = poa->activate_object(&ec_impl);
-    tmpobj = poa->id_to_reference(oid.in());
+    PortableServer::ObjectId_var oid = poa->activate_object (&ec_impl);
+    tmpobj = poa->id_to_reference (oid.in ());
     RtecEventChannelAdmin::EventChannel_var ec =
-      RtecEventChannelAdmin::EventChannel::_narrow(tmpobj.in());
+      RtecEventChannelAdmin::EventChannel::_narrow (tmpobj.in ());
 
     // Find the Naming Service.
-    tmpobj = orb->resolve_initial_references("NameService");
+    tmpobj = orb->resolve_initial_references ("NameService");
     CosNaming::NamingContextExt_var root_context =
-      CosNaming::NamingContextExt::_narrow(tmpobj.in());
+      CosNaming::NamingContextExt::_narrow (tmpobj.in ());
 
     // Bind the Event Channel using Naming Services
     CosNaming::Name_var name =
       root_context->to_name (ACE_TEXT_ALWAYS_CHAR (ecname));
-    root_context->rebind(name.in(), ec.in());
+    root_context->rebind (name.in (), ec.in ());
 
     // Get a proxy push consumer from the EventChannel.
-    RtecEventChannelAdmin::SupplierAdmin_var admin = ec->for_suppliers();
+    RtecEventChannelAdmin::SupplierAdmin_var admin = ec->for_suppliers ();
     RtecEventChannelAdmin::ProxyPushConsumer_var consumer =
-      admin->obtain_push_consumer();
+      admin->obtain_push_consumer ();
 
     // Instantiate an EchoEventSupplier_i servant.
-    EchoEventSupplier_i servant(orb.in());
+    EchoEventSupplier_i servant (orb.in ());
 
     // Register it with the RootPOA.
-    oid = poa->activate_object(&servant);
-    tmpobj = poa->id_to_reference(oid.in());
+    oid = poa->activate_object (&servant);
+    tmpobj = poa->id_to_reference (oid.in ());
     RtecEventComm::PushSupplier_var supplier =
-      RtecEventComm::PushSupplier::_narrow(tmpobj.in());
+      RtecEventComm::PushSupplier::_narrow (tmpobj.in ());
 
     // Connect to the EC.
     ACE_SupplierQOS_Factory qos;
@@ -140,23 +143,22 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     // Create an instance of the addr server for local use
 
     PortableServer::ObjectId_var addr_srv_oid =
-      poa->activate_object(&addr_srv_impl);
-    tmpobj =
-      poa->id_to_reference(addr_srv_oid.in());
+      poa->activate_object (&addr_srv_impl);
+    tmpobj = poa->id_to_reference (addr_srv_oid.in ());
 
     RtecUDPAdmin::AddrServer_var addr_srv =
-      RtecUDPAdmin::AddrServer::_narrow(tmpobj.in());
+      RtecUDPAdmin::AddrServer::_narrow (tmpobj.in ());
 
     // Create and initialize the sender object
     PortableServer::Servant_var<TAO_ECG_UDP_Sender> sender =
-                                TAO_ECG_UDP_Sender::create();
+      TAO_ECG_UDP_Sender::create ();
     TAO_ECG_UDP_Out_Endpoint endpoint;
     // need to be explicit about the address type when built with
     // IPv6 support, otherwise SOCK_DGram::open defaults to ipv6 when
     // given a sap_any address. This causes trouble on at least windows,
     // or at most on not-linux.
     if (endpoint.dgram ().open (ACE_Addr::sap_any,
-                                send_addr.get_type()) == -1)
+                                send_addr.get_type ()) == -1)
       {
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Cannot open send endpoint\n"),
@@ -178,7 +180,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     // Create and initialize the receiver
     PortableServer::Servant_var<TAO_ECG_UDP_Receiver> receiver =
-                                      TAO_ECG_UDP_Receiver::create();
+      TAO_ECG_UDP_Receiver::create ();
 
     // TAO_ECG_UDP_Receiver::init() takes a TAO_ECG_Refcounted_Endpoint.
     // If we don't clone our endpoint and pass &endpoint, the receiver will
@@ -195,18 +197,20 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     // Create the appropriate event handler and register it with the reactor
     std::unique_ptr<ACE_Event_Handler> eh;
     if (mcast) {
-      std::unique_ptr<TAO_ECG_Mcast_EH> mcast_eh(new TAO_ECG_Mcast_EH (receiver.in()));
+      std::unique_ptr<TAO_ECG_Mcast_EH> mcast_eh =
+        std::make_unique<TAO_ECG_Mcast_EH> (receiver.in ());
       mcast_eh->reactor (orb->orb_core ()->reactor ());
-      mcast_eh->open (ec.in());
-      eh.reset (mcast_eh.release());
+      mcast_eh->open (ec.in ());
+      eh = std::move (mcast_eh);
     } else {
-      std::unique_ptr<TAO_ECG_UDP_EH> udp_eh (new TAO_ECG_UDP_EH (receiver.in()));
+      std::unique_ptr<TAO_ECG_UDP_EH> udp_eh =
+        std::make_unique<TAO_ECG_UDP_EH> (receiver.in ());
       udp_eh->reactor (orb->orb_core ()->reactor ());
       ACE_INET_Addr local_addr (listenport);
       if (udp_eh->open (local_addr) == -1)
         ACE_ERROR ((LM_ERROR,"Cannot open EH\n"));
 
-      eh.reset(udp_eh.release());
+      eh = std::move (udp_eh);
     }
 
     // Create an event (just a string in this case).
@@ -222,42 +226,42 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
 #if !defined (TAO_LACKS_EVENT_CHANNEL_ANY)
     // Initialize data fields in event.
-    const CORBA::String_var eventData =
+    CORBA::String_var const event_data =
       CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (ecname));
 
-    event[0].data.any_value <<= eventData;
+    event[0].data.any_value <<= event_data;
 #else
     // Use the octet sequence payload instead
-    char *tmpstr = const_cast<char *>(ACE_TEXT_ALWAYS_CHAR (ecname));
-    size_t len = ACE_OS::strlen(tmpstr) +1;
+    char * const tmpstr = const_cast<char *> (ACE_TEXT_ALWAYS_CHAR (ecname));
+    size_t const len = std::strlen (tmpstr) + 1;
     event[0].data.payload.replace (
       len,
       len,
       reinterpret_cast<CORBA::Octet *> (tmpstr));
 #endif  /* !TAO_LACKS_EVENT_CHANNEL_ANY */
 
-    if (iorfile != 0) {
-      CORBA::String_var str = orb->object_to_string( ec.in());
-      std::ofstream iorFile( ACE_TEXT_ALWAYS_CHAR(iorfile));
-      iorFile << str.in() << std::endl;
-      iorFile.close();
+    if (iorfile != nullptr) {
+      CORBA::String_var str = orb->object_to_string (ec.in ());
+      std::ofstream ior_file (ACE_TEXT_ALWAYS_CHAR (iorfile));
+      ior_file << str.in () << std::endl;
+      ior_file.close ();
     }
     ACE_DEBUG ((LM_DEBUG,
     "Starting main loop\n"));
 
-    const int EVENT_DELAY_MS = 1000;
+    constexpr int EVENT_DELAY_MS {1000};
 
-    while (1) {
+    while (true) {
       consumer->push (event);
 
-      ACE_Time_Value tv(0, 1000 * EVENT_DELAY_MS);
-      orb->run(tv);
+      ACE_Time_Value tv (0, 1000 * EVENT_DELAY_MS);
+      orb->run (tv);
     }
 
-    orb->destroy();
+    orb->destroy ();
     return 0;
   }
-  catch (const CORBA::Exception& exc)
+  catch (CORBA::Exception const &exc)
   {
     ACE_ERROR ((LM_ERROR,
     "Caught CORBA::Exception\n%C (%C)\n",

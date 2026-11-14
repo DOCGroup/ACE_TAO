@@ -25,44 +25,46 @@
 #include "ace/String_Base.h"
 #include "tao/ORB.h"
 
-///
+/// @brief Common interface for server and client test workers.
 class Abstract_Worker
 {
 public:
-  Abstract_Worker (const ACE_TCHAR *ior);
+  explicit Abstract_Worker (ACE_TCHAR const *ior);
   virtual ~Abstract_Worker ();
   virtual int test_main (int argc,
-                    ACE_TCHAR *argv[]) = 0;
-  virtual const ACE_TCHAR * kind () const = 0;
+                         ACE_TCHAR *argv[]) = 0;
+  virtual ACE_TCHAR const *kind () const = 0;
+
+  Abstract_Worker (Abstract_Worker const &) = delete;
+  Abstract_Worker &operator= (Abstract_Worker const &) = delete;
+  Abstract_Worker (Abstract_Worker &&) = delete;
+  Abstract_Worker &operator= (Abstract_Worker &&) = delete;
+
 protected:
   ACE_TString ior_file_;
 };
 
-/**
- * A server kind of test
- */
+/// @brief Runs the server side of the test.
 class Server_Worker : public Abstract_Worker
 {
 public:
   Server_Worker ();
-  ~Server_Worker ();
-  int test_main (int argc, ACE_TCHAR *argv[]);
-  const ACE_TCHAR * kind () const;
+  ~Server_Worker () override;
+  int test_main (int argc, ACE_TCHAR *argv[]) override;
+  ACE_TCHAR const *kind () const override;
 
 private:
   int parse_args (int argc, ACE_TCHAR *argv[]);
 };
 
-/**
- * A client kind of test
- */
+/// @brief Runs the client side of the test.
 class Client_Worker : public Abstract_Worker
 {
 public:
   Client_Worker ();
-  ~Client_Worker ();
-  int test_main (int argc, ACE_TCHAR *argv[]);
-  const ACE_TCHAR * kind () const;
+  ~Client_Worker () override;
+  int test_main (int argc, ACE_TCHAR *argv[]) override;
+  ACE_TCHAR const *kind () const override;
 
 private:
   int parse_args (int argc, ACE_TCHAR *argv[]);
@@ -78,24 +80,35 @@ class Service_Config_ORB_DLL_Export Service_Config_ORB_DLL
   : public ACE_Task_Base
 {
 public:
-  /// Constructor.
   Service_Config_ORB_DLL ();
-  ~Service_Config_ORB_DLL ();
+  ~Service_Config_ORB_DLL () override;
+
+  Service_Config_ORB_DLL (Service_Config_ORB_DLL const &) = delete;
+  Service_Config_ORB_DLL &operator= (Service_Config_ORB_DLL const &) = delete;
+  Service_Config_ORB_DLL (Service_Config_ORB_DLL &&) = delete;
+  Service_Config_ORB_DLL &operator= (Service_Config_ORB_DLL &&) = delete;
 
   /// Initializes object when dynamic linking occurs.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
   /// Run by a daemon thread.
   /**
    * Each thread will invoke the Service Configurator via this
    * method unless the object is the "FINAL" object.
    */
-  virtual int svc ();
+  int svc () override;
 
 private:
-  signed char is_server_;
-  std::unique_ptr<Abstract_Worker> worker_;
-  std::unique_ptr<ACE_ARGV> argv_;
+  enum class Worker_Type
+  {
+    unspecified,
+    client,
+    server
+  };
+
+  Worker_Type worker_type_ {};
+  std::unique_ptr<Abstract_Worker> worker_ {};
+  std::unique_ptr<ACE_ARGV> argv_ {};
 };
 
 ACE_FACTORY_DECLARE (Service_Config_ORB_DLL, Service_Config_ORB_DLL)

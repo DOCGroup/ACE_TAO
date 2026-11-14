@@ -11,16 +11,16 @@
  */
 //=============================================================================
 
-
 #include "client.h"
 #include "local_server.h"
+#include "IOR_File.h"
 #include "tao/debug.h"
 #include "tao/Utils/ORB_Manager.h"
 #include "ace/Read_Buffer.h"
-#include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_fcntl.h"
-#include "ace/Malloc_Base.h"
 #include "ace/Truncate.h"
+
+#include <memory>
 
 MT_Client_Task::MT_Client_Task (int argc, ACE_TCHAR **argv,
                                 int client_number)
@@ -33,29 +33,16 @@ MT_Client_Task::MT_Client_Task (int argc, ACE_TCHAR **argv,
 int
 MT_Client_Task::svc ()
 {
-  if (this->mT_Client_.init (this->argc_,
-                             this->argv_,
-                             this->client_number_) == -1)
-    return 1;
-  else
-    return this->mT_Client_.run ();
+  if (this->mT_Client_.init (this->argc_, this->argv_, this->client_number_) == -1)
+    return -1;
+  return this->mT_Client_.run ();
 }
-
-// Constructor.
-MT_Client::MT_Client ()
-  : object_key_ (0),
-    iterations_ (1)
-{
-}
-
-
-// Reads the Object A IOR from a file
 
 int
-MT_Client::read_ior (ACE_TCHAR *filename)
+MT_Client::read_ior (ACE_TCHAR const *filename)
 {
   // Open the file for reading.
-  ACE_HANDLE f_handle = ACE_OS::open (filename,0);
+  ACE_HANDLE const f_handle = ACE_OS::open (filename, 0);
 
   if (f_handle == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -63,60 +50,51 @@ MT_Client::read_ior (ACE_TCHAR *filename)
                        filename),
                       -1);
 
-  ACE_Read_Buffer ior_buffer (f_handle);
-
-  this->object_key_ = ior_buffer.read ();
-  if (this->object_key_ == 0)
+  ACE_Read_Buffer ior_buffer (f_handle, true);
+  MT_ACE_Allocated_Buffer ior_buffer_data {ior_buffer.read ()};
+  if (!ior_buffer_data)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Unable to allocate memory to read ior: %p\n"),
+                       "Unable to allocate memory to read ior.\n"),
                        -1);
 
-  ACE_OS::close (f_handle);
+  this->object_key_.assign (ior_buffer_data.get ());
   return 0;
 }
-
-
-// Parses the command line arguments and returns an error status.
 
 int
 MT_Client::parse_args ()
 {
-  ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("df:g:h:i:n:s:"));
+  ACE_Get_Opt get_opts (this->argc_, this->argv_.data (), ACE_TEXT("df:g:h:i:n:s:"));
   int c;
-  int result;
 
   while ((c = get_opts ()) != -1)
     switch (c)
-    {
+      {
       case 'd':  // debug flag
-        TAO_debug_level++;
+        ++TAO_debug_level;
         break;
-        // Depending on the thread ID we pick the IOR
       case 'f': // read the IOR from the file.
         if ((this->client_number_ % 2) == 0)
-        {
-          result = this->read_ior (get_opts.opt_arg ());
-          // read IOR for MT Object
-          if (result < 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Unable to read ior from %s\n",
-                               get_opts.opt_arg ()),
-                              -1);
-        }
+          {
+            if (this->read_ior (get_opts.opt_arg ()) < 0)
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Unable to read ior from %s\n",
+                                 get_opts.opt_arg ()),
+                                -1);
+          }
         break;
       case 'g': // read the IOR from the file.
         if ((this->client_number_ % 2) == 1)
-        {
-          result = this->read_ior (get_opts.opt_arg ());
-          // read IOR for Object A
-          if (result < 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Unable to read ior from %s\n",
-                               get_opts.opt_arg ()),
-                              -1);
-        }
+          {
+            if (this->read_ior (get_opts.opt_arg ()) < 0)
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Unable to read ior from %s\n",
+                                 get_opts.opt_arg ()),
+                                -1);
+          }
         break;
-      case 'i': this->iterations_ = ACE_OS::atoi (get_opts.opt_arg ());
+      case 'i':
+        this->iterations_ = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'h':
       case 'n':
@@ -125,16 +103,16 @@ MT_Client::parse_args ()
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                          "usage:  %s\n"
+                           "usage:  %s\n"
                            " [-f] first server ior file\n"
                            " [-g] second server ior file\n"
                            " [-h] third server ior file\n"
                            " [-i] client iterations\n"
                            " [-n] number of client threads\n"
                            " [-s] number of server iterations\n",
-                          this->argv_ [0]),
+                           this->argv_[0]),
                           -1);
-    }
+      }
 
   // Indicates successful parsing of command line.
   return 0;
@@ -147,20 +125,12 @@ MT_Client::run ()
     {
       for (unsigned long i = 0; i < this->iterations_; i++)
         {
-#if 0
-          ACE_DEBUG ((LM_DEBUG,
-                      "(%P|%t) MT_Client::run: %d of %d\n",
-                      i,
-                      this->iterations_));
-#endif /*if 0*/
-
           // call the recursive object MT_Object for nested upcalls
           // testing
-          this->mT_Object_var_->yadda (0,
-                                       0);
+          this->mT_Object_var_->yadda (0, 0);
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("MT_Client:run");
       return -1;
@@ -169,57 +139,46 @@ MT_Client::run ()
   return 0;
 }
 
-MT_Client::~MT_Client ()
-{
-  if (this->object_key_ != 0)
-    ACE_Allocator::instance ()->free (this->object_key_);
-  if (this->argv_ != 0)
-    delete [] this->argv_;
-}
-
-
 int
 MT_Client::init (int argc, ACE_TCHAR **argv,
                  int client_number)
 {
   // Make a copy of argv since ORB_init will change it.
   this->argc_ = argc;
-  this->argv_ = new ACE_TCHAR *[argc];
-  for (int i = 0; i < argc; i++)
-    this->argv_[i] = argv[i];
+  this->argv_.assign (argv, argv + argc + 1);
 
   this->client_number_ = client_number;
 
   try
     {
-      char buf[64];
+      char buf[64] {};
       ACE_OS::sprintf (buf, "thread_%lx", ACE_Utils::truncate_cast<long> ((intptr_t)this));
 
       this->orb_var_ =
         CORBA::ORB_init (this->argc_,
-                         this->argv_,
+                         this->argv_.data (),
                          buf);
 
       // Parse command line and verify parameters.
       if (this->parse_args () == -1)
         return -1;
 
-      if (this->object_key_ == 0)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "The IOR is nil, not able to get the object.\n"),
-                            -1);
+      if (this->object_key_.empty ())
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "The IOR is nil, not able to get the object.\n"),
+                          -1);
 
       CORBA::Object_var object_var =
-        this->orb_var_->string_to_object (this->object_key_);
+        this->orb_var_->string_to_object (this->object_key_.c_str ());
 
-      if (CORBA::is_nil (object_var.in()))
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "No proper object has been returned.\n"),
-                            -1);
+      if (CORBA::is_nil (object_var.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "No proper object has been returned.\n"),
+                          -1);
 
-      this->mT_Object_var_ = MT_Object::_narrow (object_var.in());
+      this->mT_Object_var_ = MT_Object::_narrow (object_var.in ());
 
-      if (CORBA::is_nil (this->mT_Object_var_.in()))
+      if (CORBA::is_nil (this->mT_Object_var_.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "We have no proper reference to the Object.\n"),
@@ -230,7 +189,7 @@ MT_Client::init (int argc, ACE_TCHAR **argv,
         ACE_DEBUG ((LM_DEBUG, "We have a proper reference to the Object.\n"));
 
       CORBA::Object_var poa_object =
-        this->orb_var_->resolve_initial_references("RootPOA");
+        this->orb_var_->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -245,7 +204,7 @@ MT_Client::init (int argc, ACE_TCHAR **argv,
 
       poa_manager->activate ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("MT_Client::init");
       return -1;
@@ -254,82 +213,72 @@ MT_Client::init (int argc, ACE_TCHAR **argv,
   return 0;
 }
 
-
 // This function runs the test.
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int result = 0;
-
   try
     {
       TAO_ORB_Manager orb_manager;
 
-      int r = orb_manager.init (argc,
-                                argv);
+      int const result = orb_manager.init (argc, argv);
 
-      if (r != 0)
+      if (result != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "ERROR: ORB_Manager initialization failed.\n"),
                           -1);
 
-      ACE_DEBUG ((LM_DEBUG,"\n\tMT_Client: client\n\n"));
+      ACE_DEBUG ((LM_DEBUG, "\n\tMT_Client: client\n\n"));
 
-      int i;
       int threads = 1;
 
-      for (i = 0; i < argc; i++)
-        if (ACE_OS::strcmp (argv[i], ACE_TEXT("-n")) == 0)
-          threads = ACE_OS::atoi(argv[i + 1]);
+      for (int i = 0; i + 1 < argc; ++i)
+        if (ACE_OS::strcmp (argv[i], ACE_TEXT ("-n")) == 0)
+          threads = ACE_OS::atoi (argv[i + 1]);
+
+      if (threads <= 0)
+        ACE_ERROR_RETURN ((LM_ERROR, "The number of client threads must be positive.\n"), -1);
 
       // create a separate server thread
       ACE_Thread_Manager server_thr_mgr;
       // starting the server thread
-      MT_Server_Task *server = new MT_Server_Task (&server_thr_mgr,
-                                                   argc,
-                                                   argv,
-                                                   &orb_manager);
+      std::unique_ptr<MT_Server_Task> server =
+        std::make_unique<MT_Server_Task> (&server_thr_mgr, argc, argv, &orb_manager);
       if (server->activate () != 0)
-        {
-          delete server;
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "CLIENT ERROR: Unable to activate "
-                             "MT_Server_Task.\n"),
-                            -1);
-        }
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "CLIENT ERROR: Unable to activate MT_Server_Task.\n"),
+                          -1);
 
       // starting the client threads
-      MT_Client_Task **clients = new MT_Client_Task*[threads];
+      std::vector<std::unique_ptr<MT_Client_Task>> clients;
+      clients.reserve (threads);
 
-      for (i = 0; i < threads; i++)
-        clients[i] = new MT_Client_Task (argc, argv, i);
+      for (int i = 0; i < threads; ++i)
+        {
+          clients.emplace_back (std::make_unique<MT_Client_Task> (argc, argv, i));
+          if (clients.back ()->activate () != 0)
+            {
+              ACE_Thread_Manager::instance ()->wait ();
+              server_thr_mgr.wait ();
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "CLIENT ERROR: Unable to activate MT_Client_Task.\n"),
+                                -1);
+            }
+        }
 
-      for (i = 0; i < threads; i++)
-        if (clients[i]->activate () != 0)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                      "CLIENT ERROR: Unable to activate "
-                      "MT_Client_Task.\n"),
-                     -1);  // @@ Memory leak!
-
-      result = ACE_Thread_Manager::instance ()->wait ();
-
-      for (i = 0; i < threads; i++)
-        delete clients[i];
-
-      delete [] clients;
-
+      int const client_result = ACE_Thread_Manager::instance ()->wait ();
       // wait for the server thread to end
-      result |= server_thr_mgr.wait ();
+      int const server_result = server_thr_mgr.wait ();
 
-      delete server;
-
+      server.reset ();
       orb_manager.fini ();
+      return client_result | server_result;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("main");
     }
 
-  return result;
+  return -1;
 }

@@ -5,10 +5,7 @@
 #include "jaws3/Protocol_Handler.h"
 #include "jaws3/Concurrency.h"
 
-JAWS_Protocol_State::~JAWS_Protocol_State ()
-{
-}
-
+JAWS_Protocol_State::~JAWS_Protocol_State () = default;
 
 JAWS_Protocol_Handler::JAWS_Protocol_Handler ( JAWS_Protocol_State *state
                                              , void *data
@@ -17,30 +14,26 @@ JAWS_Protocol_Handler::JAWS_Protocol_Handler ( JAWS_Protocol_State *state
   , data_ (data)
   , mb_ (& this->db_)
 {
-  this->db_.base ((char *) this, 0 /* an infinite queue */);
+  this->db_.base (reinterpret_cast<char *> (this), 0 /* an infinite queue */);
 }
-
 
 JAWS_Protocol_Handler::~JAWS_Protocol_Handler ()
 {
-  this->mb_.replace_data_block (0);
+  this->mb_.replace_data_block (nullptr);
 }
-
 
 int
 JAWS_Protocol_Handler::service ()
 {
-  if (this->state_ == 0)
+  if (this->state_ == nullptr)
     return -1;
 
   return this->state_->service (this, this->data_);
 }
 
-
 void
 JAWS_Protocol_Handler::event_complete ( const JAWS_Event_Result &result
-                                      , void *act
-                                      )
+                                      , void *act)
 {
   // This call is done in the context of the dispatching
   // thread (e.g., by the Reactor thread, or by one of the

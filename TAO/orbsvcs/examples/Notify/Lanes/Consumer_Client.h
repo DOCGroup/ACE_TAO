@@ -14,8 +14,9 @@
 
 #include "tao/RTCORBA/RTCORBA.h"
 
-#include "ace/SString.h"
 #include "ace/Task.h"
+
+#include <string>
 
 class TAO_Notify_Lanes_Consumer;
 
@@ -27,45 +28,38 @@ class TAO_Notify_Lanes_Consumer;
 class TAO_Notify_Lanes_Consumer_Client  : public ACE_Task_Base
 {
 public:
-  /// Constructor
-  TAO_Notify_Lanes_Consumer_Client (TAO_Notify_ORB_Objects& orb_objects);
-
-  /// Destructor
-  ~TAO_Notify_Lanes_Consumer_Client ();
+  explicit TAO_Notify_Lanes_Consumer_Client (TAO_Notify_ORB_Objects& orb_objects);
+  ~TAO_Notify_Lanes_Consumer_Client () override = default;
+  TAO_Notify_Lanes_Consumer_Client (TAO_Notify_Lanes_Consumer_Client const&) = delete;
+  TAO_Notify_Lanes_Consumer_Client& operator= (TAO_Notify_Lanes_Consumer_Client const&) = delete;
+  TAO_Notify_Lanes_Consumer_Client (TAO_Notify_Lanes_Consumer_Client&&) = delete;
+  TAO_Notify_Lanes_Consumer_Client& operator= (TAO_Notify_Lanes_Consumer_Client&&) = delete;
 
   /// Init
   void initialize ();
-
-  /// Run
-  void run ();
 
   /// Parse Args
   int parse_args (int argc, ACE_TCHAR *argv[]);
 
   /// The thread entry point.
-  virtual int svc ();
+  int svc () override;
 
 protected:
   /// Create an RT POA with a single lane at the specified RT Priority.
-  PortableServer::POA_ptr create_rt_poa ();
+  PortableServer::POA_ptr create_rt_poa () const;
 
   /// ORB Objects.
-  TAO_Notify_ORB_Objects orb_objects_;
-
-  /// Lock to serialize internal state.
-  TAO_SYNCH_MUTEX lock_;
-
-  /// Count how many consumers are done
-  int consumer_done_count_;
+  TAO_Notify_ORB_Objects& orb_objects_;
 
   /// The Priority that we want the consumer lane to be at.
-  RTCORBA::Priority lane_priority_;
+  RTCORBA::Priority lane_priority_ {};
 
   /// The Consumer.
-  TAO_Notify_Lanes_Consumer* consumer_;
+  // The POA retains the activated servant; this pointer is non-owning.
+  TAO_Notify_Lanes_Consumer* consumer_ {};
 
   /// The Type the Consumer should subscribe to.
-  ACE_CString event_type_;
+  std::string event_type_;
 };
 
 #include /**/ "ace/post.h"

@@ -7,26 +7,29 @@
 class Server_i : public POA_Test::Server
 {
 public:
-  /// Constructor.
-  Server_i ();
+  Server_i () = default;
+  Server_i (Server_i const &) = delete;
+  Server_i (Server_i &&) = delete;
+  Server_i &operator= (Server_i const &) = delete;
+  Server_i &operator= (Server_i &&) = delete;
 
   /// Return 1 when the shutdown method has been invoked.
-  int done ();
+  bool done () const;
 
   /// Implement the CORBA methods
   //@{
-  void set_callback (Test::Callback_ptr callback);
+  void set_callback (Test::Callback_ptr callback) override;
 
   void request (Test::TimeStamp,
-                const Test::Payload &);
+                Test::Payload const &) override;
 
-  void shutdown ();
+  void shutdown () override;
 
   //@}
 
 private:
   /// A flag to terminate the event loop
-  int done_;
+  bool done_ {};
 
   /// The callback object
   Test::Callback_var callback_;

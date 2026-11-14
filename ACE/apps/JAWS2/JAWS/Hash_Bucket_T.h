@@ -10,80 +10,74 @@
 #define JAWS_HASH_BUCKET_DLCSTACK_ITERATOR \
         JAWS_Hash_Bucket_DLCStack_Iterator<EXT_ID, INT_ID>
 
-
-// Why Hash_Bucket?
-//
-// This is an attempt to simplify the creation of high-performance
-// hash tables with respect to concurrent access by multiple threads.
-// To this end, we attempt to raise the amount of concurrency through
-// the use or readers/writer locks rather than through mutual
-// exclusion.
-
+/**
+ * Hash bucket entries for concurrent hash tables.
+ * Reader-writer locks allow more concurrent access than mutual exclusion.
+ */
 template <class EXT_ID, class INT_ID>
 class JAWS_Hash_Bucket_Item
 {
 public:
   JAWS_Hash_Bucket_Item (const EXT_ID &ext_id, const INT_ID &int_id,
-                         JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *next = 0,
-                         JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *prev = 0);
-  JAWS_Hash_Bucket_Item (JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *next = 0,
-                         JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *prev = 0);
+                         JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *next = nullptr,
+                         JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *prev = nullptr);
+  explicit JAWS_Hash_Bucket_Item (JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *next = nullptr,
+                         JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *prev = nullptr);
 
-  ~JAWS_Hash_Bucket_Item ();
-  // Destructor.
+  ~JAWS_Hash_Bucket_Item () = default;
+  JAWS_Hash_Bucket_Item (JAWS_Hash_Bucket_Item const &) = delete;
+  JAWS_Hash_Bucket_Item (JAWS_Hash_Bucket_Item &&) = delete;
+  JAWS_Hash_Bucket_Item &operator= (JAWS_Hash_Bucket_Item const &) = delete;
+  JAWS_Hash_Bucket_Item &operator= (JAWS_Hash_Bucket_Item &&) = delete;
 
+  /// Key used to look up an entry.
   EXT_ID ext_id_;
-  // Key used to look up an entry.
 
+  /// Contents of the entry.
   INT_ID int_id_;
-  // The contents of the entry itself.
 
+  /// Next item in the bucket's overflow chain.
   JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *next_;
-  // Pointer to the next item in the bucket of overflow nodes.
 
+  /// Previous item in the bucket's overflow chain.
   JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *prev_;
-  // Pointer to the prev item in the bucket of overflow nodes.
 };
-
 
 template <class EXT_ID, class INT_ID> class JAWS_Hash_Bucket_DLCStack_Iterator;
 
 template <class EXT_ID, class INT_ID, class EQ_FUNC>
 class JAWS_Hash_Bucket_Manager;
 
+/// Doubly linked circular stack managed by JAWS_Hash_Bucket_Manager.
 template <class EXT_ID, class INT_ID>
 class JAWS_Hash_Bucket_DLCStack
-// Create a doubly linked circular stack to be managed by the
-// Hash_Bucket_Manager
 {
   friend class JAWS_Hash_Bucket_DLCStack_Iterator<EXT_ID, INT_ID>;
 
 public:
-  JAWS_Hash_Bucket_DLCStack (ACE_Allocator *alloc = 0);
+  explicit JAWS_Hash_Bucket_DLCStack (ACE_Allocator *alloc = nullptr);
   ~JAWS_Hash_Bucket_DLCStack ();
+  JAWS_Hash_Bucket_DLCStack (JAWS_Hash_Bucket_DLCStack const &) = delete;
+  JAWS_Hash_Bucket_DLCStack (JAWS_Hash_Bucket_DLCStack &&) = delete;
+  JAWS_Hash_Bucket_DLCStack &operator= (JAWS_Hash_Bucket_DLCStack const &) = delete;
+  JAWS_Hash_Bucket_DLCStack &operator= (JAWS_Hash_Bucket_DLCStack &&) = delete;
 
-  int is_empty () const;
-  // Returns 1 if the container is empty, otherwise returns 0.
+  bool is_empty () const;
 
+  /// Add an item at the head of the list and return the inserted item.
   JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *push (const EXT_ID &ext_id,
                                               const INT_ID &int_id);
-  // Adds <new_item> to the head of the list.
-  // Returns the new item that was inserted.
 
+  /// Remove and return the first item, or nullptr if empty. The caller owns
+  /// the returned node and must free it.
   JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *pop ();
-  // Removes and returns the first <item> in the list.  Returns
-  // internal node's address on success, 0 if the queue was empty.
-  // This method will *not* free the internal node.
 
+  /// Delete all items and reset the stack to empty.
   void reset ();
-  // Reset the <JAWS_Hash_Bucket_DLCStack> to be empty.
-  // Notice that since no one is interested in the items within,
-  // This operation will delete all items.
 
+  /// Remove and free item if it is still in the stack; return 0 on success or
+  /// -1 on error.
   int remove (JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *item);
-  // If item is still part of the CStack, it is removed.
-  // In anycase, if there is no error, item is freed.
-  // Returns 0 if ok, -1 on error.
 
   ACE_Allocator *allocator_;
 
@@ -92,44 +86,38 @@ private:
   JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *tail_;
 };
 
-
 template <class EXT_ID, class INT_ID>
 class JAWS_Hash_Bucket_DLCStack_Iterator
 {
 public:
-  JAWS_Hash_Bucket_DLCStack_Iterator (const JAWS_HASH_BUCKET_DLCSTACK &dlcstack);
+  explicit JAWS_Hash_Bucket_DLCStack_Iterator (const JAWS_HASH_BUCKET_DLCSTACK &dlcstack);
+  JAWS_Hash_Bucket_DLCStack_Iterator (JAWS_Hash_Bucket_DLCStack_Iterator const &) = delete;
+  JAWS_Hash_Bucket_DLCStack_Iterator (JAWS_Hash_Bucket_DLCStack_Iterator &&) = delete;
+  JAWS_Hash_Bucket_DLCStack_Iterator &operator= (JAWS_Hash_Bucket_DLCStack_Iterator const &) = delete;
+  JAWS_Hash_Bucket_DLCStack_Iterator &operator= (JAWS_Hash_Bucket_DLCStack_Iterator &&) = delete;
 
+  /// Move to the first element and clear the done flag; return 0 if empty.
   int first ();
-  // Moves to first element in the set, clears done flag.  Returns 0
-  // if empty, 1 otherwise.
 
+  /// Move to the last element and clear the done flag; return 0 if empty.
   int last ();
-  // Moves to last element in the set, clears done flag.  Returns 0 if
-  // empty, 1 otherwise.
 
+  /// Move forward one element; return 0 if empty or positioned at the first
+  /// element, and set done when wrapping to the first element.
   int advance ();
-  // Move forward by one element of set.  Returns 0 if empty or we end
-  // up being the first element in the set, 1 otherwise.  If advance
-  // takes us to the first element, done is set to true.
 
+  /// Move backward one element; return 0 if empty or positioned at the last
+  /// element, and set done when wrapping to the last element.
   int revert ();
-  // Move backward by one element of set.  Returns 0 if empty or we
-  // end up being the last element in the set, 1 otherwise.  If revert
-  // takes us to the last element, done is set to true.
 
   int next (JAWS_HASH_BUCKET_ITEM *&item);
   int next (JAWS_HASH_BUCKET_ITEM *&item) const;
-  // Pass back the next item.  Returns 0 if done is true, 1 otherwise.
 
   int prev (JAWS_HASH_BUCKET_ITEM *&item);
   int prev (JAWS_HASH_BUCKET_ITEM *&item) const;
-  // Pass back the previous item.  Returns 0 if done is true, 1
-  // otherwise.
 
+  /// Return 1 when iteration is complete and 0 otherwise.
   int done () const;
-  // Returns 1 if done_ flag is set, 0 otherwise.  done_ flag is set
-  // if next takes us to first element or prev takes us to last
-  // element.
 
 private:
   const JAWS_HASH_BUCKET_DLCSTACK &dlcstack_;
@@ -138,51 +126,42 @@ private:
   int done_;
 };
 
-
 template <class EXT_ID, class INT_ID, class EQ_FUNC>
 class JAWS_Hash_Bucket_Manager
 {
 public:
-  JAWS_Hash_Bucket_Manager (ACE_Allocator *alloc = 0);
-  int open (ACE_Allocator *alloc = 0);
+  explicit JAWS_Hash_Bucket_Manager (ACE_Allocator *alloc = nullptr);
+  int open (ACE_Allocator *alloc = nullptr);
 
-  ~JAWS_Hash_Bucket_Manager ();
+  ~JAWS_Hash_Bucket_Manager () = default;
+  JAWS_Hash_Bucket_Manager (JAWS_Hash_Bucket_Manager const &) = delete;
+  JAWS_Hash_Bucket_Manager (JAWS_Hash_Bucket_Manager &&) = delete;
+  JAWS_Hash_Bucket_Manager &operator= (JAWS_Hash_Bucket_Manager const &) = delete;
+  JAWS_Hash_Bucket_Manager &operator= (JAWS_Hash_Bucket_Manager &&) = delete;
   int close ();
 
   int find (const EXT_ID &ext_id) const;
+  /// Find ext_id and write its value to int_id; return 0 if found, -1 if not.
   int find (const EXT_ID &ext_id, INT_ID &int_id) const;
-  // Locate <ext_id> and pass out parameter via <int_id>.  If found,
-  // return 0, returns -1 if not found.
 
+  /// Bind ext_id only when absent; return 0 when inserted, 1 when already
+  /// bound, or -1 on failure.
   int bind (const EXT_ID &ext_id, const INT_ID &int_id);
   int trybind (const EXT_ID &ext_id, INT_ID &int_id);
-  // Associate <ext_id> with <int_id> if and only if <ext_id> is not
-  // in the map.  If <ext_id> is already in the map then the <int_id>
-  // parameter is assigned the existing value in the map.  Returns 0
-  // if a new entry is bound successfully, returns 1 if an attempt is
-  // made to bind an existing entry, and returns -1 if failures occur.
 
+  /// Bind ext_id to int_id, returning the old values when replacing an
+  /// existing entry. Return 0 when inserted, 1 when replaced, or -1 on error.
   int rebind (const EXT_ID &ext_id, const INT_ID &int_id,
               EXT_ID &old_ext_id, INT_ID &old_int_id);
-  // Associate <ext_id> with <int_id>.  If <ext_id> is not in the map
-  // then behaves just like <bind>.  Otherwise, store the old values
-  // of <ext_id> and <int_id> into the "out" parameters and rebind the
-  // new parameters.  This is very useful if you need to have an
-  // atomic way of updating <JAWS_Hash_Map_Entrys> and you also need full
-  // control over memory allocation.  Returns 0 if a new entry is
-  // bound successfully, returns 1 if an existing entry was rebound,
-  // and returns -1 if failures occur.
 
+  /// Remove ext_id; return 0 on success and -1 if it was not found.
   int unbind (const EXT_ID &ext_id);
+  /// Remove ext_id and return the associated value in int_id.
   int unbind (const EXT_ID &ext_id, INT_ID &int_id);
-  // Break any association of <ext_id>.  Returns the value of <int_id>
-  // in case the caller needs to deallocate memory.  Return value is 0
-  // if unbind succeeds, -1 otherwise.
 
 protected:
+  /// Return the item for ext_id, or nullptr if it is absent.
   JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *find_i (const EXT_ID &ext_id) const;
-  // Returns the item associated with ext_id if found in list.
-  // Returns NULL if not found.
 
 private:
   JAWS_Hash_Bucket_DLCStack<EXT_ID, INT_ID> dlcstack_;

@@ -7,47 +7,58 @@
  */
 //=============================================================================
 
-
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
 #include "ace/Filecache.h"
 #include "http_handler.h"
+#include <cstring>
+#include <cstdio>
 
-HTTP_Handler::HTTP_Handler ()
-{
-}
-
-HTTP_Handler::HTTP_Handler (const char * path)
+HTTP_Handler::HTTP_Handler (char const *path)
 {
   // How long is the request going to be?
-  this->request_[0] = '\0';
   this->request_size_ =
-    ACE_OS::strlen ("GET ")
-    + ACE_OS::strlen (path)
-    + ACE_OS::strlen (" HTTP/1.0\r\nAccept: HTTP/1.0\r\n\r\n");
+    std::strlen ("GET ")
+    + std::strlen (path)
+    + std::strlen (" HTTP/1.0\r\nAccept: HTTP/1.0\r\n\r\n");
 
   // Make the request.
-  if ((u_int) this->request_size_ < sizeof (this->request_))
-    ACE_OS::sprintf (this->request_,
-                     "GET %s HTTP/1.0\r\nAccept: HTTP/1.0\r\n\r\n",
-                     path);
+  if (this->request_size_ < sizeof (this->request_))
+    {
+      int const request_length =
+        std::snprintf (this->request_, sizeof this->request_,
+                       "GET %s HTTP/1.0\r\nAccept: HTTP/1.0\r\n\r\n",
+                       path);
+      if (request_length < 0
+          || static_cast<size_t> (request_length) >= sizeof this->request_)
+        this->request_size_ = 0;
+      else
+        this->request_size_ = static_cast<size_t> (request_length);
+    }
+  else
+    this->request_size_ = 0;
 
   // Find the filename.
-  const char *last = ACE_OS::strrchr (path, '/');
+  char const *last = std::strrchr (path, '/');
 
-  if (last == 0)
+  if (last == nullptr)
     last = path;
   else if (last[1] == '\0')
     last = "index.html";
   else
-    last = last+1;
+    last = last + 1;
 
-  ACE_OS::sprintf (this->filename_, "%s", last);
+  int const filename_length =
+    std::snprintf (this->filename_, sizeof this->filename_, "%s", last);
+  if (filename_length < 0
+      || static_cast<size_t> (filename_length) >= sizeof this->filename_)
+    this->request_size_ = 0;
 }
 
 int
 HTTP_Handler::open (void *)
 {
+  if (this->request_size_ == 0)
+    ACE_ERROR_RETURN ((LM_ERROR, "HTTP request exceeds buffer size\n"), -1);
+
   // If you want threads, use the activate stuff.
 #if 0
   if (this->activate () != 0)
@@ -64,27 +75,28 @@ HTTP_Handler::open (void *)
 int
 HTTP_Handler::svc ()
 {
-  static char buf[BUFSIZ];
-  int count = 0;
+  char buf[BUFSIZ] {};
+  int count {};
 
   ACE_DEBUG ((LM_DEBUG, "[%t] sending request --\n%s", this->request_));
 
-  this->peer ().send_n (this->request_, this->request_size_);
+  if (this->peer ().send_n (this->request_, this->request_size_)
+      != static_cast<ssize_t> (this->request_size_))
+    ACE_ERROR_RETURN ((LM_ERROR, "Failed to send HTTP request\n"), -1);
 
   // Read in characters until encounter \r\n\r\n
-  int done = 0;
-  char *contentlength;
+  bool done {};
+  char *contentlength {};
 
   do
     {
       while (((count += this->peer ().recv_n (buf + count, 1)) > 0)
-             && ((u_int) count < sizeof (buf)))
+             && (static_cast<size_t> (count) < sizeof (buf) - 1))
         {
           buf[count] = '\0';
 
-          if (count < 2)
-            continue;
-          done = ACE_OS::strcmp (buf + count - 4, "\n\n") == 0;
+          if (count >= 2)
+            done = std::strcmp (buf + count - 2, "\n\n") == 0;
 
           if (done)
             break;
@@ -92,7 +104,7 @@ HTTP_Handler::svc ()
           if (count < 4)
             continue;
 
-          done = ACE_OS::strcmp (buf + count - 4, "\r\n\r\n") == 0;
+          done = std::strcmp (buf + count - 4, "\r\n\r\n") == 0;
 
           if (done)
             break;
@@ -100,42 +112,47 @@ HTTP_Handler::svc ()
 
       if (!done)
         {
-          char *last = ACE_OS::strrchr (buf, '\n');
+          char *last = std::strrchr (buf, '\n');
+          if (last == nullptr)
+            ACE_ERROR_RETURN ((LM_ERROR, "Malformed HTTP response header\n"), -1);
           last[0] = '\0';
 
-          if ((contentlength = ACE_OS::strstr (buf, "\nContent-length:"))
-              || (contentlength = ACE_OS::strstr (buf, "\nContent-Length:")))
-            done = 1;
+          if ((contentlength = std::strstr (buf, "\nContent-length:"))
+              || (contentlength = std::strstr (buf, "\nContent-Length:")))
+            done = true;
           else
             {
               last[0] = '\n';
-              count = ACE_OS::strlen (last);
-              ACE_OS::memmove (buf, last, count + 1);
+              count = std::strlen (last);
+              std::memmove (buf, last, count + 1);
             }
         }
       else
         {
-          contentlength = ACE_OS::strstr (buf, "\nContent-length:");
+          contentlength = std::strstr (buf, "\nContent-length:");
 
           if (!contentlength)
             contentlength =
-              ACE_OS::strstr (buf, "\nContent-Length:");
+              std::strstr (buf, "\nContent-Length:");
         }
 
     }
   while (!done);
 
   // ASSERT (contentlength != 0)
-  int size = 0;
+  int size {};
   if (contentlength
       && (::sscanf (contentlength, "\nContent-%*[lL]ength: %d ",
-                    &size) == 1))
+                    &size) == 1)
+      && size >= 0)
     {
-      this->response_size_ = size;
+      this->response_size_ = static_cast<size_t> (size);
       ACE_Filecache_Handle afh (ACE_TEXT_CHAR_TO_TCHAR (this->filename_),
                                 this->response_size_);
 
-      this->peer ().recv_n (afh.address (), this->response_size_);
+      if (this->peer ().recv_n (afh.address (), this->response_size_)
+          != static_cast<ssize_t> (this->response_size_))
+        ACE_ERROR_RETURN ((LM_ERROR, "Failed to receive HTTP response body\n"), -1);
 
       ACE_DEBUG ((LM_DEBUG,
                   "  ``%s'' is now cached.\n",
@@ -159,18 +176,18 @@ HTTP_Handler::svc ()
   return 0;
 }
 
-const char *
+char const *
 HTTP_Handler::filename () const
 {
   return this->filename_;
 }
 
 int
-HTTP_Connector::connect (const char * url)
+HTTP_Connector::connect (char const *url)
 {
-  char host[BUFSIZ];
-  u_short port;
-  char path[BUFSIZ];
+  char host[BUFSIZ] {};
+  u_short port {};
+  char path[BUFSIZ] {};
 
   if (this->parseurl (url, host, &port, path) == -1)
     {
@@ -198,12 +215,12 @@ HTTP_Connector::connect (const char * url)
 
 // extract the main components of a URL
 int
-HTTP_Connector::parseurl (const char *url,
+HTTP_Connector::parseurl (char const *url,
                           char *host,
                           u_short *port,
                           char *path)
 {
-  int status = 0;
+  int status {};
 
   // hackish, but useful
   if (3 != ::sscanf (url, "http://%[^:/]:%hu%s", host, port, path))
@@ -217,13 +234,13 @@ HTTP_Connector::parseurl (const char *url,
               else
                 {
                   *port = DEFAULT_SERVER_PORT;
-                  ACE_OS::strcpy (path, "/");
+                  std::strcpy (path, "/");
                 }
             }
           else
             *port = DEFAULT_SERVER_PORT;
         }
-      else ACE_OS::strcpy (path, "/");
+      else std::strcpy (path, "/");
     }
 
   // 0 => success

@@ -66,7 +66,6 @@ Foo_A_ClientEngine::execute()
   return check_validity;
 }
 
-
 void
 Foo_A_ClientEngine::expected_results(Foo_A_Statistics& stats)
 {

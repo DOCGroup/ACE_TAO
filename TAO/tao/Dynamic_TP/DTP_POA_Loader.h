@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    DTP_POA_Loader.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author  Phil Mesnier <mesnier_p@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_DYNAMIC_TP_POA_LOADER_H
 #define TAO_DYNAMIC_TP_POA_LOADER_H
@@ -31,27 +29,25 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Dynamic_TP_Export TAO_DTP_POA_Loader : public ACE_Service_Object
 {
 public:
-  /// Constructor.
-  TAO_DTP_POA_Loader ();
+  TAO_DTP_POA_Loader () = default;
 
-  /// Destructor.
-  ~TAO_DTP_POA_Loader () override;
+  ~TAO_DTP_POA_Loader () override = default;
 
   /// Initialize the DynamicTP loader hooks.
   int init (int argc, ACE_TCHAR* []) override;
 
-private:
   TAO_DTP_POA_Loader (TAO_DTP_POA_Loader const &) = delete;
   TAO_DTP_POA_Loader &operator= (TAO_DTP_POA_Loader const &) = delete;
   TAO_DTP_POA_Loader (TAO_DTP_POA_Loader &&) = delete;
   TAO_DTP_POA_Loader &operator= (TAO_DTP_POA_Loader &&) = delete;
 
+private:
   /// Set to true after init is called.
   int load_poa_map (ACE_TCHAR *map_str,
                     TAO_CSD_Strategy_Repository * reg);
 
-  void report_option_value_error (const ACE_TCHAR* option_name,
-                                  const ACE_TCHAR* option_value);
+  void report_option_value_error (ACE_TCHAR const *option_name,
+                                  ACE_TCHAR const *option_value);
 };
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_Dynamic_TP, TAO_DTP_POA_Loader)

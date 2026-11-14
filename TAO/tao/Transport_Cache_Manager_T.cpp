@@ -8,6 +8,11 @@
 #include "ace/ACE.h"
 #include "ace/Reactor.h"
 #include "ace/Lock_Adapter_T.h"
+
+#include <cerrno>
+#include <memory>
+#include <new>
+#include <string>
 #include <vector>
 
 #if !defined (__ACE_INLINE__)
@@ -37,7 +42,6 @@ namespace TAO
     : percent_ (percent)
     , purging_strategy_ (purging)
     , cache_map_ (cache_maximum)
-    , cache_lock_ (nullptr)
     , cache_maximum_ (cache_maximum)
     , reactor_ (reactor)
     , idle_timeout_ (idle_timeout)
@@ -50,13 +54,18 @@ namespace TAO
   {
     if (locked)
       {
-        ACE_NEW (this->cache_lock_,
-                 ACE_Lock_Adapter <TAO_SYNCH_MUTEX> (this->cache_map_mutex_));
+        this->cache_lock_.reset (
+          new (std::nothrow) ACE_Lock_Adapter<TAO_SYNCH_MUTEX> (this->cache_map_mutex_));
       }
     else
       {
-        ACE_NEW (this->cache_lock_,
-                 ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX>);
+        this->cache_lock_.reset (
+          new (std::nothrow) ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX>);
+      }
+    if (!this->cache_lock_)
+      {
+        errno = ENOMEM;
+        return;
       }
 
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
@@ -65,8 +74,8 @@ namespace TAO
     ACE_NEW (this->size_monitor_,
              ACE::Monitor_Control::Size_Monitor);
 
-    ACE_CString purge_name ("Connection_Cache_Purge_");
-    ACE_CString size_name ("Connection_Cache_Size_");
+    std::string purge_name ("Connection_Cache_Purge_");
+    std::string size_name ("Connection_Cache_Size_");
 
     purge_name += orbid;
     size_name += orbid;
@@ -84,7 +93,7 @@ namespace TAO
       {
         ACE_Time_Value const interval (this->idle_scan_interval_);
         this->idle_scan_timer_id_ = this->reactor_.schedule_timer (
-          &this->idle_scanner_, nullptr, interval, interval);
+          std::addressof (this->idle_scanner_), nullptr, interval, interval);
         if (this->idle_scan_timer_id_ == -1)
           {
             if (TAO_debug_level > 0)
@@ -110,12 +119,6 @@ namespace TAO
   template <typename TT, typename TRDT, typename PSTRAT>
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::~Transport_Cache_Manager_T ()
   {
-    delete this->cache_lock_;
-    this->cache_lock_ = nullptr;
-
-    delete this->purging_strategy_;
-    this->purging_strategy_ = nullptr;
-
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
     this->purge_monitor_->remove_from_registry ();
     this->size_monitor_->remove_from_registry ();
@@ -203,7 +206,7 @@ namespace TAO
       for (HASH_MAP_ITER iter = this->cache_map_.begin ();
            iter != this->cache_map_.end ();)
         {
-          HASH_MAP_ENTRY * const entry = &(*iter);
+          HASH_MAP_ENTRY * const entry = std::addressof (*iter);
           transport_type * const transport = entry->int_id_.transport ();
           ++iter;
 
@@ -290,13 +293,13 @@ namespace TAO
        }
 
     // Get the entry too
-    HASH_MAP_ENTRY *entry = nullptr;
+    HASH_MAP_ENTRY *entry {};
 
     // Update the purging strategy information while we
     // are holding our lock
     this->purging_strategy_->update_item (*(int_id.transport ()));
-    int retval = 0;
-    bool more_to_do = true;
+    int retval {};
+    bool more_to_do {true};
     while (more_to_do)
       {
         if (this->cache_map_.current_size () >= cache_maximum_)
@@ -373,7 +376,7 @@ namespace TAO
             TAOLIB_DEBUG ((LM_INFO,
               ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::bind_i: ")
               ACE_TEXT ("Success Transport[%B] @ hash:index{%d:%d}. ")
-              ACE_TEXT ("Cache size is [%d]\n"),
+              ACE_TEXT ("Cache size is [%B]\n"),
               int_id.transport ()->id (),
               ext_id.hash (),
               ext_id.index (),
@@ -448,10 +451,10 @@ namespace TAO
 
     // Make a temporary object. It does not do a copy.
     Cache_ExtId key (prop);
-    HASH_MAP_ENTRY *entry = nullptr;
+    HASH_MAP_ENTRY *entry {};
     busy_count = 0;
-    int cache_status = 0;
-    HASH_MAP_ENTRY *found_entry = nullptr;
+    int cache_status {};
+    HASH_MAP_ENTRY *found_entry {};
 
     // loop until we find a usable transport, or until we've checked
     // all cached entries for this endpoint
@@ -562,8 +565,7 @@ namespace TAO
       }
 
     entry->item ().transport ()->touch_activity ();
-    purging_strategy *st = this->purging_strategy_;
-    (void) st->update_item (*(entry->item ().transport ()));
+    this->purging_strategy_->update_item (*(entry->item ().transport ()));
 
     return 0;
   }
@@ -641,7 +643,7 @@ namespace TAO
     Cache_Entries_State entry_state = entry.int_id_.recycle_state ();
     bool result = (entry_state == ENTRY_IDLE_AND_PURGABLE);
 
-    if (result && entry.int_id_.transport () != 0)
+    if (result && entry.int_id_.transport () != nullptr)
     {
       // if it's not connected, it's not available
       result = entry.int_id_.is_connected ();
@@ -690,7 +692,7 @@ namespace TAO
     Cache_Entries_State entry_state = entry.int_id_.recycle_state ();
     bool result = (entry_state == ENTRY_CONNECTING);
 
-    if (!result && entry.int_id_.transport () != 0)
+    if (!result && entry.int_id_.transport () != nullptr)
       {
         // if we're not connected, that counts, too.
         // Can this happen?  Not sure <wilsond@ociweb.com>
@@ -740,13 +742,10 @@ namespace TAO
     {
       ACE_MT (ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->cache_lock_, 0));
 
-      DESCRIPTOR_SET sorted_set = nullptr;
+      DESCRIPTOR_SET sorted_set {};
       int const sorted_size = this->fill_set_i (sorted_set);
 
-      // Only call close_entries () if sorted_set != 0.  It takes
-      // control of sorted_set and cleans up any allocated memory.  If
-      // sorted_set == 0, then there is nothing to de-allocate.
-      if (sorted_set != 0)
+      if (sorted_set != nullptr)
         {
           // BEGIN FORMER close_entries
           // Calculate the number of entries to purge, when we have
@@ -763,9 +762,9 @@ namespace TAO
                 sorted_size));
             }
 
-          int count = 0;
+          int count {};
 
-          for (int i = 0; count < amount && i < sorted_size; ++i)
+          for (int i {}; count < amount && i < sorted_size; ++i)
             {
               if (this->is_entry_purgable_i (*sorted_set[i]))
                 {
@@ -801,8 +800,6 @@ namespace TAO
                 }
             }
 
-          delete [] sorted_set;
-          sorted_set = nullptr;
           // END FORMER close_entries
         }
     }
@@ -828,7 +825,7 @@ namespace TAO
           {
             TAOLIB_DEBUG ((LM_INFO,
               ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::purge, ")
-              ACE_TEXT ("Cache size after purging is [%d]\n"),
+              ACE_TEXT ("Cache size after purging is [%B]\n"),
               this->current_size ()));
           }
       }
@@ -869,7 +866,7 @@ namespace TAO
           }
       }
 #else
-    ACE_OS::qsort (entries, current_size,
+    ACE_OS::qsort (entries.get (), current_size,
                    sizeof (HASH_MAP_ENTRY*), (ACE_COMPARE_FUNC)cpscmp);
 #endif /* ACE_LACKS_QSORT */
   }
@@ -879,11 +876,11 @@ namespace TAO
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::
     fill_set_i (DESCRIPTOR_SET& sorted_set)
   {
-    int current_size = 0;
+    int current_size {};
     int const cache_maximum = this->purging_strategy_->cache_maximum ();
 
-    // set sorted_set to 0.  This signifies nothing to purge.
-    sorted_set = 0;
+    // Set sorted_set to nullptr. This signifies nothing to purge.
+    sorted_set = nullptr;
 
     // Do we need to worry about cache purging?
     if (cache_maximum >= 0)
@@ -900,13 +897,15 @@ namespace TAO
 
         if (current_size >= cache_maximum)
           {
-            ACE_NEW_RETURN (sorted_set, HASH_MAP_ENTRY*[current_size], 0);
+            HASH_MAP_ENTRY **buffer {};
+            ACE_NEW_RETURN (buffer, HASH_MAP_ENTRY*[current_size], 0);
+            sorted_set.reset (buffer);
 
             HASH_MAP_ITER iter = this->cache_map_.begin ();
 
-            for (int i = 0; i < current_size; ++i)
+            for (int i {}; i < current_size; ++i)
               {
-                sorted_set[i] = &(*iter);
+                sorted_set[i] = std::addressof (*iter);
                 ++iter;
               }
 

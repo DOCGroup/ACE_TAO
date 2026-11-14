@@ -13,6 +13,9 @@
 #include "tao/SystemException.h"
 #include "tao/ZIOP_Adapter.h"
 #include <algorithm>
+#include <cstdio>
+#include <memory>
+#include <string>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -28,30 +31,28 @@ TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core,
                  orb_core->output_cdr_dblock_allocator (),
                  orb_core->output_cdr_msgblock_allocator (),
                  orb_core->orb_params ()->cdr_memcpy_tradeoff (),
-                 fragmentation_strategy_,
+                 fragmentation_strategy_.get (),
                  TAO_DEF_GIOP_MAJOR,
                  TAO_DEF_GIOP_MINOR)
 {
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
-  const int nibbles = 2 * sizeof (size_t);
+  int const nibbles = 2 * sizeof (size_t);
   char hex_string[nibbles + 1];
-  ACE_OS::sprintf (hex_string,
+  std::sprintf (hex_string,
                    "%8.8X",
                    transport->id ());
   hex_string[nibbles] = '\0';
-  ACE_CString monitor_name ("OutputCDR_");
+  std::string monitor_name ("OutputCDR_");
   monitor_name += hex_string;
   this->out_stream_.register_monitor (monitor_name.c_str ());
 #endif /* TAO_HAS_MONITOR_POINTS==1 */
 }
-
 
 TAO_GIOP_Message_Base::~TAO_GIOP_Message_Base ()
 {
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
   this->out_stream_.unregister_monitor ();
 #endif /* TAO_HAS_MONITOR_POINTS==1 */
-  delete fragmentation_strategy_;
 }
 
 void
@@ -138,7 +139,6 @@ TAO_GIOP_Message_Base::generate_locate_request_header (
       if (TAO_debug_level)
         TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) Error in writing locate request header\n")));
-
 
       return -1;
     }
@@ -232,7 +232,7 @@ TAO_GIOP_Message_Base::dump_consolidated_msg (TAO_OutputCDR &stream)
   // Check whether the output cdr stream is build up of multiple
   // messageblocks. If so, consolidate them to one block that can be
   // dumped
-  ACE_Message_Block* consolidated_block = nullptr;
+  ACE_Message_Block* consolidated_block {};
   char *buf = const_cast <char*> (stream.buffer ());
   size_t const total_len = stream.total_length ();
   if (stream.begin()->cont () != nullptr)
@@ -621,11 +621,11 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
   // lock, we need to set things like this -- put stuff in TSS here
   // and transfer to global memory when we get flow controlled. We
   // need to work on the message block to get it right!
-  TAO_OutputCDR output (&out_db,
+  TAO_OutputCDR output (std::addressof (out_db),
                         TAO_ENCAP_BYTE_ORDER,
                         this->orb_core_->input_cdr_msgblock_allocator (),
                         this->orb_core_->orb_params ()->cdr_memcpy_tradeoff (),
-                        this->fragmentation_strategy_,
+                        this->fragmentation_strategy_.get (),
                         qd->giop_version ().major_version (),
                         qd->giop_version ().minor_version ());
 
@@ -644,7 +644,7 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
   // we pass it on to the higher layers of the ORB. So we dont to any
   // copies at all here. The same is also done in the higher layers.
 
-  ACE_Data_Block *db = nullptr;
+  ACE_Data_Block *db {};
 
   // Get the flag in the message block
   ACE_Message_Block::Message_Flags flg = qd->msg_block ()->self_flags ();
@@ -678,7 +678,7 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
   if (TAO_debug_level > 9)
     {
       char buf[48];
-      ACE_OS::sprintf (buf, "Transport[" ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "] recv",
+      std::sprintf (buf, "Transport[" ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "] recv",
                        transport->id ());
       //due to alignment data block has an offset which needs to be corrected
       this->dump_msg (buf,
@@ -695,7 +695,8 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
                           qd->giop_version ().minor_version (),
                           this->orb_core_);
 
-  transport->assign_translators(&input_cdr,&output);
+  transport->assign_translators (std::addressof (input_cdr),
+                                 std::addressof (output));
 
   // We know we have some request message. Check whether it is a
   // GIOP_REQUEST or GIOP_LOCATE_REQUEST to take action.
@@ -765,7 +766,7 @@ TAO_GIOP_Message_Base::process_reply_message (
   size_t wr_pos = qd->msg_block ()->wr_ptr () - qd->msg_block ()->base ();
   rd_pos += TAO_GIOP_MESSAGE_HEADER_LEN;
 
-  ACE_Data_Block *db = nullptr;
+  ACE_Data_Block *db {};
 
   // Get the flag in the message block
   ACE_Message_Block::Message_Flags flg = qd->msg_block ()->self_flags ();
@@ -799,7 +800,7 @@ TAO_GIOP_Message_Base::process_reply_message (
   if (TAO_debug_level > 9)
     {
       char buf[48];
-      ACE_OS::sprintf (buf, "Transport[" ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "] recv",
+      std::sprintf (buf, "Transport[" ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "] recv",
                        params.transport_->id ());
       this->dump_msg (buf,
                       reinterpret_cast <u_char *> (db->base () + rd_pos - TAO_GIOP_MESSAGE_HEADER_LEN),
@@ -825,7 +826,7 @@ TAO_GIOP_Message_Base::process_reply_message (
   // Once we send the InputCDR stream we need to just forget about
   // the stream and never touch that again for anything. We basically
   // loose ownership of the data_block.
-  int retval = 0;
+  int retval {};
 
   switch (qd->msg_type ())
     {
@@ -843,7 +844,7 @@ TAO_GIOP_Message_Base::process_reply_message (
   if (retval == -1)
     return retval;
 
-  params.input_cdr_ = &input_cdr;
+  params.input_cdr_ = std::addressof (input_cdr);
   params.transport_->assign_translators (params.input_cdr_, nullptr);
 
   retval = params.transport_->tms ()->dispatch_reply (params);
@@ -948,8 +949,8 @@ TAO_GIOP_Message_Base::process_request (
                              transport,
                              this->orb_core_);
 
-  CORBA::ULong request_id = 0;
-  CORBA::Boolean response_required = false;
+  CORBA::ULong request_id {};
+  CORBA::Boolean response_required {};
 
   try
     {
@@ -963,7 +964,7 @@ TAO_GIOP_Message_Base::process_request (
       if (csm)
         {
           csm->process_service_context (request);
-          transport->assign_translators (&cdr, &output);
+          transport->assign_translators (std::addressof (cdr), std::addressof (output));
         }
 
       request_id = request.request_id ();
@@ -996,7 +997,7 @@ TAO_GIOP_Message_Base::process_request (
 
           // Send back the reply service context.
           reply_params.service_context_notowned (
-            &request.reply_service_info ());
+            std::addressof (request.reply_service_info ()));
 
           output.message_attributes (request_id,
                                      nullptr,
@@ -1040,15 +1041,15 @@ TAO_GIOP_Message_Base::process_request (
   // Only CORBA exceptions are caught here.
   catch ( ::CORBA::Exception& ex)
     {
-      int result = 0;
+      int result {};
 
       if (response_required)
         {
           result = this->send_reply_exception (transport,
                                                output,
                                                request_id,
-                                               &request.reply_service_info (),
-                                               &ex);
+                                               std::addressof (request.reply_service_info ()),
+                                               std::addressof (ex));
           if (result == -1)
             {
               if (TAO_debug_level > 0)
@@ -1091,7 +1092,7 @@ TAO_GIOP_Message_Base::process_request (
       // we have native exceptions but no support for them in the ORB
       // we should still be able to catch it.  If we don't have native
       // exceptions it couldn't have been raised in the first place!
-      int result = 0;
+      int result {};
 
       if (response_required)
         {
@@ -1102,7 +1103,7 @@ TAO_GIOP_Message_Base::process_request (
           if (this->send_reply_exception (transport,
                                           output,
                                           request_id,
-                                          &request.reply_service_info (),
+                                          std::addressof (request.reply_service_info ()),
                                           &exception) == -1
               && TAO_debug_level > 0)
             {
@@ -1133,7 +1134,6 @@ TAO_GIOP_Message_Base::process_request (
   return 0;
 }
 
-
 int
 TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
                                                TAO_InputCDR &input,
@@ -1145,9 +1145,6 @@ TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
   TAO_GIOP_Locate_Request_Header locate_request (input, this->orb_core_);
 
   TAO_GIOP_Locate_Status_Msg status_info;
-
-  // Defaulting.
-  status_info.status = GIOP::UNKNOWN_OBJECT;
 
   CORBA::Boolean response_required = true;
 
@@ -1163,7 +1160,7 @@ TAO_GIOP_Message_Base::process_locate_request (TAO_Transport *transport,
       TAO::ObjectKey tmp_key (locate_request.object_key ().length (),
                               locate_request.object_key ().length (),
                               locate_request.object_key ().get_buffer (),
-                              0);
+                              false);
 
       // Set it to an error state
       parse_error = 1;
@@ -1328,12 +1325,12 @@ TAO_GIOP_Message_Base::send_error (TAO_Transport *transport)
                              nullptr,
                              ACE_Message_Block::DONT_DELETE,
                              nullptr);
-  ACE_Message_Block message_block(&data_block,
+  ACE_Message_Block message_block (std::addressof (data_block),
                                   ACE_Message_Block::DONT_DELETE);
   message_block.wr_ptr (TAO_GIOP_MESSAGE_HEADER_LEN);
 
   size_t bt;
-  int const result = transport->send_message_block_chain (&message_block, bt);
+  int const result = transport->send_message_block_chain (std::addressof (message_block), bt);
   if (result == -1)
     {
       if (TAO_debug_level > 0)
@@ -1357,15 +1354,15 @@ TAO_GIOP_Message_Base::get_parser (
         case 0:
           return
             const_cast<TAO_GIOP_Message_Generator_Parser_10 *> (
-                                     &this->tao_giop_impl_.tao_giop_10);
+              std::addressof (this->tao_giop_impl_.tao_giop_10));
         case 1:
           return
             const_cast<TAO_GIOP_Message_Generator_Parser_11 *> (
-                                     &this->tao_giop_impl_.tao_giop_11);
+              std::addressof (this->tao_giop_impl_.tao_giop_11));
         case 2:
           return
             const_cast<TAO_GIOP_Message_Generator_Parser_12 *> (
-                                     &this->tao_giop_impl_.tao_giop_12);
+              std::addressof (this->tao_giop_impl_.tao_giop_12));
         default:
           throw ::CORBA::INTERNAL (0, CORBA::COMPLETED_NO);
         }
@@ -1430,12 +1427,12 @@ TAO_GIOP_Message_Base::
                              nullptr,
                              ACE_Message_Block::DONT_DELETE,
                              nullptr);
-  ACE_Message_Block message_block (&data_block,
+  ACE_Message_Block message_block (std::addressof (data_block),
                                   ACE_Message_Block::DONT_DELETE);
   message_block.wr_ptr (TAO_GIOP_MESSAGE_HEADER_LEN);
 
   size_t bt;
-  int const result = transport->send_message_block_chain (&message_block, bt);
+  int const result = transport->send_message_block_chain (std::addressof (message_block), bt);
   if (result == -1)
     {
       if (TAO_debug_level > 0)
@@ -1460,8 +1457,7 @@ TAO_GIOP_Message_Base::send_reply_exception (
     TAO_OutputCDR &output,
     CORBA::ULong request_id,
     IOP::ServiceContextList *svc_info,
-    CORBA::Exception *x
-  )
+    CORBA::Exception *x)
 {
   TAO_Pluggable_Reply_Params_Base reply_params;
   reply_params.request_id_ = request_id;
@@ -1528,9 +1524,9 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
     CORBA::Octet const minor = ptr[TAO_GIOP_VERSION_MINOR_OFFSET];
 
     // request/reply id.
-    CORBA::ULong tmp = 0;
+    CORBA::ULong tmp {};
     CORBA::ULong *id = std::addressof(tmp);
-    char *tmp_id = nullptr;
+    char *tmp_id {};
 
     if (ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET] == GIOP::Request ||
         ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET] == GIOP::Reply ||
@@ -1581,7 +1577,7 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
     // Print.
     TAOLIB_DEBUG ((LM_DEBUG,
                 ACE_TEXT("TAO (%P|%t) - GIOP_Message_Base::dump_msg, ")
-                ACE_TEXT("%C GIOP message v%c.%c, %d data bytes, %s endian, ")
+                ACE_TEXT("%C GIOP message v%c.%c, %B data bytes, %s endian, ")
                 ACE_TEXT("Type %C[%u]\n"),
                 label,
                 digits[ptr[TAO_GIOP_VERSION_MAJOR_OFFSET]],
@@ -1624,7 +1620,7 @@ TAO_GIOP_Message_Base::is_ready_for_bidirectional (TAO_OutputCDR &msg) const
 bool
 TAO_GIOP_Message_Base::has_pending_fragments () const
 {
-  TAO_Queued_Data *qd = nullptr;
+  TAO_Queued_Data *qd {};
   return this->fragment_stack_.top (qd) == 0;
 }
 
@@ -1697,8 +1693,8 @@ TAO_GIOP_Message_Base::parse_request_id (const TAO_Queued_Data *qd,
   // we pass it on to the higher layers of the ORB. So we dont to any
   // copies at all here. The same is also done in the higher layers.
 
-  ACE_Message_Block::Message_Flags flg = 0;
-  ACE_Data_Block *db = nullptr;
+  ACE_Message_Block::Message_Flags flg {};
+  ACE_Data_Block *db {};
 
   // Get the flag in the message block
   flg = qd->msg_block ()->self_flags ();
@@ -1792,8 +1788,8 @@ TAO_GIOP_Message_Base::consolidate_fragmented_message (
 {
   TAO::Incoming_Message_Stack reverse_stack;
 
-  TAO_Queued_Data *tail = nullptr;
-  TAO_Queued_Data *head = nullptr;
+  TAO_Queued_Data *tail {};
+  TAO_Queued_Data *head {};
 
   //
   // CONSOLIDATE FRAGMENTED MESSAGE
@@ -1868,7 +1864,7 @@ TAO_GIOP_Message_Base::consolidate_fragmented_message (
     {
       // > GIOP-1.2
 
-      CORBA::ULong tmp_request_id = 0;
+      CORBA::ULong tmp_request_id {};
       if (this->parse_request_id (tail, tmp_request_id) == -1)
         {
           return -1;
@@ -1878,8 +1874,8 @@ TAO_GIOP_Message_Base::consolidate_fragmented_message (
 
       while (this->fragment_stack_.pop (head) != -1)
         {
-          CORBA::ULong head_request_id = 0;
-          int parse_status = 0;
+          CORBA::ULong head_request_id {};
+          int parse_status {};
 
           if (head->more_fragments () &&
               head->giop_version ().major_version () >= 1 &&
@@ -1946,7 +1942,7 @@ TAO_GIOP_Message_Base::discard_fragmented_message (const TAO_Queued_Data *cancel
       return -1;
     }
 
-  TAO_Queued_Data *head = nullptr;
+  TAO_Queued_Data *head {};
 
   // Revert stack
   while (this->fragment_stack_.pop (head) != -1)
@@ -1954,7 +1950,7 @@ TAO_GIOP_Message_Base::discard_fragmented_message (const TAO_Queued_Data *cancel
       reverse_stack.push (head);
     }
 
-  bool discard_all_GIOP11_messages = false;
+  bool discard_all_GIOP11_messages {};
 
   // Now we are able to process message in order they have arrived.
   // If the cancel_request_id matches to GIOP-1.1 message, all succeeding
@@ -2000,7 +1996,7 @@ TAO_GIOP_Message_Base::discard_fragmented_message (const TAO_Queued_Data *cancel
 TAO_GIOP_Fragmentation_Strategy *
 TAO_GIOP_Message_Base::fragmentation_strategy ()
 {
-  return this->fragmentation_strategy_;
+  return this->fragmentation_strategy_.get ();
 }
 
 void

@@ -10,27 +10,28 @@
  */
 //=============================================================================
 
+#include "server.h"
 
-#include    "server.h"
-#include    <algorithm>
-#include    "icp.h"
-//#include    <iostream.h>
-//#include    <assert.h>
+#include <algorithm>
+#include <cassert>
+#include <iostream>
+
+#include "icp.h"
+
 //----------------------------------------------------------------
-
 
 // Generic ostream inserter for exceptions. Inserts the exception
 // name, if available, and the repository ID otherwise.
 
 #if 0    //This inserter may or may not be needed for your ORB.
 
-static ostream &
-operator<< (ostream & os, const CORBA::Exception & e)
+static std::ostream &
+operator<< (std::ostream& os, CORBA::Exception const& e)
 {
     CORBA::Any tmp;
     tmp <<= e;
     CORBA::TypeCode_var tc = tmp.type ();
-    const char * p = tc->name ();
+    char const *p = tc->name ();
     if (*p != '\0')
         os << p;
     else
@@ -42,7 +43,7 @@ operator<< (ostream & os, const CORBA::Exception & e)
 
 //----------------------------------------------------------------
 
-Controller_impl * Thermometer_impl::m_ctrl; // static member
+Controller_impl * Thermometer_impl::m_ctrl {}; // static member
 
 // Helper function to read the model string from a device.
 
@@ -50,7 +51,7 @@ CCS::ModelType
 Thermometer_impl::
 get_model ()
 {
-    char buf[32];
+    char buf[32] {};
     assert (ICP_get (m_anum, "model", buf, sizeof (buf)) == 0);
     return CORBA::string_dup (buf);
 }
@@ -61,7 +62,7 @@ CCS::TempType
 Thermometer_impl::
 get_temp ()
 {
-    short temp;
+    short temp {};
     assert (
         ICP_get (m_anum, "temperature", &temp, sizeof (temp)
     ) == 0);
@@ -74,7 +75,7 @@ CCS::LocType
 Thermometer_impl::
 get_loc ()
 {
-    char buf[32];
+    char buf[32] {};
     assert (ICP_get (m_anum, "location", buf, sizeof (buf)) == 0);
     return CORBA::string_dup (buf);
 }
@@ -82,20 +83,16 @@ get_loc ()
 // Helper function to set the location of a device.
 
 void
-Thermometer_impl::
-set_loc (const char * loc)
+Thermometer_impl::set_loc (char const *loc)
 {
-    long result = 0;
-    result = ICP_set (m_anum, "location", loc);
+    long const result = ICP_set (m_anum, "location", loc);
     assert (result == 0);
 }
 
-// Constructor.
-
 Thermometer_impl::
 Thermometer_impl (
-    CCS::AssetType      anum,
-    const char *        location
+    CCS::AssetType anum,
+    char const *location
 ) : m_anum (anum)
 {
     assert (ICP_online (anum) == 0);  // Mark device as on-line
@@ -103,17 +100,14 @@ Thermometer_impl (
     m_ctrl->add_impl (anum, this);   // Add self to controller's map
 }
 
-// Destructor.
-
-Thermometer_impl::
-~Thermometer_impl ()
+Thermometer_impl::~Thermometer_impl ()
 {
     try {
         m_ctrl->remove_impl (m_anum); // Remove self from map
         ICP_offline (m_anum);         // Mark device as off-line
     }
     catch (...) {
-        assert (0);      // Prevent exceptions from escaping
+        assert (false);  // Prevent exceptions from escaping
     }
 }
 
@@ -152,7 +146,7 @@ Thermometer_impl::location ()
 // IDL location attribute modifier.
 
 void
-Thermometer_impl::location (const char * loc)
+Thermometer_impl::location (char const *loc)
 {
     set_loc (loc);
 }
@@ -164,7 +158,7 @@ Thermometer_impl::location (const char * loc)
 CCS::TempType
 Thermostat_impl::get_nominal_temp ()
 {
-    short temp;
+    short temp {};
     assert (
         ICP_get (m_anum, "nominal_temp", &temp, sizeof (temp)
     ) == 0);
@@ -177,7 +171,7 @@ CCS::TempType
 Thermostat_impl::
 set_nominal_temp (CCS::TempType new_temp)
 {
-    short old_temp;
+    short old_temp {};
 
     // We need to return the previous nominal temperature,
     // so we first read the current nominal temperature before
@@ -210,13 +204,11 @@ set_nominal_temp (CCS::TempType new_temp)
     return old_temp;
 }
 
-// Constructor.
-
 Thermostat_impl::
 Thermostat_impl (
-    CCS::AssetType      anum,
-    const char *        location,
-    CCS::TempType       nominal_temp
+    CCS::AssetType anum,
+    char const *location,
+    CCS::TempType nominal_temp
 ) : Thermometer_impl (anum, location)
 {
     // Base Thermometer_impl constructor does most of the
@@ -277,9 +269,10 @@ Controller_impl::list ()
 
     // Loop over the m_assets map and create a
     // reference for each device.
-    CORBA::ULong count = 0;
-    AssetMap::iterator i;
-    for (i = m_assets.begin (); i != m_assets.end (); i++)
+    CORBA::ULong count {};
+    for (AssetMap::const_iterator i = m_assets.begin ();
+         i != m_assets.end ();
+         ++i)
         listv[count++] = i->second->_this ();
     return listv._retn ();
 }
@@ -289,17 +282,16 @@ Controller_impl::list ()
 void
 Controller_impl::
 change (
-    const CCS::Controller::ThermostatSeq &  tlist,
-    CORBA::Short                            delta
-)
+    CCS::Controller::ThermostatSeq const& tlist,
+    CORBA::Short delta)
 {
-    CCS::Controller::EChange ec;    // Just in case we need it
+    CCS::Controller::EChange ec {}; // Just in case we need it
 
     // We cannot add a delta value to a thermostat's temperature
     // directly, so for each thermostat, we read the nominal
     // temperature, add the delta value to it, and write
     // it back again.
-    for (CORBA::ULong i = 0; i < tlist.length (); i++) {
+    for (CORBA::ULong i {}; i < tlist.length (); ++i) {
         if (CORBA::is_nil (tlist[i]))
             continue;                       // Skip nil references
 
@@ -309,11 +301,11 @@ change (
         try {
             tlist[i]->set_nominal (tnom);
         }
-        catch (const CCS::Thermostat::BadTemp & bt) {
+        catch (CCS::Thermostat::BadTemp const& bt) {
             // If the update failed because the temperature
             // is out of range, we add the thermostat's info
             // to the errors sequence.
-            CORBA::ULong len = ec.errors.length ();
+            CORBA::ULong const len = ec.errors.length ();
             ec.errors.length (len + 1);
             ec.errors[len].tmstat_ref = tlist[i];
             ec.errors[len].info = bt.details;
@@ -333,17 +325,17 @@ Controller_impl::
 find (CCS::Controller::SearchSeq & slist)
 {
     // Loop over input list and look up each device.
-    CORBA::ULong listlen = slist.length ();
-    for (CORBA::ULong i = 0; i < listlen; i++) {
-        AssetMap::iterator where;   // Iterator for asset map
-        int num_found = 0;          // Num matched per iteration
+    CORBA::ULong const listlen = slist.length ();
+    for (CORBA::ULong i {}; i < listlen; ++i) {
+        AssetMap::const_iterator where;  // Iterator for asset map
+        int num_found {};                // Num matched per iteration
 
         // Assume we will not find a matching device.
         slist[i].device = CCS::Thermometer::_nil ();
 
         // Work out whether we are searching by asset,
         // model, or location.
-        CCS::Controller::SearchCriterion sc = slist[i].key._d ();
+        CCS::Controller::SearchCriterion const sc = slist[i].key._d ();
         if (sc == CCS::Controller::ASSET) {
             // Search for matching asset number.
             where = m_assets.find (slist[i].key.asset_num ());
@@ -351,20 +343,18 @@ find (CCS::Controller::SearchSeq & slist)
                 slist[i].device = where->second->_this ();
         } else {
             // Search for model or location string.
-            const char * search_str;
-            if (sc == CCS::Controller::LOCATION)
-                search_str = slist[i].key.loc ();
-            else
-                search_str = slist[i].key.model_desc ();
+            char const *const search_str = sc == CCS::Controller::LOCATION
+                ? slist[i].key.loc ()
+                : slist[i].key.model_desc ();
 
             // Find first matching device (if any).
             where = std::find_if (
-                        m_assets.begin (), m_assets.end (),
+                        m_assets.cbegin (), m_assets.cend (),
                         StrFinder (sc, search_str)
                     );
 
             // While there are matches...
-            while (where != m_assets.end ()) {
+            while (where != m_assets.cend ()) {
                 if (num_found == 0) {
                     // First match overwrites reference
                     // in search record.
@@ -372,18 +362,17 @@ find (CCS::Controller::SearchSeq & slist)
                 } else {
                     // Each further match appends a new
                     // element to the search sequence.
-                    CORBA::ULong len = slist.length ();
+                    CORBA::ULong const len = slist.length ();
                     slist.length (len + 1);
                     slist[len].key = slist[i].key;
                     slist[len].device = where->second->_this ();
                 }
-                num_found++;
+                ++num_found;
 
                 // Find next matching device with this key.
-                where = std::find_if (
-                            ++where, m_assets.end (),
-                            StrFinder (sc, search_str)
-                        );
+                where = std::find_if (++where,
+                                      m_assets.cend (),
+                                      StrFinder (sc, search_str));
             }
         }
     }
@@ -434,14 +423,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         // Accept requests
         orb->run ();
     }
-    catch (const CORBA::Exception & e) {
+    catch (CORBA::Exception const& e) {
         std::cerr << "Uncaught CORBA exception: "
                   << e
                   << std::endl;
         return 1;
     }
     catch (...) {
-        assert (0);  // Unexpected exception, dump core
+        assert (false);  // Unexpected exception, dump core
     }
     return 0;
 }

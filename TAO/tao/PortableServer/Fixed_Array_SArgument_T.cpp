@@ -30,9 +30,6 @@ TAO::In_Fixed_Array_SArgument_T<S_forany,
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
-
-// ===========================================================
-
 template<typename S_forany,
          template <typename> class Insert_Policy>
 CORBA::Boolean
@@ -66,9 +63,6 @@ TAO::Inout_Fixed_Array_SArgument_T<S_forany,
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
-
-// ==============================================================
-
 template<typename S_forany,
          template <typename> class Insert_Policy>
 CORBA::Boolean
@@ -91,9 +85,6 @@ TAO::Out_Fixed_Array_SArgument_T<S_forany,
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
-
-// ============================================================
-
 template<typename S_var,
          typename S_forany,
          template <typename> class Insert_Policy>
@@ -101,8 +92,7 @@ CORBA::Boolean
 TAO::Ret_Fixed_Array_SArgument_T<S_var,
                                  S_forany,
                                  Insert_Policy>::marshal (
-    TAO_OutputCDR & cdr
-  )
+    TAO_OutputCDR & cdr)
 {
   return cdr << S_forany (this->x_.inout ());
 }

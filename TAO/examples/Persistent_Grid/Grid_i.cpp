@@ -1,65 +1,44 @@
 // -*- C++ -*-
 #include "Grid_i.h"
 
-// Default constructor.
-
-Grid_i::Grid_i ()
-  : width_ (0),
-    height_ (0),
-    array_ (0)
-{
-  //no-op
-}
-
-//  Constructor.
+#include <new>
+#include <utility>
 
 Grid_i::Grid_i (CORBA::Short x,
                 CORBA::Short y,
                 pool_t *mem_pool)
   : width_ (x),
     height_ (y),
-    array_ (0),
-    pool_t_ (0)
+    pool_t_ (mem_pool)
 {
   // First try to locate the matrix in the pool. If it is there then
   // it has already been created. In such a case we just get that
   // memory and assign it to array_
 
-  void *tmp_array (0);
+  void *tmp_array {};
 
   if (mem_pool->find ("Array", tmp_array) != -1)
     {
-      array_ = reinterpret_cast <CORBA::Long **> (tmp_array);
+      array_ = static_cast<CORBA::Long **> (tmp_array);
     }
   else
     {
       // Allocate memory for the matrix.
       ACE_ALLOCATOR (array_,
                      static_cast<CORBA::Long **> (mem_pool->malloc (y * sizeof (CORBA::Long *))));
-      //array_ = (CORBA::Long **) mem_pool->malloc (y * sizeof (CORBA::Long *));
-
-      if (array_ != 0)
+      if (array_)
         {
           for (int ctr = 0; ctr < y; ctr++)
             {
               ACE_ALLOCATOR (array_[ctr],
                              static_cast<CORBA::Long *> (mem_pool->malloc (x *
-                                                                sizeof (CORBA::Long ))));
-
-              //array_[ctr] = (CORBA::Long *)mem_pool->malloc (x *
-              //                                            sizeof (CORBA::Long));
+                                                                sizeof (CORBA::Long))));
             }
 
           mem_pool->bind ("Array", array_);
         }
     }
 
-}
-
-// Default destructor.
-
-Grid_i::~Grid_i ()
-{
 }
 
 //  Set a value in the grid.
@@ -127,7 +106,6 @@ Grid_i::destroy ( )
   for (int i = 0; i < height_; i++)
     this->pool_t_->free (array_[i]);
 
-  //  delete [] array_;
   this->pool_t_->free (array_);
 
   ACE_DEBUG ((LM_DEBUG,
@@ -135,26 +113,7 @@ Grid_i::destroy ( )
               "Grid has been destroyed"));
 }
 
-void
-Grid_i::set_pool (pool_t *pool)
-{
-  this->pool_t_ = pool;
-}
-// Constructor
-
-Grid_Factory_i::Grid_Factory_i ()
-  : orb_ (0),
-    pool_name_ (0),
-    pool_t_ (0)
-{
-}
-
-// Destructor
-
-Grid_Factory_i::~Grid_Factory_i ()
-{
-  delete this->pool_t_;
-}
+Grid_Factory_i::~Grid_Factory_i () = default;
 
 // Make a <Grid>.
 
@@ -174,27 +133,31 @@ Grid_Factory_i::make_grid (CORBA::Short width,
     height = Grid_Factory::DEFAULT_HEIGHT;
 
   // Get a memory pool
-  ACE_NEW_THROW_EX (pool_t_,
-                    pool_t (pool_name_),
-                    CORBA::NO_MEMORY ());
+  std::unique_ptr<pool_t> pool_owner;
+  try
+    {
+      pool_owner = std::make_unique<pool_t> (pool_name_);
+      this->pool_owners_.push_back (std::move (pool_owner));
+    }
+  catch (std::bad_alloc const &)
+    {
+      throw CORBA::NO_MEMORY ();
+    }
+  this->pool_t_ = this->pool_owners_.back ().get ();
 
-  //  pool_t_ = new pool_t (pool_name_);
-
-  // This attempts to create a new Grid_i and throws an exception and
-  // returns a null value if it fails
-  int prev_no = errno;
-  Grid_i *grid_ptr = new Grid_i (width,
-                                 height,
-                                 pool_t_);
-  if (errno == ENOMEM)
-    throw CORBA::NO_MEMORY ();
-
-  errno = prev_no;
-
-  grid_ptr->set_pool (pool_t_);
+  std::unique_ptr<Grid_i> grid_owner;
+  try
+    {
+      grid_owner = std::make_unique<Grid_i> (width, height, this->pool_t_);
+      this->grid_owners_.push_back (std::move (grid_owner));
+    }
+  catch (std::bad_alloc const &)
+    {
+      throw CORBA::NO_MEMORY ();
+    }
 
   // Register the Grid pointer.
-  return grid_ptr->_this ();
+  return this->grid_owners_.back ()->_this ();
 }
 
 // Set the ORB pointer.
@@ -220,7 +183,7 @@ Grid_Factory_i::shutdown ()
 void
 Grid_Factory_i::cleanup ()
 {
-  const char *name = "Array";
+  char const * const name = "Array";
 
   if (this->pool_t_->unbind (name) == -1)
     ACE_DEBUG ((LM_DEBUG,
@@ -228,7 +191,7 @@ Grid_Factory_i::cleanup ()
 }
 
 void
-Grid_Factory_i::pool_name (const ACE_TCHAR *name)
+Grid_Factory_i::pool_name (ACE_TCHAR const *name)
 {
-  this->pool_name_ = ACE_OS::strdup (name);
+  this->pool_name_ = name;
 }

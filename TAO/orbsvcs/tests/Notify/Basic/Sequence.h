@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef NOTIFY_TESTS_SEQUENCE_H
 #define NOTIFY_TESTS_SEQUENCE_H
 
@@ -17,6 +16,8 @@
 #include "Notify_SequencePushConsumer.h"
 #include "Notify_SequencePushSupplier.h"
 #include "orbsvcs/TimeBaseC.h"
+
+#include <atomic>
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -28,11 +29,11 @@ class Sequence;
 class SequencePushConsumer : public TAO_Notify_Tests_SequencePushConsumer
 {
 public:
-  SequencePushConsumer (Sequence* client);
+  explicit SequencePushConsumer (Sequence *client);
 
   // = SequencePushConsumer methods
-  virtual void push_structured_events (
-        const CosNotification::EventBatch & notifications);
+  void push_structured_events (
+        CosNotification::EventBatch const &notifications) override;
 
 protected:
   Sequence* test_client_;
@@ -43,11 +44,9 @@ protected:
 class SequencePushSupplier : public TAO_Notify_Tests_SequencePushSupplier
 {
 public:
-  /// Constructor.
-  SequencePushSupplier (Sequence * test_client);
+  explicit SequencePushSupplier (Sequence *test_client);
 
-  /// Destructor.
-  virtual ~SequencePushSupplier ();
+  ~SequencePushSupplier () override;
 
 protected:
   Sequence* test_client_;
@@ -60,14 +59,14 @@ class Sequence : public Notify_Test_Client
 public:
   // Initialization and termination code.
   Sequence ();
-  virtual ~Sequence ();
+  ~Sequence () override;
 
   int parse_args (int argc,
-                  ACE_TCHAR *argv[]) ;
+                  ACE_TCHAR *argv[]) override;
 
   /// Initialization.
   int init (int argc,
-            ACE_TCHAR *argv []);
+            ACE_TCHAR *argv []) override;
 
   /// Called when an event is received.
   void on_event_received ();
@@ -99,7 +98,7 @@ protected:
   CORBA::Short order_policy_;
 
   /// Count the number of events received by the consumer.
-  ACE_Atomic_Op <TAO_SYNCH_MUTEX, int> events_received_;
+  std::atomic<int> events_received_ {0};
 
   ACE_Time_Value consumer_delay_;
 

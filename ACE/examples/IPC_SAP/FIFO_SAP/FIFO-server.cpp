@@ -4,14 +4,13 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_main.h"
 
-
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_OS::unlink (ACE_DEFAULT_RENDEZVOUS);
   ACE_FIFO_Recv server (ACE_DEFAULT_RENDEZVOUS);
-  char buf[BUFSIZ];
-  int n;
+  char buf[BUFSIZ] {};
+  int n {};
 
   while ((n = server.recv (buf, sizeof buf)) > 0)
     {

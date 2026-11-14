@@ -4,15 +4,19 @@
 #include "TestAppBase.h"
 #include "ace/SString.h"
 
-
 class ServerApp : public TestAppBase
 {
   public:
     ServerApp();
-    virtual ~ServerApp() = default;
+    ~ServerApp() override = default;
 
   protected:
-    virtual int run_i(int argc, ACE_TCHAR* argv[]);
+    int run_i(int argc, ACE_TCHAR* argv[]) override;
+
+    ServerApp (ServerApp const &) = delete;
+    ServerApp (ServerApp &&) = delete;
+    ServerApp & operator= (ServerApp const &) = delete;
+    ServerApp & operator= (ServerApp &&) = delete;
 
   private:
     int parse_args(int argc, ACE_TCHAR* argv[]);

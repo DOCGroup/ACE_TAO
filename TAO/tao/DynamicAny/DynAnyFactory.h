@@ -1,13 +1,9 @@
 // -*- C++ -*-
-//=============================================================================
 /**
  *  @file    DynAnyFactory.h
  *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
-//=============================================================================
-
-
 #ifndef TAO_DYNANYFACTORY_H
 #define TAO_DYNANYFACTORY_H
 #include /**/ "ace/pre.h"
@@ -38,10 +34,16 @@ class TAO_DynamicAny_Export TAO_DynAnyFactory
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   TAO_DynAnyFactory () = default;
 
-  // = The DynamicAnyFactory methods.
+  TAO_DynAnyFactory (TAO_DynAnyFactory const &src) = delete;
+  TAO_DynAnyFactory &operator= (TAO_DynAnyFactory const &src) = delete;
+  TAO_DynAnyFactory (TAO_DynAnyFactory &&) = delete;
+  TAO_DynAnyFactory &operator= (TAO_DynAnyFactory &&) = delete;
+
+  /// @name DynamicAnyFactory methods
+  /// @{
+
   DynamicAny::DynAny_ptr create_dyn_any (CORBA::Any const& value) override;
 
   DynamicAny::DynAny_ptr create_dyn_any_from_type_code (
@@ -57,6 +59,8 @@ public:
   DynamicAny::AnySeq * create_multiple_anys (
       DynamicAny::DynAnySeq const& values) override;
 
+  /// @}
+
   /// TAO-specific methods.
 
   /// Obtain the kind of object, after all aliasing has been removed.
@@ -65,12 +69,6 @@ public:
   /// Same as above, but returns type code instead of TCKind. Caller
   /// must release the return value.
   static CORBA::TypeCode_ptr strip_alias (CORBA::TypeCode_ptr tc);
-
-private:
-  TAO_DynAnyFactory (TAO_DynAnyFactory const &src) = delete;
-  TAO_DynAnyFactory &operator= (TAO_DynAnyFactory const &src) = delete;
-  TAO_DynAnyFactory (TAO_DynAnyFactory &&) = delete;
-  TAO_DynAnyFactory &operator= (TAO_DynAnyFactory &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

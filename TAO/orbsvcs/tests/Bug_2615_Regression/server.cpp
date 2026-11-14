@@ -2,53 +2,60 @@
 #include "ace/OS_NS_stdio.h"
 #include "tao/IORManipulation/IORManip_Loader.h"
 #include "tao/PortableServer/PortableServer.h"
+#include "tao/Utils/PolicyList_Destroyer.h"
 #include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
 #include "ServerORBInitializer2.h"
 #include "ServerRequest_Interceptor2.h"
 #include "tao/PI/PI.h"
 #include "tao/ORBInitializer_Registry.h"
 #include "Hello.h"
+#include <cstdio>
+#include <memory>
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT("ior.ior");
-const ACE_TCHAR *iogr_output_file = ACE_TEXT("iogr.ior");
-TAO_IOP::TAO_IOR_Manipulation_var iorm = 0;
+struct Server_Options
+{
+  ACE_TString ior_output_file { ACE_TEXT ("ior.ior") };
+  ACE_TString iogr_output_file { ACE_TEXT ("iogr.ior") };
+};
+
+using File_Ptr = std::unique_ptr<FILE, int (*) (FILE *)>;
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:p:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:p:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'o':
-        ior_output_file = get_opts.opt_arg ();
+        options.ior_output_file = get_opts.opt_arg ();
         break;
       case 'p':
-        iogr_output_file = get_opts.opt_arg ();
+        options.iogr_output_file = get_opts.opt_arg ();
         break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-o <iorfile>"
-                           "-p <iorfile>"
-                           "\n",
+                           ACE_TEXT ("usage:  %s -o <iorfile> -p <iorfile>\n"),
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
   return 0;
 }
 
 CORBA::Object_ptr
-make_iogr (const char* domain_id, CORBA::ULongLong group_id, CORBA::ULong group_version, CORBA::Object_ptr ref)
+make_iogr (TAO_IOP::TAO_IOR_Manipulation_ptr iorm,
+           char const *domain_id,
+           CORBA::ULongLong group_id,
+           CORBA::ULong group_version,
+           CORBA::Object_ptr ref)
 {
   FT::TagFTGroupTaggedComponent ft_tag_component;
   // Create the list
   TAO_IOP::TAO_IOR_Manipulation::IORList iors (1);
-  iors.length(1);
+  iors.length (1);
   iors [0] = CORBA::Object::_duplicate (ref);
 
   CORBA::Object_var new_ref =
@@ -57,11 +64,10 @@ make_iogr (const char* domain_id, CORBA::ULongLong group_id, CORBA::ULong group_
   // Property values
 
   // Major and Minor revision numbers
-  ft_tag_component.component_version.major = (CORBA::Octet) 1;
-  ft_tag_component.component_version.minor = (CORBA::Octet) 0;
+  ft_tag_component.component_version.major = static_cast<CORBA::Octet> (1);
+  ft_tag_component.component_version.minor = static_cast<CORBA::Octet> (0);
 
   // Domain id
-  //const char *id = "iogr_testing";
   ft_tag_component.group_domain_id = domain_id;
 
   // Object group id
@@ -74,53 +80,66 @@ make_iogr (const char* domain_id, CORBA::ULongLong group_id, CORBA::ULong group_
   TAO_FT_IOGR_Property iogr_prop (ft_tag_component);
 
   // Set the property
-  CORBA::Boolean retval = iorm->set_property (&iogr_prop,
-                                              new_ref.in ());
+  CORBA::Boolean const has_property = iorm->set_property (&iogr_prop, new_ref.in ());
 
-  // Set the primary
-  // See we are setting the second ior as the primary
-  if (retval != 0)
-    {
-      retval = iorm->set_primary (&iogr_prop,
-                                  new_ref.in (),
-                                  new_ref.in ());
-    }
+  if (has_property)
+    iorm->set_primary (&iogr_prop, new_ref.in (), new_ref.in ());
 
   return new_ref._retn ();
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+write_ior (ACE_TCHAR const *filename, char const *ior)
+{
+  File_Ptr output_file (ACE_OS::fopen (filename, ACE_TEXT ("w")), ACE_OS::fclose);
+  if (!output_file)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("Cannot open output file for writing IOR: %s"),
+                       filename),
+                      -1);
+
+  if (std::fprintf (output_file.get (), "%s", ior) < 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("Cannot write output file for IOR: %s"),
+                       filename),
+                      -1);
+
+  return 0;
+}
+
+int
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      Server_ORBInitializer2 *temp_initializer = 0;
+      Server_ORBInitializer2 *temp_initializer {};
       ACE_NEW_RETURN (temp_initializer,
                       Server_ORBInitializer2,
                       -1);  // No exceptions yet!
-      PortableInterceptor::ORBInitializer_var orb_initializer =
+      // The ORBInitializer_var adopts the ACE_NEW_RETURN allocation.
+      PortableInterceptor::ORBInitializer_var const orb_initializer =
         temp_initializer;
 
       PortableInterceptor::register_orb_initializer (orb_initializer.in ());
 
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
+      CORBA::Object_var const poa_object =
+        orb->resolve_initial_references ("RootPOA");
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Panic: nil RootPOA\n"),
+                           ACE_TEXT (" (%P|%t) Panic: nil RootPOA\n")),
                           1);
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
-      CORBA::PolicyList policies (2);
+      TAO::Utils::PolicyList_Destroyer policies (2);
       policies.length (2);
 
       policies[0] =
@@ -129,87 +148,66 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       policies[1] =
         root_poa->create_lifespan_policy (PortableServer::PERSISTENT);
 
-      PortableServer::POA_var my_poa =
+      PortableServer::POA_var const my_poa =
         root_poa->create_POA ("my_poa",
                               poa_manager.in (),
                               policies);
 
-      // Creation of the new POA is over, so destroy the Policy_ptr's.
-      for (CORBA::ULong i = 0; i < policies.length (); ++i)
-        {
-          CORBA::Policy_ptr policy = policies[i];
-          policy->destroy ();
-        }
-
-
-      if (parse_args (argc, argv) != 0)
+      Server_Options options;
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
-      Hello *hello_impl = 0;
+      Hello *hello_impl {};
       ACE_NEW_RETURN (hello_impl,
-                      Hello (orb.in (), Test::Hello::_nil ()),
+                      Hello (orb.in ()),
                       1);
+      // The ServantBase_var adopts the servant's initial reference.
       PortableServer::ServantBase_var owner (hello_impl);
 
-      PortableServer::ObjectId_var server_id =
+      PortableServer::ObjectId_var const server_id =
         PortableServer::string_to_ObjectId ("server_id");
 
       my_poa->activate_object_with_id (server_id.in (),
                                        hello_impl);
 
-      CORBA::Object_var hello =
+      CORBA::Object_var const hello =
         my_poa->id_to_reference (server_id.in ());
 
-      CORBA::String_var ior =
+      CORBA::String_var const ior =
         orb->object_to_string (hello.in ());
 
-      FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s",
-                           ior_output_file),
-                           1);
-      ACE_OS::fprintf (output_file, "%s", ior.in ());
-      ACE_OS::fclose (output_file);
-
+      if (write_ior (options.ior_output_file.c_str (), ior.in ()) != 0)
+        return 1;
 
       // Get a ref to the IORManipulation object
-      CORBA::Object_var IORM =
+      CORBA::Object_var const iorm_object =
         orb->resolve_initial_references (TAO_OBJID_IORMANIPULATION,
-                                         0);
+                                         nullptr);
 
-      // Narrow
-      iorm =
-        TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM.in());
+      TAO_IOP::TAO_IOR_Manipulation_var const iorm =
+        TAO_IOP::TAO_IOR_Manipulation::_narrow (iorm_object.in ());
 
-      CORBA::Object_var server = orb->string_to_object (ior.in ());
+      CORBA::Object_var const server = orb->string_to_object (ior.in ());
 
-      CORBA::Object_var iogr = make_iogr ("Domain_1", 1, 1, server.in ());
+      CORBA::Object_var const iogr = make_iogr (iorm.in (), "Domain_1", 1, 1, server.in ());
 
-      CORBA::String_var iorgr_string =
+      CORBA::String_var const iorgr_string =
         orb->object_to_string (iogr.in ());
 
-      // Output the IOR to the <iogr_output_file>
-      output_file = ACE_OS::fopen (iogr_output_file, "w");
-      if (output_file == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s",
-                           iogr_output_file),
-                           1);
-      ACE_OS::fprintf (output_file, "%s", iorgr_string.in ());
-      ACE_OS::fclose (output_file);
+      if (write_ior (options.iogr_output_file.c_str (), iorgr_string.in ()) != 0)
+        return 1;
 
       poa_manager->activate ();
 
       orb->run ();
 
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) server - event loop finished\n")));
 
       root_poa->destroy (true, true);
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

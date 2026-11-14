@@ -7,35 +7,29 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 class  Test_Dummy_i
   : public virtual POA_Test::Dummy
 {
 public:
-  // Constructor
   Test_Dummy_i ();
 
-  // Destructor
   virtual ~Test_Dummy_i ();
 
-  virtual  char * getMessage ();
+  char * getMessage () override;
 };
 
 class  Test_Time_i
   : public virtual POA_Test::Time
 {
 public:
-  // Constructor
   Test_Time_i ();
 
-  // Destructor
   virtual ~Test_Time_i ();
 
-  virtual ::CORBA::Long current_time ();
+  ::CORBA::Long current_time () override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 };
-
 
 #endif /* IMR_RECONNECTSERVER_H  */
 

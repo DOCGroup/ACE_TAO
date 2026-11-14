@@ -8,7 +8,6 @@
  */
 //==========================================================================
 
-
 #ifndef ACE_STATS_H
 #define ACE_STATS_H
 
@@ -47,7 +46,7 @@ public:
    * good value, or maybe 4.  5 will probably be too large for
    * non-trivial data sets.
    */
-  ACE_Stats_Value (const u_int precision);
+  explicit ACE_Stats_Value (const u_int precision);
 
   /// Accessor for precision.
   u_int precision () const;
@@ -83,10 +82,10 @@ private:
 
 private:
   /// The integer portion of the value.
-  ACE_UINT32 whole_;
+  ACE_UINT32 whole_ {};
 
   /// The fractional portion of the value.
-  ACE_UINT32 fractional_;
+  ACE_UINT32 fractional_ {};
 
   /**
    * The number of decimal digits of precision represented by

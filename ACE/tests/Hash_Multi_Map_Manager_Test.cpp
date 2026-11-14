@@ -10,11 +10,9 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Hash_Multi_Map_Manager_T.h"
 #include "ace/Null_Mutex.h"
-
 
 using HASH_STRING_MAP = ACE_Hash_Multi_Map_Manager<const ACE_TCHAR *, const ACE_TCHAR *, ACE_Hash<const ACE_TCHAR *>, ACE_Equal_To<const ACE_TCHAR *>, ACE_Null_Mutex>;
 
@@ -240,7 +238,7 @@ run_test ()
                   ACE_TEXT ("iterating (%d): %s:\n"),
                   i,
                   entry->key ()));
-      i++;
+      ++i;
 
       for (HASH_STRING_VALUE_SET_ITERATOR iter (entry->item ());
            iter != entry->item ().end ();
@@ -308,7 +306,7 @@ run_test ()
                   ACE_TEXT ("reverse iterating (%d): %s\n"),
                   i,
                   entry->key ()));
-      i++;
+      ++i;
 
       for (HASH_STRING_VALUE_SET_ITERATOR iter (entry->item ());
            iter != entry->item ().end ();
@@ -339,7 +337,7 @@ run_test ()
                   ACE_TEXT ("const iterating (%d): %s\n"),
                   i,
                   entry->key ()));
-      i++;
+      ++i;
 
       for (HASH_STRING_VALUE_SET_ITERATOR iter (entry->item ());
            iter != entry->item ().end ();

@@ -39,19 +39,17 @@ class TAO_ORB_Core;
 class TAO_Export TAO_ORB_Core_TSS_Resources
 {
 public:
-  /// Constructor
   TAO_ORB_Core_TSS_Resources ();
 
-  /// destructor
   ~TAO_ORB_Core_TSS_Resources ();
+
+  TAO_ORB_Core_TSS_Resources (TAO_ORB_Core_TSS_Resources const &) = delete;
+  TAO_ORB_Core_TSS_Resources (TAO_ORB_Core_TSS_Resources &&) = delete;
+  TAO_ORB_Core_TSS_Resources &operator= (TAO_ORB_Core_TSS_Resources const &) = delete;
+  TAO_ORB_Core_TSS_Resources &operator= (TAO_ORB_Core_TSS_Resources &&) = delete;
 
   /// Cleans TSS resources.
   void fini ();
-
-private:
-  /// The ORB Core TSS resources should not be copied
-  TAO_ORB_Core_TSS_Resources (const TAO_ORB_Core_TSS_Resources&);
-  void operator= (const TAO_ORB_Core_TSS_Resources&);
 
 public:
   /**

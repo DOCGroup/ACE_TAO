@@ -5,23 +5,24 @@
 #include "ace/LSOCK_Dgram.h"
 #include "ace/UNIX_Addr.h"
 #include "ace/Get_Opt.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_fcntl.h"
+#include <cstring>
+#include <memory>
 
 #if defined (ACE_HAS_MSG) && !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS) && \
   !defined (ACE_DISABLE_TEMPNAM)
 // Name of the program.
-static ACE_TCHAR *program_name;
+static ACE_TCHAR const * program_name {};
 
 // Name of rendezvous point.
-static const ACE_TCHAR *rendezvous_codgram = ACE_TEXT ("/tmp/foo_codgram");
-static const ACE_TCHAR *rendezvous_dgram = ACE_TEXT ("/tmp/foo_dgram");
+static ACE_TCHAR const *rendezvous_codgram = ACE_TEXT ("/tmp/foo_codgram");
+static ACE_TCHAR const *rendezvous_dgram = ACE_TEXT ("/tmp/foo_dgram");
 
 // Name of file to send.
-static const ACE_TCHAR *file_name = ACE_TEXT ("local_data");
+static ACE_TCHAR const *file_name = ACE_TEXT ("local_data");
 
 static void
 print_usage_and_die ()
@@ -63,13 +64,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   parse_args (argc, argv);
 
-  char *sock_client = ACE_OS::tempnam ();
+  std::unique_ptr<char, decltype (&ACE_OS::free)> sock_client (
+    ACE_OS::tempnam (), &ACE_OS::free);
+  if (!sock_client)
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("tempnam")),
+                      -1);
 
-  ACE_LSOCK_Dgram sd ((ACE_UNIX_Addr) (sock_client));
-  if (ACE_OS::unlink (sock_client))
+  ACE_LSOCK_Dgram sd (ACE_UNIX_Addr (sock_client.get ()));
+  if (ACE_OS::unlink (sock_client.get ()))
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("unlink")),
                       -1);
-  ACE_OS::free ((void *) sock_client);
 
   ACE_LSOCK_CODgram sc;
 
@@ -78,7 +82,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open")),
                       -1);
 
-  ACE_HANDLE handle = ACE_OS::open (file_name, O_RDONLY);
+  ACE_HANDLE const handle = ACE_OS::open (file_name, O_RDONLY);
 
   if (handle == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open")),
@@ -90,7 +94,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("send")),
                       -1);
 
-  char name[ACE_MAX_USERID];
+  char name[ACE_MAX_USERID] {};
 #if !defined (ACE_LACKS_CUSERID)
   ACE_OS::cuserid (name);
 #else
@@ -98,7 +102,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   name[1] = '\0';
 #endif
   if (sd.send (name,
-               ACE_OS::strlen (name) + 1,
+               std::strlen (name) + 1,
                ACE_UNIX_Addr (rendezvous_dgram)) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("send")),
                       -1);

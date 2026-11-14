@@ -5,13 +5,11 @@
 // to dynamically load this necessary library.
 #include "tao/IFR_Client/IFR_Client_Adapter_Impl.h"
 
-ACE_TCHAR const* ior = ACE_TEXT("file://test.ior");
-
-int
-parse_args (int argc, ACE_TCHAR *argv[])
+static int
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const*& ior)
 {
-  ACE_Get_Opt get_opts (argc, argv, "k:");
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -23,64 +21,60 @@ parse_args (int argc, ACE_TCHAR *argv[])
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT("usage:  %s ")
-                           ACE_TEXT("-k <ior> ")
-                           ACE_TEXT("\n"),
+                           ACE_TEXT("usage: %s [-k <ior>]\n"),
                            argv [0]),
                           -1);
       }
+
   // Indicates successful parsing of the command line
   return 0;
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+      ACE_TCHAR const* ior {ACE_TEXT("file://test.ior")};
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, ior) != 0)
         return 1;
 
-      CORBA::Object_var tmp =
-        orb->string_to_object(ior);
+      CORBA::Object_var const object = orb->string_to_object (ior);
 
-      CORBA::InterfaceDef_var ifd = tmp->_get_interface();
-      if ( ! CORBA::is_nil (ifd.in()))
-      {
-        CORBA::InterfaceDef::FullInterfaceDescription *id = ifd->describe_interface();
-        if (id == nullptr)
+      CORBA::InterfaceDef_var const interface_def = object->_get_interface ();
+      if (!CORBA::is_nil (interface_def.in ()))
         {
-          ACE_ERROR ((LM_ERROR,
-                             ACE_TEXT("Null interface description returned\n")));
+          CORBA::InterfaceDef::FullInterfaceDescription * const description =
+            interface_def->describe_interface ();
+          if (description == nullptr)
+            ACE_ERROR ((LM_ERROR, ACE_TEXT("Null interface description returned\n")));
+          CORBA::InterfaceDef::FullInterfaceDescription_var const description_owner {
+            description
+          };
         }
 
-      }
-      Test::GoodDay_var goodday =
-        Test::GoodDay::_narrow(tmp.in ());
+      Test::GoodDay_var const goodday = Test::GoodDay::_narrow (object.in ());
 
       if (CORBA::is_nil (goodday.in ()))
-        {
-          ACE_ERROR ((LM_DEBUG,
-                             ACE_TEXT("Nil Test::GoodDay reference <%s>\n"),
-                             ior));
-        }
+        ACE_ERROR ((LM_DEBUG,
+                    ACE_TEXT("Nil Test::GoodDay reference <%s>\n"),
+                    ior));
       else
-      {
-        CORBA::String_var the_string =
-          goodday->get_string ();
+        {
+          CORBA::String_var const the_string = goodday->get_string ();
 
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT("(%P|%t) - string returned <%s>\n"),
-                    the_string.in ()));
-      }
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT("(%P|%t) - string returned <%s>\n"),
+                      the_string.in ()));
+        }
 
       goodday->shutdown ();
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

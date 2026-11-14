@@ -15,14 +15,17 @@ class Roundtrip
   : public virtual POA_Test::Roundtrip
 {
 public:
-  /// Constructor
-  Roundtrip (CORBA::ORB_ptr orb);
+  explicit Roundtrip (CORBA::ORB_ptr orb);
+  Roundtrip (Roundtrip const &) = delete;
+  Roundtrip (Roundtrip &&) = delete;
+  Roundtrip &operator= (Roundtrip const &) = delete;
+  Roundtrip &operator= (Roundtrip &&) = delete;
 
   // = The skeleton methods
-  virtual Test::Timestamp test_method (Test::Timestamp send_time,
-                                       Test::number cl_number);
+  Test::Timestamp test_method (Test::Timestamp send_time,
+                               Test::number cl_number) override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

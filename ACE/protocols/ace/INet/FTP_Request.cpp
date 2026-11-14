@@ -9,7 +9,6 @@
 #include "ace/INet/INet_Log.h"
 #include "ace/INet/String_IOStream.h"
 
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
@@ -46,9 +45,7 @@ namespace ACE
       {
       }
 
-    Request::~Request()
-      {
-      }
+    Request::~Request() = default;
 
     void Request::arguments (ACE_Array<ACE_CString> & args) const
       {

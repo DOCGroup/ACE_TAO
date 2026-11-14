@@ -1,30 +1,32 @@
 #include "ace/Get_Opt.h"
 #include "testC.h"
 
-static int iterations = 5;
-static int shutdown_server = 0;
-
-static const ACE_TCHAR *ior = 0;
+struct Client_Options
+{
+  int iterations {5};
+  bool shutdown_server {};
+  ACE_TCHAR const *ior {};
+};
 
 static int
-parse_args (int argc, ACE_TCHAR **argv)
+parse_args (int argc, ACE_TCHAR **argv, Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:i:x"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
 
       case 'i':
-        iterations = ACE_OS::atoi (get_opts.opt_arg ());
+        options.iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'x':
-        shutdown_server = 1;
+        options.shutdown_server = true;
         break;
 
       case '?':
@@ -39,7 +41,7 @@ parse_args (int argc, ACE_TCHAR **argv)
                           -1);
       }
 
-  if (ior == 0)
+  if (options.ior == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Error: No IOR specified\n"),
                       -1);
@@ -55,13 +57,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      int result =
-        parse_args (argc, argv);
+      Client_Options options;
+      int const result = parse_args (argc, argv, options);
       if (result != 0)
         return result;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior);
+        orb->string_to_object (options.ior);
 
       test_var test =
         test::_narrow (object.in ());
@@ -70,16 +72,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
                              "Nil reference <%s>\n",
-                             ior),
+                             options.ior),
                             1);
         }
 
-      for (int i = 0; i < iterations; i++)
+      for (int i {}; i < options.iterations; ++i)
         {
           test->method ();
         }
 
-      if (shutdown_server)
+      if (options.shutdown_server)
         {
           test->shutdown ();
         }

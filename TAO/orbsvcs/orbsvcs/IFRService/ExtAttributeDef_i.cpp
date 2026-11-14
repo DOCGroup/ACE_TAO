@@ -17,8 +17,7 @@ TAO_ExtAttributeDef_i::TAO_ExtAttributeDef_i (TAO_Repository_i *repo)
 TAO_ExtAttributeDef_i::~TAO_ExtAttributeDef_i () = default;
 
 CORBA::ExcDescriptionSeq *
-TAO_ExtAttributeDef_i::get_exceptions (
-  )
+TAO_ExtAttributeDef_i::get_exceptions ()
 {
   TAO_IFR_READ_GUARD_RETURN (nullptr);
 
@@ -28,8 +27,7 @@ TAO_ExtAttributeDef_i::get_exceptions (
 }
 
 CORBA::ExcDescriptionSeq *
-TAO_ExtAttributeDef_i::get_exceptions_i (
-  )
+TAO_ExtAttributeDef_i::get_exceptions_i ()
 {
   CORBA::ExcDescriptionSeq *retval {};
   ACE_NEW_RETURN (retval,
@@ -45,8 +43,7 @@ TAO_ExtAttributeDef_i::get_exceptions_i (
 
 void
 TAO_ExtAttributeDef_i::get_exceptions (
-    CORBA::ExcDescriptionSeq const &get_exceptions
-  )
+    CORBA::ExcDescriptionSeq const &get_exceptions)
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -57,16 +54,14 @@ TAO_ExtAttributeDef_i::get_exceptions (
 
 void
 TAO_ExtAttributeDef_i::get_exceptions_i (
-    CORBA::ExcDescriptionSeq const &get_exceptions
-  )
+    CORBA::ExcDescriptionSeq const &get_exceptions)
 {
   this->exceptions ("get_excepts",
                     get_exceptions);
 }
 
 CORBA::ExcDescriptionSeq *
-TAO_ExtAttributeDef_i::set_exceptions (
-  )
+TAO_ExtAttributeDef_i::set_exceptions ()
 {
   TAO_IFR_READ_GUARD_RETURN (nullptr);
 
@@ -76,8 +71,7 @@ TAO_ExtAttributeDef_i::set_exceptions (
 }
 
 CORBA::ExcDescriptionSeq *
-TAO_ExtAttributeDef_i::set_exceptions_i (
-  )
+TAO_ExtAttributeDef_i::set_exceptions_i ()
 {
   CORBA::ExcDescriptionSeq *retval {};
   ACE_NEW_RETURN (retval,
@@ -93,8 +87,7 @@ TAO_ExtAttributeDef_i::set_exceptions_i (
 
 void
 TAO_ExtAttributeDef_i::set_exceptions (
-    CORBA::ExcDescriptionSeq const &set_exceptions
-  )
+    CORBA::ExcDescriptionSeq const &set_exceptions)
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -105,16 +98,14 @@ TAO_ExtAttributeDef_i::set_exceptions (
 
 void
 TAO_ExtAttributeDef_i::set_exceptions_i (
-    CORBA::ExcDescriptionSeq const &set_exceptions
-  )
+    CORBA::ExcDescriptionSeq const &set_exceptions)
 {
   this->exceptions ("put_excepts",
                     set_exceptions);
 }
 
 CORBA::ExtAttributeDescription *
-TAO_ExtAttributeDef_i::describe_attribute (
-  )
+TAO_ExtAttributeDef_i::describe_attribute ()
 {
   TAO_IFR_READ_GUARD_RETURN (nullptr);
 
@@ -124,8 +115,7 @@ TAO_ExtAttributeDef_i::describe_attribute (
 }
 
 CORBA::ExtAttributeDescription *
-TAO_ExtAttributeDef_i::describe_attribute_i (
-  )
+TAO_ExtAttributeDef_i::describe_attribute_i ()
 {
   CORBA::ExtAttributeDescription *retval {};
   ACE_NEW_RETURN (retval,
@@ -140,8 +130,7 @@ TAO_ExtAttributeDef_i::describe_attribute_i (
 
 void
 TAO_ExtAttributeDef_i::fill_description (
-    CORBA::ExtAttributeDescription &desc
-  )
+    CORBA::ExtAttributeDescription &desc)
 {
   desc.name = this->name_i ();
 

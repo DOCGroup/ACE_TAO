@@ -18,11 +18,9 @@ using TAO_CEC_Unlock = ACE_Reverse_Lock<ACE_Lock>;
 
 // Implementation skeleton constructor
 TAO_CEC_TypedProxyPushConsumer::TAO_CEC_TypedProxyPushConsumer
-(TAO_CEC_TypedEventChannel* ec, const ACE_Time_Value &timeout)
+(TAO_CEC_TypedEventChannel* ec, ACE_Time_Value const &timeout)
   : typed_event_channel_ (ec),
-    timeout_ (timeout),
-    refcount_ (1),
-    connected_ (0)
+    timeout_ (timeout)
 {
   this->lock_ = this->typed_event_channel_->create_consumer_lock ();
 
@@ -37,16 +35,16 @@ TAO_CEC_TypedProxyPushConsumer::TAO_CEC_TypedProxyPushConsumer
                   ACE_TEXT ("***** Initializing the DSI for the new TypedProxyPushConsumer *****\n")));
     }
 
-  this->dsi_impl_ = new
-    TAO_CEC_DynamicImplementationServer (this->default_POA_.in(),
-                                         this,
-                                         this->typed_event_channel_);
+  this->dsi_impl_ = std::make_unique<TAO_CEC_DynamicImplementationServer> (
+    this->default_POA_.in (),
+    this,
+    this->typed_event_channel_);
 
   try{
     // tempporary fix, should put this into some init function.
 
     this->oid_ =
-      this->default_POA_->activate_object (this->dsi_impl_);
+      this->default_POA_->activate_object (this->dsi_impl_.get ());
   }
   catch (...){
   }
@@ -61,7 +59,7 @@ TAO_CEC_TypedProxyPushConsumer::~TAO_CEC_TypedProxyPushConsumer ()
   catch (...){
   }
 
-  delete dsi_impl_;
+  this->dsi_impl_.reset ();
 
   this->typed_event_channel_->get_servant_retry_map ().unbind (this);
   this->typed_event_channel_->destroy_consumer_lock (this->lock_);
@@ -76,7 +74,7 @@ TAO_CEC_TypedProxyPushConsumer::activate (
     {
       result = this->_this ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       result = CosTypedEventChannelAdmin::TypedProxyPushConsumer::_nil ();
     }
@@ -88,13 +86,13 @@ TAO_CEC_TypedProxyPushConsumer::deactivate ()
 {
   try
     {
-      PortableServer::POA_var poa =
+      PortableServer::POA_var const poa =
         this->_default_POA ();
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         poa->servant_to_id (this);
       poa->deactivate_object (id.in ());
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // Exceptions here should not be propagated.  They usually
       // indicate that an object is being disconnected twice, or some
@@ -146,7 +144,7 @@ TAO_CEC_TypedProxyPushConsumer::shutdown ()
     // @@ CosEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
 
     supplier = this->typed_supplier_._retn ();
-    this->connected_ = 0;
+    this->connected_ = false;
   }
 
   this->deactivate ();
@@ -158,7 +156,7 @@ TAO_CEC_TypedProxyPushConsumer::shutdown ()
     {
       supplier->disconnect_push_supplier ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // Ignore exceptions, we must isolate other clients from
       // failures on this one.
@@ -170,7 +168,7 @@ TAO_CEC_TypedProxyPushConsumer::cleanup_i ()
 {
   this->typed_supplier_ =
     CosEventComm::PushSupplier::_nil ();
-  this->connected_ = 0;
+  this->connected_ = false;
 }
 
 CORBA::ULong
@@ -185,7 +183,7 @@ TAO_CEC_TypedProxyPushConsumer::_decr_refcnt ()
 {
   {
     ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
-    this->refcount_--;
+    --this->refcount_;
     if (this->refcount_ != 0)
       return this->refcount_;
   }
@@ -207,7 +205,7 @@ TAO_CEC_TypedProxyPushConsumer::connect_push_supplier (
 
     if (this->is_connected_i ())
       {
-        if (this->typed_event_channel_->supplier_reconnect () == 0)
+        if (!this->typed_event_channel_->supplier_reconnect ())
           throw CosEventChannelAdmin::AlreadyConnected ();
 
         // Re-connections are allowed, go ahead and disconnect the
@@ -232,7 +230,7 @@ TAO_CEC_TypedProxyPushConsumer::connect_push_supplier (
           return;
       }
     this->typed_supplier_ = apply_policy (push_supplier);
-    this->connected_ = 1;
+    this->connected_ = true;
   }
 
   // Notify the event channel...
@@ -255,7 +253,7 @@ TAO_CEC_TypedProxyPushConsumer::apply_policy
       policy_list[0] = this->typed_event_channel_->
         create_roundtrip_timeout_policy (this->timeout_);
 
-      CORBA::Object_var post_obj = pre->_set_policy_overrides
+      CORBA::Object_var const post_obj = pre->_set_policy_overrides
         (policy_list, CORBA::ADD_OVERRIDE);
       post = CosEventComm::PushSupplier::_narrow(post_obj.in ());
 
@@ -266,7 +264,7 @@ TAO_CEC_TypedProxyPushConsumer::apply_policy
 }
 
 void
-TAO_CEC_TypedProxyPushConsumer::push (const CORBA::Any& /* event */)
+TAO_CEC_TypedProxyPushConsumer::push (CORBA::Any const & /* event */)
 {
   throw CORBA::NO_IMPLEMENT ();
 }
@@ -301,7 +299,7 @@ TAO_CEC_TypedProxyPushConsumer::disconnect_push_consumer ()
             {
               supplier->disconnect_push_supplier ();
             }
-          catch (const CORBA::Exception&)
+          catch (CORBA::Exception const &)
             {
               // Ignore exceptions, we must isolate other clients from
               // failures on this one.
@@ -332,14 +330,14 @@ CORBA::Object_ptr
 TAO_CEC_TypedProxyPushConsumer::get_typed_consumer ()
 
 {
-  CORBA::Object_var server =
+  CORBA::Object_var const server =
          default_POA_->id_to_reference (this->oid_.in ());
 
   return CORBA::Object::_duplicate (server.in());
 }
 
 void
-TAO_CEC_TypedProxyPushConsumer::invoke (const TAO_CEC_TypedEvent& typed_event)
+TAO_CEC_TypedProxyPushConsumer::invoke (TAO_CEC_TypedEvent const &typed_event)
 {
   TAO_CEC_TypedProxyPushConsumer_Guard ace_mon (this->lock_,
                                                 this->refcount_,
@@ -361,8 +359,7 @@ TAO_CEC_TypedProxyPushConsumer_Guard::
  :   lock_ (lock),
      refcount_ (refcount),
      typed_event_channel_ (ec),
-     proxy_ (proxy),
-     locked_ (0)
+     proxy_ (proxy)
 {
   ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
   // If the guard fails there is not much we can do, raising an
@@ -375,7 +372,7 @@ TAO_CEC_TypedProxyPushConsumer_Guard::
   if (!proxy->is_connected_i ())
     return;
 
-  this->locked_ = 1;
+  this->locked_ = true;
   ++this->refcount_;
 }
 

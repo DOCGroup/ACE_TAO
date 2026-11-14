@@ -16,6 +16,7 @@
 #include /**/ "ace/pre.h"
 
 #include <ace/ACE.h>
+#include <vector>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -28,7 +29,7 @@ namespace FTAPP
 {
   class FT_Creator
   {
-    typedef ACE_Vector<ACE_CString> StringVec;
+    using StringVec = std::vector<ACE_CString>;
    public:
     ///////////////////////////
     // construction/destruction
@@ -69,7 +70,6 @@ namespace FTAPP
     const ACE_TCHAR * registry_ior_;
     StringVec create_roles_;
     StringVec unregister_roles_;
-
 
     CosNaming::NamingContext_var naming_context_;
 

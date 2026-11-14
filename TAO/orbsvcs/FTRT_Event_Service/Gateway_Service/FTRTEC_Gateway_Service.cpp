@@ -1,5 +1,4 @@
 #include "ace/Get_Opt.h"
-#include "ace/SString.h"
 #include "ace/OS_NS_stdio.h"
 #include "orbsvcs/FtRtEvent/Utils/FTEC_Gateway.h"
 #include "orbsvcs/FtRtEvent/Utils/resolve_init.h"
@@ -9,101 +8,113 @@
 /// include this file to statically linked with Transaction Depth
 #include "orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Loader.h"
 
-namespace {
-  CORBA::ORB_var orb;
-  FtRtecEventChannelAdmin::EventChannel_var ftec;
-  ACE_TString ior_file_name;
-}
+#include <memory>
+#include <string>
 
-int parse_args (int argc, ACE_TCHAR *argv[])
+struct Options
 {
-  try{
+  std::string name { "FT_EventService" };
+  std::basic_string<ACE_TCHAR> ior_file_name;
+};
+
+int parse_args (
+  int argc,
+  ACE_TCHAR * argv[],
+  CORBA::ORB_ptr orb,
+  Options & options,
+  FtRtecEventChannelAdmin::EventChannel_var & ftec)
+{
+  try
+  {
     ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("i:n:o:"));
-    int opt;
-    CosNaming::Name name(1);
-    name.length(1);
+    int opt {};
+    CosNaming::Name name (1);
+    name.length (1);
     name[0].id = CORBA::string_dup ("FT_EventService");
 
-    while ((opt = get_opt ()) != EOF)
+    while ((opt = get_opt ()) != -1)
     {
       switch (opt)
       {
       case 'i':
         {
-          CORBA::Object_var obj = orb->string_to_object (get_opt.opt_arg ());
-          ftec = FtRtecEventChannelAdmin::EventChannel::_narrow (obj.in());
+          CORBA::Object_var const obj = orb->string_to_object (get_opt.opt_arg ());
+          ftec = FtRtecEventChannelAdmin::EventChannel::_narrow (obj.in ());
         }
         break;
       case 'n':
-        name[0].id = CORBA::string_dup(ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ()));
+        options.name = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
         break;
       case 'o':
-        ior_file_name = get_opt.opt_arg ();
+        options.ior_file_name = get_opt.opt_arg ();
         break;
       }
     }
 
-    if (CORBA::is_nil(ftec.in())) {
+    if (CORBA::is_nil (ftec.in ()))
+    {
       /// we should get the ftec from Naming Service
+      name[0].id = CORBA::string_dup (options.name.c_str ());
 
       CosNaming::NamingContext_var naming_context =
-        resolve_init<CosNaming::NamingContext>(orb.in(), "NameService");
+        resolve_init<CosNaming::NamingContext> (orb, "NameService");
 
-      ftec = resolve<FtRtecEventChannelAdmin::EventChannel>(naming_context.in(),
-        name);
+      ftec = resolve<FtRtecEventChannelAdmin::EventChannel> (
+        naming_context.in (), name);
 
-      if (CORBA::is_nil(ftec.in()))
-        ORBSVCS_ERROR_RETURN((LM_ERROR, "Cannot Find FT_EventService\n"), -1);
+      if (CORBA::is_nil (ftec.in ()))
+        ORBSVCS_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Cannot Find FT_EventService\n")), -1);
     }
   }
-  catch (const CORBA::Exception&){
-    ORBSVCS_ERROR_RETURN((LM_ERROR, "Cannot Find FT_EventService\n"), -1);
+  catch (CORBA::Exception const &)
+  {
+    ORBSVCS_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Cannot Find FT_EventService\n")), -1);
   }
   return 0;
 }
 
-int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 {
   try
   {
-    orb = CORBA::ORB_init (argc, argv);
+    CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+    FtRtecEventChannelAdmin::EventChannel_var ftec;
+    Options options {};
 
-    if (parse_args (argc, argv) == -1)
+    if (parse_args (argc, argv, orb.in (), options, ftec) != 0)
       return 1;
 
     PortableServer::POA_var
-      root_poa =  resolve_init<PortableServer::POA>(orb.in(), "RootPOA");
+      root_poa = resolve_init<PortableServer::POA> (orb.in (), "RootPOA");
 
     // create POAManager
     PortableServer::POAManager_var
-      mgr = root_poa->the_POAManager();
-
-
-    mgr->activate();
+      mgr = root_poa->the_POAManager ();
+    mgr->activate ();
 
     TAO_FTRTEC::FTEC_Gateway gateway_servant(orb.in(), ftec.in());
 
     RtecEventChannelAdmin::EventChannel_var gateway =
-      gateway_servant.activate(root_poa.in());
+      gateway_servant.activate (root_poa.in ());
 
-    if (ior_file_name.length())
+    if (!options.ior_file_name.empty ())
     {
-      CORBA::String_var str = orb->object_to_string(gateway.in());
+      CORBA::String_var const str = orb->object_to_string (gateway.in ());
 
-      FILE *output_file=
-        ACE_OS::fopen (ior_file_name.c_str(), "w");
-      if (output_file == nullptr)
+      std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+        ACE_OS::fopen (options.ior_file_name.c_str (), ACE_TEXT ("w")), ACE_OS::fclose);
+      if (!output_file)
         ORBSVCS_ERROR_RETURN ((LM_ERROR,
-        "Cannot open output file for writing IOR: %s",
-        ior_file_name.c_str()),
-        1);
-      ACE_OS::fprintf (output_file, "%s", str.in ());
-      ACE_OS::fclose (output_file);
+          ACE_TEXT ("Cannot open output file for writing IOR: %s"),
+          options.ior_file_name.c_str ()),
+          1);
+      ACE_OS::fprintf (output_file.get (), "%s", str.in ());
     }
 
-    orb->run();
+    orb->run ();
   }
-  catch (const CORBA::Exception&){
+  catch (CORBA::Exception const &)
+  {
     return 1;
   }
   return 0;

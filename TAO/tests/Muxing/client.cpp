@@ -1,23 +1,27 @@
 #include "Client_Task.h"
 #include "ace/Get_Opt.h"
+#include <string>
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
-bool shutdown_srv = false;
+struct Options
+{
+  std::basic_string<ACE_TCHAR> ior {ACE_TEXT ("file://test.ior")};
+  bool shutdown_server {};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:x"));
-  int c;
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
       case 'x':
-        shutdown_srv = true;
+        options.shutdown_server = true;
         break;
       case '?':
       default:
@@ -34,31 +38,32 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  Options options;
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
-      CORBA::Object_var tmp =
-        orb->string_to_object(ior);
+      CORBA::Object_var const tmp =
+        orb->string_to_object (options.ior.c_str ());
 
-      Test::Receiver_var receiver =
-        Test::Receiver::_narrow(tmp.in ());
+      Test::Receiver_var const receiver =
+        Test::Receiver::_narrow (tmp.in ());
 
       if (CORBA::is_nil (receiver.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
                              "Nil coordinator reference <%s>\n",
-                             ior),
+                             options.ior.c_str ()),
                             1);
         }
 
-      if (shutdown_srv)
+      if (options.shutdown_server)
         {
           receiver->shutdown ();
         }
@@ -75,14 +80,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
               }
           ACE_Thread_Manager::instance ()->wait ();
 
-          CORBA::Long count = receiver->get_event_count ();
+          CORBA::Long const count = receiver->get_event_count ();
 
           ACE_DEBUG ((LM_DEBUG, "(%P) - Receiver got %d messages\n",
                       count));
         }
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

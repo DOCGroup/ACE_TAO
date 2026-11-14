@@ -21,8 +21,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_SCIOP_Transport::~TAO_SCIOP_Transport () = default;
-
 TAO_SCIOP_Transport::TAO_SCIOP_Transport (TAO_SCIOP_Connection_Handler *handler,
                                           TAO_ORB_Core *orb_core)
   : TAO_Transport (TAO_TAG_SCIOP_PROFILE,
@@ -82,7 +80,6 @@ TAO_SCIOP_Transport::recv (char *buf,
     {
       if (errno == EWOULDBLOCK)
         return 0;
-
 
       return -1;
     }
@@ -182,20 +179,15 @@ TAO_SCIOP_Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
   TAO_Acceptor_Registry &ar =
     this->orb_core ()->lane_resources ().acceptor_registry ();
 
-  // Get the first acceptor in the registry
-  TAO_AcceptorSetIterator acceptor = ar.begin ();
-
   IIOP::ListenPointList listen_point_list;
 
-  for (;
-       acceptor != ar.end ();
-       acceptor++)
+  for (std::unique_ptr<TAO_Acceptor> const& acceptor : ar.acceptors ())
     {
       // Check whether it is a SCIOP acceptor
-      if ((*acceptor)->tag () == this->tag ())
+      if (acceptor->tag () == this->tag ())
         {
           if (this->get_listen_point (listen_point_list,
-                                      *acceptor) == -1)
+                                      acceptor.get ()) == -1)
             {
               TAOLIB_ERROR ((LM_ERROR,
                           "TAO (%P|%t) - SCIOP_Transport::set_bidir_info, "
@@ -263,7 +255,7 @@ TAO_SCIOP_Transport::get_listen_point (
                         -1);
     }
 
-  for (size_t index = 0; index != count; index++)
+  for (size_t index {}; index != count; ++index)
     {
       if (local_addr.get_ip_address() == endpoint_addr[index].get_ip_address())
         {

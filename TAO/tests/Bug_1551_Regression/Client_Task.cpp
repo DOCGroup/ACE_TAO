@@ -5,8 +5,8 @@ Client_Task::Client_Task (Test::Hello_ptr receiver,
                           ACE_Thread_Manager *thr_mgr)
   : ACE_Task_Base (thr_mgr)
   , receiver_ (Test::Hello::_duplicate (receiver))
-  , handler_ (new Reply_Handler(receiver, orb))
-  , handler_var_ (handler_->_this())
+  , handler_ (new Reply_Handler (receiver, orb))
+  , handler_var_ (handler_->_this ())
   , orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
@@ -18,13 +18,13 @@ Client_Task::svc ()
 
   try
     {
-      CORBA::Object_var object =
+      CORBA::Object_var const object =
         this->orb_->resolve_initial_references ("PolicyCurrent");
 
-      CORBA::PolicyCurrent_var policy_current =
+      CORBA::PolicyCurrent_var const policy_current =
         CORBA::PolicyCurrent::_narrow (object.in ());
 
-      TimeBase::TimeT timeout_period = 20 * 1000;
+      TimeBase::TimeT const timeout_period = 20 * 1000;
 
       CORBA::Any timeout_as_any;
       timeout_as_any <<= timeout_period;
@@ -41,20 +41,20 @@ Client_Task::svc ()
       policy_list[0]->destroy ();
 
       // Start 25 separate concurrent request streams
-      for (CORBA::Short i = 0; i != 25; ++i)
-      {
-        this->receiver_->sendc_short_sleep (this->handler_var_.in ());
-      }
+      for (CORBA::Short i {}; i != 25; ++i)
+        {
+          this->receiver_->sendc_short_sleep (this->handler_var_.in ());
+        }
 
       ACE_Time_Value tv (10, 0);
       this->orb_->run (tv);
     }
-  catch (const CORBA::TIMEOUT&)
+  catch (CORBA::TIMEOUT const &)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Client received an expected CORBA::TIMEOUT exception.\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("(%P|%t) Client_Task - caught exception:");
       return -1;

@@ -1,8 +1,6 @@
 #include "MessageFactory.h"
 
-
-int MessageFactory::destructorInvoked_ = 0;
-
+int MessageFactory::destructorInvoked_ {};
 
 MessageFactory::~MessageFactory ()
 {
@@ -10,9 +8,9 @@ MessageFactory::~MessageFactory ()
   destructorInvoked_ = 1;
 }
 
-
 CORBA::ValueBase *
 MessageFactory::create_for_unmarshal ()
 {
+  // ValueFactoryBase transfers ownership of the allocated valuetype to TAO.
   return new MessageImpl ();
 }

@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef EC_COUNTING_CONSUMER_H
 #define EC_COUNTING_CONSUMER_H
 
@@ -30,7 +29,6 @@
 class EC_Test_Export EC_Counting_Consumer : public POA_RtecEventComm::PushConsumer
 {
 public:
-  /// Constructor
   EC_Counting_Consumer (const char* name);
 
   /// Simple connect/disconnect methods..
@@ -46,8 +44,8 @@ public:
   // = The RtecEventComm::PushConsumer methods
 
   /// The skeleton methods.
-  virtual void push (const RtecEventComm::EventSet& events);
-  virtual void disconnect_push_consumer ();
+  void push (const RtecEventComm::EventSet& events) override;
+  void disconnect_push_consumer () override;
 
   /// Keep track of the number of events received.
   CORBA::ULong event_count;

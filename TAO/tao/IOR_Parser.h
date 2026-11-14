@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_IOR_PARSER_H
 #define TAO_IOR_PARSER_H
 
@@ -46,7 +45,6 @@ namespace CORBA
 class TAO_Export TAO_IOR_Parser : public ACE_Service_Object
 {
 public:
-  /// The destructor
   TAO_IOR_Parser () = default;
   ~TAO_IOR_Parser () override;
 

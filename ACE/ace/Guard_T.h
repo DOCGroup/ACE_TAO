@@ -74,7 +74,6 @@ public:
   /// @a become_owner parameter indicates whether the guard should release
   /// the lock implicitly on destruction. The @a block parameter is
   /// ignored and is used here to disambiguate with the preceding
-  /// constructor.
   ACE_Guard (ACE_LOCK &l, bool block, int become_owner);
 
   /// Implicitly release the lock.
@@ -120,8 +119,10 @@ protected:
   int owner_;
 
 private:
-  void operator= (const ACE_Guard<ACE_LOCK> &) = delete;
-  ACE_Guard (const ACE_Guard<ACE_LOCK> &) = delete;
+  ACE_Guard (ACE_Guard const &) = delete;
+  ACE_Guard (ACE_Guard &&) = delete;
+  ACE_Guard &operator= (ACE_Guard const &) = delete;
+  ACE_Guard &operator= (ACE_Guard &&) = delete;
 };
 
 /**
@@ -183,7 +184,7 @@ class ACE_Read_Guard : public ACE_Guard<ACE_LOCK>
 {
 public:
   /// Implicitly and automatically acquire a read lock.
-  ACE_Read_Guard (ACE_LOCK& m);
+  explicit ACE_Read_Guard (ACE_LOCK& m);
 
   /// Implicitly and automatically acquire (or try to acquire) a read
   /// lock.
@@ -280,8 +281,10 @@ private:
   using Guard_Type = ACE_Guard<ACE_LOCK>;
   // FUZZ: enable check_for_ACE_Guard
 
-  void operator= (const ACE_TSS_Guard<ACE_LOCK> &) = delete;
-  ACE_TSS_Guard (const ACE_TSS_Guard<ACE_LOCK> &) = delete;
+  ACE_TSS_Guard (ACE_TSS_Guard const &) = delete;
+  ACE_TSS_Guard (ACE_TSS_Guard &&) = delete;
+  ACE_TSS_Guard &operator= (ACE_TSS_Guard const &) = delete;
+  ACE_TSS_Guard &operator= (ACE_TSS_Guard &&) = delete;
 };
 
 /**

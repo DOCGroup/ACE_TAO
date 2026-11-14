@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    CSD_TP_Servant_State_Map.h
  *
  *  @author  Tim Bradley <bradley_t@ociweb.com>
  */
-//=============================================================================
-
 #ifndef TAO_CSD_TP_SERVANT_STATE_MAP_H
 #define TAO_CSD_TP_SERVANT_STATE_MAP_H
 
@@ -44,12 +40,9 @@ namespace TAO
     class TAO_CSD_TP_Export TP_Servant_State_Map
     {
     public:
-      /// Default Constructor.
       TP_Servant_State_Map() = default;
 
-      /// Destructor.
-      ~TP_Servant_State_Map();
-
+      ~TP_Servant_State_Map() = default;
       /// Accessor for the servant busy flag.
       TP_Servant_State* find(PortableServer::Servant servant);
 
@@ -59,12 +52,12 @@ namespace TAO
       /// Remove the servant from map.
       void remove(PortableServer::Servant servant);
 
-    private:
       TP_Servant_State_Map (TP_Servant_State_Map const &) = delete;
       TP_Servant_State_Map &operator= (TP_Servant_State_Map const &) = delete;
       TP_Servant_State_Map (TP_Servant_State_Map &&) = delete;
       TP_Servant_State_Map &operator= (TP_Servant_State_Map &&) = delete;
 
+    private:
       /// Underlying Map Type - Hash-Based -
       /// Key Type: void*, Value Type: TP_Servant_State::HandleType
       using MapType = ACE_Hash_Map_Manager_Ex<void*,

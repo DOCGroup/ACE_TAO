@@ -10,31 +10,34 @@
 
 #include "ace/TMCast/Group.hpp"
 
+#include <cstdio>
+#include <cstring>
+
 class Args {};
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
-  int status = 0;
+  int status {};
   try
   {
-    if (argc < 4) throw Args ();
+    if (argc < 4)
+      throw Args {};
 
-    bool receiver (true);
+    if (argv[1][0] != 'r' && argv[1][0] != 's')
+      throw Args {};
+    bool const receiver {argv[1][0] == 'r'};
 
-    if (argv[1][0] == 'r') receiver = true;
-    else if (argv[1][0] == 's') receiver = false;
-    else throw Args ();
+    if (!receiver)
+      ACE_OS::srand (static_cast<u_int> (ACE_OS::time ()));
 
-    if (!receiver) ACE_OS::srand ((u_int) ACE_OS::time ());
-
-    ACE_INET_Addr address (argv[3]);
+    ACE_INET_Addr const address (argv[3]);
 
     ACE_TMCast::Group group (address, ACE_TEXT_ALWAYS_CHAR (argv[2]));
 
     if (receiver)
     {
-      for (char buffer[256];;)
+      for (char buffer[256] {}; ;)
       {
         group.recv (buffer, sizeof (buffer));
 
@@ -43,25 +46,25 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
     }
     else
     {
-      char buffer[256];
+      char buffer[256] {};
+      ACE_UINT64 const usec_per_sec {1000000U};
 
-      for (unsigned long i = 0; i < 1000; i++)
+      for (unsigned long i {}; i < 1000; ++i)
       {
         // Sleep some random time around 1 sec.
 
-        ACE_UINT64 tmpl = 1000000U;
-        unsigned long t =
-          static_cast<unsigned long> (((tmpl * ACE_OS::rand ()) / RAND_MAX));
+        unsigned long const t {
+          static_cast<unsigned long> ((usec_per_sec * ACE_OS::rand ()) / RAND_MAX)};
 
         // ACE_DEBUG ((LM_DEBUG, "sleeping for %u\n", t));
 
         ACE_OS::sleep (ACE_Time_Value (0, t));
 
-        ACE_OS::sprintf (buffer, "message # %lu", i);
+        std::snprintf (buffer, sizeof (buffer), "message # %lu", i);
 
         try
         {
-          group.send (buffer, ACE_OS::strlen (buffer) + 1);
+          group.send (buffer, std::strlen (buffer) + 1);
         }
         catch (ACE_TMCast::Group::Aborted const&)
         {
@@ -74,18 +77,18 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
   {
     ACE_ERROR ((LM_ERROR,
                 "Usage: member {r|s} <id> <IPv4 mcast address>:<port>\n"));
-    status++;
+    ++status;
   }
   catch (ACE_TMCast::Group::Failed const&)
   {
     ACE_ERROR ((LM_ERROR,
                 "Group failure. Perhaps I am alone in the group.\n"));
-    status++;
+    ++status;
   }
   catch (ACE_TMCast::Group::InsufficienSpace const&)
   {
     ACE_ERROR ((LM_ERROR, "Insufficient space in receive buffer.\n"));
-    status++;
+    ++status;
   }
   return status;
 }

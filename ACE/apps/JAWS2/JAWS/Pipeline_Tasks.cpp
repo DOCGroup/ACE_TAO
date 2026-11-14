@@ -5,7 +5,6 @@
 #include "JAWS/IO_Handler.h"
 #include "JAWS/Policy.h"
 
-
 JAWS_Pipeline_Handler::JAWS_Pipeline_Handler ()
   : policy_ (0)
 {

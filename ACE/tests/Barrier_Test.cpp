@@ -10,28 +10,24 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Barrier.h"
 #include "ace/Thread_Manager.h"
 
-
 #if defined (ACE_HAS_THREADS)
 
+/// Arguments passed to each test thread.
 struct Tester_Args
-  // = TITLE
-  //     These arguments are passed into each test thread.
 {
   Tester_Args (ACE_Barrier &tb, int i)
     : tester_barrier_ (tb),
     n_iterations_ (i) {}
 
+  /// Reference to the tester barrier controlling each thread iteration.
   ACE_Barrier &tester_barrier_;
-  // Reference to the tester barrier.  This controls each iteration
-  // of the tester function running in every thread.
 
+  /// Number of iterations to run.
   int n_iterations_;
-  // Number of iterations to run.
 };
 
 // Iterate <n_iterations> time printing off a message and "waiting"
@@ -91,7 +87,7 @@ run_main (int, ACE_TCHAR *[])
        iteration_count < ACE_MAX_ITERATIONS;
        iteration_count++)
     {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("starting iteration %d\n"),
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("starting iteration %B\n"),
                   iteration_count));
 
       if (ACE_Thread_Manager::instance ()->spawn_n

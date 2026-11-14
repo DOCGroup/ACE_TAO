@@ -47,7 +47,7 @@ public:
   void add (AST_Annotation_Appls const &other);
 
   bool empty () const;
-  std::size_t size () const;
+  size_t size () const;
 
   /// Iterate through vector_
   ///{
@@ -60,7 +60,7 @@ public:
   /**
    * Direct access to the AST_Annotation_Appl pointers by index.
    */
-  AST_Annotation_Appl *operator[] (std::size_t index) const;
+  AST_Annotation_Appl *operator[] (size_t index) const;
 
   /**
    * Return last AST_Annotation_Appl that applies the AST_Annotation_Decl

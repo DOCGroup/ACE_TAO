@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file     UIPMC_Message_Block_Data_Iterator.h
  *
  *  @author Frank Hunleth <frank@hunleth.com>
  */
-//=============================================================================
 
 #ifndef TAO_UIPMC_MESSAGE_BLOCK_DATA_ITERATOR_H
 #define TAO_UIPMC_MESSAGE_BLOCK_DATA_ITERATOR_H
@@ -32,7 +30,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class UIPMC_Message_Block_Data_Iterator
 {
 public:
-  /// Constructor
   UIPMC_Message_Block_Data_Iterator (iovec *iov, int iovcnt);
 
   /// Get the next data block that has a size less than or equal
@@ -42,20 +39,20 @@ public:
 private:
   iovec *iov_;
   int iovcnt_;
-  int iov_index_;
+  int iov_index_ {};
 
   // Point internal to a message block, if we have to split one up.
-  char *iov_ptr_;
+  char *iov_ptr_ {};
 
   // Length used in a split message block.
-  size_t iov_len_left_;
+  size_t iov_len_left_ {};
 
   // Current message iterator state.
   enum class State
   {
     INTER_BLOCK,
     INTRA_BLOCK
-  } state_;
+  } state_ {State::INTER_BLOCK};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

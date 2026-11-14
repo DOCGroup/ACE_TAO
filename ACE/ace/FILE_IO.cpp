@@ -50,7 +50,7 @@ ACE_FILE_IO::send (size_t n, ...) const
 #else
   va_list argp;
   int total_tuples = ACE_Utils::truncate_cast<int> (n / 2);
-  iovec *iovp = nullptr;
+  iovec *iovp {};
 #if defined (ACE_HAS_ALLOCA)
   iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
 #else
@@ -68,7 +68,7 @@ ACE_FILE_IO::send (size_t n, ...) const
 
   va_start (argp, n);
 
-  for (int i = 0; i < total_tuples; i++)
+  for (int i = 0; i < total_tuples; ++i)
     {
       iovp[i].iov_base = va_arg (argp, char *);
       iovp[i].iov_len  = va_arg (argp, int);
@@ -105,7 +105,7 @@ ACE_FILE_IO::recv (size_t n, ...) const
 #else
   va_list argp;
   int total_tuples = ACE_Utils::truncate_cast<int> (n / 2);
-  iovec *iovp = nullptr;
+  iovec *iovp {};
 #if defined (ACE_HAS_ALLOCA)
   iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
 #else
@@ -123,7 +123,7 @@ ACE_FILE_IO::recv (size_t n, ...) const
 
   va_start (argp, n);
 
-  for (int i = 0; i < total_tuples; i++)
+  for (int i = 0; i < total_tuples; ++i)
     {
       iovp[i].iov_base = va_arg (argp, char *);
       iovp[i].iov_len  = va_arg (argp, int);

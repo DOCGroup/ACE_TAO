@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_SERVER_REQUEST_INTERCEPTOR_H
 #define TAO_SERVER_REQUEST_INTERCEPTOR_H
 
@@ -22,7 +21,7 @@
 #include "tao/PortableInterceptorC.h"
 #include "tao/LocalObject.h"
 
-#include "ace/Atomic_Op.h"
+#include <atomic>
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -47,8 +46,12 @@ class ServerRequestInterceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
-  ServerRequestInterceptor ();
+  ServerRequestInterceptor () = default;
+
+  ServerRequestInterceptor (ServerRequestInterceptor const &) = delete;
+  ServerRequestInterceptor (ServerRequestInterceptor &&) = delete;
+  ServerRequestInterceptor &operator= (ServerRequestInterceptor const &) = delete;
+  ServerRequestInterceptor &operator= (ServerRequestInterceptor &&) = delete;
 
   /**
    * @name Methods Required by the ServerRequestInterceptor
@@ -57,45 +60,43 @@ public:
    * These are the canonical methods required for all
    * ServerRequestInterceptors.
    */
-  //@{
-  virtual char * name ();
+  /// @{
+  char * name () override;
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual void receive_request_service_contexts (
-      PortableInterceptor::ServerRequestInfo_ptr ri);
+  void receive_request_service_contexts (
+      PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void receive_request (
-      PortableInterceptor::ServerRequestInfo_ptr ri);
+  void receive_request (
+      PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_reply (
-      PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_reply (
+      PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_exception (
-      PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_exception (
+      PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_other (
-      PortableInterceptor::ServerRequestInfo_ptr ri);
-  //@}
+  void send_other (
+      PortableInterceptor::ServerRequestInfo_ptr ri) override;
+  /// @}
 
   CORBA::Long request_count ();
 
 protected:
-  /// Destructor.
   /**
    * Protected destructor to enforce correct memory management via
    * reference counting.
    */
-  ~ServerRequestInterceptor ();
+  ~ServerRequestInterceptor () override = default;
 
 private:
   /// The number of requests that have arrived on the server.
-  ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> request_count_;
+  std::atomic<CORBA::Long> request_count_ {CORBA::Long {}};
 };
 
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
-
 
 #endif  /* TAO_SERVER_REQUEST_INTERCEPTOR_H */

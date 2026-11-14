@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Any_Unknown_IDL_Type.h
  *
  *  @author Carlos O'Ryan
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #ifndef TAO_ANY_UNKNOWN_IDL_TYPE_H
 #define TAO_ANY_UNKNOWN_IDL_TYPE_H
@@ -38,6 +36,11 @@ namespace TAO
   class TAO_AnyTypeCode_Export Unknown_IDL_Type : public Any_Impl
   {
   public:
+    Unknown_IDL_Type (Unknown_IDL_Type const &) = delete;
+    Unknown_IDL_Type (Unknown_IDL_Type &&) = delete;
+    Unknown_IDL_Type &operator= (Unknown_IDL_Type const &) = delete;
+    Unknown_IDL_Type &operator= (Unknown_IDL_Type &&) = delete;
+
     Unknown_IDL_Type (CORBA::TypeCode_ptr,
                       TAO_InputCDR &cdr);
 
@@ -46,7 +49,7 @@ namespace TAO
     ~Unknown_IDL_Type () override;
 
     CORBA::Boolean marshal_value (TAO_OutputCDR &) override;
-    const void *value () const;
+    void const *value () const;
     void free_value () override;
 
     TAO_InputCDR &_tao_get_cdr ();

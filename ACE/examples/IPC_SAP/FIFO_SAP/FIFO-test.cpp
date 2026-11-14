@@ -16,7 +16,7 @@
 #define EXEC_NAME               "more"
 #define EXEC_COMMAND_ARG        "more"
 
-static const ACE_TCHAR *FIFO_NAME = ACE_TEXT ("/tmp/fifo");
+static ACE_TCHAR const * const FIFO_NAME = ACE_TEXT ("/tmp/fifo");
 
 static int
 do_child (ACE_FIFO_Recv &fifo_reader)
@@ -26,9 +26,8 @@ do_child (ACE_FIFO_Recv &fifo_reader)
       || ACE_OS::dup (fifo_reader.get_handle ()) == ACE_INVALID_HANDLE)
     return -1;
 
-  char *argv[2];
-  argv[0] = const_cast<char *> (EXEC_COMMAND_ARG);
-  argv[1] = nullptr;
+  char command[] = EXEC_COMMAND_ARG;
+  char *argv[] {command, nullptr};
 
   if (ACE_OS::execvp (EXEC_NAME, argv) == -1)
     return -1;
@@ -36,12 +35,12 @@ do_child (ACE_FIFO_Recv &fifo_reader)
 }
 
 static int
-do_parent (const ACE_TCHAR fifo_name[],
-           ACE_TCHAR input_filename[])
+do_parent (ACE_TCHAR const fifo_name[],
+           ACE_TCHAR const input_filename[])
 {
   ACE_FIFO_Send fifo_sender (fifo_name, O_WRONLY | O_CREAT);
-  ssize_t len;
-  char buf[BUFSIZ];
+  ssize_t len {};
+  char buf[BUFSIZ] {};
 
   if (fifo_sender.get_handle () == ACE_INVALID_HANDLE)
     return -1;
@@ -115,7 +114,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       // wait for child to ACE_OS::exit.
-      if (ACE_OS::waitpid (child_pid, (ACE_exitcode *) nullptr, 0) == -1)
+      if (ACE_OS::waitpid (child_pid, nullptr, 0) == -1)
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("%n: %p\n%a"),
                     ACE_TEXT ("waitpid"),

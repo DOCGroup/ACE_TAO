@@ -6,7 +6,7 @@
 #include <iostream>
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior = ACE_TEXT ("file://Messenger.ior");
+ACE_TCHAR const *ior = ACE_TEXT ("file://Messenger.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -33,7 +33,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
   // Indicates successful parsing of the command line
   return 0;
 }
-
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
@@ -93,16 +92,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       IOP::Codec_var codec =
         codec_factory->create_codec (encoding);
 
-      CORBA::Long uid = 64321;
+      constexpr CORBA::Long uid = 64321;
 
       CORBA::Any uid_as_any;
 
       uid_as_any <<= uid;
-      CORBA::OctetSeq client_uid = *codec->encode (uid_as_any);
-      messenger->send_message( client_uid );
+      CORBA::OctetSeq_var const client_uid {codec->encode (uid_as_any)};
+      messenger->send_message (client_uid.in ());
     }
 
-  catch(const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       std::cerr << "Exception in MessengerClient: " << ex << std::endl;
       return 1;

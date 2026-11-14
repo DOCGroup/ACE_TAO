@@ -4,19 +4,8 @@
 #include "orbsvcs/Event_Service_Constants.h"
 #include "EventChannel_i.h"
 #include <memory>
-#include <memory>
 
-CosEC_ServantBase::CosEC_ServantBase ()
-  :poa_ (PortableServer::POA::_nil ()),
-   rtec_servant_ (0),
-   cosec_servant_ (0),
-   rtec_ (RtecEventChannelAdmin::EventChannel::_nil ()),
-   cosec_ (CosEventChannelAdmin::EventChannel::_nil ()),
-   eventTypeIds_ (0),
-   eventSourceIds_ (0),
-   source_type_pairs_ (0)
-{
-}
+CosEC_ServantBase::CosEC_ServantBase () = default;
 
 void
 CosEC_ServantBase::init (PortableServer::POA_ptr thispoa,
@@ -53,26 +42,24 @@ CosEC_ServantBase::activate ()
   this->activate_rtec ();
 
   // Activate the CosEC
-  int retval = this->activate_cosec ();
+  int const retval = this->activate_cosec ();
   if (retval != 0)
     return -1;
 
    // Activate ourselves..
    // Note that the POA is <thispoa_>
 
-   PortableServer::ObjectId_var oid =
+   PortableServer::ObjectId_var const oid =
      this->thispoa_->activate_object (this);
 
-   this->_remove_ref ();
-
-   CORBA::Object_var obj =
+   CORBA::Object_var const obj =
      this->thispoa_->id_to_reference (oid.in ());
 
    return 0; // success.
 }
 
 int
-CosEC_ServantBase::activate (const char* servant_id)
+CosEC_ServantBase::activate (char const *servant_id)
 {
   ACE_ASSERT (!CORBA::is_nil (this->poa_.in ()));
   ACE_ASSERT (!CORBA::is_nil (this->thispoa_.in ()));
@@ -81,11 +68,11 @@ CosEC_ServantBase::activate (const char* servant_id)
   this->activate_rtec ();
 
   // Activate the CosEC
-  int retval = this->activate_cosec ();
+  int const retval = this->activate_cosec ();
   if (retval != 0)
     return -1;
 
-  PortableServer::ObjectId_var oid =
+  PortableServer::ObjectId_var const oid =
     PortableServer::string_to_ObjectId (servant_id);
 
   // Activate ourselves.
@@ -93,9 +80,7 @@ CosEC_ServantBase::activate (const char* servant_id)
   this->thispoa_->activate_object_with_id (oid.in (),
                                            this);
 
-  this->_remove_ref ();
-
-  CORBA::Object_var obj =
+  CORBA::Object_var const obj =
     this->thispoa_->id_to_reference (oid.in ());
 
   return 0; // success.
@@ -105,12 +90,12 @@ void
 CosEC_ServantBase::activate_rtec ()
 {
   // Activate the Rtec
-  PortableServer::ObjectId_var oid =
+  PortableServer::ObjectId_var const oid =
     this->poa_->activate_object (this->rtec_servant_);
 
   this->rtec_servant_->_remove_ref ();
 
-  CORBA::Object_var obj =
+  CORBA::Object_var const obj =
     this->poa_->id_to_reference (oid.in ());
 
   this->rtec_ =
@@ -121,23 +106,23 @@ int
 CosEC_ServantBase::activate_cosec ()
 {
  // Initialize the CosEC servant.
-  RtecBase::handle_t supp_handle = 0;
+  RtecBase::handle_t supp_handle {};
 
   this->init_SupplierQOS (supp_handle,
                           this->supplier_qos_,
                           this->source_type_pairs_);
 
-  RtecBase::handle_t cons_handle = 0;
+  RtecBase::handle_t cons_handle {};
 
   this->init_ConsumerQOS (cons_handle,
                           this->consumer_qos_,
                           this->eventTypeIds_,
                           this->eventSourceIds_);
 
-  const RtecEventChannelAdmin::ConsumerQOS &consumerqos =
+  RtecEventChannelAdmin::ConsumerQOS const &consumerqos =
     this->consumer_qos_.get_ConsumerQOS ();
 
-  const RtecEventChannelAdmin::SupplierQOS &supplierqos =
+  RtecEventChannelAdmin::SupplierQOS const &supplierqos =
     this->supplier_qos_.get_SupplierQOS ();
 
   if (this->cosec_servant_->init (consumerqos,
@@ -146,12 +131,12 @@ CosEC_ServantBase::activate_cosec ()
     return -1;
 
   // Activate the CosEC
-  PortableServer::ObjectId_var oid =
+  PortableServer::ObjectId_var const oid =
     this->poa_->activate_object (this->cosec_servant_);
 
   this->cosec_servant_->_remove_ref ();
 
-  CORBA::Object_var obj =
+  CORBA::Object_var const obj =
     this->poa_->id_to_reference (oid.in ());
 
   this->cosec_ =
@@ -168,7 +153,7 @@ CosEC_ServantBase::deactivate ()
   this->deactivate_cosec ();
 
   // Finally we go away..
-  PortableServer::ObjectId_var oid =
+  PortableServer::ObjectId_var const oid =
     this->thispoa_->servant_to_id (this);
 
   // deactivate from the poa.
@@ -179,7 +164,7 @@ void
 CosEC_ServantBase::deactivate_rtec ()
 {
   // Deactivate the rtec.
-  PortableServer::ObjectId_var oid =
+  PortableServer::ObjectId_var const oid =
     this->poa_->servant_to_id (this->rtec_servant_);
 
   // deactivate from the poa.
@@ -190,7 +175,7 @@ void
 CosEC_ServantBase::deactivate_cosec ()
 {
   // Deactivate the cosec.
-  PortableServer::ObjectId_var oid =
+  PortableServer::ObjectId_var const oid =
     this->poa_->servant_to_id (this->cosec_servant_);
 
   // deactivate from the poa.
@@ -256,11 +241,11 @@ CosEC_ServantBase::init_SupplierQOS (RtecBase::handle_t supp_handle,
   // Something else: please make the EventSourceID for the
   // supplier also an option...
 
-  const ACE_TCHAR *c = ACE_TEXT(" "); // space
-  ACE_TCHAR *tok = 0;
+  ACE_TCHAR const * const c = ACE_TEXT(" "); // space
+  ACE_TCHAR *tok {};
 
  // if nothing was specified on the command line use defaults..
-  if (source_type_pairs == 0)
+  if (source_type_pairs == nullptr)
     supplier_qos.insert (1,
                          ACE_ES_EVENT_ANY,
                          supp_handle,
@@ -268,9 +253,11 @@ CosEC_ServantBase::init_SupplierQOS (RtecBase::handle_t supp_handle,
   else // parse the event types..
     {
       tok = ACE_OS::strtok (source_type_pairs, c);
-      if (tok == 0) // error
+      if (tok == nullptr) // error
         {
-          ACE_DEBUG ((LM_DEBUG, "error parsing source,event pairs for SupplierQOS, defaulting to source id = 1, eventid = ACE_ES_EVENT_ANY"));
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("error parsing source,event pairs for SupplierQOS, ")
+                      ACE_TEXT ("defaulting to source id = 1, eventid = ACE_ES_EVENT_ANY")));
 
           supplier_qos.insert (1,
                                ACE_ES_EVENT_ANY,
@@ -281,12 +268,12 @@ CosEC_ServantBase::init_SupplierQOS (RtecBase::handle_t supp_handle,
         // we just use 1 source-type pair in the event channel.
         // so scan for the 1st pair only.
         {
-          int source_val = 0, type_val = 0;
-          source_val = ACE_OS::atoi (tok);
+          int const source_val = ACE_OS::atoi (tok);
 
-          tok = ACE_OS::strtok (0, c);
+          tok = ACE_OS::strtok (nullptr, c);
 
-          if (tok != 0)
+          int type_val {};
+          if (tok != nullptr)
             type_val = ACE_OS::atoi (tok);
 
           ACE_DEBUG ((LM_DEBUG, "supplier_qos::insert (%d, %d)\n",
@@ -312,15 +299,15 @@ CosEC_ServantBase::init_ConsumerQOS (RtecBase::handle_t cons_handle,
   // them (just call insert_source() or insert_type() in the
   // parse_args routine).
 
-  const ACE_TCHAR *c = ACE_TEXT(" "); // space
-  ACE_TCHAR *tok = 0;
+  ACE_TCHAR const * const c = ACE_TEXT(" "); // space
+  ACE_TCHAR *tok {};
 
   consumer_qos.start_disjunction_group ();
 
   // insert the event ids first..
 
   // if nothing was specified on the command line use defaults..
-  if (eventTypeIds == 0)
+  if (eventTypeIds == nullptr)
     {
       //consumer_qos.insert_type (ACE_ES_EVENT_ANY, // default
       //                             cons_handle);
@@ -331,7 +318,7 @@ CosEC_ServantBase::init_ConsumerQOS (RtecBase::handle_t cons_handle,
   else // parse the event types..
     {
       tok = ACE_OS::strtok (eventTypeIds, c);
-      if (tok == 0) // error
+      if (tok == nullptr) // error
         {
           ACE_DEBUG ((LM_DEBUG, "error parsing eventIds for ConsumerQOS, defaulting to 1"));
           consumer_qos.insert_type (ACE_ES_EVENT_ANY,
@@ -340,26 +327,26 @@ CosEC_ServantBase::init_ConsumerQOS (RtecBase::handle_t cons_handle,
       else
         do
           {
-            int type_val = ACE_OS::atoi (tok);
+            int const type_val = ACE_OS::atoi (tok);
             ACE_DEBUG ((LM_DEBUG, "consumer_qos::insert_type (%d)\n",
                         type_val));
             consumer_qos.insert_type (type_val,
                                       cons_handle);
-            tok = ACE_OS::strtok (0, c);
+            tok = ACE_OS::strtok (nullptr, c);
           }
-        while (tok != 0);
+        while (tok != nullptr);
     }
 
   // repeat for source ids..
 
   // if nothing was specified on the command line use defaults..
-  if (eventSourceIds == 0)
+  if (eventSourceIds == nullptr)
     consumer_qos.insert_source (1, // default = 1
                                 cons_handle);
   else // parse the event types..
     {
       tok = ACE_OS::strtok (eventSourceIds, c);
-      if (tok == 0) // error
+      if (tok == nullptr) // error
         {
           ACE_DEBUG ((LM_DEBUG, "error parsing sourceIds for ConsumerQOS, defaulting to 1"));
           consumer_qos.insert_source (1, // default = 1
@@ -368,14 +355,14 @@ CosEC_ServantBase::init_ConsumerQOS (RtecBase::handle_t cons_handle,
       else
         do
           {
-            int source_val = ACE_OS::atoi (tok);
+            int const source_val = ACE_OS::atoi (tok);
             ACE_DEBUG ((LM_DEBUG, "consumer_qos::insert_source (%d)\n",
                         source_val));
             consumer_qos.insert_type (source_val,
                                       cons_handle);
-            tok = ACE_OS::strtok (0, c);
+            tok = ACE_OS::strtok (nullptr, c);
           }
-        while (tok != 0);
+        while (tok != nullptr);
     }
 }
 

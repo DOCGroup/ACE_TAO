@@ -3,7 +3,6 @@
 #include "tao/debug.h"
 #include "Events.h"
 
-
 /***************************************************************************/
 
 Event_StructuredPushConsumer::Event_StructuredPushConsumer (Events *test_client)
@@ -13,8 +12,7 @@ Event_StructuredPushConsumer::Event_StructuredPushConsumer (Events *test_client)
 
 void
 Event_StructuredPushConsumer::push_structured_event (
-    const CosNotification::StructuredEvent & notification
-  )
+    const CosNotification::StructuredEvent & notification)
 {
   int event_num;
   notification.filterable_data[0].value >>= event_num;
@@ -97,7 +95,7 @@ Events::init (int argc,
   this->consumer_->init (root_poa_.in ());
   this->consumer_->connect (this->consumer_admin_.in ());
 
-  Event_StructuredPushConsumer* consumer2 = 0;
+  Event_StructuredPushConsumer* consumer2 {};
   ACE_NEW_RETURN (consumer2,
                   Event_StructuredPushConsumer (this),
                   -1);
@@ -122,7 +120,7 @@ Events::parse_args (int argc,
 {
     ACE_Arg_Shifter arg_shifter (argc,
                                  argv);
-    const ACE_TCHAR *current_arg = 0;
+    ACE_TCHAR const *current_arg {};
 
     while (arg_shifter.is_anything_left ())
     {
@@ -197,9 +195,9 @@ Events::on_event_received ()
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG,
                 "event count = #%d\n",
-                this->result_count_.value ()));
+                this->result_count_.load ()));
 
-  if (this->result_count_ == 2 * this->event_count_)
+  if (this->result_count_.load () == 2 * this->event_count_)
     {
       this->end_test ();
     }
@@ -242,7 +240,7 @@ Events::run_test ()
 
   CORBA::Short prio = CosNotification::LowestPriority;
 
-  for (int i = 0; i < this->event_count_; ++i)
+  for (int i {}; i < this->event_count_; ++i)
     {
       event.filterable_data[0].value <<= (CORBA::Long)i;
 
@@ -268,7 +266,7 @@ Events::check_results ()
   // Destroy the channel.
   this->ec_->destroy ();
 
-  if (this->result_count_ == 2 * this->event_count_)
+  if (this->result_count_.load () == 2 * this->event_count_)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Events test success\n"));
@@ -303,19 +301,19 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       events.ORB_run();
     }
-  catch (const CORBA::Exception& se)
+  catch (CORBA::Exception const &se)
     {
       se._tao_print_exception ("Error: ");
       return 1;
     }
 
-  int status = 0;
+  int status {};
 
   try
     {
       status = events.check_results ();
     }
-  catch (const CORBA::Exception& se)
+  catch (CORBA::Exception const &se)
     {
       se._tao_print_exception ("Error: ");
       status = 1;

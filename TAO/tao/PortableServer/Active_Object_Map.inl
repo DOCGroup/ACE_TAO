@@ -26,7 +26,7 @@ TAO_Active_Object_Map::bind_using_system_id_returning_system_id (
       if (result == 0)
         {
           ACE_NEW_RETURN (system_id,
-                          PortableServer::ObjectId (std::move(id)),
+                          PortableServer::ObjectId (id),
                           -1);
         }
 
@@ -88,7 +88,7 @@ TAO_Active_Object_Map::find_system_id_using_user_id (
 
   TAO_Active_Object_Map_Entry *entry {};
   int result =
-    this->id_uniqueness_strategy_->bind_using_user_id (0,
+    this->id_uniqueness_strategy_->bind_using_user_id (nullptr,
                                                        user_id,
                                                        priority,
                                                        entry);
@@ -243,7 +243,7 @@ TAO_Active_Object_Map::find_user_id_using_system_id (
   if (this->id_hint_strategy_->recover_key (system_id, id) == 0)
     {
       ACE_NEW_RETURN (user_id,
-                      PortableServer::ObjectId (std::move(id)),
+                      PortableServer::ObjectId (id),
                       -1);
     }
 

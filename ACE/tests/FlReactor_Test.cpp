@@ -15,10 +15,7 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
-
-
 
 #include "ace/FlReactor/FlReactor.h"
 #include "ace/Event_Handler.h"
@@ -40,7 +37,6 @@
 class Test_Window : public Fl_Gl_Window
 {
 public:
-  /// Constructor
   Test_Window (int x, int y, int w, int h,
                const char * l = nullptr);
 
@@ -50,7 +46,7 @@ public:
 
 private:
   /// from the Fl_Gl_Window...
-  virtual void draw ();
+  void draw () override;
 
   int sides_;
 };
@@ -79,7 +75,7 @@ Test_Window::sides (int s)
 void
 Test_Window::incr_sides ()
 {
-  this->sides_++;
+  ++this->sides_;
   if (this->sides_ > 10)
     this->sides_ = 3;
   this->redraw ();
@@ -130,10 +126,10 @@ public:
                       Fl_Box* box = nullptr);
 
   //FUZZ: disable check_for_lack_ACE_OS
-  virtual int open (void *);
+  int open (void *) override;
   //FUZZ: enble check_for_lack_ACE_OS
 
-  virtual int handle_input (ACE_HANDLE);
+  int handle_input (ACE_HANDLE) override;
 
 private:
   Test_Window *w_;
@@ -146,7 +142,7 @@ public:
   Acceptor (Test_Window *w = nullptr,
             Fl_Box *box = nullptr);
 
-  virtual int make_svc_handler (Connection_Handler *&sh);
+  int make_svc_handler (Connection_Handler *&sh) override;
 
 private:
   Test_Window* w_;

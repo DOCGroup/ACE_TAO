@@ -10,35 +10,35 @@
  */
 //=============================================================================
 
-#include    <string>
-#include    <map>
-#include    <algorithm>
-#include    <iostream>
-#include    "icp.h"
+#include "icp.h"
 
-using namespace std;
+#include <algorithm>
+#include <cstddef>
+#include <cstdlib>
+#include <cstring>
+#include <fstream>
+#include <iostream>
+#include <map>
+#include <string>
+#include <utility>
 
-// The following header is #included automatically by ACE+TAO.
-// Therefore, they don't need to be included explicitly.
-//#include    <stdlib.h>
-
-enum DeviceType { thermometer, thermostat };
+enum class DeviceType { thermometer = 0, thermostat = 1 };
 
 struct DeviceState
 {                // State for a device
-  DeviceType type;
-  const char *model;
-  string location;
-  short nominal_temp;   // For thermostats only
+  DeviceType type {DeviceType::thermometer};
+  char const *model {};
+  std::string location {};
+  short nominal_temp {};   // For thermostats only
 };
 
-typedef map<unsigned long, DeviceState> StateMap;
+using StateMap = std::map<unsigned long, DeviceState>;
 
-const size_t MAXSTR = 32;       // Max len of string including NUL
+constexpr size_t MAXSTR {32};  // Max len of string including NUL
 
-const long MIN_TEMP = 40;      // 40 F ==  4.44 C
-const long MAX_TEMP = 90;      // 90 F == 32.22 C
-const long DFLT_TEMP = 68;     // 68 F == 20.00 C
+constexpr long MIN_TEMP {40};      // 40 F ==  4.44 C
+constexpr long MAX_TEMP {90};      // 90 F == 32.22 C
+constexpr long DFLT_TEMP {68};     // 68 F == 20.00 C
 
 static StateMap dstate;         // Map of known devices
 
@@ -67,9 +67,9 @@ ICP_online (unsigned long id)
     return -1;                          // Already exists
 
   // Fill in state.
-  DeviceState ds;
-  ds.type =  (id % 2) ? thermometer : thermostat;
-  ds.model =  (ds.type == thermometer)
+  DeviceState ds {};
+  ds.type = (id % 2) ? DeviceType::thermometer : DeviceType::thermostat;
+  ds.model = (ds.type == DeviceType::thermometer)
     ? "Sens-A-Temp" : "Select-A-Temp";
   ds.nominal_temp = DFLT_TEMP;
 
@@ -112,8 +112,8 @@ static
 long
 vary_temp (long temp)
 {
-  long r = ACE_OS::rand() % 50;
-  long delta;
+  int const r = std::rand () % 50;
+  long delta {};
   if  (r < 5)
     delta = 3;
   else if  (r < 15)
@@ -123,7 +123,7 @@ vary_temp (long temp)
   else
     delta = 0;
 
-  if (ACE_OS::rand() % 2)
+  if (std::rand () % 2)
     delta = -delta;
   return temp + delta;
 }
@@ -134,15 +134,15 @@ vary_temp (long temp)
 class ThermostatInSameRoom
 {
 public:
-  ThermostatInSameRoom (const StateMap::iterator &pos):
-    m_pos (pos) {}
-  bool operator () (pair<const unsigned long, DeviceState> &p) const
+  explicit ThermostatInSameRoom (StateMap::const_iterator pos)
+    : m_pos (pos) {}
+  bool operator () (std::pair<unsigned long const, DeviceState> const& p) const
   {
-    return p.second.type == thermostat
+    return p.second.type == DeviceType::thermostat
       && p.second.location == m_pos->second.location;
   }
 private:
-  const StateMap::iterator & m_pos;
+  StateMap::const_iterator m_pos;
 };
 
 // actual_temp () is a helper function to determine the actual
@@ -160,17 +160,17 @@ private:
 
 static
 long
-actual_temp (const StateMap::iterator & pos)
+actual_temp (StateMap::const_iterator pos)
 {
-  long sum = 0;
-  long count = 0;
-  StateMap::iterator where = std::find_if (dstate.begin (), dstate.end (),
+  long sum {};
+  long count {};
+  StateMap::const_iterator where = std::find_if (dstate.cbegin (), dstate.cend (),
                                       ThermostatInSameRoom (pos));
-  while  (where != dstate.end ())
+  while  (where != dstate.cend ())
     {
-      count++;
+      ++count;
       sum += where->second.nominal_temp;
-      where = std::find_if (++where, dstate.end (),
+      where = std::find_if (++where, dstate.cend (),
                        ThermostatInSameRoom (pos));
     }
 
@@ -201,44 +201,46 @@ actual_temp (const StateMap::iterator & pos)
 extern "C"
 int
 ICP_get (unsigned long id,
-         const char * attr,
+         char const *attr,
          void *value,
          size_t len)
 {
+  if (attr == nullptr || value == nullptr)
+    return -1;
+
   // Look for id in state map
-  StateMap::iterator pos = dstate.find (id);
+  StateMap::const_iterator pos = dstate.find (id);
   if (pos == dstate.end ())
     return -1;                              // No such device
 
   // Depending on the attribute, return the
   // corresponding piece of state.
-  if (ACE_OS::strcmp (attr, "model") == 0)
+  if (std::strcmp (attr, "model") == 0)
     {
-      ACE_OS::strncpy ( (char *)value, pos->second.model, len);
+      std::strncpy (static_cast<char *> (value), pos->second.model, len);
     }
-  else if (ACE_OS::strcmp (attr, "location") == 0)
+  else if (std::strcmp (attr, "location") == 0)
     {
-      ACE_OS::strncpy ( (char *)value, pos->second.location.c_str (), len);
+      std::strncpy (static_cast<char *> (value), pos->second.location.c_str (), len);
     }
-  else if (ACE_OS::strcmp (attr, "nominal_temp") == 0)
+  else if (std::strcmp (attr, "nominal_temp") == 0)
     {
-      if (pos->second.type != thermostat)
+      if (pos->second.type != DeviceType::thermostat)
         return -1;                      // Must be thermostat
-      ACE_OS::memcpy (value, &pos->second.nominal_temp,
-                      (std::min) (len, sizeof (pos->second.nominal_temp)));
+      std::memcpy (value, &pos->second.nominal_temp, (std::min) (len, sizeof (pos->second.nominal_temp)));
     }
-  else if (ACE_OS::strcmp (attr, "temperature") == 0)
+  else if (std::strcmp (attr, "temperature") == 0)
     {
-      long temp = actual_temp (pos);
-      ACE_OS::memcpy (value, &temp, (std::min) (len, sizeof (temp)));
+      long const temp = actual_temp (pos);
+      std::memcpy (value, &temp, (std::min) (len, sizeof (temp)));
     }
-  else if (ACE_OS::strcmp (attr, "MIN_TEMP") == 0)
+  else if (std::strcmp (attr, "MIN_TEMP") == 0)
     {
-      ACE_OS::memcpy (value, &MIN_TEMP, (std::min) (len, sizeof (MIN_TEMP)));
+      std::memcpy (value, &MIN_TEMP, (std::min) (len, sizeof (MIN_TEMP)));
     }
-  else if (ACE_OS::strcmp (attr, "MAX_TEMP") == 0)
+  else if (std::strcmp (attr, "MAX_TEMP") == 0)
     {
-      ACE_OS::memcpy (value, &MAX_TEMP, (std::min) (len, sizeof (MAX_TEMP)));
+      std::memcpy (value, &MAX_TEMP, (std::min) (len, sizeof (MAX_TEMP)));
     }
   else
     {
@@ -257,24 +259,29 @@ ICP_get (unsigned long id,
 
 extern "C"
 int
-ICP_set (unsigned long id, const char * attr, const void * value)
+ICP_set (unsigned long id, char const *attr, void const *value)
 {
+  if (attr == nullptr || value == nullptr)
+    return -1;
+
   // Look for id in state map
   StateMap::iterator pos = dstate.find (id);
   if  (pos == dstate.end ())
     return -1;                          // No such device
 
   // Change either location or nominal temp, depending on attr.
-  if (ACE_OS::strcmp (attr, "location") == 0)
+  if (std::strcmp (attr, "location") == 0)
     {
-      pos->second.location.assign ((const char *)value, MAXSTR - 1);
+      char const * const location = static_cast<char const *> (value);
+      pos->second.location.assign (location,
+                                   (std::min) (std::strlen (location), MAXSTR - 1));
     }
-  else if (ACE_OS::strcmp (attr, "nominal_temp") == 0)
+  else if (std::strcmp (attr, "nominal_temp") == 0)
     {
-      if (pos->second.type != thermostat)
+      if (pos->second.type != DeviceType::thermostat)
         return -1;                      // Must be thermostat
-      short temp;
-      ACE_OS::memcpy (&temp, value, sizeof (temp));
+      short temp {};
+      std::memcpy (&temp, value, sizeof (temp));
       if (temp < MIN_TEMP || temp > MAX_TEMP)
         return -1;
       pos->second.nominal_temp = temp;
@@ -286,57 +293,54 @@ ICP_set (unsigned long id, const char * attr, const void * value)
   return 0;                               // OK
 }
 
-#include <fstream>
-
 class ICP_Persist
 {
 public:
-  ICP_Persist (const char *file);
+  ICP_Persist (ICP_Persist const&) = delete;
+  ICP_Persist (ICP_Persist&&) = delete;
+  ICP_Persist& operator= (ICP_Persist const&) = delete;
+  ICP_Persist& operator= (ICP_Persist&&) = delete;
+
+  explicit ICP_Persist (std::string const& file);
   ~ICP_Persist ();
 private:
-  string m_filename;
+  std::string const m_filename;
 };
 
 // Read device state from a file and initialize the dstate map.
 
 ICP_Persist::
-ICP_Persist (const char *file)
+ICP_Persist (std::string const& file)
   : m_filename (file)
 {
   // Open input file, creating it if necessary.
-  std::ifstream db (m_filename.c_str (), std::ios::in|std::ios::out);//, 0666);
+  std::ifstream db (m_filename, std::ios::in | std::ios::out);
   if  (!db)
     {
       std::cerr << "Error opening " << m_filename << std::endl;
-      ACE_OS::exit (1);
+      std::exit (1);
     }
 
   // Read device details, one attribute per line.
-  DeviceState ds;
-  unsigned long id;
+  unsigned long id {};
   while  (db >> id)
     {
+      DeviceState ds {};
       // Read device type and set model string accordingly.
-      int dtype;
+      int dtype {};
       db >> dtype;
-      ds.type = dtype == thermometer
-        ? thermometer : thermostat;
-      ds.model = dtype == thermometer
+      ds.type = dtype == static_cast<int> (DeviceType::thermometer)
+        ? DeviceType::thermometer : DeviceType::thermostat;
+      ds.model = ds.type == DeviceType::thermometer
         ? "Sens-A-Temp" : "Select-A-Temp";
-      char loc[MAXSTR];
+      char loc[MAXSTR] {};
       db.get (loc[0]);                 // Skip newline
       db.getline (loc, sizeof (loc));   // Read location
       ds.location = loc;
-      if  (ds.type == thermostat)
+      if  (ds.type == DeviceType::thermostat)
         db >> ds.nominal_temp;      // Read temperature
-      dstate[id] = ds;                // Add entry to map
+      dstate[id] = std::move (ds);    // Add entry to map
     }
-
-  //db.close ();
-  //if  (!db) {
-  //    cerr << "Error closing " << m_filename << endl;
-  //    exit (1);
-  //}
 }
 
 // Write device state to the file.
@@ -344,38 +348,43 @@ ICP_Persist (const char *file)
 ICP_Persist::
 ~ICP_Persist ()
 {
-  std::cout<<"~ICP_Persist"<<std::endl;///////////////////////
   // Open input file, truncating it.
-  ofstream db (m_filename.c_str ());
+  std::ofstream db (m_filename);
   if  (!db)
     {
       std::cerr << "Error opening " << m_filename << std::endl;
-      ACE_OS::exit (1);
+      std::exit (1);
     }
 
   // Write the state details for each device.
-  StateMap::iterator i;
-  for  (i = dstate.begin (); i != dstate.end (); i++)
+  for (StateMap::value_type const& entry : dstate)
     {
-      db << i->first << std::endl;
-      db <<  (unsigned long) (i->second.type) << std::endl;
-      db << i->second.location << std::endl;
-      if  (i->second.type == thermostat)
-        db << i->second.nominal_temp << std::endl;
+      db << entry.first << '\n';
+      db << static_cast<unsigned long> (entry.second.type) << '\n';
+      db << entry.second.location << '\n';
+      if  (entry.second.type == DeviceType::thermostat)
+        db << entry.second.nominal_temp << '\n';
     }
   if  (!db)
     {
       std::cerr << "Error writing " << m_filename << std::endl;
-      ACE_OS::exit (1);
+      std::exit (1);
     }
 
   db.close ();
   if  (!db)
     {
       std::cerr << "Error closing " << m_filename << std::endl;
-      ACE_OS::exit (1);
+      std::exit (1);
     }
 }
 
 // Instantiate a single global instance of the class.
-static ICP_Persist mydb ("/tmp/CCS_DB");
+static char const *
+database_file ()
+{
+  char const * const configured_file = std::getenv ("CCS_DB");
+  return configured_file == nullptr ? "/tmp/CCS_DB" : configured_file;
+}
+
+static ICP_Persist mydb (database_file ());

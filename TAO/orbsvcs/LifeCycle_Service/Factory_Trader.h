@@ -15,15 +15,18 @@
 #include "orbsvcs/Trader/Service_Type_Repository.h"
 #include "orbsvcs/CosLifeCycleC.h"
 
+#include <memory>
+#include <string>
+
 class Factory_Trader
 {
 public:
-  Factory_Trader (int debug_level = 1);
+  explicit Factory_Trader (int debug_level = 1);
   Factory_Trader (Factory_Trader const &) = delete;
   Factory_Trader (Factory_Trader &&) = delete;
   Factory_Trader &operator= (Factory_Trader const &) = delete;
   Factory_Trader &operator= (Factory_Trader &&) = delete;
-  ~Factory_Trader ();
+  ~Factory_Trader () = default;
 
   /// Add a the Factory type to the repository
   void add_type ();
@@ -35,17 +38,20 @@ public:
                     CORBA::Object_ptr object_ptr);
 
   /// query for a specific factory using a constraint
-  CORBA::Object_ptr query (char const * constraint);
+  CORBA::Object_ptr query (std::string const & constraint);
 
-  static char const * GENERIC_FACTORY_INTERFACE_REPOSITORY_ID;
+  static constexpr char const GENERIC_FACTORY_INTERFACE_REPOSITORY_ID[] =
+    "IDL:omg.org/CosLifeCycle/GenericFactory:1.0";
 private:
   TAO_Service_Type_Repository repository_;
-  TAO_Trader_Factory::TAO_TRADER * trader_ptr_;
-  TAO_Trading_Components_i * trading_Components_ptr_;
-  TAO_Support_Attributes_i * support_Attributes_ptr_;
+  std::unique_ptr<TAO_Trader_Factory::TAO_TRADER> trader_ptr_ {};
+  /// Non-owning; its lifetime is tied to trader_ptr_.
+  TAO_Trading_Components_i * trading_Components_ptr_ {};
+  /// Non-owning; its lifetime is tied to trader_ptr_.
+  TAO_Support_Attributes_i * support_Attributes_ptr_ {};
 
   /// debug level (0 = quiet, 1 = default, informative, 2+ = noisy);
-  int debug_level_;
+  int const debug_level_;
 };
 
 #endif // FACTORY_TRADER_H

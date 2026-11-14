@@ -4,23 +4,22 @@
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
 #include "tao/AnyTypeCode/Any.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
-
-void do_nothing ()
+struct Options
 {
-}
+  ACE_TCHAR const *ior {ACE_TEXT ("file://test.ior")};
+};
 
-int
-parse_args (int argc, ACE_TCHAR *argv[])
+static int
+parse_args (int argc, ACE_TCHAR *argv[], Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
 
       case '?':
@@ -37,7 +36,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -62,7 +61,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::PolicyList policies (1);
       policies.length (1);
 
-      CORBA::Any pol;
+      CORBA::Any pol {};
       pol <<= BiDirPolicy::BOTH;
       policies[0] =
         orb->create_policy (BiDirPolicy::BIDIRECTIONAL_POLICY_TYPE,
@@ -77,7 +76,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                               policies);
 
       // Creation of childPOA is over. Destroy the Policy objects.
-      for (CORBA::ULong i = 0;
+      for (CORBA::ULong i {};
            i < policies.length ();
            ++i)
         {
@@ -86,36 +85,38 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       poa_manager->activate ();
 
-      if (parse_args (argc, argv) != 0)
+      Options options;
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
-      CORBA::Object_var object =
-        orb->string_to_object (ior);
+      CORBA::Object_var const object =
+        orb->string_to_object (options.ior);
 
-      Simple_Server_var server =
+      Simple_Server_var const server =
         Simple_Server::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Object reference <%s> is nil.\n",
-                             ior),
+                             options.ior),
                             1);
         }
 
-      Callback_i *callback_impl = 0;
+      Callback_i *callback_impl {};
+      // ServantBase_var takes ownership through the servant reference count.
       ACE_NEW_THROW_EX (callback_impl,
                         Callback_i (orb.in ()),
                         CORBA::NO_MEMORY ());
 
-      PortableServer::ServantBase_var owner_transfer(callback_impl);
+      PortableServer::ServantBase_var owner_transfer (callback_impl);
 
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         root_poa->activate_object (callback_impl);
 
-      CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
+      CORBA::Object_var const object_act = root_poa->id_to_reference (id.in ());
 
-      Callback_var callback =
+      Callback_var const callback =
         Callback::_narrow (object_act.in ());
 
       // Send the callback object to the server
@@ -123,7 +124,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Call the client that will make remote calls
 
-      CORBA::Long r =
+      CORBA::Long const r =
         server->test_method (1);
 
       if (r != 0)
@@ -138,7 +139,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       root_poa->destroy (true, true);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;

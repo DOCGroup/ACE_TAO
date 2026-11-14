@@ -1,4 +1,5 @@
 #include "ace/Select_Reactor_Base.h"
+#include <memory>
 #include "ace/Reactor.h"
 #include "ace/Thread.h"
 #include "ace/SOCK_Acceptor.h"
@@ -175,7 +176,7 @@ ACE_Select_Reactor_Handler_Repository::find_eh (ACE_HANDLE handle)
 #if defined (ACE_SELECT_REACTOR_BASE_USES_HASH_MAP)
   this->event_handlers_.find (handle, pos);
 #else
-  map_type::iterator const tmp = &this->event_handlers_[handle];
+  map_type::iterator const tmp = std::addressof (this->event_handlers_[handle]);
 
   if (*tmp != nullptr)
     pos = tmp;
@@ -206,7 +207,7 @@ ACE_Select_Reactor_Handler_Repository::bind (ACE_HANDLE handle,
 
 #if defined (ACE_SELECT_REACTOR_BASE_USES_HASH_MAP)
 
-  map_type::ENTRY * entry = nullptr;
+  map_type::ENTRY * entry {};
 
   int const result =
     this->event_handlers_.bind (handle, event_handler, entry);
@@ -333,10 +334,10 @@ ACE_Select_Reactor_Handler_Repository::unbind (
   if (!has_any_wait_mask && !has_any_suspend_mask)
     {
 #if defined (ACE_SELECT_REACTOR_BASE_USES_HASH_MAP)
-      if (event_handler != 0 && this->event_handlers_.unbind (pos) == -1)
+      if (event_handler != nullptr && this->event_handlers_.unbind (pos) == -1)
         return -1;  // Should not happen!
 #else
-      this->event_handlers_[handle] = 0;
+      this->event_handlers_[handle] = nullptr;
 
       if (this->max_handlep1_ == handle + 1)
         {
@@ -510,7 +511,7 @@ ACE_Select_Reactor_Handler_Repository::dump () const
               this->max_handlep1 ()));
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("[")));
 
-  ACE_Event_Handler *event_handler = nullptr;
+  ACE_Event_Handler *event_handler {};
 
   for (ACE_Select_Reactor_Handler_Repository_Iterator iter (this);
        iter.next (event_handler) != 0;
@@ -759,7 +760,6 @@ ACE_Select_Reactor_Notify::dispatch_notifications (int &number_of_active_handles
     return 0;
 }
 
-
 ACE_HANDLE
 ACE_Select_Reactor_Notify::notify_handle ()
 {
@@ -767,7 +767,6 @@ ACE_Select_Reactor_Notify::notify_handle ()
 
   return this->notification_pipe_.read_handle ();
 }
-
 
 int
 ACE_Select_Reactor_Notify::is_dispatchable (ACE_Notification_Buffer &buffer)
@@ -927,7 +926,6 @@ ACE_Select_Reactor_Notify::read_notify_pipe (ACE_HANDLE handle,
   return 0;
 }
 
-
 int
 ACE_Select_Reactor_Notify::handle_input (ACE_HANDLE handle)
 {
@@ -980,7 +978,6 @@ ACE_Select_Reactor_Impl::purge_pending_notifications (ACE_Event_Handler *eh,
   else
     return this->notify_handler_->purge_pending_notifications (eh, mask);
 }
-
 
 // Perform GET, CLR, SET, and ADD operations on the Handle_Sets.
 //
@@ -1128,7 +1125,6 @@ ACE_Select_Reactor_Impl::clear_dispatch_mask (ACE_HANDLE handle,
   // the dispatch set.
   this->state_changed_ = true;
 }
-
 
 int
 ACE_Select_Reactor_Impl::resumable_handler ()

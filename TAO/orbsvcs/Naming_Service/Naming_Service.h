@@ -11,7 +11,6 @@
  */
 //==========================================================================
 
-
 #ifndef TAO_NAMING_SERVICE_H
 #define TAO_NAMING_SERVICE_H
 
@@ -55,7 +54,6 @@ public:
   /// Shut down the TAO_Naming_Service; you must still call fini().
   virtual void shutdown ();
 
-  /// Destructor.
   virtual ~TAO_Naming_Service ();
 
 protected:

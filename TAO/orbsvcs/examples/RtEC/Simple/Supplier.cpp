@@ -5,7 +5,7 @@
 #include "ace/OS_NS_unistd.h"
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Supplier supplier;
 
@@ -14,12 +14,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-Supplier::Supplier ()
-{
-}
-
 int
-Supplier::run (int argc, ACE_TCHAR* argv[])
+Supplier::run (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -69,9 +65,9 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
 
       // Simple publication, but usually the helper classes in
       // $TAO_ROOT/orbsvcs/Event_Utils.h are a better way to do this.
-      RtecEventChannelAdmin::SupplierQOS qos;
+      RtecEventChannelAdmin::SupplierQOS qos {};
       qos.publications.length (1);
-      RtecEventComm::EventHeader& h0 =
+      RtecEventComm::EventHeader &h0 =
         qos.publications[0].event.header;
       h0.type   = ACE_ES_EVENT_UNDEFINED; // first free event type
       h0.source = 1;                      // first free event source
@@ -79,13 +75,13 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
       consumer->connect_push_supplier (supplier.in (), qos);
 
       // Push the events...
-      ACE_Time_Value sleep_time (0, 10000); // 10 milliseconds
+      ACE_Time_Value const sleep_time {0, 10000}; // 10 milliseconds
 
       RtecEventComm::EventSet event (1);
       event.length (1);
-      event[0].header.type   = ACE_ES_EVENT_UNDEFINED;
+      event[0].header.type = ACE_ES_EVENT_UNDEFINED;
       event[0].header.source = 1;
-      event[0].header.ttl    = 1;
+      event[0].header.ttl = 1;
 
       for (int i = 0; i != 2000; ++i)
         {
@@ -105,9 +101,9 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
       poa->deactivate_object (id.in ());
 
       // Destroy the POA
-      poa->destroy (1, 0);
+      poa->destroy (true, false);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Supplier::run");
       return 1;

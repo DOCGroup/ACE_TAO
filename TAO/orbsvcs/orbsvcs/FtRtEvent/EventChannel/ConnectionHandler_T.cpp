@@ -55,7 +55,6 @@ int ConnectionAcceptHandler<ACE_PEER_STREAM_2>::close (u_long flags)
   return 0;
 }
 
-
 template <ACE_PEER_STREAM_1>
 int ConnectionAcceptHandler<ACE_PEER_STREAM_2>::handle_input (ACE_HANDLE)
 {
@@ -74,7 +73,6 @@ int ConnectionAcceptHandler<ACE_PEER_STREAM_2>::handle_close (ACE_HANDLE,
   this->destroy ();
   return 0;
 }
-
 
 template <ACE_PEER_STREAM_1>
 int ConnectionDetectHandler<ACE_PEER_STREAM_2>::handle_close (ACE_HANDLE,

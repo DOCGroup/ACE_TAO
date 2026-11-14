@@ -29,7 +29,7 @@ public:
   be_string (AST_Decl::NodeType nt,
              UTL_ScopedName *n,
              AST_Expression *v,
-             std::size_t width);
+             size_t width);
 
   // Overridden from class be_type.
   void gen_member_ostream_operator (TAO_OutStream *os,

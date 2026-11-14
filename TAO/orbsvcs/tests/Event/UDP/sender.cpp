@@ -10,15 +10,15 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 
-const ACE_TCHAR *udp_mcast_address =
+static ACE_TCHAR const* udp_mcast_address =
     ACE_TEXT (ACE_DEFAULT_MULTICAST_ADDR) ACE_TEXT(":10001");
 
-bool valuetype = false;
+static bool valuetype {};
 
-int parse_args (int argc, ACE_TCHAR *argv[]);
+static int parse_args (int argc, ACE_TCHAR *argv[]);
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // Register the default factory in the Service Configurator.
   // If your platform supports static constructors then you can
@@ -116,7 +116,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // First we convert the string into an INET address, then we
       // convert that into the right IDL structure:
-      ACE_INET_Addr udp_addr (udp_mcast_address);
+      ACE_INET_Addr const udp_addr (udp_mcast_address);
       ACE_DEBUG ((LM_DEBUG,
                   "udp mcast address is: %s\n",
                   udp_mcast_address));
@@ -128,7 +128,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // We need a local socket to send the data, open it and check
       // that everything is OK:
-      TAO_ECG_Refcounted_Endpoint endpoint(new TAO_ECG_UDP_Out_Endpoint);
+      TAO_ECG_Refcounted_Endpoint endpoint (new TAO_ECG_UDP_Out_Endpoint);
       if (endpoint->dgram ().open (ACE_Addr::sap_any,
                                    udp_addr.get_type()) == -1)
         {
@@ -174,10 +174,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Wait for events, including incoming multicast data.
       // We could also use orb->run(), but that will not let us
       // terminate the application in a nice way.
-      for (int i = 0; i != 25; ++i)
+      for (int i {}; i != 25; ++i)
         {
-          CORBA::Boolean there_is_work =
-            orb->work_pending ();
+          CORBA::Boolean const there_is_work {
+            orb->work_pending ()};
           if (there_is_work)
             {
               // We use a TAO extension. The CORBA mechanism does not
@@ -236,7 +236,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "UDP sender ready\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Service");
       return 1;
@@ -246,10 +246,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-int parse_args (int argc, ACE_TCHAR *argv[])
+static int parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("vm:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)

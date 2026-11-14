@@ -200,7 +200,6 @@ TAO_InputCDR::TAO_InputCDR (ACE_Data_Block *data,
 {
 }
 
-
 ACE_INLINE
 TAO_InputCDR::TAO_InputCDR (ACE_Data_Block *data,
                             ACE_Message_Block::Message_Flags flag,
@@ -220,7 +219,6 @@ TAO_InputCDR::TAO_InputCDR (ACE_Data_Block *data,
     orb_core_ (orb_core)
 {
 }
-
 
 ACE_INLINE
 TAO_InputCDR::TAO_InputCDR (const TAO_InputCDR& rhs,
@@ -260,7 +258,6 @@ TAO_InputCDR::TAO_InputCDR (ACE_InputCDR::Transfer_Contents rhs,
 {
 }
 
-
 ACE_INLINE
 TAO_InputCDR::~TAO_InputCDR ()
 {
@@ -271,7 +268,6 @@ TAO_InputCDR::orb_core () const
 {
   return this->orb_core_;
 }
-
 
 ACE_INLINE TAO_InputCDR::Repo_Id_Map_Handle&
 TAO_InputCDR::get_repo_id_map ()
@@ -438,7 +434,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       ACE_OutputCDR::from_string x)
 {
-  if (x.bound_ != 0 && x.val_ != 0 &&
+  if (x.bound_ != 0 && x.val_ != nullptr &&
       std::strlen (x.val_) > x.bound_)
     {
       throw CORBA::BAD_PARAM ();
@@ -449,7 +445,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       ACE_OutputCDR::from_wstring x)
 {
-  if (x.bound_ != 0 && x.val_ != 0 &&
+  if (x.bound_ != 0 && x.val_ != nullptr &&
       ACE_OS::strlen (x.val_) > x.bound_)
     {
       throw CORBA::BAD_PARAM ();
@@ -587,7 +583,7 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
 {
   CORBA::Boolean const marshal_flag =
     is >> const_cast<ACE_CDR::Char *&> (x.val_);
-  if (marshal_flag && x.bound_ != 0 && x.val_ != 0 &&
+  if (marshal_flag && x.bound_ != 0 && x.val_ != nullptr &&
       std::strlen (x.val_) > x.bound_)
     {
       throw CORBA::BAD_PARAM ();
@@ -600,7 +596,7 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
 {
   CORBA::Boolean const marshal_flag =
     is >> const_cast<ACE_CDR::WChar *&> (x.val_);
-  if (marshal_flag && x.bound_ != 0 && x.val_ != 0 &&
+  if (marshal_flag && x.bound_ != 0 && x.val_ != nullptr &&
       ACE_OS::strlen (x.val_) > x.bound_)
     {
       throw CORBA::BAD_PARAM ();

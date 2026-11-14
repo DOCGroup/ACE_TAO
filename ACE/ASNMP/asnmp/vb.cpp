@@ -33,103 +33,89 @@
 #include "asnmp/oid.h"         // include oid class defs
 #include "asnmp/vb.h"                  // include vb class defs
 #include "asnmp/snmperrs.h"      // error codes
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_Memory.h"
+#include <cerrno>
+#include <cstddef>
+#include <cstdio>
+#include <cstring>
+#include <memory>
+#include <new>
+#include <utility>
 
 //---------------[ Vb::Vb() ]--------------------------------------
 // constructor with no arguments
 // makes an vb, unitialized
-Vb::Vb(): output_(0), iv_vb_value_(0),
-    exception_status_(SNMP_CLASS_SUCCESS)
+Vb::Vb ()
 {
 }
 
 //---------------[ Vb::Vb( const Oid &oid) ]-----------------------------
 // constructor to initialize the oid
 // makes a vb with oid portion initialized
-Vb::Vb( const Oid &oid):  output_(0), iv_vb_oid_(oid), iv_vb_value_(0),
- exception_status_(SNMP_CLASS_SUCCESS)
+Vb::Vb (Oid const &oid)
+  : iv_vb_oid_ (oid)
 {
 }
 
 //---------------[ Vb::Vb( const Oid &oid, const SmiSyntax &val) ]-------
-Vb::Vb( const Oid &oid, const SnmpSyntax &val, const SmiUINT32 status):
-  output_(0), iv_vb_oid_(oid), iv_vb_value_(0), exception_status_(status)
+Vb::Vb (Oid const &oid, SnmpSyntax const &val, SmiUINT32 status)
+  : iv_vb_oid_ (oid), iv_vb_value_ (val.clone ()), exception_status_ (status)
 {
-  // iv_vb_value_ = recast_smi_object(val);  // allocate and construct object
-  iv_vb_value_ = val.clone();
 }
 
 //---------------[ Vb::Vb( const Vb &vb) ]-----------------------------
-// copy constructor
-Vb::Vb( const Vb &vb): output_(0), iv_vb_value_(0)
+Vb::Vb (Vb const &vb)
 {
    *this = vb;
 }
 
 //---------------[ Vb::~Vb() ]------------------------------------------
-// destructor
 // if the vb has a oid or an octect string then
 // the associated memory needs to be freed
-Vb::~Vb()
-{
-  free_vb();
-  delete [] output_; // formatting buffer if it exists
-}
-
+Vb::~Vb() = default;
 
 //--------------[ Vb::valid() ]-----------------------------------------
 // returns validity of a Vb object
 // must have a valid oid and value
-int Vb::valid() const
+int Vb::valid () const
 {
-   if ( iv_vb_oid_.valid() && (iv_vb_value_ && iv_vb_value_->valid()) )
-     return 1;
-   else
-     return 0;
+   return iv_vb_oid_.valid () && iv_vb_value_ != nullptr && iv_vb_value_->valid ();
 }
-
 
 //---------------[ Vb& Vb::operator=( const Vb &vb) ]--------------------
 // overloaded assignment allows assigning one Vb to another
 // this involves deep memory thus target vb needs to be freed
 // before assigning source
-Vb& Vb::operator=( const Vb &vb)
+Vb &Vb::operator= (Vb const &vb)
 {
-   free_vb();    // free up target to begin with
+   if (this == std::addressof (vb))
+     return *this;
 
-   //-----[ reassign the Oid portion 1st ]
-   vb.get_oid( iv_vb_oid_);
-
-   //-----[ next set the vb value portion ]
-   if (vb.iv_vb_value_ == 0) {
-     iv_vb_value_ = 0;
-   }
-   else {
-     iv_vb_value_ = vb.iv_vb_value_->clone();
-   }
+   std::unique_ptr<SnmpSyntax> value_copy {
+     vb.iv_vb_value_ != nullptr ? vb.iv_vb_value_->clone () : nullptr
+   };
+   iv_vb_oid_ = vb.iv_vb_oid_;
+   iv_vb_value_ = std::move (value_copy);
    exception_status_ = vb.exception_status_;
 
    return *this; // return self reference
 }
 
  // set a Vb null, if its not already
-void Vb::set_null()
+void Vb::set_null ()
 {
    free_vb();
 }
 
 //---------------[ Vb::set_oid( const Oid oid ) ]-----------------------
 // set value oid only with another oid
-void Vb::set_oid( const Oid& oid)
+void Vb::set_oid (Oid const &oid)
 {
   iv_vb_oid_ = oid;
 }
 
 //---------------[ Vb::get_oid( Oid &oid) ]-----------------------------
 // get oid portion
-void Vb::get_oid( Oid &oid) const
+void Vb::get_oid (Oid &oid) const
 {
   oid = iv_vb_oid_;
 }
@@ -141,89 +127,87 @@ void Vb::get_oid( Oid &oid) const
 // in the case of oids and octets, we need to do a deep free
 void Vb::free_vb()
 {
-  if (iv_vb_value_)
-    delete iv_vb_value_;
+  iv_vb_value_.reset ();
   exception_status_ = SNMP_CLASS_SUCCESS;
-  iv_vb_value_ = 0;
 }
 
-void Vb::set_value( const SnmpInt32& i)
+void Vb::set_value (SnmpInt32 const &i)
 {
   free_vb();
-  iv_vb_value_ = (SnmpSyntax *)new SnmpInt32(i);
+  iv_vb_value_ = std::make_unique<SnmpInt32> (i);
 }
 
-void Vb::set_value( const SnmpUInt32& u)
+void Vb::set_value (SnmpUInt32 const &u)
 {
   free_vb();
-  iv_vb_value_ = (SnmpSyntax *)new SnmpUInt32(u);
+  iv_vb_value_ = std::make_unique<SnmpUInt32> (u);
 }
 
-void Vb::set_value( const Gauge32& g)
+void Vb::set_value (Gauge32 const &g)
 {
   free_vb();
-  iv_vb_value_ = (SnmpSyntax *)new Gauge32(g);
+  iv_vb_value_ = std::make_unique<Gauge32> (g);
 }
 
-void Vb::set_value( const Counter32& c)
+void Vb::set_value (Counter32 const &c)
 {
   free_vb();
-  iv_vb_value_ = (SnmpSyntax *)new Counter32(c);
+  iv_vb_value_ = std::make_unique<Counter32> (c);
 }
 
-void Vb::set_value( const Counter64& c)
+void Vb::set_value (Counter64 const &c)
 {
   free_vb();
-  iv_vb_value_ = (SnmpSyntax *)new Counter64(c);
+  iv_vb_value_ = std::make_unique<Counter64> (c);
 }
 
-void Vb::set_value( const TimeTicks& t)
+void Vb::set_value (TimeTicks const &t)
 {
   free_vb();
-  iv_vb_value_ = (SnmpSyntax *)new TimeTicks(t);
+  iv_vb_value_ = std::make_unique<TimeTicks> (t);
 }
 
-void Vb::set_value( const OctetStr& s)
+void Vb::set_value (OctetStr const &s)
 {
   free_vb();
-  iv_vb_value_ = (SnmpSyntax *)new OctetStr(s);
+  iv_vb_value_ = std::make_unique<OctetStr> (s);
 }
 
-void Vb::set_value( const Oid& o)
+void Vb::set_value (Oid const &o)
 {
   free_vb();
-  iv_vb_value_ = (SnmpSyntax *)new Oid(o);
+  iv_vb_value_ = std::make_unique<Oid> (o);
 }
 
-void Vb::set_value ( const SnmpSyntax &val)
+void Vb::set_value (SnmpSyntax const &val)
 {
   free_vb();
-  iv_vb_value_ = val.clone();
+  iv_vb_value_.reset (val.clone ());
 }
 
-int Vb::get_value( SnmpInt32 &i)
+int Vb::get_value (SnmpInt32 &i)
 {
-   if (iv_vb_value_ &&
+   if (iv_vb_value_ != nullptr &&
        iv_vb_value_->valid() &&
        (iv_vb_value_->get_syntax() == sNMP_SYNTAX_INT32 )) {
-     i = *((SnmpInt32 *) iv_vb_value_);
+     i = *static_cast<SnmpInt32 *> (iv_vb_value_.get ());
      return SNMP_CLASS_SUCCESS;
    }
    else
      return SNMP_CLASS_INVALID;
 }
 
-int Vb::get_value( SnmpUInt32 &u)
+int Vb::get_value (SnmpUInt32 &u)
 {
-   if (iv_vb_value_ && iv_vb_value_->valid())
+   if (iv_vb_value_ != nullptr && iv_vb_value_->valid())
    {
-       SmiUINT32 syntax = iv_vb_value_->get_syntax();
+       SmiUINT32 const syntax = iv_vb_value_->get_syntax();
        if (syntax == sNMP_SYNTAX_GAUGE32 ||
            syntax == sNMP_SYNTAX_CNTR32 ||
            syntax == sNMP_SYNTAX_TIMETICKS ||
            syntax == sNMP_SYNTAX_UINT32)
        {
-           u = *((SnmpUInt32 *) iv_vb_value_);
+           u = *static_cast<SnmpUInt32 *> (iv_vb_value_.get ());
            return SNMP_CLASS_SUCCESS;
        }
    }
@@ -233,84 +217,83 @@ int Vb::get_value( SnmpUInt32 &u)
 /* return a uint or a gauge. this is casting, but no semantic difference
  * at this level
  */
-int Vb::get_value( Gauge32 &g)
+int Vb::get_value (Gauge32 &g)
 {
-   if (iv_vb_value_ &&
+   if (iv_vb_value_ != nullptr &&
        iv_vb_value_->valid() &&
        ((iv_vb_value_->get_syntax() == sNMP_SYNTAX_GAUGE32) ||
             iv_vb_value_->get_syntax() == sNMP_SYNTAX_UINT32) ) {
-     g = *((Gauge32 *) iv_vb_value_);
+     g = *static_cast<Gauge32 *> (iv_vb_value_.get ());
      return SNMP_CLASS_SUCCESS;
    }
    else
      return SNMP_CLASS_INVALID;
 }
 
-int Vb::get_value( Counter32 &c)
+int Vb::get_value (Counter32 &c)
 {
-   if (iv_vb_value_ &&
+   if (iv_vb_value_ != nullptr &&
        iv_vb_value_->valid() &&
        (iv_vb_value_->get_syntax() == sNMP_SYNTAX_CNTR32 )) {
-     c = *((Counter32 *) iv_vb_value_);
+     c = *static_cast<Counter32 *> (iv_vb_value_.get ());
      return SNMP_CLASS_SUCCESS;
    }
    else
      return SNMP_CLASS_INVALID;
 }
 
-int Vb::get_value( Counter64 &c)
+int Vb::get_value (Counter64 &c)
 {
-   if (iv_vb_value_ &&
+   if (iv_vb_value_ != nullptr &&
        iv_vb_value_->valid() &&
        (iv_vb_value_->get_syntax() == sNMP_SYNTAX_CNTR64 )) {
-     c = *((Counter32 *) iv_vb_value_);
+     c = *static_cast<Counter64 *> (iv_vb_value_.get ());
      return SNMP_CLASS_SUCCESS;
    }
    else
      return SNMP_CLASS_INVALID;
 }
 
-int Vb::get_value( TimeTicks &t)
+int Vb::get_value (TimeTicks &t)
 {
-   if (iv_vb_value_ &&
+   if (iv_vb_value_ != nullptr &&
        iv_vb_value_->valid() &&
        (iv_vb_value_->get_syntax() == sNMP_SYNTAX_TIMETICKS )) {
-     t = *((TimeTicks *) iv_vb_value_);
+     t = *static_cast<TimeTicks *> (iv_vb_value_.get ());
      return SNMP_CLASS_SUCCESS;
    }
    else
      return SNMP_CLASS_INVALID;
 }
 
-int Vb::get_value( OctetStr &s)
+int Vb::get_value (OctetStr &s)
 {
-   if (iv_vb_value_ &&
+   if (iv_vb_value_ != nullptr &&
        iv_vb_value_->valid() &&
        (iv_vb_value_->get_syntax() == sNMP_SYNTAX_OCTETS )) {
-     s = *((OctetStr *) iv_vb_value_);
+     s = *static_cast<OctetStr *> (iv_vb_value_.get ());
      return SNMP_CLASS_SUCCESS;
    }
    else
      return SNMP_CLASS_INVALID;
 }
 
-int Vb::get_value( Oid &s)
+int Vb::get_value (Oid &s)
 {
-   if (iv_vb_value_ &&
+   if (iv_vb_value_ != nullptr &&
        iv_vb_value_->valid() &&
        (iv_vb_value_->get_syntax() == sNMP_SYNTAX_OID )) {
-     s = *((Oid *) iv_vb_value_);
+     s = *static_cast<Oid *> (iv_vb_value_.get ());
      return SNMP_CLASS_SUCCESS;
    }
    else
      return SNMP_CLASS_INVALID;
 }
 
-
 //---------------[ Vb::get_value( Value &val) ]--------
-int Vb::get_value( SnmpSyntax &val)
+int Vb::get_value (SnmpSyntax &val)
 {
-  if (iv_vb_value_) {
+  if (iv_vb_value_ != nullptr) {
     val = *iv_vb_value_;
     if (val.valid())
         return SNMP_CLASS_SUCCESS;
@@ -324,65 +307,70 @@ int Vb::get_value( SnmpSyntax &val)
   }
 }
 
-
 //-----[ misc]--------------------------------------------------------
 
 // return the current syntax
 // This method violates Object Orientation but may be useful if
 // the caller has a vb object and does not know what it is.
 // This would be useful in the implementation of a browser.
-SmiUINT32 Vb::get_syntax()
+SmiUINT32 Vb::get_syntax ()
 {
   if ( exception_status_ != SNMP_CLASS_SUCCESS)
     return exception_status_;
   else
-    return ( iv_vb_value_ ? iv_vb_value_->get_syntax() : sNMP_SYNTAX_NULL);
+    return iv_vb_value_ != nullptr ? iv_vb_value_->get_syntax() : sNMP_SYNTAX_NULL;
 }
 
 // return the printabel value
-const char  *Vb::to_string_value()
+char const *Vb::to_string_value ()
 {
-  if (iv_vb_value_)
+  if (iv_vb_value_ != nullptr)
     return iv_vb_value_->to_string();
   else
     return "";
 }
 
 // return the printable oid
-const char  *Vb::to_string_oid()
+char const *Vb::to_string_oid ()
 {
   return iv_vb_oid_.to_string();
 }
 
 // generate string with name/ value format
-const char  *Vb::to_string()
+char const *Vb::to_string ()
 {
-  int len = ACE_OS::strlen(iv_vb_oid_.to_string());
-  const char *ptr = iv_vb_value_ ? iv_vb_value_->to_string() : "";
-  len += ACE_OS::strlen(ptr) + 3 + 1; // " / " + null
-  ACE_NEW_RETURN(output_, char[len], "");
-  ACE_OS::sprintf(output_, "%s / %s", iv_vb_oid_.to_string(), ptr);
-  return output_;
+  size_t len = std::strlen (iv_vb_oid_.to_string ());
+  char const * const ptr = iv_vb_value_ != nullptr ? iv_vb_value_->to_string () : "";
+  len += std::strlen (ptr) + 3 + 1; // " / " + null
+  std::unique_ptr<char[]> buffer {new (std::nothrow) char[len]};
+  if (buffer == nullptr)
+    {
+      errno = ENOMEM;
+      return "";
+    }
+  output_ = std::move (buffer);
+  std::sprintf (output_.get (), "%s / %s", iv_vb_oid_.to_string (), ptr);
+  return output_.get ();
 }
 
 // friend function to set exception status
-void set_exception_status( Vb *vb, const SmiUINT32 status)
+void set_exception_status (Vb *vb, SmiUINT32 status)
 {
    vb->exception_status_ = status;
 }
 
 // equivlence operator overloaded
 // hack, by side effect, compare based on string formatting output_
-bool operator==( const Vb &lhs, const Vb &rhs)
+bool operator== (Vb const &lhs, Vb const &rhs)
 {
   if ( lhs.iv_vb_oid_ != rhs.iv_vb_oid_)
        return false;
 
-  if (lhs.iv_vb_value_ != 0 && rhs.iv_vb_value_ != 0)
+  if (lhs.iv_vb_value_ != nullptr && rhs.iv_vb_value_ != nullptr)
     {
-      const int val =
-        ACE_OS::strcmp (lhs.iv_vb_value_->to_string(),
-                        rhs.iv_vb_value_->to_string());
+      int const val =
+        std::strcmp (lhs.iv_vb_value_->to_string(),
+                     rhs.iv_vb_value_->to_string());
       return !val;
     }
   else

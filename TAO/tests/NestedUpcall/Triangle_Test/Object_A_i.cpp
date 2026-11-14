@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    Object_A_i.cpp
@@ -9,23 +8,9 @@
  *  @author Michael Kircher
  */
 //=============================================================================
-
-
 #include "Object_A_i.h"
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
-
-// CTOR
-Object_A_i::Object_A_i ()
-  : finish_two_way_call_ (0)
-{
-}
-
-// DTOR
-Object_A_i::~Object_A_i ()
-{
-}
-
 
 void
 Object_A_i::foo (Initiator_ptr theInitiator_ptr)
@@ -37,7 +22,7 @@ Object_A_i::foo (Initiator_ptr theInitiator_ptr)
       while (!this->finish_two_way_call_)
         TAO_ORB_Core_instance ()->reactor ()->handle_events ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("calling the initiator");
     }
@@ -53,8 +38,8 @@ Object_A_i::finish ()
 void
 Object_A_i::shutdown ()
 {
-  int argc = 0;
-  ACE_TCHAR **argv = 0;
+  int argc {};
+  ACE_TCHAR **argv {};
   CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
   orb->shutdown ();

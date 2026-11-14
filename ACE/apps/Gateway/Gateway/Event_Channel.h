@@ -8,9 +8,10 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_EVENT_CHANNEL
 #define ACE_EVENT_CHANNEL
+
+#include <memory>
 
 #include "Connection_Handler_Connector.h"
 #include "Connection_Handler_Acceptor.h"
@@ -34,22 +35,25 @@ class ACE_Svc_Export Event_Channel : public ACE_Event_Handler
 {
 public:
   Event_Channel ();
-  ~Event_Channel ();
+  ~Event_Channel () override;
+  Event_Channel (Event_Channel const &) = delete;
+  Event_Channel (Event_Channel &&) = delete;
+  Event_Channel &operator= (Event_Channel const &) = delete;
+  Event_Channel &operator= (Event_Channel &&) = delete;
 
   /// Open the channel.
-  virtual int open (void * = 0);
+  virtual int open (void * = nullptr);
 
   /// Close down the Channel.
   virtual int close (u_long = 0);
 
-  // = Proxy management methods.
   /**
    * Initiate the connection of the <Connection_Handler> to its peer.
    * Second paratemer is used for thread connection-handler which will
    * block the connecting procedure directly, need not care
    * Options::blocking_semantics().
    */
-  int initiate_connection_connection (Connection_Handler *, int sync_directly = 0);
+  int initiate_connection_connection (Connection_Handler *, bool sync_directly = false);
 
   /// Complete the initialization of the <Connection_Handler> once it's
   /// connected to its Peer.
@@ -69,13 +73,12 @@ public:
 
   /// Subscribe the <Consumer_Dispatch_Set> to receive events that
   /// match <Event_Key>.
-  int subscribe (const Event_Key &event_addr,
-                 Consumer_Dispatch_Set *cds);
+  int subscribe (Event_Key const &event_addr,
+                 std::unique_ptr<Consumer_Dispatch_Set> cds);
 
-  // = Event processing entry point.
   /// Pass <mb> to the Event Channel so it can forward it to Consumers.
   virtual int put (ACE_Message_Block *mb,
-                   ACE_Time_Value * = 0);
+                   ACE_Time_Value * = nullptr);
 
   /// Actively initiate connections to the Peers.
   void initiate_connector ();
@@ -88,7 +91,6 @@ private:
   /// Parse the command-line arguments.
   int parse_args (int argc, ACE_TCHAR *argv[]);
 
-  // = Methods for handling events.
   /// Forwards the <data> to Consumer that have registered to receive
   /// it, based on addressing information in the <event_key>.
   void routing_event (Event_Key *event_key,
@@ -102,8 +104,8 @@ private:
 
   /// Periodically callback to perform timer-based performance
   /// profiling.
-  virtual int handle_timeout (const ACE_Time_Value &,
-                              const void *arg);
+  int handle_timeout (ACE_Time_Value const &,
+                      void const *arg) override;
 
   /// Used to establish the connections actively.
   Connection_Handler_Connector connector_;
@@ -114,7 +116,6 @@ private:
   /// Used to establish connections passively and create Consumers.
   Connection_Handler_Acceptor consumer_acceptor_;
 
-  // = Make life easier by defining aliases.
   using CONNECTION_MAP = ACE_Map_Manager<CONNECTION_ID, Connection_Handler *, MAP_MUTEX>;
   using CONNECTION_MAP_ITERATOR = ACE_Map_Iterator<CONNECTION_ID, Connection_Handler *, MAP_MUTEX>;
   using CONNECTION_MAP_ENTRY = ACE_Map_Entry<CONNECTION_ID, Connection_Handler *>;

@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_FT_SERVERPOLICY_I_H
 #define TAO_FT_SERVERPOLICY_I_H
 #include /**/ "ace/pre.h"
@@ -33,14 +32,13 @@ class TAO_FT_Heart_Beat_Enabled_Policy
   , public ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
-  TAO_FT_Heart_Beat_Enabled_Policy (const CORBA::Boolean boolean);
+  explicit TAO_FT_Heart_Beat_Enabled_Policy (CORBA::Boolean const boolean);
 
   /// Copy constructor.
   TAO_FT_Heart_Beat_Enabled_Policy (
-      const TAO_FT_Heart_Beat_Enabled_Policy &rhs);
+      TAO_FT_Heart_Beat_Enabled_Policy const &rhs);
 
-  static CORBA::Policy_ptr create (const CORBA::Any& val);
+  static CORBA::Policy_ptr create (CORBA::Any const &val);
 
   // Helper method for the implementation of
   // CORBA::ORB::create_policy.
@@ -67,7 +65,6 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #if defined (__ACE_INLINE__)
 #include "orbsvcs/FaultTolerance/FT_ServerPolicy_i.inl"
 #endif /* __ACE_INLINE__ */
-
 
 #include /**/ "ace/post.h"
 #endif /* TAO_FT_SERVERPOLICY_I_H */

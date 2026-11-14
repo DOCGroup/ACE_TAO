@@ -30,12 +30,6 @@ TAO_Notify_Buffering_Strategy::TAO_Notify_Buffering_Strategy (
 , global_not_full_ (admin_properties->global_queue_not_full())
 , local_not_full_ (global_queue_lock_)
 , local_not_empty_ (global_queue_lock_)
-, shutdown_ (false)
-, tracker_ (0)
-{
-}
-
-TAO_Notify_Buffering_Strategy::~TAO_Notify_Buffering_Strategy ()
 {
 }
 
@@ -70,7 +64,7 @@ ACE_Time_Value
 TAO_Notify_Buffering_Strategy::oldest_event ()
 {
   ACE_Time_Value tv (ACE_Time_Value::max_time);
-  ACE_Message_Block* mb = nullptr;
+  ACE_Message_Block* mb {};
 
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->global_queue_lock_, tv);
   TAO_Notify_Message_Queue::ITERATOR itr (this->msg_queue_);
@@ -90,17 +84,12 @@ TAO_Notify_Buffering_Strategy::oldest_event ()
   return tv;
 }
 
-
 TAO_Notify_Buffering_Strategy::Tracker::Tracker ()
-  : child_ (0)
+  : child_ (nullptr)
 {
 }
 
-
-TAO_Notify_Buffering_Strategy::Tracker::~Tracker ()
-{
-}
-
+TAO_Notify_Buffering_Strategy::Tracker::~Tracker () = default;
 
 void
 TAO_Notify_Buffering_Strategy::Tracker::register_child (TAO_Notify_Buffering_Strategy::Tracker * child)
@@ -129,7 +118,6 @@ TAO_Notify_Buffering_Strategy::Tracker::unregister_child (TAO_Notify_Buffering_S
     }
 }
 
-
 int
 TAO_Notify_Buffering_Strategy::enqueue (TAO_Notify_Method_Request_Queueable* method_request)
 {
@@ -138,7 +126,7 @@ TAO_Notify_Buffering_Strategy::enqueue (TAO_Notify_Method_Request_Queueable* met
   if (this->shutdown_)
     return -1;
 
-  bool discarded_existing = false;
+  bool discarded_existing {};
 
   bool local_overflow = this->max_events_per_consumer_.is_valid() &&
     static_cast <CORBA::Long> (this->msg_queue_.message_count ()) >= this->max_events_per_consumer_.value();
@@ -220,7 +208,7 @@ TAO_Notify_Buffering_Strategy::enqueue (TAO_Notify_Method_Request_Queueable* met
 int
 TAO_Notify_Buffering_Strategy::dequeue (TAO_Notify_Method_Request_Queueable* &method_request, const ACE_Time_Value *abstime)
 {
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
 
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->global_queue_lock_, -1);
 
@@ -316,7 +304,7 @@ TAO_Notify_Buffering_Strategy::discard (TAO_Notify_Method_Request_Queueable* met
       return false;
     }
 
-  ACE_Message_Block* mb = nullptr;
+  ACE_Message_Block* mb {};
   int result = -1;
 
   if (this->discard_policy_.is_valid() == 0 ||
@@ -359,6 +347,5 @@ TAO_Notify_Buffering_Strategy::discard (TAO_Notify_Method_Request_Queueable* met
 
   return false;
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

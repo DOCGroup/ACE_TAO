@@ -155,7 +155,6 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
 
       *os << be_nl;
 
-      // Default constructor.
       if (! node->is_nested ())
         {
           *os << "OBV_";
@@ -182,7 +181,6 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
               << ");" << be_uidt;
         }
 
-      // Virtual destructor.
       *os << be_nl << "~";
       if (! node->is_nested ())
         {

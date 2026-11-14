@@ -19,12 +19,12 @@ Newsweek::operator new (size_t bytes)
   return ::new char[bytes];
 }
 void *
-Newsweek::operator new (size_t bytes, const std::nothrow_t&)
+Newsweek::operator new (size_t bytes, std::nothrow_t const &)
 {
   return ::new (std::nothrow) char[bytes];
 }
 void
-Newsweek::operator delete (void *p, const std::nothrow_t&) noexcept
+Newsweek::operator delete (void *p, std::nothrow_t const &) noexcept
 {
   delete [] static_cast <char *> (p);
 }
@@ -42,7 +42,7 @@ extern "C" ACE_Svc_Export Magazine *create_magazine ();
 Magazine *
 create_magazine ()
 {
-  Magazine *mag = nullptr;
-  ACE_NEW_RETURN (mag, Newsweek, 0);
+  Magazine *mag {};
+  ACE_NEW_RETURN (mag, Newsweek, nullptr);
   return mag;
 }

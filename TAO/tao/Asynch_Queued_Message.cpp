@@ -4,64 +4,61 @@
 #include "tao/ORB_Core.h"
 
 #include "ace/OS_Memory.h"
-#include "ace/OS_NS_string.h"
 #include "ace/os_include/sys/os_uio.h"
 #include "ace/Log_Msg.h"
 #include "ace/Message_Block.h"
 #include "ace/Malloc_Base.h"
 #include "ace/High_Res_Timer.h"
 
+#include <cstring>
+#include <utility>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Asynch_Queued_Message::TAO_Asynch_Queued_Message (
   ACE_Message_Block const *contents,
   TAO_ORB_Core *oc,
-  ACE_Time_Value *timeout,
+  ACE_Time_Value const *timeout,
   ACE_Allocator *alloc,
   bool is_heap_allocated)
   : TAO_Queued_Message (oc, alloc, is_heap_allocated)
   , size_ (contents->total_length ())
-  , offset_ (0)
   , abs_timeout_ (ACE_Time_Value::zero)
 {
-  if (timeout != nullptr)// && *timeout != ACE_Time_Value::zero)
+  if (timeout != nullptr)
     {
       this->abs_timeout_ = ACE_High_Res_Timer::gettimeofday_hr () + *timeout;
     }
   // @@ Use a pool for these guys!!
-  ACE_NEW (this->buffer_, char[this->size_]);
+  char *buffer {};
+  ACE_NEW (buffer, char[this->size_]);
+  this->buffer_.reset (buffer);
 
-  size_t copy_offset = 0;
+  size_t copy_offset {};
   for (ACE_Message_Block const *i = contents;
        i != nullptr;
        i = i->cont ())
     {
-      ACE_OS::memcpy (this->buffer_ + copy_offset,
-                      i->rd_ptr (),
-                      i->length ());
+      std::memcpy (this->buffer_.get () + copy_offset, i->rd_ptr (), i->length ());
       copy_offset += i->length ();
     }
 }
 
-TAO_Asynch_Queued_Message::TAO_Asynch_Queued_Message (char *buf,
-                                                      TAO_ORB_Core *oc,
-                                                      size_t size,
-                                                      const ACE_Time_Value &abs_timeout,
-                                                      ACE_Allocator *alloc,
-                                                      bool is_heap_allocated)
+TAO_Asynch_Queued_Message::TAO_Asynch_Queued_Message (
+  std::unique_ptr<char[]> buffer,
+  TAO_ORB_Core *oc,
+  size_t size,
+  ACE_Time_Value const &abs_timeout,
+  ACE_Allocator *alloc,
+  bool is_heap_allocated)
   : TAO_Queued_Message (oc, alloc, is_heap_allocated)
   , size_ (size)
-  , offset_ (0)
-  , buffer_ (buf)
+  , buffer_ (std::move (buffer))
   , abs_timeout_ (abs_timeout)
 {
 }
 
-TAO_Asynch_Queued_Message::~TAO_Asynch_Queued_Message ()
-{
-  // @@ Use a pool for these guys!
-  delete [] this->buffer_;
-}
+TAO_Asynch_Queued_Message::~TAO_Asynch_Queued_Message () = default;
 
 size_t
 TAO_Asynch_Queued_Message::message_length () const
@@ -83,7 +80,7 @@ TAO_Asynch_Queued_Message::fill_iov (int iovcnt_max,
   ACE_ASSERT (iovcnt_max > iovcnt);
   ACE_UNUSED_ARG (iovcnt_max); // not used if ACE_ASSERT() is empty
 
-  iov[iovcnt].iov_base = this->buffer_ + this->offset_;
+  iov[iovcnt].iov_base = this->buffer_.get () + this->offset_;
   iov[iovcnt].iov_len  = static_cast<u_long> (this->size_ - this->offset_);
   ++iovcnt;
 }
@@ -108,11 +105,10 @@ TAO_Asynch_Queued_Message::bytes_transferred (size_t &byte_count)
                          this->orb_core_->leader_follower ());
 }
 
-
 TAO_Queued_Message *
 TAO_Asynch_Queued_Message::clone (ACE_Allocator *alloc)
 {
-  char *buf = nullptr;
+  char *buf {};
 
   // @todo: Need to use a memory pool. But certain things need to
   // change a bit in this class for that. Till then.
@@ -124,19 +120,18 @@ TAO_Asynch_Queued_Message::clone (ACE_Allocator *alloc)
   ACE_NEW_RETURN (buf,
                   char[sz],
                   nullptr);
+  std::unique_ptr<char[]> buffer (buf);
 
-  ACE_OS::memcpy (buf,
-                  this->buffer_ + this->offset_,
-                  sz);
+  std::memcpy (buffer.get (), this->buffer_.get () + this->offset_, sz);
 
-  TAO_Asynch_Queued_Message *qm = nullptr;
+  TAO_Asynch_Queued_Message *qm {};
 
   if (alloc != nullptr)
     {
       ACE_NEW_MALLOC_RETURN (qm,
                              static_cast<TAO_Asynch_Queued_Message *> (
                                  alloc->malloc (sizeof (TAO_Asynch_Queued_Message))),
-                             TAO_Asynch_Queued_Message (buf,
+                             TAO_Asynch_Queued_Message (std::move (buffer),
                                                         this->orb_core_,
                                                         sz,
                                                         this->abs_timeout_,
@@ -156,7 +151,7 @@ TAO_Asynch_Queued_Message::clone (ACE_Allocator *alloc)
         }
 
       ACE_NEW_RETURN (qm,
-                      TAO_Asynch_Queued_Message (buf,
+                      TAO_Asynch_Queued_Message (std::move (buffer),
                                                  this->orb_core_,
                                                  sz,
                                                  this->abs_timeout_,

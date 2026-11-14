@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef _PMC_USR_H
 #define _PMC_USR_H
 
@@ -22,12 +21,12 @@
 class PMC_Usr : public PM_Client
 {
 public:
-  PMC_Usr (char *usr_name);
-  virtual void process ();
+  explicit PMC_Usr (char *usr_name);
+  void process () override;
 
 protected:
-  virtual int encode (char *packet, int &total_bytes);
-  virtual int decode (char *packet, int &total_bytes);
+  int encode (char *packet, int &total_bytes) override;
+  int decode (char *packet, int &total_bytes) override;
 
 private:
   char *usr_name;

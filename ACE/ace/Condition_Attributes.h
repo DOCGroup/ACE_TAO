@@ -25,39 +25,37 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Condition_Attributes
 {
 public:
-  /// Constructor
-  ACE_Condition_Attributes (int type = ACE_DEFAULT_SYNCH_TYPE);
+  ACE_Condition_Attributes (ACE_Condition_Attributes const &) = delete;
+  ACE_Condition_Attributes (ACE_Condition_Attributes &&) = delete;
+  ACE_Condition_Attributes &operator= (ACE_Condition_Attributes const &) = delete;
+  ACE_Condition_Attributes &operator= (ACE_Condition_Attributes &&) = delete;
 
-  /// Destructor
+  explicit ACE_Condition_Attributes (int type = ACE_DEFAULT_SYNCH_TYPE);
+
   ~ACE_Condition_Attributes ();
 
   /// Accessor for retrieving the current attributes
-  const ACE_condattr_t& attributes () const;
+  ACE_condattr_t const &attributes () const;
 
 protected:
   /// The attributes
   ACE_condattr_t attributes_;
-
-private:
-  void operator= (const ACE_Condition_Attributes &) = delete;
-  ACE_Condition_Attributes (const ACE_Condition_Attributes &) = delete;
 };
 
 template <class TIME_POLICY>
 class ACE_Condition_Attributes_T : public ACE_Condition_Attributes
 {
 public:
-  /// Constructor
-  ACE_Condition_Attributes_T (int type = ACE_DEFAULT_SYNCH_TYPE)
+  ACE_Condition_Attributes_T (ACE_Condition_Attributes_T const &) = delete;
+  ACE_Condition_Attributes_T (ACE_Condition_Attributes_T &&) = delete;
+  ACE_Condition_Attributes_T &operator= (ACE_Condition_Attributes_T const &) = delete;
+  ACE_Condition_Attributes_T &operator= (ACE_Condition_Attributes_T &&) = delete;
+
+  explicit ACE_Condition_Attributes_T (int type = ACE_DEFAULT_SYNCH_TYPE)
     : ACE_Condition_Attributes (type)
   {}
 
-  /// Destructor
   ~ACE_Condition_Attributes_T () = default;
-
-private:
-  void operator= (const ACE_Condition_Attributes_T<TIME_POLICY> &) = delete;
-  ACE_Condition_Attributes_T (const ACE_Condition_Attributes_T<TIME_POLICY> &) = delete;
 };
 
 class ACE_Monotonic_Time_Policy;
@@ -67,15 +65,14 @@ class ACE_Export ACE_Condition_Attributes_T<ACE_Monotonic_Time_Policy>
   : public ACE_Condition_Attributes
 {
 public:
-  /// Constructor
-  ACE_Condition_Attributes_T (int type = ACE_DEFAULT_SYNCH_TYPE);
+  ACE_Condition_Attributes_T (ACE_Condition_Attributes_T const &) = delete;
+  ACE_Condition_Attributes_T (ACE_Condition_Attributes_T &&) = delete;
+  ACE_Condition_Attributes_T &operator= (ACE_Condition_Attributes_T const &) = delete;
+  ACE_Condition_Attributes_T &operator= (ACE_Condition_Attributes_T &&) = delete;
 
-  /// Destructor
+  explicit ACE_Condition_Attributes_T (int type = ACE_DEFAULT_SYNCH_TYPE);
+
   ~ACE_Condition_Attributes_T () = default;
-
-private:
-  void operator= (const ACE_Condition_Attributes_T<ACE_Monotonic_Time_Policy> &) = delete;
-  ACE_Condition_Attributes_T (const ACE_Condition_Attributes_T<ACE_Monotonic_Time_Policy> &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

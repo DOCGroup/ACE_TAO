@@ -10,12 +10,15 @@
 #include "tao/ZIOP/ZIOP_Policy_i.h"
 #include "tao/Messaging_PolicyValueC.h"
 
+#include <cstring>
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
 TAO_ZIOP_Service_Context_Handler::process_service_context (
-  TAO_Transport&,
-  const IOP::ServiceContext &ctx,
+  TAO_Transport &,
+  IOP::ServiceContext const &ctx,
   TAO_ServerRequest *req)
 {
   // Ensure this context is actually for us to decode.
@@ -26,9 +29,9 @@ TAO_ZIOP_Service_Context_Handler::process_service_context (
 
 #if defined (TAO_HAS_ZIOP) && TAO_HAS_ZIOP == 1
   // Create an input CDR from the context buffer
-  TAO_InputCDR cdr (reinterpret_cast<const char*> (ctx.context_data.get_buffer ()),
-                    ctx.context_data.length () );
-  CORBA::Boolean byte_order;
+  TAO_InputCDR cdr (reinterpret_cast<char const *> (ctx.context_data.get_buffer ()),
+                    ctx.context_data.length ());
+  CORBA::Boolean byte_order {};
   if (!(cdr >> TAO_InputCDR::to_boolean (byte_order)))
     {
       return 0;
@@ -43,10 +46,10 @@ TAO_ZIOP_Service_Context_Handler::process_service_context (
     }
 
   // Extract each policy from the slots we received.
-  for (CORBA::ULong i = 0u; i < static_cast<CORBA::ULong> (policy_value_seq.length ()); ++i)
+  for (CORBA::ULong i {}; i < static_cast<CORBA::ULong> (policy_value_seq.length ()); ++i)
     {
       TAO_InputCDR policy_cdr (
-        reinterpret_cast<const char*> (policy_value_seq[i].pvalue.get_buffer ()),
+        reinterpret_cast<char const *> (policy_value_seq[i].pvalue.get_buffer ()),
         policy_value_seq[i].pvalue.length ());
 
       if (policy_cdr >> TAO_InputCDR::to_boolean (byte_order))
@@ -56,7 +59,7 @@ TAO_ZIOP_Service_Context_Handler::process_service_context (
             {
             case ::ZIOP::COMPRESSION_ENABLING_POLICY_ID:
               {
-                TAO::CompressionEnablingPolicy *enabled = nullptr;
+                TAO::CompressionEnablingPolicy *enabled {};
                 ACE_NEW_RETURN (enabled, TAO::CompressionEnablingPolicy (), 0);
                 std::unique_ptr<TAO::CompressionEnablingPolicy> guard (enabled);
                 if (enabled->_tao_decode (policy_cdr))
@@ -68,7 +71,7 @@ TAO_ZIOP_Service_Context_Handler::process_service_context (
 
             case ::ZIOP::COMPRESSOR_ID_LEVEL_LIST_POLICY_ID:
               {
-                TAO::CompressorIdLevelListPolicy *id_list = nullptr;
+                TAO::CompressorIdLevelListPolicy *id_list {};
                 ACE_NEW_RETURN (id_list, TAO::CompressorIdLevelListPolicy (), 0);
                 std::unique_ptr<TAO::CompressorIdLevelListPolicy> guard (id_list);
                 if (id_list->_tao_decode (policy_cdr))
@@ -91,12 +94,12 @@ TAO_ZIOP_Service_Context_Handler::process_service_context (
 int
 TAO_ZIOP_Service_Context_Handler::generate_service_context (
   TAO_Stub *stub,
-  TAO_Transport&,
+  TAO_Transport &,
   TAO_Operation_Details &opdetails,
   TAO_Target_Specification &,
   TAO_OutputCDR &)
 {
-  if (stub)
+  if (stub != nullptr)
     {
       // Obtain the two policies we are interested in sending to the server.
       CORBA::Policy_var idpolicy =
@@ -113,8 +116,7 @@ TAO_ZIOP_Service_Context_Handler::generate_service_context (
       // Put these into a sequence of policy values.
       Messaging::PolicyValueSeq policy_value_seq;
       policy_value_seq.length (0);
-      CORBA::ULong i = 0;
-      size_t length = 0;
+      CORBA::ULong i {};
 
       // If we do have an COMPRESSION_ID_LEVEL_LIST_POLICY, place it in a slot
       if (!CORBA::is_nil (idpolicyp.in ()))
@@ -129,8 +131,8 @@ TAO_ZIOP_Service_Context_Handler::generate_service_context (
           if (!(idpolicyp->_tao_encode (out_CDR)))
             return 0;
 
-          length = out_CDR.total_length ();
-          policy_value_seq[i].pvalue.length (static_cast <CORBA::ULong>(length));
+          size_t const length = out_CDR.total_length ();
+          policy_value_seq[i].pvalue.length (static_cast<CORBA::ULong> (length));
           CORBA::Octet *buf = policy_value_seq[i].pvalue.get_buffer ();
 
           // Copy the CDR buffer data into the octet sequence buffer.
@@ -138,7 +140,7 @@ TAO_ZIOP_Service_Context_Handler::generate_service_context (
              iterator != nullptr;
              iterator = iterator->cont ())
           {
-            ACE_OS::memcpy (buf, iterator->rd_ptr (), iterator->length ());
+            std::memcpy (buf, iterator->rd_ptr (), iterator->length ());
             buf += iterator->length ();
           }
           ++i;
@@ -157,8 +159,8 @@ TAO_ZIOP_Service_Context_Handler::generate_service_context (
           if (!(enabledpolicyp->_tao_encode (out_CDR)))
             return 0;
 
-          length = out_CDR.total_length ();
-          policy_value_seq[i].pvalue.length (static_cast <CORBA::ULong>(length));
+          size_t const length = out_CDR.total_length ();
+          policy_value_seq[i].pvalue.length (static_cast<CORBA::ULong> (length));
           CORBA::Octet *buf = policy_value_seq[i].pvalue.get_buffer ();
 
           // Copy the CDR buffer data into the octet sequence buffer.
@@ -166,7 +168,7 @@ TAO_ZIOP_Service_Context_Handler::generate_service_context (
              iterator != nullptr;
              iterator = iterator->cont ())
           {
-            ACE_OS::memcpy (buf, iterator->rd_ptr (), iterator->length ());
+            std::memcpy (buf, iterator->rd_ptr (), iterator->length ());
             buf += iterator->length ();
           }
           ++i;

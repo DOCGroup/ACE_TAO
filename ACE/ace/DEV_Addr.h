@@ -34,20 +34,18 @@ public:
   /// Default constructor.
   ACE_DEV_Addr ();
 
-  /// Copy constructor.
-  ACE_DEV_Addr (const ACE_DEV_Addr &sa);
+  ACE_DEV_Addr (ACE_DEV_Addr const &sa);
 
   /// Acts like a copy constructor.
-  int set (const ACE_DEV_Addr &sa);
+  int set (ACE_DEV_Addr const &sa);
 
   /// Create a ACE_DEV_Addr from a device name.
-  explicit ACE_DEV_Addr (const ACE_TCHAR *devname);
+  explicit ACE_DEV_Addr (ACE_TCHAR const *devname);
 
   /// Create a ACE_Addr from a ACE_DEV pathname.
-  void set (const ACE_TCHAR *devname);
+  void set (ACE_TCHAR const *devname);
 
-  /// Assignment operator.
-  ACE_DEV_Addr &operator= (const ACE_DEV_Addr &);
+  ACE_DEV_Addr &operator= (ACE_DEV_Addr const &);
 
   /// Return a pointer to the address.
   void *get_addr () const override;
@@ -56,13 +54,13 @@ public:
   virtual int addr_to_string (ACE_TCHAR *addr, size_t) const;
 
   /// Compare two addresses for equality.
-  bool operator == (const ACE_DEV_Addr &SAP) const;
+  bool operator == (ACE_DEV_Addr const &sap) const;
 
   /// Compare two addresses for inequality.
-  bool operator != (const ACE_DEV_Addr &SAP) const;
+  bool operator != (ACE_DEV_Addr const &sap) const;
 
   /// Return the path name used for the rendezvous point.
-  const ACE_TCHAR *get_path_name () const;
+  ACE_TCHAR const *get_path_name () const;
 
   /// Dump the state of an object.
   void dump () const;
@@ -73,7 +71,7 @@ public:
 private:
   static constexpr int DEVNAME_LENGTH = MAXPATHLEN + 1;
   /// Name of the device.
-  ACE_TCHAR devname_[DEVNAME_LENGTH];
+  ACE_TCHAR devname_[DEVNAME_LENGTH] {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

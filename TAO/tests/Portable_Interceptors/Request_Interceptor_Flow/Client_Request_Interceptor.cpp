@@ -4,9 +4,9 @@
 
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/AnyTypeCode/AnyTypeCode_Adapter_Impl.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
-Client_Request_Interceptor::Client_Request_Interceptor (const char *name)
+Client_Request_Interceptor::Client_Request_Interceptor (char const *name)
   : Request_Interceptor (name)
 {
 }
@@ -15,7 +15,7 @@ void
 Client_Request_Interceptor::send_request (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-  CORBA::Boolean client_side =
+  bool const client_side =
     this->client_side_test (ri);
 
   if (!client_side)
@@ -25,15 +25,14 @@ Client_Request_Interceptor::send_request (
               "%C.send_request",
               this->name_.in ()));
 
-  if (ACE_OS::strcmp ("CLIENT B", this->name_.in ()) == 0)
+  if (std::strcmp ("CLIENT B", this->name_.in ()) == 0)
     {
       // Determine which test scenario we are in
       Dynamic::ParameterList_var paramlist =
         ri->arguments ();
 
-      Test::TestScenario scenario;
-      CORBA::ULong i = 0;  // index -- explicitly used to avoid
-                           // overloaded operator ambiguity.
+      Test::TestScenario scenario {};
+      CORBA::ULong i {};  // Index avoids overloaded operator ambiguity.
       if (paramlist[i].argument >>= scenario)
         {
           switch (scenario)
@@ -62,14 +61,14 @@ Client_Request_Interceptor::send_request (
   ACE_DEBUG ((LM_DEBUG,
               "\n"));
 
-  this->starting_interception_point_count_++;
+  ++this->starting_interception_point_count_;
 }
 
 void
 Client_Request_Interceptor::send_poll (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-  CORBA::Boolean client_side =
+  bool const client_side =
     this->client_side_test (ri);
 
   if (!client_side)
@@ -79,34 +78,33 @@ Client_Request_Interceptor::send_poll (
               "%C.send_poll\n",
               this->name_.in ()));
 
-  this->starting_interception_point_count_++;
+  ++this->starting_interception_point_count_;
 }
 
 void
 Client_Request_Interceptor::receive_reply (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-  CORBA::Boolean client_side =
+  bool const client_side =
     this->client_side_test (ri);
 
   if (!client_side)
     return;  // Don't continue if the server side is being tested.
 
-  this->ending_interception_point_count_++;
+  ++this->ending_interception_point_count_;
 
   ACE_DEBUG ((LM_INFO,
               "%C.receive_reply",
               this->name_.in ()));
 
-  if (ACE_OS::strcmp ("CLIENT B", this->name_.in ()) == 0)
+  if (std::strcmp ("CLIENT B", this->name_.in ()) == 0)
     {
       // Determine which test scenario we are in
       Dynamic::ParameterList_var paramlist =
         ri->arguments ();
 
-      Test::TestScenario scenario;
-      CORBA::ULong i = 0;  // index -- explicitly used to avoid
-                           // overloaded operator ambiguity.
+      Test::TestScenario scenario {};
+      CORBA::ULong i {};  // Index avoids overloaded operator ambiguity.
       if (paramlist[i].argument >>= scenario)
         {
           switch (scenario)
@@ -140,32 +138,31 @@ void
 Client_Request_Interceptor::receive_exception (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-  CORBA::Boolean client_side =
+  bool const client_side =
     this->client_side_test (ri);
 
   if (!client_side)
     return;  // Don't continue if the server side is being tested.
 
-  this->ending_interception_point_count_++;
+  ++this->ending_interception_point_count_;
 
   ACE_DEBUG ((LM_INFO,
               "%C.receive_exception",
               this->name_.in ()));
 
-  if (ACE_OS::strcmp ("CLIENT B", this->name_.in ()) == 0)
+  if (std::strcmp ("CLIENT B", this->name_.in ()) == 0)
     {
       // Determine which test scenario we are in
       Dynamic::ParameterList_var paramlist =
         ri->arguments ();
 
-      Test::TestScenario scenario;
-      CORBA::ULong i = 0;  // index -- explicitly used to avoid
-                           // overloaded operator ambiguity.
+      Test::TestScenario scenario {};
+      CORBA::ULong i {};  // Index avoids overloaded operator ambiguity.
       if (paramlist[i].argument >>= scenario)
         {
           CORBA::Any_var exception;
           CORBA::TypeCode_var tc;
-          const char * id = 0;
+          CORBA::String_var id;
 
           switch (scenario)
             {
@@ -176,7 +173,7 @@ Client_Request_Interceptor::receive_exception (
 
               id = tc->id ();
 
-              if (ACE_OS::strcmp (id, "IDL:Test/X:1.0") == 0)
+              if (std::strcmp (id.in (), "IDL:Test/X:1.0") == 0)
                 {
                   // We can only throw a CORBA::SystemException or a
                   // PortableInteceptor::ForwardRequest exception due
@@ -216,13 +213,13 @@ void
 Client_Request_Interceptor::receive_other (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-  CORBA::Boolean client_side =
+  bool const client_side =
     this->client_side_test (ri);
 
   if (!client_side)
     return;  // Don't continue if the server side is being tested.
 
-  this->ending_interception_point_count_++;
+  ++this->ending_interception_point_count_;
 
   ACE_DEBUG ((LM_INFO,
               "%C.receive_other\n",
@@ -235,5 +232,5 @@ Client_Request_Interceptor::client_side_test (
 {
   CORBA::String_var op = info->operation ();
 
-  return ACE_OS::strcmp (op.in (), "client_test") == 0 ? 1 : 0;
+  return std::strcmp (op.in (), "client_test") == 0;
 }

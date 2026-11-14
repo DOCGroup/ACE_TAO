@@ -105,14 +105,10 @@ namespace PortableInterceptor
     static void _tao_release (ServerRequestInterceptor_ptr obj);
 
     static ServerRequestInterceptor_ptr _narrow (
-        ::CORBA::Object_ptr obj
-
-      );
+        ::CORBA::Object_ptr obj);
 
     static ServerRequestInterceptor_ptr _unchecked_narrow (
-        ::CORBA::Object_ptr obj
-
-      );
+        ::CORBA::Object_ptr obj);
 
     static ServerRequestInterceptor_ptr _nil ()
     {
@@ -127,8 +123,7 @@ namespace PortableInterceptor
 
     virtual void tao_ft_interception_point (
         ::PortableInterceptor::ServerRequestInfo_ptr,
-        ::CORBA::OctetSeq_out
-      )
+        ::CORBA::OctetSeq_out)
       {}
 
 #endif /* TAO_HAS_EXTENDED_FT_INTERCEPTORS */
@@ -137,36 +132,31 @@ namespace PortableInterceptor
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual void receive_request_service_contexts (
-        ::PortableInterceptor::ServerRequestInfo_ptr ri
-      ) = 0;
+        ::PortableInterceptor::ServerRequestInfo_ptr ri) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual void receive_request (
-        ::PortableInterceptor::ServerRequestInfo_ptr ri
-      ) = 0;
+        ::PortableInterceptor::ServerRequestInfo_ptr ri) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual void send_reply (
-        ::PortableInterceptor::ServerRequestInfo_ptr ri
-      ) = 0;
+        ::PortableInterceptor::ServerRequestInfo_ptr ri) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual void send_exception (
-        ::PortableInterceptor::ServerRequestInfo_ptr ri
-      ) = 0;
+        ::PortableInterceptor::ServerRequestInfo_ptr ri) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_operation/operation_ch.cpp:46
 
     virtual void send_other (
-        ::PortableInterceptor::ServerRequestInfo_ptr ri
-      ) = 0;
+        ::PortableInterceptor::ServerRequestInfo_ptr ri) = 0;
 
     // TAO_IDL - Generated from
     // be\be_visitor_interface/interface_ch.cpp:210
@@ -209,16 +199,13 @@ namespace TAO
   struct TAO_PI_Server_Export Objref_Traits< ::PortableInterceptor::ServerRequestInfo>
   {
     static ::PortableInterceptor::ServerRequestInfo_ptr duplicate (
-        ::PortableInterceptor::ServerRequestInfo_ptr
-      );
+        ::PortableInterceptor::ServerRequestInfo_ptr);
     static void release (
-        ::PortableInterceptor::ServerRequestInfo_ptr
-      );
+        ::PortableInterceptor::ServerRequestInfo_ptr);
     static ::PortableInterceptor::ServerRequestInfo_ptr nil ();
     static ::CORBA::Boolean marshal (
         ::PortableInterceptor::ServerRequestInfo_ptr p,
-        TAO_OutputCDR & cdr
-      );
+        TAO_OutputCDR & cdr);
   };
 
 #endif /* end #if !defined */
@@ -230,16 +217,13 @@ namespace TAO
   struct TAO_PI_Server_Export Objref_Traits< ::PortableInterceptor::ServerRequestInterceptor>
   {
     static ::PortableInterceptor::ServerRequestInterceptor_ptr duplicate (
-        ::PortableInterceptor::ServerRequestInterceptor_ptr
-      );
+        ::PortableInterceptor::ServerRequestInterceptor_ptr);
     static void release (
-        ::PortableInterceptor::ServerRequestInterceptor_ptr
-      );
+        ::PortableInterceptor::ServerRequestInterceptor_ptr);
     static ::PortableInterceptor::ServerRequestInterceptor_ptr nil ();
     static ::CORBA::Boolean marshal (
         ::PortableInterceptor::ServerRequestInterceptor_ptr p,
-        TAO_OutputCDR & cdr
-      );
+        TAO_OutputCDR & cdr);
   };
 
 #endif /* end #if !defined */

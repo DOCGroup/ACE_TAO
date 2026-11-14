@@ -1,28 +1,20 @@
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = DESCRIPTION
-//    This program tests the behavior of ACE_Token under a variety of scenarios
-//    in order verify whether or not tokens are returned, and threads run, in
-//    a LIFO or FIFO manner.
-//
-// = AUTHOR
-//    Don Hinton <dhinton@ieee.org>
-//
-// ============================================================================
+/// @file Token_Strategy_Test.cpp
+/// This program tests the behavior of ACE_Token under a variety of scenarios
+/// in order verify whether or not tokens are returned, and threads run, in
+/// a LIFO or FIFO manner.
+///
+/// @author Don Hinton <dhinton@ieee.org>
 
 #include "test_config.h"
 #include "ace/Token.h"
 #include "ace/Task.h"
 #include "ace/Atomic_Op.h"
 #include "ace/Auto_IncDec_T.h"
-#include "ace/Vector_T.h"
 #include "ace/Stats.h"
 #include "ace/ACE.h"
 #include "ace/Barrier.h"
 
+#include <vector>
 
 #if defined (ACE_HAS_THREADS)
 
@@ -56,7 +48,7 @@ private:
   int invocations_;
 
   // Vector of token counts, one per thread.
-  ACE_Vector<ACE_INT32> vec_token_count_;
+  std::vector<ACE_INT32> vec_token_count_;
 
   // This keeps a count of the number of threads who have the token--should always
   // be 0 or 1;
@@ -72,7 +64,6 @@ private:
   Token_Strategy_Test &operator= (const Token_Strategy_Test &) = delete;
 };
 
-
 Token_Strategy_Test::Token_Strategy_Test (ACE_Token::QUEUEING_STRATEGY strategy, int threads, int invocations)
   : threads_ (threads < 5 ? 5 : threads), // need at least 5 threads to satisfy test conditions.
     barrier_ (threads_),
@@ -83,13 +74,6 @@ Token_Strategy_Test::Token_Strategy_Test (ACE_Token::QUEUEING_STRATEGY strategy,
   this->counter_ = 0;
   this->active_ = 0;
   this->errors_ = 0;
-
-  // Initialize the per thread counters used for generating stats.
-  for (int i = 0; i < this->threads_; ++i)
-    {
-      const ACE_UINT32 sample = 0;
-      this->vec_token_count_.push_back (sample);
-    }
 
   this->token_.queueing_strategy (this->strategy_);
 
@@ -124,7 +108,6 @@ Token_Strategy_Test::svc ()
   int current = this->active_.value ();
   ACE_Auto_IncDec<ACE_Atomic_Op<ACE_Thread_Mutex, int> > active_counter (this->active_);
   this->barrier_.wait ();
-
 
   //ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (tid = %t) starting loop\n")));
   for (int i = 0; i < this->invocations_; i++)
@@ -183,7 +166,7 @@ Token_Strategy_Test::svc ()
                 {
                   ACE_DEBUG ((LM_ERROR,
                               ACE_TEXT (" (tid = %t) LIFO: mean greater than std_dev.\n")));
-                  this->errors_++;
+                  ++this->errors_;
                 }
               if (this->strategy_ == ACE_Token::FIFO &&
                   (mean.whole () < std_dev.whole () &&
@@ -191,14 +174,13 @@ Token_Strategy_Test::svc ()
                 {
                   ACE_DEBUG ((LM_ERROR,
                               ACE_TEXT (" (tid = %t) FIFO: mean less than std_dev.\n")));
-                  this->errors_++;
+                  ++this->errors_;
                 }
             }
         }
     }
   return 0;
 }
-
 
 int run_test (ACE_Token::QUEUEING_STRATEGY strategy, int threads = 5,
               int invocations = 10)

@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Endpoint_Acceptor_Filter.h
  *
@@ -9,8 +8,6 @@
  *
  *  @author  Yan Dai <dai_y@ociweb.com>
  */
-//=============================================================================
-
 
 #ifndef TAO_ENDPOINT_ACCEPTOR_FILTER_H
 #define TAO_ENDPOINT_ACCEPTOR_FILTER_H
@@ -30,7 +27,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_POA_Manager;
 
-//=============================================================================
 /**
  * @class TAO_Endpoint_Acceptor_Filter
  *
@@ -39,29 +35,26 @@ class TAO_POA_Manager;
  * Endpoint strategy for populating mprofile: only the endpoints match
  * the POAManager endpoint policy are included.
  */
-//=============================================================================
 class TAO_EndpointPolicy_Export TAO_Endpoint_Acceptor_Filter
   : public TAO_Default_Acceptor_Filter
 {
 public:
-  TAO_Endpoint_Acceptor_Filter (EndpointPolicy::EndpointList const& eps);
+  explicit TAO_Endpoint_Acceptor_Filter (EndpointPolicy::EndpointList const &eps);
 
   /// Populate @a mprofile with endpoints match the POAManager endpoint
   /// policy.
-  int fill_profile (TAO::ObjectKey const& object_key,
+  int fill_profile (TAO::ObjectKey const &object_key,
                     TAO_MProfile &mprofile,
-                    TAO_Acceptor **acceptors_begin,
-                    TAO_Acceptor **acceptors_end,
+                    TAO_AcceptorSet const &acceptors,
                     CORBA::Short priority = TAO_INVALID_PRIORITY) override;
 
-private:
   TAO_Endpoint_Acceptor_Filter (TAO_Endpoint_Acceptor_Filter const &) = delete;
   TAO_Endpoint_Acceptor_Filter &operator= (TAO_Endpoint_Acceptor_Filter const &) = delete;
   TAO_Endpoint_Acceptor_Filter (TAO_Endpoint_Acceptor_Filter &&) = delete;
   TAO_Endpoint_Acceptor_Filter &operator= (TAO_Endpoint_Acceptor_Filter &&) = delete;
 
-  // this is the list of endpoints as obtained from the policy value supplied
-  // to the constructor.
+private:
+  /// Endpoint filter list supplied through the policy.
   EndpointPolicy::EndpointList endpoints_;
 };
 

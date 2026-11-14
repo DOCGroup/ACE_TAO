@@ -6,6 +6,8 @@
 
 #include "ace/Truncate.h"
 
+#include <cstring>
+
 #if !defined (__ACE_INLINE__)
 # include "tao/CDR.inl"
 #endif /* ! __ACE_INLINE__ */
@@ -68,7 +70,6 @@ TAO_OutputCDR::TAO_OutputCDR (size_t size,
   , more_fragments_ (false)
   , request_id_ (0)
   , stub_ (nullptr)
-  , message_semantics_ (TAO_Message_Semantics::TAO_TWOWAY_REQUEST)
   , timeout_ (nullptr)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_OUTPUT_CDR_CTOR1_ENTER);
@@ -76,9 +77,9 @@ TAO_OutputCDR::TAO_OutputCDR (size_t size,
 #if defined (TAO_ZERO_TAO_OUTPUTCDR_ALLOCATED_BUFFERS)
   // Zero out the buffer if we allocated the buffer.
   if (size == 0)
-    (void) ACE_OS::memset (this->current()->wr_ptr(),
-                           0,
-                           this->current()->space());
+    (void) std::memset (this->current()->wr_ptr(),
+                        0,
+                        this->current()->space());
 #endif /* TAO_ZERO_TAO_OUTPUTCDR_ALLOCATED_BUFFERS */
 }
 
@@ -104,7 +105,6 @@ TAO_OutputCDR::TAO_OutputCDR (char *data,
   , more_fragments_ (false)
   , request_id_ (0)
   , stub_ (nullptr)
-  , message_semantics_ (TAO_Message_Semantics::TAO_TWOWAY_REQUEST)
   , timeout_ (nullptr)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_OUTPUT_CDR_CTOR2_ENTER);
@@ -133,7 +133,6 @@ TAO_OutputCDR::TAO_OutputCDR (char *data,
   , more_fragments_ (false)
   , request_id_ (0)
   , stub_ (nullptr)
-  , message_semantics_ (TAO_Message_Semantics::TAO_TWOWAY_REQUEST)
   , timeout_ (nullptr)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_OUTPUT_CDR_CTOR3_ENTER);
@@ -153,7 +152,6 @@ TAO_OutputCDR::TAO_OutputCDR (ACE_Message_Block *data,
   , more_fragments_ (false)
   , request_id_ (0)
   , stub_ (nullptr)
-  , message_semantics_ (TAO_Message_Semantics::TAO_TWOWAY_REQUEST)
   , timeout_ (nullptr)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_OUTPUT_CDR_CTOR4_ENTER);
@@ -176,7 +174,6 @@ TAO_OutputCDR::TAO_OutputCDR (ACE_Data_Block *data_block,
   , more_fragments_ (false)
   , request_id_ (0)
   , stub_ (nullptr)
-  , message_semantics_ (TAO_Message_Semantics::TAO_TWOWAY_REQUEST)
   , timeout_ (nullptr)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_OUTPUT_CDR_CTOR5_ENTER);
@@ -221,14 +218,13 @@ TAO_OutputCDR::fragment_stream (ACE_CDR::ULong pending_alignment,
   return true;  // Success.
 }
 
-
 int
 TAO_OutputCDR::offset (char* pos)
 {
-  int offset = 0;
+  int offset {};
   const ACE_Message_Block * cur_mb = this->begin ();
   char* wr_ptr = this->current ()->wr_ptr ();
-  bool found = false;
+  bool found {};
 
   while (cur_mb != this->end ())
   {
@@ -255,7 +251,6 @@ TAO_OutputCDR::offset (char* pos)
 
   return offset;
 }
-
 
 // ****************************************************************
 
@@ -309,6 +304,5 @@ TAO_InputCDR::clr_mb_flags( ACE_Message_Block::Message_Flags less_flags )
 {
   return start_.clr_self_flags( less_flags );
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

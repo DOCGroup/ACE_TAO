@@ -3,7 +3,6 @@
 //------------------------------------------------------------
 
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/AV/FlowSpec_Entry.h"
 #include "orbsvcs/AV/Protocol_Factory.h"
 
@@ -11,144 +10,59 @@
 
 #include "ace/OS_NS_strings.h"
 
+#include <cstdlib>
+#include <string>
+
 #if !defined (__ACE_INLINE__)
 #include "orbsvcs/AV/FlowSpec_Entry.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// constructor.
-TAO_FlowSpec_Entry::TAO_FlowSpec_Entry ()
-  :address_ (nullptr),
-   clean_up_address_ (0),
-   control_address_ (nullptr),
-   clean_up_control_address_ (0),
-   address_str_ (),
-   format_ (),
-   direction_ (TAO_AV_INVALID),
-   direction_str_ (),
-   flowname_ (),
-   protocol_ (TAO_AV_Core::TAO_AV_NOPROTOCOL),
-   carrier_protocol_ (),
-   flow_protocol_ (),
-   use_flow_protocol_ (0),
-   entry_ (),
-   is_multicast_ (0),
-   delete_peer_addr_ (false),
-   peer_addr_ (nullptr),
-   local_sec_addr_ (nullptr),
-   num_local_sec_addrs_ (0),
-   peer_sec_addr_ (nullptr),
-   num_peer_sec_addrs_ (0),
-   peer_control_addr_ (nullptr),
-   local_addr_ (nullptr),
-   local_control_addr_ (nullptr),
-   transport_ (nullptr),
-   control_transport_ (nullptr),
-   handler_ (nullptr),
-   control_handler_ (nullptr),
-   protocol_object_ (nullptr),
-   control_protocol_object_ (nullptr),
-   role_ (TAO_AV_INVALID_ROLE)
-{
-}
+TAO_FlowSpec_Entry::TAO_FlowSpec_Entry () = default;
 
-// constructor.
-TAO_FlowSpec_Entry::TAO_FlowSpec_Entry (const char *flowname,
-                                        const char *direction,
-                                        const char *format_name,
-                                        const char *flow_protocol,
-                                        const char *carrier_protocol,
+TAO_FlowSpec_Entry::TAO_FlowSpec_Entry (char const *flowname,
+                                        char const *direction,
+                                        char const *format_name,
+                                        char const *flow_protocol,
+                                        char const *carrier_protocol,
                                         ACE_Addr *fwd_address,
                                         //ACE_Addr *peer_address,
                                         ACE_Addr *control_address)
   :address_ (fwd_address),
-   clean_up_address_ (0),
    control_address_ (control_address),
-   clean_up_control_address_ (0),
    address_str_ (),
    format_ (format_name),
    direction_str_ (), // This is initialized in the call to set_direction()
    flowname_ ( flowname ),
    carrier_protocol_ ( carrier_protocol ),
    flow_protocol_ ( flow_protocol ),
-   use_flow_protocol_ (0),
-   entry_ (),
-   is_multicast_ (0),
-   delete_peer_addr_ (false),
-   peer_addr_ (nullptr),
-   local_sec_addr_ (nullptr),
-   num_local_sec_addrs_ (0),
-   peer_sec_addr_ (nullptr),
-   num_peer_sec_addrs_ (0),
-   peer_control_addr_ (nullptr),
-   local_addr_ (nullptr),
-   local_control_addr_ (nullptr),
-   transport_ (nullptr),
-   control_transport_ (nullptr),
-   handler_ (nullptr),
-   control_handler_ (nullptr),
-   protocol_object_ (nullptr),
-   control_protocol_object_ (nullptr),
-   role_ (TAO_AV_INVALID_ROLE)
+   entry_ ()
 {
   this->set_protocol ();
   this->set_direction (direction);
   this->parse_flow_protocol_string (this->flow_protocol_.c_str());
 }
 
-TAO_FlowSpec_Entry::TAO_FlowSpec_Entry (const char *flowname,
-                                        const char *direction,
-                                        const char *format_name,
-                                        const char *flow_protocol,
-                                        const char *address)
-  :address_ (nullptr),
-   clean_up_address_ (0),
-   control_address_ (nullptr),
-   clean_up_control_address_ (0),
-   address_str_ ( address ),
+TAO_FlowSpec_Entry::TAO_FlowSpec_Entry (char const *flowname,
+                                        char const *direction,
+                                        char const *format_name,
+                                        char const *flow_protocol,
+                                        char const *address)
+  :address_str_ ( address ),
    format_ ( format_name ),
    direction_str_ (), // This is initialized in the call to set_direction()
    flowname_ ( flowname ),
    carrier_protocol_ (),
    flow_protocol_ ( flow_protocol ),
-   use_flow_protocol_ (0),
-   entry_ (),
-   is_multicast_ (0),
-   peer_addr_ (nullptr),
-   local_sec_addr_ (nullptr),
-   num_local_sec_addrs_ (0),
-   peer_sec_addr_ (nullptr),
-   num_peer_sec_addrs_ (0),
-   peer_control_addr_ (nullptr),
-   local_addr_ (nullptr),
-   local_control_addr_ (nullptr),
-   transport_ (nullptr),
-   control_transport_ (nullptr),
-   handler_ (nullptr),
-   control_handler_ (nullptr),
-   protocol_object_ (nullptr),
-   control_protocol_object_ (nullptr),
-   role_ (TAO_AV_INVALID_ROLE)
+   entry_ ()
 {
   this->parse_flow_protocol_string (this->flow_protocol_.c_str() );
   this->parse_address (this->address_str_.c_str(), TAO_AV_Core::TAO_AV_DATA);
   this->set_direction (direction);
 }
 
-// Destructor.
-TAO_FlowSpec_Entry::~TAO_FlowSpec_Entry ()
-{
-  if (this->delete_peer_addr_)
-    delete this->peer_addr_;
-
-  if (this->clean_up_address_)
-    delete address_;
-  if (this->clean_up_control_address_)
-    delete control_address_;
-  if (local_control_addr_ != nullptr)
-    delete local_control_addr_;
-}
+TAO_FlowSpec_Entry::~TAO_FlowSpec_Entry () = default;
 
 int
 TAO_FlowSpec_Entry::set_protocol ()
@@ -211,7 +125,7 @@ TAO_FlowSpec_Entry::set_protocol ()
         ORBSVCS_DEBUG ((LM_DEBUG,"TAO_FlowSpec_Entry::set_protocol:%s %x\n",buf, inet_addr->get_ip_address ()));
       if (IN_CLASSD (inet_addr->get_ip_address ()))
         {
-          this->is_multicast_ = 1;
+          this->is_multicast_ = true;
           switch (this->protocol_)
             {
             case TAO_AV_Core::TAO_AV_UDP:
@@ -235,7 +149,7 @@ TAO_FlowSpec_Entry::set_protocol ()
 }
 
 int
-TAO_FlowSpec_Entry::parse_address (const char *address,
+TAO_FlowSpec_Entry::parse_address (char const *address,
                                    TAO_AV_Core::Flow_Component flow_comp)
 {
   if (TAO_debug_level > 0)
@@ -243,7 +157,7 @@ TAO_FlowSpec_Entry::parse_address (const char *address,
 
   if (address == nullptr)
     return 0;
-  if (ACE_OS::strcmp (address,"") == 0)
+  if (address[0] == '\0')
     return 0;
   TAO_Tokenizer protocol_tokenizer (address,'=');
 
@@ -273,20 +187,19 @@ TAO_FlowSpec_Entry::parse_address (const char *address,
               if (addr_token.num_tokens () != 0)
                 {
                   addr += addr_token [0];
-                  ACE_NEW_RETURN (local_sec_addr_, char* [addr_token.num_tokens () - 1],-1);
-                  for (int j = 1; j <= addr_token.num_tokens () - 1; j++)
+                  this->local_sec_addrs_.clear ();
+                  this->local_sec_addrs_.reserve (addr_token.num_tokens () - 1);
+                  for (int j = 1; j <= addr_token.num_tokens () - 1; ++j)
                     {
                       ORBSVCS_DEBUG ((LM_DEBUG,
                                   "adding addresses to sequence %s\n",
                                   addr_token [j]));
 
-                      local_sec_addr_ [j-1] =  CORBA::string_dup (addr_token [j]);
+                      this->local_sec_addrs_.emplace_back (addr_token [j]);
                     }
-                  num_local_sec_addrs_ = addr_token.num_tokens () - 1;
                 }
             }
           else addr += protocol_tokenizer[1];
-
 
           switch (this->protocol_)
             {
@@ -306,21 +219,22 @@ TAO_FlowSpec_Entry::parse_address (const char *address,
                                 -1);
                 if (flow_comp == TAO_AV_Core::TAO_AV_DATA)
                   {
-                    this->clean_up_address_ = 1;
+                    this->owned_address_.reset (inet_addr);
                     this->address_ = inet_addr;
                   }
                 else
                   {
-                    this->clean_up_control_address_ = 1;
+                    this->owned_control_address_.reset (inet_addr);
                     this->control_address_ = inet_addr;
                   }
 
-                if (IN_CLASSD (inet_addr->get_ip_address ()))
+                if (inet_addr->get_type () == AF_INET
+                    && IN_CLASSD (inet_addr->get_ip_address ()))
                   {
                     if (TAO_debug_level > 0)
                       ORBSVCS_DEBUG ((LM_DEBUG, "TAO_FlowSpec_Entry::parse_address is multicast\n"));
 
-                    this->is_multicast_ = 1;
+                    this->is_multicast_ = true;
                     switch (this->protocol_)
                       {
                       case TAO_AV_Core::TAO_AV_UDP:
@@ -351,12 +265,8 @@ TAO_FlowSpec_Entry::parse_address (const char *address,
                       "AV BOTH %s\n",
                       protocol_tokenizer[1]));
 
-          TAO_Tokenizer address_tokenizer (protocol_tokenizer[1], ':');
-          TAO_Tokenizer port_tokenizer (address_tokenizer[1], ';');
-          ACE_CString addr;
-          addr += address_tokenizer[0];
-          addr += ":";
-          addr += port_tokenizer[0];
+          TAO_Tokenizer port_tokenizer (protocol_tokenizer[1], ';');
+          ACE_CString addr (port_tokenizer[0]);
 
           if (this->protocol_ == TAO_AV_Core::TAO_AV_SCTP_SEQ)
             {
@@ -364,34 +274,19 @@ TAO_FlowSpec_Entry::parse_address (const char *address,
                           "Number of local sec addresses = %d\n",
                           port_tokenizer.num_tokens () - 1));
 
-              if (port_tokenizer.num_tokens () - 1 != 0)
+              if (port_tokenizer.num_tokens () > 1)
                 {
-                  ACE_NEW_RETURN (local_sec_addr_, char* [port_tokenizer.num_tokens () - 1],-1);
-                  for (int j = 1; j <= port_tokenizer.num_tokens () - 1; j++)
+                  this->local_sec_addrs_.clear ();
+                  this->local_sec_addrs_.reserve (port_tokenizer.num_tokens () - 1);
+                  for (int j = 1; j <= port_tokenizer.num_tokens () - 1; ++j)
                     {
                       ORBSVCS_DEBUG ((LM_DEBUG,
                                   "adding addresses to sequence %s\n",
                                   port_tokenizer [j]));
 
-                      local_sec_addr_ [j-1] =  CORBA::string_dup (port_tokenizer [j]);
+                      this->local_sec_addrs_.emplace_back (port_tokenizer [j]);
                     }
-                  num_local_sec_addrs_ = port_tokenizer.num_tokens () - 1;
                 }
-            }
-
-          short control_port = static_cast<short> (ACE_OS::atoi(port_tokenizer[0])) + 1;
-          char control_port_str[6];
-          ACE_OS::sprintf (control_port_str, "%d", control_port);
-
-          ACE_CString control_addr = "";
-          if (ACE_OS::strcasecmp (this->carrier_protocol_.c_str(),"RTP/UDP") == 0)
-            {
-              control_addr += address_tokenizer[0];
-              control_addr += ":";
-              if (port_tokenizer[1] != nullptr)
-                control_addr += port_tokenizer[1];
-              else
-                control_addr += control_port_str;
             }
 
           switch (this->protocol_)
@@ -409,25 +304,32 @@ TAO_FlowSpec_Entry::parse_address (const char *address,
                 ACE_NEW_RETURN (inet_addr,
                                 ACE_INET_Addr (addr.c_str() ),
                                 -1);
-                this->clean_up_address_ = 1;
+                this->owned_address_.reset (inet_addr);
                 this->address_ = inet_addr;
 
                 if (ACE_OS::strcasecmp (this->carrier_protocol_.c_str(),"RTP/UDP") == 0)
                   {
                     ACE_INET_Addr *control_inet_addr;
                     ACE_NEW_RETURN (control_inet_addr,
-                                    ACE_INET_Addr (control_addr.c_str() ),
+                                    ACE_INET_Addr (*inet_addr),
                                     -1);
-                    this->clean_up_control_address_ = 1;
+                    u_short control_port =
+                      static_cast<u_short> (inet_addr->get_port_number () + 1);
+                    if (port_tokenizer[1] != nullptr)
+                      control_port = static_cast<u_short> (
+                        std::atoi (port_tokenizer[1]));
+                    control_inet_addr->set_port_number (control_port);
+                    this->owned_control_address_.reset (control_inet_addr);
                     this->control_address_ = control_inet_addr;
                   }
 
-                if (IN_CLASSD (inet_addr->get_ip_address ()))
+                if (inet_addr->get_type () == AF_INET
+                    && IN_CLASSD (inet_addr->get_ip_address ()))
                   {
                     if (TAO_debug_level > 0)
                       ORBSVCS_DEBUG ((LM_DEBUG, "TAO_FlowSpec_Entry::parse_address is multicast\n"));
 
-                    this->is_multicast_ = 1;
+                    this->is_multicast_ = true;
                     switch (this->protocol_)
                       {
                       case TAO_AV_Core::TAO_AV_UDP:
@@ -468,16 +370,12 @@ TAO_FlowSpec_Entry::get_local_addr_str ()
     {
     case AF_INET:
       {
-        ACE_TCHAR *buf = nullptr;
-        ACE_NEW_RETURN (buf,
-                        ACE_TCHAR [BUFSIZ],
-                        0);
+        ACE_TCHAR buf [BUFSIZ] {};
 
         ACE_INET_Addr *inet_addr = dynamic_cast<ACE_INET_Addr *> (this->local_addr_);
-        inet_addr->addr_to_string (buf,BUFSIZ);
-        ACE_CString cstring (ACE_TEXT_ALWAYS_CHAR(buf), 0, false);
+        inet_addr->addr_to_string (buf, BUFSIZ);
 
-        return cstring.rep ();
+        return CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (buf));
       }
     default:
       ORBSVCS_ERROR_RETURN ((LM_ERROR,"Address family not supported"),0);
@@ -488,17 +386,13 @@ TAO_FlowSpec_Entry::get_local_addr_str ()
 // TAO_Forward_FlowSpec_Entry
 //------------------------------------------------------------
 
-// default constructor.
-TAO_Forward_FlowSpec_Entry::TAO_Forward_FlowSpec_Entry ()
-{
-}
+TAO_Forward_FlowSpec_Entry::TAO_Forward_FlowSpec_Entry () = default;
 
-// constructor to construct the entry from the arguments.
-TAO_Forward_FlowSpec_Entry::TAO_Forward_FlowSpec_Entry (const char *flowname,
-                                                        const char *direction,
-                                                        const char *format_name ,
-                                                        const char *flow_protocol ,
-                                                        const char *carrier_protocol ,
+TAO_Forward_FlowSpec_Entry::TAO_Forward_FlowSpec_Entry (char const *flowname,
+                                                        char const *direction,
+                                                        char const *format_name ,
+                                                        char const *flow_protocol ,
+                                                        char const *carrier_protocol ,
                                                         ACE_Addr *address,
                                                         ACE_Addr *control_address )
   :TAO_FlowSpec_Entry (flowname,
@@ -511,12 +405,11 @@ TAO_Forward_FlowSpec_Entry::TAO_Forward_FlowSpec_Entry (const char *flowname,
 {
 }
 
-// constructor to construct the entry from the arguments.
-TAO_Forward_FlowSpec_Entry::TAO_Forward_FlowSpec_Entry (const char *flowname,
-                                                        const char *direction,
-                                                        const char *format_name ,
-                                                        const char *flow_protocol ,
-                                                        const char *address )
+TAO_Forward_FlowSpec_Entry::TAO_Forward_FlowSpec_Entry (char const *flowname,
+                                                        char const *direction,
+                                                        char const *format_name ,
+                                                        char const *flow_protocol ,
+                                                        char const *address )
   :TAO_FlowSpec_Entry (flowname,
                        direction,
                        format_name,
@@ -525,12 +418,10 @@ TAO_Forward_FlowSpec_Entry::TAO_Forward_FlowSpec_Entry (const char *flowname,
 {
 }
 
-TAO_Forward_FlowSpec_Entry::~TAO_Forward_FlowSpec_Entry ()
-{
-}
+TAO_Forward_FlowSpec_Entry::~TAO_Forward_FlowSpec_Entry () = default;
 
 int
-TAO_Forward_FlowSpec_Entry::parse (const char *flowSpec_entry)
+TAO_Forward_FlowSpec_Entry::parse (char const *flowSpec_entry)
 {
   TAO_Tokenizer tokenizer (flowSpec_entry,'\\');
 
@@ -553,8 +444,7 @@ TAO_Forward_FlowSpec_Entry::parse (const char *flowSpec_entry)
 
   if (tokenizer [TAO_AV_PEER_ADDR] != nullptr)
     {
-      ACE_INET_Addr *addr = nullptr;
-
+      ACE_INET_Addr *addr {};
 
       if (this->protocol_ == TAO_AV_Core::TAO_AV_SCTP_SEQ)
         {
@@ -570,16 +460,16 @@ TAO_Forward_FlowSpec_Entry::parse (const char *flowSpec_entry)
                               ACE_INET_Addr (addr_token [0]),
                               0);
 
-              ACE_NEW_RETURN (peer_sec_addr_, char* [addr_token.num_tokens () - 1],-1);
-              for (int j = 1; j <= addr_token.num_tokens () - 1; j++)
+              this->peer_sec_addrs_.clear ();
+              this->peer_sec_addrs_.reserve (addr_token.num_tokens () - 1);
+              for (int j = 1; j <= addr_token.num_tokens () - 1; ++j)
                 {
                   ORBSVCS_DEBUG ((LM_DEBUG,
                               "adding addresses to sequence %s\n",
                               addr_token [j]));
 
-                  peer_sec_addr_ [j-1] =  CORBA::string_dup (addr_token [j]);
+                  this->peer_sec_addrs_.emplace_back (addr_token [j]);
                 }
-              num_peer_sec_addrs_ = addr_token.num_tokens () - 1;
             }
         }
       else
@@ -588,7 +478,7 @@ TAO_Forward_FlowSpec_Entry::parse (const char *flowSpec_entry)
                           ACE_INET_Addr (tokenizer [TAO_AV_PEER_ADDR]),
                           0);
         }
-      this->delete_peer_addr_ = true;
+      this->owned_peer_addr_.reset (addr);
       this->peer_addr_ = addr;
 
       ACE_TCHAR buf [BUFSIZ];
@@ -624,7 +514,7 @@ TAO_Forward_FlowSpec_Entry::role ()
     }
 }
 
-const char *
+char const *
 TAO_Forward_FlowSpec_Entry::entry_to_string ()
 {
   if (this->flowname_.length() == 0)
@@ -665,10 +555,10 @@ TAO_Forward_FlowSpec_Entry::entry_to_string ()
 
       if (this->protocol_ == TAO_AV_Core::TAO_AV_SCTP_SEQ)
         {
-          for (int i = 0; i < this->num_local_sec_addrs_; i++)
+          for (std::string const &address : this->local_sec_addrs_)
             {
               address_str += ";";
-              address_str += this->local_sec_addr_ [i];
+              address_str += address.c_str ();
             }
         }
 
@@ -677,7 +567,6 @@ TAO_Forward_FlowSpec_Entry::entry_to_string ()
     {
       address_str = this->carrier_protocol_;
     }
-
 
   if ( (this->address_ != nullptr) &&
        (this->control_address_ == nullptr) &&
@@ -705,6 +594,7 @@ TAO_Forward_FlowSpec_Entry::entry_to_string ()
             ACE_NEW_RETURN (inet_control_addr,
                             ACE_INET_Addr (control_port, inet_addr->get_host_addr ()),
                             "");
+            this->owned_control_address_.reset (inet_control_addr);
             this->control_address_ = inet_control_addr;
           }
           break;
@@ -712,7 +602,6 @@ TAO_Forward_FlowSpec_Entry::entry_to_string ()
           break;
         }
     }
-
 
   if (this->peer_addr_ != nullptr)
     {
@@ -732,9 +621,6 @@ TAO_Forward_FlowSpec_Entry::entry_to_string ()
           {
             ACE_INET_Addr *inet_addr = dynamic_cast<ACE_INET_Addr*> (this->peer_addr_);
             inet_addr->addr_to_string (address,BUFSIZ);
-            //inet_addr->get_host_name (address, BUFSIZ);
-
-            //cstring += ACE_OS::itoa (address, BUFSIZ, inet_addr->get_port_number ());
           }
           break;
         default:
@@ -749,10 +635,10 @@ TAO_Forward_FlowSpec_Entry::entry_to_string ()
 
           if (this->protocol_ == TAO_AV_Core::TAO_AV_SCTP_SEQ)
             {
-              for (int i = 0; i < this->num_peer_sec_addrs_; i++)
+              for (std::string const &address : this->peer_sec_addrs_)
                 {
                   peer_address_str += ";";
-                  peer_address_str += this->peer_sec_addr_ [i];
+                  peer_address_str += address.c_str ();
                 }
             }
 
@@ -785,9 +671,8 @@ TAO_Forward_FlowSpec_Entry::entry_to_string ()
         }
 
       address_str += ";";
-      char port_str[10];
-      ACE_OS::sprintf(port_str, "%u", control_port);
-      address_str += port_str;
+      std::string const port_str = std::to_string (control_port);
+      address_str += port_str.c_str ();
     }
 
   this->entry_  = this->flowname_;
@@ -818,17 +703,13 @@ TAO_Forward_FlowSpec_Entry::entry_to_string ()
 // TAO_Reverse_FlowSpec_Entry
 //------------------------------------------------------------
 
-//default constructor.
-TAO_Reverse_FlowSpec_Entry::TAO_Reverse_FlowSpec_Entry ()
-{
-}
+TAO_Reverse_FlowSpec_Entry::TAO_Reverse_FlowSpec_Entry () = default;
 
-// constructor to construct an entry from the arguments.
-TAO_Reverse_FlowSpec_Entry::TAO_Reverse_FlowSpec_Entry (const char *flowname,
-                                                        const char *direction,
-                                                        const char *format_name ,
-                                                        const char *flow_protocol ,
-                                                        const char *carrier_protocol,
+TAO_Reverse_FlowSpec_Entry::TAO_Reverse_FlowSpec_Entry (char const *flowname,
+                                                        char const *direction,
+                                                        char const *format_name ,
+                                                        char const *flow_protocol ,
+                                                        char const *carrier_protocol,
                                                         ACE_Addr *address,
                                                         ACE_Addr *control_address )
   :TAO_FlowSpec_Entry (flowname,
@@ -841,12 +722,11 @@ TAO_Reverse_FlowSpec_Entry::TAO_Reverse_FlowSpec_Entry (const char *flowname,
 {
 }
 
-// constructor to construct an entry from the arguments.
-TAO_Reverse_FlowSpec_Entry::TAO_Reverse_FlowSpec_Entry (const char *flowname,
-                                                        const char *direction,
-                                                        const char *format_name ,
-                                                        const char *flow_protocol ,
-                                                        const char *address)
+TAO_Reverse_FlowSpec_Entry::TAO_Reverse_FlowSpec_Entry (char const *flowname,
+                                                        char const *direction,
+                                                        char const *format_name ,
+                                                        char const *flow_protocol ,
+                                                        char const *address)
   :TAO_FlowSpec_Entry (flowname,
                        direction,
                        format_name,
@@ -855,9 +735,7 @@ TAO_Reverse_FlowSpec_Entry::TAO_Reverse_FlowSpec_Entry (const char *flowname,
 {
 }
 
-TAO_Reverse_FlowSpec_Entry::~TAO_Reverse_FlowSpec_Entry ()
-{
-}
+TAO_Reverse_FlowSpec_Entry::~TAO_Reverse_FlowSpec_Entry () = default;
 
 TAO_FlowSpec_Entry::Role
 TAO_Reverse_FlowSpec_Entry::role ()
@@ -878,7 +756,7 @@ TAO_Reverse_FlowSpec_Entry::role ()
 }
 
 int
-TAO_Reverse_FlowSpec_Entry::parse (const char *flowSpec_entry)
+TAO_Reverse_FlowSpec_Entry::parse (char const *flowSpec_entry)
 {
   TAO_Tokenizer tokenizer (flowSpec_entry,'\\');
   this->flowname_ = tokenizer [TAO_AV_FLOWNAME];
@@ -899,8 +777,7 @@ TAO_Reverse_FlowSpec_Entry::parse (const char *flowSpec_entry)
   return 0;
 }
 
-
-const char *
+char const *
 TAO_Reverse_FlowSpec_Entry::entry_to_string ()
 {
   if (this->flowname_.length() == 0)
@@ -936,10 +813,10 @@ TAO_Reverse_FlowSpec_Entry::entry_to_string ()
 
       if (this->protocol_ == TAO_AV_Core::TAO_AV_SCTP_SEQ)
         {
-          for (int i = 0; i < this->num_local_sec_addrs_; i++)
+          for (std::string const &address : this->local_sec_addrs_)
             {
               address_str += ";";
-              address_str += this->local_sec_addr_ [i];
+              address_str += address.c_str ();
             }
         }
 
@@ -952,7 +829,6 @@ TAO_Reverse_FlowSpec_Entry::entry_to_string ()
   if (this->control_address_ != nullptr)
     {
       u_short control_port = 0;
-
 
       switch (this->protocol_)
         {
@@ -977,9 +853,8 @@ TAO_Reverse_FlowSpec_Entry::entry_to_string ()
         }
 
       address_str += ";";
-      char port_str[10];
-      ACE_OS::sprintf(port_str, "%u", control_port);
-      address_str += port_str;
+      std::string const port_str = std::to_string (control_port);
+      address_str += port_str.c_str ();
     }
 
   this->entry_ = this->flowname_;

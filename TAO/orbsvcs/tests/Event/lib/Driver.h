@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef EC_DRIVER_H
 #define EC_DRIVER_H
 
@@ -50,10 +49,8 @@ class EC_Supplier;
 class EC_Test_Export EC_Driver
 {
 public:
-  /// Constructor
   EC_Driver ();
 
-  /// Destructor
   virtual ~EC_Driver ();
 
   /// Flag to indicate in the test should be verbose.

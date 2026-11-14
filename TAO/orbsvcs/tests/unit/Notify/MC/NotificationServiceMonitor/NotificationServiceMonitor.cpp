@@ -29,7 +29,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
       size_t start_size = start_names.size ();
 
       // Test registry addition.
-      Monitor_Base* s = 0;
+      Monitor_Base *s {};
       ACE_NEW_RETURN (s,
                       Monitor_Base ("test1",
                                     Monitor_Control_Types::MC_COUNTER),

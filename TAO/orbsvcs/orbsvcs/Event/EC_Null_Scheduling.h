@@ -31,11 +31,10 @@ class TAO_RTEvent_Serv_Export TAO_EC_Null_Scheduling
   : public TAO_EC_Scheduling_Strategy
 {
 public:
-  /// Constructor.
   TAO_EC_Null_Scheduling ();
 
   // Read EC_Scheduling_Strategy.h for more details
-  virtual void add_proxy_supplier_dependencies (
+  void add_proxy_supplier_dependencies (
       TAO_EC_ProxyPushSupplier *supplier,
       TAO_EC_ProxyPushConsumer *consumer) override;
   virtual void schedule_event (const RtecEventComm::EventSet &event,

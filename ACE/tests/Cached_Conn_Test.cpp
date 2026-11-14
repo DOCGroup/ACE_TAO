@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #ifndef CACHED_CONNECT_TEST
 #define CACHED_CONNECT_TEST
 
@@ -37,7 +36,6 @@
 #if defined(_MSC_VER)
 #pragma warning(disable:4503)
 #endif /* _MSC_VER */
-
 
 using ATTRIBUTES = size_t;
 using CACHED_HANDLER = std::pair<Svc_Handler *, ATTRIBUTES>;

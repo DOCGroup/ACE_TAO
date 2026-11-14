@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_LEADER_FOLLOWER_H
 #define TAO_LEADER_FOLLOWER_H
 
@@ -48,11 +47,9 @@ class TAO_ORB_Core_TSS_Resources;
 class TAO_Export TAO_Leader_Follower
 {
 public:
-  /// Constructor
   TAO_Leader_Follower (TAO_ORB_Core *orb_core,
                        TAO_New_Leader_Generator *new_leader_generator = nullptr);
 
-  /// Destructor
   ~TAO_Leader_Follower ();
 
   /// The current thread has become a server thread (i.e. called
@@ -189,14 +186,19 @@ public:
   bool no_leaders_available ();
 
   /// Set the new leader generator.
-  void set_new_leader_generator(TAO_New_Leader_Generator *new_leader_generator);
+  void set_new_leader_generator (TAO_New_Leader_Generator *new_leader_generator);
 
   /// Method to support deferring an event till later (f.i. in
   /// cases where transport()->wait_strategy()->can_process_upcalls()
   /// returns false).
-  int defer_event (ACE_Event_Handler*);
+  int defer_event (ACE_Event_Handler *);
 
 private:
+  TAO_Leader_Follower (TAO_Leader_Follower const &) = delete;
+  TAO_Leader_Follower &operator= (TAO_Leader_Follower const &) = delete;
+  TAO_Leader_Follower (TAO_Leader_Follower &&) = delete;
+  TAO_Leader_Follower &operator= (TAO_Leader_Follower &&) = delete;
+
   /// Shortcut to obtain the TSS resources of the orb core.
   TAO_ORB_Core_TSS_Resources *get_tss_resources () const;
 
@@ -230,7 +232,7 @@ private:
   void resume_events ();
 
 private:
-  /// The orb core
+  /// Non-owning ORB core, which outlives this leader/follower object.
   TAO_ORB_Core *orb_core_;
 
   /// To synchronize access to the members.
@@ -252,34 +254,33 @@ private:
    * ORB::run), and the same leader could show up multiple times as it
    * receives nested upcalls and sends more requests.
    */
-  int leaders_;
+  int leaders_ {};
 
   /// Count the number of active clients, this is useful to know when
   /// to deactivate the reactor
-  int clients_;
+  int clients_ {};
 
-  /// The reactor
-  ACE_Reactor *reactor_;
+  /// Resource-factory reactor, reclaimed through the resource factory.
+  ACE_Reactor *reactor_ {};
 
   /// Flag to indicate that it is preferable to start a new thread, if possible
   /// rather than become a client leader. In particular when using the no-upcall
   /// wait strategy along with the dynamic thread pool, this is the case. It is
   /// still possible for a client leader to emerge in the case when no additional
   /// threads may be generated.
-  bool avoid_client_leader_;
+  bool avoid_client_leader_ {};
 
   /// Is a client thread the current leader?
-  int client_thread_is_leader_;
+  int client_thread_is_leader_ {};
 
   /// Are server threads waiting for the client leader to complete?
-  int event_loop_threads_waiting_;
+  int event_loop_threads_waiting_ {};
 
   /// Condition variable for server threads waiting for the client
   /// leader to complete.
   TAO_SYNCH_CONDITION event_loop_threads_condition_;
 
-  /// Leader/Follower class uses this method to notify the system that
-  /// we are out of leaders.
+  /// Non-owning generator, used to notify the system when no leaders remain.
   TAO_New_Leader_Generator *new_leader_generator_;
 
   /// Class used to register deferred event handlers.
@@ -287,10 +288,16 @@ private:
   : public ACE_Intrusive_List_Node<Deferred_Event>
   {
   public:
-    Deferred_Event (ACE_Event_Handler* h);
+    explicit Deferred_Event (ACE_Event_Handler *h);
 
-    ACE_Event_Handler* handler () const;
+    ACE_Event_Handler *handler () const;
+
   private:
+    Deferred_Event (Deferred_Event const &) = delete;
+    Deferred_Event &operator= (Deferred_Event const &) = delete;
+    Deferred_Event (Deferred_Event &&) = delete;
+    Deferred_Event &operator= (Deferred_Event &&) = delete;
+
     ACE_Event_Handler_var eh_;
   };
 
@@ -302,13 +309,16 @@ private:
 class TAO_Export TAO_LF_Client_Thread_Helper
 {
 public:
-  /// Constructor
-  TAO_LF_Client_Thread_Helper (TAO_Leader_Follower &leader_follower);
+  explicit TAO_LF_Client_Thread_Helper (TAO_Leader_Follower &leader_follower);
 
-  /// Destructor
   ~TAO_LF_Client_Thread_Helper ();
 
 private:
+  TAO_LF_Client_Thread_Helper (TAO_LF_Client_Thread_Helper const &) = delete;
+  TAO_LF_Client_Thread_Helper &operator= (TAO_LF_Client_Thread_Helper const &) = delete;
+  TAO_LF_Client_Thread_Helper (TAO_LF_Client_Thread_Helper &&) = delete;
+  TAO_LF_Client_Thread_Helper &operator= (TAO_LF_Client_Thread_Helper &&) = delete;
+
   /// Reference to leader/followers object.
   TAO_Leader_Follower &leader_follower_;
 };
@@ -316,13 +326,16 @@ private:
 class TAO_Export TAO_LF_Client_Leader_Thread_Helper
 {
 public:
-  /// Constructor
-  TAO_LF_Client_Leader_Thread_Helper (TAO_Leader_Follower &leader_follower);
+  explicit TAO_LF_Client_Leader_Thread_Helper (TAO_Leader_Follower &leader_follower);
 
-  /// Destructor
   ~TAO_LF_Client_Leader_Thread_Helper ();
 
 private:
+  TAO_LF_Client_Leader_Thread_Helper (TAO_LF_Client_Leader_Thread_Helper const &) = delete;
+  TAO_LF_Client_Leader_Thread_Helper &operator= (TAO_LF_Client_Leader_Thread_Helper const &) = delete;
+  TAO_LF_Client_Leader_Thread_Helper (TAO_LF_Client_Leader_Thread_Helper &&) = delete;
+  TAO_LF_Client_Leader_Thread_Helper &operator= (TAO_LF_Client_Leader_Thread_Helper &&) = delete;
+
   /// Reference to leader/followers object.
   TAO_Leader_Follower &leader_follower_;
 };

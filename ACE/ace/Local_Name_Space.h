@@ -49,7 +49,6 @@ public:
   /// Converts an ACE_NS_WString to an ACE_NS_String;
   ACE_NS_String (const ACE_NS_WString &);
 
-  /// Destructor
   ~ACE_NS_String ();
 
   /// Converts an ACE_NS_String to fresh copy of an ACE_NS_WString;
@@ -100,7 +99,6 @@ public:
   /// No-op constructor.
   ACE_NS_Internal ();
 
-  /// Constructor.
   ACE_NS_Internal (ACE_NS_String &value, const char *type);
 
   /// Compare an ACE_NS_Internal

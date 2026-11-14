@@ -1,13 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    IORInterceptor_Adapter_Factory_Impl.h
  *
  *  @author  George Edwards <g.edwards@vanderbilt.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_IORINTERCEPTOR_ADAPTER_FACTORY_IMPL_H
 #define TAO_IORINTERCEPTOR_ADAPTER_FACTORY_IMPL_H
@@ -48,7 +45,6 @@ public:
   // Used to force the initialization of the ORB code.
   static int Initializer ();
 
-private:
   TAO_IORInterceptor_Adapter_Factory_Impl (TAO_IORInterceptor_Adapter_Factory_Impl const &) = delete;
   TAO_IORInterceptor_Adapter_Factory_Impl &operator= (
     TAO_IORInterceptor_Adapter_Factory_Impl const &) = delete;

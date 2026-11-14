@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef COSPROPERTYSERVICE_SERVER_H
 #define COSPROPERTYSERVICE_SERVER_H
 

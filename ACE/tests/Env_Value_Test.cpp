@@ -1,16 +1,8 @@
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = DESCRIPTION
-//      This is a simple test to make sure the Env_Value template is
-//      working correctly.
-//
-// = AUTHOR
-//    Chris Cleeland <cleeland@cs.wustl.edu>
-//
-// ============================================================================
+/// @file Env_Value_Test.cpp
+/// This is a simple test to make sure the Env_Value template is
+/// working correctly.
+///
+/// @author Chris Cleeland <cleeland@cs.wustl.edu>
 
 #include "test_config.h"
 #include "ace/OS_NS_stdlib.h"
@@ -47,6 +39,11 @@ run_main (int, ACE_TCHAR* [])
 #  endif /* ACE_WIN32 */
     {
     ACE_START_TEST (ACE_TEXT ("Env_Value_Test"));
+
+      ACE_Env_Value<int> unbound;
+      if (unbound.varname () != nullptr || static_cast<int> (unbound) != 0)
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("Default Env_Value state was not initialized\n")));
 
       TEST_THIS (int, ACE_TEXT ("TEST_VALUE_POSITIVE"), 4, 10);
       TEST_THIS (double, ACE_TEXT ("TEST_VALUE_POSITIVE"), -1.0, 10.2);

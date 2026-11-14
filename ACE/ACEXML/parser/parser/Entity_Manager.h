@@ -22,33 +22,36 @@
 #include "ACEXML/common/XML_Types.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Null_Mutex.h"
+#include <memory>
 
-typedef ACE_Hash_Map_Entry<ACEXML_String,
-                           ACEXML_String> ACEXML_ENTITY_ENTRY;
+using ACEXML_ENTITY_ENTRY = ACE_Hash_Map_Entry<ACEXML_String,
+                                               ACEXML_String>;
 
-typedef ACE_Hash_Map_Manager_Ex<ACEXML_String,
-                                ACEXML_String,
-                                ACE_Hash<ACEXML_String>,
-                                ACE_Equal_To<ACEXML_String>,
-                                ACE_Null_Mutex> ACEXML_ENTITIES_MANAGER;
+using ACEXML_ENTITIES_MANAGER = ACE_Hash_Map_Manager_Ex<ACEXML_String,
+                                                        ACEXML_String,
+                                                        ACE_Hash<ACEXML_String>,
+                                                        ACE_Equal_To<ACEXML_String>,
+                                                        ACE_Null_Mutex>;
 
-typedef ACE_Hash_Map_Iterator_Ex<ACEXML_String,
-                                 ACEXML_String,
-                                 ACE_Hash<ACEXML_String>,
-                                 ACE_Equal_To<ACEXML_String>,
-                                 ACE_Null_Mutex> ACEXML_ENTITIES_MANAGER_ITER;
+using ACEXML_ENTITIES_MANAGER_ITER = ACE_Hash_Map_Iterator_Ex<ACEXML_String,
+                                                              ACEXML_String,
+                                                              ACE_Hash<ACEXML_String>,
+                                                              ACE_Equal_To<ACEXML_String>,
+                                                              ACE_Null_Mutex>;
 
-typedef ACE_Hash_Map_Reverse_Iterator_Ex<ACEXML_String,
-                                         ACEXML_String,
-                                         ACE_Hash<ACEXML_String>,
-                                         ACE_Equal_To<ACEXML_String>,
-                                         ACE_Null_Mutex> ACEXML_ENTITIES_MANAGER_REVERSE_ITER;
+using ACEXML_ENTITIES_MANAGER_REVERSE_ITER =
+  ACE_Hash_Map_Reverse_Iterator_Ex<ACEXML_String,
+                                   ACEXML_String,
+                                   ACE_Hash<ACEXML_String>,
+                                   ACE_Equal_To<ACEXML_String>,
+                                   ACE_Null_Mutex>;
 
-typedef ACE_Hash_Map_Bucket_Iterator<ACEXML_String,
-                                     ACEXML_String,
-                                     ACE_Hash<ACEXML_String>,
-                                     ACE_Equal_To<ACEXML_String>,
-                                     ACE_Null_Mutex> ACEXML_ENTITY_ENTRY_ITERATOR;
+using ACEXML_ENTITY_ENTRY_ITERATOR =
+  ACE_Hash_Map_Bucket_Iterator<ACEXML_String,
+                               ACEXML_String,
+                               ACE_Hash<ACEXML_String>,
+                               ACE_Equal_To<ACEXML_String>,
+                               ACE_Null_Mutex>;
 
 /**
  * @class ACEXML_Entity_Manager Entity_Manager.h "ACEXML/parser/parser/Entity_Manager.h"
@@ -60,21 +63,24 @@ typedef ACE_Hash_Map_Bucket_Iterator<ACEXML_String,
 class ACEXML_PARSER_Export ACEXML_Entity_Manager
 {
 public:
-  /// Default constructor.
   ACEXML_Entity_Manager ();
 
-  /// Destructor.
+  ACEXML_Entity_Manager (ACEXML_Entity_Manager const &) = delete;
+  ACEXML_Entity_Manager (ACEXML_Entity_Manager &&) = delete;
+  ACEXML_Entity_Manager &operator= (ACEXML_Entity_Manager const &) = delete;
+  ACEXML_Entity_Manager &operator= (ACEXML_Entity_Manager &&) = delete;
+
   ~ACEXML_Entity_Manager ();
 
   /// Add a new entity declaration.
-  int add_entity (const ACEXML_Char *ref, const ACEXML_Char *value);
+  int add_entity (ACEXML_Char const *ref, ACEXML_Char const *value);
 
   /// Resolve an entity reference.
-  const ACEXML_Char* resolve_entity (const ACEXML_Char *ref);
+  ACEXML_Char const *resolve_entity (ACEXML_Char const *ref);
 
   /// Resolve an entity reference and return the tuple of @c systemId and
   /// @c publicId
-  int resolve_entity (const ACEXML_Char* ref, ACEXML_Char*& systemId,
+  int resolve_entity (ACEXML_Char const *ref, ACEXML_Char*& systemId,
                       ACEXML_Char*& publicId);
 
   /// Number of items in the Entity Manager
@@ -84,8 +90,7 @@ public:
   int reset ();
 
 private:
-  ACEXML_ENTITIES_MANAGER* entities_;
-  // bool init_;
+  std::unique_ptr<ACEXML_ENTITIES_MANAGER> entities_ {};
 };
 
 #if defined (__ACEXML_INLINE__)

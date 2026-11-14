@@ -31,7 +31,6 @@
 #    define ACE_PROCESS_MUTEX ACE_SV_Semaphore_Simple
 #  endif /* ACE_HAS_THREADS */
 
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 using ACE_INT = ACE_Atomic_Op<ACE_PROCESS_MUTEX, int>;
@@ -94,7 +93,6 @@ using ACE_INT = ACE_Atomic_Op<ACE_PROCESS_MUTEX, int>;
    |   // Name Node linked list pointers.    |
    +-----------------------------------------+
 
-
 * Control_Block
 
   Only the first ACE_Malloc instance that uses
@@ -144,7 +142,6 @@ using ACE_INT = ACE_Atomic_Op<ACE_PROCESS_MUTEX, int>;
   That is, if the memory size returned by init_acquire() is greater
   than the sizeof Control_Block, the control block is initialized to
   the following diagram:
-
 
    +-------------------------------------
    |name_head_;                          |
@@ -299,17 +296,19 @@ public:
   class ACE_Export ACE_Name_Node
   {
   public:
-    /// Constructor.
     ACE_Name_Node (const char *name,
                    char *name_ptr,
                    char *pointer,
                    ACE_Name_Node *head);
 
-    /// Constructor.
     ACE_Name_Node ();
 
-    /// Constructor.
     ~ACE_Name_Node ();
+
+    ACE_Name_Node (ACE_Name_Node const &) = delete;
+    ACE_Name_Node (ACE_Name_Node &&) = delete;
+    ACE_Name_Node &operator= (ACE_Name_Node const &) = delete;
+    ACE_Name_Node &operator= (ACE_Name_Node &&) = delete;
 
     /// Initialize a name node pointer.
     static void init_ptr (ACE_Name_Node **ptr,
@@ -333,9 +332,6 @@ public:
 
     /// Dump the state of the object.
     void dump () const;
-  private:
-    /// Copy constructor.
-    ACE_Name_Node (const ACE_Name_Node &);
   };
 
   /// Print out a bunch of size info for debugging.

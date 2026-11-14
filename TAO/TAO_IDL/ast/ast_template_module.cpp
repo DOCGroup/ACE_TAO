@@ -49,7 +49,7 @@ AST_Template_Module::match_arg_names (FE_Utils::T_ARGLIST *args)
       return false;
     }
 
-  std::size_t slot {};
+  size_t slot {};
 
   for (AST_Decl *d : *args)
     {
@@ -60,7 +60,7 @@ AST_Template_Module::match_arg_names (FE_Utils::T_ARGLIST *args)
           d = td->primitive_base_type ();
         }
 
-      FE_Utils::T_Param_Info *param = &(*this->template_params_)[slot];
+      FE_Utils::T_Param_Info *param = std::addressof ((*this->template_params_)[slot]);
 
       if (!this->match_one_param (param, d))
         {

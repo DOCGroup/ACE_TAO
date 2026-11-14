@@ -8,9 +8,10 @@
  */
 //=============================================================================
 
-
 #ifndef _WEB_CRAWLER_H
 #define _WEB_CRAWLER_H
+
+#include <memory>
 
 #include "URL_Addr.h"
 #include "HTTP_URL.h"
@@ -34,11 +35,13 @@ class URL_Visitor_Factory;
 class Web_Crawler
 {
 public:
-  /// Constructor.
   Web_Crawler ();
 
-  /// Destructor.
   ~Web_Crawler ();
+  Web_Crawler (Web_Crawler const &) = delete;
+  Web_Crawler &operator= (Web_Crawler const &) = delete;
+  Web_Crawler (Web_Crawler &&) = delete;
+  Web_Crawler &operator= (Web_Crawler &&) = delete;
 
   /// Parses the command-line options and initializes the
   /// <URL_Visitor_Factory>.
@@ -54,7 +57,7 @@ private:
    * perform various tasks.  Subclasses of <URL_Visitor_Factory>
    * determine what happens during a visitation.
    */
-  URL_Visitor_Factory *url_visitor_factory_;
+  std::unique_ptr<URL_Visitor_Factory> url_visitor_factory_;
 };
 
 #endif /* _WEB_CRAWLER_H */

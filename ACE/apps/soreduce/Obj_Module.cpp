@@ -6,27 +6,26 @@
 // This file contains the implementation of the classes responsible for
 // managing the contents of a single object module (.o file).
 
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Process.h"
 #include "ace/Pipe.h"
 #include "ace/Message_Block.h"
 #include "ace/Log_Msg.h"
+#include <cstring>
 
 #include "Obj_Module.h"
 
 //----------------------------------------------------------------------------
 
-Obj_Module::Obj_Module (const ACE_CString &name, int cap)
+Obj_Module::Obj_Module (ACE_CString const &name, size_t cap)
   : name_ (name),
     imports_(cap),
-    exports_(cap),
-    extrefs_(0)
+    exports_(cap)
 {
 }
 
-ACE_CString &
-Obj_Module::name()
+ACE_CString const &
+Obj_Module::name() const
 {
   return name_;
 }
@@ -43,8 +42,8 @@ Obj_Module::imports()
   return imports_;
 }
 
-int
-Obj_Module::extref()
+size_t
+Obj_Module::extref () const
 {
   return extrefs_;
 }
@@ -52,21 +51,15 @@ Obj_Module::extref()
 void
 Obj_Module::add_extref()
 {
-  extrefs_ ++;
-}
-
-void
-Obj_Module::remove_extref()
-{
-  extrefs_ --;
+  ++extrefs_;
 }
 
 int
-Obj_Module::read_line (ACE_HANDLE src, ACE_Message_Block **buf)
+Obj_Module::read_line (ACE_HANDLE src, ACE_Message_Block *&buf)
 {
   int eoln = 0;
   //  ACE_Time_Value timeout (1,0);
-  if (buf == 0 || *buf == 0) {
+  if (buf == nullptr) {
     char dummy;
     while (!eoln && ACE_OS::read(src,&dummy,1) == 1) {
       eoln = (dummy == '\n');
@@ -74,25 +67,26 @@ Obj_Module::read_line (ACE_HANDLE src, ACE_Message_Block **buf)
     return eoln;
   }
   //  while (!eoln && ACE::recv(src,buf->wr_ptr(),1,&timeout) == 1) {
-  while (!eoln && ACE_OS::read(src,(*buf)->wr_ptr(),1) == 1) {
-    eoln = (*(*buf)->wr_ptr() == '\n');
-    (*buf)->wr_ptr(1);
-    if ((*buf)->space() == 0) {
-      (*buf)->cont(new ACE_Message_Block(102400));
-      *buf = (*buf)->cont();
+  while (!eoln && ACE_OS::read(src,buf->wr_ptr(),1) == 1) {
+    eoln = (*buf->wr_ptr() == '\n');
+    buf->wr_ptr(1);
+    if (buf->space() == 0) {
+      // The root message block owns this continuation; buf is only a cursor.
+      buf->cont(new ACE_Message_Block(102400));
+      buf = buf->cont();
     }
   }
   return eoln;
 }
 
 void
-Obj_Module::add_source(const char *p, int imports_only)
+Obj_Module::add_source(char const *p, bool imports_only)
 {
   ACE_Process nmproc;
   ACE_Process_Options nm_opts;
-  ACE_CString path (p);
+  ACE_CString const path (p);
 
-  ACE_CString::size_type pathsep = path.rfind('/');
+  ACE_CString::size_type const pathsep = path.rfind('/');
 
   ACE_CString src_name;
   ACE_CString workpath;
@@ -105,7 +99,7 @@ Obj_Module::add_source(const char *p, int imports_only)
     workpath= path.substr(0,pathsep);
   }
 
-  ACE_HANDLE pipe[2];
+  ACE_HANDLE pipe[2] {};
   ACE_Pipe io(pipe);
 
   nm_opts.working_directory (workpath.c_str());
@@ -113,7 +107,7 @@ Obj_Module::add_source(const char *p, int imports_only)
 
   // Options for the command line shown here are for the GNU nm 2.9.5
 
-  int result = nm_opts.command_line ("nm -C %s",src_name.c_str());
+  int const result = nm_opts.command_line ("nm -C %s",src_name.c_str());
   // Prevent compiler warning about "unused variable" if ACE_ASSERT is
   // an empty macro.
   ACE_UNUSED_ARG (result);
@@ -124,20 +118,21 @@ Obj_Module::add_source(const char *p, int imports_only)
     ACE_DEBUG ((LM_DEBUG, "%p\n", "close"));
   nm_opts.release_handles();
 
-  int import_lines = 0;
-  int export_lines = 0;
+  size_t import_lines = 0;
+  size_t export_lines = 0;
   ACE_Message_Block im_buffer (102400);
   ACE_Message_Block ex_buffer (102400);
-  ACE_Message_Block *im_buf_cur = &im_buffer;
-  ACE_Message_Block *ex_buf_cur = &ex_buffer;
+  ACE_Message_Block *im_buf_cur {&im_buffer};
+  ACE_Message_Block *ex_buf_cur {&ex_buffer};
+  ACE_Message_Block *discarded_buf {};
   char dummy;
   int eoln = 1;
   //  ACE_Time_Value timeout (1,0);
-  int is_import = 1;
-  int is_export = 1;
+  bool is_import = true;
+  bool is_export = true;
 
   while (eoln == 1) {
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 10; ++i) {
       if (ACE_OS::read(pipe[0],&dummy,1) != 1) {
         eoln = 2;
         break;
@@ -146,14 +141,15 @@ Obj_Module::add_source(const char *p, int imports_only)
     if (eoln == 2)
       break;
     is_import = dummy == 'U';
-    is_export = !imports_only && (ACE_OS::strchr("BCDRTVW",dummy) != 0);
+    is_export = !imports_only && std::strchr ("BCDRTVW", dummy) != nullptr;
 
     //    if (ACE::recv(pipe[0],&dummy,1,&timeout) != 1)
     if (ACE_OS::read(pipe[0],&dummy,1) != 1)
       break;
 
-    eoln = this->read_line (pipe[0], is_import ? &im_buf_cur :
-                            (is_export ? &ex_buf_cur : 0));
+    ACE_Message_Block *&buffer_cursor = is_import ? im_buf_cur :
+      (is_export ? ex_buf_cur : discarded_buf);
+    eoln = this->read_line (pipe[0], buffer_cursor);
     import_lines += is_import;
     export_lines += is_export;
   }
@@ -163,20 +159,21 @@ Obj_Module::add_source(const char *p, int imports_only)
   nmproc.wait ();
   ACE_OS::close (pipe[0]);
 
-  this->populate_sig_list (imports_,import_lines,&im_buffer);
+  this->populate_sig_list (imports_, import_lines, im_buffer);
   if (!imports_only)
-    this->populate_sig_list (exports_,export_lines,&ex_buffer);
+    this->populate_sig_list (exports_, export_lines, ex_buffer);
 }
 
 void
 Obj_Module::populate_sig_list (Sig_List &siglist,
-                               int lines,
-                               ACE_Message_Block *buf)
+                               size_t lines,
+                               ACE_Message_Block &buffer)
 {
+  ACE_Message_Block *buf {&buffer};
   char *c;
   ACE_CString temp;
 
-  for (int i = 0; i < lines; i++)
+  for (size_t i = 0; i < lines; ++i)
     {
       for (c = buf->rd_ptr (); c != buf->wr_ptr () && *c != '\n'; ++c)
         {
@@ -196,7 +193,7 @@ Obj_Module::populate_sig_list (Sig_List &siglist,
         {
           buf = buf->cont ();
 
-          if (buf == 0)
+          if (buf == nullptr)
             {
               siglist.add (temp);
             }

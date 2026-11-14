@@ -7,7 +7,9 @@
 
 #include "tao/corba.h"
 #include "ace/ACE.h"
+#include <cstdio>
 #include <memory>
+#include <new>
 #include "ace/INET_Addr.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
@@ -25,12 +27,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   ACE_UNUSED_ARG (argv);
 
 #if defined (ACE_HAS_IPV6)
-  int def_type = AF_UNSPEC;
+  int const def_type = AF_UNSPEC;
 #endif /* ACE_HAS_IPV6 */
 
   // network interfaces.
-  ACE_INET_Addr *if_addrs = 0;
-  size_t if_cnt = 0;
+  ACE_INET_Addr *if_addrs {};
+  size_t if_cnt {};
 
   if (ACE::get_ip_interfaces (if_cnt,
                               if_addrs) != 0
@@ -42,54 +44,50 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       return -1;
     }
 
-  if (if_cnt == 0 || if_addrs == 0)
+  std::unique_ptr<ACE_INET_Addr[]> if_addrs_owner (if_addrs);
+
+  if (if_cnt == 0 || !if_addrs_owner)
     {
       ACE_DEBUG ((LM_WARNING,
                   ACE_TEXT ("TAO (%P|%t) Unable to probe network ")
                   ACE_TEXT ("interfaces.  Using default.\n")));
 
       if_cnt = 1; // Force the network interface count to be one.
-      delete [] if_addrs;
-      ACE_NEW_RETURN (if_addrs,
-                      ACE_INET_Addr[if_cnt],
-                      -1);
+      if_addrs_owner.reset (new (std::nothrow) ACE_INET_Addr[if_cnt]);
+      if (!if_addrs_owner)
+        {
+          errno = ENOMEM;
+          return -1;
+        }
     }
 
   // Scan for the loopback interface since it shouldn't be included in
   // the list of cached hostnames unless it is the only interface.
-  size_t lo_cnt = 0;  // Loopback interface count
+  size_t lo_cnt {};  // Loopback interface count
   for (size_t j = 0; j < if_cnt; ++j)
-    if (if_addrs[j].is_loopback ())
+    if (if_addrs_owner[j].is_loopback ())
       ++lo_cnt;
 
 #if defined (ACE_HAS_IPV6)
-  size_t ipv4_cnt = 0;
-  size_t ipv4_lo_cnt = 0;
-  size_t ipv6_ll = 0;
-  bool ipv6_non_ll = false;
+  size_t ipv4_cnt {};
+  size_t ipv4_lo_cnt {};
+  bool ipv6_non_ll {};
   // Scan for IPv4 interfaces since these should not be included
   // when IPv6-only is selected.
   for (size_t j = 0; j < if_cnt; ++j)
-    if (if_addrs[j].get_type () != AF_INET6 ||
-        if_addrs[j].is_ipv4_mapped_ipv6 ())
+    if (if_addrs_owner[j].get_type () != AF_INET6 ||
+        if_addrs_owner[j].is_ipv4_mapped_ipv6 ())
       {
         ++ipv4_cnt;
-        if (if_addrs[j].is_loopback ())
+        if (if_addrs_owner[j].is_loopback ())
           ++ipv4_lo_cnt;  // keep track of IPv4 loopback ifs
       }
-    else if (!if_addrs[j].is_linklocal () &&
-             !if_addrs[j].is_loopback())
+    else if (!if_addrs_owner[j].is_linklocal () &&
+             !if_addrs_owner[j].is_loopback())
       {
         ipv6_non_ll = true; // we have at least 1 non-local IPv6 if
       }
-    else if (// !orb_core->orb_params ()->use_ipv6_link_local () &&
-             if_addrs[j].is_linklocal ())
-      {
-        ++ipv6_ll;  // count link local addrs to exclude them afterwards
-      }
 #endif /* ACE_HAS_IPV6 */
-
-  std::unique_ptr<ACE_INET_Addr[]> safe_if_addrs (if_addrs);
 
 #if defined (ACE_HAS_IPV6)
   bool ipv4_only = def_type == AF_INET;
@@ -104,7 +102,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   // If the loopback interface is the only interface then include it
   // in the list of interfaces to query for a hostname, otherwise
   // exclude it from the list.
-  bool ignore_lo;
+  bool ignore_lo {};
   if (ipv6_only)
     // only exclude loopback if non-local if exists
     ignore_lo = ipv6_non_ll;
@@ -114,18 +112,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     ignore_lo = if_cnt != lo_cnt;
 
   // Adjust counts for IPv6 only if required
-  size_t if_ok_cnt = if_cnt;
   if (ipv6_only)
     {
-      if_ok_cnt -= ipv4_cnt;
       lo_cnt -= ipv4_lo_cnt;
       ipv4_lo_cnt = 0;
     }
   else if (ipv4_only)
     {
-      if_ok_cnt = ipv4_cnt;
       lo_cnt = ipv4_lo_cnt;
-      ipv6_ll = 0;
     }
 
   // In case there are no non-local IPv6 ifs in the list only exclude
@@ -138,54 +132,49 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   // If the loopback interface is the only interface then include it
   // in the list of interfaces to query for a hostname, otherwise
   // exclude it from the list.
-  bool ignore_lo;
-  ignore_lo = if_cnt != lo_cnt;
+  bool const ignore_lo = if_cnt != lo_cnt;
 #endif /* !ACE_HAS_IPV6 */
 
   // The number of hosts/interfaces we want to cache may not be the
   // same as the number of detected interfaces so keep a separate
   // count.
-  size_t host_cnt = 0;
-
   for (size_t i = 0; i < if_cnt; ++i)
     {
 #if defined (ACE_HAS_IPV6)
       // Ignore any loopback interface if there are other
       // non-loopback interfaces.
       if (ignore_lo &&
-          if_addrs[i].is_loopback () &&
+          if_addrs_owner[i].is_loopback () &&
           (ipv4_only ||
            ipv6_non_ll ||
-           if_addrs[i].get_type () != AF_INET6))
+           if_addrs_owner[i].get_type () != AF_INET6))
         continue;
 
       // Ignore any non-IPv4 interfaces when so required.
       if (ipv4_only &&
-          (if_addrs[i].get_type () != AF_INET))
+          (if_addrs_owner[i].get_type () != AF_INET))
         continue;
 
       // Ignore any non-IPv6 interfaces when so required.
       if (ipv6_only &&
-          (if_addrs[i].get_type () != AF_INET6 ||
-           if_addrs[i].is_ipv4_mapped_ipv6 ()))
+          (if_addrs_owner[i].get_type () != AF_INET6 ||
+           if_addrs_owner[i].is_ipv4_mapped_ipv6 ()))
         continue;
 
       // Ignore all IPv6 link local interfaces when so required.
       if (// !orb_core->orb_params ()->use_ipv6_link_local () &&
-          if_addrs[i].is_linklocal ())
+          if_addrs_owner[i].is_linklocal ())
         continue;
 #else /* ACE_HAS_IPV6 */
       // Ignore any loopback interface if there are other
       // non-loopback interfaces.
       if (ignore_lo &&
-          if_addrs[i].is_loopback ())
+          if_addrs_owner[i].is_loopback ())
         continue;
 #endif /* !ACE_HAS_IPV6 */
 
       // Print the address as a string.
-      ACE_OS::printf ("%s\n", if_addrs[i].get_host_addr());
-
-      ++host_cnt;
+      std::printf ("%s\n", if_addrs_owner[i].get_host_addr ());
     }
 
   return 0;

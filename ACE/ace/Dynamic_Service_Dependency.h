@@ -13,7 +13,6 @@
 
 #include /**/ "ace/pre.h"
 
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -61,7 +60,6 @@ private:
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
-
 
 #include /**/ "ace/post.h"
 

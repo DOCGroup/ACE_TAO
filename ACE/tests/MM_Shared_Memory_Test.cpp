@@ -91,7 +91,7 @@ child (void * = nullptr)
   for (char *s = shm; *s != '\0'; s++)
     {
       ACE_TEST_ASSERT (*t == s[0]);
-      t++;
+      ++t;
     }
 
   // Indicate to the parent that we're done.

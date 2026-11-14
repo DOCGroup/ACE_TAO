@@ -7,8 +7,7 @@
 
 #include <map>
 #include <string>
-#include <memory>
-#include <typeinfo.h>
+#include <typeinfo>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -31,22 +30,20 @@ public:
     std::string               class_name;
   };
 
-  static TAO_Notify_Tracker& get_instance();
+  static TAO_Notify_Tracker &get_instance ();
 
-  void add( TAO_Notify_Refcountable* p);
+  void add (TAO_Notify_Refcountable *p);
 
-  void remove( const TAO_Notify_Refcountable* p);
+  void remove (TAO_Notify_Refcountable const *p);
 
-  Entry find( const TAO_Notify_Refcountable* p) const;
+  Entry find (TAO_Notify_Refcountable const *p) const;
 
-  void dump( const char* title = nullptr );
+  void dump (char const *title = nullptr);
 
 private:
   TAO_Notify_Tracker();
   ~TAO_Notify_Tracker();
 
-  friend class std::unique_ptr< TAO_Notify_Tracker >;
-  static std::unique_ptr< TAO_Notify_Tracker > s_instance;
   mutable TAO_SYNCH_MUTEX lock_;
   using EntityMap = std::map<int, Entry>;
   EntityMap map_;
@@ -55,13 +52,12 @@ private:
 };
 
 void
-TAO_Notify_Refcountable::diagnostic_dump( const char* title )
+TAO_Notify_Refcountable::diagnostic_dump (char const *title)
 {
-  TAO_Notify_Tracker::get_instance().dump( title );
+  TAO_Notify_Tracker::get_instance ().dump (title);
 }
 
 #endif /* TAO_NOTIFY_REFCOUNT_DIAGNOSTICS */
-
 
 TAO_Notify_Refcountable::TAO_Notify_Refcountable ()
 {
@@ -74,7 +70,7 @@ TAO_Notify_Refcountable::~TAO_Notify_Refcountable ()
   if ( e.obj != nullptr )
   {
     ORBSVCS_DEBUG ((LM_DEBUG,"object:%x %s(%d) with refcount:%d destroyed incorrectly.\n",
-        e.obj, e.class_name, e.obj->ref_id_, e.obj->refcount_.value() ));
+        e.obj, e.class_name, e.obj->ref_id_, e.obj->refcount_.load () ));
 
     if ( e.obj != this || e.obj->ref_id_ != this->ref_id_ )
     {
@@ -84,11 +80,10 @@ TAO_Notify_Refcountable::~TAO_Notify_Refcountable ()
     TAO_Notify_Tracker::get_instance().remove( this );
   }
 #endif
-  CORBA::ULong refcount = this->refcount_.value();
+  CORBA::ULong refcount = this->refcount_.load ();
   ACE_ASSERT( refcount == 0 );
   ACE_UNUSED_ARG(refcount);
 }
-
 
 CORBA::ULong
 TAO_Notify_Refcountable::_incr_refcnt ()
@@ -134,23 +129,19 @@ TAO_Notify_Refcountable::_decr_refcnt ()
 
 #if (TAO_NOTIFY_REFCOUNT_DIAGNOSTICS != 0)
 
-std::unique_ptr< TAO_Notify_Tracker > TAO_Notify_Tracker::s_instance;
-
 TAO_Notify_Tracker::TAO_Notify_Tracker()
 : id_counter_(0)
 , last_dump_count_(0)
 {
 }
 
-
 TAO_Notify_Tracker::~TAO_Notify_Tracker()
 {
   dump( "destruction" );
 }
 
-
 void
-TAO_Notify_Tracker::dump( const char* title )
+TAO_Notify_Tracker::dump (char const *title)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
@@ -160,8 +151,8 @@ TAO_Notify_Tracker::dump( const char* title )
   while ( iter != map_.end() )
   {
     ORBSVCS_DEBUG ((LM_DEBUG,"object:%x %s(%d) with refcount:%d.\n",
-      iter->second.obj, iter->second.class_name, iter->first, iter->second.obj->refcount_.value() ));
-    iter++;
+      iter->second.obj, iter->second.class_name, iter->first, iter->second.obj->refcount_.load () ));
+    ++iter;
   }
 
   EntityMap::size_type current_count = map_.size();
@@ -170,31 +161,26 @@ TAO_Notify_Tracker::dump( const char* title )
   last_dump_count_ = current_count;
 }
 
-
-TAO_Notify_Tracker&
-TAO_Notify_Tracker::get_instance()
+TAO_Notify_Tracker &
+TAO_Notify_Tracker::get_instance ()
 {
-  if ( s_instance.get() == 0 )
-  {
-    s_instance.reset( new TAO_Notify_Tracker );
-  }
-  return *s_instance;
+  static TAO_Notify_Tracker instance;
+  return instance;
 }
 
-
 void
-TAO_Notify_Tracker::add( TAO_Notify_Refcountable* p )
+TAO_Notify_Tracker::add (TAO_Notify_Refcountable *p)
 {
   if ( p == nullptr ) return;
 
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
   int id = ++id_counter_;
 
-  Entry e = { p, typeid(*p).name() };
+  Entry e { p, typeid (*p).name () };
   std::pair< EntityMap::iterator, bool > result =
     map_.insert( std::make_pair( id, e ) );
   EntityMap::iterator& it = result.first;
-  if ( result.second == false )
+  if (!result.second)
   {
     ORBSVCS_DEBUG ((LM_DEBUG,"object:%x %s(%d) added twice.\n",
       it->second.obj, it->second.class_name.c_str(), it->first ));
@@ -205,9 +191,8 @@ TAO_Notify_Tracker::add( TAO_Notify_Refcountable* p )
   }
 }
 
-
 void
-TAO_Notify_Tracker::remove( const TAO_Notify_Refcountable* p )
+TAO_Notify_Tracker::remove (TAO_Notify_Refcountable const *p)
 {
   if ( p == nullptr ) return;
 
@@ -216,7 +201,7 @@ TAO_Notify_Tracker::remove( const TAO_Notify_Refcountable* p )
   EntityMap::iterator iter( map_.find( ref_id ) );
   if ( iter == map_.end() )
   {
-    const char* class_name = typeid(*iter->second.obj).name();
+    char const *class_name = typeid (*p).name ();
     ORBSVCS_DEBUG ((LM_DEBUG,"object:%x %s(%d) not found.\n",
       p, class_name, ref_id ));
   }
@@ -226,14 +211,13 @@ TAO_Notify_Tracker::remove( const TAO_Notify_Refcountable* p )
   }
 }
 
-
 TAO_Notify_Tracker::Entry
-TAO_Notify_Tracker::find( const TAO_Notify_Refcountable* p) const
+TAO_Notify_Tracker::find (TAO_Notify_Refcountable const *p) const
 {
-  Entry e = { nullptr, "" };
+  Entry e { nullptr, {} };
   if ( p == nullptr ) return e;
 
-  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, e);
   int ref_id = p->ref_id_;
   EntityMap::const_iterator iter( map_.find( ref_id ) );
   if ( iter != map_.end() )

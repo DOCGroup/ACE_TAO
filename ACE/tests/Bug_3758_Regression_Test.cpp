@@ -1,15 +1,7 @@
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = DESCRIPTION
-//    This simple test exercises ACE_OS::fileno.
-//
-// = AUTHOR
-//    Olli Savia <ops@iki.fi>
-//
-// ============================================================================
+/// @file Bug_3758_Regression_Test.cpp
+/// This simple test exercises ACE_OS::fileno.
+///
+/// @author Olli Savia <ops@iki.fi>
 
 #include "test_config.h"
 #include "ace/OS_NS_stdio.h"

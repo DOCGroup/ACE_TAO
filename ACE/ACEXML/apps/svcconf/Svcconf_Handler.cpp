@@ -10,6 +10,7 @@
 #include "ace/Module.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/SString.h"
+#include <memory>
 
 #if (ACE_USES_CLASSIC_SVC_CONF == 0)
 
@@ -17,20 +18,8 @@
 # include "Svcconf_Handler.inl"
 #endif /* __ACEXML_INLINE__ */
 
-ACEXML_Svcconf_Handler::ACEXML_Svcconf_Handler ()
-  : in_stream_def_ (0),
-    in_module_ (0),
-    stream_svc_type_ (0),
-    stream_ (0)
-{
-}
-
-ACEXML_Svcconf_Handler::~ACEXML_Svcconf_Handler ()
-{
-}
-
 void
-ACEXML_Svcconf_Handler::characters (const ACEXML_Char *,
+ACEXML_Svcconf_Handler::characters (ACEXML_Char const *,
                                     int,
                                     int)
 {
@@ -42,20 +31,20 @@ ACEXML_Svcconf_Handler::endDocument ()
 }
 
 void
-ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
-                                    const ACEXML_Char *,
-                                    const ACEXML_Char *qName)
+ACEXML_Svcconf_Handler::endElement (ACEXML_Char const *,
+                                    ACEXML_Char const *,
+                                    ACEXML_Char const *qName)
 {
   if (ACE_OS::strcmp (qName, ACE_TEXT ("dynamic")) == 0)
     {
-      ACE_Parsed_Info *active_info = (this->in_stream_def_ == 0 ?
-                                      &this->parsed_info_ :
-                                      &this->stream_info_);
+      ACE_Parsed_Info const *active_info = (!this->in_stream_def_ ?
+                                            std::addressof (this->parsed_info_) :
+                                            std::addressof (this->stream_info_));
 
       // We must allocate a string here to ensure that the
       // name is still available by the time the
       // ACE_Service_Type_Dynamic_Guard is destructed.
-      ACE_TString name = active_info->name ();
+      ACE_TString const name = active_info->name ();
       ACE_Service_Type_Dynamic_Guard dummy (
         *ACE_Service_Config::current ()->current_service_repository (),
         name.c_str ());
@@ -73,15 +62,13 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
           throw ACEXML_SAXException (msg.c_str ());
         }
 
-      void *(*func) (ACE_Service_Object_Exterminator *) = 0;
-      ACE_Service_Object_Exterminator gobbler = 0;
-      void *symbol = 0;
+      ACE_Service_Object_Exterminator gobbler {};
 
-      long temp_ptr =
-        reinterpret_cast<long> (svc_dll.symbol (active_info->init_func ()));
-      func = reinterpret_cast<void *(*)(ACE_Service_Object_Exterminator *)> (temp_ptr);
+      using init_func_type = void *(*)(ACE_Service_Object_Exterminator *);
+      init_func_type const func =
+        reinterpret_cast<init_func_type> (svc_dll.symbol (active_info->init_func ()));
 
-      if (func == 0)
+      if (func == nullptr)
         {
           // build the error message
           ACE_TString msg (ACE_TEXT ("Cannot locate init function: '"));
@@ -92,15 +79,19 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
 
           throw ACEXML_SAXException (msg.c_str ());
         }
-      symbol = (*func)(&gobbler); // target object created in the loaded DLL.
+      void * const symbol = (*func)(std::addressof (gobbler)); // target object created in the loaded DLL.
 
-      ACE_Service_Type_Impl *stp = ACE_Service_Config::create_service_type_impl
+      ACE_Service_Type_Impl * const stp = ACE_Service_Config::create_service_type_impl
         (active_info->name (),
          active_info->service_type (),
          symbol,
          ACE_Service_Type::DELETE_THIS |
          ACE_Service_Type::DELETE_OBJ,
          gobbler);
+      if (stp == nullptr)
+        {
+          throw ACEXML_SAXException (ACE_TEXT ("Unable to create dynamic service implementation"));
+        }
 
       if (this->in_stream_def_)
         {
@@ -136,9 +127,10 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
             {
               ACE_ARGV args (active_info->init_params ());
 
-              ACE_Module_Type *mt = (ACE_Module_Type *) stp;
+              ACE_Module_Type * const mt = (ACE_Module_Type *) stp;
 
-              ACE_Module<ACE_SYNCH> *mp = (ACE_Module<ACE_SYNCH> *) mt->object ();
+              ACE_Module<ACE_SYNCH> * const mp =
+                (ACE_Module<ACE_SYNCH> *) mt->object ();
 
               if (ACE_OS::strcmp (mp->name (), active_info->name ()) != 0)
                 {
@@ -160,30 +152,23 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
 
                   throw ACEXML_SAXException (msg.c_str ());
                 }
-
-
-//               ACE_DEBUG ((LM_INFO, ACE_TEXT ("Push dynamic %s into stream %s\n"),
-//                           this->parsed_info_.name (),
-//                           this->stream_info_.name ()));
             }
           else
             {
-              ACE_Service_Type *stype =
+              std::unique_ptr<ACE_Service_Type> stype (
                 ACE_Service_Config::create_service_type (active_info->name (),
                                                          stp,
                                                          svc_dll,
-                                                         active_info->active ());
+                                                         active_info->active ()));
               // @@ Check error here.
 
               //               ACE_DEBUG ((LM_INFO, ACE_TEXT ("Apply dynamic %s\n"),
 //                           this->parsed_info_.name ()));
-              if (ACE_Service_Config::initialize (stype,
+              if (ACE_Service_Config::initialize (stype.get (),
                                                   active_info->init_params ()) == -1)
                 {
                   // If it did not initialize correctly, the
                   // ACE_Service_Config doesn't own this object
-                  delete stype;
-
                   // build the error message
                   ACE_TString msg (ACE_TEXT ("Failed to initialize dynamic service"));
                   msg += ACE_TString (ACE_TEXT (" for entity '"));
@@ -192,6 +177,7 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
 
                   throw ACEXML_SAXException (msg.c_str ());
                 }
+              stype.release ();
             }
           this->parsed_info_.reset ();
         }
@@ -234,7 +220,7 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
     }
   else if (ACE_OS::strcmp (qName, ACE_TEXT ("module")) == 0)
     {
-      this->in_module_ = 0;
+      this->in_module_ = false;
     }
   else if (ACE_OS::strcmp (qName, ACE_TEXT ("streamdef")) == 0)
     {
@@ -245,8 +231,8 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
                                       this->stream_info_.init_params ());
 
       this->stream_info_.reset ();
-      this->stream_svc_type_ = 0;
-      this->stream_ = 0;
+      this->stream_svc_type_ = nullptr;
+      this->stream_ = nullptr;
     }
   else if (ACE_OS::strcmp (qName, ACE_TEXT ("stream")) == 0)
     {
@@ -261,20 +247,20 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
 }
 
 void
-ACEXML_Svcconf_Handler::endPrefixMapping (const ACEXML_Char *)
+ACEXML_Svcconf_Handler::endPrefixMapping (ACEXML_Char const *)
 {
 }
 
 void
-ACEXML_Svcconf_Handler::ignorableWhitespace (const ACEXML_Char *,
+ACEXML_Svcconf_Handler::ignorableWhitespace (ACEXML_Char const *,
                                              int,
                                              int)
 {
 }
 
 void
-ACEXML_Svcconf_Handler::processingInstruction (const ACEXML_Char *,
-                                               const ACEXML_Char *)
+ACEXML_Svcconf_Handler::processingInstruction (ACEXML_Char const *,
+                                               ACEXML_Char const *)
 {
 }
 
@@ -285,7 +271,7 @@ ACEXML_Svcconf_Handler::setDocumentLocator (ACEXML_Locator* locator)
 }
 
 void
-ACEXML_Svcconf_Handler::skippedEntity (const ACEXML_Char *)
+ACEXML_Svcconf_Handler::skippedEntity (ACEXML_Char const *)
 {
 }
 
@@ -295,9 +281,9 @@ ACEXML_Svcconf_Handler::startDocument ()
 }
 
 void
-ACEXML_Svcconf_Handler::startElement (const ACEXML_Char *,
-                                      const ACEXML_Char *,
-                                      const ACEXML_Char *qName,
+ACEXML_Svcconf_Handler::startElement (ACEXML_Char const *,
+                                      ACEXML_Char const *,
+                                      ACEXML_Char const *qName,
                                       ACEXML_Attributes *alist)
 {
   if (ACE_OS::strcmp (qName, ACE_TEXT ("dynamic")) == 0)
@@ -327,8 +313,8 @@ ACEXML_Svcconf_Handler::startElement (const ACEXML_Char *,
 
           throw ACEXML_SAXException (msg.c_str ());
         }
-      this->stream_ =   this->stream_svc_type_ == 0
-        ? 0
+      this->stream_ = this->stream_svc_type_ == nullptr
+        ? nullptr
         : dynamic_cast<ACE_Stream_Type *> (const_cast<ACE_Service_Type_Impl *> (this->stream_svc_type_->type ()));
 
 //       ACE_DEBUG ((LM_INFO, ACE_TEXT ("Retrieve stream %s from repository\n"),
@@ -336,13 +322,13 @@ ACEXML_Svcconf_Handler::startElement (const ACEXML_Char *,
     }
   else if (ACE_OS::strcmp (qName, ACE_TEXT ("streamdef")) == 0)
     {
-      this->in_stream_def_ = 1;
+      this->in_stream_def_ = true;
       // @@ Set up stream service object
     }
   else if (ACE_OS::strcmp (qName, ACE_TEXT ("module")) == 0)
     {
-      this->in_stream_def_ = 0;
-      this->in_module_ = 1;
+      this->in_stream_def_ = false;
+      this->in_module_ = true;
     }
   else if (ACE_OS::strcmp (qName, ACE_TEXT ("resume")) == 0)
     {
@@ -352,11 +338,11 @@ ACEXML_Svcconf_Handler::startElement (const ACEXML_Char *,
 //           ACE_DEBUG ((LM_INFO, ACE_TEXT ("Resume %s in stream %s\n"),
 //                       this->parsed_info_.name (),
 //                       this->stream_info_.name ()));
-          ACE_Module_Type *mt = (this->stream_ == 0)
-            ? 0
+          ACE_Module_Type *mt = (this->stream_ == nullptr)
+            ? nullptr
             : this->stream_->find (this->parsed_info_.name ());
 
-          if (mt == 0)
+          if (mt == nullptr)
             {
               // build the error message
               ACE_TString msg (ACE_TEXT ("Can't locate module '"));
@@ -393,11 +379,11 @@ ACEXML_Svcconf_Handler::startElement (const ACEXML_Char *,
 //           ACE_DEBUG ((LM_INFO, ACE_TEXT ("Suspend %s in stream %s\n"),
 //                       this->parsed_info_.name (),
 //                       this->stream_info_.name ()));
-          ACE_Module_Type *mt = (this->stream_ == 0)
-            ? 0
+          ACE_Module_Type *mt = (this->stream_ == nullptr)
+            ? nullptr
             : this->stream_->find (this->parsed_info_.name ());
 
-          if (mt == 0)
+          if (mt == nullptr)
             {
               // build the error message
               ACE_TString msg (ACE_TEXT ("Can't locate module '"));
@@ -434,11 +420,11 @@ ACEXML_Svcconf_Handler::startElement (const ACEXML_Char *,
 //           ACE_DEBUG ((LM_INFO, ACE_TEXT ("Remove %s in stream %s\n"),
 //                       this->parsed_info_.name (),
 //                       this->stream_info_.name ()));
-          ACE_Module_Type *mt = (this->stream_ == 0)
-            ? 0
+          ACE_Module_Type *mt = (this->stream_ == nullptr)
+            ? nullptr
             : this->stream_->find (this->parsed_info_.name ());
 
-          if (mt == 0)
+          if (mt == nullptr)
             {
               // build the error message
               ACE_TString msg (ACE_TEXT ("Can't locate module '"));
@@ -481,8 +467,8 @@ ACEXML_Svcconf_Handler::startElement (const ACEXML_Char *,
 }
 
 void
-ACEXML_Svcconf_Handler::startPrefixMapping (const ACEXML_Char *,
-                                            const ACEXML_Char *)
+ACEXML_Svcconf_Handler::startPrefixMapping (ACEXML_Char const *,
+                                            ACEXML_Char const *)
 {
   // No-op.
 }
@@ -490,18 +476,18 @@ ACEXML_Svcconf_Handler::startPrefixMapping (const ACEXML_Char *,
 // *** Methods inherit from ACEXML_DTDHandler.
 
 void
-ACEXML_Svcconf_Handler::notationDecl (const ACEXML_Char *,
-                                      const ACEXML_Char *,
-                                      const ACEXML_Char *)
+ACEXML_Svcconf_Handler::notationDecl (ACEXML_Char const *,
+                                      ACEXML_Char const *,
+                                      ACEXML_Char const *)
 {
   // No-op.
 }
 
 void
-ACEXML_Svcconf_Handler::unparsedEntityDecl (const ACEXML_Char *,
-                                            const ACEXML_Char *,
-                                            const ACEXML_Char *,
-                                            const ACEXML_Char *)
+ACEXML_Svcconf_Handler::unparsedEntityDecl (ACEXML_Char const *,
+                                            ACEXML_Char const *,
+                                            ACEXML_Char const *,
+                                            ACEXML_Char const *)
 {
   // No-op.
 }
@@ -509,11 +495,11 @@ ACEXML_Svcconf_Handler::unparsedEntityDecl (const ACEXML_Char *,
 // Methods inherit from ACEXML_EnitityResolver.
 
 ACEXML_InputSource *
-ACEXML_Svcconf_Handler::resolveEntity (const ACEXML_Char *,
-                                       const ACEXML_Char *)
+ACEXML_Svcconf_Handler::resolveEntity (ACEXML_Char const *,
+                                       ACEXML_Char const *)
 {
   // No-op.
-  return 0;
+  return nullptr;
 }
 
 // Methods inherit from ACEXML_ErrorHandler.
@@ -551,7 +537,7 @@ ACEXML_Svcconf_Handler::warning (ACEXML_SAXParseException& ex)
 int
 ACEXML_Svcconf_Handler::get_stream_id (ACEXML_Attributes *alist)
 {
-  if (alist != 0)
+  if (alist != nullptr)
     for (size_t i = 0; i < alist->getLength (); ++i)
       {
         if (ACE_OS::strcmp (alist->getQName (i), ACE_TEXT ("id")) == 0)
@@ -576,7 +562,7 @@ ACEXML_Svcconf_Handler::get_stream_id (ACEXML_Attributes *alist)
 int
 ACEXML_Svcconf_Handler::get_id (ACEXML_Attributes *alist)
 {
-  if (alist != 0)
+  if (alist != nullptr)
     for (size_t i = 0; i < alist->getLength (); ++i)
       {
         if (ACE_OS::strcmp (alist->getQName (i), ACE_TEXT ("id")) == 0)
@@ -602,11 +588,11 @@ ACEXML_Svcconf_Handler::get_id (ACEXML_Attributes *alist)
 int
 ACEXML_Svcconf_Handler::get_dynamic_attrs (ACEXML_Attributes *alist)
 {
-  if (alist != 0)
+  if (alist != nullptr)
     {
-      ACE_Parsed_Info *info = (this->in_stream_def_ == 0 ?
-                               &this->parsed_info_ :
-                               &this->stream_info_);
+      ACE_Parsed_Info * const info = (!this->in_stream_def_ ?
+                                      std::addressof (this->parsed_info_) :
+                                      std::addressof (this->stream_info_));
       for (size_t i = 0; i < alist->getLength (); ++i)
         {
           if (ACE_OS::strcmp (alist->getQName (i), ACE_TEXT ("id")) == 0)
@@ -617,11 +603,11 @@ ACEXML_Svcconf_Handler::get_dynamic_attrs (ACEXML_Attributes *alist)
             {
               if (ACE_OS::strcmp (alist->getValue (i), ACE_TEXT ("inactive")) == 0)
                 {
-                  info->active (0);
+                  info->active (false);
                 }
               else if (ACE_OS::strcmp (alist->getValue (i), ACE_TEXT ("active")) == 0)
                 {
-                  info->active (1);
+                  info->active (true);
                 }
               else
                 {
@@ -681,11 +667,11 @@ ACEXML_Svcconf_Handler::get_dynamic_attrs (ACEXML_Attributes *alist)
 int
 ACEXML_Svcconf_Handler::get_initializer_attrs (ACEXML_Attributes *alist)
 {
-  if (alist != 0)
+  if (alist != nullptr)
     {
-      ACE_Parsed_Info *info = (this->in_stream_def_ == 0 ?
-                               &this->parsed_info_ :
-                               &this->stream_info_);
+      ACE_Parsed_Info * const info = (!this->in_stream_def_ ?
+                                      std::addressof (this->parsed_info_) :
+                                      std::addressof (this->stream_info_));
       for (size_t i = 0; i < alist->getLength (); ++i)
         {
           if (ACE_OS::strcmp (alist->getQName (i), ACE_TEXT ("init")) == 0)
@@ -719,11 +705,11 @@ ACEXML_Svcconf_Handler::get_initializer_attrs (ACEXML_Attributes *alist)
 int
 ACEXML_Svcconf_Handler::get_static_attrs (ACEXML_Attributes *alist)
 {
-  if (alist != 0)
+  if (alist != nullptr)
     {
-      ACE_Parsed_Info *info = (this->in_stream_def_ == 0 ?
-                               &this->parsed_info_ :
-                               &this->stream_info_);
+      ACE_Parsed_Info * const info = (!this->in_stream_def_ ?
+                                      std::addressof (this->parsed_info_) :
+                                      std::addressof (this->stream_info_));
       for (size_t i = 0; i < alist->getLength (); ++i)
         {
           if (ACE_OS::strcmp (alist->getQName (i), ACE_TEXT ("id")) == 0)

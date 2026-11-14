@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "Catior_i.h"
 #include "tao/Messaging_PolicyValueC.h"
 #include "tao/Messaging/Messaging_TypesC.h"
@@ -32,63 +31,69 @@
 #include "ace/Argv_Type_Converter.h"
 #include "ace/Log_Msg.h"
 
+#include <cstdlib>
+#include <cstring>
+#include <limits>
+#include <memory>
+#include <string>
+
 Catior_i::Catior_i()
- : trace_depth_(0),
-   buffer_()
+ : trace_depth_ {},
+   buffer_ {}
 {
 }
-
 
 CORBA::Boolean
 Catior_i::decode (const ACE_CString& aString, ACE_CString& output)
 {
+  buffer_.clear ();
+  this->trace_depth_ = 0;
+
   const ACE_CString iorPrefix = "IOR:";
   const ACE_CString iiopPrefix = "iiop:";
   const ACE_CString poopPrefix = ":IR:";
 
-  char * str = 0;
-  CORBA::Boolean b = false;
+  std::unique_ptr<char[]> str;
+  CORBA::Boolean b {};
   if (aString.find (iorPrefix) == 0)
     {
       buffer_ += "Decoding an IOR:\n";
 
       // Strip the IOR: off the string.
-      size_t prefixLength = iorPrefix.length ();
+      size_t const prefixLength = iorPrefix.length ();
       ACE_CString subString =
         aString.substring (prefixLength,
                            aString.length () - prefixLength);
       subString[subString.length ()] = '\0';
-      str = subString.rep ();
-      b = catior (str);
+      str.reset (subString.rep ());
+      b = catior (str.get ());
     }
   else if (aString.find (iiopPrefix) == 0)
     {
       buffer_ += "Decoding an IIOP URL IOR\n";
 
-      size_t prefixLength = iiopPrefix.length ();
+      size_t const prefixLength = iiopPrefix.length ();
       ACE_CString subString =
         aString.substring (prefixLength,
                            aString.length () - prefixLength);
-      str = subString.rep ();
-      b = catiiop (str);
+      str.reset (subString.rep ());
+      b = catiiop (str.get ());
     }
   else if (aString.find (poopPrefix) != ACE_CString::npos)
     {
       buffer_ += "Decoding a POOP IOR\n";
 
-      str = aString.rep ();
-      b = catpoop (str);
+      str.reset (aString.rep ());
+      b = catpoop (str.get ());
     }
   else
     {
       buffer_ += "Don't know how to decode this IOR\n";
     }
 
-  delete [] str;
   output = buffer_;
   return b;
 }
-
 
 CORBA::Boolean
 Catior_i::catiiop (char* string)
@@ -99,6 +104,10 @@ Catior_i::catiiop (char* string)
   if (!string || !*string)
     return false;
 
+  size_t const string_length = std::strlen (string);
+  if (string_length < 2)
+    throw CORBA::DATA_CONVERSION ();
+
   // Type ID not encoded in this string ... makes narrowing rather
   // expensive, though it does ensure that type-safe narrowing code
   // gets thoroughly excercised/debugged!  Without a typeID, the
@@ -108,24 +117,28 @@ Catior_i::catiiop (char* string)
   // accept
 
   CORBA::Short iiop_version_major = 1;
-  CORBA::Short iiop_version_minor = 0;
+  CORBA::Short iiop_version_minor {};
 
-  if (ACE_OS::ace_isdigit (string [0])
+  if (string_length >= 5
+      && ACE_OS::ace_isdigit (string [0])
       && ACE_OS::ace_isdigit (string [2])
       && string [1] == '.'
       && string [3] == '/'
       && string [4] == '/')
     {
-      iiop_version_major = (char) (string [0] - '0');
-      iiop_version_minor = (char) (string [2] - '0');
+      iiop_version_major = static_cast<CORBA::Short> (string [0] - '0');
+      iiop_version_minor = static_cast<CORBA::Short> (string [2] - '0');
       string += 5;
     }
   else
     {
+      if (string [0] != '/' || string [1] != '/')
+        throw CORBA::DATA_CONVERSION ();
+
       string += 2;
     }
 
-  static const size_t bufsize = 512;
+  constexpr size_t bufsize {512};
   char buf[bufsize];
   ACE_OS::snprintf (buf, bufsize, "IIOP Version:\t%d.%d\n",
                     iiop_version_major, iiop_version_minor);
@@ -134,9 +147,9 @@ Catior_i::catiiop (char* string)
   // Pull off the "hostname:port/" part of the objref Get host and
   // port.
   CORBA::UShort port_number;
-  char *cp = ACE_OS::strchr (string, ':');
+  char *cp = std::strchr (string, ':');
 
-  if (cp == 0)
+  if (cp == nullptr)
     {
       throw CORBA::DATA_CONVERSION ();
     }
@@ -152,15 +165,22 @@ Catior_i::catiiop (char* string)
   *cp = 0;
   ++string;
 
-  cp = ACE_OS::strchr ((char *) string, '/');
+  cp = std::strchr (string, '/');
 
-  if (cp == 0)
+  if (cp == nullptr)
     {
       throw CORBA::DATA_CONVERSION ();
     }
 
-  port_number = (short) ACE_OS::atoi ((char *) string);
-  string = ++cp;
+  char *port_end {};
+  long const parsed_port = std::strtol (string, &port_end, 10);
+  if (port_end == string || port_end != cp || parsed_port < 0
+      || parsed_port > (std::numeric_limits<CORBA::UShort>::max) ())
+    {
+      throw CORBA::DATA_CONVERSION ();
+    }
+  port_number = static_cast<CORBA::UShort> (parsed_port);
+  string = cp + 1;
 
   ACE_OS::snprintf (buf, bufsize, "Host Name:\t%s\n"
                                   "Port Number:\t%d\n",
@@ -184,13 +204,13 @@ Catior_i::catior (char const * str)
   // Unhex the bytes, and make a CDR deencapsulation stream from the
   // resulting data.
 
-  ACE_Message_Block mb (ACE_OS::strlen (str)  / 2 + 1
+  ACE_Message_Block mb (std::strlen (str)  / 2 + 1
                         + ACE_CDR::MAX_ALIGNMENT);
   ACE_CDR::mb_align (&mb);
 
   char * const buffer = mb.rd_ptr ();
-  char const * tmp = (char *) str;
-  size_t len = 0;
+  char const *tmp = str;
+  size_t len {};
 
   CORBA::Boolean continue_decoding;
 
@@ -214,7 +234,12 @@ Catior_i::catior (char const * str)
   // Create deencapsulation stream ... then unmarshal objref from that
   // stream.
 
-  int byteOrder = *(mb.rd_ptr ());
+  if (len == 0)
+    throw CORBA::DATA_CONVERSION ();
+
+  CORBA::Octet const byteOrder = static_cast<CORBA::Octet> (mb.rd_ptr ()[0]);
+  if (byteOrder > 1)
+    throw CORBA::DATA_CONVERSION ();
 
   mb.rd_ptr (1);
   mb.wr_ptr (len);
@@ -250,7 +275,7 @@ Catior_i::catior (char const * str)
   // just need to be able to access such preloaded libraries here as
   // we unmarshal objrefs.
 
-  CORBA::ULong profiles = 0;
+  CORBA::ULong profiles {};
 
   continue_decoding = stream.read_ulong (profiles);
 
@@ -262,9 +287,9 @@ Catior_i::catior (char const * str)
                          TAO::TRAVERSE_STOP);
     }
 
-  CORBA::ULong profile_counter = 0;
+  CORBA::ULong profile_counter {};
 
-  static const size_t bufsize = 512;
+  constexpr size_t bufsize {512};
   char buf[bufsize];
   ACE_OS::snprintf (buf, bufsize,
                     "Number of Profiles in IOR:\t%d\n", profiles);
@@ -292,7 +317,7 @@ Catior_i::catior (char const * str)
             continue;
           }
 
-        trace_depth_++;
+        ++trace_depth_;
         if (tag == IOP::TAG_INTERNET_IOP)
           {
             continue_decoding = cat_iiop_profile (stream);
@@ -337,7 +362,7 @@ Catior_i::catior (char const * str)
             buffer_ += buf;
             continue_decoding = cat_octet_seq("Profile body", stream);
           }
-        trace_depth_--;
+        --trace_depth_;
       }
   return true;
 }
@@ -357,112 +382,51 @@ Catior_i::catpoop (char* string)
   if (!string || !*string)
     return false;
 
-  //if (string [0] == ':'
-  //    && string [1] == '\\')
-  //  ACE_DEBUG ((LM_DEBUG,
-  //              "\nPerhaps we've found some POOP\n"));
+  if (string [0] != ':' || string [1] != '\\')
+    throw CORBA::DATA_CONVERSION ();
+
   string += 2;
 
-  char *cp = ACE_OS::strchr (string, ':');
-
-  if (cp == 0)
+  auto read_field = [&string] ()
     {
-      throw CORBA::DATA_CONVERSION ();
-    }
+      char *delimiter = std::strchr (string, ':');
+      if (delimiter == nullptr)
+        throw CORBA::DATA_CONVERSION ();
 
-  // Read the hostname.
-  char* hostname = CORBA::string_alloc (1 +
-    ACE_Utils::truncate_cast<CORBA::ULong> (cp - string));
+      std::string field (string, static_cast<size_t> (delimiter - string));
+      string = delimiter + 1;
+      return field;
+    };
 
-  for (cp = hostname;
-       *string != ':';
-       *cp++ = *string++)
-    continue;
-
-  *cp = 0;
-  ++string;
+  std::string hostname = read_field ();
 
   buffer_ += "Host Name:\t";
-  buffer_ += hostname;
+  buffer_ += hostname.c_str ();
   buffer_ += "\n";
-  CORBA::string_free (hostname);
 
-  //  read the server name
-  cp = ACE_OS::strchr (string, ':');
-
-  char* server_name = CORBA::string_alloc (1 +
-    ACE_Utils::truncate_cast<CORBA::ULong> (cp - string));
-
-  for (cp = server_name;
-       *string != ':';
-       *cp++ = *string++)
-    continue;
-
-  *cp = 0;
-  ++string;
+  std::string server_name = read_field ();
 
   buffer_ += "Server Name:\t";
-  buffer_ += server_name;
-  buffer_ += "\n",
+  buffer_ += server_name.c_str ();
+  buffer_ += "\n";
 
-  CORBA::string_free (server_name);
-
-  // Read the Orbix specific marker.
-  cp = ACE_OS::strchr (string, ':');
-
-  char* marker = CORBA::string_alloc (1 +
-    ACE_Utils::truncate_cast<CORBA::ULong> (cp - string));
-
-  for (cp = marker;
-       *string != ':';
-       *cp++ = *string++)
-    continue;
-
-  *cp = 0;
-  ++string;
+  std::string marker = read_field ();
 
   buffer_ += "Marker:\t\t";
-  buffer_ += marker;
+  buffer_ += marker.c_str ();
   buffer_ += "\n";
-  CORBA::string_free (marker);
 
-  cp = ACE_OS::strchr (string, ':');
-
-  // Read the IR_host.
-  char* IR_host = CORBA::string_alloc (1 +
-    ACE_Utils::truncate_cast<CORBA::ULong> (cp - string));
-
-  for (cp = IR_host;
-       *string != ':';
-       *cp++ = *string++)
-    continue;
-
-  *cp = 0;
-  ++string;
+  std::string IR_host = read_field ();
 
   buffer_ += "IR Host:\t\t";
-  buffer_ += IR_host;
+  buffer_ += IR_host.c_str ();
   buffer_ += "\n";
-  CORBA::string_free (IR_host);
 
-  // Read the IR_server
-  cp = ACE_OS::strchr (string, ':');
-
-  char* IR_server = CORBA::string_alloc (1 +
-    ACE_Utils::truncate_cast<CORBA::ULong> (cp - string));
-
-  for (cp = IR_server;
-       *string != ':';
-       *cp++ = *string++)
-    continue;
-
-  *cp = 0;
-  ++string;
+  std::string IR_server = read_field ();
 
   buffer_ += "IR Server:\t\t";
-  buffer_ += IR_server;
+  buffer_ += IR_server.c_str ();
   buffer_ += "\n";
-  CORBA::string_free (IR_server);
 
   // Read the interface_marker
   buffer_ += "Interface Marker:\t";
@@ -473,7 +437,7 @@ Catior_i::catpoop (char* string)
 
 CORBA::Boolean
 Catior_i::cat_tag_orb_type (TAO_InputCDR& stream) {
-  CORBA::ULong length = 0;
+  CORBA::ULong length {};
   if (!stream.read_ulong (length))
     return true;
 
@@ -485,7 +449,7 @@ Catior_i::cat_tag_orb_type (TAO_InputCDR& stream) {
   if (!(stream2 >> orbtype))
     return false;
 
-  static const size_t bufsize = 512;
+  constexpr size_t bufsize {512};
   char buf[bufsize];
 
   indent();
@@ -568,7 +532,7 @@ Catior_i::cat_ibm_partner_version (TAO_InputCDR& stream) {
    * refreshes that contain changes that have affected the backward
    * compatibility
    */
-  CORBA::ULong length = 0;
+  CORBA::ULong length {};
   if (!(stream.read_ulong (length)))
     return true;
 
@@ -579,7 +543,7 @@ Catior_i::cat_ibm_partner_version (TAO_InputCDR& stream) {
   if (!(stream2 >> version))
     return false;
 
-  static const size_t bufsize = 512;
+  constexpr size_t bufsize {512};
   char buf[bufsize];
   ACE_OS::snprintf (buf, bufsize, "\tPartner Version: 0x%x\n", version);
   buffer_ += buf;
@@ -587,11 +551,10 @@ Catior_i::cat_ibm_partner_version (TAO_InputCDR& stream) {
   return true;
 }
 
-
 CORBA::Boolean
 Catior_i::cat_tao_tag_endpoints (TAO_InputCDR& stream)
 {
-  CORBA::ULong length = 0;
+  CORBA::ULong length {};
   if (!stream.read_ulong (length))
     return true;
 
@@ -602,9 +565,9 @@ Catior_i::cat_tao_tag_endpoints (TAO_InputCDR& stream)
   if (!(stream2 >> epseq))
     return true;
 
-  static const size_t bufsize = 512;
+  constexpr size_t bufsize {512};
   char buf[bufsize];
-  for (unsigned int iter=0; iter < epseq.length() ; iter++) {
+  for (unsigned int iter {}; iter < epseq.length (); ++iter) {
     const char *host = epseq[iter].host;
     CORBA::UShort port = epseq[iter].port;
     indent ();
@@ -630,7 +593,7 @@ Catior_i::cat_tao_tag_endpoints (TAO_InputCDR& stream)
 
 CORBA::Boolean
 Catior_i::cat_tag_alternate_endpoints (TAO_InputCDR& stream) {
-  CORBA::ULong length = 0;
+  CORBA::ULong length {};
   if (!stream.read_ulong (length))
     return true;
 
@@ -646,7 +609,7 @@ Catior_i::cat_tag_alternate_endpoints (TAO_InputCDR& stream) {
     }
   else
     {
-      static const size_t bufsize = 512;
+      constexpr size_t bufsize {512};
       char buf[bufsize];
       indent ();
       ACE_OS::snprintf (buf, bufsize,
@@ -659,7 +622,7 @@ Catior_i::cat_tag_alternate_endpoints (TAO_InputCDR& stream) {
 
 CORBA::Boolean
 Catior_i::cat_tag_policies (TAO_InputCDR& stream) {
-  CORBA::ULong length = 0;
+  CORBA::ULong length {};
   if (!stream.read_ulong (length))
     return true;
 
@@ -670,7 +633,7 @@ Catior_i::cat_tag_policies (TAO_InputCDR& stream) {
   if (!(stream2 >> policies))
     return true;
 
-  static const size_t bufsize = 512;
+  constexpr size_t bufsize {512};
   char buf[bufsize];
   indent ();
   ACE_OS::snprintf (buf, bufsize,
@@ -678,7 +641,7 @@ Catior_i::cat_tag_policies (TAO_InputCDR& stream) {
                    policies.length());
   buffer_ += buf;
 
-  for (unsigned int iter=0; iter < policies.length() ; iter++) {
+  for (unsigned int iter {}; iter < policies.length (); ++iter) {
     // Create new stream for pvalue contents
     const CORBA::Octet *pmbuf = policies[iter].pvalue.get_buffer ();
 
@@ -821,8 +784,7 @@ Catior_i::cat_tag_policies (TAO_InputCDR& stream) {
       ::Compression::CompressorIdLevelList idlist;
       if (!(stream3 >> idlist))
         return true;
-      CORBA::ULong index = 0;
-      for (; index < idlist.length(); index++)
+      for (CORBA::ULong index {}; index < idlist.length (); ++index)
         {
           indent ();
           ACE_OS::snprintf (buf, bufsize,
@@ -907,7 +869,7 @@ Catior_i::cat_tag_ssl_sec_trans (TAO_InputCDR& cdr) {
     utility to be dependent upon SSLIOP.
    */
 
-  CORBA::ULong length = 0;
+  CORBA::ULong length {};
   if (!cdr.read_ulong (length))
     return false;
 
@@ -927,7 +889,7 @@ Catior_i::cat_tag_ssl_sec_trans (TAO_InputCDR& cdr) {
   if (stream.read_ushort(port) == 0)
     return false;
 
-  static const size_t bufsize = 512;
+  constexpr size_t bufsize {512};
   char buf[bufsize];
 
   indent ();
@@ -936,15 +898,15 @@ Catior_i::cat_tag_ssl_sec_trans (TAO_InputCDR& cdr) {
   indent ();
   ACE_OS::snprintf (buf, bufsize, "target_supports = 0x%x\n", target_supports);
   buffer_ += buf;
-  trace_depth_++;
+  ++trace_depth_;
   cat_security_association(target_supports);
-  trace_depth_--;
+  --trace_depth_;
   indent ();
   ACE_OS::snprintf (buf, bufsize, "target_requires = 0x%x\n", target_requires);
   buffer_ += buf;
-  trace_depth_++;
+  ++trace_depth_;
   cat_security_association(target_requires);
-  trace_depth_--;
+  --trace_depth_;
 
   return true;
 }
@@ -953,11 +915,11 @@ CORBA::Boolean
 Catior_i::cat_octet_seq (const char *object_name,
                          TAO_InputCDR& stream)
 {
-  CORBA::ULong length = 0;
+  CORBA::ULong length {};
   if (!stream.read_ulong (length))
     return true;
 
-  static const size_t bufsize = 512;
+  constexpr size_t bufsize {512};
   char buf[bufsize];
 
   indent ();
@@ -971,10 +933,10 @@ Catior_i::cat_octet_seq (const char *object_name,
   CORBA::Octet anOctet;
   CORBA::String_var objKey = CORBA::string_alloc (length + 1);
 
-  short counter = -1;
+  short counter {-1};
 
   indent ();
-  CORBA::ULong i = 0;
+  CORBA::ULong i {};
 
   for (; i < length; ++i)
     {
@@ -1002,7 +964,7 @@ Catior_i::cat_octet_seq (const char *object_name,
   buffer_ += buf;
   indent ();
 
-  for (i = 0; i < length; ++i)
+  for (CORBA::ULong i {}; i < length; ++i)
     {
       char c = objKey[i];
       int tmp = (unsigned char) c; // isprint doesn't work with negative vals.(except EOF)
@@ -1048,7 +1010,7 @@ Catior_i::displayHex (TAO_InputCDR & str)
       return;
     }
 
-  static const size_t bufsize = 512;
+  constexpr size_t bufsize {512};
   char buf[bufsize];
   ACE_OS::snprintf (buf, bufsize, " Hex - %x\tDescription - ", theSetId);
   buffer_ += buf;
@@ -1067,14 +1029,14 @@ Catior_i::displayHex (TAO_InputCDR & str)
 CORBA::Boolean
 Catior_i::cat_codeset_info (TAO_InputCDR& cdr)
 {
-  CORBA::ULong length = 0;
+  CORBA::ULong length {};
   if (cdr.read_ulong (length) == 0)
     return false;
 
   TAO_InputCDR stream (cdr, length);
   cdr.skip_bytes(length);
 
-  static const size_t bufsize = 512;
+  constexpr size_t bufsize {512};
   char buf[bufsize];
 
   ACE_OS::snprintf (buf, bufsize, "\tComponent length: %u\n", length);
@@ -1090,7 +1052,7 @@ Catior_i::cat_codeset_info (TAO_InputCDR& cdr)
   displayHex (stream);
 
   // number of Conversion Codesets for char
-  CORBA::ULong c_ccslen = 0;
+  CORBA::ULong c_ccslen {};
 
   if (!(stream >> c_ccslen))
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -1105,8 +1067,7 @@ Catior_i::cat_codeset_info (TAO_InputCDR& cdr)
     buffer_ += "\tConversion Codesets for char are:\n";
 
   //  Loop through and display them
-  CORBA::ULong index = 0;
-  for ( ; index < c_ccslen; ++index)
+  for (CORBA::ULong index {}; index < c_ccslen; ++index)
     {
       // CodesetId for char
       ACE_OS::snprintf (buf, bufsize,
@@ -1121,7 +1082,7 @@ Catior_i::cat_codeset_info (TAO_InputCDR& cdr)
   displayHex (stream);
 
   // number of Conversion Codesets for wchar
-  CORBA::ULong w_ccslen=0;
+  CORBA::ULong w_ccslen {};
 
   if (!(stream >> w_ccslen))
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -1136,7 +1097,7 @@ Catior_i::cat_codeset_info (TAO_InputCDR& cdr)
     buffer_ += "\tConversion Codesets for wchar are:\n";
 
   //  Loop through and display them
-  for (index = 0; index < w_ccslen; ++index)
+  for (CORBA::ULong index {}; index < w_ccslen; ++index)
     {
       ACE_OS::snprintf (buf, bufsize,
                         "\t " ACE_UINT32_FORMAT_SPECIFIER_ASCII ") ",
@@ -1156,10 +1117,10 @@ Catior_i::cat_tagged_components (TAO_InputCDR& stream)
   if (!(stream >> len))
     return false;
 
-  static const size_t bufsize = 512;
+  constexpr size_t bufsize {512};
   char buf[bufsize];
 
-  for (CORBA::ULong i = 0;
+  for (CORBA::ULong i {};
        i != len;
        ++i)
     {
@@ -1261,7 +1222,7 @@ Catior_i::cat_profile_helper (TAO_InputCDR& stream,
   if (!str.good_bit () || stream.skip_bytes (encap_len) == 0)
     return false;
 
-  static const size_t bufsize = 512;
+  constexpr size_t bufsize {512};
   char buf[bufsize];
 
   // Read and verify major, minor versions, ignoring IIOP
@@ -1270,7 +1231,7 @@ Catior_i::cat_profile_helper (TAO_InputCDR& stream,
   // XXX this doesn't actually go back and skip the whole
   // encapsulation...
   CORBA::Octet iiop_version_major = 1;
-  CORBA::Octet iiop_version_minor = 0;
+  CORBA::Octet iiop_version_minor {};
   if (! (str.read_octet (iiop_version_major)
          && iiop_version_major == 1
          && str.read_octet (iiop_version_minor)
@@ -1349,7 +1310,7 @@ Catior_i::cat_coiop_profile (TAO_InputCDR& stream)
   if (!str.good_bit () || stream.skip_bytes (encap_len) == 0)
     return false;
 
-  static const size_t bufsize = 512;
+  constexpr size_t bufsize {512};
   char buf[bufsize];
 
   // Read and verify major, minor versions, ignoring IIOP
@@ -1358,7 +1319,7 @@ Catior_i::cat_coiop_profile (TAO_InputCDR& stream)
   // XXX this doesn't actually go back and skip the whole
   // encapsulation...
   CORBA::Octet iiop_version_major = 1;
-  CORBA::Octet iiop_version_minor = 0;
+  CORBA::Octet iiop_version_minor {};
   if (! (str.read_octet (iiop_version_major)
          && iiop_version_major == 1
          && str.read_octet (iiop_version_minor)
@@ -1439,7 +1400,7 @@ Catior_i::cat_uiop_profile (TAO_InputCDR& stream)
   if (!str.good_bit () || stream.skip_bytes (encap_len) == 0)
     return false;
 
-  static const size_t bufsize = 512;
+  constexpr size_t bufsize {512};
   char buf[bufsize];
 
   // Read and verify major, minor versions, ignoring UIOP
@@ -1448,7 +1409,7 @@ Catior_i::cat_uiop_profile (TAO_InputCDR& stream)
   // XXX this doesn't actually go back and skip the whole
   // encapsulation...
   CORBA::Octet uiop_version_major = 1;
-  CORBA::Octet uiop_version_minor = 0;
+  CORBA::Octet uiop_version_minor {};
   // It appears that as of April 2002 UIOP version is 1.2
   if (! (str.read_octet (uiop_version_major)
          && uiop_version_major == 1
@@ -1493,7 +1454,7 @@ Catior_i::cat_uiop_profile (TAO_InputCDR& stream)
 CORBA::Boolean
 Catior_i::cat_multiple_components (TAO_InputCDR& stream)
 {
-  static const size_t bufsize = 512;
+  constexpr size_t bufsize {512};
   char buf[bufsize];
 
   ACE_OS::snprintf (buf, bufsize,
@@ -1520,7 +1481,7 @@ Catior_i::cat_sciop_profile (TAO_InputCDR& stream)
   if (!str.good_bit () || stream.skip_bytes (encap_len) == 0)
     return false;
 
-  static const size_t bufsize = 512;
+  constexpr size_t bufsize {512};
   char buf[bufsize];
 
   // Read and verify major, minor versions, ignoring IIOP
@@ -1529,7 +1490,7 @@ Catior_i::cat_sciop_profile (TAO_InputCDR& stream)
   // XXX this doesn't actually go back and skip the whole
   // encapsulation...
   CORBA::Octet iiop_version_major = 1;
-  CORBA::Octet iiop_version_minor = 0;
+  CORBA::Octet iiop_version_minor {};
   if (! (str.read_octet (iiop_version_major)
          && iiop_version_major == 1
          && str.read_octet (iiop_version_minor)
@@ -1554,7 +1515,7 @@ Catior_i::cat_sciop_profile (TAO_InputCDR& stream)
   // Get host and port.
   CORBA::UShort port_number;
   CORBA::UShort max_streams;
-  CORBA::ULong addresses;
+  CORBA::ULong addresses {};
 
   if (!(str >> addresses))
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -1565,7 +1526,7 @@ Catior_i::cat_sciop_profile (TAO_InputCDR& stream)
   ACE_OS::snprintf (buf, bufsize, "Addresses:\t%d\n", addresses);
   buffer_ += buf;
 
-  for (CORBA::ULong i = 0; i < addresses; ++i)
+  for (CORBA::ULong i {}; i < addresses; ++i)
     {
       CORBA::String_var hostname;
       if (!(str >> hostname.inout ()))
@@ -1580,7 +1541,6 @@ Catior_i::cat_sciop_profile (TAO_InputCDR& stream)
       buffer_ += hostname.in ();
       buffer_ += "\n";
     }
-
 
   if (!(str >> port_number))
     return false;
@@ -1602,7 +1562,6 @@ Catior_i::cat_sciop_profile (TAO_InputCDR& stream)
 
   return true;
 }
-
 
 CORBA::Boolean
 Catior_i::cat_nsk_profile_helper (TAO_InputCDR& stream,
@@ -1626,7 +1585,7 @@ Catior_i::cat_nsk_profile_helper (TAO_InputCDR& stream,
   if (!str.good_bit () || stream.skip_bytes (encap_len) == 0)
     return false;
 
-  static const size_t bufsize = 512;
+  constexpr size_t bufsize {512};
   char buf[bufsize];
 
   // Read and verify major, minor versions, ignoring NSK
@@ -1635,7 +1594,7 @@ Catior_i::cat_nsk_profile_helper (TAO_InputCDR& stream,
   // XXX this doesn't actually go back and skip the whole
   // encapsulation...
   CORBA::Octet iiop_version_major = 1;
-  CORBA::Octet iiop_version_minor = 0;
+  CORBA::Octet iiop_version_minor {};
   if (! (str.read_octet (iiop_version_major)
          && iiop_version_major == 1
          && str.read_octet (iiop_version_minor)
@@ -1659,20 +1618,18 @@ Catior_i::cat_nsk_profile_helper (TAO_InputCDR& stream,
   buffer_ += buf;
 
   // Get address
-  char* fsaddress;
-  if (!(str >> fsaddress))
+  CORBA::String_var fsaddress;
+  if (!(str >> fsaddress.out ()))
     {
       indent ();
       buffer_ += "problem decoding file system address\n";
       return true;
     }
 
-
   indent ();
   buffer_ += "FS Address:\t";
-  buffer_ += fsaddress;
+  buffer_ += fsaddress.in ();
   buffer_ += "\n";
-  CORBA::string_free (fsaddress);
 
   if (cat_object_key (str) == 0)
     return false;
@@ -1706,7 +1663,7 @@ Catior_i::indent()
 {
   if (trace_depth_ != 0)
     {
-      for(size_t i = 0; i < trace_depth_; i++)
+      for (size_t i {}; i < trace_depth_; ++i)
         buffer_ += "    ";
     }
 }

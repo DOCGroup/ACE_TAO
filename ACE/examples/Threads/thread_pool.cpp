@@ -9,13 +9,14 @@
 // Dorn <Karlheinz.Dorn@med.siemens.de>.  It was modified to utilize
 // more ACE features by Doug Schmidt <d.schmidt@vanderbilt.edu>.
 
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_main.h"
 #include "ace/Task.h"
 #include "ace/Service_Config.h"
 #include "ace/Truncate.h"
+
+#include <cstdio>
+#include <cstring>
 
 #if defined (ACE_HAS_THREADS)
 
@@ -25,30 +26,32 @@ static int n_iterations = 100;
 // Controls whether the input is generated "manually" or automatically.
 static int manual = 0;
 
+/// Defines a thread pool abstraction based on ACE_Task.
 class Thread_Pool : public ACE_Task<ACE_MT_SYNCH>
 {
-  // = TITLE
-  //   Defines a thread pool abstraction based on the <ACE_Task>.
 public:
+  /// Activates n_threads worker threads in the pool.
   Thread_Pool (ACE_Thread_Manager *thr_mgr,
                int n_threads);
-  // Constructor activates <n_threads> in the thread pool.
 
   ~Thread_Pool () override;
-  // Destructor...
 
+  Thread_Pool (Thread_Pool const &) = delete;
+  Thread_Pool (Thread_Pool &&) = delete;
+  Thread_Pool &operator= (Thread_Pool const &) = delete;
+  Thread_Pool &operator= (Thread_Pool &&) = delete;
+
+  /// Processes messages until a zero-length shutdown message is received.
   int svc () override;
-  // Iterate <n_iterations> time printing off a message and "waiting"
-  // for all other threads to complete this iteration.
 
+  /// Passes a message to the thread pool.
   int put (ACE_Message_Block *mb,
                    ACE_Time_Value *tv = nullptr) override;
-  // This allows the producer to pass messages to the <Thread_Pool>.
 
 private:
   //FUZZ: disable check_for_lack_ACE_OS
+  /// Closes a worker task.
   int close (u_long) override;
-  // Close hook.
   //FUZZ: enable check_for_lack_ACE_OS
 };
 
@@ -80,6 +83,7 @@ int
 Thread_Pool::put (ACE_Message_Block *mb,
                   ACE_Time_Value *tv)
 {
+  // The queue owns the message block after a successful enqueue.
   return this->putq (mb, tv);
 }
 
@@ -97,9 +101,9 @@ Thread_Pool::svc ()
   // Keep looping, reading a message out of the queue, until we get a
   // message with a length == 0, which signals us to quit.
 
-  for (;; count++)
+  for (;; ++count)
     {
-      ACE_Message_Block *mb = nullptr;
+      ACE_Message_Block *mb {};
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%t) in iteration %d before getq ()\n",
@@ -113,18 +117,16 @@ Thread_Pool::svc ()
           break;
         }
 
+      ACE_Message_Block_Unique_Ptr message_block {mb};
       size_t length = mb->length ();
 
       if (length > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    "(%t) in iteration %d, length = %d, text = \"%*s\"\n",
+                    "(%t) in iteration %d, length = %B, text = \"%*s\"\n",
                     count,
                     length,
-                    length - 1,
+                    static_cast<int> (length - 1),
                     mb->rd_ptr ()));
-
-      // We're responsible for deallocating this.
-      mb->release ();
 
       if (length == 0)
         {
@@ -153,9 +155,10 @@ producer (Thread_Pool &thread_pool)
   for (int n; ;)
     {
       // Allocate a new message.
-      ACE_Message_Block *mb = nullptr;
+      ACE_Message_Block *mb {};
       ACE_NEW (mb,
                ACE_Message_Block (BUFSIZ));
+      ACE_Message_Block_Unique_Ptr message_block {mb};
 
       if (manual)
         {
@@ -169,15 +172,13 @@ producer (Thread_Pool &thread_pool)
         {
           static int count = 0;
 
-          ACE_OS::sprintf (mb->rd_ptr (),
-                           "%d\n",
-                           count);
-          n = ACE_Utils::truncate_cast<int> (ACE_OS::strlen (mb->rd_ptr ()));
+          std::snprintf (mb->rd_ptr (), mb->size (), "%d\n", count);
+          n = ACE_Utils::truncate_cast<int> (std::strlen (mb->rd_ptr ()));
 
           if (count == n_iterations)
             n = 1; // Indicate that we need to shut down.
           else
-            count++;
+            ++count;
 
           if (count == 0 || (count % 20 == 0))
             ACE_OS::sleep (1);
@@ -191,9 +192,9 @@ producer (Thread_Pool &thread_pool)
 
           // Pass the message to the Thread_Pool.
           if (thread_pool.put (mb) == -1)
-                  ACE_ERROR ((LM_ERROR,
-                              " (%t) %p\n",
-                              "put"));
+            ACE_ERROR ((LM_ERROR, " (%t) %p\n", "put"));
+          else
+            message_block.release ();
         }
       else
         {
@@ -202,23 +203,24 @@ producer (Thread_Pool &thread_pool)
           // thread_pool.dump ();
 
                 // Send a shutdown message to the waiting threads and exit.
-          for (size_t i = thread_pool.thr_count (); i > 0; i--)
+          for (size_t i = thread_pool.thr_count (); i > 0; --i)
             {
               //FUZZ: disable check_for_NULL
               ACE_DEBUG ((LM_DEBUG,
-                          "(%t) EOF, enqueueing NULL block for thread = %d\n",
+                          "(%t) EOF, enqueueing NULL block for thread = %B\n",
                           i));
               //FUZZ: enable check_for_NULL
 
               // Enqueue a NULL message to flag each consumer to
               // shutdown.
-              ACE_Message_Block *mb = nullptr;
+              ACE_Message_Block *mb {};
               ACE_NEW (mb,
                        ACE_Message_Block);
+              ACE_Message_Block_Unique_Ptr message_block {mb};
               if (thread_pool.put (mb) == -1)
-                      ACE_ERROR ((LM_ERROR,
-                                  " (%t) %p\n",
-                                  "put"));
+                ACE_ERROR ((LM_ERROR, " (%t) %p\n", "put"));
+              else
+                message_block.release ();
             }
 
           ACE_DEBUG ((LM_DEBUG,

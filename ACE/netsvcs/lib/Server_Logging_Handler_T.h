@@ -8,11 +8,11 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_SERVER_LOGGING_HANDLER_T_H
 #define ACE_SERVER_LOGGING_HANDLER_T_H
 
 #include "ace/config-all.h"
+#include <atomic>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -23,8 +23,6 @@
 #include "ace/Svc_Handler.h"
 #include "ace/Acceptor.h"
 #include "ace/SString.h"
-#include "ace/Atomic_Op.h"
-
 
 #if !defined (__GNUG__)
 #include "Base_Optimizer.h"
@@ -45,13 +43,11 @@ template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_DECL, class LOG_MESSAGE_RE
 class ACE_Server_Logging_Handler_T : public ACE_Svc_Handler<ACE_PEER_STREAM_2, ACE_SYNCH_USE>
 {
 public:
-  /// Constructor.
   ACE_Server_Logging_Handler_T (ACE_Thread_Manager *,
                                 const LOG_MESSAGE_RECEIVER &receiver );
 
-
   /// Process remote logging records.
-  virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
+  virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE) override;
 
 protected:
   /// Receive the logging record from a client.
@@ -106,7 +102,7 @@ class ACE_Server_Logging_Acceptor_T : public ACE_Strategy_Acceptor<SERVER_LOGGIN
 public:
   /// Dynamic linking hook.
   ACE_Server_Logging_Acceptor_T ();
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  virtual int init (int argc, ACE_TCHAR *argv[]) override;
 
 protected:
   /// Parse svc.conf arguments.
@@ -117,7 +113,7 @@ protected:
    * specialize this since the <LOG_MESSAGE_RECEIVER> held by this Acceptor must be
    * passed into the <SERVER_LOGGING_HANDLER>.
    */
-  virtual int make_svc_handler (SERVER_LOGGING_HANDLER *&);
+  virtual int make_svc_handler (SERVER_LOGGING_HANDLER *&) override;
 
 private:
   // At the moment each ACE_Server_Logging_Acceptor_T contains
@@ -163,15 +159,15 @@ template<class LOG_MESSAGE_RECEIVER>
 class ACE_Server_Logging_Handler : public ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, u_long, ACE_NULL_SYNCH, LOG_MESSAGE_RECEIVER>
 {
 public:
-  ACE_Server_Logging_Handler (ACE_Thread_Manager * = 0);
+  ACE_Server_Logging_Handler (ACE_Thread_Manager * = nullptr);
   ACE_Server_Logging_Handler (ACE_Thread_Manager *,
                               const LOG_MESSAGE_RECEIVER &receiver);
 
-  virtual int open (void* = 0);
+  virtual int open (void* = nullptr) override;
 };
 
 #if defined (ACE_HAS_THREADS)
-using ACE_LOGGER_COUNTER = ACE_Atomic_Op<ACE_Thread_Mutex, u_long>;
+using ACE_LOGGER_COUNTER = std::atomic<u_long>;
 #define ACE_LOGGER_SYNCH ACE_MT_SYNCH
 #else
 using ACE_LOGGER_COUNTER = u_long;
@@ -192,11 +188,11 @@ template<class LOG_MESSAGE_RECEIVER>
 class ACE_Thr_Server_Logging_Handler : public ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, ACE_LOGGER_COUNTER, ACE_LOGGER_SYNCH, LOG_MESSAGE_RECEIVER>
 {
 public:
-  ACE_Thr_Server_Logging_Handler (ACE_Thread_Manager * = 0);
+  ACE_Thr_Server_Logging_Handler (ACE_Thread_Manager * = nullptr);
   ACE_Thr_Server_Logging_Handler (ACE_Thread_Manager *,
                                   const LOG_MESSAGE_RECEIVER &receiver);
-  virtual int open (void * = 0);
-  virtual int svc ();
+  virtual int open (void * = nullptr) override;
+  virtual int svc () override;
 };
 
 #include "Server_Logging_Handler_T.cpp"

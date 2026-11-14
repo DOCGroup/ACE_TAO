@@ -10,14 +10,13 @@
 #include "orbsvcs/Shutdown_Utilities.h"
 #include "tao/debug.h"
 
-
 class Notify_Service_Shutdown_Functor
   : public Shutdown_Functor
 {
 public:
   Notify_Service_Shutdown_Functor (TAO_Notify_Service_Driver& svc);
 
-  void operator() (int which_signal);
+  void operator() (int which_signal) override;
 
 private:
   TAO_Notify_Service_Driver&        svc_;

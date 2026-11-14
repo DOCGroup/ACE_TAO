@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_INTERFACEATTREXTENSION_I_H
 #define TAO_INTERFACEATTREXTENSION_I_H
 

@@ -18,8 +18,7 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::Any_Special_Impl_T (
     _tao_destructor destructor,
     CORBA::TypeCode_ptr tc,
     T * const val,
-    CORBA::ULong bound
-  )
+    CORBA::ULong bound)
   : Any_Impl (destructor,
               tc),
     value_ (val),
@@ -33,8 +32,7 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::insert (CORBA::Any & any,
                                                   _tao_destructor destructor,
                                                   CORBA::TypeCode_ptr tc,
                                                   T * const value,
-                                                  CORBA::ULong bound
-  )
+                                                  CORBA::ULong bound)
 {
   CORBA::TypeCode_var bounded_tc;
 
@@ -66,10 +64,10 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::insert (CORBA::Any & any,
 
 template<typename T, typename from_T, typename to_T>
 CORBA::Boolean
-TAO::Any_Special_Impl_T<T, from_T, to_T>::extract (const CORBA::Any & any,
+TAO::Any_Special_Impl_T<T, from_T, to_T>::extract (CORBA::Any const & any,
                                                    _tao_destructor destructor,
                                                    CORBA::TypeCode_ptr tc,
-                                                   const T *& _tao_elem,
+                                                   T const *& _tao_elem,
                                                    CORBA::ULong bound)
 {
   _tao_elem = nullptr;
@@ -77,7 +75,7 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::extract (const CORBA::Any & any,
   try
     {
       CORBA::TypeCode_ptr any_type = any._tao_get_typecode ();
-      CORBA::TypeCode_var unaliased_any_type =
+      CORBA::TypeCode_var const unaliased_any_type =
         TAO::unaliased_typecode (any_type);
 
       CORBA::TCKind const any_kind =
@@ -111,11 +109,11 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::extract (const CORBA::Any & any,
               return false;
             }
 
-          _tao_elem = (T *) narrow_impl->value_;
+          _tao_elem = static_cast<T const *> (narrow_impl->value_);
           return true;
         }
 
-      TAO::Any_Special_Impl_T<T, from_T, to_T> *replacement = nullptr;
+      TAO::Any_Special_Impl_T<T, from_T, to_T> *replacement {};
       ACE_NEW_RETURN (replacement,
                       BOUNDED_TSTRING_ANY_IMPL (destructor,
                                                 tc,
@@ -150,7 +148,7 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::extract (const CORBA::Any & any,
       // Duplicated by Any_Impl base class constructor.
       ::CORBA::release (tc);
     }
-  catch (const ::CORBA::Exception&)
+  catch (::CORBA::Exception const &)
     {
     }
 
@@ -165,7 +163,7 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::marshal_value (TAO_OutputCDR &cdr)
 }
 
 template<typename T, typename from_T, typename to_T>
-const void *
+void const *
 TAO::Any_Special_Impl_T<T, from_T, to_T>::value () const
 {
   return this->value_;

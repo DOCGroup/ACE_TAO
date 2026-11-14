@@ -156,7 +156,7 @@ namespace
    *
    * @note In/decrement operations are atomic.
    */
-  long service_open_count = 0;
+  long service_open_count {};
 
   /**
    * Part of a condition variable, which helps to ensure non-default
@@ -165,7 +165,7 @@ namespace
    * ORB. Usually, the first ORB to be created is designated the
    * default ORB (reference the CORBA spec)
    */
-  bool is_ubergestalt_ready = false;
+  bool is_ubergestalt_ready {};
 
   char const * resource_factory_args =
     TAO_DEFAULT_RESOURCE_FACTORY_ARGS;
@@ -175,9 +175,9 @@ namespace
     TAO_DEFAULT_CLIENT_STRATEGY_FACTORY_ARGS;
 
 #if (TAO_NEGOTIATE_CODESETS == 1)
-  bool negotiate_codesets = true;
+  bool negotiate_codesets {true};
 #else
-  bool negotiate_codesets = false;
+  bool negotiate_codesets {};
 #endif /* TAO_NEGOTIATE_CODESETS */
 } // anonymous namespace
 
@@ -217,7 +217,7 @@ TAO::ORB::open_global_services (int argc, ACE_TCHAR **argv)
 {
   {
     // Count of the number of (times we did this for all) ORBs.
-    static int orb_init_count = 0;
+    static int orb_init_count {};
 
     // Using ACE_Static_Object_Lock::instance() precludes ORB_init()
     // from being called within a static object CTOR.
@@ -283,7 +283,7 @@ TAO::ORB::open_global_services (int argc, ACE_TCHAR **argv)
          true) == -1)
     return -1;
 
-  bool skip_service_config_open = false; // by default we shouldn't
+  bool skip_service_config_open {}; // by default we shouldn't
 
   if (using_global_gestalt_i (tmpargc,
                               tmpargv,
@@ -295,7 +295,7 @@ TAO::ORB::open_global_services (int argc, ACE_TCHAR **argv)
         return -1;
     }
 
-  bool ignore_default_svc_conf_file = false;
+  bool ignore_default_svc_conf_file {};
 
   if (parse_private_args_i (tmpargc,
           tmpargv,
@@ -312,7 +312,8 @@ TAO::ORB::open_global_services (int argc, ACE_TCHAR **argv)
 
   // Perform the open magic (unless SC::open() has been called already)
   int global_svc_config_argc = global_svc_config_argv.argc ();
-  int status = open_private_services_i (theone,
+  int status = open_private_services_i (
+                                        ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> {theone},
                                         global_svc_config_argc,
                                         global_svc_config_argv.argv (),
                                         skip_service_config_open,
@@ -432,8 +433,8 @@ TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
 
   // Should we skip the ACE_Service_Config::open() method?,
   // e.g., because of -ORBSkipServiceConfigOpen
-  bool skip_service_config_open = false;
-  bool ignore_default_svc_conf_file = false;
+  bool skip_service_config_open {};
+  bool ignore_default_svc_conf_file {};
 
   // Extract any ORB options from the argument vector.
   if (parse_private_args_i (argc,
@@ -515,7 +516,6 @@ TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
         }
     }
 
-
   return status;
 }
 
@@ -528,7 +528,7 @@ TAO::ORB::close_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg)
                             -1));
   --service_open_count;
 
-  int result = 0;
+  int result {};
 
   if (pcfg != ACE_Service_Config::global())
     {
@@ -896,7 +896,7 @@ namespace
 
     while (arg_shifter.is_anything_left ())
       {
-        const ACE_TCHAR *current_arg = nullptr;
+        const ACE_TCHAR *current_arg {};
         if (0 == arg_shifter.cur_arg_strncasecmp
             (ACE_TEXT ("-ORBSkipServiceConfigOpen")))
           {
@@ -996,7 +996,7 @@ namespace
               {
                 // Later, replace all of these
                 // warning this turns on a daemon.
-                ACE::debug (1);
+                ACE::debug (true);
               }
 
             arg_shifter.consume_arg ();
@@ -1028,7 +1028,7 @@ namespace
                           ACE_TCHAR **argv,
                           bool &skip_service_config_open)
   {
-    bool with_global_gestalt = true;
+    bool with_global_gestalt {true};
 
     ACE_Arg_Shifter arg_shifter (argc, argv);
 

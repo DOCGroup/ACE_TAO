@@ -6,33 +6,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // This constructor is used by the CSD clone.
 ACE_INLINE
 TAO_ServerRequest::TAO_ServerRequest ()
-  : mesg_base_ (0),
-    operation_ (0),
-    operation_len_ (0),
-    release_operation_ (false),
-    is_forwarded_ (false),
-    incoming_ (0),
-    outgoing_ (0),
-    response_expected_ (false),
-    deferred_reply_ (false),
-    sync_with_server_ (false),
-    is_queued_ (false),
-    is_dsi_ (false),
-    reply_status_ (GIOP::NO_EXCEPTION),
-    orb_core_ (0),
-    request_id_ (0),
-    profile_ (0),
-    requesting_principal_ (0),
-    dsi_nvlist_align_ (0),
-    operation_details_ (0),
-    argument_flag_ (true)
+  : profile_ (nullptr),
+    requesting_principal_ (nullptr)
 #if TAO_HAS_INTERCEPTORS == 1
-  , interceptor_count_ (0)
-  , rs_pi_current_ ()
-  , caught_exception_ (0)
   , pi_reply_status_ (-1)
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-  ,  transport_(0)
+  , transport_ (nullptr)
 {
 }
 
@@ -54,16 +33,16 @@ TAO_ServerRequest::outgoing () const
   return this->outgoing_;
 }
 
-ACE_INLINE const char *
+ACE_INLINE char const *
 TAO_ServerRequest::operation () const
 {
-  return (this->operation_ == 0 ? "" : this->operation_);
+  return (this->operation_ == nullptr ? "" : this->operation_);
 }
 
 ACE_INLINE void
-TAO_ServerRequest::operation (const char *operation,
+TAO_ServerRequest::operation (char const *operation,
                               size_t length,
-                              int release)
+                              bool release)
 {
   if (this->release_operation_)
     CORBA::string_free (const_cast <char*> (this->operation_));
@@ -101,7 +80,7 @@ ACE_INLINE void
 TAO_ServerRequest::sync_before_dispatch ()
 {
   if (this->sync_with_server_ &&
-      this->transport_ != 0 &&
+      this->transport_ != nullptr &&
       this->is_queued_)
     {
       this->send_no_exception_reply ();
@@ -112,7 +91,7 @@ ACE_INLINE void
 TAO_ServerRequest::sync_after_dispatch ()
 {
   if (this->sync_with_server_ &&
-      this->transport_ != 0 &&
+      this->transport_ != nullptr &&
       !this->is_queued_)
     {
       this->send_no_exception_reply ();
@@ -186,7 +165,7 @@ TAO_ServerRequest::request_id (CORBA::ULong req)
 }
 
 ACE_INLINE void
-TAO_ServerRequest::requesting_principal (const CORBA::OctetSeq &principal)
+TAO_ServerRequest::requesting_principal (CORBA::OctetSeq const &principal)
 {
   this->requesting_principal_ = principal;
 }
@@ -262,9 +241,8 @@ TAO_ServerRequest::argument_flag (CORBA::Boolean flag)
 ACE_INLINE bool
 TAO_ServerRequest::collocated () const
 {
-  return this->transport_.get () == 0;
+  return this->transport_.get () == nullptr;
 }
-
 
 #if TAO_HAS_INTERCEPTORS == 1
 ACE_INLINE size_t &

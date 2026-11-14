@@ -20,14 +20,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_EC_Basic_Factory::TAO_EC_Basic_Factory ()
-{
-}
-
-TAO_EC_Basic_Factory::~TAO_EC_Basic_Factory ()
-{
-}
-
 TAO_EC_Dispatching*
 TAO_EC_Basic_Factory::create_dispatching (TAO_EC_Event_Channel_Base *)
 {
@@ -115,8 +107,8 @@ TAO_EC_Basic_Factory::destroy_proxy_push_consumer (TAO_EC_ProxyPushConsumer *x)
 TAO_EC_Timeout_Generator*
 TAO_EC_Basic_Factory::create_timeout_generator (TAO_EC_Event_Channel_Base *)
 {
-  int argc = 0;
-  ACE_TCHAR **argv = nullptr;
+  int argc {};
+  ACE_TCHAR **argv {};
   CORBA::ORB_var orb =
     CORBA::ORB_init (argc, argv);
   ACE_Reactor *reactor = orb->orb_core ()->reactor ();
@@ -132,7 +124,7 @@ TAO_EC_Basic_Factory::destroy_timeout_generator (TAO_EC_Timeout_Generator *x)
 TAO_EC_ObserverStrategy*
 TAO_EC_Basic_Factory::create_observer_strategy (TAO_EC_Event_Channel_Base *ec)
 {
-  ACE_Lock* lock;
+  ACE_Lock* lock {};
   ACE_NEW_RETURN (lock, ACE_Lock_Adapter<TAO_SYNCH_MUTEX>, nullptr);
   return new TAO_EC_Basic_ObserverStrategy (ec, lock);
 }
@@ -217,8 +209,8 @@ TAO_EC_Basic_Factory::destroy_supplier_lock (ACE_Lock* x)
 TAO_EC_ConsumerControl*
 TAO_EC_Basic_Factory::create_consumer_control (TAO_EC_Event_Channel_Base* ec)
 {
-  int argc = 0;
-  ACE_TCHAR **argv = nullptr;
+  int argc {};
+  ACE_TCHAR **argv {};
   CORBA::ORB_var orb =
     CORBA::ORB_init (argc, argv);
   // Hard-coded rate to 10 times a second
@@ -237,8 +229,8 @@ TAO_EC_Basic_Factory::destroy_consumer_control (TAO_EC_ConsumerControl* x)
 TAO_EC_SupplierControl*
 TAO_EC_Basic_Factory::create_supplier_control (TAO_EC_Event_Channel_Base* ec)
 {
-  int argc = 0;
-  ACE_TCHAR **argv = nullptr;
+  int argc {};
+  ACE_TCHAR **argv {};
   CORBA::ORB_var orb =
     CORBA::ORB_init (argc, argv);
   // Hard-coded rate to 10 times a second

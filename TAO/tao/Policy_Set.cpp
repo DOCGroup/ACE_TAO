@@ -13,8 +13,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_Policy_Set::TAO_Policy_Set (TAO_Policy_Scope scope)
   : scope_ (scope)
 {
-  for (unsigned int i = 0; i < TAO_CACHED_POLICY_MAX_CACHED; ++i)
-    this->cached_policies_[i] = nullptr;
 }
 
 TAO_Policy_Set::~TAO_Policy_Set ()
@@ -23,27 +21,21 @@ TAO_Policy_Set::~TAO_Policy_Set ()
     {
       this->cleanup_i ();
     }
-  catch (const ::CORBA::Exception&)
+  catch (::CORBA::Exception const &)
     {
       // Ignore exceptions...
     }
 }
 
-TAO_Policy_Set::TAO_Policy_Set (const TAO_Policy_Set &rhs)
+TAO_Policy_Set::TAO_Policy_Set (TAO_Policy_Set const &rhs)
   : scope_ (rhs.scope_)
 {
-  // Initialize the cache.
-  for (int i = 0; i < TAO_CACHED_POLICY_MAX_CACHED; ++i)
-    {
-      this->cached_policies_[i] = nullptr;
-    }
-
   // Copy over the policy list.
   this->policy_list_.length (rhs.policy_list_.length ());
 
   try
     {
-      for (CORBA::ULong i = 0; i < rhs.policy_list_.length (); ++i)
+      for (CORBA::ULong i {}; i < rhs.policy_list_.length (); ++i)
         {
           CORBA::Policy_ptr policy = rhs.policy_list_[i];
 
@@ -65,7 +57,7 @@ TAO_Policy_Set::TAO_Policy_Set (const TAO_Policy_Set &rhs)
           this->policy_list_[i] = copy._retn ();
         }
     }
-  catch (const ::CORBA::Exception& ex)
+  catch (::CORBA::Exception const &ex)
     {
       if (TAO_debug_level > 4)
         ex._tao_print_exception ("TAO_Policy_Set::TAO_Policy_Set");
@@ -76,7 +68,7 @@ TAO_Policy_Set::TAO_Policy_Set (const TAO_Policy_Set &rhs)
 }
 
 void
-TAO_Policy_Set::copy_from (TAO_Policy_Set *source)
+TAO_Policy_Set::copy_from (TAO_Policy_Set const *source)
 {
   if (source == nullptr)
     {
@@ -85,7 +77,7 @@ TAO_Policy_Set::copy_from (TAO_Policy_Set *source)
 
   this->cleanup_i ();
 
-  for (CORBA::ULong i = 0; i < source->policy_list_.length (); ++i)
+  for (CORBA::ULong i {}; i < source->policy_list_.length (); ++i)
     {
       CORBA::Policy_ptr policy = source->policy_list_[i];
 
@@ -123,7 +115,7 @@ TAO_Policy_Set::cleanup_i ()
 {
   CORBA::ULong const len = this->policy_list_.length ();
   // Cleanup the policy list.
-  for (CORBA::ULong i = 0; i < len; ++i)
+  for (CORBA::ULong i {}; i < len; ++i)
     {
       this->policy_list_[i]->destroy ();
       this->policy_list_[i] = CORBA::Policy::_nil ();
@@ -132,7 +124,7 @@ TAO_Policy_Set::cleanup_i ()
   this->policy_list_.length (0);
 
   // Cleanup the cache.
-  for (CORBA::ULong j = 0; j < TAO_CACHED_POLICY_MAX_CACHED; ++j)
+  for (CORBA::ULong j {}; j < TAO_CACHED_POLICY_MAX_CACHED; ++j)
     {
       this->cached_policies_[j] = nullptr;
     }
@@ -140,7 +132,7 @@ TAO_Policy_Set::cleanup_i ()
 
   // @@ !!! Add comments regarding Policy lifetimes, etc.
 void
-TAO_Policy_Set::set_policy_overrides (const CORBA::PolicyList &policies,
+TAO_Policy_Set::set_policy_overrides (CORBA::PolicyList const &policies,
                                       CORBA::SetOverrideType set_add)
 {
   // @@ The spec does not say what to do on this case.
@@ -156,11 +148,11 @@ TAO_Policy_Set::set_policy_overrides (const CORBA::PolicyList &policies,
 
   // Flag, indicating whether we have already overridden
   // RTCORBA::ServerProtocolPolicy during this call.
-  bool server_protocol_set = false;
+  bool server_protocol_set {};
 
   CORBA::ULong const plen = policies.length ();
 
-  for (CORBA::ULong i = 0; i < plen; ++i)
+  for (CORBA::ULong i {}; i < plen; ++i)
     {
       CORBA::Policy_ptr policy = policies[i];
 
@@ -192,7 +184,7 @@ TAO_Policy_Set::set_policy_overrides (const CORBA::PolicyList &policies,
 }
 
 void
-TAO_Policy_Set::set_policy (const CORBA::Policy_ptr policy)
+TAO_Policy_Set::set_policy (CORBA::Policy_ptr const policy)
 {
   if (! this->compatible_scope (policy->_tao_scope()))
     {
@@ -203,7 +195,7 @@ TAO_Policy_Set::set_policy (const CORBA::Policy_ptr policy)
 
   CORBA::Policy_var copy = policy->copy ();
 
-  CORBA::ULong j = 0;
+  CORBA::ULong j {};
   CORBA::ULong const length = this->policy_list_.length ();
 
   while (j != length)
@@ -244,10 +236,10 @@ TAO_Policy_Set::set_policy (const CORBA::Policy_ptr policy)
 }
 
 CORBA::PolicyList *
-TAO_Policy_Set::get_policy_overrides (const CORBA::PolicyTypeSeq &types)
+TAO_Policy_Set::get_policy_overrides (CORBA::PolicyTypeSeq const &types)
 {
   CORBA::ULong const slots = types.length ();
-  CORBA::PolicyList *policy_list_ptr = nullptr;
+  CORBA::PolicyList *policy_list_ptr {};
 
   if (slots == 0)
     {
@@ -265,14 +257,14 @@ TAO_Policy_Set::get_policy_overrides (const CORBA::PolicyTypeSeq &types)
 
   CORBA::PolicyList_var policy_list (policy_list_ptr);
   policy_list->length (slots);
-  CORBA::ULong n = 0;
+  CORBA::ULong n {};
 
-  for (CORBA::ULong j = 0; j < slots; ++j)
+  for (CORBA::ULong j {}; j < slots; ++j)
     {
       CORBA::ULong const slot = types[j];
       CORBA::ULong const length = this->policy_list_.length ();
 
-      for (CORBA::ULong i = 0; i < length; ++i)
+      for (CORBA::ULong i {}; i < length; ++i)
         {
           CORBA::ULong const current =
             this->policy_list_[i]->policy_type ();
@@ -298,7 +290,7 @@ TAO_Policy_Set::get_policy (CORBA::PolicyType type)
 {
   CORBA::ULong const length = this->policy_list_.length ();
 
-  for (CORBA::ULong i = 0; i < length; ++i)
+  for (CORBA::ULong i {}; i < length; ++i)
     {
       CORBA::PolicyType const current = this->policy_list_[i]->policy_type ();
 

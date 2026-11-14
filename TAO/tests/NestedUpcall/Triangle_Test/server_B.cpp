@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    server_B.cpp
@@ -9,32 +8,25 @@
  *  @author Michael Kircher
  */
 //=============================================================================
-
-
 #include "server_B.h"
 #include "tao/debug.h"
 #include "ace/OS_NS_stdio.h"
 
-Object_B_Server::Object_B_Server ()
-  : ior_output_file_ (0)
-{
-}
-
 int
 Object_B_Server::parse_args ()
 {
-  ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("do:"));
-  int c;
+  ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT ("do:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'd':  // debug flag.
-        TAO_debug_level++;
+        ++TAO_debug_level;
         break;
       case 'o': // output the IOR to a file.
-        this->ior_output_file_ = ACE_OS::fopen (get_opts.opt_arg (), "w");
-        if (this->ior_output_file_ == 0)
+        this->ior_output_file_.reset (ACE_OS::fopen (get_opts.opt_arg (), "w"));
+        if (!this->ior_output_file_)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to open %s for writing: %p\n",
                              get_opts.opt_arg ()), -1);
@@ -67,29 +59,28 @@ Object_B_Server::init (int argc,
   this->argc_ = argc;
   this->argv_ = argv;
 
-  this->parse_args ();
-  // ~~ check for the return value here
+  if (this->parse_args () != 0)
+    return -1;
 
-  CORBA::String_var str  =
+  CORBA::String_var const str =
     this->orb_manager_.activate_under_child_poa ("object_B",
                                                  &this->object_B_i_);
 
   if (this->ior_output_file_)
     {
-      ACE_OS::fprintf (this->ior_output_file_,
+      ACE_OS::fprintf (this->ior_output_file_.get (),
                        "%s",
                        str.in ());
-      ACE_OS::fclose (this->ior_output_file_);
+      this->ior_output_file_.reset ();
     }
 
   return 0;
 }
 
-
 int
 Object_B_Server::run ()
 {
-  int result = this->orb_manager_.run ();
+  int const result = this->orb_manager_.run ();
 
   if (result == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -99,12 +90,8 @@ Object_B_Server::run ()
   return 0;
 }
 
-Object_B_Server::~Object_B_Server ()
-{
-}
-
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Object_B_Server object_B_Server;
 
@@ -113,21 +100,18 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   try
     {
-      int retval = object_B_Server.init (argc, argv);
+      int const retval = object_B_Server.init (argc, argv);
 
       if (retval == -1)
         return 1;
-      else
-        {
-          object_B_Server.run ();
-        }
+      return object_B_Server.run () == 0 ? 0 : 1;
     }
-  catch (const CORBA::SystemException& sysex)
+  catch (CORBA::SystemException const &sysex)
     {
       sysex._tao_print_exception ("System Exception");
       return -1;
     }
-  catch (const CORBA::UserException& userex)
+  catch (CORBA::UserException const &userex)
     {
       userex._tao_print_exception ("User Exception");
       return -1;

@@ -5,10 +5,9 @@
 #include "ace/OS_NS_unistd.h"
 #include "Content_Iterator_i.h"
 
-
-Content_Iterator_i::Content_Iterator_i (const char *pathname,
+Content_Iterator_i::Content_Iterator_i (char const *pathname,
                                         CORBA::ULongLong file_size)
-  : file_ (ACE_TEXT_CHAR_TO_TCHAR(pathname)),
+  : file_ (ACE_TEXT_CHAR_TO_TCHAR (pathname)),
     file_io_ (),
     file_size_ (file_size),
     chunk_index_ (1)
@@ -31,9 +30,9 @@ Content_Iterator_i::next_chunk (CORBA::ULongLong offset,
   if (offset >= this->file_size_)
     return false;  // Applications shouldn't throw system exceptions.
 
-  ACE_OFF_T real_offset =
+  ACE_OFF_T const real_offset =
     ACE_OS::lseek (this->file_io_.get_handle (),
-                   static_cast <ACE_OFF_T> (offset),
+                   static_cast<ACE_OFF_T> (offset),
                    SEEK_SET);
 
   if (real_offset == static_cast<ACE_OFF_T> (-1))
@@ -60,10 +59,10 @@ Content_Iterator_i::next_chunk (CORBA::ULongLong offset,
     }
 
   // Allocate a buffer for the file being read.
-  CORBA::Octet *buf =
+  CORBA::Octet *const buf =
     Web_Server::Chunk_Type::allocbuf (BUFSIZ);
 
-  if (buf == 0)
+  if (buf == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("Could not allocate chunk buffer\n")),
@@ -79,11 +78,11 @@ Content_Iterator_i::next_chunk (CORBA::ULongLong offset,
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("%p\n"),
                          ACE_TEXT ("Error during read")),
-                        0);
+                        false);
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Sending chunk %d at offset <%u> of size <%u>\n"),
+              ACE_TEXT ("Sending chunk %d at offset <%Q> of size <%b>\n"),
               this->chunk_index_,
               offset,
               bytes_read));
@@ -95,7 +94,7 @@ Content_Iterator_i::next_chunk (CORBA::ULongLong offset,
                   buf,
                   1);  // The sequence releases memory for us.
 
-  this->chunk_index_++;
+  ++this->chunk_index_;
 
   return true;
 }
@@ -128,7 +127,7 @@ Content_Iterator_i::init ()
 
   if (connector.connect (this->file_io_,
                          this->file_,
-                         0,
+                         nullptr,
                          ACE_Addr::sap_any,
                          0,
                          O_RDONLY) == -1)

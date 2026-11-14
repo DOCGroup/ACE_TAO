@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Any_Basic_Impl.h
  *
  *  @authors  Carlos O'Ryan and Jeff Parsons
  */
-//=============================================================================
 
 #ifndef TAO_ANY_BASIC_IMPL_H
 #define TAO_ANY_BASIC_IMPL_H
@@ -37,6 +35,11 @@ namespace TAO
   class TAO_AnyTypeCode_Export Any_Basic_Impl : public Any_Impl
   {
   public:
+    Any_Basic_Impl (Any_Basic_Impl const &) = delete;
+    Any_Basic_Impl (Any_Basic_Impl &&) = delete;
+    Any_Basic_Impl &operator= (Any_Basic_Impl const &) = delete;
+    Any_Basic_Impl &operator= (Any_Basic_Impl &&) = delete;
+
     Any_Basic_Impl (CORBA::TypeCode_ptr,
                     void *value);
 
@@ -44,8 +47,8 @@ namespace TAO
 
     static void insert (CORBA::Any &,
                         CORBA::TypeCode_ptr,
-                        const void *);
-    static CORBA::Boolean extract (const CORBA::Any &,
+                        void const *);
+    static CORBA::Boolean extract (CORBA::Any const &,
                                    CORBA::TypeCode_ptr,
                                    void *);
 

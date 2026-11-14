@@ -1,49 +1,43 @@
 #include "Event_Consumer.h"
 #include "orbsvcs/CosEventChannelAdminS.h"
+#include "ace/Log_Msg.h"
 #include "ace/OS_main.h"
 
-#define NAMING_SERVICE_NAME "NameService"
-#define EVENT_TLS_LOG_FACTORY_NAME "EventLogFactory"
+constexpr char naming_service_name[] = "NameService";
+constexpr char event_tls_log_factory_name[] = "EventLogFactory";
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  Consumer consumer;
+  Consumer consumer {};
 
   return consumer.run (argc, argv);
 }
 
-// ****************************************************************
-
-Consumer::Consumer ()
-  : event_count_ (0)
-{
-}
-
 int
-Consumer::run (int argc, ACE_TCHAR* argv[])
+Consumer::run (int argc, ACE_TCHAR *argv[])
 {
   try
     {
       // ORB initialization boiler plate...
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
       // Do *NOT* make a copy because we don't want the ORB to outlive
       // the Consumer object.
       this->orb_ = orb.in ();
 
-      CORBA::Object_var object =
+      CORBA::Object_var const object =
         orb->resolve_initial_references ("RootPOA");
-      PortableServer::POA_var poa =
+      PortableServer::POA_var const poa =
         PortableServer::POA::_narrow (object.in ());
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         poa->the_POAManager ();
       poa_manager->activate ();
 
       // Obtain the event channel
-      CORBA::Object_var naming_obj =
-        this->orb_->resolve_initial_references (NAMING_SERVICE_NAME);
+      CORBA::Object_var const naming_obj =
+        this->orb_->resolve_initial_references (naming_service_name);
 
       // Need to check return value for errors.
       if (CORBA::is_nil (naming_obj.in ()))
@@ -54,9 +48,9 @@ Consumer::run (int argc, ACE_TCHAR* argv[])
 
       CosNaming::Name name (1);
       name.length (1);
-      name[0].id = CORBA::string_dup (EVENT_TLS_LOG_FACTORY_NAME);
+      name[0].id = CORBA::string_dup (event_tls_log_factory_name);
 
-      CORBA::Object_var obj =
+      CORBA::Object_var const obj =
         this->naming_context_->resolve (name);
 
       this->event_log_factory_ =
@@ -65,12 +59,12 @@ Consumer::run (int argc, ACE_TCHAR* argv[])
       this->supplier_ =
         this->event_log_factory_->obtain_push_supplier ();
 
-      CosEventComm::PushConsumer_var consumer =
+      CosEventComm::PushConsumer_var const consumer =
         this->_this ();
 
       this->supplier_->connect_push_consumer (consumer.in ());
 
-      orb_->run ();
+      this->orb_->run ();
 
       // We don't do any cleanup, it is hard to do it after shutdown,
       // and would complicate the example; plus it is almost
@@ -79,7 +73,7 @@ Consumer::run (int argc, ACE_TCHAR* argv[])
       // work_pending()/perform_work() to do more interesting stuff.
       // Check the supplier for the proper way to do cleanup.
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Consumer::run");
       return 1;
@@ -88,13 +82,13 @@ Consumer::run (int argc, ACE_TCHAR* argv[])
 }
 
 void
-Consumer::push (const CORBA::Any &)
+Consumer::push (CORBA::Any const &)
 {
-  this->event_count_ ++;
+  ++this->event_count_;
 
-      ACE_DEBUG ((LM_DEBUG,
-                  "Consumer (%P|%t): %d log generated events received\n",
-                  this->event_count_));
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Consumer (%P|%t): %u log generated events received\n"),
+              this->event_count_));
 }
 
 void

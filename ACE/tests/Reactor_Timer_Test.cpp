@@ -28,7 +28,6 @@ static int odd = 0;
 class Time_Handler : public ACE_Event_Handler
 {
 public:
-  /// Default constructor
   Time_Handler ();
 
   /// Handle the timeout.
@@ -128,7 +127,7 @@ test_registering_all_handlers ()
   for (size_t i = 0; i < ACE_MAX_TIMERS; i++)
     {
       t_id[i] =
-        ACE_Reactor::instance ()->schedule_timer (&rt[i],
+        ACE_Reactor::instance ()->schedule_timer (std::addressof (rt[i]),
                                                   (const void *) i,
                                                   std::chrono::seconds {2 * i + 1});
       ACE_TEST_ASSERT (t_id[i] != -1);
@@ -154,7 +153,7 @@ test_registering_one_handler ()
   for (size_t i = 0; i < ACE_MAX_TIMERS; i++)
     {
       t_id[i] =
-        ACE_Reactor::instance ()->schedule_timer (&rt[0],
+        ACE_Reactor::instance ()->schedule_timer (std::addressof (rt[0]),
                                                   (const void *) i,
                                                   ACE_Time_Value (2 * i + 1));
       ACE_TEST_ASSERT (t_id[i] != -1);
@@ -179,7 +178,7 @@ test_canceling_odd_timers ()
 
   for (size_t i = 0; i < ACE_MAX_TIMERS; i++)
     {
-      t_id[i] = ACE_Reactor::instance ()->schedule_timer (&rt[i],
+      t_id[i] = ACE_Reactor::instance ()->schedule_timer (std::addressof (rt[i]),
                                                           (const void *) i,
                                                           ACE_Time_Value (2 * i + 1));
       ACE_TEST_ASSERT (t_id[i] != -1);
@@ -249,22 +248,17 @@ run_main (int argc, ACE_TCHAR *[])
       // precision for a 1 second timer is beyond me ...  I think it
       // is a cut&paste error.
       //
-      // The use of auto_ptr<> is optional, ACE uses dangerous memory
-      // management idioms everywhere, I thought I could demonstrate how
-      // to do it right in at least one test.  Notice the lack of
-      // ACE_NEW_RETURN, that monstrosity has no business in proper C++
-      // code ...
-      std::unique_ptr<ACE_Timer_Heap_Variable_Time_Source> tq(
-          new ACE_Timer_Heap_Variable_Time_Source);
+      std::unique_ptr<ACE_Timer_Heap_Variable_Time_Source> tq =
+        std::make_unique<ACE_Timer_Heap_Variable_Time_Source> ();
       // ... notice how the policy is in the derived timer queue type.
       // The abstract timer queue does not have a time policy ...
-      tq->set_time_policy(&ACE_High_Res_Timer::gettimeofday_hr);
+      ACE_FPointer_Time_Policy const time_policy (&ACE_High_Res_Timer::gettimeofday_hr);
+      tq->set_time_policy (time_policy);
       // ... and then the timer queue is replaced.  Strangely, the
       // Reactor does *not* copy the timers, it just deletes the
       // existing timer queue ....
       r->timer_queue(tq.get());
-      // ... the Reactor has assumed ownership, release the
-      // auto_ptr<> ...
+      // The reactor takes ownership of the timer queue.
       tq.release();
     }
 

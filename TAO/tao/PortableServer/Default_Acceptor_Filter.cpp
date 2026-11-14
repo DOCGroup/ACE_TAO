@@ -7,17 +7,16 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
-TAO_Default_Acceptor_Filter::fill_profile (const TAO::ObjectKey &object_key,
+TAO_Default_Acceptor_Filter::fill_profile (TAO::ObjectKey const &object_key,
                                            TAO_MProfile &mprofile,
-                                           TAO_Acceptor **acceptors_begin,
-                                           TAO_Acceptor **acceptors_end,
+                                           TAO_AcceptorSet const &acceptors,
                                            CORBA::Short priority)
 {
   // Go through all the acceptors.
-  for (TAO_Acceptor** acceptor = acceptors_begin; acceptor != acceptors_end; ++acceptor)
+  for (std::unique_ptr<TAO_Acceptor> const& acceptor : acceptors)
     {
       // Ask each acceptor to make a profile.
-      if ((*acceptor)->create_profile (object_key, mprofile, priority) == -1)
+      if (acceptor->create_profile (object_key, mprofile, priority) == -1)
         return -1;
     }
 
@@ -29,9 +28,9 @@ TAO_Default_Acceptor_Filter::encode_endpoints (TAO_MProfile &mprofile)
 {
   // if -ORBUseSharedProfile is set, there may be multiple endpoints
   // per profile, even without priority.
-  for (CORBA::ULong i = 0; i < mprofile.profile_count (); ++i)
+  for (CORBA::ULong i {}; i < mprofile.profile_count (); ++i)
     {
-      TAO_Profile *profile = mprofile.get_profile (i);
+      TAO_Profile * const profile = mprofile.get_profile (i);
       if (profile->encode_alternate_endpoints () == -1)
         return -1;
     }

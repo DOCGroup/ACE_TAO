@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-
 //=============================================================================
 /**
  *  @file    AbstractInterfaceDef_i.h
@@ -10,7 +9,6 @@
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef TAO_ABSTRACTINTERFACEDEF_I_H
 #define TAO_ABSTRACTINTERFACEDEF_I_H
@@ -46,8 +44,7 @@ public:
   CORBA::Boolean is_a (char const *interface_id) override;
 
   CORBA::Boolean is_a_i (
-      char const *interface_id
-    );
+      char const *interface_id);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
@@ -57,5 +54,4 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #endif /* _MSC_VER */
 
 #endif /* TAO_ABSTRACTINTERFACEDEF_I_H */
-
 

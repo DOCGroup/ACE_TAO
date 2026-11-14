@@ -62,19 +62,14 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
   *os << "class " << " " << tiename << " : public " << namebuf << be_nl;
   *os << "{" << be_nl
       << "public:" << be_idt_nl
-      << "/// the T& ctor" << be_nl
-      << tiename << " (T &t);" << be_nl
-      << "/// ctor taking a POA" << be_nl
+      << "explicit " << tiename << " (T &t);" << be_nl
       << tiename << " (T &t, PortableServer::POA_ptr poa);" << be_nl
-      << "/// ctor taking pointer and an ownership flag" << be_nl
       << tiename << " (T *tp, ::CORBA::Boolean release = true);" << be_nl
-      << "/// ctor with T*, ownership flag and a POA" << be_nl
       << tiename << " (" << be_idt << be_idt_nl
       << "T *tp," << be_nl
       << "PortableServer::POA_ptr poa," << be_nl
       << "::CORBA::Boolean release = true);" << be_uidt
       << be_uidt_nl
-      << "/// dtor" << be_nl
       << "~" << tiename << " () override;" << be_nl
       << "// TIE specific functions" << be_nl
       << "/// return the underlying object" << be_nl

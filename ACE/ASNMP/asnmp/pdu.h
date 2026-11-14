@@ -34,6 +34,9 @@
 
 #define MAX_VBS 25
 #include "asnmp/vb.h"         // include Vb class definition
+#include <array>
+#include <cstddef>
+#include <memory>
 
 /**
  * @class Pdu
@@ -48,53 +51,55 @@ public:
   Pdu();
 
   /// constructor with vbs and count
-  Pdu( Vb* pvbs, const int pvb_count);
+  Pdu (Vb *pvbs, int pvb_count);
 
   /// constructor with another Pdu instance
-  Pdu( const Pdu &pdu);
+  Pdu (Pdu const &pdu);
 
-  /// destructor
+  Pdu (Pdu &&) = delete;
+  Pdu &operator= (Pdu &&) = delete;
+
   ~Pdu();
 
   /// assignment to another Pdu object overloaded
-  Pdu& operator=( const Pdu &pdu);
+  Pdu &operator= (Pdu const &pdu);
 
   /// append a vb to the pdu
-  Pdu& operator+=( Vb &vb);
+  Pdu &operator+= (Vb &vb);
 
-  // TODO: add Pdu& operator-=(const Vb &vb);
+  // TODO: add Pdu &operator-= (Vb const &vb);
 
   /// extract all Vbs from Pdu
-  int get_vblist( Vb* pvbs, const int pvb_count);
+  int get_vblist (Vb *pvbs, int pvb_count);
 
   /// deposit all Vbs to Pdu
-  int set_vblist( Vb* pvbs, const int pvb_count);
+  int set_vblist (Vb *pvbs, int pvb_count);
 
   /// get a particular vb
   /// where 0 is the first vb
-  int get_vb( Vb &vb, const int index = 0) const;
+  int get_vb (Vb &vb, int index = 0) const;
 
   /// set a particular vb
   /// where 0 is the first vb
-  int set_vb( Vb &vb, const int index);
+  int set_vb (Vb &vb, int index);
 
   /// return number of vbs
-  int get_vb_count() const;
+  int get_vb_count () const;
 
   /// return the error status
-  int get_error_status() const;
+  int get_error_status () const;
 
   /// return the complete error info from this pdu
-  const char *agent_error_reason();
+  char const *agent_error_reason ();
 
   /// set the error status
-  friend ASNMP_Export void set_error_status( Pdu *pdu, const int status);
+  friend ASNMP_Export void set_error_status (Pdu *pdu, int status);
 
   /// return the error index
-  int get_error_index() const;
+  int get_error_index () const;
 
   /// set the error index
-  friend ASNMP_Export void set_error_index( Pdu *pdu, const int index);
+  friend ASNMP_Export void set_error_index (Pdu *pdu, int index);
 
   /// clear error status
   friend ASNMP_Export void clear_error_status( Pdu *pdu);
@@ -103,88 +108,87 @@ public:
   friend ASNMP_Export void clear_error_index( Pdu *pdu);
 
   /// return the request id
-  unsigned long get_request_id() const;
+  unsigned long get_request_id () const;
 
   /// set the request id
-  friend void set_request_id( Pdu *pdu, const unsigned long rid);
+  friend void set_request_id (Pdu *pdu, unsigned long rid);
 
   /// get the pdu type
-  unsigned short get_type() const;
+  unsigned short get_type () const;
 
   /// set the pdu type
-  void set_type( unsigned short type);
+  void set_type (unsigned short type);
 
   /// returns validity of Pdu instance
-  int valid() const;
+  int valid () const;
 
   /// trim off count vbs from the end of the vb list
-  int trim(const int count=1);
+  int trim (int count = 1);
 
   /// delete a Vb anywhere within the Pdu
-  int delete_vb( const int position);
+  int delete_vb (int position);
 
   /// delete_all vbs in pdu
-  void delete_all_vbs();
+  void delete_all_vbs ();
 
   /// set notify timestamp
-  void set_notify_timestamp( const TimeTicks & timestamp);
+  void set_notify_timestamp (TimeTicks const &timestamp);
 
   /// get notify timestamp
-  void get_notify_timestamp( TimeTicks & timestamp) const;
+  void get_notify_timestamp (TimeTicks &timestamp) const;
 
   /// set the notify id
-  void set_notify_id( const Oid id);
+  void set_notify_id (Oid id);
 
   /// get the notify id
-  void get_notify_id( Oid &id) const;
+  void get_notify_id (Oid &id) const;
 
   /// set the notify enterprise
-  void set_notify_enterprise( const Oid &enterprise);
+  void set_notify_enterprise (Oid const &enterprise);
 
   /// get the notify enterprise
-  void get_notify_enterprise( Oid & enterprise) const;
+  void get_notify_enterprise (Oid &enterprise) const;
 
   /// return fomatted version of this object
-  const char *to_string();
+  char const *to_string ();
 
 protected:
   /// pointer to array of Vbs
-  Vb *vbs_[MAX_VBS];
+  std::array<std::unique_ptr<Vb>, MAX_VBS> vbs_ {};
 
   /// count of Vbs
-  int vb_count_;
+  int vb_count_ {};
 
   /// SMI error status
-  int error_status_;
+  int error_status_ {};
 
   /// SMI error index
-  int error_index_;
+  int error_index_ {};
 
   /// valid boolean status of object construction
   /// SMI request id
-  int validity_;
-  unsigned long request_id_;
+  int validity_ {};
+  unsigned long request_id_ {};
 
   /// derived at run time based on request type
-  unsigned short pdu_type_;
+  unsigned short pdu_type_ {};
 
   /**
     * a timestamp associated with an infor
     * for notify Pdu objects only
     * traps & notifies
     */
-  TimeTicks notify_timestamp_;
+  TimeTicks notify_timestamp_ {};
 
   /// an id
-  Oid notify_id_;
+  Oid notify_id_ {};
 
-  Oid notify_enterprise_;
+  Oid notify_enterprise_ {};
 
 private:
   /// buffer for to_string()
-  char *output_;
+  std::unique_ptr<char[]> output_ {};
 };
-
 
 /**
  * @class VbIter
@@ -195,20 +199,22 @@ class ASNMP_Export VbIter
 {
 public:
   /// default constructor
-  VbIter(Pdu& pdu);
+  explicit VbIter (Pdu &pdu);
+  VbIter (VbIter const &) = delete;
+  VbIter &operator= (VbIter const &) = delete;
+  VbIter (VbIter &&) = delete;
+  VbIter &operator= (VbIter &&) = delete;
 
   /// returns 1 if ok, else 0 if none left
   int next(Vb& vb);
 
 private:
   /// disallow copy constructor use
-  VbIter(const VbIter&);
-
   /// current object in list
-  int idx_;
+  int idx_ {-1};
 
   /// ptr to pdu being interated over
-  Pdu *pdu_;
+  Pdu *pdu_ {};
 };
 
 #endif //PDU_CLS_

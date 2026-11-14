@@ -3,10 +3,13 @@
 
 #include "ace/INet/INet_Log.h"
 #include "ace/INet/StreamHandler.h"
+#include "ace/Message_Block.h"
 #include "ace/OS_NS_Thread.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/Countdown_Time.h"
 #include "ace/Truncate.h"
+
+#include <cstring>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -91,20 +94,21 @@ namespace ACE
             INET_HEX_DUMP (11, (LM_DEBUG, buffer, bytes_in, DLINFO
                                 ACE_TEXT ("ACE_IOS_StreamHandler::handle_input_i <--")));
 
-            ACE_Message_Block *mb = 0;
-            ACE_NEW_RETURN (mb, ACE_Message_Block (bytes_in), -1);
+            ACE_Message_Block *raw_mb {};
+            ACE_NEW_RETURN (raw_mb, ACE_Message_Block (bytes_in), -1);
+            ACE_Message_Block_Unique_Ptr mb (raw_mb);
             mb->copy (buffer, bytes_in);
             ACE_Time_Value nowait (ACE_OS::gettimeofday ());
-            if (this->putq (mb, &nowait) == -1)
+            if (this->putq (mb.get (), &nowait) == -1)
               {
                 INET_ERROR (1, (LM_ERROR, DLINFO
                             ACE_TEXT ("ACE_IOS_StreamHandler - discarding input data, "),
                             ACE_TEXT ("enqueue failed (%d)\n"),
                             ACE_OS::last_error ()));
-                mb->release ();
                 this->connected_ = false;
                 return -1;
               }
+            mb.release ();
           }
 
         if (recv_cnt == 0 || (recv_cnt < 0 && !no_wait))
@@ -130,7 +134,7 @@ namespace ACE
             return this->handle_output_i (&to);
           }
         else
-          return this->handle_output_i (0);
+          return this->handle_output_i (nullptr);
       }
 
     template <ACE_PEER_STREAM_1, ACE_SYNCH_DECL>
@@ -138,11 +142,12 @@ namespace ACE
       {
         INET_TRACE ("ACE_IOS_StreamHandler::handle_output_i");
 
-        ACE_Message_Block *mb = 0;
+        ACE_Message_Block *raw_mb {};
         ACE_Time_Value nowait (ACE_OS::gettimeofday ());
         size_t bytes_out = 0;
-        if (-1 != this->getq (mb, &nowait))
+        if (-1 != this->getq (raw_mb, &nowait))
           {
+            ACE_Message_Block_Unique_Ptr mb (raw_mb);
             ssize_t send_cnt =
               this->peer ().send_n (mb->rd_ptr (), mb->length (), timeout, &bytes_out);
             if (bytes_out > 0)
@@ -152,9 +157,16 @@ namespace ACE
 
                 mb->rd_ptr (static_cast<size_t> (bytes_out));
                 if (mb->length () > 0)
-                    this->ungetq (mb);
-                else
-                    mb->release ();
+                  {
+                    if (this->ungetq (mb.get ()) == -1)
+                      {
+                        INET_ERROR (1, (LM_ERROR, DLINFO
+                                    ACE_TEXT ("ACE_IOS_StreamHandler - failed to requeue output data\n")));
+                        this->connected_ = false;
+                        return -1;
+                      }
+                    mb.release ();
+                  }
               }
             if (send_cnt <= 0)
               {
@@ -206,7 +218,7 @@ namespace ACE
                   {
                     // Run the event loop.
                     result = this->reactor ()->handle_events (this->use_timeout () ?
-                                                                  &max_wait_time : 0);
+                                                                  &max_wait_time : nullptr);
                   }
 
                 if (result != -1)
@@ -215,7 +227,7 @@ namespace ACE
                                                   char_length,
                                                   char_size,
                                                   this->use_timeout () ?
-                                                        &max_wait_time : 0);
+                                                        &max_wait_time : nullptr);
                   }
 
                 if (result == -1)
@@ -270,7 +282,7 @@ namespace ACE
                                               char_length,
                                               char_size,
                                               this->use_timeout () ?
-                                                        &max_wait_time : 0);
+                                                        &max_wait_time : nullptr);
 
                 if (result == -1)
                   return result;
@@ -296,7 +308,7 @@ namespace ACE
                     // nothing has been read the first time round
                     // now start blocking read 1 char_size data at a time
                     rdlen = char_size;
-                    to = this->use_timeout () ? &max_wait_time : 0;
+                    to = this->use_timeout () ? &max_wait_time : nullptr;
                   }
               }
           }
@@ -324,11 +336,11 @@ namespace ACE
             wait += *timeout;
             timeout_countdown.start ();
           }
-        ACE_Message_Block *mb_remain = 0;
+        ACE_Message_Block *mb_remain {};
         size_t recv_char_count = 0;
         while (!this->msg_queue ()->is_empty () && char_length > 0)
           {
-            ACE_Message_Block *mb = 0;
+            ACE_Message_Block *mb {};
             if (this->getq (mb, &wait) == -1)
               {
                 if (ACE_OS::last_error () == EWOULDBLOCK)
@@ -343,10 +355,11 @@ namespace ACE
               {
                 if ((mb_remain->length () + mb->length ()) < char_size)
                   {
-                    ACE_Message_Block *mb_new = 0;
-                    ACE_NEW_NORETURN (mb,
+                    ACE_Message_Block *raw_mb_new {};
+                    ACE_NEW_NORETURN (raw_mb_new,
                                       ACE_Message_Block (mb_remain->length () + mb->length ()));
-                    if (mb_new == 0)
+                    ACE_Message_Block_Unique_Ptr mb_new (raw_mb_new);
+                    if (!mb_new)
                       {
                         mb->release ();
                         mb_remain->release ();
@@ -356,16 +369,16 @@ namespace ACE
                     mb_remain->release ();
                     mb_new->copy (mb->rd_ptr (), mb->length ());
                     mb->release ();
-                    mb_remain = mb_new;
+                    mb_remain = mb_new.release ();
                     continue; // check for next msg block
                   }
 
                 copy_len = (mb_remain->length () > char_length) ?
                                 char_length :
                                 mb_remain->length ();
-                ACE_OS::memmove (&buf[recv_char_count],
-                                  mb_remain->rd_ptr (),
-                                  copy_len);
+                std::memmove (&buf[recv_char_count],
+                              mb_remain->rd_ptr (),
+                              copy_len);
                 char_length -= copy_len;
                 recv_char_count += copy_len;
                 mb_remain->rd_ptr (copy_len);
@@ -376,7 +389,7 @@ namespace ACE
 
                 // cleanup empty block
                 mb_remain->release ();
-                mb_remain = 0;
+                mb_remain = nullptr;
               }
 
             // normalize to total nr of char_size elements available in mb [+ mb_remain]
@@ -388,9 +401,9 @@ namespace ACE
             // subtract what we possibly already copied from mb_remain
             copy_len = max_copy_len - copy_len;
 
-            ACE_OS::memmove (&buf[recv_char_count],
-                              mb->rd_ptr (),
-                              copy_len);
+            std::memmove (&buf[recv_char_count],
+                          mb->rd_ptr (),
+                          copy_len);
             recv_char_count += copy_len;
             char_length -= copy_len;
             mb->rd_ptr (copy_len);
@@ -446,22 +459,23 @@ namespace ACE
         // set notification strategy if reactive
         NotificationStrategyGuard ns_guard__(*this,
                                              use_reactor ?
-                                                &this->notification_strategy_ : 0);
+                                                &this->notification_strategy_ : nullptr);
 
         size_t datasz = length * char_size;
-        ACE_Message_Block *mb = 0;
-        ACE_NEW_RETURN (mb, ACE_Message_Block (datasz), -1);
+        ACE_Message_Block *raw_mb {};
+        ACE_NEW_RETURN (raw_mb, ACE_Message_Block (datasz), -1);
+        ACE_Message_Block_Unique_Ptr mb (raw_mb);
         mb->copy ((const char*)buf, datasz);
         ACE_Time_Value nowait (ACE_OS::gettimeofday ());
-        if (this->putq (mb, &nowait) == -1)
+        if (this->putq (mb.get (), &nowait) == -1)
           {
             INET_ERROR (1, (LM_ERROR, DLINFO
                         ACE_TEXT ("(%d) ACE_IOS_StreamHandler - discarding output data, "),
                         ACE_TEXT ("enqueue failed\n"),
                         ACE_OS::last_error ()));
-            mb->release ();
             return 0;
           }
+        mb.release ();
 
         ACE_Time_Value max_wait_time = this->sync_opt_.timeout ();
         int result = 0;
@@ -480,7 +494,7 @@ namespace ACE
               {
                 // Run the event loop.
                 result = this->reactor ()->handle_events (this->use_timeout () ?
-                                                              &max_wait_time : 0);
+                                                              &max_wait_time : nullptr);
 
                 if (result == -1)
                   {
@@ -523,7 +537,7 @@ namespace ACE
             while (this->connected_)
               {
                 result = this->handle_output_i (this->use_timeout () ?
-                                                    &max_wait_time : 0);
+                                                    &max_wait_time : nullptr);
 
                 // If we got our message out, no need to run the event loop any
                 // further.

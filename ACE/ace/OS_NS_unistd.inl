@@ -50,7 +50,6 @@ ACE_OS::access (const char *path, int amode)
 #endif /* ACE_LACKS_ACCESS */
 }
 
-
 #if defined (ACE_HAS_WCHAR)
 ACE_INLINE int
 ACE_OS::access (const wchar_t *path, int amode)
@@ -405,7 +404,7 @@ ACE_OS::getcwd (wchar_t *buf, size_t size)
   return ::_wgetcwd (buf, static_cast<int> (size));
 #  else
   char *narrow_buf = new char[size];
-  char *result = nullptr;
+  char *result {};
   result = ACE_OS::getcwd (narrow_buf, size);
   ACE_Ascii_To_Wide wide_buf (result);
   delete [] narrow_buf;
@@ -567,7 +566,7 @@ ACE_OS::hostname (wchar_t name[], size_t maxnamelen)
                                           ace_result_), int, -1);
 #else /* ACE_WIN32 */
   // Emulate using the char version
-  char *char_name = nullptr;
+  char *char_name {};
 
   ACE_NEW_RETURN (char_name, char[maxnamelen], -1);
 
@@ -795,7 +794,7 @@ ACE_OS::pipe (ACE_HANDLE fds[])
   ACE_NOTSUP_RETURN (-1);
 # elif defined (ACE_WIN32)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL
-                        (::CreatePipe (&fds[0], &fds[1], 0, 0),
+                        (::CreatePipe (fds, fds + 1, 0, 0),
                          ace_result_), int, -1);
 # else
   return ::pipe (fds);

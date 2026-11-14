@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    BasicTypeTraits.cpp
  *
@@ -8,7 +7,6 @@
  *
  *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
-//=============================================================================
 
 #include "tao/AnyTypeCode/BasicTypeTraits.h"
 #include "tao/AnyTypeCode/BooleanSeqA.h"
@@ -42,8 +40,6 @@ namespace TAO
     return et.ref_;
   }
 
-  //================================================================
-
   CORBA::TypeCode_ptr const
   BasicTypeTraits<CORBA::Octet>::tc_value = CORBA::_tc_octet;
 
@@ -56,8 +52,6 @@ namespace TAO
     return et.ref_;
   }
 
-  //================================================================
-
   CORBA::TypeCode_ptr const
   BasicTypeTraits<CORBA::Char>::tc_value = CORBA::_tc_char;
 
@@ -69,8 +63,6 @@ namespace TAO
   {
     return et.ref_;
   }
-
-  //================================================================
 
 #if (defined (ACE_HAS_WCHAR) || defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)) && !defined (ACE_LACKS_NATIVE_WCHAR_T)
 
@@ -88,8 +80,6 @@ namespace TAO
 
 #endif
 
-  //================================================================
-
   CORBA::TypeCode_ptr const
   BasicTypeTraits<CORBA::Short>::tc_value = CORBA::_tc_short;
 
@@ -101,8 +91,6 @@ namespace TAO
   {
     return et;
   }
-
-  //================================================================
 
   CORBA::TypeCode_ptr const
   BasicTypeTraits<CORBA::UShort>::tc_value = CORBA::_tc_ushort;
@@ -116,8 +104,6 @@ namespace TAO
     return et;
   }
 
-  //================================================================
-
   CORBA::TypeCode_ptr const
   BasicTypeTraits<CORBA::Long>::tc_value = CORBA::_tc_long;
 
@@ -129,8 +115,6 @@ namespace TAO
   {
     return et;
   }
-
-  //================================================================
 
   CORBA::TypeCode_ptr const
   BasicTypeTraits<CORBA::ULong>::tc_value = CORBA::_tc_ulong;
@@ -144,8 +128,6 @@ namespace TAO
     return et;
   }
 
-  //================================================================
-
   CORBA::TypeCode_ptr const
   BasicTypeTraits<CORBA::LongLong>::tc_value = CORBA::_tc_longlong;
 
@@ -157,8 +139,6 @@ namespace TAO
   {
     return et;
   }
-
-  //================================================================
 
   CORBA::TypeCode_ptr const
   BasicTypeTraits<CORBA::ULongLong>::tc_value = CORBA::_tc_ulonglong;
@@ -172,8 +152,6 @@ namespace TAO
     return et;
   }
 
-  //================================================================
-
   CORBA::TypeCode_ptr const
   BasicTypeTraits<CORBA::Float>::tc_value = CORBA::_tc_float;
 
@@ -185,8 +163,6 @@ namespace TAO
   {
     return et;
   }
-
-  //================================================================
 
   CORBA::TypeCode_ptr const
   BasicTypeTraits<CORBA::Double>::tc_value = CORBA::_tc_double;
@@ -200,8 +176,6 @@ namespace TAO
     return et;
   }
 
-  //================================================================
-
   CORBA::TypeCode_ptr const
   BasicTypeTraits<CORBA::LongDouble>::tc_value = CORBA::_tc_longdouble;
 
@@ -213,8 +187,6 @@ namespace TAO
   {
     return et;
   }
-
-  //================================================================
 
   CORBA::TypeCode_ptr const
   BasicTypeTraits<CORBA::Char *>::tc_value = CORBA::_tc_string;
@@ -228,8 +200,6 @@ namespace TAO
     return et;
   }
 
-  //================================================================
-
   CORBA::TypeCode_ptr const
   BasicTypeTraits<CORBA::WChar *>::tc_value = CORBA::_tc_wstring;
 
@@ -241,8 +211,6 @@ namespace TAO
   {
     return et;
   }
-
-  //================================================================
 
   CORBA::TypeCode_ptr const
   BasicTypeTraits<CORBA::Any>::tc_value = CORBA::_tc_any;
@@ -256,8 +224,6 @@ namespace TAO
     return et;
   }
 
-  //================================================================
-
   CORBA::TypeCode_ptr const
   BasicTypeTraits<CORBA::Object_ptr>::tc_value = CORBA::_tc_Object;
 
@@ -269,8 +235,6 @@ namespace TAO
   {
     return et;
   }
-
-  //================================================================
 
   CORBA::TypeCode_ptr const
   BasicTypeTraits<CORBA::TypeCode_ptr>::tc_value = CORBA::_tc_TypeCode;
@@ -284,8 +248,6 @@ namespace TAO
     return et;
   }
 
-  //================================================================
-
   CORBA::TypeCode_ptr const
   BasicTypeTraits<CORBA::BooleanSeq>::tc_value = CORBA::_tc_BooleanSeq;
 
@@ -297,8 +259,6 @@ namespace TAO
   {
     return et;
   }
-
-  //================================================================
 
   CORBA::TypeCode_ptr const
   BasicTypeTraits<CORBA::OctetSeq>::tc_value = CORBA::_tc_OctetSeq;
@@ -312,8 +272,6 @@ namespace TAO
     return et;
   }
 
-  //================================================================
-
   CORBA::TypeCode_ptr const
   BasicTypeTraits<CORBA::CharSeq>::tc_value = CORBA::_tc_CharSeq;
 
@@ -325,8 +283,6 @@ namespace TAO
   {
     return et;
   }
-
-  //================================================================
 
   CORBA::TypeCode_ptr const
   BasicTypeTraits<CORBA::WCharSeq>::tc_value = CORBA::_tc_WCharSeq;
@@ -340,8 +296,6 @@ namespace TAO
     return et;
   }
 
-  //================================================================
-
   CORBA::TypeCode_ptr const
   BasicTypeTraits<CORBA::ShortSeq>::tc_value = CORBA::_tc_ShortSeq;
 
@@ -353,8 +307,6 @@ namespace TAO
   {
     return et;
   }
-
-  //================================================================
 
   CORBA::TypeCode_ptr const
   BasicTypeTraits<CORBA::UShortSeq>::tc_value = CORBA::_tc_UShortSeq;
@@ -368,8 +320,6 @@ namespace TAO
     return et;
   }
 
-  //================================================================
-
   CORBA::TypeCode_ptr const
   BasicTypeTraits<CORBA::LongSeq>::tc_value = CORBA::_tc_LongSeq;
 
@@ -381,8 +331,6 @@ namespace TAO
   {
     return et;
   }
-
-  //================================================================
 
   CORBA::TypeCode_ptr const
   BasicTypeTraits<CORBA::ULongSeq>::tc_value = CORBA::_tc_ULongSeq;
@@ -396,8 +344,6 @@ namespace TAO
     return et;
   }
 
-  //================================================================
-
   CORBA::TypeCode_ptr const
   BasicTypeTraits<CORBA::LongLongSeq>::tc_value = CORBA::_tc_LongLongSeq;
 
@@ -409,8 +355,6 @@ namespace TAO
   {
     return et;
   }
-
-  //================================================================
 
   CORBA::TypeCode_ptr const
   BasicTypeTraits<CORBA::ULongLongSeq>::tc_value = CORBA::_tc_ULongLongSeq;
@@ -424,8 +368,6 @@ namespace TAO
     return et;
   }
 
-  //================================================================
-
   CORBA::TypeCode_ptr const
   BasicTypeTraits<CORBA::FloatSeq>::tc_value = CORBA::_tc_FloatSeq;
 
@@ -437,8 +379,6 @@ namespace TAO
   {
     return et;
   }
-
-  //================================================================
 
   CORBA::TypeCode_ptr const
   BasicTypeTraits<CORBA::DoubleSeq>::tc_value = CORBA::_tc_DoubleSeq;
@@ -452,8 +392,6 @@ namespace TAO
     return et;
   }
 
-  //================================================================
-
   CORBA::TypeCode_ptr const
   BasicTypeTraits<CORBA::LongDoubleSeq>::tc_value = CORBA::_tc_LongDoubleSeq;
 
@@ -465,8 +403,6 @@ namespace TAO
   {
     return et;
   }
-
-  //================================================================
 
   CORBA::TypeCode_ptr const
   BasicTypeTraits<CORBA::AnySeq>::tc_value = CORBA::_tc_AnySeq;

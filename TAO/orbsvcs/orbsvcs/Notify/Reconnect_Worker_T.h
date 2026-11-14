@@ -29,11 +29,10 @@ namespace TAO_Notify
   class Reconnect_Worker : public TAO_ESF_Worker<TOPOOBJ>
   {
   public:
-    /// Constructor
     Reconnect_Worker();
 
     /// Override virtual ESF_Worker method
-    virtual void work (TOPOOBJ* o);
+    void work (TOPOOBJ* o) override;
   };
 } // namespace TAO_Notify
 

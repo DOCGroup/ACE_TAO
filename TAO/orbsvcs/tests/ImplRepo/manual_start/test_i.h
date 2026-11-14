@@ -12,13 +12,11 @@
 class  Test_i : public virtual POA_Test
 {
 public:
-  //Constructor
   Test_i ();
 
-  //Destructor
   virtual ~Test_i ();
 
-  virtual void contact ();
+  void contact () override;
 
 private:
 };

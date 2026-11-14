@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_POLICY_MANAGER_H
 #define TAO_POLICY_MANAGER_H
 
@@ -36,8 +35,7 @@ class TAO_Policy_Manager
   , public ::CORBA::LocalObject
 {
 public:
-  /// constructor
-  TAO_Policy_Manager ();
+  TAO_Policy_Manager () = default;
 
   /// Obtain a single policy.
   CORBA::Policy_ptr get_policy (CORBA::PolicyType policy);
@@ -45,26 +43,24 @@ public:
   /// Obtain a single cached policy.
   CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type);
 
-  // = The CORBA::PolicyManager operations
+  CORBA::PolicyList *get_policy_overrides (
+        CORBA::PolicyTypeSeq const &ts) override;
 
-  virtual CORBA::PolicyList * get_policy_overrides (
-        const CORBA::PolicyTypeSeq & ts);
-
-  virtual void set_policy_overrides (const CORBA::PolicyList & policies,
-                                     CORBA::SetOverrideType set_add);
+  void set_policy_overrides (CORBA::PolicyList const &policies,
+                             CORBA::SetOverrideType set_add) override;
 
 private:
   TAO_Policy_Manager (TAO_Policy_Manager const &) = delete;
-  TAO_Policy_Manager & operator= (TAO_Policy_Manager const &) = delete;
+  TAO_Policy_Manager &operator= (TAO_Policy_Manager const &) = delete;
   TAO_Policy_Manager (TAO_Policy_Manager &&) = delete;
-  TAO_Policy_Manager & operator= (TAO_Policy_Manager &&) = delete;
+  TAO_Policy_Manager &operator= (TAO_Policy_Manager &&) = delete;
 
 private:
   /// Protect access
   TAO_SYNCH_MUTEX mutex_;
 
   /// The implementation.
-  TAO_Policy_Set impl_;
+  TAO_Policy_Set impl_ {TAO_POLICY_ORB_SCOPE};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

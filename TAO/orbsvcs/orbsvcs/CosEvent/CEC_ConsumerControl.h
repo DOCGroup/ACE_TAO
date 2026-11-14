@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_CEC_CONSUMERCONTROL_H
 #define TAO_CEC_CONSUMERCONTROL_H
 
@@ -47,10 +46,13 @@ namespace CORBA
 class TAO_Event_Serv_Export TAO_CEC_ConsumerControl
 {
 public:
-  /// Constructor
   TAO_CEC_ConsumerControl () = default;
 
-  /// Destructor
+  TAO_CEC_ConsumerControl (TAO_CEC_ConsumerControl const &) = delete;
+  TAO_CEC_ConsumerControl (TAO_CEC_ConsumerControl &&) = delete;
+  TAO_CEC_ConsumerControl &operator= (TAO_CEC_ConsumerControl const &) = delete;
+  TAO_CEC_ConsumerControl &operator= (TAO_CEC_ConsumerControl &&) = delete;
+
   virtual ~TAO_CEC_ConsumerControl () = default;
 
   /// Activate any internal threads or timers used to poll the state of
@@ -81,10 +83,10 @@ public:
   /// proxy is PortableServer::ServantBase* due to the fact that this
   /// method will be used for TAO_CEC_ProxyPushSupplier's and
   /// TAO_CEC_ProxyPullSupplier's.
-  virtual bool need_to_disconnect (PortableServer::ServantBase* proxy);
+  virtual bool need_to_disconnect (PortableServer::ServantBase *proxy);
 
   /// Allow others to inform us when a send or receive was successful.
-  virtual void successful_transmission (PortableServer::ServantBase* proxy);
+  virtual void successful_transmission (PortableServer::ServantBase *proxy);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

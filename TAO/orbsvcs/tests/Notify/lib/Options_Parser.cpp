@@ -14,7 +14,7 @@ TAO_Notify_Tests_Options_Parser::~TAO_Notify_Tests_Options_Parser ()
 void
 TAO_Notify_Tests_Options_Parser::execute (CosNotification::EventTypeSeq& added, CosNotification::EventTypeSeq& removed, ACE_Arg_Shifter& arg_shifter)
 {
-  const ACE_TCHAR* current_arg = 0;
+  const ACE_TCHAR* current_arg {};
 
   while (arg_shifter.is_anything_left ())
     {
@@ -45,7 +45,7 @@ TAO_Notify_Tests_Options_Parser::execute (CosNotification::EventTypeSeq& added, 
 void
 TAO_Notify_Tests_Options_Parser::execute (CosNotification::QoSProperties& qos, ACE_Arg_Shifter& arg_shifter)
 {
-  const ACE_TCHAR *current_arg = 0;
+  const ACE_TCHAR *current_arg {};
   NotifyExt::Priority default_priority = NotifyExt::minPriority;
 
   if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-ThreadPool")) == 0) // -ThreadPool [-Threads static_threads] [-Priority default_priority]
@@ -139,7 +139,7 @@ TAO_Notify_Tests_Options_Parser::execute (CosNotification::QoSProperties& qos, A
               if (TAO_debug_level > 0)
                 ACE_DEBUG ((LM_DEBUG, "QoS Parser parsed lane: - %d, %d, %d\n",
                             tpl_params.lanes[l_index].lane_priority, tpl_params.lanes[l_index].static_threads, tpl_params.lanes[l_index].dynamic_threads));
-              l_index++;
+              ++l_index;
             }
           else
             break;

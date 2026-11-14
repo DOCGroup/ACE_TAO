@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   COIOP_Transport.h
  *
  *  @author  Johnny Willemsen <jwillemsen@remedy.nl>
  */
-//=============================================================================
 
 #ifndef TAO_COIOP_TRANSPORT_H
 #define TAO_COIOP_TRANSPORT_H
@@ -46,12 +44,10 @@ using TAO_COIOP_SVC_HANDLER = ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 class TAO_Strategies_Export TAO_COIOP_Transport : public TAO_Transport
 {
 public:
-  /// Constructor.
   TAO_COIOP_Transport (TAO_COIOP_Connection_Handler *handler,
                        TAO_ORB_Core *orb_core);
 
-  /// Default destructor.
-  ~TAO_COIOP_Transport () = default;
+  ~TAO_COIOP_Transport () override = default;
 
   /// Look for the documentation in Transport.h.
   int handle_input (TAO_Resume_Handle &rh,

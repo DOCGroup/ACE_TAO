@@ -64,12 +64,12 @@ namespace XMLSchema
     {
     }
 
-    string (Base__ const &x)
+    explicit string (Base__ const &x)
       : Base__ (x)
     {
     }
 
-    string (C const *x)
+    explicit string (C const *x)
       : Base__ (x)
     {
     }
@@ -100,12 +100,12 @@ namespace XMLSchema
     {
     }
 
-    normalizedString (Base__ const &x)
+    explicit normalizedString (Base__ const &x)
       : string<C> (x)
     {
     }
 
-    normalizedString (C const *x)
+    explicit normalizedString (C const *x)
       : string<C> (x)
     {
     }
@@ -136,12 +136,12 @@ namespace XMLSchema
     {
     }
 
-    token (Base__ const &x)
+    explicit token (Base__ const &x)
       : normalizedString<C> (x)
     {
     }
 
-    token (C const *x)
+    explicit token (C const *x)
       : normalizedString<C> (x)
     {
     }
@@ -172,12 +172,12 @@ namespace XMLSchema
     {
     }
 
-    NMTOKEN (Base__ const &x)
+    explicit NMTOKEN (Base__ const &x)
       : token<C> (x)
     {
     }
 
-    NMTOKEN (C const *x)
+    explicit NMTOKEN (C const *x)
       : token<C> (x)
     {
     }
@@ -208,12 +208,12 @@ namespace XMLSchema
     {
     }
 
-    Name (Base__ const &x)
+    explicit Name (Base__ const &x)
       : token<C> (x)
     {
     }
 
-    Name (C const *x)
+    explicit Name (C const *x)
       : token<C> (x)
     {
     }
@@ -244,12 +244,12 @@ namespace XMLSchema
     {
     }
 
-    NCName (Base__ const &x)
+    explicit NCName (Base__ const &x)
       : Name<C> (x)
     {
     }
 
-    NCName (C const *x)
+    explicit NCName (C const *x)
       : Name<C> (x)
     {
     }
@@ -280,12 +280,12 @@ namespace XMLSchema
     {
     }
 
-    QName (Base__ const &x)
+    explicit QName (Base__ const &x)
       : Name<C> (x)
     {
     }
 
-    QName (C const *x)
+    explicit QName (C const *x)
       : Name<C> (x)
     {
     }
@@ -305,14 +305,13 @@ namespace XMLSchema
     {
     }
 
-    ~IdentityProvider () override = default;
-
     bool before (XSCRT::IdentityProvider const &y) const override
     {
       return id_ < dynamic_cast<IdentityProvider const &> (y).id_;
     }
 
   private:
+    // IdentityProvider compares through this borrowed string reference.
     NCName<C> const &id_;
 
   private:
@@ -358,13 +357,13 @@ namespace XMLSchema
     {
     }
 
-    ID (Base__ const &x)
+    explicit ID (Base__ const &x)
       : NCName<C> (x)
       , id_provider_ (*this)
     {
     }
 
-    ID (C const *x)
+    explicit ID (C const *x)
       : NCName<C> (x)
       , id_provider_ (*this)
     {
@@ -382,6 +381,9 @@ namespace XMLSchema
         assign_id_ (static_cast<Base__ const &> (x));
       return *this;
     }
+
+    ID (ID &&) = delete;
+    ID &operator= (ID &&) = delete;
 
   public:
     using NCName<C>::container;
@@ -431,9 +433,6 @@ namespace XMLSchema
     {
       if (NCName<C>::container () != this && !empty ())
       {
-        // std::wcerr << "registering " << container ()
-        //            << " as '" << *this
-        //            << "' on " << container () << std::endl;
         NCName<C>::container ()->register_id (id_provider_, NCName<C>::container ());
         registered_ = true;
       }
@@ -443,15 +442,13 @@ namespace XMLSchema
     {
       if (registered_)
       {
-        // std::wcerr << "un-registering " << container ()
-        //            << " as '" << *this
-        //            << "' on " << container () << std::endl;
         NCName<C>::container ()->unregister_id (id_provider_);
         registered_ = false;
       }
     }
 
   private:
+    // This provider refers to the ID object's own string and cannot be moved.
     IdentityProvider<C> id_provider_;
     bool registered_{};
   };
@@ -462,6 +459,7 @@ namespace XMLSchema
 
   struct IDREF_Base : public XSCRT::Type
   {
+    // Both accessors return a target borrowed from the parsed object graph.
     virtual XSCRT::Type const *get () const = 0;
 
     virtual XSCRT::Type *get () = 0;
@@ -496,13 +494,13 @@ namespace XMLSchema
     {
     }
 
-    IDREF (std::basic_string<C> const &id)
+    explicit IDREF (std::basic_string<C> const &id)
       : id_ (id)
       , id_provider_ (id_)
     {
     }
 
-    IDREF (C const *id)
+    explicit IDREF (C const *id)
       : id_ (id)
       , id_provider_ (id_)
     {
@@ -520,6 +518,9 @@ namespace XMLSchema
       return *this;
     }
 
+    IDREF (IDREF &&) = delete;
+    IDREF &operator= (IDREF &&) = delete;
+
     bool operator== (IDREF const &x) const
     {
       return id_.compare (x.id_) == 0;
@@ -531,7 +532,7 @@ namespace XMLSchema
     }
 
   public:
-    NCName<C> id () const
+    NCName<C> const &id () const
     {
       return id_;
     }
@@ -588,6 +589,7 @@ namespace XMLSchema
 
   private:
     NCName<C> id_;
+    // This provider refers to id_ and cannot be moved independently.
     IdentityProvider<C> id_provider_;
   };
 
@@ -615,12 +617,12 @@ namespace XMLSchema
     {
     }
 
-    anyURI (Base__ const &x)
+    explicit anyURI (Base__ const &x)
       : Base__ (x)
     {
     }
 
-    anyURI (C const *x)
+    explicit anyURI (C const *x)
       : Base__ (x)
     {
     }

@@ -4,10 +4,10 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 
-const ACE_TCHAR *ior_output_file = 0;
+#include <memory>
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior_output_file)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
   int c;
@@ -20,9 +20,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         break;
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Usage: %s "
-                           "-o <iorfile>"
-                           "\n",
+                           ACE_TEXT ("Usage: %s -o <iorfile>\n"),
                            argv[0]),
                           -1);
       }
@@ -32,16 +30,18 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
+      ACE_TCHAR const *ior_output_file {};
+
       /// Initialize the ORB.
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv,
                                             "gateway_server_orb");
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, ior_output_file) != 0)
         return -1;
 
       /// Resolve reference to RootPOA
@@ -76,7 +76,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       policies [1] =
         root_poa->create_request_processing_policy (PortableServer::USE_DEFAULT_SERVANT);
 
-
       policies [2] =
         root_poa->create_id_uniqueness_policy (PortableServer::MULTIPLE_ID);
 
@@ -85,9 +84,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                               poa_manager.in (),
                               policies);
 
-      for (CORBA::ULong i = 0; i != policies.length (); ++i) {
-        policies[i]->destroy ();
-      }
+      for (CORBA::ULong i {}; i != policies.length (); ++i)
+        {
+          policies[i]->destroy ();
+        }
 
       // Get the POA Current object reference
       obj =
@@ -131,22 +131,22 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         orb->object_to_string (gateway_object_factory.in ());
 
       /// If the ior_output_file exists, output the IOR to it.
-      if (ior_output_file != 0)
+      if (ior_output_file != nullptr)
         {
-          FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
-          if (output_file == 0)
+          std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+            ACE_OS::fopen (ior_output_file, ACE_TEXT ("w")),
+            ACE_OS::fclose);
+          if (!output_file)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "Cannot open output file for writing "
-                               "IOR: %s",
+                               ACE_TEXT ("Cannot open output file for writing IOR: %s"),
                                ior_output_file),
                               1);
-          ACE_OS::fprintf (output_file, "%s", ior.in ());
-          ACE_OS::fclose (output_file);
+          ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
         }
 
       orb->run ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("ORT test (gateway_server):");
 

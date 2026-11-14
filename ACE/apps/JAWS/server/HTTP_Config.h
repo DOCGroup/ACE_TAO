@@ -8,8 +8,6 @@
  */
 //=============================================================================
 
-
-// = Forward declaration.
 class HTTP_Config_Info;
 
 /**
@@ -26,10 +24,6 @@ class HTTP_Config
 public:
   /// Access the Singleton.
   static HTTP_Config_Info *instance ();
-
-private:
-  /// Store the Singleton.
-  static HTTP_Config_Info *instance_;
 };
 
 /**
@@ -42,53 +36,45 @@ class HTTP_Config_Info
 friend class HTTP_Config;
 public:
   HTTP_Config_Info ();
-  ~HTTP_Config_Info ();
+  HTTP_Config_Info (HTTP_Config_Info const &) = delete;
+  HTTP_Config_Info (HTTP_Config_Info &&) = delete;
+  HTTP_Config_Info &operator= (HTTP_Config_Info const &) = delete;
+  HTTP_Config_Info &operator= (HTTP_Config_Info &&) = delete;
+  ~HTTP_Config_Info () = default;
 
   // Accessors to the information
 
   /// Where the root of the document tree begins.  This prevents
   /// clients from being able to examine your entire filesystem.
-  const char *document_root () const;
+  char const *document_root () const;
 
   /// A search path for CGI files.
-  const char *cgi_path () const;
+  char const *cgi_path () const;
 
   /// The directory which is appended to a home user directory, e.g.,
   /// ".www-docs" or "public_html".
-  const char *user_dir () const;
+  char const *user_dir () const;
 
   /// What is the default index file for a directory, e.g.,
   /// "index.html".
-  const char *dir_index () const;
+  char const *dir_index () const;
 
   /// Will the server support proxy requests?
   int proxy_flag () const;
 
 private:
-  // = Accesors that can set the data
-
-  const char *document_root (const char *dr_string);
-  const char *cgi_path (const char *cp_string);
-  const char *user_dir (const char *ud_string);
-  const char *dir_index (const char *di_string);
-
-  int proxy_flag (int pf);
-
-private:
-  // = Data members
-
   /// The directory root from which documents will be fetched
-  const char *document_root_;
+  const char *document_root_ {};
 
   /// The directories from which to expect CGI scripts
-  const char *cgi_path_;
+  const char *cgi_path_ {};
 
   /// Name of the sub-directory where user Web pages are
-  const char *user_dir_;
+  const char *user_dir_ {};
 
   /// Name of the Web page to present in place of a directory listing
-  const char *dir_index_;
+  const char *dir_index_ {};
 
   /// Should we support proxy requests?  Ignored for now.
-  int proxy_flag_;
+  int proxy_flag_ {};
 };

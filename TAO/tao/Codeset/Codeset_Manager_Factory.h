@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-
 //=============================================================================
 /**
  *  @file    Codeset_Manager_Factory.h
@@ -8,7 +7,6 @@
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
 //=============================================================================
-
 
 #ifndef TAO_CODESET_MANAGER_FACTORY_H
 #define TAO_CODESET_MANAGER_FACTORY_H
@@ -23,7 +21,6 @@
 
 #include "ace/Service_Config.h"
 #include "tao/Codeset_Manager_Factory_Base.h"
-
 
 // ****************************************************************
 
@@ -41,23 +38,20 @@ class TAO_Codeset_Export TAO_Codeset_Manager_Factory :
 public:
   TAO_Codeset_Manager_Factory () = default;
 
-  ~TAO_Codeset_Manager_Factory () override;
+  ~TAO_Codeset_Manager_Factory () override = default;
   TAO_Codeset_Manager *create () override;
   bool is_default () const override;
 
- private:
   TAO_Codeset_Manager_Factory (TAO_Codeset_Manager_Factory const &) = delete;
   TAO_Codeset_Manager_Factory &operator= (TAO_Codeset_Manager_Factory const &) = delete;
   TAO_Codeset_Manager_Factory (TAO_Codeset_Manager_Factory &&) = delete;
   TAO_Codeset_Manager_Factory &operator= (TAO_Codeset_Manager_Factory &&) = delete;
 };
 
-
 ACE_STATIC_SVC_DECLARE (TAO_Codeset_Manager_Factory)
 ACE_FACTORY_DECLARE (TAO_Codeset, TAO_Codeset_Manager_Factory)
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 #include /**/ "ace/post.h"
 

@@ -37,7 +37,6 @@ public:
   /// Default constructor.
   ACE_Shared_Memory_MM ();
 
-  /// Constructor.
   ACE_Shared_Memory_MM (ACE_HANDLE handle,
                         size_t length = static_cast<size_t> (-1),
                         int prot = PROT_RDWR,
@@ -45,7 +44,6 @@ public:
                         char *addr = nullptr,
                         ACE_OFF_T pos = 0);
 
-  /// Constructor.
   ACE_Shared_Memory_MM (const ACE_TCHAR *file_name,
                         size_t length = static_cast<size_t> (-1),
                         int flags = O_RDWR | O_CREAT,

@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Get_Opt.h"
 #include <memory>
@@ -18,9 +17,9 @@
 #include "ace/SString.h"
 #include "ace/ACE.h"
 #include "ace/OS_NS_stdlib.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_wchar.h"
 
+#include <cstring>
 
 static int n = 4096;
 static int nloops = 100;
@@ -510,7 +509,7 @@ CDR_Test_Types::test_get (ACE_InputCDR &cdr) const
                            i),
                           1);
       std::unique_ptr<ACE_CDR::Char[]> auto_xstr (xstr);
-      if (ACE_OS::strcmp (auto_xstr.get (), this->str) != 0)
+      if (std::strcmp (auto_xstr.get (), this->str) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("string[%d] differs\n"),
                            i),
@@ -783,7 +782,6 @@ CDR_Test_Types::test_get_placeholder (ACE_InputCDR &cdr) const
                        ACE_TEXT ("test_get (char) failed\n")),
                       1);
 
-
   if (cdr.read_longlong (xll) == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("read_longlong failed\n")), 1);
@@ -940,7 +938,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       switch (opt)
         {
           case 'd':
-            debug++;
+            ++debug;
             break;
           case 'n':
             n = ACE_OS::atoi (get_opt.opt_arg ());

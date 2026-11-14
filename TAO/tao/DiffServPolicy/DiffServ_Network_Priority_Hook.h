@@ -1,14 +1,10 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    DiffServ_Network_Priority_Hook.h
  *
  *  @author  Jaiganesh Balasubramanian <jai@dre.vanderbilt.edu>
  *           Johnny Willemsen <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
 #ifndef TAO_DIFFSERV_NETWORK_PRIORITY_HOOK_H
 #define TAO_DIFFSERV_NETWORK_PRIORITY_HOOK_H
 
@@ -31,7 +27,7 @@ class TAO_DiffServPolicy_Export TAO_DiffServ_Network_Priority_Hook
 public:
   TAO_DiffServ_Network_Priority_Hook () = default;
 
-  ~TAO_DiffServ_Network_Priority_Hook() override = default;
+  ~TAO_DiffServ_Network_Priority_Hook () override = default;
 
   /// This function is a hook, that is called from the Root_POA's
   /// constructor. It allows the POA to cache the server side network
@@ -47,7 +43,6 @@ public:
   void set_dscp_codepoint (TAO_ServerRequest &req,
                            TAO_Root_POA &poa) override;
 
-private:
   TAO_DiffServ_Network_Priority_Hook (TAO_DiffServ_Network_Priority_Hook const &) = delete;
   TAO_DiffServ_Network_Priority_Hook &operator= (
     TAO_DiffServ_Network_Priority_Hook const &) = delete;
@@ -55,13 +50,11 @@ private:
   TAO_DiffServ_Network_Priority_Hook &operator= (TAO_DiffServ_Network_Priority_Hook &&) = delete;
 };
 
-
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_DiffServPolicy,
                                TAO_DiffServ_Network_Priority_Hook)
 ACE_FACTORY_DECLARE (TAO_DiffServPolicy, TAO_DiffServ_Network_Priority_Hook)
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 #include /**/ "ace/post.h"
 

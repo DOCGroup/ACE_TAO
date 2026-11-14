@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   COIOP_Connection_Handler.h
  *
  *  @author  Johnny Willemsen <jwillemsen@remedy.nl>
  */
-// ===================================================================
 
 #ifndef TAO_COIOP_CONNECTION_HANDLER_H
 #define TAO_COIOP_CONNECTION_HANDLER_H
@@ -30,8 +28,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// ****************************************************************
-
 /**
  * @class TAO_COIOP_Connection_Handler
  *
@@ -47,10 +43,8 @@ class TAO_Strategies_Export TAO_COIOP_Connection_Handler
 public:
   explicit TAO_COIOP_Connection_Handler (ACE_Thread_Manager *t = nullptr);
 
-  /// Constructor.
   explicit TAO_COIOP_Connection_Handler (TAO_ORB_Core *orb_core);
 
-  /// Destructor.
   ~TAO_COIOP_Connection_Handler ();
 
   /// Called by the <Strategy_Acceptor> when the handler is completely

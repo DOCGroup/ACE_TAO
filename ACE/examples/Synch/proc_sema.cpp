@@ -6,8 +6,8 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Synch_Traits.h"
 
-int producer (ACE_SYNCH_PROCESS_SEMAPHORE &sema,
-              int iter)
+void producer (ACE_SYNCH_PROCESS_SEMAPHORE &sema,
+               int const iter)
 {
   for (int i = iter; i > 0; --i)
     {
@@ -15,17 +15,16 @@ int producer (ACE_SYNCH_PROCESS_SEMAPHORE &sema,
                   "Try releasing the semaphore (%d): ",
                   i));
 
-      int result = sema.release ();
+      int const result = sema.release ();
 
       ACE_DEBUG ((LM_DEBUG,
                   "%s",
                   (result != 0 ? "fail\n" : "succeed\n")));
     }
-  return 0;
 }
 
-int consumer (ACE_SYNCH_PROCESS_SEMAPHORE &sema,
-              int iter)
+void consumer (ACE_SYNCH_PROCESS_SEMAPHORE &sema,
+               int const iter)
 {
   for (int i = iter; i > 0; --i)
     {
@@ -33,14 +32,22 @@ int consumer (ACE_SYNCH_PROCESS_SEMAPHORE &sema,
                   "Try acquiring the semaphore (%d): ",
                   i));
 
-      int result = sema.acquire ();
+      int const result = sema.acquire ();
 
       ACE_DEBUG ((LM_DEBUG,
                   "%s",
                   (result != 0 ? "fail\n" : "succeed\n")));
     }
-  return 0;
 }
+
+struct Process_Semaphore_Options
+{
+  bool is_consumer {true};
+  bool delete_semaphore {};
+  int iterations {};
+  int exit_delay {};
+  ACE_TCHAR const *semaphore_name {ACE_TEXT ("Process_Semaphore_Test")};
+};
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
@@ -48,13 +55,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("csn:xi:d:"));
   //FUZZ: enable check_for_lack_ACE_OS
 
-  int is_consumer = 1;          // By default, make us a consumer.
-  int delete_sema = 0;
-  int iteration = 0;
-  int exit_delay = 0;
-  const ACE_TCHAR *sema_name = ACE_TEXT ("Process_Semaphore_Test");
+  Process_Semaphore_Options options;
 
-  int opt;
+  int opt {};
 
   //FUZZ: disable check_for_lack_ACE_OS
   while ((opt = getopt ()) != -1)
@@ -63,38 +66,38 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       switch (opt)
         {
         case 'c':               // Make us a consumer.
-          is_consumer = 1;
+          options.is_consumer = true;
           break;
         case 's':               // Make us a supplier.
-          is_consumer = 0;
+          options.is_consumer = false;
           break;
         case 'x':               // Remove the semaphore after we're done.
-          delete_sema = 1;
+          options.delete_semaphore = true;
           break;
         case 'n':               // Specify the name of the semaphore.
-          sema_name = getopt.opt_arg ();
+          options.semaphore_name = getopt.opt_arg ();
           break;
         case 'i':               // Number of acquire/release we'll perform.
-          iteration = ACE_OS::atoi (getopt.opt_arg ());
+          options.iterations = ACE_OS::atoi (getopt.opt_arg ());
           break;
         case 'd':
-          exit_delay = ACE_OS::atoi (getopt.opt_arg ());
+          options.exit_delay = ACE_OS::atoi (getopt.opt_arg ());
           break;
         default:
           return -1;
         }
-    };
+    }
 
-  ACE_SYNCH_PROCESS_SEMAPHORE sema (0, sema_name);
+  ACE_SYNCH_PROCESS_SEMAPHORE sema (0, options.semaphore_name);
 
-  if (is_consumer != 0)
-    consumer (sema, iteration);
+  if (options.is_consumer)
+    consumer (sema, options.iterations);
   else
-    producer (sema, iteration);
+    producer (sema, options.iterations);
 
-  ACE_OS::sleep (exit_delay);
+  ACE_OS::sleep (options.exit_delay);
 
-  if (delete_sema != 0)
+  if (options.delete_semaphore)
     sema.remove ();
   return 0;
 }

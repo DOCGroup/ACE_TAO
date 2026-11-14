@@ -1,13 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Offer_Database.h
  *
  *  @author Seth Widoff <sbw1@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_OFFER_DATABASE_H
 #define TAO_OFFER_DATABASE_H
@@ -16,6 +13,8 @@
 #include "orbsvcs/Trader/Trader.h"
 #include "orbsvcs/Trader/Offer_Iterators.h"
 #include "ace/Null_Mutex.h"
+
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -50,32 +49,36 @@ class TAO_Offer_Database
 {
   friend class TAO_Service_Offer_Iterator<LOCK_TYPE>;
 public:
+  TAO_Offer_Database (TAO_Offer_Database const&) = delete;
+  TAO_Offer_Database& operator= (TAO_Offer_Database const&) = delete;
+  TAO_Offer_Database (TAO_Offer_Database&&) = delete;
+  TAO_Offer_Database& operator= (TAO_Offer_Database&&) = delete;
+
   // Traits
   using offer_iterator = TAO_Service_Offer_Iterator<LOCK_TYPE>;
 
-  /// No arg constructor.
   TAO_Offer_Database ();
 
   ~TAO_Offer_Database ();
 
-  /// Add an offer of type @ type and generate a CosTrading::OfferId
+  /// Take ownership of an offer of type @ type and generate a CosTrading::OfferId
   /// for it. Returns 0 on failure.
   CosTrading::OfferId insert_offer (const char* type,
                                     CosTrading::Offer* offer);
 
-  int remove_offer (const CosTrading::OfferId offer_id);
+  int remove_offer (char const* offer_id);
 
   /// Lookup an offer whose offer_id is @a offer_id, and return
   /// it. Otherwise, throw the appropriate exception.
-  CosTrading::Offer* lookup_offer (const CosTrading::OfferId offer_id);
+  CosTrading::Offer* lookup_offer (char const* offer_id);
 
   /**
    * Lookup an offer whose OfferId is @a offer_id and return in
    * @a type_name the type name of the object. Type name is just a
    * pointer to a location in offer_id, so DON'T DELETE IT.
    */
-  CosTrading::Offer* lookup_offer (const CosTrading::OfferId offer_id,
-                                   char*& type_name);
+  CosTrading::Offer* lookup_offer (char const* offer_id,
+                                   char const*& type_name);
 
   /// Return an iterator that will traverse and return all the offer
   /// ids in the service type map.
@@ -83,11 +86,18 @@ public:
 
   struct Offer_Map_Entry
   {
-    TAO_Offer_Map* offer_map_;
+    Offer_Map_Entry () = default;
+    Offer_Map_Entry (Offer_Map_Entry const&) = delete;
+    Offer_Map_Entry& operator= (Offer_Map_Entry const&) = delete;
+    Offer_Map_Entry (Offer_Map_Entry&&) = delete;
+    Offer_Map_Entry& operator= (Offer_Map_Entry&&) = delete;
+
+    std::unique_ptr<TAO_Offer_Map> offer_map_;
     CORBA::ULong counter_;
     LOCK_TYPE lock_;
   };
 
+  // The database explicitly manages the lifetime of each map entry.
   using Offer_Database = ACE_Hash_Map_Manager_Ex<CORBA::String_var,
                                                   Offer_Map_Entry*,
                                                   ACE_Hash<CORBA::String_var>,
@@ -95,10 +105,8 @@ public:
                                                   ACE_Null_Mutex>;
 
 private:
-  // The internal id is a pointer here, not only to avoid copying,
-  // since we would only copy on insertion, and we only insert once
-  // --- with an empty Offer_Map_Entry --- but also since most locks
-  // have unimplemented copy constructors.
+  // The map stores entries by pointer because entries contain lock types
+  // that are not copyable.
 
   /// Lookup an offer whose type is @ type and id, @a id. Return 0 on
   /// failure.
@@ -114,20 +122,14 @@ private:
 
   /// Take in a service type name for the offer the current value of
   /// of the counter and generate an offer id.
-  static CosTrading::OfferId generate_offer_id (const char *type_name,
+  static CosTrading::OfferId generate_offer_id (char const* type_name,
                                                 CORBA::ULong id);
 
   /// Take in a previously generated offer id and return the type
   /// and id that were used to generate the offer id.
-  static void parse_offer_id (const CosTrading::OfferId offer_id,
-                              char* &service_type,
+  static void parse_offer_id (char const* offer_id,
+                              char const*& service_type,
                               CORBA::ULong& id);
-
-  // = Disallow these operations.
-  TAO_Offer_Database (TAO_Offer_Database const&) = delete;
-  TAO_Offer_Database& operator= (TAO_Offer_Database const&) = delete;
-  TAO_Offer_Database (TAO_Offer_Database&&) = delete;
-  TAO_Offer_Database& operator= (TAO_Offer_Database&&) = delete;
 
   LOCK_TYPE db_lock_;
 
@@ -147,6 +149,11 @@ template <class LOCK_TYPE>
 class TAO_Service_Offer_Iterator
 {
 public:
+  TAO_Service_Offer_Iterator (TAO_Service_Offer_Iterator const&) = delete;
+  TAO_Service_Offer_Iterator& operator= (TAO_Service_Offer_Iterator const&) = delete;
+  TAO_Service_Offer_Iterator (TAO_Service_Offer_Iterator&&) = delete;
+  TAO_Service_Offer_Iterator& operator= (TAO_Service_Offer_Iterator&&) = delete;
+
   using Offer_Database = TAO_Offer_Database<LOCK_TYPE>;
 
   TAO_Service_Offer_Iterator (const char* type,
@@ -155,8 +162,8 @@ public:
   /// Release all the locks acquired.
   ~TAO_Service_Offer_Iterator ();
 
-  /// Returns 1 if there are more offers, 0 otherwise.
-  int has_more_offers ();
+  /// Returns true if there are more offers, otherwise returns false.
+  bool has_more_offers ();
 
   /// Get the id for the current offer.
   CosTrading::OfferId get_id ();
@@ -168,11 +175,6 @@ public:
   void next_offer ();
 
  private:
-  TAO_Service_Offer_Iterator (TAO_Service_Offer_Iterator const&) = delete;
-  TAO_Service_Offer_Iterator& operator= (TAO_Service_Offer_Iterator const&) = delete;
-  TAO_Service_Offer_Iterator (TAO_Service_Offer_Iterator&&) = delete;
-  TAO_Service_Offer_Iterator& operator= (TAO_Service_Offer_Iterator&&) = delete;
-
   /// Lock the top_level map.
   TAO_Offer_Database<LOCK_TYPE>& stm_;
 
@@ -180,7 +182,7 @@ public:
   LOCK_TYPE* lock_;
 
   /// Iterator over the actual offer map.
-  TAO_Offer_Map::iterator* offer_iter_;
+  std::unique_ptr<TAO_Offer_Map::iterator> offer_iter_;
 
   /// The name of the type. Used for constructing offer ids.
   const char* type_;

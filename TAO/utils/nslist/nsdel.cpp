@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "tao/AnyTypeCode/Any.h"
@@ -19,10 +18,11 @@
 #include "tao/PolicyC.h"
 #include "ace/Time_Value.h"
 #include "ace/Log_Msg.h"
-#include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_ctype.h"
 #include "ace/Argv_Type_Converter.h"
+
+#include <cstdlib>
 
 //============================================================================
 namespace
@@ -59,7 +59,7 @@ namespace
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int err = 0;
+  int err {};
   CosNaming::Name the_name (0);
   CORBA::ORB_var orb;
 
@@ -73,11 +73,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         failed = false,
         quiet = false,
         destroy = false;
-      const ACE_TCHAR *const pname = argv[0];
-      const ACE_TCHAR *nameService = 0;
+      ACE_TCHAR const *const pname = argv[0];
+      ACE_TCHAR const *nameService {};
       ACE_TCHAR kindsep = ACE_TEXT('.');
       ACE_TCHAR ctxsep[] = ACE_TEXT("/");
-      ACE_TCHAR *name = 0;
+      ACE_TCHAR *name {};
       ACE_Time_Value
         rtt = ACE_Time_Value::zero;
 
@@ -177,7 +177,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       failed = true;
                     }
                  else
-                  rtt.set(ACE_OS::atoi (ACE_TEXT_ALWAYS_CHAR (*argv)), 0);
+                  rtt.set (std::atoi (ACE_TEXT_ALWAYS_CHAR (*argv)), 0);
                 }
               else if (0 == ACE_OS::strcmp (*argv, ACE_TEXT ("--destroy")))
                 {
@@ -236,7 +236,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Assemble the name from the user string given
       ACE_TCHAR *cp;
-      while (0 != (cp = ACE_OS::strtok (name, ctxsep)))
+      while ((cp = ACE_OS::strtok (name, ctxsep)) != nullptr)
         {
           const int index= the_name.length();
           the_name.length (index+1);
@@ -247,7 +247,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               the_name[index].kind= CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(++kind));
             }
           the_name[index].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(cp));
-          name = 0; // way strtok works
+          name = nullptr; // way strtok works
         }
 
       // Attempt to locate the object and destroy/unbind it

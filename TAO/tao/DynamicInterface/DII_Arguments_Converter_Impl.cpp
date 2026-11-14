@@ -27,7 +27,7 @@ TAO_DII_Arguments_Converter_Impl::convert_request (
   // operation with single "IN" parameter and get access violation on
   // get_in_arg () from the oneway operation with multiple "IN"
   // parameters.
-  CORBA::NVList_ptr lst
+  CORBA::NVList_ptr const lst
     = static_cast<TAO::NVList_Argument *> (
         server_request.operation_details ()->args()[1])->arg ();
 
@@ -42,9 +42,9 @@ TAO_DII_Arguments_Converter_Impl::convert_request (
   // marshal the arguments in the NVList into an output cdr and then
   // demarshal them into the TAO::Argument array.
   TAO_OutputCDR output;
-  for (CORBA::ULong i = 0; i < sz; ++i)
+  for (CORBA::ULong i {}; i < sz; ++i)
     {
-      CORBA::NamedValue_ptr theitem = lst->item (i);
+      CORBA::NamedValue_ptr const theitem = lst->item (i);
 
       if (!(theitem->value ()->impl ()->marshal_value (output)))
         {
@@ -53,7 +53,7 @@ TAO_DII_Arguments_Converter_Impl::convert_request (
     }
 
   TAO_InputCDR input (output);
-  for (CORBA::ULong j = 0; j < sz; ++j)
+  for (CORBA::ULong j {}; j < sz; ++j)
     {
       if (!(args[j + 1]->demarshal (input)))
         {
@@ -77,7 +77,7 @@ TAO_DII_Arguments_Converter_Impl::dsi_convert_request (
 {
   // The DII requests on client side always have two arguments
   // - one is the return argument and the other is NVList_Argument.
-  CORBA::NVList_ptr lst
+  CORBA::NVList_ptr const lst
     = static_cast<TAO::NVList_Argument *> (
         server_request.operation_details ()->args()[1])->arg ();
 
@@ -94,7 +94,7 @@ TAO_DII_Arguments_Converter_Impl::convert_reply (
 {
   TAO_OutputCDR output;
   errno = 0;
-  for (CORBA::ULong j = 0; j < nargs; ++j)
+  for (CORBA::ULong j {}; j < nargs; ++j)
     {
       if (!(args[j]->marshal (output)))
         {
@@ -110,13 +110,13 @@ TAO_DII_Arguments_Converter_Impl::dsi_convert_reply (
     TAO_ServerRequest & server_request,
     TAO_InputCDR & input)
 {
-  TAO::NamedValue_Argument * _ret_val
+  TAO::NamedValue_Argument * const _ret_val
     = static_cast<TAO::NamedValue_Argument *> (
         server_request.operation_details ()->args()[0]);
 
   _ret_val->demarshal (input);
 
-  CORBA::NVList_ptr lst
+  CORBA::NVList_ptr const lst
     = static_cast<TAO::NVList_Argument *> (
         server_request.operation_details ()->args()[1])->arg ();
 
@@ -132,8 +132,6 @@ TAO_DII_Arguments_Converter_Impl::handle_corba_exception (
   exception->_raise ();
 }
 
-// *********************************************************************
-
 // Initialization and registration of dynamic service object.
 
 int
@@ -142,7 +140,6 @@ TAO_DII_Arguments_Converter_Impl::Initializer ()
   return ACE_Service_Config::process_directive (
     ace_svc_desc_TAO_DII_Arguments_Converter_Impl);
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

@@ -1,7 +1,6 @@
 #include "Hello.h"
 
-
-Hello::Hello (CORBA::ORB_ptr orb, Test::Hello_ptr, CORBA::ULong)
+Hello::Hello (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
@@ -9,7 +8,7 @@ Hello::Hello (CORBA::ORB_ptr orb, Test::Hello_ptr, CORBA::ULong)
 void
 Hello::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 void

@@ -4,6 +4,7 @@
 
 #include "ace/os_include/os_stddef.h"
 #include "ace/os_include/os_limits.h"
+#include <string>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -21,63 +22,65 @@ public:
   // Parse the arguments.
 
   // = Accessor methods.
-  const char *program_name ();
-  const char *slave_name ();
-  int debug ();
-  int exec_slave ();
-  size_t iteration_count ();
-  int use_sbrk ();
-  int use_shmem ();
-  size_t max_msg_size ();
-  size_t spawn_count ();
-  int spawn_threads ();
-  int use_mmap ();
-  int child ();
+  std::string const &program_name () const;
+  std::string const &slave_name () const;
+  bool debug () const;
+  bool exec_slave () const;
+  size_t iteration_count () const;
+  bool use_sbrk () const;
+  bool use_shmem () const;
+  size_t max_msg_size () const;
+  size_t spawn_count () const;
+  bool spawn_threads () const;
+  bool use_mmap () const;
+  bool child () const;
 
 private:
-  Options ();
+  Options () = default;
   // Ensure Singleton.
 
-  static Options *instance_;
-  // Singleton.
+  Options (Options const &) = delete;
+  Options (Options &&) = delete;
+  Options &operator= (Options const &) = delete;
+  Options &operator= (Options &&) = delete;
 
   void print_usage_and_die ();
   // Explain usage and exit.
 
-  char program_name_[MAXPATHLEN];
+  std::string program_name_ {};
   // Name of the program.
 
-  char slave_name_[MAXPATHLEN];
+  std::string slave_name_ { "slave" };
   // Name of slave process.
 
-  int debug_;
+  bool debug_ {};
   // Flag to indicate if we are debugging.
 
-  int exec_slave_;
+  bool exec_slave_ {};
   // Flag to indicate if we should exec after forking.
 
-  size_t iteration_count_;
+  size_t iteration_count_ { 100 };
   // Number of iterations to call malloc_recurse().
 
-  int use_sbrk_;
+  bool use_sbrk_ {};
   // Should we use sbrk(2)?
 
-  int use_shmem_;
+  bool use_shmem_ {};
   // Should we use Shared Memory?
 
-  size_t max_msg_size_;
+  size_t max_msg_size_ { 127 };
   // Maximum number of bytes to malloc.
 
-  size_t spawn_count_;
+  size_t spawn_count_ { 1 };
   // Number of threads.
 
-  int spawn_threads_;
+  bool spawn_threads_ { true };
   // Spawn threads vs. processes.
 
-  int use_mmap_;
+  bool use_mmap_ {};
   // Use mmap() as the backing store.
 
-  int child_;
+  bool child_ {};
   // We're a child process.
 };
 

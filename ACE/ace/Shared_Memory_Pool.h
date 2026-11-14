@@ -88,6 +88,10 @@ public:
                           const OPTIONS *options = nullptr);
 
   ~ACE_Shared_Memory_Pool () override = default;
+  ACE_Shared_Memory_Pool (ACE_Shared_Memory_Pool const &) = delete;
+  ACE_Shared_Memory_Pool &operator= (ACE_Shared_Memory_Pool const &) = delete;
+  ACE_Shared_Memory_Pool (ACE_Shared_Memory_Pool &&) = delete;
+  ACE_Shared_Memory_Pool &operator= (ACE_Shared_Memory_Pool &&) = delete;
 
   /// Ask system for initial chunk of local memory.
   virtual void *init_acquire (size_t nbytes,

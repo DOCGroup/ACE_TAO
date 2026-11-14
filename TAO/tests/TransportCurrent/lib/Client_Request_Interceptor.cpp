@@ -5,9 +5,11 @@
 #include "Client_Request_Interceptor.h"
 #include "Client_ORBInitializer.h"
 
+#include <cstring>
+
 namespace Test
 {
-  Client_Request_Interceptor::Client_Request_Interceptor (const char *orb_id,
+  Client_Request_Interceptor::Client_Request_Interceptor (char const *orb_id,
                                                           TEST test)
     : orb_id_ (CORBA::string_dup (orb_id))
     , request_count_ (0)
@@ -29,7 +31,7 @@ namespace Test
   }
 
   void
-  Client_Request_Interceptor::test_transport_current (const ACE_TCHAR* amethod)
+  Client_Request_Interceptor::test_transport_current (ACE_TCHAR const *amethod)
   {
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("CRI    (%P|%t) Test accessing Transport Current from %s\n"),
@@ -38,7 +40,7 @@ namespace Test
     ++this->request_count_;
 
     int tmp = 0;
-    ACE_TCHAR **argv = 0;
+    ACE_TCHAR **argv {};
     CORBA::ORB_var orb = CORBA::ORB_init (tmp,
                                           argv,
                                           orb_id_.in ());
@@ -85,9 +87,9 @@ namespace Test
       ++this->requestID_;
     }
 
-    CORBA::ULong string_len = ACE_OS::strlen (temp) + 1;
+    CORBA::ULong const string_len = std::strlen (temp) + 1;
     CORBA::Octet *buf = CORBA::OctetSeq::allocbuf (string_len);
-    ACE_OS::strcpy (reinterpret_cast <char *> (buf), temp);
+    std::memcpy (reinterpret_cast<char *> (buf), temp, string_len);
 
     sc.context_data.replace (string_len, string_len, buf, 1);
 

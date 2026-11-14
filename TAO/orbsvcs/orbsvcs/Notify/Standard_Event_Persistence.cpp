@@ -6,20 +6,18 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/Truncate.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
 Standard_Event_Persistence::Standard_Event_Persistence ()
   : filename_ (ACE_TEXT ("__PERSISTENT_EVENT__.DB"))
-  , block_size_ (512)
-  , factory_ (nullptr)
 {
 }
 
-Standard_Event_Persistence::~Standard_Event_Persistence ()
-{
-}
+Standard_Event_Persistence::~Standard_Event_Persistence () = default;
 
 // get the current factory, creating it if necessary
 Event_Persistence_Factory *
@@ -27,36 +25,31 @@ Standard_Event_Persistence::get_factory ()
 {
   //@@todo guard? ; doublecheck?
   if (this->factory_ == nullptr)
-  {
-    ACE_NEW_NORETURN (
-      this->factory_,
-      Standard_Event_Persistence_Factory ());
-
-    if (this->factory_ != nullptr)
     {
-      if (!this->factory_->open (this->filename_.c_str ()))
-      {
-        this->factory_ = nullptr;
-      }
+      Standard_Event_Persistence_Factory *factory {};
+      ACE_NEW_NORETURN (factory,
+                        Standard_Event_Persistence_Factory ());
+
+      std::unique_ptr<Standard_Event_Persistence_Factory> new_factory (factory);
+      if (new_factory != nullptr && new_factory->open (this->filename_.c_str ()))
+        this->factory_.reset (new_factory.release ());
     }
-  }
-  return this->factory_;
+  return this->factory_.get ();
 }
 
 // release the current factory so a new one can be created
 void
 Standard_Event_Persistence::reset ()
 {
-  delete this->factory_;
-  this->factory_ = nullptr;
+  this->factory_.reset ();
 }
 
 int
 Standard_Event_Persistence::init (int argc, ACE_TCHAR *argv[])
 {
-  int result = 0;
-  bool verbose = false;
-  for (int narg = 0; narg < argc; ++narg)
+  int result {};
+  bool verbose {};
+  for (int narg {}; narg < argc; ++narg)
   {
     ACE_TCHAR * av = argv[narg];
     if (ACE_OS::strcasecmp (av, ACE_TEXT ("-v")) == 0)
@@ -84,7 +77,7 @@ Standard_Event_Persistence::init (int argc, ACE_TCHAR *argv[])
       if (TAO_debug_level > 0 || verbose)
       {
         ORBSVCS_DEBUG ((LM_DEBUG,
-          ACE_TEXT ("(%P|%t) Standard_Event_Persistence: Setting -block_size: %d\n"),
+          ACE_TEXT ("(%P|%t) Standard_Event_Persistence: Setting -block_size: %u\n"),
           this->block_size_
         ));
       }
@@ -105,17 +98,12 @@ Standard_Event_Persistence::init (int argc, ACE_TCHAR *argv[])
 int
 Standard_Event_Persistence::fini ()
 {
-  delete this->factory_;
-  this->factory_ = nullptr;
+  this->factory_.reset ();
   return 0;
 }
 
 Standard_Event_Persistence_Factory::Standard_Event_Persistence_Factory ()
-  : allocator_()
-  , root_(this)
-  , psb_(nullptr)
-  , serial_number_(ROUTING_SLIP_ROOT_SERIAL_NUMBER + 1)
-  , is_reloading_ (false)
+  : root_(this)
 {
 }
 
@@ -123,7 +111,7 @@ bool
 Standard_Event_Persistence_Factory::open (const ACE_TCHAR* filename,
                                           ACE_UINT32 block_size)
 {
-  bool result = false;
+  bool result {};
   if (allocator_.open (filename, block_size))
   {
     this->is_reloading_ = this->root_.load(ROUTING_SLIP_ROOT_BLOCK_NUMBER, ROUTING_SLIP_ROOT_SERIAL_NUMBER);
@@ -156,7 +144,7 @@ Routing_Slip_Persistence_Manager*
 Standard_Event_Persistence_Factory::create_routing_slip_persistence_manager(
   Persistent_Callback* callback)
 {
-  Routing_Slip_Persistence_Manager* rspm = nullptr;
+  Routing_Slip_Persistence_Manager* rspm {};
   ACE_NEW_RETURN(rspm, Routing_Slip_Persistence_Manager(this), rspm);
   rspm->set_callback(callback);
   return rspm;
@@ -165,7 +153,7 @@ Standard_Event_Persistence_Factory::create_routing_slip_persistence_manager(
 Routing_Slip_Persistence_Manager *
 Standard_Event_Persistence_Factory::first_reload_manager()
 {
-  Routing_Slip_Persistence_Manager * result = nullptr;
+  Routing_Slip_Persistence_Manager * result {};
   if (this->is_reloading_)
   {
     result = this->root_.load_next();
@@ -215,7 +203,7 @@ Standard_Event_Persistence_Factory::get_preallocated_pointer(
 Persistent_File_Allocator*
 Standard_Event_Persistence_Factory::allocator()
 {
-  return &this->allocator_;
+  return std::addressof (this->allocator_);
 }
 
 Routing_Slip_Persistence_Manager &

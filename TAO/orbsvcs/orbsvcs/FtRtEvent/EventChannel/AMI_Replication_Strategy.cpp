@@ -10,15 +10,11 @@ AMI_Replication_Strategy::AMI_Replication_Strategy(bool mt)
 {
 }
 
-AMI_Replication_Strategy::~AMI_Replication_Strategy()
-{
-}
-
 void
 AMI_Replication_Strategy::replicate_request(
-  const FTRT::State& state,
+  FTRT::State const& state,
   RollbackOperation rollback,
-  const FtRtecEventChannelAdmin::ObjectId& oid)
+  FtRtecEventChannelAdmin::ObjectId const& oid)
 {
   ACE_UNUSED_ARG(state);
   ACE_UNUSED_ARG(rollback);
@@ -26,7 +22,7 @@ AMI_Replication_Strategy::replicate_request(
 }
 
 void
-AMI_Replication_Strategy::add_member(const FTRT::ManagerInfo & info,
+AMI_Replication_Strategy::add_member(FTRT::ManagerInfo const &info,
                                      CORBA::ULong object_group_ref_version)
 {
   ACE_UNUSED_ARG(info);
@@ -37,11 +33,11 @@ Replication_Strategy*
 AMI_Replication_Strategy::make_primary_strategy()
 {
   AMI_Primary_Replication_Strategy* result;
-  ACE_NEW_RETURN(result, AMI_Primary_Replication_Strategy(mt_), 0);
+  ACE_NEW_RETURN(result, AMI_Primary_Replication_Strategy(mt_), nullptr);
   std::unique_ptr<AMI_Primary_Replication_Strategy> holder(result);
   if (result->activate() == 0)
     return holder.release();
-  return 0;
+  return nullptr;
 }
 
 int  AMI_Replication_Strategy::acquire_read ()

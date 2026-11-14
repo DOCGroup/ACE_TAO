@@ -5,7 +5,6 @@
 # include "ace/OS_NS_errno.inl"
 #endif /* ACE_HAS_INLINED_OSCALLS */
 
-
 #ifdef ACE_MQX
 int
 ACE_OS::mqx_error_to_errno(int mqx_error)

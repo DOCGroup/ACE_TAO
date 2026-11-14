@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef _CONNECTION_HANDLER
 #define _CONNECTION_HANDLER
 
@@ -43,13 +42,17 @@ public:
   Connection_Handler ();
 
   /// Real constructor.
-  Connection_Handler (const Connection_Config_Info &);
+  explicit Connection_Handler (Connection_Config_Info const &);
+  Connection_Handler (Connection_Handler const &) = delete;
+  Connection_Handler (Connection_Handler &&) = delete;
+  Connection_Handler &operator= (Connection_Handler const &) = delete;
+  Connection_Handler &operator= (Connection_Handler &&) = delete;
 
   /// Initialize and activate a single-threaded <Connection_Handler>
   /// (called by <ACE_Connector::handle_output>).
-  virtual int open (void * = 0);
+  int open (void * = nullptr) override;
 
-  // = The current state of the Connection_Handler.
+  /// Current state of the connection handler.
   enum State
   {
     IDLE = 1,      // Prior to initialization.
@@ -59,51 +62,50 @@ public:
     FAILED         // Connection_Handler has failed.
   };
 
-  // = Set/get the current state.
+  /// Get or set the current state.
   void state (State);
   State state () const;
 
-  // = Set/get remote INET addr.
+  /// Get or set the remote INET address.
   void remote_addr (ACE_INET_Addr &);
-  const ACE_INET_Addr &remote_addr () const;
+  ACE_INET_Addr const &remote_addr () const;
 
-  // = Set/get local INET addr.
+  /// Get or set the local INET address.
   void local_addr (ACE_INET_Addr &);
-  const ACE_INET_Addr &local_addr () const;
+  ACE_INET_Addr const &local_addr () const;
 
-  // = Set/get connection id.
+  /// Get or set the connection ID.
   void connection_id (CONNECTION_ID);
   CONNECTION_ID connection_id () const;
 
-  // = Set/get the current retry timeout delay.
+  /// Get or set the current retry timeout delay.
   void timeout (long);
   long timeout ();
 
-  // = Set/get the maximum retry timeout delay.
+  /// Get or set the maximum retry timeout delay.
   void max_timeout (long);
   long max_timeout () const;
 
-  // = Set/get proxy role (i.e., 'S' for Supplier and 'C' for Consumer
-  // (necessary for error checking).
+  /// Get or set the proxy role ('S' for Supplier and 'C' for Consumer).
   void connection_role (char);
   char connection_role () const;
 
-  // = Set/get the <Event_Channel> *.
+  /// Get or set the event channel.
   void event_channel (Event_Channel *);
   Event_Channel *event_channel () const;
 
-  // = The total number of bytes sent/received on this proxy.
+  /// Get or set the total number of bytes sent or received on this proxy.
   /// Increment count by <bytes>.
   /// Return the current byte count.
   void total_bytes (size_t bytes);
   size_t total_bytes () const;
 
   /// Perform timer-based Connection_Handler reconnection.
-  virtual int handle_timeout (const ACE_Time_Value &, const void *arg);
+  int handle_timeout (ACE_Time_Value const &, void const *arg) override;
 
   /// Perform Connection_Handler termination.
-  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-                            ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
+  int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
+                    ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK) override;
 
 protected:
   /// Address of peer.
@@ -113,27 +115,27 @@ protected:
   ACE_INET_Addr local_addr_;
 
   /// The assigned connection ID of this entry.
-  CONNECTION_ID connection_id_;
+  CONNECTION_ID connection_id_ {};
 
   /// The total number of bytes sent/received on this proxy.
-  size_t total_bytes_;
+  size_t total_bytes_ {};
 
   /// The current state of the proxy.
-  State state_;
+  State state_ {Connection_Handler::IDLE};
 
   /// Amount of time to wait between reconnection attempts.
-  long timeout_;
+  long timeout_ {1};
 
   /// Maximum amount of time to wait between reconnection attempts.
-  long max_timeout_;
+  long max_timeout_ {1};
 
   /// Indicates which role the proxy plays ('S' == Supplier and 'C' ==
   /// Consumer).
-  char connection_role_;
+  char connection_role_ {};
 
   /// Reference to the <Event_Channel> that we use to forward all
   /// the events from Consumers and Suppliers.
-  Event_Channel *event_channel_;
+  Event_Channel *event_channel_ {};
 };
 
 /**
@@ -150,7 +152,7 @@ class Connection_Handler_Factory
 public:
   /// Make the appropriate type of <Connection_Handler>, based on the
   /// <Connection_Config_Info> parameter.
-  Connection_Handler *make_connection_handler (const Connection_Config_Info &);
+  Connection_Handler *make_connection_handler (Connection_Config_Info const &);
 };
 
 #endif /* _CONNECTION_HANDLER */

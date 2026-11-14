@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    ExceptionList.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author  Copyright 1994-1995 by Sun Microsystems Inc.
  */
-//=============================================================================
 
 #ifndef TAO_CORBA_EXCEPTIONLIST_H
 #define TAO_CORBA_EXCEPTIONLIST_H
@@ -52,14 +50,16 @@ namespace CORBA
   class TAO_DynamicInterface_Export ExceptionList
   {
   public:
-    /// Constructor.
     ExceptionList () = default;
 
-    /// Constructor - initialize given a length and an array of
-    /// TypeCodes.
+    ExceptionList (ExceptionList const &) = delete;
+    ExceptionList &operator= (ExceptionList const &) = delete;
+    ExceptionList (ExceptionList &&) = delete;
+    ExceptionList &operator= (ExceptionList &&) = delete;
+
+    /// Initialize from an array of TypeCodes.
     ExceptionList (CORBA::ULong len, CORBA::TypeCode_ptr *tc_list);
 
-    /// Destructor.
     ~ExceptionList ();
 
     /// Return the number of elements.
@@ -97,12 +97,6 @@ namespace CORBA
     using _out_type = CORBA::ExceptionList_out;
 
   private:
-    // = Not allowed.
-    ExceptionList (ExceptionList const &) = delete;
-    ExceptionList &operator= (ExceptionList const &) = delete;
-    ExceptionList (ExceptionList &&) = delete;
-    ExceptionList &operator= (ExceptionList &&) = delete;
-
     /// Reference counter.
     std::atomic<uint32_t> refcount_ { 1 };
 

@@ -17,7 +17,9 @@
 #include "tao/Base_Transport_Property.h"
 
 #include "ace/OS_NS_string.h"
+
 #include <cstring>
+#include <memory>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Transport_Connector.inl"
@@ -66,16 +68,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Connector
 TAO_Connector::TAO_Connector (CORBA::ULong tag)
-  : active_connect_strategy_ (nullptr),
-    tag_ (tag),
+  : tag_ (tag),
     orb_core_ (nullptr)
 {
 }
 
-TAO_Connector::~TAO_Connector ()
-{
-  delete this->active_connect_strategy_;
-}
+TAO_Connector::~TAO_Connector () = default;
 
 TAO_Profile *
 TAO_Connector::corbaloc_scan (const char *str, size_t &len)
@@ -136,7 +134,7 @@ TAO_Connector::make_mprofile (const char *string, TAO_MProfile &mprofile)
 
   ACE_CString ior;
 
-  ior.set (string, std::strlen (string), 1);
+  ior.set (string, std::strlen (string), true);
 
   // Find out where the protocol ends
   ACE_CString::size_type ior_index = ior.find ("://");
@@ -201,11 +199,11 @@ TAO_Connector::make_mprofile (const char *string, TAO_MProfile &mprofile)
   //    `shu/arf'
   //    `1.1@chicken/arf'
 
-  ACE_CString::size_type begin = 0;
+  ACE_CString::size_type begin {};
   ACE_CString::size_type end = ior_index - 1;
   // Initialize the end of the endpoint index
 
-  for (CORBA::ULong j = 0; j < profile_count; ++j)
+  for (CORBA::ULong j {}; j < profile_count; ++j)
     {
       begin = end + 1;
 
@@ -277,7 +275,6 @@ TAO_Connector::make_parallel_connection (TAO::Profile_Transport_Resolver *,
   return nullptr;
 }
 
-
 TAO_Transport*
 TAO_Connector::parallel_connect (TAO::Profile_Transport_Resolver *r,
                                  TAO_Transport_Descriptor_Interface *desc,
@@ -293,7 +290,7 @@ TAO_Connector::parallel_connect (TAO::Profile_Transport_Resolver *r,
   if (desc == nullptr)
     return nullptr;
   TAO_Endpoint *root_ep = desc->endpoint();
-  TAO_Transport *base_transport = nullptr;
+  TAO_Transport *base_transport {};
 
   TAO::Transport_Cache_Manager &tcm =
     this->orb_core ()->lane_resources ().transport_cache ();
@@ -305,9 +302,9 @@ TAO_Connector::parallel_connect (TAO::Profile_Transport_Resolver *r,
        ep != nullptr;
        ep = ep->next_filtered(this->orb_core(),root_ep))
     {
-      TAO_Base_Transport_Property desc2(ep,0);
-      size_t busy_count = 0;
-      if (tcm.find_transport (&desc2, base_transport, busy_count) ==
+      TAO_Base_Transport_Property desc2 (ep, false);
+      size_t busy_count {};
+      if (tcm.find_transport (std::addressof (desc2), base_transport, busy_count) ==
           TAO::Transport_Cache_Manager::CACHE_FOUND_AVAILABLE)
         {
           if (TAO_debug_level)
@@ -328,7 +325,7 @@ TAO_Connector::parallel_connect (TAO::Profile_Transport_Resolver *r,
   // connection establishment. Maybe a custom wait strategy is needed
   // at this point to register several potential transports so that
   // when one succeeds the rest are cancelled or closed.
-  unsigned int endpoint_count = 0;
+  unsigned int endpoint_count {};
   for (TAO_Endpoint *ep = root_ep->next_filtered (this->orb_core(),nullptr);
        ep != nullptr;
        ep = ep->next_filtered(this->orb_core(),root_ep))
@@ -403,11 +400,11 @@ TAO_Connector::wait_for_transport (TAO::Profile_Transport_Resolver *r,
       // another thread has called ORB::run() prior to this attempted
       // connection, the wait() call will block forever (or until the ORB
       // thread leaves the reactor, which may not happen).
-      int result = 0;
+      int result {};
       if (timeout == nullptr && !r->blocked_connect ())
         {
           ACE_Time_Value tv (0, 500);
-          result = this->active_connect_strategy_->wait (transport, &tv);
+          result = this->active_connect_strategy_->wait (transport, std::addressof (tv));
         }
       else
         result = this->active_connect_strategy_->wait (transport, timeout);
@@ -488,8 +485,8 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
     {
       // Find a connection in the cache
       // If transport found, reference count is incremented on assignment
-      TAO_Transport *base_transport = nullptr;
-      size_t busy_count = 0;
+      TAO_Transport *base_transport {};
+      size_t busy_count {};
       TAO::Transport_Cache_Manager::Find_Result found =
           tcm.find_transport (desc,
                               base_transport,
@@ -723,7 +720,7 @@ TAO_Connector::wait_for_connection_completion (
     {
       TAO::Transport_Cache_Manager &tcm =
         this->orb_core ()->lane_resources ().transport_cache ();
-      result = tcm.cache_transport (&desc, transport);
+      result = tcm.cache_transport (std::addressof (desc), transport);
       if (result == -1)
       {
         if (TAO_debug_level > 2)
@@ -774,7 +771,7 @@ TAO_Connector::wait_for_connection_completion (
 
       TAO::Transport_Cache_Manager &tcm =
         this->orb_core ()->lane_resources ().transport_cache ();
-      result = tcm.cache_transport (&desc, transport, TAO::ENTRY_CONNECTING);
+      result = tcm.cache_transport (std::addressof (desc), transport, TAO::ENTRY_CONNECTING);
 
       if (result != -1)
         {
@@ -800,7 +797,6 @@ TAO_Connector::wait_for_connection_completion (
                               ACE_TEXT("transport [%B], wait done result = %d\n"),
                               transport->id (), result));
                 }
-
 
               // There are three possibilities when wait() returns: (a)
               // connection succeeded; (b) connection failed; (c) wait()
@@ -889,7 +885,7 @@ TAO_Connector::cleanup_pending (TAO_Transport *&the_winner,
   // It is possible that we have more than one connection that happened
   // to complete, or that none completed. Therefore we need to traverse
   // the list and ensure that all of the losers are closed.
-  for (unsigned int i = 0; i < count; i++)
+  for (unsigned int i {}; i < count; ++i)
     {
       if (transport[i] != the_winner)
         this->check_connection_closure (transport[i]->connection_handler());
@@ -915,7 +911,7 @@ TAO_Connector::wait_for_connection_completion (
                   ACE_TEXT("waiting for connection completion on ")
                   ACE_TEXT("%d transports, ["),
                   count));
-      for (unsigned int i = 0; i < count; i++)
+      for (unsigned int i {}; i < count; ++i)
         TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT("%B%C"),transport[i]->id (),
                     (i < (count -1) ? ", " : "]\n")));
@@ -951,7 +947,7 @@ TAO_Connector::wait_for_connection_completion (
       // the pending connections.
       // Of course, this shouldn't happen in any case, since the wait
       // strategy is called with a timeout value of 0.
-      for (unsigned int i = 0; i < count; i++)
+      for (unsigned int i {}; i < count; ++i)
         if (!transport[i]->connection_handler()->is_closed())
           {
             the_winner = transport[i];
@@ -1009,9 +1005,9 @@ TAO_Connector::create_connect_strategy ()
 {
   if (this->active_connect_strategy_ == nullptr)
     {
-      this->active_connect_strategy_ =
+      this->active_connect_strategy_.reset (
         this->orb_core_->client_factory ()->create_connect_strategy (
-          this->orb_core_);
+          this->orb_core_));
     }
 
   if (this->active_connect_strategy_ == nullptr)

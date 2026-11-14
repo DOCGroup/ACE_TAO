@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    server.cpp
@@ -15,12 +14,14 @@
  */
 //=============================================================================
 
-
 #include "ace/Get_Opt.h"
 #include "test_i.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
 #include "tao/PortableServer/AdapterActivatorC.h"
+
+#include <cstdio>
+#include <cstring>
+#include <memory>
+#include <string>
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
@@ -32,9 +33,13 @@ class reference_counted_test_i :
   public virtual test_i
 {
 public:
-  /// Constructor - takes a POA and a value parameter
   reference_counted_test_i (CORBA::ORB_ptr orb,
                             PortableServer::POA_ptr poa);
+
+  reference_counted_test_i (reference_counted_test_i const &) = delete;
+  reference_counted_test_i &operator= (reference_counted_test_i const &) = delete;
+  reference_counted_test_i (reference_counted_test_i &&) = delete;
+  reference_counted_test_i &operator= (reference_counted_test_i &&) = delete;
 };
 
 reference_counted_test_i::reference_counted_test_i (CORBA::ORB_ptr orb,
@@ -50,8 +55,13 @@ public:
   Adapter_Activator (PortableServer::POAManager_ptr poa_manager,
                      CORBA::ORB_ptr orb);
 
+  Adapter_Activator (Adapter_Activator const &) = delete;
+  Adapter_Activator &operator= (Adapter_Activator const &) = delete;
+  Adapter_Activator (Adapter_Activator &&) = delete;
+  Adapter_Activator &operator= (Adapter_Activator &&) = delete;
+
   CORBA::Boolean unknown_adapter (PortableServer::POA_ptr parent,
-                                  const char *name);
+                                 char const *name) override;
 
   CORBA::PolicyList first_poa_policies_;
   CORBA::PolicyList second_poa_policies_;
@@ -70,9 +80,9 @@ Adapter_Activator::Adapter_Activator (PortableServer::POAManager_ptr poa_manager
 
 CORBA::Boolean
 Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
-                                    const char *name)
+                                    char const *name)
 {
-  if (ACE_OS::strcmp (name, "firstPOA") == 0)
+  if (std::strcmp (name, "firstPOA") == 0)
     {
       PortableServer::POA_var child = parent->create_POA (name,
                                                           this->poa_manager_.in (),
@@ -88,20 +98,15 @@ Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
 
       child->the_activator (this);
 
-      reference_counted_test_i *servant =
-        new reference_counted_test_i (this->orb_.in (),
-                                      child.in ());
+      PortableServer::ServantBase_var servant (
+        new reference_counted_test_i (this->orb_.in (), child.in ()));
 
-      child->set_servant (servant);
-
-      // This means that the ownership of <servant> now belongs to the
-      // POA.
-      servant->_remove_ref ();
+      child->set_servant (servant.in ());
 
       // Finally everything is fine
       return 1;
     }
-  else if (ACE_OS::strcmp (name, "secondPOA") == 0)
+  else if (std::strcmp (name, "secondPOA") == 0)
     {
       PortableServer::POA_var child = parent->create_POA (name,
                                                           this->poa_manager_.in (),
@@ -115,40 +120,29 @@ Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
           this->second_poa_policies_[i]->destroy ();
         }
 
-      reference_counted_test_i *servant =
-        new reference_counted_test_i (this->orb_.in (),
-                                      child.in ());
+      PortableServer::ServantBase_var servant (
+        new reference_counted_test_i (this->orb_.in (), child.in ()));
 
       PortableServer::ObjectId_var oid =
         PortableServer::string_to_ObjectId ("third test");
 
-      child->activate_object_with_id (oid.in (),
-                                      servant);
-
-      // This means that the ownership of <servant> now belongs to the
-      // POA.
-      servant->_remove_ref ();
+      child->activate_object_with_id (oid.in (), servant.in ());
 
       // Finally everything is fine
       return 1;
     }
-  else
-    {
-      // Unknown POA.
-      return 0;
-    }
+  // Unknown POA.
+  return false;
 }
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT ("ior");
-
 static int
-parse_args (int argc, ACE_TCHAR **argv)
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior_output_file)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("f:"));
-  int c;
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'f':
         ior_output_file = get_opts.opt_arg ();
@@ -169,67 +163,34 @@ parse_args (int argc, ACE_TCHAR **argv)
 }
 
 static int
-write_iors_to_file (const char *first_ior,
-                    const char *second_ior,
-                    const char *third_ior)
+write_ior_to_file (std::string const &filename,
+                   char const *ior)
 {
-  char ior_output_file_1[BUFSIZ];
-  char ior_output_file_2[BUFSIZ];
-  char ior_output_file_3[BUFSIZ];
+  std::unique_ptr<FILE, int (*) (FILE *)> output_file (std::fopen (filename.c_str (), "w"), std::fclose);
+  if (!output_file)
+    ACE_ERROR_RETURN ((LM_ERROR, "Cannot open output file for writing IOR: %C\n", filename.c_str ()), -1);
 
-  ACE_OS::sprintf (ior_output_file_1, "%s_1", ACE_TEXT_ALWAYS_CHAR(ior_output_file));
-  ACE_OS::sprintf (ior_output_file_2, "%s_2", ACE_TEXT_ALWAYS_CHAR(ior_output_file));
-  ACE_OS::sprintf (ior_output_file_3, "%s_3", ACE_TEXT_ALWAYS_CHAR(ior_output_file));
+  int const result = std::fprintf (output_file.get (), "%s", ior);
+  if (result < 0 || static_cast<size_t> (result) != std::strlen (ior))
+    ACE_ERROR_RETURN ((LM_ERROR, "Failed writing IOR to %C\n", filename.c_str ()), -1);
+  return 0;
+}
 
-  FILE *output_file_1 = ACE_OS::fopen (ior_output_file_1, ACE_TEXT("w"));
-  FILE *output_file_2 = ACE_OS::fopen (ior_output_file_2, ACE_TEXT("w"));
-  FILE *output_file_3 = ACE_OS::fopen (ior_output_file_3, ACE_TEXT("w"));
+static int
+write_iors_to_file (ACE_TCHAR const *ior_output_file,
+                    char const *first_ior,
+                    char const *second_ior,
+                    char const *third_ior)
+{
+  std::string const base (ACE_TEXT_ALWAYS_CHAR (ior_output_file));
+  std::string const first_filename = base + "_1";
+  std::string const second_filename = base + "_2";
+  std::string const third_filename = base + "_3";
 
-  if (output_file_1 == 0 ||
-      output_file_2 == 0 ||
-      output_file_3 == 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "Cannot open output files for writing IORs: %C, %C %C\n",
-                       ior_output_file_1,
-                       ior_output_file_2,
-                       ior_output_file_3),
-                      -1);
-
-  u_int result = 0;
-
-  result = ACE_OS::fprintf (output_file_1,
-                            "%s",
-                            first_ior);
-  if (result != ACE_OS::strlen (first_ior))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "ACE_OS::fprintf failed while writing %C to %s\n",
-                       first_ior,
-                       ior_output_file_1),
-                      -1);
-
-  result = ACE_OS::fprintf (output_file_2,
-                            "%s",
-                            second_ior);
-  if (result != ACE_OS::strlen (second_ior))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "ACE_OS::fprintf failed while writing %C to %s\n",
-                       second_ior,
-                       ior_output_file_2),
-                      -1);
-
-  result = ACE_OS::fprintf (output_file_3,
-                            "%s",
-                            third_ior);
-  if (result != ACE_OS::strlen (third_ior))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "ACE_OS::fprintf failed while writing %C to %s\n",
-                       third_ior,
-                       ior_output_file_3),
-                      -1);
-
-  ACE_OS::fclose (output_file_1);
-  ACE_OS::fclose (output_file_2);
-  ACE_OS::fclose (output_file_3);
-
+  if (write_ior_to_file (first_filename, first_ior) != 0 ||
+      write_ior_to_file (second_filename, second_ior) != 0 ||
+      write_ior_to_file (third_filename, third_ior) != 0)
+    return -1;
   return 0;
 }
 
@@ -241,7 +202,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Initialize the ORB first.
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-      int result = parse_args (argc, argv);
+      ACE_TCHAR const *ior_output_file = ACE_TEXT ("ior");
+      int const result = parse_args (argc, argv, ior_output_file);
       if (result != 0)
         return result;
 
@@ -347,14 +309,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   second_ior.in (),
                   third_ior.in ()));
 
-      int write_result = write_iors_to_file (first_ior.in (),
-                                             second_ior.in (),
-                                             third_ior.in ());
+      int const write_result = write_iors_to_file (ior_output_file,
+                                                   first_ior.in (),
+                                                   second_ior.in (),
+                                                   third_ior.in ());
       if (write_result != 0)
         return write_result;
 
-      first_poa->destroy (1,
-                          1);
+      first_poa->destroy (true, true);
 
       poa_manager->activate ();
 
@@ -362,7 +324,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught");
       return -1;

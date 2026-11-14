@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef HTIOP_FACTORY_H
 #define HTIOP_FACTORY_H
 #include /**/ "ace/pre.h"
@@ -21,6 +20,8 @@
 
 #include "tao/Protocol_Factory.h"
 #include "ace/Service_Config.h"
+
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace ACE
@@ -42,6 +43,10 @@ namespace TAO
     {
     public:
       Protocol_Factory ();
+      Protocol_Factory (Protocol_Factory const&) = delete;
+      Protocol_Factory (Protocol_Factory&&) = delete;
+      Protocol_Factory& operator= (Protocol_Factory const&) = delete;
+      Protocol_Factory& operator= (Protocol_Factory&&) = delete;
       ~Protocol_Factory () override;
 
       // = Service Configurator hooks.
@@ -49,7 +54,7 @@ namespace TAO
       int init (int argc, ACE_TCHAR* argv[]) override;
 
       /// Verify prefix is a match
-      int match_prefix (const ACE_CString &prefix) override;
+      int match_prefix (std::string const &prefix) override;
 
       /// Returns the prefix used by the protocol.
       const char *prefix () const override;
@@ -65,7 +70,7 @@ namespace TAO
 
     private:
       /// Configuration reference
-      ACE::HTBP::Environment *ht_env_;
+      std::unique_ptr<ACE::HTBP::Environment> ht_env_;
 
       /// Flag used to determine if an acceptor should use an "inside"
       /// local address, or try to compose an "outside" address.

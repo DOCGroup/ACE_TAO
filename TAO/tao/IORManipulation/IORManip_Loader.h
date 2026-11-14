@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-
 //=============================================================================
 /**
  *  @file    IORManip_Loader.h
@@ -8,7 +7,6 @@
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
 //=============================================================================
-
 
 #ifndef TAO_IORMANIP_LOADER_H
 #define TAO_IORMANIP_LOADER_H
@@ -27,7 +25,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_IORManip_Export TAO_IORManip_Loader : public TAO_Object_Loader
 {
 public:
-  /// Constructor
   TAO_IORManip_Loader ();
 
   /// Creates a IORManip factory and returns it.
@@ -38,7 +35,6 @@ public:
   /// Used to force the initialization of the ORB code.
   static int Initializer ();
 
-private:
   TAO_IORManip_Loader (TAO_IORManip_Loader const &) = delete;
   TAO_IORManip_Loader &operator= (TAO_IORManip_Loader const &) = delete;
   TAO_IORManip_Loader (TAO_IORManip_Loader &&) = delete;
@@ -47,7 +43,6 @@ private:
 
 static int
 TAO_Requires_IORManip_Initializer = TAO_IORManip_Loader::Initializer ();
-
 
 ACE_STATIC_SVC_DECLARE (TAO_IORManip_Loader)
 ACE_FACTORY_DECLARE (TAO_IORManip, TAO_IORManip_Loader)

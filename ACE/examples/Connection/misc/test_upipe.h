@@ -10,61 +10,83 @@
 
 using SVC_HANDLER = ACE_Svc_Handler<ACE_UPIPE_STREAM, ACE_NULL_SYNCH>;
 
+/**
+ * Defines a service that receives data from its client and writes it to
+ * standard output.
+ */
 class Server_Service : public SVC_HANDLER
-  // = TITLE
-  //     Defines the interface for a service that recvs data from its
-  //     client and writes the data to its stdout.
 {
 public:
-  Server_Service (ACE_Thread_Manager * = 0) {}
+  explicit Server_Service (ACE_Thread_Manager *thr_mgr = nullptr)
+    : SVC_HANDLER (thr_mgr)
+  {
+  }
+  ~Server_Service () override = default;
+  Server_Service (Server_Service const &) = delete;
+  Server_Service (Server_Service &&) = delete;
+  Server_Service &operator= (Server_Service const &) = delete;
+  Server_Service &operator= (Server_Service &&) = delete;
 
-  virtual int open (void *)
+  int open (void *) override
     {
       ACE_TRACE ("Server_Service::open");
       return 0;
     }
 
-  virtual int svc ()
+  int svc () override
     {
       ACE_TRACE ("Server_Service::svc");
 
-      char buf[BUFSIZ];
-      ssize_t n;
+      char buf[BUFSIZ] {};
+      while (true)
+        {
+          ssize_t const n = this->peer ().recv (buf, sizeof buf);
+          if (n <= 0)
+            break;
 
-      while ((n = this->peer ().recv (buf, sizeof buf)) > 0)
-        ACE_OS::write (ACE_STDOUT, buf, n);
+          ACE_OS::write (ACE_STDOUT, buf, n);
+        }
 
       return 0;
     }
 };
 
-
+/**
+ * Defines a service that reads data from standard input and forwards it to
+ * its server.
+ */
 class Client_Service : public SVC_HANDLER
-  // = TITLE
-  //     Defines the interface for a service that recvs data from its
-  //     stdin and forward the data to its server.
 {
 public:
-  Client_Service (ACE_Thread_Manager *thr_mgr = 0)
+  explicit Client_Service (ACE_Thread_Manager *thr_mgr = nullptr)
     : SVC_HANDLER (thr_mgr)
     {
       ACE_TRACE ("Client_Service::Client_Service");
     }
+  ~Client_Service () override = default;
+  Client_Service (Client_Service const &) = delete;
+  Client_Service (Client_Service &&) = delete;
+  Client_Service &operator= (Client_Service const &) = delete;
+  Client_Service &operator= (Client_Service &&) = delete;
 
-  virtual int open (void *)
+  int open (void *) override
     {
       ACE_TRACE ("Client_Service::open");
       return this->activate (THR_DETACHED | THR_NEW_LWP);
     }
 
-  virtual int svc ()
+  int svc () override
     {
       ACE_TRACE ("Client_Service::svc");
-      char buf[BUFSIZ];
-      ssize_t n;
+      char buf[BUFSIZ] {};
+      while (true)
+        {
+          ssize_t const n = ACE_OS::read (ACE_STDIN, buf, sizeof buf);
+          if (n <= 0)
+            break;
 
-      while ((n = ACE_OS::read (ACE_STDIN, buf, sizeof buf)) > 0)
-        this->peer ().send (buf, n);
+          this->peer ().send (buf, n);
+        }
 
       this->peer ().close ();
       return 0;

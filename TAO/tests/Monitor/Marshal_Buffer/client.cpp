@@ -10,12 +10,16 @@
 
 #include "testC.h"
 
+#include <cstring>
+#include <memory>
+#include <string>
+
 #if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 
 using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control;
 
-const ACE_TCHAR *ior_input_file = ACE_TEXT("file://test.ior");
-const ACE_TCHAR *monitor_output_file = ACE_TEXT("monitor.ior");
+ACE_TCHAR const *ior_input_file = ACE_TEXT ("file://test.ior");
+ACE_TCHAR const *monitor_output_file = ACE_TEXT ("monitor.ior");
 
 /// Runs the ORB in a separate thread so we can listen
 /// for calls on our MC interface without blocking.
@@ -25,11 +29,16 @@ private:
   CORBA::ORB_ptr orb_;
 
 public:
-  ORB_Runner (CORBA::ORB_ptr orb)
+  explicit ORB_Runner (CORBA::ORB_ptr orb)
     : orb_ (orb)
   {}
 
-  int svc ()
+  ORB_Runner (ORB_Runner const &) = delete;
+  ORB_Runner (ORB_Runner &&) = delete;
+  ORB_Runner &operator= (ORB_Runner const &) = delete;
+  ORB_Runner &operator= (ORB_Runner &&) = delete;
+
+  int svc () override
   {
     this->orb_->run ();
     return 0;
@@ -47,14 +56,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-      Monitor_Base *bytes_sent_monitor =
-        create_os_monitor<BYTES_SENT_MONITOR> (0, ACE_Time_Value (1));
-      Monitor_Base *cpu_load_monitor =
-        create_os_monitor<CPU_LOAD_MONITOR> (0, ACE_Time_Value (1));
-      Monitor_Base *memory_usage_monitor =
-        create_os_monitor<MEMORY_USAGE_MONITOR> (0, ACE_Time_Value (1));
-      Monitor_Base *num_threads_monitor =
-        create_os_monitor<NUM_THREADS_MONITOR> (0, ACE_Time_Value (1));
+      Monitor_Base_Unique_Ptr bytes_sent_monitor (
+        create_os_monitor<BYTES_SENT_MONITOR> (nullptr, ACE_Time_Value (1)));
+      Monitor_Base_Unique_Ptr cpu_load_monitor (
+        create_os_monitor<CPU_LOAD_MONITOR> (nullptr, ACE_Time_Value (1)));
+      Monitor_Base_Unique_Ptr memory_usage_monitor (
+        create_os_monitor<MEMORY_USAGE_MONITOR> (nullptr, ACE_Time_Value (1)));
+      Monitor_Base_Unique_Ptr num_threads_monitor (
+        create_os_monitor<NUM_THREADS_MONITOR> (nullptr, ACE_Time_Value (1)));
 
       START_PERIODIC_MONITORS;
 
@@ -69,9 +78,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       CORBA::String_var ior = orb->object_to_string (monitor.in ());
 
-      FILE *output_file = ACE_OS::fopen (monitor_output_file, "w");
+      std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+        ACE_OS::fopen (monitor_output_file, "w"), ACE_OS::fclose);
 
-      if (output_file == 0)
+      if (!output_file)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Can't open output file for writing IOR: %s",
@@ -79,10 +89,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                             1);
         }
 
-      ACE_OS::fprintf (output_file,
+      ACE_OS::fprintf (output_file.get (),
                        "%s",
                        ior.in ());
-      ACE_OS::fclose (output_file);
 
       /// Call orb->run() in a separate thread so the MC interface can
       /// get remote calls.
@@ -107,14 +116,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       /// the CDR stream buffer.
       for (int i = 1; i < 4; ++i)
         {
-          char *tmp = new char[1024 * i + 1];
-          ACE_OS::memset (tmp, 'a', 1024 * i);
-          tmp[1024 * i] = '\0';
-          CORBA::String_var result = target->test_op (tmp);
-          cout << "reply to client = " << ACE_OS::strlen (result.in ())
+          std::string tmp (1024 * i, 'a');
+          CORBA::String_var result = target->test_op (tmp.c_str ());
+          cout << "reply to client = " << std::strlen (result.in ())
                << " bytes" << endl;
-          delete [] tmp;
-
           ACE_OS::sleep (2);
         }
 
@@ -124,14 +129,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       STOP_PERIODIC_MONITORS;
 
-      bytes_sent_monitor->remove_ref ();
-      cpu_load_monitor->remove_ref ();
-      memory_usage_monitor->remove_ref ();
-      num_threads_monitor->remove_ref ();
-
       orb->destroy ();
     }
-  catch (const CORBA::Exception &ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Client: exception caught:");
       return 1;

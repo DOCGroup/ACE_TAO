@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_INTERCEPTOR_TEST_I_H
 #define TAO_INTERCEPTOR_TEST_I_H
 
@@ -22,17 +21,22 @@ class Secure_Vault_i : public POA_Test_Interceptors::Secure_Vault
 {
 public:
   /// ctor
-  Secure_Vault_i (CORBA::ORB_ptr orb);
+  explicit Secure_Vault_i (CORBA::ORB_ptr orb);
 
-  virtual CORBA::Short ready ();
+  Secure_Vault_i (Secure_Vault_i const &) = delete;
+  Secure_Vault_i (Secure_Vault_i &&) = delete;
+  Secure_Vault_i &operator= (Secure_Vault_i const &) = delete;
+  Secure_Vault_i &operator= (Secure_Vault_i &&) = delete;
+
+  CORBA::Short ready () override;
 
   /// Passwd sent in the service context list
-  virtual void authenticate (const char * user);
+  void authenticate (char const *user) override;
 
-  virtual CORBA::Long update_records (CORBA::Long id,
-                                      const Test_Interceptors::Secure_Vault::Record & val);
+  CORBA::Long update_records (CORBA::Long id,
+                              Test_Interceptors::Secure_Vault::Record const &val) override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 
  private:
   /// The ORB pointer (for shutdown.)

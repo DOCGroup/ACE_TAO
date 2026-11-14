@@ -36,10 +36,10 @@ namespace ACE
           : public ACE::IOS::BufferedStreamBuffer
           {
             public:
-              StreamBuffer (std::iostream * stream);
-              virtual ~StreamBuffer ();
+              explicit StreamBuffer (std::iostream * stream);
+              ~StreamBuffer () override;
 
-              virtual int sync ();
+              int sync () override;
 
               std::iostream* set_stream (std::iostream * stream);
 
@@ -49,14 +49,13 @@ namespace ACE
                   BUFFER_SIZE = 4096
                 };
 
-              virtual int read_from_stream (char* buffer, std::streamsize length);
+              int read_from_stream (char* buffer, std::streamsize length) override;
 
-              virtual int write_to_stream (const char* buffer, std::streamsize length);
+              int write_to_stream (const char* buffer, std::streamsize length) override;
 
             private:
               std::iostream * stream_;
           };
-
 
         /**
         * @class ACE_FTP_IOS
@@ -68,7 +67,7 @@ namespace ACE
           : public virtual std::ios
           {
             public:
-              IOS (std::iostream* stream);
+              explicit IOS (std::iostream* stream);
               ~IOS ();
 
               StreamBuffer* rdbuf ();

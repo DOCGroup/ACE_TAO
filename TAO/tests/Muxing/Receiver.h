@@ -18,25 +18,28 @@ class Receiver
   : public POA_Test::Receiver
 {
 public:
-  /// Constructor
-  Receiver (CORBA::ORB_ptr orb);
+  explicit Receiver (CORBA::ORB_ptr orb);
+  Receiver (Receiver const &) = delete;
+  Receiver (Receiver &&) = delete;
+  Receiver &operator= (Receiver const &) = delete;
+  Receiver &operator= (Receiver &&) = delete;
 
   /// Print out the results
   void dump_results ();
 
   // = The skeleton methods
-  virtual void receive_data (const Test::Payload &payload);
-  virtual CORBA::Long get_event_count ();
+  void receive_data (Test::Payload const &payload) override;
+  CORBA::Long get_event_count () override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 
 private:
   TAO_SYNCH_MUTEX mutex_;
-  CORBA::ULong message_count_;
-  CORBA::ULong byte_count_;
+  CORBA::ULong message_count_ {};
+  CORBA::ULong byte_count_ {};
   /// Use an ORB reference to shutdown
   /// the application.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 };
 
 #if defined(_MSC_VER)

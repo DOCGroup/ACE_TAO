@@ -15,14 +15,12 @@ namespace ACE_RMCast
     Simulator ();
 
   public:
-    virtual void
-    send (Message_ptr m);
+    void send (Message_ptr m) override;
 
   private:
     Message_ptr hold_;
     Mutex mutex_;
   };
 }
-
 
 #endif  // ACE_RMCAST_SIMULATOR_H

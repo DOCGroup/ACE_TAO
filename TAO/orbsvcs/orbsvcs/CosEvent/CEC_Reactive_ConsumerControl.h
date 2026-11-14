@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_CEC_REACTIVE_CONSUMERCONTROL_H
 #define TAO_CEC_REACTIVE_CONSUMERCONTROL_H
 
@@ -29,7 +28,6 @@
 #include "tao/ORB.h"
 
 #include "ace/Event_Handler.h"
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -53,8 +51,7 @@ class TAO_CEC_TypedEventChannel;
 class TAO_Event_Serv_Export TAO_CEC_ConsumerControl_Adapter : public ACE_Event_Handler
 {
 public:
-  /// Constructor
-  TAO_CEC_ConsumerControl_Adapter (TAO_CEC_Reactive_ConsumerControl *adaptee);
+  explicit TAO_CEC_ConsumerControl_Adapter (TAO_CEC_Reactive_ConsumerControl *adaptee);
 
   TAO_CEC_ConsumerControl_Adapter (TAO_CEC_ConsumerControl_Adapter const &) = delete;
   TAO_CEC_ConsumerControl_Adapter (TAO_CEC_ConsumerControl_Adapter &&) = delete;
@@ -87,8 +84,8 @@ class TAO_Event_Serv_Export TAO_CEC_Reactive_ConsumerControl
 public:
   /// Constructor.  It does not assume ownership of the @a event_channel
   /// parameter.
-  TAO_CEC_Reactive_ConsumerControl (const ACE_Time_Value &rate,
-                                    const ACE_Time_Value &timeout,
+  TAO_CEC_Reactive_ConsumerControl (ACE_Time_Value const &rate,
+                                    ACE_Time_Value const &timeout,
                                     unsigned int retries,
                                     TAO_CEC_EventChannel *event_channel,
                                     CORBA::ORB_ptr orb);
@@ -96,14 +93,13 @@ public:
   /// Constructor for the typed ec.
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
   TAO_CEC_Reactive_ConsumerControl (
-      const ACE_Time_Value &rate,
-      const ACE_Time_Value &timeout,
+      ACE_Time_Value const &rate,
+      ACE_Time_Value const &timeout,
       unsigned int retries,
       TAO_CEC_TypedEventChannel *typed_event_channel,
       CORBA::ORB_ptr orb);
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
-  /// destructor...
   ~TAO_CEC_Reactive_ConsumerControl () override = default;
 
   TAO_CEC_Reactive_ConsumerControl (TAO_CEC_Reactive_ConsumerControl const &) = delete;
@@ -112,8 +108,8 @@ public:
   TAO_CEC_Reactive_ConsumerControl &operator= (TAO_CEC_Reactive_ConsumerControl &&) = delete;
 
   /// Receive the timeout from the adapter
-  void handle_timeout (const ACE_Time_Value &tv,
-                       const void* arg);
+  void handle_timeout (ACE_Time_Value const &tv,
+                       void const *arg);
 
   // = Documented in TAO_CEC_ConsumerControl
   int activate () override;
@@ -182,7 +178,7 @@ class TAO_CEC_Ping_Push_Consumer
   : public TAO_ESF_Worker<TAO_CEC_ProxyPushSupplier>
 {
 public:
-  TAO_CEC_Ping_Push_Consumer (TAO_CEC_ConsumerControl *control);
+  explicit TAO_CEC_Ping_Push_Consumer (TAO_CEC_ConsumerControl *control);
 
   TAO_CEC_Ping_Push_Consumer (TAO_CEC_Ping_Push_Consumer const &) = delete;
   TAO_CEC_Ping_Push_Consumer (TAO_CEC_Ping_Push_Consumer &&) = delete;
@@ -201,7 +197,7 @@ class TAO_CEC_Ping_Pull_Consumer
   : public TAO_ESF_Worker<TAO_CEC_ProxyPullSupplier>
 {
 public:
-  TAO_CEC_Ping_Pull_Consumer (TAO_CEC_ConsumerControl *control);
+  explicit TAO_CEC_Ping_Pull_Consumer (TAO_CEC_ConsumerControl *control);
 
   TAO_CEC_Ping_Pull_Consumer (TAO_CEC_Ping_Pull_Consumer const &) = delete;
   TAO_CEC_Ping_Pull_Consumer (TAO_CEC_Ping_Pull_Consumer &&) = delete;

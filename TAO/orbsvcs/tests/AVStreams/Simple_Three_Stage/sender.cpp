@@ -8,10 +8,10 @@
 // An Unmanaged_Singleton is used to avoid static object destruction
 // order related problems since the underlying singleton object
 // contains references to static TypeCodes.
-typedef ACE_Unmanaged_Singleton<Sender, ACE_Null_Mutex> SENDER;
+using SENDER = ACE_Unmanaged_Singleton<Sender, ACE_Null_Mutex>;
 
 int
-Sender_StreamEndPoint::get_callback (const char *,
+Sender_StreamEndPoint::get_callback (char const *,
                                      TAO_AV_Callback *&callback)
 {
   // Create and return the sender application callback to AVStreams
@@ -24,13 +24,13 @@ Sender_StreamEndPoint::get_callback (const char *,
       CORBA::Any_ptr streamctrl_any =
         this->get_property_value ("Related_StreamCtrl");
 
-      AVStreams::StreamCtrl_ptr streamctrl;
+      AVStreams::StreamCtrl_ptr streamctrl {};
       *streamctrl_any >>= streamctrl;
 
       // Store reference to the streamctrl
       SENDER::instance ()->streamctrl (streamctrl);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Sender_StreamEndPoint::get_callback failed");
 
@@ -41,7 +41,7 @@ Sender_StreamEndPoint::get_callback (const char *,
 }
 
 int
-Sender_StreamEndPoint::set_protocol_object (const char *,
+Sender_StreamEndPoint::set_protocol_object (char const *,
                                             TAO_AV_Protocol_Object *object)
 {
   // Set the sender protocol object corresponding to the transport
@@ -51,14 +51,8 @@ Sender_StreamEndPoint::set_protocol_object (const char *,
 }
 
 Sender::Sender ()
-  : sender_mmdevice_ (0),
-    streamctrl_ (0),
-    frame_count_ (0),
-    filename_ ("input"),
-    input_file_ (0),
-    frame_rate_ (10.0),
-    mb_ (BUFSIZ),
-    protocol_object_ (0)
+  : input_file_ (nullptr, ACE_OS::fclose),
+    mb_ (BUFSIZ)
 {
 }
 
@@ -85,19 +79,19 @@ Sender::parse_args (int argc,
   // Parse command line arguments
   ACE_Get_Opt opts (argc, argv, ACE_TEXT("f:r:d"));
 
-  int c;
+  int c {};
   while ((c= opts ()) != -1)
     {
       switch (c)
         {
         case 'f':
-          this->filename_ = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
+          this->options_.filename = opts.opt_arg ();
           break;
         case 'r':
-          this->frame_rate_ = (double)ACE_OS::atoi (opts.opt_arg ());
+          this->options_.frame_rate = static_cast<double> (ACE_OS::atoi (opts.opt_arg ()));
           break;
         case 'd':
-          TAO_debug_level++;
+          ++TAO_debug_level;
           break;
         default:
           ACE_DEBUG ((LM_DEBUG, "Unknown Option\n"));
@@ -132,18 +126,17 @@ Sender::init (int argc,
     return result;
 
   // Open file to read.
-  this->input_file_ =
-    ACE_OS::fopen (this->filename_.c_str (),
-                   "r");
+  this->input_file_.reset (
+    ACE_OS::fopen (this->options_.filename.c_str (), ACE_TEXT ("rb")));
 
-  if (this->input_file_ == 0)
+  if (!this->input_file_)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Cannot open input file %C\n",
-                       this->filename_.c_str ()),
+                       ACE_TEXT ("Cannot open input file %s\n"),
+                       this->options_.filename.c_str ()),
                       -1);
-  else
-    ACE_DEBUG ((LM_DEBUG,
-                "File opened successfully\n"));
+
+  ACE_DEBUG ((LM_DEBUG,
+              "File opened successfully\n"));
 
   // Register the sender mmdevice object with the ORB
   ACE_NEW_RETURN (this->sender_mmdevice_,
@@ -177,13 +170,13 @@ Sender::pace_data ()
   ACE_Time_Value inter_frame_time;
 
   // The time between two consecutive frames.
-  inter_frame_time.set (1.0 / this->frame_rate_);
+  inter_frame_time.set (1.0 / this->options_.frame_rate);
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "Frame Rate = %f / second\n"
                 "Inter Frame Time = %d (msec)\n",
-                this->frame_rate_,
+                this->options_.frame_rate,
                 inter_frame_time.msec ()));
 
   try
@@ -192,7 +185,7 @@ Sender::pace_data ()
       ACE_High_Res_Timer elapsed_timer;
 
       // If we have a receiver, send to it.
-      while (this->protocol_object_ == 0)
+      while (this->protocol_object_ == nullptr)
         {
           // Run the orb for the wait time so the sender can
           // continue other orb requests.
@@ -204,12 +197,12 @@ Sender::pace_data ()
       while (1)
         {
           // Read from the file into a message block.
-          size_t n = ACE_OS::fread (this->mb_.wr_ptr (),
-                                    1,
-                                    this->mb_.size (),
-                                    this->input_file_);
+          size_t const n = ACE_OS::fread (this->mb_.wr_ptr (),
+                                               1,
+                                               this->mb_.size (),
+                                               this->input_file_.get ());
 
-          if (n == 0 && ferror (this->input_file_))
+          if (n == 0 && std::ferror (this->input_file_.get ()))
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Sender::pace_data fread failed\n"),
                               -1);
@@ -270,9 +263,8 @@ Sender::pace_data ()
 
           if (result < 0)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "send failed:%p",
-                               "Sender::pace_data send\n"),
-                               -1);
+                               "Sender::pace_data send failed\n"),
+                              -1);
 
           ACE_DEBUG ((LM_DEBUG,
                       "Sender::pace_data frame %d was sent successfully\n",
@@ -283,14 +275,14 @@ Sender::pace_data ()
         } // end while
 
       // If a stream was setup, destroy it.
-      if (this->streamctrl_)
+      if (!CORBA::is_nil (this->streamctrl_.in ()))
         {
           // File reading is complete, destroy the stream.
           AVStreams::flowSpec stop_spec;
           this->streamctrl_->destroy (stop_spec);
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Sender::pace_data Failed\n");
       return -1;
@@ -300,8 +292,9 @@ Sender::pace_data ()
 
 int
 ACE_TMAIN (int argc,
-      ACE_TCHAR *argv[])
+           ACE_TCHAR *argv[])
 {
+  int result {};
   try
     {
       CORBA::ORB_var orb =
@@ -324,7 +317,6 @@ ACE_TMAIN (int argc,
                                       root_poa.in ());
 
       // Initialize the Sender.
-      int result = 0;
       result = SENDER::instance ()->init (argc,
                                           argv);
 
@@ -333,14 +325,16 @@ ACE_TMAIN (int argc,
                            "Sender::init failed\n"),
                           -1);
 
-      SENDER::instance ()->pace_data ();
-
-      ACE_Time_Value tv (10);
-      orb->run (tv);
-      // Hack for now....
-      ACE_OS::sleep (1);
+      result = SENDER::instance ()->pace_data ();
+      if (result == 0)
+        {
+          ACE_Time_Value tv (10);
+          orb->run (tv);
+          // Hack for now....
+          ACE_OS::sleep (1);
+        }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Sender Failed\n");
       return -1;
@@ -348,7 +342,7 @@ ACE_TMAIN (int argc,
 
   SENDER::close ();  // Explicitly finalize the Unmanaged_Singleton.
 
-  return 0;
+  return result;
 }
 
 #if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)

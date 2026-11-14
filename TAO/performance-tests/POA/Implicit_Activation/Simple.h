@@ -15,12 +15,11 @@ class Simple
   : public virtual POA_Test::Simple
 {
 public:
-  /// Constructor
-  Simple ();
+  Simple () = default;
 
   // = The skeleton methods
 
-  virtual void destroy ();
+  void destroy () override;
 };
 
 #if defined(_MSC_VER)

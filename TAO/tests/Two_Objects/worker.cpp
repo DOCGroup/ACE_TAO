@@ -1,8 +1,8 @@
 
 #include "worker.h"
 
-Worker::Worker (CORBA::ORB_ptr orb)
-  :  orb_ (CORBA::ORB::_duplicate (orb))
+Worker::Worker (CORBA::ORB_ptr const orb)
+  : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
@@ -13,7 +13,7 @@ Worker::svc ()
     {
       this->orb_->run ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
     }

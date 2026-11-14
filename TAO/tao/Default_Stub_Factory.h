@@ -40,7 +40,6 @@ class TAO_Export TAO_Default_Stub_Factory
   : public TAO_Stub_Factory
 {
 public:
-  /// Destructor.
   ~TAO_Default_Stub_Factory () override = default;
 
   /// Creates a Stub Object.

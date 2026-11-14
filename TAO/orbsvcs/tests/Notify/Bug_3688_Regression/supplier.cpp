@@ -1,156 +1,146 @@
 #include "common.h"
 #include "ace/OS_NS_unistd.h"
 
-namespace CosNotifyCommImpl{
-  class StructuredPushSupplier: public virtual POA_CosNotifyComm:: StructuredPushSupplier
+namespace CosNotifyCommImpl
+{
+  class StructuredPushSupplier : public virtual POA_CosNotifyComm::StructuredPushSupplier
   {
   public:
-    void disconnect_structured_push_supplier()
+    StructuredPushSupplier () = default;
+    StructuredPushSupplier (StructuredPushSupplier const&) = delete;
+    StructuredPushSupplier (StructuredPushSupplier&&) = delete;
+    StructuredPushSupplier& operator= (StructuredPushSupplier const&) = delete;
+    StructuredPushSupplier& operator= (StructuredPushSupplier&&) = delete;
+    ~StructuredPushSupplier () override = default;
+
+    void disconnect_structured_push_supplier () override
     {
-    };
-    void subscription_change( const CosNotification::EventTypeSeq&,
-      const CosNotification::EventTypeSeq&)
-    {};
+    }
+
+    void subscription_change (
+      CosNotification::EventTypeSeq const&,
+      CosNotification::EventTypeSeq const&) override
+    {
+    }
   };
 }
 
-
-int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+int
+ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   try
-  {
-    PortableServer::POAManager_var poa_manager;
+    {
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
+      CORBA::Object_var const poa_object = orb->resolve_initial_references ("RootPOA");
+      PortableServer::POA_var const root_poa = PortableServer::POA::_narrow (poa_object.in ());
+      PortableServer::POAManager_var const poa_manager = root_poa->the_POAManager ();
+      poa_manager->activate ();
 
-    CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
+      std::cout << "Create event_channel now" << std::endl;
+      CosNotifyChannelAdmin::EventChannel_var const event_channel = get_event_channel (orb.in ());
 
-    CORBA::Object_var poa_obj = orb->resolve_initial_references("RootPOA");
-    PortableServer::POA_var root_poa = PortableServer::POA::_narrow(poa_obj.in());
+      CosNotifyCommImpl::StructuredPushSupplier* const supplier_impl =
+        new CosNotifyCommImpl::StructuredPushSupplier;
+      PortableServer::ServantBase_var supplier_servant (supplier_impl);
+      CosNotifyComm::StructuredPushSupplier_var supplier = supplier_impl->_this ();
 
-    poa_manager = root_poa->the_POAManager();
+      CosNotifyChannelAdmin::SupplierAdmin_var const supplier_admin =
+        event_channel->default_supplier_admin ();
+      if (supplier_admin.in () == CosNotifyChannelAdmin::SupplierAdmin::_nil ())
+        {
+          std::cerr << "sa is nil!" << std::endl;
+          return 1;
+        }
 
-    poa_manager->activate();
+      CosNotifyChannelAdmin::ProxyID proxy_id {};
+      CosNotifyChannelAdmin::ProxyConsumer_var proxy_consumer_object;
+      try
+        {
+          proxy_consumer_object = supplier_admin->obtain_notification_push_consumer (
+            CosNotifyChannelAdmin::STRUCTURED_EVENT,
+            proxy_id);
+        }
+      catch (CosNotifyChannelAdmin::AdminLimitExceeded const&)
+        {
+          std::cerr << "CosNotifyChannelAdmin::AdminLimitExceeded Exception!" << std::endl;
+          throw;
+        }
 
-    /*Get event_channel*/
-    std::cout << "Create event_channel now"  << std::endl;
-    CosNotifyChannelAdmin::EventChannel_var ec = get_event_channel(orb.in());
+      CosNotifyChannelAdmin::StructuredProxyPushConsumer_var const proxy_consumer =
+        CosNotifyChannelAdmin::StructuredProxyPushConsumer::_narrow (proxy_consumer_object.in ());
 
-    //Instanciating the Supplier
-    CosNotifyComm::StructuredPushSupplier_var sps =
-      CosNotifyComm::StructuredPushSupplier::_nil();
+      try
+        {
+          proxy_consumer->connect_structured_push_supplier (supplier.in ());
+        }
+      catch (CosEventChannelAdmin::AlreadyConnected const&)
+        {
+          std::cerr << "CosEventChannelAdmin::AlreadyConnected" << std::endl;
+          throw;
+        }
+      catch (CORBA::SystemException const& ex)
+        {
+          std::cerr << "System exception occurred during connect: " << ex << std::endl;
+          throw;
+        }
 
+      CosNotification::StructuredEvent event {};
+      event.header.fixed_header.event_type.domain_name = "Test_domain";
+      event.header.fixed_header.event_type.type_name = "Test_type_name";
+      event.header.variable_header.length (0);
 
-    CosNotifyCommImpl::StructuredPushSupplier *pImpl_sps = new CosNotifyCommImpl::StructuredPushSupplier;
-    sps = pImpl_sps->_this();
+      CORBA::Long const data = 5;
+      event.filterable_data.length (1);
+      event.filterable_data[0].name = "data";
+      event.filterable_data[0].value <<= data;
+      event.remainder_of_body <<= data;
 
-    //Obtain a Supplier Admin
-    CosNotifyChannelAdmin::SupplierAdmin_var sa = ec->default_supplier_admin();
-    if( sa.in() == CosNotifyChannelAdmin::SupplierAdmin::_nil() ){
-      std::cerr << "sa is nil!" << std::endl;
+      std::cout << "Sending a demo event...," << std::endl;
+      std::cout << "event.header.fixed_header.event_type.domain_name = "
+                << event.header.fixed_header.event_type.domain_name << std::endl;
+      std::cout << "event.header.fixed_header.event_type.type_name = "
+                << event.header.fixed_header.event_type.type_name << std::endl;
+      std::cout << "event.filterable_data: data=" << data << std::endl;
+
+      try
+        {
+          proxy_consumer->push_structured_event (event);
+        }
+      catch (CORBA::SystemException const& ex)
+        {
+          std::cerr << "System exception occurred during push: " << ex << std::endl;
+          throw;
+        }
+      catch (CORBA::Exception const&)
+        {
+          std::cerr << "Unknown exception occurred during push" << std::endl;
+          throw;
+        }
+
+      ACE_OS::sleep (5);
+
+      try
+        {
+          proxy_consumer->disconnect_structured_push_consumer ();
+        }
+      catch (CORBA::Exception const&)
+        {
+          std::cerr << "Disconnect fail!" << std::endl;
+        }
+
+      orb->shutdown ();
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Supplier done.\n")));
+    }
+  catch (CORBA::Exception const& ex)
+    {
+      ex._tao_print_exception ("Supplier: ");
       return 1;
     }
-
-    //Obtain a Proxy Consumer
-    CosNotifyChannelAdmin::ProxyID proxy_id;
-    CosNotifyChannelAdmin::ClientType ctype = CosNotifyChannelAdmin::STRUCTURED_EVENT;
-
-    CosNotifyChannelAdmin::ProxyConsumer_var proxyCon_obj;
-    try
-    {
-      proxyCon_obj = sa->obtain_notification_push_consumer(ctype, proxy_id);
-    }
-    catch(const CosNotifyChannelAdmin::AdminLimitExceeded&)
-    {
-      std::cerr << "CosNotifyChannelAdmin::AdminLimitExceeded Exception!" << std::endl;
-      throw;
-    }
-
-    CosNotifyChannelAdmin::StructuredProxyPushConsumer_var ppc =
-      CosNotifyChannelAdmin::StructuredProxyPushConsumer::_narrow(proxyCon_obj.in());
-
-    //Connecting a Supplier to a Proxy Consumer
-    try
-    {
-      ppc->connect_structured_push_supplier(sps.in());
-    }
-    catch (const CosEventChannelAdmin::AlreadyConnected&)
-    {
-      std::cerr << "CosEventChannelAdmin::AlreadyConnected" << std::endl;
-      throw;
-    }
-    catch (const CORBA::SystemException& se)
-    {
-      std::cerr << "System exception occurred during connect: " <<
-        se << std::endl;
-      throw;
-    }
-
-
-    //Demo::demo_send_heart_beat(ppc);
-    //Send a Demo Notification
-
-    CosNotification::StructuredEvent event;
-
-    event.header.fixed_header.event_type.domain_name =
-      CORBA::string_dup("Test_domain");
-    event.header.fixed_header.event_type.type_name =
-      CORBA::string_dup("Test_type_name");
-    event.header.variable_header.length(0);
-
-    int data = 5;
-    event.filterable_data.length(1);
-    event.filterable_data[0].name = CORBA::string_dup ("data");
-    event.filterable_data[0].value <<= data;
-    event.remainder_of_body <<= data;
-
-    std::cout << "Sending a demo event...," << std::endl;
-    std::cout << "event.header.fixed_header.event_type.domain_name = "
-      << event.header.fixed_header.event_type.domain_name
-      << std::endl;
-    std::cout << "event.header.fixed_header.event_type.type_name = "
-      << event.header.fixed_header.event_type.type_name
-      << std::endl;
-    std::cout << "event.filterable_data: data=" << data << std::endl;
-
-
-    try{
-      ppc->push_structured_event(event);
-    }
-    catch (const CORBA::SystemException& se)
-    {
-      std::cerr << "System exception occurred during push: "
-        << se << std::endl;
-      throw;
-    }
-    catch (const CORBA::Exception&)
-    {
-      std::cerr << "Unknown exception occurred during push" << std::endl;
-      throw;
-    }
-
-    ACE_OS::sleep (5);
-
-    try{
-      ppc->disconnect_structured_push_consumer();
-    }
-    catch(CORBA::Exception&)
-    {
-      std::cerr << "Disconnect fail!" << std::endl;
-    }
-
-    orb->shutdown();
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Supplier done.\n")));
-  }
-  catch (const CORBA::Exception& ex)
-  {
-    ex._tao_print_exception ("Supplier: ");
-    return 1;
-  }
   catch (...)
-  {
-    std::cerr << "Supplier: Some exceptions was caught!" << std::endl;
-    return 1;
-  }
-
+    {
+      std::cerr << "Supplier: Some exceptions was caught!" << std::endl;
+      return 1;
+    }
 
   return 0;
 }

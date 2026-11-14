@@ -1,15 +1,10 @@
 // -*- C++ -*-
 
-
-//=============================================================================
 /**
  *  @file    Locate_ResponseHandler.h
  *
  *  @author Phil Mesnier <mesnier_p@ociweb>
  */
-//=============================================================================
-
-
 #ifndef TAO_LOCATE_RESPONSEHANDLER_H
 #define TAO_LOCATE_RESPONSEHANDLER_H
 
@@ -49,7 +44,7 @@ class TAO_Async_IORTable_Export TAO_AMH_Locate_ResponseHandler_var
 {
 public:
   TAO_AMH_Locate_ResponseHandler_var ();
-  TAO_AMH_Locate_ResponseHandler_var (TAO_AMH_Locate_ResponseHandler_ptr);
+  explicit TAO_AMH_Locate_ResponseHandler_var (TAO_AMH_Locate_ResponseHandler_ptr);
   TAO_AMH_Locate_ResponseHandler_var (
       TAO_AMH_Locate_ResponseHandler_var const &);
   ~TAO_AMH_Locate_ResponseHandler_var ();
@@ -72,7 +67,6 @@ public:
 private:
   TAO_AMH_Locate_ResponseHandler_ptr ptr_;
 };
-
 
 /**
  * @class TAO_AMH_Locate_ResponseHandler
@@ -101,8 +95,8 @@ public:
   using _ptr_type = TAO_AMH_Locate_ResponseHandler_ptr;
   using _var_type = TAO_AMH_Locate_ResponseHandler_var;
 
-  TAO_AMH_Locate_ResponseHandler (TAO_ServerRequest &sr);
-  ~TAO_AMH_Locate_ResponseHandler () override;
+  explicit TAO_AMH_Locate_ResponseHandler (TAO_ServerRequest &sr);
+  ~TAO_AMH_Locate_ResponseHandler () override = default;
 
   virtual void raise_excep (CORBA::Exception const &ex);
 
@@ -118,6 +112,11 @@ public:
   static TAO_AMH_Locate_ResponseHandler* _narrow (CORBA::Object_ptr);
   static TAO_AMH_Locate_ResponseHandler* _unchecked_narrow (CORBA::Object_ptr);
 
+  TAO_AMH_Locate_ResponseHandler (TAO_AMH_Locate_ResponseHandler const &) = delete;
+  TAO_AMH_Locate_ResponseHandler &operator= (TAO_AMH_Locate_ResponseHandler const &) = delete;
+  TAO_AMH_Locate_ResponseHandler (TAO_AMH_Locate_ResponseHandler &&) = delete;
+  TAO_AMH_Locate_ResponseHandler &operator= (TAO_AMH_Locate_ResponseHandler &&) = delete;
+
 protected:
   /// Return 0.  Should never be used.
   char const *_interface_repository_id () const override;
@@ -126,18 +125,12 @@ protected:
   virtual void *_downcast (char const *repository_id);
 
 private:
-  TAO_AMH_Locate_ResponseHandler (TAO_AMH_Locate_ResponseHandler const &) = delete;
-  TAO_AMH_Locate_ResponseHandler &operator= (TAO_AMH_Locate_ResponseHandler const &) = delete;
-  TAO_AMH_Locate_ResponseHandler (TAO_AMH_Locate_ResponseHandler &&) = delete;
-  TAO_AMH_Locate_ResponseHandler &operator= (TAO_AMH_Locate_ResponseHandler &&) = delete;
-
   CORBA::ORB_var orb_;
 };
 
-
 namespace IORTable
 {
-  // satisfy the native type requirement for the asnyc locate interface
+  /// Satisfies the native type requirement for the async locate interface.
   using Locate_ResponseHandler = TAO_AMH_Locate_ResponseHandler_var const &;
 }
 

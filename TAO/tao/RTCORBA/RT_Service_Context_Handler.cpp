@@ -18,7 +18,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 int
 TAO_RT_Service_Context_Handler::process_service_context (
   TAO_Transport&,
-  const IOP::ServiceContext&,
+  IOP::ServiceContext const &,
   TAO_ServerRequest*)
 {
   return 0;
@@ -89,7 +89,6 @@ TAO_RT_Service_Context_Handler::generate_service_context (
     }
   return 0;
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/OS_NS_unistd.h"
 
@@ -73,7 +72,6 @@ static int do_sysconf ()
   ACE_ERROR ((LM_ERROR,
               "_SC_REALTIME_SIGNALS does not exist on this platform\n"));
 #endif /* _SC_REALTIME_SIGNALS */
-
 
 #if defined (_SC_RTSIG_MAX)
   errno = 0;

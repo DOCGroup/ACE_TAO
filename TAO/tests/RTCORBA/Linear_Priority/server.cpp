@@ -6,20 +6,27 @@
 #include "../check_supported_priorities.cpp"
 #include "../common_args.cpp"
 
+#include <cstring>
+#include <memory>
+
 class test_i :
   public POA_test
 {
 public:
   test_i (CORBA::ORB_ptr orb,
           PortableServer::POA_ptr poa);
+  test_i (test_i const &) = delete;
+  test_i (test_i &&) = delete;
+  test_i &operator= (test_i const &) = delete;
+  test_i &operator= (test_i &&) = delete;
 
-  void method ();
+  void method () override;
 
   //FUZZ: disable check_for_lack_ACE_OS
-  void shutdown ();
+  void shutdown () override;
   //FUZZ: enable check_for_lack_ACE_OS
 
-  PortableServer::POA_ptr _default_POA ();
+  PortableServer::POA_ptr _default_POA () override;
 
 private:
   CORBA::ORB_var orb_;
@@ -55,43 +62,44 @@ test_i::_default_POA ()
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
-static CORBA::ULong stacksize = 0;
-static CORBA::ULong static_threads = 2;
-static CORBA::ULong dynamic_threads = 0;
-static CORBA::Boolean allow_request_buffering = 0;
-static CORBA::ULong max_buffered_requests = 0;
-static CORBA::ULong max_request_buffer_size = 0;
-static CORBA::Boolean allow_borrowing = 0;
-
-static const ACE_TCHAR *ior = ACE_TEXT("ior");
-static int debug = 1;
-
-static const ACE_TCHAR *bands_file = ACE_TEXT ("bands");
-static const ACE_TCHAR *lanes_file = ACE_TEXT ("lanes");
+struct Server_Options
+{
+  CORBA::ULong stacksize {};
+  CORBA::ULong static_threads { 2 };
+  CORBA::ULong dynamic_threads {};
+  CORBA::Boolean allow_request_buffering {};
+  CORBA::ULong max_buffered_requests {};
+  CORBA::ULong max_request_buffer_size {};
+  CORBA::Boolean allow_borrowing {};
+  ACE_TCHAR const *ior { ACE_TEXT ("ior") };
+  ACE_TCHAR const *bands_file { ACE_TEXT ("bands") };
+  ACE_TCHAR const *lanes_file { ACE_TEXT ("lanes") };
+  int debug { 1 };
+};
 
 static int
-parse_args (int argc, ACE_TCHAR **argv)
+parse_args (int argc, ACE_TCHAR **argv, Server_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:b:d:l:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'o':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
 
       case 'b':
-        bands_file = get_opts.opt_arg ();
+        options.bands_file = get_opts.opt_arg ();
         break;
 
       case 'd':
-        debug = ACE_OS::atoi (get_opts.opt_arg ());
+        options.debug = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'l':
-        lanes_file = get_opts.opt_arg ();
+        options.lanes_file = get_opts.opt_arg ();
         break;
 
       case '?':
@@ -113,42 +121,49 @@ parse_args (int argc, ACE_TCHAR **argv)
 static void
 write_iors_to_file (CORBA::Object_ptr object,
                     CORBA::ORB_ptr orb,
-                    const ACE_TCHAR *filename)
+                    ACE_TCHAR const *filename)
 {
-  FILE *file =
-    ACE_OS::fopen (filename, "w");
-  ACE_ASSERT (file != 0);
+  std::unique_ptr<FILE, int (*) (FILE *)> file (
+    ACE_OS::fopen (filename, ACE_TEXT ("w")), ACE_OS::fclose);
+  ACE_ASSERT (file != nullptr);
 
-  CORBA::String_var ior =
+  CORBA::String_var const ior =
     orb->object_to_string (object);
 
-  u_int result = 0;
-  result =
-    ACE_OS::fprintf (file,
+  int const result =
+    ACE_OS::fprintf (file.get (),
                      "%s",
                      ior.in ());
 
-  ACE_ASSERT (result == ACE_OS::strlen (ior.in ()));
+  ACE_ASSERT (result >= 0 &&
+              static_cast<size_t> (result) == std::strlen (ior.in ()));
   ACE_UNUSED_ARG (result);
-
-  ACE_OS::fclose (file);
 }
 
 class Task : public ACE_Task_Base
 {
 public:
   Task (ACE_Thread_Manager &thread_manager,
-        CORBA::ORB_ptr orb);
+        CORBA::ORB_ptr orb,
+        Server_Options const &options);
+  Task (Task const &) = delete;
+  Task (Task &&) = delete;
+  Task &operator= (Task const &) = delete;
+  Task &operator= (Task &&) = delete;
 
-  int svc ();
+  int svc () override;
 
-  CORBA::ORB_var orb_;
+private:
+  CORBA::ORB_var const orb_;
+  Server_Options const options_;
 };
 
 Task::Task (ACE_Thread_Manager &thread_manager,
-            CORBA::ORB_ptr orb)
+            CORBA::ORB_ptr orb,
+            Server_Options const &options)
   : ACE_Task_Base (&thread_manager),
-    orb_ (CORBA::ORB::_duplicate (orb))
+    orb_ (CORBA::ORB::_duplicate (orb)),
+    options_ (options)
 {
 }
 
@@ -160,51 +175,51 @@ Task::svc ()
       CORBA::Object_var object =
         this->orb_->resolve_initial_references ("RTORB");
 
-      RTCORBA::RTORB_var rt_orb =
+      RTCORBA::RTORB_var const rt_orb =
         RTCORBA::RTORB::_narrow (object.in ());
 
       object =
         this->orb_->resolve_initial_references ("RootPOA");
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (object.in ());
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
       CORBA::PolicyList policies;
 
       int result =
         get_priority_bands ("server",
-                            bands_file,
+                            this->options_.bands_file,
                             rt_orb.in (),
                             policies,
-                            debug);
+                            this->options_.debug);
       if (result != 0)
         return result;
 
       result =
         get_priority_lanes ("server",
-                            lanes_file,
+                            this->options_.lanes_file,
                             rt_orb.in (),
-                            stacksize,
-                            static_threads,
-                            dynamic_threads,
-                            allow_request_buffering,
-                            max_buffered_requests,
-                            max_request_buffer_size,
-                            allow_borrowing,
+                            this->options_.stacksize,
+                            this->options_.static_threads,
+                            this->options_.dynamic_threads,
+                            this->options_.allow_request_buffering,
+                            this->options_.max_buffered_requests,
+                            this->options_.max_request_buffer_size,
+                            this->options_.allow_borrowing,
                             policies,
-                            debug);
+                            this->options_.debug);
       if (result != 0)
         return result;
 
-      CORBA::Policy_var priority_model_policy =
+      CORBA::Policy_var const priority_model_policy =
         rt_orb->create_priority_model_policy (RTCORBA::CLIENT_PROPAGATED,
                                               0);
 
       // Implicit_activation policy.
-      CORBA::Policy_var implicit_activation_policy =
+      CORBA::Policy_var const implicit_activation_policy =
         root_poa->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION);
 
       policies.length (policies.length () + 1);
@@ -215,12 +230,12 @@ Task::svc ()
       policies[policies.length () - 1] =
         implicit_activation_policy;
 
-      PortableServer::POA_var poa =
+      PortableServer::POA_var const poa =
         root_poa->create_POA ("child",
                               poa_manager.in (),
                               policies);
 
-      test_i *servant = 0;
+      test_i *servant {};
       ACE_NEW_THROW_EX (servant,
                         test_i (this->orb_.in (),
                                 poa.in ()),
@@ -228,17 +243,17 @@ Task::svc ()
 
       PortableServer::ServantBase_var safe_servant (servant);
 
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         poa->activate_object (servant);
 
-      CORBA::Object_var object_act = poa->id_to_reference (id.in ());
+      CORBA::Object_var const object_act = poa->id_to_reference (id.in ());
 
-      test_var test =
+      test_var const test =
         test::_narrow (object_act.in ());
 
       write_iors_to_file (test.in (),
                           this->orb_.in (),
-                          ior);
+                          this->options_.ior);
 
       poa_manager->activate ();
 
@@ -246,7 +261,7 @@ Task::svc ()
 
       this->orb_->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught");
       return -1;
@@ -260,13 +275,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
+      Server_Options options;
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      int result =
-        parse_args (argc, argv);
-      if (result != 0)
-        return result;
+      int const parse_args_result = parse_args (argc, argv, options);
+      if (parse_args_result != 0)
+        return parse_args_result;
 
       // Make sure we can support multiple priorities that are required
       // for this test.
@@ -278,18 +293,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Create task.
       Task task (thread_manager,
-                 orb.in ());
+                 orb.in (),
+                 options);
 
       // Task activation flags.
-      long flags =
+      long const flags =
         THR_NEW_LWP |
         THR_JOINABLE |
         orb->orb_core ()->orb_params ()->thread_creation_flags ();
 
       // Activate task.
-      result =
-        task.activate (flags);
-      if (result == -1)
+      int const activate_result = task.activate (flags);
+      if (activate_result == -1)
         {
           if (errno == EPERM)
             {
@@ -306,11 +321,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       // Wait for task to exit.
-      result =
-        thread_manager.wait ();
-      ACE_ASSERT (result != -1);
+      int const wait_result = thread_manager.wait ();
+      ACE_ASSERT (wait_result != -1);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught");
       return -1;

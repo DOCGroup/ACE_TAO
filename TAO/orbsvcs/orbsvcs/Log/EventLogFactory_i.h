@@ -28,6 +28,7 @@
 #include "orbsvcs/CosEvent/CEC_EventChannel.h"
 #include "orbsvcs/CosEvent/CEC_Default_Factory.h"
 #include "orbsvcs/Log/EventLog_i.h"
+#include <memory>
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -52,10 +53,8 @@ class TAO_EventLog_Serv_Export TAO_EventLogFactory_i :
 public:
   //= Initialization and termination code.
 
-  /// Constructor.
   TAO_EventLogFactory_i ();
 
-  /// Destructor.
   ~TAO_EventLogFactory_i () override;
 
   /// Initialise the EventChannel and obtain a
@@ -82,9 +81,9 @@ public:
         DsLogAdmin::CapacityAlarmThresholdList const & thresholds) override;
 
   // = Implementation of the CosEventChannelAdmin::ConsumerAdmin methods.
-  CosEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier ();
+  CosEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier () override;
 
-  CosEventChannelAdmin::ProxyPullSupplier_ptr obtain_pull_supplier ();
+  CosEventChannelAdmin::ProxyPullSupplier_ptr obtain_pull_supplier () override;
 
 protected:
   CORBA::RepositoryId create_repositoryid () override;
@@ -95,10 +94,10 @@ protected:
   DsLogAdmin::LogMgr_var log_mgr_;
 
   /// The event channel used for log generated events.
-  TAO_CEC_EventChannel * impl;
+  std::unique_ptr<TAO_CEC_EventChannel> impl;
 
   /// The object used for log generated events.
-  TAO_EventLogNotification * notifier_;
+  std::unique_ptr<TAO_EventLogNotification> notifier_;
 
   /// EventChannel used to obtain the ConsumerAdmin.
   CosEventChannelAdmin::EventChannel_var event_channel_;

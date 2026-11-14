@@ -1,4 +1,5 @@
 #define  ACE_BUILD_SVC_DLL
+#include "ace/Condition_Thread_Mutex.h"
 #include "Performance_Test_Options.h"
 #include "Benchmark_Performance.h"
 
@@ -7,7 +8,12 @@
 class ACE_Svc_Export Cond_Signal_Test : public Benchmark_Performance
 {
 public:
-  virtual int svc ();
+  Cond_Signal_Test () = default;
+  Cond_Signal_Test (Cond_Signal_Test const &) = delete;
+  Cond_Signal_Test (Cond_Signal_Test &&) = delete;
+  Cond_Signal_Test &operator= (Cond_Signal_Test const &) = delete;
+  Cond_Signal_Test &operator= (Cond_Signal_Test &&) = delete;
+  int svc () override;
 
 private:
   static ACE_Thread_Mutex mutex;
@@ -25,7 +31,7 @@ ACE_Condition_Thread_Mutex Cond_Signal_Test::notempty (Cond_Signal_Test::mutex);
 int
 Cond_Signal_Test::svc ()
 {
-  int ni = this->thr_id ();
+  int const ni = this->thr_id ();
   synch_count = 2;
 
   // This is a horrible hack and only works for Solaris threads.  This
@@ -38,9 +44,9 @@ Cond_Signal_Test::svc ()
         while (resources > 0)
         notfull.wait ();
 
-        performance_test_options.thr_work_count[ni]++;
+        ++performance_test_options.thr_work_count[ni];
         resources = performance_test_options.thr_count () - 1;
-        buffer++;
+        ++buffer;
         notempty.signal ();
         mutex.release ();
       }
@@ -50,8 +56,8 @@ Cond_Signal_Test::svc ()
         mutex.acquire ();
         while (resources == 0)
         notempty.wait ();
-        performance_test_options.thr_work_count[ni]++;
-        buffer++;
+        ++performance_test_options.thr_work_count[ni];
+        ++buffer;
         if (--resources == 0)
         notfull.signal ();
         mutex.release ();

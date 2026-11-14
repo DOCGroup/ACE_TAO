@@ -1,13 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Any_Dual_Impl_T.h
  *
  *  @authors  Carlos O'Ryan and Jeff Parsons
  */
-//=============================================================================
-
 
 #ifndef TAO_ANY_DUAL_IMPL_T_H
 #define TAO_ANY_DUAL_IMPL_T_H
@@ -19,7 +16,6 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -38,12 +34,17 @@ namespace TAO
   class Any_Dual_Impl_T : public Any_Impl
   {
   public:
+    Any_Dual_Impl_T (Any_Dual_Impl_T const &) = delete;
+    Any_Dual_Impl_T (Any_Dual_Impl_T &&) = delete;
+    Any_Dual_Impl_T &operator= (Any_Dual_Impl_T const &) = delete;
+    Any_Dual_Impl_T &operator= (Any_Dual_Impl_T &&) = delete;
+
     Any_Dual_Impl_T (_tao_destructor destructor,
                      CORBA::TypeCode_ptr,
                      T * const);
     Any_Dual_Impl_T (_tao_destructor destructor,
                      CORBA::TypeCode_ptr,
-                     const T &);
+                     T const &);
     explicit Any_Dual_Impl_T (CORBA::TypeCode_ptr);
     ~Any_Dual_Impl_T () override = default;
 
@@ -54,30 +55,32 @@ namespace TAO
     static void insert_copy (CORBA::Any &,
                              _tao_destructor destructor,
                              CORBA::TypeCode_ptr,
-                             const T &);
-    static CORBA::Boolean extract (const CORBA::Any &,
+                             T const &);
+    static CORBA::Boolean extract (CORBA::Any const &,
                                    _tao_destructor,
                                    CORBA::TypeCode_ptr,
-                                   const T *&);
+                                   T const *&);
 
     CORBA::Boolean marshal_value (TAO_OutputCDR &) override;
     CORBA::Boolean demarshal_value (TAO_InputCDR &);
     void _tao_decode (TAO_InputCDR &) override;
 
-    const void *value () const;
+    void const *value () const;
     void free_value () override;
 
   protected:
-    void value (const T &);
+    void value (T const &);
 
+    // The base destructor callback owns the stored value; this raw pointer
+    // supports the type-erased CORBA Any insertion/extraction interface.
     T *value_ {};
 
   private:
     static CORBA::Boolean replace (TAO_InputCDR &,
-                                   const CORBA::Any &,
+                                   CORBA::Any const &,
                                    _tao_destructor,
                                    CORBA::TypeCode_ptr,
-                                   const T *&);
+                                   T const *&);
   };
 }
 

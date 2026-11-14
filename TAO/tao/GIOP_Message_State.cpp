@@ -34,7 +34,7 @@ TAO_GIOP_Message_State::parse_message_header_i (ACE_Message_Block &incoming)
                   ));
     }
 
-  char * const buf = incoming.rd_ptr ();
+  char const * const buf = incoming.rd_ptr ();
 
   if (this->parse_magic_bytes (buf) == -1        // Parse magic bytes first
       || this->get_version_info (buf) == -1      // Get version information
@@ -79,7 +79,7 @@ TAO_GIOP_Message_State::parse_message_header_i (ACE_Message_Block &incoming)
 }
 
 int
-TAO_GIOP_Message_State::parse_magic_bytes (char *buf)
+TAO_GIOP_Message_State::parse_magic_bytes (char const *buf)
 {
   if (!((buf [0] == 0x5A || buf [0] == 0x47)     // 'Z' or 'G' (depending on compression)
         && buf [1] == 0x49   // 'I'
@@ -103,7 +103,7 @@ TAO_GIOP_Message_State::parse_magic_bytes (char *buf)
 }
 
 int
-TAO_GIOP_Message_State::get_version_info (char *buf)
+TAO_GIOP_Message_State::get_version_info (char const *buf)
 {
   if (TAO_debug_level > 8)
     {
@@ -138,7 +138,7 @@ TAO_GIOP_Message_State::get_version_info (char *buf)
 }
 
 int
-TAO_GIOP_Message_State::get_byte_order_info (char *buf)
+TAO_GIOP_Message_State::get_byte_order_info (char const *buf)
 {
   if (TAO_debug_level > 8)
     {
@@ -168,7 +168,7 @@ TAO_GIOP_Message_State::get_byte_order_info (char *buf)
     {
       // Read the byte ORDER
       this->byte_order_ =
-        (CORBA::Octet) (buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET]& 0x01);
+        static_cast<CORBA::Octet> (buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & 0x01);
 
       // Read the fragment bit
       this->more_fragments_ =
@@ -181,7 +181,7 @@ TAO_GIOP_Message_State::get_byte_order_info (char *buf)
 }
 
 void
-TAO_GIOP_Message_State::get_payload_size (char *rd_ptr)
+TAO_GIOP_Message_State::get_payload_size (char const *rd_ptr)
 {
   // Move the read pointer
   rd_ptr += TAO_GIOP_MESSAGE_SIZE_OFFSET;
@@ -190,9 +190,9 @@ TAO_GIOP_Message_State::get_payload_size (char *rd_ptr)
 }
 
 CORBA::ULong
-TAO_GIOP_Message_State::read_ulong (const char *rd_ptr) const
+TAO_GIOP_Message_State::read_ulong (char const *rd_ptr) const
 {
-  CORBA::ULong x = 0;
+  CORBA::ULong x {};
 
   // We don't need to do this sort of copy. But some compilers (read it
   // as SunCC) have a problem in deferencing from the

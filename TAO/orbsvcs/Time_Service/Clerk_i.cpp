@@ -7,14 +7,21 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_string.h"
-#include "ace/OS_NS_fcntl.h"
 #include "ace/os_include/os_netdb.h"
+#include "ace/Malloc_Base.h"
 
-// Constructor.
-Clerk_i::Clerk_i () = default;
+#include <cstring>
+#include <string>
 
-// Destructor.
-Clerk_i::~Clerk_i () = default;
+struct Read_Buffer_Deleter
+{
+  ACE_Allocator *allocator;
+
+  void operator() (char *data) const
+  {
+    this->allocator->free (data);
+  }
+};
 
 // Reads the Time Service Server iors from a file instead of using a
 // naming service.
@@ -22,20 +29,21 @@ int
 Clerk_i::read_ior (ACE_TCHAR const * filename)
 {
   // Open the file for reading.
-  ACE_HANDLE f_handle = ACE_OS::open (filename, 0);
+  std::unique_ptr<FILE, int (*) (FILE *)> ior_file (
+    ACE_OS::fopen (filename, ACE_TEXT ("r")), ACE_OS::fclose);
 
-  if (f_handle == ACE_INVALID_HANDLE)
+  if (!ior_file)
     ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT("[CLIENT] Process/Thread Id : (%P/%t) Unable to open %s for writing: %p\n"),
+                       ACE_TEXT("[CLIENT] Process/Thread Id : (%P/%t) Unable to open %s for reading: %p\n"),
                        filename),
                       -1);
-  else
-    this->ior_file_provided_ = true;
+  this->ior_file_provided_ = true;
 
-  ACE_Read_Buffer ior_buffer (f_handle);
+  ACE_Read_Buffer ior_buffer (ior_file.get ());
 
-  char * data = ior_buffer.read (EOF,'\n','\n');
-  if (data == nullptr)
+  std::unique_ptr<char, Read_Buffer_Deleter> data (
+    ior_buffer.read (EOF, '\n', '\n'), Read_Buffer_Deleter {ior_buffer.alloc ()});
+  if (!data)
     ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT("[CLIENT] Process/Thread Id : (%P/%t) Unable to read ior: %p\n")),
                       -1);
@@ -44,15 +52,15 @@ Clerk_i::read_ior (ACE_TCHAR const * filename)
 
   try
     {
-      for (char * str = ACE_OS::strtok (data, "\n");
+      for (char * str = std::strtok (data.get (), "\n");
            str != nullptr;
-           str = ACE_OS::strtok (nullptr, "\n"))
+           str = std::strtok (nullptr, "\n"))
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT("iors -> |%C|\n"),
                       str));
 
-          CORBA::Object_var objref =
+          CORBA::Object_var const objref =
             this->orb_->string_to_object (str);
 
           // Return if the server reference is nil.
@@ -64,19 +72,16 @@ Clerk_i::read_ior (ACE_TCHAR const * filename)
               break;
             }
 
-          CosTime::TimeService_ptr server =
+          CosTime::TimeService_var const server =
             CosTime::TimeService::_narrow (objref.in ());
 
-          this->insert_server (server);
+          this->insert_server (server.in ());
         }
     }
   catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (ACE_TEXT("Exception"));
     }
-
-  ACE_OS::close (f_handle);
-  ior_buffer.alloc ()->free (data);
 
   return result;
 }
@@ -90,13 +95,11 @@ Clerk_i::parse_args (int argc,
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("dt:u:f:o:"));
 
   int c {};
-  int result {};
-
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'd':  // debug flag.
-        TAO_debug_level++;
+        ++TAO_debug_level;
         break;
 
       case 't':  // time in secs after which the clerk should update time.
@@ -110,24 +113,25 @@ Clerk_i::parse_args (int argc,
         break;
 
       case 'f':  // read the server IORs from a file.
-        result = this->read_ior (get_opts.opt_arg ());
-
-        if (result < 0)
-          ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT("[CLERK] Process/Thread Id : (%P/%t) Unable to read ior from %s : %p\n"),
-                             get_opts.opt_arg ()),
-                            -1);
+        {
+          int const result = this->read_ior (get_opts.opt_arg ());
+          if (result < 0)
+            ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT("[CLERK] Process/Thread Id : (%P/%t) Unable to read ior from %s : %p\n"),
+                               get_opts.opt_arg ()),
+                              -1);
+        }
         break;
 
-     case 'o':  // output the Clerk IOR to a file.
-       this->ior_output_file_ =
-         ACE_OS::fopen (get_opts.opt_arg (), ACE_TEXT("w"));
+      case 'o':  // output the Clerk IOR to a file.
+        this->ior_output_file_.reset (
+          ACE_OS::fopen (get_opts.opt_arg (), ACE_TEXT ("w")));
 
-       if (this->ior_output_file_ == nullptr)
-         ORBSVCS_ERROR_RETURN ((LM_ERROR,
+        if (!this->ior_output_file_)
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
                             ACE_TEXT("[SERVER] Process/Thread Id : (%P/%t)Unable to open %s for writing: %\n"),
                             get_opts.opt_arg ()), -1);
-       break;
+        break;
 
       case '?':  // display help for use of the server.
         ACE_FALLTHROUGH;
@@ -157,12 +161,8 @@ Clerk_i::get_first_IOR ()
 {
   try
     {
-      char host_name[MAXHOSTNAMELEN];
-
-      ACE_OS::hostname (host_name,
-                        MAXHOSTNAMELEN);
-      CosNaming::BindingList_var bindings_list;
-      CosNaming::BindingIterator_var iter;
+      CosNaming::BindingList_var bindings_list {};
+      CosNaming::BindingIterator_var iter {};
 
       // Construct the server context name.
       CosNaming::Name server_context_name;
@@ -173,8 +173,7 @@ Clerk_i::get_first_IOR ()
       CORBA::Object_var temp_object =
         this->naming_client_->resolve (server_context_name);
 
-
-      CosNaming::NamingContext_var server_context =
+      CosNaming::NamingContext_var const server_context =
         CosNaming::NamingContext::_narrow (temp_object.in ());
 
       if (CORBA::is_nil (server_context.in ()))
@@ -194,7 +193,7 @@ Clerk_i::get_first_IOR ()
       temp_object =
         server_context->resolve (server_name);
 
-      CosTime::TimeService_var obj =
+      CosTime::TimeService_var const obj =
         CosTime::TimeService::_narrow (temp_object.in ());
 
       if (CORBA::is_nil (obj.in ()))
@@ -229,12 +228,12 @@ Clerk_i::get_first_IOR ()
 // the naming context.
 
 int
-Clerk_i::next_n_IORs (CosNaming::BindingIterator_var iter,
-                      CosNaming::NamingContext_var server_context)
+Clerk_i::next_n_IORs (CosNaming::BindingIterator_var const &iter,
+                      CosNaming::NamingContext_var const &server_context)
 {
   try
     {
-      CosNaming::Binding_var binding;
+      CosNaming::Binding_var binding {};
 
       if (!CORBA::is_nil (iter.in ()))
         {
@@ -248,13 +247,13 @@ Clerk_i::next_n_IORs (CosNaming::BindingIterator_var iter,
               server_name.length (1);
               server_name[0].id = binding->binding_name[0].id;
 
-              CORBA::Object_var temp_object =
+              CORBA::Object_var const temp_object =
                 server_context->resolve (server_name);
 
-              CosTime::TimeService_ptr server =
+              CosTime::TimeService_var const server =
                 CosTime::TimeService::_narrow (temp_object.in ());
 
-              this->insert_server (server);
+              this->insert_server (server.in ());
             }
 
         }
@@ -288,18 +287,20 @@ Clerk_i::create_clerk ()
     {
       // Create a new clerk object. Pass it the timer value, the set
       // of server IORs and the no. of servers.
-      ACE_NEW_RETURN (this->time_service_clerk_impl_,
+      TAO_Time_Service_Clerk *clerk_impl {};
+      ACE_NEW_RETURN (clerk_impl,
                       TAO_Time_Service_Clerk (this->timer_value_,
                                               this->timer_value_usecs_,
                                               this->server_),
-                      0);
+                      -1);
+      PortableServer::ServantBase_var const clerk_impl_owner (clerk_impl);
 
       // Generate IOR of the Clerk and register with POA.
       this->time_service_clerk_ =
-        this->time_service_clerk_impl_->_this ();
+        clerk_impl->_this ();
 
       // Convert the clerk reference to a string.
-      CORBA::String_var objref_clerk =
+      CORBA::String_var const objref_clerk =
         this->orb_->object_to_string (this->time_service_clerk_.in ());
 
       // Print the clerk IOR on the console.
@@ -310,14 +311,11 @@ Clerk_i::create_clerk ()
       // Print the Time Service clerk IOR to a file.
       if (this->ior_output_file_)
         {
-          ACE_OS::fprintf (this->ior_output_file_,
+          ACE_OS::fprintf (this->ior_output_file_.get (),
                            "%s",
                            objref_clerk.in ());
-          ACE_OS::fclose (this->ior_output_file_);
+          this->ior_output_file_.reset ();
         }
-
-      // Register the clerk implementation with the Interface
-      // Repository.  init_IR();
     }
   catch (CORBA::Exception const &ex)
     {
@@ -344,27 +342,24 @@ Clerk_i::register_clerk ()
 
       try
         {
-          CosNaming::NamingContext_var clerk_context =
-            this->naming_client_->bind_new_context(clerk_context_name);
+          this->naming_client_->bind_new_context (clerk_context_name);
         }
       catch (CosNaming::NamingContext::AlreadyBound const &)
         {
           // OK, naming context already exists.
         }
 
-      char host_name[MAXHOSTNAMELEN];
-      char clerk_mc_name[MAXHOSTNAMELEN];
+      char host_name[MAXHOSTNAMELEN] {};
       ACE_OS::hostname (host_name, MAXHOSTNAMELEN);
 
-      //CosNaming::Name clerk_name (clerk_context_name);
       CosNaming::Name clerk_name;
       clerk_name.length (2);
 
-      ACE_OS::strcpy (clerk_mc_name, "Clerk:");
-      ACE_OS::strcat (clerk_mc_name, host_name);
+      std::string clerk_mc_name {"Clerk:"};
+      clerk_mc_name += host_name;
 
       clerk_name[0].id = CORBA::string_dup ("ClerkContext");
-      clerk_name[1].id = CORBA::string_dup (clerk_mc_name);
+      clerk_name[1].id = CORBA::string_dup (clerk_mc_name.c_str ());
 
       this->naming_client_->rebind (clerk_name,
                                      this->time_service_clerk_.in ());
@@ -390,8 +385,7 @@ Clerk_i::init (int argc,
       ACE_Argv_Type_Converter command (argc, argv);
 
       // Set the size of the Server IOR Array.
-      this->server_.max_size (10);
-      this->server_.size (0);
+      this->server_.reserve (Clerk_i::DEFAULT_SERVER_COUNT);
 
       // Call the init of <TAO_ORB_Manager> to initialize the ORB and
       // create a child POA under the root POA.
@@ -435,7 +429,6 @@ Clerk_i::init (int argc,
       if (this->create_clerk () != 0)
         return -1;
 
-
       // Register the clerk with the Naming Service.
       if (!this->ior_file_provided_)
         {
@@ -460,9 +453,9 @@ Clerk_i::run ()
   try
     {
       // Run the main event loop for the ORB.
-      int const r = this->orb_manager_.run ();
+      int const result = this->orb_manager_.run ();
 
-      if (r == -1)
+      if (result == -1)
         ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT("[SERVER] Process/Thread Id : (%P/%t) Clerk_i::run")),
                           -1);
@@ -480,13 +473,5 @@ void
 Clerk_i::insert_server (CosTime::TimeService_ptr server)
 {
   // We duplicate the capacity of the Array.
-  size_t s = this->server_.size ();
-
-  if (this->server_.max_size () == s)
-    this->server_.max_size (2 * s);
-
-  this->server_[s] =
-    CosTime::TimeService::_duplicate (server);
-
-  this->server_.size (s + 1);
+  this->server_.push_back (CosTime::TimeService::_duplicate (server));
 }

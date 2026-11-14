@@ -11,11 +11,14 @@
  */
 //=============================================================================
 
-
 #if !defined (NESTEA_SERVER_I_H)
 #define NESTEA_SERVER_I_H
 
 #include "nestea_i.h"
+
+#include "ace/OS_NS_stdio.h"
+
+#include <memory>
 
 /**
  * @class Nestea_Server_i
@@ -28,11 +31,14 @@
 class Nestea_Server_i
 {
 public:
-  /// Default constructor
-  Nestea_Server_i (const char *filename = "nestea.dat");
+  Nestea_Server_i () = default;
 
-  /// Destructor
-  ~Nestea_Server_i ();
+  ~Nestea_Server_i () = default;
+
+  Nestea_Server_i (Nestea_Server_i const &) = delete;
+  Nestea_Server_i &operator= (Nestea_Server_i const &) = delete;
+  Nestea_Server_i (Nestea_Server_i &&) = delete;
+  Nestea_Server_i &operator= (Nestea_Server_i &&) = delete;
 
   /// Initialize the Server state - parsing arguments and waiting
   int init (int argc, ACE_TCHAR **argv);
@@ -45,26 +51,27 @@ private:
   int parse_args ();
 
   /// Number of command line arguments.
-  int argc_;
+  int argc_ {};
 
   /// The command line arguments.
-  ACE_TCHAR **argv_;
+  ACE_TCHAR **argv_ {};
 
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 
-  PortableServer::POA_var root_poa_;
+  PortableServer::POA_var root_poa_ {};
 
   /// The POA for the Nestea Server.
-  PortableServer::POA_var nestea_poa_;
+  PortableServer::POA_var nestea_poa_ {};
 
   /// The POA manager.
-  PortableServer::POAManager_var poa_manager_;
+  PortableServer::POAManager_var poa_manager_ {};
 
   /// The Nestea Bookshelf Server Implementation.
-  Nestea_i *server_impl_;
+  PortableServer::ServantBase_var server_impl_ {};
 
   /// File where the IOR of the server object is stored.
-  FILE *ior_output_file_;
+  using File_Handle = std::unique_ptr<FILE, int (*) (FILE *)>;
+  File_Handle ior_output_file_ {nullptr, ACE_OS::fclose};
 };
 
 #endif /* NESTEA_SERVER_I_H */

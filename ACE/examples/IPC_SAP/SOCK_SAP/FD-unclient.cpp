@@ -4,7 +4,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_main.h"
 
-
 #if defined (ACE_HAS_MSG) && !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 // ACE_LSOCK Client.
 

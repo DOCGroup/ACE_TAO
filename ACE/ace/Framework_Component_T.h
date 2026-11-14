@@ -36,10 +36,8 @@ template <class Concrete>
 class ACE_Framework_Component_T : public ACE_Framework_Component
 {
 public:
-  /// Constructor.
   ACE_Framework_Component_T (Concrete *concrete);
 
-  /// Destructor.
   ~ACE_Framework_Component_T () override;
 
   /// Close the contained singleton.

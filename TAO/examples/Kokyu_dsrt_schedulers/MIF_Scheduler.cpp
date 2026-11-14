@@ -5,6 +5,9 @@
 #include "tao/CodecFactory/CodecFactory.h"
 #include "tao/ORB_Constants.h"
 
+#include <cstring>
+#include <utility>
+
 MIF_Sched_Param_Policy::MIF_Sched_Param_Policy ()
 {
 }
@@ -35,7 +38,7 @@ MIF_Sched_Param_Policy::value (const MIF_Scheduling::SchedulingParameter& value)
 CORBA::Policy_ptr
 MIF_Sched_Param_Policy::copy ()
 {
-  MIF_Sched_Param_Policy* tmp = 0;
+  MIF_Sched_Param_Policy *tmp {};
   ACE_NEW_THROW_EX (tmp,
                     MIF_Sched_Param_Policy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,
@@ -129,7 +132,6 @@ MIF_Scheduler::create_scheduling_parameter (const MIF_Scheduling::SchedulingPara
 
   return sched_param_policy;
 }
-
 
 void
 MIF_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType& guid,
@@ -230,7 +232,6 @@ MIF_Scheduler::end_nested_scheduling_segment (
 {
 }
 
-
 void
 MIF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
 {
@@ -289,7 +290,7 @@ MIF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
       sc_qos_as_any <<= sc_qos;
 
       CORBA::OctetSeq_var cdtmp = codec_->encode (sc_qos_as_any);
-      sc.context_data = cdtmp.in ();
+      sc.context_data = std::move (*cdtmp.ptr ());
 
 #ifdef KOKYU_DSRT_LOGGING
       ACE_DEBUG ((LM_DEBUG,
@@ -299,7 +300,6 @@ MIF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
       // Add this context to the service context list.
       ri->add_request_service_context (sc, 0);
     }
-
 
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,
@@ -323,13 +323,14 @@ MIF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
                                 CORBA::Policy_out sched_param_out,
                                 CORBA::Policy_out /*implicit_sched_param_out*/)
 {
-  const Kokyu::Svc_Ctxt_DSRT_QoS* sc_qos_ptr = 0;
+  Kokyu::Svc_Ctxt_DSRT_QoS const *sc_qos_ptr {};
 
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG, "(%t|%T):entered MIF_Scheduler::receive_request\n"));
 #endif
 
   RTScheduling::Current::IdType guid;
+  RTScheduling::Current::IdType const *schedule_guid = &guid;
 
   CORBA::String_var operation = ri->operation ();
 
@@ -343,7 +344,7 @@ MIF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
   // Ignore the "_is_a" operation since it may have been invoked
   // locally on the server side as a side effect of another call,
   // meaning that the client hasn't added the service context yet.
-  if (ACE_OS::strcmp ("_is_a", operation.in ()) == 0)
+  if (std::strcmp ("_is_a", operation.in ()) == 0)
     return;
 
   IOP::ServiceContext_var sc =
@@ -357,12 +358,8 @@ MIF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
     }
   else
     {
-      CORBA::OctetSeq oc_seq = CORBA::OctetSeq (sc->context_data.length (),
-                                                 sc->context_data.length (),
-                                                 sc->context_data.get_buffer (),
-                                                 0);
       CORBA::Any sc_qos_as_any;
-      CORBA::Any_var scqostmp = codec_->decode (oc_seq);
+      CORBA::Any_var scqostmp = codec_->decode (sc->context_data);
       sc_qos_as_any = scqostmp.in ();
       //Don't store in a _var, since >>= returns a pointer to an
       //internal buffer and we are not supposed to free it.
@@ -374,8 +371,6 @@ MIF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
 
       ACE_NEW (guid_out.ptr (),
                RTScheduling::Current::IdType);
-      guid_out.ptr ()->length (guid.length ());
-      *(guid_out.ptr ()) = guid;
 
 #ifdef KOKYU_DSRT_LOGGING
       int int_guid;
@@ -386,6 +381,8 @@ MIF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
                   "(%t|%T): Importance = %d, guid = %d in recvd service context\n",
                   importance, int_guid));
 #endif
+      *(guid_out.ptr ()) = std::move (guid);
+      schedule_guid = guid_out.ptr ();
 
       MIF_Scheduling::SchedulingParameter sched_param;
       sched_param.importance = importance;
@@ -394,7 +391,7 @@ MIF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
 
   MIF_Scheduler_Traits::QoSDescriptor_t qos;
   qos.importance_ = importance;
-  this->kokyu_dispatcher_->schedule (guid, qos);
+  this->kokyu_dispatcher_->schedule (*schedule_guid, qos);
 
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG, "(%t|%T): receive_request interceptor done\n"));
@@ -456,7 +453,7 @@ MIF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
       sc_qos_as_any <<= sc_qos;
 
       CORBA::OctetSeq_var cdtmp = codec_->encode (sc_qos_as_any);
-      sc.context_data = cdtmp.in ();
+      sc.context_data = std::move (*cdtmp.ptr ());
 
       // Add this context to the service context list.
       ri->add_reply_service_context (sc, 1);
@@ -520,16 +517,12 @@ MIF_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri)
     }
   else
     {
-      CORBA::OctetSeq oc_seq = CORBA::OctetSeq (sc->context_data.length (),
-                                                sc->context_data.length (),
-                                                sc->context_data.get_buffer (),
-                                                0);
 
       //Don't store in a _var, since >>= returns a pointer to an internal buffer
       //and we are not supposed to free it.
-      const Kokyu::Svc_Ctxt_DSRT_QoS* sc_qos_ptr = 0;
+      Kokyu::Svc_Ctxt_DSRT_QoS const *sc_qos_ptr {};
       CORBA::Any sc_qos_as_any;
-      CORBA::Any_var scqostmp = codec_->decode (oc_seq);
+      CORBA::Any_var scqostmp = codec_->decode (sc->context_data);
       sc_qos_as_any = scqostmp.in ();
       sc_qos_as_any >>= sc_qos_ptr;
       importance = sc_qos_ptr->importance;

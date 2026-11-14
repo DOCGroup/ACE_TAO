@@ -57,7 +57,7 @@ public:
   int handle_close (ACE_HANDLE, ACE_Reactor_Mask mask) override
   {
     ACE_TEST_ASSERT (mask == ACE_Event_Handler::TIMER_MASK);
-    this->close_count_++;
+    ++this->close_count_;
     return 0;
   }
 
@@ -78,7 +78,6 @@ public:
   /// Keeps track of the number of times that <handle_close> is called.
   int close_count_;
 };
-
 
 struct Interval_Handler : public ACE_Event_Handler
 {
@@ -690,7 +689,6 @@ run_main (int argc, ACE_TCHAR *argv[])
                                      ACE_TEXT ("ACE_Timer_Heap (high-res timer)"),
                                      tq_stack),
                   -1);
-
 
   // Create the Timer ID array
   ACE_NEW_RETURN (timer_ids,

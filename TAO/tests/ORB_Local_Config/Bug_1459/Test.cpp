@@ -1,14 +1,3 @@
-// @author Jeff Mirwaisi <jeff_mirwaisi@yahoo.com>
-// @author Iliyan Jeliazkov <iliyan2ociweb.com>
-
-// the following is a simplification of the above problems (see
-// bugzilla 1459) and the different scenarios minus the creation of
-// the servant the service manager or threads even without the servant
-// to demonstrate that the server is capable of responding (which in
-// some cases it isnt) problems can already be seen in the multiple
-// orb scenarios
-
-
 #include "tao/corba.h"
 #include "ace/ARGV.h"
 #include "ace/Dynamic_Service.h"
@@ -19,35 +8,41 @@
 //#define DO_1459_SSLIOP_TEST 1
 
 // UIOP
-const ACE_TCHAR argStrA[] = ACE_TEXT ("AAA -ORBGestalt LOCAL -ORBId ORB-A -ORBSvcConf a.conf");
+constexpr ACE_TCHAR argStrA[] = ACE_TEXT ("AAA -ORBGestalt LOCAL -ORBId ORB-A -ORBSvcConf a.conf");
 
 #if defined (DO_1459_SSLIOP_TEST)
 // SSLIOP
-const ACE_TCHAR argStrB[] = ACE_TEXT ("BBB -ORBGestalt LOCAL -ORBId ORB-B -ORBSvcConf b.conf");
+constexpr ACE_TCHAR argStrB[] = ACE_TEXT ("BBB -ORBGestalt LOCAL -ORBId ORB-B -ORBSvcConf b.conf");
 #endif
 
 // UIPMC
-const ACE_TCHAR argStrC[] = ACE_TEXT ("CCC -ORBGestalt LOCAL -ORBId ORB-C -ORBSvcConf m1.conf");
+constexpr ACE_TCHAR argStrC[] = ACE_TEXT ("CCC -ORBGestalt LOCAL -ORBId ORB-C -ORBSvcConf m1.conf");
 
 // DIOP
-const ACE_TCHAR argStrD[] = ACE_TEXT ("DDD -ORBGestalt LOCAL -ORBId ORB-D -ORBSvcConf d.conf");
+constexpr ACE_TCHAR argStrD[] = ACE_TEXT ("DDD -ORBGestalt LOCAL -ORBId ORB-D -ORBSvcConf d.conf");
 
-// empty file
-const ACE_TCHAR argStrM[] = ACE_TEXT ("MMM -ORBGestalt LOCAL -ORBId ORB-M -ORBSvcConf m.conf");
+// Empty file.
+constexpr ACE_TCHAR argStrM[] = ACE_TEXT ("MMM -ORBGestalt LOCAL -ORBId ORB-M -ORBSvcConf m.conf");
 
-int
+/// @author Jeff Mirwaisi <jeff_mirwaisi@yahoo.com>
+/// @author Iliyan Jeliazkov <iliyan2ociweb.com>
+///
+/// Simplifies Bug 1459 by testing multiple ORBs without creating servants,
+/// service managers, or threads. The scenarios demonstrate that failures can
+/// occur even when the server is otherwise capable of responding.
+static int
 testBug1459 (int, ACE_TCHAR *[])
 {
   ACE_TRACE ("testBug1459");
 
   try
     {
-      int n, error = 0;
+      bool error {};
 
       ACE_ARGV argM (argStrM);
-      n = argM.argc ();
-      CORBA::ORB_var ORBM =
-        CORBA::ORB_init (n, argM.argv ());
+      int argcM = argM.argc ();
+      CORBA::ORB_var const ORBM =
+        CORBA::ORB_init (argcM, argM.argv ());
 
       if (CORBA::is_nil (ORBM.in ()))
         ACE_ERROR_RETURN ((LM_DEBUG,
@@ -57,9 +52,9 @@ testBug1459 (int, ACE_TCHAR *[])
 #if TAO_HAS_UIOP == 1
       // UIOP
       ACE_ARGV argA (argStrA);
-      n = argA.argc ();
-      CORBA::ORB_var ORBA =
-        CORBA::ORB_init (n, argA.argv ());
+      int argcA = argA.argc ();
+      CORBA::ORB_var const ORBA =
+        CORBA::ORB_init (argcA, argA.argv ());
 
       if (CORBA::is_nil (ORBA.in ()))
         ACE_ERROR_RETURN ((LM_DEBUG,
@@ -70,9 +65,9 @@ testBug1459 (int, ACE_TCHAR *[])
 #if defined (DO_1459_SSLIOP_TEST)
       // SSLIOP
       ACE_ARGV argB (argStrB);
-      n = argB.argc ();
-      CORBA::ORB_var ORBB =
-        CORBA::ORB_init (n, argB.argv ());
+      int argcB = argB.argc ();
+      CORBA::ORB_var const ORBB =
+        CORBA::ORB_init (argcB, argB.argv ());
 
       if (CORBA::is_nil (ORBB.in ()))
         ACE_ERROR_RETURN ((LM_DEBUG,
@@ -82,9 +77,9 @@ testBug1459 (int, ACE_TCHAR *[])
 
       // MIOP
       ACE_ARGV argC (argStrC);
-      n = argC.argc ();
-      CORBA::ORB_var ORBC =
-        CORBA::ORB_init (n, argC.argv ());
+      int argcC = argC.argc ();
+      CORBA::ORB_var const ORBC =
+        CORBA::ORB_init (argcC, argC.argv ());
 
       if (CORBA::is_nil (ORBC.in ()))
         ACE_ERROR_RETURN ((LM_DEBUG,
@@ -93,9 +88,9 @@ testBug1459 (int, ACE_TCHAR *[])
 
       // DIOP
       ACE_ARGV argD (argStrD);
-      n = argD.argc ();
-      CORBA::ORB_var ORBD =
-        CORBA::ORB_init (n, argD.argv ());
+      int argcD = argD.argc ();
+      CORBA::ORB_var const ORBD =
+        CORBA::ORB_init (argcD, argD.argv ());
 
       if (CORBA::is_nil (ORBD.in ()))
         ACE_ERROR_RETURN ((LM_DEBUG,
@@ -134,11 +129,11 @@ testBug1459 (int, ACE_TCHAR *[])
 
 #if TAO_HAS_UIOP == 1
       // UIOP
-      ACE_Service_Object *uiop_so =
+      ACE_Service_Object * const uiop_so =
         ACE_Dynamic_Service<ACE_Service_Object>::instance ("UIOP_Factory");
-      if (uiop_so != 0)
+      if (uiop_so != nullptr)
         {
-          ++error;
+          error = true;
           ACE_ERROR ((LM_DEBUG,
                       ACE_TEXT("Unexpected to find ")
                       ACE_TEXT("UIOP_Factory globally\n")));
@@ -147,11 +142,11 @@ testBug1459 (int, ACE_TCHAR *[])
 
 #if defined (DO_1459_SSLIOP_TEST)
       // SSLIOP
-      ACE_Service_Object *ssliop_so =
+      ACE_Service_Object * const ssliop_so =
         ACE_Dynamic_Service<ACE_Service_Object>::instance ("SSLIOP_Factory");
-      if (ssliop_so != 0)
+      if (ssliop_so != nullptr)
         {
-          ++error;
+          error = true;
           ACE_ERROR ((LM_DEBUG,
                       ACE_TEXT("Unexpected to find ")
                       ACE_TEXT("SSLIOP_Factory globally\n")));
@@ -159,45 +154,45 @@ testBug1459 (int, ACE_TCHAR *[])
 #endif
 
       // MIOP
-      ACE_Service_Object *uipmc_so =
+      ACE_Service_Object * const uipmc_so =
         ACE_Dynamic_Service<ACE_Service_Object>::instance ("UIPMC_Factory");
-      if (uipmc_so != 0)
+      if (uipmc_so != nullptr)
         {
-          ++error;
+          error = true;
           ACE_ERROR ((LM_DEBUG,
                       ACE_TEXT("Unexpected to find ")
                       ACE_TEXT("UIPMC_Factory globally\n")));
         }
 
       // DIOP
-      ACE_Service_Object *diop_so =
+      ACE_Service_Object * const diop_so =
         ACE_Dynamic_Service<ACE_Service_Object>::instance ("DIOP_Factory");
-      if (diop_so != 0)
+      if (diop_so != nullptr)
         {
-          ++error;
+          error = true;
           ACE_ERROR ((LM_DEBUG,
                       ACE_TEXT("Unexpected to find ")
                       ACE_TEXT("DIOP_Factory globally\n")));
         }
 
-      ORBM->destroy();
+      ORBM->destroy ();
 
 #if TAO_HAS_UIOP == 1
-      ORBA->destroy();
+      ORBA->destroy ();
 #endif /* TAO_HAS_UIOP */
 
 #if defined (DO_1459_SSLIOP_TEST)
-      ORBB->destroy();
+      ORBB->destroy ();
 #endif
 
-      ORBC->destroy();
+      ORBC->destroy ();
 
-      ORBD->destroy();
+      ORBD->destroy ();
 
-      if (error > 0)
+      if (error)
         return -1;
     }
-  catch(const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Unhandled exception caught");
       return -1;
@@ -206,10 +201,9 @@ testBug1459 (int, ACE_TCHAR *[])
   return 0;
 }
 
-// @brief the main driver
-
+/// Runs the Bug 1459 test.
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  return testBug1459(argc, argv);
+  return testBug1459 (argc, argv);
 }

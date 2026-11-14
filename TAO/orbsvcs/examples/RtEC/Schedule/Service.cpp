@@ -11,18 +11,15 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"
-#include <memory>
 #include "ace/OS_NS_unistd.h"
 
+int parse_args (int argc, ACE_TCHAR *argv[], bool &config_run);
 
-int config_run = 0;
-
-int parse_args (int argc, ACE_TCHAR *argv[]);
-
-typedef TAO_Reconfig_Scheduler<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX> RECONFIG_SCHED_TYPE;
+using RECONFIG_SCHED_TYPE =
+  TAO_Reconfig_Scheduler<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   TAO_EC_Default_Factory::init_svcs ();
 
@@ -32,10 +29,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) == -1)
+      bool config_run {};
+      if (parse_args (argc, argv, config_run) == -1)
         {
           ACE_ERROR ((LM_ERROR,
-                      "Usage: Service [-o IOR_file_name]\n"));
+                      ACE_TEXT ("Usage: Service [-c]\n")));
           return 1;
         }
 
@@ -61,7 +59,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // ****************************************************************
 
       // Create an scheduling service
-      POA_RtecScheduler::Scheduler* sched_impl = 0;
+      POA_RtecScheduler::Scheduler *sched_impl {};
       if (config_run)
         {
           ACE_NEW_RETURN (sched_impl,
@@ -121,8 +119,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Let's say that the execution time for event 1 is 2
       // milliseconds...
-      ACE_Time_Value tv (0, 2000);
-      TimeBase::TimeT time;
+      ACE_Time_Value tv {0, 2000};
+      TimeBase::TimeT time {};
       ORBSVCS_Time::Time_Value_to_TimeT (time, tv);
       scheduler->set (consumer_rt_info1,
                       RtecScheduler::VERY_HIGH_CRITICALITY,
@@ -185,7 +183,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // lie to the scheduler to obtain right priorities; but we
       // don't care if the set is schedulable.
       tv.set (0, 10000);
-      TimeBase::TimeT tmp;
+      TimeBase::TimeT tmp {};
       ORBSVCS_Time::Time_Value_to_TimeT (tmp, tv);
       RtecScheduler::Period_t rate = ACE_U64_TO_U32(tmp);
 
@@ -218,7 +216,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                       1,
                       RtecScheduler::OPERATION);
 
-      RtecEventComm::EventSourceID supplier_id = 1;
+      RtecEventComm::EventSourceID const supplier_id {1};
       ACE_SupplierQOS_Factory supplier_qos;
       supplier_qos.insert (supplier_id,
                            ACE_ES_EVENT_UNDEFINED,
@@ -267,10 +265,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           // generated file, but in the future we may just use the
           // "logical" priorities and define the mapping to OS
           // priorities at run-time.
-          int min_os_priority =
+          int const min_os_priority =
             ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
                                             ACE_SCOPE_THREAD);
-          int max_os_priority =
+          int const max_os_priority =
             ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
                                             ACE_SCOPE_THREAD);
           scheduler->compute_scheduling (min_os_priority,
@@ -296,16 +294,17 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       RtecEventComm::EventSet event1 (1);
       event1.length (1);
-      event1[0].header.type   = ACE_ES_EVENT_UNDEFINED;
+      event1[0].header.type = ACE_ES_EVENT_UNDEFINED;
       event1[0].header.source = supplier_id;
-      event1[0].header.ttl    = 1;
+      event1[0].header.ttl = 1;
 
       RtecEventComm::EventSet event2 (1);
       event2.length (1);
-      event2[0].header.type   = ACE_ES_EVENT_UNDEFINED + 1;
+      event2[0].header.type = ACE_ES_EVENT_UNDEFINED + 1;
       event2[0].header.source = supplier_id;
-      event2[0].header.ttl    = 1;
+      event2[0].header.ttl = 1;
 
+      ACE_Time_Value const push_interval {0, 10000};
       for (int i = 0; i != 200; ++i)
         {
           if (i % 2 == 0)
@@ -317,8 +316,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
               consumer_proxy->push (event2);
             }
 
-          ACE_Time_Value rate (0, 10000);
-          ACE_OS::sleep (rate);
+          ACE_OS::sleep (push_interval);
         }
 
       // ****************************************************************
@@ -328,7 +326,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // just a simple demo so we are going to be lazy.
 
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Service");
       return 1;
@@ -338,26 +336,22 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-int parse_args (int argc, ACE_TCHAR *argv[])
+int
+parse_args (int argc, ACE_TCHAR *argv[], bool &config_run)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("c"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("c"));
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'c':
-        config_run = 1;
+        config_run = true;
         break;
 
       case '?':
       default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-c (config run)"
-                           "\n",
-                           argv [0]),
-                          -1);
+        return -1;
       }
   // Indicates successful parsing of the command line
   return 0;

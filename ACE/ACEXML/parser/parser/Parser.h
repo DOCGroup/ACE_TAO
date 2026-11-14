@@ -12,6 +12,8 @@
 #ifndef _ACEXML_BASIC_PARSER_H_
 #define _ACEXML_BASIC_PARSER_H_
 
+#include <memory>
+
 #include /**/ "ace/pre.h"
 #include "ACEXML/parser/parser/Parser_export.h"
 
@@ -41,11 +43,14 @@
 class ACEXML_PARSER_Export ACEXML_Parser : public ACEXML_XMLReader
 {
 public:
-  /// Default constructor.
   ACEXML_Parser ();
 
-  /// Destructor.
-  virtual ~ACEXML_Parser ();
+  ~ACEXML_Parser () override;
+
+  ACEXML_Parser (ACEXML_Parser const &) = delete;
+  ACEXML_Parser (ACEXML_Parser &&) = delete;
+  ACEXML_Parser &operator= (ACEXML_Parser const &) = delete;
+  ACEXML_Parser &operator= (ACEXML_Parser &&) = delete;
 
   /**
    *  Initialize the parser state.
@@ -57,78 +62,76 @@ public:
    /**
    * Return the current content handler.
    */
-  virtual ACEXML_ContentHandler *getContentHandler () const;
+  ACEXML_ContentHandler *getContentHandler () const override;
 
   /*
    * Return the current DTD handler.
    */
-  virtual ACEXML_DTDHandler *getDTDHandler () const;
+  ACEXML_DTDHandler *getDTDHandler () const override;
 
   /*
    * Return the current entity resolver.
    */
-  virtual ACEXML_EntityResolver *getEntityResolver () const;
+  ACEXML_EntityResolver *getEntityResolver () const override;
 
   /*
    * Return the current error handler.
    */
-  virtual ACEXML_ErrorHandler *getErrorHandler () const;
+  ACEXML_ErrorHandler *getErrorHandler () const override;
 
   /**
    * Look up the value of a feature.  This method allows
    * programmers to check whether a specific feature has been
    * activated in the parser.
    */
-  virtual int getFeature (const ACEXML_Char *name);
+  int getFeature (ACEXML_Char const *name) override;
 
   /**
    * Activating or deactivating a feature.
    */
-  virtual void setFeature (const ACEXML_Char *name,
-                           int boolean_value);
+  void setFeature (ACEXML_Char const *name,
+                   int boolean_value) override;
 
   /*
    * Look up the value of a property.
    */
-  virtual void * getProperty (const ACEXML_Char *name);
+  void * getProperty (ACEXML_Char const *name) override;
 
   /*
    * Set the value of a property.
    */
-  virtual void setProperty (const ACEXML_Char *name,
-                            void *value);
+  void setProperty (ACEXML_Char const *name,
+                    void *value) override;
 
   /*
    * Parse an XML document.
    */
-  virtual void parse (ACEXML_InputSource *input);
+  void parse (ACEXML_InputSource *input) override;
 
   /*
    * Parse an XML document from a system identifier (URI).
    */
-  virtual void parse (const ACEXML_Char *systemId)
-    ;
+  void parse (ACEXML_Char const *systemId) override;
 
   /*
    * Allow an application to register a content event handler.
    */
-  virtual void setContentHandler (ACEXML_ContentHandler *handler);
+  void setContentHandler (ACEXML_ContentHandler *handler) override;
 
   /*
    * Allow an application to register a DTD event handler.
    */
-  virtual void setDTDHandler (ACEXML_DTDHandler *handler);
+  void setDTDHandler (ACEXML_DTDHandler *handler) override;
 
   /*
    * Allow an application to register an entity resolver.
    */
-  virtual void setEntityResolver (ACEXML_EntityResolver *resolver);
+  void setEntityResolver (ACEXML_EntityResolver *resolver) override;
 
   /*
    * Allow an application to register an error event handler.
    */
-  virtual void setErrorHandler (ACEXML_ErrorHandler *handler);
-
+  void setErrorHandler (ACEXML_ErrorHandler *handler) override;
 
 protected:
   /**
@@ -177,7 +180,7 @@ protected:
    * Parse an XML element.  The first character encountered should
    * be the first character of the element "Name".
    *
-   * @param is_root If not 0, then we are expecting to see the "root"
+   * @param is_root If true, then we are expecting to see the "root"
    * element now, and the next element's name need to match the name
    * defined in DOCTYPE definition, i.e., @a this->doctype_.
    *
@@ -186,14 +189,14 @@ protected:
    * of validator or allow the function to return the element name so it
    * can be used in a validator.
    */
-  void parse_element (int is_root);
+  void parse_element (bool is_root);
 
   /**
    *  Parse a content declaration.
    *
    */
-  int parse_content (const ACEXML_Char* startname, const ACEXML_Char*& ns_uri,
-                     const ACEXML_Char*& ns_lname, int ns_flag);
+  int parse_content (ACEXML_Char const *startname, ACEXML_Char const *&ns_uri,
+                     ACEXML_Char const *&ns_lname, bool ns_flag);
 
   /**
    * Parse a character reference, i.e., "&#x20;" or "&#30;".   The first
@@ -211,8 +214,8 @@ protected:
   /**
    * Parse a reference name, i.e., foo in "&foo;" or "%foo;". The first
    * character encountered should be the character following '&' or '%'.
-   * Effectively the same as @sa parse_name but we don't use the parser's
-   * obstack. Caller is responsible for deleting the memory.
+   * Effectively the same as @sa parse_name but uses the parser's alternate
+   * obstack. The returned pointer remains owned by that obstack.
    *
    * @retval  A pointer to name of reference, 0 otherwise.
    */
@@ -363,7 +366,6 @@ protected:
    */
   int parse_defaultdecl ();
 
-
   /**
    * Parse the "children" and "Mixed" non-terminals in contentspec.
    *
@@ -378,13 +380,13 @@ protected:
    * Parse a @c cp non-terminal.  @c cp can either be a @c seq or a @c choice.
    * This function calls itself recursively.
    *
-   * @param skip_open_paren when non-zero, it indicates that the open paren of
+   * @param skip_open_paren when true, it indicates that the open paren of
    *        the @c seq or @c choice has already been removed from the input
    *        stream.
    *
    * @retval 0 on success, -1 otherwise.
    */
-  int parse_child (int skip_open_paren);
+  int parse_child (bool skip_open_paren);
 
   /**
    *  Parse a name from the input CharStream. If @a ch @!= 0, then we have
@@ -477,79 +479,79 @@ protected:
   /**
    * Check if a character @a c is a whitespace.
    *
-   * @retval 1 if @a c is a valid white space character. 0 otherwise.
+   * @retval true if @a c is a valid white space character, false otherwise.
    */
-  int is_whitespace (const ACEXML_Char c) const;
+  bool is_whitespace (ACEXML_Char const c) const;
 
   /**
    * Check if a character @a c is a valid Char.
    *
-   * @retval 1 if @a c is a valid character. 0 otherwise.
+   * @retval true if @a c is a valid character, false otherwise.
    */
-  int isChar (ACEXML_UCS4 c) const;
+  bool isChar (ACEXML_UCS4 c) const;
 
   /**
    * Check if a character @a c is a valid CharRef character.
    *
-   * @retval 1 if @a c is a valid character reference character, 0 otherwise.
+   * @retval true if @a c is a valid character reference character, false otherwise.
    */
-  int isCharRef (const ACEXML_Char c) const;
+  bool isCharRef (ACEXML_Char const c) const;
 
   /**
    * Check if a character @a c is a BaseChar.
    *
-   * @retval 1 if @a c is a valid BaseChar character, 0 otherwise.
+   * @retval true if @a c is a valid BaseChar character, false otherwise.
    */
-  int isBasechar (const ACEXML_Char c) const;
+  bool isBasechar (ACEXML_Char const c) const;
 
   /**
    * Check if a character @a c is a Ideographic.
    *
-   * @retval 1 if @a c is a valid Ideographic character, 0 otherwise.
+   * @retval true if @a c is a valid Ideographic character, false otherwise.
    */
-  int isIdeographic (const ACEXML_Char c) const;
+  bool isIdeographic (ACEXML_Char const c) const;
 
   /**
    * Check if a character @a c is a CombiningChar.
    *
-   * @retval 1 if @a c is a valid CombiningChar character, 0 otherwise.
+   * @retval true if @a c is a valid CombiningChar character, false otherwise.
    */
-  int isCombiningchar (const ACEXML_Char c) const;
+  bool isCombiningchar (ACEXML_Char const c) const;
 
   /**
    * Check if a character @a c is a Digit.
    *
-   * @retval 1 if @a c is a valid Digit character, 0 otherwise.
+   * @retval true if @a c is a valid Digit character, false otherwise.
    */
-  int isDigit (const ACEXML_Char c) const;
+  bool isDigit (ACEXML_Char const c) const;
 
   /**
    * Check if a character @a c is an Extender.
    *
-   * @retval 1 if @a c is a valid Extender character, 0 otherwise.
+   * @retval true if @a c is a valid Extender character, false otherwise.
    */
-  int isExtender (const ACEXML_Char c) const;
+  bool isExtender (ACEXML_Char const c) const;
 
   /**
    * Check if a character @a c is a Letter.
    *
-   * @retval 1 if @a c is a valid Letter character, 0 otherwise.
+   * @retval true if @a c is a valid Letter character, false otherwise.
    */
-  int isLetter (const ACEXML_Char c) const;
+  bool isLetter (ACEXML_Char const c) const;
 
   /**
    * Check if a character is an acceptable NameChar.
    *
-   * @retval 1 if @a c is a valid NameChar character, 0 otherwise.
+   * @retval true if @a c is a valid NameChar character, false otherwise.
    */
-  int isNameChar (const ACEXML_Char c) const;
+  bool isNameChar (ACEXML_Char const c) const;
 
   /**
    * Check if a character is a PubidChar.
    *
-   * @retval 1 if @a c is a valid PubidChar character, 0 otherwise.
+   * @retval true if @a c is a valid PubidChar character, false otherwise.
    */
-  int isPubidChar (const ACEXML_Char c) const;
+  bool isPubidChar (ACEXML_Char const c) const;
 
   /// Get a character.
   virtual ACEXML_Char get ();
@@ -584,7 +586,7 @@ private:
    *
    * @sa skip_whitespace
    */
-  int skip_whitespace_count (ACEXML_Char *peek = 0);
+  size_t skip_whitespace_count (ACEXML_Char *peek = nullptr);
 
   /**
    * Skip an equal sign.
@@ -608,27 +610,27 @@ private:
   /**
    * Check if a character @a c is a Digit.
    *
-   * @retval 1 if @a c is a valid Digit character, 0 otherwise.
+   * @retval true if @a c is a valid Digit character, false otherwise.
    */
-  int isNormalDigit (const ACEXML_Char c) const;
+  bool isNormalDigit (ACEXML_Char const c) const;
 
   /**
    * Dispatch errors to ErrorHandler.
    *
    */
-  void error (const ACEXML_Char* msg);
+  void error (ACEXML_Char const *msg);
 
   /**
    * Dispatch warnings to ErrorHandler.
    *
    */
-  void warning (const ACEXML_Char* msg);
+  void warning (ACEXML_Char const *msg);
 
   /**
    * Dispatch fatal errors to ErrorHandler.
    *
    */
-  void fatal_error (const ACEXML_Char* msg);
+  void fatal_error (ACEXML_Char const *msg);
 
   /**
    * Dispatch prefix mapping calls to the ContentHandler.
@@ -636,15 +638,15 @@ private:
    * @param prefix Namespace prefix
    * @param uri Namespace URI
    * @param name Local name
-   * @param start 1 => startPrefixMapping 0 => endPrefixMapping
+   * @param start true => startPrefixMapping, false => endPrefixMapping
    */
-  void prefix_mapping (const ACEXML_Char* prefix,
-                       const ACEXML_Char* uri,
-                       int start);
+  void prefix_mapping (ACEXML_Char const *prefix,
+                       ACEXML_Char const *uri,
+                       bool start);
   /**
    *  Parse a keyword.
    */
-  int parse_token (const ACEXML_Char* keyword);
+  int parse_token (ACEXML_Char const *keyword);
 
   /**
    *  Push the current context on to the stack.
@@ -655,22 +657,24 @@ private:
   /**
    *  Pop the top element in the stack and replace current context with that.
    */
-  size_t pop_context (int GE_ref);
+  size_t pop_context (bool GE_ref);
 
   /**
    *  Create a new ACEXML_CharStream from @a systemId and @a publicId and
    *  replace the current input stream with the newly created stream.
+   *  Takes ownership of @a cstream.
    */
   virtual int switch_input (ACEXML_CharStream* cstream,
-                            const ACEXML_Char* systemId,
-                            const ACEXML_Char* publicId = 0);
+                            ACEXML_Char const *systemId,
+                            ACEXML_Char const *publicId = nullptr);
   /**
    *  Create a new ACEXML_InputSource from @a systemId and @a publicId and
    *  replace the current input source with the newly created InputSource.
+   *  Takes ownership of @a input.
    */
   virtual int switch_input (ACEXML_InputSource* input,
-                            const ACEXML_Char* systemId,
-                            const ACEXML_Char* publicId = 0);
+                            ACEXML_Char const *systemId,
+                            ACEXML_Char const *publicId = nullptr);
 
   /**
    * Check for a parameter entity reference. This is used to check for the
@@ -680,7 +684,7 @@ private:
    *
    * @retval Number of whitespace characters skipped.
    */
-  int check_for_PE_reference ();
+  size_t check_for_PE_reference ();
 
   /**
    *  Reset the parser state.
@@ -692,7 +696,7 @@ private:
    * Very trivial, non-conformant normalization of a systemid.
    *
    */
-  ACEXML_Char* normalize_systemid (const ACEXML_Char* systemId);
+  std::unique_ptr<ACEXML_Char[]> normalize_systemid (ACEXML_Char const *systemId);
 
   // Feature names:
 
@@ -744,18 +748,18 @@ private:
 
   /// Keeping track of the handlers. We do not manage the memory for
   /// handlers.
-  ACEXML_DTDHandler *dtd_handler_;
-  ACEXML_EntityResolver *entity_resolver_;
-  ACEXML_ContentHandler *content_handler_;
-  ACEXML_ErrorHandler *error_handler_;
+  ACEXML_DTDHandler *dtd_handler_ {};
+  ACEXML_EntityResolver *entity_resolver_ {};
+  ACEXML_ContentHandler *content_handler_ {};
+  ACEXML_ErrorHandler *error_handler_ {};
 
-  /// Document Type
-  ACEXML_Char *doctype_;
+  /// Non-owning pointer into obstack_ used to validate the root element.
+  ACEXML_Char *doctype_ {};
 
-  /// Current parser context
-  ACEXML_Parser_Context* current_;
+  /// Non-owning alias to the context at the top of ctx_stack_.
+  ACEXML_Parser_Context* current_ {};
 
-  /// Stack used to hold the Parser_Context
+  /// Owns contexts pushed here; pop_context() and reset() delete removed contexts.
   ACE_Unbounded_Stack<ACEXML_Parser_Context*> ctx_stack_;
 
   /*
@@ -765,10 +769,10 @@ private:
    * both fall under different namespaces.
    *
    */
-  /// Set used to hold the general entity references that are active.
+  /// Non-owning references into alt_stack_ for active general entities.
   ACE_Unbounded_Stack<ACEXML_Char*> GE_reference_;
 
-  /// Set used to hold the parameter entity references that are active.
+  /// Non-owning references into alt_stack_ for active parameter entities.
   ACE_Unbounded_Stack<ACEXML_Char*> PE_reference_;
 
   /// Obstack used by the parser to hold all the strings parsed
@@ -781,7 +785,7 @@ private:
   ACEXML_NamespaceSupport xml_namespace_;
 
   /// T => We are processing a nested namespace
-  int nested_namespace_;
+  int nested_namespace_ {};
 
   /// Set of internal parsed general entities in the document
   ACEXML_Entity_Manager internal_GE_;
@@ -805,39 +809,39 @@ private:
   ACEXML_Entity_Manager notations_;
 
   /// State of the parser when it encounters a reference.
-  ACEXML_ParserInt::ReferenceState ref_state_;
+  ACEXML_ParserInt::ReferenceState ref_state_ {ACEXML_ParserInt::INVALID};
 
   /// T => We are parsing an external subset
-  int external_subset_;
+  bool external_subset_ {};
 
   /// T => We are parsing an external entity value
-  int external_entity_;
+  int external_entity_ {};
 
   /// T => Internal DTD has parameter entity references
-  int has_pe_refs_;
+  bool has_pe_refs_ {};
 
   /// If set, the document is a standalone XML document
-  int standalone_;
+  bool standalone_ {};
 
   /// If set, the document has an external DTD subset
-  int external_dtd_;
+  bool external_dtd_ {};
 
   /// If set, the document has an internal DTD
-  int internal_dtd_;
+  bool internal_dtd_ {};
 
   /// Feature flags
   /// If set, the parser should parse a document without a prolog
-  int simple_parsing_;
+  bool simple_parsing_ {};
 
   /// If set, the parser should also validate
-  int validate_;
+  bool validate_ {true};
 
   /// If set, the parser should allow access by namespace qualified names.
-  int namespaces_;
+  bool namespaces_ {true};
 
   /// If set, the parser should include namespace declarations in the list
   /// of attributes of an element.
-  int namespace_prefixes_;
+  bool namespace_prefixes_ {};
 };
 
 #if defined (__ACEXML_INLINE__)

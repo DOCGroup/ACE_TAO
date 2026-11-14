@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   DIOP_Transport.h
  *
  *  @author  Michael Kircher
  */
-//=============================================================================
 
 #ifndef TAO_DIOP_TRANSPORT_H
 #define TAO_DIOP_TRANSPORT_H
@@ -50,12 +48,10 @@ using TAO_DIOP_SVC_HANDLER = ACE_Svc_Handler<ACE_SOCK_DGRAM, ACE_NULL_SYNCH>;
 class TAO_Strategies_Export TAO_DIOP_Transport : public TAO_Transport
 {
 public:
-  /// Constructor.
   TAO_DIOP_Transport (TAO_DIOP_Connection_Handler *handler,
                       TAO_ORB_Core *orb_core);
 
-  /// Default destructor.
-  ~TAO_DIOP_Transport () = default;
+  ~TAO_DIOP_Transport () override = default;
 
   /// Look for the documentation in Transport.h.
   int handle_input (TAO_Resume_Handle &rh,

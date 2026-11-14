@@ -8,8 +8,8 @@
 #include <array>
 #include <cstddef>
 #include <memory>
-std::size_t
-TAO_IDL_CPP_Keyword_Table::hash (char const *str, std::size_t len)
+size_t
+TAO_IDL_CPP_Keyword_Table::hash (char const *str, size_t len)
 {
   static constexpr std::array<unsigned char, 128> asso_values =
     {
@@ -34,10 +34,10 @@ TAO_IDL_CPP_Keyword_Table::hash (char const *str, std::size_t len)
 }
 
 struct TAO_IDL_CPP_Keyword_Entry const *
-TAO_IDL_CPP_Keyword_Table::lookup (char const *str, std::size_t len)
+TAO_IDL_CPP_Keyword_Table::lookup (char const *str, size_t len)
 {
-  constexpr std::size_t MIN_WORD_LENGTH {2};
-  constexpr std::size_t MAX_WORD_LENGTH {16};
+  constexpr size_t MIN_WORD_LENGTH {2};
+  constexpr size_t MAX_WORD_LENGTH {16};
   constexpr int MIN_HASH_VALUE {6};
   constexpr int MAX_HASH_VALUE {251};
 
@@ -299,7 +299,7 @@ TAO_IDL_CPP_Keyword_Table::lookup (char const *str, std::size_t len)
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
     {
-      std::size_t const key = hash (str, len);
+      size_t const key = hash (str, len);
 
       if (key <= MAX_HASH_VALUE && key >= MIN_HASH_VALUE)
         {

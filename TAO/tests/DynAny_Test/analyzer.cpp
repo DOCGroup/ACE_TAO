@@ -49,10 +49,9 @@
 
 DynAnyAnalyzer::DynAnyAnalyzer (CORBA::ORB_ptr orb,
                                 DynamicAny::DynAnyFactory_ptr dynany_factory,
-                                int debug)
+                                bool debug)
   : orb_ (CORBA::ORB::_duplicate (orb)),
     dynany_factory_ (DynamicAny::DynAnyFactory::_duplicate (dynany_factory)),
-    level_ (0),
     debug_ (debug)
 {
 }
@@ -66,10 +65,6 @@ void DynAnyAnalyzer::tab (int t)
           ACE_DEBUG ((LM_DEBUG, "\t"));
         }
     }
-}
-
-DynAnyAnalyzer::~DynAnyAnalyzer ()
-{
 }
 
 void DynAnyAnalyzer::resetTab ()
@@ -110,7 +105,7 @@ void DynAnyAnalyzer::analyze (DynamicAny::DynAny_ptr da)
 
         if (da->seek (0) )
           {
-            level_++;
+            ++level_;
 
             do
               {
@@ -135,7 +130,7 @@ void DynAnyAnalyzer::analyze (DynamicAny::DynAny_ptr da)
 
               } while (da->next ());
 
-            level_--;
+            --level_;
           }
       }
       break; // end tk_struct
@@ -162,7 +157,7 @@ void DynAnyAnalyzer::analyze (DynamicAny::DynAny_ptr da)
 
             if (ds->seek (0UL))
               {
-                level_++;
+                ++level_;
 
                 do
                   {
@@ -179,10 +174,10 @@ void DynAnyAnalyzer::analyze (DynamicAny::DynAny_ptr da)
                         analyze (cc.in ());
                       }
 
-                    i++;
+                    ++i;
                   } while (da->next ());
 
-                level_--;
+                --level_;
               }
           }
       }
@@ -198,7 +193,7 @@ void DynAnyAnalyzer::analyze (DynamicAny::DynAny_ptr da)
                         "ARRAY\n"));
           }
 
-        level_++;
+        ++level_;
 
         CORBA::ULong const len =
           dup->length ();
@@ -221,7 +216,7 @@ void DynAnyAnalyzer::analyze (DynamicAny::DynAny_ptr da)
 
             da->next ();
           }
-        level_--;
+        --level_;
       }
       break;
 

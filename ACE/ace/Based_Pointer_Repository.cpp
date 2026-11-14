@@ -43,15 +43,13 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Based_Pointer_Repository_Rep);
 ACE_Based_Pointer_Repository::ACE_Based_Pointer_Repository ()
 {
   ACE_TRACE ("ACE_Based_Pointer_Repository::ACE_Based_Pointer_Repository");
-  ACE_NEW (this->rep_,
+  ACE_Based_Pointer_Repository_Rep *rep {};
+  ACE_NEW (rep,
            ACE_Based_Pointer_Repository_Rep);
+  this->rep_.reset (rep);
 }
 
-ACE_Based_Pointer_Repository::~ACE_Based_Pointer_Repository ()
-{
-  ACE_TRACE ("ACE_Based_Pointer_Repository::~ACE_Based_Pointer_Repository");
-  delete this->rep_;
-}
+ACE_Based_Pointer_Repository::~ACE_Based_Pointer_Repository () = default;
 
 // Search for appropriate base address in repository
 
@@ -60,7 +58,7 @@ ACE_Based_Pointer_Repository::find (void *addr, void *&base_addr)
 {
   ACE_TRACE ("ACE_Based_Pointer_Repository::find");
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->rep_->lock_, -1);
-  ACE_Based_Pointer_Repository_Rep::MAP_ENTRY *ce = nullptr;
+  ACE_Based_Pointer_Repository_Rep::MAP_ENTRY *ce {};
 
   for (ACE_Based_Pointer_Repository_Rep::MAP_ITERATOR iter (this->rep_->addr_map_);
        iter.next (ce) != 0;
@@ -98,7 +96,7 @@ ACE_Based_Pointer_Repository::unbind (void *addr)
 {
   ACE_TRACE ("ACE_Based_Pointer_Repository::unbind");
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->rep_->lock_, -1);
-  ACE_Based_Pointer_Repository_Rep::MAP_ENTRY *ce = nullptr;
+  ACE_Based_Pointer_Repository_Rep::MAP_ENTRY *ce {};
 
   // Search for service handlers that requested notification.
 

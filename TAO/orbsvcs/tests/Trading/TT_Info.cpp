@@ -3,7 +3,6 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 
-
 const char* TT_Info::INTERFACE_NAMES[] =
 {
   "TAO_Trader_Test::Remote_IO",
@@ -147,8 +146,8 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
   for (int length = prop_seq.length (), k = 0; k < length; k++)
     {
       CORBA::ULong seq_length = 0, i= 0;
-      CORBA::Any* value = 0;
-      CORBA::TypeCode_ptr tc = 0;
+      CORBA::Any const* value {};
+      CORBA::TypeCode_ptr tc {};
       ACE_DEBUG ((LM_DEBUG, "%-15s: ", prop_seq[k].name.in ()));
       try
         {
@@ -171,13 +170,13 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
           ACE_DEBUG ((LM_DEBUG, "Error retrieving property value.\n"));
         }
 
-      if (tc == 0)
+      if (tc == nullptr)
         continue;
       int check = tc->equal (TAO_Trader_Test::_tc_StringSeq);
 
       if (check)
         {
-          const TAO_Trader_Test::StringSeq* str_seq = 0;
+          TAO_Trader_Test::StringSeq const *str_seq {};
           (*value) >>= str_seq;
 
           for (seq_length = str_seq->length (), i = 0; i < seq_length; i++)
@@ -191,7 +190,7 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
 
           if (check)
             {
-              const TAO_Trader_Test::ULongSeq* ulong_seq = 0;
+              TAO_Trader_Test::ULongSeq const *ulong_seq {};
               (*value) >>= ulong_seq;
 
               for (seq_length = ulong_seq->length (), i = 0; i < seq_length; i++)
@@ -260,40 +259,42 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
 }
 
 TT_Parse_Args::TT_Parse_Args (int& argc, ACE_TCHAR** argv)
-  : federated_ (0),
-    quiet_ (0),
-    ior_ (0)
+  : federated_ (false),
+    quiet_ (false),
+    ior_ (nullptr)
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
   while (arg_shifter.is_anything_left ())
     {
-      const ACE_TCHAR *current_arg = arg_shifter.get_current ();
+      ACE_TCHAR const * const current_arg = arg_shifter.get_current ();
 
       if (ACE_OS::strcmp (current_arg, ACE_TEXT("-f")) == 0 ||
           ACE_OS::strcmp (current_arg, ACE_TEXT("-federate")) == 0)
         {
           arg_shifter.consume_arg ();
-          this->federated_ = 1;
+          this->federated_ = true;
         }
       else if (ACE_OS::strcmp (current_arg, ACE_TEXT("-q")) == 0 ||
                ACE_OS::strcmp (current_arg, ACE_TEXT("-quiet")) == 0)
         {
           arg_shifter.consume_arg ();
-          this->quiet_ = 1;
+          this->quiet_ = true;
         }
       else if (ACE_OS::strcmp (current_arg, ACE_TEXT("-i")) == 0 ||
                ACE_OS::strcmp (current_arg, ACE_TEXT("-iorfile")) == 0)
         {
           arg_shifter.consume_arg ();
-          FILE* ior_file = 0;
+          FILE* ior_file {};
+          bool close_ior_file {};
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* file_name = arg_shifter.get_current ();
-              ior_file = ACE_OS::fopen (file_name, "r");
+              ACE_TCHAR const * const file_name = arg_shifter.get_current ();
+              ior_file = ACE_OS::fopen (file_name, ACE_TEXT ("r"));
+              close_ior_file = ior_file != nullptr;
 
-              if (ior_file == 0)
+              if (ior_file == nullptr)
                 ACE_ERROR ((LM_ERROR,
                             "Unable to open %s for reading: %p\n",
                             file_name));
@@ -303,9 +304,9 @@ TT_Parse_Args::TT_Parse_Args (int& argc, ACE_TCHAR** argv)
           else
             ior_file = ACE_OS::fdopen (ACE_STDIN, ACE_TEXT("r"));
 
-          if (ior_file != 0)
+          if (ior_file != nullptr)
             {
-              ACE_Read_Buffer read_buffer (ior_file, 1);
+              ACE_Read_Buffer read_buffer (ior_file, close_ior_file);
               this->ior_ = read_buffer.read ();
             }
           else
@@ -327,13 +328,13 @@ TT_Parse_Args::~TT_Parse_Args ()
   alloc->free (this->ior_);
 }
 
-int
+bool
 TT_Parse_Args::federated () const
 {
   return this->federated_;
 }
 
-int
+bool
 TT_Parse_Args::quiet () const
 {
   return this->quiet_;

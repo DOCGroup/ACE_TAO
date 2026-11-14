@@ -11,6 +11,8 @@
 #include "ace/os_include/sys/os_socket.h"
 #include "ace/Svc_Handler.h"
 
+#include <memory>
+
 #if !defined (__ACE_INLINE__)
 #include "tao/Connection_Handler.inl"
 #endif /* __ACE_INLINE__ */
@@ -53,7 +55,7 @@ TAO_Connection_Handler::set_socket_option (ACE_SOCK &sock,
   if (snd_size != 0
       && sock.set_option (SOL_SOCKET,
                           SO_SNDBUF,
-                          (void *) &snd_size,
+                          std::addressof (snd_size),
                           sizeof (snd_size)) == -1)
   {
     if (TAO_debug_level)
@@ -71,7 +73,7 @@ TAO_Connection_Handler::set_socket_option (ACE_SOCK &sock,
   if (rcv_size != 0
       && sock.set_option (SOL_SOCKET,
                           SO_RCVBUF,
-                          (void *) &rcv_size,
+                          std::addressof (rcv_size),
                           sizeof (int)) == -1)
   {
       if (TAO_debug_level)
@@ -101,7 +103,7 @@ TAO_Connection_Handler::set_socket_option (ACE_SOCK &sock,
 int
 TAO_Connection_Handler::svc_i ()
 {
-  int result = 0;
+  int result {};
 
   if (TAO_debug_level > 0)
     TAOLIB_DEBUG ((LM_DEBUG,
@@ -111,14 +113,14 @@ TAO_Connection_Handler::svc_i ()
   // in a reactive handler, except that this can simply block waiting
   // for input.
 
-  ACE_Time_Value *max_wait_time = nullptr;
+  ACE_Time_Value *max_wait_time {};
   ACE_Time_Value timeout;
   ACE_Time_Value current_timeout;
 
   if (this->orb_core_->thread_per_connection_timeout (timeout))
     {
       current_timeout = timeout;
-      max_wait_time = &current_timeout;
+      max_wait_time = std::addressof (current_timeout);
     }
 
   TAO_Resume_Handle rh (this->orb_core_, ACE_INVALID_HANDLE);
@@ -191,7 +193,7 @@ TAO_Connection_Handler::handle_output_eh (ACE_HANDLE, ACE_Event_Handler * eh)
   // resume the handle once data is written..
   TAO_Resume_Handle resume_handle (this->orb_core (), eh->get_handle ());
 
-  int return_value = 0;
+  int return_value {};
   this->pre_io_hook (return_value);
   if (return_value != 0)
     {
@@ -279,7 +281,7 @@ TAO_Connection_Handler::handle_input_internal (
 
   TAO_Resume_Handle resume_handle (this->orb_core (), eh->get_handle ());
 
-  int return_value = 0;
+  int return_value {};
 
   this->pre_io_hook (return_value);
 

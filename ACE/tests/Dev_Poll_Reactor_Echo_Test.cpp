@@ -60,7 +60,6 @@ private:
   unsigned int call_count_;
 };
 
-
 class Server : public SVC_HANDLER
 {
 public:
@@ -126,7 +125,7 @@ Client::handle_output (ACE_HANDLE handle)
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Client::handle_output; handle = %d")
-              ACE_TEXT (" bytes sent %d\n"),
+              ACE_TEXT (" bytes sent %b\n"),
               handle,
               bytes_sent));
 
@@ -164,7 +163,7 @@ Client::handle_input (ACE_HANDLE handle)
       char buffer[BUFSIZ];
       ssize_t bytes_read = this->peer ().recv (buffer, BUFSIZ);
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%t) Client::handle_input handle = %d bytes_read = %d\n"),
+                  ACE_TEXT ("(%t) Client::handle_input handle = %d bytes_read = %b\n"),
                   handle, bytes_read));
 
       if (bytes_read == -1 && errno == EWOULDBLOCK)
@@ -200,7 +199,7 @@ Client::handle_timeout (const ACE_Time_Value &, const void *)
                              ACE_TEXT ("in ACE_Dev_Poll_Reactor")),
                             -1);
         }
-      this->call_count_++;
+      ++this->call_count_;
       return 0;
     }
   else
@@ -244,7 +243,7 @@ Server::handle_input (ACE_HANDLE handle)
       char buffer[BUFSIZ];
       ssize_t bytes_read = this->peer ().recv (buffer, BUFSIZ);
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%t) Server::handle_input handle = %d bytes_read = %d\n"),
+                  ACE_TEXT ("(%t) Server::handle_input handle = %d bytes_read = %b\n"),
                   handle, bytes_read));
 
       if (bytes_read == -1 && errno == EWOULDBLOCK)
@@ -306,7 +305,7 @@ Server::handle_output (ACE_HANDLE handle)
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%t) Server::handle_output; handle = %d")
-                  ACE_TEXT (" bytes sent %d\n"),
+                  ACE_TEXT (" bytes sent %b\n"),
                   handle, bytes_sent));
 
       if (bytes_sent == -1)

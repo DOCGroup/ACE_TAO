@@ -15,18 +15,20 @@
 class test_i : public virtual POA_RedirectionTest::test
 {
 public:
-  /// Constructor.
-  test_i (CORBA::Short num,
-          CORBA::ORB_ptr orb);
+  test_i (CORBA::Short num, CORBA::ORB_ptr orb);
 
-  /// Destructor.
-  ~test_i ();
+  ~test_i () override = default;
 
   /// Return the number assigned to this object.
-  virtual CORBA::Short number ();
+  CORBA::Short number () override;
 
   /// Shutdown the ORB.
-  virtual void shutdown ();
+  void shutdown () override;
+
+  test_i (test_i const &) = delete;
+  test_i (test_i &&) = delete;
+  test_i &operator= (test_i const &) = delete;
+  test_i &operator= (test_i &&) = delete;
 
 private:
   /// The number assigned to this object.

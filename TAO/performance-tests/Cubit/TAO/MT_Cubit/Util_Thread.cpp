@@ -5,8 +5,6 @@
 Util_Thread::Util_Thread (Task_State *ts,
                           ACE_Thread_Manager *thr_mgr)
   : ACE_Task<ACE_NULL_SYNCH> (thr_mgr),
-    done_ (0),
-    number_of_computations_ (0),
     ts_ (ts)
 {
 }
@@ -88,7 +86,7 @@ Util_Thread::run_computations ()
         }
 
       this->computation ();
-      this->number_of_computations_++;
+      ++this->number_of_computations_;
     }
 
   return 0;

@@ -1,14 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    DynamicAny.h
  *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
-//=============================================================================
-
-
 #ifndef TAO_DYNAMICANY_H
 #define TAO_DYNAMICANY_H
 #include /**/ "ace/pre.h"
@@ -31,8 +26,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_DynamicAny_Export TAO_DynamicAny_Loader : public TAO_Object_Loader
 {
 public:
-  /// Constructor
   TAO_DynamicAny_Loader ();
+
+  TAO_DynamicAny_Loader (TAO_DynamicAny_Loader const &) = delete;
+  TAO_DynamicAny_Loader &operator= (TAO_DynamicAny_Loader const &) = delete;
+  TAO_DynamicAny_Loader (TAO_DynamicAny_Loader &&) = delete;
+  TAO_DynamicAny_Loader &operator= (TAO_DynamicAny_Loader &&) = delete;
 
   /// Creates a DynamicAny factory and returns it.
   CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
@@ -45,7 +44,6 @@ public:
 
 static int
 TAO_Requires_DynamicAny_Initializer = TAO_DynamicAny_Loader::Initializer ();
-
 
 ACE_STATIC_SVC_DECLARE (TAO_DynamicAny_Loader)
 ACE_FACTORY_DECLARE (TAO_DynamicAny, TAO_DynamicAny_Loader)

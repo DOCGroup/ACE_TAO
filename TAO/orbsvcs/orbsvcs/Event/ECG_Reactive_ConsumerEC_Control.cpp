@@ -6,12 +6,13 @@
 
 #include "ace/Reactor.h"
 
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ECG_Reactive_ConsumerEC_Control::
-     TAO_ECG_Reactive_ConsumerEC_Control (const ACE_Time_Value &rate,
-                                          const ACE_Time_Value &timeout,
+     TAO_ECG_Reactive_ConsumerEC_Control (ACE_Time_Value const &rate,
+                                          ACE_Time_Value const &timeout,
                                           TAO_EC_Gateway_IIOP* gateway,
                                           CORBA::ORB_ptr orb)
   : rate_ (rate),
@@ -27,10 +28,6 @@ TAO_ECG_Reactive_ConsumerEC_Control::
     this->orb_->orb_core ()->reactor ();
 }
 
-TAO_ECG_Reactive_ConsumerEC_Control::~TAO_ECG_Reactive_ConsumerEC_Control ()
-{
-}
-
 void
 TAO_ECG_Reactive_ConsumerEC_Control::query_eventchannel ()
 {
@@ -44,18 +41,18 @@ TAO_ECG_Reactive_ConsumerEC_Control::query_eventchannel ()
           this->event_channel_not_exist (gateway_);
         }
     }
-  catch (const CORBA::OBJECT_NOT_EXIST&)
+  catch (CORBA::OBJECT_NOT_EXIST const &)
     {
       this->event_channel_not_exist (gateway_);
     }
-  catch (const CORBA::TRANSIENT&)
+  catch (CORBA::TRANSIENT const &)
     {
       // This is TAO's minor code for a failed connection, we may
       // want to be more lenient in the future..
       // if (transient.minor () == 0x54410085)
       this->event_channel_not_exist (gateway_);
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // Ignore all exceptions
     }
@@ -63,7 +60,7 @@ TAO_ECG_Reactive_ConsumerEC_Control::query_eventchannel ()
 
 void
 TAO_ECG_Reactive_ConsumerEC_Control::handle_timeout (
-      const ACE_Time_Value &,
+      ACE_Time_Value const &,
       const void *)
 {
   // NOTE, setting RELATIVE_RT_TIMEOUT_POLICY for the duration of
@@ -91,12 +88,12 @@ TAO_ECG_Reactive_ConsumerEC_Control::handle_timeout (
 
       this->policy_current_->set_policy_overrides (policies.in (),
                                                    CORBA::SET_OVERRIDE);
-      for (CORBA::ULong i = 0; i != policies->length (); ++i)
+      for (CORBA::ULong i {}; i != policies->length (); ++i)
         {
           policies[i]->destroy ();
         }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // Ignore all exceptions
     }
@@ -132,7 +129,7 @@ TAO_ECG_Reactive_ConsumerEC_Control::activate ()
         // Schedule the timer after these policies has been set, because the
         // handle_timeout uses these policies, if done in front, the channel
         // can crash when the timeout expires before initiazation is ready.
-        timer_id_ = this->reactor_->schedule_timer (&this->adapter_,
+        timer_id_ = this->reactor_->schedule_timer (std::addressof (this->adapter_),
                                                     nullptr,
                                                     this->rate_,
                                                     this->rate_);
@@ -140,7 +137,7 @@ TAO_ECG_Reactive_ConsumerEC_Control::activate ()
           return -1;
       }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       return -1;
     }
@@ -152,7 +149,7 @@ TAO_ECG_Reactive_ConsumerEC_Control::activate ()
 int
 TAO_ECG_Reactive_ConsumerEC_Control::shutdown ()
 {
-  int r = 0;
+  int r {};
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
   r = this->reactor_->cancel_timer (timer_id_);
@@ -175,7 +172,7 @@ TAO_ECG_Reactive_ConsumerEC_Control::event_channel_not_exist (
 
       gateway->cleanup_consumer_proxies ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "TAO_EC_Reactive_ConsumerControl::event_channel_not_exist");
@@ -194,7 +191,7 @@ TAO_ECG_Reactive_ConsumerEC_Control::system_exception (
 
       gateway->cleanup_consumer_proxies ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // Ignore all exceptions..
     }
@@ -210,8 +207,8 @@ TAO_ECG_Reactive_ConsumerEC_Control_Adapter::TAO_ECG_Reactive_ConsumerEC_Control
 
 int
 TAO_ECG_Reactive_ConsumerEC_Control_Adapter::handle_timeout (
-      const ACE_Time_Value &tv,
-      const void *arg)
+      ACE_Time_Value const &tv,
+      void const *arg)
 {
   this->adaptee_->handle_timeout (tv, arg);
   return 0;

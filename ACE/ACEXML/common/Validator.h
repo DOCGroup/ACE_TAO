@@ -53,7 +53,6 @@ public:
                             const ACEXML_Char *qName) = 0;
 };
 
-
 #include /**/ "ace/post.h"
 
 #endif /* _ACEXML_VALIDATOR_H_ */

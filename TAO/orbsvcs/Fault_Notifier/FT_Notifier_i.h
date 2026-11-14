@@ -17,7 +17,8 @@
 #define TAO_FT_NOTIFIER_I_H_
 #include /**/ "ace/pre.h"
 #include "ace/ACE.h"
-#include "ace/SString.h"
+#include <string>
+#include <vector>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -26,7 +27,6 @@
 #include <orbsvcs/FT_NotifierS.h>
 #include <orbsvcs/FT_ReplicationManagerC.h>
 #include <orbsvcs/Notify/Notify_EventChannelFactory_i.h>
-#include <ace/Vector_T.h>
 
 /////////////////////
 // Forward references
@@ -42,13 +42,12 @@ namespace TAO
     /**
      * Default constructor.
      */
-    FT_FaultNotifier_i ();
+    FT_FaultNotifier_i () = default;
 
     /**
      * Virtual destructor.
      */
     ~FT_FaultNotifier_i () override;
-
 
     /**
      * Parse command line arguments.
@@ -75,14 +74,14 @@ namespace TAO
      * Identify this fault notifier.
      * @return a string to identify this object for logging/console message purposes.
      */
-    const char * identity () const;
+    char const * identity () const;
 
     /**
      * idle time activity.
      * @param result [out] status code to return from process
      * @returns 0 to continue; nonzero to quit
      */
-    int idle(int &result);
+    int idle (int & result);
 
     //////////////////
     // CORBA interface
@@ -149,7 +148,6 @@ namespace TAO
      */
     PortableServer::ObjectId_var object_id_;
 
-
     /**
      * IOR of this object as assigned by orb.
      */
@@ -158,12 +156,12 @@ namespace TAO
     /**
      * A file to which the notifier's IOR should be written.
      */
-    ACE_TCHAR const * ior_output_file_;
+    std::basic_string<ACE_TCHAR> ior_output_file_;
 
     /**
      * A name to be used to register the notifier with the name service.
      */
-    char const * ns_name_;
+    char const * ns_name_ {};
 
     CosNaming::NamingContext_var naming_context_;
 
@@ -173,7 +171,7 @@ namespace TAO
      * bool: if true, register with ReplicationManager.
      * default is true. -r turns it off.
      */
-    int rm_register_;
+    bool rm_register_ {true};
 
     /**
      * the replication manager
@@ -183,33 +181,33 @@ namespace TAO
     /**
      * bool: if true the registration with ReplicationManager was successful.
      */
-    int registered_;
+    bool registered_ {};
 
     /**
      * A human-readable string to distinguish this from other Notifiers.
      */
-    ACE_CString identity_;
+    std::string identity_;
 
     /////////////////////////////
     //
     struct ProxyInfo
     {
-      ::CosNotifyChannelAdmin::ProxyID proxyId_;
+      ::CosNotifyChannelAdmin::ProxyID proxyId_ {};
       ::CosNotifyChannelAdmin::ProxySupplier_var proxyVar_;
 
-      ProxyInfo ();
-      ProxyInfo (ProxyInfo const & rhs);
+      ProxyInfo () = default;
+      ProxyInfo (ProxyInfo const &) = default;
       ProxyInfo & operator= (ProxyInfo const &) = default;
     };
 
-    using ProxyInfoVec = ACE_Vector<ProxyInfo>;
+    using ProxyInfoVec = std::vector<ProxyInfo>;
 
     ProxyInfoVec proxy_infos_;
 
-    size_t consumer_connects_;
-    size_t consumer_disconnects_;
+    size_t consumer_connects_ {};
+    size_t consumer_disconnects_ {};
 
-    ::CosNotifyChannelAdmin::ChannelID channel_id_;
+    ::CosNotifyChannelAdmin::ChannelID channel_id_ {};
     ::CosNotifyChannelAdmin::EventChannel_var notify_channel_;
     ::CosNotifyFilter::FilterFactory_var filter_factory_;
     ::CosNotifyChannelAdmin::SupplierAdmin_var supplier_admin_;
@@ -221,17 +219,17 @@ namespace TAO
     /*
      * boolean quit when all consumers disconnect
      */
-    int quit_on_idle_;
+    bool quit_on_idle_ {};
 
     /**
      * boolean: set true we've asked CORBA to deactivate
      */
-    int quitting_;
+    bool quitting_ {};
 
     /**
      * boolean: set true when CORBA is done with this object.
      */
-    int gone_;
+    bool gone_ {};
   };
 } // namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL

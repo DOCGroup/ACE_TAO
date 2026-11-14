@@ -1,14 +1,14 @@
 #include "Client_Task.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
-static int iterations = 1000;
+ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
+static int iterations {1000};
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("i:k:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -44,10 +44,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior);
+        orb->string_to_object (ior);
 
       Test::Sender_var sender =
-        Test::Sender::_narrow(tmp.in ());
+        Test::Sender::_narrow (tmp.in ());
 
       if (CORBA::is_nil (sender.in ()))
         {
@@ -56,7 +56,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                              ior),
                             1);
         }
-
 
       Client_Task client_task (sender.in (),
                                iterations,
@@ -78,10 +77,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // shutdown the remote ORB
       sender->shutdown ();
 
-
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

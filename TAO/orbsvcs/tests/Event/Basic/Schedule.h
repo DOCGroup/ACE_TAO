@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef EC_SCHEDULE_H
 #define EC_SCHEDULE_H
 
@@ -18,6 +17,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/RtecSchedulerS.h"
+
+#include <memory>
 
 /**
  * @class EC_Schedule
@@ -39,40 +40,43 @@
 class EC_Schedule : public EC_Driver
 {
 public:
-  /// Constructor
-  EC_Schedule ();
+  EC_Schedule () = default;
+  EC_Schedule (EC_Schedule const &) = delete;
+  EC_Schedule &operator= (EC_Schedule const &) = delete;
+  EC_Schedule (EC_Schedule &&) = delete;
+  EC_Schedule &operator= (EC_Schedule &&) = delete;
 
   // = The EC_Driver methods
   /// add some command line args to change the scheduling service to
   /// use.
-  virtual int parse_args (int& argc, ACE_TCHAR* argv[]);
-  virtual void print_args () const;
-  virtual void print_usage ();
+  int parse_args (int& argc, ACE_TCHAR* argv[]) override;
+  void print_args () const override;
+  void print_usage () override;
 
   /// Set the scheduling service attribute
   void initialize_ec_impl ();
   void cleanup_ec ();
-  virtual void modify_attributes (TAO_EC_Event_Channel_Attributes& attr);
+  void modify_attributes (TAO_EC_Event_Channel_Attributes& attr) override;
 
   /// Don't run the suppliers, just compute the schedule.
-  void execute_test ();
+  void execute_test () override;
 
   /// Don't dump the EC_Driver results, they are meaningless.
-  void dump_results ();
+  void dump_results () override;
 
   /// This time really connect to the scheduler
-  virtual void build_consumer_qos (
+  void build_consumer_qos (
       int i,
       RtecEventChannelAdmin::ConsumerQOS& qos,
-      int& shutdown_event_type);
-  virtual void build_supplier_qos (
+      int& shutdown_event_type) override;
+  void build_supplier_qos (
       int i,
       RtecEventChannelAdmin::SupplierQOS& qos,
-      int& shutdown_event_type);
+      int& shutdown_event_type) override;
 
 private:
   /// The scheduler implementation
-  POA_RtecScheduler::Scheduler *scheduler_impl_;
+  std::unique_ptr<POA_RtecScheduler::Scheduler> scheduler_impl_;
 
   /// The scheduler object reference
   RtecScheduler::Scheduler_var scheduler_;

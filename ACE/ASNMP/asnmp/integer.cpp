@@ -27,28 +27,23 @@
 =====================================================================*/
 
 #include "asnmp/integer.h"        // header file for gauge class
-#include "ace/OS_NS_stdio.h"
+#include <cstdio>
+#include <memory>
 
 // constructor with value
-SnmpUInt32::SnmpUInt32 (const unsigned long i)
+SnmpUInt32::SnmpUInt32 (unsigned long const i)
 {
-  smival.value.uNumber=i;
+  smival.value.uNumber = i;
   smival.syntax = sNMP_SYNTAX_UINT32;
-  valid_flag = 1;
+  valid_flag = true;
 }
 
-// copy constructor
-SnmpUInt32::SnmpUInt32( const SnmpUInt32 &c)
+SnmpUInt32::SnmpUInt32 (SnmpUInt32 const &c)
   : SnmpSyntax (c)
 {
-  smival.value.uNumber=c.smival.value.uNumber;
+  smival.value.uNumber = c.smival.value.uNumber;
   smival.syntax = sNMP_SYNTAX_UINT32;
-  valid_flag = 1;
-}
-
-// destructor (ensure that SnmpSyntax::~SnmpSyntax() is overridden)
-SnmpUInt32::~SnmpUInt32()
-{
+  valid_flag = true;
 }
 
 // syntax type
@@ -64,20 +59,20 @@ int SnmpUInt32::valid() const
 }
 
 // overloaded assignment
-SnmpUInt32& SnmpUInt32::operator=( const unsigned long int i)
+SnmpUInt32 &SnmpUInt32::operator= (unsigned long const i)
 {
-  smival.value.uNumber=i;
-  valid_flag = 1;
+  smival.value.uNumber = i;
+  valid_flag = true;
   return *this;
 }
 
 // general assignment from any Value
 SnmpSyntax& SnmpUInt32::operator=( SnmpSyntax &in_val)
 {
-  if ( this == &in_val )        // handle assignment from itself
+  if (this == std::addressof (in_val))        // handle assignment from itself
       return *this;
 
-  valid_flag = 0;               // will get set true if really valid
+  valid_flag = false;
   if (in_val.valid())
   {
     switch (in_val.get_syntax())
@@ -89,7 +84,7 @@ SnmpSyntax& SnmpUInt32::operator=( SnmpSyntax &in_val)
       case sNMP_SYNTAX_INT32:           // implied cast int -> uint
           this->smival.value.uNumber =
               ((SnmpUInt32 &)in_val).smival.value.uNumber;
-          valid_flag = 1;
+          valid_flag = true;
           break;
     }
   }
@@ -97,13 +92,14 @@ SnmpSyntax& SnmpUInt32::operator=( SnmpSyntax &in_val)
 }
 
 // overloaded assignment
-SnmpUInt32& SnmpUInt32::operator=( const SnmpUInt32 &uli)
+SnmpUInt32 &SnmpUInt32::operator= (SnmpUInt32 const &uli)
 {
-  this->smival.value.uNumber = uli.smival.value.uNumber; return *this;
+  this->smival.value.uNumber = uli.smival.value.uNumber;
+  return *this;
 }
 
 // otherwise, behave like an unsigned long int
-SnmpUInt32::operator unsigned long()
+SnmpUInt32::operator unsigned long() const
 {
   return smival.value.uNumber;
 }
@@ -111,41 +107,34 @@ SnmpUInt32::operator unsigned long()
 // create a new instance of this Value
 SnmpSyntax* SnmpUInt32::clone() const
 {
-  return (SnmpSyntax *) new SnmpUInt32(*this);
+  return new SnmpUInt32 (*this);
 }
 
 // ASCII format return
-const char * SnmpUInt32::to_string()
+char const *SnmpUInt32::to_string ()
 {
-  ACE_OS::sprintf(output_buffer, "%d", (int) (this->smival.value.uNumber));
+  std::snprintf (output_buffer, sizeof output_buffer, "%lu", smival.value.uNumber);
   return output_buffer;
 }
-
 
 //====================================================================
 //  INT 32 Implementation
 //====================================================================
 
-// default constructor
-SnmpInt32::SnmpInt32 (const long i)
+SnmpInt32::SnmpInt32 (long const i)
 {
-  smival.value.sNumber=i;
+  smival.value.sNumber = i;
   smival.syntax = sNMP_SYNTAX_INT32;
-  valid_flag = 1;
+  valid_flag = true;
 }
 
 // constructor with value
-SnmpInt32::SnmpInt32 (const SnmpInt32 &c)
+SnmpInt32::SnmpInt32 (SnmpInt32 const &c)
   : SnmpSyntax (c)
 {
-  smival.value.sNumber=c.smival.value.sNumber;
+  smival.value.sNumber = c.smival.value.sNumber;
   smival.syntax = sNMP_SYNTAX_INT32;
-  valid_flag = 1;
-}
-
-// destructor
-SnmpInt32::~SnmpInt32()
-{
+  valid_flag = true;
 }
 
 // syntax type
@@ -161,28 +150,28 @@ int SnmpInt32::valid() const
 }
 
 // overloaded assignment
-SnmpInt32& SnmpInt32::operator=( const long i)
+SnmpInt32 &SnmpInt32::operator= (long const i)
 {
-  this->smival.value.sNumber = (unsigned long) i;
-  valid_flag = 1;
+  this->smival.value.sNumber = i;
+  valid_flag = true;
   return *this;
 }
 
 // overloaded assignment
-SnmpInt32& SnmpInt32::operator=( const SnmpInt32 &uli)
+SnmpInt32 &SnmpInt32::operator= (SnmpInt32 const &uli)
 {
   this->smival.value.sNumber = uli.smival.value.sNumber;
-  valid_flag = 1;
+  valid_flag = true;
   return *this;
 }
 
 // general assignment from any Value
 SnmpSyntax& SnmpInt32::operator=( SnmpSyntax &in_val)
 {
-  if ( this == &in_val )        // handle assignment from itself
+  if (this == std::addressof (in_val))        // handle assignment from itself
       return *this;
 
-  valid_flag = 0;               // will get set true if really valid
+  valid_flag = false;
   if (in_val.valid())
   {
     switch (in_val.get_syntax())
@@ -194,7 +183,7 @@ SnmpSyntax& SnmpInt32::operator=( SnmpSyntax &in_val)
       case sNMP_SYNTAX_TIMETICKS:       // implied cast uint -> int
           this->smival.value.sNumber =
                 ((SnmpInt32 &)in_val).smival.value.sNumber;
-          valid_flag = 1;
+          valid_flag = true;
           break;
     }
   }
@@ -202,21 +191,21 @@ SnmpSyntax& SnmpInt32::operator=( SnmpSyntax &in_val)
 }
 
 // otherwise, behave like a long int
-SnmpInt32::operator long()
+SnmpInt32::operator long() const
 {
-  return (long) smival.value.sNumber;
+  return smival.value.sNumber;
 }
 
 // clone - create a new instance of this Value
 SnmpSyntax* SnmpInt32::clone() const
 {
-  return ( SnmpSyntax *) new SnmpInt32(*this);
+  return new SnmpInt32 (*this);
 }
 
 // ASCII format return
 
-const char *SnmpInt32::to_string()
+char const *SnmpInt32::to_string ()
 {
-  ACE_OS::sprintf(output_buffer, "%d", (int) (long) this->smival.value.sNumber);
+  std::snprintf (output_buffer, sizeof output_buffer, "%ld", smival.value.sNumber);
   return output_buffer;
 }

@@ -1,13 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    TypeCodeFactory_Adapter_Impl.h
  *
  *  @author  Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_TYPECODEFACTORY_ADAPTER_IMPL_H
 #define TAO_TYPECODEFACTORY_ADAPTER_IMPL_H
@@ -22,6 +19,8 @@
 #include "tao/TypeCodeFactory_Adapter.h"
 #include "ace/Service_Config.h"
 #include "tao/default_environment.h"
+
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -38,37 +37,43 @@ class TAO_TypeCodeFactory_Export TAO_TypeCodeFactory_Adapter_Impl
   : public TAO_TypeCodeFactory_Adapter
 {
 public:
-  ~TAO_TypeCodeFactory_Adapter_Impl () override;
+  TAO_TypeCodeFactory_Adapter_Impl () = default;
+  ~TAO_TypeCodeFactory_Adapter_Impl () override = default;
+
+  TAO_TypeCodeFactory_Adapter_Impl (TAO_TypeCodeFactory_Adapter_Impl const &) = delete;
+  TAO_TypeCodeFactory_Adapter_Impl &operator= (TAO_TypeCodeFactory_Adapter_Impl const &) = delete;
+  TAO_TypeCodeFactory_Adapter_Impl (TAO_TypeCodeFactory_Adapter_Impl &&) = delete;
+  TAO_TypeCodeFactory_Adapter_Impl &operator= (TAO_TypeCodeFactory_Adapter_Impl &&) = delete;
 
   CORBA::TypeCode_ptr create_struct_tc (
-      const char *id,
-      const char *name,
-      const CORBA::StructMemberSeq &members) override;
+      char const *id,
+      char const *name,
+      CORBA::StructMemberSeq const &members) override;
 
   CORBA::TypeCode_ptr create_union_tc (
-      const char *id,
-      const char *name,
+      char const *id,
+      char const *name,
       CORBA::TypeCode_ptr discriminator_type,
-      const CORBA::UnionMemberSeq &members) override;
+      CORBA::UnionMemberSeq const &members) override;
 
   CORBA::TypeCode_ptr create_enum_tc (
-      const char *id,
-      const char *name,
-      const CORBA::EnumMemberSeq &members) override;
+      char const *id,
+      char const *name,
+      CORBA::EnumMemberSeq const &members) override;
 
   CORBA::TypeCode_ptr create_alias_tc (
-      const char *id,
-      const char *name,
+      char const *id,
+      char const *name,
       CORBA::TypeCode_ptr original_type) override;
 
   CORBA::TypeCode_ptr create_exception_tc (
-      const char *id,
-      const char *name,
-      const CORBA::StructMemberSeq &members) override;
+      char const *id,
+      char const *name,
+      CORBA::StructMemberSeq const &members) override;
 
   CORBA::TypeCode_ptr create_interface_tc (
-      const char *id,
-      const char *name) override;
+      char const *id,
+      char const *name) override;
 
   CORBA::TypeCode_ptr create_string_tc (
       CORBA::ULong bound) override;
@@ -89,46 +94,46 @@ public:
       CORBA::TypeCode_ptr element_type) override;
 
   CORBA::TypeCode_ptr create_value_tc (
-      const char *id,
-      const char *name,
+      char const *id,
+      char const *name,
       CORBA::ValueModifier type_modifier,
       CORBA::TypeCode_ptr concrete_base,
-      const CORBA::ValueMemberSeq &members) override;
+      CORBA::ValueMemberSeq const &members) override;
 
   CORBA::TypeCode_ptr create_value_box_tc (
-      const char *id,
-      const char *name,
+      char const *id,
+      char const *name,
       CORBA::TypeCode_ptr boxed_type) override;
 
   CORBA::TypeCode_ptr create_native_tc (
-      const char *id,
-      const char *name) override;
+      char const *id,
+      char const *name) override;
 
   CORBA::TypeCode_ptr create_recursive_tc (
-      const char *id) override;
+      char const *id) override;
 
   CORBA::TypeCode_ptr create_abstract_interface_tc (
-      const char *id,
-      const char *name) override;
+      char const *id,
+      char const *name) override;
 
   CORBA::TypeCode_ptr create_local_interface_tc (
-      const char *id,
-      const char *name) override;
+      char const *id,
+      char const *name) override;
 
   CORBA::TypeCode_ptr create_component_tc (
-      const char *id,
-      const char *name) override;
+      char const *id,
+      char const *name) override;
 
   CORBA::TypeCode_ptr create_home_tc (
-      const char *id,
-      const char *name) override;
+      char const *id,
+      char const *name) override;
 
   CORBA::TypeCode_ptr create_event_tc (
-      const char *id,
-      const char *name,
+      char const *id,
+      char const *name,
       CORBA::ValueModifier type_modifier,
       CORBA::TypeCode_ptr concrete_base,
-      const CORBA::ValueMemberSeq &members) override;
+      CORBA::ValueMemberSeq const &members) override;
 
   /**
    * @name TAO-specific TypeCode factory methods.
@@ -141,7 +146,7 @@ public:
   CORBA::TypeCode_ptr create_enum_tc (
     char const * id,
     char const * name,
-    ACE_Array_Base<CORBA::String_var> const & enumerators,
+    std::vector<CORBA::String_var> const & enumerators,
     CORBA::ULong ncases) override;
 
   /// Create a structure or exception TypeCode.
@@ -149,7 +154,7 @@ public:
     CORBA::TCKind,
     char const * id,
     char const * name,
-    ACE_Array_Base<
+    std::vector<
       TAO::TypeCode::Struct_Field<CORBA::String_var,
                                   CORBA::TypeCode_var> > const & fields,
     CORBA::ULong nfields) override;
@@ -159,8 +164,8 @@ public:
     char const * id,
     char const * name,
     CORBA::TypeCode_ptr discriminant_type,
-    ACE_Array_Base<TAO::TypeCode::Case<CORBA::String_var,
-                                       CORBA::TypeCode_var> > const & cases,
+    std::vector<TAO::TypeCode::Case<CORBA::String_var,
+                                    CORBA::TypeCode_var> > const & cases,
     CORBA::ULong ncases,
     CORBA::Long default_index,
     char const * default_case_name,
@@ -173,15 +178,15 @@ public:
     char const * name,
     CORBA::ValueModifier modifier,
     CORBA::TypeCode_ptr concrete_base,
-    ACE_Array_Base<
+    std::vector<
       TAO::TypeCode::Value_Field<CORBA::String_var,
                                  CORBA::TypeCode_var> > const & fields,
     CORBA::ULong nfields) override;
   //@}
 
-
   /// Used to force the initialization of the ORB code.
   static int Initializer ();
+
 };
 
 static int
@@ -192,7 +197,6 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE (TAO_TypeCodeFactory_Adapter_Impl)
 ACE_FACTORY_DECLARE (TAO_TypeCodeFactory, TAO_TypeCodeFactory_Adapter_Impl)
-
 
 #include /**/ "ace/post.h"
 #endif /* TAO_TYPECODEFACTORY_ADAPTER_IMPL_H */

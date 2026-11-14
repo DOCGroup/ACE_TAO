@@ -17,7 +17,6 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_poll.h"
 
-
 // Should we be verbose?
 static int verbose = 0;
 

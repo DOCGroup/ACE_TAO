@@ -10,12 +10,12 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "Map_Test.h"
 #include "ace/Map_T.h"
 #include "ace/Profile_Timer.h"
 
+#include <memory>
 
 #undef THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL
 #define THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL(X) \
@@ -53,7 +53,7 @@ functionality_test (TEST_MAP &map,
        ++i)
     {
       original_keys[i].size (sizeof i / sizeof (KEY::TYPE));
-      ACE_OS::memcpy (&original_keys[i][0],
+      ACE_OS::memcpy (std::addressof (original_keys[i][0]),
                       &i,
                       sizeof i);
     }
@@ -96,12 +96,12 @@ functionality_test (TEST_MAP &map,
         // Obtain value from key.
         VALUE original_value;
         ACE_OS::memcpy (&original_value,
-                        &original_key[0],
+                        std::addressof (original_key[0]),
                         sizeof original_value);
 
         // Debugging info.
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%d|%d|%d)"),
+                    ACE_TEXT ("(%B|%d|%d)"),
                     counter,
                     original_value,
                     entry.second ()));
@@ -135,7 +135,7 @@ functionality_test (TEST_MAP &map,
         // Obtain value from key.
         VALUE original_value;
         ACE_OS::memcpy (&original_value,
-                        &original_key[0],
+                        std::addressof (original_key[0]),
                         sizeof original_value);
 
         // Debugging info.
@@ -237,7 +237,7 @@ performance_test (void (*ptf) (TEST_MAP &, size_t, KEY *),
   timer.elapsed_time (et);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("time to run %s of size %d for %d iterations\n"),
+              ACE_TEXT ("time to run %s of size %B for %B iterations\n"),
               test_name,
               table_size,
               iterations));

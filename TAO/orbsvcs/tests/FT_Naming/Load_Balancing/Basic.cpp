@@ -1,22 +1,21 @@
 #include "Basic.h"
 #include "LB_server.h"
-#include "orbsvcs/PortableGroup/PG_Property_Set.h"
 
 Basic::Basic (CORBA::Object_ptr object_group,
               FT_Naming::NamingManager_ptr lm,
               CORBA::ORB_ptr orb,
-              char const* loc)
-  : object_group_name_ ("Basic Group"), orb_ (CORBA::ORB::_duplicate (orb))
+              char const *loc)
+  : orb_ (CORBA::ORB::_duplicate (orb)),
+    nm_ (FT_Naming::NamingManager::_duplicate (lm)),
+    location_ (loc),
+    object_group_ (CORBA::Object::_duplicate (object_group))
 {
-  this->object_group_ = CORBA::Object::_duplicate (object_group);
-  this->nm_ = FT_Naming::NamingManager::_duplicate (lm);
-  this->location_ = CORBA::string_dup (loc);
 }
 
 char *
 Basic::get_string ()
 {
-  return CORBA::string_dup (this->location_.in ());
+  return CORBA::string_dup (this->location_.c_str ());
 }
 
 void
@@ -26,13 +25,13 @@ Basic::remove_member ()
     {
       PortableGroup::Location location (1);
       location.length (1);
-      location[0].id = CORBA::string_dup (this->location_.in ());
+      location[0].id = CORBA::string_dup (this->location_.c_str ());
       this->object_group_ =
         this->nm_->remove_member (this->object_group_.in (),
                                   location);
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Removed Member at Location <%C>\n",
-                      this->location_.in ()));
+                  this->location_.c_str ()));
     }
   catch (const PortableGroup::ObjectNotFound& ex)
     {
@@ -48,9 +47,7 @@ Basic::remove_member ()
     {
       ex._tao_print_exception ("Exception caught while destroying member\n");
     }
-
 }
-
 
 void
 Basic::shutdown ()

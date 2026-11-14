@@ -1,14 +1,7 @@
 // -*- C++ -*-
 #include "ServerORBInitializer2.h"
 #include "ServerRequest_Interceptor2.h"
-#include "tao/ORB_Constants.h"
 #include "tao/Exception.h"
-
-
-Server_ORBInitializer2::Server_ORBInitializer2 ()
-  : sri_ (0)
-{
-}
 
 void
 Server_ORBInitializer2::pre_init (
@@ -27,13 +20,14 @@ void
 Server_ORBInitializer2::register_server_request_interceptors (
     PortableInterceptor::ORBInitInfo_ptr info)
 {
-  TAO249_ServerRequest_Interceptor2 *sri = 0;
+  TAO249_ServerRequest_Interceptor2 *sri {};
   ACE_NEW_THROW_EX (sri,
                     TAO249_ServerRequest_Interceptor2,
                     CORBA::NO_MEMORY ());
 
   PortableInterceptor::ServerRequestInterceptor_var
     server_interceptor = sri;
+  // The ORB initializer retains a non-owning pointer to the registered interceptor.
   this->sri_ = sri;
 
   info->add_server_request_interceptor (server_interceptor.in ());
@@ -42,6 +36,6 @@ Server_ORBInitializer2::register_server_request_interceptors (
 void
 Server_ORBInitializer2::set_server_iogr (CORBA::Object_ptr obj)
 {
-  if (this->sri_)
-    this->sri_->server_iogr_ = CORBA::Object::_duplicate (obj);
+  if (this->sri_ != nullptr)
+    this->sri_->set_server_iogr (obj);
 }

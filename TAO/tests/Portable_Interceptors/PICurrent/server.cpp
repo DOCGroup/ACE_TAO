@@ -10,22 +10,24 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_strings.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
+#include <memory>
+
+ACE_TCHAR const *ior_output_file = ACE_TEXT("test.ior");
 
 extern PortableInterceptor::SlotId slot_id;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  bool error = false;
-  for(int i = 1; i < argc; i++)
+  bool error {};
+  for (int i = 1; i < argc; i++)
     {
-      if (ACE_OS::strncasecmp(argv[i], ACE_TEXT("-ORB"), 4) != 0)
+      if (ACE_OS::strncasecmp (argv[i], ACE_TEXT ("-ORB"), 4) != 0)
         {
           switch (argv[i][1])
             {
               case 'o':
-              i++;
+              ++i;
               if (i < argc)
                 ior_output_file = argv[i];
               else
@@ -36,10 +38,11 @@ parse_args (int argc, ACE_TCHAR *argv[])
 #if defined (ACE_HAS_THREADS)
               argv[i] = const_cast<ACE_TCHAR*> (ACE_TEXT("-ORBSvcConfDirective"));
 #endif /* ACE_HAS_THREADS */
-              i++;
+              ++i;
               if (i < argc)
 #if defined (ACE_HAS_THREADS)
-                argv[i] = const_cast<ACE_TCHAR*> (ACE_TEXT("static Server_Strategy_Factory \"-ORBConcurrency thread-per-connection\""));
+                argv[i] = const_cast<ACE_TCHAR*> (ACE_TEXT("static Server_Strategy_Factory "
+                                                            "\"-ORBConcurrency thread-per-connection\""));
 #else
                 ACE_DEBUG ((LM_DEBUG, "NOTE: Non-threaded build.  "
                                       "Defaulting to single threaded.\n"));
@@ -68,12 +71,11 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      PortableInterceptor::ORBInitializer_ptr temp_initializer =
-        PortableInterceptor::ORBInitializer::_nil ();
+      PortableInterceptor::ORBInitializer_ptr temp_initializer {};
 
       ACE_NEW_RETURN (temp_initializer,
                       ServerORBInitializer,
@@ -137,27 +139,27 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_INFO, "PICurrentTest::test: <%C>\n", ior.in ()));
 
       // If the ior_output_file exists, output the IOR to it.
-      if (ior_output_file != 0)
+      if (ior_output_file != nullptr)
         {
-          FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
-          if (output_file == 0)
+          std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+            ACE_OS::fopen (ior_output_file, "w"), ACE_OS::fclose);
+          if (!output_file)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Cannot open output file for writing "
                                "IOR: %s",
                                ior_output_file),
                               1);
-          ACE_OS::fprintf (output_file, "%s", ior.in ());
-          ACE_OS::fclose (output_file);
+          ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
         }
 
       orb->run ();
 
-      ACE_OS::sleep(1);
+      ACE_OS::sleep (1);
       orb->destroy ();
 
       ACE_DEBUG ((LM_INFO, "Event loop finished.\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("PICurrent test (server-side):");
 

@@ -46,16 +46,21 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/Truncate.h"
 
+#include <cstring>
+#include <cstdio>
+#include <utility>
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
 TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *data,
-                                             const ACE_Addr &peer_address)
+                                             ACE_Addr const &peer_address)
 {
   int length = static_cast<int> (data->length ());
   int more = length;
   char *buf_ptr = data->rd_ptr ();
-  char first_rtcp_packet = 1;
+  bool first_rtcp_packet = true;
   RTCP_Channel_In *c;
 
   // This code performs the RTCP Header validity checks detailed in RFC 1889
@@ -69,22 +74,17 @@ TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *data,
         case RTCP_PT_SR:
           {
             RTCP_SR_Packet sr(&buf_ptr[length-more],
-                              &more);
+                              std::addressof (more));
 
             if (!sr.is_valid(first_rtcp_packet))
               ORBSVCS_DEBUG ((LM_DEBUG,
                           "TAO_AV_RTCP_Callback::receive_control_frame - "
                           "warning invalid rtcp packet\n"));
 
-            if (this->inputs_.find (sr.ssrc (), c) == -1)
-              {
-                ACE_NEW_RETURN (c,
-                                RTCP_Channel_In (sr.ssrc (),
-                                                 &peer_address),
-                                -1);
-                this->inputs_.bind (sr.ssrc (), c);
-              }
-            c->updateStatistics (&sr);
+            if (this->inputs_.find (sr.ssrc (), c) == -1 &&
+                this->add_input_channel (sr.ssrc (), std::addressof (peer_address), c) < 0)
+              return -1;
+            c->updateStatistics (std::addressof (sr));
 
             if (TAO_debug_level > 0)
               sr.dump ();
@@ -93,23 +93,18 @@ TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *data,
         case RTCP_PT_RR:
           {
             RTCP_RR_Packet rr(&buf_ptr[length-more],
-                              &more);
+                              std::addressof (more));
 
             if (!rr.is_valid(first_rtcp_packet))
               ORBSVCS_DEBUG ((LM_DEBUG,
                           "TAO_AV_RTCP_Callback::receive_control_frame - "
                           "warning invalid rtcp packet\n"));
 
-            if (this->inputs_.find (rr.ssrc (), c) == -1)
-              {
-                ACE_NEW_RETURN (c,
-                                RTCP_Channel_In (rr.ssrc (),
-                                                 &peer_address),
-                                -1);
-                this->inputs_.bind (rr.ssrc (), c);
-              }
+            if (this->inputs_.find (rr.ssrc (), c) == -1 &&
+                this->add_input_channel (rr.ssrc (), std::addressof (peer_address), c) < 0)
+              return -1;
 
-            c->updateStatistics (&rr);
+            c->updateStatistics (std::addressof (rr));
 
             if (TAO_debug_level > 0)
               rr.dump ();
@@ -118,7 +113,7 @@ TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *data,
         case RTCP_PT_SDES:
           {
             RTCP_SDES_Packet sdes (&buf_ptr[length-more],
-                                   &more);
+                                   std::addressof (more));
 
             if (!sdes.is_valid(first_rtcp_packet))
               ORBSVCS_DEBUG ((LM_DEBUG,
@@ -132,7 +127,7 @@ TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *data,
         case RTCP_PT_BYE:
           {
             RTCP_BYE_Packet bye (&buf_ptr[length-more],
-                                 &more);
+                                 std::addressof (more));
 
             if (!bye.is_valid(first_rtcp_packet))
               ORBSVCS_DEBUG ((LM_DEBUG,
@@ -143,11 +138,11 @@ TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *data,
             ACE_UINT32 *ssrc_list;
             unsigned char length;
 
-            bye.ssrc_list(&ssrc_list, length);
+            bye.ssrc_list (std::addressof (ssrc_list), length);
 
-            for (int i=0; i<length; i++)
+            for (int i {}; i < length; ++i)
               {
-                RTCP_Channel_In *c = nullptr;
+                RTCP_Channel_In *c {};
 
                 // remove the channel from the list
                 this->inputs_.unbind(ssrc_list[i], c);
@@ -176,7 +171,7 @@ TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *data,
           more = 0;
       }
 
-      first_rtcp_packet = 0;
+      first_rtcp_packet = false;
     }
 
     if (more != 0)
@@ -213,11 +208,12 @@ TAO_AV_RTCP::alloc_srcid (ACE_UINT32 addr)
   ACE_UINT32 r;
   int i;
 
-  MD5Init (&context);
-  MD5Update (&context, string_val, length);
-  MD5Final ((unsigned char*)&digest, &context);
+  MD5Init (std::addressof (context));
+  MD5Update (std::addressof (context), string_val, length);
+  MD5Final (reinterpret_cast<unsigned char *> (std::addressof (digest)),
+            std::addressof (context));
   r=0;
-  for (i=0; i<3; i++)
+  for (i=0; i<3; ++i)
     r ^= digest.x[i];
 
   return r;
@@ -231,7 +227,6 @@ TAO_AV_RTCP::alloc_srcid (ACE_UINT32 addr)
   return (srcid);
 */
 }
-
 
 double
 TAO_AV_RTCP::rtcp_interval (int members,
@@ -328,16 +323,13 @@ TAO_AV_RTCP::rtcp_interval (int members,
 //  return t * (drand48() + 0.5);
 }
 
-
 // TAO_AV_RTCP_Flow_Factory
-TAO_AV_RTCP_Flow_Factory::TAO_AV_RTCP_Flow_Factory ()
-{
-}
+TAO_AV_RTCP_Flow_Factory::TAO_AV_RTCP_Flow_Factory () = default;
 
 TAO_AV_RTCP_Flow_Factory::~TAO_AV_RTCP_Flow_Factory () = default;
 
 int
-TAO_AV_RTCP_Flow_Factory::match_protocol (const char *flow_string)
+TAO_AV_RTCP_Flow_Factory::match_protocol (char const *flow_string)
 {
   if (ACE_OS::strncasecmp (flow_string,"RTCP",4) == 0)
       return 1;
@@ -358,14 +350,14 @@ TAO_AV_RTCP_Flow_Factory::make_protocol_object (TAO_FlowSpec_Entry * /*entry*/,
                                                 TAO_AV_Flow_Handler *handler,
                                                 TAO_AV_Transport *transport)
 {
-  TAO_AV_Callback *client_cb = nullptr;
-  TAO_AV_RTCP_Callback *rtcp_cb = nullptr;
+  TAO_AV_Callback *client_cb {};
+  TAO_AV_RTCP_Callback *rtcp_cb {};
 
   // TODO: need to handle a client callback at some point
 //  endpoint->get_control_callback (entry->flowname (),
 //                                  client_cb);
 
-  TAO_AV_Protocol_Object *object = nullptr;
+  TAO_AV_Protocol_Object *object {};
   ACE_NEW_RETURN (object,
                   TAO_AV_RTCP_Object (client_cb,
                                       rtcp_cb,
@@ -399,7 +391,7 @@ TAO_AV_RTCP_Object::handle_input ()
     }
   data.wr_ptr (n);
   ACE_Addr *peer_addr = this->transport_->get_peer_addr ();
-  this->callback_->receive_control_frame (&data,*peer_addr);
+  this->callback_->receive_control_frame (std::addressof (data), *peer_addr);
   return 0;
 }
 
@@ -411,7 +403,7 @@ TAO_AV_RTCP_Object::send_frame (ACE_Message_Block *frame,
 }
 
 int
-TAO_AV_RTCP_Object::send_frame (const iovec *iov,
+TAO_AV_RTCP_Object::send_frame (iovec const *iov,
                                int iovcnt,
                                 TAO_AV_frame_info * /*frame_info*/)
 {
@@ -420,7 +412,7 @@ TAO_AV_RTCP_Object::send_frame (const iovec *iov,
 }
 
 int
-TAO_AV_RTCP_Object::send_frame (const char*,
+TAO_AV_RTCP_Object::send_frame (char const *,
                                 size_t)
 {
   return 0;
@@ -429,11 +421,11 @@ TAO_AV_RTCP_Object::send_frame (const char*,
 TAO_AV_RTCP_Object::TAO_AV_RTCP_Object (TAO_AV_Callback *client_cb,
                                         TAO_AV_RTCP_Callback *&rtcp_cb,
                                         TAO_AV_Transport *transport)
-  : TAO_AV_Protocol_Object (&rtcp_cb_, transport)
+  : TAO_AV_Protocol_Object (std::addressof (rtcp_cb_), transport)
   , client_cb_ (client_cb)
   , ssrc_ (0)
 {
-  rtcp_cb = &this->rtcp_cb_;
+  rtcp_cb = std::addressof (this->rtcp_cb_);
 }
 
 TAO_AV_RTCP_Object::~TAO_AV_RTCP_Object () = default;
@@ -448,7 +440,7 @@ TAO_AV_RTCP_Object::destroy ()
 }
 
 int
-TAO_AV_RTCP_Object::set_policies (const TAO_AV_PolicyList &/*policy_list*/)
+TAO_AV_RTCP_Object::set_policies (TAO_AV_PolicyList const &/*policy_list*/)
 {
   return -1;
 }
@@ -467,7 +459,7 @@ TAO_AV_RTCP_Object::stop ()
 
 int
 TAO_AV_RTCP_Object::handle_control_input (ACE_Message_Block *frame,
-                                          const ACE_Addr &peer_address)
+                                          ACE_Addr const &peer_address)
 {
   return this->callback_->receive_frame (frame,
                                          0,
@@ -491,21 +483,45 @@ TAO_AV_RTCP_Object::ts_offset (ACE_UINT32 ts_offset)
 
 // TAO_AV_RTCP_Callback
 TAO_AV_RTCP_Callback::TAO_AV_RTCP_Callback ()
-  :is_initial_timeout_(1),
-   packet_size_(0)
 {
-  char cname[256];
   char host[256];
+  char cname[sizeof ("username@") + sizeof (host) - 1];
   ACE_OS::hostname(host, sizeof(host));
 
   // TODO: determine username auto-magically?
-  ACE_OS::sprintf(cname, "username@%s", host);
+  std::snprintf (cname, sizeof (cname), "username@%s", host);
 
   this->output_.cname(cname);
 }
 
 TAO_AV_RTCP_Callback::~TAO_AV_RTCP_Callback ()
 {
+  ACE_Hash_Map_Iterator<ACE_UINT32, RTCP_Channel_In*, ACE_Null_Mutex> iter (this->inputs_);
+  for (; iter != this->inputs_.end (); ++iter)
+    delete (*iter).int_id_;
+}
+
+int
+TAO_AV_RTCP_Callback::add_input_channel (ACE_UINT32 ssrc,
+                                         ACE_Addr const *peer_address,
+                                         RTCP_Channel_In *&channel)
+{
+  RTCP_Channel_In *raw_channel {};
+  ACE_NEW_RETURN (raw_channel,
+                  RTCP_Channel_In (ssrc, peer_address),
+                  -1);
+  std::unique_ptr<RTCP_Channel_In> channel_owner (raw_channel);
+
+  if (this->inputs_.bind (ssrc, channel_owner.get ()) == -1)
+    {
+      if (this->inputs_.find (ssrc, channel) == 0)
+        return 0;
+
+      ORBSVCS_ERROR_RETURN ((LM_ERROR, "Unable to add RTCP input channel\n"), -1);
+    }
+
+  channel = channel_owner.release ();
+  return 0;
 }
 
 void
@@ -539,12 +555,13 @@ TAO_AV_RTCP_Callback::send_report (int bye)
   TAO_AV_RTCP_Object *rtcp_prot_obj = dynamic_cast<TAO_AV_RTCP_Object*> (this->protocol_object_);
   ACE_UINT32 my_ssrc = rtcp_prot_obj->ssrc ();
 
-  RTCP_Packet *cp;
+  std::unique_ptr<RTCP_Packet> cp;
+  RTCP_Packet *raw_cp {};
   RTCP_SDES_Packet sdes;
   ACE_CString value = "";
   ACE_CString note = "";
   unsigned char sdes_type = 0;
-  RTCP_BYE_Packet *bye_packet = nullptr;  // only used for bye
+  std::unique_ptr<RTCP_BYE_Packet> bye_packet;  // only used for bye
   ACE_UINT32 ssrc_list[1];          // only used for bye
 
   // get an iterator for the incoming channels.
@@ -552,35 +569,28 @@ TAO_AV_RTCP_Callback::send_report (int bye)
   iter = this->inputs_.begin();
 
   // first send an SR/RR
-  RR_Block *blocks = nullptr;
-  RR_Block *b_iter = nullptr;
-  RR_Block *b_ptr = nullptr;
+  std::unique_ptr<RR_Block> blocks;
+  RR_Block *tail {};
 
-  while (iter != this->inputs_.end() )
+  while (iter != this->inputs_.end ())
     {
-      if (!b_iter)
-      {
-        b_ptr = (*iter).int_id_->getRRBlock ();
-        if (b_ptr)
-          {
-            blocks = b_ptr;
-            b_iter = b_ptr;
-          }
-      }
-      else
-      {
-        b_ptr = (*iter).int_id_->getRRBlock ();
-        if (b_ptr)
-          {
-            b_iter->next_ = b_ptr;
-          }
-      }
+      std::unique_ptr<RR_Block> block = (*iter).int_id_->getRRBlock ();
+      if (block != nullptr)
+        {
+          if (tail == nullptr)
+            {
+              blocks = std::move (block);
+              tail = blocks.get ();
+            }
+          else
+            {
+              tail->next_ = std::move (block);
+              tail = tail->next_.get ();
+            }
+        }
 
-      iter++;
+      ++iter;
     }
-
-  if (b_iter)
-    b_iter->next_ = 0;
 
   if (this->output_.active ())
     {
@@ -590,22 +600,24 @@ TAO_AV_RTCP_Callback::send_report (int bye)
       ACE_UINT32 rtp_ts = ACE_Utils::truncate_cast<ACE_UINT32> (
                             unix_now.sec () * 8000 + unix_now.usec () / 125 +
                             this->timestamp_offset_);
-      ACE_NEW_RETURN(cp,
+      ACE_NEW_RETURN(raw_cp,
                      RTCP_SR_Packet (my_ssrc,
                                      ntp_now.upper,
                                      ntp_now.lower,
                                      rtp_ts,
                                      this->output_.packets_sent (),
                                      this->output_.octets_sent (),
-                                     blocks),
+                                     std::move (blocks)),
                      -1);
+      cp.reset (raw_cp);
     }
   else
     {
-      ACE_NEW_RETURN(cp,
+      ACE_NEW_RETURN(raw_cp,
                      RTCP_RR_Packet (my_ssrc,
-                                     blocks),
+                                     std::move (blocks)),
                      -1);
+      cp.reset (raw_cp);
     }
 
   /*
@@ -664,17 +676,19 @@ TAO_AV_RTCP_Callback::send_report (int bye)
 
   sdes.add_item (my_ssrc,
                  RTCP_SDES_CNAME,
-                 static_cast<unsigned char> (ACE_OS::strlen(this->output_.cname())),
+                 static_cast<unsigned char> (std::strlen(this->output_.cname())),
                  this->output_.cname());
   if (bye)
     {
       ssrc_list[0] = rtcp_prot_obj->ssrc ();
 
-      ACE_NEW_RETURN (bye_packet,
+      RTCP_BYE_Packet *raw_bye_packet {};
+      ACE_NEW_RETURN (raw_bye_packet,
                       RTCP_BYE_Packet(ssrc_list,
                                       sizeof(ssrc_list)/sizeof(ssrc_list[0]),
                                       "Got bored."),
                       -1);
+      bye_packet.reset (raw_bye_packet);
     }
   else
     {
@@ -685,35 +699,31 @@ TAO_AV_RTCP_Callback::send_report (int bye)
   // create the message block
   char *cp_ptr;
   char *sdes_ptr;
-  char *bye_ptr = nullptr;
+  char *bye_ptr {};
   ACE_UINT16 cp_length;
   ACE_UINT16 sdes_length;
   ACE_UINT16 bye_length = 0;
-  cp->get_packet_data (&cp_ptr, cp_length);
-  sdes.get_packet_data (&sdes_ptr, sdes_length);
+  cp->get_packet_data (std::addressof (cp_ptr), cp_length);
+  sdes.get_packet_data (std::addressof (sdes_ptr), sdes_length);
   if (bye_packet)
-    bye_packet->get_packet_data(&bye_ptr, bye_length);
+    bye_packet->get_packet_data (std::addressof (bye_ptr), bye_length);
 
   ACE_Message_Block mb (cp_length + sdes_length + bye_length);
 
-  ACE_OS::memcpy (mb.wr_ptr (), cp_ptr, cp_length);
+  std::memcpy (mb.wr_ptr (), cp_ptr, cp_length);
   mb.wr_ptr (cp_length);
-  ACE_OS::memcpy (mb.wr_ptr (), sdes_ptr, sdes_length);
+  std::memcpy (mb.wr_ptr (), sdes_ptr, sdes_length);
   mb.wr_ptr (sdes_length);
   if (bye_length)
     {
-      ACE_OS::memcpy (mb.wr_ptr (), bye_ptr, bye_length);
+      std::memcpy (mb.wr_ptr (), bye_ptr, bye_length);
       mb.wr_ptr (bye_length);
     }
 
   // send the report
-  this->protocol_object_->send_frame (&mb);
+  this->protocol_object_->send_frame (std::addressof (mb));
 
   this->packet_size_ = cp_length + sdes_length + bye_length;
-
-  delete cp;
-  if (bye_packet)
-    delete bye_packet;
 
   return 0;
 }
@@ -734,7 +744,7 @@ TAO_AV_RTCP_Callback::get_timeout (ACE_Time_Value *&tv,
   iter = this->inputs_.begin();
 
   if (this->output_.active ())
-    senders++;
+    ++senders;
 
   // determine the number of senders and members of this session
   while (iter != this->inputs_.end ())
@@ -742,10 +752,10 @@ TAO_AV_RTCP_Callback::get_timeout (ACE_Time_Value *&tv,
       if ((*iter).int_id_->active ())
         {
           if ((*iter).int_id_->sender ())
-            senders++;
-          members++;
+            ++senders;
+          ++members;
         }
-      iter++;
+      ++iter;
     }
 
   // Here we do the RTCP timeout calculation.
@@ -757,7 +767,7 @@ TAO_AV_RTCP_Callback::get_timeout (ACE_Time_Value *&tv,
                                          &this->avg_rtcp_size_,    // avg_rtcp_size
                                          this->is_initial_timeout_);  // initial)
 
-  this->is_initial_timeout_ = 0;
+  this->is_initial_timeout_ = false;
 
   ACE_NEW (tv,
            ACE_Time_Value);
@@ -775,23 +785,17 @@ TAO_AV_RTCP_Callback::handle_destroy ()
 int
 TAO_AV_RTCP_Callback::receive_frame (ACE_Message_Block *frame,
                                      TAO_AV_frame_info *,
-                                     const ACE_Addr &peer_address)
+                                     ACE_Addr const &peer_address)
 {
   RTCP_Channel_In *c;
 
   RTP_Packet packet (frame->rd_ptr(), static_cast<int> (frame->length()));
 
-  if (this->inputs_.find (packet.ssrc(), c) < 0)
-    {
-      ACE_NEW_RETURN (c,
-                      RTCP_Channel_In (packet.ssrc(),
-                                       &peer_address),
-                      -1);
+  if (this->inputs_.find (packet.ssrc(), c) < 0 &&
+      this->add_input_channel (packet.ssrc (), std::addressof (peer_address), c) < 0)
+    return -1;
 
-      this->inputs_.bind (packet.ssrc(), c);
-    }
-
-  c->recv_rtp_packet (frame, &peer_address);
+  c->recv_rtp_packet (frame, std::addressof (peer_address));
   return 0;
 }
 
@@ -799,7 +803,7 @@ int
 TAO_AV_RTCP_Callback::send_frame (ACE_Message_Block *frame)
 {
   RTP_Packet packet (frame->rd_ptr(), static_cast<int> (frame->length()));
-  this->output_.updateStatistics (&packet);
+  this->output_.updateStatistics (std::addressof (packet));
 
   return 0;
 }

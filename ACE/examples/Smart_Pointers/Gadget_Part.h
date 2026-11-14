@@ -22,8 +22,14 @@
 class Gadget_Part
 {
 public:
-  /// Destructor.
+  Gadget_Part () = default;
+
   virtual ~Gadget_Part ();
+
+  Gadget_Part (Gadget_Part const &) = delete;
+  Gadget_Part (Gadget_Part &&) = delete;
+  Gadget_Part &operator= (Gadget_Part const &) = delete;
+  Gadget_Part &operator= (Gadget_Part &&) = delete;
 
   /// Ask the part to print information about itself.
   virtual void print_info () = 0;

@@ -43,7 +43,6 @@ class TAO_Export TAO_Collocation_Resolver
   : public ACE_Service_Object
 {
 public:
-  /// Destructor.
   ~TAO_Collocation_Resolver () override;
 
   /// Is @a object collocated?

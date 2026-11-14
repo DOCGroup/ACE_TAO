@@ -1,4 +1,5 @@
 #include "AMH_DSI_Response_Handler.h"
+#include <memory>
 #include "Request.h"
 #include "ExceptionList.h"
 #include "DII_Invocation.h"
@@ -31,12 +32,10 @@ TAO_AMH_DSI_Exception_Holder::TAO_AMH_DSI_Exception_Holder (CORBA::Exception *ex
 {
 }
 
-TAO_AMH_DSI_Exception_Holder::~TAO_AMH_DSI_Exception_Holder () = default;
-
 ::CORBA::ValueBase *
 TAO_AMH_DSI_Exception_Holder::_copy_value ()
 {
-  ::CORBA::ValueBase *ret_val = nullptr;
+  ::CORBA::ValueBase *ret_val {};
   ACE_NEW_THROW_EX (
     ret_val,
     TAO_AMH_DSI_Exception_Holder (
@@ -58,7 +57,6 @@ tao_TAO_AMH_DSI_Exception_Holder_remove_ref (TAO_AMH_DSI_Exception_Holder *p)
 {
   CORBA::remove_ref (p);
 }
-
 
 TAO_AMH_DSI_Exception_Holder_var::TAO_AMH_DSI_Exception_Holder_var ()
   : ptr_ (nullptr)
@@ -107,7 +105,7 @@ TAO_AMH_DSI_Exception_Holder_var &
 TAO_AMH_DSI_Exception_Holder_var::operator= (
     TAO_AMH_DSI_Exception_Holder_var const &p)
 {
-  if (this != &p)
+  if (this != std::addressof (p))
     {
       CORBA::remove_ref (this->ptr_);
       TAO_AMH_DSI_Exception_Holder *tmp = p.ptr ();
@@ -263,9 +261,9 @@ TAO_AMH_DSI_Exception_Holder::_tao_unmarshal (
     TAO_InputCDR &strm,
     TAO_AMH_DSI_Exception_Holder *&new_object)
 {
-  ::CORBA::ValueBase *base = nullptr;
-  ::CORBA::Boolean is_indirected = false;
-  ::CORBA::Boolean is_null_object = false;
+  ::CORBA::ValueBase *base {};
+  ::CORBA::Boolean is_indirected {};
+  ::CORBA::Boolean is_null_object {};
   ::CORBA::Boolean const retval =
     ::CORBA::ValueBase::_tao_unmarshal_pre (
         strm,
@@ -298,7 +296,7 @@ TAO_AMH_DSI_Exception_Holder::_tao_unmarshal (
 void
 TAO_AMH_DSI_Exception_Holder::raise_invoke ()
 {
-  std::unique_ptr< ::CORBA::Exception> safety (this->exception_);
+  std::unique_ptr< ::CORBA::Exception> const safety (this->exception_);
   this->exception_->_raise ();
 }
 
@@ -309,15 +307,12 @@ TAO_AMH_DSI_Response_Handler::_nil ()
   return nullptr;
 }
 
-
 TAO_AMH_DSI_Response_Handler::TAO_AMH_DSI_Response_Handler (
     TAO_ServerRequest & sr)
   : TAO_AMH_Response_Handler (),
     orb_core_ (sr.orb_core ())
 {
 }
-
-TAO_AMH_DSI_Response_Handler::~TAO_AMH_DSI_Response_Handler () = default;
 
 void
 TAO_AMH_DSI_Response_Handler::invoke_reply (CORBA::NVList_ptr args,

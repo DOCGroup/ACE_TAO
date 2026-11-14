@@ -10,7 +10,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_main.h"
 
-
 #if defined (ACE_WIN32)
 
 // Number of threads.
@@ -22,11 +21,18 @@ static constexpr int MAX_ITERATIONS = 100;
 class WFMO_Test : public ACE_Task <ACE_NULL_SYNCH>
 {
 public:
+  WFMO_Test () = default;
+
   //FUZZ: disable check_for_lack_ACE_OS
-  virtual int open (void *);
+  int open (void *) override;
   //FUZZ: enable check_for_lack_ACE_OS
 
-  virtual int svc ();
+  int svc () override;
+
+  WFMO_Test (WFMO_Test const &) = delete;
+  WFMO_Test (WFMO_Test &&) = delete;
+  WFMO_Test &operator= (WFMO_Test const &) = delete;
+  WFMO_Test &operator= (WFMO_Test &&) = delete;
 
   // Use two handles here..
   ACE_sema_t sema_handles_[2];
@@ -72,7 +78,7 @@ WFMO_Test::svc ()
       // resource it's not protected via a mutex because the ++
       // operation on Intel is atomic.
 
-      semaphore_count_++;
+      ++semaphore_count_;
       ACE_DEBUG ((LM_DEBUG,
                   "(%t) thread has been signaled.\n"));
 
@@ -101,7 +107,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   result = ACE_OS::sema_init (&wfmo_test.sema_handles_[1], thread_count + 5);
   ACE_ASSERT (result != -1);
 
-  for (int i = 0; i < MAX_ITERATIONS; i++)
+  for (int i = 0; i < MAX_ITERATIONS; ++i)
     {
       wfmo_test.semaphore_count_ = 0;
 

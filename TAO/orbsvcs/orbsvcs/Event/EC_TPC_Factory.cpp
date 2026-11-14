@@ -11,7 +11,6 @@
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_strings.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 unsigned long TAO_EC_TPC_debug_level;
@@ -19,10 +18,6 @@ unsigned long TAO_EC_TPC_debug_level;
 TAO_EC_TPC_Factory::TAO_EC_TPC_Factory ()
 {
   TAO_EC_TPC_debug_level = 0;
-}
-
-TAO_EC_TPC_Factory::~TAO_EC_TPC_Factory ()
-{
 }
 
 int
@@ -40,7 +35,7 @@ TAO_EC_TPC_Factory::init (int argc, ACE_TCHAR* argv[])
 
   while (arg_shifter.is_anything_left ())
     {
-      const ACE_TCHAR *arg = arg_shifter.get_current ();
+      ACE_TCHAR const *arg = arg_shifter.get_current ();
 
       if (ACE_OS::strcasecmp (arg, ACE_TEXT("-ECDispatching")) == 0)
         {
@@ -92,7 +87,6 @@ TAO_EC_TPC_Factory::create_dispatching (TAO_EC_Event_Channel_Base *)
                                      so);
 }
 
-
 TAO_EC_ProxyPushSupplier*
 TAO_EC_TPC_Factory::create_proxy_push_supplier (TAO_EC_Event_Channel_Base *ec)
 {
@@ -100,7 +94,6 @@ TAO_EC_TPC_Factory::create_proxy_push_supplier (TAO_EC_Event_Channel_Base *ec)
     ORBSVCS_DEBUG ((LM_DEBUG, "EC (%P|%t) EC_TPC_Factory::create_proxy_push_supplier\n"));
   return new TAO_EC_TPC_ProxyPushSupplier (ec, this->consumer_validate_connection_);
 }
-
 
 TAO_EC_ProxyPushConsumer*
 TAO_EC_TPC_Factory::create_proxy_push_consumer (TAO_EC_Event_Channel_Base *ec)

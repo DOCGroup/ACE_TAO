@@ -69,7 +69,6 @@ TAO_WstringDef_i::bound ()
   return this->bound_i ();
 }
 
-
 CORBA::ULong
 TAO_WstringDef_i::bound_i ()
 {

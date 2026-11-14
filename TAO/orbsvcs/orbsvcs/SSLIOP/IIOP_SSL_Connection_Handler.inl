@@ -5,8 +5,7 @@ ACE_INLINE
 TAO::Null_SSL_State_Guard::Null_SSL_State_Guard (
   TAO::SSLIOP::Current_ptr current,
   int &result)
-  : current_ (current), // No need to duplicate
-    setup_done_ (false)
+  : current_ (current) // No need to duplicate
 {
   // Invalidate the TSS SSL session state to make sure that SSL state
   // from a previous SSL connection is not confused with this non-SSL

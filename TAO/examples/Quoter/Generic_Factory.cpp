@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    Generic_Factory.cpp
@@ -9,16 +8,9 @@
  */
 //=============================================================================
 
-
 #include "Generic_Factory.h"
 
 #include "orbsvcs/LifeCycleServiceC.h"
-
-Quoter_Generic_Factory_Server::Quoter_Generic_Factory_Server ()
-: use_LifeCycle_Service_ (0),
-  debug_level_ (1)
-{
-}
 
 Quoter_Generic_Factory_Server::~Quoter_Generic_Factory_Server ()
 {
@@ -32,11 +24,11 @@ Quoter_Generic_Factory_Server::~Quoter_Generic_Factory_Server ()
       if (!CORBA::is_nil (this->quoterNamingContext_var_.in ()))
         this->quoterNamingContext_var_->unbind (generic_Factory_Name);
     }
-  catch (const CORBA::SystemException& sysex)
+  catch (CORBA::SystemException const &sysex)
     {
       sysex._tao_print_exception ("System Exception");
     }
-  catch (const CORBA::UserException& userex)
+  catch (CORBA::UserException const &userex)
     {
       userex._tao_print_exception ("User Exception");
     }
@@ -46,17 +38,25 @@ int
 Quoter_Generic_Factory_Server::init (int argc,
                                      ACE_TCHAR *argv[])
 {
-  const char *exception_message = "Null Message";
+  char const *exception_message = "Null Message";
 
   try
     {
-      int result = 0;
+      int result {};
       // Initialize the ORB Manager
       exception_message = "While initing the orb_manager";
       result = this->orb_manager_.init (argc, argv);
 
       if (result == -1)
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "init"), -1);
+
+      // ORB_init removes ORB options, so preserve the remaining app args.
+      this->argc_ = argc;
+      ACE_TCHAR **argv_copy {};
+      ACE_NEW_RETURN (argv_copy, ACE_TCHAR *[argc], -1);
+      this->argv_.reset (argv_copy);
+      for (int i = 0; i < argc; i++)
+        this->argv_[i] = argv[i];
 
       // Activate the POA manager
       exception_message = "While activating the POA manager";
@@ -65,26 +65,26 @@ Quoter_Generic_Factory_Server::init (int argc,
       if (result == -1)
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "activate_poa_manager"), -1);
 
-      // Copy them, because parse_args expects them there.
-      this->argc_ = argc;
-      this->argv_ = argv;
-      this->parse_args ();
+      if (this->parse_args () != 0)
+        return -1;
 
-      ACE_NEW_RETURN (this->quoter_Generic_Factory_i_ptr_,
-                      Quoter_Generic_Factory_i(this->debug_level_),
+      Quoter_Generic_Factory_i *factory {};
+      ACE_NEW_RETURN (factory,
+                      Quoter_Generic_Factory_i (this->options_.debug_level),
                       -1);
+      this->quoter_Generic_Factory_i_ptr_.reset (factory);
 
       // Activate the object.
       exception_message = "While activating the Generic Factory";
       CORBA::String_var str  =
-        this->orb_manager_.activate (this->quoter_Generic_Factory_i_ptr_);
+        this->orb_manager_.activate (this->quoter_Generic_Factory_i_ptr_.get ());
 
       // Print the IOR.
-      if (this->debug_level_ >= 2)
+      if (this->options_.debug_level >= 2)
         ACE_DEBUG ((LM_DEBUG, "Generic_Factory: IOR is: <%C>\n", str.in ()));
 
       // Register the Quoter GenericFactory with the Naming Service.
-      if (this->debug_level_ >= 2)
+      if (this->options_.debug_level >= 2)
         ACE_DEBUG ((LM_DEBUG,
                     "Generic_Factory: Trying to get a reference to the Naming Service.\n"));
 
@@ -106,8 +106,7 @@ Quoter_Generic_Factory_Server::init (int argc,
         ACE_ERROR ((LM_ERROR,
                    " (%P|%t) Unable get the Naming Service.\n"));
 
-
-      if (this->debug_level_ >= 2)
+      if (this->options_.debug_level >= 2)
         ACE_DEBUG ((LM_DEBUG,
                     "Generic_Factory: Have a proper reference to the Naming Service.\n"));
 
@@ -124,7 +123,7 @@ Quoter_Generic_Factory_Server::init (int argc,
       quoterNamingContext_var_ =
         CosNaming::NamingContext::_narrow (quoterNamingObj_var.in ());
 
-      if (this->debug_level_ >= 2)
+      if (this->options_.debug_level >= 2)
         ACE_DEBUG ((LM_DEBUG,
                     "Generic_Factory: Have a proper reference to the Quoter Naming Context.\n"));
 
@@ -135,13 +134,13 @@ Quoter_Generic_Factory_Server::init (int argc,
       quoter_Generic_Factory_Name[0].id = CORBA::string_dup ("Quoter_Generic_Factory");
 
       exception_message = "Generic_Factory::_this";
-      CORBA::Object_var gf_obj = this->quoter_Generic_Factory_i_ptr_->_this();
+      CORBA::Object_var gf_obj = this->quoter_Generic_Factory_i_ptr_->_this ();
 
       exception_message = "While binding the Generic Factory";
       quoterNamingContext_var_->bind (quoter_Generic_Factory_Name,
                                       gf_obj.in ());
 
-      if (this->debug_level_ >= 2)
+      if (this->options_.debug_level >= 2)
         ACE_DEBUG ((LM_DEBUG,
                     "Generic_Factory: Bound the Quoter GenericFactory to the Quoter Naming Context.\n"));
 
@@ -149,7 +148,7 @@ Quoter_Generic_Factory_Server::init (int argc,
       // the Generic Factory should try to register itself to the closest
       // Life Cycle Service is order to be called.
 
-      if (this->use_LifeCycle_Service_)
+      if (this->options_.use_lifecycle_service)
       {
         // get the Quoter_Life_Cycle_Service
         CosNaming::Name life_Cycle_Service_Name (1);
@@ -164,11 +163,11 @@ Quoter_Generic_Factory_Server::init (int argc,
         LifeCycleService::Life_Cycle_Service_var  life_Cycle_Service_var =
           LifeCycleService::Life_Cycle_Service::_narrow (life_Cycle_Service_Obj_var.in ());
 
-        if (this->debug_level_ >= 2)
+        if (this->options_.debug_level >= 2)
           ACE_DEBUG ((LM_DEBUG, "Generic_Factory: Have a proper reference to Life Cycle Service.\n"));
 
         exception_message = "While _this on Generic Factory";
-        CORBA::Object_var object_var = this->quoter_Generic_Factory_i_ptr_->_this();
+        CORBA::Object_var object_var = this->quoter_Generic_Factory_i_ptr_->_this ();
 
         exception_message = "While registering the generic factory";
         life_Cycle_Service_var->register_factory ("Quoter_Generic_Factory",  // name
@@ -176,28 +175,26 @@ Quoter_Generic_Factory_Server::init (int argc,
                                                   "Generic Factory",         // description
                                                   object_var.in ());
 
-        if (this->debug_level_ >= 2)
+        if (this->options_.debug_level >= 2)
           ACE_DEBUG ((LM_DEBUG,
                       "Generic_Factory: Registered the Quoter GenericFactory to the Life Cycle Service.\n"));
       }
 
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ACE_ERROR ((LM_ERROR, "Quoter_Generic_Factory_Server::init - %C\n", exception_message));
       ex._tao_print_exception (
         "Quoter_Generic_Factory_Server::init");
       return -1;
     }
-
-
   return 0;
 }
 
 int
 Quoter_Generic_Factory_Server::run ()
 {
-  if (this->debug_level_ >= 1)
+  if (this->options_.debug_level >= 1)
     ACE_DEBUG ((LM_DEBUG,
                 "\nQuoter Example: Quoter_Generic_Factory_Server is running\n"));
 
@@ -211,18 +208,18 @@ Quoter_Generic_Factory_Server::run ()
 u_int
 Quoter_Generic_Factory_Server::parse_args ()
 {
-  ACE_Get_Opt get_opt (this->argc_, this->argv_, ACE_TEXT("l?d:"));
-  int opt;
-  int exit_code = 0;
+  ACE_Get_Opt get_opt (this->argc_, this->argv_.get (), ACE_TEXT("l?d:"));
+  int opt {};
+  int exit_code {};
 
   while ((opt = get_opt ()) != EOF)
     switch (opt)
       {
       case 'd':  // debug flag.
-        this->debug_level_ = ACE_OS::atoi (get_opt.opt_arg ());
+        this->options_.debug_level = ACE_OS::atoi (get_opt.opt_arg ());
         break;
       case 'l':
-        this->use_LifeCycle_Service_ = 1;
+        this->options_.use_lifecycle_service = true;
         break;
       default:
         exit_code = 1;
@@ -261,12 +258,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           quoter_Generic_Factory_Server.run ();
         }
     }
-  catch (const CORBA::SystemException& sysex)
+  catch (CORBA::SystemException const &sysex)
     {
       sysex._tao_print_exception ("System Exception");
       return -1;
     }
-  catch (const CORBA::UserException& userex)
+  catch (CORBA::UserException const &userex)
     {
       userex._tao_print_exception ("User Exception");
       return -1;

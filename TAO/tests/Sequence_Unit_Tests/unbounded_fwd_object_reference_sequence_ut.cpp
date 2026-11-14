@@ -16,18 +16,17 @@
 
 #include "test_macros.h"
 
-
 using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO;
 
 struct Tester
 {
-  typedef unbounded_object_reference_sequence<fwd_mock_reference, fwd_mock_reference_var> tested_sequence;
-  typedef tested_sequence::value_type value_type;
-  typedef tested_sequence::const_value_type const_value_type;
+  using tested_sequence = unbounded_object_reference_sequence<fwd_mock_reference, fwd_mock_reference_var>;
+  using value_type = tested_sequence::value_type;
+  using const_value_type = tested_sequence::const_value_type;
 
-  typedef tested_sequence::element_traits tested_element_traits;
-  typedef tested_sequence::allocation_traits tested_allocation_traits;
-  typedef TAO::details::range_checking<value_type,true> range;
+  using tested_element_traits = tested_sequence::element_traits;
+  using tested_allocation_traits = tested_sequence::allocation_traits;
+  using range = TAO::details::range_checking<value_type,true>;
 
   int test_default_constructor()
   {
@@ -35,7 +34,7 @@ struct Tester
     expected_calls f(tested_allocation_traits::freebuf_calls);
     expected_calls i(tested_element_traits::default_initializer_calls);
     {
-      tested_sequence x;
+      tested_sequence const x;
 
       CHECK_EQUAL(CORBA::ULong(0), x.maximum());
       CHECK_EQUAL(CORBA::ULong(0), x.length());
@@ -50,7 +49,7 @@ struct Tester
 
 int ACE_TMAIN(int,ACE_TCHAR*[])
 {
-  int status = 0;
+  int status {};
   Tester x;
   status += x.test_default_constructor ();
 

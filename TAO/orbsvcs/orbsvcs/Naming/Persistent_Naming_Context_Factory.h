@@ -35,7 +35,6 @@ public:
   /// Data structure used by TAO_Persistent_Context_Index.
   using HASH_MAP = TAO_Persistent_Naming_Context::HASH_MAP;
 
-  /// Constructor.
   TAO_Persistent_Naming_Context_Factory ();
 
   /// Destructor.  Does not deallocate the hash map: if an instance of
@@ -45,10 +44,10 @@ public:
   /// Factory method for creating an implementation object for naming contexts
   virtual TAO_Persistent_Naming_Context*
     create_naming_context_impl (PortableServer::POA_ptr poa,
-                                const char *poa_id,
+                                char const *poa_id,
                                 TAO_Persistent_Context_Index *context_index,
-                                HASH_MAP * map = 0,
-                                ACE_UINT32 *counter = 0);
+                                HASH_MAP * map = nullptr,
+                                ACE_UINT32 *counter = nullptr);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

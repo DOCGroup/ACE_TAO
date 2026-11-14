@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef PARAM_TEST_RECURSIVE_STRUCT_H
 #define PARAM_TEST_RECURSIVE_STRUCT_H
 

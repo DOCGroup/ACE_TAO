@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef _PMC_FLO_H
 #define _PMC_FLO_H
 
@@ -23,12 +22,12 @@ class PMC_Flo : public PM_Client
 {
 public:
   PMC_Flo ();
-  virtual void process ();
+  void process () override;
 
 protected:
-  virtual Protocol_Record *insert_protocol_info (Protocol_Record &protocol_record);
-  virtual int encode (char *packet, int &total_bytes);
-  virtual int decode (char *packet, int &total_bytes);
+  Protocol_Record *insert_protocol_info (Protocol_Record &protocol_record) override;
+  int encode (char *packet, int &total_bytes) override;
+  int decode (char *packet, int &total_bytes) override;
 };
 
 #endif /* _PMC_FLO_H */

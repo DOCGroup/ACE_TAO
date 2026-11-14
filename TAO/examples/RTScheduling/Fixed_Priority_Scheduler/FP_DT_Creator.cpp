@@ -15,7 +15,7 @@ FP_DT_Creator::create_thr_task (int importance,
                                 int dist,
                                 char *job_name)
 {
-  FP_Task* task = 0;
+  FP_Task *task {};
   ACE_NEW_RETURN (task,
                   FP_Task (importance,
                            start_time,
@@ -35,7 +35,6 @@ FP_DT_Creator::sched_param (int importance)
     DT_TEST::instance ()->scheduler ()->create_segment_scheduling_parameter (
                                           importance);
 }
-
 
 void
 FP_DT_Creator::yield (time_t suspend_time,
@@ -63,5 +62,4 @@ ACE_STATIC_SVC_DEFINE(FP_DT_Creator,
                       0)
 
 ACE_FACTORY_DEFINE (ACE_Local_Service, FP_DT_Creator)
-
 

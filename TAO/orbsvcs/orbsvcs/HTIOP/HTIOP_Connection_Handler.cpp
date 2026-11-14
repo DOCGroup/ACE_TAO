@@ -40,7 +40,7 @@ TAO::HTIOP::Connection_Handler::Connection_Handler (TAO_ORB_Core *orb_core)
   : SVC_HANDLER (orb_core->thr_mgr (), nullptr, nullptr),
     TAO_Connection_Handler (orb_core)
 {
-  TAO::HTIOP::Transport* specific_transport = nullptr;
+  TAO::HTIOP::Transport* specific_transport {};
   ACE_NEW(specific_transport,
           TAO::HTIOP::Transport (this, orb_core));
 
@@ -244,7 +244,7 @@ TAO::HTIOP::Connection_Handler::process_listen_point_list
   // Get the size of the list
   CORBA::ULong len = listen_list.length ();
 
-  for (CORBA::ULong i = 0; i < len; ++ i)
+  for (CORBA::ULong i {}; i < len; ++i)
     {
       ::HTIOP::ListenPoint listen_point = listen_list[i];
       ACE::HTBP::Addr addr;
@@ -271,7 +271,7 @@ TAO::HTIOP::Connection_Handler::process_listen_point_list
       TAO_Base_Transport_Property prop (&endpoint);
 
       // Mark the connection as bidirectional
-      prop.set_bidir_flag (1);
+      prop.set_bidir_flag (true);
 
       // The property for this handler has changed. Recache the
       // handler with this property

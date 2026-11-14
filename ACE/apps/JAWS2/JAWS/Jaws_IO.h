@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef JAWS_IO_H
 #define JAWS_IO_H
 
@@ -47,17 +46,14 @@ class JAWS_Export JAWS_IO
 public:
   JAWS_IO ();
   virtual ~JAWS_IO ();
-
-  //  void acceptor (JAWS_IO_Acceptor *acceptor);
-  //  void handler (JAWS_IO_Handler *handler);
-  //  void handle (ACE_HANDLE h);
-  //  ACE_HANDLE handle ();
-
-  // James, please add documentation here.
+  JAWS_IO (JAWS_IO const &) = delete;
+  JAWS_IO (JAWS_IO &&) = delete;
+  JAWS_IO &operator= (JAWS_IO const &) = delete;
+  JAWS_IO &operator= (JAWS_IO &&) = delete;
 
   /// accept a passive connection
   virtual void accept (JAWS_IO_Handler *ioh,
-                       ACE_Message_Block *mb = 0,
+                       ACE_Message_Block *mb = nullptr,
                        unsigned int size = 0) = 0;
 
   /// read from the handle size bytes into the message block.
@@ -100,8 +96,9 @@ public:
 
 protected:
   ACE_HANDLE handle_;
+  /// Non-owning pointer to the active I/O handler.
   JAWS_IO_Handler *handler_;
-  ACE_INET_Addr *inet_addr_;
+  /// Non-owning pointer to the configured acceptor.
   JAWS_IO_Acceptor *acceptor_;
 };
 
@@ -115,43 +112,47 @@ class JAWS_Export JAWS_Synch_IO : public JAWS_IO
 public:
   JAWS_Synch_IO ();
 
-  virtual ~JAWS_Synch_IO ();
+  ~JAWS_Synch_IO () override;
+  JAWS_Synch_IO (JAWS_Synch_IO const &) = delete;
+  JAWS_Synch_IO (JAWS_Synch_IO &&) = delete;
+  JAWS_Synch_IO &operator= (JAWS_Synch_IO const &) = delete;
+  JAWS_Synch_IO &operator= (JAWS_Synch_IO &&) = delete;
 
-  virtual void accept (JAWS_IO_Handler *ioh,
-                       ACE_Message_Block *mb = 0,
-                       unsigned int size = 0);
+  void accept (JAWS_IO_Handler *ioh,
+               ACE_Message_Block *mb = nullptr,
+               unsigned int size = 0) override;
 
-  virtual void read (JAWS_IO_Handler *ioh,
-                     ACE_Message_Block *mb,
-                     unsigned int size);
+  void read (JAWS_IO_Handler *ioh,
+             ACE_Message_Block *mb,
+             unsigned int size) override;
 
-  virtual void transmit_file (JAWS_IO_Handler *ioh,
-                              ACE_HANDLE handle,
-                              const char *header,
-                              unsigned int header_size,
-                              const char *trailer,
-                              unsigned int trailer_size);
+  void transmit_file (JAWS_IO_Handler *ioh,
+                      ACE_HANDLE handle,
+                      const char *header,
+                      unsigned int header_size,
+                      const char *trailer,
+                      unsigned int trailer_size) override;
 
-  virtual void transmit_file (JAWS_IO_Handler *ioh,
-                              const char *filename,
-                              const char *header,
-                              unsigned int header_size,
-                              const char *trailer,
-                              unsigned int trailer_size);
+  void transmit_file (JAWS_IO_Handler *ioh,
+                      const char *filename,
+                      const char *header,
+                      unsigned int header_size,
+                      const char *trailer,
+                      unsigned int trailer_size) override;
 
-  virtual void receive_file (JAWS_IO_Handler *ioh,
-                             const char *filename,
-                             void *initial_data,
-                             unsigned int initial_data_length,
-                             unsigned int entire_length);
+  void receive_file (JAWS_IO_Handler *ioh,
+                     const char *filename,
+                     void *initial_data,
+                     unsigned int initial_data_length,
+                     unsigned int entire_length) override;
 
-  virtual void send_confirmation_message (JAWS_IO_Handler *ioh,
-                                          const char *buffer,
-                                          unsigned int length);
+  void send_confirmation_message (JAWS_IO_Handler *ioh,
+                                  const char *buffer,
+                                  unsigned int length) override;
 
-  virtual void send_error_message (JAWS_IO_Handler *ioh,
-                                   const char *buffer,
-                                   unsigned int length);
+  void send_error_message (JAWS_IO_Handler *ioh,
+                           const char *buffer,
+                           unsigned int length) override;
 
 protected:
   virtual void send_message (JAWS_IO_Handler *ioh,
@@ -161,7 +162,7 @@ protected:
 
 using JAWS_Synch_IO_Singleton = ACE_Singleton<JAWS_Synch_IO, ACE_SYNCH_MUTEX>;
 
-// This only works on asynch I/O-capable systems.
+/// Available on asynchronous I/O-capable systems.
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
 
 /**
@@ -174,43 +175,47 @@ class JAWS_Export JAWS_Asynch_IO : public JAWS_IO
 public:
   JAWS_Asynch_IO ();
 
-  virtual ~JAWS_Asynch_IO ();
+  ~JAWS_Asynch_IO () override;
+  JAWS_Asynch_IO (JAWS_Asynch_IO const &) = delete;
+  JAWS_Asynch_IO (JAWS_Asynch_IO &&) = delete;
+  JAWS_Asynch_IO &operator= (JAWS_Asynch_IO const &) = delete;
+  JAWS_Asynch_IO &operator= (JAWS_Asynch_IO &&) = delete;
 
-  virtual void accept (JAWS_IO_Handler *ioh,
-                       ACE_Message_Block *mb = 0,
-                       unsigned int size = 0);
+  void accept (JAWS_IO_Handler *ioh,
+               ACE_Message_Block *mb = nullptr,
+               unsigned int size = 0) override;
 
-  virtual void read (JAWS_IO_Handler *ioh,
-                     ACE_Message_Block *mb,
-                     unsigned int size);
+  void read (JAWS_IO_Handler *ioh,
+             ACE_Message_Block *mb,
+             unsigned int size) override;
 
-  virtual void transmit_file (JAWS_IO_Handler *ioh,
-                              ACE_HANDLE handle,
-                              const char *header,
-                              unsigned int header_size,
-                              const char *trailer,
-                              unsigned int trailer_size);
+  void transmit_file (JAWS_IO_Handler *ioh,
+                      ACE_HANDLE handle,
+                      const char *header,
+                      unsigned int header_size,
+                      const char *trailer,
+                      unsigned int trailer_size) override;
 
-  virtual void transmit_file (JAWS_IO_Handler *ioh,
-                              const char *filename,
-                              const char *header,
-                              unsigned int header_size,
-                              const char *trailer,
-                              unsigned int trailer_size);
+  void transmit_file (JAWS_IO_Handler *ioh,
+                      const char *filename,
+                      const char *header,
+                      unsigned int header_size,
+                      const char *trailer,
+                      unsigned int trailer_size) override;
 
-  virtual void receive_file (JAWS_IO_Handler *ioh,
-                             const char *filename,
-                             void *initial_data,
-                             unsigned int initial_data_length,
-                             unsigned int entire_length);
+  void receive_file (JAWS_IO_Handler *ioh,
+                     const char *filename,
+                     void *initial_data,
+                     unsigned int initial_data_length,
+                     unsigned int entire_length) override;
 
-  virtual void send_confirmation_message (JAWS_IO_Handler *ioh,
-                                          const char *buffer,
-                                          unsigned int length);
+  void send_confirmation_message (JAWS_IO_Handler *ioh,
+                                  const char *buffer,
+                                  unsigned int length) override;
 
-  virtual void send_error_message (JAWS_IO_Handler *ioh,
-                                   const char *buffer,
-                                   unsigned int length);
+  void send_error_message (JAWS_IO_Handler *ioh,
+                           const char *buffer,
+                           unsigned int length) override;
 
 #ifdef ACE_LYNXOS_MAJOR
 #ifdef ERROR_MESSAGE
@@ -241,9 +246,9 @@ class JAWS_Export JAWS_Asynch2_IO : public JAWS_Asynch_IO
 {
 public:
   /// does nothing
-  virtual void accept (JAWS_IO_Handler *ioh,
-                       ACE_Message_Block *mb = 0,
-                       unsigned int size = 0);
+  void accept (JAWS_IO_Handler *ioh,
+               ACE_Message_Block *mb = nullptr,
+               unsigned int size = 0) override;
 };
 
 using JAWS_Asynch2_IO_Singleton = ACE_Singleton<JAWS_Asynch2_IO, ACE_SYNCH_MUTEX>;

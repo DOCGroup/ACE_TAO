@@ -10,7 +10,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_string.h"
 
-
 ACE_INLINE
 Handle_L_SPIPE::Handle_L_SPIPE ()
 {
@@ -37,7 +36,7 @@ Handle_L_SPIPE::info (ACE_TCHAR **strp, size_t length) const
   ACE_OS::strcpy (buf, sa.get_path_name ());
   ACE_OS::strcat (buf, ACE_TEXT (" # tests local STREAM pipe\n"));
 
-  if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
+  if (*strp == nullptr && (*strp = ACE_OS::strdup (buf)) == nullptr)
     return -1;
   else
     ACE_OS::strncpy (*strp, buf, length);
@@ -93,7 +92,7 @@ Handle_L_SPIPE::handle_input (int)
   ACE_SPIPE_Stream new_spipe;
   char     buf[PIPE_BUF];
   ACE_Str_Buf  msg (buf, 0, sizeof buf);
-  int      flags = 0;
+  int      flags {};
 
   /* Accept communication requests */
   if (this->ACE_SPIPE_Acceptor::accept (new_spipe) == -1)
@@ -109,7 +108,7 @@ Handle_L_SPIPE::handle_input (int)
                   sa.get_path_name (), sa.group_id (), sa.user_id ()));
     }
 
-  while (new_spipe.recv ((ACE_Str_Buf *) 0, &msg, &flags) >= 0)
+  while (new_spipe.recv (nullptr, &msg, &flags) >= 0)
     if (msg.len != 0)
       ACE_OS::write (ACE_STDOUT, (const char *) msg.buf, (int) msg.len);
     else

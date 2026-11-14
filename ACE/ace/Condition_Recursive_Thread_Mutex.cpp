@@ -49,7 +49,7 @@ ACE_Condition<ACE_Recursive_Thread_Mutex>::ACE_Condition (ACE_Recursive_Thread_M
 }
 
 ACE_Condition<ACE_Recursive_Thread_Mutex>::ACE_Condition (ACE_Recursive_Thread_Mutex &m,
-                                                          const ACE_Condition_Attributes &attributes)
+                                                          ACE_Condition_Attributes const &attributes)
   : mutex_ (m)
 {
   if (ACE_OS::cond_init (&this->cond_,
@@ -59,14 +59,14 @@ ACE_Condition<ACE_Recursive_Thread_Mutex>::ACE_Condition (ACE_Recursive_Thread_M
 }
 
 int
-ACE_Condition<ACE_Recursive_Thread_Mutex>::wait (const ACE_Time_Value *abstime)
+ACE_Condition<ACE_Recursive_Thread_Mutex>::wait (ACE_Time_Value const *abstime)
 {
   return this->wait (this->mutex_, abstime);
 }
 
 int
 ACE_Condition<ACE_Recursive_Thread_Mutex>::wait (ACE_Recursive_Thread_Mutex &mutex,
-                                                 const ACE_Time_Value *abstime)
+                                                 ACE_Time_Value const *abstime)
 {
   ACE_recursive_mutex_state mutex_state_holder;
   ACE_recursive_thread_mutex_t &recursive_mutex = mutex.lock ();

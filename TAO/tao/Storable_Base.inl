@@ -18,12 +18,6 @@ ACE_INLINE
 TAO::Storable_Base::Storable_Base (bool use_backup, bool retry_ebadf)
   : use_backup_ (use_backup)
   , retry_on_ebadf_ (retry_ebadf)
-  , state_ (goodbit)
-{
-}
-
-ACE_INLINE
-TAO::Storable_Base::~Storable_Base ()
 {
 }
 

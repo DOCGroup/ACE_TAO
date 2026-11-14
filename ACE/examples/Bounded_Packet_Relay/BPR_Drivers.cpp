@@ -6,27 +6,20 @@
  *  This code builds an abstraction to factor out common code for
  *  the different implementations of the Timer_Queue.
  *
- *  @author Chris Gill           <cdgill@cs.wustl.edu>  and Douglas C. Schmidt   <d.schmidt@vanderbilt.edu> Based on the Timer Queue Test example written by Carlos O'Ryan        <coryan@cs.wustl.edu>  and Douglas C. Schmidt   <d.schmidt@vanderbilt.edu> and Sergio Flores-Gaitan <sergio@cs.wustl.edu>
+ *  @author Chris Gill <cdgill@cs.wustl.edu> and Douglas C. Schmidt
+ *          <d.schmidt@vanderbilt.edu>. Based on Timer Queue Test by Carlos O'Ryan
+ *          <coryan@cs.wustl.edu>, Douglas C. Schmidt <d.schmidt@vanderbilt.edu>,
+ *          and Sergio Flores-Gaitan <sergio@cs.wustl.edu>.
  */
 //=============================================================================
-
 
 #include "ace/OS_NS_sys_time.h"
 #include "BPR_Drivers.h"
 
-
-// Constructor.
-
 Input_Device_Wrapper_Base::Input_Device_Wrapper_Base (ACE_Thread_Manager *input_task_mgr)
-  : ACE_Task_Base (input_task_mgr),
-    send_input_msg_cmd_ (nullptr),
-    input_period_ (ACE_ONE_SECOND_IN_USECS),
-    is_active_ (0),
-    send_count_ (0)
+  : ACE_Task_Base (input_task_mgr)
 {
 }
-
-// Destructor.
 
 Input_Device_Wrapper_Base::~Input_Device_Wrapper_Base () = default;
 
@@ -35,8 +28,7 @@ Input_Device_Wrapper_Base::~Input_Device_Wrapper_Base () = default;
 int
 Input_Device_Wrapper_Base::set_send_input_msg_cmd (ACE_Command_Base *send_input_msg_cmd)
 {
-  // Set the new command.  Input device is not responsible
-  // for deleting the old command, if any.
+  // The input device borrows this command. Its owner must outlive the device.
   send_input_msg_cmd_ = send_input_msg_cmd;
   return 0;
 }
@@ -68,7 +60,7 @@ Input_Device_Wrapper_Base::request_stop ()
 {
   if (is_active_)
     {
-      is_active_ = 0;
+      is_active_ = false;
       return 1;
     }
 
@@ -81,10 +73,9 @@ int
 Input_Device_Wrapper_Base::svc ()
 {
   ACE_Time_Value timeout;
-  ACE_Message_Block *message;
 
   // Set a flag to indicate we're active.
-  is_active_ = 1;
+  is_active_ = true;
 
   // Start with the total count of messages to send.
   for (current_count_ = send_count_;
@@ -93,12 +84,12 @@ Input_Device_Wrapper_Base::svc ()
        )
     {
       // Create an input message to send.
-      message = create_input_message ();
-      if (message == nullptr)
+      ACE_Message_Block_Unique_Ptr message_owner {create_input_message ()};
+      if (!message_owner)
         {
           if (is_active_)
             {
-              is_active_ = 0;
+              is_active_ = false;
               ACE_ERROR_RETURN ((LM_ERROR, "%t %p\n",
                                  "Failed to create input message object"),
                                  -1);
@@ -110,10 +101,9 @@ Input_Device_Wrapper_Base::svc ()
       // Make sure there is a send command object.
       if (send_input_msg_cmd_ == nullptr)
         {
-          delete message;
           if (is_active_)
             {
-              is_active_ = 0;
+              is_active_ = false;
               ACE_ERROR_RETURN ((LM_ERROR, "%t %p\n",
                                  "send message command object not instantiated"),
                                 -1);
@@ -123,12 +113,11 @@ Input_Device_Wrapper_Base::svc ()
         }
 
       // Send the input message.
-      if (send_input_msg_cmd_->execute ((void *) message) < 0)
+      if (send_input_msg_cmd_->execute (message_owner.get ()) < 0)
         {
-          delete message;
           if (is_active_)
             {
-              is_active_ = 0;
+              is_active_ = false;
               ACE_ERROR_RETURN ((LM_ERROR, "%t %p\n",
                                  "Failed executing send message command object"),
                                 -1);
@@ -136,6 +125,9 @@ Input_Device_Wrapper_Base::svc ()
 
           break;
         }
+
+      // Successful execution transfers the message to the receiver.
+      message_owner.release ();
 
       // If all went well, decrement count of messages to send, and
       // run the reactor event loop unti we get a timeout or something
@@ -147,7 +139,7 @@ Input_Device_Wrapper_Base::svc ()
       reactor_.run_event_loop (timeout);
     }
 
-  is_active_ = 0;
+  is_active_ = false;
 
   return 0;
 }
@@ -160,7 +152,7 @@ int
 Input_Device_Wrapper_Base::send_input_message (ACE_Message_Block *amb)
 {
   if (send_input_msg_cmd_)
-    return send_input_msg_cmd_->execute ((void *) amb);
+    return send_input_msg_cmd_->execute (amb);
   else
     {
       if (is_active_)
@@ -172,32 +164,18 @@ Input_Device_Wrapper_Base::send_input_message (ACE_Message_Block *amb)
     }
 }
 
-Output_Device_Wrapper_Base::~Output_Device_Wrapper_Base () = default;
-
-// Constructor.
-
 Bounded_Packet_Relay::Bounded_Packet_Relay (ACE_Thread_Manager *input_task_mgr,
                                             Input_Device_Wrapper_Base *input_wrapper,
                                             Output_Device_Wrapper_Base *output_wrapper)
-  : is_active_ (0),
-    input_task_mgr_ (input_task_mgr),
+  : input_task_mgr_ (input_task_mgr),
     input_wrapper_ (input_wrapper),
     output_wrapper_ (output_wrapper),
     queue_ (Bounded_Packet_Relay::DEFAULT_HWM,
-            Bounded_Packet_Relay::DEFAULT_LWM),
-    queue_hwm_ (Bounded_Packet_Relay::DEFAULT_HWM),
-    queue_lwm_ (Bounded_Packet_Relay::DEFAULT_LWM),
-    transmission_number_ (0),
-    packets_sent_ (0),
-    status_ (Bounded_Packet_Relay::UN_INITIALIZED),
-    transmission_start_ (ACE_Time_Value::zero),
-    transmission_end_ (ACE_Time_Value::zero)
+            Bounded_Packet_Relay::DEFAULT_LWM)
 {
   if (input_task_mgr_ == nullptr)
     input_task_mgr_ = ACE_Thread_Manager::instance ();
 }
-
-// Destructor.
 
 Bounded_Packet_Relay::~Bounded_Packet_Relay ()
 {
@@ -205,9 +183,10 @@ Bounded_Packet_Relay::~Bounded_Packet_Relay ()
   queue_.activate ();
   while (! queue_.is_empty ())
     {
-      ACE_Message_Block *msg;
-      queue_.dequeue_head (msg);
-      delete msg;
+      ACE_Message_Block *msg {};
+      if (queue_.dequeue_head (msg) < 0)
+        break;
+      ACE_Message_Block_Unique_Ptr message {msg};
     }
 
 }
@@ -218,7 +197,7 @@ int
 Bounded_Packet_Relay::send_input ()
 {
   // Don't block, return immediately if queue is empty.
-  ACE_Message_Block *item;
+  ACE_Message_Block *item {};
 
   // Using a separate (non-const) time value
   // is necessary on some platforms
@@ -230,7 +209,7 @@ Bounded_Packet_Relay::send_input ()
 
   // If a message block was dequeued, send it to the output device.
 
-  if (output_wrapper_->write_output_message ((void *) item) < 0)
+  if (output_wrapper_->write_output_message (item) < 0)
     {
       if (is_active_)
         ACE_ERROR ((LM_ERROR,
@@ -261,7 +240,7 @@ Bounded_Packet_Relay::start_transmission (u_long packet_count,
     return 1;
 
   // Set transmission in progress flag true.
-  is_active_ = 1;
+  is_active_ = true;
 
   // Update statistics for a new transmission.
   ++transmission_number_;
@@ -273,27 +252,28 @@ Bounded_Packet_Relay::start_transmission (u_long packet_count,
   queue_.activate ();
   while (! queue_.is_empty ())
     {
-      ACE_Message_Block *msg;
-      queue_.dequeue_head (msg);
-      delete msg;
+      ACE_Message_Block *msg {};
+      if (queue_.dequeue_head (msg) < 0)
+        break;
+      ACE_Message_Block_Unique_Ptr message {msg};
     }
 
   // Initialize the output device.
-  if (output_wrapper_->modify_device_settings ((void *) &logging_level) < 0)
+  if (output_wrapper_->modify_device_settings (&logging_level) < 0)
     {
       status_ = ERROR_DETECTED;
       transmission_end_ = ACE_OS::gettimeofday ();
-      is_active_ = 0;
+      is_active_ = false;
       ACE_ERROR_RETURN ((LM_ERROR, "%t %p\n",
                          "failed to initialize output device object"),
                         -1);
     }
   // Initialize the input device.
-  if (input_wrapper_->modify_device_settings ((void *) &logging_level) < 0)
+  if (input_wrapper_->modify_device_settings (&logging_level) < 0)
     {
       status_ = ERROR_DETECTED;
       transmission_end_ = ACE_OS::gettimeofday ();
-      is_active_ = 0;
+      is_active_ = false;
       ACE_ERROR_RETURN ((LM_ERROR, "%t %p\n",
                          "failed to initialize output device object"),
                         -1);
@@ -302,7 +282,7 @@ Bounded_Packet_Relay::start_transmission (u_long packet_count,
     {
       status_ = ERROR_DETECTED;
       transmission_end_ = ACE_OS::gettimeofday ();
-      is_active_ = 0;
+      is_active_ = false;
       ACE_ERROR_RETURN ((LM_ERROR, "%t %p\n",
                          "failed to initialize input device object"),
                         -1);
@@ -311,7 +291,7 @@ Bounded_Packet_Relay::start_transmission (u_long packet_count,
     {
       status_ = ERROR_DETECTED;
       transmission_end_ = ACE_OS::gettimeofday ();
-      is_active_ = 0;
+      is_active_ = false;
       ACE_ERROR_RETURN ((LM_ERROR, "%t %p\n",
                          "failed to initialize input device object"),
                         -1);
@@ -321,7 +301,7 @@ Bounded_Packet_Relay::start_transmission (u_long packet_count,
     {
       status_ = ERROR_DETECTED;
       transmission_end_ = ACE_OS::gettimeofday ();
-      is_active_ = 0;
+      is_active_ = false;
       ACE_ERROR_RETURN ((LM_ERROR, "%t %p\n",
                          "failed to activate input device object"),
                         -1);
@@ -348,7 +328,7 @@ Bounded_Packet_Relay::end_transmission (Transmission_Status status)
     return 1;
 
   // Set transmission in progress flag false.
-  is_active_ = 0;
+  is_active_ = false;
 
   // Ask the the input thread to stop.
   if (input_wrapper_->request_stop () < 0)
@@ -370,9 +350,10 @@ Bounded_Packet_Relay::end_transmission (Transmission_Status status)
   queue_.activate ();
   while (! queue_.is_empty ())
     {
-      ACE_Message_Block *msg;
-      queue_.dequeue_head (msg);
-      delete msg;
+      ACE_Message_Block *msg {};
+      if (queue_.dequeue_head (msg) < 0)
+        break;
+      ACE_Message_Block_Unique_Ptr message {msg};
     }
 
   // If all went well, set passed status, stamp end time, print a
@@ -435,7 +416,7 @@ Bounded_Packet_Relay::receive_input (void * arg)
 
       return -1;
     }
-  ACE_Message_Block *message = static_cast<ACE_Message_Block *> (arg);
+  ACE_Message_Block *message {static_cast<ACE_Message_Block *> (arg)};
   if (queue_.enqueue_tail (message) < 0)
     {
       if (is_active_)
@@ -451,11 +432,10 @@ Bounded_Packet_Relay::receive_input (void * arg)
 // Get high water mark for relay queue.
 
 ACE_UINT32
-Bounded_Packet_Relay::queue_hwm ()
+Bounded_Packet_Relay::queue_hwm () const
 {
-  return queue_lwm_;
+  return queue_hwm_;
 }
-
 
 // Set high water mark for relay queue.
 
@@ -468,7 +448,7 @@ Bounded_Packet_Relay::queue_hwm (ACE_UINT32 hwm)
 // Get low water mark for relay queue.
 
 ACE_UINT32
-Bounded_Packet_Relay::queue_lwm ()
+Bounded_Packet_Relay::queue_lwm () const
 {
   return queue_lwm_;
 }
@@ -481,13 +461,12 @@ Bounded_Packet_Relay::queue_lwm (ACE_UINT32 lwm)
   queue_lwm_ = lwm;
 }
 
-
 // Returns string corresponding to current status.
 
-const char *
-Bounded_Packet_Relay::status_msg ()
+char const *
+Bounded_Packet_Relay::status_msg () const
 {
-  const char *status_msg;
+  char const *status_msg {};
   switch (status_)
     {
       case UN_INITIALIZED:

@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef LB_LOAD_AVERAGE_H
 #define LB_LOAD_AVERAGE_H
 
@@ -25,6 +24,7 @@
 
 #include "ace/Synch_Traits.h"
 #include "ace/Thread_Mutex.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -57,8 +57,7 @@ class TAO_LB_LoadAverage
   : public virtual POA_CosLoadBalancing::Strategy
 {
 public:
-  /// Constructor.
-  TAO_LB_LoadAverage (PortableServer::POA_ptr poa);
+  explicit TAO_LB_LoadAverage (PortableServer::POA_ptr poa);
 
   /**
    * @name CosLoadBalancing::Strategy methods
@@ -99,8 +98,7 @@ public:
   TAO_LB_LoadAverage & operator= (TAO_LB_LoadAverage &&) = delete;
 
 protected:
-  /// Destructor.
-  ~TAO_LB_LoadAverage () override;
+  ~TAO_LB_LoadAverage () override = default;
 
   /// Return the effective load.
   CORBA::Float effective_load (CORBA::Float previous_load,
@@ -123,11 +121,11 @@ private:
   PortableServer::POA_var poa_;
 
   /// Table that maps location to load list.
-  TAO_LB_LoadMap * load_map_ {};
+  std::unique_ptr<TAO_LB_LoadMap> load_map_;
 
   /// Lock used to ensure atomic access to state retained by this
   /// class.
-  TAO_SYNCH_MUTEX * lock_ {};
+  std::unique_ptr<TAO_SYNCH_MUTEX> lock_;
 
   /// Cached set of properties used when initializing this strategy.
   CosLoadBalancing::Properties properties_;

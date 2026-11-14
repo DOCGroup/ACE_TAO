@@ -22,7 +22,6 @@
 #include "tao/Codeset_Translator_Base.h"
 #include "tao/Codeset/codeset_export.h"
 
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Char_Codeset_Translator;
 class ACE_WChar_Codeset_Translator;
@@ -80,7 +79,7 @@ protected:
   /// assign().
   void assign_i (TAO_OutputCDR *, ACE_WChar_Codeset_Translator*) const;
 
- private:
+public:
   TAO_Codeset_Translator_Factory (TAO_Codeset_Translator_Factory const &) = delete;
   TAO_Codeset_Translator_Factory &operator= (TAO_Codeset_Translator_Factory const &) = delete;
   TAO_Codeset_Translator_Factory (TAO_Codeset_Translator_Factory &&) = delete;

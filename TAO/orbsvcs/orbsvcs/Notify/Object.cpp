@@ -16,14 +16,6 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_Object::TAO_Notify_Object ()
-: poa_ (0)
-, proxy_poa_ (0)
-, own_proxy_poa_ (false)
-, object_poa_ (0)
-, own_object_poa_ (false)
-, id_ (0)
-, own_worker_task_ (false)
-, shutdown_ (false)
 {
   if (TAO_debug_level > 2 )
     ORBSVCS_DEBUG ((LM_DEBUG,"object:%x  created\n", this ));
@@ -79,7 +71,6 @@ TAO_Notify_Object::activate (
   this->id_ = id;
   return this->poa_->activate_with_id (servant, this->id_);
 }
-
 
 void
 TAO_Notify_Object::deactivate ()
@@ -302,7 +293,6 @@ TAO_Notify_Object::find_qos_property_value (
   // zero on success.  We must convert this to a boolean value.
   return (this->qos_properties_.find (name, value) == 0);
 }
-
 
 void
 TAO_Notify_Object::qos_changed (const TAO_Notify_QoSProperties& /*qos_properties*/)

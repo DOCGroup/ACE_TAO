@@ -16,8 +16,8 @@ namespace Kokyu
 
 template <class DSRT_Scheduler_Traits>
 int Comparator_Adapter_Generator<DSRT_Scheduler_Traits>::MoreEligible::
-operator ()(const DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits>& item1,
-            const DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits>& item2)
+operator ()(DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits> const &item1,
+            DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits> const &item2)
 {
   int rc = qos_comparator_ (item1->qos (), item2->qos ());
 
@@ -45,14 +45,14 @@ DSRT_CV_Dispatcher_Impl (ACE_Sched_Params::Policy sched_policy,
 
 template <class DSRT_Scheduler_Traits> int
 DSRT_CV_Dispatcher_Impl<DSRT_Scheduler_Traits>::
-init_i (const DSRT_ConfigInfo&)
+init_i (DSRT_ConfigInfo const &)
 {
   return 0;
 }
 
 template <class DSRT_Scheduler_Traits>
 int DSRT_CV_Dispatcher_Impl<DSRT_Scheduler_Traits>::
-schedule_i (Guid_t id, const DSRT_QoSDescriptor& qos)
+schedule_i (Guid_t id, DSRT_QoSDescriptor const &qos)
 {
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,
@@ -174,7 +174,7 @@ schedule_i (Guid_t id, const DSRT_QoSDescriptor& qos)
 
 template <class DSRT_Scheduler_Traits>
 int DSRT_CV_Dispatcher_Impl<DSRT_Scheduler_Traits>::
-update_schedule_i (Guid_t guid, const DSRT_QoSDescriptor& qos)
+update_schedule_i (Guid_t guid, DSRT_QoSDescriptor const &qos)
 {
   return this->schedule_i (guid, qos);
 }
@@ -271,7 +271,7 @@ template <class DSRT_Scheduler_Traits> int
 DSRT_CV_Dispatcher_Impl<DSRT_Scheduler_Traits>::
 shutdown_i ()
 {
-  this->shutdown_flagged_ = 1;
+  this->shutdown_flagged_ = true;
   return 0;
 }
 

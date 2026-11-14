@@ -12,33 +12,30 @@ TAO_EventLog_i::TAO_EventLog_i (CORBA::ORB_ptr orb,
                                 TAO_LogNotification *log_notifier,
                                 DsLogAdmin::LogId id)
   : TAO_Log_i (orb, logmgr_i, factory, id, log_notifier),
-    event_channel_ (0),
-    my_log_consumer_ (0),
     poa_(PortableServer::POA::_duplicate(poa)),
     log_poa_(PortableServer::POA::_duplicate(log_poa))
 {
   // Create an instance of the event channel.
-  TAO_CEC_EventChannel_Attributes attr (this->poa_.in(),
-                                        this->poa_.in());
+  TAO_CEC_EventChannel_Attributes const attr (this->poa_.in(),
+                                              this->poa_.in());
 
-  ACE_NEW_THROW_EX (this->event_channel_,
+  TAO_CEC_EventChannel * event_channel {};
+  ACE_NEW_THROW_EX (event_channel,
                     TAO_CEC_EventChannel(attr),
                     CORBA::NO_MEMORY ());
+  this->event_channel_.reset (event_channel);
 }
 
 TAO_EventLog_i::~TAO_EventLog_i ()
 {
   this->event_channel_->destroy ();
-
-  delete this->event_channel_;
 }
-
 
 DsLogAdmin::Log_ptr
 TAO_EventLog_i::copy (DsLogAdmin::LogId &id)
 {
   // Duplicate the log.
-  DsEventLogAdmin::EventLogFactory_var eventLogFactory =
+  DsEventLogAdmin::EventLogFactory_var const eventLogFactory =
     DsEventLogAdmin::EventLogFactory::_narrow (factory_.in ());
 
   DsEventLogAdmin::EventLog_var log =
@@ -53,7 +50,7 @@ DsLogAdmin::Log_ptr
 TAO_EventLog_i::copy_with_id (DsLogAdmin::LogId id)
 {
   // Duplicate the log supplying the log id.
-  DsEventLogAdmin::EventLogFactory_var eventLogFactory =
+  DsEventLogAdmin::EventLogFactory_var const eventLogFactory =
     DsEventLogAdmin::EventLogFactory::_narrow (factory_.in ());
 
   DsEventLogAdmin::EventLog_var log =
@@ -63,7 +60,6 @@ TAO_EventLog_i::copy_with_id (DsLogAdmin::LogId id)
 
   return log._retn ();
 }
-
 
 void
 TAO_EventLog_i::destroy ()
@@ -75,7 +71,7 @@ TAO_EventLog_i::destroy ()
   this->logmgr_i_.remove (this->logid_);
 
   // Deregister with POA.
-  PortableServer::ObjectId_var id =
+  PortableServer::ObjectId_var const id =
     this->log_poa_->servant_to_id (this);
 
   this->log_poa_->deactivate_object (id.in ());
@@ -84,14 +80,13 @@ TAO_EventLog_i::destroy ()
 void
 TAO_EventLog_i::activate ()
 {
-  CosEventChannelAdmin::ConsumerAdmin_var consumer_admin =
+  CosEventChannelAdmin::ConsumerAdmin_var const consumer_admin =
   this->event_channel_->for_consumers ();
 
   // Create the PushConsumer that will log the events.
   this->my_log_consumer_ = new TAO_Event_LogConsumer (this);
   this->my_log_consumer_->connect (consumer_admin.in ());
 }
-
 
 CosEventChannelAdmin::ConsumerAdmin_ptr
 TAO_EventLog_i::for_consumers ()

@@ -2,7 +2,6 @@
 
 #include "JAWS/JAWS.h"
 
-
 char *
 JAWS_HTTP_10_Helper::HTTP_decode_string (char *path)
 {

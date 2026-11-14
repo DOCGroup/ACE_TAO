@@ -53,7 +53,6 @@ be_argument::be_argument (AST_Argument::Direction d,
     }
 }
 
-
 int
 be_argument::accept (be_visitor *visitor)
 {

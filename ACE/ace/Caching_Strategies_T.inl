@@ -7,27 +7,20 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class ATTRIBUTES, class CACHING_UTILITY, class IMPLEMENTATION> ACE_INLINE
-ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, IMPLEMENTATION>::ACE_Caching_Strategy_Adapter (IMPLEMENTATION *implementation,
-                                                                                                         bool delete_implementation)
-  : implementation_ (implementation),
-    delete_implementation_ (delete_implementation)
+ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, IMPLEMENTATION>::ACE_Caching_Strategy_Adapter (
+  IMPLEMENTATION *implementation,
+  bool delete_implementation)
+  : implementation_ (implementation)
 {
-  if (this->implementation_ == 0)
+  if (this->implementation_ == nullptr)
     {
       ACE_NEW (this->implementation_,
                IMPLEMENTATION);
-      this->delete_implementation_ = true;
+      this->owned_implementation_.reset (this->implementation_);
     }
-}
-
-template<class ATTRIBUTES, class CACHING_UTILITY, class IMPLEMENTATION> ACE_INLINE
-ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, IMPLEMENTATION>::~ACE_Caching_Strategy_Adapter ()
-{
-  if (this->delete_implementation_)
+  else if (delete_implementation)
     {
-      delete this->implementation_;
-      this->delete_implementation_ = false;
-      this->implementation_ = nullptr;
+      this->owned_implementation_.reset (this->implementation_);
     }
 }
 

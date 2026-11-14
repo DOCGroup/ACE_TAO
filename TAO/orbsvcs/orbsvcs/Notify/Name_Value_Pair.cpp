@@ -1,20 +1,23 @@
 #include "orbsvcs/Notify/Name_Value_Pair.h"
 #include "orbsvcs/Notify/Property_T.h"
-#include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_ctype.h"
+
+#include <cstdlib>
+#include <cstring>
+#include <string>
 
 namespace
 {
   ACE_UINT64 string_to_uint64 (const char * s)
   {
-    size_t const len = ACE_OS::strlen (s);
+    size_t const len = std::strlen (s);
     if (len == 0)
       return 0;
     if (! ACE_OS::ace_isdigit(s[0]))
       return 0;
 
-    ACE_UINT64 t = 0;
-    for (size_t i = 0; i < len; ++i)
+    ACE_UINT64 t {};
+    for (size_t i {}; i < len; ++i)
     {
       if (ACE_OS::ace_isdigit(s[i]) == 0)
       {
@@ -31,25 +34,18 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
-  NVP::NVP()
-  {
-  }
-
   NVP::NVP(const TAO_Notify_Property_Short& p)
     : name(p.name())
   {
-    char buf[64];
-    ACE_OS::sprintf (buf, "%d", p.value ());
-    value = buf;
+    const std::string string_value = std::to_string (p.value ());
+    value = string_value.c_str ();
   }
 
   NVP::NVP(const TAO_Notify_Property_Long& p)
     : name(p.name())
   {
-    char buf[64];
-    long temp = static_cast<long> (p.value ());
-    ACE_OS::sprintf (buf, "%ld", temp);
-    value = buf;
+    const std::string string_value = std::to_string (static_cast<long> (p.value ()));
+    value = string_value.c_str ();
   }
 
   NVP::NVP(const TAO_Notify_Property_Time& p)
@@ -70,10 +66,8 @@ namespace TAO_Notify
   NVP::NVP(const char * n, CORBA::Long v)
     : name(n)
   {
-    char buf[64];
-    long temp = v;
-    ACE_OS::sprintf (buf, "%ld", temp);
-    value = buf;
+    const std::string string_value = std::to_string (static_cast<long> (v));
+    value = string_value.c_str ();
   }
 
   NVP::NVP(const char * n, const char * v)
@@ -98,7 +92,7 @@ namespace TAO_Notify
 
   bool NVPList::find (const char * name, ACE_CString& val) const
   {
-    for (size_t i = 0; i < list_.size(); ++i)
+    for (size_t i {}; i < list_.size(); ++i)
     {
       if (list_[i].name == name)
       {
@@ -111,7 +105,7 @@ namespace TAO_Notify
 
   bool NVPList::find (const char * name, const char *& val) const
   {
-    for (size_t i = 0; i < list_.size(); ++i)
+    for (size_t i {}; i < list_.size(); ++i)
     {
       if (list_[i].name == name)
       {
@@ -127,7 +121,7 @@ namespace TAO_Notify
     const char * v;
     if (find(p.name(), v))
     {
-      p.assign (static_cast<CORBA::Short> (ACE_OS::atoi(v)));
+      p.assign (static_cast<CORBA::Short> (std::atoi (v)));
     }
   }
 
@@ -136,7 +130,7 @@ namespace TAO_Notify
     const char * v;
     if (find(p.name(), v))
     {
-      p.assign (static_cast<CORBA::Long> (ACE_OS::atoi(v)));
+      p.assign (static_cast<CORBA::Long> (std::atoi (v)));
     }
   }
 
@@ -160,7 +154,7 @@ namespace TAO_Notify
       }
       else
       {
-        p = nullptr;
+        p = false;
       }
     }
   }
@@ -170,7 +164,7 @@ namespace TAO_Notify
     const char * val;
     if (find(n, val))
     {
-      v = static_cast<CORBA::Long> (ACE_OS::atoi(val));
+      v = static_cast<CORBA::Long> (std::atoi (val));
       return true;
     }
     return false;
@@ -183,7 +177,7 @@ namespace TAO_Notify
 
   void NVPList::push_back(const NVP& v)
   {
-    for (size_t i = 0; i < list_.size(); ++i)
+    for (size_t i {}; i < list_.size(); ++i)
     {
       if (list_[i].name == v.name)
       {

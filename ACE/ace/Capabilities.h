@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_CAPABILITIES_H
 #define ACE_CAPABILITIES_H
 #include /**/ "ace/pre.h"
@@ -50,7 +49,7 @@ protected:
     ACE_BOOLCAP = 2
   };
 
-  ACE_CapEntry (int captype);
+  explicit ACE_CapEntry (int captype);
 
 protected:
   int captype_;
@@ -67,7 +66,7 @@ protected:
 class ACE_Export ACE_IntCapEntry : public ACE_CapEntry
 {
 public:
-  ACE_IntCapEntry (int val);
+  explicit ACE_IntCapEntry (int val);
   int getval () const;
   ACE_ALLOC_HOOK_DECLARE;
 
@@ -86,7 +85,7 @@ protected:
 class ACE_Export ACE_StringCapEntry : public ACE_CapEntry
 {
 public:
-  ACE_StringCapEntry (const ACE_TString &val);
+  explicit ACE_StringCapEntry (const ACE_TString &val);
   ACE_TString getval () const;
   ACE_ALLOC_HOOK_DECLARE;
 
@@ -105,7 +104,7 @@ protected:
 class ACE_Export ACE_BoolCapEntry : public ACE_CapEntry
 {
 public:
-  ACE_BoolCapEntry (int val);
+  explicit ACE_BoolCapEntry (int val);
   int getval () const;
   ACE_ALLOC_HOOK_DECLARE;
 
@@ -134,10 +133,8 @@ class ACE_Export ACE_Capabilities
 public:
   using CAPABILITIES_MAP = ACE_Hash_Map_Manager_Ex<ACE_TString, ACE_CapEntry *, ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_Null_Mutex>;
 
-  /// The Constructor
   ACE_Capabilities ();
 
-  /// The Destructor
   ~ACE_Capabilities();
 
 public:
@@ -169,7 +166,7 @@ protected:
                ACE_TString &line);
 
   /// Is a valid entry
-  int is_entry (const ACE_TCHAR *name, const ACE_TCHAR *line);
+  bool is_entry (const ACE_TCHAR *name, const ACE_TCHAR *line);
 
   /// Reset the set of capabilities
   void resetcaps ();

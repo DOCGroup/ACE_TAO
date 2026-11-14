@@ -1,20 +1,25 @@
 #include "ace/Get_Opt.h"
-#include "ace/OS_NS_ctype.h"
+#include "ace/OS_NS_stdio.h"
 
 #include "orbsvcs/Notify/MonitorControl/NotificationServiceMCC.h"
 
-static const ACE_TCHAR* monitor_ior = 0;
-static const char* shutdown_cmd = "shutdown";
-static const char* rm_consumer = "remove_consumer";
-static const char* rm_supplier = "remove_supplier";
-static const char* rm_consumeradmin = "remove_consumeradmin";
-static const char* rm_supplieradmin = "remove_supplieradmin";
+#include <algorithm>
+#include <cstring>
+#include <string>
+#include <vector>
+
+static ACE_TCHAR const* monitor_ior {};
+constexpr char shutdown_cmd[] = "shutdown";
+constexpr char rm_consumer[] = "remove_consumer";
+constexpr char rm_supplier[] = "remove_supplier";
+constexpr char rm_consumeradmin[] = "remove_consumeradmin";
+constexpr char rm_supplieradmin[] = "remove_supplieradmin";
 
 static int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     {
@@ -34,65 +39,57 @@ parse_args (int argc, ACE_TCHAR *argv[])
         }
     }
 
+  if (monitor_ior == nullptr)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "usage: %s -k <ior>\n",
+                         argv [0]),
+                        -1);
+    }
+
   return 0;
 }
 
-extern "C" int
-sorter (const void* a, const void* b)
-{
-  const char* left = *(reinterpret_cast<const char* const*> (a));
-  const char* right = *(reinterpret_cast<const char* const*> (b));
-  return ACE_OS::strcmp (left, right);
-}
-
-bool
+static bool
 process_command (CosNotification::NotificationServiceMonitorControl_ptr nsm,
-                 char* buf,
-                 const char* command)
+                 std::string const& input,
+                 char const* command)
 {
-  if (ACE_OS::strstr (buf, command) == buf)
+  size_t const command_length = std::strlen (command);
+  if (input.compare (0, command_length, command) == 0)
     {
-      const char* name = buf + ACE_OS::strlen (command);
-      bool space = false;
-      size_t i = 0;
-
-      while (ACE_OS::ace_isspace (name[i]))
+      std::string const name = input.substr (command_length);
+      size_t const argument_start = name.find_first_not_of (" \t\n\r\f\v");
+      if (argument_start != std::string::npos)
         {
-          space = true;
-          ++i;
-        }
-
-      if (space)
-        {
+          std::string const argument = name.substr (argument_start);
           try
             {
-              const char* start = name + i;
-
-              if (ACE_OS::strcmp (command, shutdown_cmd) == 0)
+              if (std::strcmp (command, shutdown_cmd) == 0)
                 {
-                  nsm->shutdown_event_channel (start);
+                  nsm->shutdown_event_channel (argument.c_str ());
                 }
-              else if (ACE_OS::strcmp (command, rm_consumer) == 0)
+              else if (std::strcmp (command, rm_consumer) == 0)
                 {
-                  nsm->remove_consumer (start);
+                  nsm->remove_consumer (argument.c_str ());
                 }
-              else if (ACE_OS::strcmp (command, rm_supplier) == 0)
+              else if (std::strcmp (command, rm_supplier) == 0)
                 {
-                  nsm->remove_supplier (start);
+                  nsm->remove_supplier (argument.c_str ());
                 }
-              else if (ACE_OS::strcmp (command, rm_consumeradmin) == 0)
+              else if (std::strcmp (command, rm_consumeradmin) == 0)
                 {
-                  nsm->remove_consumeradmin (start);
+                  nsm->remove_consumeradmin (argument.c_str ());
                 }
-              else if (ACE_OS::strcmp (command, rm_supplieradmin) == 0)
+              else if (std::strcmp (command, rm_supplieradmin) == 0)
                 {
-                  nsm->remove_supplieradmin (start);
+                  nsm->remove_supplieradmin (argument.c_str ());
                 }
             }
-          catch (const CORBA::Exception& ex)
+          catch (CORBA::Exception const& ex)
             {
-              ACE_OS::strcat (buf, ": ");
-              ex._tao_print_exception (buf);
+              std::string const error_prefix = input + ": ";
+              ex._tao_print_exception (error_prefix.c_str ());
             }
 
           return true;
@@ -105,7 +102,7 @@ process_command (CosNotification::NotificationServiceMonitorControl_ptr nsm,
 int
 ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
-  int status = 0;
+  int status {};
 
   try
     {
@@ -129,55 +126,51 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
                             1);
         }
 
-      bool done = false;
-      static const size_t lsize = 1024;
-      char prev[lsize];
+      bool done {};
+      constexpr size_t line_size = 1024;
+      std::string previous_line;
 
       while (!done)
         {
           ACE_OS::printf ("NotifyService> ");
           ACE_OS::fflush (stdout);
 
-          char line[lsize] = "";
-          char* rl = ACE_OS::fgets (line, lsize, stdin);
-
-          if (rl != 0)
-            {
-              int len = static_cast<int> (ACE_OS::strlen (line));
-
-              for (int i = 0; i < len && ACE_OS::ace_isspace (rl[0]); ++i)
-                {
-                  rl++;
-                }
-
-              for (int i = len - 1; i >= 0 && ACE_OS::ace_isspace (line[i]); --i)
-                {
-                  line[i] = '\0';
-                }
-
-              if (ACE_OS::strlen (rl) == 0 || ACE_OS::strcmp (rl, "!!") == 0)
-                {
-                  ACE_OS::strcpy (line, prev);
-                  rl = line;
-                }
-
-              ACE_OS::strcpy (prev, line);
-            }
-
-
-          if (rl == 0)
+          char line_buffer[line_size] {};
+          if (ACE_OS::fgets (line_buffer, line_size, stdin) == nullptr)
             {
               done = true;
               ACE_DEBUG ((LM_DEBUG, "\n"));
+              continue;
             }
-          else if (ACE_OS::strlen (rl) == 0)
+
+          std::string line (line_buffer);
+          size_t const first = line.find_first_not_of (" \t\n\r\f\v");
+          if (first == std::string::npos)
             {
+              line.clear ();
             }
-          else if (ACE_OS::strcmp (rl, "quit") == 0)
+          else
+            {
+              size_t const last = line.find_last_not_of (" \t\n\r\f\v");
+              line = line.substr (first, last - first + 1);
+            }
+
+          if (line.empty () || line == "!!")
+            {
+              line = previous_line;
+            }
+          previous_line = line;
+
+          if (line.empty ())
+            {
+              continue;
+            }
+
+          if (line == "quit")
             {
               done = true;
             }
-          else if (ACE_OS::strcmp (rl, "help") == 0)
+          else if (line == "help")
             {
               ACE_DEBUG ((LM_DEBUG,
                           "names                - Get a list of "
@@ -196,61 +189,59 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
                           "<statistic name>     - Return the "
                           "information for the specified statistic.\n"));
             }
-          else if (ACE_OS::strcmp (rl, "names") == 0)
+          else if (line == "names")
             {
               try
                 {
                   Monitor::NameList_var names = nsm->get_statistic_names ();
-                  CORBA::ULong length = names->length ();
+                  CORBA::ULong const length = names->length ();
                   ACE_DEBUG ((LM_DEBUG, "Statistic names\n"));
 
                   // It's much easier to read once it's sorted
-                  const char** narray = 0;
-                  ACE_NEW_THROW_EX (narray,
-                                    const char* [length],
-                                    CORBA::NO_MEMORY ());
+                  std::vector<char const*> sorted_names;
+                  sorted_names.reserve (length);
 
                   for (CORBA::ULong i = 0; i < length; ++i)
                     {
-                      narray[i] = names[i].in ();
+                      sorted_names.push_back (names[i].in ());
                     }
 
-                  ACE_OS::qsort (narray,
-                                 length,
-                                 sizeof (const char*),
-                                 sorter);
+                  std::sort (sorted_names.begin (),
+                             sorted_names.end (),
+                             [] (char const* left, char const* right)
+                             {
+                               return std::strcmp (left, right) < 0;
+                             });
 
-                  for (CORBA::ULong i = 0; i < length; ++i)
+                  for (char const* name : sorted_names)
                     {
-                      ACE_DEBUG ((LM_DEBUG, "  %s\n", narray[i]));
+                      ACE_DEBUG ((LM_DEBUG, "  %s\n", name));
                     }
-
-                  delete [] narray;
                 }
-              catch (const CORBA::Exception& ex)
+              catch (CORBA::Exception const& ex)
                 {
                   ex._tao_print_exception ("names: ");
                 }
             }
           else
             {
-              if (process_command (nsm.in (), rl, shutdown_cmd))
+              if (process_command (nsm.in (), line, shutdown_cmd))
                 {
                   continue;
                 }
-              else if (process_command (nsm.in (), rl, rm_consumer))
+              else if (process_command (nsm.in (), line, rm_consumer))
                 {
                   continue;
                 }
-              else if (process_command (nsm.in (), rl, rm_supplier))
+              else if (process_command (nsm.in (), line, rm_supplier))
                 {
                   continue;
                 }
-              else if (process_command (nsm.in (), rl, rm_consumeradmin))
+              else if (process_command (nsm.in (), line, rm_consumeradmin))
                 {
                   continue;
                 }
-              else if (process_command (nsm.in (), rl, rm_supplieradmin))
+              else if (process_command (nsm.in (), line, rm_supplieradmin))
                 {
                   continue;
                 }
@@ -258,8 +249,8 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
               try
                 {
                   Monitor::Data_var data =
-                    nsm->get_statistic (rl);
-                  ACE_DEBUG ((LM_DEBUG, "%s => ", rl));
+                    nsm->get_statistic (line.c_str ());
+                  ACE_DEBUG ((LM_DEBUG, "%s => ", line.c_str ()));
 
                   if (data->data_union._d () == Monitor::DATA_NUMERIC)
                     {
@@ -281,10 +272,10 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
                       ACE_DEBUG ((LM_DEBUG, "\n"));
                     }
                 }
-              catch (const CORBA::Exception& ex)
+              catch (CORBA::Exception const& ex)
                 {
-                  ACE_OS::strcat (rl, ": ");
-                  ex._tao_print_exception (rl);
+                  std::string const error_prefix = line + ": ";
+                  ex._tao_print_exception (error_prefix.c_str ());
                 }
             }
         }
@@ -306,7 +297,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       ACE_ERROR ((LM_ERROR,
                   "Notification Service Monitor: "
                   "unexpected exception type\n"));
-      status++;
+      ++status;
     }
 
   return status;

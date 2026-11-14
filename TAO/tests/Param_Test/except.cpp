@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "helper.h"
 #include "except.h"
 #include "tao/debug.h"
@@ -29,7 +28,7 @@ Test_Exception::Test_Exception ()
 Test_Exception::~Test_Exception ()
 {
   CORBA::string_free (this->opname_);
-  this->opname_ = 0;
+  this->opname_ = nullptr;
 }
 
 const char *
@@ -43,7 +42,7 @@ Test_Exception::dii_req_invoke (CORBA::Request_ptr req)
 {
   try
     {
-      this->in_++;
+      ++this->in_;
       req->add_in_arg ("s1") <<= this->in_;
       req->add_inout_arg ("s2") <<= this->inout_;
       req->add_out_arg ("s3") <<= this->out_;
@@ -68,8 +67,8 @@ Test_Exception::dii_req_invoke (CORBA::Request_ptr req)
     }
   catch (CORBA::UnknownUserException& user_ex)
     {
-      const Param_Test::Ooops* oops = 0;
-      const Param_Test::BadBoy* bad_boy = 0;
+      Param_Test::Ooops const *oops {};
+      Param_Test::BadBoy const *bad_boy {};
 
       if (user_ex.exception () >>= oops)
         {
@@ -243,7 +242,7 @@ Test_Exception::run_sii_test (Param_Test_ptr objref)
 {
   try
     {
-      this->in_++;
+      ++this->in_;
       this->ret_ = objref->test_exception (this->in_,
                                            this->inout_,
                                            this->out_);

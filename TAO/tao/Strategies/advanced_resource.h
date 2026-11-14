@@ -36,13 +36,10 @@ class TAO_Strategies_Export TAO_Advanced_Resource_Factory :
   public TAO_Default_Resource_Factory
 {
 public:
-  /// Constructor.
   TAO_Advanced_Resource_Factory ();
 
-  /// Destructor.
   ~TAO_Advanced_Resource_Factory () override;
 
-  // = Service Configurator hooks.
   /// Dynamic linking hook
   int init (int argc, ACE_TCHAR* argv[]) override;
 
@@ -136,7 +133,6 @@ private:
 };
 
 static TAO_Resource_Factory_Changer TAO_changer;
-
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_Strategies, TAO_Advanced_Resource_Factory)
 ACE_FACTORY_DECLARE (TAO_Strategies, TAO_Advanced_Resource_Factory)

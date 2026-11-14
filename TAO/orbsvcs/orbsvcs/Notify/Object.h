@@ -48,7 +48,6 @@ public:
   /// Id for Objects.
   using ID = CORBA::Long;
 
-  /// Destructor
   virtual ~TAO_Notify_Object ();
 
   /// This Object's ID
@@ -100,7 +99,6 @@ public:
   TAO_Notify_Worker_Task* get_worker_task ();
 
 protected:
-  /// Constructor
   TAO_Notify_Object ();
 
   /// Init this object with data from <rhs>.
@@ -142,8 +140,6 @@ protected:
   /// saving its own attrs.
   virtual void save_attrs(TAO_Notify::NVPList& attrs);
 
-  ///= Protected data members.
-
   /// QoS Properties.
   TAO_Notify_QoSProperties qos_properties_;
 
@@ -178,18 +174,18 @@ protected:
 
 private:
   /// The POA in which the object is activated.
-  TAO_Notify_POA_Helper* poa_;
+  TAO_Notify_POA_Helper* poa_ {};
 
   /// The POA in which the proxys are activated.
-  TAO_Notify_POA_Helper* proxy_poa_;
-  bool own_proxy_poa_;
+  TAO_Notify_POA_Helper* proxy_poa_ {};
+  bool own_proxy_poa_ {};
 
   /// The POA in which the object's children are activated.
-  TAO_Notify_POA_Helper* object_poa_;
-  bool own_object_poa_;
+  TAO_Notify_POA_Helper* object_poa_ {};
+  bool own_object_poa_ {};
 
   /// Id assigned to this object
-  ID id_;
+  ID id_ {};
 
   /// The event manager.
   /// TAO_Notify_Event_Manager inl includes Object.h
@@ -200,10 +196,10 @@ private:
 
   /// Worker Task.
   TAO_Notify_Worker_Task::Ptr worker_task_;
-  bool own_worker_task_;
+  bool own_worker_task_ {};
 
   /// Are we shutdown (i,e. scheduled for destroy).
-  bool shutdown_;
+  bool shutdown_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -23,13 +23,11 @@ TAO_Async_Table_Adapter::TAO_Async_Table_Adapter (TAO_ORB_Core &orb_core)
 {
 }
 
-TAO_Async_Table_Adapter::~TAO_Async_Table_Adapter () = default;
-
 void
 TAO_Async_Table_Adapter::open ()
 {
   ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
-  TAO_Async_IOR_Table_Impl *impl = nullptr;
+  TAO_Async_IOR_Table_Impl *impl {};
   ACE_NEW_THROW_EX (impl,
                     TAO_Async_IOR_Table_Impl (),
                     CORBA::NO_MEMORY ());
@@ -56,14 +54,14 @@ TAO_Async_Table_Adapter::dispatch (TAO::ObjectKey &key,
     rootref = this->root_;
   }
 
-  if (this->root_->async_available ())
+  if (rootref->async_available ())
     {
       // construct a callback handler
-      TAO_AMH_Locate_ResponseHandler_ptr rhp = nullptr;
+      TAO_AMH_Locate_ResponseHandler_ptr rhp {};
       ACE_NEW_RETURN (rhp,
                       TAO_AMH_Locate_ResponseHandler (request),
                       DS_MISMATCHED_KEY);
-      TAO_AMH_Locate_ResponseHandler_var rh (rhp);
+      TAO_AMH_Locate_ResponseHandler_var const rh (rhp);
       this->find_object (rh, key);
       return 0;
     }
@@ -81,10 +79,19 @@ void
 TAO_Async_Table_Adapter::find_object (IORTable::Locate_ResponseHandler rh,
                                       TAO::ObjectKey &key)
 {
+  TAO_IOR_Table_Impl_var rootref;
+  {
+    ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
+    if (!this->closed_)
+      {
+        rootref = this->root_;
+      }
+  }
+
   CORBA::String_var object_key;
   TAO::ObjectKey::encode_sequence_to_string (object_key.out (), key);
-  TAO_Async_IOR_Table_Impl * aroot =
-    dynamic_cast<TAO_Async_IOR_Table_Impl *>(this->root_.ptr());
+  TAO_Async_IOR_Table_Impl * const aroot =
+    dynamic_cast<TAO_Async_IOR_Table_Impl *> (rootref.ptr ());
   if (aroot != nullptr)
     {
       aroot->async_find (rh, object_key.in ());
@@ -100,10 +107,10 @@ TAO_Async_Table_Adapter::find_object (IORTable::Locate_ResponseHandler rh,
 TAO_Adapter*
 TAO_Async_Table_Adapter_Factory::create (TAO_ORB_Core *oc)
 {
-  TAO_Adapter *ptr = nullptr;
+  TAO_Adapter *ptr {};
   ACE_NEW_RETURN (ptr,
                  TAO_Async_Table_Adapter (*oc),
-                 0);
+                 nullptr);
   return ptr;
 }
 

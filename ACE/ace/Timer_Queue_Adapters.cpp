@@ -30,7 +30,7 @@ ACE_Async_Timer_Queue_Adapter<TQ, TYPE>::timer_queue ()
 
 template <class TQ, class TYPE> int
 ACE_Async_Timer_Queue_Adapter<TQ, TYPE>::cancel (long timer_id,
-                                           const void **act)
+                                           void const **act)
 {
   // Block designated signals.
   ACE_Sig_Guard sg (&this->mask_);
@@ -69,9 +69,9 @@ ACE_Async_Timer_Queue_Adapter<TQ, TYPE>::schedule_ualarm ()
 
 template <class TQ, class TYPE> long
 ACE_Async_Timer_Queue_Adapter<TQ, TYPE>::schedule (TYPE eh,
-                                             const void *act,
-                                             const ACE_Time_Value &future_time,
-                                             const ACE_Time_Value &interval)
+                                             void const *act,
+                                             ACE_Time_Value const &future_time,
+                                             ACE_Time_Value const &interval)
 {
   ACE_UNUSED_ARG (act);
   ACE_UNUSED_ARG (interval);
@@ -81,7 +81,7 @@ ACE_Async_Timer_Queue_Adapter<TQ, TYPE>::schedule (TYPE eh,
   ACE_UNUSED_ARG (sg);
 
   // @@ We still need to implement interval timers...
-  long tid = this->timer_queue_.schedule (eh, act, future_time);
+  long const tid = this->timer_queue_.schedule (eh, act, future_time);
 
   if (tid == -1)
     ACELIB_ERROR_RETURN ((LM_ERROR,
@@ -105,7 +105,7 @@ ACE_Async_Timer_Queue_Adapter<TQ, TYPE>::ACE_Async_Timer_Queue_Adapter (ACE_Sig_
   // signals when SIGALRM is running.  Also, we always restart system
   // calls that are interrupted by the signals.
 
-  ACE_Sig_Action sa ((ACE_SignalHandler) nullptr,
+  ACE_Sig_Action sa (nullptr,
                      this->mask_,
                      SA_RESTART);
 
@@ -136,7 +136,7 @@ ACE_Async_Timer_Queue_Adapter<TQ, TYPE>::handle_signal (int signum, siginfo_t *,
 
         // @@ This code should also become smarter to avoid
         // unnecessary calls to ualarm().
-        if (this->timer_queue_.is_empty () == 0)
+        if (!this->timer_queue_.is_empty ())
           return this->schedule_ualarm ();
         else
           return 0;
@@ -153,35 +153,38 @@ ACE_Async_Timer_Queue_Adapter<TQ, TYPE>::handle_signal (int signum, siginfo_t *,
 
 template<class TQ, class TYPE>
 ACE_Thread_Timer_Queue_Adapter<TQ, TYPE>::ACE_Thread_Timer_Queue_Adapter (ACE_Thread_Manager *tm,
-                                                                    TQ* timer_queue)
+                                                                    TQ *timer_queue)
   : ACE_Task_Base (tm),
-    timer_queue_(timer_queue),
-    delete_timer_queue_(false),
+    timer_queue_ (timer_queue),
+    owned_timer_queue_ (),
     condition_ (mutex_, cond_attr_),
     active_ (true), // Assume that we start in active mode.
     thr_id_ (ACE_OS::NULL_thread)
 {
-  if (timer_queue_ == 0)
+  if (this->timer_queue_ == nullptr)
     {
-      ACE_NEW (this->timer_queue_,
-               TQ);
-      this->delete_timer_queue_ = true;
+      TQ *timer_queue {};
+      ACE_NEW (timer_queue, TQ);
+      this->owned_timer_queue_.reset (timer_queue);
+      this->timer_queue_ = this->owned_timer_queue_.get ();
     }
 }
 
 template<class TQ, class TYPE>
 ACE_Thread_Timer_Queue_Adapter<TQ, TYPE>::~ACE_Thread_Timer_Queue_Adapter ()
 {
-  if (this->delete_timer_queue_)
+  this->deactivate ();
+  this->wait ();
+
+  if (this->owned_timer_queue_)
     {
-      delete this->timer_queue_;
-      this->timer_queue_ = 0;
-      this->delete_timer_queue_ = false;
+      this->owned_timer_queue_.reset ();
+      this->timer_queue_ = nullptr;
     }
-  else if (this->timer_queue_)
+  else if (this->timer_queue_ != nullptr)
     {
       this->timer_queue_->close ();
-      this->timer_queue_ = 0;
+      this->timer_queue_ = nullptr;
     }
 }
 
@@ -194,24 +197,24 @@ ACE_Thread_Timer_Queue_Adapter<TQ, TYPE>::mutex ()
 template<class TQ, class TYPE> long
 ACE_Thread_Timer_Queue_Adapter<TQ, TYPE>::schedule
     (TYPE handler,
-     const void *act,
-     const ACE_Time_Value &future_time,
-     const ACE_Time_Value &interval)
+     void const *act,
+     ACE_Time_Value const &future_time,
+     ACE_Time_Value const &interval)
 {
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mutex_, -1);
 
-  long result = this->timer_queue_->schedule (handler, act, future_time, interval);
+  long const result = this->timer_queue_->schedule (handler, act, future_time, interval);
   this->condition_.signal ();
   return result;
 }
 
 template<class TQ, class TYPE> int
 ACE_Thread_Timer_Queue_Adapter<TQ, TYPE>::cancel (long timer_id,
-                                            const void **act)
+                                            void const **act)
 {
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mutex_, -1);
 
-  int result = this->timer_queue_->cancel (timer_id, act);
+  int const result = this->timer_queue_->cancel (timer_id, act);
   condition_.signal ();
   return result;
 }
@@ -306,7 +309,7 @@ ACE_Thread_Timer_Queue_Adapter<TQ, TYPE>::activate (long flags,
                                               void *stack[],
                                               size_t stack_size[],
                                               ACE_thread_t thread_ids[],
-                                              const char* thr_name[])
+                                              char const *thr_name[])
 {
   // Make sure to set this flag in case we were deactivated earlier.
   this->active_ = true;
@@ -348,13 +351,13 @@ ACE_Thread_Timer_Queue_Adapter<TQ, TYPE>::dispatch_commands ()
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->command_mutex_, -1);
 
   // loop through the enqueued commands
-  ACE_Command_Base *cmd = nullptr;
+  ACE_Command_Base *cmd {};
   while (command_queue_.dequeue_head (cmd) == 0)
-    if (cmd)
-      {
-        cmd->execute ();
-        delete cmd;
-      }
+    {
+      std::unique_ptr<ACE_Command_Base> command (cmd);
+      if (command)
+        command->execute ();
+    }
 
   return 0;
 }

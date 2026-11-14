@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "timeC.h"
 
 #include "ace/Log_Msg.h"
@@ -21,13 +20,12 @@
 //#include <iomanip.h>
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
       // Initialize orb
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
       // Check arguments.
       if  (argc != 2)
@@ -38,7 +36,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       // Destringify argv[1].
-      CORBA::Object_var obj = orb->string_to_object (argv[1]);
+      CORBA::Object_var const obj =
+        orb->string_to_object (ACE_TEXT_ALWAYS_CHAR (argv [1]));
 
       if  (CORBA::is_nil (obj.in ()))
         {
@@ -48,7 +47,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       // Narrow.
-      Time_var tm = Time::_narrow (obj.in ());
+      Time_var const tm = Time::_narrow (obj.in ());
 
       if  (CORBA::is_nil (tm.in ()))
         {
@@ -58,7 +57,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       // Get time.
-      TimeOfDay tod = tm->get_gmt ();
+      TimeOfDay const tod = tm->get_gmt ();
 
       ACE_DEBUG ((LM_DEBUG,
                   "%s%s%d:%s%d:%d\n",
@@ -70,7 +69,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                   tod.second));
     }
 
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("client: a CORBA exception occurred");
       return 1;

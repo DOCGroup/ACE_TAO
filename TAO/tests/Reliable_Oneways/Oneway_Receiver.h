@@ -10,15 +10,18 @@ class Oneway_Receiver
   : public virtual POA_Test::Oneway_Receiver
 {
 public:
-  /// Constructor
-  Oneway_Receiver (CORBA::ORB_ptr orb);
+  explicit Oneway_Receiver (CORBA::ORB_ptr orb);
+  Oneway_Receiver (Oneway_Receiver const &) = delete;
+  Oneway_Receiver (Oneway_Receiver &&) = delete;
+  Oneway_Receiver &operator= (Oneway_Receiver const &) = delete;
+  Oneway_Receiver &operator= (Oneway_Receiver &&) = delete;
 
   // = The skeleton methods
-  virtual void raise_no_permission ();
+  void raise_no_permission () override;
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual Test::Shutdown_Helper_ptr get_shutdown_helper ();
+  Test::Shutdown_Helper_ptr get_shutdown_helper () override;
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

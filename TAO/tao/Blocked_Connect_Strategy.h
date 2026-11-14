@@ -29,8 +29,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Export TAO_Blocked_Connect_Strategy : public TAO_Connect_Strategy
 {
 public:
-  /// Constructor
-  TAO_Blocked_Connect_Strategy (TAO_ORB_Core *orb);
+  explicit TAO_Blocked_Connect_Strategy (TAO_ORB_Core *orb);
 
   /*
    * Concrete implementation for this class. Please see

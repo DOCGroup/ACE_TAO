@@ -13,15 +13,10 @@ TAO::SL3::SecurityCurrent::SecurityCurrent (size_t tss_slot,
 {
 }
 
-
-TAO::SL3::SecurityCurrent::~SecurityCurrent ()
-{
-}
-
 SecurityLevel3::ClientCredentials_ptr
 TAO::SL3::SecurityCurrent::client_credentials ()
 {
-  TAO::SL3::SecurityCurrent_Impl * impl = this->implementation ();
+  TAO::SL3::SecurityCurrent_Impl * const impl = this->implementation ();
 
   // If the implementation pointer returned from TSS is zero, then
   // we're not in the middle of a request/upcall.  Throw an exception
@@ -35,7 +30,7 @@ TAO::SL3::SecurityCurrent::client_credentials ()
 CORBA::Boolean
 TAO::SL3::SecurityCurrent::request_is_local ()
 {
-  TAO::SL3::SecurityCurrent_Impl * impl = this->implementation ();
+  TAO::SL3::SecurityCurrent_Impl * const impl = this->implementation ();
 
   // If the implementation pointer returned from TSS is zero, then
   // we're not in the middle of a request/upcall.  Throw an exception

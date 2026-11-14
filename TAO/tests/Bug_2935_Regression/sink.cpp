@@ -1,9 +1,11 @@
+#include <cstdio>
+#include <memory>
+
 #include "sink_i.h"
 #include "ace/OS_NS_unistd.h"
 
-ACE_TCHAR const *ior_output_file = nullptr;
-
-void eat_args (int &argc, ACE_TCHAR *argv[], int argp, int how_many)
+void
+eat_args (int &argc, ACE_TCHAR *argv[], int argp, int how_many)
 {
   for (int marg = argp; marg + how_many < argc; ++marg)
     {
@@ -12,9 +14,10 @@ void eat_args (int &argc, ACE_TCHAR *argv[], int argp, int how_many)
   argc -= how_many;
 }
 
-bool parse_args (int &argc, ACE_TCHAR *argv[])
+bool
+parse_args (int &argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior_output_file)
 {
-  int argp = 1;
+  int argp {1};
   while (argp < argc)
     {
       ACE_TCHAR const *arg = argv[argp];
@@ -46,58 +49,58 @@ bool parse_args (int &argc, ACE_TCHAR *argv[])
   return true;
 }
 
-
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_TCHAR const *ior_output_file {};
   ACE_DEBUG ((LM_DEBUG,
               "Sink (%P|%t) started\n"));
 
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc,
                          argv);
 
-      if (!parse_args (argc, argv))
+      if (!parse_args (argc, argv, ior_output_file))
         {
           return -1;
         }
-      CORBA::Object_var poa_object =
+      CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
+      // The POA borrows this stack servant until orb->run() returns.
       Sink_i sink (orb.in ());
-      if (sink.parse_args (argc, argv))
-        {
-          PortableServer::ObjectId_var id =
-            root_poa->activate_object (&sink);
+      PortableServer::ObjectId_var const id =
+        root_poa->activate_object (&sink);
 
-          CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+      CORBA::Object_var const servant_object = root_poa->id_to_reference (id.in ());
 
-          ThreeTier_var server =
-            ThreeTier::_narrow (object.in ());
+      ThreeTier_var const server =
+        ThreeTier::_narrow (servant_object.in ());
 
-          CORBA::String_var ior =
-            orb->object_to_string (server.in ());
+      CORBA::String_var const ior =
+        orb->object_to_string (server.in ());
 
-          FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
-          if (output_file == nullptr)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Cannot open output file for writing IOR: %s",
-                               ior_output_file),
-                              -1);
-          ACE_OS::fprintf (output_file, "%s", ior.in ());
-          ACE_OS::fclose (output_file);
+      {
+        std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+          ACE_OS::fopen (ior_output_file, "w"), ACE_OS::fclose);
+        if (!output_file)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot open output file for writing IOR: %s",
+                             ior_output_file),
+                            -1);
+        ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
+      }
 
-          poa_manager->activate ();
-          orb->run ();
-        }
+      poa_manager->activate ();
+      orb->run ();
     }
   catch (CORBA::UserException const &userex)
     {

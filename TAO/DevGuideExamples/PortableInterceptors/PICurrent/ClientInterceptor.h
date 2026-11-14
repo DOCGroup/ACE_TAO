@@ -11,32 +11,37 @@ class ClientInterceptor:
   public virtual PortableInterceptor::ClientRequestInterceptor,
   public virtual ::CORBA::LocalObject
 {
- public:
-  ClientInterceptor (Messenger_var theMessage,
+public:
+  ClientInterceptor (Messenger_ptr theMessage,
                      PortableInterceptor::Current_ptr thePic,
                      PortableInterceptor::SlotId theSlot);
 
-  virtual ~ClientInterceptor ();
+  ~ClientInterceptor () override = default;
 
-  virtual char * name ();
+  char *name () override;
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr ri);
+  void send_poll (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri);
+  void send_request (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri);
+  void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_other (PortableInterceptor::ClientRequestInfo_ptr ri);
+  void receive_other (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri);
+  void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
- private:
-  const char *myname_;
-  Messenger_var messenger;
-  PortableInterceptor::Current_ptr pic;
-  PortableInterceptor::SlotId slot;
+  ClientInterceptor (ClientInterceptor const &) = delete;
+  ClientInterceptor (ClientInterceptor &&) = delete;
+  ClientInterceptor &operator= (ClientInterceptor const &) = delete;
+  ClientInterceptor &operator= (ClientInterceptor &&) = delete;
+
+private:
+  char const *myname_;
+  Messenger_var messenger_;
+  PortableInterceptor::Current_var current_;
+  PortableInterceptor::SlotId slot_;
 };
 
 #endif

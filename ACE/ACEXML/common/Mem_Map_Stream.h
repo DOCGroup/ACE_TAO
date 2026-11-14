@@ -22,6 +22,7 @@
 #include "ace/Connector.h"
 #include "ace/Svc_Handler.h"
 #include "ACEXML/common/XML_Types.h"
+#include <memory>
 
 using Svc_Handler = ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 using Connector = ACE_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>;
@@ -52,14 +53,12 @@ using Connector = ACE_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>;
 class ACEXML_Export ACEXML_Mem_Map_Stream
 {
 public:
-  /// Default constructor
   ACEXML_Mem_Map_Stream ();
 
   /// Initialize this object.
   virtual int open (Connector *connector,
                     const ACE_INET_Addr &);
 
-  /// Destructor.
   virtual ~ACEXML_Mem_Map_Stream ();
 
   /// Returns the underlying <ACE_SOCK_Stream>.
@@ -71,7 +70,7 @@ public:
    */
   virtual ssize_t send_n (const void *buf,
                           size_t size,
-                          ACE_Time_Value *tv = 0);
+                          ACE_Time_Value *tv = nullptr);
 
   /**
    * Return the next character in the stream and advance the <get>
@@ -162,7 +161,7 @@ private:
    *  Connection to peer. The granularity is at the Svc_Handler level.
    *  The Svc_Handler has an SOCK_Stream.
    */
-  Svc_Handler *svc_handler_;
+  std::unique_ptr<Svc_Handler> svc_handler_ {};
 
   /// Memory-mapped file that we're iterating over.
   ACE_Mem_Map mem_map_;
@@ -180,8 +179,5 @@ private:
   char *end_of_mapping_plus1_;
 };
 
-
 #include /**/ "ace/post.h"
-
-
 #endif /* _ACEXML_MEM_MAP_STREAM_H */

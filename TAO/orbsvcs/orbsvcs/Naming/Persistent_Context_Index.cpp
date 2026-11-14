@@ -6,18 +6,19 @@
 #include "tao/debug.h"
 
 #include <memory>
+#include <cstring>
 #include "ace/OS_NS_unistd.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
-TAO_Persistent_Context_Index::unbind (const char *poa_id)
+TAO_Persistent_Context_Index::unbind (char const *poa_id)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, -1);
 
   TAO_Persistent_Index_ExtId name (poa_id);
   TAO_Persistent_Index_IntId entry;
-  if (this->index_->unbind (name, entry, this->allocator_) != 0)
+  if (this->index_->unbind (name, entry, this->allocator_.get ()) != 0)
     return -1;
   else
     {
@@ -28,18 +29,18 @@ TAO_Persistent_Context_Index::unbind (const char *poa_id)
 }
 
 int
-TAO_Persistent_Context_Index::bind (const char *poa_id,
+TAO_Persistent_Context_Index::bind (char const *poa_id,
                                     ACE_UINT32 *&counter,
                                     TAO_Persistent_Context_Index::CONTEXT *hash_map)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, -1);
 
   // Allocate memory for items to be stored in the table.
-  size_t poa_id_len = ACE_OS::strlen (poa_id) + 1;
+  size_t poa_id_len = std::strlen (poa_id) + 1;
   size_t counter_len = sizeof (ACE_UINT32);
   char *ptr = (char *) this->allocator_->malloc (poa_id_len + counter_len);
 
-  if (ptr == 0)
+  if (ptr == nullptr)
     return -1;
   else
     {
@@ -47,7 +48,7 @@ TAO_Persistent_Context_Index::bind (const char *poa_id,
       counter = reinterpret_cast<ACE_UINT32 *> (ptr);
       *counter = 0;
       char * poa_id_ptr = ptr + counter_len;
-      ACE_OS::strcpy (poa_id_ptr, poa_id);
+      std::strcpy (poa_id_ptr, poa_id);
 
       TAO_Persistent_Index_ExtId name (poa_id_ptr);
       TAO_Persistent_Index_IntId entry (counter, hash_map);
@@ -55,7 +56,7 @@ TAO_Persistent_Context_Index::bind (const char *poa_id,
 
       // Do a normal bind.  This will fail if there's already an
       // entry with the same name.
-      result = this->index_->bind (name, entry, this->allocator_);
+      result = this->index_->bind (name, entry, this->allocator_.get ());
 
       if (result == 1)
         {
@@ -82,11 +83,7 @@ TAO_Persistent_Context_Index::TAO_Persistent_Context_Index
   (CORBA::ORB_ptr orb,
    PortableServer::POA_ptr poa,
    TAO_Persistent_Naming_Context_Factory * context_impl_factory)
-  : allocator_ (0),
-    index_ (0),
-    index_file_ (0),
-    base_address_ (0),
-    orb_ (CORBA::ORB::_duplicate (orb)),
+  : orb_ (CORBA::ORB::_duplicate (orb)),
     poa_ (PortableServer::POA::_duplicate (poa)),
     context_impl_factory_ (context_impl_factory)
 {
@@ -94,15 +91,15 @@ TAO_Persistent_Context_Index::TAO_Persistent_Context_Index
 
 TAO_Persistent_Context_Index::~TAO_Persistent_Context_Index ()
 {
-  delete allocator_;
-  delete context_impl_factory_;
+  this->allocator_.reset ();
+  this->context_impl_factory_.reset ();
   ACE_OS::free (reinterpret_cast<void *> (const_cast<ACE_TCHAR *> (index_file_)));
 }
 
 ACE_Allocator*
 TAO_Persistent_Context_Index::allocator ()
 {
-  return allocator_;
+  return this->allocator_.get ();
 }
 
 CosNaming::NamingContext_ptr
@@ -118,13 +115,13 @@ TAO_Persistent_Context_Index::orb ()
 }
 
 int
-TAO_Persistent_Context_Index::open (const ACE_TCHAR *file_name,
+TAO_Persistent_Context_Index::open (ACE_TCHAR const *file_name,
                                     void *base_address)
 {
   this->base_address_ = base_address;
 
   index_file_ = ACE_OS::strdup (file_name);
-  if (index_file_ == 0)
+  if (index_file_ == nullptr)
     return -1;
 
   return create_index ();
@@ -161,7 +158,7 @@ TAO_Persistent_Context_Index::init (size_t context_size)
 int
 TAO_Persistent_Context_Index::recreate_all ()
 {
-  CONTEXT_INDEX::ITERATOR *index_iter = nullptr;
+  CONTEXT_INDEX::ITERATOR *index_iter {};
 
   ACE_NEW_RETURN (index_iter,
                   (CONTEXT_INDEX::ITERATOR) (*index_),
@@ -173,7 +170,7 @@ TAO_Persistent_Context_Index::recreate_all ()
   using IND_DEF = ACE_Hash_Map_With_Allocator<TAO_Persistent_Index_ExtId,
                                               TAO_Persistent_Index_IntId>;
 
-  IND_DEF::ENTRY *entry = nullptr;
+  IND_DEF::ENTRY *entry {};
 
   if (TAO_debug_level > 0)
     ORBSVCS_DEBUG ((LM_DEBUG, "Starting to recreate Naming Contexts from the file...\n"));
@@ -196,17 +193,17 @@ TAO_Persistent_Context_Index::recreate_all ()
       // allocation fails.
       std::unique_ptr<TAO_Persistent_Naming_Context> temp (context_impl);
 
-      TAO_Naming_Context *context = nullptr;
+      TAO_Naming_Context *context {};
       ACE_NEW_RETURN (context,
                       TAO_Naming_Context (context_impl),
                       -1);
 
+      // Transfer ownership to TAO_Naming_Context after it was constructed.
+      temp.release ();
+
       // Let <implementation> know about it's <interface>.
       context_impl->interface (context);
 
-      // Release unique pointer and start using reference counting to
-      // control our servant.
-      temp.release ();
       PortableServer::ServantBase_var s = context;
 
       // Register with the POA.
@@ -229,7 +226,7 @@ TAO_Persistent_Context_Index::recreate_all ()
 TAO_Persistent_Naming_Context*
 TAO_Persistent_Context_Index::create_naming_context_impl (
   PortableServer::POA_ptr poa,
-  const char *poa_id)
+  char const *poa_id)
 {
   return this->context_impl_factory_->create_naming_context_impl(poa,
                                                                  poa_id,
@@ -250,11 +247,13 @@ TAO_Persistent_Context_Index::create_index ()
 
   // Create the allocator with the appropriate options.  The name used
   // for  the lock is the same as one used for the file.
-  ACE_NEW_RETURN (this->allocator_,
+  ALLOCATOR *allocator {};
+  ACE_NEW_RETURN (allocator,
                   ALLOCATOR (this->index_file_,
                              this->index_file_,
                              &options),
                   -1);
+  this->allocator_.reset (allocator);
 
 #if !defined (ACE_LACKS_ACCESS)
   // Now check if the backing store has been created successfully.
@@ -264,7 +263,7 @@ TAO_Persistent_Context_Index::create_index ()
                       -1);
 #endif /* ACE_LACKS_ACCESS */
 
-  void *context_index = nullptr;
+  void *context_index {};
 
   // This is the easy case since if we find hash table in the
   // memory-mapped file we know it's already initialized.
@@ -278,7 +277,7 @@ TAO_Persistent_Context_Index::create_index ()
       size_t index_size = sizeof (CONTEXT_INDEX);
       context_index = this->allocator_->malloc (index_size);
 
-      if (context_index == 0
+      if (context_index == nullptr
           || create_index_helper (context_index) == -1
           || this->allocator_->bind (TAO_NAMING_CONTEXT_INDEX,
                                      context_index) == -1)
@@ -296,7 +295,7 @@ TAO_Persistent_Context_Index::create_index ()
 int
 TAO_Persistent_Context_Index::create_index_helper (void *buffer)
 {
-  this->index_ = new (buffer) CONTEXT_INDEX (this->allocator_);
+  this->index_ = new (buffer) CONTEXT_INDEX (this->allocator_.get ());
   return 0;
 }
 

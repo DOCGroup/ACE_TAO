@@ -28,21 +28,24 @@ class Stock_Database : public ACE_Task_Base
 public:
   /// Default constructor
   /// Initializes the stock database with MSFT, IBM, and INTEL.
-  /// @param the rate at which to perform updates
-  Stock_Database (u_int rate = 1);
+  /// @param rate The rate at which to perform updates.
+  explicit Stock_Database (u_int rate = 1);
 
-  /// Constructor.
   /// @param file The name of a file to read initial stocks and values from.
-  Stock_Database (const char *file, u_int rate = 1);
+  explicit Stock_Database (std::string const &file, u_int rate = 1);
 
-  typedef std::map <std::string, unsigned int> Init_Map;
+  using Init_Map = std::map<std::string, unsigned int>;
 
-  /// Constructor
   /// @param stockmap  A map containing stocks and initial values.  An initial value
   /// of 0 will be assigned a random start value.
-  Stock_Database (const Init_Map &stockmap, u_int rate = 0);
+  explicit Stock_Database (Init_Map const &stockmap, u_int rate = 0);
 
-  typedef std::string Cookie;
+  Stock_Database (Stock_Database const &) = delete;
+  Stock_Database (Stock_Database &&) = delete;
+  Stock_Database &operator= (Stock_Database const &) = delete;
+  Stock_Database &operator= (Stock_Database &&) = delete;
+
+  using Cookie = std::string;
 
   /**
    * Register a callback object with the database. The callback object must have
@@ -62,18 +65,16 @@ public:
 
   struct StockInfo
   {
-    StockInfo ()
-      : name_(""), high_ (0), low_ (0), last_ (0)
-    {};
+    StockInfo () = default;
 
-    StockInfo (const std::string name)
-      : name_ (name), high_ (0), low_(0), last_(0)
-    {};
+    explicit StockInfo (std::string const &name)
+      : name_ (name)
+    {}
 
     std::string name_;
-    int high_;
-    int low_;
-    int last_;
+    int high_ {};
+    int low_ {};
+    int last_ {};
   };
 
   /**
@@ -82,13 +83,13 @@ public:
    * @param name The name of the stock.
    * @return A StockInfo object.
    */
-  StockInfo get_stock_info (const char *name);
+  StockInfo get_stock_info (std::string const &name);
 
   /**
    * This function is used to calculate the new high, low and last values
    * for each stock in the stock database randomly.
    */
-  virtual int svc ();
+  int svc () override;
 
   /// Change the rate at which database updates are made
   void update_rate (u_int rate);
@@ -99,19 +100,19 @@ public:
   /// Stop the active object
   void stop ();
 
-  typedef std::map <std::string, StockInfo> Stock_Map;
+  using Stock_Map = std::map<std::string, StockInfo>;
 
   /// This method is not intended to be called by clients of this class,
   /// it is public only by necessity.
-  virtual int handle_signal (int signum,
-                             siginfo_t * = 0,
-                             ucontext_t * = 0);
+  int handle_signal (int signum,
+                     siginfo_t * = nullptr,
+                     ucontext_t * = nullptr) override;
 
-  typedef std::map <Cookie, CALLBACK_TYPE *> Callback_Map;
+  using Callback_Map = std::map<Cookie, CALLBACK_TYPE *>;
 
 private:
   /// The filname initialized from, if any.
-  const std::string filename_;
+  std::string const filename_;
 
   /// Keep track of the stock names and information about them.
   Stock_Map stock_map_;
@@ -122,14 +123,12 @@ private:
   /// Rate at which updates are made.
   u_int rate_;
 
+  /// Borrowed callback pointers; each callback must outlive its registration.
   Callback_Map callbacks_;
 
-  bool active_;
+  bool active_ {};
 };
 
 #include "Stock_Database.tpp"
-
-//typedef ACE_Singleton<Stock_Database, TAO_SYNCH_MUTEX> Stock_Database_Singleton;
-//#define STOCK_DATABASE Stock_Database_Singleton::instance()
 
 #endif  // !defined STOCK_DATABASE_H_

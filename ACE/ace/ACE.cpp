@@ -23,6 +23,9 @@
 #include "ace/OS_TLI.h"
 #include "ace/Truncate.h"
 
+#include <cstring>
+#include <cwchar>
+
 #if !defined (__ACE_INLINE__)
 #include "ace/ACE.inl"
 #endif /* __ACE_INLINE__ */
@@ -274,9 +277,9 @@ ACE::execname (const ACE_TCHAR *old_name)
 {
 #if defined (ACE_WIN32)
   const ACE_TCHAR *suffix = ACE_OS::strrchr (old_name, ACE_TEXT ('.'));
-  if (suffix == 0 || ACE_OS::strcasecmp (suffix, ACE_TEXT (".exe")) != 0)
+  if (suffix == nullptr || ACE_OS::strcasecmp (suffix, ACE_TEXT (".exe")) != 0)
     {
-      ACE_TCHAR *new_name = nullptr;
+      ACE_TCHAR *new_name {};
 
       size_t size =
         ACE_OS::strlen (old_name)
@@ -285,7 +288,7 @@ ACE::execname (const ACE_TCHAR *old_name)
 
       ACE_NEW_RETURN (new_name,
                       ACE_TCHAR[size],
-                      0);
+                      nullptr);
       ACE_TCHAR *end = new_name;
 
       end = ACE_OS::strecpy (new_name, old_name);
@@ -305,7 +308,7 @@ ACE::hash_pjw (const char *str, size_t len)
 {
   u_long hash = 0;
 
-  for (size_t i = 0; i < len; i++)
+  for (size_t i = 0; i < len; ++i)
     {
       const char temp = str[i];
       hash = (hash << 4) + (temp * 13);
@@ -325,7 +328,7 @@ ACE::hash_pjw (const char *str, size_t len)
 u_long
 ACE::hash_pjw (const char *str)
 {
-  return ACE::hash_pjw (str, ACE_OS::strlen (str));
+  return ACE::hash_pjw (str, std::strlen (str));
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -334,7 +337,7 @@ ACE::hash_pjw (const wchar_t *str, size_t len)
 {
   u_long hash = 0;
 
-  for (size_t i = 0; i < len; i++)
+  for (size_t i = 0; i < len; ++i)
     {
       // @@ UNICODE: Does this function do the correct thing with wchar's?
 
@@ -356,7 +359,7 @@ ACE::hash_pjw (const wchar_t *str, size_t len)
 u_long
 ACE::hash_pjw (const wchar_t *str)
 {
-  return ACE::hash_pjw (str, ACE_OS::strlen (str));
+  return ACE::hash_pjw (str, std::wcslen (str));
 }
 #endif /* ACE_HAS_WCHAR */
 
@@ -910,7 +913,7 @@ ACE::recv (ACE_HANDLE handle, size_t n, ...)
 {
   va_list argp;
   int const total_tuples = static_cast<int> (n / 2);
-  iovec *iovp = nullptr;
+  iovec *iovp {};
 #if defined (ACE_HAS_ALLOCA)
   iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
 #else
@@ -928,7 +931,7 @@ ACE::recv (ACE_HANDLE handle, size_t n, ...)
 
   va_start (argp, n);
 
-  for (int i = 0; i < total_tuples; i++)
+  for (int i = 0; i < total_tuples; ++i)
     {
       iovp[i].iov_base = va_arg (argp, char *);
       iovp[i].iov_len = va_arg (argp, int);
@@ -946,7 +949,6 @@ ACE::recv (ACE_HANDLE handle, size_t n, ...)
   return result;
 }
 #endif /* ACE_LACKS_VA_FUNCTIONS */
-
 
 ssize_t
 ACE::recvv (ACE_HANDLE handle,
@@ -1012,7 +1014,7 @@ ACE::recvv_n_i (ACE_HANDLE handle,
       for (bytes_transferred += n;
            s < iovcnt
              && n >= static_cast<ssize_t> (iov[s].iov_len);
-           s++)
+           ++s)
         n -= iov[s].iov_len;
 
       if (n != 0)
@@ -1078,7 +1080,7 @@ ACE::recvv_n_i (ACE_HANDLE handle,
       for (bytes_transferred += n;
            s < iovcnt
              && n >= static_cast<ssize_t> (iov[s].iov_len);
-           s++)
+           ++s)
         n -= iov[s].iov_len;
 
       if (n != 0)
@@ -1714,7 +1716,7 @@ ACE::send (ACE_HANDLE handle, size_t n, ...)
 
   va_start (argp, n);
 
-  for (int i = 0; i < total_tuples; i++)
+  for (int i = 0; i < total_tuples; ++i)
     {
       iovp[i].iov_base = va_arg (argp, char *);
       iovp[i].iov_len = va_arg (argp, int);
@@ -1802,7 +1804,7 @@ ACE::sendv_n_i (ACE_HANDLE handle,
       for (bytes_transferred += n;
            s < iovcnt
              && n >= static_cast<ssize_t> (iov[s].iov_len);
-           s++)
+           ++s)
         n -= iov[s].iov_len;
 
       if (n != 0)
@@ -1874,7 +1876,7 @@ ACE::sendv_n_i (ACE_HANDLE handle,
       for (bytes_transferred += n;
            s < iovcnt
              && n >= static_cast<ssize_t> (iov[s].iov_len);
-           s++)
+           ++s)
         n -= iov[s].iov_len;
 
       if (n != 0)
@@ -2117,7 +2119,7 @@ ACE::readv_n (ACE_HANDLE handle,
       for (bytes_transferred += n;
            s < iovcnt
              && n >= static_cast<ssize_t> (iov[s].iov_len);
-           s++)
+           ++s)
         n -= iov[s].iov_len;
 
       if (n != 0)
@@ -2160,7 +2162,7 @@ ACE::writev_n (ACE_HANDLE handle,
       for (bytes_transferred += n;
            s < iovcnt
              && n >= static_cast<ssize_t> (iov[s].iov_len);
-           s++)
+           ++s)
         n -= iov[s].iov_len;
 
       if (n != 0)
@@ -2313,11 +2315,11 @@ ACE::format_hexdump (const char *buffer,
   size_t i;
 
   size_t const lines = size / bytes_per_line;
-  for (i = 0; i < lines; i++)
+  for (i = 0; i < lines; ++i)
     {
       size_t j;
 
-      for (j = 0 ; j < bytes_per_line; j++)
+      for (j = 0 ; j < bytes_per_line; ++j)
         {
           c = (u_char) buffer[(i * bytes_per_line) + j];
           ACE_OS::snprintf (obuf, obuf_sz - (obuf - obuf_start),
@@ -2343,7 +2345,7 @@ ACE::format_hexdump (const char *buffer,
 
   if (size % bytes_per_line)
     {
-      for (i = 0 ; i < size % bytes_per_line; i++)
+      for (i = 0 ; i < size % bytes_per_line; ++i)
         {
           c = (u_char) buffer[size - size % bytes_per_line + i];
           ACE_OS::snprintf (obuf, obuf_sz - (obuf - obuf_start),
@@ -2357,7 +2359,7 @@ ACE::format_hexdump (const char *buffer,
           textver[i] = ACE_OS::ace_isprint (c) ? c : u_char ('.');
         }
 
-      for (i = size % bytes_per_line; i < bytes_per_line; i++)
+      for (i = size % bytes_per_line; i < bytes_per_line; ++i)
         {
           ACE_OS::snprintf (obuf, obuf_sz - (obuf - obuf_start),
                            ACE_TEXT ("   "));
@@ -2431,7 +2433,7 @@ ACE::timestamp (const ACE_Time_Value& time_value,
                     tms.tm_sec,
                     static_cast<long> (cur_time.usec()));
   date_and_time[date_and_timelen - 1] = '\0';
-  return &date_and_time[10 + (return_pointer_to_first_digit != 0)];
+  return date_and_time + 10 + (return_pointer_to_first_digit != 0);
 }
 
 /// This function rounds the request to a multiple of the page size.
@@ -2722,7 +2724,7 @@ ACE::daemonize (const ACE_TCHAR pathname[],
   // Close down the I/O handles.
   if (close_all_handles)
     {
-      for (int i = ACE::max_handles () - 1; i >= 0; i--)
+      for (int i = ACE::max_handles () - 1; i >= 0; --i)
         ACE_OS::close (i);
 
       int fd = ACE_OS::open ("/dev/null", O_RDWR, 0);
@@ -2847,7 +2849,7 @@ ACE::set_handle_limit (int new_limit,
 #if !defined (ACE_LACKS_RLIMIT) && defined (RLIMIT_NOFILE)
   struct rlimit rl;
 
-  ACE_OS::memset ((void *) &rl, 0, sizeof rl);
+  std::memset (&rl, 0, sizeof rl);
   int r = ACE_OS::getrlimit (RLIMIT_NOFILE, &rl);
   if (r == 0)
     max_limit = rl.rlim_max;
@@ -3187,7 +3189,7 @@ ACE::strndup (const char *str, size_t n)
 
   for (len = 0;
        len < n && *t++ != '\0';
-       len++)
+       ++len)
     continue;
 
   char *s;
@@ -3215,11 +3217,11 @@ ACE::strndup (const wchar_t *str, size_t n)
 
   for (len = 0;
        len < n && *t++ != '\0';
-       len++)
+       ++len)
     continue;
 
   size_t const size = (len + 1) * sizeof (wchar_t);
-  wchar_t *s = nullptr;
+  wchar_t *s {};
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_ALLOCATOR_RETURN (s,
                         static_cast<wchar_t*> (
@@ -3245,7 +3247,7 @@ ACE::strnnew (const char *str, size_t n)
 
   for (len = 0;
        len < n && *t++ != L'\0';
-       len++)
+       ++len)
     continue;
 
   char *s;
@@ -3275,7 +3277,7 @@ ACE::strnnew (const wchar_t *str, size_t n)
 
   for (len = 0;
        len < n && *t++ != ACE_TEXT_WIDE ('\0');
-       len++)
+       ++len)
     continue;
 
   wchar_t *s;
@@ -3311,18 +3313,18 @@ ACE::strnew (const char *s)
 {
   if (s == nullptr)
     return nullptr;
-  char *t = nullptr;
+  char *t {};
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_ALLOCATOR_RETURN (t,
-                        static_cast<char*> (ACE_Allocator::instance ()->malloc (sizeof (char) * (ACE_OS::strlen (s) + 1))),
+                        static_cast<char*> (ACE_Allocator::instance ()->malloc (sizeof (char) * (std::strlen (s) + 1))),
     0);
 #else
   ACE_NEW_RETURN (t,
-                  char [ACE_OS::strlen (s) + 1],
+                  char [std::strlen (s) + 1],
                   nullptr);
 #endif  /* ACE_HAS_ALLOC_HOOKS */
 
-  return ACE_OS::strcpy (t, s);
+  return std::strcpy (t, s);
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -3332,8 +3334,8 @@ ACE::strnew (const wchar_t *s)
   if (s == nullptr)
     return nullptr;
 
-  size_t const n = ACE_OS::strlen (s) + 1;
-  wchar_t *t = nullptr;
+  size_t const n = std::wcslen (s) + 1;
+  wchar_t *t {};
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_ALLOCATOR_RETURN (t,
                         static_cast<wchar_t*> (
@@ -3344,7 +3346,7 @@ ACE::strnew (const wchar_t *s)
   ACE_NEW_RETURN (t, wchar_t[n], nullptr);
 #endif  /* ACE_HAS_ALLOC_HOOKS */
 
-  return ACE_OS::strcpy (t, s);
+  return std::wcscpy (t, s);
 }
 #endif /* ACE_HAS_WCHAR */
 

@@ -16,7 +16,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/LOCK_SOCK_Acceptor.h"
@@ -34,7 +33,6 @@
 #include "ace/OS_NS_sys_wait.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/os_include/os_netdb.h"
-
 
 static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 
@@ -166,7 +164,7 @@ Svc_Handler::recv_data ()
               if (*t == 'z')
                 t = ACE_ALPHABET;
               else
-                t++;
+                ++t;
             }
 
           if (r_bytes == 0)
@@ -219,23 +217,21 @@ Svc_Handler::idle (u_long flags)
   return ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::idle (flags);
 }
 
+/// Information passed to the client so it can communicate with the server.
 struct Client_Info
-  // = TITLE
-  //   Information passed to the client so it can communicate with the
-  //   server.
 {
+  /// Address of the server to connect with.
   ACE_INET_Addr *server_addr_;
-  // Address of the server to connect with.
 
+  /// Connection factory.
   CONNECTOR *connector_;
-  // Connection factory.
 
+  /// Strategy for connecting.
   STRAT_CONNECTOR *strat_connector_;
-  // Strategy for connecting.
 
 #if defined (ACE_HAS_THREADS)
+  /// Performs barrier synchronization.
   ACE_Barrier *barrier_;
-  // Performs barrier synchronization.
 #endif /* ACE_HAS_THREADS */
 };
 
@@ -589,13 +585,13 @@ spawn_threads (ACCEPTOR *acceptor,
 
 #if 0
   // Assign thread (VxWorks task) names to test that feature.
-  ACE_hthread_t *server_name = 0;
+  ACE_hthread_t *server_name {};
   ACE_NEW_RETURN (server_name,
                   ACE_hthread_t[n_servers],
                   -1);
 
   // And test ability to provide stacks.
-  size_t *stack_size = 0;
+  size_t *stack_size {};
   ACE_NEW_RETURN (stack_size,
                   size_t[n_servers],
                   -1);

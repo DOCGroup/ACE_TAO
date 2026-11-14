@@ -1,13 +1,13 @@
 #include "ace/String_Base.h"
 #include "ace/OS_NS_ctype.h"
 #include "ace/INet/HTTP_Request.h"
+#include <string>
 
 #if !defined (__ACE_INLINE__)
 #include "ace/INet/HTTP_Request.inl"
 #endif
 
 #include "ace/INet/INet_Log.h"
-
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -53,16 +53,14 @@ namespace ACE
       {
       }
 
-    Request::~Request()
-      {
-      }
+    Request::~Request() = default;
 
     void Request::set_host(const ACE_CString& host, u_short port)
       {
         ACE_CString val(host);
         val += ':';
-        char buf[16];
-        val += ACE_OS::itoa (port, buf, 10);
+        const std::string port_string = std::to_string (port);
+        val += port_string.c_str ();
         this->set (HOST, val);
       }
 
@@ -86,11 +84,17 @@ namespace ACE
           while (!it.done () && ACE_OS::ace_isspace (*it))
             ++it;
           while (!it.done () && !ACE_OS::ace_isspace (*it))
-            scheme += *it++;
+            {
+              scheme += *it;
+              ++it;
+            }
           while (!it.done () && ACE_OS::ace_isspace (*it))
             ++it;
           while (!it.done ())
-            auth_info += *it++;
+            {
+              auth_info += *it;
+              ++it;
+            }
         }
       }
 

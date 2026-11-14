@@ -5,11 +5,6 @@
 #include "ace/OS_NS_string.h"
 #include "ace/Truncate.h"
 
-ACE_INLINE
-Handle_Timeout::Handle_Timeout () : count (0)
-{
-}
-
 ACE_INLINE int
 Handle_Timeout::info (ACE_TCHAR **strp, size_t length) const
 {
@@ -17,7 +12,7 @@ Handle_Timeout::info (ACE_TCHAR **strp, size_t length) const
 
   ACE_OS::strcpy (buf, ACE_TEXT("# tests timeout facility\n"));
 
-  if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
+  if (*strp == nullptr && (*strp = ACE_OS::strdup (buf)) == nullptr)
     {
       return -1;
     }
@@ -35,7 +30,7 @@ Handle_Timeout::init (int argc, ACE_TCHAR *argv[])
   ACE_Time_Value delta (10);
   ACE_Time_Value interval (1);
   ACE_Get_Opt    get_opt (argc, argv, ACE_TEXT("a:d:i:"), 0);
-  intptr_t       arg = 0;
+  intptr_t       arg {};
 
   for (int c; (c = get_opt ()) != -1; )
      switch (c)
@@ -78,8 +73,9 @@ ACE_INLINE int
 Handle_Timeout::handle_timeout (const ACE_Time_Value &tv,
                                 const void *arg)
 {
-  if (this->count++ >= 10)
+  if (this->count >= 10)
     return -1; // Automatically cancel periodic timer...
+  ++this->count;
 
   // Cast arg to a long, first, because a pointer is the same
   // size as a long on all current ACE platforms.

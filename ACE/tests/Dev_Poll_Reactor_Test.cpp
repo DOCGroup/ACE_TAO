@@ -35,7 +35,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_netdb.h"
 
-
 using SVC_HANDLER = ACE_Svc_Handler<ACE_SOCK_Stream, ACE_NULL_SYNCH>;
 
 // ----------------------------------------------------
@@ -60,7 +59,6 @@ public:
 private:
   unsigned int call_count_;
 };
-
 
 class Server : public SVC_HANDLER
 {
@@ -148,7 +146,7 @@ Client::handle_timeout (const ACE_Time_Value &, const void *)
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("(%t) Expected client timeout occurred at: %T\n")));
 
-  this->call_count_++;
+  ++this->call_count_;
 
   int status = this->handle_output (this->get_handle ());
   if (status == -1 || this->call_count_ > 10)
@@ -217,7 +215,7 @@ Server::handle_input (ACE_HANDLE /* handle */)
       bytes_read = this->peer ().recv (buf, end - buf);
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("****** bytes_read = %d\n"),
+                  ACE_TEXT ("****** bytes_read = %b\n"),
                   bytes_read));
 
       if (bytes_read == -1)
@@ -264,8 +262,7 @@ Server::handle_timeout (const ACE_Time_Value &,
 //               "SERVER HANDLE = %d\n",
 //               this->get_handle ()));
 
-
-  this->call_count_++;
+  ++this->call_count_;
 
   if (this->call_count_ > 10)
     {

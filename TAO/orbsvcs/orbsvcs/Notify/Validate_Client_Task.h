@@ -27,7 +27,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Notify_EventChannelFactory;
 
-
 /**
  * @class TAO_Notify_validate_client_Task
  *
@@ -51,8 +50,12 @@ public:
                                      const ACE_Time_Value &interval,
                                      TAO_Notify_EventChannelFactory *ecf);
 
-  /// destructor...
-  virtual ~TAO_Notify_validate_client_Task ();
+  TAO_Notify_validate_client_Task (TAO_Notify_validate_client_Task const &) = delete;
+  TAO_Notify_validate_client_Task (TAO_Notify_validate_client_Task &&) = delete;
+  TAO_Notify_validate_client_Task &operator= (TAO_Notify_validate_client_Task const &) = delete;
+  TAO_Notify_validate_client_Task &operator= (TAO_Notify_validate_client_Task &&) = delete;
+
+  ~TAO_Notify_validate_client_Task () override;
 
   int svc () override;
 
@@ -70,7 +73,7 @@ private:
 
   CONDITION condition_;
 
-  bool shutdown_;
+  bool shutdown_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -22,6 +22,7 @@
 #include "ace/Process.h"
 #include "ace/Event_Handler.h"
 #include "ace/Time_Value.h"
+#include <memory>
 
 #if defined (ACE_HAS_THREADS)
 #  include "ace/Recursive_Thread_Mutex.h"
@@ -114,6 +115,10 @@ public:
    */
   ACE_Process_Manager (size_t size = ACE_Process_Manager::DEFAULT_SIZE,
                        ACE_Reactor *reactor = nullptr);
+  ACE_Process_Manager (ACE_Process_Manager const &) = delete;
+  ACE_Process_Manager (ACE_Process_Manager &&) = delete;
+  ACE_Process_Manager &operator= (ACE_Process_Manager const &) = delete;
+  ACE_Process_Manager &operator= (ACE_Process_Manager &&) = delete;
 
   /**
    * Initialize an ACE_Process_Manager with a table containing up to
@@ -386,7 +391,7 @@ protected:
    * On Win32, this routine is called synchronously, and is passed the
    * HANDLE of the Process that exited, so we can do all our work here
    */
-  int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0) override;
+  int handle_signal (int signum, siginfo_t * = nullptr, ucontext_t * = nullptr) override;
 
 private:
   /**
@@ -404,10 +409,10 @@ private:
     ~Process_Descriptor ();
 
     /// Describes the process itself.
-    ACE_Process *process_;
+    ACE_Process *process_ {};
 
     /// Function to call when process exits
-    ACE_Event_Handler *exit_notify_;
+    ACE_Event_Handler *exit_notify_ {};
 
     /// Dump the state of an object.
     void dump () const;
@@ -451,19 +456,19 @@ private:
   /// table, or there's a default handler, call it.
   int notify_proc_handler (size_t n, ACE_exitcode status);
 
-  /// Vector that describes process state within the Process_Manager.
-  Process_Descriptor *process_table_;
+  /// Array that describes process state within the Process_Manager.
+  std::unique_ptr<Process_Descriptor[]> process_table_ {};
 
   /// Maximum number of processes we can manage (should be dynamically
   /// allocated).
-  size_t max_process_table_size_;
+  size_t max_process_table_size_ {};
 
   /// Current number of processes we are managing.
-  size_t current_count_;
+  size_t current_count_ {};
 
   /// This event handler is used to notify when a process we control
   /// exits.
-  ACE_Event_Handler *default_exit_handler_;
+  ACE_Event_Handler *default_exit_handler_ {};
 
   /// Singleton pointer.
   static ACE_Process_Manager *instance_;

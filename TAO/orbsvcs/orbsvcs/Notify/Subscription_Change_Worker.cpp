@@ -11,9 +11,7 @@ TAO_Notify_Subscription_Change_Worker::TAO_Notify_Subscription_Change_Worker (
 {
 }
 
-TAO_Notify_Subscription_Change_Worker::~TAO_Notify_Subscription_Change_Worker ()
-{
-}
+TAO_Notify_Subscription_Change_Worker::~TAO_Notify_Subscription_Change_Worker () = default;
 
 void
 TAO_Notify_Subscription_Change_Worker::work (TAO_Notify_Proxy* proxy)

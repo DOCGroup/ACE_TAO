@@ -26,9 +26,9 @@ void
 HTTP_Server::parse_args (int argc, ACE_TCHAR *argv[])
 {
   int c;
-  int thr_strategy = 0;
-  int io_strategy = 0;
-  const ACE_TCHAR *prog = argc > 0 ? argv[0] : ACE_TEXT ("HTTP_Server");
+  int thr_strategy {};
+  int io_strategy {};
+  ACE_TCHAR const *const prog = argc > 0 ? argv[0] : ACE_TEXT ("HTTP_Server");
 
   // Set some defaults
   this->port_ = 0;
@@ -109,7 +109,6 @@ HTTP_Server::parse_args (int argc, ACE_TCHAR *argv[])
 
   this->strategy_ = thr_strategy | io_strategy;
 
-  ACE_UNUSED_ARG (prog);
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("in HTTP_Server::init, %s port = %d, ")
               ACE_TEXT ("number of threads = %d\n"),
@@ -118,7 +117,6 @@ HTTP_Server::parse_args (int argc, ACE_TCHAR *argv[])
 
 int
 HTTP_Server::init (int argc, ACE_TCHAR *argv[])
-  // Document this function
 {
   // Ignore signals generated when a connection is broken unexpectedly.
   ACE_Sig_Action sig ((ACE_SignalHandler) SIG_IGN, SIGPIPE);
@@ -129,7 +127,7 @@ HTTP_Server::init (int argc, ACE_TCHAR *argv[])
 
   //If the IO strategy is synchronous (SYNCH case), then choose a handler
   //factory based on the desired caching scheme
-  HTTP_Handler_Factory *f = 0;
+  HTTP_Handler_Factory *f {};
 
   if (this->strategy_ != (JAWS::JAWS_POOL | JAWS::JAWS_ASYNCH))
     {
@@ -155,11 +153,11 @@ HTTP_Server::init (int argc, ACE_TCHAR *argv[])
       return this->asynch_thread_pool ();
 
     case (JAWS::JAWS_PER_REQUEST | JAWS::JAWS_SYNCH) :
-      return this->thread_per_request (*factory.get ());
+      return this->thread_per_request (*factory);
 
     case (JAWS::JAWS_POOL | JAWS::JAWS_SYNCH) :
     default:
-      return this->synch_thread_pool (*factory.get ());
+      return this->synch_thread_pool (*factory);
     }
 
   ACE_NOTREACHED (return 0);
@@ -171,7 +169,6 @@ HTTP_Server::fini ()
   this->tm_.close ();
   return 0;
 }
-
 
 int
 HTTP_Server::synch_thread_pool (HTTP_Handler_Factory &factory)
@@ -217,7 +214,7 @@ Synch_Thread_Pool_Task::svc ()
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT("%p\n"),
                            ACE_TEXT ("HTTP_Acceptor::accept")), -1);
 
-      ACE_Message_Block *mb = 0;
+      ACE_Message_Block *mb {};
       ACE_NEW_RETURN (mb,
                       ACE_Message_Block (HTTP_Handler::MAX_REQUEST_SIZE + 1),
                       -1);
@@ -268,7 +265,6 @@ HTTP_Server::thread_per_request (HTTP_Handler_Factory &factory)
                                                   factory),
                       -1);
 
-
       if (t->open () != 0)
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
                            ACE_TEXT ("Thread_Per_Request_Task::open")),
@@ -298,7 +294,6 @@ Thread_Per_Request_Task::Thread_Per_Request_Task (ACE_HANDLE handle,
 {
 }
 
-
 // HEY!  Add a method to the thread_manager to return total number of
 // threads managed in all the tasks.
 
@@ -323,7 +318,7 @@ Thread_Per_Request_Task::open (void *)
 int
 Thread_Per_Request_Task::svc ()
 {
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb {};
   ACE_NEW_RETURN (mb, ACE_Message_Block (HTTP_Handler::MAX_REQUEST_SIZE + 1),
                   -1);
   //Synch_HTTP_Handler_Factory factory;

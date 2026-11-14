@@ -11,7 +11,8 @@
 
 #include "ace/Timeprobe.h"
 #include "ace/High_Res_Timer.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -46,7 +47,7 @@ ACE_Timeprobe_Ex (ALLOCATOR *allocator,
     report_buffer_full_ (0),
     allocator_ (allocator)
 {
-  ACE_timeprobe_t *temp = nullptr;
+  ACE_timeprobe_t *temp {};
   //FUZZ: disable check_for_lack_ACE_OS
   ACE_NEW_MALLOC_ARRAY (temp,
                         (ACE_timeprobe_t *) this->allocator ()->
@@ -142,7 +143,7 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::increase_size (u_long size)
 
   if (size > this->max_size_)
     {
-      ACE_timeprobe_t *temp = nullptr;
+      ACE_timeprobe_t *temp {};
       //FUZZ: disable check_for_lack_ACE_OS
       ACE_NEW_MALLOC_ARRAY (temp,
                             (ACE_timeprobe_t *) this->allocator ()->
@@ -154,9 +155,7 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::increase_size (u_long size)
 
       if (this->max_size_ > 0)
         {
-          ACE_OS::memcpy (temp,
-                          this->timeprobes_,
-                          this->max_size_ * sizeof (ACE_timeprobe_t));
+          std::memcpy (temp, this->timeprobes_, this->max_size_ * sizeof (ACE_timeprobe_t));
 
           // Iterates over the array explicitly calling the destructor for
           // each probe instance, then deallocates the memory
@@ -362,7 +361,7 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::find_description_i (u_long i)
       EVENT_DESCRIPTIONS::iterator iterator = this->sorted_event_descriptions_.begin ();
       for (u_long j = 0;
            j < this->sorted_event_descriptions_.size () - 1;
-           iterator++, j++)
+           ++iterator, ++j)
         {
           EVENT_DESCRIPTIONS::iterator next_event_descriptions = iterator;
           ++next_event_descriptions;
@@ -381,14 +380,14 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::sort_event_descriptions_i ()
 
   for (size_t i = 0;
        i < total_elements;
-       i++)
+       ++i)
     {
       EVENT_DESCRIPTIONS::iterator iterator = this->event_descriptions_.begin ();
       ACE_Event_Descriptions min_entry = *iterator;
 
       for (;
            iterator != this->event_descriptions_.end ();
-           iterator++)
+           ++iterator)
         if ((*iterator).minimum_id_ < min_entry.minimum_id_)
           min_entry = *iterator;
 

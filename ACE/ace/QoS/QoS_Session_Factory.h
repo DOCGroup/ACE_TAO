@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_QOS_SESSION_FACTORY_H
 #define ACE_QOS_SESSION_FACTORY_H
 #include /**/ "ace/pre.h"
@@ -32,18 +31,23 @@ class ACE_QoS_Session;
  *
  * @brief Concrete factory for the QoS Session objects.
  *
- * This class manages the life cycle of QoS Session objects. These
- * objects are currently either RAPI session objects or GQoS session
- * objects. It stores the sessions in an unbounded set.
+ * This class creates QoS Session objects, currently either RAPI or GQoS
+ * sessions, and tracks their pointers in an unbounded set. The caller owns
+ * each session returned by create_session () and must delete it. Calling
+ * destroy_session () only removes the session from the factory's set; it
+ * does not delete the session.
  */
 class ACE_QoS_Export ACE_QoS_Session_Factory
 {
 public :
-  /// Default constructor.
   ACE_QoS_Session_Factory ();
 
-  /// Default destructor.
   ~ACE_QoS_Session_Factory ();
+
+  ACE_QoS_Session_Factory (ACE_QoS_Session_Factory const &) = delete;
+  ACE_QoS_Session_Factory &operator= (ACE_QoS_Session_Factory const &) = delete;
+  ACE_QoS_Session_Factory (ACE_QoS_Session_Factory &&) = delete;
+  ACE_QoS_Session_Factory &operator= (ACE_QoS_Session_Factory &&) = delete;
 
   /// Types of sessions for this factory to manage.
   enum ACE_QoS_Session_Type
@@ -60,12 +64,13 @@ public :
     *       ACE_DEFAULT_QOS_SESSION = ACE_RAPI_SESSION on Unix platforms with RAPI support
     *                               = ACE_GQOS_SESSION on Windows platforms with GQOS support
     */
-  static const enum ACE_QoS_Session_Type ACE_DEFAULT_QOS_SESSION;
+  static ACE_QoS_Session_Type const ACE_DEFAULT_QOS_SESSION;
 
   /// Create a QoS session of the given type (RAPI or GQoS).
+  /// The caller owns the returned pointer and must delete it.
   ACE_QoS_Session * create_session (ACE_QoS_Session_Type qos_session_type = ACE_DEFAULT_QOS_SESSION );
 
-  /// Destroy the QoS Session.
+  /// Remove a QoS session from the factory's set. This does not delete it.
   int destroy_session (ACE_QoS_Session *qos_session);
 
 private:

@@ -36,7 +36,6 @@ ACE_SOCK_SEQPACK_Connector::shared_open (ACE_SOCK_SEQPACK_Association &new_assoc
 {
   ACE_TRACE ("ACE_SOCK_SEQPACK_Connector::shared_open");
 
-
   // Only open a new socket if we don't already have a valid handle.
   if (new_association.get_handle () == ACE_INVALID_HANDLE &&
 #if defined (ACE_HAS_LKSCTP)
@@ -129,7 +128,7 @@ ACE_SOCK_SEQPACK_Connector::shared_connect_start (ACE_SOCK_SEQPACK_Association &
       // Create an array of sockaddr_in to hold the underlying
       // representations of the primary and secondary
       // addresses.
-      sockaddr_in*  local_inet_addrs = nullptr;
+      sockaddr_in*  local_inet_addrs {};
 #if defined(ACE_HAS_ALLOC_HOOKS)
       ACE_ALLOCATOR_NORETURN (local_inet_addrs, static_cast<sockaddr_in*>(ACE_Allocator::instance()->malloc(sizeof(sockaddr_in) * (num_addresses))));
 #else
@@ -143,7 +142,7 @@ ACE_SOCK_SEQPACK_Connector::shared_connect_start (ACE_SOCK_SEQPACK_Association &
       local_sap.get_addresses(local_inet_addrs, num_addresses);
 
 #if defined (ACE_HAS_LKSCTP)
-      sockaddr_in *local_sockaddr = nullptr;
+      sockaddr_in *local_sockaddr {};
       sockaddr_in portst;
       int sn = sizeof(sockaddr);
 
@@ -175,13 +174,13 @@ ACE_SOCK_SEQPACK_Connector::shared_connect_start (ACE_SOCK_SEQPACK_Association &
         }
 
         // set the local port # assigned by the os to every secondary addr
-        for (size_t i = 1; i < num_addresses; i++)
+        for (size_t i = 1; i < num_addresses; ++i)
         {
           local_inet_addrs[i].sin_port = portst.sin_port;
         }
 
         // copy all of the secondary addrs into a sockaddr structure
-        for (size_t i = 0; i < num_addresses - 1; i++)
+        for (size_t i = 0; i < num_addresses - 1; ++i)
         {
           ACE_OS::memcpy(&(local_sockaddr[i]),
                          &(local_inet_addrs[i + 1]),
@@ -270,7 +269,6 @@ ACE_SOCK_SEQPACK_Connector::shared_connect_finish (ACE_SOCK_SEQPACK_Association 
 }
 
 // Actively connect and produce a new ACE_SOCK_SEQPACK_Association if things go well...
-
 
 int
 ACE_SOCK_SEQPACK_Connector::connect (ACE_SOCK_SEQPACK_Association &new_association,

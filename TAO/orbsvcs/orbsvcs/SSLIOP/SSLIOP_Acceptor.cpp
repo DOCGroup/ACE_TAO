@@ -14,11 +14,12 @@
 #endif /* __ACE_INLINE__ */
 
 #include <algorithm>
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::SSLIOP::Acceptor::Acceptor (::Security::QOP qop,
-                                 const ACE_Time_Value & timeout,
+                                 ACE_Time_Value const & timeout,
                                  bool check_host)
   : TAO::IIOP_SSL_Acceptor (),
     ssl_acceptor_ (this),
@@ -52,7 +53,6 @@ TAO::SSLIOP::Acceptor::Acceptor (::Security::QOP qop,
   if (qop == ::Security::SecQOPNoProtection)
     ACE_SET_BITS (this->ssl_component_.target_supports,
                   ::Security::NoProtection);
-
 
   // --- CSIv2 ---
 
@@ -93,7 +93,7 @@ TAO::SSLIOP::Acceptor::~Acceptor ()
 }
 
 int
-TAO::SSLIOP::Acceptor::create_profile (const TAO::ObjectKey &object_key,
+TAO::SSLIOP::Acceptor::create_profile (TAO::ObjectKey const &object_key,
                                        TAO_MProfile &mprofile,
                                        CORBA::Short priority)
 {
@@ -114,20 +114,20 @@ TAO::SSLIOP::Acceptor::create_profile (const TAO::ObjectKey &object_key,
 }
 
 int
-TAO::SSLIOP::Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
+TAO::SSLIOP::Acceptor::create_new_profile (TAO::ObjectKey const &object_key,
                                            TAO_MProfile &mprofile,
                                            CORBA::Short priority)
 {
   // Adding this->endpoint_count_ to the TAO_MProfile.
-  const int count = mprofile.profile_count ();
+  int const count = mprofile.profile_count ();
   if ((mprofile.size () - count) < this->endpoint_count_
       && mprofile.grow (count + this->endpoint_count_) == -1)
     return -1;
 
   // Create a profile for each acceptor endpoint.
-  for (size_t i = 0; i < this->endpoint_count_; ++i)
+  for (size_t i {}; i < this->endpoint_count_; ++i)
     {
-      TAO_SSLIOP_Profile *pfile = nullptr;
+      TAO_SSLIOP_Profile *pfile {};
 
       // @@ We need to create an SSLIOP::SSL component for the object
       //    we're creating an MProfile for.  This will allow us to
@@ -188,7 +188,7 @@ TAO::SSLIOP::Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
            mb != nullptr;
            mb = mb->cont ())
         {
-          ACE_OS::memcpy (buf, mb->rd_ptr (), mb->length ());
+          std::memcpy (buf, mb->rd_ptr (), mb->length ());
           buf += mb->length ();
         }
 
@@ -198,15 +198,14 @@ TAO::SSLIOP::Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
   return 0;
 }
 
-
 int
-TAO::SSLIOP::Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
+TAO::SSLIOP::Acceptor::create_shared_profile (TAO::ObjectKey const &object_key,
                                               TAO_MProfile &mprofile,
                                               CORBA::Short priority)
 {
-  size_t index = 0;
-  TAO_Profile *pfile = nullptr;
-  TAO_SSLIOP_Profile *ssliop_profile = nullptr;
+  size_t index {};
+  TAO_Profile *pfile {};
+  TAO_SSLIOP_Profile *ssliop_profile {};
 
   // First see if <mprofile> already contains a SSLIOP profile.
   for (TAO_PHandle i = 0; i != mprofile.profile_count (); ++i)
@@ -242,7 +241,7 @@ TAO::SSLIOP::Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
                                             &(this->ssl_component_)),
                       -1);
 
-      TAO_SSLIOP_Endpoint * const ssliop_endp =
+      TAO_SSLIOP_Endpoint *const ssliop_endp =
         dynamic_cast<TAO_SSLIOP_Endpoint *> (ssliop_profile->endpoint ());
 
       if (!ssliop_endp)
@@ -287,11 +286,11 @@ TAO::SSLIOP::Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
           CORBA::ULong const length = static_cast<CORBA::ULong> (cdr.total_length ());
           component.component_data.length (length);
           CORBA::Octet *buf = component.component_data.get_buffer ();
-          for (const ACE_Message_Block *i = cdr.begin ();
+          for (ACE_Message_Block const *i = cdr.begin ();
                i != nullptr;
                i = i->cont ())
             {
-              ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());
+              std::memcpy (buf, i->rd_ptr (), i->length ());
               buf += i->length ();
             }
 
@@ -306,8 +305,8 @@ TAO::SSLIOP::Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
        index < this->endpoint_count_;
        ++index)
     {
-      TAO_SSLIOP_Endpoint *ssl_endp = nullptr;
-      TAO_IIOP_Endpoint *iiop_endp = nullptr;
+      TAO_SSLIOP_Endpoint *ssl_endp {};
+      TAO_IIOP_Endpoint *iiop_endp {};
       ACE_NEW_RETURN (iiop_endp,
                       TAO_IIOP_Endpoint (this->hosts_[index],
                                          this->addrs_[index].get_port_number (),
@@ -327,26 +326,26 @@ TAO::SSLIOP::Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
   return 0;
 }
 
-int
-TAO::SSLIOP::Acceptor::is_collocated (const TAO_Endpoint *endpoint)
+bool
+TAO::SSLIOP::Acceptor::is_collocated (TAO_Endpoint const *endpoint)
 {
-  const TAO_SSLIOP_Endpoint *endp =
-    dynamic_cast<const TAO_SSLIOP_Endpoint *> (endpoint);
+  TAO_SSLIOP_Endpoint const *endp =
+    dynamic_cast<TAO_SSLIOP_Endpoint const *> (endpoint);
 
   // Make sure the dynamically cast pointer is valid.
   if (endp == nullptr)
-    return 0;
+    return false;
 
-  const TAO_IIOP_Endpoint *iiop = endp->iiop_endpoint ();
+  TAO_IIOP_Endpoint const *iiop = endp->iiop_endpoint ();
 
-  for (size_t i = 0; i < this->endpoint_count_; ++i)
+  for (size_t i {}; i < this->endpoint_count_; ++i)
     {
       if (iiop->port () == this->addrs_[i].get_port_number ()
-          && ACE_OS::strcmp (iiop->host (), this->hosts_[i]) == 0)
-        return 1;
+          && std::strcmp (iiop->host (), this->hosts_[i]) == 0)
+        return true;
     }
 
-  return 0;
+  return false;
 }
 
 int
@@ -364,8 +363,8 @@ TAO::SSLIOP::Acceptor::open (TAO_ORB_Core *orb_core,
                              ACE_Reactor *reactor,
                              int major,
                              int minor,
-                             const char *address,
-                             const char *options)
+                             char const *address,
+                             char const *options)
 {
   // Ensure that neither the endpoint configuration nor the ORB
   // configuration violate security measures.
@@ -403,7 +402,7 @@ TAO::SSLIOP::Acceptor::open_default (TAO_ORB_Core *orb_core,
                                      ACE_Reactor *reactor,
                                      int major,
                                      int minor,
-                                     const char *options)
+                                     char const *options)
 {
   // Ensure that neither the endpoint configuration nor the ORB
   // configuration violate security measures.
@@ -440,7 +439,7 @@ TAO::SSLIOP::Acceptor::open_default (TAO_ORB_Core *orb_core,
 
 int
 TAO::SSLIOP::Acceptor::ssliop_open_i (TAO_ORB_Core *orb_core,
-                                      const ACE_INET_Addr& addr,
+                                      ACE_INET_Addr const& addr,
                                       ACE_Reactor *reactor)
 {
   this->orb_core_ = orb_core;
@@ -483,10 +482,10 @@ TAO::SSLIOP::Acceptor::ssliop_open_i (TAO_ORB_Core *orb_core,
     {
       ACE_INET_Addr a(addr);
 
-      int found_a_port = 0;
+      bool found_a_port {};
       ACE_UINT32 const last_port = (std::min) (requested_port + this->port_span_ - 1, ACE_MAX_DEFAULT_PORT);
 
-      for (ACE_UINT32 p = requested_port; p <= last_port; p++)
+      for (ACE_UINT32 p = requested_port; p <= last_port; ++p)
         {
           if (TAO_debug_level > 5)
             ORBSVCS_DEBUG ((LM_DEBUG,
@@ -503,7 +502,7 @@ TAO::SSLIOP::Acceptor::ssliop_open_i (TAO_ORB_Core *orb_core,
                                         0, 0, 0, 1,
                                         this->reuse_addr_) != -1)
             {
-              found_a_port = 1;
+              found_a_port = true;
               break;
             }
         }
@@ -547,7 +546,7 @@ TAO::SSLIOP::Acceptor::ssliop_open_i (TAO_ORB_Core *orb_core,
 
   if (TAO_debug_level > 5)
     {
-      for (size_t i = 0; i < this->endpoint_count_; ++i)
+      for (size_t i {}; i < this->endpoint_count_; ++i)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) ")
@@ -577,7 +576,7 @@ TAO::SSLIOP::Acceptor::parse_options_i (int &argc, ACE_CString ** argv)
     return result;
 
   // then parse out our own options.
-  int i = 0;
+  int i {};
   while (i < argc)
     {
       // since the base class has already iterated over the list once,
@@ -595,7 +594,7 @@ TAO::SSLIOP::Acceptor::parse_options_i (int &argc, ACE_CString ** argv)
                              value.c_str ()),
                             -1);
         }
-      else if (ACE_OS::strcmp (name.c_str (), "ssl_port") == 0)
+      else if (std::strcmp (name.c_str (), "ssl_port") == 0)
         {
           int ssl_port = ACE_OS::atoi (value.c_str ());
 
@@ -612,16 +611,16 @@ TAO::SSLIOP::Acceptor::parse_options_i (int &argc, ACE_CString ** argv)
       else
         {
           // the name is not known, skip to the next option
-          i++;
+          ++i;
           continue;
         }
       // at the end, we've consumed this argument. Shift the list and
       // put this one on the end. This technique has the effect of
       // putting them in reverse order, but that doesn't matter, since
       // these arguments are only whole strings.
-      argc--;
+      --argc;
       ACE_CString *temp = argv[i];
-      for (int j = i; j <= argc-1; j++)
+      for (int j = i; j <= argc-1; ++j)
         argv[j] = argv[j+1];
       argv[argc] = temp;
     }

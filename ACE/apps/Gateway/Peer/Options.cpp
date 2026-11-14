@@ -1,50 +1,36 @@
 #define ACE_BUILD_SVC_DLL
 
+#include <cstdlib>
+
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"
-#include "ace/OS_Memory.h"
 #include "Options.h"
-
-// Static initialization.
-Options *Options::instance_ = 0;
 
 void
 Options::print_usage_and_die ()
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("%n [-a {C|S}:acceptor-port] [-c {C|S}:connector-port] [-C connection-id] [-h gateway-host] [-q max-queue-size] [-t timeout] [-v]\n")));
+              ACE_TEXT ("%n [-a {C|S}:acceptor-port] [-c {C|S}:connector-port] [-C connection-id] "
+                        "[-h gateway-host] [-q max-queue-size] [-t timeout] [-v]\n")));
   ACE_OS::exit (1);
 }
 
 Options::Options ()
-  : options_ (0),
-    supplier_acceptor_port_ (DEFAULT_PEER_SUPPLIER_PORT),
-    consumer_acceptor_port_ (DEFAULT_PEER_CONSUMER_PORT),
-    supplier_connector_port_ (DEFAULT_GATEWAY_SUPPLIER_PORT),
-    consumer_connector_port_ (DEFAULT_GATEWAY_CONSUMER_PORT),
-    connector_host_ (ACE_DEFAULT_SERVER_HOST),
-    timeout_ (0),
-    max_queue_size_ (MAX_QUEUE_SIZE),
-    connection_id_ (0)
 {
-  char *timeout = ACE_OS::getenv ("TIMEOUT");
+  char * const timeout = std::getenv ("TIMEOUT");
 
-  if (timeout == 0)
-    this->timeout_ = Options::DEFAULT_TIMEOUT;
-  else
-    this->timeout_ = ACE_OS::atoi (timeout);
+  if (timeout != nullptr)
+    this->timeout_ = std::atoi (timeout);
 }
 
 Options *
 Options::instance ()
 {
-  if (Options::instance_ == 0)
-    ACE_NEW_RETURN (Options::instance_, Options, 0);
-
-  return Options::instance_;
+  static Options options;
+  return &options;
 }
 
 long
@@ -89,7 +75,7 @@ Options::supplier_connector_port () const
   return this->supplier_connector_port_;
 }
 
-const ACE_TCHAR *
+ACE_TCHAR const *
 Options::connector_host () const
 {
   return this->connector_host_;
@@ -116,8 +102,8 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
 
             for (ACE_TCHAR *flag = ACE_OS::strtok (get_opt.opt_arg (),
                                                    ACE_TEXT ("|"));
-                 flag != 0;
-                 flag = ACE_OS::strtok (0, ACE_TEXT ("|")))
+                 flag != nullptr;
+                 flag = ACE_OS::strtok (nullptr, ACE_TEXT ("|")))
               if (ACE_OS::strncasecmp (flag, ACE_TEXT ("C"), 1) == 0)
                 {
                   ACE_SET_BITS (this->options_,
@@ -143,8 +129,8 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
 
             for (ACE_TCHAR *flag = ACE_OS::strtok (get_opt.opt_arg (),
                                                    ACE_TEXT ("|"));
-                 flag != 0;
-                 flag = ACE_OS::strtok (0, ACE_TEXT ("|")))
+                 flag != nullptr;
+                 flag = ACE_OS::strtok (nullptr, ACE_TEXT ("|")))
               if (ACE_OS::strncasecmp (flag, ACE_TEXT ("C"), 1) == 0)
                 {
                   ACE_SET_BITS (this->options_,

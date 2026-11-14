@@ -18,17 +18,16 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_SSL_SOCK_Stream)
 
 ACE_SSL_SOCK_Stream::ACE_SSL_SOCK_Stream (ACE_SSL_Context *context)
-  : ssl_ (nullptr),
-    stream_ ()
+  : stream_ ()
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::ACE_SSL_SOCK_Stream");
 
-  ACE_SSL_Context * ctx =
+  ACE_SSL_Context * const ctx =
     (context == nullptr ? ACE_SSL_Context::instance () : context);
 
-  this->ssl_ = ::SSL_new (ctx->context ());
+  this->ssl_.reset (::SSL_new (ctx->context ()));
 
-  if (this->ssl_ == nullptr)
+  if (this->ssl_.get () == nullptr)
     {
       ACELIB_ERROR ((LM_ERROR,
                   "(%P|%t) ACE_SSL_SOCK_Stream "
@@ -40,8 +39,6 @@ ACE_SSL_SOCK_Stream::ACE_SSL_SOCK_Stream (ACE_SSL_Context *context)
 ACE_SSL_SOCK_Stream::~ACE_SSL_SOCK_Stream ()
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::~ACE_SSL_SOCK_Stream");
-
-  ::SSL_free (this->ssl_);
 
   // @@ Question: should we reference count the Context object or
   // leave that to the application developer? We do not reference
@@ -61,7 +58,7 @@ ACE_SSL_SOCK_Stream::sendv (const iovec iov[],
   // (sendv()) are not possible to retain with the emulation in this
   // method.
 
-  ssize_t bytes_sent = 0;
+  ssize_t bytes_sent {};
 
   ACE_Time_Value t;
   ACE_Time_Value *timeout = const_cast<ACE_Time_Value *> (max_wait_time);
@@ -77,7 +74,7 @@ ACE_SSL_SOCK_Stream::sendv (const iovec iov[],
   // Take into account the time between each send.
   ACE_Countdown_Time countdown (timeout);
 
-  for (size_t i = 0; i < n; ++i)
+  for (size_t i {}; i < n; ++i)
     {
       ssize_t const result = this->send (iov[i].iov_base,
                                          iov[i].iov_len,
@@ -127,7 +124,7 @@ ACE_SSL_SOCK_Stream::recvv (iovec *io_vec,
 
   io_vec->iov_base = nullptr;
 
-  int select_width = 0;
+  int select_width {};
 #if !defined (ACE_WIN32)
   select_width = this->get_handle () + 1;
 #endif /* ACE_WIN32 */
@@ -185,10 +182,10 @@ ACE_SSL_SOCK_Stream::send (const void *buf,
 
   // If SSL has data in the buffer, i.e. SSL_pending() returns a
   // non-zero value, then don't block on select().
-  if (timeout == nullptr || ::SSL_pending (this->ssl_))
+  if (timeout == nullptr || ::SSL_pending (this->ssl_.get ()))
     return this->send (buf, len, flags);
 
-  int val = 0;
+  int val {};
   if (ACE::enter_send_timedwait (this->get_handle (),
                                  timeout,
                                  val) == -1)
@@ -212,7 +209,6 @@ ACE_SSL_SOCK_Stream::recv (void *buf,
   return this->recv_i (buf, n, flags, timeout);
 }
 
-
 ssize_t
 ACE_SSL_SOCK_Stream::send (size_t n, ...) const
 {
@@ -223,14 +219,14 @@ ACE_SSL_SOCK_Stream::send (size_t n, ...) const
   va_list argp;
   va_start (argp, n);
 
-  ssize_t bytes_sent = 0;
+  ssize_t bytes_sent {};
 
   // NOTE: This method used to fill an IO vector (e.g. iovec) and then
   //       send it using a scatter write (sendv()).  However, it is
   //       not possible to emulate a non-blocking scatter write over
   //       SSL.  As such, there is no point in attempting to use
   //       scatter writes over SSL.
-  for (size_t i = 0; i < total_tuples; ++i)
+  for (size_t i {}; i < total_tuples; ++i)
     {
       ssize_t const data_len = va_arg (argp, ssize_t);
       ssize_t const result = this->send (va_arg (argp, char *), data_len);
@@ -279,9 +275,9 @@ ACE_SSL_SOCK_Stream::recv (size_t n, ...) const
   va_list argp;
   va_start (argp, n);
 
-  ssize_t bytes_recv = 0;
+  ssize_t bytes_recv {};
 
-  for (size_t i = 0; i < total_tuples; ++i)
+  for (size_t i {}; i < total_tuples; ++i)
     {
       ssize_t const data_len = va_arg (argp, ssize_t);
       ssize_t const result = this->recv (va_arg (argp, char *), data_len);
@@ -341,17 +337,17 @@ ACE_SSL_SOCK_Stream::send_n (const void *buf,
 
   /* This code mimics ACE::send_n */
   // Total number of bytes written.
-  size_t temp = 0;
+  size_t temp {};
   size_t &bytes_transferred = ((bt == nullptr) ? temp : *bt);
 
   // Actual number of bytes written in each <send> attempt
-  ssize_t n = 0;
+  ssize_t n {};
 
   for (bytes_transferred = 0;
        bytes_transferred < len;
        bytes_transferred += n)
     {
-      n = this->send ((const char*) buf + bytes_transferred,
+      n = this->send (static_cast<char const *> (buf) + bytes_transferred,
                       len - bytes_transferred,
                       flags,
                       timeout);
@@ -395,16 +391,16 @@ ACE_SSL_SOCK_Stream::recv_n (void *buf,
         }
     }
 
-  size_t temp = 0;
+  size_t temp {};
   size_t &bytes_transferred = ((bt == nullptr) ? temp : *bt);
 
-  ssize_t n = 0;
+  ssize_t n {};
 
   for (bytes_transferred = 0;
        bytes_transferred < len;
        bytes_transferred += n)
     {
-      n = this->recv ((char*) buf + bytes_transferred,
+      n = this->recv (static_cast<char *> (buf) + bytes_transferred,
                       len - bytes_transferred,
                       flags,
                       timeout);
@@ -431,14 +427,14 @@ ACE_SSL_SOCK_Stream::recv_n (void *buf, int len, int flags) const
         }
     }
 
-  ssize_t bytes_transferred = 0;
-  ssize_t n = 0;
+  ssize_t bytes_transferred {};
+  ssize_t n {};
 
   for (bytes_transferred = 0;
        bytes_transferred < len;
        bytes_transferred += n)
     {
-      n = this->recv ((char*) buf + bytes_transferred,
+      n = this->recv (static_cast<char *> (buf) + bytes_transferred,
                       len - bytes_transferred,
                       flags);
 
@@ -463,14 +459,14 @@ ACE_SSL_SOCK_Stream::send_n (const void *buf, int len, int flags) const
     }
 
   /*  The following code mimics <ACE::send_n> */
-  size_t bytes_transferred = 0;
-  ssize_t n = 0;
+  size_t bytes_transferred {};
+  ssize_t n {};
 
   for (bytes_transferred = 0;
-       bytes_transferred < (size_t) len;
+       bytes_transferred < static_cast<size_t> (len);
        bytes_transferred += n)
     {
-      n = this->send ((const char*) buf + bytes_transferred,
+      n = this->send (static_cast<char const *> (buf) + bytes_transferred,
                       len - bytes_transferred,
                       flags);
       if (n < 0)
@@ -487,13 +483,12 @@ ACE_SSL_SOCK_Stream::sendv_n (const iovec iov[], size_t iovcnt) const
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::sendv_n");
 
-  ssize_t bytes_sent = 0;
+  ssize_t bytes_sent {};
 
-  for (size_t i = 0; i < iovcnt; ++i)
+  for (size_t i {}; i < iovcnt; ++i)
     {
-      ssize_t result = this->send_n (iov[i].iov_base,
+      ssize_t const result = this->send_n (iov[i].iov_base,
                                      iov[i].iov_len);
-
 
       if (result == -1)
         {
@@ -525,9 +520,9 @@ ACE_SSL_SOCK_Stream::recvv_n (iovec iov[], size_t iovcnt) const
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::recvv_n");
 
-  ssize_t bytes_read = 0;
+  ssize_t bytes_read {};
 
-  for (size_t i = 0; i < iovcnt; ++i)
+  for (size_t i {}; i < iovcnt; ++i)
     {
       ssize_t const result = this->recv_n (iov[i].iov_base,
                                            iov[i].iov_len);
@@ -566,7 +561,7 @@ ACE_SSL_SOCK_Stream::get_remote_addr (ACE_Addr &addr) const
   // complete.  Despite that fact, the SSL connection may not have
   // been completed.  In such a case, a successful return from
   // get_remote_addr() would be misleading.
-  if (SSL_is_init_finished (this->ssl_))
+  if (SSL_is_init_finished (this->ssl_.get ()))
     {
       return this->ACE_SSL_SOCK::get_remote_addr (addr);
     }

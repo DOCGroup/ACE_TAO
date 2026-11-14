@@ -2,7 +2,6 @@
 #include "ace/Service_Repository.h"
 #include "ace/Service_Types.h"
 
-
 int
 Test_Task::open (void *)
 {
@@ -86,7 +85,6 @@ make_close ()
   return new MT_Module (ACE_TEXT ("Close_Test_Module"),
                         new Test_Task, new Test_Task);
 }
-
 
 // Task to verify the order and operation of the stream assembly
 // Command line args give the stream name (to look it up) and the names

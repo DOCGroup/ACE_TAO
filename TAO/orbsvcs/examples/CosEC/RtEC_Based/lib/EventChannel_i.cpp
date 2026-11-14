@@ -1,39 +1,33 @@
 #include "EventChannel_i.h"
 #include <memory>
 
-TAO_CosEC_EventChannel_i::TAO_CosEC_EventChannel_i ()
-  : consumer_admin_ (0),
-    supplier_admin_ (0),
-    consumeradmin_ (CosEventChannelAdmin::ConsumerAdmin::_nil ()),
-    supplieradmin_ (CosEventChannelAdmin::SupplierAdmin::_nil ())
-{
-}
+TAO_CosEC_EventChannel_i::TAO_CosEC_EventChannel_i () = default;
 
 int
-TAO_CosEC_EventChannel_i::init (const RtecEventChannelAdmin::ConsumerQOS &consumerqos,
-                                const RtecEventChannelAdmin::SupplierQOS &supplierqos,
+TAO_CosEC_EventChannel_i::init (RtecEventChannelAdmin::ConsumerQOS const &consumerqos,
+                                RtecEventChannelAdmin::SupplierQOS const &supplierqos,
                                 RtecEventChannelAdmin::EventChannel_ptr rtec)
 {
   // Allocate the admins..
-  TAO_CosEC_ConsumerAdmin_i *consumer_;
+  TAO_CosEC_ConsumerAdmin_i *consumer_ {};
   ACE_NEW_RETURN (consumer_,
                   TAO_CosEC_ConsumerAdmin_i (),
                   -1);
 
-  std::unique_ptr <TAO_CosEC_ConsumerAdmin_i> auto_consumer_ (consumer_);
+  std::unique_ptr<TAO_CosEC_ConsumerAdmin_i> auto_consumer_ (consumer_);
 
-  TAO_CosEC_SupplierAdmin_i *supplier_;
+  TAO_CosEC_SupplierAdmin_i *supplier_ {};
   ACE_NEW_RETURN (supplier_,
                   TAO_CosEC_SupplierAdmin_i (),
                   -1);
 
-  std::unique_ptr <TAO_CosEC_SupplierAdmin_i> auto_supplier_ (supplier_);
+  std::unique_ptr<TAO_CosEC_SupplierAdmin_i> auto_supplier_ (supplier_);
 
-  RtecEventChannelAdmin::ConsumerAdmin_ptr rtec_consumeradmin =
+  RtecEventChannelAdmin::ConsumerAdmin_var const rtec_consumeradmin =
     rtec->for_consumers ();
 
   if (auto_consumer_.get ()->init (consumerqos,
-                                   rtec_consumeradmin) == -1)
+                                   rtec_consumeradmin.in ()) == -1)
     return -1;
 
   this->consumeradmin_ =
@@ -42,11 +36,11 @@ TAO_CosEC_EventChannel_i::init (const RtecEventChannelAdmin::ConsumerQOS &consum
   // give the ownership to the POA.
   auto_consumer_.get ()->_remove_ref ();
 
-  RtecEventChannelAdmin::SupplierAdmin_ptr rtec_supplieradmin =
+  RtecEventChannelAdmin::SupplierAdmin_var const rtec_supplieradmin =
     rtec->for_suppliers ();
 
   if (auto_supplier_.get ()->init (supplierqos,
-                                   rtec_supplieradmin) == -1)
+                                   rtec_supplieradmin.in ()) == -1)
     return -1;
 
   this->supplieradmin_ =
@@ -81,10 +75,10 @@ void
 TAO_CosEC_EventChannel_i::destroy ()
 {
   // Deactivate the CosEventChannel
-  PortableServer::POA_var poa =
+  PortableServer::POA_var const poa =
     this->_default_POA ();
 
-  PortableServer::ObjectId_var id = poa->servant_to_id (this);
+  PortableServer::ObjectId_var const id = poa->servant_to_id (this);
 
   poa->deactivate_object (id.in ());
 

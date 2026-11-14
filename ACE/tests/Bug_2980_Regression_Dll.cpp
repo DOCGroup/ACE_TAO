@@ -14,7 +14,6 @@ ACE_Proper_Export_Flag int capi_init()
   return ret;
 }
 
-
 ACE_Proper_Export_Flag int capi_fini()
 {
   ACE_START_TEST (ACE_TEXT ("Bug_2980_Regression_Test"));
@@ -24,7 +23,6 @@ ACE_Proper_Export_Flag int capi_fini()
 
   return ACE::fini();
 }
-
 
 ACE_Proper_Export_Flag int capi_dosomething()
 {
@@ -43,6 +41,5 @@ ACE_Proper_Export_Flag int capi_dosomething()
   ACE_END_TEST;
   return 0;
 }
-
 
 }

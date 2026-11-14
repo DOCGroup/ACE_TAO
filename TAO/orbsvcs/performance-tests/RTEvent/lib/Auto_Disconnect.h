@@ -31,13 +31,11 @@ template<class Client>
 class Auto_Disconnect : public ACE_Utils::Auto_Functor<Client,Disconnect<Client> >
 {
 public:
-  /// Constructor
   /**
    * @param client The client
    */
-  explicit Auto_Disconnect (Client *s = 0);
+  explicit Auto_Disconnect (Client *s = nullptr);
 
-  /// Assignment operator
   Auto_Disconnect<Client>& operator= (Client *client);
 };
 

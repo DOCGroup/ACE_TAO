@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef IFR_SERVICE_H
 #define IFR_SERVICE_H
 
@@ -36,7 +35,6 @@ public:
   IFR_Service &operator= (IFR_Service const &) = delete;
   IFR_Service &operator= (IFR_Service &&) = delete;
 
-  /// Destructor
   ~IFR_Service ();
 
   /// Initialize the IFR service.

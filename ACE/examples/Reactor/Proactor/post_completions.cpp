@@ -23,19 +23,16 @@
  */
 //=============================================================================
 
-
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_main.h"
 #include "ace/Proactor.h"
 #include "ace/Task.h"
 #include "ace/WIN32_Proactor.h"
 #include "ace/POSIX_Proactor.h"
-#include "ace/Atomic_Op.h"
-#include "ace/Thread_Mutex.h"
+#include <atomic>
 
 // Keep track of how many completions are still expected.
-static ACE_Atomic_Op <ACE_SYNCH_MUTEX, size_t> Completions_To_Go;
-
+static std::atomic<size_t> Completions_To_Go {0};
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
 // This only works on Win32 platforms and on Unix platforms supporting
@@ -68,10 +65,7 @@ public:
                     signal_number),
       sequence_number_ (sequence_number)
     {}
-  // Constructor.
-
   ~My_Result () override = default;
-  // Destructor.
 
     /**
      * This is the method that will be called by the Proactor for
@@ -88,11 +82,11 @@ public:
       this->completion_key_ = completion_key;
       this->error_ = error;
 
-      size_t to_go = --Completions_To_Go;
+      size_t const to_go = --Completions_To_Go;
 
       // Print the completion details.
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t) Completion sequence number %d, success : %d, error : %d, signal_number : %d, %u more to go\n",
+                  "(%t) Completion sequence number %d, success : %d, error : %d, signal_number : %d, %B more to go\n",
                   this->sequence_number_,
                   this->success_,
                   this->error_,
@@ -116,10 +110,8 @@ private:
 class My_Handler : public  ACE_Handler
 {
 public:
-  /// Constructor.
   My_Handler () = default;
 
-  /// Destructor.
   ~My_Handler () override = default;
 };
 
@@ -132,10 +124,8 @@ public:
 class My_Task: public ACE_Task <ACE_NULL_SYNCH>
 {
 public:
-  /// Constructor.
   My_Task () = default;
 
-  /// Destructor.
   ~My_Task () override = default;
 
   //FUZZ: disable check_for_lack_ACE_OS
@@ -270,11 +260,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_Thread_Manager::instance ()->wait ();
 
   int status = 0;
-  size_t to_go = Completions_To_Go.value ();
+  size_t const to_go = Completions_To_Go.load ();
   if (size_t (0) != to_go)
     {
       ACE_ERROR ((LM_ERROR,
-                  "Fail! Expected all completions to finish but %u to go\n",
+                  "Fail! Expected all completions to finish but %B to go\n",
                   to_go));
       status = 1;
     }

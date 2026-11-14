@@ -6,12 +6,11 @@
 #include "ace/Log_Msg.h"
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      PortableInterceptor::ORBInitializer_ptr temp_initializer =
-        PortableInterceptor::ORBInitializer::_nil ();
+      PortableInterceptor::ORBInitializer_ptr temp_initializer {};
 
       ACE_NEW_RETURN (temp_initializer,
                       Server_ORBInitializer,
@@ -27,15 +26,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Create the test policy.
 
-      const CORBA::ULong val = 40442;
-      CORBA::Any any;
+      const CORBA::ULong val (40442);
+      CORBA::Any any {};
       any <<= val;
 
       CORBA::Policy_var p (orb->create_policy (Test::POLICY_TYPE,
                                                any));
 
-      const CORBA::PolicyType ptype =
-        p->policy_type ();
+      const CORBA::PolicyType ptype (p->policy_type ());
 
       // Sanity check.
       if (ptype != Test::POLICY_TYPE)
@@ -43,7 +41,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       Test::Policy_var policy (Test::Policy::_narrow (p.in ()));
 
-      const CORBA::ULong pval = policy->value ();
+      const CORBA::ULong pval (policy->value ());
 
       // Sanity check.
       if (val != pval)
@@ -85,7 +83,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                   "\n"
                   "PolicyFactory test succeeded.\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("PolicyFactory test:");
 

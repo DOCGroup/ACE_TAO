@@ -6,8 +6,8 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Server_Network_Priority_Policy::TAO_Server_Network_Priority_Policy (
-  TAO::DiffservCodepoint const& request_diffserv_codepoint,
-  TAO::DiffservCodepoint const& reply_diffserv_codepoint,
+  TAO::DiffservCodepoint const &request_diffserv_codepoint,
+  TAO::DiffservCodepoint const &reply_diffserv_codepoint,
   TAO::NetworkPriorityModel &network_priority_model)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
@@ -22,7 +22,7 @@ TAO_Server_Network_Priority_Policy::TAO_Server_Network_Priority_Policy (
 TAO_Server_Network_Priority_Policy::~TAO_Server_Network_Priority_Policy () = default;
 
 TAO_Server_Network_Priority_Policy::TAO_Server_Network_Priority_Policy (
-   TAO_Server_Network_Priority_Policy const& rhs)
+  TAO_Server_Network_Priority_Policy const &rhs)
   : ::CORBA::Object ()
   , ::CORBA::Policy ()
   , TAO::NetworkPriorityPolicy ()
@@ -34,9 +34,9 @@ TAO_Server_Network_Priority_Policy::TAO_Server_Network_Priority_Policy (
 }
 
 CORBA::Policy_ptr
-TAO_Server_Network_Priority_Policy::create (CORBA::Any const&)
+TAO_Server_Network_Priority_Policy::create (CORBA::Any const &)
 {
-  CORBA::Policy_ptr policy = CORBA::Policy::_nil ();
+  CORBA::Policy_ptr policy {};
 
   ACE_NEW_THROW_EX (policy,
                     TAO_Server_Network_Priority_Policy (),
@@ -54,7 +54,7 @@ TAO_Server_Network_Priority_Policy::policy_type ()
 TAO_Server_Network_Priority_Policy *
 TAO_Server_Network_Priority_Policy::clone () const
 {
-  TAO_Server_Network_Priority_Policy *copy = nullptr;
+  TAO_Server_Network_Priority_Policy *copy {};
   ACE_NEW_RETURN (copy,
                   TAO_Server_Network_Priority_Policy (*this),
                   nullptr);
@@ -103,7 +103,7 @@ TAO_Server_Network_Priority_Policy::network_priority_model (
 CORBA::Policy_ptr
 TAO_Server_Network_Priority_Policy::copy ()
 {
-  TAO_Server_Network_Priority_Policy* servant = nullptr;
+  TAO_Server_Network_Priority_Policy *servant {};
   ACE_NEW_THROW_EX (servant,
                     TAO_Server_Network_Priority_Policy (*this),
                     CORBA::NO_MEMORY ());

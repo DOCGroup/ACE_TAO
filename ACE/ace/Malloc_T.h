@@ -87,7 +87,7 @@ class ACE_Cached_Allocator : public ACE_New_Allocator
 public:
   /// Create a cached memory pool with @a n_chunks chunks
   /// each with sizeof (TYPE) size.
-  ACE_Cached_Allocator (size_t n_chunks);
+  explicit ACE_Cached_Allocator (size_t n_chunks);
 
   /// Clear things up.
   ~ACE_Cached_Allocator () override;
@@ -250,7 +250,6 @@ public:
                          MEMORY_POOL_OPTIONS options = 0);
 #endif /* ACE_HAS_WCHAR */
 
-  /// Destructor.
   ~ACE_Allocator_Adapter () override;
 
   // = Memory Management
@@ -479,7 +478,6 @@ public:
                 const ACE_MEM_POOL_OPTIONS *options,
                 ACE_LOCK *lock);
 
-  /// Destructor
   ~ACE_Malloc_T ();
 
   /// Get Reference counter.
@@ -705,7 +703,6 @@ public:
   ACE_Malloc_LIFO_Iterator_T (ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB> &malloc,
                               const char *name = nullptr);
 
-  /// Destructor.
   ~ACE_Malloc_LIFO_Iterator_T ();
 
   // = Iteration methods.
@@ -773,7 +770,6 @@ public:
   ACE_Malloc_FIFO_Iterator_T (ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB> &malloc,
                               const char *name = nullptr);
 
-  /// Destructor.
   ~ACE_Malloc_FIFO_Iterator_T ();
 
   // = Iteration methods.

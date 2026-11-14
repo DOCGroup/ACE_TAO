@@ -68,6 +68,11 @@ template <ACE_SYNCH_DECL, class TIME_POLICY = ACE_System_Time_Policy>
 class ACE_Message_Queue : public ACE_Message_Queue_Base
 {
 public:
+  ACE_Message_Queue (ACE_Message_Queue const &) = delete;
+  ACE_Message_Queue (ACE_Message_Queue &&) = delete;
+  ACE_Message_Queue &operator= (ACE_Message_Queue const &) = delete;
+  ACE_Message_Queue &operator= (ACE_Message_Queue &&) = delete;
+
   friend class ACE_Message_Queue_Iterator<ACE_SYNCH_USE, TIME_POLICY>;
   friend class ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_USE, TIME_POLICY>;
 
@@ -388,7 +393,6 @@ public:
 
   //@}
 
-
   /** @name Water mark (flow control) methods
    */
   //@{
@@ -622,16 +626,10 @@ protected:
 #if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
   ACE::Monitor_Control::Size_Monitor *monitor_;
 #endif
-
-private:
-  // = Disallow these operations.
-  void operator= (const ACE_Message_Queue<ACE_SYNCH_USE> &) = delete;
-  ACE_Message_Queue (const ACE_Message_Queue<ACE_SYNCH_USE> &) = delete;
 };
 
 // This typedef is used to get around a compiler bug in g++/vxworks.
 using ACE_DEFAULT_MESSAGE_QUEUE_TYPE = ACE_Message_Queue<ACE_MT_SYNCH>;
-
 
 /**
  * @class ACE_Message_Queue_Iterator
@@ -780,13 +778,18 @@ template <ACE_SYNCH_DECL, class TIME_POLICY = ACE_System_Time_Policy>
 class ACE_Dynamic_Message_Queue : public ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>
 {
 public:
+  ACE_Dynamic_Message_Queue (ACE_Dynamic_Message_Queue const &) = delete;
+  ACE_Dynamic_Message_Queue (ACE_Dynamic_Message_Queue &&) = delete;
+  ACE_Dynamic_Message_Queue &operator= (ACE_Dynamic_Message_Queue const &) = delete;
+  ACE_Dynamic_Message_Queue &operator= (ACE_Dynamic_Message_Queue &&) = delete;
+
   ACE_Dynamic_Message_Queue (ACE_Dynamic_Message_Strategy & message_strategy,
                              size_t hwm = ACE_Message_Queue_Base::DEFAULT_HWM,
                              size_t lwm = ACE_Message_Queue_Base::DEFAULT_LWM,
                              ACE_Notification_Strategy * = nullptr);
 
   /// Close down the message queue and release all resources.
-  virtual ~ACE_Dynamic_Message_Queue ();
+  ~ACE_Dynamic_Message_Queue () override;
 
   /**
    * Detach all messages with status given in the passed flags from
@@ -806,11 +809,11 @@ public:
    * queue.  Returns -1 on failure, else the number of items still on
    * the queue.
    */
-  virtual int dequeue_head (ACE_Message_Block *&first_item,
-                            ACE_Time_Value *timeout = nullptr);
+  int dequeue_head (ACE_Message_Block *&first_item,
+                    ACE_Time_Value *timeout = nullptr) override;
 
   /// Dump the state of the queue.
-  virtual void dump () const;
+  void dump () const override;
 
   /**
    * Just call priority enqueue method: tail enqueue semantics for dynamic
@@ -818,8 +821,8 @@ public:
    * it was placed after the queue is refreshed prior to the next
    * enqueue or dequeue operation.
    */
-  virtual int enqueue_tail (ACE_Message_Block *new_item,
-                            ACE_Time_Value *timeout = nullptr);
+  int enqueue_tail (ACE_Message_Block *new_item,
+                    ACE_Time_Value *timeout = nullptr) override;
 
   /**
    * Just call priority enqueue method: head enqueue semantics for dynamic
@@ -827,9 +830,8 @@ public:
    * it was placed after the queue is refreshed prior to the next
    * enqueue or dequeue operation.
    */
-  virtual int enqueue_head (ACE_Message_Block *new_item,
-                            ACE_Time_Value *timeout = nullptr);
-
+  int enqueue_head (ACE_Message_Block *new_item,
+                    ACE_Time_Value *timeout = nullptr) override;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -842,7 +844,7 @@ protected:
    * Message Queue constructor to update the priorities of all
    * enqueued messages.
    */
-  virtual int enqueue_i (ACE_Message_Block *new_item);
+  int enqueue_i (ACE_Message_Block *new_item) override;
 
   /// Enqueue a message in priority order within a given priority status sublist
   virtual int sublist_enqueue_i (ACE_Message_Block *new_item,
@@ -858,7 +860,7 @@ protected:
    * or if that is empty from the beyond late portion, or if that is
    * empty just sets the passed pointer to zero and returns -1.
    */
-  virtual int dequeue_head_i (ACE_Message_Block *&first_item);
+  int dequeue_head_i (ACE_Message_Block *&first_item) override;
 
   /// Refresh the queue using the strategy
   /// specific priority status function.
@@ -894,17 +896,12 @@ protected:
   ACE_Dynamic_Message_Strategy &message_strategy_;
 
 private:
-  // = Disallow public access to these operations.
-
-  void operator= (const ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY> &) = delete;
-  ACE_Dynamic_Message_Queue (const ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY> &) = delete;
-
   // provide definitions for these (just call base class method),
   // but make them private so they're not accessible outside the class
 
   /// Private method to hide public base class method: just calls base class method
-  virtual int peek_dequeue_head (ACE_Message_Block *&first_item,
-                                 ACE_Time_Value *timeout = nullptr);
+  int peek_dequeue_head (ACE_Message_Block *&first_item,
+                         ACE_Time_Value *timeout = nullptr) override;
 };
 
 /**
@@ -929,13 +926,13 @@ public:
   static ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY> *
     create_static_message_queue (size_t hwm = ACE_Message_Queue_Base::DEFAULT_HWM,
                                  size_t lwm = ACE_Message_Queue_Base::DEFAULT_LWM,
-                                 ACE_Notification_Strategy * = 0);
+                                 ACE_Notification_Strategy * = nullptr);
 
   /// Factory method for a dynamically prioritized (by time to deadline) ACE_Dynamic_Message_Queue
   static ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY> *
     create_deadline_message_queue (size_t hwm = ACE_Message_Queue_Base::DEFAULT_HWM,
                                    size_t lwm = ACE_Message_Queue_Base::DEFAULT_LWM,
-                                   ACE_Notification_Strategy * = 0,
+                                   ACE_Notification_Strategy * = nullptr,
                                    u_long static_bit_field_mask = 0x3FFUL,        // 2^(10) - 1
                                    u_long static_bit_field_shift = 10,            // 10 low order bits
                                    u_long dynamic_priority_max = 0x3FFFFFUL,      // 2^(22)-1
@@ -945,12 +942,11 @@ public:
   static ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY> *
     create_laxity_message_queue (size_t hwm = ACE_Message_Queue_Base::DEFAULT_HWM,
                                  size_t lwm = ACE_Message_Queue_Base::DEFAULT_LWM,
-                                 ACE_Notification_Strategy * = 0,
+                                 ACE_Notification_Strategy * = nullptr,
                                  u_long static_bit_field_mask = 0x3FFUL,        // 2^(10) - 1
                                  u_long static_bit_field_shift = 10,            // 10 low order bits
                                  u_long dynamic_priority_max = 0x3FFFFFUL,      // 2^(22)-1
                                  u_long dynamic_priority_offset =  0x200000UL); // 2^(22-1)
-
 
 #if defined (ACE_VXWORKS)
 
@@ -1522,7 +1518,7 @@ public:
    *            - EWOULDBLOCK: the timeout elapsed
    *            - ESHUTDOWN: the queue was deactivated or pulsed
    */
-  virtual int enqueue_head (ACE_MESSAGE_TYPE *new_item, ACE_Time_Value *tv = nullptr);
+  int enqueue_head (ACE_MESSAGE_TYPE *new_item, ACE_Time_Value *tv = nullptr) override;
 
   /**
    * Enqueue one or more @c ACE_MESSAGE_TYPE objects at the tail of the queue.
@@ -1544,7 +1540,7 @@ public:
    *            - EWOULDBLOCK: the timeout elapsed
    *            - ESHUTDOWN: the queue was deactivated or pulsed
    */
-  virtual int enqueue_tail (ACE_MESSAGE_TYPE *new_item, ACE_Time_Value *tv = nullptr);
+  int enqueue_tail (ACE_MESSAGE_TYPE *new_item, ACE_Time_Value *tv = nullptr) override;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

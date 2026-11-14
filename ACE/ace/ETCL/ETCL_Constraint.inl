@@ -2,25 +2,16 @@
 // ****************************************************************
 
 ACE_INLINE
-ETCL_Literal_Constraint::ETCL_Literal_Constraint ()
-  : type_ (ACE_ETCL_UNKNOWN)
-{
-}
-
-// ****************************************************************
-
-ACE_INLINE
-ETCL_Identifier::ETCL_Identifier (const char *value)
+ETCL_Identifier::ETCL_Identifier (char const *value)
   : string_ (value)
 {
 }
 
-ACE_INLINE const char *
+ACE_INLINE char const *
 ETCL_Identifier::value () const
 {
   return this->string_.c_str ();
 }
-
 
 // ****************************************************************
 
@@ -28,20 +19,16 @@ ACE_INLINE
 ETCL_Union_Value::ETCL_Union_Value (int sign,
                                     ETCL_Constraint *integer)
   : sign_ (sign),
-    string_ (0)
-{
-  this->integer_ =
-    dynamic_cast<ETCL_Literal_Constraint*> (integer);
-}
+    integer_ (dynamic_cast<ETCL_Literal_Constraint *> (integer)),
+    string_ {}
+{}
 
 ACE_INLINE
 ETCL_Union_Value::ETCL_Union_Value (ETCL_Constraint *string)
-  :  sign_ (0),
-     integer_ (0)
-{
-  this->string_ =
-    dynamic_cast<ETCL_Literal_Constraint*> (string);
-}
+  : sign_ {},
+    integer_ {},
+    string_ (dynamic_cast<ETCL_Literal_Constraint *> (string))
+{}
 
 ACE_INLINE int
 ETCL_Union_Value::sign () const
@@ -52,13 +39,13 @@ ETCL_Union_Value::sign () const
 ACE_INLINE ETCL_Literal_Constraint *
 ETCL_Union_Value::integer () const
 {
-  return this->integer_;
+  return this->integer_.get ();
 }
 
 ACE_INLINE ETCL_Literal_Constraint *
 ETCL_Union_Value::string () const
 {
-  return this->string_;
+  return this->string_.get ();
 }
 
 // ****************************************************************
@@ -66,22 +53,20 @@ ETCL_Union_Value::string () const
 ACE_INLINE
 ETCL_Union_Pos::ETCL_Union_Pos (ETCL_Constraint *union_value,
                                 ETCL_Constraint *component)
-  : component_ (component)
-{
-  this->union_value_ =
-    dynamic_cast<ETCL_Union_Value*> (union_value);
-}
+  : union_value_ (dynamic_cast<ETCL_Union_Value *> (union_value)),
+    component_ (component)
+{}
 
 ACE_INLINE ETCL_Union_Value *
 ETCL_Union_Pos::union_value () const
 {
-  return this->union_value_;
+  return this->union_value_.get ();
 }
 
 ACE_INLINE ETCL_Constraint *
 ETCL_Union_Pos::component () const
 {
-  return this->component_;
+  return this->component_.get ();
 }
 
 // ****************************************************************
@@ -90,22 +75,20 @@ ACE_INLINE
 ETCL_Component_Pos::ETCL_Component_Pos (
     ETCL_Constraint *integer,
     ETCL_Constraint *component)
-  : component_ (component)
-{
-  this->integer_ =
-    dynamic_cast<ETCL_Literal_Constraint*> (integer);
-}
+  : integer_ (dynamic_cast<ETCL_Literal_Constraint *> (integer)),
+    component_ (component)
+{}
 
 ACE_INLINE ETCL_Literal_Constraint *
 ETCL_Component_Pos::integer () const
 {
-  return this->integer_;
+  return this->integer_.get ();
 }
 
 ACE_INLINE ETCL_Constraint *
 ETCL_Component_Pos::component () const
 {
-  return this->component_;
+  return this->component_.get ();
 }
 
 // ****************************************************************
@@ -114,22 +97,20 @@ ACE_INLINE
 ETCL_Component_Assoc::ETCL_Component_Assoc (
     ETCL_Constraint *identifier,
     ETCL_Constraint *component)
-  : component_ (component)
-{
-  this->identifier_ =
-    dynamic_cast<ETCL_Identifier*> (identifier);
-}
+  : identifier_ (dynamic_cast<ETCL_Identifier *> (identifier)),
+    component_ (component)
+{}
 
 ACE_INLINE ETCL_Identifier *
 ETCL_Component_Assoc::identifier () const
 {
-  return this->identifier_;
+  return this->identifier_.get ();
 }
 
 ACE_INLINE ETCL_Constraint *
 ETCL_Component_Assoc::component () const
 {
-  return this->component_;
+  return this->component_.get ();
 }
 
 // ****************************************************************
@@ -138,22 +119,20 @@ ACE_INLINE
 ETCL_Component_Array::ETCL_Component_Array (
     ETCL_Constraint *integer,
     ETCL_Constraint *component)
-  : component_ (component)
-{
-  this->integer_ =
-    dynamic_cast<ETCL_Literal_Constraint*> (integer);
-}
+  : integer_ (dynamic_cast<ETCL_Literal_Constraint *> (integer)),
+    component_ (component)
+{}
 
 ACE_INLINE ETCL_Literal_Constraint *
 ETCL_Component_Array::integer () const
 {
-  return this->integer_;
+  return this->integer_.get ();
 }
 
 ACE_INLINE ETCL_Constraint *
 ETCL_Component_Array::component () const
 {
-  return this->component_;
+  return this->component_.get ();
 }
 
 // ****************************************************************
@@ -174,22 +153,20 @@ ETCL_Special::type () const
 ACE_INLINE
 ETCL_Component::ETCL_Component (ETCL_Constraint *identifier,
                                 ETCL_Constraint *component)
-  : component_ (component)
-{
-  this->identifier_ =
-    dynamic_cast<ETCL_Identifier*> (identifier);
-}
+  : identifier_ (dynamic_cast<ETCL_Identifier *> (identifier)),
+    component_ (component)
+{}
 
 ACE_INLINE ETCL_Identifier *
 ETCL_Component::identifier () const
 {
-  return this->identifier_;
+  return this->identifier_.get ();
 }
 
 ACE_INLINE ETCL_Constraint *
 ETCL_Component::component () const
 {
-  return this->component_;
+  return this->component_.get ();
 }
 
 // ****************************************************************
@@ -203,7 +180,7 @@ ETCL_Dot::ETCL_Dot (ETCL_Constraint *component)
 ACE_INLINE ETCL_Constraint *
 ETCL_Dot::component () const
 {
-  return this->component_;
+  return this->component_.get ();
 }
 
 // ****************************************************************
@@ -217,7 +194,7 @@ ETCL_Eval::ETCL_Eval (ETCL_Constraint *component)
 ACE_INLINE ETCL_Constraint *
 ETCL_Eval::component () const
 {
-  return this->component_;
+  return this->component_.get ();
 }
 
 // ****************************************************************
@@ -231,7 +208,7 @@ ETCL_Default::ETCL_Default (ETCL_Constraint *component)
 ACE_INLINE ETCL_Constraint *
 ETCL_Default::component () const
 {
-  return this->component_;
+  return this->component_.get ();
 }
 
 // ****************************************************************
@@ -245,7 +222,7 @@ ETCL_Exist::ETCL_Exist (ETCL_Constraint *component)
 ACE_INLINE ETCL_Constraint *
 ETCL_Exist::component () const
 {
-  return this->component_;
+  return this->component_.get ();
 }
 
 // ****************************************************************
@@ -266,7 +243,7 @@ ETCL_Unary_Expr::type () const
 ACE_INLINE ETCL_Constraint *
 ETCL_Unary_Expr::subexpr () const
 {
-  return this->subexpr_;
+  return this->subexpr_.get ();
 }
 
 // ****************************************************************
@@ -289,13 +266,13 @@ ETCL_Binary_Expr::type () const
 ACE_INLINE ETCL_Constraint *
 ETCL_Binary_Expr::rhs () const
 {
-  return this->rhs_;
+  return this->rhs_.get ();
 }
 
 ACE_INLINE ETCL_Constraint *
 ETCL_Binary_Expr::lhs () const
 {
-  return this->lhs_;
+  return this->lhs_.get ();
 }
 
 // ****************************************************************
@@ -316,23 +293,23 @@ ETCL_Preference::type () const
 ACE_INLINE ETCL_Constraint *
 ETCL_Preference::subexpr () const
 {
-  return this->subexpr_;
+  return this->subexpr_.get ();
 }
 
 ACE_INLINE bool
-ETCL_Literal_Constraint::operator!= (const ETCL_Literal_Constraint & rhs)
+ETCL_Literal_Constraint::operator!= (ETCL_Literal_Constraint const &rhs)
 {
   return !(*this == rhs);
 }
 
 ACE_INLINE bool
-ETCL_Literal_Constraint::operator<= (const ETCL_Literal_Constraint & rhs)
+ETCL_Literal_Constraint::operator<= (ETCL_Literal_Constraint const &rhs)
 {
   return !(*this > rhs);
 }
 
 ACE_INLINE bool
-ETCL_Literal_Constraint::operator>= (const ETCL_Literal_Constraint & rhs)
+ETCL_Literal_Constraint::operator>= (ETCL_Literal_Constraint const &rhs)
 {
   return !(*this < rhs);
 }

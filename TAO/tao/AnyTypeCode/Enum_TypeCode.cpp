@@ -9,6 +9,9 @@
 
 #include "ace/Dynamic_Service.h"
 #include <cstring>
+#include <memory>
+
+#include <vector>
 
 #ifndef __ACE_INLINE__
 # include "tao/AnyTypeCode/Enum_TypeCode.inl"
@@ -40,7 +43,7 @@ TAO::TypeCode::Enum<StringType,
   if (!success)
     return false;
 
-  StringType const * const begin = &this->enumerators_[0];
+  StringType const * const begin = std::addressof (this->enumerators_[0]);
   StringType const * const end   = begin + this->nenumerators_;
 
   for (StringType const * i = begin; i != end; ++i)
@@ -91,7 +94,7 @@ TAO::TypeCode::Enum<StringType,
   if (tc_nenumerators != this->nenumerators_)
     return false;
 
-  for (CORBA::ULong i = 0; i < this->nenumerators_; ++i)
+  for (CORBA::ULong i {}; i < this->nenumerators_; ++i)
     {
       StringType const & lhs_enumerator = this->enumerators_[i];
 
@@ -130,14 +133,14 @@ TAO::TypeCode::Enum<StringType,
                     EnumeratorArrayType,
                     RefCountPolicy>::get_compact_typecode_i () const
 {
-  ACE_Array_Base<CORBA::String_var> tc_enumerators (this->nenumerators_);
+  std::vector<CORBA::String_var> tc_enumerators (this->nenumerators_);
 
   // Dynamically construct a new array of enumerators stripped of
   // member names.
 
   static char const empty_name[] = "";
 
-  for (CORBA::ULong i = 0; i < this->nenumerators_; ++i)
+  for (CORBA::ULong i {}; i < this->nenumerators_; ++i)
     {
       // Member names will be stripped, i.e. not embedded within
       // the compact TypeCode.
@@ -145,7 +148,7 @@ TAO::TypeCode::Enum<StringType,
       tc_enumerators[i] = empty_name;
     }
 
-  TAO_TypeCodeFactory_Adapter * adapter =
+  TAO_TypeCodeFactory_Adapter * const adapter =
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
       TAO_ORB_Core::typecodefactory_adapter_name ());
 

@@ -17,16 +17,18 @@ using JAWS_Pipeline_Stream = ACE_Stream<ACE_NULL_SYNCH>;
 using JAWS_Pipeline_Module = ACE_Module<ACE_NULL_SYNCH>;
 using JAWS_Pipeline_Task = ACE_Task<ACE_NULL_SYNCH>;
 
+/// Base class for methods common to pipeline components.
 class JAWS_Pipeline : public JAWS_Pipeline_Task
-  // = TITLE
-  //   Methods that are common to pipeline components
 {
 public:
   JAWS_Pipeline ();
-  // ACE_Task hooks
+  JAWS_Pipeline (JAWS_Pipeline const &) = delete;
+  JAWS_Pipeline (JAWS_Pipeline &&) = delete;
+  JAWS_Pipeline &operator= (JAWS_Pipeline const &) = delete;
+  JAWS_Pipeline &operator= (JAWS_Pipeline &&) = delete;
 
-  virtual int open (void * = 0);
-  virtual int close (u_long = 0);
+  int open (void * = nullptr) override;
+  int close (u_long = 0) override;
 };
 
 #include "JAWS_Pipeline_Handler.h"

@@ -21,22 +21,20 @@ class TAO_RTEC_Perf_Export Control
  : public virtual POA_Federated_Test::Control
 {
 public:
-  /// Constructor
   Control (size_t peers_expected,
            size_t iterations,
            int do_dump_history,
            CORBA::ORB_ptr orb,
            PortableServer::POA_ptr poa);
 
-  /// Destructor
-  virtual ~Control ();
+  ~Control () override;
 
   //@{
   /** @name The Federated_Test::Control methods
    */
-  virtual void join (Federated_Test::Peer_ptr peer);
+  void join (Federated_Test::Peer_ptr peer) override;
 
-  virtual PortableServer::POA_ptr _default_POA ();
+  PortableServer::POA_ptr _default_POA () override;
   //@}
 
 private:

@@ -1,7 +1,10 @@
+#include <cstdio>
+#include <memory>
+
 #include "receiver.h"
 #include "ace/Get_Opt.h"
 
-static FILE *output_file = nullptr;
+static std::unique_ptr<FILE, int (*) (FILE *)> output_file {nullptr, std::fclose};
 // File handle of the file into which received data is written.
 
 static ACE_TCHAR const *output_file_name = ACE_TEXT ("output");
@@ -14,8 +17,6 @@ Receiver_StreamEndPoint::get_callback (const char *,
   // Return the receiver application callback to the AVStreams for
   // future upcalls.
   callback = &this->callback_;
-
-
   // Get the stream controller for this stream.
   try
     {
@@ -28,7 +29,7 @@ Receiver_StreamEndPoint::get_callback (const char *,
       // Store the stream control for the stream with the callback.
       this->callback_.streamctrl (streamctrl);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Sender_StreamEndPoint::get_callback failed");
 
@@ -36,12 +37,6 @@ Receiver_StreamEndPoint::get_callback (const char *,
     }
 
   return 0;
-}
-
-Receiver_Callback::Receiver_Callback ()
-  : frame_count_ (0),
-    streamctrl_ (nullptr)
-{
 }
 
 void
@@ -52,20 +47,18 @@ Receiver_Callback::streamctrl (AVStreams::StreamCtrl_ptr streamctrl)
   this->streamctrl_ = streamctrl;
 }
 
-
 int
 Receiver_Callback::receive_frame (ACE_Message_Block *frame,
                                   TAO_AV_frame_info *,
-                                  const ACE_Addr &)
+                                  ACE_Addr const &)
 {
   //
   // Upcall from the AVStreams when there is data to be received from
   // the sender.
   //
   ACE_DEBUG ((LM_DEBUG,
-              "Receiver_Callback::receive_frame for frame %d\n",
+              "Receiver_Callback::receive_frame for frame %B\n",
               ++this->frame_count_));
-
 
   if (this->streamctrl_ != nullptr)
     {
@@ -95,7 +88,6 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
           qos [0].QoSParams [0].property_name = CORBA::string_dup ("video_frame_rate");
           qos [0].QoSParams [0].property_value <<= (CORBA::Short) 30;
 
-
           // Initiate the modifying of the qos for the flows.
           this->streamctrl_->modify_QoS (qos, flow_spec);
 
@@ -109,13 +101,13 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
   while (frame != nullptr)
     {
       // Write the received data to the file.
-      size_t result =
-        ACE_OS::fwrite (frame->rd_ptr (),
-                        frame->length (),
-                        1,
-                        output_file);
+      size_t const written =
+        std::fwrite (frame->rd_ptr (),
+                     frame->length (),
+                     1,
+                     output_file.get ());
 
-      if (result == frame->length ())
+      if (written != 1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Receiver_Callback::fwrite failed\n"),
                           -1);
@@ -137,7 +129,7 @@ Receiver_Callback::handle_destroy ()
     {
       TAO_AV_CORE::instance ()->orb ()->shutdown (false);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Receiver_Callback::handle_destroy Failed\n");
       return -1;
@@ -145,14 +137,6 @@ Receiver_Callback::handle_destroy ()
 
   return 0;
 }
-
-Receiver::Receiver ()
-  : mmdevice_ (nullptr)
-{
-}
-
-Receiver::~Receiver () = default;
-
 
 int
 Receiver::init (int,
@@ -258,9 +242,9 @@ ACE_TMAIN (int argc,
         return -1;
 
       // Make sure we have a valid <output_file>
-      output_file = ACE_OS::fopen (output_file_name,
-                                   "w");
-      if (output_file == nullptr)
+      output_file.reset (ACE_OS::fopen (output_file_name,
+                                        "w"));
+      if (!output_file)
         ACE_ERROR_RETURN ((LM_DEBUG,
                            "Cannot open output file %s\n",
                            output_file_name),
@@ -285,13 +269,11 @@ ACE_TMAIN (int argc,
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("receiver::init");
       return -1;
     }
-
-  ACE_OS::fclose (output_file);
 
   return 0;
 }

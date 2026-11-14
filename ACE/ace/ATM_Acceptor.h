@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_ATM_ACCEPTOR_H
 #define ACE_ATM_ACCEPTOR_H
 #include /**/ "ace/pre.h"
@@ -108,7 +107,6 @@ private:
 
 // Close versioned namespace, if enabled by the user.
 ACE_END_VERSIONED_NAMESPACE_DECL
-
 
 #if defined (__ACE_INLINE__)
 #include "ace/ATM_Acceptor.inl"

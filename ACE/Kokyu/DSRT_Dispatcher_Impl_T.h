@@ -20,7 +20,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 namespace Kokyu
 {
   /**
@@ -46,8 +45,7 @@ namespace Kokyu
   class Comparator_Adapter_Generator
   {
   public:
-    typedef typename
-    DSRT_Scheduler_Traits::QoSComparator_t QoSComparator_t;
+    using QoSComparator_t = typename DSRT_Scheduler_Traits::QoSComparator_t;
 
     /**
      * @class More_Eligible
@@ -63,10 +61,10 @@ namespace Kokyu
        * item2, otherwise 0.
        */
       int operator ()
-        (const DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits>& item1,
-         const DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits>& item2)
+        (DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits> const &item1,
+         DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits> const &item2)
       {
-        int rc = qos_comparator_ (item1->qos (), item2->qos ());
+        int const rc = qos_comparator_ (item1->qos (), item2->qos ());
 
 #ifdef KOKYU_DSRT_LOGGING
         ACE_DEBUG ((LM_DEBUG,
@@ -116,16 +114,16 @@ namespace Kokyu
                           int sched_scope);
 
     /// Configure the DSRT dispatcher.
-    int init (const DSRT_ConfigInfo&);
+    int init (DSRT_ConfigInfo const &);
 
     /// Schedule a thread dynamically based on the qos info supplied.
     int schedule (Guid_t guid,
-                  const DSRT_QoSDescriptor&);
+                  DSRT_QoSDescriptor const &);
 
     /// Update the schedule for a thread. This could alter the current
     /// schedule.
     int update_schedule (Guid_t guid,
-                         const DSRT_QoSDescriptor&);
+                         DSRT_QoSDescriptor const &);
 
     /// Inform the scheduler that the caller thread is about to
     /// block. This could alter the current schedule.
@@ -140,31 +138,34 @@ namespace Kokyu
     int shutdown ();
 
     virtual ~DSRT_Dispatcher_Impl ();
+    DSRT_Dispatcher_Impl (DSRT_Dispatcher_Impl const &) = delete;
+    DSRT_Dispatcher_Impl (DSRT_Dispatcher_Impl &&) = delete;
+    DSRT_Dispatcher_Impl &operator= (DSRT_Dispatcher_Impl const &) = delete;
+    DSRT_Dispatcher_Impl &operator= (DSRT_Dispatcher_Impl &&) = delete;
 
   private:
     //following an idiom to avoid public virtual functions.
     //instead make them private and use the template method
     //pattern - "Virtually Yours" article in CUJ Experts Forum
 
-    virtual int init_i (const DSRT_ConfigInfo&)=0;
+    virtual int init_i (DSRT_ConfigInfo const &) = 0;
     virtual int schedule_i (Guid_t guid,
-                    const DSRT_QoSDescriptor&)=0;
+                    DSRT_QoSDescriptor const &) = 0;
     virtual int update_schedule_i (Guid_t guid,
-                           const DSRT_QoSDescriptor&)=0;
+                           DSRT_QoSDescriptor const &) = 0;
     virtual int update_schedule_i (Guid_t guid, Block_Flag_t flag)=0;
     virtual int cancel_schedule_i (Guid_t guid)=0;
     virtual int shutdown_i ()=0;
 
   protected:
     /// Generate the QoSComparator adapter.
-    typedef typename
-    Comparator_Adapter_Generator<DSRT_Scheduler_Traits>::RET_FUNC
-    Queue_Item_Comparator_t;
+    using Queue_Item_Comparator_t =
+      typename Comparator_Adapter_Generator<DSRT_Scheduler_Traits>::RET_FUNC;
 
-    typedef Sched_Ready_Queue<DSRT_Scheduler_Traits,
-                              Queue_Item_Comparator_t,
-                              ACE_SYNCH_NULL_MUTEX>
-    DSRT_Sched_Queue_t;
+    using DSRT_Sched_Queue_t =
+      Sched_Ready_Queue<DSRT_Scheduler_Traits,
+                        Queue_Item_Comparator_t,
+                        ACE_SYNCH_NULL_MUTEX>;
 
     ACE_Sched_Params::Policy sched_policy_;
     int sched_scope_;
@@ -177,7 +178,7 @@ namespace Kokyu
     Priority_t active_prio_;
 
     DSRT_Sched_Queue_t ready_queue_;
-    int shutdown_flagged_;
+    bool shutdown_flagged_;
     long non_rt_thr_flags_;
     long rt_thr_flags_;
 

@@ -4,11 +4,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 UIPMC_Message_Block_Data_Iterator::UIPMC_Message_Block_Data_Iterator (iovec *iov, int iovcnt) :
   iov_ (iov),
-  iovcnt_ (iovcnt),
-  iov_index_ (0),
-  iov_ptr_ (nullptr),
-  iov_len_left_ (0),
-  state_ (State::INTER_BLOCK)
+  iovcnt_ (iovcnt)
 {
 }
 
@@ -21,7 +17,6 @@ UIPMC_Message_Block_Data_Iterator::next_block (size_t max_length,
       // Check that there are some iovec buffers left.
       if (this->iov_index_ >= this->iovcnt_)
         return false;
-
 
       if (static_cast<u_long> (this->iov_[this->iov_index_].iov_len) <= max_length)
         {

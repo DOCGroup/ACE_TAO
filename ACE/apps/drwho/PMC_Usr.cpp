@@ -14,9 +14,9 @@ PMC_Usr::encode (char *packet, int &packet_length)
     ACE_DEBUG ((LM_DEBUG,
                 "in PMC_Usr::encode"));
 
-  ACE_NEW_RETURN (this->ss,
-                  SL_Client (this->usr_name),
-                  -1);
+  Search_Struct *lookup {};
+  ACE_NEW_RETURN (lookup, SL_Client (this->usr_name), -1);
+  this->ss.reset (lookup);
 
   SET_PACKET_TYPE (packet, Options::PROTO_USR);
 
@@ -76,26 +76,26 @@ PMC_Usr::process ()
   Protocol_Record *prp = this->get_each_friend ();
   Drwho_Node *np  = prp->get_drwho_list ();
 
-  if (np == 0)
+  if (np == nullptr)
     ACE_DEBUG ((LM_DEBUG,
                 "<unknown>"));
   else
     {
       // First try to get a login session that is active...
 
-      for (; np != 0; np = np->next_)
+      for (; np != nullptr; np = np->next_)
         if (np->active_count_ > 0)
           {
             ACE_DEBUG ((LM_DEBUG,
                         "%s ",
                         np->get_host_name ()));
 
-            if (Options::get_opt (Options::USE_VERBOSE_FORMAT) == 0)
+            if (!Options::get_opt (Options::USE_VERBOSE_FORMAT))
               return;
           }
 
       for (np = prp->get_drwho_list ();
-           np != 0;
+           np != nullptr;
            np = np->next_)
         if (np->active_count_ == 0)
           {
@@ -103,7 +103,7 @@ PMC_Usr::process ()
                         "%s ",
                         np->get_host_name ()));
 
-            if (Options::get_opt (Options::USE_VERBOSE_FORMAT) == 0)
+            if (!Options::get_opt (Options::USE_VERBOSE_FORMAT))
               return;
           }
     }

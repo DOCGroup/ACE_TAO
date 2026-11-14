@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_CLIENTREQUESTINTERCEPTOR_ADAPTER_FACTORY_H
 #define TAO_CLIENTREQUESTINTERCEPTOR_ADAPTER_FACTORY_H
 

@@ -26,20 +26,21 @@ TAO_Monitor_Init::create_object (CORBA::ORB_ptr orb,
 
       mgr->activate ();
 
-      Monitor_Impl *servant = nullptr;
+      Monitor_Impl *servant {};
       ACE_NEW_RETURN (servant,
-                      Monitor_Impl (orb),
+                      Monitor_Impl (),
                       CORBA::Object::_nil ());
 
+      // Keep a local reference until the POA retains the servant.
+      PortableServer::ServantBase_var safe_servant = servant;
       PortableServer::ObjectId_var id =
         poa->activate_object (servant);
 
-      PortableServer::ServantBase_var safe_servant = servant;
       obj = servant->_this ();
 
       return obj._retn ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
     }
 
@@ -54,7 +55,6 @@ TAO_Monitor_Init::Initializer ()
 {
   return ACE_Service_Config::process_directive (ace_svc_desc_TAO_Monitor_Init);
 }
-
 
 ACE_STATIC_SVC_DEFINE (TAO_Monitor_Init,
                        ACE_TEXT ("Monitor_Init"),

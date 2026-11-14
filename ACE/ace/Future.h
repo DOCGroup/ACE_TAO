@@ -71,7 +71,6 @@ template <class T>
 class ACE_Future_Observer
 {
 public:
-  /// Destructor
   virtual ~ACE_Future_Observer () = default;
 
   /// Called by the ACE_Future in which we are subscribed to when
@@ -82,7 +81,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  /// Constructor
   ACE_Future_Observer () = default;
 };
 
@@ -230,7 +228,6 @@ template <class T>
 class ACE_Future
 {
 public:
-  /// Constructor.
   ACE_Future ();
 
   /// Copy constructor binds @a this and @a r to the same
@@ -241,7 +238,6 @@ public:
   /// result @a r immediately.
   ACE_Future (const T &r);
 
-  /// Destructor.
   ~ACE_Future ();
 
   /// Assignment operator that binds @a this and @a r to the same
@@ -347,7 +343,7 @@ public:
    * rarely, if ever, be used and that modifying the underlying
    * ACE_Future_Rep should be done with extreme caution.
    */
-  ACE_Future_Rep<T> *get_rep ();
+  ACE_Future_Rep<T> *get_rep () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

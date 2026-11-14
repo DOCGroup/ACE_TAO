@@ -10,6 +10,8 @@
 
 #include "tao/ETCL/TAO_ETCL_Constraint.h"
 
+#include <utility>
+
 #if ! defined (__ACE_INLINE__)
 #include "tao/ETCL/TAO_ETCL_Constraint.inl"
 #endif /* __ACE_INLINE__ */
@@ -17,65 +19,61 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint (
-  TAO_ETCL_Literal_Constraint const& lit)
+  TAO_ETCL_Literal_Constraint const &lit)
   : ETCL_Literal_Constraint ()
 {
   this->copy (lit);
 }
 
-TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint (CORBA::Any * any)
+TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint (CORBA::Any *any)
 {
-  CORBA::Any& any_ref = *any;
-  CORBA::TypeCode_var type = any_ref.type ();
+  CORBA::Any const &any_ref = *any;
+  CORBA::TypeCode_var const type = any_ref.type ();
   CORBA::TCKind corba_type = CORBA::tk_null;
+  Literal_Type const literal_type =
+    TAO_ETCL_Literal_Constraint::comparable_type (type.in ());
 
   try
     {
       corba_type = type->kind ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // @@ Seth: Don't know what else to do. Make sure we can tell
       // when this constructor fails.
       return;
     }
 
-  this->type_ =
-    TAO_ETCL_Literal_Constraint::comparable_type (type.in ());
-
-  switch (this->type_)
+  switch (literal_type)
     {
     case ACE_ETCL_SIGNED:
-      this->op_.integer_ = 0;
-
       if (corba_type == CORBA::tk_short)
         {
-          CORBA::Short sh;
+          CORBA::Short sh {};
           any_ref >>= sh;
-          this->op_.integer_ = (CORBA::Long) sh;
+          this->op_ = static_cast<CORBA::Long> (sh);
         }
       else
         {
-          any_ref >>= this->op_.integer_;
+          this->op_.emplace<CORBA::Long> ();
+          any_ref >>= std::get<CORBA::Long> (this->op_);
         }
 
       break;
     case ACE_ETCL_UNSIGNED:
-      this->op_.uinteger_ = 0;
-
       if (corba_type == CORBA::tk_ushort)
         {
-          CORBA::UShort sh;
+          CORBA::UShort sh {};
           any_ref >>= sh;
-          this->op_.uinteger_ = (CORBA::ULong) sh;
+          this->op_ = static_cast<CORBA::ULong> (sh);
         }
       else if (corba_type == CORBA::tk_enum)
         {
-          TAO::Any_Impl *impl = any->impl ();
+          TAO::Any_Impl * const impl = any->impl ();
 
           if (impl->encoded ())
             {
-              TAO::Unknown_IDL_Type *unk =
+              TAO::Unknown_IDL_Type * const unk =
                 dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
 
               if (unk == nullptr)
@@ -86,46 +84,54 @@ TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint (CORBA::Any * any)
               // We don't want unk's rd_ptr to move, in case we are shared by
               // another Any, so we use this to copy the state, not the buffer.
               TAO_InputCDR for_reading (unk->_tao_get_cdr ());
-              for_reading.read_ulong (this->op_.uinteger_);
+              CORBA::ULong uinteger {};
+              for_reading.read_ulong (uinteger);
+              this->op_ = uinteger;
             }
           else
             {
               TAO_OutputCDR out;
               impl->marshal_value (out);
               TAO_InputCDR in (out);
-              in.read_ulong (this->op_.uinteger_);
+              CORBA::ULong uinteger {};
+              in.read_ulong (uinteger);
+              this->op_ = uinteger;
             }
         }
       else
         {
-          any_ref >>= this->op_.uinteger_;
+          this->op_.emplace<CORBA::ULong> ();
+          any_ref >>= std::get<CORBA::ULong> (this->op_);
         }
 
       break;
     case ACE_ETCL_DOUBLE:
       if (corba_type == CORBA::tk_float)
         {
-          CORBA::Float fl;
+          CORBA::Float fl {};
           (*any) >>= fl;
-          this->op_.double_ = (CORBA::Double) fl;
+          this->op_ = static_cast<CORBA::Double> (fl);
         }
       else
         {
-          (*any) >>= this->op_.double_;
+          this->op_.emplace<CORBA::Double> ();
+          (*any) >>= std::get<CORBA::Double> (this->op_);
         }
 
       break;
     case ACE_ETCL_BOOLEAN:
       {
-        CORBA::Any::to_boolean tmp (this->op_.bool_);
+        CORBA::Boolean boolean {};
+        CORBA::Any::to_boolean const tmp (boolean);
         (*any) >>= tmp;
+        this->op_ = boolean;
       }
       break;
     case ACE_ETCL_STRING:
       {
-        const char* s;
+        char const *s {};
         any_ref >>= s;
-        this->op_.str_ = CORBA::string_dup (s);
+        this->op_ = String_Owner (CORBA::string_dup (s));
       }
       break;
     case ACE_ETCL_COMPONENT:
@@ -144,7 +150,7 @@ TAO_ETCL_Literal_Constraint::~TAO_ETCL_Literal_Constraint ()
 }
 
 void
-TAO_ETCL_Literal_Constraint::operator= (TAO_ETCL_Literal_Constraint const& co)
+TAO_ETCL_Literal_Constraint::operator= (TAO_ETCL_Literal_Constraint const &co)
 {
   this->copy (co);
 }
@@ -156,11 +162,11 @@ TAO_ETCL_Literal_Constraint::operator CORBA::Boolean () const
 
 TAO_ETCL_Literal_Constraint::operator CORBA::ULong () const
 {
-  switch (this->type_)
+  switch (this->expr_type ())
   {
     case ACE_ETCL_COMPONENT:
       {
-        CORBA::ULong retval = 0;
+        CORBA::ULong retval {};
         CORBA::Any tmp;
         tmp.replace (this->any_);
         this->any_->_add_ref ();
@@ -174,11 +180,11 @@ TAO_ETCL_Literal_Constraint::operator CORBA::ULong () const
 
 TAO_ETCL_Literal_Constraint::operator CORBA::Long () const
 {
-  switch (this->type_)
+  switch (this->expr_type ())
   {
     case ACE_ETCL_COMPONENT:
       {
-        CORBA::Long retval = 0;
+        CORBA::Long retval {};
         CORBA::Any tmp;
         tmp.replace (this->any_);
         this->any_->_add_ref ();
@@ -192,11 +198,11 @@ TAO_ETCL_Literal_Constraint::operator CORBA::Long () const
 
 TAO_ETCL_Literal_Constraint::operator CORBA::Double () const
 {
-  switch (this->type_)
+  switch (this->expr_type ())
   {
     case ACE_ETCL_COMPONENT:
       {
-        CORBA::Double retval = 0.0;
+        CORBA::Double retval {};
         CORBA::Any tmp;
         tmp.replace (this->any_);
         this->any_->_add_ref ();
@@ -210,11 +216,11 @@ TAO_ETCL_Literal_Constraint::operator CORBA::Double () const
 
 TAO_ETCL_Literal_Constraint::operator char const* () const
 {
-  switch (this->type_)
+  switch (this->expr_type ())
   {
     case ACE_ETCL_COMPONENT:
       {
-        char const* retval = nullptr;
+        char const* retval {};
         CORBA::Any tmp;
         tmp.replace (this->any_);
         this->any_->_add_ref ();
@@ -228,7 +234,15 @@ TAO_ETCL_Literal_Constraint::operator char const* () const
 
 TAO_ETCL_Literal_Constraint::operator TAO::Any_Impl* () const
 {
-  return (this->type_ == ACE_ETCL_COMPONENT) ? this->any_ : nullptr;
+  return (this->expr_type () == ACE_ETCL_COMPONENT) ? this->any_ : nullptr;
+}
+
+Literal_Type
+TAO_ETCL_Literal_Constraint::expr_type () const
+{
+  return this->any_ != nullptr
+    ? static_cast<Literal_Type> (ACE_ETCL_COMPONENT)
+    : ETCL_Literal_Constraint::expr_type ();
 }
 
 Literal_Type
@@ -250,7 +264,7 @@ TAO_ETCL_Literal_Constraint::comparable_type (CORBA::TypeCode_ptr type)
         kind = tmp->kind ();
       }
   }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
   {
     return return_value;
   }
@@ -288,155 +302,168 @@ TAO_ETCL_Literal_Constraint::comparable_type (CORBA::TypeCode_ptr type)
 }
 
 TAO_ETCL_Literal_Constraint
-TAO_ETCL_Literal_Constraint::operator+ (TAO_ETCL_Literal_Constraint const& rhs)
+TAO_ETCL_Literal_Constraint::operator+ (TAO_ETCL_Literal_Constraint const &rhs)
 {
-  Literal_Type widest_type = this->widest_type (rhs);
+  Literal_Type const widest_type = this->widest_type (rhs);
 
   switch (widest_type)
     {
     case ACE_ETCL_DOUBLE:
       {
-        CORBA::Double result = (CORBA::Double) *this + (CORBA::Double) rhs;
-        return TAO_ETCL_Literal_Constraint ((CORBA::Double) result);
+        CORBA::Double const result = static_cast<CORBA::Double> (*this)
+          + static_cast<CORBA::Double> (rhs);
+        return TAO_ETCL_Literal_Constraint (result);
       }
     case ACE_ETCL_INTEGER:
     case ACE_ETCL_SIGNED:
       {
-        CORBA::Long result = (CORBA::Long) *this + (CORBA::Long) rhs;
-        return TAO_ETCL_Literal_Constraint ((CORBA::Long) result);
+        CORBA::Long const result = static_cast<CORBA::Long> (*this)
+          + static_cast<CORBA::Long> (rhs);
+        return TAO_ETCL_Literal_Constraint (result);
       }
     case ACE_ETCL_UNSIGNED:
       {
-        CORBA::ULong result = (CORBA::ULong) *this + (CORBA::ULong) rhs;
-        return TAO_ETCL_Literal_Constraint ((CORBA::ULong) result);
+        CORBA::ULong const result = static_cast<CORBA::ULong> (*this)
+          + static_cast<CORBA::ULong> (rhs);
+        return TAO_ETCL_Literal_Constraint (result);
       }
     default:
-      return TAO_ETCL_Literal_Constraint ((CORBA::Long) 0);
+      return TAO_ETCL_Literal_Constraint (CORBA::Long {});
     }
 }
 
 TAO_ETCL_Literal_Constraint
-TAO_ETCL_Literal_Constraint::operator- (TAO_ETCL_Literal_Constraint const& rhs)
+TAO_ETCL_Literal_Constraint::operator- (TAO_ETCL_Literal_Constraint const &rhs)
 {
-  Literal_Type widest_type = this->widest_type (rhs);
+  Literal_Type const widest_type = this->widest_type (rhs);
 
   switch (widest_type)
     {
     case ACE_ETCL_DOUBLE:
       {
-        CORBA::Double result = (CORBA::Double) *this - (CORBA::Double) rhs;
-        return TAO_ETCL_Literal_Constraint ((CORBA::Double) result);
+        CORBA::Double const result = static_cast<CORBA::Double> (*this)
+          - static_cast<CORBA::Double> (rhs);
+        return TAO_ETCL_Literal_Constraint (result);
       }
     case ACE_ETCL_INTEGER:
     case ACE_ETCL_SIGNED:
       {
-        CORBA::Long result = (CORBA::Long) *this - (CORBA::Long) rhs;
-        return TAO_ETCL_Literal_Constraint ((CORBA::Long) result);
+        CORBA::Long const result = static_cast<CORBA::Long> (*this)
+          - static_cast<CORBA::Long> (rhs);
+        return TAO_ETCL_Literal_Constraint (result);
       }
     case ACE_ETCL_UNSIGNED:
       {
-        CORBA::ULong result = (CORBA::ULong) *this - (CORBA::ULong) rhs;
-        return TAO_ETCL_Literal_Constraint ((CORBA::ULong) result);
+        CORBA::ULong const result = static_cast<CORBA::ULong> (*this)
+          - static_cast<CORBA::ULong> (rhs);
+        return TAO_ETCL_Literal_Constraint (result);
       }
     default:
-      return TAO_ETCL_Literal_Constraint ((CORBA::Long) 0);
+      return TAO_ETCL_Literal_Constraint (CORBA::Long {});
     }
 }
 
 TAO_ETCL_Literal_Constraint
-TAO_ETCL_Literal_Constraint::operator* (TAO_ETCL_Literal_Constraint const& rhs)
+TAO_ETCL_Literal_Constraint::operator* (TAO_ETCL_Literal_Constraint const &rhs)
 {
-  Literal_Type widest_type = this->widest_type (rhs);
+  Literal_Type const widest_type = this->widest_type (rhs);
 
   switch (widest_type)
     {
     case ACE_ETCL_DOUBLE:
       {
-        CORBA::Double result = (CORBA::Double) *this * (CORBA::Double) rhs;
-        return TAO_ETCL_Literal_Constraint ((CORBA::Double) result);
+        CORBA::Double const result = static_cast<CORBA::Double> (*this)
+          * static_cast<CORBA::Double> (rhs);
+        return TAO_ETCL_Literal_Constraint (result);
       }
     case ACE_ETCL_INTEGER:
     case ACE_ETCL_SIGNED:
       {
-        CORBA::Long result = (CORBA::Long) *this * (CORBA::Long) rhs;
-        return TAO_ETCL_Literal_Constraint ((CORBA::Long) result);
+        CORBA::Long const result = static_cast<CORBA::Long> (*this)
+          * static_cast<CORBA::Long> (rhs);
+        return TAO_ETCL_Literal_Constraint (result);
       }
     case ACE_ETCL_UNSIGNED:
       {
-        CORBA::ULong result = (CORBA::ULong) *this * (CORBA::ULong) rhs;
-        return TAO_ETCL_Literal_Constraint ((CORBA::ULong) result);
+        CORBA::ULong const result = static_cast<CORBA::ULong> (*this)
+          * static_cast<CORBA::ULong> (rhs);
+        return TAO_ETCL_Literal_Constraint (result);
       }
     default:
-      return TAO_ETCL_Literal_Constraint ((CORBA::Long) 0);
+      return TAO_ETCL_Literal_Constraint (CORBA::Long {});
     }
 }
 
 TAO_ETCL_Literal_Constraint
-TAO_ETCL_Literal_Constraint::operator/ (TAO_ETCL_Literal_Constraint const& rhs)
+TAO_ETCL_Literal_Constraint::operator/ (TAO_ETCL_Literal_Constraint const &rhs)
 {
-  Literal_Type widest_type = this->widest_type (rhs);
+  Literal_Type const widest_type = this->widest_type (rhs);
 
   switch (widest_type)
     {
     case ACE_ETCL_DOUBLE:
       {
-        if (ACE::is_equal ((ACE_CDR::Double) rhs, 0.0))
-          return TAO_ETCL_Literal_Constraint ((ACE_CDR::Double) 0.0);
+        if (ACE::is_equal (static_cast<ACE_CDR::Double> (rhs), 0.0))
+          return TAO_ETCL_Literal_Constraint (ACE_CDR::Double {});
 
-        CORBA::Double result = (CORBA::Double) *this / (CORBA::Double) rhs;
-        return TAO_ETCL_Literal_Constraint ((CORBA::Double) result);
+        CORBA::Double const result = static_cast<CORBA::Double> (*this)
+          / static_cast<CORBA::Double> (rhs);
+        return TAO_ETCL_Literal_Constraint (result);
       }
     case ACE_ETCL_INTEGER:
     case ACE_ETCL_SIGNED:
       {
-        if ((ACE_CDR::Long) rhs == 0)
-          return TAO_ETCL_Literal_Constraint ((ACE_CDR::Long) 0);
+        if (static_cast<ACE_CDR::Long> (rhs) == 0)
+          return TAO_ETCL_Literal_Constraint (ACE_CDR::Long {});
 
-        CORBA::Long result = (CORBA::Long) *this / (CORBA::Long) rhs;
-        return TAO_ETCL_Literal_Constraint ((CORBA::Long) result);
+        CORBA::Long const result = static_cast<CORBA::Long> (*this)
+          / static_cast<CORBA::Long> (rhs);
+        return TAO_ETCL_Literal_Constraint (result);
       }
     case ACE_ETCL_UNSIGNED:
       {
-        if ((ACE_CDR::ULong) rhs == 0)
-          return TAO_ETCL_Literal_Constraint ((ACE_CDR::ULong) 0);
+        if (static_cast<ACE_CDR::ULong> (rhs) == 0)
+          return TAO_ETCL_Literal_Constraint (ACE_CDR::ULong {});
 
-        CORBA::ULong result = (CORBA::ULong) *this / (CORBA::ULong) rhs;
-        return TAO_ETCL_Literal_Constraint ((CORBA::ULong) result);
+        CORBA::ULong const result = static_cast<CORBA::ULong> (*this)
+          / static_cast<CORBA::ULong> (rhs);
+        return TAO_ETCL_Literal_Constraint (result);
       }
     default:
-      return TAO_ETCL_Literal_Constraint ((CORBA::Long) 0);
+      return TAO_ETCL_Literal_Constraint (CORBA::Long {});
     }
 }
 
 TAO_ETCL_Literal_Constraint
 TAO_ETCL_Literal_Constraint::operator- ()
 {
-  switch (this->type_)
+  switch (this->expr_type ())
   {
     case ACE_ETCL_DOUBLE:
-      return TAO_ETCL_Literal_Constraint (- this->op_.double_);
+      return TAO_ETCL_Literal_Constraint (- std::get<CORBA::Double> (this->op_));
     case ACE_ETCL_INTEGER:
     case ACE_ETCL_SIGNED:
-      return TAO_ETCL_Literal_Constraint (- this->op_.integer_);
+      return TAO_ETCL_Literal_Constraint (- std::get<CORBA::Long> (this->op_));
     case ACE_ETCL_UNSIGNED:
-      return TAO_ETCL_Literal_Constraint (- (CORBA::Long) this->op_.uinteger_);
+      return TAO_ETCL_Literal_Constraint (
+        - static_cast<CORBA::Long> (std::get<CORBA::ULong> (this->op_)));
     default:
-      return TAO_ETCL_Literal_Constraint ((CORBA::Long) 0);
+      return TAO_ETCL_Literal_Constraint (CORBA::Long {});
   }
 }
 
 Literal_Type
 TAO_ETCL_Literal_Constraint::widest_type (
-  ETCL_Literal_Constraint const& rhs)
+  ETCL_Literal_Constraint const &rhs)
 {
   Literal_Type rhs_type = rhs.expr_type ();
-  Literal_Type return_value = rhs_type;
+  Literal_Type const return_value = rhs_type;
 
   if (rhs_type == ACE_ETCL_COMPONENT)
     {
-      TAO_ETCL_Literal_Constraint const& actual =
-        dynamic_cast<TAO_ETCL_Literal_Constraint const&> (rhs);
-      CORBA::TypeCode_var tc = actual.any_->type ();
+      TAO_ETCL_Literal_Constraint const &actual =
+        dynamic_cast<TAO_ETCL_Literal_Constraint const &> (rhs);
+      CORBA::TypeCode_var const tc = actual.any_->type ();
       rhs_type = TAO_ETCL_Literal_Constraint::comparable_type (tc.in ());
       return return_value;
     }
@@ -445,25 +472,15 @@ TAO_ETCL_Literal_Constraint::widest_type (
 }
 
 void
-TAO_ETCL_Literal_Constraint::copy (TAO_ETCL_Literal_Constraint const& lit)
+TAO_ETCL_Literal_Constraint::copy (TAO_ETCL_Literal_Constraint const &lit)
 {
-  if (this->type_ == ACE_ETCL_COMPONENT && this->any_ != nullptr)
-    {
-      this->any_->_remove_ref ();
-      this->any_ = nullptr;
-    }
-
-  switch (lit.type_)
-    {
-    case ACE_ETCL_COMPONENT:
-      this->type_ = ACE_ETCL_COMPONENT;
-      this->any_ = lit.any_;
-      this->any_->_add_ref ();
-      break;
-    default:
-      this->ETCL_Literal_Constraint::copy (lit);
-      break;
-    }
+  Value value = ETCL_Literal_Constraint::copy_value (lit.op_);
+  if (lit.any_ != nullptr)
+    lit.any_->_add_ref ();
+  if (this->any_ != nullptr)
+    this->any_->_remove_ref ();
+  this->op_ = std::move (value);
+  this->any_ = lit.any_;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

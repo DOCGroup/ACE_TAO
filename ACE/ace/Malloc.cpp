@@ -7,11 +7,14 @@
 #include "ace/Object_Manager.h"
 #include "ace/Malloc_Base.h"
 #include "ace/OS_NS_string.h"
+#include <memory>
+
+#include <cstring>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Process-wide ACE_Allocator.
-ACE_Allocator *ACE_Allocator::allocator_ = nullptr;
+ACE_Allocator *ACE_Allocator::allocator_ {};
 
 void
 ACE_Control_Block::ACE_Malloc_Header::dump () const
@@ -21,7 +24,7 @@ ACE_Control_Block::ACE_Malloc_Header::dump () const
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nnext_block = %@"), (ACE_Malloc_Header *) this->next_block_));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nsize = %d\n"), this->size_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nsize = %B\n"), this->size_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
@@ -34,7 +37,7 @@ ACE_Control_Block::print_alignment_info ()
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("Start ---> ACE_Control_Block::print_alignment_info:\n")));
   ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Sizeof ptr: %d\n")
-              ACE_TEXT ("Sizeof size_t: %d\n")
+              ACE_TEXT ("Sizeof size_t: %B\n")
               ACE_TEXT ("Sizeof long: %d\n")
               ACE_TEXT ("Sizeof double: %d\n")
               ACE_TEXT ("Sizeof ACE_MALLOC_ALIGN: %d\n")
@@ -80,7 +83,7 @@ ACE_Control_Block::dump () const
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nMalloc Header:\n")));
   for (ACE_Malloc_Header *nexth = ((ACE_Malloc_Header *)this->freep_)->next_block_;
-       nexth != 0 && nexth != &this->base_;
+       nexth != 0 && nexth != std::addressof (this->base_);
        nexth = nexth->next_block_)
     nexth->dump ();
 
@@ -109,7 +112,7 @@ ACE_Control_Block::ACE_Name_Node::ACE_Name_Node (const char *name,
 {
   ACE_TRACE ("ACE_Control_Block::ACE_Name_Node::ACE_Name_Node");
   char *n = this->name_;
-  ACE_OS::strcpy (n, name);
+  std::strcpy (n, name);
   if (next != nullptr)
     next->prev_ = this;
 }
@@ -142,7 +145,6 @@ ACE_Control_Block::ACE_Name_Node::dump () const
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
-
 
 #if defined (ACE_HAS_MALLOC_STATS)
 ACE_Malloc_Stats::ACE_Malloc_Stats ()

@@ -1,7 +1,8 @@
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/Runtime_Scheduler.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -28,8 +29,8 @@ ACE_Runtime_Scheduler::create (const char *entry_point)
 {
   // Just make sure it's there and return its handle.
   for (int i = 0; i < entry_count_; ++i)
-      if (ACE_OS::strcmp (entry_point,
-                          rt_info_[i].entry_point) == 0)
+      if (std::strcmp (entry_point,
+                       rt_info_[i].entry_point) == 0)
         return i + 1;
 
   // TODO: throw an exception or print an error.
@@ -44,7 +45,6 @@ ACE_Runtime_Scheduler::lookup (const char * entry_point)
 {
   return create (entry_point);
 }
-
 
 // Return a pointer to the RT_Info corresponding to the passed handle.
 
@@ -63,7 +63,6 @@ ACE_Runtime_Scheduler::get (RtecScheduler::handle_t handle)
                     RtecScheduler::RT_Info,
                     CORBA::NO_MEMORY ());
 
-
   info->entry_point = rt_info_[handle - 1].entry_point;
   info->handle = rt_info_[handle - 1].handle;
   info->worst_case_execution_time = rt_info_[handle - 1].worst_case_execution_time;
@@ -81,7 +80,6 @@ ACE_Runtime_Scheduler::get (RtecScheduler::handle_t handle)
 
   return info;
 }
-
 
 // Set characteristics of the RT_Info corresponding to the passed handle.
 
@@ -121,7 +119,6 @@ ACE_Runtime_Scheduler::set (::RtecScheduler::handle_t handle,
   // TODO: throw something here.
 }
 
-
 void
 ACE_Runtime_Scheduler::reset (RtecScheduler::handle_t handle,
                               RtecScheduler::Criticality_t criticality,
@@ -138,7 +135,6 @@ ACE_Runtime_Scheduler::reset (RtecScheduler::handle_t handle,
   this->set (handle, criticality, time, typical_time, cached_time,
              period, importance, quantum, threads, info_type );
 }
-
 
 void
 ACE_Runtime_Scheduler::set_seq (const RtecScheduler::RT_Info_Set& infos)
@@ -178,14 +174,12 @@ ACE_Runtime_Scheduler::replace_seq (const RtecScheduler::RT_Info_Set& infos)
     }
 }
 
-
 void
 ACE_Runtime_Scheduler::reset_seq (const RtecScheduler::RT_Info_Set& infos)
 {
   // Just call the set sequence method
   this->set_seq (infos);
 }
-
 
 // Returns the priority and subpriority values assigned to an RT_Info,
 // based on its handle.
@@ -204,7 +198,6 @@ ACE_Runtime_Scheduler::priority (RtecScheduler::handle_t handle,
   subpriority = rt_info_[handle - 1].static_subpriority;
   p_priority = rt_info_[handle - 1].preemption_priority;
 }
-
 
 // Returns the priority and subpriority values assigned to an RT_Info,
 // based on its entry point name.
@@ -225,7 +218,6 @@ ACE_Runtime_Scheduler::entry_point_priority (const char * entry_point,
                   subpriority,
                   p_priority);
 }
-
 
 // In the config run scheduler, this method registers a dependency between
 // two RT_Infos.  In the run time scheduler, this is a no-op.
@@ -257,7 +249,6 @@ ACE_Runtime_Scheduler::add_dependency (RtecScheduler::handle_t handle,
 #endif
 }
 
-
 // In the reconfig scheduler, this method removes a dependency between
 // two RT_Infos.  In the run time scheduler, this is a no-op.
 
@@ -270,7 +261,6 @@ ACE_Runtime_Scheduler::remove_dependency (RtecScheduler::handle_t handle,
   if (handle <= 0 || handle > entry_count_)
     throw RtecScheduler::UNKNOWN_TASK ();
 }
-
 
 // In the reconfig scheduler, this method enables a dependency between
 // two RT_Infos.  In the run time scheduler, this is a no-op.
@@ -286,7 +276,6 @@ ACE_Runtime_Scheduler::set_dependency_enable_state (RtecScheduler::handle_t hand
     throw RtecScheduler::UNKNOWN_TASK ();
 }
 
-
 // In the reconfig scheduler, this method enables or disables an RT_Info.
 // In the run time scheduler, this is a no-op.
 
@@ -297,7 +286,6 @@ ACE_Runtime_Scheduler::set_rt_info_enable_state (RtecScheduler::handle_t handle,
   if (handle <= 0 || handle > entry_count_)
     throw RtecScheduler::UNKNOWN_TASK ();
 }
-
 
 void ACE_Runtime_Scheduler::set_dependency_enable_state_seq (const RtecScheduler::Dependency_Set & dependencies)
   // This method sets the enable state of a sequence of dependencies.
@@ -347,7 +335,6 @@ ACE_Runtime_Scheduler::recompute_scheduling (CORBA::Long minimum_priority,
   return;
 }
 
-
 // Returns the set of rt_infos, with their assigned priorities (as
 // of the last schedule re-computation).
 
@@ -359,7 +346,6 @@ ACE_Runtime_Scheduler::get_rt_info_set (RtecScheduler::RT_Info_Set_out infos)
   ACE_UNUSED_ARG(infos);
   return;
 }
-
 
 // Returns the set of rt_infos, with their assigned priorities (as
 // of the last schedule re-computation).
@@ -373,7 +359,6 @@ ACE_Runtime_Scheduler::get_dependency_set (RtecScheduler::Dependency_Set_out dep
   return;
 }
 
-
 // Returns the set of config_infos, describing the appropriate
 // number, types, and priority levels for the dispatching lanes.
 
@@ -384,7 +369,6 @@ ACE_Runtime_Scheduler::get_config_info_set (RtecScheduler::Config_Info_Set_out c
   ACE_UNUSED_ARG(configs);
   return;
 }
-
 
 // Provides the thread priority and queue type for the given priority
 // level.
@@ -415,7 +399,6 @@ ACE_Runtime_Scheduler::dispatch_configuration (RtecScheduler::Preemption_Priorit
     }
 }
 
-
 // Returns the last priority number assigned to an operation in the
 // schedule.  The number returned is one less than the total number
 // of scheduled priorities.  All scheduled priorities range from 0
@@ -430,7 +413,6 @@ ACE_Runtime_Scheduler::last_scheduled_priority ()
   else
     return (RtecScheduler::Preemption_Priority_t) (config_count_ - 1);
 }
-
 
 void
 ACE_Runtime_Scheduler::get_config_infos (RtecScheduler::Config_Info_Set_out /*configs */)

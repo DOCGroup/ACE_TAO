@@ -1,15 +1,7 @@
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = DESCRIPTION
-//    This simple test exercises and illustrates use of OS wrapper functions.
-//
-// = AUTHOR
-//    Steve Huston <shuston@riverace.com>
-//
-// ============================================================================
+/// @file OS_Test.cpp
+/// This simple test exercises and illustrates use of OS wrapper functions.
+///
+/// @author Steve Huston <shuston@riverace.com>
 
 #include "test_config.h"
 #include "ace/ACE.h"
@@ -319,7 +311,6 @@ string_emulation_test ()
     THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strcmp (ACE_OS::itoa (42, itow1, 16),
                                 ACE_TEXT_WIDE ("2a")) == 0);
 
-
     //FUZZ: disable check_for_lack_ACE_OS
     // ========================================================================
     // Test strcmp (wchar_t version)
@@ -570,7 +561,6 @@ string_emulation_test ()
     THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strtok (nullptr, ACE_TEXT_WIDE (" ")) == nullptr);
 #  endif /* ACE_LACKS_WCSTOK */
 
-
   }
 #endif /* ACE_HAS_WCHAR */
 
@@ -788,7 +778,6 @@ ctime_r_test ()
   return result;
 }
 
-
 int
 string_strsncpy_test ()
 {
@@ -933,7 +922,6 @@ string_strsncpy_test ()
 
   return 0;
 }
-
 
 // Test conversion between narrow and wide chars.
 int

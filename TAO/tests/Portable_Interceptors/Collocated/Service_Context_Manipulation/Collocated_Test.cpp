@@ -9,29 +9,30 @@
 #include "interceptors.h"
 #include "Collocated_ORBInitializer.h"
 
-const ACE_TCHAR *output = ACE_TEXT ("test.ior");
-const ACE_TCHAR *input = ACE_TEXT ("file://test.ior");
-ACE_CString server_orb;
-ACE_CString client_orb;
+struct Options
+{
+  ACE_TString output { ACE_TEXT ("test.ior") };
+  ACE_TString input { ACE_TEXT ("file://test.ior") };
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:o"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:o:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'o':
-        output = get_opts.opt_arg ();
+        options.output = get_opts.opt_arg ();
         break;
       case 'k':
-        input = get_opts.opt_arg ();
+        options.input = get_opts.opt_arg ();
         break;
       case '?':
       default:
-        // This is a hack but that is okay!
+        // Leave ORB options for ORB_init to process.
         return 0;
       }
   // Indicates successful parsing of the command line
@@ -41,16 +42,18 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  if (parse_args (argc, argv) == -1)
+  Options options;
+  if (parse_args (argc, argv, options) == -1)
     return -1;
 
-  server_orb.set ("server_orb");
-  client_orb.set ("client_orb");
+  char const server_orb[] = "server_orb";
+  char const client_orb[] = "client_orb";
 
   try
     {
-      PortableInterceptor::ORBInitializer_ptr temp_initializer;
+      PortableInterceptor::ORBInitializer_ptr temp_initializer {};
 
+      // The ORB initializer var assumes ownership of the ACE_NEW allocation.
       ACE_NEW_RETURN (temp_initializer,
                       Collocated_ORBInitializer,
                       -1);  // No exceptions yet!
@@ -60,11 +63,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       PortableInterceptor::register_orb_initializer (initializer.in ());
 
       CORBA::ORB_var sorb =
-        CORBA::ORB_init (argc, argv, server_orb.c_str ());
+        CORBA::ORB_init (argc, argv, server_orb);
 
       ACE_Manual_Event me;
 
-      Server_Task server_task (output,
+      Server_Task server_task (options.output,
                                sorb.in (),
                                me,
                                ACE_Thread_Manager::instance ());
@@ -80,9 +83,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       me.wait ();
 
       CORBA::ORB_var corb =
-        CORBA::ORB_init (argc, argv, client_orb.c_str ());
+        CORBA::ORB_init (argc, argv, client_orb);
 
-      Client_Task client_task (input,
+      Client_Task client_task (options.input,
                                corb.in (),
                                ACE_Thread_Manager::instance ());
 
@@ -95,7 +98,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_Thread_Manager::instance ()->wait ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // Ignore exceptions..
     }

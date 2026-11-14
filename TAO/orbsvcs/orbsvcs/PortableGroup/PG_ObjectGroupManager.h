@@ -1,13 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file PG_ObjectGroupManager.h
  *
  * @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_PG_OBJECT_GROUP_MANAGER_H
 #define TAO_PG_OBJECT_GROUP_MANAGER_H
@@ -27,12 +24,10 @@
 #include "tao/PortableServer/Key_Adapters.h"
 #include "tao/PortableServer/PortableServerC.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Forward declarations
 class TAO_PG_GenericFactory;
-
 
 /**
  * @class TAO_PG_ObjectGroupManager
@@ -46,11 +41,14 @@ class TAO_PortableGroup_Export TAO_PG_ObjectGroupManager
   : public virtual POA_PortableGroup::ObjectGroupManager
 {
 public:
-  /// Constructor.
   TAO_PG_ObjectGroupManager ();
 
-  /// Destructor.
-  ~TAO_PG_ObjectGroupManager ();
+  ~TAO_PG_ObjectGroupManager () override;
+
+  TAO_PG_ObjectGroupManager (TAO_PG_ObjectGroupManager const &) = delete;
+  TAO_PG_ObjectGroupManager (TAO_PG_ObjectGroupManager &&) = delete;
+  TAO_PG_ObjectGroupManager & operator= (TAO_PG_ObjectGroupManager const &) = delete;
+  TAO_PG_ObjectGroupManager & operator= (TAO_PG_ObjectGroupManager &&) = delete;
 
   /**
    * @name PortableGroup::ObjectGroupManager methods
@@ -62,14 +60,14 @@ public:
   /// Create a member and add it to the given object group.
   PortableGroup::ObjectGroup_ptr create_member (
       PortableGroup::ObjectGroup_ptr object_group,
-      const PortableGroup::Location & the_location,
-      const char * type_id,
-      const PortableGroup::Criteria & the_criteria) override;
+      PortableGroup::Location const & the_location,
+      char const * type_id,
+      PortableGroup::Criteria const & the_criteria) override;
 
   /// Add an existing object to the ObjectGroup.
   PortableGroup::ObjectGroup_ptr add_member (
       PortableGroup::ObjectGroup_ptr object_group,
-      const PortableGroup::Location & the_location,
+      PortableGroup::Location const & the_location,
       CORBA::Object_ptr member) override;
 
   /**
@@ -81,7 +79,7 @@ public:
    */
   PortableGroup::ObjectGroup_ptr remove_member (
       PortableGroup::ObjectGroup_ptr object_group,
-      const PortableGroup::Location & the_location) override;
+      PortableGroup::Location const & the_location) override;
 
   /// Return the locations of the members in the given ObjectGroup.
   PortableGroup::Locations * locations_of_members (
@@ -89,7 +87,7 @@ public:
 
   /// Return the locations of the members in the given ObjectGroup.
   PortableGroup::ObjectGroups * groups_at_location (
-      const PortableGroup::Location & the_location) override;
+      PortableGroup::Location const & the_location) override;
 
   /// Return the ObjectGroupId for the given ObjectGroup.
   /// @note Does this method make sense for load balanced objects?
@@ -104,14 +102,13 @@ public:
   /// ObjectGroup at the given location.
   CORBA::Object_ptr get_member_ref (
       PortableGroup::ObjectGroup_ptr object_group,
-      const PortableGroup::Location & loc) override;
+      PortableGroup::Location const & loc) override;
   /**
    * TAO-specific extension.
    * Return the ObjectGroup reference for the given ObjectGroupId.
    */
-   virtual PortableGroup::ObjectGroup_ptr get_object_group_ref_from_id (
-        PortableGroup::ObjectGroupId group_id
-      );
+  PortableGroup::ObjectGroup_ptr get_object_group_ref_from_id (
+    PortableGroup::ObjectGroupId group_id) override;
 
   //@}
 
@@ -124,10 +121,10 @@ public:
    */
   PortableGroup::ObjectGroup_ptr _tao_add_member (
       PortableGroup::ObjectGroup_ptr object_group,
-      const PortableGroup::Location & the_location,
+      PortableGroup::Location const & the_location,
       CORBA::Object_ptr member,
-      const char * type_id,
-      const CORBA::Boolean propagate_member_already_present);
+      char const * type_id,
+      CORBA::Boolean const propagate_member_already_present);
 
   /// Create object group hash map entry that represents an actual
   /// ObjectGroup.
@@ -137,16 +134,16 @@ public:
    */
   PortableGroup::ObjectGroup_ptr create_object_group (
     CORBA::ULong group_id,
-    const PortableServer::ObjectId &oid,
-    const char * type_id,
-    const PortableGroup::Criteria & the_criteria);
+    PortableServer::ObjectId const & oid,
+    char const * type_id,
+    PortableGroup::Criteria const & the_criteria);
 
   /// Destroy the object group corresponding to the given ObjectId.
   /**
    * @note This method is used mainly by the
    *       GenericFactory::delete_object() method.
    */
-  void destroy_object_group (const PortableServer::ObjectId & oid);
+  void destroy_object_group (PortableServer::ObjectId const & oid);
 
   /// Return the properties set when the object group was created, and
   /// the dynamic properties that may have overridden them.
@@ -162,7 +159,7 @@ public:
    *         group corresponding to the given ObjectId exists.
    */
   PortableGroup::ObjectGroup_ptr object_group (
-    const PortableServer::ObjectId & oid);
+    PortableServer::ObjectId const & oid);
 
   /// Return the number of members in the given object group.
   CORBA::ULong member_count (PortableGroup::ObjectGroup_ptr group);
@@ -183,33 +180,32 @@ public:
 
   /// Get active or inactive member count in a group.
   size_t member_count (
-    const PortableServer::ObjectId & oid, bool is_active);
+    PortableServer::ObjectId const & oid, bool is_active);
 
   /// Verify if the member is active from local cache.
   bool is_alive (
-    const PortableServer::ObjectId & oid,
+    PortableServer::ObjectId const & oid,
     CORBA::Object_ptr member);
 
   /// Remove the inactive members.
   void remove_inactive_members ();
 
   /// Validate all active members.
-  void validate_members (CORBA::ORB_ptr orb, const TimeBase::TimeT& timeout);
+  void validate_members (CORBA::ORB_ptr orb, TimeBase::TimeT const & timeout);
 
 protected:
   /// Underlying and non-locking implementation of the add_member()
   /// and _tao_add_member() methods in this class.
   PortableGroup::ObjectGroup_ptr add_member_i (
     PortableGroup::ObjectGroup_ptr object_group,
-    const PortableGroup::Location & the_location,
+    PortableGroup::Location const & the_location,
     CORBA::Object_ptr member,
-    const CORBA::Boolean check_type_id);
+    CORBA::Boolean const check_type_id);
 
   /// Obtain the ObjectGroup hash map entry corresponding to the given
   /// ObjectGroup reference.
   TAO_PG_ObjectGroup_Map_Entry * get_group_entry (
       PortableGroup::ObjectGroup_ptr object_group);
-
 
   /// Check if a member resides at the location to which the group
   /// array belongs to.
@@ -219,13 +215,13 @@ protected:
    * hash map entry is associated with a given a location.
    */
   CORBA::Boolean member_already_present (
-    const TAO_PG_ObjectGroup_Array & groups,
+    TAO_PG_ObjectGroup_Array const & groups,
     TAO_PG_ObjectGroup_Map_Entry * group_entry);
 
   /// get the position of the object_group_map_entry
   /// -1 indicate group is not found.
   int get_object_group_position (
-    const TAO_PG_ObjectGroup_Array & groups,
+    TAO_PG_ObjectGroup_Array const & groups,
     TAO_PG_ObjectGroup_Map_Entry * group_entry);
 
   /// Verify that the member type_id matches the object group type_id.
@@ -252,7 +248,7 @@ private:
   /// Ping the remote to verify the connections.
   bool ping (CORBA::ORB_ptr orb,
              CORBA::Object_var& obj,
-             const TimeBase::TimeT& tt);
+             TimeBase::TimeT const & tt);
 
   /// Reference to the POA that created the object group references.
   PortableServer::POA_var poa_;

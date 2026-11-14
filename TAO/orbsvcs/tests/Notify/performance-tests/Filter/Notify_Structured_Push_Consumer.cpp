@@ -5,26 +5,19 @@
 #include "ace/OS_NS_sys_time.h"
 
 Notify_Structured_Push_Consumer::Notify_Structured_Push_Consumer (
-                                            const char* name,
-                                            unsigned int expected,
-                                            Notify_Test_Client& client)
- : name_ (name),
-   expected_ (expected),
-   count_ (0),
-   client_ (client)
+  char const* name,
+  unsigned int expected,
+  Notify_Test_Client& client)
+  : name_ (name),
+    expected_ (expected),
+    client_ (client)
 {
   this->client_.consumer_start (this);
 }
 
-
-Notify_Structured_Push_Consumer::~Notify_Structured_Push_Consumer ()
-{
-}
-
-
 void
 Notify_Structured_Push_Consumer::_connect (
-                CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin)
+  CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin)
 {
   CosNotifyComm::StructuredPushConsumer_var objref =
     this->_this ();
@@ -40,13 +33,11 @@ Notify_Structured_Push_Consumer::_connect (
 
   proxy_->connect_structured_push_consumer (objref.in ());
 
-  this->_remove_ref ();
 }
 
-
 void
-Notify_Structured_Push_Consumer::push_structured_event(
-                          const CosNotification::StructuredEvent& /*event*/)
+Notify_Structured_Push_Consumer::push_structured_event (
+  CosNotification::StructuredEvent const& /*event*/)
 {
   if ( this->count_ == 0 )
   {
@@ -60,7 +51,7 @@ Notify_Structured_Push_Consumer::push_structured_event(
 
   //ACE_DEBUG((LM_DEBUG, "-"));
 
-  this->count_++;
+  ++this->count_;
 
   if (this->count_ == this->expected_)
     {

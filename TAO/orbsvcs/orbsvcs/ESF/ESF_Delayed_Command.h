@@ -41,9 +41,13 @@ template<class Target, class Object>
 class TAO_ESF_Connected_Command : public ACE_Command_Base
 {
 public:
-  /// constructor...
   TAO_ESF_Connected_Command (Target *target,
                             Object *object);
+
+  TAO_ESF_Connected_Command (TAO_ESF_Connected_Command const &) = delete;
+  TAO_ESF_Connected_Command (TAO_ESF_Connected_Command &&) = delete;
+  TAO_ESF_Connected_Command &operator= (TAO_ESF_Connected_Command const &) = delete;
+  TAO_ESF_Connected_Command &operator= (TAO_ESF_Connected_Command &&) = delete;
 
   /// The callback method, if the argument is not nil it is interpreted
   /// as a CORBA::Environment.
@@ -79,9 +83,13 @@ template<class Target, class Object>
 class TAO_ESF_Reconnected_Command : public ACE_Command_Base
 {
 public:
-  /// constructor...
   TAO_ESF_Reconnected_Command (Target *target,
                             Object *object);
+
+  TAO_ESF_Reconnected_Command (TAO_ESF_Reconnected_Command const &) = delete;
+  TAO_ESF_Reconnected_Command (TAO_ESF_Reconnected_Command &&) = delete;
+  TAO_ESF_Reconnected_Command &operator= (TAO_ESF_Reconnected_Command const &) = delete;
+  TAO_ESF_Reconnected_Command &operator= (TAO_ESF_Reconnected_Command &&) = delete;
 
   /// The callback method, if the argument is not nil it is interpreted
   /// as a CORBA::Environment.
@@ -118,9 +126,13 @@ template<class Target, class Object>
 class TAO_ESF_Disconnected_Command : public ACE_Command_Base
 {
 public:
-  /// constructor...
   TAO_ESF_Disconnected_Command (Target *target,
                                Object *object);
+
+  TAO_ESF_Disconnected_Command (TAO_ESF_Disconnected_Command const &) = delete;
+  TAO_ESF_Disconnected_Command (TAO_ESF_Disconnected_Command &&) = delete;
+  TAO_ESF_Disconnected_Command &operator= (TAO_ESF_Disconnected_Command const &) = delete;
+  TAO_ESF_Disconnected_Command &operator= (TAO_ESF_Disconnected_Command &&) = delete;
 
   /// The callback method, if the argument is not nil it is interpreted
   /// as a CORBA::Environment.
@@ -156,8 +168,12 @@ template<class Target>
 class TAO_ESF_Shutdown_Command : public ACE_Command_Base
 {
 public:
-  /// constructor...
-  TAO_ESF_Shutdown_Command (Target *target);
+  explicit TAO_ESF_Shutdown_Command (Target *target);
+
+  TAO_ESF_Shutdown_Command (TAO_ESF_Shutdown_Command const &) = delete;
+  TAO_ESF_Shutdown_Command (TAO_ESF_Shutdown_Command &&) = delete;
+  TAO_ESF_Shutdown_Command &operator= (TAO_ESF_Shutdown_Command const &) = delete;
+  TAO_ESF_Shutdown_Command &operator= (TAO_ESF_Shutdown_Command &&) = delete;
 
   /// The callback method, if the argument is not nil it is interpreted
   /// as a CORBA::Environment.

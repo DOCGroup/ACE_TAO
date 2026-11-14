@@ -6,16 +6,14 @@
 
 #include "ace/Guard_T.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Notification_Queue_Node)
 
 ACE_Notification_Queue::ACE_Notification_Queue()
-  : alloc_queue_()
-  , notify_queue_()
-  , free_queue_()
-{
-}
+  = default;
 
 ACE_Notification_Queue::~ACE_Notification_Queue()
 {
@@ -53,7 +51,7 @@ ACE_Notification_Queue::reset()
     }
 
   // ... free up the dynamically allocated resources ...
-  ACE_Notification_Queue_Node **b = nullptr;
+  ACE_Notification_Queue_Node **b {};
   for (ACE_Unbounded_Queue_Iterator<ACE_Notification_Queue_Node *> alloc_iter (this->alloc_queue_);
        alloc_iter.next (b) != 0;
        alloc_iter.advance ())
@@ -75,19 +73,19 @@ ACE_Notification_Queue::allocate_more_buffers()
 {
   ACE_TRACE ("ACE_Notification_Queue::allocate_more_buffers");
 
-  ACE_Notification_Queue_Node *temp = nullptr;
+  ACE_Notification_Queue_Node *temp {};
 
   ACE_NEW_RETURN (temp,
                   ACE_Notification_Queue_Node[ACE_REACTOR_NOTIFICATION_ARRAY_SIZE],
                   -1);
+  std::unique_ptr<ACE_Notification_Queue_Node[]> safe_temp (temp);
 
   if (this->alloc_queue_.enqueue_head (temp) == -1)
-    {
-      delete [] temp;
-      return -1;
-    }
+    return -1;
 
-  for (size_t i = 0; i < ACE_REACTOR_NOTIFICATION_ARRAY_SIZE; ++i)
+  safe_temp.release ();
+
+  for (size_t i {}; i < ACE_REACTOR_NOTIFICATION_ARRAY_SIZE; ++i)
     {
       free_queue_.push_front(temp + i);
     }
@@ -130,7 +128,7 @@ ACE_Notification_Queue::purge_pending_notifications(
       // ... this is the more complicated case, we want to remove the
       // node from the notify_queue_ list.  First save the next node
       // on the list:
-      ACE_Notification_Queue_Node * next = node->next();
+      ACE_Notification_Queue_Node * const next = node->next();
 
       // ... then remove it ...
       notify_queue_.unsafe_remove(node);
@@ -156,13 +154,10 @@ ACE_Notification_Queue::push_new_notification(
 {
   ACE_TRACE ("ACE_Notification_Queue::push_new_notification");
 
-  bool notification_required = false;
-
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->notify_queue_lock_, -1);
 
   // No pending notifications.
-  if (this->notify_queue_.is_empty ())
-    notification_required = true;
+  bool const notification_required = this->notify_queue_.is_empty ();
 
   if (free_queue_.is_empty())
     {

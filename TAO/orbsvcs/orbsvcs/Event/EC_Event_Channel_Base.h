@@ -27,6 +27,7 @@
 #include "orbsvcs/Event/EC_Defaults.h"
 
 #include "orbsvcs/RtecEventChannelAdminS.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -63,11 +64,11 @@ public:
   // the user should be able to set any values she wants.
 
   /// Can consumers or suppliers invoke connect_push_* multiple times?
-  int consumer_reconnect;
-  int supplier_reconnect;
+  bool consumer_reconnect;
+  bool supplier_reconnect;
 
   /**
-   * It not zero the event channel will send disconnect callbacks when
+   * If true, the event channel sends disconnect callbacks when
    * a disconnect method is called on a Proxy.  In other words, if a
    * consumer calls disconnect_push_supplier() on its proxy the EC
    * will invoke disconnect_push_consumer() on the consumer.  A
@@ -75,7 +76,7 @@ public:
    * It is a matter of debate what the spec requires for the regular
    * event service.
    */
-  int disconnect_callbacks;
+  bool disconnect_callbacks;
 
   /**
    * The scheduling service that we will use with this event channel.
@@ -109,7 +110,6 @@ class TAO_RTEvent_Serv_Export TAO_EC_Event_Channel_Base
   : public POA_RtecEventChannelAdmin::EventChannel
 {
 public:
-  /// destructor
   virtual ~TAO_EC_Event_Channel_Base ();
 
   /// Start the internal threads (if any), etc.
@@ -162,12 +162,10 @@ public:
   void create_proxy (TAO_EC_ProxyPushConsumer*&);
   void destroy_proxy (TAO_EC_ProxyPushConsumer*);
 
-
   /// Create and destroy a the collections used to store
   /// ProxyPushSuppliers
   void create_proxy_collection (TAO_EC_ProxyPushSupplier_Collection*&);
   void destroy_proxy_collection (TAO_EC_ProxyPushSupplier_Collection*);
-
 
   /// Create and destroy a the collections used to store
   /// ProxyPushConsumers
@@ -201,39 +199,39 @@ public:
   // at construction time.
 
   /// Can the consumers reconnect to the EC?
-  int consumer_reconnect () const;
+  bool consumer_reconnect () const;
 
   /// Can the suppliers reconnect to the EC?
-  int supplier_reconnect () const;
+  bool supplier_reconnect () const;
 
   /// Should we send callback disconnect messages when a proxy is
   /// disconnected by the client
-  int disconnect_callbacks () const;
+  bool disconnect_callbacks () const;
 
   /// Obtain the scheduler, the user must release
-  CORBA::Object_ptr scheduler ();
+  CORBA::Object_ptr scheduler () const;
 
   // = The RtecEventChannelAdmin::EventChannel methods...
   /// The default implementation is:
   ///    this->consumer_admin ()->_this ();
-  virtual RtecEventChannelAdmin::ConsumerAdmin_ptr
-      for_consumers ();
+  RtecEventChannelAdmin::ConsumerAdmin_ptr
+      for_consumers () override;
 
   /// The default implementation is:
   ///    this->supplier_admin ()->_this ();
-  virtual RtecEventChannelAdmin::SupplierAdmin_ptr
-      for_suppliers ();
+  RtecEventChannelAdmin::SupplierAdmin_ptr
+      for_suppliers () override;
 
   /// Commit suicide.
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual RtecEventChannelAdmin::Observer_Handle
-      append_observer (RtecEventChannelAdmin::Observer_ptr);
-  virtual void
-      remove_observer (RtecEventChannelAdmin::Observer_Handle);
+  RtecEventChannelAdmin::Observer_Handle
+      append_observer (RtecEventChannelAdmin::Observer_ptr) override;
+  void
+      remove_observer (RtecEventChannelAdmin::Observer_Handle) override;
 
-  /// Return 1 if the event channel is already destroyed.
-  int destroyed ();
+  /// Return true if the event channel is already destroyed.
+  bool destroyed () const;
 
 protected:
   /**
@@ -280,10 +278,8 @@ protected:
    * compose an event channel, the event channel simply acts as a
    * Mediator among them.
    */
+  std::unique_ptr<TAO_EC_Factory> owned_factory_;
   TAO_EC_Factory *factory_;
-
-  /// Flag that indicates if we own the factory.
-  int own_factory_;
 
   /// The dispatching "module"
   TAO_EC_Dispatching *dispatching_;
@@ -313,13 +309,13 @@ protected:
   TAO_EC_Scheduling_Strategy *scheduling_strategy_;
 
   /// Consumer reconnection flags
-  int consumer_reconnect_;
+  bool const consumer_reconnect_;
 
   /// Supplier reconnection flags
-  int supplier_reconnect_;
+  bool const supplier_reconnect_;
 
-  /// If not zero we send callbacks when a proxy is disconnected
-  int disconnect_callbacks_;
+  /// Whether callbacks are sent when a proxy is disconnected
+  bool const disconnect_callbacks_;
 
   /// Strategies to disconnect misbehaving or destroyed consumers
   TAO_EC_ConsumerControl *consumer_control_;
@@ -328,17 +324,18 @@ protected:
   TAO_EC_SupplierControl *supplier_control_;
 
   /// Mutex to protect the internal state
-  TAO_SYNCH_MUTEX mutex_;
+  mutable TAO_SYNCH_MUTEX mutex_;
 
-  /// Flag to track the status of the event channel
-  enum {
-    EC_S_IDLE
-    , EC_S_ACTIVATING
-    , EC_S_ACTIVE
-    , EC_S_DESTROYING
-    , EC_S_DESTROYED
+  /// Track the lifecycle status of the event channel.
+  enum class Status
+  {
+    idle,
+    activating,
+    active,
+    destroying,
+    destroyed
   };
-  int status_;
+  Status status_ {Status::idle};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

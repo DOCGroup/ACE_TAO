@@ -25,12 +25,17 @@ class Client_ORBInitializer :
   public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor
-  Client_ORBInitializer ();
+  Client_ORBInitializer () = default;
 
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
+  void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
+  void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
+
+private:
+  Client_ORBInitializer (Client_ORBInitializer const &) = delete;
+  Client_ORBInitializer &operator= (Client_ORBInitializer const &) = delete;
+  Client_ORBInitializer (Client_ORBInitializer &&) = delete;
+  Client_ORBInitializer &operator= (Client_ORBInitializer &&) = delete;
 };
 
 #if defined(_MSC_VER)

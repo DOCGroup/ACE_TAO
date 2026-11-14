@@ -3,6 +3,10 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_ctype.h"
 #include "ace/OS_NS_string.h"
+#include "ace/Malloc_Base.h"
+
+#include <cstring>
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -26,13 +30,14 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
       errno = EINVAL;
       return -1;
     }
-  FILE* in = ACE_OS::fopen (filename, ACE_TEXT ("r"));
+  std::unique_ptr<FILE, int (*) (FILE *)> in {
+    ACE_OS::fopen (filename, ACE_TEXT ("r")), ACE_OS::fclose};
   if (!in)
     return -1;
 
   u_int buffer_size = 4096;
   u_int read_pos = 0;
-  ACE_TCHAR *buffer = nullptr;
+  ACE_TCHAR *buffer {};
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_ALLOCATOR_NORETURN (buffer, static_cast<ACE_TCHAR*> (ACE_Allocator::instance()->malloc(sizeof(ACE_TCHAR) * buffer_size)));
 #else
@@ -41,13 +46,14 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
   if (!buffer)
     {
       ACE_Errno_Guard guard (errno);
-      (void) ACE_OS::fclose (in);
+      in.reset ();
       return -1;
     }
+  std::unique_ptr<ACE_TCHAR[], ACE_Array_Deleter<ACE_TCHAR>> buffer_owner {buffer};
   ACE_Configuration_Section_Key section;
-  ACE_TCHAR *end = nullptr;
+  ACE_TCHAR *end {};
 
-  while (ACE_OS::fgets (buffer+read_pos, buffer_size - read_pos, in))
+  while (ACE_OS::fgets (buffer+read_pos, buffer_size - read_pos, in.get ()))
     {
       // Check if we got all the line.
       end = ACE_OS::strrchr (buffer + read_pos,
@@ -55,7 +61,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
       if (!end) // we havn't reach the end of the line yet
         {
           // allocate a new buffer - double size the previous one
-          ACE_TCHAR *temp_buffer;
+          ACE_TCHAR *temp_buffer {};
 #if defined (ACE_HAS_ALLOC_HOOKS)
           ACE_ALLOCATOR_NORETURN (temp_buffer, static_cast<ACE_TCHAR*> (ACE_Allocator::instance()->malloc(sizeof (ACE_TCHAR) * buffer_size * 2)));
 #else
@@ -64,25 +70,19 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
           if (!temp_buffer)
             {
               ACE_Errno_Guard guard (errno);
-#if defined (ACE_HAS_ALLOC_HOOKS)
-              ACE_Allocator::instance()->free(buffer);
-#else
-              delete [] buffer;
-#endif /* ACE_HAS_ALLOC_HOOKS */
-              (void) ACE_OS::fclose (in);
+              buffer_owner.reset ();
+              in.reset ();
               return -1;
             }
 
+          std::unique_ptr<ACE_TCHAR[], ACE_Array_Deleter<ACE_TCHAR>> temp_buffer_owner {temp_buffer};
+
           // copy the beginnning of the line
-          ACE_OS::memcpy (temp_buffer, buffer, buffer_size);
+          std::memcpy (temp_buffer, buffer, buffer_size * sizeof (ACE_TCHAR));
           read_pos = buffer_size - 1;
           buffer_size *= 2;
-#if defined (ACE_HAS_ALLOC_HOOKS)
-          ACE_Allocator::instance()->free(buffer);
-#else
-          delete [] buffer;
-#endif /* ACE_HAS_ALLOC_HOOKS */
-          buffer = temp_buffer;
+          buffer_owner.swap (temp_buffer_owner);
+          buffer = buffer_owner.get ();
           continue;
         }
       read_pos = 0;
@@ -97,24 +97,12 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
           end = ACE_OS::strrchr (buffer, ACE_TEXT (']'));
           if (!end)
             {
-              ACE_OS::fclose (in);
-#if defined (ACE_HAS_ALLOC_HOOKS)
-              ACE_Allocator::instance()->free(buffer);
-#else
-              delete [] buffer;
-#endif /* ACE_HAS_ALLOC_HOOKS */
               return -3;
             }
           *end = 0;
 
-          if (config_.expand_path (config_.root_section (), buffer + 1, section, 1))
+          if (config_.expand_path (config_.root_section (), buffer + 1, section, true))
             {
-              ACE_OS::fclose (in);
-#if defined (ACE_HAS_ALLOC_HOOKS)
-              ACE_Allocator::instance()->free(buffer);
-#else
-              delete [] buffer;
-#endif /* ACE_HAS_ALLOC_HOOKS */
               return -3;
             }
           continue;
@@ -142,29 +130,17 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
                 *trailing = 0;
               if (config_.set_string_value (section, name, end))
                 {
-                  ACE_OS::fclose (in);
-#if defined (ACE_HAS_ALLOC_HOOKS)
-                  ACE_Allocator::instance()->free(buffer);
-#else
-                  delete [] buffer;
-#endif /* ACE_HAS_ALLOC_HOOKS */
                   return -4;
                 }
             }
           else if (ACE_OS::strncmp (end, ACE_TEXT ("dword:"), 6) == 0)
             {
               // number type
-              ACE_TCHAR* endptr = nullptr;
+              ACE_TCHAR* endptr {};
               unsigned long value = ACE_OS::strtoul (end + 6, &endptr, 16);
               if (config_.set_integer_value (section, name,
                                              static_cast<u_int> (value)))
                 {
-                  ACE_OS::fclose (in);
-#if defined (ACE_HAS_ALLOC_HOOKS)
-                  ACE_Allocator::instance()->free(buffer);
-#else
-                  delete [] buffer;
-#endif /* ACE_HAS_ALLOC_HOOKS */
                   return -4;
                 }
             }
@@ -175,7 +151,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
               // divide by 3 to get the actual buffer length
               size_t length = string_length / 3;
               size_t remaining = length;
-              u_char* data = nullptr;
+              u_char* data {};
 #if defined (ACE_HAS_ALLOC_HOOKS)
               ACE_ALLOCATOR_RETURN (data,
                                     static_cast<u_char*> (ACE_Allocator::instance()->malloc(sizeof(u_char) * length)),
@@ -185,9 +161,10 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
                               u_char[length],
                               -1);
 #endif /* ACE_HAS_ALLOC_HOOKS */
+              std::unique_ptr<u_char[], ACE_Array_Deleter<u_char>> data_owner {data};
               u_char* out = data;
               ACE_TCHAR* inb = end + 4;
-              ACE_TCHAR* endptr = nullptr;
+              ACE_TCHAR* endptr {};
               while (remaining)
                 {
                   u_char charin = (u_char) ACE_OS::strtoul (inb, &endptr, 16);
@@ -198,22 +175,8 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
                 }
               if (config_.set_binary_value (section, name, data, length))
                 {
-                  ACE_OS::fclose (in);
-#if defined (ACE_HAS_ALLOC_HOOKS)
-                  ACE_Allocator::instance()->free(data);
-                  ACE_Allocator::instance()->free(buffer);
-#else
-                  delete [] data;
-                  delete [] buffer;
-#endif /* ACE_HAS_ALLOC_HOOKS */
                   return -4;
                 }
-              else
-#if defined (ACE_HAS_ALLOC_HOOKS)
-                ACE_Allocator::instance()->free(data);
-#else
-                delete [] data;
-#endif /* ACE_HAS_ALLOC_HOOKS */
             }
           else
             {
@@ -230,34 +193,13 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
           int rc = process_previous_line_format (buffer, section);
           if (rc != 0)
             {
-              ACE_OS::fclose (in);
-#if defined (ACE_HAS_ALLOC_HOOKS)
-              ACE_Allocator::instance()->free(buffer);
-#else
-              delete [] buffer;
-#endif /* ACE_HAS_ALLOC_HOOKS */
               return rc;
             }
         }             // end if maybe old format
     }                 // end while fgets
 
-  if (ferror (in))
-    {
-      ACE_OS::fclose (in);
-#if defined (ACE_HAS_ALLOC_HOOKS)
-      ACE_Allocator::instance()->free(buffer);
-#else
-      delete [] buffer;
-#endif /* ACE_HAS_ALLOC_HOOKS */
-      return -1;
-    }
-
-  ACE_OS::fclose (in);
-#if defined (ACE_HAS_ALLOC_HOOKS)
-  ACE_Allocator::instance()->free(buffer);
-#else
-  delete [] buffer;
-#endif /* ACE_HAS_ALLOC_HOOKS */
+  if (ferror (in.get ()))
+    return -1;
   return 0;
 }
 
@@ -274,20 +216,20 @@ ACE_Registry_ImpExp::export_config (const ACE_TCHAR* filename)
     }
   int result = -1;
 
-  FILE* out = ACE_OS::fopen (filename, ACE_TEXT ("w"));
+  std::unique_ptr<FILE, int (*) (FILE *)> out {
+    ACE_OS::fopen (filename, ACE_TEXT ("w")), ACE_OS::fclose};
   if (out)
     {
       result = this->export_section (config_.root_section (),
                                      ACE_TEXT (""),
-                                     out);
+                                     out.get ());
       // The data may have been buffered and will be flush on close,
       // so we need to check that the close succeeds.
-      if (ACE_OS::fclose (out) < 0)
+      if (ACE_OS::fclose (out.release ()) < 0)
         result = -7;
     }
   return result;
 }
-
 
 #if !defined ACE_USES_WCHAR && defined ACE_LACKS_FPUTS
 # define ACE_WRITE_STRING write_string
@@ -295,7 +237,7 @@ namespace
 {
   int write_string (const char *string, FILE *stream)
   {
-    const size_t count = ACE_OS::strlen (string);
+    const size_t count = std::strlen (string);
     return (ACE_OS::fwrite (string, 1, count, stream) < count) ? -1 : 0;
   }
 }
@@ -323,7 +265,6 @@ ACE_Registry_ImpExp::export_section (const ACE_Configuration_Section_Key& sectio
       if (ACE_WRITE_STRING (header.fast_rep (), out) < 0)
         return -1;
       // Write out each value
-      int index = 0;
       ACE_TString name;
       ACE_Configuration::VALUETYPE type;
       ACE_TString line;
@@ -332,7 +273,7 @@ ACE_Registry_ImpExp::export_section (const ACE_Configuration_Section_Key& sectio
       void* binary_data;
       size_t binary_length;
       ACE_TString string_value;
-      while (!config_.enumerate_values (section, index, name, type))
+      for (int index {}; !config_.enumerate_values (section, index, name, type); ++index)
         {
           line = ACE_TEXT ("\"") + name + ACE_TEXT ("\"=");
           switch (type)
@@ -395,24 +336,21 @@ ACE_Registry_ImpExp::export_section (const ACE_Configuration_Section_Key& sectio
           line += ACE_TEXT ("\n");
           if (ACE_WRITE_STRING (line.fast_rep (), out) < 0)
             return -4;
-          ++index;
         }
     }
   // Export all sub sections
-  int index = 0;
   ACE_TString name;
   ACE_Configuration_Section_Key sub_key;
-  while (!config_.enumerate_sections (section, index, name))
+  for (int index {}; !config_.enumerate_sections (section, index, name); ++index)
     {
       ACE_TString sub_section (path);
       if (path.length ())
         sub_section += ACE_TEXT ("\\");
       sub_section += name;
-      if (config_.open_section (section, name.fast_rep (), 0, sub_key))
+      if (config_.open_section (section, name.fast_rep (), false, sub_key))
         return -5;
       if (export_section (sub_key, sub_section.fast_rep (), out))
         return -6;
-      ++index;
     }
   return 0;
 }
@@ -454,7 +392,6 @@ ACE_Registry_ImpExp::process_previous_line_format (ACE_TCHAR* buffer,
   return 0;
 }                // end read_previous_line_format
 
-
 ACE_Ini_ImpExp::ACE_Ini_ImpExp (ACE_Configuration& config)
     : ACE_Config_ImpExp_Base (config)
 {
@@ -469,14 +406,15 @@ ACE_Ini_ImpExp::import_config (const ACE_TCHAR* filename)
       errno = EINVAL;
       return -1;
     }
-  FILE* in = ACE_OS::fopen (filename, ACE_TEXT ("r"));
+  std::unique_ptr<FILE, int (*) (FILE *)> in {
+    ACE_OS::fopen (filename, ACE_TEXT ("r")), ACE_OS::fclose};
   if (!in)
     return -1;
 
   // @@ Make this a dynamic size!
   ACE_TCHAR buffer[4096];
   ACE_Configuration_Section_Key section;
-  while (ACE_OS::fgets (buffer, sizeof buffer, in))
+  while (ACE_OS::fgets (buffer, sizeof buffer, in.get ()))
     {
       ACE_TCHAR *line = this->squish (buffer);
       // Check for a comment and blank line
@@ -491,7 +429,6 @@ ACE_Ini_ImpExp::import_config (const ACE_TCHAR* filename)
           ACE_TCHAR* end = ACE_OS::strrchr (line, ACE_TEXT (']'));
           if (!end)
             {
-              ACE_OS::fclose (in);
               return -3;
             }
           *end = 0;
@@ -499,9 +436,8 @@ ACE_Ini_ImpExp::import_config (const ACE_TCHAR* filename)
           if (config_.expand_path (config_.root_section (),
                                    line + 1,
                                    section,
-                                   1))
+                                   true))
             {
-              ACE_OS::fclose (in);
               return -3;
             }
 
@@ -512,7 +448,6 @@ ACE_Ini_ImpExp::import_config (const ACE_TCHAR* filename)
       ACE_TCHAR *end = ACE_OS::strchr (line, ACE_TEXT ('='));
       if (end == nullptr)                            // No '='
         {
-          ACE_OS::fclose (in);
           return -3;
         }
       *end++ = '\0';
@@ -520,7 +455,6 @@ ACE_Ini_ImpExp::import_config (const ACE_TCHAR* filename)
 #if 0
       if (ACE_OS::strlen (name) == 0)          // No name; just an '='
         {
-          ACE_OS::fclose (in);
           return -3;
         }
 #endif
@@ -542,19 +476,12 @@ ACE_Ini_ImpExp::import_config (const ACE_TCHAR* filename)
         }
 
       if (config_.set_string_value (section, name, value))
-        {
-          ACE_OS::fclose (in);
-          return -4;
-        }
+        return -4;
     }             // end while fgets
 
-  if (ferror (in))
-    {
-      ACE_OS::fclose (in);
-      return -1;
-    }
+  if (ferror (in.get ()))
+    return -1;
 
-  ACE_OS::fclose (in);
   return 0;
 }
 
@@ -571,15 +498,16 @@ ACE_Ini_ImpExp::export_config (const ACE_TCHAR* filename)
     }
   int result = -1;
 
-  FILE* out = ACE_OS::fopen (filename, ACE_TEXT ("w"));
+  std::unique_ptr<FILE, int (*) (FILE *)> out {
+    ACE_OS::fopen (filename, ACE_TEXT ("w")), ACE_OS::fclose};
   if (out)
     {
       result = this->export_section (config_.root_section (),
                                      ACE_TEXT (""),
-                                     out);
+                                     out.get ());
       // The data may have been buffered and will be flush on close,
       // so we need to check that the close succeeds.
-      if (ACE_OS::fclose (out) < 0)
+      if (ACE_OS::fclose (out.release ()) < 0)
         result = -7;
     }
   return result;
@@ -604,7 +532,6 @@ ACE_Ini_ImpExp::export_section (const ACE_Configuration_Section_Key& section,
       if (ACE_WRITE_STRING (header.fast_rep (), out) < 0)
         return -1;
       // Write out each value
-      int index = 0;
       ACE_TString name;
       ACE_Configuration::VALUETYPE type;
       ACE_TString line;
@@ -613,7 +540,7 @@ ACE_Ini_ImpExp::export_section (const ACE_Configuration_Section_Key& section,
       void* binary_data;
       size_t binary_length;
       ACE_TString string_value;
-      while (!config_.enumerate_values (section, index, name, type))
+      for (int index {}; !config_.enumerate_values (section, index, name, type); ++index)
         {
           line = name + ACE_TEXT ("=");
           switch (type)
@@ -678,24 +605,21 @@ ACE_Ini_ImpExp::export_section (const ACE_Configuration_Section_Key& section,
           line += ACE_TEXT ("\n");
           if (ACE_WRITE_STRING (line.fast_rep (), out) < 0)
             return -4;
-          ++index;
         }// end while enumerating values
     }
   // Export all sub sections
-  int index = 0;
   ACE_TString name;
   ACE_Configuration_Section_Key sub_key;
-  while (!config_.enumerate_sections (section, index, name))
+  for (int index {}; !config_.enumerate_sections (section, index, name); ++index)
     {
       ACE_TString sub_section (path);
       if (path.length ())
         sub_section += ACE_TEXT ("\\");
       sub_section += name;
-      if (config_.open_section (section, name.fast_rep (), 0, sub_key))
+      if (config_.open_section (section, name.fast_rep (), false, sub_key))
         return -5;
       if (export_section (sub_key, sub_section.fast_rep (), out))
         return -6;
-      ++index;
     }
   return 0;
 }
@@ -710,7 +634,7 @@ ACE_Ini_ImpExp::export_section (const ACE_Configuration_Section_Key& section,
 ACE_TCHAR *
 ACE_Ini_ImpExp::squish (ACE_TCHAR *src)
 {
-  ACE_TCHAR *cp = nullptr;
+  ACE_TCHAR *cp {};
 
   if (src == nullptr)
     return nullptr;

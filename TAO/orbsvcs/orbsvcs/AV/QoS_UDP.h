@@ -8,11 +8,9 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_AV_QOS_UDP_H
 #define TAO_AV_QOS_UDP_H
 #include /**/ "ace/pre.h"
-
 
 #include "ace/config-all.h"
 
@@ -34,7 +32,7 @@ public:
   ~TAO_AV_UDP_QoS_Factory () override;
   int init (int argc, ACE_TCHAR *argv[]) override;
   /// Initialization hook.
-  int match_protocol (const char *protocol_string) override;
+  int match_protocol (char const *protocol_string) override;
   TAO_AV_Acceptor *make_acceptor () override;
   TAO_AV_Connector *make_connector () override;
 };
@@ -54,7 +52,7 @@ class TAO_AV_UDP_QoS_Transport
 public:
   TAO_AV_UDP_QoS_Transport ();
 
-  TAO_AV_UDP_QoS_Transport (TAO_AV_UDP_QoS_Flow_Handler *handler);
+  explicit TAO_AV_UDP_QoS_Transport (TAO_AV_UDP_QoS_Flow_Handler *handler);
 
   ~TAO_AV_UDP_QoS_Transport () override;
 
@@ -66,7 +64,7 @@ public:
 
   ACE_Addr *get_peer_addr () override;
 
-  virtual int set_remote_address (const ACE_INET_Addr &address);
+  virtual int set_remote_address (ACE_INET_Addr const &address);
 
   /// Write the complete Message_Block chain to the connection.
   ssize_t send (ACE_Message_Block const *mblk,
@@ -98,8 +96,8 @@ public:
                 int iovcnt,
                 ACE_Time_Value *s = nullptr) override;
 protected:
-  TAO_AV_UDP_QoS_Flow_Handler *handler_;
-  ACE_Addr *addr_;
+  TAO_AV_UDP_QoS_Flow_Handler *handler_ {};
+  ACE_Addr *addr_ {};
   ACE_INET_Addr peer_addr_;
 };
 
@@ -108,7 +106,6 @@ class TAO_AV_UDP_QoS_Flow_Handler
    public virtual ACE_Event_Handler
 {
 public:
-  /// Constructor.
   /**
    * Destructor
    */
@@ -146,12 +143,12 @@ public:
   TAO_AV_Core* av_core ();
 
 protected:
-  TAO_AV_Core *av_core_;
+  TAO_AV_Core *av_core_ {};
   ACE_INET_Addr peer_addr_;
   ACE_SOCK_Dgram_Mcast_QoS qos_sock_dgram_;
-  ACE_QoS_Session *qos_session_;
-  TAO_FlowSpec_Entry *entry_;
-  TAO_Base_StreamEndPoint *endpoint_;
+  ACE_QoS_Session *qos_session_ {};
+  TAO_FlowSpec_Entry *entry_ {};
+  TAO_Base_StreamEndPoint *endpoint_ {};
   AVStreams::Negotiator_ptr negotiator_;
 };
 
@@ -181,12 +178,11 @@ public:
 
   virtual int activate_svc_handler (TAO_AV_UDP_QoS_Flow_Handler *handler);
 
-
 protected:
-  TAO_Base_StreamEndPoint *endpoint_;
-  TAO_FlowSpec_Entry *entry_;
-  TAO_AV_Flow_Protocol_Factory *flow_protocol_factory_;
-  ACE_QoS_Session *qos_session_;
+  TAO_Base_StreamEndPoint *endpoint_ {};
+  TAO_FlowSpec_Entry *entry_ {};
+  TAO_AV_Flow_Protocol_Factory *flow_protocol_factory_ {};
+  ACE_QoS_Session *qos_session_ {};
   ACE_QoS_Manager qos_manager_;
   ACE_INET_Addr qos_acceptor_addr_;
 };
@@ -212,11 +208,11 @@ public:
                  ACE_Flow_Spec *ace_flow_spec);
 
 protected:
-  TAO_Base_StreamEndPoint *endpoint_;
-  TAO_AV_Core *av_core_;
-  TAO_FlowSpec_Entry *entry_;
-  TAO_AV_Flow_Protocol_Factory *flow_protocol_factory_;
-  ACE_QoS_Session *qos_session_;
+  TAO_Base_StreamEndPoint *endpoint_ {};
+  TAO_AV_Core *av_core_ {};
+  TAO_FlowSpec_Entry *entry_ {};
+  TAO_AV_Flow_Protocol_Factory *flow_protocol_factory_ {};
+  ACE_QoS_Session *qos_session_ {};
   ACE_QoS_Manager qos_manager_;
 };
 
@@ -235,7 +231,7 @@ protected:
 //                           TAO_AV_frame_info *frame_info = 0);
 //   // send a data frame.
 
-//   virtual int send_frame (const iovec *iov,
+//   virtual int send_frame (iovec const *iov,
 //                           int iovcnt,
 //                           TAO_AV_frame_info *frame_info = 0);
 
@@ -290,7 +286,6 @@ ACE_FACTORY_DECLARE (TAO_AV, TAO_AV_UDP_QoS_Flow_Factory)
 
 ACE_STATIC_SVC_DECLARE (TAO_AV_UDP_QoS_Factory)
 ACE_FACTORY_DECLARE (TAO_AV, TAO_AV_UDP_QoS_Factory)
-
 
 #if defined(__ACE_INLINE__)
 #include "orbsvcs/AV/QoS_UDP.inl"

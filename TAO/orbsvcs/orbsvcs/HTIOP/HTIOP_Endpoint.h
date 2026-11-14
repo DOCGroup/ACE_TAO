@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef HTIOP_ENDPOINT_H
 #define HTIOP_ENDPOINT_H
 #include /**/ "ace/pre.h"
@@ -49,6 +48,10 @@ namespace TAO
 
       /// Default constructor.
       Endpoint ();
+      Endpoint (Endpoint const&) = delete;
+      Endpoint (Endpoint&&) = delete;
+      Endpoint& operator= (Endpoint const&) = delete;
+      Endpoint& operator= (Endpoint&&) = delete;
 
       /// Constructor.  This is the most efficient constructor since it
       /// does not require any address resolution processing.
@@ -57,7 +60,6 @@ namespace TAO
                 const char *htid,
                 const ACE::HTBP::Addr &addr);
 
-      /// Constructor.
       Endpoint (const ACE::HTBP::Addr &addr,
                 int use_dotted_decimal_addresses);
 
@@ -66,7 +68,6 @@ namespace TAO
                 CORBA::UShort port,
                 const char *htid);
 
-      /// Destructor.
       ~Endpoint () override;
 
       // = Implementation of abstract TAO_Endpoint methods.  See

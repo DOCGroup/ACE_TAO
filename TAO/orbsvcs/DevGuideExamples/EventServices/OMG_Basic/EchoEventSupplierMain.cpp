@@ -13,55 +13,58 @@ int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
   try
   {
     // Initialize the ORB.
-    CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
+    CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
     // Find the Naming Service.
-    CORBA::Object_var obj = orb->resolve_initial_references("NameService");
-    CosNaming::NamingContextExt_var root_context = CosNaming::NamingContextExt::_narrow(obj.in());
+    CORBA::Object_var obj = orb->resolve_initial_references ("NameService");
+    CosNaming::NamingContextExt_var const root_context =
+      CosNaming::NamingContextExt::_narrow (obj.in ());
 
     // Find the EventChannel.
-    obj = root_context->resolve_str("CosEventService");
+    obj = root_context->resolve_str ("CosEventService");
 
     // Downcast the object reference to an EventChannel reference.
-    CosEventChannelAdmin::EventChannel_var echoEC =
-      CosEventChannelAdmin::EventChannel::_narrow(obj.in());
-    if (CORBA::is_nil(echoEC.in())) {
-      std::cerr << "Could not resolve EchoEventChannel." << std::endl;
-      return 1;
-    }
+    CosEventChannelAdmin::EventChannel_var const echoEC =
+      CosEventChannelAdmin::EventChannel::_narrow (obj.in ());
+    if (CORBA::is_nil (echoEC.in ()))
+      {
+        std::cerr << "Could not resolve EchoEventChannel." << std::endl;
+        return 1;
+      }
 
     // Get a SupplierAdmin object from the EventChannel.
-    CosEventChannelAdmin::SupplierAdmin_var supplierAdmin =
-      echoEC->for_suppliers();
+    CosEventChannelAdmin::SupplierAdmin_var const supplierAdmin =
+      echoEC->for_suppliers ();
 
     // Get a ProxyPushConsumer from the SupplierAdmin.
-    CosEventChannelAdmin::ProxyPushConsumer_var consumer =
-      supplierAdmin->obtain_push_consumer();
+    CosEventChannelAdmin::ProxyPushConsumer_var const consumer =
+      supplierAdmin->obtain_push_consumer ();
 
     // Connect to the ProxyPushConsumer as a PushSupplier
     // (passing a nil PushSupplier object reference to it because
     // we don't care to be notified about disconnects).
-    consumer->connect_push_supplier(CosEventComm::PushSupplier::_nil());
+    consumer->connect_push_supplier (CosEventComm::PushSupplier::_nil ());
 
     // Create an event (just a string in this case).
-    CORBA::String_var const eventData = CORBA::string_dup("Hello, world.");
+    CORBA::String_var const eventData = CORBA::string_dup ("Hello, world.");
 
     // Send one event per second. (approx)
-    while (1) {
-      // Insert the event data into an any.
-      CORBA::Any any;
-      any <<= eventData;
+    while (true)
+      {
+        // Insert the event data into an any.
+        CORBA::Any any;
+        any <<= eventData;
 
-      // Now push the event to the consumer
-      consumer->push(any);
+        // Now push the event to the consumer
+        consumer->push (any);
 
-      ACE_Time_Value event_delay(0, 1000 * EVENT_DELAY_MS);
-      orb->run(event_delay);
-    }
+        ACE_Time_Value event_delay (0, 1000 * EVENT_DELAY_MS);
+        orb->run (event_delay);
+      }
 
     return 0;
   }
-  catch(const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
   {
     std::cerr << "Supplier Caught CORBA::Exception. " << ex << std::endl;
   }

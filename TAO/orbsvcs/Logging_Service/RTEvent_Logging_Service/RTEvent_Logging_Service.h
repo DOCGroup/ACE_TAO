@@ -18,6 +18,9 @@
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Log/RTEventLogFactory_i.h"
 
+#include <optional>
+#include <string>
+
 class RTEvent_Logging_Service
   : public ACE_Task_Base
 {
@@ -28,22 +31,20 @@ class RTEvent_Logging_Service
   //   Implementation of the Telecom Log Service
 
 public:
-  RTEvent_Logging_Service ();
-  // Constructor.
+  RTEvent_Logging_Service () = default;
 
-  ~RTEvent_Logging_Service () override;
-  // Destructor.
+  ~RTEvent_Logging_Service () override = default;
 
   RTEvent_Logging_Service (RTEvent_Logging_Service const &) = delete;
   RTEvent_Logging_Service (RTEvent_Logging_Service &&) = delete;
   RTEvent_Logging_Service &operator= (RTEvent_Logging_Service const &) = delete;
   RTEvent_Logging_Service &operator= (RTEvent_Logging_Service &&) = delete;
 
-  int init (int argc, ACE_TCHAR * argv[]);
+  int init (int argc, ACE_TCHAR * argv[]) override;
   // Initializes the Telecom Log Service.
 
   int run ();
-    // Run the Telecom Log Service.
+  // Run the Telecom Log Service.
   // Returns 0 on success, -1 on error.
 
   void shutdown ();
@@ -65,31 +66,31 @@ protected:
 
 private:
   // = Data members
-  TAO_RTEventLogFactory_i * rtevent_log_factory_;
-  // The RTEvent Log Factory.
-
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
   // The ORB that we use.
 
-  PortableServer::POA_var poa_;
+  PortableServer::POA_var poa_ {};
   // Reference to the root poa.
 
-  CosNaming::NamingContext_var naming_;
+  PortableServer::ServantBase_var rtevent_log_factory_owner_ {};
+  // Keep the factory servant alive while it is active in the POA.
+
+  CosNaming::NamingContext_var naming_ {};
   // A naming context.
 
-  ACE_CString service_name_;
+  std::string service_name_ {"RTEventLogFactory"};
   // The name we use to bind with the NameService
 
-  ACE_TCHAR const * ior_file_name_;
+  std::optional<std::basic_string<ACE_TCHAR>> ior_file_name_ {};
   // The name of the file were we output the factory IOR.
 
-  ACE_TCHAR const * pid_file_name_;
+  std::optional<std::basic_string<ACE_TCHAR>> pid_file_name_ {};
   // The name of a file where the process stores its pid
 
-  bool bind_to_naming_service_;
+  bool bind_to_naming_service_ {true};
   // If true, bind to naming service
 
-  int nthreads_;
+  int nthreads_ {};
   // Number of worker threads.
 };
 

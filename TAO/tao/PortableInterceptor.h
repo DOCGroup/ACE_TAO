@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_PORTABLE_INTERCEPTOR_H
 #define TAO_PORTABLE_INTERCEPTOR_H
 

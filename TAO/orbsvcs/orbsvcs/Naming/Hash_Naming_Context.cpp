@@ -6,21 +6,20 @@
  */
 //=============================================================================
 
-
 #include "orbsvcs/Naming/Hash_Naming_Context.h"
 #include "orbsvcs/Naming/nsconf.h"
+
+#include <cstring>
 #include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Bindings_Map::~TAO_Bindings_Map ()
-{
-}
+TAO_Bindings_Map::~TAO_Bindings_Map () = default;
 
 TAO_Hash_Naming_Context::TAO_Hash_Naming_Context (PortableServer::POA_ptr poa,
-                                                  const char *poa_id)
-  : context_ (0),
-    interface_ (0),
+                                                  char const *poa_id)
+  : context_ (nullptr),
+    interface_ (nullptr),
     destroyed_ (0),
     poa_ (PortableServer::POA::_duplicate (poa)),
     poa_id_ (poa_id)
@@ -51,7 +50,7 @@ TAO_Hash_Naming_Context::_default_POA ()
 }
 
 CosNaming::NamingContext_ptr
-TAO_Hash_Naming_Context::get_context (const CosNaming::Name &name)
+TAO_Hash_Naming_Context::get_context (CosNaming::Name const &name)
 {
   CosNaming::NamingContext_var result =
     CosNaming::NamingContext::_nil ();
@@ -97,7 +96,7 @@ TAO_Hash_Naming_Context::get_context (const CosNaming::Name &name)
 }
 
 void
-TAO_Hash_Naming_Context::bind (const CosNaming::Name& n, CORBA::Object_ptr obj)
+TAO_Hash_Naming_Context::bind (CosNaming::Name const &n, CORBA::Object_ptr obj)
 {
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
@@ -125,7 +124,7 @@ TAO_Hash_Naming_Context::bind (const CosNaming::Name& n, CORBA::Object_ptr obj)
         {
           context->bind (simple_name, obj);
         }
-      catch (const CORBA::SystemException&)
+      catch (CORBA::SystemException const &)
         {
           throw CosNaming::NamingContext::CannotProceed(
             context.in (), simple_name);
@@ -153,7 +152,7 @@ TAO_Hash_Naming_Context::bind (const CosNaming::Name& n, CORBA::Object_ptr obj)
 }
 
 void
-TAO_Hash_Naming_Context::rebind (const CosNaming::Name& n,
+TAO_Hash_Naming_Context::rebind (CosNaming::Name const &n,
                                  CORBA::Object_ptr obj)
 {
   // Check to make sure this object didn't have <destroy> method
@@ -182,7 +181,7 @@ TAO_Hash_Naming_Context::rebind (const CosNaming::Name& n,
         {
           context->rebind (simple_name, obj);
         }
-      catch (const CORBA::SystemException&)
+      catch (CORBA::SystemException const &)
         {
           throw CosNaming::NamingContext::CannotProceed(
             context.in (), simple_name);
@@ -211,7 +210,7 @@ TAO_Hash_Naming_Context::rebind (const CosNaming::Name& n,
 }
 
 void
-TAO_Hash_Naming_Context::bind_context (const CosNaming::Name &n,
+TAO_Hash_Naming_Context::bind_context (CosNaming::Name const &n,
                                        CosNaming::NamingContext_ptr nc)
 {
   // Check to make sure this object didn't have <destroy> method
@@ -244,7 +243,7 @@ TAO_Hash_Naming_Context::bind_context (const CosNaming::Name &n,
         {
           context->bind_context (simple_name, nc);
         }
-      catch (const CORBA::SystemException&)
+      catch (CORBA::SystemException const &)
         {
           throw CosNaming::NamingContext::CannotProceed(
             context.in (), simple_name);
@@ -272,7 +271,7 @@ TAO_Hash_Naming_Context::bind_context (const CosNaming::Name &n,
 }
 
 void
-TAO_Hash_Naming_Context::rebind_context (const CosNaming::Name &n,
+TAO_Hash_Naming_Context::rebind_context (CosNaming::Name const &n,
                                          CosNaming::NamingContext_ptr nc)
 {
   // Check to make sure this object didn't have <destroy> method
@@ -301,7 +300,7 @@ TAO_Hash_Naming_Context::rebind_context (const CosNaming::Name &n,
         {
           context->rebind_context (simple_name, nc);
         }
-      catch (const CORBA::SystemException&)
+      catch (CORBA::SystemException const &)
         {
           throw CosNaming::NamingContext::CannotProceed(
             context.in (), simple_name);
@@ -331,7 +330,7 @@ TAO_Hash_Naming_Context::rebind_context (const CosNaming::Name &n,
 }
 
 CORBA::Object_ptr
-TAO_Hash_Naming_Context::resolve (const CosNaming::Name& n)
+TAO_Hash_Naming_Context::resolve (CosNaming::Name const &n)
 {
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
@@ -408,7 +407,7 @@ TAO_Hash_Naming_Context::resolve (const CosNaming::Name& n)
               resolved_ref = context->resolve (rest_of_name);
               return resolved_ref;
             }
-          catch (const CORBA::SystemException&)
+          catch (CORBA::SystemException const &)
             {
               throw CosNaming::NamingContext::CannotProceed
                 (context.in (), rest_of_name);
@@ -435,7 +434,7 @@ TAO_Hash_Naming_Context::resolve (const CosNaming::Name& n)
 }
 
 void
-TAO_Hash_Naming_Context::unbind (const CosNaming::Name& n)
+TAO_Hash_Naming_Context::unbind (CosNaming::Name const &n)
 {
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
@@ -463,7 +462,7 @@ TAO_Hash_Naming_Context::unbind (const CosNaming::Name& n)
         {
           context->unbind (simple_name);
         }
-      catch (const CORBA::SystemException&)
+      catch (CORBA::SystemException const &)
         {
           throw CosNaming::NamingContext::CannotProceed(
             context.in (), simple_name);
@@ -485,7 +484,7 @@ TAO_Hash_Naming_Context::unbind (const CosNaming::Name& n)
 }
 
 CosNaming::NamingContext_ptr
-TAO_Hash_Naming_Context::bind_new_context (const CosNaming::Name& n)
+TAO_Hash_Naming_Context::bind_new_context (CosNaming::Name const &n)
 {
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
@@ -525,7 +524,7 @@ TAO_Hash_Naming_Context::bind_new_context (const CosNaming::Name& n)
     {
       this->bind_context (n, result.in ());
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // If the bind() operation fails we must destroy the recently
       // created context, should any exceptions be raised by the
@@ -535,7 +534,7 @@ TAO_Hash_Naming_Context::bind_new_context (const CosNaming::Name& n)
           {
             result->destroy ();
           }
-        catch (const CORBA::Exception&)
+        catch (CORBA::Exception const &)
           {
           }
       }
@@ -581,8 +580,8 @@ TAO_Hash_Naming_Context::destroy ()
 int
 TAO_Hash_Naming_Context::root ()
 {
-  return (ACE_OS::strcmp (this->poa_id_.fast_rep (),
-                          TAO_ROOT_NAMING_CONTEXT) == 0);
+  return (std::strcmp (this->poa_id_.fast_rep (),
+                       TAO_ROOT_NAMING_CONTEXT) == 0);
 }
 
 int

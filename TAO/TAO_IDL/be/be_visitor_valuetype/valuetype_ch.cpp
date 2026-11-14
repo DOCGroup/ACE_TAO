@@ -154,7 +154,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
     }
 
   // Generate the supported interfaces.
-  for (std::size_t i = 0; i < node->n_supports (); ++i)
+  for (size_t i = 0; i < node->n_supports (); ++i)
     {
       *os << "," << be_nl
           << "public virtual ::"
@@ -294,7 +294,6 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
           << be_nl;
     }
   /*********************************************************/
-
 
   // Map fields to private data (if optimizing).
   if (node->opt_accessor ())
@@ -473,7 +472,6 @@ be_visitor_valuetype_ch::visit_field (be_field *node)
 
   return 0;
 }
-
 
 void
 be_visitor_valuetype_ch::begin_public ()

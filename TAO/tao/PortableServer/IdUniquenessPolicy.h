@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file IdUniquenessPolicy.h
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
 #ifndef TAO_PORTABLESERVER_IDUNIQUENESSTPOLICY_H
 #define TAO_PORTABLESERVER_IDUNIQUENESSTPOLICY_H
 #include /**/ "ace/pre.h"
@@ -41,7 +37,7 @@ namespace TAO
         public virtual ::CORBA::LocalObject
     {
     public:
-      IdUniquenessPolicy (::PortableServer::IdUniquenessPolicyValue value);
+      explicit IdUniquenessPolicy (::PortableServer::IdUniquenessPolicyValue value);
 
       CORBA::Policy_ptr copy () override;
 

@@ -39,7 +39,7 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
   if (!SSL_in_connect_init (ssl))
     ::SSL_set_connect_state (ssl);
 
-  ACE_HANDLE handle = new_stream.get_handle ();
+  ACE_HANDLE const handle = new_stream.get_handle ();
 
   // We're going to call SSL_connect, optionally doing ACE::select and
   // retrying the SSL_connect, until the SSL handshake is done or
@@ -49,11 +49,11 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
   // is 0 (wait as long as it takes) then don't worry about the blocking
   // status; we'll block in SSL_connect if the socket is blocking, and
   // block in ACE::select if not.
-  int reset_blocking_mode = 0;
+  bool reset_blocking_mode {};
   if (timeout != nullptr)
     {
       reset_blocking_mode = ACE_BIT_DISABLED (ACE::get_flags (handle),
-                                              ACE_NONBLOCK);
+                                              ACE_NONBLOCK) != 0;
           // Set the handle into non-blocking mode if it's not already
           // in it.
           if (reset_blocking_mode
@@ -151,8 +151,8 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
           // Must have at least one handle to wait for at this point.
           ACE_ASSERT (rd_handle.num_set () == 1 || wr_handle.num_set () == 1);
 
-          // Block indefinitely if timeout pointer is zero.
-          int select_width = 0;
+          // Block indefinitely if the timeout pointer is null.
+          int select_width {};
 #if !defined (ACE_WIN32)
           select_width = handle + 1;
 #endif /* ACE_WIN32 */
@@ -218,7 +218,7 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
                               flags,
                               perms);
 
-  int error = 0;
+  int error {};
   if (result == -1)
     error = errno;  // Save us some TSS accesses.
 
@@ -288,7 +288,7 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
                                          reuse_addr,
                                          perms);
 
-  int error = 0;
+  int error {};
   if (result == -1)
     error = errno;  // Save us some TSS accesses.
 
@@ -371,7 +371,6 @@ ACE_SSL_SOCK_Connector::complete (ACE_SSL_SOCK_Stream &new_stream,
 
   return 0;
 }
-
 
 ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector (
   ACE_SSL_SOCK_Stream &new_stream,

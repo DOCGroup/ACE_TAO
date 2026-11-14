@@ -1,120 +1,93 @@
 // -*- C++ -*-
 
 #include "ace/Get_Opt.h"
-
 #include "FooC.h"
-#include "ace/SString.h"
 #include "orbsvcs/SecurityC.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
-const char *cert_file = "cacert.pem";
+struct Client_Options
+{
+  ACE_TCHAR const *ior {ACE_TEXT ("file://test.ior")};
+};
 
 void
 null_cipher_test (CORBA::ORB_ptr orb,
-                  CORBA::Object_ptr obj)
+                  CORBA::Object_ptr obj,
+                  ACE_TCHAR const *ior)
 {
-  Security::QOP qop = Security::SecQOPIntegrity;
-  //  Security::EstablishTrust establish_trust = {0,1};
-
+  Security::QOP const qop = Security::SecQOPIntegrity;
   CORBA::Any protection;
-  //CORBA::Any trust;
-
   protection <<= qop;
-  //trust <<= establish_trust;
 
-  CORBA::PolicyList policy_list (2);
+  CORBA::PolicyList policy_list (1);
   policy_list.length (1);
-  policy_list[0] =
-    orb->create_policy (Security::SecQOPPolicy, protection);
-//   policy_list[1] =
-//     orb->create_policy (Security::SecEstablishTrustPolicy, trust);
+  policy_list[0] = orb->create_policy (Security::SecQOPPolicy, protection);
 
-  // Create an object reference that uses plain IIOP (i.e. no
-  // protection).
-  CORBA::Object_var object =
-    obj->_set_policy_overrides (policy_list,
-                                CORBA::SET_OVERRIDE);
-
-  Foo_var server =
-    Foo::_narrow (object.in ());
-
+  // Create an object reference that uses plain IIOP (i.e. no protection).
+  CORBA::Object_var object = obj->_set_policy_overrides (policy_list,
+                                                         CORBA::SET_OVERRIDE);
+  Foo_var server = Foo::_narrow (object.in ());
   if (CORBA::is_nil (server.in ()))
     {
       ACE_ERROR ((LM_ERROR,
-                  "(%P|%t) ERROR: Object reference <%s> is "
-                  "nil.\n",
+                  ACE_TEXT ("(%P|%t) ERROR: Object reference <%s> is nil.\n"),
                   ior));
-
       throw CORBA::INTERNAL ();
     }
 
   try
     {
-      // This invocation should result in a CORBA::NO_PERMISSION
-      // exception.
+      // This invocation should result in a CORBA::NO_PERMISSION exception.
       server->shutdown ();
     }
-  catch (const CORBA::NO_PERMISSION&)
+  catch (CORBA::NO_PERMISSION const &)
     {
       ACE_DEBUG ((LM_INFO,
-                  "(%P|%t) Received CORBA::NO_PERMISSION from "
-                  "server\n"));
+                  ACE_TEXT ("(%P|%t) Received CORBA::NO_PERMISSION from server\n")));
     }
 }
 
-
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
-
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
+  int c {};
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Usage:  %s "
-                           "-k <ior> "
-                           "\n",
-                           argv [0]),
+                           ACE_TEXT ("Usage: %s -k <ior>\n"),
+                           argv[0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+
   return 0;
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
-
-      if (parse_args (argc, argv) != 0)
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      Client_Options options;
+      if (parse_args (argc, argv, options) != 0)
         return 1;
-
-      CORBA::Object_var object =
-        orb->string_to_object (ior);
-
-      null_cipher_test (orb.in (), object.in ());
-
+      CORBA::Object_var object = orb->string_to_object (options.ior);
+      null_cipher_test (orb.in (), object.in (), options.ior);
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              "\n"
-              "Secure_Invocation test passed.\n"));
-
+              ACE_TEXT ("\nSecure_Invocation test passed.\n")));
   return 0;
 }

@@ -30,16 +30,16 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
     {
       Catior_i catior_impl;
       orb_var =  CORBA::ORB_init (argcw, argvw);
-      CORBA::Boolean b = false;
-      CORBA::Boolean have_argument = false;
-      int opt;
+      CORBA::Boolean b {};
+      bool have_argument {};
+      int opt {};
 
       ACE_Get_Opt get_opt (argcw, argvw, ACE_TEXT ("f:n:x"));
 
       while ((opt = get_opt ()) != EOF)
         {
           // some arguments have been supplied
-          have_argument = 1;
+          have_argument = true;
           switch (opt)
             {
             case 'n':
@@ -69,16 +69,16 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                                       -1);
                     }
 
-                    CosNaming::Name *name =
+                    CosNaming::Name_var name =
                       naming_context->to_name (ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ()));
 
                     try
                       {
-                        server_object = naming_context->resolve (*name);
-                          if (CORBA::is_nil (server_object.in ()))
+                        server_object = naming_context->resolve (name.in ());
+                        if (CORBA::is_nil (server_object.in ()))
                           {
                             ACE_ERROR_RETURN ((LM_ERROR,
-                                  "name is not resolved to a valid object\n"),
+                                               "name is not resolved to a valid object\n"),
                                               -1);
                           }
                       }
@@ -141,7 +141,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
 
                     ACE_DEBUG ((LM_DEBUG,
                                 "\nhere is the IOR\n%C\n\n",
-                                aString.rep ()));
+                                aString.c_str ()));
 
                     ACE_CString str;
                     b = catior_impl.decode(aString, str);
@@ -157,7 +157,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                                       -1);
                   }
 
-                if (b == 1)
+                if (b)
                   ACE_DEBUG ((LM_DEBUG,
                               "catior returned true\n"));
                 else
@@ -167,8 +167,8 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
               }
             case 'f':
               {
-                int have_some_input = 0;
-                int decode_pass_count = 0;
+                bool have_some_input {};
+                int decode_pass_count {};
 
                 //  Read the file into a CORBA::String_var.
                 ACE_DEBUG ((LM_DEBUG,
@@ -196,16 +196,16 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                   {
                     ACE_CString aString;
 
-                    have_some_input = 0;
+                    have_some_input = false;
 
                     while (!ifstr.eof ())
                       {
-                        char ch = 0;
+                        char ch {};
                         ifstr.get (ch);
                         if (ifstr.eof () || ch == '\n' || ch == '\r')
                           break;
                         aString += ch;
-                        ++have_some_input;
+                        have_some_input = true;
                       }
 #else
                 FILE* ifstr = ACE_OS::fopen (get_opt.opt_arg (), ACE_TEXT ("r"));
@@ -232,7 +232,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                     char ch;
                     ACE_CString aString;
 
-                    have_some_input = 0;
+                    have_some_input = false;
 
                     while (!feof (ifstr))
                       {
@@ -240,10 +240,10 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                         if (ch == EOF || ch == '\n' || ch == '\r')
                           break;
                         aString += ch;
-                        ++have_some_input;
+                        have_some_input = true;
                       }
 #endif /* !defined (ACE_LACKS_IOSTREAM_TOTALLY) */
-                    if (have_some_input == 0 || !aString.length())
+                    if (!have_some_input || !aString.length ())
                       {
                         if (!decode_pass_count)
                           {
@@ -269,7 +269,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
 
                     ACE_DEBUG ((LM_DEBUG,
                                 "IOR %d: here is the IOR\n%C\n\n",
-                                decode_pass_count, aString.rep ()));
+                                decode_pass_count, aString.c_str ()));
 
                     ACE_CString str;
                     Catior_i fcatior_impl;
@@ -277,7 +277,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                     b = fcatior_impl.decode(aString, str);
                     ACE_DEBUG ((LM_DEBUG, "%s", str.c_str()));
                   }
-                if (b == 1)
+                if (b)
                   ACE_DEBUG ((LM_DEBUG,
                               "catior returned true\n"));
                 else
@@ -292,8 +292,8 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
               break;
             case 'x':
               {
-                int have_some_input = 0;
-                int decode_pass_count = 0;
+                bool have_some_input {};
+                int decode_pass_count {};
 
                 //  Read the input into a CORBA::String_var.
                 ACE_DEBUG ((LM_DEBUG,
@@ -316,16 +316,16 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                   {
                     ACE_CString aString;
 
-                    have_some_input = 0;
+                    have_some_input = false;
 
                     while (!cin.eof ())
                       {
-                        char ch = 0;
+                        char ch {};
                         cin.get (ch);
                         if (cin.eof () || ch == '\n' || ch == '\r')
                           break;
                         aString += ch;
-                        ++have_some_input;
+                        have_some_input = true;
                       }
 #else
                 FILE* ifstr = stdin;
@@ -351,7 +351,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                     char ch;
                     ACE_CString aString;
 
-                    have_some_input = 0;
+                    have_some_input = false;
 
                     while (!feof (ifstr))
                       {
@@ -359,11 +359,11 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                         if (ch == EOF || ch == '\n' || ch == '\r')
                           break;
                         aString += ch;
-                        ++have_some_input;
+                        have_some_input = true;
                       }
 #endif /* !defined (ACE_LACKS_IOSTREAM_TOTALLY) */
 
-                    if (have_some_input == 0)
+                    if (!have_some_input)
                       {
                         if (!decode_pass_count)
                           {
@@ -386,13 +386,13 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
 
                     ACE_DEBUG ((LM_DEBUG,
                                 "IOR: %d\nhere is the IOR\n%C\n\n",
-                                decode_pass_count, aString.rep ()));
+                                decode_pass_count, aString.c_str ()));
 
                     ACE_CString str;
                     b = catior_impl.decode(aString, str);
                     ACE_DEBUG ((LM_DEBUG, "%s", str.c_str()));
                   }
-                if (b == 1)
+                if (b)
                   ACE_DEBUG ((LM_DEBUG,
                               "catior returned true\n"));
                 else
@@ -417,7 +417,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
         }
 
         // check that some relevant arguments have been supplied
-        if (have_argument == 0)
+        if (!have_argument)
               ACE_ERROR_RETURN ((LM_ERROR,
                                 "Usage: %s "
                                 "-f filename "

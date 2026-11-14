@@ -93,6 +93,9 @@ namespace XSCRT
       return *this;
     }
 
+    Type (Type &&) = delete;
+    Type &operator= (Type &&) = delete;
+
   public:
     Type const *container () const
     {
@@ -134,14 +137,12 @@ namespace XSCRT
 
       Map_::size_type registered{};
 
+      // container_ is borrowed; it points to an ancestor in the parsed graph.
       // Revoke registrations from our old container.
-      if (container_ != nullptr && map_.get ())
+      if (container_ != nullptr && map_)
       {
         for (Map_::value_type const &entry : *map_)
         {
-          // std::wcerr << "revoking " << entry.second
-          //            << " to " << container_ << std::endl;
-
           container_->unregister_id (*entry.first);
         }
       }
@@ -153,9 +154,6 @@ namespace XSCRT
         {
           for (Map_::value_type const &entry : *map_)
           {
-            // std::wcerr << "copying " << entry.second
-            //            << " to " << c << std::endl;
-
             c->register_id (*entry.first, entry.second);
             ++registered;
           }
@@ -184,7 +182,7 @@ namespace XSCRT
     {
       if (!map_)
       {
-        map_ = std::unique_ptr<Map_> (new Map_);
+        map_ = std::make_unique<Map_> ();
       }
 
       std::pair<Map_::iterator, bool> const insertion (map_->try_emplace (std::addressof (id), t));
@@ -207,7 +205,7 @@ namespace XSCRT
 
     void unregister_id (IdentityProvider const &id)
     {
-      if (map_.get ())
+      if (map_)
       {
         Map_::iterator const it (map_->find (std::addressof (id)));
 
@@ -227,7 +225,7 @@ namespace XSCRT
 
     Type *lookup_id (IdentityProvider const &id) const
     {
-      if (map_.get ())
+      if (map_)
       {
         Map_::const_iterator const it (map_->find (std::addressof (id)));
 
@@ -241,7 +239,7 @@ namespace XSCRT
     }
 
     /// Get and set methods for the idref_map_ data member
-    Type *get_idref (const char *name) const
+    Type *get_idref (char const *name) const
     {
       std::basic_string<ACE_TCHAR> const name_string (ACE_TEXT_CHAR_TO_TCHAR (name));
       std::map<std::basic_string<ACE_TCHAR>, XSCRT::Type *>::const_iterator const i =
@@ -256,7 +254,7 @@ namespace XSCRT
       }
     }
 
-    Type *get_idref (const std::basic_string<ACE_TCHAR> &name) const
+    Type *get_idref (std::basic_string<ACE_TCHAR> const &name) const
     {
       std::map<std::basic_string<ACE_TCHAR>, XSCRT::Type *>::const_iterator const i = this->idref_map_.find (name);
       if (i != idref_map_.end ())
@@ -269,7 +267,7 @@ namespace XSCRT
       }
     }
 
-    Type *get_idref (const wchar_t *name) const
+    Type *get_idref (wchar_t const *name) const
     {
       std::basic_string<ACE_TCHAR> const name_string (ACE_TEXT_WCHAR_TO_TCHAR (name));
       std::map<std::basic_string<ACE_TCHAR>, XSCRT::Type *>::const_iterator const i =
@@ -284,13 +282,13 @@ namespace XSCRT
       }
     }
 
-    void set_idref (const std::basic_string<ACE_TCHAR> &name, Type *new_idref)
+    void set_idref (std::basic_string<ACE_TCHAR> const &name, Type *new_idref)
     {
       this->idref_map_.try_emplace (name, new_idref);
     }
 
   private:
-    // Data member to handle unbounded IDREF attributes and elements
+    // IDREF targets and the parent container are borrowed from the parsed graph.
     std::map<std::basic_string<ACE_TCHAR>, XSCRT::Type *> idref_map_{};
 
     Type *container_{};
@@ -305,6 +303,7 @@ namespace XSCRT
 
     using Map_ = std::map<IdentityProvider const *, Type *, IdentityComparator>;
 
+    // Owns the registration map; its IdentityProvider keys and Type values are borrowed.
     std::unique_ptr<Map_> map_{};
   };
 
@@ -330,7 +329,7 @@ namespace XSCRT
     {
     }
 
-    FundamentalType (X const &x)
+    explicit FundamentalType (X const &x)
       : x_ (x)
     {
     }
@@ -362,7 +361,7 @@ namespace XSCRT
   inline FundamentalType<signed char>::FundamentalType (XML::Element<C> const &e)
   {
     short const t (Details::parse_numeric<C, short> (e.value ()));
-    if (t < std::numeric_limits<signed char>::min () || t > std::numeric_limits<signed char>::max ())
+    if (t < (std::numeric_limits<signed char>::min) () || t > (std::numeric_limits<signed char>::max) ())
       throw std::out_of_range ("XML byte value is out of range");
     x_ = static_cast<signed char> (t);
   }
@@ -372,7 +371,7 @@ namespace XSCRT
   inline FundamentalType<signed char>::FundamentalType (XML::Attribute<C> const &a)
   {
     short const t (Details::parse_numeric<C, short> (a.value ()));
-    if (t < std::numeric_limits<signed char>::min () || t > std::numeric_limits<signed char>::max ())
+    if (t < (std::numeric_limits<signed char>::min) () || t > (std::numeric_limits<signed char>::max) ())
       throw std::out_of_range ("XML byte value is out of range");
     x_ = static_cast<signed char> (t);
   }
@@ -383,7 +382,7 @@ namespace XSCRT
   inline FundamentalType<unsigned char>::FundamentalType (XML::Element<C> const &e)
   {
     unsigned short const t (Details::parse_numeric<C, unsigned short> (e.value ()));
-    if (t > std::numeric_limits<unsigned char>::max ())
+    if (t > (std::numeric_limits<unsigned char>::max) ())
       throw std::out_of_range ("XML unsignedByte value is out of range");
     x_ = static_cast<unsigned char> (t);
   }
@@ -393,7 +392,7 @@ namespace XSCRT
   inline FundamentalType<unsigned char>::FundamentalType (XML::Attribute<C> const &a)
   {
     unsigned short const t (Details::parse_numeric<C, unsigned short> (a.value ()));
-    if (t > std::numeric_limits<unsigned char>::max ())
+    if (t > (std::numeric_limits<unsigned char>::max) ())
       throw std::out_of_range ("XML unsignedByte value is out of range");
     x_ = static_cast<unsigned char> (t);
   }

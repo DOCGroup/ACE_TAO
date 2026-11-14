@@ -9,44 +9,48 @@
 
 #include "tao/Object.h"
 #include "tao/IORManipulation/IORManipulation.h"
+
+struct Client_Options
+{
+  ACE_TCHAR const *first_ior {};
+  ACE_TCHAR const *first_key {};
+  ACE_TCHAR const *second_ior {};
+  ACE_TCHAR const *second_key {};
+  ACE_TCHAR const *first_iogr_file {};
+  ACE_TCHAR const *second_iogr_file {};
+  int sleep_delay {15};
+};
+
 class Manager
 {
 public:
-  Manager ();
-  // Ctor
+  Manager () = default;
+
+  Manager (Manager const &) = delete;
+  Manager (Manager &&) = delete;
+  Manager &operator= (Manager const &) = delete;
+  Manager &operator= (Manager &&) = delete;
 
   void init (int& argc,
              ACE_TCHAR *argv[]);
 
-  // Initialize the ORB, POA etc.
+  int make_merged_iors (Client_Options const &options);
 
-  int make_merged_iors ();
-  // Merges the different IORS
+  int write_to_files (Client_Options const &options);
 
-  /// Run the  ORB event loop..
-  int run ();
-
-  /// Write the merged IOGRs to a file
-  int write_to_files ();
-
-  /// Return the pointer to the copy of our ORB
-  CORBA::ORB_ptr orb ();
+  CORBA::ORB_ptr orb () const;
 
 private:
-  /// Write the merged IOGRs to a file
-  int write_to_file (CORBA::Object_ptr ior, const ACE_TCHAR* ior_output_file);
+  int write_to_file (CORBA::Object_ptr ior, ACE_TCHAR const *ior_output_file);
 
-  /// Sets the properties for the profiles
   int set_properties (TAO_IOP::TAO_IOR_Manipulation_ptr iorm,
                       CORBA::Object_ptr merged_set,
-                      CORBA::Object_ptr primary, CORBA::ULong version);
+                      CORBA::Object_ptr primary, CORBA::ULong const version);
 
-  /// Our ORB
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 
-  /// The merged IOR set
-  CORBA::Object_var merged_set_10_;
-  CORBA::Object_var merged_set_11_;
+  CORBA::Object_var merged_set_10_ {};
+  CORBA::Object_var merged_set_11_ {};
 };
 
 #endif /* BUG_2248_REGRESSION_CLIENT_H */

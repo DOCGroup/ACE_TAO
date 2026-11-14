@@ -11,7 +11,6 @@
 #include "ace/OS_NS_poll.h"
 #include "ace/OS_NS_stdio.h"
 
-
 #if defined (ACE_HAS_POLL)
 
 // Should we be verbose?
@@ -86,7 +85,7 @@ handle_data (size_t &n_handles)
       if (ACE_BIT_ENABLED (poll_array[index].revents, POLLIN))
         {
           // First time in, we need to initialize the buffer.
-          if (buffer_array[index].buf_ == 0
+          if (buffer_array[index].buf_ == nullptr
               && init_buffer (index) == -1)
             {
               ACE_ERROR ((LM_ERROR,
@@ -117,7 +116,7 @@ handle_data (size_t &n_handles)
               poll_array[index].fd = poll_array[--n_handles].fd;
 
               ACE_OS::free ((void *) buffer_array[index].buf_);
-              buffer_array[index].buf_ = 0;
+              buffer_array[index].buf_ = nullptr;
               buffer_array[index].len_ = 0;
             }
           else if (verbose)
@@ -150,7 +149,7 @@ handle_connections (ACE_SOCK_Acceptor &peer_acceptor,
           {
             const char *s = client.get_host_name ();
 
-            ACE_ASSERT (s != 0);
+            ACE_ASSERT (s != nullptr);
             ACE_DEBUG ((LM_DEBUG,
                         "(%P|%t) client %s\n",
                         s));

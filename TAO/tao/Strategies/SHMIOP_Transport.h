@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   SHMIOP_Transport.h
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
-// ===================================================================
 
 #ifndef TAO_SHMIOP_TRANSPORT_H
 #define TAO_SHMIOP_TRANSPORT_H
@@ -49,12 +47,10 @@ using TAO_SHMIOP_SVC_HANDLER = ACE_Svc_Handler<ACE_MEM_STREAM, ACE_NULL_SYNCH>;
 class TAO_Strategies_Export TAO_SHMIOP_Transport : public TAO_Transport
 {
 public:
-  /// Constructor.
   TAO_SHMIOP_Transport (TAO_SHMIOP_Connection_Handler *handler,
                         TAO_ORB_Core *orb_core);
 
-  /// Default destructor.
-  ~TAO_SHMIOP_Transport () override;
+  ~TAO_SHMIOP_Transport () override = default;
 
 protected:
   /**

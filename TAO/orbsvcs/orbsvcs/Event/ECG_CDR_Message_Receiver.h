@@ -23,6 +23,8 @@
 #include "ace/INET_Addr.h"
 #include "ace/Null_Mutex.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -35,7 +37,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_ECG_CDR_Processor
 {
 public:
-  virtual ~TAO_ECG_CDR_Processor ();
+  virtual ~TAO_ECG_CDR_Processor () = default;
 
   /// Extracts data from @a cdr.  Returns 0 on success, -1 on error.
   virtual int decode (TAO_InputCDR &cdr) = 0;
@@ -64,6 +66,10 @@ public:
                              CORBA::ULong fragment_count);
 
   ~TAO_ECG_UDP_Request_Entry ();
+  TAO_ECG_UDP_Request_Entry (const TAO_ECG_UDP_Request_Entry&) = delete;
+  TAO_ECG_UDP_Request_Entry (TAO_ECG_UDP_Request_Entry&&) = delete;
+  TAO_ECG_UDP_Request_Entry& operator= (const TAO_ECG_UDP_Request_Entry&) = delete;
+  TAO_ECG_UDP_Request_Entry& operator= (TAO_ECG_UDP_Request_Entry&&) = delete;
 
   /// Validate a fragment, it should be rejected if it is invalid..
   int validate_fragment (CORBA::Boolean byte_order,
@@ -86,10 +92,6 @@ public:
   char* fragment_buffer (CORBA::ULong fragment_offset);
 
 private:
-  TAO_ECG_UDP_Request_Entry (const TAO_ECG_UDP_Request_Entry & rhs);
-  TAO_ECG_UDP_Request_Entry& operator= (const TAO_ECG_UDP_Request_Entry & rhs);
-
-private:
   /// This attributes should remain constant in all the fragments, used
   /// for validation....
   CORBA::Boolean byte_order_;
@@ -100,9 +102,10 @@ private:
   ACE_Message_Block payload_;
 
   /// This is a bit vector, used to keep track of the received buffers.
-  CORBA::ULong* received_fragments_;
-  int own_received_fragments_;
-  CORBA::ULong received_fragments_size_;
+  std::unique_ptr<CORBA::ULong[]> owned_received_fragments_ {};
+  /// View of the inline storage or the owned dynamic storage above.
+  CORBA::ULong* received_fragments_ {};
+  CORBA::ULong received_fragments_size_ {};
   CORBA::ULong default_received_fragments_[ECG_DEFAULT_FRAGMENT_BUFSIZ];
 };
 
@@ -142,7 +145,7 @@ class TAO_RTEvent_Serv_Export TAO_ECG_CDR_Message_Receiver
 public:
   /// Initialization and termination methods.
   //@{
-  TAO_ECG_CDR_Message_Receiver (CORBA::Boolean check_crc);
+  explicit TAO_ECG_CDR_Message_Receiver (CORBA::Boolean check_crc);
   ~TAO_ECG_CDR_Message_Receiver ();
 
   /**
@@ -201,7 +204,6 @@ private:
                         char * data_buf,
                         TAO_ECG_CDR_Processor *cdr_processor);
 
-
   Request_Map::ENTRY* get_source_entry (const ACE_INET_Addr &from);
 
 private:
@@ -243,7 +245,7 @@ struct TAO_ECG_CDR_Message_Receiver::Mcast_Header
   CORBA::ULong crc;
   int read (char * header,
             size_t bytes_received,
-            CORBA::Boolean checkcrc = 0);
+            CORBA::Boolean checkcrc = false);
 };
 
 // ****************************************************************
@@ -253,8 +255,12 @@ struct TAO_ECG_CDR_Message_Receiver::Mcast_Header
 class TAO_ECG_CDR_Message_Receiver::Requests
 {
 public:
-  Requests ();
+  Requests () = default;
   ~Requests ();
+  Requests (const Requests&) = delete;
+  Requests (Requests&&) = delete;
+  Requests& operator= (const Requests&) = delete;
+  Requests& operator= (Requests&&) = delete;
 
   /// Allocates and initializes <fragmented_requests_>.
   int init (size_t size, size_t min_purge_count);
@@ -275,27 +281,26 @@ private:
   void purge_requests (CORBA::ULong purge_first,
                        CORBA::ULong purge_last);
 
-  Requests & operator= (const Requests &rhs);
-  Requests (const Requests &rhs);
-
 private:
   /// Array, used in a circular fashion, that stores partially received
   /// requests (and info on which requests have been fully received
   /// and processed) for a range of request ids.
-  TAO_ECG_UDP_Request_Entry** fragmented_requests_;
+  /// Non-sentinel slots own their request pointers; the raw slots also allow
+  /// get_request() to return the address of a slot.
+  std::unique_ptr<TAO_ECG_UDP_Request_Entry*[]> fragmented_requests_ {};
 
   /// Size of <fragmented_requests_> array.
-  size_t size_;
+  size_t size_ {};
 
   /// The range of request ids, currently represented in
   /// <fragmented_requests>.
   //@{
-  CORBA::ULong id_range_low_;
-  CORBA::ULong id_range_high_;
+  CORBA::ULong id_range_low_ {};
+  CORBA::ULong id_range_high_ {};
   //@}
 
   /// Minimum range shifting amount.
-  size_t min_purge_count_;
+  size_t min_purge_count_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

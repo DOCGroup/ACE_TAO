@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Upcall_Command.h
  *
  *  @author Ossama Othman
  */
-//=============================================================================
-
 #ifndef TAO_UPCALL_COMMAND_H
 #define TAO_UPCALL_COMMAND_H
 
@@ -40,8 +36,7 @@ namespace TAO
   class TAO_PortableServer_Export Upcall_Command
   {
   public:
-    /// Destructor.
-    virtual ~Upcall_Command ();
+    virtual ~Upcall_Command () = default;
 
     /// Execute the upcall.
     virtual void execute () = 0;

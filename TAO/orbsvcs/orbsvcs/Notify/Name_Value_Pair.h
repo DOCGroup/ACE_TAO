@@ -17,7 +17,8 @@
 #include "orbsvcs/Notify/notify_serv_export.h"
 
 #include "ace/SString.h"
-#include "ace/Vector_T.h"
+
+#include <vector>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -36,7 +37,7 @@ namespace TAO_Notify
   class TAO_Notify_Serv_Export NVP {
   public:
     /// Construct an undefined name/value (to allow use in collections)
-    NVP();
+    NVP() = default;
     /// Construct from a property containing a short value.
     explicit NVP(const TAO_Notify_Property_Short& p);
     /// Construct from a property containing a long value.
@@ -53,7 +54,7 @@ namespace TAO_Notify
     /// Construct from name and string value.
     NVP(const char * n, const ACE_CString & v);
 
-    /// Assignment operator
+    /// Equality comparison operator.
     bool operator==(const NVP& rhs) const;
     /// Comparison operator compares only name (not value)
     bool operator!=(const NVP& rhs) const;
@@ -90,7 +91,7 @@ namespace TAO_Notify
     bool find (const char * name, const char *& val) const;
 
   private:
-    ACE_Vector<NVP> list_;
+    std::vector<NVP> list_;
   };
 } // namespace TAO_Notify
 

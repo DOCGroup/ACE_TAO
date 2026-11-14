@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef DUALEC_SUP_H
 #define DUALEC_SUP_H
 
@@ -25,6 +24,8 @@
 #include "NavWeapS.h"
 #include "DOVE_Supplier.h"
 
+#include <vector>
+
 struct Schedule_Viewer_Data
 {
   char operation_name [BUFSIZ];
@@ -35,7 +36,6 @@ struct Schedule_Viewer_Data
   u_long completion_time;
   u_long computation_time;
 };
-
 
 /**
  * @class DualEC_Supplier
@@ -54,6 +54,11 @@ public:
 
   ~DualEC_Supplier ();
 
+  DualEC_Supplier (DualEC_Supplier const &) = delete;
+  DualEC_Supplier (DualEC_Supplier &&) = delete;
+  DualEC_Supplier &operator= (DualEC_Supplier const &) = delete;
+  DualEC_Supplier &operator= (DualEC_Supplier &&) = delete;
+
   /// Initialize: set up, resolve ORB services,
   /// connect the DOVE_Suppliers.
   int init ();
@@ -69,7 +74,6 @@ public:
   /// Load the scheduling information into memory
   void load_schedule_data ();
 
-
 private:
 /**
  * @class Terminator
@@ -78,7 +82,7 @@ private:
  */
   class Terminator : public POA_NavWeapTerminator
   {
-    void shutdown ();
+    void shutdown () override;
   };
 
   /// Run the orb event loop.
@@ -165,8 +169,8 @@ private:
   RtecScheduler::Scheduling_Anomaly_Set_var anomalies_lo_;
 
   // Queues to store event carried data structures.
-  ACE_Unbounded_Queue<Navigation *> navigation_data_;
-  ACE_Unbounded_Queue<Weapons *> weapons_data_;
+  std::vector<Navigation *> navigation_data_;
+  std::vector<Weapons *> weapons_data_;
 
   int argc_;
   ACE_TCHAR **argv_;
@@ -177,8 +181,8 @@ private:
   int dump_schedule_headers_;
   int use_runtime_schedulers_;
   int suppress_priority_;
-  const ACE_TCHAR * hi_schedule_file_name_;
-  const ACE_TCHAR * lo_schedule_file_name_;
+  ACE_TCHAR const *hi_schedule_file_name_;
+  ACE_TCHAR const *lo_schedule_file_name_;
   CORBA::Long nav_roll_;
   CORBA::Long nav_pitch_;
 };

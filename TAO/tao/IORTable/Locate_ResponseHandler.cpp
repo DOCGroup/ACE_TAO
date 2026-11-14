@@ -1,12 +1,10 @@
 // -*- C++ -*-
-//=============================================================================
+
 /**
  *  @file    Locate_ResponseHandler.cpp
  *
  *  @author Phil Mesnier <mesnier_p@ociweb>
  */
-//=============================================================================
-
 #include "Locate_ResponseHandler.h"
 
 #include "tao/Exception.h"
@@ -38,8 +36,6 @@ TAO_AMH_Locate_ResponseHandler::TAO_AMH_Locate_ResponseHandler (
   this->init (sr, nullptr);
 }
 
-TAO_AMH_Locate_ResponseHandler::~TAO_AMH_Locate_ResponseHandler () = default;
-
 void
 TAO_AMH_Locate_ResponseHandler::raise_excep (CORBA::Exception const &ex)
 {
@@ -50,10 +46,9 @@ void
 TAO_AMH_Locate_ResponseHandler::forward_ior (char const *ior,
                                              CORBA::Boolean is_perm)
 {
-  CORBA::Object_var fwd = this->orb_->string_to_object (ior);
+  CORBA::Object_var const fwd = this->orb_->string_to_object (ior);
   this->_tao_rh_send_location_forward (fwd.in(), is_perm);
 }
-
 
 void *
 TAO_AMH_Locate_ResponseHandler::_downcast (char const *)
@@ -81,6 +76,4 @@ TAO_AMH_Locate_ResponseHandler::_interface_repository_id () const
 {
   return nullptr;
 }
-
-
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    PG_Property_Set.cpp
  *
@@ -10,36 +9,31 @@
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
-//=============================================================================
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/PortableGroup/PG_Property_Set.h"
 #include "tao/debug.h"
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 //////////////////////
 // PG_Property_Set
 
-TAO::PG_Property_Set::PG_Property_Set()
-  : defaults_ (0)
-{
-}
+TAO::PG_Property_Set::PG_Property_Set () = default;
 
-TAO::PG_Property_Set::PG_Property_Set (const PortableGroup::Properties & ps)
-  : defaults_ (0)
+TAO::PG_Property_Set::PG_Property_Set (PortableGroup::Properties const & ps)
 {
   this->decode (ps);
 }
 
-TAO::PG_Property_Set::PG_Property_Set (const PortableGroup::Properties & ps,
-                                       const PG_Property_Set_var & defaults)
+TAO::PG_Property_Set::PG_Property_Set (PortableGroup::Properties const & ps,
+                                       PG_Property_Set_var const & defaults)
   : defaults_ (defaults)
 {
   this->decode (ps);
 }
 
-
-TAO::PG_Property_Set::PG_Property_Set (const PG_Property_Set_var & defaults)
+TAO::PG_Property_Set::PG_Property_Set (PG_Property_Set_var const & defaults)
   : defaults_ (defaults)
 {
 }
@@ -50,20 +44,20 @@ TAO::PG_Property_Set::~PG_Property_Set ()
 }
 
 void
-TAO::PG_Property_Set::decode (const PortableGroup::Properties & property_set)
+TAO::PG_Property_Set::decode (PortableGroup::Properties const & property_set)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
 
   CORBA::ULong const count = property_set.length ();
-  for (CORBA::ULong nItem = 0; nItem < count; ++nItem)
+  for (CORBA::ULong nItem {}; nItem < count; ++nItem)
   {
-    const PortableGroup::Property & property = property_set[nItem];
-    const CosNaming::Name & nsName = property.nam;
+    PortableGroup::Property const & property = property_set[nItem];
+    CosNaming::Name const & nsName = property.nam;
     // note assumption one level name with no kind
     // @@ TODO: fix this
-    const CosNaming::NameComponent & nc = nsName[0];
+    CosNaming::NameComponent const & nc = nsName[0];
 
-    this->set_property (static_cast<const char *> (nc.id),
+    this->set_property (static_cast<char const *> (nc.id),
                         property.val);
 
 #if 0
@@ -74,7 +68,7 @@ TAO::PG_Property_Set::decode (const PortableGroup::Properties & property_set)
                       PortableGroup::Value (property.val),
                       CORBA::NO_MEMORY ());
 
-    const PortableGroup::Value * replaced_value = nullptr;
+  const PortableGroup::Value * replaced_value {};
     if (0 == this->values_.rebind (name, value_copy, replaced_value))
     {
       if (0 != replaced_value)
@@ -109,20 +103,20 @@ void TAO::PG_Property_Set::clear ()
   this->values_.unbind_all ();
 }
 
-void TAO::PG_Property_Set::remove (const PortableGroup::Properties & property_set)
+void TAO::PG_Property_Set::remove (PortableGroup::Properties const & property_set)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
   CORBA::ULong const count = property_set.length ();
-  for (CORBA::ULong nItem = 0; nItem < count; ++nItem)
+  for (CORBA::ULong nItem {}; nItem < count; ++nItem)
   {
-    const PortableGroup::Property & property = property_set[nItem];
-    const CosNaming::Name & nsName = property.nam;
+    PortableGroup::Property const & property = property_set[nItem];
+    CosNaming::Name const & nsName = property.nam;
     // note assumption one level name with no kind
     // @@ TODO: fix this
-    const CosNaming::NameComponent & nc = nsName[0];
-    ACE_CString name = static_cast<const char *> (nc.id);
+    CosNaming::NameComponent const & nc = nsName[0];
+    ACE_CString name = static_cast<char const *> (nc.id);
 
-    const PortableGroup::Value * deleted_value;
+    PortableGroup::Value const * deleted_value;
     if ( 0 == this->values_.unbind (name, deleted_value))
     {
       delete deleted_value;
@@ -135,8 +129,8 @@ void TAO::PG_Property_Set::remove (const PortableGroup::Properties & property_se
 }
 
 void TAO::PG_Property_Set::set_property (
-  const char * name,
-  const PortableGroup::Value & value)
+  char const * name,
+  PortableGroup::Value const & value)
 {
   ACE_CString key (name);
   PortableGroup::Value * value_copy;
@@ -144,7 +138,7 @@ void TAO::PG_Property_Set::set_property (
     value_copy, PortableGroup::Value (value),
     CORBA::NO_MEMORY ());
 
-  const PortableGroup::Value * replaced_value = nullptr;
+  PortableGroup::Value const * replaced_value {};
   int rebind_result = this->values_.rebind (name, value_copy, replaced_value);
   if (1 == rebind_result)
     { // Existing value was replaced
@@ -163,8 +157,7 @@ void TAO::PG_Property_Set::set_property (
     }
 }
 
-
-void TAO::PG_Property_Set::export_properties(PortableGroup::Properties & property_set) const
+void TAO::PG_Property_Set::export_properties (PortableGroup::Properties & property_set) const
 {
   ValueMap merged_values;
   this->merge_properties (merged_values);
@@ -176,8 +169,8 @@ void TAO::PG_Property_Set::export_properties(PortableGroup::Properties & propert
         it != merged_values.end ();
         ++it)
   {
-    const ACE_CString & name = (*it).ext_id_;
-    const PortableGroup::Value * value = (*it).int_id_;
+    ACE_CString const & name = (*it).ext_id_;
+    PortableGroup::Value const * value = (*it).int_id_;
 
     PortableGroup::Property & property = property_set[pos];
     CosNaming::Name & nsName = property.nam;
@@ -195,7 +188,7 @@ void TAO::PG_Property_Set::export_properties(PortableGroup::Properties & propert
 void TAO::PG_Property_Set::merge_properties (ValueMap & merged_values) const
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
-  if (this->defaults_ != nullptr)
+  if (this->defaults_)
   {
     this->defaults_->merge_properties (merged_values);
   }
@@ -209,16 +202,15 @@ void TAO::PG_Property_Set::merge_properties (ValueMap & merged_values) const
   }
 }
 
-
 int TAO::PG_Property_Set::find (
-  const ACE_CString & key,
-  const PortableGroup::Value *& pValue) const
+  ACE_CString const & key,
+  PortableGroup::Value const *& pValue) const
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->internals_, 0);
   int found = (0 == this->values_.find (key, pValue));
   if (! found)
   {
-    if (this->defaults_ != nullptr)
+    if (this->defaults_)
     {
       found = this->defaults_->find (key, pValue);
     }
@@ -290,7 +282,7 @@ int TAO_PG::test_encode_decode ()
   const char * stringResult = "";
   if (find (decoder, testStringKey, stringResult))
   {
-    if (0 != ACE_OS::strcmp (testString, stringResult))
+    if (0 != std::strcmp (testString, stringResult))
     {
       ORBSVCS_ERROR ( (LM_ERROR,
         "%n\n%T: %s = \"%s\" expecting \"%s\"\n",
@@ -308,7 +300,6 @@ int TAO_PG::test_encode_decode ()
       ));
     result = 0;
   }
-
 
   CORBA::Double doubleResult = 0.0;
   if (find (decoder, testDoubleKey, doubleResult))

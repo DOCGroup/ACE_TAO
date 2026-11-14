@@ -9,16 +9,17 @@
  */
 //=============================================================================
 
-
 #define ACE_BUILD_SVC_DLL
 #include "ace/Get_Opt.h"
 #include "testC.h"
-#include "ace/OS_NS_string.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+struct Options
+{
+  ACE_TCHAR const *ior {ACE_TEXT("file://test.ior")};
+};
 
-int
-parse_args (int argc, ACE_TCHAR *argv[])
+static int
+parse_args (Options &options, int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("i:"));
   int c;
@@ -27,8 +28,8 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'i':
-        ior = get_opts.opt_arg ();
-      break;
+        options.ior = get_opts.opt_arg ();
+        break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -42,19 +43,19 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
+      Options options;
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc,
                          argv);
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (options, argc, argv) != 0)
         return 1;
 
-       CORBA::Object_var object =
-        orb->string_to_object (ior);
+      CORBA::Object_var object = orb->string_to_object (options.ior);
 
       // To use the smart proxy just enter it as a svc.conf
       // entry.
@@ -65,7 +66,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (server.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Object reference <%s> is nil.\n",
-                           ior),
+                           options.ior),
                           1);
 
       server->method (0);
@@ -74,7 +75,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Client-side exception:");
       return 1;
@@ -82,5 +83,4 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   return 0;
 }
-
 

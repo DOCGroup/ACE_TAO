@@ -34,6 +34,13 @@ namespace TAO_Notify
   class TAO_Notify_Serv_Export Topology_Saver
   {
   public:
+    Topology_Saver () = default;
+
+    Topology_Saver (Topology_Saver const &) = delete;
+    Topology_Saver (Topology_Saver &&) = delete;
+    Topology_Saver &operator= (Topology_Saver const &) = delete;
+    Topology_Saver &operator= (Topology_Saver &&) = delete;
+
     /// The destructor.
     virtual ~Topology_Saver ();
 

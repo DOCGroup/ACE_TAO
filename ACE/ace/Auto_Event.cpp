@@ -12,7 +12,7 @@ template <class TIME_POLICY>
 ACE_Auto_Event_T<TIME_POLICY>::ACE_Auto_Event_T (
     int initial_state,
     int type,
-    const char *name,
+    char const *name,
     void *arg)
   : ACE_Event_T<TIME_POLICY> (0,
                               initial_state,
@@ -27,7 +27,7 @@ template <class TIME_POLICY>
 ACE_Auto_Event_T<TIME_POLICY>::ACE_Auto_Event_T (
     int initial_state,
     int type,
-    const wchar_t *name,
+    wchar_t const *name,
     void *arg)
   : ACE_Event_T<TIME_POLICY> (0,
                               initial_state,

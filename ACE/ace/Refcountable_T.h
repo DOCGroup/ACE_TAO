@@ -28,8 +28,10 @@ template <class ACE_LOCK>
 class ACE_Refcountable_T
 {
 public:
-  /// Destructor.
   virtual ~ACE_Refcountable_T () = default;
+
+  ACE_Refcountable_T (ACE_Refcountable_T const &) = default;
+  ACE_Refcountable_T &operator= (ACE_Refcountable_T const &) = default;
 
   /// Increment refcount
   long increment ();
@@ -42,7 +44,7 @@ public:
 
 protected:
   /// Protected constructor.
-  ACE_Refcountable_T (long refcount);
+  explicit ACE_Refcountable_T (long refcount);
 
   /// Current refcount.
   ACE_Atomic_Op <ACE_LOCK, long> refcount_;

@@ -35,7 +35,6 @@ int TPC_Logging_Handler::open (void *) {
   return activate (THR_NEW_LWP | THR_DETACHED);
 }
 
-
 #if !defined (TPC_CERTIFICATE_FILENAME)
 #  define TPC_CERTIFICATE_FILENAME "tpc-cert.pem"
 #endif /* !TPC_CERTIFICATE_FILENAME */
@@ -66,14 +65,12 @@ int TPC_Logging_Acceptor::open
   return ssl_ == nullptr ? -1 : 0;
 }
 
-
 int TPC_Logging_Acceptor::handle_close (ACE_HANDLE h,
                                         ACE_Reactor_Mask mask) {
   PARENT::handle_close (h, mask);
   delete this;
   return 0;
 }
-
 
 int TPC_Logging_Acceptor::accept_svc_handler
     (TPC_Logging_Handler *sh) {

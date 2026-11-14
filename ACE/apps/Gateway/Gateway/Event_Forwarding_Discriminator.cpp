@@ -3,6 +3,15 @@
 
 #include "Event_Forwarding_Discriminator.h"
 
+Event_Forwarding_Discriminator::~Event_Forwarding_Discriminator ()
+{
+  ACE_Map_Iterator<Event_Key, Consumer_Dispatch_Set *, ACE_Null_Mutex> iterator (this->map_);
+  ACE_Map_Entry<Event_Key, Consumer_Dispatch_Set *> *entry {};
+
+  for (; iterator.next (entry) != 0; iterator.advance ())
+    delete entry->int_id_;
+}
+
 // Bind the Event_Key to the INT_ID.
 
 int
@@ -26,7 +35,7 @@ Event_Forwarding_Discriminator::find (Event_Key event_addr,
 int
 Event_Forwarding_Discriminator::unbind (Event_Key event_addr)
 {
-  Consumer_Dispatch_Set *cds = 0;
+  Consumer_Dispatch_Set *cds {};
   int result = this->map_.unbind (event_addr, cds);
   delete cds;
   return result;

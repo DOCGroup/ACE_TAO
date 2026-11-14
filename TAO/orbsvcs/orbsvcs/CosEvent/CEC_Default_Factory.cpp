@@ -41,13 +41,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_CEC_Default_Factory::~TAO_CEC_Default_Factory ()
-{
-  if (orbid_dupped_ != 0)
-    {
-      ACE_OS::free (orbid_);
-    }
-}
+TAO_CEC_Default_Factory::~TAO_CEC_Default_Factory () = default;
 
 int
 TAO_CEC_Default_Factory::init_svcs ()
@@ -58,16 +52,17 @@ TAO_CEC_Default_Factory::init_svcs ()
 }
 
 int
-TAO_CEC_Default_Factory::parse_collection_arg (ACE_TCHAR* opt)
+TAO_CEC_Default_Factory::parse_collection_arg (ACE_TCHAR const *opt)
 {
-  int collection_type = 0;
-  int synch_type = 0;
-  int iteration_type = 0;
+  std::basic_string<ACE_TCHAR> options (opt);
+  int collection_type {};
+  int synch_type {};
+  int iteration_type {};
 
-  ACE_TCHAR* aux = 0;
-  for (ACE_TCHAR* arg = ACE_OS::strtok_r (opt, ACE_TEXT(":"), &aux);
-       arg != 0;
-       arg = ACE_OS::strtok_r (0, ACE_TEXT(":"), &aux))
+  ACE_TCHAR* aux {};
+  for (ACE_TCHAR* arg = ACE_OS::strtok_r (options.data (), ACE_TEXT(":"), &aux);
+       arg != nullptr;
+       arg = ACE_OS::strtok_r (nullptr, ACE_TEXT(":"), &aux))
     {
       if (ACE_OS::strcasecmp (arg, ACE_TEXT("mt")) == 0)
         synch_type = 0;
@@ -106,7 +101,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
   while (arg_shifter.is_anything_left ())
     {
-      const ACE_TCHAR *arg = arg_shifter.get_current ();
+      ACE_TCHAR const *arg = arg_shifter.get_current ();
 
       if (ACE_OS::strcasecmp (arg, ACE_TEXT("-CECDispatching")) == 0)
         {
@@ -114,14 +109,14 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, ACE_TEXT("reactive")) == 0)
                 {
-                  this->dispatching_ = 0;
+                  this->dispatching_ = false;
                 }
               else if (ACE_OS::strcasecmp (opt, ACE_TEXT("mt")) == 0)
                 {
-                  this->dispatching_ = 1;
+                  this->dispatching_ = true;
                 }
               else
                 {
@@ -140,7 +135,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               this->dispatching_threads_ = ACE_OS::atoi (opt);
               arg_shifter.consume_arg ();
             }
@@ -152,10 +147,8 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR *current_arg = arg_shifter.get_current ();
-              ACE_TCHAR *opt = ACE_OS::strdup (current_arg);
-              this->consumer_collection_ = this->parse_collection_arg (opt);
-              ACE_OS::free (opt);
+              ACE_TCHAR const *current_arg = arg_shifter.get_current ();
+              this->consumer_collection_ = this->parse_collection_arg (current_arg);
               arg_shifter.consume_arg ();
             }
         }
@@ -166,11 +159,9 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR *current_arg = arg_shifter.get_current();
-              ACE_TCHAR* opt = ACE_OS::strdup(current_arg);
+              ACE_TCHAR const *current_arg = arg_shifter.get_current();
               this->supplier_collection_ =
-                this->parse_collection_arg (opt);
-              ACE_OS::free(opt);
+                this->parse_collection_arg (current_arg);
               arg_shifter.consume_arg ();
             }
         }
@@ -181,7 +172,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, ACE_TEXT("null")) == 0)
                 {
                   this->consumer_lock_ = 0;
@@ -211,7 +202,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, ACE_TEXT("null")) == 0)
                 {
                   this->supplier_lock_ = 0;
@@ -241,7 +232,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               this->reactive_pulling_period_ = ACE_OS::atoi (opt);
               arg_shifter.consume_arg ();
             }
@@ -254,8 +245,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
           if (arg_shifter.is_parameter_next ())
             {
               // Copy argument for later use
-              this->orbid_ = ACE_OS::strdup(ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ()));
-              orbid_dupped_ = 1;
+              this->orbid_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
               arg_shifter.consume_arg ();
             }
         }
@@ -266,14 +256,14 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, ACE_TEXT("null")) == 0)
                 {
-                  this->consumer_control_ = 0;
+                  this->consumer_control_ = false;
                 }
               else if (ACE_OS::strcasecmp (opt, ACE_TEXT("reactive")) == 0)
                 {
-                  this->consumer_control_ = 1;
+                  this->consumer_control_ = true;
                 }
               else
                 {
@@ -292,14 +282,14 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, ACE_TEXT("null")) == 0)
                 {
-                  this->supplier_control_ = 0;
+                  this->supplier_control_ = false;
                 }
               else if (ACE_OS::strcasecmp (opt, ACE_TEXT("reactive")) == 0)
                 {
-                  this->supplier_control_ = 1;
+                  this->supplier_control_ = true;
                 }
               else
                 {
@@ -318,7 +308,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               if (ACE_OS::strcasecmp (opt, ACE_TEXT("false")) == 0)
                 {
                   this->wait_for_shutdown_thread_completion_ = false;
@@ -344,7 +334,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               this->consumer_control_period_ = ACE_OS::atoi (opt);
               arg_shifter.consume_arg ();
             }
@@ -356,7 +346,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               this->supplier_control_period_ = ACE_OS::atoi (opt);
               arg_shifter.consume_arg ();
             }
@@ -369,8 +359,8 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
-                          unsigned long timeout_ = ACE_OS::strtoul(opt, 0, 10);
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
+                          unsigned long const timeout_ = ACE_OS::strtoul(opt, nullptr, 10);
               this->consumer_control_timeout_.usec(timeout_);
               arg_shifter.consume_arg ();
             }
@@ -383,8 +373,8 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
-                          unsigned long timeout_ = ACE_OS::strtoul(opt, 0, 10);
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
+                          unsigned long const timeout_ = ACE_OS::strtoul(opt, nullptr, 10);
               this->supplier_control_timeout_.usec(timeout_);
               arg_shifter.consume_arg ();
             }
@@ -396,8 +386,8 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
-              unsigned long timeout = ACE_OS::strtoul (opt, 0, 10);
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
+              unsigned long const timeout = ACE_OS::strtoul (opt, nullptr, 10);
               this->consumer_timeout_.usec (timeout);
               arg_shifter.consume_arg ();
             }
@@ -409,8 +399,8 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
-              unsigned long timeout = ACE_OS::strtoul (opt, 0, 10);
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
+              unsigned long const timeout = ACE_OS::strtoul (opt, nullptr, 10);
               this->supplier_timeout_.usec (timeout);
               arg_shifter.consume_arg ();
             }
@@ -422,7 +412,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* opt = arg_shifter.get_current ();
+              ACE_TCHAR const *opt = arg_shifter.get_current ();
               this->proxy_disconnect_retries_ = ACE_OS::atoi (opt);
               arg_shifter.consume_arg ();
             }
@@ -459,9 +449,9 @@ TAO_CEC_Default_Factory::fini ()
 TAO_CEC_Dispatching*
 TAO_CEC_Default_Factory::create_dispatching (TAO_CEC_EventChannel *)
 {
-  if (this->dispatching_ == 0)
+  if (!this->dispatching_)
     return new TAO_CEC_Reactive_Dispatching ();
-  else if (this->dispatching_ == 1)
+  else
     return new TAO_CEC_MT_Dispatching (this->dispatching_threads_,
                                       this->dispatching_threads_flags_,
                                       this->dispatching_threads_priority_,
@@ -474,9 +464,9 @@ TAO_CEC_Default_Factory::create_dispatching (TAO_CEC_EventChannel *)
 TAO_CEC_Dispatching*
 TAO_CEC_Default_Factory::create_dispatching (TAO_CEC_TypedEventChannel *)
 {
-  if (this->dispatching_ == 0)
+  if (!this->dispatching_)
     return new TAO_CEC_Reactive_Dispatching ();
-  else if (this->dispatching_ == 1)
+  else
     return new TAO_CEC_MT_Dispatching (this->dispatching_threads_,
                                       this->dispatching_threads_flags_,
                                       this->dispatching_threads_priority_,
@@ -497,17 +487,17 @@ TAO_CEC_Default_Factory::create_pulling_strategy (TAO_CEC_EventChannel *ec)
 {
   if (this->pulling_strategy_ == 0)
     {
-      int argc = 0;
-      ACE_TCHAR **argv = 0;
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, this->orbid_);
+      int argc {};
+      ACE_TCHAR **argv {};
+      CORBA::ORB_var const orb =
+        CORBA::ORB_init (argc, argv, this->orbid_.c_str ());
 
-      ACE_Time_Value rate (0, this->reactive_pulling_period_);
+      ACE_Time_Value const rate (0, this->reactive_pulling_period_);
       return new TAO_CEC_Reactive_Pulling_Strategy (
                                  rate, this->supplier_control_timeout_,
                                  ec, orb.in ());
     }
-  return 0;
+  return nullptr;
 }
 
 void
@@ -575,10 +565,10 @@ TAO_CEC_Default_Factory::destroy_supplier_admin (TAO_CEC_TypedSupplierAdmin *x)
 TAO_CEC_ProxyPushSupplier*
 TAO_CEC_Default_Factory::create_proxy_push_supplier (TAO_CEC_EventChannel *ec)
 {
-  TAO_CEC_ProxyPushSupplier *created = 0;
-  ACE_Time_Value timeout = this->consumer_control_ ? this->consumer_timeout_
+  TAO_CEC_ProxyPushSupplier *created {};
+  ACE_Time_Value const timeout = this->consumer_control_ ? this->consumer_timeout_
     : ACE_Time_Value::zero;
-  ACE_NEW_RETURN (created, TAO_CEC_ProxyPushSupplier (ec, timeout), 0);
+  ACE_NEW_RETURN (created, TAO_CEC_ProxyPushSupplier (ec, timeout), nullptr);
   return created;
 }
 
@@ -586,10 +576,10 @@ TAO_CEC_Default_Factory::create_proxy_push_supplier (TAO_CEC_EventChannel *ec)
 TAO_CEC_ProxyPushSupplier*
 TAO_CEC_Default_Factory::create_proxy_push_supplier (TAO_CEC_TypedEventChannel *ec)
 {
-  TAO_CEC_ProxyPushSupplier *created = 0;
-  ACE_Time_Value timeout = this->consumer_control_ ? this->consumer_timeout_
+  TAO_CEC_ProxyPushSupplier *created {};
+  ACE_Time_Value const timeout = this->consumer_control_ ? this->consumer_timeout_
     : ACE_Time_Value::zero;
-  ACE_NEW_RETURN (created, TAO_CEC_ProxyPushSupplier (ec, timeout), 0);
+  ACE_NEW_RETURN (created, TAO_CEC_ProxyPushSupplier (ec, timeout), nullptr);
   return created;
 }
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
@@ -603,10 +593,10 @@ TAO_CEC_Default_Factory::destroy_proxy_push_supplier (TAO_CEC_ProxyPushSupplier 
 TAO_CEC_ProxyPullSupplier*
 TAO_CEC_Default_Factory::create_proxy_pull_supplier (TAO_CEC_EventChannel *ec)
 {
-  TAO_CEC_ProxyPullSupplier *created;
-  ACE_Time_Value timeout = this->consumer_control_ ? this->consumer_timeout_
+  TAO_CEC_ProxyPullSupplier *created {};
+  ACE_Time_Value const timeout = this->consumer_control_ ? this->consumer_timeout_
     : ACE_Time_Value::zero;
-  ACE_NEW_RETURN (created, TAO_CEC_ProxyPullSupplier (ec, timeout), 0);
+  ACE_NEW_RETURN (created, TAO_CEC_ProxyPullSupplier (ec, timeout), nullptr);
   return created;
 }
 
@@ -619,10 +609,10 @@ TAO_CEC_Default_Factory::destroy_proxy_pull_supplier (TAO_CEC_ProxyPullSupplier 
 TAO_CEC_ProxyPushConsumer*
 TAO_CEC_Default_Factory::create_proxy_push_consumer (TAO_CEC_EventChannel *ec)
 {
-  TAO_CEC_ProxyPushConsumer *created = 0;
-  ACE_Time_Value timeout = this->supplier_control_ ? this->supplier_timeout_
+  TAO_CEC_ProxyPushConsumer *created {};
+  ACE_Time_Value const timeout = this->supplier_control_ ? this->supplier_timeout_
     : ACE_Time_Value::zero;
-  ACE_NEW_RETURN (created, TAO_CEC_ProxyPushConsumer (ec, timeout), 0);
+  ACE_NEW_RETURN (created, TAO_CEC_ProxyPushConsumer (ec, timeout), nullptr);
   return created;
 }
 
@@ -630,10 +620,10 @@ TAO_CEC_Default_Factory::create_proxy_push_consumer (TAO_CEC_EventChannel *ec)
 TAO_CEC_TypedProxyPushConsumer*
 TAO_CEC_Default_Factory::create_proxy_push_consumer (TAO_CEC_TypedEventChannel *ec)
 {
-  TAO_CEC_TypedProxyPushConsumer *created = 0;
-  ACE_Time_Value timeout = this->supplier_control_ ? this->supplier_timeout_
+  TAO_CEC_TypedProxyPushConsumer *created {};
+  ACE_Time_Value const timeout = this->supplier_control_ ? this->supplier_timeout_
     : ACE_Time_Value::zero;
-  ACE_NEW_RETURN (created, TAO_CEC_TypedProxyPushConsumer (ec, timeout), 0);
+  ACE_NEW_RETURN (created, TAO_CEC_TypedProxyPushConsumer (ec, timeout), nullptr);
   return created;
 }
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
@@ -655,10 +645,10 @@ TAO_CEC_Default_Factory::destroy_proxy_push_consumer (TAO_CEC_TypedProxyPushCons
 TAO_CEC_ProxyPullConsumer*
 TAO_CEC_Default_Factory::create_proxy_pull_consumer (TAO_CEC_EventChannel *ec)
 {
-  TAO_CEC_ProxyPullConsumer *created;
-  ACE_Time_Value timeout = this->supplier_control_ ? this->supplier_timeout_
+  TAO_CEC_ProxyPullConsumer *created {};
+  ACE_Time_Value const timeout = this->supplier_control_ ? this->supplier_timeout_
     : ACE_Time_Value::zero;
-  ACE_NEW_RETURN (created, TAO_CEC_ProxyPullConsumer (ec, timeout), 0);
+  ACE_NEW_RETURN (created, TAO_CEC_ProxyPullConsumer (ec, timeout), nullptr);
   return created;
 }
 
@@ -776,7 +766,7 @@ TAO_CEC_Default_Factory::create_proxy_push_consumer_collection (TAO_CEC_EventCha
       TAO_CEC_PushConsumer_RB_Tree_Iterator,
       ACE_NULL_SYNCH> ();
 
-  return 0;
+  return nullptr;
 }
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
@@ -864,7 +854,7 @@ TAO_CEC_Default_Factory::create_proxy_push_consumer_collection (TAO_CEC_TypedEve
       TAO_CEC_TypedPushConsumer_RB_Tree_Iterator,
       ACE_NULL_SYNCH> ();
 
-  return 0;
+  return nullptr;
 }
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
@@ -966,7 +956,7 @@ TAO_CEC_Default_Factory::create_proxy_pull_consumer_collection (TAO_CEC_EventCha
       TAO_CEC_PullConsumer_RB_Tree_Iterator,
       ACE_NULL_SYNCH> ();
 
-  return 0;
+  return nullptr;
 }
 
 void
@@ -1059,7 +1049,7 @@ TAO_CEC_Default_Factory::create_proxy_push_supplier_collection (TAO_CEC_EventCha
       TAO_CEC_PushSupplier_RB_Tree_Iterator,
       ACE_NULL_SYNCH> ();
 
-  return 0;
+  return nullptr;
 }
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
@@ -1147,7 +1137,7 @@ TAO_CEC_Default_Factory::create_proxy_push_supplier_collection (TAO_CEC_TypedEve
       TAO_CEC_PushSupplier_RB_Tree_Iterator,
       ACE_NULL_SYNCH> ();
 
-  return 0;
+  return nullptr;
 }
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
@@ -1241,7 +1231,7 @@ TAO_CEC_Default_Factory::create_proxy_pull_supplier_collection (TAO_CEC_EventCha
       TAO_CEC_PullSupplier_RB_Tree_Iterator,
       ACE_NULL_SYNCH> ();
 
-  return 0;
+  return nullptr;
 }
 
 void
@@ -1259,7 +1249,7 @@ TAO_CEC_Default_Factory::create_consumer_lock ()
     return new ACE_Lock_Adapter<TAO_SYNCH_MUTEX> ();
   else if (this->consumer_lock_ == 2)
     return new ACE_Lock_Adapter<TAO_SYNCH_RECURSIVE_MUTEX> ();
-  return 0;
+  return nullptr;
 }
 
 void
@@ -1277,7 +1267,7 @@ TAO_CEC_Default_Factory::create_supplier_lock ()
     return new ACE_Lock_Adapter<TAO_SYNCH_MUTEX> ();
   else if (this->supplier_lock_ == 2)
     return new ACE_Lock_Adapter<TAO_SYNCH_RECURSIVE_MUTEX> ();
-  return 0;
+  return nullptr;
 }
 
 void
@@ -1289,44 +1279,44 @@ TAO_CEC_Default_Factory::destroy_supplier_lock (ACE_Lock* x)
 TAO_CEC_ConsumerControl*
 TAO_CEC_Default_Factory::create_consumer_control (TAO_CEC_EventChannel* ec)
 {
-  if (this->consumer_control_ == 0)
+  if (!this->consumer_control_)
     return new TAO_CEC_ConsumerControl ();
-  else if (this->consumer_control_ == 1)
+  else
     {
-      int argc = 0;
-      ACE_TCHAR **argv = 0;
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, this->orbid_);
+      int argc {};
+      ACE_TCHAR **argv {};
+      CORBA::ORB_var const orb =
+        CORBA::ORB_init (argc, argv, this->orbid_.c_str ());
 
-      ACE_Time_Value rate (0, this->consumer_control_period_);
+      ACE_Time_Value const rate (0, this->consumer_control_period_);
       return new TAO_CEC_Reactive_ConsumerControl (
                                  rate, this->consumer_control_timeout_,
                                  this->proxy_disconnect_retries_,
                                  ec, orb.in ());
     }
-  return 0;
+  return nullptr;
 }
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
 TAO_CEC_ConsumerControl*
 TAO_CEC_Default_Factory::create_consumer_control (TAO_CEC_TypedEventChannel* ec)
 {
-  if (this->consumer_control_ == 0)
+  if (!this->consumer_control_)
     return new TAO_CEC_ConsumerControl ();
-  else if (this->consumer_control_ == 1)
+  else
     {
-      int argc = 0;
-      ACE_TCHAR **argv = 0;
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, this->orbid_);
+      int argc {};
+      ACE_TCHAR **argv {};
+      CORBA::ORB_var const orb =
+        CORBA::ORB_init (argc, argv, this->orbid_.c_str ());
 
-      ACE_Time_Value rate (0, this->consumer_control_period_);
+      ACE_Time_Value const rate (0, this->consumer_control_period_);
       return new TAO_CEC_Reactive_ConsumerControl (
                                  rate, this->consumer_control_timeout_,
                                  this->proxy_disconnect_retries_,
                                  ec, orb.in ());
     }
-  return 0;
+  return nullptr;
 }
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
@@ -1339,44 +1329,44 @@ TAO_CEC_Default_Factory::destroy_consumer_control (TAO_CEC_ConsumerControl* x)
 TAO_CEC_SupplierControl*
 TAO_CEC_Default_Factory::create_supplier_control (TAO_CEC_EventChannel* ec)
 {
-  if (this->supplier_control_ == 0)
+  if (!this->supplier_control_)
     return new TAO_CEC_SupplierControl ();
-  else if (this->supplier_control_ == 1)
+  else
     {
-      int argc = 0;
-      ACE_TCHAR **argv = 0;
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, this->orbid_);
+      int argc {};
+      ACE_TCHAR **argv {};
+      CORBA::ORB_var const orb =
+        CORBA::ORB_init (argc, argv, this->orbid_.c_str ());
 
-      ACE_Time_Value rate (0, this->supplier_control_period_);
+      ACE_Time_Value const rate (0, this->supplier_control_period_);
       return new TAO_CEC_Reactive_SupplierControl (
                                  rate, this->supplier_control_timeout_,
                                  this->proxy_disconnect_retries_,
                                  ec, orb.in ());
     }
-  return 0;
+  return nullptr;
 }
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
 TAO_CEC_SupplierControl*
 TAO_CEC_Default_Factory::create_supplier_control (TAO_CEC_TypedEventChannel* ec)
 {
-  if (this->supplier_control_ == 0)
+  if (!this->supplier_control_)
     return new TAO_CEC_SupplierControl ();
-  else if (this->supplier_control_ == 1)
+  else
     {
-      int argc = 0;
-      ACE_TCHAR **argv = 0;
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, this->orbid_);
+      int argc {};
+      ACE_TCHAR **argv {};
+      CORBA::ORB_var const orb =
+        CORBA::ORB_init (argc, argv, this->orbid_.c_str ());
 
-      ACE_Time_Value rate (0, this->supplier_control_period_);
+      ACE_Time_Value const rate (0, this->supplier_control_period_);
       return new TAO_CEC_Reactive_SupplierControl (
                                  rate, this->supplier_control_timeout_,
                                  this->proxy_disconnect_retries_,
                                  ec, orb.in ());
     }
-  return 0;
+  return nullptr;
 }
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
@@ -1387,12 +1377,12 @@ TAO_CEC_Default_Factory::destroy_supplier_control (TAO_CEC_SupplierControl* x)
 }
 
 CORBA::Policy_ptr TAO_CEC_Default_Factory::create_roundtrip_timeout_policy
-(const ACE_Time_Value &timeout)
+(ACE_Time_Value const &timeout)
 {
   //get the existing orb
-  int fake_argc = 0;
-  ACE_TCHAR **fake_argv = 0;
-  CORBA::ORB_var orb = CORBA::ORB_init (fake_argc, fake_argv, this->orbid_);
+  int fake_argc {};
+  ACE_TCHAR **fake_argv {};
+  CORBA::ORB_var const orb = CORBA::ORB_init (fake_argc, fake_argv, this->orbid_.c_str ());
 
   CORBA::Any value;
   TimeBase::TimeT timet;

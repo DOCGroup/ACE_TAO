@@ -4,9 +4,9 @@
 #include "PMC_All.h"
 #include "ace/ACE.h"
 #include "ace/Log_Msg.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_Memory.h"
+#include <cstring>
 
 // This function is pretty much a no-op that just sets up the
 // appropriate lookup function to use.
@@ -18,9 +18,9 @@ PMC_All::encode (char *packet, int &packet_length)
     ACE_DEBUG ((LM_DEBUG,
                 "in PMC_All::encode\n"));
 
-  ACE_NEW_RETURN (this->ss,
-                  HT_Client,
-                  -1);
+  Search_Struct *lookup {};
+  ACE_NEW_RETURN (lookup, HT_Client, -1);
+  this->ss.reset (lookup);
 
   SET_PACKET_TYPE (packet, Options::PROTO_ALL);
 
@@ -58,7 +58,7 @@ PMC_All::decode (char *packet, int &packet_length)
 
   for (cp = (char *) ACE::strend (cp);
        *cp != '\n';
-       cp++)
+       ++cp)
     {
       // Skip over the LOGIN_NAME.
 
@@ -78,7 +78,7 @@ Protocol_Record *
 PMC_All::insert_protocol_info (Protocol_Record &protocol_record)
 {
   Protocol_Record *prp = PM_Client::insert_protocol_info (protocol_record);
-  int length = ACE_OS::strlen (prp->set_real (ACE::strnew (protocol_record.get_real ())));
+  const int length = std::strlen (prp->set_real (ACE::strnew (protocol_record.get_real ())));
 
   if (length > this->max_key_length)
     this->max_key_length = length;

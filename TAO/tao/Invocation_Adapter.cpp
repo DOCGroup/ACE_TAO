@@ -17,6 +17,8 @@
 #include "ace/Service_Config.h"
 #include "ace/Truncate.h"
 
+#include <memory>
+
 #if !defined (__ACE_INLINE__)
 # include "tao/Invocation_Adapter.inl"
 #endif /* __ACE_INLINE__ */
@@ -61,11 +63,11 @@ namespace TAO
 
     // Initial state
     TAO::Invocation_Status status = TAO_INVOKE_START;
-    ACE_Time_Value *max_wait_time = nullptr;
+    ACE_Time_Value *max_wait_time {};
     ACE_Time_Value tmp_wait_time = ACE_Time_Value::zero;
     if (this->get_timeout (stub, tmp_wait_time))
       {
-        max_wait_time= &tmp_wait_time;
+      max_wait_time = std::addressof (tmp_wait_time);
       }
 
     TAO::Invocation_Retry_State retry_state (*stub);
@@ -97,7 +99,7 @@ namespace TAO
                                      details,
                                      effective_target,
                                      max_wait_time,
-                                     &retry_state);
+                                     std::addressof (retry_state));
           }
         else
           {
@@ -130,7 +132,7 @@ namespace TAO
   bool
   Invocation_Adapter::get_timeout (TAO_Stub *stub, ACE_Time_Value &timeout)
   {
-    bool has_timeout = false;
+    bool has_timeout {};
     this->target_->orb_core ()->call_timeout_hook (stub, has_timeout, timeout);
 
     return has_timeout;
@@ -204,7 +206,7 @@ namespace TAO
           // Grab the syncscope policy from the ORB.
           Messaging::SyncScope sync_scope;
 
-          bool has_synchronization = false;
+          bool has_synchronization {};
 
           stub->orb_core ()->call_sync_scope_hook (stub,
                                                    has_synchronization,
@@ -362,9 +364,9 @@ namespace TAO
   {
     // The object pointer has to be changed to a TAO_Stub pointer
     // in order to obtain the profiles.
-    TAO_Stub *stubobj = nullptr;
+    TAO_Stub *stubobj {};
 
-    bool nil_forward_ref = false;
+    bool nil_forward_ref {};
     if (CORBA::is_nil (effective_target.in ()))
       nil_forward_ref = true;
     else

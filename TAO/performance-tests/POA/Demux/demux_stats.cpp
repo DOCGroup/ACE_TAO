@@ -6,11 +6,10 @@
  */
 //=============================================================================
 
-
-// FUZZ: disable check_for_math_include
-#include <math.h>
 #include "ace/Get_Opt.h"
 #include "tao/corba.h"
+#include "demux_test_file.h"
+#include <cstring>
 
 class Demux_Stats
 {
@@ -21,17 +20,15 @@ public:
   calculate_avg_latency ();
 
   /// parses args.
-  int
-  Demux_Stats::parse_args (int argc_, char * argv_ []);
+  int parse_args (int argc_, char *argv_ []);
 
 private :
 
   /// temporary results file.
-  FILE *result_fp_;
+  Demux_Test_Utils::File_Handle result_fp_;
 
-  int iterations;
+  int iterations {};
 };
-
 
 // parse command line arguments (if any).
 int
@@ -52,27 +49,23 @@ Demux_Stats::parse_args (int argc_, char * argv_ [])
   return 0;
 }
 
-
 int
 Demux_Stats::calculate_avg_latency ()
 {
-  CORBA::ULong i, time;
+  long ignored, time;
   char str1[50], str2[50], str3[50];
 
-  double temp, mean_poa, mean_servant, mean_dispatch, mean_perfect, mean_dynamic, mean_binary, mean_linear, mean_parse;
-  double deviation_poa, deviation_servant, deviation_dispatch;
-  double std_deviation_poa, std_deviation_servant, std_deviation_dispatch;
-  double sum_poa_temp, sum_servant_temp, sum_dispatch_temp;
-  double time_temp, items_temp;
-
+  double mean_poa, mean_servant, mean_dispatch, mean_perfect, mean_dynamic, mean_binary, mean_linear, mean_parse;
   double items;
-  CORBA::ULong sum_poa, sum_servant, sum_dispatch, last_poa_time=0, last_servant_time=0, last_dispatch_time=0;
-  CORBA::ULong sum_linear, sum_dynamic, sum_binary, sum_perfect, sum_parse;
-  CORBA::ULong last_dynamic_time=0, last_linear_time=0, last_perfect_time=0, last_binary_time=0, last_parse_time = 0;
+  long sum_poa, sum_servant, sum_dispatch, last_poa_time = 0, last_servant_time = 0;
+  long last_dispatch_time = 0, sum_linear, sum_dynamic, sum_binary, sum_perfect, sum_parse;
+  long last_dynamic_time = 0, last_linear_time = 0, last_perfect_time = 0;
+  long last_binary_time = 0, last_parse_time = 0;
 
   int counter;
 
-  if ((this->result_fp_ = ACE_OS::fopen ("my_results.dat", "r")) == 0)
+  this->result_fp_.reset (ACE_OS::fopen ("my_results.dat", "r"));
+  if (!this->result_fp_)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "Demux_Test_Client::print_results - "
@@ -92,9 +85,11 @@ Demux_Stats::calculate_avg_latency ()
   items = 0;
   counter = 0;
 
-  while (fscanf (this->result_fp_, "%s %s %s %ld %ld", &str1, &str2, &str3, &i, &time) != EOF)
+  while (fscanf (this->result_fp_.get (), "%49s %49s %49s %ld %ld",
+                 str1, str2, str3, &ignored, &time) == 5)
     {
-      if(ACE_OS::strcmp (str1,"POA::locate_poa_i")==0 && (ACE_OS::strcmp (str3,"end") == 0))
+      ACE_UNUSED_ARG (ignored);
+      if (std::strcmp (str1, "POA::locate_poa_i") == 0 && std::strcmp (str3, "end") == 0)
         {
           if (items < 1) { items = items + 1; counter++; }
           else
@@ -106,7 +101,7 @@ Demux_Stats::calculate_avg_latency ()
             }
         }
 
-      if(ACE_OS::strcmp (str1,"POA::find_servant")==0 && (ACE_OS::strcmp (str3,"end") == 0))
+      if (std::strcmp (str1, "POA::find_servant") == 0 && std::strcmp (str3, "end") == 0)
         {
           if (items < 1) { items = items + 1; counter++; }
           else
@@ -114,11 +109,11 @@ Demux_Stats::calculate_avg_latency ()
               sum_servant += time;
               last_servant_time = time;
               items = items + 1;
-              counter++;
+              ++counter;
             }
         }
 
-      if(ACE_OS::strcmp (str1,"Servant::_dispatch")==0 && (ACE_OS::strcmp (str3,"end") == 0))
+      if (std::strcmp (str1, "Servant::_dispatch") == 0 && std::strcmp (str3, "end") == 0)
         {
           if (items < 1) { ++items; counter++; }
           else
@@ -126,11 +121,12 @@ Demux_Stats::calculate_avg_latency ()
               sum_dispatch += time;
               last_dispatch_time = time;
               ++items;items++;
-              counter++;
+              ++counter;
             }
         }
 
-      if(ACE_OS::strcmp (str1,"TAO_Dynamic_Hash_OpTable::find")==0 && (ACE_OS::strcmp (str3,"end") == 0))
+      if (std::strcmp (str1, "TAO_Dynamic_Hash_OpTable::find") == 0 &&
+          std::strcmp (str3, "end") == 0)
         {
           if (items < 1) { ++items; counter++; }
           else
@@ -138,55 +134,58 @@ Demux_Stats::calculate_avg_latency ()
               sum_dynamic += time;
               last_dynamic_time = time;
               ++items;
-              counter++;
+              ++counter;
             }
         }
 
-      if(ACE_OS::strcmp (str1,"TAO_Linear_Search_OpTable::find")==0 && (ACE_OS::strcmp (str3,"end") == 0))
+      if (std::strcmp (str1, "TAO_Linear_Search_OpTable::find") == 0 &&
+          std::strcmp (str3, "end") == 0)
         {
           if (items < 1) { items++; counter++; }
           else
             {
               sum_linear += time;
               last_linear_time = time;
-              items++;
-              counter++;
+              ++items;
+              ++counter;
             }
         }
 
-      if(ACE_OS::strcmp (str1,"TAO_Perfect_Hash_OpTable::find")==0 && (ACE_OS::strcmp (str3,"end") == 0))
+      if (std::strcmp (str1, "TAO_Perfect_Hash_OpTable::find") == 0 &&
+          std::strcmp (str3, "end") == 0)
         {
           if (items < 1) { items++; counter++; }
           else
             {
               sum_perfect += time;
               last_perfect_time = time;
-              items++;
-              counter++;
+              ++items;
+              ++counter;
             }
         }
 
-      if(ACE_OS::strcmp (str1,"TAO_Binary_Search_OpTable::find")==0 && (ACE_OS::strcmp (str3,"end") == 0))
+      if (std::strcmp (str1, "TAO_Binary_Search_OpTable::find") == 0 &&
+          std::strcmp (str3, "end") == 0)
         {
           if (items < 1) { items++; counter++; }
           else
             {
               sum_binary += time;
               last_binary_time = time;
-              items++;
-              counter++;
+              ++items;
+              ++counter;
             }
         }
 
-      if(ACE_OS::strcmp (str1,"POA::parse_key")==0 && (ACE_OS::strcmp (str3,"end") == 0))
+      if (std::strcmp (str1, "POA::parse_key") == 0 && std::strcmp (str3, "end") == 0)
         {
           if (items < 1) { items++; counter++; }
           else
             {
               sum_parse += time;
               last_parse_time = time;
-              items++;
-              counter++;
+              ++items;
+              ++counter;
             }
         }
 
@@ -222,7 +221,7 @@ Demux_Stats::calculate_avg_latency ()
           }
     }
 
-  ACE_OS::fclose (this->result_fp_);
+  this->result_fp_.reset ();
 
   if (iterations == 0)
     {
@@ -248,67 +247,6 @@ Demux_Stats::calculate_avg_latency ()
       mean_perfect = sum_perfect/items;
       mean_parse = sum_parse/items;
     }
-
-  // now compute standard deviation
-
-
-  if ((this->result_fp_ = ACE_OS::fopen ("my_results.dat", "r")) == 0)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "Demux_Test_Client::print_results - "
-                         "Failed to open the results file for reading\n"),
-                        -1);
-    }
-
-
-  sum_poa_temp = 0;
-  sum_servant_temp = 0;
-  sum_dispatch_temp = 0;
-
-  deviation_poa = 0.0;
-  deviation_servant = 0.0;
-  deviation_dispatch = 0.0;
-
-  while (fscanf (this->result_fp_, "%s %s %s %ld %ld", &str1, &str2, &str3, &i, &time) != EOF)
-    {
-      time_temp = (double) time;
-
-      if(ACE_OS::strcmp (str1,"POA::locate_poa_i")==0 && (ACE_OS::strcmp (str3,"end") == 0))
-        {
-          deviation_poa = time_temp - mean_poa;
-          sum_poa_temp += deviation_poa * deviation_poa;
-        }
-
-      if(ACE_OS::strcmp (str1,"POA::find_servant")==0 && (ACE_OS::strcmp (str3,"end") == 0))
-        {
-          deviation_servant = time_temp - mean_servant;
-          sum_servant_temp += deviation_servant * deviation_servant;
-        }
-
-      if(ACE_OS::strcmp (str1,"Servant::_dispatch")==0 && (ACE_OS::strcmp (str3,"end") == 0))
-        {
-          deviation_dispatch = time_temp - mean_dispatch;
-          sum_dispatch_temp += deviation_dispatch * deviation_dispatch;
-        }
-    }
-
-  items_temp = (double) items;
-
-  if (items == 1)
-    {
-      std_deviation_poa = 0;
-      std_deviation_servant = 0;
-      std_deviation_dispatch = 0;
-    }
-  else
-    {
-      std_deviation_poa = sqrt (sum_poa_temp/(items_temp - 1));
-      std_deviation_servant = sqrt (sum_servant_temp/(items_temp - 1));
-      std_deviation_dispatch = sqrt (sum_dispatch_temp/(items_temp - 1));
-    }
-
-  // ACE_OS::unlink ("my_results.dat");
-  ACE_OS::fclose (this->result_fp_);
 
   if (iterations == 0)
     {

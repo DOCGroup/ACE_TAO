@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef _OPTIONS_H
 #define _OPTIONS_H
 
@@ -48,7 +47,7 @@ public:
 
   static void set_options (int argc, char *argv[]);
   static void set_opt (Option_Types opt);
-  static int get_opt (Option_Types opt);
+  static bool get_opt (Option_Types opt);
 
   static short port_number;
   static Protocol_Types protocol_type;

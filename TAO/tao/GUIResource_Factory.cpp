@@ -2,19 +2,15 @@
 #include "ace/Reactor.h"
 #include "ace/Guard_T.h"
 #include "tao/debug.h"
+#include <cerrno>
+#include <memory>
+#include <new>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  GUIResource_Factory::GUIResource_Factory ()
-    : dynamically_allocated_reactor_ (false)
-  {
-  }
-
-  GUIResource_Factory::~GUIResource_Factory ()
-  {
-  }
+  GUIResource_Factory::~GUIResource_Factory () = default;
 
   ACE_Reactor *
   GUIResource_Factory::get_reactor ()
@@ -30,20 +26,24 @@ namespace TAO
     //   not necessary, because the performance is not an issue here.
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, nullptr);
 
-    ACE_Reactor *reactor = nullptr;
-    ACE_NEW_RETURN (reactor,
-                    ACE_Reactor (this->reactor_impl (), 1),
-                    nullptr);
+    std::unique_ptr<ACE_Reactor> reactor {
+      new (std::nothrow) ACE_Reactor (this->reactor_impl (), true)
+    };
+
+    if (!reactor)
+    {
+      errno = ENOMEM;
+      return nullptr;
+    }
 
     if (reactor->initialized () == 0)
     {
-      delete reactor;
-      reactor = nullptr;
+      return nullptr;
     }
-    else
-      this->dynamically_allocated_reactor_ = true;
 
-    return reactor;
+    this->dynamically_allocated_reactor_ = true;
+
+    return reactor.release ();
   }
 
   void

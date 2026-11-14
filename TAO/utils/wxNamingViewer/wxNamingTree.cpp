@@ -11,7 +11,6 @@
 #include "wxBindDialog.h"
 #include "wxViewIORDialog.h"
 
-
 BEGIN_EVENT_TABLE( WxNamingTree, wxTreeCtrl)
   EVT_MENU(
       contextPopupBindContext,
@@ -48,7 +47,6 @@ BEGIN_EVENT_TABLE( WxNamingTree, wxTreeCtrl)
   EVT_LEFT_DCLICK( WxNamingTree::onLeftDClick)
 END_EVENT_TABLE()
 
-
 WxNamingTree::WxNamingTree(
     wxWindow* parent,
     const wxWindowID id):
@@ -72,7 +70,6 @@ WxNamingTree::WxNamingTree(
   objectPopup->Append( objectPopupUnbind, "Unbind");
   objectPopup->Append( objectPopupViewReference, "View reference");
 }
-
 
 WxNamingTree::~WxNamingTree()
 {
@@ -99,7 +96,6 @@ void WxNamingTree::clearChildren( wxTreeItemId& item)
   }
 }
 
-
 void WxNamingTree::copySelectedToClipboard()
 {
   WxNamingObject* object = getTreeObject();
@@ -114,7 +110,6 @@ void WxNamingTree::copySelectedToClipboard()
     wxMessageBox( ex._rep_id(), "CORBA::Exception");
   }
 }
-
 
 WxNamingObject* WxNamingTree::getTreeObject() const
 {
@@ -131,7 +126,6 @@ WxNamingObject* WxNamingTree::getTreeObject( wxTreeItemId& item) const
       GetItemData( item));
   return object;
 }
-
 
 void WxNamingTree::listBindingList(
       wxTreeItemId& item,
@@ -173,7 +167,6 @@ void WxNamingTree::listBindingList(
   }
 }
 
-
 void WxNamingTree::listContext( wxTreeItemId& item)
 {
 // TODO: use hourglass
@@ -214,7 +207,6 @@ void WxNamingTree::listContext( wxTreeItemId& item)
 
 }
 
-
 void WxNamingTree::onContextPopupBindContext( wxCommandEvent& event)
 {
   WxAutoDialog<WxBindDialog> dialog( new WxBindDialog(
@@ -251,7 +243,6 @@ void WxNamingTree::onContextPopupBindContext( wxCommandEvent& event)
   }
 }
 
-
 void WxNamingTree::onContextPopupBindObject( wxCommandEvent& event)
 {
   WxAutoDialog<WxBindDialog> dialog( new WxBindDialog(
@@ -277,7 +268,6 @@ void WxNamingTree::onContextPopupBindObject( wxCommandEvent& event)
   }
 }
 
-
 void WxNamingTree::onContextPopupBindNewContext( wxCommandEvent& event)
 {
   wxTreeItemId item = GetSelection();
@@ -300,7 +290,6 @@ void WxNamingTree::onContextPopupBindNewContext( wxCommandEvent& event)
         "CORBA::Exception");
   }
 }
-
 
 void WxNamingTree::onContextPopupDestroy( wxCommandEvent&)
 {
@@ -332,14 +321,12 @@ void WxNamingTree::onContextPopupDestroy( wxCommandEvent&)
   }
 }
 
-
 void WxNamingTree::onContextPopupRefresh( wxCommandEvent&)
 {
   wxTreeItemId item = GetSelection();
   clearChildren( item);
   listContext( item);
 }
-
 
 void WxNamingTree::onContextPopupUnbind( wxCommandEvent&)
 {
@@ -366,7 +353,6 @@ void WxNamingTree::onContextPopupUnbind( wxCommandEvent&)
   }
 }
 
-
 void WxNamingTree::onItemExpanding( wxTreeEvent& event)
 {
   wxTreeItemId item = event.GetItem();
@@ -376,7 +362,6 @@ void WxNamingTree::onItemExpanding( wxTreeEvent& event)
   }
   listContext( item);
 }
-
 
 void WxNamingTree::onLeftDClick( wxMouseEvent& event)
 {
@@ -391,7 +376,6 @@ void WxNamingTree::onLeftDClick( wxMouseEvent& event)
 
   dialog->ShowModal();
 }
-
 
 void WxNamingTree::onObjectPopupUnbind( wxCommandEvent& )
 {
@@ -420,7 +404,6 @@ void WxNamingTree::onObjectPopupUnbind( wxCommandEvent& )
   }
 }
 
-
 void WxNamingTree::onPopupViewReference( wxCommandEvent&)
 {
   WxAutoDialog<WxViewIORDialog> dialog( new WxViewIORDialog(
@@ -430,7 +413,6 @@ void WxNamingTree::onPopupViewReference( wxCommandEvent&)
 
   dialog->ShowModal();
 }
-
 
 void WxNamingTree::onRMouseUClick( wxMouseEvent& event)
 {

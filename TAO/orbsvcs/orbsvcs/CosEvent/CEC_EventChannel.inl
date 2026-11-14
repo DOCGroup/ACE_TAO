@@ -5,9 +5,9 @@ ACE_INLINE
 TAO_CEC_EventChannel_Attributes::
 TAO_CEC_EventChannel_Attributes (PortableServer::POA_ptr s_poa,
                                   PortableServer::POA_ptr c_poa)
-  :  consumer_reconnect (TAO_CEC_DEFAULT_CONSUMER_RECONNECT),
-     supplier_reconnect (TAO_CEC_DEFAULT_SUPPLIER_RECONNECT),
-     disconnect_callbacks (TAO_CEC_DEFAULT_DISCONNECT_CALLBACKS),
+  :  consumer_reconnect (TAO_CEC_DEFAULT_CONSUMER_RECONNECT != 0),
+     supplier_reconnect (TAO_CEC_DEFAULT_SUPPLIER_RECONNECT != 0),
+     disconnect_callbacks (TAO_CEC_DEFAULT_DISCONNECT_CALLBACKS != 0),
      supplier_poa (s_poa),
      consumer_poa (c_poa)
 {
@@ -175,19 +175,19 @@ TAO_CEC_EventChannel::destroy_supplier_lock (ACE_Lock* x)
   this->factory_->destroy_supplier_lock (x);
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 TAO_CEC_EventChannel::consumer_reconnect () const
 {
   return this->consumer_reconnect_;
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 TAO_CEC_EventChannel::supplier_reconnect () const
 {
   return this->supplier_reconnect_;
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 TAO_CEC_EventChannel::disconnect_callbacks () const
 {
   return this->disconnect_callbacks_;

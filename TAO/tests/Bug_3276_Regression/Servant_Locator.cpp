@@ -1,7 +1,5 @@
 #include "Servant_Locator.h"
 #include "ace/Log_Msg.h"
-#include "testC.h"
-#include "ace/OS_NS_string.h"
 
 PortableServer::Servant
 Servant_Locator::preinvoke (PortableServer::ObjectId const & /* oid */,

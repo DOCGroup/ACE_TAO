@@ -11,7 +11,6 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CAddNameServerDlg dialog
 
-
 CAddNameServerDlg::CAddNameServerDlg(CWnd* pParent /*=NULL*/)
   : CDialog(CAddNameServerDlg::IDD, pParent)
 {
@@ -21,7 +20,6 @@ CAddNameServerDlg::CAddNameServerDlg(CWnd* pParent /*=NULL*/)
   //}}AFX_DATA_INIT
 }
 
-
 void CAddNameServerDlg::DoDataExchange(CDataExchange* pDX)
 {
   CDialog::DoDataExchange(pDX);
@@ -30,7 +28,6 @@ void CAddNameServerDlg::DoDataExchange(CDataExchange* pDX)
   DDX_Text(pDX, IDC_NAME, m_Name);
   //}}AFX_DATA_MAP
 }
-
 
 BEGIN_MESSAGE_MAP(CAddNameServerDlg, CDialog)
   //{{AFX_MSG_MAP(CAddNameServerDlg)

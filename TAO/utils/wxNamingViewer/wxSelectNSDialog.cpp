@@ -82,7 +82,6 @@ BEGIN_EVENT_TABLE( WxSelectNSDialog, wxDialog)
   EVT_LISTBOX_DCLICK( IDC_SERVERS, WxSelectNSDialog::onLeftDClick)
 END_EVENT_TABLE()
 
-
 WxSelectNSDialog::WxSelectNSDialog( wxWindow* parent)
 #if defined(wxUSE_RESOURCES) && (wxUSE_RESOURCES == 1)
   : wxDialog()
@@ -130,10 +129,9 @@ WxSelectNSDialog::WxSelectNSDialog( wxWindow* parent)
           name.c_str(),
           new wxString( value.c_str()));
     }
-    index++;
+    ++index;
   }
 }
-
 
 WxSelectNSDialog::~WxSelectNSDialog()
 {
@@ -142,7 +140,6 @@ WxSelectNSDialog::~WxSelectNSDialog()
     delete static_cast<wxString*>( servers->GetClientData( i));
   }
 }
-
 
 void WxSelectNSDialog::onAdd( wxCommandEvent& WXUNUSED(event))
 {
@@ -160,12 +157,10 @@ void WxSelectNSDialog::onAdd( wxCommandEvent& WXUNUSED(event))
   }
 }
 
-
 void WxSelectNSDialog::onDefault( wxCommandEvent& WXUNUSED(event))
 {
   EndModal( IDC_DEFAULT);
 }
-
 
 void WxSelectNSDialog::onInitDialog( wxInitDialogEvent& event)
 {
@@ -179,7 +174,6 @@ void WxSelectNSDialog::onInitDialog( wxInitDialogEvent& event)
   servers->SetFocus();
 }
 
-
 void WxSelectNSDialog::onLeftDClick( wxMouseEvent& event)
 {
   ACE_UNUSED_ARG( event);
@@ -191,7 +185,6 @@ void WxSelectNSDialog::onLeftDClick( wxMouseEvent& event)
   serverName = servers->GetString( index);
   EndModal( wxID_OK);
 }
-
 
 void WxSelectNSDialog::onOK( wxCommandEvent& WXUNUSED(event))
 {
@@ -207,7 +200,6 @@ void WxSelectNSDialog::onOK( wxCommandEvent& WXUNUSED(event))
   serverName = servers->GetString( index);
   EndModal( wxID_OK);
 }
-
 
 void WxSelectNSDialog::onRemove( wxCommandEvent& WXUNUSED(event))
 {

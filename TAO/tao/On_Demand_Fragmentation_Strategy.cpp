@@ -9,21 +9,18 @@
 #include "ace/Truncate.h"
 
 TAO_On_Demand_Fragmentation_Strategy::TAO_On_Demand_Fragmentation_Strategy (
-  TAO_Transport * transport,
+  TAO_Transport *transport,
   CORBA::ULong max_message_size)
   : transport_ (transport)
   , max_message_size_ (max_message_size)
 {
 }
 
-TAO_On_Demand_Fragmentation_Strategy::~TAO_On_Demand_Fragmentation_Strategy (
-  )
-{
-}
+TAO_On_Demand_Fragmentation_Strategy::~TAO_On_Demand_Fragmentation_Strategy () = default;
 
 int
 TAO_On_Demand_Fragmentation_Strategy::fragment (
-  TAO_OutputCDR & cdr,
+  TAO_OutputCDR &cdr,
   ACE_CDR::ULong pending_alignment,
   ACE_CDR::ULong pending_length)
 {
@@ -72,7 +69,7 @@ TAO_On_Demand_Fragmentation_Strategy::fragment (
       if (TAO_debug_level > 0)
         TAOLIB_DEBUG ((LM_DEBUG,
                     "TAO (%P|%t) - On_Demand_Fragmentation_Strategy::fragment, "
-                    "sending fragment of size %d\n",
+                    "sending fragment of size %B\n",
                     cdr.total_length ()));
 
       // Send the current CDR stream contents through the transport,

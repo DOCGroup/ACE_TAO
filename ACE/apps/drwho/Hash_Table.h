@@ -8,11 +8,11 @@
  */
 //=============================================================================
 
-
 #ifndef _HASH_TABLE_H
 #define _HASH_TABLE_H
 
 #include "Search_Struct.h"
+#include <array>
 
 /**
  * @class Hash_Table
@@ -23,21 +23,23 @@ class Hash_Table : public Search_Struct
 {
 public:
   Hash_Table ();
-  virtual ~Hash_Table ();
-  virtual Protocol_Record *insert (const char *key_name,
-                                   int max_len = MAXUSERIDNAMELEN) = 0;
-  virtual Protocol_Record *get_next_entry ();
-  virtual Protocol_Record *get_each_entry ();
+  ~Hash_Table () override;
+  Hash_Table (Hash_Table const &) = delete;
+  Hash_Table &operator= (Hash_Table const &) = delete;
+  Hash_Table (Hash_Table &&) = delete;
+  Hash_Table &operator= (Hash_Table &&) = delete;
+  Protocol_Record *insert (const char *key_name,
+                           int max_len = MAXUSERIDNAMELEN) override = 0;
+  Protocol_Record *get_next_entry () override;
+  Protocol_Record *get_each_entry () override;
 
 protected:
-  enum
-  {
-    HASH_TABLE_SIZE = 500
-  };
+  static constexpr int HASH_TABLE_SIZE = 500;
 
-  Protocol_Record **hash_table;
-  Protocol_Record *current_ptr;
-  int current_index;
-  int hash_table_size;
+  // Each bucket owns its linked Protocol_Record chain.
+  std::array<Protocol_Record *, HASH_TABLE_SIZE> hash_table {};
+  // Non-owning iterator into one of the bucket chains.
+  Protocol_Record *current_ptr {};
+  int current_index {};
 };
 #endif /* _HASH_TABLE_H */

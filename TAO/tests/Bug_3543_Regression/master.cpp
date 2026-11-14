@@ -5,34 +5,35 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Barrier.h"
+#include <atomic>
 #include <cstdint>
+#include <cstdio>
 #include <list>
 #include <memory>
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT ("test.ior");
-size_t number_of_servers = 300;
-size_t steps = 10;
-int n_threads = 10;
-std::unique_ptr<ACE_Barrier> barrier;
-CORBA::ORB_var orb;
+size_t number_of_servers {300};
+size_t steps {10};
+int n_threads {10};
+std::unique_ptr<ACE_Barrier> barrier {};
+CORBA::ORB_var orb {};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior_output_file)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:c:s:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:c:s:"));
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'o':
         ior_output_file = get_opts.opt_arg ();
         break;
       case 'c':
-        number_of_servers = ACE_OS::atoi(get_opts.opt_arg ());
+        number_of_servers = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 's':
-        steps = ACE_OS::atoi(get_opts.opt_arg ());
+        steps = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case '?':
@@ -52,7 +53,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
 static TAO_SYNCH_MUTEX mutex;
 std::list<MasterClient::Server_var> servers;
-bool started = false;
+std::atomic<bool> started {};
 
 class MasterImpl : public POA_MasterClient::Master
 {
@@ -65,11 +66,11 @@ public:
 
   void registerServer (MasterClient::Server_ptr c) override
   {
-    ACE_GUARD(TAO_SYNCH_MUTEX, mon, mutex);
-    servers.push_back(MasterClient::Server::_duplicate(c));
+    ACE_GUARD (TAO_SYNCH_MUTEX, mon, mutex);
+    servers.push_back (MasterClient::Server::_duplicate (c));
     if (servers.size () == number_of_servers)
     {
-      started = true;
+      started.store (true, std::memory_order_release);
     }
     else
     {
@@ -85,18 +86,16 @@ void Dispatcher_shutdown ()
     ACE_GUARD (TAO_SYNCH_MUTEX, mon, mutex);
     copiedlist = servers;
   }
-  for (std::list<MasterClient::Server_var>::iterator it = copiedlist.begin ();
-       it != copiedlist.end ();
-       ++it)
-  {
-    try
+  for (MasterClient::Server_var const &server : copiedlist)
     {
-      (*it)->shutdown ();
+      try
+        {
+          server->shutdown ();
+        }
+      catch (...)
+        {
+        }
     }
-    catch (...)
-    {
-    }
-  }
 }
 
 void Dispatcher_step (int id, int i)
@@ -108,93 +107,92 @@ void Dispatcher_step (int id, int i)
   }
 
   ACE_DEBUG ((LM_DEBUG, "Id %d Sending %B pings in iteration %d\n", id, copiedlist.size (), i));
-  int ok = 0;
-  int timeout = 0;
-  int transient = 0;
-  int corba = 0;
-  int unknown = 0;
+  int ok {};
+  int timeout {};
+  int transient {};
+  int corba {};
+  int unknown {};
 
-  for (std::list<MasterClient::Server_var>::iterator it = copiedlist.begin ();
-       it != copiedlist.end ();
-       ++it)
-  {
-    try
+  for (MasterClient::Server_var const &server : copiedlist)
     {
-      (*it)->ping ();
-      ++ok;
+      try
+        {
+          server->ping ();
+          ++ok;
+        }
+      catch (CORBA::TIMEOUT const &)
+        {
+          ++timeout;
+        }
+      catch (CORBA::TRANSIENT const &)
+        {
+          ++transient;
+        }
+      catch (CORBA::Exception const &e)
+        {
+          ACE_ERROR ((LM_ERROR, "ERROR: Caught CORBA exception %C", e._info ().c_str()));
+          ++corba;
+        }
+      catch (...)
+        {
+          ++unknown;
+        }
     }
-    catch (CORBA::TIMEOUT const &)
-    {
-      ++timeout;
-    }
-    catch (CORBA::TRANSIENT const &)
-    {
-      ++transient;
-    }
-    catch (CORBA::Exception const &e)
-    {
-      ACE_ERROR ((LM_ERROR, "ERROR: Caught CORBA exception %C", e._info ().c_str()));
-      ++corba;
-    }
-    catch (...)
-    {
-      ++unknown;
-    }
-  }
-  if (ok)
+  if (ok != 0)
     ACE_ERROR ((LM_ERROR, "Ok: %d\n", ok));
-  if (timeout)
+  if (timeout != 0)
     ACE_ERROR ((LM_ERROR, "TIMEOUT: %d\n", timeout));
-  if (transient)
+  if (transient != 0)
     ACE_ERROR ((LM_ERROR, "TRANSIENT: %d\n", transient));
-  if (corba)
+  if (corba != 0)
     ACE_ERROR ((LM_ERROR, "CORBA: %d\n", corba));
-  if (unknown)
+  if (unknown != 0)
     ACE_ERROR ((LM_ERROR, "UNKNOWN: %d\n", unknown));
 }
 
 ACE_THR_FUNC_RETURN Dispatcher_run (void *arg)
 {
   int const id = static_cast<int> (reinterpret_cast<std::intptr_t> (arg));
-  size_t i = 0;
+  size_t i {};
   while (true)
     {
-      if (started)
+      if (started.load (std::memory_order_acquire))
         {
           Dispatcher_step (id, i);
           ++i;
         }
       if (i >= steps)
-      {
-        ACE_DEBUG ((LM_DEBUG, "Id %d ready\n", id));
-        break;
-      }
-      ACE_OS::sleep(1);
+        {
+          ACE_DEBUG ((LM_DEBUG, "Id %d ready\n", id));
+          break;
+        }
+      ACE_OS::sleep (1);
     }
   ACE_DEBUG ((LM_DEBUG, "Waiting for barrier\n"));
   barrier->wait ();
   if (id == 0)
-  {
-    ACE_DEBUG ((LM_DEBUG, "Shutting down ORB\n"));
-    orb->shutdown (true);
-  }
+    {
+      ACE_DEBUG ((LM_DEBUG, "Shutting down ORB\n"));
+      orb->shutdown (true);
+    }
   return ACE_THR_FUNC_RETURN_NULL;
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
       orb = CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      ACE_TCHAR const *ior_output_file = ACE_TEXT ("test.ior");
+      if (parse_args (argc, argv, ior_output_file) != 0)
         return 1;
 
-      CORBA::Object_var poa_object =
+      CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
@@ -202,42 +200,48 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                            " (%P|%t) Panic: nil RootPOA\n"),
                           1);
 
-      PortableServer::POAManager_var poa_manager = root_poa->the_POAManager ();
+      PortableServer::POAManager_var const poa_manager = root_poa->the_POAManager ();
 
-      MasterImpl *hello_impl = nullptr;
+      MasterImpl *hello_impl {};
       ACE_NEW_RETURN (hello_impl,
                       MasterImpl,
                       1);
+      // ServantBase_var takes ownership of this pointer.
       PortableServer::ServantBase_var owner_transfer (hello_impl);
 
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         root_poa->activate_object (hello_impl);
 
-      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+      CORBA::Object_var const object = root_poa->id_to_reference (id.in ());
 
-      MasterClient::Master_var hello = MasterClient::Master::_narrow (object.in ());
+      MasterClient::Master_var const hello = MasterClient::Master::_narrow (object.in ());
 
       poa_manager->activate ();
 
-      CORBA::String_var ior = orb->object_to_string (hello.in ());
+      CORBA::String_var const ior = orb->object_to_string (hello.in ());
 
       // Output the IOR to the <ior_output_file>
-      FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == nullptr)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s\n",
-                           ior_output_file),
-                           1);
-      ACE_OS::fprintf (output_file, "%s", ior.in ());
-      ACE_OS::fclose (output_file);
+      {
+        std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+          ACE_OS::fopen (ior_output_file, "w"), ACE_OS::fclose);
+        if (!output_file)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot open output file for writing IOR: %s\n",
+                             ior_output_file),
+                            1);
+        ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
+      }
 
       barrier = std::make_unique<ACE_Barrier> (n_threads);
 
-      ACE_Thread_Manager *thr_mgr = ACE_Thread_Manager::instance ();
+      ACE_Thread_Manager * const thr_mgr = ACE_Thread_Manager::instance ();
 
-      for (int i = 0; i < n_threads; ++i)
+      for (int thread_id {}; thread_id < n_threads; ++thread_id)
         {
-          thr_mgr->spawn_n (1, Dispatcher_run, reinterpret_cast<void *> (i), THR_NEW_LWP | THR_DETACHED);
+          thr_mgr->spawn_n (1,
+                            Dispatcher_run,
+                            reinterpret_cast<void *> (thread_id),
+                            THR_NEW_LWP | THR_DETACHED);
         }
 
       orb->run ();

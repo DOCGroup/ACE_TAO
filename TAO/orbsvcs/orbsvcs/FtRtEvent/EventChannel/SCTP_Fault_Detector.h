@@ -31,7 +31,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 extern "C" {
 #include <netinet/sctp.h>
 };
@@ -62,8 +61,12 @@ public:
                int perms = 0,
                int protocol = 132);
   void set_heart_beat(int hb);
+  SCTP_Connector(SCTP_Connector const&) = delete;
+  SCTP_Connector(SCTP_Connector&&) = delete;
+  SCTP_Connector& operator=(SCTP_Connector const&) = delete;
+  SCTP_Connector& operator=(SCTP_Connector&&) = delete;
 private:
-  int heart_beat_;
+  int heart_beat_ {};
 };
 
 class SCTP_Fault_Detector : public Fault_Detector_T<
@@ -72,7 +75,11 @@ class SCTP_Fault_Detector : public Fault_Detector_T<
           SCTP_ConnectionDetectHandler >
 {
 public:
-    ~SCTP_Fault_Detector() override;
+    ~SCTP_Fault_Detector() override = default;
+    SCTP_Fault_Detector(SCTP_Fault_Detector const&) = delete;
+    SCTP_Fault_Detector(SCTP_Fault_Detector&&) = delete;
+    SCTP_Fault_Detector& operator=(SCTP_Fault_Detector const&) = delete;
+    SCTP_Fault_Detector& operator=(SCTP_Fault_Detector&&) = delete;
 private:
     int parse_conf(int argc, ACE_TCHAR** argv) override;
 };

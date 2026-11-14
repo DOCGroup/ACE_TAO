@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "helper.h"
 #include "ub_long_seq.h"
 
@@ -29,7 +28,7 @@ Test_Long_Sequence::Test_Long_Sequence ()
 Test_Long_Sequence::~Test_Long_Sequence ()
 {
   CORBA::string_free (this->opname_);
-  this->opname_ = 0;
+  this->opname_ = nullptr;
 }
 
 const char *
@@ -49,19 +48,19 @@ Test_Long_Sequence::dii_req_invoke (CORBA::Request *req)
 
   req->invoke ();
 
-  const CORBA::LongSeq *tmp = 0;
+  CORBA::LongSeq const *tmp {};
   req->return_value () >>= tmp;
-  this->ret_ = CORBA::LongSeq (*tmp);
+  this->ret_ = new CORBA::LongSeq (*tmp);
 
   CORBA::NamedValue_ptr o2 =
     req->arguments ()->item (1);
   *o2->value () >>= tmp;
-  this->inout_ = CORBA::LongSeq (*tmp);
+  this->inout_ = new CORBA::LongSeq (*tmp);
 
   CORBA::NamedValue_ptr o3 =
     req->arguments ()->item (2);
   *o3->value () >>= tmp;
-  this->out_ = CORBA::LongSeq (*tmp);
+  this->out_ = new CORBA::LongSeq (*tmp);
 }
 
 int
@@ -116,7 +115,7 @@ Test_Long_Sequence::run_sii_test (Param_Test_ptr objref)
 CORBA::Boolean
 Test_Long_Sequence::check_validity ()
 {
-  CORBA::Boolean flag = 0;
+  CORBA::Boolean flag = false;
   if ((this->in_->length () == this->inout_->length ()) &&
       (this->in_->length () == this->out_->length ()) &&
       (this->in_->length () == this->ret_->length ()))
@@ -129,7 +128,7 @@ Test_Long_Sequence::check_validity ()
               this->in_[i] != this->out_[i] ||
               this->in_[i] != this->ret_[i])
             // not equal
-            flag = 0;
+            flag = false;
         }
     }
   return flag;

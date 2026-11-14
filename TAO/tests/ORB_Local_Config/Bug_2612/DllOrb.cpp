@@ -1,10 +1,7 @@
-/*
- * @author Iliyan jeliazkov <iliyan@ociweb.com>
- * @author Lothar Werzinger <lothar@tradescape.biz>
- */
+/// @author Iliyan Jeliazkov <iliyan@ociweb.com>
+/// @author Lothar Werzinger <lothar@tradescape.biz>
 
 #include "ace/Arg_Shifter.h"
-#include "ace/SString.h"
 #include "ace/OS_NS_unistd.h"
 
 #include "tao/corba.h"
@@ -13,105 +10,82 @@
 #include "DllOrb.h"
 
 DllOrb::DllOrb (int nthreads)
-:
-  m_nthreads_ (nthreads),
-  m_failPrePostInit(0),
-#if defined (ACE_HAS_THREADS)
-  mp_barrier(0),
-#endif
-  mv_orb(),
-  mv_rootPOA()
+  : m_nthreads_ (nthreads)
 {
 }
 
-DllOrb::~DllOrb () noexcept
-{
-#if defined (ACE_HAS_THREADS)
-  delete mp_barrier;
-#endif
-}
+DllOrb::~DllOrb () noexcept = default;
 
 int DllOrb::init (int argc, ACE_TCHAR *argv[])
 {
-  int result = 0;
-  int threadCnt = this->m_nthreads_;
+  int thread_count = this->m_nthreads_;
 
   try
   {
     ACE_Arg_Shifter as (argc, argv);
-    const ACE_TCHAR *currentArg = 0;
+    ACE_TCHAR const *current_arg {};
     while (as.is_anything_left ())
       {
-        if (0 != (currentArg = as.get_the_parameter (ACE_TEXT ("-t"))))
+        if ((current_arg = as.get_the_parameter (ACE_TEXT ("-t"))) != nullptr)
           {
-            int num = ACE_OS::atoi (currentArg);
+            int const num = ACE_OS::atoi (current_arg);
             if (num >= 1)
-              threadCnt = num;
+              thread_count = num;
             as.consume_arg ();
           }
         else
           as.ignore_arg ();
       }
 
-    if (m_failPrePostInit < 3)
-      {
-        ACE_DEBUG((LM_DEBUG, "TEST (%P|%t) Pre-ORB initialization ...\n"));
+    ACE_DEBUG ((LM_DEBUG, "TEST (%P|%t) Pre-ORB initialization ...\n"));
 
-        // -----------------------------------------------------------------
-        // Pre-ORB initialization steps necessary for proper DLL ORB
-        // support.
-        // -----------------------------------------------------------------
-        // Make sure TAO's singleton manager is initialized, and set to not
-        // register itself with the ACE_Object_Manager since it is under the
-        // control of the Service Configurator.  If we register with the
-        // ACE_Object_Manager, then the ACE_Object_Manager will still hold
-        // (dangling) references to instances of objects created by this
-        // module and destroyed by this object when it is dynamically
-        // unloaded.
-        int register_with_object_manager = 0;
-        TAO_Singleton_Manager * p_tsm = TAO_Singleton_Manager::instance ();
-        result = p_tsm->init (register_with_object_manager);
-
-        if (result == -1 && m_failPrePostInit == 0)
-          return -1;
-      }
-
-    // Initialize the ORB
-    mv_orb = CORBA::ORB_init (argc, argv);
-    if (CORBA::is_nil (mv_orb.in ()))
+    // Make sure TAO's singleton manager is initialized, and set to not
+    // register itself with the ACE_Object_Manager since it is under the
+    // control of the Service Configurator. If we register with the
+    // ACE_Object_Manager, it will retain references to objects destroyed
+    // when this module is dynamically unloaded.
+    int const register_with_object_manager {};
+    TAO_Singleton_Manager * const tsm = TAO_Singleton_Manager::instance ();
+    int const result = tsm->init (register_with_object_manager);
+    if (result == -1)
       return -1;
 
-    CORBA::Object_var v_poa = mv_orb->resolve_initial_references ("RootPOA");
-
-    mv_rootPOA = PortableServer::POA::_narrow (v_poa.in ());
-    if (CORBA::is_nil (mv_rootPOA.in ()))
+    // Initialize the ORB.
+    this->mv_orb_ = CORBA::ORB_init (argc, argv);
+    if (CORBA::is_nil (this->mv_orb_.in ()))
       return -1;
 
-    mv_poaManager = mv_rootPOA->the_POAManager ();
-    if (CORBA::is_nil (mv_poaManager.in ()))
+    CORBA::Object_var const poa_object (
+      this->mv_orb_->resolve_initial_references ("RootPOA"));
+
+    this->mv_root_poa_ = PortableServer::POA::_narrow (poa_object.in ());
+    if (CORBA::is_nil (this->mv_root_poa_.in ()))
       return -1;
 
-    mv_poaManager->activate ();
+    this->mv_poa_manager_ = this->mv_root_poa_->the_POAManager ();
+    if (CORBA::is_nil (this->mv_poa_manager_.in ()))
+      return -1;
+
+    this->mv_poa_manager_->activate ();
   }
-  catch(CORBA::Exception& ex)
-  {
-    ex._tao_print_exception (ACE_TEXT ("(%P|%t) init failed:"));
-    return -1;
-  }
+  catch (CORBA::Exception const &ex)
+    {
+      ex._tao_print_exception (ACE_TEXT ("(%P|%t) init failed:"));
+      return -1;
+    }
   catch (...)
-  {
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) init failed\n")),
-                      -1);
-  }
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) init failed\n")),
+                        -1);
+    }
 
 #if defined (ACE_HAS_THREADS)
-  mp_barrier = new ACE_Thread_Barrier (threadCnt + 1);
+  this->mp_barrier_ = std::make_unique<ACE_Thread_Barrier> (thread_count + 1);
 
-  this->activate(
-                 THR_NEW_LWP|THR_JOINABLE|THR_INHERIT_SCHED,
-                 threadCnt);
-  mp_barrier->wait ();
+  this->activate (THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED,
+                  thread_count);
+  this->mp_barrier_->wait ();
 #endif
 
   return 0;
@@ -119,71 +93,58 @@ int DllOrb::init (int argc, ACE_TCHAR *argv[])
 
 int DllOrb::fini ()
 {
-  int result;
-
   try
     {
 #if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) && !defined (TAO_HAS_MINIMUM_POA)
-      mv_poaManager->deactivate(1, 1);
+      this->mv_poa_manager_->deactivate (true, true);
 #endif
-      mv_poaManager = PortableServer::POAManager::_nil();
+      this->mv_poa_manager_ = PortableServer::POAManager::_nil ();
 
-      // attempt to protect against sporadic BAD_INV_ORDER exceptions
-      ACE_OS::sleep(ACE_Time_Value(0, 500));
+      // Attempt to protect against sporadic BAD_INV_ORDER exceptions.
+      ACE_OS::sleep (ACE_Time_Value (0, 500));
 
-      mv_orb->shutdown(true);
+      this->mv_orb_->shutdown (true);
     }
-  catch(CORBA::Exception& ex)
-  {
-    ex._tao_print_exception (ACE_TEXT ("(%P|%t) fini failed:"));
-    return -1;
-  }
-  catch(...)
+  catch (CORBA::Exception const &ex)
+    {
+      ex._tao_print_exception (ACE_TEXT ("(%P|%t) fini failed:"));
+      return -1;
+    }
+  catch (...)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("(%P|%t) fini failed to deactivate/shutdown\n")),
                         -1);
     }
 
-
-  // wait for our threads to finish
-  this->wait();
+  // Wait for our threads to finish.
+  this->wait ();
 
 #if defined (ACE_HAS_THREADS)
-  delete mp_barrier;
-  mp_barrier = 0;
+  this->mp_barrier_.reset ();
 #endif
 
   try
     {
-      mv_orb->destroy();
-      mv_orb = CORBA::ORB::_nil();
+      this->mv_orb_->destroy ();
+      this->mv_orb_ = CORBA::ORB::_nil ();
     }
-  catch(CORBA::Exception& ex)
-  {
-    ex._tao_print_exception (
-      ACE_TEXT (
-        "(%P|%t) init failed to destroy the orb:"));
-    return -1;
-  }
-
-  if (m_failPrePostInit < 3)
+  catch (CORBA::Exception const &ex)
     {
-      ACE_DEBUG((LM_DEBUG, "TEST (%P|%t) Post-ORB finalization ...\n"));
+      ex._tao_print_exception (ACE_TEXT ("(%P|%t) init failed to destroy the orb:"));
+      return -1;
+    }
 
-      // -----------------------------------------------------------------
-      // Post-ORB finalization steps necessary for proper DLL ORB
-      // support.
-      // -----------------------------------------------------------------
-      // Explicitly clean up singletons created by TAO before
-      // unloading this module.
-      TAO_Singleton_Manager * p_tsm = TAO_Singleton_Manager::instance();
-      result = p_tsm->fini();
-      if (result == -1 && m_failPrePostInit == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) fini failed to destroy TAO_Singleton_Manager\n")),
-                          -1);
-    } /* end of if */
+  ACE_DEBUG ((LM_DEBUG, "TEST (%P|%t) Post-ORB finalization ...\n"));
+
+  // Explicitly clean up singletons created by TAO before unloading this
+  // module.
+  TAO_Singleton_Manager * const tsm = TAO_Singleton_Manager::instance ();
+  int const result = tsm->fini ();
+  if (result == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("(%P|%t) fini failed to destroy TAO_Singleton_Manager\n")),
+                      -1);
 
   return 0;
 }
@@ -191,28 +152,28 @@ int DllOrb::fini ()
 int DllOrb::svc ()
 {
 #if defined (ACE_HAS_THREADS)
-  mp_barrier->wait();
+  this->mp_barrier_->wait ();
 #endif
 
   try
     {
-      mv_orb->run();
+      this->mv_orb_->run ();
     }
-  catch(CORBA::BAD_INV_ORDER const & rc_ex)
+  catch (CORBA::BAD_INV_ORDER const &ex)
     {
-      const CORBA::ULong VMCID = rc_ex.minor() & 0xFFFFF000U;
-      const CORBA::ULong minorCode = rc_ex.minor() & 0xFFFU;
-      if (VMCID != CORBA::OMGVMCID || minorCode != 4)
+      CORBA::ULong const vmcid = ex.minor () & 0xFFFFF000U;
+      CORBA::ULong const minor_code = ex.minor () & 0xFFFU;
+      if (vmcid != CORBA::OMGVMCID || minor_code != 4)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("(%P|%t) svc exits (-1)\n")),
                           -1);
     }
-  catch(CORBA::Exception& ex)
-  {
-    ex._tao_print_exception (ACE_TEXT ("(%P|%t) svc - orb->run() failed:"));
-    return -1;
-  }
-  catch(...)
+  catch (CORBA::Exception const &ex)
+    {
+      ex._tao_print_exception (ACE_TEXT ("(%P|%t) svc - orb->run() failed:"));
+      return -1;
+    }
+  catch (...)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("(%P|%t) svc got some exception\n")),

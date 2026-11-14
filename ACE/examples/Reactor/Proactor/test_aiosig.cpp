@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 //FUZZ: disable check_for_lack_ACE_OS
 //FUZZ: disable check_for_improper_main_declaration
 

@@ -191,7 +191,7 @@ ACE_Token_Name::name (const ACE_TCHAR *new_name)
 {
   ACE_TRACE ("ACE_Token_Name::name");
 
-  if (new_name == 0)
+  if (new_name == nullptr)
     new_name = ACE_TEXT ("no name");
 
   size_t n = ACE_OS::strlen (new_name) + 1;
@@ -233,12 +233,11 @@ ACE_Local_WLock::ACE_Local_WLock (const ACE_TCHAR *token_name,
 
 // ************************************************************
 
-
 ACE_INLINE void
 ACE_Token_Name::operator= (const ACE_Token_Name &rhs)
 {
   ACE_TRACE ("ACE_Token_Name::operator=");
-  if (&rhs != this)
+  if (std::addressof (rhs) != this)
   {
     this->name (rhs.name ());
   }

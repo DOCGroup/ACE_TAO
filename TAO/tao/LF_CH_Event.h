@@ -48,10 +48,8 @@ public:
    */
   friend class TAO_LF_Multi_Event;
 
-  /// Constructor
   TAO_LF_CH_Event ();
 
-  /// Destructor
   ~TAO_LF_CH_Event () override;
 
   //@{

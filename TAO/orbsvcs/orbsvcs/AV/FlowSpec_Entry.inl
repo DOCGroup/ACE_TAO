@@ -5,10 +5,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 int
-TAO_FlowSpec_Entry::set_direction (const char *direction)
+TAO_FlowSpec_Entry::set_direction (char const *direction)
 {
   this->direction_str_ = direction;
-  if (direction == 0)
+  if (direction == nullptr)
     {
       this->direction_ = TAO_AV_INVALID;
       return -1;
@@ -22,15 +22,15 @@ TAO_FlowSpec_Entry::set_direction (const char *direction)
 
 ACE_INLINE
 int
-TAO_FlowSpec_Entry::parse_flow_protocol_string (const char *flow_string)
+TAO_FlowSpec_Entry::parse_flow_protocol_string (char const *flow_string)
 {
   if (flow_string == nullptr)
     return 0;
 
-  if (ACE_OS::strcmp (flow_string,"") == 0)
-        return 0;
+  if (flow_string[0] == '\0')
+    return 0;
 
-  this->use_flow_protocol_ = 1;
+  this->use_flow_protocol_ = true;
   // do some flow protocol processing.
   this->flow_protocol_ = flow_string;
 
@@ -45,14 +45,14 @@ TAO_FlowSpec_Entry::direction ()
 }
 
 ACE_INLINE
-const char *
+char const *
 TAO_FlowSpec_Entry::direction_str () const
 {
   return this->direction_str_.c_str();
 }
 
 ACE_INLINE
-const char *
+char const *
 TAO_FlowSpec_Entry::flow_protocol_str () const
 {
   return this->flow_protocol_.c_str();
@@ -60,7 +60,7 @@ TAO_FlowSpec_Entry::flow_protocol_str () const
 
 ACE_INLINE
 void
-TAO_FlowSpec_Entry::flow_protocol_str (const char *str)
+TAO_FlowSpec_Entry::flow_protocol_str (char const *str)
 {
   this->flow_protocol_ = CORBA::string_dup (str);
 }
@@ -73,7 +73,7 @@ TAO_FlowSpec_Entry::carrier_protocol ()
 }
 
 ACE_INLINE
-const char *
+char const *
 TAO_FlowSpec_Entry::carrier_protocol_str () const
 {
   return this->carrier_protocol_.c_str();
@@ -90,11 +90,9 @@ ACE_INLINE
 void
 TAO_FlowSpec_Entry::address (ACE_Addr *addr, bool cleanup)
 {
-  if (this->clean_up_address_)
-    delete this->address_;
-
+  if (this->owned_address_.get () != addr)
+    this->owned_address_.reset (cleanup ? addr : nullptr);
   this->address_ = addr;
-  this->clean_up_address_ = cleanup;
 }
 
 ACE_INLINE
@@ -108,39 +106,38 @@ ACE_INLINE
 void
 TAO_FlowSpec_Entry::control_address (ACE_Addr *addr)
 {
+  if (this->owned_control_address_.get () != addr)
+    this->owned_control_address_.reset ();
   this->control_address_ = addr;
 }
 
 ACE_INLINE
-const char *
+char const *
 TAO_FlowSpec_Entry::address_str () const
 {
   return this->address_str_.c_str();
 }
 
 ACE_INLINE
-const char*
+char const *
 TAO_FlowSpec_Entry::format () const
 {
   return this->format_.c_str();
 }
 
 ACE_INLINE
-const char *
+char const *
 TAO_FlowSpec_Entry::flowname () const
 {
   return this->flowname_.c_str();
 }
 
-
 ACE_INLINE
 int
 TAO_FlowSpec_Entry::set_peer_addr (ACE_Addr *peer_addr)
 {
-  if (this->delete_peer_addr_)
-    delete this->peer_addr_;
-
-  this->delete_peer_addr_ = false;
+  if (this->owned_peer_addr_.get () != peer_addr)
+    this->owned_peer_addr_.reset ();
   this->peer_addr_ = peer_addr;
 
   if (this->handler_ != nullptr)
@@ -167,7 +164,8 @@ ACE_INLINE
 int
 TAO_FlowSpec_Entry::set_local_control_addr (ACE_Addr *local_addr)
 {
-  this->local_control_addr_ = local_addr;
+  if (this->local_control_addr_.get () != local_addr)
+    this->local_control_addr_.reset (local_addr);
   return 0;
 }
 
@@ -182,55 +180,51 @@ ACE_INLINE
 ACE_Addr*
 TAO_FlowSpec_Entry::get_local_control_addr ()
 {
-  return this->local_control_addr_;
+  return this->local_control_addr_.get ();
 }
 
 ACE_INLINE
-int
-TAO_FlowSpec_Entry::set_local_sec_addr (char** local_sec_addr,
-                                        int size)
+void
+TAO_FlowSpec_Entry::set_local_sec_addrs (
+  std::vector<std::string> const &addresses)
 {
-  this->local_sec_addr_ = local_sec_addr;
-  this->num_local_sec_addrs_ = size;
-  return 0;
+  this->local_sec_addrs_ = addresses;
 }
 
 ACE_INLINE
-char**
-TAO_FlowSpec_Entry::get_local_sec_addr ()
+std::vector<std::string> const &
+TAO_FlowSpec_Entry::get_local_sec_addrs () const
 {
-  return this->local_sec_addr_;
+  return this->local_sec_addrs_;
 }
 
 ACE_INLINE
-int
-TAO_FlowSpec_Entry::num_local_sec_addrs ()
+size_t
+TAO_FlowSpec_Entry::num_local_sec_addrs () const
 {
-  return this->num_local_sec_addrs_;
+  return this->local_sec_addrs_.size ();
 }
 
 ACE_INLINE
-int
-TAO_FlowSpec_Entry::set_peer_sec_addr (char** peer_sec_addr,
-                                       int size)
+void
+TAO_FlowSpec_Entry::set_peer_sec_addrs (
+  std::vector<std::string> const &addresses)
 {
-  this->peer_sec_addr_ = peer_sec_addr;
-  this->num_peer_sec_addrs_ = size;
-  return 0;
+  this->peer_sec_addrs_ = addresses;
 }
 
 ACE_INLINE
-char**
-TAO_FlowSpec_Entry::get_peer_sec_addr ()
+std::vector<std::string> const &
+TAO_FlowSpec_Entry::get_peer_sec_addrs () const
 {
-  return this->peer_sec_addr_;
+  return this->peer_sec_addrs_;
 }
 
 ACE_INLINE
-int
-TAO_FlowSpec_Entry::num_peer_sec_addrs ()
+size_t
+TAO_FlowSpec_Entry::num_peer_sec_addrs () const
 {
-  return this->num_peer_sec_addrs_;
+  return this->peer_sec_addrs_.size ();
 }
 
 ACE_INLINE
@@ -332,8 +326,8 @@ TAO_FlowSpec_Entry::control_protocol_object (TAO_AV_Protocol_Object *object)
 }
 
 ACE_INLINE
-int
-TAO_FlowSpec_Entry::is_multicast ()
+bool
+TAO_FlowSpec_Entry::is_multicast () const
 {
   return this->is_multicast_;
 }

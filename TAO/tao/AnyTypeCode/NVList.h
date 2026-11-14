@@ -1,20 +1,16 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    NVList.h
  *
  *  @author  Copyright 1994-1995 by Sun Microsystems Inc.
  *  @author  Aniruddha Gokhale <gokhale@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_NVLIST_H
 #define TAO_NVLIST_H
 
 #include /**/ "ace/pre.h"
-
-#include "ace/Unbounded_Queue.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -26,7 +22,9 @@
 
 #include "ace/Unbounded_Queue.h"
 #include "ace/Thread_Mutex.h"
+
 #include <atomic>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -36,7 +34,7 @@ namespace CORBA
 {
   enum
   {
-    // = Flags for NVList add methods
+    /// Flags for NVList add methods.
     ARG_IN                  = 0x01,
     ARG_OUT                 = 0x02,
     ARG_INOUT               = 0x04,
@@ -44,11 +42,11 @@ namespace CORBA
     OUT_LIST_MEMORY         = 0x10,
     DEPENDENT_LIST          = 0x20,
 
-    // = (Unused) flags for Context methods
+    /// Unused flags for Context methods.
     CTX_RESTRICT_SCOPE      = 0x40,
     CTX_DELETE_DESCENDENTS  = 0x80,
 
-    // = Flags for deferred synchronous methods
+    /// Flags for deferred synchronous methods.
     INV_NO_RESPONSE         = 0x100,
     INV_TERM_ON_ERR         = 0x200,
     RESP_NO_WAIT            = 0x400
@@ -80,7 +78,7 @@ namespace CORBA
 
   public:
     /// optional name
-    const char * name () const;
+    char const * name () const;
 
     /// return the value
     Any_ptr value () const;
@@ -92,9 +90,18 @@ namespace CORBA
     static NamedValue * _duplicate (NamedValue *);
     static NamedValue * _nil ();
 
-    // = Reference counting.
+    NamedValue (NamedValue const &) = delete;
+    NamedValue (NamedValue &&) = delete;
+    NamedValue &operator= (NamedValue const &) = delete;
+    NamedValue &operator= (NamedValue &&) = delete;
+
+    /// @name Reference counting
+    /// @{
+
     ULong _incr_refcount ();
     ULong _decr_refcount ();
+
+    /// @}
 
     // Useful for template programming.
     using _ptr_type = NamedValue_ptr;
@@ -102,7 +109,6 @@ namespace CORBA
     using _out_type = NamedValue_out;
 
   protected:
-    /// Destructor
     /**
      * Protected destructor to enforce proper memory management
      * through the reference counting mechanism.
@@ -124,11 +130,10 @@ namespace CORBA
     /// parameter mode flags
     Flags flags_ {};
 
-    /// optional IDL name of the parameter
+    /// Optional IDL name; this object owns the string and frees it on
+    /// destruction.
     char *name_ {};
   };
-
-  // ****************************************************************
 
   using NVList_var = TAO_Pseudo_Var_T<NVList>;
   using NVList_out = TAO_Pseudo_Out_T<NVList>;
@@ -162,10 +167,10 @@ namespace CORBA
     NamedValue_ptr add (Flags);
 
     /// add an element and initialize its name and flags
-    NamedValue_ptr add_item (const char *, Flags);
+    NamedValue_ptr add_item (char const *, Flags);
 
     /// initializes a value, name, and flags
-    NamedValue_ptr add_value (const char *, const Any &, Flags);
+    NamedValue_ptr add_value (char const *, Any const &, Flags);
 
     /// just like add_item. In addition, memory management of char *
     /// name is taken over by the NVList
@@ -186,11 +191,21 @@ namespace CORBA
     static NVList * _duplicate (NVList *);
     static NVList * _nil ();
 
-    // = Reference counting.
+    /// @name Reference counting
+    /// @{
+
     ULong _incr_refcount ();
     ULong _decr_refcount ();
 
-    // = TAO Extensions:
+    /// @}
+
+    NVList (NVList const &) = delete;
+    NVList (NVList &&) = delete;
+    NVList &operator= (NVList const &) = delete;
+    NVList &operator= (NVList &&) = delete;
+
+    /// @name TAO extensions
+    /// @{
 
     /**
      * Set the incoming CDR stream, this is used by TAO to perform lazy
@@ -223,13 +238,14 @@ namespace CORBA
      */
     Boolean _lazy_has_arguments () const;
 
+    /// @}
+
     // Useful for template programming.
     using _ptr_type = NVList_ptr;
     using _var_type = NVList_var;
     using _out_type = NVList_out;
 
   protected:
-    /// Destructor
     /**
      * Protected destructor to enforce proper memory management
      * through the reference counting mechanism.
@@ -250,7 +266,7 @@ namespace CORBA
     void evaluate ();
 
   private:
-    /// Internal list of parameters stored as NamedValues
+    /// Owns NamedValue objects; the ACE queue owns only its internal nodes.
     ACE_Unbounded_Queue<NamedValue_ptr> values_;
 
     /// Maximum length of list
@@ -267,7 +283,7 @@ namespace CORBA
      * store the CDR buffer and perform lazy evaluation to compute the
      * Anys.
      */
-    TAO_InputCDR *incoming_ {};
+    std::unique_ptr<TAO_InputCDR> incoming_ {};
 
     /// The flags used to check which parameters are actually extracted
     /// from the <incoming_> buffer

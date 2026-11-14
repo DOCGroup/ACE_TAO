@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Mem_Map.h"
 #include "ace/Lib_Find.h"
@@ -48,7 +47,7 @@ reverse_file (ACE_HANDLE file_handle,
           count = 0;
         }
       else
-        count++;
+        ++count;
     }
   ACE_OS::write (file_handle, array, count+1);
 }
@@ -85,7 +84,7 @@ create_test_file (ACE_TCHAR *filename, int line_length, int num_lines)
       for (int i = 0; i < line_length; i++)
         {
           mybuf[i] = *c;
-          c++;
+          ++c;
         }
 
       mybuf[line_length] = '\0';

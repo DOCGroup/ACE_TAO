@@ -1,18 +1,17 @@
 #include "Test_i.h"
 
-CORBA::Long
-Test_i::instance_count_ = 0;
+std::atomic<CORBA::Long> Test_i::instance_count_ {};
 
 Test_i::Test_i (PortableServer::POA_ptr poa)
   :  poa_ (PortableServer::POA::_duplicate (poa))
 {
-  Test_i::instance_count_++;
+  ++Test_i::instance_count_;
 }
 
 CORBA::Long
 Test_i::instance_count ()
 {
-  return Test_i::instance_count_;
+  return Test_i::instance_count_.load ();
 }
 
 void

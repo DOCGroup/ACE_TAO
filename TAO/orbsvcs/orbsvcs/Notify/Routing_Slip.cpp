@@ -34,23 +34,23 @@ namespace TAO_Notify
 Routing_Slip_Queue Routing_Slip::persistent_queue_(QUEUE_ALLOWED);
 
 TAO_SYNCH_MUTEX Routing_Slip::sequence_lock_;
-int Routing_Slip::routing_slip_sequence_= 0;
-size_t Routing_Slip::count_enter_transient_ = 0;
-size_t Routing_Slip::count_continue_transient_ = 0;
-size_t Routing_Slip::count_enter_reloaded_ = 0;
-size_t Routing_Slip::count_enter_new_ = 0;
-size_t Routing_Slip::count_continue_new_ = 0;
-size_t Routing_Slip::count_enter_complete_while_new_ = 0;
-size_t Routing_Slip::count_enter_saving_ = 0;
-size_t Routing_Slip::count_enter_saved_ = 0;
-size_t Routing_Slip::count_enter_updating_ = 0;
-size_t Routing_Slip::count_enter_changed_while_saving_ = 0;
-size_t Routing_Slip::count_continue_changed_while_saving_ = 0;
-size_t Routing_Slip::count_enter_changed_ = 0;
-size_t Routing_Slip::count_continue_changed_ = 0;
-size_t Routing_Slip::count_enter_complete_ = 0;
-size_t Routing_Slip::count_enter_deleting_ = 0;
-size_t Routing_Slip::count_enter_terminal_ = 0;
+int Routing_Slip::routing_slip_sequence_ {};
+size_t Routing_Slip::count_enter_transient_ {};
+size_t Routing_Slip::count_continue_transient_ {};
+size_t Routing_Slip::count_enter_reloaded_ {};
+size_t Routing_Slip::count_enter_new_ {};
+size_t Routing_Slip::count_continue_new_ {};
+size_t Routing_Slip::count_enter_complete_while_new_ {};
+size_t Routing_Slip::count_enter_saving_ {};
+size_t Routing_Slip::count_enter_saved_ {};
+size_t Routing_Slip::count_enter_updating_ {};
+size_t Routing_Slip::count_enter_changed_while_saving_ {};
+size_t Routing_Slip::count_continue_changed_while_saving_ {};
+size_t Routing_Slip::count_enter_changed_ {};
+size_t Routing_Slip::count_continue_changed_ {};
+size_t Routing_Slip::count_enter_complete_ {};
+size_t Routing_Slip::count_enter_deleting_ {};
+size_t Routing_Slip::count_enter_terminal_ {};
 
 Routing_Slip_Ptr
 Routing_Slip::create (const TAO_Notify_Event::Ptr& event)
@@ -109,8 +109,8 @@ Routing_Slip::create (
   Routing_Slip_Persistence_Manager * rspm)
 {
   Routing_Slip_Ptr result;
-  ACE_Message_Block * event_mb = nullptr;
-  ACE_Message_Block * rs_mb = nullptr;
+  ACE_Message_Block * event_mb {};
+  ACE_Message_Block * rs_mb {};
   try
     {
       if (rspm->reload (event_mb, rs_mb))
@@ -166,13 +166,8 @@ Routing_Slip::set_rspm (Routing_Slip_Persistence_Manager * rspm)
 
 Routing_Slip::Routing_Slip(
       const TAO_Notify_Event::Ptr& event)
-  : is_safe_ (false)
-  , until_safe_ (internals_)
-  , this_ptr_ (0)
+  : until_safe_ (internals_)
   , event_(event)
-  , state_ (rssCREATING)
-  , complete_requests_ (0)
-  , rspm_ (0)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, sequence_lock_);
   this->sequence_ = ++routing_slip_sequence_;
@@ -295,12 +290,12 @@ Routing_Slip::forward (TAO_Notify_ProxySupplier* ps, bool filter)
   size_t request_id = delivery_requests_.size ();
 
   if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
-      ACE_TEXT ("(%P|%t) Routing Slip #%d: add Delivery_Request #%d: Forward %s; completed %d of %d\n"),
+      ACE_TEXT ("(%P|%t) Routing Slip #%d: add Delivery_Request #%B: Forward %s; completed %B of %B\n"),
       this->sequence_,
-      static_cast<int> (request_id),
+      request_id,
       filter ? ACE_TEXT ("Filter") : ACE_TEXT ("No Filter"),
-      static_cast<int> (this->complete_requests_),
-      static_cast<int> (this->delivery_requests_.size ())
+      this->complete_requests_,
+      this->delivery_requests_.size ()
       ));
 
   Delivery_Request_Ptr request (new Delivery_Request (this->this_ptr_, request_id));
@@ -308,7 +303,8 @@ Routing_Slip::forward (TAO_Notify_ProxySupplier* ps, bool filter)
     {
       this->delivery_requests_.push_back (request);
 //      Delivery_Method_Dispatch method (request, ps, filter);
-      TAO_Notify_Method_Request_Dispatch_No_Copy method (request, ps, filter);
+      TAO_Notify_Method_Request_Event event_request (request);
+      TAO_Notify_Method_Request_Dispatch_No_Copy method (event_request, ps, filter);
       guard.release ();
       if (DEBUG_LEVEL > 8)
         ORBSVCS_DEBUG ((LM_DEBUG,
@@ -357,7 +353,8 @@ Routing_Slip::dispatch (
   if (! ps->has_shutdown() )
     {
       this->delivery_requests_.push_back (request);
-      TAO_Notify_Method_Request_Dispatch_No_Copy method (request, ps, filter);
+      TAO_Notify_Method_Request_Event event_request (request);
+      TAO_Notify_Method_Request_Dispatch_No_Copy method (event_request, ps, filter);
       guard.release ();
       if (DEBUG_LEVEL > 8)
         ORBSVCS_DEBUG ((LM_DEBUG,
@@ -738,7 +735,6 @@ Routing_Slip::enter_state_updating (Routing_Slip_Guard & guard)
   this->rspm_->update (*rs_mb);
 }
 
-
 void
 Routing_Slip::enter_state_changed_while_saving (Routing_Slip_Guard & guard)
 {
@@ -835,7 +831,7 @@ Routing_Slip::marshal (TAO_OutputCDR & cdr)
   size_t request_count = this->delivery_requests_.size();
   cdr.write_ulong (
     ACE_Utils::truncate_cast<CORBA::ULong> (request_count - this->complete_requests_));
-  for (size_t nreq = 0; nreq < request_count; ++nreq)
+  for (size_t nreq {}; nreq < request_count; ++nreq)
   {
     Delivery_Request * request = this->delivery_requests_[nreq].get ();
     if (request != nullptr)
@@ -848,11 +844,11 @@ Routing_Slip::marshal (TAO_OutputCDR & cdr)
 bool
 Routing_Slip::unmarshal (TAO_Notify_EventChannelFactory &ecf, TAO_InputCDR & cdr)
 {
-  CORBA::ULong count = 0;
+  CORBA::ULong count {};
   cdr.read_ulong (count);
-  for (size_t nreq = 0; nreq < count; ++nreq)
+  for (size_t nreq {}; nreq < count; ++nreq)
   {
-    ACE_CDR::Octet code = 0;
+    ACE_CDR::Octet code {};
     while (cdr.read_octet(code))
     {
       try
@@ -898,7 +894,7 @@ Routing_Slip::unmarshal (TAO_Notify_EventChannelFactory &ecf, TAO_InputCDR & cdr
       }
     }
   }
-  return this->delivery_requests_.size () > 0;
+  return !this->delivery_requests_.empty ();
 }
 
 void
@@ -909,7 +905,7 @@ Routing_Slip::reconnect ()
 
   //@@todo is there a worker_task available to do this?
   size_t const count = this->delivery_methods_.size ();
-  for (size_t nmethod = 0; nmethod < count; ++nmethod)
+  for (size_t nmethod {}; nmethod < count; ++nmethod)
   {
     this->delivery_methods_[nmethod]->execute ();
   }

@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef _OPTIONS_H
 #define _OPTIONS_H
 
@@ -40,7 +39,7 @@ public:
 
   /// If non-0 and the link is an HTML file then recursively check all
   /// links that are embedded in the body of file.
-  int recurse () const;
+  bool recurse () const;
 
   /// Return the hostname of the initial Web server.
   const ACE_TCHAR *hostname () const;
@@ -52,10 +51,10 @@ public:
   const ACE_TCHAR *url_filter () const;
 
   /// Are we debugging?
-  int debug () const;
+  bool debug () const;
 
   /// Are we being verbose?
-  int verbose () const;
+  bool verbose () const;
 
   /// Which order? LIFO|FIFO??
   const ACE_TCHAR *order () const;
@@ -67,52 +66,60 @@ public:
   /// <connect> calls to broken servers.
   const ACE_Time_Value *timeout () const;
 
-  // = Get/set the <Command_Processor>.
+  /// @name Command processor
+  /// @{
+
   Command_Processor *command_processor () const;
   void command_processor (Command_Processor *);
 
-  // = Get/set the <URL_Visitor>.
+  /// @}
+
+  /// @name URL visitor
+  /// @{
+
   URL_Visitor *visitor () const;
   void visitor (URL_Visitor *);
 
-  // Get the handle_limit.
-  int handle_limit ();
+  /// @}
+
+  /// Get the handle limit.
+  int handle_limit () const;
 private:
   /// Are we recursving.
-  int recurse_;
+  bool recurse_ {};
 
   /// Initial Web server name.
-  const ACE_TCHAR *hostname_;
+  const ACE_TCHAR *hostname_ {};
 
   /// Initial URI name.
-  const ACE_TCHAR *uri_;
+  const ACE_TCHAR *uri_ {};
 
   /// Are we debugging?
-  int debug_;
+  bool debug_ {};
 
   /// Are we being verbose?
-  int verbose_;
+  bool verbose_ {};
 
   /// Whether the URLs are traversed in FIFO or LIFO order.
-  const ACE_TCHAR *order_;
+  const ACE_TCHAR *order_ {};
 
   /// Timeout on <recv> and <connect> to broken Web servers.
   ACE_Time_Value timeout_;
 
   /// String used to filter out which URLs to validate.
-  const ACE_TCHAR *url_filter_;
+  const ACE_TCHAR *url_filter_ {};
 
   /// Pointer to the Command_Processor.
-  Command_Processor *command_processor_;
+  Command_Processor *command_processor_ {};
 
   /// Pointer to the <URL_Visitor>.
-  URL_Visitor *visitor_;
+  URL_Visitor *visitor_ {};
 
   /// Port no.
-  int port_no_;
+  int port_no_ {};
 
   /// The limit of the number of descriptors to be given for this process.
-  int handle_limit_;
+  int handle_limit_ {};
 };
 
 // Typedef an Options Singleton.

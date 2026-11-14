@@ -45,8 +45,7 @@ static HANDLE logf = INVALID_HANDLE_VALUE;
 
 BOOL APIENTRY DllMain( HANDLE hModule,
                        DWORD  ul_reason_for_call,
-                       LPVOID lpReserved
-                      )
+                       LPVOID lpReserved)
 {
   if (ul_reason_for_call == DLL_PROCESS_ATTACH)
     {
@@ -141,8 +140,8 @@ Peer::command ()
   // request-reply command lines, so we can make assumptions about a complete
   // line being available to make life easier.
   const int MAX_RECV = 1024;
-  char line[MAX_RECV], *p;
-  p = &line[0];
+  char line[MAX_RECV];
+  char *p = line;
   int count = 0, len = 0;
   while ((count = recv (this->handle_, p, MAX_RECV - len, 0)) > 0)
     {

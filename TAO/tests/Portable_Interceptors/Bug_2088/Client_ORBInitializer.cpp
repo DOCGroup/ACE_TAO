@@ -1,12 +1,6 @@
 // -*- C++ -*-
 #include "Client_ORBInitializer.h"
 
-Client_ORBInitializer::Client_ORBInitializer () :
-  pre_init_called (false),
-  post_init_called (false)
-{
-}
-
 void
 Client_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr)

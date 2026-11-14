@@ -14,10 +14,10 @@ Thread::Thread (long tid, const char *alias, size_t offset)
     server_encounters_ (0),
     nested_ (0),
     pending_(),
-    incoming_(0),
+    incoming_ (nullptr),
     new_connection_(),
-    giop_target_(0),
-    target_dup_(0),
+    giop_target_ (nullptr),
+    target_dup_ (nullptr),
     current_invocation_ (),
     active_handle_ (0),
     first_line_ (offset),
@@ -40,23 +40,24 @@ Thread::add_time (const ACE_CString &time)
 void
 Thread::push_new_connection (PeerProcess *pp)
 {
-  this->new_connection_.push (pp);
+  this->new_connection_.push_back (pp);
 }
 
 PeerProcess *
 Thread::pop_new_connection ()
 {
-  PeerProcess *pp = 0;
-  this->new_connection_.pop (pp);
+  if (this->new_connection_.empty ())
+    return nullptr;
+
+  PeerProcess *pp = this->new_connection_.back ();
+  this->new_connection_.pop_back ();
   return pp;
 }
 
 PeerProcess *
 Thread::peek_new_connection () const
 {
-  PeerProcess *pp = 0;
-  this->new_connection_.top (pp);
-  return pp;
+  return this->new_connection_.empty () ? nullptr : this->new_connection_.back ();
 }
 
 void
@@ -74,39 +75,45 @@ Thread::pending_local_addr () const
 void
 Thread::handle_request ()
 {
-  this->server_encounters_++;
+  ++this->server_encounters_;
   if (this->pending_.size() > 1)
-    this->nested_++;
+    ++this->nested_;
 }
 
 void
 Thread::enter_wait (PeerProcess *pp)
 {
-  this->pending_.push (pp);
-  this->client_encounters_++;
+  this->pending_.push_back (pp);
+  ++this->client_encounters_;
   if (this->pending_.size() > this->max_depth_)
     this->max_depth_ = this->pending_.size();
   if (this->pending_.size() > 1)
-    this->nested_++;
+    ++this->nested_;
 }
 
 void
 Thread::exit_wait (PeerProcess *pp, size_t linenum)
 {
-  PeerProcess *old;
-  if (this->pending_.pop(old) == -1)
+  if (this->pending_.empty ())
     return;
+
+  PeerProcess *old = this->pending_.back ();
+  this->pending_.pop_back ();
   while (old != pp)
     {
       ACE_ERROR ((LM_ERROR,
-                  "Line %d, Ending an invocation to peer %s, but most recent started"
+                  "Line %B, Ending an invocation to peer %s, but most recent started"
                   " is to peer %s\n", linenum, pp->id(), old->id()));
       //      this->pending_.push(old);
-      if (this->pending_.pop(old) == -1)
+      if (this->pending_.empty ())
         return;
+
+      old = this->pending_.back ();
+      this->pending_.pop_back ();
     }
-  if (this->pending_.top (old) == 0)
+  if (! this->pending_.empty ())
     {
+      old = this->pending_.back ();
       this->active_handle (old->last_transport ()->handle_);
     }
   else
@@ -180,30 +187,30 @@ Thread::set_dup (Thread *other, bool set_other)
 void
 Thread::clear_dup ()
 {
-  this->target_dup_ = 0;
+  this->target_dup_ = nullptr;
 }
 
 bool
 Thread::has_dup ()
 {
-  return this->target_dup_ != 0;
+  return this->target_dup_ != nullptr;
 }
 
 void
 Thread::swap_target ()
 {
-  if (target_dup_ != 0 && target_dup_->giop_target() != 0)
+  if (target_dup_ != nullptr && target_dup_->giop_target() != nullptr)
     {
       this->giop_target_->swap (target_dup_->giop_target());
       this->target_dup_->clear_dup ();
-      this->target_dup_ = 0;
+      this->target_dup_ = nullptr;
     }
   else
     {
-      if (target_dup_ == 0)
-        ACE_ERROR ((LM_ERROR, "Thread::swap_target, target_dup_ == 0\n"));
+      if (target_dup_ == nullptr)
+        ACE_ERROR ((LM_ERROR, "Thread::swap_target, target_dup_ == nullptr\n"));
       else
-        ACE_ERROR ((LM_ERROR, "Thread::swap_target, target_dup_.id = %d, giop_target == 0\n", target_dup_->id()));
+        ACE_ERROR ((LM_ERROR, "Thread::swap_target, target_dup_.id = %d, giop_target == nullptr\n", target_dup_->id()));
     }
 }
 
@@ -217,10 +224,10 @@ void
 Thread::set_giop_target (GIOP_Buffer *buffer)
 {
   this->giop_target_ = buffer;
-  if (this->target_dup_ != 0)
+  if (this->target_dup_ != nullptr)
     {
       this->target_dup_->clear_dup();
-      this->target_dup_ = 0;
+      this->target_dup_ = nullptr;
     }
 }
 
@@ -233,23 +240,20 @@ Thread::add_invocation (Invocation *inv)
 void
 Thread::push_invocation (Invocation *inv)
 {
-  this->current_invocation_.push(inv);
+  this->current_invocation_.push_back (inv);
 }
 
 void
 Thread::pop_invocation ()
 {
-  Invocation *inv;
-  this->current_invocation_.pop (inv);
+  if (! this->current_invocation_.empty ())
+    this->current_invocation_.pop_back ();
 }
 
 Invocation *
 Thread::current_invocation () const
 {
-  Invocation *inv = 0;
-  if (this->current_invocation_.size() > 0)
-    this->current_invocation_.top(inv);
-  return inv;
+  return this->current_invocation_.empty () ? nullptr : this->current_invocation_.back ();
 }
 
 void
@@ -284,7 +288,7 @@ Thread::get_summary (long &sent_reqs,
        !i.done();
        i.advance())
     {
-      Invocation *inv = 0;
+      Invocation *inv {};
       i.next(inv);
       if (inv->sent_request())
         {
@@ -302,7 +306,7 @@ Thread::get_summary (long &sent_reqs,
 void
 Thread::dump_invocations (ostream &strm)
 {
-  size_t total_request_bytes = 0;
+  size_t total_request_bytes {};
   strm << this->alias_ << " handled " << this->invocations_.size()
        << " invocations" << endl;
 
@@ -311,9 +315,9 @@ Thread::dump_invocations (ostream &strm)
        !i.done();
        i.advance())
     {
-      Invocation *inv = 0;
+      Invocation *inv {};
       i.next(inv);
-      size_t level = 0;
+      size_t level {};
 
       while (!nested.empty ())
         {
@@ -347,7 +351,7 @@ Thread::dump_incidents (ostream &strm, const ACE_Time_Value& relstart)
        !i.done();
        i.advance())
     {
-      Invocation *inv = 0;
+      Invocation *inv {};
       i.next(inv);
       size_t level = nested_queue.size();
 
@@ -359,7 +363,7 @@ Thread::dump_incidents (ostream &strm, const ACE_Time_Value& relstart)
               break;
             }
           nested_queue.pop_back ();
-          level--;
+          --level;
           prev->dump_finish_line (strm, level, relstart);
         }
       if (nested_queue.size() > 1)
@@ -388,9 +392,9 @@ Thread::count_nesting ()
        !i.done();
        i.advance())
     {
-      Invocation *inv = 0;
+      Invocation *inv {};
       i.next(inv);
-      size_t level = 0;
+      size_t level {};
       while (!nested.empty ())
         {
           level = nested.size();

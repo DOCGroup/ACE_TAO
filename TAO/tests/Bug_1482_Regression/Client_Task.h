@@ -16,7 +16,6 @@
 class Client_Task : public ACE_Task_Base
 {
 public:
-  /// Constructor
   Client_Task (Test::Hello_ptr receiver,
                CORBA::ORB_ptr o,
                ACE_Thread_Manager *thr_mgr);
@@ -30,13 +29,13 @@ public:
 
 private:
   /// Reference to the test interface
-  Test::Hello_var receiver_;
+  Test::Hello_var const receiver_;
 
   Reply_Handler handler_;
 
-  Test::AMI_HelloHandler_var handler_var_;
+  Test::AMI_HelloHandler_var const handler_var_;
 
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 };
 #include /**/ "ace/post.h"
 #endif /* LONGUPCALLS_CLIENT_TASK_H */

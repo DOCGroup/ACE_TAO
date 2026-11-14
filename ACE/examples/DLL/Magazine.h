@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef MAGAZINE_H
 #define MAGAZINE_H
 
@@ -26,8 +25,15 @@
 class Magazine
 {
 public:
+  Magazine () = default;
+
   /// No-op virtual destructor.
-  virtual ~Magazine () {};
+  virtual ~Magazine () = default;
+
+  Magazine (Magazine const &) = delete;
+  Magazine (Magazine &&) = delete;
+  Magazine &operator= (Magazine const &) = delete;
+  Magazine &operator= (Magazine &&) = delete;
 
   /// This method gives the title of the magazine.
   virtual void title () = 0;

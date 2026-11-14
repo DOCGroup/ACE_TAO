@@ -20,7 +20,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Atomic_Op.h"
 #include "ace/Thread_Manager.h"
@@ -34,9 +33,12 @@
 #include "ace/Task.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
+
+#include <cstring>
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <memory>
 
 const ACE_TCHAR usage[] = ACE_TEXT ("usage: Message_Queue_Test <number of messages>\n");
 
@@ -57,26 +59,19 @@ static ACE_High_Res_Timer *timer = nullptr;
 #if defined (ACE_HAS_THREADS)
 using SYNCH_QUEUE = ACE_Message_Queue<ACE_MT_SYNCH>;
 
+/// Container for queue data shared by the multithreaded performance test.
 struct Queue_Wrapper
 {
-  // = TITLE
-  //     Container for data passed to sender and receiver in
-  //     performance test.
-  //
-  // = DESCRIPTION
-  //     For use in multithreaded performance test.
-
+  /// Queue used by the sender and receiver.
   ACE_Message_Queue_Base *q_;
-  // The message queue.
 
+  /// Message blocks for the sender to transmit to the receiver.
   ACE_Message_Block **send_block_;
-  // Pointer to messages blocks for sender to send to reciever.
 
   Queue_Wrapper ()
     : q_ (nullptr), send_block_ (nullptr)
   {
   }
-  // Default constructor.
 };
 
 // For the message counting test, there are two tasks, producer and consumer.
@@ -421,30 +416,30 @@ chained_block_test ()
   // Test enqueueing single and chained blocks and be sure they end up with
   // the proper enqueued block count and sizes. Then be sure they are dequeued
   // in the proper order.
-  b[0].next (&b[1]);
-  b[1].next (&b[2]);
+  b[0].next (std::addressof (b[1]));
+  b[1].next (std::addressof (b[2]));
   // b[3] and b[4] are unchained.
-  b[5].next (&b[6]);
-  b[6].next (&b[7]);
-  b[7].next (&b[8]);
+  b[5].next (std::addressof (b[6]));
+  b[6].next (std::addressof (b[7]));
+  b[7].next (std::addressof (b[8]));
   // b[9] is unchained
-  q.enqueue_tail (&b[3]);
-  q.enqueue_tail (&b[4]);
-  int num = q.enqueue_head (&b[0]);
+  q.enqueue_tail (std::addressof (b[3]));
+  q.enqueue_tail (std::addressof (b[4]));
+  int num = q.enqueue_head (std::addressof (b[0]));
   if (num != 5)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Chained enqueue expected 5; has %d\n"),
                   num));
       status = -1;
     }
-  num = q.enqueue_tail (&b[5]);
+  num = q.enqueue_tail (std::addressof (b[5]));
   if (num != 9)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Chained enqueue expected 9; has %d\n"),
                   num));
       status = -1;
     }
-  num = q.enqueue_tail (&b[9]);
+  num = q.enqueue_tail (std::addressof (b[9]));
   if (num != 10)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Chained enqueue expected 10; has %d\n"),
@@ -477,7 +472,7 @@ chained_block_test ()
                       (int)i, ACE_TEXT ("dequeue_head")));
           status = -1;
         }
-      else if (bp != &b[i])
+      else if (bp != std::addressof (b[i]))
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("Checking chained blocks, pass %d: ")
@@ -549,7 +544,7 @@ single_thread_performance_test (int queue_type = 0)
   // Set up blocks to receive the messages.  Allocate these off the
   // heap in case messages is large relative to the amount of
   // stack space available.
-  ACE_Message_Block *receive_block = 0;
+  ACE_Message_Block *receive_block {};
   ACE_NEW_RETURN (receive_block,
                   ACE_Message_Block[max_messages],
                   -1);
@@ -560,7 +555,7 @@ single_thread_performance_test (int queue_type = 0)
 
       // For VxWorks Message Queues, the receive block pointer must be
       // assigned.  It will be used by dequeue_head ().
-      receive_block_p[i] = &receive_block[i];
+      receive_block_p[i] = std::addressof (receive_block[i]);
     }
 #endif /* ACE_VXWORKS */
 
@@ -634,7 +629,7 @@ receiver (void *arg)
 
       // For VxWorks Message Queues, the receive block pointer must be
       // assigned.  It will be used by <dequeue_head>.
-      receive_block_p[i] = &receive_block[i];
+      receive_block_p[i] = std::addressof (receive_block[i]);
     }
 #endif /* ACE_VXWORKS */
 
@@ -832,8 +827,8 @@ prio_test ()
               mb1p->rd_ptr (),
               mb2p->rd_ptr ()));
 
-  if (ACE_OS::strcmp (mb1p->rd_ptr (), S1) == 0
-      && ACE_OS::strcmp (mb2p->rd_ptr (), S2) == 0)
+  if (std::strcmp (mb1p->rd_ptr (), S1) == 0
+      && std::strcmp (mb2p->rd_ptr (), S2) == 0)
     status = 0;
   else
     status = 1;
@@ -951,7 +946,6 @@ run_main (int argc, ACE_TCHAR *argv[])
                 ACE_TEXT ("test failed")));
   delete timer;
   timer = nullptr;
-
 
   ACE_END_TEST;
   return status;

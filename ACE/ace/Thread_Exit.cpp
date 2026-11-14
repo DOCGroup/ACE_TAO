@@ -64,7 +64,6 @@ ACE_Thread_Exit::instance ()
 }
 
 // Grab hold of the Task * so that we can close() it in the
-// destructor.
 
 ACE_Thread_Exit::ACE_Thread_Exit ()
 {
@@ -79,7 +78,7 @@ ACE_Thread_Exit::thr_mgr (ACE_Thread_Manager *tm)
   ACE_OS_TRACE ("ACE_Thread_Exit::thr_mgr");
 
   if (tm != nullptr)
-    this->thread_control_.insert (tm, 0);
+    this->thread_control_.insert (tm, false);
 }
 
 // When this object is destroyed the Task is automatically closed
@@ -93,29 +92,27 @@ ACE_Thread_Exit::~ACE_Thread_Exit ()
 ACE_ALLOC_HOOK_DEFINE(ACE_Thread_Exit)
 
 ACE_Thread_Exit_Maybe::ACE_Thread_Exit_Maybe (int flag)
-  : instance_ (nullptr)
 {
   if (flag)
     {
-      ACE_NEW (instance_, ACE_Thread_Exit);
+      ACE_Thread_Exit *instance {};
+      ACE_NEW (instance, ACE_Thread_Exit);
+      this->instance_.reset (instance);
     }
 }
 
-ACE_Thread_Exit_Maybe::~ACE_Thread_Exit_Maybe ()
-{
-  delete this->instance_;
-}
+ACE_Thread_Exit_Maybe::~ACE_Thread_Exit_Maybe () = default;
 
 ACE_Thread_Exit *
 ACE_Thread_Exit_Maybe::operator -> () const
 {
-  return this->instance_;
+  return this->instance_.get ();
 }
 
 ACE_Thread_Exit *
 ACE_Thread_Exit_Maybe::instance () const
 {
-  return this->instance_;
+  return this->instance_.get ();
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

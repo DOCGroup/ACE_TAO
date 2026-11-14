@@ -7,19 +7,19 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-//Class Messenger_i
 class  Messenger_i : public virtual POA_Messenger
 {
  public:
-  //Constructor
-  Messenger_i ();
+  Messenger_i (Messenger_i const &) = delete;
+  Messenger_i (Messenger_i &&) = delete;
+  Messenger_i &operator= (Messenger_i const &) = delete;
+  Messenger_i &operator= (Messenger_i &&) = delete;
 
-  //Destructor
-  virtual ~Messenger_i ();
+  Messenger_i () = default;
 
+  ~Messenger_i () override = default;
 
-  virtual void send_message (const CORBA::OctetSeq & user_name);
+  void send_message (CORBA::OctetSeq const& user_name) override;
 };
-
 
 #endif /* MESSENGERI_H_  */

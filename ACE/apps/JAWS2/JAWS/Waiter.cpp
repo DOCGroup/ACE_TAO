@@ -3,7 +3,6 @@
 #include "JAWS/Waiter.h"
 #include "JAWS/IO_Handler.h"
 
-
 JAWS_Waiter::JAWS_Waiter ()
   : iter_ (*this)
 {
@@ -39,20 +38,18 @@ JAWS_Waiter::index ()
 JAWS_IO_Handler *
 JAWS_Waiter::wait_for_completion (int i)
 {
-  JAWS_IO_Handler *ioh;
-  JAWS_IO_Handler **iohptr;
+  JAWS_IO_Handler ** const iohptr =
+    (i >= 0) ? this->find_by_index (i) : this->find_by_index (this->index ());
 
-  iohptr = (i >= 0) ? this->find_by_index (i) : this->find_by_index (this->index ());
-
-  while (*iohptr == 0)
+  while (*iohptr == nullptr)
     if (ACE_Proactor::instance ()->handle_events () == -1)
       {
         ACE_ERROR ((LM_ERROR, "%p\n", "JAWS_Waiter::wait_for_completion"));
-        return 0;
+        return nullptr;
       }
 
-  ioh = *iohptr;
-  *iohptr = 0;
+  JAWS_IO_Handler * const ioh = *iohptr;
+  *iohptr = nullptr;
 
   ioh->lock ();
   ioh->release ();

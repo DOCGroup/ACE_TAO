@@ -13,7 +13,8 @@
 
 #include /**/ "ace/pre.h"
 #include "tao/Invocation_Retry_Params.h"
-#include "ace/Unbounded_Queue.h"
+#include <string>
+#include <vector>
 #include "ace/Array_Map.h"
 #include "ace/Synch.h"
 #include "ace/Time_Value.h"
@@ -31,14 +32,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward decls.
 
-// @@ Using an ACE_Unbounded_Queue to contain the endpoints and
-//    preconnects may not be the best container to use.  However, it
-//    will only be used during ORB bootstrapping.  Also, a template
-//    instantiation of ACE_Unbounded_Queue<ACE_CString> already exists
-//    in ACE so we do not have to worry about increasing TAO's
-//    footprint by using this container.
-using TAO_EndpointSet = ACE_Unbounded_Queue<ACE_CString>;
-using TAO_EndpointSetIterator = ACE_Unbounded_Queue_Const_Iterator<ACE_CString>;
+using TAO_EndpointSet = std::vector<ACE_CString>;
+using TAO_EndpointSetIterator = TAO_EndpointSet::const_iterator;
 
 // -------------------------------------------------------------------
 
@@ -53,7 +48,6 @@ class TAO_Export TAO_ORB_Parameters
 public:
   using endpoints_map_type = ACE_Array_Map<ACE_CString, ACE_CString>;
 
-  /// Constructor.
   TAO_ORB_Parameters ();
 
   /// Specifies the endpoints on which this server is willing to
@@ -309,7 +303,7 @@ private:
   CORBA::String_var mcast_discovery_endpoint_;
 
   /// List of comma separated prefixes from ORBDefaultInitRef.
-  ACE_CString default_init_ref_;
+  std::string default_init_ref_;
 
   /// Size to be used for a socket's receive buffer.
   int sock_rcvbuf_size_;
@@ -409,7 +403,7 @@ private:
   unsigned long parallel_connect_delay_;
 
   /// Preferred network interfaces as a string
-  ACE_CString pref_network_;
+  std::string pref_network_;
 
   /// Default collocation resolver
   /**
@@ -451,7 +445,7 @@ private:
    * The default value is "Protocols_Hooks". If RTCORBA option is
    * set, its value will be set to be "RT_Protocols_Hooks".
    */
-  ACE_CString protocols_hooks_name_;
+  std::string protocols_hooks_name_;
 
   /**
    * Name of the stub factory that needs to be instantiated.
@@ -459,7 +453,7 @@ private:
    * linked, the set_stub_factory will be called to set the value
    * to be "RT_Stub_Factory".
    */
-  ACE_CString stub_factory_name_;
+  std::string stub_factory_name_;
 
   /**
    * Name of the endpoint selector factory that needs to be instantiated.
@@ -467,7 +461,7 @@ private:
    * TAO_RTCORBA is linked, the set_endpoint_selector_factory will be
    * called to set the value to be "RT_Endpoint_Selector_Factory".
    */
-  ACE_CString endpoint_selector_factory_name_;
+  std::string endpoint_selector_factory_name_;
 
   /**
    * Name of the thread lane resources manager that needs to be
@@ -477,14 +471,14 @@ private:
    * to set the value to be
    * "RT_Thread_Lane_Resources_Manager_Factory".
    */
-  ACE_CString thread_lane_resources_manager_factory_name_;
+  std::string thread_lane_resources_manager_factory_name_;
 
   /**
    * Name of the non-RT dynamic thread pool configuration set to load.
    * This is only used if the Dynamic_TP library is linked. Default
    * is an empty string.
    */
-  ACE_CString dynamic_thread_pool_config_name_;
+  std::string dynamic_thread_pool_config_name_;
 
   /**
    * Name of the service object used to create the RootPOA.  The
@@ -492,14 +486,13 @@ private:
    * will be changed to TAO_RT_POA so that a POA equipped with
    * realtime extensions will be returned.
    */
-  ACE_CString poa_factory_name_;
+  std::string poa_factory_name_;
 
   /**
    * The service configurator directive used to load
    * poa_factory_name_ dynamically.
    */
   ACE_TString poa_factory_directive_;
-
 
   /**
    * Do we need forward invocation to next avaiable profile upon
@@ -521,7 +514,7 @@ private:
    * TAO_RTCORBA is linked, the set_collocation_resolver will be
    * called to set the value to be "RT_Collocation_Resolver".
    */
-  ACE_CString collocation_resolver_name_;
+  std::string collocation_resolver_name_;
 
   // Allows a client to ZIOP compress without having any server
   // ZIOP available compressor's list policies. THIS IS GOING DIRECTLY

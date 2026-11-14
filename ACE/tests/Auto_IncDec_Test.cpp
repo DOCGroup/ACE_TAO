@@ -10,13 +10,11 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Auto_IncDec_T.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Atomic_Op.h"
 #include "ace/OS_NS_unistd.h"
-
 
 #if defined (ACE_HAS_THREADS)
 

@@ -4,7 +4,6 @@
 #include "Options.h"
 #include "Mem_Map_Stream.h"
 
-
 ACE_SOCK_Stream &
 Mem_Map_Stream::stream ()
 {
@@ -65,7 +64,6 @@ Mem_Map_Stream::recv (size_t &len)
 {
   if (this->eof () && this->grow_file_and_remap () == -1)
     return nullptr;
-
 
   const char *s = this->recv_pos_;
   ACE_OFF_T olen = static_cast <ACE_OFF_T> (len);
@@ -130,7 +128,6 @@ Mem_Map_Stream::svc_handler ()
 {
   return this->svc_handler_;
 }
-
 
 int
 Mem_Map_Stream::open (STRAT_CONNECTOR *connector,

@@ -3,24 +3,28 @@
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "ace/OS_NS_stdio.h"
+#include <memory>
 
-const ACE_TCHAR *ior_output_file = 0;
-int no_iterations = 10;
+struct Options
+{
+  ACE_TCHAR const *ior_output_file {};
+  int iterations {10};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:i:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'o':
-        ior_output_file = get_opts.opt_arg ();
+        options.ior_output_file = get_opts.opt_arg ();
         break;
       case 'i':
-        no_iterations = ACE_OS::atoi (get_opts.opt_arg ());
+        options.iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case '?':
       default:
@@ -41,10 +45,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var poa_object =
+      CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
@@ -52,10 +56,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                            " (%P|%t) Unable to initialize the POA.\n"),
                           1);
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
       // Policies for the childPOA to be created.
@@ -71,7 +75,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Create POA as child of RootPOA with the above policies.  This POA
       // will receive request in the same connection in which it sent
       // the request
-      PortableServer::POA_var child_poa =
+      PortableServer::POA_var const child_poa =
         root_poa->create_POA ("childPOA",
                               poa_manager.in (),
                               policies);
@@ -86,42 +90,43 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       poa_manager->activate ();
 
-      if (parse_args (argc, argv) != 0)
+      Options options;
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
-      Simple_Server_i *server_impl = 0;
+      Simple_Server_i *server_impl {};
 
       ACE_NEW_THROW_EX (server_impl,
                         Simple_Server_i (orb.in (),
-                                         no_iterations),
+                                         options.iterations),
                         CORBA::NO_MEMORY ());
 
       PortableServer::ServantBase_var owner_transfer (server_impl);
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         PortableServer::string_to_ObjectId ("simple_server");
 
       child_poa->activate_object_with_id (id.in (),
                                           server_impl);
 
-      CORBA::Object_var obj =
+      CORBA::Object_var const obj =
         child_poa->id_to_reference (id.in ());
 
-      CORBA::String_var ior =
+      CORBA::String_var const ior =
         orb->object_to_string (obj.in ());
 
       ACE_DEBUG ((LM_DEBUG, "Activated as <%C>\n", ior.in ()));
 
       // If the ior_output_file exists, output the ior to it
-      if (ior_output_file != 0)
+      if (options.ior_output_file != nullptr)
         {
-          FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-          if (output_file == 0)
+          std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+            ACE_OS::fopen (options.ior_output_file, "w"), ACE_OS::fclose);
+          if (!output_file)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "Cannot open output file for writing IOR: %s",
-                               ior_output_file),
+                               ACE_TEXT ("Cannot open output file for writing IOR: %s"),
+                               options.ior_output_file),
                               1);
-          ACE_OS::fprintf (output_file, "%s", ior.in ());
-          ACE_OS::fclose (output_file);
+          ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
         }
 
       // Run the event loop
@@ -131,7 +136,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       root_poa->destroy (true, true);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;

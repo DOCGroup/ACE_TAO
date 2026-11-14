@@ -43,41 +43,45 @@ public:
    * @param parent The parent StockBroker object reference of the StockNameConsumer object.
    * @param stock_name The name of the stock that the parent StockBroker object need to listen to.
    */
-  Stock_StockNameConsumer_i (Stock_StockBroker_i  &context,
-                             const char *stock_name);
+  Stock_StockNameConsumer_i (Stock_StockBroker_i &context,
+                             char const *stock_name);
 
-  /// Destructor.
-  virtual ~Stock_StockNameConsumer_i ();
+  ~Stock_StockNameConsumer_i () override = default;
+
+  Stock_StockNameConsumer_i (Stock_StockNameConsumer_i const &) = delete;
+  Stock_StockNameConsumer_i (Stock_StockNameConsumer_i &&) = delete;
+  Stock_StockNameConsumer_i &operator= (Stock_StockNameConsumer_i const &) = delete;
+  Stock_StockNameConsumer_i &operator= (Stock_StockNameConsumer_i &&) = delete;
 
   /**
    * Push an event to the consumer.
    *
    * @param the_stockname The name of the stock that will be provided to the context StockBroker object.
    */
-  virtual void push_StockName (::Stock::StockNames *the_stockname);
+  void push_StockName (::Stock::StockNames *the_stockname) override;
 
   /**
    * Get the cookie attribute.
    *
    * @return The cookie attribute.
    */
-  virtual ::Stock::Cookie * cookie_ ();
+  ::Stock::Cookie * cookie_ () override;
 
   /**
    * Set the cookie attribute.
    *
    * @param cookie The value of cookie attribute that need to be set.
    */
-  virtual void cookie_ (::Stock::Cookie *cookie);
+  void cookie_ (::Stock::Cookie *cookie) override;
 
 private:
   /// Context of the StockNameConsumer object.
   Stock_StockBroker_i &context_;
 
   /// Name of the stock to listen to.
-  CORBA::String_var stock_name_;
+  std::string stock_name_;
 
-  Stock::Cookie_var cookie__;
+  Stock::Cookie_var cookie_value_;
 };
 
 #endif /*  STOCKNAMECONSUMER_I_H_ */

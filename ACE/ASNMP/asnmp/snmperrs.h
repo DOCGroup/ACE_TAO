@@ -25,7 +25,6 @@
   derivatives based upon this software code base.
 ============================================================================*/
 
-
 //-------[ Positive ASNMP Error Return Codes ]------------------------------
 // These values are error status values from RFC 1905
 //
@@ -50,7 +49,6 @@
 #define SNMP_ERROR_AUTH_ERR         16   // Authentication failure
 #define SNMP_ERROR_NOT_WRITEABLE    17   // Mib Object not writeable
 #define SNMP_ERROR_INCONSIS_NAME    18   // Inconsistent naming used
-
 
 //-------[ Negative ASNMP Result/Error Return Codes ]-------------------
 
@@ -119,7 +117,6 @@ static const char * pErrs[] = {
   "SNMP: Cannot create variable, Inconsistent Name",          // 18
   "SNMP: Unknown error code",                                 // Always last
 };
-
 
 static const char * nErrs[] = {
   // General:

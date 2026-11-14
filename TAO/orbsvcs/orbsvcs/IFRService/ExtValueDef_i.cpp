@@ -20,8 +20,7 @@ TAO_ExtValueDef_i::TAO_ExtValueDef_i (TAO_Repository_i *repo)
 TAO_ExtValueDef_i::~TAO_ExtValueDef_i () = default;
 
 CORBA::ExtInitializerSeq *
-TAO_ExtValueDef_i::ext_initializers (
-  )
+TAO_ExtValueDef_i::ext_initializers ()
 {
   TAO_IFR_READ_GUARD_RETURN (nullptr);
 
@@ -31,8 +30,7 @@ TAO_ExtValueDef_i::ext_initializers (
 }
 
 CORBA::ExtInitializerSeq *
-TAO_ExtValueDef_i::ext_initializers_i (
-  )
+TAO_ExtValueDef_i::ext_initializers_i ()
 {
   CORBA::ExtInitializerSeq *iseq {};
   ACE_NEW_RETURN (iseq,
@@ -64,7 +62,7 @@ TAO_ExtValueDef_i::ext_initializers_i (
 
   for (CORBA::ULong i {}; i < count; ++i)
     {
-      char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
+      char * const stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->open_section (initializers_key,
                                             stringified,
                                             0,
@@ -93,7 +91,7 @@ TAO_ExtValueDef_i::ext_initializers_i (
 
       for (CORBA::ULong j {}; j < arg_count; ++j)
         {
-          stringified = TAO_IFR_Service_Utils::int_to_string (j);
+          char * const stringified = TAO_IFR_Service_Utils::int_to_string (j);
           this->repo_->config ()->open_section (params_key,
                                                 stringified,
                                                 0,
@@ -129,8 +127,7 @@ TAO_ExtValueDef_i::ext_initializers_i (
 
 void
 TAO_ExtValueDef_i::ext_initializers (
-    CORBA::ExtInitializerSeq const &ext_initializers
-  )
+    CORBA::ExtInitializerSeq const &ext_initializers)
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -141,8 +138,7 @@ TAO_ExtValueDef_i::ext_initializers (
 
 void
 TAO_ExtValueDef_i::ext_initializers_i (
-    CORBA::ExtInitializerSeq const &ext_initializers
-  )
+    CORBA::ExtInitializerSeq const &ext_initializers)
 {
   ACE_Configuration *config = this->repo_->config ();
   config->remove_section (this->section_key_,
@@ -184,8 +180,7 @@ TAO_ExtValueDef_i::ext_initializers_i (
 }
 
 CORBA::ExtValueDef::ExtFullValueDescription *
-TAO_ExtValueDef_i::describe_ext_value (
-  )
+TAO_ExtValueDef_i::describe_ext_value ()
 {
   TAO_IFR_READ_GUARD_RETURN (nullptr);
 
@@ -195,8 +190,7 @@ TAO_ExtValueDef_i::describe_ext_value (
 }
 
 CORBA::ExtValueDef::ExtFullValueDescription *
-TAO_ExtValueDef_i::describe_ext_value_i (
-  )
+TAO_ExtValueDef_i::describe_ext_value_i ()
 {
   CORBA::ExtValueDef::ExtFullValueDescription *fv_desc {};
   ACE_NEW_RETURN (fv_desc,
@@ -490,11 +484,9 @@ TAO_ExtValueDef_i::describe_ext_value_i (
                                                     holder);
           fv_desc->attributes[i].defined_in = holder.fast_rep ();
 
-
           this->fill_exceptions (fv_desc->attributes[i].get_exceptions,
                                  attr_key,
                                  "get_excepts");
-
 
           this->fill_exceptions (fv_desc->attributes[i].put_exceptions,
                                  attr_key,
@@ -707,8 +699,7 @@ TAO_ExtValueDef_i::create_ext_attribute (
     CORBA::IDLType_ptr type,
     CORBA::AttributeMode mode,
     CORBA::ExceptionDefSeq const &get_exceptions,
-    CORBA::ExceptionDefSeq const &set_exceptions
-  )
+    CORBA::ExceptionDefSeq const &set_exceptions)
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ExtAttributeDef::_nil ());
 
@@ -731,8 +722,7 @@ TAO_ExtValueDef_i::create_ext_attribute_i (
     CORBA::IDLType_ptr type,
     CORBA::AttributeMode mode,
     CORBA::ExceptionDefSeq const &get_exceptions,
-    CORBA::ExceptionDefSeq const &set_exceptions
-  )
+    CORBA::ExceptionDefSeq const &set_exceptions)
 {
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;

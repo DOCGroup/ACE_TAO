@@ -14,16 +14,14 @@ class Terminator;
 class  Test_i : public virtual POA_Test
 {
 public:
-  //Constructor
   Test_i (short server_num,
           Terminator &terminator,
           PortableServer::POA_ptr pa,
           PortableServer::POA_ptr pb);
 
-  //Destructor
   virtual ~Test_i ();
 
-  virtual CORBA::Short get_server_num ();
+  CORBA::Short get_server_num () override;
 
 private:
   void reset (PortableServer::POAManager_var &mgr, bool pause);

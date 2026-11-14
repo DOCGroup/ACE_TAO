@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file PG_Group_List_Store.h
  *
  * @author Byron Harris <harrisb@ociweb.com>
  */
-//=============================================================================
 
 #ifndef PG_GROUP_LIST_STORE_H
 #define PG_GROUP_LIST_STORE_H
@@ -45,9 +43,14 @@ namespace TAO
   class TAO_PortableGroup_Export PG_Group_List_Store
   {
   public:
-    PG_Group_List_Store (Storable_Factory & storable_factory);
+    explicit PG_Group_List_Store (Storable_Factory & storable_factory);
 
     ~PG_Group_List_Store ();
+
+    PG_Group_List_Store (PG_Group_List_Store const &) = delete;
+    PG_Group_List_Store (PG_Group_List_Store &&) = delete;
+    PG_Group_List_Store &operator= (PG_Group_List_Store const &) = delete;
+    PG_Group_List_Store &operator= (PG_Group_List_Store &&) = delete;
 
     /**
      * Return a group ID that can be used for creating a new object group.
@@ -88,14 +91,14 @@ namespace TAO
 
     /// Ensure ID is monotonically increasing even when groups gets
     /// removed.
-    PortableGroup::ObjectGroupId next_group_id_;
+    PortableGroup::ObjectGroupId next_group_id_ {};
 
-    TAO::Storable_Base * create_stream (const char * mode);
+    TAO::Storable_Base * create_stream (char const *mode);
 
     Storable_Factory & storable_factory_;
-    bool loaded_from_stream_;
-    time_t last_changed_;
-    bool stale_;
+    bool loaded_from_stream_ {};
+    time_t last_changed_ {};
+    bool stale_ {};
     void read (TAO::Storable_Base & stream);
     void write (TAO::Storable_Base & stream);
 

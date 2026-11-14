@@ -9,9 +9,7 @@
  */
 //=============================================================================
 
-
 #include "ace/Get_Opt.h"
-#include "ace/Task.h"
 #include "ace/High_Res_Timer.h"
 #include "testC.h"
 
@@ -24,10 +22,13 @@
 # define ACE_MAIN testClient
 #endif
 
-const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
+struct Client_Options
+{
+  ACE_TCHAR const *ior { ACE_TEXT ("file://test.ior") };
+};
 
-int
-parse_args (int argc, ACE_TCHAR *argv[])
+static int
+parse_args (Client_Options &options, int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
   int c;
@@ -36,15 +37,13 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
 
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "\n",
+                           ACE_TEXT ("usage:  %s -k <ior>\n"),
                            argv [0]),
                           -1);
       }
@@ -52,15 +51,13 @@ parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-ACE_UINT32 niter = 10;
-ACE_UINT32 SIZE_BLOCK= 256;
+constexpr ACE_UINT32 niter { 10 };
+constexpr ACE_UINT32 SIZE_BLOCK { 256 };
 
 /**
  * @class Client
  *
- * @brief Run the client thread
- *
- * Use the ACE_Task_Base class to run the client threads.
+ * @brief Run the client benchmark.
  */
 class Client
 {
@@ -68,21 +65,24 @@ public:
   /// ctor
   Client (Simple_Server_ptr server, ACE_UINT32 niterations);
 
-  virtual ~Client () {};
+  Client (Client const &) = delete;
+  Client &operator= (Client const &) = delete;
+  Client (Client &&) = delete;
+  Client &operator= (Client &&) = delete;
+
+  ~Client () = default;
 
   /// The thread entry point.
-  virtual int svc ();
+  int svc ();
 
 private:
   /// The server.
-  Simple_Server_var server_;
+  Simple_Server_var server_ {};
 
   /// The number of iterations on each client thread.
-  ACE_UINT32 niterations_;
+  ACE_UINT32 niterations_ {};
 };
 
-
-//int testClient (char* orbName, char* ior)
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
@@ -92,11 +92,12 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                            argv,
                            "ORB_Test_Client");
 
-      if (parse_args (argc, argv) != 0)
+      Client_Options options;
+      if (parse_args (options, argc, argv) != 0)
         return 1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior);
+        orb->string_to_object (options.ior);
 
       Simple_Server_var server =
         Simple_Server::_narrow (object.in ());
@@ -104,8 +105,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (server.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Object reference <%s> is nil.\n",
-                             ior),
+                             ACE_TEXT ("Object reference <%s> is nil.\n"),
+                             options.ior),
                             1);
         }
 
@@ -120,11 +121,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       client.svc ();
 
-      //ACE_DEBUG ((LM_DEBUG, "threads finished\n"));
-
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;
@@ -132,7 +131,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   return 0;
 }
-
 
 // ****************************************************************
 
@@ -143,19 +141,16 @@ Client::Client (Simple_Server_ptr server,
 {
 }
 
-
 int
 Client::svc ()
 {
   try
     {
-      Octet_Seq octetSeq(SIZE_BLOCK);
       Char_Seq charSeq(SIZE_BLOCK);
       ACE_High_Res_Timer timer;
-      ACE_OS::printf("Start sending %d Msgs...\n",this->niterations_);
+      ACE_OS::printf ("Start sending %u Msgs...\n", this->niterations_);
 
-      charSeq.length(SIZE_BLOCK);
-      octetSeq.length(SIZE_BLOCK);
+      charSeq.length (SIZE_BLOCK);
 
       // This sets up the connector, so that we do not incur
       // the overhead on the first call in the loop.
@@ -163,43 +158,39 @@ Client::svc ()
 
       timer.start ();
 
-      ACE_UINT32 client_count = 0;
       for (ACE_UINT32 i = 0; i < this->niterations_; ++i)
         {
-          client_count++;
-
           server_->sendCharSeq (charSeq);
 
-          //server_->sendOctetSeq (octetSeq);
-
-          //ACE_DEBUG ((LM_DEBUG, "."));
         }
       timer.stop ();
 
-      ACE_Time_Value measured;
+      ACE_Time_Value measured {};
       timer.elapsed_time (measured);
 
-      //ACE_DEBUG ((LM_DEBUG, "...finished\n"));
-
-      time_t dur = measured.sec () * 1000000 + measured.usec ();
-      if (dur == 0 || this->niterations_ == 0)
+      ACE_INT64 const duration =
+        static_cast<ACE_INT64> (measured.sec ()) * 1000000 + measured.usec ();
+      if (duration == 0 || this->niterations_ == 0)
         ACE_DEBUG ((LM_DEBUG, "Time not measurable, calculation skipped\n"));
       else
-      {
-        ACE_DEBUG ((LM_DEBUG,
-                    "Time for %u Msgs: %u usec\n",
-                    this->niterations_,
-                    dur));
+        {
+          ACE_INT64 const usec_per_call = duration / this->niterations_;
+          ACE_INT64 const calls_per_second =
+            usec_per_call == 0 ? 0 : 1000000 / usec_per_call;
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Time for %u Msgs: %q usec\n"),
+                      this->niterations_,
+                      duration));
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Time for 1 Msg: %q usec, %q calls/sec\n"),
+                      usec_per_call,
+                      calls_per_second));
+        }
 
-        ACE_DEBUG ((LM_DEBUG, "Time for 1 Msg: %u usec, %u calls/sec\n",
-                    dur / this->niterations_,
-                    1000000 / (dur / this->niterations_)));
-      }
-
-      for (int c = 0; c < 10; ++c)
+      for (int count = 0; count < 10; ++count)
         server_->shutdown ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("MT_Client: exception raised");
     }

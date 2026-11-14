@@ -5,6 +5,7 @@
 #include "ace/Handle_Ops.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_stropts.h"
+#include <memory>
 
 #if !defined (__ACE_INLINE__)
 #include "ace/UPIPE_Connector.inl"
@@ -53,11 +54,11 @@ ACE_UPIPE_Connector::connect (ACE_UPIPE_Stream &new_stream,
     {
       ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, new_stream.lock_, -1));
 
-      ACE_UPIPE_Stream *ustream = &new_stream;
+      ACE_UPIPE_Stream *ustream = std::addressof (new_stream);
 
       new_stream.set_handle (handle);
       new_stream.remote_addr_ = addr; // class copy.
-      new_stream.reference_count_++;
+      ++new_stream.reference_count_;
 
       // Now send the address of our ACE_UPIPE_Stream over this pipe
       // to our corresponding ACE_UPIPE_Acceptor, so he may link the
@@ -71,7 +72,7 @@ ACE_UPIPE_Connector::connect (ACE_UPIPE_Stream &new_stream,
                     ACE_TEXT ("write to pipe failed")));
 
       // Wait for confirmation of stream linking.
-      ACE_Message_Block *mb_p = nullptr;
+      ACE_Message_Block *mb_p {};
 
       // Our part is done, wait for server to confirm connection.
       result = new_stream.recv (mb_p, nullptr);

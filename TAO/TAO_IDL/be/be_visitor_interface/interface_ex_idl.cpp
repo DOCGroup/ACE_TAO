@@ -39,4 +39,3 @@ be_visitor_interface_ex_idl::visit_interface (be_interface *node)
   return 0;
 }
 
-

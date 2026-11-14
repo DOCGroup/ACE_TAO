@@ -1,8 +1,8 @@
 // -*- C++ -*-
 #include "test_i.h"
 
-test_i::test_i (CORBA::Short num,
-                CORBA::ORB_ptr orb)
+test_i::test_i (CORBA::Short const num,
+                CORBA::ORB_ptr const orb)
   : number_ (num),
     orb_ (CORBA::ORB::_duplicate (orb))
 {

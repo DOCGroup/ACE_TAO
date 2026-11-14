@@ -1,6 +1,8 @@
 // server.cpp
 // This version uses the Implementation Repository.
 
+#include <string>
+
 #include "Test_i.h"
 #include "Server_ORBInitializer.h"
 
@@ -17,8 +19,7 @@ namespace
 {
   ACE_CString toStr(int n)
   {
-    char buf[20];
-    return ACE_OS::itoa(n, buf, 10);
+    return ACE_CString (std::to_string (n).c_str ());
   }
 }
 
@@ -142,7 +143,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         orb->perform_work ();
       }
 
-    root_poa->destroy(1,1);
+    root_poa->destroy(true,true);
     orb->destroy();
   }
   catch(const CORBA::Exception& ex) {

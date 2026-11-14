@@ -31,15 +31,13 @@ TAO::FT_Property_Validator::FT_Property_Validator ()
   this->factories_[0].id = CORBA::string_dup (::FT::FT_FACTORIES);
 }
 
-
 TAO::FT_Property_Validator::~FT_Property_Validator () = default;
-
 
 void
 TAO::FT_Property_Validator::validate_property (
     PortableGroup::Properties const & props)
 {
-  const CORBA::ULong len = props.length ();
+  CORBA::ULong const len = props.length ();
 
   for (CORBA::ULong i = 0; i < len; ++i)
     {
@@ -93,12 +91,12 @@ TAO::FT_Property_Validator::validate_property (
         }
       else if (property.nam == this->factories_)
         {
-          PortableGroup::FactoriesValue const * factories = nullptr;
+          PortableGroup::FactoriesValue const * factories {};
           if (!(property.val >>= factories))
             throw PortableGroup::InvalidProperty (property.nam, property.val);
           else
             {
-              const CORBA::ULong flen = factories->length ();
+              CORBA::ULong const flen = factories->length ();
 
               if (flen == 0)
                 throw PortableGroup::InvalidProperty (
@@ -125,7 +123,7 @@ void
 TAO::FT_Property_Validator::validate_criteria (
     PortableGroup::Properties const & props)
 {
-  const CORBA::ULong len = props.length ();
+  CORBA::ULong const len = props.length ();
   PortableGroup::Criteria invalid_criteria;
 
   // Optimize for the worst case scenario where all properties are
@@ -133,12 +131,12 @@ TAO::FT_Property_Validator::validate_criteria (
   invalid_criteria.length (len);
 
   /// The invalid criteria index.
-  CORBA::ULong p = 0;
+  CORBA::ULong p {};
 
   for (CORBA::ULong i = 0; i < len; ++i)
     {
       PortableGroup::Property const & property = props[i];
-      CORBA::Long value;
+      CORBA::Long value {};
 
       if (!(property.val >>= value))
         invalid_criteria[p++] = property;
@@ -182,12 +180,12 @@ TAO::FT_Property_Validator::validate_criteria (
         }
         else if (property.nam == this->factories_)
         {
-          PortableGroup::FactoriesValue const * factories = nullptr;
+          PortableGroup::FactoriesValue const * factories {};
           if (!(property.val >>= factories))
             invalid_criteria[p++] = property;
           else
             {
-              const CORBA::ULong flen = factories->length ();
+              CORBA::ULong const flen = factories->length ();
 
               if (flen == 0)
                 invalid_criteria[p++] = property;

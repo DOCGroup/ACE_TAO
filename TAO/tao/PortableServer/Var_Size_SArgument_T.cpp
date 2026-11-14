@@ -29,9 +29,6 @@ TAO::In_Var_Size_SArgument_T<S,Insert_Policy>::interceptor_value (
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
-
-// ===========================================================
-
 template<typename S,
          template <typename> class Insert_Policy>
 CORBA::Boolean
@@ -60,9 +57,6 @@ TAO::Inout_Var_Size_SArgument_T<S,Insert_Policy>::interceptor_value (
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
-
-// ==============================================================
-
 template<typename S,
          template <typename> class Insert_Policy>
 CORBA::Boolean
@@ -86,9 +80,6 @@ TAO::Out_Var_Size_SArgument_T<S,Insert_Policy>::interceptor_value (
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
-
-// ============================================================
-
 template<typename S,
          template <typename> class Insert_Policy>
 CORBA::Boolean

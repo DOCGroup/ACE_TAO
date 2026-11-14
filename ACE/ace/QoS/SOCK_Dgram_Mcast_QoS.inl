@@ -1,17 +1,12 @@
 // -*- C++ -*-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_INLINE
-ACE_SOCK_Dgram_Mcast_QoS::~ACE_SOCK_Dgram_Mcast_QoS ()
-{
-}
-
 ACE_INLINE ssize_t
-ACE_SOCK_Dgram_Mcast_QoS::send (const iovec buffers[],
+ACE_SOCK_Dgram_Mcast_QoS::send (iovec const buffers[],
                                 int buffer_count,
                                 size_t &number_of_bytes_sent,
                                 int flags,
-                                const ACE_Addr &addr,
+                                ACE_Addr const &addr,
                                 ACE_OVERLAPPED *overlapped,
                                 ACE_OVERLAPPED_COMPLETION_FUNC func) const
 {
@@ -28,9 +23,9 @@ ACE_SOCK_Dgram_Mcast_QoS::send (const iovec buffers[],
 }
 
 ACE_INLINE ssize_t
-ACE_SOCK_Dgram_Mcast_QoS::send (const void *buf,
+ACE_SOCK_Dgram_Mcast_QoS::send (void const *buf,
                                 size_t n,
-                                const ACE_Addr &addr,
+                                ACE_Addr const &addr,
                                 int flags,
                                 ACE_OVERLAPPED *overlapped,
                                 ACE_OVERLAPPED_COMPLETION_FUNC func) const

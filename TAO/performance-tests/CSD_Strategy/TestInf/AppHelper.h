@@ -10,76 +10,74 @@
 template <typename T>
 struct RefHelper
 {
-  typedef typename T::_ptr_type T_ptr;
-  typedef typename T::_var_type T_var;
+  using T_ptr = typename T::_ptr_type;
+  using T_var = typename T::_var_type;
 
-  static T_ptr string_to_ref(CORBA::ORB_ptr orb,
-                             const ACE_TCHAR* ior)
+  static T_ptr string_to_ref (CORBA::ORB_ptr orb,
+                              ACE_TCHAR const *ior)
   {
-    CORBA::Object_var obj = orb->string_to_object(ior);
+    CORBA::Object_var obj = orb->string_to_object (ior);
 
-    if (CORBA::is_nil(obj.in()))
+    if (CORBA::is_nil (obj.in ()))
       {
-        ACE_ERROR((LM_ERROR,
+        ACE_ERROR ((LM_ERROR,
                    "(%P|%t) Failed to convert IOR string to obj ref.\n"));
-        throw TestAppException();
+        throw TestAppException ();
       }
 
-    T_var t_obj = T::_narrow(obj.in());
+    T_var t_obj = T::_narrow (obj.in ());
 
-    if (CORBA::is_nil(t_obj.in()))
+    if (CORBA::is_nil (t_obj.in ()))
       {
-        ACE_ERROR((LM_ERROR,
+        ACE_ERROR ((LM_ERROR,
                    "(%P|%t) Failed to narrow obj ref to T interface.\n"));
-        throw TestAppException();
+        throw TestAppException ();
       }
 
-    return t_obj._retn();
+    return t_obj._retn ();
   }
 
-  static T_ptr resolve_initial_ref(CORBA::ORB_ptr orb,
-                                   const char* name)
+  static T_ptr resolve_initial_ref (CORBA::ORB_ptr orb,
+                                    char const *name)
   {
-    CORBA::Object_var obj
-      = orb->resolve_initial_references(name);
+    CORBA::Object_var obj = orb->resolve_initial_references (name);
 
-    if (CORBA::is_nil(obj.in()))
+    if (CORBA::is_nil (obj.in ()))
       {
-        ACE_ERROR((LM_ERROR,
+        ACE_ERROR ((LM_ERROR,
                    "(%P|%t) Failed to resolve initial ref for '%s'.\n",
                    name));
-        throw TestAppException();
+        throw TestAppException ();
       }
 
-    T_var t_obj = T::_narrow(obj.in());
+    T_var t_obj = T::_narrow (obj.in ());
 
-
-    if (CORBA::is_nil(t_obj.in()))
+    if (CORBA::is_nil (t_obj.in ()))
       {
-        ACE_ERROR((LM_ERROR,
+        ACE_ERROR ((LM_ERROR,
                    "(%P|%t) Failed to narrow resolved initial ref '%s'.\n",
                    name));
-        throw TestAppException();
+        throw TestAppException ();
       }
 
-    return t_obj._retn();
+    return t_obj._retn ();
   }
 };
 
 struct CSD_PT_TestInf_Export AppHelper
 {
-  static void ref_to_file(CORBA::ORB_ptr    orb,
-                          CORBA::Object_ptr obj,
-                          const ACE_TCHAR*  filename);
+  static void ref_to_file (CORBA::ORB_ptr orb,
+                           CORBA::Object_ptr obj,
+                           ACE_TCHAR const *filename);
 
-  static PortableServer::POA_ptr create_poa
-                              (const char*                    name,
-                               PortableServer::POA_ptr        root_poa,
-                               PortableServer::POAManager_ptr mgr,
-                               CORBA::PolicyList&             policies);
+  static PortableServer::POA_ptr create_poa (
+    char const *name,
+    PortableServer::POA_ptr root_poa,
+    PortableServer::POAManager_ptr mgr,
+    CORBA::PolicyList &policies);
 
-  static CORBA::Object_ptr activate_servant(PortableServer::POA_ptr poa,
-                                            PortableServer::Servant servant);
+  static CORBA::Object_ptr activate_servant (PortableServer::POA_ptr poa,
+                                             PortableServer::Servant servant);
 
   // This helper method is used because there is a chance that the
   // initial CORBA request made to the target ORB will fail during

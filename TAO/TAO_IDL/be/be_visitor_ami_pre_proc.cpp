@@ -1045,11 +1045,11 @@ be_visitor_ami_pre_proc::create_inheritance_list (be_interface *node)
 {
   AST_Type_List retval;
   AST_Type_List const& parents = node->inherits ();
-  std::size_t const n_parents = parents.size ();
+  size_t const n_parents = parents.size ();
   AST_Type *parent {};
-  std::size_t n_rh_parents {};
+  size_t n_rh_parents {};
 
-  for (std::size_t i = 0; i < n_parents; ++i)
+  for (size_t i = 0; i < n_parents; ++i)
     {
       parent = parents[i];
 
@@ -1073,9 +1073,9 @@ be_visitor_ami_pre_proc::create_inheritance_list (be_interface *node)
       std::string const prefix ("AMI_");
 
       std::string const suffix ("Handler");
-      std::size_t index {};
+      size_t index {};
 
-      for (std::size_t j = 0; j < n_parents; ++j)
+      for (size_t j = 0; j < n_parents; ++j)
         {
           parent = parents[j];
 

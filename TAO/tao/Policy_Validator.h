@@ -25,6 +25,8 @@
 
 #include /**/ "tao/TAO_Export.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward declarations.
@@ -50,10 +52,8 @@ namespace CORBA
 class TAO_Export TAO_Policy_Validator
 {
 public:
-  /// Constructor.
-  TAO_Policy_Validator (TAO_ORB_Core &orb_core);
+  explicit TAO_Policy_Validator (TAO_ORB_Core &orb_core);
 
-  /// Destructor.
   virtual ~TAO_Policy_Validator ();
 
   /**
@@ -77,7 +77,8 @@ public:
   CORBA::Boolean legal_policy (CORBA::PolicyType type);
 
   /**
-   * Adds a validator to the "chain of validators". The <code>
+   * Adds a validator to the "chain of validators". Ownership of the validator
+   * is transferred to this chain. The <code>
    * TAO_POA_Policy_Validator </code> implements something that looks
    * like a chain of responsability in which different member of the
    * chain have the responsability of validating a given set of
@@ -88,7 +89,7 @@ public:
   /**
    * Accessor for the stored ORB core reference
    */
- TAO_ORB_Core & orb_core() const;
+  TAO_ORB_Core &orb_core () const;
 
 protected:
   virtual void validate_impl (TAO_Policy_Set &policies) = 0;
@@ -100,11 +101,13 @@ protected:
   TAO_ORB_Core &orb_core_;
 
 private:
-  void operator= (const TAO_Policy_Validator &);
-  TAO_Policy_Validator (const TAO_Policy_Validator &);
+  TAO_Policy_Validator (TAO_Policy_Validator const &) = delete;
+  TAO_Policy_Validator &operator= (TAO_Policy_Validator const &) = delete;
+  TAO_Policy_Validator (TAO_Policy_Validator &&) = delete;
+  TAO_Policy_Validator &operator= (TAO_Policy_Validator &&) = delete;
 
 private:
-  TAO_Policy_Validator *next_;
+  std::unique_ptr<TAO_Policy_Validator> next_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

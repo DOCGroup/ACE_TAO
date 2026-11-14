@@ -7,7 +7,7 @@
 #include "ace/INET_Addr.h"
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   EC_BCast driver;
   return driver.run (argc, argv);
@@ -31,7 +31,7 @@ EC_BCast::parse_args (int& argc, ACE_TCHAR* argv[])
 
   while (arg_shifter.is_anything_left ())
     {
-      const ACE_TCHAR *arg = arg_shifter.get_current ();
+          ACE_TCHAR const * const arg = arg_shifter.get_current ();
 
       if (ACE_OS::strcmp (arg, ACE_TEXT("-port")) == 0)
         {

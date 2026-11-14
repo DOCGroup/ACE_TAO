@@ -28,8 +28,8 @@ TAO::ORT_Adapter_Impl::tao_adapter_name ()
 }
 
 CORBA::Object_ptr
-TAO::ORT_Adapter_Impl::make_object (const char *repo_id,
-                                    const PortableInterceptor::ObjectId &id)
+TAO::ORT_Adapter_Impl::make_object (char const *repo_id,
+                                    PortableInterceptor::ObjectId const &id)
 {
   return this->ort_factory_->make_object (repo_id, id);
 }
@@ -70,8 +70,8 @@ TAO::ORT_Adapter_Impl::release (
 
 int
 TAO::ORT_Adapter_Impl::activate (
-  const char *server_id,
-  const char *orb_id,
+  char const *server_id,
+  char const *orb_id,
   PortableInterceptor::AdapterName *adapter_name,
   PortableServer::POA_ptr poa)
 {
@@ -79,7 +79,7 @@ TAO::ORT_Adapter_Impl::activate (
   // when the POA creates and actives an ORT_Adapter it will lock
   // itself. Create an ObjectReferenceTemplate for this POA.
 
-  ObjectReferenceTemplate * t = nullptr;
+  ObjectReferenceTemplate * t {};
   ACE_NEW_THROW_EX (t,
                     ObjectReferenceTemplate (server_id,
                                              orb_id,

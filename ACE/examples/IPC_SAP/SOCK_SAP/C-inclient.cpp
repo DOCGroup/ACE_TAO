@@ -1,12 +1,11 @@
 #include "ace/OS_main.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_netdb.h"
 #include "ace/Default_Constants.h"
-
 
 /* BSD socket client */
 
@@ -50,10 +49,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     ACE_OS::perror (ACE_TEXT("gethostbyname")), ACE_OS::exit (1);
 
   // Set up the address information to contact the server.
-  ACE_OS::memset ((void *) &saddr, 0, sizeof saddr);
+  std::memset (&saddr, 0, sizeof saddr);
   saddr.sin_family = AF_INET;
   saddr.sin_port = port_num;
-  ACE_OS::memcpy (&saddr.sin_addr, hp->h_addr, hp->h_length);
+  std::memcpy (&saddr.sin_addr, hp->h_addr, hp->h_length);
 
   // Establish connection with remote server.
   if (ACE_OS::connect (s_handle,

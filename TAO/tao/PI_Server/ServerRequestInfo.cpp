@@ -18,6 +18,7 @@
 #include "tao/AnyTypeCode/ExceptionA.h"
 
 #include <cstring>
+#include <memory>
 
 # if !defined (__ACE_INLINE__)
 #   include "tao/PI_Server/ServerRequestInfo.inl"
@@ -46,13 +47,13 @@ TAO::ServerRequestInfo::request_id ()
 
   if (sizeof (this) == 4)       // 32 bit address
     id = static_cast <CORBA::ULong> (
-                     reinterpret_cast <ptrdiff_t>
-                                      (&(this->server_request_)));
+      reinterpret_cast <ptrdiff_t> (
+        std::addressof (this->server_request_)));
 
   else if (sizeof (this) == 8)  // 64 bit address -- use lower 32 bits
     id = static_cast <CORBA::ULong> (
-                     reinterpret_cast <ptrdiff_t>
-                               (&(this->server_request_)) & 0xFFFFFFFFu);
+      reinterpret_cast <ptrdiff_t> (
+        std::addressof (this->server_request_)) & 0xFFFFFFFFu);
 
   else
     // @@ Rather than fallback on the GIOP request ID, we should use
@@ -106,7 +107,7 @@ TAO::ServerRequestInfo::arguments ()
           (this->server_request_.pi_reply_status () == -1 &&
            (*i)->mode () != CORBA::PARAM_OUT))
         {
-          (*i)->interceptor_value (&parameter.argument);
+          (*i)->interceptor_value (std::addressof (parameter.argument));
         }
     }
 

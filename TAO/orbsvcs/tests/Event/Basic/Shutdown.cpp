@@ -2,9 +2,8 @@
 #include "Consumer.h"
 #include "Supplier.h"
 
-
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   EC_Shutdown driver;
   return driver.run (argc, argv);
@@ -65,7 +64,7 @@ EC_Shutdown::dump_results ()
 void
 EC_Shutdown::consumer_disconnect (void* cookie)
 {
-  this->consumer_disconnects_++;
+  ++this->consumer_disconnects_;
   if (this->verbose ())
     ACE_DEBUG ((LM_DEBUG, "Consumer %x has been disconnected\n", cookie));
 }
@@ -73,7 +72,7 @@ EC_Shutdown::consumer_disconnect (void* cookie)
 void
 EC_Shutdown::supplier_disconnect (void* cookie)
 {
-  this->supplier_disconnects_++;
+  ++this->supplier_disconnects_;
   if (this->verbose ())
     ACE_DEBUG ((LM_DEBUG, "Supplier %x has been disconnected\n", cookie));
 }

@@ -14,13 +14,11 @@
 #include "be_root.h"
 #include "be_visitor.h"
 
-// Default Constructor.
 be_scope::be_scope ()
   : UTL_Scope ()
 {
 }
 
-// Constructor.
 be_scope::be_scope (AST_Decl::NodeType type)
   : UTL_Scope (type)
 {

@@ -28,7 +28,6 @@ class DT_Creator;
 class RTSCHEDTESTLIB_Export Job_i : public POA_Job
 {
  public:
-  /// Constructor
   Job_i (DT_Creator* dt_creator);
 
   ~Job_i ();
@@ -41,15 +40,15 @@ class RTSCHEDTESTLIB_Export Job_i : public POA_Job
   const ACE_CString& poa ();
 
   /// = inteface Job method implementation.
-  virtual void work (CORBA::ULong work,
-         CORBA::Short importance);
+  void work (CORBA::ULong work,
+         CORBA::Short importance) override;
 
   virtual void post_work (int guid,
         int importance);
 
   void dump_stats ();
 
-  virtual void shutdown ();
+  void shutdown () override;
 
   int guid ();
 

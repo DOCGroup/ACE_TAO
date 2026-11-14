@@ -70,7 +70,6 @@ class Scheduler : public ACE_Task<ACE_SYNCH>
   friend class Method_Request_print;
   friend class Method_Request_end;
 public:
-  /// Constructor.
   Scheduler ();
 
   //FUZZ: disable check_for_lack_ACE_OS
@@ -81,7 +80,6 @@ public:
   int close (u_long flags = 0) override;
   //FUZZ: enable check_for_lack_ACE_OS
 
-  /// Destructor.
   ~Scheduler () override;
 
   // = These methods are part of the Active Object Proxy interface.
@@ -182,7 +180,6 @@ Method_Request_end::call ()
   return -1;
 }
 
-// Constructor
 // Associates the activation queue with this task's message queue,
 // allowing easy access to the message queue for shutting it down
 // when it's time to stop this object's service threads.
@@ -192,8 +189,6 @@ Scheduler::Scheduler ()
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Scheduler created\n")));
 }
-
-// Destructor
 
 Scheduler::~Scheduler ()
 {
@@ -272,7 +267,6 @@ static int n_loops = 10;
 
 #endif /* ACE_HAS_THREADS */
 
-
 // This will be used in a single thread to test the reset and release
 // methods. See Bugzilla #1925 for history.
 
@@ -349,6 +343,8 @@ static int test_reset_release ()
   if (!expect (ACE_TEXT ("fie"), fie, false, 3, 0))
     ++errors;
   if (!expect (ACE_TEXT ("foe"), foe, true, 0, 0))
+    ++errors;
+  if (foe || foe.get () != nullptr || foe.count () != 0)
     ++errors;
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Test assignment to null\n")));

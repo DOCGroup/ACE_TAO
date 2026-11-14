@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    CSD_TP_Collocated_Asynch_Request.h
  *
  *  @author  Tim Bradley <bradley_t@ociweb.com>
  */
-//=============================================================================
-
 #ifndef TAO_CSD_TP_COLLOCATED_ASYNCH_REQUEST_H
 #define TAO_CSD_TP_COLLOCATED_ASYNCH_REQUEST_H
 
@@ -45,18 +41,19 @@ namespace TAO
                                                  : public TP_Corba_Request
     {
     public:
-      /// Constructor.
       TP_Collocated_Asynch_Request
                            (TAO_ServerRequest&              server_request,
-                            const PortableServer::ObjectId& object_id,
+                            PortableServer::ObjectId const &object_id,
                             PortableServer::POA_ptr         poa,
-                            const char*                     operation,
+                            char const *                    operation,
                             PortableServer::Servant         servant,
                             TP_Servant_State*               servant_state);
 
-      /// Virtual Destructor.
-      ~TP_Collocated_Asynch_Request() override;
-
+      ~TP_Collocated_Asynch_Request() override = default;
+      TP_Collocated_Asynch_Request (TP_Collocated_Asynch_Request const &) = delete;
+      TP_Collocated_Asynch_Request &operator= (TP_Collocated_Asynch_Request const &) = delete;
+      TP_Collocated_Asynch_Request (TP_Collocated_Asynch_Request &&) = delete;
+      TP_Collocated_Asynch_Request &operator= (TP_Collocated_Asynch_Request &&) = delete;
 
     protected:
       /// Prepare this TP_Collocated_Asynch_Request object to be placed

@@ -44,7 +44,7 @@ private:
 TAO_FT_ReplicationManagerController::TAO_FT_ReplicationManagerController ()
   : orb_ (CORBA::ORB::_nil())
   , replication_manager_ (FT::ReplicationManager::_nil())
-  , rm_ior_ (0)
+  , rm_ior_ (nullptr)
   , shutdown_ (0)
 {
 }
@@ -67,7 +67,7 @@ int TAO_FT_ReplicationManagerController::init (int &argc, ACE_TCHAR *argv[])
     if (result == 0)
     {
       CORBA::Object_var obj = CORBA::Object::_nil ();
-      if (this->rm_ior_ != 0)
+      if (this->rm_ior_ != nullptr)
       {
         obj = this->orb_->string_to_object (
           ACE_TEXT_ALWAYS_CHAR (this->rm_ior_));
@@ -99,7 +99,6 @@ int TAO_FT_ReplicationManagerController::init (int &argc, ACE_TCHAR *argv[])
 
   return result;
 }
-
 
 int TAO_FT_ReplicationManagerController::parse_args (int &argc, ACE_TCHAR *argv[])
 {

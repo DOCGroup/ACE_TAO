@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    CSD_TP_Request.h
  *
  *  @author  Tim Bradley <bradley_t@ociweb.com>
  */
-//=============================================================================
-
 #ifndef TAO_CSD_TP_REQUEST_H
 #define TAO_CSD_TP_REQUEST_H
 
@@ -35,7 +31,6 @@ namespace TAO
 
     class TP_Queue;
 
-
     /**
      * @class TP_Request
      *
@@ -49,9 +44,7 @@ namespace TAO
       : public TAO_Intrusive_Ref_Count_Base<TAO_SYNCH_MUTEX>
     {
     public:
-      /// Virtual Destructor.
-      virtual ~TP_Request();
-
+      ~TP_Request() override = default;
       /// Prepare the request to be placed into the request queue.
       void prepare_for_queue();
 
@@ -74,9 +67,12 @@ namespace TAO
       /// servant object.
       bool is_target(PortableServer::Servant servant);
 
+      TP_Request (TP_Request const &) = delete;
+      TP_Request &operator= (TP_Request const &) = delete;
+      TP_Request (TP_Request &&) = delete;
+      TP_Request &operator= (TP_Request &&) = delete;
 
     protected:
-      /// Constructor.
       TP_Request(PortableServer::Servant servant,
                  TP_Servant_State*       servant_state);
 
@@ -98,26 +94,21 @@ namespace TAO
       virtual void cancel_i() = 0;
 
     private:
-      TP_Request (TP_Request const &) = delete;
-      TP_Request &operator= (TP_Request const &) = delete;
-      TP_Request (TP_Request &&) = delete;
-      TP_Request &operator= (TP_Request &&) = delete;
-
       /// The TP_Queue class is our friend since it needs access to
       /// the prev_ and next_ (private) data members.
       friend class TP_Queue;
 
-      /// The previous TP_Request object (in the queue).
+      /// Non-owning link to the previous queued TP_Request object.
       TP_Request* prev_ {};
 
-      /// The next TP_Request object (in the queue).
+      /// Non-owning link to the next queued TP_Request object.
       TP_Request* next_ {};
 
       /// Reference to the servant object.
-      PortableServer::ServantBase_var servant_;
+      PortableServer::ServantBase_var const servant_;
 
       /// Reference to the servant "state" object (contains the busy flag).
-      TP_Servant_State::HandleType servant_state_;
+      TP_Servant_State::HandleType const servant_state_;
     };
   }
 }

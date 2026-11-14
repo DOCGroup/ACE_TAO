@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-// ===================================================================
 /*
  *  @file   SCIOP_Acceptor.h
  *
@@ -9,7 +8,6 @@
  *  @author  Jason Cohen, Lockheed Martin ATL  <jcohen@atl.lmco.com>
  *  @author  Keith O'Hara, Lockheed Martin ATL
  */
-// ===================================================================
 
 #ifndef TAO_SCIOP_ACCEPTOR_H
 #define TAO_SCIOP_ACCEPTOR_H
@@ -31,6 +29,9 @@
 #include "ace/SOCK_SEQPACK_Acceptor.h"
 #include "ace/Acceptor.h"
 
+#include <memory>
+#include <string>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO SCIOP_Acceptor concrete call definition
@@ -45,10 +46,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Strategies_Export TAO_SCIOP_Acceptor : public TAO_Acceptor
 {
 public:
-  /// Constructor.
   TAO_SCIOP_Acceptor ();
 
-  /// Destructor.
   ~TAO_SCIOP_Acceptor ();
 
   /// @@ Helper method for the implementation repository, should go
@@ -82,7 +81,7 @@ public:
   int create_profile (TAO::ObjectKey const &object_key,
                       TAO_MProfile &mprofile,
                       CORBA::Short priority) override;
-  int is_collocated (TAO_Endpoint const *endpoint) override;
+  bool is_collocated (TAO_Endpoint const *endpoint) override;
   CORBA::ULong endpoint_count () override;
 
   int object_key (IOP::TaggedProfile &profile,
@@ -163,7 +162,7 @@ protected:
 protected:
   /// Array of ACE_INET_Addr instances, each one corresponding to a
   /// given network interface.
-  ACE_INET_Addr *addrs_ {};
+  std::unique_ptr<ACE_INET_Addr[]> addrs_;
 
   /**
    * The number of ports over which the acceptor should search (starting
@@ -179,7 +178,7 @@ protected:
    * example, if the IP address is INADDR_ANY (0.0.0.0) then there
    * will be possibly a different hostname for each interface.
    */
-  char **hosts_ {};
+  std::unique_ptr<char *[]> hosts_;
 
   /// The number of host names cached in the hosts_ array (equivalent
   /// to the number of endpoints opened by this Acceptor).
@@ -188,7 +187,7 @@ protected:
   /**
    * Override the hostname used in the ORBEndPoint.
    */
-  char *hostname_in_ior_ {};
+  std::string hostname_in_ior_;
 
   /**
    * The GIOP version for this endpoint
@@ -210,9 +209,9 @@ private:
   TAO_SCIOP_BASE_ACCEPTOR base_acceptor_;
 
   /// Acceptor strategies.
-  TAO_SCIOP_CREATION_STRATEGY *creation_strategy_ {};
-  TAO_SCIOP_CONCURRENCY_STRATEGY *concurrency_strategy_ {};
-  TAO_SCIOP_ACCEPT_STRATEGY *accept_strategy_ {};
+  std::unique_ptr<TAO_SCIOP_CREATION_STRATEGY> creation_strategy_;
+  std::unique_ptr<TAO_SCIOP_CONCURRENCY_STRATEGY> concurrency_strategy_;
+  std::unique_ptr<TAO_SCIOP_ACCEPT_STRATEGY> accept_strategy_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

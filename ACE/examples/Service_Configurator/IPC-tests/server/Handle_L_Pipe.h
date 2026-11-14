@@ -24,19 +24,23 @@ class ACE_Svc_Export Handle_L_Pipe : public ACE_Service_Object, public ACE_LSOCK
 public:
   Handle_L_Pipe ();
   ~Handle_L_Pipe ();
-  virtual int init (int argc, ACE_TCHAR *argv[]);
-  virtual int info (ACE_TCHAR **, size_t) const;
-  virtual int fini ();
+  Handle_L_Pipe (Handle_L_Pipe const &) = delete;
+  Handle_L_Pipe (Handle_L_Pipe &&) = delete;
+  Handle_L_Pipe &operator= (Handle_L_Pipe const &) = delete;
+  Handle_L_Pipe &operator= (Handle_L_Pipe &&) = delete;
+  int init (int argc, ACE_TCHAR *argv[]) override;
+  int info (ACE_TCHAR **, size_t) const override;
+  int fini () override;
 
 private:
   int open (const ACE_UNIX_Addr &suap, int async = 0);
-  virtual ACE_HANDLE get_handle () const;
-  virtual int handle_input (ACE_HANDLE fd);
-  virtual int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask);
+  ACE_HANDLE get_handle () const override;
+  int handle_input (ACE_HANDLE fd) override;
+  int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask) override;
 
   char *upper_case (char s[], int n);
 
-  ACE_TCHAR rendezvous[MAXPATHLEN + 1];
+  ACE_TCHAR rendezvous[MAXPATHLEN + 1] {};
   static const ACE_TCHAR *DEFAULT_RENDEZVOUS;
 };
 

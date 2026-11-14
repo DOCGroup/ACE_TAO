@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_AV_TCP_H
 #define TAO_AV_TCP_H
 #include /**/ "ace/pre.h"
@@ -32,7 +31,7 @@ public:
   TAO_AV_TCP_Factory ();
   ~TAO_AV_TCP_Factory () override;
   int init (int argc, ACE_TCHAR *argv[]) override;
-  int match_protocol (const char *protocol_string) override;
+  int match_protocol (char const *protocol_string) override;
   TAO_AV_Acceptor *make_acceptor () override;
   TAO_AV_Connector *make_connector () override;
 };
@@ -50,7 +49,7 @@ class TAO_AV_TCP_Transport
 public:
   TAO_AV_TCP_Transport ();
 
-  TAO_AV_TCP_Transport (TAO_AV_TCP_Flow_Handler *handler);
+  explicit TAO_AV_TCP_Transport (TAO_AV_TCP_Flow_Handler *handler);
 
   ~TAO_AV_TCP_Transport () override;
 
@@ -92,7 +91,7 @@ public:
                 int iovcnt,
                 ACE_Time_Value *s = nullptr) override;
 protected:
-  TAO_AV_TCP_Flow_Handler *handler_;
+  TAO_AV_TCP_Flow_Handler *handler_ {};
 };
 
 /**
@@ -104,7 +103,7 @@ class TAO_AV_TCP_Flow_Handler
    public virtual ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
 public:
-  TAO_AV_TCP_Flow_Handler (TAO_AV_Callback *callback = nullptr);
+  explicit TAO_AV_TCP_Flow_Handler (TAO_AV_Callback *callback = nullptr);
   ~TAO_AV_TCP_Flow_Handler () override;
   TAO_AV_Transport *transport ();
   int open (void * = nullptr) override;
@@ -112,7 +111,7 @@ public:
   int handle_timeout (ACE_Time_Value const &tv, void const *arg = nullptr) override;
   ACE_Event_Handler *event_handler () override { return this; }
 protected:
-  TAO_AV_Core *av_core_;
+  TAO_AV_Core *av_core_ {};
 };
 
 class TAO_AV_TCP_Acceptor;
@@ -126,13 +125,13 @@ class TAO_AV_TCP_Base_Acceptor : public ACE_Acceptor <TAO_AV_TCP_Flow_Handler,AC
 public:
   virtual int acceptor_open (TAO_AV_TCP_Acceptor *acceptor,
                     ACE_Reactor *reactor,
-                    const ACE_INET_Addr &local_addr,
+                    ACE_INET_Addr const &local_addr,
                     TAO_FlowSpec_Entry *entry);
   int make_svc_handler (TAO_AV_TCP_Flow_Handler *&handler) override;
 protected:
-  TAO_AV_TCP_Acceptor *acceptor_;
-  ACE_Reactor *reactor_;
-  TAO_FlowSpec_Entry *entry_;
+  TAO_AV_TCP_Acceptor *acceptor_ {};
+  ACE_Reactor *reactor_ {};
+  TAO_FlowSpec_Entry *entry_ {};
 };
 
 /**
@@ -163,9 +162,9 @@ public:
   virtual int make_svc_handler (TAO_AV_TCP_Flow_Handler *&handler);
 protected:
   TAO_AV_TCP_Base_Acceptor acceptor_;
-  TAO_FlowSpec_Entry *entry_;
-  TAO_Base_StreamEndPoint *endpoint_;
-  TAO_AV_Flow_Protocol_Factory *flow_protocol_factory_;
+  TAO_FlowSpec_Entry *entry_ {};
+  TAO_Base_StreamEndPoint *endpoint_ {};
+  TAO_AV_Flow_Protocol_Factory *flow_protocol_factory_ {};
 };
 
 class TAO_AV_TCP_Connector;
@@ -181,11 +180,11 @@ public:
   int connector_open (TAO_AV_TCP_Connector *connector,
                       ACE_Reactor *reactor);
   int connector_connect (TAO_AV_TCP_Flow_Handler *&handler,
-                         const ACE_INET_Addr &remote_addr);
+                         ACE_INET_Addr const &remote_addr);
   int make_svc_handler (TAO_AV_TCP_Flow_Handler *&handler) override;
 protected:
-  TAO_AV_TCP_Connector *connector_;
-  ACE_Reactor *reactor_;
+  TAO_AV_TCP_Connector *connector_ {};
+  ACE_Reactor *reactor_ {};
 };
 
 /**
@@ -209,11 +208,11 @@ public:
   int close () override;
   virtual int make_svc_handler (TAO_AV_TCP_Flow_Handler *&handler);
 protected:
-  TAO_AV_Core *av_core_;
+  TAO_AV_Core *av_core_ {};
   TAO_AV_TCP_Base_Connector connector_;
-  TAO_Base_StreamEndPoint *endpoint_;
-  TAO_FlowSpec_Entry *entry_;
-  TAO_AV_Flow_Protocol_Factory *flow_protocol_factory_;
+  TAO_Base_StreamEndPoint *endpoint_ {};
+  TAO_FlowSpec_Entry *entry_ {};
+  TAO_AV_Flow_Protocol_Factory *flow_protocol_factory_ {};
 };
 
 /**
@@ -226,7 +225,6 @@ public:
   TAO_AV_TCP_Object (TAO_AV_Callback *callback,
                      TAO_AV_Transport *transport = nullptr);
 
-  /// Dtor
   ~TAO_AV_TCP_Object () override;
 
   int handle_input () override;

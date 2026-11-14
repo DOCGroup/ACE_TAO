@@ -5,22 +5,22 @@
 // Listing 1 code/ch21
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  Temperature_Monitor_Options opt (argc, argv);
+  Temperature_Monitor_Options const opt {argc, argv};
 
   Naming_Context process_context;
   {
-    ACE_Name_Options *name_options =
+    ACE_Name_Options *const name_options =
       process_context.name_options ();
     name_options->context (ACE_Naming_Context::PROC_LOCAL);
-    ACE_TCHAR *nargv[] = { argv[0] };
-    name_options->parse_args (sizeof(nargv) / sizeof(ACE_TCHAR*),
+    ACE_TCHAR *nargv[] = {argv[0]};
+    name_options->parse_args (sizeof (nargv) / sizeof (nargv[0]),
                               nargv);
     process_context.open (name_options->context ());
   }
 
   Naming_Context shared_context;
   {
-    ACE_Name_Options *name_options =
+    ACE_Name_Options *const name_options =
       shared_context.name_options ();
     name_options->process_name (argv[0]);
     name_options->context (ACE_Naming_Context::NET_LOCAL);

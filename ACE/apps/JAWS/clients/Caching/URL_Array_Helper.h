@@ -8,9 +8,10 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_URL_ARRAY_HELPER_H
 #define ACE_URL_ARRAY_HELPER_H
+
+#include "ace/Basic_Types.h"
 
 // ### These template functions are probably named improperly.
 // You should find some way to avoid name space polution.

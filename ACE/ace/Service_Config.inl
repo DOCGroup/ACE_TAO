@@ -27,7 +27,6 @@ ACE_Service_Config::open (const ACE_TCHAR program_name[],
                           ignore_debug_flag);
 }
 
-
 ACE_INLINE int
 ACE_Service_Config::open (int argc,
                           ACE_TCHAR *argv[],

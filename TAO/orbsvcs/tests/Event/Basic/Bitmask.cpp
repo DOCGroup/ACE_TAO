@@ -7,7 +7,7 @@
 #include "orbsvcs/Event/EC_Default_Factory.h"
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   TAO_EC_Default_Factory::init_svcs ();
 
@@ -38,7 +38,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       RtecEventChannelAdmin::EventChannel_var event_channel =
         ec_impl._this ();
 
-
       // ****************************************************************
 
       // Obtain the consumer admin..
@@ -51,7 +50,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // ****************************************************************
 
-      const int milliseconds = 50;
+      constexpr int milliseconds = 50;
 
       EC_Counting_Supplier first_supplier;
 

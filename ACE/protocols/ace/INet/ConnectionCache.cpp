@@ -1,11 +1,13 @@
 #include "ace/INet/ConnectionCache.h"
 
+#include <memory>
+#include <utility>
+
 #if !defined (__ACE_INLINE__)
 #include "ace/INet/ConnectionCache.inl"
 #endif
 
 #include "ace/INet/INet_Log.h"
-
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -13,103 +15,76 @@ namespace ACE
 {
   namespace INet
   {
-    ConnectionKey::ConnectionKey ()
-      {}
+    ConnectionKey::ConnectionKey () = default;
 
-    ConnectionKey::~ConnectionKey ()
-      {}
+    ConnectionKey::~ConnectionKey () = default;
 
-    ConnectionCacheKey::ConnectionCacheKey ()
-      : key_ (0),
-        delete_key_ (false)
+    ConnectionCacheKey::ConnectionCacheKey () = default;
+
+    ConnectionCacheKey::ConnectionCacheKey (ConnectionKey const& key)
+      : key_ (&key)
       {
       }
 
-    ConnectionCacheKey::ConnectionCacheKey (const ConnectionKey& key)
-      : key_ (&const_cast<ConnectionKey&> (key)),
-        delete_key_ (false)
-      {
-      }
-
-    ConnectionCacheKey::ConnectionCacheKey (const ConnectionCacheKey& cachekey)
-      : key_ (0),
-        delete_key_ (false)
+    ConnectionCacheKey::ConnectionCacheKey (ConnectionCacheKey const& cachekey)
       {
         *this = cachekey;
       }
 
-    ConnectionCacheKey::~ConnectionCacheKey ()
+    ConnectionCacheKey::~ConnectionCacheKey () = default;
+
+    ConnectionCacheKey& ConnectionCacheKey::operator = (ConnectionCacheKey const& cachekey)
       {
-        if (this->key_ != 0 && this->delete_key_)
+        if (this != std::addressof (cachekey))
           {
-            delete this->key_;
-            this->delete_key_ = false;
-          }
-      }
-
-    ConnectionCacheKey& ConnectionCacheKey::operator =(const ConnectionCacheKey& cachekey)
-      {
-        if (this != &cachekey)
-          {
-            if (this->key_ != 0 && this->delete_key_)
-              {
-                delete this->key_;
-                this->delete_key_ = false;
-              }
-
-            this->key_ = cachekey.key_->duplicate ();
-
-            if (this->key_ == 0)
-              {
-                this->delete_key_ = false;
-              }
-            else
-              {
-                this->delete_key_ = true;
-              }
+            std::unique_ptr<ConnectionKey> duplicate;
+            if (cachekey.key_ != nullptr)
+              duplicate.reset (cachekey.key_->duplicate ());
+            this->owned_key_ = std::move (duplicate);
+            this->key_ = this->owned_key_.get ();
           }
         return *this;
       }
 
     u_long ConnectionCacheKey::hash () const
       {
-        return this->key_ ? this->key ().hash () : 0;
+        return this->key_ != nullptr ? this->key ().hash () : 0;
       }
 
-    ConnectionHolder::~ConnectionHolder () {}
-    ConnectionHolder::ConnectionHolder () {}
+    ConnectionHolder::~ConnectionHolder () = default;
+    ConnectionHolder::ConnectionHolder () = default;
 
-    ConnectionFactory::~ConnectionFactory () {}
-    ConnectionFactory::ConnectionFactory () {}
+    ConnectionFactory::~ConnectionFactory () = default;
+    ConnectionFactory::ConnectionFactory () = default;
 
     ConnectionCacheValue::ConnectionCacheValue ()
-      : state_ (CST_INIT),
-        connection_ (0)
+      : state_ (CST_INIT)
       {
       }
 
     ConnectionCacheValue::ConnectionCacheValue (connection_type* connection)
-      : state_ (connection ? CST_IDLE : CST_INIT),
+      : state_ (connection != nullptr ? CST_IDLE : CST_INIT),
         connection_ (connection)
       {
       }
 
-    ConnectionCacheValue::ConnectionCacheValue (const ConnectionCacheValue& cacheval)
+    ConnectionCacheValue::ConnectionCacheValue (ConnectionCacheValue const& cacheval)
+      : state_ (cacheval.state_),
+        connection_ (cacheval.connection_)
       {
-        *this = cacheval;
       }
 
-    ConnectionCacheValue& ConnectionCacheValue::operator =(const ConnectionCacheValue& cacheval)
+    ConnectionCacheValue& ConnectionCacheValue::operator = (ConnectionCacheValue const& cacheval)
       {
-        if (this != &cacheval)
+        if (this != std::addressof (cacheval))
           {
-            this->state_ = cacheval.state ();
-            this->connection_ = const_cast<connection_type*> (cacheval.connection ());
+            this->state_ = cacheval.state_;
+            this->connection_ = cacheval.connection_;
           }
         return *this;
       }
 
-    ConnectionCache::ConnectionCache(size_t size)
+    ConnectionCache::ConnectionCache (size_t size)
       : condition_ (lock_),
         cache_map_ (size)
       {
@@ -120,7 +95,7 @@ namespace ACE
         this->close_all_connections ();
       }
 
-    bool ConnectionCache::find_connection (const ConnectionKey& key,
+    bool ConnectionCache::find_connection (ConnectionKey const& key,
                                            ConnectionCacheValue& cacheval)
       {
         if (this->cache_map_.find (ConnectionCacheKey (key),
@@ -131,14 +106,14 @@ namespace ACE
         return false;
       }
 
-    bool ConnectionCache::set_connection (const ConnectionKey& key,
-                                          const ConnectionCacheValue& cacheval)
+    bool ConnectionCache::set_connection (ConnectionKey const& key,
+                                          ConnectionCacheValue const& cacheval)
       {
         return this->cache_map_.rebind (ConnectionCacheKey (key),
                                         cacheval) != -1;
       }
 
-    bool ConnectionCache::claim_existing_connection(const ConnectionKey& key,
+    bool ConnectionCache::claim_existing_connection (ConnectionKey const& key,
                                                     connection_type*& connection,
                                                     ConnectionCacheValue::State& state)
       {
@@ -166,17 +141,17 @@ namespace ACE
         return false;
       }
 
-    bool ConnectionCache::claim_connection(const ConnectionKey& key,
+    bool ConnectionCache::claim_connection (ConnectionKey const& key,
                                            connection_type*& connection,
-                                           const factory_type& connection_factory,
+                                           factory_type const& connection_factory,
                                            bool wait)
       {
         INET_TRACE ("ConnectionCache::claim_connection");
 
-        while (1)
+        while (true)
           {
-            bool create_connection = false;
-            ConnectionCacheValue::State state = ConnectionCacheValue::CST_NONE;
+            bool create_connection {};
+            ConnectionCacheValue::State state {ConnectionCacheValue::CST_NONE};
             do
               {
                 ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
@@ -226,8 +201,9 @@ namespace ACE
 
             if (create_connection)
               {
-                connection = connection_factory.create_connection (key);
-                if (connection)
+                std::unique_ptr<connection_type> new_connection (
+                  connection_factory.create_connection (key));
+                if (new_connection != nullptr)
                   {
                     INET_DEBUG (9, (LM_INFO, DLINFO ACE_TEXT ("ConnectionCache::claim_connection - ")
                                              ACE_TEXT ("successfully created new connection\n")));
@@ -237,9 +213,14 @@ namespace ACE
                                               this->lock_,
                                               false));
 
-                    ConnectionCacheValue cacheval (connection);
+                    ConnectionCacheValue cacheval (new_connection.get ());
                     cacheval.state (ConnectionCacheValue::CST_BUSY);
-                    return this->set_connection (key, cacheval);
+                    if (this->set_connection (key, cacheval))
+                      {
+                        connection = new_connection.release ();
+                        return true;
+                      }
+                    return false;
                   }
                 else
                   return false;
@@ -247,7 +228,7 @@ namespace ACE
           }
       }
 
-    bool ConnectionCache::release_connection(const ConnectionKey& key,
+    bool ConnectionCache::release_connection (ConnectionKey const& key,
                                              connection_type* connection)
       {
         INET_TRACE ("ConnectionCache::release_connection");
@@ -283,7 +264,7 @@ namespace ACE
           return false;
       }
 
-    bool ConnectionCache::close_connection(const ConnectionKey& key,
+    bool ConnectionCache::close_connection (ConnectionKey const& key,
                                            connection_type* connection)
       {
         INET_TRACE ("ConnectionCache::close_connection");
@@ -301,14 +282,14 @@ namespace ACE
               cacheval.connection () == connection &&
               cacheval.state () == ConnectionCacheValue::CST_BUSY)
           {
-            connection_type* conn = cacheval.connection ();
-            cacheval.connection (0);
+            connection_type* const conn = cacheval.connection ();
+            cacheval.connection (nullptr);
             cacheval.state (ConnectionCacheValue::CST_CLOSED);
             if (this->set_connection (key, cacheval))
               {
                 // signal other threads about closed connection
                 this->condition_.broadcast ();
-                delete conn; // clean up
+                std::unique_ptr<connection_type> connection_owner (conn);
                 return true;
               }
             else
@@ -322,7 +303,7 @@ namespace ACE
           return false;
       }
 
-    bool ConnectionCache::has_connection(const ConnectionKey& key)
+    bool ConnectionCache::has_connection (ConnectionKey const& key)
       {
         INET_TRACE ("ConnectionCache::has_connection");
 
@@ -336,7 +317,7 @@ namespace ACE
                   cacheval.state () != ConnectionCacheValue::CST_CLOSED);
       }
 
-    void ConnectionCache::close_all_connections()
+    void ConnectionCache::close_all_connections ()
       {
         INET_TRACE ("ConnectionCache::close_all_connections");
 
@@ -352,9 +333,9 @@ namespace ACE
             if ((*iter).int_id_.state () != ConnectionCacheValue::CST_CLOSED)
               {
                 connection_type* conn = (*iter).int_id_.connection ();
-                (*iter).int_id_.connection (0);
+                (*iter).int_id_.connection (nullptr);
                 (*iter).int_id_.state (ConnectionCacheValue::CST_CLOSED);
-                delete conn;
+                std::unique_ptr<connection_type> connection_owner (conn);
               }
           }
         this->cache_map_.unbind_all ();

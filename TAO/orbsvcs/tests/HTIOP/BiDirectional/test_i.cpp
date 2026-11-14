@@ -9,7 +9,6 @@
 #include "test_i.inl"
 #endif /* __ACE_INLINE__ */
 
-
 void
 Callback_i::shutdown ()
 {
@@ -24,12 +23,10 @@ Callback_i::callback_method ()
     ACE_DEBUG ((LM_DEBUG, "Callback method called\n"));
 }
 
-
 // ****************************************************************
 
 CORBA::Long
-Simple_Server_i::test_method (CORBA::Boolean do_callback
- )
+Simple_Server_i::test_method (CORBA::Boolean do_callback)
 {
   if (do_callback)
     {
@@ -40,8 +37,7 @@ Simple_Server_i::test_method (CORBA::Boolean do_callback
 }
 
 void
-Simple_Server_i::callback_object (Callback_ptr callback
- )
+Simple_Server_i::callback_object (Callback_ptr callback)
 {
   // Store the callback object
   this->callback_ = Callback::_duplicate (callback);
@@ -75,7 +71,6 @@ Simple_Server_i::call_client ()
 
   return 0;
 }
-
 
 void
 Simple_Server_i::shutdown ()

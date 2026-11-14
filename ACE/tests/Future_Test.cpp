@@ -59,7 +59,6 @@ class Prime_Scheduler : public ACE_Task_Base
   friend class Method_Request_name;
   friend class Method_Request_end;
 public:
-  /// Constructor.
   Prime_Scheduler (const ACE_TCHAR *,
                    Prime_Scheduler * = nullptr);
 
@@ -71,7 +70,6 @@ public:
   /// Terminator.
   virtual int shutdown ();
 
-  /// Destructor.
   ~Prime_Scheduler () override;
 
   // = These methods are part of the Active Object Proxy interface.
@@ -231,7 +229,6 @@ Method_Request_end::call ()
   return -1;
 }
 
-// Constructor
 Prime_Scheduler::Prime_Scheduler (const ACE_TCHAR *newname,
                                   Prime_Scheduler *new_scheduler)
   : scheduler_ (new_scheduler)
@@ -244,8 +241,6 @@ Prime_Scheduler::Prime_Scheduler (const ACE_TCHAR *newname,
               ACE_TEXT ("(%t) Prime_Scheduler %s created\n"),
               this->name_));
 }
-
-// Destructor
 
 Prime_Scheduler::~Prime_Scheduler ()
 {
@@ -260,7 +255,7 @@ Prime_Scheduler::~Prime_Scheduler ()
 int
 Prime_Scheduler::open (void *)
 {
-  task_count++;
+  ++task_count;
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Prime_Scheduler %s open\n"),
               this->name_));
@@ -276,7 +271,7 @@ Prime_Scheduler::shutdown ()
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Prime_Scheduler %s shutdown\n"),
               this->name_));
-  task_count--;
+  --task_count;
   return 0;
 }
 

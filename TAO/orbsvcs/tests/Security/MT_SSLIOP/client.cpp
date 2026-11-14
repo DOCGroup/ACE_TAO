@@ -1,47 +1,44 @@
 #include "ace/Get_Opt.h"
+#include "ace/SString.h"
 #include "Client_Worker.h"
 
-
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
-ACE_TCHAR *another_ior = 0;
-
-int niterations = 5;
-int do_shutdown = 0;
-int nthreads = 5;
+struct Client_Options
+{
+  ACE_TString ior {ACE_TEXT ("file://test.ior")};
+  int niterations {5};
+  int nthreads {5};
+  bool do_shutdown {};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:n:i:x"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
 
       case 'n':
-        nthreads = ACE_OS::atoi (get_opts.opt_arg ());
+        options.nthreads = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'i':
-        niterations = ACE_OS::atoi (get_opts.opt_arg ());
+        options.niterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'x':
-        do_shutdown = 1;
+        options.do_shutdown = true;
         break;
 
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "-n <nthreads>"
-                           "-i <niterations> "
-                           "\n",
+                           ACE_TEXT ("usage: %s -k <ior> -n <nthreads> -i <niterations> [-x]\n"),
                            argv [0]),
                           -1);
       }
@@ -50,26 +47,27 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  Client_Options options;
   try
     {
       // Initialize the ORB
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
-      int len = ACE_OS::strlen(ior) + 1;
-      another_ior = new ACE_TCHAR[len + 1];
-      ACE_OS::strcpy(another_ior, ior);
-      another_ior[len-1] = '1';
-      another_ior[len] = '\0';
+      if (options.ior.empty ())
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("The IOR must not be empty.\n")), 1);
+
+      ACE_TString another_ior (options.ior);
+      another_ior[another_ior.length () - 1] = '1';
 
       // Get Object Reference using IOR file
       CORBA::Object_var object =
-        orb->string_to_object (ior);
+        orb->string_to_object (options.ior.c_str ());
 
       // Cast to Appropriate Type
       Simple_Server_var server =
@@ -78,26 +76,26 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (server.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Object reference <%s> is nil\n", ior),
+                             ACE_TEXT ("Object reference <%s> is nil\n"),
+                             options.ior.c_str ()),
                               1);
         }
 
-
       object =
-        orb->string_to_object (another_ior);
+        orb->string_to_object (another_ior.c_str ());
 
       // Cast to Appropriate Type
       Another_One_var another =
         Another_One::_narrow (object.in ());
 
-
       Client_Worker client (server.in (),
                             another.in (),
-                            niterations);
+                            options.niterations);
 
-      if (client.activate (THR_NEW_LWP | THR_JOINABLE, nthreads) != 0)
+      if (client.activate (THR_NEW_LWP | THR_JOINABLE,
+                           options.nthreads) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                         " (%P|%t) Cannot Activate Client Threads\n"),
+                           " (%P|%t) Cannot Activate Client Threads\n"),
                           1);
 
       client.thr_mgr ()->wait ();
@@ -106,7 +104,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                   "(%P|%t) threads finished\n"));
 
       // Shut down the server if -x option given in command line
-      if (do_shutdown)
+      if (options.do_shutdown)
         {
           server->shutdown ();
         }
@@ -115,12 +113,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       orb->destroy ();
     }
 
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-
-
   return 0;
 }

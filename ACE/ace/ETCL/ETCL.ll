@@ -82,12 +82,12 @@ in		{ YY_LEX_DEBUG; return ETCL_IN; }
 "]"		{ YY_LEX_DEBUG; return ETCL_RBRA; }
 TRUE		{ 
 		  lvalp->constraint = 
-		    new ETCL_Literal_Constraint ((CORBA::Boolean) 1);
+		    new ETCL_Literal_Constraint ((CORBA::Boolean) true);
 		  YY_LEX_DEBUG; return ETCL_BOOLEAN;
 		}
 FALSE		{ 
 		  lvalp->constraint = 
-		    new ETCL_Literal_Constraint ((CORBA::Boolean) 0);
+		    new ETCL_Literal_Constraint ((CORBA::Boolean) false);
 		  YY_LEX_DEBUG; return ETCL_BOOLEAN;
 		}
 {integer}	{ 

@@ -9,8 +9,9 @@
  */
 //=============================================================================
 
-
 #include "helper.h"
+
+#include <cstring>
 #include "big_union.h"
 
 // ************************************************************************
@@ -27,7 +28,7 @@ Test_Big_Union::Test_Big_Union ()
 Test_Big_Union::~Test_Big_Union ()
 {
   CORBA::string_free (this->opname_);
-  this->opname_ = 0;
+  this->opname_ = nullptr;
 }
 
 const char *
@@ -47,7 +48,7 @@ Test_Big_Union::dii_req_invoke (CORBA::Request *req)
 
   req->invoke ();
 
-  const Param_Test::Big_Union *tmp = 0;
+  Param_Test::Big_Union const *tmp {};
   req->return_value () >>= tmp;
   this->ret_ = new Param_Test::Big_Union (*tmp);
 
@@ -243,7 +244,6 @@ Test_Big_Union::check_validity ()
       return 0;
     }
 
-
   switch (this->in_._d ())
     {
     case 0:
@@ -289,11 +289,11 @@ Test_Big_Union::check_validity ()
             Coffee::Desc_var ret_desc =
               ret->description ();
 
-            if (ACE_OS::strcmp (in_desc->name.in (),
+            if (std::strcmp (in_desc->name.in (),
                                 inout_desc->name.in ())
-                || ACE_OS::strcmp (in_desc->name.in (),
+                || std::strcmp (in_desc->name.in (),
                                    out_desc->name.in ())
-                || ACE_OS::strcmp (in_desc->name.in (),
+                || std::strcmp (in_desc->name.in (),
                                    ret_desc->name.in ()))
               return 0;
           }
@@ -345,9 +345,9 @@ Test_Big_Union::check_validity ()
         const char* out   = this->out_->the_string ();
         const char* ret   = this->ret_->the_string ();
 
-        if (ACE_OS::strcmp (in,out)
-            || ACE_OS::strcmp (in,inout)
-            || ACE_OS::strcmp (in,ret))
+        if (std::strcmp (in,out)
+            || std::strcmp (in,inout)
+            || std::strcmp (in,ret))
           {
             return 0;
           }
@@ -458,17 +458,17 @@ Test_Big_Union::check_validity ()
         const Param_Test::Var_Struct& ret =
           this->ret_->the_var_struct ();
 
-        if (!(ACE_OS::strcmp (in.dummy1.in (),
+        if (!(std::strcmp (in.dummy1.in (),
                               inout.dummy1.in ()) == 0
-              && ACE_OS::strcmp (in.dummy2.in (),
+              && std::strcmp (in.dummy2.in (),
                                  inout.dummy2.in ()) == 0)
-            || !(ACE_OS::strcmp (in.dummy1.in (),
+            || !(std::strcmp (in.dummy1.in (),
                                  out.dummy1.in ()) == 0
-               && ACE_OS::strcmp (in.dummy2.in (),
+               && std::strcmp (in.dummy2.in (),
                                   out.dummy2.in ()) == 0)
-            || !(ACE_OS::strcmp (in.dummy1.in (),
+            || !(std::strcmp (in.dummy1.in (),
                                  ret.dummy1.in ()) == 0
-               && ACE_OS::strcmp (in.dummy2.in (),
+               && std::strcmp (in.dummy2.in (),
                                   ret.dummy2.in ()) == 0))
           {
             return 0;
@@ -485,11 +485,11 @@ Test_Big_Union::check_validity ()
 
         for (CORBA::ULong i = 0; i != len; ++i)
           {
-            if (ACE_OS::strcmp (in.seq[i],
+            if (std::strcmp (in.seq[i],
                                 inout.seq[i])
-                || ACE_OS::strcmp (in.seq[i],
+                || std::strcmp (in.seq[i],
                                    out.seq[i])
-                || ACE_OS::strcmp (in.seq[i],
+                || std::strcmp (in.seq[i],
                                    ret.seq[i]))
               {
                 return 0;

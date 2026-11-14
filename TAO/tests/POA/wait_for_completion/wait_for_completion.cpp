@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file     wait_for_completion.cpp
@@ -7,19 +6,22 @@
  *
  *  @author  Irfan Pyarali
  */
-//=============================================================================
-
-
 #include "testS.h"
 
 class test_i : public POA_test
 {
 public:
-  void destroy_poa ();
+  test_i () = default;
+  test_i (test_i const &) = delete;
+  test_i (test_i &&) = delete;
+  test_i &operator= (test_i const &) = delete;
+  test_i &operator= (test_i &&) = delete;
+
+  void destroy_poa () override;
 
   void test_poa (PortableServer::POA_ptr poa);
 
-  PortableServer::POA_var poa_;
+  PortableServer::POA_var poa_ {};
 };
 
 void
@@ -31,8 +33,8 @@ test_i::test_poa (PortableServer::POA_ptr poa)
 void
 test_i::destroy_poa ()
 {
-  CORBA::Boolean etherealize_objects = 1;
-  CORBA::Boolean wait_for_completion = 1;
+  CORBA::Boolean const etherealize_objects = true;
+  CORBA::Boolean const wait_for_completion = true;
   this->poa_->destroy (etherealize_objects,
                        wait_for_completion);
 }
@@ -40,7 +42,7 @@ test_i::destroy_poa ()
 PortableServer::POA_ptr
 init_orb (int argc,
           ACE_TCHAR **argv,
-          const char *orb_name,
+          char const *orb_name,
           CORBA::ORB_ptr &orb_ptr)
 {
   // Initialize the ORB first.
@@ -49,7 +51,7 @@ init_orb (int argc,
                                         orb_name);
 
   // Obtain the RootPOA.
-  CORBA::Object_var obj =
+  CORBA::Object_var const obj =
     orb->resolve_initial_references ("RootPOA");
 
   // Get the POA_var object from Object_var.
@@ -57,7 +59,7 @@ init_orb (int argc,
     PortableServer::POA::_narrow (obj.in ());
 
   // Get the POAManager of the RootPOA.
-  PortableServer::POAManager_var poa_manager =
+  PortableServer::POAManager_var const poa_manager =
     root_poa->the_POAManager ();
 
   poa_manager->activate ();
@@ -72,28 +74,28 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   try
     {
       CORBA::ORB_var orb1;
-      PortableServer::POA_var first_poa =
+      PortableServer::POA_var const first_poa =
         init_orb (argc,
                   argv,
                   "first ORB",
                   orb1.inout ());
 
       CORBA::ORB_var orb2;
-      PortableServer::POA_var second_poa =
+      PortableServer::POA_var const second_poa =
         init_orb (argc,
                   argv,
                   "second ORB",
                   orb2.inout ());
 
       test_i servant;
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         first_poa->activate_object (&servant);
 
-      CORBA::Object_var object_act = first_poa->id_to_reference (id.in ());
+      CORBA::Object_var const object_act = first_poa->id_to_reference (id.in ());
 
-      test_var test_object = test::_narrow (object_act.in ());
+      test_var const test_object = test::_narrow (object_act.in ());
 
-      int expected_exception_raised = 0;
+      bool expected_exception_raised {};
 
       try
         {
@@ -101,12 +103,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
           test_object->destroy_poa ();
         }
-      catch (const CORBA::BAD_INV_ORDER& )
+      catch (CORBA::BAD_INV_ORDER const &)
         {
           // This is the correct exception! Ignore
-          expected_exception_raised = 1;
+          expected_exception_raised = true;
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const &ex)
         {
           ex._tao_print_exception (
             "Exception caught of incorrect type");
@@ -129,7 +131,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       orb1->destroy ();
       orb2->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Unexpected exception caught");
       return -1;

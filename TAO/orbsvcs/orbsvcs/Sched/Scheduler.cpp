@@ -1,69 +1,50 @@
-//=============================================================================
 /**
  *  @file    Scheduler.cpp
  *
  *  @author David Levine
  */
-//=============================================================================
-
 
 #include "orbsvcs/Log_Macros.h"
 #include "ace/Sched_Params.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/Sched/Scheduler.h"
-#include "ace/OS_NS_stdio.h"
+#include <cstdio>
 
 #include "ace/Lock_Adapter_T.h"
 
-
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-// class Scheduler static members
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-
-const ACE_Scheduler::mode_t ACE_Scheduler::CURRENT_MODE = 0xFFFFFFFF;
-
-ACE_Scheduler *ACE_Scheduler::instance_ = nullptr;
-
-
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-// class ACE_Scheduler static functions
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
+ACE_Scheduler *ACE_Scheduler::instance_ {};
 
 void
-ACE_Scheduler::output (FILE *file, const status_t status)
+ACE_Scheduler::output (FILE *file, status_t status)
 {
   switch (status)
   {
     case NOT_SCHEDULED :
-      ACE_OS::fprintf (file, "NOT_SCHEDULED");
+      std::fprintf (file, "NOT_SCHEDULED");
       break;
     case SUCCEEDED :
-      ACE_OS::fprintf (file, "SUCCEEDED");
+      std::fprintf (file, "SUCCEEDED");
       break;
     case ST_TASK_ALREADY_REGISTERED :
-      ACE_OS::fprintf (file, "TASK_ALREADY_REGISTERED");
+      std::fprintf (file, "TASK_ALREADY_REGISTERED");
       break;
     case ST_VIRTUAL_MEMORY_EXHAUSTED :
-      ACE_OS::fprintf (file, "VIRTUAL_MEMORY_EXHAUSTED");
+      std::fprintf (file, "VIRTUAL_MEMORY_EXHAUSTED");
       break;
     case ST_UNKNOWN_TASK :
-      ACE_OS::fprintf (file, "UNKNOWN_TASK");
+      std::fprintf (file, "UNKNOWN_TASK");
       break;
     case INVALID_MODE :
-      ACE_OS::fprintf (file, "INVALID_MODE");
+      std::fprintf (file, "INVALID_MODE");
       break;
     case MODE_COUNT_MISMATCH :
-      ACE_OS::fprintf (file, "MODE_COUNT_MISMATCH");
+      std::fprintf (file, "MODE_COUNT_MISMATCH");
       break;
     case TASK_COUNT_MISMATCH :
-      ACE_OS::fprintf (file, "TASK_COUNT_MISMATCH");
+      std::fprintf (file, "TASK_COUNT_MISMATCH");
       break;
     case INVALID_PRIORITY :
-      ACE_OS::fprintf (file, "INVALID_PRIORITY");
+      std::fprintf (file, "INVALID_PRIORITY");
       break;
 
     // The following are only used during scheduling (in the case of
@@ -72,53 +53,26 @@ ACE_Scheduler::output (FILE *file, const status_t status)
     // we could conditionally compile them so that they're not in the
     // runtime version.
     case ST_UTILIZATION_BOUND_EXCEEDED :
-      ACE_OS::fprintf (file, "UTILIZATION_BOUND_EXCEEDED");
+      std::fprintf (file, "UTILIZATION_BOUND_EXCEEDED");
       break;
     case ST_INSUFFICIENT_THREAD_PRIORITY_LEVELS :
-      ACE_OS::fprintf (file, "INSUFFICIENT_THREAD_PRIORITY_LEVELS");
+      std::fprintf (file, "INSUFFICIENT_THREAD_PRIORITY_LEVELS");
       break;
     case ST_CYCLE_IN_DEPENDENCIES :
-      ACE_OS::fprintf (file, "CYCLE_IN_DEPENDENCIES");
+      std::fprintf (file, "CYCLE_IN_DEPENDENCIES");
       break;
     case UNABLE_TO_OPEN_SCHEDULE_FILE :
-      ACE_OS::fprintf (file, "UNABLE_TO_OPEN_SCHEDULE_FILE");
+      std::fprintf (file, "UNABLE_TO_OPEN_SCHEDULE_FILE");
       break;
     case UNABLE_TO_WRITE_SCHEDULE_FILE :
-      ACE_OS::fprintf (file, "UNABLE_TO_WRITE_SCHEDULE_FILE");
+      std::fprintf (file, "UNABLE_TO_WRITE_SCHEDULE_FILE");
       break;
     // End of config-only status values.
 
     default:
-      ACE_OS::fprintf (file, "UNKNOWN STATUS: %d", status);
+      std::fprintf (file, "UNKNOWN STATUS: %d", status);
   }
 }
-
-
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-// class ACE_Scheduler member functions
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-
-ACE_Scheduler::ACE_Scheduler () :
-  minimum_priority_queue_ (0),  // Could initialize this to -1, but it's
-                                // unsigned and we don't really need to
-                                // distinguish between no queues and one
-                                // queue.
-  modes_ (0),
-  tasks_ (0),
-  threads_ (0),
-  mode_ (0),
-  status_ (NOT_SCHEDULED),
-  output_level_ (0)
-{
-}
-
-
-ACE_Scheduler::~ACE_Scheduler ()
-{
-}
-
 
 // ************************************************************
 
@@ -132,7 +86,7 @@ ACE_Scheduler::get_rt_info (Object_Name name,
   // class.
   ACE_CString lookup (name);
   // Search the map for the <name>.  If found, return the RT_Info.
-  RT_Info **info_array = nullptr;
+  RT_Info **info_array {};
   if (info_collection_.find (lookup, info_array) >= 0)
     {
       rtinfo = info_array[0];
@@ -183,11 +137,9 @@ int ACE_Scheduler::number_of_dependencies(RT_Info& rt_info)
   return rt_info.dependencies.length();
 }
 
-int ACE_Scheduler::add_dependency(RT_Info* rt_info,
-                              const Dependency_Info& d)
+int ACE_Scheduler::add_dependency (RT_Info *rt_info,
+                                   Dependency_Info const &d)
 {
-  // ORBSVCS_DEBUG ((LM_DEBUG, "Sched (%t) adding dependency to: %s\n",
-  //              (const char*)rt_info->entry_point));
   RtecScheduler::Dependency_Set& set = rt_info->dependencies;
   int l = set.length();
   set.length(l + 1);
@@ -202,7 +154,7 @@ void ACE_Scheduler::export_to_file (RT_Info* info, FILE* file)
 
 void ACE_Scheduler::export_to_file (RT_Info& info, FILE* file)
 {
-  (void) ACE_OS::fprintf (file,
+  (void) std::fprintf (file,
                           ACE_TEXT("%s\n%d\n")
                           ACE_UINT64_FORMAT_SPECIFIER ACE_TEXT("\n")
                           ACE_UINT64_FORMAT_SPECIFIER ACE_TEXT("\n")
@@ -210,7 +162,7 @@ void ACE_Scheduler::export_to_file (RT_Info& info, FILE* file)
                           ACE_TEXT("%d\n%d\n")
                           ACE_UINT64_FORMAT_SPECIFIER ACE_TEXT("\n")
                           ACE_TEXT("%u\n# begin dependencies\n%d\n"),
-                          (const char*)info.entry_point,
+                          static_cast<char const *> (info.entry_point),
                           info.handle,
                           ORBSVCS_Time::to_hrtime (info.worst_case_execution_time) / 1,
                           ORBSVCS_Time::to_hrtime (info.typical_execution_time) / 1,
@@ -221,28 +173,29 @@ void ACE_Scheduler::export_to_file (RT_Info& info, FILE* file)
                           info.threads,
                           number_of_dependencies(info));
 
-  for (int i = 0; i < number_of_dependencies(info); ++i)
+  for (int i {}; i < number_of_dependencies(info); ++i)
     {
       RT_Info tmp;
       // TODO: info.dependencies [i].rt_info >>= &tmp;
-      (void) ACE_OS::fprintf (file, "%s, %d\n",
-                              (const char*)tmp.entry_point,
+      (void) std::fprintf (file, "%s, %d\n",
+                              static_cast<char const *> (tmp.entry_point),
                               info.dependencies[i].number_of_calls);
     }
 
-  (void) ACE_OS::fprintf (file, "# end dependencies\n%d\n%d\n\n",
+  (void) std::fprintf (file, "# end dependencies\n%d\n%d\n\n",
                           info.priority,
                           info.preemption_subpriority);
 
 }
 
+/// Provides the thread priority and queue type for the given priority level.
 int
-ACE_Scheduler::dispatch_configuration (const Preemption_Priority & p_priority,
+ACE_Scheduler::dispatch_configuration (Preemption_Priority const &p_priority,
                                        OS_Thread_Priority & priority,
                                        Dispatching_Type & d_type)
 {
   // look up the stored configuration info for the given priority level
-  Config_Info *config_info;
+  Config_Info *config_info {};
   if (lookup_config_info (p_priority, config_info) != SUCCEEDED)
   {
     ORBSVCS_ERROR_RETURN ((LM_ERROR,
@@ -256,4 +209,3 @@ ACE_Scheduler::dispatch_configuration (const Preemption_Priority & p_priority,
 
   return 0;
 }
-  // provide the thread priority and queue type for the given priority level

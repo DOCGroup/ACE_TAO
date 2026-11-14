@@ -3,7 +3,7 @@
 #include "orbsvcs/Trader/Constraint_Tokens.h"
 
 #include "tao/AnyTypeCode/Any.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 #if ! defined (__ACE_INLINE__)
 #include "orbsvcs/Trader/Constraint_Nodes.inl"
@@ -37,11 +37,7 @@ TAO_Binary_Constraint (TAO_Expression_Type op_type,
 {
 }
 
-TAO_Binary_Constraint::~TAO_Binary_Constraint ()
-{
-  delete left_;
-  delete right_;
-}
+TAO_Binary_Constraint::~TAO_Binary_Constraint () = default;
 
 // Dispatch table for the accept method
 static int (*dispatch_table[]) (TAO_Constraint_Visitor*,
@@ -192,17 +188,16 @@ visit_in (TAO_Constraint_Visitor* visitor,
   return visitor->visit_in (expr);
 }
 
-
 TAO_Constraint*
 TAO_Binary_Constraint::left_operand () const
 {
-  return this->left_;
+  return this->left_.get ();
 }
 
 TAO_Constraint*
 TAO_Binary_Constraint::right_operand () const
 {
-  return this->right_;
+  return this->right_.get ();
 }
 
 TAO_Unary_Constraint::
@@ -213,11 +208,7 @@ TAO_Unary_Constraint (TAO_Expression_Type op_type,
 {
 }
 
-TAO_Unary_Constraint::~TAO_Unary_Constraint ()
-{
-  delete operand_;
-}
-
+TAO_Unary_Constraint::~TAO_Unary_Constraint () = default;
 
 int
 TAO_Unary_Constraint::accept (TAO_Constraint_Visitor* visitor)
@@ -256,11 +247,11 @@ TAO_Unary_Constraint::accept (TAO_Constraint_Visitor* visitor)
 TAO_Constraint*
 TAO_Unary_Constraint::operand ()
 {
-  return this->operand_;
+  return this->operand_.get ();
 }
 
 TAO_Property_Constraint::
-TAO_Property_Constraint (const char* name)
+TAO_Property_Constraint (char const* name)
   : name_ (CORBA::string_dup (name))
 {
 }
@@ -301,11 +292,10 @@ TAO_Literal_Constraint (const TAO_Literal_Constraint& lit)
   this->copy (lit);
 }
 
-
 TAO_Literal_Constraint::
-TAO_Literal_Constraint (CORBA::Any* any)
+TAO_Literal_Constraint (CORBA::Any const* any)
 {
-  CORBA::Any& any_ref = *any;
+  CORBA::Any const& any_ref = *any;
   CORBA::TypeCode_var type = any_ref.type ();
   // @@ No where to throw exception back.
   CORBA::TCKind corba_type = CORBA::tk_null;
@@ -362,7 +352,7 @@ TAO_Literal_Constraint (CORBA::Any* any)
         {
           CORBA::Float fl;
           (*any) >>= fl;
-          this->op_.double_ = (CORBA::Double) fl;
+          this->op_.double_ = static_cast<CORBA::Double> (fl);
         }
       else
         (*any) >>= this->op_.double_;
@@ -409,7 +399,7 @@ TAO_Literal_Constraint::TAO_Literal_Constraint (CORBA::Double doub)
   this->op_.double_ = doub;
 }
 
-TAO_Literal_Constraint::TAO_Literal_Constraint (const char* str)
+TAO_Literal_Constraint::TAO_Literal_Constraint (char const* str)
   : type_ (TAO_STRING)
 {
   this->op_.str_ = CORBA::string_dup (str);
@@ -440,7 +430,7 @@ TAO_Literal_Constraint::operator CORBA::Boolean () const
 
 TAO_Literal_Constraint::operator CORBA::ULongLong () const
 {
-  CORBA::ULongLong return_value = 0;
+  CORBA::ULongLong return_value {};
 
   if (this->type_ == TAO_UNSIGNED)
     return_value = this->op_.uinteger_;
@@ -460,7 +450,7 @@ TAO_Literal_Constraint::operator CORBA::ULongLong () const
 
 TAO_Literal_Constraint::operator CORBA::LongLong () const
 {
-  CORBA::LongLong return_value = 0;
+  CORBA::LongLong return_value {};
 
   if (this->type_ == TAO_SIGNED)
     return_value = this->op_.integer_;
@@ -488,9 +478,9 @@ TAO_Literal_Constraint::operator CORBA::Double () const
   if (this->type_ == TAO_DOUBLE)
     return_value = this->op_.double_;
   else if (this->type_ == TAO_SIGNED)
-    return_value = (CORBA::Double) this->op_.integer_;
+    return_value = static_cast<CORBA::Double> (this->op_.integer_);
   else if (this->type_ == TAO_UNSIGNED)
-    return_value = (CORBA::Double) this->op_.uinteger_;
+    return_value = static_cast<CORBA::Double> (this->op_.uinteger_);
 
   return return_value;
 }
@@ -576,17 +566,19 @@ bool
 operator== (const TAO_Literal_Constraint& left,
             const TAO_Literal_Constraint& right)
 {
-  bool return_value = false;
-  TAO_Expression_Type widest_type =
+  bool return_value {};
+  TAO_Expression_Type const widest_type =
     TAO_Literal_Constraint::widest_type (left, right);
 
   switch (widest_type)
     {
     case TAO_STRING:
-      return_value = (ACE_OS::strcmp ((const char*) left, (const char*) right) == 0);
+      return_value = std::strcmp (static_cast<char const*> (left),
+                                  static_cast<char const*> (right)) == 0;
       break;
     case TAO_DOUBLE:
-      return_value = ACE::is_equal ((CORBA::Double) left, (CORBA::Double) right);
+      return_value = ACE::is_equal (static_cast<CORBA::Double> (left),
+                                    static_cast<CORBA::Double> (right));
       break;
     case TAO_SIGNED:
       return_value = static_cast<CORBA::LongLong> (left) ==
@@ -597,29 +589,31 @@ operator== (const TAO_Literal_Constraint& left,
                      static_cast<CORBA::ULongLong> (right);
       break;
     case TAO_BOOLEAN:
-      return_value = (CORBA::Boolean) left == (CORBA::Boolean) right;
+      return_value = static_cast<CORBA::Boolean> (left) ==
+                     static_cast<CORBA::Boolean> (right);
       break;
     }
 
   return return_value;
 }
 
-
 bool
 operator< (const TAO_Literal_Constraint& left,
            const TAO_Literal_Constraint& right)
 {
-  bool return_value = false;
-  TAO_Expression_Type widest_type =
+  bool return_value {};
+  TAO_Expression_Type const widest_type =
     TAO_Literal_Constraint::widest_type (left, right);
 
   switch (widest_type)
     {
     case TAO_STRING:
-      return_value = (ACE_OS::strcmp ((const char*) left, (const char*) right) < 0);
+      return_value = std::strcmp (static_cast<char const*> (left),
+                                  static_cast<char const*> (right)) < 0;
       break;
     case TAO_DOUBLE:
-      return_value = (CORBA::Double) left < (CORBA::Double) right;
+      return_value = static_cast<CORBA::Double> (left) <
+                     static_cast<CORBA::Double> (right);
       break;
     case TAO_SIGNED:
       return_value = static_cast<CORBA::LongLong> (left) <
@@ -630,7 +624,8 @@ operator< (const TAO_Literal_Constraint& left,
                      static_cast<CORBA::ULongLong> (right);
       break;
     case TAO_BOOLEAN:
-      return_value = (CORBA::Boolean) left < (CORBA::Boolean) right;
+      return_value = static_cast<CORBA::Boolean> (left) <
+                     static_cast<CORBA::Boolean> (right);
       break;
     }
 
@@ -641,17 +636,19 @@ bool
 operator> (const TAO_Literal_Constraint& left,
            const TAO_Literal_Constraint& right)
 {
-  bool return_value = false;
-  TAO_Expression_Type widest_type =
+  bool return_value {};
+  TAO_Expression_Type const widest_type =
     TAO_Literal_Constraint::widest_type (left, right);
 
   switch (widest_type)
     {
     case TAO_STRING:
-      return_value = (ACE_OS::strcmp ((const char*) left, (const char*) right) > 0);
+      return_value = std::strcmp (static_cast<char const*> (left),
+                                  static_cast<char const*> (right)) > 0;
       break;
     case TAO_DOUBLE:
-      return_value = (CORBA::Double) left > (CORBA::Double) right;
+      return_value = static_cast<CORBA::Double> (left) >
+                     static_cast<CORBA::Double> (right);
       break;
     case TAO_SIGNED:
       return_value = static_cast<CORBA::LongLong> (left) >
@@ -669,46 +666,46 @@ operator> (const TAO_Literal_Constraint& left,
 bool
 operator== (CORBA::Double left, const TAO_Literal_Constraint& right)
 {
-  return ACE::is_equal (left, (CORBA::Double) right);
+  return ACE::is_equal (left, static_cast<CORBA::Double> (right));
 }
 
 bool
 operator== (const TAO::String_Manager& left,
             const TAO_Literal_Constraint& right)
 {
-  bool result = false;
+  bool result {};
 
-  if (static_cast<const char*> (right) != nullptr)
-    result = ACE_OS::strcmp ((const char*) left,
-                             (const char*) right) == 0;
+  if (static_cast<char const*> (right) != nullptr)
+    result = std::strcmp (static_cast<char const*> (left),
+                          static_cast<char const*> (right)) == 0;
   return result;
 }
-
 
 TAO_Literal_Constraint
 operator+ (const TAO_Literal_Constraint& left,
            const TAO_Literal_Constraint& right)
 {
-  TAO_Expression_Type widest_type =
+  TAO_Expression_Type const widest_type =
     TAO_Literal_Constraint::widest_type (left, right);
 
   switch (widest_type)
     {
     case TAO_DOUBLE:
       {
-        CORBA::Double result = (CORBA::Double) left + (CORBA::Double) right;
+        CORBA::Double const result = static_cast<CORBA::Double> (left) +
+                                     static_cast<CORBA::Double> (right);
         return TAO_Literal_Constraint (result);
       }
     case TAO_SIGNED:
       {
-        CORBA::LongLong result = static_cast<CORBA::LongLong> (left) +
-                                 static_cast<CORBA::LongLong> (right);
+        CORBA::LongLong const result = static_cast<CORBA::LongLong> (left) +
+                                       static_cast<CORBA::LongLong> (right);
         return TAO_Literal_Constraint (result);
       }
     case TAO_UNSIGNED:
       {
-        CORBA::ULongLong result = static_cast<CORBA::ULongLong> (left) +
-                                  static_cast<CORBA::ULongLong> (right);
+        CORBA::ULongLong const result = static_cast<CORBA::ULongLong> (left) +
+                                        static_cast<CORBA::ULongLong> (right);
         return TAO_Literal_Constraint (result);
       }
     default:
@@ -720,26 +717,27 @@ TAO_Literal_Constraint
 operator- (const TAO_Literal_Constraint& left,
            const TAO_Literal_Constraint& right)
 {
-  TAO_Expression_Type widest_type =
+  TAO_Expression_Type const widest_type =
     TAO_Literal_Constraint::widest_type (left, right);
 
   switch (widest_type)
     {
     case TAO_DOUBLE:
       {
-        CORBA::Double result = (CORBA::Double) left - (CORBA::Double) right;
+        CORBA::Double const result = static_cast<CORBA::Double> (left) -
+                                     static_cast<CORBA::Double> (right);
         return TAO_Literal_Constraint (result);
       }
     case TAO_SIGNED:
       {
-        CORBA::LongLong result = static_cast<CORBA::LongLong> (left) -
-                                 static_cast<CORBA::LongLong> (right);
+        CORBA::LongLong const result = static_cast<CORBA::LongLong> (left) -
+                                       static_cast<CORBA::LongLong> (right);
         return TAO_Literal_Constraint (result);
       }
     case TAO_UNSIGNED:
       {
-        CORBA::ULongLong result = static_cast<CORBA::ULongLong> (left) -
-                                  static_cast<CORBA::ULongLong> (right);
+        CORBA::ULongLong const result = static_cast<CORBA::ULongLong> (left) -
+                                        static_cast<CORBA::ULongLong> (right);
         return TAO_Literal_Constraint (result);
       }
     default:
@@ -751,26 +749,27 @@ TAO_Literal_Constraint
 operator* (const TAO_Literal_Constraint& left,
            const TAO_Literal_Constraint& right)
 {
-  TAO_Expression_Type widest_type =
+  TAO_Expression_Type const widest_type =
     TAO_Literal_Constraint::widest_type (left, right);
 
   switch (widest_type)
     {
     case TAO_DOUBLE:
       {
-        CORBA::Double result = (CORBA::Double) left * (CORBA::Double) right;
+        CORBA::Double const result = static_cast<CORBA::Double> (left) *
+                                     static_cast<CORBA::Double> (right);
         return TAO_Literal_Constraint (result);
       }
     case TAO_SIGNED:
       {
-        CORBA::LongLong result = static_cast<CORBA::LongLong> (left) *
-                                 static_cast<CORBA::LongLong> (right);
+        CORBA::LongLong const result = static_cast<CORBA::LongLong> (left) *
+                                       static_cast<CORBA::LongLong> (right);
         return TAO_Literal_Constraint (result);
       }
     case TAO_UNSIGNED:
       {
-        CORBA::ULongLong result = static_cast<CORBA::ULongLong> (left) *
-                                  static_cast<CORBA::ULongLong> (right);
+        CORBA::ULongLong const result = static_cast<CORBA::ULongLong> (left) *
+                                        static_cast<CORBA::ULongLong> (right);
         return TAO_Literal_Constraint (result);
       }
     default:
@@ -782,17 +781,18 @@ TAO_Literal_Constraint
 operator/ (const TAO_Literal_Constraint& left,
            const TAO_Literal_Constraint& right)
 {
-  TAO_Expression_Type widest_type =
+  TAO_Expression_Type const widest_type =
     TAO_Literal_Constraint::widest_type (left, right);
 
   switch (widest_type)
     {
     case TAO_DOUBLE:
       {
-        if (ACE::is_equal ((CORBA::Double) right, 0.0))
-          return TAO_Literal_Constraint ((CORBA::Double) 0.0);
+        if (ACE::is_equal (static_cast<CORBA::Double> (right), 0.0))
+          return TAO_Literal_Constraint (CORBA::Double {});
 
-        CORBA::Double result = (CORBA::Double) left / (CORBA::Double) right;
+        CORBA::Double const result = static_cast<CORBA::Double> (left) /
+                                     static_cast<CORBA::Double> (right);
         return TAO_Literal_Constraint (result);
       }
     case TAO_SIGNED:
@@ -800,8 +800,8 @@ operator/ (const TAO_Literal_Constraint& left,
         if (static_cast<CORBA::LongLong> (right) == 0)
           return TAO_Literal_Constraint (static_cast<CORBA::LongLong> (0));
 
-        CORBA::LongLong result = static_cast<CORBA::LongLong> (left) /
-                                 static_cast<CORBA::LongLong> (right);
+        CORBA::LongLong const result = static_cast<CORBA::LongLong> (left) /
+                                       static_cast<CORBA::LongLong> (right);
         return TAO_Literal_Constraint (result);
       }
     case TAO_UNSIGNED:
@@ -809,8 +809,8 @@ operator/ (const TAO_Literal_Constraint& left,
         if (static_cast<CORBA::ULongLong> (right) == 0)
           return TAO_Literal_Constraint (static_cast<CORBA::ULongLong> (0));
 
-        CORBA::ULongLong result = static_cast<CORBA::ULongLong> (left) /
-                                  static_cast<CORBA::ULongLong> (right);
+        CORBA::ULongLong const result = static_cast<CORBA::ULongLong> (left) /
+                                        static_cast<CORBA::ULongLong> (right);
         return TAO_Literal_Constraint (result);
       }
     default:
@@ -825,18 +825,18 @@ operator- (const TAO_Literal_Constraint& operand)
     {
     case TAO_DOUBLE:
       {
-        CORBA::Double result = - (CORBA::Double) operand;
+        CORBA::Double const result = - static_cast<CORBA::Double> (operand);
         return TAO_Literal_Constraint (result);
       }
     case TAO_SIGNED:
       {
-        CORBA::LongLong result = - static_cast<CORBA::LongLong> (operand);
+        CORBA::LongLong const result = - static_cast<CORBA::LongLong> (operand);
         return TAO_Literal_Constraint (result);
       }
     case TAO_UNSIGNED:
       {
-        CORBA::LongLong result = - static_cast<CORBA::LongLong> (
-                                     static_cast<CORBA::ULongLong> (operand));
+        CORBA::LongLong const result = - static_cast<CORBA::LongLong> (
+                                           static_cast<CORBA::ULongLong> (operand));
         return TAO_Literal_Constraint (static_cast<CORBA::ULongLong> (result));
       }
     default:

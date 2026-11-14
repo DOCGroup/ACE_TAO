@@ -1,5 +1,6 @@
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Naming/Storable_Naming_Context.h"
+#include "ace/SString.h"
 #include "orbsvcs/Naming/Storable_Naming_Context_Factory.h"
 #include "orbsvcs/Naming/Storable_Naming_Context_ReaderWriter.h"
 #include "orbsvcs/Naming/Bindings_Iterator_T.h"
@@ -9,12 +10,14 @@
 #include "tao/Storable_Factory.h"
 
 #include <memory>
+#include <utility>
+#include <cstring>
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_sys_time.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-const char * TAO_Storable_Naming_Context::root_name_;
+char const *TAO_Storable_Naming_Context::root_name_;
 ACE_UINT32 TAO_Storable_Naming_Context::gcounter_;
 std::unique_ptr<TAO::Storable_Base> TAO_Storable_Naming_Context::gfl_;
 int TAO_Storable_Naming_Context::redundant_;
@@ -25,28 +28,26 @@ TAO_Storable_IntId::TAO_Storable_IntId ()
 {
 }
 
-TAO_Storable_IntId::TAO_Storable_IntId (const char * ior,
+TAO_Storable_IntId::TAO_Storable_IntId (char const *ior,
                                             CosNaming::BindingType type)
   : ref_ (ior),
     type_ (type)
 {
 }
 
-TAO_Storable_IntId::TAO_Storable_IntId (const TAO_Storable_IntId &rhs)
+TAO_Storable_IntId::TAO_Storable_IntId (TAO_Storable_IntId const &rhs)
 {
   ref_ = rhs.ref_;
   type_ = rhs.type_;
 }
 
-TAO_Storable_IntId::~TAO_Storable_IntId ()
-{
-}
+TAO_Storable_IntId::~TAO_Storable_IntId () = default;
 
 void
-TAO_Storable_IntId::operator= (const TAO_Storable_IntId &rhs)
+TAO_Storable_IntId::operator= (TAO_Storable_IntId const &rhs)
 {
   // check for self assignment.
-  if (&rhs == this)
+  if (std::addressof (rhs) == this)
     return;
 
   type_ = rhs.type_;
@@ -59,27 +60,25 @@ TAO_Storable_ExtId::TAO_Storable_ExtId ()
 {
 }
 
-TAO_Storable_ExtId::TAO_Storable_ExtId (const char *id, const char *kind)
+TAO_Storable_ExtId::TAO_Storable_ExtId (char const *id, char const *kind)
   : id_ (id)
   , kind_ (kind)
 {
 }
 
-TAO_Storable_ExtId::TAO_Storable_ExtId (const TAO_Storable_ExtId &rhs)
+TAO_Storable_ExtId::TAO_Storable_ExtId (TAO_Storable_ExtId const &rhs)
 {
   id_ = rhs.id_;
   kind_ = rhs.kind_;
 }
 
-TAO_Storable_ExtId::~TAO_Storable_ExtId ()
-{
-}
+TAO_Storable_ExtId::~TAO_Storable_ExtId () = default;
 
 void
-TAO_Storable_ExtId::operator= (const TAO_Storable_ExtId &rhs)
+TAO_Storable_ExtId::operator= (TAO_Storable_ExtId const &rhs)
 {
   // Check for self assignment.
-  if (&rhs == this)
+  if (std::addressof (rhs) == this)
     return;
 
   id_ = rhs.id_;
@@ -87,17 +86,17 @@ TAO_Storable_ExtId::operator= (const TAO_Storable_ExtId &rhs)
 }
 
 bool
-TAO_Storable_ExtId::operator== (const TAO_Storable_ExtId &rhs) const
+TAO_Storable_ExtId::operator== (TAO_Storable_ExtId const &rhs) const
 {
-  return (ACE_OS::strcmp (id_.in(), rhs.id_.in()) == 0)
-    && (ACE_OS::strcmp (kind_.in(), rhs.kind_.in()) == 0);
+  return (std::strcmp (id_.in(), rhs.id_.in()) == 0)
+    && (std::strcmp (kind_.in(), rhs.kind_.in()) == 0);
 }
 
 bool
-TAO_Storable_ExtId::operator!= (const TAO_Storable_ExtId &rhs) const
+TAO_Storable_ExtId::operator!= (TAO_Storable_ExtId const &rhs) const
 {
-  return (ACE_OS::strcmp (id_.in(), rhs.id_.in()) != 0)
-    || (ACE_OS::strcmp (kind_.in(), rhs.kind_.in()) != 0);
+  return (std::strcmp (id_.in(), rhs.id_.in()) != 0)
+    || (std::strcmp (kind_.in(), rhs.kind_.in()) != 0);
 }
 
 u_long
@@ -113,20 +112,20 @@ TAO_Storable_ExtId::hash () const
   return temp.hash ();
 }
 
-const char *
+char const *
 TAO_Storable_ExtId::id ()
 {
   return id_.in();
 }
 
-const char *
+char const *
 TAO_Storable_ExtId::kind ()
 {
   return kind_.in();
 }
 
 int
-TAO_Storable_Bindings_Map::unbind (const char *id, const char *kind)
+TAO_Storable_Bindings_Map::unbind (char const *id, char const *kind)
 {
   ACE_TRACE("unbind");
   TAO_Storable_ExtId name (id, kind);
@@ -134,8 +133,8 @@ TAO_Storable_Bindings_Map::unbind (const char *id, const char *kind)
 }
 
 int
-TAO_Storable_Bindings_Map::bind (const char *id,
-                                 const char *kind,
+TAO_Storable_Bindings_Map::bind (char const *id,
+                                 char const *kind,
                                  CORBA::Object_ptr obj,
                                  CosNaming::BindingType type)
 {
@@ -144,8 +143,8 @@ TAO_Storable_Bindings_Map::bind (const char *id,
 }
 
 int
-TAO_Storable_Bindings_Map::rebind (const char *id,
-                                   const char *kind,
+TAO_Storable_Bindings_Map::rebind (char const *id,
+                                   char const *kind,
                                    CORBA::Object_ptr obj,
                                    CosNaming::BindingType type)
 {
@@ -154,8 +153,8 @@ TAO_Storable_Bindings_Map::rebind (const char *id,
 }
 
 int
-TAO_Storable_Bindings_Map::find (const char *id,
-                                 const char *kind,
+TAO_Storable_Bindings_Map::find (char const *id,
+                                 char const *kind,
                                  CORBA::Object_ptr & obj,
                                  CosNaming::BindingType &type)
 {
@@ -211,8 +210,8 @@ TAO_Storable_Bindings_Map::total_size ()
 }
 
 int
-TAO_Storable_Bindings_Map::shared_bind (const char * id,
-                                        const char * kind,
+TAO_Storable_Bindings_Map::shared_bind (char const *id,
+                                        char const *kind,
                                         CORBA::Object_ptr obj,
                                         CosNaming::BindingType type,
                                         int rebind)
@@ -282,7 +281,7 @@ File_Open_Lock_and_Check::File_Open_Lock_and_Check
             }
         }
     }
-  catch (const TAO::Storable_Exception &)
+  catch (TAO::Storable_Exception const &)
     {
       throw CORBA::INTERNAL ();
     }
@@ -295,10 +294,10 @@ File_Open_Lock_and_Check::~File_Open_Lock_and_Check ()
 
   // Check if a write occurred for this context and
   // notify the context if it did.
-  if (context_->write_occurred_ == 1)
+  if (context_->write_occurred_)
     {
       // clear first to avoid potential nested upcalls
-      context_->write_occurred_ = 0;
+      context_->write_occurred_ = false;
       context_->context_written ();
     }
 }
@@ -324,7 +323,7 @@ File_Open_Lock_and_Check::mark_object_current ()
 
 void
 TAO_Storable_Naming_Context::
-File_Open_Lock_and_Check::set_object_last_changed (const time_t & time)
+File_Open_Lock_and_Check::set_object_last_changed (time_t const &time)
 {
   context_->last_changed_ = time;
 }
@@ -340,7 +339,7 @@ int
 TAO_Storable_Naming_Context::
 File_Open_Lock_and_Check::load_from_stream ()
 {
-  if (context_ == 0)
+  if (context_ == nullptr)
     {
       ORBSVCS_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) File_Open_Lock_and_Check::load_from_stream -")
@@ -351,7 +350,7 @@ File_Open_Lock_and_Check::load_from_stream ()
   if (context_->storable_context_)
     {
       delete context_->storable_context_;
-      context_->storable_context_ = 0;
+      context_->storable_context_ = nullptr;
     }
 
   // and build a new one from disk
@@ -362,17 +361,17 @@ bool
 TAO_Storable_Naming_Context::
 File_Open_Lock_and_Check::is_loaded_from_stream ()
 {
-  return context_->storable_context_ != 0;
+  return context_->storable_context_ != nullptr;
 }
 
 TAO::Storable_Base *
 TAO_Storable_Naming_Context::
-File_Open_Lock_and_Check::create_stream (const char * mode)
+File_Open_Lock_and_Check::create_stream (char const *mode)
 {
-  ACE_CString file_name = context_->context_name_;
+  std::string const &file_name = context_->context_name_;
 
   // Create the stream
-  return context_->factory_->create_stream(file_name, mode);
+  return context_->factory_->create_stream (file_name, mode);
 }
 
 // Make shortcut to get to Method_Type enums
@@ -381,13 +380,13 @@ using SFG = TAO::Storable_File_Guard;
 TAO_Storable_Naming_Context::TAO_Storable_Naming_Context (
                                CORBA::ORB_ptr orb,
                                PortableServer::POA_ptr poa,
-                               const char *context_name,
+                               char const *context_name,
                                TAO_Storable_Naming_Context_Factory *cxt_factory,
                                TAO::Storable_Factory *factory,
                                size_t hash_table_size)
   : TAO_Hash_Naming_Context (poa, context_name),
     counter_ (0),
-    storable_context_ (0),
+    storable_context_ (nullptr),
     orb_(CORBA::ORB::_duplicate (orb)),
     context_name_ (context_name),
     poa_ (PortableServer::POA::_duplicate (poa)),
@@ -395,8 +394,7 @@ TAO_Storable_Naming_Context::TAO_Storable_Naming_Context (
     factory_ (factory),
     hash_table_size_ (hash_table_size),
     last_changed_ (0),
-    last_check_ (0),
-    write_occurred_ (0)
+    last_check_ (0)
 {
   ACE_TRACE("TAO_Storable_Naming_Context");
 }
@@ -411,18 +409,18 @@ TAO_Storable_Naming_Context::~TAO_Storable_Naming_Context ()
   if (this->destroyed_)
     {
       // Make sure we delete the associated stream
-      ACE_CString file_name = this->context_name_;
+      std::string const &file_name = this->context_name_;
 
       // Now delete the file
       std::unique_ptr<TAO::Storable_Base>
         fl (
-          this->factory_->create_stream(file_name.c_str(), "r")
+          this->factory_->create_stream (file_name, "r")
           );
       if (fl.get())
         {
           if (TAO_debug_level > 5)
             ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t) NameService: removing file %s\n",
-                        file_name.fast_rep()));
+                        file_name.c_str ()));
           fl->remove ();
         }
     }
@@ -437,7 +435,7 @@ TAO_Storable_Naming_Context::context_written ()
 bool
 TAO_Storable_Naming_Context::is_obsolete (time_t stored_time)
 {
-  bool result = this->context_ == 0 ||
+  bool result = this->context_ == nullptr ||
     stored_time >= this->last_check_;
   this->last_check_ = ACE_OS::gettimeofday ().sec ();
   return result;
@@ -452,7 +450,7 @@ TAO_Storable_Naming_Context::verify_not_destroyed ()
 }
 
 bool
-TAO_Storable_Naming_Context::nested_context (const CosNaming::Name &n,
+TAO_Storable_Naming_Context::nested_context (CosNaming::Name const &n,
                                              CosNaming::NamingContext_out nc)
 {
   CORBA::ULong name_len = n.length ();
@@ -473,7 +471,7 @@ CosNaming::NamingContext_ptr
 TAO_Storable_Naming_Context::make_new_context (
                               CORBA::ORB_ptr orb,
                               PortableServer::POA_ptr poa,
-                              const char *context_name,
+      char const *context_name,
                               TAO_Storable_Naming_Context_Factory *cxt_factory,
                               TAO::Storable_Factory *pers_factory,
                               TAO_Storable_Naming_Context **new_context)
@@ -490,24 +488,24 @@ TAO_Storable_Naming_Context::make_new_context (
                                              context_name,
                                              pers_factory);
 
-  if (context_impl == 0)
+  if (context_impl == nullptr)
     throw CORBA::NO_MEMORY ();
 
   // Put <context_impl> into the unique pointer temporarily, in case next
   // allocation fails.
   std::unique_ptr<TAO_Storable_Naming_Context> temp (context_impl);
 
-  TAO_Naming_Context *context = nullptr;
+  TAO_Naming_Context *context {};
   ACE_NEW_THROW_EX (context,
                     TAO_Naming_Context (context_impl),
                     CORBA::NO_MEMORY ());
 
+  // Transfer ownership to TAO_Naming_Context after it was constructed.
+  temp.release ();
+
   // Let <implementation> know about it's <interface>.
   context_impl->interface (context);
 
-  // Release unique pointer, and start using reference counting to
-  // control our servant.
-  temp.release ();
   PortableServer::ServantBase_var s = context;
 
   // Register the new context with the POA.
@@ -523,11 +521,10 @@ TAO_Storable_Naming_Context::make_new_context (
     {
       poa->activate_object_with_id (id.in (), context);
     }
-  catch (const PortableServer::POA::ObjectAlreadyActive&)
+  catch (PortableServer::POA::ObjectAlreadyActive const &)
     {
       throw CosNaming::NamingContext::AlreadyBound();
     }
-
 
   result = context->_this ();
 
@@ -560,7 +557,7 @@ TAO_Storable_Naming_Context::new_context ()
         // acquire a lock on the file that holds our counter
         if (gfl_->open () != 0)
           {
-            delete gfl_.release ();
+            gfl_.reset ();
             throw CORBA::PERSIST_STORE ();
           }
         if (gfl_->flock (0, 0, 0) != 0)
@@ -591,7 +588,7 @@ TAO_Storable_Naming_Context::new_context ()
   }
 
   // Create a new context.
-  TAO_Storable_Naming_Context *new_context = nullptr;
+  TAO_Storable_Naming_Context *new_context {};
   CosNaming::NamingContext_var result =
     make_new_context (this->orb_.in (),
                       this->poa_.in (),
@@ -613,7 +610,7 @@ TAO_Storable_Naming_Context::new_context ()
 }
 
 void
-TAO_Storable_Naming_Context::rebind (const CosNaming::Name& n,
+TAO_Storable_Naming_Context::rebind (CosNaming::Name const &n,
                                      CORBA::Object_ptr obj)
 {
   ACE_TRACE("TAO_Storable_Naming_Context::rebind");
@@ -652,7 +649,7 @@ TAO_Storable_Naming_Context::rebind (const CosNaming::Name& n,
 }
 
 void
-TAO_Storable_Naming_Context::bind_context (const CosNaming::Name &n,
+TAO_Storable_Naming_Context::bind_context (CosNaming::Name const &n,
                                            CosNaming::NamingContext_ptr nc)
 {
   ACE_TRACE("TAO_Storable_Naming_Context::bind_context");
@@ -693,7 +690,7 @@ TAO_Storable_Naming_Context::bind_context (const CosNaming::Name &n,
 }
 
 void
-TAO_Storable_Naming_Context::rebind_context (const CosNaming::Name &n,
+TAO_Storable_Naming_Context::rebind_context (CosNaming::Name const &n,
                                              CosNaming::NamingContext_ptr nc)
 {
   ACE_TRACE("TAO_Storable_Naming_Context::rebind_context");
@@ -734,7 +731,7 @@ TAO_Storable_Naming_Context::rebind_context (const CosNaming::Name &n,
 }
 
 CosNaming::NamingContext_ptr
-TAO_Storable_Naming_Context::bind_new_context (const CosNaming::Name& n)
+TAO_Storable_Naming_Context::bind_new_context (CosNaming::Name const &n)
 {
   ACE_TRACE("TAO_Storable_Naming_Context::bind_new_context");
   CosNaming::NamingContext_var context;
@@ -752,13 +749,13 @@ TAO_Storable_Naming_Context::bind_new_context (const CosNaming::Name& n)
     {
       bind_context (n, result.in ());
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       try
         {
           result->destroy ();
         }
-      catch (const CORBA::Exception&)
+      catch (CORBA::Exception const &)
         {
           // Do nothing?
         }
@@ -768,7 +765,7 @@ TAO_Storable_Naming_Context::bind_new_context (const CosNaming::Name& n)
 }
 
 void
-TAO_Storable_Naming_Context::unbind (const CosNaming::Name& n)
+TAO_Storable_Naming_Context::unbind (CosNaming::Name const &n)
 {
   ACE_TRACE("TAO_Storable_Naming_Context::unbind");
   CosNaming::NamingContext_var context;
@@ -800,7 +797,7 @@ TAO_Storable_Naming_Context::unbind (const CosNaming::Name& n)
 }
 
 void
-TAO_Storable_Naming_Context::bind (const CosNaming::Name& n,
+TAO_Storable_Naming_Context::bind (CosNaming::Name const &n,
                                    CORBA::Object_ptr obj)
 {
   ACE_TRACE("TAO_Storable_Naming_Context::bind");
@@ -865,7 +862,7 @@ TAO_Storable_Naming_Context::destroy ()
 }
 
 CORBA::Object_ptr
-TAO_Storable_Naming_Context::resolve (const CosNaming::Name& n)
+TAO_Storable_Naming_Context::resolve (CosNaming::Name const &n)
 {
   ACE_TRACE("TAO_Storable_Naming_Context::resolve");
 
@@ -943,7 +940,7 @@ TAO_Storable_Naming_Context::list (CORBA::ULong how_many,
                            CORBA::INTERNAL ());
 
   // Dynamically allocate iterator for traversing the underlying hash map.
-  HASH_MAP::ITERATOR *hash_iter = nullptr;
+  HASH_MAP::ITERATOR *hash_iter {};
   ACE_NEW_THROW_EX (hash_iter,
                     HASH_MAP::ITERATOR (storable_context_->map ()),
                     CORBA::NO_MEMORY ());
@@ -965,7 +962,7 @@ TAO_Storable_Naming_Context::list (CORBA::ULong how_many,
   using ITER_SERVANT = TAO_Bindings_Iterator<ITER_DEF, ENTRY_DEF>;
 
   // A pointer to BindingIterator servant.
-  ITER_SERVANT *bind_iter = nullptr;
+  ITER_SERVANT *bind_iter {};
 
   // Number of bindings that will go into the BindingList <bl>.
   CORBA::ULong n;
@@ -979,9 +976,9 @@ TAO_Storable_Naming_Context::list (CORBA::ULong how_many,
   // Use the hash map iterator to populate <bl> with bindings.
   bl->length (n);
 
-  ENTRY_DEF *hash_entry = nullptr;
+  ENTRY_DEF *hash_entry {};
 
-  for (CORBA::ULong i = 0; i < n; i++)
+  for (CORBA::ULong i {}; i < n; ++i)
     {
       hash_iter->next (hash_entry);
       hash_iter->advance ();
@@ -1005,12 +1002,10 @@ TAO_Storable_Naming_Context::list (CORBA::ULong how_many,
     {
       // Create a BindingIterator for return.
       ACE_NEW_THROW_EX (bind_iter,
-                        ITER_SERVANT (this, hash_iter, this->poa_.in ()),
+                        ITER_SERVANT (this, std::move (temp), this->poa_.in ()),
                         CORBA::NO_MEMORY ());
 
-      // Release <hash_iter> from unique pointer, and start using
-      // reference counting to control our servant.
-      temp.release ();
+      // Start using reference counting to control our servant.
       PortableServer::ServantBase_var iter = bind_iter;
 
       // Increment reference count on this Naming Context, so it doesn't get
@@ -1045,7 +1040,7 @@ CosNaming::NamingContext_ptr
 TAO_Storable_Naming_Context::recreate_all (
                                CORBA::ORB_ptr orb,
                                PortableServer::POA_ptr poa,
-                               const char *poa_id,
+                               char const *poa_id,
                                size_t context_size,
                                int reentering,
                                TAO_Storable_Naming_Context_Factory *cxt_factory,
@@ -1063,7 +1058,7 @@ TAO_Storable_Naming_Context::recreate_all (
   root_name_ = poa_id;
 
   // Create a new context.
-  TAO_Storable_Naming_Context *new_context = nullptr;
+  TAO_Storable_Naming_Context *new_context {};
   CosNaming::NamingContext_var result =
     make_new_context (orb,
                       poa,
@@ -1073,9 +1068,9 @@ TAO_Storable_Naming_Context::recreate_all (
                       &new_context);
 
   // Now does this already exist on disk?
-  ACE_CString file_name = poa_id;
+  std::string file_name = poa_id;
   std::unique_ptr<TAO::Storable_Base> fl (
-    pers_factory->create_stream (file_name.c_str (), "r"));
+    pers_factory->create_stream (file_name, "r"));
   if (fl->exists ())
   {
     // Load the map from disk
@@ -1098,23 +1093,22 @@ TAO_Storable_Naming_Context::recreate_all (
   // Create the stream for the counter used to uniquely create context names
   // Pass false for use_backup since access to this file is not wrapped
   // around a Storable_File_Guard derived class.
-  gfl_.reset(pers_factory->
-             create_stream (file_name.c_str(),
-                            "crw"));
-  if (gfl_->open() != 0)
+  gfl_.reset (pers_factory->create_stream (file_name,
+                                           "crw"));
+  if (gfl_->open () != 0)
     {
-      delete gfl_.release();
-      throw CORBA::PERSIST_STORE();
+      gfl_.reset ();
+      throw CORBA::PERSIST_STORE ();
     }
 
   // get the counter from disk
   TAO_NS_Persistence_Global global;
-  TAO_Storable_Naming_Context_ReaderWriter rw(*gfl_.get());
-  rw.read_global(global);
-  gcounter_ = global.counter();
+  TAO_Storable_Naming_Context_ReaderWriter rw (*gfl_);
+  rw.read_global (global);
+  gcounter_ = global.counter ();
   if (redundant_)
     {
-      gfl_->close();
+      gfl_->close ();
     }
 
   return result._retn ();

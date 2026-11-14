@@ -1,87 +1,73 @@
 #include "Server_i.h"
 #include "tao/debug.h"
 #include "tao/IORTable/IORTable.h"
+#include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 
-// Constructor.
-Server_i::Server_i ()
-  : ior_output_file_ (0),
-    ins_ (0)
-{
-}
+#include <memory>
 
-// Destructor.
-Server_i::~Server_i ()
+struct Server_Options
 {
-}
+  ACE_TCHAR const *ior_output_file {};
+  std::string ins;
+};
 
 // Parse the command-line arguments and set options.
-int
-Server_i::parse_args ()
+static int
+parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
 {
-  ACE_Get_Opt get_opts (this->argc_, this->argv_, ACE_TEXT("do:ni:"));
-  int c = 0;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("do:ni:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
-      case 'd':  // debug flag.
-        TAO_debug_level++;
+      case 'd':
+        ++TAO_debug_level;
         break;
-      case 'o':  // output the IOR to a file.
-        this->ior_output_file_ = ACE_OS::fopen (get_opts.opt_arg (), "w");
-        if (this->ior_output_file_ == 0)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to open %s for writing: %p\n",
-                             get_opts.opt_arg ()), -1);
+      case 'o':
+        options.ior_output_file = get_opts.opt_arg ();
         break;
-
-      case 'i': // For Testing the InterOperable Naming Service.
-        this->ins_ = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ()));
+      case 'n':
         break;
-
-      case '?':  // display help for use of the server.
+      case 'i':
+        options.ins = ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ());
+        break;
+      case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s"
-                           " [-d]"
-                           " [-o] <ior_output_file>"
-                           " [-n] "
-                           "\n",
-                           argv_ [0]),
+                           ACE_TEXT ("usage: %s [-d] [-o <ior_output_file>] [-n] "
+                                     "[-i <object_name>]\n"),
+                           argv [0]),
                           -1);
       }
 
-  // Indicates successful parsing of command line.
   return 0;
 }
 
-// Add the ObjectID:IOR mapping to the IOR table of
-// the ORB.
-
+// Add the ObjectID:IOR mapping to the IOR table of the ORB.
 int
-Server_i::add_IOR_to_table (CORBA::String_var ior)
+Server_i::add_IOR_to_table (char const *ior, std::string const &ins)
 {
   try
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    "Adding (KEY:IOR) %C:%C\n",
-                    this->ins_,
-                    ior.in ()));
+                    ACE_TEXT ("Adding (KEY:IOR) %C:%C\n"),
+                    ins.c_str (),
+                    ior));
 
-      CORBA::Object_var table_object =
-        this->orb_manager_.orb ()->resolve_initial_references (
-            "IORTable");
+      CORBA::Object_var const table_object (
+        this->orb_manager_.orb ()->resolve_initial_references ("IORTable"));
+      IORTable::Table_var const adapter (
+        IORTable::Table::_narrow (table_object.in ()));
 
-      IORTable::Table_var adapter =
-        IORTable::Table::_narrow (table_object.in ());
-
-      adapter->bind (this->ins_, ior.in ());
+      adapter->bind (ins.c_str (), ior);
     }
-  catch (const CORBA::SystemException& ex)
+  catch (CORBA::SystemException const &ex)
     {
-      ex._tao_print_exception ("Exception caugh in add_IOR_to_table");
+      ex._tao_print_exception ("Exception caught in add_IOR_to_table");
+      return -1;
     }
 
   return 0;
@@ -89,63 +75,48 @@ Server_i::add_IOR_to_table (CORBA::String_var ior)
 
 // Initialize the server.
 int
-Server_i::init (int argc,
-                ACE_TCHAR *argv[])
+Server_i::init (int argc, ACE_TCHAR *argv[])
 {
-  // Call the init of <TAO_ORB_Manager> to initialize the ORB and
-  // create a child POA under the root POA.
-  int result = this->orb_manager_.init_child_poa (argc,
-                                                  argv,
-                                                  "child_poa");
+  // Initialize the ORB and create a child POA under the root POA.
+  int const result = this->orb_manager_.init_child_poa (argc, argv, "child_poa");
 
   if (result == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "init_child_poa"),
-                      -1);
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "init_child_poa"), -1);
 
-  this->argc_ = argc;
-  this->argv_ = argv;
-
-  int retval = this->parse_args ();
-
-  if (retval != 0)
-    return retval;
-
-  CORBA::ORB_var orb = this->orb_manager_.orb ();
-
-  // Stash our ORB pointer for later reference.
-  this->servant_.orb (orb.in ());
+  Server_Options options {};
+  if (parse_args (argc, argv, options) != 0)
+    return -1;
 
   try
     {
-      CORBA::String_var str  =
-        this->orb_manager_.activate_under_child_poa ("INS_servant",
-                                                     &this->servant_);
+      CORBA::String_var const ior (
+        this->orb_manager_.activate_under_child_poa ("INS_servant", &this->servant_));
 
-      ACE_DEBUG ((LM_DEBUG,
-                  "The IOR is: <%C>\n",
-                  str.in ()));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("The IOR is: <%C>\n"), ior.in ()));
 
-      if (this->ins_)
-        if (this->add_IOR_to_table (str) != 0)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "test_for_ins (): failed\n"),
-                            -1);
+      if (!options.ins.empty () && this->add_IOR_to_table (ior.in (), options.ins) != 0)
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("test_for_ins (): failed\n")), -1);
 
-      if (this->ior_output_file_)
+      if (options.ior_output_file != nullptr)
         {
-          ACE_OS::fprintf (this->ior_output_file_,
-                           "%s",
-                           str.in ());
-          ACE_OS::fclose (this->ior_output_file_);
+          std::unique_ptr<FILE, int (*) (FILE *)> ior_file (
+            ACE_OS::fopen (options.ior_output_file, ACE_TEXT ("w")),
+            ACE_OS::fclose);
+          if (!ior_file)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("Unable to open %s for writing: %p\n"),
+                               options.ior_output_file),
+                              -1);
+          if (ACE_OS::fprintf (ior_file.get (), "%s", ior.in ()) < 0)
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("Unable to write %s: %p\n"),
+                               options.ior_output_file),
+                              -1);
         }
-
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
-      ex._tao_print_exception (
-        "\tException in activation of POA");
+      ex._tao_print_exception ("Exception in activation of POA");
       return -1;
     }
 
@@ -156,12 +127,10 @@ int
 Server_i::run ()
 {
   // Run the main event loop for the ORB.
-  int result = this->orb_manager_.run ();
+  int const result = this->orb_manager_.run ();
 
   if (result == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Server_i::run"),
-                      -1);
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Server_i::run")), -1);
 
   return 0;
 }

@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   ORBInitInfo.h
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-// ===================================================================
 
 #ifndef TAO_ORB_INIT_INFO_H
 #define TAO_ORB_INIT_INFO_H
@@ -53,7 +51,6 @@ class TAO_PI_Export TAO_ORBInitInfo
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   TAO_ORBInitInfo (TAO_ORB_Core *orb_core,
                    int argc,
                    char *argv[],
@@ -87,12 +84,12 @@ public:
    * resolve_initial_references() that may be called in the
    * ORBInitializer::post_init() call.
    */
-  void register_initial_reference (const char * id, CORBA::Object_ptr obj) override;
+  void register_initial_reference (char const *id, CORBA::Object_ptr obj) override;
 
   /// Obtain a reference to an object that may not yet be available
   /// via the usual CORBA::ORB::resolve_initial_references() mechanism
   /// since the ORB may not be fully initialized yet.
-  CORBA::Object_ptr resolve_initial_references (const char * id) override;
+  CORBA::Object_ptr resolve_initial_references (char const *id) override;
 
   /// Register a client request interceptor with the ORB currently
   /// being initialized.
@@ -113,19 +110,19 @@ public:
   /// being initialized, along with a list of policies.
   void add_client_request_interceptor_with_policy (
       PortableInterceptor::ClientRequestInterceptor_ptr interceptor,
-      const CORBA::PolicyList& policies) override;
+      CORBA::PolicyList const &policies) override;
 
   /// Register a server request interceptor with the ORB currently
   /// being initialized, along with a list of policies.
   void add_server_request_interceptor_with_policy (
       PortableInterceptor::ServerRequestInterceptor_ptr interceptor,
-      const CORBA::PolicyList& policies) override;
+      CORBA::PolicyList const &policies) override;
 
   /// Register an IOR interceptor with the ORB currently being
   /// initialized, along with a list of policies.
   void add_ior_interceptor_with_policy (
       PortableInterceptor::IORInterceptor_ptr interceptor,
-      const CORBA::PolicyList& policies) override;
+      CORBA::PolicyList const &policies) override;
 
   /// Reserve a slot in table found within the
   /// PortableInterceptor::Current object.
@@ -195,9 +192,7 @@ public:
 
   static TAO_ORBInitInfo_ptr _narrow (CORBA::Object_ptr obj);
 
-
   static TAO_ORBInitInfo_ptr _unchecked_narrow (CORBA::Object_ptr obj);
-
 
   static TAO_ORBInitInfo_ptr _nil ()
     {
@@ -205,12 +200,12 @@ public:
     }
   //@}
 
-  const char* _interface_repository_id () const override;
+  char const *_interface_repository_id () const override;
 
 protected:
   /// Destructor is protected to enforce proper memory management
   /// through the reference counting mechanism.
-  ~TAO_ORBInitInfo () override;
+  ~TAO_ORBInitInfo () override = default;
 
   /// Check if this ORBInitInfo instance is valid.  Once post_init()
   /// has been called on each of the ORBInitializers, this ORBInitInfo
@@ -219,19 +214,19 @@ protected:
 
 private:
   TAO_ORBInitInfo (TAO_ORBInitInfo const &) = delete;
-  void operator= (TAO_ORBInitInfo const &) = delete;
+  TAO_ORBInitInfo &operator= (TAO_ORBInitInfo const &) = delete;
   TAO_ORBInitInfo (TAO_ORBInitInfo &&) = delete;
-  void operator= (TAO_ORBInitInfo &&) = delete;
+  TAO_ORBInitInfo &operator= (TAO_ORBInitInfo &&) = delete;
 
 private:
-  /// Reference to the ORB Core.
+  /// Borrowed ORB Core; this object is valid only during ORB initialization.
   TAO_ORB_Core *orb_core_;
 
   /// The number of arguments in the argument vector passed to
   /// CORBA::ORB_init().
   int argc_;
 
-  /// The argument vector passed to CORBA::ORB_init().
+  /// Borrowed argument vector passed to CORBA::ORB_init().
   char **argv_;
 
   /// Reference to the CodecFactory returned by

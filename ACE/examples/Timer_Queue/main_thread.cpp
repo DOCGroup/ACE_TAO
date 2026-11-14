@@ -15,6 +15,7 @@
 #include "Driver.h"
 #include "Thread_Timer_Queue_Test.h"
 #include <memory>
+#include <new>
 
 using THREAD_TIMER_QUEUE_TEST_DRIVER = Timer_Queue_Test_Driver<Thread_Timer_Queue,
                                                                 Input_Task,
@@ -23,12 +24,10 @@ using THREAD_TIMER_QUEUE_TEST_DRIVER = Timer_Queue_Test_Driver<Thread_Timer_Queu
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  // unique ptr ensures that the driver memory is released
-  // automatically.
-  THREAD_TIMER_QUEUE_TEST_DRIVER *tqtd;
-  ACE_NEW_RETURN (tqtd, Thread_Timer_Queue_Test_Driver, -1);
-
-  std::unique_ptr <THREAD_TIMER_QUEUE_TEST_DRIVER> driver (tqtd);
+  std::unique_ptr<THREAD_TIMER_QUEUE_TEST_DRIVER> driver (
+    new (std::nothrow) Thread_Timer_Queue_Test_Driver);
+  if (!driver)
+    return -1;
 
   return driver->run_test ();
 }

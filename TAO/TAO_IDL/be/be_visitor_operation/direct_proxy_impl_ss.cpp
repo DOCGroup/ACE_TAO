@@ -154,12 +154,10 @@ be_visitor_operation_direct_proxy_impl_ss::visit_operation (
   return 0;
 }
 
-
 int
 be_visitor_operation_direct_proxy_impl_ss::gen_invoke (
     be_visitor_context & /*ctx*/,
-    be_operation *node
-  )
+    be_operation *node)
 {
   TAO_OutStream * const os = this->ctx_->stream ();
 

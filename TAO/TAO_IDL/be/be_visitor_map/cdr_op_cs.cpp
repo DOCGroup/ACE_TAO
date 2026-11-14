@@ -156,8 +156,7 @@ be_visitor_map_cdr_op_cs::visit_eventtype_fwd (be_eventtype_fwd *node)
 
 int
 be_visitor_map_cdr_op_cs::visit_predefined_type (
-    be_predefined_type *node
-  )
+    be_predefined_type *node)
 {
   return this->visit_node (node);
 }

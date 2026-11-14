@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file ImplicitActivationStrategy.h
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
 #ifndef TAO_ACTIVATION_STRATEGY_H
 #define TAO_ACTIVATION_STRATEGY_H
 #include /**/ "ace/pre.h"

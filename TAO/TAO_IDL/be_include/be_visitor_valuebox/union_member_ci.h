@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VISITOR_VALUEBOX_UNION_MEMBER_CI_H_
 #define _BE_VISITOR_VALUEBOX_UNION_MEMBER_CI_H_
 

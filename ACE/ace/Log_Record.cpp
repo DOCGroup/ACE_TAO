@@ -17,6 +17,7 @@
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
 #include "ace/OS_Memory.h"
+#include "ace/Malloc_Base.h"
 #include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -297,25 +298,28 @@ ACE_Log_Record::print (const ACE_TCHAR host_name[],
 {
   if ( log_priority_enabled(this->category(), ACE_Log_Priority (this->type_)) )
     {
-      ACE_TCHAR *verbose_msg = nullptr;
+      ACE_TCHAR *verbose_msg {};
 #if defined (ACE_HAS_ALLOC_HOOKS)
       ACE_ALLOCATOR_RETURN (verbose_msg, static_cast<ACE_TCHAR *>(ACE_Allocator::instance()->malloc(sizeof(ACE_TCHAR) * MAXVERBOSELOGMSGLEN)), -1);
 #else
       ACE_NEW_RETURN (verbose_msg, ACE_TCHAR[MAXVERBOSELOGMSGLEN], -1);
 #endif /* ACE_HAS_ALLOC_HOOKS */
+      std::unique_ptr<ACE_TCHAR[], ACE_Array_Deleter<ACE_TCHAR>> safe_verbose_msg (
+        verbose_msg);
 
-      int result = this->format_msg (host_name, verbose_flag, verbose_msg,
+      int result = this->format_msg (host_name, verbose_flag,
+                                     safe_verbose_msg.get (),
                                      MAXVERBOSELOGMSGLEN);
 
       if (result == 0)
         {
           if (fp != nullptr)
             {
-              int const verbose_msg_len =
-                static_cast<int> (ACE_OS::strlen (verbose_msg));
+              int const verbose_msg_len = static_cast<int> (
+                ACE_OS::strlen (safe_verbose_msg.get ()));
               int const fwrite_result = ACE_OS::fprintf (fp,
                                                          ACE_TEXT ("%") ACE_TEXT_PRIs,
-                                                         verbose_msg);
+                                                         safe_verbose_msg.get ());
               // We should have written everything
               if (fwrite_result != verbose_msg_len)
                 result = -1;
@@ -323,12 +327,6 @@ ACE_Log_Record::print (const ACE_TCHAR host_name[],
                 ACE_OS::fflush (fp);
             }
         }
-
-#if defined (ACE_HAS_ALLOC_HOOKS)
-      ACE_Allocator::instance()->free(verbose_msg);
-#else
-      delete [] verbose_msg;
-#endif /* ACE_HAS_ALLOC_HOOKS */
 
       return result;
     }
@@ -378,7 +376,8 @@ operator>> (ACE_InputCDR &cdr,
 #else
     ACE_NEW_RETURN (log_msg, ACE_TCHAR[buffer_len + 1], -1);
 #endif /* ACE_HAS_ALLOC_HOOKS */
-    std::unique_ptr<ACE_TCHAR[]> log_msg_p (log_msg);
+    std::unique_ptr<ACE_TCHAR[], ACE_Array_Deleter<ACE_TCHAR>> log_msg_p (
+      log_msg);
     log_record.type (type);
     log_record.pid (pid);
     log_record.time_stamp (ACE_Time_Value (ACE_Utils::truncate_cast<time_t> (sec),
@@ -404,20 +403,20 @@ ACE_Log_Record::print (const ACE_TCHAR host_name[],
 {
   if ( log_priority_enabled(this->category(), ACE_Log_Priority (this->type_)) )
     {
-      ACE_TCHAR* verbose_msg = nullptr;
+      ACE_TCHAR* verbose_msg {};
       ACE_NEW_RETURN (verbose_msg, ACE_TCHAR[MAXVERBOSELOGMSGLEN], -1);
+      std::unique_ptr<ACE_TCHAR[]> safe_verbose_msg (verbose_msg);
 
-      int const result = this->format_msg (host_name, verbose_flag, verbose_msg,
+      int const result = this->format_msg (host_name, verbose_flag,
+                                           safe_verbose_msg.get (),
                                            MAXVERBOSELOGMSGLEN);
 
       if (result == 0)
         {
           // Since ostream expects only chars, we cannot pass wchar_t's
-          s << ACE_TEXT_ALWAYS_CHAR (verbose_msg);
+          s << ACE_TEXT_ALWAYS_CHAR (safe_verbose_msg.get ());
           s.flush ();
         }
-
-      delete [] verbose_msg;
 
       return result;
     }

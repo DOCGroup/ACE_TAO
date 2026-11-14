@@ -24,8 +24,8 @@ public:
   /// Perform member initialization
   TAO_MonitorManager ();
 
-  virtual int init (int argc, ACE_TCHAR* argv[]);
-  virtual int fini ();
+  int init (int argc, ACE_TCHAR* argv[]) override;
+  int fini () override;
 
   /// Start the ORB task which includes initializtion of the ORB,
   /// creation of the monitor servant and activation.
@@ -33,7 +33,12 @@ public:
   int run ();
 
   /// This will call the run() method.
-  virtual int resume ();
+  int resume () override;
+
+  TAO_MonitorManager (TAO_MonitorManager const&) = delete;
+  TAO_MonitorManager (TAO_MonitorManager&&) = delete;
+  TAO_MonitorManager& operator= (TAO_MonitorManager const&) = delete;
+  TAO_MonitorManager& operator= (TAO_MonitorManager&&) = delete;
 
   /// Get the dynamic instance of the TAO_MonitorManager and
   /// shut it down
@@ -44,19 +49,24 @@ private:
   {
   public:
     ORBTask ();
-    virtual int svc ();
+    ORBTask (ORBTask const&) = delete;
+    ORBTask (ORBTask&&) = delete;
+    ORBTask& operator= (ORBTask const&) = delete;
+    ORBTask& operator= (ORBTask&&) = delete;
+
+    int svc () override;
 
     TAO_SYNCH_MUTEX mutex_;
     ACE_ARGV_T<ACE_TCHAR> argv_;
     CORBA::ORB_var orb_;
     ACE_TString ior_output_;
-    bool use_name_svc_;
+    bool use_name_svc_ {true};
     ACE_Barrier startup_barrier_;
-    ACE_TString mc_orb_name_;
+    ACE_TString mc_orb_name_ {ACE_TEXT ("TAO_MonitorAndControl")};
   };
 
-  bool run_;
-  bool initialized_;
+  bool run_ {};
+  bool initialized_ {};
   ORBTask task_;
 };
 
@@ -66,7 +76,6 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE_EXPORT(TAO_Notify_MC, TAO_MonitorAndControl)
 ACE_FACTORY_DECLARE(TAO_Notify_MC, TAO_MonitorAndControl)
-
 
 #endif /* TAO_HAS_MONITOR_FRAMEWORK==1 */
 

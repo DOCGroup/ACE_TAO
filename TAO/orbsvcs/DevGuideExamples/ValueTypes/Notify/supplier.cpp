@@ -3,117 +3,116 @@
 // at minimum.
 
 #include "Event_i.h"
-
 #include "orbsvcs/CosEventCommS.h"
-
 #include "orbsvcs/CosNotifyChannelAdminC.h"
-
 #include "tao/corba.h"
 #include "tao/ORB_Core.h"
-
-#include "ace/Reactor.h"
 #include "ace/Event_Handler.h"
+#include "ace/Get_Opt.h"
+#include "ace/Reactor.h"
+
 #include <iostream>
 #include <stdexcept>
-#include "ace/Get_Opt.h"
 
-ACE_TCHAR const * ec_ior = ACE_TEXT("file://ec.ior");
-ACE_TCHAR const * hostname = ACE_TEXT("localhost");
-ACE_TCHAR const * port = ACE_TEXT("8888");
-//const char* notify_ior = "corbaloc::localhost:8888/NotifyEventChannelFactory";
-
-int
-parse_args (int argc, ACE_TCHAR *argv[])
+struct SupplierOptions
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:h:p:"));
-  int c;
+  ACE_TCHAR const *event_channel_ior { ACE_TEXT ("file://ec.ior") };
+  ACE_TCHAR const *hostname { ACE_TEXT ("localhost") };
+  ACE_TCHAR const *port { ACE_TEXT ("8888") };
+  int num_events {};
+  int payload_size {1};
+};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+static int
+parse_args (int argc, ACE_TCHAR *argv[], SupplierOptions &options)
+{
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:h:p:"));
+  int option {};
+
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'k':
-        ec_ior = get_opts.opt_arg ();
+        options.event_channel_ior = get_opts.opt_arg ();
         break;
       case 'h':
-        hostname = get_opts.opt_arg ();
+        options.hostname = get_opts.opt_arg ();
         break;
       case 'p':
-        port = get_opts.opt_arg ();
+        options.port = get_opts.opt_arg ();
         break;
-
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ec_ior> "
-                           "-h <host> "
-                           "\n",
-                           argv [0]),
+                           ACE_TEXT ("usage: %s [-k <ec_ior>] [-h <host>] [-p <port>] "
+                                     "[num_events [payload_size]]\n"),
+                           argv[0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
+
+  int const argument_index = get_opts.opt_ind ();
+  if (argument_index < argc)
+    options.num_events = ACE_OS::atoi (argv[argument_index]);
+  if (argument_index + 1 < argc)
+    options.payload_size = ACE_OS::atoi (argv[argument_index + 1]);
+  if (argument_index + 2 < argc)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("usage: %s [-k <ec_ior>] [-h <host>] [-p <port>] "
+                                 "[num_events [payload_size]]\n"),
+                       argv[0]),
+                      -1);
   return 0;
 }
 
-
-const ACE_Time_Value EVENT_DELAY(0, 10 * 1000);
-
-static MyEvent_var event_;
-
-class TestSupplier
-: public POA_CosEventComm::PushSupplier
-, public ACE_Event_Handler
+class TestSupplier : public POA_CosEventComm::PushSupplier,
+                     public ACE_Event_Handler
 {
-  int num_events_;
-
-  CosEventChannelAdmin::SupplierAdmin_var admin_;
-  CosEventChannelAdmin::ProxyPushConsumer_var consumer_;
-  PortableServer::ObjectId_var id_;
-  int event_count_;
-  bool connected_;
-  ACE_Reactor* reactor_;
-  PortableServer::POA_ptr poa_;
-  CORBA::ORB_ptr orb_;
+  int const num_events_;
+  CosEventChannelAdmin::SupplierAdmin_var admin_ {};
+  CosEventChannelAdmin::ProxyPushConsumer_var consumer_ {};
+  PortableServer::ObjectId_var id_ {};
+  int event_count_ {};
+  bool connected_ {};
+  ACE_Reactor * const reactor_;
+  PortableServer::POA_var poa_ {};
+  CORBA::ORB_var orb_ {};
+  MyEvent_var event_ {};
 
 public:
-  TestSupplier(int evts, CosNotifyChannelAdmin::EventChannelFactory_ptr ecf,
-               CORBA::ORB_ptr orb,
-               PortableServer::POA_ptr poa)
-    : num_events_(evts)
-    , event_count_(0)
-    , connected_(false)
-    , reactor_(orb->orb_core()->reactor())
-    , poa_(poa)
-    , orb_(orb)
+  TestSupplier (SupplierOptions const &options,
+                CosNotifyChannelAdmin::EventChannel_ptr event_channel,
+                CORBA::ORB_ptr orb,
+                PortableServer::POA_ptr poa,
+                MyEvent_var const &event)
+    : num_events_ (options.num_events),
+      reactor_ (orb->orb_core ()->reactor ()),
+      poa_ (PortableServer::POA::_duplicate (poa)),
+      orb_ (CORBA::ORB::_duplicate (orb)),
+      event_ (event)
   {
-    if (reactor_ == nullptr || CORBA::is_nil (ecf))
-      throw std::invalid_argument("TestSupplier::CTOR: reactor == 0 || CORBA::is_nil(ecf)");
+    if (reactor_ == nullptr || CORBA::is_nil (event_channel) || CORBA::is_nil (event_.in ()))
+      throw std::invalid_argument ("TestSupplier: invalid event channel, reactor, or event");
 
-    CORBA::Object_var obj =
-        this->orb_->string_to_object (ec_ior);
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("TestSupplier: string_to_object from %s\n"),
+                options.event_channel_ior));
 
-    ACE_DEBUG((LM_DEBUG, "TestSupplier: string_to_object from %s\n", ec_ior));
+    admin_ = event_channel->for_suppliers ();
+    CORBA::Object_var const consumer_object = admin_->obtain_push_consumer ();
+    consumer_ = CosEventChannelAdmin::ProxyPushConsumer::_unchecked_narrow (consumer_object.in ());
+    id_ = poa_->activate_object (this);
+    CORBA::Object_var const supplier_object = poa_->id_to_reference (id_.in ());
+    CosEventComm::PushSupplier_var const supplier =
+      CosEventComm::PushSupplier::_unchecked_narrow (supplier_object.in ());
 
-    CosNotifyChannelAdmin::EventChannel_var ec
-      = CosNotifyChannelAdmin::EventChannel::_unchecked_narrow (obj.in ());
-
-    admin_ = ec->for_suppliers();
-    obj = admin_->obtain_push_consumer();
-    consumer_ = CosEventChannelAdmin::ProxyPushConsumer::_unchecked_narrow(obj.in());
-    id_ = poa->activate_object(this);
-    obj = poa->id_to_reference(id_.in());
-    CosEventComm::PushSupplier_var supplier =
-      CosEventComm::PushSupplier::_unchecked_narrow(obj.in());
-
-    consumer_->connect_push_supplier(supplier.in());
+    consumer_->connect_push_supplier (supplier.in ());
     connected_ = true;
-
-    schedule_next_event(ACE_Time_Value(0, 10 * 1000));
-
+    schedule_next_event (ACE_Time_Value (0, 10 * 1000));
     std::cout << "Supplier initialized." << std::endl;
   }
 
-  ~TestSupplier () override {
+  ~TestSupplier () override
+  {
     std::cout << "~TestSupplier()" << std::endl;
   }
 
@@ -122,141 +121,145 @@ public:
   TestSupplier &operator= (TestSupplier const &) = delete;
   TestSupplier &operator= (TestSupplier &&) = delete;
 
-  void schedule_next_event (ACE_Time_Value const & tv) {
-    reactor_->schedule_timer(this, 0, tv, ACE_Time_Value::zero);
+  void schedule_next_event (ACE_Time_Value const &delay)
+  {
+    reactor_->schedule_timer (this, nullptr, delay, ACE_Time_Value::zero);
   }
 
-  void disconnect_push_supplier () override {
-    // this should never be called. The notify service uses this to allow its
-    // clients to disconnect gracefully.
+  void disconnect_push_supplier () override
+  {
     std::cout << "disconnect_push_supplier()." << std::endl;
-    //ACE_ASSERT(false);
   }
 
-  bool push_next_event() {
-    try {
-      if (! connected_) {
-        std::cout << "Trying to push when disconnected." << std::endl;
-        return false;
+  bool push_next_event ()
+  {
+    try
+      {
+        if (!connected_)
+          {
+            std::cout << "Trying to push when disconnected." << std::endl;
+            return false;
+          }
+
+        std::cout << "+" << std::flush;
+        ++event_count_;
+
+        CORBA::Any value {};
+        value <<= event_.in ();
+        consumer_->push (value);
+
+        if (event_count_ >= num_events_ && num_events_ > 0)
+          {
+            std::cout << "Supplier stopping after sending "
+                      << event_count_ << " events." << std::endl;
+            disconnect ();
+          }
+        else
+          schedule_next_event (ACE_Time_Value (0, 10 * 1000));
+        return true;
       }
-      std::cout << "+" << std::flush;
-
-      ++event_count_;
-
-      CORBA::Any a;
-      a <<= event_;
-      consumer_->push(a);
-
-      if (event_count_ >= num_events_ && num_events_ > 0) {
-        std::cout << "Supplier stopping after sending "
-                  << event_count_ << " events." << std::endl;
-        disconnect();
-      } else {
-        schedule_next_event(EVENT_DELAY);
+    catch (CORBA::Exception const &exception)
+      {
+        std::cerr << "TestSupplier::push_next_event() exception: " << exception << std::endl;
       }
-      return true;
-    } catch (CORBA::Exception const & e) {
-      std::cerr << "TestSupplier::push_next_event() exception: " << e << std::endl;
-    }
     return false;
   }
 
-  void disconnect() {
-    try {
-      std::cout << "Supplier Disconnecting..." << std::endl;
-      consumer_->disconnect_push_consumer();
-      disconnect_self();
-      orb_->shutdown(0);
-      std::cout << "Supplier Disconnected." << std::endl;
-    } catch (CORBA::Exception const & e) {
-      std::cerr <<  "TestSupplier::disconnect() exception: " << e << std::endl;
-    }
+  void disconnect ()
+  {
+    try
+      {
+        std::cout << "Supplier Disconnecting..." << std::endl;
+        consumer_->disconnect_push_consumer ();
+        disconnect_self ();
+        orb_->shutdown (false);
+        std::cout << "Supplier Disconnected." << std::endl;
+      }
+    catch (CORBA::Exception const &exception)
+      {
+        std::cerr << "TestSupplier::disconnect() exception: " << exception << std::endl;
+      }
   }
 
-  void disconnect_self() {
-    if (! connected_)
+  void disconnect_self ()
+  {
+    if (!connected_)
       return;
     connected_ = false;
-    reactor_->cancel_timer(this);
-    poa_->deactivate_object(id_.in());
+    reactor_->cancel_timer (this);
+    poa_->deactivate_object (id_.in ());
   }
 
-  int handle_timeout (ACE_Time_Value const &, void const *) override {
-    if (! push_next_event()) {
-      return -1;
-    }
-    return 0;
+  int handle_timeout (ACE_Time_Value const &, void const *) override
+  {
+    return this->push_next_event () ? 0 : -1;
   }
 };
 
-int ACE_TMAIN (int ac, ACE_TCHAR* av[]) {
-  int num_events = 0;
-  int pay_size = 1;
-
-  try {
-    CORBA::ORB_var orb = CORBA::ORB_init(ac, av);
-
-    if (parse_args (ac, av) != 0)
-      return 1;
-
-    CORBA::ValueFactoryBase_var vfb = new MyEventFactory;
-    CORBA::String_var id = _tc_MyEvent->id();
-    orb->register_value_factory(id.in(), vfb);
-
-    CORBA::Object_var obj = orb->resolve_initial_references("RootPOA");
-
-    PortableServer::POA_var poa = PortableServer::POA::_narrow(obj.in());
-    PortableServer::POAManager_var mgr = poa->the_POAManager();
-
-    // "corbaloc::localhost:8888/NotifyEventChannelFactory"
-    ACE_CString notify_ior ("corbaloc::");
-    notify_ior += ACE_TEXT_ALWAYS_CHAR (hostname);
-    notify_ior += ":";
-    notify_ior += ACE_TEXT_ALWAYS_CHAR (port);
-    notify_ior += "/NotifyEventChannelFactory";
-
-    obj = orb->string_to_object(notify_ior.c_str());
-    CosNotifyChannelAdmin::EventChannelFactory_var ecf
-      = CosNotifyChannelAdmin::EventChannelFactory::_narrow(obj.in());
-    if (CORBA::is_nil(ecf.in()))
-      throw std::runtime_error("no event channel factory");
-
-    if (ac > 1) {
-      num_events = ACE_OS::atoi(av[1]);
-    }
-    if (ac > 2) {
-      pay_size = ACE_OS::atoi(av[1]);
-    }
-
-    event_ = new MyEvent_i("TestName", 42);
-
-    for (int i = 0; i < pay_size; ++i) {
-      event_->add_long((i + 1) * 42);
-    }
-
-    // Activate the manager in case the notify service wants to call us
-    // back when we register.
-    mgr->activate();
-
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+{
+  SupplierOptions options {};
+  try
     {
-      TestSupplier supplier(num_events, ecf.in(), orb.in(), poa.in());
-      orb->run();
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
+      if (parse_args (argc, argv, options) != 0)
+        return 1;
+
+      CORBA::ValueFactoryBase_var const value_factory = new MyEventFactory;
+      CORBA::String_var const repository_id = _tc_MyEvent->id ();
+      orb->register_value_factory (repository_id.in (), value_factory.in ());
+
+      CORBA::Object_var const root_poa_object = orb->resolve_initial_references ("RootPOA");
+      PortableServer::POA_var const poa = PortableServer::POA::_narrow (root_poa_object.in ());
+      PortableServer::POAManager_var const poa_manager = poa->the_POAManager ();
+
+      ACE_TString notify_ior (ACE_TEXT ("corbaloc::"));
+      notify_ior += options.hostname;
+      notify_ior += ACE_TEXT (":");
+      notify_ior += options.port;
+      notify_ior += ACE_TEXT ("/NotifyEventChannelFactory");
+      CORBA::Object_var const notify_object = orb->string_to_object (notify_ior.c_str ());
+      CosNotifyChannelAdmin::EventChannelFactory_var const event_channel_factory =
+        CosNotifyChannelAdmin::EventChannelFactory::_unchecked_narrow (notify_object.in ());
+      if (CORBA::is_nil (event_channel_factory.in ()))
+        throw std::invalid_argument ("No event channel factory");
+
+      CORBA::Object_var const event_channel_object =
+        orb->string_to_object (options.event_channel_ior);
+      CosNotifyChannelAdmin::EventChannel_var const event_channel =
+        CosNotifyChannelAdmin::EventChannel::_unchecked_narrow (event_channel_object.in ());
+      if (CORBA::is_nil (event_channel.in ()))
+        throw std::invalid_argument ("No event channel");
+
+      MyEvent_var event = new MyEvent_i ("TestName", 42);
+      for (int i {}; i < options.payload_size; ++i)
+        event->add_long ((i + 1) * 42);
+
+      poa_manager->activate ();
+      {
+        TestSupplier supplier (options,
+                              event_channel.in (),
+                              orb.in (),
+                              poa.in (),
+                              event);
+        orb->run ();
+      }
+
+      poa->destroy (true, true);
+      orb->destroy ();
+      return 0;
     }
-
-    event_ = nullptr;
-
-    poa->destroy(1, 1);
-    orb->destroy();
-
-    return 0;
-  } catch (CORBA::Exception const & e) {
-    std::cerr << "Supplier: main() exception: " << e << std::endl;
-  } catch (std::invalid_argument const & e) {
-    std::cerr << "Supplier: main() exception: " << e.what () << std::endl;
-  } catch (std::runtime_error const & e) {
-    std::cerr << "Supplier: main() exception: " << e.what () << std::endl;
-  } catch(...) {
-    std::cerr << "Supplier: main() unknown exception: " << std::endl;
-  }
+  catch (CORBA::Exception const &exception)
+    {
+      std::cerr << "Supplier: main() exception: " << exception << std::endl;
+    }
+  catch (std::invalid_argument const &exception)
+    {
+      std::cerr << "Supplier: main() exception: " << exception.what () << std::endl;
+    }
+  catch (...)
+    {
+      std::cerr << "Supplier: main() unknown exception" << std::endl;
+    }
   return 1;
 }

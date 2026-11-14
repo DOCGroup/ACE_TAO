@@ -34,6 +34,7 @@
 #include "ace/Task.h"
 #include "ace/Service_Config.h"
 #include "ace/Truncate.h"
+#include <memory>
 
 #if defined (ACE_HAS_THREADS)
 
@@ -46,16 +47,21 @@ public:
                 size_t n_tasks,
                 size_t n_threads,
                 size_t n_iterations);
+  /// Creates n_tasks and waits for them to finish.
   int svc () override;
-  // creats <n_tasks> and wait for them to finish
+
+  Invoker_Task (Invoker_Task const &) = delete;
+  Invoker_Task (Invoker_Task &&) = delete;
+  Invoker_Task &operator= (Invoker_Task const &) = delete;
+  Invoker_Task &operator= (Invoker_Task &&) = delete;
 
 private:
+  /// Number of tasks to start.
   size_t n_tasks_;
-  // Number of tasks to start.
+  /// Number of threads per task.
   size_t n_threads_;
-  // Number of threads per task.
+  /// Number of iterations per thread.
   size_t n_iterations_;
-  // Number of iterations per thread.
 };
 
 class Worker_Task : public ACE_Task<ACE_MT_SYNCH>
@@ -66,8 +72,13 @@ public:
                size_t n_iterations);
   int svc () override;
 
+  Worker_Task (Worker_Task const &) = delete;
+  Worker_Task (Worker_Task &&) = delete;
+  Worker_Task &operator= (Worker_Task const &) = delete;
+  Worker_Task &operator= (Worker_Task &&) = delete;
+
   //FUZZ: disable check_for_lack_ACE_OS
-  // Does a small work...
+  /// Performs a small amount of work when activated.
   int open (void * = nullptr) override;
   //FUZZ: enable check_for_lack_ACE_OS
 
@@ -78,7 +89,7 @@ private:
   size_t n_iterations_;
 
   //FUZZ: disable check_for_lack_ACE_OS
-  // = Not needed for this test.
+  /// Not needed for this test.
   int close (u_long) override;
   //FUZZ: enable check_for_lack_ACE_OS
 
@@ -91,9 +102,9 @@ int
 Worker_Task::close (u_long)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) closing task %d\n",
+              "(%t) closing task %B\n",
               this->index_));
-  delete this;
+  // Invoker_Task retains ownership until its Thread_Manager wait completes.
   return 0;
 }
 
@@ -123,21 +134,21 @@ int
 Worker_Task::svc ()
 {
   ACE_DEBUG ((LM_DEBUG,
-              " (%t) in worker %d\n",
+              " (%t) in worker %B\n",
               index_));
 
   for (size_t iterations = 1;
        iterations <= this->n_iterations_;
-       iterations++)
+       ++iterations)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  " (%t) in iteration %d\n",
+                  " (%t) in iteration %B\n",
                   iterations));
       ACE_OS::sleep (0);
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              " (%t) worker %d ends\n",
+              " (%t) worker %B ends\n",
               index_));
 
   return 0;
@@ -175,32 +186,33 @@ Invoker_Task::svc ()
 
   ACE_Thread_Manager *thr_mgr =
     ACE_Thread_Manager::instance ();
-  Worker_Task **worker_task = nullptr;
+  std::unique_ptr<Worker_Task> *worker_task_storage {};
 
-  ACE_NEW_RETURN (worker_task,
-                  Worker_Task *[n_tasks_],
+  ACE_NEW_RETURN (worker_task_storage,
+                  std::unique_ptr<Worker_Task>[n_tasks_],
                   -1);
+  std::unique_ptr<std::unique_ptr<Worker_Task>[]> worker_tasks {worker_task_storage};
   size_t task = 0;
 
   for (task = 0;
        task < this->n_tasks_;
-       task++)
+       ++task)
     {
       ACE_DEBUG ((LM_DEBUG,
                   " (%t) in task %d\n",
                   task + 1));
 
-      ACE_NEW_RETURN (worker_task[task],
-                      Worker_Task (thr_mgr,
-                                   n_threads_,
-                                   n_iterations_),
-                                   -1);
+      Worker_Task *worker_task {};
+      ACE_NEW_RETURN (worker_task,
+                      Worker_Task (thr_mgr, n_threads_, n_iterations_),
+                      -1);
+      worker_tasks[task].reset (worker_task);
 
-      if (worker_task[task]->open () == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%p\n",
-                           "open failed"),
-                          -1);
+      if (worker_tasks[task]->open () == -1)
+        {
+          thr_mgr->wait ();
+          ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open failed"), -1);
+        }
     }
 
   // Set all tasks to be one group
@@ -209,8 +221,8 @@ Invoker_Task::svc ()
 
   for (task = 0;
        task < this->n_tasks_;
-       task++)
-    if (thr_mgr->set_grp (worker_task[task],
+       ++task)
+    if (thr_mgr->set_grp (worker_tasks[task].get (),
                           1) == -1)
       ACE_ERROR ((LM_DEBUG,
                   " (%t) %p\n",
@@ -219,7 +231,7 @@ Invoker_Task::svc ()
   size_t n_tasks =
     thr_mgr->num_tasks_in_group (1);
   ACE_DEBUG ((LM_DEBUG,
-              "Number of tasks in group 1: %d\n",
+              "Number of tasks in group 1: %B\n",
               n_tasks)) ;
 
   // Wait for 1 second and then suspend every thread in the group.

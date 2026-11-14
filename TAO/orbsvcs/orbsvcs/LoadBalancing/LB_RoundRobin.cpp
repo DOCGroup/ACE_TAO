@@ -6,6 +6,8 @@
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_LB_RoundRobin::TAO_LB_RoundRobin (PortableServer::POA_ptr poa)
@@ -15,9 +17,7 @@ TAO_LB_RoundRobin::TAO_LB_RoundRobin (PortableServer::POA_ptr poa)
 {
 }
 
-TAO_LB_RoundRobin::~TAO_LB_RoundRobin ()
-{
-}
+TAO_LB_RoundRobin::~TAO_LB_RoundRobin () = default;
 
 char *
 TAO_LB_RoundRobin::name ()
@@ -31,7 +31,7 @@ TAO_LB_RoundRobin::get_properties ()
   // There are no RoundRobin properties.  Return an empty property
   // list.
 
-  CosLoadBalancing::Properties * props = nullptr;
+  CosLoadBalancing::Properties * props {};
   ACE_NEW_THROW_EX (props,
                     CosLoadBalancing::Properties,
                     CORBA::NO_MEMORY (
@@ -103,13 +103,13 @@ TAO_LB_RoundRobin::next_member (
       // location backwards one by one until we find an existing
       // one in current list then use the next location. If not
       // find a match, then start with 0 index.
-      bool found = false;
+      bool found {};
 
       for (CORBA::ULong k = i; k > 0 && !found; --k)
       {
-        for (CORBA::ULong j = 0; j < len && !found; ++j)
+        for (CORBA::ULong j {}; j < len && !found; ++j)
         {
-          if (ACE_OS::strcmp (this->last_locations_[k][0].id.in (),
+          if (std::strcmp (this->last_locations_[k][0].id.in (),
                               locations[j][0].id.in ()) == 0)
           {
             if (k == i)
@@ -139,7 +139,7 @@ TAO_LB_RoundRobin::next_member (
                                       locations[i]);
 
       // Increment index to point to next location.
-      i++;
+      ++i;
 
       // Keep a copy of location list for use in next next_member call.
       this->copy_locations (locations);
@@ -154,7 +154,7 @@ TAO_LB_RoundRobin::next_member (
   // length of the sequence is 1 since the above code handles the
   // boundary case correctly by wrapping around.
 
-  CORBA::ULong const index = 0;
+  CORBA::ULong const index {};
   if (this->location_index_map_.bind (id, index + 1) != 0)
     throw CORBA::INTERNAL ();
 
@@ -163,16 +163,14 @@ TAO_LB_RoundRobin::next_member (
                                        locations[index]);
 }
 
-
 void
 TAO_LB_RoundRobin::copy_locations (PortableGroup::Locations_var & locations)
 {
   this->last_locations_.clear ();
   CORBA::ULong len = locations->length ();
-  for (CORBA::ULong j = 0; j < len; ++j)
+  for (CORBA::ULong j {}; j < len; ++j)
     this->last_locations_.push_back (locations[j]);
 }
-
 
 void
 TAO_LB_RoundRobin::analyze_loads (

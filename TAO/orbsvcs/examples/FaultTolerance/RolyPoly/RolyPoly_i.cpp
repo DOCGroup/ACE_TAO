@@ -1,16 +1,15 @@
 // file      : RolyPoly/RolyPoly_i.cpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
 #include "RolyPoly_i.h"
-#include "StateUpdate.h"
 #include "tao/AnyTypeCode/Any.h"
 
 RolyPoly_i::RolyPoly_i (CORBA::ORB_ptr orb)
-  : number_ (0)
-  , orb_ (CORBA::ORB::_duplicate (orb))
+  : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
-CORBA::Any* RolyPoly_i::
+CORBA::Any *
+RolyPoly_i::
 get_state ()
 {
   /*
@@ -21,16 +20,14 @@ get_state ()
   return state._retn ();
   */
 
-  return 0;
+  return nullptr;
 }
 
-
-void RolyPoly_i::
-set_state (CORBA::Any const& state)
+void
+RolyPoly_i::set_state (CORBA::Any const &state)
 {
   state >>= this->number_;
 }
-
 
 CORBA::Short
 RolyPoly_i::number (char *&str)
@@ -40,12 +37,10 @@ RolyPoly_i::number (char *&str)
   str = CORBA::string_dup ("Greetings from RolyPoly.");
 
   ++this->number_;
-
-
   // Preppare state update.
   //
 
-  CORBA::Any a;
+  CORBA::Any a {};
 
   a <<= this->number_;
 
@@ -57,7 +52,7 @@ RolyPoly_i::number (char *&str)
 void
 RolyPoly_i::shutdown ()
 {
-  ACE_DEBUG ((LM_DEBUG, "Server is shutting down.\n"));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Server is shutting down.\n")));
 
   this->orb_->shutdown (false);
 }

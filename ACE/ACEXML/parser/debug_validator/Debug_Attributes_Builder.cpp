@@ -1,13 +1,9 @@
 #include "ACEXML/common/SAXExceptions.h"
 #include "ACEXML/parser/debug_validator/Debug_Attributes_Builder.h"
+#include "ace/streams.h"
 
-ACEXML_Debug_Attribute_Builder::ACEXML_Debug_Attribute_Builder ()
-  : type_ (ERROR_TYPE),
-    default_decl_ (INVALID)
-{
-}
-
-ACEXML_Debug_Attribute_Builder::ACEXML_Debug_Attribute_Builder (const ACEXML_Debug_Attribute_Builder &rhs)
+ACEXML_Debug_Attribute_Builder::ACEXML_Debug_Attribute_Builder (
+  ACEXML_Debug_Attribute_Builder const &rhs)
   : name_ (rhs.name_),
     type_ (rhs.type_),
     default_decl_ (rhs.default_decl_),
@@ -16,49 +12,47 @@ ACEXML_Debug_Attribute_Builder::ACEXML_Debug_Attribute_Builder (const ACEXML_Deb
 {
 }
 
-ACEXML_Debug_Attribute_Builder::~ACEXML_Debug_Attribute_Builder ()
-{
-}
+ACEXML_Debug_Attribute_Builder::~ACEXML_Debug_Attribute_Builder () = default;
 
 int
-ACEXML_Debug_Attribute_Builder::setName (const ACEXML_Char *n)
+ACEXML_Debug_Attribute_Builder::setName (ACEXML_Char const *n)
 {
-  this->name_.set (n, 0);
+  this->name_.set (n, false);
   return 0;
 }
 
-const ACEXML_Char *
+ACEXML_Char const *
 ACEXML_Debug_Attribute_Builder::getName ()
 {
   return this->name_.fast_rep ();
 }
 
 int
-ACEXML_Debug_Attribute_Builder::setAttType (const ATT_TYPE type)
+ACEXML_Debug_Attribute_Builder::setAttType (ATT_TYPE type)
 {
   if (this->type_ == ERROR_TYPE)
     {
       this->type_ = type;
       return 0;
     }
-  ACEXML_THROW_RETURN (ACEXML_SAXParseException (ACE_TEXT("Attribute type redefinition in Debug Validator")), -1);
+  throw ACEXML_SAXParseException (ACE_TEXT("Attribute type redefinition in Debug Validator"));
 }
 
 int
-ACEXML_Debug_Attribute_Builder::insertList (const ACEXML_Char *n)
+ACEXML_Debug_Attribute_Builder::insertList (ACEXML_Char const *n)
 {
-  ACEXML_String str (n, 0, 0);
+  ACEXML_String str (n, nullptr, false);
 
   this->att_value_queue_.enqueue_tail (str);
   return 0;
 }
 
 int
-ACEXML_Debug_Attribute_Builder::setDefault (const DEFAULT_DECL def,
-                                            const ACEXML_Char *value)
+ACEXML_Debug_Attribute_Builder::setDefault (DEFAULT_DECL def,
+                                            ACEXML_Char const *value)
 {
   this->default_decl_ = def;
-  this->default_value_.set (value, 0);
+  this->default_value_.set (value, false);
   return 0;
 }
 
@@ -107,11 +101,11 @@ ACEXML_Debug_Attribute_Builder::dump ()
       {
         cout << "(";
         ACEXML_STRING_QUEUE_ITERATOR iter (this->att_value_queue_);
-        ACEXML_String *n = 0;
+        ACEXML_String *n {};
 
         while (iter.advance () != 0)
           {
-            if (n == 0)
+            if (n == nullptr)
               cout << " | ";
             iter.next (n);
             cout << *n;
@@ -140,22 +134,14 @@ ACEXML_Debug_Attribute_Builder::dump ()
       break;
     }
 }
-// ========================================
-
-ACEXML_Debug_Attributes_Builder::ACEXML_Debug_Attributes_Builder ()
-{
-}
-
-ACEXML_Debug_Attributes_Builder::~ACEXML_Debug_Attributes_Builder ()
-{
-}
+ACEXML_Debug_Attributes_Builder::~ACEXML_Debug_Attributes_Builder () = default;
 
 int
-ACEXML_Debug_Attributes_Builder::setElement (const ACEXML_Char *,
-                                             const ACEXML_Char *,
-                                             const ACEXML_Char *qName)
+ACEXML_Debug_Attributes_Builder::setElement (ACEXML_Char const *,
+                                             ACEXML_Char const *,
+                                             ACEXML_Char const *qName)
 {
-  this->element_name_.set (qName, 0);
+  this->element_name_.set (qName, false);
   return 0;
 }
 
@@ -166,7 +152,7 @@ ACEXML_Debug_Attributes_Builder::getAttribute_Def_Builder ()
 
   ACE_NEW_RETURN (tmp,
                   ACEXML_Debug_Attribute_Builder (),
-                  0);
+                  nullptr);
   return tmp;
 }
 
@@ -176,15 +162,20 @@ ACEXML_Debug_Attributes_Builder::insertAttribute (
 {
   ACEXML_Attribute_Def_Builder::VAR ptr (def);
 
-  if (def != 0)
+  if (def != nullptr)
     {
-      ACEXML_String attname (def->getName (), 0, 0);
-      ACEXML_Debug_Attribute_Builder *ptr =
+      ACEXML_Debug_Attribute_Builder *attribute =
         dynamic_cast<ACEXML_Debug_Attribute_Builder *> (def);
-      this->attributes_.bind (attname, *ptr);
+      if (attribute == nullptr)
+        {
+          throw ACEXML_SAXParseException (ACE_TEXT("Unexpected attribute builder type"));
+        }
+
+      ACEXML_String attname (attribute->getName (), nullptr, false);
+      this->attributes_.bind (attname, *attribute);
       return 0;
     }
-  ACEXML_THROW_RETURN (ACEXML_SAXParseException (ACE_TEXT("ACEXML_Debug_Attributes_Builder internal error")), -1);
+  throw ACEXML_SAXParseException (ACE_TEXT("ACEXML_Debug_Attributes_Builder internal error"));
 }
 
 void

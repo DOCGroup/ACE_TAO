@@ -2,6 +2,8 @@
 // This is needed on LynxOS 4.0 with GCC 2.95
 #include "ace/OS_NS_stdio.h"
 
+#include <memory>
+
 #include <openssl/crypto.h>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -80,7 +82,7 @@ template <typename T> ACE_INLINE TAO::SSLIOP::OpenSSL_st_var<T> &
 TAO::SSLIOP::OpenSSL_st_var<T>::operator= (
   TAO::SSLIOP::OpenSSL_st_var<T> const & st)
 {
-  if (this != &st)
+  if (this != std::addressof (st))
     {
       TAO::SSLIOP::OpenSSL_traits<T>::release (this->st_);
       this->st_ = TAO::SSLIOP::OpenSSL_traits<T>::_duplicate (st.ptr ());

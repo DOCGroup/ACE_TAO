@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_SSL_SOCK_H
 #define ACE_SSL_SOCK_H
 
@@ -60,11 +59,15 @@ public:
   //@}
 
 protected:
+  ACE_SSL_SOCK (ACE_SSL_SOCK const &) = delete;
+  ACE_SSL_SOCK &operator= (ACE_SSL_SOCK const &) = delete;
+  ACE_SSL_SOCK (ACE_SSL_SOCK &&) = delete;
+  ACE_SSL_SOCK &operator= (ACE_SSL_SOCK &&) = delete;
+
   /// Default constructor is private to prevent instances of this class
   /// from being defined.
   ACE_SSL_SOCK ();
 
-  /// Destructor
   /**
    * Not a virtual destructor.  Protected destructor to prevent
    * operator delete() from being called through a base class
@@ -82,6 +85,4 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include /**/ "ace/post.h"
 
 #endif /* ACE_SSL_SOCK_H */
-
-
 

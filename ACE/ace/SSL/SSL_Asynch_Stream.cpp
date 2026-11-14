@@ -9,9 +9,11 @@
 # include "ace/POSIX_Proactor.h"
 #endif  /* ACE_WIN32 */
 
-#include "ace/OS_NS_string.h"
 #include "ace/Proactor.h"
 #include "ace/Truncate.h"
+
+#include <cstring>
+#include <memory>
 
 #if !defined(__ACE_INLINE__)
 #include "SSL_Asynch_Stream.inl"
@@ -38,8 +40,7 @@ ACE_SSL_Asynch_Write_Stream_Result::ACE_SSL_Asynch_Write_Stream_Result
                 act,
                 event,
                 priority,
-                signal_number
-                )
+                signal_number)
 {
 }
 
@@ -60,8 +61,7 @@ ACE_SSL_Asynch_Read_Stream_Result::ACE_SSL_Asynch_Read_Stream_Result
                 act,
                 event,
                 priority,
-                signal_number
-                )
+                signal_number)
 {
 }
 
@@ -72,8 +72,7 @@ ACE_SSL_Asynch_Result::ACE_SSL_Asynch_Result (ACE_Handler & handler)
               0,           // Offset
               0,           // OffsetHigh
               0,           // Priority
-              ACE_SIGRTMIN //signal_number
-              )
+              ACE_SIGRTMIN) // signal_number
 {
 }
 
@@ -92,34 +91,17 @@ ACE_SSL_Asynch_Result::complete (size_t /* bytes_transferred */,
 ACE_SSL_Asynch_Stream::ACE_SSL_Asynch_Stream (
   ACE_SSL_Asynch_Stream::Stream_Type s_type,
   ACE_SSL_Context * context)
-  : type_         (s_type),
-    proactor_     (nullptr),
-    ext_handler_  (nullptr),
-    ext_read_result_ (nullptr),
-    ext_write_result_(nullptr),
-    flags_        (0),
-    ssl_          (nullptr),
-    handshake_complete_(false),
-    bio_          (nullptr),
-    bio_istream_  (),
-    bio_inp_msg_  (),
-    bio_inp_errno_(0),
-    bio_inp_flag_ (0),
-    bio_ostream_  (),
-    bio_out_msg_  (),
-    bio_out_errno_(0),
-    bio_out_flag_ (0),
-    mutex_ ()
+  : type_ (s_type)
 {
   ACE_TRACE ("ACE_SSL_Asynch_Stream::ACE_SSL_Asynch_Stream");
   // was honestly copied from ACE_SSL_SOCK_Stream :)
 
-  ACE_SSL_Context * ctx =
+  ACE_SSL_Context * const ctx =
     (context == nullptr ? ACE_SSL_Context::instance () : context);
 
-  this->ssl_ = ::SSL_new (ctx->context ());
+  this->ssl_.reset (::SSL_new (ctx->context ()));
 
-  if (this->ssl_ == nullptr)
+  if (this->ssl_.get () == nullptr)
     ACELIB_ERROR
       ((LM_ERROR,
         ACE_TEXT ("(%P|%t) ACE_SSL_Asynch_Stream %p\n"),
@@ -131,7 +113,6 @@ ACE_SSL_Asynch_Stream::~ACE_SSL_Asynch_Stream ()
 {
   ACE_TRACE ("ACE_SSL_Asynch_Stream::~ACE_SSL_Asynch_Stream");
 
-
   // It is safe to delete stream if all notifications are received,
   // i.e., state is SF_DELETE_ENABLE or if proactor event loop is
   // done.
@@ -141,8 +122,6 @@ ACE_SSL_Asynch_Stream::~ACE_SSL_Asynch_Stream ()
                   ACE_TEXT("ACE_SSL_Asynch_Stream::DTOR-")
                   ACE_TEXT("possible access violation ")
                   ACE_TEXT("if proactor still handles events\n")));
-
-  ::SSL_free (this->ssl_);
 
   // Was honestly copied from ACE_SSL_SOCK_Stream :)
 
@@ -194,12 +173,12 @@ ACE_SSL_Asynch_Stream::cancel ()
     }
 
   // attempt to cancel internal, i.e. user's read/write
-  int rc_r_int = bio_istream_.cancel();
-  int rc_w_int = bio_ostream_.cancel();
+  int const rc_r_int = bio_istream_.cancel();
+  int const rc_w_int = bio_ostream_.cancel();
 
   // attempt to cancel external, i.e. bio_ssl read/write
-  int rc_r_ext = notify_read (0, ERR_CANCELED);
-  int rc_w_ext = notify_write (0, ERR_CANCELED);
+  int const rc_r_ext = notify_read (0, ERR_CANCELED);
+  int const rc_w_ext = notify_write (0, ERR_CANCELED);
 
   if ((rc_r_int < 0 || rc_w_int < 0)
       && (rc_r_ext < 0 || rc_w_ext < 0))
@@ -241,7 +220,7 @@ ACE_SSL_Asynch_Stream::open (ACE_Handler & handler,
         ACE_TEXT ("- already opened")),
        -1);
 
-  if (this->ssl_ == nullptr)
+  if (this->ssl_.get () == nullptr)
     ACELIB_ERROR_RETURN
       ((LM_ERROR,
         ACE_TEXT ("(%P|%t) ACE_SSL_Asynch_Stream::open() %p\n"),
@@ -274,25 +253,28 @@ ACE_SSL_Asynch_Stream::open (ACE_Handler & handler,
                                this->proactor_) != 0)
     return -1;
 
-  this->bio_ = ACE_SSL_make_BIO (this);
+  std::unique_ptr<BIO, decltype(&::BIO_free)> bio (
+    ACE_SSL_make_BIO (this),
+    ::BIO_free);
 
-  if (this->bio_ == nullptr)
+  if (bio == nullptr)
     ACELIB_ERROR_RETURN
       ((LM_ERROR,
         ACE_TEXT ("(%P|%t) ACE_SSL_Asynch_Stream::open() %p\n"),
         ACE_TEXT ("- cannot allocate new BIO structure")),
        -1);
 
-  ::SSL_set_bio (this->ssl_ , this->bio_ , this->bio_);
+  ::SSL_set_bio (this->ssl_.get (), bio.get (), bio.get ());
+  bio.release ();
 
   switch (this->type_)
     {
     case ST_CLIENT:
-      ::SSL_set_connect_state (this->ssl_);
+      ::SSL_set_connect_state (this->ssl_.get ());
       break;
 
     case ST_SERVER:
-      ::SSL_set_accept_state (this->ssl_);
+      ::SSL_set_accept_state (this->ssl_.get ());
       break;
 
     default:
@@ -309,7 +291,6 @@ ACE_SSL_Asynch_Stream::open (ACE_Handler & handler,
 
   return 0;
 }
-
 
 // ************************************************************
 //  Asynch_Operation interface
@@ -446,9 +427,9 @@ ACE_SSL_Asynch_Stream::do_SSL_shutdown ()
   this->notify_read  (0, ERR_CANCELED);
   this->notify_write (0, ERR_CANCELED);
 
-  int retval = ::SSL_shutdown (this->ssl_);
+  int retval = ::SSL_shutdown (this->ssl_.get ());
 
-  int const status = ::SSL_get_error (this->ssl_, retval);
+  int const status = ::SSL_get_error (this->ssl_.get (), retval);
 
   switch (status)
     {
@@ -487,7 +468,7 @@ ACE_SSL_Asynch_Stream::do_SSL_shutdown ()
 int
 ACE_SSL_Asynch_Stream::do_SSL_handshake ()
 {
-  if (SSL_is_init_finished (this->ssl_))
+  if (SSL_is_init_finished (this->ssl_.get ()))
     {
       if (!handshake_complete_)
         {
@@ -509,11 +490,11 @@ ACE_SSL_Asynch_Stream::do_SSL_handshake ()
   switch (this->type_)
     {
     case ST_CLIENT:
-      retval = ::SSL_connect (this->ssl_);
+      retval = ::SSL_connect (this->ssl_.get ());
       break;
 
     case ST_SERVER:
-      retval = ::SSL_accept (this->ssl_);
+      retval = ::SSL_accept (this->ssl_.get ());
       break;
 
     default:
@@ -524,7 +505,7 @@ ACE_SSL_Asynch_Stream::do_SSL_handshake ()
          -1);
     }
 
-  int const status = ::SSL_get_error (this->ssl_, retval);
+  int const status = ::SSL_get_error (this->ssl_.get (), retval);
 
   switch (status)
     {
@@ -573,16 +554,16 @@ ACE_SSL_Asynch_Stream::do_SSL_read ()
     }
 
   ACE_Message_Block & mb = this->ext_read_result_->message_block ();
-  size_t bytes_req = this->ext_read_result_->bytes_to_read ();
+  size_t const bytes_req = this->ext_read_result_->bytes_to_read ();
 
   ERR_clear_error ();
 
   const int bytes_trn =
-    ::SSL_read (this->ssl_,
+    ::SSL_read (this->ssl_.get (),
                 mb.wr_ptr (),
                 ACE_Utils::truncate_cast<int> (bytes_req));
 
-  int const status = ::SSL_get_error (this->ssl_, bytes_trn);
+  int const status = ::SSL_get_error (this->ssl_.get (), bytes_trn);
 
   switch (status)
     {
@@ -635,16 +616,16 @@ ACE_SSL_Asynch_Stream::do_SSL_write ()
     }
 
   ACE_Message_Block & mb = this->ext_write_result_->message_block ();
-  size_t       bytes_req = this->ext_write_result_->bytes_to_write ();
+  size_t const bytes_req = this->ext_write_result_->bytes_to_write ();
 
   ERR_clear_error ();
 
   const int bytes_trn =
-    ::SSL_write (this->ssl_,
+    ::SSL_write (this->ssl_.get (),
                  mb.rd_ptr (),
                  ACE_Utils::truncate_cast<int> (bytes_req));
 
-  int const status = ::SSL_get_error (this->ssl_, bytes_trn);
+  int const status = ::SSL_get_error (this->ssl_.get (), bytes_trn);
 
   switch (status)
     {
@@ -693,24 +674,36 @@ ACE_SSL_Asynch_Stream::notify_close ()
     return 2;   // too early , we will do later
 
   // create result for future notification
-  ACE_SSL_Asynch_Result * close_result = nullptr;
+  ACE_SSL_Asynch_Result * close_result {};
 
   ACE_NEW_RETURN (close_result,
                   ACE_SSL_Asynch_Result (*this),
                   2);
-  //@@ Not exception safe!
+  std::unique_ptr<ACE_SSL_Asynch_Result> close_result_owner (close_result);
 
- int retval =
-   close_result->post_completion (this->proactor_->implementation ());
+  int retval {};
+#if defined (ACE_WIN32)
+  ACE_WIN32_Proactor * const proactor =
+    dynamic_cast<ACE_WIN32_Proactor *> (this->proactor_->implementation ());
+  if (proactor == nullptr)
+    return 2;
 
- if (retval == 0)
-   {
-     this->flags_ |= SF_CLOSE_NTF_SENT;
-     return 0;
-   }
+  retval = proactor->post_completion (close_result);
+  // Win32 post_completion consumes the result on success and failure.
+  close_result_owner.release ();
+#else
+  retval = close_result->post_completion (this->proactor_->implementation ());
+  if (retval == 0)
+    close_result_owner.release ();
+#endif
 
- delete close_result;
- return 2;
+  if (retval == 0)
+    {
+      this->flags_ |= SF_CLOSE_NTF_SENT;
+      return 0;
+    }
+
+  return 2;
 }
 
 // ************************************************************
@@ -731,12 +724,26 @@ ACE_SSL_Asynch_Stream::notify_read (int bytes_transferred,
   this->ext_read_result_->set_bytes_transferred (bytes_transferred);
   this->ext_read_result_->set_error (error);
 
-  int retval =
-    this->ext_read_result_->post_completion (proactor_->implementation ());
+  int retval {};
+#if defined (ACE_WIN32)
+  ACE_WIN32_Proactor * const proactor =
+    dynamic_cast<ACE_WIN32_Proactor *> (this->proactor_->implementation ());
+  if (proactor == nullptr)
+    return 2;
+
+  retval = proactor->post_completion (this->ext_read_result_);
+  // Win32 post_completion consumes the result on success and failure.
+  this->ext_read_result_ = nullptr;
+#else
+  retval = this->ext_read_result_->post_completion (
+    this->proactor_->implementation ());
+#endif
 
   if (retval == 0)
     {
+#if !defined (ACE_WIN32)
       this->ext_read_result_ = nullptr;
+#endif
       return 0;  // success
     }
 
@@ -761,13 +768,26 @@ ACE_SSL_Asynch_Stream::notify_write (int bytes_transferred,
   this->ext_write_result_->set_bytes_transferred (bytes_transferred);
   this->ext_write_result_->set_error (error);
 
-  int retval =
-    this->ext_write_result_->post_completion (
-      this->proactor_->implementation ());
+  int retval {};
+#if defined (ACE_WIN32)
+  ACE_WIN32_Proactor * const proactor =
+    dynamic_cast<ACE_WIN32_Proactor *> (this->proactor_->implementation ());
+  if (proactor == nullptr)
+    return 2;
+
+  retval = proactor->post_completion (this->ext_write_result_);
+  // Win32 post_completion consumes the result on success and failure.
+  this->ext_write_result_ = nullptr;
+#else
+  retval = this->ext_write_result_->post_completion (
+    this->proactor_->implementation ());
+#endif
 
   if (retval == 0)
     {
+#if !defined (ACE_WIN32)
       this->ext_write_result_ = nullptr;
+#endif
       return 0;  // success
     }
 
@@ -827,7 +847,7 @@ ACE_SSL_Asynch_Stream::ssl_bio_read (char * buf,
           cur_len = len;
         }
 
-      ACE_OS::memcpy (buf, rd_ptr, cur_len);
+      std::memcpy (buf, rd_ptr, cur_len);
 
       this->bio_inp_msg_.rd_ptr (cur_len); // go ahead
 
@@ -892,7 +912,6 @@ ACE_SSL_Asynch_Stream::ssl_bio_read (char * buf,
   return -1;
 }
 
-
 int
 ACE_SSL_Asynch_Stream::ssl_bio_write (const char * buf,
                                       size_t len,
@@ -945,7 +964,6 @@ ACE_SSL_Asynch_Stream::ssl_bio_write (const char * buf,
       return -1;
     }
 
-
   if (this->bio_ostream_.write (
         this->bio_out_msg_, // message block
         len,          // priority
@@ -984,10 +1002,10 @@ ACE_SSL_Asynch_Stream::handle_write_stream (
 
   ACE_Message_Block & mb = result.message_block ();
 
-  size_t bytes_req = result.bytes_to_write ();
-  size_t bytes_trn = result.bytes_transferred ();
-  u_long errval    = result.error ();
-  size_t len       = bytes_req - bytes_trn;
+  size_t const bytes_req = result.bytes_to_write ();
+  size_t const bytes_trn = result.bytes_transferred ();
+  u_long const errval = result.error ();
+  size_t const len = bytes_req - bytes_trn;
 
   if (errval != 0)                    // error ?
     this->bio_out_errno_ = errval;    // save err code
@@ -1027,8 +1045,8 @@ ACE_SSL_Asynch_Stream::handle_read_stream (
 
   this->bio_inp_flag_ &= ~BF_AIO;
 
-  size_t bytes_trn = result.bytes_transferred ();
-  u_long errval    = result.error ();
+  size_t const bytes_trn = result.bytes_transferred ();
+  u_long const errval = result.error ();
 
   if (errval != 0)                     // error ?
      this->bio_inp_errno_ = errval;    // save err code
@@ -1043,7 +1061,7 @@ ACE_SSL_Asynch_Stream::handle_read_stream (
 void
 ACE_SSL_Asynch_Stream::handle_wakeup ()
 {
-  ACE_Handler * user_handler = nullptr;
+  ACE_Handler * user_handler {};
 
   {
     ACE_MT (ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->mutex_));
@@ -1060,7 +1078,7 @@ ACE_SSL_Asynch_Stream::handle_wakeup ()
 int
 ACE_SSL_Asynch_Stream::pending_BIO_count ()
 {
-  int ret = 0;
+  int ret {};
 
   if (this->bio_inp_flag_ & BF_AIO)
     ++ret;

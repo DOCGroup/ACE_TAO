@@ -29,11 +29,13 @@
 #include "tao/Wait_Strategy.h"
 #include "ace/os_include/os_netdb.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_SCIOP_Connection_Handler::TAO_SCIOP_Connection_Handler (ACE_Thread_Manager *t)
-  : TAO_SCIOP_SVC_HANDLER (t, 0 , 0),
-    TAO_Connection_Handler (0),
+  : TAO_SCIOP_SVC_HANDLER (t, nullptr, 0),
+    TAO_Connection_Handler (nullptr),
     dscp_codepoint_ (IPDSFIELD_DSCP_DEFAULT << 2)
 {
   // This constructor should *never* get called, it is just here to
@@ -41,16 +43,15 @@ TAO_SCIOP_Connection_Handler::TAO_SCIOP_Connection_Handler (ACE_Thread_Manager *
   // Creation_Strategy requires a constructor with that signature, we
   // don't use that implementation, but some (most?) compilers
   // instantiate it anyway.
-  ACE_ASSERT (0);
+  ACE_ASSERT (false);
 }
 
-
 TAO_SCIOP_Connection_Handler::TAO_SCIOP_Connection_Handler (TAO_ORB_Core *orb_core)
-  : TAO_SCIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
+  : TAO_SCIOP_SVC_HANDLER (orb_core->thr_mgr (), nullptr, 0),
     TAO_Connection_Handler (orb_core),
     dscp_codepoint_ (IPDSFIELD_DSCP_DEFAULT << 2)
 {
-  TAO_SCIOP_Transport *specific_transport = nullptr;
+  TAO_SCIOP_Transport *specific_transport {};
   ACE_NEW (specific_transport,
            TAO_SCIOP_Transport (this, orb_core));
 
@@ -126,14 +127,14 @@ TAO_SCIOP_Connection_Handler::open (void*)
 #if !defined (ACE_LACKS_TCP_NODELAY)
   if (this->peer ().set_option (IPPROTO_SCTP,
                                 SCTP_NODELAY,
-                                (void *) &protocol_properties.no_delay_,
+                                std::addressof (protocol_properties.no_delay_),
                                 sizeof (protocol_properties.no_delay_)) == -1)
     return -1;
 #endif /* ! ACE_LACKS_TCP_NODELAY */
 
   if (protocol_properties.hop_limit_ >= 0)
     {
-      int result = 0;
+      int result {};
 #if defined (ACE_HAS_IPV6)
       ACE_INET_Addr local_addr;
       if (this->peer ().get_local_addr (local_addr) == -1)
@@ -152,7 +153,7 @@ TAO_SCIOP_Connection_Handler::open (void*)
           result = this->peer ().set_option (
             IPPROTO_IPV6,
             IPV6_UNICAST_HOPS,
-            (void *) &hop_limit,
+            std::addressof (hop_limit),
             sizeof (hop_limit));
         }
       else
@@ -168,7 +169,7 @@ TAO_SCIOP_Connection_Handler::open (void*)
           result = this->peer ().set_option (
             IPPROTO_IP,
             IP_TTL,
-            (void *) &hop_limit,
+            std::addressof (hop_limit),
             sizeof (hop_limit));
         }
 
@@ -314,7 +315,7 @@ int
 TAO_SCIOP_Connection_Handler::handle_close (ACE_HANDLE,
                                             ACE_Reactor_Mask)
 {
-  ACE_ASSERT (0);
+  ACE_ASSERT (false);
   return 0;
 }
 
@@ -345,13 +346,13 @@ TAO_SCIOP_Connection_Handler::add_transport_to_cache ()
       this->orb_core()->orb_params()->use_dotted_decimal_addresses ());
 
   // Construct a property object
-  TAO_Base_Transport_Property prop (&endpoint);
+  TAO_Base_Transport_Property prop (std::addressof (endpoint));
 
   TAO::Transport_Cache_Manager &cache =
     this->orb_core ()->lane_resources ().transport_cache ();
 
   // Idle the transport..
-  return cache.cache_transport (&prop, this->transport ());
+  return cache.cache_transport (std::addressof (prop), this->transport ());
 }
 
 int
@@ -361,7 +362,7 @@ TAO_SCIOP_Connection_Handler::process_listen_point_list (
   // Get the size of the list
   CORBA::ULong const len = listen_list.length ();
 
-  for (CORBA::ULong i = 0; i < len; ++ i)
+  for (CORBA::ULong i {}; i < len; ++ i)
     {
       IIOP::ListenPoint listen_point = listen_list[i];
       ACE_INET_Addr addr (listen_point.port,
@@ -380,14 +381,14 @@ TAO_SCIOP_Connection_Handler::process_listen_point_list (
         this->orb_core()->orb_params()->use_dotted_decimal_addresses ());
 
       // Construct a property object
-      TAO_Base_Transport_Property prop (&endpoint);
+      TAO_Base_Transport_Property prop (std::addressof (endpoint));
 
       // Mark the connection as bidirectional
-      prop.set_bidir_flag (1);
+      prop.set_bidir_flag (true);
 
       // The property for this handler has changed. Recache the
       // handler with this property
-      int const retval = this->transport ()->recache_transport (&prop);
+      int const retval = this->transport ()->recache_transport (std::addressof (prop));
       if (retval == -1)
         return retval;
 

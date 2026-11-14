@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   RT_Endpoint_Utils.h
  *
@@ -9,8 +8,6 @@
  *  @author Angelo Corsaro <corsaro@cs.wustl.edu>
  *  @author Frank Hunleth <fhunleth@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef RT_ENDPOINT_UTILS_H
 #define RT_ENDPOINT_UTILS_H

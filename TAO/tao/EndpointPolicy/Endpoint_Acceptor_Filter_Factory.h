@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Endpoint_Acceptor_Filter_Factory.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author  Yan Dai <dai_y@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_ENDPOINT_ACCEPTOR_FILTER_FACTORY_H
 #define TAO_ENDPOINT_ACCEPTOR_FILTER_FACTORY_H
@@ -41,23 +39,19 @@ public:
 
   ~TAO_Endpoint_Acceptor_Filter_Factory () override = default;
 
-  /// Create a new TAO_Endpoint_Acceptor_Filter object.
-  TAO_Acceptor_Filter* create_object (TAO_POA_Manager& poamanager) override;
-
-private:
   TAO_Endpoint_Acceptor_Filter_Factory (TAO_Endpoint_Acceptor_Filter_Factory const &) = delete;
-  TAO_Endpoint_Acceptor_Filter_Factory &operator= (
-    TAO_Endpoint_Acceptor_Filter_Factory const &) = delete;
+  TAO_Endpoint_Acceptor_Filter_Factory &operator= (TAO_Endpoint_Acceptor_Filter_Factory const &) = delete;
   TAO_Endpoint_Acceptor_Filter_Factory (TAO_Endpoint_Acceptor_Filter_Factory &&) = delete;
   TAO_Endpoint_Acceptor_Filter_Factory &operator= (TAO_Endpoint_Acceptor_Filter_Factory &&) = delete;
-};
 
+  /// Create a new TAO_Endpoint_Acceptor_Filter object.
+  TAO_Acceptor_Filter *create_object (TAO_POA_Manager &poamanager) override;
+};
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_EndpointPolicy, TAO_Endpoint_Acceptor_Filter_Factory)
 ACE_FACTORY_DECLARE (TAO_EndpointPolicy, TAO_Endpoint_Acceptor_Filter_Factory)
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 #include /**/ "ace/post.h"
 

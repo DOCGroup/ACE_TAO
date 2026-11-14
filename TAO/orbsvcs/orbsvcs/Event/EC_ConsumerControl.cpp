@@ -2,14 +2,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_EC_ConsumerControl::TAO_EC_ConsumerControl ()
-{
-}
-
-TAO_EC_ConsumerControl::~TAO_EC_ConsumerControl ()
-{
-}
-
 int
 TAO_EC_ConsumerControl::activate ()
 {

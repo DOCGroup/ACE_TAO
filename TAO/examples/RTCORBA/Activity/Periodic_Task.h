@@ -17,12 +17,13 @@
 #include "ace/SString.h"
 #include "ace/Arg_Shifter.h"
 #include "JobC.h"
+#include "Task_Stats.h"
+
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Barrier;
 ACE_END_VERSIONED_NAMESPACE_DECL
-
-class Task_Stats;
 
 /**
  * @class Periodic_Task
@@ -32,28 +33,34 @@ class Task_Stats;
 class Periodic_Task : public ACE_Task <ACE_SYNCH>
 {
  public:
-  Periodic_Task ();
-  ~Periodic_Task ();
+  Periodic_Task () = default;
+  ~Periodic_Task () override = default;
+
+  Periodic_Task (Periodic_Task const &) = delete;
+  Periodic_Task (Periodic_Task &&) = delete;
+  Periodic_Task &operator= (Periodic_Task const &) = delete;
+  Periodic_Task &operator= (Periodic_Task &&) = delete;
 
   /// Init the state of this object.
   int init_task (ACE_Arg_Shifter& arg_shifter);
 
   /// Activate this task, synch on the given barrier.
-  virtual int activate_task (ACE_Barrier* barrier, RTCORBA::PriorityMapping *priority_mapping) = 0;
+  virtual int activate_task (ACE_Barrier *barrier,
+                             RTCORBA::PriorityMapping *priority_mapping) = 0;
 
   /// Dump the stats collected.
-  void dump_stats (ACE_TCHAR* msg);
+  void dump_stats (ACE_TCHAR const *msg);
 
   /// = Job get/set
   /// Returns the name of the Job exec'ed by this Task.
-  const char* job ();
+  char const *job () const;
 
   /// Sets the Job to exec.
   void job (Job_ptr job);
 
  protected:
   /// All tasks synch at this barrier.
-  ACE_Barrier* barrier_;
+  ACE_Barrier *barrier_ {};
 
   /// The Job to execute.
   Job_var job_;
@@ -65,25 +72,25 @@ class Periodic_Task : public ACE_Task <ACE_SYNCH>
   /// see http://www.cis.ksu.edu/~neilsen/classes/cis721/lectures/lecture2/sld009.htm
 
   /// The priority of this task.
-  RTCORBA::Priority task_priority_;
+  RTCORBA::Priority task_priority_ {};
 
   /// Period
-  unsigned long period_;
+  unsigned long period_ {};
 
   /// Worst case exec. time.
-  unsigned long exec_time_;
+  unsigned long exec_time_ {};
 
   /// Phase
-  long phase_;
+  long phase_ {};
 
   /// Number of times to exec. Job
-  int iter_;
+  int iter_ {};
 
   /// A load factor supplied to each Job.
-  int load_;
+  int load_ {};
 
   /// = Stats house keeping
-  Task_Stats* task_stats_;
+  std::unique_ptr<Task_Stats> task_stats_;
 };
 
 #endif /* PERIODIC_TASK_H */

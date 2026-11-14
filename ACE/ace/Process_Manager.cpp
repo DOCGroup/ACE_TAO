@@ -50,11 +50,10 @@ sigchld_nop (int, siginfo_t *, ucontext_t *)
 }
 #endif /* ACE_WIN32 */
 
-
 ACE_ALLOC_HOOK_DEFINE(ACE_Process_Manager)
 
 // Singleton instance.
-ACE_Process_Manager *ACE_Process_Manager::instance_ = nullptr;
+ACE_Process_Manager *ACE_Process_Manager::instance_ {};
 
 // Controls whether the Process_Manager is deleted when we shut down
 // (we can only delete it safely if we created it!)
@@ -87,10 +86,10 @@ ACE_Process_Manager::dump () const
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nmax_process_table_size_ = %d"), this->max_process_table_size_));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\ncurrent_count_ = %d"), this->current_count_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nmax_process_table_size_ = %B"), this->max_process_table_size_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\ncurrent_count_ = %B"), this->current_count_));
 
-  for (size_t i = 0; i < this->current_count_; i++)
+  for (size_t i = 0; i < this->current_count_; ++i)
     this->process_table_[i].dump ();
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
@@ -98,8 +97,6 @@ ACE_Process_Manager::dump () const
 }
 
 ACE_Process_Manager::Process_Descriptor::Process_Descriptor ()
-  : process_ (nullptr),
-    exit_notify_ (nullptr)
 {
   ACE_TRACE ("ACE_Process_Manager::Process_Descriptor::Process_Descriptor");
 }
@@ -182,23 +179,22 @@ ACE_Process_Manager::resize (size_t size)
   if (size <= this->max_process_table_size_)
     return 0;
 
-  Process_Descriptor *temp = nullptr;
+  Process_Descriptor *temp {};
 
   ACE_NEW_RETURN (temp,
                   Process_Descriptor[size],
                   -1);
 
+  std::unique_ptr<Process_Descriptor[]> new_table (temp);
+
   for (size_t i = 0;
        i < this->current_count_;
-       i++)
+       ++i)
     // Structure assignment.
-    temp[i] = this->process_table_[i];
+    new_table[i] = this->process_table_[i];
 
   this->max_process_table_size_ = size;
-
-  delete [] this->process_table_;
-
-  this->process_table_ = temp;
+  this->process_table_.swap (new_table);
   return 0;
 }
 
@@ -208,7 +204,7 @@ ACE_Process_Manager::open (size_t size, ACE_Reactor *r)
 {
   ACE_TRACE ("ACE_Process_Manager::open");
 
-  if (r)
+  if (r != nullptr)
     {
       this->reactor (r);
 #if !defined (ACE_WIN32) && !defined (ACE_LACKS_UNIX_SIGNALS)
@@ -228,11 +224,7 @@ ACE_Process_Manager::open (size_t size, ACE_Reactor *r)
 // Initialize the synchronization variables.
 ACE_Process_Manager::ACE_Process_Manager (size_t size,
                                           ACE_Reactor *r)
-  : ACE_Event_Handler (),
-    process_table_ (nullptr),
-    max_process_table_size_ (0),
-    current_count_ (0),
-    default_exit_handler_ (nullptr)
+  : ACE_Event_Handler ()
 #if defined (ACE_HAS_THREADS)
   , lock_ ()
 #endif /* ACE_HAS_THREADS */
@@ -268,8 +260,7 @@ ACE_Process_Manager::close ()
       while (this->current_count_ > 0)
         this->remove_proc (0);
 
-      delete [] this->process_table_;
-      this->process_table_ = nullptr;
+      this->process_table_.reset ();
       this->max_process_table_size_ = 0;
       this->current_count_ = 0;
     }
@@ -411,7 +402,7 @@ pid_t
 ACE_Process_Manager::spawn (ACE_Process_Options &options,
                             ACE_Event_Handler *event_handler)
 {
-  ACE_Process *process = nullptr;
+  ACE_Process *process {};
   ACE_NEW_RETURN (process,
                   ACE_Managed_Process,
                   ACE_INVALID_PID);
@@ -464,7 +455,7 @@ ACE_Process_Manager::spawn_n (size_t n,
 
   for (size_t i = 0;
        i < n;
-       i++)
+       ++i)
     {
       pid_t const pid = this->spawn (options, event_handler);
       if (pid == ACE_INVALID_PID || pid == 0)
@@ -507,7 +498,7 @@ ACE_Process_Manager::append_proc (ACE_Process *proc,
   // automagically.  Get a handle to this new Process and tell the
   // Reactor we're interested in <handling_input> on it.
   ACE_Reactor * const r = this->reactor ();
-  if (r != 0)
+  if (r != nullptr)
     r->register_handler (this, proc->gethandle ());
 #endif /* ACE_WIN32 */
 
@@ -576,7 +567,7 @@ ACE_Process_Manager::remove_proc (size_t i)
 
   this->process_table_[i].process_ = nullptr;
 
-  this->current_count_--;
+  --this->current_count_;
 
   if (this->current_count_ > 0)
     // Compact the table by moving the last item into the slot vacated
@@ -766,7 +757,7 @@ ACE_Process_Manager::wait (pid_t pid,
   *status = 0;
 
   ssize_t idx = -1;
-  ACE_Process *proc = nullptr;
+  ACE_Process *proc {};
 
   {
     // fake context after which the lock is released
@@ -789,7 +780,7 @@ ACE_Process_Manager::wait (pid_t pid,
       ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
       // Wait for any Process spawned by this Process_Manager.
 #if defined (ACE_WIN32)
-      HANDLE *handles = nullptr;
+      HANDLE *handles {};
 
       ACE_NEW_RETURN (handles,
                       HANDLE[this->current_count_],

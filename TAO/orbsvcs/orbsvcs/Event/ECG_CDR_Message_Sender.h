@@ -80,7 +80,7 @@ public:
 
   /// Initialization and termination methods.
   //@{
-  TAO_ECG_CDR_Message_Sender (CORBA::Boolean crc = false);
+  explicit TAO_ECG_CDR_Message_Sender (CORBA::Boolean crc = false);
 
   /// Set the endpoint for sending messages.
   /**
@@ -151,8 +151,8 @@ private:
    * The maximum fragment payload (i.e. the size without the header is
    * also required); @a total_length returns the total message size.
    */
-  CORBA::ULong compute_fragment_count (const ACE_Message_Block* begin,
-                                       const ACE_Message_Block* end,
+  CORBA::ULong compute_fragment_count (ACE_Message_Block const *begin,
+                                       ACE_Message_Block const *end,
                                        int iov_size,
                                        CORBA::ULong max_fragment_payload,
                                        CORBA::ULong& total_length);

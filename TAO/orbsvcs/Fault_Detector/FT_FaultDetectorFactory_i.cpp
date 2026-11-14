@@ -42,7 +42,6 @@
       ));                     \
     return /* value goes here */
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 //////////////////////////////////////////////////////
@@ -52,22 +51,11 @@ TAO::FT_FaultDetectorFactory_i::FT_FaultDetectorFactory_i ()
   : orb_ (nullptr)
   , poa_ (nullptr)
   , objectId_ (nullptr)
-  , ior_output_file_ (nullptr)
-  , ns_name_ (nullptr)
-  , naming_context_ (nullptr)
-  , this_name_ (1)
-  , quit_on_idle_ (0)
   , domain_ (CORBA::string_dup("default_domain"))
   , location_ (1)
   , notifier_ (nullptr)
-  , rm_register_ (1)
   , replication_manager_ (nullptr)
-  , registered_ (0)
   , factory_registry_ (nullptr)
-  , identity_ ("")
-  , empty_slots_ (0)
-  , quit_requested_ (0)
-
 {
   this->location_.length(1);
   this->location_[0].id = CORBA::string_dup("default_location");
@@ -90,36 +78,30 @@ TAO::FT_FaultDetectorFactory_i::~FT_FaultDetectorFactory_i ()
 ////////////////////////////////////////////
 // FT_FaultDetectorFactory_i private methods
 
-void TAO::FT_FaultDetectorFactory_i::shutdown_i()
+void TAO::FT_FaultDetectorFactory_i::shutdown_i ()
 {
   // assume mutex is locked
   for (size_t nDetector = 0; nDetector < this->detectors_.size(); ++nDetector)
   {
-    Fault_Detector_i * detector = this->detectors_[nDetector];
-    if (detector != nullptr)
-    {
-      detector->request_quit();
-    }
+    if (this->detectors_[nDetector])
+      this->detectors_[nDetector]->request_quit ();
   }
 }
 
-int TAO::FT_FaultDetectorFactory_i::write_ior()
+int TAO::FT_FaultDetectorFactory_i::write_ior ()
 {
-  int result = -1;
-  FILE* out = ACE_OS::fopen (this->ior_output_file_, "w");
+  std::unique_ptr<FILE, int (*) (FILE *)> out (
+    ACE_OS::fopen (this->ior_output_file_.c_str (), ACE_TEXT ("w")), ACE_OS::fclose);
   if (out)
   {
-    ACE_OS::fprintf (out, "%s", this->ior_.in ());
-    ACE_OS::fclose (out);
-    result = 0;
+    ACE_OS::fprintf (out.get (), "%s", this->ior_.in ());
+    return 0;
   }
-  else
-  {
-    ORBSVCS_ERROR ((LM_ERROR,
-      "Open failed for %s\n", ior_output_file_
-    ));
-  }
-  return result;
+
+  ORBSVCS_ERROR ((LM_ERROR,
+    ACE_TEXT ("Open failed for %s\n"), this->ior_output_file_.c_str ()
+  ));
+  return -1;
 }
 
 //////////////////////////////////////////////////////
@@ -128,7 +110,7 @@ int TAO::FT_FaultDetectorFactory_i::write_ior()
 int TAO::FT_FaultDetectorFactory_i::parse_args (int argc, ACE_TCHAR * argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("d:l:o:qr"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
   {
@@ -136,13 +118,13 @@ int TAO::FT_FaultDetectorFactory_i::parse_args (int argc, ACE_TCHAR * argv[])
     {
       case 'd':
       {
-        this->domain_ = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ()));
+        this->domain_ = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ()));
         break;
       }
       case 'l':
       {
         this->location_.length(1);
-        this->location_[0].id = CORBA::string_dup(ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ()));
+        this->location_[0].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ()));
         break;
       }
       case 'o':
@@ -157,7 +139,7 @@ int TAO::FT_FaultDetectorFactory_i::parse_args (int argc, ACE_TCHAR * argv[])
       }
       case 'q':
       {
-        this->quit_on_idle_ = 1;
+        this->quit_on_idle_ = true;
         break;
       }
 
@@ -181,16 +163,17 @@ int TAO::FT_FaultDetectorFactory_i::parse_args (int argc, ACE_TCHAR * argv[])
   return 0;
 }
 
-const char * TAO::FT_FaultDetectorFactory_i::identity () const
+char const * TAO::FT_FaultDetectorFactory_i::identity () const
 {
-  return this->identity_.c_str();
+  return this->identity_.c_str ();
 }
 
 int TAO::FT_FaultDetectorFactory_i::idle (int & result)
 {
   ACE_UNUSED_ARG (result);
-  int quit = this->quit_requested_;
-  if (quit == 0 && this->detectors_.size() == this->empty_slots_)
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->internals_, 1);
+  bool quit = this->quit_requested_;
+  if (!quit && this->detectors_.size() == this->empty_slots_)
   {
     // don't quitOnIdle until something has happened
     if (this->quit_on_idle_ && this->empty_slots_ != 0)
@@ -198,13 +181,12 @@ int TAO::FT_FaultDetectorFactory_i::idle (int & result)
       ORBSVCS_ERROR (( LM_INFO,
         "FaultDetectorFactory exits due to quit on idle option.\n"
         ));
-      quit = 1;
+      quit = true;
     }
   }
 
   return quit;
 }
-
 
 int TAO::FT_FaultDetectorFactory_i::init (CORBA::ORB_ptr orb)
 {
@@ -223,7 +205,6 @@ int TAO::FT_FaultDetectorFactory_i::init (CORBA::ORB_ptr orb)
   // Get the POA object.
   this->poa_ =
     PortableServer::POA::_narrow (poa_object.in ());
-
 
   if (CORBA::is_nil(this->poa_.in ()))
   {
@@ -288,7 +269,7 @@ int TAO::FT_FaultDetectorFactory_i::init (CORBA::ORB_ptr orb)
           ORBSVCS_DEBUG ((LM_DEBUG,
             "FaultDetector Registration complete.\n"
             ));
-          this->registered_ = 1;
+          this->registered_ = true;
         }
         else
         {
@@ -300,7 +281,7 @@ int TAO::FT_FaultDetectorFactory_i::init (CORBA::ORB_ptr orb)
         ORBSVCS_ERROR ((LM_ERROR,"FaultNotifier: Can't resolve ReplicationManager, It will not be registered.\n" ));
       }
     }
-    catch (const CORBA::Exception& ex)
+    catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "ReplicaFactory: Exception resolving ReplicationManager.  Factory will not be registered.\n");
@@ -313,11 +294,11 @@ int TAO::FT_FaultDetectorFactory_i::init (CORBA::ORB_ptr orb)
       ));
   }
 
-  if (this->ior_output_file_ != nullptr)
+  if (!this->ior_output_file_.empty ())
   {
     this->identity_ = "file:";
-    this->identity_ += ACE_TEXT_ALWAYS_CHAR(this->ior_output_file_);
-    write_ior();
+    this->identity_ += ACE_TEXT_ALWAYS_CHAR (this->ior_output_file_.c_str ());
+    result = this->write_ior ();
   }
 
   if (this->ns_name_ != nullptr)
@@ -348,10 +329,10 @@ int TAO::FT_FaultDetectorFactory_i::init (CORBA::ORB_ptr orb)
 
 int TAO::FT_FaultDetectorFactory_i::fini ()
 {
-  if (this->ior_output_file_ != nullptr)
+  if (!this->ior_output_file_.empty ())
   {
-    ACE_OS::unlink (this->ior_output_file_);
-    this->ior_output_file_ = nullptr;
+    ACE_OS::unlink (this->ior_output_file_.c_str ());
+    this->ior_output_file_.clear ();
   }
   if (this->ns_name_ != nullptr)
   {
@@ -364,43 +345,49 @@ int TAO::FT_FaultDetectorFactory_i::fini ()
     this->factory_registry_->unregister_factory(
       FT::FAULT_DETECTOR_ROLE_NAME,
       this->location_);
-    this->registered_ = 0;
+    this->registered_ = false;
   }
   return 0;
 }
 
-
-CORBA::ULong TAO::FT_FaultDetectorFactory_i::allocate_id()
+CORBA::ULong TAO::FT_FaultDetectorFactory_i::allocate_id ()
 {
-  CORBA::ULong id = this->detectors_.size();
+  CORBA::ULong const id = static_cast<CORBA::ULong> (this->detectors_.size ());
   if (this->empty_slots_ != 0)
   {
-    for(CORBA::ULong pos = 0; pos < id; ++pos)
+    for (CORBA::ULong pos {}; pos < id; ++pos)
     {
-      if (this->detectors_[pos] == nullptr)
-      {
-        id = pos;
-      }
+      if (!this->detectors_[pos])
+        return pos;
     }
   }
   else
   {
-    this->detectors_.push_back(nullptr);
+    try
+    {
+      this->detectors_.emplace_back ();
+    }
+    catch (std::bad_alloc const &)
+    {
+      throw CORBA::NO_MEMORY ();
+    }
     this->empty_slots_ += 1;
   }
   return id;
 }
 
-void TAO::FT_FaultDetectorFactory_i::remove_detector(CORBA::ULong id, TAO::Fault_Detector_i * detector)
+void TAO::FT_FaultDetectorFactory_i::remove_detector (
+  CORBA::ULong id,
+  TAO::Fault_Detector_i * detector)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->internals_);
 
-  if (id < this->detectors_.size())
+  if (id < this->detectors_.size ())
   {
-    if(this->detectors_[id] == detector)
+    if (this->detectors_[id].get () == detector)
     {
-      delete this->detectors_[id];
-      this->detectors_[id] = nullptr;
+      // The worker thread makes this its final call before returning.
+      this->detectors_[id].reset ();
       this->empty_slots_ += 1;
       if (this->empty_slots_ == this->detectors_.size())
       {
@@ -431,7 +418,7 @@ void TAO::FT_FaultDetectorFactory_i::remove_detector(CORBA::ULong id, TAO::Fault
 // FT_FaultDetectorFactory_i CORBA methods
 
 void TAO::FT_FaultDetectorFactory_i::change_properties (
-    const PortableGroup::Properties & property_set)
+    PortableGroup::Properties const & property_set)
 {
   METHOD_ENTRY(TAO::FT_FaultDetectorFactory_i::change_properties);
 
@@ -470,13 +457,13 @@ void TAO::FT_FaultDetectorFactory_i::shutdown ()
   METHOD_ENTRY(TAO::FT_FaultDetectorFactory_i::shutdown);
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->internals_);
   shutdown_i ();
-  this->quit_requested_ = 1;
+  this->quit_requested_ = true;
   METHOD_RETURN(TAO::FT_FaultDetectorFactory_i::shutdown);
 }
 
 CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
-    const char * type_id,
-    const PortableGroup::Criteria & the_criteria,
+    char const * type_id,
+    PortableGroup::Criteria const & the_criteria,
     PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id)
 {
   METHOD_ENTRY(TAO::FT_FaultDetectorFactory_i::create_object);
@@ -487,10 +474,10 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
   ::TAO::PG_Property_Set decoder (the_criteria);
 
   // boolean, becomes true if a required parameter is missing
-  int missingParameter = 0;
-  char const * missingParameterName = nullptr;
+  bool missingParameter {};
+  char const * missingParameterName {};
 
-  FT::FaultNotifier_ptr notifier = nullptr;
+  FT::FaultNotifier_ptr notifier {};
   if (! ::TAO::find (decoder, ::FT::FT_NOTIFIER, notifier) )
   {
     if (! CORBA::is_nil (this->notifier_.in ()))
@@ -503,25 +490,25 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
         "FaultDetectorFactory::create_object: Missing parameter %s\n",
         ::FT::FT_NOTIFIER
         ));
-      missingParameter = 1;
+      missingParameter = true;
       missingParameterName = ::FT::FT_NOTIFIER;
     }
   }
 
-  FT::PullMonitorable_ptr monitorable = nullptr;
+  FT::PullMonitorable_ptr monitorable {};
   if (! ::TAO::find (decoder, ::FT::FT_MONITORABLE, monitorable) )
   {
     ORBSVCS_ERROR ((LM_ERROR,
       "FaultDetectorFactory::create_object: Missing parameter %s\n",
       ::FT::FT_MONITORABLE
       ));
-    missingParameter = 1;
+    missingParameter = true;
     missingParameterName = ::FT::FT_MONITORABLE;
   }
 
-  FT::FTDomainId domain_id = nullptr;
+  FT::FTDomainId domain_id {};
   // note the cast in the next line makes ANY >>= work.
-  char const * domain_id_string = nullptr;
+  char const * domain_id_string {};
   if (::TAO::find (decoder, ::FT::FT_DOMAIN_ID, domain_id_string) )
   {
     // NOTE the assumption that we can assign a char * to a domain id
@@ -539,7 +526,7 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
 //    missingParameterName = ::FT::FT_DOMAIN_ID;
   }
 
-  PortableGroup::Location const * object_location = nullptr;
+  PortableGroup::Location const * object_location {};
   if (! ::TAO::find (decoder, ::FT::FT_LOCATION, object_location) )
   {
       object_location = & this->location_;
@@ -552,8 +539,8 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
 //    missingParameterName = ::FT::FT_LOCATION;
   }
 
-  PortableGroup::TypeId object_type = nullptr;
-  char const * object_type_string = nullptr;
+  PortableGroup::TypeId object_type {};
+  char const * object_type_string {};
   if (::TAO::find (decoder, ::FT::FT_TYPE_ID, object_type_string))
   {
     object_type = const_cast<char *> (object_type_string);
@@ -565,7 +552,7 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
     ORBSVCS_DEBUG ((LM_DEBUG, "Object type not given.\n"));
   }
 
-  FT::ObjectGroupId group_id = 0;
+  FT::ObjectGroupId group_id {};
   if (! ::TAO::find (decoder, ::FT::FT_GROUP_ID, group_id) )
   {
     // Not required: missingParameter = 1;
@@ -580,15 +567,15 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
     throw PortableGroup::InvalidCriteria();
   }
 
-  CORBA::ULong detectorId = allocate_id();
+  CORBA::ULong const detector_id = this->allocate_id ();
 
   // NOTE: ACE_NEW is incompatable with auto_ptr
   // so create a bare pointer first.
-  TAO::Fault_Detector_i * pFD = nullptr;
+  TAO::Fault_Detector_i * pFD {};
 
   ACE_NEW_NORETURN(pFD, TAO::Fault_Detector_i(
     *this,
-    detectorId,
+    detector_id,
     notifier,
     monitorable,
     domain_id,
@@ -600,9 +587,9 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
     ORBSVCS_ERROR ((LM_ERROR,
       "New FaultDetector_i returned NULL.  Throwing ObjectNotCreated.\n"
       ));
-    throw PortableGroup::ObjectNotCreated();
+    throw PortableGroup::ObjectNotCreated ();
   }
-  std::unique_ptr<TAO::Fault_Detector_i> detector(pFD);
+  std::unique_ptr<TAO::Fault_Detector_i> detector (pFD);
 
   ACE_NEW_NORETURN ( factory_creation_id,
     PortableGroup::GenericFactory::FactoryCreationId);
@@ -614,12 +601,16 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
 
     throw PortableGroup::ObjectNotCreated();
   }
-  (*factory_creation_id) <<= detectorId;
+  (*factory_creation_id) <<= detector_id;
 
-  (*detector).start(this->threadManager_);
-
-  this->detectors_[detectorId] = detector.release();
+  this->detectors_[detector_id] = std::move (detector);
   this->empty_slots_ -= 1;
+  if (this->detectors_[detector_id]->start (this->threadManager_) == -1)
+  {
+    this->detectors_[detector_id].reset ();
+    this->empty_slots_ += 1;
+    throw PortableGroup::ObjectNotCreated ();
+  }
 
   // since FaultDetector is not a CORBA object (it does not implement
   // an interface.) we always return NIL;
@@ -628,19 +619,19 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
 }
 
 void TAO::FT_FaultDetectorFactory_i::delete_object (
-    const PortableGroup::GenericFactory::FactoryCreationId & factory_creation_id)
+    PortableGroup::GenericFactory::FactoryCreationId const & factory_creation_id)
 {
   METHOD_ENTRY(TAO::FT_FaultDetectorFactory_i::delete_object);
 
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->internals_);
 
-  CORBA::ULong detectorId;
-  factory_creation_id >>= detectorId;
-  if (detectorId < this->detectors_.size())
+  CORBA::ULong detector_id {};
+  factory_creation_id >>= detector_id;
+  if (detector_id < this->detectors_.size ())
   {
-    if(this->detectors_[detectorId] != nullptr)
+    if (this->detectors_[detector_id])
     {
-      this->detectors_[detectorId]->request_quit();
+      this->detectors_[detector_id]->request_quit ();
     }
     else
     {

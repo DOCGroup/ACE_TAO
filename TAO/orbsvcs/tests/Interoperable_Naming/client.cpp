@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    client.cpp
@@ -10,27 +9,23 @@
  */
 //=============================================================================
 
-
 #include "ncontextext_client_i.h"
 
-int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+int
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int result = 0;
-
   try
     {
-      NContextExt_Client_i client;
+      NContextExt_Client_i client {};
 
       if (client.init (argc, argv) != 0)
         return 1;
 
-      result = client.run ();
+      return client.run ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("client");
       return 1;
     }
-
-  return result;
 }

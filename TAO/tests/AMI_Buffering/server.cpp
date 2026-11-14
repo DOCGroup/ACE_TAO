@@ -1,25 +1,29 @@
 #include "AMI_Buffering.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
+#include <memory>
 
-ACE_TCHAR const *ior_output_file = ACE_TEXT("server.ior");
-ACE_TCHAR const *ior = ACE_TEXT("file://admin.ior");
+struct Options
+{
+  ACE_TCHAR const *ior_output_file {ACE_TEXT ("server.ior")};
+  ACE_TCHAR const *ior {ACE_TEXT ("file://admin.ior")};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:k:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'o':
-        ior_output_file = get_opts.opt_arg ();
+        options.ior_output_file = get_opts.opt_arg ();
         break;
 
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
 
       case '?':
@@ -41,13 +45,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
+      CORBA::Object_var const poa_object =
+        orb->resolve_initial_references ("RootPOA");
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
@@ -55,53 +59,57 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                            " (%P|%t) Panic: nil RootPOA\n"),
                           1);
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
-      if (parse_args (argc, argv) != 0)
+      Options options;
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
-      CORBA::Object_var tmp =
-        orb->string_to_object (ior);
+      CORBA::Object_var const object =
+        orb->string_to_object (options.ior);
 
-      Test::AMI_Buffering_Admin_var admin =
-        Test::AMI_Buffering_Admin::_narrow (tmp.in ());
+      Test::AMI_Buffering_Admin_var const admin =
+        Test::AMI_Buffering_Admin::_narrow (object.in ());
 
       if (CORBA::is_nil (admin.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
                              "Nil AMI_Buffering_Admin reference <%s>\n",
-                             ior),
+                             options.ior),
                             1);
         }
 
-      AMI_Buffering *AMI_buffering_impl;
-      ACE_NEW_RETURN (AMI_buffering_impl,
+      AMI_Buffering *ami_buffering_impl {};
+      ACE_NEW_RETURN (ami_buffering_impl,
                       AMI_Buffering (orb.in (),
                                         admin.in ()),
                       1);
-      PortableServer::ServantBase_var owner_transfer(AMI_buffering_impl);
+      // The servant var takes ownership of this newly allocated servant.
+      PortableServer::ServantBase_var owner_transfer (ami_buffering_impl);
 
-      PortableServer::ObjectId_var id =
-        root_poa->activate_object (AMI_buffering_impl);
+      PortableServer::ObjectId_var const id =
+        root_poa->activate_object (ami_buffering_impl);
 
-      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+      CORBA::Object_var const object_ref = root_poa->id_to_reference (id.in ());
 
-      Test::AMI_Buffering_var AMI_buffering =
-        Test::AMI_Buffering::_narrow (object.in ());
+      Test::AMI_Buffering_var const ami_buffering =
+        Test::AMI_Buffering::_narrow (object_ref.in ());
 
-      CORBA::String_var ior =
-        orb->object_to_string (AMI_buffering.in ());
+      CORBA::String_var const ior =
+        orb->object_to_string (ami_buffering.in ());
 
       // If the ior_output_file exists, output the ior to it
-      FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == nullptr)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s",
-                           ior_output_file),
-                          1);
-      ACE_OS::fprintf (output_file, "%s", ior.in ());
-      ACE_OS::fclose (output_file);
+      {
+        std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+          ACE_OS::fopen (options.ior_output_file, "w"), ACE_OS::fclose);
+        if (!output_file)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Cannot open output file for writing IOR: %s"),
+                             options.ior_output_file),
+                            1);
+        ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
+      }
 
       poa_manager->activate ();
 
@@ -113,7 +121,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught in server:");
       return 1;

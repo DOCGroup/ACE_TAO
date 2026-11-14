@@ -8,17 +8,17 @@
  */
 //=============================================================================
 
-
 #ifndef _URL_VISITOR_H
 #define _URL_VISITOR_H
 #include /**/ "ace/pre.h"
+
+#include <memory>
 
 #include "ace/Strategies_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
 
 #include "HTTP_URL.h"
 #include "Iterators.h"
@@ -38,7 +38,6 @@ class URL_Validation_Visitor;
 class URL_Processing_Strategy
 {
 public:
-  /// Constructor.
   URL_Processing_Strategy (URL &,
                            URL_Iterator &);
 
@@ -47,9 +46,8 @@ public:
   /// Perform the strategy.
   virtual int execute () = 0;
 
+  /// Close down the resources.
   virtual int destroy ();
-
-  // Close down the resources.
 
 protected:
   /// A reference to the URL "context" that we're processing.
@@ -67,12 +65,11 @@ protected:
 class HTTP_Header_Processing_Strategy : public URL_Processing_Strategy
 {
 public:
-  /// Constructor.
   HTTP_Header_Processing_Strategy (URL &,
                                    URL_Iterator &);
 
   /// Perform the strategy for processing an HTTP header.
-  virtual int execute ();
+  int execute () override;
 };
 
 /**
@@ -86,7 +83,6 @@ public:
 class HTML_Body_Validation_Strategy : public URL_Processing_Strategy
 {
 public:
-  /// Constructor.
   HTML_Body_Validation_Strategy (URL &,
                                  URL_Iterator &,
                                  URL_Validation_Visitor &);
@@ -96,7 +92,7 @@ public:
    * iterates over the HTML file and recursively visits embedded links
    * to process them, as well.
    */
-  virtual int execute ();
+  int execute () override;
 
 private:
   /// This is the context of the visit.
@@ -113,12 +109,11 @@ private:
 class URL_Download_Strategy : public URL_Processing_Strategy
 {
 public:
-  /// Constructor.
   URL_Download_Strategy (URL &,
                          URL_Iterator &);
 
   /// Perform the strategy for downloading a URL to a temporary file.
-  virtual int execute ();
+  int execute () override;
 };
 
 /**
@@ -131,10 +126,11 @@ class URL_Visitation_Strategy_Factory
 public:
   URL_Visitation_Strategy_Factory (URL *);
 
-  /// Destructor.
   virtual ~URL_Visitation_Strategy_Factory ();
 
-  // = Factory Methods.
+  /// @name Factory methods
+  /// @{
+
   /// Factory Method that makes the header iterator.
   virtual URL_Iterator *make_header_iterator () = 0;
 
@@ -150,6 +146,8 @@ public:
   /// Close down the resources.
   virtual int destroy () = 0;
 
+  /// @}
+
 protected:
   /// Stash the URL so we don't have to pass it around.
   URL *url_;
@@ -163,24 +161,27 @@ protected:
 class URL_Download_Visitation_Strategy_Factory : public URL_Visitation_Strategy_Factory
 {
 public:
-  /// Constructor.
   URL_Download_Visitation_Strategy_Factory (URL *);
 
-  // = Factory Methods.
+  /// @name Factory methods
+  /// @{
+
   /// Factory Method that makes an <HTTP_Header_Iterator>.
-  virtual URL_Iterator *make_header_iterator ();
+  URL_Iterator *make_header_iterator () override;
 
   /// Factory Method that makes an <HTML_Body_Iterator>.
-  virtual URL_Iterator *make_body_iterator ();
+  URL_Iterator *make_body_iterator () override;
 
   /// Factory Method that makes the header processing strategy.
-  virtual URL_Processing_Strategy *make_header_strategy (URL_Iterator &);
+  URL_Processing_Strategy *make_header_strategy (URL_Iterator &) override;
 
   /// Factory Method that makes the body processing strategy .
-  virtual URL_Processing_Strategy *make_body_strategy (URL_Iterator &);
+  URL_Processing_Strategy *make_body_strategy (URL_Iterator &) override;
 
   /// Close down the resources.
-  virtual int destroy ();
+  int destroy () override;
+
+  /// @}
 };
 
 /**
@@ -191,25 +192,28 @@ public:
 class URL_Validation_Visitation_Strategy_Factory : public URL_Visitation_Strategy_Factory
 {
 public:
-  /// Constructor.
   URL_Validation_Visitation_Strategy_Factory (URL *,
                                               URL_Validation_Visitor &);
 
-  // = Factory Methods.
+  /// @name Factory methods
+  /// @{
+
   /// Factory Method that makes an <HTTP_Header_Iterator>.
-  virtual URL_Iterator *make_header_iterator ();
+  URL_Iterator *make_header_iterator () override;
 
   /// Factory Method that makes an <HTML_Body_Iterator>.
-  virtual URL_Iterator *make_body_iterator ();
+  URL_Iterator *make_body_iterator () override;
 
   /// Factory Method that makes the header processing strategy.
-  virtual URL_Processing_Strategy *make_header_strategy (URL_Iterator &);
+  URL_Processing_Strategy *make_header_strategy (URL_Iterator &) override;
 
   /// Factory Method that makes the body processing strategy .
-  virtual URL_Processing_Strategy *make_body_strategy (URL_Iterator &);
+  URL_Processing_Strategy *make_body_strategy (URL_Iterator &) override;
 
   /// Close down the resources.
-  virtual int destroy ();
+  int destroy () override;
+
+  /// @}
 
 private:
   /// Context of the visitor.
@@ -293,14 +297,18 @@ public:
    * is enabled then <visit> recursively checks each link embedded in
    * the HTML page.
    */
-  virtual int visit (HTTP_URL &http_url);
+  int visit (HTTP_URL &http_url) override;
 
   // @@
   // virtual int visit (FTP_URL &http_url);
 
   /// Cleanup the resources.
   URL_Validation_Visitor ();
-  virtual int destroy ();
+  int destroy () override;
+  URL_Validation_Visitor (URL_Validation_Visitor const &) = delete;
+  URL_Validation_Visitor &operator= (URL_Validation_Visitor const &) = delete;
+  URL_Validation_Visitor (URL_Validation_Visitor &&) = delete;
+  URL_Validation_Visitor &operator= (URL_Validation_Visitor &&) = delete;
 
   /// Returns a reference to the URL cache.
   URL_CACHE &url_cache ();
@@ -308,8 +316,8 @@ public:
 protected:
   /// Factory Method that makes a
   /// <URL_Validation_Visitation_Strategy_Factory>.
-  virtual ~URL_Validation_Visitor ();
-  virtual URL_Visitation_Strategy_Factory *make_visitation_strategy_factory (URL &);
+  ~URL_Validation_Visitor () override;
+  URL_Visitation_Strategy_Factory *make_visitation_strategy_factory (URL &) override;
 
   /// Cache the status of URLs we've already validated.
   URL_CACHE url_cache_;
@@ -321,15 +329,14 @@ protected:
   NULL_CREATION_STRATEGY creation_strategy_;
   NULL_ACTIVATION_STRATEGY activation_strategy_;
 
-  // Configure the Strategy Connector with a strategy that caches
-  // connection.
-  CACHED_CONNECT_STRATEGY *caching_connect_strategy_;
-
-  STRATEGY_CONNECTOR *strat_connector_;
-
   CACHING_STRATEGY caching_strategy_;
-};
 
+  /// Cached connection strategy used by the connector.
+  std::unique_ptr<CACHED_CONNECT_STRATEGY> caching_connect_strategy_;
+
+  /// Strategy connector used to open URL streams.
+  std::unique_ptr<STRATEGY_CONNECTOR> strat_connector_;
+};
 
 /**
  * @class URL_Download_Visitor
@@ -347,50 +354,40 @@ public:
    * is enabled then <visit> recursively checks each link embedded in
    * the HTML page.
    */
-  virtual int visit (HTTP_URL &http_url);
+  int visit (HTTP_URL &http_url) override;
 
   // @@
   // virtual int visit (FTP_URL &http_url);
 
   /// Cleanup the resources.
-  virtual int destroy ();
+  int destroy () override;
 
 protected:
   /// Factory Method that makes a <URL_Download_Visitation_Strategy_Factory>.
-  URL_Visitation_Strategy_Factory *make_visitation_strategy_factory (URL &);
+  URL_Visitation_Strategy_Factory *make_visitation_strategy_factory (URL &) override;
 };
 
 /**
- * @class Auto_Destroyer
+ * @class Destroy_Deleter
  *
  * @brief Simple class that ensures the <destroy> method is called on our
  * <URL_*> objects when they go out of scope.
  *
- * This class is similar to an auto_ptr<> and should be used to
- * simplify blocks of code that must create/destroy pointers to
- * various <URL_*> related strategies and iterators.
+ * Use it as a unique_ptr deleter for objects whose cleanup is
+ * performed by their destroy() operation.
  */
 template <class T>
-class Auto_Destroyer
+struct Destroy_Deleter
 {
-public:
-  Auto_Destroyer (T *t): t_ (t) {}
-  T *operator-> () { return this->t_; }
-  T *operator *() { return this->t_; }
-  void operator= (T *t)
+  void operator () (T *ptr) const
   {
-    if (this->t_ != 0)
-      this->t_->destroy ();
-    this->t_ = t;
+    if (ptr != nullptr)
+      ptr->destroy ();
   }
-  ~Auto_Destroyer ()
-  {
-    if (this->t_ != 0)
-      t_->destroy ();
-  }
-private:
-  T *t_;
 };
+
+template <class T>
+using Destroyable_Unique_Ptr = std::unique_ptr<T, Destroy_Deleter<T>>;
 
 #include /**/ "ace/post.h"
 #endif /* _URL_VISITOR_H */

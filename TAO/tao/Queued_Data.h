@@ -45,17 +45,18 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Export TAO_Queued_Data
 {
 public:
-  /// Default Constructor
-  TAO_Queued_Data (ACE_Allocator *alloc = nullptr);
+  explicit TAO_Queued_Data (ACE_Allocator *alloc = nullptr);
 
-  /// Constructor.
-  TAO_Queued_Data (ACE_Message_Block *mb, ACE_Allocator *alloc = nullptr);
+  /// Borrow the message block \a mb; the caller retains ownership and controls its lifetime.
+  explicit TAO_Queued_Data (ACE_Message_Block *mb, ACE_Allocator *alloc = nullptr);
 
-  /// Copy constructor.
   TAO_Queued_Data (TAO_Queued_Data const &qd);
+  TAO_Queued_Data &operator= (TAO_Queued_Data const &) = delete;
+  TAO_Queued_Data (TAO_Queued_Data &&) = delete;
+  TAO_Queued_Data &operator= (TAO_Queued_Data &&) = delete;
 
   /// Creation of a node in the queue.
-  static TAO_Queued_Data* make_queued_data (
+  static TAO_Queued_Data *make_queued_data (
                                     ACE_Allocator *message_buffer_alloc = nullptr,
                                     ACE_Allocator *input_cdr_alloc = nullptr,
                                     ACE_Data_Block *db = nullptr);
@@ -65,7 +66,7 @@ public:
 
   /// Duplicate ourselves. This creates a copy of ourselves on the
   /// heap and returns a pointer to the duplicated node.
-  static TAO_Queued_Data* duplicate (TAO_Queued_Data &qd);
+  static TAO_Queued_Data *duplicate (TAO_Queued_Data &qd);
 
   /// Consolidate this fragments chained message blocks into one.
   /// @return -1 if consolidation failed, eg out or memory, otherwise 0
@@ -93,26 +94,24 @@ public:
   TAO_Queued_Data *next () const;
 
   /// Set next
-  void next (TAO_Queued_Data* qd);
+  void next (TAO_Queued_Data *qd);
 
   /// Get message block
   ACE_Message_Block *msg_block () const;
 
-  /// Set message block
+  /// Adopt the message block \a mb; nullptr detaches it without releasing it.
   void msg_block (ACE_Message_Block *mb);
 
   /// Set the state
-  void state (const TAO_GIOP_Message_State& state);
+  void state (TAO_GIOP_Message_State const &state);
 
   /// Get the state
-  const TAO_GIOP_Message_State& state () const;
+  TAO_GIOP_Message_State const &state () const;
 
 private:
-  TAO_Queued_Data &operator= (TAO_Queued_Data const &) = delete;
-  TAO_Queued_Data (TAO_Queued_Data &&) = delete;
-  TAO_Queued_Data &operator= (TAO_Queued_Data &&) = delete;
-
   /// The message block that contains the message.
+  /// Owns dynamically allocated message blocks; msg_block_ may also borrow a stack block.
+  ACE_Message_Block_Unique_Ptr msg_block_owner_ {};
   ACE_Message_Block *msg_block_ {};
 
   /*!

@@ -1,68 +1,81 @@
-#include <stdio.h>
+#ifndef ACE_PERFORMANCE_TESTS_SCTP_HIST_H
+#define ACE_PERFORMANCE_TESTS_SCTP_HIST_H
 
-#define HIST_VERSION  "1.3"
+#include <cfloat>
+#include <cstdio>
+#include <string>
+#include <utility>
+#include <vector>
 
 namespace ACE_SCTP
 {
-  struct optheader {
-    char *key;
-    char *value;
-    struct optheader *next;
+  inline constexpr char HIST_VERSION[] = "1.3";
+
+  struct hist_t
+  {
+    std::string name;
+    double max {DBL_MIN};
+    double min {DBL_MAX};
+    double sum {};
+    double sum2 {};
+    double sum3 {};
+    double sum4 {};
+    double first {};
+    double last {};
+    unsigned int num_points {};
+    unsigned int num_bins {};
+    std::vector<unsigned int> hs;
+    unsigned int num_outer {};
+    unsigned int max_num_outer {};
+    std::vector<double> outer;
+    int skew {};
+    std::vector<std::pair<std::string, std::string>> optional_headers;
   };
 
-  typedef struct hist_s {
-    char *name;
-    double max, min, sum, sum2, sum3, sum4;
-    double first, last;
-    unsigned int num_points, num_bins;
-    unsigned int *hs;
-    unsigned int num_outer, max_num_outer;
-    double *outer;
-    struct hist_s *next;
-    int skew;
-    struct optheader *firstoptheader;
-  } hist_t;
+  // The histogram registry in hist.cpp owns these; pointers remain valid
+  // until the process exits.
+  using HIST = hist_t *;
 
-  #define HIST hist_t *
+  hist_t *histogram (std::string name,
+                     unsigned int num_bins,
+                     double first,
+                     double last);
 
-  hist_t *histogram(char *name, unsigned int num_bins, double first,
-                    double last);
+  void set_outer (unsigned int max_num_outer, hist_t *hist);
 
-  void set_outer(unsigned int max_num_outer, hist_t *hist);
+  void enable_skew (hist_t *hist);
 
-  void enable_skew(hist_t *hist);
+  void add_field (std::string key, std::string value, hist_t *hist);
 
-  void add_field(char *key, char *value, hist_t *hist);
+  void add_field_n (std::string key, int value, hist_t *hist);
 
-  void add_field_n(char *key, int value, hist_t *hist);
+  void record (double point, hist_t *hist);
 
-  void record(double point, hist_t *hist);
+  void report_to (std::FILE *strm, hist_t const *hist);
 
-  void report_to(FILE *strm, hist_t *hist);
+  void report ();
 
-  void report();
+  double get_mean (hist_t const *hist);
 
-  void stats_init();
+  double get_min (hist_t const *hist);
 
-  double get_mean(HIST hist);
+  double get_max (hist_t const *hist);
 
-  double get_min(HIST hist);
+  double get_variance (hist_t const *hist);
 
-  double get_max(HIST hist);
+  double get_num (hist_t const *hist);
 
-  double get_variance(HIST hist);
+  void set_mean (hist_t *hist, double mean);
 
-  double get_num(HIST hist);
+  void set_min (hist_t *hist, double min);
 
-  void set_mean(HIST hist, double mean);
+  void set_max (hist_t *hist, double max);
 
-  void set_min(HIST hist, double min);
+  void set_variance (hist_t *hist, double variance);
 
-  void set_max(HIST hist, double max);
+  void add_histogram (hist_t *dest, hist_t const *source);
 
-  void set_variance(HIST hist, double variance);
-
-  void add_histogram(HIST dest, HIST source);
-
-  double histfloor(double x);
+  double histfloor (double x);
 }
+
+#endif // ACE_PERFORMANCE_TESTS_SCTP_HIST_H

@@ -37,30 +37,27 @@ class TAO_RTEvent_Serv_Export TAO_EC_Default_ProxyPushConsumer :
   public TAO_EC_ProxyPushConsumer
 {
 public:
-  /// Constructor...
-  TAO_EC_Default_ProxyPushConsumer (TAO_EC_Event_Channel_Base* event_channel);
+  explicit TAO_EC_Default_ProxyPushConsumer (TAO_EC_Event_Channel_Base* event_channel);
 
-  /// Destructor...
   virtual ~TAO_EC_Default_ProxyPushConsumer () = default;
 
- virtual void activate (
-     RtecEventChannelAdmin::ProxyPushConsumer_ptr &proxy);
+  void activate (
+    RtecEventChannelAdmin::ProxyPushConsumer_ptr &proxy) override;
 
   // = The RtecEventChannelAdmin::ProxyPushConsumer methods...
-  virtual void connect_push_supplier (
-                RtecEventComm::PushSupplier_ptr push_supplier,
-                const RtecEventChannelAdmin::SupplierQOS& qos);
-  virtual void push (const RtecEventComm::EventSet& event);
-  virtual void disconnect_push_consumer ();
+  void connect_push_supplier (
+    RtecEventComm::PushSupplier_ptr push_supplier,
+    const RtecEventChannelAdmin::SupplierQOS& qos) override;
+  void push (const RtecEventComm::EventSet& event) override;
+  void disconnect_push_consumer () override;
 
   // = The Servant methods
-  virtual PortableServer::POA_ptr _default_POA ();
-  virtual void _add_ref ();
-  virtual void _remove_ref ();
+  PortableServer::POA_ptr _default_POA () override;
+  void _add_ref () override;
+  void _remove_ref () override;
 
 private:
-  virtual PortableServer::ObjectId
-         object_id ();
+  PortableServer::ObjectId object_id () override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

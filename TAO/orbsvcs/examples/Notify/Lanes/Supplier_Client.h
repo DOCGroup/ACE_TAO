@@ -24,11 +24,12 @@ class TAO_Notify_Lanes_Supplier;
 class TAO_Notify_Lanes_Supplier_Client : public ACE_Task_Base
 {
 public:
-  /// Constructor
-  TAO_Notify_Lanes_Supplier_Client (TAO_Notify_ORB_Objects& orb_objects);
-
-  /// Destructor
-  ~TAO_Notify_Lanes_Supplier_Client ();
+  explicit TAO_Notify_Lanes_Supplier_Client (TAO_Notify_ORB_Objects& orb_objects);
+  ~TAO_Notify_Lanes_Supplier_Client () override = default;
+  TAO_Notify_Lanes_Supplier_Client (TAO_Notify_Lanes_Supplier_Client const&) = delete;
+  TAO_Notify_Lanes_Supplier_Client& operator= (TAO_Notify_Lanes_Supplier_Client const&) = delete;
+  TAO_Notify_Lanes_Supplier_Client (TAO_Notify_Lanes_Supplier_Client&&) = delete;
+  TAO_Notify_Lanes_Supplier_Client& operator= (TAO_Notify_Lanes_Supplier_Client&&) = delete;
 
   /// Init
   void initialize ();
@@ -40,26 +41,29 @@ public:
   int parse_args (int argc, ACE_TCHAR *argv[]);
 
   /// The thread entry point.
-  virtual int svc ();
+  int svc () override;
 
 protected:
   /// Create an EC
-  CosNotifyChannelAdmin::EventChannel_ptr create_ec ();
+  CosNotifyChannelAdmin::EventChannel_ptr create_ec () const;
 
   /// Write ior to file.
-  void write_ior ();
+  void write_ior () const;
 
   /// ORB Objects.
-  TAO_Notify_ORB_Objects orb_objects_;
+  TAO_Notify_ORB_Objects& orb_objects_;
 
   /// Supplier that sends events.
-  TAO_Notify_Lanes_Supplier* supplier_;
+  // The POA retains the activated servant; this pointer is non-owning.
+  TAO_Notify_Lanes_Supplier* supplier_ {};
 
-  /// The Number of consumers that we expect to send an event to.
-  int consumer_count_;
+  struct Options
+  {
+    int consumer_count {2};
+    ACE_TString ior_file_name;
+  };
 
-  /// Name of the file to write the supplier ior to.
-  ACE_TString ior_file_name_;
+  Options options_;
 };
 
 #include /**/ "ace/post.h"

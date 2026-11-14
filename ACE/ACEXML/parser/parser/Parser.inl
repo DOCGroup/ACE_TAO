@@ -54,7 +54,7 @@ ACEXML_Parser::setErrorHandler (ACEXML_ErrorHandler *handler)
   this->error_handler_ = handler;
 }
 
-ACEXML_INLINE int
+ACEXML_INLINE bool
 ACEXML_Parser::isChar (ACEXML_UCS4 c) const
 {
   return (c == 0x9
@@ -65,21 +65,21 @@ ACEXML_Parser::isChar (ACEXML_UCS4 c) const
           || (c >= 0x10000 && c <= 0x10FFFF));
 }
 
-ACEXML_INLINE int
-ACEXML_Parser::isCharRef (const ACEXML_Char c) const
+ACEXML_INLINE bool
+ACEXML_Parser::isCharRef (ACEXML_Char const c) const
 {
   return ((c >= 'a' && c <= 'f')
           || (c >= 'A' && c <= 'F'));
 }
 
-ACEXML_INLINE int
-ACEXML_Parser::isNormalDigit (const ACEXML_Char c) const
+ACEXML_INLINE bool
+ACEXML_Parser::isNormalDigit (ACEXML_Char const c) const
 {
   return (c >= '\x30' && c <= '\x39');
 }
 
-ACEXML_INLINE int
-ACEXML_Parser::isBasechar (const ACEXML_Char c) const
+ACEXML_INLINE bool
+ACEXML_Parser::isBasechar (ACEXML_Char const c) const
 {
 #if defined (ACE_USES_WCHAR)
   return ACEXML_ParserInt::isBasechar_i (c);
@@ -88,30 +88,30 @@ ACEXML_Parser::isBasechar (const ACEXML_Char c) const
 #endif /* ACE_USES_WCHAR */
 }
 
-ACEXML_INLINE int
-ACEXML_Parser::isIdeographic (const ACEXML_Char c) const
+ACEXML_INLINE bool
+ACEXML_Parser::isIdeographic (ACEXML_Char const c) const
 {
 #if defined (ACE_USES_WCHAR)
   return ACEXML_ParserInt::isIdeographic_i (c);
 #else
   ACE_UNUSED_ARG (c);
-  return 0;
+  return false;
 #endif /* ACE_USES_WCHAR */
 }
 
-ACEXML_INLINE int
-ACEXML_Parser::isCombiningchar (const ACEXML_Char c) const
+ACEXML_INLINE bool
+ACEXML_Parser::isCombiningchar (ACEXML_Char const c) const
 {
 #if defined (ACE_USES_WCHAR)
   return ACEXML_ParserInt::isCombiningchar_i (c);
 #else
   ACE_UNUSED_ARG (c);
-      return 0;
+  return false;
 #endif /* ACE_USES_WCHAR */
-    }
+}
 
-ACEXML_INLINE int
-ACEXML_Parser::isDigit (const ACEXML_Char c) const
+ACEXML_INLINE bool
+ACEXML_Parser::isDigit (ACEXML_Char const c) const
 {
 #if defined (ACE_USES_WCHAR)
   return ACEXML_ParserInt::isDigit_i (c);
@@ -120,8 +120,8 @@ ACEXML_Parser::isDigit (const ACEXML_Char c) const
 #endif /* ACE_USES_WCHAR */
 }
 
-ACEXML_INLINE int
-ACEXML_Parser::isExtender (const ACEXML_Char c) const
+ACEXML_INLINE bool
+ACEXML_Parser::isExtender (ACEXML_Char const c) const
 {
 #if defined (ACE_USES_WCHAR)
   return ACEXML_ParserInt::isExtender_i (c);
@@ -130,22 +130,22 @@ ACEXML_Parser::isExtender (const ACEXML_Char c) const
 #endif /* ACE_USES_WCHAR */
 }
 
-ACEXML_INLINE int
-ACEXML_Parser::isLetter (const ACEXML_Char c) const
+ACEXML_INLINE bool
+ACEXML_Parser::isLetter (ACEXML_Char const c) const
 {
   return (this->isBasechar (c) || this->isIdeographic (c));
 }
 
-ACEXML_INLINE int
-ACEXML_Parser::isNameChar (const ACEXML_Char c) const
+ACEXML_INLINE bool
+ACEXML_Parser::isNameChar (ACEXML_Char const c) const
 {
   return (this->isLetter (c) || this->isDigit (c) || c == '.' || c == '-' ||
           c == '_' || c == ':' || this->isCombiningchar (c) ||
           this->isExtender (c));
 }
 
-ACEXML_INLINE int
-ACEXML_Parser::isPubidChar (const ACEXML_Char c) const
+ACEXML_INLINE bool
+ACEXML_Parser::isPubidChar (ACEXML_Char const c) const
 {
   return (c == '\x20' || c == '\x0D' || c == '\x0A' ||
           (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') ||
@@ -156,17 +156,16 @@ ACEXML_Parser::isPubidChar (const ACEXML_Char c) const
           c == '%');
 }
 
-
-ACEXML_INLINE int
-ACEXML_Parser::is_whitespace (const ACEXML_Char c) const
+ACEXML_INLINE bool
+ACEXML_Parser::is_whitespace (ACEXML_Char const c) const
 {
   switch (c)
     {
       case '\x0A': case '\x20':
       case '\x09': case '\x0D':
-      return 1;
+      return true;
     default:
-      return 0;
+      return false;
     }
 }
 
@@ -179,15 +178,14 @@ ACEXML_Parser::skip_whitespace ()
   return ch;
 }
 
-
-ACEXML_INLINE int
+ACEXML_INLINE size_t
 ACEXML_Parser::skip_whitespace_count (ACEXML_Char *peeky)
 {
-  int wscount = 0;
-  ACEXML_Char dummy;
-  ACEXML_Char &forward = (peeky == 0 ? dummy : *peeky);
+  size_t wscount {};
+  ACEXML_Char dummy {};
+  ACEXML_Char &forward = (peeky == nullptr ? dummy : *peeky);
 
-  for (;this->is_whitespace ((forward = this->peek ())); ++wscount)
+  for (; this->is_whitespace ((forward = this->peek ())); ++wscount)
     this->get ();
   return wscount;
 }
@@ -205,9 +203,9 @@ ACEXML_Parser::skip_equal ()
 ACEXML_INLINE ACEXML_Char
 ACEXML_Parser::get ()
 {
-  ACEXML_Char ch = 0;
-  const ACEXML_InputSource* ip = this->current_->getInputSource();
-  ACEXML_CharStream* instream = ip->getCharStream();
+  ACEXML_Char ch {};
+  ACEXML_InputSource const * const ip = this->current_->getInputSource();
+  ACEXML_CharStream * const instream = ip->getCharStream();
 
   if (instream->get (ch) != -1)
     {
@@ -235,19 +233,19 @@ ACEXML_Parser::peek ()
 {
   // Using an extra level of indirection so we can
   // manage document location in the future.
-  ACEXML_Char ch = 0;
-  const ACEXML_InputSource* ip = this->current_->getInputSource();
-  ACEXML_CharStream* instream = ip->getCharStream();
+  ACEXML_Char ch {};
+  ACEXML_InputSource const * const ip = this->current_->getInputSource();
+  ACEXML_CharStream * const instream = ip->getCharStream();
   ch = static_cast<ACEXML_Char> (instream->peek ());
   return (ch > 0 ? ch : 0);
 }
 
 ACEXML_INLINE int
-ACEXML_Parser::parse_token (const ACEXML_Char* keyword)
+ACEXML_Parser::parse_token (ACEXML_Char const *keyword)
 {
-  if (keyword == 0)
+  if (keyword == nullptr)
     return -1;
-  const ACEXML_Char* ptr = keyword;
+  ACEXML_Char const *ptr = keyword;
   for (; *ptr != 0 && (this->get() == *ptr); ++ptr)
     ;
   if (*ptr == 0)

@@ -22,6 +22,10 @@
 
 #include "tao/Codeset_Descriptor_Base.h"
 
+#include <cstddef>
+#include <string>
+#include <vector>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Codeset_Translator_Factory;
@@ -31,34 +35,36 @@ class TAO_Codeset_Export TAO_Codeset_Descriptor
 {
 public:
   TAO_Codeset_Descriptor () = default;
-  ~TAO_Codeset_Descriptor () override;
+  ~TAO_Codeset_Descriptor () override = default;
 
   struct Translator_Node
   {
-    ACE_TCHAR *name_ {};
+    std::basic_string<ACE_TCHAR> name_ {};
+    // Borrowed; the ACE service registry owns the factory.
     TAO_Codeset_Translator_Factory *translator_factory_ {};
-    Translator_Node *next_ {};
   };
 
+  using Translator_List = std::vector<Translator_Node>;
+
   void ncs (ACE_CDR::ULong ncs);
-  void ncs (const ACE_TCHAR *name) override;
+  void ncs (ACE_TCHAR const *name) override;
   ACE_CDR::ULong ncs () const;
   int max_bytes () const;
-  int num_translators () const;
+  size_t num_translators () const;
 
-  void add_translator (const ACE_TCHAR *name) override;
-  Translator_Node *translators ();
+  void add_translator (ACE_TCHAR const *name) override;
+  Translator_List &translators ();
+  Translator_List const &translators () const;
 
-private:
   TAO_Codeset_Descriptor (TAO_Codeset_Descriptor const &) = delete;
   TAO_Codeset_Descriptor &operator= (TAO_Codeset_Descriptor const &) = delete;
   TAO_Codeset_Descriptor (TAO_Codeset_Descriptor &&) = delete;
   TAO_Codeset_Descriptor &operator= (TAO_Codeset_Descriptor &&) = delete;
 
+private:
   ACE_CDR::ULong ncs_ {};
   int max_bytes_ {1};
-  int num_translators_ {};
-  Translator_Node *trans_base_ {};
+  Translator_List translators_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -3,11 +3,7 @@
 #include "Supplier_Input_Handler.h"
 #include "tao/ORB_Core.h"
 
-Supplier_Input_Handler::Supplier_Input_Handler ()
-  : notifier_ (0)
-{
-  // No-Op.
-}
+#include <cstring>
 
 Supplier_Input_Handler::~Supplier_Input_Handler ()
 {
@@ -48,11 +44,10 @@ Supplier_Input_Handler::initialize (Notifier_Handler *notifier)
                        "register_stdin_handler"),
                       -1);
 
-
   return 0;
 }
 
-// Frame input events and notify <Consumers>.
+/// Frames input events and notifies @a Consumers.
 
 int
 Supplier_Input_Handler::handle_input (ACE_HANDLE)
@@ -71,7 +66,7 @@ Supplier_Input_Handler::handle_input (ACE_HANDLE)
     }
   else
     {
-      size_t n = ACE_OS::strlen (buf);
+      size_t n = std::strlen (buf);
 
       // Null terminate the buffer, replacing the '\n' with '\0'.
       if (buf[n - 1] == '\n')
@@ -83,14 +78,13 @@ Supplier_Input_Handler::handle_input (ACE_HANDLE)
                   buf));
     }
 
-
-  if (ACE_OS::strncmp (buf, "quit", 4) == 0)
+  if (std::strncmp (buf, "quit", 4) == 0)
     // Tell the main event loop to shutdown.
     this->notifier_->shutdown ();
   else
     {
       Event_Comm::Notifier *notifier = this->notifier_->notifier ();
-      ACE_ASSERT (notifier != 0);
+      ACE_ASSERT (notifier != nullptr);
 
       // Use the notifier to notify Consumers.
       try
@@ -106,7 +100,7 @@ Supplier_Input_Handler::handle_input (ACE_HANDLE)
           // Forward <Event> to all <Consumers>.
           notifier->push (event);
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const &ex)
         {
           ex._tao_print_exception ("Unexpected Error\n");
         }

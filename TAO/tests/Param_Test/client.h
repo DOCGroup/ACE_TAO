@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef PARAM_TEST_CLIENT_H
 #define PARAM_TEST_CLIENT_H
 
@@ -17,6 +16,7 @@
 #include "tao/Codeset/Codeset.h"
 #include "param_testC.h"
 #include "results.h"
+#include <memory>
 
 /**
  * @class Param_Test_Client
@@ -33,14 +33,19 @@ template <class T>
 class Param_Test_Client
 {
 public:
-  typedef T TEST_OBJECT;
+  using TEST_OBJECT = T;
 
   // = Constructor and destructor.
+  /// Takes ownership of the test object.
   Param_Test_Client (CORBA::ORB_ptr orb,
                      Param_Test_ptr objref,
-                     T *);
+                     T *test_object);
 
-  ~Param_Test_Client ();
+  ~Param_Test_Client () = default;
+  Param_Test_Client (Param_Test_Client const &) = delete;
+  Param_Test_Client (Param_Test_Client &&) = delete;
+  Param_Test_Client &operator= (Param_Test_Client const &) = delete;
+  Param_Test_Client &operator= (Param_Test_Client &&) = delete;
 
   /// run the SII test
   int run_sii_test ();
@@ -56,7 +61,7 @@ private:
   Param_Test_ptr param_test_;
 
   /// object doing the actual work
-  TEST_OBJECT *test_object_;
+  std::unique_ptr<TEST_OBJECT> test_object_;
 
   /// results
   Results results_;

@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef CEC_COUNTING_CONSUMER_H
 #define CEC_COUNTING_CONSUMER_H
 
@@ -20,6 +19,7 @@
 #include "orbsvcs/CosEventCommS.h"
 #include "orbsvcs/CosEventChannelAdminC.h"
 #include "ace/Task.h"
+#include <string>
 
 /**
  * @class CEC_Counting_Consumer
@@ -31,8 +31,11 @@
 class CEC_Test_Export CEC_Counting_Consumer : public POA_CosEventComm::PushConsumer
 {
 public:
-  /// Constructor
-  CEC_Counting_Consumer (const char* name);
+  explicit CEC_Counting_Consumer (std::string const &name);
+  CEC_Counting_Consumer (CEC_Counting_Consumer const &) = delete;
+  CEC_Counting_Consumer (CEC_Counting_Consumer &&) = delete;
+  CEC_Counting_Consumer &operator= (CEC_Counting_Consumer const &) = delete;
+  CEC_Counting_Consumer &operator= (CEC_Counting_Consumer &&) = delete;
 
   /// Simple connect/disconnect methods..
   void connect (CosEventChannelAdmin::ConsumerAdmin_ptr consumer_admin);
@@ -49,17 +52,17 @@ public:
   void disconnect_push_consumer () override;
 
   /// Keep track of the number of events received.
-  CORBA::ULong event_count;
+  CORBA::ULong event_count {};
 
   /// Keep track of the number of disconnect calls received.
-  CORBA::ULong disconnect_count;
+  CORBA::ULong disconnect_count {};
 
 protected:
   /// The proxy
   CosEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_;
 
   /// The name
-  char const *name_;
+  std::string name_;
 };
 
 // ****************************************************************
@@ -74,8 +77,11 @@ protected:
 class CEC_Test_Export CEC_Pull_Counting_Consumer : public POA_CosEventComm::PullConsumer
 {
 public:
-  /// Constructor
-  CEC_Pull_Counting_Consumer (const char* name);
+  explicit CEC_Pull_Counting_Consumer (std::string const &name);
+  CEC_Pull_Counting_Consumer (CEC_Pull_Counting_Consumer const &) = delete;
+  CEC_Pull_Counting_Consumer (CEC_Pull_Counting_Consumer &&) = delete;
+  CEC_Pull_Counting_Consumer &operator= (CEC_Pull_Counting_Consumer const &) = delete;
+  CEC_Pull_Counting_Consumer &operator= (CEC_Pull_Counting_Consumer &&) = delete;
 
   /// Simple connect/disconnect methods..
   void connect (CosEventChannelAdmin::ConsumerAdmin_ptr consumer_admin);
@@ -93,17 +99,17 @@ public:
   void disconnect_pull_consumer () override;
 
   /// Keep track of the number of events received.
-  CORBA::ULong event_count;
+  CORBA::ULong event_count {};
 
   /// Keep track of the number of disconnect calls received.
-  CORBA::ULong disconnect_count;
+  CORBA::ULong disconnect_count {};
 
 protected:
   /// The proxy
   CosEventChannelAdmin::ProxyPullSupplier_var supplier_proxy_;
 
   /// The name
-  char const *name_;
+  std::string name_;
 };
 
 // ****************************************************************
@@ -114,31 +120,35 @@ public:
   /// Create the task...
   CEC_Counting_Consumer_Task (CEC_Pull_Counting_Consumer *consumer,
                               int milliseconds = 0);
+  CEC_Counting_Consumer_Task (CEC_Counting_Consumer_Task const &) = delete;
+  CEC_Counting_Consumer_Task (CEC_Counting_Consumer_Task &&) = delete;
+  CEC_Counting_Consumer_Task &operator= (CEC_Counting_Consumer_Task const &) = delete;
+  CEC_Counting_Consumer_Task &operator= (CEC_Counting_Consumer_Task &&) = delete;
 
   // = Check the ACE_Task_Base documentation.
   int svc () override;
 
   void stop ();
-  CORBA::ULong pull_count ();
+  CORBA::ULong pull_count () const;
 
   /// Run a single iteration of the test
   void run ();
 
 private:
-  /// The consumer we are turning into an active object
-  CEC_Pull_Counting_Consumer *consumer_;
+  /// Borrowed consumer; it outlives this task and the task is joined first.
+  CEC_Pull_Counting_Consumer * const consumer_;
 
-  /// Set to 1 when the test must stop
-  int stop_flag_;
+  /// Set when the test must stop.
+  bool stop_flag_ {};
 
   /// Count the number of pull() calls
-  CORBA::ULong pull_count_;
+  CORBA::ULong pull_count_ {};
 
-  /// If not zero then pause for <milliseconds> before sending each
+  /// If nonzero, pause for <milliseconds> before each
   /// event.
-  int milliseconds_;
+  int const milliseconds_;
 
-  TAO_SYNCH_MUTEX lock_;
+  mutable TAO_SYNCH_MUTEX lock_;
 };
 
 #endif /* ECT_CONSUMER_H */

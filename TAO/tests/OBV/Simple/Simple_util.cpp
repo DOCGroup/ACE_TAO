@@ -10,21 +10,6 @@
 # include "ace/OS_NS_unistd.h"
 # include "ace/OS_NS_string.h"
 
-// Constructor.
-
-template <class Servant>
-Server<Servant>::Server ()
-    : ior_output_file_ (0)
-{
-}
-
-// Destructor.
-
-template <class Servant>
-Server<Servant>::~Server ()
-{
-}
-
 // Parse the command-line arguments and set options.
 
 template <class Servant> int
@@ -37,11 +22,11 @@ Server<Servant>::parse_args ()
     switch (c)
       {
       case 'd':  // debug flag.
-        TAO_debug_level++;
+        ++TAO_debug_level;
         break;
       case 'o':  // output the IOR to a file.
         this->ior_output_file_ = ACE_OS::fopen (get_opts.opt_arg (), "w");
-        if (this->ior_output_file_ == 0)
+        if (this->ior_output_file_ == nullptr)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to open %s for writing: %p\n",
                              get_opts.opt_arg ()), -1);
@@ -64,7 +49,7 @@ Server<Servant>::parse_args ()
 
 // Initialize the server.
 template <class Servant> int
-Server<Servant>::init (const char *servant_name,
+Server<Servant>::init (char const *servant_name,
                        int argc,
                        ACE_TCHAR *argv[])
 {
@@ -77,7 +62,6 @@ Server<Servant>::init (const char *servant_name,
                        "%p\n",
                        "init_child_poa"),
                       -1);
-
 
   this->argc_ = argc;
   this->argv_ = argv;
@@ -115,7 +99,7 @@ Server<Servant>::init (const char *servant_name,
         }
 
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Exception in activation of POA");
       return -1;
@@ -142,19 +126,10 @@ Server<Servant>::register_name ()
   return -1;
 }
 
-// Constructor.
-
-template <class InterfaceObj, class Var>
-Client<InterfaceObj, Var>::Client ()
-  : ior_ (0)
-{
-  //no-op
-}
-
 // Reads the Server ior from a file
 
 template <class InterfaceObj, class Var> int
-Client<InterfaceObj, Var>::read_ior (ACE_TCHAR *filename)
+Client<InterfaceObj, Var>::read_ior (ACE_TCHAR const *filename)
 {
   // Open the file for reading.
   ACE_HANDLE f_handle = ACE_OS::open (filename, 0);
@@ -168,7 +143,7 @@ Client<InterfaceObj, Var>::read_ior (ACE_TCHAR *filename)
   ACE_Read_Buffer ior_buffer (f_handle);
   char *data = ior_buffer.read ();
 
-  if (data == 0)
+  if (data == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Unable to read ior: %p\n"),
                       -1);
@@ -194,7 +169,7 @@ Client<InterfaceObj, Var>::parse_args ()
     switch (c)
       {
       case 'd':  // debug flag
-        TAO_debug_level++;
+        ++TAO_debug_level;
         break;
       case 'k':  // ior provide on command line
         this->ior_ = ACE_OS::strdup (get_opts.opt_arg ());
@@ -208,7 +183,7 @@ Client<InterfaceObj, Var>::parse_args ()
                             -1);
         break;
       case 'x': // read the flag for shutting down
-        this->shutdown_ = 1;
+        this->shutdown_ = true;
         break;
       }
 
@@ -223,13 +198,12 @@ Client<InterfaceObj, Var>::~Client ()
 }
 
 template <class InterfaceObj, class Var> int
-Client<InterfaceObj, Var>::init (const char *name,
+Client<InterfaceObj, Var>::init (char const *name,
                                  int argc,
                                  ACE_TCHAR **argv)
 {
   this->argc_ = argc;
   this->argv_ = argv;
-
 
   try
     {
@@ -242,11 +216,10 @@ Client<InterfaceObj, Var>::init (const char *name,
       if (this->parse_args () == -1)
         return -1;
 
-      if(this->ior_ != 0)
+      if (this->ior_ != nullptr)
         {
           CORBA::Object_var server_object =
             this->orb_->string_to_object (this->ior_);
-
 
           if (CORBA::is_nil (server_object.in ()))
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -260,16 +233,14 @@ Client<InterfaceObj, Var>::init (const char *name,
                            "no ior or naming options  specified\n"),
                           -1);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Client_i::init");
       return -1;
     }
 
-
   return 0;
 }
-
 
 template <class InterfaceObj, class Var> int
 Client<InterfaceObj, Var>::obtain_initial_references ()
@@ -288,7 +259,7 @@ template <class InterfaceObj, class Var> void
 Client<InterfaceObj, Var>::shutdown (int flag)
 {
   // Fills the flag
-  shutdown_ = flag;
+  shutdown_ = flag != 0;
 }
 
 #endif

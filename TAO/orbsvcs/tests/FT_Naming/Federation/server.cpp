@@ -28,7 +28,7 @@ TestTask::TestTask(int argc, ACE_TCHAR** argv)
 
 void TestTask::end()
 {
-  orb_->shutdown(0);
+  orb_->shutdown (false);
   this->wait();
 }
 

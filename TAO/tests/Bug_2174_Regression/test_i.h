@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_TIMEOUT_TEST_I_H
 #define TAO_TIMEOUT_TEST_I_H
 
@@ -24,7 +23,7 @@ class Simple_Server_i : public POA_Simple_Server
 {
 public:
   /// ctor
-  Simple_Server_i (CORBA::ORB_ptr orb);
+  explicit Simple_Server_i (CORBA::ORB_ptr orb);
   Simple_Server_i (Simple_Server_i const &) = delete;
   Simple_Server_i &operator= (Simple_Server_i const &) = delete;
   Simple_Server_i (Simple_Server_i &&) = delete;

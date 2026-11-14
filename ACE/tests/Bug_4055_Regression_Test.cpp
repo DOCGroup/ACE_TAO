@@ -128,7 +128,6 @@ MyTask::start (int num_threads)
   return 0;
 }
 
-
 int
 MyTask::stop ()
 {

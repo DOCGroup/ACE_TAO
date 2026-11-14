@@ -17,12 +17,16 @@ public:
   Gateway_ObjRef_Factory (
     Gateway::Object_Factory_ptr gateway_object_factory,
     PortableInterceptor::ObjectReferenceFactory *old_factory);
+  Gateway_ObjRef_Factory (Gateway_ObjRef_Factory const &) = delete;
+  Gateway_ObjRef_Factory (Gateway_ObjRef_Factory &&) = delete;
+  Gateway_ObjRef_Factory &operator= (Gateway_ObjRef_Factory const &) = delete;
+  Gateway_ObjRef_Factory &operator= (Gateway_ObjRef_Factory &&) = delete;
 
-  virtual ::CORBA::ValueBase *_copy_value ();
+  ::CORBA::ValueBase *_copy_value () override;
 
-  virtual CORBA::Object_ptr make_object (
-      const char *repository_id,
-      const PortableInterceptor::ObjectId &id);
+  CORBA::Object_ptr make_object (
+      char const *repository_id,
+      PortableInterceptor::ObjectId const &id) override;
 
 private:
   Gateway::Object_Factory_var gateway_object_factory_;

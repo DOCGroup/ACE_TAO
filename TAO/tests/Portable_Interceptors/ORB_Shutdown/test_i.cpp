@@ -5,10 +5,6 @@ test_i::test_i (CORBA::ORB_ptr orb)
 {
 }
 
-test_i::~test_i ()
-{
-}
-
 void
 test_i::hello ()
 {

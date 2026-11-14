@@ -18,31 +18,37 @@
  */
 //=============================================================================
 
-
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_main.h"
 #include "ace/Service_Config.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Process_Manager.h"
+#include "ace/Reactor.h"
 #include "ace/Get_Opt.h"
+#include <memory>
 
 class ExitHandler : public ACE_Event_Handler
 {
 public:
-  ExitHandler (const char *name);
+  explicit ExitHandler (char const *name);
 
   /// Called when object is removed from the <ACE_Reactor>.
-  virtual ~ExitHandler ();
-  virtual int handle_exit (ACE_Process *proc);
-  virtual int handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg = 0);
-  virtual int handle_close (ACE_HANDLE handle,
-                            ACE_Reactor_Mask close_mask);
+  ~ExitHandler () override;
+  int handle_exit (ACE_Process *proc) override;
+  int handle_timeout (ACE_Time_Value const &tv,
+                      void const *arg = nullptr) override;
+  int handle_close (ACE_HANDLE handle,
+                    ACE_Reactor_Mask close_mask) override;
+
+  ExitHandler (ExitHandler const &) = delete;
+  ExitHandler (ExitHandler &&) = delete;
+  ExitHandler &operator= (ExitHandler const &) = delete;
+  ExitHandler &operator= (ExitHandler &&) = delete;
 private:
-  const char *name_;
+  char const * const name_ {};
 };
 
-ExitHandler::ExitHandler (const char *name)
+ExitHandler::ExitHandler (char const *name)
   : ACE_Event_Handler (),
     name_ (name)
 {
@@ -67,8 +73,8 @@ ExitHandler::handle_exit (ACE_Process *proc)
 }
 
 int
-ExitHandler::handle_timeout(const ACE_Time_Value &,
-                            const void *)
+ExitHandler::handle_timeout (ACE_Time_Value const &,
+                             void const *)
 {
   static int tick_tock = 0;
 
@@ -76,7 +82,7 @@ ExitHandler::handle_timeout(const ACE_Time_Value &,
               "(%P|%t@%T) \"%s\" %s\n",
               name_,
               ACE_ODD (tick_tock) ? "Tock" : "Tick"));
-  tick_tock++;
+  ++tick_tock;
   return 0;
 }
 
@@ -87,7 +93,20 @@ ExitHandler::handle_close (ACE_HANDLE,
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t@%T) ExitHandler \"%s\" handle_close\n",
               name_));
+  // ACE_Process_Manager calls handle_close when it releases the registered
+  // handler; this callback owns the final deletion.
   delete this;
+  return 0;
+}
+
+static int
+register_handler (std::unique_ptr<ExitHandler> handler,
+                  pid_t pid = ACE_INVALID_PID)
+{
+  if (ACE_Process_Manager::instance ()->register_handler (handler.get (), pid) == -1)
+    return -1;
+
+  handler.release ();
   return 0;
 }
 
@@ -99,11 +118,11 @@ worker (size_t iterations)
 {
   for (size_t i = 0;
        i <= iterations;
-       i++)
+       ++i)
     if (i && (i % 100) == 0)
       {
         ACE_DEBUG ((LM_DEBUG,
-                    "(%P|%t@%T) worker spinning furiously... (%u)\n",
+                    "(%P|%t@%B) worker spinning furiously... (%u)\n",
                     i));
         ACE_OS::sleep (1);
       }
@@ -181,8 +200,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               "(%P|%t@%T) Process_Manager test.  Expect output from"
               "2 or 3 processes...\n"));
 
-  ACE_Process_Manager::instance ()->register_handler
-    (new ExitHandler ("default"));
+  if (register_handler (std::make_unique<ExitHandler> ("default")) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "failed to register default process handler\n"), 1);
 
   pid_t pid1 = respawn_self (argv[0],
                              n_iterations,
@@ -201,8 +220,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
 #endif /* ACE_WIN32 */
 
-  ACE_Process_Manager::instance ()->register_handler (new ExitHandler ("specific"),
-                                                      pid2);
+  if (register_handler (std::make_unique<ExitHandler> ("specific"), pid2) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, "failed to register specific process handler\n"), 1);
 
   if (pid1 == ACE_INVALID_PID || pid2 == ACE_INVALID_PID)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -256,7 +275,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
 #endif /* ACE_WIN32 */
 
-  ExitHandler *main_thread_work = 0;
+  ExitHandler *main_thread_work {};
   ACE_NEW_RETURN (main_thread_work,
                   ExitHandler ("main thread worker"),
                   1);

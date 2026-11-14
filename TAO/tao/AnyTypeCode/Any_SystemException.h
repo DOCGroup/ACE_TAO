@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Any_SystemException.h
  *
  *  @authors  Carlos O'Ryan and Jeff Parsons
  */
-//=============================================================================
 #ifndef TAO_ANY_SYSTEMEXCEPTION_H
 #define TAO_ANY_SYSTEMEXCEPTION_H
 
@@ -40,13 +38,18 @@ namespace TAO
   class Any_SystemException : public Any_Impl
   {
   public:
+    Any_SystemException (Any_SystemException const &) = delete;
+    Any_SystemException (Any_SystemException &&) = delete;
+    Any_SystemException &operator= (Any_SystemException const &) = delete;
+    Any_SystemException &operator= (Any_SystemException &&) = delete;
+
     Any_SystemException (_tao_destructor destructor,
                          CORBA::TypeCode_ptr,
                          CORBA::SystemException* const);
 
     Any_SystemException (_tao_destructor destructor,
                          CORBA::TypeCode_ptr,
-                         const CORBA::SystemException &);
+                         CORBA::SystemException const &);
 
     explicit Any_SystemException (CORBA::TypeCode_ptr);
 
@@ -60,21 +63,23 @@ namespace TAO
     static void insert_copy (CORBA::Any &,
                              _tao_destructor destructor,
                              CORBA::TypeCode_ptr,
-                             const CORBA::SystemException &);
+                             CORBA::SystemException const &);
 
-    static CORBA::Boolean extract (const CORBA::Any &,
+    static CORBA::Boolean extract (CORBA::Any const &,
                                    _tao_destructor,
                                    CORBA::TypeCode_ptr,
-                                   const CORBA::SystemException *&,
+                                   CORBA::SystemException const *&,
                                    excp_factory f);
 
     CORBA::Boolean marshal_value (TAO_OutputCDR &) override;
     CORBA::Boolean demarshal_value (TAO_InputCDR &);
 
-    const void *value () const;
+    void const *value () const;
     void free_value () override;
 
   protected:
+    /// The base destructor callback owns the exception; this pointer supports
+    /// the type-erased CORBA Any insertion/extraction interface.
     CORBA::SystemException *value_ {};
   };
 }

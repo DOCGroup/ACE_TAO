@@ -9,24 +9,21 @@
  */
 //=============================================================================
 
-
 #ifndef _ICP_H
 #define _ICP_H
 
 extern "C" {
-    int ICP_online(unsigned long id);   // Add device
-    int ICP_offline(unsigned long id);  // Remove device
-    int ICP_get(                        // Get attribute
+    int ICP_online (unsigned long id);   // Add device
+    int ICP_offline (unsigned long id);  // Remove device
+    int ICP_get (                        // Get attribute
             unsigned long   id,
-            const char *    attr,
+            char const *    attr,
             void *          value,
-            size_t          len
-        );
-    int ICP_set(                        // Set attribute
+            size_t          len);
+    int ICP_set (                        // Set attribute
             unsigned long   id,
-            const char *    attr,
-            const void *    value
-        );
+            char const *    attr,
+            void const *    value);
 }
 
 #endif /* _ICP_H */

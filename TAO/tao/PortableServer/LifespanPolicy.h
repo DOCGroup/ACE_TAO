@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file LifespanPolicy.h
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
 #ifndef TAO_POA_LIFESPANPOLICY_H
 #define TAO_POA_LIFESPANPOLICY_H
 #include /**/ "ace/pre.h"
@@ -41,7 +37,7 @@ namespace TAO
         public virtual ::CORBA::LocalObject
     {
     public:
-      LifespanPolicy (::PortableServer::LifespanPolicyValue value);
+      explicit LifespanPolicy (::PortableServer::LifespanPolicyValue value);
 
       CORBA::Policy_ptr copy () override;
 

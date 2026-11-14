@@ -2,10 +2,11 @@
 #include "Offer_Exporter.h"
 #include "Offer_Importer.h"
 #include "Service_Type_Exporter.h"
-#include <memory>
 #include "orbsvcs/Trader/Trader.h"
 #include "orbsvcs/Trader/Service_Type_Repository.h"
 #include "ace/Get_Opt.h"
+
+#include <memory>
 
 const ACE_TCHAR *done_file = ACE_TEXT("export_test_ready");
 
@@ -41,7 +42,6 @@ parse_args_spec (int argc, ACE_TCHAR *argv[], int help)
   };
   return 0;
 }
-
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
@@ -110,8 +110,6 @@ int failure = 0;
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT("*** Running the Offer Exporter tests.\n")));
       TAO_Offer_Exporter offer_exporter (lookup_if.in (), ! parse_args.quiet ());
 
-      // = Test series.
-
       offer_exporter.withdraw_offers ();
 
       offer_exporter.export_offers ();
@@ -140,17 +138,15 @@ int failure = 0;
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT("*** Offer Exporter tests complete.\n")));
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT("*** Now serving dynamic properties.\n")));
 
-      FILE *ready_file = ACE_OS::fopen (done_file, ACE_TEXT("w"));
-      if (ready_file != 0)
         {
-          ACE_OS::fprintf (ready_file, "The export test is ready\n");
-          ACE_OS::fclose (ready_file);
-        }
-      else
-        {
-          ACE_DEBUG ((LM_WARNING,
-                      ACE_TEXT("Unable to open %s for output.\n"),
-                      done_file));
+          std::unique_ptr<FILE, int (*) (FILE *)> ready_file {
+            ACE_OS::fopen (done_file, ACE_TEXT("w")), ACE_OS::fclose};
+          if (ready_file != nullptr)
+            ACE_OS::fprintf (ready_file.get (), "The export test is ready\n");
+          else
+            ACE_DEBUG ((LM_WARNING,
+                        ACE_TEXT("Unable to open %s for output.\n"),
+                        done_file));
         }
 
       orb_manager.run ();

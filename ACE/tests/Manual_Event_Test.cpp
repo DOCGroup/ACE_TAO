@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Manual_Event.h"
 #include "ace/Thread.h"

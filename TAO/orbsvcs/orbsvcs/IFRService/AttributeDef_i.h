@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_ATTRIBUTEDEF_I_H
 #define TAO_ATTRIBUTEDEF_I_H
 

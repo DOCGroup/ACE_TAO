@@ -55,7 +55,6 @@ static int int_str_index [] = {7, 6, 5, 4, 3, 2, 1, 0}; // RL inorder
 static int str_int_index [] = {4, 6, 2, 7, 5, 3, 1, 0}; // RL BFS
 static int str_str_index [] = {4, 2, 1, 0, 3, 6, 5, 7}; // LR preorder
 
-
 int
 run_main (int, ACE_TCHAR *[])
 {
@@ -501,8 +500,6 @@ run_main (int, ACE_TCHAR *[])
   return 0;
 }
 
-// Constructor.
-
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree_Test
   (int entry_count,
@@ -520,13 +517,6 @@ ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree_Test
 {
 }
 
-// Destructor.
-
-template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
-ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::~ACE_RB_Tree_Test ()
-{
-}
-
 // Run the interface and iteration tests.
 
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> void
@@ -540,7 +530,6 @@ ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::run_test ()
   test_tree_deletion ();
   test_post_deletion_iteration ();
 }
-
 
 // Tests stable and deprecated insertion interfaces.
 
@@ -645,7 +634,6 @@ ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_post_insertion_it
   ++deprecated_fwd_iter_;
   ++deprecated_rev_iter_;
 
-
   // Make sure each item in each tree has been visited
   if (stable_fwd_iter_.done () != 1)
     ACE_ERROR ((LM_ERROR,
@@ -678,7 +666,7 @@ ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_partial_iteration
                     ACE_TEXT ("Partial rev iter, pass %d %p\n"),
                     i,
                     ACE_TEXT ("failure")));
-      part_rev_iter_++;
+      ++part_rev_iter_;
     }
 
   part_fwd_iter_ = ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> (key_array_ [5], stable_tree_);
@@ -692,7 +680,7 @@ ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_partial_iteration
                     ACE_TEXT ("Partial fwd iter, pass %d %p\n"),
                     k,
                     ACE_TEXT ("failure")));
-      part_fwd_iter_++;
+      ++part_fwd_iter_;
     }
 }
 
@@ -771,10 +759,10 @@ ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_post_deletion_ite
                     ACE_TEXT ("failure")));
 
       // Advance each iterator via postfix increment.
-      stable_fwd_iter_++;
-      stable_rev_iter_++;
-      deprecated_fwd_iter_++;
-      deprecated_rev_iter_++;
+      ++stable_fwd_iter_;
+      ++stable_rev_iter_;
+      ++deprecated_fwd_iter_;
+      ++deprecated_rev_iter_;
     }
 
   // Make sure each item in each tree has been visited a second time.
@@ -791,5 +779,4 @@ ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_post_deletion_ite
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("Deprecated rev iter not done but should be\n")));
 }
-
 

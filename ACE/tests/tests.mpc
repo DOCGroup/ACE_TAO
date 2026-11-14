@@ -872,6 +872,10 @@ project(Compiler_Features_42_Test) : acetest {
   specific(vs2019,vs2022) {
     LanguageStandard = stdcpp20
   }
+  specific(nmake) {
+    compile_flags -= /std:c++17
+    compile_flags += /std:c++20
+  }
 }
 
 project(Compiler_Features_43_Test) : acetest {
@@ -1044,6 +1048,13 @@ project(Hash Map Bucket Iterator Test) : acetest {
   exename = Hash_Map_Bucket_Iterator_Test
   Source_Files {
     Hash_Map_Bucket_Iterator_Test.cpp
+  }
+}
+
+project(Monitor Point Registry Test) : acetest {
+  exename = Monitor_Point_Registry_Test
+  Source_Files {
+    Monitor_Point_Registry_Test.cpp
   }
 }
 

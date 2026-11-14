@@ -589,14 +589,14 @@ bool AST_Structure::annotatable () const
 }
 
 AST_Decl *
-AST_Structure::operator[] (std::size_t const index)
+AST_Structure::operator[] (size_t const index)
 {
-  std::size_t const count = member_count_ <= 0 ? 0 : member_count_;
+  size_t const count = member_count_ <= 0 ? 0 : member_count_;
   if (index >= count)
     {
       return nullptr;
     }
-  std::size_t i {};
+  size_t i {};
   for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
        !si.is_done ();
        si.next ())

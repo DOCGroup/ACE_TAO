@@ -6,10 +6,12 @@
  *  This code builds an abstraction to factor out common code for
  *  the different implementations of the Timer_Queue.
  *
- *  @author Chris Gill           <cdgill@cs.wustl.edu>  and Douglas C. Schmidt   <d.schmidt@vanderbilt.edu> Based on the Timer Queue Test example written by Carlos O'Ryan        <coryan@cs.wustl.edu>  and Douglas C. Schmidt   <d.schmidt@vanderbilt.edu> and Sergio Flores-Gaitan <sergio@cs.wustl.edu>
+ *  @author Chris Gill <cdgill@cs.wustl.edu> and Douglas C. Schmidt
+ *          <d.schmidt@vanderbilt.edu>. Based on Timer Queue Test by Carlos O'Ryan
+ *          <coryan@cs.wustl.edu>, Douglas C. Schmidt <d.schmidt@vanderbilt.edu>,
+ *          and Sergio Flores-Gaitan <sergio@cs.wustl.edu>.
  */
 //=============================================================================
-
 
 #ifndef _BPR_DRIVER_T_CPP_
 #define _BPR_DRIVER_T_CPP_
@@ -17,52 +19,13 @@
 // #include BPR_Drivers.h instead of BPR_Drivers_T.h
 // to avoid problems with circular includes
 #include "BPR_Drivers.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
 #include "ace/OS_NS_unistd.h"
-
-
-// Constructor.
-
-template <class TQ>
-Bounded_Packet_Relay_Driver<TQ>::Bounded_Packet_Relay_Driver ()
-  : packet_count_cmd_ (0),
-    arrival_period_cmd_ (0),
-    transmit_period_cmd_ (0),
-    duration_limit_cmd_ (0),
-    logging_level_cmd_ (0),
-    run_transmission_cmd_ (0),
-    cancel_transmission_cmd_ (0),
-    report_stats_cmd_ (0),
-    shutdown_cmd_ (0),
-    packet_count_ (1000),
-    arrival_period_ (10000),
-    send_period_ (10000),
-    duration_limit_ (20000000),
-    logging_level_ (0)
-{
-}
-
-// Destructor.
-
-template <class TQ>
-Bounded_Packet_Relay_Driver<TQ>::~Bounded_Packet_Relay_Driver ()
-{
-  // delete all instantiated command objects
-  delete packet_count_cmd_;
-  delete arrival_period_cmd_;
-  delete transmit_period_cmd_;
-  delete duration_limit_cmd_;
-  delete logging_level_cmd_;
-  delete run_transmission_cmd_;
-  delete cancel_transmission_cmd_;
-  delete report_stats_cmd_;
-  delete shutdown_cmd_;
-}
 
 // Parse the input and execute the corresponding command.
 
 template <class TQ> int
-Bounded_Packet_Relay_Driver<TQ>::parse_commands (const char *buf)
+Bounded_Packet_Relay_Driver<TQ>::parse_commands (char const *buf)
 {
   int option;
 
@@ -83,7 +46,7 @@ Bounded_Packet_Relay_Driver<TQ>::parse_commands (const char *buf)
             // If there was not enough information on the line, ignore
             // option and try the next line.
             return 0;
-          if (packet_count_cmd_->execute ((void *) &count) == -1)
+          if (packet_count_cmd_->execute (&count) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "%t %p\n",
                                "set packet count failed"),
@@ -100,7 +63,7 @@ Bounded_Packet_Relay_Driver<TQ>::parse_commands (const char *buf)
             // If there was not enough information on the line, ignore
             // option and try the next line.
             return 0;
-          if (arrival_period_cmd_->execute ((void *) &usec) == -1)
+          if (arrival_period_cmd_->execute (&usec) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "%t %p\n",
                                "set arrival period failed"),
@@ -117,7 +80,7 @@ Bounded_Packet_Relay_Driver<TQ>::parse_commands (const char *buf)
             // If there was not enough information on the line, ignore
             // option and try the next line.
             return 0;
-          if (transmit_period_cmd_->execute ((void *) &usec) == -1)
+          if (transmit_period_cmd_->execute (&usec) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "%t %p\n",
                                "set transmit period failed"),
@@ -134,7 +97,7 @@ Bounded_Packet_Relay_Driver<TQ>::parse_commands (const char *buf)
             // If there was not enough information on the line, ignore
             // option and try the next line.
             return 0;
-          if (duration_limit_cmd_->execute ((void *) &usec) == -1)
+          if (duration_limit_cmd_->execute (&usec) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "%t %p\n",
                                "\nSet duration limit failed."),
@@ -155,7 +118,7 @@ Bounded_Packet_Relay_Driver<TQ>::parse_commands (const char *buf)
               return 0;
             }
 
-          if (logging_level_cmd_->execute ((void *) &level) == -1)
+          if (logging_level_cmd_->execute (&level) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "%t %p\n",
                                "set logging level failed"),
@@ -163,16 +126,16 @@ Bounded_Packet_Relay_Driver<TQ>::parse_commands (const char *buf)
           break;
         }
       case 6: // Run one transmission.
-        return run_transmission_cmd_->execute (0);
+        return run_transmission_cmd_->execute (nullptr);
         /* NOTREACHED */
       case 7: // Cancel current transmission.
-        return cancel_transmission_cmd_->execute (0);
+        return cancel_transmission_cmd_->execute (nullptr);
         /* NOTREACHED */
       case 8: // Report statistics.
-        return report_stats_cmd_->execute (0);
+        return report_stats_cmd_->execute (nullptr);
         /* NOTREACHED */
       case 9: // Shut down the driver.
-        return shutdown_cmd_->execute (0);
+        return shutdown_cmd_->execute (nullptr);
         /* NOTREACHED */
       default:
         // Display an error message.
@@ -221,7 +184,7 @@ Bounded_Packet_Relay_Driver<TQ>::get_next_request ()
 template <class TQ> ssize_t
 Bounded_Packet_Relay_Driver<TQ>::read_input (char *buf, size_t bufsiz)
 {
-  ACE_OS::memset (buf, 0, bufsiz);
+  std::memset (buf, 0, bufsiz);
 
   // Wait for user to type commands.  This call is automatically
   // restarted when SIGINT or SIGALRM signals occur.
@@ -231,7 +194,7 @@ Bounded_Packet_Relay_Driver<TQ>::read_input (char *buf, size_t bufsiz)
 // Get count of packets to send in a transmission.
 
 template <class TQ> u_long
-Bounded_Packet_Relay_Driver<TQ>::packet_count ()
+Bounded_Packet_Relay_Driver<TQ>::packet_count () const
 {
   return packet_count_;
 }
@@ -247,7 +210,7 @@ Bounded_Packet_Relay_Driver<TQ>::packet_count (u_long pc)
 // Get rate at which input packets are to arrive.
 
 template <class TQ> u_long
-Bounded_Packet_Relay_Driver<TQ>::arrival_period ()
+Bounded_Packet_Relay_Driver<TQ>::arrival_period () const
 {
   return arrival_period_;
 }
@@ -263,7 +226,7 @@ Bounded_Packet_Relay_Driver<TQ>::arrival_period (u_long ap)
 // Get rate at which packets are to be relayed (usec).
 
 template <class TQ> u_long
-Bounded_Packet_Relay_Driver<TQ>::send_period ()
+Bounded_Packet_Relay_Driver<TQ>::send_period () const
 {
   return send_period_;
 }
@@ -279,7 +242,7 @@ Bounded_Packet_Relay_Driver<TQ>::send_period (u_long sp)
 // Get limit on the duration of the transmission (usec).
 
 template <class TQ> u_long
-Bounded_Packet_Relay_Driver<TQ>::duration_limit ()
+Bounded_Packet_Relay_Driver<TQ>::duration_limit () const
 {
   return duration_limit_;
 }
@@ -294,7 +257,7 @@ Bounded_Packet_Relay_Driver<TQ>::duration_limit (u_long dl)
 // Get logging level.
 
 template <class TQ> int
-Bounded_Packet_Relay_Driver<TQ>::logging_level ()
+Bounded_Packet_Relay_Driver<TQ>::logging_level () const
 {
   return logging_level_;
 }

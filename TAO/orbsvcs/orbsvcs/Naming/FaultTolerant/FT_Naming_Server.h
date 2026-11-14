@@ -24,6 +24,8 @@
 #include "tao/IORManipulation/IORManip_Loader.h"
 #include "orbsvcs/FT_NamingReplicationC.h"
 #include "ace/Recursive_Thread_Mutex.h"
+#include <deque>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -36,16 +38,14 @@ public:
 
   int handle_exception (ACE_HANDLE) override;
 
-  TAO_FT_Naming_Server &owner_;
-  bool iors_;
-
-private:
   TAO_FTNS_Notifier (TAO_FTNS_Notifier const &) = delete;
   TAO_FTNS_Notifier (TAO_FTNS_Notifier &&) = delete;
   TAO_FTNS_Notifier &operator= (TAO_FTNS_Notifier const &) = delete;
   TAO_FTNS_Notifier &operator= (TAO_FTNS_Notifier &&) = delete;
-};
 
+  TAO_FT_Naming_Server &owner_;
+  bool iors_;
+};
 
 /**
  * @class TAO_FT_Naming_Server
@@ -64,6 +64,11 @@ public:
   friend class TAO_FTNS_Notifier;
 
   TAO_FT_Naming_Server ();
+
+  TAO_FT_Naming_Server (TAO_FT_Naming_Server const &) = delete;
+  TAO_FT_Naming_Server (TAO_FT_Naming_Server &&) = delete;
+  TAO_FT_Naming_Server &operator= (TAO_FT_Naming_Server const &) = delete;
+  TAO_FT_Naming_Server &operator= (TAO_FT_Naming_Server &&) = delete;
 
   /// Initialize the Naming Service and Object Group Manager with the command line
   /// arguments and the ORB. Overrridden from TAO_Naming_Server
@@ -118,27 +123,26 @@ public:
   char * naming_manager_ior ();
 
   virtual int update_object_group (
-    const ::FT_Naming::ObjectGroupUpdate & group_info);
+    ::FT_Naming::ObjectGroupUpdate const & group_info);
 
   virtual int update_naming_context (
-    const ::FT_Naming::NamingContextUpdate & naming_context);
+    ::FT_Naming::NamingContextUpdate const & naming_context);
 
-  void update_ior (FT_Naming::EntityKind, const CORBA::Object_ptr);
-  void combine_iors (FT_Naming::EntityKind, const CORBA::Object_ptr);
+  void update_ior (FT_Naming::EntityKind, CORBA::Object_ptr const);
+  void combine_iors (FT_Naming::EntityKind, CORBA::Object_ptr const);
 
-  const ACE_CString & ft_endpoint ();
-  const ACE_Time_Value & ft_update_delay ();
+  ACE_CString const & ft_endpoint () const;
+  ACE_Time_Value const & ft_update_delay () const;
 
   /// Destroy the child POAs created in @c init_with_orb,
   /// @c init_naming_manager_with_orb, and
   /// @c init_replication_manager_with_orb
   int fini () override;
 
-  /// Destructor.
   ~TAO_FT_Naming_Server () override;
 
   void update_info (FT_Naming::UpdateInfoSeq &infos);
-  void update_iors (const FT_Naming::ReplicaInfo & iors);
+  void update_iors (FT_Naming::ReplicaInfo const & iors);
   void update_info_i ();
   void update_iors_i ();
 
@@ -160,20 +164,17 @@ protected:
   TAO_FT_Naming_Manager naming_manager_;
 
 private:
-  TAO_FT_Naming_Server (TAO_FT_Naming_Server const &) = delete;
-  TAO_FT_Naming_Server (TAO_FT_Naming_Server &&) = delete;
-  TAO_FT_Naming_Server &operator= (TAO_FT_Naming_Server const &) = delete;
-  TAO_FT_Naming_Server &operator= (TAO_FT_Naming_Server &&) = delete;
+  void stop_replicator ();
 
 protected:
   /// The object that implements the FT_Naming::Replication_Manager
-  /// interface.
-  TAO_FT_Naming_Replication_Manager *replicator_ {};
+  /// interface. The server owns it; contexts and the naming manager borrow it.
+  std::unique_ptr<TAO_FT_Naming_Replication_Manager> replicator_;
 
   /// The Object Group Manager POA.
   PortableServer::POA_var naming_manager_poa_;
 
-  int use_object_group_persistence_;
+  bool use_object_group_persistence_ {};
   ACE_TString object_group_dir_;
 
   /// The role this server is supporting in the dual redundant
@@ -206,8 +207,8 @@ protected:
   TAO_FTNS_Notifier ior_notifier_;
   TAO_FTNS_Notifier info_notifier_;
 
-  ACE_Unbounded_Queue<FT_Naming::ReplicaInfo> u_iors_;
-  ACE_Unbounded_Queue<FT_Naming::UpdateInfoSeq*> u_infos_;
+  std::deque<FT_Naming::ReplicaInfo> u_iors_;
+  std::deque<std::unique_ptr<FT_Naming::UpdateInfoSeq>> u_infos_;
   TAO_SYNCH_MUTEX ior_lock_;
   TAO_SYNCH_MUTEX info_lock_;
 };

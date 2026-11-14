@@ -9,10 +9,14 @@
  */
 //=============================================================================
 
+#ifndef TAO_LOADBALANCING_MANAGE_OBJECT_GROUP_SERVER_H
+#define TAO_LOADBALANCING_MANAGE_OBJECT_GROUP_SERVER_H
 
 #include "orbsvcs/CosLoadBalancingC.h"
 #include "orbsvcs/PortableGroupC.h"
 #include "tao/PortableServer/PortableServer.h"
+
+#include <string>
 
 // Forward Declaration of the kind of servant we would like to handle
 // by the server.
@@ -33,17 +37,18 @@ class Simple;
 class LB_server
 {
 public:
-  /// Constructor
   LB_server (int argc, ACE_TCHAR **argv);
+
+  LB_server (LB_server const &) = delete;
+  LB_server (LB_server &&) = delete;
+  LB_server &operator= (LB_server const &) = delete;
+  LB_server &operator= (LB_server &&) = delete;
 
   /// destroys LoadManager, ORB and POA.
   int destroy ();
 
   /// start the ORB.
   int start_orb_and_poa ();
-
-  /// Get the LoadManager Interface.
-  int init (int argc, ACE_TCHAR **argv);
 
   /// Create the basic Object Group using the Load Manager Reference.
   int create_basic_object_group ();
@@ -58,10 +63,10 @@ public:
   int remove_simple_member ();
 
   /// register the basic servants with the object group.
-  int register_basic_servant (Basic *servant, const char *loc);
+  int register_basic_servant (Basic *servant, std::string const &loc);
 
   /// register the simple servants with the object group.
-  int register_simple_servant (Simple *servant, const char *loc);
+  int register_simple_servant (Simple *servant, std::string const &loc);
 
   /// for servants to register to the initialised ORB.
   CORBA::ORB_ptr orb ();
@@ -94,10 +99,12 @@ private:
   /// ORB pointer
   CORBA::ORB_var orb_;
 
-  /// command line arguments
+  /// Borrowed from main; the argument storage must outlive this object.
   int argc_;
   ACE_TCHAR **argv_;
 
   /// root poa pointer
   PortableServer::POA_var root_poa_;
 };
+
+#endif  /* TAO_LOADBALANCING_MANAGE_OBJECT_GROUP_SERVER_H */

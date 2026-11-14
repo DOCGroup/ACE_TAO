@@ -5,16 +5,14 @@
 #include "Command_Factory.h"
 #include "Name.h"
 
+#include <utility>
 
 TAO_Notify_Tests_Command_Builder::TAO_Notify_Tests_Command_Builder ()
-  : start_command_ (0),
-    last_command_ (0)
 {
 }
 
 TAO_Notify_Tests_Command_Builder::~TAO_Notify_Tests_Command_Builder ()
-{
-}
+= default;
 
 int
 TAO_Notify_Tests_Command_Builder::init (int argc, ACE_TCHAR *argv[])
@@ -22,7 +20,7 @@ TAO_Notify_Tests_Command_Builder::init (int argc, ACE_TCHAR *argv[])
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
   ACE_CString current_arg;
-  TAO_Notify_Tests_Command_Factory* factory = 0;
+  TAO_Notify_Tests_Command_Factory* factory {};
 
   if (arg_shifter.is_anything_left ())
     {
@@ -35,11 +33,13 @@ TAO_Notify_Tests_Command_Builder::init (int argc, ACE_TCHAR *argv[])
           ACE_DEBUG ((LM_DEBUG, "NS Command: %s not recognized!\n", current_arg.c_str ()));
       else
         {
-          TAO_Notify_Tests_Command* new_command = factory->create ();
+          std::unique_ptr<TAO_Notify_Tests_Command> new_command_owner (factory->create ());
+          TAO_Notify_Tests_Command* new_command = new_command_owner.get ();
 
           new_command->init (arg_shifter);
+          this->commands_.push_back (std::move (new_command_owner));
 
-          if (this->start_command_ == 0)
+          if (this->start_command_ == nullptr)
             {
               this->start_command_ = new_command;
               this->last_command_ = new_command;

@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-
 //=============================================================================
 /**
  *  @file    Driver.h
@@ -11,7 +10,6 @@
  *  @author Sergio Flores-Gaitan <sergio@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef _DRIVER_H_
 #define _DRIVER_H_
@@ -24,6 +22,7 @@
 
 #include "ace/Timer_Heap_T.h"
 #include "ace/Timer_Queue_Adapters.h"
+#include <memory>
 
 /**
  * @class Command
@@ -46,10 +45,15 @@ public:
   /// <action_> of the Command to <action>.
   Command (RECEIVER &recvr, ACTION action);
 
-  virtual ~Command ();
+  ~Command () = default;
+
+  Command (Command const &) = delete;
+  Command (Command &&) = delete;
+  Command &operator= (Command const &) = delete;
+  Command &operator= (Command &&) = delete;
 
   /// Invokes the method <action_> from the object <receiver_>.
-  virtual int execute (void *arg);
+  int execute (void *arg);
 
 private:
   /// object where the method resides.
@@ -76,12 +80,18 @@ template <class TQ, class RECEIVER, class ACTION>
 class Timer_Queue_Test_Driver
 {
 public:
-  /// Default destructor
-  virtual ~Timer_Queue_Test_Driver ();
+  Timer_Queue_Test_Driver () = default;
+
+  virtual ~Timer_Queue_Test_Driver () = default;
+
+  Timer_Queue_Test_Driver (Timer_Queue_Test_Driver const &) = delete;
+  Timer_Queue_Test_Driver (Timer_Queue_Test_Driver &&) = delete;
+  Timer_Queue_Test_Driver &operator= (Timer_Queue_Test_Driver const &) = delete;
+  Timer_Queue_Test_Driver &operator= (Timer_Queue_Test_Driver &&) = delete;
 
   /// Breaks up the input string buffer into pieces and executes
   /// the appropriate method to handle that operation.
-  virtual int parse_commands (const char *buf);
+  virtual int parse_commands (char const *buf);
 
   /**
    * This is the main entry point to the test driver.  The user
@@ -116,16 +126,16 @@ protected:
   // = Set of <Command>s to be executed.
 
   /// schedule timer command
-  Command<RECEIVER, ACTION> *schedule_cmd_;
+  std::unique_ptr<Command<RECEIVER, ACTION>> schedule_cmd_ {};
 
   /// cancel timer command.
-  Command<RECEIVER, ACTION> *cancel_cmd_;
+  std::unique_ptr<Command<RECEIVER, ACTION>> cancel_cmd_ {};
 
   /// list timers command.
-  Command<RECEIVER, ACTION> *list_cmd_;
+  std::unique_ptr<Command<RECEIVER, ACTION>> list_cmd_ {};
 
   /// shutdown the driver.
-  Command<RECEIVER, ACTION> *shutdown_cmd_;
+  std::unique_ptr<Command<RECEIVER, ACTION>> shutdown_cmd_ {};
 };
 
 #include "Driver.cpp"

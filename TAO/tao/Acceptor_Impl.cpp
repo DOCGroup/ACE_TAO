@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_ACCEPTOR_IMPL_CPP
 #define TAO_ACCEPTOR_IMPL_CPP
 
@@ -112,13 +111,13 @@ TAO_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *sh,
   // point.
   TAO_Server_Strategy_Factory *f = this->orb_core_->server_factory ();
 
-  int result = 0;
+  int result {};
 
   // Do we need to create threads?
   if (f->activate_server_connections ())
     {
       // Thread-per-connection concurrency model
-      TAO_Thread_Per_Connection_Handler *tpch = nullptr;
+      TAO_Thread_Per_Connection_Handler *tpch {};
 
       ACE_NEW_RETURN (tpch,
                       TAO_Thread_Per_Connection_Handler (sh,
@@ -167,7 +166,7 @@ TAO_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *sh,
 
       if (TAO_debug_level > 0)
          {
-           ACE_TCHAR const *error_message = nullptr;
+           ACE_TCHAR const *error_message {};
            if (f->activate_server_connections ())
              error_message = ACE_TEXT("could not activate new connection");
            else
@@ -214,7 +213,6 @@ TAO_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler (SVC_H
 
   return result;
 }
-
 
 /////////////////////////////////////////////////////////////////////
 

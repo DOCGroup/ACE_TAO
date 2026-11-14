@@ -1,22 +1,16 @@
 #include "Foo_B_Statistics.h"
 #include "Foo_B_ClientEngine.h"
 
+#include <cstring>
+
 extern const char* ONEWAY_ARG_TEST_STR;
 extern CORBA::Boolean special_value;
 
 Foo_B_Statistics::Foo_B_Statistics(unsigned num_remote_clients,
                                    unsigned num_collcated_clients)
 : num_clients_ (num_remote_clients + num_collcated_clients),
-  num_collcated_clients_ (num_collcated_clients),
-  expected_callbacks_ (0),
-  actual_callbacks_ (0),
-  servant_error_count_ (0)
+  num_collcated_clients_ (num_collcated_clients)
 {
-  for (unsigned i = 0; i < 16; i++)
-    {
-      this->expected_op_count_[i] = 0;
-      this->actual_op_count_[i] = 0;
-    }
 }
 
 void
@@ -26,13 +20,11 @@ Foo_B_Statistics::expected(unsigned op_num, unsigned count, In_Value_Type type)
   this->expected_in_value_type_[op_num-1] = type;
 }
 
-
 void
 Foo_B_Statistics::actual(unsigned op_num, unsigned count)
 {
   this->actual_op_count_[op_num-1] += count;
 }
-
 
 void
 Foo_B_Statistics::actual(unsigned op_num, LongVector lv)
@@ -44,7 +36,6 @@ Foo_B_Statistics::actual(unsigned op_num, LongVector lv)
     }
 }
 
-
 void
 Foo_B_Statistics::actual(unsigned op_num, StringVector sv)
 {
@@ -55,13 +46,11 @@ Foo_B_Statistics::actual(unsigned op_num, StringVector sv)
     }
 }
 
-
 void
 Foo_B_Statistics::expected_callbacks (unsigned num_cbs)
 {
   expected_callbacks_ = num_cbs * this->num_collcated_clients_;
 }
-
 
 void
 Foo_B_Statistics::actual_callbacks (unsigned num_cbs)
@@ -69,13 +58,11 @@ Foo_B_Statistics::actual_callbacks (unsigned num_cbs)
   actual_callbacks_ += num_cbs;
 }
 
-
 void
 Foo_B_Statistics::servant_error_count (unsigned error_count)
 {
   this->servant_error_count_ += error_count;
 }
-
 
 bool
 Foo_B_Statistics::actual_vs_expected()
@@ -172,7 +159,7 @@ Foo_B_Statistics::actual_vs_expected()
               {
                 unsigned client_id;
                 sscanf (this->actual_in_string_[i][k].c_str(), "%u %s", &client_id, buffer);
-                if (ACE_OS::strcmp (buffer, ONEWAY_ARG_TEST_STR) != 0)
+                if (std::strcmp (buffer, ONEWAY_ARG_TEST_STR) != 0)
                   {
                     ACE_ERROR((LM_ERROR, "(%P|%t)Foo_B_Statistics::actual_vs_expected  "
                       "actual_in_string_[%u][%u]=%s\n",

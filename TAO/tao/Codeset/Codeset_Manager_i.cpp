@@ -20,6 +20,9 @@
 #include "ace/OS_NS_string.h"
 #include "ace/Service_Config.h"
 
+#include <memory>
+#include <new>
+
 // These numbers are assigned by the OpenGroup, a database is
 // available at
 //
@@ -72,13 +75,13 @@ TAO_Codeset_Manager_i::TAO_Codeset_Manager_i ()
 TAO_Codeset_Descriptor_Base *
 TAO_Codeset_Manager_i::char_codeset_descriptor ()
 {
-  return &this->char_descriptor_;
+  return std::addressof (this->char_descriptor_);
 }
 
 TAO_Codeset_Descriptor_Base *
 TAO_Codeset_Manager_i::wchar_codeset_descriptor ()
 {
-  return &this->wchar_descriptor_;
+  return std::addressof (this->wchar_descriptor_);
 }
 
 void
@@ -168,11 +171,11 @@ TAO_Codeset_Manager_i::process_service_context (TAO_ServerRequest &request)
   if (service_cntx.get_context(context))
     {
       // Convert the Service Context to Codeset Context
-      const char *buffer =
+      char const *buffer =
         reinterpret_cast<const char*> (context.context_data.get_buffer ());
 
       TAO_InputCDR cdr (buffer,context.context_data.length ());
-      CORBA::Boolean byte_order;
+      CORBA::Boolean byte_order {};
 
       if (cdr >> TAO_InputCDR::to_boolean (byte_order))
         {
@@ -197,8 +200,8 @@ TAO_Codeset_Manager_i::process_service_context (TAO_ServerRequest &request)
     {
       ACE_CString tcs_c_locale;
       ACE_CString tcs_w_locale;
-      ACE_Codeset_Registry::registry_to_locale (tcs_c, tcs_c_locale, 0, 0);
-      ACE_Codeset_Registry::registry_to_locale (tcs_w, tcs_w_locale, 0, 0);
+      ACE_Codeset_Registry::registry_to_locale (tcs_c, tcs_c_locale, nullptr, nullptr);
+      ACE_Codeset_Registry::registry_to_locale (tcs_w, tcs_w_locale, nullptr, nullptr);
       TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - Codeset_Manager_i::")
                   ACE_TEXT ("process_service_context, ")
@@ -219,24 +222,26 @@ TAO_Codeset_Manager_i::generate_service_context (TAO_Operation_Details &opd,
 
   // Generating codeset context
   // Assuming the TCS values from Transport will be defaulted
-  TAO_Codeset_Translator_Factory *tf =
+  TAO_Codeset_Translator_Factory * const char_tf =
     dynamic_cast<TAO_Codeset_Translator_Factory*>(trans.char_translator());
 
   codeset_cntx.char_data =
-    tf ? tf->tcs () : this->codeset_info_.ForCharData.native_code_set;
+    char_tf ? char_tf->tcs () : this->codeset_info_.ForCharData.native_code_set;
 
-  tf =
+  TAO_Codeset_Translator_Factory * const wchar_tf =
     dynamic_cast<TAO_Codeset_Translator_Factory*>(trans.wchar_translator());
 
   codeset_cntx.wchar_data =
-    tf ? tf->tcs () : this->codeset_info_.ForWcharData.native_code_set;
+    wchar_tf ? wchar_tf->tcs () : this->codeset_info_.ForWcharData.native_code_set;
 
   if (TAO_debug_level > 2)
     {
       ACE_CString tcs_c_locale;
       ACE_CString tcs_w_locale;
-      ACE_Codeset_Registry::registry_to_locale (codeset_cntx.char_data, tcs_c_locale, 0, 0);
-      ACE_Codeset_Registry::registry_to_locale (codeset_cntx.wchar_data, tcs_w_locale, 0, 0);
+      ACE_Codeset_Registry::registry_to_locale (
+        codeset_cntx.char_data, tcs_c_locale, nullptr, nullptr);
+      ACE_Codeset_Registry::registry_to_locale (
+        codeset_cntx.wchar_data, tcs_w_locale, nullptr, nullptr);
       TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - Codeset_Manager_i::")
                   ACE_TEXT ("generate_service_context, ")
@@ -256,27 +261,27 @@ TAO_Codeset_Manager_i::generate_service_context (TAO_Operation_Details &opd,
 }
 
 /// Checks whether the NCS is a part of CCS
-int
+bool
 TAO_Codeset_Manager_i::isElementOf (CONV_FRAME::CodeSetId id,
-                                    CONV_FRAME::CodeSetComponent &cs_comp)
+                                    CONV_FRAME::CodeSetComponent const &cs_comp) const
 {
-  for (CORBA::ULong i = 0L;
+  for (CORBA::ULong i {};
        i < cs_comp.conversion_code_sets.length ();
        ++i )
     {
       if (id == cs_comp.conversion_code_sets[i])
-        return 1;
+        return true;
     }
 
-  return 0;
+  return false;
 }
 
 /// Find the Intersection of Client and Server CCS's
 CONV_FRAME::CodeSetId
-TAO_Codeset_Manager_i::intersectionOf (CONV_FRAME::CodeSetComponent &cs_comp1,
-                                       CONV_FRAME::CodeSetComponent &cs_comp2)
+TAO_Codeset_Manager_i::intersectionOf (CONV_FRAME::CodeSetComponent const &cs_comp1,
+                                       CONV_FRAME::CodeSetComponent const &cs_comp2) const
 {
-  for(CORBA::ULong index = 0L;
+  for (CORBA::ULong index {};
        index < cs_comp1.conversion_code_sets.length();
        ++index )
     {
@@ -289,18 +294,10 @@ TAO_Codeset_Manager_i::intersectionOf (CONV_FRAME::CodeSetComponent &cs_comp1,
   return 0;
 }
 
-int
-TAO_Codeset_Manager_i::isCompatible(CONV_FRAME::CodeSetId cs1,
-                                    CONV_FRAME::CodeSetId cs2 )
-{
-  // Call the is_compatible method of ACE_Codeset_Registry
-  return ACE_Codeset_Registry::is_compatible(cs1,cs2);
-}
-
 /// returns the TCS for Char / Wchar
 CONV_FRAME::CodeSetId
-TAO_Codeset_Manager_i::computeTCS (CONV_FRAME::CodeSetComponent &remote,
-                                   CONV_FRAME::CodeSetComponent &local)
+TAO_Codeset_Manager_i::computeTCS (CONV_FRAME::CodeSetComponent const &remote,
+                                   CONV_FRAME::CodeSetComponent const &local) const
 {
   if (remote.native_code_set == local.native_code_set)
     {
@@ -317,11 +314,12 @@ TAO_Codeset_Manager_i::computeTCS (CONV_FRAME::CodeSetComponent &remote,
       return local.native_code_set;
     }
 
-  CONV_FRAME::CodeSetId tcs;
-
-  if ((tcs = this->intersectionOf (remote, local)) == 0)
+  CONV_FRAME::CodeSetId const tcs = this->intersectionOf (remote, local);
+  if (tcs == 0)
     {
-      if (isCompatible (local.native_code_set, remote.native_code_set))
+      if (ACE_Codeset_Registry::is_compatible (
+            local.native_code_set,
+            remote.native_code_set))
         {
           return remote.native_code_set;
         }
@@ -342,7 +340,7 @@ TAO_Codeset_Manager_i::open(TAO_ORB_Core& core)
   TAO_Codeset_Translator_Factory *fact =
     ACE_Dynamic_Service<TAO_Codeset_Translator_Factory>::
     instance ("UTF8_Latin1_Factory");
-  if (fact == 0)
+  if (fact == nullptr)
     ACE_Service_Config::process_directive
       (ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE ("UTF8_Latin1_Factory",
                                       "TAO_Codeset",
@@ -360,7 +358,7 @@ TAO_Codeset_Manager_i::open(TAO_ORB_Core& core)
 
   fact = ACE_Dynamic_Service<TAO_Codeset_Translator_Factory>::
     instance ("UTF16_BOM_Factory");
-  if (fact == 0)
+  if (fact == nullptr)
     ACE_Service_Config::process_directive
       (ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE ("UTF16_BOM_Factory",
                                       "TAO_Codeset",
@@ -377,10 +375,15 @@ TAO_Codeset_Manager_i::open(TAO_ORB_Core& core)
     }
 #endif
   //
-  TAO_Codeset_Service_Context_Handler *h = nullptr;
-  ACE_NEW (h,
-           TAO_Codeset_Service_Context_Handler());
-  core.service_context_registry ().bind (IOP::CodeSets, h);
+  std::unique_ptr<TAO_Codeset_Service_Context_Handler> handler {
+    new (std::nothrow) TAO_Codeset_Service_Context_Handler};
+  if (!handler)
+    {
+      errno = ENOMEM;
+      return;
+    }
+  // Transfer ownership to the service-context registry.
+  core.service_context_registry ().bind (IOP::CodeSets, handler.release ());
 
   // add in from the service configurator
   this->codeset_info_.ForCharData.native_code_set =
@@ -415,57 +418,55 @@ int
 TAO_Codeset_Manager_i::init_ccs (TAO_Codeset_Descriptor& cd,
                                  CONV_FRAME::CodeSetComponent& cs_comp)
 {
-  cs_comp.conversion_code_sets.length
-    (static_cast<CORBA::ULong> (cd.num_translators()));
+  cs_comp.conversion_code_sets.length (
+    static_cast<CORBA::ULong> (cd.num_translators ()));
 
-  CORBA::ULong index;
-  TAO_Codeset_Descriptor::Translator_Node *tlist = cd.translators();
-
-  for (index = 0; tlist; tlist = tlist->next_)
+  CORBA::ULong index {};
+  for (TAO_Codeset_Descriptor::Translator_Node &tlist : cd.translators ())
     {
-      tlist->translator_factory_ =
+      tlist.translator_factory_ =
         ACE_Dynamic_Service<TAO_Codeset_Translator_Factory>::instance
-        (tlist->name_);
+        (tlist.name_.c_str ());
 
-      if (tlist->translator_factory_ == nullptr)
+      if (tlist.translator_factory_ == nullptr)
         {
           if (TAO_debug_level)
             TAOLIB_ERROR ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) - Codeset_Manager_i::")
                         ACE_TEXT ("init_ccs, Unable to load ")
                         ACE_TEXT ("code set translator <%s>, %m\n"),
-                        tlist->name_));
+                        tlist.name_.c_str ()));
           continue;
         }
 
-      if (tlist->translator_factory_->ncs() != cs_comp.native_code_set)
+      if (tlist.translator_factory_->ncs() != cs_comp.native_code_set)
         {
           if (TAO_debug_level)
             TAOLIB_ERROR ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) - Codeset_Manager_i::")
                         ACE_TEXT ("init_ccs, codeset translator <%s> ")
                         ACE_TEXT ("has wrong ncs (%d), %m\n"),
-                        tlist->name_,
-                        tlist->translator_factory_->ncs()));
-          tlist->translator_factory_ = nullptr;
+                        tlist.name_.c_str (),
+                        tlist.translator_factory_->ncs()));
+          tlist.translator_factory_ = nullptr;
           continue;
         }
 
       // this is a special case for the utf16 bom translator.
-      if (tlist->translator_factory_->tcs() ==  cs_comp.native_code_set)
+      if (tlist.translator_factory_->tcs() ==  cs_comp.native_code_set)
         continue;
 
       cs_comp.conversion_code_sets[index++] =
-        tlist->translator_factory_->tcs();
+        tlist.translator_factory_->tcs();
       if (TAO_debug_level > 2)
         {
           TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - Codeset_Manager_i::")
                       ACE_TEXT ("init_ccs, Loaded Codeset translator ")
                       ACE_TEXT ("<%s>, ncs = %08x tcs = %08x\n"),
-                      tlist->name_,
-                      tlist->translator_factory_->ncs(),
-                      tlist->translator_factory_->tcs()
+                      tlist.name_.c_str (),
+                      tlist.translator_factory_->ncs(),
+                      tlist.translator_factory_->tcs()
                       ));
         }
     }
@@ -478,7 +479,7 @@ TAO_Codeset_Translator_Base *
 TAO_Codeset_Manager_i::get_char_trans (CONV_FRAME::CodeSetId tcs)
 {
   if (this->codeset_info_.ForCharData.native_code_set == tcs)
-    return 0;
+    return nullptr;
   return this->get_translator_i (this->char_descriptor_,tcs);
 }
 
@@ -487,22 +488,21 @@ TAO_Codeset_Manager_i::get_wchar_trans (CONV_FRAME::CodeSetId tcs)
 {
   if (tcs == this->codeset_info_.ForWcharData.native_code_set &&
       tcs != ACE_CODESET_ID_ISO_UTF_16)
-    return 0;
+    return nullptr;
   return this->get_translator_i (this->wchar_descriptor_,tcs);
 }
 
 TAO_Codeset_Translator_Base *
-TAO_Codeset_Manager_i::get_translator_i (TAO_Codeset_Descriptor& cd,
-                                         CONV_FRAME::CodeSetId tcs)
+TAO_Codeset_Manager_i::get_translator_i (TAO_Codeset_Descriptor const &cd,
+                                         CONV_FRAME::CodeSetId tcs) const
 {
-  for (TAO_Codeset_Descriptor::Translator_Node *tlist = cd.translators();
-       tlist; tlist = tlist->next_)
+  for (TAO_Codeset_Descriptor::Translator_Node const &tlist : cd.translators ())
     {
-      TAO_Codeset_Translator_Factory *fact = tlist->translator_factory_;
-      if (fact && tcs == fact->tcs ())
+      TAO_Codeset_Translator_Factory * const fact = tlist.translator_factory_;
+      if (fact != nullptr && tcs == fact->tcs ())
         return fact;
     }
-  return 0;
+  return nullptr;
 }
 
 void

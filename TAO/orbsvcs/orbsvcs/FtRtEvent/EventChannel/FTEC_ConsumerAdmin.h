@@ -25,7 +25,6 @@ namespace FtRtecEventChannelAdmin {
   struct ConsumerAdminState;
 }
 
-
 class TAO_FTEC_Event_Channel_Impl;
 class TAO_FTEC_ProxyPushSupplier;
 /**
@@ -50,10 +49,15 @@ public:
              FtRtecEventChannelAdmin::ConsumerAdminState>;
 
   using StateWorker = ProxySupplierStateWorker;
-  TAO_FTEC_ConsumerAdmin (TAO_EC_Event_Channel_Base* event_channel);
+  explicit TAO_FTEC_ConsumerAdmin (TAO_EC_Event_Channel_Base* event_channel);
+
+  TAO_FTEC_ConsumerAdmin(TAO_FTEC_ConsumerAdmin const&) = delete;
+  TAO_FTEC_ConsumerAdmin(TAO_FTEC_ConsumerAdmin&&) = delete;
+  TAO_FTEC_ConsumerAdmin& operator=(TAO_FTEC_ConsumerAdmin const&) = delete;
+  TAO_FTEC_ConsumerAdmin& operator=(TAO_FTEC_ConsumerAdmin&&) = delete;
 
   /// destructor...
-  ~TAO_FTEC_ConsumerAdmin () override;
+  ~TAO_FTEC_ConsumerAdmin () override = default;
 
   // = The RtecEventChannelAdmin::ConsumerAdmin methods...
   RtecEventChannelAdmin::ProxyPushSupplier_ptr

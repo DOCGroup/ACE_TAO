@@ -33,14 +33,13 @@ Client_Task::svc ()
           this->sender_->get_data (this->event_size_, pl.out ());
         }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       return -1;
     }
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Client task finished\n"));
   return 0;
 }
-
 
 void
 Client_Task::validate_connections ()
@@ -51,6 +50,8 @@ Client_Task::validate_connections ()
         {
           this->sender_->ping ();
         }
-      catch (const CORBA::Exception&){}
+      catch (CORBA::Exception const &)
+        {
+        }
     }
 }

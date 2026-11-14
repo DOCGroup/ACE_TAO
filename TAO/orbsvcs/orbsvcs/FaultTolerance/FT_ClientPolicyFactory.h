@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_FT_CLIENTPOLICY_FACTORY_H
 #define TAO_FT_CLIENTPOLICY_FACTORY_H
 
@@ -39,8 +38,15 @@ class TAO_FT_ClientPolicyFactory
   , public ::CORBA::LocalObject
 {
 public:
+  TAO_FT_ClientPolicyFactory () = default;
+
   CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
                                    CORBA::Any const& value) override;
+
+  TAO_FT_ClientPolicyFactory (TAO_FT_ClientPolicyFactory const&) = delete;
+  TAO_FT_ClientPolicyFactory& operator= (TAO_FT_ClientPolicyFactory const&) = delete;
+  TAO_FT_ClientPolicyFactory (TAO_FT_ClientPolicyFactory&&) = delete;
+  TAO_FT_ClientPolicyFactory& operator= (TAO_FT_ClientPolicyFactory&&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
@@ -48,7 +54,6 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
-
 
 #include /**/ "ace/post.h"
 

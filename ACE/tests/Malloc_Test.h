@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_TESTS_MALLOC_TEST_H
 #define ACE_TESTS_MALLOC_TEST_H
 

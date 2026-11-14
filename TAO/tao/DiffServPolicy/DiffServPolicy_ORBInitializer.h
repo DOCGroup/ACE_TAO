@@ -1,15 +1,10 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file DiffServPolicy_ORBInitializer.h
  *
  *  @author Jaiganesh Balasubramanian <jai@dre.vanderbilt.edu>
  *          Johnny Willemsen <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
-
 #ifndef TAO_DIFFSERV_POLICY_ORB_INITIALIZER_H
 #define TAO_DIFFSERV_POLICY_ORB_INITIALIZER_H
 
@@ -45,13 +40,13 @@ public:
 
   void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
-private:
   TAO_DiffServPolicy_ORBInitializer (TAO_DiffServPolicy_ORBInitializer const &) = delete;
   TAO_DiffServPolicy_ORBInitializer &operator= (
     TAO_DiffServPolicy_ORBInitializer const &) = delete;
   TAO_DiffServPolicy_ORBInitializer (TAO_DiffServPolicy_ORBInitializer &&) = delete;
   TAO_DiffServPolicy_ORBInitializer &operator= (TAO_DiffServPolicy_ORBInitializer &&) = delete;
 
+private:
   /// Register DiffServ policy factories.
   void register_policy_factories (PortableInterceptor::ORBInitInfo_ptr info);
 

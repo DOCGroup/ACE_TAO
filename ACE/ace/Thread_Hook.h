@@ -35,7 +35,6 @@ public:
   /// Default constructor
   ACE_Thread_Hook ();
 
-  /// Destructor.
   virtual ~ACE_Thread_Hook ();
 
   /**

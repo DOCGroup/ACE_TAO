@@ -58,7 +58,7 @@ ACE_ATM_Addr::ACE_ATM_Addr (u_char selector)
   this->init (selector);
 }
 
-// Copy constructor.
+
 
 ACE_ATM_Addr::ACE_ATM_Addr (const ACE_ATM_Addr &sap,
                             u_char selector)
@@ -95,7 +95,6 @@ ACE_ATM_Addr::ACE_ATM_Addr (const ATM_Addr *sap,
   ACE_TRACE ("ACE_ATM_Addr::ACE_ATM_Addr");
   this->set (sap, selector);
 }
-
 
 ACE_ATM_Addr::ACE_ATM_Addr (const ACE_TCHAR sap[],
                             u_char selector)
@@ -260,18 +259,18 @@ ACE_ATM_Addr::string_to_addr (const ACE_TCHAR sap[])
   struct atmnsap_addr *nsap;
 
   // Yow, someone gave us a NULL ATM address!
-  if (sap == 0)
+  if (sap == nullptr)
     {
       errno = EINVAL;
       return -1;
     }
-  else if ((entry = gethostbyname_atmnsap ((ACE_TCHAR *)sap)) != 0)
+  else if ((entry = gethostbyname_atmnsap ((ACE_TCHAR *)sap)) != nullptr)
     {
       ACE_OS::memcpy (atm_addr_.sap.t_atm_sap_addr.address,
                       entry->h_addr_list[0],
                       ATMNSAP_ADDR_LEN - 1);
     }
-  else if ((nsap = atmnsap_addr (sap)) != 0)
+  else if ((nsap = atmnsap_addr (sap)) != nullptr)
     {
       ACE_OS::memcpy (atm_addr_.sap.t_atm_sap_addr.address,
                       nsap->atmnsap,
@@ -335,7 +334,7 @@ ACE_ATM_Addr::string_to_addr (const ACE_TCHAR sap[])
       return -1;
    }
 #elif defined (ACE_HAS_LINUX_ATM)
-   if (sap == 0 || !ACE_OS::strcmp (sap,"")) {
+   if (sap == nullptr || !ACE_OS::strcmp (sap, "")) {
      errno = EINVAL;
      return -1;
    }
@@ -393,7 +392,7 @@ ACE_ATM_Addr::addr_to_string (ACE_TCHAR addr[],
   if (addrlen < ATM_ADDR_SIZE + 1)
           return -1;
 
-  for (i = 0; i < ATM_ADDR_SIZE; i++) {
+  for (i = 0; i < ATM_ADDR_SIZE; ++i) {
     buffer[ i * 3 ] = '\0';
           ACE_OS::sprintf (buffer, ACE_TEXT ("%s%02x."),
                      buffer,

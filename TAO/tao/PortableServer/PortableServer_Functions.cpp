@@ -1,6 +1,5 @@
 // -*- C++ -*-
 #include "tao/PortableServer/PortableServer_Functions.h"
-#include "ace/OS_NS_string.h"
 #include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -22,14 +21,14 @@ namespace PortableServer
     // We DO NOT include the zero terminator, as this is simply an
     // artifact of the way strings are stored in C.
     //
-    CORBA::ULong buffer_size = static_cast <CORBA::ULong>
+    CORBA::ULong const buffer_size = static_cast <CORBA::ULong>
                                            (std::strlen (string));
 
     // Create the buffer for the Id
     CORBA::Octet *buffer = PortableServer::ObjectId::allocbuf (buffer_size);
 
     // Copy the contents
-    ACE_OS::memcpy (buffer, string, buffer_size);
+    std::memcpy (buffer, string, buffer_size);
 
     // Create and return a new ID
     PortableServer::ObjectId *id {};
@@ -37,7 +36,7 @@ namespace PortableServer
                     PortableServer::ObjectId (buffer_size,
                                               buffer_size,
                                               buffer,
-                                              1),
+                                              true),
                     nullptr);
 
     return id;
@@ -50,7 +49,7 @@ namespace PortableServer
     char * string = CORBA::string_alloc (id.length ());
 
     // Copy the data
-    ACE_OS::memcpy (string, id.get_buffer (), id.length ());
+    std::memcpy (string, id.get_buffer (), id.length ());
 
     // Null terminate the string
     string[id.length ()] = '\0';
@@ -59,6 +58,5 @@ namespace PortableServer
     return string;
   }
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

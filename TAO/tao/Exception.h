@@ -30,7 +30,6 @@
 #include "ace/iosfwd.h"
 #include "ace/CORBA_macros.h"
 
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Allocator;
 ACE_END_VERSIONED_NAMESPACE_DECL
@@ -108,15 +107,22 @@ namespace CORBA
      */
     Exception (const Exception &src);
 
-    /// Destructor.
     virtual ~Exception () = default;
 
-    // = To throw the exception (when using the standard mapping).
+    /// @name Throwing
+    /// @{
+
     virtual void _raise () const = 0;
 
-    // = The static narrow operations.
+    /// @}
+
+    /// @name Narrowing
+    /// @{
+
     static Exception * _downcast (Exception * x);
     static Exception const * _downcast (Exception const * x);
+
+    /// @}
 
     /// Return the repository ID of the Exception.
     virtual const char * _rep_id () const;
@@ -124,7 +130,8 @@ namespace CORBA
     /// Return the name of the Exception.
     virtual const char * _name () const;
 
-    // = These are TAO-specific extensions.
+    /// @name TAO-specific extensions
+    /// @{
 
     /// Will be overridden in the concrete derived classes.
     virtual CORBA::TypeCode_ptr _tao_type () const = 0;
@@ -178,8 +185,9 @@ namespace CORBA
      */
     virtual CORBA::Exception *_tao_duplicate () const = 0;
 
+    /// @}
+
   protected:
-    /// Default constructor.
     Exception () = default;
 
     /// Assignment operator.

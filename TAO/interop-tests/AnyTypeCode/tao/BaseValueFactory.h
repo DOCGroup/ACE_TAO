@@ -7,8 +7,8 @@
 class Demo_BaseValueFactory : public virtual Demo::BaseValue_init
 {
 public:
-  virtual CORBA::ValueBase* create_for_unmarshal();
-  virtual Demo::BaseValue* create(const char * str);
+  CORBA::ValueBase *create_for_unmarshal () override;
+  Demo::BaseValue *create (char const *str) override;
 };
 
 #endif

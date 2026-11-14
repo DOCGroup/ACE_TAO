@@ -1,39 +1,30 @@
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = DESCRIPTION
-//    This program tests ACE_SOCK_Dgram_Mcast class.
-//    It specifically tests subscribing to multiple groups on the same socket
-//    on one or more physical interfaces (if available).
-//
-//    The test can be run as a producer, consumer, or both producer/consumer
-//    (default).  The test requires at least two (2) multicast groups which can
-//    be configured as command line options.  The consumer subscribes to a
-//    single group per instance and an additional instance tries to subscribe
-//    to all groups on a single socket (if the ACE_SOCK_Dgram_Mcast instance
-//    bind()'s the first address to the socket, additional joins will fail).
-//    The producer iterates through the list of group addresses and sends a
-//    single message containing the destination address and port to each one.
-//    It also sends messages to five (5) additional groups and a message to an
-//    additional port for each group in order to produce a bit of "noise" in
-//    order to help validate how well the multicast filtering works on a
-//    particular platform.
-//
-//    The list of destination groups start at 239.255.0.1 (default) and
-//    increment by 1 up to 5 (default) groups.  Both of these values, as well
-//    as others, can be overridden via command-line options.  Use the -?
-//    option to display the usage message...
-//
-// = AUTHOR
-//    Don Hinton <dhinton@dresystems.com>
-//
-// ============================================================================
+/// @file Multicast_Test.cpp
+/// This program tests ACE_SOCK_Dgram_Mcast class.
+/// It specifically tests subscribing to multiple groups on the same socket
+/// on one or more physical interfaces (if available).
+///
+/// The test can be run as a producer, consumer, or both producer/consumer
+/// (default).  The test requires at least two (2) multicast groups which can
+/// be configured as command line options.  The consumer subscribes to a
+/// single group per instance and an additional instance tries to subscribe
+/// to all groups on a single socket (if the ACE_SOCK_Dgram_Mcast instance
+/// bind()'s the first address to the socket, additional joins will fail).
+/// The producer iterates through the list of group addresses and sends a
+/// single message containing the destination address and port to each one.
+/// It also sends messages to five (5) additional groups and a message to an
+/// additional port for each group in order to produce a bit of "noise" in
+/// order to help validate how well the multicast filtering works on a
+/// particular platform.
+///
+/// The list of destination groups start at 239.255.0.1 (default) and
+/// increment by 1 up to 5 (default) groups.  Both of these values, as well
+/// as others, can be overridden via command-line options.  Use the -?
+/// option to display the usage message...
+///
+/// @author Don Hinton <dhinton@dresystems.com>
 
 #include "test_config.h"
 #include "ace/Get_Opt.h"
-#include "ace/Vector_T.h"
 #include "ace/SOCK_Dgram_Mcast.h"
 #include "ace/ACE.h"
 #include "ace/Reactor.h"
@@ -46,6 +37,7 @@
 #include "ace/SString.h"
 #include "ace/Signal.h"
 #include <algorithm>
+#include <vector>
 
 #if defined (ACE_HAS_IP_MULTICAST) && defined (ACE_HAS_THREADS)
 
@@ -466,14 +458,14 @@ private:
   ACE_SOCK_Dgram_Mcast mcast_;
 
   // List of groups we've joined
-  ACE_Vector<ACE_CString*> address_vec_;
+  std::vector<ACE_CString> address_vec_;
 
   // Flag used to set the 'finished' flag when the last event handler
   // gets removed from the reactor.
   static ACE_Atomic_Op<ACE_SYNCH_MUTEX, long> active_handlers_;
 };
 
-ACE_Atomic_Op<ACE_SYNCH_MUTEX, long> MCT_Event_Handler::active_handlers_ = 0;
+ACE_Atomic_Op<ACE_SYNCH_MUTEX, long> MCT_Event_Handler::active_handlers_ {0};
 
 MCT_Event_Handler::MCT_Event_Handler (ACE_SOCK_Dgram_Mcast::options options)
   : mcast_ (options)
@@ -485,15 +477,8 @@ MCT_Event_Handler::MCT_Event_Handler (ACE_SOCK_Dgram_Mcast::options options)
 
 MCT_Event_Handler::~MCT_Event_Handler ()
 {
-  size_t size = this->address_vec_.size ();
-  for (size_t i = 0; i < size; ++i)
-    {
-      delete this->address_vec_[i];
-      this->address_vec_[i] = 0;
-    }
   mcast_.close ();
 }
-
 
 ACE_SOCK_Dgram_Mcast *
 MCT_Event_Handler::mcast ()
@@ -504,21 +489,19 @@ MCT_Event_Handler::mcast ()
 int
 MCT_Event_Handler::find (const char *buf)
 {
-  size_t const size = this->address_vec_.size ();
-  size_t i = 0;
-  for (i = 0; i < size; ++i)
+  for (ACE_CString const &address : this->address_vec_)
     {
-      if (ACE_OS::strcasecmp (buf, this->address_vec_[i]->c_str ()) == 0)
+      if (ACE_OS::strcasecmp (buf, address.c_str ()) == 0)
         return 0;
     }
 
   // Not found, so output message we received along with a list of groups
   // we've joined for debugging.
   ACE_CString local;
-  for (i = 0; i < size; ++i)
+  for (ACE_CString const &address : this->address_vec_)
     {
       local += "\t";
-      local += this->address_vec_[i]->c_str ();
+      local += address.c_str ();
       local += "\n";
     }
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%C not in:\n%C"),
@@ -526,7 +509,6 @@ MCT_Event_Handler::find (const char *buf)
 
   return -1;
 }
-
 
 int
 MCT_Event_Handler::join (const ACE_INET_Addr &mcast_addr,
@@ -546,9 +528,7 @@ MCT_Event_Handler::join (const ACE_INET_Addr &mcast_addr,
                       -1);
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Joined %C\n"), buf));
 
-  ACE_CString *str = nullptr;
-  ACE_NEW_RETURN (str, ACE_CString (buf), -1);
-  this->address_vec_.push_back (str);
+  this->address_vec_.emplace_back (buf);
   return 0;
 }
 
@@ -559,15 +539,14 @@ MCT_Event_Handler::leave (const ACE_INET_Addr &mcast_addr,
   if (this->mcast_.leave (mcast_addr, net_if) == 0)
     {
       char buf[MAX_STRING_SIZE];
-      size_t size = this->address_vec_.size ();
-      for (size_t i = 0; i < size; ++i)
+      for (ACE_CString &address : this->address_vec_)
         {
           ACE_OS::snprintf (buf, MAX_STRING_SIZE, "%s/%d",
                            mcast_addr.get_host_addr (),
                            mcast_addr.get_port_number ());
-          if (ACE_OS::strcasecmp (buf, this->address_vec_[i]->c_str ()) == 0)
+          if (ACE_OS::strcasecmp (buf, address.c_str ()) == 0)
             {
-              this->address_vec_[i]->set ("");
+              address.set ("");
               break;
             }
         }

@@ -3,12 +3,14 @@
 #include "orbsvcs/Naming/Bindings_Iterator_T.h"
 #include "ace/OS_NS_stdio.h"
 
+#include <cstring>
 #include <memory>
+#include <utility>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
-TAO_Persistent_Bindings_Map::unbind (const char *id, const char *kind)
+TAO_Persistent_Bindings_Map::unbind (char const *id, char const *kind)
 {
   TAO_Persistent_ExtId name (id, kind);
   TAO_Persistent_IntId entry;
@@ -26,8 +28,8 @@ TAO_Persistent_Bindings_Map::unbind (const char *id, const char *kind)
 }
 
 int
-TAO_Persistent_Bindings_Map::bind (const char *id,
-                                   const char *kind,
+TAO_Persistent_Bindings_Map::bind (char const *id,
+                                   char const *kind,
                                    CORBA::Object_ptr obj,
                                    CosNaming::BindingType type)
 {
@@ -35,8 +37,8 @@ TAO_Persistent_Bindings_Map::bind (const char *id,
 }
 
 int
-TAO_Persistent_Bindings_Map::rebind (const char *id,
-                                     const char *kind,
+TAO_Persistent_Bindings_Map::rebind (char const *id,
+                                     char const *kind,
                                      CORBA::Object_ptr obj,
                                      CosNaming::BindingType type)
 {
@@ -44,8 +46,8 @@ TAO_Persistent_Bindings_Map::rebind (const char *id,
 }
 
 int
-TAO_Persistent_Bindings_Map::find (const char *id,
-                                   const char *kind,
+TAO_Persistent_Bindings_Map::find (char const *id,
+                                   char const *kind,
                                    CORBA::Object_ptr & obj,
                                    CosNaming::BindingType &type)
 {
@@ -64,15 +66,13 @@ TAO_Persistent_Bindings_Map::find (const char *id,
 }
 
 TAO_Persistent_Bindings_Map::TAO_Persistent_Bindings_Map (CORBA::ORB_ptr orb)
-  : allocator_ (0),
-    map_ (0),
+  : allocator_ (nullptr),
+    map_ (nullptr),
     orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
-TAO_Persistent_Bindings_Map::~TAO_Persistent_Bindings_Map ()
-{
-}
+TAO_Persistent_Bindings_Map::~TAO_Persistent_Bindings_Map () = default;
 
 void
 TAO_Persistent_Bindings_Map::destroy ()
@@ -105,12 +105,12 @@ TAO_Persistent_Bindings_Map::open (size_t hash_table_size, ACE_Allocator *alloc)
   allocator_ = alloc;
 
   // Use allocator to allocate space for the hash map.
-  void *hash_map = nullptr;
+  void *hash_map {};
   size_t map_size = sizeof (HASH_MAP);
   hash_map = this->allocator_->malloc (map_size);
 
   // If allocation failed ...
-  if (hash_map == 0)
+  if (hash_map == nullptr)
     return -1;
 
   // Initialize allocated hash map through placement new.
@@ -136,8 +136,8 @@ TAO_Persistent_Bindings_Map::set (HASH_MAP *map, ACE_Allocator *alloc)
 }
 
 int
-TAO_Persistent_Bindings_Map::shared_bind (const char * id,
-                                          const char * kind,
+TAO_Persistent_Bindings_Map::shared_bind (char const *id,
+                                          char const *kind,
                                           CORBA::Object_ptr obj,
                                           CosNaming::BindingType type,
                                           int rebind)
@@ -147,14 +147,14 @@ TAO_Persistent_Bindings_Map::shared_bind (const char * id,
 
   // Calculate and allocate the memory we need to store this name to
   // object binding.
-  size_t id_len = ACE_OS::strlen (id) + 1;
-  size_t kind_len = ACE_OS::strlen (kind) + 1;
-  size_t ref_len = ACE_OS::strlen (ref.in ()) + 1;
+  size_t id_len = std::strlen (id) + 1;
+  size_t kind_len = std::strlen (kind) + 1;
+  size_t ref_len = std::strlen (ref.in ()) + 1;
   size_t total_len = id_len + kind_len + ref_len;
   char *ptr = (char *) this->allocator_->malloc (total_len);
 
   // Allocation failed - bail out.
-  if (ptr == 0)
+  if (ptr == nullptr)
     return -1;
 
   // Allocation succeded - place the data into the allocated memory
@@ -166,9 +166,9 @@ TAO_Persistent_Bindings_Map::shared_bind (const char * id,
       char * ref_ptr = ptr;
       char * id_ptr =  ptr + ref_len;
       char * kind_ptr = ptr + ref_len + id_len;
-      ACE_OS::strcpy (ref_ptr, ref.in ());
-      ACE_OS::strcpy (id_ptr, id);
-      ACE_OS::strcpy (kind_ptr, kind);
+      std::strcpy (ref_ptr, ref.in ());
+      std::strcpy (id_ptr, id);
+      std::strcpy (kind_ptr, kind);
 
       TAO_Persistent_ExtId new_name (id_ptr, kind_ptr);
       TAO_Persistent_IntId new_entry (ref_ptr, type);
@@ -232,14 +232,14 @@ TAO_Persistent_Bindings_Map::shared_bind (const char * id,
 }
 
 TAO_Persistent_Naming_Context::TAO_Persistent_Naming_Context (PortableServer::POA_ptr poa,
-                                                              const char *poa_id,
+                                                              char const *poa_id,
                                                               TAO_Persistent_Context_Index *context_index,
                                                               HASH_MAP *map,
                                                               ACE_UINT32 *counter)
   : TAO_Hash_Naming_Context (poa,
                              poa_id),
     counter_ (counter),
-    persistent_context_ (0),
+    persistent_context_ (nullptr),
     index_ (context_index)
 {
   ACE_NEW (this->persistent_context_,
@@ -250,7 +250,7 @@ TAO_Persistent_Naming_Context::TAO_Persistent_Naming_Context (PortableServer::PO
 
   // If a map was provided (i.e., not defaulted) then set it in the
   // persistent_context_
-  if (map != 0)
+  if (map != nullptr)
     persistent_context_->set (map, index_->allocator ());
 }
 
@@ -284,7 +284,7 @@ TAO_Persistent_Naming_Context::set_cleanup_level (int level)
 
 CosNaming::NamingContext_ptr
 TAO_Persistent_Naming_Context::make_new_context (PortableServer::POA_ptr poa,
-                                                 const char *poa_id,
+                                                 char const *poa_id,
                                                  size_t context_size,
                                                  TAO_Persistent_Context_Index * ind)
 {
@@ -298,7 +298,7 @@ TAO_Persistent_Naming_Context::make_new_context (PortableServer::POA_ptr poa,
     poa_id);
 
   // Verify that a context implementation was created. If not, throw an exception
-  if (context_impl == 0)
+  if (context_impl == nullptr)
     throw CORBA::NO_MEMORY ();
 
   // Put <context_impl> into the unique pointer temporarily, in case next
@@ -320,17 +320,17 @@ TAO_Persistent_Naming_Context::make_new_context (PortableServer::POA_ptr poa,
   // Insure appropriate cleanup in case of exception conditions ahead.
   context_impl->set_cleanup_level (2);
 
-  TAO_Naming_Context *context = nullptr;
+  TAO_Naming_Context *context {};
   ACE_NEW_THROW_EX (context,
                     TAO_Naming_Context (context_impl),
                     CORBA::NO_MEMORY ());
 
+  // Transfer ownership to TAO_Naming_Context after it was constructed.
+  temp.release ();
+
   // Let <implementation> know about it's <interface>.
   context_impl->interface (context);
 
-  // Release unique pointer, and start using reference counting to
-  // control our servant.
-  temp.release ();
   PortableServer::ServantBase_var s = context;
 
   // Register the new context with the POA.
@@ -390,7 +390,7 @@ TAO_Persistent_Naming_Context::list (CORBA::ULong how_many,
     throw CORBA::OBJECT_NOT_EXIST ();
 
   // Dynamically allocate hash map iterator.
-  HASH_MAP::ITERATOR *hash_iter = nullptr;
+  HASH_MAP::ITERATOR *hash_iter {};
   ACE_NEW_THROW_EX (hash_iter,
                     HASH_MAP::ITERATOR
                     (*persistent_context_->map ()),
@@ -411,7 +411,7 @@ TAO_Persistent_Naming_Context::list (CORBA::ULong how_many,
   using ITER_SERVANT = TAO_Bindings_Iterator<ITER_DEF, ENTRY_DEF>;
 
   // A pointer to BindingIterator servant.
-  ITER_SERVANT *bind_iter = nullptr;
+  ITER_SERVANT *bind_iter {};
 
   // Number of bindings that will go into the BindingList.
   CORBA::ULong n;
@@ -425,7 +425,7 @@ TAO_Persistent_Naming_Context::list (CORBA::ULong how_many,
   // Use hash iterator to populate a BindingList with bindings.
   bl->length (n);
 
-  ENTRY_DEF *hash_entry = nullptr;
+  ENTRY_DEF *hash_entry {};
   {
     // Obtain a lock before we proceed with the operation.
     ACE_READ_GUARD_THROW_EX (TAO_SYNCH_RW_MUTEX,
@@ -433,7 +433,7 @@ TAO_Persistent_Naming_Context::list (CORBA::ULong how_many,
                              this->lock_,
                              CORBA::INTERNAL ());
 
-    for (CORBA::ULong i = 0; i < n; i++)
+    for (CORBA::ULong i {}; i < n; ++i)
       {
         hash_iter->next (hash_entry);
         hash_iter->advance ();
@@ -452,12 +452,10 @@ TAO_Persistent_Naming_Context::list (CORBA::ULong how_many,
     {
       // Create a BindingIterator for return.
       ACE_NEW_THROW_EX (bind_iter,
-                        ITER_SERVANT (this, hash_iter, this->poa_.in ()),
+                        ITER_SERVANT (this, std::move (temp), this->poa_.in ()),
                         CORBA::NO_MEMORY ());
 
-      // Release <hash_iter> from unique pointer, and start using the
-      // reference counting to control our servant.
-      temp.release ();
+      // Start using reference counting to control our servant.
       PortableServer::ServantBase_var iter = bind_iter;
 
       // Increment reference count on this Naming Context, so it doesn't get

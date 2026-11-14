@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef EC_CONSUMER_H
 #define EC_CONSUMER_H
 
@@ -37,7 +36,6 @@
 class EC_Test_Export EC_Consumer : public POA_RtecEventComm::PushConsumer
 {
 public:
-  /// Constructor
   EC_Consumer (EC_Driver* driver, void* cookie);
 
   /// The driver program can build the QoS attributes and obtain the
@@ -77,8 +75,8 @@ public:
   // = The RtecEventComm::PushConsumer methods
 
   /// The skeleton methods.
-  virtual void push (const RtecEventComm::EventSet& events);
-  virtual void disconnect_push_consumer ();
+  void push (const RtecEventComm::EventSet& events) override;
+  void disconnect_push_consumer () override;
 
 private:
   /// The main driver for the test.

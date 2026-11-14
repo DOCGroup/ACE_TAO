@@ -15,13 +15,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 int
 TAO_CEC_Dispatching_Task::svc ()
 {
-  bool done = false;
+  bool done {};
 
   while (!done)
     {
       try
         {
-          ACE_Message_Block *mb = nullptr;
+          ACE_Message_Block *mb {};
 
           if (this->getq (mb) == -1)
             {
@@ -54,7 +54,7 @@ TAO_CEC_Dispatching_Task::svc ()
               done = true;
             }
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const &ex)
         {
           ex._tao_print_exception ("EC (%P|%t) exception in dispatching queue");
         }
@@ -106,10 +106,6 @@ TAO_CEC_Dispatching_Task::invoke (TAO_CEC_ProxyPushSupplier *proxy,
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
 // ****************************************************************
-
-TAO_CEC_Dispatch_Command::~TAO_CEC_Dispatch_Command ()
-{
-}
 
 // ****************************************************************
 

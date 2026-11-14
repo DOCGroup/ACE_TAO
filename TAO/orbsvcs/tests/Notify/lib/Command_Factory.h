@@ -25,10 +25,8 @@ class TAO_Notify_Tests_Command;
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Command_Factory
 {
 public:
-  /// Constructor
   TAO_Notify_Tests_Command_Factory ();
 
-  /// Destructor
   virtual ~TAO_Notify_Tests_Command_Factory ();
 
   /// Create the command.

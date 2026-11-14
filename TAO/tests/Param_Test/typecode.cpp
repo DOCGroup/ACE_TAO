@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "helper.h"
 #include "typecode.h"
 
@@ -25,7 +24,7 @@ Test_TypeCode::Test_TypeCode ()
 Test_TypeCode::~Test_TypeCode ()
 {
   CORBA::string_free (this->opname_);
-  this->opname_ = 0;
+  this->opname_ = nullptr;
 }
 
 const char *
@@ -86,7 +85,7 @@ Test_TypeCode::init_parameters (Param_Test_ptr)
   this->out_ = CORBA::TypeCode::_nil ();
   this->ret_ = CORBA::TypeCode::_nil ();
 
-  index++;
+  ++index;
   if (index >= sizeof(tc_table)/sizeof(tc_table[0]))
     index = 0;
 

@@ -10,9 +10,10 @@
  */
 //=============================================================================
 
-
 #ifndef _ICP_H
 #define _ICP_H
+
+#include <cstddef>
 
 extern "C"
 {
@@ -21,13 +22,13 @@ extern "C"
 
   // Get attribute
   int ICP_get (unsigned long id,
-               const char * attr,
+               char const *attr,
                void *value,
                size_t len);
   // Set attribute
   int ICP_set (unsigned long id,
-               const char *attr,
-               const void *value);
+               char const *attr,
+               void const *value);
 }
 
 #endif /* _ICP_H */

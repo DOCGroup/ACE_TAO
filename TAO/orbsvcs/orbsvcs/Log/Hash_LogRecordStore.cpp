@@ -12,6 +12,10 @@
 #include "tao/debug.h"
 #include "ace/OS_NS_sys_time.h"
 
+#include <cstdio>
+#include <cstring>
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Hash_LogRecordStore::TAO_Hash_LogRecordStore (
@@ -63,9 +67,9 @@ TAO_Hash_LogRecordStore::TAO_Hash_LogRecordStore (
     log_poa->create_id_assignment_policy (PortableServer::SYSTEM_ID);
 
   char buf[32];
-  ACE_OS::snprintf (buf, sizeof (buf), "Log%d", (int) id_);
+  std::snprintf (buf, sizeof (buf), "Log%d", static_cast<int> (id_));
 
-  PortableServer::POAManager_var poa_manager =
+  PortableServer::POAManager_var const poa_manager =
     log_poa->the_POAManager ();
 
   this->iterator_poa_ =
@@ -74,7 +78,7 @@ TAO_Hash_LogRecordStore::TAO_Hash_LogRecordStore (
 
 TAO_Hash_LogRecordStore::~TAO_Hash_LogRecordStore ()
 {
-  this->iterator_poa_->destroy (1, 0);
+  this->iterator_poa_->destroy (true, false);
 }
 
 int
@@ -115,10 +119,10 @@ TAO_Hash_LogRecordStore::reset_gauge ()
 }
 
 int
-TAO_Hash_LogRecordStore::log (const DsLogAdmin::LogRecord &const_rec)
+TAO_Hash_LogRecordStore::log (DsLogAdmin::LogRecord const &const_rec)
 {
   // Get log record size...
-  size_t record_size = log_record_size (const_rec);
+  size_t const record_size = log_record_size (const_rec);
 
   // Check if we are allowed to write...
   if (max_size_ !=0 && ((current_size_ + record_size) >= max_size_))
@@ -154,7 +158,7 @@ int
 TAO_Hash_LogRecordStore::retrieve_i (DsLogAdmin::RecordId id,
                                      DsLogAdmin::LogRecord &rec)
 {
-  int retval = rec_map_.find (id, rec);
+  int const retval = rec_map_.find (id, rec);
   return retval;
 }
 
@@ -200,9 +204,9 @@ TAO_Hash_LogRecordStore::remove_i (DsLogAdmin::RecordId id)
 void
 TAO_Hash_LogRecordStore::remove_i (LOG_RECORD_STORE_ITER iter)
 {
-  size_t size = log_record_size(iter->item ());
+  size_t const size = log_record_size(iter->item ());
 
-  rec_map_.unbind(&*iter);
+  rec_map_.unbind (std::addressof (*iter));
 
   --this->num_records_;
   this->current_size_ -= size;
@@ -216,15 +220,15 @@ TAO_Hash_LogRecordStore::purge_old_records ()
   if (num_records_to_purge < 1)
     num_records_to_purge = 1;
 
-  CORBA::ULong count = 0; // count of matches found.
+  CORBA::ULong count {}; // count of matches found.
 
   if (num_records_to_purge > 0 )
     {
       // Create iterators
       LOG_RECORD_STORE_ITER iter (rec_map_.begin ());
-      LOG_RECORD_STORE_ITER iter_end (rec_map_.end ());
+      LOG_RECORD_STORE_ITER const iter_end (rec_map_.end ());
 
-      for (CORBA::ULongLong i = 0;
+      for (CORBA::ULongLong i {};
            iter != iter_end && i < num_records_to_purge;
            ++i)
         {
@@ -238,8 +242,7 @@ TAO_Hash_LogRecordStore::purge_old_records ()
 
 void
 TAO_Hash_LogRecordStore::set_record_attribute (DsLogAdmin::RecordId id,
-                const DsLogAdmin::NVList
-                &attr_list)
+                                              DsLogAdmin::NVList const &attr_list)
 {
   // TODO: validate attributes here.
 
@@ -259,10 +262,9 @@ TAO_Hash_LogRecordStore::set_record_attribute (DsLogAdmin::RecordId id,
 
 CORBA::ULong
 TAO_Hash_LogRecordStore::set_records_attribute (
-  const char *grammar,
-  const char *constraint,
-  const DsLogAdmin::NVList
-  &attr_list)
+  char const *grammar,
+  char const *constraint,
+  DsLogAdmin::NVList const &attr_list)
 {
   this->check_grammar (grammar);
 
@@ -273,9 +275,9 @@ TAO_Hash_LogRecordStore::set_records_attribute (
 
   // Create iterators
   LOG_RECORD_STORE_ITER iter (rec_map_.begin ());
-  LOG_RECORD_STORE_ITER iter_end (rec_map_.end ());
+  LOG_RECORD_STORE_ITER const iter_end (rec_map_.end ());
 
-  CORBA::ULong count = 0; // count of matches found.
+  CORBA::ULong count {}; // count of matches found.
 
   for ( ; iter != iter_end; ++iter)
     {
@@ -298,21 +300,20 @@ TAO_Hash_LogRecordStore::get_record_attribute (DsLogAdmin::RecordId id)
 {
   DsLogAdmin::LogRecord rec;
 
-  int retval = this->retrieve_i (id, rec);
+  int const retval = this->retrieve_i (id, rec);
 
   if (retval == -1)
     {
       throw DsLogAdmin::InvalidRecordId ();
     }
 
-  DsLogAdmin::NVList *nvlist = nullptr;
+  DsLogAdmin::NVList *nvlist {};
   ACE_NEW_THROW_EX (nvlist,
                     DsLogAdmin::NVList (rec.attr_list),
                     CORBA::NO_MEMORY ());
 
   return nvlist;
 }
-
 
 int
 TAO_Hash_LogRecordStore::flush ()
@@ -321,9 +322,9 @@ TAO_Hash_LogRecordStore::flush ()
 }
 
 size_t
-TAO_Hash_LogRecordStore::log_record_size (const DsLogAdmin::LogRecord &rec)
+TAO_Hash_LogRecordStore::log_record_size (DsLogAdmin::LogRecord const &rec)
 {
-  size_t mb_size = 0;
+  size_t mb_size {};
   TAO::Any_Impl *impl = rec.info.impl ();
 
   if (impl->encoded ())
@@ -344,7 +345,7 @@ TAO_Hash_LogRecordStore::log_record_size (const DsLogAdmin::LogRecord &rec)
 }
 
 DsLogAdmin::RecordList*
-TAO_Hash_LogRecordStore::query_i (const char *constraint,
+TAO_Hash_LogRecordStore::query_i (char const *constraint,
                                   DsLogAdmin::Iterator_out &iter_out,
                                   CORBA::ULong how_many)
 {
@@ -363,9 +364,9 @@ TAO_Hash_LogRecordStore::query_i (const char *constraint,
 
   // Create iterators
   LOG_RECORD_STORE_ITER iter (rec_map_.begin ());
-  LOG_RECORD_STORE_ITER iter_end (rec_map_.end ());
+  LOG_RECORD_STORE_ITER const iter_end (rec_map_.end ());
 
-  CORBA::ULong count = 0;       // count of matches found.
+  CORBA::ULong count {};       // count of matches found.
 
   for ( ; ((iter != iter_end) && (count < how_many)); ++iter)
     {
@@ -393,7 +394,7 @@ TAO_Hash_LogRecordStore::query_i (const char *constraint,
   if (iter != iter_end)         // There are more records to process.
     {
       // Create an iterator to pass out.
-      TAO_Hash_Iterator_i *iter_query = nullptr;
+      TAO_Hash_Iterator_i *iter_query {};
       ACE_NEW_THROW_EX (iter_query,
                         TAO_Hash_Iterator_i (this->iterator_poa_.in (),
                                              this->reactor_,
@@ -406,12 +407,12 @@ TAO_Hash_LogRecordStore::query_i (const char *constraint,
                         CORBA::NO_MEMORY ());
 
       // Transfer ownership to the POA.
-      PortableServer::ServantBase_var safe_iter_query = iter_query;
+      PortableServer::ServantBase_var const safe_iter_query = iter_query;
 
       // Activate it.
-      PortableServer::ObjectId_var oid =
+      PortableServer::ObjectId_var const oid =
         this->iterator_poa_->activate_object (iter_query);
-      CORBA::Object_var obj =
+      CORBA::Object_var const obj =
         this->iterator_poa_->id_to_reference (oid.in ());
 
       // Narrow it
@@ -422,8 +423,8 @@ TAO_Hash_LogRecordStore::query_i (const char *constraint,
 }
 
 DsLogAdmin::RecordList*
-TAO_Hash_LogRecordStore::query (const char *grammar,
-                                const char *constraint,
+TAO_Hash_LogRecordStore::query (char const *grammar,
+                                char const *constraint,
                                 DsLogAdmin::Iterator_out iter_out)
 {
   this->check_grammar (grammar);
@@ -439,7 +440,7 @@ TAO_Hash_LogRecordStore::retrieve (DsLogAdmin::TimeT from_time,
                                    DsLogAdmin::Iterator_out iter_out)
 {
   // Decide between forward vs backward retrieval.
-  char constraint[32];
+  char constraint[64];
   ACE_TCHAR uint64_formating[32];
 
   ACE_OS::sprintf (uint64_formating,
@@ -447,12 +448,12 @@ TAO_Hash_LogRecordStore::retrieve (DsLogAdmin::TimeT from_time,
                    from_time);
 
   if (how_many >= 0)
-    ACE_OS::sprintf (constraint, "time >= %s",
-                     ACE_TEXT_ALWAYS_CHAR (uint64_formating));
+    std::snprintf (constraint, sizeof (constraint), "time >= %s",
+                   ACE_TEXT_ALWAYS_CHAR (uint64_formating));
   else
     {
-      ACE_OS::sprintf (constraint, "time < %s",
-                       ACE_TEXT_ALWAYS_CHAR (uint64_formating));
+      std::snprintf (constraint, sizeof (constraint), "time < %s",
+                     ACE_TEXT_ALWAYS_CHAR (uint64_formating));
       how_many = -(how_many);
     }
 
@@ -462,8 +463,8 @@ TAO_Hash_LogRecordStore::retrieve (DsLogAdmin::TimeT from_time,
 }
 
 CORBA::ULong
-TAO_Hash_LogRecordStore::match (const char* grammar,
-                                const char *constraint)
+TAO_Hash_LogRecordStore::match (char const *grammar,
+                                char const *constraint)
 {
   this->check_grammar (grammar);
 
@@ -472,9 +473,9 @@ TAO_Hash_LogRecordStore::match (const char* grammar,
 
   // Create iterators
   LOG_RECORD_STORE_ITER iter (rec_map_.begin ());
-  LOG_RECORD_STORE_ITER iter_end (rec_map_.end ());
+  LOG_RECORD_STORE_ITER const iter_end (rec_map_.end ());
 
-  CORBA::ULong count = 0; // count of matches found.
+  CORBA::ULong count {}; // count of matches found.
 
   for ( ; iter != iter_end; ++iter)
     {
@@ -492,8 +493,8 @@ TAO_Hash_LogRecordStore::match (const char* grammar,
 }
 
 CORBA::ULong
-TAO_Hash_LogRecordStore::delete_records (const char *grammar,
-                                         const char *constraint)
+TAO_Hash_LogRecordStore::delete_records (char const *grammar,
+                                         char const *constraint)
 {
   this->check_grammar (grammar);
 
@@ -502,9 +503,9 @@ TAO_Hash_LogRecordStore::delete_records (const char *grammar,
 
   // Create iterators
   LOG_RECORD_STORE_ITER iter (rec_map_.begin ());
-  LOG_RECORD_STORE_ITER iter_end (rec_map_.end ());
+  LOG_RECORD_STORE_ITER const iter_end (rec_map_.end ());
 
-  CORBA::ULong count = 0; // count of matches found.
+  CORBA::ULong count {}; // count of matches found.
 
   while (iter != iter_end)
     {
@@ -527,11 +528,11 @@ TAO_Hash_LogRecordStore::delete_records (const char *grammar,
 }
 
 CORBA::ULong
-TAO_Hash_LogRecordStore::delete_records_by_id (const DsLogAdmin::RecordIdList &ids)
+TAO_Hash_LogRecordStore::delete_records_by_id (DsLogAdmin::RecordIdList const &ids)
 {
-  CORBA::ULong count (0);
+  CORBA::ULong count {};
 
-  for (CORBA::ULong i = 0; i < ids.length (); i++)
+  for (CORBA::ULong i {}; i < ids.length (); ++i)
     {
       if (this->remove_i (ids [i]) == 0)
         {
@@ -549,7 +550,9 @@ TAO_Hash_LogRecordStore::remove_old_records ()
     return 0;
   }
 
-  TimeBase::TimeT purge_time (ORBSVCS_Time::to_Absolute_TimeT ((ACE_OS::gettimeofday () - ACE_Time_Value(this->max_record_life_))));
+  TimeBase::TimeT const purge_time (
+    ORBSVCS_Time::to_Absolute_TimeT (
+      ACE_OS::gettimeofday () - ACE_Time_Value (this->max_record_life_)));
 
   // As there is no separate timestamp index, we must iterate through
   // the entire map.  We can't be tempted to think timestamps will be
@@ -557,9 +560,9 @@ TAO_Hash_LogRecordStore::remove_old_records ()
 
   // Create iterators
   LOG_RECORD_STORE_ITER iter (rec_map_.begin ());
-  LOG_RECORD_STORE_ITER iter_end (rec_map_.end ());
+  LOG_RECORD_STORE_ITER const iter_end (rec_map_.end ());
 
-  CORBA::ULong count = 0; // count of matches found.
+  CORBA::ULong count {}; // count of matches found.
 
   while (iter != iter_end)
     {
@@ -578,23 +581,21 @@ TAO_Hash_LogRecordStore::remove_old_records ()
   return count;
 }
 
-ACE_SYNCH_RW_MUTEX&
-TAO_Hash_LogRecordStore::lock()
+ACE_SYNCH_RW_MUTEX &
+TAO_Hash_LogRecordStore::lock ()
 {
   return lock_;
 }
 
-
 void
-TAO_Hash_LogRecordStore::check_grammar (const char* grammar)
+TAO_Hash_LogRecordStore::check_grammar (char const *grammar)
 {
   // Verify grammar
-  if (ACE_OS::strcmp (grammar, "TCL") != 0 &&
-      ACE_OS::strcmp (grammar, "ETCL") != 0 &&
-      ACE_OS::strcmp (grammar, "EXTENDED_TCL") != 0)
+  if (std::strcmp (grammar, "TCL") != 0 &&
+      std::strcmp (grammar, "ETCL") != 0 &&
+      std::strcmp (grammar, "EXTENDED_TCL") != 0)
     throw DsLogAdmin::InvalidGrammar ();
 }
-
 
 DsLogAdmin::AdministrativeState
 TAO_Hash_LogRecordStore::get_administrative_state () const
@@ -608,7 +609,6 @@ TAO_Hash_LogRecordStore::set_administrative_state (DsLogAdmin::AdministrativeSta
   this->admin_state_ = state;
 }
 
-
 DsLogAdmin::CapacityAlarmThresholdList*
 TAO_Hash_LogRecordStore::get_capacity_alarm_thresholds () const
 {
@@ -621,11 +621,11 @@ TAO_Hash_LogRecordStore::get_capacity_alarm_thresholds () const
 }
 
 void
-TAO_Hash_LogRecordStore::set_capacity_alarm_thresholds (const DsLogAdmin::CapacityAlarmThresholdList& thresholds)
+TAO_Hash_LogRecordStore::set_capacity_alarm_thresholds (
+    DsLogAdmin::CapacityAlarmThresholdList const &thresholds)
 {
   this->thresholds_ = thresholds;
 }
-
 
 DsLogAdmin::ForwardingState
 TAO_Hash_LogRecordStore::get_forwarding_state () const
@@ -646,11 +646,10 @@ TAO_Hash_LogRecordStore::get_interval () const
 }
 
 void
-TAO_Hash_LogRecordStore::set_interval (const DsLogAdmin::TimeInterval &interval)
+TAO_Hash_LogRecordStore::set_interval (DsLogAdmin::TimeInterval const &interval)
 {
   this->interval_ = interval;
 }
-
 
 DsLogAdmin::LogFullActionType
 TAO_Hash_LogRecordStore::get_log_full_action () const
@@ -667,7 +666,7 @@ TAO_Hash_LogRecordStore::set_log_full_action (DsLogAdmin::LogFullActionType acti
 DsLogAdmin::QoSList *
 TAO_Hash_LogRecordStore::get_log_qos () const
 {
-  DsLogAdmin::QoSList *ret_val = nullptr;
+  DsLogAdmin::QoSList *ret_val {};
   ACE_NEW_THROW_EX (ret_val,
                     DsLogAdmin::QoSList (this->log_qos_),
                     CORBA::NO_MEMORY ());
@@ -676,7 +675,7 @@ TAO_Hash_LogRecordStore::get_log_qos () const
 }
 
 void
-TAO_Hash_LogRecordStore::set_log_qos (const DsLogAdmin::QoSList& qos)
+TAO_Hash_LogRecordStore::set_log_qos (DsLogAdmin::QoSList const &qos)
 {
   this->log_qos_ = qos;
 }
@@ -708,7 +707,7 @@ TAO_Hash_LogRecordStore::set_max_size (CORBA::ULongLong size)
 DsLogAdmin::WeekMask*
 TAO_Hash_LogRecordStore::get_week_mask ()
 {
-  DsLogAdmin::WeekMask *ret_val = nullptr;
+  DsLogAdmin::WeekMask *ret_val {};
   ACE_NEW_THROW_EX (ret_val,
                     DsLogAdmin::WeekMask (this->weekmask_),
                     CORBA::NO_MEMORY ());
@@ -717,7 +716,7 @@ TAO_Hash_LogRecordStore::get_week_mask ()
 }
 
 void
-TAO_Hash_LogRecordStore::set_week_mask (const DsLogAdmin::WeekMask &masks)
+TAO_Hash_LogRecordStore::set_week_mask (DsLogAdmin::WeekMask const &masks)
 {
   this->weekmask_ = masks;
 }

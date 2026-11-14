@@ -19,31 +19,39 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "Kokyu_defs.h"
+#include <memory>
 
 namespace Kokyu
 {
 class Dispatch_Queue_Item : public ACE_Message_Block
 {
 public:
-  Dispatch_Queue_Item (
-        const Dispatch_Command* cmd,
-        const QoSDescriptor& qos_info,
-        ACE_Allocator* mb_allocator =0);
+  Dispatch_Queue_Item (Dispatch_Queue_Item const &) = delete;
+  Dispatch_Queue_Item (Dispatch_Queue_Item &&) = delete;
+  Dispatch_Queue_Item &operator= (Dispatch_Queue_Item const &) = delete;
+  Dispatch_Queue_Item &operator= (Dispatch_Queue_Item &&) = delete;
 
   Dispatch_Queue_Item (
-        const Dispatch_Command* cmd,
-        const QoSDescriptor& qos_info,
-        ACE_Data_Block* data_block,
+        Dispatch_Command const *cmd,
+        QoSDescriptor const &qos_info,
+        ACE_Allocator *mb_allocator = nullptr);
+
+  Dispatch_Queue_Item (
+        Dispatch_Command const *cmd,
+        QoSDescriptor const &qos_info,
+        ACE_Data_Block *data_block,
         int flags,
-        ACE_Allocator* mb_allocator =0);
+        ACE_Allocator *mb_allocator = nullptr);
 
-  Dispatch_Command* command ();
-
-private:
-  void init_i(const QoSDescriptor&);
+  Dispatch_Command *command ();
 
 private:
-  const Dispatch_Command* command_;
+  void init_i (QoSDescriptor const &);
+
+private:
+  // The caller retains ownership when can_be_deleted() is false; otherwise
+  // the worker destroys the command after execution.
+  Dispatch_Command const *command_;
   QoSDescriptor qos_info_;
 };
 
@@ -56,40 +64,38 @@ private:
 class Dispatcher_Task : public ACE_Task<ACE_SYNCH>
 {
 public:
-  /// Constructor
-  Dispatcher_Task (const ConfigInfo& config_info,
-                   ACE_Thread_Manager* thr_manager = 0);
+  explicit Dispatcher_Task (ConfigInfo const &config_info,
+                            ACE_Thread_Manager *thr_manager = nullptr);
 
+  ~Dispatcher_Task () override = default;
+  Dispatcher_Task (Dispatcher_Task const &) = delete;
+  Dispatcher_Task (Dispatcher_Task &&) = delete;
+  Dispatcher_Task &operator= (Dispatcher_Task const &) = delete;
+  Dispatcher_Task &operator= (Dispatcher_Task &&) = delete;
 
-  ~Dispatcher_Task ();
-  int initialize();
+  int initialize ();
 
-  int enqueue (const Dispatch_Command* cmd,
-           const QoSDescriptor& qos_info);
+  int enqueue (Dispatch_Command const *cmd,
+               QoSDescriptor const &qos_info);
 
   /// Process the events in the queue.
-  int svc ();
+  int svc () override;
 
-  const ConfigInfo& get_curr_config_info() const;
-  Priority_t preemption_priority() const;
-
-private:
-  static int get_native_prio();
+  ConfigInfo const &get_curr_config_info () const;
+  Priority_t preemption_priority () const;
 
 private:
+  static constexpr int ALLOC_POOL_CHUNKS = 200;
+
   ConfigInfo curr_config_info_;
 
-  ACE_Allocator *allocator_;
-  int own_allocator_;
+  std::unique_ptr<ACE_Allocator> owned_allocator_;
+  ACE_Allocator *allocator_; // Borrowed unless owned_allocator_ owns it.
 
   /// Helper data structure to minimize memory allocations...
   ACE_Locked_Data_Block<ACE_Lock_Adapter<ACE_SYNCH_MUTEX> > data_block_;
-
-  /// The queue
-  ACE_Message_Queue<ACE_SYNCH>* the_queue_;
-
-  ACE_Deadline_Message_Strategy deadline_msg_strategy_;
-  ACE_Laxity_Message_Strategy laxity_msg_strategy_;
+  // Destroy the queue before its data block and allocator.
+  std::unique_ptr<ACE_Message_Queue<ACE_SYNCH> > owned_queue_;
 };
 } //end of namespace
 

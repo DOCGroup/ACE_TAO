@@ -3,7 +3,7 @@
 #include "tao/SystemException.h"
 #include "tao/default_environment.h"
 
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Environment.inl"
@@ -11,35 +11,26 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-CORBA::Environment::Environment (const CORBA::Environment& rhs)
-  : exception_ (nullptr)
-  , previous_ (nullptr)
+CORBA::Environment::Environment (CORBA::Environment const &rhs)
 {
   if (rhs.exception_)
-    this->exception_ = rhs.exception_->_tao_duplicate ();
+    this->exception_.reset (rhs.exception_->_tao_duplicate ());
 }
 
-CORBA::Environment::Environment (TAO_ORB_Core* orb_core)
-  : exception_ (nullptr)
-  , previous_ (orb_core->default_environment ())
+CORBA::Environment::Environment (TAO_ORB_Core * const orb_core)
+  : previous_ (orb_core->default_environment ())
 {
   orb_core->default_environment (this);
 }
 
-CORBA::Environment&
-CORBA::Environment::operator= (const CORBA::Environment& rhs)
+CORBA::Environment &
+CORBA::Environment::operator= (CORBA::Environment const &rhs)
 {
   CORBA::Environment tmp (rhs);
-  {
-    CORBA::Exception *tmp_ex = this->exception_;
-    this->exception_ = tmp.exception_;
-    tmp.exception_ = tmp_ex;
-  }
-  {
-    CORBA::Environment *tmp_env = this->previous_;
-    this->previous_ = rhs.previous_;
-    tmp.previous_ = tmp_env;
-  }
+  this->exception_.swap (tmp.exception_);
+  CORBA::Environment * const tmp_env = this->previous_;
+  this->previous_ = rhs.previous_;
+  tmp.previous_ = tmp_env;
   return *this;
 }
 
@@ -47,7 +38,7 @@ CORBA::Environment::~Environment ()
 {
   this->clear ();
 
-  // If previous is 0 then this is the first Environment, allocated
+  // If previous is nullptr then this is the first Environment, allocated
   // with the ORB, it shouldn't try to pop because the ORB is being
   // destroyed also.
   if (this->previous_ != nullptr)
@@ -67,16 +58,16 @@ CORBA::Environment::exception (CORBA::Exception *ex)
   //    *BAD*, i.e. we are not helping the application to get better
   //    and only making the ORB bigger and slower.
 #if 0
-  if (ex != this->exception_)
+  if (ex != this->exception_.get ())
     {
       this->clear ();
     }
 #else
-  ACE_ASSERT (ex != this->exception_);
+  ACE_ASSERT (ex != this->exception_.get ());
   this->clear ();
 #endif /* 0 */
 
-  this->exception_ = ex;
+  this->exception_.reset (ex);
 
   if (this->exception_ != nullptr)
     this->exception_->_raise ();
@@ -85,11 +76,10 @@ CORBA::Environment::exception (CORBA::Exception *ex)
 void
 CORBA::Environment::clear ()
 {
-  delete this->exception_;
-  this->exception_ = nullptr;
+  this->exception_.reset ();
 }
 
-CORBA::Environment&
+CORBA::Environment &
 CORBA::Environment::default_environment ()
 {
   // If we are using native C++ exceptions the user is *not* supposed
@@ -124,10 +114,10 @@ CORBA::Environment::exception_type () const
   //    the IDL compiler vs. the ones hard-coded in
   //    $TAO_ROOT/tao/Typecode_Constants.cpp
 
-  static char sysex_prefix [] = "IDL:omg.org/CORBA/";
-  static char typecode_extra [] = "TypeCode/";
+  static char const sysex_prefix [] = "IDL:omg.org/CORBA/";
+  static char const typecode_extra [] = "TypeCode/";
 
-  if (!this->exception_)
+  if (this->exception_ == nullptr)
     {
       return CORBA::NO_EXCEPTION;
     }
@@ -136,20 +126,20 @@ CORBA::Environment::exception_type () const
   // are system exceptions ... except for a couple that are related to
   // TypeCodes.
 
-  const char *id = this->exception_->_rep_id ();
+  char const * const id = this->exception_->_rep_id ();
 
-  if ((ACE_OS::strncmp (id,
-                        sysex_prefix,
-                        sizeof sysex_prefix - 1) == 0
-       && ACE_OS::strncmp (id + sizeof sysex_prefix - 1,
-                           typecode_extra,
-                           sizeof typecode_extra - 1) != 0))
+  if ((std::strncmp (id,
+                     sysex_prefix,
+                     sizeof sysex_prefix - 1) == 0
+       && std::strncmp (id + sizeof sysex_prefix - 1,
+                        typecode_extra,
+                        sizeof typecode_extra - 1) != 0))
     return CORBA::SYSTEM_EXCEPTION;
   else
     return CORBA::USER_EXCEPTION;
 }
 
-const char*
+char const *
 CORBA::Environment::exception_id () const
 {
   if (this->exception_ == nullptr)
@@ -162,19 +152,19 @@ CORBA::Environment::exception_id () const
 // standard I/O stream passed as a parameter.
 
 void
-CORBA::Environment::print_exception (const char *info,
+CORBA::Environment::print_exception (char const *info,
                                      FILE *) const
 {
   if (this->exception_)
     {
-      const char *id = this->exception_->_rep_id ();
+      char const * const id = this->exception_->_rep_id ();
 
       TAOLIB_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO: (%P|%t) EXCEPTION, %C\n"),
                   info));
 
-      CORBA::SystemException *x2 =
-        CORBA::SystemException::_downcast (this->exception_);
+      CORBA::SystemException * const x2 =
+        CORBA::SystemException::_downcast (this->exception_.get ());
 
       if (x2 != nullptr)
         x2->_tao_print_system_exception ();

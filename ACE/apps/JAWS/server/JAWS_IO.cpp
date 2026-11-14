@@ -1,4 +1,3 @@
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_uio.h"
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/Message_Block.h"
@@ -11,15 +10,12 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/Basic_Types.h"
+#include <cstring>
 #include <memory>
 #include <algorithm>
 
 JAWS_IO::JAWS_IO ()
-  : handler_ (0)
-{
-}
-
-JAWS_IO::~JAWS_IO ()
+  : handler_ (nullptr)
 {
 }
 
@@ -27,10 +23,6 @@ void
 JAWS_IO::handler (JAWS_IO_Handler *handler)
 {
   this->handler_ = handler;
-}
-
-JAWS_IO_Handler::~JAWS_IO_Handler ()
-{
 }
 
 JAWS_Synch_IO::JAWS_Synch_IO ()
@@ -88,7 +80,7 @@ JAWS_Synch_IO::receive_file (const char *filename,
       stream.set_handle (this->handle_);
 
       int const bytes_to_memcpy = (std::min) (entire_length, initial_data_length);
-      ACE_OS::memcpy (handle.address (), initial_data, bytes_to_memcpy);
+      std::memcpy (handle.address (), initial_data, bytes_to_memcpy);
 
       int bytes_to_read = entire_length - bytes_to_memcpy;
 
@@ -137,19 +129,19 @@ JAWS_Synch_IO::transmit_file (const char *filename,
         {
           iov[iovcnt].iov_base = const_cast<char*> (header);
           iov[iovcnt].iov_len =  header_size;
-          iovcnt++;
+          ++iovcnt;
         }
       if (handle.size () > 0)
         {
           iov[iovcnt].iov_base =  reinterpret_cast<char*> (handle.address ());
           iov[iovcnt].iov_len = handle.size ();
-          iovcnt++;
+          ++iovcnt;
         }
       if (trailer_size > 0)
         {
           iov[iovcnt].iov_base = const_cast<char*> (trailer);
           iov[iovcnt].iov_len = trailer_size;
-          iovcnt++;
+          ++iovcnt;
         }
       if (ACE_OS::writev (this->handle_, iov, iovcnt) < 0)
         result = -1;
@@ -217,7 +209,7 @@ void
 JAWS_Asynch_IO::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
 {
   // This callback is for this->receive_file()
-  if (result.act () != 0)
+  if (result.act () != nullptr)
     {
       int code = 0;
       if (result.success () && result.bytes_transferred () != 0)
@@ -264,7 +256,7 @@ JAWS_Asynch_IO::receive_file (const char *filename,
                               int initial_data_length,
                               int entire_length)
 {
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb {};
   ACE_Filecache_Handle *handle;
 
   ACE_NEW (handle, ACE_Filecache_Handle (filename, entire_length, ACE_NOMAP));
@@ -273,16 +265,14 @@ JAWS_Asynch_IO::receive_file (const char *filename,
 
   if (result == ACE_Filecache_Handle::ACE_SUCCESS)
     {
-      ACE_OS::memcpy (handle->address (),
-                      initial_data,
-                      initial_data_length);
+      std::memcpy (handle->address (), initial_data, initial_data_length);
 
       int bytes_to_read = entire_length - initial_data_length;
 
       ACE_NEW (mb, ACE_Message_Block ((char *)handle->address ()
                                       + initial_data_length, bytes_to_read));
 
-      if (mb == 0)
+      if (mb == nullptr)
         {
           errno = ENOMEM;
           result = -1;
@@ -312,7 +302,7 @@ JAWS_Asynch_IO::transmit_file (const char *filename,
                                const char *trailer,
                                int trailer_size)
 {
-  ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer = 0;
+  ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer {};
   ACE_Filecache_Handle *handle = new ACE_Filecache_Handle (filename, ACE_NOMAP);
 
   int result = handle->error ();
@@ -348,7 +338,6 @@ JAWS_Asynch_IO::transmit_file (const char *filename,
     }
 }
 
-
 // This method will be called when an asynchronous transmit file completes.
 void
 JAWS_Asynch_IO::handle_transmit_file (const ACE_Asynch_Transmit_File::Result &result)
@@ -381,10 +370,10 @@ JAWS_Asynch_IO::send_message (const char *buffer,
                               int length,
                               int act)
 {
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb {};
   ACE_NEW (mb, ACE_Message_Block (buffer, length));
 
-  if (mb == 0)
+  if (mb == nullptr)
     {
       this->handler_->error_message_complete ();
       return;

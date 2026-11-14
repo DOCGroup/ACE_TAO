@@ -52,7 +52,7 @@ namespace ACE
        */
       struct ACE_Export Data
       {
-        Data (Monitor_Control_Types::Information_Type type);
+        explicit Data (Monitor_Control_Types::Information_Type type);
         ACE_Time_Value timestamp_;
         double value_;
         ACE_Array_Base<char *> list_;
@@ -101,7 +101,9 @@ namespace ACE
        * @brief Holder for a monitor point's constraints.
        */
 #if defined (ACE_HAS_ALLOC_HOOKS)
-      typedef ACE_Array_Map<long, Constraint, std::equal_to<long>, ACE_Allocator_Std_Adapter<std::pair<long, Constraint> > > ConstraintList;
+      using ConstraintList =
+        ACE_Array_Map<long, Constraint, std::equal_to<long>,
+                      ACE_Allocator_Std_Adapter<std::pair<long, Constraint> > >;
 #else
       using ConstraintList = ACE_Array_Map<long, Constraint>;
 #endif /* ACE_HAS_ALLOC_HOOKS */

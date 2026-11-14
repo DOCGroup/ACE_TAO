@@ -1,7 +1,5 @@
 #include "Hello.h"
-#include "tao/ORB_Core.h"
-#include "tao/ORB_Table.h"
-#include "tao/ORB_Core_Auto_Ptr.h"
+#include "ace/OS_NS_unistd.h"
 
 Hello::Hello (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))

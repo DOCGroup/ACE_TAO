@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    CSD_TP_Cancel_Visitor.h
  *
  *  @author  Tim Bradley <bradley_t@ociweb.com>
  */
-//=============================================================================
-
 #ifndef TAO_CSD_TP_CANCEL_VISITOR_H
 #define TAO_CSD_TP_CANCEL_VISITOR_H
 
@@ -21,7 +17,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/CSD_ThreadPool/CSD_TP_Queue_Visitor.h"
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -47,15 +42,18 @@ namespace TAO
     class TAO_CSD_TP_Export TP_Cancel_Visitor : public TP_Queue_Visitor
     {
     public:
-      /// Default Constructor - cancel *all* requests.
+      /// Cancels all requests by default.
       TP_Cancel_Visitor() = default;
 
       /// Constructor with provided servant - cancel requests that
       /// target the supplied servant.
       explicit TP_Cancel_Visitor(PortableServer::Servant servant);
 
-      /// Virtual Destructor.
-      ~TP_Cancel_Visitor() override;
+      ~TP_Cancel_Visitor() override = default;
+      TP_Cancel_Visitor (TP_Cancel_Visitor const &) = delete;
+      TP_Cancel_Visitor &operator= (TP_Cancel_Visitor const &) = delete;
+      TP_Cancel_Visitor (TP_Cancel_Visitor &&) = delete;
+      TP_Cancel_Visitor &operator= (TP_Cancel_Visitor &&) = delete;
 
       /// Returns true to continue visitation.  Returns false to stop
       /// visitation.  Sets the remove_flag to true if the request should
@@ -66,7 +64,7 @@ namespace TAO
     private:
       /// Left as nil if we are to cancel all requests, or set to a specific
       /// servant if only requests targeting that servant should be cancelled.
-      PortableServer::ServantBase_var servant_;
+      PortableServer::ServantBase_var const servant_;
     };
   }
 }

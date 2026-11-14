@@ -1,13 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    PG_Location_Equal_To.h
  *
  *  @author  Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_PG_LOCATION_EQUAL_TO_H
 #define TAO_PG_LOCATION_EQUAL_TO_H
@@ -40,8 +37,8 @@ class TAO_PortableGroup_Export TAO_PG_Location_Equal_To
 public:
   /// Perform a string comparison on each of the sequence elements in
   /// the given locations.
-  int operator() (const PortableGroup::Location &lhs,
-                  const PortableGroup::Location &rhs) const;
+  int operator() (PortableGroup::Location const & lhs,
+                  PortableGroup::Location const & rhs) const;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

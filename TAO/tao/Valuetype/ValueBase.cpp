@@ -154,7 +154,7 @@ CORBA::ValueBase::_tao_marshal (TAO_OutputCDR &strm,
     return _tao_write_value (strm, this_, formal_type_id);
   }
   else
-    return 1;
+    return true;
 }
 
 CORBA::Boolean
@@ -584,7 +584,7 @@ CORBA::ValueBase::_tao_unmarshal_value_indirection (TAO_InputCDR &strm,
   CORBA::Long offset {};
   if (!strm.read_long (offset) ||  offset >= 0)
   {
-    return 0;
+    return false;
   }
 
   char* pos = strm.rd_ptr () + offset - sizeof (CORBA::Long);
@@ -655,7 +655,7 @@ CORBA::ValueBase::_tao_unmarshal_repo_id_indirection (TAO_InputCDR &strm,
         pos, id.c_str ()));
     }
 
-  return 1;
+  return true;
 }
 
 CORBA::Boolean
@@ -687,7 +687,7 @@ CORBA::ValueBase::_tao_unmarshal_codebase_url_indirection (TAO_InputCDR &strm,
         pos, codebase_url.c_str ()));
     }
 
-  return 1;
+  return true;
 }
 
 #if defined (GEN_OSTREAM_OPS)
@@ -949,7 +949,7 @@ CORBA::ValueBase::_tao_write_repository_id (TAO_OutputCDR &strm,
     }
 #endif
 
-  return 1;
+  return true;
 }
 
 // this method is called by the IDL generated _tao_marshal_state() method.
@@ -993,7 +993,7 @@ TAO_ChunkInfo::end_chunk(TAO_OutputCDR &strm)
       if ( -- this->value_nesting_level_ == 0 )
         {
           // ending chunk for outermost value
-          this->chunking_ = 0;
+          this->chunking_ = false;
         }
     }
   return true;
@@ -1053,7 +1053,7 @@ TAO_ChunkInfo::reserve_chunk_size(TAO_OutputCDR &strm)
       // later and write the actual size.
       if (! strm.write_long (0))
         {
-          return 0;
+          return false;
         }
 
       // Remember length before writing chunk data. This is used to calculate
@@ -1061,7 +1061,7 @@ TAO_ChunkInfo::reserve_chunk_size(TAO_OutputCDR &strm)
       this->length_to_chunk_octets_pos_ = strm.total_length ();
     }
 
-  return 1;
+  return true;
 }
 
 CORBA::Boolean
@@ -1069,7 +1069,7 @@ TAO_ChunkInfo::handle_chunking (TAO_InputCDR &strm)
 {
   if (!this->chunking_)
     {
-      return 1;
+      return true;
     }
 
   char* the_rd_ptr = strm.start()->rd_ptr ();
@@ -1082,14 +1082,14 @@ TAO_ChunkInfo::handle_chunking (TAO_InputCDR &strm)
   if (the_rd_ptr < this->chunk_octets_end_pos_)
     {
       ++this->value_nesting_level_;
-      return 1;
+      return true;
     }
 
   //Safty check if reading is out of range of current chunk.
   if (this->chunk_octets_end_pos_ != nullptr
       && the_rd_ptr > this->chunk_octets_end_pos_)
     {
-      return 0;
+      return false;
     }
 
   // Read a long value that might be an endtag, the chunk size or the value tag
@@ -1098,7 +1098,7 @@ TAO_ChunkInfo::handle_chunking (TAO_InputCDR &strm)
 
   if (!strm.read_long (tag))
     {
-      return 0;
+      return false;
     }
 
   if (tag < 0)
@@ -1137,10 +1137,10 @@ TAO_ChunkInfo::handle_chunking (TAO_InputCDR &strm)
       // This should not happen since the valuetag of the nested
       // values are always unmarshalled in the
       // ValueBase::_tao_unmarshal_pre().
-      return 0;
+      return false;
     }
 
-  return 1;
+  return true;
 }
 
 CORBA::Boolean
@@ -1148,7 +1148,7 @@ TAO_ChunkInfo::skip_chunks (TAO_InputCDR &strm)
 {
   if (!this->chunking_)
     {
-      return 1;
+      return true;
     }
 
   // This function is called after reading data of the truncated parent and
@@ -1157,13 +1157,13 @@ TAO_ChunkInfo::skip_chunks (TAO_InputCDR &strm)
   CORBA::Long tag {};
   if (!strm.read_long(tag))
     {
-      return 0;
+      return false;
     }
 
   // end of the whole valuetype.
   if (tag == -1)
     {
-      return 1;
+      return true;
     }
   else if (tag < 0)
     {
@@ -1179,7 +1179,7 @@ TAO_ChunkInfo::skip_chunks (TAO_InputCDR &strm)
       return this->skip_chunks (strm);
     }
   else
-    return 0;
+    return false;
 }
 
 CORBA::Boolean
@@ -1190,13 +1190,13 @@ CORBA::ValueBase::_tao_read_repository_id_list (TAO_InputCDR& strm,
 
   if (!strm.read_long (num_ids))
     {
-      return 0;
+      return false;
     }
 
   if (num_ids == TAO_OBV_GIOP_Flags::Indirection_tag)
     {
       // Multiple repo id is not indirected.
-      return 0;
+      return false;
     }
   else
     {
@@ -1205,13 +1205,13 @@ CORBA::ValueBase::_tao_read_repository_id_list (TAO_InputCDR& strm,
           ACE_CString id;
           if (!_tao_read_repository_id (strm, id))
             {
-              return 0;
+              return false;
             }
           ids.push_back (id);
         }
     }
 
-  return 1;
+  return true;
 }
 
 CORBA::Boolean
@@ -1224,7 +1224,7 @@ CORBA::ValueBase::_tao_read_repository_id (TAO_InputCDR& strm,
 
   if (!strm.read_ulong (length))
     {
-      return 0;
+      return false;
     }
 
   VERIFY_MAP (TAO_InputCDR, repo_id_map, Repo_Id_Map);
@@ -1249,11 +1249,11 @@ CORBA::ValueBase::_tao_read_repository_id (TAO_InputCDR& strm,
 
   if (!id_stream.good_bit ())
     {
-      return 0;
+      return false;
     }
 
   if (! id_stream.read_string (id))
-    return 0;
+    return false;
 
   // It's possible the id is read again from an indirection stream,
   // so make sure the id is the same.
@@ -1301,7 +1301,7 @@ CORBA::ValueBase::_tao_read_repository_id (TAO_InputCDR& strm,
 
   strm.skip_bytes (length);
 
-  return 1;
+  return true;
 }
 
 CORBA::Boolean
@@ -1415,7 +1415,7 @@ namespace TAO
                                                    tc_value_base_id,
                                                    tc_value_base_name,
                                                    CORBA::VM_NONE,
-                                                   &CORBA::_tc_null,
+                                                   std::addressof (CORBA::_tc_null),
                                                    0,  // Field array
                                                    0); // Field count
 
@@ -1428,7 +1428,7 @@ namespace TAO
                                                    tc_event_base_id,
                                                    tc_event_base_name,
                                                    CORBA::VM_NONE,
-                                                   &CORBA::_tc_null,
+                                                   std::addressof (CORBA::_tc_null),
                                                    0,  // Field array
                                                    0); // Field count
   }

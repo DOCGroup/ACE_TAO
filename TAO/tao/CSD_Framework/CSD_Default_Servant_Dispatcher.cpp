@@ -3,36 +3,37 @@
 #include "tao/CSD_Framework/CSD_POA.h"
 #include "tao/CSD_Framework/CSD_Strategy_Repository.h"
 #include "ace/Dynamic_Service.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_CSD_Default_Servant_Dispatcher::~TAO_CSD_Default_Servant_Dispatcher () = default;
 
-
 TAO_Root_POA *
-TAO_CSD_Default_Servant_Dispatcher::create_Root_POA (const ACE_CString &name,
-                                                     PortableServer::POAManager_ptr poa_manager,
-                                                 const TAO_POA_Policy_Set &policies,
-                                                 ACE_Lock &lock,
-                                                 TAO_SYNCH_MUTEX &thread_lock,
-                                                 TAO_ORB_Core &orb_core,
-                                                 TAO_Object_Adapter *object_adapter)
-    {
-  TAO_CSD_POA *poa = nullptr;
+TAO_CSD_Default_Servant_Dispatcher::create_Root_POA (
+  ACE_CString const &name,
+  PortableServer::POAManager_ptr poa_manager,
+  TAO_POA_Policy_Set const &policies,
+  ACE_Lock &lock,
+  TAO_SYNCH_MUTEX &thread_lock,
+  TAO_ORB_Core &orb_core,
+  TAO_Object_Adapter *object_adapter)
+{
+  TAO_CSD_POA *poa {};
 
   ACE_NEW_THROW_EX (poa,
                     TAO_CSD_POA (name,
                                  poa_manager,
                                  policies,
-                                 0,
+                                 nullptr,
                                  lock,
                                  thread_lock,
                                  orb_core,
                                  object_adapter),
                     CORBA::NO_MEMORY ());
+  std::unique_ptr<TAO_CSD_POA> poa_owner {poa};
 
-
-  TAO_CSD_Strategy_Repository *repo =
+  TAO_CSD_Strategy_Repository * const repo =
     ACE_Dynamic_Service<TAO_CSD_Strategy_Repository>::instance ("TAO_CSD_Strategy_Repository");
 
   if (repo == nullptr)
@@ -45,14 +46,14 @@ TAO_CSD_Default_Servant_Dispatcher::create_Root_POA (const ACE_CString &name,
       return nullptr;
     }
 
-  CSD_Framework::Strategy_var strategy = repo->find (name);
+  CSD_Framework::Strategy_var const strategy = repo->find (std::string (name.c_str ()));
 
   if (! ::CORBA::is_nil (strategy.in ()))
     {
-      poa->set_csd_strategy (strategy.in ());
+      poa_owner->set_csd_strategy (strategy.in ());
     }
 
-  return poa;
+  return poa_owner.release ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

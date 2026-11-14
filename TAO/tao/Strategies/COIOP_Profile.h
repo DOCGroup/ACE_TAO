@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file     COIOP_Profile.h
  *
@@ -8,8 +7,6 @@
  *
  *  @author  Johnny Willemsen <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
 
 #ifndef TAO_COIOP_PROFILE_H
 #define TAO_COIOP_PROFILE_H
@@ -56,7 +53,6 @@ public:
                      TAO_GIOP_Message_Version const &version,
                      TAO_ORB_Core *orb_core);
 
-  /// Profile constructor, default.
   explicit TAO_COIOP_Profile (TAO_ORB_Core *orb_core);
 
   /// Destructor is to be called only through <_decr_refcnt>.

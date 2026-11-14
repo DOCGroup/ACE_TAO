@@ -44,7 +44,6 @@ protected:
   //}}AFX_MSG
   DECLARE_MESSAGE_MAP()
 
-
   ACE_Configuration_Win32Registry* m_pConfig;
   CString   m_IOR;
   CString   m_Name;

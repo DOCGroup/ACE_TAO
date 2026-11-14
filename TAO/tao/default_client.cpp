@@ -70,9 +70,7 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
 {
   ACE_TRACE ("TAO_Default_Client_Strategy_Factory::parse_args");
 
-  int curarg;
-
-  for (curarg = 0; curarg < argc && argv[curarg]; ++curarg)
+  for (int curarg {}; curarg < argc && argv[curarg]; ++curarg)
     {
       if (ACE_OS::strcasecmp (argv[curarg],
                               ACE_TEXT("-ORBClientConnectionHandler")) == 0
@@ -80,7 +78,7 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
           ACE_OS::strcasecmp (argv[curarg],
                               ACE_TEXT("-ORBWaitStrategy")) == 0)
         {
-          curarg++;
+          ++curarg;
           if (curarg < argc)
             {
               ACE_TCHAR* name = argv[curarg];
@@ -106,7 +104,7 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
                                    ACE_TEXT("-ORBTransportMuxStrategy"))
                == 0)
         {
-          curarg++;
+          ++curarg;
           if (curarg < argc)
             {
               ACE_TCHAR* name = argv[curarg];
@@ -126,7 +124,7 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
                                    ACE_TEXT("-ORBTransportMuxStrategyLock"))
                == 0)
         {
-          curarg++;
+          ++curarg;
           if (curarg < argc)
             {
               ACE_TCHAR* name = argv[curarg];
@@ -145,7 +143,7 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
       else if (ACE_OS::strcasecmp (argv[curarg],
                                    ACE_TEXT("-ORBConnectStrategy")) == 0)
         {
-          curarg++;
+          ++curarg;
           if (curarg < argc)
             {
               ACE_TCHAR* name = argv[curarg];
@@ -206,7 +204,7 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
                                    ACE_TEXT("-ORBReplyDispatcherTableSize"))
                == 0)
         {
-          curarg++;
+          ++curarg;
           if (curarg < argc)
             {
               this->rd_table_size_ = ACE_OS::atoi (argv[curarg]);
@@ -215,7 +213,7 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
       else if (ACE_OS::strcmp (argv[curarg],
                                ACE_TEXT("-ORBConnectionHandlerCleanup")) == 0)
          {
-           curarg++;
+           ++curarg;
            if (curarg < argc)
              {
                ACE_TCHAR* name = argv[curarg];
@@ -235,12 +233,12 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
                                ACE_TEXT("-ORBForwardOnCommFailureLimit"))
                == 0)
          {
-           curarg++;
+           ++curarg;
            if (curarg < argc)
              {
                ACE_TCHAR* name = argv[curarg];
 
-               ACE_TCHAR *err = nullptr;
+               ACE_TCHAR *err {};
                long limit = ACE_OS::strtol (name, &err, 10);
                if (err && *err != 0)
                  {
@@ -257,12 +255,12 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
       else if (ACE_OS::strcmp (argv[curarg],
                                ACE_TEXT("-ORBForwardOnTransientLimit")) == 0)
          {
-           curarg++;
+           ++curarg;
            if (curarg < argc)
              {
                ACE_TCHAR* name = argv[curarg];
 
-               ACE_TCHAR *err = nullptr;
+               ACE_TCHAR *err {};
                long limit = ACE_OS::strtol (name, &err, 10);
                if (err && *err != 0)
                  {
@@ -280,12 +278,12 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
                                ACE_TEXT("-ORBForwardOnObjectNotExistLimit"))
                == 0)
          {
-           curarg++;
+           ++curarg;
            if (curarg < argc)
              {
                ACE_TCHAR* name = argv[curarg];
 
-               ACE_TCHAR *err = nullptr;
+               ACE_TCHAR *err {};
                long limit = ACE_OS::strtol (name, &err, 10);
                if (err && *err != 0)
                  {
@@ -302,12 +300,12 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
       else if (ACE_OS::strcmp (argv[curarg],
                                ACE_TEXT("-ORBForwardOnInvObjrefLimit")) == 0)
          {
-           curarg++;
+           ++curarg;
            if (curarg < argc)
              {
                ACE_TCHAR* name = argv[curarg];
 
-               ACE_TCHAR *err = nullptr;
+               ACE_TCHAR *err {};
                long limit = ACE_OS::strtol (name, &err, 10);
                if (err && *err != 0)
                  {
@@ -324,12 +322,12 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
                                ACE_TEXT("-ORBForwardOnReplyClosedLimit"))
                == 0)
          {
-           curarg++;
+          ++curarg;
            if (curarg < argc)
              {
                ACE_TCHAR* name = argv[curarg];
 
-               ACE_TCHAR *err = nullptr;
+               ACE_TCHAR *err {};
                long limit = ACE_OS::strtol (name, &err, 10);
                if (err && *err != 0)
                  {
@@ -366,7 +364,7 @@ TAO_Transport_Mux_Strategy *
 TAO_Default_Client_Strategy_Factory::create_transport_mux_strategy (
    TAO_Transport *transport)
 {
-  TAO_Transport_Mux_Strategy *tms = nullptr;
+  TAO_Transport_Mux_Strategy *tms {};
 
   switch (this->transport_mux_strategy_)
     {
@@ -392,7 +390,7 @@ TAO_Default_Client_Strategy_Factory::create_transport_mux_strategy (
 ACE_Lock *
 TAO_Default_Client_Strategy_Factory::create_transport_mux_strategy_lock ()
 {
-  ACE_Lock *the_lock = nullptr;
+  ACE_Lock *the_lock {};
 
   switch (this->muxed_strategy_lock_type_)
     {
@@ -425,7 +423,7 @@ TAO_Wait_Strategy *
 TAO_Default_Client_Strategy_Factory::create_wait_strategy (
   TAO_Transport *transport)
 {
-  TAO_Wait_Strategy *ws = nullptr;
+  TAO_Wait_Strategy *ws {};
 
   switch (this->wait_strategy_)
     {
@@ -472,7 +470,7 @@ TAO_Connect_Strategy *
 TAO_Default_Client_Strategy_Factory::create_connect_strategy (
   TAO_ORB_Core *orb_core)
 {
-  TAO_Connect_Strategy *cs = nullptr;
+  TAO_Connect_Strategy *cs {};
 
   switch (this->connect_strategy_)
     {

@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "helper.h"
 #include "bd_struct_seq.h"
 
@@ -30,7 +29,7 @@ Test_Bounded_Struct_Sequence::Test_Bounded_Struct_Sequence ()
 Test_Bounded_Struct_Sequence::~Test_Bounded_Struct_Sequence ()
 {
   CORBA::string_free (this->opname_);
-  this->opname_ = 0;
+  this->opname_ = nullptr;
   // the other data members will be freed as they are "_var"s and objects
   // (rather than pointers to objects)
 }
@@ -51,7 +50,7 @@ Test_Bounded_Struct_Sequence::dii_req_invoke (CORBA::Request *req)
 
   req->invoke ();
 
-  const Param_Test::Bounded_StructSeq *tmp = 0;
+  Param_Test::Bounded_StructSeq const *tmp {};
   req->return_value () >>= tmp;
   this->ret_ = new Param_Test::Bounded_StructSeq (*tmp);
 
@@ -192,8 +191,8 @@ void
 Test_Bounded_Struct_Sequence::print_sequence (const Param_Test::Bounded_StructSeq &s)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "maximum = %d\n"
-              "length = %d\n",
+              "maximum = %u\n"
+              "length = %u\n",
               s.maximum (),
               s.length ()));
   ACE_DEBUG ((LM_DEBUG, "Elements -\n"));

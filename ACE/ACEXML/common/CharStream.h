@@ -79,6 +79,4 @@ public:
 };
 
 #include /**/ "ace/post.h"
-
-
 #endif /* _ACEXML_CHARSTREAM_H_ */

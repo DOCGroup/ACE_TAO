@@ -2,6 +2,7 @@
 #define ACE_RB_TREE_CPP
 
 #include "ace/Global_Macros.h"
+#include <memory>
 #include "ace/RB_Tree.h"
 #include "ace/SString.h"
 
@@ -22,7 +23,6 @@ ACE_ALLOC_HOOK_DEFINE_Tc4(ACE_RB_Tree_Iterator_Base)
 ACE_ALLOC_HOOK_DEFINE_Tc4(ACE_RB_Tree_Iterator)
 ACE_ALLOC_HOOK_DEFINE_Tc4(ACE_RB_Tree_Reverse_Iterator)
 
-// Constructor.
 template <class EXT_ID, class INT_ID>
 ACE_RB_Tree_Node<EXT_ID, INT_ID>::ACE_RB_Tree_Node (const EXT_ID &k, const INT_ID &t)
   : k_ (k),
@@ -35,16 +35,11 @@ ACE_RB_Tree_Node<EXT_ID, INT_ID>::ACE_RB_Tree_Node (const EXT_ID &k, const INT_I
   ACE_TRACE ("ACE_RB_Tree_Node<EXT_ID, INT_ID>::ACE_RB_Tree_Node (const EXT_ID &k, const INT_ID &t)");
 }
 
-
-// Destructor.
-
 template <class EXT_ID, class INT_ID>
 ACE_RB_Tree_Node<EXT_ID, INT_ID>::~ACE_RB_Tree_Node ()
 {
   ACE_TRACE ("ACE_RB_Tree_Node<EXT_ID, INT_ID>::~ACE_RB_Tree_Node");
 }
-
-// Constructor.
 
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree (ACE_Allocator *alloc)
@@ -58,7 +53,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree (ACE_Allocator 
                 ACE_TEXT ("ACE_RB_Tree::ACE_RB_Tree\n")));
 }
 
-// Copy constructor.
+
 
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree (const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &rbt)
@@ -74,7 +69,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree (const ACE_RB_T
 
   for (iter.first ();
 
-       iter.is_done () == 0; iter.next ())
+       !iter.is_done (); iter.next ())
     insert_i (*(iter.key ()),
               *(iter.item ()));
 }
@@ -82,8 +77,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree (const ACE_RB_T
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree (
     void *location,
-    ACE_Allocator *alloc
-)
+    ACE_Allocator *alloc)
 {
   ACE_TRACE ("ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree (void *, ACE_Allocator *)");
 
@@ -95,7 +89,6 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree (
 
   this->allocator_ = alloc;
 }
-// Destructor.
 
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::~ACE_RB_Tree ()
@@ -107,7 +100,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::~ACE_RB_Tree ()
   this->close ();
 }
 
-// Assignment operator.
+
 
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> void
 ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::operator = (const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &rbt)
@@ -115,7 +108,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::operator = (const ACE_RB_Tr
   ACE_TRACE ("ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::operator =");
   ACE_WRITE_GUARD (ACE_LOCK, ace_mon, this->lock_);
 
-  if (this != &rbt)
+  if (this != std::addressof (rbt))
     {
       // Clear out the existing tree.
       close_i ();
@@ -124,7 +117,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::operator = (const ACE_RB_Tr
       ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> iter(rbt);
 
       for (iter.first ();
-           iter.is_done () == 0;
+           !iter.is_done ();
            iter.next ())
         insert_i (*(iter.key ()),
                   *(iter.item ()));
@@ -391,7 +384,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::RB_rebalance (ACE_RB_Tree_N
 {
   ACE_TRACE ("ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::RB_rebalance");
 
-  ACE_RB_Tree_Node<EXT_ID, INT_ID> *y = nullptr;
+  ACE_RB_Tree_Node<EXT_ID, INT_ID> *y {};
 
   while (x &&
          x->parent ()
@@ -643,7 +636,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::insert_i (const EXT_ID &k, 
           else
             {
               // The right subtree is empty: insert new node there.
-              ACE_RB_Tree_Node<EXT_ID, INT_ID> *tmp = nullptr;
+              ACE_RB_Tree_Node<EXT_ID, INT_ID> *tmp {};
 
               ACE_NEW_MALLOC_RETURN
                 (tmp,
@@ -656,7 +649,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::insert_i (const EXT_ID &k, 
               // If the node was successfully inserted, set its
               // parent, rebalance the tree, color the root black, and
               // return a pointer to the inserted item.
-              INT_ID *item = &(current->right ()->item ());
+              INT_ID *item = std::addressof (current->right ()->item ());
               current->right ()->parent (current);
               RB_rebalance (current->right ());
               root_->color (ACE_RB_Tree_Node_Base::BLACK);
@@ -678,7 +671,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::insert_i (const EXT_ID &k, 
           else
             {
               // The left subtree is empty: insert new node there.
-              ACE_RB_Tree_Node<EXT_ID, INT_ID> *tmp = nullptr;
+              ACE_RB_Tree_Node<EXT_ID, INT_ID> *tmp {};
               ACE_NEW_MALLOC_RETURN
                 (tmp,
                  (reinterpret_cast<ACE_RB_Tree_Node<EXT_ID, INT_ID>*>
@@ -690,7 +683,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::insert_i (const EXT_ID &k, 
               // If the node was successfully inserted, set its
               // parent, rebalance the tree, color the root black, and
               // return a pointer to the inserted item.
-              INT_ID *item = &current->left ()->item ();
+              INT_ID *item = std::addressof (current->left ()->item ());
               current->left ()->parent (current);
               RB_rebalance (current->left ());
               root_->color (ACE_RB_Tree_Node_Base::BLACK);
@@ -759,7 +752,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::insert_i (const EXT_ID &k,
           else
             {
               // The right subtree is empty: insert new node there.
-              ACE_RB_Tree_Node<EXT_ID, INT_ID> *tmp = nullptr;
+              ACE_RB_Tree_Node<EXT_ID, INT_ID> *tmp {};
               ACE_NEW_MALLOC_RETURN
                 (tmp,
                  (reinterpret_cast<ACE_RB_Tree_Node<EXT_ID, INT_ID>*>
@@ -793,7 +786,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::insert_i (const EXT_ID &k,
           else
             {
               // The left subtree is empty: insert new node there.
-              ACE_RB_Tree_Node<EXT_ID, INT_ID> *tmp = nullptr;
+              ACE_RB_Tree_Node<EXT_ID, INT_ID> *tmp {};
               ACE_NEW_MALLOC_RETURN
                 (tmp,
                  (reinterpret_cast<ACE_RB_Tree_Node<EXT_ID, INT_ID>*>
@@ -1098,8 +1091,6 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::remove_i (ACE_RB_Tree_Node<
   return 0;
 }
 
-// Constructor.
-
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree_Iterator_Base (const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree, int set_first)
   : tree_ (&tree), node_ (0)
@@ -1126,12 +1117,12 @@ ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree_I
    : tree_ (&tree), node_ (0)
 {
   ACE_TRACE("ACE_RB_Tree_Iterator_Base (ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree, const EXT_ID& key)");
-  ACE_RB_Tree_Node<EXT_ID, INT_ID>* entry = nullptr;
+  ACE_RB_Tree_Node<EXT_ID, INT_ID>* entry {};
   tree.find_i(key, entry);
   node_ = entry;
 }
 
-// Copy constructor.
+
 
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree_Iterator_Base (const ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &iter)
@@ -1141,20 +1132,18 @@ ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree_I
   ACE_TRACE ("ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree_Iterator_Base (ACE_RB_Tree_Iterator_Base)");
 }
 
-// Assignment operator.
+
 
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> void
 ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::operator= (const ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &iter)
 {
   ACE_TRACE ("ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::operator=");
-  if (this != &iter)
+  if (this != std::addressof (iter))
     {
       tree_ = iter.tree_;
       node_ = iter.node_;
     }
 }
-
-// Destructor.
 
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::~ACE_RB_Tree_Iterator_Base ()
@@ -1174,9 +1163,6 @@ ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::dump_i () con
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nnode_ = %x\n"), this->node_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
-
-
-// Constructor.
 
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree_Iterator (const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree,
@@ -1201,16 +1187,11 @@ ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree_Iterat
   ACE_TRACE ("ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree_Iterator");
 }
 
-// Destructor.
-
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::~ACE_RB_Tree_Iterator ()
 {
   ACE_TRACE ("ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::~ACE_RB_Tree_Iterator");
 }
-
-
-// Constructor.
 
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree_Reverse_Iterator (const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree, int set_last)
@@ -1232,8 +1213,6 @@ ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tre
 {
   ACE_TRACE ("ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree_Reverse_Iterator");
 }
-
-// Destructor.
 
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::~ACE_RB_Tree_Reverse_Iterator ()

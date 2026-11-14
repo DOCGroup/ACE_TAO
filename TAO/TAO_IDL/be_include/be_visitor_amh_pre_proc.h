@@ -97,5 +97,4 @@ private:
   be_operation *generate_set_operation (be_attribute *node);
 };
 
-
 #endif // TAO_BE_VISITOR_AMH_PRE_PROC_H

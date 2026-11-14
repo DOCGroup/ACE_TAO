@@ -1,13 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Any_Array_Impl_T.h
  *
  *  @authors  Carlos O'Ryan and Jeff Parsons
  */
-//=============================================================================
-
 
 #ifndef TAO_ANY_ARRAY_IMPL_T_H
 #define TAO_ANY_ARRAY_IMPL_T_H
@@ -35,6 +32,11 @@ namespace TAO
   class Any_Array_Impl_T : public Any_Impl
   {
   public:
+    Any_Array_Impl_T (Any_Array_Impl_T const &) = delete;
+    Any_Array_Impl_T (Any_Array_Impl_T &&) = delete;
+    Any_Array_Impl_T &operator= (Any_Array_Impl_T const &) = delete;
+    Any_Array_Impl_T &operator= (Any_Array_Impl_T &&) = delete;
+
     Any_Array_Impl_T (_tao_destructor destructor,
                       CORBA::TypeCode_ptr,
                       T_slice * const);
@@ -44,7 +46,7 @@ namespace TAO
                         _tao_destructor destructor,
                         CORBA::TypeCode_ptr,
                         T_slice * const);
-    static CORBA::Boolean extract (const CORBA::Any &,
+    static CORBA::Boolean extract (CORBA::Any const &,
                                    _tao_destructor,
                                    CORBA::TypeCode_ptr,
                                    T_slice *&);
@@ -53,10 +55,12 @@ namespace TAO
     CORBA::Boolean demarshal_value (TAO_InputCDR &);
     void _tao_decode (TAO_InputCDR &) override;
 
-    const void *value () const;
+    void const *value () const;
     void free_value () override;
 
   private:
+    /// The base destructor callback owns the array; this pointer supports
+    /// the type-erased CORBA Any insertion/extraction interface.
     T_slice *value_ {};
   };
 }

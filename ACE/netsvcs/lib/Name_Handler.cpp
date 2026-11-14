@@ -91,7 +91,6 @@ ACE_Name_Acceptor::init (int argc, ACE_TCHAR *argv[])
 
 ACE_SVC_FACTORY_DEFINE (ACE_Name_Acceptor)
 
-// Default constructor.
 ACE_Name_Handler::ACE_Name_Handler (ACE_Thread_Manager *tm)
   : ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> (tm)
 {
@@ -172,7 +171,7 @@ ACE_Name_Handler::send_reply (ACE_INT32 status,
 
   if (n != len)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n, expected len = %d, actual len = %d"),
+                       ACE_TEXT ("%p\n, expected len = %d, actual len = %b"),
                        ACE_TEXT ("send failed"),
                        len,
                        n),
@@ -270,7 +269,7 @@ ACE_Name_Handler::recv_request ()
       ACE_FALLTHROUGH;
     default:
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("%p got %d bytes, expected %d bytes\n"),
+                  ACE_TEXT ("%p got %b bytes, expected %B bytes\n"),
                   ACE_TEXT ("recv failed"),
                   n,
                   sizeof (ACE_UINT32)));
@@ -289,7 +288,7 @@ ACE_Name_Handler::recv_request ()
         if (length > (ssize_t) sizeof this->name_request_)
           {
             ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("length %d too long\n"),
+                        ACE_TEXT ("length %b too long\n"),
                         length));
             return this->abandon ();
           }
@@ -303,7 +302,7 @@ ACE_Name_Handler::recv_request ()
         // Subtract off the size of the part we skipped over...
         if (n != (length - (ssize_t) sizeof (ACE_UINT32)))
           {
-            ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p expected %d, got %d\n"),
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p expected %b, got %b\n"),
                        ACE_TEXT ("invalid length"), length, n));
             return this->abandon ();
           }
@@ -498,7 +497,7 @@ ACE_Name_Handler::lists ()
     }
   else
     {
-      ACE_NS_WString *one_entry = 0;
+      ACE_NS_WString *one_entry {};
 
       for (ACE_Unbounded_Set_Iterator<ACE_NS_WString> set_iterator (set);
            set_iterator.next (one_entry) !=0;
@@ -571,7 +570,7 @@ ACE_Name_Handler::lists_entries ()
 
   if (result == 0)
     {
-      ACE_Name_Binding *one_entry = 0;
+      ACE_Name_Binding *one_entry {};
 
       for (ACE_Unbounded_Set_Iterator<ACE_Name_Binding> set_iterator (set);
            set_iterator.next (one_entry) !=0;

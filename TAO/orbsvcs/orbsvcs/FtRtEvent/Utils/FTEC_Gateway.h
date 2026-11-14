@@ -15,6 +15,8 @@
 #include "orbsvcs/FtRtecEventChannelAdminC.h"
 #include "orbsvcs/RtecEventChannelAdminS.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_FTRTEC
@@ -47,14 +49,15 @@ namespace TAO_FTRTEC
       void remove_observer (RtecEventChannelAdmin::Observer_Handle) override;
 
       void push(RtecEventChannelAdmin::ProxyPushConsumer_ptr proxy_consumer,
-                const RtecEventComm::EventSet & data);
-  private:
+                RtecEventComm::EventSet const &data);
+
       FTEC_Gateway (FTEC_Gateway const &) = delete;
       FTEC_Gateway &operator= (FTEC_Gateway const &) = delete;
       FTEC_Gateway (FTEC_Gateway &&) = delete;
       FTEC_Gateway &operator= (FTEC_Gateway &&) = delete;
 
-      struct FTEC_Gateway_Impl  *impl_;
+  private:
+      std::unique_ptr<FTEC_Gateway_Impl> impl_;
   };
 }
 

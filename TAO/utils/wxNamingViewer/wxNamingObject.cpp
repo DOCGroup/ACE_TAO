@@ -3,7 +3,6 @@
 #include "pch.h"
 #include "wxNamingObject.h"
 
-
 WxNamingObject::WxNamingObject(
     CosNaming::Name& Name,
     CORBA::Object_ptr pObject,
@@ -14,7 +13,6 @@ WxNamingObject::WxNamingObject(
 {
   // Empty
 }
-
 
 WxNamingObject::WxNamingObject( CORBA::Object_ptr pObject):
   m_Object(CORBA::Object::_duplicate(pObject))
@@ -27,18 +25,15 @@ WxNamingObject::~WxNamingObject()
   // Empty
 }
 
-
 CosNaming::NamingContext_ptr WxNamingObject::NamingContext()
 {
   return CosNaming::NamingContext::_narrow(m_Object.in());
 }
 
-
 CORBA::Object_ptr WxNamingObject::Object()
 {
   return m_Object.in();
 }
-
 
 CosNaming::Name& WxNamingObject::Name()
 {

@@ -3,10 +3,6 @@
 #include "Server_ORBInitializer.h"
 #include "server_interceptor.h"
 
-Server_ORBInitializer::Server_ORBInitializer ()
-{
-}
-
 void
 Server_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr)

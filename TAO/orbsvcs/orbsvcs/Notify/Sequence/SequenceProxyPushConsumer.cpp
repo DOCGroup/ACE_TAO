@@ -6,14 +6,12 @@
 #include "orbsvcs/Notify/Structured/StructuredEvent.h"
 #include "orbsvcs/Notify/Properties.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_SequenceProxyPushConsumer::TAO_Notify_SequenceProxyPushConsumer ()
 :pacing_interval_ (CosNotification::PacingInterval)
-{
-}
-
-TAO_Notify_SequenceProxyPushConsumer::~TAO_Notify_SequenceProxyPushConsumer ()
 {
 }
 
@@ -34,19 +32,21 @@ void
 TAO_Notify_SequenceProxyPushConsumer::connect_sequence_push_supplier (CosNotifyComm::SequencePushSupplier_ptr push_supplier)
 {
   // Convert Supplier to Base Type
-  TAO_Notify_SequencePushSupplier *supplier;
+  TAO_Notify_SequencePushSupplier *supplier {};
   ACE_NEW_THROW_EX (supplier,
                     TAO_Notify_SequencePushSupplier (this),
                     CORBA::NO_MEMORY ());
 
-  supplier->init (push_supplier);
+  std::unique_ptr<TAO_Notify_SequencePushSupplier> supplier_guard (supplier);
+  supplier_guard->init (push_supplier);
 
-  this->connect (supplier);
+  this->connect (supplier_guard.release ());
   this->self_change ();
 }
 
 void
-TAO_Notify_SequenceProxyPushConsumer::push_structured_events (const CosNotification::EventBatch& event_batch)
+TAO_Notify_SequenceProxyPushConsumer::push_structured_events (
+  CosNotification::EventBatch const &event_batch)
 {
   // Check if we should proceed at all.
   if (this->admin_properties().reject_new_events () == 1 && this->admin_properties().queue_full ())
@@ -57,9 +57,9 @@ TAO_Notify_SequenceProxyPushConsumer::push_structured_events (const CosNotificat
       throw CosEventComm::Disconnected ();
     }
 
-  for (CORBA::ULong i = 0; i < event_batch.length (); ++i)
+  for (CORBA::ULong i {}; i < event_batch.length (); ++i)
     {
-      const CosNotification::StructuredEvent& notification = event_batch[i];
+      CosNotification::StructuredEvent const &notification = event_batch[i];
 
       TAO_Notify_StructuredEvent_No_Copy event (notification);
       this->push_i (&event);
@@ -74,7 +74,7 @@ TAO_Notify_SequenceProxyPushConsumer::disconnect_sequence_push_consumer ()
   this->self_change ();
 }
 
-const char *
+char const *
 TAO_Notify_SequenceProxyPushConsumer::get_proxy_type_name () const
 {
   return "sequence_proxy_push_consumer";
@@ -83,7 +83,7 @@ TAO_Notify_SequenceProxyPushConsumer::get_proxy_type_name () const
 void
 TAO_Notify_SequenceProxyPushConsumer::validate ()
 {
-  TAO_Notify_Supplier* sup = this->supplier ();
+  TAO_Notify_Supplier * const sup = this->supplier ();
   if (sup != nullptr && ! sup->is_alive (true))
   {
     if (TAO_debug_level > 0)
@@ -98,28 +98,30 @@ TAO_Notify_SequenceProxyPushConsumer::validate ()
 }
 
 void
-TAO_Notify_SequenceProxyPushConsumer::load_attrs (const TAO_Notify::NVPList& attrs)
+TAO_Notify_SequenceProxyPushConsumer::load_attrs (
+  TAO_Notify::NVPList const &attrs)
 {
   SuperClass::load_attrs(attrs);
   ACE_CString ior;
   if (attrs.load("PeerIOR", ior))
   {
-    CORBA::ORB_var orb = TAO_Notify_PROPERTIES::instance()->orb();
+    CORBA::ORB_var const orb = TAO_Notify_PROPERTIES::instance ()->orb ();
     try
     {
-      CosNotifyComm::SequencePushSupplier_var ps = CosNotifyComm::SequencePushSupplier::_nil();
+      CosNotifyComm::SequencePushSupplier_var ps =
+        CosNotifyComm::SequencePushSupplier::_nil ();
       if ( ior.length() > 0 )
       {
-        CORBA::Object_var obj = orb->string_to_object(ior.c_str());
-        ps = CosNotifyComm::SequencePushSupplier::_unchecked_narrow(obj.in());
+        CORBA::Object_var const obj = orb->string_to_object (ior.c_str ());
+        ps = CosNotifyComm::SequencePushSupplier::_unchecked_narrow (obj.in ());
       }
       // minor hack: suppress generating subscription updates during reload.
-      bool save_updates = this->updates_off_;
+      bool const save_updates = this->updates_off_;
       this->updates_off_ = true;
       this->connect_sequence_push_supplier(ps.in());
       this->updates_off_ = save_updates;
     }
-    catch (const CORBA::Exception&)
+    catch (CORBA::Exception const &)
     {
       ACE_ASSERT(0);
     }
@@ -134,6 +136,5 @@ TAO_Notify_SequenceProxyPushConsumer::configure(
   // Nothing to do.
   // This virtual method was added to support Notification MC
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

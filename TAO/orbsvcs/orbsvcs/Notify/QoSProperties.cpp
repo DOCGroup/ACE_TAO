@@ -27,14 +27,12 @@ TAO_Notify_QoSProperties::TAO_Notify_QoSProperties ()
   unsupported_[0] = CosNotification::StartTimeSupported;
 }
 
-TAO_Notify_QoSProperties::~TAO_Notify_QoSProperties ()
-{
-}
+TAO_Notify_QoSProperties::~TAO_Notify_QoSProperties () = default;
 
 int
 TAO_Notify_QoSProperties::unsupported (ACE_CString& name)
 {
-  for (int i = 0; i < UNSUPPORTED_PROPERTY_COUNT; ++i)
+  for (int i {}; i < UNSUPPORTED_PROPERTY_COUNT; ++i)
     {
       if (this->unsupported_[i] == name)
         return 1;
@@ -132,7 +130,7 @@ TAO_Notify_QoSProperties::init (const CosNotification::PropertySeq& prop_seq, Co
   int err_index = -1;
 
   ACE_CString name;
-  for (CORBA::ULong i = 0; i < prop_seq.length (); ++i)
+  for (CORBA::ULong i {}; i < prop_seq.length (); ++i)
     {
       name = prop_seq[i].name.in();
 

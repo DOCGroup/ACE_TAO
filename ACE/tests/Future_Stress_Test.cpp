@@ -23,7 +23,6 @@
 
 #include <random>
 
-
 #if defined (ACE_HAS_THREADS)
 
 struct Worker_Config

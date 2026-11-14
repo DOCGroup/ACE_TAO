@@ -1,8 +1,10 @@
 #ifndef _PRIORITIES_H_
 #define _PRIORITIES_H_
 
-#define LOW_PRIORITY 0
-#define HIGH_PRIORITY 0
-#define DEFAULT_PRIORITY LOW_PRIORITY
+#include "tao/RTCORBA/RTCORBA.h"
+
+inline constexpr RTCORBA::Priority LOW_PRIORITY {};
+inline constexpr RTCORBA::Priority HIGH_PRIORITY {};
+inline constexpr RTCORBA::Priority DEFAULT_PRIORITY = LOW_PRIORITY;
 
 #endif

@@ -11,7 +11,6 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_unistd.h"
 
-
 #if defined (ACE_HAS_SYSV_IPC) && !defined(ACE_LACKS_SYSV_SHMEM)
 
 // Must be global for signal Message...
@@ -29,21 +28,22 @@ handler (int)
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  char *username = ACE_OS::cuserid (static_cast<char *> (0));
-  Message_Data msg_data ((int) ACE_OS::getpid (), username, "I received your message.");
+  char * const username = ACE_OS::cuserid (static_cast<char *> (nullptr));
+  Message_Data const msg_data (static_cast<int> (ACE_OS::getpid ()), username,
+                               "I received your message.");
   ACE_Typed_SV_Message<Message_Data> send_msg (msg_data, 0, msg_data.length ());
   ACE_Typed_SV_Message<Message_Data> recv_msg (SRV_ID);
 
   // Register a signal handler.
-  ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
+  ACE_Sig_Action sa (handler, SIGINT);
   ACE_UNUSED_ARG (sa);
 
-  for (;;)
+  while (true)
     {
       if (ace_sv_message_queue.recv (recv_msg) == -1)
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ace_sv_message_queue.recv"), 1);
 
-      Message_Data &recv_msg_data = recv_msg.data ();
+      Message_Data const &recv_msg_data = recv_msg.data ();
 
       cout << "a msg of length "
            << recv_msg_data.length ()

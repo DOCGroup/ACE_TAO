@@ -12,12 +12,12 @@
  */
 //=============================================================================
 
-
 #if !defined (IOR_CORBANAME_CLIENT_I_H)
 #define IOR_CORBANAME_CLIENT_I_H
 
 #include "corbanameC.h"
 #include "orbsvcs/CosNamingC.h"
+#include "ace/SString.h"
 
 /**
  * @class IOR_corbaname_Client_i
@@ -26,10 +26,12 @@
  */
 class IOR_corbaname_Client_i
 {
- public:
-  // = Constructor and destructor.
-  IOR_corbaname_Client_i ();
-  ~IOR_corbaname_Client_i ();
+public:
+  IOR_corbaname_Client_i () = default;
+  IOR_corbaname_Client_i (IOR_corbaname_Client_i const &) = delete;
+  IOR_corbaname_Client_i (IOR_corbaname_Client_i &&) = delete;
+  IOR_corbaname_Client_i &operator= (IOR_corbaname_Client_i const &) = delete;
+  IOR_corbaname_Client_i &operator= (IOR_corbaname_Client_i &&) = delete;
 
   /// Execute the client example code.
   int run ();
@@ -37,18 +39,9 @@ class IOR_corbaname_Client_i
   /// Initialize the client communication endpoint with the server.
   int init (int argc, ACE_TCHAR **argv);
 
- private:
-  /// # of arguments on the command line.
-  int argc_;
-
-  /// arguments from command line.
-  ACE_TCHAR **argv_;
-
-  /// ORB
-  CORBA::ORB_var orb_;
-
-  /// Naming context
-  CosNaming::NamingContextExt_var naming_context_;
+private:
+  CORBA::ORB_var orb_ {};
+  ACE_TString name_service_address_ {};
 };
 
 #endif /* IOR_CORBANAME_CLIENT_I_H */

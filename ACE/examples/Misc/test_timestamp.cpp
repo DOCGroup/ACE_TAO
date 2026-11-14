@@ -3,16 +3,15 @@
 #include "ace/OS_main.h"
 #include "ace/ACE.h"
 #include "ace/Log_Msg.h"
-
+#include <array>
 
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  ACE_TCHAR day_and_time[27];
-  ACE::timestamp (day_and_time,
-                  sizeof day_and_time);
+  std::array<ACE_TCHAR, 27> day_and_time {};
+  ACE::timestamp (day_and_time.data (), day_and_time.size ());
 
-  ACE_DEBUG ((LM_DEBUG, "%s", day_and_time));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%s"), day_and_time.data ()));
 
   return 0;
 }

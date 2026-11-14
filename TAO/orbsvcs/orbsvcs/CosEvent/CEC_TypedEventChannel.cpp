@@ -19,9 +19,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Implementation skeleton constructor
 TAO_CEC_TypedEventChannel::
-TAO_CEC_TypedEventChannel (const TAO_CEC_TypedEventChannel_Attributes& attr,
-                           TAO_CEC_Factory* factory,
-                           int own_factory)
+TAO_CEC_TypedEventChannel (TAO_CEC_TypedEventChannel_Attributes const &attr,
+                           TAO_CEC_Factory *factory,
+                           bool own_factory)
   : typed_supplier_poa_ (PortableServer::POA::_duplicate (attr.typed_supplier_poa)),
     typed_consumer_poa_ (PortableServer::POA::_duplicate (attr.typed_consumer_poa)),
     orb_ (CORBA::ORB::_duplicate (attr.orb)),
@@ -31,15 +31,14 @@ TAO_CEC_TypedEventChannel (const TAO_CEC_TypedEventChannel_Attributes& attr,
     consumer_reconnect_ (attr.consumer_reconnect),
     supplier_reconnect_ (attr.supplier_reconnect),
     disconnect_callbacks_ (attr.disconnect_callbacks),
-    destroy_on_shutdown_ (attr.destroy_on_shutdown),
-    destroyed_ (0)
+    destroy_on_shutdown_ (attr.destroy_on_shutdown)
 {
-  if (this->factory_ == 0)
+  if (this->factory_ == nullptr)
     {
       this->factory_ =
         ACE_Dynamic_Service<TAO_CEC_Factory>::instance ("CEC_Factory");
-      this->own_factory_ = 0;
-      ACE_ASSERT (this->factory_ != 0);
+      this->own_factory_ = false;
+      ACE_ASSERT (this->factory_ != nullptr);
     }
 
   this->dispatching_ =
@@ -61,12 +60,12 @@ TAO_CEC_TypedEventChannel::~TAO_CEC_TypedEventChannel ()
   this->interface_description_.close ();
 
   this->factory_->destroy_dispatching (this->dispatching_);
-  this->dispatching_ = 0;
+  this->dispatching_ = nullptr;
 
   this->factory_->destroy_consumer_admin (this->typed_consumer_admin_);
-  this->typed_consumer_admin_ = 0;
+  this->typed_consumer_admin_ = nullptr;
   this->factory_->destroy_supplier_admin (this->typed_supplier_admin_);
-  this->typed_supplier_admin_ = 0;
+  this->typed_supplier_admin_ = nullptr;
 
   if (this->own_factory_)
     delete this->factory_;
@@ -88,7 +87,7 @@ namespace
       : orb_ (CORBA::ORB::_duplicate (orb)) {}
     CORBA::ORB_var orb_;
 
-    int handle_timeout (const ACE_Time_Value&, const void*) override
+    int handle_timeout (ACE_Time_Value const &, void const *) override
     {
       orb_->shutdown (true);
       return 0;
@@ -103,15 +102,15 @@ TAO_CEC_TypedEventChannel::shutdown ()
   this->supplier_control_->shutdown ();
   this->consumer_control_->shutdown ();
 
-  PortableServer::POA_var typed_consumer_poa =
+  PortableServer::POA_var const typed_consumer_poa =
     this->typed_consumer_admin_->_default_POA ();
-  PortableServer::ObjectId_var typed_consumer_id =
+  PortableServer::ObjectId_var const typed_consumer_id =
     typed_consumer_poa->servant_to_id (this->typed_consumer_admin_);
   typed_consumer_poa->deactivate_object (typed_consumer_id.in ());
 
-  PortableServer::POA_var typed_supplier_poa =
+  PortableServer::POA_var const typed_supplier_poa =
     this->typed_supplier_admin_->_default_POA ();
-  PortableServer::ObjectId_var typed_supplier_id =
+  PortableServer::ObjectId_var const typed_supplier_id =
     typed_supplier_poa->servant_to_id (this->typed_supplier_admin_);
   typed_supplier_poa->deactivate_object (typed_supplier_id.in ());
 
@@ -122,10 +121,10 @@ TAO_CEC_TypedEventChannel::shutdown ()
   if (destroy_on_shutdown_)
     {
       // Deactivate the Typed EC
-      PortableServer::POA_var t_poa =
+      PortableServer::POA_var const t_poa =
         this->_default_POA ();
 
-      PortableServer::ObjectId_var t_id =
+      PortableServer::ObjectId_var const t_id =
         t_poa->servant_to_id (this);
 
       t_poa->deactivate_object (t_id.in ());
@@ -175,9 +174,9 @@ TAO_CEC_TypedEventChannel::disconnected (TAO_CEC_ProxyPushSupplier* supplier)
 
 // Find from the ifr cache the operation and return the parameter array pointer.
 TAO_CEC_Operation_Params *
-TAO_CEC_TypedEventChannel::find_from_ifr_cache (const char *operation)
+TAO_CEC_TypedEventChannel::find_from_ifr_cache (char const *operation)
 {
-  TAO_CEC_Operation_Params *found = 0;
+  TAO_CEC_Operation_Params *found {};
 
   this->interface_description_.find (operation, found);
 
@@ -186,12 +185,12 @@ TAO_CEC_TypedEventChannel::find_from_ifr_cache (const char *operation)
 
 // Insert the operation and its parameters into the ifr cache.
 int
-TAO_CEC_TypedEventChannel::insert_into_ifr_cache (const char *operation_,
+TAO_CEC_TypedEventChannel::insert_into_ifr_cache (char const *operation_,
                                                   TAO_CEC_Operation_Params *parameters_)
 {
   // Make sure that the supplied Object reference is valid,
   // i.e. not nil.
-  if (operation_ == 0 || parameters_ == 0)
+  if (operation_ == nullptr || parameters_ == nullptr)
     {
       errno = EINVAL;
       return -1;
@@ -232,11 +231,10 @@ TAO_CEC_TypedEventChannel::clear_ifr_cache ()
       delete ((*i).int_id_);
     }
 
-  int result = this->interface_description_.unbind_all ();
+  int const result = this->interface_description_.unbind_all ();
 
   return result;
 }
-
 
 // The function performs a lookup_id of the passed interface in the IFR,
 // and then obtains the FullInterfaceDescription.
@@ -244,16 +242,16 @@ TAO_CEC_TypedEventChannel::clear_ifr_cache ()
 // All the operations and their parameters are then inserted in the ifr cache.
 // Function returns 0 if successful or -1 on a failure.
 int
-TAO_CEC_TypedEventChannel::cache_interface_description (const char *interface_)
+TAO_CEC_TypedEventChannel::cache_interface_description (char const *interface_)
 {
   try
     {
       // Lookup the Interface Name in the IFR
-      CORBA::Contained_var contained =
+      CORBA::Contained_var const contained =
         this->interface_repository_->lookup_id (interface_);
 
       // Narrow the interface
-      CORBA::InterfaceDef_var intface =
+      CORBA::InterfaceDef_var const intface =
         CORBA::InterfaceDef::_narrow (contained.in ());
 
       if (CORBA::is_nil (intface.in () ))
@@ -276,7 +274,7 @@ TAO_CEC_TypedEventChannel::cache_interface_description (const char *interface_)
           this->base_interfaces_ = fid->base_interfaces;
           if (TAO_debug_level >= 10)
             {
-              for (CORBA::ULong base=0; base<fid->base_interfaces.length(); base++)
+              for (CORBA::ULong base {}; base < fid->base_interfaces.length (); ++base)
                 {
                   ORBSVCS_DEBUG ((LM_DEBUG,
                               ACE_TEXT ("***** Base interface %C found on interface %C *****\n"),
@@ -286,22 +284,22 @@ TAO_CEC_TypedEventChannel::cache_interface_description (const char *interface_)
             }
 
           // Obtain the operations
-          for (CORBA::ULong oper=0; oper<fid->operations.length(); oper++)
+          for (CORBA::ULong oper {}; oper < fid->operations.length (); ++oper)
             {
               if (TAO_debug_level >= 10)
                 {
                   ORBSVCS_DEBUG ((LM_DEBUG,
-                              ACE_TEXT ("***** Operation %C found on interface %C, num params %d *****\n"),
+                              ACE_TEXT ("***** Operation %C found on interface %C, num params %u *****\n"),
                               fid->operations[oper].name.in(),
                               interface_,
                               fid->operations[oper].parameters.length() ));
                 }
 
               // Obtain the parameters
-              CORBA::ULong num_params = fid->operations[oper].parameters.length();
+              CORBA::ULong const num_params = fid->operations[oper].parameters.length();
               TAO_CEC_Operation_Params *oper_params = new TAO_CEC_Operation_Params (num_params);
 
-              for (CORBA::ULong param=0; param<num_params; param++)
+              for (CORBA::ULong param {}; param < num_params; ++param)
                 {
                   oper_params->parameters_[param].name_ = fid->operations[oper].parameters[param].name.in();
                   oper_params->parameters_[param].type_ = fid->operations[oper].parameters[param].type;
@@ -335,7 +333,7 @@ TAO_CEC_TypedEventChannel::cache_interface_description (const char *interface_)
                               oper_params->num_params_ ));
                 }
 
-              int result = insert_into_ifr_cache (fid->operations[oper].name.in(), oper_params);
+              int const result = insert_into_ifr_cache (fid->operations[oper].name.in(), oper_params);
               if (result != 0)
                 {
                   if (TAO_debug_level >= 10)
@@ -347,7 +345,7 @@ TAO_CEC_TypedEventChannel::cache_interface_description (const char *interface_)
             }
         }
     }
-  catch (const CORBA::SystemException& sysex)
+  catch (CORBA::SystemException const &sysex)
     {
       if (TAO_debug_level >= 4)
         {
@@ -356,7 +354,7 @@ TAO_CEC_TypedEventChannel::cache_interface_description (const char *interface_)
         }
       return -1;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       if (TAO_debug_level >= 4)
         {
@@ -377,7 +375,7 @@ TAO_CEC_TypedEventChannel::cache_interface_description (const char *interface_)
 // If neither a consumer nor a supplier has registered an interface,
 // the function calls cache_interface_description and returns 0 if successful.
 int
-TAO_CEC_TypedEventChannel::consumer_register_uses_interace (const char *uses_interface)
+TAO_CEC_TypedEventChannel::consumer_register_uses_interace (char const *uses_interface)
 {
   // Check if a consumer has already registered an interface with the typed EC
   if (this->uses_interface_.length() > 0)
@@ -420,7 +418,7 @@ TAO_CEC_TypedEventChannel::consumer_register_uses_interace (const char *uses_int
   else
     {
       // Neither a consumer nor a supplier has connected yet
-      int result = cache_interface_description (uses_interface);
+      int const result = cache_interface_description (uses_interface);
 
       if (result == 0)
         {
@@ -439,7 +437,8 @@ TAO_CEC_TypedEventChannel::consumer_register_uses_interace (const char *uses_int
 // If neither a consumer nor a supplier has registered an interface,
 // the function calls cache_interface_description and returns 0 if successful.
 int
-TAO_CEC_TypedEventChannel::supplier_register_supported_interface (const char *supported_interface)
+TAO_CEC_TypedEventChannel::supplier_register_supported_interface (
+  char const *supported_interface)
 {
   // Check if a supplier has already registered an interface with the typed EC
   if (this->supported_interface_.length() > 0)
@@ -482,7 +481,7 @@ TAO_CEC_TypedEventChannel::supplier_register_supported_interface (const char *su
   else
     {
       // Neither a consumer nor a supplier has connected yet
-      int result = cache_interface_description (supported_interface);
+      int const result = cache_interface_description (supported_interface);
 
       if (result == 0)
         {
@@ -499,7 +498,7 @@ TAO_CEC_TypedEventChannel::create_operation_list (TAO_CEC_Operation_Params *oper
 {
   this->orb_->create_list (0, new_list);
 
-  for (CORBA::ULong param=0; param<oper_params->num_params_; param++)
+  for (CORBA::ULong param {}; param < oper_params->num_params_; ++param)
     {
       CORBA::Any any_1;
       any_1._tao_set_typecode(oper_params->parameters_[param].type_.in ());
@@ -536,13 +535,13 @@ TAO_CEC_TypedEventChannel::destroy ()
 {
   if (!destroyed_)
     {
-      destroyed_ = 1;
+      destroyed_ = true;
       this->shutdown ();
     }
 }
 
 CORBA::Policy_ptr
-TAO_CEC_TypedEventChannel::create_roundtrip_timeout_policy (const ACE_Time_Value &timeout)
+TAO_CEC_TypedEventChannel::create_roundtrip_timeout_policy (ACE_Time_Value const &timeout)
 {
   return this->factory_->create_roundtrip_timeout_policy (timeout);
 }

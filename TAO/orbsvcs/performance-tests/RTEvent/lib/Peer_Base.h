@@ -26,27 +26,24 @@ class TAO_RTEC_Perf_Export Peer_Base
  : public virtual POA_Federated_Test::Peer
 {
 public:
-  /// Constructor
   Peer_Base (CORBA::ORB_ptr orb,
              RTServer_Setup &rtserver_setup);
 
-  /// Destructor
-  virtual ~Peer_Base ();
+  ~Peer_Base () override;
 
   //@{
   /** @name The Federated_Test::Peer methods
    */
-  virtual void shutdown ();
+  void shutdown () override;
 
-  virtual CORBA::Object_ptr
-      channel ();
+  CORBA::Object_ptr channel () override;
 
-  virtual void connect (Federated_Test::Peer_ptr remote_peer);
+  void connect (Federated_Test::Peer_ptr remote_peer) override;
 
   Federated_Test::Loopback_ptr setup_loopback (CORBA::Long experiment_id,
-                                               CORBA::Long base_event_type);
+                                               CORBA::Long base_event_type) override;
 
-  PortableServer::POA_ptr _default_POA ();
+  PortableServer::POA_ptr _default_POA () override;
   //@}
 
 protected:

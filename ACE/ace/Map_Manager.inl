@@ -1,6 +1,7 @@
 // -*- C++ -*-
 #include "ace/Guard_T.h"
 #include "ace/Log_Category.h"
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -271,7 +272,7 @@ ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::next (ACE_Map_Entry<EXT_ID, INT
 {
   if (this->next_ != this->map_man_->occupied_list_id ())
     {
-      mm = &this->map_man_->search_structure_[this->next_];
+      mm = std::addressof (this->map_man_->search_structure_[this->next_]);
       return 1;
     }
   else
@@ -290,7 +291,7 @@ ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::forward_i ()
 
 #if defined (ACE_HAS_LAZY_MAP_MANAGER)
 
-  while (1)
+  while (true)
     {
       // Go to the next item in the list.
       this->next_ = this->map_man_->search_structure_[this->next_].next ();
@@ -321,7 +322,7 @@ ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::reverse_i ()
 
 #if defined (ACE_HAS_LAZY_MAP_MANAGER)
 
-  while (1)
+  while (true)
     {
       // Go to the prev item in the list.
       this->next_ = this->map_man_->search_structure_[this->next_].prev ();
@@ -378,7 +379,7 @@ ACE_Map_Const_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::next (ACE_Map_Entry<EXT_I
 {
   if (this->next_ != this->map_man_->occupied_list_id ())
     {
-      mm = &this->map_man_->search_structure_[this->next_];
+      mm = std::addressof (this->map_man_->search_structure_[this->next_]);
       return 1;
     }
   else
@@ -397,7 +398,7 @@ ACE_Map_Const_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::forward_i ()
 
 #if defined (ACE_HAS_LAZY_MAP_MANAGER)
 
-  while (1)
+  while (true)
     {
       // Go to the next item in the list.
       this->next_ = this->map_man_->search_structure_[this->next_].next ();
@@ -428,7 +429,7 @@ ACE_Map_Const_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::reverse_i ()
 
 #if defined (ACE_HAS_LAZY_MAP_MANAGER)
 
-  while (1)
+  while (true)
     {
       // Go to the prev item in the list.
       this->next_ = this->map_man_->search_structure_[this->next_].prev ();
@@ -486,7 +487,7 @@ ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::ACE_Map_Iterator (ACE_Map_Manager<EX
       // Start here.
       this->next_ = this->map_man_->occupied_list_.next ();
 
-      while (1)
+      while (true)
         {
           // Stop if we reach the end.
           if (this->done ())
@@ -564,7 +565,7 @@ ACE_Map_Const_Iterator<EXT_ID, INT_ID, ACE_LOCK>::ACE_Map_Const_Iterator (const 
       // Start here.
       this->next_ = this->map_man_->occupied_list_.next ();
 
-      while (1)
+      while (true)
         {
           // Stop if we reach the end.
           if (this->done ())
@@ -642,7 +643,7 @@ ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::ACE_Map_Reverse_Iterator (AC
       // Start here.
       this->next_ = this->map_man_->occupied_list_.prev ();
 
-      while (1)
+      while (true)
         {
           // Stop if we reach the end.
           if (this->done ())
@@ -711,7 +712,7 @@ template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE
 ACE_Map_Entry<EXT_ID, INT_ID>&
 ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::operator* () const
 {
-  ACE_Map_Entry<EXT_ID, INT_ID> *retv = nullptr;
+  ACE_Map_Entry<EXT_ID, INT_ID> *retv {};
 
   int const result = this->next (retv);
   ACE_ASSERT (result != 0);
@@ -724,7 +725,7 @@ template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE
 ACE_Map_Entry<EXT_ID, INT_ID>&
 ACE_Map_Const_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::operator* () const
 {
-  ACE_Map_Entry<EXT_ID, INT_ID> *retv = nullptr;
+  ACE_Map_Entry<EXT_ID, INT_ID> *retv {};
 
   int const result = this->next (retv);
   ACE_ASSERT (result != 0);
@@ -732,6 +733,5 @@ ACE_Map_Const_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::operator* () const
 
   return *retv;
 }
-
 
 ACE_END_VERSIONED_NAMESPACE_DECL

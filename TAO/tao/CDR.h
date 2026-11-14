@@ -35,7 +35,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_CDR_H
 #define TAO_CDR_H
 
@@ -74,7 +73,7 @@ namespace CORBA
 }
 
 /// Check the IDL bound and representable CDR length before narrowing.
-inline bool tao_valid_std_string_length (std::size_t length, ACE_CDR::ULong bound)
+inline bool tao_valid_std_string_length (size_t length, ACE_CDR::ULong bound)
 {
   return (bound == 0 || length <= bound) &&
     length < (std::numeric_limits<ACE_CDR::ULong>::max) ();
@@ -178,16 +177,23 @@ public:
                  ACE_CDR::Octet major_version = TAO_DEF_GIOP_MAJOR,
                  ACE_CDR::Octet minor_version = TAO_DEF_GIOP_MINOR);
 
-  /// Destructor.
   ~TAO_OutputCDR ();
+  TAO_OutputCDR (TAO_OutputCDR const &) = delete;
+  TAO_OutputCDR &operator= (TAO_OutputCDR const &) = delete;
+  TAO_OutputCDR (TAO_OutputCDR &&) = delete;
+  TAO_OutputCDR &operator= (TAO_OutputCDR &&) = delete;
 
   // @todo do we want a special method to write an array of
   // strings and wstrings?
 
-  // = TAO specific methods.
+  /// @name TAO-specific methods
+  /// @{
+
   static void throw_skel_exception (int error_num);
 
   void get_version (TAO_GIOP_Message_Version& giop_version);
+
+  /// @}
 
   /**
    * @name Outgoing GIOP Fragment Related Methods
@@ -229,7 +235,9 @@ public:
   ACE_Time_Value * timeout () const;
   //@}
 
-  /// These methods are used by valuetype indirection support.
+  /// @name Valuetype indirection support
+  /// @{
+
   /// Accessor to the indirect maps.
   Repo_Id_Map_Handle& get_repo_id_map ();
 #ifdef TAO_HAS_VALUETYPE_CODEBASE
@@ -254,12 +262,9 @@ public:
   /// Calculate the offset between pos and current wr_ptr.
   int offset (char* pos);
 
-private:
-  TAO_OutputCDR (const TAO_OutputCDR&rhs) = delete;
-  TAO_OutputCDR& operator= (const TAO_OutputCDR&) = delete;
-  TAO_OutputCDR (TAO_OutputCDR&&) = delete;
-  TAO_OutputCDR& operator= (TAO_OutputCDR&&) = delete;
+  /// @}
 
+private:
 private:
   /**
    * @name Outgoing GIOP Fragment Related Attributes
@@ -370,7 +375,6 @@ public:
                 ACE_CDR::Octet minor_version = TAO_DEF_GIOP_MINOR,
                 TAO_ORB_Core* orb_core = nullptr);
 
-
   /// Create an input stream from an ACE_Data_Block
   TAO_InputCDR (ACE_Data_Block *data,
                 ACE_Message_Block::Message_Flags flag = 0,
@@ -426,20 +430,23 @@ public:
 
   TAO_InputCDR& operator= (const TAO_InputCDR&) = default;
 
-  /// Destructor
   virtual ~TAO_InputCDR ();
 
-  // = TAO specific methods.
+  /// @name TAO-specific methods
+  /// @{
 
   /// Accessor
   TAO_ORB_Core *orb_core () const;
 
   ACE_Message_Block::Message_Flags clr_mb_flags(ACE_Message_Block::Message_Flags less_flags);
 
-  // = TAO specific methods.
   static void throw_skel_exception (int error_num);
 
-  /// These methods are used by valuetype indirection support.
+  /// @}
+
+  /// @name Valuetype indirection support
+  /// @{
+
   /// Accessor to the indirect maps.
   Repo_Id_Map_Handle& get_repo_id_map ();
   Codebase_URL_Map_Handle& get_codebase_url_map ();
@@ -455,6 +462,8 @@ public:
   /// If indirect map is not nil and not empty, unbind all entries.
   /// Called after demarshalling.
   void reset_vt_indirect_maps ();
+
+  /// @}
 
 private:
   /// The ORB_Core, required to extract object references.

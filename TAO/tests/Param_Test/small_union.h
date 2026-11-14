@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef PARAM_TEST_SMALL_UNION_H
 #define PARAM_TEST_SMALL_UNION_H
 

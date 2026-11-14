@@ -1,6 +1,6 @@
 #include "interface_3_i.h"
 
-interface_3_i::interface_3_i (CORBA::ORB_ptr orb)
+interface_3_i::interface_3_i (CORBA::ORB_ptr const orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
@@ -38,7 +38,7 @@ interface_3_i::attribute_2 ()
   return CORBA::string_dup ("Returning attribute_2");
 }
 
-//INTERFACE 3
+// INTERFACE 3
 
 char *
 interface_3_i::operation_3 ()
@@ -63,5 +63,4 @@ interface_3_i::attribute_3 (::CORBA::Short attribute_3)
 {
   ACE_UNUSED_ARG (attribute_3);
 }
-
 

@@ -1,13 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   UIOP_Factory.h
  *
  *  @author Fred Kuhns <fredk@cs.wustl.edu>Ossama Othman <othman@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_UIOP_FACTORY_H
 #define TAO_UIOP_FACTORY_H
@@ -34,18 +31,15 @@ class TAO_Connector;
 class TAO_Strategies_Export TAO_UIOP_Protocol_Factory : public TAO_Protocol_Factory
 {
 public:
-  /// Constructor.
   TAO_UIOP_Protocol_Factory ();
 
-  /// Destructor.
-  ~TAO_UIOP_Protocol_Factory () override;
+  ~TAO_UIOP_Protocol_Factory () override = default;
 
-  // = Service Configurator hooks.
   /// Dynamic linking hook
   int init (int argc, ACE_TCHAR* argv[]) override;
 
   /// Verify prefix is a match
-  int match_prefix (ACE_CString const &prefix) override;
+  int match_prefix (std::string const &prefix) override;
 
   /// Returns the prefix used by the protocol.
   char const *prefix () const override;
@@ -71,7 +65,6 @@ private:
   TAO_UIOP_Protocol_Factory (TAO_UIOP_Protocol_Factory &&) = delete;
   TAO_UIOP_Protocol_Factory &operator= (TAO_UIOP_Protocol_Factory &&) = delete;
 };
-
 
 ACE_STATIC_SVC_DECLARE (TAO_UIOP_Protocol_Factory)
 ACE_FACTORY_DECLARE (TAO_Strategies, TAO_UIOP_Protocol_Factory)

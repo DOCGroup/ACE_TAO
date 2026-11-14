@@ -33,7 +33,7 @@ namespace Stock
     Priority_Mapping ();
 
     /// Default destructor.
-    virtual ~Priority_Mapping ();
+    ~Priority_Mapping () override;
 
     /// Stock priorities.
     enum Priority

@@ -11,7 +11,6 @@ W32_Test_Impl::W32_Test_Impl ()
   blabla = 1;
 }
 
-
 char *
 W32_Test_Impl::getresponse (CORBA::Long respnr)
 {

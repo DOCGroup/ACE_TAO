@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef HTIOP_CONNECTOR_H
 #define HTIOP_CONNECTOR_H
 #include /**/ "ace/pre.h"
@@ -27,6 +26,8 @@
 
 #include "ace/SOCK_Connector.h"
 #include "ace/Connector.h"
+
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace ACE
@@ -65,15 +66,16 @@ namespace TAO
       using CONNECT_CREATION_STRATEGY = TAO_Connect_Creation_Strategy<Connection_Handler>;
 
       /// Initialization and termination methods.
-      /// Constructor.
       /// {@
-      Connector (ACE::HTBP::Environment *ht_env);
+      explicit Connector (ACE::HTBP::Environment *ht_env);
+      Connector (Connector const&) = delete;
+      Connector (Connector&&) = delete;
+      Connector& operator= (Connector const&) = delete;
+      Connector& operator= (Connector&&) = delete;
 
-      /// Destructor.
       ~Connector () override;
 
       /// @}
-
 
       /// The TAO_Connector methods, please check the documentation on
       /// Transport_Connector.h
@@ -91,12 +93,11 @@ namespace TAO
     protected:
       // = The TAO_Connector methods, please check the documentation on
       // Transport_Connector.h
-      int set_validate_endpoint (TAO_Endpoint *ep);
+      int set_validate_endpoint (TAO_Endpoint *ep) override;
 
       TAO_Transport *make_connection (TAO::Profile_Transport_Resolver *r,
                                       TAO_Transport_Descriptor_Interface &desc,
                                       ACE_Time_Value *timeout = nullptr) override;
-
 
       /// More TAO_Connector methods, please check the documentation on
       /// Transport_Connector.h
@@ -112,10 +113,10 @@ namespace TAO
       Endpoint *remote_endpoint (TAO_Endpoint *ep);
 
       /// Our creation strategy
-      CONNECT_CREATION_STRATEGY *connect_creation_strategy_;
+      std::unique_ptr<CONNECT_CREATION_STRATEGY> connect_creation_strategy_;
 
       /// Our activation strategy
-      CONNECT_CONCURRENCY_STRATEGY *concurrency_strategy_;
+      std::unique_ptr<CONNECT_CONCURRENCY_STRATEGY> concurrency_strategy_;
 
       /// reference to the configuration parameters
       ACE::HTBP::Environment *ht_env_;

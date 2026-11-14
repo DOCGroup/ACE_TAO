@@ -62,8 +62,12 @@ namespace TAO
       using _var_type = Current_var;
       using _out_type = Current_out;
 
-      /// Constructor.
-      Current (TAO_ORB_Core *orb_core);
+      explicit Current (TAO_ORB_Core *orb_core);
+
+      Current (Current const &) = delete;
+      Current (Current &&) = delete;
+      Current &operator= (Current const &) = delete;
+      Current &operator= (Current &&) = delete;
 
       /// Return the peer certificate associated with the current
       /// request.
@@ -116,12 +120,11 @@ namespace TAO
         return nullptr;
       }
 
-      const char* _interface_repository_id () const override;
+      char const* _interface_repository_id () const override;
       //@}
 
     protected:
-      /// Destructor
-      ~Current () override;
+      ~Current () override = default;
 
       /// Set the TSS SSLIOP::Current implementation.
       int implementation (Current_Impl *impl);
@@ -130,12 +133,8 @@ namespace TAO
       Current_Impl *implementation ();
 
     private:
-      Current (const Current &) = delete;
-      void operator= (const Current &) = delete;
-
-    private:
       /// TSS slot assigned to this object.
-      size_t tss_slot_;
+      size_t tss_slot_ {};
 
       /// Pointer to the ORB Core corresponding to the ORB with which this
       /// object is registered.

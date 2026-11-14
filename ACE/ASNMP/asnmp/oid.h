@@ -1,5 +1,4 @@
 
-
 #ifndef OID_CLS_
 #define OID_CLS_
 //=============================================================================
@@ -41,6 +40,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "asnmp/smival.h"                // derived class for all values
+#include <memory>
 
 /**
  * @class Oid
@@ -51,22 +51,26 @@ class ASNMP_Export Oid : public  SnmpSyntax
 {
 public:
   /// constructor using a dotted string
-  Oid( const char * dotted_oid_string = "", size_t size = unsigned(-1) );
+  explicit Oid (char const * dotted_oid_string = "", size_t size = unsigned(-1));
 
   /// constructor using another oid object
   Oid ( const Oid &oid);
+  Oid (Oid &&) = delete;
 
   /// constructor from raw form
   Oid(const unsigned long *raw_oid, size_t oid_len);
 
-  /// destructor
   ~Oid();
 
   /// syntax type
-  SmiUINT32 get_syntax();
+  SmiUINT32 get_syntax() override;
 
   /// assignment to another oid object overloaded
   Oid& operator=( const Oid &oid);
+  Oid& operator= (Oid &&) = delete;
+
+  /// assignment from a dotted string
+  Oid& operator= (char const *dotted_oid_string);
 
   /// equal operator overloaded
   friend ASNMP_Export bool operator==( const Oid &lhs,const Oid &rhs);
@@ -124,7 +128,6 @@ public:
    */
   int left_comparison( const unsigned long n, const Oid &o) const;
 
-
   /**
    * compare the n rightmost bytes (right-to-left)
    * returns 0, equal
@@ -134,21 +137,21 @@ public:
   int right_comparison( const unsigned long n, const Oid &o) const;
 
   /// is the Oid object valid
-  int valid() const;
+  int valid() const override;
 
   /// return dotted string value from the right
   /// where the user specifies how many positions to print
-  const char *to_string();
+  const char *to_string() override;
 
   /// create a new instance of this Value
-  SnmpSyntax *clone() const;
+  SnmpSyntax *clone() const override;
 
   /// copy an instance of this Value
-  SnmpSyntax& operator=( SnmpSyntax &val);
+  SnmpSyntax& operator=( SnmpSyntax &val) override;
 
 protected:
   /// used for returning oid string
-  char *iv_str;
+  std::unique_ptr<char[]> iv_str {};
 
   /// convert a string to an smi oid
   int StrToOid( const char *string, SmiLPOID dstOid, size_t& how_many_bytes);

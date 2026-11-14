@@ -10,6 +10,8 @@
 #include <ace/Event_Handler.h>
 #include <ace/SOCK_Stream.h>
 
+#include <memory>
+
 /**
  * This read handler is created by the accept handler and handles all the data
  * exchange between client and server. The client makes two requests to the
@@ -26,23 +28,23 @@ class ReadHandler : public ACE_Event_Handler {
         /**
          * The size of the data array.
          */
-        int mDataSize;
+        int mDataSize {};
 
         /**
          * The array containing the client's data.
          */
-        char *mData;
+        std::unique_ptr<char[]> mData {};
 
         /**
          * The call counter to distinguish between first and second call.
          */
-        int mCallCounter;
+        int mCallCounter {};
 
         /**
          * Count the numer of invocations of handle_*(). According to the
          * docs, there should be only one invocation at any given time.
          */
-        int mInvocationCounter;
+        int mInvocationCounter {};
 
     public:
         /**
@@ -53,7 +55,11 @@ class ReadHandler : public ACE_Event_Handler {
         /**
          * Clean up data.
          */
-        virtual ~ReadHandler();
+        ~ReadHandler() override;
+        ReadHandler(ReadHandler const &) = delete;
+        ReadHandler(ReadHandler &&) = delete;
+        ReadHandler &operator= (ReadHandler const &) = delete;
+        ReadHandler &operator= (ReadHandler &&) = delete;
 
         /**
          * Provide access to the internal stream socket.
@@ -67,19 +73,19 @@ class ReadHandler : public ACE_Event_Handler {
         /**
          * Provides the handle of mStream;
          */
-        virtual ACE_HANDLE get_handle() const;
+        ACE_HANDLE get_handle() const override;
 
         /**
          * Handles the data excahnge between client and server. On the first
          * invocation, mData is allocated to the requested size and on the
          * second invocation, that buffer is filled with the client's data.
          */
-        virtual int handle_input(ACE_HANDLE = ACE_INVALID_HANDLE);
+        int handle_input(ACE_HANDLE = ACE_INVALID_HANDLE) override;
 
         /**
          * Deletes this instance of the read handler.
          */
-        virtual int handle_close(ACE_HANDLE, ACE_Reactor_Mask);
+        int handle_close(ACE_HANDLE, ACE_Reactor_Mask) override;
         // @}
 };
 

@@ -19,7 +19,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/XtReactor/XtReactor.h"
 #include "ace/Event_Handler.h"

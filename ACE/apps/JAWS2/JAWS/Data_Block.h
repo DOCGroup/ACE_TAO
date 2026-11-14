@@ -16,14 +16,16 @@ class JAWS_Dispatch_Policy;
 class JAWS_Data_Block;
 class JAWS_Pipeline_Handler;
 
+/// Defines the communication unit between pipeline components.
 class JAWS_Export JAWS_Data_Block : public ACE_Message_Block
-// = TITLE
-//   Defines the communication unit between pipeline components
 {
 public:
   JAWS_Data_Block ();
   JAWS_Data_Block (JAWS_Data_Block &db);
   ~JAWS_Data_Block ();
+  JAWS_Data_Block (JAWS_Data_Block &&) = delete;
+  JAWS_Data_Block &operator= (JAWS_Data_Block const &) = delete;
+  JAWS_Data_Block &operator= (JAWS_Data_Block &&) = delete;
 
   JAWS_Pipeline_Handler *task ();
   JAWS_IO_Handler *io_handler ();
@@ -38,6 +40,7 @@ public:
   enum { JAWS_DATA_BLOCK_SIZE = 8192 };
 
 private:
+  /// Non-owning pipeline state pointers copied to each worker's data block.
   JAWS_IO_Handler *io_handler_;
   JAWS_Dispatch_Policy *policy_;
   JAWS_Pipeline_Handler *task_;

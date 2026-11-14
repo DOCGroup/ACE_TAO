@@ -1,4 +1,5 @@
 #include "tao/PortableServer/Collocated_Object_Proxy_Broker.h"
+
 #include "tao/PortableServer/Object_Adapter.h"
 #include "tao/PortableServer/Servant_Upcall.h"
 #include "tao/PortableServer/Servant_Base.h"
@@ -88,7 +89,7 @@ namespace TAO
   CORBA::Boolean
   Collocated_Object_Proxy_Broker::_non_existent (CORBA::Object_ptr target)
   {
-    CORBA::Boolean _tao_retval = true;
+    CORBA::Boolean _tao_retval {true};
 
     TAO_Stub *stub = target->_stubobj ();
 
@@ -207,8 +208,6 @@ namespace TAO
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 
 }
-
-// -----------------------------------------------------
 TAO::Collocated_Object_Proxy_Broker *
 the_tao_collocated_object_proxy_broker ()
 {

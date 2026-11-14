@@ -15,23 +15,27 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 
-const ACE_TCHAR *udp_mcast_address =
-    ACE_TEXT (ACE_DEFAULT_MULTICAST_ADDR) ACE_TEXT(":10001");
+#include <atomic>
 
-static CORBA::ORB_var orb = CORBA::ORB::_nil ();
-static bool terminate_threads = false;
-static const unsigned pool_size = 2;
-static const int data_items = 60000;
-
-void *
-run_orb_within_thread (void *)
+struct Orb_Work_State
 {
-  while (! terminate_threads)
+  CORBA::ORB_var orb;
+  std::atomic_bool terminate_threads {};
+};
+
+static constexpr size_t pool_size {2};
+static constexpr CORBA::ULong data_items {60000};
+
+static void *
+run_orb_within_thread (void *arg)
+{
+  Orb_Work_State * const state = static_cast<Orb_Work_State *> (arg);
+  while (!state->terminate_threads.load (std::memory_order_relaxed))
     {
       try
         {
           CORBA::Boolean there_is_work =
-            orb->work_pending ();
+            state->orb->work_pending ();
           if (there_is_work)
             {
               // We use a TAO extension. The CORBA mechanism does not
@@ -39,10 +43,10 @@ run_orb_within_thread (void *)
               // perform_work() or work_pending(), so just calling
               // them results in a spin loop.
               ACE_Time_Value tv (0, 50000);
-              orb->perform_work (tv);
+              state->orb->perform_work (tv);
             }
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const& ex)
         {
           ex._tao_print_exception ("perform work");
 
@@ -53,10 +57,10 @@ run_orb_within_thread (void *)
   return 0;
 }
 
-int parse_args (int argc, ACE_TCHAR *argv[]);
+static int parse_args (int argc, ACE_TCHAR *argv[], ACE_TString& udp_mcast_address);
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // Register the default factory in the Service Configurator.
   // If your platform supports static constructors then you can
@@ -67,15 +71,19 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   try
     {
+      ACE_TString udp_mcast_address =
+        ACE_TEXT (ACE_DEFAULT_MULTICAST_ADDR) ACE_TEXT (":10001");
+      Orb_Work_State orb_state;
+
       // **************** HERE IS THE ORB SETUP
 
       // Create the ORB, pass the argv list for parsing.
-      orb = CORBA::ORB_init (argc, argv);
+      orb_state.orb = CORBA::ORB_init (argc, argv);
 
       // Parse the arguments, you usually want to do this after
       // invoking ORB_init() because ORB_init() will remove all the
       // -ORB options from the command line.
-      if (parse_args (argc, argv) == -1)
+      if (parse_args (argc, argv, udp_mcast_address) == -1)
         {
           ACE_ERROR ((LM_ERROR,
                       "Usage: Service [-m udp_mcast_addr]\n"));
@@ -87,7 +95,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // The POA starts in the holding state, if it is not activated
       // it will not process any requests.
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RootPOA");
+        orb_state.orb->resolve_initial_references ("RootPOA");
       PortableServer::POA_var poa =
         PortableServer::POA::_narrow (object.in ());
       PortableServer::POAManager_var poa_manager =
@@ -145,10 +153,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // First we convert the string into an INET address, then we
       // convert that into the right IDL structure:
-      ACE_INET_Addr udp_addr (ACE_TEXT_ALWAYS_CHAR(udp_mcast_address));
+      ACE_INET_Addr udp_addr (
+        ACE_TEXT_ALWAYS_CHAR (udp_mcast_address.c_str ()));
       ACE_DEBUG ((LM_DEBUG,
                   "Multicast address is: %s\n",
-                  udp_mcast_address));
+                  ACE_TEXT_ALWAYS_CHAR (udp_mcast_address.c_str ())));
 
       // Now we create and activate the servant
       AddrServer as_impl (udp_addr);
@@ -157,10 +166,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // We need a local socket to send the data, open it and check
       // that everything is OK:
-      TAO_ECG_UDP_Out_Endpoint* endpointptr = 0;
+      TAO_ECG_UDP_Out_Endpoint* endpointptr {};
 
-      ACE_NEW_RETURN (endpointptr, TAO_ECG_UDP_Out_Endpoint, 0);
+      ACE_NEW_RETURN (endpointptr, TAO_ECG_UDP_Out_Endpoint, 1);
 
+      // Transfer the endpoint into its reference-counted owner.
       TAO_ECG_Refcounted_Endpoint endpoint (endpointptr);
       if (endpoint->dgram ().open (ACE_Addr::sap_any,
                                    udp_addr.get_type()) == -1)
@@ -195,11 +205,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       PortableServer::Servant_var<TAO_ECG_UDP_Receiver> receiver;
       receiver = TAO_ECG_UDP_Receiver::create();
 
-      TAO_ECG_Mcast_EH mcast_eh (&*receiver);
+      TAO_ECG_Mcast_EH mcast_eh (receiver.in ());
 
       // The event handler uses the ORB reactor to wait for multicast
       // traffic:
-      mcast_eh.reactor (orb->orb_core ()->reactor ());
+      mcast_eh.reactor (orb_state.orb->orb_core ()->reactor ());
 
       // The multicast Event Handler needs to know to what multicast
       // groups it should listen to.  To do so it becomes an observer
@@ -261,22 +271,24 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // creating thread pool
       ACE_Thread_Manager the_ace_manager;
       the_ace_manager.open ();
-      int thread_pool_id = the_ace_manager.spawn_n (
-        pool_size, ACE_THR_FUNC (run_orb_within_thread), 0, THR_DETACHED | THR_NEW_LWP);
-      if (thread_pool_id == -1) {
+      int const thread_pool_id = the_ace_manager.spawn_n (
+        pool_size,
+        ACE_THR_FUNC (run_orb_within_thread),
+        &orb_state,
+        THR_DETACHED | THR_NEW_LWP);
+      if (thread_pool_id == -1)
         ACE_ERROR_RETURN ((LM_ERROR, "Cannot spawn thread pool\n"), 1);
-      }
       ACE_OS::sleep (1); // simple solution ensures ready thread pool
 
-      for (int i = 0; i < data_items; i++)
+      for (CORBA::ULong i {}; i < data_items; ++i)
         {
           supplier.perform_push ();
         }
 
       ACE_OS::sleep (2); // simple solution ensures ready receivers
-      terminate_threads = true; // terminate thread pool
+      orb_state.terminate_threads.store (true, std::memory_order_relaxed);
 
-      the_ace_manager.wait(); // wait until all threads in the pool are stopped
+      the_ace_manager.wait ();
 
       the_ace_manager.close ();
 
@@ -330,14 +342,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       poa->destroy (true, true);
 
       // Finally destroy the ORB
-      orb->destroy ();
+      orb_state.orb->destroy ();
 
       // **************** THAT COMPLETES THE CLEANUP CODE
 
       ACE_DEBUG ((LM_DEBUG,
                   "MCast example finished\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Service");
       return 1;
@@ -347,10 +359,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-int parse_args (int argc, ACE_TCHAR *argv[])
+static int
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TString& udp_mcast_address)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("m:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)

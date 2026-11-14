@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Non_Servant_Upcall.h
  *
  *  @author Irfan Pyarali
  */
-//=============================================================================
-
 #ifndef TAO_NONSERVANT_UPCALL_H
 #define TAO_NONSERVANT_UPCALL_H
 
@@ -48,10 +44,8 @@ namespace TAO
     class TAO_PortableServer_Export Non_Servant_Upcall
     {
     public:
-      /// Constructor.
-      Non_Servant_Upcall (::TAO_Root_POA &poa);
+      explicit Non_Servant_Upcall (::TAO_Root_POA &poa);
 
-      /// Destructor.
       ~Non_Servant_Upcall ();
 
       ::TAO_Root_POA &poa () const;
@@ -59,6 +53,7 @@ namespace TAO
     protected:
       TAO_Object_Adapter &object_adapter_;
       TAO_Root_POA &poa_;
+      /// Non-owning link to the previous stack-scoped nested upcall.
       Non_Servant_Upcall *previous_;
     };
   }

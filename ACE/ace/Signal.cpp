@@ -156,7 +156,7 @@ ACE_Sig_Action::ACE_Sig_Action (const ACE_Sig_Set &signals,
   this->sa_.sa_handler = ACE_SignalHandlerV (sig_handler);
 
 #if (ACE_NSIG > 0)
-  for (int s = 1; s < ACE_NSIG; s++)
+  for (int s = 1; s < ACE_NSIG; ++s)
     if ((signals.is_member (s)) == 1)
       ACE_OS::sigaction (s, &this->sa_, nullptr);
 #else  /* ACE_NSIG <= 0  */
@@ -180,7 +180,7 @@ ACE_Sig_Action::ACE_Sig_Action (const ACE_Sig_Set &signals,
   this->sa_.sa_handler = ACE_SignalHandlerV (sig_handler);
 
 #if (ACE_NSIG > 0)
-  for (int s = 1; s < ACE_NSIG; s++)
+  for (int s = 1; s < ACE_NSIG; ++s)
     if ((signals.is_member (s)) == 1)
       ACE_OS::sigaction (s, &this->sa_, nullptr);
 #else  /* ACE_NSIG <= 0  */

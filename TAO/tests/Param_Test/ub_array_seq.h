@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef PARAM_TEST_UNBOUNED_ARRAY_SEQUENCE_H
 #define PARAM_TEST_UNBOUNED_ARRAY_SEQUENCE_H
 
@@ -77,6 +76,5 @@ private:
   /// return value
   Param_Test::ArraySeq_var ret_;
 };
-
 
 #endif /* PARAM_TEST_UNBOUNED_ARRAY_SEQUENCE_H */

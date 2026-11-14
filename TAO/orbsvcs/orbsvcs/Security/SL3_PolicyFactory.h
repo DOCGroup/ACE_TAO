@@ -34,7 +34,7 @@ namespace TAO
   namespace SL3
     {
       /**
-       * @class olicyFactory
+       * @class PolicyFactory
        *
        * @brief SecurityLevel3 PolicyFactory
        *
@@ -45,21 +45,8 @@ namespace TAO
           public virtual ::CORBA::LocalObject
       {
       public:
-        /**
-         * @name Methods Required by the PolicyFactory Interface
-         *
-         * These are methods that must be implemented since they are
-         * pure virtual in the abstract base class.  They are the
-         * canonical methods required for all PolicyFactory
-         * sub-classes.
-         */
-        //@{
-        /// Construct a Test::Policy object as a test.
         CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
                                          CORBA::Any const & value) override;
-
-        //@}
-
       };
   }  // End SL3 namespace.
 }  // End TAO namespace.

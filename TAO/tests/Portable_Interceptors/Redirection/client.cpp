@@ -1,36 +1,39 @@
 // -*- C++ -*-
 #include "ace/Get_Opt.h"
+#include "ace/SString.h"
 #include "testC.h"
 #include "Client_ORBInitializer.h"
 #include "tao/ORBInitializer_Registry.h"
 
-const ACE_TCHAR *ior1 = 0;
-const ACE_TCHAR *ior2 = 0;
+struct Options
+{
+  ACE_TString primary_ior {};
+  ACE_TString forward_ior {};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Options &options)
 {
   if (argc != 5)  // foo -p IOR_1 -s IOR_2
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Wrong number of arguments.\n"),
+                       ACE_TEXT ("Wrong number of arguments.\n")),
                       -1);
 
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("p:s:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("p:s:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'p':
-        ior1 = get_opts.opt_arg ();
+        options.primary_ior = get_opts.opt_arg ();
         break;
       case 's':
-        ior2 = get_opts.opt_arg ();
+        options.forward_ior = get_opts.opt_arg ();
         break;
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Usage:  %s "
-                           "-p IOR_1 -s IOR_2\n",
+                           ACE_TEXT ("Usage: %s -p IOR_1 -s IOR_2\n"),
                            argv[0]),
                           -1);
       }
@@ -39,15 +42,14 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int status = 0;
+  Options options;
 
   try
     {
 #if TAO_HAS_INTERCEPTORS == 1
-      PortableInterceptor::ORBInitializer_ptr temp_initializer =
-        PortableInterceptor::ORBInitializer::_nil ();
+      PortableInterceptor::ORBInitializer_ptr temp_initializer {};
 
       ACE_NEW_RETURN (temp_initializer,
                       Client_ORBInitializer,
@@ -62,11 +64,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                             argv,
                                             "Client ORB");
 
-      if (::parse_args (argc, argv) != 0)
+      if (::parse_args (argc, argv, options) != 0)
         return -1;
 
       CORBA::Object_var object =
-        orb->string_to_object (ior1);
+        orb->string_to_object (options.primary_ior.c_str ());
 
       RedirectionTest::test_var server =
         RedirectionTest::test::_narrow (object.in ());
@@ -74,22 +76,22 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (server.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Object reference <%s> is nil.\n",
-                             ior1),
+                             ACE_TEXT ("Object reference <%s> is nil.\n"),
+                             options.primary_ior.c_str ()),
                             1);
         }
 
-      CORBA::Short number = 0;
-      for (int i = 1; i <= 4; ++i)
+      CORBA::Short number {};
+      for (int i { 1 }; i <= 4; ++i)
         {
           ACE_DEBUG ((LM_INFO,
-                      "CLIENT: Issuing request %d.\n",
+                      ACE_TEXT ("CLIENT: Issuing request %d.\n"),
                       i));
 
           number = server->number ();
 
           ACE_DEBUG ((LM_INFO,
-                      "CLIENT: Request %d handled by object %d.\n",
+                      ACE_TEXT ("CLIENT: Request %d handled by object %d.\n"),
                       i,
                       number));
         }
@@ -98,15 +100,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return -1;
     }
 
-  if (status != -1)
-    ACE_DEBUG ((LM_INFO,
-                "PortableInterceptor::Redirection test passed.\n"));
+  ACE_DEBUG ((LM_INFO,
+              ACE_TEXT ("PortableInterceptor::Redirection test passed.\n")));
 
-  return status;
+  return 0;
 }

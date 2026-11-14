@@ -16,8 +16,7 @@ JAWS_Reactive_IO::send ( ACE_HANDLE handle
                        , ACE_Message_Block *mb
                        , JAWS_Event_Completer *completer
                        , const ACE_Time_Value &tv
-                       , void *act
-                       )
+                       , void *act)
 {
   if (mb->length () == 0)
     {
@@ -34,7 +33,7 @@ JAWS_Reactive_IO::send ( ACE_HANDLE handle
   JAWS_IO_Reactive_Send *rs;
   rs = JAWS_IO_Reactive_Send::make (handle, mb, completer, tv, act);
 
-  if (rs == 0)
+  if (rs == nullptr)
     {
       JAWS_Event_Result io_result ( 0
                                   , JAWS_Event_Result::JE_ERROR
@@ -53,25 +52,22 @@ void
 JAWS_Reactive_IO::send ( ACE_HANDLE handle
                        , ACE_Message_Block *mb
                        , JAWS_Event_Completer *completer
-                       , void *act
-                       )
+                       , void *act)
 {
   this->send (handle, mb, completer, ACE_Time_Value::zero, act);
 }
-
 
 void
 JAWS_Reactive_IO::recv ( ACE_HANDLE handle
                        , ACE_Message_Block *mb
                        , JAWS_Event_Completer *completer
                        , const ACE_Time_Value &tv
-                       , void *act
-                       )
+                       , void *act)
 {
   JAWS_IO_Reactive_Recv *rr;
   rr = JAWS_IO_Reactive_Recv::make (handle, mb, completer, tv, act);
 
-  if (rr == 0)
+  if (rr == nullptr)
     {
       JAWS_Event_Result io_result ( 0
                                   , JAWS_Event_Result::JE_ERROR
@@ -86,17 +82,14 @@ JAWS_Reactive_IO::recv ( ACE_HANDLE handle
   rr->open ();
 }
 
-
 void
 JAWS_Reactive_IO::recv ( ACE_HANDLE handle
                        , ACE_Message_Block *mb
                        , JAWS_Event_Completer *completer
-                       , void *act
-                       )
+                       , void *act)
 {
   this->recv (handle, mb, completer, ACE_Time_Value::zero, act);
 }
-
 
 void
 JAWS_Reactive_IO::transmit ( ACE_HANDLE handle
@@ -105,8 +98,7 @@ JAWS_Reactive_IO::transmit ( ACE_HANDLE handle
                            , const ACE_Time_Value &tv
                            , void *act
                            , ACE_Message_Block *header
-                           , ACE_Message_Block *trailer
-                           )
+                           , ACE_Message_Block *trailer)
 {
   JAWS_IO_Reactive_Transmit *rt;
   rt = JAWS_IO_Reactive_Transmit::make ( handle
@@ -118,7 +110,7 @@ JAWS_Reactive_IO::transmit ( ACE_HANDLE handle
                                        , act
                                        );
 
-  if (rt == 0)
+  if (rt == nullptr)
     {
       JAWS_Event_Result io_result ( 0
                                   , JAWS_Event_Result::JE_ERROR
@@ -133,15 +125,13 @@ JAWS_Reactive_IO::transmit ( ACE_HANDLE handle
   rt->open ();
 }
 
-
 void
 JAWS_Reactive_IO::transmit ( ACE_HANDLE handle
                            , ACE_HANDLE source
                            , JAWS_Event_Completer *completer
                            , void *act
                            , ACE_Message_Block *header
-                           , ACE_Message_Block *trailer
-                           )
+                           , ACE_Message_Block *trailer)
 {
   this->transmit ( handle
                  , source
@@ -152,7 +142,6 @@ JAWS_Reactive_IO::transmit ( ACE_HANDLE handle
                  , trailer
                  );
 }
-
 
 void
 JAWS_IO_Reactive_Handler::open ()
@@ -194,10 +183,10 @@ JAWS_IO_Reactive_Handler::handle_timeout (const ACE_Time_Value &, const void *)
 {
   if (this->was_active_)
     {
-      this->was_active_ = 0;
+      this->was_active_ = false;
 
       this->timer_id_ =
-        ACE_Reactor::instance ()->schedule_timer (this, 0, this->tv_);
+        ACE_Reactor::instance ()->schedule_timer (this, nullptr, this->tv_);
 
       return 0;
     }
@@ -292,11 +281,10 @@ JAWS_IO_Reactive_Handler::handle_exception (ACE_HANDLE handle)
   return -1;
 }
 
-
 int
 JAWS_IO_Reactive_Send::handle_output (ACE_HANDLE handle)
 {
-  this->was_active_ = 1;
+  this->was_active_ = true;
 
   ssize_t count = ACE::send ( handle
                             , this->mb_->rd_ptr ()
@@ -340,7 +328,6 @@ JAWS_IO_Reactive_Send::handle_output (ACE_HANDLE handle)
   return 0;
 }
 
-
 int
 JAWS_IO_Reactive_Recv::handle_input (ACE_HANDLE handle)
 {
@@ -372,16 +359,15 @@ JAWS_IO_Reactive_Recv::handle_input (ACE_HANDLE handle)
   return -1;
 }
 
-
 int
 JAWS_IO_Reactive_Transmit::handle_output (ACE_HANDLE handle)
 {
-  this->was_active_ = 1;
+  this->was_active_ = true;
 
   if (this->header_ && this->header_->length () > 0)
     return this->handle_output_header (handle);
   else
-    this->header_ = 0;
+    this->header_ = nullptr;
 
   if (this->source_ != ACE_INVALID_HANDLE)
     return this->handle_output_source (handle);
@@ -389,7 +375,7 @@ JAWS_IO_Reactive_Transmit::handle_output (ACE_HANDLE handle)
   if (this->trailer_ && this->trailer_->length () > 0)
     return this->handle_output_trailer (handle);
   else
-    this->trailer_ = 0;
+    this->trailer_ = nullptr;
 
   JAWS_Event_Result io_result ( this->bytes_
                               , JAWS_Event_Result::JE_OK
@@ -411,7 +397,7 @@ JAWS_IO_Reactive_Transmit::handle_output_source (ACE_HANDLE handle)
 {
   ACE_Message_Block *mb = this->source_buf_;
 
-  if (mb == 0)
+  if (mb == nullptr)
     return -1;
 
   // Try to read data into the mb if data is still available.
@@ -423,7 +409,7 @@ JAWS_IO_Reactive_Transmit::handle_output_source (ACE_HANDLE handle)
       if (count < 0)
         {
           this->source_ = ACE_INVALID_HANDLE;
-          this->source_buf_ = 0;
+          this->source_buf_ = nullptr;
 
           if (this->bytes_ == 0)
             {
@@ -458,10 +444,10 @@ JAWS_IO_Reactive_Transmit::handle_output_source (ACE_HANDLE handle)
   if (result < 0)
     {
       this->source_ = ACE_INVALID_HANDLE;
-      this->source_buf_ = 0;
+      this->source_buf_ = nullptr;
     }
-  else if (mb == 0 && this->source_ == ACE_INVALID_HANDLE)
-    this->source_buf_ = 0;
+  else if (mb == nullptr && this->source_ == ACE_INVALID_HANDLE)
+    this->source_buf_ = nullptr;
   else
     this->source_buf_->crunch ();
 
@@ -473,7 +459,7 @@ JAWS_IO_Reactive_Transmit::handle_output_trailer (ACE_HANDLE handle)
 {
   int result = this->handle_output_mb (handle, this->trailer_);
 
-  if (result == 0 && this->trailer_ == 0)
+  if (result == 0 && this->trailer_ == nullptr)
     {
       JAWS_Event_Result io_result ( this->bytes_
                                   , JAWS_Event_Result::JE_ERROR
@@ -488,8 +474,7 @@ JAWS_IO_Reactive_Transmit::handle_output_trailer (ACE_HANDLE handle)
 
 int
 JAWS_IO_Reactive_Transmit::handle_output_mb ( ACE_HANDLE handle
-                                            , ACE_Message_Block *&mb
-                                            )
+                                            , ACE_Message_Block *&mb)
 {
   ssize_t count = ACE::send (handle, mb->rd_ptr (), mb->length ());
 
@@ -519,7 +504,7 @@ JAWS_IO_Reactive_Transmit::handle_output_mb ( ACE_HANDLE handle
     return -1;
 
   if (mb->length () == 0)
-    mb = 0;
+    mb = nullptr;
 
   return 0;
 }
@@ -544,10 +529,10 @@ JAWS_IO_Reactive_Transmit::handle_timeout (const ACE_Time_Value &, const void *)
 {
   if (this->was_active_)
     {
-      this->was_active_ = 0;
+      this->was_active_ = false;
 
       this->timer_id_ =
-        ACE_Reactor::instance ()->schedule_timer (this, 0, this->tv_);
+        ACE_Reactor::instance ()->schedule_timer (this, nullptr, this->tv_);
 
       return 0;
     }

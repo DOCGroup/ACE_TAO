@@ -33,24 +33,22 @@ class TAO_Notify_Tests_Task_Callback;
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Periodic_Consumer : public TAO_Notify_Tests_StructuredPushConsumer
 {
 public:
-  /// Constructor
   TAO_Notify_Tests_Periodic_Consumer ();
 
-  /// Destructor
   ~TAO_Notify_Tests_Periodic_Consumer ();
 
   /// set the helper callback
   void task_callback(TAO_Notify_Tests_Task_Callback* client);
 
   /// Init the state of this object.
-  virtual int init_state (ACE_Arg_Shifter& arg_shifter);
+  int init_state (ACE_Arg_Shifter& arg_shifter) override;
 
   /// dump stats
   void dump_stats (ACE_TCHAR* msg, int dump_samples);
 
 protected:
-  virtual void push_structured_event (
-        const CosNotification::StructuredEvent & notification);
+  void push_structured_event (
+        const CosNotification::StructuredEvent & notification) override;
 
   void handle_start_event (const CosNotification::PropertySeq& prop_seq);
   void check_priority (const CosNotification::PropertySeq& prop_seq);
@@ -76,8 +74,8 @@ protected:
   /// Stats house keeping
   Task_Stats stats_;
 
-  /// Client
-  TAO_Notify_Tests_Task_Callback* client_;
+  /// Non-owning callback supplied by the activation manager.
+  TAO_Notify_Tests_Task_Callback* client_ {};
 
   /// Flag to indicate if we want to check the expected priority.
   int check_priority_;

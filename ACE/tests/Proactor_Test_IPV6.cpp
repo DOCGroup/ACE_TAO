@@ -12,6 +12,7 @@
 // ============================================================================
 
 #include "test_config.h"
+#include <cstring>
 
 #if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS))
   // This only works on Win32 platforms and on Unix platforms
@@ -204,7 +205,7 @@ MyTask::create_proactor (ProactorType type_proactor, size_t max_op)
   ACE_UNUSED_ARG (type_proactor);
   ACE_UNUSED_ARG (max_op);
 
-  ACE_WIN32_Proactor *proactor_impl = 0;
+  ACE_WIN32_Proactor *proactor_impl {};
 
   ACE_NEW_RETURN (proactor_impl,
                   ACE_WIN32_Proactor,
@@ -305,7 +306,6 @@ MyTask::start (int num_threads,
 
   return 0;
 }
-
 
 int
 MyTask::stop ()
@@ -709,7 +709,6 @@ Server::cancel ()
   return;
 }
 
-
 void
 Server::addresses (const ACE_INET_Addr& peer, const ACE_INET_Addr&)
 {
@@ -725,7 +724,6 @@ Server::addresses (const ACE_INET_Addr& peer, const ACE_INET_Addr&)
                 ACE_TEXT ("addr_to_string")));
   return;
 }
-
 
 void
 Server::open (ACE_HANDLE handle, ACE_Message_Block &)
@@ -791,8 +789,8 @@ Server::initiate_read_stream ()
                         -1);
     }
 
-  this->io_count_++;
-  this->total_r_++;
+  ++this->io_count_;
+  ++this->total_r_;
   return 0;
 }
 
@@ -831,8 +829,8 @@ Server::initiate_write_stream (ACE_Message_Block &mb, size_t nbytes)
                        -1);
     }
 
-  this->io_count_++;
-  this->total_w_++;
+  ++this->io_count_;
+  ++this->total_w_;
   return 0;
 }
 
@@ -1069,7 +1067,6 @@ Connector::make_handler ()
   return this->tester_->client_up ();
 }
 
-
 int
 Connector::start (const ACE_INET_Addr& addr, int num)
 {
@@ -1106,7 +1103,6 @@ Connector::start (const ACE_INET_Addr& addr, int num)
     }
   return rc;
 }
-
 
 Client::Client ()
 {
@@ -1198,7 +1194,6 @@ Client::close ()
   return;
 }
 
-
 void
 Client::addresses (const ACE_INET_Addr& peer, const ACE_INET_Addr& local)
 {
@@ -1213,7 +1208,7 @@ Client::addresses (const ACE_INET_Addr& peer, const ACE_INET_Addr& local)
     {
       if (nullptr != addr.get_host_addr (my_name, sizeof (my_name)))
         {
-          if (0 != ACE_OS::strncmp (peer_name, my_name, sizeof (my_name)))
+          if (0 != std::strncmp (peer_name, my_name, sizeof (my_name)))
             {
               ACE_ERROR
                 ((LM_ERROR,
@@ -1253,7 +1248,6 @@ Client::addresses (const ACE_INET_Addr& peer, const ACE_INET_Addr& local)
                 ACE_TEXT ("addr_to_string")));
   return;
 }
-
 
 void
 Client::open (ACE_HANDLE handle, ACE_Message_Block &)
@@ -1371,8 +1365,8 @@ Client::initiate_write_stream ()
     }
 #endif /* defined (ACE_WIN32) */
 
-  this->io_count_++;
-  this->total_w_++;
+  ++this->io_count_;
+  ++this->total_w_;
   return 0;
 }
 
@@ -1413,7 +1407,6 @@ Client::initiate_read_stream ()
   mb3->cont (mb4);
   mb4->cont (mb5);
   mb5->cont (mb6);
-
 
   // hide last byte in each message block, reserving it for later to set '\0'
   // for proper printouts
@@ -1469,8 +1462,8 @@ Client::initiate_read_stream ()
     }
 #endif /* defined (ACE_WIN32) */
 
-  this->io_count_++;
-  this->total_r_++;
+  ++this->io_count_;
+  ++this->total_r_;
   return 0;
 }
 

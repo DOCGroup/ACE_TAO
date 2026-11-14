@@ -43,7 +43,6 @@ class ORBInitializer
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   ORBInitializer ();
 
   /**
@@ -70,7 +69,6 @@ private:
    */
   TAO_LB_LoadAlert load_alert_;
 };
-
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

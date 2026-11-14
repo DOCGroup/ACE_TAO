@@ -40,7 +40,6 @@ public:
   /// Default Constructor.
   ACE_Time_Value_T () {}
 
-  /// Constructor.
   explicit ACE_Time_Value_T (time_t sec, suseconds_t usec = 0)
     : ACE_Time_Value (sec, usec) {}
 
@@ -67,7 +66,6 @@ public:
       time_policy_ (tp)
   {}
 
-  /// Destructor
   ~ACE_Time_Value_T () override {}
 
   /// Add @a tv to this.

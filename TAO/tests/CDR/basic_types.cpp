@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "tao/ORB.h"
 #include "tao/debug.h"
 #include "tao/CDR.h"
@@ -20,6 +19,8 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
+
+#include <cstring>
 
 static int
 test_std_string_bounds ()
@@ -34,7 +35,7 @@ test_std_string_bounds ()
       output << ACE_OutputCDR::from_std_string (value, 4);
       ACE_ERROR_RETURN ((LM_ERROR, "Oversized std::string was accepted\n"), 1);
     }
-  catch (CORBA::BAD_PARAM const&)
+  catch (CORBA::BAD_PARAM const &)
     {
     }
 
@@ -47,26 +48,23 @@ test_std_string_bounds ()
       output << ACE_OutputCDR::from_std_wstring (wide, 4);
       ACE_ERROR_RETURN ((LM_ERROR, "Oversized std::wstring was accepted\n"), 1);
     }
-  catch (CORBA::BAD_PARAM const&)
+  catch (CORBA::BAD_PARAM const &)
     {
     }
 #endif
 
-  std::size_t const max_length = (std::numeric_limits<ACE_CDR::ULong>::max) ();
+  size_t const max_length = (std::numeric_limits<ACE_CDR::ULong>::max) ();
   if (!TAO_VERSIONED_NAMESPACE_NAME::tao_valid_std_string_length (max_length - 1, 0) ||
       TAO_VERSIONED_NAMESPACE_NAME::tao_valid_std_string_length (max_length, 0) ||
       TAO_VERSIONED_NAMESPACE_NAME::tao_valid_std_string_length (5, 4) ||
       TAO_VERSIONED_NAMESPACE_NAME::tao_valid_std_string_length (5, 3))
     ACE_ERROR_RETURN ((LM_ERROR, "Incorrect std::string length validation\n"), 1);
-  if (sizeof (std::size_t) > sizeof (ACE_CDR::ULong) &&
+  if (sizeof (size_t) > sizeof (ACE_CDR::ULong) &&
       TAO_VERSIONED_NAMESPACE_NAME::tao_valid_std_string_length (max_length + 1, 0))
     ACE_ERROR_RETURN ((LM_ERROR, "Unrepresentable CDR length accepted\n"), 1);
 
   return 0;
 }
-
-static int n = 4096;
-static int nloops = 100;
 
 template<typename Holder>
 static int
@@ -96,8 +94,8 @@ test_boolean_holder ()
 static int
 test_sargument_initialization ()
 {
-  typedef TAO::SArg_Traits<ACE_InputCDR::to_boolean> Boolean_Traits;
-  typedef TAO::SArg_Traits<CORBA::Long> Long_Traits;
+  using Boolean_Traits = TAO::SArg_Traits<ACE_InputCDR::to_boolean>;
+  using Long_Traits = TAO::SArg_Traits<CORBA::Long>;
 
   Boolean_Traits::ret_val boolean_ret;
   Boolean_Traits::out_arg_val boolean_out;
@@ -121,13 +119,11 @@ struct CDR_Test_Types
   CORBA::Octet o;
   CORBA::Short s;
   CORBA::Long l;
-  const char* str;
+  char const *str;
   CORBA::Double d;
   CORBA::Any any;
 
-  enum {
-    ARRAY_SIZE = 10
-  };
+  static constexpr int ARRAY_SIZE = 10;
 
   CORBA::Short a[ARRAY_SIZE];
 };
@@ -145,7 +141,7 @@ CDR_Test_Types::CDR_Test_Types ()
 }
 
 static int
-test_put (TAO_OutputCDR &cdr, CDR_Test_Types &test_types)
+test_put (TAO_OutputCDR &cdr, CDR_Test_Types const &test_types, int const n)
 {
   for (int i = 0; i < n; ++i)
     {
@@ -192,12 +188,12 @@ test_put (TAO_OutputCDR &cdr, CDR_Test_Types &test_types)
 }
 
 static int
-test_get (TAO_InputCDR &cdr, const CDR_Test_Types &test_types)
+test_get (TAO_InputCDR &cdr, CDR_Test_Types const &test_types, int const n)
 {
-  CORBA::Octet xo;
-  CORBA::Short xs;
-  CORBA::Long xl;
-  CORBA::Any any;
+  CORBA::Octet xo {};
+  CORBA::Short xs {};
+  CORBA::Long xl {};
+  CORBA::Any any {};
 
   for (int i = 0; i < n; ++i)
     {
@@ -257,7 +253,7 @@ test_get (TAO_InputCDR &cdr, const CDR_Test_Types &test_types)
                            "read_string2[%d] failed\n",
                            i),
                           1);
-      if (ACE_OS::strcmp (xstr, test_types.str) != 0)
+      if (std::strcmp (xstr, test_types.str) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "string[%d] differs\n",
                            i),
@@ -266,7 +262,7 @@ test_get (TAO_InputCDR &cdr, const CDR_Test_Types &test_types)
 #endif
       if (cdr >> any)
         {
-          CORBA::Short s;
+          CORBA::Short s {};
           if (any >>= s)
             {
               if (test_types.s != s)
@@ -298,7 +294,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb {CORBA::ORB_init (argc, argv)};
 
       if (test_std_string_bounds () != 0)
         return 1;
@@ -306,61 +302,59 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (test_sargument_initialization () != 0)
         return 1;
 
-      ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("dn:l:"));
-      int opt;
+      int n {4096};
+      int nloops {100};
+      ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("dn:l:"));
+      int opt {};
 
       while ((opt = get_opt ()) != EOF)
-              {
-                switch (opt)
-                  {
-                    case 'd':
-                      TAO_debug_level++;
-                      break;
-                    case 'n':
-                      n = ACE_OS::atoi (get_opt.opt_arg ());
-                      break;
-                    case 'l':
-                      nloops = ACE_OS::atoi (get_opt.opt_arg ());
-                      break;
-                    case '?':
-                    default:
-                      ACE_DEBUG ((LM_DEBUG,
-                                  "Usage: %s "
-                                  "-d debug"
-                                  "-n <num> "
-                                  "-l <loops> "
-                                  "\n",
-                                  argv[0]));
-                      return -1;
-                    }
-              }
+        {
+          switch (opt)
+            {
+            case 'd':
+              ++TAO_debug_level;
+              break;
+            case 'n':
+              n = ACE_OS::atoi (get_opt.opt_arg ());
+              break;
+            case 'l':
+              nloops = ACE_OS::atoi (get_opt.opt_arg ());
+              break;
+            case '?':
+            default:
+              ACE_DEBUG ((LM_DEBUG,
+                          "Usage: %s "
+                          "-d debug"
+                          "-n <num> "
+                          "-l <loops> "
+                          "\n",
+                          argv[0]));
+              return -1;
+            }
+        }
 
       for (int i = 0; i < nloops; ++i)
-              {
-                TAO_OutputCDR output;
-                CDR_Test_Types test_types;
+        {
+          TAO_OutputCDR output;
+          CDR_Test_Types test_types;
 
-                if (test_put (output, test_types) != 0)
-                  {
-                    return 1;
-                  }
-                TAO_InputCDR input (output);
-                if (TAO_debug_level > 0)
-                  {
-                    ACE_DEBUG ((LM_DEBUG, "Output CDR:\n"));
-                    ACE_HEX_DUMP ((LM_DEBUG, input.rd_ptr(), 64));
-                    ACE_DEBUG ((LM_DEBUG, "Input CDR:\n"));
-                    ACE_HEX_DUMP ((LM_DEBUG, input.rd_ptr(), 64));
-                  }
+          if (test_put (output, test_types, n) != 0)
+            return 1;
+          TAO_InputCDR input (output);
+          if (TAO_debug_level > 0)
+            {
+              ACE_DEBUG ((LM_DEBUG, "Output CDR:\n"));
+              ACE_HEX_DUMP ((LM_DEBUG, input.rd_ptr (), 64));
+              ACE_DEBUG ((LM_DEBUG, "Input CDR:\n"));
+              ACE_HEX_DUMP ((LM_DEBUG, input.rd_ptr (), 64));
+            }
 
-                if (test_get (input, test_types) != 0)
-                  {
-                    return 1;
-                  }
-              }
+          if (test_get (input, test_types, n) != 0)
+            return 1;
+        }
 
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Basic_Types");
       return 1;

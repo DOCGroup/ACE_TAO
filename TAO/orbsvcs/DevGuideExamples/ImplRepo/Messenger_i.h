@@ -16,15 +16,11 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-//Class Messenger_i
-class  Messenger_i : public virtual POA_Messenger
+class Messenger_i : public virtual POA_Messenger
 {
 public:
-  //Constructor
-  Messenger_i ();
-
-  //Destructor
-  virtual ~Messenger_i ();
+  Messenger_i () = default;
+  ~Messenger_i () override = default;
 
   Messenger_i (Messenger_i const &) = delete;
   Messenger_i (Messenger_i &&) = delete;
@@ -32,10 +28,9 @@ public:
   Messenger_i &operator= (Messenger_i &&) = delete;
 
   CORBA::Boolean send_message (
-    char const * user_name,
-    char const * subject,
-    char *& message) override;
+    char const *user_name,
+    char const *subject,
+    char *&message) override;
 };
-
 
 #endif /* MESSENGERI_H_  */

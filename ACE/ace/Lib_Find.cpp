@@ -8,6 +8,8 @@
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_fcntl.h"
 
+#include <cstring>
+
 #if defined (ACE_HAS_ALLOC_HOOKS)
 # include "ace/Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
@@ -123,7 +125,7 @@ ACE::ldfind (const ACE_TCHAR* filename,
   if (!has_suffix)
     ACE_OS::strcpy (searchfilename + len_searchfilename, decorator);
 
-  for (int tag = 1; tag >= 0; tag --)
+  for (int tag = 1; tag >= 0; --tag)
     {
       if (tag == 0)
         searchfilename [len_searchfilename] = 0;
@@ -173,7 +175,7 @@ ACE::ldfind (const ACE_TCHAR* filename,
       else
         {
 #if defined (ACE_WIN32)
-          ACE_TCHAR *file_component = nullptr;
+          ACE_TCHAR *file_component {};
           DWORD pathlen =
             ACE_TEXT_SearchPath (0,
                                  searchfilename,
@@ -208,7 +210,7 @@ ACE::ldfind (const ACE_TCHAR* filename,
           else if (pathlen > 0)
             return 0;
 #else
-          ACE_TCHAR *ld_path = nullptr;
+          ACE_TCHAR *ld_path {};
 #  if defined ACE_DEFAULT_LD_SEARCH_PATH
           ld_path = const_cast<ACE_TCHAR*> (ACE_DEFAULT_LD_SEARCH_PATH);
 #  else
@@ -241,7 +243,7 @@ ACE::ldfind (const ACE_TCHAR* filename,
 
               // Look at each dynamic lib directory in the search path.
 
-              ACE_TCHAR *nextholder = nullptr;
+              ACE_TCHAR *nextholder {};
               const ACE_TCHAR *path_entry =
                 ACE::strsplit_r (ld_path,
                                  ACE_LD_SEARCH_PATH_SEPARATOR_STR,
@@ -470,7 +472,7 @@ ACE::strrepl (char *s, char search, char replace)
 
   size_t replaced = 0;
 
-  for (size_t i = 0; s[i] != '\0'; i++)
+  for (size_t i = 0; s[i] != '\0'; ++i)
     if (s[i] == search)
       {
         s[i] = replace;
@@ -480,7 +482,6 @@ ACE::strrepl (char *s, char search, char replace)
   return replaced;
 }
 
-
 // Split a string up into 'token'-delimited pieces, ala Perl's
 // "split".
 
@@ -489,14 +490,14 @@ ACE::strsplit_r (char *str,
                  const char *token,
                  char *&next_start)
 {
-  char *result = nullptr;
+  char *result {};
 
   if (str != nullptr)
     next_start = str;
 
   if (next_start != nullptr)
     {
-      char *tok_loc = ACE_OS::strstr (next_start, token);
+      char *tok_loc = std::strstr (next_start, token);
 
       if (tok_loc != nullptr)
         {
@@ -505,7 +506,7 @@ ACE::strsplit_r (char *str,
 
           // Insure it's terminated.
           *tok_loc = '\0';
-          next_start = tok_loc + ACE_OS::strlen (token);
+          next_start = tok_loc + std::strlen (token);
         }
       else
         {
@@ -523,7 +524,7 @@ ACE::strsplit_r (wchar_t *str,
                  const wchar_t *token,
                  wchar_t *&next_start)
 {
-  wchar_t *result = nullptr;
+  wchar_t *result {};
 
   if (str != nullptr)
     next_start = str;
@@ -558,7 +559,7 @@ ACE::strrepl (wchar_t *s, wchar_t search, wchar_t replace)
 
   size_t replaced = 0;
 
-  for (size_t i = 0; s[i] != '\0'; i++)
+  for (size_t i = 0; s[i] != '\0'; ++i)
     if (s[i] == search)
       {
         s[i] = replace;

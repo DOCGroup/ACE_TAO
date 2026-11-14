@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file   Stopwatch_display.h
@@ -6,7 +5,6 @@
  *  @author Balachandran  Natarajan <bala@cs.wustl.edu>
  */
 //=============================================================================
-
 #ifndef STOPWATCH_H
 #define STOPWATCH_H
 #include /**/ "ace/pre.h"
@@ -20,10 +18,14 @@ class Stopwatch_display
 {
 public:
   /// Stopwatch_display constructor
-  Stopwatch_display (Widget &parent);
+  explicit Stopwatch_display (Widget parent);
 
-  /// Destructor
-  virtual ~Stopwatch_display ();
+  virtual ~Stopwatch_display () = default;
+
+  Stopwatch_display (Stopwatch_display const &) = delete;
+  Stopwatch_display &operator= (Stopwatch_display const &) = delete;
+  Stopwatch_display (Stopwatch_display &&) = delete;
+  Stopwatch_display &operator= (Stopwatch_display &&) = delete;
 
   /// Manage the widget
   virtual void manage ();
@@ -33,12 +35,11 @@ public:
 
 private:
   /// A frame widget...
-  Widget frame_;
+  Widget frame_ {};
 
   /// Label Widget that is used to display time..
-  Widget label_;
+  Widget label_ {};
 };
-
 
 #include /**/ "ace/post.h"
 #endif /* STOPWATCH_H */

@@ -18,7 +18,7 @@ POA_Holder::init (ACE_Arg_Shifter& arg_shifter)
   ACE_DEBUG ((LM_DEBUG,
         "Init POA\n"));
 
-  const ACE_TCHAR *current_arg = 0;
+  ACE_TCHAR const *current_arg {};
 
   POA_name_ = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ()); // Read the name of the POA
   arg_shifter.consume_arg ();
@@ -65,7 +65,7 @@ POA_Holder::init (ACE_Arg_Shifter& arg_shifter)
                   //if (TAO_debug_level > 0)
                   ACE_DEBUG ((LM_DEBUG, "lane parsed - %d, %d, %d\n",
                               lanes_[l_index].lane_priority, lanes_[l_index].static_threads, lanes_[l_index].dynamic_threads));
-                  l_index++;
+                  ++l_index;
                 }
         else
                 break;
@@ -119,7 +119,7 @@ POA_Holder::init (ACE_Arg_Shifter& arg_shifter)
                   //if (TAO_debug_level > 0)
                   ACE_DEBUG ((LM_DEBUG, "band parsed - %d, %d\n",
                               bands_[b_index].low, bands_[b_index].high));
-                  b_index++;
+                  ++b_index;
                 }
               else
                 break;
@@ -194,7 +194,6 @@ POA_Holder::activate (RTCORBA::RTORB_ptr rt_orb, PortableServer::POA_ptr parent_
                                    allow_request_buffering,
                                    max_buffered_requests,
                                    max_request_buffer_size);
-
 
       thread_pool_policy = rt_orb->create_threadpool_policy (threadpool_id_1);
 

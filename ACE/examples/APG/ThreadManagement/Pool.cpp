@@ -8,10 +8,16 @@
 class HA_CommandHandler : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
+  HA_CommandHandler () = default;
+  HA_CommandHandler (HA_CommandHandler const &) = delete;
+  HA_CommandHandler (HA_CommandHandler &&) = delete;
+  HA_CommandHandler &operator= (HA_CommandHandler const &) = delete;
+  HA_CommandHandler &operator= (HA_CommandHandler &&) = delete;
+
   int svc () override
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) starting up\n")));
-    ACE_Message_Block *mb = nullptr;
+    ACE_Message_Block *mb {};
     if (this->getq (mb) == -1)
       return -1;
     // ... do something with the message.

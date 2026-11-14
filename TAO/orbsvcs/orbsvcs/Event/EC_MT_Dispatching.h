@@ -37,7 +37,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_RTEvent_Serv_Export TAO_EC_MT_Dispatching : public TAO_EC_Dispatching
 {
 public:
-  /// Constructor
   /// It will create @a nthreads servicing threads...
   TAO_EC_MT_Dispatching (int nthreads,
                          int thread_creation_flags,
@@ -45,9 +44,14 @@ public:
                          int force_activate,
                          TAO_EC_Queue_Full_Service_Object* queue_full_service_object_name);
 
+  TAO_EC_MT_Dispatching (TAO_EC_MT_Dispatching const &) = delete;
+  TAO_EC_MT_Dispatching (TAO_EC_MT_Dispatching &&) = delete;
+  TAO_EC_MT_Dispatching &operator= (TAO_EC_MT_Dispatching const &) = delete;
+  TAO_EC_MT_Dispatching &operator= (TAO_EC_MT_Dispatching &&) = delete;
+
   // = The EC_Dispatching methods.
-  virtual void activate () override;
-  virtual void shutdown () override;
+  void activate () override;
+  void shutdown () override;
   virtual void push (TAO_EC_ProxyPushSupplier* proxy,
                      RtecEventComm::PushConsumer_ptr consumer,
                      const RtecEventComm::EventSet& event,
@@ -73,7 +77,7 @@ private:
 
   /// If activation at the requested priority fails then we fallback on
   /// the defaults for thread activation.
-  int force_activate_;
+  bool force_activate_ {};
 
   /// The dispatching task
   TAO_EC_Dispatching_Task task_;
@@ -82,7 +86,7 @@ private:
   TAO_SYNCH_MUTEX lock_;
 
   /// Are the threads running?
-  int active_;
+  bool active_ {};
 
   /// Service Object information
   // TAO_EC_Queue_Full_Service_Object* queue_full_service_object_;

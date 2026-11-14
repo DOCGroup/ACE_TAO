@@ -2,13 +2,11 @@
 #include "Service_Config_DLL.h"
 #include "ace/Service_Config.h"
 #include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
 
 static ACE_THR_FUNC_RETURN
 invoke_service_config (void *arg)
 {
-  const ACE_TCHAR *directive = reinterpret_cast<const ACE_TCHAR *> (arg);
-
+  ACE_TCHAR const * const directive = static_cast<ACE_TCHAR const *> (arg);
 
   // Process a Service Configurator directive in the current thread.
   if (ACE_Service_Config::process_directive (directive) != 0)
@@ -18,13 +16,7 @@ invoke_service_config (void *arg)
                 ACE_TEXT ("\"%s\"\n"),
                 directive));
 
-  return 0;
-}
-
-Service_Config_DLL::Service_Config_DLL ()
-{
-  ACE_OS::memset (this->directive_[0], 0, BUFSIZ * sizeof (ACE_TCHAR));
-  ACE_OS::memset (this->directive_[1], 0, BUFSIZ * sizeof (ACE_TCHAR));
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 int
@@ -37,31 +29,60 @@ Service_Config_DLL::init (int argc, ACE_TCHAR *argv[])
                   argv[0],
                   argv[1]));
 
-      ACE_OS::sprintf (this->directive_[0],
+      int const directive_0_length =
+        ACE_OS::snprintf (this->directive_[0],
+                          sizeof (this->directive_[0]) / sizeof (ACE_TCHAR),
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
-                       ACE_TEXT ("dynamic Test_Object_%s Service_Object * Service_Config_Dependent_DLL:_make_Service_Config_DLL() \"Test_Object_%s\""),
+                          ACE_TEXT ("dynamic Test_Object_%s Service_Object * ")
+                          ACE_TEXT ("Service_Config_Dependent_DLL:_make_Service_Config_DLL() ")
+                          ACE_TEXT ("\"Test_Object_%s\""),
 #else
-                       ACE_TEXT ("<?xml version='1.0'?> <dynamic id='Test_Object_%s' type='service_object'> <initializer init='_make_Service_Config_DLL' path='Service_Config_Dependent_DLL' params='Test_Object_%s'/> </dynamic>"),
+                          ACE_TEXT ("<?xml version='1.0'?> <dynamic id='Test_Object_%s' ")
+                          ACE_TEXT ("type='service_object'> <initializer ")
+                          ACE_TEXT ("init='_make_Service_Config_DLL' ")
+                          ACE_TEXT ("path='Service_Config_Dependent_DLL' ")
+                          ACE_TEXT ("params='Test_Object_%s'/> </dynamic>"),
 #endif
-                       argv[0],
-                       argv[0]);
+                          argv[0],
+                          argv[0]);
+      if (directive_0_length < 0
+          || static_cast<size_t> (directive_0_length)
+             >= sizeof (this->directive_[0]) / sizeof (ACE_TCHAR))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("Service directive is too long\n")),
+                          -1);
 
-      ACE_OS::sprintf (this->directive_[1],
+      int const directive_1_length =
+        ACE_OS::snprintf (this->directive_[1],
+                          sizeof (this->directive_[1]) / sizeof (ACE_TCHAR),
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
-                       ACE_TEXT ("dynamic Test_Object_%s Service_Object * Service_Config_Dependent_DLL:_make_Service_Config_DLL() \"Test_Object_%s\""),
+                          ACE_TEXT ("dynamic Test_Object_%s Service_Object * ")
+                          ACE_TEXT ("Service_Config_Dependent_DLL:_make_Service_Config_DLL() ")
+                          ACE_TEXT ("\"Test_Object_%s\""),
 #else
-                       ACE_TEXT ("<?xml version='1.0'?> <dynamic id='Test_Object_%s' type='service_object'> <initializer init='_make_Service_Config_DLL' path='Service_Config_Dependent_DLL' params='Test_Object_%s'/> </dynamic>"),
+                          ACE_TEXT ("<?xml version='1.0'?> <dynamic id='Test_Object_%s' ")
+                          ACE_TEXT ("type='service_object'> <initializer ")
+                          ACE_TEXT ("init='_make_Service_Config_DLL' ")
+                          ACE_TEXT ("path='Service_Config_Dependent_DLL' ")
+                          ACE_TEXT ("params='Test_Object_%s'/> </dynamic>"),
 #endif
 
-                       argv[1],
-                       argv[1]);
+                          argv[1],
+                          argv[1]);
+      if (directive_1_length < 0
+          || static_cast<size_t> (directive_1_length)
+             >= sizeof (this->directive_[1]) / sizeof (ACE_TCHAR))
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("Service directive is too long\n")),
+                          -1);
 
       if (ACE_Service_Config::process_directive (this->directive_[0]) != 0)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) Service_Config_DLL::init() - ")
-                    ACE_TEXT ("process_directive() failed for:\n")
-                    ACE_TEXT ("\"%s\"\n"),
-                    this->directive_[0]));
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("(%P|%t) Service_Config_DLL::init() - ")
+                           ACE_TEXT ("process_directive() failed for:\n")
+                           ACE_TEXT ("\"%s\"\n"),
+                           this->directive_[0]),
+                          -1);
 
 #if defined (ACE_HAS_THREADS)
 
@@ -113,8 +134,6 @@ Service_Config_DLL::svc ()
 // The same class (Service_Config_DLL) is used to implement each of the
 // Service Objects whose service descriptors are defined below.
 
-// -----------------------------------------------------------------
-
 ACE_STATIC_SVC_DEFINE (Test_Object_1,
                        ACE_TEXT ("Test_Object_1"),
                        ACE_SVC_OBJ_T,
@@ -122,8 +141,6 @@ ACE_STATIC_SVC_DEFINE (Test_Object_1,
                        ACE_Service_Type::DELETE_THIS
                        | ACE_Service_Type::DELETE_OBJ,
                        0)
-
-// -----------------------------------------------------------------
 
 ACE_STATIC_SVC_DEFINE (Test_Object_2,
                        ACE_TEXT ("Test_Object_2"),
@@ -133,8 +150,6 @@ ACE_STATIC_SVC_DEFINE (Test_Object_2,
                        | ACE_Service_Type::DELETE_OBJ,
                        0)
 
-// -----------------------------------------------------------------
-
 ACE_STATIC_SVC_DEFINE (Test_Object_3,
                        ACE_TEXT ("Test_Object_3"),
                        ACE_SVC_OBJ_T,
@@ -142,8 +157,6 @@ ACE_STATIC_SVC_DEFINE (Test_Object_3,
                        ACE_Service_Type::DELETE_THIS
                        | ACE_Service_Type::DELETE_OBJ,
                        0)
-
-// -----------------------------------------------------------------
 
 ACE_STATIC_SVC_DEFINE (Test_Object_4,
                        ACE_TEXT ("Test_Object_4"),
@@ -153,8 +166,6 @@ ACE_STATIC_SVC_DEFINE (Test_Object_4,
                        | ACE_Service_Type::DELETE_OBJ,
                        0)
 
-// -----------------------------------------------------------------
-
 ACE_STATIC_SVC_DEFINE (Test_Object_5,
                        ACE_TEXT ("Test_Object_5"),
                        ACE_SVC_OBJ_T,
@@ -162,8 +173,6 @@ ACE_STATIC_SVC_DEFINE (Test_Object_5,
                        ACE_Service_Type::DELETE_THIS
                        | ACE_Service_Type::DELETE_OBJ,
                        0)
-
-// -----------------------------------------------------------------
 
 ACE_STATIC_SVC_DEFINE (Test_Object_6,
                        ACE_TEXT ("Test_Object_6"),
@@ -173,8 +182,6 @@ ACE_STATIC_SVC_DEFINE (Test_Object_6,
                        | ACE_Service_Type::DELETE_OBJ,
                        0)
 
-// -----------------------------------------------------------------
-
 ACE_STATIC_SVC_DEFINE (Final_Object,
                        ACE_TEXT ("Final_Object"),
                        ACE_SVC_OBJ_T,
@@ -183,9 +190,6 @@ ACE_STATIC_SVC_DEFINE (Final_Object,
                        | ACE_Service_Type::DELETE_OBJ,
                        0)
 
-// -----------------------------------------------------------------
-
 // Same factory is used for all service descriptors defined above.
 ACE_FACTORY_DEFINE (Service_Config_DLL, Service_Config_DLL)
-
 

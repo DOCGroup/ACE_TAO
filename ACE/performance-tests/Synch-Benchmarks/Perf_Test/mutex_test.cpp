@@ -7,7 +7,12 @@
 class ACE_Svc_Export Mutex_Test : public Benchmark_Performance
 {
 public:
-  virtual int svc ();
+  Mutex_Test () = default;
+  Mutex_Test (Mutex_Test const &) = delete;
+  Mutex_Test (Mutex_Test &&) = delete;
+  Mutex_Test &operator= (Mutex_Test const &) = delete;
+  Mutex_Test &operator= (Mutex_Test &&) = delete;
+  int svc () override;
 
 private:
   static ACE_Thread_Mutex mutex;
@@ -20,14 +25,14 @@ Mutex_Test::svc ()
 {
   // Extract out the unique thread-specific value to be used as an
   // index...
-  int ni = this->thr_id ();
+  int const ni = this->thr_id ();
   synch_count = 2;
 
   while (!this->done ())
     {
       mutex.acquire ();
-      performance_test_options.thr_work_count[ni]++;
-      buffer++;
+      ++performance_test_options.thr_work_count[ni];
+      ++buffer;
       mutex.release ();
     }
   /* NOTREACHED */

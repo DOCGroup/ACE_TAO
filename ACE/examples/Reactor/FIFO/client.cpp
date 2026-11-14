@@ -2,7 +2,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stropts.h"
 
-
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {

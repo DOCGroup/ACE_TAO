@@ -1,6 +1,4 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Fixed_Size_SArgument_T.h
  *
@@ -8,8 +6,6 @@
  *  @author Carlos O'Ryan
  *  @author Ossama Othman
  */
-//=============================================================================
-
 #ifndef TAO_FIXED_SIZE_SARGUMENT_T_H
 #define TAO_FIXED_SIZE_SARGUMENT_T_H
 
@@ -61,9 +57,6 @@ namespace TAO
     /// Reference to the "IN" argument.
     S x_ {};
   };
-
-  // ------------------------------------------------------------
-
   /**
    * @class Inout_Fixed_Size_SArgument_T
    *
@@ -74,7 +67,6 @@ namespace TAO
   class Inout_Fixed_Size_SArgument_T : public InoutArgument
   {
   public:
-    /// Constructor.
     Inout_Fixed_Size_SArgument_T ();
 
     /**
@@ -98,9 +90,6 @@ namespace TAO
   private:
     S x_ {};
   };
-
-  // ------------------------------------------------------------
-
   /**
    * @class Out_Fixed_Size_SArgument_T
    *
@@ -111,7 +100,6 @@ namespace TAO
   class Out_Fixed_Size_SArgument_T : public OutArgument
   {
   public:
-    /// Constructor.
     Out_Fixed_Size_SArgument_T ();
 
     /**
@@ -134,9 +122,6 @@ namespace TAO
   private:
     S x_ {};
   };
-
-  // ------------------------------------------------------------
-
   /**
    * @class Ret_Fixed_Size_SArgument_T
    *
@@ -147,7 +132,6 @@ namespace TAO
   class Ret_Fixed_Size_SArgument_T : public RetArgument
   {
   public:
-    /// Constructor.
     Ret_Fixed_Size_SArgument_T ();
 
     /**
@@ -170,9 +154,6 @@ namespace TAO
   private:
     S x_ {};
   };
-
-  // ------------------------------------------------------------
-
   /**
    * @struct Fixed_Size_SArg_Traits_T
    *

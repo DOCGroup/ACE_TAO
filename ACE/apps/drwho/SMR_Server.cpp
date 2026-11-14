@@ -10,7 +10,3 @@ SMR_Server::SMR_Server (short port_number)
                 Options::program_name,
                 1));
 }
-
-SMR_Server::~SMR_Server ()
-{
-}

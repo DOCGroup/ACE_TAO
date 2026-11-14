@@ -27,10 +27,7 @@ using TAO_Notify_ProxyConsumer_Find_Worker =
 
 using TAO_Notify_Proxy_Seq_Worker = TAO_Notify_Seq_Worker_T<TAO_Notify_Proxy>;
 
-TAO_Notify_SupplierAdmin::TAO_Notify_SupplierAdmin ()
-  : TAO_Notify_Admin ()
-{
-}
+TAO_Notify_SupplierAdmin::TAO_Notify_SupplierAdmin () = default;
 
 const char *
 TAO_Notify_SupplierAdmin::get_admin_type_name () const
@@ -38,9 +35,7 @@ TAO_Notify_SupplierAdmin::get_admin_type_name () const
   return "supplier_admin";
 }
 
-TAO_Notify_SupplierAdmin::~TAO_Notify_SupplierAdmin ()
-{
-}
+TAO_Notify_SupplierAdmin::~TAO_Notify_SupplierAdmin () = default;
 
 void
 TAO_Notify_SupplierAdmin::init (TAO_Notify_EventChannel *ec)
@@ -81,8 +76,8 @@ TAO_Notify_SupplierAdmin::destroy ()
 }
 
 TAO_Notify::Topology_Object*
-TAO_Notify_SupplierAdmin::load_child (const ACE_CString &type,
-  CORBA::Long id, const TAO_Notify::NVPList& attrs)
+TAO_Notify_SupplierAdmin::load_child (ACE_CString const &type,
+  CORBA::Long id, TAO_Notify::NVPList const &attrs)
 {
   TAO_Notify::Topology_Object* result = this;
   if (type == "proxy_push_consumer")
@@ -132,9 +127,8 @@ TAO_Notify_SupplierAdmin::load_proxy (
   return proxy;
 }
 
-
 void
-TAO_Notify_SupplierAdmin::set_qos (const CosNotification::QoSProperties & qos)
+TAO_Notify_SupplierAdmin::set_qos (CosNotification::QoSProperties const &qos)
 {
   this->TAO_Notify_Object::set_qos (qos);
 }
@@ -164,7 +158,7 @@ TAO_Notify_SupplierAdmin::obtain_notification_push_consumer (CosNotifyChannelAdm
 CosNotifyChannelAdmin::ProxyConsumer_ptr
 TAO_Notify_SupplierAdmin::obtain_notification_push_consumer_with_qos (CosNotifyChannelAdmin::ClientType ctype,
                                                                   CosNotifyChannelAdmin::ProxyID_out proxy_id,
-                                                                  const CosNotification::QoSProperties & initial_qos)
+                                                                  CosNotification::QoSProperties const &initial_qos)
 {
   CosNotifyChannelAdmin::ProxyConsumer_var proxy =
     TAO_Notify_PROPERTIES::instance()->builder()->build_proxy (this
@@ -174,7 +168,6 @@ TAO_Notify_SupplierAdmin::obtain_notification_push_consumer_with_qos (CosNotifyC
   this->self_change ();
   return proxy._retn ();
 }
-
 
 CosEventChannelAdmin::ProxyPushConsumer_ptr
 TAO_Notify_SupplierAdmin::obtain_push_consumer ()
@@ -220,8 +213,8 @@ TAO_Notify_SupplierAdmin::get_proxy_consumer (CosNotifyChannelAdmin::ProxyID pro
 }
 
 void
-TAO_Notify_SupplierAdmin::offer_change (const CosNotification::EventTypeSeq & added,
-                                        const CosNotification::EventTypeSeq & removed)
+TAO_Notify_SupplierAdmin::offer_change (CosNotification::EventTypeSeq const &added,
+                                        CosNotification::EventTypeSeq const &removed)
 
 {
   TAO_Notify_EventTypeSeq seq_added (added);
@@ -277,7 +270,7 @@ TAO_Notify_SupplierAdmin::find_proxy_consumer (
     TAO_Notify::IdVec & id_path,
     size_t position)
 {
-  TAO_Notify_ProxyConsumer * result = nullptr;
+  TAO_Notify_ProxyConsumer * result {};
   size_t path_size = id_path.size ();
   if (position < path_size)
   {
@@ -302,9 +295,8 @@ TAO_Notify_SupplierAdmin::pull_consumers ()
   throw CORBA::NO_IMPLEMENT ();
 }
 
-
 void
-TAO_Notify_SupplierAdmin::validate_qos (const CosNotification::QoSProperties & /*required_qos*/,
+TAO_Notify_SupplierAdmin::validate_qos (CosNotification::QoSProperties const & /*required_qos*/,
                                     CosNotification::NamedPropertyRangeSeq_out /*available_qos*/)
 {
   throw CORBA::NO_IMPLEMENT ();

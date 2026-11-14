@@ -8,9 +8,12 @@
  * @author Johnny Willemsen
  */
 #include "tao/orbconf.h"
+#include <memory>
 
 #include "tao/Unbounded_Value_Sequence_T.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
+#include <utility>
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
 
@@ -45,17 +48,13 @@ public:
 
   inline unbounded_value_sequence()
     : maximum_ (allocation_traits::default_maximum())
-    , length_ (0)
     , buffer_ (allocation_traits::default_buffer_allocation())
     , release_ (buffer_ != nullptr)
-    , mb_ (nullptr)
   {}
   inline explicit unbounded_value_sequence(CORBA::ULong maximum)
     : maximum_(maximum)
-    , length_(0)
     , buffer_(allocbuf(maximum_))
     , release_(true)
-    , mb_ (nullptr)
   {}
   inline unbounded_value_sequence(
       CORBA::ULong maximum,
@@ -65,24 +64,20 @@ public:
     : maximum_ (maximum),
       length_ (length),
       buffer_ (data),
-      release_ (release),
-      mb_ (nullptr)
+      release_ (release)
   {}
   inline ~unbounded_value_sequence() {
-    if (mb_)
-      ACE_Message_Block::release (mb_);
     if (release_)
       freebuf(buffer_);
   }
   /// Create a sequence of octets from a single message block (i.e. it
   /// ignores any chaining in the message block).
   inline unbounded_value_sequence (CORBA::ULong length,
-                                                 const ACE_Message_Block* mb)
+                                   ACE_Message_Block const *mb)
     : maximum_ (length)
     , length_ (length)
     , buffer_ (reinterpret_cast <CORBA::Octet *>(mb->rd_ptr ()))
-    , release_ (false)
-    , mb_(nullptr) {
+    , release_ (false) {
     // Get the message block flags.
     ACE_Message_Block::Message_Flags const flg = mb->self_flags ();
 
@@ -94,7 +89,7 @@ public:
     if (ACE_BIT_DISABLED (flg,
                           ACE_Message_Block::DONT_DELETE))
       {
-        this->mb_ = ACE_Message_Block::duplicate (mb);
+        this->mb_.reset (ACE_Message_Block::duplicate (mb));
       }
     else
       {
@@ -110,7 +105,7 @@ public:
         size_t const rd_pos = static_cast<size_t> (mb->rd_ptr () - start);
         size_t const wr_pos = static_cast<size_t> (mb->wr_ptr () - start);
 
-        this->mb_ = ACE_Message_Block::duplicate (&msgb);
+        this->mb_.reset (ACE_Message_Block::duplicate (&msgb));
 
         this->mb_->rd_ptr (rd_pos);
         this->mb_->wr_ptr (wr_pos);
@@ -204,7 +199,7 @@ public:
 
   // moved inside the class to resolve namespace lookup issues.
   // This is a replacement for the commented block below.
-  inline bool operator== (const unbounded_value_sequence & rhs) const {
+  inline bool operator== (unbounded_value_sequence const &rhs) const {
     unbounded_value_sequence const & lhs = *this;
     CORBA::ULong const len = lhs.length();
 
@@ -214,10 +209,12 @@ public:
       (len == rhs.length()
        && (len == 0
            ? true
-           : ACE_OS::memcmp(&lhs[0], &rhs[0], len) == 0));
+           : std::memcmp (std::addressof (lhs[0]),
+                          std::addressof (rhs[0]),
+                          len) == 0));
   }
 
-  inline bool operator!= (const unbounded_value_sequence & rhs) const
+  inline bool operator!= (unbounded_value_sequence const &rhs) const
   {
     return !this->operator==(rhs);
   }
@@ -238,24 +235,20 @@ public:
 
   /// Returns the underlying message block, the caller must *not*
   /// release the copy.
-  inline ACE_Message_Block* mb () const {
-    return mb_;
+  inline ACE_Message_Block *mb () const {
+    return this->mb_.get ();
   }
 
   /// Replaces the current buffer with @a mb, using only @a length bytes.
   /// It takes a duplicate of <mb> so the user still owns it.
-  inline void replace (CORBA::ULong length, const ACE_Message_Block* mb) {
+  inline void replace (CORBA::ULong length, ACE_Message_Block const *mb) {
     unbounded_value_sequence s (length, mb);
     swap (s);
   }
 
   unbounded_value_sequence (
-    const unbounded_value_sequence &rhs)
-    : maximum_ (0)
-    , length_ (0)
-    , buffer_(nullptr)
-    , release_(false)
-    , mb_ (nullptr)
+    unbounded_value_sequence const &rhs)
+    : release_ (false)
   {
     if (rhs.maximum_ == 0 || rhs.buffer_ == nullptr)
     {
@@ -267,18 +260,14 @@ public:
     tmp.length_ = rhs.length_;
     if (rhs.mb_ == nullptr)
       {
-        ACE_OS::memcpy (tmp.buffer_,
-                        rhs.buffer_,
-                        rhs.length_);
+        std::memcpy (tmp.buffer_, rhs.buffer_, rhs.length_);
       }
     else
       {
-        size_t offset = 0;
-        for (const ACE_Message_Block *i = rhs.mb_; i != nullptr; i = i->cont ())
+        size_t offset {};
+        for (ACE_Message_Block const *i = rhs.mb_.get (); i != nullptr; i = i->cont ())
           {
-            ACE_OS::memcpy (tmp.buffer_ + offset,
-                            i->rd_ptr (),
-                            i->length ());
+            std::memcpy (tmp.buffer_ + offset, i->rd_ptr (), i->length ());
 
             offset += i->length ();
           }
@@ -287,28 +276,52 @@ public:
   }
 
   unbounded_value_sequence &
-  operator= (const unbounded_value_sequence & rhs)
+  operator= (unbounded_value_sequence const &rhs)
   {
     unbounded_value_sequence tmp(rhs);
     swap(tmp);
     return * this;
   }
 
+  unbounded_value_sequence (unbounded_value_sequence &&rhs) noexcept
+    : maximum_ (rhs.maximum_)
+    , length_ (rhs.length_)
+    , buffer_ (rhs.buffer_)
+    , release_ (rhs.release_)
+  {
+    this->mb_.swap (rhs.mb_);
+    rhs.maximum_ = 0;
+    rhs.length_ = 0;
+    rhs.buffer_ = nullptr;
+    rhs.release_ = false;
+  }
+
+  unbounded_value_sequence &operator= (unbounded_value_sequence &&rhs) noexcept
+  {
+    if (this != std::addressof (rhs))
+      {
+        unbounded_value_sequence tmp (std::move (rhs));
+        this->swap (tmp);
+      }
+    return *this;
+  }
+
 private:
   /// The maximum number of elements the buffer can contain.
-  CORBA::ULong maximum_;
+  CORBA::ULong maximum_ {};
 
   /// The current number of elements in the buffer.
-  CORBA::ULong length_;
+  CORBA::ULong length_ {};
 
   /// The buffer with all the elements, casting must be done in derived
   /// classes.
-  mutable value_type * buffer_;
+  mutable value_type *buffer_ {};
 
   /// If true then the sequence should release the buffer when it is
   /// destroyed.
-  mutable CORBA::Boolean release_;
-  ACE_Message_Block* mb_;
+  mutable CORBA::Boolean release_ {};
+  /// Message block retained while buffer_ points into its data.
+  ACE_Message_Block_Unique_Ptr mb_ {};
 };
 } // namespace TAO
 
@@ -324,8 +337,9 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 // resurrected if need be
 inline
 bool
-operator== (const TAO_VERSIONED_NAMESPACE_NAME::TAO::unbounded_value_sequence<CORBA::Octet> & lhs,
-            const TAO_VERSIONED_NAMESPACE_NAME::TAO::unbounded_value_sequence<CORBA::Octet> & rhs)
+operator== (
+  TAO_VERSIONED_NAMESPACE_NAME::TAO::unbounded_value_sequence<CORBA::Octet> const &lhs,
+  TAO_VERSIONED_NAMESPACE_NAME::TAO::unbounded_value_sequence<CORBA::Octet> const &rhs)
 {
   ::CORBA::ULong const rlen = rhs.length ();
 
@@ -334,17 +348,18 @@ operator== (const TAO_VERSIONED_NAMESPACE_NAME::TAO::unbounded_value_sequence<CO
       return false;
     }
 
-  const CORBA::Octet * rhs_buff = rhs.get_buffer ();
-  const CORBA::Octet * lhs_buff = lhs.get_buffer ();
-  const bool result = (ACE_OS::memcmp (lhs_buff, rhs_buff, rlen) == 0);
+  CORBA::Octet const *rhs_buff = rhs.get_buffer ();
+  CORBA::Octet const *lhs_buff = lhs.get_buffer ();
+  bool const result = (std::memcmp (lhs_buff, rhs_buff, rlen) == 0);
 
   return result;
 }
 
 inline
 bool
-operator!= (const TAO_VERSIONED_NAMESPACE_NAME::TAO::unbounded_value_sequence<CORBA::Octet> & lhs,
-            const TAO_VERSIONED_NAMESPACE_NAME::TAO::unbounded_value_sequence<CORBA::Octet> & rhs)
+operator!= (
+  TAO_VERSIONED_NAMESPACE_NAME::TAO::unbounded_value_sequence<CORBA::Octet> const &lhs,
+  TAO_VERSIONED_NAMESPACE_NAME::TAO::unbounded_value_sequence<CORBA::Octet> const &rhs)
 {
   return !(lhs == rhs);
 }

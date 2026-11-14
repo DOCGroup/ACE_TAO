@@ -43,7 +43,7 @@ namespace ACE
               */
               int connect (ACE_SSL_SOCK_Stream& new_stream,
                            ACE_HANDLE proxy_handle,
-                           const ACE_Time_Value *timeout = 0);
+                           const ACE_Time_Value *timeout = nullptr);
             protected:
               /// Complete non-blocking SSL active connection.
               int ssl_connect (ACE_SSL_SOCK_Stream &new_stream,

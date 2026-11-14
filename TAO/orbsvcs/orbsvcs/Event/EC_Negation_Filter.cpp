@@ -1,6 +1,5 @@
 #include "orbsvcs/Event/EC_Negation_Filter.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Negation_Filter::TAO_EC_Negation_Filter (TAO_EC_Filter* child)
@@ -33,7 +32,7 @@ TAO_EC_Negation_Filter::size () const
 }
 
 int
-TAO_EC_Negation_Filter::filter (const RtecEventComm::EventSet& event,
+TAO_EC_Negation_Filter::filter (RtecEventComm::EventSet const &event,
                                 TAO_EC_QOS_Info& qos_info)
 {
   int n =
@@ -61,7 +60,7 @@ TAO_EC_Negation_Filter::filter_nocopy (RtecEventComm::EventSet& event,
 }
 
 void
-TAO_EC_Negation_Filter::push (const RtecEventComm::EventSet&,
+TAO_EC_Negation_Filter::push (RtecEventComm::EventSet const &,
                                  TAO_EC_QOS_Info&)
 {
 }
@@ -86,15 +85,15 @@ TAO_EC_Negation_Filter::max_event_size () const
 
 int
 TAO_EC_Negation_Filter::can_match (
-      const RtecEventComm::EventHeader& header) const
+      RtecEventComm::EventHeader const &header) const
 {
   return !this->child_->can_match (header);
 }
 
 int
 TAO_EC_Negation_Filter::add_dependencies (
-      const RtecEventComm::EventHeader&,
-      const TAO_EC_QOS_Info &)
+      RtecEventComm::EventHeader const &,
+      TAO_EC_QOS_Info const &)
 {
   return 0;
 }

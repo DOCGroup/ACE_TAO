@@ -3,6 +3,8 @@
 
 #include "orbsvcs/Naming/Bindings_Iterator_T.h"
 
+#include <utility>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -12,11 +14,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 template <class ITERATOR, class TABLE_ENTRY>
 TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::TAO_Bindings_Iterator (
   TAO_Hash_Naming_Context *context,
-  ITERATOR *hash_iter,
+  std::unique_ptr<ITERATOR> hash_iter,
   PortableServer::POA_ptr poa)
   : destroyed_ (false),
     context_ (context),
-    hash_iter_ (hash_iter),
+    hash_iter_ (std::move (hash_iter)),
     poa_ (PortableServer::POA::_duplicate (poa))
 
 {
@@ -25,7 +27,7 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::TAO_Bindings_Iterator (
 template <class ITERATOR, class TABLE_ENTRY>
 TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::~TAO_Bindings_Iterator ()
 {
-  delete hash_iter_;
+  this->hash_iter_.reset ();
 
   // Since we are going away, decrement the reference count on the
   // Naming Context we were iterating over.
@@ -43,7 +45,7 @@ template <class ITERATOR, class TABLE_ENTRY> CORBA::Boolean
 TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::next_one (
     CosNaming::Binding_out b)
 {
-  CosNaming::Binding *binding = nullptr;
+  CosNaming::Binding *binding {};
 
   // Allocate a binding to be returned (even if there no more
   // bindings, we need to allocate an out parameter.)
@@ -81,7 +83,7 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::next_one (
                                CORBA::INTERNAL ());
 
       // Return a binding.
-      TABLE_ENTRY *hash_entry = nullptr;
+      TABLE_ENTRY *hash_entry {};
       hash_iter_->next (hash_entry);
 
       if (populate_binding (hash_entry, *binding) == 0)
@@ -134,10 +136,10 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::next_n (
       // bindings.
       bl->length (how_many);
 
-      TABLE_ENTRY *hash_entry = nullptr;
+      TABLE_ENTRY *hash_entry {};
 
       // Iterate and populate the BindingList.
-      for (CORBA::ULong i = 0; i < how_many; i++)
+      for (CORBA::ULong i {}; i < how_many; ++i)
         {
           hash_iter_->next (hash_entry);
 
@@ -183,18 +185,18 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::populate_binding (
   // Here we perform a check before assignment to make sure
   // CORBA::string_dup is not called on 0 pointer, since the spec does
   // not say what should happen in that case.
-  if (hash_entry->ext_id_.id () != 0)
+  if (hash_entry->ext_id_.id () != nullptr)
     {
       b.binding_name[0].id =
         hash_entry->ext_id_.id ();
-      if (b.binding_name[0].id.in () == 0)
+      if (b.binding_name[0].id.in () == nullptr)
         return 0;
     }
-  if (hash_entry->ext_id_.kind () != 0)
+  if (hash_entry->ext_id_.kind () != nullptr)
     {
       b.binding_name[0].kind =
         hash_entry->ext_id_.kind ();
-      if (b.binding_name[0].kind.in () == 0)
+      if (b.binding_name[0].kind.in () == nullptr)
         return 0;
     }
   return 1;

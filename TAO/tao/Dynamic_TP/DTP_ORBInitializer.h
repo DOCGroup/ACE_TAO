@@ -1,13 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file DTP_ORBInitializer.h
  *
  *  @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_DYNAMIC_TP_ORB_INITIALIZER_H
 #define TAO_DYNAMIC_TP_ORB_INITIALIZER_H
@@ -42,20 +39,16 @@ class TAO_DTP_ORBInitializer
   , public virtual ::CORBA::LocalObject
 {
 public:
-  TAO_DTP_ORBInitializer ();
+  TAO_DTP_ORBInitializer () = default;
 
   void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
   void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
-private:
   TAO_DTP_ORBInitializer (TAO_DTP_ORBInitializer const &) = delete;
   TAO_DTP_ORBInitializer &operator= (TAO_DTP_ORBInitializer const &) = delete;
   TAO_DTP_ORBInitializer (TAO_DTP_ORBInitializer &&) = delete;
   TAO_DTP_ORBInitializer &operator= (TAO_DTP_ORBInitializer &&) = delete;
-
-  /// Register Dynamic_TP policy factories.
-  void register_policy_factories (PortableInterceptor::ORBInitInfo_ptr info);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

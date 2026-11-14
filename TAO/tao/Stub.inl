@@ -13,8 +13,7 @@ TAO_Stub::reset_base ()
   this->set_profile_in_use_i (base_profiles_.get_next ());
 }
 
-
-ACE_INLINE const TAO_SYNCH_MUTEX&
+ACE_INLINE TAO_SYNCH_MUTEX const &
 TAO_Stub::profile_lock () const
 {
   return this->profile_lock_;
@@ -74,7 +73,7 @@ TAO_Stub::profile_in_use ()
 ACE_INLINE TAO_MProfile *
 TAO_Stub::make_profiles ()
 {
-  TAO_MProfile * mp = nullptr;
+  TAO_MProfile * mp {};
 
   ACE_NEW_RETURN (mp,
                   TAO_MProfile (base_profiles_),
@@ -86,11 +85,12 @@ TAO_Stub::make_profiles ()
 ACE_INLINE TAO_Profile *
 TAO_Stub::next_forward_profile ()
 {
-  TAO_Profile * pfile_next = nullptr;
+  TAO_Profile * pfile_next {};
 
+  // Do not remove the permanent forward at the bottom of the stack.
   while (this->forward_profiles_
          && (pfile_next = this->forward_profiles_->get_next ()) == nullptr
-         && this->forward_profiles_ != this->forward_profiles_perm_)  // do not remove permanent forward from bottom of stack
+         && this->forward_profiles_ != this->forward_profiles_perm_)
     // that was the last profile.  Now we clean up our forward profiles.
     // since we own the forward MProfiles, we must delete them when done.
     this->forward_back_one ();
@@ -101,7 +101,7 @@ TAO_Stub::next_forward_profile ()
 ACE_INLINE TAO_Profile *
 TAO_Stub::next_profile_i ()
 {
-  TAO_Profile * pfile_next = nullptr;
+  TAO_Profile * pfile_next {};
 
   // First handle the case that a permanent forward occurred
   if (this->forward_profiles_perm_) // the permanent forward defined
@@ -214,7 +214,7 @@ TAO_Stub::valid_profile () const
 }
 
 ACE_INLINE TAO_Profile *
-TAO_Stub::base_profiles (const TAO_MProfile &mprofiles)
+TAO_Stub::base_profiles (TAO_MProfile const &mprofiles)
 {
   ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                             guard,
@@ -225,7 +225,6 @@ TAO_Stub::base_profiles (const TAO_MProfile &mprofiles)
       TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - Stub::base_profiles, acquired profile lock this = 0x%x\n"), this));
     }
-
 
   // first reset things so we start from scratch!
 
@@ -273,7 +272,7 @@ TAO_Stub::next_profile_retry ()
   return false;
 }
 
-ACE_INLINE const TAO_MProfile&
+ACE_INLINE TAO_MProfile const &
 TAO_Stub::base_profiles () const
 {
   return this->base_profiles_;
@@ -285,7 +284,7 @@ TAO_Stub::base_profiles ()
   return this->base_profiles_;
 }
 
-ACE_INLINE const TAO_MProfile *
+ACE_INLINE TAO_MProfile const *
 TAO_Stub::forward_profiles () const
 {
   return this->forward_profiles_;
@@ -360,7 +359,7 @@ TAO_Stub::destroy ()
   delete this;
 }
 
-ACE_INLINE CORBA::Boolean
+ACE_INLINE bool
 TAO_Stub::optimize_collocation_objects () const
 {
   return this->collocation_opt_;

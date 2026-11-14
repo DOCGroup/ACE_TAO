@@ -28,16 +28,12 @@ TAO_SHMIOP_Acceptor::~TAO_SHMIOP_Acceptor ()
   // strategies.
   this->close ();
 
-  delete this->creation_strategy_;
-  delete this->concurrency_strategy_;
-  delete this->accept_strategy_;
+  this->creation_strategy_.reset ();
+  this->concurrency_strategy_.reset ();
+  this->accept_strategy_.reset ();
 }
 
-// TODO =
-//    2) For V1.[1,2] there are tagged components
-//    3) Create multiple profiles for wild carded endpoints (may be multiple
-//       interfaces over which we can receive requests.  Thus a profile
-//       must be made for each one.
+// TODO: Create one profile for each interface used by a wildcard endpoint.
 int
 TAO_SHMIOP_Acceptor::create_profile (const TAO::ObjectKey &object_key,
                                      TAO_MProfile &mprofile,
@@ -57,12 +53,12 @@ TAO_SHMIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
                                          CORBA::Short priority)
 {
   // @@ we only make one for now
-  int count = mprofile.profile_count ();
+  int const count = mprofile.profile_count ();
   if ((mprofile.size () - count) < 1
       && mprofile.grow (count + 1) == -1)
     return -1;
 
-  TAO_SHMIOP_Profile *pfile = nullptr;
+  TAO_SHMIOP_Profile *pfile {};
   ACE_NEW_RETURN (pfile,
                   TAO_SHMIOP_Profile (this->host_.c_str (),
                                       this->address_.get_port_number (),
@@ -100,11 +96,11 @@ TAO_SHMIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
                                             TAO_MProfile &mprofile,
                                             CORBA::Short priority)
 {
-  TAO_Profile *pfile = nullptr;
-  TAO_SHMIOP_Profile *shmiop_profile = nullptr;
+  TAO_Profile *pfile {};
+  TAO_SHMIOP_Profile *shmiop_profile {};
 
   // First see if <mprofile> already contains a SHMIOP profile.
-  for (TAO_PHandle i = 0; i != mprofile.profile_count (); ++i)
+  for (TAO_PHandle i {}; i != mprofile.profile_count (); ++i)
     {
       pfile = mprofile.get_profile (i);
       if (pfile->tag () == TAO_TAG_SHMEM_PROFILE)
@@ -124,7 +120,7 @@ TAO_SHMIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
     {
       // A SHMIOP_Profile already exists - just add our endpoint to it.
 
-      TAO_SHMIOP_Endpoint *endpoint = nullptr;
+      TAO_SHMIOP_Endpoint *endpoint {};
       ACE_NEW_RETURN (endpoint,
                       TAO_SHMIOP_Endpoint (this->host_.c_str (),
                                            this->address_.get_port_number (),
@@ -137,7 +133,7 @@ TAO_SHMIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
     }
 }
 
-int
+bool
 TAO_SHMIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 {
   const TAO_SHMIOP_Endpoint *endp =
@@ -145,10 +141,10 @@ TAO_SHMIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 
   // Make sure the dynamically cast pointer is valid.
   if (endp == nullptr)
-    return 0;
+    return false;
 
   if (endp->port () != this->address_.get_port_number ())
-    return 0;
+    return false;
 
   return this->address_.same_host (endp->object_addr ());
 }
@@ -222,24 +218,30 @@ TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core, ACE_Reactor *reactor)
 {
   this->orb_core_ = orb_core;
 
-  ACE_NEW_RETURN (this->creation_strategy_,
+  TAO_SHMIOP_CREATION_STRATEGY *creation_strategy {};
+  ACE_NEW_RETURN (creation_strategy,
                   TAO_SHMIOP_CREATION_STRATEGY (this->orb_core_),
                   -1);
+  this->creation_strategy_.reset (creation_strategy);
 
-  ACE_NEW_RETURN (this->concurrency_strategy_,
+  TAO_SHMIOP_CONCURRENCY_STRATEGY *concurrency_strategy {};
+  ACE_NEW_RETURN (concurrency_strategy,
                   TAO_SHMIOP_CONCURRENCY_STRATEGY (this->orb_core_),
                   -1);
+  this->concurrency_strategy_.reset (concurrency_strategy);
 
-  ACE_NEW_RETURN (this->accept_strategy_,
+  TAO_SHMIOP_ACCEPT_STRATEGY *accept_strategy {};
+  ACE_NEW_RETURN (accept_strategy,
                   TAO_SHMIOP_ACCEPT_STRATEGY (this->orb_core_),
                   -1);
+  this->accept_strategy_.reset (accept_strategy);
 
   // We only accept connection on localhost.
   if (this->base_acceptor_.open (this->address_,
                                  reactor,
-                                 this->creation_strategy_,
-                                 this->accept_strategy_,
-                                 this->concurrency_strategy_) == -1)
+                                 this->creation_strategy_.get (),
+                                 this->accept_strategy_.get (),
+                                 this->concurrency_strategy_.get ()) == -1)
     {
       if (TAO_debug_level > 0)
         TAOLIB_ERROR ((LM_ERROR,
@@ -326,7 +328,6 @@ TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core, ACE_Reactor *reactor)
   return 0;
 }
 
-
 int
 TAO_SHMIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
                                  TAO::ObjectKey &object_key)
@@ -339,8 +340,8 @@ TAO_SHMIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
                     profile.profile_data.length ());
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
-  CORBA::Octet major = 0;
-  CORBA::Octet minor = 0;
+  CORBA::Octet major {};
+  CORBA::Octet minor {};
 
   // Read the version. We just read it here. We don't*do any*
   // processing.
@@ -357,7 +358,7 @@ TAO_SHMIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
   }
 
   CORBA::String_var host;
-  CORBA::UShort port = 0;
+  CORBA::UShort port {};
 
   // Get host and port. No processing here too..
   if (cdr.read_string (host.out ()) == 0
@@ -380,7 +381,6 @@ TAO_SHMIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
 
   return 1;
 }
-
 
 CORBA::ULong
 TAO_SHMIOP_Acceptor::endpoint_count ()
@@ -414,11 +414,11 @@ TAO_SHMIOP_Acceptor::parse_options (const char *str)
 
   // Only check for endpoints after the protocol specification and
   // before the object key.
-  for (size_t i = 0; i < len; ++i)
+  for (size_t i {}; i < len; ++i)
     if (options[i] == option_delimiter)
       ++option_count;
 
-  ACE_CString::size_type const begin = 0;
+  ACE_CString::size_type const begin {};
   ACE_CString::size_type const end = (option_count > 1) ? options.find (option_delimiter, begin) : len;
 
   if (end == begin)

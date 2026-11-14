@@ -18,33 +18,7 @@ ACE_round (ACE_timer_t t)
 }
 
 Task_State::Task_State ()
-  : barrier_ (0),
-    key_ ("Cubit"),
-    loop_count_ (1000),
-    thread_count_ (2),
-    latency_ (0),
-    ave_latency_ (0),
-    datatype_ (CB_OCTET),
-    thread_per_rate_ (0),
-    global_jitter_array_ (0),
-    count_ (0),
-    shutdown_ (0),
-    oneway_ (0),
-    one_ior_ (0),
-    one_to_n_test_ (0),
-    context_switch_test_ (0),
-    iors_ (0),
-    iors_count_ (0),
-    ior_file_ (0),
-    granularity_ (1),
-    use_utilization_test_ (0),
-    high_priority_loop_count_ (0),
-    semaphore_ (0),
-    use_multiple_priority_ (0),
-    ready_ (0),
-    ready_cnd_ (ready_mtx_),
-    remote_invocations_ (1),
-    util_test_time_ (0)
+  : ready_cnd_ (ready_mtx_)
 {
 }
 
@@ -261,14 +235,7 @@ Client::Client (ACE_Thread_Manager *thread_manager,
     cubit_impl_ (CORBA::ORB::_nil (),
                  PortableServer::POA::_nil ()),
     ts_ (ts),
-    num_ (0),
     id_ (id),
-    call_count_ (0),
-    error_count_ (0),
-    my_jitter_array_ (0),
-    timer_ (0),
-    frequency_ (0),
-    latency_ (0),
     argc_ (argc),
     argv_ (argv)
 {
@@ -551,7 +518,6 @@ Client::init_orb ()
   ACE_DEBUG ((LM_DEBUG,
               "I'm thread %t\n"));
 
-
   // Convert the argv vector into a string.
   ACE_ARGV tmp_args (this->argv_);
   ACE_TCHAR tmp_buf[BUFSIZ];
@@ -727,7 +693,7 @@ Client::cube_octet ()
 {
   try
     {
-      this->call_count_++;
+      ++this->call_count_;
       // Cube an octet.
       CORBA::Octet arg_octet = func (this->num_);
       CORBA::Octet ret_octet = 0;
@@ -746,7 +712,7 @@ Client::cube_octet ()
 
       if (arg_octet != ret_octet)
         {
-          this->error_count_++;
+          ++this->error_count_;
           ACE_ERROR_RETURN ((LM_ERROR,
                              "** cube_octet (%d) (--> %d)\n",
                              arg_octet,
@@ -768,7 +734,7 @@ Client::cube_short ()
 {
   try
     {
-      this->call_count_++;
+      ++this->call_count_;
 
       CORBA::Short arg_short = func (this->num_);
       CORBA::Short ret_short;
@@ -780,7 +746,7 @@ Client::cube_short ()
 
       if (arg_short != ret_short)
         {
-          this->error_count_++;
+          ++this->error_count_;
           ACE_ERROR_RETURN ((LM_ERROR,
                              "** cube_short (%d) (--> %d)\n",
                              arg_short ,
@@ -801,7 +767,7 @@ Client::cube_long ()
 {
   try
     {
-      this->call_count_++;
+      ++this->call_count_;
 
       CORBA::Long arg_long = func (this->num_);
       CORBA::Long ret_long;
@@ -814,7 +780,7 @@ Client::cube_long ()
 
       if (arg_long != ret_long)
         {
-          this->error_count_++;
+          ++this->error_count_;
           ACE_ERROR ((LM_ERROR,
                       "** cube_long (%d) (--> %d)\n",
                       arg_long,
@@ -837,7 +803,7 @@ Client::cube_struct ()
       Cubit::Many arg_struct;
       Cubit::Many ret_struct;
 
-      this->call_count_++;
+      ++this->call_count_;
 
       arg_struct.l = func (this->num_);
       arg_struct.s = func (this->num_);
@@ -855,7 +821,7 @@ Client::cube_struct ()
           || arg_struct.s  != ret_struct.s
           || arg_struct.o  != ret_struct.o )
         {
-          this->error_count_++;
+          ++this->error_count_;
           ACE_ERROR ((LM_ERROR,
                       "**cube_struct error!\n"));
         }
@@ -904,7 +870,7 @@ Client::make_request ()
     {
       try
         {
-          this->call_count_++;
+          ++this->call_count_;
           START_QUANTIFY;
           this->cubit_->noop ();
           STOP_QUANTIFY;
@@ -1051,7 +1017,7 @@ Client::do_test ()
           {
             if (this->ts_->semaphore_->tryacquire () != -1)
               {
-                low_priority_client_count --;
+                --low_priority_client_count;
                 // If all clients are done then break out of loop.
                 if (low_priority_client_count <= 0)
                   break;

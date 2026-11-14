@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef OPTIONS_H
 #define OPTIONS_H
 
@@ -22,6 +21,7 @@
 #include "ace/Thread_Mutex.h"
 #include "ace/Lock_Adapter_T.h"
 #include "ace/Synch_Traits.h"
+#include <memory>
 
 /**
  * @class Options
@@ -31,10 +31,15 @@
 class ACE_Svc_Export Options
 {
 public:
-  // = Options that can be enabled/disabled.
+  Options (Options const &) = delete;
+  Options (Options &&) = delete;
+  Options &operator= (Options const &) = delete;
+  Options &operator= (Options &&) = delete;
+
+  /// Options that can be enabled or disabled.
   enum
   {
-    // = The types of threading strategies.
+    /// Threading strategies.
     REACTIVE = 0,
     OUTPUT_MT = 1,
     INPUT_MT = 2,
@@ -57,12 +62,10 @@ public:
   /// Parse the arguments and set the options.
   int parse_args (int argc, ACE_TCHAR *argv[]);
 
-  /**
-   * Print the gateway supported parameters.
-   * = Accessor methods.
-   * Determine if an option is enabled.
-   */
-  void print_usage();
+  /// Print the gateway's supported parameters.
+  void print_usage ();
+
+  /// Determine whether an option is enabled.
   int enabled (int option) const;
 
   /**
@@ -75,6 +78,7 @@ public:
 
   /// Set the locking strategy used for serializing access to the
   /// reference count in <ACE_Message_Block>.
+  /// Takes ownership of the supplied strategy.
   void locking_strategy (ACE_Lock_Adapter<ACE_SYNCH_MUTEX> *);
 
   /// Number of seconds after connection establishment to report
@@ -113,10 +117,10 @@ public:
   u_short consumer_connector_port () const;
 
   /// Name of the connection configuration file.
-  const ACE_TCHAR *connection_config_file () const;
+  ACE_TCHAR const *connection_config_file () const;
 
   /// Name of the consumer map configuration file.
-  const ACE_TCHAR *consumer_config_file () const;
+  ACE_TCHAR const *consumer_config_file () const;
 
   /// The maximum retry timeout delay.
   long max_timeout () const;
@@ -144,12 +148,12 @@ private:
   static Options *instance_;
 
   /**
-   * Points to the locking strategy used for serializing access to the
-   * reference count in <ACE_Message_Block>.  If it's 0, then there's
+   * Owns the locking strategy used for serializing access to the
+   * reference count in <ACE_Message_Block>. If it's empty, then there's
    * no locking strategy and we're using a REACTIVE concurrency
    * strategy.
    */
-  ACE_Lock_Adapter<ACE_SYNCH_MUTEX> *locking_strategy_;
+  std::unique_ptr<ACE_Lock_Adapter<ACE_SYNCH_MUTEX>> locking_strategy_;
 
   /// Number of seconds after connection establishment to report
   /// throughput.

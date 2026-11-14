@@ -2,6 +2,7 @@
 #include <cstdint>
 #include <memory>
 #include <string>
+#include <vector>
 
 #include "orbsvcs/Log_Macros.h"
 #include "ast_argument.h"
@@ -52,8 +53,6 @@
 #include "ifr_adding_visitor_union.h"
 
 #include "tao/IFR_Client/IFR_ComponentsC.h"
-
-#include "ace/Vector_T.h"
 
 static bool
 append_wide_codepoint (std::uint32_t codepoint,
@@ -1248,7 +1247,6 @@ ifr_adding_visitor::visit_component_fwd (AST_ComponentFwd *node)
               CORBA::InterfaceDefSeq supported_interfaces;
               supported_interfaces.length (0);
               CORBA::ComponentIR::ComponentDef_var base_component;
-
 
               if (node->is_defined ())
                 {
@@ -3101,7 +3099,6 @@ ifr_adding_visitor::create_interface_def (AST_Interface *node)
                              );
         }
 
-
       node->ifr_added (true);
 
       // Push the new IR object onto the scope stack.
@@ -3754,8 +3751,7 @@ ifr_adding_visitor::fill_base_value (CORBA::ValueDef_ptr &result,
 void
 ifr_adding_visitor::fill_base_component (
     CORBA::ComponentIR::ComponentDef_ptr &result,
-    AST_Component *node
-  )
+    AST_Component *node)
 {
   result = CORBA::ComponentIR::ComponentDef::_nil ();
   AST_Component *base_component = node->base_component ();
@@ -3812,8 +3808,7 @@ ifr_adding_visitor::fill_base_home (CORBA::ComponentIR::HomeDef_ptr &result,
 void
 ifr_adding_visitor::fill_managed_component (
     CORBA::ComponentIR::ComponentDef_ptr &result,
-    AST_Home *node
-  )
+    AST_Home *node)
 {
   result = CORBA::ComponentIR::ComponentDef::_nil ();
   AST_Component *managed_component = node->managed_component ();
@@ -3969,7 +3964,7 @@ ifr_adding_visitor::fill_initializers (CORBA::ExtInitializerSeq &result,
 {
   result.length (0);
   AST_Decl *item {};
-  ACE_Vector<AST_Factory *> factories;
+  std::vector<AST_Factory *> factories;
 
   for (UTL_ScopeActiveIterator v_iter (node,
                                        UTL_Scope::IK_decls);

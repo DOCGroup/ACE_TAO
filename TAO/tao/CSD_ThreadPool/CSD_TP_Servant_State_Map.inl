@@ -5,7 +5,7 @@ ACE_INLINE
 TAO::CSD::TP_Servant_State*
 TAO::CSD::TP_Servant_State_Map::find(PortableServer::Servant servant)
 {
-  void* key = servant;
+  void * const key = servant;
 
   TP_Servant_State::HandleType value;
 
@@ -17,14 +17,13 @@ TAO::CSD::TP_Servant_State_Map::find(PortableServer::Servant servant)
   return value._retn();
 }
 
-
 ACE_INLINE
 void
 TAO::CSD::TP_Servant_State_Map::insert(PortableServer::Servant servant)
 {
-  void* key = servant;
+  void * const key = servant;
 
-  TP_Servant_State::HandleType value = new TP_Servant_State ();
+  TP_Servant_State::HandleType value {new TP_Servant_State ()};
 
   int const result = this->map_.bind(key, value);
 
@@ -36,12 +35,11 @@ TAO::CSD::TP_Servant_State_Map::insert(PortableServer::Servant servant)
   ACE_ASSERT (result == 0);
 }
 
-
 ACE_INLINE
 void
 TAO::CSD::TP_Servant_State_Map::remove(PortableServer::Servant servant)
 {
-  void* key = servant;
+  void * const key = servant;
 
   if (this->map_.unbind(key) == -1)
     {

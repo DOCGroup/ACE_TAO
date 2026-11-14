@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #include "Cubit_Client.h"
 #include "Cubit_i.h"
 #include "RTI_IO.h"
@@ -106,14 +105,10 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (Cubit_i_Timeprobe_Description,
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
-// Constructor
-
 Cubit_Factory_i::Cubit_Factory_i (CORBA::ORB_ptr orb)
   : my_cubit_ (orb)
 {
 }
-
-// Destructor
 
 Cubit_Factory_i::~Cubit_Factory_i ()
 {
@@ -131,14 +126,10 @@ Cubit_Factory_i::set_default_poa (PortableServer::POA_ptr poa)
   this->my_cubit_.set_default_poa (poa);
 }
 
-// Constructor
-
 Cubit_i::Cubit_i (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
-
-// Destructor
 
 Cubit_i::~Cubit_i ()
 {
@@ -255,7 +246,7 @@ Cubit_i::cube_long_sequence (const Cubit::long_seq &input,
 {
   ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_LONG_SEQUENCE_START);
 
-  if (output.ptr () == 0)
+  if (output.ptr () == nullptr)
     output = new Cubit::long_seq (input.length ());
 
   output->length (input.length ());
@@ -280,7 +271,7 @@ Cubit_i::cube_octet_sequence (const Cubit::octet_seq &input,
 {
   ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_OCTET_SEQUENCE_START);
 
-  if (output.ptr () == 0)
+  if (output.ptr () == nullptr)
     {
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
       ACE_Message_Block mb (input.length ());
@@ -319,7 +310,7 @@ Cubit_i::cube_many_sequence (const Cubit::many_seq & input,
 {
   ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_MANY_SEQUENCE_START);
 
-  if (output.ptr () == 0)
+  if (output.ptr () == nullptr)
     output = new Cubit::many_seq (input.length ());
 
   output->length (input.length ());
@@ -358,7 +349,7 @@ Cubit_i::cube_rti_data (const Cubit::RtiPacket &input,
       print_RtiPacket (input);
     }
 
-  if (output.ptr () == 0)
+  if (output.ptr () == nullptr)
     output = new Cubit::RtiPacket (input);
 
   output->packetHeader.packetColor
@@ -395,7 +386,7 @@ CORBA::Any *
 Cubit_i::cube_any_struct (const CORBA::Any & any)
 {
   ACE_FUNCTION_TIMEPROBE (CUBIT_I_CUBE_ANY_STRUCT_START);
-  const Cubit::Many * arg_struct = 0;
+  Cubit::Many const *arg_struct {};
   Cubit::Many ret_struct;
   any >>= arg_struct;
 
@@ -418,7 +409,6 @@ void Cubit_i::shutdown ()
 
   this->orb_->shutdown ();
 }
-
 
 void
 Cubit_i::ping ()

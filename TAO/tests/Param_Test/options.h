@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef OPTIONS_H
 #define OPTIONS_H
 
@@ -73,10 +72,8 @@ public:
     DII
   };
 
-  /// constructor
   Options ();
 
-  /// destructor
   ~Options ();
 
   /// Parses the arguments passed on the command line.
@@ -123,6 +120,6 @@ private:
   CORBA::Boolean shutdown_;
 };
 
-typedef ACE_Singleton<Options, TAO_SYNCH_RECURSIVE_MUTEX> OPTIONS;
+using OPTIONS = ACE_Singleton<Options, TAO_SYNCH_RECURSIVE_MUTEX>;
 
 #endif /* OPTIONS_H */

@@ -19,6 +19,9 @@
 #include "tao/IORManipulation/IORManip_Loader.h"
 #include "tao/ORB_Core.h"
 
+#include <cstdlib>
+#include <string>
+
 namespace {
   class Lockable_File
   {
@@ -169,7 +172,6 @@ namespace {
     ACE_TString filename_;
   }; // class Lockable_File
 
-
   void
   create_uid (const Options::ImrType repo_type,
               const unsigned int repo_id,
@@ -189,10 +191,8 @@ namespace {
         id.repo_type_str = ACE_TEXT ("2");
       }
 
-    ACE_TCHAR tmp[20];
-    ACE_OS::itoa(repo_id, tmp, 10);
-
-    id.repo_id_str = tmp;
+    std::string const repo_id_string = std::to_string (repo_id);
+    id.repo_id_str = ACE_TEXT_CHAR_TO_TCHAR (repo_id_string.c_str ());
     id.unique_filename = id.repo_type_str + ACE_TEXT ("_") +
       id.repo_id_str + ACE_TEXT (".xml");
   }
@@ -341,14 +341,15 @@ Shared_Backing_Store::verify_unique_id (const ACE_CString& key,
          this->repo_values_[Shared_Backing_Store::REPO_TYPE].first))
       {
         repo_type =
-          (Options::ImrType)ACE_OS::atoi(extra_params[Shared_Backing_Store::REPO_TYPE].second.c_str());
+          static_cast<Options::ImrType> (
+            std::atoi (extra_params[Shared_Backing_Store::REPO_TYPE].second.c_str ()));
       }
     if ((size > Shared_Backing_Store::REPO_ID) &&
         (extra_params[Shared_Backing_Store::REPO_ID].first ==
          this->repo_values_[Shared_Backing_Store::REPO_ID].first))
       {
         repo_id =
-          ACE_OS::atoi(extra_params[Shared_Backing_Store::REPO_ID].second.c_str());
+          std::atoi (extra_params[Shared_Backing_Store::REPO_ID].second.c_str ());
       }
     else
       {
@@ -463,7 +464,6 @@ Shared_Backing_Store::persistent_update (const Server_Info_Ptr& info, bool add)
 
   return 0;
 }
-
 
 int
 Shared_Backing_Store::persistent_update(const Activator_Info_Ptr& info, bool add)
@@ -611,7 +611,7 @@ Shared_Backing_Store::init_repo(PortableServer::POA_ptr)
         {
           const ACE_Vector<ACE_TString>& filenames = listings->filenames();
           size_t const sz = filenames.size ();
-          for (CORBA::ULong i = 0; i < sz; ++i)
+          for (CORBA::ULong i {}; i < sz; ++i)
             {
               if (this->opts_.debug() > 9)
                 {
@@ -664,7 +664,7 @@ Shared_Backing_Store::persistent_load (bool only_changes)
     {
       ORBSVCS_DEBUG((LM_INFO, ACE_TEXT ("(%P|%t) persistent_load %d files\n"), sz));
     }
-  for (CORBA::ULong i = 0; i < sz; ++i)
+  for (CORBA::ULong i {}; i < sz; ++i)
     {
       const ACE_TString& fname = filenames[i];
       Lockable_File file(fname, O_RDONLY);
@@ -682,7 +682,7 @@ Shared_Backing_Store::XMLHandler_Ptr
 Shared_Backing_Store::get_listings (Lockable_File& listing_lf,
                                     bool only_changes) const
 {
-  LocatorListings_XMLHandler *raw_xml = nullptr;
+  LocatorListings_XMLHandler *raw_xml {};
   if (only_changes)
     {
       ACE_NEW_RETURN (raw_xml,
@@ -738,7 +738,7 @@ Shared_Backing_Store::sync_load ()
       if (this->opts_.debug() > 5)
         {
           ORBSVCS_DEBUG((LM_INFO,
-                         ACE_TEXT("(%P|%t) sync_load INC_SYNC, %d files\n"),
+                         ACE_TEXT("(%P|%t) sync_load INC_SYNC, %B files\n"),
                          this->sync_files_.size ()));
         }
 
@@ -775,7 +775,7 @@ Shared_Backing_Store::write_listing (FILE* list)
   UniqueId uid;
 
   // Save servers
-  Locator_Repository::SIMap::ENTRY* sientry = nullptr;
+  Locator_Repository::SIMap::ENTRY* sientry {};
   Locator_Repository::SIMap::CONST_ITERATOR siit (this->servers ());
   for (; siit.next (sientry); siit.advance() )
     {
@@ -788,7 +788,7 @@ Shared_Backing_Store::write_listing (FILE* list)
     }
 
   // Save Activators
-  Locator_Repository::AIMap::ENTRY* aientry = nullptr;
+  Locator_Repository::AIMap::ENTRY* aientry {};
   Locator_Repository::AIMap::CONST_ITERATOR aiit (this->activators ());
   for (; aiit.next (aientry); aiit.advance ())
     {
@@ -986,7 +986,7 @@ Shared_Backing_Store::updates_available
   if (seq_gap)
     {
       bool found = false;
-      for (CORBA::Long i = 0; !found && i < len; i++)
+      for (CORBA::Long i {}; !found && i < len; ++i)
         {
           if (this->updates_[i].action._d () == ImplementationRepository::repo_update)
             {
@@ -1004,7 +1004,7 @@ Shared_Backing_Store::updates_available
           this->updates_[len++].action.info (rinfo);
         }
     }
-  for (CORBA::ULong i = 0; i < info.length (); i++)
+  for (CORBA::ULong i {}; i < info.length (); ++i)
     {
       if (info[i].action._d () == ImplementationRepository::access || !seq_gap)
         {
@@ -1032,7 +1032,7 @@ Shared_Backing_Store::process_updates ()
   //  ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->sync_lock_);
   this->notified_ = false;
   this->sync_needed_ = NO_SYNC;
-  for (CORBA::ULong i = 0; i < this->updates_.length (); i++)
+  for (CORBA::ULong i {}; i < this->updates_.length (); ++i)
     {
       ImplementationRepository::UpdateInfo &entity = this->updates_[i];
       switch (entity.action._d ())
@@ -1122,7 +1122,7 @@ Shared_Backing_Store::gen_ior (char*& ft_imr_ior)
 
   // otherwise we need to combine the primary and backup ior to make
   // the fault tolerant ImR ior
-  char* combined_ior = nullptr;
+  char* combined_ior {};
   CORBA::String_var reason;
   try
     {
@@ -1190,14 +1190,14 @@ Shared_Backing_Store::LocatorListings_XMLHandler::LocatorListings_XMLHandler(
 : dir_(dir),
   only_changes_(true)
 {
-  Locator_Repository::SIMap::ENTRY* sientry = nullptr;
+  Locator_Repository::SIMap::ENTRY* sientry {};
   Locator_Repository::SIMap::CONST_ITERATOR siit (servers);
   for (; siit.next (sientry); siit.advance() )
     {
       unmatched_servers_.bind (sientry->ext_id_, sientry->int_id_);
     }
 
-  Locator_Repository::AIMap::ENTRY* aientry = nullptr;
+  Locator_Repository::AIMap::ENTRY* aientry {};
   Locator_Repository::AIMap::CONST_ITERATOR aiit (activators);
   for (; aiit.next (aientry); aiit.advance() )
     {
@@ -1259,7 +1259,7 @@ void
 Shared_Backing_Store::LocatorListings_XMLHandler::remove_unmatched(
   Locator_Repository& repo)
 {
-  Locator_Repository::SIMap::ENTRY* sientry = nullptr;
+  Locator_Repository::SIMap::ENTRY* sientry {};
   Locator_Repository::SIMap::CONST_ITERATOR siit (this->unmatched_servers_);
   for (; siit.next (sientry); siit.advance() )
     {
@@ -1272,7 +1272,7 @@ Shared_Backing_Store::LocatorListings_XMLHandler::remove_unmatched(
         }
     }
 
-  Locator_Repository::AIMap::ENTRY* aientry = nullptr;
+  Locator_Repository::AIMap::ENTRY* aientry {};
   Locator_Repository::AIMap::CONST_ITERATOR aiit (this->unmatched_activators_);
   for (; aiit.next (aientry); aiit.advance ())
     {

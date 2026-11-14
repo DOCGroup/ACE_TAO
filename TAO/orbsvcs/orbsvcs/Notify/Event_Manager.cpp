@@ -26,8 +26,7 @@ public:
   TAO_Notify_ProxyConsumer_Update_Worker (const TAO_Notify_EventTypeSeq& added, const TAO_Notify_EventTypeSeq& removed);
 
 protected:
-  ///= TAO_ESF_Worker method
-  void work (TAO_Notify_ProxyConsumer* proxy);
+  void work (TAO_Notify_ProxyConsumer* proxy) override;
 
   const TAO_Notify_EventTypeSeq& added_;
   const TAO_Notify_EventTypeSeq& removed_;
@@ -46,8 +45,7 @@ public:
   TAO_Notify_ProxySupplier_Update_Worker (const TAO_Notify_EventTypeSeq& added, const TAO_Notify_EventTypeSeq& removed);
 
 protected:
-  ///= TAO_ESF_Worker method
-  void work (TAO_Notify_ProxySupplier* proxy);
+  void work (TAO_Notify_ProxySupplier* proxy) override;
 
   const TAO_Notify_EventTypeSeq& added_;
   const TAO_Notify_EventTypeSeq& removed_;
@@ -78,7 +76,7 @@ TAO_Notify_Event_Manager::init ()
 {
   ACE_ASSERT (this->consumer_map_.get() == nullptr);
 
-  TAO_Notify_Consumer_Map* consumer_map = nullptr;
+  TAO_Notify_Consumer_Map* consumer_map {};
   ACE_NEW_THROW_EX (consumer_map,
                     TAO_Notify_Consumer_Map (),
                     CORBA::NO_MEMORY ());
@@ -86,7 +84,7 @@ TAO_Notify_Event_Manager::init ()
 
   this->consumer_map().init ();
 
-  TAO_Notify_Supplier_Map* supplier_map = nullptr;
+  TAO_Notify_Supplier_Map* supplier_map {};
   ACE_NEW_THROW_EX (supplier_map,
                     TAO_Notify_Supplier_Map (),
                     CORBA::NO_MEMORY ());
@@ -169,64 +167,48 @@ TAO_Notify_Event_Manager::subscription_change (TAO_Notify_ProxySupplier* proxy_s
 void
 TAO_Notify_Event_Manager::subscribe (TAO_Notify_ProxySupplier* proxy_supplier, const TAO_Notify_EventTypeSeq& seq, TAO_Notify_EventTypeSeq& new_seq)
 {
-  TAO_Notify_EventTypeSeq::CONST_ITERATOR iter (seq);
-
-  TAO_Notify_EventType* event_type;
-
-  for (iter.first (); iter.next (event_type) != 0; iter.advance ())
+  for (TAO_Notify_EventType const & event_type : seq)
     {
-      int result = this->consumer_map().insert (proxy_supplier, *event_type);
+      int result = this->consumer_map().insert (proxy_supplier, event_type);
 
       if (result == 1)
-        new_seq.insert (*event_type);
+        new_seq.add (event_type);
     }
 }
 
 void
 TAO_Notify_Event_Manager::un_subscribe (TAO_Notify_ProxySupplier* proxy_supplier, const TAO_Notify_EventTypeSeq& seq, TAO_Notify_EventTypeSeq& last_seq)
 {
-  TAO_Notify_EventTypeSeq::CONST_ITERATOR iter (seq);
-
-  TAO_Notify_EventType* event_type = nullptr;
-
-  for (iter.first (); iter.next (event_type) != 0; iter.advance ())
+  for (TAO_Notify_EventType const & event_type : seq)
     {
-      int result = this->consumer_map().remove (proxy_supplier, *event_type);
+      int result = this->consumer_map().remove (proxy_supplier, event_type);
 
       if (result == 1)
-        last_seq.insert (*event_type);
+        last_seq.add (event_type);
     }
 }
 
 void
 TAO_Notify_Event_Manager::publish (TAO_Notify_ProxyConsumer* proxy_consumer, const TAO_Notify_EventTypeSeq& seq, TAO_Notify_EventTypeSeq& new_seq)
 {
-  TAO_Notify_EventTypeSeq::CONST_ITERATOR iter (seq);
-
-  TAO_Notify_EventType* event_type = nullptr;
-
-  for (iter.first (); iter.next (event_type) != 0; iter.advance ())
+  for (TAO_Notify_EventType const & event_type : seq)
     {
-      int result = supplier_map().insert (proxy_consumer, *event_type);
+      int result = supplier_map().insert (proxy_consumer, event_type);
 
       if (result == 1)
-        new_seq.insert (*event_type);
+        new_seq.add (event_type);
     }
 }
 
 void
 TAO_Notify_Event_Manager::un_publish (TAO_Notify_ProxyConsumer* proxy_consumer, const TAO_Notify_EventTypeSeq& seq, TAO_Notify_EventTypeSeq& last_seq)
 {
-  TAO_Notify_EventTypeSeq::CONST_ITERATOR iter (seq);
-
-  TAO_Notify_EventType* event_type = nullptr;
-
-  for (iter.first (); iter.next (event_type) != 0; iter.advance ())
+  for (TAO_Notify_EventType const & event_type : seq)
     {
-      int result = supplier_map().remove (proxy_consumer, *event_type);
+      int result = supplier_map().remove (proxy_consumer, event_type);
 
       if (result == 1)
-        last_seq.insert (*event_type);
+        last_seq.add (event_type);
     }
 }
 

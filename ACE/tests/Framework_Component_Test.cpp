@@ -1,20 +1,12 @@
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = DESCRIPTION
-//    This program tests both the ACE_Framework_Compondent and ACE_Repository.
-//    Since Framework Components are singletons that can live in dlls loaded
-//    via the Service Configurator framework, this test uses that framework
-//    to load services from a dll that has a singleton based on ACE_DLL_Singleton.
-//    When the dll is finally ready to be unloaded, the singleton will be
-//    automatically cleaned up just-in-time.
-//
-// = AUTHOR
-//    Don Hinton <dhinton@ieee.org>
-//
-// ============================================================================
+/// @file Framework_Component_Test.cpp
+/// This program tests both the ACE_Framework_Compondent and ACE_Repository.
+/// Since Framework Components are singletons that can live in dlls loaded
+/// via the Service Configurator framework, this test uses that framework
+/// to load services from a dll that has a singleton based on ACE_DLL_Singleton.
+/// When the dll is finally ready to be unloaded, the singleton will be
+/// automatically cleaned up just-in-time.
+///
+/// @author Don Hinton <dhinton@ieee.org>
 
 #include "test_config.h"
 #include "ace/Service_Config.h"

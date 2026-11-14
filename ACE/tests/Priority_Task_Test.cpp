@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Task.h"
 #include "ace/Sched_Params.h"
@@ -34,7 +33,6 @@ static const ACE_TCHAR *usage = ACE_TEXT ("usage: %s [-d]\n");
 class Priority_Task : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  /// The constructor
   Priority_Task ();
 
   //FUZZ: disable check_for_lack_ACE_OS

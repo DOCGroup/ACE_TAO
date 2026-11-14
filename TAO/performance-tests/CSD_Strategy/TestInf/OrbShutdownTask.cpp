@@ -10,20 +10,16 @@
 #include "ace/CORBA_macros.h"
 #include "ace/OS_NS_unistd.h"
 
-OrbShutdownTask::OrbShutdownTask()
-{
-}
-
 void
-OrbShutdownTask::orb(CORBA::ORB_ptr orb)
+OrbShutdownTask::orb (CORBA::ORB_ptr orb)
 {
-  this->orb_ = CORBA::ORB::_duplicate(orb);
+  this->orb_ = CORBA::ORB::_duplicate (orb);
 }
 
 int
-OrbShutdownTask::open(void*)
+OrbShutdownTask::open (void *)
 {
-  if (this->activate(THR_NEW_LWP | THR_JOINABLE, 1) != 0)
+  if (this->activate (THR_NEW_LWP | THR_JOINABLE, 1) != 0)
     {
       //FUZZ: disable check_for_lack_ACE_OS
       // Assumes that when activate returns non-zero return code that
@@ -37,13 +33,12 @@ OrbShutdownTask::open(void*)
   return 0;
 }
 
-
 int
-OrbShutdownTask::svc()
+OrbShutdownTask::svc ()
 {
   try
   {
-    this->orb_->shutdown(0);
+    this->orb_->shutdown (false);
   }
   catch (...)
   {
@@ -55,9 +50,8 @@ OrbShutdownTask::svc()
   return 0;
 }
 
-
 int
-OrbShutdownTask::close(u_long)
+OrbShutdownTask::close (u_long)
 {
   return 0;
 }

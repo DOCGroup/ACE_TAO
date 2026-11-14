@@ -33,15 +33,15 @@ namespace XML
     XML_Error_Handler () = default;
     ~XML_Error_Handler () override = default;
 
-    void warning (const xercesc::SAXParseException &toCatch) override;
-    void error (const xercesc::SAXParseException &toCatch) override;
-    void fatalError (const xercesc::SAXParseException &toCatch) override;
+    void warning (xercesc::SAXParseException const &toCatch) override;
+    void error (xercesc::SAXParseException const &toCatch) override;
+    void fatalError (xercesc::SAXParseException const &toCatch) override;
     void resetErrors () override;
     bool getErrors () const;
 
   private:
-    XML_Error_Handler (const XML_Error_Handler &) = delete;
-    XML_Error_Handler &operator= (const XML_Error_Handler &) = delete;
+    XML_Error_Handler (XML_Error_Handler const &) = delete;
+    XML_Error_Handler &operator= (XML_Error_Handler const &) = delete;
     XML_Error_Handler (XML_Error_Handler &&) = delete;
     XML_Error_Handler &operator= (XML_Error_Handler &&) = delete;
 

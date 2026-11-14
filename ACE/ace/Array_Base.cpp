@@ -2,6 +2,7 @@
 #define ACE_ARRAY_BASE_CPP
 
 #include "ace/Array_Base.h"
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -26,7 +27,7 @@ ACE_Array_Base<T>::ACE_Array_Base (typename ACE_Array_Base<T>::size_type size,
     cur_size_ (size),
     allocator_ (alloc)
 {
-  if (this->allocator_ == 0)
+  if (this->allocator_ == nullptr)
     this->allocator_ = ACE_Allocator::instance ();
 
   if (size != 0)
@@ -34,21 +35,19 @@ ACE_Array_Base<T>::ACE_Array_Base (typename ACE_Array_Base<T>::size_type size,
       ACE_ALLOCATOR (this->array_,
                      (T *) this->allocator_->malloc (size * sizeof (T)));
       for (size_type i = 0; i < size; ++i)
-        new (&array_[i]) T;
+        new (std::addressof (array_[i])) T;
     }
-  else
-    this->array_ = nullptr;
 }
 
 template <class T>
 ACE_Array_Base<T>::ACE_Array_Base (typename ACE_Array_Base<T>::size_type size,
-                                   const T &default_value,
+                                   T const &default_value,
                                    ACE_Allocator *alloc)
   : max_size_ (size),
     cur_size_ (size),
     allocator_ (alloc)
 {
-  if (this->allocator_ == 0)
+  if (this->allocator_ == nullptr)
     this->allocator_ = ACE_Allocator::instance ();
 
   if (size != 0)
@@ -56,37 +55,35 @@ ACE_Array_Base<T>::ACE_Array_Base (typename ACE_Array_Base<T>::size_type size,
       ACE_ALLOCATOR (this->array_,
                      (T *) this->allocator_->malloc (size * sizeof (T)));
       for (size_type i = 0; i < size; ++i)
-        new (&array_[i]) T (default_value);
+        new (std::addressof (array_[i])) T (default_value);
     }
-  else
-    this->array_ = nullptr;
 }
 
 // The copy constructor (performs initialization).
 
 template <class T>
-ACE_Array_Base<T>::ACE_Array_Base (const ACE_Array_Base<T> &s)
+ACE_Array_Base<T>::ACE_Array_Base (ACE_Array_Base<T> const &s)
   : max_size_ (s.size ()),
     cur_size_ (s.size ()),
     allocator_ (s.allocator_)
 {
-  if (this->allocator_ == 0)
+  if (this->allocator_ == nullptr)
     this->allocator_ = ACE_Allocator::instance ();
 
   ACE_ALLOCATOR (this->array_,
                  (T *) this->allocator_->malloc (s.size () * sizeof (T)));
   for (size_type i = 0; i < this->size (); ++i)
-    new (&this->array_[i]) T (s.array_[i]);
+    new (std::addressof (this->array_[i])) T (s.array_[i]);
 }
 
 // Assignment operator (performs assignment).
 
 template <class T> void
-ACE_Array_Base<T>::operator= (const ACE_Array_Base<T> &s)
+ACE_Array_Base<T>::operator= (ACE_Array_Base<T> const &s)
 {
   // Check for "self-assignment".
 
-  if (this != &s)
+  if (this != std::addressof (s))
     {
       if (this->max_size_ < s.size ())
         {
@@ -121,7 +118,7 @@ ACE_Array_Base<T>::operator= (const ACE_Array_Base<T> &s)
           this->cur_size_ = s.size ();
 
           for (size_type i = 0; i < this->size (); ++i)
-            new (&this->array_[i]) T (s.array_[i]);
+            new (std::addressof (this->array_[i])) T (s.array_[i]);
         }
     }
 }
@@ -129,7 +126,7 @@ ACE_Array_Base<T>::operator= (const ACE_Array_Base<T> &s)
 // Set an item in the array at location slot.
 
 template <class T> int
-ACE_Array_Base<T>::set (const T &new_item,
+ACE_Array_Base<T>::set (T const &new_item,
                         typename ACE_Array_Base<T>::size_type slot)
 {
   if (this->in_range (slot))
@@ -163,18 +160,18 @@ ACE_Array_Base<T>::max_size (typename ACE_Array_Base<T>::size_type new_size)
 {
   if (new_size > this->max_size_)
     {
-      T *tmp = nullptr;
+      T *tmp {};
 
       ACE_ALLOCATOR_RETURN (tmp,
                             (T *) this->allocator_->malloc (new_size * sizeof (T)),
                             -1);
       for (size_type i = 0; i < this->cur_size_; ++i)
-        new (&tmp[i]) T (this->array_[i]);
+        new (std::addressof (tmp[i])) T (this->array_[i]);
 
       // Initialize the new portion of the array that exceeds the
       // previously allocated section.
       for (size_type j = this->cur_size_; j < new_size; ++j)
-        new (&tmp[j]) T;
+        new (std::addressof (tmp[j])) T;
 
       ACE_DES_ARRAY_FREE (this->array_,
                           this->max_size_,
@@ -218,12 +215,12 @@ ACE_Array_Iterator<T>::next (T *&item)
 
   if (this->done ())
     {
-      item = 0;
+      item = nullptr;
       return 0;
     }
   else
     {
-      item = &array_[current_];
+      item = std::addressof (array_[current_]);
       return 1;
     }
 }

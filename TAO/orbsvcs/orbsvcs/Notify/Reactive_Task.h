@@ -33,10 +33,8 @@ class TAO_Notify_Serv_Export TAO_Notify_Reactive_Task
   : public TAO_Notify_Worker_Task
 {
 public:
-  /// Constructor
   TAO_Notify_Reactive_Task ();
 
-  /// Destructor
   virtual ~TAO_Notify_Reactive_Task ();
 
   /// Init the reactive task.
@@ -56,12 +54,11 @@ public:
 
 private:
   /// The timer.
-  TAO_Notify_Timer_Reactor::Ptr timer_;
+  TAO_Notify_Timer_Reactor::Ptr timer_ {};
 
   /// Release
-  virtual void release ();
+  void release () override;
 };
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

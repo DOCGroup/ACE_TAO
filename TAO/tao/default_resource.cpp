@@ -35,32 +35,19 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-
 TAO_Codeset_Parameters::TAO_Codeset_Parameters ()
   : translators_ ()
-  , native_ (nullptr)
+  , native_ ()
+  , native_set_ (false)
 {
 }
 
-TAO_Codeset_Parameters::~TAO_Codeset_Parameters ()
-{
-  for (TAO_Codeset_Parameters::iterator i =
-         this->translators ();
-       !i.done ();
-       i.advance ())
-    {
-      ACE_TCHAR** element = nullptr;
-      if (i.next (element))
-        ACE_OS::free (*element);
-    }
-
-  ACE_OS::free (this->native_);
-}
+TAO_Codeset_Parameters::~TAO_Codeset_Parameters () = default;
 
 const ACE_TCHAR*
 TAO_Codeset_Parameters::native ()
 {
-  return (this->native_);
+  return this->native_set_ ? this->native_.c_str () : nullptr;
 }
 
 void
@@ -69,30 +56,30 @@ TAO_Codeset_Parameters::apply_to (TAO_Codeset_Descriptor_Base *csd)
   if (csd == nullptr)
     return;
 
-  if (this->native () != nullptr)
+  if (this->native_set_)
       csd->ncs (this->native ());
 
-  ACE_TCHAR** element = nullptr;
-  for (TAO_Codeset_Parameters::iterator i = this->translators ();
-       !i.done ();
-       i.advance ())
+  for (std::basic_string<ACE_TCHAR> const& translator : this->translators_)
     {
-      if (i.next (element))
-        csd->add_translator (*element);
+      csd->add_translator (translator.c_str ());
     }
 }
 
 void
 TAO_Codeset_Parameters::native (const ACE_TCHAR* n)
 {
-  ACE_OS::free (this->native_);
-  this->native_ = ACE_OS::strdup (n);
+  if (n == nullptr)
+    this->native_.clear ();
+  else
+    this->native_ = n;
+
+  this->native_set_ = n != nullptr;
 }
 
 void
 TAO_Codeset_Parameters::add_translator (const ACE_TCHAR*name)
 {
-  this->translators_.enqueue_tail (ACE_OS::strdup (name));
+  this->translators_.emplace_back (name);
 }
 
 TAO_Codeset_Parameters::iterator
@@ -142,7 +129,6 @@ TAO_Default_Resource_Factory::TAO_Default_Resource_Factory ()
     TAO_Resource_Factory::TAO_LAZY;
 #endif /*TAO_USE_LAZY_RESOURCE_USAGE_STRATEGY*/
 
-
 }
 
 TAO_Default_Resource_Factory::~TAO_Default_Resource_Factory ()
@@ -159,12 +145,11 @@ TAO_Default_Resource_Factory::~TAO_Default_Resource_Factory ()
 
   this->protocol_factories_.reset ();
 
-  for (int i = 0; i < this->parser_names_count_; ++i)
+  for (int i {}; i < this->parser_names_count_; ++i)
     CORBA::string_free (this->parser_names_[i]);
 
   delete [] this->parser_names_;
 }
-
 
 int
 TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
@@ -186,9 +171,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
 
   this->parser_names_count_ = 0;
 
-  int curarg = 0;
-
-  for (curarg = 0; curarg < argc; ++curarg)
+  for (int curarg {}; curarg < argc; ++curarg)
     {
     // Parse thro' and find the number of Parsers to be loaded.
     if (ACE_OS::strcasecmp (argv[curarg],
@@ -204,7 +187,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                         char *[this->parser_names_count_],
                         -1);
 
-        for (int i = 0;
+        for (int i {};
              i < this->parser_names_count_;
              ++i)
           this->parser_names_[i] = nullptr;
@@ -213,7 +196,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
       }
   }
 
-  for (curarg = 0; curarg < argc; ++curarg)
+  for (int curarg {}; curarg < argc; ++curarg)
     {
       if (ACE_OS::strcasecmp (argv[curarg],
                                  ACE_TEXT("-ORBReactorMaskSignals")) == 0)
@@ -239,15 +222,20 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
         ++curarg;
         if (curarg < argc)
           {
-            TAO_Protocol_Item *item = nullptr;
-            ACE_NEW_RETURN (item,
+            TAO_Protocol_Item *raw_item {};
+            ACE_NEW_RETURN (raw_item,
                             TAO_Protocol_Item (ACE_TEXT_ALWAYS_CHAR(argv[curarg])),
                             -1);
-            if (pset->insert (item) == -1)
-              TAOLIB_ERROR ((LM_ERROR,
-                          ACE_TEXT ("(%P|%t) Unable to add protocol factories ")
-                          ACE_TEXT ("for %s: %m\n"),
-                          argv[curarg]));
+            std::unique_ptr<TAO_Protocol_Item> item (raw_item);
+            if (pset->insert (item.get ()) == -1)
+              {
+                TAOLIB_ERROR ((LM_ERROR,
+                            ACE_TEXT ("(%P|%t) Unable to add protocol factories ")
+                            ACE_TEXT ("for %s: %m\n"),
+                            argv[curarg]));
+              }
+            else
+              item.release ();
           }
       }
 
@@ -563,7 +551,7 @@ TAO_Default_Resource_Factory::get_parser_names (char **&names,
                   char *[this->parser_names_count_],
                   -1);
 
-  CORBA::ULong index = 0;
+  CORBA::ULong index {};
 
 #if (TAO_HAS_DDL_PARSER == 1)
   this->parser_names_[index] = CORBA::string_dup ("DLL_Parser");
@@ -611,7 +599,6 @@ TAO_Default_Resource_Factory::add_to_ior_parser_names (const char *curarg)
 
   return 0;
 }
-
 
 // This is virtual and protected...
 int
@@ -666,7 +653,7 @@ TAO_Default_Resource_Factory::init_protocol_factories ()
 
   for (; factory != end; ++factory)
     {
-      const ACE_CString &name = (*factory)->protocol_name ();
+      std::string const &name = (*factory)->protocol_name ();
       (*factory)->factory (
         ACE_Dynamic_Service<TAO_Protocol_Factory>::instance (name.c_str ()));
       if ((*factory)->factory () == nullptr)
@@ -699,13 +686,13 @@ TAO_Default_Resource_Factory::use_locked_data_blocks () const
 TAO_ProtocolFactorySet *
 TAO_Default_Resource_Factory::get_protocol_factories ()
 {
-  return &protocol_factories_;
+  return std::addressof (protocol_factories_);
 }
 
 TAO_Acceptor_Registry *
 TAO_Default_Resource_Factory::get_acceptor_registry ()
 {
-  TAO_Acceptor_Registry *ar = nullptr;
+  TAO_Acceptor_Registry *ar {};
 
   ACE_NEW_RETURN(ar,
                  TAO_Acceptor_Registry,
@@ -717,7 +704,7 @@ TAO_Default_Resource_Factory::get_acceptor_registry ()
 TAO_Connector_Registry *
 TAO_Default_Resource_Factory::get_connector_registry ()
 {
-  TAO_Connector_Registry *cr = nullptr;
+  TAO_Connector_Registry *cr {};
 
   ACE_NEW_RETURN(cr,
                  TAO_Connector_Registry,
@@ -773,7 +760,7 @@ TAO_Default_Resource_Factory::destroy_timer_queue (ACE_Timer_Queue *tmq) const
 ACE_Reactor_Impl*
 TAO_Default_Resource_Factory::allocate_reactor_impl () const
 {
-  ACE_Reactor_Impl *impl = nullptr;
+  ACE_Reactor_Impl *impl {};
   // get a timer queue (or not) from a possibly configured
   // time policy
   TAO_RSF_Timer_Queue_Ptr tmq (*this, this->create_timer_queue ());
@@ -793,25 +780,22 @@ TAO_Default_Resource_Factory::allocate_reactor_impl () const
 ACE_Reactor *
 TAO_Default_Resource_Factory::get_reactor ()
 {
-  ACE_Reactor *reactor = nullptr;
-  ACE_NEW_RETURN (reactor,
-                  ACE_Reactor (this->allocate_reactor_impl (), 1),
+  ACE_Reactor *raw_reactor {};
+  ACE_NEW_RETURN (raw_reactor,
+                  ACE_Reactor (this->allocate_reactor_impl (), true),
                   nullptr);
+  std::unique_ptr<ACE_Reactor> reactor (raw_reactor);
 
   if (reactor->initialized () == 0)
     {
-      // backup timer queue
-      ACE_Timer_Queue *tmq = reactor->timer_queue ();
-      // clean up reactor
-      delete reactor;
-      reactor = nullptr;
-      // clean up timer queue in case it was created by time policy
-      this->destroy_timer_queue (tmq);
+      ACE_Timer_Queue * const timer_queue = reactor->timer_queue ();
+      reactor.reset ();
+      this->destroy_timer_queue (timer_queue);
+      return nullptr;
     }
-  else
-    this->dynamically_allocated_reactor_ = true;
 
-  return reactor;
+  this->dynamically_allocated_reactor_ = true;
+  return reactor.release ();
 }
 
 void
@@ -819,15 +803,12 @@ TAO_Default_Resource_Factory::reclaim_reactor (ACE_Reactor *reactor)
 {
   if (this->dynamically_allocated_reactor_)
     {
-      // backup timer queue
-      ACE_Timer_Queue *tmq = reactor->timer_queue ();
-      // clean up reactor
-      delete reactor;
-      // clean up timer queue in case it was created by time policy
-      this->destroy_timer_queue (tmq);
+      ACE_Timer_Queue * const timer_queue = reactor->timer_queue ();
+      std::unique_ptr<ACE_Reactor> reactor_owner (reactor);
+      reactor_owner.reset ();
+      this->destroy_timer_queue (timer_queue);
     }
 }
-
 
 using LOCKED_MALLOC = ACE_Malloc<ACE_LOCAL_MEMORY_POOL, TAO_SYNCH_MUTEX>;
 using LOCKED_ALLOCATOR_POOL = ACE_Allocator_Adapter<LOCKED_MALLOC>;
@@ -845,7 +826,7 @@ TAO_Default_Resource_Factory::use_local_memory_pool (bool flag)
 ACE_Allocator *
 TAO_Default_Resource_Factory::input_cdr_dblock_allocator ()
 {
-  ACE_Allocator *allocator = nullptr;
+  ACE_Allocator *allocator {};
   if (use_local_memory_pool_)
   {
     ACE_NEW_RETURN (allocator,
@@ -865,7 +846,7 @@ TAO_Default_Resource_Factory::input_cdr_dblock_allocator ()
 ACE_Allocator *
 TAO_Default_Resource_Factory::input_cdr_buffer_allocator ()
 {
-  ACE_Allocator *allocator = nullptr;
+  ACE_Allocator *allocator {};
   if (use_local_memory_pool_)
   {
     ACE_NEW_RETURN (allocator,
@@ -885,7 +866,7 @@ TAO_Default_Resource_Factory::input_cdr_buffer_allocator ()
 ACE_Allocator *
 TAO_Default_Resource_Factory::input_cdr_msgblock_allocator ()
 {
-  ACE_Allocator *allocator = nullptr;
+  ACE_Allocator *allocator {};
   if (use_local_memory_pool_)
   {
     ACE_NEW_RETURN (allocator,
@@ -911,7 +892,7 @@ TAO_Default_Resource_Factory::input_cdr_allocator_type_locked ()
 ACE_Allocator*
 TAO_Default_Resource_Factory::output_cdr_dblock_allocator ()
 {
-  ACE_Allocator *allocator = nullptr;
+  ACE_Allocator *allocator {};
   if (use_local_memory_pool_)
   {
     ACE_NEW_RETURN (allocator,
@@ -931,7 +912,7 @@ TAO_Default_Resource_Factory::output_cdr_dblock_allocator ()
 ACE_Allocator *
 TAO_Default_Resource_Factory::output_cdr_buffer_allocator ()
 {
-  ACE_Allocator *allocator = nullptr;
+  ACE_Allocator *allocator {};
 
   switch (this->output_cdr_allocator_type_)
     {
@@ -966,7 +947,7 @@ TAO_Default_Resource_Factory::output_cdr_buffer_allocator ()
 ACE_Allocator*
 TAO_Default_Resource_Factory::output_cdr_msgblock_allocator ()
 {
-  ACE_Allocator *allocator = nullptr;
+  ACE_Allocator *allocator {};
   if (use_local_memory_pool_)
   {
     ACE_NEW_RETURN (allocator,
@@ -986,7 +967,7 @@ TAO_Default_Resource_Factory::output_cdr_msgblock_allocator ()
 ACE_Allocator*
 TAO_Default_Resource_Factory::amh_response_handler_allocator ()
 {
-  ACE_Allocator *allocator = nullptr;
+  ACE_Allocator *allocator {};
   if (use_local_memory_pool_)
   {
     ACE_NEW_RETURN (allocator,
@@ -1006,7 +987,7 @@ TAO_Default_Resource_Factory::amh_response_handler_allocator ()
 ACE_Allocator*
 TAO_Default_Resource_Factory::ami_response_handler_allocator ()
 {
-  ACE_Allocator *allocator = nullptr;
+  ACE_Allocator *allocator {};
   if (use_local_memory_pool_)
   {
     ACE_NEW_RETURN (allocator,
@@ -1041,11 +1022,10 @@ TAO_Default_Resource_Factory::max_muxed_connections () const
   return this->max_muxed_connections_;
 }
 
-
 ACE_Lock *
 TAO_Default_Resource_Factory::create_cached_connection_lock ()
 {
-  ACE_Lock *the_lock = nullptr;
+  ACE_Lock *the_lock {};
 
   if (this->cached_connection_lock_type_ == TAO_NULL_LOCK)
     ACE_NEW_RETURN (the_lock,
@@ -1071,7 +1051,7 @@ TAO_Default_Resource_Factory::locked_transport_cache ()
 TAO_Flushing_Strategy *
 TAO_Default_Resource_Factory::create_flushing_strategy ()
 {
-  TAO_Flushing_Strategy *strategy = nullptr;
+  TAO_Flushing_Strategy *strategy {};
   if (this->flushing_strategy_type_ == TAO_LEADER_FOLLOWER_FLUSHING)
     ACE_NEW_RETURN (strategy,
                     TAO_Leader_Follower_Flushing_Strategy,
@@ -1090,7 +1070,7 @@ TAO_Default_Resource_Factory::create_flushing_strategy ()
 TAO_Connection_Purging_Strategy *
 TAO_Default_Resource_Factory::create_purging_strategy ()
 {
-  TAO_Connection_Purging_Strategy *strategy = nullptr;
+  TAO_Connection_Purging_Strategy *strategy {};
 
   if (this->connection_purging_type_ == TAO_Resource_Factory::LRU)
     {
@@ -1112,7 +1092,7 @@ TAO_Default_Resource_Factory::create_purging_strategy ()
 TAO_LF_Strategy *
 TAO_Default_Resource_Factory::create_lf_strategy ()
 {
-  TAO_LF_Strategy *strategy = nullptr;
+  TAO_LF_Strategy *strategy {};
 
   ACE_NEW_RETURN (strategy,
                   TAO_LF_Strategy_Complete,
@@ -1126,7 +1106,7 @@ TAO_Default_Resource_Factory::create_fragmentation_strategy (
   TAO_Transport * transport,
   CORBA::ULong max_message_size) const
 {
-  TAO_GIOP_Fragmentation_Strategy* strategy = nullptr;
+  TAO_GIOP_Fragmentation_Strategy* strategy {};
 
   // Minimum GIOP message size is 24 (a multiple of 8):
   //   12   GIOP Message Header
@@ -1210,7 +1190,6 @@ TAO_Default_Resource_Factory::codeset_manager()
                     ACE_TEXT (" - unable to create codeset manager.\n")));
       return nullptr;
     }
-
 
   std::unique_ptr<TAO_Codeset_Manager> safemgr (mgr);
 

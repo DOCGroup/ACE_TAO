@@ -8,13 +8,13 @@
 #include "tao/ORBInitializer_Registry.h"
 #include "tao/PI/PI.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -34,12 +34,11 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      PortableInterceptor::ORBInitializer_ptr temp_initializer =
-        PortableInterceptor::ORBInitializer::_nil ();
+      PortableInterceptor::ORBInitializer_ptr temp_initializer {};
 
       ACE_NEW_RETURN (temp_initializer,
                       ClientORBInitializer,
@@ -73,8 +72,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       // Insert some data into the allocated PICurrent slot.
-      CORBA::Any data;
-      CORBA::Long number = 46;
+      CORBA::Any data {};
+      CORBA::Long const number (46);
 
       data <<= number;
 
@@ -100,24 +99,21 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // BUG 2656 testing - _get_policy_overrides() should return an empty
       // sequence rather than nill.
-      CORBA::PolicyTypeSeq types;
-      CORBA::PolicyList_var policies = server->_get_policy_overrides(types);
+      CORBA::PolicyTypeSeq types {};
+      CORBA::PolicyList_var policies = server->_get_policy_overrides (types);
 
-      if (policies.ptr () == 0)
+      if (policies.ptr () == nullptr)
         {
-            ACE_ERROR ((LM_ERROR,
-                        "(%P|%t) _get_policy_overrides returned nill pointer\n"));
-            throw CORBA::INTERNAL ();
+          ACE_ERROR ((LM_ERROR,
+                      "(%P|%t) _get_policy_overrides returned nill pointer\n"));
+          throw CORBA::INTERNAL ();
         }
-      else
+      CORBA::ULong const list_size (policies->length ());
+      if (list_size != 0)
         {
-          CORBA::ULong const list_size = policies->length();
-          if (list_size != 0)
-            {
-              ACE_ERROR ((LM_ERROR,
-                          "(%P|%t) _get_policy_overrides returned list with size not equal 0\n"));
-              throw CORBA::INTERNAL ();
-            }
+          ACE_ERROR ((LM_ERROR,
+                      "(%P|%t) _get_policy_overrides returned list with size not equal 0\n"));
+          throw CORBA::INTERNAL ();
         }
 
       server->invoke_me ();
@@ -129,7 +125,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // following extraction from the CORBA::Any fails, then the
       // original data in the TSC was not replaced within the client
       // request interceptor, as this test should do.
-      const char *str = 0;
+      char const *str {};
       if (new_data.in () >>= str)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -149,10 +145,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       server->shutdown ();
 
-      ACE_OS::sleep(1);
+      ACE_OS::sleep (1);
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("PICurrent test (client-side):");
       return -1;

@@ -8,19 +8,22 @@
 #include "ace/Get_Opt.h"
 #include "../check_supported_priorities.cpp"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+struct Client_Options
+{
+  ACE_TCHAR const *ior {ACE_TEXT("file://test.ior")};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
       case '?':
       default:
@@ -39,17 +42,26 @@ class Task : public ACE_Task_Base
 {
 public:
   Task (ACE_Thread_Manager &thread_manager,
-        CORBA::ORB_ptr orb);
+        CORBA::ORB_ptr orb,
+        Client_Options const &options);
 
-  int svc ();
+  int svc () override;
 
+private:
   CORBA::ORB_var orb_;
+  Client_Options const options_;
+  Task (Task const &) = delete;
+  Task &operator= (Task const &) = delete;
+  Task (Task &&) = delete;
+  Task &operator= (Task &&) = delete;
 };
 
 Task::Task (ACE_Thread_Manager &thread_manager,
-            CORBA::ORB_ptr orb)
+            CORBA::ORB_ptr orb,
+            Client_Options const &options)
   : ACE_Task_Base (&thread_manager),
-    orb_ (CORBA::ORB::_duplicate (orb))
+    orb_ (CORBA::ORB::_duplicate (orb)),
+    options_ (options)
 {
 }
 
@@ -59,7 +71,7 @@ Task::svc ()
   try
     {
       CORBA::Object_var object =
-        this->orb_->string_to_object (ior);
+        this->orb_->string_to_object (this->options_.ior);
 
       Test_var server =
         Test::_narrow (object.in ());
@@ -68,16 +80,16 @@ Task::svc ()
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "ERROR: Object reference <%s> is nil\n",
-                             ior),
+                             this->options_.ior),
                             -1);
         }
 
       // Check that the object is configured with CLIENT_PROPAGATED
       // PriorityModelPolicy.
-      CORBA::Policy_var policy =
+      CORBA::Policy_var const policy =
         server->_get_policy (RTCORBA::PRIORITY_MODEL_POLICY_TYPE);
 
-      RTCORBA::PriorityModelPolicy_var priority_policy =
+      RTCORBA::PriorityModelPolicy_var const priority_policy =
         RTCORBA::PriorityModelPolicy::_narrow (policy.in ());
 
       if (CORBA::is_nil (priority_policy.in ()))
@@ -85,7 +97,7 @@ Task::svc ()
                            "ERROR: Priority Model Policy not exposed!\n"),
                           -1);
 
-      RTCORBA::PriorityModel priority_model =
+      RTCORBA::PriorityModel const priority_model =
         priority_policy->priority_model ();
 
       if (priority_model != RTCORBA::CLIENT_PROPAGATED)
@@ -98,28 +110,29 @@ Task::svc ()
       // for each.
       object =
         this->orb_->resolve_initial_references ("RTCurrent");
-      RTCORBA::Current_var current =
+      RTCORBA::Current_var const current =
         RTCORBA::Current::_narrow (object.in ());
 
       object = this->orb_->resolve_initial_references ("PriorityMappingManager");
-      RTCORBA::PriorityMappingManager_var mapping_manager =
+      RTCORBA::PriorityMappingManager_var const mapping_manager =
         RTCORBA::PriorityMappingManager::_narrow (object.in ());
 
+      // The mapping manager owns this mapping; this pointer is borrowed.
       RTCORBA::PriorityMapping *pm =
         mapping_manager->mapping ();
 
-      int sched_policy =
+      int const sched_policy =
         this->orb_->orb_core ()->orb_params ()->ace_sched_policy ();
 
-      int max_priority =
+      int const max_priority =
         ACE_Sched_Params::priority_max (sched_policy);
-      int min_priority =
+      int const min_priority =
         ACE_Sched_Params::priority_min (sched_policy);
 
-      CORBA::Short native_priority =
+      CORBA::Short const native_priority =
         (max_priority + min_priority) / 2;
 
-      CORBA::Short desired_priority = 0;
+      CORBA::Short desired_priority {};
 
       if (pm->to_CORBA (native_priority, desired_priority) == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -131,7 +144,7 @@ Task::svc ()
         {
           current->the_priority (desired_priority);
 
-          CORBA::Short priority =
+          CORBA::Short const priority =
             current->the_priority ();
 
           if (desired_priority != priority)
@@ -140,22 +153,21 @@ Task::svc ()
                                "priority to %d\n", desired_priority),
                               -1);
 
-
           server->test_method (priority);
 
-          desired_priority++;
+          ++desired_priority;
         }
 
       // Shut down Server ORB.
       server->shutdown ();
     }
-  catch (const CORBA::DATA_CONVERSION& ex)
+  catch (CORBA::DATA_CONVERSION const &ex)
     {
       ex._tao_print_exception (
         "Most likely, this is due to the in-ability ""to set the thread priority.");
       return -1;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return -1;
@@ -185,7 +197,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      Client_Options options;
+      if (parse_args (argc, argv, options) != 0)
         return -1;
 
       // Make sure we can support multiple priorities that are required
@@ -197,11 +210,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_Thread_Manager thread_manager;
 
       // Create task.
-      Task task (thread_manager,
-                 orb.in ());
+      Task task (thread_manager, orb.in (), options);
 
       // Task activation flags.
-      long flags =
+      long const flags =
         THR_NEW_LWP |
         THR_JOINABLE |
         orb->orb_core ()->orb_params ()->thread_creation_flags ();
@@ -230,7 +242,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         thread_manager.wait ();
       ACE_ASSERT (result != -1);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return -1;

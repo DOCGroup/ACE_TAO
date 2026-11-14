@@ -4,7 +4,6 @@
 #include "ace/TLI_Acceptor.h"
 #include "ace/Thread_Manager.h"
 
-
 #if defined (ACE_HAS_THREADS) && defined (ACE_HAS_TLI)
 
 // Global thread manager.
@@ -98,7 +97,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (server.accept (new_stream) == -1)
         ACE_OS::t_error ("server.accept error");
 
-      if (thr_mgr.spawn (ACE_THR_FUNC (lookup_name),
+      if (thr_mgr.spawn (lookup_name,
                          (void *) new_stream.get_handle (),
                          THR_DETACHED) == -1)
         ACE_DEBUG ((LM_ERROR,

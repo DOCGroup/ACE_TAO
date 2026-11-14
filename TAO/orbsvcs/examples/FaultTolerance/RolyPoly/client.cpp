@@ -2,8 +2,6 @@
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
-#include "ace/SString.h"
-#include "ace/Unbounded_Queue.h"
 
 // IOR manipulation.
 #include "tao/IORManipulation/IORManip_Loader.h"
@@ -12,35 +10,39 @@
 
 #include "RolyPolyC.h"
 
-typedef ACE_Unbounded_Queue<ACE_SString> IOR_QUEUE;
-
-IOR_QUEUE ior_strs;
+#include <cstddef>
+#include <new>
+#include <string>
+#include <vector>
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], std::vector<std::string> &ior_strs)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
     {
     case 'k':
       {
-      ACE_SString ior(ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ()));
-      if (ior_strs.enqueue_tail (ior) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Unable to enqueue IOR: %s\n",
-                           ior.c_str ()),
-                          -1);
-      else
-        ACE_DEBUG ((LM_DEBUG, "Enqueued IOR: %s\n", ior.c_str ()));
+      try
+        {
+          std::string const ior (ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ()));
+          ior_strs.push_back (ior);
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Enqueued IOR: %C\n"), ior.c_str ()));
+        }
+      catch (std::bad_alloc const&)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Unable to store IOR\n")),
+                            -1);
+        }
       }
       break;
     default:
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "Usage:  %s "
-                         "-k IOR ...\n",
+                         ACE_TEXT ("Usage:  %s -k IOR ...\n"),
                          argv[0]),
                         -1);
     }
@@ -49,82 +51,65 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int status = 0;
+  std::vector<std::string> ior_strs;
 
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            "Client ORB");
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc,
+                                                  argv,
+                                                  "Client ORB");
 
-      if (::parse_args (argc, argv) != 0) return -1;
+      if (::parse_args (argc, argv, ior_strs) != 0)
+        return -1;
 
-      if (ior_strs.is_empty ())
+      if (ior_strs.empty ())
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "No IOR provided\n"),
+                           ACE_TEXT ("No IOR provided\n")),
                           -1);
 
       // Start out with the first IOR.  Interaction with the second
       // IOR occurs during the various interceptions executed during
       // this test.
 
-      CORBA::Object_var object;
+      CORBA::Object_var object {};
 
-      if (ior_strs.size() > 1)
+      if (ior_strs.size () > 1)
       {
         // merge case
 
-        ACE_DEBUG ((LM_DEBUG, "We got %d iors\n", ior_strs.size ()));
-        IOR_QUEUE::ITERATOR ior_go = ior_strs.begin ();
-        ACE_SString *pior = 0;
-         while (ior_go.next (pior) != 0)
-           {
-             ACE_DEBUG ((LM_DEBUG, "IOR: %s\n", pior->c_str ()));
-             ior_go.advance ();
-           }
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("We got %B iors\n"), ior_strs.size ()));
+        for (std::string const &ior : ior_strs)
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("IOR: %C\n"), ior.c_str ()));
 
-
-        IOR_QUEUE::ITERATOR ior_iter = ior_strs.begin ();
-
-        ACE_SString *ior = 0;
-        ior_iter.next (ior);
-
-        CORBA::Object_var object_primary;
-
-        object_primary =
-          orb->string_to_object (ior->c_str());
-
+        CORBA::Object_var const object_primary =
+          orb->string_to_object (ior_strs.front ().c_str ());
 
         // Get an object reference for the ORBs IORManipultion object!
-        CORBA::Object_ptr IORM =
+        CORBA::Object_var const iorm_object =
           orb->resolve_initial_references (TAO_OBJID_IORMANIPULATION,
                                            0);
 
-        TAO_IOP::TAO_IOR_Manipulation_ptr iorm =
-          TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM);
-
+        TAO_IOP::TAO_IOR_Manipulation_var const iorm =
+          TAO_IOP::TAO_IOR_Manipulation::_narrow (iorm_object.in ());
 
         // Create the list
-        TAO_IOP::TAO_IOR_Manipulation::IORList iors (ior_strs.size ());
-        iors.length(ior_strs.size ());
-        size_t cntr = 0;
-        iors [cntr] = CORBA::Object::_duplicate (object_primary.in ());
+        CORBA::ULong const ior_count = static_cast<CORBA::ULong> (ior_strs.size ());
+        TAO_IOP::TAO_IOR_Manipulation::IORList iors (ior_count);
+        iors.length (ior_count);
+        iors [0] = CORBA::Object::_duplicate (object_primary.in ());
 
-        while (ior_iter.advance ())
+        for (size_t cntr {1}; cntr < ior_strs.size (); ++cntr)
           {
-            ++cntr;
-            ior_iter.next (ior);
-            ACE_DEBUG ((LM_DEBUG, "IOR%d: %s\n",cntr, ior->c_str ()));
-            iors [cntr] =
-              orb->string_to_object (ior->c_str());
+            ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("IOR%B: %C\n"), cntr, ior_strs[cntr].c_str ()));
+            iors [static_cast<CORBA::ULong> (cntr)] =
+              orb->string_to_object (ior_strs[cntr].c_str ());
           }
 
-        ACE_DEBUG ((LM_DEBUG, "Prepare to merge IORs.\n"));
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Prepare to merge IORs.\n")));
         // Create a merged set 1;
         object = iorm->merge_iors (iors);
-
 
         FT::TagFTGroupTaggedComponent ft_tag_component;
 
@@ -134,56 +119,46 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         ft_tag_component.object_group_ref_version = 0;
 
         // Domain id
-        const char *id = "iogr_testing";
+        char const *id = "iogr_testing";
         ft_tag_component.group_domain_id = id;
 
         // Object group id
-        ft_tag_component.object_group_id =
-          (CORBA::ULongLong) 10;
+        ft_tag_component.object_group_id = static_cast<CORBA::ULongLong> (10);
 
         // Version
         ft_tag_component.object_group_ref_version =
-          (CORBA::ULong) 5;
+          static_cast<CORBA::ULong> (5);
 
         // Construct the IOGR Property class
         TAO_FT_IOGR_Property iogr_prop (ft_tag_component);
 
         // Set the property
-        CORBA::Boolean retval = iorm->set_property (&iogr_prop,
-                                                    object.in ());
+        iorm->set_property (&iogr_prop, object.in ());
 
-        retval = iorm->set_primary (&iogr_prop,
-                                    object_primary.in (),
-                                    object.in ());
-
-        ACE_UNUSED_ARG (retval);
+        iorm->set_primary (&iogr_prop,
+                           object_primary.in (),
+                           object.in ());
       }
       else
       {
-        ACE_SString *ior = 0;
-        if (ior_strs.get (ior) != 0)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to extract the only IOR string\n"),
-                            -1);
-        object = orb->string_to_object (ior->c_str());
+        object = orb->string_to_object (ior_strs.front ().c_str ());
       }
 
-      RolyPoly_var server =
+      RolyPoly_var const server =
         RolyPoly::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
       {
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Object reference is nil\n"),
+                           ACE_TEXT ("Object reference is nil\n")),
                           1);
       }
 
-      CORBA::Short number = 0;
+      CORBA::Short number {};
 
-
-      for (int i = 1; i < 500; ++i)
+      for (int i {1}; i < 500; ++i)
       {
-        CORBA::String_var str;
+        CORBA::String_var str {};
 
         try
         {
@@ -192,25 +167,24 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         catch (RolyPoly::E const& e)
         {
           ACE_DEBUG ((LM_INFO,
-                      "client: received exception %s .\n",
+                      ACE_TEXT ("client: received exception %C .\n"),
                       e.s.in ()));
           continue;
         }
 
-
         ACE_DEBUG ((LM_INFO,
-                    "client: received %d\n",
+                    ACE_TEXT ("client: received %d\n"),
                     number));
         ACE_OS::sleep (1);
       }
 
       server->shutdown ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
-      ex._tao_print_exception ("Caught exception:");
+      ex._tao_print_exception (ACE_TEXT ("Caught exception:"));
       return -1;
     }
 
-  return status;
+  return 0;
 }

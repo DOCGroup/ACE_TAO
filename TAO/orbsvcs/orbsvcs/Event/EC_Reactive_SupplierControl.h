@@ -56,12 +56,11 @@ class TAO_EC_Reactive_SupplierControl;
 class TAO_RTEvent_Serv_Export TAO_EC_SupplierControl_Adapter : public ACE_Event_Handler
 {
 public:
-  /// Constructor
-  TAO_EC_SupplierControl_Adapter (TAO_EC_Reactive_SupplierControl *adaptee);
+  explicit TAO_EC_SupplierControl_Adapter (TAO_EC_Reactive_SupplierControl *adaptee);
 
   // = Documented in ACE_Event_Handler.
-  virtual int handle_timeout (const ACE_Time_Value &tv,
-                              void const *arg = nullptr);
+  int handle_timeout (const ACE_Time_Value &tv,
+                      void const *arg = nullptr) override;
 
 private:
   /// The adapted object
@@ -86,19 +85,18 @@ public:
                                    TAO_EC_Event_Channel_Base *event_channel,
                                    CORBA::ORB_ptr orb);
 
-  /// Destructor.
-  virtual ~TAO_EC_Reactive_SupplierControl () override;
+  ~TAO_EC_Reactive_SupplierControl () override = default;
 
   /// Receive the timeout from the adapter
   void handle_timeout (const ACE_Time_Value &tv,
                        const void* arg);
 
   // = Documented in TAO_EC_SupplierControl
-  virtual int activate () override;
-  virtual int shutdown () override;
-  virtual void supplier_not_exist (TAO_EC_ProxyPushConsumer *proxy) override;
-  virtual void system_exception (TAO_EC_ProxyPushConsumer *proxy,
-                                 CORBA::SystemException &);
+  int activate () override;
+  int shutdown () override;
+  void supplier_not_exist (TAO_EC_ProxyPushConsumer *proxy) override;
+  void system_exception (TAO_EC_ProxyPushConsumer *proxy,
+                         CORBA::SystemException &) override;
 
 private:
   /// Check if the suppliers still exists.  It is a helper method for
@@ -141,9 +139,9 @@ private:
 class TAO_EC_Ping_Supplier : public TAO_ESF_Worker<TAO_EC_ProxyPushConsumer>
 {
 public:
-  TAO_EC_Ping_Supplier (TAO_EC_SupplierControl *control);
+  explicit TAO_EC_Ping_Supplier (TAO_EC_SupplierControl *control);
 
-  virtual void work (TAO_EC_ProxyPushConsumer *consumer) override;
+  void work (TAO_EC_ProxyPushConsumer *consumer) override;
 
 private:
   TAO_EC_SupplierControl *control_;

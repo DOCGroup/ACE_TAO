@@ -8,7 +8,6 @@
  */
 //==========================================================================
 
-
 #ifndef ACE_THROUGHPUT_STATS_H
 #define ACE_THROUGHPUT_STATS_H
 
@@ -43,7 +42,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Throughput_Stats : public ACE_Basic_Stats
 {
 public:
-  /// Constructor
   ACE_Throughput_Stats () = default;
 
   /// Store one sample

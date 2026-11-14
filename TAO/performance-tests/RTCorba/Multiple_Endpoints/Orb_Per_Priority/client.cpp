@@ -86,7 +86,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         if (nthreads < MAX_THREADS)
           {
             priorities[nthreads] = ACE_OS::atoi (get_opts.opt_arg ());
-            nthreads++;
+            ++nthreads;
           }
         break;
       case 'n':

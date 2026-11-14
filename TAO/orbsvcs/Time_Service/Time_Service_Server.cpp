@@ -2,7 +2,6 @@
 #include "Server_i.h"
 #include "ace/OS_main.h"
 
-
 // This is the main driver program for the Time Service server.
 
 int
@@ -15,14 +14,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   try
     {
-      int r = server.init (argc, argv);
-
-      if (r == -1)
+      int const result = server.init (argc, argv);
+      if (result == -1)
         return 1;
-      else
-        {
-          server.run ();
-        }
+
+      server.run ();
     }
   catch (CORBA::SystemException const &sysex)
     {

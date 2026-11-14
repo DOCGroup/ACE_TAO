@@ -33,7 +33,7 @@ TAO_Notify_Event::queueable_copy () const
   {
     return const_cast< TAO_Notify_Event* >( this );
   }
-  else if (this->clone_.get() == 0)
+  else if (this->clone_.get() == nullptr)
   {
     TAO_Notify_Event* copied = this->copy ();
     copied->is_on_heap_ = true;

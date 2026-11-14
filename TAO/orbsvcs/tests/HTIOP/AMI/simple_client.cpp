@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "../test_config.h"
 
 #include "ace/OS_NS_sys_socket.h"
@@ -19,7 +18,6 @@
 
 #include "ami_testC.h"
 #include "ami_testS.h"
-
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int niterations = 5;
@@ -65,14 +63,12 @@ parse_args (int argc, ACE_TCHAR *argv[])
 class Handler : public POA_A::AMI_AMI_TestHandler
 {
 public:
-  /// Constructor.
   Handler () {};
 
-  /// Destructor.
     ~Handler () {};
 
   void foo (CORBA::Long ami_return_val,
-            CORBA::Long out_l)
+            CORBA::Long out_l) override
     {
       if (debug)
         {
@@ -83,7 +79,7 @@ public:
         }
     };
 
-  void foo_excep (::Messaging::ExceptionHolder * excep_holder)
+  void foo_excep (::Messaging::ExceptionHolder * excep_holder) override
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <foo_excep> called:\n"
@@ -104,27 +100,26 @@ public:
         }
     };
 
-
-  void get_yadda (CORBA::Long result)
+  void get_yadda (CORBA::Long result) override
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <get_yadda> called: result <%d>\n",
                   result));
     };
 
-  void get_yadda_excep (::Messaging::ExceptionHolder *)
+  void get_yadda_excep (::Messaging::ExceptionHolder *) override
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <get_yadda_excep> called:\n"));
     };
 
-  void set_yadda ()
+  void set_yadda () override
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <set_yadda> called:\n"));
     };
 
-  void set_yadda_excep (::Messaging::ExceptionHolder *)
+  void set_yadda_excep (::Messaging::ExceptionHolder *) override
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <set_yadda_excep> called:\n"));
@@ -135,7 +130,6 @@ int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("HTIOP_AMI_simple_client"));
-
 
   try
     {
@@ -184,7 +178,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                0,
                                "");
 
-
       // Trigger the DidTheRightThing exception on the server side
       // by sending 0 to it.
       ACE_DEBUG ((LM_DEBUG,
@@ -199,7 +192,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       for (ssize_t ni = 0; ni < niterations; ni++)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "Sending asynch message: %d\n",
+                          "Sending asynch message: %b\n",
                       ni));
 
           ami_test_var->sendc_foo (the_handler_var.in (),
@@ -233,7 +226,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       //while (orb->work_pending())
       //  orb->perform_work ();
 
-
       CORBA::Long number = ami_test_var->foo (l,
                                               l,
                                               "Let's talk SMI.");
@@ -251,8 +243,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           ami_test_var->shutdown ();
         }
 
-      poa_var->destroy (1,  // ethernalize objects
-                        0);  // wait for completion
+      poa_var->destroy (true,  // ethernalize objects
+                        false);  // wait for completion
 
       orb->destroy ();
     }

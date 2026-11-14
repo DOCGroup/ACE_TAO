@@ -9,24 +9,23 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_OC_Endpoint_Selector_Factory::~TAO_OC_Endpoint_Selector_Factory ()
-{
-  delete this->oc_endpoint_selector_;
-}
+TAO_OC_Endpoint_Selector_Factory::TAO_OC_Endpoint_Selector_Factory () = default;
+
+TAO_OC_Endpoint_Selector_Factory::~TAO_OC_Endpoint_Selector_Factory () = default;
 
 int
 TAO_OC_Endpoint_Selector_Factory::init (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Time_Value connect_timeout(0,0);
+  ACE_Time_Value connect_timeout {};
 
-  for (int count = 0; count < argc; count++)
+  for (int count {}; count < argc; ++count)
     {
       if ((ACE_OS::strcasecmp (argv[count],
                                ACE_TEXT ("-connect_timeout")) == 0) &&
           count < argc-1)
         {
           ++count;
-          long const ms = ACE_OS::strtol(argv[count],0,10);
+          long const ms = ACE_OS::strtol (argv[count], nullptr, 10);
           connect_timeout.msec (ms);
         }
     }
@@ -34,9 +33,11 @@ TAO_OC_Endpoint_Selector_Factory::init (int argc, ACE_TCHAR *argv[])
   if (this->register_orb_initializer () == -1)
     return -1;
 
-  ACE_NEW_RETURN (this->oc_endpoint_selector_,
+  TAO_Optimized_Connection_Endpoint_Selector *selector {};
+  ACE_NEW_RETURN (selector,
                   TAO_Optimized_Connection_Endpoint_Selector(connect_timeout),
                   -1);
+  this->oc_endpoint_selector_.reset (selector);
   return 0;
 }
 
@@ -78,11 +79,8 @@ TAO_Invocation_Endpoint_Selector *
 TAO_OC_Endpoint_Selector_Factory::get_selector ()
 {
   // Trivial endpoint selector.  Just return the default selector.
-  return this->oc_endpoint_selector_;
+  return this->oc_endpoint_selector_.get ();
 }
-
-
-// ****************************************************************
 
 ACE_STATIC_SVC_DEFINE (TAO_OC_Endpoint_Selector_Factory,
                        ACE_TEXT ("OC_Endpoint_Selector_Factory"),

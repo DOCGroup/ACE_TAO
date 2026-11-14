@@ -4,6 +4,7 @@
 #define XSCRT_TRAVERSAL_HPP
 
 #include <cstddef>
+#include <cstdlib>
 #include <map>
 #include <memory>
 #include <set>
@@ -44,6 +45,7 @@ namespace XSCRT
       }
 
     public:
+      // Registered traversers are borrowed and must outlive their dispatcher.
       using Traversers = std::vector<TraverserBase<B> *>;
       using TraversalMap = std::map<TypeId, Traversers>;
       using Iterator = typename TraversalMap::const_iterator;
@@ -67,10 +69,10 @@ namespace XSCRT
         }
       };
 
-      using LevelMap = std::map<ExtendedTypeInfo, std::size_t, TypeInfoComparator>;
+      using LevelMap = std::map<ExtendedTypeInfo, size_t, TypeInfoComparator>;
       using TypeInfoSet = std::set<ExtendedTypeInfo, TypeInfoComparator>;
 
-      static std::size_t compute_levels (ExtendedTypeInfo const &ti, std::size_t cur, LevelMap &map);
+      static size_t compute_levels (ExtendedTypeInfo const &ti, size_t cur, LevelMap &map);
 
       static void flatten_tree (ExtendedTypeInfo const &ti, TypeInfoSet &set);
 
@@ -86,7 +88,7 @@ namespace XSCRT
 
       void traverser (DispatcherBase<B> &d)
       {
-        for (auto const &entry : d)
+        for (typename DispatcherBase<B>::TraversalMap::value_type const &entry : d)
         {
           for (TraverserBase<B> *item : entry.second)
           {
@@ -116,7 +118,7 @@ namespace XSCRT
       {
         if (merge_)
         {
-          for (auto const &entry : *this)
+          for (typename DispatcherBase<B>::TraversalMap::value_type const &entry : *this)
           {
             for (TraverserBase<B> *traverser : entry.second)
             {
@@ -153,6 +155,12 @@ namespace XSCRT
     {
       using Type = T;
 
+      // The dispatcher stores this object's address.
+      Traverser (Traverser const &) = delete;
+      Traverser (Traverser &&) = delete;
+      Traverser &operator= (Traverser const &) = delete;
+      Traverser &operator= (Traverser &&) = delete;
+
       Traverser ()
       {
         DispatcherBase<B>::map (TypeId (typeid (Type)), *this);
@@ -160,12 +168,12 @@ namespace XSCRT
 
       virtual void traverse (Type &)
       {
-        abort ();
+        std::abort ();
       }
 
       virtual void traverse (Type const &)
       {
-        abort ();
+        std::abort ();
       }
 
     protected:

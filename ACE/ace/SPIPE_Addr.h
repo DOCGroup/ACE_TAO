@@ -36,10 +36,9 @@ public:
   /// Default constructor.
   ACE_SPIPE_Addr ();
 
-  /// Copy constructor.
+
   ACE_SPIPE_Addr (const ACE_SPIPE_Addr &sa);
 
-  /// Assignment operator
   ACE_SPIPE_Addr& operator= (const ACE_SPIPE_Addr&) = default;
 
   /// Create a ACE_SPIPE_Addr from a rendezvous point in the file

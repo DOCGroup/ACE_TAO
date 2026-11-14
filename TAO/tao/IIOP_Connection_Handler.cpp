@@ -16,8 +16,10 @@
 #include "ace/os_include/netinet/os_tcp.h"
 #include "ace/os_include/os_netdb.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include <memory>
+#include <new>
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #ifdef TAO_LOG_CH_REF_COUNTS
 ACE_Event_Handler::Reference_Count
@@ -53,7 +55,6 @@ TAO_IIOP_Connection_Handler::remove_reference ()
 }
 #endif /*TAO_LOG_CH_REF_COUNTS*/
 
-
 TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_IIOP_SVC_HANDLER (t, nullptr , nullptr),
     TAO_Connection_Handler (nullptr),
@@ -67,20 +68,24 @@ TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (ACE_Thread_Manager *t)
   ACE_ASSERT (0);
 }
 
-
 TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (
   TAO_ORB_Core *orb_core)
   : TAO_IIOP_SVC_HANDLER (orb_core->thr_mgr (), nullptr, nullptr),
     TAO_Connection_Handler (orb_core),
     dscp_codepoint_ (IPDSFIELD_DSCP_DEFAULT << 2)
 {
-  TAO_IIOP_Transport* specific_transport = nullptr;
-  ACE_NEW (specific_transport,
-           TAO_IIOP_Transport (this, orb_core));
+  std::unique_ptr<TAO_Transport> specific_transport {
+    new (std::nothrow) TAO_IIOP_Transport (this, orb_core)
+  };
+  if (!specific_transport)
+    {
+      errno = ENOMEM;
+      return;
+    }
 
   if (TAO_debug_level > 9)
     {
-      TAO_Transport *tport = static_cast<TAO_Transport *> (specific_transport);
+      TAO_Transport *tport = specific_transport.get ();
       TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler[%B]::")
                   ACE_TEXT("IIOP_Connection_Handler, ")
@@ -90,7 +95,7 @@ TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (
     }
 
   // store this pointer (indirectly increment ref count)
-  this->transport (specific_transport);
+  this->transport (specific_transport.release ());
 }
 
 TAO_IIOP_Connection_Handler::~TAO_IIOP_Connection_Handler ()
@@ -178,7 +183,7 @@ TAO_IIOP_Connection_Handler::open (void*)
 #if !defined (ACE_LACKS_TCP_NODELAY)
   if (this->peer ().set_option (ACE_IPPROTO_TCP,
                                 TCP_NODELAY,
-                                (void *) &protocol_properties.no_delay_,
+                                std::addressof (protocol_properties.no_delay_),
                                 sizeof (protocol_properties.no_delay_)) == -1)
     return -1;
 #endif /* ! ACE_LACKS_TCP_NODELAY */
@@ -188,7 +193,7 @@ TAO_IIOP_Connection_Handler::open (void*)
       if (this->peer ().
           set_option (SOL_SOCKET,
                       SO_KEEPALIVE,
-                      (void *) &protocol_properties.keep_alive_,
+                      std::addressof (protocol_properties.keep_alive_),
                       sizeof (protocol_properties.keep_alive_)) == -1
           && errno != ENOTSUP)
         {
@@ -202,7 +207,7 @@ TAO_IIOP_Connection_Handler::open (void*)
       if (this->peer ().
           set_option (SOL_SOCKET,
                       SO_DONTROUTE,
-                      (void *) &protocol_properties.dont_route_,
+                      std::addressof (protocol_properties.dont_route_),
                       sizeof (protocol_properties.dont_route_)) == -1
           && errno != ENOTSUP)
         {
@@ -213,7 +218,7 @@ TAO_IIOP_Connection_Handler::open (void*)
 
   if (protocol_properties.hop_limit_ >= 0)
     {
-      int result = 0;
+      int result {};
 #if defined (ACE_HAS_IPV6)
       ACE_INET_Addr local_addr;
       if (this->peer ().get_local_addr (local_addr) == -1)
@@ -232,7 +237,7 @@ TAO_IIOP_Connection_Handler::open (void*)
           result = this->peer ().set_option (
             IPPROTO_IPV6,
             IPV6_UNICAST_HOPS,
-            (void *) &hop_limit,
+            std::addressof (hop_limit),
             sizeof (hop_limit));
         }
       else
@@ -248,7 +253,7 @@ TAO_IIOP_Connection_Handler::open (void*)
           result = this->peer ().set_option (
             IPPROTO_IP,
             IP_TTL,
-            (void *) &hop_limit,
+            std::addressof (hop_limit),
             sizeof (hop_limit));
         }
 
@@ -370,7 +375,7 @@ TAO_IIOP_Connection_Handler::close_connection ()
   int const linger = this->orb_core()->orb_params()->linger ();
   if (linger != -1)
     {
-      struct linger lval;
+      struct linger lval {};
       lval.l_onoff = 1;
 #if defined(ACE_HAS_LINGER_MS)
       lval.l_linger_ms = linger * 1000;
@@ -379,7 +384,7 @@ TAO_IIOP_Connection_Handler::close_connection ()
 #endif
       if (this->peer ().set_option(SOL_SOCKET,
                                    SO_LINGER,
-                                   (void*) &lval,
+                                   std::addressof (lval),
                                    sizeof (lval)) == -1)
         {
           if (TAO_debug_level)
@@ -415,10 +420,9 @@ TAO_IIOP_Connection_Handler::handle_output (ACE_HANDLE handle)
   return result;
 }
 
-
 int
-TAO_IIOP_Connection_Handler::handle_timeout (const ACE_Time_Value &,
-                                             const void *)
+TAO_IIOP_Connection_Handler::handle_timeout (ACE_Time_Value const &,
+                                             void const *)
 {
   // Using this to ensure this instance will be deleted (if necessary)
   // only after reset_state(). Without this, when this refcount==1 -
@@ -479,13 +483,13 @@ TAO_IIOP_Connection_Handler::add_transport_to_cache ()
       this->orb_core()->orb_params()->cache_incoming_by_dotted_decimal_address ());
 
   // Construct a property object
-  TAO_Base_Transport_Property prop (&endpoint);
+  TAO_Base_Transport_Property prop (std::addressof (endpoint));
 
   TAO::Transport_Cache_Manager &cache =
     this->orb_core ()->lane_resources ().transport_cache ();
 
   // Idle the transport..
-  return cache.cache_transport (&prop, this->transport ());
+  return cache.cache_transport (std::addressof (prop), this->transport ());
 }
 
 int
@@ -521,7 +525,7 @@ TAO_IIOP_Connection_Handler::process_listen_point_list (
   // same transport so that rather than recaching, we simply add a
   // key.
   len = 1;
-  for (CORBA::ULong i = 0; i < len; ++i)
+  for (CORBA::ULong i {}; i < len; ++i)
     {
       IIOP::ListenPoint listen_point = listen_list[i];
 
@@ -550,14 +554,14 @@ TAO_IIOP_Connection_Handler::process_listen_point_list (
                                   listen_point.port, addr);
 
       // Construct a property object
-      TAO_Base_Transport_Property prop (&endpoint);
+      TAO_Base_Transport_Property prop (std::addressof (endpoint));
 
       // Mark the connection as bidirectional
-      prop.set_bidir_flag (1);
+      prop.set_bidir_flag (true);
 
       // The property for this handler has changed. Recache the
       // handler with this property
-      if (this->transport ()->recache_transport (&prop) == -1)
+      if (this->transport ()->recache_transport (std::addressof (prop)) == -1)
         return -1;
 
       // Make the handler idle and ready for use
@@ -572,7 +576,7 @@ TAO_IIOP_Connection_Handler::set_tos (int tos)
 {
   if (tos != this->dscp_codepoint_)
     {
-      int result = 0;
+      int result {};
 #if defined (ACE_HAS_IPV6)
       ACE_INET_Addr local_addr;
       if (this->peer ().get_local_addr (local_addr) == -1)
@@ -623,11 +627,7 @@ TAO_IIOP_Connection_Handler::set_tos (int tos)
 int
 TAO_IIOP_Connection_Handler::set_dscp_codepoint (CORBA::Long dscp_codepoint)
 {
-  int tos = IPDSFIELD_DSCP_DEFAULT << 2;
-
-  CORBA::Long codepoint = dscp_codepoint;
-
-  tos = static_cast<int> (codepoint) << 2;
+  int const tos = static_cast<int> (dscp_codepoint) << 2;
 
   this->set_tos (tos);
 
@@ -637,17 +637,13 @@ TAO_IIOP_Connection_Handler::set_dscp_codepoint (CORBA::Long dscp_codepoint)
 int
 TAO_IIOP_Connection_Handler::set_dscp_codepoint (CORBA::Boolean set_network_priority)
 {
-  int tos = IPDSFIELD_DSCP_DEFAULT << 2;
-
   if (set_network_priority)
     {
       TAO_Protocols_Hooks *tph = this->orb_core ()->get_protocols_hooks ();
 
       if (tph != nullptr)
         {
-          CORBA::Long codepoint = tph->get_dscp_codepoint ();
-
-          tos = static_cast<int> (codepoint) << 2;
+          int const tos = static_cast<int> (tph->get_dscp_codepoint ()) << 2;
           this->set_tos (tos);
         }
     }
@@ -658,12 +654,12 @@ TAO_IIOP_Connection_Handler::set_dscp_codepoint (CORBA::Boolean set_network_prio
 void
 TAO_IIOP_Connection_Handler::abort ()
 {
-  struct linger lval = { 0, 0 };
+  struct linger lval {};
   lval.l_onoff = 1;
 
   if (this->peer ().set_option(SOL_SOCKET,
                                SO_LINGER,
-                               (void*) &lval,
+                               std::addressof (lval),
                                sizeof (lval)) == -1)
     {
       if (TAO_debug_level)

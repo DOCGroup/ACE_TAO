@@ -7,7 +7,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Constructor.
 TAO_DII_Deferred_Reply_Dispatcher::TAO_DII_Deferred_Reply_Dispatcher (
     CORBA::Request_ptr req,
     TAO_ORB_Core *orb_core)
@@ -28,7 +27,7 @@ TAO_DII_Deferred_Reply_Dispatcher::dispatch_reply (
   this->locate_reply_status_ = params.locate_reply_status ();
 
   // Transfer the <params.input_cdr_>'s content to this->reply_cdr_
-  ACE_Data_Block *db = this->reply_cdr_.clone_from (*params.input_cdr_);
+  ACE_Data_Block * const db = this->reply_cdr_.clone_from (*params.input_cdr_);
 
   if (db == nullptr)
     {
@@ -56,13 +55,14 @@ TAO_DII_Deferred_Reply_Dispatcher::dispatch_reply (
   // this data.
   CORBA::ULong const max = params.svc_ctx_.maximum ();
   CORBA::ULong const len = params.svc_ctx_.length ();
-  IOP::ServiceContext* context_list = params.svc_ctx_.get_buffer (1);
-  this->reply_service_info_.replace (max, len, context_list, 1);
+  IOP::ServiceContext* const context_list = params.svc_ctx_.get_buffer (true);
+  this->reply_service_info_.replace (max, len, context_list, true);
 
   if (TAO_debug_level >= 4)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - DII_Deferred_Reply_Dispatcher::dispatch_reply, id [%d]\n"), params.request_id_));
+                     ACE_TEXT ("TAO (%P|%t) - DII_Deferred_Reply_Dispatcher::dispatch_reply, id [%d]\n"),
+                     params.request_id_));
     }
 
   try
@@ -90,7 +90,7 @@ TAO_DII_Deferred_Reply_Dispatcher::connection_closed ()
   try
     {
       // Generate a fake exception....
-      CORBA::COMM_FAILURE comm_failure (0, CORBA::COMPLETED_MAYBE);
+      CORBA::COMM_FAILURE const comm_failure (0, CORBA::COMPLETED_MAYBE);
 
       TAO_OutputCDR out_cdr;
 
@@ -147,7 +147,7 @@ TAO_DII_Asynch_Reply_Dispatcher::dispatch_reply (
   this->locate_reply_status_ = params.locate_reply_status ();
 
   // Transfer the <params.input_cdr_>'s content to this->reply_cdr_
-  ACE_Data_Block *db = this->reply_cdr_.clone_from (*params.input_cdr_);
+  ACE_Data_Block * const db = this->reply_cdr_.clone_from (*params.input_cdr_);
 
   // See whether we need to delete the data block by checking the
   // flags. We cannot be happy that we initally allocated the
@@ -163,8 +163,8 @@ TAO_DII_Asynch_Reply_Dispatcher::dispatch_reply (
   // this data.
   CORBA::ULong const max = params.svc_ctx_.maximum ();
   CORBA::ULong const len = params.svc_ctx_.length ();
-  IOP::ServiceContext* context_list = params.svc_ctx_.get_buffer (1);
-  this->reply_service_info_.replace (max, len, context_list, 1);
+  IOP::ServiceContext* const context_list = params.svc_ctx_.get_buffer (true);
+  this->reply_service_info_.replace (max, len, context_list, true);
 
   if (TAO_debug_level >= 4)
     {
@@ -199,14 +199,14 @@ TAO_DII_Asynch_Reply_Dispatcher::connection_closed ()
   try
     {
       // Generate a fake exception....
-      CORBA::COMM_FAILURE comm_failure (0, CORBA::COMPLETED_MAYBE);
+      CORBA::COMM_FAILURE const comm_failure (0, CORBA::COMPLETED_MAYBE);
 
       TAO_OutputCDR out_cdr;
 
       comm_failure._tao_encode (out_cdr);
 
       // Turn into an output CDR
-      TAO_InputCDR cdr (out_cdr);
+      TAO_InputCDR const cdr (out_cdr);
       CORBA::Request::_tao_reply_stub (
           this->reply_cdr_,
           this->callback_,

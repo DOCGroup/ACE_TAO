@@ -1,6 +1,5 @@
 #include "RT_CORBA_Leader_Follower.h"
 
-
 #if defined (ACE_HAS_THREADS)
 
 // We need the following only if we have threads enabled..
@@ -10,42 +9,55 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/Sched_Params.h"
 #include "ace/Profile_Timer.h"
+#include <cerrno>
+#include <limits>
 
 // Number of messages that are used in this experiment
-static size_t number_of_messages = 1000;
+static size_t number_of_messages {1000};
 
 // Number of messages that are used in this experiment
-static size_t number_of_messages_left = 0;
+static size_t number_of_messages_left {};
 
 // Number of threads used in this experiment
-static size_t number_of_threads = 2;
+static size_t number_of_threads {2};
 
 // Global variable for the availability of the leader
-static size_t leader_available = 0;
+static bool leader_available {};
 
 // Number of threads that are ready to go/dispatch
-static size_t ready_threads = 0;
+static size_t ready_threads {};
 
 // Work in the upcall
-static size_t message_size = 100;
+static size_t message_size {100};
 
 // Debugging condition
-static DEBUGGING_RANGE debug = DEBUG_NONE;
+static DEBUGGING_RANGE debug {DEBUGGING_RANGE::DEBUG_NONE};
 
 // Timer for the test
 ACE_High_Res_Timer test_timer;
 
+static bool
+parse_size (ACE_TCHAR const *argument, size_t &value)
+{
+  ACE_TCHAR *end {};
+  errno = 0;
+  long const parsed = ACE_OS::strtol (argument, &end, 10);
+  if (argument == end || *end != ACE_TEXT ('\0') || errno == ERANGE || parsed < 0
+      || static_cast<unsigned long> (parsed) > (std::numeric_limits<size_t>::max) ())
+    {
+      return false;
+    }
 
+  value = static_cast<size_t> (parsed);
+  return true;
+}
 
-/*******************************************************************/
-// Constructor for Synchronisers
 Synchronisers::Synchronisers ()
   : mutex_ (),
     condition_ (mutex_),
     event_ ()
 {
 }
-
 
 int
 Synchronisers::start_synchronization ()
@@ -55,9 +67,9 @@ Synchronisers::start_synchronization ()
   {
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
 
-    ready_threads ++;
+    ++ready_threads;
 
-    if (debug)
+    if (debug != DEBUGGING_RANGE::DEBUG_NONE)
       {
         ACE_DEBUG ((LM_DEBUG,
                     "(%P|%t) Ready to go..\n"));
@@ -96,9 +108,9 @@ Synchronisers::end_synchronization ()
   {
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
 
-    ready_threads ++;
+    ++ready_threads;
 
-    if (debug)
+    if (debug != DEBUGGING_RANGE::DEBUG_NONE)
       {
         ACE_DEBUG ((LM_DEBUG,
                     "(%P|%t) Ready to go..\n"));
@@ -129,7 +141,6 @@ Synchronisers::end_synchronization ()
   return 0;
 }
 
-
 /*******************************************************************/
 
 Leader_Follower_Task::Leader_Follower_Task (Synchronisers &synch)
@@ -138,8 +149,8 @@ Leader_Follower_Task::Leader_Follower_Task (Synchronisers &synch)
 {
 }
 
-int
-Leader_Follower_Task::processed ()
+size_t
+Leader_Follower_Task::processed () const
 {
   return this->messages_consumed_;
 }
@@ -147,7 +158,10 @@ Leader_Follower_Task::processed ()
 int
 Leader_Follower_Task::svc ()
 {
-  (void) this->synch_.start_synchronization ();
+  if (this->synch_.start_synchronization () != 0)
+    {
+      return -1;
+    }
 
   for (;;)
     {
@@ -157,7 +171,7 @@ Leader_Follower_Task::svc ()
         // Wait until there is no leader.
         while (leader_available)
           {
-            int result = this->synch_.condition_.wait ();
+            int const result = this->synch_.condition_.wait ();
 
             if (result == -1)
               {
@@ -169,7 +183,7 @@ Leader_Follower_Task::svc ()
           }
 
         // I am the leader.
-        leader_available = 1;
+        leader_available = true;
 
         //
         // We are letting go of the leader follower lock before going
@@ -182,22 +196,18 @@ Leader_Follower_Task::svc ()
       // since we are the only leader.
       //
 
-      int exit_loop = 0;
-      if (number_of_messages_left == 0)
-        {
-          exit_loop = 1;
-        }
-      else
+      bool const exit_loop = number_of_messages_left == 0;
+      if (!exit_loop)
         {
           --number_of_messages_left;
 
           // Local counter.
           ++this->messages_consumed_;
 
-          if (debug)
+          if (debug != DEBUGGING_RANGE::DEBUG_NONE)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "(%t) message for this thread %d\n",
+                          "(%t) message for this thread %B\n",
                           this->messages_consumed_));
             }
         }
@@ -206,7 +216,7 @@ Leader_Follower_Task::svc ()
         ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->synch_.mutex_, -1);
 
         // I am no longer the leader.
-        leader_available = 0;
+        leader_available = false;
 
         // Wake up a follower.
         this->synch_.condition_.signal ();
@@ -225,14 +235,17 @@ Leader_Follower_Task::svc ()
             {
               // Eat a little CPU
               /* takes about 40.2 usecs on a 167 MHz Ultra2 */
-              u_long n = 11UL;
+              u_long const n = 11UL;
               ACE::is_prime (n, 2, n / 2);
             }
 
         }
     }
 
-  (void) this->synch_.end_synchronization ();
+  if (this->synch_.end_synchronization () != 0)
+    {
+      return -1;
+    }
 
   return 0;
 }
@@ -240,33 +253,51 @@ Leader_Follower_Task::svc ()
 static int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("m:t:d:s:"));
-  int c;
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("m:w:t:d:s:"));
+  int c {};
 
   while ((c = get_opt ()) != -1)
     {
       switch (c)
         {
         case 'm':
-          number_of_messages = ACE_OS::atoi (get_opt.opt_arg ());
+          if (!parse_size (get_opt.opt_arg (), number_of_messages)
+              || number_of_messages == 0)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR, "Message count must be positive\n"), -1);
+            }
           break;
+        case 'w':
         case 't':
-          number_of_threads = ACE_OS::atoi (get_opt.opt_arg ());
+          if (!parse_size (get_opt.opt_arg (), number_of_threads)
+              || number_of_threads == 0)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR, "Thread count must be positive\n"), -1);
+            }
           break;
         case 'd':
-          debug = static_cast<DEBUGGING_RANGE> (ACE_OS::atoi (get_opt.opt_arg ()));
+          {
+            size_t parsed_debug {};
+            if (!parse_size (get_opt.opt_arg (), parsed_debug)
+                || parsed_debug > static_cast<size_t> (DEBUGGING_RANGE::DEBUG))
+              {
+                ACE_ERROR_RETURN ((LM_ERROR, "Invalid debug level\n"), -1);
+              }
+            debug = static_cast<DEBUGGING_RANGE> (parsed_debug);
+          }
           break;
         case 's':
-          message_size = ACE_OS::atoi (get_opt.opt_arg ());
+          if (!parse_size (get_opt.opt_arg (), message_size))
+            {
+              ACE_ERROR_RETURN ((LM_ERROR, "Invalid message size\n"), -1);
+            }
           break;
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
                              "usage: %s\n"
                              "\t[-m number of messages]\n"
                              "\t[-s message size]\n"
-                             "\t[-w number of threads]\n"
-                             "\t[-b burst size]\n"
-                             "\t[-t timeout between bursts]\n"
+                             "\t[-w number of threads (or legacy -t)]\n"
                              "\t[-d debug]\n",
                              argv[0]),
                             -1);
@@ -283,19 +314,24 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int result = parse_args (argc, argv);
+  int const parse_result = parse_args (argc, argv);
 
-  if (result != 0)
+  if (parse_result != 0)
     {
-      return result;
+      return parse_result;
     }
+
+  int result {};
 
   Synchronisers synch_forms;
 
   ACE_High_Res_Timer::calibrate ();
 
   // Leader Followers.
-  Leader_Follower_Task **leader_followers = 0;
+  // Keep task ownership explicit: failed activation can leave workers waiting
+  // at the fixed-size startup barrier, so this path returns without deleting
+  // task objects still referenced by those workers.
+  Leader_Follower_Task **leader_followers {};
   ACE_NEW_RETURN (leader_followers,
                   Leader_Follower_Task *[number_of_threads],
                   -1);
@@ -308,7 +344,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Number of messages left = Number_Of_messages
   number_of_messages_left = number_of_messages;
 
-  size_t i = 0;
+  size_t i {};
   // Create and activate them.
   for (i = 0; i < number_of_threads; ++i)
     {
@@ -325,7 +361,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%P|%t) - Activate failed  for RT class "
-                      " - Using default priority for thread [%d]\n",
+                      " - Using default priority for thread [%B]\n",
                       i));
 
           flags = THR_BOUND;
@@ -343,7 +379,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               ACE_DEBUG ((LM_DEBUG,
                           "(%P|%t) - Failed again no hope\n"));
 
-              return 0;
+              return result;
             }
 
         }
@@ -352,23 +388,28 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Wait for all threads to terminate.
   result = ACE_Thread_Manager::instance ()->wait ();
 
-  ACE_hrtime_t elapsed_time = 0;
+  ACE_hrtime_t elapsed_time {};
 
   test_timer.elapsed_time (elapsed_time);
 
-  double elapsed_time_per_invocation =
-    static_cast<double> (
-        ACE_UINT64_DBLCAST_ADAPTER (elapsed_time / number_of_messages)
-      );
+  double const elapsed_time_per_invocation =
+    static_cast<double> (elapsed_time) / number_of_messages;
 
-  ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) Throughput is [%f]\n",
-              1000000000/ elapsed_time_per_invocation));
+  if (elapsed_time_per_invocation > 0.0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P|%t) Throughput is [%f]\n",
+                  1000000000 / elapsed_time_per_invocation));
+    }
+  else
+    {
+      ACE_DEBUG ((LM_DEBUG, "No elapsed time measured\n"));
+    }
 
   for (i = 0; i < number_of_threads; ++i)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Message consumed in thread [%d] is [%d]\n",
+                  "Message consumed in thread [%B] is [%B]\n",
                   i, leader_followers[i]->processed ()));
       delete leader_followers[i];
     }

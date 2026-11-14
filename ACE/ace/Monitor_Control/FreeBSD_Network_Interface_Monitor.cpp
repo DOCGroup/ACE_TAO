@@ -19,42 +19,40 @@ namespace ACE
   namespace Monitor_Control
   {
     FreeBSD_Network_Interface_Monitor::FreeBSD_Network_Interface_Monitor (
-      const ACE_TCHAR *lookup_str)
-      : value_ (0UL),
-        start_ (0UL),
-        lookup_str_ (lookup_str)
+      ACE_TCHAR const *lookup_str)
+      : lookup_str_ (lookup_str)
     {
-      this->init();
+      this->init ();
     }
 
     void
     FreeBSD_Network_Interface_Monitor::update_i ()
     {
-      this->fetch(this->value_);
+      this->fetch (this->value_);
       this->value_ -= this->start_;
     }
 
     void
     FreeBSD_Network_Interface_Monitor::clear_impl ()
     {
-      this->init();
+      this->init ();
     }
 
     void
     FreeBSD_Network_Interface_Monitor::init ()
     {
-      this->fetch(this->start_);
+      this->fetch (this->start_);
       this->value_ = 0UL;
     }
 
     void
     FreeBSD_Network_Interface_Monitor::fetch (ACE_UINT64& value) const
     {
-      ACE_UINT64 count = 0;
+      ACE_UINT64 count {};
 
-      int req_name[5];
-      int ifcount;
-      size_t ifcount_len = sizeof(ifcount);
+      int req_name[5] {};
+      int ifcount {};
+      size_t ifcount_len = sizeof (ifcount);
 
       req_name[0] = CTL_NET;
       req_name[1] = PF_LINK;
@@ -62,55 +60,47 @@ namespace ACE
       req_name[3] = IFMIB_SYSTEM;
       req_name[4] = IFMIB_IFCOUNT;
 
-      if (::sysctl(req_name, 5, &ifcount, &ifcount_len, (void *)0, 0) == -1)
-      {
-        ACELIB_ERROR((LM_ERROR, ACE_TEXT("(%P|%t) %p\n"),
-                  ACE_TEXT("sysctl failed")));
-
-        return;
-      }
-
-      for (int i = 1; i <= ifcount; i++)
-      {
-        int name[6];
-        struct ifmibdata ifmd;
-        size_t len = sizeof(ifmd);
-
-        name[0] = CTL_NET;
-        name[1] = PF_LINK;
-        name[2] = NETLINK_GENERIC;
-        name[3] = IFMIB_IFDATA;
-        name[4] = i;
-        name[5] = IFDATA_GENERAL;
-
-        if(::sysctl(name, 6, &ifmd, &len, (void *)0, 0) == -1)
+      if (::sysctl (req_name, 5, &ifcount, &ifcount_len, nullptr, 0) == -1)
         {
-          ACELIB_ERROR((LM_ERROR, ACE_TEXT("(%P|%t) %p\n"),
-               ACE_TEXT("sysctl failed")));
+          ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"),
+                         ACE_TEXT ("sysctl failed")));
 
-          break;
+          return;
         }
 
-        struct if_data * const ifi = &ifmd.ifmd_data;
+      for (int i = 1; i <= ifcount; ++i)
+        {
+          int name[6] {};
+          struct ifmibdata ifmd {};
+          size_t len = sizeof (ifmd);
 
-        if(this->lookup_str_ == "ibytes")
-        {
-          count += ifi->ifi_ibytes;
-        }
-        else if(this->lookup_str_ == "ipackets")
-        {
-          count += ifi->ifi_ipackets;
-        }
-        else if(this->lookup_str_ == "obytes")
-        {
-          count += ifi->ifi_obytes;
-        }
-        else if(this->lookup_str_ == "opackets")
-        {
-          count += ifi->ifi_opackets;
-        }
+          name[0] = CTL_NET;
+          name[1] = PF_LINK;
+          name[2] = NETLINK_GENERIC;
+          name[3] = IFMIB_IFDATA;
+          name[4] = i;
+          name[5] = IFDATA_GENERAL;
 
-      } // for
+          if (::sysctl (name, 6, &ifmd, &len, nullptr, 0) == -1)
+            {
+              ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"),
+                             ACE_TEXT ("sysctl failed")));
+
+              break;
+            }
+
+          struct if_data *const ifi = &ifmd.ifmd_data;
+
+          if (this->lookup_str_ == "ibytes")
+            count += ifi->ifi_ibytes;
+          else if (this->lookup_str_ == "ipackets")
+            count += ifi->ifi_ipackets;
+          else if (this->lookup_str_ == "obytes")
+            count += ifi->ifi_obytes;
+          else if (this->lookup_str_ == "opackets")
+            count += ifi->ifi_opackets;
+
+        }
 
       value = count;
     }

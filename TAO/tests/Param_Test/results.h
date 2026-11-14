@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef RESULTS_H
 #define RESULTS_H
 
@@ -17,6 +16,7 @@
 
 #include "ace/Profile_Timer.h"
 #include "ace/CORBA_macros.h"
+#include <vector>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -33,16 +33,15 @@ class Results
 {
 public:
   /// ctor
-  Results ();
+  Results () = default;
 
-  /// destructor
-  ~Results ();
+  ~Results () = default;
 
   /// prints the time stats
   void print_stats ();
 
   /// print the exception
-  void print_exception (const char *call_name);
+  void print_exception (char const *call_name);
 
   /// start timing
   void start_timer ();
@@ -51,13 +50,13 @@ public:
   void stop_timer ();
 
   /// return call count
-  CORBA::ULong call_count ();
+  CORBA::ULong call_count () const;
 
   /// set the call count
   void call_count (CORBA::ULong);
 
   /// return the error count
-  CORBA::ULong error_count ();
+  CORBA::ULong error_count () const;
 
   /// set error count
   void error_count (CORBA::ULong);
@@ -67,16 +66,16 @@ public:
 
 private:
   /// # of calls made to functions
-  CORBA::ULong call_count_;
+  CORBA::ULong call_count_ {};
 
   /// # of errors incurred in the lifetime of the application.
-  CORBA::ULong error_count_;
+  CORBA::ULong error_count_ {};
 
   /// for timing the test
   ACE_Profile_Timer timer_;
 
   /// holds the elapsed time for each iteration
-  ACE_Profile_Timer::ACE_Elapsed_Time *elapsed_time_;
+  std::vector<ACE_Profile_Timer::ACE_Elapsed_Time> elapsed_time_;
 };
 
 #endif /* RESULTS_H */

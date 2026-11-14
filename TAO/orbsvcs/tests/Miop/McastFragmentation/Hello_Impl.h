@@ -4,9 +4,9 @@
 
 #include "ace/Hash_Map_Manager_T.h"
 #include "HelloS.h"
-#include "ace/Atomic_Op_T.h"
+#include <atomic>
 
-extern ACE_Atomic_Op<TAO_SYNCH_MUTEX, u_long> Number_of_Problems;
+extern std::atomic<u_long> Number_of_Problems;
 
 class UIPMC_Object_Impl : public virtual POA_Test::UIPMC_Object
 {
@@ -31,11 +31,9 @@ private:
   Client_Count_Map received_;
 };
 
-
 class Hello_Impl : public virtual POA_Test::Hello
 {
 public:
-  // Constructor
   Hello_Impl (CORBA::ORB_ptr orb, Test::UIPMC_Object_ptr obj);
 
   // The skeleton methods

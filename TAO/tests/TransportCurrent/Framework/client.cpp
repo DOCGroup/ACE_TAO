@@ -19,34 +19,36 @@ test_transport_current (CORBA::ORB_ptr);
 
 using namespace TAO;
 
-const char* CLIENT_ORB_ID = "client orb";
-const ACE_TCHAR* ior = ACE_TEXT("file://server.ior");
+char const CLIENT_ORB_ID[] = "client orb";
 
-int nthreads = 1;
-int niterations = 1;
-int use_dii = 1;
-
+struct Options
+{
+  ACE_TCHAR const *ior {ACE_TEXT ("file://server.ior")};
+  int nthreads {1};
+  int niterations {1};
+  bool use_dii {true};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("yt:n:k:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'y':
-        use_dii = 0; // Do not use DII
+        options.use_dii = false; // Do not use DII
         break;
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
       case 't':
-        nthreads = ACE_OS::atoi (get_opts.opt_arg ());
+        options.nthreads = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'n':
-        niterations = ACE_OS::atoi (get_opts.opt_arg ());
+        options.niterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -62,38 +64,40 @@ parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-
 /// A helper class to encapsulate a task
 
 class Worker : public ACE_Task_Base
 {
 public:
-  Worker (Test::Transport::CurrentTest_ptr server, int niterations, int use_dii_too);
-  virtual int svc ();
+  Worker (Test::Transport::CurrentTest_ptr server, int niterations, bool use_dii_too);
+  int svc () override;
+
+  Worker (Worker const &) = delete;
+  Worker (Worker &&) = delete;
+  Worker &operator= (Worker const &) = delete;
+  Worker &operator= (Worker &&) = delete;
 
 private:
   // The server.
-   Test::Transport::CurrentTest_var server_;
+  Test::Transport::CurrentTest_var const server_;
 
   // The number of iterations on each client thread.
-  int niterations_;
+  int const niterations_;
 
   // Whether to use DII in addition to SII
-  int use_dii_too_;
+  bool const use_dii_too_;
 };
-
 
 /// Ctor
 
 Worker::Worker (Test::Transport::CurrentTest_ptr server,
                 int niterations,
-                int use_dii_too)
+                bool use_dii_too)
   :  server_ (Test::Transport::CurrentTest::_duplicate (server))
   ,  niterations_ (niterations)
   , use_dii_too_ (use_dii_too)
 {
 }
-
 
 /// Test referencing the TC data *inside* the context of a client-side
 /// interceptor
@@ -134,13 +138,12 @@ Worker::svc ()
                         i));
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Client: exception raised");
     }
   return 0;
 }
-
 
 /// The main driver
 int
@@ -150,14 +153,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   try
     {
-      Test::Client_Request_Interceptor* cri = 0;
+      Test::Client_Request_Interceptor *cri {};
       ACE_NEW_RETURN (cri,
                       Test::Client_Request_Interceptor (CLIENT_ORB_ID,
                                                         test_transport_current),
                       -1);
       PortableInterceptor::ClientRequestInterceptor_var cri_safe (cri);
 
-      PortableInterceptor::ORBInitializer_ptr temp_initializer = 0;
+      PortableInterceptor::ORBInitializer_ptr temp_initializer {};
       ACE_NEW_RETURN (temp_initializer,
                       Test::Client_ORBInitializer (cri),
                       -1);
@@ -165,17 +168,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       PortableInterceptor::register_orb_initializer (orb_initializer.in ());
 
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc,
                          argv,
                          CLIENT_ORB_ID);
 
-      if (parse_args (argc, argv) != 0)
+      Options options;
+      if (parse_args (argc, argv, options) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("Client (%P|%t) Failure to parse the command line.\n"),
-                           ior),
+                           options.ior),
                           -1);
-
 
       try
         {
@@ -188,7 +191,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                              ACE_TEXT (" Expected exception was not thrown\n")),
                             -1);
         }
-      catch (const Transport::NoContext& )
+      catch (Transport::NoContext const &)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("Client (%P|%t) Expected exception occurred when trying ")
@@ -197,33 +200,35 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       // Resolve the target object
-      CORBA::Object_var obj = orb->string_to_object (ior);
+      CORBA::Object_var const obj = orb->string_to_object (options.ior);
 
-      Test::Transport::CurrentTest_var server =
+      Test::Transport::CurrentTest_var const server =
         Test::Transport::CurrentTest::_narrow (obj.in ());
 
       if (CORBA::is_nil (server.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("Client (%P|%t) The server object reference <%s> is nil.\n"),
-                           ior),
+                           options.ior),
                           -1);
 
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Client (%P|%t) Spawning %d threads\n"), nthreads));
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Client (%P|%t) Spawning %d threads\n"),
+                  options.nthreads));
 
       // Spawn a number of clients doing the same thing for a
       // predetermined number of times
-      Worker client (server.in (), niterations, use_dii);
+      Worker client (server.in (), options.niterations, options.use_dii);
 
 #if defined (ACE_HAS_THREADS)
       if (client.activate (THR_NEW_LWP | THR_JOINABLE,
-                           nthreads) != 0)
+                           options.nthreads) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("Client (%P|%t) Cannot activate %d client threads\n"),
-                           nthreads),
+                           options.nthreads),
                           -1);
       client.thr_mgr ()->wait ();
 #else
-      if (nthreads > 1)
+      if (options.nthreads > 1)
         ACE_ERROR ((LM_WARNING,
                     ACE_TEXT ("Client (%P|%t) Cannot use threads other than ")
                     ACE_TEXT ("the only one available.\n")));
@@ -232,17 +237,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Client (%P|%t) Collected any threads\n")));
 
-      CORBA::Long result = 0;
+      CORBA::Long result {};
 
       // Verify enough interception points have been triggered
       if (cri->interceptions () != 2 *             // request & response
-                                  niterations *   // iterations
-                                  nthreads *      // threads
-                                  (2*use_dii))    // sii and dii, if needed
+                                  options.niterations * // iterations
+                                  options.nthreads * // threads
+                                  (2 * options.use_dii)) // sii and dii, if needed
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("Client (%P|%t) Expected %d client-side interceptions, but detected %d\n"),
-                      2 * niterations * nthreads * (2*use_dii),
+                      2 * options.niterations * options.nthreads *
+                        (2 * options.use_dii),
                       cri->interceptions ()));
         }
       else
@@ -270,7 +276,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   ((result == 0) ? ACE_TEXT ("successfuly") : ACE_TEXT ("with failure"))));
       return result;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         ACE_TEXT (

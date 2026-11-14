@@ -33,19 +33,18 @@ namespace FTRTEC {
   class TAO_FTRTEC_Export Fault_Detector_Loader : public ACE_Service_Object
   {
   public:
-    /// Constructor.
     Fault_Detector_Loader ();
 
-    /// Destructor.
     ~Fault_Detector_Loader () override;
 
-    Fault_Detector_Loader(Fault_Detector_Loader const&) = delete;
-    Fault_Detector_Loader(Fault_Detector_Loader&&) = delete;
-    Fault_Detector_Loader& operator=(Fault_Detector_Loader const&) = delete;
-    Fault_Detector_Loader& operator=(Fault_Detector_Loader&&) = delete;
+    Fault_Detector_Loader (Fault_Detector_Loader const &) = delete;
+    Fault_Detector_Loader (Fault_Detector_Loader &&) = delete;
+    Fault_Detector_Loader & operator= (Fault_Detector_Loader const &) = delete;
+    Fault_Detector_Loader & operator= (Fault_Detector_Loader &&) = delete;
 
     int init (int argc,
       ACE_TCHAR* []) override;
+    void stop ();
     Fault_Detector* detector();
   private:
     std::unique_ptr<Fault_Detector> detector_;

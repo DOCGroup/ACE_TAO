@@ -3,7 +3,7 @@
 ACEXML_INLINE int
 ACEXML_XMLFilterImpl::setupParser ()
 {
-  if (this->parent_ == 0)
+  if (this->parent_ == nullptr)
     return -1;
 
   this->parent_->setEntityResolver (this);

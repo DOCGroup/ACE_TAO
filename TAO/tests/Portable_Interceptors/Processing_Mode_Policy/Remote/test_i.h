@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_INTERCEPTOR_TEST_I_H
 #define TAO_INTERCEPTOR_TEST_I_H
 
@@ -22,19 +21,23 @@ class Visual_i : public POA_Test_Interceptors::Visual
 {
 public:
   /// ctor
-  Visual_i (CORBA::ORB_ptr orb);
+  explicit Visual_i (CORBA::ORB_ptr orb);
+  Visual_i (Visual_i const &) = delete;
+  Visual_i (Visual_i &&) = delete;
+  Visual_i &operator= (Visual_i const &) = delete;
+  Visual_i &operator= (Visual_i &&) = delete;
 
-  void normal (CORBA::Long arg);
+  void normal (CORBA::Long arg) override;
 
   CORBA::Long calculate (
                          CORBA::Long one,
-                         CORBA::Long two);
+                         CORBA::Long two) override;
 
-  void user ();
+  void user () override;
 
-  void system ();
+  void system () override;
 
-  void shutdown ();
+  void shutdown () override;
 
 private:
   /// The ORB pointer (for shutdown.)

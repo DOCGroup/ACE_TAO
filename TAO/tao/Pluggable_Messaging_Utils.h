@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_PLUGGABLE_MESSAGING_UTILS_H
 #define TAO_PLUGGABLE_MESSAGING_UTILS_H
 
@@ -40,7 +39,6 @@ class TAO_Transport;
 class TAO_Export TAO_Pluggable_Reply_Params_Base
 {
 public:
-  /// Constructor.
   TAO_Pluggable_Reply_Params_Base ();
 
   /// The IOP service context list.
@@ -54,7 +52,7 @@ public:
    * way to determine if the request was DSI, so we can use Carlos'
    * service context list no-deep-copy optimization.
    */
-  CORBA::Boolean is_dsi_;
+  CORBA::Boolean is_dsi_ {};
 
   /// Info required for DSI optimization that pads the outgoing
   /// CDR stream according to the alignment of the NVList.
@@ -71,7 +69,7 @@ public:
 
   /// A flag that indicates if there is any data is going to get
   /// marshalled in the reply
-  CORBA::Boolean argument_flag_;
+  CORBA::Boolean argument_flag_ {};
 
   GIOP::ReplyStatusType reply_status () const;
   void reply_status (GIOP::ReplyStatusType status);
@@ -99,8 +97,7 @@ class TAO_Export TAO_Pluggable_Reply_Params
   : public TAO_Pluggable_Reply_Params_Base
 {
 public:
-  /// Constructor.
-  TAO_Pluggable_Reply_Params (TAO_Transport *t);
+  explicit TAO_Pluggable_Reply_Params (TAO_Transport *t);
 
   /// The stream with the non-demarshaled reply. This stream will be
   /// passed up to the stubs to demarshal the parameter values.

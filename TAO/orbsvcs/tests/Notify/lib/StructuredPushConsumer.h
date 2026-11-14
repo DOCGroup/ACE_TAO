@@ -23,10 +23,10 @@
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_StructuredProxyPushSupplier_Traits
 {
 public:
-  typedef CosNotifyChannelAdmin::StructuredProxyPushSupplier INTERFACE;
-  typedef CosNotifyChannelAdmin::StructuredProxyPushSupplier_ptr PTR;
-  typedef CosNotifyChannelAdmin::StructuredProxyPushSupplier_var VAR;
-  typedef CosNotifyChannelAdmin::ProxyID ID;
+  using INTERFACE = CosNotifyChannelAdmin::StructuredProxyPushSupplier;
+  using PTR = CosNotifyChannelAdmin::StructuredProxyPushSupplier_ptr;
+  using VAR = CosNotifyChannelAdmin::StructuredProxyPushSupplier_var;
+  using ID = CosNotifyChannelAdmin::ProxyID;
 };
 
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_StructuredPushConsumer_Traits
@@ -34,52 +34,52 @@ class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_StructuredPushConsumer_Traits
 public:
   TAO_Notify_Tests_StructuredPushConsumer_Traits ();
 
-  typedef CosNotifyComm::StructuredPushConsumer INTERFACE;
-  typedef CosNotifyComm::StructuredPushConsumer_ptr PTR;
-  typedef CosNotifyComm::StructuredPushConsumer_var VAR;
-  typedef POA_CosNotifyComm::StructuredPushConsumer SKELETON;
+  using INTERFACE = CosNotifyComm::StructuredPushConsumer;
+  using PTR = CosNotifyComm::StructuredPushConsumer_ptr;
+  using VAR = CosNotifyComm::StructuredPushConsumer_var;
+  using SKELETON = POA_CosNotifyComm::StructuredPushConsumer;
 
-  typedef TAO_Notify_Tests_StructuredProxyPushSupplier_Traits Proxy_Traits;
-  typedef TAO_Notify_Tests_ConsumerAdmin_Traits Admin_Traits;
-  typedef TAO_Notify_Tests_ConsumerAdmin_Ext_Traits Admin_Ext_Traits;
+  using Proxy_Traits = TAO_Notify_Tests_StructuredProxyPushSupplier_Traits;
+  using Admin_Traits = TAO_Notify_Tests_ConsumerAdmin_Traits;
+  using Admin_Ext_Traits = TAO_Notify_Tests_ConsumerAdmin_Ext_Traits;
 
   const CosNotifyChannelAdmin::ClientType type_;
 };
 
-typedef TAO_Notify_Tests_Consumer_T<TAO_Notify_Tests_StructuredPushConsumer_Traits> TAO_Notify_Tests_StructuredPushConsumer_Base;
+using TAO_Notify_Tests_StructuredPushConsumer_Base =
+  TAO_Notify_Tests_Consumer_T<TAO_Notify_Tests_StructuredPushConsumer_Traits>;
 
 /**
  * @class TAO_Notify_Tests_StructuredPushConsumer
  *
  * @brief StructuredPushConsumer Implementation.
  */
-class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_StructuredPushConsumer : public TAO_Notify_Tests_StructuredPushConsumer_Base
+class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_StructuredPushConsumer
+  : public TAO_Notify_Tests_StructuredPushConsumer_Base
 {
-  typedef TAO_Notify_Tests_StructuredPushConsumer_Traits Peer_Traits;
-  typedef Peer_Traits::Admin_Traits Admin_Traits;
-  typedef Peer_Traits::Admin_Ext_Traits Admin_Ext_Traits;
-  typedef Peer_Traits::Proxy_Traits Proxy_Traits;
+  using Peer_Traits = TAO_Notify_Tests_StructuredPushConsumer_Traits;
+  using Admin_Traits = Peer_Traits::Admin_Traits;
+  using Admin_Ext_Traits = Peer_Traits::Admin_Ext_Traits;
+  using Proxy_Traits = Peer_Traits::Proxy_Traits;
 
 public:
-  /// Constructor
   TAO_Notify_Tests_StructuredPushConsumer ();
 
-  /// Destructor
   virtual ~TAO_Notify_Tests_StructuredPushConsumer ();
 
 protected:
   /// Connect to Peer.
-  virtual void connect_to_peer (Proxy_Traits::PTR proxy_ptr, Peer_Traits::PTR peer_ptr);
+  void connect_to_peer (Proxy_Traits::PTR proxy_ptr, Peer_Traits::PTR peer_ptr) override;
 
   /// Disconnect from proxy.
-  virtual void disconnect_from_proxy ();
+  void disconnect_from_proxy () override;
 
   // = StructuredPushConsumer methods
-  virtual void disconnect_structured_push_consumer ();
+  void disconnect_structured_push_consumer () override;
 
  /// Default does nothing.
-  virtual void push_structured_event (
-        const CosNotification::StructuredEvent & notification);
+  void push_structured_event (
+        CosNotification::StructuredEvent const &notification) override;
 };
 
 #if defined (__ACE_INLINE__)

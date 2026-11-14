@@ -3,6 +3,8 @@
 #include "ace/Timer_Heap_T.h"
 #include "ace/Event_Handler_Handle_Timeout_Upcall.h"
 
+#include <memory>
+
 #if (TAO_HAS_TIME_POLICY == 1)
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -13,7 +15,7 @@ TAO_HR_Time_Policy_Strategy::~TAO_HR_Time_Policy_Strategy () = default;
 
 ACE_Timer_Queue * TAO_HR_Time_Policy_Strategy::create_timer_queue ()
 {
-  ACE_Timer_Queue * tmq = nullptr;
+  ACE_Timer_Queue * tmq {};
 
   using timer_queue_type = ACE_Timer_Heap_T<ACE_Event_Handler *,
                                              ACE_Event_Handler_Handle_Timeout_Upcall,
@@ -32,9 +34,8 @@ TAO_HR_Time_Policy_Strategy::destroy_timer_queue (ACE_Timer_Queue *tmq)
 
 ACE_Dynamic_Time_Policy_Base * TAO_HR_Time_Policy_Strategy::get_time_policy ()
 {
-  return &time_policy_;
+  return std::addressof (time_policy_);
 }
-
 
 ACE_STATIC_SVC_DEFINE (TAO_HR_Time_Policy_Strategy,
                        ACE_TEXT ("TAO_HR_TIME_POLICY"),

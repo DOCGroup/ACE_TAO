@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Server_Request.h
  *
@@ -10,7 +9,6 @@
  *  @author  Copyright 1994-1995 by Sun Microsystems
  *  @author Inc. and Chris Cleeland.  Modifications by Aniruddha Gokhale based on CORBAv2.2 Feb 98
  */
-//=============================================================================
 
 #ifndef TAO_CORBA_SERVER_REQUEST_H
 #define TAO_CORBA_SERVER_REQUEST_H
@@ -30,6 +28,7 @@
 #include "tao/TAO_Server_Request.h"
 #include "tao/CDR.h"
 #include <atomic>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -54,11 +53,13 @@ namespace CORBA
   class TAO_DynamicInterface_Export ServerRequest
   {
   public:
-    /// Constructor.
-    ServerRequest (TAO_ServerRequest &orb_server_request);
+    explicit ServerRequest (TAO_ServerRequest &orb_server_request);
 
-    /// Destructor.
     ~ServerRequest ();
+    ServerRequest (ServerRequest const &) = delete;
+    ServerRequest &operator= (ServerRequest const &) = delete;
+    ServerRequest (ServerRequest &&) = delete;
+    ServerRequest &operator= (ServerRequest &&) = delete;
 
     /// Implementation uses this to provide the ORB with the operation's
     /// parameter list ... on return, their values are available; the
@@ -79,14 +80,10 @@ namespace CORBA
     /// sent when this returns, and reclaim memory it allocated.
     void set_exception (CORBA::Any const& value);
 
-    // = Get various universal call attributes.
-
-    // e.g., who made the call, the target of the call, what ORB and OA
-    // that target object uses.
-    //
-    // NOTE: none of these report exceptions; unavailability of any of
-    // this stuff is a catastrophic error since this is all part of the
-    // basic CORBA Object Model.
+    /// For example, these attributes identify who made the call, its
+    /// target, and the ORB and object adapter used by that target.
+    /// Their unavailability is a catastrophic error under the CORBA
+    /// object model.
 
     /// Marshal outgoing parameters.
     void dsi_marshal ();
@@ -104,7 +101,6 @@ namespace CORBA
     static ServerRequest_ptr _duplicate (ServerRequest_ptr);
     static ServerRequest_ptr _nil ();
 
-    // = Reference counting.
     CORBA::ULong _incr_refcount ();
     CORBA::ULong _decr_refcount ();
 
@@ -140,10 +136,10 @@ namespace CORBA
     CORBA::NVList_ptr params_ {};
 
     /// Return value.
-    CORBA::Any_ptr retval_ {};
+    std::unique_ptr<CORBA::Any> retval_;
 
     /// Any exception which might be raised.
-    CORBA::Any_ptr exception_ {};
+    std::unique_ptr<CORBA::Any> exception_;
 
     /// Reference counting.
     std::atomic<uint32_t> refcount_ { 1 };

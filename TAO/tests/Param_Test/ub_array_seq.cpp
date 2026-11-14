@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "helper.h"
 #include "ub_array_seq.h"
 
@@ -28,7 +27,7 @@ Test_Array_Sequence::Test_Array_Sequence ()
 Test_Array_Sequence::~Test_Array_Sequence ()
 {
   CORBA::string_free (this->opname_);
-  this->opname_ = 0;
+  this->opname_ = nullptr;
   // the other data members will be freed as they are "_var"s and objects
   // (rather than pointers to objects)
 }
@@ -50,7 +49,7 @@ Test_Array_Sequence::dii_req_invoke (CORBA::Request *req)
 
   req->invoke ();
 
-  const Param_Test::ArraySeq *tmp = 0;
+  Param_Test::ArraySeq const *tmp {};
   req->return_value () >>= tmp;
   this->ret_ = new Param_Test::ArraySeq (*tmp);
 
@@ -206,8 +205,8 @@ void
 Test_Array_Sequence::print_sequence (const Param_Test::ArraySeq &s)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "maximum = %d\n"
-              "length = %d\n",
+              "maximum = %u\n"
+              "length = %u\n",
               s.maximum (),
               s.length ()));
   ACE_DEBUG ((LM_DEBUG, "Elements -\n"));

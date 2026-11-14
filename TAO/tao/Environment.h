@@ -30,6 +30,7 @@
 #include "tao/orbconf.h"
 #include "tao/Pseudo_VarOut_T.h"
 #include "tao/default_environment.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -77,10 +78,14 @@ namespace CORBA
     Environment () = default;
 
     /// Copy constructor.
-    Environment (const Environment &rhs);
+    Environment (Environment const &rhs);
+
+    Environment (Environment &&) = delete;
 
     /// Assingment.
-    Environment &operator=(const Environment &rhs);
+    Environment &operator= (Environment const &rhs);
+
+    Environment &operator= (Environment &&) = delete;
 
     /// Destructor, release the exception.
     ~Environment ();
@@ -126,7 +131,7 @@ namespace CORBA
     /// is not CORBA compliant.
     void print_exception (const char *info, FILE *f=stdout) const;
 
-    // = Obtain a default environment to use with TAO.
+    /// Obtain a default environment to use with TAO.
     static CORBA::Environment &default_environment ();
 
     // Useful for template programming.
@@ -141,7 +146,7 @@ namespace CORBA
     Environment (TAO_ORB_Core *orb_core);
 
     /// Pointer to the exception object contained in the environment.
-    CORBA::Exception *exception_ {};
+    std::unique_ptr<CORBA::Exception> exception_;
 
     /// The previous environment on the "default environment stack".
     Environment *previous_ {};
@@ -155,7 +160,6 @@ namespace CORBA
 } // End CORBA namespace
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 #if defined (__ACE_INLINE__)
 # include "tao/Environment.inl"

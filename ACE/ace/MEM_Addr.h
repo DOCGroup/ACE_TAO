@@ -8,7 +8,6 @@
  */
 //==========================================================================
 
-
 #ifndef ACE_MEM_ADDR_H
 #define ACE_MEM_ADDR_H
 #include /**/ "ace/pre.h"
@@ -37,14 +36,13 @@ public:
   /// Default constructor.
   ACE_MEM_Addr ();
 
-  /// Copy constructor.
+
   ACE_MEM_Addr (const ACE_MEM_Addr &);
 
-  /// Assignment operator
   ACE_MEM_Addr& operator= (const ACE_MEM_Addr&) = default;
 
   /// Creates an ACE_MEM_Addr from a @a port_number
-  ACE_MEM_Addr (u_short port_number);
+  explicit ACE_MEM_Addr (u_short port_number);
 
   /// Creates an ACE_MEM_Addr from a @a port_name.
   explicit ACE_MEM_Addr (const ACE_TCHAR port_name[]);

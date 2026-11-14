@@ -9,8 +9,9 @@
 #include "tao/debug.h"
 #include "tao/Strategies/COIOP_EndpointsC.h"
 
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
+#include <cstdio>
+#include <cstring>
+#include <memory>
 
 static const char the_prefix[] = "niop";
 
@@ -46,7 +47,7 @@ TAO_COIOP_Profile::~TAO_COIOP_Profile ()
 {
   // Clean up the list of endpoints since we own it.
   // Skip the head, since it is not dynamically allocated.
-  TAO_Endpoint *tmp = nullptr;
+  TAO_Endpoint *tmp {};
 
   for (TAO_Endpoint *next = this->endpoint ()->next ();
        next != nullptr;
@@ -112,7 +113,7 @@ TAO_COIOP_Profile::parse_string_i (const char *ior)
   CORBA::String_var tmp = CORBA::string_alloc (length_host);
 
   // Skip the trailing '/'
-  ACE_OS::strncpy (tmp.inout (), ior, length_host);
+  std::strncpy (tmp.inout (), ior, length_host);
   tmp[length_host] = '\0';
 
   this->endpoint_.uuid_.from_string (tmp._retn ());
@@ -132,8 +133,8 @@ TAO_COIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
     dynamic_cast<const TAO_COIOP_Profile *> (other_profile);
 
   // Check endpoints equivalence.
-  const TAO_COIOP_Endpoint *other_endp = &op->endpoint_;
-  for (TAO_COIOP_Endpoint *endp = &this->endpoint_;
+  const TAO_COIOP_Endpoint *other_endp = std::addressof (op->endpoint_);
+  for (TAO_COIOP_Endpoint *endp = std::addressof (this->endpoint_);
        endp != nullptr;
        endp = endp->next_)
     {
@@ -150,8 +151,8 @@ CORBA::ULong
 TAO_COIOP_Profile::hash (CORBA::ULong max)
 {
   // Get the hashvalue for all endpoints.
-  CORBA::ULong hashval = 0;
-  for (TAO_COIOP_Endpoint *endp = &this->endpoint_;
+  CORBA::ULong hashval {};
+  for (TAO_COIOP_Endpoint *endp = std::addressof (this->endpoint_);
        endp != nullptr;
        endp = endp->next_)
     {
@@ -178,7 +179,7 @@ TAO_COIOP_Profile::hash (CORBA::ULong max)
 TAO_Endpoint*
 TAO_COIOP_Profile::endpoint ()
 {
-  return &this->endpoint_;
+  return std::addressof (this->endpoint_);
 }
 
 CORBA::ULong
@@ -193,7 +194,7 @@ TAO_COIOP_Profile::add_endpoint (TAO_COIOP_Endpoint *endp)
   endp->next_ = this->endpoint_.next_;
   this->endpoint_.next_ = endp;
 
-  this->count_++;
+  ++this->count_;
 }
 
 char *
@@ -206,7 +207,7 @@ TAO_COIOP_Profile::to_string () const
   const ACE_CString * uuidstr = this->endpoint_.uuid_.to_string ();
   size_t buflen = (8 /* "corbaloc" */ +
                    1 /* colon separator */ +
-                   ACE_OS::strlen (::the_prefix) +
+                   std::strlen (::the_prefix) +
                    1 /* colon separator */ +
                    1 /* major version */ +
                    1 /* decimal point */ +
@@ -216,13 +217,13 @@ TAO_COIOP_Profile::to_string () const
                    1 /* colon separator */ +
                    5 /* port number */ +
                    1 /* object key separator */ +
-                   ACE_OS::strlen (key.in ()));
+                   std::strlen (key.in ()));
 
   char * buf = CORBA::string_alloc (static_cast<CORBA::ULong> (buflen));
 
   static const char digits [] = "0123456789";
 
-  ACE_OS::sprintf (buf,
+  std::sprintf (buf,
                    "corbaloc:%s:%c.%c@%s%c%s",
                    ::the_prefix,
                    digits [this->version_.major],
@@ -281,8 +282,8 @@ TAO_COIOP_Profile::encode_endpoints ()
   TAO::COIOPEndpointSequence endpoints;
   endpoints.length (this->count_);
 
-  const TAO_COIOP_Endpoint *endpoint = &this->endpoint_;
-  for (CORBA::ULong i = 0;
+  const TAO_COIOP_Endpoint *endpoint = std::addressof (this->endpoint_);
+  for (CORBA::ULong i {};
        i < this->count_;
        ++i)
     {
@@ -300,7 +301,7 @@ TAO_COIOP_Profile::encode_endpoints ()
        == 0)
       || (out_cdr << endpoints) == 0)
     return -1;
-  size_t length = out_cdr.total_length ();
+  size_t const length = out_cdr.total_length ();
 
   IOP::TaggedComponent tagged_component;
   tagged_component.tag = TAO_TAG_ENDPOINTS;
@@ -313,7 +314,7 @@ TAO_COIOP_Profile::encode_endpoints ()
        iterator = iterator->cont ())
     {
       size_t i_length = iterator->length ();
-      ACE_OS::memcpy (buf, iterator->rd_ptr (), i_length);
+      std::memcpy (buf, iterator->rd_ptr (), i_length);
 
       buf += i_length;
     }
@@ -366,7 +367,7 @@ TAO_COIOP_Profile::decode_endpoints ()
            i > 0;
            --i)
         {
-          TAO_COIOP_Endpoint *endpoint = nullptr;
+          TAO_COIOP_Endpoint *endpoint {};
           CORBA::String_var strvar = CORBA::string_dup (endpoints[i].uuid);
           ACE_Utils::UUID uuid1 (strvar.in());
           ACE_NEW_RETURN (endpoint,

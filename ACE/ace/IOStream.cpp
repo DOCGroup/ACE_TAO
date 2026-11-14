@@ -7,6 +7,7 @@
 
 #  include "ace/OS_NS_errno.h"
 #  include "ace/OS_Memory.h"
+#  include <memory>
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -44,7 +45,6 @@
   // a reference to iostream.  The second >> has no idea of the ACE_IOStream and
   // gets invoked on iostream.  Probably NOT what you wanted!
 
-
   // In order to make all of this work the way you want, you have to do this:
 
   class myiostream : public iostream
@@ -75,7 +75,6 @@
   // OK
   // invokes myiostream::operator>> (int&) returning myiostream&
 
-
   foo >> i >> s;
   // OK
   // Because you provided operator>> (int&) in class myiostream, that
@@ -97,7 +96,7 @@ ACE_Streambuf::recv_timeout (ACE_Time_Value *tv)
   if (tv)
     {
       recv_timeout_value_ = *tv;
-      recv_timeout_ = &recv_timeout_value_;
+      recv_timeout_ = std::addressof (recv_timeout_value_);
     }
   else
     recv_timeout_ = 0;

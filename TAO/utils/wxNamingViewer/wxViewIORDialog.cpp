@@ -120,7 +120,6 @@ BEGIN_EVENT_TABLE( WxViewIORDialog, wxDialog)
   EVT_TEXT( IDC_IOR, WxViewIORDialog::onIORText)
 END_EVENT_TABLE()
 
-
 WxViewIORDialog::WxViewIORDialog(
     CORBA::ORB_ptr orb,
     CORBA::Object_ptr object,
@@ -175,7 +174,6 @@ WxViewIORDialog::WxViewIORDialog(
   decodeIOR();
 }
 
-
 void WxViewIORDialog::decodeIOR()
 {
   profiles->DeleteAllItems();
@@ -213,7 +211,6 @@ void WxViewIORDialog::decodeIOR()
   profiles->Expand( rootItem);
 }
 
-
 void WxViewIORDialog::OnApply( wxCommandEvent& event)
 {
   wxDialog::OnApply( event);
@@ -225,7 +222,6 @@ void WxViewIORDialog::OnApply( wxCommandEvent& event)
   }
 }
 
-
 void WxViewIORDialog::onIORText( wxCommandEvent& event)
 {
   // Enable the Apply button if the IOR has changed
@@ -234,13 +230,11 @@ void WxViewIORDialog::onIORText( wxCommandEvent& event)
   }
 }
 
-
 bool WxViewIORDialog::TransferDataFromWindow()
 {
   ior = iorText->GetValue();
   return true;
 }
-
 
 bool WxViewIORDialog::TransferDataToWindow()
 {

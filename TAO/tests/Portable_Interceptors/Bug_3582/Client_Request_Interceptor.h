@@ -27,9 +27,12 @@ class Client_Request_Interceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
-  Client_Request_Interceptor (const char *orb_id,
-                              const char *forward_str);
+  explicit Client_Request_Interceptor (char const *orb_id);
+
+  Client_Request_Interceptor (Client_Request_Interceptor const &) = delete;
+  Client_Request_Interceptor (Client_Request_Interceptor &&) = delete;
+  Client_Request_Interceptor &operator= (Client_Request_Interceptor const &) = delete;
+  Client_Request_Interceptor &operator= (Client_Request_Interceptor &&) = delete;
 
   /**
    * @name Methods Required by the Client Request Interceptor
@@ -41,24 +44,24 @@ public:
    */
   //@{
   /// Return the name of this ClientRequestinterceptor.
-  virtual char * name ();
+  char * name () override;
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual void send_request (
-      PortableInterceptor::ClientRequestInfo_ptr ri);
+  void send_request (
+      PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void send_poll (
-      PortableInterceptor::ClientRequestInfo_ptr ri);
+  void send_poll (
+      PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_reply (
-      PortableInterceptor::ClientRequestInfo_ptr ri);
+  void receive_reply (
+      PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_exception (
-      PortableInterceptor::ClientRequestInfo_ptr ri);
+  void receive_exception (
+      PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_other (
-      PortableInterceptor::ClientRequestInfo_ptr ri);
+  void receive_other (
+      PortableInterceptor::ClientRequestInfo_ptr ri) override;
   //@}
 
 private:
@@ -67,12 +70,7 @@ private:
 
   /// Pseudo-reference to the ORB this interceptor is registered
   /// with.
-  CORBA::ORB_var orb_;
-
-  /// The number of requests intercepted by this interceptor.
-  CORBA::ULong request_count_;
-
-  CORBA::String_var forward_str_;
+  CORBA::ORB_var orb_ {};
 };
 
 #if defined(_MSC_VER)

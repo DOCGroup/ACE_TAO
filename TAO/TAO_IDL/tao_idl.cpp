@@ -401,7 +401,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             ACE_OS::fopen (idl_global->big_file_name ().c_str (), "w");
         }
 
-      for (std::size_t i = 0; i < DRV_files.size (); ++i)
+      for (size_t i = 0; i < DRV_files.size (); ++i)
         {
           if (idl_global->multi_file_input ())
             {

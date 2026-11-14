@@ -73,7 +73,7 @@ public:
   const void *act () const;
 
   /// Did the operation succeed?
-  int success () const;
+  bool success () const;
 
   /**
    * This returns the ACT associated with the handle when it was
@@ -104,7 +104,6 @@ public:
   /// Post @c this to the Proactor's completion port.
   int post_completion (ACE_Proactor_Impl *proactor);
 
-  /// Destructor.
   virtual ~ACE_WIN32_Asynch_Result ();
 
   /// Simulate error value to use in the post_completion()
@@ -114,7 +113,6 @@ public:
   void set_bytes_transferred (size_t nbytes);
 
 protected:
-  /// Constructor.
   ACE_WIN32_Asynch_Result (const ACE_Handler::Proxy_Ptr &handler_proxy,
                            const void* act,
                            ACE_HANDLE event,
@@ -133,7 +131,7 @@ protected:
   size_t bytes_transferred_;
 
   /// Success indicator.
-  int success_;
+  bool success_;
 
   /// ACT associated with handle.
   const void *completion_key_;
@@ -175,10 +173,8 @@ public:
   ACE_Proactor* proactor () const;
 
 protected:
-  /// Constructor.
   ACE_WIN32_Asynch_Operation (ACE_WIN32_Proactor *win32_proactor);
 
-  /// Destructor.
   virtual ~ACE_WIN32_Asynch_Operation ();
 
   /// Win32 Proactor.
@@ -230,7 +226,7 @@ public:
   const void *act () const;
 
   /// Did the operation succeed?
-  int success () const;
+  bool success () const;
 
   /**
    * This returns the ACT associated with the handle when it was
@@ -283,7 +279,6 @@ protected:
                          const void *completion_key,
                          u_long error);
 
-  /// Destructor.
   virtual ~ACE_WIN32_Asynch_Read_Stream_Result ();
 
   /// Bytes requested when the asynchronous read was initiated.
@@ -315,7 +310,6 @@ class ACE_Export ACE_WIN32_Asynch_Read_Stream : public virtual ACE_Asynch_Read_S
                                                 public ACE_WIN32_Asynch_Operation
 {
 public:
-  /// Constructor.
   ACE_WIN32_Asynch_Read_Stream (ACE_WIN32_Proactor *win32_proactor);
 
   /// This starts off an asynchronous read.  Upto @a bytes_to_read will
@@ -336,7 +330,6 @@ public:
              int priority,
              int signal_number = 0);
 
-  /// Destructor.
   virtual ~ACE_WIN32_Asynch_Read_Stream ();
 
   // Methods belong to ACE_WIN32_Asynch_Operation base class. These
@@ -406,7 +399,7 @@ public:
   const void *act () const;
 
   /// Did the operation succeed?
-  int success () const;
+  bool success () const;
 
   /**
    * This returns the ACT associated with the handle when it was
@@ -459,7 +452,6 @@ protected:
                          const void *completion_key,
                          u_long error);
 
-  /// Destructor.
   virtual ~ACE_WIN32_Asynch_Write_Stream_Result ();
 
   /// The number of bytes which were requested at the start of the
@@ -492,7 +484,6 @@ class ACE_Export ACE_WIN32_Asynch_Write_Stream : public virtual ACE_Asynch_Write
                                                  public ACE_WIN32_Asynch_Operation
 {
 public:
-  /// Constructor.
   ACE_WIN32_Asynch_Write_Stream (ACE_WIN32_Proactor *win32_proactor);
 
   /// This starts off an asynchronous write.  Upto @a bytes_to_write
@@ -513,7 +504,6 @@ public:
               int priority,
               int signal_number = 0);
 
-  /// Destructor.
   virtual ~ACE_WIN32_Asynch_Write_Stream ();
 
   // = Methods belonging to <ACE_WIN32_Asynch_Operation> base class.
@@ -570,7 +560,7 @@ public:
   const void *act () const;
 
   /// Did the operation succeed?
-  int success () const;
+  bool success () const;
 
   /**
    * This returns the ACT associated with the handle when it was
@@ -637,7 +627,6 @@ protected:
                          const void *completion_key,
                          u_long error);
 
-  /// Destructor.
   virtual ~ACE_WIN32_Asynch_Read_File_Result ();
 };
 
@@ -660,7 +649,6 @@ class ACE_Export ACE_WIN32_Asynch_Read_File : public virtual ACE_Asynch_Read_Fil
                                               public ACE_WIN32_Asynch_Read_Stream
 {
 public:
-  /// Constructor.
   ACE_WIN32_Asynch_Read_File (ACE_WIN32_Proactor *win32_proactor);
 
   /**
@@ -691,8 +679,6 @@ public:
              int priority,
              int signal_number = 0);
 
-
-  /// Destructor.
   virtual ~ACE_WIN32_Asynch_Read_File ();
 
   // = Methods belong to ACE_WIN32_Asynch_Operation base class. These
@@ -780,7 +766,7 @@ public:
   const void *act () const;
 
   /// Did the operation succeed?
-  int success () const;
+  bool success () const;
 
   /**
    * This returns the ACT associated with the handle when it was
@@ -847,7 +833,6 @@ protected:
                          const void *completion_key,
                          u_long error);
 
-  /// Destructor.
   virtual ~ACE_WIN32_Asynch_Write_File_Result ();
 };
 
@@ -867,7 +852,6 @@ class ACE_Export ACE_WIN32_Asynch_Write_File : public virtual ACE_Asynch_Write_F
                                                public ACE_WIN32_Asynch_Write_Stream
 {
 public:
-  /// Constructor.
   ACE_WIN32_Asynch_Write_File (ACE_WIN32_Proactor *win32_proactor);
 
   /**
@@ -992,7 +976,7 @@ public:
   const void *act () const;
 
   /// Did the operation succeed?
-  int success () const;
+  bool success () const;
 
   /**
    * This returns the ACT associated with the handle when it was
@@ -1042,7 +1026,6 @@ protected:
                          const void *completion_key,
                          u_long error);
 
-  /// Destructor.
   virtual ~ACE_WIN32_Asynch_Accept_Result ();
 
   /// Bytes requested when the asynchronous read was initiated.
@@ -1074,7 +1057,6 @@ class ACE_Export ACE_WIN32_Asynch_Accept : public virtual ACE_Asynch_Accept_Impl
                                            public ACE_WIN32_Asynch_Operation
 {
 public:
-  /// Constructor.
   ACE_WIN32_Asynch_Accept (ACE_WIN32_Proactor *win32_proactor);
 
   /**
@@ -1096,7 +1078,6 @@ public:
               int signal_number = 0,
               int addr_family = AF_INET);
 
-  /// Destructor.
   ~ACE_WIN32_Asynch_Accept ();
 
   // Methods belong to ACE_WIN32_Asynch_Operation base class. These
@@ -1158,7 +1139,7 @@ public:
   const void *act () const;
 
   /// Did the operation succeed?
-  int success () const;
+  bool success () const;
 
   /**
    * Returns the ACT associated with the handle when it was
@@ -1205,7 +1186,6 @@ protected:
                          const void *completion_key,
                          u_long error);
 
-  /// Destructor.
   virtual ~ACE_WIN32_Asynch_Connect_Result ();
 
   /// Set the I/O handle for the new connection.
@@ -1213,7 +1193,6 @@ protected:
 
   ACE_HANDLE  connect_handle_;
 };
-
 
 /**
  * @class ACE_WIN32_Asynch_Connect
@@ -1224,10 +1203,8 @@ class ACE_Export ACE_WIN32_Asynch_Connect :
   public ACE_Event_Handler
 {
 public:
-  /// Constructor.
-  ACE_WIN32_Asynch_Connect (ACE_WIN32_Proactor * win32_proactor);
+  explicit ACE_WIN32_Asynch_Connect (ACE_WIN32_Proactor * win32_proactor);
 
-  /// Destructor.
   virtual ~ACE_WIN32_Asynch_Connect ();
 
  /**
@@ -1380,7 +1357,7 @@ public:
   const void *act () const;
 
   /// Did the operation succeed?
-  int success () const;
+  bool success () const;
 
   /**
    * This returns the ACT associated with the handle when it was
@@ -1434,7 +1411,6 @@ protected:
                          const void *completion_key,
                          u_long error);
 
-  /// Destructor.
   virtual ~ACE_WIN32_Asynch_Transmit_File_Result ();
 
   /// Network I/O handle.
@@ -1481,7 +1457,6 @@ class ACE_Export ACE_WIN32_Asynch_Transmit_File : public virtual ACE_Asynch_Tran
                                                   public ACE_WIN32_Asynch_Operation
 {
 public:
-  /// Constructor.
   ACE_WIN32_Asynch_Transmit_File (ACE_WIN32_Proactor *win32_proactor);
 
   /**
@@ -1506,7 +1481,6 @@ public:
                      int priority,
                      int signal_number = 0);
 
-  /// Destructor.
   ~ACE_WIN32_Asynch_Transmit_File ();
 
   // Methods belong to ACE_WIN32_Asynch_Operation base class. These
@@ -1579,7 +1553,7 @@ public:
   const void *act () const;
 
   /// Did the operation succeed?
-  int success () const;
+  bool success () const;
 
   /**
    * This returns the ACT associated with the handle when it was
@@ -1630,7 +1604,6 @@ protected:
                          const void *completion_key,
                          u_long error);
 
-  /// Destructor.
   virtual ~ACE_WIN32_Asynch_Read_Dgram_Result ();
 
   /// Bytes requested when the asynchronous read was initiated.
@@ -1667,10 +1640,8 @@ class ACE_Export ACE_WIN32_Asynch_Read_Dgram : public virtual ACE_Asynch_Read_Dg
                                                public ACE_WIN32_Asynch_Operation
 {
 public:
-  /// Constructor.
   ACE_WIN32_Asynch_Read_Dgram (ACE_WIN32_Proactor *win32_proactor);
 
-  /// Destructor.
   virtual ~ACE_WIN32_Asynch_Read_Dgram ();
 
    /** This starts off an asynchronous read.  Upto
@@ -1767,7 +1738,7 @@ public:
   const void *act () const;
 
   /// Did the operation succeed?
-  int success () const;
+  bool success () const;
 
   /**
    * This returns the ACT associated with the handle when it was
@@ -1817,7 +1788,6 @@ protected:
                          const void *completion_key,
                          u_long error);
 
-  /// Destructor.
   virtual ~ACE_WIN32_Asynch_Write_Dgram_Result ();
 
   /// The number of bytes which were requested at the start of the
@@ -1850,10 +1820,8 @@ class ACE_Export ACE_WIN32_Asynch_Write_Dgram : public virtual ACE_Asynch_Write_
                                                 public ACE_WIN32_Asynch_Operation
 {
 public:
-  /// Constructor.
   ACE_WIN32_Asynch_Write_Dgram (ACE_WIN32_Proactor *win32_proactor);
 
-  /// Destructor.
   virtual ~ACE_WIN32_Asynch_Write_Dgram ();
 
   /** This starts off an asynchronous send.  Upto

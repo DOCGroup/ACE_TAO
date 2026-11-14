@@ -3,6 +3,8 @@
 
 #include "tao/ORB_Constants.h"
 
+#include <utility>
+
 FOO_IORInterceptor::FOO_IORInterceptor (IOP::Codec_ptr codec)
   : codec_ (IOP::Codec::_duplicate (codec))
 {
@@ -42,15 +44,11 @@ FOO_IORInterceptor::establish_components (
 
   component.tag = FOO::COMPONENT_ID;
 
-  const CORBA::ULong maximum   = encoded_data->maximum ();
-  const CORBA::ULong length    = encoded_data->length ();
-  CORBA::Octet * buffer  = encoded_data->get_buffer ();
-  const CORBA::Boolean release = 0;  // OctetSeq retains ownership.
+  CORBA::ULong const length = encoded_data->length ();
 
-  ACE_ASSERT (maximum > 1);  // Sanity check.
   ACE_ASSERT (length > 1);   // Sanity check.
 
-  component.component_data.replace (maximum, length, buffer, release);
+  component.component_data = std::move (*encoded_data.ptr ());
 
   ACE_ASSERT (component.component_data.length () == length);
 
@@ -62,7 +60,6 @@ FOO_IORInterceptor::establish_components (
               "(%P|%t)   string \"%C\" to all profiles.\n",
               name.in ()));
 
-
   // Add the tagged component to all IIOP profiles.
   info->add_ior_component_to_profile (component,
                                       IOP::TAG_INTERNET_IOP);
@@ -71,7 +68,6 @@ FOO_IORInterceptor::establish_components (
               "(%P|%t) Added tagged component containing the\n"
               "(%P|%t)   string \"%C\" to all IIOP profiles.\n",
               name.in ()));
-
 
   try
     {
@@ -83,7 +79,7 @@ FOO_IORInterceptor::establish_components (
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Successfully retrieved effective policy.\n"));
     }
-  catch (const CORBA::INV_POLICY& ex)
+  catch (CORBA::INV_POLICY const &ex)
     {
       if (ex.minor () != (CORBA::OMGVMCID | 3))
         throw;
@@ -97,9 +93,8 @@ FOO_IORInterceptor::components_established (
   // Construct a dummy tagged component.
   IOP::TaggedComponent component;
 
-  component.tag = 0;
+  component.tag = {};
   component.component_data.length (1);
-
 
   try
     {
@@ -113,7 +108,7 @@ FOO_IORInterceptor::components_established (
       // The above call should NOT have succeeded.
       throw CORBA::INTERNAL ();
     }
-  catch (const CORBA::BAD_INV_ORDER& ex)
+  catch (CORBA::BAD_INV_ORDER const &ex)
     {
       if (ex.minor () != (CORBA::OMGVMCID | 14))
         {
@@ -136,7 +131,7 @@ FOO_IORInterceptor::components_established (
       // The above call should NOT have succeeded.
       throw CORBA::INTERNAL ();
     }
-  catch (const CORBA::BAD_INV_ORDER& ex)
+  catch (CORBA::BAD_INV_ORDER const &ex)
     {
       if (ex.minor () != (CORBA::OMGVMCID | 14))
         {
@@ -149,14 +144,14 @@ FOO_IORInterceptor::components_established (
 
 void
 FOO_IORInterceptor::adapter_manager_state_changed (
-    const char *,
+    char const *,
     PortableInterceptor::AdapterState)
 {
 }
 
 void
-FOO_IORInterceptor:: adapter_state_changed (
-    const PortableInterceptor::ObjectReferenceTemplateSeq &,
+FOO_IORInterceptor::adapter_state_changed (
+    PortableInterceptor::ObjectReferenceTemplateSeq const &,
     PortableInterceptor::AdapterState)
 {
 }

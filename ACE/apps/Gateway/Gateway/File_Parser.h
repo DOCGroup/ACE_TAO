@@ -8,11 +8,13 @@
  */
 //=============================================================================
 
-
 #ifndef _FILE_PARSER
 #define _FILE_PARSER
 
+#include <memory>
+
 #include "ace/Basic_Types.h"
+#include "ace/OS_NS_stdio.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -46,18 +48,32 @@ public:
 template <class ENTRY>
 class File_Parser
 {
-public:
-  /// Destructor.
-  virtual ~File_Parser ();
+  struct File_Deleter
+  {
+    void operator() (FILE *file) const
+    {
+      if (file != nullptr)
+        ACE_OS::fclose (file);
+    }
+  };
 
-  // = Open and Close the file specified
+public:
+  File_Parser () = default;
+
+  virtual ~File_Parser () = default;
+  File_Parser (File_Parser const &) = delete;
+  File_Parser (File_Parser &&) = delete;
+  File_Parser &operator= (File_Parser const &) = delete;
+  File_Parser &operator= (File_Parser &&) = delete;
+
+  /// Open or close the configured input file.
   int open (const ACE_TCHAR filename[]);
   int close ();
 
+  /// Pure virtual hook for subclasses to fill in an entry using the
+  /// protected parsing methods.
   virtual FPRT::Return_Type read_entry (ENTRY &entry,
                                         int &line_number) = 0;
-  // Pure virtual hook that subclasses override and use the protected
-  // methods to fill in the <entry>.
 
 protected:
   /// Read the next ASCII word.
@@ -84,8 +100,8 @@ protected:
   /// character.
   int skipline ();
 
-  /// Pointer to the file we're reading.
-  FILE *infile_;
+  /// Owns the file being read and closes it if the parser exits early.
+  std::unique_ptr<FILE, File_Deleter> infile_;
 };
 
 #include "File_Parser.cpp"

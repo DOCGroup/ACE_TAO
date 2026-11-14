@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-
 //=============================================================================
 /**
  *  @file    Async_Timer_Queue_Test.h
@@ -11,7 +10,6 @@
  *  @author Douglas C. Schmidt and Sergio Flores-Gaitan
  */
 //=============================================================================
-
 
 #ifndef _ASYNC_TIMER_QUEUE_TEST_H_
 #define _ASYNC_TIMER_QUEUE_TEST_H_
@@ -36,9 +34,16 @@
 class Async_Timer_Handler : public ACE_Event_Handler
 {
 public:
+  Async_Timer_Handler () = default;
+
+  Async_Timer_Handler (Async_Timer_Handler const &) = delete;
+  Async_Timer_Handler (Async_Timer_Handler &&) = delete;
+  Async_Timer_Handler &operator= (Async_Timer_Handler const &) = delete;
+  Async_Timer_Handler &operator= (Async_Timer_Handler &&) = delete;
+
   /// Callback hook invoked by the <Timer_Queue>.
-  virtual int handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg);
+  int handle_timeout (ACE_Time_Value const &tv,
+                      void const *arg) override;
 };
 
 /**
@@ -87,11 +92,13 @@ private:
   /// Private constructor enforces the Singleton.
   Async_Timer_Queue (ACE_Sig_Set *);
 
-  /// Pointer to the timer queue.
-  static Async_Timer_Queue *instance_;
-
   /// The adapter is instantiated by an <ACE_Timer_Heap>.
   ACE_Async_Timer_Queue_Adapter<ACE_Timer_Heap> tq_;
+
+  Async_Timer_Queue (Async_Timer_Queue const &) = delete;
+  Async_Timer_Queue (Async_Timer_Queue &&) = delete;
+  Async_Timer_Queue &operator= (Async_Timer_Queue const &) = delete;
+  Async_Timer_Queue &operator= (Async_Timer_Queue &&) = delete;
 };
 
 /**
@@ -105,16 +112,19 @@ private:
  * the driver.  The rest of the common functionality is in the
  * parent class <Timer_Queue_Test_Driver>.
  */
-class ACE_Svc_Export Async_Timer_Queue_Test_Driver : public Timer_Queue_Test_Driver <Async_Timer_Queue *, Async_Timer_Queue, Async_Timer_Queue::ACTION>
+class ACE_Svc_Export Async_Timer_Queue_Test_Driver
+  : public Timer_Queue_Test_Driver<Async_Timer_Queue *,
+                                   Async_Timer_Queue,
+                                   Async_Timer_Queue::ACTION>
 {
 public:
-  Async_Timer_Queue_Test_Driver ();
+  Async_Timer_Queue_Test_Driver () = default;
 
   /// Print menu of options.
-  virtual int display_menu ();
+  int display_menu () override;
 
   /// Initializes the driver's internal variables inherited from the parent
-  virtual int init ();
+  int init () override;
 };
 
 #endif /* _ASYNC_TIMER_QUEUE_TEST_H_ */

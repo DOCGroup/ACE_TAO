@@ -10,7 +10,6 @@
  */
 // =========================================================================
 
-
 #ifndef BASE_SERVER_H
 #define BASE_SERVER_H
 
@@ -20,6 +19,8 @@
 #include "tao/PortableServer/Servant_Base.h"
 
 #include "tao/ORB.h"
+
+#include <string>
 
 // Forward declaration of the kind of servant we are willing to handle
 // in this server
@@ -32,6 +33,11 @@ class AMH_Servant;
 class Base_Server
 {
 public:
+  Base_Server (Base_Server const &) = delete;
+  Base_Server (Base_Server &&) = delete;
+  Base_Server &operator= (Base_Server const &) = delete;
+  Base_Server &operator= (Base_Server &&) = delete;
+
   Base_Server (int &argc, ACE_TCHAR **argv);
 
   //    Is there any reason to make the destructor virtual?  Will you
@@ -44,7 +50,7 @@ public:
   // entry in the vtbl) and if, by chance, someone does delete a
   // derived-class though this classes ptr, we are still safe.  The
   // short answer to your question is : I don't know. :)
-  virtual ~Base_Server ();
+  virtual ~Base_Server () = default;
 
   // Just parse the command line for the output-file (-o) option.
   // return -1 if -o option is not present
@@ -71,18 +77,19 @@ public:
   // Mayur: A separate file for just one method? AAAGH. OK.
 
   /// Accesor method (for servants) to the initialised ORB
-  CORBA::ORB_ptr orb ();
+  CORBA::ORB_ptr orb () const;
 
 protected:
   int &argc_;
+  /// Borrowed from the process entry point; valid for this server's lifetime.
   ACE_TCHAR **argv_;
-  const ACE_TCHAR *ior_output_file_;
+  std::basic_string<ACE_TCHAR> ior_output_file_;
   CORBA::ORB_var orb_;
   PortableServer::POA_var root_poa_;
 
 private:
   /// Write servant IOR to file specified with the '-o' option
-  int write_ior_to_file (const char * ior);
+  int write_ior_to_file (char const *ior);
 };
 
 #if defined (__ACE_INLINE__)

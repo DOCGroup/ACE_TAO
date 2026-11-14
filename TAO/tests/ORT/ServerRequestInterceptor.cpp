@@ -2,10 +2,11 @@
 #include "ServerRequestInterceptor.h"
 
 #include "ace/Log_Msg.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 ServerRequestInterceptor::ServerRequestInterceptor (
-  const char * orb_id,
+  char const *orb_id,
   PortableServer::Current_ptr poa_current)
   : orb_id_ (orb_id),
     poa_current_ (PortableServer::Current::_duplicate (poa_current))
@@ -48,7 +49,7 @@ ServerRequestInterceptor::receive_request (
     {
       poa = this->poa_current_->get_POA ();
     }
-  catch (const PortableServer::Current::NoContext& ex)
+    catch (PortableServer::Current::NoContext const &ex)
     {
       ex._tao_print_exception ("ServerRequestInterceptor::receive_request");
 
@@ -66,12 +67,11 @@ ServerRequestInterceptor::receive_request (
   PortableInterceptor::AdapterName_var name =
     ri->adapter_name ();
 
-
   ACE_DEBUG ((LM_INFO,
               "POA Hierarchy:\n"
               "==============\n"));
 
-  const CORBA::ULong len = name->length ();
+  CORBA::ULong const len = name->length ();
 
   // Make sure there is more than one AdapterName in the AdapterName
   // sequence since the servant should have been registered with a
@@ -94,15 +94,15 @@ ServerRequestInterceptor::receive_request (
 
   // Make sure the name of the RootPOA is the first in the AdapterName
   // sequence.
-  ACE_ASSERT (ACE_OS::strcmp ("RootPOA", name[(CORBA::ULong) 0]) == 0);
+  ACE_ASSERT (std::strcmp ("RootPOA", name[(CORBA::ULong) 0]) == 0);
 
   CORBA::String_var orb_id = ri->orb_id ();
 
-  ACE_ASSERT (ACE_OS::strcmp (this->orb_id_.in (), orb_id.in ()) == 0);
+  ACE_ASSERT (std::strcmp (this->orb_id_.in (), orb_id.in ()) == 0);
 
   CORBA::String_var server_id = ri->server_id ();
 
-  ACE_ASSERT (ACE_OS::strcmp (server_id.in (), "ORT_test_server") == 0);
+  ACE_ASSERT (std::strcmp (server_id.in (), "ORT_test_server") == 0);
 }
 
 void

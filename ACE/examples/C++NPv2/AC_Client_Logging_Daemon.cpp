@@ -30,23 +30,21 @@
 
 #include <openssl/ssl.h>
 
-
 class AC_CLD_Acceptor
   : public ACE_Acceptor<AC_Input_Handler, ACE_SOCK_ACCEPTOR> {
 public:
-  // Constructor.
-  AC_CLD_Acceptor (AC_Output_Handler *handler = nullptr)
+  explicit AC_CLD_Acceptor (AC_Output_Handler *handler = nullptr)
     : output_handler_ (handler), input_handler_ (handler) {}
 
 protected:
   using PARENT = ACE_Acceptor<AC_Input_Handler, ACE_SOCK_ACCEPTOR>;
 
   // <ACE_Acceptor> factory method.
-  virtual int make_svc_handler (AC_Input_Handler *&sh);
+  int make_svc_handler (AC_Input_Handler *&sh) override;
 
   // <ACE_Reactor> close hook method.
-  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-                            ACE_Reactor_Mask = 0);
+  int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
+                    ACE_Reactor_Mask = 0) override;
 
   // Pointer to the output handler.
   AC_Output_Handler *output_handler_;
@@ -60,20 +58,19 @@ class AC_CLD_Connector
 public:
   using PARENT = ACE_Connector<AC_Output_Handler, ACE_SOCK_CONNECTOR>;
 
-  // Constructor.
-  AC_CLD_Connector (AC_Output_Handler *handler = nullptr)
+  explicit AC_CLD_Connector (AC_Output_Handler *handler = nullptr)
     : handler_ (handler), ssl_ctx_ (nullptr), ssl_ (nullptr) {}
 
   // Destructor frees the SSL resources.
-  virtual ~AC_CLD_Connector () {
+  ~AC_CLD_Connector () override {
     SSL_free (ssl_);
     SSL_CTX_free (ssl_ctx_);
   }
 
   //FUZZ: disable check_for_lack_ACE_OS
   // Initialize the Connector.
-  virtual int open (ACE_Reactor *r = ACE_Reactor::instance (),
-                    int flags = 0);
+  int open (ACE_Reactor *r = ACE_Reactor::instance (),
+            int flags = 0) override;
   //FUZZ: enable check_for_lack_ACE_OS
 
   // Re-establish a connection to the logging server.
@@ -81,20 +78,20 @@ public:
 
 protected:
   // Connection establishment and authentication hook method.
-  virtual int connect_svc_handler
+  int connect_svc_handler
     (AC_Output_Handler *&svc_handler,
      const ACE_SOCK_Connector::PEER_ADDR &remote_addr,
      ACE_Time_Value *timeout,
      const ACE_SOCK_Connector::PEER_ADDR &local_addr,
-     int reuse_addr, int flags, int perms);
+     int reuse_addr, int flags, int perms) override;
 
-  virtual int connect_svc_handler
+  int connect_svc_handler
     (AC_Output_Handler *&svc_handler,
      AC_Output_Handler *&sh_copy,
      const ACE_SOCK_Connector::PEER_ADDR &remote_addr,
      ACE_Time_Value *timeout,
      const ACE_SOCK_Connector::PEER_ADDR &local_addr,
-     int reuse_addr, int flags, int perms);
+     int reuse_addr, int flags, int perms) override;
 
   // Pointer to <AC_Output_Handler> we're connecting.
   AC_Output_Handler *handler_;
@@ -122,14 +119,13 @@ protected:
   AC_Output_Handler output_handler_;
 
 public:
-  // Constructor.
   AC_Client_Logging_Daemon ()
     : acceptor_ (&output_handler_),
       connector_ (&output_handler_) {}
 
   // Service Configurator hook methods.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
-  virtual int fini ();
+  int init (int argc, ACE_TCHAR *argv[]) override;
+  int fini () override;
   //virtual int info (ACE_TCHAR **bufferp, size_t length = 0) const;
   //virtual int suspend ();
   //virtual int resume ();
@@ -177,7 +173,7 @@ int AC_Output_Handler::handle_input (ACE_HANDLE h) {
 }
 
 int AC_Output_Handler::svc () {
-  ACE_Message_Block *chunk[ACE_IOV_MAX];
+  std::array<ACE_Message_Block_Unique_Ptr, ACE_IOV_MAX> chunk {};
   size_t message_index = 0;
   ACE_Time_Value time_of_last_send (ACE_OS::gettimeofday ());
   ACE_Time_Value timeout;
@@ -198,10 +194,11 @@ int AC_Output_Handler::svc () {
       } else if (errno != EWOULDBLOCK) break;
       else if (message_index == 0) continue;
     } else {
+      ACE_Message_Block_Unique_Ptr mblk_owner {mblk};
       if (mblk->size () == 0
           && mblk->msg_type () == ACE_Message_Block::MB_STOP)
-        { mblk->release (); break; }
-      chunk[message_index] = mblk;
+        break;
+      chunk[message_index].reset (mblk_owner.release ());
       ++message_index;
     }
     if (message_index >= ACE_IOV_MAX ||
@@ -218,12 +215,14 @@ int AC_Output_Handler::svc () {
   return 0;
 }
 
-int AC_Output_Handler::send (ACE_Message_Block *chunk[], size_t &count) {
+int AC_Output_Handler::send (
+  std::array<ACE_Message_Block_Unique_Ptr, ACE_IOV_MAX> &chunk,
+  size_t &count) {
   iovec iov[ACE_IOV_MAX];
-  size_t iov_size;
+  size_t iov_size = 0;
   int result = 0;
 
-  for (iov_size = 0; iov_size < count; ++iov_size) {
+  for (; iov_size < count; ++iov_size) {
     iov[iov_size].iov_base = chunk[iov_size]->rd_ptr ();
     iov[iov_size].iov_len =
       ACE_Utils::truncate_cast<u_long> (chunk[iov_size]->length ());
@@ -234,10 +233,9 @@ int AC_Output_Handler::send (ACE_Message_Block *chunk[], size_t &count) {
       break;
     }
 
-  while (iov_size > 0) {
-    chunk[--iov_size]->release (); chunk[iov_size] = nullptr;
-  }
-  count = iov_size;
+  for (size_t i = 0; i < count; ++i)
+    chunk[i].reset ();
+  count = 0;
   return result;
 }
 
@@ -257,7 +255,10 @@ int AC_Input_Handler::close (u_long) {
   ACE_NEW_RETURN
     (shutdown_message,
      ACE_Message_Block (0, ACE_Message_Block::MB_STOP), -1);
-  output_handler_->put (shutdown_message);
+  ACE_Message_Block_Unique_Ptr shutdown_owner {shutdown_message};
+  if (output_handler_->put (shutdown_message) == -1)
+    return -1;
+  shutdown_owner.release ();
 
   reactor ()->remove_handler
     (connected_clients_, ACE_Event_Handler::READ_MASK);
@@ -265,20 +266,16 @@ int AC_Input_Handler::close (u_long) {
 }
 
 int AC_Input_Handler::handle_input (ACE_HANDLE handle) {
-  ACE_Message_Block *mblk = nullptr;
+  ACE_Message_Block_Unique_Ptr mblk;
   Logging_Handler logging_handler (handle);
 
   if (logging_handler.recv_log_record (mblk) != -1)
     {
-      if (output_handler_->put (mblk->cont ()) != -1)
+      ACE_Message_Block * const payload = mblk->cont ();
+      if (output_handler_->put (payload) != -1)
         {
-          mblk->cont (0);
-          mblk->release ();
+          mblk->cont (nullptr);
           return 0; // Success return.
-        }
-      else
-        {
-          mblk->release ();
         }
     }
 
@@ -295,7 +292,6 @@ int AC_Input_Handler::handle_close (ACE_HANDLE handle,
 
 int AC_CLD_Acceptor::make_svc_handler (AC_Input_Handler *&sh)
 { sh = &input_handler_; return 0; }
-
 
 int AC_CLD_Acceptor::handle_close (ACE_HANDLE,
                                    ACE_Reactor_Mask) {

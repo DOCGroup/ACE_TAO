@@ -24,6 +24,7 @@
 #include "ace/Synch_Traits.h"
 #include "ace/os_include/os_stddef.h"
 
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -43,6 +44,11 @@ public:
 
   ACE_Based_Pointer_Repository ();
   ~ACE_Based_Pointer_Repository ();
+
+  ACE_Based_Pointer_Repository (ACE_Based_Pointer_Repository const &) = delete;
+  ACE_Based_Pointer_Repository (ACE_Based_Pointer_Repository &&) = delete;
+  ACE_Based_Pointer_Repository &operator= (ACE_Based_Pointer_Repository const &) = delete;
+  ACE_Based_Pointer_Repository &operator= (ACE_Based_Pointer_Repository &&) = delete;
 
   // = Search structure methods.
   /**
@@ -65,11 +71,7 @@ public:
 private:
   /// Use the "Cheshire-Cat" technique to hide the implementation in
   /// order to avoid circular #include dependencies.
-  ACE_Based_Pointer_Repository_Rep *rep_;
-
-private:
-  void operator= (const ACE_Based_Pointer_Repository &) = delete;
-  ACE_Based_Pointer_Repository (const ACE_Based_Pointer_Repository &) = delete;
+  std::unique_ptr<ACE_Based_Pointer_Repository_Rep> rep_;
 };
 
 // ----------------------------------

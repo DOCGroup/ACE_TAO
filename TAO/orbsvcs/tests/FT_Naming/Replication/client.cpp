@@ -24,18 +24,16 @@ class My_Test_Object :
   public virtual POA_Test_Object
 {
 public:
-  My_Test_Object (CORBA::Short id = 0);
-  // Constructor.
+  explicit My_Test_Object (CORBA::Short id = 0);
 
-  ~My_Test_Object ();
-  // Destructor.
+  ~My_Test_Object () override;
 
   // = Interface implementation accessor methods.
 
-  void id (CORBA::Short id);
+  void id (CORBA::Short id) override;
   // Sets id.
 
-  CORBA::Short id ();
+  CORBA::Short id () override;
   // Gets id.
 
 private:
@@ -62,7 +60,6 @@ My_Test_Object::id (CORBA::Short id)
 {
   id_ = id;
 }
-
 
 // This function runs the test.
 
@@ -582,7 +579,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   // TODO: Cleanup namespace
 
-
   // TODO: Create object groups and bind them. Check the replica.
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Redundancy test OK.\n")
@@ -670,7 +666,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     ex._tao_print_exception (ACE_TEXT ("ERROR: Exception during performance test.\n"));
     return -1;
   }
-
 
   return 0;
 }

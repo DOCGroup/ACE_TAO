@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_BLOB_H
 #define ACE_BLOB_H
 
@@ -27,6 +26,7 @@
 #include "ace/Connector.h"
 #include "ace/Message_Block.h"
 #include "Blob_Handler.h"
+#include <string>
 
 /**
  * @class ACE_Blob
@@ -42,15 +42,19 @@
 class ACE_Blob
 {
 public:
-  ACE_Blob ();
-  ~ACE_Blob ();
+  ACE_Blob () = default;
+  ~ACE_Blob () = default;
+
+  ACE_Blob (ACE_Blob const &) = delete;
+  ACE_Blob (ACE_Blob &&) = delete;
+  ACE_Blob &operator= (ACE_Blob const &) = delete;
+  ACE_Blob &operator= (ACE_Blob &&) = delete;
 
   /// initializes the class with the given filename, hostname and port.
   /// it should be called with the filename, before any read/write calls
-  int open (const ACE_TCHAR *filename,
-            const ACE_TCHAR *hostname = ACE_DEFAULT_SERVER_HOST,
+  int open (ACE_TCHAR const *filename,
+            ACE_TCHAR const *hostname = ACE_DEFAULT_SERVER_HOST,
             u_short port = 80);
-
 
   /**
    * starts a connection, and reads a file from the server,
@@ -68,8 +72,7 @@ public:
    */
   int write (ACE_Message_Block *mb, size_t length, size_t offset);
 
-
-  /// Frees memory allocated for filename.
+  /// Clears the filename.
   int close ();
 
 private:
@@ -77,7 +80,7 @@ private:
   ACE_INET_Addr inet_addr_;
 
   /// The filename
-  ACE_TCHAR *filename_;
+  std::basic_string<ACE_TCHAR> filename_;
 
   /// The connector endpoint to initiate the client connection
   ACE_Connector<ACE_Blob_Handler, ACE_SOCK_CONNECTOR> connector_;

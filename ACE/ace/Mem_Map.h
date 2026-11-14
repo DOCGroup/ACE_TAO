@@ -96,7 +96,6 @@ public:
            ACE_OFF_T offset = 0,
            LPSECURITY_ATTRIBUTES sa = 0);
 
-  /// Destructor.
   ~ACE_Mem_Map ();
 
   /// Open the file without mapping it.

@@ -1,24 +1,15 @@
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = DESCRIPTION
-//    This simple test illustrates how to use advanced features of
-//    <ACE_ARGV>.
-//
-// = AUTHOR
-//    Suresh Kannan <kannan@uav.ae.gatech.edu> and
-//    Duane Binder <duane.binder@veritas.com>
-
-// ============================================================================
+/// @file ARGV_Test.cpp
+/// This simple test illustrates how to use advanced features of
+/// <ACE_ARGV>.
+///
+/// @author Suresh Kannan <kannan@uav.ae.gatech.edu> and
+/// @author Duane Binder <duane.binder@veritas.com>
 
 #include "ace/ARGV.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Argv_Type_Converter.h"
 #include "test_config.h"
-
 
 static void
 consume_arg (int argc, ACE_TCHAR *argv[])
@@ -95,7 +86,7 @@ test_argv_type_converter ()
   {
     for (size_t i = 0; i < 4; i++)
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT (" (%d) %C\n"),
+                  ACE_TEXT (" (%B) %C\n"),
                   i,
                   argv[i]));
   }
@@ -132,7 +123,7 @@ test_argv_type_converter2 ()
   {
     for (size_t i = 0; i < 4; i++)
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT (" (%d) %s\n"),
+                  ACE_TEXT (" (%B) %s\n"),
                   i,
                   argv[i]));
   }

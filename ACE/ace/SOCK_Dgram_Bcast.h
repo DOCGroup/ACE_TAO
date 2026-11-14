@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_SOCK_DGRAM_BCAST_H
 #define ACE_SOCK_DGRAM_BCAST_H
 #include /**/ "ace/pre.h"
@@ -36,7 +35,6 @@ public:
   ACE_Bcast_Node (ACE_INET_Addr &,
                   ACE_Bcast_Node *);
 
-  /// Destructor.
   ~ACE_Bcast_Node () = default;
 
   /// Broadcast address for the interface.

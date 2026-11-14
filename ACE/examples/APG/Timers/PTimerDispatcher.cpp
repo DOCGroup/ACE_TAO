@@ -4,7 +4,7 @@ void PTimer_Dispatcher::wait_for_event ()
 {
   ACE_TRACE ("PTimer_Dispatcher::wait_for_event");
 
-  while (1)
+  while (true)
     {
       ACE_Time_Value max_tv = timer_queue_->gettimeofday ();
 
@@ -19,7 +19,7 @@ void PTimer_Dispatcher::wait_for_event ()
           ACE_Time_Value next_timeout =
             timer_queue_->gettimeofday ();
           next_timeout += *this_timeout;
-          if (this->timer_.wait (&next_timeout) == -1 )
+          if (this->timer_.wait (&next_timeout) == -1)
             this->timer_queue_->expire ();
         }
     }
@@ -28,8 +28,8 @@ void PTimer_Dispatcher::wait_for_event ()
 long
 PTimer_Dispatcher::schedule (PCB *cb,
                              void *arg,
-                             const ACE_Time_Value &abs_time,
-                             const ACE_Time_Value &interval)
+                             ACE_Time_Value const &abs_time,
+                             ACE_Time_Value const &interval)
 {
   ACE_TRACE ("PTimer_Dispatcher::schedule_timer");
 
@@ -54,7 +54,7 @@ void PTimer_Dispatcher::set (PTimerQueue *timer_queue)
 
 int
 PTimer_Dispatcher::reset_interval (long timer_id,
-                                   const ACE_Time_Value &interval)
+                                   ACE_Time_Value const &interval)
 {
   ACE_TRACE ("PTimer_Dispatcher::reset_interval");
 

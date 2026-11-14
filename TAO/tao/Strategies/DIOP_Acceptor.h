@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    DIOP_Acceptor.h
  *
@@ -8,8 +7,6 @@
  *
  *  @author  Michael Kircher
  */
-//=============================================================================
-
 
 #ifndef TAO_DIOP_ACCEPTOR_H
 #define TAO_DIOP_ACCEPTOR_H
@@ -29,6 +26,7 @@
 #include "tao/Acceptor_Impl.h"
 
 #include "tao/GIOP_Message_Version.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -44,10 +42,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Strategies_Export TAO_DIOP_Acceptor : public TAO_Acceptor
 {
 public:
-  /// Constructor.
   TAO_DIOP_Acceptor ();
 
-  /// Destructor.
   ~TAO_DIOP_Acceptor ();
 
   /// @@ Helper method for the implementation repository, should go
@@ -85,7 +81,7 @@ public:
                       TAO_MProfile &mprofile,
                       CORBA::Short priority) override;
 
-  int is_collocated (TAO_Endpoint const *endpoint) override;
+  bool is_collocated (TAO_Endpoint const *endpoint) override;
   CORBA::ULong endpoint_count () override;
 
   int object_key (IOP::TaggedProfile &profile,
@@ -174,7 +170,7 @@ protected:
 protected:
   /// Array of ACE_INET_Addr instances, each one corresponding to a
   /// given network interface.
-  ACE_INET_Addr *addrs_ {};
+  std::unique_ptr<ACE_INET_Addr[]> addrs_;
 
   /**
    * The number of ports over which the acceptor should search (starting
@@ -190,7 +186,7 @@ protected:
    * example, if the IP address is INADDR_ANY (0.0.0.0) then there
    * will be possibly a different hostname for each interface.
    */
-  char **hosts_ {};
+  std::unique_ptr<char *[]> hosts_;
 
   /// The number of host names cached in the hosts_ array (equivalent
   /// to the number of endpoints opened by this Acceptor).

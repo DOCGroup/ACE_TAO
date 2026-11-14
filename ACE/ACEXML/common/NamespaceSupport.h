@@ -23,28 +23,29 @@
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Containers_T.h"
 #include "ace/Null_Mutex.h"
+#include <memory>
 
+using ACEXML_NS_CONTEXT_ENTRY = ACE_Hash_Map_Entry<ACEXML_String,
+                                                   ACEXML_String>;
 
-typedef ACE_Hash_Map_Entry<ACEXML_String,
-                           ACEXML_String> ACEXML_NS_CONTEXT_ENTRY;
+using ACEXML_NS_CONTEXT = ACE_Hash_Map_Manager_Ex<ACEXML_String,
+                                                  ACEXML_String,
+                                                  ACE_Hash<ACEXML_String>,
+                                                  ACE_Equal_To<ACEXML_String>,
+                                                  ACE_Null_Mutex>;
 
-typedef ACE_Hash_Map_Manager_Ex<ACEXML_String,
-                                ACEXML_String,
-                                ACE_Hash<ACEXML_String>,
-                                ACE_Equal_To<ACEXML_String>,
-                                ACE_Null_Mutex> ACEXML_NS_CONTEXT;
+using ACEXML_NS_CONTEXT_ITER = ACE_Hash_Map_Iterator_Ex<ACEXML_String,
+                                                        ACEXML_String,
+                                                        ACE_Hash<ACEXML_String>,
+                                                        ACE_Equal_To<ACEXML_String>,
+                                                        ACE_Null_Mutex>;
 
-typedef ACE_Hash_Map_Iterator_Ex<ACEXML_String,
-                                 ACEXML_String,
-                                 ACE_Hash<ACEXML_String>,
-                                 ACE_Equal_To<ACEXML_String>,
-                                 ACE_Null_Mutex> ACEXML_NS_CONTEXT_ITER;
-
-typedef ACE_Hash_Map_Reverse_Iterator_Ex<ACEXML_String,
-                                         ACEXML_String,
-                                         ACE_Hash<ACEXML_String>,
-                                         ACE_Equal_To<ACEXML_String>,
-                                         ACE_Null_Mutex> ACEXML_NS_CONTEXT_REVERSE_ITER;
+using ACEXML_NS_CONTEXT_REVERSE_ITER =
+  ACE_Hash_Map_Reverse_Iterator_Ex<ACEXML_String,
+                                   ACEXML_String,
+                                   ACE_Hash<ACEXML_String>,
+                                   ACE_Equal_To<ACEXML_String>,
+                                   ACE_Null_Mutex>;
 
 using ACEXML_STR_LIST = ACE_Unbounded_Queue<const ACEXML_Char *>;
 
@@ -59,11 +60,14 @@ using ACEXML_STR_LIST = ACE_Unbounded_Queue<const ACEXML_Char *>;
 class ACEXML_Export ACEXML_Namespace_Context_Stack
 {
 public:
-  /// Default constructor.
   ACEXML_Namespace_Context_Stack ();
 
-  /// Destructor.
   ~ACEXML_Namespace_Context_Stack ();
+
+  ACEXML_Namespace_Context_Stack (ACEXML_Namespace_Context_Stack const &) = delete;
+  ACEXML_Namespace_Context_Stack (ACEXML_Namespace_Context_Stack &&) = delete;
+  ACEXML_Namespace_Context_Stack &operator= (ACEXML_Namespace_Context_Stack const &) = delete;
+  ACEXML_Namespace_Context_Stack &operator= (ACEXML_Namespace_Context_Stack &&) = delete;
 
   /// Push the old namespace before entering into a new namespace scope.
   int push (ACEXML_NS_CONTEXT * old);
@@ -72,7 +76,7 @@ public:
   ACEXML_NS_CONTEXT *pop ();
 
 private:
-  /// Internal stack structure to hold namespace context.
+  /// Owns contexts passed to push; pop transfers ownership back to the caller.
   ACE_Unbounded_Stack<ACEXML_NS_CONTEXT*> stack_;
 };
 
@@ -123,15 +127,14 @@ private:
 class ACEXML_Export ACEXML_NamespaceSupport
 {
 public:
-  /**
-   * Default constructor.
-   */
   ACEXML_NamespaceSupport ();
 
-  /**
-   * Default destructor.
-   */
   ~ACEXML_NamespaceSupport ();
+
+  ACEXML_NamespaceSupport (ACEXML_NamespaceSupport const &) = delete;
+  ACEXML_NamespaceSupport (ACEXML_NamespaceSupport &&) = delete;
+  ACEXML_NamespaceSupport &operator= (ACEXML_NamespaceSupport const &) = delete;
+  ACEXML_NamespaceSupport &operator= (ACEXML_NamespaceSupport &&) = delete;
 
   /**
    *  Initialize the namespace support object
@@ -196,10 +199,10 @@ public:
    * @a is_attribute specifies whether the name is an attribute or not.
    *    Attributes have different scoping rules from elements.
    */
-  int processName (const ACEXML_Char *qName,
-                   const ACEXML_Char *&uri,
-                   const ACEXML_Char *&name,
-                   int is_attribute) const;
+  int processName (ACEXML_Char const *qName,
+                   ACEXML_Char const *&uri,
+                   ACEXML_Char const *&name,
+                   bool is_attribute) const;
 
   /**
    * Start a new Namespace context.  Prefixes defined in previous
@@ -224,7 +227,7 @@ private:
   /**
    * The effective namespace context.
    */
-  ACEXML_NS_CONTEXT *effective_context_;
+  std::unique_ptr<ACEXML_NS_CONTEXT> effective_context_ {};
 };
 
 #include /**/ "ace/post.h"

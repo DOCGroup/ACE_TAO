@@ -24,49 +24,42 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @brief Simple consumer of log-generated events.
+ */
 class Consumer
   : public POA_CosNotifyComm::PushConsumer
 {
-  // = TITLE
-  //   Simple consumer object
-  //
-  // = DESCRIPTION
-  //   This class is a consumer of log generated events.
-  //
 public:
-  Consumer ();
-  // Constructor
+  Consumer () = default;
 
-  int run (int argc, ACE_TCHAR* argv[]);
-  // Run the test
+  Consumer (Consumer const &) = delete;
+  Consumer (Consumer &&) = delete;
+  Consumer &operator= (Consumer const &) = delete;
+  Consumer &operator= (Consumer &&) = delete;
+
+  /// Run the test.
+  int run (int argc, ACE_TCHAR *argv[]);
 
 protected:
-  CosNotifyChannelAdmin::ProxyID proxy_supplier_id_;
-  // The proxy_supplier id.
+  /// The proxy supplier ID.
+  CosNotifyChannelAdmin::ProxyID proxy_supplier_id_ {};
 
-  // = Methods
+  void offer_change (CosNotification::EventTypeSeq const &added,
+                     CosNotification::EventTypeSeq const &removed) override;
 
-  // = NotifyPublish method
-  virtual void offer_change (
-        const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed);
-
-  // = StructuredPushSupplier methods
-  virtual void push (const CORBA::Any &event);
-
-
-  virtual void disconnect_push_consumer ();
+  void push (CORBA::Any const &event) override;
+  void disconnect_push_consumer () override;
 
 private:
-  CORBA::ULong event_count_;
-  // Keep track of the number of events received.
+  /// Number of events received.
+  CORBA::ULong event_count_ {};
 
-  // = Data Members
+  /// The ORB used by this consumer.
   CORBA::ORB_var orb_;
-  // The ORB that we use.
 
+  /// Handle to the name service.
   CosNaming::NamingContext_var naming_context_;
-  // Handle to the name service.
 
   DsNotifyLogAdmin::NotifyLogFactory_var notify_log_factory_;
 

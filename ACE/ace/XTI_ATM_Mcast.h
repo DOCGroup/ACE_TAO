@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_XTI_ATM_MCAST_H
 #define ACE_XTI_ATM_MCAST_H
 #include /**/ "ace/pre.h"

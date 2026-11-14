@@ -14,11 +14,11 @@
 class Stdout : public ACE_Event_Handler
 {
 public:
-  Stdout (ACE_Reactor * r)
-    : reactor_ (r),
+  explicit Stdout (ACE_Reactor &reactor)
+    : reactor_ (reactor),
       msg_ (1000000) // Make a very big message block.
   {
-    int flags = ACE_OS::fcntl (ACE_STDOUT, F_GETFL);
+    int const flags = ACE_OS::fcntl (ACE_STDOUT, F_GETFL);
 
     if (flags != -1
         && ACE_OS::fcntl (ACE_STDOUT,
@@ -29,24 +29,23 @@ public:
                   "Unable to set stdout to non-block."));
   }
 
-  ACE_HANDLE get_handle () const { return ACE_STDOUT; }
+  ACE_HANDLE get_handle () const override { return ACE_STDOUT; }
 
-  int handle_output (ACE_HANDLE)
+  int handle_output (ACE_HANDLE) override
   {
-    char *s = msg_.rd_ptr ();
+    char const *s = msg_.rd_ptr ();
 
     if (ACE_OS::write (ACE_STDOUT, s, 1) == 1)
       {
         ACE_DEBUG ((LM_DEBUG,
                     "wrote output '%d'\n",
-                    (int) *s));
+                    static_cast<int> (*s)));
         msg_.rd_ptr (1);
       }
 
     if (msg_.length () == 0)
       {
-        reactor_->remove_handler (this,
-                                  ACE_Event_Handler::WRITE_MASK);
+        this->reactor_.remove_handler (this, ACE_Event_Handler::WRITE_MASK);
         msg_.rd_ptr (msg_.base ());
         msg_.wr_ptr (msg_.base ());
       }
@@ -56,8 +55,7 @@ public:
   void put (char c)
   {
     if (msg_.length () == 0)
-      reactor_->register_handler (this,
-                                  ACE_Event_Handler::WRITE_MASK);
+      this->reactor_.register_handler (this, ACE_Event_Handler::WRITE_MASK);
 
     if (msg_.wr_ptr () < msg_.end ())
       {
@@ -70,38 +68,48 @@ public:
   }
 
 private:
-  ACE_Reactor *reactor_;
+  ACE_Reactor &reactor_;
   ACE_Message_Block msg_;
+
+  Stdout (Stdout const &) = delete;
+  Stdout (Stdout &&) = delete;
+  Stdout &operator= (Stdout const &) = delete;
+  Stdout &operator= (Stdout &&) = delete;
 };
 
 class Stdin : public ACE_Event_Handler
 {
 public:
-  Stdin (Stdout *out)
+  explicit Stdin (Stdout &out)
     : out_ (out) {}
 
-  ACE_HANDLE get_handle () const { return ACE_STDIN; }
+  ACE_HANDLE get_handle () const override { return ACE_STDIN; }
 
-  int handle_input (ACE_HANDLE)
+  int handle_input (ACE_HANDLE) override
   {
     char c;
 
     if (ACE_OS::read (ACE_STDIN, &c, 1) == 1)
-      out_->put (c);
+      this->out_.put (c);
 
     return 0;
   }
 
-  int handle_timeout (const ACE_Time_Value &tv, const void *)
+  int handle_timeout (ACE_Time_Value const &tv, void const *) override
   {
     ACE_DEBUG ((LM_DEBUG,
                 "Timeout! %f\n",
-                (double) (tv.msec () / 1000.)));
+                static_cast<double> (tv.msec () / 1000.)));
     return 0;
   }
 
 private:
-  Stdout *out_;
+  Stdout &out_;
+
+  Stdin (Stdin const &) = delete;
+  Stdin (Stdin &&) = delete;
+  Stdin &operator= (Stdin const &) = delete;
+  Stdin &operator= (Stdin &&) = delete;
 };
 
 static void
@@ -115,40 +123,38 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR**argv)
 {
   // The worlds most useless user interface
-  Widget top_level = XtVaAppInitialize (0,
+  Widget const top_level = XtVaAppInitialize (nullptr,
                                         "buttontest",
-                                        0,
+                                        nullptr,
                                         0,
                                         &argc,
                                         argv,
-                                        0,
-                                        static_cast<void *>(0));
+                                        nullptr,
+                                        static_cast<void *> (nullptr));
   char change[] = "change"; // XmCreatePushButton() wants a non-const
                             // string.
-  Widget button = XmCreatePushButton (top_level,
+  Widget const button = XmCreatePushButton (top_level,
                                       change,
-                                      0,
+                                      nullptr,
                                       0);
   XtManageChild (button);
   XtAddCallback (button,
                  XmNactivateCallback,
                  ActivateCB,
-                 0);
+                 nullptr);
 
   // A reactor beastie.
   ACE_XtReactor xreactor (XtWidgetToApplicationContext (top_level));
   ACE_Reactor reactor (&xreactor);
 
   // Print a message when data is recv'd on stdin...
-  ACE_Event_Handler *stdin_;
-  ACE_NEW_RETURN (stdin_,
-                  Stdin (new Stdout (&reactor)),
-                  -1);
-  reactor.register_handler (stdin_,
+  Stdout stdout_handler (reactor);
+  Stdin stdin_handler (stdout_handler);
+  reactor.register_handler (&stdin_handler,
                             ACE_Event_Handler::READ_MASK);
 
   // Print a message every 10 seconds.
-  if (reactor.schedule_timer (stdin_, 0,
+  if (reactor.schedule_timer (&stdin_handler, nullptr,
                               ACE_Time_Value (10),
                               ACE_Time_Value (10)) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -161,6 +167,10 @@ ACE_TMAIN (int argc, ACE_TCHAR**argv)
 
   // Demonstrate Reactor/Xt event loop unification.
   XtAppMainLoop (XtWidgetToApplicationContext (top_level));
+
+  reactor.cancel_timer (&stdin_handler);
+  reactor.remove_handler (&stdin_handler, ACE_Event_Handler::READ_MASK);
+  reactor.remove_handler (&stdout_handler, ACE_Event_Handler::WRITE_MASK);
 
   return 0;
 }

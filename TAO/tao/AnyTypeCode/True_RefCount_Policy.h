@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    True_RefCount_Policy.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_TRUE_REFCOUNT_POLICY_H
 #define TAO_TRUE_REFCOUNT_POLICY_H
@@ -69,6 +67,11 @@ namespace TAO
   class TAO_AnyTypeCode_Export True_RefCount_Policy
   {
   public:
+    True_RefCount_Policy (True_RefCount_Policy const &) = delete;
+    True_RefCount_Policy (True_RefCount_Policy &&) = delete;
+    True_RefCount_Policy &operator= (True_RefCount_Policy const &) = delete;
+    True_RefCount_Policy &operator= (True_RefCount_Policy &&) = delete;
+
     /// Increase the reference count on this object.
     void add_ref ();
 
@@ -81,14 +84,12 @@ namespace TAO
     void remove_ref ();
 
   protected:
-    /// Constructor.
     /**
      * @note This constructor is protected since it not meant to be
      *       instantiated/used as a standalone object.
      */
     True_RefCount_Policy () = default;
 
-    /// Destructor.
     /**
      * @note The destructor must be virtual to ensure that subclass
      *       destructors are called when the reference count drops to

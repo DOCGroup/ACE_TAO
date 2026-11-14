@@ -34,7 +34,7 @@ $SV = $server->CreateProcess ("server",
                               "-o $server_iorfile");
 
 $CL = $client->CreateProcess ("client",
-                              "-i $iterations -b $burst" .
+                              "-i $iterations -b $burst " .
                               "-k file://$client_iorfile");
 $server_status = $SV->Spawn ();
 

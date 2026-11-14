@@ -31,24 +31,30 @@
 #include "ace/INET_Addr.h"
 #include "ace/Log_Msg.h"
 
+#include <memory>
+
 // Port used to receive for dgrams.
-static u_short port1;
+static u_short port1 {};
 
 class Dgram_Endpoint : public ACE_Event_Handler
 {
 public:
-  Dgram_Endpoint (const ACE_INET_Addr &local_addr);
+  Dgram_Endpoint (ACE_INET_Addr const &local_addr);
+  Dgram_Endpoint (Dgram_Endpoint const &) = delete;
+  Dgram_Endpoint (Dgram_Endpoint &&) = delete;
+  Dgram_Endpoint &operator= (Dgram_Endpoint const &) = delete;
+  Dgram_Endpoint &operator= (Dgram_Endpoint &&) = delete;
 
   // = Hook methods inherited from the <ACE_Event_Handler>.
   ACE_HANDLE get_handle () const override;
   int handle_input (ACE_HANDLE handle) override;
-  int handle_timeout (const ACE_Time_Value & tv,
-                      const void *arg = nullptr) override;
+  int handle_timeout (ACE_Time_Value const &tv,
+                      void const *arg = nullptr) override;
   int handle_close (ACE_HANDLE handle,
                     ACE_Reactor_Mask close_mask) override;
 
   //FUZZ: disable check_for_lack_ACE_OS
-  int send (const char *buf, size_t len, const ACE_INET_Addr &);
+  int send (char const *buf, size_t len, ACE_INET_Addr const &);
   // Send the <buf> to the peer.
   //FUZZ: enable check_for_lack_ACE_OS
 
@@ -58,14 +64,14 @@ private:
 };
 
 int
-Dgram_Endpoint::send (const char *buf,
+Dgram_Endpoint::send (char const *buf,
                       size_t len,
-                      const ACE_INET_Addr &addr)
+                      ACE_INET_Addr const &addr)
 {
   return this->endpoint_.send (buf, len, addr);
 }
 
-Dgram_Endpoint::Dgram_Endpoint (const ACE_INET_Addr &local_addr)
+Dgram_Endpoint::Dgram_Endpoint (ACE_INET_Addr const &local_addr)
   : endpoint_ (local_addr)
 {
 }
@@ -127,23 +133,25 @@ run_test (u_short localport,
   ACE_INET_Addr remote_addr (remoteport, remotehost);
   ACE_INET_Addr local_addr (localport);
 
-  Dgram_Endpoint *endpoint = nullptr;
+  Dgram_Endpoint *endpoint_raw {};
 
-  ACE_NEW_RETURN (endpoint,
+  ACE_NEW_RETURN (endpoint_raw,
                   Dgram_Endpoint (local_addr),
                   -1);
+  std::unique_ptr<Dgram_Endpoint> endpoint_owner (endpoint_raw);
 
   // Read data from other side.
   if (ACE_Reactor::instance ()->register_handler
-      (endpoint,
+      (endpoint_owner.get (),
        ACE_Event_Handler::READ_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "ACE_Reactor::register_handler"),
                       -1);
+  // After registration, the handler deletes itself from the close callback.
+  Dgram_Endpoint *endpoint = endpoint_owner.release ();
 
-  char buf[BUFSIZ];
-  ACE_OS::strcpy (buf, "Data to transmit");
-  size_t const len = ACE_OS::strlen (buf);
+  char const buf[] = "Data to transmit";
+  size_t const len = sizeof (buf) - 1;
 
   if (ACE_OS::strncmp (peer, ACE_TEXT("peer1"), 5) == 0)
     {
@@ -195,8 +203,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // Establish call backs and socket names.
   port1 = argc > 1 ? ACE_OS::atoi (argv[1]) : ACE_DEFAULT_SERVER_PORT;
-  const ACE_TCHAR *remotehost = argc > 2 ? argv[2] : ACE_DEFAULT_SERVER_HOST;
-  const u_short port2 = argc > 3 ? ACE_OS::atoi (argv[3]) : port1 + 1;
+  ACE_TCHAR const *remotehost = argc > 2 ? argv[2] : ACE_DEFAULT_SERVER_HOST;
+  u_short const port2 = argc > 3 ? ACE_OS::atoi (argv[3]) : port1 + 1;
 
   // Providing the fourth command line argument indicate we don't want
   // to spawn a new process.  On Win32, we use this to exec the new

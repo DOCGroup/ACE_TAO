@@ -24,26 +24,24 @@
 template <class Peer_Traits>
 class TAO_Notify_Tests_Peer_T : public TAO_Notify_Tests_Peer, public Peer_Traits::SKELETON
 {
-  typedef typename Peer_Traits::Admin_Traits Admin_Traits;
-  typedef typename Peer_Traits::Admin_Ext_Traits Admin_Ext_Traits;
-  typedef typename Peer_Traits::Proxy_Traits Proxy_Traits;
+  using Admin_Traits = typename Peer_Traits::Admin_Traits;
+  using Admin_Ext_Traits = typename Peer_Traits::Admin_Ext_Traits;
+  using Proxy_Traits = typename Peer_Traits::Proxy_Traits;
 
-  typedef typename Peer_Traits::PTR Peer_Traits_PTR;
+  using Peer_Traits_PTR = typename Peer_Traits::PTR;
 
-  typedef typename Proxy_Traits::INTERFACE Proxy_Traits_INTERFACE;
-  typedef typename Proxy_Traits::PTR Proxy_Traits_PTR;
-  typedef typename Proxy_Traits::ID Proxy_Traits_ID;
+  using Proxy_Traits_INTERFACE = typename Proxy_Traits::INTERFACE;
+  using Proxy_Traits_PTR = typename Proxy_Traits::PTR;
+  using Proxy_Traits_ID = typename Proxy_Traits::ID;
 
-  typedef typename Admin_Traits::PTR Admin_Traits_PTR;
+  using Admin_Traits_PTR = typename Admin_Traits::PTR;
 
-  typedef typename Admin_Ext_Traits::INTERFACE Admin_Ext_Traits_INTERFACE;
-  typedef typename Admin_Ext_Traits::PTR Admin_Ext_Traits_PTR;
+  using Admin_Ext_Traits_INTERFACE = typename Admin_Ext_Traits::INTERFACE;
+  using Admin_Ext_Traits_PTR = typename Admin_Ext_Traits::PTR;
 
 public:
-  /// Constructor
   TAO_Notify_Tests_Peer_T ();
 
-  /// Destructor
   virtual ~TAO_Notify_Tests_Peer_T ();
 
   // Activates this servant with the POA supplied in init.
@@ -73,7 +71,7 @@ public:
   void deactivate ();
 
   // = ServantBase operations
-  virtual PortableServer::POA_ptr _default_POA ();
+  PortableServer::POA_ptr _default_POA () override;
 
 protected:
   /// Activate this object in the default POA.

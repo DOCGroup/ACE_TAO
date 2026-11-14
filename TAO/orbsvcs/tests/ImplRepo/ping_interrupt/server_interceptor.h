@@ -23,31 +23,34 @@ class Ping_Death_Request_Interceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-  // cotr.
-  Ping_Death_Request_Interceptor (int *counter);
+  explicit Ping_Death_Request_Interceptor (int *counter);
 
-  // dotr.
-  ~Ping_Death_Request_Interceptor ();
+  Ping_Death_Request_Interceptor (Ping_Death_Request_Interceptor const &) = delete;
+  Ping_Death_Request_Interceptor (Ping_Death_Request_Interceptor &&) = delete;
+  Ping_Death_Request_Interceptor &operator= (Ping_Death_Request_Interceptor const &) = delete;
+  Ping_Death_Request_Interceptor &operator= (Ping_Death_Request_Interceptor &&) = delete;
+
+  ~Ping_Death_Request_Interceptor () override = default;
   void set_poa (PortableServer::POA_ptr poa);
 
-  // Canonical name of the interceptor.
-  virtual char * name ();
+  /// Canonical name of the interceptor.
+  char * name () override;
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri);
+  void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void receive_request_service_contexts (PortableInterceptor::ServerRequestInfo_ptr);
+  void receive_request_service_contexts (PortableInterceptor::ServerRequestInfo_ptr) override;
 
-  virtual void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_other (PortableInterceptor::ServerRequestInfo_ptr);
+  void send_other (PortableInterceptor::ServerRequestInfo_ptr) override;
 
 private:
-  const char *myname_;
-  int *counter_;
+  /// Non-owning counter retained by the ORB initializer for the interceptor's lifetime.
+  int * const counter_;
   PortableServer::POA_var poa_;
 };
 

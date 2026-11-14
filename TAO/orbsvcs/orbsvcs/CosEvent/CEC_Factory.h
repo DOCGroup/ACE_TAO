@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_CEC_FACTORY_H
 #define TAO_CEC_FACTORY_H
 
@@ -82,8 +81,14 @@ using TAO_CEC_ProxyPullSupplier_Collection = TAO_ESF_Proxy_Collection<TAO_CEC_Pr
 class TAO_Event_Serv_Export TAO_CEC_Factory : public ACE_Service_Object
 {
 public:
-  /// destructor...
-  virtual ~TAO_CEC_Factory ();
+  TAO_CEC_Factory () = default;
+
+  ~TAO_CEC_Factory () override = default;
+
+  TAO_CEC_Factory (TAO_CEC_Factory const &) = delete;
+  TAO_CEC_Factory (TAO_CEC_Factory &&) = delete;
+  TAO_CEC_Factory &operator= (TAO_CEC_Factory const &) = delete;
+  TAO_CEC_Factory &operator= (TAO_CEC_Factory &&) = delete;
 
   /// Create and destroy the dispatching module.
   virtual TAO_CEC_Dispatching*
@@ -224,7 +229,7 @@ public:
       destroy_supplier_control (TAO_CEC_SupplierControl*) = 0;
 
   virtual CORBA::Policy_ptr
-  create_roundtrip_timeout_policy (const ACE_Time_Value &timeout) = 0;
+  create_roundtrip_timeout_policy (ACE_Time_Value const &timeout) = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

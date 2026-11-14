@@ -1,13 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Any_Special_Impl_T.h
  *
  *  @author  Carlos O'Ryan and Jeff Parsons
  */
-//=============================================================================
-
 
 #ifndef TAO_ANY_SPECIAL_IMPL_T_H
 #define TAO_ANY_SPECIAL_IMPL_T_H
@@ -33,6 +30,11 @@ namespace TAO
   class Any_Special_Impl_T : public Any_Impl
   {
   public:
+    Any_Special_Impl_T (Any_Special_Impl_T const &) = delete;
+    Any_Special_Impl_T (Any_Special_Impl_T &&) = delete;
+    Any_Special_Impl_T &operator= (Any_Special_Impl_T const &) = delete;
+    Any_Special_Impl_T &operator= (Any_Special_Impl_T &&) = delete;
+
     Any_Special_Impl_T (_tao_destructor destructor,
                         CORBA::TypeCode_ptr,
                         T * const,
@@ -44,20 +46,22 @@ namespace TAO
                         CORBA::TypeCode_ptr,
                         T * const,
                         CORBA::ULong bound);
-    static CORBA::Boolean extract (const CORBA::Any &,
+    static CORBA::Boolean extract (CORBA::Any const &,
                                    _tao_destructor,
                                    CORBA::TypeCode_ptr,
-                                   const T *&,
+                                   T const *&,
                                    CORBA::ULong bound);
 
     CORBA::Boolean marshal_value (TAO_OutputCDR &) override;
     CORBA::Boolean demarshal_value (TAO_InputCDR &);
     void _tao_decode (TAO_InputCDR &) override;
 
-    const void *value () const;
+    void const *value () const;
     void free_value () override;
 
   private:
+    /// The base destructor callback owns the value; this pointer supports
+    /// the type-erased CORBA Any insertion/extraction interface.
     T *value_ {};
     CORBA::ULong bound_;
   };

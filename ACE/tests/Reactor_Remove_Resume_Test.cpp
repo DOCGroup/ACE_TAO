@@ -330,7 +330,6 @@ handle_events (ACE_Reactor & reactor,
       timeout.sec (2);
       int const result = reactor.handle_events (&timeout);
 
-
       if (result > 0)
         {
           ACE_ERROR ((LM_ERROR,

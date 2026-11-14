@@ -9,18 +9,23 @@
 class ACE_Svc_Export Adaptive_Recursive_Lock_Test : public Adaptive_Lock_Performance_Test_Base
 {
 public:
-  virtual int init (int, ACE_TCHAR *[]);
+  Adaptive_Recursive_Lock_Test () = default;
+  Adaptive_Recursive_Lock_Test (Adaptive_Recursive_Lock_Test const &) = delete;
+  Adaptive_Recursive_Lock_Test (Adaptive_Recursive_Lock_Test &&) = delete;
+  Adaptive_Recursive_Lock_Test &operator= (Adaptive_Recursive_Lock_Test const &) = delete;
+  Adaptive_Recursive_Lock_Test &operator= (Adaptive_Recursive_Lock_Test &&) = delete;
+  int init (int, ACE_TCHAR *[]) override;
 };
 
 int
 Adaptive_Recursive_Lock_Test::init (int, ACE_TCHAR *[])
 {
-  ACE_Lock *lock;
+  ACE_Lock *lock {};
   ACE_NEW_RETURN (lock,
                   ACE_Lock_Adapter<ACE_Recursive_Thread_Mutex> (),
                   -1);
 
-  return this->set_lock (lock);
+  return this->set_lock (std::unique_ptr<ACE_Lock> {lock});
 }
 
 ACE_SVC_FACTORY_DECLARE (Adaptive_Recursive_Lock_Test)

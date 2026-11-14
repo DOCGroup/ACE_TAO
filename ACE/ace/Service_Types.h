@@ -15,6 +15,8 @@
 
 #include "ace/Service_Object.h"
 
+#include <memory>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -43,6 +45,11 @@ public:
                          ACE_Service_Object_Exterminator gobbler = 0,
                          int stype = ACE_Service_Type::INVALID_TYPE);
   virtual ~ACE_Service_Type_Impl ();
+
+  ACE_Service_Type_Impl (ACE_Service_Type_Impl const &) = delete;
+  ACE_Service_Type_Impl (ACE_Service_Type_Impl &&) = delete;
+  ACE_Service_Type_Impl &operator= (ACE_Service_Type_Impl const &) = delete;
+  ACE_Service_Type_Impl &operator= (ACE_Service_Type_Impl &&) = delete;
 
   // = Pure virtual interface (must be defined by the subclass).
   virtual int suspend () const = 0;
@@ -73,8 +80,13 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
+  struct Name_Deleter
+  {
+    void operator() (ACE_TCHAR *name) const;
+  };
+
   /// Name of the service.
-  const ACE_TCHAR *name_;
+  mutable std::unique_ptr<ACE_TCHAR[], Name_Deleter> name_ {};
 
   /// Pointer to object that implements the service.  This actually
   /// points to an ACE_Service_Object, ACE_Module, or ACE_Stream.

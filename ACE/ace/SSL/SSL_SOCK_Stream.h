@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_SSL_SOCK_STREAM_H
 #define ACE_SSL_SOCK_STREAM_H
 
@@ -31,6 +30,8 @@
 #include "SSL_Context.h"
 
 #include "ace/SOCK_Stream.h"
+
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -60,7 +61,11 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_SSL_Export ACE_SSL_SOCK_Stream : public ACE_SSL_SOCK
 {
 public:
-  /// Constructor
+  ACE_SSL_SOCK_Stream (ACE_SSL_SOCK_Stream const &) = delete;
+  ACE_SSL_SOCK_Stream (ACE_SSL_SOCK_Stream &&) = delete;
+  ACE_SSL_SOCK_Stream &operator= (ACE_SSL_SOCK_Stream const &) = delete;
+  ACE_SSL_SOCK_Stream &operator= (ACE_SSL_SOCK_Stream &&) = delete;
+
   /**
    * @param context Pointer to @c ACE_SSL_Context instance containing
    *                the OpenSSL @c SSL data structure to be associated
@@ -68,10 +73,9 @@ public:
    *                structure will be copied to make it at least
    *                logically independent of the supplied @a context.
    */
-  ACE_SSL_SOCK_Stream (ACE_SSL_Context *context =
-                       ACE_SSL_Context::instance ());
+  explicit ACE_SSL_SOCK_Stream (ACE_SSL_Context *context =
+                                ACE_SSL_Context::instance ());
 
-  /// Destructor
   ~ACE_SSL_SOCK_Stream ();
 
   /// Send an @a n byte buffer to the ssl socket using the semantics of
@@ -318,12 +322,17 @@ protected:
                   const ACE_Time_Value *timeout) const;
 
 private:
-  void operator= (const ACE_SSL_SOCK_Stream &) = delete;
-  ACE_SSL_SOCK_Stream (const ACE_SSL_SOCK_Stream &) = delete;
+  /// The SSL session.
+  struct SSL_Deleter
+  {
+    void operator() (SSL *ssl) const
+    {
+      ::SSL_free (ssl);
+    }
+  };
 
 protected:
-  /// The SSL session.
-  SSL *ssl_;
+  std::unique_ptr<SSL, SSL_Deleter> ssl_ {};
 
   /// The stream which works under the ssl connection.
   ACE_SOCK_Stream stream_;

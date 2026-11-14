@@ -79,7 +79,6 @@
 //
 // ==========================================================================//
 
-
 // Type based log message receiver
 /**
  * @class Static_Log_Message_Receiver
@@ -115,7 +114,6 @@ public:
 //  Log_Message_Receiver is the envelope class for Log_Message_Receiver_Impl.
 //
 // ------------------------------------------------------------------------- //
-
 
 //Forward declaration
 template<ACE_SYNCH_DECL> class Log_Message_Receiver_Impl;

@@ -1,10 +1,6 @@
 #include "ServerInitializer.h"
 #include "ServerInterceptor.h"
 
-ServerInitializer::ServerInitializer ()
-{
-}
-
 void
 ServerInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr)
@@ -17,6 +13,6 @@ ServerInitializer::post_init (
 {
   // Create and register the request interceptors.
   PortableInterceptor::ServerRequestInterceptor_var si =
-    new ServerInterceptor();
-  info->add_server_request_interceptor (si.in());
+    new ServerInterceptor ();
+  info->add_server_request_interceptor (si.in ());
 }

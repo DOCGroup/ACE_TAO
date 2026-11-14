@@ -20,19 +20,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-CC_Lock::CC_Lock ()
-  : mode_ (CosConcurrencyControl::intention_read),
-    lock_held_ (0)
-{
-}
-
 CC_Lock::CC_Lock (CosConcurrencyControl::lock_mode mode)
-  : mode_ (mode),
-    lock_held_ (0)
-{
-}
-
-CC_Lock::~CC_Lock ()
+  : mode_ (mode)
 {
 }
 
@@ -41,7 +30,7 @@ CC_Lock::lock ()
 {
   ORBSVCS_DEBUG ((LM_DEBUG,
               "CC_Lock::lock\n"));
-  lock_held_++;
+  ++lock_held_;
 }
 
 CORBA::Boolean
@@ -50,13 +39,13 @@ CC_Lock::try_lock ()
   ORBSVCS_DEBUG ((LM_DEBUG,
               "CC_Lock::try_lock. "));
 
-  lock_held_++;
+  ++lock_held_;
 
   ORBSVCS_DEBUG ((LM_DEBUG,
               "lock_held_: %i, ",
               lock_held_));
 
-  int success = 0;//semaphore_.tryacquire ();
+  int const success {}; //semaphore_.tryacquire ()
 
   ORBSVCS_DEBUG ((LM_DEBUG,
               "success: %i\n", success));
@@ -65,8 +54,8 @@ CC_Lock::try_lock ()
     {
       if (errno == EBUSY)
         {
-          lock_held_--;
-          return 0;
+          --lock_held_;
+          return false;
         }
       else
         throw CORBA::INTERNAL ();
@@ -75,7 +64,7 @@ CC_Lock::try_lock ()
               "lock_held_: %i, ",
               lock_held_));
 
-  return 1;
+  return true;
 }
 
 void
@@ -86,12 +75,12 @@ CC_Lock::unlock ()
   if (lock_held_ == 0)
     throw CosConcurrencyControl::LockNotHeld ();
 
-  int success = 0; //semaphore_.release ();
+  int const success {}; //semaphore_.release ()
 
   if (success == -1)
     throw CORBA::INTERNAL ();
 
-  lock_held_--;
+  --lock_held_;
 
   ORBSVCS_DEBUG ((LM_DEBUG,
               "lock_held_: %i, ",
@@ -121,25 +110,25 @@ CC_Lock::set_mode (CosConcurrencyControl::lock_mode mode)
 }
 
 CORBA::Boolean
-CC_Lock::Compatible (const CC_Lock &other)
+CC_Lock::Compatible (CC_Lock const & other) const
 {
   return this->Compatible (other.mode_);
 }
 
 CORBA::Boolean
-CC_Lock::Compatible (CosConcurrencyControl::lock_mode mode)
+CC_Lock::Compatible (CosConcurrencyControl::lock_mode mode) const
 {
   return compatible_[this->mode_][mode];
 }
 
 CosConcurrencyControl::lock_mode
-CC_Lock::GetMode ()
+CC_Lock::GetMode () const
 {
   return mode_;
 }
 
 int
-CC_Lock::GetLocksHeld ()
+CC_Lock::GetLocksHeld () const
 {
   return this->lock_held_;
 }
@@ -147,11 +136,11 @@ CC_Lock::GetLocksHeld ()
 void
 CC_Lock::DecLocksHeld ()
 {
-  this->lock_held_--;
+  --this->lock_held_;
 }
 
 void
-CC_Lock::dump ()
+CC_Lock::dump () const
 {
   ORBSVCS_DEBUG ((LM_DEBUG,
               "mode_ %i, lock_held_: %i\n",
@@ -174,24 +163,8 @@ CC_Lock::dump ()
 //        IR     X
 //        IW  X  X  X
 //
-CORBA::Boolean CC_Lock::compatible_[NUMBER_OF_LOCK_MODES][NUMBER_OF_LOCK_MODES] ={
-  {1, 0, 1, 1, 0},
-  {0, 0, 0, 0, 0},
-  {1, 0, 0, 1, 0},
-  {1, 0, 1, 1, 1},
-  {0, 0, 0, 1, 1}};
-
 // CC_LockModeterator
 
-CC_LockModeIterator::CC_LockModeIterator ()
-  : current_ (CosConcurrencyControl::intention_read)
-{
-}
-
-CC_LockModeIterator::~CC_LockModeIterator ()
-{
-  // Do nothing
-}
 void CC_LockModeIterator::First ()
 {
   current_ = CosConcurrencyControl::intention_read;
@@ -221,16 +194,13 @@ void CC_LockModeIterator::Next ()
 }
 
 CORBA::Boolean
-CC_LockModeIterator::IsDone ()
+CC_LockModeIterator::IsDone () const
 {
-  if (current_ == CosConcurrencyControl::write)
-    return 1;
-  else
-    return 0;
+  return current_ == CosConcurrencyControl::write;
 }
 
 CosConcurrencyControl::lock_mode
-CC_LockModeIterator::GetLockMode ()
+CC_LockModeIterator::GetLockMode () const
 {
   return current_;
 }

@@ -54,7 +54,12 @@ public:
   static constexpr int DEFAULT_SIZE = ACE_DEFAULT_SERVICE_REPOSITORY_SIZE;
 
   /// Initialize the repository.
-  ACE_Service_Repository (size_t size = DEFAULT_SIZE);
+  explicit ACE_Service_Repository (size_t size = DEFAULT_SIZE);
+
+  ACE_Service_Repository (ACE_Service_Repository const &) = delete;
+  ACE_Service_Repository &operator= (ACE_Service_Repository const &) = delete;
+  ACE_Service_Repository (ACE_Service_Repository &&) = delete;
+  ACE_Service_Repository &operator= (ACE_Service_Repository &&) = delete;
 
   /// Initialize the repository.
   int open (size_t size = DEFAULT_SIZE);
@@ -82,18 +87,19 @@ public:
   /// Delete the dynamically allocated Singleton.
   static void close_singleton ();
 
-  // = Search structure operations (all acquire locks as necessary).
+  /// @name Service table operations
+  /// @{
 
   /// Insert a new service record.  Returns -1 when the service repository
   /// is full and 0 on success.
-  int insert (const ACE_Service_Type *sr);
+  int insert (ACE_Service_Type const *sr);
 
   /**
    * Locate a named entry in the service table, optionally ignoring
    * suspended entries.
    *
    * @param name The name of the service to search for.
-   * @param srp  Optional; if not 0, it is a pointer to a location
+   * @param srp  Optional; if not nullptr, it is a pointer to a location
    *             to receive the ACE_Service_Type pointer for the
    *             located service. Meaningless if this method
    *             returns -1.
@@ -104,23 +110,27 @@ public:
    * @retval -2 Named service was found, but is suspended and
    *            @a ignore_suspended is true.
    */
-  int find (const ACE_TCHAR name[],
-            const ACE_Service_Type **srp = 0,
+  int find (ACE_TCHAR const name[],
+            ACE_Service_Type const **srp = nullptr,
             bool ignore_suspended = true) const;
 
-  /// Remove an existing service record. If @a sr == 0, the service record
-  /// is deleted before control is returned to the caller. If @a sr != 0,
-  /// the service's record is removed from the repository, but not deleted;
-  /// *sr receives the service record pointer and the caller is responsible
-  /// for properly disposing of it.
-  int remove (const ACE_TCHAR name[], ACE_Service_Type **sr = 0);
+  /// Remove an existing service record. If @a sr is nullptr, the record is
+  /// deleted before return. Otherwise, the record is returned through @a sr
+  /// and the caller is responsible for disposing of it.
+  int remove (ACE_TCHAR const name[], ACE_Service_Type **sr = nullptr);
 
-  // = Liveness control
+  /// @}
+
+  /// @name Liveness control
+  /// @{
+
   /// Resume a service record.
-  int resume (const ACE_TCHAR name[], const ACE_Service_Type **srp = 0);
+  int resume (ACE_TCHAR const name[], ACE_Service_Type const **srp = nullptr);
 
   /// Suspend a service record.
-  int suspend (const ACE_TCHAR name[], const ACE_Service_Type **srp = 0);
+  int suspend (ACE_TCHAR const name[], ACE_Service_Type const **srp = nullptr);
+
+  /// @}
 
   /// Return the current size of the repository.
   size_t current_size () const;
@@ -140,7 +150,7 @@ protected:
   /// Remove an existing service record. It requires @a sr != 0, which
   /// receives the service record pointer and the caller is
   /// responsible for properly disposing of it.
-  int remove_i (const ACE_TCHAR[], ACE_Service_Type **sr);
+  int remove_i (ACE_TCHAR const[], ACE_Service_Type **sr);
 
   /**
    * Locate a named entry in the service table, optionally ignoring
@@ -150,7 +160,7 @@ protected:
    * @param slot         Receives the position index of the service if it
    *                     is found. Contents are meaningless if this method
    *                     returns -1.
-   * @param srp          Optional; if not 0, it is a pointer to a location
+   * @param srp          Optional; if not nullptr, it is a pointer to a location
    *                     to receive the ACE_Service_Type pointer for the
    *                     located service. Meaningless if this method
    *                     returns -1.
@@ -162,9 +172,9 @@ protected:
    * @retval -2 Named service was found, but is suspended and
    *            @a ignore_suspended is true.
    */
-  int find_i (const ACE_TCHAR service_name[],
+  int find_i (ACE_TCHAR const service_name[],
               size_t &slot,
-              const ACE_Service_Type **srp = 0,
+              ACE_Service_Type const **srp = nullptr,
               bool ignore_suspended = true) const;
 
   /// @brief Relocate (static) services to another DLL.
@@ -182,7 +192,7 @@ protected:
   /// static ones - but that will cause Very Bad Things (tm) to happen.
   int relocate_i (size_t begin,
                   size_t end,
-                  const ACE_DLL &adll);
+                  ACE_DLL const &adll);
 
   /// The typedef of the array used to store the services.
 #if defined (ACE_HAS_ALLOC_HOOKS)
@@ -191,7 +201,7 @@ protected:
                                    std::equal_to<size_t>,
                                    ACE_Allocator_Std_Adapter<std::pair<size_t, ACE_Service_Type const *>>>;
 #else
-  using array_type = ACE_Array_Map<size_t, const ACE_Service_Type *>;
+  using array_type = ACE_Array_Map<size_t, ACE_Service_Type const *>;
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
   /// Contains all the configured services.
@@ -219,19 +229,22 @@ class ACE_Export ACE_Service_Repository_Iterator
 {
 public:
   /// Constructor initializes the iterator.
-  ACE_Service_Repository_Iterator (ACE_Service_Repository &sr,
-                                   bool ignored_suspended = true);
+  explicit ACE_Service_Repository_Iterator (ACE_Service_Repository &sr,
+                                           bool ignored_suspended = true);
 
-  /// Destructor.
+  ACE_Service_Repository_Iterator (ACE_Service_Repository_Iterator const &) = delete;
+  ACE_Service_Repository_Iterator &operator= (ACE_Service_Repository_Iterator const &) = delete;
+  ACE_Service_Repository_Iterator (ACE_Service_Repository_Iterator &&) = delete;
+  ACE_Service_Repository_Iterator &operator= (ACE_Service_Repository_Iterator &&) = delete;
+
   ~ACE_Service_Repository_Iterator ();
 
-
-public:
-  // = Iteration methods.
+  /// @name Iteration methods
+  /// @{
 
   /// Pass back the @a next_item that hasn't been seen in the repository.
   /// Returns 0 when all items have been seen, else 1.
-  int next (const ACE_Service_Type *&next_item);
+  int next (ACE_Service_Type const *&next_item);
 
   /// Returns 1 when all items have been seen, else 0.
   int done () const;
@@ -239,6 +252,8 @@ public:
   /// Move forward by one element in the repository.  Returns 0 when all the
   /// items in the set have been seen, else 1.
   int advance ();
+
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;
@@ -250,13 +265,11 @@ private:
   bool valid () const;
 
 private:
-  ACE_Service_Repository_Iterator (const ACE_Service_Repository_Iterator&);
-
   /// Reference to the Service Repository we are iterating over.
   ACE_Service_Repository &svc_rep_;
 
   /// Next index location that we haven't yet seen.
-  size_t next_;
+  size_t next_ {};
 
   /// Are we ignoring suspended services?
   bool const ignore_suspended_;

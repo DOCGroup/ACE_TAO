@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_WAIT_ON_LF_NO_UPCALL_H
 #define TAO_WAIT_ON_LF_NO_UPCALL_H
 
@@ -40,10 +39,8 @@ namespace TAO
   class Wait_On_LF_No_Upcall : public TAO_Wait_On_Leader_Follower
   {
   public:
-     /// Constructor.
     explicit Wait_On_LF_No_Upcall (TAO_Transport *t);
 
-    /// Destructor.
     ~Wait_On_LF_No_Upcall () override = default;
 
     /*! @copydoc TAO_Wait_Strategy::wait() */
@@ -53,7 +50,12 @@ namespace TAO
     bool can_process_upcalls () const override;
 
     /*! @copydoc TAO_Wait_Strategy::defer_upcall() */
-    int defer_upcall (ACE_Event_Handler*) override;
+    int defer_upcall (ACE_Event_Handler *) override;
+
+    Wait_On_LF_No_Upcall (Wait_On_LF_No_Upcall const &) = delete;
+    Wait_On_LF_No_Upcall &operator= (Wait_On_LF_No_Upcall const &) = delete;
+    Wait_On_LF_No_Upcall (Wait_On_LF_No_Upcall &&) = delete;
+    Wait_On_LF_No_Upcall &operator= (Wait_On_LF_No_Upcall &&) = delete;
   };
 }
 

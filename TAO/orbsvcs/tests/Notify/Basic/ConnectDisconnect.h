@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef NOTIFY_CONNECT_DISCONNECT_H
 #define NOTIFY_CONNECT_DISCONNECT_H
 
@@ -20,6 +19,8 @@
 #include "Notify_PushSupplier.h"
 #include "Notify_SequencePushConsumer.h"
 #include "Notify_SequencePushSupplier.h"
+
+#include <atomic>
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -64,17 +65,17 @@ class ConnectDisconnect : public Notify_Test_Client
 public:
   // Initialization and termination code.
   ConnectDisconnect ();
-  virtual ~ConnectDisconnect ();
+  ~ConnectDisconnect () override;
 
   /// Keeps track of how many objects were destroyed.
   void on_entity_destroyed ();
 
   int parse_args (int argc,
-                  ACE_TCHAR *argv[]);
+                  ACE_TCHAR *argv[]) override;
 
   /// initialization.
   int init (int argc,
-            ACE_TCHAR *argv []);
+            ACE_TCHAR *argv []) override;
 
   /// Run the test.
   void run_test ();
@@ -110,7 +111,7 @@ protected:
 
   /// Count of clients destroyed. for c consumers, s suppliers and for t times.
   /// this should be (s+c)*t.
-  ACE_Atomic_Op <TAO_SYNCH_MUTEX, int> result_count_;
+  std::atomic<int> result_count_ {0};
 
   int expected_count_; // (s+c)*t
 

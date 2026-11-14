@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-
 //=============================================================================
 /**
  *  @file    Contained_i.h
@@ -10,7 +9,6 @@
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef TAO_CONTAINED_I_H
 #define TAO_CONTAINED_I_H
@@ -106,20 +104,17 @@ protected:
       CORBA::Container_ptr new_container,
       char const *new_name,
       char const *new_version,
-      CORBA::Boolean cleanup
-    );
+      CORBA::Boolean cleanup);
 
 private:
   /// Check if <name> already exists in our container
   CORBA::Boolean name_exists (
-      char const *name
-    );
+      char const *name);
 
   /// Recursively update the scoped name of our contents.
   void contents_name_update (
       ACE_TString stem,
-      ACE_Configuration_Section_Key key
-    );
+      ACE_Configuration_Section_Key key);
 
   /**
    * Mangle the names of references that are also
@@ -130,8 +125,7 @@ private:
   void move_pre_process (
       CORBA::Container_ptr container,
       char const *contained_path,
-      char const *name
-    );
+      char const *name);
 
   /**
    * Recursively calls move_i for definitions,
@@ -139,15 +133,13 @@ private:
    * applicable.
    */
   void move_contents (
-      CORBA::Container_ptr new_container
-    );
+      CORBA::Container_ptr new_container);
 
 private:
   static char const *tmp_name_holder_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

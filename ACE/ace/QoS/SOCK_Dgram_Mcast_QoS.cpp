@@ -1,6 +1,7 @@
 #include "SOCK_Dgram_Mcast_QoS.h"
 #include "ace/Log_Category.h"
 #include "ace/OS_NS_sys_socket.h"
+#include <memory>
 
 #if defined (ACE_WIN32)
 #include "ace/Sock_Connect.h"  // needed for subscribe_ifs()
@@ -20,17 +21,17 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_Dgram_Mcast_QoS)
 
-// Dummy default constructor...
-
 ACE_SOCK_Dgram_Mcast_QoS::ACE_SOCK_Dgram_Mcast_QoS (options opts)
   : ACE_SOCK_Dgram_Mcast (opts)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast_QoS::ACE_SOCK_Dgram_Mcast_QoS");
 }
 
+ACE_SOCK_Dgram_Mcast_QoS::~ACE_SOCK_Dgram_Mcast_QoS () = default;
+
 int
-ACE_SOCK_Dgram_Mcast_QoS::open (const ACE_INET_Addr &addr,
-                                const ACE_QoS_Params &qos_params,
+ACE_SOCK_Dgram_Mcast_QoS::open (ACE_INET_Addr const &addr,
+                                ACE_QoS_Params const &qos_params,
                                 int protocol_family,
                                 int protocol,
                                 ACE_Protocol_Info *protocolinfo,
@@ -59,14 +60,13 @@ ACE_SOCK_Dgram_Mcast_QoS::open (const ACE_INET_Addr &addr,
                       reuse_addr) == -1)
     return -1;
 
-  return this->open_i (addr, 0, reuse_addr);
+  return this->open_i (addr, nullptr, reuse_addr);
 }
 
-
 int
-ACE_SOCK_Dgram_Mcast_QoS::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
-                                         const ACE_QoS_Params &qos_params,
-                                         const ACE_TCHAR *net_if,
+ACE_SOCK_Dgram_Mcast_QoS::subscribe_ifs (ACE_INET_Addr const &mcast_addr,
+                                         ACE_QoS_Params const &qos_params,
+                                         ACE_TCHAR const *net_if,
                                          int protocol_family,
                                          int protocol,
                                          int reuse_addr,
@@ -93,15 +93,17 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
   // with MSVC.  The reliable way of getting the interface list is
   // available only with MSVC 5.
 
-  if (net_if == 0)
+  if (net_if == nullptr)
     {
-      ACE_INET_Addr *if_addrs = nullptr;
-      size_t if_cnt;
+      ACE_INET_Addr *if_addrs_raw {};
+      size_t if_cnt {};
 
-      if (ACE::get_ip_interfaces (if_cnt, if_addrs) != 0)
+      int const result = ACE::get_ip_interfaces (if_cnt, if_addrs_raw);
+      std::unique_ptr<ACE_INET_Addr[]> if_addrs (if_addrs_raw);
+      if (result != 0)
         return -1;
 
-      size_t nr_subscribed = 0;
+      size_t nr_subscribed {};
 
       if (if_cnt < 2)
         {
@@ -135,8 +137,6 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
               ++nr_subscribed;
           }
 
-      delete [] if_addrs;
-
       if (nr_subscribed == 0)
         {
           errno = ENODEV;
@@ -159,7 +159,7 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
   // Otherwise, do it like everyone else...
 
   // Create multicast request.
-  if (this->make_multicast_ifaddr (0,
+  if (this->make_multicast_ifaddr (nullptr,
                                    mcast_addr,
                                    net_if) == -1)
     return -1;
@@ -168,10 +168,10 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
 }
 
 int
-ACE_SOCK_Dgram_Mcast_QoS::subscribe (const ACE_INET_Addr &mcast_addr,
-                                     const ACE_QoS_Params &qos_params,
+ACE_SOCK_Dgram_Mcast_QoS::subscribe (ACE_INET_Addr const &mcast_addr,
+                                     ACE_QoS_Params const &qos_params,
                                      int reuse_addr,
-                                     const ACE_TCHAR *net_if,
+                                     ACE_TCHAR const *net_if,
                                      int protocol_family,
                                      int protocol,
                                      ACE_Protocol_Info *protocolinfo,
@@ -192,13 +192,13 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe (const ACE_INET_Addr &mcast_addr,
     return -1;
 
   // The following method call only applies to Win32 currently.
-  int result = this->subscribe_ifs (mcast_addr,
-                                    qos_params,
-                                    net_if,
-                                    protocol_family,
-                                    protocol,
-                                    reuse_addr,
-                                    protocolinfo);
+  int const result = this->subscribe_ifs (mcast_addr,
+                                          qos_params,
+                                          net_if,
+                                          protocol_family,
+                                          protocol,
+                                          reuse_addr,
+                                          protocolinfo);
   // Check for the "short-circuit" return value of 1 (for NT).
   if (result != 0)
     return result;
@@ -209,7 +209,7 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe (const ACE_INET_Addr &mcast_addr,
     {
       // Check if the mcast_addr passed into this method is the
       // same as the QoS session address.
-      if (qos_session != 0 && mcast_addr == qos_session->dest_addr ())
+      if (qos_session != nullptr && mcast_addr == qos_session->dest_addr ())
         {
           // Subscribe to the QoS session.
           if (this->qos_manager_.join_qos_session (qos_session) == -1)
@@ -220,8 +220,10 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe (const ACE_INET_Addr &mcast_addr,
       else
         {
           if (this->close () != 0)
-            ACELIB_ERROR ((LM_ERROR,
-                        ACE_TEXT ("Unable to close socket\n")));
+            {
+              ACELIB_ERROR ((LM_ERROR,
+                            ACE_TEXT ("Unable to close socket\n")));
+            }
             ACELIB_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("Dest Addr in the QoS Session does")
                                ACE_TEXT (" not match the address passed into")
@@ -229,19 +231,19 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe (const ACE_INET_Addr &mcast_addr,
                               -1);
         }
 
-      ip_mreq ret_mreq;
-      this->make_multicast_ifaddr (&ret_mreq, mcast_addr, net_if);
+      ip_mreq ret_mreq {};
+      this->make_multicast_ifaddr (std::addressof (ret_mreq), mcast_addr, net_if);
 
       // XX This is windows stuff only. fredk
       if (ACE_OS::join_leaf (this->get_handle (),
-                             reinterpret_cast<const sockaddr *> (&ret_mreq.IMR_MULTIADDR.s_addr),
+                             reinterpret_cast<sockaddr const *> (std::addressof (ret_mreq.IMR_MULTIADDR.s_addr)),
                              sizeof ret_mreq.IMR_MULTIADDR.s_addr,
                              qos_params) == ACE_INVALID_HANDLE
           && errno != ENOTSUP)
         return -1;
 
       else
-        if (qos_params.socket_qos () != 0 && qos_session != 0)
+        if (qos_params.socket_qos () != nullptr && qos_session != nullptr)
           qos_session->qos (*(qos_params.socket_qos ()));
 
       return 0;

@@ -1,1 +1,1 @@
-void poll (const char* filename);
+void poll (char const* filename);

@@ -7,12 +7,12 @@ class RecordingDevice;
 class Message
 {
 public:
-  Message () : device_(0), type_(0), id_(0)
+  Message () : device_ (nullptr), type_ (nullptr), id_ (nullptr)
   { }
 
   ~Message () = default;
 
-  RecordingDevice *recorder ()
+  RecordingDevice *recorder () const
   {
     return this->device_;
   }
@@ -27,7 +27,7 @@ public:
     this->type_ = type;
   }
 
-  MessageType *type ()
+  MessageType *type () const
   {
     return this->type_;
   }
@@ -37,7 +37,7 @@ public:
     this->id_ = id;
   }
 
-  CallerId *caller_id ()
+  CallerId *caller_id () const
   {
     return this->id_;
   }
@@ -58,17 +58,17 @@ public:
     return this->addr_;
   }
 
-  int is_text ()
+  bool is_text () const
   {
     return this->type_->is_text ();
   }
 
-  int is_audio ()
+  bool is_audio () const
   {
     return this->type_->is_audio ();
   }
 
-  int is_video ()
+  bool is_video () const
   {
     return this->type_->is_video ();
   }

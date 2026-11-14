@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef FT_FAULT_ANALYZER_H_
 #define FT_FAULT_ANALYZER_H_
 
@@ -34,14 +33,8 @@ namespace TAO
   class TAO_ReplicationManagerLib_Export FT_FaultAnalyzer
   {
   public:
-    /**
-    * Default constructor.
-    */
-    FT_FaultAnalyzer ();
+    FT_FaultAnalyzer () = default;
 
-    /**
-    * Destructor.
-    */
     virtual ~FT_FaultAnalyzer ();
 
   public:
@@ -51,7 +44,7 @@ namespace TAO
     * @return 0 if it is a valid event type, -1 otherwise.
     */
     virtual int validate_event_type (
-      const CosNotification::StructuredEvent & event) = 0;
+      CosNotification::StructuredEvent const & event) = 0;
 
     /**
     * Analyze a fault event.
@@ -59,14 +52,12 @@ namespace TAO
     * @return 0 on success, -1 on failure.
     */
     virtual int analyze_fault_event (
-      const CosNotification::StructuredEvent & event) = 0;
+      CosNotification::StructuredEvent const & event) = 0;
 
     ////////////////////
     // Forbidden methods
   private:
-    /// Copy constructor.
     FT_FaultAnalyzer (FT_FaultAnalyzer const &) = delete;
-    /// Assignment operator.
     FT_FaultAnalyzer (FT_FaultAnalyzer &&) = delete;
     FT_FaultAnalyzer & operator= (FT_FaultAnalyzer const &) = delete;
     FT_FaultAnalyzer & operator= (FT_FaultAnalyzer &&) = delete;

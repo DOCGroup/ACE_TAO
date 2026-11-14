@@ -224,7 +224,7 @@ ACE_OS::shm_open (const ACE_TCHAR *filename,
   ACE_OS::sprintf (buf,
                    ACE_TEXT ("%s"),
                    filename);
-  for (size_t i = 1; i < MAXPATHLEN + 1; i++)
+  for (size_t i = 1; i < MAXPATHLEN + 1; ++i)
     {
       if (buf[i] == '/')
         {
@@ -252,7 +252,7 @@ ACE_OS::shm_unlink (const ACE_TCHAR *path)
   ACE_OS::sprintf (buf,
                    ACE_TEXT ("%s"),
                    path);
-  for (size_t i = 1; i < MAXPATHLEN + 1; i++)
+  for (size_t i = 1; i < MAXPATHLEN + 1; ++i)
     {
       if (buf[i] == '/')
         {

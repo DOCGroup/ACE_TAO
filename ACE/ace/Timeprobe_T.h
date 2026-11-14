@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_TIMEPROBE_T_H
 #define ACE_TIMEPROBE_T_H
 #include /**/ "ace/pre.h"
@@ -67,7 +66,6 @@ public:
    */
   using ACE_Timeprobe = ACE_Timeprobe_Ex<ACE_LOCK, ACE_Allocator>;
 
-
   /// We can hold multiple event description tables.
   using EVENT_DESCRIPTIONS = ACE_Unbounded_Set<ACE_Event_Descriptions>;
 
@@ -77,7 +75,6 @@ public:
   /// Create Timeprobes with @a size slots
   ACE_Timeprobe_Ex (ALLOCATOR *allocator,
                  u_long size = ACE_DEFAULT_TIMEPROBE_TABLE_SIZE);
-  /// Destructor.
   ~ACE_Timeprobe_Ex ();
 
   /// Record a time. @a event is used to describe this time probe.
@@ -185,10 +182,8 @@ template <class Timeprobe>
 class ACE_Function_Timeprobe
 {
 public:
-  /// Constructor.
   ACE_Function_Timeprobe (Timeprobe &timeprobe, u_long event);
 
-  /// Destructor.
   ~ACE_Function_Timeprobe ();
 
 protected:

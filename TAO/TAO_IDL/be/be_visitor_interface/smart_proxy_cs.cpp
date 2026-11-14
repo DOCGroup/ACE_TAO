@@ -243,7 +243,6 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
                             -1);
         }
 
-
       os->indent ();
 
       *os << node->full_name() << "_ptr" << be_nl;
@@ -280,8 +279,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
 }
 
 int be_visitor_interface_smart_proxy_cs::visit_component (
-    be_component *node
-  )
+    be_component *node)
 {
   return this->visit_interface (node);
 }

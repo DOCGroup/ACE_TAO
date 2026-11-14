@@ -17,6 +17,8 @@
 #include "ace/OS_Errno.h"
 #include "ace/Svc_Handler.h"
 
+#include <memory>
+
 #if !defined (__ACE_INLINE__)
 #include "ace/Strategies_T.inl"
 #endif /* __ACE_INLINE__ */
@@ -24,9 +26,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class SVC_HANDLER>
-ACE_Recycling_Strategy<SVC_HANDLER>::~ACE_Recycling_Strategy ()
-{
-}
+ACE_Recycling_Strategy<SVC_HANDLER>::~ACE_Recycling_Strategy () = default;
 
 template<class SVC_HANDLER> int
 ACE_Recycling_Strategy<SVC_HANDLER>::assign_recycler (SVC_HANDLER *svc_handler,
@@ -72,7 +72,7 @@ ACE_Singleton_Strategy<SVC_HANDLER>::open (SVC_HANDLER *sh,
     delete this->svc_handler_;
 
   // If <sh> is NULL then create a new <SVC_HANDLER>.
-  if (sh == 0)
+  if (sh == nullptr)
     {
       ACE_NEW_RETURN (this->svc_handler_,
                       SVC_HANDLER,
@@ -120,22 +120,22 @@ ACE_DLL_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLER *&sh)
 
   // Call the factory function to obtain the new SVC_Handler (should
   // use RTTI here when it becomes available...)
-  SVC_HANDLER *svc_handler = nullptr;
+  SVC_HANDLER *svc_handler {};
 
   ACE_ALLOCATOR_RETURN (svc_handler, (*factory)(), -1);
 
-  if (svc_handler != 0)
+  if (svc_handler != nullptr)
     {
       // Create an ACE_Service_Type containing the SVC_Handler and
       // insert into this->svc_rep_;
 
-      ACE_Service_Type_Impl *stp = nullptr;
+      ACE_Service_Type_Impl *stp {};
       ACE_NEW_RETURN (stp,
                       ACE_Service_Object_Type (svc_handler,
                                                this->svc_name_),
                       -1);
 
-      ACE_Service_Type *srp = nullptr;
+      ACE_Service_Type *srp {};
 
       ACE_NEW_RETURN (srp,
                       ACE_Service_Type (this->svc_name_,
@@ -173,7 +173,7 @@ ACE_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *svc_ha
 
   // See if we should enable non-blocking I/O on the <svc_handler>'s
   // peer.
-  if (ACE_BIT_ENABLED (this->flags_, ACE_NONBLOCK) != 0)
+  if (ACE_BIT_ENABLED (this->flags_, ACE_NONBLOCK))
     {
       if (svc_handler->peer ().enable (ACE_NONBLOCK) == -1)
         result = -1;
@@ -204,7 +204,7 @@ ACE_Reactive_Strategy<SVC_HANDLER>::open (ACE_Reactor *reactor,
   this->flags_ = flags;
 
   // Must have a <Reactor>
-  if (this->reactor_ == 0)
+  if (this->reactor_ == nullptr)
     return -1;
   else
     return 0;
@@ -218,7 +218,7 @@ ACE_Reactive_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *svc_handl
 
   int result = 0;
 
-  if (this->reactor_ == 0)
+  if (this->reactor_ == nullptr)
     result = -1;
 
   // Register with the Reactor with the appropriate <mask>.
@@ -263,7 +263,7 @@ ACE_Thread_Strategy<SVC_HANDLER>::open (ACE_Thread_Manager *thr_mgr,
   this->flags_ = flags;
 
   // Must have a thread manager!
-  if (this->thr_mgr_ == 0)
+  if (this->thr_mgr_ == nullptr)
     ACELIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("error: must have a non-NULL thread manager\n")),
                       -1);
@@ -440,7 +440,7 @@ ACE_Process_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *svc_handle
 
       // Close down the SOCK_Acceptor's handle since we don't need to
       // keep it open.
-      if (this->acceptor_ != 0)
+      if (this->acceptor_ != nullptr)
         // Ignore the return value here...
         (void) this->reactor_->remove_handler (this->acceptor_,
                                                ACE_Event_Handler::ACCEPT_MASK);
@@ -464,27 +464,24 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::ACE_Cache
  ACE_Recycling_Strategy<SVC_HANDLER> *rec_s,
  MUTEX *lock,
  bool delete_lock)
-  : lock_ (lock),
-    delete_lock_ (delete_lock),
-    reverse_lock_ (0),
-    creation_strategy_ (0),
-    delete_creation_strategy_ (false),
-    concurrency_strategy_ (0),
-    delete_concurrency_strategy_ (false),
-    recycling_strategy_ (0),
-    delete_recycling_strategy_ (false)
+  : lock_ (lock, strategy_deleter {delete_lock}),
+    reverse_lock_ {},
+    creation_strategy_ {},
+    concurrency_strategy_ {},
+    recycling_strategy_ {}
 {
   // Create a new lock if necessary.
-  if (this->lock_ == 0)
+  if (this->lock_ == nullptr)
     {
-      ACE_NEW (this->lock_,
-               MUTEX);
-
-      this->delete_lock_ = true;
+      MUTEX *lock {};
+      ACE_NEW (lock, MUTEX);
+      this->lock_.get_deleter ().owned = true;
+      this->lock_.reset (lock);
     }
 
-  ACE_NEW (this->reverse_lock_,
-           REVERSE_MUTEX (*this->lock_));
+  REVERSE_MUTEX *reverse_lock {};
+  ACE_NEW (reverse_lock, REVERSE_MUTEX (*this->lock_));
+  this->reverse_lock_.reset (reverse_lock);
 
   if (this->open (cre_s,
                   con_s,
@@ -497,33 +494,20 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::ACE_Cache
 template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX>
 ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::~ACE_Cached_Connect_Strategy ()
 {
-  if (this->delete_lock_)
-    delete this->lock_;
+  this->lock_.reset ();
+  this->reverse_lock_.reset ();
 
-  delete this->reverse_lock_;
-
-  if (this->delete_creation_strategy_)
-    delete this->creation_strategy_;
-  this->delete_creation_strategy_ = false;
-  this->creation_strategy_ = 0;
-
-  if (this->delete_concurrency_strategy_)
-    delete this->concurrency_strategy_;
-  this->delete_concurrency_strategy_ = false;
-  this->concurrency_strategy_ = 0;
-
-  if (this->delete_recycling_strategy_)
-    delete this->recycling_strategy_;
-  this->delete_recycling_strategy_ = false;
-  this->recycling_strategy_ = 0;
+  this->creation_strategy_.reset ();
+  this->concurrency_strategy_.reset ();
+  this->recycling_strategy_.reset ();
 
   // Close down all cached service handlers.
-  CONNECTION_MAP_ENTRY *entry = nullptr;
+  CONNECTION_MAP_ENTRY *entry {};
   for (CONNECTION_MAP_ITERATOR iterator (connection_map_);
        iterator.next (entry);
        iterator.advance ())
     {
-      entry->int_id_->recycler (0, 0);
+      entry->int_id_->recycler (nullptr, nullptr);
       entry->int_id_->close ();
     }
 }
@@ -536,63 +520,50 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::open
 {
   // Initialize the creation strategy.
 
-  // First we decide if we need to clean up.
-  if (this->creation_strategy_ != 0 &&
-      this->delete_creation_strategy_ &&
-      cre_s != 0)
+  if (cre_s != nullptr && this->creation_strategy_.get () != cre_s)
     {
-      delete this->creation_strategy_;
-      this->creation_strategy_ = 0;
-      this->delete_creation_strategy_ = false;
+      this->creation_strategy_.reset ();
+      this->creation_strategy_.get_deleter ().owned = false;
+      this->creation_strategy_.reset (cre_s);
     }
-
-  if (cre_s != 0)
-    this->creation_strategy_ = cre_s;
-  else if (this->creation_strategy_ == 0)
+  else if (cre_s == nullptr && this->creation_strategy_ == nullptr)
     {
-      ACE_NEW_RETURN (this->creation_strategy_,
-                      CREATION_STRATEGY, -1);
-      this->delete_creation_strategy_ = true;
+      CREATION_STRATEGY *strategy {};
+      ACE_NEW_RETURN (strategy, CREATION_STRATEGY, -1);
+      this->creation_strategy_.get_deleter ().owned = true;
+      this->creation_strategy_.reset (strategy);
     }
 
   // Initialize the concurrency strategy.
 
-  if (this->concurrency_strategy_ != 0 &&
-      this->delete_concurrency_strategy_ &&
-      con_s != 0)
+  if (con_s != nullptr && this->concurrency_strategy_.get () != con_s)
     {
-      delete this->concurrency_strategy_;
-      this->concurrency_strategy_ = 0;
-      this->delete_concurrency_strategy_ = false;
+      this->concurrency_strategy_.reset ();
+      this->concurrency_strategy_.get_deleter ().owned = false;
+      this->concurrency_strategy_.reset (con_s);
     }
-
-  if (con_s != 0)
-    this->concurrency_strategy_ = con_s;
-  else if (this->concurrency_strategy_ == 0)
+  else if (con_s == nullptr && this->concurrency_strategy_ == nullptr)
     {
-      ACE_NEW_RETURN (this->concurrency_strategy_,
-                      CONCURRENCY_STRATEGY, -1);
-      this->delete_concurrency_strategy_ = true;
+      CONCURRENCY_STRATEGY *strategy {};
+      ACE_NEW_RETURN (strategy, CONCURRENCY_STRATEGY, -1);
+      this->concurrency_strategy_.get_deleter ().owned = true;
+      this->concurrency_strategy_.reset (strategy);
     }
 
   // Initialize the recycling strategy.
 
-  if (this->recycling_strategy_ != 0 &&
-      this->delete_recycling_strategy_ &&
-      rec_s != 0)
+  if (rec_s != nullptr && this->recycling_strategy_.get () != rec_s)
     {
-      delete this->recycling_strategy_;
-      this->recycling_strategy_ = 0;
-      this->delete_recycling_strategy_ = false;
+      this->recycling_strategy_.reset ();
+      this->recycling_strategy_.get_deleter ().owned = false;
+      this->recycling_strategy_.reset (rec_s);
     }
-
-  if (rec_s != 0)
-    this->recycling_strategy_ = rec_s;
-  else if (this->recycling_strategy_ == 0)
+  else if (rec_s == nullptr && this->recycling_strategy_ == nullptr)
     {
-      ACE_NEW_RETURN (this->recycling_strategy_,
-                      RECYCLING_STRATEGY, -1);
-      this->delete_recycling_strategy_ = true;
+      RECYCLING_STRATEGY *strategy {};
+      ACE_NEW_RETURN (strategy, RECYCLING_STRATEGY, -1);
+      this->recycling_strategy_.get_deleter ().owned = true;
+      this->recycling_strategy_.reset (strategy);
     }
 
   return 0;
@@ -661,7 +632,7 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::check_hin
       if (possible_entry->ext_id_.decrement () == 0)
         {
           // If refcount goes to zero, close down the svc_handler
-          possible_entry->int_id_->recycler (0, 0);
+          possible_entry->int_id_->recycler (nullptr, nullptr);
           possible_entry->int_id_->close ();
           this->purge_i (possible_entry);
         }
@@ -670,7 +641,7 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::check_hin
       found = 0;
 
       // Reset hint
-      sh = 0;
+      sh = nullptr;
     }
 
   // If hint is not closed, see if it is connected to the correct
@@ -696,7 +667,7 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::check_hin
 
       // If <sh> is not connected to the correct address or is busy,
       // we will not use it.
-      sh = 0;
+      sh = nullptr;
     }
 
   if (found)
@@ -734,7 +705,7 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::find_or_c
       // Note that making a new svc_handler, connecting remotely,
       // binding to the map, and assigning of the hint and recycler
       // should be atomic to the outside world.
-      SVC_HANDLER *potential_handler = nullptr;
+      SVC_HANDLER *potential_handler {};
 
       // Create a new svc_handler
       if (this->make_svc_handler (potential_handler) == -1)
@@ -878,7 +849,7 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::connect_s
           ACE_GUARD_RETURN (MUTEX, ace_mon, *this->lock_, -1);
 
           // Reset handler.
-          sh = 0;
+          sh = nullptr;
 
           return -1;
         }
@@ -944,8 +915,8 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::connect_s
           ACE_GUARD_RETURN (MUTEX, ace_mon, *this->lock_, -1);
 
           // Reset handler.
-          sh = 0;
-          sh_copy = 0;
+          sh = nullptr;
+          sh_copy = nullptr;
 
           return -1;
         }
@@ -965,10 +936,10 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::connect_s
  int perms,
  int& found)
 {
-  CONNECTION_MAP_ENTRY *entry = nullptr;
+  CONNECTION_MAP_ENTRY *entry {};
 
   // Check if the user passed a hint svc_handler
-  if (sh != 0)
+  if (sh != nullptr)
     {
       int result = this->check_hint_i (sh,
                                        remote_addr,
@@ -999,7 +970,7 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::connect_s
         return result;
     }
 
-  if (entry)
+  if (entry != nullptr)
     {
       // For all successful cases: mark the <svc_handler> in the cache
       // as being <in_use>.  Therefore recyclable is BUSY.
@@ -1159,7 +1130,7 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::cleanup_h
   if (entry->ext_id_.recycle_state () == ACE_RECYCLABLE_CLOSED &&
       refcount == 0)
     {
-      entry->int_id_->recycler (0, 0);
+      entry->int_id_->recycler (nullptr, nullptr);
       entry->int_id_->close ();
       this->purge_i (entry);
     }
@@ -1170,19 +1141,19 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::cleanup_h
 template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX> ACE_Creation_Strategy<SVC_HANDLER> *
 ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::creation_strategy () const
 {
-  return this->creation_strategy_;
+  return this->creation_strategy_.get ();
 }
 
 template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX> ACE_Recycling_Strategy<SVC_HANDLER> *
 ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::recycling_strategy () const
 {
-  return this->recycling_strategy_;
+  return this->recycling_strategy_.get ();
 }
 
 template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX> ACE_Concurrency_Strategy<SVC_HANDLER> *
 ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::concurrency_strategy () const
 {
-  return this->concurrency_strategy_;
+  return this->concurrency_strategy_.get ();
 }
 
 template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX> int
@@ -1217,7 +1188,7 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::find (
       if (addr.subject () != search_addr.subject ())
         continue;
 
-      entry = &(*iterator);
+      entry = std::addressof (*iterator);
       return 0;
     }
 
@@ -1238,7 +1209,6 @@ ACE_Concurrency_Strategy<SVC_HANDLER>::~ACE_Concurrency_Strategy ()
   ACE_TRACE ("ACE_Concurrency_Strategy<SVC_HANDLER>::~ACE_Concurrency_Strategy");
 }
 
-
 template <class SVC_HANDLER> void
 ACE_Concurrency_Strategy<SVC_HANDLER>::dump () const
 {
@@ -1252,7 +1222,6 @@ ACE_Reactive_Strategy<SVC_HANDLER>::~ACE_Reactive_Strategy ()
 {
   ACE_TRACE ("ACE_Reactive_Strategy<SVC_HANDLER>::~ACE_Reactive_Strategy");
 }
-
 
 template <class SVC_HANDLER> void
 ACE_Reactive_Strategy<SVC_HANDLER>::dump () const
@@ -1422,9 +1391,7 @@ ACE_Schedule_All_Threaded_Strategy<SVC_HANDLER>::dump () const
 }
 
 template <class T>
-ACE_Refcounted_Hash_Recyclable<T>::~ACE_Refcounted_Hash_Recyclable ()
-{
-}
+ACE_Refcounted_Hash_Recyclable<T>::~ACE_Refcounted_Hash_Recyclable () = default;
 
 template <class SVC_HANDLER> void
 ACE_Singleton_Strategy<SVC_HANDLER>::dump () const
@@ -1448,7 +1415,7 @@ ACE_Creation_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLER *&sh)
 {
   ACE_TRACE ("ACE_Creation_Strategy<SVC_HANDLER>::make_svc_handler");
 
-  if (sh == 0)
+  if (sh == nullptr)
     ACE_NEW_RETURN (sh, SVC_HANDLER (this->thr_mgr_), -1);
   sh->reactor (this->reactor_);
   return 0;

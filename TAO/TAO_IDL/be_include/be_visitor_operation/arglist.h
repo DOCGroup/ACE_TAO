@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VISITOR_OPERATION_ARGLIST_H_
 #define _BE_VISITOR_OPERATION_ARGLIST_H_
 

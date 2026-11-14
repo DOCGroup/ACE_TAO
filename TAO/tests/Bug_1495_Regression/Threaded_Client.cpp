@@ -19,23 +19,26 @@
 #include "ace/Argv_Type_Converter.h"
 #include "ace/Manual_Event.h"
 
-ACE_TCHAR const *ior_input_file = ACE_TEXT("test.ior");
-ACE_TCHAR const *ior_output_file = ACE_TEXT("thr_server.ior");
+struct Options
+{
+  ACE_TCHAR const *ior_input_file {ACE_TEXT ("test.ior")};
+  ACE_TCHAR const *ior_output_file {ACE_TEXT ("thr_server.ior")};
+};
 
-int
-parse_args (int argc, ACE_TCHAR *argv[])
+static int
+parse_args (int argc, ACE_TCHAR *argv[], Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("i:o:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
         case 'i':
-          ior_input_file = get_opts.opt_arg ();
+          options.ior_input_file = get_opts.opt_arg ();
           break;
         case 'o':
-          ior_output_file = get_opts.opt_arg ();
+          options.ior_output_file = get_opts.opt_arg ();
           break;
         case '?':
         default:
@@ -50,27 +53,27 @@ parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
       ACE_Argv_Type_Converter main_args_s (argc, argv);
 
-      CORBA::ORB_var sorb =
+      CORBA::ORB_var const sorb =
         CORBA::ORB_init (main_args_s.get_argc (),
                          main_args_s.get_TCHAR_argv (),
                          "Server_ORB");
-    // Parse command line
-      if (parse_args (argc, argv) == -1)
+      // Parse the command line.
+      Options options;
+      if (parse_args (argc, argv, options) == -1)
         {
           return -1;
         }
 
       ACE_Manual_Event me;
 
-      Server_Task server_task (ior_output_file,
+      Server_Task server_task (options.ior_output_file,
                                sorb.in (),
                                me,
                                ACE_Thread_Manager::instance ());
@@ -86,13 +89,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_Argv_Type_Converter main_args_c (argc, argv);
 
-      CORBA::ORB_var corb =
+      CORBA::ORB_var const corb =
         CORBA::ORB_init (main_args_c.get_argc (),
                          main_args_c.get_TCHAR_argv (),
                          "Client_ORB");
 
       {
-        Client_Task client_task (ior_input_file,
+        Client_Task client_task (options.ior_input_file,
                                  corb.in (),
                                  ACE_Thread_Manager::instance ());
 
@@ -107,7 +110,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       corb->destroy ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // ignore exceptions
     }

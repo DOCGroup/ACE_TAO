@@ -1,6 +1,4 @@
 #include "ace/Get_Opt.h"
-#include <memory>
-#include "ace/OS_NS_errno.h"
 #include "ace/INet/HTTP_URL.h"
 #include "ace/INet/HTTP_ClientRequestHandler.h"
 #if defined (ACE_HAS_SSL) && ACE_HAS_SSL == 1
@@ -8,21 +6,26 @@
 # include "ace/INet/HTTPS_Context.h"
 #endif
 #include "ace/INet/INet_Log.h"
+#include <cstddef>
 #include <iostream>
 #include <fstream>
+#include <memory>
 
-ACE_CString proxy_hostname;
-u_short proxy_port = ACE::HTTP::URL::HTTP_PROXY_PORT;
-ACE_CString url;
-ACE_CString outfile;
+struct HTTP_Options
+{
+  ACE_CString proxy_hostname;
+  u_short proxy_port { ACE::HTTP::URL::HTTP_PROXY_PORT };
+  ACE_CString url;
+  ACE_CString outfile;
 #if defined (ACE_HAS_SSL) && ACE_HAS_SSL == 1
-int ssl_mode = ACE_SSL_Context::SSLv23;
-bool verify_peer = true;
-bool ignore_verify = false;
-ACE_CString certificate;
-ACE_CString private_key;
-ACE_CString ca_location;
+  int ssl_mode { ACE_SSL_Context::SSLv23 };
+  bool verify_peer { true };
+  bool ignore_verify {};
+  ACE_CString certificate;
+  ACE_CString private_key;
+  ACE_CString ca_location;
 #endif
+};
 
 void
 usage ()
@@ -42,7 +45,7 @@ usage ()
 }
 
 bool
-parse_args (int argc, ACE_TCHAR *argv [])
+parse_args (int argc, ACE_TCHAR *argv [], HTTP_Options &options)
 {
 #if defined (ACE_HAS_SSL) && ACE_HAS_SSL == 1
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("H:p:o:hv:nic:k:C:"), 0, 0, ACE_Get_Opt::RETURN_IN_ORDER);
@@ -50,46 +53,46 @@ parse_args (int argc, ACE_TCHAR *argv [])
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("H:p:o:h"), 0, 0, ACE_Get_Opt::RETURN_IN_ORDER);
 #endif
 
-  int c;
-  ACE_CString s;
+  int c {};
   while ((c = get_opt ()) != EOF)
     {
       switch (c)
         {
         case 1:
-          url = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
+          options.url = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
           break;
         case 'H':
-          proxy_hostname = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
+          options.proxy_hostname = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
           break;
 
         case 'p':
-          proxy_port = (u_short)ACE_OS::atoi (ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ()));
+          options.proxy_port = static_cast<u_short> (
+            ACE_OS::atoi (ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ())));
           break;
 
         case 'o':
-          outfile = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
+          options.outfile = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
           break;
 
 #if defined (ACE_HAS_SSL) && ACE_HAS_SSL == 1
         case 'n':
-          verify_peer = false;
+          options.verify_peer = false;
           break;
 
         case 'i':
-          ignore_verify = true;
+          options.ignore_verify = true;
           break;
 
         case 'c':
-          certificate = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
+          options.certificate = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
           break;
 
         case 'k':
-          private_key = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
+          options.private_key = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
           break;
 
         case 'C':
-          ca_location = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
+          options.ca_location = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
           break;
 #endif
         case 'h':
@@ -106,40 +109,47 @@ class My_HTTP_RequestHandler
   : public ACE::HTTP::ClientRequestHandler
 {
   public:
-    My_HTTP_RequestHandler () : in_length_ (0), read_length_ (0) {}
-    virtual ~My_HTTP_RequestHandler () {}
+    My_HTTP_RequestHandler () = default;
+    ~My_HTTP_RequestHandler () override = default;
+
+    My_HTTP_RequestHandler (My_HTTP_RequestHandler const &) = delete;
+    My_HTTP_RequestHandler (My_HTTP_RequestHandler &&) = delete;
+    My_HTTP_RequestHandler &operator= (My_HTTP_RequestHandler const &) = delete;
+    My_HTTP_RequestHandler &operator= (My_HTTP_RequestHandler &&) = delete;
 
   protected:
-    virtual void handle_request_error (const ACE::HTTP::URL& url)
+    void handle_request_error (ACE::HTTP::URL const &url) override
       {
         std::cout << "ERROR" << std::endl;
         std::cerr << "Failed to handle request for " << url.to_string ().c_str () << std::endl;
       }
 
-    virtual void handle_connection_error (const ACE::HTTP::URL& url)
+    void handle_connection_error (ACE::HTTP::URL const &url) override
       {
         std::cout << "ERROR" << std::endl;
         std::cerr << "Failed to set up connection for " << url.to_string ().c_str () << std::endl;
       }
 
-    virtual void after_read (const char_type* /*buffer*/, int length_read)
+    void after_read (char_type const * /*buffer*/, int length_read) override
       {
         if (this->read_length_ == 0)
           {
             this->in_length_ = this->response ().get_content_length ();
           }
-        this->read_length_ += length_read;
+        this->read_length_ += static_cast<size_t> (length_read);
         std::cout << "\r [" << this->read_length_ << '/';
-        if (this->in_length_ != ACE::HTTP::Response::UNKNOWN_CONTENT_LENGTH)
+        if (this->in_length_ > 0)
           {
-            std::cout << this->in_length_ << "] " << ((this->read_length_ * 100) / this->in_length_) << "%";
+            std::cout << this->in_length_ << "] "
+                      << ((this->read_length_ * 100) /
+                          static_cast<size_t> (this->in_length_)) << "%";
           }
         else
           std::cout << "???]";
         std::cout.flush ();
       }
 
-    virtual void on_eof ()
+    void on_eof () override
       {
         ACE::HTTP::ClientRequestHandler::on_eof ();
         std::cout << std::endl;
@@ -147,95 +157,108 @@ class My_HTTP_RequestHandler
       }
 
   private:
-    int in_length_;
-    int read_length_;
+    int in_length_ {};
+    size_t read_length_ {};
 };
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 {
-  std::unique_ptr<std::ofstream> fout;
-  std::ostream* sout = &std::cout;
+  HTTP_Options options {};
+  std::ofstream fout;
+  std::ostream *sout = &std::cout;
 
-  if (!parse_args (argc, argv))
+  if (!parse_args (argc, argv, options))
     {
       return 1;
     }
 
 #if defined (ACE_HAS_SSL) && ACE_HAS_SSL == 1
-  ACE::HTTPS::Context::set_default_ssl_mode (ssl_mode);
-  ACE::HTTPS::Context::set_default_verify_mode (verify_peer);
+  ACE::HTTPS::Context::set_default_ssl_mode (options.ssl_mode);
+  ACE::HTTPS::Context::set_default_verify_mode (options.verify_peer);
   ACE::HTTPS::Context::instance ().use_default_ca ();
-  if (!private_key.empty ())
+  if (!options.private_key.empty ())
     {
-      if (certificate.empty ())
+      if (options.certificate.empty ())
         {
-          std::cerr << "ERROR: private key file [" << private_key << "] requires certificate file to be specified." << std::endl;
+          std::cerr << "ERROR: private key file [" << options.private_key
+                    << "] requires certificate file to be specified." << std::endl;
           return 1;
         }
-      if (!ACE::HTTPS::Context::instance ().set_key_files (private_key.c_str (), certificate.c_str ()))
+      if (!ACE::HTTPS::Context::instance ().set_key_files (
+            options.private_key.c_str (), options.certificate.c_str ()))
         {
-          std::cerr << "ERROR: failed to set private key [" << private_key << "]." << std::endl;
+          std::cerr << "ERROR: failed to set private key [" << options.private_key << "]." << std::endl;
           return 1;
         }
     }
-  if (!ca_location.empty ())
+  if (!options.ca_location.empty ())
     {
-      INET_DEBUG (6, (LM_INFO, DLINFO ACE_TEXT ("loading trusted CA [%C]\n"), ca_location.c_str ()));
-      if (!ACE::HTTPS::Context::instance ().load_trusted_ca (ca_location.c_str ()))
+      INET_DEBUG (6, (LM_INFO, DLINFO ACE_TEXT ("loading trusted CA [%C]\n"),
+                      options.ca_location.c_str ()));
+      if (!ACE::HTTPS::Context::instance ().load_trusted_ca (options.ca_location.c_str ()))
         {
-          std::cerr << "ERROR: failed to load trusted CA from [" << ca_location << "]." << std::endl;
+          std::cerr << "ERROR: failed to load trusted CA from [" << options.ca_location << "]." << std::endl;
           return 1;
         }
-      INET_DEBUG (6, (LM_INFO, DLINFO ACE_TEXT ("loaded [%d] trusted CA\n"), ACE::HTTPS::Context::instance ().has_trusted_ca ()));
+      INET_DEBUG (6, (LM_INFO, DLINFO ACE_TEXT ("loaded [%d] trusted CA\n"),
+                      ACE::HTTPS::Context::instance ().has_trusted_ca ()));
     }
-  if (ignore_verify)
+  if (options.ignore_verify)
     ACE::INet::SSL_CallbackManager::instance ()->set_certificate_callback (new ACE::INet::SSL_CertificateAcceptor);
 #endif
 
   std::cout << "Starting..." << std::endl;
 
-  if (!url.empty ())
+  if (!options.url.empty ())
     {
-      if (!outfile.empty ())
+      if (!options.outfile.empty ())
         {
-          fout.reset (new std::ofstream (outfile.c_str (), std::ios_base::binary|std::ios_base::out));
+          fout.open (options.outfile.c_str (), std::ios_base::binary | std::ios_base::out);
 
-          if (!*fout)
+          if (!fout)
             {
-              std::cerr << "Failed to open output file : " << outfile.c_str () << std::endl;
+              std::cerr << "Failed to open output file : " << options.outfile.c_str () << std::endl;
               return 1;
             }
 
-          sout = fout.get ();
+          sout = &fout;
         }
 
-      std::cout << "Parsing url [" << url.c_str () << "]" << std::endl;
+      std::cout << "Parsing url [" << options.url.c_str () << "]" << std::endl;
 
-      std::unique_ptr<ACE::INet::URL_Base> url_safe (ACE::INet::URL_Base::create_from_string (url));
+      std::unique_ptr<ACE::INet::URL_Base> url_safe (
+        ACE::INet::URL_Base::create_from_string (options.url));
 
-      if (url_safe.get () == 0 || url != url_safe->to_string ())
+      if (!url_safe || options.url != url_safe->to_string ())
         {
-          std::cerr << "Failed parsing url [" << url << "]" << std::endl;
-          std::cerr << "\tresult = " << (url_safe.get () == 0 ? "(null)" : url_safe->to_string ().c_str ()) << std::endl;
+          std::cerr << "Failed parsing url [" << options.url << "]" << std::endl;
+          std::cerr << "\tresult = "
+                    << (url_safe ? url_safe->to_string ().c_str () : "(null)") << std::endl;
           return 1;
         }
 
-      ACE::HTTP::URL& http_url = *dynamic_cast<ACE::HTTP::URL*> (url_safe.get ());
-
-      if (!proxy_hostname.empty ())
+      ACE::HTTP::URL * const http_url = dynamic_cast<ACE::HTTP::URL *> (url_safe.get ());
+      if (http_url == nullptr)
         {
-          std::cout << "Setting proxy: " << proxy_hostname.c_str () << ':' << proxy_port << std::endl;
-          http_url.set_proxy (proxy_hostname, proxy_port);
+          std::cerr << "URL is not an HTTP URL: " << options.url << std::endl;
+          return 1;
+        }
+
+      if (!options.proxy_hostname.empty ())
+        {
+          std::cout << "Setting proxy: " << options.proxy_hostname.c_str ()
+                    << ':' << options.proxy_port << std::endl;
+          http_url->set_proxy (options.proxy_hostname, options.proxy_port);
         }
 
       std::cout << "Opening url...";
       My_HTTP_RequestHandler my_rh;
-      ACE::INet::URLStream urlin = http_url.open (my_rh);
+      ACE::INet::URLStream urlin = http_url->open (my_rh);
       if (urlin)
         {
           std::cout << "Received response "
-                    << (int)my_rh.response ().get_status ().get_status ()
+                    << static_cast<int> (my_rh.response ().get_status ().get_status ())
                     << " "
                     << my_rh.response ().get_status ().get_reason ().c_str ()
                     << std::endl;
@@ -254,8 +277,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
             }
 
           std::cout << "Saving to: ";
-          if (!outfile.empty ())
-            std::cout << '\'' << outfile.c_str () << '\'' << std::endl;
+          if (!options.outfile.empty ())
+            std::cout << '\'' << options.outfile.c_str () << '\'' << std::endl;
           else
             std::cout << "(stdout)" << std::endl;
 

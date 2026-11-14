@@ -51,13 +51,11 @@ namespace ACE
    * @brief Smart pointer implementation designed for use as a class
    *        member.
    *
-   * Using a @c std::auto_ptr\<\> as a class member is sometimes
-   * problematic since ownership of memory is transferred when copying
-   * such members.  This @c Value_Ptr class is explicitly designed to
-   * avoid such problems by performing copies of the underlying object
-   * rather than transfer ownership.  This, for example, allows it to
-   * be readily used as a member in classes placed inside STL
-   * containers.
+   * Using a @c std::unique_ptr\<\> as a class member is sometimes
+   * problematic when the containing class needs copy semantics. This
+   * @c Value_Ptr class performs copies of the underlying object rather
+   * than transferring ownership. This allows it to be used as a member
+   * in copyable classes and standard containers.
    *
    * @see Item 31 in "More Exceptional C++" by Herb Sutter.
    */
@@ -65,10 +63,8 @@ namespace ACE
   class Value_Ptr
   {
   public:
-    /// Constructor.
     explicit Value_Ptr (T * p = nullptr) : p_ (p) {}
 
-    /// Destructor.
     ~Value_Ptr () { delete this->p_; }
 
     /// Deference operator.
@@ -80,18 +76,16 @@ namespace ACE
     /// Non-throwing swap operation used to make assignment strongly
     /// exception-safe.
     /**
-     * @note As implemented, the swap operation may not work correctly
-     *       for @c auto_ptr\<\>s, but why would one use an @c
-     *       auto_ptr\<\> as the template argument for this particular
-     *       template class!?
+     * @note Swapping exchanges the owned pointers. Each @c Value_Ptr
+     *       remains responsible for deleting the pointer it holds.
      */
     void swap (Value_Ptr & other) { std::swap (this->p_, other.p_); }
 
-    /// Copy constructor.
+
     Value_Ptr (Value_Ptr const & other)
       : p_ (create_from (other.p_)) { }
 
-    /// Assignment operator.
+
     Value_Ptr & operator= (Value_Ptr const & other)
     {
       // Strongly exception-safe.

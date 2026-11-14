@@ -11,14 +11,20 @@
 class SignalableTask : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  int handle_signal (int signum, siginfo_t *  = nullptr, ucontext_t * = nullptr) override
+  SignalableTask () = default;
+  SignalableTask (SignalableTask const &) = delete;
+  SignalableTask (SignalableTask &&) = delete;
+  SignalableTask &operator= (SignalableTask const &) = delete;
+  SignalableTask &operator= (SignalableTask &&) = delete;
+
+  int handle_signal (int signum, siginfo_t * = nullptr, ucontext_t * = nullptr) override
   {
     if (signum == SIGUSR1)
       {
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%t) received a %S signal\n"),
                     signum));
-        handle_alert();
+        handle_alert ();
       }
 
     return 0;
@@ -28,13 +34,13 @@ public:
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Starting thread\n")));
 
-    while (1)
+    while (true)
       {
-        ACE_Message_Block* mb = nullptr;
-        ACE_Time_Value tv (0, 1000);
+        ACE_Message_Block *mb {};
+        ACE_Time_Value tv {0, 1000};
         tv += ACE_OS::time (nullptr);
 
-        int result = this->getq(mb, &tv);
+        int const result = this->getq (mb, &tv);
 
         if (result == -1 && errno == EWOULDBLOCK)
           continue;
@@ -46,7 +52,7 @@ public:
   }
 
   void handle_alert ();
-  void process_message (ACE_Message_Block *mb);
+  void process_message (ACE_Message_Block *);
 };
 
 void
@@ -73,7 +79,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 
   ACE_OS::sleep (1);      // Allow threads to start
 
-  for (int i = 0; i < 5; i++)
+  for (int i = 0; i < 5; ++i)
     ACE_OS::kill (ACE_OS::getpid (), SIGUSR1);
   handler.wait ();
   return 0;

@@ -23,8 +23,6 @@ namespace ACE
     Session_T<ACE_SYNCH_USE>::Session_T ()
       : port_ (FTP_PORT),
         reactive_ (false),
-        connection_ (0),
-        sock_stream_ (0),
         ftp_timeout_ (DEFAULT_TIMEOUT),
         cannot_reconnect_ (false),
         has_ftp_ext_ (true),
@@ -37,8 +35,6 @@ namespace ACE
     Session_T<ACE_SYNCH_USE>::Session_T (const ACE_Time_Value& timeout)
       : port_ (FTP_PORT),
         reactive_ (false),
-        connection_ (0),
-        sock_stream_ (0),
         ftp_timeout_ (timeout),
         cannot_reconnect_ (false),
         has_ftp_ext_ (true),
@@ -111,7 +107,7 @@ namespace ACE
       {
         INET_TRACE ("ACE_FTP_Session::connect");
 
-        typedef ACE_Connector<connection_type, ACE_SOCK_CONNECTOR> connector_type;
+        using connector_type = ACE_Connector<connection_type, ACE_SOCK_CONNECTOR>;
 
         this->close ();
 
@@ -120,7 +116,7 @@ namespace ACE
                                     this->ftp_timeout_);
         connector_type connector;
 
-        connection_type* new_connection = 0;
+        connection_type* new_connection {};
         ACE_NEW_RETURN (new_connection,
                         connection_type(sync_opt),
                         false);
@@ -143,8 +139,10 @@ namespace ACE
         this->connection_->reference_counting_policy ().value (
             ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
 
-        ACE_NEW_NORETURN (this->sock_stream_,
+        sock_stream_type* new_sock_stream {};
+        ACE_NEW_NORETURN (new_sock_stream,
                           sock_stream_type (this->connection_));
+        this->sock_stream_.reset (new_sock_stream);
         if (this->sock_stream_)
           {
             this->new_connect_ = true;
@@ -176,7 +174,7 @@ namespace ACE
           }
         else
           {
-            typedef ACE_Connector<connection_type, ACE_SOCK_CONNECTOR> connector_type;
+            using connector_type = ACE_Connector<connection_type, ACE_SOCK_CONNECTOR>;
 
             connector_type connector;
             if (connector.connect (connection,
@@ -194,8 +192,10 @@ namespace ACE
         this->connection_ = connection;
         this->connection_->add_reference ();
 
-        ACE_NEW_NORETURN (this->sock_stream_,
+        sock_stream_type* new_sock_stream {};
+        ACE_NEW_NORETURN (new_sock_stream,
                           sock_stream_type (this->connection_));
+        this->sock_stream_.reset (new_sock_stream);
 
         if (this->sock_stream_)
           {
@@ -268,15 +268,11 @@ namespace ACE
 
         if (this->connection_)
           {
-            if (this->sock_stream_)
-              {
-                delete this->sock_stream_;
-                this->sock_stream_ = 0;
-              }
+            this->sock_stream_.reset ();
             // this should be the last referece and removing it
             // causes the connection to be destroyed
             this->connection_->remove_reference ();
-            this->connection_ = 0;
+            this->connection_ = nullptr;
           }
       }
 

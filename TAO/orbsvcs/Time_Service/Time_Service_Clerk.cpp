@@ -2,7 +2,6 @@
 #include "Clerk_i.h"
 #include "ace/OS_main.h"
 
-
 // This is the main driver program for the Time Service clerk.
 
 int
@@ -15,13 +14,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   try
     {
-      int r = clerk.init (argc, argv);
-      if (r == -1)
+      int const result = clerk.init (argc, argv);
+      if (result == -1)
         return 1;
-      else
-        {
-          clerk.run ();
-        }
+
+      clerk.run ();
     }
   catch (CORBA::SystemException const &sysex)
     {

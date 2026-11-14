@@ -68,7 +68,6 @@ void TAO_FTEC_ProxyPushSupplier::connect_push_consumer (
   }
 }
 
-
 void TAO_FTEC_ProxyPushSupplier::disconnect_push_supplier ()
 {
   if (Request_Context_Repository().is_executed_request())
@@ -85,7 +84,6 @@ void TAO_FTEC_ProxyPushSupplier::disconnect_push_supplier ()
 
   svc->replicate_request(update, nullptr);
 }
-
 
 void TAO_FTEC_ProxyPushSupplier::suspend_connection ()
 {
@@ -138,7 +136,6 @@ void TAO_FTEC_ProxyPushSupplier::resume_connection ()
   }
 }
 
-
 void TAO_FTEC_ProxyPushSupplier::get_state(FtRtecEventChannelAdmin::ProxyPushSupplierStat& state)
 {
   state.object_id = this->object_id_.in ();
@@ -150,7 +147,6 @@ void TAO_FTEC_ProxyPushSupplier::get_state(FtRtecEventChannelAdmin::ProxyPushSup
     state.parameter.info(info);
   }
 }
-
 
 void TAO_FTEC_ProxyPushSupplier::set_state(const FtRtecEventChannelAdmin::ProxyPushSupplierStat& state)
 {

@@ -1,4 +1,5 @@
 #include "tao/Strategies/DIOP_Profile.h"
+#include <memory>
 
 #if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
 
@@ -9,11 +10,11 @@
 #include "tao/debug.h"
 #include "tao/IIOP_EndpointsC.h"
 
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
 #include "ace/os_include/os_netdb.h"
 #include "ace/Truncate.h"
 #include <cstring>
+#include <cstdio>
+#include <cstdlib>
 
 static const char the_prefix[] = "diop";
 
@@ -24,7 +25,6 @@ TAO_DIOP_Profile::object_key_delimiter () const
 {
   return TAO_DIOP_Profile::object_key_delimiter_;
 }
-
 
 TAO_DIOP_Profile::TAO_DIOP_Profile (const ACE_INET_Addr &addr,
                                     const TAO::ObjectKey &object_key,
@@ -65,7 +65,7 @@ TAO_DIOP_Profile::~TAO_DIOP_Profile ()
 {
   // Clean up the list of endpoints since we own it.
   // Skip the head, since it is not dynamically allocated.
-  TAO_Endpoint *tmp = nullptr;
+  TAO_Endpoint *tmp {};
 
   for (TAO_Endpoint *next = this->endpoint ()->next ();
        next != nullptr;
@@ -126,12 +126,12 @@ TAO_DIOP_Profile::parse_string_i (const char *ior)
     }
 
   // Length of host string.
-  CORBA::ULong length_host = 0;
+  CORBA::ULong length_host {};
 
   const char *cp_pos = std::strchr (ior, ':');  // Look for a port
 #if defined (ACE_HAS_IPV6)
   // IPv6 numeric address in host string?
-  bool ipv6_in_host = false;
+  bool ipv6_in_host {};
 
   // Check if this is a (possibly) IPv6 supporting profile containing a
   // decimal IPv6 address representation.
@@ -187,17 +187,17 @@ TAO_DIOP_Profile::parse_string_i (const char *ior)
   else if (cp_pos != nullptr)
     {
       // A port number or port name was specified.
-      CORBA::ULong length_port = ACE_Utils::truncate_cast<CORBA::ULong> (okd - cp_pos - 1);
+      CORBA::ULong const length_port = ACE_Utils::truncate_cast<CORBA::ULong> (okd - cp_pos - 1);
 
       CORBA::String_var tmp = CORBA::string_alloc (length_port);
 
-      ACE_OS::strncpy (tmp.inout (), cp_pos + 1, length_port);
+      std::strncpy (tmp.inout (), cp_pos + 1, length_port);
       tmp[length_port] = '\0';
 
-      if (ACE_OS::strspn (tmp.in (), "1234567890") == length_port)
+      if (std::strspn (tmp.in (), "1234567890") == length_port)
         {
           this->endpoint_.port_ =
-            static_cast<CORBA::UShort> (ACE_OS::atoi (tmp.in ()));
+            static_cast<CORBA::UShort> (std::atoi (tmp.in ()));
         }
       else
         {
@@ -230,11 +230,11 @@ TAO_DIOP_Profile::parse_string_i (const char *ior)
 
 #if defined (ACE_HAS_IPV6)
   if (ipv6_in_host)
-    ACE_OS::strncpy (tmp.inout (), ior + 1, length_host);
+    std::strncpy (tmp.inout (), ior + 1, length_host);
   else
 #endif /* ACE_HAS_IPV6 */
   // Skip the trailing '/'
-  ACE_OS::strncpy (tmp.inout (), ior, length_host);
+  std::strncpy (tmp.inout (), ior, length_host);
   tmp[length_host] = '\0';
 
   this->endpoint_.host_ = tmp._retn ();
@@ -242,9 +242,9 @@ TAO_DIOP_Profile::parse_string_i (const char *ior)
   this->endpoint_.is_ipv6_decimal_ = ipv6_in_host;
 #endif /* ACE_HAS_IPV6 */
 
-  if (ACE_OS::strcmp (this->endpoint_.host_.in (), "") == 0)
+  if (std::strcmp (this->endpoint_.host_.in (), "") == 0)
     {
-      ACE_INET_Addr host_addr;
+      ACE_INET_Addr const host_addr;
 
       char tmp_host [MAXHOSTNAMELEN + 1];
 
@@ -290,11 +290,11 @@ TAO_DIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
 
   // Make sure we have a TAO_DIOP_Profile.
   if (op == nullptr)
-    return 0;
+    return false;
 
   // Check endpoints equivalence.
-  const TAO_DIOP_Endpoint *other_endp = &op->endpoint_;
-  for (TAO_DIOP_Endpoint *endp = &this->endpoint_;
+  const TAO_DIOP_Endpoint *other_endp = std::addressof (op->endpoint_);
+  for (TAO_DIOP_Endpoint *endp = std::addressof (this->endpoint_);
        endp != nullptr;
        endp = endp->next_)
     {
@@ -311,8 +311,8 @@ CORBA::ULong
 TAO_DIOP_Profile::hash (CORBA::ULong max)
 {
   // Get the hashvalue for all endpoints.
-  CORBA::ULong hashval = 0;
-  for (TAO_DIOP_Endpoint *endp = &this->endpoint_;
+  CORBA::ULong hashval {};
+  for (TAO_DIOP_Endpoint *endp = std::addressof (this->endpoint_);
        endp != nullptr;
        endp = endp->next_)
     {
@@ -339,7 +339,7 @@ TAO_DIOP_Profile::hash (CORBA::ULong max)
 TAO_Endpoint*
 TAO_DIOP_Profile::endpoint ()
 {
-  return &this->endpoint_;
+  return std::addressof (this->endpoint_);
 }
 
 CORBA::ULong
@@ -354,7 +354,7 @@ TAO_DIOP_Profile::add_endpoint (TAO_DIOP_Endpoint *endp)
   endp->next_ = this->endpoint_.next_;
   this->endpoint_.next_ = endp;
 
-  this->count_++;
+  ++this->count_;
 }
 
 char *
@@ -370,13 +370,13 @@ TAO_DIOP_Profile::to_string () const
        8 /* "corbaloc" */ +
        1 /* colon separator */ +
        1 /* object key separator */ +
-       ACE_OS::strlen (key.in ()));
-  size_t pfx_len = (
-       ACE_OS::strlen (::the_prefix) /* "diop" */ +
+       std::strlen (key.in ()));
+  size_t const pfx_len = (
+       std::strlen (::the_prefix) /* "diop" */ +
        1 /* colon separator */);
 
- TAO_DIOP_Endpoint const *endp = nullptr;
- for (endp = &this->endpoint_; endp != nullptr; endp = endp->next_)
+ TAO_DIOP_Endpoint const *endp {};
+ for (endp = std::addressof (this->endpoint_); endp != nullptr; endp = endp->next_)
    {
       buflen += (
           pfx_len +
@@ -384,7 +384,7 @@ TAO_DIOP_Profile::to_string () const
           1 /* decimal point */ +
           1 /* minor version */ +
           1 /* `@' character */ +
-          ACE_OS::strlen (endp->host ()) +
+          std::strlen (endp->host ()) +
           1 /* colon separator */ +
           5 /* port number */ +
           1 /* comma */);
@@ -398,25 +398,25 @@ TAO_DIOP_Profile::to_string () const
 
   char * buf = CORBA::string_alloc (static_cast<CORBA::ULong> (buflen));
 
-  ACE_OS::strcpy (buf, "corbaloc:");
+  std::strcpy (buf, "corbaloc:");
 
-  for (endp = &this->endpoint_; endp != nullptr; endp = endp->next_)
+  for (endp = std::addressof (this->endpoint_); endp != nullptr; endp = endp->next_)
     {
-      if (&this->endpoint_ != endp)
-      ACE_OS::strcat (buf, ",");
+      if (std::addressof (this->endpoint_) != endp)
+      std::strcat (buf, ",");
 
 #if defined (ACE_HAS_IPV6)
       if (endp->is_ipv6_decimal_)
         {
           // Don't publish scopeid if included.
           ACE_CString tmp (endp->host ());
-          ACE_CString::size_type pos = tmp.find ('%');
+          ACE_CString::size_type const pos = tmp.find ('%');
           if (pos != ACE_CString::npos)
             {
               tmp = tmp.substr (0, pos + 1);
               tmp[pos] = '\0';
             }
-          ACE_OS::sprintf (buf + ACE_OS::strlen (buf),
+          std::sprintf (buf + std::strlen (buf),
                   "%s:%c.%c@[%s]:%d",
                   ::the_prefix,
                   digits [this->version_.major],
@@ -426,7 +426,7 @@ TAO_DIOP_Profile::to_string () const
         }
       else
 #endif
-      ACE_OS::sprintf (buf + ACE_OS::strlen (buf),
+      std::sprintf (buf + std::strlen (buf),
               "%s:%c.%c@%s:%d",
               ::the_prefix,
               digits [this->version_.major],
@@ -434,7 +434,7 @@ TAO_DIOP_Profile::to_string () const
               endp->host (),
               endp->port ());
   }
-  ACE_OS::sprintf (buf + ACE_OS::strlen (buf),
+  std::sprintf (buf + std::strlen (buf),
                    "%c%s",
                    this->object_key_delimiter_,
                    key.in ());
@@ -467,8 +467,8 @@ TAO_DIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
       (pos = std::strchr (host = this->endpoint_.host (), '%')) != nullptr)
     {
       ACE_CString tmp;
-      size_t len = pos - host;
-      tmp.set (this->endpoint_.host (), len, 1);
+      size_t const len = pos - host;
+      tmp.set (this->endpoint_.host (), len, true);
       encap.write_string (tmp.c_str ());
     }
   else
@@ -506,8 +506,8 @@ TAO_DIOP_Profile::encode_endpoints ()
   TAO::IIOPEndpointSequence endpoints;
   endpoints.length (this->count_);
 
-  const TAO_DIOP_Endpoint *endpoint = &this->endpoint_;
-  for (CORBA::ULong i = 0;
+  const TAO_DIOP_Endpoint *endpoint = std::addressof (this->endpoint_);
+  for (CORBA::ULong i {};
        i < this->count_;
        ++i)
     {
@@ -516,7 +516,7 @@ TAO_DIOP_Profile::encode_endpoints ()
         {
           // Don't publish scopeid if included.
           ACE_CString tmp (endpoint->host ());
-          ACE_CString::size_type pos = tmp.find ('%');
+          ACE_CString::size_type const pos = tmp.find ('%');
           if (pos != ACE_CString::npos)
             {
               tmp = tmp.substr (0, pos + 1);
@@ -587,7 +587,7 @@ TAO_DIOP_Profile::decode_endpoints ()
            i > 0;
            --i)
         {
-          TAO_DIOP_Endpoint *endpoint = nullptr;
+          TAO_DIOP_Endpoint *endpoint {};
           ACE_NEW_RETURN (endpoint,
                           TAO_DIOP_Endpoint (endpoints[i].host,
                                              endpoints[i].port,

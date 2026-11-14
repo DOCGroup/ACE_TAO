@@ -26,10 +26,8 @@
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Options_Parser
 {
 public:
-  /// Constructor
   TAO_Notify_Tests_Options_Parser ();
 
-  /// Destructor
   ~TAO_Notify_Tests_Options_Parser ();
 
   /// Populates <qos> with options apecified in <arg_shifter>

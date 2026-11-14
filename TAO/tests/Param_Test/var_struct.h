@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef PARAM_TEST_VAR_STRUCT_H
 #define PARAM_TEST_VAR_STRUCT_H
 

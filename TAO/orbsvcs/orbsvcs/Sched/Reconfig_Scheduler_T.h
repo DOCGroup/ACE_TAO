@@ -1,13 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Reconfig_Scheduler_T.h
  *
  *  @author  Chris Gill <cdgill@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_RECONFIG_SCHEDULER_T_H
 #define TAO_RECONFIG_SCHEDULER_T_H
@@ -23,23 +20,23 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+/**
+ * A servant for RtecScheduler::Scheduler that can be initialized
+ * and run solely with precomputed scheduling information, but is also
+ * designed to perform efficient recomputation of scheduling info
+ * in the face of run-time changes to RT_Infos in the schedule.
+ *
+ * This class implements the TAO scheduling service.  It has
+ * the ability to accept and use precomputed scheduling information
+ * with deterministic performance once the schedule is fully configured.
+ * It also provides efficient and flexible lookup and computation
+ * during schedule configuration, so that it can be used during
+ * both schedule configuration and run-time phases of operation.
+ */
+
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 class TAO_Reconfig_Scheduler :
   public POA_RtecScheduler::Scheduler
-  // = TITLE
-  //   A servant for RtecScheduler::Scheduler that can be initialized
-  //   and run solely with precomputed scheduling information, but is also
-  //   designed to perform efficient recomputation of scheduling info
-  //   in the face of run-time changes to RT_Infos in the schedule.
-  //
-  // = DESCRIPTION
-  //   This class implements the TAO scheduling service.  It has
-  //   the ability to accept and use precomputed scheduling information
-  //   with deterministic performance once the schedule is fully configured.
-  //   It also provides efficient and flexible lookup and computation
-  //   during schedule configuration, so that it can be used during
-  //   both schedule configuration and run-time phases of operation.
-  //
 {
 public:
   /// Type of map used for O(1) lookup of RT_Infos by their handles.
@@ -50,9 +47,9 @@ public:
                                               ACE_LOCK>;
 
   /// Type of tree used for O(log n) lookup of RT_Infos by their names.
-  using RT_INFO_TREE = ACE_RB_Tree<const char *,
+  using RT_INFO_TREE = ACE_RB_Tree<char const *,
                                   TAO_RT_Info_Ex *,
-                                  ACE_Less_Than<const char *>,
+                                  ACE_Less_Than<char const *>,
                                   ACE_LOCK>;
 
   /// Type of map used for O(1) lookup of Config_Infos by their priorities.
@@ -74,10 +71,9 @@ public:
   /// caller or called handle.
   using DEPENDENCY_SET_MAP_ITERATOR = typename DEPENDENCY_SET_MAP::ITERATOR;
 
-  /// Default constructor.
-  TAO_Reconfig_Scheduler (int enforce_schedule_stability = 0,
-                          const CORBA::Double & critical_utilization_threshold = 1.0,
-                          const CORBA::Double & noncritical_utilization_threshold = 1.1);
+  explicit TAO_Reconfig_Scheduler (bool enforce_schedule_stability = false,
+                                   CORBA::Double const & critical_utilization_threshold = 1.0,
+                                   CORBA::Double const & noncritical_utilization_threshold = 1.1);
 
   /// Constructor. Initialize the scheduler from POD_Config_Info, POD_RT_Info,
   /// and POD_Dependency arrays, plus schedule stability flags.
@@ -88,16 +84,15 @@ public:
                           int dependency_count,
                           ACE_Scheduler_Factory::POD_Dependency_Info dependency_info[],
                           u_long stability_flags,
-                          int enforce_schedule_stability = 0,
-                          const CORBA::Double & critical_utilization_threshold = 1.0,
-                          const CORBA::Double & noncritical_utilization_threshold = 1.1);
+                          bool enforce_schedule_stability = false,
+                          CORBA::Double const & critical_utilization_threshold = 1.0,
+                          CORBA::Double const & noncritical_utilization_threshold = 1.1);
 
-  /// Destructor.
   ~TAO_Reconfig_Scheduler () override;
 
-  TAO_Reconfig_Scheduler (const TAO_Reconfig_Scheduler &) = delete;
+  TAO_Reconfig_Scheduler (TAO_Reconfig_Scheduler const &) = delete;
   TAO_Reconfig_Scheduler (TAO_Reconfig_Scheduler &&) = delete;
-  TAO_Reconfig_Scheduler &operator= (const TAO_Reconfig_Scheduler &) = delete;
+  TAO_Reconfig_Scheduler &operator= (TAO_Reconfig_Scheduler const &) = delete;
   TAO_Reconfig_Scheduler &operator= (TAO_Reconfig_Scheduler &&) = delete;
 
   /// Initializes the scheduler with the passed information.
@@ -118,11 +113,11 @@ public:
    * RT_Info is returned.  If the RT_Info already exists, an exception
    * is thrown.
    */
-  RtecScheduler::handle_t create (const char * entry_point) override;
+  RtecScheduler::handle_t create (char const * entry_point) override;
 
   /// Lookup a handle for an RT_Info, and return its handle, or an error
   /// value if it's not present.
-  RtecScheduler::handle_t lookup (const char * entry_point) override;
+  RtecScheduler::handle_t lookup (char const * entry_point) override;
 
   /// Return a pointer to the RT_Info corresponding to the passed handle.
   RtecScheduler::RT_Info* get (RtecScheduler::handle_t handle) override;
@@ -153,11 +148,11 @@ public:
 
   /// Set characteristics of the RT_Infos corresponding to the passed handles.
   /// Tuples are added in the case of existing and/or multiple definitions.
-  void set_seq (const RtecScheduler::RT_Info_Set& infos) override;
+  void set_seq (RtecScheduler::RT_Info_Set const & infos) override;
 
   /// Reset characteristics of the RT_Infos corresponding to the passed handles.
   /// Tuples are replaced in the case of existing and/or multiple definitions.
-  void reset_seq (const RtecScheduler::RT_Info_Set& infos) override;
+  void reset_seq (RtecScheduler::RT_Info_Set const & infos) override;
 
   /**
    * Replace all RT_Infos, resetting characteristics of the RT_Infos
@@ -165,7 +160,7 @@ public:
    * reset to their uninitialized values, i.e., the same they have
    * just after the create call.
    */
-  void replace_seq (const RtecScheduler::RT_Info_Set& infos) override;
+  void replace_seq (RtecScheduler::RT_Info_Set const & infos) override;
 
   /// Returns the priority and subpriority values assigned to an RT_Info,
   /// based on its handle.
@@ -176,7 +171,7 @@ public:
 
   /// Returns the priority and subpriority values assigned to an RT_Info,
   /// based on its entry point name.
-  void entry_point_priority (const char * entry_point,
+  void entry_point_priority (char const * entry_point,
                                      RtecScheduler::OS_Priority& o_priority,
                                      RtecScheduler::Preemption_Subpriority_t& p_subpriority,
                                      RtecScheduler::Preemption_Priority_t& p_priority) override;
@@ -201,14 +196,14 @@ public:
                                             RtecScheduler::Dependency_Enabled_Type_t enabled) override;
 
   /// This method sets the enable state of a sequence of dependencies.
-  void set_dependency_enable_state_seq (const RtecScheduler::Dependency_Set & dependencies) override;
+  void set_dependency_enable_state_seq (RtecScheduler::Dependency_Set const & dependencies) override;
 
   /// This method enables or disables an RT_Info.
   void set_rt_info_enable_state (RtecScheduler::handle_t handle,
                                  RtecScheduler::RT_Info_Enabled_Type_t enabled) override;
 
   /// This method enables or disables a sequence of RT_Infos.
-  void set_rt_info_enable_state_seq (const RtecScheduler::RT_Info_Enable_State_Pair_Set & pair_set) override;
+  void set_rt_info_enable_state_seq (RtecScheduler::RT_Info_Enable_State_Pair_Set const & pair_set) override;
 
   /**
    * If information has been added or changed since the last stable
@@ -240,7 +235,6 @@ public:
   /// number, types, and priority levels for the dispatching lanes.
   void get_config_info_set (RtecScheduler::Config_Info_Set_out configs) override;
 
-
   /// Provides the thread priority and queue type for the given priority level.
   void dispatch_configuration (RtecScheduler::Preemption_Priority_t p_priority,
                                        RtecScheduler::OS_Priority& o_priority,
@@ -257,7 +251,7 @@ public:
   /// Provides the set of Config_Infos associated with the current schedule.
   void get_config_infos (RtecScheduler::Config_Info_Set_out configs) override;
 
-  // = Accessors that allow controlled relaxations of encapsulation.
+  /// Accessors that allow controlled relaxations of encapsulation.
 
   /// Accesses scheduling strategy for the reconfig scheduler.
   RECONFIG_SCHED_STRATEGY & sched_strategy ();
@@ -303,13 +297,13 @@ public:
   CORBA::Double noncritical_utilization_threshold ();
 
   /// Mutator for noncritical task utilization threshold.
-  void noncritical_utilization_threshold (const CORBA::Double &);
+  void noncritical_utilization_threshold (CORBA::Double const &);
 
   /// Accessor for critical task utilization threshold.
   CORBA::Double critical_utilization_threshold ();
 
   /// Mutator for critical task utilization threshold.
-  void critical_utilization_threshold (const CORBA::Double &);
+  void critical_utilization_threshold (CORBA::Double const &);
 
 protected:
   // @@ TO DO: use a memento to save and restore scheduler state without
@@ -352,7 +346,7 @@ protected:
    * exists, then if the ignore_duplicates flag is set, the handle
    * is simply returned; otherwise, an exception is thrown.
    */
-  TAO_RT_Info_Ex * create_i (const char * entry_point,
+  TAO_RT_Info_Ex * create_i (char const * entry_point,
                              RtecScheduler::handle_t handle,
                              int ignore_duplicates);
 
@@ -370,7 +364,7 @@ protected:
 
   /// Internal method to look up a handle for an RT_Info, and return
   /// its handle, or an exception if it's not present.
-  virtual RtecScheduler::handle_t lookup_i (const char * entry_point);
+  virtual RtecScheduler::handle_t lookup_i (char const * entry_point);
 
   /// Internal method to return the priority and subpriority
   /// values assigned to an RT_Info, based on its handle.
@@ -411,7 +405,6 @@ protected:
                                               RtecScheduler::Dependency_Type_t dependency_type,
                                               RtecScheduler::Dependency_Enabled_Type_t enabled);
 
-
   /// This method installs a dependency in a dependency set map.
   virtual void map_dependency_i
                  (RtecScheduler::handle_t key,
@@ -449,7 +442,6 @@ protected:
   /// rate tuples.
   void perform_admission_i ();
 
-
   /**
    * Traverses criticality dependency graph, assigning a topological
    * ordering.  Resets DFS map entries, do DFS traversal, constructs
@@ -457,10 +449,8 @@ protected:
    */
   void crit_dfs_traverse_i ();
 
-
   /// Propagates criticalities.
   void propagate_criticalities_i ();
-
 
   /// Propagates effective execution time and period, sets total frame size.
   void propagate_characteristics_i ();
@@ -479,9 +469,8 @@ protected:
 /* WSOA merge - commented out
   virtual void compute_utilization_i ();
 
-
   /// Helper method to give an RT_Info some reasonable default values
-  /// = Protected class members.
+  /// Protected class members.
   static void init_rt_info (RtecScheduler::RT_Info &rt_info);
 */
 
@@ -535,7 +524,7 @@ protected:
    * order and then priority order at various points
    * during schedule computation.
    */
-  TAO_Reconfig_Scheduler_Entry ** entry_ptr_array_;
+  TAO_Reconfig_Scheduler_Entry ** entry_ptr_array_ {};
 
   /// Size of the array of scheduling entry pointers.
   long entry_ptr_array_size_;
@@ -547,7 +536,7 @@ protected:
    * order and then priority order at various points
    * during schedule computation.
    */
-  TAO_RT_Info_Tuple ** tuple_ptr_array_;
+  TAO_RT_Info_Tuple ** tuple_ptr_array_ {};
 
   /// Size of the array of scheduling entry pointers.
   long tuple_ptr_array_size_;
@@ -565,7 +554,7 @@ protected:
    * matters, it will simply return a default value if nothing
    * has been generated.
    */
-  int enforce_schedule_stability_;
+  bool enforce_schedule_stability_;
 
   /// The number of dependencies in the dependency lists of all RT_Infos.
   /// This is used when traversing the dependency graph.
@@ -591,14 +580,12 @@ protected:
   ACE_LOCK mutex_;
 };
 
-
+/// Ensures that the scheduling pointer arrays have room, expanding them
+/// eagerly to minimize allocation overhead at the cost of some unused space.
 template <class ARRAY_ELEMENT_TYPE> void
 maintain_scheduling_array (ARRAY_ELEMENT_TYPE ** & current_ptr_array,
                            long & current_ptr_array_size,
                            RtecScheduler::handle_t handle);
-// Helper function: makes sure there is room in the scheduling pointer
-// arrays.  This function expands the array eagerly, to minimize time
-// overhead for memory allocation (at a cost of some unused space).
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

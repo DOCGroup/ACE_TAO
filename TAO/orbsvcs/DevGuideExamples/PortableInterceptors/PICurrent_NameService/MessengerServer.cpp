@@ -8,63 +8,53 @@
 #include "orbsvcs/CosNamingC.h"
 #include <iostream>
 
-int
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      ServerInitializer *temp_initializer = nullptr;
-      temp_initializer = new ServerInitializer;
-
-      PortableInterceptor::ORBInitializer_var orb_initializer =
-        temp_initializer;
+      PortableInterceptor::ORBInitializer_var const orb_initializer =
+        new ServerInitializer;
 
       PortableInterceptor::register_orb_initializer (orb_initializer.in ());
 
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv, "Server ORB");
 
-      //Get reference to Root POA
-      CORBA::Object_var obj = orb->resolve_initial_references( "RootPOA" );
-      PortableServer::POA_var poa = PortableServer::POA::_narrow( obj.in() );
+      CORBA::Object_var const poa_object = orb->resolve_initial_references ("RootPOA");
+      PortableServer::POA_var const poa = PortableServer::POA::_narrow (poa_object.in ());
 
-      // Activate POA Manager
-      PortableServer::POAManager_var mgr = poa->the_POAManager();
-      mgr->activate();
+      PortableServer::POAManager_var const poa_manager = poa->the_POAManager ();
+      poa_manager->activate ();
 
-      // Create an object
-      PortableServer::Servant_var<Messenger_i> messenger_servant =
+      PortableServer::Servant_var<Messenger_i> const messenger_servant =
         new Messenger_i;
 
-      // Find the Naming Service
-      CORBA::Object_var naming_obj =
-        orb->resolve_initial_references( "NameService" );
-      CosNaming::NamingContext_var root =
-        CosNaming::NamingContext::_narrow( naming_obj.in() );
-      if( CORBA::is_nil( root.in() ) ) {
-        std::cerr << "Nil Naming Context reference" << std::endl;
-        return 1;
-      }
+      CORBA::Object_var const naming_object = orb->resolve_initial_references ("NameService");
+      CosNaming::NamingContext_var const root =
+        CosNaming::NamingContext::_narrow (naming_object.in ());
+      if (CORBA::is_nil (root.in ()))
+        {
+          std::cerr << "Nil Naming Context reference" << std::endl;
+          return 1;
+        }
 
-      // Bind Messenger
-      CosNaming::Name name;
-      name.length( 1 );
-      name[0].id = CORBA::string_dup( "Messenger" );
+      CosNaming::Name name {};
+      name.length (1);
+      name[0].id = CORBA::string_dup ("Messenger");
 
-      PortableServer::ObjectId_var oid =
-        poa->activate_object( messenger_servant.in() );
-      CORBA::Object_var messenger_obj = poa->id_to_reference( oid.in() );
+      PortableServer::ObjectId_var const oid =
+        poa->activate_object (messenger_servant.in ());
+      CORBA::Object_var const messenger_object = poa->id_to_reference (oid.in ());
 
-      root->rebind(name, messenger_obj.in());
+      root->rebind (name, messenger_object.in ());
 
       std::cout << "Messenger bound in Naming Service" << std::endl;
 
       // Accept requests
-      orb->run();
-      orb->destroy();
+      orb->run ();
+      orb->destroy ();
     }
-
-  catch (CORBA::Exception const & ex)
+  catch (CORBA::Exception const &ex)
     {
       std::cerr << "Caught CORBA exception: " << ex << std::endl;
       return 1;

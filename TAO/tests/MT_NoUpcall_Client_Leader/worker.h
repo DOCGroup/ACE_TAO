@@ -17,7 +17,12 @@ public:
   Worker (CORBA::ORB_ptr orb);
   // ctor
 
-  virtual int svc ();
+  Worker (Worker const&) = delete;
+  Worker (Worker&&) = delete;
+  Worker& operator= (Worker const&) = delete;
+  Worker& operator= (Worker&&) = delete;
+
+  int svc () override;
   // The thread entry point.
 
 public:

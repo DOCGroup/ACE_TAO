@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Context.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author  Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_CONTEXT_H
 #define TAO_CONTEXT_H
@@ -72,16 +70,18 @@ namespace CORBA
     Context () = default;
     ~Context () = default;
 
-    // = Pseudo-object methods
+    Context (Context const &) = delete;
+    Context &operator= (Context const &) = delete;
+    Context (Context &&) = delete;
+    Context &operator= (Context &&) = delete;
+
     static Context *_duplicate (Context*);
     static Context *_nil ();
 
-    // = Reference counting.
     CORBA::ULong _incr_refcount ();
     CORBA::ULong _decr_refcount ();
 
-    // = All the spec-required functions below will just throw a
-    //   CORBA::NO_IMPLEMENT exception and do nothing else.
+    /// These specification-required operations throw CORBA::NO_IMPLEMENT.
 
     char const* context_name () const;
 
@@ -121,14 +121,16 @@ namespace CORBA
   class TAO_DynamicInterface_Export ContextList
   {
   public:
-    /// Constructor.
     ContextList () = default;
 
-    /// Constructor - initialize given a length and an array of
-    /// strings.
+    ContextList (ContextList const &) = delete;
+    ContextList &operator= (ContextList const &) = delete;
+    ContextList (ContextList &&) = delete;
+    ContextList &operator= (ContextList &&) = delete;
+
+    /// Initialize from an array of strings.
     ContextList (CORBA::ULong len, char **ctx_list);
 
-    /// Destructor.
     ~ContextList ();
 
     /// Return the number of elements.
@@ -146,10 +148,10 @@ namespace CORBA
     /// Return null pointer of this type.
     static ContextList_ptr _nil ();
 
-    /// Add a string to the list.
+    /// Duplicate a string and add it to the list.
     void add (char *ctx);
 
-    /// Add and consume a string to the list.
+    /// Transfer ownership of a string to the list.
     void add_consume (char *ctx);
 
     /// Return the typecode at slot i. Raises the "Bounds" exception.
@@ -168,15 +170,10 @@ namespace CORBA
     using _out_type = CORBA::ContextList_out;
 
   private:
-    ContextList (ContextList const &) = delete;
-    ContextList &operator= (ContextList const &) = delete;
-    ContextList (ContextList &&) = delete;
-    ContextList &operator= (ContextList &&) = delete;
-
     /// Reference counter.
     std::atomic<uint32_t> refcount_ { 1 };
 
-    /// Internal list of typecodes.
+    /// Owns strings duplicated by add() or transferred by add_consume().
     ACE_Unbounded_Queue<char *> ctx_list_;
   };
 } // End CORBA namespace.

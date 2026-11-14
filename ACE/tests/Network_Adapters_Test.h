@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_NETWORK_ADAPTERS_TEST_H
 #define ACE_NETWORK_ADAPTERS_TEST_H
 
@@ -34,10 +33,8 @@
 class Echo_Handler : public ACE_Event_Handler
 {
 public:
-  /// Default constructor
   Echo_Handler ();
 
-  /// Destructor
   virtual ~Echo_Handler ();
 
   /**
@@ -92,13 +89,13 @@ public:
             ACE_Addr const &       local_addr = ACE_Addr::sap_any);
 
   /// Returns reference to the ACE::Ping_Socket. Necessary for ACE_Reactor.
-  virtual ACE_HANDLE get_handle () const;
+  ACE_HANDLE get_handle () const override;
 
   /**
    * Takes care of the input. Reads the incoming ICMP datagrams and
    * calls for process_incoming () of the ping_socket for processing.
    */
-  virtual int handle_input (ACE_HANDLE handle);
+  int handle_input (ACE_HANDLE handle) override;
 
   /*
    * Decides, if we need to continue checks (when at least a single
@@ -106,12 +103,12 @@ public:
    * set in open () not expired).  If yes, calls for dispatch_echo_checks (),
    * if not returns -1 to initiate clean-up.
    */
-  virtual int handle_timeout (ACE_Time_Value const & tv,
-                              void const * arg = 0);
+  int handle_timeout (ACE_Time_Value const & tv,
+                      void const * arg = 0) override;
 
   /// Makes clean-up
-  virtual int handle_close (ACE_HANDLE handle,
-                            ACE_Reactor_Mask close_mask);
+  int handle_close (ACE_HANDLE handle,
+                    ACE_Reactor_Mask close_mask) override;
 
   /// Calls send_echo_check() for all remote_addrs_
   int dispatch_echo_checks (int first_call = 0);
@@ -153,7 +150,6 @@ private:
   int connect_to_remote_;
 };
 
-
 /*
  * Class Stop_Handler - the most important class of the process.
  * Knows how to stop all this business.
@@ -167,27 +163,25 @@ public:
   using counter_sig = long;
 #endif
 
-  // Constructor.
   Stop_Handler (ACE_Reactor * const reactor = ACE_Reactor::instance ());
 
-  // Destructor.
   virtual ~Stop_Handler ();
 
   // Initialization. Registers this for SIGINT, SIGTERM and SIGQUIT.
   virtual int open ();
 
   // De-registers this from the reactor and stops reactors event_loop.
-  virtual int handle_close (ACE_HANDLE handle,
-                            ACE_Reactor_Mask close_mask);
+  int handle_close (ACE_HANDLE handle,
+                    ACE_Reactor_Mask close_mask) override;
 
   // Called by reactor from the notification queue.
-  virtual int handle_input (ACE_HANDLE);
+  int handle_input (ACE_HANDLE) override;
 
   // Dispatches handle_input () notification.
-  virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
+  int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0) override;
 
-  virtual int handle_timeout (ACE_Time_Value const & current_time,
-                              void const * act = 0);
+  int handle_timeout (ACE_Time_Value const & current_time,
+                      void const * act = 0) override;
 
   // Register handler with us for stopping.
   virtual int register_handler (ACE_Event_Handler * handler);
@@ -210,17 +204,14 @@ private:
   ACE_Sig_Set registered_signals_;
 };
 
-
 /*
  * TODO comment
  */
 class Repeats_Handler : public ACE_Event_Handler
 {
 public:
-  // Constructor.
   Repeats_Handler ();
 
-  // Destructor.
   virtual ~Repeats_Handler ();
 
   // Initialization.
@@ -228,12 +219,12 @@ public:
                     ACE_Reactor * const reactor = ACE_Reactor::instance (),
                     unsigned int seconds_timer = 60);
 
-  virtual int handle_close (ACE_HANDLE handle,
-                            ACE_Reactor_Mask close_mask);
+  int handle_close (ACE_HANDLE handle,
+                    ACE_Reactor_Mask close_mask) override;
 
   // dispatches a new echo-checks series
-  virtual int handle_timeout (ACE_Time_Value const & current_time,
-                              void const * act = 0);
+  int handle_timeout (ACE_Time_Value const & current_time,
+                      void const * act = 0) override;
 
 private:
   // an instance of a handler

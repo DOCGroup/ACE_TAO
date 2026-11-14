@@ -15,22 +15,18 @@
 #include "ace/Thread_Mutex.h"
 #include "ace/Manual_Event.h"
 #include "ace/Thread_Manager.h"
-#include "ace/Atomic_Op.h"
-
+#include <atomic>
 
 #if defined (ACE_HAS_THREADS)
-static ACE_Atomic_Op <ACE_Thread_Mutex, int> amount_of_work = 0;
+static std::atomic<int> amount_of_work {0};
 
+/**
+ * Uses ACE manual-reset events to implement a one-shot pseudo-barrier.
+ *
+ * All waiters after the Nth waiter are allowed to proceed. The event is not
+ * reset afterward. See ACE_Barrier for a reusable barrier.
+ */
 class Pseudo_Barrier
-  // = TITLE
-  //    A barrier class using ACE manual-reset events.
-  //
-  // = DESCRIPTION
-  //    This is *not* a real barrier.
-  //    Pseudo_Barrier is more like a ``one shot'' barrier.
-  //    All waiters after the Nth waiter are allowed to go.
-  //    The barrier does not reset after the Nth waiter.
-  //    For an example of a real barrier, please see class ACE_Barrier.
 {
 public:
   Pseudo_Barrier (u_long count);
@@ -40,7 +36,7 @@ public:
   //FUZZ: enable check_for_lack_ACE_OS
 
 private:
-  ACE_Atomic_Op <ACE_Thread_Mutex, int> counter_;
+  std::atomic<int> counter_;
   ACE_Manual_Event event_;
 };
 
@@ -52,32 +48,34 @@ Pseudo_Barrier::Pseudo_Barrier (u_long count)
 int
 Pseudo_Barrier::wait ()
 {
-  if (--this->counter_ == 0)
+  if (this->counter_.fetch_sub (1, std::memory_order_relaxed) == 1)
     return this->event_.signal ();
   else
     return this->event_.wait ();
 }
 
-static void *
+static ACE_THR_FUNC_RETURN
 worker (void *arg)
 {
-  Pseudo_Barrier &thread_barrier = *(Pseudo_Barrier *) arg;
+  Pseudo_Barrier &thread_barrier = *static_cast<Pseudo_Barrier *> (arg);
 
   // work
-  ACE_DEBUG ((LM_DEBUG, "(%t) working (%d secs)\n", ++::amount_of_work));
-  ACE_OS::sleep (::amount_of_work.value ());
+  const int work = ::amount_of_work.fetch_add (1, std::memory_order_relaxed) + 1;
+  ACE_DEBUG ((LM_DEBUG, "(%t) working (%d secs)\n", work));
+  ACE_OS::sleep (::amount_of_work.load (std::memory_order_relaxed));
 
   // synch with everybody else
   ACE_DEBUG ((LM_DEBUG, "(%t) waiting to synch with others\n"));
   thread_barrier.wait ();
 
   // more work
-  ACE_DEBUG ((LM_DEBUG, "(%t) more work (%d secs)\n", ++::amount_of_work));
-  ACE_OS::sleep (::amount_of_work.value ());
+  const int more_work = ::amount_of_work.fetch_add (1, std::memory_order_relaxed) + 1;
+  ACE_DEBUG ((LM_DEBUG, "(%t) more work (%d secs)\n", more_work));
+  ACE_OS::sleep (::amount_of_work.load (std::memory_order_relaxed));
 
   ACE_DEBUG ((LM_DEBUG, "(%t) dying\n"));
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 int
@@ -91,7 +89,7 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
   Pseudo_Barrier thread_barrier (n_threads);
 
   // create workers
-  if (tm.spawn_n (n_threads, (ACE_THR_FUNC) worker, &thread_barrier) == -1)
+  if (tm.spawn_n (n_threads, worker, &thread_barrier) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "thread creates for worker failed"), -1);
 
   // wait for all workers to exit

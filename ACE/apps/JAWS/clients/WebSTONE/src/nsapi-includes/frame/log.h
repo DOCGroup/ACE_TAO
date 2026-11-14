@@ -7,9 +7,7 @@
  * parties.
  */
 
-
 /* ------------------------------------------------------------------------ */
-
 
 /*
  * log.h: Records transactions, reports errors to administrators, etc.
@@ -17,22 +15,17 @@
  * Rob McCool
  */
 
-
 #ifndef LOG_H
 #define LOG_H
-
 
 #include "netsite.h"
 #include "base/session.h"   /* Session structure */
 #include "frame/req.h"      /* Request struct */
 #include "base/ereport.h"   /* Error reporting, degrees */
 
-
 #define ERROR_CUTOFF 128
 
-
 /* ------------------------------ Prototypes ------------------------------ */
-
 
 /*
  * log_error logs an error of the given degree from the function func

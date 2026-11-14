@@ -6,13 +6,13 @@
 #include <iostream>
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior = ACE_TEXT ("file://Messenger.ior");
+ACE_TCHAR const *ior = ACE_TEXT ("file://Messenger.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  int c = 0;
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -49,24 +49,26 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      CORBA::Object_var obj = orb->string_to_object( ior );
+      CORBA::Object_var obj = orb->string_to_object (ior);
 
-      if ( CORBA::is_nil(obj.in() ) ) {
+      if (CORBA::is_nil (obj.in ()))
+      {
         std::cerr << "Nil Messenger reference" << std::endl;
         return 1;
       }
 
-      Messenger_var messenger = Messenger::_narrow( obj.in() );
+      Messenger_var messenger = Messenger::_narrow (obj.in ());
 
-      if( CORBA::is_nil( messenger.in() ) ) {
+      if (CORBA::is_nil (messenger.in ()))
+      {
         std::cerr << "Not a Messenger reference" << std::endl;
         return 1;
       }
 
-      CORBA::String_var message = CORBA::string_dup( "Hello!" );
-      messenger->send_message( "TAO User", "TAO Test", message.inout() );
+      CORBA::String_var message = CORBA::string_dup ("Hello!");
+      messenger->send_message ("TAO User", "TAO Test", message.inout ());
     }
-  catch(const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       std::cerr << "Caught CORBA exception: " << ex << std::endl;
       return 1;

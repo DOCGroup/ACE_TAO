@@ -18,29 +18,23 @@ TAO_EC_And_Filter::TAO_EC_And_Filter (TAO_EC_Filter* children[],
 
 TAO_EC_And_Filter::~TAO_EC_And_Filter ()
 {
-  TAO_EC_Filter** end = this->children_ + this->n_;
-  for (TAO_EC_Filter** i = this->children_;
-       i != end;
-       ++i)
+  for (size_t i {}; i != this->n_; ++i)
     {
-      delete *i;
-      *i = nullptr;
+      delete this->children_[i];
     }
-  delete[] this->children_;
-  this->children_ = nullptr;
   this->n_ = 0;
 }
 
 TAO_EC_Filter::ChildrenIterator
 TAO_EC_And_Filter::begin () const
 {
-  return this->children_;
+  return this->children_.get ();
 }
 
 TAO_EC_Filter::ChildrenIterator
 TAO_EC_And_Filter::end () const
 {
-  return this->children_ + this->n_;
+  return this->children_.get () + this->n_;
 }
 
 int
@@ -50,7 +44,7 @@ TAO_EC_And_Filter::size () const
 }
 
 int
-TAO_EC_And_Filter::filter (const RtecEventComm::EventSet& event,
+TAO_EC_And_Filter::filter (RtecEventComm::EventSet const &event,
                            TAO_EC_QOS_Info& qos_info)
 {
   ChildrenIterator end = this->end ();
@@ -92,7 +86,7 @@ TAO_EC_And_Filter::filter_nocopy (RtecEventComm::EventSet& event,
 }
 
 void
-TAO_EC_And_Filter::push (const RtecEventComm::EventSet&,
+TAO_EC_And_Filter::push (RtecEventComm::EventSet const &,
                          TAO_EC_QOS_Info&)
 {
 }
@@ -118,7 +112,7 @@ TAO_EC_And_Filter::clear ()
 CORBA::ULong
 TAO_EC_And_Filter::max_event_size () const
 {
-  CORBA::ULong n = 0;
+  CORBA::ULong n {};
   ChildrenIterator end = this->end ();
   for (ChildrenIterator i = this->begin ();
        i != end;
@@ -133,7 +127,7 @@ TAO_EC_And_Filter::max_event_size () const
 
 int
 TAO_EC_And_Filter::can_match (
-      const RtecEventComm::EventHeader& header) const
+      RtecEventComm::EventHeader const &header) const
 {
   ChildrenIterator end = this->end ();
   for (ChildrenIterator i = this->begin ();
@@ -148,8 +142,8 @@ TAO_EC_And_Filter::can_match (
 
 int
 TAO_EC_And_Filter::add_dependencies (
-      const RtecEventComm::EventHeader&,
-      const TAO_EC_QOS_Info&)
+      RtecEventComm::EventHeader const &,
+      TAO_EC_QOS_Info const &)
 {
   return 0;
 }

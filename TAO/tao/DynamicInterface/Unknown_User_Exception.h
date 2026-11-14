@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Unknown_User_Exception.h
  *
@@ -9,8 +8,6 @@
  *  @author  Portions Copyright 1994-1995 by Sun Microsystems Inc.
  *  @author  Portions Copyright 1997-2003 by Washington University
  */
-//=============================================================================
-
 
 #ifndef TAO_UNKNOWN_USER_EXCEPTION_H
 #define TAO_UNKNOWN_USER_EXCEPTION_H
@@ -24,6 +21,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/UserException.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -44,16 +42,13 @@ namespace CORBA
     : public CORBA::UserException
   {
   public:
-    /// Constructor.
     UnknownUserException ();
 
-    /// Constructor.
-    UnknownUserException (CORBA::Any& exception);
+    explicit UnknownUserException (CORBA::Any& exception);
 
     /// Copy constructor.
     UnknownUserException (UnknownUserException const& e);
 
-    /// Destructor.
     ~UnknownUserException () override;
 
     /// Return the any containing the user exception.
@@ -73,14 +68,12 @@ namespace CORBA
     /// Return the repository ID of the Exception.
     char const* _rep_id () const override;
 
-    // = TAO specific extension.
-
     /// This class has a specific typecode.
     CORBA::TypeCode_ptr _tao_type () const override;
 
   private:
     /// Holder for the actual exception.
-    CORBA::Any *exception_ {};
+    std::unique_ptr<CORBA::Any> exception_;
   };
 
   // The CORBA::UnknownUserException TypeCode.

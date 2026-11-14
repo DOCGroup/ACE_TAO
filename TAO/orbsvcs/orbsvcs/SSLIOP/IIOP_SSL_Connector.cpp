@@ -13,16 +13,14 @@
 #include "tao/Transport_Descriptor_Interface.h"
 #include "ace/Strategies_T.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::IIOP_SSL_Connector::IIOP_SSL_Connector ()
   : TAO_IIOP_Connector (),
     connect_strategy_ (),
-    base_connector_ (0)
-{
-}
-
-TAO::IIOP_SSL_Connector::~IIOP_SSL_Connector ()
+    base_connector_ (nullptr)
 {
 }
 
@@ -36,7 +34,7 @@ TAO::IIOP_SSL_Connector::open (TAO_ORB_Core *orb_core)
     return -1;
 
   // Our connect creation strategy
-  CONNECT_CREATION_STRATEGY *connect_creation_strategy = nullptr;
+  CONNECT_CREATION_STRATEGY *connect_creation_strategy {};
 
   ACE_NEW_RETURN (connect_creation_strategy,
                   CONNECT_CREATION_STRATEGY (orb_core->thr_mgr (),
@@ -44,16 +42,15 @@ TAO::IIOP_SSL_Connector::open (TAO_ORB_Core *orb_core)
                   -1);
 
   // Our activation strategy
-  CONNECT_CONCURRENCY_STRATEGY *concurrency_strategy = nullptr;
+  CONNECT_CONCURRENCY_STRATEGY *concurrency_strategy {};
 
   ACE_NEW_RETURN (concurrency_strategy,
                   CONNECT_CONCURRENCY_STRATEGY (orb_core),
                   -1);
 
-
   return this->base_connector_.open (this->orb_core ()->reactor (),
                                      connect_creation_strategy,
-                                     &this->connect_strategy_,
+                                     std::addressof (this->connect_strategy_),
                                      concurrency_strategy);
 }
 
@@ -77,7 +74,7 @@ TAO::IIOP_SSL_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
   if (iiop_endpoint == nullptr)
     return -1;
 
-  const ACE_INET_Addr &remote_address = iiop_endpoint->object_addr ();
+  ACE_INET_Addr const &remote_address = iiop_endpoint->object_addr ();
 
   // Verify that the remote ACE_INET_Addr was initialized properly.
   // Failure can occur if hostname lookup failed when initializing the
@@ -114,7 +111,7 @@ TAO::IIOP_SSL_Connector::make_connection (
   if (iiop_endpoint == nullptr)
     return nullptr;
 
-  const ACE_INET_Addr &remote_address =
+  ACE_INET_Addr const &remote_address =
     iiop_endpoint->object_addr ();
 
   if (TAO_debug_level > 4)
@@ -136,8 +133,7 @@ TAO::IIOP_SSL_Connector::make_connection (
       max_wait_time = &tmp_zero;
     }
 
-
-  IIOP_SSL_Connection_Handler *svc_handler = nullptr;
+  IIOP_SSL_Connection_Handler *svc_handler {};
 
   // Connect.
   int result =
@@ -175,7 +171,7 @@ TAO::IIOP_SSL_Connector::make_connection (
         }
     }
 
-  // In case of errors transport is zero
+  // In case of errors transport is null
   if (transport == nullptr)
     {
       // Give users a clue to the problem.
@@ -246,7 +242,7 @@ TAO::IIOP_SSL_Connector::make_connection (
                     "in the reactor.\n",
                     transport->id ()));
 
-      return 0;
+      return nullptr;
     }
 
   svc_handler_auto_ptr.release ();

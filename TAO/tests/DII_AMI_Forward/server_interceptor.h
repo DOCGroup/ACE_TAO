@@ -22,36 +22,36 @@ class ForwardTest_Request_Interceptor
   // = Server-side echo interceptor.  For checking interceptor visually only.
 public:
   ForwardTest_Request_Interceptor ();
-  // cotr.
-
-  ForwardTest_Request_Interceptor (CORBA::Object_ptr forward_location);
-
-  ~ForwardTest_Request_Interceptor ();
-  // dotr.
+  explicit ForwardTest_Request_Interceptor (CORBA::Object_ptr forward_location);
+  ForwardTest_Request_Interceptor (ForwardTest_Request_Interceptor const &) = delete;
+  ForwardTest_Request_Interceptor (ForwardTest_Request_Interceptor &&) = delete;
+  ForwardTest_Request_Interceptor &operator= (ForwardTest_Request_Interceptor const &) = delete;
+  ForwardTest_Request_Interceptor &operator= (ForwardTest_Request_Interceptor &&) = delete;
+  ~ForwardTest_Request_Interceptor () override = default;
 
   void forward_reference (CORBA::Object_ptr forward_location);
 
-  virtual char * name ();
+  char * name () override;
   // Canonical name of the interceptor.
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri);
+  void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void receive_request_service_contexts (
-        PortableInterceptor::ServerRequestInfo_ptr);
+  void receive_request_service_contexts (
+    PortableInterceptor::ServerRequestInfo_ptr) override;
 
-  virtual void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_other (PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_other (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  bool forward_location_done() const;
+  bool forward_location_done () const;
 private:
-  const char *myname_;
+  char const * const myname_;
   CORBA::Object_var forward_location_;
-  bool forward_location_done_;
+  bool forward_location_done_ {};
 };
 
 #if defined(_MSC_VER)

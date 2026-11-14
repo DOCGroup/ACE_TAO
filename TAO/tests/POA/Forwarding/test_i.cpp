@@ -1,7 +1,6 @@
 #include "test_i.h"
 #include "Servant_Activator.h"
 
-// Constructor
 test_i::test_i (CORBA::ORB_ptr orb,
                 PortableServer::POA_ptr poa,
                 ServantActivator &activator,
@@ -29,7 +28,6 @@ test_i::forward ()
 
   this->poa_->deactivate_object (id.in ());
 }
-
 
 void
 test_i::shutdown ()

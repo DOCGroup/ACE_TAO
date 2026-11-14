@@ -2,9 +2,10 @@
 
 #include "ace/Log_Category.h"
 #include "ace/OS_Errno.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/os_include/os_fcntl.h"
+
+#include <cstring>
 #if defined (ACE_HAS_ALLOC_HOOKS)
 # include "ace/Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
@@ -116,8 +117,8 @@ ACE_SOCK_Acceptor::accept (ACE_SOCK_Stream &new_stream,
     {
       // On Win32 the third parameter to <accept> must be a NULL
       // pointer if we want to ignore the client's address.
-      int *len_ptr = nullptr;
-      sockaddr *addr = nullptr;
+      int *len_ptr {};
+      sockaddr *addr {};
       int len = 0;
 
       if (remote_addr != nullptr)
@@ -171,9 +172,9 @@ ACE_SOCK_Acceptor::accept (ACE_SOCK_Stream &new_stream,
     {
       // On Win32 the third parameter to <accept> must be a NULL
       // pointer if we want to ignore the client's address.
-      int *len_ptr = nullptr;
+      int *len_ptr {};
       int len = 0;
-      sockaddr *addr = nullptr;
+      sockaddr *addr {};
 
       if (remote_addr != nullptr)
         {
@@ -227,7 +228,7 @@ ACE_SOCK_Acceptor::shared_open (const ACE_Addr &local_sap,
   if (protocol_family == PF_INET6)
     {
       sockaddr_in6 local_inet6_addr;
-      ACE_OS::memset (reinterpret_cast<void *> (&local_inet6_addr),
+      std::memset (reinterpret_cast<void *> (&local_inet6_addr),
                       0,
                       sizeof local_inet6_addr);
 
@@ -268,7 +269,7 @@ ACE_SOCK_Acceptor::shared_open (const ACE_Addr &local_sap,
   if (protocol_family == PF_INET)
     {
       sockaddr_in local_inet_addr;
-      ACE_OS::memset (reinterpret_cast<void *> (&local_inet_addr),
+      std::memset (reinterpret_cast<void *> (&local_inet_addr),
                       0,
                       sizeof local_inet_addr);
 

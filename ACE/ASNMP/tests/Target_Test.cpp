@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 Copyright 1997 Cisco Systems, Inc.
 
@@ -33,11 +32,12 @@ SOFTWARE INCLUDING WITHOUT LIMITATION, DIRECT, INDIRECT OR CONSEQUENTIAL
 DAMAGES.
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
+#include <cstring>
+#include <memory>
 #include "ace/OS_main.h"
 #include "asnmp/octet.h"
 #include "asnmp/target.h"
 #include "test_config.h"
-
 /*
   Percieved Problems with this CTarget aka UdpTarget Interface:
 
@@ -80,50 +80,53 @@ DAMAGES.
 static void TestSnmpTarget()
 {
   OctetStr rd("rd_comm"), wr("wr_comm");
-  ACE_ASSERT(rd.valid() == 1);
-  ACE_ASSERT(wr.valid() == 1);
+  ACE_TEST_ASSERT(rd.valid() == 1);
+  ACE_TEST_ASSERT(wr.valid() == 1);
 
   // constructor and get tests
   UdpAddress ga;
-  ACE_ASSERT(ga.valid() == 0);
+  ACE_TEST_ASSERT(ga.valid() == 0);
 
   UdpTarget c1;
-  ACE_ASSERT(c1.valid() == 0);
+  ACE_TEST_ASSERT(c1.valid() == 0);
   OctetStr a, b("public"), c("private");
   c1.get_read_community(a);
-  ACE_ASSERT(a == b);
+  ACE_TEST_ASSERT(a == b);
   c1.get_write_community(a);
-  ACE_ASSERT(a == c);
+  ACE_TEST_ASSERT(a == c);
   c1.get_address (ga);
-  ACE_ASSERT(c1.get_version() == version1);
+  ACE_TEST_ASSERT(c1.get_version() == version1);
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) UdpTarget:c1(\"\") [%s]\n",
     c1.to_string()));
 
-  IpAddress ip("127.0.0.1");
-  UdpTarget c2(ip);
-  ACE_ASSERT(c2.valid() == 1);
+  IpAddress const ip ("127.0.0.1");
+  UdpTarget c2 {UdpAddress (ip)};
+  ACE_TEST_ASSERT(c2.valid() == 1);
   c2.get_address (ga);
-  ACE_ASSERT(ga.valid() == 1);
-  ACE_ASSERT(c2.get_version() == version1);
-  ACE_ASSERT(ga.valid() == 1);
+  ACE_TEST_ASSERT(ga.valid() == 1);
+  ACE_TEST_ASSERT(c2.get_version() == version1);
+  c2.set_version (version2c);
+  ACE_TEST_ASSERT(c2.get_version() == version2c);
+  ACE_TEST_ASSERT(std::strstr (c2.to_string (), "ver: 1") != nullptr);
+  ACE_TEST_ASSERT(ga.valid() == 1);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) UdpTarget:c2(\"\") [%s]\n",
     c2.to_string()));
 
-  UdpTarget *c5 = new UdpTarget(c2);
-  ACE_ASSERT(c5 != 0);
-  ACE_ASSERT(c5->valid() == 1);
+  std::unique_ptr<UdpTarget> c5 = std::make_unique<UdpTarget> (c2);
+  ACE_TEST_ASSERT(c5 != nullptr);
+  ACE_TEST_ASSERT(c5->valid() == 1);
   c5->get_address (ga);
-  ACE_ASSERT(ga.valid() == 1);
-  ACE_ASSERT(c5->get_version() == version1);
+  ACE_TEST_ASSERT(ga.valid() == 1);
+  ACE_TEST_ASSERT(c5->get_version() == version2c);
+  ACE_TEST_ASSERT(std::strstr (c5->to_string (), "ver: 1") != nullptr);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) UdpTarget:c5(\"\") [%s]\n",
     c5->to_string()));
-  delete c5;
 
 // these are not supported yet
-//   ACE_ASSERT(c5 == c5);
+//   ACE_TEST_ASSERT(c5 == c5);
 //   c5 = c2;
-//  ACE_ASSERT(c5 == c2);
+//  ACE_TEST_ASSERT(c5 == c2);
 }
 
 int

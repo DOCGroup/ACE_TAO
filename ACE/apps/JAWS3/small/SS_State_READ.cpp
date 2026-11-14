@@ -1,4 +1,4 @@
-#include "jaws3/IO.h"
+#include "jaws3/Jaws_IO.h"
 #include "jaws3/Event_Completer.h"
 
 #include "SS_State_READ.h"
@@ -11,27 +11,23 @@ int
 TeraSS_State_READ::service (JAWS_Event_Completer *ec, void *data)
 {
   // Recover state.
-  TeraSS_Data *tdata = (TeraSS_Data *) data;
+  TeraSS_Data * const tdata = static_cast<TeraSS_Data *> (data);
 
   // Read until we see a newline.
-  JAWS_IO::instance ()->recv ( tdata->peer ().get_handle ()
-                             , & tdata->mb ()
-                             , ec
-                             );
+  JAWS_IO::instance ()->recv (tdata->peer ().get_handle (), &tdata->mb (), ec);
 
   return 0;
 }
 
 JAWS_Protocol_State *
-TeraSS_State_READ::transition ( const JAWS_Event_Result &result
-                              , void *
-                              , void *
-                              )
+TeraSS_State_READ::transition (JAWS_Event_Result const &result,
+                                void *,
+                                void *)
 {
   // In the READ state, move to PARSE if success.
   // Otherwise ERROR.
 
-  JAWS_Protocol_State *next_state = 0;
+  JAWS_Protocol_State *next_state {};
 
   switch (result.status ())
     {

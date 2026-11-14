@@ -32,7 +32,7 @@ Handle_L_Dgram::info (ACE_TCHAR **strp, size_t length) const
   ACE_OS::strcpy (buf, ACE_TEXT_CHAR_TO_TCHAR (sa.get_path_name ()));
   ACE_OS::strcat (buf, ACE_TEXT (" # tests local datagram\n"));
 
-  if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
+  if (*strp == nullptr && (*strp = ACE_OS::strdup (buf)) == nullptr)
     return -1;
   else
     ACE_OS::strncpy (*strp, buf, length);
@@ -87,7 +87,7 @@ Handle_L_Dgram::handle_input (int)
 {
   ACE_UNIX_Addr sa;
   char buf[8 * 1024]; /* 8 k buffer */
-  int n;
+  int n {};
 
   if ((n = this->recv (buf, sizeof buf, sa)) == -1)
     return -1;
@@ -98,7 +98,7 @@ Handle_L_Dgram::handle_input (int)
   ACE_OS::puts ("----------------------------------------");
   ACE_OS::write (ACE_STDOUT, buf, n);
 
-  if (buf[n - 1] != '\n')
+  if (n > 0 && buf[n - 1] != '\n')
     putchar ('\n');
 
   ACE_OS::puts ("----------------------------------------");

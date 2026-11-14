@@ -1,14 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file IOR_Table_Impl.h
  *
  *  @author Carlos O'Ryan (coryan@uci.edu)
  */
-//=============================================================================
-
-
 #ifndef TAO_IOR_TABLE_IMPL_H
 #define TAO_IOR_TABLE_IMPL_H
 
@@ -20,11 +16,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Hash_Map_Manager_T.h"
 #include "ace/Null_Mutex.h"
 #include "tao/LocalObject.h"
-#include "ace/SString.h"
 #include "tao/Objref_VarOut_T.h"
+
+#include <string>
+#include <unordered_map>
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -48,7 +45,6 @@ public:
     return nullptr;
   }
 
-  /// Constructor
   TAO_IOR_Table_Impl () = default;
 
   virtual bool async_available () { return false; }
@@ -71,11 +67,13 @@ public:
   void set_locator (IORTable::Locator_ptr the_locator) override;
   //@}
 
+  TAO_IOR_Table_Impl (TAO_IOR_Table_Impl const &) = delete;
+  TAO_IOR_Table_Impl &operator= (TAO_IOR_Table_Impl const &) = delete;
+  TAO_IOR_Table_Impl (TAO_IOR_Table_Impl &&) = delete;
+  TAO_IOR_Table_Impl &operator= (TAO_IOR_Table_Impl &&) = delete;
+
 protected:
-  using Map = ACE_Hash_Map_Manager_Ex <ACE_CString, ACE_CString,
-                                       ACE_Hash <ACE_CString>,
-                                       ACE_Equal_To <ACE_CString>,
-                                       ACE_Null_Mutex>;
+  using Map = std::unordered_map<std::string, std::string>;
 
   /// The map
   Map map_;
@@ -85,12 +83,6 @@ protected:
 
   /// Synchronization
   TAO_SYNCH_MUTEX lock_;
-
-private:
-  TAO_IOR_Table_Impl (TAO_IOR_Table_Impl const &) = delete;
-  TAO_IOR_Table_Impl &operator= (TAO_IOR_Table_Impl const &) = delete;
-  TAO_IOR_Table_Impl (TAO_IOR_Table_Impl &&) = delete;
-  TAO_IOR_Table_Impl &operator= (TAO_IOR_Table_Impl &&) = delete;
 };
 
 // Traits specializations.
@@ -108,10 +100,8 @@ namespace TAO
 
     static ::CORBA::Boolean marshal (TAO_IOR_Table_Impl_ptr const p,
                                      TAO_OutputCDR &cdr);
-  }
-  ;
+  };
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

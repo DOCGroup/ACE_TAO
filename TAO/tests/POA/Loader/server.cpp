@@ -9,11 +9,10 @@
  */
 //=============================================================================
 
-
 #include "Server_Manager.h"
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -62,7 +61,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                           "Failure during request processing: run ()\n"),
                           -1);
     }
-  catch (const ::CORBA::Exception &ex)
+  catch (::CORBA::Exception const &ex)
     {
       ex._tao_print_exception("Caught unexpected CORBA exception :");
     }

@@ -19,14 +19,18 @@
 class Foo_i : public virtual POA_Foo::Bar
 {
 public:
-  /// Constructor.
   Foo_i (CORBA::ORB_ptr,
          SecurityLevel3::SecurityCurrent_ptr current);
 
-  /// Test method.
-  virtual void baz ();
+  Foo_i (Foo_i const &) = delete;
+  Foo_i (Foo_i &&) = delete;
+  Foo_i &operator= (Foo_i const &) = delete;
+  Foo_i &operator= (Foo_i &&) = delete;
 
-  virtual void shutdown ();
+  /// Test method.
+  void baz () override;
+
+  void shutdown () override;
 
 private:
   /// Reference to the ORB.

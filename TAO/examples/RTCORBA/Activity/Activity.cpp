@@ -17,6 +17,7 @@
 #include "ace/Signal.h"
 #include "ace/Reactor.h"
 
+#include <cstdio>
 
 //***************************************************************//
 extern "C" void handler (int)
@@ -27,19 +28,11 @@ extern "C" void handler (int)
 //***************************************************************//
 
 Activity::Activity ()
-  :builder_ (0),
-   barrier_ (0),
-   active_task_count_ (0),
-   active_job_count_ (0)
+  :state_lock_ (std::make_unique<ACE_Lock_Adapter<TAO_SYNCH_MUTEX>> ())
 {
-  state_lock_ = new ACE_Lock_Adapter <TAO_SYNCH_MUTEX>;
 }
 
-Activity::~Activity ()
-{
-  delete state_lock_;
-  delete barrier_;
-}
+Activity::~Activity () = default;
 
 void
 Activity::builder (Builder* builder)
@@ -121,26 +114,15 @@ Activity::resolve_naming_service ()
 void
 Activity::activate_poa_list ()
 {
-  POA_LIST list;
-  int count = builder_->poa_list (list);
-
-  for (int i = 0; i < count; ++i)
-    {
-      list[i]->activate (this->rt_orb_.in(), this->root_poa_.in ());
-    }
+  for (std::unique_ptr<POA_Holder> const &poa : this->builder_->poa_list ())
+    poa->activate (this->rt_orb_.in (), this->root_poa_.in ());
 }
 
 void
 Activity::activate_job_list ()
 {
-  JOB_LIST list;
-  int count = builder_->job_list (list);
-  Job_i* job;
-
-  for (int i = 0; i < count; ++i)
+  for (Job_i * const job : this->builder_->job_list ())
     {
-      job = list[i];
-
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG, "Activating job:%C\n", job->name ().c_str ()));
 
@@ -161,7 +143,7 @@ Activity::activate_job_list ()
       CORBA::String_var ior =
         orb_->object_to_string (server.in ());
 
-      const ACE_CString &job_name = job->name ();
+      ACE_CString const &job_name = job->name ();
 
       CosNaming::Name_var name =
         this->naming_->to_name (job_name.c_str ());
@@ -173,27 +155,27 @@ Activity::activate_job_list ()
                   "Registered %C with the naming service\n",
                   job_name.c_str ()));
 
-      active_job_count_++;
+      ++active_job_count_;
     } /* while */
 }
 
 void
 Activity::activate_schedule ()
 {
-  TASK_LIST list;
-  int count = builder_->task_list (list);
+  TASK_LIST const &task_list = this->builder_->task_list ();
+  int const count = static_cast<int> (task_list.size ());
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "Activating schedule, task count = %d\n",
                 count));
 
-  ACE_NEW (barrier_, ACE_Barrier (count+1));
+  ACE_Barrier *barrier {};
+  ACE_NEW (barrier, ACE_Barrier (count + 1));
+  barrier_.reset (barrier);
 
-  Periodic_Task* task;
-
-  for (int i = 0; i < count; ++i)
+  for (std::unique_ptr<Periodic_Task> const &task_pointer : task_list)
     {
-      task = list[i];
+      Periodic_Task * const task = task_pointer.get ();
 
       // resolve the object from the naming service
       CosNaming::Name name (1);
@@ -233,8 +215,8 @@ Activity::activate_schedule ()
         } /*  if (TAO_debug_level > 0) */
 
       task->job (job.in ());
-      task->activate_task (this->barrier_, this->priority_mapping_);
-      active_task_count_++;
+      task->activate_task (this->barrier_.get (), this->priority_mapping_);
+      ++active_task_count_;
 
       ACE_DEBUG ((LM_DEBUG, "Job %C scheduled\n", task->job ()));
     }
@@ -277,15 +259,14 @@ Activity::check_ifexit ()
       ACE_DEBUG ((LM_DEBUG, "Shutdown in progress ...\n"));
       // ask all tasks to dump stats.
 
-      TASK_LIST task_list;
-      int count = builder_->task_list (task_list);
+      TASK_LIST const &task_list = this->builder_->task_list ();
 
       ACE_TCHAR msg[BUFSIZ];
       ACE_OS::sprintf (msg, ACE_TEXT("# Stats generated on --\n"));
 
-      for (int i = 0; i < count; ++i)
+      for (std::unique_ptr<Periodic_Task> const &task : task_list)
         {
-          task_list[i]->dump_stats (msg);
+          task->dump_stats (msg);
         }
 
       // shutdown the ORB
@@ -334,8 +315,6 @@ Activity::run (int argc, ACE_TCHAR *argv[])
 
   ACE_Thread_Manager::instance ()->wait ();
 
-  CORBA::release (this->naming_);
-
   // Hack for proper cleanup.
   this->builder_->fini ();
 
@@ -347,22 +326,22 @@ Activity::create_started_flag_file (int argc, ACE_TCHAR *argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
-  const ACE_TCHAR* current_arg = 0;
+  ACE_TCHAR const *current_arg {};
 
   while (arg_shifter.is_anything_left ())
     {
-      if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Started_Flag"))))
+      if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Started_Flag"))) != nullptr)
         {
           FILE *file = ACE_OS::fopen (current_arg, ACE_TEXT("w"));
 
-          if (file == 0)
+          if (file == nullptr)
             ACE_ERROR ((LM_ERROR,
                         "Unable to open %s for writing: %p\n",
                         current_arg));
 
-          ACE_OS::fprintf (file, "ignore");
+          std::fprintf (file, "ignore");
 
-          ACE_OS::fclose (file);
+          std::fclose (file);
 
           arg_shifter.consume_arg ();
         }

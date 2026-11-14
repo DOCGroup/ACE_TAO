@@ -7,17 +7,15 @@
 #include "ace/streams.h"
 
 StubFaultNotifier::StubFaultNotifier ()
-  : ior_output_file_(0)
-  , detector_ior_(0)
+  : ior_output_file_ (nullptr)
+  , detector_ior_ (nullptr)
   , ns_name_("")
 {
 }
 
-
 StubFaultNotifier::~StubFaultNotifier ()
 {
 }
-
 
 ::PortableServer::POA_ptr StubFaultNotifier::_default_POA ()
 {
@@ -70,14 +68,14 @@ int StubFaultNotifier::parse_args (int argc, ACE_TCHAR * argv[])
 
   if(! optionError)
   {
-    if (iorReplicaFiles_.size() == 0)
+    if (iorReplicaFiles_.empty ())
     {
       ACE_ERROR ((LM_ERROR,
         "-r option is required.\n"
         ));
       optionError = -1;
     }
-    if (0 == this->detector_ior_)
+    if (this->detector_ior_ == nullptr)
     {
       ACE_ERROR ((LM_ERROR,
         "-d option is required.\n"
@@ -129,7 +127,6 @@ int StubFaultNotifier::fini ()
   return 0;
 }
 
-
 /**
  * Publish this objects IOR.
  */
@@ -150,7 +147,6 @@ int StubFaultNotifier::init (CORBA::ORB_ptr orb)
   // Get the POA object.
   this->poa_ =
     PortableServer::POA::_narrow (poa_object.in ());
-
 
   if (CORBA::is_nil(this->poa_.in ()))
   {
@@ -214,7 +210,6 @@ int StubFaultNotifier::init (CORBA::ORB_ptr orb)
         value <<= notifier.in ();
         encoder.add(::FT::FT_NOTIFIER, value);
 
-
         value <<= replica.in ();
         encoder.add(::FT::FT_MONITORABLE, value);
 
@@ -240,7 +235,7 @@ int StubFaultNotifier::init (CORBA::ORB_ptr orb)
         PortableGroup::Criteria_var criteria;
         ACE_NEW_NORETURN (criteria,
           PortableGroup::Criteria);
-        if (criteria.ptr() == 0)
+        if (criteria.ptr() == nullptr)
         {
           ACE_ERROR((LM_ERROR,
             "Error cannot allocate criteria.\n"
@@ -260,7 +255,7 @@ int StubFaultNotifier::init (CORBA::ORB_ptr orb)
       }
     }
 
-    if (this->ior_output_file_ != 0)
+    if (this->ior_output_file_ != nullptr)
     {
       this->identity_ = ACE_TEXT("file:");
       this->identity_ += this->ior_output_file_;
@@ -330,8 +325,7 @@ void StubFaultNotifier::shutdown_i ()
 }
 
 void StubFaultNotifier::push_structured_fault (
-    const CosNotification::StructuredEvent & event
-  )
+    const CosNotification::StructuredEvent & event)
 {
   ACE_ERROR ((LM_ERROR,
     "FaultNotifier: Received Fault notification:\n"
@@ -356,29 +350,24 @@ void StubFaultNotifier::push_structured_fault (
   }
 }
 
-
 void StubFaultNotifier::push_sequence_fault (
-    const CosNotification::EventBatch & events
-  )
+    const CosNotification::EventBatch & events)
 {
   ACE_UNUSED_ARG (events);
   throw CORBA::NO_IMPLEMENT();
 }
 
 ::CosNotifyFilter::Filter_ptr StubFaultNotifier::create_subscription_filter (
-    const char * constraint_grammar
-  )
+    const char * constraint_grammar)
 {
   ACE_UNUSED_ARG (constraint_grammar);
   throw CORBA::NO_IMPLEMENT();
   return 0;
 }
 
-
 FT::FaultNotifier::ConsumerId StubFaultNotifier::connect_structured_fault_consumer (
     CosNotifyComm::StructuredPushConsumer_ptr push_consumer,
-    CosNotifyFilter::Filter_ptr filter
-  )
+    CosNotifyFilter::Filter_ptr filter)
 {
   ACE_UNUSED_ARG(push_consumer);
   ACE_UNUSED_ARG(filter);
@@ -387,11 +376,9 @@ FT::FaultNotifier::ConsumerId StubFaultNotifier::connect_structured_fault_consum
   return 0;
 }
 
-
 FT::FaultNotifier::ConsumerId StubFaultNotifier::connect_sequence_fault_consumer (
     CosNotifyComm::SequencePushConsumer_ptr push_consumer,
-    CosNotifyFilter::Filter_ptr filter
-  )
+    CosNotifyFilter::Filter_ptr filter)
 {
   ACE_UNUSED_ARG(push_consumer);
   ACE_UNUSED_ARG(filter);
@@ -401,8 +388,7 @@ FT::FaultNotifier::ConsumerId StubFaultNotifier::connect_sequence_fault_consumer
 }
 
 void StubFaultNotifier::disconnect_consumer (
-    FT::FaultNotifier::ConsumerId connection
-  )
+    FT::FaultNotifier::ConsumerId connection)
 {
   ACE_UNUSED_ARG(connection);
 

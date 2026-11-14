@@ -152,7 +152,7 @@ test_boundaries ()
                   handle));
       int const done = set.remove (handle);
       ACE_TEST_ASSERT (done == 0);
-      count++;
+      ++count;
     }
 
   ACE_TEST_ASSERT (count == handle_set.num_set ());
@@ -179,7 +179,7 @@ test_performance (size_t max_handles,
 
       // Only iterate up to <handle_set.max_set ()>.
       while (iter () != ACE_INVALID_HANDLE)
-        count++;
+        ++count;
     }
 
   timer.stop ();
@@ -198,7 +198,7 @@ test_performance (size_t max_handles,
               et.system_time));
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("time per each of the %d calls = %f usecs\n"),
+              ACE_TEXT ("time per each of the %B calls = %f usecs\n"),
               count,
               et.real_time / double (count) * 1000000));
 }

@@ -19,14 +19,13 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Leader_Follower::Deferred_Event::Deferred_Event (ACE_Event_Handler* h)
-: eh_ (h)
+TAO_Leader_Follower::Deferred_Event::Deferred_Event (ACE_Event_Handler *h)
+  : eh_ (h)
 {
   h->add_reference ();
 }
 
-
-ACE_Event_Handler* TAO_Leader_Follower::Deferred_Event::handler () const
+ACE_Event_Handler *TAO_Leader_Follower::Deferred_Event::handler () const
 {
   return this->eh_.handler ();
 }
@@ -35,12 +34,12 @@ TAO_Leader_Follower::~TAO_Leader_Follower ()
 {
   while (!this->deferred_event_set_.is_empty ())
     {
-      Deferred_Event *event = this->deferred_event_set_.pop_front ();
+      Deferred_Event * const event = this->deferred_event_set_.pop_front ();
       delete event;
     }
   while (!this->follower_free_list_.is_empty ())
     {
-      TAO_LF_Follower *follower = this->follower_free_list_.pop_front ();
+      TAO_LF_Follower * const follower = this->follower_free_list_.pop_front ();
       delete follower;
     }
   // Hand the reactor back to the resource factory.
@@ -59,7 +58,7 @@ TAO_Leader_Follower::allocate_follower ()
   if (!this->follower_free_list_.is_empty ())
     return this->follower_free_list_.pop_front ();
 
-  TAO_LF_Follower* ptr = nullptr;
+  TAO_LF_Follower *ptr {};
   ACE_NEW_RETURN (ptr,
                   TAO_LF_Follower (*this),
                   nullptr);
@@ -75,7 +74,7 @@ TAO_Leader_Follower::release_follower (TAO_LF_Follower *follower)
 int
 TAO_Leader_Follower::elect_new_leader_i ()
 {
-  TAO_LF_Follower* const follower = this->follower_set_.head ();
+  TAO_LF_Follower * const follower = this->follower_set_.head ();
 
 #if defined (TAO_DEBUG_LEADER_FOLLOWER)
   TAOLIB_DEBUG ((LM_DEBUG,
@@ -90,7 +89,7 @@ TAO_Leader_Follower::elect_new_leader_i ()
 int
 TAO_Leader_Follower::wait_for_client_leader_to_complete (ACE_Time_Value *max_wait_time)
 {
-  int result = 0;
+  int result {};
   TAO::ORB_Countdown_Time countdown (max_wait_time);
 
   // Note that we are waiting.
@@ -113,9 +112,9 @@ TAO_Leader_Follower::wait_for_client_leader_to_complete (ACE_Time_Value *max_wai
       else
         {
           countdown.update ();
-          ACE_Time_Value tv = ACE_OS::gettimeofday ();
+          ACE_Time_Value tv {ACE_OS::gettimeofday ()};
           tv += *max_wait_time;
-          if (this->event_loop_threads_condition_.wait (&tv) == -1)
+          if (this->event_loop_threads_condition_.wait (std::addressof (tv)) == -1)
             {
               if (errno != ETIME)
                 TAOLIB_ERROR ((LM_ERROR,
@@ -159,7 +158,7 @@ TAO_Leader_Follower::set_client_thread ()
 {
   // If we were a leader thread or an event loop thread, give up
   // leadership.
-  TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
+  TAO_ORB_Core_TSS_Resources * const tss = this->get_tss_resources ();
   if (tss->event_loop_thread_ ||
       tss->client_leader_thread_)
     {
@@ -183,7 +182,7 @@ TAO_Leader_Follower::reset_client_thread ()
 {
   // If we were a leader thread or an event loop thread, take back
   // leadership.
-  TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
+  TAO_ORB_Core_TSS_Resources * const tss = this->get_tss_resources ();
   if (tss->event_loop_thread_ ||
       tss->client_leader_thread_)
     {
@@ -202,7 +201,7 @@ TAO_Leader_Follower::reset_client_thread ()
 }
 
 int
-TAO_Leader_Follower::defer_event (ACE_Event_Handler* eh)
+TAO_Leader_Follower::defer_event (ACE_Event_Handler *eh)
 {
   // Obtain the lock.
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock (), -1);
@@ -212,7 +211,7 @@ TAO_Leader_Follower::defer_event (ACE_Event_Handler* eh)
                 ACE_TEXT ("TAO (%P|%t) - TAO_Leader_Follower::defer_event, ")
                 ACE_TEXT ("deferring event handler[%d]\n"),
                 eh->get_handle ()));
-  Deferred_Event* ptr = nullptr;
+  Deferred_Event *ptr {};
   ACE_NEW_RETURN (ptr,
                   Deferred_Event (eh),
                   -1);
@@ -229,7 +228,7 @@ TAO_Leader_Follower::resume_events ()
       std::unique_ptr<Deferred_Event> event (this->deferred_event_set_.pop_front ());
       // Send a notification to the reactor to cause the awakening of a new
       // follower, if there is one already available.
-      ACE_Reactor *reactor = this->orb_core_->reactor ();
+      ACE_Reactor * const reactor = this->orb_core_->reactor ();
       int const retval = reactor->notify (event->handler (), ACE_Event_Handler::READ_MASK);
       if (TAO_debug_level > 2)
         {
@@ -264,7 +263,7 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
   // with debugging level on we are on a sticky wicket. Hopefully none
   // of our users should run TAO with debugging enabled like they did
   // in PathFinder
-  size_t t_id = 0;
+  size_t t_id {};
 
   if (TAO_debug_level && transport != nullptr)
   {
@@ -293,7 +292,7 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
       // gave up our leadership when we became a client.
       if (this->leader_available ())
       { // Scope #3: threads here are followers
-        // = Wait as a follower.
+        // Wait as a follower.
 
         // Grab a follower:
         TAO_LF_Follower_Auto_Ptr follower (*this);
@@ -358,9 +357,9 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
           else
           {
             countdown.update ();
-            ACE_Time_Value tv = ACE_OS::gettimeofday ();
+            ACE_Time_Value tv {ACE_OS::gettimeofday ()};
             tv += *max_wait_time;
-            if (follower->wait (&tv) == -1)
+            if (follower->wait (std::addressof (tv)) == -1)
               {
                 if (TAO_debug_level >= 5)
                   TAOLIB_DEBUG ((LM_DEBUG,
@@ -401,8 +400,6 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
                                 t_id ));
                   }
                 }
-
-
               return -1;
             }
           }
@@ -468,7 +465,7 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
                           t_id));
             }
         }
-      // = Leader Code.
+      // Leader code.
 
       // The only way to reach this point is if we must become the
       // leader, because there is no leader or we have to update to a
@@ -488,7 +485,7 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
                             this->reverse_lock (), -1);
 
           // Become owner of the reactor.
-          ACE_Reactor *reactor = this->reactor_;
+          ACE_Reactor * const reactor = this->reactor_;
           reactor->owner (ACE_Thread::self ());
 
           // Run the reactor event loop.
@@ -571,8 +568,6 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
       }
 
     } // End Scope #2: we loop here if our event is incomplete
-
-
   // End artificial scope for auto_ptr like helpers calling:
   // this->reset_client_thread ()
 

@@ -28,10 +28,8 @@ TAO_FT_Service_Activate::activate_services (TAO_ORB_Core *orb_core)
                   TAO_FT_Service_Callbacks (orb_core),
                   0);
 
-
   return ft_service_callback;
 }
-
 
 int
 TAO_FT_Service_Activate::Initializer ()

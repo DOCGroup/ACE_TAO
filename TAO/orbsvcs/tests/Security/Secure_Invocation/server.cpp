@@ -2,29 +2,29 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 #include "Foo_i.h"
-#include "ace/SString.h"
+#include <memory>
 
-const ACE_TCHAR *ior_output_file = 0;
-const char *cert_file = "cacert.pem";
+struct Server_Options
+{
+  ACE_TCHAR const *ior_output_file {};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'o':
-        ior_output_file = get_opts.opt_arg ();
+        options.ior_output_file = get_opts.opt_arg ();
         break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Usage:  %s "
-                           "-o <iorfile>"
-                           "\n",
+                           ACE_TEXT ("Usage:  %s -o <iorfile>\n"),
                            argv [0]),
                           -1);
       }
@@ -33,8 +33,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  Server_Options options;
   try
     {
       CORBA::ORB_var orb =
@@ -55,7 +56,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
       obj =
@@ -70,17 +71,15 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                            "is nil.\n"),
                           1);
 
-      Foo_i *server_impl = 0;
-
-      ACE_NEW_RETURN (server_impl,
-                      Foo_i (orb.in (),
-                             security_current.in ()),
+      Foo_i *server_impl_raw {};
+      ACE_NEW_RETURN (server_impl_raw,
+                      Foo_i (orb.in (), security_current.in ()),
                       -1);
-
-      PortableServer::ServantBase_var owner_transfer (server_impl);
+      std::unique_ptr<Foo_i> server_impl (server_impl_raw);
 
       Foo::Bar_var server =
         server_impl->_this ();
+      PortableServer::ServantBase_var owner_transfer (server_impl.release ());
 
       // Sanity check on SSLIOP profile equivalence.
       // Since the POA is reference counting the servants, this
@@ -89,7 +88,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       Foo::Bar_var server2 =
         server_impl2._this ();
 
-      const CORBA::Boolean equivalent =
+      CORBA::Boolean const equivalent =
         server->_is_equivalent (server2.in ());
 
       if (equivalent)
@@ -105,16 +104,16 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "Activated as <%C>\n", ior.in ()));
 
       // If the ior_output_file exists, output the ior to it
-      if (ior_output_file != 0)
+      if (options.ior_output_file != nullptr)
         {
-          FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-          if (output_file == 0)
+          std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+            ACE_OS::fopen (options.ior_output_file, "w"), ACE_OS::fclose);
+          if (!output_file)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "Cannot open output file for writing IOR: %s",
-                               ior_output_file),
+                               ACE_TEXT ("Cannot open output file for writing IOR: %s"),
+                               options.ior_output_file),
                               1);
-          ACE_OS::fprintf (output_file, "%s", ior.in ());
-          ACE_OS::fclose (output_file);
+          ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
         }
 
       poa_manager->activate ();

@@ -16,11 +16,10 @@ TAO_Base_Transport_Property::duplicate ()
     return nullptr;
 
   // Construct a copy of our class
-  TAO_Base_Transport_Property *prop = nullptr;
+  TAO_Base_Transport_Property *prop {};
   ACE_NEW_RETURN (prop, TAO_Base_Transport_Property (endpt, true), nullptr);
   return prop;
 }
-
 
 CORBA::Boolean
 TAO_Base_Transport_Property::is_equivalent
@@ -34,7 +33,6 @@ TAO_Base_Transport_Property::is_equivalent
 
   return this->endpoint_->is_equivalent (other_desc->endpoint_);
 }
-
 
 u_long
 TAO_Base_Transport_Property::hash () const

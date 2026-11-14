@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_QOS_SESSION_H
 #define ACE_QOS_SESSION_H
 #include /**/ "ace/pre.h"
@@ -16,6 +15,7 @@
 #include "ACE_QoS_Export.h"
 #include "ace/INET_Addr.h"
 #include "ace/OS_QoS.h"
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -26,8 +26,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_SOCK;
 class ACE_QoS_Manager;
 
+/// IPPROTO_UDP or IPPROTO_TCP.
 using ACE_Protocol_ID = int;
-// IPPROTO_UDP or IPPROTO_TCP.
 
 /**
  * @class ACE_QoS_Session
@@ -60,12 +60,17 @@ public:
     ACE_QOS_BOTH
   };
 
+  virtual ~ACE_QoS_Session () = default;
 
-  /// to shutup g++.
-  virtual ~ACE_QoS_Session () {};
+  ACE_QoS_Session () = default;
+
+  ACE_QoS_Session (ACE_QoS_Session const &) = delete;
+  ACE_QoS_Session &operator= (ACE_QoS_Session const &) = delete;
+  ACE_QoS_Session (ACE_QoS_Session &&) = delete;
+  ACE_QoS_Session &operator= (ACE_QoS_Session &&) = delete;
 
   /// Open a QoS session [dest IP, dest port, Protocol ID].
-  virtual int open (ACE_INET_Addr dest_addr,
+  virtual int open (ACE_INET_Addr const &dest_addr,
                     ACE_Protocol_ID protocol_id) = 0;
 
   /// Close the QoS Session.
@@ -78,7 +83,7 @@ public:
   /// confirm if this QoS session was subscribed to by the socket.
   virtual int qos (ACE_SOCK *socket,
                    ACE_QoS_Manager *qos_manager,
-                   const ACE_QoS &ace_qos) = 0;
+                   ACE_QoS const &ace_qos) = 0;
 
   /**
    * Sets the QoS for this session object to ace_qos. Does not
@@ -88,7 +93,7 @@ public:
    * method e.g. inside the dgram_mcast.subscribe () where the QoS for
    * the socket is set through ACE_OS::join_leaf ().
    */
-  virtual void qos (const ACE_QoS &ace_qos) = 0;
+  virtual void qos (ACE_QoS const &ace_qos) = 0;
 
   /**
    * This is called from handle_qos () method of the the QoS Event
@@ -101,74 +106,72 @@ public:
 
   /// Get/Set methods for the flags_.
   virtual ACE_End_Point_Type flags () const = 0;
-  virtual void flags (const ACE_End_Point_Type flags) = 0;
+  virtual void flags (ACE_End_Point_Type flags) = 0;
 
   /// Get the session id.
   virtual int session_id () const = 0;
 
   /// Set the session id.
-  virtual void session_id (const int session_id) = 0;
+  virtual void session_id (int session_id) = 0;
 
   /// Get the file descriptor on which RSVP events will occur.
   virtual ACE_HANDLE rsvp_events_handle () = 0;
 
-  virtual void  rsvp_event_type (RSVP_Event_Type event_type) = 0;
-  ///Set the RAPI event that last occurred
+  /// Set the last QoS event.
+  virtual void rsvp_event_type (RSVP_Event_Type event_type) = 0;
 
-  virtual RSVP_Event_Type rsvp_event_type () = 0;
-  ///Get the RAPI event that last occurred
-
+  /// Get the last QoS event.
+  virtual RSVP_Event_Type rsvp_event_type () const = 0;
 
   /// Get the destination address for this session.
   virtual ACE_INET_Addr dest_addr () const = 0;
 
   /// Set the destination address for this session.
-  virtual void dest_addr (const ACE_INET_Addr &dest_addr) = 0;
+  virtual void dest_addr (ACE_INET_Addr const &dest_addr) = 0;
 
   /// Get the source port for this session.
   virtual u_short source_port () const = 0;
 
   /// Set the source port for this session.
-  virtual void source_port (const u_short &source_port) = 0;
+  virtual void source_port (u_short source_port) = 0;
 
-  //Set the source host
-  virtual ACE_INET_Addr* source_addr () const = 0;
+  /// Returns the borrowed source address, or nullptr if none is set.
+  virtual ACE_INET_Addr *source_addr () const = 0;
 
-  /// Set the source port for this session.
-  virtual void source_addr (ACE_INET_Addr* source_addr) = 0;
-
+  /// Takes ownership of source_addr.
+  virtual void source_addr (ACE_INET_Addr *source_addr) = 0;
 
   /**
    * Returns the version of the underlying RSVP implementation. Is
    * meaningful only when the underlying implementation has
    * versioning.
    */
-  virtual int version () = 0;
+  virtual int version () const = 0;
 
 protected:
   /// Source port if this is a Sender session. Used for rapi_sender ().
-  u_short source_port_;
+  u_short source_port_ {};
 
   /// session id for the session.
-  int session_id_;
+  int session_id_ {};
 
   /// Destination address for this session.
-  ACE_INET_Addr dest_addr_;
+  ACE_INET_Addr dest_addr_ {};
 
-  /// Source address for this session.
-  ACE_INET_Addr* src_addr_;
+  /// Owned source address for this session.
+  std::unique_ptr<ACE_INET_Addr> src_addr_;
 
   /// Is this a TCP or a UDP session.
-  ACE_Protocol_ID protocol_id_;
+  ACE_Protocol_ID protocol_id_ {};
 
   /// QoS for this session.
-  ACE_QoS qos_;
+  ACE_QoS qos_ {};
 
   /// Specifies if this is a sending/receiving/both session.
-  ACE_End_Point_Type flags_;
+  ACE_End_Point_Type flags_ {ACE_QOS_SENDER};
 
-  RSVP_Event_Type rsvp_event_type_;
-  //Has the last rsvp event that occurred
+  /// The last QoS event that occurred.
+  RSVP_Event_Type rsvp_event_type_ {RSVP_PATH_EVENT};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

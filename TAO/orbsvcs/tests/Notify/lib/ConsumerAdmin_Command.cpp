@@ -1,6 +1,5 @@
 #include "ConsumerAdmin_Command.h"
 
-
 #include "LookupManager.h"
 #include "Name.h"
 #include "Options_Parser.h"
@@ -40,7 +39,6 @@ TAO_Notify_Tests_ConsumerAdmin_Command::handle_create ()
 
   LOOKUP_MANAGER->_register (sa.in(), this->name_.c_str ());
 }
-
 
 void
 TAO_Notify_Tests_ConsumerAdmin_Command::handle_subscriptions ()

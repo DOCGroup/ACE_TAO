@@ -13,17 +13,12 @@ class Simple_Server_i : public POA_Simple_Server
   //
 public:
   Simple_Server_i (CORBA::ORB_ptr orb, char const * key);
-  // ctor
-
-  Simple_Server_i ();
-  // ctor
 
   Simple_Server_i (Simple_Server_i const &) = delete;
   Simple_Server_i (Simple_Server_i &&) = delete;
   Simple_Server_i &operator= (Simple_Server_i const &) = delete;
   Simple_Server_i &operator= (Simple_Server_i &&) = delete;
 
-  // = The Simple_Server methods.
   char * remote_call () override;
 
   char * shutdown (char const * key) override;
@@ -31,8 +26,8 @@ public:
   char * abort (char const * key) override;
 
 private:
-  CORBA::ORB_var orb_;
-  CORBA::String_var _key;
+  CORBA::ORB_var orb_ {};
+  CORBA::String_var _key {};
 };
 
 #endif /* BUG_2248_REGRESSION_TEST_I_H */

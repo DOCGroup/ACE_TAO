@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef CONSUMER_H
 #define CONSUMER_H
 
@@ -33,14 +32,17 @@
 class Consumer : public POA_RtecEventComm::PushConsumer
 {
 public:
-  /// Constructor
-  Consumer ();
+  Consumer () = default;
+  Consumer (Consumer const &) = delete;
+  Consumer (Consumer &&) = delete;
+  Consumer &operator= (Consumer const &) = delete;
+  Consumer &operator= (Consumer &&) = delete;
 
   // = The RtecEventComm::PushConsumer methods
 
   /// The skeleton methods.
-  virtual void push (const RtecEventComm::EventSet& events);
-  virtual void disconnect_push_consumer ();
+  void push (RtecEventComm::EventSet const &events) override;
+  void disconnect_push_consumer () override;
 };
 
 #endif /* CONSUMER_H */

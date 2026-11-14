@@ -6,13 +6,9 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_Constraint_Interpreter::TAO_Notify_Constraint_Interpreter ()
-{
-}
+TAO_Notify_Constraint_Interpreter::TAO_Notify_Constraint_Interpreter () = default;
 
-TAO_Notify_Constraint_Interpreter::~TAO_Notify_Constraint_Interpreter ()
-{
-}
+TAO_Notify_Constraint_Interpreter::~TAO_Notify_Constraint_Interpreter () = default;
 
 void
 TAO_Notify_Constraint_Interpreter::build_tree (
@@ -20,10 +16,11 @@ TAO_Notify_Constraint_Interpreter::build_tree (
 {
   if (ETCL_Interpreter::is_empty_string (constraints))
     {
-      // Root is deleted in the TAO_Interpreter's destructor.
-      ACE_NEW_THROW_EX (this->root_,
+      ETCL_Constraint *root {};
+      ACE_NEW_THROW_EX (root,
                         ETCL_Literal_Constraint (true),
                         CORBA::NO_MEMORY ());
+      this->root_.reset (root);
     }
   else
     {
@@ -44,9 +41,9 @@ TAO_Notify_Constraint_Interpreter::build_tree (
 
   CORBA::ULong const len = exp.event_types.length ();
 
-  bool has_et_exp = false;
+  bool has_et_exp {};
 
-  for (CORBA::ULong ii = 0; ii < len; ++ii)
+  for (CORBA::ULong ii {}; ii < len; ++ii)
   {
     TAO_Notify_EventType et;
     bool const d = et.domain_is_wildcard (exp.event_types [ii].domain_name.in ());
@@ -110,7 +107,7 @@ TAO_Notify_Constraint_Interpreter::build_tree (
 CORBA::Boolean
 TAO_Notify_Constraint_Interpreter::evaluate (TAO_Notify_Constraint_Visitor &evaluator)
 {
-  return evaluator.evaluate_constraint (this->root_);
+  return evaluator.evaluate_constraint (this->root_.get ());
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

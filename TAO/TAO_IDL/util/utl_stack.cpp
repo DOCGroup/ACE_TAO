@@ -152,7 +152,7 @@ UTL_ScopeStack::clear ()
 }
 
 // How deep is the stack?
-std::size_t
+size_t
 UTL_ScopeStack::depth () const
 {
   return this->pd_stack_data.size ();
@@ -174,7 +174,7 @@ UTL_ScopeStack::next_to_top () const
 UTL_Scope *
 UTL_ScopeStack::top_non_null () const
 {
-  for (std::size_t i = this->pd_stack_data.size (); i > 0; --i)
+  for (size_t i = this->pd_stack_data.size (); i > 0; --i)
     {
       UTL_Scope *scope = this->pd_stack_data[i - 1];
 
@@ -191,7 +191,7 @@ AST_Decl *
 UTL_ScopeStack::lookup_by_name (
   UTL_ScopedName *name, bool full_def_only, bool for_add)
 {
-  for (std::size_t i = this->pd_stack_data.size (); i > 0; --i)
+  for (size_t i = this->pd_stack_data.size (); i > 0; --i)
     {
       UTL_Scope *scope = this->pd_stack_data[i - 1];
       if (scope != nullptr)

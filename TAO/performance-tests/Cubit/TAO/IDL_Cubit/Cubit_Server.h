@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef _CUBIT_SERVER_H
 #define _CUBIT_SERVER_H
 
@@ -24,6 +23,8 @@
 #include "tao/Utils/ORB_Manager.h"
 #include "Cubit_Client.h"
 #include "Cubit_i.h"
+#include <cstdio>
+#include <memory>
 
 /**
  * @class Cubit_Server
@@ -39,10 +40,14 @@ class Cubit_Server
 {
 public:
   /// Default constructor
-  Cubit_Server ();
+  Cubit_Server () = default;
 
-  /// Destructor
-  ~Cubit_Server ();
+  ~Cubit_Server () = default;
+
+  Cubit_Server (Cubit_Server const &) = delete;
+  Cubit_Server (Cubit_Server &&) = delete;
+  Cubit_Server &operator= (Cubit_Server const &) = delete;
+  Cubit_Server &operator= (Cubit_Server &&) = delete;
 
   /// Initialize the Cubit_Server state - parsing arguments and ...
   int init (int argc,
@@ -56,22 +61,23 @@ private:
   int parse_args ();
 
   /// File to output the cubit factory IOR.
-  FILE* ior_output_file_;
+  using File_Ptr = std::unique_ptr<FILE, int (*) (FILE *)>;
+  File_Ptr ior_output_file_ {nullptr, &std::fclose};
 
   /// The ORB manager.
   TAO_ORB_Manager orb_manager_;
 
   /// Implementation object of the cubit factory.
-  Cubit_Factory_i *factory_impl_;
+  std::unique_ptr<Cubit_Factory_i> factory_impl_ {};
 
   /// Id of the factory.
   CORBA::String_var factory_id_;
 
   /// Number of commandline arguments.
-  int argc_;
+  int argc_ {};
 
   /// commandline arguments.
-  ACE_TCHAR **argv_;
+  ACE_TCHAR **argv_ {};
 };
 
 #endif /* _CUBIT_SERVER_H */

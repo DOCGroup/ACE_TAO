@@ -7,21 +7,19 @@ BlobServerImpl::BlobServerImpl (CORBA::ORB_ptr orb)
 
 /// Implement the BlobServer interface
 void
-BlobServerImpl::test(
-            BlobType1& blob1,
-            BlobType2& blob2
-      )
+BlobServerImpl::test (BlobType1 &blob1,
+                      BlobType2 &blob2)
 {
-    blob1.length(10);
-    for(int i = 0; i < 10; i++)
+  blob1.length (10);
+  for (CORBA::ULong i {}; i < 10; ++i)
     {
-        blob1[i] = 'A' + i;
+      blob1[i] = static_cast<CORBA::Octet> ('A' + i);
     }
 
-    blob2.length(10);
-    for(int i = 0; i < 10; i++)
+  blob2.length (10);
+  for (CORBA::ULong i {}; i < 10; ++i)
     {
-        blob2[i] = 'A' + i;
+      blob2[i] = static_cast<CORBA::Octet> ('A' + i);
     }
 }
 

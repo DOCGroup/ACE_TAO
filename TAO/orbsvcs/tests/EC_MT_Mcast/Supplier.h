@@ -10,37 +10,31 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/// Simple supplier object that publishes one event type.
 class Supplier : public POA_RtecEventComm::PushSupplier
 {
-  // = TITLE
-  //   Simple supplier object
-  //
-  // = DESCRIPTION
-  //   This class is a supplier of events.
-  //   It simply publishes one event type, when the perform_push()
-  //   method is invoked it pushes the event through the event service
-  //
 public:
-  Supplier ();
-  // Constructor
+  Supplier () = default;
+  Supplier (Supplier const&) = delete;
+  Supplier (Supplier&&) = delete;
+  Supplier& operator= (Supplier const&) = delete;
+  Supplier& operator= (Supplier&&) = delete;
 
+  /// Connects to the Event Channel.
   void connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin);
-  // Connect to the event channel
 
+  /// Disconnects from the Event Channel.
   void disconnect ();
-  // Disconnect from the event channel
 
+  /// Pushes one event through the Event Channel.
   void perform_push ();
-  // Push a single event
 
-  // = The RtecEventComm::PushSupplier methods
-
+  /// Receives disconnect notifications from the Event Channel.
   void disconnect_push_supplier () override;
-  // The skeleton methods.
 
 private:
+  /// Proxy used to communicate with the Event Channel.
   RtecEventChannelAdmin::ProxyPushConsumer_var proxy_;
-  // The proxy
 };
 
 #endif /* SUPPLIER_H */

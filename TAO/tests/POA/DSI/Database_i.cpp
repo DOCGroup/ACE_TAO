@@ -4,12 +4,10 @@
 
 #include "tao/AnyTypeCode/NVList.h"
 #include "tao/AnyTypeCode/TypeCode.h"
-#include "ace/Null_Mutex.h"
 
-DatabaseImpl::Simpler_Database_Malloc::Simpler_Database_Malloc ()
-  //  : DATABASE_MALLOC ()
-{
-}
+#include <cstring>
+#include <memory>
+#include <string>
 
 DatabaseImpl::Simpler_Database_Malloc::~Simpler_Database_Malloc ()
 {
@@ -30,10 +28,6 @@ DatabaseImpl::Entry::Entry (CORBA::ORB_ptr orb,
     PortableServer::Current::_narrow (obj.in ());
 }
 
-DatabaseImpl::Entry::~Entry ()
-{
-}
-
 void
 DatabaseImpl::Entry::invoke (CORBA::ServerRequest_ptr request)
 {
@@ -47,11 +41,10 @@ DatabaseImpl::Entry::invoke (CORBA::ServerRequest_ptr request)
     PortableServer::ObjectId_to_string (oid.in ());
 
   // Get the operation name for this request
-  const char *operation =
+  char const * const operation =
     request->operation ();
 
-  if (ACE_OS::strcmp (operation,
-                      "_is_a") == 0)
+  if (std::strcmp (operation, "_is_a") == 0)
     {
       this->is_a (request);
     }
@@ -62,7 +55,7 @@ DatabaseImpl::Entry::invoke (CORBA::ServerRequest_ptr request)
 void
 DatabaseImpl::Entry::is_a (CORBA::ServerRequest_ptr request)
 {
-  CORBA::NVList_ptr list;
+  CORBA::NVList_ptr list {};
   this->orb_->create_list (0, list);
 
   CORBA::Any any_1;
@@ -76,20 +69,17 @@ DatabaseImpl::Entry::is_a (CORBA::ServerRequest_ptr request)
 
   CORBA::NamedValue_ptr nv = list->item (0);
 
-  CORBA::Any_ptr ap = nv->value ();
-  const char *value;
+  CORBA::Any_ptr const ap = nv->value ();
+  char const *value {};
   *ap >>= value;
 
-  const char *object_id =
+  char const * const object_id =
     CORBA::_tc_Object->id ();
 
-  CORBA::Boolean result;
-  if (ACE_OS::strcmp (value, "IDL:Database/Employee:1.0") == 0
-      || ACE_OS::strcmp (value, "IDL:Database/Entry:1.0") == 0
-      || ACE_OS::strcmp (value, object_id) == 0)
-    result = 1;
-  else
-    result = 0;
+  CORBA::Boolean const result =
+    std::strcmp (value, "IDL:Database/Employee:1.0") == 0
+    || std::strcmp (value, "IDL:Database/Entry:1.0") == 0
+    || std::strcmp (value, object_id) == 0;
 
   CORBA::Any result_any;
   CORBA::Any::from_boolean from_boolean (result);
@@ -99,10 +89,10 @@ DatabaseImpl::Entry::is_a (CORBA::ServerRequest_ptr request)
 }
 
 CORBA::RepositoryId
-DatabaseImpl::Entry::_primary_interface (const PortableServer::ObjectId &/*oid*/,
+DatabaseImpl::Entry::_primary_interface (PortableServer::ObjectId const & /*oid*/,
                                          PortableServer::POA_ptr)
 {
-  return 0;
+  return {};
 }
 
 PortableServer::POA_ptr
@@ -121,46 +111,42 @@ DatabaseImpl::Agent::Agent (CORBA::ORB_ptr orb,
   this->poa_->set_servant (&this->common_servant_);
 }
 
-DatabaseImpl::Agent::~Agent ()
-{
-}
-
 Database::Entry_ptr
-DatabaseImpl::Agent::create_entry (const char *key,
-                                   const char *entry_type,
-                                   const Database::NVPairSequence &initial_attributes)
+DatabaseImpl::Agent::create_entry (char const *key,
+                                   char const *entry_type,
+                                   Database::NVPairSequence const &initial_attributes)
 {
   // Create a new entry in the database:
-  if (ACE_OS::strcmp (entry_type, "Employee") != 0
+  if (std::strcmp (entry_type, "Employee") != 0
       || initial_attributes.length () != 2)
     throw Database::Unknown_Type ();
 
-  const char *name = 0;
-  CORBA::Long id = 0;
+  char const *name {};
+  CORBA::Long id {};
 
-  const Database::NamedValue &first =
+  Database::NamedValue const &first =
     initial_attributes[0];
-  const Database::NamedValue &second =
+  Database::NamedValue const &second =
     initial_attributes[1];
 
-  if (ACE_OS::strcmp (first.name.in (), "name") != 0
-      || ACE_OS::strcmp (second.name.in (), "id") != 0)
+  if (std::strcmp (first.name.in (), "name") != 0
+      || std::strcmp (second.name.in (), "id") != 0)
     throw Database::Unknown_Type ();
 
   first.value >>= name;
   second.value >>= id;
 
-  Employee *new_employee;
+  Employee *new_employee {};
   // This attempts to create a new Employee and throws an exception
   // and returns a null value if it fails
   ACE_NEW_THROW_EX (new_employee,
                     Employee (name, id),
                     CORBA::NO_MEMORY ());
+  std::unique_ptr<Employee> employee (new_employee);
 
-  // @@ Should check the return value here and throw an exception if
-  // it fails.
-  DATABASE::instance ()->bind (key,
-                               new_employee);
+  if (DATABASE::instance ()->bind (key, new_employee) != 0)
+    throw Database::Duplicate_Key (key);
+  employee.release ();
 
   ACE_DEBUG ((LM_DEBUG,
               "New employee created with name = %C and id = %d\n",
@@ -185,19 +171,18 @@ DatabaseImpl::Agent::create_entry (const char *key,
 }
 
 Database::Entry_ptr
-DatabaseImpl::Agent::find_entry (const char *key,
-                                 const char *entry_type)
+DatabaseImpl::Agent::find_entry (char const *key,
+                                 char const *entry_type)
 {
-  if (ACE_OS::strcmp (entry_type,
-                      "Employee") != 0)
+  if (std::strcmp (entry_type, "Employee") != 0)
     throw Database::Unknown_Type ();
 
-  void *temp = 0;
+  void *temp {};
   Database::Entry_var entry;
   if (DATABASE::instance ()->find (key, temp) == 0)
     {
-      Employee *employee =
-        reinterpret_cast<Employee *> (temp);
+      // The map owns this object; this pointer is only a temporary borrowed view.
+      Employee * const employee = static_cast<Employee *> (temp);
       ACE_DEBUG ((LM_DEBUG,
                   "Employee with key = %C found: name = %C and id = %d\n",
                   key,
@@ -230,17 +215,16 @@ DatabaseImpl::Agent::find_entry (const char *key,
 }
 
 void
-DatabaseImpl::Agent::destroy_entry (const char *key,
-                                    const char *entry_type)
+DatabaseImpl::Agent::destroy_entry (char const *key,
+                                    char const *entry_type)
 {
-  if (ACE_OS::strcmp (entry_type, "Employee") != 0)
+  if (std::strcmp (entry_type, "Employee") != 0)
     throw Database::Unknown_Type ();
 
-  void *temp = 0;
+  void *temp {};
   if (DATABASE::instance ()->unbind (key, temp) == 0)
     {
-      Employee *employee =
-        reinterpret_cast<Employee *> (temp);
+      std::unique_ptr<Employee> employee (static_cast<Employee *> (temp));
       ACE_DEBUG ((LM_DEBUG,
                   "Employee with key = %C will be removed from the database: "
                   "name = %C and id = %d\n",
@@ -248,7 +232,6 @@ DatabaseImpl::Agent::destroy_entry (const char *key,
                   employee->name (),
                   employee->id ()));
 
-      delete employee;
     }
   else
     {
@@ -273,32 +256,18 @@ DatabaseImpl::Agent::_default_POA ()
 }
 
 char *
-DatabaseImpl::entry_type_to_repository_id (const char *entry_type)
+DatabaseImpl::entry_type_to_repository_id (char const *entry_type)
 {
-  static const char *prefix = "IDL:Database/";
-  static int prefix_length = ACE_OS::strlen (prefix);
-  static const char *suffix = ":1.0";
-  static int suffix_length = ACE_OS::strlen (prefix);
-
-  int len =
-    prefix_length +
-    ACE_OS::strlen (entry_type) +
-    suffix_length +
-    1;
-
-  char *result = CORBA::string_alloc (len);
-  ACE_OS::sprintf (result,
-                   "%s%s%s",
-                   prefix,
-                   entry_type,
-                   suffix);
-  return result;
+  static constexpr char prefix[] = "IDL:Database/";
+  static constexpr char suffix[] = ":1.0";
+  std::string const repository_id = std::string (prefix) + entry_type + suffix;
+  return CORBA::string_dup (repository_id.c_str ());
 }
 
-DatabaseImpl::Employee::Employee (const char* name,
+DatabaseImpl::Employee::Employee (char const *name,
                                   CORBA::Long id)
   : id_ (id),
-    name_ (0)
+    name_ {}
 {
   this->name (name);
 }
@@ -308,34 +277,27 @@ DatabaseImpl::Employee::~Employee ()
   DATABASE::instance ()->free (this->name_);
 }
 
-const char *
+char const *
 DatabaseImpl::Employee::name () const
 {
   return this->name_;
 }
 
 void
-DatabaseImpl::Employee::name (const char* name)
+DatabaseImpl::Employee::name (char const *name)
 {
+  char * const new_name = static_cast<char *> (DATABASE::instance ()->malloc (std::strlen (name) + 1));
+  if (new_name == nullptr)
+    throw CORBA::NO_MEMORY ();
+  std::strcpy (new_name, name);
   DATABASE::instance ()->free (this->name_);
-
-  this->name_ =
-    (char *) DATABASE::instance ()->malloc (ACE_OS::strlen (name) + 1);
-
-  ACE_OS::strcpy (this->name_,
-                  name);
+  this->name_ = new_name;
 }
 
 CORBA::Long
 DatabaseImpl::Employee::id () const
 {
   return this->id_;
-}
-
-void
-DatabaseImpl::Employee::id (CORBA::Long id)
-{
-  this->id_ = id;
 }
 
 void *
@@ -352,13 +314,13 @@ DatabaseImpl::Employee::operator delete (void *pointer)
 
   /// Overloaded new operator, nothrow_t variant.
 void *
-DatabaseImpl::Employee::operator new (size_t size, const std::nothrow_t &)
+DatabaseImpl::Employee::operator new (size_t size, std::nothrow_t const &)
 {
   return DATABASE::instance ()->malloc (size);
 }
 
 void
-DatabaseImpl::Employee::operator delete (void *ptr, const std::nothrow_t&) noexcept
+DatabaseImpl::Employee::operator delete (void *ptr, std::nothrow_t const &) noexcept
 {
   DATABASE::instance ()->free (ptr);
 }

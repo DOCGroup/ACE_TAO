@@ -6,24 +6,25 @@
 #include "tao/Environment.h"
 #include "ace/CORBA_macros.h"
 
-
 class CSD_PT_TestInf_Export TestAppBase
 {
   public:
-    virtual ~TestAppBase();
+    TestAppBase (TestAppBase const &) = delete;
+    TestAppBase (TestAppBase &&) = delete;
+    TestAppBase &operator= (TestAppBase const &) = delete;
+    TestAppBase &operator= (TestAppBase &&) = delete;
+    virtual ~TestAppBase ();
 
     // Returns 0 for success, and -1 for failure.
-    int run(int argc, ACE_TCHAR* argv[]);
+    int run (int argc, ACE_TCHAR *argv[]);
 
-    const char* name() const;
-
+    char const *name () const;
 
   protected:
-    TestAppBase(const char* name);
+    explicit TestAppBase (char const *name);
 
     // Returns -1 for failure, 0 for success
-    virtual int run_i(int argc, ACE_TCHAR* argv[]) = 0;
-
+    virtual int run_i (int argc, ACE_TCHAR *argv[]) = 0;
 
   private:
     ACE_CString name_;

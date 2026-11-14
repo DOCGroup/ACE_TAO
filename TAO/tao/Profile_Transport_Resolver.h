@@ -20,6 +20,8 @@
 
 #include "tao/Transport_Selection_Guard.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Time_Value;
 ACE_END_VERSIONED_NAMESPACE_DECL
@@ -60,7 +62,6 @@ namespace TAO
   class TAO_Export Profile_Transport_Resolver
   {
   public:
-    /// Constructor
     /**
      * With @a block we tell whether this resolved should always deliver
      * a connection by blocking or unblock before the connection is
@@ -153,8 +154,10 @@ namespace TAO
     /// ORB.
     bool get_connection_timeout (ACE_Time_Value &max_wait_time);
 
-    void operator= (const Profile_Transport_Resolver &);
-    Profile_Transport_Resolver (const Profile_Transport_Resolver &);
+    Profile_Transport_Resolver (Profile_Transport_Resolver const &) = delete;
+    Profile_Transport_Resolver &operator= (Profile_Transport_Resolver const &) = delete;
+    Profile_Transport_Resolver (Profile_Transport_Resolver &&) = delete;
+    Profile_Transport_Resolver &operator= (Profile_Transport_Resolver &&) = delete;
 
   private:
     bool try_connect_i (TAO_Transport_Descriptor_Interface *desc,
@@ -194,7 +197,7 @@ namespace TAO
      * Policy_ForwardC.h, and that is what we precisely want to
      * avoid.
      */
-    CORBA::PolicyList *inconsistent_policies_;
+    std::unique_ptr<CORBA::PolicyList> inconsistent_policies_ {};
 
     /// Has the transport been idle?
     mutable bool is_released_;

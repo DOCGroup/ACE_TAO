@@ -5,6 +5,9 @@
 #include "UpdateableServerInfo.h"
 #include "orbsvcs/Log_Macros.h"
 
+#include <cstdlib>
+#include <cstring>
+
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
 
@@ -73,7 +76,7 @@ AsyncAccessManager::is_running () const
 bool
 AsyncAccessManager::has_server (const char *s) const
 {
-  return ACE_OS::strcmp (this->info_->ping_id (), s) == 0;
+  return std::strcmp (this->info_->ping_id (), s) == 0;
 }
 
 void
@@ -81,7 +84,7 @@ AsyncAccessManager::report (const char* operation) const
 {
   const Server_Info* si = info_.operator->();
   ORBSVCS_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) AsyncAccessManager(%@:%@)::%C - Server <%C> pid <%d> lastpid <%d> status <%C> running <%d> waiters <%d>\n"),
+                  ACE_TEXT ("(%P|%t) AsyncAccessManager(%@:%@)::%C - Server <%C> pid <%d> lastpid <%d> status <%C> running <%d> waiters <%B>\n"),
                   this, si, operation, info_->ping_id (), info_->pid, this->prev_pid_, status_name (this->status_), this->is_running(), this->rh_list_.size()));
 }
 
@@ -142,7 +145,7 @@ AsyncAccessManager::add_interest (ImR_ResponseHandler *rh, bool manual)
     {
       // This is not a leak. The listener registers with
       // the pinger and will delete itself when done.
-      AccessLiveListener *l = nullptr;
+      AccessLiveListener *l {};
       ACE_NEW (l, AccessLiveListener (this->info_->ping_id(),
                                      this,
                                      this->locator_.pinger()));
@@ -207,7 +210,7 @@ AsyncAccessManager::final_state (bool active)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::final_state - ")
-                      ACE_TEXT ("server <%C> active <%d> status <%C> waiters <%d>\n"),
+                      ACE_TEXT ("server <%C> active <%d> status <%C> waiters <%B>\n"),
                       this, info_->ping_id (), active, status_name (this->status_), this->rh_list_.size()));
     }
   bool const success = this->status_ == ImplementationRepository::AAM_SERVER_READY;
@@ -317,7 +320,7 @@ AsyncAccessManager::notify_waiters ()
       this->report ("notify_waiters");
     }
 
-  for (size_t i = 0; i < this->rh_list_.size(); i++)
+  for (size_t i {}; i < this->rh_list_.size(); ++i)
     {
       // Sending the IOR through to the response handler could trigger
       // an exception which we should catch here and log. This way when
@@ -519,7 +522,7 @@ AsyncAccessManager::server_is_running (const char *partial_ior,
       this->final_state ();
     }
 
-  AccessLiveListener *l = nullptr;
+  AccessLiveListener *l {};
   if (this->info_->is_mode (ImplementationRepository::PER_CLIENT))
     {
       ACE_NEW (l, AccessLiveListener (this->info_->ping_id(),
@@ -554,7 +557,7 @@ AsyncAccessManager::notify_child_death (int pid)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) AsyncAccessManager(%@), notify_child_death, server <%C> pid <%d> status <%C> ")
-                      ACE_TEXT ("this info_.pid <%d> prev_pid <%d> waiter count <%d>\n"),
+                      ACE_TEXT ("this info_.pid <%d> prev_pid <%d> waiter count <%B>\n"),
                       this, info_->ping_id (), pid, status_name (status_),
                       this->info_->pid, this->prev_pid_, this->rh_list_.size()));
     }
@@ -632,7 +635,7 @@ AsyncAccessManager::ping_replied (LiveStatus server)
       {
         if (this->status_ == ImplementationRepository::AAM_WAIT_FOR_PING)
           {
-            AccessLiveListener *l = nullptr;
+            AccessLiveListener *l {};
             ACE_NEW (l, AccessLiveListener (this->info_->ping_id(),
                                             this,
                                             this->locator_.pinger()));
@@ -875,9 +878,9 @@ ActivatorReceiver::start_server_excep (Messaging::ExceptionHolder *holder)
                           ACE_TEXT ("(%P|%t) ActivatorReceiver(%@)::start_server_excep, reason <%C>\n"),
                           this, ca.reason.in ()));
         }
-      if (ACE_OS::strstr (ca.reason.in(),"pid:") == ca.reason.in())
+      if (std::strstr (ca.reason.in (), "pid:") == ca.reason.in ())
         {
-          int const pid = ACE_OS::atoi (ca.reason.in()+4);
+          int const pid = std::atoi (ca.reason.in () + 4);
           this->aam_->activator_replied_start_running (true, pid);
         }
       else
@@ -916,7 +919,6 @@ void
 ActivatorReceiver::kill_server_excep (Messaging::ExceptionHolder * )
 {
 }
-
 
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------

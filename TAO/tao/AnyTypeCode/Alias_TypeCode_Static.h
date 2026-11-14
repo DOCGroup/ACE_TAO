@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Alias_TypeCode_Static.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_ALIAS_TYPECODE_STATIC_H
 #define TAO_ALIAS_TYPECODE_STATIC_H
@@ -52,7 +50,6 @@ namespace TAO
         private TAO::Null_RefCount_Policy
     {
     public:
-      /// Constructor.
       Alias (CORBA::TCKind kind,
              char const * id,
              char const * name,
@@ -66,11 +63,11 @@ namespace TAO
        *
        * @see @c CORBA::TypeCode
        */
-      //@{
+      /// @{
       bool tao_marshal (TAO_OutputCDR & cdr, CORBA::ULong offset) const override;
       void tao_duplicate () override;
       void tao_release () override;
-      //@}
+      /// @}
 
     protected:
       /**
@@ -81,7 +78,7 @@ namespace TAO
        *
        * @see @c CORBA::TypeCode
        */
-      //@{
+      /// @{
       CORBA::Boolean equal_i (CORBA::TypeCode_ptr tc) const override;
       CORBA::Boolean equivalent_i (CORBA::TypeCode_ptr tc) const override;
       CORBA::TypeCode_ptr get_compact_typecode_i () const override;
@@ -112,7 +109,6 @@ namespace TAO
 }  // End namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 #ifdef __ACE_INLINE__
 # include "tao/AnyTypeCode/Alias_TypeCode_Static.inl"

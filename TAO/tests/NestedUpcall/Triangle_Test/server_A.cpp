@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    server_A.cpp
@@ -9,22 +8,15 @@
  *  @author Michael Kircher
  */
 //=============================================================================
-
-
 #include "server_A.h"
 #include "tao/debug.h"
 #include "ace/OS_NS_stdio.h"
 
-Object_A_Server::Object_A_Server ()
-  : ior_output_file_ (0)
-{
-}
-
 int
 Object_A_Server::parse_args ()
 {
-  ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("do:"));
-  int c;
+  ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT ("do:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -33,8 +25,8 @@ Object_A_Server::parse_args ()
         TAO_debug_level++;
         break;
       case 'o': // output the IOR to a file.
-        this->ior_output_file_ = ACE_OS::fopen (get_opts.opt_arg (), "w");
-        if (this->ior_output_file_ == 0)
+        this->ior_output_file_.reset (ACE_OS::fopen (get_opts.opt_arg (), "w"));
+        if (!this->ior_output_file_)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to open %s for writing: %p\n",
                              get_opts.opt_arg ()), -1);
@@ -67,44 +59,37 @@ Object_A_Server::init (int argc,
   this->argc_ = argc;
   this->argv_ = argv;
 
-  this->parse_args ();
-  // ~~ check for the return value here
+  if (this->parse_args () != 0)
+    return -1;
 
-  CORBA::String_var str  =
+  CORBA::String_var const str =
     this->orb_manager_.activate_under_child_poa ("object_A",
                                                  &this->object_A_i_);
 
   if (this->ior_output_file_)
     {
-      ACE_OS::fprintf (this->ior_output_file_,
+      ACE_OS::fprintf (this->ior_output_file_.get (),
                        "%s",
                        str.in ());
-      ACE_OS::fclose (this->ior_output_file_);
+      this->ior_output_file_.reset ();
     }
-
-
   return 0;
 }
-
 
 int
 Object_A_Server::run ()
 {
-  int r = this->orb_manager_.run ();
+  int const r = this->orb_manager_.run ();
 
   if (r == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "NestedUpCalls_Server::run"),
                       -1);
-  return 0;}
-
-
-Object_A_Server::~Object_A_Server ()
-{
+  return 0;
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Object_A_Server object_A_Server;
 
@@ -113,22 +98,18 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   try
     {
-      int retval =
-        object_A_Server.init (argc,argv);
+      int const retval = object_A_Server.init (argc, argv);
 
       if (retval == -1)
         return 1;
-      else
-        {
-          object_A_Server.run ();
-        }
+      return object_A_Server.run () == 0 ? 0 : 1;
     }
-  catch (const CORBA::SystemException& sysex)
+  catch (CORBA::SystemException const &sysex)
     {
       sysex._tao_print_exception ("System Exception");
       return -1;
     }
-  catch (const CORBA::UserException& userex)
+  catch (CORBA::UserException const &userex)
     {
       userex._tao_print_exception ("User Exception");
       return -1;

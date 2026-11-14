@@ -47,7 +47,6 @@ protected:
   /// Default constructor.
   ACE_Object_Manager_Base ();
 
-  /// Destructor.
   virtual ~ACE_Object_Manager_Base ();
 
 public:
@@ -192,10 +191,8 @@ public:
   // They're public so that the ACE_Object_Manager can be
   // constructed/destructed in <main> with
   // <ACE_HAS_NONSTATIC_OBJECT_MANAGER>.
-  /// Constructor.
   ACE_OS_Object_Manager ();
 
-  /// Destructor.
   ~ACE_OS_Object_Manager () override;
 
   /// Accessor to singleton instance.

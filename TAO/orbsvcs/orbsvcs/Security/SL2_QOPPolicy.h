@@ -8,7 +8,6 @@
  */
 // ===================================================================
 
-
 #ifndef TAO_SL2_QOP_POLICY_H
 #define TAO_SL2_QOP_POLICY_H
 
@@ -51,8 +50,12 @@ namespace TAO
         public virtual ::CORBA::LocalObject
     {
     public:
-      /// Constructor
-      QOPPolicy (::Security::QOP qop);
+      explicit QOPPolicy (::Security::QOP qop);
+
+      QOPPolicy (QOPPolicy const &) = delete;
+      QOPPolicy (QOPPolicy &&) = delete;
+      QOPPolicy &operator= (QOPPolicy const &) = delete;
+      QOPPolicy &operator= (QOPPolicy &&) = delete;
 
       /**
        * @name CORBA::Policy Methods
@@ -70,12 +73,11 @@ namespace TAO
       ::Security::QOP qop () override;
 
     protected:
-      /// Destructor
       /**
        * Protected destructor to enforce proper memory management
        * through the reference counting mechansim.
        */
-      ~QOPPolicy () override;
+      ~QOPPolicy () override = default;
 
     private:
       /// Quality of protection which can be specified for an object

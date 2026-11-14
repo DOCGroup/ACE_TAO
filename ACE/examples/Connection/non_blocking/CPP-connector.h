@@ -12,75 +12,84 @@
 #include "ace/Svc_Handler.h"
 #include "ace/Sig_Adapter.h"
 
+/**
+ * Communicates with a server using a state machine to track interaction
+ * with the user and server.
+ */
 template <typename PEER_STREAM>
 class Peer_Handler : public ACE_Svc_Handler<PEER_STREAM, ACE_SYNCH>
 {
-  // = TITLE
-  //   Handles communication with the server.
-  //
-  // = DESCRIPTION
-  //   This class uses a very clever state machine pattern to keep
-  //   track of how it interacts with the user and the server.
 public:
-  Peer_Handler (ACE_Reactor *r = 0);
+  explicit Peer_Handler (ACE_Reactor *r = nullptr);
+  ~Peer_Handler () override = default;
+  Peer_Handler (Peer_Handler const &) = delete;
+  Peer_Handler (Peer_Handler &&) = delete;
+  Peer_Handler &operator= (Peer_Handler const &) = delete;
+  Peer_Handler &operator= (Peer_Handler &&) = delete;
 
-  virtual int open (void * = 0);
-  // Activate the handler when connection is established.
+  /// Activates the handler after a connection is established.
+  int open (void * = nullptr) override;
 
-  virtual int close (u_long flags = 0);
-  // Called on failed connection attempt.
+  /// Handles a failed connection attempt.
+  int close (u_long flags = 0) override;
 
-  // = Demultiplexing hooks.
-  virtual int handle_output (ACE_HANDLE);
-  virtual int handle_input (ACE_HANDLE);
-  virtual int handle_close (ACE_HANDLE,
-                            ACE_Reactor_Mask mask);
-  virtual int handle_signal (int signum,
-                             siginfo_t * = 0,
-                             ucontext_t * = 0);
-  virtual int handle_timeout (const ACE_Time_Value &time,
-                              const void *);
+  /// @name Demultiplexing hooks
+  /// @{
+  int handle_output (ACE_HANDLE) override;
+  int handle_input (ACE_HANDLE) override;
+  int handle_close (ACE_HANDLE,
+                    ACE_Reactor_Mask mask) override;
+  int handle_signal (int signum,
+                     siginfo_t * = nullptr,
+                     ucontext_t * = nullptr) override;
+  int handle_timeout (ACE_Time_Value const &time,
+                      void const *) override;
+  /// @}
+
 protected:
-  // = These methods implement the State pattern.
+  /// @name State handlers
+  /// @{
   int uninitialized ();
   int connected ();
   int stdio ();
+  /// @}
 
+  /// Tracks the current state handler.
   int (Peer_Handler<PEER_STREAM>::*action_) ();
-  // Keeps track of which state we are in.
 };
 
+/// Illustrates the ACE_Connector interface.
 template <typename SVC_HANDLER, typename PEER_CONNECTOR>
 class IPC_Client : public ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>
 {
-  // = TITLE
-  //   This class illustrates how the <ACE_Connector> works.
 public:
   IPC_Client ();
-  // Constructor.
 
-  ~IPC_Client ();
-  // Destructor.
+  ~IPC_Client () override = default;
+  IPC_Client (IPC_Client const &) = delete;
+  IPC_Client (IPC_Client &&) = delete;
+  IPC_Client &operator= (IPC_Client const &) = delete;
+  IPC_Client &operator= (IPC_Client &&) = delete;
+  /// @name Dynamic linking hooks
+  /// @{
+  /// Initializes the IPC client.
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
-  // = Dynamic linking hooks.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
-  // Initialize the IPC client.
+  /// Destroys the IPC client.
+  int fini () override;
+  /// @}
 
-  virtual int fini ();
-  // Destroy the IPC client.
-
+  /// Runs the client service.
   virtual int svc ();
-  // Run the svc.
 
 private:
   using inherited = ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>;
 
+  /// Options for the active connection factory.
   ACE_Synch_Options options_;
-  // Options for the active connection factory.
 
+  /// Tracks shutdown after receipt of SIGINT.
   ACE_Sig_Adapter done_handler_;
-  // Keeps track of when we shut down due to receipt of the SIGINT
-  // signal.
 };
 
 #include "CPP-connector.cpp"

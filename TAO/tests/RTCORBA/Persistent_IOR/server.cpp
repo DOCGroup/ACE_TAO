@@ -2,7 +2,9 @@
 #include "testS.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
 #include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
+#include <memory>
 
 #include "../check_supported_priorities.cpp"
 
@@ -13,13 +15,20 @@ public:
   test_i (CORBA::ORB_ptr orb,
           PortableServer::POA_ptr poa);
 
-  void method ();
+  ~test_i () override = default;
+
+  test_i (test_i const &) = delete;
+  test_i (test_i &&) = delete;
+  test_i &operator= (test_i const &) = delete;
+  test_i &operator= (test_i &&) = delete;
+
+  void method () override;
 
   //FUZZ: disable check_for_lack_ACE_OS
-  void shutdown ();
+  void shutdown () override;
   //FUZZ: enable check_for_lack_ACE_OS
 
-  PortableServer::POA_ptr _default_POA ();
+  PortableServer::POA_ptr _default_POA () override;
 
 private:
   CORBA::ORB_var orb_;
@@ -55,42 +64,44 @@ test_i::_default_POA ()
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
-static const ACE_TCHAR *persistent_ior = ACE_TEXT ("persistent_ior");
-static const ACE_TCHAR *transient_ior = ACE_TEXT ("transient_ior");
-static const ACE_TCHAR *tp_persistent_ior = ACE_TEXT ("tp_persistent_ior");
-static int debug = 0;
+struct Server_Options
+{
+  ACE_TCHAR const *persistent_ior {ACE_TEXT ("persistent_ior")};
+  ACE_TCHAR const *transient_ior {ACE_TEXT ("transient_ior")};
+  ACE_TCHAR const *tp_persistent_ior {ACE_TEXT ("tp_persistent_ior")};
+  bool debug {};
+  CORBA::ULong stacksize {};
+  CORBA::ULong static_threads {2};
+  CORBA::ULong dynamic_threads {};
+  RTCORBA::Priority default_thread_priority {};
+  bool allow_request_buffering {};
+  CORBA::ULong max_buffered_requests {};
+  CORBA::ULong max_request_buffer_size {};
+};
 
-static CORBA::ULong stacksize = 0;
-static CORBA::ULong static_threads = 2;
-static CORBA::ULong dynamic_threads = 0;
-static RTCORBA::Priority default_thread_priority;
-static CORBA::Boolean allow_request_buffering = 0;
-static CORBA::ULong max_buffered_requests = 0;
-static CORBA::ULong max_request_buffer_size = 0;
-
-int
-parse_args (int argc, ACE_TCHAR *argv[])
+static int
+parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("a:p:t:d:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'a':
-        tp_persistent_ior = get_opts.opt_arg ();
+        options.tp_persistent_ior = get_opts.opt_arg ();
         break;
 
       case 'p':
-        persistent_ior = get_opts.opt_arg ();
+        options.persistent_ior = get_opts.opt_arg ();
         break;
 
       case 't':
-        transient_ior = get_opts.opt_arg ();
+        options.transient_ior = get_opts.opt_arg ();
         break;
 
       case 'd':
-        debug = ACE_OS::atoi (get_opts.opt_arg ());
+        options.debug = ACE_OS::atoi (get_opts.opt_arg ()) != 0;
         break;
 
       case '?':
@@ -113,11 +124,12 @@ parse_args (int argc, ACE_TCHAR *argv[])
 static void
 write_iors_to_file (CORBA::Object_ptr object,
                     CORBA::ORB_ptr orb,
-                    const ACE_TCHAR *filename)
+                    ACE_TCHAR const *filename,
+                    bool debug)
 {
-  FILE *file =
-    ACE_OS::fopen (filename, "w");
-  ACE_ASSERT (file != 0);
+  std::unique_ptr<FILE, int (*) (FILE *)> file (
+    ACE_OS::fopen (filename, "w"), ACE_OS::fclose);
+  ACE_ASSERT (file != nullptr);
 
   CORBA::String_var ior =
     orb->object_to_string (object);
@@ -128,22 +140,20 @@ write_iors_to_file (CORBA::Object_ptr object,
                 filename,
                 ior.in ()));
 
-  u_int result = 0;
-  result =
-    ACE_OS::fprintf (file,
-                     "%s",
-                     ior.in ());
+  int const result = ACE_OS::fprintf (file.get (),
+                                      "%s",
+                                      ior.in ());
 
-  ACE_ASSERT (result == ACE_OS::strlen (ior.in ()));
+  ACE_ASSERT (result >= 0
+              && static_cast<size_t> (result) == std::strlen (ior.in ()));
   ACE_UNUSED_ARG (result);
-
-  ACE_OS::fclose (file);
 }
 
-void
+static void
 create_poa_and_servant_with_persistent_policy (CORBA::ORB_ptr orb,
                                                PortableServer::POA_ptr root_poa,
-                                               PortableServer::POAManager_ptr poa_manager)
+                                               PortableServer::POAManager_ptr poa_manager,
+                                               Server_Options const &options)
 {
   CORBA::PolicyList policies;
 
@@ -166,7 +176,7 @@ create_poa_and_servant_with_persistent_policy (CORBA::ORB_ptr orb,
                           poa_manager,
                           policies);
 
-  test_i *servant = 0;
+  test_i *servant {};
   ACE_NEW_THROW_EX (servant,
                     test_i (orb,
                             poa.in ()),
@@ -179,23 +189,25 @@ create_poa_and_servant_with_persistent_policy (CORBA::ORB_ptr orb,
 
   write_iors_to_file (test.in (),
                       orb,
-                      persistent_ior);
+                      options.persistent_ior,
+                      options.debug);
 }
 
-void
+static void
 create_poa_and_servant_with_tp_policy (CORBA::ORB_ptr orb,
                                        RTCORBA::RTORB_ptr rt_orb,
                                        PortableServer::POA_ptr root_poa,
-                                       PortableServer::POAManager_ptr poa_manager)
+                                       PortableServer::POAManager_ptr poa_manager,
+                                       Server_Options const &options)
 {
-  RTCORBA::ThreadpoolId threadpool_id =
-    rt_orb->create_threadpool (stacksize,
-                               static_threads,
-                               dynamic_threads,
-                               default_thread_priority,
-                               allow_request_buffering,
-                               max_buffered_requests,
-                               max_request_buffer_size);
+  RTCORBA::ThreadpoolId threadpool_id = rt_orb->create_threadpool (
+    options.stacksize,
+    options.static_threads,
+    options.dynamic_threads,
+    options.default_thread_priority,
+    options.allow_request_buffering,
+    options.max_buffered_requests,
+    options.max_request_buffer_size);
 
   CORBA::Policy_var threadpool_policy =
     rt_orb->create_threadpool_policy (threadpool_id);
@@ -218,7 +230,7 @@ create_poa_and_servant_with_tp_policy (CORBA::ORB_ptr orb,
                           poa_manager,
                           policies);
 
-  test_i *servant = 0;
+  test_i *servant {};
   ACE_NEW_THROW_EX (servant,
                     test_i (orb,
                             poa.in ()),
@@ -231,23 +243,25 @@ create_poa_and_servant_with_tp_policy (CORBA::ORB_ptr orb,
 
   write_iors_to_file (test.in (),
                       orb,
-                      transient_ior);
+                      options.transient_ior,
+                      options.debug);
 }
 
-void
+static void
 create_poa_with_tp_and_persistent_policy (CORBA::ORB_ptr orb,
                                           RTCORBA::RTORB_ptr rt_orb,
                                           PortableServer::POA_ptr root_poa,
-                                          PortableServer::POAManager_ptr poa_manager)
+                                          PortableServer::POAManager_ptr poa_manager,
+                                          Server_Options const &options)
 {
-  RTCORBA::ThreadpoolId threadpool_id =
-    rt_orb->create_threadpool (stacksize,
-                               static_threads,
-                               dynamic_threads,
-                               default_thread_priority,
-                               allow_request_buffering,
-                               max_buffered_requests,
-                               max_request_buffer_size);
+  RTCORBA::ThreadpoolId threadpool_id = rt_orb->create_threadpool (
+    options.stacksize,
+    options.static_threads,
+    options.dynamic_threads,
+    options.default_thread_priority,
+    options.allow_request_buffering,
+    options.max_buffered_requests,
+    options.max_request_buffer_size);
 
   CORBA::Policy_var threadpool_policy =
     rt_orb->create_threadpool_policy (threadpool_id);
@@ -277,7 +291,7 @@ create_poa_with_tp_and_persistent_policy (CORBA::ORB_ptr orb,
                           poa_manager,
                           policies);
 
-  test_i *servant = 0;
+  test_i *servant {};
   ACE_NEW_THROW_EX (servant,
                     test_i (orb,
                             poa.in ()),
@@ -290,7 +304,8 @@ create_poa_with_tp_and_persistent_policy (CORBA::ORB_ptr orb,
 
   write_iors_to_file (test.in (),
                       orb,
-                      tp_persistent_ior);
+                      options.tp_persistent_ior,
+                      options.debug);
 }
 
 int
@@ -301,8 +316,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      int result =
-        parse_args (argc, argv);
+      Server_Options options;
+      int const result = parse_args (argc, argv, options);
       if (result != 0)
         return result;
 
@@ -318,7 +333,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       RTCORBA::Current_var current =
         RTCORBA::Current::_narrow (object.in ());
 
-      default_thread_priority =
+      options.default_thread_priority =
         get_implicit_thread_CORBA_priority (orb.in ());
 
       object =
@@ -332,17 +347,20 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       create_poa_and_servant_with_tp_policy (orb.in (),
                                              rt_orb.in (),
-                                             root_poa.in  (),
-                                             poa_manager.in ());
+                                             root_poa.in (),
+                                             poa_manager.in (),
+                                             options);
 
       create_poa_and_servant_with_persistent_policy (orb.in (),
-                                                     root_poa.in  (),
-                                                     poa_manager.in ());
+                                                     root_poa.in (),
+                                                     poa_manager.in (),
+                                                     options);
 
       create_poa_with_tp_and_persistent_policy (orb.in (),
                                                 rt_orb.in (),
-                                                root_poa.in  (),
-                                                poa_manager.in ());
+                                                root_poa.in (),
+                                                poa_manager.in (),
+                                                options);
 
       poa_manager->activate ();
 

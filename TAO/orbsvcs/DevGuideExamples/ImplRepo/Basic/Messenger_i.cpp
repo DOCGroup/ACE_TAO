@@ -1,16 +1,15 @@
 #include "Messenger_i.h"
 #include <iostream>
-#include <exception>
 
-CORBA::Boolean Messenger_i::send_message (
-  char const * user_name,
-  char const * subject,
-  char *& message)
+CORBA::Boolean
+Messenger_i::send_message (char const *user_name,
+                           char const *subject,
+                           char *&message)
 {
   std::cout << "Message from: " << user_name << std::endl
             << "Subject:      " << subject << std::endl
             << "Message:      " << message << std::endl;
-  message = CORBA::string_dup("A reply.");
-  return 1;
+  message = CORBA::string_dup ("A reply.");
+  return true;
 }
 

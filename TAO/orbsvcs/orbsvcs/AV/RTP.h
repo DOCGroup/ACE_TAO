@@ -34,7 +34,6 @@
  * SUCH DAMAGE.
  */
 
-
 //=============================================================================
 /**
  *  @file   RTP.h
@@ -51,7 +50,6 @@
 #include "orbsvcs/AV/Protocol_Factory.h"
 
 #include "ace/Service_Config.h"
-
 
 #define RTP_PT_BVC              22      /* Berkeley video codec */
 
@@ -96,7 +94,6 @@
 #define RTP_P   0x2000  /* Padding is present */
 #define RTP_X   0x1000  /* Extension Header is present */
 
-
 #define RTCP_PT_SR      200     /* sender report */
 #define RTCP_PT_RR      201     /* receiver report */
 #define RTCP_PT_SDES    202     /* source description */
@@ -115,7 +112,6 @@
 #define RTCP_SDES_MIN   1
 
 #define RTP_SEQ_MOD (1<<16)
-
 
 /*
  * Parameters controling the RTCP report rate timer.
@@ -137,6 +133,8 @@
 #include "orbsvcs/AV/Policy.h"
 #include "orbsvcs/AV/FlowSpec_Entry.h"
 #include "orbsvcs/AV/MCast.h"
+
+#include <array>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -266,7 +264,6 @@ public:
              char *data,
              ACE_UINT16 dataSize);
 
-  /// Destructor
   ~RTP_Packet();
 
   /// Returns the size of the RTP packet in bytes.
@@ -278,8 +275,8 @@ public:
   /// Populates the passed in frame_info.
   void get_frame_info (TAO_AV_frame_info *frame_info);
 
-  /// Returns 1 if packet is valid and 0 if not.
-  int is_valid ();
+  /// Returns true if the packet is valid, otherwise returns false.
+  bool is_valid ();
 
   /// Returns the RTP version of the packet.
   unsigned int ver ();
@@ -328,17 +325,17 @@ public:
 
 private:
   /// Local buffer to hold the RTP packet.
-  char packet_[RTP_MTU];
+  std::array<char, RTP_MTU> packet_;
 
   /// Local buffer to hold the contributing source list with the values stored
   /// in host byte order.
-  ACE_UINT32 host_byte_order_csrc_list_[15];
+  std::array<ACE_UINT32, 15> host_byte_order_csrc_list_;
 
   /// Local buffer to hold the payload with the values stored in host byte order.
-  char host_byte_order_payload_[RTP_MTU];
+  std::array<char, RTP_MTU> host_byte_order_payload_;
 
   /// The number of bytes in the header extension - 0 if no extension.
-  unsigned int extension_bytes_;
+  unsigned int extension_bytes_ {};
 
   /// The size of the overall data packet.
   ACE_UINT16 packet_size_;
@@ -365,30 +362,29 @@ public:
   int send_frame (ACE_Message_Block *frame,
                   TAO_AV_frame_info *frame_info = nullptr) override;
 
-  int send_frame (const iovec *iov,
+  int send_frame (iovec const *iov,
                   int iovcnt,
                   TAO_AV_frame_info *frame_info = nullptr) override;
 
-  int send_frame (const char *buf,
+  int send_frame (char const *buf,
                   size_t len) override;
 
   int destroy () override;
-  int set_policies (const TAO_AV_PolicyList &policy_list) override;
+  int set_policies (TAO_AV_PolicyList const &policy_list) override;
   void control_object (TAO_AV_Protocol_Object *object) override;
 
 protected:
   ACE_UINT16 sequence_num_;
   ACE_UINT32 timestamp_offset_;
-  int format_;
+  int format_ {};
   ACE_UINT32 ssrc_;
   TAO_AV_Protocol_Object *control_object_;
 
   /// Pre-allocated memory to receive the data...
   ACE_Message_Block frame_;
 
-  int connection_gone_;
+  bool connection_gone_ {};
 };
-
 
 /**
  * @class TAO_AV_RTP_Flow_Factory
@@ -401,7 +397,7 @@ public:
   TAO_AV_RTP_Flow_Factory ();
   ~TAO_AV_RTP_Flow_Factory () override;
   int init (int argc, ACE_TCHAR *argv[]) override;
-  int match_protocol (const char *flow_string) override;
+  int match_protocol (char const *flow_string) override;
   TAO_AV_Protocol_Object *make_protocol_object (TAO_FlowSpec_Entry *entry,
                                                 TAO_Base_StreamEndPoint *endpoint,
                                                 TAO_AV_Flow_Handler *handler,

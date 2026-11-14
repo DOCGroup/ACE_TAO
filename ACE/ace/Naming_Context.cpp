@@ -428,7 +428,7 @@ ACE_Name_Options::ACE_Name_Options ()
 #if defined (ACE_DEFAULT_NAMESPACE_DIR)
   this->namespace_dir_ = ACE_OS::strdup (ACE_DEFAULT_NAMESPACE_DIR);
 #else /* ACE_DEFAULT_NAMESPACE_DIR */
-  size_t pathsize = (MAXPATHLEN + 1) * sizeof (ACE_TCHAR);
+  size_t const pathsize = (MAXPATHLEN + 1) * sizeof (ACE_TCHAR);
 #if defined (ACE_HAS_ALLOC_HOOKS)
   this->namespace_dir_ = static_cast <ACE_TCHAR *> (ACE_Allocator::instance()->malloc (pathsize));
 #else
@@ -575,7 +575,7 @@ ACE_Name_Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_TRACE ("ACE_Name_Options::parse_args");
 
-  const ACE_TCHAR* program_name = nullptr;
+  ACE_TCHAR const *program_name {};
 
   // Argc can be 0 on some platforms like VxWorks.
   if (argc > 0)

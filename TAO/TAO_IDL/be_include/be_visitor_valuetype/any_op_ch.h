@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VALUETYPE_ANY_OP_CH_H_
 #define _BE_VALUETYPE_ANY_OP_CH_H_
 

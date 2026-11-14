@@ -35,7 +35,7 @@ TAO_ORB_Parameters::TAO_ORB_Parameters ()
   , cache_incoming_by_dotted_decimal_address_ (0)
   , linger_ (-1)
   , accept_error_delay_ (0)
-  , std_profile_components_ (1)
+  , std_profile_components_ (true)
   , ace_sched_policy_ (ACE_SCHED_OTHER)
   , sched_policy_ (THR_SCHED_DEFAULT)
   , scope_policy_ (THR_SCOPE_PROCESS)
@@ -70,7 +70,7 @@ TAO_ORB_Parameters::TAO_ORB_Parameters ()
   , collocation_resolver_name_ ("Default_Collocation_Resolver")
   , allow_ziop_no_server_policies_ (!!TAO_ALLOW_ZIOP_NO_SERVER_POLICIES_DEFAULT)
 {
-  for (int i = 0; i != TAO_NO_OF_MCAST_SERVICES; ++i)
+  for (int i {}; i != TAO_NO_OF_MCAST_SERVICES; ++i)
     {
       this->service_port_[i] = 0;
     }
@@ -153,14 +153,14 @@ TAO_ORB_Parameters::parse_and_add_endpoints (const ACE_CString &endpoints,
       // (e.g. ";uiop://foo;iiop://1.3@bar")
     }
 
-  int status = 0;
+  int status {};
   // Return code:  0 = success,  -1 = failure
 
   if (length > 0)
     {
       int endpoints_count = 1;
 
-      for (size_t j = 0; j != length; ++j)
+      for (size_t j {}; j != length; ++j)
         {
           if (endpoints[j] == endpoints_delimiter)
             {
@@ -168,10 +168,10 @@ TAO_ORB_Parameters::parse_and_add_endpoints (const ACE_CString &endpoints,
             }
         }
 
-      ssize_t begin = 0;
+      ssize_t begin {};
       ssize_t end = endpoints.find (endpoints_delimiter);
 
-      for (int i = 0; i < endpoints_count; ++i)
+      for (int i {}; i < endpoints_count; ++i)
         {
           if (end == 0)
             {
@@ -195,7 +195,7 @@ TAO_ORB_Parameters::parse_and_add_endpoints (const ACE_CString &endpoints,
           if (check_offset > 0 &&
               check_offset != endpt.npos)
             {
-              endpoint_set.enqueue_tail (endpt);
+              endpoint_set.push_back (endpt);
               // Insert endpoint into list
             }
           else
@@ -224,10 +224,10 @@ TAO_ORB_Parameters::check_preferred_interfaces_string (const char *s)
   // assignment separator ('=' or ':')
   // Any other char is legal, although '*' and '?' will be
   // treated as wildcards.
-  bool expect_assign = false;
-  bool expect_comma = false;
-  bool expect_wild = true;
-  bool found_remote = false;
+  bool expect_assign {};
+  bool expect_comma {};
+  bool expect_wild {true};
+  bool found_remote {};
 
   for (const char *p = s; *p; ++p) switch (*p)
     {
@@ -282,7 +282,7 @@ TAO_ORB_Parameters::preferred_interfaces (const char *s)
       // Append any valid string to those already specified
       // (by other -ORBPreferredInterfaces options that have been
       // seen previously)
-      if (this->pref_network_.length ())
+      if (!this->pref_network_.empty ())
         this->pref_network_+= ',';
       this->pref_network_+= s;
     }

@@ -23,11 +23,11 @@
 #include "ace/Thread_Manager.h"
 #include "Logging_Acceptor.h"
 #include "CLD_export.h"
+#include <array>
 
 #if !defined (FLUSH_TIMEOUT)
 #define FLUSH_TIMEOUT 120 /* 120 seconds == 2 minutes. */
 #endif /* FLUSH_TIMEOUT */
-
 
 class CLD_Connector;
 
@@ -45,9 +45,9 @@ public:
   virtual ACE_SOCK_Stream &peer () { return peer_; }
 
   // Reactor hook methods.
-  virtual int handle_input (ACE_HANDLE handle);
-  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-                            ACE_Reactor_Mask = 0);
+  int handle_input (ACE_HANDLE handle) override;
+  int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
+                    ACE_Reactor_Mask = 0) override;
 
 protected:
   // Forward log records to the server logging daemon.
@@ -55,7 +55,9 @@ protected:
 
   //FUZZ: disable check_for_lack_ACE_OS
   // Send the buffered log records using a gather-write operation.
-  virtual int send (ACE_Message_Block *chunk[], size_t &count);
+  virtual int send (
+    std::array<ACE_Message_Block_Unique_Ptr, ACE_IOV_MAX> &chunk,
+    size_t &count);
   //FUZZ: enable check_for_lack_ACE_OS
 
   // Entry point into forwarder thread of control.
@@ -73,7 +75,6 @@ protected:
   // Connection to the logging server.
   ACE_SOCK_Stream peer_;
 };
-
 
 class CLD_Connector {
 public:
@@ -96,7 +97,6 @@ private:
   ACE_INET_Addr remote_addr_;
 };
 
-
 class CLD_Acceptor : public ACE_Event_Handler {
 public:
   //FUZZ: disable check_for_lack_ACE_OS
@@ -106,10 +106,10 @@ public:
   //FUZZ: enable check_for_lack_ACE_OS
 
   // Reactor hook methods.
-  virtual int handle_input (ACE_HANDLE handle);
-  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-                            ACE_Reactor_Mask = 0);
-  virtual ACE_HANDLE get_handle () const;
+  int handle_input (ACE_HANDLE handle) override;
+  int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
+                    ACE_Reactor_Mask = 0) override;
+  ACE_HANDLE get_handle () const override;
 
 protected:
   // Factory that passively connects <ACE_SOCK_Stream>s.
@@ -123,31 +123,25 @@ protected:
 
 int CLD_Handler::handle_input (ACE_HANDLE handle)
 {
-  ACE_Message_Block *mblk = nullptr;
+  ACE_Message_Block_Unique_Ptr mblk;
   Logging_Handler logging_handler (handle);
 
   if (logging_handler.recv_log_record (mblk) != -1)
     {
-      if (msg_queue_.enqueue_tail (mblk->cont ()) != -1)
+      ACE_Message_Block * const payload = mblk->cont ();
+      if (msg_queue_.enqueue_tail (payload) != -1)
         {
-          mblk->cont (0);
-          mblk->release ();
+          mblk->cont (nullptr);
           return 0; // Success return.
-        }
-      else
-        {
-          mblk->release ();
         }
     }
 
   return -1; // Error return.
 }
 
-
 int CLD_Handler::handle_close (ACE_HANDLE handle,
                                ACE_Reactor_Mask)
 { return ACE_OS::closesocket (handle); }
-
 
 int CLD_Handler::open (CLD_Connector *connector) {
   connector_ = connector;
@@ -159,15 +153,13 @@ int CLD_Handler::open (CLD_Connector *connector) {
                          this, THR_SCOPE_SYSTEM);
 }
 
-
 ACE_THR_FUNC_RETURN CLD_Handler::run_svc (void *arg) {
   CLD_Handler *handler = static_cast<CLD_Handler *> (arg);
   return handler->forward ();
 }
 
-
 ACE_THR_FUNC_RETURN CLD_Handler::forward () {
-  ACE_Message_Block *chunk[ACE_IOV_MAX];
+  std::array<ACE_Message_Block_Unique_Ptr, ACE_IOV_MAX> chunk {};
   size_t message_index = 0;
   ACE_Time_Value time_of_last_send (ACE_OS::gettimeofday ());
   ACE_Time_Value timeout;
@@ -185,10 +177,11 @@ ACE_THR_FUNC_RETURN CLD_Handler::forward () {
       if (errno != EWOULDBLOCK) break;
       else if (message_index == 0) continue;
     } else {
+      ACE_Message_Block_Unique_Ptr mblk_owner {mblk};
       if (mblk->size () == 0
           && mblk->msg_type () == ACE_Message_Block::MB_STOP)
-        { mblk->release (); break; }
-      chunk[message_index] = mblk;
+        break;
+      chunk[message_index].reset (mblk_owner.release ());
       ++message_index;
     }
     if (message_index >= ACE_IOV_MAX ||
@@ -207,13 +200,14 @@ ACE_THR_FUNC_RETURN CLD_Handler::forward () {
   return 0;
 }
 
-
-int CLD_Handler::send (ACE_Message_Block *chunk[], size_t &count) {
+int CLD_Handler::send (
+  std::array<ACE_Message_Block_Unique_Ptr, ACE_IOV_MAX> &chunk,
+  size_t &count) {
   iovec iov[ACE_IOV_MAX];
-  size_t iov_size;
+  size_t iov_size = 0;
   int result = 0;
 
-  for (iov_size = 0; iov_size < count; ++iov_size) {
+  for (; iov_size < count; ++iov_size) {
     iov[iov_size].iov_base = chunk[iov_size]->rd_ptr ();
     iov[iov_size].iov_len =
       ACE_Utils::truncate_cast<u_long> (chunk[iov_size]->length ());
@@ -224,25 +218,25 @@ int CLD_Handler::send (ACE_Message_Block *chunk[], size_t &count) {
       break;
     }
 
-  while (iov_size > 0) {
-    chunk[--iov_size]->release (); chunk[iov_size] = 0;
-  }
-  count = iov_size;
+  for (size_t i = 0; i < count; ++i)
+    chunk[i].reset ();
+  count = 0;
   return result;
 }
-
 
 int CLD_Handler::close () {
   ACE_Message_Block *shutdown_message = nullptr;
   ACE_NEW_RETURN
     (shutdown_message,
      ACE_Message_Block (0, ACE_Message_Block::MB_STOP), -1);
-  msg_queue_.enqueue_tail (shutdown_message);
+  ACE_Message_Block_Unique_Ptr shutdown_owner {shutdown_message};
+  if (msg_queue_.enqueue_tail (shutdown_message) == -1)
+    return -1;
+  shutdown_owner.release ();
   return thr_mgr_.wait ();
 }
 
 /**************************************************************/
-
 
 int CLD_Acceptor::open (CLD_Handler *handler,
                         const ACE_INET_Addr &local_addr,
@@ -256,10 +250,8 @@ int CLD_Acceptor::open (CLD_Handler *handler,
   return 0;
 }
 
-
 ACE_HANDLE CLD_Acceptor::get_handle () const
 { return acceptor_.get_handle (); }
-
 
 int CLD_Acceptor::handle_input (ACE_HANDLE) {
   ACE_SOCK_Stream peer_stream;
@@ -272,16 +264,13 @@ int CLD_Acceptor::handle_input (ACE_HANDLE) {
   else return 0;
 }
 
-
 int CLD_Acceptor::handle_close (ACE_HANDLE, ACE_Reactor_Mask) {
   acceptor_.close ();
   handler_->close ();
   return 0;
 }
 
-
 /***************************************************/
-
 
 int CLD_Connector::connect
   (CLD_Handler *handler,
@@ -296,7 +285,6 @@ int CLD_Connector::connect
   remote_addr_ = remote_addr;
   return 0;
 }
-
 
 int CLD_Connector::reconnect () {
   // Maximum number of times to retry connect.
@@ -320,16 +308,15 @@ int CLD_Connector::reconnect () {
   return i == MAX_RETRIES ? -1 : 0;
 }
 
-
 /*******************************************************/
 
 class Client_Logging_Daemon : public ACE_Service_Object {
 public:
-  virtual ~Client_Logging_Daemon () = default;    // Turn off g++ warnings.
+  ~Client_Logging_Daemon () override = default;
 
   // Service Configurator hook methods.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
-  virtual int fini ();
+  int init (int argc, ACE_TCHAR *argv[]) override;
+  int fini () override;
 #if 0
   // Implementing these methods is left as an exercise for the reader.
   virtual int info (ACE_TCHAR **bufferp, size_t length = 0) const;
@@ -347,7 +334,6 @@ protected:
   // Factory that actively connects the <CLD_Handler>.
   CLD_Connector connector_;
 };
-
 
 int Client_Logging_Daemon::init (int argc, ACE_TCHAR *argv[]) {
   u_short cld_port = ACE_DEFAULT_SERVICE_PORT;
@@ -387,12 +373,10 @@ int Client_Logging_Daemon::init (int argc, ACE_TCHAR *argv[]) {
   return 0;
 }
 
-
 int Client_Logging_Daemon::fini () {
   acceptor_.handle_close ();
   handler_.close ();
   return 0;
 }
-
 
 ACE_FACTORY_DEFINE (CLD, Client_Logging_Daemon)

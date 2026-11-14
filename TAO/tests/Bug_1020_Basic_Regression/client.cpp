@@ -4,19 +4,22 @@
 #include "tao/Messaging/Messaging.h"
 #include "tao/AnyTypeCode/Any.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+struct Options
+{
+  ACE_TCHAR const *ior {ACE_TEXT ("file://test.ior")};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
 
       case '?':
@@ -32,19 +35,18 @@ parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
+      CORBA::Object_var const poa_object =
+        orb->resolve_initial_references ("RootPOA");
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
@@ -52,13 +54,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                            " (%P|%t) Panic: nil RootPOA\n"),
                           1);
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
-      CORBA::Object_var object =
+      CORBA::Object_var const object =
         orb->resolve_initial_references ("PolicyCurrent");
 
-      CORBA::PolicyCurrent_var policy_current =
+      CORBA::PolicyCurrent_var const policy_current =
         CORBA::PolicyCurrent::_narrow (object.in ());
 
       if (CORBA::is_nil (policy_current.in ()))
@@ -70,7 +72,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::Any scope_as_any;
       scope_as_any <<= Messaging::SYNC_WITH_TRANSPORT;
 
-      CORBA::PolicyList policies(1);
+      CORBA::PolicyList policies (1);
       policies.length (1);
       policies[0] =
         orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,
@@ -81,12 +83,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       policies[0]->destroy ();
 
-      if (parse_args (argc, argv) != 0)
+      Options options;
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
       PortableServer::Servant_var<Echo> impl;
       {
-        Echo * tmp;
+        Echo *tmp {};
         // ACE_NEW_RETURN is the worst possible way to handle
         // exceptions (think: what if the constructor allocates memory
         // and fails?), but I'm not in the mood to fight for a more
@@ -97,25 +100,25 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         impl = tmp;
       }
 
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         root_poa->activate_object (impl.in ());
 
-      CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
+      CORBA::Object_var const object_act = root_poa->id_to_reference (id.in ());
 
-      Test::Echo_var echo =
+      Test::Echo_var const echo =
         Test::Echo::_narrow (object_act.in ());
 
-      CORBA::Object_var tmp =
-        orb->string_to_object(ior);
+      CORBA::Object_var const tmp =
+        orb->string_to_object (options.ior);
 
-      Test::Echo_Caller_var server =
-        Test::Echo_Caller::_narrow(tmp.in ());
+      Test::Echo_Caller_var const server =
+        Test::Echo_Caller::_narrow (tmp.in ());
 
       if (CORBA::is_nil (echo.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
                              "Nil Test::Echo_Caller reference <%s>\n",
-                             ior),
+                             options.ior),
                             1);
         }
 
@@ -123,7 +126,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       Client_Task ctask (orb.in ());
 
-      server->start_task (echo.in());
+      server->start_task (echo.in ());
 
       if (ctask.activate (THR_NEW_LWP | THR_JOINABLE,
                           4,
@@ -144,7 +147,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

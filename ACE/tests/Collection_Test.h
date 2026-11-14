@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-
 //=============================================================================
 /**
  *  @file    Collection_Test.h
@@ -10,7 +9,6 @@
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef ACE_TESTS_COLLECTION_TEST_H
 #define ACE_TESTS_COLLECTION_TEST_H

@@ -10,7 +10,7 @@
 
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  ACE_Timer_Queue *timer_queue;
+  ACE_Timer_Queue *timer_queue {};
 
 #if defined(HEAP)
 
@@ -29,12 +29,12 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   // setup the timer queue
   Timer::instance ()->set (timer_queue);
 
-  CB cb[10];
-  long args[10];
-  for (long i = 0; i < 10 ; i++)
+  CB cb[10] {};
+  long args[10] {};
+  for (long i = 0; i < 10; ++i)
     {
       ACE_Time_Value const timeout (i);
-      long timerID =
+      long const timer_id =
         Timer::instance ()->schedule
           (&cb[i],
            &args[i],
@@ -42,10 +42,10 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
            timeout);
 
       // Set the timerID state variable of the handler.
-      cb[i].setID (timerID);
+      cb[i].setID (timer_id);
 
       // Implicitly send the handler it's timer id.
-      args[i] = timerID;
+      args[i] = timer_id;
     }
 
   // "run" the timer.

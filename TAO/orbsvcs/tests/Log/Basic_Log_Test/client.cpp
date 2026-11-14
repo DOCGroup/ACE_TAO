@@ -119,7 +119,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_DEBUG((LM_DEBUG,"** - The week mask test succeeded.\n\n"));
         }
     }
-  catch (const ::CORBA::Exception &e)
+  catch (::CORBA::Exception const &e)
     {
       e._tao_print_exception("Caught CORBA exception");
       return 1;

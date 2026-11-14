@@ -19,7 +19,10 @@
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_strings.h"
+#include <cstring>
 #include <memory>
+#include <new>
+#include <string>
 
 Test_ECG::Test_ECG ()
   : lcl_name_ ("Test_ECG"),
@@ -27,7 +30,9 @@ Test_ECG::Test_ECG ()
     scheduling_type_ (Test_ECG::ss_runtime),
     consumer_disconnects_ (0),
     supplier_disconnects_ (0),
-    short_circuit_ (0),
+    short_circuit_ (false),
+    suppliers_ {},
+    consumers_ {},
     hp_suppliers_ (1),
     hp_consumers_ (1),
     hp_workload_ (10),
@@ -46,17 +51,21 @@ Test_ECG::Test_ECG ()
     lps_event_b_ (0),
     lpc_event_a_ (0),
     lpc_event_b_ (0),
-    schedule_file_ (nullptr),
-    pid_file_name_ (nullptr),
-    ready_ (0),
-    ready_cnd_ (ready_mtx_)
+    schedule_file_ {},
+    pid_file_name_ {},
+    stats_ {},
+    ready_ (false),
+    ready_cnd_ (ready_mtx_),
+    running_suppliers_ (0),
+    running_consumers_ (0),
+    test_start_ {},
+    test_stop_ {}
 {
 }
 
-void
-print_priority_info (const char *const name)
+static void
+print_priority_info (char const* const name)
 {
-#if defined (ACE_HAS_PTHREADS)
 #if defined (ACE_HAS_PTHREADS)
   struct sched_param param;
   int policy, status;
@@ -73,10 +82,6 @@ print_priority_info (const char *const name)
   } else {
     ACE_DEBUG ((LM_DEBUG,"pthread_getschedparam failed: %d\n", status));
   }
-#else
-  ACE_UNUSED_ARG (name);
-#endif /* ACE_HAS_PTHREADS */
-
 #ifdef sun
   // Find what scheduling class the thread's LWP is in.
   //FUZZ: disable check_for_lack_ACE_OS
@@ -106,6 +111,20 @@ print_priority_info (const char *const name)
 #else
   ACE_UNUSED_ARG (name);
 #endif /* ACE_HAS_PTHREADS */
+}
+
+static std::string
+make_service_name (char const* prefix,
+                   int index,
+                   ACE_CString const& local_name)
+{
+  std::string result {prefix};
+  if (index >= 0 && index < 10)
+    result += '0';
+  result += std::to_string (index);
+  result += '@';
+  result += local_name.c_str ();
+  return result;
 }
 
 int
@@ -197,12 +216,12 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
 
       if (this->pid_file_name_ != nullptr)
         {
-          FILE* pid = ACE_OS::fopen (this->pid_file_name_, "w");
+          std::unique_ptr<FILE, int (*) (FILE *)> pid (
+            ACE_OS::fopen (this->pid_file_name_, "w"), ACE_OS::fclose);
           if (pid != nullptr)
             {
-              ACE_OS::fprintf (pid, "%ld\n",
+              ACE_OS::fprintf (pid.get (), "%ld\n",
                                static_cast<long> (ACE_OS::getpid ()));
-              ACE_OS::fclose (pid);
             }
         }
 
@@ -254,17 +273,12 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
           break;
 
         case Test_ECG::ss_local:
-          {
-            std::unique_ptr<POA_RtecScheduler::Scheduler> auto_scheduler_impl (new ACE_Config_Scheduler);
-            scheduler_impl = std::move(auto_scheduler_impl);
-          }
-          if (scheduler_impl.get () == nullptr)
-            return -1;
+          scheduler_impl = std::make_unique<ACE_Config_Scheduler> ();
           scheduler = scheduler_impl->_this ();
           break;
 
         case Test_ECG::ss_runtime:
-          if (ACE_OS::strcmp (this->lcl_name_.c_str (), "ECM1") == 0)
+          if (std::strcmp (this->lcl_name_.c_str (), "ECM1") == 0)
             {
               // This setups Scheduler_Factory to use the runtime version
               ACE_Scheduler_Factory::use_runtime (
@@ -273,18 +287,14 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
                 sizeof (runtime_infos_1)/sizeof (runtime_infos_1[0]),
                 runtime_infos_1);
 
-              std::unique_ptr<POA_RtecScheduler::Scheduler> auto_scheduler_impl
-                (new ACE_Runtime_Scheduler (runtime_configs_1_size,
-                                            runtime_configs_1,
-                                            runtime_infos_1_size,
-                                            runtime_infos_1));
-              scheduler_impl = std::move(auto_scheduler_impl);
-
-              if (scheduler_impl.get () == nullptr)
-                return -1;
+              scheduler_impl = std::make_unique<ACE_Runtime_Scheduler> (
+                runtime_configs_1_size,
+                runtime_configs_1,
+                runtime_infos_1_size,
+                runtime_infos_1);
               scheduler = scheduler_impl->_this ();
             }
-          else if (ACE_OS::strcmp (this->lcl_name_.c_str (), "ECM2") == 0)
+          else if (std::strcmp (this->lcl_name_.c_str (), "ECM2") == 0)
             {
               // This setups Scheduler_Factory to use the runtime version
               ACE_Scheduler_Factory::use_runtime (
@@ -293,18 +303,14 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
                 sizeof (runtime_infos_2)/sizeof (runtime_infos_2[0]),
                 runtime_infos_2);
 
-              std::unique_ptr<POA_RtecScheduler::Scheduler> auto_scheduler_impl
-                (new ACE_Runtime_Scheduler (runtime_configs_2_size,
-                                            runtime_configs_2,
-                                            runtime_infos_2_size,
-                                            runtime_infos_2));
-              scheduler_impl = std::move(auto_scheduler_impl);
-
-              if (scheduler_impl.get () == nullptr)
-                return -1;
+              scheduler_impl = std::make_unique<ACE_Runtime_Scheduler> (
+                runtime_configs_2_size,
+                runtime_configs_2,
+                runtime_infos_2_size,
+                runtime_infos_2);
               scheduler = scheduler_impl->_this ();
             }
-          else if (ACE_OS::strcmp (this->lcl_name_.c_str (), "ECM3") == 0)
+          else if (std::strcmp (this->lcl_name_.c_str (), "ECM3") == 0)
             {
               // This setups Scheduler_Factory to use the runtime version
               ACE_Scheduler_Factory::use_runtime (
@@ -313,15 +319,11 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
                 sizeof (runtime_infos_3)/sizeof (runtime_infos_3[0]),
                 runtime_infos_3);
 
-              std::unique_ptr<POA_RtecScheduler::Scheduler> auto_scheduler_impl
-                (new ACE_Runtime_Scheduler (runtime_configs_3_size,
-                                            runtime_configs_3,
-                                            runtime_infos_3_size,
-                                            runtime_infos_3));
-              scheduler_impl = std::move(auto_scheduler_impl);
-
-              if (scheduler_impl.get () == nullptr)
-                return -1;
+              scheduler_impl = std::make_unique<ACE_Runtime_Scheduler> (
+                runtime_configs_3_size,
+                runtime_configs_3,
+                runtime_infos_3_size,
+                runtime_infos_3);
               scheduler = scheduler_impl->_this ();
             }
           else
@@ -330,20 +332,14 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
                           "Unknown name <%C> defaulting to "
                           "config scheduler\n", this->lcl_name_.c_str ()));
 
-              std::unique_ptr<POA_RtecScheduler::Scheduler> auto_scheduler_impl (new ACE_Config_Scheduler);
-              scheduler_impl = std::move(auto_scheduler_impl);
-
-              if (scheduler_impl.get () == nullptr)
-                return -1;
+              scheduler_impl = std::make_unique<ACE_Config_Scheduler> ();
               scheduler = scheduler_impl->_this ();
             }
           break;
         }
 
-      // We use this buffer to generate the names of the local
-      // services.
-      const int bufsize = 512;
-      char buf[bufsize];
+      // Build the names of the local services.
+      std::string buf;
 
       // Register the scheduler with the naming service.
       switch (this->scheduling_type_)
@@ -360,17 +356,17 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
             ACE_DEBUG ((LM_DEBUG, "The (local) scheduler IOR is <%C>\n",
                         str.in ()));
 
-            ACE_OS::strcpy (buf, "ScheduleService@");
-            ACE_OS::strcat (buf, this->lcl_name_.c_str ());
+            buf = "ScheduleService@";
+            buf += this->lcl_name_.c_str ();
 
             // Register the servant with the Naming Context....
             CosNaming::Name schedule_name (1);
             schedule_name.length (1);
-            schedule_name[0].id = CORBA::string_dup (buf);
+            schedule_name[0].id = CORBA::string_dup (buf.c_str ());
             naming_context->bind (schedule_name, scheduler.in ());
 
             if (ACE_Scheduler_Factory::use_config (naming_context.in (),
-                                                   buf) == -1)
+                                                   buf.c_str ()) == -1)
               return -1;
           }
           break;
@@ -392,12 +388,12 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
       ACE_OS::sleep (5);
       ACE_DEBUG ((LM_DEBUG, "The (local) EC IOR is <%C>\n", str.in ()));
 
-      ACE_OS::strcpy (buf, "EventChannel@");
-      ACE_OS::strcat (buf, this->lcl_name_.c_str ());
+      buf = "EventChannel@";
+      buf += this->lcl_name_.c_str ();
 
       CosNaming::Name channel_name (1);
       channel_name.length (1);
-      channel_name[0].id = CORBA::string_dup (buf);
+      channel_name[0].id = CORBA::string_dup (buf.c_str ());
       naming_context->bind (channel_name, ec.in ());
 
       ACE_DEBUG ((LM_DEBUG, "waiting to start\n"));
@@ -442,13 +438,13 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
 
           CosNaming::Name rsch_name (1);
           rsch_name.length (1);
-          ACE_OS::strcpy (buf, "ScheduleService");
+          buf = "ScheduleService";
           if (this->scheduling_type_ != Test_ECG::ss_global)
             {
-              ACE_OS::strcat (buf, "@");
-              ACE_OS::strcat (buf, this->rmt_name_.c_str ());
+              buf += '@';
+              buf += this->rmt_name_.c_str ();
             }
-          rsch_name[0].id = CORBA::string_dup (buf);
+          rsch_name[0].id = CORBA::string_dup (buf.c_str ());
           CORBA::Object_var tmpobj =
             naming_context->resolve (rsch_name);
 
@@ -489,7 +485,7 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
       // Acquire the mutex for the ready mutex, blocking any supplier
       // that may start after this point.
       ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ready_mon, this->ready_mtx_, 1);
-      this->ready_ = 1;
+      this->ready_ = true;
       this->test_start_ = ACE_OS::gethrtime ();
       this->ready_cnd_.broadcast ();
       ready_mon.release ();
@@ -551,11 +547,11 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
       tv.set (5, 0);
       orb->run (&tv);
     }
-  catch (const CORBA::SystemException& sys_ex)
+  catch (CORBA::SystemException const& sys_ex)
     {
       sys_ex._tao_print_exception ("SYS_EX");
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("NON SYS EX");
     }
@@ -564,16 +560,14 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
 
 RtecEventChannelAdmin::EventChannel_ptr
 Test_ECG::get_ec (CosNaming::NamingContext_ptr naming_context,
-                  const char* process_name)
+                  char const* process_name)
 {
-  const int bufsize = 512;
-  char buf[bufsize];
-  ACE_OS::strcpy (buf, "EventChannel@");
-  ACE_OS::strcat (buf, process_name);
+  std::string buf {"EventChannel@"};
+  buf += process_name;
 
   CosNaming::Name channel_name (1);
   channel_name.length (1);
-  channel_name[0].id = CORBA::string_dup (buf);
+  channel_name[0].id = CORBA::string_dup (buf.c_str ());
 
   CORBA::Object_var ec_ptr =
     naming_context->resolve (channel_name);
@@ -603,13 +597,15 @@ Test_ECG::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec)
       if (mc == 0)
         mc = 1;
 
-      char buf[BUFSIZ];
-      ACE_OS::sprintf (buf, "hp_supplier_%02d@%s", i, this->lcl_name_.c_str ());
+      std::string const buf = make_service_name ("hp_supplier_", i, this->lcl_name_);
 
-      ACE_NEW (this->suppliers_[i],
-               Test_Supplier (this, this->suppliers_ + i));
+      Test_Supplier* const supplier =
+        new (std::nothrow) Test_Supplier (this, this->suppliers_.data () + i);
+      if (supplier == nullptr)
+        throw CORBA::NO_MEMORY ();
+      this->suppliers_[i] = supplier;
 
-      this->suppliers_[i]->open (buf,
+      this->suppliers_[i]->open (buf.c_str (),
                                  this->hps_event_a_,
                                  this->hps_event_b_,
                                  mc,
@@ -624,14 +620,17 @@ Test_ECG::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec)
       if (mc == 0)
         mc = 1;
 
-      char buf[BUFSIZ];
-      ACE_OS::sprintf (buf, "lp_supplier_%02d@%s",
-                       i - this->hp_suppliers_, this->lcl_name_.c_str ());
+      std::string const buf = make_service_name ("lp_supplier_",
+                                                 i - this->hp_suppliers_,
+                                                 this->lcl_name_);
 
-      ACE_NEW (this->suppliers_[i],
-               Test_Supplier (this, this->suppliers_ + i));
+      Test_Supplier* const supplier =
+        new (std::nothrow) Test_Supplier (this, this->suppliers_.data () + i);
+      if (supplier == nullptr)
+        throw CORBA::NO_MEMORY ();
+      this->suppliers_[i] = supplier;
 
-      this->suppliers_[i]->open (buf,
+      this->suppliers_[i]->open (buf.c_str (),
                                  this->lps_event_a_,
                                  this->lps_event_b_,
                                  mc,
@@ -662,10 +661,9 @@ Test_ECG::activate_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec)
           if (mc == 0)
             mc = 1;
 
-          char buf[BUFSIZ];
-          ACE_OS::sprintf (buf, "hp_supplier_%02d@%s", i, this->lcl_name_.c_str ());
+          std::string const buf = make_service_name ("hp_supplier_", i, this->lcl_name_);
 
-          this->suppliers_[i]->activate (buf,
+          this->suppliers_[i]->activate (buf.c_str (),
                                          this->hp_interval_ * 10,
                                          local_ec);
         }
@@ -677,16 +675,16 @@ Test_ECG::activate_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec)
           if (mc == 0)
             mc = 1;
 
-          char buf[BUFSIZ];
-          ACE_OS::sprintf (buf, "lp_supplier_%02d@%s",
-                           i - this->hp_suppliers_, this->lcl_name_.c_str ());
+          std::string const buf = make_service_name ("lp_supplier_",
+                                                     i - this->hp_suppliers_,
+                                                     this->lcl_name_);
 
-          this->suppliers_[i]->activate (buf,
+          this->suppliers_[i]->activate (buf.c_str (),
                                          this->lp_interval_ * 10,
                                          local_ec);
         }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
       throw;
     }
@@ -698,13 +696,15 @@ Test_ECG::connect_consumers (RtecEventChannelAdmin::EventChannel_ptr local_ec)
   int i;
   for (i = 0; i < this->hp_consumers_; ++i)
     {
-      char buf[BUFSIZ];
-      ACE_OS::sprintf (buf, "hp_consumer_%02d@%s", i, this->lcl_name_.c_str ());
+      std::string const buf = make_service_name ("hp_consumer_", i, this->lcl_name_);
 
-      ACE_NEW (this->consumers_[i],
-               Test_Consumer (this, this->consumers_ + i));
+      Test_Consumer* const consumer =
+        new (std::nothrow) Test_Consumer (this, this->consumers_.data () + i);
+      if (consumer == nullptr)
+        throw CORBA::NO_MEMORY ();
+      this->consumers_[i] = consumer;
 
-      this->consumers_[i]->open (buf,
+      this->consumers_[i]->open (buf.c_str (),
                                  this->hpc_event_a_,
                                  this->hpc_event_b_,
                                  local_ec);
@@ -715,14 +715,17 @@ Test_ECG::connect_consumers (RtecEventChannelAdmin::EventChannel_ptr local_ec)
 
   for (; i < this->hp_consumers_ + this->lp_consumers_; ++i)
     {
-      char buf[BUFSIZ];
-      ACE_OS::sprintf (buf, "lp_consumer_%02d@%s",
-                       i - this->hp_consumers_, this->lcl_name_.c_str ());
+      std::string const buf = make_service_name ("lp_consumer_",
+                                                 i - this->hp_consumers_,
+                                                 this->lcl_name_);
 
-      ACE_NEW (this->consumers_[i],
-               Test_Consumer (this, this->consumers_ + i));
+      Test_Consumer* const consumer =
+        new (std::nothrow) Test_Consumer (this, this->consumers_.data () + i);
+      if (consumer == nullptr)
+        throw CORBA::NO_MEMORY ();
+      this->consumers_[i] = consumer;
 
-      this->consumers_[i]->open (buf,
+      this->consumers_[i]->open (buf.c_str (),
                                  this->lpc_event_a_,
                                  this->lpc_event_b_,
                                  local_ec);
@@ -742,33 +745,29 @@ Test_ECG::connect_ecg (RtecEventChannelAdmin::EventChannel_ptr local_ec,
     ACE_Scheduler_Factory::server ();
 
   // ECG name.
-  const int bufsize = 512;
-  char ecg_name[bufsize];
-  ACE_OS::strcpy (ecg_name, "ecg_");
-  ACE_OS::strcat (ecg_name, this->lcl_name_.c_str ());
+  std::string ecg_name {"ecg_"};
+  ecg_name += this->lcl_name_.c_str ();
 
   // We could use the same name on the local and remote scheduler,
   // but that fails when using a global scheduler.
-  char rmt[BUFSIZ];
-  ACE_OS::strcpy (rmt, ecg_name);
-  ACE_OS::strcat (rmt, "@");
-  ACE_OS::strcat (rmt, this->rmt_name_.c_str ());
+  std::string rmt {ecg_name};
+  rmt += '@';
+  rmt += this->rmt_name_.c_str ();
 
   // We could use the same name on the local and remote scheduler,
   // but that fails when using a global scheduler.
-  char lcl[bufsize];
-  ACE_OS::strcpy (lcl, ecg_name);
-  ACE_OS::strcat (lcl, "@");
-  ACE_OS::strcat (lcl, this->lcl_name_.c_str ());
+  std::string lcl {ecg_name};
+  lcl += '@';
+  lcl += this->lcl_name_.c_str ();
 
   this->ecg_.init (remote_ec, local_ec, remote_sch, local_sch,
-                   rmt, lcl);
+                   rmt.c_str (), lcl.c_str ());
 }
 
 void
 Test_ECG::push_supplier (void * /* cookie */,
                          RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer,
-                         const RtecEventComm::EventSet &events)
+                         RtecEventComm::EventSet const& events)
 {
   this->wait_until_ready ();
   // ACE_DEBUG ((LM_DEBUG, "(%P|%t) events sent by supplier\n"));
@@ -794,11 +793,12 @@ Test_ECG::push_supplier (void * /* cookie */,
 void
 Test_ECG::push_consumer (void *consumer_cookie,
                          ACE_hrtime_t arrival,
-                         const RtecEventComm::EventSet &events)
+                         RtecEventComm::EventSet const& events)
 {
   int ID =
-    (reinterpret_cast<Test_Consumer**> (consumer_cookie)
-     - this->consumers_);
+    (reinterpret_cast<PortableServer::Servant_var<Test_Consumer>*> (
+       consumer_cookie)
+     - this->consumers_.data ());
 
   // ACE_DEBUG ((LM_DEBUG, "(%P|%t) events received by consumer %d\n", ID));
 
@@ -808,10 +808,10 @@ Test_ECG::push_consumer (void *consumer_cookie,
       return;
     }
 
-  // ACE_DEBUG ((LM_DEBUG, "%d event(s)\n", events.length ()));
+  // ACE_DEBUG ((LM_DEBUG, "%u event(s)\n", events.length ()));
 
 #if 0
-  const int bufsize = 128;
+  constexpr int bufsize {128};
   char buf[bufsize];
   ACE_OS::sprintf (buf, "Consumer %d receives event in thread: ", ID);
   print_priority_info (buf);
@@ -819,7 +819,7 @@ Test_ECG::push_consumer (void *consumer_cookie,
 
   for (u_int i = 0; i < events.length (); ++i)
     {
-      const RtecEventComm::Event& e = events[i];
+      RtecEventComm::Event const& e = events[i];
 
       if (e.header.type == ACE_ES_EVENT_SHUTDOWN)
         {
@@ -866,13 +866,13 @@ Test_ECG::push_consumer (void *consumer_cookie,
 
           CORBA::ULong tmp = ACE_U64_TO_U32 (s - now);
           this->stats_[ID].laxity_[count] = 1 + tmp/1000.0F/interval;
-          count++;
+          ++count;
         }
       else
         {
           int& count = this->stats_[ID].rmt_count_;
           this->stats_[ID].rmt_latency_[count] = nsec;
-          count++;
+          ++count;
         }
     }
 }
@@ -889,7 +889,7 @@ void
 Test_ECG::shutdown_supplier (void* /* supplier_cookie */,
                              RtecEventComm::PushConsumer_ptr consumer)
 {
-  this->running_suppliers_--;
+  --this->running_suppliers_;
   if (this->running_suppliers_ != 0)
     return;
 
@@ -913,11 +913,11 @@ void
 Test_ECG::shutdown_consumer (int id)
 {
   ACE_DEBUG ((LM_DEBUG, "Shutdown consumer %d\n", id));
-  this->running_consumers_--;
+  --this->running_consumers_;
 
   if (this->running_consumers_ == 0)
     {
-      if (TAO_ORB_Core_instance ()->orb () == 0)
+      if (TAO_ORB_Core_instance ()->orb () == nullptr)
         {
           ACE_ERROR ((LM_ERROR,
                       "(%P|%t) Test_ECG::shutdown_consumer, "
@@ -930,24 +930,10 @@ Test_ECG::shutdown_consumer (int id)
     }
 }
 
-int
-Test_ECG::shutdown ()
-{
-  ACE_DEBUG ((LM_DEBUG, "Shutting down the multiple EC test\n"));
-
-  if (this->rmt_name_.length () != 0)
-    {
-      this->ecg_.shutdown ();
-    }
-
-  TAO_ORB_Core_instance ()->orb ()->shutdown ();
-  return 0;
-}
-
 void
 Test_ECG::dump_results ()
 {
-  const int bufsize = 512;
+  constexpr int bufsize {512};
   ACE_TCHAR buf[bufsize];
 
   int i;
@@ -967,7 +953,7 @@ Test_ECG::dump_results ()
 }
 
 void
-Test_ECG::dump_results (const ACE_TCHAR* name, Stats& stats)
+Test_ECG::dump_results (ACE_TCHAR const* name, Stats& stats)
 {
   // @@ We are reporting the information without specifics about
   double usec = ACE_U64_TO_U32 (stats.total_time_) / 1000.0;
@@ -1044,12 +1030,12 @@ Test_ECG::parse_args (int argc, ACE_TCHAR *argv [])
           break;
 
         case 'x':
-          this->short_circuit_ = 1;
+          this->short_circuit_ = true;
           break;
 
         case 'i':
           {
-            char* aux = nullptr;
+            char* aux {};
             char* arg = ACE_OS::strtok_r (ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ()), ",", &aux);
             this->consumer_disconnects_ = ACE_OS::atoi (arg);
             arg = ACE_OS::strtok_r (nullptr, ",", &aux);
@@ -1059,50 +1045,50 @@ Test_ECG::parse_args (int argc, ACE_TCHAR *argv [])
 
         case 'h':
           {
-            char* aux = nullptr;
-                char* arg = ACE_OS::strtok_r (ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ()), ",", &aux);
+            char* aux {};
+            char* arg = ACE_OS::strtok_r (ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ()), ",", &aux);
 
             this->hp_suppliers_ = ACE_OS::atoi (arg);
-                arg = ACE_OS::strtok_r (nullptr, ",", &aux);
+            arg = ACE_OS::strtok_r (nullptr, ",", &aux);
             this->hp_consumers_ = ACE_OS::atoi (arg);
-                arg = ACE_OS::strtok_r (nullptr, ",", &aux);
+            arg = ACE_OS::strtok_r (nullptr, ",", &aux);
             this->hp_workload_ = ACE_OS::atoi (arg);
-                arg = ACE_OS::strtok_r (nullptr, ",", &aux);
+            arg = ACE_OS::strtok_r (nullptr, ",", &aux);
             this->hp_interval_ = ACE_OS::atoi (arg);
-                arg = ACE_OS::strtok_r (nullptr, ",", &aux);
+            arg = ACE_OS::strtok_r (nullptr, ",", &aux);
             this->hp_message_count_ = ACE_OS::atoi (arg);
-                arg = ACE_OS::strtok_r (nullptr, ",", &aux);
+            arg = ACE_OS::strtok_r (nullptr, ",", &aux);
             this->hps_event_a_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
-                arg = ACE_OS::strtok_r (nullptr, ",", &aux);
+            arg = ACE_OS::strtok_r (nullptr, ",", &aux);
             this->hps_event_b_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
-                arg = ACE_OS::strtok_r (nullptr, ",", &aux);
+            arg = ACE_OS::strtok_r (nullptr, ",", &aux);
             this->hpc_event_a_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
-                arg = ACE_OS::strtok_r (nullptr, ",", &aux);
+            arg = ACE_OS::strtok_r (nullptr, ",", &aux);
             this->hpc_event_b_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
           }
           break;
 
         case 'w':
           {
-            char* aux = nullptr;
-                char* arg = ACE_OS::strtok_r (ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ()), ",", &aux);
+            char* aux {};
+            char* arg = ACE_OS::strtok_r (ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ()), ",", &aux);
 
             this->lp_suppliers_ = ACE_OS::atoi (arg);
-                arg = ACE_OS::strtok_r (nullptr, ",", &aux);
+            arg = ACE_OS::strtok_r (nullptr, ",", &aux);
             this->lp_consumers_ = ACE_OS::atoi (arg);
-                arg = ACE_OS::strtok_r (nullptr, ",", &aux);
+            arg = ACE_OS::strtok_r (nullptr, ",", &aux);
             this->lp_workload_ = ACE_OS::atoi (arg);
-                arg = ACE_OS::strtok_r (nullptr, ",", &aux);
+            arg = ACE_OS::strtok_r (nullptr, ",", &aux);
             this->lp_interval_ = ACE_OS::atoi (arg);
-                arg = ACE_OS::strtok_r (nullptr, ",", &aux);
+            arg = ACE_OS::strtok_r (nullptr, ",", &aux);
             this->lp_message_count_ = ACE_OS::atoi (arg);
-                arg = ACE_OS::strtok_r (nullptr, ",", &aux);
+            arg = ACE_OS::strtok_r (nullptr, ",", &aux);
             this->lps_event_a_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
-                arg = ACE_OS::strtok_r (nullptr, ",", &aux);
+            arg = ACE_OS::strtok_r (nullptr, ",", &aux);
             this->lps_event_b_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
-                arg = ACE_OS::strtok_r (nullptr, ",", &aux);
+            arg = ACE_OS::strtok_r (nullptr, ",", &aux);
             this->lpc_event_a_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
-                arg = ACE_OS::strtok_r (nullptr, ",", &aux);
+            arg = ACE_OS::strtok_r (nullptr, ",", &aux);
             this->lpc_event_b_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
           }
           break;
@@ -1168,7 +1154,7 @@ Test_ECG::parse_args (int argc, ACE_TCHAR *argv [])
                          "suppliers (low: %d, high: %d) out of range\n",
                          argv[0],
                          lp_consumers_, hp_consumers_,
-                         lp_suppliers_, lp_suppliers_), -1);
+                         lp_suppliers_, hp_suppliers_), -1);
     }
 
   return 0;
@@ -1178,16 +1164,20 @@ Test_Supplier::Test_Supplier (Test_ECG *test,
                               void *cookie)
   :  test_ (test),
      cookie_ (cookie),
+     supplier_id_ {},
+     event_a_ {},
+     event_b_ {},
+     message_count_ {},
      consumer_ (this)
 {
 }
 
 void
-Test_Supplier::open (const char* name,
+Test_Supplier::open (char const* name,
                      int event_a,
                      int event_b,
                      int message_count,
-                     const RtecScheduler::Period_t& rate,
+                     RtecScheduler::Period_t const& rate,
                      RtecEventChannelAdmin::EventChannel_ptr ec)
 {
   this->event_a_ = event_a;
@@ -1256,19 +1246,17 @@ Test_Supplier::close ()
 }
 
 void
-Test_Supplier::activate (const char* name,
-                         const RtecScheduler::Period_t& rate,
+Test_Supplier::activate (char const* name,
+                         RtecScheduler::Period_t const& rate,
                          RtecEventChannelAdmin::EventChannel_ptr ec)
 {
   RtecScheduler::Scheduler_ptr server =
     ACE_Scheduler_Factory::server ();
 
-  const int bufsize = 512;
-  char buf[bufsize];
-  ACE_OS::strcpy (buf, "consumer_");
-  ACE_OS::strcat (buf, name);
+  std::string buf {"consumer_"};
+  buf += name;
   RtecScheduler::handle_t rt_info =
-    server->create (buf);
+    server->create (buf.c_str ());
 
   // The execution times are set to reasonable values, but
   // actually they are changed on the real execution, i.e. we
@@ -1277,7 +1265,7 @@ Test_Supplier::activate (const char* name,
   ACE_Time_Value tv (0, 2000);
   TimeBase::TimeT time;
   ORBSVCS_Time::Time_Value_to_TimeT (time, tv);
-  ACE_DEBUG ((LM_DEBUG, "activate \"%C\"\n", buf));
+  ACE_DEBUG ((LM_DEBUG, "activate \"%C\"\n", buf.c_str ()));
   server->set (rt_info,
                RtecScheduler::VERY_HIGH_CRITICALITY,
                time, time, time,
@@ -1300,7 +1288,6 @@ Test_Supplier::activate (const char* name,
                             timeout,
                             rt_info);
 
-  // = Connect as a consumer.
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
     ec->for_consumers ();
 
@@ -1316,10 +1303,10 @@ Test_Supplier::activate (const char* name,
 }
 
 void
-Test_Supplier::push (const RtecEventComm::EventSet& events)
+Test_Supplier::push (RtecEventComm::EventSet const& events)
 {
 #if 0
-   const int bufsize = 128;
+   constexpr int bufsize {128};
    char buf[bufsize];
    ACE_OS::sprintf (buf, "Supplier %d receives event in thread: ",
                     this->supplier_id_);
@@ -1337,7 +1324,7 @@ Test_Supplier::push (const RtecEventComm::EventSet& events)
 
   for (u_int i = 0; i < events.length (); ++i)
     {
-      const RtecEventComm::Event& e = events[i];
+      RtecEventComm::Event const& e = events[i];
       if (e.header.type != ACE_ES_EVENT_INTERVAL_TIMEOUT)
         continue;
 
@@ -1350,7 +1337,7 @@ Test_Supplier::push (const RtecEventComm::EventSet& events)
       ACE_hrtime_t t = ACE_OS::gethrtime ();
       ORBSVCS_Time::hrtime_to_TimeT (s.header.creation_time, t);
 
-      this->message_count_--;
+      --this->message_count_;
 
       if (this->message_count_ < 0)
         {
@@ -1399,7 +1386,7 @@ Test_Consumer::Test_Consumer (Test_ECG *test,
 }
 
 void
-Test_Consumer::open (const char* name,
+Test_Consumer::open (char const* name,
                      int event_a, int event_b,
                      RtecEventChannelAdmin::EventChannel_ptr ec)
 {
@@ -1430,7 +1417,6 @@ Test_Consumer::open (const char* name,
   qos.insert_type (event_a, rt_info);
   qos.insert_type (event_b, rt_info);
 
-  // = Connect as a consumer.
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
     ec->for_consumers ();
 
@@ -1455,7 +1441,7 @@ Test_Consumer::close ()
 }
 
 void
-Test_Consumer::push (const RtecEventComm::EventSet& events)
+Test_Consumer::push (RtecEventComm::EventSet const& events)
 {
   ACE_hrtime_t arrival = ACE_OS::gethrtime ();
   this->test_->push_consumer (this->cookie_, arrival, events);
@@ -1467,18 +1453,14 @@ Test_Consumer::disconnect_push_consumer ()
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  Test_ECG *test;
-
   // Dynamically allocate the Test_ECG instance so that we don't have
   // to worry about running out of stack space if it's large.
-  ACE_NEW_RETURN (test,
-                  Test_ECG,
-                  -1);
+  std::unique_ptr<Test_ECG> test (new (std::nothrow) Test_ECG);
+  if (!test)
+    return -1;
 
   const int status = test->run (argc, argv);
-
-  delete test;
   return status;
 }

@@ -86,7 +86,7 @@ public:
    *
    * Construct from a pointer to function.
    */
-  ACE_FPointer_Time_Policy(FPtr f);
+  explicit ACE_FPointer_Time_Policy(FPtr f);
 
   /// Return the current time according to this policy
   ACE_Time_Value_T<ACE_FPointer_Time_Policy> operator()() const;

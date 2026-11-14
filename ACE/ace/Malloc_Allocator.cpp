@@ -8,7 +8,8 @@
 #include "ace/Guard_T.h"
 #include "ace/Recursive_Thread_Mutex.h"
 #include "ace/Log_Category.h"  // for ACE_ASSERT
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -39,7 +40,7 @@ ACE_Allocator::instance ()
           // that of a pointer, we allocate it as a pointer so that it
           // doesn't get constructed statically.  We never bother to
           // destroy it.
-          static void *allocator_instance = nullptr;
+          static void *allocator_instance {};
 
           // Check this critical assumption.  We put it in a variable
           // first to avoid stupid compiler warnings that the
@@ -94,7 +95,7 @@ ACE_Allocator::ACE_Allocator ()
 void *
 ACE_New_Allocator::malloc (size_t nbytes)
 {
-  char *ptr = nullptr;
+  char *ptr {};
   if (nbytes > 0)
     ACE_NEW_RETURN (ptr, char[nbytes], nullptr);
   return (void *) ptr;
@@ -104,11 +105,11 @@ void *
 ACE_New_Allocator::calloc (size_t nbytes,
                            char initial_value)
 {
-  char *ptr = nullptr;
+  char *ptr {};
 
   ACE_NEW_RETURN (ptr, char[nbytes], nullptr);
 
-  ACE_OS::memset (ptr, initial_value, nbytes);
+  std::memset (ptr, initial_value, nbytes);
   return (void *) ptr;
 }
 
@@ -234,7 +235,7 @@ ACE_Static_Allocator_Base::calloc (size_t nbytes,
 {
   void *ptr = this->malloc (nbytes);
 
-  ACE_OS::memset (ptr, initial_value, nbytes);
+  std::memset (ptr, initial_value, nbytes);
   return (void *) ptr;
 }
 
@@ -335,7 +336,7 @@ ACE_Static_Allocator_Base::dump () const
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\noffset_ = %d"), this->offset_));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nsize_ = %d\n"), this->size_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nsize_ = %B\n"), this->size_));
   ACELIB_HEX_DUMP ((LM_DEBUG, this->buffer_, this->size_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
 

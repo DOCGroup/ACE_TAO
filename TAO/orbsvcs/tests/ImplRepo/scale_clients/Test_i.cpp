@@ -34,5 +34,5 @@ Test_i::expected_requests_made ()
 void
 Test_i::shutdown ()
 {
-  orb_->shutdown(0);
+  orb_->shutdown (false);
 }

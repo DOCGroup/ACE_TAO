@@ -33,7 +33,13 @@ namespace TAO_Notify
   class TAO_Notify_Serv_Export Event_Persistence_Factory
   {
   public:
-    virtual ~Event_Persistence_Factory();
+    Event_Persistence_Factory () = default;
+    Event_Persistence_Factory (Event_Persistence_Factory const &) = delete;
+    Event_Persistence_Factory (Event_Persistence_Factory &&) = delete;
+    Event_Persistence_Factory &operator= (Event_Persistence_Factory const &) = delete;
+    Event_Persistence_Factory &operator= (Event_Persistence_Factory &&) = delete;
+
+    virtual ~Event_Persistence_Factory ();
 
     /// Create a Persistence Manager
     virtual Routing_Slip_Persistence_Manager *

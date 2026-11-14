@@ -1,13 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    IORInterceptor_Adapter_Impl.h
  *
  *  @author  Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_IORINTERCEPTOR_ADAPTER_IMPL_H
 #define TAO_IORINTERCEPTOR_ADAPTER_IMPL_H
@@ -57,30 +54,30 @@ public:
 
   void add_interceptor (
       PortableInterceptor::IORInterceptor_ptr interceptor,
-      CORBA::PolicyList const& policies) override;
+      CORBA::PolicyList const &policies) override;
 
   void destroy_interceptors () override;
 
-  void establish_components (TAO_Root_POA * poa) override;
+  void establish_components (TAO_Root_POA *poa) override;
 
   /// Call the IORInterceptor::components_established() method on all
   /// registered IORInterceptors.
   void components_established (PortableInterceptor::IORInfo_ptr info) override;
 
   void adapter_state_changed (
-      TAO::ObjectReferenceTemplate_Array const& array_obj_ref_template,
+      TAO::ObjectReferenceTemplate_Array const &array_obj_ref_template,
       PortableInterceptor::AdapterState state) override;
 
   void adapter_manager_state_changed (
-      char const* id,
+      char const *id,
       PortableInterceptor::AdapterState state) override;
 
-private:
   TAO_IORInterceptor_Adapter_Impl (TAO_IORInterceptor_Adapter_Impl const &) = delete;
   TAO_IORInterceptor_Adapter_Impl &operator= (TAO_IORInterceptor_Adapter_Impl const &) = delete;
   TAO_IORInterceptor_Adapter_Impl (TAO_IORInterceptor_Adapter_Impl &&) = delete;
   TAO_IORInterceptor_Adapter_Impl &operator= (TAO_IORInterceptor_Adapter_Impl &&) = delete;
 
+private:
   /// List of IOR interceptors maintained
   TAO::IORInterceptor_List ior_interceptor_list_;
 };

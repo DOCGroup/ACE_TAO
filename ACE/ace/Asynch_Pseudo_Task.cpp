@@ -7,7 +7,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_Asynch_Pseudo_Task::ACE_Asynch_Pseudo_Task ()
   : select_reactor_ (),               // should be initialized before reactor_
-    reactor_ (&select_reactor_, 0)    // don't delete implementation
+    reactor_ (&select_reactor_, false)    // don't delete implementation
 {
 }
 
@@ -50,7 +50,7 @@ ACE_Asynch_Pseudo_Task::svc ()
   sigset_t RT_signals;
 
   ACE_OS::sigemptyset (&RT_signals);
-  for (int si = ACE_SIGRTMIN; si <= ACE_SIGRTMAX; si++)
+  for (int si = ACE_SIGRTMIN; si <= ACE_SIGRTMAX; ++si)
     ACE_OS::sigaddset (&RT_signals, si);
 
   if (ACE_OS::pthread_sigmask (SIG_BLOCK, &RT_signals, nullptr) != 0)
@@ -64,7 +64,6 @@ ACE_Asynch_Pseudo_Task::svc ()
 
   return 0;
 }
-
 
 int
 ACE_Asynch_Pseudo_Task::register_io_handler (ACE_HANDLE handle,

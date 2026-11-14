@@ -3,36 +3,34 @@
 #include "tao/debug.h"
 
 #include "ace/High_Res_Timer.h"
-#include "ace/Stats.h"
 #include "ace/Throughput_Stats.h"
-#include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
+
+#include <string>
 
 TAO_Notify_ThreadPool_Consumer::TAO_Notify_ThreadPool_Consumer (TAO_Notify_ORB_Objects& orb_objects)
   : orb_objects_ (orb_objects)
-    , proxy_supplier_thread_count_ (0)
-    , max_events_ (10)
-    , events_received_count_ (0)
-    , t_first_ (0)
-    , t_last_ (0)
-{
-}
-
-TAO_Notify_ThreadPool_Consumer::~TAO_Notify_ThreadPool_Consumer ()
 {
 }
 
 void
-TAO_Notify_ThreadPool_Consumer::init (PortableServer::POA_var& poa, CosNotifyChannelAdmin::ConsumerAdmin_var& admin,
-                       int proxy_supplier_thread_count, int max_events, long delay)
+TAO_Notify_ThreadPool_Consumer::init (
+  PortableServer::POA_ptr poa,
+  CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
+  int proxy_supplier_thread_count,
+  int max_events,
+  long delay)
 {
   this->default_POA_ = poa;
   this->admin_ = admin;
   this->proxy_supplier_thread_count_ = proxy_supplier_thread_count;
   this->max_events_ = max_events;
-  this->delay_ = ACE_Time_Value (delay, 0);
+  this->delay_ = ACE_Time_Value (delay, {});
 
-  ACE_DEBUG ((LM_DEBUG, "(%P, %t)Consumer Delay = %d, param = %d\n", delay_.sec (), delay));
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P, %t)Consumer Delay = %ld, param = %ld\n",
+              static_cast<long> (this->delay_.sec ()),
+              delay));
 
   this->connect ();
 }
@@ -41,12 +39,6 @@ PortableServer::POA_ptr
 TAO_Notify_ThreadPool_Consumer::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->default_POA_.in ());
-}
-
-void
-TAO_Notify_ThreadPool_Consumer::run ()
-{
-  // Nothing to do.
 }
 
 void
@@ -62,9 +54,10 @@ TAO_Notify_ThreadPool_Consumer::connect ()
       // Narrow to the extended interface.
       NotifyExt::ConsumerAdmin_var admin_ext = NotifyExt::ConsumerAdmin::_narrow (this->admin_.in ());
 
-      NotifyExt::ThreadPoolParams tp_params = { NotifyExt::CLIENT_PROPAGATED, 0,
-                                                0, static_cast<CORBA::ULong> (this->proxy_supplier_thread_count_),
-                                                0, 0, 0, 0, 0 };
+      NotifyExt::ThreadPoolParams tp_params {};
+      tp_params.priority_model = NotifyExt::CLIENT_PROPAGATED;
+      tp_params.static_threads =
+        static_cast<CORBA::ULong> (this->proxy_supplier_thread_count_);
 
       CosNotification::QoSProperties qos (1);
       qos.length (1);
@@ -72,13 +65,16 @@ TAO_Notify_ThreadPool_Consumer::connect ()
       qos[0].value <<= tp_params;
 
       // Obtain the proxy. The QoS is applied to the POA in which the Proxy is hosted.
-      proxysupplier = admin_ext->obtain_notification_push_supplier_with_qos (CosNotifyChannelAdmin::STRUCTURED_EVENT
-                                                                                   , proxy_supplier_id_, qos);
+      proxysupplier = admin_ext->obtain_notification_push_supplier_with_qos (
+        CosNotifyChannelAdmin::STRUCTURED_EVENT,
+        this->proxy_supplier_id_,
+        qos);
     }
   else
     {
-      proxysupplier = this->admin_->obtain_notification_push_supplier (CosNotifyChannelAdmin::STRUCTURED_EVENT
-                                                                       , proxy_supplier_id_);
+      proxysupplier = this->admin_->obtain_notification_push_supplier (
+        CosNotifyChannelAdmin::STRUCTURED_EVENT,
+        this->proxy_supplier_id_);
     }
 
   ACE_ASSERT (!CORBA::is_nil (proxysupplier.in ()));
@@ -98,33 +94,33 @@ TAO_Notify_ThreadPool_Consumer::connect ()
   added.length (1);
   added[0].domain_name = CORBA::string_dup ("TEST_DOMAIN");
 
-  /* We generate a unique Id for the consumer type so that the supplier can distinguish between the consumers.*/
-  char type[BUFSIZ];
-  ACE_OS::sprintf (type, "TEST_TYPE_%d", this->proxy_supplier_id_);
-
-  added[0].type_name = CORBA::string_dup (type);
+  // Give each consumer a unique type so the supplier can distinguish them.
+  std::string const type_name = "TEST_TYPE_" + std::to_string (this->proxy_supplier_id_);
+  added[0].type_name = CORBA::string_dup (type_name.c_str ());
 
   this->proxy_supplier_->subscription_change (added, removed);
 
-  ACE_DEBUG ((LM_DEBUG, "(%P,%t) Created Consumer %d with %d threads at the ProxySupplier\n", proxy_supplier_id_,
+  ACE_DEBUG ((LM_DEBUG, "(%P,%t) Created Consumer %d with %d threads at the ProxySupplier\n",
+              this->proxy_supplier_id_,
               this->proxy_supplier_thread_count_));
 }
 
 void
 TAO_Notify_ThreadPool_Consumer::disconnect ()
 {
-  this->proxy_supplier_->disconnect_structured_push_supplier();
+  this->proxy_supplier_->disconnect_structured_push_supplier ();
 }
 
 void
-TAO_Notify_ThreadPool_Consumer::offer_change (const CosNotification::EventTypeSeq & /*added*/,
-                               const CosNotification::EventTypeSeq & /*removed*/)
+TAO_Notify_ThreadPool_Consumer::offer_change (CosNotification::EventTypeSeq const& /*added*/,
+                                              CosNotification::EventTypeSeq const& /*removed*/)
 {
   // No-Op.
 }
 
 void
-TAO_Notify_ThreadPool_Consumer::push_structured_event (const CosNotification::StructuredEvent & /*notification*/)
+TAO_Notify_ThreadPool_Consumer::push_structured_event (
+  CosNotification::StructuredEvent const& /*notification*/)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
@@ -163,9 +159,9 @@ TAO_Notify_ThreadPool_Consumer::dump_throughput ()
   ACE_High_Res_Timer::global_scale_factor_type gsf =
     ACE_High_Res_Timer::global_scale_factor ();
 
-  ACE_DEBUG ((LM_DEBUG, "(%P,%t) Consumer %d\n", proxy_supplier_id_));
+  ACE_DEBUG ((LM_DEBUG, "(%P,%t) Consumer %d\n", this->proxy_supplier_id_));
 
-  ACE_Throughput_Stats::dump_throughput (ACE_TEXT("Total"), gsf,
+  ACE_Throughput_Stats::dump_throughput (ACE_TEXT ("Total"), gsf,
                                          t_last_ - t_first_,
                                          this->max_events_);
 }
@@ -177,7 +173,7 @@ TAO_Notify_ThreadPool_Consumer::deactivate ()
 
   PortableServer::ObjectId_var id (poa->servant_to_id (this));
 
-  poa->deactivate_object (id.in());
+  poa->deactivate_object (id.in ());
 }
 
 void

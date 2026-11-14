@@ -20,7 +20,6 @@
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
-
 // Name for application's naming context
 static ACE_Registry::Name application_context_name;
 
@@ -36,7 +35,7 @@ int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
   int result;
-  u_long current_counter = 0;
+  u_long current_counter {};
 
   // initialize name
   setup_names ();
@@ -90,9 +89,9 @@ update_counter (HKEY predefined,
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Registry::Naming_Contexts::bind/resolve_context failed"), -1);
 
   // Counter
-  u_long counter = 0;
+  u_long counter {};
   // Represent counter as an ACE_Registry::Object
-  ACE_Registry::Object object ((void *) &counter,
+  ACE_Registry::Object object (static_cast<void *> (&counter),
                                sizeof counter,
                                REG_DWORD);
   // Find counter
@@ -110,7 +109,7 @@ update_counter (HKEY predefined,
     // Counter was found
     {
       // increment counter
-      counter++;
+      ++counter;
       // Update
       result = application_context.rebind (counter_name,
                                            object);
@@ -123,7 +122,6 @@ update_counter (HKEY predefined,
 
   return 0;
 }
-
 
 static void
 setup_names ()

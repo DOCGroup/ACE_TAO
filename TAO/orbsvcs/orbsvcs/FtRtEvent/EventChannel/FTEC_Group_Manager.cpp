@@ -14,7 +14,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 int find_by_location(const FTRT::ManagerInfoList& list,
                 const FTRT::Location & location)
 {
-    unsigned i;
+    unsigned i {};
     for (i = 0; i < list.length(); ++i) {
         if (list[i].the_location == location) {
             return i;
@@ -37,30 +37,25 @@ void print(const FTRT::Location& location)
 struct TAO_FTEC_Group_Manager_Impl
 {
   FTRT::ManagerInfoList info_list;
-  unsigned my_position;
+  unsigned my_position {};
 };
 
 TAO_FTEC_Group_Manager::TAO_FTEC_Group_Manager()
-: impl_(new TAO_FTEC_Group_Manager_Impl)
+: impl_ (std::make_unique<TAO_FTEC_Group_Manager_Impl> ())
 {
   Fault_Detector::instance()->set_listener(this);
 }
 
-TAO_FTEC_Group_Manager::~TAO_FTEC_Group_Manager()
-{
-  delete impl_;
-}
+TAO_FTEC_Group_Manager::~TAO_FTEC_Group_Manager() = default;
 
 CORBA::Boolean TAO_FTEC_Group_Manager::start (
         FTRT::FaultListener_ptr listener,
-        FTRT::Location_out cur
-      )
+        FTRT::Location_out cur)
 {
   listener_ = listener;
   ACE_NEW_RETURN(cur , FTRT::Location(Fault_Detector::instance()->my_location()), false);
   return true;
 }
-
 
 void TAO_FTEC_Group_Manager::create_group (
     const FTRT::ManagerInfoList & info_list,
@@ -116,12 +111,13 @@ void TAO_FTEC_Group_Manager::add_member (
   TAO_FTRTEC::Log(1, ACE_TEXT("add_member location = <%s>\n"),
     (const char*)info.the_location[0].id);
 
-  std::unique_ptr<TAO_FTEC_Group_Manager_Impl> new_impl(new TAO_FTEC_Group_Manager_Impl);
+  std::unique_ptr<TAO_FTEC_Group_Manager_Impl> new_impl =
+    std::make_unique<TAO_FTEC_Group_Manager_Impl> ();
 
   new_impl->my_position = impl_->my_position;
   size_t pos = impl_->info_list.length();
   new_impl->info_list.length(pos+1);
-  for (size_t i = 0; i < pos; ++i) {
+  for (size_t i {}; i < pos; ++i) {
     new_impl->info_list[i] = impl_->info_list[i];
   }
   new_impl->info_list[pos] = info;
@@ -186,7 +182,7 @@ void TAO_FTEC_Group_Manager::add_member (
 
       // Now copy over each byte.
       char* base = blk->data_block ()->base ();
-      for(CORBA::ULong i = 0; i < length; i++)
+      for(CORBA::ULong i {}; i < length; ++i)
       {
         s[i] = base[i];
       }
@@ -205,7 +201,7 @@ void TAO_FTEC_Group_Manager::add_member (
 
       // Now copy over each byte.
       char* base = cdr.begin()->data_block ()->base ();
-      for(CORBA::ULong i = 0; i < length; i++)
+      for(CORBA::ULong i {}; i < length; ++i)
       {
         s[i] = base[i];
       }
@@ -222,8 +218,7 @@ void TAO_FTEC_Group_Manager::add_member (
   // commit the changes
   IOGR_Maker::instance()->set_ref_version( object_group_ref_version );
   publisher->update_info(group_info);
-  delete impl_;
-  impl_ = new_impl.release();
+  impl_.swap (new_impl);
 }
 
 template <class SEQ>
@@ -296,13 +291,12 @@ void TAO_FTEC_Group_Manager::connection_closed()
   // crashed_location will be repliaced by its successor.
   FTRT::Location crashed_location = impl_->info_list[impl_->my_position-1].the_location;
 
-
   if (impl_->my_position > 1) {
     // if I am not the new primary, tell the new primary
     try{
       TAO_IOP::TAO_IOR_Manipulation::IORList iors;
       iors.length(impl_->my_position-1);
-      for (size_t i = 0; i < impl_->my_position-1; ++i)
+      for (size_t i {}; i < impl_->my_position-1; ++i)
         iors[i] = CORBA::Object::_duplicate(impl_->info_list[i].ior.in());
 
       CORBA::Object_var obj =

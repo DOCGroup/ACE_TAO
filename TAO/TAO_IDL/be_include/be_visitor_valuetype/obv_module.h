@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VISITOR_VALUETYPE_OBV_MODULE_H_
 #define _BE_VISITOR_VALUETYPE_OBV_MODULE_H_
 

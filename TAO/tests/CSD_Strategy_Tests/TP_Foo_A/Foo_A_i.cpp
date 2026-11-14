@@ -1,14 +1,7 @@
 #include "Foo_A_i.h"
 #include "AppShutdown.h"
 
-
-Foo_A_i::Foo_A_i()
-{
-  for (unsigned i = 0; i < 5; i++)
-    {
-      this->op_count_[i] = 0;
-    }
-}
+Foo_A_i::Foo_A_i() = default;
 
 void
 Foo_A_i::op1()
@@ -16,14 +9,12 @@ Foo_A_i::op1()
   this->op_count_[0] ++;
 }
 
-
 void
 Foo_A_i::op2(CORBA::Long value)
 {
   this->in_values_[1].push_back (value);
   this->op_count_[1] ++;
 }
-
 
 CORBA::Long
 Foo_A_i::op3(CORBA::Long value)
@@ -33,14 +24,12 @@ Foo_A_i::op3(CORBA::Long value)
   return value;
 }
 
-
 void
 Foo_A_i::op4(CORBA::Long value)
 {
   this->in_values_[3].push_back (value);
   this->op_count_[3] ++;
 }
-
 
 void
 Foo_A_i::op5()
@@ -49,13 +38,11 @@ Foo_A_i::op5()
   throw FooException();
 }
 
-
 void
 Foo_A_i::done()
 {
   TheAppShutdown->client_done();
 }
-
 
 void
 Foo_A_i::gather_stats(Foo_A_Statistics& stats)

@@ -39,7 +39,7 @@ public:
   /// Default constructor.
   ACE_Netlink_Addr ();
 
-  /// Copy constructor.
+
   ACE_Netlink_Addr (const ACE_Netlink_Addr &);
 
   /// Creates an ACE_INET_Addr from a sockaddr_in structure.
@@ -109,5 +109,4 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include /**/ "ace/post.h"
 
 #endif /* ACE_NETLINK_ADDR_H */
-
 

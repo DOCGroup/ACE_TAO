@@ -2,38 +2,13 @@
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
-#include "ace/Event_Handler.h"
 
 #include "tao/Strategies/advanced_resource.h"
-
-// Create a singleton instance of the Sender.
 
 // An Unmanaged_Singleton is used to avoid static object destruction
 // order related problems since the underlying singleton object
 // contains references to static TypeCodes.
-typedef ACE_Unmanaged_Singleton<Sender, ACE_Null_Mutex> SENDER;
-
-int g_shutdown = 0;
-/// Flag set when a signal is raised.
-
-// constructor.
-Signal_Handler::Signal_Handler ()
-{
-}
-
-int
-Signal_Handler::handle_signal (int signum, siginfo_t *, ucontext_t*)
-{
-  if (signum == SIGINT)
-    {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "In the signal handler\n"));
-
-      g_shutdown = 1;
-    }
-  return 0;
-}
+using SENDER = ACE_Unmanaged_Singleton<Sender, ACE_Null_Mutex>;
 
 ACE_CString &
 Sender_Callback::flowname ()
@@ -42,11 +17,10 @@ Sender_Callback::flowname ()
 }
 
 void
-Sender_Callback::flowname (const ACE_CString &flowname)
+Sender_Callback::flowname (ACE_CString const &flowname)
 {
   this->flowname_ = flowname;
 }
-
 
 int
 Sender_Callback::handle_destroy ()
@@ -57,39 +31,35 @@ Sender_Callback::handle_destroy ()
 
   SENDER::instance ()->connection_manager ().receivers ().unbind (this->flowname_.c_str ());
 
-  //  SENDER::instance ()->remove_stream ();
-
   return 0;
 }
 
 int
-Sender_StreamEndPoint::get_callback (const char * flowname,
+Sender_StreamEndPoint::get_callback (char const *flowname,
                                      TAO_AV_Callback *&callback)
 {
-  //SENDER::instance ()->add_stream ();
-
-  /// Create and return the client application callback and return to the AVStreams
-  /// for further upcalls.
+  // Create and return the client application callback and return to the AVStreams
+  // for further upcalls.
   callback = &this->callback_;
 
-  ACE_CString flow_name (flowname);
+  ACE_CString const flow_name (flowname);
   this->callback_.flowname (flow_name);
 
   return 0;
 }
 
 int
-Sender_StreamEndPoint::set_protocol_object (const char *flowname,
+Sender_StreamEndPoint::set_protocol_object (char const *flowname,
                                             TAO_AV_Protocol_Object *object)
 {
   Connection_Manager &connection_manager =
     SENDER::instance ()->connection_manager ();
 
-  /// Add to the map of protocol objects.
+  // Add to the map of protocol objects.
   connection_manager.protocol_objects ().bind (flowname,
                                                object);
 
-  /// Store the related streamctrl.
+  // Store the related streamctrl.
   connection_manager.add_streamctrl (flowname,
                                      this);
 
@@ -99,44 +69,33 @@ Sender_StreamEndPoint::set_protocol_object (const char *flowname,
 CORBA::Boolean
 Sender_StreamEndPoint::handle_preconnect (AVStreams::flowSpec &flowspec)
 {
-  /// If another receiver of the same flowname is in the map, destroy
-  /// the old stream.
+  // If another receiver of the same flowname is in the map, destroy
+  // the old stream.
   for (CORBA::ULong i = 0;
        i < flowspec.length ();
-       i++)
+       ++i)
     {
       TAO_Forward_FlowSpec_Entry entry;
       entry.parse (flowspec[i]);
 
-      ACE_CString flowname (entry.flowname ());
+      ACE_CString const flowname (entry.flowname ());
 
       Connection_Manager &connection_manager =
         SENDER::instance ()->connection_manager ();
 
-      int result =
+      int const result =
         connection_manager.protocol_objects ().find (flowname);
 
-      /// If the flowname is found.
+      // If the flowname is found.
       if (result == 0)
         {
           ACE_DEBUG ((LM_DEBUG, "\nSender switching distributers\n\n"));
 
-          /// Destroy old stream with the same flowname.
+          // Destroy old stream with the same flowname.
           connection_manager.destroy (flowname);
         }
     }
   return 1;
-}
-
-Sender::Sender ()
-  : sender_mmdevice_ (0),
-    frame_count_ (0),
-    filename_ ("input"),
-    input_file_ (0),
-    frame_rate_ (5),
-    mb_ (BUFSIZ),
-    sender_name_ ("sender")
-{
 }
 
 Sender::~Sender ()
@@ -154,10 +113,11 @@ Sender::shut_down ()
       AVStreams::MMDevice_var mmdevice =
         this->sender_mmdevice_->_this ();
 
-      SENDER::instance ()->connection_manager ().unbind_sender (this->sender_name_,
+      ACE_CString const sender_name (this->options_.sender_name.c_str ());
+      SENDER::instance ()->connection_manager ().unbind_sender (sender_name,
                                                                 mmdevice.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Sender::shut_down Failed\n");
     }
@@ -167,25 +127,25 @@ int
 Sender::parse_args (int argc,
                     ACE_TCHAR *argv[])
 {
-  /// Parse command line arguments
+  // Parse command line arguments
   ACE_Get_Opt opts (argc, argv, ACE_TEXT("s:f:r:d"));
 
-  int c;
+  int c {};
   while ((c= opts ()) != -1)
     {
       switch (c)
         {
         case 'f':
-          this->filename_ = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
+          this->options_.filename = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
           break;
         case 'r':
-          this->frame_rate_ = ACE_OS::atoi (opts.opt_arg ());
+          this->options_.frame_rate = ACE_OS::atoi (opts.opt_arg ());
           break;
         case 's':
-          this->sender_name_ = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
+          this->options_.sender_name = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
           break;
         case 'd':
-          TAO_debug_level++;
+          ++TAO_debug_level;
           break;
         default:
           ACE_DEBUG ((LM_DEBUG, "Unknown Option\n"));
@@ -199,125 +159,97 @@ int
 Sender::init (int argc,
               ACE_TCHAR *argv[])
 {
-  /// Initialize the endpoint strategy with the orb and poa.
+  // Initialize the endpoint strategy with the orb and poa.
   int result =
     this->endpoint_strategy_.init (TAO_AV_CORE::instance ()->orb (),
                                    TAO_AV_CORE::instance ()->poa ());
   if (result != 0)
     return result;
 
-  /// Initialize the connection manager.
+  // Initialize the connection manager.
   result =
     this->connection_manager_.init (TAO_AV_CORE::instance ()->orb ());
   if (result != 0)
     return result;
 
-  /// Parse the command line arguments
+  // Parse the command line arguments
   result =
     this->parse_args (argc,
                       argv);
   if (result != 0)
     return result;
 
-  /*
-  ACE_Reactor *reactor =
-    TAO_AV_CORE::instance ()->reactor ();
+  // Open file to read.
+  this->input_file_.reset (std::fopen (this->options_.filename.c_str (), "rb"));
 
-
-  if (reactor->register_handler (SIGINT,
-                                 &this->signal_handler_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error in handler register\n"),
-                      -1);
-  /// Register the signal handler for clean termination of the process.
-  */
-
-  /// Open file to read.
-  this->input_file_ =
-    ACE_OS::fopen (this->filename_.c_str (),
-                   "r");
-
-  if (this->input_file_ == 0)
+  if (!this->input_file_)
     ACE_ERROR_RETURN ((LM_DEBUG,
                        "Cannot open input file %C\n",
-                       this->filename_.c_str ()),
+                       this->options_.filename.c_str ()),
                       -1);
   else
     ACE_DEBUG ((LM_DEBUG,
                 "File opened successfully\n"));
 
-  /// Register the sender mmdevice object with the ORB
+  // Register the sender mmdevice object with the ORB
   ACE_NEW_RETURN (this->sender_mmdevice_,
                   TAO_MMDevice (&this->endpoint_strategy_),
                   -1);
 
-  /// Servant Reference Counting to manage lifetime
+  // Servant Reference Counting to manage lifetime
   PortableServer::ServantBase_var safe_mmdevice =
     this->sender_mmdevice_;
 
   AVStreams::MMDevice_var mmdevice =
     this->sender_mmdevice_->_this ();
 
-  /// Register the object reference with the Naming Service and bind to
-  /// the receivers
-  this->connection_manager_.bind_to_receivers (this->sender_name_,
+  // Register the object reference with the Naming Service and bind to
+  // the receivers
+  ACE_CString const sender_name (this->options_.sender_name.c_str ());
+  this->connection_manager_.bind_to_receivers (sender_name,
                                                mmdevice.in ());
 
-  /// Connect to the receivers
+  // Connect to the receivers
   this->connection_manager_.connect_to_receivers ();
 
   return 0;
 }
 
-/// Method to send data at the specified rate
+// Method to send data at the specified rate
 int
 Sender::pace_data ()
 {
-  /// The time that should lapse between two consecutive frames sent.
+  // The time that should lapse between two consecutive frames sent.
   ACE_Time_Value inter_frame_time;
 
-  /// The time between two consecutive frames.
-  inter_frame_time.set (1.0 / this->frame_rate_);
+  // The time between two consecutive frames.
+  inter_frame_time.set (1.0 / this->options_.frame_rate);
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "Frame Rate = %d / second\n"
-                "Inter Frame Time = %d (msec)\n",
-                this->frame_rate_,
+                "Inter Frame Time = %lu (msec)\n",
+                this->options_.frame_rate,
                 inter_frame_time.msec ()));
 
   try
     {
-      /// The time taken for sending a frame and preparing for the next frame
+      // The time taken for sending a frame and preparing for the next frame
       ACE_High_Res_Timer elapsed_timer;
 
-      /// Continue to send data till the file is read to the end.
-      while (1)
+      // Continue to send data till the file is read to the end.
+      while (true)
         {
-          if (g_shutdown == 1)
+          // Read from the file into a message block.
+          size_t const bytes_read =
+            std::fread (this->mb_.wr_ptr (),
+                        1,
+                        this->mb_.size (),
+                        this->input_file_.get ());
+
+          if (bytes_read == 0)
             {
-              ACE_DEBUG ((LM_DEBUG,
-                          "Shut Down called\n"));
-
-              this->shut_down ();
-
-              break;
-            }
-
-          /// Read from the file into a message block.
-          int n = ACE_OS::fread (this->mb_.wr_ptr (),
-                                 1,
-                                 this->mb_.size (),
-                                 this->input_file_);
-
-          if (n < 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Sender::pace_data fread failed\n"),
-                              -1);
-
-          if (n == 0)
-            {
-              /// At end of file break the loop and end the sender.
+              // At end of file break the loop and end the sender.
               if (TAO_debug_level > 0)
                 ACE_DEBUG ((LM_DEBUG,"Handle_Start:End of file\n"));
 
@@ -326,57 +258,57 @@ Sender::pace_data ()
               break;
             }
 
-          this->mb_.wr_ptr (n);
+          this->mb_.wr_ptr (bytes_read);
 
           if (this->frame_count_ > 1)
             {
-              ///
-              /// Second frame and beyond
-              ///
+              //
+              // Second frame and beyond
+              //
 
-              /// Stop the timer that was started just before the previous frame was sent.
+              // Stop the timer that was started just before the previous frame was sent.
               elapsed_timer.stop ();
 
-              /// Get the time elapsed after sending the previous frame.
+              // Get the time elapsed after sending the previous frame.
               ACE_Time_Value elapsed_time;
               elapsed_timer.elapsed_time (elapsed_time);
 
               if (TAO_debug_level > 0)
                 ACE_DEBUG ((LM_DEBUG,
-                            "Elapsed Time = %d\n",
+                            "Elapsed Time = %lu\n",
                             elapsed_time.msec ()));
 
-              /// Check to see if the inter frame time has elapsed.
+              // Check to see if the inter frame time has elapsed.
               if (elapsed_time < inter_frame_time)
                 {
-                  /// Inter frame time has not elapsed.
+                  // Inter frame time has not elapsed.
 
-                  /// Calculate the time to wait before the next frame needs to be sent.
+                  // Calculate the time to wait before the next frame needs to be sent.
                   ACE_Time_Value wait_time (inter_frame_time - elapsed_time);
 
                   if (TAO_debug_level > 0)
                     ACE_DEBUG ((LM_DEBUG,
-                                "Wait Time = %d\n",
+                                "Wait Time = %lu\n",
                                 wait_time.msec ()));
 
-                  /// Run the orb for the wait time so the sender can
-                  /// continue other orb requests.
+                  // Run the orb for the wait time so the sender can
+                  // continue other orb requests.
                   TAO_AV_CORE::instance ()->orb ()->run (wait_time);
                 }
             }
 
-          /// Start timer before sending the frame.
+          // Start timer before sending the frame.
           elapsed_timer.start ();
 
           Connection_Manager::Protocol_Objects &protocol_objects =
             this->connection_manager_.protocol_objects ();
 
-          /// Send frame to all receivers.
+          // Send frame to all receivers.
           for (Connection_Manager::Protocol_Objects::iterator iterator = protocol_objects.begin ();
                iterator != protocol_objects.end ();
                ++iterator)
             {
-              int result =
+              int const result =
                 (*iterator).int_id_->send_frame (&this->mb_);
 
               if (result < 0)
@@ -387,15 +319,15 @@ Sender::pace_data ()
             }
 
           ACE_DEBUG ((LM_DEBUG,
-                      "Sender::pace_data frame %d was sent successfully\n",
+                      "Sender::pace_data frame %B was sent successfully\n",
                       ++this->frame_count_));
 
-          /// Reset the message block.
+          // Reset the message block.
           this->mb_.reset ();
         } /// end while
 
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Sender::pace_data Failed\n");
       return -1;
@@ -409,24 +341,6 @@ Sender::connection_manager ()
   return this->connection_manager_;
 }
 
-//  void
-//  Sender::add_stream ()
-//  {
-//    this->stream_count_++;
-//  }
-
-//  void
-//  Sender::remove_stream ()
-//  {
-//    this->stream_count_--;
-//  }
-
-//  int
-//  Sender::stream_alive ()
-//  {
-//    return this->stream_count_;
-//  }
-
 int
 ACE_TMAIN (int argc,
       ACE_TCHAR *argv[])
@@ -438,7 +352,7 @@ ACE_TMAIN (int argc,
       CORBA::Object_var obj
         = orb->resolve_initial_references ("RootPOA");
 
-      ///Get the POA_var object from Object_var
+      //Get the POA_var object from Object_var
       PortableServer::POA_var root_poa
         = PortableServer::POA::_narrow (obj.in ());
 
@@ -447,14 +361,12 @@ ACE_TMAIN (int argc,
 
       mgr->activate ();
 
-      /// Initialize the AV Stream components.
+      // Initialize the AV Stream components.
       TAO_AV_CORE::instance ()->init (orb.in (),
                                       root_poa.in ());
 
-      /// Initialize the Client.
-      int result = 0;
-      result = SENDER::instance ()->init (argc,
-                                          argv);
+      // Initialize the Client.
+      int const result = SENDER::instance ()->init (argc, argv);
 
       if (result < 0)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -464,7 +376,7 @@ ACE_TMAIN (int argc,
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Sender Failed\n");
       return -1;

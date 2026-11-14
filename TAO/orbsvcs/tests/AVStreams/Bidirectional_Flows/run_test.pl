@@ -6,7 +6,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
-use File::stat;
+use File::Compare;
 
 $status = 0;
 $debug_level = '0';
@@ -28,16 +28,20 @@ $sleeptime = 2;
 $nsiorfile = "ns.ior";
 $outputfile = "output";
 $inputfile = "test_input";
+$server_outputfile = "server_output";
+$client_outputfile = "client_output";
 
 my $ns_nsiorfile = $ns->LocalFile ($nsiorfile);
 my $sv_nsiorfile = $sv->LocalFile ($nsiorfile);
 my $cl_nsiorfile = $cl->LocalFile ($nsiorfile);
 my $sv_outputfile = $sv->LocalFile ($outputfile);
+my $cl_outputfile = $cl->LocalFile ($outputfile);
 $ns->DeleteFile ($nsiorfile);
 $sv->DeleteFile ($nsiorfile);
 $cl->DeleteFile ($nsiorfile);
 $cl->DeleteFile ($inputfile);
 $sv->DeleteFile ($outputfile);
+$cl->DeleteFile ($outputfile);
 
 # generate test stream data
 $inputfile = PerlACE::generate_test_file($inputfile, 102400);
@@ -111,6 +115,24 @@ if ($SV_status != 0) {
     $status = 1;
 }
 
+if ($sv->GetFile ($outputfile, $server_outputfile) == -1) {
+    print STDERR "ERROR: cannot retrieve output file <$sv_outputfile>\n";
+    $status = 1;
+}
+elsif (File::Compare::compare ($inputfile, $server_outputfile) != 0) {
+    print STDERR "ERROR: receiver output differs from input file\n";
+    $status = 1;
+}
+
+if ($cl->GetFile ($outputfile, $client_outputfile) == -1) {
+    print STDERR "ERROR: cannot retrieve output file <$cl_outputfile>\n";
+    $status = 1;
+}
+elsif (File::Compare::compare ($inputfile, $client_outputfile) != 0) {
+    print STDERR "ERROR: sender output differs from input file\n";
+    $status = 1;
+}
+
 $NS_status = $NS->TerminateWaitKill ($ns->ProcessStopWaitInterval());
 if ($NS_status != 0) {
     print STDERR "ERROR: Naming Service returned $NS_status\n";
@@ -122,5 +144,8 @@ $sv->DeleteFile ($nsiorfile);
 $cl->DeleteFile ($nsiorfile);
 $cl->DeleteFile ($inputfile);
 $sv->DeleteFile ($outputfile);
+$cl->DeleteFile ($outputfile);
+unlink ($server_outputfile);
+unlink ($client_outputfile);
 
 exit $status;

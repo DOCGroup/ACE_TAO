@@ -1,63 +1,71 @@
 #include "Manager_i.h"
 
 #include <ace/Get_Opt.h>
-#include <ace/streams.h>
+#include <iostream>
+#include <fstream>
+
+struct Manager_Options
+{
+  long retry_count {};
+  ACE_TCHAR const *ior_arg {ACE_TEXT ("manager.ior")};
+};
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
-  {
-    long retryCount = 0;
-    const ACE_TCHAR *ior_arg = ACE_TEXT("manager.ior");
-    CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
-
-    ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("r:o:"));
-    int c;
-    while ((c = get_opts ()) != -1)
     {
-      switch (c)
+      Manager_Options options;
+      CORBA::ORB_var orb (CORBA::ORB_init (argc, argv));
+
+      ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("r:o:"));
+      int c {};
+      while ((c = get_opts ()) != -1)
+        {
+          switch (c)
+            {
+            case 'r':
+              options.retry_count = ACE_OS::atoi (get_opts.opt_arg ());
+              break;
+            case 'o':
+              options.ior_arg = get_opts.opt_arg ();
+              break;
+            case '?':
+            default:
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("Usage:  %s [-r retryCount] [-o iorfile]\n"),
+                          argv[0]));
+              break;
+            }
+        }
+
+      CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
+      PortableServer::POA_var poa = PortableServer::POA::_narrow (obj.in ());
+
+      PortableServer::POAManager_var mgr = poa->the_POAManager ();
+
+      Manager_i servant (options.retry_count);
+      PortableServer::ObjectId_var oid = poa->activate_object (&servant);
+      obj = poa->id_to_reference (oid.in ());
       {
-      case 'r':
-        retryCount = ACE_OS::atoi(get_opts.opt_arg());
-        break;
-      case 'o':
-        ior_arg = get_opts.opt_arg();
-        break;
-      case '?':
-      default:
-        cout << "Usage:  " << argv[0] << " [-r retryCount]"
-             << " [-o iorfile]" << endl;
-        break;
+        CORBA::String_var ior = orb->object_to_string (obj.in ());
+        std::ofstream ior_file (ACE_TEXT_ALWAYS_CHAR (options.ior_arg));
+        ior_file << ior.in () << std::endl;
       }
+
+      std::cout << "IMR Test Manager activated (servers retry = " << options.retry_count
+                << ")." << std::endl;
+
+      mgr->activate ();
+
+      orb->run ();
+
+      poa->destroy (true, true);
+      orb->destroy ();
+      return 0;
     }
-
-    CORBA::Object_var obj = orb->resolve_initial_references("RootPOA");
-    PortableServer::POA_var poa = PortableServer::POA::_narrow(obj.in());
-
-    PortableServer::POAManager_var mgr = poa->the_POAManager();
-
-    Manager_i servant(retryCount);
-    PortableServer::ObjectId_var oid = poa->activate_object(&servant);
-    obj = poa->id_to_reference(oid.in());
+  catch (CORBA::Exception const &ex)
     {
-      CORBA::String_var ior = orb->object_to_string(obj.in());
-      ofstream iorFile(ACE_TEXT_ALWAYS_CHAR(ior_arg));
-      iorFile << ior.in() << endl;
+      std::cerr << "Manager: " << ex << std::endl;
     }
-
-    cout << "IMR Test Manager activated (servers retry = " << retryCount << ")." << endl;
-
-    mgr->activate();
-
-    orb->run();
-
-    poa->destroy(1, 1);
-    orb->destroy();
-    return 0;
-  }
-  catch (const CORBA::Exception& ex)
-  {
-    cerr << "Manager: " << ex << endl;
-  }
   return 1;
 }

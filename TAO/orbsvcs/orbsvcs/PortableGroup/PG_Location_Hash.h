@@ -1,13 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    PG_Location_Hash.h
  *
  *  @author  Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_PG_LOCATION_HASH_H
 #define TAO_PG_LOCATION_HASH_H
@@ -35,7 +32,7 @@ class TAO_PortableGroup_Export TAO_PG_Location_Hash
 {
 public:
   /// Creates a hash based on all of elements of the given Location
-  CORBA::ULong operator() (const PortableGroup::Location &) const;
+  CORBA::ULong operator() (PortableGroup::Location const &) const;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -17,11 +17,12 @@
 
 #include <ace/Get_Opt.h>
 #include <ace/OS_NS_stdio.h>
+#include <cstring>
 
 FTAPP::FT_Creator::FT_Creator ()
   : creator_ ()
   , orb_ (CORBA::ORB::_nil ())
-  , registry_ior_(0)
+  , registry_ior_ (nullptr)
   , replication_manager_ (::FT::ReplicationManager::_nil ())
   , have_replication_manager_ (0)
   , write_iors_ (0)
@@ -104,7 +105,7 @@ FTAPP::FT_Creator::parse_args (int argc, ACE_TCHAR *argv[])
     }
   }
 
-  if ( this->create_roles_.size() == 0 && this->unregister_roles_.size() == 0)
+  if (this->create_roles_.empty () && this->unregister_roles_.empty ())
   {
     //FUZZ: disable check_for_lack_ACE_OS
     ACE_OS::fprintf (stderr, "Creator: neither create (-t) nor kill (-u) specified.  Nothing to do.\n");
@@ -128,14 +129,13 @@ void FTAPP::FT_Creator::usage(FILE* out)const
                         " -n (toggle register iogr with name service (default true))\n");
 }
 
-
 int FTAPP::FT_Creator::init (CORBA::ORB_ptr orb)
 {
   int result = 0;
   this->orb_ = CORBA::ORB::_duplicate (orb);
 
   // if a factory IOR was specified on command line
-  if ( this->registry_ior_ != 0)
+  if (this->registry_ior_ != nullptr)
   {
     CORBA::Object_var registry_obj
       = this->orb_->string_to_object (this->registry_ior_);
@@ -151,7 +151,6 @@ int FTAPP::FT_Creator::init (CORBA::ORB_ptr orb)
   {
     result = this->creator_.init (orb);
   }
-
 
   if (result == 0 && this->ns_register_)
   {
@@ -195,10 +194,10 @@ int FTAPP::FT_Creator::run ()
         role,
         this->iogr_seq_);
       FILE * iogr_file = ACE_OS::fopen (iogr_filename, "w");
-      if (iogr_file != 0)
+      if (iogr_file != nullptr)
       {
         char const * siogr = static_cast<const char *> (iogr.in ());
-        ACE_OS::fwrite (siogr, 1, ACE_OS::strlen(siogr), iogr_file);
+        ACE_OS::fwrite (siogr, 1, std::strlen (siogr), iogr_file);
         ACE_OS::fclose (iogr_file);
       }
       else

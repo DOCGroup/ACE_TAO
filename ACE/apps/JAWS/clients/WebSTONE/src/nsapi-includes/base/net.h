@@ -7,16 +7,13 @@
  * parties.
  */
 
-
 /* ------------------------------------------------------------------------ */
-
 
 /*
  * net.h: system specific networking definitions
  *
  * Rob McCool
  */
-
 
 #ifndef NET_H
 #define NET_H
@@ -26,7 +23,6 @@
 #include "file.h"       /* for client file descriptors */
 
 #include "pblock.h"     /* for client data block */
-
 
 /* This should be a user-given parameter later */
 #define NET_BUFFERSIZE 8192
@@ -52,14 +48,11 @@
 #include "minissl.h"
 #endif
 
-
 /* -------------------------------- Global -------------------------------- */
 
 extern int net_enabledns;
 
-
 /* ------------------------------ Data types ------------------------------ */
-
 
 #ifdef NET_WINSOCK
 typedef SOCKET SYS_NETFD;
@@ -69,12 +62,9 @@ typedef int SYS_NETFD;
 
 #define SYS_NET_ERRORFD -1
 
-
 /* -------------------------------- Macros -------------------------------- */
 
-
 /* These may be different for non-UNIX systems. */
-
 
 #ifndef NET_SSL
 #define net_socket socket
@@ -118,7 +108,6 @@ int net_bind(SYS_NETFD s, const struct sockaddr *name, int namelen);
 #define net_accept SSL_Accept
 #endif /* ! NET_SSL */
 
-
 /* Users should never call the system_net* functions.  */
 #ifdef NET_SSL
 #define system_netread(sd, buf, sz) SSL_Read(sd, buf, sz)
@@ -144,9 +133,7 @@ int net_semaccept(int s, struct sockaddr *addr, int *addrlen);
 void net_semaccept_terminate();
 #endif
 
-
 /* ------------------------------ Prototypes ------------------------------ */
-
 
 /*
  * net_find_fqdn looks through the given hostent structure trying to find

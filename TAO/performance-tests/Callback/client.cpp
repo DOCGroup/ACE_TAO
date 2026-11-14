@@ -13,25 +13,31 @@
 #include "ace/Task.h"
 #include "ace/OS_NS_errno.h"
 
-int iterations = 1000;
-int do_dump_history = 0;
-const ACE_TCHAR *ior = ACE_TEXT("file://server.ior");
+struct Client_Options
+{
+  int iterations = 1000;
+  bool dump_history = false;
+  ACE_TCHAR const *ior = ACE_TEXT("file://server.ior");
+};
 
 /// Parse the arguments.
-static int parse_args (int argc, ACE_TCHAR *argv[]);
+static int parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options);
 
 /// Send events in another thread
 class Task : public ACE_Task_Base
 {
 public:
-  /// Constructor
   Task (Test::Server_ptr server, int iterations);
+  Task (Task const &) = delete;
+  Task (Task &&) = delete;
+  Task &operator= (Task const &) = delete;
+  Task &operator= (Task &&) = delete;
 
   /// Return 1 when all the messages have been sent
   int done ();
 
   /// Run the experiment
-  int svc ();
+  int svc () override;
 
 private:
   /// The consumer
@@ -106,12 +112,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       poa_manager->activate ();
 
-      if (parse_args (argc, argv) != 0)
+      Client_Options options;
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
       // Get the event channel object reference
-      CORBA::Object_var object =
-        orb->string_to_object (ior);
+      CORBA::Object_var object = orb->string_to_object (options.ior);
 
       Test::Server_var server =
         Test::Server::_narrow (object.in ());
@@ -124,7 +130,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Resolved server\n"));
 
-      Callback_i callback_i (iterations);
+      Callback_i callback_i (options.iterations);
 
       Test::Callback_var callback = callback_i._this ();
 
@@ -132,16 +138,16 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Connected callback\n"));
 
-      Task task (server.in (), iterations);
+      Task task (server.in (), options.iterations);
       task.activate ();
 
-      ACE_hrtime_t start = ACE_OS::gethrtime ();
+      ACE_hrtime_t const start = ACE_OS::gethrtime ();
       while (!callback_i.done () || !task.done ())
         {
           ACE_Time_Value tv (1, 0);
           orb->run (tv);
         }
-      ACE_hrtime_t end = ACE_OS::gethrtime ();
+      ACE_hrtime_t const end = ACE_OS::gethrtime ();
 
       ACE_Thread_Manager::instance ()->wait ();
 
@@ -150,13 +156,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "Calibrating high res timer ...."));
       ACE_High_Res_Timer::calibrate ();
 
-      ACE_High_Res_Timer::global_scale_factor_type gsf =
+      ACE_High_Res_Timer::global_scale_factor_type const gsf =
         ACE_High_Res_Timer::global_scale_factor ();
       ACE_DEBUG ((LM_DEBUG, "Done (%d)\n", gsf));
 
       ACE_Sample_History &history =
         callback_i.sample_history ();
-      if (do_dump_history)
+      if (options.dump_history)
         {
           history.dump_samples (ACE_TEXT("HISTORY"), gsf);
         }
@@ -176,9 +182,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       root_poa->deactivate_object (id.in ());
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (argv[0]);
+      return 1;
     }
   return 0;
 }
@@ -186,7 +193,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 // ****************************************************************
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("hi:k:"));
   int c;
@@ -195,25 +202,21 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'h':
-        do_dump_history = 1;
+        options.dump_history = true;
         break;
 
       case 'i':
-        iterations = ACE_OS::atoi (get_opts.opt_arg ());
+        options.iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
 
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-h (dump full sample history) "
-                           "-i <iterations> "
-                           "-k <IOR> "
-                           "\n",
+                           ACE_TEXT("usage: %s -h (dump full sample history) -i <iterations> -k <IOR>\n"),
                            argv [0]),
                           -1);
       }
@@ -240,12 +243,13 @@ Task::done ()
 int
 Task::svc ()
 {
-  Test::Payload payload(1024); payload.length(1024);
+  Test::Payload payload (1024);
+  payload.length (1024);
   try
     {
       for (;;)
         {
-          Test::TimeStamp creation = ACE_OS::gethrtime ();
+          Test::TimeStamp const creation = ACE_OS::gethrtime ();
           this->server_->request (creation, payload);
 
           // ACE_Time_Value tv (0, 5000);
@@ -253,14 +257,15 @@ Task::svc ()
 
           ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
 
-          this->remaining_messages_--;
+          --this->remaining_messages_;
           if (this->remaining_messages_ == 0)
             return 0;
         }
     }
-  catch (const CORBA::SystemException& ex)
+  catch (CORBA::SystemException const &ex)
     {
       ex._tao_print_exception ("Task::svc");
+      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
       this->remaining_messages_ = 0;
     }
   return 0;

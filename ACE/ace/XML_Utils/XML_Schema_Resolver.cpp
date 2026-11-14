@@ -8,18 +8,17 @@
 #include "ace/Env_Value_T.h"
 #include "ace/SString.h"
 
-#include <iostream>
 #include <new>
 #include <utility>
 
 namespace XML
 {
-  Basic_Resolver::Basic_Resolver (const ACE_TCHAR *path)
+  Basic_Resolver::Basic_Resolver (ACE_TCHAR const *path)
     : path_ (path)
   {
   }
 
-  XMLCh *Basic_Resolver::operator() (const XMLCh *const, const XMLCh *const systemId) const
+  XMLCh *Basic_Resolver::operator() (XMLCh const *const, XMLCh const *const systemId) const
   {
     XStr path (path_);
     if (!path.append (systemId))
@@ -28,12 +27,12 @@ namespace XML
     return path.release ();
   }
 
-  Environment_Resolver::Environment_Resolver (const ACE_TCHAR *variable, const ACE_TCHAR *relpath)
+  Environment_Resolver::Environment_Resolver (ACE_TCHAR const *variable, ACE_TCHAR const *relpath)
   {
     this->add_path (variable, relpath);
   }
 
-  void Environment_Resolver::add_path (const ACE_TCHAR *variable, const ACE_TCHAR *relpath)
+  void Environment_Resolver::add_path (ACE_TCHAR const *variable, ACE_TCHAR const *relpath)
   {
     ACE_Env_Value<ACE_TString> path_env (variable, ACE_TEXT (""));
 
@@ -46,7 +45,7 @@ namespace XML
     paths_.push_back (std::move (xpath));
   }
 
-  XMLCh *Environment_Resolver::operator() (const XMLCh *const, const XMLCh *const systemId) const
+  XMLCh *Environment_Resolver::operator() (XMLCh const *const, XMLCh const *const systemId) const
   {
     for (XStr const &path_prefix : this->paths_)
     {

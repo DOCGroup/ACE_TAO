@@ -49,7 +49,6 @@ namespace TAO
   class TAO_Export Argument
   {
   public:
-    /// Destructor.
     virtual ~Argument ();
 
     /// Marshal the argument into the given CDR output stream.

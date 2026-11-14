@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_LB_LOAD_MANAGER_H
 #define TAO_LB_LOAD_MANAGER_H
 
@@ -34,7 +33,6 @@
 #include "ace/Task.h"
 #include "tao/Condition.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_LoadBalancing_Export TAO_LB_LoadManager
@@ -42,7 +40,6 @@ class TAO_LoadBalancing_Export TAO_LB_LoadManager
     public ACE_Task_Base
 {
 public:
-  /// Constructor.
   TAO_LB_LoadManager (int ping_timeout,
                       int ping_interval);
 
@@ -207,8 +204,8 @@ public:
       PortableGroup::ObjectGroup_ptr object_group) override;
 
   /// TAO specific method
-  virtual PortableGroup::ObjectGroup_ptr get_object_group_ref_from_id (
-      PortableGroup::ObjectGroupId group_id);
+  PortableGroup::ObjectGroup_ptr get_object_group_ref_from_id (
+      PortableGroup::ObjectGroupId group_id) override;
 
   /// Return the reference corresponding to the Replica of a given
   /// ObjectGroup at the given location.
@@ -271,7 +268,6 @@ public:
                    PortableServer::POA_ptr root_poa);
 
 protected:
-  /// Destructor.
   /**
    * Destructor is protected to enforce correct memory management
    * through reference counting.
@@ -410,14 +406,13 @@ private:
   TAO_SYNCH_MUTEX validate_lock_;
   TAO_Condition<TAO_SYNCH_MUTEX> validate_condition_;
 
-  bool shutdown_;
+  bool shutdown_ {};
 
   /// Short timeout for non_exist call. defaults to 1 second
   TimeBase::TimeT ping_timeout_;
   /// Long timeout for non_exist call. defaults to 5 seconds
   ACE_Time_Value ping_interval_;
 };
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

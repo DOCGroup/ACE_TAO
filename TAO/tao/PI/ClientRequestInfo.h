@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  * @file ClientRequestInfo.h
  *
@@ -9,7 +8,6 @@
  *
  * @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_CLIENT_REQUEST_INFO_H
 #define TAO_CLIENT_REQUEST_INFO_H
@@ -71,7 +69,7 @@ class TAO_PI_Export TAO_ClientRequestInfo
     public virtual ::CORBA::LocalObject
 {
 public:
-  TAO_ClientRequestInfo (TAO::Invocation_Base *invocation);
+  explicit TAO_ClientRequestInfo (TAO::Invocation_Base *invocation);
 
   /// Return an ID unique to the current request.  This request ID may
   /// or may not be the same as the GIOP request ID.
@@ -164,7 +162,7 @@ public:
   /// Add the IOP::ServiceContext to the request (outgoing)
   /// IOP::ServiceContextList.
   void add_request_service_context (
-      const IOP::ServiceContext & service_context,
+      IOP::ServiceContext const &service_context,
       CORBA::Boolean replace) override;
 
   /*
@@ -189,6 +187,12 @@ public:
   */
 
 private:
+  TAO_ClientRequestInfo (TAO_ClientRequestInfo const &) = delete;
+  TAO_ClientRequestInfo &operator= (TAO_ClientRequestInfo const &) = delete;
+  TAO_ClientRequestInfo (TAO_ClientRequestInfo &&) = delete;
+  TAO_ClientRequestInfo &operator= (TAO_ClientRequestInfo &&) = delete;
+
+private:
   bool parameter_list (Dynamic::ParameterList &param_list);
 
   bool exception_list (Dynamic::ExceptionList &exception_list);
@@ -209,7 +213,7 @@ private:
       IOP::ServiceId id);
 
 private:
-  /// Pointer to the invocation object.
+  /// Non-owning pointer to the invocation currently being intercepted.
   TAO::Invocation_Base *invocation_;
 
   /// The "Request Scope Current" (RSC) object, as required by

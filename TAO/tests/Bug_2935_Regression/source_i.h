@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef SOURCE_I_H
 #define SOURCE_I_H
 
@@ -27,21 +26,20 @@
 class Source_i
 {
 public:
-  Source_i (ThreeTier_ptr target);
-
-  ~Source_i () = default;
-
-  bool parse_args (int argc, ACE_TCHAR *argv[]);
+  explicit Source_i (ThreeTier_ptr target);
+  Source_i (Source_i const &) = delete;
+  Source_i &operator= (Source_i const &) = delete;
+  Source_i (Source_i &&) = delete;
+  Source_i &operator= (Source_i &&) = delete;
 
   /// Execute the methods
   int run ();
 
 private:
-  ThreeTier_var target_;
+  ThreeTier_var const target_;
 
   // Number of messages to send (make this configurable)
-  unsigned long counter_;
+  unsigned long const counter_ {5};
 };
-
 
 #endif /* SOURCE_I_H */

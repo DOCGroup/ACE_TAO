@@ -7,8 +7,7 @@ test_i::test_i (CORBA::ORB_ptr orb,
                 PortableServer::POA_ptr poa,
                 long msec_sleep)
   : orb_ (CORBA::ORB::_duplicate (orb)),
-    poa_ (PortableServer::POA::_duplicate (poa)),
-    nap_time_ ()
+    poa_ (PortableServer::POA::_duplicate (poa))
 {
   this->nap_time_.msec (msec_sleep);
 }
@@ -18,12 +17,13 @@ test_i::method (CORBA::Long client_id,
                 CORBA::Long iteration)
 {
   // Get the ORB_Core's TSS resources.
-  TAO_ORB_Core_TSS_Resources *tss =
+  // Both pointers below are borrowed from the current thread's ORB resources.
+  TAO_ORB_Core_TSS_Resources * const tss =
     this->orb_->orb_core ()->get_tss_resources ();
 
   /// Get the lane attribute in TSS.
-  TAO_Thread_Lane *lane =
-    static_cast <TAO_Thread_Lane *> (tss->lane_);
+  TAO_Thread_Lane * const lane =
+    static_cast<TAO_Thread_Lane *> (tss->lane_);
 
   if (lane)
     ACE_DEBUG ((LM_DEBUG,

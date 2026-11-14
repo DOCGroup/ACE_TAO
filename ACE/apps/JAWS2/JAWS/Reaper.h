@@ -13,8 +13,6 @@
 
 #include "JAWS/Export.h"
 
-// A reaper class to reap the threads.
-
 class JAWS_Concurrency_Base;
 
 /**
@@ -30,10 +28,10 @@ class JAWS_Export JAWS_Reaper : public ACE_Task<ACE_SYNCH>
 {
 public:
   JAWS_Reaper (JAWS_Concurrency_Base *concurrency);
-  virtual ~JAWS_Reaper ();
+  ~JAWS_Reaper () override;
 
-  virtual int open (void * = 0);
-  virtual int svc ();
+  int open (void * = nullptr) override;
+  int svc () override;
 
 private:
   JAWS_Concurrency_Base *concurrency_;

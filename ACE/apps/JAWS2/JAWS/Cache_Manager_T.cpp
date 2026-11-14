@@ -72,17 +72,14 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
     {
       this->maxsize_ = 0;
 
-
       ACE_DES_FREE_TEMPLATE3(this->hash_, this->allocator_->free,
                              JAWS_Cache_Hash,
                              KEY, HASH_FUNC, EQ_FUNC);
-
 
       this->hash_ = 0;
       this->hashsize_ = 0;
     }
 }
-
 
 template <class KEY, class FACTORY, class HASH_FUNC, class EQ_FUNC> int
 JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
@@ -143,11 +140,9 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
       errno = ENOMEM;
       this->maxsize_ = 0;
 
-
       ACE_DES_FREE_TEMPLATE3(this->hash_, this->allocator_->free,
                              JAWS_Cache_Hash,
                              KEY, HASH_FUNC, EQ_FUNC);
-
 
       this->hash_ = 0;
       this->hashsize_ = 0;
@@ -177,7 +172,6 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>::close ()
                              JAWS_Cache_Hash,
                              KEY, HASH_FUNC, EQ_FUNC);
 
-
       this->hash_ = 0;
     }
 
@@ -186,7 +180,6 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>::close ()
       ACE_DES_FREE_TEMPLATE4(this->heap_, this->allocator_->free,
                              JAWS_Cache_List,
                              KEY, FACTORY, HASH_FUNC, EQ_FUNC);
-
 
       this->heap_ = 0;
     }
@@ -476,7 +469,6 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
   return this->FLUSH_i ();
 }
 
-
 template <class KEY, class DATA, class CACHE_MANAGER>
 JAWS_Cache_Proxy<KEY, DATA, CACHE_MANAGER>
 ::JAWS_Cache_Proxy (const KEY &key, Cache_Manager *manager)
@@ -532,6 +524,5 @@ JAWS_Cache_Proxy<KEY, DATA, CACHE_MANAGER>::close (DATA *)
 {
   return 0;
 }
-
 
 #endif /* JAWS_CACHE_MANAGER_T_CPP */

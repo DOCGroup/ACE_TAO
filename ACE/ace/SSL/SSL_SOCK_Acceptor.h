@@ -49,6 +49,11 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_SSL_Export ACE_SSL_SOCK_Acceptor : public ACE_SSL_SOCK
 {
 public:
+  ACE_SSL_SOCK_Acceptor (ACE_SSL_SOCK_Acceptor const &) = delete;
+  ACE_SSL_SOCK_Acceptor &operator= (ACE_SSL_SOCK_Acceptor const &) = delete;
+  ACE_SSL_SOCK_Acceptor (ACE_SSL_SOCK_Acceptor &&) = delete;
+  ACE_SSL_SOCK_Acceptor &operator= (ACE_SSL_SOCK_Acceptor &&) = delete;
+
   /// Default constructor.
   ACE_SSL_SOCK_Acceptor ();
 
@@ -65,12 +70,12 @@ public:
    *                   @c ACE_SOCK::get_local_addr(ACE_Addr&) method
    *                   upon return.
    */
-  ACE_SSL_SOCK_Acceptor (const ACE_Addr &local_sap,
-                         int reuse_addr = 0,
-                         int protocol_family = PF_UNSPEC,
-                         int backlog = ACE_DEFAULT_BACKLOG,
-                         int protocol = 0,
-                         int ipv6_only = 0);
+  explicit ACE_SSL_SOCK_Acceptor (const ACE_Addr &local_sap,
+                                  int reuse_addr = 0,
+                                  int protocol_family = PF_UNSPEC,
+                                  int backlog = ACE_DEFAULT_BACKLOG,
+                                  int protocol = 0,
+                                  int ipv6_only = 0);
 
   /**
    * Initiate a passive-mode QoS-enabled acceptor socket.

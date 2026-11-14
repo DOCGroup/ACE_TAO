@@ -4,54 +4,58 @@
 #include "ace/Mutex.h"
 #include "ace/OS_NS_strings.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://server.ior");
-int client_num = 1;
-int report_exception = 1;
-bool is_shutdown = false;
-int num_threads = 1;
-const ACE_TCHAR *test = ACE_TEXT("");
-int goal = 0;
+struct Client_Options
+{
+  ACE_TString ior {ACE_TEXT ("file://server.ior")};
+  int client_num {1};
+  bool report_exception {true};
+  bool is_shutdown {};
+  int num_threads {1};
+  ACE_TString test {};
+  int goal {};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("c:e:g:k:n:st:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("c:e:g:k:n:st:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'c':
-        client_num = ACE_OS::atoi(get_opts.opt_arg ());
+        options.client_num = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'e':
-        report_exception = ACE_OS::atoi(get_opts.opt_arg ());
+        options.report_exception = ACE_OS::atoi (get_opts.opt_arg ()) != 0;
         break;
       case 'g':
-        goal = ACE_OS::atoi(get_opts.opt_arg ());
+        options.goal = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
       case 'n':
-        num_threads = ACE_OS::atoi(get_opts.opt_arg ());
+        options.num_threads = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 's':
-        is_shutdown = true;
+        options.is_shutdown = true;
         break;
       case 't':
-        test = get_opts.opt_arg();
+        options.test = get_opts.opt_arg ();
         break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT("usage:  %C ")
-                           ACE_TEXT("[-c <client #>] ")
-                           ACE_TEXT("[-e (show exception) <0|1>] ")
-                           ACE_TEXT("[-k <ior>] ")
-                           ACE_TEXT("[-s (shutdownE)] ")
-                           ACE_TEXT("[-t <test> <goal>] ")
-                           ACE_TEXT("\n"),
+                           ACE_TEXT ("usage:  %s ")
+                           ACE_TEXT ("[-c <client #>] ")
+                           ACE_TEXT ("[-e (show exception) <0|1>] ")
+                           ACE_TEXT ("[-g <goal>] ")
+                           ACE_TEXT ("[-k <ior>] ")
+                           ACE_TEXT ("[-s (shutdownE)] ")
+                           ACE_TEXT ("[-t <test>] ")
+                           ACE_TEXT ("\n"),
                            argv [0]),
                           -1);
       }
@@ -62,15 +66,22 @@ parse_args (int argc, ACE_TCHAR *argv[])
 class ClientTask : public ACE_Task_Base
 {
 public:
-  ClientTask (Test::Hello_ptr h)
-  : replies_(0),
-    nis_(0),
-    exs_(0),
-    lock_(),
-    target_ (Test::Hello::_duplicate(h))
-  {}
+  ClientTask (Test::Hello_ptr h, int client_num)
+    : replies_ {},
+      nis_ {},
+      exs_ {},
+      lock_ {},
+      target_ (Test::Hello::_duplicate (h)),
+      next_client_num_ (client_num)
+  {
+  }
 
-  int svc ();
+  ClientTask (ClientTask const &) = delete;
+  ClientTask (ClientTask &&) = delete;
+  ClientTask &operator= (ClientTask const &) = delete;
+  ClientTask &operator= (ClientTask &&) = delete;
+
+  int svc () override;
 
   int replies_;
   int nis_;
@@ -78,59 +89,60 @@ public:
 
 private:
   ACE_Mutex lock_;
-  Test::Hello_var target_;
+  Test::Hello_var const target_;
+  int next_client_num_;
 };
 
 int ClientTask::svc ()
 {
-  int ndx = 0;
+  int ndx {};
   {
     ACE_GUARD_RETURN (ACE_Mutex, mon, this->lock_, -1);
-    ndx = client_num++;
+    ndx = this->next_client_num_++;
   }
 
-  for (int i = 5; i > 0; i--)
+  for (int i = 5; i > 0; --i)
     {
       try
         {
-          ACE_DEBUG((LM_DEBUG,
-                     ACE_TEXT("Client %d calling server\n"),
-                     ndx));
-          CORBA::String_var the_string = target_->get_string (ndx);
-          ACE_DEBUG((LM_DEBUG,
-                     ACE_TEXT("Client %d received return text of: [%s %d].\n"),
-                     ndx, the_string.in(), ndx));
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Client %d calling server\n"),
+                      ndx));
+          CORBA::String_var const the_string = target_->get_string (ndx);
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Client %d received return text of: [%s %d].\n"),
+                      ndx, the_string.in (), ndx));
           {
             ACE_GUARD_RETURN (ACE_Mutex, mon, this->lock_, -1);
-            this->replies_++;
+            ++this->replies_;
           }
         }
-      catch (const CORBA::NO_IMPLEMENT& )
+      catch (CORBA::NO_IMPLEMENT const &)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT("Client %d caught full queue exception.\n"),
+                      ACE_TEXT ("Client %d caught full queue exception.\n"),
                       ndx));
           {
             ACE_GUARD_RETURN (ACE_Mutex, mon, this->lock_, -1);
-            this->nis_++;
+            ++this->nis_;
           }
         }
-      catch (const CORBA::TRANSIENT& )
+      catch (CORBA::TRANSIENT const &)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT("Client %d caught transent, retrying.\n"),
+                      ACE_TEXT ("Client %d caught transient, retrying.\n"),
                       ndx));
           continue;
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const &ex)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT("Client %d caught other exception. %s\n"),
+                      ACE_TEXT ("Client %d caught other exception. %C\n"),
                       ndx, ex._name()));
 
           {
             ACE_GUARD_RETURN (ACE_Mutex, mon, this->lock_, -1);
-            this->exs_++;
+            ++this->exs_;
           }
         }
       break;
@@ -140,88 +152,83 @@ int ClientTask::svc ()
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int result = 0;
+  int result {};
+  Client_Options options;
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
-      CORBA::Object_var tmp =
-        orb->string_to_object(ior);
+      CORBA::Object_var const tmp =
+        orb->string_to_object (options.ior.c_str ());
 
-      Test::Hello_var hello =
-        Test::Hello::_narrow(tmp.in ());
+      Test::Hello_var const hello =
+        Test::Hello::_narrow (tmp.in ());
 
       if (CORBA::is_nil (hello.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Client: Nil Test::Hello reference <%s>\n",
-                             ior),
+                             ACE_TEXT ("Client: Nil Test::Hello reference <%s>\n"),
+                             options.ior.c_str ()),
                             -1);
         }
 
-      for (int i = 3; i > 0; i--)
+      for (int i = 3; i > 0; --i)
         {
           try
             {
-              if (hello->_non_existent())
+              if (hello->_non_existent ())
                 {
                   ACE_ERROR_RETURN ((LM_ERROR,
-                                     ACE_TEXT("Client: non_existent returns true\n")),
+                                     ACE_TEXT ("Client: non_existent returns true\n")),
                                     -1);
                 }
-              else
-                break;
+              break;
             }
-          catch (const CORBA::TRANSIENT &)
+          catch (CORBA::TRANSIENT const &)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT("Client: got a transient exception with %d tries remaining\n"),
-                          i-1));
+                          ACE_TEXT ("Client: got a transient exception with %d tries remaining\n"),
+                          i - 1));
             }
         }
 
-
-      if (is_shutdown)
-      {
-        hello->shutdown();
-      }
+      if (options.is_shutdown)
+        hello->shutdown ();
       else
-      {
-        ClientTask ct (hello.in());
-        ct.activate (THR_NEW_LWP | THR_JOINABLE, num_threads);
-        ct.wait ();
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT("Client: replies = %d, NO_IMPL = %d, other ex = %d\n"),
-                    ct.replies_, ct.nis_, ct.exs_));
-        if (ct.exs_ > 0)
-          {
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT("Client: ERROR: unexpected exception caught.\n")));
-            result = -1;
-          }
-        else if (ACE_OS::strcasecmp (test, ACE_TEXT ("max_queue")) == 0)
-          {
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT("Client: max_queue test, got %d overages, expected %d\n"),
-                        ct.nis_, goal));
-            if (ct.nis_ != goal)
-              {
+        {
+          ClientTask ct (hello.in (), options.client_num);
+          ct.activate (THR_NEW_LWP | THR_JOINABLE, options.num_threads);
+          ct.wait ();
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Client: replies = %d, NO_IMPL = %d, other ex = %d\n"),
+                      ct.replies_, ct.nis_, ct.exs_));
+          if (ct.exs_ > 0)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("Client: ERROR: unexpected exception caught.\n")));
+              result = -1;
+            }
+          else if (ACE_OS::strcasecmp (options.test.c_str (), ACE_TEXT ("max_queue")) == 0)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("Client: max_queue test, got %d overages, expected %d\n"),
+                          ct.nis_, options.goal));
+              if (ct.nis_ != options.goal)
                 result = -1;
-              }
-          }
-      }
+            }
+        }
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
-      if (report_exception)
-        ex._tao_print_exception (ACE_TEXT("Exception caught:"));
+      if (options.report_exception)
+        ex._tao_print_exception (ACE_TEXT ("Exception caught:"));
       return -1;
     }
 

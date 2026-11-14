@@ -61,7 +61,7 @@ ACE_Threading_Helper<ACE_Thread_Mutex>::set (void* p)
 void*
 ACE_Threading_Helper<ACE_Thread_Mutex>::get ()
 {
-  void* temp = nullptr;
+  void* temp {};
   if (ACE_Thread::getspecific (key_, &temp) == -1)
     ACELIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("(%P|%t) Service Config failed to get thread key value: %p\n"),
@@ -96,9 +96,8 @@ ACE_Threading_Helper<ACE_Null_Mutex>::get ()
   */
 using ACE_SERVICE_CONFIG_SINGLETON = ACE_Unmanaged_Singleton<ACE_Service_Config, ACE_SYNCH_RECURSIVE_MUTEX>;
 
-
 /// ctor
-ACE_Service_Config_Guard::ACE_Service_Config_Guard (ACE_Service_Gestalt * psg)
+ACE_Service_Config_Guard::ACE_Service_Config_Guard (ACE_Service_Gestalt *psg)
   : saved_ (ACE_Service_Config::current ())
 {
   if (ACE::debug ())
@@ -116,7 +115,7 @@ ACE_Service_Config_Guard::ACE_Service_Config_Guard (ACE_Service_Gestalt * psg)
 
 ACE_Service_Config_Guard::~ACE_Service_Config_Guard ()
 {
-  ACE_Service_Gestalt* s = this->saved_.get ();
+  ACE_Service_Gestalt *s = this->saved_.get ();
   ACE_ASSERT (s != nullptr);
 
   ACE_Service_Config::current (s);
@@ -129,11 +128,10 @@ ACE_Service_Config_Guard::~ACE_Service_Config_Guard ()
                 this->saved_->repo_));
 }
 
-
 ACE_ALLOC_HOOK_DEFINE (ACE_Service_Config)
 
 // Set the signal handler to point to the handle_signal() function.
-ACE_Sig_Adapter *ACE_Service_Config::signal_handler_ = nullptr;
+ACE_Sig_Adapter *ACE_Service_Config::signal_handler_ {};
 
 // Trigger a reconfiguration.
 sig_atomic_t ACE_Service_Config::reconfig_occurred_ = 0;
@@ -141,7 +139,7 @@ sig_atomic_t ACE_Service_Config::reconfig_occurred_ = 0;
 // = Set by command-line options.
 
 /// Pathname of file to write process id.
-ACE_TCHAR *ACE_Service_Config::pid_file_name_ = nullptr;
+ACE_TCHAR *ACE_Service_Config::pid_file_name_ {};
 
 /// Shall we become a daemon process?
 bool ACE_Service_Config::be_a_daemon_ = false;
@@ -210,7 +208,6 @@ ACE_Service_Config::parse_args_i (int argc, ACE_TCHAR *argv[])
 
   return 0;
 } /* parse_args_i () */
-
 
 int
 ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
@@ -333,7 +330,6 @@ ACE_Service_Config::insert (ACE_Static_Svc_Descriptor* stsd)
   return ACE_Service_Config::instance ()->insert (stsd);
 }
 
-
 // Totally remove <svc_name> from the daemon by removing it from the
 // ACE_Reactor, and unlinking it if necessary.
 int
@@ -366,7 +362,6 @@ ACE_Service_Config::resume (const ACE_TCHAR svc_name[])
   return ACE_Service_Repository::instance ()->resume (svc_name);
 }
 
-
 ACE_Service_Config::ACE_Service_Config (bool ignore_static_svcs,
                                         size_t size,
                                         int signum)
@@ -376,31 +371,29 @@ ACE_Service_Config::ACE_Service_Config (bool ignore_static_svcs,
   // TODO: Need to find a more customizable way of instantiating the
   // gestalt but perhaps we should leave this out untill such
   // customizations are identified.
-  ACE_Service_Gestalt* tmp = nullptr;
+  ACE_Service_Gestalt *tmp {};
   ACE_NEW_NORETURN (tmp,
                     ACE_Service_Gestalt (size, false, ignore_static_svcs));
 
-  this->is_opened_ = false;
-  this->instance_ = tmp;
+  this->instance_.reset (tmp);
   this->threadkey_.set (tmp);
 
   ACE_Service_Config::signum_ = signum;
 }
 
-ACE_Service_Config::ACE_Service_Config (const ACE_TCHAR program_name[],
-                                        const ACE_TCHAR *logger_key)
+ACE_Service_Config::ACE_Service_Config (ACE_TCHAR const program_name[],
+                                        ACE_TCHAR const *logger_key)
 {
   ACE_TRACE ("ACE_Service_Config::ACE_Service_Config");
 
   // TODO: Need to find a more customizable way of instantiating the
   // gestalt but perhaps we should leave this out untill such
   // customizations are identified.
-  ACE_Service_Gestalt* tmp = nullptr;
+  ACE_Service_Gestalt *tmp {};
   ACE_NEW_NORETURN (tmp,
                     ACE_Service_Gestalt (ACE_Service_Repository::DEFAULT_SIZE, false));
 
-  this->is_opened_ = false;
-  this->instance_ = tmp;
+  this->instance_.reset (tmp);
   this->threadkey_.set (tmp);
 
   if (this->open (program_name,
@@ -447,7 +440,6 @@ ACE_Service_Config::current (ACE_Service_Gestalt* newcurrent)
   ACE_Service_Config::singleton()->threadkey_.set (newcurrent);
 }
 
-
 #if (ACE_USES_CLASSIC_SVC_CONF == 0)
 ACE_Service_Type *
 ACE_Service_Config::create_service_type  (const ACE_TCHAR *n,
@@ -455,7 +447,7 @@ ACE_Service_Config::create_service_type  (const ACE_TCHAR *n,
                                           ACE_DLL &dll,
                                           int active)
 {
-  ACE_Service_Type *sp = nullptr;
+  ACE_Service_Type *sp {};
   ACE_NEW_RETURN (sp,
                   ACE_Service_Type (n, o, dll, active),
                   0);
@@ -470,7 +462,7 @@ ACE_Service_Config::create_service_type_impl (const ACE_TCHAR *name,
                                               u_int flags,
                                               ACE_Service_Object_Exterminator gobbler)
 {
-  ACE_Service_Type_Impl *stp = nullptr;
+  ACE_Service_Type_Impl *stp {};
 
   // Note, the only place we need to put a case statement.  This is
   // also the place where we'd put the RTTI tests, if the compiler
@@ -503,7 +495,6 @@ ACE_Service_Config::create_service_type_impl (const ACE_TCHAR *name,
   return stp;
 }
 
-
 // Signal handling API to trigger dynamic reconfiguration.
 void
 ACE_Service_Config::handle_signal (int sig, siginfo_t *, ucontext_t *)
@@ -528,7 +519,7 @@ ACE_Service_Config::reconfigure ()
   if (ACE::debug ())
     {
 #if !defined (ACE_NLOGGING)
-      time_t t = ACE_OS::time (nullptr);
+      time_t const t = ACE_OS::time (nullptr);
 
       if (ACE::debug ())
         ACELIB_DEBUG ((LM_DEBUG,
@@ -557,7 +548,6 @@ ACE_Service_Config::close ()
 
   return 0;
 }
-
 
 int
 ACE_Service_Config::fini_svcs ()

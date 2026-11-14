@@ -2,8 +2,9 @@
 #define ACE_BUFFERED_STREAM_BUFFER_CPP
 
 #include "ace/INet/BufferedStreamBuffer.h"
-#include "ace/OS_Memory.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
+#include <new>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -17,11 +18,11 @@ namespace ACE
         typename std::basic_ios<ACE_CHAR_T, TR>::openmode mode)
       : bufsize_ (bufsz),
         mode_ (mode),
-        interceptor_ (0)
+        interceptor_ (nullptr)
       {
-        char_type* p = 0;
-        ACE_NEW_NORETURN (p, char_type [bufsz]);
-        this->buffer_.reset (p);
+        this->buffer_.reset (new (std::nothrow) char_type [bufsz]);
+        if (!this->buffer_)
+          throw std::bad_alloc ();
 
         this->setg (this->buffer_.get () + 4,
                     this->buffer_.get () + 4,
@@ -31,9 +32,7 @@ namespace ACE
       }
 
     template <class ACE_CHAR_T, class TR>
-    BasicBufferedStreamBuffer<ACE_CHAR_T, TR>::~BasicBufferedStreamBuffer ()
-      {
-      }
+    BasicBufferedStreamBuffer<ACE_CHAR_T, TR>::~BasicBufferedStreamBuffer () = default;
 
     template <class ACE_CHAR_T, class TR>
     typename BasicBufferedStreamBuffer<ACE_CHAR_T, TR>::int_type
@@ -63,9 +62,9 @@ namespace ACE
         int putback = int (this->gptr () - this->eback ());
         if (putback > 4) putback = 4;
 
-        ACE_OS::memmove (this->buffer_.get () + (4 - putback),
-                         this->gptr () - putback,
-                         putback * sizeof (char_type));
+        std::memmove (this->buffer_.get () + (4 - putback),
+                      this->gptr () - putback,
+                      putback * sizeof (char_type));
 
         if (this->interceptor_)
           this->interceptor_->before_read (this->bufsize_ - 4);

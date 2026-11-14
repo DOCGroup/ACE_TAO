@@ -1,6 +1,5 @@
 #include "McastHello.h"
 
-
 McastHello::McastHello (CORBA::ORB_ptr orb,
                         int instance)
   : orb_ (CORBA::ORB::_duplicate (orb)),

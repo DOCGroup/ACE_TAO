@@ -17,23 +17,21 @@ TAO_CosNotify_Service::TAO_CosNotify_Service ()
 {
 }
 
-TAO_CosNotify_Service::~TAO_CosNotify_Service ()
-{
-}
+TAO_CosNotify_Service::~TAO_CosNotify_Service () = default;
 
 int
 TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
-  const ACE_TCHAR *current_arg = nullptr;
+  const ACE_TCHAR *current_arg {};
 
   // Default to an all reactive system.
-  int ec_threads = 0;
-  int consumer_threads = 0;
-  int supplier_threads = 0;
+  int ec_threads {};
+  int consumer_threads {};
+  int supplier_threads {};
 
-  bool task_per_proxy = false;
+  bool task_per_proxy {};
 
   TAO_Notify_Properties *properties = TAO_Notify_PROPERTIES::instance();
 
@@ -99,7 +97,7 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
         {
           arg_shifter.consume_arg ();
 
-          properties->updates (0);
+          properties->updates (false);
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-AllocateTaskperProxy")) == 0)
         {
@@ -110,7 +108,7 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
         {
           current_arg = arg_shifter.get_the_parameter
                                 (ACE_TEXT("-UseSeparateDispatchingORB"));
-          if (current_arg != 0 &&
+          if (current_arg != nullptr &&
               (ACE_OS::strcmp(ACE_TEXT ("0"), current_arg) == 0 ||
                ACE_OS::strcmp(ACE_TEXT ("1"), current_arg) == 0))
             {
@@ -125,9 +123,9 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
                           ACE_TEXT ("(%P|%t) WARNING: Unrecognized ")
                           ACE_TEXT ("argument (%s).  Ignoring invalid ")
                           ACE_TEXT ("-UseSeparateDispatchingORB usage.\n"),
-                          (current_arg == 0 ? ACE_TEXT ("''") : current_arg)));
+                          (current_arg == nullptr ? ACE_TEXT ("''") : current_arg)));
             }
-          if (current_arg != 0)
+          if (current_arg != nullptr)
             arg_shifter.consume_arg ();
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-AllowReconnect")) == 0)
@@ -140,9 +138,9 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
         current_arg = arg_shifter.get_the_parameter
                       (ACE_TEXT("-DefaultConsumerAdminFilterOp"));
         CosNotifyChannelAdmin::InterFilterGroupOperator op = CosNotifyChannelAdmin::OR_OP;
-        if (current_arg != 0 && (ACE_OS::strcmp(ACE_TEXT ("AND"), current_arg) == 0))
+        if (current_arg != nullptr && (ACE_OS::strcmp(ACE_TEXT ("AND"), current_arg) == 0))
                       op = CosNotifyChannelAdmin::AND_OP;
-        else if (current_arg != 0 && (ACE_OS::strcmp(ACE_TEXT ("OR"), current_arg) == 0))
+        else if (current_arg != nullptr && (ACE_OS::strcmp(ACE_TEXT ("OR"), current_arg) == 0))
                       op = CosNotifyChannelAdmin::OR_OP;
         else
           {
@@ -150,7 +148,7 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
                         ACE_TEXT ("(%P|%t) WARNING: Unrecognized ")
                         ACE_TEXT ("argument (%s).  Ignoring invalid ")
                         ACE_TEXT ("-DefaultConsumerAdminFilterOp usage.\n"),
-                        (current_arg == 0 ? ACE_TEXT ("''") : current_arg)));
+                        (current_arg == nullptr ? ACE_TEXT ("''") : current_arg)));
           }
         properties->defaultConsumerAdminFilterOp (op);
         arg_shifter.consume_arg ();
@@ -160,9 +158,9 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
         current_arg = arg_shifter.get_the_parameter
                       (ACE_TEXT("-DefaultSupplierAdminFilterOp"));
         CosNotifyChannelAdmin::InterFilterGroupOperator op = CosNotifyChannelAdmin::OR_OP;
-        if (current_arg != 0 && (ACE_OS::strcmp(ACE_TEXT ("AND"), current_arg) == 0))
+        if (current_arg != nullptr && (ACE_OS::strcmp(ACE_TEXT ("AND"), current_arg) == 0))
                       op = CosNotifyChannelAdmin::AND_OP;
-        else if (current_arg != 0 && (ACE_OS::strcmp(ACE_TEXT ("OR"), current_arg) == 0))
+        else if (current_arg != nullptr && (ACE_OS::strcmp(ACE_TEXT ("OR"), current_arg) == 0))
                       op = CosNotifyChannelAdmin::OR_OP;
         else
           {
@@ -170,7 +168,7 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
                         ACE_TEXT ("(%P|%t) WARNING: Unrecognized ")
                         ACE_TEXT ("argument (%s).  Ignoring invalid ")
                         ACE_TEXT ("-DefaultSupplierAdminFilterOp usage.\n"),
-                        (current_arg == 0 ? ACE_TEXT ("''") : current_arg)));
+                        (current_arg == nullptr ? ACE_TEXT ("''") : current_arg)));
           }
         properties->defaultSupplierAdminFilterOp (op);
         arg_shifter.consume_arg ();
@@ -184,7 +182,7 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-ValidateClientDelay")) == 0)
       {
         current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-ValidateClientDelay"));
-        if (current_arg != 0)
+        if (current_arg != nullptr)
         {
           ACE_Time_Value tv (ACE_OS::atoi (current_arg));
           TAO_Notify_PROPERTIES::instance()->validate_client_delay (tv);
@@ -195,15 +193,15 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
             ACE_TEXT ("(%P|%t) WARNING: Unrecognized ")
             ACE_TEXT ("argument (%s).  Ignoring invalid ")
             ACE_TEXT ("-ValidateClientDelay usage.\n"),
-            (current_arg == 0 ? ACE_TEXT ("''") : current_arg)));
+            (current_arg == nullptr ? ACE_TEXT ("''") : current_arg)));
         }
-        if (current_arg != 0)
+        if (current_arg != nullptr)
           arg_shifter.consume_arg ();
       }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-ValidateClientInterval")) == 0)
       {
         current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-ValidateClientInterval"));
-        if (current_arg != 0)
+        if (current_arg != nullptr)
         {
           ACE_Time_Value tv (ACE_OS::atoi (current_arg));
           TAO_Notify_PROPERTIES::instance()->validate_client_interval (tv);
@@ -214,9 +212,9 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
             ACE_TEXT ("(%P|%t) WARNING: Unrecognized ")
             ACE_TEXT ("argument (%s).  Ignoring invalid ")
             ACE_TEXT ("-ValidateClientDelay usage.\n"),
-            (current_arg == 0 ? ACE_TEXT ("''") : current_arg)));
+            (current_arg == nullptr ? ACE_TEXT ("''") : current_arg)));
         }
-        if (current_arg != 0)
+        if (current_arg != nullptr)
           arg_shifter.consume_arg ();
       }
       else
@@ -321,8 +319,8 @@ TAO_CosNotify_Service::init_service (CORBA::ORB_ptr orb)
         {
           ORBSVCS_DEBUG ((LM_DEBUG, "No dispatching orb supplied. Creating default one.\n"));
 
-          int argc = 0;
-          ACE_TCHAR *argv0 = nullptr;
+          int argc {};
+          ACE_TCHAR *argv0 {};
           ACE_TCHAR **argv = &argv0;  // ansi requires argv be null terminated.
           CORBA::ORB_var dispatcher = CORBA::ORB_init (argc, argv,
                                                        "default_dispatcher");
@@ -360,7 +358,7 @@ TAO_CosNotify_Service::finalize_service (
   CosNotifyChannelAdmin::ChannelIDSeq_var channels =
     ecf->get_all_channels ();
   CORBA::ULong length = channels->length ();
-  for(CORBA::ULong i = 0; i < length; i++)
+  for(CORBA::ULong i {}; i < length; ++i)
     {
       try
         {
@@ -408,11 +406,11 @@ TAO_CosNotify_Service::init_i (CORBA::ORB_ptr orb)
 
   // Init the factory
   this->factory_.reset (this->create_factory ());
-  ACE_ASSERT( this->factory_.get() != 0 );
+  ACE_ASSERT( this->factory_.get() != nullptr );
   TAO_Notify_PROPERTIES::instance()->factory (this->factory_.get());
 
   this->builder_.reset (this->create_builder ());
-  ACE_ASSERT( this->builder_.get() != 0 );
+  ACE_ASSERT( this->builder_.get() != nullptr );
   TAO_Notify_PROPERTIES::instance()->builder (this->builder_.get());
 }
 
@@ -439,11 +437,11 @@ TAO_CosNotify_Service::init_i2 (CORBA::ORB_ptr orb, CORBA::ORB_ptr dispatching_o
 
   // Init the factory and builder
   this->factory_.reset (this->create_factory ());
-  ACE_ASSERT( this->factory_.get() != 0 );
+  ACE_ASSERT( this->factory_.get() != nullptr );
   TAO_Notify_PROPERTIES::instance()->factory (this->factory_.get());
 
   this->builder_.reset (this->create_builder ());
-  ACE_ASSERT( this->builder_.get() != 0 );
+  ACE_ASSERT( this->builder_.get() != nullptr );
   TAO_Notify_PROPERTIES::instance()->builder (this->builder_.get());
 }
 
@@ -451,7 +449,7 @@ TAO_Notify_Factory*
 TAO_CosNotify_Service::create_factory ()
 {
   TAO_Notify_Factory* factory = ACE_Dynamic_Service<TAO_Notify_Factory>::instance ("TAO_Notify_Factory");
-  if (factory == 0)
+  if (factory == nullptr)
     {
        ACE_NEW_THROW_EX (factory,
                          TAO_Notify_Default_Factory (),
@@ -463,7 +461,7 @@ TAO_CosNotify_Service::create_factory ()
 TAO_Notify_Builder*
 TAO_CosNotify_Service::create_builder ()
 {
-  TAO_Notify_Builder* builder = nullptr;
+  TAO_Notify_Builder* builder {};
   ACE_NEW_THROW_EX (builder,
                     TAO_Notify_Builder (),
                     CORBA::NO_MEMORY ());
@@ -487,14 +485,14 @@ TAO_CosNotify_Service::remove (TAO_Notify_EventChannelFactory* /*ecf*/)
 TAO_Notify_Factory&
 TAO_CosNotify_Service::factory ()
 {
-  ACE_ASSERT( this->factory_.get() != 0 );
+  ACE_ASSERT( this->factory_.get() != nullptr );
   return *this->factory_;
 }
 
 TAO_Notify_Builder&
 TAO_CosNotify_Service::builder ()
 {
-  ACE_ASSERT( this->builder_.get() != 0 );
+  ACE_ASSERT( this->builder_.get() != nullptr );
   return *this->builder_;
 }
 
@@ -517,7 +515,6 @@ ACE_STATIC_SVC_DEFINE (TAO_CosNotify_Service,
                        &ACE_SVC_NAME (TAO_CosNotify_Service),
                        ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
-
 
 ACE_FACTORY_DEFINE (TAO_Notify_Serv, TAO_CosNotify_Service)
 

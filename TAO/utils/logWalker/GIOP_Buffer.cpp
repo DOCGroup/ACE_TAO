@@ -1,21 +1,22 @@
 #include "GIOP_Buffer.h"
-#include "ace/OS_NS_string.h"
 #include "ace/Log_Msg.h"
+
+#include <cstdlib>
+#include <cstring>
 
 static const char *size_leadin_1_5 = "GIOP v1."; //"x msg, ";
 static size_t leadin_len_1_5 = 15;
 static const char *size_leadin_1_6 = "GIOP message v1."; //2, ";
 static size_t leadin_len_1_6 = 19;
 
-
-const char *GIOP_Buffer::size_leadin = 0;
-size_t GIOP_Buffer::leadin_len = 0;
+const char *GIOP_Buffer::size_leadin = nullptr;
+size_t GIOP_Buffer::leadin_len {};
 const size_t GIOP_Buffer::giop_header_len = 12;
 
 void
 GIOP_Buffer::init_leadin (int version)
 {
-  if (size_leadin == 0)
+  if (size_leadin == nullptr)
     {
       if (version == 150)
         {
@@ -100,29 +101,28 @@ struct ReplyHeader_1_0 { // Renamed from ReplyHeader
 
  */
 
-
 //static const size_t target_offset_12 = GIOP_Buffer::giop_header_len + 12;
 
 // 12 = req_id + flags + RESVD + addr disp.
 
 GIOP_Buffer::GIOP_Buffer()
-  : cdr_ (0),
+  : cdr_ (nullptr),
     preamble_(),
     log_offset_(0),
-    thr_(0),
+    thr_ (nullptr),
     time_(),
     expected_req_id_(0),
     expected_size_(0),
     expected_type_(0),
     buffer_size_(0),
-    wr_pos_ (0),
-    octets_ (0),
-    owner_ (0),
+    wr_pos_ (nullptr),
+    octets_ (nullptr),
+    owner_ (nullptr),
     buffer_lost_ (false),
     sending_(false),
-    oid_ (0),
+    oid_ (nullptr),
     oid_len_ (0),
-    opname_ (0),
+    opname_ (nullptr),
     req_id_ (0),
     resp_exp_ (0),
     reply_status_ (0),
@@ -130,7 +130,7 @@ GIOP_Buffer::GIOP_Buffer()
     msg_size_ (0),
     num_contexts_ (0),
     header_parsed_ (false),
-    payload_start_ (0),
+    payload_start_ (nullptr),
     payload_size_ (0)
 {
 }
@@ -139,7 +139,7 @@ GIOP_Buffer::GIOP_Buffer(const char *text,
                          size_t offset,
                          Thread *thread,
                          Invocation *owner)
-  : cdr_ (0),
+  : cdr_ (nullptr),
     preamble_(text),
     log_offset_(offset),
     thr_(thread),
@@ -148,14 +148,14 @@ GIOP_Buffer::GIOP_Buffer(const char *text,
     expected_size_(0),
     expected_type_(0),
     buffer_size_(0),
-    wr_pos_ (0),
-    octets_ (0),
+    wr_pos_ (nullptr),
+    octets_ (nullptr),
     owner_ (owner),
     buffer_lost_ (false),
     sending_(false),
-    oid_ (0),
+    oid_ (nullptr),
     oid_len_ (0),
-    opname_ (0),
+    opname_ (nullptr),
     req_id_ (0),
     resp_exp_ (0),
     reply_status_ (0),
@@ -163,20 +163,20 @@ GIOP_Buffer::GIOP_Buffer(const char *text,
     msg_size_ (0),
     num_contexts_ (0),
     header_parsed_ (false),
-    payload_start_ (0),
+    payload_start_ (nullptr),
     payload_size_ (0)
 {
-  const char *size_str = ACE_OS::strstr(text, size_leadin);
-  if (size_str != 0)
+  const char *size_str = std::strstr (text, size_leadin);
+  if (size_str != nullptr)
     {
       size_str += leadin_len; //ACE_OS::strlen (size_leadin);
       //      size_str += 3;
-      this->expected_size_ = ACE_OS::strtol(size_str, 0, 10);
-      const char *id = ACE_OS::strchr(size_str, '[') + 1;
-      this->expected_req_id_ = ACE_OS::strtol(id, 0, 10);
+      this->expected_size_ = std::strtol (size_str, nullptr, 10);
+      const char *id = std::strchr (size_str, '[') + 1;
+      this->expected_req_id_ = std::strtol (id, nullptr, 10);
     }
-  this->sending_ = ACE_OS::strstr(text,"send") ? 0 : 1;
-  this->expected_type_ = ACE_OS::strstr(text,"Request") ? 0 : 1;
+  this->sending_ = std::strstr (text, "send") ? 0 : 1;
+  this->expected_type_ = std::strstr (text, "Request") ? 0 : 1;
 }
 
 void
@@ -196,21 +196,21 @@ GIOP_Buffer::init_buf (const char *text, size_t offset)
 {
   // GIOP message -  HEXDUMP
   this->log_offset_ = offset;
-  const char * size_str = ACE_OS::strstr (text,"HEXDUMP ") + 8;
-  this->buffer_size_ = ACE_OS::strtol (size_str, 0, 10);
+  const char *size_str = std::strstr (text, "HEXDUMP ") + 8;
+  this->buffer_size_ = std::strtol (size_str, nullptr, 10);
   this->payload_size_ = this->buffer_size_ - 12;
-  size_str =  ACE_OS::strstr (text,"showing first ");
-  if (size_str != 0)
+  size_str = std::strstr (text, "showing first ");
+  if (size_str != nullptr)
     {
       size_str += 14;
-      this->buffer_size_ = ACE_OS::strtol (size_str, 0, 10);
+      this->buffer_size_ = std::strtol (size_str, nullptr, 10);
     }
-  if (this->octets_ != 0)
+  if (this->octets_ != nullptr)
     {
       delete [] this->octets_;
     }
   this->octets_ = new char [this->buffer_size_];
-  ACE_OS::memset (this->octets_, 0, this->buffer_size_);
+  std::memset (this->octets_, 0, this->buffer_size_);
   this->wr_pos_ = this->octets_;
 }
 
@@ -222,7 +222,7 @@ GIOP_Buffer::~GIOP_Buffer()
 int
 GIOP_Buffer::add_octets (const char *text, size_t offset)
 {
-  if (this->octets_ == 0)
+  if (this->octets_ == nullptr)
     {
       this->init_buf(text, offset);
       return 0;
@@ -230,7 +230,7 @@ GIOP_Buffer::add_octets (const char *text, size_t offset)
 
   const char *c = text;
   char *err;
-  for (int count = 0;
+  for (int count {};
        count < 16 && this->cur_size() < this->buffer_size_;
        count++)
     {
@@ -243,7 +243,7 @@ GIOP_Buffer::add_octets (const char *text, size_t offset)
       c = err+1;
     }
   size_t cs = this->cur_size();
-  int rtn = 0;
+  int rtn {};
   if (!this->header_parsed_)
     {
       this->header_parsed_ = this->parse_header();
@@ -280,7 +280,7 @@ GIOP_Buffer::is_full () const
 char
 GIOP_Buffer::type () const
 {
-  if (this->octets_ == 0)
+  if (this->octets_ == nullptr)
     return 127;
   return this->octets_[7];
 }
@@ -312,7 +312,7 @@ GIOP_Buffer::num_contexts () const
 bool
 GIOP_Buffer::is_oneway ()
 {
-  if (this->octets_ == 0)
+  if (this->octets_ == nullptr)
     {
       return false;
     }
@@ -378,7 +378,7 @@ GIOP_Buffer::expected_req_id () const
 size_t
 GIOP_Buffer::actual_req_id ()
 {
-  if (this->octets_ == 0)
+  if (this->octets_ == nullptr)
     return 0;
 
   if (!this->header_parsed_)
@@ -423,7 +423,7 @@ GIOP_Buffer::parse_svc_contexts ()
 bool
 GIOP_Buffer::parse_header ()
 {
-  if (this->octets_ == 0 || this->cur_size() < 12)
+  if (this->octets_ == nullptr || this->cur_size() < 12)
     {
       return false;
     }
@@ -516,16 +516,16 @@ GIOP_Buffer::parse_header ()
 const char *
 GIOP_Buffer::target_oid (size_t &len)
 {
-  if (this->octets_ == 0)
+  if (this->octets_ == nullptr)
     {
-      return 0;
+      return nullptr;
     }
 
   if (!this->header_parsed_)
     this->header_parsed_ = this->parse_header();
 
-  if (this->oid_ == 0)
-    return 0;
+  if (this->oid_ == nullptr)
+    return nullptr;
 
   len = this->oid_len_;
   return this->oid_;
@@ -534,8 +534,8 @@ GIOP_Buffer::target_oid (size_t &len)
 const char *
 GIOP_Buffer::operation ()
 {
-  if (octets_ == 0)
-    return 0;
+  if (octets_ == nullptr)
+    return nullptr;
 
   if (!this->header_parsed_)
     this->header_parsed_ = this->parse_header();
@@ -546,7 +546,7 @@ GIOP_Buffer::operation ()
 ACE_InputCDR &
 GIOP_Buffer::payload ()
 {
-  if (octets_ != 0 && !this->header_parsed_)
+  if (octets_ != nullptr && !this->header_parsed_)
     this->header_parsed_ = this->parse_header();
   return *this->cdr_;
 }
@@ -554,7 +554,7 @@ GIOP_Buffer::payload ()
 bool
 GIOP_Buffer::has_octets () const
 {
-  return (octets_ != 0);
+  return (octets_ != nullptr);
 }
 
 bool
@@ -585,13 +585,13 @@ GIOP_Buffer::matches (GIOP_Buffer *other) const
 void
 GIOP_Buffer::reset ()
 {
-  this->octets_ = 0;
-  this->wr_pos_ = 0;
+  this->octets_ = nullptr;
+  this->wr_pos_ = nullptr;
   this->buffer_size_ = 0;
   this->payload_size_ = 0;
   this->buffer_lost_ = true;
   this->header_parsed_ = false;
-  this->opname_ = 0;
+  this->opname_ = nullptr;
 }
 
 void

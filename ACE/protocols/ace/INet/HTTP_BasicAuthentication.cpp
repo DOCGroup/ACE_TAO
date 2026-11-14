@@ -6,7 +6,6 @@
 #include "ace/INet/HTTP_BasicAuthentication.inl"
 #endif
 
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
@@ -47,9 +46,7 @@ namespace ACE
         }
       }
 
-    BasicAuthentication::~BasicAuthentication()
-      {
-      }
+    BasicAuthentication::~BasicAuthentication() = default;
 
     void BasicAuthentication::set_credentials (Request& request) const
       {

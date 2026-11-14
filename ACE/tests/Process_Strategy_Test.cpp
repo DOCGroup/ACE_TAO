@@ -30,6 +30,7 @@
 //=============================================================================
 
 #include "test_config.h"
+#include <cstring>
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Acceptor.h"
@@ -74,7 +75,6 @@ connection_completed ()
     ACE_Reactor::instance()->wakeup_all_threads ();
 }
 
-// Constructor
 Process_Strategy::Process_Strategy (size_t n_processes,
                                     ACE_Event_Handler *acceptor,
                                     ACE_Reactor *r,
@@ -335,7 +335,7 @@ Counting_Service::inc ()
               ACE_TEXT ("(%P|%t) incrementing count from %d to %d\n"),
               count,
               count + 1));
-  count++;
+  ++count;
 
   if (ACE_OS::pwrite (OPTIONS::instance ()->file_lock ().get_handle (),
                       (const void *) &count,
@@ -382,12 +382,10 @@ Counting_Service::handle_input (ACE_HANDLE)
                   bytes,
                   ACE_TEXT_CHAR_TO_TCHAR (buf)));
       // Read and return the current value in the file.
-      if (ACE_OS::strncmp (buf,
-                           "read",
-                           4) == 0)
+      if (std::strncmp (buf, "read", 4) == 0)
         return this->read ();
       // Increment the current value in the file.
-      else if (ACE_OS::strncmp (buf, "inc", 3) == 0)
+      else if (std::strncmp (buf, "inc", 3) == 0)
         return this->inc ();
       else
         ACE_DEBUG ((LM_DEBUG,
@@ -483,7 +481,7 @@ client (void *arg)
   for (i = 0; i < ACE_MAX_ITERATIONS; i++)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) client iteration %d\n"),
+                  ACE_TEXT ("(%P|%t) client iteration %B\n"),
                   i));
       if (connector.connect (stream,
                              server_addr) == -1)
@@ -564,13 +562,13 @@ client (void *arg)
                                                     ACE_TEXT (' ')));
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) count = %d\n"),
+                  ACE_TEXT ("(%P|%t) count = %B\n"),
                   count));
       // Make sure that the count is correct.
       if (count != ACE_MAX_ITERATIONS)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("Error: Count invalid, has %d expected %d\n"),
+                             ACE_TEXT ("Error: Count invalid, has %B expected %d\n"),
                              count, ACE_MAX_ITERATIONS),
                             0);
         }

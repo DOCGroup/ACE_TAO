@@ -8,6 +8,8 @@
 #include "tao/CDR.h"
 #include "tao/SystemException.h"
 #include <memory>
+#include <new>
+#include <utility>
 
 #if !defined(__ACE_INLINE__)
 #include "tao/Connector_Registry.inl"
@@ -20,21 +22,15 @@ TAO_Connector_Registry::TAO_Connector_Registry () = default;
 TAO_Connector_Registry::~TAO_Connector_Registry ()
 {
   this->close_all ();
-
-  delete [] this->connectors_;
 }
 
 TAO_Connector *
 TAO_Connector_Registry::get_connector (CORBA::ULong tag) const
 {
-  const TAO_ConnectorSetIterator end = this->end ();
-
-  for (TAO_ConnectorSetIterator connector = this->begin ();
-       connector != end;
-       ++connector)
+  for (std::unique_ptr<TAO_Connector> const& connector : this->connectors_)
     {
-      if ((*connector)->tag () == tag)
-        return *connector;
+      if (connector->tag () == tag)
+        return connector.get ();
     }
 
   return nullptr;
@@ -46,12 +42,19 @@ TAO_Connector_Registry::open (TAO_ORB_Core *orb_core)
   TAO_ProtocolFactorySet * const pfs =
     orb_core->protocol_factories ();
 
-  // The array containing the TAO_Connectors will never contain more
+  // The vector containing the TAO_Connectors will never contain more
   // than the number of loaded protocols in the ORB core.
-  if (this->connectors_ == nullptr)
-    ACE_NEW_RETURN (this->connectors_,
-                    TAO_Connector *[pfs->size ()],
-                    -1);
+  if (pfs->size () > this->connectors_.max_size () - this->connectors_.size ())
+    return -1;
+
+  try
+    {
+      this->connectors_.reserve (this->connectors_.size () + pfs->size ());
+    }
+  catch (std::bad_alloc const&)
+    {
+      return -1;
+    }
 
   // Open one connector for each loaded protocol!
   const TAO_ProtocolFactorySetItor end = pfs->end ();
@@ -60,21 +63,21 @@ TAO_Connector_Registry::open (TAO_ORB_Core *orb_core)
        factory != end;
        ++factory)
     {
-      std::unique_ptr <TAO_Connector> connector ((*factory)->factory ()->make_connector ());
+      std::unique_ptr<TAO_Connector> connector ((*factory)->factory ()->make_connector ());
 
-      if (connector.get ())
+      if (connector != nullptr)
         {
-         if (connector->open (orb_core) != 0)
-           {
-             TAOLIB_ERROR_RETURN ((LM_ERROR,
-                                ACE_TEXT ("TAO (%P|%t) - TAO_Connector_Registry")
-                                ACE_TEXT ("::open: unable to open connector for ")
-                                ACE_TEXT ("<%C>.\n"),
-                                (*factory)->protocol_name ().c_str ()),
-                               -1);
-           }
+          if (connector->open (orb_core) != 0)
+            {
+              TAOLIB_ERROR_RETURN ((LM_ERROR,
+                                    ACE_TEXT ("TAO (%P|%t) - TAO_Connector_Registry")
+                                    ACE_TEXT ("::open: unable to open connector for ")
+                                    ACE_TEXT ("<%C>.\n"),
+                                    (*factory)->protocol_name ().c_str ()),
+                                   -1);
+            }
 
-         this->connectors_[this->size_++] = connector.release ();
+          this->connectors_.push_back (std::move (connector));
         }
       else
         return -1;
@@ -86,21 +89,13 @@ TAO_Connector_Registry::open (TAO_ORB_Core *orb_core)
 int
 TAO_Connector_Registry::close_all ()
 {
-  const TAO_ConnectorSetIterator end = this->end ();
-
-  for (TAO_ConnectorSetIterator i = this->begin ();
-       i != end;
-       ++i)
+  for (std::unique_ptr<TAO_Connector> const& connector : this->connectors_)
     {
-      if (*i == nullptr)
-        continue;
-
-      (*i)->close ();
-
-      delete *i;
+      if (connector != nullptr)
+        connector->close ();
     }
 
-  this->size_ = 0;
+  this->connectors_.clear ();
 
   return 0;
 }
@@ -117,18 +112,13 @@ TAO_Connector_Registry::make_mprofile (const char *ior,
         EINVAL),
       CORBA::COMPLETED_NO);
 
-  const TAO_ConnectorSetIterator first_connector = this->begin ();
-  const TAO_ConnectorSetIterator last_connector = this->end ();
-
-  for (TAO_ConnectorSetIterator connector = first_connector;
-       connector != last_connector;
-       ++connector)
+  for (std::unique_ptr<TAO_Connector> const& connector : this->connectors_)
     {
-      if (*connector)
+      if (connector != nullptr)
         {
           const int mp_result =
-            (*connector)->make_mprofile (ior,
-                                         mprofile);
+            connector->make_mprofile (ior,
+                                      mprofile);
 
           if (mp_result == 0)
             return 0;  // Success
@@ -154,7 +144,7 @@ TAO_Connector_Registry::make_mprofile (const char *ior,
 TAO_Profile *
 TAO_Connector_Registry::create_profile (TAO_InputCDR &cdr)
 {
-  CORBA::ULong tag = 0;
+  CORBA::ULong tag {};
 
   // If there is an error we abort.
   if (!(cdr >> tag))
@@ -192,7 +182,7 @@ TAO_Connector_Registry::create_profile (TAO_InputCDR &cdr)
             }
         }
 
-      TAO_Profile *pfile = nullptr;
+      TAO_Profile *pfile {};
       ACE_NEW_RETURN (pfile,
                       TAO_Unknown_Profile (tag,
                                            orb_core),
@@ -215,7 +205,7 @@ TAO_Connector_Registry::create_profile (TAO_InputCDR &cdr)
 
   // ProfileData is encoded as a sequence of octet. So first get the
   // length of the sequence.
-  CORBA::ULong encap_len = 0;
+  CORBA::ULong encap_len {};
   if (!(cdr >> encap_len))
   {
     TAOLIB_ERROR ((LM_ERROR,
@@ -257,17 +247,12 @@ TAO_Connector_Registry::object_key_delimiter (const char *ior)
       return 0; // Failure: Null IOR string pointer
     }
 
-  const TAO_ConnectorSetIterator first_connector = this->begin ();
-  const TAO_ConnectorSetIterator last_connector =  this->end ();
-
-  for (TAO_ConnectorSetIterator connector = first_connector;
-       connector != last_connector;
-       ++connector)
+  for (std::unique_ptr<TAO_Connector> const& connector : this->connectors_)
     {
-      if (*connector)
+      if (connector != nullptr)
         {
-          if ((*connector)->check_prefix (ior) == 0)
-            return (*connector)->object_key_delimiter ();
+          if (connector->check_prefix (ior) == 0)
+            return connector->object_key_delimiter ();
         }
     }
 

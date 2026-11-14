@@ -99,7 +99,7 @@ ACE_OS::strerror (int errnum)
   // and set errno to EINVAL.
   ACE_Errno_Guard g (errno);
   errno = 0;
-  char *errmsg = nullptr;
+  char *errmsg {};
 
 # if defined (ACE_HAS_TR24731_2005_CRT)
   errmsg = ret_errortext;
@@ -143,16 +143,16 @@ ACE_OS::strsignal (int signum)
 {
   static char signal_text[128];
 #if defined (ACE_HAS_STRSIGNAL)
-  char *ret_val = nullptr;
+  char *ret_val {};
 
 # if defined (ACE_NEEDS_STRSIGNAL_RANGE_CHECK)
   if (signum < 0 || signum >= ACE_NSIG)
-    ret_val = 0;
+    ret_val = nullptr;
   else
 # endif /* (ACE_NEEDS_STRSIGNAL_RANGE_CHECK */
   ret_val = ::strsignal (signum);
 
-  if (ret_val <= reinterpret_cast<char *> (0))
+  if (ret_val == nullptr)
     {
       ACE_OS::snprintf (signal_text, 128, "Unknown signal: %d", signum);
       ret_val = signal_text;
@@ -226,7 +226,7 @@ ACE_OS::strnstr (const char *s1, const char *s2, size_t len2)
   // Go upto <len>
   size_t const len = len1 - len2;
 
-  for (size_t i = 0; i <= len; i++)
+  for (size_t i = 0; i <= len; ++i)
     {
       if (ACE_OS::memcmp (s1 + i, s2, len2) == 0)
         {
@@ -251,7 +251,7 @@ ACE_OS::strnstr (const ACE_WCHAR_T *s1, const ACE_WCHAR_T *s2, size_t len2)
   // Go upto <len>
   size_t const len = len1 - len2;
 
-  for (size_t i = 0; i <= len; i++)
+  for (size_t i = 0; i <= len; ++i)
     {
       if (ACE_OS::memcmp (s1 + i, s2, len2 * sizeof (ACE_WCHAR_T)) == 0)
         {

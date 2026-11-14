@@ -15,6 +15,7 @@
 #include "ace/Event_Handler.h"
 #include "ace/Null_Mutex.h"
 #include "ace/Reactor.h"
+#include "ace/Unbounded_Set.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #define  ACE_LACKS_PRAGMA_ONCE
@@ -25,14 +26,14 @@
 #include "tao/Cache_Entries_T.h"
 #include "tao/orbconf.h"
 
+#include <memory>
+
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
 #include "ace/Monitor_Size.h"
 #endif /* TAO_HAS_MONITOR_POINTS==1 */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Handle_Set;
-template <class T> class ACE_Unbounded_Set;
-template <class T> class ACE_Unbounded_Set_Iterator;
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -96,20 +97,25 @@ namespace TAO
 
     using CONDITION = TAO_Condition<TAO_SYNCH_MUTEX>;
 
-    // == Public methods
-    /// Constructor
+    /// @name Public methods
+    /// @{
+    /// Constructor; ownership of the purge strategy transfers to the cache manager.
     Transport_Cache_Manager_T (
       ACE_Reactor &reactor,
       int percent,
-      purging_strategy* purging_strategy,
+      purging_strategy *purging_strategy,
       size_t cache_maximum,
       bool locked,
       char const *orbid,
       int idle_timeout,
       int idle_scan_interval);
 
-    /// Destructor
     ~Transport_Cache_Manager_T ();
+
+    Transport_Cache_Manager_T (Transport_Cache_Manager_T const &) = delete;
+    Transport_Cache_Manager_T &operator= (Transport_Cache_Manager_T const &) = delete;
+    Transport_Cache_Manager_T (Transport_Cache_Manager_T &&) = delete;
+    Transport_Cache_Manager_T &operator= (Transport_Cache_Manager_T &&) = delete;
 
     /// Add the transport to the cache and record transport activity.
     /**
@@ -175,6 +181,7 @@ namespace TAO
 
     /// Return the underlying cache map
     HASH_MAP &map ();
+    /// @}
 
   private:
     friend transport_type;
@@ -263,7 +270,7 @@ namespace TAO
     static int cpscmp(const void* a, const void* b);
 #endif
 
-    using DESCRIPTOR_SET = HASH_MAP_ENTRY**;
+    using DESCRIPTOR_SET = std::unique_ptr<HASH_MAP_ENTRY*[]>;
 
     /// Sort the list of entries
     void sort_set (DESCRIPTOR_SET& entries, int size);
@@ -280,7 +287,7 @@ namespace TAO
     int percent_;
 
     /// The underlying connection purging strategy
-    purging_strategy *purging_strategy_;
+    std::unique_ptr<purging_strategy> purging_strategy_ {};
 
     /// The hash map that has the connections
     HASH_MAP cache_map_;
@@ -288,7 +295,7 @@ namespace TAO
     TAO_SYNCH_MUTEX cache_map_mutex_;
 
     /// The lock that is used by the cache map
-    ACE_Lock *cache_lock_;
+    std::unique_ptr<ACE_Lock> cache_lock_ {};
 
     /// Maximum size of the cache
     size_t cache_maximum_;

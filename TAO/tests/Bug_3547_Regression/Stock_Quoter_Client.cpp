@@ -6,12 +6,15 @@
 #include "ace/streams.h"
 #include "ace/Task.h"
 #include <algorithm>
+#include <array>
 
 class OrbTask : public ACE_Task_Base
 {
 public:
-  OrbTask (CORBA::ORB_ptr orb)
-    : orb_ (CORBA::ORB::_duplicate (orb)) {}
+  explicit OrbTask (CORBA::ORB_ptr orb)
+    : orb_ (CORBA::ORB::_duplicate (orb))
+  {
+  }
   OrbTask (OrbTask const &) = delete;
   OrbTask (OrbTask &&) = delete;
   OrbTask &operator= (OrbTask const &) = delete;
@@ -30,49 +33,49 @@ public:
   }
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 };
 
-static int n_threads = 1;
-
-unsigned char Msg[1000] = { 0 } ;
+constexpr int thread_count {1};
+constexpr int buffer_size {1000};
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
   {
     // Initialize the ORB
-    CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+    CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
     // Use a simple ObjectKey to access the Stock Quoter.
     // (Client ORB must be initialized with
     // -ORBInitRef MyStockQuoter=corbaloc:...)
-    CORBA::Object_var udp_obj =
+    CORBA::Object_var const udp_obj =
       orb->resolve_initial_references ("UDPTest");
 
-    CORBA::Object_var stock_quoter_obj =
+    CORBA::Object_var const stock_quoter_obj =
       orb->resolve_initial_references ("MyStockQuoter");
 
     OrbTask task (orb.in ());
 
     if (task.activate (THR_NEW_LWP | THR_JOINABLE,
-                          n_threads) != 0)
+                          thread_count) != 0)
        ACE_ERROR_RETURN ((LM_ERROR,
                           "Cannot activate threads\n"),
                          1);
 
-    UDPTestI_var server = UDPTestI::_narrow (udp_obj.in ());
+    UDPTestI_var const server = UDPTestI::_narrow (udp_obj.in ());
 
-    Stock_Quoter_var quoter = Stock_Quoter::_narrow (stock_quoter_obj.in ());
+    Stock_Quoter_var const quoter = Stock_Quoter::_narrow (stock_quoter_obj.in ());
 
-    std::fill_n (Msg, 1000, static_cast<unsigned char> (1));
+    std::array<CORBA::Octet, buffer_size> message {};
+    std::fill (message.begin (), message.end (), CORBA::Octet {1});
     //UDP->send( 10 );
 
-    server->send (Msg);
+    server->send (message.data ());
 
     try
       {
-        CORBA::Float current_stock_price = quoter->get_quote ("BA");
+        CORBA::Float const current_stock_price = quoter->get_quote ("BA");
         cout << "Stock Id: BA, Price = " << current_stock_price << endl;
       }
       catch (Bad_Ticker_Symbol const &e)
@@ -83,6 +86,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     quoter->shutdown ();
 
+    orb->shutdown (true);
     task.wait ();
 
     orb->destroy ();

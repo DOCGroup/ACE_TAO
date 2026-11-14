@@ -66,9 +66,11 @@ public:
   /**
    * Constructor, initializes the handle set from a given mask.
    */
-  ACE_Handle_Set (const fd_set &mask);
+  explicit ACE_Handle_Set (fd_set const &mask);
 
-  // = Methods for manipulating bitsets.
+  /// @name Methods for manipulating bitsets
+  /// @{
+
   /// Initialize the bitmask to all 0s and reset the associated fields.
   void reset ();
 
@@ -77,7 +79,7 @@ public:
    * performed so @a handle must be less than
    * @c ACE_DEFAULT_SELECT_REACTOR_SIZE.
    */
-  int is_set (ACE_HANDLE handle) const;
+  bool is_set (ACE_HANDLE handle) const;
 
   /// Enables the @a handle.  No range checking is performed so @a handle
   /// must be less than @c ACE_DEFAULT_SELECT_REACTOR_SIZE.
@@ -102,22 +104,24 @@ public:
    */
   void sync (ACE_HANDLE max);
 
-  /// Returns a pointer to the underlying @c fd_set.  Returns 0 if
+  /// @}
+
+  /// Returns a pointer to the underlying @c fd_set.  Returns nullptr if
   /// there are no handle bits set (<size_> == 0).
   operator fd_set *();
 
-  /// Returns a pointer to the underlying @c fd_set.  Returns 0 if
+  /// Returns a pointer to the underlying @c fd_set.  Returns nullptr if
   /// there are no handle bits set (<size_> == 0).
   fd_set *fdset ();
 
 #if defined (ACE_HAS_BIG_FD_SET)
   /// Assignment operator optimizes for cases where size_ == 0.
-  ACE_Handle_Set & operator= (const ACE_Handle_Set &rhs);
+  ACE_Handle_Set &operator= (ACE_Handle_Set const &rhs);
   /// Copy constructor optimizes for cases where size_ == 0
-  ACE_Handle_Set (const ACE_Handle_Set &rhs);
+  ACE_Handle_Set (ACE_Handle_Set const &rhs);
 #else
-  ACE_Handle_Set & operator= (const ACE_Handle_Set &) = default;
-  ACE_Handle_Set (const ACE_Handle_Set &) = default;
+  ACE_Handle_Set &operator= (ACE_Handle_Set const &) = default;
+  ACE_Handle_Set (ACE_Handle_Set const &) = default;
 #endif /* ACE_HAS_BIG_FD_SET */
 
   ACE_Handle_Set & operator= (ACE_Handle_Set &&) = default;
@@ -165,7 +169,7 @@ private:
 
   /// Table that maps bytes to counts of the enabled bits in each value
   /// from 0 to 255.
-  static const char nbits_[NBITS];
+  static char const nbits_[NBITS];
 };
 
 /**
@@ -176,8 +180,7 @@ private:
 class ACE_Export ACE_Handle_Set_Iterator
 {
 public:
-  /// Constructor.
-  ACE_Handle_Set_Iterator (const ACE_Handle_Set &hs);
+  ACE_Handle_Set_Iterator (ACE_Handle_Set const &hs);
   ACE_Handle_Set_Iterator () = delete;
   ~ACE_Handle_Set_Iterator () = default;
 
@@ -202,7 +205,7 @@ public:
 
 private:
   /// The Handle_Set we are iterating through.
-  const ACE_Handle_Set &handles_;
+  ACE_Handle_Set const &handles_;
 
   /// Index of the bit we're examining in the current word_num_() word.
 #if defined (ACE_HANDLE_SET_USES_FD_ARRAY)

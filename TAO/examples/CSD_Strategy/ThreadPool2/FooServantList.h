@@ -5,27 +5,32 @@
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/Servant_Base.h"
 #include "ace/SString.h"
-
+#include <atomic>
+#include <vector>
 
 class FooServantList
 {
 public:
-  FooServantList(const ACE_TCHAR* prefix,
+  FooServantList (ACE_TCHAR const *prefix,
                   unsigned num_servants,
                   unsigned num_clients,
                   CORBA::ORB_ptr orb);
-  ~FooServantList();
+  ~FooServantList () = default;
 
-  void create_and_activate(PortableServer::POA_ptr poa);
+  FooServantList (FooServantList const &) = delete;
+  FooServantList (FooServantList &&) = delete;
+  FooServantList & operator= (FooServantList const &) = delete;
+  FooServantList & operator= (FooServantList &&) = delete;
 
-  void client_done();
+  void create_and_activate (PortableServer::POA_ptr poa);
+
+  void client_done ();
 
 private:
-  PortableServer::ServantBase_var* servants_;
+  std::vector<PortableServer::ServantBase_var> servants_;
   ACE_TString prefix_;
-  unsigned num_servants_;
 
-  ACE_Atomic_Op <TAO_SYNCH_MUTEX, unsigned> num_clients_;
+  std::atomic<unsigned> num_clients_;
 
   CORBA::ORB_var  orb_;
 };

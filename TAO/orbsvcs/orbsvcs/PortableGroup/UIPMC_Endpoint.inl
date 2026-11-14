@@ -1,7 +1,7 @@
 // -*- C++ -*-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_INLINE const ACE_INET_Addr &
+ACE_INLINE ACE_INET_Addr const &
 TAO_UIPMC_Endpoint::object_addr () const
 {
   return this->object_addr_;
@@ -19,7 +19,7 @@ TAO_UIPMC_Endpoint::port (CORBA::UShort p)
   return this->port_ = p;
 }
 
-ACE_INLINE const char*
+ACE_INLINE char const *
 TAO_UIPMC_Endpoint::preferred_if () const
 {
   return this->preferred_if_.in();

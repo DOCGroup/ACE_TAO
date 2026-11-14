@@ -120,7 +120,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE, TIME_POLICY>::peek_dequeue
 {
   ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE, TIME_POLICY>::peek_dequeue_head");
 
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
 
   int const cur_count = this->queue_.peek_dequeue_head (mb, timeout);
 
@@ -136,7 +136,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE, TIME_POLICY>::enqueue_head
 {
   ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE, TIME_POLICY>::enqueue_head");
 
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
 
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block ((char *) new_item,
@@ -171,7 +171,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE, TIME_POLICY>::enqueue_prio
 {
   ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE, TIME_POLICY>::enqueue_prio");
 
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
 
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block ((char *) new_item,
@@ -193,7 +193,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE, TIME_POLICY>::enqueue_dead
 {
   ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE, TIME_POLICY>::enqueue_deadline");
 
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
 
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block ((char *) new_item,
@@ -218,7 +218,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE, TIME_POLICY>::enqueue_tail
 {
   ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE, TIME_POLICY>::enqueue_tail");
 
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
 
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block ((char *) new_item,
@@ -243,7 +243,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE, TIME_POLICY>::dequeue_head
 {
   ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE, TIME_POLICY>::dequeue_head");
 
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
 
   int const cur_count = this->queue_.dequeue_head (mb, timeout);
 
@@ -268,7 +268,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE, TIME_POLICY>::dequeue_prio
 {
   ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE, TIME_POLICY>::dequeue_prio");
 
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
 
   int const cur_count = this->queue_.dequeue_prio (mb, timeout);
 
@@ -293,7 +293,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE, TIME_POLICY>::dequeue_tail
 {
   ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE, TIME_POLICY>::dequeue_tail");
 
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
 
   int const cur_count = this->queue_.dequeue_tail (mb, timeout);
 
@@ -318,7 +318,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE, TIME_POLICY>::dequeue_dead
 {
   ACE_TRACE ("ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE, TIME_POLICY>::dequeue_deadline");
 
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
 
   int const cur_count = this->queue_.dequeue_deadline (mb, timeout);
 
@@ -352,7 +352,7 @@ template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL, class TIME_POLICY> int
 ACE_Message_Queue_Ex_Iterator<ACE_MESSAGE_TYPE, ACE_SYNCH_USE, TIME_POLICY>::
 next (ACE_MESSAGE_TYPE *&entry)
 {
-  ACE_Message_Block * mb = nullptr;
+  ACE_Message_Block * mb {};
   int retval = this->iter_.next (mb);
 
   if (retval == 1)
@@ -392,7 +392,7 @@ template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL, class TIME_POLICY> int
 ACE_Message_Queue_Ex_Reverse_Iterator<ACE_MESSAGE_TYPE, ACE_SYNCH_USE, TIME_POLICY>::
 next (ACE_MESSAGE_TYPE *&entry)
 {
-  ACE_Message_Block * mb = nullptr;
+  ACE_Message_Block * mb {};
   int retval = this->iter_.next (mb);
 
   if (retval == 1)
@@ -494,7 +494,7 @@ ACE_Message_Queue_Ex_N<ACE_MESSAGE_TYPE, ACE_SYNCH_USE, TIME_POLICY>::wrap_with_
   ACE_TRACE ("ACE_Message_Queue_Ex_N<ACE_MESSAGE_TYPE, ACE_SYNCH_USE, TIME_POLICY>::wrap_with_mbs_i");
 
   // We need to keep a reference to the head of the chain
-  ACE_Message_Block *mb_head = nullptr;
+  ACE_Message_Block *mb_head {};
 
   ACE_NEW_RETURN (mb_head,
                   ACE_Message_Block ((char *) new_item,
@@ -508,7 +508,7 @@ ACE_Message_Queue_Ex_N<ACE_MESSAGE_TYPE, ACE_SYNCH_USE, TIME_POLICY>::wrap_with_
   // Run through rest of the messages and wrap them
   for (ACE_MESSAGE_TYPE *pobj = new_item->next (); pobj; pobj = pobj->next ())
     {
-      ACE_Message_Block *mb_temp = nullptr;
+      ACE_Message_Block *mb_temp {};
       ACE_NEW_NORETURN (mb_temp,
                         ACE_Message_Block ((char *) pobj,
                                            sizeof (*pobj),
@@ -709,7 +709,7 @@ ACE_Message_Queue_Iterator<ACE_SYNCH_USE, TIME_POLICY>::next (ACE_Message_Block 
 {
   ACE_READ_GUARD_RETURN (ACE_SYNCH_MUTEX_T, m, this->queue_.lock_, -1)
 
-  if (this->curr_ != 0)
+  if (this->curr_ != nullptr)
     {
       entry = this->curr_;
       return 1;
@@ -723,7 +723,7 @@ ACE_Message_Queue_Iterator<ACE_SYNCH_USE, TIME_POLICY>::done () const
 {
   ACE_READ_GUARD_RETURN (ACE_SYNCH_MUTEX_T, m, this->queue_.lock_, -1)
 
-  return this->curr_ == 0;
+  return this->curr_ == nullptr;
 }
 
 template <ACE_SYNCH_DECL, class TIME_POLICY> int
@@ -733,7 +733,7 @@ ACE_Message_Queue_Iterator<ACE_SYNCH_USE, TIME_POLICY>::advance ()
 
   if (this->curr_)
     this->curr_ = this->curr_->next ();
-  return this->curr_ != 0;
+  return this->curr_ != nullptr;
 }
 
 template <ACE_SYNCH_DECL, class TIME_POLICY> void
@@ -757,7 +757,7 @@ ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_USE, TIME_POLICY>::next (ACE_Messag
 {
   ACE_READ_GUARD_RETURN (ACE_SYNCH_MUTEX_T, m, this->queue_.lock_, -1)
 
-  if (this->curr_ != 0)
+  if (this->curr_ != nullptr)
     {
       entry = this->curr_;
       return 1;
@@ -771,7 +771,7 @@ ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_USE, TIME_POLICY>::done () const
 {
   ACE_READ_GUARD_RETURN (ACE_SYNCH_MUTEX_T, m, this->queue_.lock_, -1)
 
-  return this->curr_ == 0;
+  return this->curr_ == nullptr;
 }
 
 template <ACE_SYNCH_DECL, class TIME_POLICY> int
@@ -781,7 +781,7 @@ ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_USE, TIME_POLICY>::advance ()
 
   if (this->curr_)
     this->curr_ = this->curr_->prev ();
-  return this->curr_ != 0;
+  return this->curr_ != nullptr;
 }
 
 template <ACE_SYNCH_DECL, class TIME_POLICY> void
@@ -821,7 +821,7 @@ template <ACE_SYNCH_DECL, class TIME_POLICY> bool
 ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::is_empty_i ()
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::is_empty_i");
-  return this->tail_ == 0;
+  return this->tail_ == nullptr;
 }
 
 // Check if queue is full (does not hold locks).
@@ -1003,13 +1003,13 @@ ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::dump () const
       break;
     }
   ACELIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("low_water_mark = %d\n")
-              ACE_TEXT ("high_water_mark = %d\n")
-              ACE_TEXT ("cur_bytes = %d\n")
-              ACE_TEXT ("cur_length = %d\n")
-              ACE_TEXT ("cur_count = %d\n")
-              ACE_TEXT ("head_ = %u\n")
-              ACE_TEXT ("tail_ = %u\n"),
+              ACE_TEXT ("low_water_mark = %B\n")
+              ACE_TEXT ("high_water_mark = %B\n")
+              ACE_TEXT ("cur_bytes = %B\n")
+              ACE_TEXT ("cur_length = %B\n")
+              ACE_TEXT ("cur_count = %B\n")
+              ACE_TEXT ("head_ = %@\n")
+              ACE_TEXT ("tail_ = %@\n"),
               this->low_water_mark_,
               this->high_water_mark_,
               this->cur_bytes_,
@@ -1088,7 +1088,7 @@ template <ACE_SYNCH_DECL, class TIME_POLICY>
 ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::~ACE_Message_Queue ()
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::~ACE_Message_Queue");
-  if (this->head_ != 0 && this->close () == -1)
+  if (this->head_ != nullptr && this->close () == -1)
     ACELIB_ERROR ((LM_ERROR,
                 ACE_TEXT ("close")));
 
@@ -1101,16 +1101,16 @@ ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::~ACE_Message_Queue ()
 template <ACE_SYNCH_DECL, class TIME_POLICY> int
 ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::flush_i ()
 {
-  int number_flushed = 0;
+  int number_flushed {};
 
   // Remove all the <ACE_Message_Block>s in the <ACE_Message_Queue>
   // and <release> their memory.
-  for (this->tail_ = 0; this->head_ != 0; )
+  for (this->tail_ = nullptr; this->head_ != nullptr; )
     {
       ++number_flushed;
 
-      size_t mb_bytes = 0;
-      size_t mb_length = 0;
+      size_t mb_bytes {};
+      size_t mb_length {};
       this->head_->total_size_and_length (mb_bytes,
                                           mb_length);
       // Subtract off all of the bytes associated with this message.
@@ -1153,8 +1153,8 @@ ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::open (size_t hwm,
   this->cur_bytes_ = 0;
   this->cur_length_ = 0;
   this->cur_count_ = 0;
-  this->tail_ = 0;
-  this->head_ = 0;
+  this->tail_ = nullptr;
+  this->head_ = nullptr;
   this->notification_strategy_ = ns;
   return 0;
 }
@@ -1265,7 +1265,7 @@ ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::enqueue_tail_i (ACE_Message_Block
     }
 
   // List was empty, so build a new one.
-  if (this->tail_ == 0)
+  if (this->tail_ == nullptr)
     {
       this->head_ = new_item;
       this->tail_ = seq_tail;
@@ -1318,7 +1318,7 @@ ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::enqueue_head_i (ACE_Message_Block
   new_item->prev (nullptr);
   seq_tail->next (this->head_);
 
-  if (this->head_ != 0)
+  if (this->head_ != nullptr)
     this->head_->prev (seq_tail);
   else
     this->tail_ = seq_tail;
@@ -1348,13 +1348,13 @@ ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::enqueue_i (ACE_Message_Block *new
   // next pointer is 0.
   new_item->next (nullptr);
 
-  if (this->head_ == 0)
+  if (this->head_ == nullptr)
     // Check for simple case of an empty queue, where all we need to
     // do is insert <new_item> into the head.
     return this->enqueue_head_i (new_item);
   else
     {
-      ACE_Message_Block *temp = nullptr;
+      ACE_Message_Block *temp {};
 
       // Figure out where the new item goes relative to its priority.
       // We start looking from the lowest priority (at the tail) to
@@ -1411,36 +1411,36 @@ ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::enqueue_deadline_i (ACE_Message_B
 #if defined (ACE_HAS_TIMED_MESSAGE_BLOCKS)
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::enqueue_deadline_i");
 
-  if (new_item == 0)
+  if (new_item == nullptr)
     return -1;
 
   // Since this method uses enqueue_head_i() and enqueue_tail_i() for
   // special situations, and this method doesn't support enqueueing
   // chains of blocks off the 'next' pointer, make sure the new_item's
   // next pointer is 0.
-  new_item->next (0);
+  new_item->next (nullptr);
 
-  if (this->head_ == 0)
+  if (this->head_ == nullptr)
     // Check for simple case of an empty queue, where all we need to
     // do is insert <new_item> into the head.
     return this->enqueue_head_i (new_item);
   else
     {
-      ACE_Message_Block *temp = nullptr;
+      ACE_Message_Block *temp {};
 
       // Figure out where the new item goes relative to its priority.
       // We start looking from the smallest deadline to the highest
       // deadline.
 
       for (temp = this->head_;
-           temp != 0;
+           temp != nullptr;
            temp = temp->next ())
         if (new_item->msg_deadline_time () < temp->msg_deadline_time ())
           // Break out when we've located an item that has
           // greater or equal priority.
           break;
 
-      if (temp == 0 || temp->next () == 0)
+      if (temp == nullptr || temp->next () == nullptr)
         // Check for simple case of inserting at the tail of the queue,
         // where all we need to do is insert <new_item> after the
         // current tail.
@@ -1487,14 +1487,14 @@ ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::dequeue_head_i (ACE_Message_Block
   first_item = this->head_;
   this->head_ = this->head_->next ();
 
-  if (this->head_ == 0)
-    this->tail_ = 0;
+  if (this->head_ == nullptr)
+    this->tail_ = nullptr;
   else
     // The prev pointer of first message block must point to 0...
-    this->head_->prev (0);
+    this->head_->prev (nullptr);
 
-  size_t mb_bytes = 0;
-  size_t mb_length = 0;
+  size_t mb_bytes {};
+  size_t mb_length {};
   first_item->total_size_and_length (mb_bytes,
                                      mb_length);
   // Subtract off all of the bytes associated with this message.
@@ -1503,7 +1503,7 @@ ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::dequeue_head_i (ACE_Message_Block
   --this->cur_count_;
 
   if (this->cur_count_ == 0 && this->head_ == this->tail_)
-    this->head_ = this->tail_ = 0;
+    this->head_ = this->tail_ = nullptr;
 
   // Make sure that the prev and next fields are 0!
   first_item->prev (nullptr);
@@ -1532,12 +1532,12 @@ ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::dequeue_prio_i (ACE_Message_Block
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::dequeue_prio_i");
 
-  if (this->head_ == 0)
+  if (this->head_ == nullptr)
     return -1;
 
   // Find the earliest (i.e., FIFO) message enqueued with the lowest
   // priority.
-  ACE_Message_Block *chosen = nullptr;
+  ACE_Message_Block *chosen {};
   u_long priority = ULONG_MAX;
 
   for (ACE_Message_Block *temp = this->tail_;
@@ -1573,8 +1573,8 @@ ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::dequeue_prio_i (ACE_Message_Block
   // Pass back the chosen block
   dequeued = chosen;
 
-  size_t mb_bytes = 0;
-  size_t mb_length = 0;
+  size_t mb_bytes {};
+  size_t mb_length {};
   dequeued->total_size_and_length (mb_bytes,
                                    mb_length);
   // Subtract off all of the bytes associated with this message.
@@ -1583,7 +1583,7 @@ ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::dequeue_prio_i (ACE_Message_Block
   --this->cur_count_;
 
   if (this->cur_count_ == 0 && this->head_ == this->tail_)
-    this->head_ = this->tail_ = 0;
+    this->head_ = this->tail_ = nullptr;
 
   // Make sure that the prev and next fields are 0!
   dequeued->prev (nullptr);
@@ -1605,25 +1605,25 @@ ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::dequeue_prio_i (ACE_Message_Block
 template <ACE_SYNCH_DECL, class TIME_POLICY> int
 ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::dequeue_tail_i (ACE_Message_Block *&dequeued)
 {
-  if (this->head_ == 0)
+  if (this->head_ == nullptr)
     ACELIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Attempting to dequeue from empty queue")),
                       -1);
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::dequeue_tail_i");
   dequeued = this->tail_;
-  if (this->tail_->prev () == 0)
+  if (this->tail_->prev () == nullptr)
     {
-      this->head_ = 0;
-      this->tail_ = 0;
+      this->head_ = nullptr;
+      this->tail_ = nullptr;
     }
   else
     {
-      this->tail_->prev ()->next (0);
+      this->tail_->prev ()->next (nullptr);
       this->tail_ = this->tail_->prev ();
     }
 
-  size_t mb_bytes = 0;
-  size_t mb_length = 0;
+  size_t mb_bytes {};
+  size_t mb_length {};
   dequeued->total_size_and_length (mb_bytes,
                                    mb_length);
   // Subtract off all of the bytes associated with this message.
@@ -1632,7 +1632,7 @@ ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::dequeue_tail_i (ACE_Message_Block
   --this->cur_count_;
 
   if (this->cur_count_ == 0 && this->head_ == this->tail_)
-    this->head_ = this->tail_ = 0;
+    this->head_ = this->tail_ = nullptr;
 
   // Make sure that the prev and next fields are 0!
   dequeued->prev (nullptr);
@@ -1655,16 +1655,16 @@ template <ACE_SYNCH_DECL, class TIME_POLICY> int
 ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::dequeue_deadline_i (ACE_Message_Block *&dequeued)
 {
 #if defined (ACE_HAS_TIMED_MESSAGE_BLOCKS)
-  if (this->head_ == 0)
+  if (this->head_ == nullptr)
     ACELIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Attempting to dequeue from empty queue")),
                       -1);
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::dequeue_deadline_i");
 
   // Find the last message enqueued with the lowest deadline time
-  ACE_Message_Block* chosen = nullptr;
+  ACE_Message_Block* chosen {};
   ACE_Time_Value deadline = ACE_Time_Value::max_time;
-  for (ACE_Message_Block *temp = this->head_; temp != 0; temp = temp->next ())
+  for (ACE_Message_Block *temp = this->head_; temp != nullptr; temp = temp->next ())
     if (temp->msg_deadline_time () < deadline)
       {
         deadline = temp->msg_deadline_time ();
@@ -1673,17 +1673,17 @@ ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::dequeue_deadline_i (ACE_Message_B
 
   // If every message block is the same deadline time,
   // pass back the first one
-  if (chosen == 0)
+  if (chosen == nullptr)
     chosen = this->head_;
 
   // Patch up the queue.  If we don't have a previous
   // then we are at the head of the queue.
-  if (chosen->prev () == 0)
+  if (chosen->prev () == nullptr)
     this->head_ = chosen->next ();
   else
     chosen->prev ()->next (chosen->next ());
 
-  if (chosen->next () == 0)
+  if (chosen->next () == nullptr)
     this->tail_ = chosen->prev ();
   else
     chosen->next ()->prev (chosen->prev ());
@@ -1691,8 +1691,8 @@ ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::dequeue_deadline_i (ACE_Message_B
   // Pass back the chosen block
   dequeued = chosen;
 
-  size_t mb_bytes = 0;
-  size_t mb_length = 0;
+  size_t mb_bytes {};
+  size_t mb_length {};
   dequeued->total_size_and_length (mb_bytes,
                                    mb_length);
   // Subtract off all of the bytes associated with this message.
@@ -1701,11 +1701,11 @@ ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::dequeue_deadline_i (ACE_Message_B
   --this->cur_count_;
 
   if (this->cur_count_ == 0 && this->head_ == this->tail_)
-    this->head_ = this->tail_ = 0;
+    this->head_ = this->tail_ = nullptr;
 
   // Make sure that the prev and next fields are 0!
-  dequeued->prev (0);
-  dequeued->next (0);
+  dequeued->prev (nullptr);
+  dequeued->next (nullptr);
 
   // Only signal enqueueing threads if we've fallen below the low
   // water mark.
@@ -1745,7 +1745,7 @@ ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::peek_dequeue_head (ACE_Message_Bl
 template <ACE_SYNCH_DECL, class TIME_POLICY> int
 ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::wait_not_full_cond (ACE_Time_Value *timeout)
 {
-  int result = 0;
+  int result {};
 
   // Wait while the queue is full.
 
@@ -1771,7 +1771,7 @@ ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::wait_not_full_cond (ACE_Time_Valu
 template <ACE_SYNCH_DECL, class TIME_POLICY> int
 ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::wait_not_empty_cond (ACE_Time_Value *timeout)
 {
-  int result = 0;
+  int result {};
 
   // Wait while the queue is empty.
 
@@ -1802,8 +1802,8 @@ ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::enqueue_head (ACE_Message_Block *
                                                 ACE_Time_Value *timeout)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::enqueue_head");
-  int queue_count = 0;
-  ACE_Notification_Strategy *notifier = nullptr;
+  int queue_count {};
+  ACE_Notification_Strategy *notifier {};
   {
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
@@ -1840,8 +1840,8 @@ ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::enqueue_prio (ACE_Message_Block *
                                                 ACE_Time_Value *timeout)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::enqueue_prio");
-  int queue_count = 0;
-  ACE_Notification_Strategy *notifier = nullptr;
+  int queue_count {};
+  ACE_Notification_Strategy *notifier {};
   {
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
@@ -1878,8 +1878,8 @@ ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::enqueue_deadline (ACE_Message_Blo
                                                     ACE_Time_Value *timeout)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::enqueue_deadline");
-  int queue_count = 0;
-  ACE_Notification_Strategy *notifier = nullptr;
+  int queue_count {};
+  ACE_Notification_Strategy *notifier {};
   {
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
@@ -1923,8 +1923,8 @@ ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::enqueue_tail (ACE_Message_Block *
                                               ACE_Time_Value *timeout)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::enqueue_tail");
-  int queue_count = 0;
-  ACE_Notification_Strategy *notifier = nullptr;
+  int queue_count {};
+  ACE_Notification_Strategy *notifier {};
   {
     ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
@@ -2050,7 +2050,7 @@ ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::notify ()
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::notify");
 
   // By default, don't do anything.
-  if (this->notification_strategy_ == 0)
+  if (this->notification_strategy_ == nullptr)
     return 0;
   else
     return this->notification_strategy_->notify ();
@@ -2109,13 +2109,13 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::remove_messages (ACE_Mess
       if (this->pending_head_->prev ())
         {
           this->tail_ = this->pending_head_->prev ();
-          this->pending_head_->prev ()->next (0);
+          this->pending_head_->prev ()->next (nullptr);
         }
       else
         {
           // the list has become empty
-          this->head_ = 0;
-          this->tail_ = 0;
+          this->head_ = nullptr;
+          this->tail_ = nullptr;
         }
 
       // point to the head and tail of the list
@@ -2123,9 +2123,9 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::remove_messages (ACE_Mess
       list_tail = this->pending_tail_;
 
       // cut the pending messages out of the queue entirely
-      this->pending_head_->prev (0);
-      this->pending_head_ = 0;
-      this->pending_tail_ = 0;
+      this->pending_head_->prev (nullptr);
+      this->pending_head_ = nullptr;
+      this->pending_tail_ = nullptr;
     }
 
   if (ACE_BIT_ENABLED (status_flags,
@@ -2154,9 +2154,9 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::remove_messages (ACE_Mess
 
       list_tail = this->late_tail_;
 
-      this->late_tail_->next (0);
-      this->late_head_ = 0;
-      this->late_tail_ = 0;
+      this->late_tail_->next (nullptr);
+      this->late_head_ = nullptr;
+      this->late_tail_ = nullptr;
     }
 
   if (ACE_BIT_ENABLED (status_flags,
@@ -2168,13 +2168,13 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::remove_messages (ACE_Mess
       if (this->beyond_late_tail_->next ())
         {
           this->head_ = this->beyond_late_tail_->next ();
-          this->beyond_late_tail_->next ()->prev (0);
+          this->beyond_late_tail_->next ()->prev (nullptr);
         }
       else
         {
           // the list has become empty
-          this->head_ = 0;
-          this->tail_ = 0;
+          this->head_ = nullptr;
+          this->tail_ = nullptr;
         }
 
       // Put beyond late messages at the end of the list being
@@ -2189,9 +2189,9 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::remove_messages (ACE_Mess
 
       list_tail = this->beyond_late_tail_;
 
-      this->beyond_late_tail_->next (0);
-      this->beyond_late_head_ = 0;
-      this->beyond_late_tail_ = 0;
+      this->beyond_late_tail_->next (nullptr);
+      this->beyond_late_head_ = nullptr;
+      this->beyond_late_tail_ = nullptr;
     }
 
   // Decrement message and size counts for removed messages.
@@ -2203,8 +2203,8 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::remove_messages (ACE_Mess
     {
       --this->cur_count_;
 
-      size_t mb_bytes = 0;
-      size_t mb_length = 0;
+      size_t mb_bytes {};
+      size_t mb_length {};
       temp1->total_size_and_length (mb_bytes,
                                     mb_length);
       // Subtract off all of the bytes associated with this message.
@@ -2274,12 +2274,12 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::dump () const
   this->ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::dump ();
 
   ACELIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("pending_head_ = %u\n")
-              ACE_TEXT ("pending_tail_ = %u\n")
-              ACE_TEXT ("late_head_ = %u\n")
-              ACE_TEXT ("late_tail_ = %u\n")
-              ACE_TEXT ("beyond_late_head_ = %u\n")
-              ACE_TEXT ("beyond_late_tail_ = %u\n"),
+              ACE_TEXT ("pending_head_ = %@\n")
+              ACE_TEXT ("pending_tail_ = %@\n")
+              ACE_TEXT ("late_head_ = %@\n")
+              ACE_TEXT ("late_tail_ = %@\n")
+              ACE_TEXT ("beyond_late_head_ = %@\n")
+              ACE_TEXT ("beyond_late_tail_ = %@\n"),
               this->pending_head_,
               this->pending_tail_,
               this->late_head_,
@@ -2305,7 +2305,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::enqueue_i (ACE_Message_Bl
       return -1;
     }
 
-  int result = 0;
+  int result {};
 
   // Get the current time.
   ACE_Time_Value current_time = ACE_OS::gettimeofday ();
@@ -2324,7 +2324,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::enqueue_i (ACE_Message_Bl
                                              current_time))
     {
     case ACE_Dynamic_Message_Strategy::PENDING:
-      if (this->pending_tail_ == 0)
+      if (this->pending_tail_ == nullptr)
         {
           // Check for simple case of an empty pending queue, where
           // all we need to do is insert <new_item> into the tail of
@@ -2346,17 +2346,17 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::enqueue_i (ACE_Message_Bl
       break;
 
     case ACE_Dynamic_Message_Strategy::LATE:
-      if (this->late_tail_ == 0)
+      if (this->late_tail_ == nullptr)
         {
           late_head_ = new_item;
           late_tail_ = late_head_;
 
-          if (this->pending_head_ == 0)
+          if (this->pending_head_ == nullptr)
             // Check for simple case of an empty pending queue,
             // where all we need to do is insert <new_item> into the
             // tail of the queue.
             return this->enqueue_tail_i (new_item);
-          else if (this->beyond_late_tail_ == 0)
+          else if (this->beyond_late_tail_ == nullptr)
             // Check for simple case of an empty beyond late queue, where all
             // we need to do is insert <new_item> into the head of the queue.
             return this->enqueue_head_i (new_item);
@@ -2384,7 +2384,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::enqueue_i (ACE_Message_Bl
       break;
 
     case ACE_Dynamic_Message_Strategy::BEYOND_LATE:
-      if (this->beyond_late_tail_ == 0)
+      if (this->beyond_late_tail_ == nullptr)
         {
           // Check for simple case of an empty beyond late queue,
           // where all we need to do is insert <new_item> into the
@@ -2426,8 +2426,8 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::enqueue_i (ACE_Message_Bl
       return result;
     }
 
-  size_t mb_bytes = 0;
-  size_t mb_length = 0;
+  size_t mb_bytes {};
+  size_t mb_length {};
   new_item->total_size_and_length (mb_bytes,
                                    mb_length);
   this->cur_bytes_ += mb_bytes;
@@ -2457,8 +2457,8 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::sublist_enqueue_i (ACE_Me
                                                              ACE_Message_Block *&sublist_tail,
                                                              ACE_Dynamic_Message_Strategy::Priority_Status status)
 {
-  int result = 0;
-  ACE_Message_Block *current_item = nullptr;
+  int const result {};
+  ACE_Message_Block *current_item {};
 
   // Find message after which to enqueue new item, based on message
   // priority and priority status.
@@ -2484,7 +2484,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::sublist_enqueue_i (ACE_Me
       // head of the list (and sublist).
       new_item->prev (nullptr);
       new_item->next (this->head_);
-      if (this->head_ != 0)
+      if (this->head_ != nullptr)
         this->head_->prev (new_item);
       else
         {
@@ -2524,8 +2524,8 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::dequeue_head_i (ACE_Messa
 {
   ACE_TRACE ("ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::dequeue_head_i");
 
-  int result = 0;
-  int last_in_subqueue = 0;
+  int result {};
+  int last_in_subqueue {};
 
   // first, try to dequeue from the head of the pending list
   if (this->pending_head_)
@@ -2540,8 +2540,8 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::dequeue_head_i (ACE_Messa
       if (0 == this->pending_head_->next ())
         {
           this->tail_ = this->pending_head_->prev ();
-          this->pending_head_ = 0;
-          this->pending_tail_ = 0;
+          this->pending_head_ = nullptr;
+          this->pending_tail_ = nullptr;
         }
       else
         {
@@ -2575,8 +2575,8 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::dequeue_head_i (ACE_Messa
 
       if (last_in_subqueue)
         {
-          this->late_head_ = 0;
-          this->late_tail_ = 0;
+          this->late_head_ = nullptr;
+          this->late_tail_ = nullptr;
         }
 
       first_item->prev (nullptr);
@@ -2603,8 +2603,8 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::dequeue_head_i (ACE_Messa
 
       if (last_in_subqueue)
         {
-          this->beyond_late_head_ = 0;
-          this->beyond_late_tail_ = 0;
+          this->beyond_late_head_ = nullptr;
+          this->beyond_late_tail_ = nullptr;
         }
 
       first_item->prev (nullptr);
@@ -2622,8 +2622,8 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::dequeue_head_i (ACE_Messa
       return result;
     }
 
-  size_t mb_bytes = 0;
-  size_t mb_length = 0;
+  size_t mb_bytes {};
+  size_t mb_length {};
   first_item->total_size_and_length (mb_bytes,
                                      mb_length);
   // Subtract off all of the bytes associated with this message.
@@ -2685,8 +2685,8 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::refresh_pending_queue (co
 
           // Zero out the late queue pointers, and set them only if
           // there turn out to be late messages in the pending sublist
-          this->late_head_ = 0;
-          this->late_tail_ = 0;
+          this->late_head_ = nullptr;
+          this->late_tail_ = nullptr;
 
           // Advance through the beyond late messages in the pending queue
           do
@@ -2724,8 +2724,8 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::refresh_pending_queue (co
               // There are no pending or late messages left in the
               // queue.
               this->beyond_late_tail_ = this->tail_;
-              this->pending_head_ = 0;
-              this->pending_tail_ = 0;
+              this->pending_head_ = nullptr;
+              this->pending_tail_ = nullptr;
               break; // switch
             }
           ACE_FALLTHROUGH;
@@ -2734,7 +2734,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::refresh_pending_queue (co
           // Make sure the head of the late queue is set (there may
           // not have been any late messages previously, or they may
           // have all become beyond late).
-          if (this->late_head_ == 0)
+          if (this->late_head_ == nullptr)
             this->late_head_ = this->pending_head_;
 
           // advance through the beyond late messages in the pending queue
@@ -2767,8 +2767,8 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::refresh_pending_queue (co
             {
               // there are no pending messages left in the queue
               this->late_tail_ = this->tail_;
-              this->pending_head_ = 0;
-              this->pending_tail_ = 0;
+              this->pending_head_ = nullptr;
+              this->pending_tail_ = nullptr;
             }
 
           break; // switch
@@ -2828,8 +2828,8 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::refresh_late_queue (const
               if (current_status == ACE_Dynamic_Message_Strategy::PENDING)
                 {
                   // there are no late messages left in the queue
-                  this->late_head_ = 0;
-                  this->late_tail_ = 0;
+                  this->late_head_ = nullptr;
+                  this->late_tail_ = nullptr;
                 }
               else if (current_status != ACE_Dynamic_Message_Strategy::LATE)
                 // if we got here, something is *seriously* wrong with the queue
@@ -2842,8 +2842,8 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::refresh_late_queue (const
             {
               // there are no late messages left in the queue
               this->beyond_late_tail_ = this->tail_;
-              this->late_head_ = 0;
-              this->late_tail_ = 0;
+              this->late_head_ = nullptr;
+              this->late_tail_ = nullptr;
             }
 
           break;  // switch
@@ -2918,7 +2918,7 @@ ACE_Message_Queue_Factory<ACE_SYNCH_USE, TIME_POLICY>::create_static_message_que
                                                                        ACE_Notification_Strategy *ns)
 {
   using QUEUE_TYPE = ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>;
-  QUEUE_TYPE *tmp = nullptr;
+  QUEUE_TYPE *tmp {};
 
   ACE_NEW_RETURN (tmp,
                   QUEUE_TYPE (hwm, lwm, ns),
@@ -2938,7 +2938,7 @@ ACE_Message_Queue_Factory<ACE_SYNCH_USE, TIME_POLICY>::create_deadline_message_q
                                                                          u_long dynamic_priority_max,
                                                                          u_long dynamic_priority_offset)
 {
-  ACE_Deadline_Message_Strategy *adms = nullptr;
+  ACE_Deadline_Message_Strategy *adms {};
 
   ACE_NEW_RETURN (adms,
                   ACE_Deadline_Message_Strategy (static_bit_field_mask,
@@ -2948,7 +2948,7 @@ ACE_Message_Queue_Factory<ACE_SYNCH_USE, TIME_POLICY>::create_deadline_message_q
                   0);
 
   using QUEUE_TYPE = ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>;
-  QUEUE_TYPE *tmp = nullptr;
+  QUEUE_TYPE *tmp {};
   ACE_NEW_RETURN (tmp,
                   QUEUE_TYPE (*adms, hwm, lwm, ns),
                   0);
@@ -2968,7 +2968,7 @@ ACE_Message_Queue_Factory<ACE_SYNCH_USE, TIME_POLICY>::create_laxity_message_que
                                                                        u_long dynamic_priority_max,
                                                                        u_long dynamic_priority_offset)
 {
-  ACE_Laxity_Message_Strategy *alms = nullptr;
+  ACE_Laxity_Message_Strategy *alms {};
 
   ACE_NEW_RETURN (alms,
                   ACE_Laxity_Message_Strategy (static_bit_field_mask,
@@ -2978,7 +2978,7 @@ ACE_Message_Queue_Factory<ACE_SYNCH_USE, TIME_POLICY>::create_laxity_message_que
                   0);
 
   using QUEUE_TYPE = ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>;
-  QUEUE_TYPE *tmp = nullptr;
+  QUEUE_TYPE *tmp {};
   ACE_NEW_RETURN (tmp,
                   QUEUE_TYPE (*alms, hwm, lwm, ns),
                   0);
@@ -2997,7 +2997,7 @@ ACE_Message_Queue_Factory<ACE_SYNCH_USE, TIME_POLICY>::create_Vx_message_queue (
                                                                    size_t max_message_length,
                                                                    ACE_Notification_Strategy *ns)
 {
-  ACE_Message_Queue_Vx *tmp = nullptr;
+  ACE_Message_Queue_Vx *tmp {};
 
   ACE_NEW_RETURN (tmp,
                   ACE_Message_Queue_Vx (max_messages, max_message_length, ns),
@@ -3012,7 +3012,7 @@ template <ACE_SYNCH_DECL, class TIME_POLICY>
 ACE_Message_Queue_NT *
 ACE_Message_Queue_Factory<ACE_SYNCH_USE, TIME_POLICY>::create_NT_message_queue (size_t max_threads)
 {
-  ACE_Message_Queue_NT *tmp = nullptr;
+  ACE_Message_Queue_NT *tmp {};
 
   ACE_NEW_RETURN (tmp,
                   ACE_Message_Queue_NT (max_threads),

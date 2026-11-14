@@ -12,6 +12,7 @@
 #define TAO_TRANSPORT_SELECTION_GUARD_H
 
 #include /**/ "ace/pre.h"
+#include <memory>
 
 #include "tao/TAO_Export.h"
 
@@ -50,131 +51,131 @@ namespace TAO
    *
    * <B>See Also:</B>
    *
-   * https://htmlpreview.github.io/?https://github.com/DOCGroup/ACE_TAO/blob/master/TAO/docs/transport_current/index.html
+   * https://github.com/DOCGroup/ACE_TAO/blob/master/TAO/docs/transport_current/index.html
    *
    */
   class TAO_Export Transport_Selection_Guard
   {
   public:
-    static Transport_Selection_Guard* current (TAO_ORB_Core* core,
+    static Transport_Selection_Guard *current (TAO_ORB_Core *core,
                                                size_t tss_slot_id);
 
-  public:
-    /// Ctor
-    Transport_Selection_Guard (TAO_Transport* t);
+    explicit Transport_Selection_Guard (TAO_Transport *t);
 
-    /// Dtor
     ~Transport_Selection_Guard ();
 
+    // CSD server-request cloning copies the selected transport state.
+    Transport_Selection_Guard &operator= (Transport_Selection_Guard const &rhs)
+    {
+      if (this != std::addressof (rhs))
+        {
+#if TAO_HAS_TRANSPORT_CURRENT == 1
+          this->prev_ = rhs.prev_;
+#endif  /* TAO_HAS_TRANSPORT_CURRENT == 1 */
+          this->curr_ = rhs.curr_;
+        }
+      return *this;
+    }
+
     /// getter
-    TAO_Transport* operator-> () const
+    TAO_Transport *operator-> () const
     {
       return this->get ();
     }
 
     /// getter
-    TAO_Transport& operator* () const
+    TAO_Transport &operator* () const
     {
       return *this->get ();
     }
 
     /// Getter
-    TAO_Transport* get () const
+    TAO_Transport *get () const
     {
       return this->curr_;
     }
 
     /// Setter
-    Transport_Selection_Guard& set (TAO_Transport* t)
+    Transport_Selection_Guard &set (TAO_Transport *t)
     {
       this->curr_ = t;
       return *this;
     }
 
-  Transport_Selection_Guard& operator=(const Transport_Selection_Guard& rhs) {
-    if (this != &rhs)
-      {
-#if TAO_HAS_TRANSPORT_CURRENT == 1
-        prev_ = rhs.prev_;
-#endif  /* TAO_HAS_TRANSPORT_CURRENT == 1 */
-        curr_ = rhs.curr_;
-      }
-    return *this;
-  }
-
   private:
-    Transport_Selection_Guard (const Transport_Selection_Guard&) = delete;
+    Transport_Selection_Guard (Transport_Selection_Guard const &) = delete;
+    Transport_Selection_Guard (Transport_Selection_Guard &&) = delete;
+    Transport_Selection_Guard &operator= (Transport_Selection_Guard &&) = delete;
 
 #if TAO_HAS_TRANSPORT_CURRENT == 1
-    /// This is pointing to the guard that was active prior to
-    /// instantiating us.
-    Transport_Selection_Guard* prev_;
+    /// Non-owning pointer to the previous guard in the current thread's stack.
+    Transport_Selection_Guard *prev_;
 
 #endif  /* TAO_HAS_TRANSPORT_CURRENT == 1 */
 
-    /// The "real" Transport, i.e. the one selected at present
-    TAO_Transport* curr_;
+    /// Non-owning pointer to the currently selected transport.
+    TAO_Transport *curr_;
 
     friend TAO_Export bool
-    operator== (const Transport_Selection_Guard& lhs,
-                const TAO_Transport* rhs);
+    operator== (Transport_Selection_Guard const &lhs,
+                TAO_Transport const *rhs);
 
     friend TAO_Export bool
-    operator== (const TAO_Transport* lhs,
-                const Transport_Selection_Guard& rhs);
+    operator== (TAO_Transport const *lhs,
+                Transport_Selection_Guard const &rhs);
 
     friend TAO_Export bool
-    operator!= (const Transport_Selection_Guard& lhs,
-                const TAO_Transport* rhs);
+    operator!= (Transport_Selection_Guard const &lhs,
+                TAO_Transport const *rhs);
 
     friend TAO_Export bool
-    operator!= (const TAO_Transport* lhs,
-                const Transport_Selection_Guard& rhs);
+    operator!= (TAO_Transport const *lhs,
+                Transport_Selection_Guard const &rhs);
 
     template <class U> inline friend bool
-    operator== (const Transport_Selection_Guard& lhs,
-                const U* rhs)
+    operator== (Transport_Selection_Guard const &lhs,
+                U *rhs)
     {
       return lhs.curr_ == rhs;
     }
 
     template <class U> inline friend bool
-    operator== (const U* lhs,
-                const Transport_Selection_Guard& rhs)
+    operator== (U *lhs,
+                Transport_Selection_Guard const &rhs)
     {
       return lhs == rhs.curr_;
     }
 
     template <class U> inline friend bool
-    operator!= (const Transport_Selection_Guard& lhs,
-                const U* rhs)
+    operator!= (Transport_Selection_Guard const &lhs,
+                U *rhs)
     {
       return lhs.curr_ != rhs;
     }
 
     template <class U> inline friend bool
-    operator!= (const U* lhs,
-                const Transport_Selection_Guard& rhs)
+    operator!= (U *lhs,
+                Transport_Selection_Guard const &rhs)
     {
       return lhs != rhs.curr_;
     }
   };
 
   TAO_Export bool
-  operator== (const Transport_Selection_Guard& lhs,
-              const TAO_Transport* rhs);
+  operator== (Transport_Selection_Guard const &lhs,
+              TAO_Transport const *rhs);
 
   TAO_Export bool
-  operator== (const TAO_Transport* lhs,
-              const Transport_Selection_Guard& rhs);
+  operator== (TAO_Transport const *lhs,
+              Transport_Selection_Guard const &rhs);
 
   TAO_Export bool
-  operator!= (const Transport_Selection_Guard& lhs,
-              const TAO_Transport* rhs);
+  operator!= (Transport_Selection_Guard const &lhs,
+              TAO_Transport const *rhs);
 
   TAO_Export bool
-  operator!= (const TAO_Transport* lhs,
-              const Transport_Selection_Guard& rhs);
+  operator!= (TAO_Transport const *lhs,
+              Transport_Selection_Guard const &rhs);
 } /* namespace TAO */
 
 TAO_END_VERSIONED_NAMESPACE_DECL

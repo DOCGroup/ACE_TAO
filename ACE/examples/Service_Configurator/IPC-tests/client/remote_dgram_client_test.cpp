@@ -9,16 +9,16 @@
 #include "ace/Log_Msg.h"
 
 // Name of the program.
-static const ACE_TCHAR *program_name;
+static ACE_TCHAR const * program_name {};
 
 // Port number to use.
-static u_short port_number = ACE_DEFAULT_SERVER_PORT;
+static u_short port_number { ACE_DEFAULT_SERVER_PORT };
 
 // Name of remote host.
-static const ACE_TCHAR *host_name = ACE_DEFAULT_SERVER_HOST;
+static ACE_TCHAR const *host_name { ACE_DEFAULT_SERVER_HOST };
 
 // Name of file to send.
-static const ACE_TCHAR *file_name = ACE_TEXT("./remote_data");
+static ACE_TCHAR const *file_name { ACE_TEXT ("./remote_data") };
 
 static void print_usage_and_die ()
 {
@@ -59,8 +59,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   parse_args (argc, argv);
 
   ACE_SOCK_Dgram sd (ACE_Addr::sap_any);
-  void *cp = nullptr;
-  ACE_INET_Addr sa (port_number, host_name);
+  void *cp {};
+  ACE_INET_Addr const sa (port_number, host_name);
 
   //FUZZ: disable check_for_lack_ACE_OS
   ACE_Mem_Map mmap (file_name);
@@ -74,14 +74,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   // Next, send the file's contents.
 
-  ssize_t cc = sd.send (cp, mmap.size (), sa);
+  ssize_t const cc = sd.send (cp, mmap.size (), sa);
 
   if (cc == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "send"),
                       -1);
-  else if (cc != (ssize_t) mmap.size ())
+  else if (cc != static_cast<ssize_t> (mmap.size ()))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "Not all the contents of mmap file are sent."),

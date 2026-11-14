@@ -6,8 +6,7 @@
 
 void
 Server_IORInterceptor_ORBInitializer::pre_init (
-    PortableInterceptor::ORBInitInfo_ptr /* info */
-    )
+    PortableInterceptor::ORBInitInfo_ptr /* info */)
 {
 }
 

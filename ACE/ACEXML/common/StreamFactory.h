@@ -36,7 +36,6 @@ class ACEXML_CharStream;
 class ACEXML_Export ACEXML_StreamFactory
 {
 public:
-  // Destructor
   virtual ~ACEXML_StreamFactory ();
 
   /**
@@ -47,7 +46,7 @@ public:
    *  @param uri SYSTEM id or a stream of characters (in the case of a
    *  StrCharStream).
    */
-  virtual ACEXML_CharStream* create_stream (const ACEXML_Char* uri);
+  virtual ACEXML_CharStream* create_stream (ACEXML_Char const *uri);
 };
 
 #include /**/ "ace/post.h"

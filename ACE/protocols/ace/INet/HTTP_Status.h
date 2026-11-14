@@ -84,15 +84,12 @@ namespace ACE
               Status();
 
               /// Constructor; sets corresponding reason
-              Status(Code status);
+              explicit Status(Code status);
 
-              /// Constructor
               Status(Code status, const ACE_CString& reason);
 
-              /// Copy constructor
               Status(const Status& status);
 
-              /// Copy assignment
               Status& operator =(const Status& status);
 
               /// Set the status code.

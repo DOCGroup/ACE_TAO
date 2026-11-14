@@ -3,6 +3,8 @@
 
 #include "ace/Profile_Timer.h"
 
+#include <cstddef>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -13,23 +15,27 @@ class IO_Test
 {
 public:
   // Initialize the test name
-  IO_Test (const char *name,
+  IO_Test (char const *name,
            ACE_Profile_Timer &tm);
 
-  // Destructor.
   virtual ~IO_Test ();
 
+  IO_Test (IO_Test const &) = delete;
+  IO_Test (IO_Test &&) = delete;
+  IO_Test &operator= (IO_Test const &) = delete;
+  IO_Test &operator= (IO_Test &&) = delete;
+
   // Return the name of the test
-  const char *name ();
+  char const *name () const;
 
   // Execute the IO test (note this is a pure virtual function...)
-  virtual int run_test (int iterations,
+  virtual int run_test (size_t iterations,
                         FILE *input_fp,
                         FILE *output_fp) = 0;
 
 protected:
-  // Name of the test
-  const char *name_;
+  // The caller passes a string literal, so this non-owning pointer remains valid.
+  char const *const name_;
 
   // Reference to a timer
   ACE_Profile_Timer &tm_;
@@ -38,60 +44,84 @@ protected:
 class Slow_Read_Write_Test : public IO_Test
 {
 public:
-  Slow_Read_Write_Test (const char *name,
+  Slow_Read_Write_Test (char const *name,
                         ACE_Profile_Timer &tm);
-  virtual int run_test (int iterations,
-                        FILE *input_fp,
-                        FILE *output_fp);
+  Slow_Read_Write_Test (Slow_Read_Write_Test const &) = delete;
+  Slow_Read_Write_Test (Slow_Read_Write_Test &&) = delete;
+  Slow_Read_Write_Test &operator= (Slow_Read_Write_Test const &) = delete;
+  Slow_Read_Write_Test &operator= (Slow_Read_Write_Test &&) = delete;
+  int run_test (size_t iterations,
+                FILE *input_fp,
+                FILE *output_fp) override;
 };
 
 class Stdio_Test : public IO_Test
 {
 public:
-  Stdio_Test (const char *name,
+  Stdio_Test (char const *name,
               ACE_Profile_Timer &tm);
-  virtual int run_test (int iterations,
-                        FILE *input_fp,
-                        FILE *output_fp);
+  Stdio_Test (Stdio_Test const &) = delete;
+  Stdio_Test (Stdio_Test &&) = delete;
+  Stdio_Test &operator= (Stdio_Test const &) = delete;
+  Stdio_Test &operator= (Stdio_Test &&) = delete;
+  int run_test (size_t iterations,
+                FILE *input_fp,
+                FILE *output_fp) override;
 };
 
 class Block_Read_Write_Test : public IO_Test
 {
 public:
-  Block_Read_Write_Test (const char *name,
+  Block_Read_Write_Test (char const *name,
                          ACE_Profile_Timer &tm);
-  virtual int run_test (int iterations,
-                        FILE *input_fp,
-                        FILE *output_fp);
+  Block_Read_Write_Test (Block_Read_Write_Test const &) = delete;
+  Block_Read_Write_Test (Block_Read_Write_Test &&) = delete;
+  Block_Read_Write_Test &operator= (Block_Read_Write_Test const &) = delete;
+  Block_Read_Write_Test &operator= (Block_Read_Write_Test &&) = delete;
+  int run_test (size_t iterations,
+                FILE *input_fp,
+                FILE *output_fp) override;
 };
 
 class Block_Fread_Fwrite_Test : public IO_Test
 {
 public:
-  Block_Fread_Fwrite_Test (const char *name,
+  Block_Fread_Fwrite_Test (char const *name,
                            ACE_Profile_Timer &tm);
-  virtual int run_test (int iterations,
-                        FILE *input_fp,
-                        FILE *output_fp);
+  Block_Fread_Fwrite_Test (Block_Fread_Fwrite_Test const &) = delete;
+  Block_Fread_Fwrite_Test (Block_Fread_Fwrite_Test &&) = delete;
+  Block_Fread_Fwrite_Test &operator= (Block_Fread_Fwrite_Test const &) = delete;
+  Block_Fread_Fwrite_Test &operator= (Block_Fread_Fwrite_Test &&) = delete;
+  int run_test (size_t iterations,
+                FILE *input_fp,
+                FILE *output_fp) override;
 };
 
 class Mmap1_Test : public IO_Test
 {
 public:
-  Mmap1_Test (const char *name,
+  Mmap1_Test (char const *name,
               ACE_Profile_Timer &tm);
-  virtual int run_test (int iterations,
-                        FILE *input_fp,
-                        FILE *output_fp);
+  Mmap1_Test (Mmap1_Test const &) = delete;
+  Mmap1_Test (Mmap1_Test &&) = delete;
+  Mmap1_Test &operator= (Mmap1_Test const &) = delete;
+  Mmap1_Test &operator= (Mmap1_Test &&) = delete;
+  int run_test (size_t iterations,
+                FILE *input_fp,
+                FILE *output_fp) override;
 };
 
 class Mmap2_Test : public IO_Test
 {
 public:
-  Mmap2_Test (const char *name,
+  Mmap2_Test (char const *name,
               ACE_Profile_Timer &tm);
-  virtual int run_test (int iterations,
-                        FILE *input_fp,
-                        FILE *output_fp);
+  Mmap2_Test (Mmap2_Test const &) = delete;
+  Mmap2_Test (Mmap2_Test &&) = delete;
+  Mmap2_Test &operator= (Mmap2_Test const &) = delete;
+  Mmap2_Test &operator= (Mmap2_Test &&) = delete;
+  int run_test (size_t iterations,
+                FILE *input_fp,
+                FILE *output_fp) override;
 };
 

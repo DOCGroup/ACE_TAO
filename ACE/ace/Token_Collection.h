@@ -64,6 +64,10 @@ public:
    */
   ACE_Token_Collection (bool debug = false,
                         const ACE_TCHAR *name = nullptr);
+  ACE_Token_Collection (ACE_Token_Collection const &) = delete;
+  ACE_Token_Collection (ACE_Token_Collection &&) = delete;
+  ACE_Token_Collection &operator= (ACE_Token_Collection const &) = delete;
+  ACE_Token_Collection &operator= (ACE_Token_Collection &&) = delete;
 
 // Collection Management operations
 
@@ -95,10 +99,9 @@ public:
 
   /**
    * Is the specified token in the collection?
-   * 1, yes.
-   * 0, no.
+   * Returns true when the specified token is in the collection.
    */
-  int is_member (const ACE_Token_Proxy &token);
+  bool is_member (const ACE_Token_Proxy &token);
 
 // = Collective operation semantics.
 
@@ -127,25 +130,25 @@ public:
    * words, once the collection reports deadlock, it is out of our
    * hands.
    */
-  virtual int acquire (int notify = 0,
-                       void (*sleep_hook)(void *) = 0,
-                       ACE_Synch_Options &options =
-                       ACE_Synch_Options::defaults);
+  int acquire (int notify = 0,
+               void (*sleep_hook)(void *) = nullptr,
+               ACE_Synch_Options &options =
+               ACE_Synch_Options::defaults) override;
 
   /// Acquire the token corresponding to @a token_name.  The other
   /// parameters are passed to <token>::acquire.
   virtual int acquire (const ACE_TCHAR *token_name,
                        int notify = 0,
-                       void (*sleep_hook)(void *) = 0,
+                       void (*sleep_hook)(void *) = nullptr,
                        ACE_Synch_Options &options =
                        ACE_Synch_Options::defaults);
 
   /// Try to acquire all tokens in collection.
-  virtual int tryacquire (void (*sleep_hook)(void *) = 0);
+  int tryacquire (void (*sleep_hook)(void *) = nullptr) override;
 
   /// Try to acquire @a token_name.
   virtual int tryacquire (const ACE_TCHAR *token_name,
-                          void (*sleep_hook)(void *) = 0);
+                          void (*sleep_hook)(void *) = nullptr);
 
   /**
    * Renews "atomically" all resources in the collection.  This is
@@ -154,10 +157,9 @@ public:
    * value, etc.  Returns: 0 on success, -1 on failure with @c errno ==
    * problem.
    */
-  virtual int renew (int requeue_position = 0,
-                     ACE_Synch_Options &options =
-                     ACE_Synch_Options::defaults);
-
+  int renew (int requeue_position = 0,
+             ACE_Synch_Options &options =
+             ACE_Synch_Options::defaults) override;
 
   /// Renew the token corresponding to @a token_name.  The other
   /// parameters are passed to <token>::renew.
@@ -173,9 +175,8 @@ public:
    * value, etc.  Returns: 0 on success, -1 on failure with @c errno ==
    * problem.
    */
-  virtual int release (ACE_Synch_Options &options =
-                       ACE_Synch_Options::defaults);
-
+  int release (ACE_Synch_Options &options =
+               ACE_Synch_Options::defaults) override;
 
   /// Release the token corresponding to <token_name>.  The other
   /// parameters are passed to <token>::release.
@@ -190,7 +191,7 @@ public:
 
   /// Return the name of the collection.  Not very functionally
   /// important, but sometimes a useful debugging tool.
-  virtual const ACE_TCHAR *name () const;
+  ACE_TCHAR const *name () const override;
 
 protected:
   using TOKEN_NAME = ACE_Token_Name;
@@ -209,8 +210,8 @@ protected:
 
   // = I'm not sure what these mean, but they have to be defined since they're
   //   pure virtual in ACE_Token_Proxy.
-  virtual ACE_Token_Proxy *clone () const;
-  virtual ACE_Tokens *create_token (const ACE_TCHAR *name);
+  ACE_Token_Proxy *clone () const override;
+  ACE_Tokens *create_token (const ACE_TCHAR *name) override;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

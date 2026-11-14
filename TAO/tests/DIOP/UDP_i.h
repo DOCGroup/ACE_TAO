@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #ifndef UDP_I_H
 #define UDP_I_H
 
@@ -33,22 +32,24 @@
 class UDP_i: public POA_UDP
 {
 public:
-  /// Constructor
   UDP_i (CORBA::ORB_ptr o);
 
-  /// Destructor
-  ~UDP_i ();
+  ~UDP_i () override = default;
+  UDP_i (UDP_i const &) = delete;
+  UDP_i (UDP_i &&) = delete;
+  UDP_i &operator= (UDP_i const &) = delete;
+  UDP_i &operator= (UDP_i &&) = delete;
 
-  virtual void invoke (const char *client_name,
-                       UDP_ptr udpHandler,
-                       CORBA::Long request_id);
+  void invoke (char const *client_name,
+               UDP_ptr udpHandler,
+               CORBA::Long request_id) override;
 
   /// Shutdown the server.
-  virtual void shutdown ();
+  void shutdown () override;
 
 private:
   /// ORB pointer.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 
   ACE_Hash_Map_Manager_Ex < CORBA::String_var,
                             CORBA::Long,

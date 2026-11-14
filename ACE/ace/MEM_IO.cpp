@@ -2,6 +2,8 @@
 #include "ace/MEM_IO.h"
 #include "ace/Handle_Set.h"
 
+#include <cstring>
+
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 
 #if !defined (__ACE_INLINE__)
@@ -11,8 +13,6 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_MEM_IO)
-
-ACE_Reactive_MEM_IO::~ACE_Reactive_MEM_IO () = default;
 
 int
 ACE_Reactive_MEM_IO::init (ACE_HANDLE handle,
@@ -35,7 +35,7 @@ ACE_Reactive_MEM_IO::recv_buf (ACE_MEM_SAP_Node *&buf,
   if (this->shm_malloc_ == nullptr || this->handle_ == ACE_INVALID_HANDLE)
     return -1;
 
-  ACE_OFF_T new_offset = 0;
+  ACE_OFF_T new_offset {};
   ssize_t retv = ACE::recv (this->handle_,
                             (char *) &new_offset,
                             sizeof (ACE_OFF_T),
@@ -96,21 +96,21 @@ ACE_Reactive_MEM_IO::send_buf (ACE_MEM_SAP_Node *buf,
 int
 ACE_MT_MEM_IO::Simple_Queue::write (ACE_MEM_SAP_Node *new_node)
 {
-  if (this->mq_ == 0)
+  if (this->mq_ == nullptr)
     return -1;
 
   // Here, we assume we already have acquired the lock necessary.
   // And we are allowed to write.
-  if (this->mq_->tail_.addr () == 0)     // nothing in the queue.
+  if (this->mq_->tail_.addr () == nullptr)     // nothing in the queue.
     {
       this->mq_->head_ = new_node;
       this->mq_->tail_ = new_node;
-      new_node->next_ = 0;
+      new_node->next_ = nullptr;
     }
   else
     {
       this->mq_->tail_->next_ = new_node;
-      new_node->next_ = 0;
+      new_node->next_ = nullptr;
       this->mq_->tail_ = new_node;
     }
   return 0;
@@ -119,10 +119,10 @@ ACE_MT_MEM_IO::Simple_Queue::write (ACE_MEM_SAP_Node *new_node)
 ACE_MEM_SAP_Node *
 ACE_MT_MEM_IO::Simple_Queue::read ()
 {
-  if (this->mq_ == 0)
-    return 0;
+  if (this->mq_ == nullptr)
+    return nullptr;
 
-  ACE_MEM_SAP_Node *retv = nullptr;
+  ACE_MEM_SAP_Node *retv {};
 
   ACE_SEH_TRY
     {
@@ -132,8 +132,8 @@ ACE_MT_MEM_IO::Simple_Queue::read ()
       if (this->mq_->head_ == this->mq_->tail_)
         {
           // Last message in the queue.
-          this->mq_->head_ = 0;
-          this->mq_->tail_ = 0;
+          this->mq_->head_ = nullptr;
+          this->mq_->tail_ = nullptr;
         }
       else
         this->mq_->head_ = retv->next_;
@@ -145,14 +145,6 @@ ACE_MT_MEM_IO::Simple_Queue::read ()
   return retv;
 }
 
-ACE_MT_MEM_IO::~ACE_MT_MEM_IO ()
-{
-  delete this->recv_channel_.sema_;
-  delete this->recv_channel_.lock_;
-  delete this->send_channel_.sema_;
-  delete this->send_channel_.lock_;
-}
-
 int
 ACE_MT_MEM_IO::init (ACE_HANDLE handle,
                      const ACE_TCHAR *name,
@@ -160,6 +152,8 @@ ACE_MT_MEM_IO::init (ACE_HANDLE handle,
 {
   ACE_TRACE ("ACE_MT_MEM_IO::init");
   ACE_UNUSED_ARG (handle);
+  ACE_SYNCH_PROCESS_SEMAPHORE *semaphore {};
+  ACE_SYNCH_PROCESS_MUTEX *mutex {};
 
   // @@ Give me a rule on naming and how the queue should
   //    be kept in the shared memory and we are done
@@ -184,65 +178,73 @@ ACE_MT_MEM_IO::init (ACE_HANDLE handle,
   ACE_OS::strcpy (client_lock, basename);
   ACE_OS::strcat (client_lock, ACE_TEXT ("_lock_to_client"));
 
-  void *to_server_ptr = nullptr;
+  void *to_server_ptr {};
   // @@ Here, we assume the shared memory fill will never be resued.
   //    So we can determine whether we are server or client by examining
   //    if the simple message queues have already been set up in
   //    the Malloc object or not.
   if (this->shm_malloc_->find ("to_server", to_server_ptr) == -1)
     {
-      void *ptr = nullptr;
+      void *ptr {};
       // We are server.
       ACE_ALLOCATOR_RETURN (ptr,
                             this->shm_malloc_->malloc (2 * sizeof (MQ_Struct)),
                             -1);
 
       MQ_Struct *mymq = reinterpret_cast<MQ_Struct *> (ptr);
-      mymq->tail_ = 0;
-      mymq->head_ = 0;
-      (mymq + 1)->tail_ = 0;
-      (mymq + 1)->head_ = 0;
+      mymq->tail_ = nullptr;
+      mymq->head_ = nullptr;
+      (mymq + 1)->tail_ = nullptr;
+      (mymq + 1)->head_ = nullptr;
       if (this->shm_malloc_->bind ("to_server", mymq) == -1)
         return -1;
 
       if (this->shm_malloc_->bind ("to_client", mymq + 1) == -1)
         return -1;
 
-      this->recv_channel_.queue_.init (mymq, this->shm_malloc_);
-      ACE_NEW_RETURN (this->recv_channel_.sema_,
+      this->recv_channel_.queue_.init (mymq, this->shm_malloc_.get ());
+      ACE_NEW_RETURN (semaphore,
                       ACE_SYNCH_PROCESS_SEMAPHORE (0, server_sema),
                       -1);
-      ACE_NEW_RETURN (this->recv_channel_.lock_,
+      this->recv_channel_.sema_.reset (semaphore);
+      ACE_NEW_RETURN (mutex,
                       ACE_SYNCH_PROCESS_MUTEX (server_lock),
                       -1);
+      this->recv_channel_.lock_.reset (mutex);
 
-      this->send_channel_.queue_.init (mymq + 1, this->shm_malloc_);
-      ACE_NEW_RETURN (this->send_channel_.sema_,
+      this->send_channel_.queue_.init (mymq + 1, this->shm_malloc_.get ());
+      ACE_NEW_RETURN (semaphore,
                       ACE_SYNCH_PROCESS_SEMAPHORE (0, client_sema),
                       -1);
-      ACE_NEW_RETURN (this->send_channel_.lock_,
+      this->send_channel_.sema_.reset (semaphore);
+      ACE_NEW_RETURN (mutex,
                       ACE_SYNCH_PROCESS_MUTEX (client_lock),
                       -1);
+      this->send_channel_.lock_.reset (mutex);
     }
   else
     {
       // we are client.
       MQ_Struct *mymq = reinterpret_cast<MQ_Struct *> (to_server_ptr);
-      this->recv_channel_.queue_.init (mymq +1, this->shm_malloc_);
-      ACE_NEW_RETURN (this->recv_channel_.sema_,
+      this->recv_channel_.queue_.init (mymq +1, this->shm_malloc_.get ());
+      ACE_NEW_RETURN (semaphore,
                       ACE_SYNCH_PROCESS_SEMAPHORE (0, client_sema),
                       -1);
-      ACE_NEW_RETURN (this->recv_channel_.lock_,
+      this->recv_channel_.sema_.reset (semaphore);
+      ACE_NEW_RETURN (mutex,
                       ACE_SYNCH_PROCESS_MUTEX (client_lock),
                       -1);
+      this->recv_channel_.lock_.reset (mutex);
 
-      this->send_channel_.queue_.init (mymq, this->shm_malloc_);
-      ACE_NEW_RETURN (this->send_channel_.sema_,
+      this->send_channel_.queue_.init (mymq, this->shm_malloc_.get ());
+      ACE_NEW_RETURN (semaphore,
                       ACE_SYNCH_PROCESS_SEMAPHORE (0, server_sema),
                       -1);
-      ACE_NEW_RETURN (this->send_channel_.lock_,
+      this->send_channel_.sema_.reset (semaphore);
+      ACE_NEW_RETURN (mutex,
                       ACE_SYNCH_PROCESS_MUTEX (server_lock),
                       -1);
+      this->send_channel_.lock_.reset (mutex);
     }
   return 0;
 }
@@ -251,8 +253,10 @@ int
 ACE_MT_MEM_IO::fini ()
 {
   const int ret = ACE_MEM_SAP::fini ();
-  ACE_Process_Mutex::unlink (this->recv_channel_.lock_->name ());
-  ACE_Process_Mutex::unlink (this->send_channel_.lock_->name ());
+  if (this->recv_channel_.lock_ != nullptr)
+    ACE_Process_Mutex::unlink (this->recv_channel_.lock_->name ());
+  if (this->send_channel_.lock_ != nullptr)
+    ACE_Process_Mutex::unlink (this->send_channel_.lock_->name ());
   return ret;
 }
 
@@ -267,7 +271,7 @@ ACE_MT_MEM_IO::recv_buf (ACE_MEM_SAP_Node *&buf,
   ACE_UNUSED_ARG (timeout);
   ACE_UNUSED_ARG (flags);
 
-  if (this->shm_malloc_ == 0)
+  if (this->shm_malloc_ == nullptr)
     {
       return -1;
     }
@@ -284,7 +288,7 @@ ACE_MT_MEM_IO::recv_buf (ACE_MEM_SAP_Node *&buf,
 
     buf = this->recv_channel_.queue_.read ();
 
-    if (buf != 0)
+    if (buf != nullptr)
       {
         return ACE_Utils::truncate_cast<ssize_t> (buf->size ());
       }
@@ -304,7 +308,7 @@ ACE_MT_MEM_IO::send_buf (ACE_MEM_SAP_Node *buf,
   ACE_UNUSED_ARG (timeout);
   ACE_UNUSED_ARG (flags);
 
-  if (this->shm_malloc_ == 0)
+  if (this->shm_malloc_ == nullptr)
     {
       return -1;
     }
@@ -342,20 +346,18 @@ ACE_MEM_IO::init (const ACE_TCHAR *name,
                   ACE_MEM_IO::Signal_Strategy type,
                   ACE_MEM_SAP::MALLOC_OPTIONS *options)
 {
-  ACE_UNUSED_ARG (type);
-
-  delete this->deliver_strategy_;
-  this->deliver_strategy_ = nullptr;
+  this->deliver_strategy_.reset ();
+  ACE_MEM_SAP *strategy {};
   switch (type)
     {
     case ACE_MEM_IO::Reactive:
-      ACE_NEW_RETURN (this->deliver_strategy_,
+      ACE_NEW_RETURN (strategy,
                       ACE_Reactive_MEM_IO (),
                       -1);
       break;
 #if defined (ACE_WIN32) || !defined (_ACE_USE_SV_SEM)
     case ACE_MEM_IO::MT:
-      ACE_NEW_RETURN (this->deliver_strategy_,
+      ACE_NEW_RETURN (strategy,
                       ACE_MT_MEM_IO (),
                       -1);
       break;
@@ -364,6 +366,7 @@ ACE_MEM_IO::init (const ACE_TCHAR *name,
       return -1;
     }
 
+  this->deliver_strategy_.reset (strategy);
   return this->deliver_strategy_->init (this->get_handle (),
                                         name,
                                         options);
@@ -372,7 +375,7 @@ ACE_MEM_IO::init (const ACE_TCHAR *name,
 int
 ACE_MEM_IO::fini ()
 {
-  if (this->deliver_strategy_ != nullptr)
+  if (this->deliver_strategy_)
     {
       return this->deliver_strategy_->fini ();
     }
@@ -393,7 +396,7 @@ ACE_MEM_IO::send (const ACE_Message_Block *message_block,
 {
   ACE_TRACE ("ACE_MEM_IO::send");
 
-  if (this->deliver_strategy_ == nullptr)
+  if (!this->deliver_strategy_)
     {
       return -1;                  // Something went seriously wrong.
     }
@@ -407,13 +410,11 @@ ACE_MEM_IO::send (const ACE_Message_Block *message_block,
           this->deliver_strategy_->acquire_buffer (
             ACE_Utils::truncate_cast<ssize_t> (len)));
 
-      size_t n = 0;
+      size_t n {};
 
       while (message_block != nullptr)
         {
-          ACE_OS::memcpy (static_cast<char *> (buf->data ()) + n,
-                          message_block->rd_ptr (),
-                          message_block->length ());
+          std::memcpy (static_cast<char *> (buf->data ()) + n, message_block->rd_ptr (), message_block->length ());
           n += message_block->length ();
 
           if (message_block->cont ())

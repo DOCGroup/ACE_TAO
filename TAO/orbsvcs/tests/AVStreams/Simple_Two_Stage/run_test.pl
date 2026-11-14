@@ -6,10 +6,13 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
-use File::stat;
+use File::Compare;
 
 $status = 0;
 $debug = 0;
+$protocols[0] = "UDP";
+$local_address = "127.0.0.1:8000";
+$peer_address = "127.0.0.1:8050";
 
 my $ns = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 my $sv = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
@@ -50,6 +53,10 @@ for ($i = 0; $i <= $#ARGV; $i++) {
 
         print STDERR "\t-d: Debug Level defaults to 0";
 
+        print STDERR "\n\t-l: Optional local address in host:port format";
+
+        print STDERR "\n\t-a: Optional peer address in host:port format";
+
         print STDERR "\n";
 
         exit;
@@ -60,6 +67,14 @@ for ($i = 0; $i <= $#ARGV; $i++) {
     }
     elsif ($ARGV[$i] eq "-d") {
         $debug = $ARGV[$i + 1];
+        $i++;
+    }
+    elsif ($ARGV[$i] eq "-l") {
+        $local_address = $ARGV[$i + 1];
+        $i++;
+    }
+    elsif ($ARGV[$i] eq "-a") {
+        $peer_address = $ARGV[$i + 1];
         $i++;
     }
 }
@@ -107,8 +122,16 @@ for $protocol (@protocols) {
         $protocol = "RTP/UDP";
     }
 
+    my $address_args = "";
+    if ($local_address ne "") {
+        $address_args .= "-l $local_address ";
+    }
+    if ($peer_address ne "") {
+        $address_args .= "-a $peer_address ";
+    }
+
     my $sv_outputfile = $sv->LocalFile ($outputfile);
-    $ns->DeleteFile ($outputfile);
+    $sv->DeleteFile ($outputfile);
 
     $SV = $sv->CreateProcess ("receiver",
                               "-ORBInitRef NameService=file://$sv_nsiorfile ".
@@ -119,6 +142,8 @@ for $protocol (@protocols) {
                               "-ORBInitRef NameService=file://$cl_nsiorfile ".
                               "-ORBDebugLevel $debug ".
                               "-p $protocol ".
+                              "-s 103 ".
+                              $address_args.
                               "-f $cl_inputfile");
 
     print STDERR "Using ".$protocol."\n";
@@ -147,7 +172,18 @@ for $protocol (@protocols) {
         $status = 1;
     }
 
-    $ns->DeleteFile ($outputfile);
+    if ($sv->GetFile ($outputfile) == -1) {
+        print STDERR "ERROR: cannot retrieve output file <$sv_outputfile>\n";
+        $status = 1;
+    }
+    elsif (File::Compare::compare ($inputfile, $outputfile) != 0) {
+        my $input_size = -s $inputfile;
+        my $output_size = -s $outputfile;
+        print STDERR "ERROR: received $output_size bytes, expected $input_size for $protocol\n";
+        $status = 1;
+    }
+
+    $sv->DeleteFile ($outputfile);
 }
 
 $NS_status = $NS->TerminateWaitKill ($ns->ProcessStopWaitInterval()+985);

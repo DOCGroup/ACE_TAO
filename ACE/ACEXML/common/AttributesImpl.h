@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACEXML_ATTRIBUTESIMPL_H
 #define ACEXML_ATTRIBUTESIMPL_H
 
@@ -21,6 +20,7 @@
 
 #include "ACEXML/common/Attributes.h"
 #include "ace/Containers_T.h"
+#include <memory>
 
 #if !defined ACEXML_AttributesImpl_Default_Size
 #define ACEXML_AttributesImpl_Default_Size 20
@@ -40,73 +40,72 @@ class ACEXML_Export ACEXML_Attribute
 public:
   friend class ACEXML_AttributesImpl;
 
-  /// Default constructor.
-  ACEXML_Attribute ();
+  ACEXML_Attribute () = default;
 
-  /// Copy constructor.
-  ACEXML_Attribute (const ACEXML_Attribute &attr);
+  ACEXML_Attribute (ACEXML_Attribute&&) = delete;
+  ACEXML_Attribute& operator= (ACEXML_Attribute&&) = delete;
 
-  /// Initialize all constructor.
-  ACEXML_Attribute (const ACEXML_Char *uri,
-                    const ACEXML_Char *localName,
-                    const ACEXML_Char *qName,
-                    const ACEXML_Char *type,
-                    const ACEXML_Char *value);
+  ACEXML_Attribute (ACEXML_Attribute const &attr);
 
-  /// Destructor.
-  ~ACEXML_Attribute ();
+  /// Initialize all attribute fields.
+  ACEXML_Attribute (ACEXML_Char const *uri,
+                    ACEXML_Char const *localName,
+                    ACEXML_Char const *qName,
+                    ACEXML_Char const *type,
+                    ACEXML_Char const *value);
+
+  ~ACEXML_Attribute () = default;
 
   /// Set all members.
-  void setAttribute (const ACEXML_Char *uri,
-                     const ACEXML_Char *localName,
-                     const ACEXML_Char *qName,
-                     const ACEXML_Char *type,
-                     const ACEXML_Char *value);
+  void setAttribute (ACEXML_Char const *uri,
+                     ACEXML_Char const *localName,
+                     ACEXML_Char const *qName,
+                     ACEXML_Char const *type,
+                     ACEXML_Char const *value);
 
   /// Get \a uri_.
-  const ACEXML_Char *uri () const;
+  ACEXML_Char const *uri () const;
 
   /// Set \a uri_.
-  void uri (const ACEXML_Char *uri);
+  void uri (ACEXML_Char const *uri);
 
   /// Get \a localName_.
-  const ACEXML_Char *localName () const;
+  ACEXML_Char const *localName () const;
 
   /// Set \a localName_.
-  void localName (const ACEXML_Char *localName);
+  void localName (ACEXML_Char const *localName);
 
   /// Get \a qName_.
-  const ACEXML_Char *qName () const;
+  ACEXML_Char const *qName () const;
 
   /// Set \a qName_.
-  void qName (const ACEXML_Char *qName);
+  void qName (ACEXML_Char const *qName);
 
   /// Get \a type_.
-  const ACEXML_Char *type () const;
+  ACEXML_Char const *type () const;
 
   /// Set \a type_.
-  void type (const ACEXML_Char *type);
+  void type (ACEXML_Char const *type);
 
   /// Get \a value_.
-  const ACEXML_Char *value () const;
+  ACEXML_Char const *value () const;
 
   /// Set \a value_.
-  void value (const ACEXML_Char *value);
+  void value (ACEXML_Char const *value);
 
-  /// Assignment operator.
-  ACEXML_Attribute &operator= (const ACEXML_Attribute &rhs);
+  ACEXML_Attribute &operator= (ACEXML_Attribute const &rhs);
 
   /// Comparison operator.
-  bool operator!= (const ACEXML_Attribute&rhs) const;
+  bool operator!= (ACEXML_Attribute const&rhs) const;
 
 private:
   /// Namespace URI of an attribute
-  ACEXML_Char *uri_;
+  std::unique_ptr<ACEXML_Char[]> uri_ {};
 
-  ACEXML_Char *localName_;
-  ACEXML_Char *qName_;
-  ACEXML_Char *type_;
-  ACEXML_Char *value_;
+  std::unique_ptr<ACEXML_Char[]> localName_ {};
+  std::unique_ptr<ACEXML_Char[]> qName_ {};
+  std::unique_ptr<ACEXML_Char[]> type_ {};
+  std::unique_ptr<ACEXML_Char[]> value_ {};
 };
 
 /**
@@ -145,8 +144,8 @@ public:
   /**
    * Initialize an AttributesImpl that holds @a size attributes.
    */
-  ACEXML_AttributesImpl (int size = ACEXML_AttributesImpl_Default_Size);
-  ACEXML_AttributesImpl (const ACEXML_AttributesImpl &attrs);
+  explicit ACEXML_AttributesImpl (int size = ACEXML_AttributesImpl_Default_Size);
+  ACEXML_AttributesImpl (ACEXML_AttributesImpl const &attrs);
   virtual ~ACEXML_AttributesImpl ();
 
   /**
@@ -173,80 +172,79 @@ public:
    */
   virtual int removeAttribute (size_t index);
 
-
   /**
    * Look up the index of an attribute by XML 1.0 qualified name.
    * Return -1 if we fail to find a match.
    */
-  virtual int getIndex (const ACEXML_Char *qName);
+  int getIndex (const ACEXML_Char *qName) override;
 
   /**
    * Look up the index of an attribute by Namespace name.
    * Return -1 if we fail to find a match.
    */
-  virtual int getIndex (const ACEXML_Char *uri,
-                        const ACEXML_Char *localPart);
+  int getIndex (const ACEXML_Char *uri,
+                const ACEXML_Char *localPart) override;
 
   /**
    * Return the number of attributes in the list.
    */
-  virtual size_t getLength ();
+  size_t getLength () override;
 
   /**
    * Look up an attribute's local name by index.
    * Return 0 if index is out of range.
    */
-  virtual const ACEXML_Char *getLocalName (size_t index);
+  const ACEXML_Char *getLocalName (size_t index) override;
 
   /**
    * Look up an attribute's XML 1.0 qualified name by index.
    * Return 0 if index is out of range.
    */
-  virtual const ACEXML_Char *getQName (size_t index);
+  const ACEXML_Char *getQName (size_t index) override;
 
   /**
    * Look up an attribute's type by index.
    * Return 0 if index is out of range.
    */
-  virtual const ACEXML_Char *getType (size_t index);
+  const ACEXML_Char *getType (size_t index) override;
 
   /**
    * Look up an attribute's type by XML 1.0 qualified name.
    * Return 0 if we fail to find a match.
    */
-  virtual const ACEXML_Char *getType (const ACEXML_Char *qName);
+  const ACEXML_Char *getType (const ACEXML_Char *qName) override;
 
   /**
    * Look up an attribute's type by Namespace name.
    * Return 0 if we fail to find a match.
    */
-  virtual const ACEXML_Char *getType (const ACEXML_Char *uri,
-                                      const ACEXML_Char *localPart);
+  const ACEXML_Char *getType (const ACEXML_Char *uri,
+                              const ACEXML_Char *localPart) override;
 
   /**
    * Look up an attribute's Namespace URI by index.
    * Return 0 if index is out of range.
    */
-  virtual const ACEXML_Char *getURI (size_t index);
+  const ACEXML_Char *getURI (size_t index) override;
 
   /**
    * Look up an attribute's value by index.
    * Return 0 if index is out of range.
    */
-  virtual const ACEXML_Char *getValue (size_t index);
+  const ACEXML_Char *getValue (size_t index) override;
 
   /**
    * Look up an attribute's value by XML 1.0 qualified name.
    * Return 0 if we fail to find a match.
    */
-  virtual const ACEXML_Char *getValue (const ACEXML_Char *qName);
+  const ACEXML_Char *getValue (const ACEXML_Char *qName) override;
 
   /**
    * Look up an attribute's value by Namespace name.
    * Return 0 if we fail to find a match.
    */
-  virtual const ACEXML_Char *getValue (const ACEXML_Char *uri,
-                                       const ACEXML_Char *localPart);
+  const ACEXML_Char *getValue (const ACEXML_Char *uri,
+                               const ACEXML_Char *localPart) override;
 
   /**
    * Set an attribute at index.  Return -1 if index is out of

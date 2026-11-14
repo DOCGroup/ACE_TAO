@@ -3,18 +3,13 @@
 #include "AppShutdown.h"
 #include "ace/SString.h"
 
-
 ClientTask::ClientTask(bool shutdown_after_done)
 : shutdown_after_done_(shutdown_after_done),
   failure_count_(0)
 {
 }
 
-
-ClientTask::~ClientTask()
-{
-}
-
+ClientTask::~ClientTask() = default;
 
 void
 ClientTask::add_engine(ClientEngine* engine)
@@ -23,7 +18,6 @@ ClientTask::add_engine(ClientEngine* engine)
   ClientEngine_Handle engine_handle(engine,false);
   this->engines_.push_back(engine_handle);
 }
-
 
 int
 ClientTask::open(void*)
@@ -43,13 +37,12 @@ ClientTask::open(void*)
       // no threads were activated.
       ACE_ERROR_RETURN((LM_ERROR,
                         "(%P|%t) ClientTask failed to activate "
-                        "the %d client threads.\n", num_threads),
+                        "the %B client threads.\n", num_threads),
                        -1);
     }
 
   return 0;
 }
-
 
 int
 ClientTask::svc()
@@ -68,7 +61,7 @@ ClientTask::svc()
     if (exec_ret == false)
       {
         ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, 0);
-        this->failure_count_ ++;
+        ++this->failure_count_;
       }
   }
   catch (const CORBA::Exception& ex)
@@ -77,7 +70,7 @@ ClientTask::svc()
       "ClientTask::svc Caught exception from execute():");
 
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, 0);
-    this->failure_count_ ++;
+    ++this->failure_count_;
   }
   catch (...)
   {
@@ -85,7 +78,7 @@ ClientTask::svc()
                "(%P|%t) ClientTask::svc caught unknown (...) exception "\
                "in execute() " ));
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, 0);
-    this->failure_count_ ++;
+    ++this->failure_count_;
   }
 
   if(this->shutdown_after_done_)

@@ -9,38 +9,35 @@ template <typename RI, typename RV>
 class Log
 {
 public:
-  typedef RI RecordIdType;
-  typedef RV RecordValueType;
+  using RecordIdType = RI;
+  using RecordValueType = RV;
 
 private:
-  typedef
-  std::map <RecordIdType, RecordValueType>
-  Map_;
+  using Map_ = std::map<RecordIdType, RecordValueType>;
 
 public:
   class Duplicate {};
   class NotFound {};
 
   void
-  insert (RecordIdType const& ri, RecordValueType const& rv)
+  insert (RecordIdType const &ri, RecordValueType const &rv)
   {
-    if (!map_.insert (std::make_pair (ri, rv)).second)
+    if (!map_.emplace (ri, rv).second)
     {
       throw Duplicate ();
     }
   }
 
   bool
-  contains (RecordIdType const& ri) const
+  contains (RecordIdType const &ri) const
   {
-    return map_.count (ri) != 0;
+    return map_.find (ri) != map_.end ();
   }
 
-
-  RecordValueType const&
-  lookup (RecordIdType const& ri) const
+  RecordValueType const &
+  lookup (RecordIdType const &ri) const
   {
-    typename Map_::const_iterator i = map_.find (ri);
+    typename Map_::const_iterator const i = map_.find (ri);
 
     if (i != map_.end ()) return i->second;
     else throw NotFound ();

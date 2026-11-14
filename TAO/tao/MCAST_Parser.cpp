@@ -12,7 +12,9 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Truncate.h"
+#include <cstdlib>
 #include <cstring>
+#include <memory>
 
 #if !defined(__ACE_INLINE__)
 #include "tao/MCAST_Parser.inl"
@@ -27,9 +29,9 @@ TAO_MCAST_Parser::~TAO_MCAST_Parser () = default;
 bool
 TAO_MCAST_Parser::match_prefix (const char *ior_string) const
 {
-  return (ACE_OS::strncmp (ior_string,
-                           ::mcast_prefix,
-                           sizeof (::mcast_prefix) - 1) == 0);
+  return (std::strncmp (ior_string,
+                        ::mcast_prefix,
+                        sizeof (::mcast_prefix) - 1) == 0);
 }
 
 CORBA::Object_ptr
@@ -112,7 +114,7 @@ TAO_MCAST_Parser::multicast_query (char* & buf,
   ACE_SOCK_Stream stream;
   ACE_SOCK_Dgram dgram;
 
-  ssize_t result = 0;
+  ssize_t result {};
 
   // Bind listener to any port and then find out what the port was.
 #if defined (ACE_HAS_IPV6)
@@ -181,7 +183,7 @@ TAO_MCAST_Parser::multicast_query (char* & buf,
               if (dgram.set_option (
                     IPPROTO_IPV6,
                     IPV6_MULTICAST_HOPS,
-                    &mcast_ttl_optval,
+                    std::addressof (mcast_ttl_optval),
                     sizeof (mcast_ttl_optval)) != 0)
                 return -1;
             }
@@ -190,7 +192,7 @@ TAO_MCAST_Parser::multicast_query (char* & buf,
           if (dgram.set_option (
                 IPPROTO_IP,
                 IP_MULTICAST_TTL,
-                &mcast_ttl_optval,
+                std::addressof (mcast_ttl_optval),
                 sizeof (mcast_ttl_optval)) != 0)
             result = -1;
 
@@ -211,11 +213,11 @@ TAO_MCAST_Parser::multicast_query (char* & buf,
           iovec iovp[iovcnt];
 
           // The length of service name string.
-          iovp[0].iov_base = (char *) &data_len;
+          iovp[0].iov_base = std::addressof (data_len);
           iovp[0].iov_len  = sizeof (CORBA::Short);
 
           // The port at which we are listening.
-          iovp[1].iov_base = (char *) &response_port;
+          iovp[1].iov_base = std::addressof (response_port);
           iovp[1].iov_len  = sizeof (ACE_UINT16);
 
           // The service name string.
@@ -242,7 +244,7 @@ TAO_MCAST_Parser::multicast_query (char* & buf,
               if (TAO_debug_level > 0)
                 TAOLIB_DEBUG ((LM_DEBUG,
                             ACE_TEXT ("\n%N; Sent multicast.")
-                            ACE_TEXT ("# of bytes sent is %d.\n"),
+                            ACE_TEXT ("# of bytes sent is %b.\n"),
                             result));
               // Wait for response until timeout.
               ACE_Time_Value tv (
@@ -253,7 +255,7 @@ TAO_MCAST_Parser::multicast_query (char* & buf,
               // Accept reply connection from server.
               if (acceptor.accept (stream,
                                    nullptr,
-                                   &tv) == -1)
+                                   std::addressof (tv)) == -1)
                 {
                   if (TAO_debug_level > 0)
                     {
@@ -269,10 +271,10 @@ TAO_MCAST_Parser::multicast_query (char* & buf,
 
                   // IOR length.
                   CORBA::Short ior_len;
-                  result = stream.recv_n (&ior_len,
+                  result = stream.recv_n (std::addressof (ior_len),
                                           sizeof ior_len,
                                           0,
-                                          &tv);
+                                          std::addressof (tv));
                   if (result != (ssize_t)sizeof (ior_len))
                     {
                       if (TAO_debug_level > 0)
@@ -311,7 +313,7 @@ TAO_MCAST_Parser::multicast_query (char* & buf,
                           result = stream.recv_n (buf,
                                                   ior_len,
                                                   0,
-                                                  &tv);
+                                                  std::addressof (tv));
                           if (result == -1)
                             TAOLIB_ERROR ((LM_ERROR,
                                         ACE_TEXT ( "%p\n"),
@@ -362,7 +364,7 @@ TAO_MCAST_Parser::assign_to_variables (char const * mcast_name)
 
 #if defined (ACE_HAS_IPV6)
   // IPv6 numeric address in host string?
-  bool ipv6_in_host = false;
+  bool ipv6_in_host {};
 
   // Check if this is an mcast address containing a
   // decimal IPv6 address representation.
@@ -443,7 +445,7 @@ TAO_MCAST_Parser::assign_to_variables (char const * mcast_name)
   else
     {
       int const the_port =
-        ACE_OS::atoi (mcast_name_cstring.substring (0, pos_colon2).c_str ());
+        std::atoi (mcast_name_cstring.substring (0, pos_colon2).c_str ());
 
       if (the_port >= 0 && the_port <= ACE_MAX_DEFAULT_PORT)
         this->mcast_port_ = static_cast<unsigned short> (the_port);
@@ -452,7 +454,6 @@ TAO_MCAST_Parser::assign_to_variables (char const * mcast_name)
   mcast_name_cstring =
     mcast_name_cstring.substring (pos_colon2 + 1,
                                   mcast_name_cstring.length() - pos_colon2);
-
 
   ACE_CString::size_type const pos_colon3 = mcast_name_cstring.find (':', 0);
 
@@ -468,7 +469,7 @@ TAO_MCAST_Parser::assign_to_variables (char const * mcast_name)
     {
       // Change TTL to non-default value.
       int const the_ttl =
-        ACE_OS::atoi (mcast_name_cstring.substring (0, pos_colon4).c_str ());
+        std::atoi (mcast_name_cstring.substring (0, pos_colon4).c_str ());
 
       if (the_ttl > 0 && the_ttl <= 255)  // Valid TTLs: (0, 255]
         this->mcast_ttl_ = the_ttl;
@@ -493,6 +494,5 @@ ACE_STATIC_SVC_DEFINE (TAO_MCAST_Parser,
 ACE_FACTORY_DEFINE (TAO, TAO_MCAST_Parser)
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 #endif /* TAO_HAS_MCAST_PARSER == 1 */

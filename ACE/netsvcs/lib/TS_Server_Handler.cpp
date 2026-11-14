@@ -81,7 +81,6 @@ ACE_TS_Server_Acceptor::init (int argc, ACE_TCHAR *argv[])
 
 ACE_SVC_FACTORY_DEFINE (ACE_TS_Server_Acceptor)
 
-// Default constructor.
 ACE_TS_Server_Handler::ACE_TS_Server_Handler (ACE_Thread_Manager *tm)
   : ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> (tm)
 {
@@ -207,7 +206,7 @@ ACE_TS_Server_Handler::recv_request ()
           ACE_FALLTHROUGH;
         default:
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("%p got %d bytes, expected %d bytes\n"),
+                      ACE_TEXT ("%p got %b bytes, expected %b bytes\n"),
                       ACE_TEXT ("recv failed"),
                       n,
                       bytes_expected));

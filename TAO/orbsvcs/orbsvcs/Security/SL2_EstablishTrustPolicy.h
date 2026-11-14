@@ -8,7 +8,6 @@
  */
 // ===================================================================
 
-
 #ifndef TAO_ESTABLISH_TRUST_POLICY_H
 #define TAO_ESTABLISH_TRUST_POLICY_H
 
@@ -53,8 +52,12 @@ namespace TAO
         public virtual ::CORBA::LocalObject
     {
     public:
-      /// Constructor
-      EstablishTrustPolicy (const ::Security::EstablishTrust &trust);
+      explicit EstablishTrustPolicy (::Security::EstablishTrust const & trust);
+
+      EstablishTrustPolicy (EstablishTrustPolicy const &) = delete;
+      EstablishTrustPolicy (EstablishTrustPolicy &&) = delete;
+      EstablishTrustPolicy &operator= (EstablishTrustPolicy const &) = delete;
+      EstablishTrustPolicy &operator= (EstablishTrustPolicy &&) = delete;
 
       /**
        * @name CORBA::Policy Methods
@@ -72,12 +75,11 @@ namespace TAO
       ::Security::EstablishTrust trust () override;
 
     protected:
-      /// Destructor
       /**
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.
        */
-      ~EstablishTrustPolicy () override;
+      ~EstablishTrustPolicy () override = default;
 
     private:
       /// Quality of protection which can be specified for an object

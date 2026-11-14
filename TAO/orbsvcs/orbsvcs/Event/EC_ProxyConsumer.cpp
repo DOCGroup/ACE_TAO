@@ -35,7 +35,6 @@ TAO_EC_ProxyPushConsumer::~TAO_EC_ProxyPushConsumer ()
   this->cleanup_i ();
 }
 
-
 CORBA::Boolean
 TAO_EC_ProxyPushConsumer::supplier_non_existent (
       CORBA::Boolean_out disconnected)
@@ -216,7 +215,7 @@ TAO_EC_ProxyPushConsumer::_decr_refcnt ()
 {
   {
     ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
-    this->ec_refcount_--;
+    --this->ec_refcount_;
     if (this->ec_refcount_ != 0)
       return this->ec_refcount_;
   }
@@ -224,7 +223,6 @@ TAO_EC_ProxyPushConsumer::_decr_refcnt ()
   this->refcount_zero_hook ();
   return 0;
 }
-
 
 // ****************************************************************
 

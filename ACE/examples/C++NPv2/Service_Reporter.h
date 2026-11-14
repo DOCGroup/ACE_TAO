@@ -9,23 +9,22 @@
 #include "ace/Service_Object.h"
 #include "ace/SOCK_Acceptor.h"
 
-
 class Service_Reporter : public ACE_Service_Object {
 public:
-  Service_Reporter (ACE_Reactor *r = ACE_Reactor::instance ())
+  explicit Service_Reporter (ACE_Reactor *r = ACE_Reactor::instance ())
     : ACE_Service_Object (r) {}
 
 protected:
   // Hook methods inherited from <ACE_Service_Object>.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
-  virtual int fini ();
-  virtual int info (ACE_TCHAR **, size_t) const;
-  virtual int suspend ();
-  virtual int resume ();
+  int init (int argc, ACE_TCHAR *argv[]) override;
+  int fini () override;
+  int info (ACE_TCHAR **, size_t) const override;
+  int suspend () override;
+  int resume () override;
 
   // Reactor hook methods.
-  virtual int handle_input (ACE_HANDLE);
-  virtual ACE_HANDLE get_handle () const
+  int handle_input (ACE_HANDLE) override;
+  ACE_HANDLE get_handle () const override
   { return acceptor_.get_handle (); }
 
 private:

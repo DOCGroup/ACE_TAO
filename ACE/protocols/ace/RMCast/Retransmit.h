@@ -17,18 +17,14 @@ namespace ACE_RMCast
   public:
     Retransmit (Parameters const& params);
 
-    virtual void
-    out_start (Out_Element* out);
+    void out_start (Out_Element* out) override;
 
-    virtual void
-    out_stop ();
+    void out_stop () override;
 
   public:
-    virtual void
-    send (Message_ptr m);
+    void send (Message_ptr m) override;
 
-    virtual void
-    recv (Message_ptr m);
+    void recv (Message_ptr m) override;
 
   private:
     struct Descr
@@ -68,9 +64,7 @@ namespace ACE_RMCast
       unsigned long count_;
     };
 
-    typedef
-    ACE_Hash_Map_Manager<u64, Descr, ACE_Null_Mutex>
-    Queue;
+    using Queue = ACE_Hash_Map_Manager<u64, Descr, ACE_Null_Mutex>;
 
   private:
     void
@@ -90,6 +84,5 @@ namespace ACE_RMCast
     ACE_Thread_Manager tracker_mgr_;
   };
 }
-
 
 #endif  // ACE_RMCAST_RETRANSMIT_H

@@ -25,7 +25,7 @@ namespace TAO
     {
       // Remember information about this upcall.
       this->poa_ = p;
-      this->object_key_ = &key;
+      this->object_key_ = std::addressof (key);
 
       // Set the current context and remember the old one.
       this->tss_resources_ = TAO_TSS_Resources::instance ();

@@ -3,18 +3,21 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdlib.h"
 
-int runtime = 5; //sec
+constexpr int DEFAULT_RUNTIME { 5 };
 
-
-namespace CosNotifyCommImpl{
-  class StructuredPushConsumer: public virtual POA_CosNotifyComm:: StructuredPushConsumer
+namespace CosNotifyCommImpl
+{
+  class StructuredPushConsumer : public virtual POA_CosNotifyComm::StructuredPushConsumer
   {
   public:
-    StructuredPushConsumer () : received_ (false) {};
-    virtual ~ StructuredPushConsumer () {};
+    StructuredPushConsumer () = default;
+    StructuredPushConsumer (StructuredPushConsumer const&) = delete;
+    StructuredPushConsumer (StructuredPushConsumer&&) = delete;
+    StructuredPushConsumer& operator= (StructuredPushConsumer const&) = delete;
+    StructuredPushConsumer& operator= (StructuredPushConsumer&&) = delete;
+    ~StructuredPushConsumer () override = default;
 
-    void push_structured_event(
-      const CosNotification::StructuredEvent &event)
+    void push_structured_event (CosNotification::StructuredEvent const& event) override
     {
       received_ = true;
       std::cout << "Received an event...," << std::endl;
@@ -26,28 +29,28 @@ namespace CosNotifyCommImpl{
         << std::endl;
     };
 
-    void disconnect_structured_push_consumer()
-    {};
+    void disconnect_structured_push_consumer () override
+    {}
 
     void offer_change (
-      const CosNotification::EventTypeSeq &,
-      const CosNotification::EventTypeSeq &)
-    {};
+      CosNotification::EventTypeSeq const&,
+      CosNotification::EventTypeSeq const&) override
+    {}
 
-    bool received_events ()
+    bool received_events () const
     {
       return this->received_;
     };
 
   private:
-    bool received_;
+    bool received_ {};
   };
 }
 
-int parse_args (int argc, ACE_TCHAR *argv[])
+int parse_args (int argc, ACE_TCHAR *argv[], int& runtime)
 {
-  ACE_Get_Opt get_opts (argc, argv, "t:");
-  int x;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("t:"));
+  int x {};
 
   while ((x = get_opts ()) != -1)
     switch (x)
@@ -68,69 +71,72 @@ int parse_args (int argc, ACE_TCHAR *argv[])
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  int runtime { DEFAULT_RUNTIME };
   try
   {
     PortableServer::POAManager_var poa_manager;
 
-    CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
+    CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-    CORBA::Object_var poa_obj = orb->resolve_initial_references("RootPOA");
-    PortableServer::POA_var root_poa = PortableServer::POA::_narrow(poa_obj.in());
+    CORBA::Object_var poa_obj = orb->resolve_initial_references ("RootPOA");
+    PortableServer::POA_var root_poa = PortableServer::POA::_narrow (poa_obj.in ());
 
-    poa_manager = root_poa->the_POAManager();
+    poa_manager = root_poa->the_POAManager ();
 
-    if (parse_args (argc, argv) != 0)
+    if (parse_args (argc, argv, runtime) != 0)
       return 1;
 
-    poa_manager->activate();
+    poa_manager->activate ();
 
     /*Get event_channel*/
     std::cout << "Get event_channel now"  << std::endl;
-    CosNotifyChannelAdmin::EventChannel_var ec = get_event_channel(orb.in());
+    CosNotifyChannelAdmin::EventChannel_var ec = get_event_channel (orb.in ());
 
     //Instanciating the Consumer
     CosNotifyComm::StructuredPushConsumer_var spc =
       CosNotifyComm::StructuredPushConsumer::_nil();
 
-    CosNotifyCommImpl::StructuredPushConsumer *pImpl_spc = new CosNotifyCommImpl::StructuredPushConsumer;
-    spc = pImpl_spc->_this();
+    CosNotifyCommImpl::StructuredPushConsumer* const servant_impl =
+      new CosNotifyCommImpl::StructuredPushConsumer;
+    PortableServer::ServantBase_var servant_owner (servant_impl);
+    spc = servant_impl->_this ();
 
     //Obtain a Consumer Admin
-    CosNotifyChannelAdmin::AdminID adminid = 0;
+    CosNotifyChannelAdmin::AdminID adminid {};
     CosNotifyChannelAdmin::ConsumerAdmin_var ca =
       ec->new_for_consumers (CosNotifyChannelAdmin::AND_OP, adminid);
 
-    if( ca.in() == CosNotifyChannelAdmin::ConsumerAdmin::_nil() ){
+    if (CORBA::is_nil (ca.in ()))
+      {
       std::cerr << "ca is nil!" << std::endl;
       return 1;
     }
 
     //Obtain a Proxy Consumer
-    CosNotifyChannelAdmin::ProxyID proxy_id;
-    CosNotifyChannelAdmin::ClientType ctype = CosNotifyChannelAdmin::STRUCTURED_EVENT;
+    CosNotifyChannelAdmin::ProxyID proxy_id {};
+    CosNotifyChannelAdmin::ClientType const ctype = CosNotifyChannelAdmin::STRUCTURED_EVENT;
 
     CosNotifyChannelAdmin::ProxySupplier_var proxySupplier_obj;
     try
     {
-      proxySupplier_obj = ca->obtain_notification_push_supplier(ctype, proxy_id);
+      proxySupplier_obj = ca->obtain_notification_push_supplier (ctype, proxy_id);
     }
-    catch(CosNotifyChannelAdmin::AdminLimitExceeded& err)
+    catch (CosNotifyChannelAdmin::AdminLimitExceeded&)
     {
       std::cerr << "CosNotifyChannelAdmin::AdminLimitExceeded Exception!" << std::endl;
       throw;
     }
 
     CosNotifyChannelAdmin::StructuredProxyPushSupplier_var pps =
-      CosNotifyChannelAdmin::StructuredProxyPushSupplier::_narrow(proxySupplier_obj.in());
-
+      CosNotifyChannelAdmin::StructuredProxyPushSupplier::_narrow (proxySupplier_obj.in ());
 
     //Attaching a filter to pps
     CosNotifyFilter::FilterFactory_var dff =
-      ec->default_filter_factory();
+      ec->default_filter_factory ();
 
-    ACE_ASSERT(!CORBA::is_nil(dff.in()));
+    ACE_ASSERT (!CORBA::is_nil (dff.in ()));
 
-    CosNotifyFilter::Filter_var filter = dff->create_filter("EXTENDED_TCL");
+    CosNotifyFilter::Filter_var filter = dff->create_filter ("EXTENDED_TCL");
 
     CosNotification::EventTypeSeq event_types(1);
     event_types.length(2);
@@ -144,9 +150,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     constraints.length(1);
 
     constraints[0].event_types = event_types;
-    constraints[0].constraint_expr = CORBA::string_dup("");
+    constraints[0].constraint_expr = CORBA::string_dup ("");
 
-    CosNotifyFilter::ConstraintInfoSeq_var cons_info = filter->add_constraints(constraints);
+    CosNotifyFilter::ConstraintInfoSeq_var cons_info = filter->add_constraints (constraints);
 
     pps->add_filter(filter.in());
 
@@ -156,13 +162,12 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     std::cout << "The filter's event_types[1].domain_name=" <<  event_types[1].domain_name << std::endl;
     std::cout << "The filter's event_types[1].type_name=" <<  event_types[1].type_name << std::endl;
 
-
     //Connecting a Supplier to a Proxy Consumer
     try
     {
-      pps->connect_structured_push_consumer(spc.in());
+      pps->connect_structured_push_consumer (spc.in ());
     }
-    catch (CosEventChannelAdmin::AlreadyConnected& ac)
+    catch (CosEventChannelAdmin::AlreadyConnected&)
     {
       std::cerr << "CosEventChannelAdmin::AlreadyConnected" << std::endl;
       throw;
@@ -174,12 +179,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       throw;
     }
 
-
     ACE_Time_Value tv (runtime);
     orb->run (tv);
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Consumer done.\n")));
 
-    if (pImpl_spc->received_events ())
+    if (servant_impl->received_events ())
     {
       //Consumer should not receive any events as it's filtered with event type.
       std::cerr << "Test failed - received test events." << std::endl;
@@ -190,7 +194,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       std::cerr << "Test passed - did not receive test events as expected." << std::endl;
     }
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
   {
     ex._tao_print_exception ("Consumer: ");
     return 1;
@@ -200,7 +204,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     std::cerr << "Consumer: Some exceptions was caught!" << std::endl;
     return 1;
   }
-
 
   return 0;
 }

@@ -8,6 +8,11 @@
 
 #include "ace/Monitor_Control/Constraint_Visitor.h"
 
+#include <cerrno>
+#include <memory>
+#include <new>
+#include <utility>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
@@ -15,14 +20,22 @@ namespace ACE
   namespace Monitor_Control
   {
     int
-    Constraint_Interpreter::build_tree (const char *constraints)
+    Constraint_Interpreter::build_tree (char const* constraints)
     {
       if (ETCL_Interpreter::is_empty_string (constraints))
         {
           /// Root is deleted in the interpreter's destructor.
-          ACE_NEW_RETURN (this->root_,
-                          ETCL_Literal_Constraint (true),
-                          -1);
+          std::unique_ptr<ETCL_Constraint> root {
+            new (std::nothrow) ETCL_Literal_Constraint (true)
+          };
+
+          if (root == nullptr)
+            {
+              errno = ENOMEM;
+              return -1;
+            }
+
+          this->root_ = std::move (root);
         }
       else
         {
@@ -42,7 +55,7 @@ namespace ACE
     ACE_CDR::Boolean
     Constraint_Interpreter::evaluate (Constraint_Visitor &evaluator)
     {
-      return evaluator.evaluate_constraint (this->root_);
+      return evaluator.evaluate_constraint (this->root_.get ());
     }
   }
 }

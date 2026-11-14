@@ -2,7 +2,9 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/CORBA_macros.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
+#include <memory>
+
+ACE_TCHAR const *ior_output_file = ACE_TEXT ("test.ior");
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
@@ -33,9 +35,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::String_var ior =
         orb->object_to_string (server.in ());
 
-      FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
+      std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+        ACE_OS::fopen (ior_output_file, "w"), ACE_OS::fclose);
 
-      if (output_file == 0)
+      if (!output_file)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Can't open output file for writing IOR: %s",
@@ -43,10 +46,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                             1);
         }
 
-      ACE_OS::fprintf (output_file,
-                        "%s",
-                        ior.in ());
-      ACE_OS::fclose (output_file);
+      ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
 
       poa_manager->activate ();
       orb->run ();

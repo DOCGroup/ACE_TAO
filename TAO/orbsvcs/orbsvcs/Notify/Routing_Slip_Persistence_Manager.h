@@ -57,7 +57,12 @@ public:
   using Block_Type = ACE_UINT16;
 
   /// The constructor.
-  Routing_Slip_Persistence_Manager(Standard_Event_Persistence_Factory* factory);
+  explicit Routing_Slip_Persistence_Manager(Standard_Event_Persistence_Factory* factory);
+
+  Routing_Slip_Persistence_Manager (Routing_Slip_Persistence_Manager const &) = delete;
+  Routing_Slip_Persistence_Manager (Routing_Slip_Persistence_Manager &&) = delete;
+  Routing_Slip_Persistence_Manager &operator= (Routing_Slip_Persistence_Manager const &) = delete;
+  Routing_Slip_Persistence_Manager &operator= (Routing_Slip_Persistence_Manager &&) = delete;
 
   /// The destructor.
   ~Routing_Slip_Persistence_Manager();
@@ -129,7 +134,7 @@ private:
       BT_Overflow
       };
 
-    Block_Header(Header_Type type);
+    explicit Block_Header(Header_Type type);
     virtual ~Block_Header ();
     virtual size_t extract_header(Persistent_Storage_Block& psb,
       size_t offset = 0);
@@ -154,10 +159,10 @@ private:
   {
   public:
     Routing_Slip_Header();
-    virtual size_t extract_header(Persistent_Storage_Block& psb,
-      size_t offset = 0);
-    virtual size_t put_header(Persistent_Storage_Block& psb,
-      size_t offset = 0);
+    size_t extract_header(Persistent_Storage_Block& psb,
+      size_t offset = 0) override;
+    size_t put_header(Persistent_Storage_Block& psb,
+      size_t offset = 0) override;
 
   public:
     /// The next event in the system
@@ -236,24 +241,24 @@ private:
 
 private:
   TAO_SYNCH_MUTEX lock_;
-  bool removed_;
-  ACE_UINT64 serial_number_;
+  bool removed_ {};
+  ACE_UINT64 serial_number_ {};
   Persistent_File_Allocator* allocator_;
   Standard_Event_Persistence_Factory* factory_;
   Event_Header event_header_;
   Routing_Slip_Header routing_slip_header_;
-  Persistent_Storage_Block* first_event_block_;
-  Persistent_Storage_Block* first_routing_slip_block_;
+  Persistent_Storage_Block* first_event_block_ {};
+  Persistent_Storage_Block* first_routing_slip_block_ {};
   /// We are part of a doubly-linked list
   Routing_Slip_Persistence_Manager* prev_manager_;
   Routing_Slip_Persistence_Manager* next_manager_;
   ACE_Unbounded_Stack<size_t> allocated_event_blocks_;
   ACE_Unbounded_Stack<size_t> allocated_routing_slip_blocks_;
-  Persistent_Callback* callback_;
+  Persistent_Callback* callback_ {};
 
-  /// If these are non-zero we own 'em
-  ACE_Message_Block * event_mb_;
-  ACE_Message_Block * routing_slip_mb_;
+  /// If these are non-null, we own them.
+  ACE_Message_Block_Unique_Ptr event_mb_ {};
+  ACE_Message_Block_Unique_Ptr routing_slip_mb_ {};
 };
 } /* namespace TAO_Notify */
 

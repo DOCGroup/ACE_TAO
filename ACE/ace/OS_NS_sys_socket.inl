@@ -875,7 +875,7 @@ ACE_OS::sendv (ACE_HANDLE handle,
   iovec local_iov[ACE_IOV_MAX];
   long total = 0;
   long new_total = 0;
-  for (int i = 0; i < n; i++)
+  for (int i = 0; i < n; ++i)
     {
       local_iov[i].iov_base = buffers[i].iov_base;
       local_iov[i].iov_len  = buffers[i].iov_len;

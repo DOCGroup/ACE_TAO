@@ -58,12 +58,10 @@ template <class SVC_HANDLER>
 class ACE_NonBlocking_Connect_Handler : public ACE_Event_Handler
 {
 public:
-  /// Constructor.
   ACE_NonBlocking_Connect_Handler (ACE_Connector_Base<SVC_HANDLER> &connector,
                                    SVC_HANDLER *,
                                    long timer_id);
 
-  /// Destructor.
   ~ACE_NonBlocking_Connect_Handler () override;
 
   /// Close up and return underlying SVC_HANDLER through @c sh.
@@ -439,8 +437,8 @@ public:
    * non-blocking I/O on the SVC_HANDLER when it is opened.
    * Default strategies would be created and used.
    */
-  virtual int open (ACE_Reactor *r,
-                    int flags);
+  int open (ACE_Reactor *r,
+            int flags) override;
 
   /**
    * Initialize a connector.  @a flags indicates how SVC_HANDLER's
@@ -458,7 +456,7 @@ public:
   virtual ~ACE_Strategy_Connector ();
 
   /// Close down the Connector
-  virtual int close ();
+  int close () override;
 
   // = Strategies accessors
   virtual ACE_Creation_Strategy<SVC_HANDLER> *creation_strategy () const;
@@ -484,20 +482,20 @@ protected:
    * dynamically linking the handler, etc.).  Returns -1 if failure,
    * else 0.
    */
-  virtual int make_svc_handler (SVC_HANDLER *&sh);
+  int make_svc_handler (SVC_HANDLER *&sh) override;
 
   /**
    * Bridge method for connecting the new connection into the
    * SVC_HANDLER.  The default behavior delegates to the
    * <PEER_CONNECTOR::connect> in the <Connect_Strategy>.
    */
-  virtual int connect_svc_handler (SVC_HANDLER *&sh,
-                                   const typename PEER_CONNECTOR::PEER_ADDR &remote_addr,
-                                   ACE_Time_Value *timeout,
-                                   const typename PEER_CONNECTOR::PEER_ADDR &local_addr,
-                                   int reuse_addr,
-                                   int flags,
-                                   int perms);
+  int connect_svc_handler (SVC_HANDLER *&sh,
+                           const typename PEER_CONNECTOR::PEER_ADDR &remote_addr,
+                           ACE_Time_Value *timeout,
+                           const typename PEER_CONNECTOR::PEER_ADDR &local_addr,
+                           int reuse_addr,
+                           int flags,
+                           int perms) override;
 
   /**
    * Bridge method for connecting the new connection into the
@@ -509,14 +507,14 @@ protected:
    * the internal locks in the Connect_Strategy, while saving a TSS
    * copy in @a sh_copy, usually located in the stack.
    */
-  virtual int connect_svc_handler (SVC_HANDLER *&sh,
-                                   SVC_HANDLER *&sh_copy,
-                                   const typename PEER_CONNECTOR::PEER_ADDR &remote_addr,
-                                   ACE_Time_Value *timeout,
-                                   const typename PEER_CONNECTOR::PEER_ADDR &local_addr,
-                                   int reuse_addr,
-                                   int flags,
-                                   int perms);
+  int connect_svc_handler (SVC_HANDLER *&sh,
+                           SVC_HANDLER *&sh_copy,
+                           const typename PEER_CONNECTOR::PEER_ADDR &remote_addr,
+                           ACE_Time_Value *timeout,
+                           const typename PEER_CONNECTOR::PEER_ADDR &local_addr,
+                           int reuse_addr,
+                           int flags,
+                           int perms) override;
 
   /**
    * Bridge method for activating a SVC_HANDLER with the appropriate
@@ -528,7 +526,7 @@ protected:
    * SVC_HANDLER as an "active object" via multi-threading or
    * multi-processing).
    */
-  virtual int activate_svc_handler (SVC_HANDLER *svc_handler);
+  int activate_svc_handler (SVC_HANDLER *svc_handler) override;
 
   // = Strategy objects.
 

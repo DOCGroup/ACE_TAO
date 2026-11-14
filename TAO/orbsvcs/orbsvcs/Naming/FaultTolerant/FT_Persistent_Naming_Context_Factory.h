@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_FT_PERSISTENT_NAMING_CONTEXT_FACTORY_H
 #define TAO_FT_PERSISTENT_NAMING_CONTEXT_FACTORY_H
 #include /**/ "ace/pre.h"
@@ -29,7 +28,6 @@ class TAO_FtNaming_Export TAO_FT_Persistent_Naming_Context_Factory
   : public TAO_Persistent_Naming_Context_Factory
 {
 public:
-  /// Constructor.
   TAO_FT_Persistent_Naming_Context_Factory () = default;
 
   /// Destructor.  Does not deallocate the hash map: if an instance of
@@ -39,7 +37,7 @@ public:
   /// Factory method for creating an implementation object for naming contexts
   TAO_Persistent_Naming_Context* create_naming_context_impl (
     PortableServer::POA_ptr poa,
-    const char *poa_id,
+    char const *poa_id,
     TAO_Persistent_Context_Index *context_index,
     HASH_MAP *map = nullptr,
     ACE_UINT32 *counter = nullptr) override;

@@ -11,10 +11,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Fault_Tolerance_Service::~TAO_Fault_Tolerance_Service ()
-{
-  delete this->ft_service_callback_;
-}
+TAO_Fault_Tolerance_Service::~TAO_Fault_Tolerance_Service () = default;
 
 void
 TAO_Fault_Tolerance_Service::init (TAO_ORB_Core *orb_core)
@@ -28,10 +25,8 @@ TAO_Fault_Tolerance_Service::init (TAO_ORB_Core *orb_core)
 
       // Activate the callback
       if (service)
-        this->ft_service_callback_ = service->activate_services (orb_core);
+        this->ft_service_callback_.reset (service->activate_services (orb_core));
     }
-
-  return;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

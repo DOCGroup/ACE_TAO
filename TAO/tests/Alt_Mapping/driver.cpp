@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "client.h"
 #include "driver.h"
 #include "results.h"
@@ -39,15 +38,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-// constructor
-Driver::Driver ()
-{
-}
-
-Driver::~Driver ()
-{
-}
-
 // initialize the driver
 int
 Driver::init (int argc, ACE_TCHAR **argv)
@@ -55,14 +45,11 @@ Driver::init (int argc, ACE_TCHAR **argv)
   // environment to track exceptions
 
   // retrieve the instance of Options
-  Options *opt = OPTIONS::instance ();
-
-  char exception_string[256];
+  Options* opt = OPTIONS::instance ();
+  char const* exception_string = "ORB Initialization";
 
   try
     {
-      ACE_OS::strcpy (exception_string, "ORB Initialization");
-
       // Retrieve the underlying ORB
       this->orb_ = CORBA::ORB_init (argc,
                                     argv,
@@ -75,11 +62,10 @@ Driver::init (int argc, ACE_TCHAR **argv)
                            "parse_args failed\n"),
                           -1);
       // Retrieve a Param_Test object reference
-      ACE_OS::strcpy (exception_string,"ORB::string_to_object() failed.");
+      exception_string = "ORB::string_to_object() failed.";
 
       CORBA::Object_var temp =
         this->orb_->string_to_object (opt->param_test_ior ());
-
 
       if (CORBA::is_nil (temp.in()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -88,11 +74,11 @@ Driver::init (int argc, ACE_TCHAR **argv)
                           -1);
 
       // Get the object reference
-      ACE_OS::strcpy (exception_string,"Param_Test::_narrow () failed.");
+      exception_string = "Param_Test::_narrow () failed.";
 
       this->objref_ = Alt_Mapping::_narrow (temp.in());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (exception_string);
       return -1;
@@ -107,43 +93,33 @@ Driver::run ()
   // serves as a factory of Param_Client objects. It is also responsible to
   // start the test
 
-  Options *opt = OPTIONS::instance ();  // get the options object
+  Options const* opt = OPTIONS::instance ();  // get the options object
   int retstatus = -1;
 
   switch (opt->test_type ())
     {
-    case Options::TEST_UB_STRING:
+    case Options::Test_Type::Unbounded_String:
       {
-        Alt_Mapping_Client<Test_Unbounded_String> *client = new
-          Alt_Mapping_Client<Test_Unbounded_String> (this->orb_.in (),
-                                                    this->objref_.in(),
-                                                    new Test_Unbounded_String);
-        retstatus = client->run_sii_test ();
-
-        delete client;
+        Alt_Mapping_Client<Test_Unbounded_String> client (
+          this->orb_.in (),
+          this->objref_.in (),
+          std::make_unique<Test_Unbounded_String> ());
+        retstatus = client.run_sii_test ();
       }
       break;
-    case Options::TEST_UB_STRUCT_SEQUENCE:
+    case Options::Test_Type::Unbounded_Struct_Sequence:
       {
-        Alt_Mapping_Client<Test_Unbounded_Struct_Sequence> *client = new
-          Alt_Mapping_Client<Test_Unbounded_Struct_Sequence> (
+        Alt_Mapping_Client<Test_Unbounded_Struct_Sequence> client (
             this->orb_.in (),
-            this->objref_.in(),
-            new Test_Unbounded_Struct_Sequence);
+            this->objref_.in (),
+            std::make_unique<Test_Unbounded_Struct_Sequence> ());
+        retstatus = client.run_sii_test ();
 
-        retstatus = client->run_sii_test ();
-
-        delete client;
-
-        Alt_Mapping_Client<Test_Unbounded_Struct_Sequence> *client2 = new
-          Alt_Mapping_Client<Test_Unbounded_Struct_Sequence>
-          (this->orb_.in (),
-           this->objref_.in(),
-           new Test_Unbounded_Struct_Sequence);
-
-        retstatus = client2->run_sii_test ();
-
-        delete client2;
+        Alt_Mapping_Client<Test_Unbounded_Struct_Sequence> client2 (
+          this->orb_.in (),
+          this->objref_.in (),
+          std::make_unique<Test_Unbounded_Struct_Sequence> ());
+        retstatus = client2.run_sii_test ();
       }
       break;
     default:
@@ -158,7 +134,7 @@ Driver::run ()
           this->objref_->shutdown ();
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("during shutdown");
     }

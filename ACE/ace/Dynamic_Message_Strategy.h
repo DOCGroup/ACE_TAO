@@ -61,7 +61,6 @@ public:
     ANY_STATUS  = 0x07
   };
 
-  /// Constructor.
   ACE_Dynamic_Message_Strategy (unsigned long static_bit_field_mask,
                                 unsigned long static_bit_field_shift,
                                 unsigned long dynamic_priority_max,

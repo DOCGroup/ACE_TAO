@@ -82,7 +82,6 @@ UpdateableServerInfo::operator* () const
   return *(si_.get());
 }
 
-
 const Server_Info_Ptr&
 UpdateableServerInfo::edit (bool active)
 {

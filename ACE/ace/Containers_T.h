@@ -15,6 +15,8 @@
 
 #include /**/ "ace/config-all.h"
 
+#include <memory>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -37,7 +39,6 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Allocator;
-
 
 /**
  * @class ACE_Bounded_Stack
@@ -82,7 +83,7 @@ public:
    * Initialize and allocate space for a new Bounded_Stack with the provided
    * size.
    */
-  ACE_Bounded_Stack (size_t size);
+  explicit ACE_Bounded_Stack (size_t size);
 
   /// Initialize the stack to be a copy of the stack provided.
   /**
@@ -91,7 +92,6 @@ public:
    */
   ACE_Bounded_Stack (const ACE_Bounded_Stack<T> &s);
 
-  /// Assignment operator
   /**
    * Perform a deep copy operation using the Bounded_Stack parameter.  If the
    * capacity of the lhs isn't sufficient for the rhs, then the underlying data
@@ -133,17 +133,17 @@ public:
 
   // = Check boundary conditions.
 
-  /// Returns 1 if the container is empty, otherwise returns 0.
+  /// Returns true if the container is empty.
   /**
    * Performs constant time check to determine if the stack is empty.
    */
-  int is_empty () const;
+  bool is_empty () const;
 
-  /// Returns 1 if the container is full, otherwise returns 0.
+  /// Returns true if the container is full.
   /**
    * Performs constant time check to determine if the stack is at capacity.
    */
-  int is_full () const;
+  bool is_full () const;
 
   /// The number of items in the stack.
   /**
@@ -169,7 +169,6 @@ private:
 };
 
 //----------------------------------------
-
 
 /**
  * @class ACE_Fixed_Stack
@@ -258,17 +257,17 @@ public:
 
   // = Check boundary conditions.
 
-  /// Returns 1 if the container is empty, otherwise returns 0.
+  /// Returns true if the container is empty.
   /**
    * Performs constant time check to see if stack is empty.
    */
-  int is_empty () const;
+  bool is_empty () const;
 
-  /// Returns 1 if the container is full, otherwise returns 0.
+  /// Returns true if the container is full.
   /**
    * Performs constant time check to see if stack is full.
    */
-  int is_full () const;
+  bool is_full () const;
 
   /// The number of items in the stack.
   /**
@@ -328,7 +327,6 @@ private:
   /// Current value of the item in this node.
   T item_;
 };
-
 
 /**
  * @class ACE_Unbounded_Stack
@@ -402,7 +400,6 @@ public:
 
   // = Classic Stack operations.
 
-
   ///Push an element onto the top of stack.
   /**
    * Place a new item on top of the stack.  Returns -1 if the stack
@@ -429,17 +426,17 @@ public:
 
   // = Check boundary conditions.
 
-  /// Returns 1 if the container is empty, otherwise returns 0.
+  /// Returns true if the container is empty.
   /**
    * Constant time check to see if the stack is empty.
    */
-  int is_empty () const;
+  bool is_empty () const;
 
-  /// Returns 1 if the container is full, otherwise returns 0.
+  /// Returns true if the container is full.
   /**
    * Always resturns 0 since the stack is unbounded.
    */
-  int is_full () const;
+  bool is_full () const;
 
   // = Auxiliary methods (not strictly part of the Stack ADT).
 
@@ -484,10 +481,10 @@ private:
   void copy_all_nodes (const ACE_Unbounded_Stack<T> &s);
 
   /// Head of the linked list of Nodes.
-  ACE_Node<T> *head_;
+  ACE_Node<T> *head_ {};
 
   /// Current size of the stack.
-  size_t cur_size_;
+  size_t cur_size_ {};
 
   /// Allocation strategy of the stack.
   ACE_Allocator *allocator_;
@@ -582,10 +579,9 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  /// Constructor
   ACE_Double_Linked_List_Iterator_Base (const ACE_Double_Linked_List<T> &);
 
-  /// Copy constructor.
+
   ACE_Double_Linked_List_Iterator_Base (const
                                         ACE_Double_Linked_List_Iterator_Base<T>
                                         &iter);
@@ -763,7 +759,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 };
 
-
 /**
  * @class ACE_Double_Linked_List
  *
@@ -827,21 +822,20 @@ public:
    */
   ACE_Double_Linked_List (ACE_Allocator *the_allocator = nullptr);
 
-  /// Copy constructor.
+
   /**
    * Create a double linked list that is a copy of the provided
    * parameter.
    */
   ACE_Double_Linked_List (const ACE_Double_Linked_List<T> &);
 
-  /// Assignment operator.
+
   /**
    * Perform a deep copy of the provided list by first deleting the nodes of the
    * lhs and then copying the nodes of the rhs.
    */
   void operator= (const ACE_Double_Linked_List<T> &);
 
-  /// Destructor.
   /**
    * Clean up the memory allocated for the nodes of the list.
    */
@@ -849,17 +843,17 @@ public:
 
   // = Check boundary conditions.
 
-  /// Returns 1 if the container is empty, 0 otherwise.
+  /// Returns true if the container is empty.
   /**
    * Performs constant time check to determine if the list is empty.
    */
-  int is_empty () const;
+  bool is_empty () const;
 
-  /// The list is unbounded, so this always returns 0.
+  /// The list is unbounded, so this always returns false.
   /**
-   * Since the list is unbounded, the method simply returns 0.
+   * Since the list is unbounded, the method simply returns false.
    */
-  int is_full () const;
+  bool is_full () const;
 
   // = Classic queue operations.
 
@@ -979,7 +973,6 @@ protected:
   ACE_Allocator *allocator_;
 };
 
-
 template <class T> class ACE_DLList;
 template <class T> class ACE_DLList_Iterator;
 template <class T> class ACE_DLList_Reverse_Iterator;
@@ -1088,7 +1081,7 @@ public:
    * @code
         ACE_DLList<Item> list;
         ...   // insert dynamically allocated Items...
-        Item *p = nullptr;
+        Item *p {};
         while ((p = list.delete_head()) != nullptr)
           delete p;
       @endcode
@@ -1379,19 +1372,18 @@ public:
    */
   ACE_Fixed_Set ();
 
-  /// Copy constructor.
+
   /**
    * Initializes a set to be a copy of the set parameter.
    */
   ACE_Fixed_Set (const ACE_Fixed_Set<T, ACE_SIZE> &);
 
-  /// Assignment operator.
+
   /**
    * Deep copy of one set to another.
    */
   void operator= (const ACE_Fixed_Set<T, ACE_SIZE> &);
 
-  /// Destructor.
   /**
    * Destroys a set.
    */
@@ -1399,17 +1391,17 @@ public:
 
   // = Check boundary conditions.
 
-  /// Returns 1 if the container is empty, otherwise returns 0.
+  /// Returns true if the container is empty.
   /**
    * Performs constant time check to determine if a set is empty.
    */
-  int is_empty () const;
+  bool is_empty () const;
 
-  /// Returns 1 if the container is full, otherwise returns 0.
+  /// Returns true if the container is full.
   /**
    * Performs a constant time check to see if the set is full.
    */
-  int is_full () const;
+  bool is_full () const;
 
   // = Classic unordered set operations.
 
@@ -1452,17 +1444,17 @@ private:
   struct
   {
     /// Item in the set.
-    T item_;
+    T item_ {};
 
     /// Keeps track of whether this item is in use or not.
-    int is_free_;
+    bool is_free_ {true};
   } search_structure_[ACE_SIZE];
 
   /// Current size of the set.
-  size_t cur_size_;
+  size_t cur_size_ {};
 
   /// Maximum size of the set.
-  size_t max_size_;
+  size_t max_size_ {ACE_SIZE};
 };
 
 // Forward declaration.
@@ -1513,7 +1505,6 @@ private:
   /// How far we've advanced over the set.
   ssize_t next_;
 };
-
 
 /**
  * @class ACE_Bounded_Set
@@ -1574,7 +1565,7 @@ public:
    * Initialize the Bounded_Set to have a maximum size equal to the size
    * parameter specified.
    */
-  ACE_Bounded_Set (size_t size);
+  explicit ACE_Bounded_Set (size_t size);
 
   /// Construct a Bounded_Set that is a copy of the provides Bounded_Set.
   /**
@@ -1582,7 +1573,7 @@ public:
    */
   ACE_Bounded_Set (const ACE_Bounded_Set<T> &);
 
-  /// Assignment operator.
+
   /**
    * The assignment will make a deep copy of the Bounded_Set provided.  If the
    * rhs has more elements than the capacity of the lhs, then the lhs will be
@@ -1590,7 +1581,6 @@ public:
    */
   void operator= (const ACE_Bounded_Set<T> &);
 
-  /// Destructor
   /**
    * Clean up the underlying dynamically allocated memory that is used by
    * the Bounded_Set.
@@ -1599,19 +1589,19 @@ public:
 
   // = Check boundary conditions.
 
-  /// Returns 1 if the container is empty, otherwise returns 0.
+  /// Returns true if the container is empty.
   /**
    * A constant time check is performed to determine if the Bounded_Set is
    * empty.
    */
-  int is_empty () const;
+  bool is_empty () const;
 
-  /// Returns 1 if the container is full, otherwise returns 0.
+  /// Returns true if the container is full.
   /**
    * Performs a constant time check to determine if the Bounded_Set is at
    * capacity.
    */
-  int is_full () const;
+  bool is_full () const;
 
   // = Classic unordered set operations.
 
@@ -1656,17 +1646,17 @@ private:
   struct Search_Structure
   {
     /// Item in the set.
-    T item_;
+    T item_ {};
 
     /// Keeps track of whether this item is in use or not.
-    int is_free_;
+    bool is_free_ {true};
   };
 
   /// Holds the contents of the set.
-  Search_Structure *search_structure_;
+  Search_Structure *search_structure_ {};
 
   /// Current size of the set.
-  size_t cur_size_;
+  size_t cur_size_ {};
 
   /// Maximum size of the set.
   size_t max_size_;
@@ -1730,7 +1720,6 @@ private:
   ACE_Ordered_MultiSet<T> &set_;
 };
 
-
 /**
  * @class ACE_Ordered_MultiSet
  *
@@ -1781,19 +1770,18 @@ public:
    */
   ACE_Ordered_MultiSet (ACE_Allocator *the_allocator = nullptr);
 
-  /// Copy constructor.
+
   /**
    * Initialize the set to be a copy of the provided set.
    */
   ACE_Ordered_MultiSet (const ACE_Ordered_MultiSet<T> &);
 
-  /// Destructor.
   /**
    * Delete the nodes of the set.
    */
   ~ACE_Ordered_MultiSet ();
 
-  /// Assignment operator.
+
   /**
    * Delete the nodes in lhs, and copy the nodes from the rhs.
    */
@@ -1801,11 +1789,11 @@ public:
 
   // = Check boundary conditions.
 
-  /// Returns 1 if the container is empty, otherwise returns 0.
+  /// Returns true if the container is empty.
   /**
    * Constant time check to determine if the set is empty.
    */
-  int is_empty () const;
+  bool is_empty () const;
 
   /// Size of the set.
   /**
@@ -1960,7 +1948,7 @@ public:
              const T &default_value,
              ACE_Allocator* alloc = nullptr);
 
-  ///Copy constructor.
+
   /**
    * The copy constructor performs initialization by making an exact
    * copy of the contents of parameter {s}, i.e., *this == s will
@@ -1968,7 +1956,6 @@ public:
    */
   ACE_Array (const ACE_Array<T> &s);
 
-  ///Assignment operator
   /**
    * Assignment operator performs an assignment by making an exact
    * copy of the contents of parameter {s}, i.e., *this == s will

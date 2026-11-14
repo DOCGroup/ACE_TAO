@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef _URL_STATUS_H
 #define _URL_STATUS_H
 
@@ -44,7 +43,7 @@ public:
     STATUS_INSUFFICIENT_DATA = 399
   };
 
-  URL_Status (STATUS_CODE = STATUS_INSUFFICIENT_DATA);
+  explicit URL_Status (STATUS_CODE = STATUS_INSUFFICIENT_DATA);
   URL_Status (const URL_Status &) = default;
   URL_Status& operator= (const URL_Status&) = default;
 

@@ -23,51 +23,54 @@
 #include "tao/PolicyC.h"
 #include "ace/Time_Value.h"
 #include "ace/Log_Msg.h"
-#include "ace/OS_NS_stdio.h"
 #include "ace/Argv_Type_Converter.h"
 #include "ace/OS_NS_ctype.h"
+
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 
 //============================================================================
 namespace
 {
   CORBA::ORB_var orb;
   bool
-    showIOR = false,    // Default decodes endpoints
-    showCtxIOR = false, // Default no displaying naming context ior
-    noLoops = false;    // Default draw loopback arrows
-  const char
-    *myTree = "|",      // Default string to draw tree "tram-lines"
-    *myNode = "+";      // Default string to draw tree node end-points
-  size_t sizeMyTree;       // Initialised by main to strlen (myTree)
-  size_t sizeMyNode;       // Initialised by main to strlen (myNode)
-  size_t maxDepth= 0;      // Limit to display depth (default unlimited)
+    showIOR {},    // Default decodes endpoints
+    showCtxIOR {}, // Default no displaying naming context ior
+    noLoops {};    // Default draw loopback arrows
+  char const *myTree = "|"; // Default string to draw tree "tram-lines"
+  char const *myNode = "+"; // Default string to draw tree node end-points
+  size_t sizeMyTree; // Initialized by main to strlen (myTree)
+  size_t sizeMyNode; // Initialized by main to strlen (myNode)
+  size_t maxDepth {};      // Limit to display depth (default unlimited)
   ACE_Time_Value
     rtt = ACE_Time_Value::zero; // relative roundtrip timeout for ctx
 
-  const CORBA::ULong MAX_COUNT_DEFAULT = 100;
+  constexpr CORBA::ULong MAX_COUNT_DEFAULT = 100;
   CORBA::ULong max_count = MAX_COUNT_DEFAULT;
 
   void list_context (const CosNaming::NamingContext_ptr,
                      size_t level,
                      CORBA::ULong max_count);
 
-  CORBA::Object_ptr set_rtt(CORBA::Object_ptr obj);
+  CORBA::Object_ptr set_rtt (CORBA::Object_ptr obj);
 
   //==========================================================================
   class NestedNamingContexts
   {
   public:
-    static void add (const CosNaming::NamingContext_ptr nc)
+    explicit NestedNamingContexts (CosNaming::NamingContext_ptr const nc)
+      :pnc(nc), pNext(pBottom)
     {
-      (void) new NestedNamingContexts( nc ); // This is not a leak (see constructor)
+      pBottom = this;
     }
 
-    static void remove ()
+    ~NestedNamingContexts ()
     {
-      delete pBottom;
+      pBottom = this->pNext;
     }
 
-    static size_t hasBeenSeen (const CosNaming::NamingContext_ptr nc)
+    static size_t hasBeenSeen (CosNaming::NamingContext_ptr const nc)
     {
       size_t level = 1;
       for (const NestedNamingContexts *pMyNode= pBottom;
@@ -82,29 +85,17 @@ namespace
     }
 
   private:
-    static const NestedNamingContexts
-      *pBottom; // Our current lowest level
-    const CosNaming::NamingContext_ptr
+    static NestedNamingContexts const *pBottom; // Our current lowest level
+    CosNaming::NamingContext_ptr const
       pnc; // This level's Naming Context
-    const NestedNamingContexts
-      *const pNext; // Next highest level
+    NestedNamingContexts const *const pNext; // Next highest level
 
-    NestedNamingContexts (const CosNaming::NamingContext_ptr nc)
-      :pnc(nc), pNext(pBottom) // Adds the old list to this!
-    {
-      this->pBottom= this; // Doesn't leak this (it's the new start)
-    }
-
-    ~NestedNamingContexts ()
-    {
-      this->pBottom= this->pNext; // this node removed from list.
-    }
-
-    // Outlaw copying
-    NestedNamingContexts (const NestedNamingContexts &);
-    NestedNamingContexts &operator= (const NestedNamingContexts &);
+    NestedNamingContexts (NestedNamingContexts const &) = delete;
+    NestedNamingContexts (NestedNamingContexts &&) = delete;
+    NestedNamingContexts &operator= (NestedNamingContexts const &) = delete;
+    NestedNamingContexts &operator= (NestedNamingContexts &&) = delete;
   };
-  const NestedNamingContexts *NestedNamingContexts::pBottom= 0;
+  NestedNamingContexts const *NestedNamingContexts::pBottom = nullptr;
 
   //==========================================================================
   void
@@ -125,7 +116,7 @@ namespace
     else
       {
         char buffer[32]= {'\0'};
-        ACE_OS::sprintf( buffer, "%08x (%u)", tag, tag );
+        std::sprintf (buffer, "%08x (%u)", tag, tag);
         (tag_string = "Unknown tag: ") += buffer;
       }
   }
@@ -161,22 +152,21 @@ namespace
     get_tag_name (tag, tag_name);
 
     ACE_DEBUG ((LM_DEBUG, "\n"));
-    size_t count;
-    for (count= 0; count < level; ++count)
+    for (size_t count {}; count < level; ++count)
       ACE_DEBUG ((LM_DEBUG, "%C ", myTree));
-    for (count= 0; count < sizeMyNode; ++count)
+    for (size_t count {}; count < sizeMyNode; ++count)
       ACE_DEBUG ((LM_DEBUG, " "));
     ACE_DEBUG ((LM_DEBUG, " Protocol: %C\n",
                tag_name.c_str()));
 
     // Display Endpoint
-    for (count= 0; count < level; ++count)
+    for (size_t count {}; count < level; ++count)
       ACE_DEBUG ((LM_DEBUG, "%C ", myTree));
-    for (count= 0; count < sizeMyNode; ++count)
+    for (size_t count {}; count < sizeMyNode; ++count)
       ACE_DEBUG ((LM_DEBUG, " "));
-    char buf[256]= {'\0'};
+    char buf[256] {};
     if (endpoint->addr_to_string (buf, sizeof(buf)-1u) < 0)
-      ACE_OS::strcpy( buf, "{Endpoint too long}" );
+      std::strcpy (buf, "{Endpoint too long}");
     ACE_DEBUG ((LM_DEBUG, " Endpoint: %C\n", buf));
   }
 
@@ -187,12 +177,11 @@ namespace
               const CosNaming::BindingList &bl,
               size_t level)
   {
-    for (CORBA::ULong i = 0;
+    for (CORBA::ULong i {};
          i < bl.length ();
          ++i)
       {
-        size_t count;
-        for (count= 0; count < level-1; ++count)
+        for (size_t count {}; count < level-1; ++count)
           ACE_DEBUG ((LM_DEBUG, "%C ", myTree));
         ACE_DEBUG ((LM_DEBUG, "%C %C", myNode,
                    bl[i].binding_name[0].id.in ()));
@@ -225,17 +214,17 @@ namespace
               }
             catch (const CORBA::OBJECT_NOT_EXIST&)
               {
-                xc= 0;
+                xc = nullptr;
                 ACE_DEBUG ((LM_DEBUG, " {Destroyed}"));
               }
             catch (const CORBA::TRANSIENT&)
               {
-                 xc= 0;
+                 xc = nullptr;
                  ACE_DEBUG ((LM_DEBUG, " {Transient context IOR}"));
               }
             catch (const CORBA::TIMEOUT&)
               {
-                 xc= 0;
+                 xc = nullptr;
                  ACE_DEBUG ((LM_DEBUG, " {Operation on conext IOR timed out}"));
               }
 
@@ -244,15 +233,14 @@ namespace
                 ACE_DEBUG ((LM_DEBUG, " (Binding Loop)\n"));
                 if (!noLoops)
                   {
-                    size_t count_binding;
-                    for (count_binding= 0; count_binding < (level - backwards); ++count_binding)
+                    size_t count_binding {};
+                    for (; count_binding < (level - backwards); ++count_binding)
                       ACE_DEBUG ((LM_DEBUG, "%C ", myTree));
                     ACE_DEBUG ((LM_DEBUG, "^"));
-                    size_t chars;
                     while (++count_binding < level)
-                      for (chars= 0; chars <= sizeMyTree; ++chars)
+                      for (size_t chars {}; chars <= sizeMyTree; ++chars)
                         ACE_DEBUG ((LM_DEBUG, "-"));
-                    for (chars= 0; chars < sizeMyNode; ++chars)
+                    for (size_t chars {}; chars < sizeMyNode; ++chars)
                       ACE_DEBUG ((LM_DEBUG, "-"));
                     ACE_DEBUG ((LM_DEBUG, "^\n"));
                   }
@@ -308,7 +296,7 @@ namespace
     CosNaming::BindingIterator_var it;
     CosNaming::BindingList_var bl;
 
-    NestedNamingContexts::add (nc);
+    NestedNamingContexts current (nc);
     nc->list (max_bindings, bl, it);
 
     show_chunk (nc, bl.in (), level);
@@ -325,8 +313,6 @@ namespace
 
         it->destroy ();
       }
-
-    NestedNamingContexts::remove ();
   }
 
   //==========================================================================
@@ -375,9 +361,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         showNSonly = false;
       ACE_TCHAR kindsep = ACE_TEXT('.');
       ACE_TCHAR ctxsep[] = ACE_TEXT("/");
-      ACE_TCHAR *name = 0;
-      const ACE_TCHAR *const pname = argv[0];
-      const ACE_TCHAR *nameService = 0;
+      ACE_TCHAR *name {};
+      ACE_TCHAR const *const pname = argv[0];
+      ACE_TCHAR const *nameService {};
 
       if (0 < argc)
         {
@@ -639,7 +625,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                     }
                  else
                     {
-                     CORBA::ULong count = ACE_OS::strtoul (ACE_TEXT_ALWAYS_CHAR (*argv), 0, 10);
+                     CORBA::ULong count = std::strtoul (ACE_TEXT_ALWAYS_CHAR (*argv), nullptr, 10);
                      if (count > 0)
                        {
                         max_count = count;
@@ -686,9 +672,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           return 1;
         }
 
-      // Initialise the lengths of the myTree and myNode draw strings.
-      sizeMyTree= ACE_OS::strlen (myTree);
-      sizeMyNode= ACE_OS::strlen (myNode);
+      // Initialize the lengths of the myTree and myNode draw strings.
+      sizeMyTree = std::strlen (myTree);
+      sizeMyNode = std::strlen (myNode);
 
       // Contact the name service
       CORBA::Object_var obj;
@@ -713,7 +699,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           // Assemble the name from the user string given
           CosNaming::Name the_name (0);
           ACE_TCHAR *cp;
-          while (0 != (cp = ACE_OS::strtok (name, ctxsep)))
+          while ((cp = ACE_OS::strtok (name, ctxsep)) != nullptr)
             {
               const int index= the_name.length();
               the_name.length (index+1);
@@ -724,7 +710,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   the_name[index].kind= CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(++kind));
                 }
               the_name[index].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(cp));
-              name = 0; // way strtok works
+              name = nullptr; // way strtok works
             }
 
           // Now find this sub-context and replace the root with it.

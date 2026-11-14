@@ -1,13 +1,11 @@
 #include "TestC.h"
 #include "ace/Get_Opt.h"
 
-ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
-
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -30,20 +28,22 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
+      // The selected IOR points to either this literal or an argv entry.
+      ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, ior) != 0)
         return 1;
 
-      CORBA::Object_var tmp =
+      CORBA::Object_var const tmp =
         orb->string_to_object (ior);
 
-      Test::Hello_var hello =
+      Test::Hello_var const hello =
         Test::Hello::_narrow (tmp.in ());
 
       if (CORBA::is_nil (hello.in ()))
@@ -54,8 +54,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             1);
         }
 
-      Test::Fls_var fstruct;
-      Test::Vls_var vstruct;
+      Test::Fls_var fstruct {};
+      Test::Vls_var vstruct {};
 
       ACE_DEBUG ((LM_DEBUG, "\n(%P|%t) - op test 1\n"));
       hello->op (fstruct.out (), vstruct.out ());
@@ -67,7 +67,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

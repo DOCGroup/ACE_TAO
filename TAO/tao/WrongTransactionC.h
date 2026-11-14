@@ -62,32 +62,30 @@ namespace CORBA
   {
   public:
     WrongTransaction ();
-    WrongTransaction (const WrongTransaction &);
-    ~WrongTransaction ();
+    WrongTransaction (WrongTransaction const &);
+    ~WrongTransaction () override = default;
 
-    WrongTransaction &operator= (const WrongTransaction &);
+    WrongTransaction &operator= (WrongTransaction const &);
 
     static void _tao_any_destructor (void *);
 
     static WrongTransaction *_downcast (CORBA::Exception *);
-    static const WrongTransaction *_downcast (CORBA::Exception const *);
+    static WrongTransaction const *_downcast (CORBA::Exception const *);
 
     static CORBA::Exception *_alloc ();
 
-    virtual CORBA::Exception *_tao_duplicate () const;
+    CORBA::Exception *_tao_duplicate () const override;
 
-    virtual void _raise () const;
+    void _raise () const override;
 
-    virtual void _tao_encode (
-        TAO_OutputCDR &) const;
+    void _tao_encode (TAO_OutputCDR &) const override;
 
-    virtual void _tao_decode (
-        TAO_InputCDR &);
+    void _tao_decode (TAO_InputCDR &) override;
 
     // TAO_IDL - Generated from
     // be\be_visitor_exception/exception_ch.cpp:129
 
-    virtual CORBA::TypeCode_ptr _tao_type () const;
+    CORBA::TypeCode_ptr _tao_type () const override;
   };
 
 #endif /* end #if !defined */
@@ -108,7 +106,7 @@ namespace TAO
 // TAO_IDL - Generated from
 // be\be_visitor_exception/cdr_op_ch.cpp:52
 
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::WrongTransaction &);
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, CORBA::WrongTransaction const &);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::WrongTransaction &);
 
 // TAO_IDL - Generated from

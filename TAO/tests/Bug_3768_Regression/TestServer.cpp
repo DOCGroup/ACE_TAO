@@ -11,7 +11,7 @@ TestServer::pass_callback (Test::TestCallback_ptr test)
 }
 
 bool
-TestServer::got_callback ()
+TestServer::got_callback () const
 {
   return callback_.in () != nullptr;
 }

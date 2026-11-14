@@ -3,6 +3,8 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_errno.h"
 
+#include <cstring>
+
 #if defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 #   define ACE_NETDBCALL_RETURN(OP,TYPE,FAILVALUE,TARGET,SIZE) \
@@ -15,9 +17,7 @@
         TYPE ace_result_; \
         ACE_OSCALL (OP, TYPE, ace_result_); \
         if (ace_result_ != FAILVALUE) \
-          ACE_OS::memcpy (TARGET, \
-                    ace_result_, \
-                    SIZE < sizeof (TYPE) ? SIZE : sizeof (TYPE)); \
+          std::memcpy (TARGET, \ ace_result_, \ SIZE < sizeof (TYPE) ? SIZE : sizeof (TYPE)); \
         ACE_OS::netdb_release (); \
         return ace_result_; \
       } \
@@ -29,9 +29,7 @@
         TYPE ace_result_; \
         ACE_OSCALL(OP,TYPE,ace_result_); \
         if (ace_result_ != FAILVALUE) \
-          ACE_OS::memcpy (TARGET, \
-                    ace_result_, \
-                    SIZE < sizeof (TYPE) ? SIZE : sizeof (TYPE)); \
+          std::memcpy (TARGET, \ ace_result_, \ SIZE < sizeof (TYPE) ? SIZE : sizeof (TYPE)); \
         return ace_result_; \
   } while(0)
 # endif /* ACE_MT_SAFE && ACE_MT_SAFE != 0 */
@@ -144,16 +142,16 @@ ACE_OS::gethostbyaddr_r (const char *addr,
     result->h_addr_list = (char **) buffer;
     // Store the actual address _after_ the address list.
     result->h_addr_list[0] = (char *) &result->h_addr_list[2];
-    ACE_OS::memcpy (result->h_addr_list[0], hp->h_addr_list[0], hp->h_length);
+    std::memcpy (result->h_addr_list[0], hp->h_addr_list[0], hp->h_length);
     // Null-terminate the list of addresses.
     result->h_addr_list[1] = 0;
     // And no aliases, so null-terminate h_aliases.
     result->h_aliases = &result->h_addr_list[1];
 
-    if (((2*sizeof(char*))+hp->h_length+ACE_OS::strlen (hp->h_name)+1) <= sizeof (ACE_HOSTENT_DATA))
+    if (((2*sizeof(char*))+hp->h_length+std::strlen (hp->h_name)+1) <= sizeof (ACE_HOSTENT_DATA))
     {
       result->h_name = (char *) result->h_addr_list[0] + hp->h_length;
-      ACE_OS::strcpy (result->h_name, hp->h_name);
+      std::strcpy (result->h_name, hp->h_name);
     }
     else
     {
@@ -308,16 +306,16 @@ ACE_OS::gethostbyname_r (const char *name,
     result->h_addr_list = (char **) buffer;
     // Store the actual address _after_ the address list.
     result->h_addr_list[0] = (char *) &result->h_addr_list[2];
-    ACE_OS::memcpy (result->h_addr_list[0], hp->h_addr_list[0], hp->h_length);
+    std::memcpy (result->h_addr_list[0], hp->h_addr_list[0], hp->h_length);
     // Null-terminate the list of addresses.
     result->h_addr_list[1] = 0;
     // And no aliases, so null-terminate h_aliases.
     result->h_aliases = &result->h_addr_list[1];
 
-    if (((2*sizeof(char*))+hp->h_length+ACE_OS::strlen (hp->h_name)+1) <= sizeof (ACE_HOSTENT_DATA))
+    if (((2*sizeof(char*))+hp->h_length+std::strlen (hp->h_name)+1) <= sizeof (ACE_HOSTENT_DATA))
     {
       result->h_name = (char *) result->h_addr_list[0] + hp->h_length;
-      ACE_OS::strcpy (result->h_name, hp->h_name);
+      std::strcpy (result->h_name, hp->h_name);
     }
     else
     {
@@ -366,7 +364,7 @@ ACE_OS::gethostbyname_r (const char *name,
   ACE_UNUSED_ARG (buffer);
 
   // FUZZ: disable check_for_lack_ACE_OS
-  struct hostent *result2 = nullptr;
+  struct hostent *result2 {};
   ACE_SOCKCALL (::gethostbyname (name),
                 struct hostent *,
                 0,
@@ -388,7 +386,7 @@ ACE_OS::getipnodebyaddr (const void *src, size_t len, int family)
   ACE_UNUSED_ARG (family);
   ACE_NOTSUP_RETURN (0);
 #  else
-  struct hostent *hptr = nullptr;
+  struct hostent *hptr {};
   int errnum;
   //FUZZ: disable check_for_lack_ACE_OS
   if ((hptr = ::getipnodebyaddr (src, len, family, &errnum)) == 0)
@@ -425,7 +423,7 @@ ACE_OS::getipnodebyname (const char *name, int family, int flags)
                        struct hostent *, 0);
 #     endif /* ACE_HAS_NONCONST_GETBY */
 #   else
-  struct hostent *hptr = nullptr;
+  struct hostent *hptr {};
   int errnum;
   //FUZZ: disable check_for_lack_ACE_OS
   if ((hptr = ::getipnodebyname (name, family, flags, &errnum)) == 0)

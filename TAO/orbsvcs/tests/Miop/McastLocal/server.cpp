@@ -90,7 +90,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       root_poa->activate_object_with_id (id.in (),
                                          &server_impl);
 
-
       poa_manager->activate ();
 
       orb->run ();

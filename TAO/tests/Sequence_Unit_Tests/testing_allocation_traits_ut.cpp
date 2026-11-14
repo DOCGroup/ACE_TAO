@@ -16,14 +16,13 @@ try { statement; } catch(...) { \
 
 using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO::details;
 
-
-CORBA::ULong const MAXIMUM = 32;
+CORBA::ULong constexpr MAXIMUM = 32;
 
 template<class value_type>
 struct Tester
 {
-  typedef unbounded_value_allocation_traits<value_type,true> unbounded;
-  typedef bounded_value_allocation_traits<value_type,MAXIMUM,true> bounded;
+  using unbounded = unbounded_value_allocation_traits<value_type,true>;
+  using bounded = bounded_value_allocation_traits<value_type,MAXIMUM,true>;
 
   template<class aspect>
   int test_allocbuf()
@@ -31,7 +30,7 @@ struct Tester
     expected_calls c(aspect::allocbuf_calls);
 
     aspect::allocbuf_calls.failure_countdown(2);
-    value_type * s = 0;
+    value_type * s {};
     CHECK_NO_THROW(s = aspect::allocbuf(4));
     aspect::freebuf(s);
     CHECK_THROW(s = aspect::allocbuf(4), testing_exception);
@@ -68,7 +67,7 @@ struct Tester
     value_type * s = unbounded::default_buffer_allocation();
     FAIL_RETURN_IF_NOT(u.expect(1), u);
     FAIL_RETURN_IF_NOT(b.expect(0), b);
-    CHECK_EQUAL(static_cast<value_type*>(0), s);
+    CHECK_EQUAL(static_cast<value_type*> (nullptr), s);
     bounded::freebuf(s);
 
     s = bounded::default_buffer_allocation();
@@ -76,7 +75,7 @@ struct Tester
     FAIL_RETURN_IF_NOT(b.expect(1), b);
     // default_buffer_allocation doesn't allocate a buffer for
     // bounded sequences (see bug 3042).
-    CHECK_EQUAL(static_cast<value_type*>(0), s);
+    CHECK_EQUAL(static_cast<value_type*> (nullptr), s);
     bounded::freebuf(s);
     return 0;
   }
@@ -87,7 +86,7 @@ struct Tester
     expected_calls c(aspect::default_buffer_allocation_calls);
 
     aspect::default_buffer_allocation_calls.failure_countdown(2);
-    value_type * s = 0;
+    value_type * s {};
     CHECK_NO_THROW(
         s = aspect::default_buffer_allocation());
     aspect::freebuf(s);
@@ -133,7 +132,7 @@ struct Tester
 
   int test_all()
   {
-    int status = 0;
+    int status {};
     status += this->test_default_buffer_allocation_value();
     status += this->test_default_buffer_allocation_unbounded();
     status += this->test_default_buffer_allocation_bounded();
@@ -143,14 +142,14 @@ struct Tester
     status += this->test_freebuf_bounded();
      return status;
   }
-  Tester() {}
+  Tester () = default;
 };
 
-struct Foo { int y; };
+struct Foo { int y {}; };
 
 int ACE_TMAIN(int,ACE_TCHAR*[])
 {
-  int status = 0;
+  int status {};
 
   try
     {

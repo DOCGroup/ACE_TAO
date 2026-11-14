@@ -1,5 +1,4 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/XML_Loader.h"
 #include "orbsvcs/Notify/Topology_Object.h"
 
@@ -11,6 +10,10 @@
 #include "tao/debug.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <cstring>
+#include <cstdlib>
+#include <memory>
+
 //#define DEBUG_LEVEL 9
 #ifndef DEBUG_LEVEL
 # define DEBUG_LEVEL TAO_debug_level
@@ -21,7 +24,7 @@ using namespace TAO_Notify;
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify {
-  extern const char TOPOLOGY_ID_NAME[];
+  extern char const TOPOLOGY_ID_NAME[];
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
@@ -29,15 +32,15 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 namespace {
   CORBA::Long makeNVPList (NVPList& nvp, ACEXML_Attributes* attrs)
   {
-    CORBA::Long id = 0;
-    for (size_t i = 0; i < attrs->getLength (); ++i)
+    CORBA::Long id {};
+  for (size_t i {}; i < attrs->getLength (); ++i)
     {
       ACE_CString name = ACE_TEXT_ALWAYS_CHAR(attrs->getQName (i));
       ACE_CString value = ACE_TEXT_ALWAYS_CHAR(attrs->getValue (i));
-      if (ACE_OS::strcmp (name.c_str (),
+      if (std::strcmp (name.c_str (),
                           TAO_VERSIONED_NAMESPACE_NAME::TAO_Notify::TOPOLOGY_ID_NAME) == 0)
       {
-        id = ACE_OS::atoi (value.c_str ());
+        id = std::atoi (value.c_str ());
       }
       nvp.push_back (NVP (name.c_str (), value.c_str ()));
     }
@@ -49,19 +52,14 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
-  XML_Loader::XML_Loader ()
-    : live_ (false)
-  {
-  }
+  XML_Loader::XML_Loader () = default;
 
-  XML_Loader::~XML_Loader ()
-  {
-  }
+  XML_Loader::~XML_Loader () = default;
 
   bool
-  XML_Loader::open (const ACE_TString & base_name)
+  XML_Loader::open (ACE_TString const &base_name)
   {
-    bool result = false;
+    bool result {};
 
     // if *.xml exists, use it
     // if it does not exist then
@@ -77,7 +75,8 @@ namespace TAO_Notify
     if (result)
     {
       this->live_ = false;
-      std::unique_ptr<ACEXML_FileCharStream> fstm (new ACEXML_FileCharStream);
+      std::unique_ptr<ACEXML_FileCharStream> fstm =
+        std::make_unique<ACEXML_FileCharStream> ();
       // xml input source will take ownership
 
       if (fstm->open (this->file_name_.c_str ()) == 0)
@@ -96,7 +95,7 @@ namespace TAO_Notify
         {
           parser.parse (&input);
         }
-        catch (const ACEXML_Exception& ex)
+        catch (ACEXML_Exception const &ex)
         {
           // The only way to find out what it is, it to let it print itself, so...
           ORBSVCS_ERROR ((LM_ERROR, "Unable to load \"%s\".\n Will try backup file.\n", this->file_name_.c_str ()));
@@ -127,7 +126,8 @@ namespace TAO_Notify
     ACE_ASSERT (root != nullptr);
     this->live_ = true;
 
-    std::unique_ptr<ACEXML_FileCharStream> fstm (new ACEXML_FileCharStream);
+    std::unique_ptr<ACEXML_FileCharStream> fstm =
+      std::make_unique<ACEXML_FileCharStream> ();
     // xml input source will take ownership
 
     if (fstm->open (this->file_name_.c_str ()) == 0)
@@ -144,13 +144,13 @@ namespace TAO_Notify
 
       try
       {
-        object_stack_.push (root);
+        object_stack_.push_back (root);
         parser.parse (&input);
         ACE_ASSERT (object_stack_.size () == 1);
-        Topology_Object* cur = nullptr;
-        object_stack_.pop (cur);
+        if (! object_stack_.empty ())
+          object_stack_.pop_back ();
       }
-      catch (const ACEXML_Exception& ex)
+      catch (ACEXML_Exception const &ex)
       {
         // The only way to find out what it is, it to let it print itself, so...
         ORBSVCS_ERROR ((LM_ERROR, "Unable to load \"%s\".\n", this->file_name_.c_str ()));
@@ -166,9 +166,9 @@ namespace TAO_Notify
   }
 
   void
-  XML_Loader::startElement (const ACEXML_Char*,
-    const ACEXML_Char*,
-    const ACEXML_Char* name,
+  XML_Loader::startElement (ACEXML_Char const *,
+    ACEXML_Char const *,
+    ACEXML_Char const *name,
     ACEXML_Attributes* xml_attrs)
   {
     ACE_ASSERT (name != nullptr);
@@ -176,36 +176,36 @@ namespace TAO_Notify
     if (this->live_)
     {
       ACE_ASSERT (object_stack_.size () > 0);
-      Topology_Object* cur = nullptr;
-      if (object_stack_.top (cur) == 0)
-      {
-        try
+      if (! object_stack_.empty ())
         {
-          NVPList attrs;
-          CORBA::Long id = makeNVPList (attrs, xml_attrs);
+          Topology_Object* cur = object_stack_.back ();
+          try
+            {
+              NVPList attrs;
+              CORBA::Long id = makeNVPList (attrs, xml_attrs);
 
-          if (DEBUG_LEVEL > 5) ORBSVCS_DEBUG ((LM_INFO,
-            ACE_TEXT("(%P|%t) XML_Loader: Element %s\n"),
-            name
-            ));
+              if (DEBUG_LEVEL > 5) ORBSVCS_DEBUG ((LM_INFO,
+                ACE_TEXT("(%P|%t) XML_Loader: Element %s\n"),
+                name
+                ));
 
-          ACE_CString cname (ACE_TEXT_ALWAYS_CHAR(name));
-          Topology_Object* next = cur->load_child (cname, id, attrs);
-          ACE_ASSERT(next != nullptr);
-          object_stack_.push (next);
+              ACE_CString cname (ACE_TEXT_ALWAYS_CHAR(name));
+              Topology_Object* next = cur->load_child (cname, id, attrs);
+              ACE_ASSERT(next != nullptr);
+              object_stack_.push_back (next);
+            }
+          catch (CORBA::Exception const &ex)
+            {
+              throw ACEXML_SAXException (ACE_TEXT_CHAR_TO_TCHAR(ex._info ().c_str ()));
+            }
         }
-        catch (const CORBA::Exception& ex)
-        {
-          throw ACEXML_SAXException (ACE_TEXT_CHAR_TO_TCHAR(ex._info ().c_str ()));
-        }
-      }
     }
   }
 
   void
-  XML_Loader::endElement (const ACEXML_Char*,
-    const ACEXML_Char*,
-    const ACEXML_Char* name)
+  XML_Loader::endElement (ACEXML_Char const *,
+    ACEXML_Char const *,
+    ACEXML_Char const *name)
   {
     ACE_UNUSED_ARG (name);
     if (this->live_)
@@ -217,8 +217,10 @@ namespace TAO_Notify
                       ACE_TEXT("(%P|%t) XML_Loader: End Element %s\n"),
                       name));
         }
-      Topology_Object* cur = nullptr;
-      object_stack_.pop (cur);
+      if (! object_stack_.empty ())
+        {
+          object_stack_.pop_back ();
+        }
     }
   }
 

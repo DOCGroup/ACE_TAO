@@ -16,7 +16,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/OS_NS_sys_wait.h"
 #include "ace/OS_NS_unistd.h"
@@ -243,7 +242,7 @@ server (void *arg)
               while ((r_bytes = new_stream.recv (buf, 1)) > 0)
                 {
                   ACE_TEST_ASSERT (*t == buf[0]);
-                  t++;
+                  ++t;
                 }
 
               ACE_DEBUG((LM_DEBUG, "(%P|%t) server: Received data.\n"));

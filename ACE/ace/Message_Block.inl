@@ -195,7 +195,7 @@ ACE_Message_Block::msg_class () const
     return ACE_Message_Block::MB_USER;
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_Message_Block::is_data_msg () const
 {
   ACE_TRACE ("ACE_Message_Block::is_data_msg");
@@ -340,7 +340,6 @@ ACE_Message_Block::end () const
   return this->data_block ()->end ();
 }
 
-
 ACE_INLINE void
 ACE_Message_Block::rd_ptr (char *new_ptr)
 {
@@ -391,7 +390,7 @@ ACE_Message_Block::replace_data_block (ACE_Data_Block *db)
   ACE_Data_Block *old = this->data_block_;
   this->data_block_ = db;
 
-  if (db != 0)
+  if (db != nullptr)
     {
       // Set the read and write pointers in the <Message_Block> to point
       // to the buffer in the ACE_Data_Block.
@@ -428,7 +427,7 @@ ACE_Message_Block::reset_allocators (ACE_Allocator *allocator_strategy,
   this->message_block_allocator_ =
     message_block_allocator;
 
-  if (this->cont () != 0)
+  if (this->cont () != nullptr)
     this->cont ()->reset_allocators (allocator_strategy,
                                      data_block_allocator,
                                      message_block_allocator);

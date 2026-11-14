@@ -19,32 +19,32 @@
 #include "orbsvcs/CosEventChannelAdminC.h"
 #include "ProxyPushConsumer_i.h"
 
+/**
+ * @brief Implements the Cos SupplierAdmin interface using the Rtec
+ * SupplierAdmin.
+ */
 class TAO_RTEC_COSEC_Export TAO_CosEC_SupplierAdmin_i :
   public virtual POA_CosEventChannelAdmin::SupplierAdmin
 {
-  // = TITLE
-  //   class TAO_CosEC_SupplierAdmin_i implements the SupplierAdmin interface.
-  //
-  // = DESCRIPTION
-  //   This COS-compliant implementation of the SupplierAdmin uses
-  //   TAO's RtecEventChannelAdmin::SupplierAdmin.
 public:
-  /// Constructor.
   TAO_CosEC_SupplierAdmin_i ();
 
-  /// Destructor.
-  ~TAO_CosEC_SupplierAdmin_i () = default;
+  ~TAO_CosEC_SupplierAdmin_i () override = default;
+  TAO_CosEC_SupplierAdmin_i (TAO_CosEC_SupplierAdmin_i const &) = delete;
+  TAO_CosEC_SupplierAdmin_i (TAO_CosEC_SupplierAdmin_i &&) = delete;
+  TAO_CosEC_SupplierAdmin_i &operator= (TAO_CosEC_SupplierAdmin_i const &) = delete;
+  TAO_CosEC_SupplierAdmin_i &operator= (TAO_CosEC_SupplierAdmin_i &&) = delete;
 
   /// Initializes the SupplierAdmin.  Returns 0 on success, -1 on
   /// error.
-  int init (const RtecEventChannelAdmin::SupplierQOS &supplierqos,
+  int init (RtecEventChannelAdmin::SupplierQOS const &supplierqos,
             RtecEventChannelAdmin::SupplierAdmin_ptr rtec_supplieradmin);
 
   /// Returns a new ProxyPushConsumer_ptr.
-  virtual CosEventChannelAdmin::ProxyPushConsumer_ptr obtain_push_consumer ();
+  CosEventChannelAdmin::ProxyPushConsumer_ptr obtain_push_consumer () override;
 
   /// Returns a new ProxyPullConsumer_ptr.
-  virtual CosEventChannelAdmin::ProxyPullConsumer_ptr obtain_pull_consumer();
+  CosEventChannelAdmin::ProxyPullConsumer_ptr obtain_pull_consumer () override;
 
 private:
   /// The SupplierQOS specified by the user of this class.

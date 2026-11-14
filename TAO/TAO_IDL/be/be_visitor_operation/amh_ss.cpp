@@ -317,7 +317,6 @@ be_visitor_amh_operation_ss::generate_shared_prologue (be_decl *node,
                         -1);
     }
 
-
   std::string const buf = intf->compute_full_name ("AMH_", "");
   std::string amh_skel_name ("POA_");
   amh_skel_name += buf;

@@ -24,11 +24,7 @@ TAO_Hash_Iterator_i::TAO_Hash_Iterator_i (
 {
 }
 
-
-TAO_Hash_Iterator_i::~TAO_Hash_Iterator_i ()
-{
-}
-
+TAO_Hash_Iterator_i::~TAO_Hash_Iterator_i () = default;
 
 DsLogAdmin::RecordList*
 TAO_Hash_Iterator_i::get (CORBA::ULong position, CORBA::ULong how_many)
@@ -55,13 +51,13 @@ TAO_Hash_Iterator_i::get (CORBA::ULong position, CORBA::ULong how_many)
   // meet the constraints.
 
   // Allocate the list of <how_many> length.
-  DsLogAdmin::RecordList *rec_list = nullptr;
+  DsLogAdmin::RecordList *rec_list {};
   ACE_NEW_THROW_EX (rec_list,
                     DsLogAdmin::RecordList (how_many),
                     CORBA::NO_MEMORY ());
   rec_list->length (how_many);
 
-  CORBA::ULong count = 0;
+  CORBA::ULong count {};
   CORBA::ULong current_position = this->current_position_;
 
   for ( ;
@@ -78,7 +74,7 @@ TAO_Hash_Iterator_i::get (CORBA::ULong position, CORBA::ULong how_many)
             {
               (*rec_list)[count] = this->iter_->item ();
               // copy the log record.
-              count++;
+              ++count;
             }
         }
     }

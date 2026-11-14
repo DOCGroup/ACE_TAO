@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_SSLIOP_FACTORY_H
 #define TAO_SSLIOP_FACTORY_H
 
@@ -29,7 +28,6 @@
 #include "tao/Protocol_Factory.h"
 
 #include "ace/Service_Config.h"
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -52,21 +50,19 @@ namespace TAO
       : public TAO_Protocol_Factory
     {
     public:
-      /// Constructor.
       Protocol_Factory ();
 
-      /// Destructor.
-      ~Protocol_Factory () override;
+      ~Protocol_Factory () override = default;
 
       // = Service Configurator hooks.
       /// Dynamic linking hook
       int init (int argc, ACE_TCHAR* argv[]) override;
 
       /// Verify prefix is a match
-      int match_prefix (const ACE_CString & prefix) override;
+      int match_prefix (std::string const &prefix) override;
 
       /// Returns the prefix used by the protocol.
-      const char * prefix () const override;
+      char const * prefix () const override;
 
       /// Return the character used to mark where an endpoint ends and
       /// where its options begin.
@@ -114,7 +110,7 @@ namespace TAO
        */
       ACE_Time_Value timeout_;
 
-      bool check_host_;
+      bool check_host_ {};
     };
   }  // End SSLIOP namespace.
 }  // End TAO namespace.

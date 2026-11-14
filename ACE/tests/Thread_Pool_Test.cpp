@@ -17,7 +17,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Task.h"
 
@@ -134,7 +133,7 @@ Thread_Pool::svc ()
         {
           // The queue has been deactivated, so let's bail out.
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%t) in iteration %d, queue len = %d, ")
+                      ACE_TEXT ("(%t) in iteration %d, queue len = %B, ")
                       ACE_TEXT ("queue deactivated, exiting\n"),
                       count,
                       this->msg_queue ()->message_count ()));
@@ -146,12 +145,12 @@ Thread_Pool::svc ()
 
       if (length > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%t) in iteration %d, queue len = %d, ")
-                    ACE_TEXT ("length = %d, text = \"%*s\"\n"),
+                    ACE_TEXT ("(%t) in iteration %d, queue len = %B, ")
+                    ACE_TEXT ("length = %B, text = \"%*s\"\n"),
                     count,
                     this->msg_queue ()->message_count (),
                     length,
-                    length - 1,
+                    static_cast<int> (length - 1),
                     mb->rd_ptr ()));
 
       // We're responsible for deallocating this.
@@ -160,7 +159,7 @@ Thread_Pool::svc ()
       if (length == 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%t) in iteration %d, queue len = %d, ")
+                      ACE_TEXT ("(%t) in iteration %d, queue len = %B, ")
                       ACE_TEXT ("got \"empty\" message, exiting\n"),
                       count,
                       this->msg_queue ()->message_count ()));
@@ -240,7 +239,7 @@ Thread_Pool::test_queue_deactivation_shutdown ()
           if (count == n_iterations)
             n = 1; // Indicate that we need to shut down.
           else
-            count++;
+            ++count;
 
           if (count == 0 || (count % 20 == 0))
             ACE_OS::sleep (1);
@@ -327,7 +326,7 @@ Thread_Pool::test_empty_message_shutdown ()
           if (count == n_iterations)
             n = 1; // Indicate that we need to shut down.
           else
-            count++;
+            ++count;
 
           if (count == 0 || (count % 20 == 0))
             ACE_OS::sleep (1);
@@ -364,7 +363,7 @@ Thread_Pool::test_empty_message_shutdown ()
             {
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%t) end of input, ")
-                          ACE_TEXT ("enqueueing \"empty\" message %d\n"),
+                          ACE_TEXT ("enqueueing \"empty\" message %B\n"),
                           i));
 
               // Note the use of reference counting to avoid copying

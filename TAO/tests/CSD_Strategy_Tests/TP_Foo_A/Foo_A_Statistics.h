@@ -4,11 +4,10 @@
 #include "CSD_TP_Foo_A_Export.h"
 #include "StatisticsHelper.h"
 
-
 class CSD_TP_Foo_A_Export Foo_A_Statistics
 {
   public:
-    Foo_A_Statistics(unsigned num_clients);
+    explicit Foo_A_Statistics(unsigned num_clients);
 
     virtual ~Foo_A_Statistics() = default;
 
@@ -17,6 +16,11 @@ class CSD_TP_Foo_A_Export Foo_A_Statistics
     void actual_in_values(unsigned op_num, LongVector lv);
 
     bool actual_vs_expected();
+
+    Foo_A_Statistics (Foo_A_Statistics const &) = delete;
+    Foo_A_Statistics (Foo_A_Statistics &&) = delete;
+    Foo_A_Statistics & operator= (Foo_A_Statistics const &) = delete;
+    Foo_A_Statistics & operator= (Foo_A_Statistics &&) = delete;
 
   private:
     unsigned num_clients_;

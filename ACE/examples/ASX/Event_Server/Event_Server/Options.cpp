@@ -8,35 +8,12 @@
 
 #include "Options.h"
 
-
-/* static */
-Options *Options::instance_ = nullptr;
-
-Options *
+Options &
 Options::instance ()
 {
-  if (Options::instance_ == nullptr)
-    Options::instance_ = new Options;
-
-  return Options::instance_;
+  static Options instance;
+  return instance;
 }
-
-Options::Options ()
-  : thr_count_ (4),
-    t_flags_ (0),
-    high_water_mark_ (8 * 1024),
-    low_water_mark_ (1024),
-    message_size_ (128),
-    initial_queue_length_ (0),
-    iterations_ (100000),
-    debugging_ (0),
-    verbosity_ (0),
-    consumer_port_ (ACE_DEFAULT_SERVER_PORT),
-    supplier_port_ (ACE_DEFAULT_SERVER_PORT + 1)
-{
-}
-
-Options::~Options () = default;
 
 void Options::print_results ()
 {
@@ -105,7 +82,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
   ACE_LOG_MSG->open (argv[0]);
 
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("c:bdH:i:L:l:M:ns:t:T:v"));
-  int c;
+  int c {};
 
   while ((c = get_opt ()) != EOF)
   //FUZZ: enable check_for_lack_ACE_OS
@@ -118,7 +95,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         this->consumer_port (ACE_OS::atoi (get_opt.opt_arg ()));
         break;
       case 'd':
-        this->debugging_ = 1;
+        this->debugging_ = true;
         break;
       case 'H':
         this->high_water_mark (ACE_OS::atoi (get_opt.opt_arg ()));
@@ -153,7 +130,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         this->thr_count (ACE_OS::atoi (get_opt.opt_arg ()));
         break;
       case 'v':
-        this->verbosity_ = 1;
+        this->verbosity_ = true;
         break;
       default:
         ACE_OS::fprintf (stderr, "%s\n"

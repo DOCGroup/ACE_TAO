@@ -80,7 +80,6 @@ ACE_STATIC_SVC_DEFINE (TAO_EC_Simple_Queue_Full_Action,
                        0)
 ACE_FACTORY_DEFINE (TAO_RTEvent_Serv, TAO_EC_Simple_Queue_Full_Action)
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 bool
 TAO_EC_Queue::is_full_i ()
@@ -93,13 +92,13 @@ TAO_EC_Queue::is_full_i ()
 int
 TAO_EC_Dispatching_Task::svc ()
 {
-  bool done = false;
+  bool done {};
 
   while (!done)
     {
       try
         {
-          ACE_Message_Block *mb = nullptr;
+          ACE_Message_Block *mb {};
 
           if (this->getq (mb) == -1)
             {
@@ -179,10 +178,6 @@ TAO_EC_Dispatching_Task::push (TAO_EC_ProxyPushSupplier *proxy,
 }
 
 // ****************************************************************
-
-TAO_EC_Dispatch_Command::~TAO_EC_Dispatch_Command ()
-{
-}
 
 // ****************************************************************
 

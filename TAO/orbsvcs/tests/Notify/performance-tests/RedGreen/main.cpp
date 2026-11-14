@@ -8,15 +8,16 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   RedGreen_Test client;
 
-  client.parse_args (argc, argv);
+  if (client.parse_args (argc, argv) != 0)
+    return 1;
 
   try
     {
-      client.init (argc, argv); //Init the Client
+      client.init (argc, argv); // Init the Client
 
       client.run ();
     }
-  catch (const CORBA::Exception& se)
+  catch (CORBA::Exception const& se)
     {
       se._tao_print_exception ("Error: ");
       return 1;

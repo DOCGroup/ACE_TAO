@@ -47,7 +47,6 @@ public:
     ACEXML_NON_UNICODE = -5
   } ACEXML_STATUS;
 
-
   // The following functions translate a unicode characters
   // into different encoding.  Return number of characters put into
   // destination or consumed from src if success without

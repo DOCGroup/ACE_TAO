@@ -8,7 +8,6 @@ TAO::SSLIOP::TargetCredentials::TargetCredentials (::X509 *cert,
 {
 }
 
-
 SecurityLevel3::CredentialsType
 TAO::SSLIOP::TargetCredentials::creds_type ()
 {

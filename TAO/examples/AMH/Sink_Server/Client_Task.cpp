@@ -2,6 +2,7 @@
 #include "tao/Strategies/advanced_resource.h"
 
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_stdlib.h"
 #include "ace/Sched_Params.h"
 #include "ace/Stats.h"
 #include "ace/Throughput_Stats.h"
@@ -9,7 +10,7 @@
 Client_Task::Client_Task (int &argc, ACE_TCHAR **argv)
   : argc_ (argc)
   , argv_ (argv)
-  , ior_ (ACE_TEXT("file://test.ior"))
+  , ior_ (ACE_TEXT ("file://test.ior"))
   , iterations_ (1000)
 {
 }
@@ -17,39 +18,37 @@ Client_Task::Client_Task (int &argc, ACE_TCHAR **argv)
 int
 Client_Task::parse_args ()
 {
-    ACE_Get_Opt get_opts (this->argc_, this->argv_, "k:n:O:");
-    int c;
+  ACE_Get_Opt get_opts (this->argc_, this->argv_, "k:n:O:");
+  int c {};
 
-    while ((c = get_opts ()) != -1)
-      {
-        switch (c)
+  while ((c = get_opts ()) != -1)
+    {
+      switch (c)
+        {
+        case 'k':
+          this->ior_ = get_opts.opt_arg ();
+          break;
+        case 'n':
           {
-          case 'k':
-            {
-              this->ior_ = get_opts.opt_arg ();
-              break;
-            }
-          case 'n':
-            {
-              int iterations = ACE_OS::atoi (get_opts.opt_arg ());
-              if (iterations >= 0 )
-                this->iterations_ = iterations;
-              break;
-            }
-          case '?':
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "usage:  %s "
-                               "-k <file that contains IOR> "
-                               "-n <iterations> "
-                               "\n",
-                               this->argv_ [0]),
-                              -1);
-          default:
+            int const iterations = ACE_OS::atoi (get_opts.opt_arg ());
+            if (iterations >= 0)
+              this->iterations_ = iterations;
             break;
           }
-      }
-    // Indicates successful parsing of the command line
-    return 1;
+        case '?':
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "usage:  %s "
+                             "-k <file that contains IOR> "
+                             "-n <iterations> "
+                             "\n",
+                             this->argv_ [0]),
+                            -1);
+        default:
+          break;
+        }
+    }
+  // Indicates successful parsing of the command line
+  return 1;
 }
 
 void
@@ -84,7 +83,7 @@ Client_Task::narrow_servant (CORBA::ORB_ptr orb)
   try
     {
       CORBA::Object_var object =
-        orb->string_to_object (this->ior_);
+        orb->string_to_object (this->ior_.c_str ());
 
       this->roundtrip_ =
         Test::Roundtrip::_narrow (object.in ());
@@ -93,11 +92,11 @@ Client_Task::narrow_servant (CORBA::ORB_ptr orb)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Nil Test::Roundtrip reference <%s>\n",
-                             this->ior_),
+                             this->ior_.c_str ()),
                             0);
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught trying to narrow servant\n");
       return 0;
@@ -108,8 +107,8 @@ Client_Task::narrow_servant (CORBA::ORB_ptr orb)
 int
 Client_Task::run_test ()
 {
-  ACE_hrtime_t test_start = 0;
-  ACE_hrtime_t test_end = 0;
+  ACE_hrtime_t test_start {};
+  ACE_hrtime_t test_end {};
 
   try
     {
@@ -123,14 +122,12 @@ Client_Task::run_test ()
 
       test_end = ACE_OS::gethrtime ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       return 0;
     }
-
-
   // High resolution timer calibration
-  ACE_High_Res_Timer::global_scale_factor_type gsf =
+  ACE_High_Res_Timer::global_scale_factor_type const gsf =
     ACE_High_Res_Timer::global_scale_factor ();
 
   ACE_Basic_Stats totals;
@@ -153,15 +150,15 @@ Client_Task::svc ()
     {
       for (int i = 0; i != this->iterations_; ++i)
         {
-          CORBA::ULongLong start = ACE_OS::gethrtime ();
+          CORBA::ULongLong const start = ACE_OS::gethrtime ();
 
           (void) this->roundtrip_->test_method (start);
 
-          ACE_hrtime_t now = ACE_OS::gethrtime ();
+          ACE_hrtime_t const now = ACE_OS::gethrtime ();
           this->latency_.sample (now - start);
         }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       return 0;
     }
@@ -170,7 +167,7 @@ Client_Task::svc ()
 
 void
 Client_Task::accumulate_and_dump (ACE_Basic_Stats &totals,
-                                  const ACE_TCHAR *msg,
+                                  ACE_TCHAR const *msg,
                                   ACE_High_Res_Timer::global_scale_factor_type gsf)
 {
   totals.accumulate (this->latency_);

@@ -1,14 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file Table_Adapter.h
  *
  *  @author Carlos O'Ryan (coryan@uci.edu)
  */
-//=============================================================================
-
-
 #ifndef TAO_TABLE_ADAPTER_H
 #define TAO_TABLE_ADAPTER_H
 #include /**/ "ace/pre.h"
@@ -26,20 +22,20 @@
 #include "ace/Service_Config.h"
 #include "ace/Lock.h"
 #include "tao/ORB_Core.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_IORTable_Export TAO_Table_Adapter : public TAO_Adapter
 {
 public:
-  /// Constructor
-  TAO_Table_Adapter (TAO_ORB_Core &orb_core);
+  explicit TAO_Table_Adapter (TAO_ORB_Core &orb_core);
 
-  /// Destructor
-  ~TAO_Table_Adapter () override;
+  ~TAO_Table_Adapter () override = default;
 
-  // = The TAO_Adapter methods, please check tao/Adapter.h for the
-  // documentation
+  /// @name TAO_Adapter methods
+  /// @{
+
   void open () override;
   void close (int wait_for_completion) override;
   void check_close (int wait_for_completion) override;
@@ -55,8 +51,15 @@ public:
 
   CORBA::Long initialize_collocated_object (TAO_Stub *stub) override;
 
+  /// @}
+
+  TAO_Table_Adapter (TAO_Table_Adapter const &) = delete;
+  TAO_Table_Adapter &operator= (TAO_Table_Adapter const &) = delete;
+  TAO_Table_Adapter (TAO_Table_Adapter &&) = delete;
+  TAO_Table_Adapter &operator= (TAO_Table_Adapter &&) = delete;
+
 protected:
-  static ACE_Lock * create_lock (TAO_SYNCH_MUTEX &l);
+  static std::unique_ptr<ACE_Lock> create_lock (TAO_SYNCH_MUTEX &l);
 
   /// Helper method to find an object bound in the table.
   bool find_object (TAO::ObjectKey &key,
@@ -70,28 +73,18 @@ protected:
 
   bool closed_ {true};
   TAO_SYNCH_MUTEX thread_lock_;
-  ACE_Lock *lock_;
-
-private:
-  TAO_Table_Adapter (TAO_Table_Adapter const &) = delete;
-  TAO_Table_Adapter &operator= (TAO_Table_Adapter const &) = delete;
-  TAO_Table_Adapter (TAO_Table_Adapter &&) = delete;
-  TAO_Table_Adapter &operator= (TAO_Table_Adapter &&) = delete;
+  std::unique_ptr<ACE_Lock> lock_;
 };
-
-// ****************************************************************
 
 class TAO_IORTable_Export TAO_Table_Adapter_Factory : public TAO_Adapter_Factory
 {
 public:
-  /// Constructor
   TAO_Table_Adapter_Factory () = default;
 
   /// The TAO_Adapter_Factory methods, please read tao/Adapter.h for
   /// details.
   TAO_Adapter *create (TAO_ORB_Core *orb_core) override;
 
-private:
   TAO_Table_Adapter_Factory (TAO_Table_Adapter_Factory const &) = delete;
   TAO_Table_Adapter_Factory &operator= (TAO_Table_Adapter_Factory const &) = delete;
   TAO_Table_Adapter_Factory (TAO_Table_Adapter_Factory &&) = delete;

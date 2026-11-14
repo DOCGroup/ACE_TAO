@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 
 #include "ace/Atomic_Op.h"
@@ -21,7 +20,6 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Barrier.h"
 #include "ace/Task.h"
-
 
 /*
  * Exchange_Test tests the exchange() operation in ACE_Atomic_Op. It runs
@@ -73,7 +71,6 @@ Exchange_Tester<T>::svc ()
     ++this->claimed_;
   return 0;
 }
-
 
 template <typename TYPE, typename dummy>
 int test (const ACE_TCHAR* type, int iterations)
@@ -158,10 +155,10 @@ int test (const ACE_TCHAR* type, int iterations)
   diff = ACE_OS::gettimeofday ();
   for (i = 0; i < iterations; ++i)
     {
-      foo--;
-      foo--;
-      foo--;
-      foo--;
+      --foo;
+      --foo;
+      --foo;
+      --foo;
     }
   diff = ACE_OS::gettimeofday () - diff;
   diff.to_usec (usec);
@@ -177,10 +174,10 @@ int test (const ACE_TCHAR* type, int iterations)
   diff = ACE_OS::gettimeofday ();
   for (i = 0; i < iterations; ++i)
     {
-      foo++;
-      foo++;
-      foo++;
-      foo++;
+      ++foo;
+      ++foo;
+      ++foo;
+      ++foo;
     }
   diff = ACE_OS::gettimeofday () - diff;
   diff.to_usec (usec);

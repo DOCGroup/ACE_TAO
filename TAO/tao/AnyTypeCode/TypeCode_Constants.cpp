@@ -5,6 +5,8 @@
 #include "tao/AnyTypeCode/Objref_TypeCode_Static.h"
 #include "tao/AnyTypeCode/String_TypeCode_Static.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -34,12 +36,8 @@ namespace TAO
     Empty_Param tc_TypeCode   (CORBA::tk_TypeCode);
     Empty_Param tc_Principal  (CORBA::tk_Principal);
 
-    // --------------
-
     String<TAO::Null_RefCount_Policy> tc_string  (CORBA::tk_string, 0);
     String<TAO::Null_RefCount_Policy> tc_wstring (CORBA::tk_wstring, 0);
-
-    // --------------
 
     char const tc_object_id[]   = "IDL:omg.org/CORBA/Object:1.0";
     char const tc_object_name[] = "Object";
@@ -64,43 +62,40 @@ namespace TAO
   }  // End TypeCode namespace
 }  // End TAO namespace
 
-// ------------------------------------------------------------------
 // OMG defined TypeCode constants
-// ------------------------------------------------------------------
-
 namespace CORBA
 {
   // Notice that these are constant TypeCode references/pointers, not
   // constant TypeCodes.  TypeCodes are effectively read-only since
   // all non-static TypeCode operations are const.
 
-  TypeCode_ptr const _tc_null       = &TAO::TypeCode::tc_null;
-  TypeCode_ptr const _tc_void       = &TAO::TypeCode::tc_void;
-  TypeCode_ptr const _tc_boolean    = &TAO::TypeCode::tc_boolean;
-  TypeCode_ptr const _tc_char       = &TAO::TypeCode::tc_char;
-  TypeCode_ptr const _tc_wchar      = &TAO::TypeCode::tc_wchar;
-  TypeCode_ptr const _tc_short      = &TAO::TypeCode::tc_short;
-  TypeCode_ptr const _tc_ushort     = &TAO::TypeCode::tc_ushort;
-  TypeCode_ptr const _tc_int8       = nullptr;
-  TypeCode_ptr const _tc_uint8      = nullptr;
-  TypeCode_ptr const _tc_long       = &TAO::TypeCode::tc_long;
-  TypeCode_ptr const _tc_ulong      = &TAO::TypeCode::tc_ulong;
-  TypeCode_ptr const _tc_longlong   = &TAO::TypeCode::tc_longlong;
-  TypeCode_ptr const _tc_ulonglong  = &TAO::TypeCode::tc_ulonglong;
-  TypeCode_ptr const _tc_float      = &TAO::TypeCode::tc_float;
-  TypeCode_ptr const _tc_double     = &TAO::TypeCode::tc_double;
-  TypeCode_ptr const _tc_longdouble = &TAO::TypeCode::tc_longdouble;
-  TypeCode_ptr const _tc_octet      = &TAO::TypeCode::tc_octet;
-  TypeCode_ptr const _tc_any        = &TAO::TypeCode::tc_any;
-  TypeCode_ptr const _tc_TypeCode   = &TAO::TypeCode::tc_TypeCode;
-  TypeCode_ptr const _tc_Principal  = &TAO::TypeCode::tc_Principal;
+  TypeCode_ptr const _tc_null       = std::addressof (TAO::TypeCode::tc_null);
+  TypeCode_ptr const _tc_void       = std::addressof (TAO::TypeCode::tc_void);
+  TypeCode_ptr const _tc_boolean    = std::addressof (TAO::TypeCode::tc_boolean);
+  TypeCode_ptr const _tc_char       = std::addressof (TAO::TypeCode::tc_char);
+  TypeCode_ptr const _tc_wchar      = std::addressof (TAO::TypeCode::tc_wchar);
+  TypeCode_ptr const _tc_short      = std::addressof (TAO::TypeCode::tc_short);
+  TypeCode_ptr const _tc_ushort     = std::addressof (TAO::TypeCode::tc_ushort);
+  TypeCode_ptr const _tc_int8       {};
+  TypeCode_ptr const _tc_uint8      {};
+  TypeCode_ptr const _tc_long       = std::addressof (TAO::TypeCode::tc_long);
+  TypeCode_ptr const _tc_ulong      = std::addressof (TAO::TypeCode::tc_ulong);
+  TypeCode_ptr const _tc_longlong   = std::addressof (TAO::TypeCode::tc_longlong);
+  TypeCode_ptr const _tc_ulonglong  = std::addressof (TAO::TypeCode::tc_ulonglong);
+  TypeCode_ptr const _tc_float      = std::addressof (TAO::TypeCode::tc_float);
+  TypeCode_ptr const _tc_double     = std::addressof (TAO::TypeCode::tc_double);
+  TypeCode_ptr const _tc_longdouble = std::addressof (TAO::TypeCode::tc_longdouble);
+  TypeCode_ptr const _tc_octet      = std::addressof (TAO::TypeCode::tc_octet);
+  TypeCode_ptr const _tc_any        = std::addressof (TAO::TypeCode::tc_any);
+  TypeCode_ptr const _tc_TypeCode   = std::addressof (TAO::TypeCode::tc_TypeCode);
+  TypeCode_ptr const _tc_Principal  = std::addressof (TAO::TypeCode::tc_Principal);
 
-  TypeCode_ptr const _tc_string     = &TAO::TypeCode::tc_string;
-  TypeCode_ptr const _tc_wstring    = &TAO::TypeCode::tc_wstring;
+  TypeCode_ptr const _tc_string     = std::addressof (TAO::TypeCode::tc_string);
+  TypeCode_ptr const _tc_wstring    = std::addressof (TAO::TypeCode::tc_wstring);
 
-  TypeCode_ptr const _tc_Object     = &TAO::TypeCode::tc_Object;
-  TypeCode_ptr const _tc_Component  = &TAO::TypeCode::tc_Component;
-  TypeCode_ptr const _tc_Home       = &TAO::TypeCode::tc_Home;
+  TypeCode_ptr const _tc_Object     = std::addressof (TAO::TypeCode::tc_Object);
+  TypeCode_ptr const _tc_Component  = std::addressof (TAO::TypeCode::tc_Component);
+  TypeCode_ptr const _tc_Home       = std::addressof (TAO::TypeCode::tc_Home);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -45,7 +45,12 @@ class Server_Request_Interceptor
 {
 public:
   /// Constructor.  Accepts the name of the interceptor.
-  Server_Request_Interceptor (const char *name);
+  explicit Server_Request_Interceptor (char const *name);
+
+  Server_Request_Interceptor (Server_Request_Interceptor const &) = delete;
+  Server_Request_Interceptor (Server_Request_Interceptor &&) = delete;
+  Server_Request_Interceptor &operator= (Server_Request_Interceptor const &) = delete;
+  Server_Request_Interceptor &operator= (Server_Request_Interceptor &&) = delete;
 
   /**
    * @name Methods Required by the Server Request Interceptor
@@ -56,20 +61,20 @@ public:
    * methods required for all server request interceptors.
    */
   //@{
-  virtual void receive_request_service_contexts (
-      PortableInterceptor::ServerRequestInfo_ptr ri);
+  void receive_request_service_contexts (
+      PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void receive_request (
-      PortableInterceptor::ServerRequestInfo_ptr ri);
+  void receive_request (
+      PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_reply (
-      PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_reply (
+      PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_exception (
-      PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_exception (
+      PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_other (
-      PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_other (
+      PortableInterceptor::ServerRequestInfo_ptr ri) override;
   //@}
 
 private:
@@ -82,7 +87,7 @@ private:
   /// Variable used to keep track of the scenario count.  Used to get
   /// around the inability to call RequestInfo::arguments() in the
   /// receive_service_contexts() interception point.
-  CORBA::ULong scenario_;
+  CORBA::ULong scenario_ {};
 };
 
 #if defined(_MSC_VER)

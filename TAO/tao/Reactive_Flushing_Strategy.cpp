@@ -23,7 +23,7 @@ TAO_Reactive_Flushing_Strategy::flush_message (TAO_Transport *transport,
                                                TAO_Queued_Message *msg,
                                                ACE_Time_Value *max_wait_time)
 {
-  int result = 0;
+  int result {};
 
   // @@ Should we pass this down?  Can we?
   try

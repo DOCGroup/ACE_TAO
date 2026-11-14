@@ -17,9 +17,8 @@
 #include "ace/Synch_Traits.h"
 #include "ace/os_include/os_ctype.h"
 
-#if !defined (__GNUG__)
-# include <memory>
-#endif
+#include <cstring>
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -52,20 +51,13 @@ struct ace_yy_buffer_state
      state_ (ACE_NO_STATE),
      string_start_ (0)
 #if defined (ACE_USES_WCHAR)
-     , converter_ (0)
+     , converter_ {}
 #endif /* ACE_USES_WCHAR */
   {
   }
 #if defined (_MSC_VER)
 #  pragma warning (pop)
 #endif /* VC8 */
-
-  ~ace_yy_buffer_state ()
-  {
-#if defined (ACE_USES_WCHAR)
-    delete converter_;
-#endif /* ACE_USES_WCHAR */
-  }
 
   ACE_ALLOC_HOOK_DECLARE;
 
@@ -83,7 +75,7 @@ struct ace_yy_buffer_state
 
 #if defined (ACE_USES_WCHAR)
   // Code set conversion related
-  ACE_Encoding_Converter* converter_;
+  std::unique_ptr<ACE_Encoding_Converter> converter_;
 #endif /* ACE_USES_WCHAR */
 };
 
@@ -180,9 +172,9 @@ ACE_Svc_Conf_Lexer::yylex (ACE_YYSTYPE* ace_yylval,
                     input (param,
                            param->buffer->input_ + amount,
                            read_more);
-                    ACE_OS::memmove (param->buffer->input_,
-                                     param->buffer->input_ + read_more,
-                                     amount);
+                    std::memmove (param->buffer->input_,
+                                  param->buffer->input_ + read_more,
+                                  amount);
                   }
               }
             skip_bytes = param->buffer->size_;
@@ -246,9 +238,7 @@ ACE_Svc_Conf_Lexer::input (ACE_Svc_Conf_Param* param,
             {
               result = max_size;
             }
-          ACE_OS::memcpy (buf,
-                          param->source.directive + param->buffer->start_,
-                          result);
+          std::memcpy (buf, param->source.directive + param->buffer->start_, result);
           param->buffer->start_ += (result / sizeof (ACE_TCHAR));
         }
       break;
@@ -286,7 +276,7 @@ ACE_Svc_Conf_Lexer::scan (ACE_YYSTYPE* ace_yylval,
 
   size_t current;
   size_t last = buffer->size_ + (buffer->eof_ ? 1 : 0);
-  for (current = buffer->index_; current < last; current++)
+  for (current = buffer->index_; current < last; ++current)
     {
       static const char* separators = " \t\r\n:*(){}";
       char c = (buffer->eof_ && current == buffer->size_ ?
@@ -339,7 +329,7 @@ ACE_Svc_Conf_Lexer::scan (ACE_YYSTYPE* ace_yylval,
 #if defined (ACE_USES_WCHAR)
                 ACE_TCHAR target[ACE_YY_CONVERSION_SPACE] = ACE_TEXT ("");
                 size_t length = 0;
-                if (!convert_from_utf8 (buffer->converter_,
+                if (!convert_from_utf8 (buffer->converter_.get (),
                                         source,
                                         amount,
                                         target,
@@ -422,60 +412,60 @@ ACE_Svc_Conf_Lexer::scan (ACE_YYSTYPE* ace_yylval,
                   {
                     str = str_buf;
                   }
-                ACE_OS::strncpy (str, buffer->input_ + buffer->index_, size - 1);
+                std::strncpy (str, buffer->input_ + buffer->index_, size - 1);
                 str[size - 1] = '\0';
 
-                if (ACE_OS::strcmp (str, "dynamic") == 0)
+                if (std::strcmp (str, "dynamic") == 0)
                   {
                     buffer->index_ = current;
                     return ACE_DYNAMIC;
                   }
-                else if (ACE_OS::strcmp (str, "static") == 0)
+                else if (std::strcmp (str, "static") == 0)
                   {
                     buffer->index_ = current;
                     return ACE_STATIC;
                   }
-                else if (ACE_OS::strcmp (str, "suspend") == 0)
+                else if (std::strcmp (str, "suspend") == 0)
                   {
                     buffer->index_ = current;
                     return ACE_SUSPEND;
                   }
-                else if (ACE_OS::strcmp (str, "resume") == 0)
+                else if (std::strcmp (str, "resume") == 0)
                   {
                     buffer->index_ = current;
                     return ACE_RESUME;
                   }
-                else if (ACE_OS::strcmp (str, "remove") == 0)
+                else if (std::strcmp (str, "remove") == 0)
                   {
                     buffer->index_ = current;
                     return ACE_REMOVE;
                   }
-                else if (ACE_OS::strcmp (str, "stream") == 0)
+                else if (std::strcmp (str, "stream") == 0)
                   {
                     buffer->index_ = current;
                     return ACE_USTREAM;
                   }
-                else if (ACE_OS::strcmp (str, "Module") == 0)
+                else if (std::strcmp (str, "Module") == 0)
                   {
                     buffer->index_ = current;
                     return ACE_MODULE_T;
                   }
-                else if (ACE_OS::strcmp (str, "Service_Object") == 0)
+                else if (std::strcmp (str, "Service_Object") == 0)
                   {
                     buffer->index_ = current;
                     return ACE_SVC_OBJ_T;
                   }
-                else if (ACE_OS::strcmp (str, "STREAM") == 0)
+                else if (std::strcmp (str, "STREAM") == 0)
                   {
                     buffer->index_ = current;
                     return ACE_STREAM_T;
                   }
-                else if (ACE_OS::strcmp (str, "active") == 0)
+                else if (std::strcmp (str, "active") == 0)
                   {
                     buffer->index_ = current;
                     return ACE_ACTIVE;
                   }
-                else if (ACE_OS::strcmp (str, "inactive") == 0)
+                else if (std::strcmp (str, "inactive") == 0)
                   {
                     buffer->index_ = current;
                     return ACE_INACTIVE;
@@ -488,7 +478,7 @@ ACE_Svc_Conf_Lexer::scan (ACE_YYSTYPE* ace_yylval,
 #if defined (ACE_USES_WCHAR)
                     ACE_TCHAR target[ACE_YY_CONVERSION_SPACE] = ACE_TEXT ("");
                     size_t length = 0;
-                    if (!convert_from_utf8 (buffer->converter_,
+                    if (!convert_from_utf8 (buffer->converter_.get (),
                                             str,
                                             amount,
                                             target,
@@ -516,7 +506,7 @@ ACE_Svc_Conf_Lexer::scan (ACE_YYSTYPE* ace_yylval,
                       {
                         static const ACE_TCHAR* path_parts =
                                                 ACE_TEXT ("/\\:%.~-");
-                        for (const ACE_TCHAR* p = path_parts; *p != '\0'; p++)
+                        for (const ACE_TCHAR* p = path_parts; *p != '\0'; ++p)
                           {
                             if (ACE_OS::strchr (ace_yylval->ident_, *p) != nullptr)
                               {
@@ -554,8 +544,8 @@ ACE_Svc_Conf_Lexer::scan (ACE_YYSTYPE* ace_yylval,
         {
           buffer->size_ = current - buffer->index_;
           if (buffer->size_ != 0 && buffer->index_ != 0)
-            ACE_OS::memmove (buffer->input_,
-                             buffer->input_ + buffer->index_, buffer->size_);
+            std::memmove (buffer->input_,
+                          buffer->input_ + buffer->index_, buffer->size_);
           buffer->index_ = 0;
           buffer->state_ = ACE_NO_STATE;
         }
@@ -572,16 +562,16 @@ ACE_Svc_Conf_Lexer::convert_to_utf8 (
                       ACE_Encoding_Converter_Factory::Encoding_Hint hint)
 {
   bool status = false;
-  if (param->buffer->converter_ == 0)
+  if (!param->buffer->converter_)
     {
-      param->buffer->converter_ =
+      param->buffer->converter_.reset (
         ACE_Encoding_Converter_Factory::create (
           reinterpret_cast<ACE_Byte*> (param->buffer->input_ + skip_bytes),
           param->buffer->size_ - skip_bytes,
-          hint);
+          hint));
     }
 
-  if (param->buffer->converter_ != 0)
+  if (param->buffer->converter_)
     {
       char target[ACE_YY_CONVERSION_SPACE] = "";
       if (param->buffer->converter_->to_utf8 (
@@ -590,8 +580,8 @@ ACE_Svc_Conf_Lexer::convert_to_utf8 (
             reinterpret_cast<ACE_Byte*> (target),
             ACE_YY_CONVERSION_SPACE) == ACE_Encoding_Converter::CONVERSION_OK)
         {
-          ACE_OS::strcpy (param->buffer->input_ + skip_bytes, target);
-          param->buffer->size_ = ACE_OS::strlen (target) + skip_bytes;
+          std::strcpy (param->buffer->input_ + skip_bytes, target);
+          param->buffer->size_ = std::strlen (target) + skip_bytes;
           status = true;
         }
     }
@@ -646,12 +636,12 @@ ACE_Svc_Conf_Lexer::locate_bom (char* source,
     { 3, "\xef\xbb\xbf",     ACE_Encoding_Converter_Factory::ACE_UTF_8    },
   };
 
-  for (size_t i = 0; i < sizeof (boms) / sizeof (bom); i++)
+  for (size_t i = 0; i < sizeof (boms) / sizeof (bom); ++i)
     {
       if (source_size >= boms[i].length_)
         {
-          if (ACE_OS::memcmp (source,
-                              boms[i].data_, boms[i].length_) == 0)
+          if (std::memcmp (source,
+                           boms[i].data_, boms[i].length_) == 0)
             {
               bytes_used = boms[i].length_;
               return boms[i].hint_;

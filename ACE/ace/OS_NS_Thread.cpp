@@ -20,6 +20,7 @@
 #endif
 #include <memory>
 #include <algorithm>
+#include <cstring>
 
 #if defined (ACE_INTEGRITY) && !defined (ACE_HAS_PTHREADS)
 #  include <map>
@@ -38,7 +39,7 @@ ACE_MUTEX_LOCK_CLEANUP_ADAPTER_NAME (void *args)
   // Green Hills compiler gets confused when __stdcall is embedded in
   // parameter list, so we define the type ACE_WIN32THRFUNC_T and use it
   // instead.
-  typedef unsigned (__stdcall *ACE_WIN32THRFUNC_T)(void*);
+  using ACE_WIN32THRFUNC_T = unsigned (__stdcall *)(void*);
 # define ACE_BEGINTHREADEX(STACK, STACKSIZE, ENTRY_POINT, ARGS, FLAGS, THR_ID) \
       ::_beginthreadex (STACK, STACKSIZE, (ACE_WIN32THRFUNC_T) ENTRY_POINT, ARGS, FLAGS, (unsigned int *) THR_ID)
 #endif /* defined (__IBMCPP__) && (__IBMCPP__ >= 400) */
@@ -138,7 +139,7 @@ ACE_TSS_Emulation::tss_base (void* ts_storage[], u_int *ts_created)
         }
     }
 
-  void **old_ts_storage = nullptr;
+  void **old_ts_storage {};
 
   // Get the tss_storage from thread-OS specific storage.
   if (ACE_OS::thr_getspecific_native (native_tss_key_,
@@ -231,12 +232,12 @@ ACE_TSS_Emulation::next_key (ACE_thread_key_t &key)
     {
        u_int counter = 0;
        // Loop through all possible keys and check whether a key is free
-       for ( ;counter < ACE_TSS_THREAD_KEYS_MAX; counter++)
+       for ( ;counter < ACE_TSS_THREAD_KEYS_MAX; ++counter)
          {
             ACE_thread_key_t localkey = counter;
             // If the key is not set as used, we can give out this key, if not
             // we have to search further
-            if (tss_keys_used_->is_set(localkey) == 0)
+            if (!tss_keys_used_->is_set (localkey))
             {
                tss_keys_used_->test_and_set(localkey);
                key = localkey;
@@ -271,7 +272,7 @@ ACE_TSS_Emulation::release_key (ACE_thread_key_t key)
   return 1;
 }
 
-int
+bool
 ACE_TSS_Emulation::is_key (ACE_thread_key_t key)
 {
   ACE_OS_Recursive_Thread_Mutex_Guard guard (
@@ -280,11 +281,11 @@ ACE_TSS_Emulation::is_key (ACE_thread_key_t key)
                         ACE_OS_Object_Manager::ACE_TSS_KEY_LOCK]));
 
   if (tss_keys_used_ != 0 &&
-      tss_keys_used_->is_set (key) == 1)
+      tss_keys_used_->is_set (key))
   {
-    return 1;
+    return true;
   }
-  return 0;
+  return false;
 }
 
 void *
@@ -359,7 +360,7 @@ ACE_TSS_Ref::operator== (const ACE_TSS_Ref &info) const
   ACE_OS_TRACE ("ACE_TSS_Ref::operator==");
 
 #ifdef ACE_THREAD_T_IS_A_STRUCT
-  return 0 == ACE_OS::memcmp (&this->tid_, &info.tid_, sizeof tid_);
+  return 0 == std::memcmp (&this->tid_, &info.tid_, sizeof tid_);
 #else
   return this->tid_ == info.tid_;
 #endif
@@ -439,7 +440,6 @@ ACE_TSS_Keys::ACE_TSS_Keys ()
     }
 }
 
-
 void
 ACE_TSS_Keys::find (const u_int key, u_int &word, u_int &bit)
 {
@@ -481,13 +481,13 @@ ACE_TSS_Keys::test_and_clear (const ACE_thread_key_t key)
     }
 }
 
-int
+bool
 ACE_TSS_Keys::is_set (const ACE_thread_key_t key) const
 {
   u_int word, bit;
   find (key, word, bit);
 
-  return word < ACE_WORDS ? ACE_BIT_ENABLED (key_bit_words_[word], 1 << bit) : 0;
+  return word < ACE_WORDS && ACE_BIT_ENABLED (key_bit_words_[word], 1 << bit);
 }
 
 /**
@@ -555,8 +555,8 @@ private:
 
 private:
   // Array of <ACE_TSS_Info> objects.
-  typedef ACE_TSS_Info ACE_TSS_TABLE[ACE_DEFAULT_THREAD_KEYS];
-  typedef ACE_TSS_Info *ACE_TSS_TABLE_ITERATOR;
+  using ACE_TSS_TABLE = ACE_TSS_Info[ACE_DEFAULT_THREAD_KEYS];
+  using ACE_TSS_TABLE_ITERATOR = ACE_TSS_Info *;
 
   /// Table of <ACE_TSS_Info>'s.
   ACE_TSS_TABLE table_;
@@ -676,7 +676,7 @@ TSS_Cleanup_Instance::~TSS_Cleanup_Instance ()
 {
   // Variable to hold the mutex_ to delete outside the scope of the
   // guard.
-  ACE_Thread_Mutex *del_mutex = nullptr;
+  ACE_Thread_Mutex *del_mutex {};
 
   // scope the guard
   {
@@ -736,9 +736,7 @@ ACE_TSS_Cleanup * TSS_Cleanup_Instance::instance_ = 0;
 ACE_Thread_Mutex* TSS_Cleanup_Instance::mutex_ = 0;
 ACE_Condition_Thread_Mutex* TSS_Cleanup_Instance::condition_ = 0;
 
-ACE_TSS_Cleanup::~ACE_TSS_Cleanup ()
-{
-}
+ACE_TSS_Cleanup::~ACE_TSS_Cleanup () = default;
 
 void
 ACE_TSS_Cleanup::thread_exit ()
@@ -758,7 +756,7 @@ ACE_TSS_Cleanup::thread_exit ()
     ACE_TSS_CLEANUP_GUARD
 
     // if not initialized or already cleaned up
-    ACE_TSS_Keys *this_thread_keys = nullptr;
+    ACE_TSS_Keys *this_thread_keys {};
     if (! find_tss_keys (this_thread_keys) )
       {
         return;
@@ -901,7 +899,7 @@ ACE_TSS_Cleanup::thread_detach_key (ACE_thread_key_t key)
   // variables to hold the destructor and the object to be destructed
   // the actual call is deferred until the guard is released
   ACE_TSS_Info::Destructor destructor = 0;
-  void * tss_obj = nullptr;
+  void * tss_obj {};
 
   // scope the guard
   {
@@ -941,7 +939,7 @@ ACE_TSS_Cleanup::thread_release (
   // assume guard is held by caller
   // Find the TSS keys (if any) for this thread
   // do not create them if they don't exist
-  ACE_TSS_Keys * thread_keys = nullptr;
+  ACE_TSS_Keys * thread_keys {};
   if (find_tss_keys (thread_keys))
     {
         // if this key is in use by this thread
@@ -1022,7 +1020,7 @@ ACE_TSS_Cleanup::tss_keys ()
         }
     }
 
-  void *ts_keys = nullptr;
+  void *ts_keys {};
   if (ACE_OS::thr_getspecific (in_use_, &ts_keys) == -1)
     {
       ACE_ASSERT (false);
@@ -1746,7 +1744,7 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
   if (ACE_OS::thread_mutex_lock (&cv->waiters_lock_) != 0)
     return -1;
 
-  cv->waiters_--;
+  --cv->waiters_;
 
   bool const last_waiter = cv->was_broadcast_ && cv->waiters_ == 0;
 
@@ -1873,7 +1871,7 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
        *   when calling this routine.
        * Tests shows this to be necessary.
        */
-      ACE_OS::memset (m, 0, sizeof (*m));
+      std::memset (m, 0, sizeof (*m));
 #   endif
       if (ACE_ADAPT_RETVAL (::pthread_mutex_init (m, attributes), result) == 0)
         result = 0;
@@ -2649,7 +2647,7 @@ ACE_OS::event_init (ACE_event_t *event,
 
       int result = 0;
 # if !ACE_EVENT_USE_COND_PSHARED
-      char sem_name[128] = {};
+      char sem_name[128] {};
       format_name (sem_name, name, "._ACE_EVTSEM_");
       result = ACE_OS::sema_init (&event->semaphore_, 0, type, attributes,
                                   sem_name, arg);
@@ -2658,7 +2656,7 @@ ACE_OS::event_init (ACE_event_t *event,
 # if !ACE_EVENT_USE_MUTEX_PSHARED
       if (result == 0)
         {
-          char lck_name[128] = {};
+          char lck_name[128] {};
           format_name (lck_name, name, "._ACE_EVTLCK_");
           result = ACE_OS::sema_init (&event->lock_, owner, type, attributes,
                                       lck_name, arg);
@@ -3338,15 +3336,15 @@ static ACE_thread_mutex_t integrity_task_args_lock;
 class ACE_Int178_Stack_Manager
 {
 private:
-  typedef Address Int178_Stack[ACE_INTEGRITY178B_DEFAULT_STACK_SIZE / sizeof (Address)];
-  typedef Int178_Stack Int178_Stack_Pool[NUM_DYNAMIC_THREADS];
+  using Int178_Stack = Address[ACE_INTEGRITY178B_DEFAULT_STACK_SIZE / sizeof (Address)];
+  using Int178_Stack_Pool = Int178_Stack[NUM_DYNAMIC_THREADS];
 
   struct StackInfo
   {
     ACE_hthread_t id {};
     bool occupied {};
   };
-  typedef StackInfo StackPoolInfo[NUM_DYNAMIC_THREADS];
+  using StackPoolInfo = StackInfo[NUM_DYNAMIC_THREADS];
 
 public:
   // Get an unoccupied stack and return its address.
@@ -3410,7 +3408,7 @@ extern "C" void integrity_task_adapter ()
 {
   const ACE_hthread_t curr_task = CurrentTask ();
 
-  ACE_Base_Thread_Adapter *thr_arg = nullptr;
+  ACE_Base_Thread_Adapter *thr_arg {};
   {
     // The thread argument should be ready when this function starts
     LockGuard guard (integrity_task_args_lock);
@@ -3471,7 +3469,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 # define  ACE_THREAD_ARGUMENT  thread_args
 #endif /* ! defined (ACE_NO_THREAD_ADAPTER) */
 
-  ACE_Base_Thread_Adapter *thread_args = nullptr;
+  ACE_Base_Thread_Adapter *thread_args {};
   if (thread_adapter == nullptr)
 #if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
     ACE_NEW_RETURN (thread_args,
@@ -3676,7 +3674,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
       if (priority != ACE_DEFAULT_THREAD_PRIORITY)
         {
           struct sched_param sparam;
-          ACE_OS::memset ((void *) &sparam, 0, sizeof sparam);
+          std::memset (&sparam, 0, sizeof sparam);
 
 #     if defined (PTHREAD_MAX_PRIORITY) && !defined(ACE_HAS_PTHREADS)
           /* For MIT pthreads... */
@@ -3889,7 +3887,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
           if (kernelbase)
             {
-              typedef HRESULT (WINAPI *FnPtr) (HANDLE, PCWSTR);
+              using FnPtr = HRESULT (WINAPI *) (HANDLE, PCWSTR);
               FnPtr const SetThreadDescription = (FnPtr) GetProcAddress (kernelbase, "SetThreadDescription");
 
               if (SetThreadDescription)
@@ -4667,7 +4665,7 @@ ACE_OS::thr_setspecific (ACE_thread_key_t key, void *data)
   // ACE_OS_TRACE ("ACE_OS::thr_setspecific");
 #if defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_TSS_EMULATION)
-    if (ACE_TSS_Emulation::is_key (key) == 0)
+    if (!ACE_TSS_Emulation::is_key (key))
       {
         errno = EINVAL;
         data = 0;
@@ -4845,12 +4843,12 @@ add_to_argv (ACE_VX_USR_ARG_T& argc, char** argv, int max_args, char* string)
 {
   char indouble   = 0;
   size_t previous = 0;
-  size_t length   = ACE_OS::strlen (string);
+  size_t length   = std::strlen (string);
 
   if (length > 0)
     {
       // We use <= to make sure that we get the last argument
-      for (size_t i = 0; i <= length; i++)
+      for (size_t i = 0; i <= length; ++i)
         {
           // Is it a double quote that hasn't been escaped?
           if (string[i] == '\"' && (i == 0 || string[i - 1] != '\\'))
@@ -4873,7 +4871,7 @@ add_to_argv (ACE_VX_USR_ARG_T& argc, char** argv, int max_args, char* string)
             {
               // The next character is automatically skipped because
               // of the memmove().
-              ACE_OS::memmove (string + i, string + i + 1, length);
+              std::memmove (string + i, string + i + 1, length);
               --length;
             }
           else if (!indouble &&

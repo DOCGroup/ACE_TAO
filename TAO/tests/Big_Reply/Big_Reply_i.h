@@ -21,7 +21,6 @@ class Big_Reply_i
   : public virtual POA_Test::Big_Reply
 {
 public:
-  /// Constructor
   Big_Reply_i (CORBA::ORB_ptr orb,
                CORBA::ULong length);
   Big_Reply_i (Big_Reply_i const &) = delete;
@@ -29,8 +28,7 @@ public:
   Big_Reply_i &operator= (Big_Reply_i const &) = delete;
   Big_Reply_i &operator= (Big_Reply_i &&) = delete;
 
-  ///Destructor
-  ~Big_Reply_i () override;
+  ~Big_Reply_i () override = default;
 
   // = The skeleton methods
   Test::Octet_Seq *get_big_reply () override;
@@ -44,10 +42,7 @@ private:
   CORBA::ORB_ptr orb_;
 
   /// Length of the reply sequence
-  CORBA::ULong length_;
-
-  /// The reply message
-  Test::Octet_Seq_var reply_message_;
+  CORBA::ULong const length_;
 };
 
 #include /**/ "ace/post.h"

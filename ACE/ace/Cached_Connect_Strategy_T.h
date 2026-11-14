@@ -47,7 +47,6 @@ class ACE_Cached_Connect_Strategy_Ex
  : public ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>
 {
 public:
-  /// Constructor
   ACE_Cached_Connect_Strategy_Ex (
     CACHING_STRATEGY &caching_s,
     ACE_Creation_Strategy<SVC_HANDLER> *cre_s = nullptr,
@@ -56,15 +55,20 @@ public:
     MUTEX *lock = nullptr,
     int delete_lock = 0);
 
-  /// Destructor
-  virtual ~ACE_Cached_Connect_Strategy_Ex ();
+  ~ACE_Cached_Connect_Strategy_Ex () override;
+
+  ACE_Cached_Connect_Strategy_Ex () = delete;
+  ACE_Cached_Connect_Strategy_Ex (ACE_Cached_Connect_Strategy_Ex const &) = delete;
+  ACE_Cached_Connect_Strategy_Ex &operator= (ACE_Cached_Connect_Strategy_Ex const &) = delete;
+  ACE_Cached_Connect_Strategy_Ex (ACE_Cached_Connect_Strategy_Ex &&) = delete;
+  ACE_Cached_Connect_Strategy_Ex &operator= (ACE_Cached_Connect_Strategy_Ex &&) = delete;
 
   /// Explicit purging of connection entries from the connection cache.
   virtual int purge_connections ();
 
   /// Mark as closed (non-locking version). This is used during the cleanup of the
   /// connections purged.
-  virtual int mark_as_closed_i (const void *recycling_act);
+  int mark_as_closed_i (const void *recycling_act) override;
 
   /**
    * Since g++ version < 2.8 arent happy with templates, this special
@@ -73,18 +77,35 @@ public:
    */
   void cleanup ();
 
-  // = Typedefs for managing the map
+  /// @name Connection cache types
+  /// @{
+
   using REFCOUNTED_HASH_RECYCLABLE_ADDRESS = ARHR<typename _ACE_PEER_CONNECTOR::PEER_ADDR>;
- using CONNECTION_CACHE = ACE_Hash_Cache_Map_Manager<REFCOUNTED_HASH_RECYCLABLE_ADDRESS, SVC_HANDLER *, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>, CACHING_STRATEGY, ATTRIBUTES>;
+  using CONNECTION_CACHE =
+    ACE_Hash_Cache_Map_Manager<REFCOUNTED_HASH_RECYCLABLE_ADDRESS,
+                               SVC_HANDLER *,
+                               ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>,
+                               ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>,
+                               CACHING_STRATEGY,
+                               ATTRIBUTES>;
   using CONNECTION_CACHE_ENTRY = typename CONNECTION_CACHE::CACHE_ENTRY;
   using KEY = typename CONNECTION_CACHE::key_type;
   using VALUE = typename CONNECTION_CACHE::mapped_type;
 
-  using CLEANUP_STRATEGY = ARHCLE<REFCOUNTED_HASH_RECYCLABLE_ADDRESS, std::pair<SVC_HANDLER *, ATTRIBUTES>, ACE_Hash_Map_Manager_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDRESS, std::pair<SVC_HANDLER *, ATTRIBUTES>, ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>, ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>, MUTEX>>;
+  using CLEANUP_STRATEGY =
+    ARHCLE<REFCOUNTED_HASH_RECYCLABLE_ADDRESS,
+           std::pair<SVC_HANDLER *, ATTRIBUTES>,
+           ACE_Hash_Map_Manager_Ex<REFCOUNTED_HASH_RECYCLABLE_ADDRESS,
+                                   std::pair<SVC_HANDLER *, ATTRIBUTES>,
+                                   ACE_Hash<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>,
+                                   ACE_Equal_To<REFCOUNTED_HASH_RECYCLABLE_ADDRESS>,
+                                   MUTEX>>;
 
   using CCSBASE = ACE_Cached_Connect_Strategy<SVC_HANDLER, _ACE_PEER_CONNECTOR, MUTEX>;
 
-  // = Accessor.
+  /// @}
+
+  /// Accessor.
   CACHING_STRATEGY &caching_strategy ();
 
   /// Declare the dynamic allocation hooks.
@@ -96,21 +117,23 @@ protected:
             ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>, std::pair<SVC_HANDLER *, ATTRIBUTES> > *&entry);
 
   /// Remove from cache (non-locking version).
-  virtual int purge_i (const void *recycling_act);
+  int purge_i (const void *recycling_act) override;
 
   /// Add to cache (non-locking version).
-  virtual int cache_i (const void *recycling_act);
+  int cache_i (const void *recycling_act) override;
 
   /// Get/Set recycle_state (non-locking version).
-  virtual int recycle_state_i (const void *recycling_act,
-                               ACE_Recyclable_State new_state);
-  virtual ACE_Recyclable_State recycle_state_i (const void *recycling_act) const;
+  int recycle_state_i (const void *recycling_act,
+                       ACE_Recyclable_State new_state) override;
+  ACE_Recyclable_State recycle_state_i (const void *recycling_act) const override;
 
   /// Cleanup hint and reset @c *act_holder to zero if @a act_holder != 0.
-  virtual int cleanup_hint_i (const void *recycling_act,
-                              void **act_holder);
+  int cleanup_hint_i (const void *recycling_act,
+                      void **act_holder) override;
 
-  // = Helpers
+  /// @name Internal cache operations
+  /// @{
+
   int check_hint_i (SVC_HANDLER *&sh,
                     const ACE_PEER_CONNECTOR_ADDR &remote_addr,
                     ACE_Time_Value *timeout,
@@ -131,14 +154,14 @@ protected:
                                     ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>, std::pair<SVC_HANDLER *, ATTRIBUTES> > *&entry,
                                     int &found);
 
-  virtual int connect_svc_handler_i (SVC_HANDLER *&sh,
-                                     const ACE_PEER_CONNECTOR_ADDR &remote_addr,
-                                     ACE_Time_Value *timeout,
-                                     const ACE_PEER_CONNECTOR_ADDR &local_addr,
-                                     bool reuse_addr,
-                                     int flags,
-                                     int perms,
-                                     int &found);
+  int connect_svc_handler_i (SVC_HANDLER *&sh,
+                             const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+                             ACE_Time_Value *timeout,
+                             const ACE_PEER_CONNECTOR_ADDR &local_addr,
+                             bool reuse_addr,
+                             int flags,
+                             int perms,
+                             int &found) override;
 
   /**
    * Connection of the svc_handler with the remote host.  This method
@@ -156,6 +179,8 @@ protected:
                               bool reuse_addr,
                               int flags,
                               int perms);
+
+  /// @}
 
   /// Table that maintains the cache of connected SVC_HANDLERs.
   CONNECTION_CACHE connection_cache_;
@@ -196,7 +221,12 @@ class ACE_Bounded_Cached_Connect_Strategy
   using REFCOUNTED_HASH_RECYCLABLE_ADDRESS = ARHR<typename _ACE_PEER_CONNECTOR::PEER_ADDR>;
 
 public:
-  /// Constructor
+  ACE_Bounded_Cached_Connect_Strategy () = delete;
+  ACE_Bounded_Cached_Connect_Strategy (ACE_Bounded_Cached_Connect_Strategy const &) = delete;
+  ACE_Bounded_Cached_Connect_Strategy &operator= (ACE_Bounded_Cached_Connect_Strategy const &) = delete;
+  ACE_Bounded_Cached_Connect_Strategy (ACE_Bounded_Cached_Connect_Strategy &&) = delete;
+  ACE_Bounded_Cached_Connect_Strategy &operator= (ACE_Bounded_Cached_Connect_Strategy &&) = delete;
+
   ACE_Bounded_Cached_Connect_Strategy (size_t  max_size,
                                        CACHING_STRATEGY &caching_s,
                                        ACE_Creation_Strategy<SVC_HANDLER> *cre_s = nullptr,
@@ -205,8 +235,7 @@ public:
                                        MUTEX *lock = nullptr,
                                        int delete_lock = 0);
 
-  /// Destructor
-  virtual ~ACE_Bounded_Cached_Connect_Strategy () = default;
+  ~ACE_Bounded_Cached_Connect_Strategy () override = default;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -225,7 +254,7 @@ protected:
 
 protected:
   /// Max items in the cache, used as a bound for the creation of svc_handlers.
-  size_t  max_size_;
+  size_t max_size_;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

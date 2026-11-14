@@ -18,6 +18,7 @@
 #include "orbsvcs/RtecEventChannelAdminS.h"
 
 #include "orbsvcs/Event/EC_Filter.h"
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -58,10 +59,8 @@ public:
   using _var_type = RtecEventChannelAdmin::ProxyPushSupplier_var;
   using _ptr_type = RtecEventChannelAdmin::ProxyPushSupplier_ptr;
 
-  /// Constructor...
   TAO_EC_ProxyPushSupplier (TAO_EC_Event_Channel_Base* event_channel, int validate_connection);
 
-  /// Destructor...
   virtual ~TAO_EC_ProxyPushSupplier ();
 
   /// Activate in the POA
@@ -128,19 +127,19 @@ public:
   CORBA::ULong _decr_refcnt ();
 
   // = The TAO_EC_Filter methods, only push() is implemented...
-  virtual int filter (const RtecEventComm::EventSet &event,
-                      TAO_EC_QOS_Info& qos_info);
-  virtual int filter_nocopy (RtecEventComm::EventSet &event,
-                             TAO_EC_QOS_Info &qos_info);
-  virtual void push (const RtecEventComm::EventSet &event,
-                     TAO_EC_QOS_Info& qos_info);
-  virtual void push_nocopy (RtecEventComm::EventSet &event,
-                            TAO_EC_QOS_Info &qos_info);
-  virtual void clear ();
-  virtual CORBA::ULong max_event_size () const;
-  virtual int can_match (const RtecEventComm::EventHeader &header) const;
-  virtual int add_dependencies (const RtecEventComm::EventHeader &header,
-                                const TAO_EC_QOS_Info &qos_info);
+  int filter (const RtecEventComm::EventSet &event,
+                      TAO_EC_QOS_Info& qos_info) override;
+  int filter_nocopy (RtecEventComm::EventSet &event,
+                             TAO_EC_QOS_Info &qos_info) override;
+  void push (const RtecEventComm::EventSet &event,
+                     TAO_EC_QOS_Info& qos_info) override;
+  void push_nocopy (RtecEventComm::EventSet &event,
+                            TAO_EC_QOS_Info &qos_info) override;
+  void clear () override;
+  CORBA::ULong max_event_size () const override;
+  int can_match (const RtecEventComm::EventHeader &header) const override;
+  int add_dependencies (const RtecEventComm::EventHeader &header,
+                                const TAO_EC_QOS_Info &qos_info) override;
 
 protected:
   /// Set the consumer, used by some implementations to change the
@@ -181,7 +180,7 @@ protected:
   PortableServer::POA_var default_POA_;
 
   /// The filter object
-  TAO_EC_Filter* child_;
+  std::unique_ptr<TAO_EC_Filter> child_;
 
   /// Validate the connection to consumer on connect
   int consumer_validate_connection_;

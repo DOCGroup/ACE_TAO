@@ -148,8 +148,8 @@ TAO_IFR_Server::fini ()
 {
   try
     {
-      this->root_poa_->destroy (1,
-                                1);
+      this->root_poa_->destroy (true,
+                                true);
     }
   catch (CORBA::Exception const &ex)
     {
@@ -320,7 +320,6 @@ TAO_IFR_Server::create_repository ()
   this->ifr_ior_ =
     this->orb_->object_to_string (repo_ref);
 
-
   CORBA::Object_var table_object =
     this->orb_->resolve_initial_references ("IORTable");
 
@@ -486,8 +485,7 @@ TAO_IFR_Service_Utils::int_to_string (CORBA::ULong number)
 void
 TAO_IFR_Service_Utils::valid_container (
     CORBA::DefinitionKind container_kind,
-    CORBA::DefinitionKind contained_kind
-  )
+    CORBA::DefinitionKind contained_kind)
 {
   bool error_flag = false;
 
@@ -559,8 +557,7 @@ TAO_IFR_Service_Utils::pre_exist (
     name_clash_checker checker,
     ACE_Configuration_Section_Key &key,
     TAO_Repository_i *repo,
-    CORBA::DefinitionKind kind
-  )
+    CORBA::DefinitionKind kind)
 {
   TAO_IFR_Service_Utils::id_exists (id,
                                     repo);
@@ -594,8 +591,7 @@ TAO_IFR_Service_Utils::name_exists (
     name_clash_checker checker,
     ACE_Configuration_Section_Key &key,
     TAO_Repository_i *repo,
-    CORBA::DefinitionKind kind
-  )
+    CORBA::DefinitionKind kind)
 {
   int status = 0;
   ACE_TString section_name;
@@ -728,8 +724,7 @@ TAO_IFR_Service_Utils::check_subsection (
     TAO_IFR_Service_Utils::name_clash_checker checker,
     char const *sub_section,
     ACE_Configuration *config,
-    ACE_Configuration_Section_Key &key
-  )
+    ACE_Configuration_Section_Key &key)
 {
   ACE_Configuration_Section_Key sub_key;
   int status =
@@ -778,8 +773,7 @@ TAO_IFR_Service_Utils::valid_creation (
     char const *id,
     name_clash_checker checker,
     ACE_Configuration_Section_Key &key,
-    TAO_Repository_i *repo
-  )
+    TAO_Repository_i *repo)
 {
   TAO_IFR_Service_Utils::valid_container (container_kind,
                                           contained_kind);
@@ -808,8 +802,7 @@ TAO_IFR_Service_Utils::create_common (
     char const *name,
     TAO_IFR_Service_Utils::name_clash_checker checker,
     char const *version,
-    char const *sub_section_name
-  )
+    char const *sub_section_name)
 {
   ACE_TString path;
 
@@ -928,8 +921,7 @@ TAO_IFR_Service_Utils::set_exceptions (
     ACE_Configuration *config,
     ACE_Configuration_Section_Key &key,
     char const *sub_section,
-    CORBA::ExceptionDefSeq const &exceptions
-  )
+    CORBA::ExceptionDefSeq const &exceptions)
 {
   CORBA::ULong length = exceptions.length ();
 
@@ -967,8 +959,7 @@ TAO_IFR_Service_Utils::set_exceptions (
 CORBA::TypeCode_ptr
 TAO_IFR_Service_Utils::gen_valuetype_tc_r (
       ACE_Configuration_Section_Key &key,
-      TAO_Repository_i *repo
-    )
+      TAO_Repository_i *repo)
 {
   ACE_TString name;
   repo->config ()->get_string_value (key,
@@ -1049,8 +1040,7 @@ void
 TAO_IFR_Service_Utils::fill_valuemember_seq (
     CORBA::ValueMemberSeq &vm_seq,
     ACE_Configuration_Section_Key &key,
-    TAO_Repository_i *repo
-  )
+    TAO_Repository_i *repo)
 {
   ACE_Configuration_Section_Key members_key;
   int status =
@@ -1371,9 +1361,7 @@ TAO_IFR_Service_Utils::oid_to_string (PortableServer::ObjectId &oid)
   CORBA::ULong length = oid.length ();
 
   // Copy the data.
-  std::memcpy (oid_string,
-                  oid.get_buffer (),
-                  length);
+  std::memcpy (oid_string, oid.get_buffer (), length);
 
   // Null terminate the string.
   oid_string[length] = '\0';

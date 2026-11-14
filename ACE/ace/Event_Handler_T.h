@@ -14,6 +14,8 @@
 
 #include "ace/Event_Handler.h"
 
+#include <memory>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -78,18 +80,23 @@ public:
 
   /// Initialize the op_handler.
   ACE_Event_Handler_T (T *op_handler,
-                       int delete_handler,
-                       GET_HANDLE get_handle = 0,
-                       IO_HANDLER input = 0,
-                       CL_HANDLER close = 0,
-                       SIG_HANDLER sig = 0,
-                       TO_HANDLER timeout = 0,
-                       IO_HANDLER output = 0,
-                       SET_HANDLE set_handle = 0,
-                       IO_HANDLER except = 0);
+                       bool delete_handler,
+                       GET_HANDLE get_handle = nullptr,
+                       IO_HANDLER input = nullptr,
+                       CL_HANDLER close = nullptr,
+                       SIG_HANDLER sig = nullptr,
+                       TO_HANDLER timeout = nullptr,
+                       IO_HANDLER output = nullptr,
+                       SET_HANDLE set_handle = nullptr,
+                       IO_HANDLER except = nullptr);
 
   /// Close down and delete the <op_handler>
   ~ACE_Event_Handler_T () override;
+
+  ACE_Event_Handler_T (ACE_Event_Handler_T const &) = delete;
+  ACE_Event_Handler_T &operator= (ACE_Event_Handler_T const &) = delete;
+  ACE_Event_Handler_T (ACE_Event_Handler_T &&) = delete;
+  ACE_Event_Handler_T &operator= (ACE_Event_Handler_T &&) = delete;
 
   // = Override all the ACE_Event_Handler methods.
 
@@ -101,7 +108,7 @@ public:
   int handle_exception (ACE_HANDLE fd = ACE_INVALID_HANDLE) override;
   int handle_timeout (const ACE_Time_Value &tv, const void *arg = nullptr) override;
   int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask close_mask) override;
-  int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0) override;
+  int handle_signal (int signum, siginfo_t * = nullptr, ucontext_t * = nullptr) override;
 
   // = Get/set the operations handler.
   T *op_handler ();
@@ -139,9 +146,21 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
+private:
+  struct Op_Handler_Deleter
+  {
+    bool delete_handler {};
+
+    void operator() (T *op_handler) const
+    {
+      if (this->delete_handler)
+        delete op_handler;
+    }
+  };
+
 protected:
-  /// Pointer to the object that handles all the delegated operations.
-  T *op_handler_;
+  /// Can own or borrow the operations handler, according to its deleter.
+  std::unique_ptr<T, Op_Handler_Deleter> op_handler_;
 
   // = Handle input, output, and exception events.
   IO_HANDLER input_handler_;
@@ -156,10 +175,6 @@ protected:
 
   /// Handle signal events.
   SIG_HANDLER sig_handler_;
-
-  /// Keeps track of whether we need to delete the handler in the
-  /// destructor.
-  int delete_handler_;
 
   // = Get/set underlying handle.
   SET_HANDLE set_handle_;

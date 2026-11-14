@@ -18,7 +18,7 @@ TAO_ZIOP_PolicyFactory::create_policy (
   {
     case ZIOP::COMPRESSION_ENABLING_POLICY_ID:
     {
-      ::CORBA::Boolean val;
+      ::CORBA::Boolean val {};
 
       // Extract the value from the any.
       if (!(value >>= CORBA::Any::to_boolean (val)))
@@ -38,7 +38,7 @@ TAO_ZIOP_PolicyFactory::create_policy (
     }
   case ZIOP::COMPRESSOR_ID_LEVEL_LIST_POLICY_ID :
     {
-      ::Compression::CompressorIdLevelList const* val = nullptr;
+      ::Compression::CompressorIdLevelList const* val {};
 
       // Extract the value from the any.
       if (!(value >>= val))
@@ -58,7 +58,7 @@ TAO_ZIOP_PolicyFactory::create_policy (
     }
   case ZIOP::COMPRESSION_LOW_VALUE_POLICY_ID:
     {
-      ::CORBA::ULong val;
+      ::CORBA::ULong val {};
 
       // Extract the value from the any.
       if (!(value >>= val))
@@ -78,7 +78,7 @@ TAO_ZIOP_PolicyFactory::create_policy (
     }
   case ZIOP::COMPRESSION_MIN_RATIO_POLICY_ID:
     {
-      ::Compression::CompressionRatio val;
+      ::Compression::CompressionRatio val {};
 
       // Extract the value from the any.
       if (!(value >>= val))
@@ -104,7 +104,7 @@ TAO_ZIOP_PolicyFactory::create_policy (
 CORBA::Policy_ptr
 TAO_ZIOP_PolicyFactory::_create_policy (CORBA::PolicyType type)
 {
-  CORBA::Policy_ptr policy = CORBA::Policy_ptr ();
+  CORBA::Policy_ptr policy {};
 
   switch (type)
   {
@@ -135,7 +135,6 @@ TAO_ZIOP_PolicyFactory::_create_policy (CORBA::PolicyType type)
   }
   throw ::CORBA::PolicyError (CORBA::BAD_POLICY_TYPE);
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

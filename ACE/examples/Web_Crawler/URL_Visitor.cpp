@@ -1,8 +1,9 @@
+#include <utility>
+
 #include "ace/OS_NS_string.h"
 #include "ace/Truncate.h"
 #include "URL_Visitor.h"
 #include "Command_Processor.h"
-
 
 URL_Processing_Strategy::URL_Processing_Strategy (URL &url,
                                                   URL_Iterator &iterator)
@@ -72,13 +73,13 @@ HTTP_Header_Processing_Strategy::execute ()
           ACE_CString status = line.substring (status_index + 9, //HTTP/1.1 200
                                                3);
 
-           URL_Status *url_status = nullptr;
+          URL_Status *url_status {};
           ACE_NEW_RETURN (url_status,
                           URL_Status,
                           0);
-          Auto_Destroyer<URL_Status> url_status_ptr (url_status);
+          Destroyable_Unique_Ptr<URL_Status> url_status_ptr (url_status);
           url_status_ptr->status (ACE_OS::atoi (status.c_str ()));
-          this->url_.reply_status (**url_status_ptr);
+          this->url_.reply_status (*url_status_ptr);
           // Invalid url.
           if (url_status_ptr->status () != 200)
             return -1;
@@ -106,12 +107,12 @@ HTML_Body_Validation_Strategy::HTML_Body_Validation_Strategy (URL &url,
 int
 HTML_Body_Validation_Strategy::execute ()
 {
-  char host_name_buf[BUFSIZ + 1];
+  char host_name_buf[BUFSIZ + 1] {};
   ACE_CString host_name (host_name_buf);
   host_name.set (url_.url_addr ().get_host_name (),1);
 
   // All to facilitate relative paths
-  char temp[BUFSIZ + 1];
+  char temp[BUFSIZ + 1] {};
   ACE_CString prev_location (temp);
 
   prev_location.set (ACE_TEXT_ALWAYS_CHAR (this->url_.url_addr ().get_path_name ()),
@@ -158,24 +159,28 @@ HTML_Body_Validation_Strategy::execute ()
         url = url + "/";
 
       // Create the new URL address.
-      ACE_URL_Addr *url_addr;
+      ACE_URL_Addr *url_addr {};
       ACE_NEW_RETURN (url_addr,
                       ACE_URL_Addr,
                       0);
-      Auto_Destroyer<ACE_URL_Addr> url_addr_ptr (url_addr);
+      Destroyable_Unique_Ptr<ACE_URL_Addr> url_addr_ptr (url_addr);
       if (url_addr_ptr->string_to_addr (ACE_TEXT_CHAR_TO_TCHAR (url.c_str ())) == 0)
         {
-          HTTP_URL *http_url;
+          HTTP_URL *http_url {};
           ACE_NEW_RETURN (http_url,
-                          HTTP_URL (**url_addr_ptr,
+                          HTTP_URL (*url_addr_ptr,
                                     dynamic_cast<HTTP_URL *> (&this->url_)),
                           0);
-          URL_Command *url_command;
+          std::unique_ptr<HTTP_URL> http_url_ptr (http_url);
+          URL_Command *url_command {};
           ACE_NEW_RETURN (url_command,
-                          URL_Command (http_url),
+                          URL_Command (std::move (http_url_ptr)),
                           0);
+          Destroyable_Unique_Ptr<URL_Command> url_command_ptr (url_command);
 
-          OPTIONS::instance ()->command_processor ()->insert (url_command);
+          if (OPTIONS::instance ()->command_processor ()->insert (url_command) != 0)
+            ACE_ERROR_RETURN ((LM_ERROR, "insert URL command failed\n"), -1);
+          url_command_ptr.release ();
         }
     }
   return 0;
@@ -184,7 +189,7 @@ HTML_Body_Validation_Strategy::execute ()
 URL_Iterator *
 URL_Validation_Visitation_Strategy_Factory::make_header_iterator ()
 {
-  URL_Iterator *i;
+  URL_Iterator *i {};
   ACE_NEW_RETURN (i,
                   HTTP_Header_Iterator (*this->url_),
                   nullptr);
@@ -194,7 +199,7 @@ URL_Validation_Visitation_Strategy_Factory::make_header_iterator ()
 URL_Iterator *
 URL_Validation_Visitation_Strategy_Factory::make_body_iterator ()
 {
-  URL_Iterator *i;
+  URL_Iterator *i {};
   ACE_NEW_RETURN (i,
                   HTML_Body_Iterator (*this->url_),
                   nullptr);
@@ -204,7 +209,7 @@ URL_Validation_Visitation_Strategy_Factory::make_body_iterator ()
 URL_Processing_Strategy *
 URL_Validation_Visitation_Strategy_Factory::make_header_strategy (URL_Iterator &iterator)
 {
-  URL_Processing_Strategy *ps;
+  URL_Processing_Strategy *ps {};
   ACE_NEW_RETURN (ps,
                   HTTP_Header_Processing_Strategy (*this->url_,
                                                    iterator),
@@ -215,7 +220,7 @@ URL_Validation_Visitation_Strategy_Factory::make_header_strategy (URL_Iterator &
 URL_Processing_Strategy *
 URL_Validation_Visitation_Strategy_Factory::make_body_strategy (URL_Iterator &iterator)
 {
-  URL_Processing_Strategy *ps;
+  URL_Processing_Strategy *ps {};
   ACE_NEW_RETURN (ps,
                   HTML_Body_Validation_Strategy (*this->url_,
                                                  iterator,
@@ -236,26 +241,16 @@ URL_Visitor::~URL_Visitor () = default;
 
 URL_Validation_Visitor::URL_Validation_Visitor ()
 {
-  ACE_NEW (this->caching_connect_strategy_,
-           CACHED_CONNECT_STRATEGY (this->caching_strategy_));
-  ACE_NEW (this->strat_connector_,
-           STRATEGY_CONNECTOR(nullptr,
-                           &creation_strategy_,
-                           caching_connect_strategy_,
-                           &activation_strategy_));
-  if (strat_connector_ == nullptr)
-    ACE_ERROR ((LM_ERROR,
-                "%p %s\n"
-                "strategy connector creation failed"));
-
+  this->caching_connect_strategy_ =
+    std::make_unique<CACHED_CONNECT_STRATEGY> (this->caching_strategy_);
+  this->strat_connector_ =
+    std::make_unique<STRATEGY_CONNECTOR> (nullptr,
+                                          &this->creation_strategy_,
+                                          this->caching_connect_strategy_.get (),
+                                          &this->activation_strategy_);
 }
 
-URL_Validation_Visitor::~URL_Validation_Visitor ()
-{
-  this->strat_connector_ = nullptr;
-  if (this->caching_connect_strategy_ != nullptr)
-    delete this->caching_connect_strategy_;
-}
+URL_Validation_Visitor::~URL_Validation_Visitor () = default;
 
 URL_Validation_Visitor::URL_CACHE &
 URL_Validation_Visitor::url_cache ()
@@ -291,7 +286,7 @@ URL_Validation_Visitor::make_visitation_strategy_factory (URL &url)
   // Since this is HTTP 1.1 we'll need to establish a connection
   // only once. Trying for relative paths.
 
-  if (url.stream ().open (this->strat_connector_,
+  if (url.stream ().open (this->strat_connector_.get (),
                           url.url_addr ()) == -1)
     return nullptr;
 
@@ -315,7 +310,7 @@ URL_Validation_Visitor::make_visitation_strategy_factory (URL &url)
   // HTTP URL.
   else
     {
-      URL_Visitation_Strategy_Factory *vs;
+      URL_Visitation_Strategy_Factory *vs {};
       ACE_NEW_RETURN (vs,
                       URL_Validation_Visitation_Strategy_Factory (&url,
                                                                   *this),
@@ -327,7 +322,6 @@ URL_Validation_Visitor::make_visitation_strategy_factory (URL &url)
 int
 URL_Validation_Visitor::destroy ()
 {
-  delete this->strat_connector_;
   // Commit suicide.
   delete this;
   return 0;
@@ -339,22 +333,22 @@ URL_Validation_Visitor::visit (HTTP_URL &http_url)
   int result = this->in_cache (http_url.url_addr ());
   if (result == 0)
     {
-      Auto_Destroyer <URL_Visitation_Strategy_Factory> vs (this->make_visitation_strategy_factory (http_url));
+      Destroyable_Unique_Ptr <URL_Visitation_Strategy_Factory> vs (this->make_visitation_strategy_factory (http_url));
 
-      if (*vs == nullptr)
+      if (!vs)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "%p\n",
                            "make_visitation_strategy_factory"),
                           -1);
 
-      Auto_Destroyer <URL_Iterator> ihs (vs->make_header_iterator ());
-      if (*ihs == nullptr)
+      Destroyable_Unique_Ptr <URL_Iterator> ihs (vs->make_header_iterator ());
+      if (!ihs)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "%p\n",
                            "make_header_iterator"),
                           -1);
-      Auto_Destroyer <URL_Processing_Strategy> phs (vs->make_header_strategy (**ihs));
-      if (*phs == nullptr)
+      Destroyable_Unique_Ptr <URL_Processing_Strategy> phs (vs->make_header_strategy (*ihs));
+      if (!phs)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "%p\n",
                            "make_header_strategy"),
@@ -381,18 +375,18 @@ URL_Validation_Visitor::visit (HTTP_URL &http_url)
         return 0;
 
       // Get back if the recurse option isnt set.
-      if (OPTIONS::instance ()->recurse () != 1)
+      if (!OPTIONS::instance ()->recurse ())
         return 0;
 
-      Auto_Destroyer <URL_Iterator> is (vs->make_body_iterator ());
-      if (*is == nullptr)
+      Destroyable_Unique_Ptr <URL_Iterator> is (vs->make_body_iterator ());
+      if (!is)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "%p\n",
                            "make_body_iterator"),
                           -1);
 
-      Auto_Destroyer <URL_Processing_Strategy> ps (vs->make_body_strategy (**is));
-      if (*ps == nullptr)
+      Destroyable_Unique_Ptr <URL_Processing_Strategy> ps (vs->make_body_strategy (*is));
+      if (!ps)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "%p\n",
                            "make_body_strategy"),
@@ -424,7 +418,7 @@ URL_Download_Visitation_Strategy_Factory::make_header_iterator ()
 URL_Iterator *
 URL_Download_Visitation_Strategy_Factory::make_body_iterator ()
 {
-  URL_Iterator *i;
+  URL_Iterator *i {};
   ACE_NEW_RETURN (i,
                   URL_Download_Iterator (*this->url_),
                   nullptr);
@@ -443,7 +437,7 @@ URL_Download_Visitation_Strategy_Factory::make_header_strategy (URL_Iterator &it
 URL_Processing_Strategy *
 URL_Download_Visitation_Strategy_Factory::make_body_strategy (URL_Iterator &iterator)
 {
-  URL_Processing_Strategy *ps;
+  URL_Processing_Strategy *ps {};
   ACE_NEW_RETURN (ps,
                   URL_Download_Strategy (*this->url_,
                                          iterator),
@@ -484,7 +478,7 @@ URL_Download_Visitor::make_visitation_strategy_factory (URL &url)
   // @@ Here's where we could check to see if the <url> was HTTP or
   // FTP, etc.  But for now we'll just assume that everything is an
   // HTTP URL.
-  URL_Visitation_Strategy_Factory *vs;
+  URL_Visitation_Strategy_Factory *vs {};
   ACE_NEW_RETURN (vs,
                   URL_Download_Visitation_Strategy_Factory (&url),
                   nullptr);
@@ -502,23 +496,23 @@ URL_Download_Visitor::destroy ()
 int
 URL_Download_Visitor::visit (HTTP_URL &http_url)
 {
-  Auto_Destroyer <URL_Visitation_Strategy_Factory> vs (this->make_visitation_strategy_factory (http_url));
+  Destroyable_Unique_Ptr <URL_Visitation_Strategy_Factory> vs (this->make_visitation_strategy_factory (http_url));
 
-  if (*vs == nullptr)
+  if (!vs)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "make_visitation_strategy_factory"),
                       -1);
 
-  Auto_Destroyer <URL_Iterator> is (vs->make_body_iterator ());
-  if (*is == nullptr)
+  Destroyable_Unique_Ptr <URL_Iterator> is (vs->make_body_iterator ());
+  if (!is)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "make_body_iterator"),
                       -1);
 
-  Auto_Destroyer <URL_Processing_Strategy> ps (vs->make_body_strategy (**is));
-  if (*ps == nullptr)
+  Destroyable_Unique_Ptr <URL_Processing_Strategy> ps (vs->make_body_strategy (*is));
+  if (!ps)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "make_body_strategy"),

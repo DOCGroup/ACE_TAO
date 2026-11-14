@@ -19,10 +19,14 @@
 class Event_Handler : public ACE_Event_Handler
 {
 public:
-  Event_Handler (ACE_Reactor &reactor);
-  int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
+  explicit Event_Handler (ACE_Reactor &reactor);
+  Event_Handler (Event_Handler const &) = delete;
+  Event_Handler (Event_Handler &&) = delete;
+  Event_Handler &operator= (Event_Handler const &) = delete;
+  Event_Handler &operator= (Event_Handler &&) = delete;
+  int handle_signal (int signum, siginfo_t * = nullptr, ucontext_t * = nullptr) override;
   int handle_close (ACE_HANDLE handle,
-                    ACE_Reactor_Mask close_mask);
+                    ACE_Reactor_Mask close_mask) override;
 };
 
 Event_Handler::Event_Handler (ACE_Reactor &reactor)
@@ -39,14 +43,17 @@ int
 Event_Handler::handle_signal (int, siginfo_t *, ucontext_t *)
 {
   ACE_TCHAR buffer[BUFSIZ];
-  int result = ACE_OS::read (ACE_STDIN, buffer, sizeof buffer);
-  buffer[result] = '\0';
+  int const result = ACE_OS::read (ACE_STDIN,
+                                  buffer,
+                                  sizeof buffer - sizeof buffer[0]);
 
   if (result <= 0)
     {
       this->reactor ()->close ();
       ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_OS::read"), -1);
     }
+
+  buffer[result] = ACE_TEXT ('\0');
 
   if (ACE_OS::strcmp (ACE_TEXT("quit\r\n"), buffer) == 0)
     this->reactor ()->close ();

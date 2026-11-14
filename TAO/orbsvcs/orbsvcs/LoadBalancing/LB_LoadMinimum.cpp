@@ -10,7 +10,8 @@
 #include "tao/ORB_Constants.h"
 
 #include "ace/Null_Mutex.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
+#include <new>
 
 #if !defined (__ACE_INLINE__)
 #include "orbsvcs/LoadBalancing/LB_LoadMinimum.inl"
@@ -29,19 +30,24 @@ TAO_LB_LoadMinimum::TAO_LB_LoadMinimum (PortableServer::POA_ptr poa)
   // and lock are only needed if dampening is enabled, i.e. non-zero.
   if (!ACE::is_equal (this->dampening_, 0.0f))
     {
-      ACE_NEW (this->load_map_, TAO_LB_LoadMap (TAO_PG_MAX_LOCATIONS));
+      this->load_map_.reset (new (std::nothrow) TAO_LB_LoadMap (TAO_PG_MAX_LOCATIONS));
+      if (!this->load_map_)
+        {
+          errno = ENOMEM;
+          return;
+        }
 
-      ACE_NEW (this->lock_, TAO_SYNCH_MUTEX);
+      this->lock_.reset (new (std::nothrow) TAO_SYNCH_MUTEX);
+      if (!this->lock_)
+        {
+          this->load_map_.reset ();
+          errno = ENOMEM;
+          return;
+        }
     }
 
   // Initialize the random load balancing strategy.
   TAO_LB_Random::init ();
-}
-
-TAO_LB_LoadMinimum::~TAO_LB_LoadMinimum ()
-{
-  delete this->load_map_;
-  delete this->lock_;
 }
 
 char *
@@ -53,7 +59,7 @@ TAO_LB_LoadMinimum::name ()
 CosLoadBalancing::Properties *
 TAO_LB_LoadMinimum::get_properties ()
 {
-  CosLoadBalancing::Properties * props = nullptr;
+  CosLoadBalancing::Properties * props {};
   ACE_NEW_THROW_EX (props,
                     CosLoadBalancing::Properties (this->properties_),
                     CORBA::NO_MEMORY (
@@ -97,7 +103,7 @@ TAO_LB_LoadMinimum::push_loads (
     {
       ACE_GUARD (TAO_SYNCH_MUTEX, guard, *this->lock_);
 
-      TAO_LB_LoadMap::ENTRY * entry = nullptr;
+      TAO_LB_LoadMap::ENTRY * entry {};
       if (this->load_map_->find (the_location, entry) == 0)
         {
           CosLoadBalancing::Load & previous_load = entry->int_id_;
@@ -155,7 +161,6 @@ TAO_LB_LoadMinimum::get_loads (CosLoadBalancing::LoadManager_ptr load_manager,
 
   return loads._retn ();
 }
-
 
 CORBA::Object_ptr
 TAO_LB_LoadMinimum::next_member (
@@ -239,7 +244,7 @@ TAO_LB_LoadMinimum::analyze_loads (
 
   // Iterate through the entire location list to determine
   // the average load of all the locations
-  for (CORBA::ULong i = 0; i < len; ++i)
+  for (CORBA::ULong i {}; i < len; ++i)
     {
       try
         {
@@ -289,7 +294,7 @@ TAO_LB_LoadMinimum::analyze_loads (
 
   // Iterate through the entire location list to determine
   // the location where the load has to be shed.
-  for (CORBA::ULong j = 0; j < len; ++j)
+  for (CORBA::ULong j {}; j < len; ++j)
     {
       try
         {
@@ -368,15 +373,15 @@ TAO_LB_LoadMinimum::get_location (
   CORBA::Float min_load = FLT_MAX;  // Start out with the largest
                                     // positive value.
 
-  CORBA::ULong location_index = 0;
-  CORBA::Boolean found_location = 0;
-  CORBA::Boolean found_load = 0;
+  CORBA::ULong location_index {};
+  CORBA::Boolean found_location {};
+  CORBA::Boolean found_load {};
 
   const CORBA::ULong len = locations.length ();
 
   // Iterate through the entire location list to find the least loaded
   // of them.
-  for (CORBA::ULong i = 0; i < len; ++i)
+  for (CORBA::ULong i {}; i < len; ++i)
     {
       try
         {
@@ -387,7 +392,7 @@ TAO_LB_LoadMinimum::get_location (
           CosLoadBalancing::LoadList_var current_loads =
             load_manager->get_loads (loc);
 
-          found_load = 1;
+          found_load = true;
 
           CosLoadBalancing::Load load;
           load.value = 0.0;
@@ -454,7 +459,7 @@ TAO_LB_LoadMinimum::get_location (
                         {
                           min_load = load.value;
                           location_index = i;
-                          found_location = 1;
+                          found_location = true;
 
 //                           ORBSVCS_DEBUG ((LM_DEBUG,
 //                                       "** NEW MIN_LOAD == %f\n",
@@ -470,7 +475,7 @@ TAO_LB_LoadMinimum::get_location (
                     {
                       min_load = load.value;
                       location_index = i;
-                      found_location = 1;
+                      found_location = true;
 
 //                       ORBSVCS_DEBUG ((LM_DEBUG,
 //                                   "***** NEW MIN_LOAD == %f\n",
@@ -481,7 +486,7 @@ TAO_LB_LoadMinimum::get_location (
                 {
                   min_load = load.value;
                   location_index = i;
-                  found_location = 1;
+                  found_location = true;
 
 //                   ORBSVCS_DEBUG ((LM_DEBUG,
 //                               "NEW MIN_LOAD == %f\n",
@@ -529,10 +534,10 @@ TAO_LB_LoadMinimum::init (PortableGroup::Properties const & props)
   CORBA::Float per_balance_load = TAO_LB::LM_DEFAULT_PER_BALANCE_LOAD;
 
   CORBA::ULong const len = props.length ();
-  for (CORBA::ULong i = 0; i < len; ++i)
+  for (CORBA::ULong i {}; i < len; ++i)
     {
       PortableGroup::Property const & property = props[i];
-      if (ACE_OS::strcmp (property.nam[0].id.in (),
+      if (std::strcmp (property.nam[0].id.in (),
                           "org.omg.CosLoadBalancing.Strategy.LoadMinimum.Tolerance") == 0)
         {
           this->extract_float_property (property,
@@ -543,7 +548,7 @@ TAO_LB_LoadMinimum::init (PortableGroup::Properties const & props)
             throw PortableGroup::InvalidProperty (property.nam, property.val);
         }
 
-      else if (ACE_OS::strcmp (property.nam[0].id.in (),
+      else if (std::strcmp (property.nam[0].id.in (),
                                "org.omg.CosLoadBalancing.Strategy.LoadMinimum.Dampening") == 0)
         {
           this->extract_float_property (property,
@@ -554,7 +559,7 @@ TAO_LB_LoadMinimum::init (PortableGroup::Properties const & props)
             throw PortableGroup::InvalidProperty (property.nam, property.val);
         }
 
-      else if (ACE_OS::strcmp (property.nam[0].id.in (),
+      else if (std::strcmp (property.nam[0].id.in (),
                                "org.omg.CosLoadBalancing.Strategy.LoadMinimum.PerBalanceLoad") == 0)
         {
           this->extract_float_property (property,

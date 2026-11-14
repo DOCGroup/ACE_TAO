@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #ifndef _CONCURRENCY_SERVER_H
 #define _CONCURRENCY_SERVER_H
 
@@ -22,7 +21,6 @@
 #include "orbsvcs/CosConcurrencyControlC.h"
 #include "orbsvcs/Concurrency/CC_LockSetFactory.h"
 #include "orbsvcs/Concurrency/concurrency_serv_export.h"
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -38,16 +36,19 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Concurrency_Serv_Export TAO_Concurrency_Server
 {
 public:
-  ///Default constructor.
-  TAO_Concurrency_Server ();
+  TAO_Concurrency_Server () = default;
 
   /// Takes the POA under which to register the Concurrency Service
   /// implementation object.
   TAO_Concurrency_Server (CORBA::ORB_ptr orb,
                           PortableServer::POA_ptr poa);
 
-  /// Destructor.
-  ~TAO_Concurrency_Server ();
+  ~TAO_Concurrency_Server () = default;
+
+  TAO_Concurrency_Server (TAO_Concurrency_Server const &) = delete;
+  TAO_Concurrency_Server &operator = (TAO_Concurrency_Server const &) = delete;
+  TAO_Concurrency_Server (TAO_Concurrency_Server &&) = delete;
+  TAO_Concurrency_Server &operator = (TAO_Concurrency_Server &&) = delete;
 
   /// Initialize the concurrency server under the given ORB and POA.
   CORBA::Object_ptr init (CORBA::ORB_ptr orb,
@@ -64,7 +65,7 @@ private:
   CC_LockSetFactory lock_set_factory_;
 
   /// The POA which the lock set factory servant was registered.
-  PortableServer::POA_var poa_;
+  PortableServer::POA_var poa_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

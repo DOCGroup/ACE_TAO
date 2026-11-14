@@ -7,7 +7,7 @@ Sleeper_i::Sleeper_i (CORBA::ORB_ptr orb)
 }
 
 void
-Sleeper_i::delay(CORBA::Short sec)
+Sleeper_i::delay (CORBA::Short sec)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Sleeper_i::delay called\n")));
   ACE_OS::sleep (sec);
@@ -30,17 +30,17 @@ Middle_i::Middle_i (CORBA::ORB_ptr orb, Test::Sleeper_ptr s)
 }
 
 void
-Middle_i::call_delay(CORBA::Short sec)
+Middle_i::call_delay (CORBA::Short sec)
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) Middle_i::delay called\n")));
 
-  ACE_hthread_t thr;
+  ACE_hthread_t thr {};
   ACE_Thread::self (thr);
-  bool recursive = false;
+  bool recursive {};
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
-    int result = this->threads_.insert (thr);
+    int const result = this->threads_.insert (thr);
     ACE_ASSERT (result != -1);
     if (result == 1)
       {
@@ -52,12 +52,12 @@ Middle_i::call_delay(CORBA::Short sec)
       }
   }
 
-  this->sleeper_->delay(sec);
+  this->sleeper_->delay (sec);
 
   if (!recursive)
     {
       ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
-      int result = this->threads_.remove (thr);
+      int const result = this->threads_.remove (thr);
       if (result == -1)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%P|%t) Middle_i::call_delay, ")
@@ -67,13 +67,13 @@ Middle_i::call_delay(CORBA::Short sec)
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT("(%P|%t) Middle_i::delay returning recursive = %d\n"),
+              ACE_TEXT ("(%P|%t) Middle_i::delay returning recursive = %d\n"),
               recursive));
 }
 
 void
 Middle_i::shutdown ()
 {
-  sleeper_->shutdown ();
+  this->sleeper_->shutdown ();
   this->orb_->shutdown (false);
 }

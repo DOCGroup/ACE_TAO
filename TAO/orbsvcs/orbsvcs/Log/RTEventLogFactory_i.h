@@ -28,6 +28,7 @@
 
 #include "orbsvcs/Log/RTEventLog_i.h"
 #include "orbsvcs/Log/rteventlog_serv_export.h"
+#include <memory>
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -51,10 +52,8 @@ class TAO_RTEventLog_Serv_Export TAO_RTEventLogFactory_i :
 public:
   //= Initialization and termination code.
 
-  /// Constructor.
   TAO_RTEventLogFactory_i ();
 
-  /// Destructor.
   ~TAO_RTEventLogFactory_i () override;
 
   /// Initialise the EventChannel and obtain a
@@ -82,8 +81,7 @@ public:
         DsLogAdmin::CapacityAlarmThresholdList const & thresholds) override;
 
    // = Implementation of the RtecEventChannelAdmin::ConsumerAdmin methods.
-  RtecEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier (
-      );
+  RtecEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier () override;
 
 protected:
   CORBA::RepositoryId create_repositoryid () override;
@@ -94,10 +92,10 @@ protected:
   DsLogAdmin::LogMgr_var log_mgr_;
 
   /// The event channel used for log generated events.
-  TAO_EC_Event_Channel * impl;
+  std::unique_ptr<TAO_EC_Event_Channel> impl;
 
   /// The object used for log generated events.
-  TAO_RTEventLogNotification * notifier_;
+  std::unique_ptr<TAO_RTEventLogNotification> notifier_;
 
   /// EventChannel used to obtain the ConsumerAdmin.
   RtecEventChannelAdmin::EventChannel_var event_channel_;

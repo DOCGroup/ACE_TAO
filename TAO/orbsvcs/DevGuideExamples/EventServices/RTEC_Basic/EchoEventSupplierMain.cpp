@@ -10,6 +10,7 @@
 #include "orbsvcs/CosNamingC.h"
 
 #include <iostream>
+
 constexpr RtecEventComm::EventSourceID MY_SOURCE_ID = ACE_ES_EVENT_SOURCE_ANY + 1;
 constexpr RtecEventComm::EventType MY_EVENT_TYPE = ACE_ES_EVENT_UNDEFINED + 1;
 
@@ -20,43 +21,45 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   try
   {
     // Initialize the ORB.
-    CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
+    CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
     // Find the Naming Service.
-    CORBA::Object_var obj = orb->resolve_initial_references("NameService");
-    CosNaming::NamingContextExt_var root_context = CosNaming::NamingContextExt::_narrow(obj.in());
+    CORBA::Object_var obj = orb->resolve_initial_references ("NameService");
+    CosNaming::NamingContextExt_var const root_context =
+      CosNaming::NamingContextExt::_narrow (obj.in ());
 
     // Get the Event Channel using Naming Services
-    obj = root_context->resolve_str("EventService");
+    obj = root_context->resolve_str ("EventService");
 
     // Downcast the object reference to an EventChannel reference.
-    RtecEventChannelAdmin::EventChannel_var ec =
-      RtecEventChannelAdmin::EventChannel::_narrow(obj.in());
-    if (CORBA::is_nil(ec.in())) {
-      std::cerr << "Could not resolve EchoEventChannel." << std::endl;
-      return 1;
-    }
+    RtecEventChannelAdmin::EventChannel_var const ec =
+      RtecEventChannelAdmin::EventChannel::_narrow (obj.in ());
+    if (CORBA::is_nil (ec.in ()))
+      {
+        std::cerr << "Could not resolve EchoEventChannel." << std::endl;
+        return 1;
+      }
 
     // Get a SupplierAdmin object from the EventChannel.
-    RtecEventChannelAdmin::SupplierAdmin_var admin = ec->for_suppliers();
+    RtecEventChannelAdmin::SupplierAdmin_var const admin = ec->for_suppliers ();
 
     // Get a ProxyPushConsumer from the SupplierAdmin.
-    RtecEventChannelAdmin::ProxyPushConsumer_var consumer =
-                                        admin->obtain_push_consumer();
+    RtecEventChannelAdmin::ProxyPushConsumer_var const consumer =
+      admin->obtain_push_consumer ();
 
     // Get the RootPOA.
-    obj = orb->resolve_initial_references("RootPOA");
-    PortableServer::POA_var poa = PortableServer::POA::_narrow(obj.in());
+    obj = orb->resolve_initial_references ("RootPOA");
+    PortableServer::POA_var const poa = PortableServer::POA::_narrow (obj.in ());
 
     // Instantiate an EchoEventSupplier_i servant.
-    PortableServer::Servant_var<EchoEventSupplier_i> servant =
-      new EchoEventSupplier_i(orb.in());
+    PortableServer::Servant_var<EchoEventSupplier_i> const servant =
+      new EchoEventSupplier_i (orb.in ());
 
     // Register it with the RootPOA.
-    PortableServer::ObjectId_var oid = poa->activate_object(servant.in());
-    CORBA::Object_var supplier_obj = poa->id_to_reference(oid.in());
-    RtecEventComm::PushSupplier_var supplier =
-      RtecEventComm::PushSupplier::_narrow(supplier_obj.in());
+    PortableServer::ObjectId_var const oid = poa->activate_object (servant.in ());
+    CORBA::Object_var const supplier_obj = poa->id_to_reference (oid.in ());
+    RtecEventComm::PushSupplier_var const supplier =
+      RtecEventComm::PushSupplier::_narrow (supplier_obj.in ());
 
     // Publish the events the supplier provides.
     ACE_SupplierQOS_Factory qos;
@@ -70,11 +73,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                      qos.get_SupplierQOS ());
 
     // Activate the POA via its POAManager.
-    PortableServer::POAManager_var poa_manager = poa->the_POAManager();
-    poa_manager->activate();
+    PortableServer::POAManager_var const poa_manager = poa->the_POAManager ();
+    poa_manager->activate ();
 
     // Create an event (just a string in this case).
-    CORBA::String_var const eventData = CORBA::string_dup("Hello, world.");
+    CORBA::String_var const eventData = CORBA::string_dup ("Hello, world.");
 
     // Create an event set for one event
     RtecEventComm::EventSet events (1);
@@ -89,20 +92,18 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     std::cout << "Supplier starting sending of events" << std::endl;
 
-    while (true) {
-      consumer->push (events);
-      ACE_Time_Value tv(0, 1000 * EVENT_DELAY_MS);
-      orb->run(tv);
+    while (true)
+      {
+        consumer->push (events);
+        ACE_Time_Value tv (0, 1000 * EVENT_DELAY_MS);
+        orb->run (tv);
+      }
+
+  }
+  catch (CORBA::Exception const &ex)
+    {
+      std::cerr << "Supplier::main() Caught CORBA::Exception" << std::endl << ex << std::endl;
     }
-
-    orb->destroy();
-
-    return 0;
-  }
-  catch (CORBA::Exception const & ex)
-  {
-    std::cerr << "Supplier::main() Caught CORBA::Exception" << std::endl << ex << std::endl;
-  }
 
   return 1;
 }

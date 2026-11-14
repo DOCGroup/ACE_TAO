@@ -44,19 +44,16 @@ template <class SVC_HANDLER>
 class TAO_Connect_Creation_Strategy : public ACE_Creation_Strategy<SVC_HANDLER>
 {
 public:
-  /// Constructor.
   TAO_Connect_Creation_Strategy (ACE_Thread_Manager * = nullptr,
                                  TAO_ORB_Core* orb_core = nullptr);
 
   /// Makes TAO_*_Client_Connection_Handlers
   int make_svc_handler (SVC_HANDLER *&sh) override;
 
-
 private:
   /// Pointer to the ORB_Core on which we are activated
   TAO_ORB_Core * const orb_core_;
 };
-
 
 /**
  * @class TAO_Connect_Concurrency_Strategy
@@ -72,13 +69,11 @@ class TAO_Connect_Concurrency_Strategy :
   public ACE_Concurrency_Strategy<SVC_HANDLER>
 {
 public:
-  /// Constructor.
-  TAO_Connect_Concurrency_Strategy (TAO_ORB_Core *orb_core);
-
+  explicit TAO_Connect_Concurrency_Strategy (TAO_ORB_Core *orb_core);
 
   /// Activates the Svc_Handler, and if the right wait strategy is in
   /// use, registers the handle with the reactor.
-  int activate_svc_handler (SVC_HANDLER *svc_handler, void *arg);
+  int activate_svc_handler (SVC_HANDLER *svc_handler, void *arg) override;
 
 private:
   /// Pointer to the ORB Core.

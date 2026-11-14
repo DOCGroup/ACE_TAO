@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #include "ace/Singleton.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -24,12 +23,19 @@
 class TSS_Data
 {
 public:
-  void *data () { return this->data_; }
+  TSS_Data () = default;
+
+  TSS_Data (TSS_Data const &) = delete;
+  TSS_Data (TSS_Data &&) = delete;
+  TSS_Data &operator= (TSS_Data const &) = delete;
+  TSS_Data &operator= (TSS_Data &&) = delete;
+
+  void *data () const { return this->data_; }
   void data (void *v) { this->data_ = v; }
 
 private:
   // = data_ will be thread-specific data so it doesn't need a lock.
-  void *data_;
+  void *data_ {};
 };
 
 using TSS_DATA = ACE_TSS_Singleton<TSS_Data, ACE_SYNCH_MUTEX>;

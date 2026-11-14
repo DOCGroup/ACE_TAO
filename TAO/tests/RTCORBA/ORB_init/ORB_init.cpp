@@ -1,3 +1,5 @@
+#include <vector>
+
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/ORB.h"
 #include "ace/Get_Opt.h"
@@ -8,14 +10,11 @@ test_multiple_orbs (const char *test_name,
                     int argc,
                     ACE_TCHAR *argv[],
                     int iterations,
-                    int rt_orb,
-                    int destroy)
+                    bool rt_orb,
+                    bool destroy)
 {
-  CORBA::ORB_var *orbs =
-    new CORBA::ORB_var[iterations];
-
-  RTCORBA::RTORB_var *rt_orbs =
-    new RTCORBA::RTORB_var[iterations];
+  std::vector<CORBA::ORB_var> orbs (iterations);
+  std::vector<RTCORBA::RTORB_var> rt_orbs (iterations);
 
   try
     {
@@ -59,18 +58,15 @@ test_multiple_orbs (const char *test_name,
       return -1;
     }
 
-  delete[] rt_orbs;
-  delete[] orbs;
-
   return 0;
 }
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int iterations = 5;
-  int rt_orb = 0;
-  int destroy = 0;
+  int const iterations = 5;
+  bool rt_orb = false;
+  bool destroy = false;
 
   int result =
     test_multiple_orbs ("non-RT ORBs, disable destroy",
@@ -81,8 +77,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                         destroy);
   ACE_ASSERT (result == 0);
 
-  destroy = 1;
-  rt_orb = 0;
+  destroy = true;
+  rt_orb = false;
 
   result =
     test_multiple_orbs ("non-RT ORBs, enable destroy",
@@ -93,8 +89,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                         destroy);
   ACE_ASSERT (result == 0);
 
-  destroy = 0;
-  rt_orb = 1;
+  destroy = false;
+  rt_orb = true;
 
   result =
     test_multiple_orbs ("RT ORBs, disable destroy",
@@ -105,8 +101,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                         destroy);
   ACE_ASSERT (result == 0);
 
-  destroy = 1;
-  rt_orb = 1;
+  destroy = true;
+  rt_orb = true;
 
   result =
     test_multiple_orbs ("RT ORBs, enable destroy",

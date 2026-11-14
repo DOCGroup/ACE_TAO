@@ -75,15 +75,12 @@ class TAO_IDL_FE_Export Identifier
 {
 public:
   Identifier () = default;
-  // Default Constructor.
 
   explicit Identifier (std::string const& s);
-  // Constructor.
 
   Identifier (Identifier const &other);
 
   virtual ~Identifier ();
-  // Destructor.
 
   // Operations
 

@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
@@ -23,7 +22,6 @@
 #include "ace/Task.h"
 #include "ace/Get_Opt.h"
 #include "ace/ACE.h"
-
 
 int number_of_event_loop_threads = 3;
 int number_of_messages = 10;
@@ -116,7 +114,7 @@ Handler::handle_input (ACE_HANDLE fd)
                  &message.type_,
                  sizeof (message.type_));
   if (result != static_cast<ssize_t> (sizeof (message.type_)))
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t): read %d, %p\n"),
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t): read %b, %p\n"),
                 result,
                 ACE_TEXT ("recv 1")));
   result =
@@ -124,7 +122,7 @@ Handler::handle_input (ACE_HANDLE fd)
                  &message.size_,
                  sizeof (message.size_));
   if (result != static_cast<ssize_t> (sizeof (message.size_)))
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t): read %d, %p\n"),
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t): read %b, %p\n"),
                 result,
                 ACE_TEXT ("recv 2")));
 
@@ -147,7 +145,7 @@ Handler::handle_input (ACE_HANDLE fd)
                  &message.data_,
                  message.size_);
   if (result != static_cast<ssize_t> (message.size_))
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t): read %d, %p\n"),
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t): read %b, %p\n"),
                 result,
                 ACE_TEXT ("recv 3")));
   else
@@ -164,7 +162,7 @@ Handler::handle_input (ACE_HANDLE fd)
                                  sleep_time_in_msec * 1000));
 
   // Keep count.
-  this->number_of_messages_read_++;
+  ++this->number_of_messages_read_;
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Completed handling message %d\n"),

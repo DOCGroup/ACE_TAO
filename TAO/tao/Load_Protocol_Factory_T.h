@@ -32,15 +32,15 @@ namespace TAO
     load_protocol_factory (TAO_ProtocolFactorySet &protocol_set,
                            const char *name)
     {
-      TAO_Protocol_Factory *protocol_factory = nullptr;
+      TAO_Protocol_Factory *protocol_factory {};
       std::unique_ptr<TAO_Protocol_Factory> safe_protocol_factory;
 
-      TAO_Protocol_Item *item = nullptr;
+      TAO_Protocol_Item *raw_item {};
 
       // If a protocol factory is obtained from the Service
       // Configurator then do not transfer ownership to the
       // TAO_Protocol_Item.
-      bool transfer_ownership = false;
+      bool transfer_ownership {};
 
       protocol_factory =
         ACE_Dynamic_Service<TAO_Protocol_Factory>::instance (
@@ -67,33 +67,29 @@ namespace TAO
           transfer_ownership = false;
         }
 
-      ACE_NEW_RETURN (item, TAO_Protocol_Item (name), -1);
-      // If the TAO_Protocol_Item retains ownership of the
-      // TAO_Protocol_Factory then we used an auto_ptr<> above, so
-      // release the TAO_Protocol_Factory from it.  Otherwise, we
-      // obtained the TAO_Protocol_Factory from the Service
-      // Configurator so an auto_ptr<> wasn't used since the Service
-      // Configurator retains ownership, hence there was no need to
-      // use an auto_ptr<> in this method.
+      ACE_NEW_RETURN (raw_item, TAO_Protocol_Item (name), -1);
+      std::unique_ptr<TAO_Protocol_Item> item (raw_item);
+      // The protocol item takes ownership of a locally created factory.
+      // A factory obtained from the Service Configurator remains owned by
+      // the Configurator.
       item->factory ((transfer_ownership ?
                       safe_protocol_factory.release () :
                       protocol_factory),
                       transfer_ownership);
 
-      if (protocol_set.insert (item) == -1)
+      if (protocol_set.insert (item.get ()) == -1)
         {
           TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT("TAO (%P|%t) Unable to add ")
                       ACE_TEXT("<%C> to protocol factory set.\n"),
                       item->protocol_name ().c_str ()));
 
-          delete item;
-
           if (transfer_ownership == false)
             delete protocol_factory;
 
           return -1;
         }
+      item.release ();
 
       if (TAO_debug_level > 0)
         {

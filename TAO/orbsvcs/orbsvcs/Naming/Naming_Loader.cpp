@@ -18,24 +18,21 @@
 
 #include "orbsvcs/Naming/Naming_Server.h"
 
+#include <new>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Naming_Loader::TAO_Naming_Loader (TAO_Naming_Server *server)
-: naming_server_(server)
+  : naming_server_ (server)
 {
-  // Constructor
 
   // If no server was provided, then we will construct one of the
   // base class type.
-  if (naming_server_ == 0)
-    ACE_NEW (naming_server_, TAO_Naming_Server);
+  if (naming_server_ == nullptr)
+    naming_server_.reset (new (std::nothrow) TAO_Naming_Server);
 }
 
-TAO_Naming_Loader::~TAO_Naming_Loader ()
-{
-  // Destroy the naming server that was created
-  delete naming_server_;
-}
+TAO_Naming_Loader::~TAO_Naming_Loader () = default;
 
 int
 TAO_Naming_Loader::init (int argc, ACE_TCHAR *argv[])
@@ -56,7 +53,7 @@ TAO_Naming_Loader::init (int argc, ACE_TCHAR *argv[])
                              command_line.get_argc(),
                              command_line.get_TCHAR_argv ());
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // @@ Should we log this???
       return -1;
@@ -68,7 +65,7 @@ int
 TAO_Naming_Loader::fini ()
 {
   // Remove the Naming Service.
-  if (this->naming_server_ == 0)
+  if (this->naming_server_ == nullptr)
     return 0;
   else
     return this->naming_server_->fini ();
@@ -79,7 +76,7 @@ TAO_Naming_Loader::create_object (CORBA::ORB_ptr orb,
                                   int argc,
                                   ACE_TCHAR *argv[])
 {
-  if (this->naming_server_ == 0)
+  if (this->naming_server_ == nullptr)
     {
       ORBSVCS_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO_Naming_Loader::create_object - naming_server_ ")

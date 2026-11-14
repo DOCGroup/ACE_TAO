@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file     DIOP_Profile.h
  *
@@ -8,8 +7,6 @@
  *
  *  @author  Michael Kircher
  */
-//=============================================================================
-
 
 #ifndef TAO_DIOP_PROFILE_H
 #define TAO_DIOP_PROFILE_H
@@ -65,13 +62,10 @@ public:
                     TAO_GIOP_Message_Version const &version,
                     TAO_ORB_Core *orb_core);
 
-
-  /// Profile constructor, default.
   explicit TAO_DIOP_Profile (TAO_ORB_Core *orb_core);
 
   /// Destructor is to be called only through <_decr_refcnt>.
   ~TAO_DIOP_Profile ();
-
 
   /// Template methods. Please tao/Profile.h for documentation.
   char *to_string () const override;

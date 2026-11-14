@@ -2,10 +2,13 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
+#include <memory>
+#include <string>
 
-#include <cstdio>
-
-const ACE_TCHAR *ior_output_file = ACE_TEXT ("server.ior");
+struct Server_Options
+{
+  std::basic_string<ACE_TCHAR> ior_output_file {ACE_TEXT ("server.ior")};
+};
 
 class Test_i : public virtual POA_Transport_Idle_Timeout_Test::Test
 {
@@ -14,6 +17,11 @@ public:
     : orb_ (CORBA::ORB::_duplicate (orb))
   {
   }
+
+  Test_i (Test_i const &) = delete;
+  Test_i (Test_i &&) = delete;
+  Test_i & operator= (Test_i const &) = delete;
+  Test_i & operator= (Test_i &&) = delete;
 
   void ping () override
   {
@@ -27,27 +35,27 @@ public:
   }
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 };
 
-int
-parse_args (int argc, ACE_TCHAR *argv[])
+static int
+parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:"));
-  int c;
+  int option {};
 
-  while ((c = get_opts ()) != -1)
+  while ((option = get_opts ()) != -1)
     {
-      switch (c)
+      switch (option)
         {
         case 'o':
-          ior_output_file = get_opts.opt_arg ();
+          options.ior_output_file = get_opts.opt_arg ();
           break;
         case '?':
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "usage: %s [-o <iorfile>]\n",
-                             argv[0]),
+                             ACE_TEXT ("usage: %s [-o <iorfile>]\n"),
+                             argv [0]),
                             -1);
         }
     }
@@ -60,45 +68,48 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
+      Server_Options options;
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
-      CORBA::Object_var poa_object =
+      CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
         ACE_ERROR_RETURN ((LM_ERROR, "nil RootPOA\n"), 1);
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
-      Test_i *servant = 0;
+      Test_i *servant {};
       ACE_NEW_RETURN (servant, Test_i (orb.in ()), 1);
       PortableServer::ServantBase_var owner_transfer (servant);
 
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         root_poa->activate_object (servant);
 
-      CORBA::Object_var object =
+      CORBA::Object_var const object =
         root_poa->id_to_reference (id.in ());
 
-      CORBA::String_var ior =
+      CORBA::String_var const ior =
         orb->object_to_string (object.in ());
 
-      FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file <%s>\n",
-                           ior_output_file),
-                          1);
+      {
+        std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+          ACE_OS::fopen (options.ior_output_file.c_str (), ACE_TEXT ("w")), ACE_OS::fclose);
+        if (!output_file)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Cannot open output file <%s>\n"),
+                             options.ior_output_file.c_str ()),
+                            1);
 
-      ACE_OS::fprintf (output_file, "%s", ior.in ());
-      ACE_OS::fclose (output_file);
+        ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
+      }
 
       poa_manager->activate ();
       orb->run ();
@@ -106,7 +117,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       root_poa->destroy (true, true);
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

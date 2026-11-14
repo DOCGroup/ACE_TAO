@@ -52,7 +52,7 @@ ACE::HTBP::Filter::reset_http_code ()
 
 ACE_INLINE
 int
-ACE::HTBP::Filter::http_code ()
+ACE::HTBP::Filter::http_code () const
 {
   return this->http_code_;
 }

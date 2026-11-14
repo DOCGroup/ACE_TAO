@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_BE_VISITOR_XPLICIT_PRE_PROC_H
 #define TAO_BE_VISITOR_XPLICIT_PRE_PROC_H
 

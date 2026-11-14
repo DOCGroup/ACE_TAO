@@ -29,7 +29,7 @@
 
 #include "asnmp/integer.h"
 
-#define TICKOUTBUF 30 // max formatted time string
+constexpr size_t TICKOUTBUF = 3 * sizeof (unsigned long) + 12;
 
 //------------[ TimeTicks Class ]-----------------------------------
 // The timeticks class allows all the functionality of unsigned
@@ -44,37 +44,38 @@
 class ASNMP_Export TimeTicks : public SnmpUInt32
 {
 public:
-  TimeTicks( const unsigned long i = 0);
+  explicit TimeTicks (unsigned long const i = 0);
 
-  /// copy constructor
-  TimeTicks( const TimeTicks &t);
+  TimeTicks (TimeTicks const &t);
+  TimeTicks (TimeTicks &&) = delete;
 
-  /// destructor
-  ~TimeTicks();
+  ~TimeTicks () override = default;
+
+  TimeTicks &operator= (TimeTicks &&) = delete;
 
   /// syntax type
-  SmiUINT32 get_syntax();
+  SmiUINT32 get_syntax() override;
 
   /// get a printable ASCII value
-  const char *to_string();
+  char const *to_string () override;
 
   /// create a new instance of this Value
-  SnmpSyntax *clone() const;
+  SnmpSyntax *clone() const override;
 
   /// copy an instance of this Value
-  SnmpSyntax& operator=(SnmpSyntax &val);
+  SnmpSyntax& operator=(SnmpSyntax &val) override;
 
   /// overloaded assignment
-  TimeTicks& operator=( const TimeTicks &uli);
+  TimeTicks &operator= (TimeTicks const &uli);
 
   /// overloaded assignment
-  TimeTicks& operator=( const unsigned long int i);
+  TimeTicks &operator= (unsigned long const i);
 
   /// otherwise, behave like an unsigned long
-  operator unsigned long();
+  operator unsigned long() const;
 
 protected:
   /// for storing printed form
-  char output_buffer[TICKOUTBUF];
+  char output_buffer[TICKOUTBUF] {};
 };
 #endif // TIMETICKS_

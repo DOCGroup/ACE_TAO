@@ -27,9 +27,9 @@ AST_ValueType::AST_ValueType (UTL_ScopedName *n,
                               long n_inherits,
                               AST_Type *inherits_concrete,
                               AST_Interface_List const& inherits_flat,
-                              std::size_t n_inherits_flat,
+                              size_t n_inherits_flat,
                               AST_Type_List const& supports,
-                              std::size_t n_supports,
+                              size_t n_supports,
                               AST_Type *supports_concrete,
                               bool abstract,
                               bool truncatable,
@@ -59,7 +59,7 @@ AST_ValueType::AST_ValueType (UTL_ScopedName *n,
   // to iterate over pd_inherits.
   // Also check for illegal template module scope reference,
   // as long as we're iterating.
-  for (std::size_t i {}; i < n_supports; ++i)
+  for (size_t i {}; i < n_supports; ++i)
     {
       if (supports[i]->node_type () == AST_Decl::NT_param_holder)
         {
@@ -207,7 +207,7 @@ AST_ValueType::supports () const
   return this->pd_supports;
 }
 
-std::size_t
+size_t
 AST_ValueType::n_supports () const
 {
   return this->pd_supports.size ();
@@ -263,7 +263,7 @@ AST_ValueType::look_in_supported (UTL_ScopedName *e,
   // (Don't leave the inheritance hierarchy, no module or global ...)
   // Find all and report ambiguous results as error.
 
-  for (std::size_t j {}; j < supported.size (); ++j)
+  for (size_t j {}; j < supported.size (); ++j)
     {
       if (supported[j]->node_type () == AST_Decl::NT_param_holder)
         {
@@ -437,7 +437,7 @@ AST_ValueType::dump (ACE_OSTREAM_TYPE &o)
     {
       this->dump_i (o, "supports ");
 
-      for (std::size_t i {}; i < this->pd_supports.size (); ++i)
+      for (size_t i {}; i < this->pd_supports.size (); ++i)
         {
           this->pd_supports[i]->local_name ()->dump (o);
 
@@ -497,7 +497,7 @@ AST_ValueType::derived_from_primary_key_base (AST_ValueType const *node,
 
   AST_Type_List const& inherited = node->inherits ();
 
-  for (std::size_t i {}; i < inherited.size (); ++i)
+  for (size_t i {}; i < inherited.size (); ++i)
     {
       AST_ValueType *tmp = dynamic_cast<AST_ValueType*> (inherited[i]);
 

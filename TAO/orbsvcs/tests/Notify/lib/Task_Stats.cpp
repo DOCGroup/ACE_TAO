@@ -2,6 +2,9 @@
 #include "ace/ACE.h"
 #include "ace/Log_Msg.h"
 
+#include <new>
+#include <utility>
+
 #if !defined (__ACE_INLINE__)
 #include "Task_Stats.inl"
 #endif /* __ACE_INLINE__ */
@@ -15,30 +18,31 @@ Base_Time::Base_Time ()
 }
 
 Task_Stats::Task_Stats ()
-  : base_time_(0),
+  : base_time_ (0),
     end_time_ (0),
     max_samples_ (0),
     samples_count_ (0),
-    time_inv_ (0),
-    time_exec_ (0),
     mean_ (0),
     var_2_ (0)
 {
 }
 
-Task_Stats::~Task_Stats ()
-{
-  delete[] this->time_inv_;
-  delete[] this->time_exec_;
-}
+Task_Stats::~Task_Stats () = default;
 
 int
 Task_Stats::init (size_t max_samples)
 {
-  this->max_samples_ = max_samples;
+  std::unique_ptr<ACE_UINT64[]> time_inv (new (std::nothrow) ACE_UINT64[max_samples]);
+  if (!time_inv)
+    return -1;
 
-  ACE_NEW_RETURN (this->time_inv_, ACE_UINT64[this->max_samples_], -1);
-  ACE_NEW_RETURN (this->time_exec_, ACE_UINT64[this->max_samples_], -1);
+  std::unique_ptr<ACE_UINT64[]> time_exec (new (std::nothrow) ACE_UINT64[max_samples]);
+  if (!time_exec)
+    return -1;
+
+  this->time_inv_ = std::move (time_inv);
+  this->time_exec_ = std::move (time_exec);
+  this->max_samples_ = max_samples;
   return 0;
 }
 

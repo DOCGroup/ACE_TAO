@@ -25,10 +25,9 @@
 #include "ace/Sched_Params.h"
 #include "ace/Barrier.h"
 
-
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  const CORBA::Long experiment_id = 1;
+  CORBA::Long const experiment_id = 1;
 
   RT_Class rt_class;
 
@@ -200,7 +199,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - starting cleanup\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

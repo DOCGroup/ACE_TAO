@@ -15,9 +15,10 @@
 #include "tao/debug.h"
 #include "ace/OS_Memory.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// = Documented in $ACE_ROOT/ace/CDR_Stream.h
 ACE_CDR::Boolean
 TAO_UTF8_Latin1_Translator::read_char (ACE_InputCDR &cdr, ACE_CDR::Char &x)
 {
@@ -68,40 +69,49 @@ TAO_UTF8_Latin1_Translator::read_string (ACE_InputCDR &cdr,
 {
   ACE_CDR::ULong len;
   if (!cdr.read_ulong (len))
-    return 0;
+    return false;
 
   // A check for the length being too great is done later in the
   // call to read_char_array but we want to have it done before
   // the memory is allocated.
   if (len > 0 && len <= cdr.length())
     {
-      ACE_NEW_RETURN (x,
+      x = nullptr;
+      ACE_CDR::Char *buffer {};
+      ACE_NEW_RETURN (buffer,
                       ACE_CDR::Char [len],
-                      0);
+                      false);
+      std::unique_ptr<ACE_CDR::Char[]> buffer_guard (buffer);
       // pos keeps track of the character position, it will never be
       // greater than len
-      size_t pos = 0;
+      size_t pos {};
       ACE_CDR::ULong incr = 1;
-      for (ACE_CDR::ULong i = 0; incr > 0 && i < len; i += incr)
+      for (ACE_CDR::ULong i {}; incr > 0 && i < len; i += incr)
         {
-          incr = this->read_char_i(cdr,x[pos++]);
+          incr = this->read_char_i (cdr, buffer_guard[pos++]);
         }
       if (incr > 0)
-        return 1;
-      delete [] x;
+        {
+          x = buffer_guard.release ();
+          return true;
+        }
     }
   else if (len == 0)
     {
       // Convert any null strings to empty strings since empty
       // strings can cause crashes. (See bug 58.)
-      ACE_NEW_RETURN (x,
+      x = nullptr;
+      ACE_CDR::Char *buffer {};
+      ACE_NEW_RETURN (buffer,
                       ACE_CDR::Char[1],
-                      0);
-      x[0] = '\x00';
-      return 1;
+                      false);
+      std::unique_ptr<ACE_CDR::Char[]> buffer_guard (buffer);
+      buffer_guard[0] = '\x00';
+      x = buffer_guard.release ();
+      return true;
     }
   x = nullptr;
-  return 0;
+  return false;
 }
 
 ACE_CDR::Boolean
@@ -118,21 +128,21 @@ TAO_UTF8_Latin1_Translator::read_string (ACE_InputCDR &cdr,
   if (len > 0 && len <= cdr.length())
     {
       // detract terminating '\0' from length
-      len--;
+      --len;
       try
         {
           x.resize (len);
         }
-      catch (const std::bad_alloc&)
+      catch (std::bad_alloc const &)
         {
           return false;
         }
 
       // pos keeps track of the character position, it will never be
       // greater than len
-      size_t pos = 0;
+      size_t pos {};
       ACE_CDR::ULong incr = 1;
-      for (ACE_CDR::ULong i = 0; incr > 0 && i < len; i += incr)
+      for (ACE_CDR::ULong i {}; incr > 0 && i < len; i += incr)
         {
           incr = this->read_char_i(cdr,x[pos++]);
         }
@@ -155,13 +165,13 @@ TAO_UTF8_Latin1_Translator::read_char_array (ACE_InputCDR & cdr,
                                         ACE_CDR::ULong length)
 {
   if (length == 0)
-    return 1;
+    return true;
 
-  for (size_t i = 0; i < length; ++i)
+  for (size_t i {}; i < length; ++i)
     if (!this->read_char(cdr,x[i]))
-      return 0;
+      return false;
 
-  return 1;
+  return true;
 }
 
 ACE_CDR::Boolean
@@ -174,7 +184,7 @@ TAO_UTF8_Latin1_Translator::write_char (ACE_OutputCDR &cdr,
   else
     { // character cannot be represented in a single octet
       errno = EINVAL;
-      return 0;
+      return false;
     }
 }
 
@@ -198,50 +208,50 @@ TAO_UTF8_Latin1_Translator::write_char_i (ACE_OutputCDR &cdr,
       if (this->write_1(cdr, &upper))
         return this->write_1(cdr, &lower);
     }
-  return 0;
+  return false;
 }
 
 ACE_CDR::Boolean
 TAO_UTF8_Latin1_Translator::write_string (ACE_OutputCDR & cdr,
                                      ACE_CDR::ULong len,
-                                     const ACE_CDR::Char *x)
+                                     ACE_CDR::Char const *x)
 {
   // we'll accept a null pointer but only for an empty string
   if (x == nullptr && len != 0)
-    return 0;
+    return false;
 
   ACE_CDR::ULong l = len;
   // Compute the real buffer size by adding in multi-byte codepoints.
-  for (ACE_CDR::ULong i = 0; i < len; i++)
-    if (static_cast<ACE_CDR::Octet>(x[i]) > 0xbf) l++;
+  for (ACE_CDR::ULong i {}; i < len; ++i)
+    if (static_cast<ACE_CDR::Octet>(x[i]) > 0xbf) ++l;
 
   // Always add one for the nul
-  l++;
+  ++l;
   if (cdr.write_ulong (l))
     {
-      for (ACE_CDR::ULong i = 0; i < len; ++i)
+      for (ACE_CDR::ULong i {}; i < len; ++i)
         {
-          if (this->write_char_i (cdr,x[i]) == 0)
-            return 0;
+          if (!this->write_char_i (cdr, x[i]))
+            return false;
         }
-      ACE_CDR::Octet s = 0;
+      ACE_CDR::Octet s {};
       return this->write_1 (cdr, &s);
     }
-  return 0;
+  return false;
 }
 
 ACE_CDR::Boolean
 TAO_UTF8_Latin1_Translator::write_char_array (ACE_OutputCDR & cdr,
-                                         const ACE_CDR::Char *x,
+                                         ACE_CDR::Char const *x,
                                          ACE_CDR::ULong length)
 {
   if (length == 0)
     return true;
 
-  for (size_t i = 0; i < length; ++i)
+  for (size_t i {}; i < length; ++i)
     // We still have to write each char individually, as any translated
     // value may fail to fit in a single octet.
-    if (this->write_char (cdr, x[i]) == 0)
+    if (!this->write_char (cdr, x[i]))
       return false;
 
   return true;

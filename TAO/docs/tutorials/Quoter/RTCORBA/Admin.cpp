@@ -8,7 +8,7 @@
 // local header files
 #include "DistributorC.h"
 
-enum Option_Types
+enum class Option_Type
 {
   START,
   STOP,
@@ -22,7 +22,7 @@ static std::string ior = "file://StockDistributor.ior";
 static std::string distributor_name = "StockDistributor";
 
 // The default command, which starts the StockDistributor.
-static Option_Types option = START;
+static Option_Type option = Option_Type::START;
 
 // The default rate, which sends data out once per second.
 static std::string rate = "1";
@@ -46,24 +46,25 @@ parse_args (int argc, ACE_TCHAR *argv[])
           ior = get_opts.opt_arg ();
           break;
         case 'r':
-          option = RATE;
+          option = Option_Type::RATE;
           rate = get_opts.opt_arg ();
           break;
         case 'b':
-          option = START;
+          option = Option_Type::START;
           break;
         case 's':
-          option = STOP;
+          option = Option_Type::STOP;
           break;
         case 'c':
-          use_naming = get_opts.opt_arg ();
+          use_naming = true;
           break;
 
         case '?':
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
                              "usage: %s\n"
-                             "-o <Distributor IOR> (the ior file of stock distributor (default is file://StockDistributor.ior))\n"
+                             "-o <Distributor IOR> (the ior file of stock distributor "
+                             "(default is file://StockDistributor.ior))\n"
                              "-r <rate> (set the distribution rate to 'n' seconds (default is 1))\n"
                              "-b (start the stock distributor)\n"
                              "-s (stop the stock distributor)\n"
@@ -81,11 +82,9 @@ get_distributor_reference (CORBA::ORB_ptr orb)
 {
   if (use_naming)
     {
-      CORBA::Object_var tmp =
-        orb->resolve_initial_references ("NameService");
+      CORBA::Object_var tmp (orb->resolve_initial_references ("NameService"));
 
-      CosNaming::NamingContext_var pns =
-        CosNaming::NamingContext::_narrow (tmp.in ());
+      CosNaming::NamingContext_var pns (CosNaming::NamingContext::_narrow (tmp.in ()));
 
       CosNaming::Name name (1);
       name.length (1);
@@ -94,8 +93,10 @@ get_distributor_reference (CORBA::ORB_ptr orb)
       return pns->resolve (name);
     }
   else
-    // Read and destringify the Stock_Distributor object's IOR.
-    return orb->string_to_object (ior.c_str ());
+    {
+      // Read and destringify the Stock_Distributor object's IOR.
+      return orb->string_to_object (ior.c_str ());
+    }
 }
 
 int
@@ -104,18 +105,18 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   try
     {
       // Initialiaze the ORB.
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var orb (CORBA::ORB_init (argc, argv));
 
       // This call MUST come after ORB_init(), which may need to
       // extract -ORB options first.
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      CORBA::Object_var obj = get_distributor_reference (orb.in ());
+      CORBA::Object_var obj (get_distributor_reference (orb.in ()));
 
       // Narrow the IOR to a Stock_Distributor object reference.
-      Stock::StockDistributor_var stock_distributor =
-        Stock::StockDistributor::_narrow(obj.in ());
+      Stock::StockDistributor_var stock_distributor (
+        Stock::StockDistributor::_narrow (obj.in ()));
 
       if (CORBA::is_nil (stock_distributor.in ()))
         ACE_ERROR_RETURN ((LM_DEBUG,
@@ -123,12 +124,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                            ior.c_str ()),
                           1);
 
-      if (option == STOP)
+      if (option == Option_Type::STOP)
         {
           ACE_DEBUG ((LM_DEBUG, "Stop the stock distributor.\n"));
           stock_distributor->stop ();
         }
-      else if (option == RATE)
+      else if (option == Option_Type::RATE)
         {
           CORBA::Long notify_rate = ACE_OS::atoi (rate.c_str ());
           ACE_DEBUG ((LM_DEBUG,

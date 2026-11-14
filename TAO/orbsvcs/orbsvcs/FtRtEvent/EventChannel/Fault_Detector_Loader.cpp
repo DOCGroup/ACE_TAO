@@ -17,26 +17,22 @@ namespace FTRTEC {
     ACE_Acceptor<ConnectionAcceptHandler<ACE_SOCK_STREAM> , ACE_SOCK_ACCEPTOR>,
     ACE_SOCK_Connector, ConnectionDetectHandler<ACE_SOCK_STREAM> >;
 
-  Fault_Detector_Loader::Fault_Detector_Loader ()
-  {
-  }
+  Fault_Detector_Loader::Fault_Detector_Loader () = default;
 
-  Fault_Detector_Loader::~Fault_Detector_Loader ()
-  {
-  }
+  Fault_Detector_Loader::~Fault_Detector_Loader () = default;
 
   int
   Fault_Detector_Loader::init (int argc, ACE_TCHAR* argv[])
   {
-    static int initialized = 0;
+    static bool initialized {};
 
     // Only allow initialization once.
     if (initialized)
       return 0;
 
-    initialized = 1;
+    initialized = true;
 
-    Fault_Detector* detector = nullptr;
+    Fault_Detector* detector {};
 
     // Parse any service configurator parameters.
     if (argc > 0 && ACE_OS::strcasecmp (argv[0], ACE_TEXT("sctp")) == 0)
@@ -48,7 +44,8 @@ namespace FTRTEC {
                   "(%P|%t) SCTP not enabled. ",
                   " Enable SCTP and rebuild ACE+TAO\n"));
 #endif /* TAO_HAS_SCIOP */
-      argc--; argv++;
+      --argc;
+      ++argv;
     }
     else {
       ACE_NEW_RETURN(detector, TCP_Fault_Detector, -1);
@@ -61,6 +58,13 @@ namespace FTRTEC {
     Fault_Detector_Loader::detector()
   {
     return detector_.get();
+  }
+
+  void
+  Fault_Detector_Loader::stop ()
+  {
+    if (this->detector_ != nullptr)
+      this->detector_->stop ();
   }
 }
 

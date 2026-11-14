@@ -1,6 +1,4 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Default_Acceptor_Filter.h
  *
@@ -9,9 +7,6 @@
  *  @author  Marina Spivak <marina@cs.wustl.edu>
  *  @author  Carlos O'Ryan <coryan@uci.edu>
  */
-//=============================================================================
-
-
 #ifndef TAO_DEFAULT_ACCEPTOR_FILTER_H
 #define TAO_DEFAULT_ACCEPTOR_FILTER_H
 
@@ -44,10 +39,9 @@ public:
   TAO_Default_Acceptor_Filter () = default;
 
   /// Populate @a mprofile with all available endpoints.
-  int fill_profile (const TAO::ObjectKey &object_key,
+  int fill_profile (TAO::ObjectKey const& object_key,
                     TAO_MProfile &mprofile,
-                    TAO_Acceptor **acceptors_begin,
-                    TAO_Acceptor **acceptors_end,
+                    TAO_AcceptorSet const& acceptors,
                     CORBA::Short priority = TAO_INVALID_PRIORITY) override;
 
   /// Encodes the endpoints in the profiles into the TAO_TAG_ENDPOINTS

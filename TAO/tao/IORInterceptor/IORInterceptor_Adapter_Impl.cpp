@@ -19,7 +19,7 @@ TAO_IORInterceptor_Adapter_Impl::add_interceptor (
 void
 TAO_IORInterceptor_Adapter_Impl::add_interceptor (
     PortableInterceptor::IORInterceptor_ptr i,
-    CORBA::PolicyList const& policies)
+    CORBA::PolicyList const &policies)
 {
   this->ior_interceptor_list_.add_interceptor (i, policies);
 }
@@ -29,18 +29,19 @@ TAO_IORInterceptor_Adapter_Impl::destroy_interceptors ()
 {
   this->ior_interceptor_list_.destroy_interceptors ();
 
+  // TAO_ORB_Core calls this hook as the adapter's destruction operation.
   delete this;
 }
 
 void
-TAO_IORInterceptor_Adapter_Impl::establish_components (TAO_Root_POA * poa)
+TAO_IORInterceptor_Adapter_Impl::establish_components (TAO_Root_POA *poa)
 {
   size_t const interceptor_count = this->ior_interceptor_list_.size ();
 
   if (interceptor_count == 0)
     return;
 
-  TAO_IORInfo *tao_info = nullptr;
+  TAO_IORInfo *tao_info {};
   ACE_NEW_THROW_EX (tao_info,
                     TAO_IORInfo (poa),
                     CORBA::NO_MEMORY (
@@ -49,21 +50,22 @@ TAO_IORInterceptor_Adapter_Impl::establish_components (TAO_Root_POA * poa)
                           ENOMEM),
                        CORBA::COMPLETED_NO));
 
-  PortableInterceptor::IORInfo_var info = tao_info;
+  // The var owns the reference; tao_info remains a non-owning typed alias.
+  PortableInterceptor::IORInfo_var const info = tao_info;
 
   // Release the POA during IORInterceptor calls to avoid potential
   // deadlocks.
-  TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*poa);
+  TAO::Portable_Server::Non_Servant_Upcall const non_servant_upcall (*poa);
   ACE_UNUSED_ARG (non_servant_upcall);
 
-  for (size_t i = 0; i < interceptor_count; ++i)
+  for (size_t i {}; i < interceptor_count; ++i)
     {
       try
         {
           this->ior_interceptor_list_.interceptor (i)->establish_components (
             info.in ());
         }
-      catch (const ::CORBA::Exception& ex)
+      catch (::CORBA::Exception const &ex)
         {
           // According to the Portable Interceptors specification,
           // IORInterceptor::establish_components() must not throw an
@@ -72,7 +74,7 @@ TAO_IORInterceptor_Adapter_Impl::establish_components (TAO_Root_POA * poa)
           // IORInterceptors.
           if (TAO_debug_level > 1)
             {
-              CORBA::String_var name =
+              CORBA::String_var const name =
                 this->ior_interceptor_list_.interceptor (i)->name ();
               // @@ What do we do if we get an exception here?
 
@@ -99,7 +101,6 @@ TAO_IORInterceptor_Adapter_Impl::establish_components (TAO_Root_POA * poa)
   // prevent the user from peforming "illegal" operations.
   tao_info->invalidate ();
 }
-
 void
 TAO_IORInterceptor_Adapter_Impl::components_established (
   PortableInterceptor::IORInfo_ptr info)
@@ -112,21 +113,21 @@ TAO_IORInterceptor_Adapter_Impl::components_established (
   // All the establish_components() interception points have been
   // invoked. Now call the components_established() interception point
   // on all the IORInterceptors.
-  for (size_t j = 0; j < interceptor_count; ++j)
+  for (size_t j {}; j < interceptor_count; ++j)
     {
       try
         {
-          PortableInterceptor::IORInterceptor_ptr ior_interceptor =
+          PortableInterceptor::IORInterceptor_ptr const ior_interceptor =
             this->ior_interceptor_list_.interceptor (j);
 
-          PortableInterceptor::IORInterceptor_3_0_var ior_3_interceptor =
+          PortableInterceptor::IORInterceptor_3_0_var const ior_3_interceptor =
             PortableInterceptor::IORInterceptor_3_0::_narrow (ior_interceptor);
           if (!CORBA::is_nil (ior_3_interceptor.in ()))
             {
               ior_3_interceptor->components_established (info);
             }
         }
-      catch (const ::CORBA::Exception&)
+      catch (::CORBA::Exception const &)
         {
           throw ::CORBA::OBJ_ADAPTER (CORBA::OMGVMCID | 6,
                                       CORBA::COMPLETED_NO);
@@ -136,7 +137,7 @@ TAO_IORInterceptor_Adapter_Impl::components_established (
 
 void
 TAO_IORInterceptor_Adapter_Impl::adapter_state_changed (
-      TAO::ObjectReferenceTemplate_Array const& array_obj_ref_template,
+      TAO::ObjectReferenceTemplate_Array const &array_obj_ref_template,
       PortableInterceptor::AdapterState state)
 {
   size_t const interceptor_count = this->ior_interceptor_list_.size ();
@@ -147,11 +148,11 @@ TAO_IORInterceptor_Adapter_Impl::adapter_state_changed (
   PortableInterceptor::ObjectReferenceTemplateSeq seq_obj_ref_template;
 
   seq_obj_ref_template.length (
-    static_cast <CORBA::ULong> (array_obj_ref_template.size()));
+    static_cast<CORBA::ULong> (array_obj_ref_template.size()));
 
-  for (size_t counter = 0; counter < array_obj_ref_template.size(); ++counter)
+  for (size_t counter {}; counter < array_obj_ref_template.size(); ++counter)
     {
-      PortableInterceptor::ObjectReferenceTemplate *member =
+      PortableInterceptor::ObjectReferenceTemplate * const member =
         array_obj_ref_template[counter];
 
       CORBA::add_ref (member);
@@ -159,12 +160,12 @@ TAO_IORInterceptor_Adapter_Impl::adapter_state_changed (
       seq_obj_ref_template[static_cast<CORBA::ULong> (counter)] = member;
     }
 
-  for (size_t i = 0; i < interceptor_count; ++i)
+  for (size_t i {}; i < interceptor_count; ++i)
     {
-      PortableInterceptor::IORInterceptor_ptr ior_interceptor =
+      PortableInterceptor::IORInterceptor_ptr const ior_interceptor =
         this->ior_interceptor_list_.interceptor (i);
 
-      PortableInterceptor::IORInterceptor_3_0_var ior_3_interceptor =
+      PortableInterceptor::IORInterceptor_3_0_var const ior_3_interceptor =
         PortableInterceptor::IORInterceptor_3_0::_narrow (ior_interceptor);
       if (!CORBA::is_nil (ior_3_interceptor.in ()))
         {
@@ -175,7 +176,7 @@ TAO_IORInterceptor_Adapter_Impl::adapter_state_changed (
 
 void
 TAO_IORInterceptor_Adapter_Impl::adapter_manager_state_changed (
-      char const* id,
+      char const *id,
       PortableInterceptor::AdapterState state)
 {
   /// Whenever the POAManager state is changed, the
@@ -186,12 +187,12 @@ TAO_IORInterceptor_Adapter_Impl::adapter_manager_state_changed (
   if (interceptor_count == 0)
     return;
 
-  for (size_t i = 0; i < interceptor_count; ++i)
+  for (size_t i {}; i < interceptor_count; ++i)
     {
-      PortableInterceptor::IORInterceptor_ptr ior_interceptor =
+      PortableInterceptor::IORInterceptor_ptr const ior_interceptor =
         this->ior_interceptor_list_.interceptor (i);
 
-      PortableInterceptor::IORInterceptor_3_0_var ior_3_interceptor =
+      PortableInterceptor::IORInterceptor_3_0_var const ior_3_interceptor =
         PortableInterceptor::IORInterceptor_3_0::_narrow (ior_interceptor);
       if (!CORBA::is_nil (ior_3_interceptor.in ()))
         {

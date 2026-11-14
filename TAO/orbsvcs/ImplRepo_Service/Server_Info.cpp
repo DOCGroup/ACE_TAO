@@ -1,5 +1,8 @@
 #include "Server_Info.h"
 
+#include <cstring>
+#include <memory>
+
 Server_Info::Server_Info ()
 {
   this->clear ();
@@ -13,7 +16,7 @@ Server_Info::Server_Info (Server_Info const &other)
 Server_Info&
 Server_Info::operator= (Server_Info const &other)
 {
-  if (this != &other)
+  if (this != std::addressof (other))
   {
     server_id = other.server_id;
     poa_name = other.poa_name;
@@ -137,9 +140,9 @@ Server_Info::has_peer (char const *name) const
 bool
 Server_Info::is_server (char const *name) const
 {
-  for (CORBA::ULong i = 0; i < peers.length(); i++)
+  for (CORBA::ULong i {}; i < peers.length(); ++i)
     {
-      if (ACE_OS::strcmp (peers[i], name) == 0)
+      if (std::strcmp (peers[i], name) == 0)
         return true;
     }
   return false;

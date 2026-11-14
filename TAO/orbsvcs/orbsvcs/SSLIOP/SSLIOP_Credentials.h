@@ -24,7 +24,6 @@
 #include "orbsvcs/SecurityLevel3C.h"
 #include "tao/LocalObject.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -62,7 +61,6 @@ namespace TAO
       using _var_type = SSLIOP::Credentials_var;
       using _out_type = SSLIOP::Credentials_out;
 
-      /// Constructor
       SSLIOP_Credentials (::X509 * cert, ::EVP_PKEY * evp);
 
       /**
@@ -85,9 +83,8 @@ namespace TAO
       char * add_relinquished_listener (
           SecurityLevel3::RelinquishedCredentialsListener_ptr listener) override;
 
-      void remove_relinquished_listener (const char * id) override;
+      void remove_relinquished_listener (char const * id) override;
       //@}
-
 
       //@{
       /// Return a pointer to the underlying X.509 certificate.
@@ -95,7 +92,7 @@ namespace TAO
        * @note Caller owns the returned object.  Use a
        *       TAO::SSLIOP::X509_var.
        */
-      ::X509 *x509 ();
+      ::X509 *x509 () const;
       //@}
 
       /// Return a pointer to the underlying private key.
@@ -105,10 +102,10 @@ namespace TAO
        * @note Caller owns the returned object.  Use a
        *       TAO::SSLIOP::EVP_PKEY_var.
        */
-      ::EVP_PKEY *evp ();
+      ::EVP_PKEY *evp () const;
       //@}
 
-      bool operator== (const SSLIOP_Credentials &rhs);
+      bool operator== (SSLIOP_Credentials const &rhs);
 
       CORBA::ULong hash () const;
 
@@ -119,18 +116,17 @@ namespace TAO
 
       static SSLIOP::Credentials_ptr _nil ()
       {
-        return (SSLIOP::Credentials_ptr) 0;
+        return nullptr;
       }
 
       //@}
 
     protected:
-      /// Destructor.
       /**
        * Protected destructor to enforce proper memory management
        * through the reference counting  mechanism.
        */
-      ~SSLIOP_Credentials ();
+      ~SSLIOP_Credentials () override = default;
 
     protected:
       /// Reference to the X.509 certificate associated with this SSLIOP

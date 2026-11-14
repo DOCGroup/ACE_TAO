@@ -18,7 +18,6 @@ class Invocation;
 class Session;
 class Thread;
 
-
 enum EndpointRole {
   ER_UNKNOWN,
   ER_CLIENT,
@@ -57,7 +56,6 @@ public:
   size_t close_offset_;
   ACE_CString close_time_;
 };
-
 
 using PeerObjectTable = ACE_RB_Tree<u_long, PeerObject *, ACE_Less_Than<u_long>, ACE_Null_Mutex>;
 using ObjectByIndex = ACE_RB_Tree<long, PeerObject *, ACE_Less_Than<long>, ACE_Null_Mutex>;
@@ -119,6 +117,5 @@ private:
   ObjectByIndex object_by_index_;
   ACE_CString first_time_;
 };
-
 
 #endif // LOG_WALKER_PEER_PROCESS_H

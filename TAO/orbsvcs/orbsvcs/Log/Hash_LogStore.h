@@ -40,12 +40,9 @@ class TAO_Log_Serv_Export TAO_Hash_LogStore
   : public TAO_LogStore
 {
 public:
-  /// Constructor.
-  TAO_Hash_LogStore (TAO_LogMgr_i * mgr);
+  explicit TAO_Hash_LogStore (TAO_LogMgr_i * mgr);
 
-  /// Destructor.
   ~TAO_Hash_LogStore () override;
-
 
   /// Lists all logs created by the log factory.
   DsLogAdmin::LogList *list_logs () override;

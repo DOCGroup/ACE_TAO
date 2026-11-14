@@ -37,6 +37,7 @@ namespace XSCRT
     }
 
   private:
+    // type_info objects have static lifetime; this pointer is borrowed.
     std::type_info const *tid_;
   };
 

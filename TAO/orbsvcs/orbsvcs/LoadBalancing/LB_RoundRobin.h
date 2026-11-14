@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef LB_ROUND_ROBIN_H
 #define LB_ROUND_ROBIN_H
 
@@ -23,8 +22,7 @@
 #include "orbsvcs/LoadBalancing/LB_Location_Index_Map.h"
 
 #include "orbsvcs/CosLoadBalancingS.h"
-#include "ace/Vector_T.h"
-
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -40,8 +38,7 @@ class TAO_LB_RoundRobin
   : public virtual POA_CosLoadBalancing::Strategy
 {
 public:
-  /// Constructor.
-  TAO_LB_RoundRobin (PortableServer::POA_ptr poa);
+  explicit TAO_LB_RoundRobin (PortableServer::POA_ptr poa);
 
   /**
    * @name CosLoadBalancing::Strategy methods
@@ -79,7 +76,6 @@ public:
   TAO_LB_RoundRobin & operator= (TAO_LB_RoundRobin &&) = delete;
 
 protected:
-  /// Destructor
   ~TAO_LB_RoundRobin () override;
 
 private:
@@ -107,7 +103,7 @@ private:
   TAO_LB_Location_Index_Map location_index_map_;
 
   /// Locations list retrieved in last next_member() call.
-  ACE_Vector<PortableGroup::Location> last_locations_;
+  std::vector<PortableGroup::Location> last_locations_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -7,12 +7,14 @@
  */
 //=============================================================================
 
-
 #ifndef EC_OBSERVER_H
 #define EC_OBSERVER_H
 
 #include "Driver.h"
 #include "orbsvcs/Event/EC_Gateway_IIOP.h"
+
+#include <memory>
+#include <vector>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -32,6 +34,10 @@ class EC_Master
 {
 public:
   EC_Master ();
+  EC_Master (EC_Master const &) = delete;
+  EC_Master &operator= (EC_Master const &) = delete;
+  EC_Master (EC_Master &&) = delete;
+  EC_Master &operator= (EC_Master &&) = delete;
 
   virtual ~EC_Master ();
 
@@ -54,7 +60,7 @@ private:
 
   /// The driver programs
   int n_channels_;
-  EC_Observer** channels_;
+  std::vector<std::unique_ptr<EC_Observer>> channels_;
 
   /// The ORB
   CORBA::ORB_var orb_;
@@ -71,40 +77,42 @@ private:
 class EC_Observer : public EC_Driver
 {
 public:
-  /// Constructor
   EC_Observer (EC_Master *master,
                unsigned int seed,
                CORBA::ORB_ptr orb,
                PortableServer::POA_ptr root_poa,
                int id);
+  EC_Observer (EC_Observer const &) = delete;
+  EC_Observer &operator= (EC_Observer const &) = delete;
+  EC_Observer (EC_Observer &&) = delete;
+  EC_Observer &operator= (EC_Observer &&) = delete;
 
-  /// Destructor
-  ~EC_Observer ();
+  ~EC_Observer () override;
 
   // = The EC_Driver methods
   /// add some command line args to enable/disable observerions
-  virtual void initialize_orb_and_poa (int& argc, ACE_TCHAR* argv[]);
-  virtual int parse_args (int& argc, ACE_TCHAR* argv[]);
-  virtual void print_args () const;
-  virtual void print_usage ();
+  void initialize_orb_and_poa (int& argc, ACE_TCHAR* argv[]) override;
+  int parse_args (int& argc, ACE_TCHAR* argv[]) override;
+  void print_args () const override;
+  void print_usage () override;
 
   /// Run the suppliers, using the <thread_manager> parameter
-  void execute_test ();
-  void run_cleanup ();
+  void execute_test () override;
+  void run_cleanup () override;
 
-  void dump_results ();
+  void dump_results () override;
   void connect_consumer (
     RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
-    int i);
+    int i) override;
   void consumer_push (void*,
-                      const RtecEventComm::EventSet&);
+                      const RtecEventComm::EventSet&) override;
 
 private:
   EC_Master *master_;
   unsigned int seed_;
   int id_;
 
-  TAO_EC_Gateway_IIOP *gwys_;
+  std::unique_ptr<TAO_EC_Gateway_IIOP[]> gwys_;
 
   /// lock internal state
   TAO_SYNCH_MUTEX lock_;

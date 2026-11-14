@@ -24,12 +24,12 @@ void
 TAO_EndpointPolicy_ORBInitializer::register_policy_factories (
   PortableInterceptor::ORBInitInfo_ptr info)
 {
-  TAO_ORBInitInfo * local_info = dynamic_cast <TAO_ORBInitInfo *> (info);
+  TAO_ORBInitInfo * const local_info = dynamic_cast <TAO_ORBInitInfo *> (info);
 
-  if (!local_info)
+  if (local_info == nullptr)
     throw CORBA::INTERNAL ();
 
-  TAO_ORB_Core * the_orb_core = local_info->orb_core ();
+  TAO_ORB_Core * const the_orb_core = local_info->orb_core ();
 
   // Register the EndpointPolicy policy factories.
   PortableInterceptor::PolicyFactory_ptr policy_factory_ptr;
@@ -41,8 +41,7 @@ TAO_EndpointPolicy_ORBInitializer::register_policy_factories (
                         ENOMEM),
                       CORBA::COMPLETED_NO));
 
-
-  PortableInterceptor::PolicyFactory_var policy_factory =
+  PortableInterceptor::PolicyFactory_var const policy_factory =
     policy_factory_ptr;
 
   try
@@ -50,7 +49,7 @@ TAO_EndpointPolicy_ORBInitializer::register_policy_factories (
       info->register_policy_factory (EndpointPolicy::ENDPOINT_POLICY_TYPE,
                                      policy_factory.in ());
     }
-  catch (const ::CORBA::BAD_INV_ORDER& ex)
+  catch (::CORBA::BAD_INV_ORDER const &ex)
     {
       if (ex.minor () == (CORBA::OMGVMCID | 16))
         {

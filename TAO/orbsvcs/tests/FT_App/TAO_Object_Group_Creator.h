@@ -21,14 +21,15 @@
 #include <orbsvcs/FT_ReplicationManagerC.h>
 #include <orbsvcs/PortableGroupC.h>
 #include <ace/SString.h>
-#include <ace/Vector_T.h>
+
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
   class Object_Group_Creator
   {
-    typedef ACE_Vector<ACE_CString> StringVec;
+    using StringVec = std::vector<ACE_CString>;
    public:
     ///////////////////////////
     // construction/destruction
@@ -89,7 +90,6 @@ namespace TAO
 
     ::PortableGroup::FactoryInfos_var detector_infos_;
     CORBA::String_var detector_type_id_;
-
 
     /**
      * bool: true if we have a real replication manager

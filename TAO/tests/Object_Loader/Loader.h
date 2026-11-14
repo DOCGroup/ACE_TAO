@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_OBJECT_LOADER_LOADER_H
 #define TAO_OBJECT_LOADER_LOADER_H
 
@@ -23,12 +22,17 @@ class OLT_Export Loader : public TAO_Object_Loader
 {
 public:
   /// ctor
-  Loader ();
+  Loader () = default;
+
+  Loader (Loader const &) = delete;
+  Loader (Loader &&) = delete;
+  Loader & operator= (Loader const &) = delete;
+  Loader & operator= (Loader &&) = delete;
 
   /// Create a new instance
-  virtual CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
-                                           int argc,
-                                           ACE_TCHAR *argv[]);
+  CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
+                                   int argc,
+                                   ACE_TCHAR *argv[]) override;
 };
 
 // ACE_STATIC_SVC_DECLARE (Loader)

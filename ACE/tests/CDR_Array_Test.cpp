@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 // For measuring time, choose your method:
 // Define:
 //
@@ -46,7 +45,6 @@
 #if defined(USE_GETRUSAGE) && !defined(ACE_HAS_GETRUSAGE)
 #error "Can't define USE_GETRUSAGE on this platform."
 #endif
-
 
 // Default number of elements for check buffer, for each tested CDR type.
 // Be aware that time will be affected by the buffer fitting/not fitting
@@ -354,7 +352,6 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
              total,
              ((use_array) ? ACE_TEXT( "" ) : ACE_TEXT( "not " ))));
 
-
   if (!use_array && (total % 4) != 0)
     {
       int lasttotal = total;
@@ -554,7 +551,7 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
                 CDR_Test<T,H>::ttoh (v, rs);
                 ACE_DEBUG ((LM_DEBUG, "Read idata[%d] = %s\n", i, rs));
                 idata[i] = v;
-                i++;
+                ++i;
 #else
                 is >> idata[i++];
                 is >> idata[i++];
@@ -619,7 +616,7 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
                        ACE_TEXT ( "Wrong value at pos %d:" )
                        ACE_TEXT ( " '%C' should be '%C'.\n" ),
                        i, rs, cs));
-            errors++;
+            ++errors;
             if (errors == maxerrors)
               {
                 ACE_ERROR((LM_ERROR,

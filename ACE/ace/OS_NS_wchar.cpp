@@ -101,17 +101,17 @@ ACE_OS::wcscpy_emulation (wchar_t *destination,
 size_t
 ACE_OS::wcscspn_emulation (const wchar_t *s, const wchar_t *reject)
 {
-  const wchar_t *scan = nullptr;
-  const wchar_t *rej_scan = nullptr;
+  const wchar_t *scan {};
+  const wchar_t *rej_scan {};
   int count = 0;
 
-  for (scan = s; *scan; scan++)
+  for (scan = s; *scan; ++scan)
     {
-      for (rej_scan = reject; *rej_scan; rej_scan++)
+      for (rej_scan = reject; *rej_scan; ++rej_scan)
         if (*scan == *rej_scan)
           return count;
 
-      count++;
+      ++count;
     }
 
   return count;
@@ -152,7 +152,7 @@ ACE_OS::wcsicmp_emulation (const wchar_t *s, const wchar_t *t)
 size_t
 ACE_OS::wcslen_emulation (const ACE_WCHAR_T *string)
 {
-  const ACE_WCHAR_T *s = nullptr;
+  const ACE_WCHAR_T *s {};
 
   for (s = string; *s; ++s)
     continue;
@@ -280,7 +280,7 @@ wchar_t *
 ACE_OS::wcspbrk_emulation (const wchar_t *string,
                            const wchar_t *charset)
 {
-  const wchar_t *scanp = nullptr;
+  const wchar_t *scanp {};
   int c, sc;
 
   while ((c = *string++) != 0)
@@ -304,7 +304,7 @@ ACE_OS::wcsrchr_emulation (const wchar_t *s, wint_t c)
     if (p == s)
       return 0;
     else
-      p--;
+      --p;
 
   return p;
 }
@@ -318,7 +318,7 @@ ACE_OS::wcsrchr_emulation (wchar_t *s, wint_t c)
     if (p == s)
       return 0;
     else
-      p--;
+      --p;
 
   return p;
 }
@@ -330,7 +330,7 @@ ACE_OS::wcsspn_emulation (const wchar_t *string,
                           const wchar_t *charset)
 {
   const wchar_t *p = string;
-  const wchar_t *spanp = nullptr;
+  const wchar_t *spanp {};
   wchar_t c, sc;
 
   // Skip any characters in charset, excluding the terminating \0.
@@ -362,7 +362,7 @@ ACE_OS::wcsstr_emulation (const wchar_t *string,
                 return 0;
             } while (sc != c);
         } while (ACE_OS::strncmp (string, charset, len) != 0);
-      string--;
+      --string;
     }
 
   return const_cast<wchar_t *> (string);

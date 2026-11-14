@@ -8,7 +8,6 @@
 #include "ace/Select_Reactor.h"
 #include "ace/Service_Config.h"
 
-
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[]) {
   ACE_Select_Reactor *select_reactor;
   ACE_NEW_RETURN (select_reactor, ACE_Select_Reactor, 1);

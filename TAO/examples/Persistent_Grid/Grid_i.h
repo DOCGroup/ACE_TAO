@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef GRID_I_H
 #define GRID_I_H
 
@@ -17,10 +16,13 @@
 #include "ace/Null_Mutex.h"
 #include "ace/Malloc_T.h"
 
-typedef ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> pool_t;
+#include <memory>
+#include <vector>
+
+using pool_t = ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex>;
 // Memory pool for the persistent stuff
 
-//class Grid_Factory_i;
+class Grid_i;
 /**
  * @class Grid_Factory_i
  *
@@ -29,41 +31,49 @@ typedef ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> pool_t;
 class Grid_Factory_i : public POA_Grid_Factory
 {
 public:
-  /// Constructor.
-  Grid_Factory_i ();
+  Grid_Factory_i () = default;
 
-  /// Destructor.
+  /// Out-of-line because grid_owners_ owns the forward-declared Grid_i.
   ~Grid_Factory_i ();
 
+  Grid_Factory_i (Grid_Factory_i const&) = delete;
+  Grid_Factory_i (Grid_Factory_i&&) = delete;
+  Grid_Factory_i& operator= (Grid_Factory_i const&) = delete;
+  Grid_Factory_i& operator= (Grid_Factory_i&&) = delete;
+
   /// This function creates and returns a <Grid>.
-  virtual Grid_ptr make_grid (CORBA::Short,
-                              CORBA::Short);
+  Grid_ptr make_grid (CORBA::Short,
+                      CORBA::Short) override;
 
   /// Shutdown the server.
-  virtual void shutdown ();
+  void shutdown () override;
 
   /// Do a clean up of the memory map
-  virtual void cleanup ( );
+  void cleanup () override;
 
   /// Set the ORB pointer.
   void orb (CORBA::ORB_ptr o);
 
   /// Set the pool pointer
-  void pool_name (const ACE_TCHAR *name);
+  void pool_name (ACE_TCHAR const *name);
 
 private:
   /// ORB pointer.
   CORBA::ORB_var orb_;
 
   /// Name of the pool
-  ACE_TCHAR *pool_name_;
+  /// Borrowed from the server's command-line arguments.
+  ACE_TCHAR const *pool_name_ {};
 
-  /// Hold the pool of name pool_name_
-  pool_t *pool_t_;
+  /// Borrowed pointer to the latest pool wrapper, used by cleanup().
+  pool_t *pool_t_ {};
 
-  void operator= (const Grid_Factory_i &);
+  /// Owns pool wrappers while Grid_i servants borrow pointers to them.
+  std::vector<std::unique_ptr<pool_t>> pool_owners_;
+
+  /// Keeps activated Grid_i servants alive for the factory's lifetime.
+  std::vector<std::unique_ptr<Grid_i>> grid_owners_;
 };
-
 
 /**
  * @class Grid_i:
@@ -75,55 +85,52 @@ private:
 class Grid_i: public POA_Grid
 {
 public:
-  /// Constructor
-  Grid_i ();
-
-  /// Constructor.
   Grid_i (CORBA::Short, CORBA::Short, pool_t *);
 
-  /// Destructor
-  ~Grid_i ();
+  ~Grid_i () override = default;
+
+  Grid_i (Grid_i const&) = delete;
+  Grid_i (Grid_i&&) = delete;
+  Grid_i& operator= (Grid_i const&) = delete;
+  Grid_i& operator= (Grid_i&&) = delete;
 
   /// Returns the width of the grid
-  virtual CORBA::Short width ();
+  CORBA::Short width () override;
 
   /// Returns the height of the grid
-  virtual CORBA::Short height ();
+  CORBA::Short height () override;
 
   /// Sets the width of the grid.
-  virtual void width (CORBA::Short);
+  void width (CORBA::Short) override;
 
   /// Sets the height of the grid.
-  virtual void height (CORBA::Short);
+  void height (CORBA::Short) override;
 
   /// Sets the grid value.
-  virtual void set (CORBA::Short,
-                    CORBA::Short,
-                    CORBA::Long);
+  void set (CORBA::Short,
+            CORBA::Short,
+            CORBA::Long) override;
 
   /// Gets the grid value.
-  virtual CORBA::Long get (CORBA::Short,
-                           CORBA::Short);
+  CORBA::Long get (CORBA::Short,
+                   CORBA::Short) override;
 
   /// Destroy the grid.
-  virtual void destroy ();
-
-  /// Set a pointer to the pool
-  void set_pool (pool_t *);
+  void destroy () override;
 
 private:
   /// Width of the grid.
-  CORBA::Short width_;
+  CORBA::Short width_ {};
 
   /// Height of the grid.
-  CORBA::Short height_;
+  CORBA::Short height_ {};
 
-  /// Pointer to the matrix.  This is organized as an "array of arrays."
-  CORBA::Long **array_;
+  /// Pointers into persistent mapped storage, organized as an array of arrays.
+  /// Keep this representation because it is persisted in the memory pool.
+  CORBA::Long **array_ {};
 
-  ///Pointer to the memory pool..
-  pool_t *pool_t_;
+  /// Borrowed pointer to a pool wrapper kept alive by Grid_Factory_i.
+  pool_t *pool_t_ {};
 };
-
 
 #endif /* GRID_I_H */

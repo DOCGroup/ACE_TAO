@@ -40,10 +40,14 @@ public:
    * @param orb
    * @param policy_list The policy list use to create StockQuoter_POA.
    */
-  StockDistributor_i (RTPortableServer::POA_ptr poa);
+  explicit StockDistributor_i (RTPortableServer::POA_ptr poa);
 
-  /// Destructor
-  virtual ~StockDistributor_i ();
+  StockDistributor_i (StockDistributor_i const &) = delete;
+  StockDistributor_i (StockDistributor_i &&) = delete;
+  StockDistributor_i &operator= (StockDistributor_i const &) = delete;
+  StockDistributor_i &operator= (StockDistributor_i &&) = delete;
+
+  ~StockDistributor_i () override;
 
   /**
    * Insert StockNameConsumer object and its priority into the StockDistributor
@@ -54,8 +58,8 @@ public:
    * @param priority The priority of the StockNameConsumer object.
    * @return A Cookie object that records this subscription.
    */
-  virtual ::Stock::Cookie * subscribe_notifier (::Stock::StockNameConsumer_ptr c,
-                                                ::RTCORBA::Priority priority);
+  ::Stock::Cookie * subscribe_notifier (::Stock::StockNameConsumer_ptr c,
+                                        ::RTCORBA::Priority priority) override;
 
   /**
    * Erase the StockNameConsumer object from the StockDistributor object's subscribers' map.
@@ -63,41 +67,41 @@ public:
    * @param ck The Cookie object that records the subscription.
    * @param The reference of the StockNameConsumer object that has been erased.
    */
-  virtual ::Stock::StockNameConsumer_ptr unsubscribe_notifier (::Stock::Cookie *ck);
+  ::Stock::StockNameConsumer_ptr unsubscribe_notifier (::Stock::Cookie *ck) override;
 
   /**
    * Return the StockQuoter object created by the Constructor.
    *
    * @return A StockQuoter object created by this StockDistributor object.
    */
-  virtual ::Stock::StockQuoter_ptr provide_quoter_info (::Stock::Cookie *ck);
+  ::Stock::StockQuoter_ptr provide_quoter_info (::Stock::Cookie *ck) override;
 
   /**
    * Get the notification_rate attribute.
    *
    * @return The notification_rate attribute.
    */
-  virtual ::CORBA::Long notification_rate ();
+  ::CORBA::Long notification_rate () override;
 
   /**
    * Set the notification_rate attribute.
    *
    * @param notification_rate The value of notification_rate attribute that need to be set.
    */
-  virtual void notification_rate (::CORBA::Long notification_rate);
+  void notification_rate (::CORBA::Long notification_rate) override;
 
   /**
    * Set the active state of the StockDistributor object to true and create a thread
    * to publish the stock information to the Stock Broker clients.
    */
-  virtual void start ();
+  void start () override;
 
   /**
    * Set the active state of StockDistributor object to false.
    */
-  virtual void stop ();
+  void stop () override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 
   /// Callback for stock database.
   void operator () (std::vector <std::string> &stocks);
@@ -105,9 +109,9 @@ public:
   int svn ();
 
   /// The map that stores the subscribed StockNameConsumer object.
-  typedef std::map <std::string,
-                    std::pair <Stock::StockNameConsumer_var,
-                               RTCORBA::Priority> > CookieMap;
+  using CookieMap = std::map<std::string,
+                             std::pair<Stock::StockNameConsumer_var,
+                                       RTCORBA::Priority>>;
 
 private:
   /// Notification rate for distributor in seconds.
@@ -119,7 +123,7 @@ private:
   ACE_RW_Thread_Mutex lock_;
 
   /// The active state of the  StockDistributor object.
-  bool active_;
+  bool active_ {};
 
   /// Cache a copy of the RTCORBA::POA.
   RTPortableServer::POA_var rt_poa_;
@@ -136,11 +140,14 @@ class  StockQuoter_i
   : public virtual POA_Stock::StockQuoter
 {
 public:
-  /// Constructor.
-  StockQuoter_i ();
+  StockQuoter_i () = default;
 
-  /// Destructor.
-  virtual ~StockQuoter_i ();
+  ~StockQuoter_i () override = default;
+
+  StockQuoter_i (StockQuoter_i const &) = delete;
+  StockQuoter_i (StockQuoter_i &&) = delete;
+  StockQuoter_i &operator= (StockQuoter_i const &) = delete;
+  StockQuoter_i &operator= (StockQuoter_i &&) = delete;
 
   /**
    * Get detailed stock information.
@@ -148,7 +155,7 @@ public:
    * @param stock_name The name of the stock whose detailed info is needed.
    * @throw ::Stock::Invalid_Stock
    */
-  virtual ::Stock::StockInfo *get_stock_info (const char *stock_name);
+  ::Stock::StockInfo *get_stock_info (const char *stock_name) override;
 };
 
 /**
@@ -167,21 +174,25 @@ public:
    *
    * @param orb
    */
-  StockDistributorHome_i (CORBA::ORB_ptr orb);
+  explicit StockDistributorHome_i (CORBA::ORB_ptr orb);
 
-  /// Destructor
-  virtual ~StockDistributorHome_i ();
+  StockDistributorHome_i (StockDistributorHome_i const &) = delete;
+  StockDistributorHome_i (StockDistributorHome_i &&) = delete;
+  StockDistributorHome_i &operator= (StockDistributorHome_i const &) = delete;
+  StockDistributorHome_i &operator= (StockDistributorHome_i &&) = delete;
+
+  ~StockDistributorHome_i () override;
 
   /**
    * Return the StockDistributor object created by the Constructor.
    *
    * @return The StockDistributor object created by the Constructor.
    */
-  virtual ::Stock::StockDistributor_ptr create ();
+  ::Stock::StockDistributor_ptr create () override;
 
-  virtual int handle_signal (int signum,
-                             siginfo_t * = 0,
-                             ucontext_t * = 0);
+  int handle_signal (int signum,
+                     siginfo_t * = nullptr,
+                     ucontext_t * = nullptr) override;
 private:
   void create_distributor ();
 
@@ -195,9 +206,9 @@ private:
   PortableServer::ObjectId_var dist_id_;
 };
 
-
 // Define typedefs for our version of the stock database.
-typedef ACE_Singleton<Stock_Database<StockDistributor_i>, TAO_SYNCH_MUTEX> Stock_Database_Singleton;
+using Stock_Database_Singleton = ACE_Singleton<Stock_Database<StockDistributor_i>,
+                                               TAO_SYNCH_MUTEX>;
 #define STOCK_DATABASE Stock_Database_Singleton::instance()
 
 #endif /* DISTRIBUTORI_H_  */

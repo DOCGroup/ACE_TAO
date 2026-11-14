@@ -1,14 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    ORT_Adapter_Factory.h
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
-
 #ifndef TAO_ORT_ADAPTER_FACTORY_H
 #define TAO_ORT_ADAPTER_FACTORY_H
 
@@ -46,15 +41,7 @@ namespace TAO
     : public ACE_Service_Object
   {
   public:
-    /// Destructor.
-    /**
-     * @note Even though this class only defines an interface, a
-     *       destructor is necessary to avoid dynamic_cast<> failures
-     *       when using g++ 4.0's -fvisibility-inlines-hidden command
-     *       line option.  Apparently the compiler generated
-     *       destructor is inlined.
-     */
-    ~ORT_Adapter_Factory () override;
+    ~ORT_Adapter_Factory () override = default;
 
     /// Create a new adapter, in case not possible to allocate, returns 0
     virtual TAO::ORT_Adapter * create () = 0;

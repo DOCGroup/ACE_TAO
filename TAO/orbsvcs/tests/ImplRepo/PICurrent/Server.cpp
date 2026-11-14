@@ -74,7 +74,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     std::cout << "Test server shutting down." << std::endl;
 
-    root_poa->destroy(1,1);
+    root_poa->destroy(true,true);
     orb->destroy();
 
     ACE_Message_Block *mb;

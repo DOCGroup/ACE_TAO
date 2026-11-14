@@ -11,11 +11,11 @@ TeraSS_State_DONE::service (JAWS_Event_Completer *, void *)
 }
 
 JAWS_Protocol_State *
-TeraSS_State_DONE::transition (const JAWS_Event_Result &, void *, void *)
+TeraSS_State_DONE::transition (JAWS_Event_Result const &, void *, void *)
 {
   // In the DONE state, this won't get called.
 
-  ACE_ASSERT (0);
-  return 0;
+  ACE_ASSERT (false);
+  return nullptr;
 }
 

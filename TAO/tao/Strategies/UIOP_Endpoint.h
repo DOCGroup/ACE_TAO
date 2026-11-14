@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//==========================================================================
 /**
  * @file UIOP_Endpoint.h
  *
@@ -8,7 +7,6 @@
  *
  * @author  Marina Spivak <marina@cs.wustl.edu>
  */
-//==========================================================================
 
 #ifndef TAO_UIOP_ENDPOINT_H
 #define TAO_UIOP_ENDPOINT_H
@@ -40,22 +38,16 @@ class TAO_Strategies_Export TAO_UIOP_Endpoint : public TAO_Endpoint
 public:
   friend class TAO_UIOP_Profile;
 
-  /// Default constructor.
   TAO_UIOP_Endpoint ();
 
-  /// Constructor.
-  TAO_UIOP_Endpoint (ACE_UNIX_Addr const &addr,
-                     CORBA::Short priority = TAO_INVALID_PRIORITY);
+  explicit TAO_UIOP_Endpoint (ACE_UNIX_Addr const &addr,
+                              CORBA::Short priority = TAO_INVALID_PRIORITY);
 
-  /// Destructor.
-  ~TAO_UIOP_Endpoint () = default;
+  ~TAO_UIOP_Endpoint () override = default;
 
-  /**
-   * @name TAO_Endpoint Methods
-   *
-   * Please check the documentation in Endpoint.h for details.
-   */
-  //@{
+  /// @name TAO_Endpoint methods
+  /// Please check the documentation in Endpoint.h for details.
+  /// @{
   TAO_Endpoint *next () override;
   int addr_to_string (char *buffer, size_t length) override;
   TAO_Endpoint *duplicate () override;
@@ -66,16 +58,17 @@ public:
 
   /// Return a hash value for this object.
   CORBA::ULong hash () override;
-  //@}
+  /// @}
 
-  // = UIOP_Endpoint-specific methods.
-
+  /// @name UIOP-specific methods
+  /// @{
   /// Return a reference to the <object_addr>.
   ACE_UNIX_Addr const &object_addr () const;
 
   /// Return a pointer to the rendezvous point string.
   /// This object maintains ownership of the returned string.
   char const *rendezvous_point () const;
+  /// @}
 
 private:
   TAO_UIOP_Endpoint (TAO_UIOP_Endpoint const &) = delete;

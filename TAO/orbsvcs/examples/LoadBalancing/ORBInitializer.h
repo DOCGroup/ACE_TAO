@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ORB_INITIALIZER_H
 #define ORB_INITIALIZER_H
 
@@ -44,8 +43,13 @@ class ORBInitializer
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
-  ORBInitializer ();
+  ORBInitializer () = default;
+  ~ORBInitializer () override = default;
+
+  ORBInitializer (ORBInitializer const &) = delete;
+  ORBInitializer (ORBInitializer &&) = delete;
+  ORBInitializer &operator= (ORBInitializer const &) = delete;
+  ORBInitializer &operator= (ORBInitializer &&) = delete;
 
   /**
    * @name PortableInterceptor::ORBInitializer Methods
@@ -53,11 +57,11 @@ public:
    * Methods required by the PortableInterceptor::ORBInitializer
    * interface.
    */
-  //@{
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
+  /// @{
+  void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
-  //@}
+  void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
+  /// @}
 
   /// Return a reference to the LoadAlert object.
   TAO_LB_LoadAlert & load_alert ();
@@ -73,9 +77,8 @@ private:
    */
   TAO_LB_LoadAlert load_alert_;
 
-  ServerRequestInterceptor * interceptor_;
+  ServerRequestInterceptor *interceptor_ {};
 };
-
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

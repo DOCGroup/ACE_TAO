@@ -9,8 +9,9 @@
  */
 //=============================================================================
 
-
 #include "helper.h"
+
+#include <cstring>
 #include "ub_any_seq.h"
 #include "tao/debug.h"
 
@@ -33,7 +34,7 @@ Test_AnySeq::Test_AnySeq ()
 Test_AnySeq::~Test_AnySeq ()
 {
   CORBA::string_free (this->opname_);
-  this->opname_ = 0;
+  this->opname_ = nullptr;
 }
 
 const char *
@@ -53,7 +54,7 @@ Test_AnySeq::dii_req_invoke (CORBA::Request *req)
 
   req->invoke ();
 
-  const CORBA::AnySeq* tmp = 0;
+  CORBA::AnySeq const *tmp {};
   req->return_value () >>= tmp;
   this->ret_ = new CORBA::AnySeq (*tmp);
 
@@ -181,7 +182,6 @@ Test_AnySeq::reset_parameters ()
   return 0;
 }
 
-
 int
 Test_AnySeq::run_sii_test (Param_Test_ptr objref)
 {
@@ -246,9 +246,9 @@ Test_AnySeq::check_validity ()
                (this->out_[i] >>= str_out) &&
                (this->ret_[i] >>= str_ret))
         {
-          if (ACE_OS::strcmp (str_in, str_inout) ||
-              ACE_OS::strcmp (str_in, str_out) ||
-              ACE_OS::strcmp (str_in, str_ret))
+          if (std::strcmp (str_in, str_inout) ||
+              std::strcmp (str_in, str_out) ||
+              std::strcmp (str_in, str_ret))
             {
               ACE_DEBUG ((LM_DEBUG,
                           "mismatch of string values\n"));
@@ -310,8 +310,8 @@ void
 Test_AnySeq::print_sequence (const CORBA::AnySeq &s)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "maximum = %d\n"
-              "length = %d\n",
+              "maximum = %u\n"
+              "length = %u\n",
               s.maximum (),
               s.length ()));
   ACE_DEBUG ((LM_DEBUG, "Elements -\n"));

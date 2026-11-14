@@ -44,7 +44,7 @@ ACE_Shared_Memory_Pool::in_use (ACE_OFF_T &offset,
   SHM_TABLE *st = reinterpret_cast<SHM_TABLE *> (this->shm_addr_table_[0]);
   shmid_ds buf;
 
-  for (counter = 0; counter < this->max_segments_ && st[counter].used_ == 1; counter++)
+  for (counter = 0; counter < this->max_segments_ && st[counter].used_ == 1; ++counter)
     {
       if (ACE_OS::shmctl (st[counter].shmid_, IPC_STAT, &buf) == -1)
         ACELIB_ERROR_RETURN ((LM_ERROR,
@@ -73,7 +73,7 @@ ACE_Shared_Memory_Pool::find_seg (const void* const searchPtr,
   SHM_TABLE *st = reinterpret_cast<SHM_TABLE *> (this->shm_addr_table_[0]);
   shmid_ds buf;
 
-  for (counter = 0; counter < this->max_segments_ && st[counter].used_ == 1; counter++)
+  for (counter = 0; counter < this->max_segments_ && st[counter].used_ == 1; ++counter)
     {
       if (ACE_OS::shmctl (st[counter].shmid_, IPC_STAT, &buf) == -1)
         ACELIB_ERROR_RETURN ((LM_ERROR,
@@ -373,7 +373,7 @@ ACE_Shared_Memory_Pool::init_acquire (size_t nbytes,
 
       for (size_t counter = 1; // Skip over the first entry...
            counter < this->max_segments_;
-           counter++)
+           ++counter)
         {
 #ifdef ACE_HAS_SYSV_IPC
           st[counter].key_ = this->base_shm_key_ + counter;

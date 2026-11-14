@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef _CM_SERVER_H
 #define _CM_SERVER_H
 
@@ -24,14 +23,14 @@
 class CM_Server : public Comm_Manager
 {
 public:
-  CM_Server ();
-  virtual ~CM_Server ();
+  CM_Server () = default;
+  ~CM_Server () override;
 
-  virtual int open (short port_number);
-  virtual int receive (int timeout = 0);
-  virtual int send ();
-  virtual int mux (char *packet, int &packet_length)   = 0;
-  virtual int demux (char *packet, int &packet_length) = 0;
+  int open (short port_number) override;
+  int receive (int timeout = 0) override;
+  int send () override;
+  int mux (char *packet, int &packet_length) override = 0;
+  int demux (char *packet, int &packet_length) override = 0;
 };
 
 #endif /* _CM_SERVER_H */

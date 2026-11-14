@@ -22,7 +22,7 @@ ACE_Thread::spawn_n (size_t n,
   ACE_TRACE ("ACE_Thread::spawn_n");
   size_t i;
 
-  for (i = 0; i < n; i++)
+  for (i = 0; i < n; ++i)
    {
       ACE_thread_t t_id;
       // Bail out if error occurs.
@@ -35,7 +35,7 @@ ACE_Thread::spawn_n (size_t n,
                               stack == nullptr ? nullptr : stack[i],
                               stack_size == nullptr ? ACE_DEFAULT_THREAD_STACKSIZE : stack_size[i],
                               thread_adapter,
-                              thr_name == nullptr ? nullptr : &thr_name[i]) != 0)
+                              thr_name == nullptr ? nullptr : thr_name + i) != 0)
         break;
    }
 
@@ -58,7 +58,7 @@ ACE_Thread::spawn_n (ACE_thread_t thread_ids[],
   ACE_TRACE ("ACE_Thread::spawn_n");
   size_t i = 0;
 
-  for (i = 0; i < n; i++)
+  for (i = 0; i < n; ++i)
     {
       ACE_thread_t t_id;
       ACE_hthread_t t_handle;
@@ -73,7 +73,7 @@ ACE_Thread::spawn_n (ACE_thread_t thread_ids[],
                             stack == nullptr ? nullptr : stack[i],
                             stack_size == nullptr ? ACE_DEFAULT_THREAD_STACKSIZE : stack_size[i],
                             thread_adapter,
-                            thr_name == nullptr ? nullptr : &thr_name[i]);
+                            thr_name == nullptr ? nullptr : thr_name + i);
 
       if (result == 0)
         {

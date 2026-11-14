@@ -7,7 +7,7 @@
 
 class Stock_Consumer : public POA_CosEventComm::PushConsumer {
 public:
-  Stock_Consumer ();
+  Stock_Consumer () = default;
 
   void connect (CosEventChannelAdmin::EventChannel_ptr event_channel);
   // Connect to the event channel, using <consumer_admin>
@@ -15,8 +15,13 @@ public:
   void disconnect ();
   // Disconnect from the event channel.
 
-  void push (const CORBA::Any& data);
-  void disconnect_push_consumer ();
+  void push (CORBA::Any const &data) override;
+  void disconnect_push_consumer () override;
+
+  Stock_Consumer (Stock_Consumer const &) = delete;
+  Stock_Consumer (Stock_Consumer &&) = delete;
+  Stock_Consumer &operator= (Stock_Consumer const &) = delete;
+  Stock_Consumer &operator= (Stock_Consumer &&) = delete;
 
 private:
   CosEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_;

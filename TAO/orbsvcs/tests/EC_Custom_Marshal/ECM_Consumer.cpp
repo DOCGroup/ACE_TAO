@@ -11,7 +11,9 @@
 #include "tao/CDR.h"
 
 #include "ace/Get_Opt.h"
+#include <algorithm>
 #include <memory>
+#include <string>
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_unistd.h"
@@ -26,11 +28,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 // ****************************************************************
 
 Driver::Driver ()
-  : n_consumers_ (1),
+  : consumers_ {},
+    n_consumers_ (1),
     event_count_ (100),
     event_a_ (ACE_ES_EVENT_UNDEFINED),
     event_b_ (ACE_ES_EVENT_UNDEFINED + 1),
-    pid_file_name_ (0),
+    pid_file_name_ {},
     recv_count_ (0)
 {
 }
@@ -75,20 +78,22 @@ Driver::run (int argc, ACE_TCHAR* argv[])
                   this->event_a_,
                   this->event_b_,
 
-                  this->pid_file_name_?this->pid_file_name_:ACE_TEXT("nil")));
+                  this->pid_file_name_ != nullptr
+                    ? this->pid_file_name_
+                    : ACE_TEXT ("nil")));
 
-      if (this->pid_file_name_ != 0)
+      if (this->pid_file_name_ != nullptr)
         {
-          FILE* pid = ACE_OS::fopen (this->pid_file_name_, "w");
-          if (pid != 0)
+          std::unique_ptr<FILE, int (*) (FILE *)> pid (
+            ACE_OS::fopen (this->pid_file_name_, "w"), ACE_OS::fclose);
+          if (pid != nullptr)
             {
-              ACE_OS::fprintf (pid, "%ld\n",
+              ACE_OS::fprintf (pid.get (), "%ld\n",
                                static_cast<long> (ACE_OS::getpid ()));
-              ACE_OS::fclose (pid);
             }
         }
 
-      int min_priority =
+      int const min_priority =
         ACE_Sched_Params::priority_min (ACE_SCHED_FIFO);
       // Enable FIFO scheduling
 
@@ -162,16 +167,8 @@ Driver::run (int argc, ACE_TCHAR* argv[])
 }
 
 void
-Driver::push_consumer (void* /* consumer_cookie */,
-                       ACE_hrtime_t /* arrival */,
-                       const RtecEventComm::EventSet& events)
+Driver::push_consumer (RtecEventComm::EventSet const& events)
 {
-  // int ID =
-  //   (reinterpret_cast<Test_Consumer**> (consumer_cookie)
-  //    - this->consumers_);
-  //
-  // ACE_DEBUG ((LM_DEBUG, "(%t) events received by consumer %d\n", ID));
-
   if (events.length () == 0)
     {
       // ACE_DEBUG ((LM_DEBUG, "no events\n"));
@@ -182,7 +179,7 @@ Driver::push_consumer (void* /* consumer_cookie */,
 
   this->recv_count_ += events.length ();
 
-  int x = this->event_count_ / 10;
+  int const x = std::max (1, this->event_count_ / 10);
   if (this->recv_count_ % x == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -195,14 +192,14 @@ Driver::push_consumer (void* /* consumer_cookie */,
       TAO_ORB_Core_instance ()->orb ()->shutdown ();
     }
 
-  // ACE_DEBUG ((LM_DEBUG, "%d event(s)\n", events.length ()));
+  // ACE_DEBUG ((LM_DEBUG, "%u event(s)\n", events.length ()));
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
-  for (u_int i = 0; i < events.length (); ++i)
+  for (CORBA::ULong i {}; i < events.length (); ++i)
     {
       const RtecEventComm::Event& e = events[i];
 
-      if (e.data.payload.mb () == 0)
+      if (e.data.payload.mb () == nullptr)
         {
           ACE_DEBUG ((LM_DEBUG, "No data in event[%d]\n", i));
           continue;
@@ -216,26 +213,24 @@ Driver::push_consumer (void* /* consumer_cookie */,
       // already!)?
 
       // Note that there is no copying
-      int byte_order = e.data.payload[0];
+      int const byte_order = e.data.payload[0];
 
-      ACE_Message_Block* mb =
-        ACE_Message_Block::duplicate (e.data.payload.mb ());
+      ACE_Message_Block_Unique_Ptr const mb (
+        ACE_Message_Block::duplicate (e.data.payload.mb ()));
       mb->rd_ptr (1); // skip the byte order
 
-      TAO_InputCDR cdr (mb, byte_order);
+      TAO_InputCDR cdr (mb.get (), byte_order);
 
-      ECM_IDLData::Info info;
+      ECM_IDLData::Info info {};
       cdr >> info;
 
-      ECM_Data other;
+      ECM_Data other {};
       cdr >> other;
 
       if (!cdr.good_bit ())
         ACE_ERROR ((LM_ERROR, "Problem demarshalling C++ data\n"));
 
-      ACE_Message_Block::release (mb);
-
-      CORBA::ULong n = info.trajectory.length ();
+      CORBA::ULong const n = info.trajectory.length ();
       // ACE_DEBUG ((LM_DEBUG, "Payload contains <%d> elements\n", n));
       // ACE_DEBUG ((LM_DEBUG, "Inventory <%s> contains <%d> elements\n",
       // other.description.in (),
@@ -243,7 +238,7 @@ Driver::push_consumer (void* /* consumer_cookie */,
 
       for (CORBA::ULong j = 0; j < n; ++j)
         {
-          ECM_IDLData::Point& p = info.trajectory[j];
+          ECM_IDLData::Point const& p = info.trajectory[j];
           if (static_cast<CORBA::ULong>(p.x) != j ||
               static_cast<CORBA::ULong>(p.y) != j*j)
             {
@@ -259,13 +254,9 @@ Driver::push_consumer (void* /* consumer_cookie */,
 void
 Driver::connect_consumers (RtecEventChannelAdmin::EventChannel_ptr channel)
 {
-  for (int i = 0; i < this->n_consumers_; ++i)
+  for (int i {}; i < this->n_consumers_; ++i)
     {
-      char buf[BUFSIZ];
-      ACE_OS::sprintf (buf, "consumer_%02d", i);
-
-      ACE_NEW (this->consumers_[i],
-               Test_Consumer (this, this->consumers_ + i));
+      this->consumers_[i] = new Test_Consumer (*this);
 
       this->consumers_[i]->connect (this->event_a_,
                                     this->event_b_,
@@ -276,7 +267,7 @@ Driver::connect_consumers (RtecEventChannelAdmin::EventChannel_ptr channel)
 void
 Driver::disconnect_consumers ()
 {
-  for (int i = 0; i < this->n_consumers_; ++i)
+  for (int i {}; i < this->n_consumers_; ++i)
     {
       this->consumers_[i]->disconnect ();
     }
@@ -302,12 +293,18 @@ Driver::parse_args (int argc, ACE_TCHAR *argv [])
 
         case 'h':
           {
-            char* aux;
-                char* arg = ACE_OS::strtok_r (ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ()), ",", &aux);
+            std::string event_types (ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ()));
+            char* state {};
+            char* first = ACE_OS::strtok_r (event_types.data (), ",", &state);
+            char* second = ACE_OS::strtok_r (nullptr, ",", &state);
+            char* extra = ACE_OS::strtok_r (nullptr, ",", &state);
+            if (first == nullptr || second == nullptr || extra != nullptr)
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Expected two comma-separated event types\n"),
+                                -1);
 
-            this->event_a_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
-                arg = ACE_OS::strtok_r (0, ",", &aux);
-            this->event_b_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
+            this->event_a_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (first);
+            this->event_b_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (second);
           }
           break;
 
@@ -340,7 +337,7 @@ Driver::parse_args (int argc, ACE_TCHAR *argv [])
       this->event_count_ = 100;
     }
 
-  if (this->n_consumers_ <= 0)
+  if (this->n_consumers_ <= 0 || this->n_consumers_ > MAX_CONSUMERS)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%s: number of consumers or "
@@ -352,9 +349,9 @@ Driver::parse_args (int argc, ACE_TCHAR *argv [])
 
 // ****************************************************************
 
-Test_Consumer::Test_Consumer (Driver *driver, void *cookie)
+Test_Consumer::Test_Consumer (Driver& driver)
   : driver_ (driver),
-    cookie_ (cookie)
+    supplier_proxy_ {}
 {
 }
 
@@ -369,7 +366,6 @@ Test_Consumer::connect (int event_a,
   qos.insert_type (event_a, 0);
   qos.insert_type (event_b, 0);
 
-  // = Connect as a consumer.
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
     ec->for_consumers ();
 
@@ -395,10 +391,9 @@ Test_Consumer::disconnect ()
 }
 
 void
-Test_Consumer::push (const RtecEventComm::EventSet& events)
+Test_Consumer::push (RtecEventComm::EventSet const& events)
 {
-  ACE_hrtime_t arrival = ACE_OS::gethrtime ();
-  this->driver_->push_consumer (this->cookie_, arrival, events);
+  this->driver_.push_consumer (events);
 }
 
 void

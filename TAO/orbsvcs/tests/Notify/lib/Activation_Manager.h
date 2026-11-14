@@ -23,6 +23,8 @@
 #include "Periodic_Consumer.h"
 #include "Activation_ManagerS.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Barrier;
 ACE_END_VERSIONED_NAMESPACE_DECL
@@ -35,22 +37,29 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Activation_Manager : public TAO_Notify_Tests_Task_Callback
                                                        , public POA_Notify_Test::Activation_Manager
 {
-  typedef ACE_Hash_Map_Manager<ACE_CString, TAO_Notify_Tests_Periodic_Supplier*, ACE_SYNCH_NULL_MUTEX> TAO_Notify_Tests_PeriodicSupplier_Map;
-  typedef ACE_Hash_Map_Manager<ACE_CString, TAO_Notify_Tests_Periodic_Consumer*, ACE_SYNCH_NULL_MUTEX> TAO_Notify_Tests_PeriodicConsumer_Map;
-  typedef ACE_Hash_Map_Iterator<ACE_CString, TAO_Notify_Tests_Periodic_Supplier*, ACE_SYNCH_NULL_MUTEX> TAO_Notify_Tests_PeriodicSupplier_Iterator;
-  typedef ACE_Hash_Map_Iterator<ACE_CString, TAO_Notify_Tests_Periodic_Consumer*, ACE_SYNCH_NULL_MUTEX> TAO_Notify_Tests_PeriodicConsumer_Iterator;
-  typedef ACE_Hash_Map_Entry<ACE_CString, TAO_Notify_Tests_Periodic_Supplier*> TAO_Notify_Tests_PeriodicSupplier_Entry;
-  typedef ACE_Hash_Map_Entry<ACE_CString, TAO_Notify_Tests_Periodic_Consumer*> TAO_Notify_Tests_PeriodicConsumer_Entry;
+  using TAO_Notify_Tests_PeriodicSupplier_Map =
+    ACE_Hash_Map_Manager<ACE_CString, TAO_Notify_Tests_Periodic_Supplier*, ACE_SYNCH_NULL_MUTEX>;
+  using TAO_Notify_Tests_PeriodicConsumer_Map =
+    ACE_Hash_Map_Manager<ACE_CString, TAO_Notify_Tests_Periodic_Consumer*, ACE_SYNCH_NULL_MUTEX>;
+  using TAO_Notify_Tests_PeriodicSupplier_Iterator =
+    ACE_Hash_Map_Iterator<ACE_CString, TAO_Notify_Tests_Periodic_Supplier*, ACE_SYNCH_NULL_MUTEX>;
+  using TAO_Notify_Tests_PeriodicConsumer_Iterator =
+    ACE_Hash_Map_Iterator<ACE_CString, TAO_Notify_Tests_Periodic_Consumer*, ACE_SYNCH_NULL_MUTEX>;
+  using TAO_Notify_Tests_PeriodicSupplier_Entry = ACE_Hash_Map_Entry<ACE_CString, TAO_Notify_Tests_Periodic_Supplier*>;
+  using TAO_Notify_Tests_PeriodicConsumer_Entry = ACE_Hash_Map_Entry<ACE_CString, TAO_Notify_Tests_Periodic_Consumer*>;
 
 public:
-  /// Constructor
   TAO_Notify_Tests_Activation_Manager ();
 
-  /// Destructor
+  TAO_Notify_Tests_Activation_Manager (TAO_Notify_Tests_Activation_Manager const &) = delete;
+  TAO_Notify_Tests_Activation_Manager &operator=(TAO_Notify_Tests_Activation_Manager const &) = delete;
+  TAO_Notify_Tests_Activation_Manager (TAO_Notify_Tests_Activation_Manager &&) = delete;
+  TAO_Notify_Tests_Activation_Manager &operator=(TAO_Notify_Tests_Activation_Manager &&) = delete;
+
   virtual ~TAO_Notify_Tests_Activation_Manager ();
 
   /// Interface impl.
-  virtual void start ();
+  void start () override;
 
   /// Register Supplier
   void _register (TAO_Notify_Tests_Periodic_Supplier* supplier, const char* obj_name);
@@ -76,8 +85,8 @@ public:
   void wait_for_completion ();
 
   /// TAO_Notify_Tests_Task_Callback methods
-  virtual void done (TAO_Notify_Tests_Periodic_Supplier* supplier);
-  virtual void done (TAO_Notify_Tests_Periodic_Consumer* consumer);
+  void done (TAO_Notify_Tests_Periodic_Supplier* supplier) override;
+  void done (TAO_Notify_Tests_Periodic_Consumer* consumer) override;
 
   // Dump stats gathered during exec..
   void dump_stats (int dump_samples);
@@ -97,7 +106,7 @@ protected:
   TAO_SYNCH_MUTEX lock_;
 
   /// The barrier to synch all supplier on so that everyone starts at the same instance.
-  ACE_Barrier* barrier_;
+  std::unique_ptr<ACE_Barrier> barrier_ {};
 
   /// Number of Active suppliers (still running a ACE_Task and sending events)
   int active_suppliers_;
@@ -114,8 +123,8 @@ protected:
   // Map that stores consumers.
   TAO_Notify_Tests_PeriodicConsumer_Map consumer_map_;
 
-  /// The file for output
-  FILE *ior_output_file_;
+  /// Owned output stream; closed after writing or when the manager is destroyed.
+  FILE *ior_output_file_ {};
 
   /// The file for input
   ACE_TString ior_input_file_;

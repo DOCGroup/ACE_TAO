@@ -17,12 +17,14 @@
 class Supplier : public ACE_Event_Handler, public ShutdownCallback
 {
 public:
-  // Initialization and Termination methods.
-  /// Constructor.
   Supplier () = default;
 
-  /// Destructor.
-  ~Supplier () = default;
+  ~Supplier () override = default;
+
+  Supplier (Supplier const &) = delete;
+  Supplier &operator= (Supplier const &) = delete;
+  Supplier (Supplier &&) = delete;
+  Supplier &operator= (Supplier &&) = delete;
 
   /// Initialization method. returns 0 on success, -1 on error.
   int init (int argc, ACE_TCHAR *argv[]);
@@ -31,13 +33,13 @@ public:
   void run ();
 
   /// Shutdown the application.
-  virtual void close ();
+  void close () override;
 
 private:
   /// Handle shutdown signals.
-  virtual int handle_signal (int signum,
-                             siginfo_t *,
-                             ucontext_t *);
+  int handle_signal (int signum,
+                     siginfo_t *,
+                     ucontext_t *) override;
 
   /// Handler for keyboard input.
   Supplier_Input_Handler ih_;

@@ -20,7 +20,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (ACE_OS::access (ACE_DEFAULT_SVC_CONF, F_OK) != 0)
     {
       // Use static linking.
-      ACE_Service_Object_Ptr sp = ACE_SVC_INVOKE (Peer_Factory);
+      ACE_Service_Object_Ptr sp (ACE_SVC_INVOKE (Peer_Factory));
 
       if (sp->init (argc - 1, argv + 1) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,

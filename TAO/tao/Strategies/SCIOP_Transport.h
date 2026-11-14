@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   SCIOP_Transport.h
  *
  *  @author  Jason Cohen, Lockheed Martin ATL  <jcohen@atl.lmco.com>
  *  @author  Keith O'Hara, Lockheed Martin ATL
  */
-// ===================================================================
 
 #ifndef TAO_SCIOP_TRANSPORT_H
 #define TAO_SCIOP_TRANSPORT_H
@@ -46,17 +44,15 @@ class TAO_Acceptor;
 class TAO_Strategies_Export TAO_SCIOP_Transport : public TAO_Transport
 {
 public:
-  /// Constructor.
   TAO_SCIOP_Transport (TAO_SCIOP_Connection_Handler *handler,
                        TAO_ORB_Core *orb_core);
 
 protected:
-  /// Destructor
   /**
    * Protected destructor to enforce proper memory management through
    * the reference counting mechanism.
    */
-  ~TAO_SCIOP_Transport () override;
+  ~TAO_SCIOP_Transport () override = default;
 
   /** @name Overridden Template Methods
    *
@@ -73,7 +69,6 @@ protected:
   ssize_t recv (char *buf,
                 size_t len,
                 ACE_Time_Value const *s = nullptr) override;
-
 
 public:
   /// @todo These methods IMHO should have more meaningful

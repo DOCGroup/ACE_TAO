@@ -5,16 +5,11 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_ctype.h"
+#include <cstring>
 
 // Implementation of class Headers
 
-Headers::Headers () : done_(0)
-{
-}
-
-Headers::~Headers ()
-{
-}
+Headers::Headers () = default;
 
 void
 Headers::recognize (const char * const header)
@@ -29,33 +24,33 @@ Headers::parse_header_line (char * const header_line)
   char *buf = header_line;
   int offset = 1;
 
-  ptr = ACE_OS::strchr (header_line, '\n');
+  ptr = std::strchr (header_line, '\n');
 
   if (ptr > header_line && ptr[-1] == '\r')
     {
-      ptr--;
-      offset++;
+      --ptr;
+      ++offset;
     }
 
   if (ptr == header_line)
     {
-      this->done_ = 1;
+      this->done_ = true;
       return;
     }
 
   *ptr = '\0';
   ptr += offset;
 
-  char *value = 0;
+  char *value {};
   char *header = ACE_OS::strtok_r (buf, ":", &value);
 
   ACE_DEBUG((LM_DEBUG, " (%t) Headers::parse_header_line [%s]\n",
              header ? header : "<empty>"));
 
-  if (header != 0 && this->map_.mapped (header))
+  if (header != nullptr && this->map_.mapped (header))
     {
       while (ACE_OS::ace_isspace (*value))
-        value++;
+        ++value;
 
       this->map_[header] = value;
 
@@ -64,7 +59,7 @@ Headers::parse_header_line (char * const header_line)
     }
 
   // Write back the unused portion of the input.
-  ACE_OS::memmove (header_line, ptr, ACE_OS::strlen(ptr) + 1);
+  std::memmove (header_line, ptr, std::strlen (ptr) + 1);
 }
 
 int
@@ -88,8 +83,8 @@ Headers::complete_header_line (char *const header_line)
 
   if (ptr == header_line)
     {
-      ACE_OS::memmove (ptr, ptr+offset, ACE_OS::strlen (ptr + offset) + 1);
-      this->done_ = 1;
+      std::memmove (ptr, ptr + offset, std::strlen (ptr + offset) + 1);
+      this->done_ = true;
       ACE_DEBUG ((LM_DEBUG, "  (%t) no more headers\n"));
       return 0;
     }
@@ -100,7 +95,7 @@ Headers::complete_header_line (char *const header_line)
         {
         case ' ':
         case '\t':
-          ACE_OS::memmove (ptr, ptr+offset, ACE_OS::strlen (ptr + offset) + 1);
+          std::memmove (ptr, ptr + offset, std::strlen (ptr + offset) + 1);
           break;
 
         case '\n':
@@ -141,9 +136,9 @@ int
 Headers::end_of_line (char *&line, int &offset) const
 {
   char *old_line = line;
-  char *ptr = ACE_OS::strchr (old_line, '\n');
+  char *ptr = std::strchr (old_line, '\n');
 
-  if (ptr == 0)
+  if (ptr == nullptr)
     return 0;
 
   line = ptr;
@@ -152,36 +147,24 @@ Headers::end_of_line (char *&line, int &offset) const
   if (line > old_line
       && line[-1] == '\r')
     {
-      line--;
+      --line;
       offset = 2;
     }
 
   return 1;
 }
 
-
 // Implementation of class Headers_Map
 
-Headers_Map::Headers_Map ()
-  : num_headers_(0)
-{
-}
+Headers_Map::Headers_Map () = default;
 
-Headers_Map::~Headers_Map ()
-{
-}
-
-Headers_Map_Item::Headers_Map_Item ()
-  : header_(0),
-    value_(0)
-{
-}
+Headers_Map_Item::Headers_Map_Item () = default;
 
 Headers_Map_Item::~Headers_Map_Item ()
 {
   ACE_OS::free ((void *) this->header_);
   ACE_OS::free ((void *) this->value_);
-  this->header_ = this->value_ = 0;
+  this->header_ = this->value_ = nullptr;
 }
 
 // Headers_Map_Item::operator const char * () const
@@ -211,7 +194,7 @@ Headers_Map_Item::operator= (const Headers_Map_Item & mi)
   ACE_OS::free ((void *) this->value_);
   ACE_OS::free ((void *) this->header_);
   this->header_ = ACE_OS::strdup (mi.header_);
-  this->value_ = (mi.value_ ? ACE_OS::strdup (mi.value_) : 0);
+  this->value_ = (mi.value_ ? ACE_OS::strdup (mi.value_) : nullptr);
   return *this;
 }
 
@@ -234,7 +217,7 @@ Headers_Map::operator[] (const char * const header)
 
   item_ptr = this->find (header);
 
-  if (item_ptr == 0)
+  if (item_ptr == nullptr)
     item_ptr = this->place (header);
 
   return *item_ptr;
@@ -248,7 +231,7 @@ Headers_Map::operator[] (const char * const header) const
 
   item_ptr = this->find (header);
 
-  if (item_ptr == 0)
+  if (item_ptr == nullptr)
     item_ptr = mutable_this->place (header);
 
   return *item_ptr;
@@ -257,7 +240,7 @@ Headers_Map::operator[] (const char * const header) const
 int
 Headers_Map::mapped (const char * const header) const
 {
-  int result = this->find (header) != 0;
+  int result = this->find (header) != nullptr;
 
   return result;
 }
@@ -290,10 +273,10 @@ Headers_Map::find (const char * const header) const
 
   Headers_Map_Item *mi_ptr = mutable_this->map_ + i;
   if (Headers_Map::compare (&this->garbage_, mi_ptr) != 0)
-    mi_ptr = 0;
+    mi_ptr = nullptr;
 #endif
 
-  mutable_this->garbage_.header_ = 0;
+  mutable_this->garbage_.header_ = nullptr;
 
   return mi_ptr;
 }
@@ -306,8 +289,8 @@ Headers_Map::place (const char *const header)
   int i = this->num_headers_++;
   ACE_OS::free ((void *) this->map_[i].header_);
   ACE_OS::free ((void *) this->map_[i].value_);
-  this->map_[i].header_ = 0;
-  this->map_[i].value_ = 0;
+  this->map_[i].header_ = nullptr;
+  this->map_[i].value_ = nullptr;
   Headers_Map_Item temp_item;
 
   while (i > 0)
@@ -318,16 +301,16 @@ Headers_Map::place (const char *const header)
 
       this->map_[i].header_ = this->map_[i - 1].header_;
       this->map_[i].value_ = this->map_[i - 1].value_;
-      this->map_[i - 1].header_ = 0;
-      this->map_[i - 1].value_ = 0;
+      this->map_[i - 1].header_ = nullptr;
+      this->map_[i - 1].value_ = nullptr;
 
-      i--;
+      --i;
     }
 
   this->map_[i].header_ = this->garbage_.header_;
   this->map_[i].value_ = this->garbage_.value_;
 
-  this->garbage_.header_ = 0;
+  this->garbage_.header_ = nullptr;
 
   return &this->map_[i];
 }
@@ -342,11 +325,11 @@ Headers_Map::compare (const void *item1,
   a = (Headers_Map_Item *) item1;
   b = (Headers_Map_Item *) item2;
 
-  if (a->header_ == 0 || b->header_ == 0)
+  if (a->header_ == nullptr || b->header_ == nullptr)
     {
-      if (a->header_ == 0 && b->header_ == 0)
+      if (a->header_ == nullptr && b->header_ == nullptr)
         result = 0;
-      else if (a->header_ == 0)
+      else if (a->header_ == nullptr)
         result = 1;
       else
         result = -1;

@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VISITOR_SEQUENCE_SEQUENCE_BASE_H_
 #define _BE_VISITOR_SEQUENCE_SEQUENCE_BASE_H_
 

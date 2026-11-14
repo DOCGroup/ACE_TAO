@@ -4,6 +4,7 @@
 
 #include "ace/Svc_Handler.h"
 #include "ace/Service_Config.h"
+#include <string>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,11 +26,15 @@ class Svc_Handler : public ACE_Svc_Handler <ACE_SPIPE_STREAM, ACE_NULL_SYNCH>, p
 {
 public:
   Svc_Handler ();
-  ~Svc_Handler ();
+  ~Svc_Handler () override = default;
+  Svc_Handler (Svc_Handler const &) = delete;
+  Svc_Handler (Svc_Handler &&) = delete;
+  Svc_Handler &operator= (Svc_Handler const &) = delete;
+  Svc_Handler &operator= (Svc_Handler &&) = delete;
 
-  virtual int open (void *);
+  int open (void *) override;
 
-  virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result);
+  void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result) override;
   // This is called when asynchronous read from the socket complete
   // Handle data from the client.
 
@@ -41,14 +46,18 @@ private:
 class IPC_Server : public ACE_Oneshot_Acceptor<Svc_Handler, ACE_SPIPE_ACCEPTOR>
 {
 public:
-  IPC_Server ();
-  ~IPC_Server ();
+  IPC_Server () = default;
+  ~IPC_Server () override = default;
+  IPC_Server (IPC_Server const &) = delete;
+  IPC_Server (IPC_Server &&) = delete;
+  IPC_Server &operator= (IPC_Server const &) = delete;
+  IPC_Server &operator= (IPC_Server &&) = delete;
 
   // = Dynamic linking hooks.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
   // Initialize the network server.
 
-  virtual int fini ();
+  int fini () override;
   // Close down the server.
 
   virtual int svc ();
@@ -58,17 +67,17 @@ private:
   int parse_args (int argc, ACE_TCHAR *argv[]);
   // Parse command-line arguments.
 
-  int n_threads_;
+  int n_threads_ {1};
   // Size of thread pool to use.
 
-  ACE_TCHAR rendezvous_[MAXPATHLEN + 1];
+  std::basic_string<ACE_TCHAR> rendezvous_ {ACE_TEXT ("acepipe")};
   // Meeting place for pipe.
 
-  int shutdown_;
+  int shutdown_ {};
   // Keeps track of when we shut down due to receipt of the SIGINT
   // signal.
 
-  int handle_signal (int signum, siginfo_t *, ucontext_t *);
+  int handle_signal (int signum, siginfo_t *, ucontext_t *) override;
   // Signal handler method.
 };
 

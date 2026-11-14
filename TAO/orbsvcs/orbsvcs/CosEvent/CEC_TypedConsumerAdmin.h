@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_CEC_TYPEDCONSUMERADMIN_H_
 #define TAO_CEC_TYPEDCONSUMERADMIN_H_
 
@@ -36,17 +35,20 @@ class TAO_Event_Serv_Export TAO_CEC_TypedConsumerAdmin
   : public POA_CosTypedEventChannelAdmin::TypedConsumerAdmin
 {
 public:
-  // Constructor
-  TAO_CEC_TypedConsumerAdmin (TAO_CEC_TypedEventChannel* typed_event_channel);
+  explicit TAO_CEC_TypedConsumerAdmin (TAO_CEC_TypedEventChannel* typed_event_channel);
 
-  // Destructor
   ~TAO_CEC_TypedConsumerAdmin () override = default;
+
+  TAO_CEC_TypedConsumerAdmin (TAO_CEC_TypedConsumerAdmin const &) = delete;
+  TAO_CEC_TypedConsumerAdmin (TAO_CEC_TypedConsumerAdmin &&) = delete;
+  TAO_CEC_TypedConsumerAdmin &operator= (TAO_CEC_TypedConsumerAdmin const &) = delete;
+  TAO_CEC_TypedConsumerAdmin &operator= (TAO_CEC_TypedConsumerAdmin &&) = delete;
 
   /// For each elements call <worker->work()>.
   void for_each (TAO_ESF_Worker<TAO_CEC_ProxyPushSupplier> *worker);
 
   /// Invoke the typed event on all the consumers
-  virtual void invoke (const TAO_CEC_TypedEvent& typed_event);
+  virtual void invoke (TAO_CEC_TypedEvent const &typed_event);
 
   /// Used to inform the EC that a Supplier has connected or
   /// disconnected from it.
@@ -73,11 +75,6 @@ public:
   PortableServer::POA_ptr _default_POA () override;
 
 private:
-  TAO_CEC_TypedConsumerAdmin (TAO_CEC_TypedConsumerAdmin const &) = delete;
-  TAO_CEC_TypedConsumerAdmin (TAO_CEC_TypedConsumerAdmin &&) = delete;
-  TAO_CEC_TypedConsumerAdmin &operator= (TAO_CEC_TypedConsumerAdmin const &) = delete;
-  TAO_CEC_TypedConsumerAdmin &operator= (TAO_CEC_TypedConsumerAdmin &&) = delete;
-
   /// The Event Channel we belong to
   TAO_CEC_TypedEventChannel *typed_event_channel_;
 
@@ -95,7 +92,7 @@ private:
 class TAO_CEC_Propagate_Typed_Event : public TAO_ESF_Worker<TAO_CEC_ProxyPushSupplier>
 {
 public:
-  TAO_CEC_Propagate_Typed_Event (const TAO_CEC_TypedEvent& typed_event,
+  TAO_CEC_Propagate_Typed_Event (TAO_CEC_TypedEvent const &typed_event,
                                  TAO_CEC_TypedEventChannel*);
 
   TAO_CEC_Propagate_Typed_Event (TAO_CEC_Propagate_Typed_Event const &) = delete;
@@ -108,7 +105,7 @@ public:
 
 private:
   /// The typed event
-  const TAO_CEC_TypedEvent typed_event_;
+  TAO_CEC_TypedEvent const typed_event_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -27,8 +27,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Stub::TAO_Stub (const char *repository_id,
-                    const TAO_MProfile &profiles,
+TAO_Stub::TAO_Stub (char const *repository_id,
+                    TAO_MProfile const &profiles,
                     TAO_ORB_Core *orb_core)
   : type_id (repository_id)
   , orb_core_ (orb_core)
@@ -43,11 +43,6 @@ TAO_Stub::TAO_Stub (const char *repository_id,
   , profile_in_use_ (nullptr)
   , profile_success_ (false)
   , refcount_ (1)
-#if (TAO_HAS_CORBA_MESSAGING == 1)
-  , policies_ (nullptr)
-#endif
-  , ior_info_ (nullptr)
-  , forwarded_ior_info_ (nullptr)
   , collocation_opt_ (orb_core->optimize_collocation_objects ())
   , forwarded_on_exception_ (false)
 {
@@ -97,17 +92,15 @@ TAO_Stub::~TAO_Stub ()
     }
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
-  delete this->policies_;
+  this->policies_.reset ();
 #endif
-
-  delete this->ior_info_;
-
-  delete this->forwarded_ior_info_;
+  this->ior_info_.reset ();
+  this->forwarded_ior_info_.reset ();
 }
 
 void
-TAO_Stub::add_forward_profiles (const TAO_MProfile &mprofiles,
-                                const CORBA::Boolean permanent_forward)
+TAO_Stub::add_forward_profiles (TAO_MProfile const &mprofiles,
+                                CORBA::Boolean permanent_forward)
 {
   // we assume that the profile_in_use_ is being
   // forwarded!  Grab the lock so things don't change.
@@ -130,9 +123,10 @@ TAO_Stub::add_forward_profiles (const TAO_MProfile &mprofiles,
       this->reset_forward ();
     }
 
-  TAO_MProfile *now_pfiles = this->forward_profiles_;
-  if (now_pfiles == nullptr)
-    now_pfiles = &this->base_profiles_;
+  TAO_MProfile * const now_pfiles =
+    this->forward_profiles_ != nullptr
+      ? this->forward_profiles_
+      : std::addressof (this->base_profiles_);
 
   ACE_NEW (this->forward_profiles_,
            TAO_MProfile (mprofiles));
@@ -184,28 +178,24 @@ TAO_Stub::create_ior_info (IOP::IOR *&ior_info, CORBA::ULong &index)
                   this));
     }
 
-
-  IOP::IOR *tmp_info = nullptr;
-
   if (this->forward_profiles_ != nullptr)
     {
       if (this->forwarded_ior_info_ == nullptr)
         {
-          this->get_profile_ior_info (*this->forward_profiles_, tmp_info);
-
-          this->forwarded_ior_info_ = tmp_info;
+          this->get_profile_ior_info (*this->forward_profiles_,
+                                      this->forwarded_ior_info_);
         }
 
       // First we look at the forward profiles to see whether the
       // profile_in_use is any of it.
-      for (CORBA::ULong i = 0;
+      for (CORBA::ULong i {};
            i < this->forward_profiles_->profile_count ();
            ++i)
         {
           if (this->forward_profiles_->get_profile (i)
               == this->profile_in_use_)
             {
-              ior_info = this->forwarded_ior_info_;
+              ior_info = this->forwarded_ior_info_.get ();
               index = i;
               return 0;
             }
@@ -215,20 +205,17 @@ TAO_Stub::create_ior_info (IOP::IOR *&ior_info, CORBA::ULong &index)
   // Else we look at the base profiles
   if (this->ior_info_ == nullptr)
     {
-      this->get_profile_ior_info (this->base_profiles_, tmp_info);
-
-      this->ior_info_ = tmp_info;
+      this->get_profile_ior_info (this->base_profiles_, this->ior_info_);
     }
 
-
-  for (CORBA::ULong ind = 0;
+  for (CORBA::ULong ind {};
        ind < this->base_profiles_.profile_count ();
        ++ind)
     {
       if (this->base_profiles_.get_profile (ind) == this->profile_in_use_)
         {
           index = ind;
-          ior_info = this->ior_info_;
+          ior_info = this->ior_info_.get ();
           return 0;
         }
     }
@@ -237,7 +224,7 @@ TAO_Stub::create_ior_info (IOP::IOR *&ior_info, CORBA::ULong &index)
   return -1;
 }
 
-const TAO::ObjectKey &
+TAO::ObjectKey const &
 TAO_Stub::object_key () const
 {
   // Return the profile in use's object key if you see one.
@@ -260,12 +247,16 @@ TAO_Stub::object_key () const
   return this->base_profiles_.get_profile (0)->object_key ();
 }
 
-int
-TAO_Stub::get_profile_ior_info (TAO_MProfile &profiles, IOP::IOR *&ior_info)
+void
+TAO_Stub::get_profile_ior_info (
+  TAO_MProfile &profiles,
+  std::unique_ptr<IOP::IOR> &ior_info)
 {
-  ACE_NEW_THROW_EX (ior_info,
+  IOP::IOR *raw_ior_info {};
+  ACE_NEW_THROW_EX (raw_ior_info,
                     IOP::IOR (),
                     CORBA::NO_MEMORY ());
+  ior_info.reset (raw_ior_info);
 
   // Get the number of elements
   CORBA::ULong const count = profiles.profile_count ();
@@ -275,18 +266,16 @@ TAO_Stub::get_profile_ior_info (TAO_MProfile &profiles, IOP::IOR *&ior_info)
 
   // Call the create_tagged_profile one every member of the
   // profile and make the sequence
-  for (CORBA::ULong index = 0; index < count; ++index)
+  for (CORBA::ULong index {}; index < count; ++index)
     {
-      TAO_Profile *prof = profiles.get_profile (index);
+      TAO_Profile * const prof = profiles.get_profile (index);
 
-      IOP::TaggedProfile *tp = prof->create_tagged_profile ();
+      IOP::TaggedProfile * const tp = prof->create_tagged_profile ();
 
       if (tp == nullptr)
         throw ::CORBA::NO_MEMORY ();
       ior_info->profiles[index] = *tp;
     }
-
-  return 0;
 }
 
 void
@@ -371,7 +360,7 @@ TAO_Stub::set_profile_in_use_i (TAO_Profile *pfile)
 void
 TAO_Stub::forward_back_one ()
 {
-  TAO_MProfile *from = forward_profiles_->forward_from ();
+  TAO_MProfile * const from = forward_profiles_->forward_from ();
 
   // Only delete the forward location if it is not permanent
   if (this->forward_profiles_ != this->forward_profiles_perm_)
@@ -379,7 +368,7 @@ TAO_Stub::forward_back_one ()
 
   // the current profile in this profile list is no
   // longer being forwarded, so set the reference to zero.
-  if (from == &this->base_profiles_)
+  if (from == std::addressof (this->base_profiles_))
     {
       this->base_profiles_.get_current_profile ()->forward_to (nullptr);
       this->forward_profiles_ = nullptr;
@@ -390,7 +379,6 @@ TAO_Stub::forward_back_one ()
       this->forward_profiles_ = from;
     }
 }
-
 
 // Note that if the repository ID (typeID) is NULL, it will make
 // narrowing rather expensive, though it does ensure that type-safe
@@ -462,11 +450,11 @@ TAO_Stub::get_cached_policy (TAO_Cached_Policy_Type type)
 }
 
 TAO_Stub *
-TAO_Stub::set_policy_overrides (const CORBA::PolicyList & policies,
+TAO_Stub::set_policy_overrides (CORBA::PolicyList const &policies,
                                 CORBA::SetOverrideType set_add)
 {
   // Notice the use of an explicit constructor....
-  std::unique_ptr<TAO_Policy_Set> policy_manager (new TAO_Policy_Set (TAO_POLICY_OBJECT_SCOPE));
+  std::unique_ptr<TAO_Policy_Set> policy_manager = std::make_unique<TAO_Policy_Set> (TAO_POLICY_OBJECT_SCOPE);
 
   if (set_add == CORBA::SET_OVERRIDE)
     {
@@ -478,15 +466,15 @@ TAO_Stub::set_policy_overrides (const CORBA::PolicyList & policies,
     }
   else
     {
-      policy_manager->copy_from (this->policies_);
+      policy_manager->copy_from (this->policies_.get ());
 
       policy_manager->set_policy_overrides (policies, set_add);
     }
 
-  TAO_Stub* stub = this->orb_core_->create_stub (this->type_id.in (),
-                                                 this->base_profiles_);
+  TAO_Stub * const stub = this->orb_core_->create_stub (this->type_id.in (),
+                                                        this->base_profiles_);
 
-  stub->policies_ = policy_manager.release ();
+  stub->policies_ = std::move (policy_manager);
 
   // Copy the servant ORB if it is present.
   stub->servant_orb (this->servant_orb_var ().in ());
@@ -495,11 +483,11 @@ TAO_Stub::set_policy_overrides (const CORBA::PolicyList & policies,
 }
 
 CORBA::PolicyList *
-TAO_Stub::get_policy_overrides (const CORBA::PolicyTypeSeq &types)
+TAO_Stub::get_policy_overrides (CORBA::PolicyTypeSeq const &types)
 {
   if (this->policies_ == nullptr)
     {
-      CORBA::PolicyList *policy_list_ptr = nullptr;
+      CORBA::PolicyList *policy_list_ptr {};
       ACE_NEW_THROW_EX (policy_list_ptr,
                         CORBA::PolicyList (),
                         CORBA::NO_MEMORY ());
@@ -519,24 +507,24 @@ TAO_Stub::marshal (TAO_OutputCDR &cdr)
   // do as many outside of locked else-branch as posssible
 
   // STRING, a type ID hint
-  if ((cdr << this->type_id.in()) == 0)
-    return 0;
+  if (!(cdr << this->type_id.in()))
+    return false;
 
   if ( ! this->forward_profiles_perm_)
     {
-      const TAO_MProfile& mprofile = this->base_profiles_;
+      TAO_MProfile const &mprofile = this->base_profiles_;
 
       CORBA::ULong const profile_count = mprofile.profile_count ();
-      if ((cdr << profile_count) == 0)
-        return 0;
+      if (!(cdr << profile_count))
+        return false;
 
     // @@ The MProfile should be locked during this iteration, is there
     // anyway to achieve that?
-    for (CORBA::ULong i = 0; i < profile_count; ++i)
+    for (CORBA::ULong i {}; i < profile_count; ++i)
       {
-        const TAO_Profile* p = mprofile.get_profile (i);
-        if (p->encode (cdr) == 0)
-          return 0;
+        TAO_Profile const * const p = mprofile.get_profile (i);
+        if (!p->encode (cdr))
+          return false;
       }
     }
   else
@@ -553,27 +541,26 @@ TAO_Stub::marshal (TAO_OutputCDR &cdr)
                   this));
     }
 
-
       ACE_ASSERT(this->forward_profiles_ !=nullptr);
 
       // paranoid - in case of FT the basic_profiles_ would do, too,
       // but might be dated
-      const TAO_MProfile& mprofile =
+      TAO_MProfile const &mprofile =
           this->forward_profiles_perm_
         ? *(this->forward_profiles_perm_)
         : this->base_profiles_;
 
       CORBA::ULong const profile_count = mprofile.profile_count ();
-      if ((cdr << profile_count) == 0)
-           return 0;
+      if (!(cdr << profile_count))
+        return false;
 
       // @@ The MProfile should be locked during this iteration, is there
       // anyway to achieve that?
-      for (CORBA::ULong i = 0; i < profile_count; ++i)
+      for (CORBA::ULong i {}; i < profile_count; ++i)
         {
-          const TAO_Profile* p = mprofile.get_profile (i);
-          if (p->encode (cdr) == 0)
-            return 0;
+          TAO_Profile const * const p = mprofile.get_profile (i);
+          if (!p->encode (cdr))
+            return false;
         }
 
       // release ACE_Lock

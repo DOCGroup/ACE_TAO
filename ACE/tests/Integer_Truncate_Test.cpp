@@ -334,7 +334,6 @@ struct Caller
   using argument_type = T;
   using result_type = void;
 
-  /// Constructor
   Caller () : success (true) {}
 
   /// Function call operator overload.

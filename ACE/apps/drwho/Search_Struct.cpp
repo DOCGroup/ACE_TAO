@@ -9,9 +9,7 @@ Search_Struct::~Search_Struct ()
                 "disposing Search_Struct\n"));
 }
 
-Search_Struct::Search_Struct ()
-  : count_ (0)
-{}
+Search_Struct::Search_Struct () = default;
 
 int
 Search_Struct::n_elems ()

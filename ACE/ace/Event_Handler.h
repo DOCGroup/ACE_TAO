@@ -132,7 +132,7 @@ public:
 
   /// Called when object is signaled by OS (either via UNIX signals or
   /// when a Win32 object becomes signaled).
-  virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
+  virtual int handle_signal (int signum, siginfo_t * = nullptr, ucontext_t * = nullptr);
 
   enum
     {
@@ -268,7 +268,7 @@ public:
 
   private:
     /// Private constructor.
-    Reference_Counting_Policy (Value value);
+    explicit Reference_Counting_Policy (Value value);
 
     /// The value of the policy.
     Value value_;
@@ -316,10 +316,9 @@ public:
   /// Construct with a handler.
   ACE_Event_Handler_var (ACE_Event_Handler *p);
 
-  /// Copy constructor.
+
   ACE_Event_Handler_var (const ACE_Event_Handler_var &b);
 
-  /// Destructor.
   ~ACE_Event_Handler_var ();
 
   /// Assignment to a handler.

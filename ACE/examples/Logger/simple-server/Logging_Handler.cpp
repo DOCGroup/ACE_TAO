@@ -1,9 +1,9 @@
+#include <new>
+
 #include "ace/Log_Msg.h"
 #include "ace/Message_Block.h"
 #include "ace/Log_Record.h"
-#include "ace/OS_NS_string.h"
 #include "ace/CDR_Stream.h"
-#include <memory>
 
 #include "Logging_Handler.h"
 #include "Reactor_Singleton.h"
@@ -25,8 +25,8 @@ Logging_Handler::peer ()
 }
 
 int
-Logging_Handler::handle_timeout (const ACE_Time_Value &,
-                                 const void *arg)
+Logging_Handler::handle_timeout (ACE_Time_Value const &,
+                                 void const *arg)
 {
 #if defined (ACE_NDEBUG)
   ACE_UNUSED_ARG (arg);
@@ -43,29 +43,29 @@ Logging_Handler::handle_timeout (const ACE_Time_Value &,
 int
 Logging_Handler::handle_input (ACE_HANDLE)
 {
-  ACE_Log_Record log_record;
+  ACE_Log_Record log_record {};
 
   // We need to use the old two-read trick here since TCP sockets
   // don't support framing natively.  Allocate a message block for the
   // payload; initially at least large enough to hold the header, but
   // needs some room for alignment.
-  ACE_Message_Block *payload_p = 0;
-  ACE_Message_Block *header_p = 0;
-  ACE_NEW_RETURN (header_p,
-                  ACE_Message_Block (ACE_DEFAULT_CDR_BUFSIZE),
-                  -1);
-
-  std::unique_ptr <ACE_Message_Block> header (header_p);
+  ACE_Message_Block_Unique_Ptr header {
+    new (std::nothrow) ACE_Message_Block (ACE_DEFAULT_CDR_BUFSIZE)};
+  if (!header)
+    {
+      errno = ENOMEM;
+      return -1;
+    }
 
   // Align the Message Block for a CDR stream
   ACE_CDR::mb_align (header.get ());
 
-  ACE_CDR::Boolean byte_order;
-  ACE_CDR::ULong length;
+  ACE_CDR::Boolean byte_order {};
+  ACE_CDR::ULong length {};
 
-  ssize_t count = ACE::recv_n (this->peer ().get_handle (),
-                               header->wr_ptr (),
-                               8);
+  ssize_t const count = ACE::recv_n (this->peer ().get_handle (),
+                                     header->wr_ptr (),
+                                     8);
   switch (count)
     {
       // Handle shutdown and error cases.
@@ -99,10 +99,13 @@ Logging_Handler::handle_input (ACE_HANDLE)
   // Extract the length
   header_cdr >> length;
 
-  ACE_NEW_RETURN (payload_p,
-                  ACE_Message_Block (length),
-                  -1);
-  std::unique_ptr <ACE_Message_Block> payload (payload_p);
+  ACE_Message_Block_Unique_Ptr payload {
+    new (std::nothrow) ACE_Message_Block (length)};
+  if (!payload)
+    {
+      errno = ENOMEM;
+      return -1;
+    }
 
   // Ensure there's sufficient room for log record payload.
   ACE_CDR::grow (payload.get (), 8 + ACE_CDR::MAX_ALIGNMENT + length);
@@ -126,7 +129,9 @@ Logging_Handler::handle_input (ACE_HANDLE)
 
   log_record.length (length);
 
-  log_record.print (ACE_TEXT_CHAR_TO_TCHAR (this->host_name_), 1, stderr);
+  log_record.print (ACE_TEXT_CHAR_TO_TCHAR (this->host_name_.c_str ()),
+                    1,
+                    stderr);
 
   return 0;
 }
@@ -146,29 +151,31 @@ Logging_Handler::open ()
 
   if (this->cli_stream_.get_remote_addr (addr) == -1)
     return -1;
-  else
-    {
-      ACE_OS::strncpy (this->host_name_,
-                       addr.get_host_name (),
-                       MAXHOSTNAMELEN + 1);
 
-      if (REACTOR::instance ()->register_handler (this, READ_MASK) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) can't register with reactor\n")),
-                          -1);
-      else if (REACTOR::instance ()->schedule_timer
-               (this, (const void *) this,
-                ACE_Time_Value (2),
-                ACE_Time_Value (2)) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) can't register with reactor\n")),
-                          -1);
-      else
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) connected with %C\n"),
-                    this->host_name_));
-      return 0;
+  char const *const host_name = addr.get_host_name ();
+  if (host_name == nullptr)
+    return -1;
+  this->host_name_ = host_name;
+
+  if (REACTOR::instance ()->schedule_timer
+      (this, static_cast<void const *> (this),
+       ACE_Time_Value (2), ACE_Time_Value (2)) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("(%P|%t) can't register with reactor\n")),
+                      -1);
+
+  if (REACTOR::instance ()->register_handler (this, READ_MASK) == -1)
+    {
+      REACTOR::instance ()->cancel_timer (this);
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) can't register with reactor\n")),
+                        -1);
     }
+
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("(%P|%t) connected with %C\n"),
+              this->host_name_.c_str ()));
+  return 0;
 }
 
 // Perform termination activities when deregistered from the
@@ -182,8 +189,3 @@ Logging_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 }
 
 // Perform termination activities when close fails.
-int
-Logging_Handler::close ()
-{
-  return this->handle_close ();
-}

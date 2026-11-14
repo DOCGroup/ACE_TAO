@@ -1,19 +1,14 @@
 #include "orbsvcs/Trader/Interpreter.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_SYNCH_MUTEX TAO_Interpreter::parserMutex__;
 
-TAO_Interpreter::TAO_Interpreter ()
-  : root_ (nullptr)
-{
-}
+TAO_Interpreter::TAO_Interpreter () = default;
 
-TAO_Interpreter::~TAO_Interpreter ()
-{
-  delete root_;
-}
+TAO_Interpreter::~TAO_Interpreter () = default;
 
 int
 TAO_Interpreter::build_tree (const char* constraints)
@@ -24,49 +19,49 @@ TAO_Interpreter::build_tree (const char* constraints)
                     -1);
 
   TAO_Lex_String_Input::reset ((char*)constraints);
-  int return_value = 0;
+  int return_value {};
 
   yyval.constraint_ = nullptr;
   return_value = ::yyparse ();
 
   if (return_value == 0 && yyval.constraint_ != nullptr)
-    this->root_ = yyval.constraint_;
+    this->root_.reset (yyval.constraint_);
   else
     {
       while (yylex () > 0)
         continue;
-      this->root_ = nullptr;
+      this->root_.reset ();
     }
 
   return return_value;
 }
 
-int
+bool
 TAO_Interpreter::is_empty_string (const char* str)
 {
-  int return_value = 0;
+  bool return_value {};
 
   if (str != nullptr)
     {
-      int i = 0;
+      int i {};
       while (str[i] != '\0')
         {
           if (str[i] != ' ')
             break;
 
-          i++;
+          ++i;
         }
 
       if (str[i] == '\0')
-        return_value = 1;
+        return_value = true;
     }
 
   return return_value;
 }
 
-char* TAO_Lex_String_Input::string_ = nullptr;
-char* TAO_Lex_String_Input::current_ = nullptr;
-char* TAO_Lex_String_Input::end_ = nullptr;
+char* TAO_Lex_String_Input::string_ {};
+char* TAO_Lex_String_Input::current_ {};
+char* TAO_Lex_String_Input::end_ {};
 
 // Routine to have Lex read its input from the constraint string.
 
@@ -79,9 +74,7 @@ TAO_Lex_String_Input::copy_into (char* buf, int max_size)
 
   if (n > 0)
     {
-      ACE_OS::memcpy (buf,
-                      TAO_Lex_String_Input::current_,
-                      n);
+      std::memcpy (buf, TAO_Lex_String_Input::current_, n);
       TAO_Lex_String_Input::current_ += n;
     }
 
@@ -94,7 +87,7 @@ TAO_Lex_String_Input::reset (char* input_string)
   TAO_Lex_String_Input::string_ = input_string;
   TAO_Lex_String_Input::current_ = input_string;
   TAO_Lex_String_Input::end_ = input_string +
-    ACE_OS::strlen (TAO_Lex_String_Input::string_);
+    std::strlen (TAO_Lex_String_Input::string_);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

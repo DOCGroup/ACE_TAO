@@ -13,111 +13,105 @@
 #include "orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Loader.h"
 #include <memory>
 
-CORBA::ORB_var orb;
-std::unique_ptr<TAO_FTRTEC::FTEC_Gateway> gateway;
+CORBA::ORB_var orb {};
+std::unique_ptr<TAO_FTRTEC::FTEC_Gateway> gateway {};
 
 RtecEventChannelAdmin::EventChannel_ptr
 get_event_channel(int argc, ACE_TCHAR** argv)
 {
-    FtRtecEventChannelAdmin::EventChannel_var channel;
-    ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("hi:n"));
-    int opt;
-    int use_gateway = 1;
+  FtRtecEventChannelAdmin::EventChannel_var channel;
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("hi:n"));
+  int opt {};
+  bool use_gateway {true};
 
-    while ((opt = get_opt ()) != EOF)
+  while ((opt = get_opt ()) != EOF)
     {
       switch (opt)
-      {
-      case 'i':
         {
-          CORBA::Object_var obj = orb->string_to_object(get_opt.opt_arg ());
-          channel = FtRtecEventChannelAdmin::EventChannel::_narrow(obj.in());
-        }
-        break;
-      case 'n':
-         use_gateway = 0;
-         break;
-      case 'h':
-      case '?':
-        ACE_DEBUG((LM_DEBUG,
-                   ACE_TEXT("Usage: %s ")
-                   ACE_TEXT("-i ftrt_eventchannel_ior\n")
-                   ACE_TEXT("-n       do not use gateway\n")
-                   ACE_TEXT("\n"),
+        case 'i':
+          {
+            CORBA::Object_var const obj = orb->string_to_object (get_opt.opt_arg ());
+            channel = FtRtecEventChannelAdmin::EventChannel::_narrow (obj.in ());
+          }
+          break;
+        case 'n':
+          use_gateway = false;
+          break;
+        case 'h':
+        case '?':
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Usage: %s ")
+                      ACE_TEXT ("-i ftrt_eventchannel_ior\n")
+                      ACE_TEXT ("-n       do not use gateway\n")
+                      ACE_TEXT ("\n"),
                       argv[0]));
-        return 0;
-      }
+          return nullptr;
+        }
     }
 
-    if (CORBA::is_nil(channel.in()))
+  if (CORBA::is_nil (channel.in ()))
     {
-      CosNaming::Name name(1);
-      name.length(1);
-      name[0].id = CORBA::string_dup("FT_EventService");
+      CosNaming::Name name (1);
+      name.length (1);
+      name[0].id = CORBA::string_dup ("FT_EventService");
 
-      CosNaming::NamingContext_var naming_context =
-        resolve_init<CosNaming::NamingContext>(orb.in(), "NameService");
+      CosNaming::NamingContext_var const naming_context =
+        resolve_init<CosNaming::NamingContext> (orb.in (), "NameService");
 
-      channel  = resolve<FtRtecEventChannelAdmin::EventChannel>(naming_context.in(),
-        name);
+      channel = resolve<FtRtecEventChannelAdmin::EventChannel> (naming_context.in (), name);
     }
 
-    if (use_gateway)
+  if (use_gateway)
     {
-      gateway.reset (new TAO_FTRTEC::FTEC_Gateway(orb.in(), channel.in()));
-      return gateway->_this();
+      gateway = std::make_unique<TAO_FTRTEC::FTEC_Gateway> (orb.in (), channel.in ());
+      return gateway->_this ();
     }
-    else
-      return channel._retn();
+  return channel._retn ();
 }
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  try{
-    orb = CORBA::ORB_init (argc, argv);
+  try
+    {
+      orb = CORBA::ORB_init (argc, argv);
 
-    RtecEventChannelAdmin::EventChannel_var channel
-      = get_event_channel (argc, argv);
+      RtecEventChannelAdmin::EventChannel_var const channel = get_event_channel (argc, argv);
 
+      if (CORBA::is_nil (channel.in ()))
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Cannot Find FT_EventService\n")), -1);
 
-    if (CORBA::is_nil(channel.in()))
-      ACE_ERROR_RETURN ((LM_ERROR, "Cannot Find FT_EventService\n"), -1);
+      PortableServer::POA_var const poa =
+        resolve_init<PortableServer::POA> (orb.in (), "RootPOA");
 
-    PortableServer::POA_var poa =
-      resolve_init<PortableServer::POA>(orb.in(), "RootPOA");
+      PortableServer::POAManager_var const mgr = poa->the_POAManager ();
 
-    PortableServer::POAManager_var mgr = poa->the_POAManager();
+      mgr->activate ();
 
-    mgr->activate();
+      PushConsumer_impl push_consumer_impl (orb.in ());
+      RtecEventChannelAdmin::ConsumerAdmin_var const consumer_admin = channel->for_consumers ();
 
-    PushConsumer_impl push_consumer_impl(orb.in());
-    RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-      channel->for_consumers();
+      RtecEventChannelAdmin::ProxyPushSupplier_var const supplier =
+        consumer_admin->obtain_push_supplier ();
 
-    RtecEventChannelAdmin::ProxyPushSupplier_var supplier =
-      consumer_admin->obtain_push_supplier();
+      RtecEventChannelAdmin::ConsumerQOS qos;
+      qos.is_gateway = true;
+      qos.dependencies.length (1);
 
-    RtecEventChannelAdmin::ConsumerQOS qos;
-    qos.is_gateway = 1;
-    qos.dependencies.length(1);
+      RtecEventComm::EventHeader &h0 = qos.dependencies[0].event.header;
+      h0.type = ACE_ES_EVENT_UNDEFINED; // First free event type.
+      h0.source = ACE_ES_EVENT_SOURCE_ANY;
 
-    RtecEventComm::EventHeader& h0 =
-      qos.dependencies[0].event.header;
-    h0.type   = ACE_ES_EVENT_UNDEFINED; // first free event type
-    h0.source = ACE_ES_EVENT_SOURCE_ANY;
+      RtecEventComm::PushConsumer_var const push_consumer = push_consumer_impl._this ();
 
-    RtecEventComm::PushConsumer_var push_consumer =
-      push_consumer_impl._this();
+      supplier->connect_push_consumer (push_consumer.in (), qos);
 
-    supplier->connect_push_consumer(push_consumer.in(),
-      qos);
-
-    orb->run();
-  }
-  catch (const CORBA::Exception& ex){
-    ex._tao_print_exception ("A CORBA Exception occurred.");
-    return -1;
-  }
+      orb->run ();
+    }
+  catch (CORBA::Exception const &ex)
+    {
+      ex._tao_print_exception (ACE_TEXT ("A CORBA Exception occurred."));
+      return -1;
+    }
 
   return 0;
 }

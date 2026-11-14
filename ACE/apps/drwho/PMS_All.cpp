@@ -8,6 +8,8 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_Memory.h"
+#include <cstdio>
+#include <cstring>
 
 // This function packs the located friends userids, plus the machines
 // they are logged into (along with the inactive and active counts on
@@ -25,15 +27,15 @@ PMS_All::encode (char *packet, int &packet_length)
   Protocol_Record *prp;
   char *buf_ptr = packet;
 
-  ACE_OS::sprintf (buf_ptr,
+  std::sprintf (buf_ptr,
                    "Users   %d",
                    this->get_total_users ());
-  buf_ptr += ACE_OS::strlen (buf_ptr) + 1;
+  buf_ptr += std::strlen (buf_ptr) + 1;
 
   // We only send back info on friends that we actually see logged in.
 
   for (;
-       (prp = this->get_next_friend ()) != 0;
+       (prp = this->get_next_friend ()) != nullptr;
        *buf_ptr++ = '\t')
     buf_ptr =
       this->handle_protocol_entries (ACE_OS::strecpy
@@ -69,9 +71,9 @@ PMS_All::decode (char *, int &packet_length)
                 "in PMS_All::decode, packet_length = %d\n",
                 packet_length));
 
-  ACE_NEW_RETURN (this->ss,
-                  HT_Server,
-                  -1);
+  Search_Struct *lookup {};
+  ACE_NEW_RETURN (lookup, HT_Server, -1);
+  this->ss.reset (lookup);
   return 1;
 }
 
@@ -84,12 +86,12 @@ PMS_All::insert_protocol_info (Protocol_Record &protocol_record)
 {
   Protocol_Record *prp = PM_Server::insert_protocol_info (protocol_record);
   passwd *pwent = ACE_OS::getpwnam (prp->get_login ());
-  char *cp = (char *) ACE_OS::strchr (prp->set_real
-                                      (pwent == 0
+  char *cp = (char *) std::strchr (prp->set_real
+                                      (pwent == nullptr
                                        ? prp->get_login () :
                                        ACE::strnew (pwent->pw_gecos)),
                                       ',');
-  if (cp != 0)
+  if (cp != nullptr)
     *cp = '\0';
 
   return prp;

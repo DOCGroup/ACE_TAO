@@ -33,7 +33,7 @@ public:
 #endif
   }
 
-  virtual int handle_signal (int, siginfo_t*, ucontext_t*)
+  int handle_signal (int, siginfo_t*, ucontext_t*) override
   {
     ACE_DEBUG ((LM_DEBUG, "Shutting down...\n"));
     this->orb_->shutdown ();
@@ -115,7 +115,6 @@ DT_Test::init (int argc, ACE_TCHAR *argv [])
 
   TAO_RTScheduler_Manager_var manager = TAO_RTScheduler_Manager::_narrow (manager_obj.in ());
 
-
   ACE_NEW_RETURN (scheduler_,
                   Fixed_Priority_Scheduler (orb_.in ()),
                   -1);
@@ -127,7 +126,6 @@ DT_Test::init (int argc, ACE_TCHAR *argv [])
 
   current_  =
     RTScheduling::Current::_narrow (object.in ());
-
 
   if (sched_policy_ != ACE_SCHED_OTHER)
     {
@@ -161,9 +159,7 @@ DT_Test::run (int argc, ACE_TCHAR* argv [])
   if (this->dt_creator_->resolve_naming_service () == -1)
     return;
 
-
   //TASK_STATS::instance ()->init (this->dt_creator_->dt_count () * 100);
-
 
   this->dt_creator_->activate_root_poa ();
 

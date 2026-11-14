@@ -5,31 +5,31 @@
 #include "orbsvcs/RtecEventCommS.h"
 #include "orbsvcs/CosEventCommS.h"
 #include "ProxyPushConsumer_i.h"
+#include <array>
 #include <memory>
 
 #if defined(_MSC_VER)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+/**
+ * @brief Adapts a Cos PushSupplier for use by the Rtec ProxyPushConsumer.
+ *
+ * The wrapper presents the Cos PushSupplier as an Rtec PushSupplier.
+ */
 class TAO_CosEC_PushSupplierWrapper :
   public virtual POA_RtecEventComm::PushSupplier
 {
-  // = TITLE
-  //   A Wrapper for the Rtec PushSupplier.
-  //
-  // = DESCRIPTION
-  //   The Rtec ProxyPushConsumer uses a Rtec PushSupplier.  This
-  //   class wraps the Cos PushSupplier to make it look like a Rtec
-  //   PushSupplier.
 public:
-  TAO_CosEC_PushSupplierWrapper (CosEventComm::PushSupplier_ptr supplier);
-  // Constructor.
+  explicit TAO_CosEC_PushSupplierWrapper (CosEventComm::PushSupplier_ptr supplier);
 
-  ~TAO_CosEC_PushSupplierWrapper () = default;
-  // Destructor.
-
-  virtual void disconnect_push_supplier ();
-  // Disconnects the push supplier.
+  ~TAO_CosEC_PushSupplierWrapper () override = default;
+  TAO_CosEC_PushSupplierWrapper (TAO_CosEC_PushSupplierWrapper const &) = delete;
+  TAO_CosEC_PushSupplierWrapper (TAO_CosEC_PushSupplierWrapper &&) = delete;
+  TAO_CosEC_PushSupplierWrapper &operator= (TAO_CosEC_PushSupplierWrapper const &) = delete;
+  TAO_CosEC_PushSupplierWrapper &operator= (TAO_CosEC_PushSupplierWrapper &&) = delete;
+  /// Disconnects the push supplier.
+  void disconnect_push_supplier () override;
 
 private:
   // @@ Pradeep: are you sure you want to go through the CORBA
@@ -38,8 +38,8 @@ private:
   // can use remote CosPushSuppliers), but suffers some performance
   // penalty: do you need the extra flexibility? Can you use it? [I
   // suspect the answers are "not" for both]
+  /// The Cos PushSupplier being proxied.
   CosEventComm::PushSupplier_var supplier_;
-  // The Cos PushSupplier that we're proxying for.
 };
 
 #if defined(_MSC_VER)
@@ -70,28 +70,24 @@ TAO_CosEC_PushSupplierWrapper::disconnect_push_supplier ()
   // list.
 }
 
-TAO_CosEC_ProxyPushConsumer_i::TAO_CosEC_ProxyPushConsumer_i (const RtecEventChannelAdmin::SupplierQOS &qos,
-                                                              RtecEventChannelAdmin::ProxyPushConsumer_ptr proxypushconsumer)
+TAO_CosEC_ProxyPushConsumer_i::TAO_CosEC_ProxyPushConsumer_i
+  (RtecEventChannelAdmin::SupplierQOS const &qos,
+   RtecEventChannelAdmin::ProxyPushConsumer_ptr proxypushconsumer)
   : qos_ (qos),
-    proxypushconsumer_ (RtecEventChannelAdmin::ProxyPushConsumer::_duplicate (proxypushconsumer)),
-    wrapper_ (0)
-{
-}
-
-TAO_CosEC_ProxyPushConsumer_i::~TAO_CosEC_ProxyPushConsumer_i ()
+    proxypushconsumer_ (RtecEventChannelAdmin::ProxyPushConsumer::_duplicate (proxypushconsumer))
 {
 }
 
 void
-TAO_CosEC_ProxyPushConsumer_i::push (const CORBA::Any &data)
+TAO_CosEC_ProxyPushConsumer_i::push (CORBA::Any const &data)
 {
-  RtecEventComm::Event buffer[1];
+  std::array<RtecEventComm::Event, 1> buffer {};
   // Create an event set that does not own the buffer....
-  RtecEventComm::EventSet events (1, 1, buffer, 0);
+  RtecEventComm::EventSet events (1, 1, buffer.data (), false);
   events.length (1);
 
   RtecEventComm::Event &e = events[0];
-  RtecEventComm::Event eqos =
+  RtecEventComm::Event const eqos =
     qos_.publications[0].event;
 
   // @@ what if i initialize the entire <EventSet> with corresponding
@@ -104,7 +100,7 @@ TAO_CosEC_ProxyPushConsumer_i::push (const CORBA::Any &data)
   e.header.ttl = eqos.header.ttl;
   e.header.type = eqos.header.type;
 
-  ACE_hrtime_t t = ACE_OS::gethrtime ();
+  ACE_hrtime_t const t = ACE_OS::gethrtime ();
 
   ORBSVCS_Time::hrtime_to_TimeT (e.header.creation_time,
                                  t);
@@ -124,10 +120,10 @@ TAO_CosEC_ProxyPushConsumer_i::disconnect_push_consumer ()
   this->proxypushconsumer_->disconnect_push_consumer ();
 
   // Deactivate the ProxyPushConsumer
-  PortableServer::POA_var poa =
+  PortableServer::POA_var const poa =
     this->_default_POA ();
 
-  PortableServer::ObjectId_var id =
+  PortableServer::ObjectId_var const id =
     poa->servant_to_id (this);
 
   poa->deactivate_object (id.in ());
@@ -139,15 +135,15 @@ TAO_CosEC_ProxyPushConsumer_i::connect_push_supplier (CosEventComm::PushSupplier
   if (this->connected ())
     throw CosEventChannelAdmin::AlreadyConnected ();
 
-  TAO_CosEC_PushSupplierWrapper *wrapper;
+  TAO_CosEC_PushSupplierWrapper *wrapper {};
 
   ACE_NEW_THROW_EX (wrapper,
                     TAO_CosEC_PushSupplierWrapper (push_supplier),
                     CORBA::NO_MEMORY ());
 
-  std::unique_ptr <TAO_CosEC_PushSupplierWrapper> auto_wrapper (wrapper);
+  std::unique_ptr<TAO_CosEC_PushSupplierWrapper> auto_wrapper (wrapper);
 
-  RtecEventComm::PushSupplier_ptr rtecpushsupplier
+  RtecEventComm::PushSupplier_ptr const rtecpushsupplier
     = auto_wrapper.get ()->_this ();
 
   // give the ownership to the POA.
@@ -160,9 +156,9 @@ TAO_CosEC_ProxyPushConsumer_i::connect_push_supplier (CosEventComm::PushSupplier
   this->wrapper_ = auto_wrapper.release ();
 }
 
-int
-TAO_CosEC_ProxyPushConsumer_i::connected ()
+bool
+TAO_CosEC_ProxyPushConsumer_i::connected () const
 {
-  return this->wrapper_ == 0 ? 0 : 1;
+  return this->wrapper_ != nullptr;
 }
 

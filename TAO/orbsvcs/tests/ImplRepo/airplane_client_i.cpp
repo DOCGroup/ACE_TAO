@@ -1,20 +1,6 @@
 #include "airplane_client_i.h"
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
-#include "ace/Read_Buffer.h"
-#include "ace/ACE.h"
-
-
-// Constructor.
-Airplane_Client_i::Airplane_Client_i ()
-  : argc_ (0),
-    argv_ (0),
-    server_key_ (ACE::strnew (ACE_TEXT("key0"))),
-    loop_count_ (10),
-    server_ (Paper_Airplane_Server::_nil ())
-{
-}
-
 
 // Parses the command line arguments and returns an error status.
 
@@ -22,20 +8,19 @@ int
 Airplane_Client_i::parse_args ()
 {
   ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("dn:k:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'd':  // debug flag
-        TAO_debug_level++;
+        ++TAO_debug_level;
         break;
       case 'n':  // loop count
-        this->loop_count_ = (u_int) ACE_OS::atoi (get_opts.opt_arg ());
+        this->loop_count_ = static_cast<size_t> (ACE_OS::atoi (get_opts.opt_arg ()));
         break;
       case 'k':  // ior provide on command line
-        delete [] this->server_key_;
-        this->server_key_ = ACE::strnew (get_opts.opt_arg ());
+        this->server_key_ = get_opts.opt_arg ();
         break;
       case '?':
       default:
@@ -58,26 +43,25 @@ Airplane_Client_i::parse_args ()
 int
 Airplane_Client_i::get_planes (size_t count)
 {
-  int rc = 0;
-  for (size_t i = 0; i < count; i++)
+  int rc {};
+  for (size_t i = 0; i < count; ++i)
     {
       try
         {
-          CORBA::String_var response =
+          CORBA::String_var const response =
             this->server_->get_plane ();
 
-          ACE_DEBUG ((LM_DEBUG, "Plane %d is %C\n", i, response.in ()));
+          ACE_DEBUG ((LM_DEBUG, "Plane %B is %C\n", i, response.in ()));
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const &ex)
         {
-          ACE_ERROR ((LM_ERROR, "Plane %d exception:\n", i));
+          ACE_ERROR ((LM_ERROR, "Plane %B exception:\n", i));
           ex._tao_print_exception ("get_planes");
           rc = 1;
         }
     }
   return rc;
 }
-
 
 // Execute client example code.
 
@@ -86,15 +70,6 @@ Airplane_Client_i::run ()
 {
   return this->get_planes (this->loop_count_);
 }
-
-Airplane_Client_i::~Airplane_Client_i ()
-{
-  // Free resources
-  CORBA::release (this->server_);
-
-  delete [] this->server_key_;
-}
-
 
 int
 Airplane_Client_i::init (int argc, ACE_TCHAR **argv)
@@ -113,22 +88,16 @@ Airplane_Client_i::init (int argc, ACE_TCHAR **argv)
       if (this->parse_args () == -1)
         return -1;
 
-      if (this->server_key_ == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%s: no server key specified\n",
-                           this->argv_[0]),
-                          -1);
+      CORBA::Object_var const server_object =
+        this->orb_->string_to_object (this->server_key_.c_str ());
 
-      CORBA::Object_var server_object =
-        this->orb_->string_to_object (this->server_key_);
-
-      this->server_ = Paper_Airplane_Server::_narrow (server_object.in());
+      this->server_ = Paper_Airplane_Server::_narrow (server_object.in ());
 
       if (CORBA::is_nil (server_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-          "Error: invalid server key <%s>\n", this->server_key_), -1);
+          "Error: invalid server key <%s>\n", this->server_key_.c_str ()), -1);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Airplane_Client_i::init");
       return -1;

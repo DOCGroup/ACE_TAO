@@ -720,13 +720,13 @@ output.  Two C++ functions are generated.  They are called @code{hash} and
 @code{in_word_set}, although you may modify the name for
 @code{in_word_set} with a command-line option.  Both functions require
 two arguments, a string, @code{char const *} @var{str}, and a length
-parameter, @code{std::size_t} @var{len}.  Their default function prototypes are
+parameter, @code{size_t} @var{len}.  Their default function prototypes are
 as follows:
 
 @example
 @group
-static std::size_t hash (char const *str, std::size_t len);
-char const * in_word_set (char const *str, std::size_t len);
+static size_t hash (char const *str, size_t len);
+char const * in_word_set (char const *str, size_t len);
 @end group
 @end example
 

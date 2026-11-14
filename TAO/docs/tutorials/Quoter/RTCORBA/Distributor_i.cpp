@@ -20,7 +20,6 @@
 // Implementation skeleton constructor
 StockDistributor_i::StockDistributor_i (RTPortableServer::POA_ptr poa)
   : rate_ (3), // Default is 3 seconds (3000 milliseconds).
-    active_ (false),
     rt_poa_ (RTPortableServer::POA::_duplicate (poa)),
     orb_ (CORBA::ORB::_duplicate (poa->_get_orb ()))
 {
@@ -34,10 +33,10 @@ StockDistributor_i::~StockDistributor_i ()
 
 ::Stock::Cookie *
 StockDistributor_i::subscribe_notifier (::Stock::StockNameConsumer_ptr c,
-                                              ::RTCORBA::Priority priority)
+                                         ::RTCORBA::Priority priority)
 {
   // Get mutual exclusion of the <subscribers_list_>.
-  ACE_WRITE_GUARD_RETURN (ACE_RW_Thread_Mutex, g, lock_, 0);
+  ACE_WRITE_GUARD_RETURN (ACE_RW_Thread_Mutex, g, lock_, nullptr);
 
   // Generate a unique id for the cookie.
   ACE_Utils::UUID uuid;
@@ -60,14 +59,14 @@ StockDistributor_i::subscribe_notifier (::Stock::StockNameConsumer_ptr c,
 ::Stock::StockNameConsumer_ptr
 StockDistributor_i::unsubscribe_notifier (::Stock::Cookie *ck)
 {
-  if (ck == 0)
+  if (ck == nullptr)
     {
       ACE_DEBUG ((LM_DEBUG, "ERROR: Cookie given to unsubscribe_notifier was null\n"));
       return 0;
     }
 
   // Get mutual exclusion of the <subscribers_list_>.
-  ACE_WRITE_GUARD_RETURN (ACE_RW_Thread_Mutex, guard, lock_, 0);
+  ACE_WRITE_GUARD_RETURN (ACE_RW_Thread_Mutex, guard, lock_, nullptr);
 
   ACE_DEBUG ((LM_DEBUG, "Unsubscribing  %s\n", ck->cookie_id ()));
 
@@ -89,7 +88,7 @@ StockDistributor_i::unsubscribe_notifier (::Stock::Cookie *ck)
 ::Stock::StockQuoter_ptr
 StockDistributor_i::provide_quoter_info (::Stock::Cookie *ck)
 {
-  ACE_READ_GUARD_RETURN (ACE_RW_Thread_Mutex, guard, lock_, 0);
+  ACE_READ_GUARD_RETURN (ACE_RW_Thread_Mutex, guard, lock_, nullptr);
 
   try
     {
@@ -100,15 +99,15 @@ StockDistributor_i::provide_quoter_info (::Stock::Cookie *ck)
       if (iter == this->subscribers_list_.end ())
         throw ::Stock::Invalid_Subscription ();
 
-
-      StockQuoter_i *quoter = new StockQuoter_i;
+      StockQuoter_i *const quoter = new StockQuoter_i;
       PortableServer::ServantBase_var owner_transfer (quoter);
-      PortableServer::ObjectId *oid =
+      PortableServer::ObjectId_var oid (
         this->rt_poa_->activate_object_with_priority (quoter,
-                                                      iter->second.second);
+                                                      iter->second.second));
 
-      CORBA::Object_var obj = rt_poa_->id_to_reference (*oid);
-      ::Stock::StockQuoter_var quoter_var = ::Stock::StockQuoter::_narrow (obj.in ());
+      CORBA::Object_var obj (this->rt_poa_->id_to_reference (oid.in ()));
+      ::Stock::StockQuoter_var quoter_var (
+        ::Stock::StockQuoter::_narrow (obj.in ()));
 
       if (CORBA::is_nil (quoter_var.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -117,7 +116,7 @@ StockDistributor_i::provide_quoter_info (::Stock::Cookie *ck)
 
       return quoter_var._retn ();
     }
-  catch (const CORBA::Exception &ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("StockDistributor_i::provide_quoter_info");
       return ::Stock::StockQuoter::_nil ();
@@ -206,7 +205,7 @@ struct Stock_Publisher
         // publish!
         item.second.first->push_StockName (this->sn_.in ());
       }
-    catch (const CORBA::Exception &ex)
+    catch (CORBA::Exception const &ex)
       {
         ex._tao_print_exception ("Distributor: Stock_Publisher");
       }
@@ -216,38 +215,26 @@ struct Stock_Publisher
   Stock::StockNames_var sn_;
 };
 
-
 void
 StockDistributor_i::operator () (std::vector <std::string> &stocks)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "*** message: transmitting data to the StockNameConsumer, got %i stocks\n",
+              "*** message: transmitting data to the StockNameConsumer, got %B stocks\n",
               stocks.size ()));
 
   // Convert the stocks into a stringseq
-  CORBA::StringSeq_var corba_stocks = new CORBA::StringSeq ();
+  CORBA::StringSeq_var corba_stocks (new CORBA::StringSeq ());
   corba_stocks->length (stocks.size ());
 
-  std::for_each (stocks.begin (),
-                 stocks.end (),
+  std::for_each (stocks.cbegin (),
+                 stocks.cend (),
                  StrSeq_Converter (corba_stocks));
-
 
   ACE_READ_GUARD (ACE_RW_Thread_Mutex, g, lock_);
   std::for_each (this->subscribers_list_.begin (),
                  this->subscribers_list_.end (),
                  Stock_Publisher (this->orb_.in (),
                                   corba_stocks));
-}
-
-// Implementation skeleton constructor
-StockQuoter_i::StockQuoter_i ()
-{
-}
-
-// Implementation skeleton destructor
-StockQuoter_i::~StockQuoter_i ()
-{
 }
 
 ::Stock::StockInfo *
@@ -258,10 +245,10 @@ StockQuoter_i::get_stock_info (const char * stock_name)
 
   try
     {
-      Stock_Database<StockDistributor_i>::StockInfo si
-        (STOCK_DATABASE->get_stock_info (stock_name));
+      Stock_Database<StockDistributor_i>::StockInfo const si (
+        STOCK_DATABASE->get_stock_info (std::string (stock_name)));
 
-      Stock::StockInfo_var stock_info = new Stock::StockInfo;
+      Stock::StockInfo_var stock_info (new Stock::StockInfo);
       stock_info->name = si.name_.c_str ();
       stock_info->high = si.high_;
       stock_info->low = si.low_;
@@ -269,7 +256,7 @@ StockQuoter_i::get_stock_info (const char * stock_name)
 
       return stock_info._retn ();
     }
-  catch (Stock_Database<StockDistributor_i>::Invalid_Stock &ex)
+  catch (Stock_Database<StockDistributor_i>::Invalid_Stock const &)
     {
       throw Stock::Invalid_Stock ();
     }
@@ -278,9 +265,9 @@ StockQuoter_i::get_stock_info (const char * stock_name)
 
 // Implementation skeleton constructor
 StockDistributorHome_i::StockDistributorHome_i (CORBA::ORB_ptr orb)
-  :     orb_ (CORBA::ORB::_duplicate (orb)),
-        rt_poa_ (RTPortableServer::POA::_nil ()),
-        dist_id_ (0)
+  : orb_ (CORBA::ORB::_duplicate (orb)),
+    rt_poa_ (RTPortableServer::POA::_nil ()),
+    dist_id_ (nullptr)
 {
   // Register this class as a signal handler to catch keyboard interrupts.
   if (orb_->orb_core ()->reactor ()->register_handler (SIGINT, this) == -1)
@@ -296,7 +283,7 @@ StockDistributorHome_i::StockDistributorHome_i (CORBA::ORB_ptr orb)
 
   Stock::Cookie_init *cookie_factory = new Stock::Cookie_init;
   this->orb_->register_value_factory (cookie_factory->tao_repository_id (),
-                               cookie_factory);
+                                      cookie_factory);
 
   Stock::Priority_Mapping::register_mapping (orb_.in ());
 
@@ -314,7 +301,8 @@ StockDistributorHome_i::StockDistributorHome_i (CORBA::ORB_ptr orb)
 
   // Create a threadpool with lanes for the distributor. Since the brokers
   // will have various priorities, create a lane for each priority.
-  RTCORBA::ThreadpoolLanes lanes (5); lanes.length (5);
+  RTCORBA::ThreadpoolLanes lanes (5);
+  lanes.length (5);
 
   for (CORBA::ULong i = 0; i < lanes.length (); ++i)
     {
@@ -350,9 +338,7 @@ StockDistributorHome_i::StockDistributorHome_i (CORBA::ORB_ptr orb)
 }
 
 // Implementation skeleton destructor
-StockDistributorHome_i::~StockDistributorHome_i ()
-{
-}
+StockDistributorHome_i::~StockDistributorHome_i () = default;
 
 ::Stock::StockDistributor_ptr
 StockDistributorHome_i::create ()
@@ -374,7 +360,6 @@ StockDistributorHome_i::create ()
 
   return Stock::StockDistributor::_narrow (obj.in ());
 }
-
 
 int
 StockDistributorHome_i::handle_signal (int,
@@ -412,8 +397,8 @@ StockDistributorHome_i::create_distributor ()
   // Create a new instance of the <StockDistributor_i>. Then
   // activate the <distributor> under the located POA. This will cause
   // the object to have the <CLIENT_PROPAGATED> policies.
-  StockDistributor_i *servant = new StockDistributor_i (this->rt_poa_.in ());
-  PortableServer::ServantBase_var distributor_owner_transfer = servant;
+  StockDistributor_i *const servant = new StockDistributor_i (this->rt_poa_.in ());
+  PortableServer::ServantBase_var distributor_owner_transfer (servant);
   this->dist_id_ = this->rt_poa_->activate_object (servant);
 
   // Register the distributor with the database as a callback.

@@ -13,31 +13,21 @@
  */
 //=============================================================================
 
-
 #include "orbsvcs/Log_Macros.h"
 #include "Factory_Trader.h"
 #include "orbsvcs/CosTradingC.h"
 
-// This const char * is used for adding a new type to the service repository
-// the added types will be subclasses of this.
-char const * Factory_Trader::GENERIC_FACTORY_INTERFACE_REPOSITORY_ID =
-  "IDL:omg.org/CosLifeCycle/GenericFactory:1.0";
-
-
 Factory_Trader::Factory_Trader (int debug_level)
-  : trader_ptr_(nullptr),
-    trading_Components_ptr_ (nullptr),
-    support_Attributes_ptr_(nullptr),
-    debug_level_ (debug_level)
+  : debug_level_ (debug_level)
 {
   try
     {
-      int argc = 0;
+      int argc {};
       // create the trader
-      this->trader_ptr_ = TAO_Trader_Factory::create_trader (argc, nullptr);
-      this->support_Attributes_ptr_ = &(trader_ptr_->support_attributes ());
+      this->trader_ptr_.reset (TAO_Trader_Factory::create_trader (argc, nullptr));
+      this->support_Attributes_ptr_ = std::addressof (this->trader_ptr_->support_attributes ());
       // this pointer is deleted when the trader_ptr is deleted
-      this->trading_Components_ptr_ = &(trader_ptr_->trading_components ());
+      this->trading_Components_ptr_ = std::addressof (this->trader_ptr_->trading_components ());
       // this pointer is deleted when the trader_ptr is deleted
 
       // Set the service type repository
@@ -47,19 +37,13 @@ Factory_Trader::Factory_Trader (int debug_level)
       // Add the "Factory" type to the repository
       this->add_type ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "LifeCycle Server: (Factory_Trader::Factory_Trader) Failed adding a new type.\n");
     }
   // @@ ACE_CHECK?  No way to pass back any exceptions.
 }
-
-Factory_Trader::~Factory_Trader ()
-{
-  delete this->trader_ptr_;
-}
-
 
 void
 Factory_Trader::add_type ()
@@ -96,13 +80,12 @@ Factory_Trader::add_type ()
                                   propStructSeq,
                                   superTypeSeq);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("LifeCycle Server: (Factory_Trader::init).\n");
     }
   // @@ ACE_CHECK
 }
-
 
 void
 Factory_Trader::_cxx_export (char const * name,
@@ -137,7 +120,7 @@ Factory_Trader::_cxx_export (char const * name,
                                  CORBA::string_dup("GenericFactory"),
                                  propertySeq);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "LifeCycle Server (Factory_Trader::export): ""Failed to export factory.\n");
@@ -145,19 +128,17 @@ Factory_Trader::_cxx_export (char const * name,
   // @@ ACE_CHECK*
 }
 
-
 CORBA::Object_ptr
-Factory_Trader::query (char const * constraint)
+Factory_Trader::query (std::string const & constraint)
 {
   try
     {
       CosTrading::Lookup::SpecifiedProps specifiedProps;
       specifiedProps._d(CosTrading::Lookup::all);
 
-      // Get some pointers for the out parameters of the call.
-      CosTrading::OfferSeq * offerSeq_ptr = nullptr;
-      CosTrading::OfferIterator_ptr offerIterator_ptr = nullptr;
-      CosTrading::PolicyNameSeq * policyNameSeq_ptr = nullptr;
+      CosTrading::OfferSeq_var offer_seq;
+      CosTrading::OfferIterator_var offer_iterator;
+      CosTrading::PolicyNameSeq_var policy_names;
 
       // An empty policy sequence
       CosTrading::PolicySeq policySeq;
@@ -168,47 +149,45 @@ Factory_Trader::query (char const * constraint)
 
       // Invoke the query method on the Lookup Interface.
       lookup_ptr->query ("GenericFactory",  // Type name
-                         constraint,        // Constraint, very important
+                         constraint.c_str (), // Constraint, very important
                          "",                // Preferences
                          policySeq,         // Policy
                          specifiedProps,    // Specified Properties
                          1,                 // Number of wanted results
-                         CosTrading::OfferSeq_out(offerSeq_ptr),               // results
-                         CosTrading::OfferIterator_out(offerIterator_ptr),     // more results
-                         CosTrading::PolicyNameSeq_out(policyNameSeq_ptr)      // Policies
+                         offer_seq.out (),
+                         offer_iterator.out (),
+                         policy_names.out ()
                          );
 
-      // Initialize
-      CORBA::Object_ptr object_ptr = nullptr;
-
       // Check if an offer was made
-      if (offerSeq_ptr != nullptr)
+      if (offer_seq.ptr () != nullptr)
         {
-          // Insert the pointer into the out class
-          CosTrading::OfferSeq_var offerSeq_var(offerSeq_ptr);
-
           // We need at least one offer.
-          if (offerSeq_var->length() >= 1)
+          if (offer_seq->length () >= 1)
             {
               // now we are all set to read from the sequence the result
-              object_ptr = CORBA::Object::_duplicate (offerSeq_var[0u].reference.in());
+              CORBA::Object_var object =
+                CORBA::Object::_duplicate (offer_seq[0u].reference.in ());
 
-              if (CORBA::is_nil (object_ptr))
-                ORBSVCS_ERROR_RETURN ((LM_ERROR,"Factory_Trader::query: Object reference is nil.\n"), 0);
+              if (CORBA::is_nil (object.in ()))
+                ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                       "Factory_Trader::query: Object reference is nil.\n"),
+                                      0);
               else
                 if (this->debug_level_ >= 2)
                   ORBSVCS_DEBUG ((LM_DEBUG, "Factory_Trader::query: Received a proper object reference.\n"));
+              return object._retn ();
             }
           else
             ORBSVCS_ERROR ((LM_ERROR, "Factory_Trader::query: OfferSequence.length is smaller than 1.\n"));
         }
-      return object_ptr;
+      return {};
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "Factory_Trader::query: Failed.\n");
     }
   // @@ ACE_CHECK_RETURN (?)
-  return nullptr;
+  return {};
 }

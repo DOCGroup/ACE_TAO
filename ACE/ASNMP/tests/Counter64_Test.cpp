@@ -33,6 +33,9 @@ SOFTWARE INCLUDING WITHOUT LIMITATION, DIRECT, INDIRECT OR CONSEQUENTIAL
 DAMAGES.
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
+#include <cstring>
+#include <iostream>
+
 #include "ace/OS_main.h"
 #include "asnmp/ctr64.h"
 #include "test_config.h"
@@ -70,42 +73,45 @@ DAMAGES.
 static void TestCounter64()
 {
 #if !defined (ACE_WIN32)
-  static unsigned long ul = ULONG_MAX;
-  LLONG ll =  (LLONG) 0x7fffffffffffffffLL;
-  LLONG mll =  (LLONG) ((-ll) - 1);
-  ULLONG ull =  (ULLONG) 0xffffffffffffffffULL;
-  long double ld = (LLONG) ll;
+  constexpr unsigned long ul = ULONG_MAX;
+  constexpr LLONG ll = static_cast<LLONG> (0x7fffffffffffffffLL);
+  constexpr LLONG mll = (-ll) - 1;
+  constexpr ULLONG ull = static_cast<ULLONG> (0xffffffffffffffffULL);
+  constexpr long double ld = static_cast<long double> (ll);
 
-  cerr << "max unsigned long long is " << ull << endl;
-  cerr << "max long long is " << ll << endl;
-  cerr << "min long long is " << mll << endl;
+  std::cerr << "max unsigned long long is " << ull << std::endl;
+  std::cerr << "max long long is " << ll << std::endl;
+  std::cerr << "min long long is " << mll << std::endl;
 
   Counter64  c1;
-  ACE_ASSERT(c1.valid() == 1);
+  ACE_TEST_ASSERT(c1.valid() == 1);
   Counter64  c2(ul, ul);
-  ACE_ASSERT(c2.valid() == 1);
-  ACE_ASSERT(c2.high() == ul);
-  ACE_ASSERT(c2.low() == ul);
+  ACE_TEST_ASSERT(c2.valid() == 1);
+  ACE_TEST_ASSERT(c2.high() == ul);
+  ACE_TEST_ASSERT(c2.low() == ul);
 
   Counter64  c3(ul);
-  ACE_ASSERT(c3.valid() == 1);
-  ACE_ASSERT(c3.low() == ul);
+  ACE_TEST_ASSERT(c3.valid() == 1);
+  ACE_TEST_ASSERT(c3.high() == static_cast<unsigned long> (static_cast<ACE_UINT64> (ul) >> 32));
+  ACE_TEST_ASSERT(c3.low() == static_cast<unsigned long> (static_cast<ACE_UINT64> (ul) & 0xffffffffULL));
 
   Counter64  c4(c2);
-  ACE_ASSERT(c4.valid() == 1);
-  ACE_ASSERT(c4.high() == ul);
-  ACE_ASSERT(c4.low() == ul);
+  ACE_TEST_ASSERT(c4.valid() == 1);
+  ACE_TEST_ASSERT(c4.high() == ul);
+  ACE_TEST_ASSERT(c4.low() == ul);
 
   Counter64  c5(0);
-  ACE_ASSERT(c5.valid() == 1);
+  ACE_TEST_ASSERT(c5.valid() == 1);
 
   Counter64 c6;
   c6.assign(ld);
-  ACE_ASSERT(ACE::is_equal(c6.to_long_double(), ld));
+  ACE_TEST_ASSERT(ACE::is_equal(c6.to_long_double(), ld));
 
   Counter64 c7(ull);
-  ACE_ASSERT(c7 == ull);
+  ACE_TEST_ASSERT(c7 == ull);
 
+  Counter64 low_word_max (static_cast<ACE_UINT64> (0xffffffffULL));
+  ACE_TEST_ASSERT(std::strcmp (low_word_max.to_string (), "4294967295") == 0);
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) c1(\"\") [%s]\n",
     c1.to_string()));
@@ -121,19 +127,19 @@ static void TestCounter64()
   // misc routines
    c1.set_low(1);
    c1.set_high(2);
-   ACE_ASSERT(c1.low() == 1);
-   ACE_ASSERT(c1.high() == 2);
+   ACE_TEST_ASSERT(c1.low() == 1);
+   ACE_TEST_ASSERT(c1.high() == 2);
   // assignment
   c5 = c4;
-  ACE_ASSERT(c5 == c4);
+  ACE_TEST_ASSERT(c5 == c4);
   c4 = c4;
-  ACE_ASSERT(c5 == c4);
+  ACE_TEST_ASSERT(c5 == c4);
   c5 = ll;
-  ACE_ASSERT(c5 == static_cast<ACE_UINT64> (ll));
+  ACE_TEST_ASSERT(c5 == static_cast<ACE_UINT64> (ll));
   // try simple arithmetic (needs more test cases)
   c5 = mll;
   c5 = c5 + (ULLONG) 10;
-  ACE_ASSERT(c5 == static_cast<ACE_UINT64> (mll + 10));
+  ACE_TEST_ASSERT(c5 == static_cast<ACE_UINT64> (mll + 10));
 #endif /*ACE_WIN32 */
 }
 

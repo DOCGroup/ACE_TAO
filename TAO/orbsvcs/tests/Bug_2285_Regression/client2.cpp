@@ -5,48 +5,51 @@
 #include "tao/PI/PI.h"
 #include "orbsvcs/FaultTolerance/FT_ClientService_Activate.h"
 #include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
-#include <memory>
+#include <string>
+#include <vector>
 
-
-//const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
-TAO_IOP::TAO_IOR_Manipulation_var iorm = 0;
-CORBA::ULong number_of_servers = 0;
+struct Client_Options
+{
+  CORBA::ULong number_of_servers {};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:n:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("n:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'k':
-        break;
-      case 'n':
-        number_of_servers = ACE_OS::atoi (get_opts.opt_arg ());
-        break;
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
-  // Indicates successful parsing of the command line
+    {
+      switch (c)
+        {
+        case 'n':
+          options.number_of_servers = static_cast<CORBA::ULong> (ACE_OS::atoi (get_opts.opt_arg ()));
+          break;
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("usage: %s -n <number of servers>\n"),
+                             argv[0]),
+                            -1);
+        }
+    }
   return 0;
 }
 
 CORBA::Object_ptr
-make_iogr (const char* domain_id, CORBA::ULongLong group_id, CORBA::ULong group_version, Test::Hello_var *refs)
+make_iogr (TAO_IOP::TAO_IOR_Manipulation_ptr iorm,
+           char const *domain_id,
+           CORBA::ULongLong group_id,
+           CORBA::ULong group_version,
+           std::vector<Test::Hello_var> const &refs,
+           CORBA::ULong number_of_servers)
 {
   FT::TagFTGroupTaggedComponent ft_tag_component;
   // Create the list
   TAO_IOP::TAO_IOR_Manipulation::IORList iors (number_of_servers);
-  iors.length(number_of_servers);
-  for (CORBA::ULong i = 0; i < number_of_servers; ++i)
+  iors.length (number_of_servers);
+  for (CORBA::ULong i {}; i < number_of_servers; ++i)
     {
       iors [i] = CORBA::Object::_duplicate (refs[i].in ());
     }
@@ -57,11 +60,10 @@ make_iogr (const char* domain_id, CORBA::ULongLong group_id, CORBA::ULong group_
   // Property values
 
   // Major and Minor revision numbers
-  ft_tag_component.component_version.major = (CORBA::Octet) 1;
-  ft_tag_component.component_version.minor = (CORBA::Octet) 0;
+  ft_tag_component.component_version.major = static_cast<CORBA::Octet> (1);
+  ft_tag_component.component_version.minor = static_cast<CORBA::Octet> (0);
 
   // Domain id
-  //const char *id = "iogr_testing";
   ft_tag_component.group_domain_id = domain_id;
 
   // Object group id
@@ -74,92 +76,88 @@ make_iogr (const char* domain_id, CORBA::ULongLong group_id, CORBA::ULong group_
   TAO_FT_IOGR_Property iogr_prop (ft_tag_component);
 
   // Set the property
-  CORBA::Boolean retval = iorm->set_property (&iogr_prop,
-                                              new_ref.in ());
+  CORBA::Boolean const has_property = iorm->set_property (&iogr_prop, new_ref.in ());
 
-  // Set the primary
-  // See we are setting the second ior as the primary
-  if (retval != 0)
+  // Use the first server as the primary.
+  if (has_property)
     {
-      retval = iorm->set_primary (&iogr_prop,
-                                  refs[0].in (),
-                                  new_ref.in ());
+      iorm->set_primary (&iogr_prop, refs[0].in (), new_ref.in ());
     }
 
   return new_ref._retn ();
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  CORBA::Boolean result = 0;
+  CORBA::Boolean result {};
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      Client_Options options;
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
       // Get a ref to the IORManipulation object
-      CORBA::Object_var IORM =
+      CORBA::Object_var const iorm_object =
         orb->resolve_initial_references (TAO_OBJID_IORMANIPULATION,
-                                         0);
+                                         nullptr);
 
       // Narrow
-      iorm =
-        TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM.in());
+      TAO_IOP::TAO_IOR_Manipulation_var const iorm =
+        TAO_IOP::TAO_IOR_Manipulation::_narrow (iorm_object.in ());
 
-      Test::Hello_var *servers = 0;
-      ACE_NEW_RETURN (servers,
-                      Test::Hello_var [number_of_servers],
-                      -1);
-      std::unique_ptr<Test::Hello_var[]> owner (servers);
+      std::vector<Test::Hello_var> servers (options.number_of_servers);
 
-      for (CORBA::ULong i = 0; i < number_of_servers; ++ i)
+      for (CORBA::ULong i {}; i < options.number_of_servers; ++i)
         {
-          char buf[4]; // if you run more than 10000 servers then you need your head looking at
-          const char *number = ACE_OS::itoa ((int) i, buf, 10);
-          ACE_CString ior_file ("file://n");
-          const char *ior = ((ior_file += number) += ".ior").c_str ();
+          std::string const ior_file =
+            "file://n" + std::to_string (i) + ".ior";
 
-          CORBA::Object_var tmp =
-            orb->string_to_object(ior);
+          CORBA::Object_var const tmp =
+            orb->string_to_object (ior_file.c_str ());
 
           servers[i] =
-            Test::Hello::_narrow(tmp.in ());
+            Test::Hello::_narrow (tmp.in ());
 
           if (CORBA::is_nil (servers[i].in ()))
             {
               ACE_ERROR_RETURN ((LM_DEBUG,
-                                  "Test failed - Not regression - Unexpected Nil Test::Hello reference <%s>\n",
-                                  ior),
-                                  1);
+                                  ACE_TEXT ("Test failed - Not regression - Unexpected Nil "
+                                            "Test::Hello reference <%s>\n"),
+                                  ior_file.c_str ()),
+                                1);
             }
         }
 
-      CORBA::Object_var iogr = make_iogr ("Domain_1", 1, 1, servers);
+      CORBA::Object_var const iogr = make_iogr (
+        iorm.in (), "Domain_1", 1, 1, servers, options.number_of_servers);
 
-      Test::Hello_var hello_iogr = Test::Hello::_narrow(iogr.in ());
+      Test::Hello_var const hello_iogr = Test::Hello::_narrow (iogr.in ());
 
-      CORBA::ULong last_server = 0;
+      CORBA::ULong last_server {};
 
       try
         {
           last_server = hello_iogr->drop_down_dead ();
           // If the call 'succeeds' the server has identified a regression.
-          result = 1;
-          ACE_DEBUG ((LM_ERROR, "Error: REGRESSION identified by server %u. Test Failed !!\n", last_server));
+          result = true;
+          ACE_DEBUG ((LM_ERROR,
+                      ACE_TEXT ("Error: REGRESSION identified by server %u. Test Failed !!\n"),
+                      static_cast<unsigned int> (last_server)));
         }
-      catch (const CORBA::COMM_FAILURE&)
+      catch (CORBA::COMM_FAILURE const &)
         {
           // We can't use the word exception for fear of upsetting the build log parser
-          ACE_DEBUG ((LM_DEBUG, "Client caught one of those things that is normally used to indicate a problem ("
-                      "although it doesn't in this case) and which we cannot name because the autobuild "
-                      "script will think we have a problem if we do mention the word. No problem !\n"));
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Client caught one of those things that is normally used to indicate a problem ("
+                                "although it doesn't in this case) and which we cannot name because the autobuild "
+                                "script will think we have a problem if we do mention the word. No problem !\n")));
         }
 
-      for (CORBA::ULong j = last_server; j < number_of_servers; ++j)
+      for (CORBA::ULong j = last_server; j < options.number_of_servers; ++j)
         {
           try
             {
@@ -173,7 +171,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "Test failed (Not regression) because unexpected exception caught:");
@@ -182,11 +180,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   if (result)
     {
-      ACE_DEBUG ((LM_ERROR, "Error: REGRESSION identified!!!\n"));
+      ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Error: REGRESSION identified!!!\n")));
     }
   else
     {
-      ACE_DEBUG ((LM_DEBUG, "Test passed !!!\n"));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Test passed !!!\n")));
     }
   return result;
 }

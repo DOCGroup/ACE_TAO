@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef NOTIFY_TESTS_UPDATES_H
 #define NOTIFY_TESTS_UPDATES_H
 
@@ -28,12 +27,11 @@ class Updates;
 class Updates_StructuredPushConsumer : public TAO_Notify_Tests_StructuredPushConsumer
 {
 public:
-  /// Constructor.
-  Updates_StructuredPushConsumer (Updates *test_client);
+  explicit Updates_StructuredPushConsumer (Updates *test_client);
 
   /// Offer change is conveyed here.
-  virtual void offer_change (const CosNotification::EventTypeSeq & added,
-                             const CosNotification::EventTypeSeq & removed);
+  void offer_change (CosNotification::EventTypeSeq const &added,
+                     CosNotification::EventTypeSeq const &removed) override;
 
 protected:
   Updates * test_client_;
@@ -44,16 +42,14 @@ protected:
 class Updates_StructuredPushSupplier : public TAO_Notify_Tests_StructuredPushSupplier
 {
 public:
-  /// Constructor.
-  Updates_StructuredPushSupplier (Updates * test_client);
+  explicit Updates_StructuredPushSupplier (Updates *test_client);
 
-  /// Destructor.
-  virtual ~Updates_StructuredPushSupplier ();
+  ~Updates_StructuredPushSupplier () override;
 
   /// Subscription change is conveyed here.
-  virtual void subscription_change (
-      const CosNotification::EventTypeSeq & added,
-      const CosNotification::EventTypeSeq & removed);
+  void subscription_change (
+      CosNotification::EventTypeSeq const &added,
+      CosNotification::EventTypeSeq const &removed) override;
 
 protected:
   Updates* test_client_;
@@ -66,10 +62,10 @@ class Updates : public Notify_Test_Client
 public:
   // Initialization and termination code
   Updates ();
-  virtual ~Updates ();
+  ~Updates () override;
 
   /// initialization.
-  int init (int argc, ACE_TCHAR *argv []);
+  int init (int argc, ACE_TCHAR *argv []) override;
 
   /// Run the test.
   void run_test ();

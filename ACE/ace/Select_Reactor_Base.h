@@ -92,7 +92,6 @@ public:
   /// Default constructor.
   ACE_Event_Tuple ();
 
-  /// Constructor.
   ACE_Event_Tuple (ACE_Event_Handler *eh, ACE_HANDLE h);
 
   /// Equality operator.
@@ -127,15 +126,13 @@ public:
 class ACE_Export ACE_Select_Reactor_Notify : public ACE_Reactor_Notify
 {
 public:
-  /// Constructor.
   ACE_Select_Reactor_Notify ();
 
-  /// Destructor.
   ~ACE_Select_Reactor_Notify () override;
 
   /// Initialize.
   int open (ACE_Reactor_Impl *,
-                    ACE_Timer_Queue * = 0,
+                    ACE_Timer_Queue * = nullptr,
                     int disable_notify_pipe = ACE_DISABLE_NOTIFY_PIPE_DEFAULT) override;
 
   /// Destroy.
@@ -152,7 +149,7 @@ public:
    * the caller will block until action is possible, else will wait
    * until the relative time specified in @c *timeout elapses).
    */
-  int notify (ACE_Event_Handler * = 0,
+  int notify (ACE_Event_Handler * = nullptr,
                       ACE_Reactor_Mask = ACE_Event_Handler::EXCEPT_MASK,
                       ACE_Time_Value * timeout = nullptr) override;
 
@@ -285,7 +282,6 @@ public:
   using key_type = ACE_HANDLE;
   using value_type = ACE_Event_Handler *;
 
-  // = The mapping from <HANDLES> to <Event_Handlers>.
 #ifdef ACE_SELECT_REACTOR_BASE_USES_HASH_MAP
   /**
    * The NT version implements this via a hash map
@@ -312,6 +308,9 @@ public:
 
   using size_type = map_type::size_type;
 
+  /// @name Handler table operations
+  /// @{
+
   /// Default "do-nothing" constructor.
   ACE_Select_Reactor_Handler_Repository (ACE_Select_Reactor_Impl &);
 
@@ -328,8 +327,6 @@ public:
 
   /// Close down the repository.
   int close ();
-
-  // = Search structure operations.
 
   /**
    * Return the @c ACE_Event_Handler* associated with @c ACE_HANDLE.
@@ -349,7 +346,10 @@ public:
   /// Remove all the <ACE_HANDLE, ACE_Event_Handler> tuples.
   int unbind_all ();
 
-  // = Sanity checking.
+  /// @}
+
+  /// @name Handle validation
+  /// @{
 
   // Check the @a handle to make sure it's a valid @c ACE_HANDLE that
   // is within the range of legal handles (i.e., >= 0 && < max_size_).
@@ -360,12 +360,18 @@ public:
   // @c max_handlep1_).
   bool handle_in_range (ACE_HANDLE handle);
 
-  // = Accessors.
+  /// @}
+
+  /// @name Repository accessors
+  /// @{
+
   /// Returns the current table size.
   size_type size () const;
 
   /// Maximum ACE_HANDLE value, plus 1.
   max_handlep1_type max_handlep1 () const;
+
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;
@@ -408,13 +414,14 @@ private:
 class ACE_Export ACE_Select_Reactor_Handler_Repository_Iterator
 {
 public:
-  typedef
-    ACE_Select_Reactor_Handler_Repository::map_type::const_iterator const_base_iterator;
+  using const_base_iterator =
+    ACE_Select_Reactor_Handler_Repository::map_type::const_iterator;
 
   explicit ACE_Select_Reactor_Handler_Repository_Iterator (
     ACE_Select_Reactor_Handler_Repository const * s);
 
-  // = Iteration methods.
+  /// @name Iteration methods
+  /// @{
 
   /// Pass back the @a next_item that hasn't been seen in the Set.
   /// Returns @c false when all items have been seen, else @c true.
@@ -426,6 +433,8 @@ public:
   /// Move forward by one element in the set.  Returns @c false when
   /// all the items in the set have been seen, else @c true.
   bool advance ();
+
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;
@@ -451,10 +460,14 @@ private:
 class ACE_Export ACE_Select_Reactor_Impl : public ACE_Reactor_Impl
 {
 public:
+  ACE_Select_Reactor_Impl (ACE_Select_Reactor_Impl const &) = delete;
+  ACE_Select_Reactor_Impl (ACE_Select_Reactor_Impl &&) = delete;
+  ACE_Select_Reactor_Impl &operator= (ACE_Select_Reactor_Impl const &) = delete;
+  ACE_Select_Reactor_Impl &operator= (ACE_Select_Reactor_Impl &&) = delete;
+
   /// Default size of the Select_Reactor's handle table.
   static constexpr int DEFAULT_SIZE = ACE_DEFAULT_SELECT_REACTOR_SIZE;
 
-  /// Constructor.
   ACE_Select_Reactor_Impl (bool mask_signals = true);
 
   friend class ACE_Select_Reactor_Notify;
@@ -465,7 +478,7 @@ public:
    * ACE_Event_Handler object. Returns the number of notifications
    * purged. Returns -1 on error.
    */
-  int purge_pending_notifications (ACE_Event_Handler * = 0,
+  int purge_pending_notifications (ACE_Event_Handler * = nullptr,
                                            ACE_Reactor_Mask    = ACE_Event_Handler::ALL_EVENTS_MASK) override;
 
   /// Does the reactor allow the application to resume the handle on
@@ -486,8 +499,8 @@ protected:
   virtual void renew () = 0;
 
   /// Check to see if the Event_Handler associated with @a handle is
-  /// suspended. Returns 0 if not, 1 if so.
-  virtual int is_suspended_i (ACE_HANDLE handle) = 0;
+  /// suspended.
+  virtual bool is_suspended_i (ACE_HANDLE handle) = 0;
 
   /// When register/unregister occur, then we need to re-eval our
   /// wait/suspend/dispatch set.
@@ -576,9 +589,6 @@ private:
   /// Determine whether we should renew Select_Reactor's token after handling
   /// the notification message.
   bool supress_renew_;
-
-  ACE_Select_Reactor_Impl (const ACE_Select_Reactor_Impl &) = delete;
-  ACE_Select_Reactor_Impl &operator = (const ACE_Select_Reactor_Impl &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -42,13 +42,12 @@ public:
   /// Default constructor.
   ACE_Name_Binding ();
 
-  /// Copy constructor.
+
   ACE_Name_Binding (const ACE_Name_Binding &);
 
-  /// Assignment operator.
+
   const ACE_Name_Binding& operator= (const ACE_Name_Binding &);
 
-  /// Destructor.
   ~ACE_Name_Binding ();
 
   /// Test for equality.
@@ -90,7 +89,6 @@ public:
   virtual int bind (const ACE_NS_WString &name_in,
                     const ACE_NS_WString &value_in,
                     const char *type_in = "") = 0;
-
 
   /**
    * Overwrite the value or type of an existing name in a

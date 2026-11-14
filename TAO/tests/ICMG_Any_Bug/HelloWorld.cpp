@@ -1,9 +1,4 @@
-
 #include "HelloWorld.h"
-
-HelloWorld::HelloWorld ()
-{
-}
 
 char *
 HelloWorld::get_string ()

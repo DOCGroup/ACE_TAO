@@ -1,14 +1,10 @@
 // -*- C++ -*-
 
-
-//=============================================================================
 /**
  *  @file    Reconfig_Sched_Utils.h
  *
  *  @author  Chris Gill <cdgill@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_RECONFIG_SCHED_UTILS_H
 #define TAO_RECONFIG_SCHED_UTILS_H
@@ -30,72 +26,66 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+/**
+ * A wrapper class for the IDL-generated RT_Info operation descriptors.
+ *
+ * This class provides (re)initialization methods and a validity flag
+ * for the underlying IDL-generated RT_Info descriptor.
+ */
+
 struct TAO_RTSched_Export TAO_RT_Info_Ex
   : public RtecScheduler::RT_Info
-  // = TITLE
-  //   A wrapper class for the IDL-generated RT_Info operation descriptors.
-  //
-  // = DESCRIPTION
-  //   This class provides (re)initialization methods and a validity flag
-  //   for the underlying IDL-generated RT_Info descriptor.
 {
   TAO_RT_Info_Ex ();
-  // Default Constructor.
 
-  TAO_RT_Info_Ex (const RtecScheduler::RT_Info &);
-  // Constructor from an RT_Info
-  // (also serves as a copy constructor).
+  /// Constructs from an RT_Info and also serves as a copy constructor.
+  explicit TAO_RT_Info_Ex (RtecScheduler::RT_Info const &);
 
-  virtual ~TAO_RT_Info_Ex ();
-  // Destructor.
+  virtual ~TAO_RT_Info_Ex () = default;
 
-  void operator = (const RtecScheduler::RT_Info &);
-  // Assignment operator with an RT_Info on the RHS.
+  /// Assigns from an RT_Info.
+  void operator = (RtecScheduler::RT_Info const &);
 
+  /// Resets output data members to initial values and removes tuples
+  /// corresponding to the reset flags.
   virtual void reset (u_long reset_flags);
-  // Resets output data members to initial values, and removes tuples
-  // corresponding to the reset flags.
 
+  /// Sets the info and underlying entry's enable states.
   virtual void enabled_state (RtecScheduler::RT_Info_Enabled_Type_t);
-  // Sets the info and underlying entry's enable states.
 
-  virtual RtecScheduler::RT_Info_Enabled_Type_t enabled_state ();
-  // Returns the info's enable state.
+  /// Returns the info's enable state.
+  virtual RtecScheduler::RT_Info_Enabled_Type_t enabled_state () const;
 };
 
+/**
+ * An implementation class used to wrap available operation descriptors.
+ * Each operation may have one or more tuples describing different rates,
+ * etc., for the same operation.
+ *
+ * This class enables admission control within the Reconfig Scheduler,
+ * which offers improved performance compared to admission control
+ * outside the scheduler.
+ */
 
 struct TAO_RTSched_Export TAO_RT_Info_Tuple
   : public TAO_RT_Info_Ex
-  // = TITLE
-  //   An implementation class used to wrap available operation descriptors.
-  //   Each operation may have one or more tuples describing different rates,
-  //   etc., for the same operation.
-  //
-  // = DESCRIPTION
-  //   This class enables admission control within the Reconfig Scheduler,
-  //   which offers improved performance compared to admission control
-  //   outside the scheduler.
 {
-  TAO_RT_Info_Tuple ();
-  // Default Constructor.
+  TAO_RT_Info_Tuple () = default;
 
-  TAO_RT_Info_Tuple (const RtecScheduler::RT_Info &);
-  // Constructor from an RT_Info.
-  // (also serves as a copy constructor).
+  /// Constructs from an RT_Info and also serves as a copy constructor.
+  explicit TAO_RT_Info_Tuple (RtecScheduler::RT_Info const &);
 
-  virtual ~TAO_RT_Info_Tuple ();
-  // Destructor.
+  ~TAO_RT_Info_Tuple () override;
 
-  void operator = (const RtecScheduler::RT_Info &);
-  // Assignment operator with an RT_Info on the RHS.
+  /// Assigns from an RT_Info.
+  void operator = (RtecScheduler::RT_Info const &);
 
-  bool operator < (const TAO_RT_Info_Tuple &t);
-  // Less-than comparison operator: orders tuples by ascending rate (descending period).
+  /// Orders tuples by ascending rate (descending period).
+  bool operator < (TAO_RT_Info_Tuple const &t) const;
 
-  u_long rate_index;
-  // Index of the tuple in the operation's ordered available rates
+  /// Index of the tuple in the operation's ordered available rates.
+  u_long rate_index {};
 };
-
 
 /**
  * @class TAO_Reconfig_Scheduler_Entry
@@ -116,11 +106,14 @@ public:
 
   enum Tuple_Type {ORIGINAL = 0x01UL, PROPAGATED = 0x02UL};
 
-  /// Constructor.
-  TAO_Reconfig_Scheduler_Entry (TAO_RT_Info_Ex &rt_info);
+  explicit TAO_Reconfig_Scheduler_Entry (TAO_RT_Info_Ex &rt_info);
 
-  /// Destructor.
   ~TAO_Reconfig_Scheduler_Entry ();
+
+  TAO_Reconfig_Scheduler_Entry (TAO_Reconfig_Scheduler_Entry const &) = delete;
+  TAO_Reconfig_Scheduler_Entry (TAO_Reconfig_Scheduler_Entry &&) = delete;
+  TAO_Reconfig_Scheduler_Entry &operator= (TAO_Reconfig_Scheduler_Entry const &) = delete;
+  TAO_Reconfig_Scheduler_Entry &operator= (TAO_Reconfig_Scheduler_Entry &&) = delete;
 
   /// Removes all tuples from the entry.
   void remove_tuples (u_long tuple_flags = ORIGINAL | PROPAGATED);
@@ -188,27 +181,27 @@ public:
 
   /// Accessor for flag indicating whether node is a thread
   /// delineator.
-  int is_thread_delineator () const;
+  bool is_thread_delineator () const;
 
   /// Mutator for flag indicating whether node is a thread
   /// delineator.
-  void is_thread_delineator (int i);
+  void is_thread_delineator (bool value);
 
   /// Accessor for flag indicating whether node has unresolved remote
   /// dependencies.
-  int has_unresolved_remote_dependencies () const;
+  bool has_unresolved_remote_dependencies () const;
 
   /// Mutator for flag indicating whether node has unresolved remote
   /// dependencies.
-  void has_unresolved_remote_dependencies (int i);
+  void has_unresolved_remote_dependencies (bool value);
 
   /// Accessor for flag indicating whether node has unresolved local
   /// dependencies.
-  int has_unresolved_local_dependencies () const;
+  bool has_unresolved_local_dependencies () const;
 
   /// Mutator for flag indicating whether node has unresolved local
   /// dependencies.
-  void has_unresolved_local_dependencies (int i);
+  void has_unresolved_local_dependencies (bool value);
 
   /**
    * Accessor for effective execution time of the corresponding
@@ -316,55 +309,55 @@ private:
   TAO_RT_Info_Ex *actual_rt_info_;
 
   /// Forward depth-first-search status of the entry.
-  DFS_Status fwd_dfs_status_;
+  DFS_Status fwd_dfs_status_ {NOT_VISITED};
 
   /// Reverse depth-first-search status of the entry.
-  DFS_Status rev_dfs_status_;
+  DFS_Status rev_dfs_status_ {NOT_VISITED};
 
   /// Forward depth-first-search discovery order of the entry.
-  long fwd_discovered_;
+  long fwd_discovered_ {-1};
 
   /// Reverse depth-first-search discovery order of the entry.
-  long rev_discovered_;
+  long rev_discovered_ {-1};
 
   /// Forward depth-first-search completion order of the entry.
-  long fwd_finished_;
+  long fwd_finished_ {-1};
 
   /// Reverse depth-first-search completion order of the entry.
-  long rev_finished_;
+  long rev_finished_ {-1};
 
   /// Flag identifying threads in the call graph.
-  int is_thread_delineator_;
+  bool is_thread_delineator_ {};
 
   /// Flag indicating whether or not there are unresolved remote
   /// dependencies in the entry's dependency call chain.
-  int has_unresolved_remote_dependencies_;
+  bool has_unresolved_remote_dependencies_ {};
 
   /// Flag indicating whether or not there are unresolved local
   /// dependencies in the entry's dependency call chain.
-  int has_unresolved_local_dependencies_;
+  bool has_unresolved_local_dependencies_ {};
 
   /// Effective execution time for corresponding RT_Info and its
   /// disjunctively executed dependants.
-  RtecScheduler::Time aggregate_exec_time_;
+  RtecScheduler::Time aggregate_exec_time_ {};
 
   /// Sum of periods for tuples directly associated with the entry.  It
   /// can be used to compute the mean rate for the entry.
-  RtecScheduler::Period_t orig_tuple_period_sum_;
+  RtecScheduler::Period_t orig_tuple_period_sum_ {};
 
   /**
    * The sum of periods for tuples propagated via dependencies on
    * other entries.  It can be used to compute the mean rate for the
    * entry.
    */
-  RtecScheduler::Period_t prop_tuple_period_sum_;
+  RtecScheduler::Period_t prop_tuple_period_sum_ {};
 
   /// The number of tuples directly associated with the entry.
-  u_int orig_tuple_count_;
+  u_int orig_tuple_count_ {};
 
   /// The number of tuples propagated via dependencies on other
   /// entries.
-  u_int prop_tuple_count_;
+  u_int prop_tuple_count_ {};
 
   /// The set of tuples directly associated with the entry.
   TUPLE_SET orig_tuple_subset_;
@@ -373,7 +366,7 @@ private:
   TUPLE_SET prop_tuple_subset_;
 
   /// A pointer to the entry's most recently admitted tuple.
-  TAO_RT_Info_Tuple * current_admitted_tuple_;
+  TAO_RT_Info_Tuple * current_admitted_tuple_ {};
 
   /// Flag indicating whether or not node is enabled.
   RtecScheduler::RT_Info_Enabled_Type_t enabled_;
@@ -387,7 +380,6 @@ private:
   */
 };
 
-
 /**
  * @class TAO_Reconfig_Sched_Entry_Visitor
  *
@@ -400,29 +392,26 @@ private:
 class TAO_RTSched_Export TAO_Reconfig_Sched_Entry_Visitor
 {
 public:
-  /// Destructor.
   virtual ~TAO_Reconfig_Sched_Entry_Visitor ();
 
   /// Visit a Reconfig Scheduler Entry.
   virtual int visit (TAO_Reconfig_Scheduler_Entry &) = 0;
 };
 
+/**
+ * A scheduler entry visitor that resets nodes.
+ *
+ * This class resets each node it visits to an initial state
+ * prior to the first DFS traversal for topological sorting.
+ */
 
 class TAO_RTSched_Export TAO_RSE_Reset_Visitor :
   public TAO_Reconfig_Sched_Entry_Visitor
-  // = TITLE
-  //   A scheduler entry visitor that resets nodes.
-  //
-  // = DESCRIPTION
-  //   This class resets each node it visits to an initial state
-  //   prior to the first DFS traversal for topological sorting.
 {
 public:
-  /// Constructor.
-  TAO_RSE_Reset_Visitor ();
+  TAO_RSE_Reset_Visitor () = default;
 
-  /// Destructor.
-  virtual ~TAO_RSE_Reset_Visitor () {}
+  ~TAO_RSE_Reset_Visitor () override = default;
 
   /// Resets the fields in the entry to pre-DFS traversal states.
   /// Returns 0 on success and -1 on error.
@@ -441,7 +430,6 @@ public:
 class TAO_RTSched_Export TAO_RT_Info_Tuple_Visitor
 {
 public:
-  /// Destructor.
   virtual ~TAO_RT_Info_Tuple_Visitor ();
 
   /// Visit a RT_Info tuple.
@@ -461,22 +449,22 @@ class TAO_RTSched_Export TAO_Reconfig_Sched_Strategy_Base
 public:
   /// Ordering function to compare the DFS finish times of
   /// two RT_Info_Tuples
-  static int comp_tuple_finish_times (const void *first, const void *second);
+  static int comp_tuple_finish_times (void const *first, void const *second);
 
   /**
    * Ordering function to compare the DFS finish times of
    * two task entries, so qsort orders these in topological
    * order, with the higher times *first*.
    */
-  static int comp_entry_finish_times (const void *first, const void *second);
+  static int comp_entry_finish_times (void const *first, void const *second);
 
   /// Determines whether or not an entry is critical, based on
-  /// operation characteristics.  returns 1 if critical, 0 if not
-  static int is_critical (TAO_Reconfig_Scheduler_Entry &rse);
+  /// operation characteristics.
+  static bool is_critical (TAO_Reconfig_Scheduler_Entry &rse);
 
   /// Determines whether or not a tuple is critical, based on operation
-  /// characteristics.  returns 1 if critical, 0 if not
-  static int is_critical (TAO_RT_Info_Tuple &t);
+  /// characteristics.
+  static bool is_critical (TAO_RT_Info_Tuple &t);
 
   /// Compares two entries by subpriority alone.  Returns -1 if the
   /// first one is higher, 0 if they're the same, and 1 if the second one is higher.
@@ -484,21 +472,22 @@ public:
                                   TAO_Reconfig_Scheduler_Entry &);
 };
 
+/**
+ * A scheduling strategy that implements the Maximum Urgency First
+ * scheduling algorithm with Fair Admission of Indexed Rates
+ * (FAIR).
+ *
+ * The strategy assigns static thread and global priority according
+ * to operation criticality, assigns static subpriority according to
+ * importance and then topological order, and assigns a dispatching
+ * configuration with a minimum laxity dispatching queue for each
+ * distinct criticality level.  It admits operation tuples in order
+ * of ascending rate index, where the lowest rate for an operation
+ * has index 0, the next higher rate has index 1, etc.
+ */
+
 class TAO_RTSched_Export TAO_MUF_FAIR_Reconfig_Sched_Strategy
   : public TAO_Reconfig_Sched_Strategy_Base
-  // = TITLE
-  //   A scheduling strategy that implements the Maximum Urgency First
-  //   scheduling algorithm with Fair Admission of Indexed Rates
-  //   (FAIR).
-  //
-  // = DESCRIPTION
-  //   The strategy assigns static thread and global priority according
-  //   to operation criticality, assigns static subpriority according to
-  //   importance and then topological order, and assigns a dispatching
-  //   configuration with a minimum laxity dispatching queue for each
-  //   distinct criticality level.  It admits operation tuples in order
-  //   of ascending rate index, where the lowest rate for an operation
-  //   has index 0, the next higher rate has index 1, etc.
 {
 public:
   /**
@@ -507,7 +496,7 @@ public:
    * -1 if the first one is higher, 0 if they're the same, and 1 if
    * the second one is higher.
    */
-  static int total_priority_comp (const void *, const void *);
+  static int total_priority_comp (void const *, void const *);
 
   /**
    * Ordering function used to qsort an array of RT_Info_Tuple
@@ -515,7 +504,7 @@ public:
    * -1 if the first one is higher, 0 if they're the same, and 1 if
    * the second one is higher.
    */
-  static int total_admission_comp (const void *, const void *);
+  static int total_admission_comp (void const *, void const *);
 
   /// Compares two entries by priority alone.  Returns -1 if the
   /// first one is higher, 0 if they're the same, and 1 if the second one is higher.
@@ -538,23 +527,24 @@ public:
                             TAO_Reconfig_Scheduler_Entry &);
 };
 
+/**
+ * A scheduling strategy that implements the Boeing RMS-Dynamic
+ * scheduling algorithm, and the Honeywell MNO admission control
+ * algorithm.
+ *
+ * The strategy assigns static thread and global priority
+ * according to criticality and rate, assigns static subpriority
+ * according to importance and then topological order, and assigns
+ * a dispatching configuration with a static dispatching queue for
+ * each high criticality rate, and a single minimum laxity
+ * dispatching queue for all low criticality operations.  It
+ * admits the lowest rate-index tuple for each operation, then
+ * admits operations at their highest admissible rates in priority
+ * order.
+ */
+
 class TAO_RTSched_Export TAO_RMS_FAIR_Reconfig_Sched_Strategy
   : public TAO_Reconfig_Sched_Strategy_Base
-  // = TITLE
-  //   A scheduling strategy that implements the Boeing RMS-Dynamic
-  //   scheduling algorithm, and the Honeywell MNO admission control
-  //   algorithm.
-  //
-  // = DESCRIPTION
-  //   The strategy assigns static thread and global priority
-  //   according to criticality and rate, assigns static subpriority
-  //   according to importance and then topological order, and assigns
-  //   a dispatching configuration with a static dispatching queue for
-  //   each high criticality rate, and a single minimum laxity
-  //   dispatching queue for all low criticality operations.  It
-  //   admits the lowest rate-index tuple for each operation, then
-  //   admits operations at their highest admissible rates in priority
-  //   order.
 {
 public:
   /**
@@ -563,7 +553,7 @@ public:
    * -1 if the first one is higher, 0 if they're the same, and 1 if
    * the second one is higher.
    */
-  static int total_priority_comp (const void *, const void *);
+  static int total_priority_comp (void const *, void const *);
 
   /**
    * Ordering function used to qsort an array of RT_Info_Tuple
@@ -571,7 +561,7 @@ public:
    * -1 if the first one is higher, 0 if they're the same, and 1 if
    * the second one is higher.
    */
-  static int total_admission_comp (const void *, const void *);
+  static int total_admission_comp (void const *, void const *);
 
   /// Compares two entries by criticality alone.  Returns -1 if the
   /// first one is higher, 0 if they're the same, and 1 if the second one is higher.
@@ -609,23 +599,24 @@ public:
                             TAO_Reconfig_Scheduler_Entry &);
 };
 
+/**
+ * A scheduling strategy that implements the Boeing RMS-Dynamic
+ * scheduling algorithm, and the Honeywell MNO admission control
+ * algorithm.
+ *
+ * The strategy assigns static thread and global priority
+ * according to criticality and rate, assigns static subpriority
+ * according to importance and then topological order, and assigns
+ * a dispatching configuration with a static dispatching queue for
+ * each high criticality rate, and a single minimum laxity
+ * dispatching queue for all low criticality operations.  It
+ * admits the lowest rate-index tuple for each operation, then
+ * admits operations at their highest admissible rates in priority
+ * order.
+ */
+
 class TAO_RTSched_Export TAO_RMS_MLF_Reconfig_Sched_Strategy
   : public TAO_Reconfig_Sched_Strategy_Base
-  // = TITLE
-  //   A scheduling strategy that implements the Boeing RMS-Dynamic
-  //   scheduling algorithm, and the Honeywell MNO admission control
-  //   algorithm.
-  //
-  // = DESCRIPTION
-  //   The strategy assigns static thread and global priority
-  //   according to criticality and rate, assigns static subpriority
-  //   according to importance and then topological order, and assigns
-  //   a dispatching configuration with a static dispatching queue for
-  //   each high criticality rate, and a single minimum laxity
-  //   dispatching queue for all low criticality operations.  It
-  //   admits the lowest rate-index tuple for each operation, then
-  //   admits operations at their highest admissible rates in priority
-  //   order.
 {
 public:
   /**
@@ -634,7 +625,7 @@ public:
    * -1 if the first one is higher, 0 if they're the same, and 1 if
    * the second one is higher.
    */
-  static int total_priority_comp (const void *, const void *);
+  static int total_priority_comp (void const *, void const *);
 
   /**
    * Ordering function used to qsort an array of RT_Info_Tuple
@@ -642,7 +633,7 @@ public:
    * -1 if the first one is higher, 0 if they're the same, and 1 if
    * the second one is higher.
    */
-  static int total_admission_comp (const void *, const void *);
+  static int total_admission_comp (void const *, void const *);
 
   /// Compares two entries by criticality alone.  Returns -1 if the
   /// first one is higher, 0 if they're the same, and 1 if the second one is higher.

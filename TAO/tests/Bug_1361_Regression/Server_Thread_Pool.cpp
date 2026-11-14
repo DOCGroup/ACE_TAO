@@ -2,8 +2,6 @@
 #include "TestC.h"
 #include "ace/OS_NS_unistd.h"
 
-time_t last_success;
-
 int
 Thread_Pool::close (u_long)
 {
@@ -16,8 +14,8 @@ Thread_Pool::Thread_Pool (CORBA::ORB_ptr orb,
                           ACE_Thread_Manager *thr_mgr,
                           int n_threads)
   : ACE_Task<ACE_SYNCH> (thr_mgr),
-  orb_(CORBA::ORB::_duplicate(orb)),
-  nt_(n_threads)
+  orb_ (CORBA::ORB::_duplicate (orb)),
+  nt_ (n_threads)
 {
   if (this->activate (THR_NEW_LWP,
                       n_threads) == -1)
@@ -26,24 +24,21 @@ Thread_Pool::Thread_Pool (CORBA::ORB_ptr orb,
                 "activate failed\n"));
 }
 
-Thread_Pool::~Thread_Pool ()
-{
-}
-
 int
 Thread_Pool::shutdown ()
 {
   thr_mgr_->cancel_grp (grp_id_);
 
-  int n_threads = nt_.value ();
+  int const n_threads = this->nt_.load ();
   for (int i = 0; i < n_threads; ++i)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "(%t) eof, sending block for thread=%d\n",
                   i + 1));
-      ACE_Message_Block *mb1;
+      ACE_Message_Block *mb1 {};
+      // put() transfers ownership of the shutdown message block to the queue.
       ACE_NEW_RETURN (mb1,
-                      ACE_Message_Block ((char*) Test::Echo::_nil ()),
+                      ACE_Message_Block (reinterpret_cast<char *> (Test::Echo::_nil ())),
                       -1);
       mb1->length (0);
 
@@ -63,10 +58,12 @@ Thread_Pool::shutdown ()
 int
 Thread_Pool::put (Test::Echo_ptr echoptr)
 {
-  char * charData = (char *) Test::Echo::_duplicate (echoptr);
+  // The message block stores the duplicated object reference until a worker
+  // wraps it in a Test::Echo_var after dequeueing it.
+  char *char_data = reinterpret_cast<char *> (Test::Echo::_duplicate (echoptr));
 
-  ACE_Message_Block *mb = 0;
-  ACE_NEW_RETURN(mb, ACE_Message_Block(charData), -1);
+  ACE_Message_Block *mb {};
+  ACE_NEW_RETURN (mb, ACE_Message_Block (char_data), -1);
   return this->put (mb);
 }
 
@@ -86,14 +83,14 @@ Thread_Pool::svc ()
   // Note that the <ACE_Task::svc_run> method automatically adds us to
   // the Thread_Manager when the thread begins.
 
-  int count = 1;
+  int count {1};
 
   // Keep looping, reading a message out of the queue, until we get a
   // message with a length == 0, which signals us to quit.
 
   for (;; count++)
     {
-      ACE_Message_Block *mb = 0;
+      ACE_Message_Block *mb {};
 
 #if 0
       ACE_DEBUG ((LM_DEBUG,
@@ -121,11 +118,12 @@ Thread_Pool::svc ()
         }
 #endif
 
-      Test::Echo_var echo = (Test::Echo_ptr)mb->base();
+      Test::Echo_var const echo = reinterpret_cast<Test::Echo_ptr> (mb->base ());
 
+      // echo now owns the duplicate stored in this message block.
       mb->release ();
 
-      if (CORBA::is_nil(echo.in()))
+      if (CORBA::is_nil (echo.in ()))
         {
           //FUZZ: disable check_for_NULL
           ACE_DEBUG ((LM_DEBUG,
@@ -136,7 +134,7 @@ Thread_Pool::svc ()
         }
 
       // Keep calling a few times after receiving exceptions
-      for(int exception_count = 50; exception_count; --exception_count)
+      for (int exception_count = 50; exception_count; --exception_count)
         {
           try
             {
@@ -161,7 +159,7 @@ Thread_Pool::svc ()
                     }
               }
             }
-          catch (const CORBA::Exception&)
+          catch (CORBA::Exception const &)
             {
               // Just forget the exception and continue
             }
@@ -169,8 +167,7 @@ Thread_Pool::svc ()
 
     }
 
-  --nt_;
-  if (nt_ == 0)
+  if (--this->nt_ == 0)
     {
       orb_->shutdown (false);
     }

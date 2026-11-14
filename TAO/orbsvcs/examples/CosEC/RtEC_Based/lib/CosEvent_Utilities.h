@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_COSEVENT_UTILITIES_H
 #define TAO_COSEVENT_UTILITIES_H
 #include /**/ "ace/pre.h"
@@ -23,21 +22,23 @@
 
 class TAO_CosEC_EventChannel_i;
 
+/**
+ * @brief Generic servant base for CosEC applications.
+ *
+ * Contains the member data and methods needed to create and manage a CosEC
+ * servant. Clients can derive from this class to create servants.
+ */
 class TAO_RTEC_COSEC_Export CosEC_ServantBase :
   public virtual POA_CosEventChannelAdmin::EventChannel
 {
-  // = TITLE
-  //   A generic servant base class.
-  // = DESCRIPTION
-  //   This class contains all the member data and methods required to
-  //   create and manage a CosEC servant.
-  //   Clients can derive from this class and create servants.
  public:
-  /// Constructor.
   CosEC_ServantBase ();
 
-  /// Destructor.
-  virtual ~CosEC_ServantBase () = default;
+  ~CosEC_ServantBase () override = default;
+  CosEC_ServantBase (CosEC_ServantBase const &) = delete;
+  CosEC_ServantBase (CosEC_ServantBase &&) = delete;
+  CosEC_ServantBase &operator= (CosEC_ServantBase const &) = delete;
+  CosEC_ServantBase &operator= (CosEC_ServantBase &&) = delete;
 
   /**
    * This method creates a local scheduler, rtec and cosec.
@@ -56,24 +57,21 @@ class TAO_RTEC_COSEC_Export CosEC_ServantBase :
 
   /// If the servant_id is not nil then it is used to supply the object id
   /// for <this> servant.
-  int activate (const char* servant_id);
+  int activate (char const *servant_id);
 
   /// Deactivates the CosEC and friends with the POA.
   void deactivate ();
 
-  // =  POA_CosEventChannelAdmin::EventChannel methods.
-  virtual CosEventChannelAdmin::ConsumerAdmin_ptr for_consumers ();
+  CosEventChannelAdmin::ConsumerAdmin_ptr for_consumers () override;
 
-  virtual CosEventChannelAdmin::SupplierAdmin_ptr for_suppliers ();
+  CosEventChannelAdmin::SupplierAdmin_ptr for_suppliers () override;
 
   /// Destroys this Event Channel object.
-  virtual void destroy ();
+  void destroy () override;
 
  protected:
-  // = RtEC creation, activation and deactivation methods.
   /// Create a local rtec.
-  virtual POA_RtecEventChannelAdmin::EventChannel_ptr
-  create_rtec ();
+  virtual POA_RtecEventChannelAdmin::EventChannel_ptr create_rtec ();
 
   /// Activates the rtec.
   virtual void activate_rtec ();
@@ -81,7 +79,6 @@ class TAO_RTEC_COSEC_Export CosEC_ServantBase :
   /// Deactivates the rtec.
   virtual void deactivate_rtec ();
 
-  // = CosEC creation, activation and deactivation methods.
   /// Create a local cosec.
   TAO_CosEC_EventChannel_i*
   create_cosec ();
@@ -97,14 +94,11 @@ class TAO_RTEC_COSEC_Export CosEC_ServantBase :
                          ACE_SupplierQOS_Factory &supplier_qos,
                          ACE_TCHAR *source_type_pairs);
 
-
   /// Initialize the ConsumerQOS Factory.
   void init_ConsumerQOS (RtecBase::handle_t cons_handle,
                          ACE_ConsumerQOS_Factory &consumer_qos,
                          ACE_TCHAR *eventTypeIds,
                          ACE_TCHAR *eventSourceIds);
-
-  // = Protected Data members.
 
   /// The poa that we use to activate ourselves.
   PortableServer::POA_var thispoa_;
@@ -113,10 +107,10 @@ class TAO_RTEC_COSEC_Export CosEC_ServantBase :
   PortableServer::POA_var poa_;
 
   /// The Event Channel servant.
-  POA_RtecEventChannelAdmin::EventChannel_ptr rtec_servant_;
+  POA_RtecEventChannelAdmin::EventChannel_ptr rtec_servant_ {};
 
   /// The servant object of the COS Event Channel.
-  TAO_CosEC_EventChannel_i *cosec_servant_;
+  TAO_CosEC_EventChannel_i *cosec_servant_ {};
 
   /// Ref to the Rtec.
   RtecEventChannelAdmin::EventChannel_var rtec_;
@@ -132,18 +126,18 @@ class TAO_RTEC_COSEC_Export CosEC_ServantBase :
 
   /// The list of EventTypeIDs (for ConsumerQOS) separated by spaces.
   /// e.g. "1 2 3 4"
-  ACE_TCHAR *eventTypeIds_;
+  ACE_TCHAR *eventTypeIds_ {};
 
   /// The list of EventSourceIDs (for ConsumerQOS) separated by spaces.
   /// e.g. "1 2 3 4"
-  ACE_TCHAR *eventSourceIds_;
+  ACE_TCHAR *eventSourceIds_ {};
 
   /**
    * The pairs of Source and EventType Ids (for the SupplierQOS).
    * e.g "1 4 2 5 3 6" where (1,4) (2,5) and (3,6) from source id,
    * event id pairs.
    */
-  ACE_TCHAR *source_type_pairs_;
+  ACE_TCHAR *source_type_pairs_ {};
 };
 
 #include /**/ "ace/post.h"

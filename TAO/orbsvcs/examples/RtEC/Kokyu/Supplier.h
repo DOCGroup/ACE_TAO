@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef SUPPLIER_H
 #define SUPPLIER_H
 
@@ -34,20 +33,24 @@
 class Supplier : public POA_RtecEventComm::PushSupplier
 {
 public:
-  /// Constructor
   Supplier (RtecEventComm::EventSourceID id,
-            const RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer_proxy);
+            RtecEventChannelAdmin::ProxyPushConsumer_ptr const consumer_proxy);
+  Supplier (Supplier const &) = delete;
+  Supplier (Supplier &&) = delete;
+  Supplier &operator= (Supplier const &) = delete;
+  Supplier &operator= (Supplier &&) = delete;
 
   // = The RtecEventComm::PushSupplier methods
 
   /// The skeleton methods.
-  virtual void disconnect_push_supplier ();
+  void disconnect_push_supplier () override;
 
   void timeout_occurred ();
 
 private:
   RtecEventComm::EventSourceID id_;
-  const RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer_proxy_;
+  // Borrowed from the active ProxyPushConsumer_var in Service::ACE_TMAIN.
+  RtecEventChannelAdmin::ProxyPushConsumer_ptr const consumer_proxy_;
 };
 
 /**
@@ -62,16 +65,20 @@ private:
 class Timeout_Consumer : public POA_RtecEventComm::PushConsumer
 {
 public:
-  /// Constructor
-  Timeout_Consumer (Supplier * supplier_impl);
+  explicit Timeout_Consumer (Supplier *supplier_impl);
+  Timeout_Consumer (Timeout_Consumer const &) = delete;
+  Timeout_Consumer (Timeout_Consumer &&) = delete;
+  Timeout_Consumer &operator= (Timeout_Consumer const &) = delete;
+  Timeout_Consumer &operator= (Timeout_Consumer &&) = delete;
 
   // = The RtecEventComm::PushConsumer methods
 
   /// The skeleton methods.
-  virtual void push (const RtecEventComm::EventSet& events);
-  virtual void disconnect_push_consumer ();
+  void push (RtecEventComm::EventSet const &events) override;
+  void disconnect_push_consumer () override;
 
 private:
+  // Borrowed from the Supplier objects in Service::ACE_TMAIN.
   Supplier *supplier_impl_;
 };
 

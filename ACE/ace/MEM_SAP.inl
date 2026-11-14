@@ -7,7 +7,7 @@ ACE_INLINE
 ACE_MEM_SAP_Node::ACE_MEM_SAP_Node (size_t cap)
   : capacity_ (cap),
     size_ (0),
-    next_ (0)
+    next_ (nullptr)
 {
 }
 
@@ -29,21 +29,20 @@ ACE_MEM_SAP_Node::data ()
   return  this + 1;
 }
 
-
 ACE_INLINE ACE_MEM_SAP_Node *
 ACE_MEM_SAP::acquire_buffer (const ssize_t size)
 {
   ACE_TRACE ("ACE_MEM_SAP::acquire_buffer");
-  if (this->shm_malloc_ == 0)
-    return 0;                  // not initialized.
+  if (this->shm_malloc_ == nullptr)
+    return nullptr; // not initialized.
 
-  ACE_MEM_SAP_Node *buf = nullptr;
+  ACE_MEM_SAP_Node *buf {};
 
   ACE_NEW_MALLOC_RETURN (buf,
                          static_cast<ACE_MEM_SAP_Node *>
                            (this->shm_malloc_->malloc (sizeof (ACE_MEM_SAP_Node) + size)),
                          ACE_MEM_SAP_Node (size),
-                         0);
+                         nullptr);
   return buf;
 }
 
@@ -51,7 +50,7 @@ ACE_INLINE int
 ACE_MEM_SAP::release_buffer (ACE_MEM_SAP_Node *buf)
 {
   ACE_TRACE ("ACE_MEM_SAP::release_buffer");
-  if (this->shm_malloc_ == 0)
+  if (this->shm_malloc_ == nullptr)
     return -1;                  // not initialized.
 
   this->shm_malloc_->free (buf);

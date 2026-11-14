@@ -1,7 +1,7 @@
 #include "airplane_server_i.h"
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Airplane_Server_i server;
 
@@ -18,11 +18,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       return retval;
     }
-  catch (const CORBA::SystemException& sysex)
+  catch (CORBA::SystemException const &sysex)
     {
       sysex._tao_print_exception ("System Exception");
     }
-  catch (const CORBA::UserException& userex)
+  catch (CORBA::UserException const &userex)
     {
       userex._tao_print_exception ("User Exception");
     }

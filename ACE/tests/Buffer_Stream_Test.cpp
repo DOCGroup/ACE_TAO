@@ -14,14 +14,12 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Stream.h"
 #include "ace/Module.h"
 #include "ace/Task.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_time.h"
-
 
 #if defined (ACE_HAS_THREADS)
 
@@ -185,7 +183,7 @@ Consumer::svc ()
         {
           output = mb->rd_ptr ();
           ACE_TEST_ASSERT (*c == output[0]);
-          c++;
+          ++c;
         }
       mb->release ();
 

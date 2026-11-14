@@ -25,8 +25,8 @@ public:
   using Cache_Hash = JAWS_Cache_Hash<KEY, HASH_FUNC, EQ_FUNC>;
   using Cache_Heap = JAWS_Cache_List<KEY, FACTORY, HASH_FUNC, EQ_FUNC>;
 
-  JAWS_Cache_Manager (ACE_Allocator *alloc = 0,
-                     JAWS_Cache_Object_Factory *cof = 0,
+  explicit JAWS_Cache_Manager (ACE_Allocator *alloc = nullptr,
+                     JAWS_Cache_Object_Factory *cof = nullptr,
 
                      size_t hashsize = 8192,   // number of hash buckets
                      size_t maxsize = 65535,   // max number of in memory
@@ -44,12 +44,11 @@ public:
                                                // priority item is allowed to
                                                // remain in the cache
 
-                     int counted = 0           // flag for whether to use
-                                               // counts
-                     );
+                     // flag for whether to use counts
+                     int counted = 0);
 
-  int open (ACE_Allocator *alloc = 0,
-            JAWS_Cache_Object_Factory *cof = 0,
+  int open (ACE_Allocator *alloc = nullptr,
+            JAWS_Cache_Object_Factory *cof = nullptr,
 
             size_t hashsize = 1024,   // number of hash buckets
             size_t maxsize = 4096,    // max number of in memory
@@ -67,56 +66,53 @@ public:
                                       // priority item is allowed to
                                       // remain in the cache
 
-            int counted = 0           // flag for whether to use
-                                      // counts
-            );
+            // flag for whether to use counts
+            int counted = 0);
 
   ~JAWS_Cache_Manager ();
 
   int close ();
 
-  // Search Methods
-
+  /// Retrieve the object associated with key. Return 0 on success, -1 on
+  /// failure.
   int GET (const KEY &key, JAWS_Cache_Object *&cobj);
-  // Retrieve the object associated with key from cache.  Return 0 on
-  // success, -1 on failure.
 
+  /// Insert or replace the object associated with key. Return 0 on success,
+  /// -1 on failure.
   int PUT (const KEY &key, const void *data, size_t size,
            JAWS_Cache_Object *&obj);
-  // Inserts or replaces object associated with key into cache.
-  // Return 0 on success, -1 on failure.
 
+  /// Create a cached object and increment its reference count.
   int MAKE (const void *data, size_t size, JAWS_Cache_Object *&cobj);
-  // Create a cached object, increment reference count.
 
+  /// Increment the object's reference count.
   int TAKE (JAWS_Cache_Object *const &cobj);
-  // Increment reference count.
 
+  /// Decrement the object's reference count; return 0 if retained, 1 if
+  /// deleted, or -1 on error.
   int DROP (JAWS_Cache_Object *&cobj);
-  // Decrement reference count on cached object, perhaps delete.
-  // Returns 0 if only decremented, 1 if deleted, -1 if error.
 
+  /// Remove the lowest-priority object from the cache.
   int FLUSH ();
-  // Removes lowest priority object from cache.
 
 protected:
+  /// Retrieve the object associated with key. Return 0 on success, -1 on
+  /// failure.
   int GET_i (const KEY &key, JAWS_Cache_Object *&object);
-  // Retrieve the object associated with key from cache.  Return 0 on
-  // success, -1 on failure.
 
+  /// Insert or replace the object associated with key. Return 0 on success,
+  /// -1 on failure.
   int PUT_i (const KEY &key, const void *data, size_t size,
              JAWS_Cache_Object *&object);
-  // Inserts or replaces object associated with key into cache.
-  // Return 0 on success, -1 on failure.
 
+  /// Remove the lowest-priority object from the cache.
   int FLUSH_i ();
-  // Removes lowest priority object from cache.
 
+  /// Remove the object associated with key.
   int FLUSH_i (const KEY &key);
-  // Removes object associated with key from cache.
 
+  /// Decrement the object's reference count, possibly deleting it.
   int DROP_i (JAWS_Cache_Object *&cobj);
-  // Decrement reference count on cached object, perhaps delete.
 
 private:
   ACE_Allocator *allocator_;
@@ -138,7 +134,6 @@ private:
   ACE_SYNCH_RW_MUTEX lock_;
 };
 
-
 template <class KEY, class DATA, class CACHE_MANAGER>
 class JAWS_Cache_Proxy
 {
@@ -146,11 +141,11 @@ public:
   using Cache_Manager = CACHE_MANAGER;
   using Cache_Manager_Singleton = ACE_Singleton<Cache_Manager, ACE_SYNCH_MUTEX>;
 
-  JAWS_Cache_Proxy (const KEY &, Cache_Manager * = 0);
-  // Corresponds to a GET
+  /// Construct a proxy for a cache lookup.
+  JAWS_Cache_Proxy (const KEY &, Cache_Manager * = nullptr);
 
-  JAWS_Cache_Proxy (const KEY &, DATA *, size_t, Cache_Manager * = 0);
-  // Corresponds to a U/PUT
+  /// Construct a proxy that inserts or replaces a cached object.
+  JAWS_Cache_Proxy (const KEY &, DATA *, size_t, Cache_Manager * = nullptr);
 
   virtual ~JAWS_Cache_Proxy ();
 

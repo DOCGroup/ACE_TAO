@@ -196,7 +196,7 @@ public:
    * You must invoke open() or join(), to create/bind a socket and define
    * operational parameters, before performing any I/O with this instance.
    */
-  ACE_SOCK_Dgram_Mcast (options opts = DEFOPTS);
+  explicit ACE_SOCK_Dgram_Mcast (options opts = DEFOPTS);
 
   /// Release all resources and implicitly or explicitly unsubscribe
   /// from all currently subscribed groups.
@@ -272,7 +272,6 @@ public:
   int join (const ACE_INET_Addr &mcast_addr,
             int reuse_addr = 1,               // (see above)
             const ACE_TCHAR *net_if = nullptr);
-
 
   /// Leave a multicast group on a given interface (or all interfaces, if
   /// supported).

@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Any_Impl.h
  *
  *  @author Carlos O'Ryan
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #ifndef TAO_ANY_IMPL_H
 #define TAO_ANY_IMPL_H
@@ -54,6 +52,11 @@ namespace TAO
   class TAO_AnyTypeCode_Export Any_Impl
   {
   public:
+    Any_Impl (Any_Impl const &) = delete;
+    Any_Impl (Any_Impl &&) = delete;
+    Any_Impl &operator= (Any_Impl const &) = delete;
+    Any_Impl &operator= (Any_Impl &&) = delete;
+
     /// Generated data types define a 'destructor' function that
     /// correctly destroys an object stored in an Any.
     using _tao_destructor = void (*) (void *);

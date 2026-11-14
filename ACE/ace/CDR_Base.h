@@ -525,7 +525,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 # include "ace/CDR_Base.inl"
 #endif  /* __ACE_INLINE__ */
 
-
 #include /**/ "ace/post.h"
 
 #endif /* ACE_CDR_BASE_H */

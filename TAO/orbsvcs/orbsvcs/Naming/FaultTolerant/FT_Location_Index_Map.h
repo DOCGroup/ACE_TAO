@@ -8,7 +8,6 @@
  */
 //=======================================================================
 
-
 #ifndef TAO_FT_LOCATION_INDEX_MAP_H
 #define TAO_FT_LOCATION_INDEX_MAP_H
 

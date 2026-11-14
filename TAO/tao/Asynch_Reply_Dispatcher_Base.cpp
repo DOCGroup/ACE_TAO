@@ -8,9 +8,10 @@
 #include "tao/Asynch_Reply_Dispatcher_Base.inl"
 #endif /* __ACE_INLINE__ */
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Constructor.
 TAO_Asynch_Reply_Dispatcher_Base::TAO_Asynch_Reply_Dispatcher_Base (
     TAO_ORB_Core *orb_core,
     ACE_Allocator *allocator)
@@ -22,30 +23,23 @@ TAO_Asynch_Reply_Dispatcher_Base::TAO_Asynch_Reply_Dispatcher_Base (
          orb_core->locking_strategy (),
          ACE_Message_Block::DONT_DELETE,
          orb_core->input_cdr_dblock_allocator ()),
-    reply_cdr_ (&db_,
+    reply_cdr_ (std::addressof (db_),
                 ACE_Message_Block::MB_DATA,
                 TAO_ENCAP_BYTE_ORDER,
                 TAO_DEF_GIOP_MAJOR,
                 TAO_DEF_GIOP_MINOR,
                 orb_core)
   , transport_ (nullptr)
-  , lock_ (nullptr)
+  , lock_ (orb_core->resource_factory ()->create_cached_connection_lock ())
   , is_reply_dispatched_ (false)
 {
-  // @@ NOTE: Need a separate option for this..
-  this->lock_ =
-    orb_core->resource_factory ()->create_cached_connection_lock ();
 }
 
-// Destructor.
 TAO_Asynch_Reply_Dispatcher_Base::~TAO_Asynch_Reply_Dispatcher_Base ()
 {
   // Release the transport that we own
   if (this->transport_ != nullptr)
     this->transport_->remove_reference ();
-
-  if (this->lock_ != nullptr)
-    delete this->lock_;
 }
 
 void

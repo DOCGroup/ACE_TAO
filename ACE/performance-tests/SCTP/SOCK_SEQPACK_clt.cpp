@@ -11,6 +11,11 @@
 
 #include "ace/os_include/arpa/os_inet.h"
 
+#include <memory>
+#include <new>
+#include <string>
+#include <utility>
+
 // make sure that the code compiles cleanly even if SCTP is not
 // available. If SCTP is not installed, program will exit early in
 // main() with an error message
@@ -63,17 +68,16 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv){
     return 1;
   }
 
-
   // Create the address that we want the client to connect to
   ACE_INET_Addr serverAddr(Options_Manager::server_port,
-                           Options_Manager::server_host);
+                           Options_Manager::server_host.c_str ());
 
   // Create the address that we want the client to connect FROM
   ACE_Multihomed_INET_Addr clientAddr;
   clientAddr.set(optsMgr.client_port,
                  optsMgr.client_connect_addr,
                  1,
-                 optsMgr.secondary_connect_addrs,
+                 optsMgr.secondary_connect_addrs.data (),
                  optsMgr.num_secondary_connect_addrs);
 
   // object that manages the connection to the server
@@ -93,7 +97,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv){
                       1);
 
   // run the test
-  ACE_SCTP::HIST testResultsHistogram = 0;
+  ACE_SCTP::HIST testResultsHistogram {};
   // connection is closed by runTest* functions
   testResultsHistogram = runTest(dataStream);
 
@@ -101,7 +105,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv){
   // all histograms created are placed onto a linked list that report()
   // can access. So the histogram created in one of the *_test() functions
   // will be reported out by the report() call
-  if (testResultsHistogram)
+  if (testResultsHistogram != nullptr)
     ACE_SCTP::report();
 
   return 0;
@@ -110,18 +114,12 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv){
 
 // create a histogram to store test results
 ACE_SCTP::HIST createHistogram(ACE_CDR::ULong messageSize){
-  // The histogram created below lives beyond the scope of this
-  // function. So the memory allocated here cannot be cleaned up when
-  // this function goes out of scope. Unfortunately the histogram
-  // implementation does not clean it up either. So it is a small
-  // memory leak.
-  char * histName = (char *) malloc(200);
-
-  ACE_OS::sprintf(histName, "%s Unmarshalled Msg Synchronous Latency Test\n\t\t\t\t\t(Message Size %u, Message Type octet)",
-                  "ACE", messageSize);
+  std::string hist_name =
+    "ACE Unmarshalled Msg Synchronous Latency Test\n\t\t\t\t\t(Message Size " +
+    std::to_string (messageSize) + ", Message Type octet)";
 
   // actually create the histogram
-  ACE_SCTP::HIST createdHist = ACE_SCTP::histogram(histName,
+  ACE_SCTP::HIST createdHist = ACE_SCTP::histogram(std::move (hist_name),
                                Options_Manager::histogram_bin_count,
                                Options_Manager::histogram_min_bin,
                                Options_Manager::histogram_max_bin);
@@ -152,24 +150,24 @@ int sendHeader(ACE_SOCK_SEQPACK_Association & stream) {
 
 // conduct the UnMarshalled Octet performance test using separate
 // send_n calls with Nagle's algorithm disabled
-ACE_SCTP::HIST runUnmarshalledOctetTest(ACE_CDR::Octet *buf, size_t seqLen, ACE_SOCK_SEQPACK_Association & stream){
+ACE_SCTP::HIST runUnmarshalledOctetTest (
+  std::unique_ptr<ACE_CDR::Octet[]> buf,
+  size_t seqLen,
+  ACE_SOCK_SEQPACK_Association & stream)
+{
   ACE_CDR::ULong const testIterations = Options_Manager::test_iterations;
 
   size_t bt;
-  ACE_CDR::ULong cnt = 0;
+  ACE_CDR::ULong cnt {};
   // variables for the timing measurements
   ACE_hrtime_t startTime, endTime;
   ACE_CDR::Double messageLatency_usec = 0.0;
-  ACE_CDR::ULong msgLen = seqLen*ACE_CDR::OCTET_SIZE;
+  ACE_CDR::ULong const msgLen = seqLen * ACE_CDR::OCTET_SIZE;
 
   // explicity configure Nagling. Default is
   // Options_Manager::test_enable_nagle=0 so default configurations is
   // NO NAGLING
-  ACE_CDR::Long nagle;
-  if (Options_Manager::test_enable_nagle)
-    nagle=0;
-  else
-    nagle=1;
+  ACE_CDR::Long nagle = Options_Manager::test_enable_nagle ? 0 : 1;
   if (-1 == stream.set_option(IPPROTO_SCTP, SCTP_NODELAY, &nagle, sizeof nagle))
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
@@ -177,10 +175,10 @@ ACE_SCTP::HIST runUnmarshalledOctetTest(ACE_CDR::Octet *buf, size_t seqLen, ACE_
                       0);
 
   // prime the client and server before starting the test
-  for(cnt=0;cnt<primerIterations;++cnt){
+  for (cnt = 0; cnt < primerIterations; ++cnt){
     // send message size
     // TODO : The message length should be CDR encoded
-    ACE_CDR::ULong msgLenExpressed = ACE_HTONL(msgLen);
+    ACE_CDR::ULong msgLenExpressed = ACE_HTONL (msgLen);
     if (-1 == stream.send_n (&msgLenExpressed, ACE_CDR::LONG_SIZE, 0, &bt))
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("%p\n"),
@@ -188,7 +186,7 @@ ACE_SCTP::HIST runUnmarshalledOctetTest(ACE_CDR::Octet *buf, size_t seqLen, ACE_
                         0);
 
     // send a message
-    if (-1 == stream.send_n (buf, msgLen, 0, &bt))
+    if (-1 == stream.send_n (buf.get (), msgLen, 0, &bt))
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("%p\n"),
                          ACE_TEXT ("send_n")),
@@ -204,9 +202,9 @@ ACE_SCTP::HIST runUnmarshalledOctetTest(ACE_CDR::Octet *buf, size_t seqLen, ACE_
   }
 
   // AFTER PRIMING THE PUMP CREATE THE HISTOGRAM
-  ACE_SCTP::HIST aceStream_hist = 0;
+  ACE_SCTP::HIST aceStream_hist {};
   aceStream_hist = createHistogram(msgLen);
-  if (0 == aceStream_hist)
+  if (aceStream_hist == nullptr)
     ACE_ERROR_RETURN((LM_ERROR,
                       ACE_TEXT ("%p\n"),
                       ACE_TEXT ("histogram create failed")),
@@ -223,10 +221,10 @@ ACE_SCTP::HIST runUnmarshalledOctetTest(ACE_CDR::Octet *buf, size_t seqLen, ACE_
                         ACE_TEXT ("ACE_OS::gethrtime()")),
                        0);
 
-    ACE_CDR::ULong msgLenExpressed = ACE_HTONL(msgLen);
+    ACE_CDR::ULong msgLenExpressed = ACE_HTONL (msgLen);
     iov[0].iov_base = reinterpret_cast<char *> (&msgLenExpressed);
     iov[0].iov_len = ACE_CDR::LONG_SIZE;
-    iov[1].iov_base = reinterpret_cast<char *> (buf);
+    iov[1].iov_base = reinterpret_cast<char *> (buf.get ());
     iov[1].iov_len = msgLen;
 
     if (-1 == stream.sendv_n (iov, 2))
@@ -259,7 +257,6 @@ ACE_SCTP::HIST runUnmarshalledOctetTest(ACE_CDR::Octet *buf, size_t seqLen, ACE_
 
       / microsec_clock_scale_factor;
 
-
     // record the message latency in the histogram
     ACE_SCTP::record(messageLatency_usec, aceStream_hist);
   }
@@ -270,8 +267,6 @@ ACE_SCTP::HIST runUnmarshalledOctetTest(ACE_CDR::Octet *buf, size_t seqLen, ACE_
   // LONGER VALID AND WE CLOSE IT.
   stream.close();
 
-  // allocated by runTest
-  delete[] buf;
   return aceStream_hist;
 }
 
@@ -280,9 +275,8 @@ ACE_SCTP::HIST runUnmarshalledOctetTest(ACE_CDR::Octet *buf, size_t seqLen, ACE_
 ACE_SCTP::HIST runTest(ACE_SOCK_SEQPACK_Association & stream)
 {
   size_t msgLen = 1;
-  for (int i=1; i <= Options_Manager::payload_size_power_of_2; i++)
+  for (int i = 1; i <= Options_Manager::payload_size_power_of_2; ++i)
     msgLen *= 2;
-
 
   // send a header to the server that contains test parameters
   if (sendHeader(stream) < 0)
@@ -292,11 +286,11 @@ ACE_SCTP::HIST runTest(ACE_SOCK_SEQPACK_Association & stream)
 
   // create the forward message buffer
 
-  ACE_CDR::Octet *o_arr;
-  ACE_CDR::ULong seqLen = msgLen/ACE_CDR::OCTET_SIZE;
-  ACE_NEW_RETURN(o_arr,
-                 ACE_CDR::Octet[seqLen],
-                 0);
-  // o_arr is deleted in run_octet_test
-  return(runUnmarshalledOctetTest(o_arr, seqLen, stream));
+  ACE_CDR::ULong const seqLen = msgLen/ACE_CDR::OCTET_SIZE;
+  std::unique_ptr<ACE_CDR::Octet[]> o_arr (
+    new (std::nothrow) ACE_CDR::Octet[seqLen]);
+  if (!o_arr)
+    return 0;
+
+  return runUnmarshalledOctetTest (std::move (o_arr), seqLen, stream);
 }

@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   UIOP_Connection_Handler.h
  *
@@ -8,7 +7,6 @@
  *   UIOP_Connect.h
  *  @author modified by Balachandran Natarajan <bala@cs.wustl.edu>
  */
-// ===================================================================
 #ifndef TAO_UIOP_CONNECTION_HANDLER_H
 #define TAO_UIOP_CONNECTION_HANDLER_H
 
@@ -30,8 +28,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// ****************************************************************
-
 /**
  * @class TAO_UIOP_Connection_Handler
  *
@@ -47,10 +43,8 @@ class TAO_Strategies_Export TAO_UIOP_Connection_Handler
 public:
   explicit TAO_UIOP_Connection_Handler (ACE_Thread_Manager *t = nullptr);
 
-  /// Constructor.
   explicit TAO_UIOP_Connection_Handler (TAO_ORB_Core *orb_core);
 
-  /// Destructor.
   ~TAO_UIOP_Connection_Handler ();
 
   //@{

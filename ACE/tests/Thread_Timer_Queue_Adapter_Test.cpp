@@ -22,16 +22,10 @@
 class ICustomEventHandler
 {
     public:
-        /// Default constructor.
-        ///
-        /// @return
         ICustomEventHandler()
         {
         }
 
-        /// Default destructor.
-        ///
-        /// @return
         virtual ~ICustomEventHandler()
         {
         }
@@ -52,12 +46,10 @@ class CCustomEventHandlerUpcall
     public:
         using TTimerQueue = ACE_Timer_Queue_T<ICustomEventHandler *, CCustomEventHandlerUpcall, ACE_Null_Mutex>;
 
-        /// Default constructor
         CCustomEventHandlerUpcall()
         {
         }
 
-        /// Destructor.
         ~CCustomEventHandlerUpcall()
         {
         }
@@ -113,18 +105,12 @@ class CCustomEventHandlerUpcall
 class CTestEventHandler : public ICustomEventHandler
 {
     public:
-        /// Default constructor.
-        ///
-        /// @return
         CTestEventHandler(long* p_iCallCount)
         : m_p_iCallCount(p_iCallCount)
         {
             ACE_DEBUG((LM_DEBUG, ACE_TEXT("%I(%t) Initializing test event handler.\n")));
         }
 
-        /// Default destructor.
-        ///
-        /// @return
         ~CTestEventHandler() override
         {
             ACE_DEBUG((LM_DEBUG, ACE_TEXT("%I(%t) Destroying test event handler.\n")));

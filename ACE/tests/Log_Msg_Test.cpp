@@ -446,7 +446,6 @@ test_acelib_category()
     ++failed;
   }
 
-
   if (failed == 0) {
     ACE_DEBUG((LM_DEBUG, "All ace lib category log passed\n"));
   }
@@ -540,14 +539,13 @@ test_ostream ()
   if (size != info.size_)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Read %d bytes, rather than expected %d bytes\n"),
+                         ACE_TEXT ("Read %b bytes, rather than expected %B bytes\n"),
                          size,
                          info.size_),
                         -1);
     }
   // Make sure to NUL-terminate this turkey!
   buffer[size] = '\0';
-
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("%C"),
@@ -571,7 +569,6 @@ test_ostream ()
 
   return 0;
 }
-
 
 // For testing the format specifiers, a class is defined as a callback
 // mechanism. It will get the formatted messages and check them for
@@ -646,7 +643,7 @@ Log_Spec_Verify::log (ACE_Log_Record &log_record)
           // Check if we have a string, exact length could vary
           if (b != log_record.msg_data () && ACE_OS::strlen (b) < 15)
             {
-              ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Test %s failed; expected %d\n"),
+              ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Test %s failed; expected %B\n"),
                           log_record.msg_data (), ACE_OS::strlen (b)));
               ++this->fail_;
             }

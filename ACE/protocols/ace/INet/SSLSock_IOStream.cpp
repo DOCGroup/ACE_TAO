@@ -20,9 +20,7 @@ namespace ACE
       }
 
     template <ACE_SYNCH_DECL>
-    SSLSock_StreamBufferBase<ACE_SYNCH_USE>::~SSLSock_StreamBufferBase ()
-      {
-      }
+    SSLSock_StreamBufferBase<ACE_SYNCH_USE>::~SSLSock_StreamBufferBase () = default;
 
     template <ACE_SYNCH_DECL>
     SSLSock_IOSBase<ACE_SYNCH_USE>::SSLSock_IOSBase (stream_type* stream)
@@ -58,12 +56,18 @@ namespace ACE
       }
 
     template <ACE_SYNCH_DECL>
+    typename SSLSock_IOSBase<ACE_SYNCH_USE>::stream_type&
+    SSLSock_IOSBase<ACE_SYNCH_USE>::stream ()
+      {
+        return this->streambuf_.stream ();
+      }
+
+    template <ACE_SYNCH_DECL>
     const typename SSLSock_IOSBase<ACE_SYNCH_USE>::stream_type&
     SSLSock_IOSBase<ACE_SYNCH_USE>::stream () const
       {
         return this->streambuf_.stream ();
       }
-
 
     template <ACE_SYNCH_DECL>
     SSLSock_OStreamBase<ACE_SYNCH_USE>::SSLSock_OStreamBase(stream_type* stream)
@@ -72,9 +76,7 @@ namespace ACE
       }
 
     template <ACE_SYNCH_DECL>
-    SSLSock_OStreamBase<ACE_SYNCH_USE>::~SSLSock_OStreamBase()
-      {
-      }
+    SSLSock_OStreamBase<ACE_SYNCH_USE>::~SSLSock_OStreamBase() = default;
 
     template <ACE_SYNCH_DECL>
     void SSLSock_OStreamBase<ACE_SYNCH_USE>::set_interceptor (
@@ -90,9 +92,7 @@ namespace ACE
       }
 
     template <ACE_SYNCH_DECL>
-    SSLSock_IStreamBase<ACE_SYNCH_USE>::~SSLSock_IStreamBase ()
-      {
-      }
+    SSLSock_IStreamBase<ACE_SYNCH_USE>::~SSLSock_IStreamBase () = default;
 
     template <ACE_SYNCH_DECL>
     void SSLSock_IStreamBase<ACE_SYNCH_USE>::set_interceptor (
@@ -108,9 +108,7 @@ namespace ACE
       }
 
     template <ACE_SYNCH_DECL>
-    SSLSock_IOStreamBase<ACE_SYNCH_USE>::~SSLSock_IOStreamBase ()
-      {
-      }
+    SSLSock_IOStreamBase<ACE_SYNCH_USE>::~SSLSock_IOStreamBase () = default;
 
     template <ACE_SYNCH_DECL>
     void SSLSock_IOStreamBase<ACE_SYNCH_USE>::set_interceptor (

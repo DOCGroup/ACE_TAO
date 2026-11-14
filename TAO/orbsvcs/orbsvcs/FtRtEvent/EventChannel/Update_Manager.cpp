@@ -19,10 +19,6 @@ Update_Manager::Update_Manager(ACE_Auto_Event& evt,
   signal_condition_.resize(num_backups);
 }
 
-Update_Manager::~Update_Manager()
-{
-}
-
 void Update_Manager::handle_reply(int id)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);

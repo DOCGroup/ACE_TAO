@@ -12,9 +12,9 @@ AST_EventType::AST_EventType (UTL_ScopedName *n,
                               long n_inherits,
                               AST_Type *inherits_concrete,
                               AST_Interface_List const& inherits_flat,
-                              std::size_t n_inherits_flat,
+                              size_t n_inherits_flat,
                               AST_Type_List const& supports,
-                              std::size_t n_supports,
+                              size_t n_supports,
                               AST_Type *supports_concrete,
                               bool abstract,
                               bool truncatable,
@@ -94,7 +94,7 @@ AST_EventType::dump (ACE_OSTREAM_TYPE &o)
     {
       this->dump_i (o, "supports ");
 
-      for (std::size_t i {}; i < this->pd_supports.size (); ++i)
+      for (size_t i {}; i < this->pd_supports.size (); ++i)
         {
           this->pd_supports[i]->local_name ()->dump (o);
 

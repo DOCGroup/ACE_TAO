@@ -11,12 +11,12 @@
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  const ACE_TCHAR *prog_name  = argv[0];
-  int iterations  = argc < 2 ? 10 : ACE_OS::atoi (argv[1]);
-  const ACE_TCHAR *logger_key = argc < 3 ? ACE_DEFAULT_LOGGER_KEY : argv[2];
-  int verbose = argc < 4 ? 0 : ACE_Log_Msg::VERBOSE;
+  ACE_TCHAR const * const prog_name = argv[0];
+  int const iterations = argc < 2 ? 10 : ACE_OS::atoi (argv[1]);
+  ACE_TCHAR const * const logger_key = argc < 3 ? ACE_DEFAULT_LOGGER_KEY : argv[2];
+  int const verbose = argc < 4 ? 0 : ACE_Log_Msg::VERBOSE;
 
-  ACE_OS::srand ((u_int) ACE_OS::time (0));
+  ACE_OS::srand (static_cast<u_int> (ACE_OS::time (nullptr)));
 
   if (ACE_LOG_MSG->open (prog_name, ACE_Log_Msg::LOGGER, logger_key) == -1)
     {
@@ -30,9 +30,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   for (int i = 0; i < iterations; i++)
     {
-      size_t priority = ACE_OS::rand () % int (LM_MAX);
+      int priority = ACE_OS::rand () % static_cast<int> (LM_MAX);
       ACE_POW (priority);
-      ACE_Log_Priority log_priority = ACE_Log_Priority (priority);
+      ACE_Log_Priority const log_priority = static_cast<ACE_Log_Priority> (priority);
       ACE_DEBUG ((log_priority,
                   "random message %s (%d)...\n",
                   ACE_Log_Record::priority_name (log_priority),
@@ -49,7 +49,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   // Here we close down the connection to Logger by redirecting
   // the logging destination back to stderr.
-  ACE_LOG_MSG->open (0, ACE_Log_Msg::STDERR, 0);
+  ACE_LOG_MSG->open (nullptr, ACE_Log_Msg::STDERR, 0);
 #endif /* ACE_WIN32 */
 
   return 0;

@@ -1,6 +1,5 @@
 #define ACE_BUILD_SVC_DLL
 
-#include "ace/OS_NS_string.h"
 #include "Event_Channel.h"
 #include "Concrete_Connection_Handlers.h"
 
@@ -42,20 +41,15 @@ Connection_Handler::total_bytes (size_t bytes)
   this->total_bytes_ += bytes;
 }
 
-Connection_Handler::Connection_Handler ()
-{
-}
+Connection_Handler::Connection_Handler () = default;
 
-Connection_Handler::Connection_Handler (const Connection_Config_Info &pci)
+Connection_Handler::Connection_Handler (Connection_Config_Info const &pci)
   : local_addr_ (pci.local_port_),
     connection_id_ (pci.connection_id_),
-    total_bytes_ (0),
-    state_ (Connection_Handler::IDLE),
-    timeout_ (1),
     max_timeout_ (pci.max_retry_timeout_),
     event_channel_ (pci.event_channel_)
 {
-  if (ACE_OS::strlen (pci.host_) > 0)
+  if (pci.host_[0] != '\0')
     this->remote_addr_.set (pci.remote_port_, pci.host_);
   else
     this->remote_addr_.set (pci.remote_port_, ACE_DEFAULT_SERVER_HOST);
@@ -125,8 +119,8 @@ Connection_Handler::max_timeout () const
 // Restart connection asynchronously when timeout occurs.
 
 int
-Connection_Handler::handle_timeout (const ACE_Time_Value &,
-                                    const void *)
+Connection_Handler::handle_timeout (ACE_Time_Value const &,
+                                    void const *)
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%t) attempting to reconnect Connection_Handler %d with timeout = %d\n",
@@ -196,7 +190,7 @@ Connection_Handler::open (void *)
     return 0;
 }
 
-const ACE_INET_Addr &
+ACE_INET_Addr const &
 Connection_Handler::remote_addr () const
 {
   return this->remote_addr_;
@@ -208,7 +202,7 @@ Connection_Handler::remote_addr (ACE_INET_Addr &ra)
   this->remote_addr_ = ra;
 }
 
-const ACE_INET_Addr &
+ACE_INET_Addr const &
 Connection_Handler::local_addr () const
 {
   return this->local_addr_;
@@ -225,9 +219,9 @@ Connection_Handler::local_addr (ACE_INET_Addr &la)
 // <Thr_Supplier_Handler>).
 
 Connection_Handler *
-Connection_Handler_Factory::make_connection_handler (const Connection_Config_Info &pci)
+Connection_Handler_Factory::make_connection_handler (Connection_Config_Info const &pci)
 {
-  Connection_Handler *connection_handler = 0;
+  Connection_Handler *connection_handler {};
 
   // The next few lines of code are dependent on whether we are making
   // a threaded/reactive Supplier_Handler/Consumer_Handler.
@@ -239,13 +233,13 @@ Connection_Handler_Factory::make_connection_handler (const Connection_Config_Inf
                            Options::OUTPUT_MT))
         ACE_NEW_RETURN (connection_handler,
                         Thr_Consumer_Handler (pci),
-                        0);
+                        nullptr);
 
       // Create a reactive Consumer_Handler.
       else
         ACE_NEW_RETURN (connection_handler,
                         Consumer_Handler (pci),
-                        0);
+                        nullptr);
     }
   else // connection_role == 'S', so configure a Supplier_Handler.
     {
@@ -254,13 +248,13 @@ Connection_Handler_Factory::make_connection_handler (const Connection_Config_Inf
                            Options::INPUT_MT))
         ACE_NEW_RETURN (connection_handler,
                         Thr_Supplier_Handler (pci),
-                        0);
+                        nullptr);
 
       // Create a reactive Supplier_Handler.
       else
         ACE_NEW_RETURN (connection_handler,
                         Supplier_Handler (pci),
-                        0);
+                        nullptr);
     }
 
   return connection_handler;

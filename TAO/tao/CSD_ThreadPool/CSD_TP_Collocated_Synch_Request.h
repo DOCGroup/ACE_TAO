@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    CSD_TP_Collocated_Synch_Request.h
  *
  *  @author  Tim Bradley <bradley_t@ociweb.com>
  */
-//=============================================================================
-
 #ifndef TAO_CSD_TP_COLLOCATED_SYNCH_REQUEST_H
 #define TAO_CSD_TP_COLLOCATED_SYNCH_REQUEST_H
 
@@ -22,6 +18,7 @@
 #include "tao/CSD_ThreadPool/CSD_TP_Corba_Request.h"
 #include "tao/CSD_ThreadPool/CSD_TP_Synch_Helper.h"
 #include "tao/Exception.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -48,17 +45,19 @@ namespace TAO
                                                   : public TP_Corba_Request
     {
     public:
-      /// Constructor.
       TP_Collocated_Synch_Request
                            (TAO_ServerRequest&              server_request,
-                            const PortableServer::ObjectId& object_id,
+                            PortableServer::ObjectId const &object_id,
                             PortableServer::POA_ptr         poa,
-                            const char*                     operation,
+                            char const *                    operation,
                             PortableServer::Servant         servant,
                             TP_Servant_State*               servant_state);
 
-      /// Virtual Destructor.
-      ~TP_Collocated_Synch_Request() override;
+      ~TP_Collocated_Synch_Request() override = default;
+      TP_Collocated_Synch_Request (TP_Collocated_Synch_Request const &) = delete;
+      TP_Collocated_Synch_Request &operator= (TP_Collocated_Synch_Request const &) = delete;
+      TP_Collocated_Synch_Request (TP_Collocated_Synch_Request &&) = delete;
+      TP_Collocated_Synch_Request &operator= (TP_Collocated_Synch_Request &&) = delete;
 
       /// Wait until the request has been dispatched (and completed), or
       /// until it has been cancelled.
@@ -84,7 +83,7 @@ namespace TAO
 
       /// Set to null initially, and will only be set thereafter if an
       /// exception is raised from the dispatch() call on the server_request_.
-      CORBA::Exception* exception_ {};
+      std::unique_ptr<CORBA::Exception> exception_;
     };
   }
 }

@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "tao/Codeset/Codeset_Descriptor.h"
 #include "tao/Codeset/Codeset_Translator_Factory.h"
 
@@ -18,34 +17,22 @@
 #include "ace/Log_Msg.h"
 #include "tao/debug.h"
 
+#include <cstdlib>
+#include <utility>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Codeset_Descriptor::~TAO_Codeset_Descriptor ()
-{
-  Translator_Node *temp = trans_base_;
-  while (temp)
-    {
-      temp = trans_base_->next_;
-      // don't need to delete the associated translator factory, it is
-      // owned by the service registry
-      ACE_OS::free (trans_base_->name_);
-      delete trans_base_;
-      trans_base_ = temp;
-    }
-}
-
 void
-TAO_Codeset_Descriptor::ncs (const ACE_TCHAR *name)
+TAO_Codeset_Descriptor::ncs (ACE_TCHAR const *name)
 {
-  ACE_CDR::ULong n = 0;
+  ACE_CDR::ULong n {};
   if (ACE_Codeset_Registry::locale_to_registry
-      (ACE_TEXT_ALWAYS_CHAR(name), n) == 0)
+      (ACE_TEXT_ALWAYS_CHAR (name), n) == 0)
     {
-      char **endPtr = nullptr;
       n = static_cast<ACE_CDR::ULong> (
-            ACE_OS::strtoul(ACE_TEXT_ALWAYS_CHAR(name), endPtr, 0));
+            std::strtoul (ACE_TEXT_ALWAYS_CHAR (name), nullptr, 0));
     }
-  this->ncs(n);
+  this->ncs (n);
 }
 
 void
@@ -53,13 +40,13 @@ TAO_Codeset_Descriptor::ncs (ACE_CDR::ULong n)
 {
   this->ncs_ = n;
   // Validate the CodesetId
-  this->max_bytes_ = ACE_Codeset_Registry::get_max_bytes(n);
+  this->max_bytes_ = ACE_Codeset_Registry::get_max_bytes (n);
   if (this->max_bytes_ == 0)
     {
       if (TAO_debug_level > 0)
         TAOLIB_ERROR((LM_ERROR,
-                   ACE_TEXT("(%P|%t) TAO_Codeset_Descriptor::ncs, ")
-                   ACE_TEXT("unknown codeset id 0x%x\n"),
+                   ACE_TEXT ("(%P|%t) TAO_Codeset_Descriptor::ncs, ")
+                   ACE_TEXT ("unknown codeset id 0x%x\n"),
                    n));
       this->ncs_ = 0;
     }
@@ -71,10 +58,10 @@ TAO_Codeset_Descriptor::ncs () const
   return this->ncs_;
 }
 
-int
+size_t
 TAO_Codeset_Descriptor::num_translators () const
 {
-  return this->num_translators_;
+  return this->translators_.size ();
 }
 
 int
@@ -84,34 +71,23 @@ TAO_Codeset_Descriptor::max_bytes () const
 }
 
 void
-TAO_Codeset_Descriptor::add_translator (const ACE_TCHAR *name)
+TAO_Codeset_Descriptor::add_translator (ACE_TCHAR const *name)
 {
-  Translator_Node *temp = trans_base_;
-  if (this->trans_base_ == nullptr)
-    {
-      ACE_NEW (this->trans_base_, Translator_Node);
-      temp = trans_base_;
-    }
-  else
-    {
-      while (temp->next_ != nullptr)
-        temp = temp->next_;
-      ACE_NEW (temp->next_, Translator_Node);
-      temp = temp->next_;
-    }
-  if (temp)
-    {
-      this->num_translators_ ++;
-      temp->name_ = ACE_OS::strdup (name);
-      temp->translator_factory_ = nullptr;
-      temp->next_ = nullptr;
-    }
+  Translator_Node node {};
+  node.name_ = name;
+  this->translators_.push_back (std::move (node));
 }
 
-TAO_Codeset_Descriptor::Translator_Node *
+TAO_Codeset_Descriptor::Translator_List &
 TAO_Codeset_Descriptor::translators ()
 {
-  return this->trans_base_;
+  return this->translators_;
+}
+
+TAO_Codeset_Descriptor::Translator_List const &
+TAO_Codeset_Descriptor::translators () const
+{
+  return this->translators_;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

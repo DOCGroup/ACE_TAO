@@ -14,16 +14,9 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Implementation skeleton constructor
-TAO_Notify_FilterAdmin::TAO_Notify_FilterAdmin ()
-{
-}
+TAO_Notify_FilterAdmin::TAO_Notify_FilterAdmin () = default;
 
-
-// Implementation skeleton destructor
-TAO_Notify_FilterAdmin::~TAO_Notify_FilterAdmin ()
-{
-}
+TAO_Notify_FilterAdmin::~TAO_Notify_FilterAdmin () = default;
 
 CosNotifyFilter::FilterID
 TAO_Notify_FilterAdmin::add_filter (CosNotifyFilter::Filter_ptr new_filter)
@@ -79,7 +72,7 @@ TAO_Notify_FilterAdmin::get_all_filters ()
   // Figure out the length of the list.
   size_t len = this->filter_list_.current_size ();
 
-  CosNotifyFilter::FilterIDSeq* list_ptr = nullptr;
+  CosNotifyFilter::FilterIDSeq* list_ptr {};
 
   // Allocate the list of <len> length.
   ACE_NEW_THROW_EX (list_ptr,
@@ -152,12 +145,12 @@ TAO_Notify_FilterAdmin::save_persistent (TAO_Notify::Topology_Saver& saver)
 }
 
 TAO_Notify::Topology_Object*
-TAO_Notify_FilterAdmin::load_child (const ACE_CString &type, CORBA::Long id,
-  const TAO_Notify::NVPList& attrs)
+TAO_Notify_FilterAdmin::load_child (ACE_CString const &type, CORBA::Long id,
+  TAO_Notify::NVPList const &attrs)
 {
   if (type == "filter")
   {
-   TAO_Notify_Object::ID mapid = 0;
+   TAO_Notify_Object::ID mapid {};
    attrs.load("MapId", mapid);
 
    TAO_Notify_FilterFactory* factory = ec_->default_filter_factory_servant ();
@@ -184,6 +177,5 @@ TAO_Notify_FilterAdmin::event_channel (TAO_Notify_EventChannel* ec)
 {
   this->ec_.reset (ec);
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

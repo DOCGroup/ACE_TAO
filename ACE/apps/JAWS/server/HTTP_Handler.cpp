@@ -8,11 +8,13 @@
 #include "JAWS_IO.h"
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/OS_NS_stdio.h"
+#include <cstdio>
+#include <memory>
 
 HTTP_Handler::HTTP_Handler (JAWS_IO &io,
                             HTTP_Handler_Factory &factory)
   : factory_ (factory),
-    request_data_ (0),
+    request_data_ {},
     handle_ (ACE_INVALID_HANDLE),
     response_ (io, request_),
     io_ (io)
@@ -20,11 +22,7 @@ HTTP_Handler::HTTP_Handler (JAWS_IO &io,
   this->io_.handler (this);
 }
 
-HTTP_Handler::~HTTP_Handler ()
-{
-  this->request_data_->release ();
-  this->request_data_ = 0;
-}
+HTTP_Handler::~HTTP_Handler () = default;
 
 void
 HTTP_Handler::open (ACE_HANDLE handle,
@@ -55,7 +53,7 @@ HTTP_Handler::open (ACE_HANDLE handle,
   this->handle_ = handle;
   this->io_.handle (this->handle_);
 
-  this->request_data_ = initial_data.duplicate ();
+  this->request_data_.reset (initial_data.duplicate ());
   this->read_complete (initial_data);
 }
 
@@ -97,12 +95,20 @@ HTTP_Handler::receive_file_complete ()
               request_.uri ()));
 
   char buffer[BUFSIZ];
-  int buflen =
-    ACE_OS::sprintf (buffer,
-                     "%s %d %s\r\n",
-                     this->request_.version (),
-                     HTTP_Status_Code::STATUS_OK,
-                     "Successful");
+  char const *version = this->request_.version ();
+  if (version == nullptr)
+    version = "HTTP/0.9";
+
+  int buflen = std::snprintf (buffer,
+                              sizeof buffer,
+                              "%s %d %s\r\n",
+                              version,
+                              HTTP_Status_Code::STATUS_OK,
+                              "Successful");
+  if (buflen < 0)
+    return;
+  if (buflen >= static_cast<int> (sizeof buffer))
+    buflen = sizeof buffer - 1;
 
   this->io_.send_confirmation_message (buffer, buflen);
 }
@@ -132,12 +138,20 @@ HTTP_Handler::receive_file_error (int result)
       status_code = HTTP_Status_Code::STATUS_INTERNAL_SERVER_ERROR;
       break;
     }
-  int buflen =
-    ACE_OS::sprintf (buffer,
-                     "%s %d %s",
-                     this->request_.version (),
-                     status_code,
-                     "Failed");
+  char const *version = this->request_.version ();
+  if (version == nullptr)
+    version = "HTTP/0.9";
+
+  int buflen = std::snprintf (buffer,
+                              sizeof buffer,
+                              "%s %d %s",
+                              version,
+                              status_code,
+                              "Failed");
+  if (buflen < 0)
+    return;
+  if (buflen >= static_cast<int> (sizeof buffer))
+    buflen = sizeof buffer - 1;
 
   this->io_.send_confirmation_message (buffer, buflen);
 }
@@ -234,17 +248,15 @@ HTTP_Handler::done ()
   this->factory_.destroy_http_handler (*this, this->io_);
 }
 
-HTTP_Handler_Factory::~HTTP_Handler_Factory ()
-{
-}
-
 HTTP_Handler *
 Synch_HTTP_Handler_Factory::create_http_handler ()
 {
-  JAWS_Synch_IO *io;
-  ACE_NEW_RETURN (io, JAWS_Synch_IO, 0);
-  HTTP_Handler *handler;
-  ACE_NEW_RETURN (handler, HTTP_Handler (*io, *this), 0);
+  JAWS_Synch_IO *io_ptr {};
+  ACE_NEW_RETURN (io_ptr, JAWS_Synch_IO, nullptr);
+  std::unique_ptr<JAWS_Synch_IO> io (io_ptr);
+  HTTP_Handler *handler {};
+  ACE_NEW_RETURN (handler, HTTP_Handler (*io, *this), nullptr);
+  io.release ();
 
   return handler;
 }
@@ -262,10 +274,12 @@ Synch_HTTP_Handler_Factory::destroy_http_handler (HTTP_Handler &handler,
 HTTP_Handler *
 No_Cache_Synch_HTTP_Handler_Factory::create_http_handler ()
 {
-  JAWS_Synch_IO_No_Cache *io = 0;
-  ACE_NEW_RETURN (io, JAWS_Synch_IO_No_Cache, 0);
-  HTTP_Handler *handler = 0;
-  ACE_NEW_RETURN (handler, HTTP_Handler (*io, *this), 0);
+  JAWS_Synch_IO_No_Cache *io_ptr {};
+  ACE_NEW_RETURN (io_ptr, JAWS_Synch_IO_No_Cache, nullptr);
+  std::unique_ptr<JAWS_Synch_IO_No_Cache> io (io_ptr);
+  HTTP_Handler *handler {};
+  ACE_NEW_RETURN (handler, HTTP_Handler (*io, *this), nullptr);
+  io.release ();
 
   return handler;
 }

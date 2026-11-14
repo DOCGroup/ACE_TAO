@@ -46,7 +46,7 @@ ACE_Handle_Gobbler::consume_handles (size_t n_handles_to_keep_available)
 
 #else
 
-  while (1)
+  while (true)
     {
       ACE_HANDLE handle = ACE_OS::open (ACE_DEV_NULL, O_WRONLY);
 

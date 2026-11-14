@@ -58,7 +58,6 @@ public:
   using element_type = X;
   using functor_type = Functor;
 
-  /// Constructor
   explicit Auto_Functor (X * p = nullptr,
       Functor functor = Functor()); // noexcept
 

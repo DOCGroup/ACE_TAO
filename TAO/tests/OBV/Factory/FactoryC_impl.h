@@ -25,6 +25,13 @@
 class Value2_impl : public virtual OBV_OBV_FactoryTest::Value2,
                     public virtual CORBA::DefaultValueRefCountBase
 {
+public:
+  Value2_impl () = default;
+
+  Value2_impl (Value2_impl const&) = delete;
+  Value2_impl (Value2_impl&&) = delete;
+  Value2_impl& operator= (Value2_impl const&) = delete;
+  Value2_impl& operator= (Value2_impl&&) = delete;
 };
 
 /**
@@ -37,15 +44,20 @@ class Value2_impl : public virtual OBV_OBV_FactoryTest::Value2,
 class Value2_init_impl : public OBV_FactoryTest::Value2_init
 {
 public:
-  virtual OBV_FactoryTest::Value2* create_default (
-      CORBA::ULong id);
+  Value2_init_impl () = default;
 
-  virtual OBV_FactoryTest::Value2* create (
+  Value2_init_impl (Value2_init_impl const&) = delete;
+  Value2_init_impl (Value2_init_impl&&) = delete;
+  Value2_init_impl& operator= (Value2_init_impl const&) = delete;
+  Value2_init_impl& operator= (Value2_init_impl&&) = delete;
+
+  OBV_FactoryTest::Value2 *create_default (CORBA::ULong id) override;
+
+  OBV_FactoryTest::Value2 *create (
       CORBA::ULong id,
-      const OBV_FactoryTest::BaseValue::BV_Data & data);
+      OBV_FactoryTest::BaseValue::BV_Data const &data) override;
 
-public:
-  virtual CORBA::ValueBase * create_for_unmarshal ();
+  CORBA::ValueBase *create_for_unmarshal () override;
 };
 
 #endif /* TAO_FACTORY_FACTORY_C_IMPL_H */

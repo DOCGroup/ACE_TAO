@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_CEC_MT_DISPATCHING_H
 #define TAO_CEC_MT_DISPATCHING_H
 
@@ -38,12 +37,11 @@ class TAO_CEC_EventChannel;
 class TAO_Event_Serv_Export TAO_CEC_MT_Dispatching : public TAO_CEC_Dispatching
 {
 public:
-  /// Constructor
   /// It will create @a nthreads servicing threads...
   TAO_CEC_MT_Dispatching (int nthreads,
                          int thread_creation_flags,
                          int thread_priority,
-                         int force_activate,
+                         bool force_activate,
                          bool shutdown_completion);
 
   TAO_CEC_MT_Dispatching (TAO_CEC_MT_Dispatching const &) = delete;
@@ -81,7 +79,7 @@ private:
 
   /// If activation at the requested priority fails then we fallback on
   /// the defaults for thread activation.
-  int const force_activate_;
+  bool const force_activate_;
 
   /// The dispatching task
   TAO_CEC_Dispatching_Task task_;
@@ -90,7 +88,7 @@ private:
   TAO_SYNCH_MUTEX lock_;
 
   /// Are the threads running?
-  int active_;
+  bool active_ {};
 
   /// The flag which allows or not to wait the message queue threads completion
   bool const wait_for_shutdown_thread_completion_;

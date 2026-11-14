@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_TS_SERVER_HANDLER_H
 #define ACE_TS_SERVER_HANDLER_H
 
@@ -37,11 +36,11 @@ class ACE_Svc_Export ACE_TS_Server_Handler : public ACE_Svc_Handler<ACE_SOCK_STR
 {
 public:
   /// Default constructor.
-  ACE_TS_Server_Handler (ACE_Thread_Manager * = 0);
+  ACE_TS_Server_Handler (ACE_Thread_Manager * = nullptr);
 
   /// Activate this instance of the <ACE_TS_Server_Handler> (called by the
   /// <ACE_Strategy_Acceptor>).
-  virtual int open (void * = 0);
+  virtual int open (void * = nullptr) override;
 
 protected:
   /// Must be allocated dynamically.
@@ -68,15 +67,15 @@ protected:
 
   // = Demultiplexing hooks.
   /// Return the underlying <ACE_HANDLE>.
-  virtual ACE_HANDLE get_handle () const;
+  virtual ACE_HANDLE get_handle () const override;
 
   /// Callback method invoked by the <ACE_Reactor> when client events
   /// arrive.
-  virtual int handle_input (ACE_HANDLE);
+  virtual int handle_input (ACE_HANDLE) override;
 
   // = Timer hook.
   /// Enable clients to limit the amount of time they wait.
-  virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg);
+  virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg) override;
 
 private:
   /// Cache request from the client.
@@ -96,7 +95,7 @@ class ACE_TS_Server_Acceptor : public ACE_Strategy_Acceptor<ACE_TS_Server_Handle
 {
 public:
   /// Dynamic linking hook.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  virtual int init (int argc, ACE_TCHAR *argv[]) override;
 
   /// Parse svc.conf arguments.
   int parse_args (int argc, ACE_TCHAR *argv[]);

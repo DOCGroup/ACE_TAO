@@ -1,19 +1,17 @@
 // -*- C++ -*-
-//=============================================================================
 /**
  *  @file    DynValue_i.h
  *
  *  @author simon dot massey at prismtech dot com
  */
-//=============================================================================
-
-
 #ifndef TAO_DYNVALUE_I_H
 #define TAO_DYNVALUE_I_H
 #include /**/ "ace/pre.h"
 
 #include "ace/Array_Base.h"
 #include "tao/DynamicAny/DynValueCommon_i.h"
+
+#include "ace/Array_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -36,11 +34,16 @@ class TAO_DynamicAny_Export TAO_DynValue_i
     public virtual TAO_DynValueCommon_i
 {
 public:
-  /// Constructor.
   explicit TAO_DynValue_i (CORBA::Boolean allow_truncation = true);
 
-  /// Destructor.
-  ~TAO_DynValue_i () = default;
+  ~TAO_DynValue_i () override = default;
+
+  /// These are not implemented!
+  /// Use copy() or assign() instead of these.
+  TAO_DynValue_i (TAO_DynValue_i const &src) = delete;
+  TAO_DynValue_i &operator= (TAO_DynValue_i const &src) = delete;
+  TAO_DynValue_i (TAO_DynValue_i &&) = delete;
+  TAO_DynValue_i &operator= (TAO_DynValue_i &&) = delete;
 
   /// Initialize using an Any.
   void init (CORBA::Any const& any);
@@ -51,10 +54,16 @@ public:
   /// Initialize using just a TypeCode.
   void init (CORBA::TypeCode_ptr tc);
 
-  // = LocalObject methods.
+  /// @name LocalObject methods
+  /// @{
+
   static TAO_DynValue_i *_narrow (CORBA::Object_ptr obj);
 
-  // = Functions specific to DynValue.
+  /// @}
+
+  /// @name Functions specific to DynValue
+  /// @{
+
   DynamicAny::FieldName current_member_name () override;
 
   CORBA::TCKind current_member_kind () override;
@@ -68,7 +77,11 @@ public:
   void set_members_as_dyn_any (
       DynamicAny::NameDynAnyPairSeq const& value) override;
 
-  // = DynAny common functions not implemented in class TAO_DynCommon.
+  /// @}
+
+  /// @name DynAny common functions not implemented in TAO_DynCommon
+  /// @{
+
   void from_any (CORBA::Any const& value) override;
 
   CORBA::Any * to_any () override;
@@ -79,12 +92,18 @@ public:
 
   DynamicAny::DynAny_ptr current_component () override;
 
+  /// @}
+
+  /// @name DynValueCommon methods
+  /// @{
+
   void insert_val (CORBA::ValueBase * value) override;
 
   CORBA::ValueBase * get_val () override;
 
-  // = DynValueCommon needed to be provided here
   void set_to_value () override;
+
+  /// @}
 
 private:
   /// List of base types.
@@ -135,13 +154,6 @@ private:
 
   /// Read the value from the input stream
   void from_inputCDR (TAO_InputCDR &);
-
-  /// These are not implemented!
-  /// Use copy() or assign() instead of these.
-  TAO_DynValue_i (TAO_DynValue_i const &src) = delete;
-  TAO_DynValue_i &operator= (TAO_DynValue_i const &src) = delete;
-  TAO_DynValue_i (TAO_DynValue_i &&) = delete;
-  TAO_DynValue_i &operator= (TAO_DynValue_i &&) = delete;
 
   /// Each component of DynValue and DynValueBox is also a DynAny.
   ACE_Array_Base<DynamicAny::DynAny_var> da_members_;

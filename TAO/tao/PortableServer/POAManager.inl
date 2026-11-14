@@ -2,6 +2,8 @@
 #include "tao/SystemException.h"
 #include "ace/CORBA_macros.h"
 
+#include <string>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE ACE_Lock &
@@ -83,7 +85,7 @@ TAO_POA_Manager::generate_manager_id () const
   // shifting of 64 bit addresses is performed since the
   // TAO_POA_Manager object is not large enough to allow that trick.
 
-  CORBA::Long id = 0;
+  CORBA::Long id {};
 
   // Note that we reinterpret_cast to an "unsigned long" instead of
   // CORBA::ULong since we need to first cast to an integer large
@@ -104,11 +106,10 @@ TAO_POA_Manager::generate_manager_id () const
 //     // ORB, or perhaps specific to the process.
 //     id = ...GENERATE_ID_ATOMICALLY...;  // Fallback
 
-  char* buf = new char [25];
-  ACE_OS::sprintf (buf, "POAManager%d", id);
-  return buf;
+  std::string manager_id {"POAManager"};
+  manager_id += std::to_string (id);
+  return CORBA::string_dup (manager_id.c_str ());
 }
-
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 
@@ -119,6 +120,5 @@ CORBA::PolicyList& TAO_POA_Manager::get_policies ()
 }
 
 #endif
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

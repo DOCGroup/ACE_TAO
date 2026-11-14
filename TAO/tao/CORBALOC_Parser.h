@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_CORBALOC_PARSER_H
 #define TAO_CORBALOC_PARSER_H
 #include /**/ "ace/pre.h"
@@ -44,19 +43,18 @@ class TAO_MProfile;
 class TAO_CORBALOC_Parser : public TAO_IOR_Parser
 {
 public:
-  /// Constructor
   TAO_CORBALOC_Parser () = default;
 
-  /// The destructor
   ~TAO_CORBALOC_Parser () override = default;
 
-  /// = The IOR_Parser methods, please read the documentation in
-  ///   IOR_Parser.h
+  /// @name IOR_Parser methods
+  /// @{
   bool match_prefix (const char *ior_string) const override;
 
   /// Parse the ior-string that is passed.
   CORBA::Object_ptr parse_string (const char *ior,
                                   CORBA::ORB_ptr orb) override;
+  /// @}
 
 private:
   /**

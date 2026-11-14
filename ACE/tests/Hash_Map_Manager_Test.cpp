@@ -12,13 +12,11 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "STL_algorithm_Test_T.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Malloc_T.h"
 #include "ace/Null_Mutex.h"
-
 
 static constexpr size_t STRING_TABLE_ENTRIES = 3 * 2;
 static constexpr size_t MAX_HASH = 6;
@@ -82,7 +80,7 @@ int test_two_allocators ()
   ACE_Dynamic_Cached_Allocator<ACE_Null_Mutex> table_alloc_small (1, chunk_size * chunks - 1);
   ACE_Cached_Allocator<HASH_STRING_MAP::ENTRY, ACE_Null_Mutex> entry_alloc (chunks);
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing hash map manager with %d elements...\n"), chunks));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing hash map manager with %B elements...\n"), chunks));
 
   HASH_STRING_MAP hash;
 
@@ -217,11 +215,11 @@ run_test ()
          hash_iter.advance ())
       {
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("iterating (%d): [%s, %s]\n"),
+                    ACE_TEXT ("iterating (%B): [%s, %s]\n"),
                     i,
                     entry->ext_id_,
                     entry->int_id_));
-        i++;
+        ++i;
       }
   }
 
@@ -235,11 +233,11 @@ run_test ()
          hash_iter.advance ())
       {
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("const iterating (%d): [%s, %s]\n"),
+                    ACE_TEXT ("const iterating (%B): [%s, %s]\n"),
                     i,
                     entry->ext_id_,
                     entry->int_id_));
-        i++;
+        ++i;
       }
   }
 
@@ -269,11 +267,11 @@ run_test ()
          hash_iter.advance ())
       {
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("iterating (%d): [%s, %s]\n"),
+                    ACE_TEXT ("iterating (%B): [%s, %s]\n"),
                     i,
                     entry->ext_id_,
                     entry->int_id_));
-        i++;
+        ++i;
       }
   }
 

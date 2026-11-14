@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_FILECACHE_H
 #define ACE_FILECACHE_H
 
@@ -90,8 +89,8 @@ class ACE_Export ACE_Filecache_Handle
 public:
   /// Query cache for file, and acquire it.  Assumes the file is being
   /// opened for reading.
-  ACE_Filecache_Handle (const ACE_TCHAR *filename,
-                        ACE_Filecache_Flag mapit = ACE_MAPIT);
+  explicit ACE_Filecache_Handle (const ACE_TCHAR *filename,
+                                 ACE_Filecache_Flag mapit = ACE_MAPIT);
 
   /**
    * Create new entry, and acquire it.  Presence of SIZE assumes the
@@ -101,6 +100,11 @@ public:
   ACE_Filecache_Handle (const ACE_TCHAR *filename,
                         int size,
                         ACE_Filecache_Flag mapit = ACE_MAPIT);
+
+  ACE_Filecache_Handle (ACE_Filecache_Handle const &) = delete;
+  ACE_Filecache_Handle (ACE_Filecache_Handle &&) = delete;
+  ACE_Filecache_Handle &operator= (ACE_Filecache_Handle const &) = delete;
+  ACE_Filecache_Handle &operator= (ACE_Filecache_Handle &&) = delete;
 
   /// Closes any open handles, release acquired file.
   ~ACE_Filecache_Handle ();
@@ -121,9 +125,6 @@ protected:
   /// Default do nothing constructor.  Prevent it from being called.
   ACE_Filecache_Handle ();
 
-  /// Common initializations for constructors.
-  void init ();
-
 public:
   /// These come from ACE_Filecache_Object, which is an internal class.
   enum
@@ -138,11 +139,12 @@ public:
   };
 
 private:
-  /// A reference to the low level instance.
-  ACE_Filecache_Object *file_;
+  /// Acquired from ACE_Filecache and released with ACE_Filecache::finish.
+  /// The cache manages this reference, so it cannot be owned by a smart pointer.
+  ACE_Filecache_Object *file_ {};
 
-  /// A dup'd version of the one from file_.
-  ACE_HANDLE handle_;
+  /// A duplicated OS handle, closed by the destructor when valid.
+  ACE_HANDLE handle_ {ACE_INVALID_HANDLE};
 };
 
 using ACE_Filecache_Hash = ACE_Hash_Map_Manager_Ex<const ACE_TCHAR *, ACE_Filecache_Object *, ACE_Hash<const ACE_TCHAR *>, ACE_Equal_To<const ACE_TCHAR *>, ACE_Null_Mutex>;
@@ -239,14 +241,14 @@ public:
   /// Creates a file for reading.
   ACE_Filecache_Object (const ACE_TCHAR *filename,
                         ACE_SYNCH_RW_MUTEX &lock,
-                        LPSECURITY_ATTRIBUTES sa = 0,
+                        LPSECURITY_ATTRIBUTES sa = LPSECURITY_ATTRIBUTES {},
                         int mapit = 1);
 
   /// Creates a file for writing.
   ACE_Filecache_Object (const ACE_TCHAR *filename,
                         ACE_OFF_T size,
                         ACE_SYNCH_RW_MUTEX &lock,
-                        LPSECURITY_ATTRIBUTES sa = 0);
+                        LPSECURITY_ATTRIBUTES sa = LPSECURITY_ATTRIBUTES {});
 
   /// Only if reference count is zero should this be called.
   ~ACE_Filecache_Object ();
@@ -283,9 +285,6 @@ protected:
   /// Prevent from being called.
   ACE_Filecache_Object ();
 
-  /// Common initialization code,
-  void init ();
-
 private:
   /// Internal error logging method, no locking.
   int error_i (int error_value,
@@ -312,34 +311,34 @@ public:
 private:
   /// The temporary file name and the real file name.  The real file is
   /// copied into the temporary file for safety reasons.
-  ACE_TCHAR *tempname_;
-  ACE_TCHAR filename_[MAXPATHLEN + 1];
+  ACE_TCHAR *tempname_ {};
+  ACE_TCHAR filename_[MAXPATHLEN + 1] {};
 
   /// Holds the memory mapped version of the temporary file.
-  ACE_Mem_Map mmap_;
+  ACE_Mem_Map mmap_ {};
 
   /// The descriptor to the temporary file.
-  ACE_HANDLE handle_;
+  ACE_HANDLE handle_ {ACE_INVALID_HANDLE};
 
   /// Used to compare against the real file to test if an update is needed.
-  ACE_stat stat_;
-  ACE_OFF_T size_;
+  ACE_stat stat_ {};
+  ACE_OFF_T size_ {};
 
   /// Status indicators.
-  int action_;
-  int error_;
+  int action_ {};
+  int error_ {ACE_SUCCESS};
 
   /// If set to 1, means the object is flagged for removal.
-  int stale_;
+  int stale_ {};
 
   /// Security attribute object.
-  LPSECURITY_ATTRIBUTES sa_;
+  LPSECURITY_ATTRIBUTES sa_ {};
 
   /// The default initializer
   ACE_SYNCH_RW_MUTEX junklock_;
 
   /// Provides a bookkeeping mechanism for users of this object.
-  ACE_SYNCH_RW_MUTEX &lock_;
+  ACE_SYNCH_RW_MUTEX &lock_ {junklock_};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

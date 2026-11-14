@@ -1,17 +1,12 @@
 #include "Server_Request_Interceptor.h"
 
-CORBA::Boolean receive_request_service_contexts_called = 0;
-CORBA::Boolean receive_request_called = 0;
-CORBA::Boolean ending_interception_point_called = 0;
+#include <cstring>
 
+CORBA::Boolean receive_request_service_contexts_called = false;
+CORBA::Boolean receive_request_called = false;
+CORBA::Boolean ending_interception_point_called = false;
 
-Server_Request_Interceptor::Server_Request_Interceptor ()
-{
-}
-
-Server_Request_Interceptor::~Server_Request_Interceptor ()
-{
-}
+Server_Request_Interceptor::Server_Request_Interceptor () = default;
 
 char *
 Server_Request_Interceptor::name ()
@@ -30,14 +25,14 @@ Server_Request_Interceptor::receive_request_service_contexts (
 {
   CORBA::String_var op = ri->operation ();
 
-  if (ACE_OS::strcmp (op.in (), "shutdown") != 0)
+  if (std::strcmp (op.in (), "shutdown") != 0)
     {
-      if (::receive_request_service_contexts_called != 0)
+      if (::receive_request_service_contexts_called)
         {
           throw CORBA::INTERNAL ();
         }
 
-      ::receive_request_service_contexts_called = 1;
+      ::receive_request_service_contexts_called = true;
     }
 }
 
@@ -47,14 +42,14 @@ Server_Request_Interceptor::receive_request (
 {
   CORBA::String_var op = ri->operation ();
 
-  if (ACE_OS::strcmp (op.in (), "shutdown") != 0)
+  if (std::strcmp (op.in (), "shutdown") != 0)
     {
-      if (::receive_request_called != 0)
+      if (::receive_request_called)
         {
           throw CORBA::INTERNAL ();
         }
 
-      ::receive_request_called = 1;
+      ::receive_request_called = true;
     }
 }
 
@@ -64,14 +59,14 @@ Server_Request_Interceptor::send_reply (
 {
   CORBA::String_var op = ri->operation ();
 
-  if (ACE_OS::strcmp (op.in (), "shutdown") != 0)
+  if (std::strcmp (op.in (), "shutdown") != 0)
     {
-      if (::ending_interception_point_called != 0)
+      if (::ending_interception_point_called)
         {
           throw CORBA::INTERNAL ();
         }
 
-      ::ending_interception_point_called = 1;
+      ::ending_interception_point_called = true;
     }
 }
 
@@ -81,14 +76,14 @@ Server_Request_Interceptor::send_exception (
 {
   CORBA::String_var op = ri->operation ();
 
-  if (ACE_OS::strcmp (op.in (), "shutdown") != 0)
+  if (std::strcmp (op.in (), "shutdown") != 0)
     {
-      if (::ending_interception_point_called != 0)
+      if (::ending_interception_point_called)
         {
           throw CORBA::INTERNAL ();
         }
 
-      ::ending_interception_point_called = 1;
+      ::ending_interception_point_called = true;
     }
 }
 
@@ -98,13 +93,13 @@ Server_Request_Interceptor::send_other (
 {
   CORBA::String_var op = ri->operation ();
 
-  if (ACE_OS::strcmp (op.in (), "shutdown") != 0)
+  if (std::strcmp (op.in (), "shutdown") != 0)
     {
-      if (::ending_interception_point_called != 0)
+      if (::ending_interception_point_called)
         {
           throw CORBA::INTERNAL ();
         }
 
-      ::ending_interception_point_called = 1;
+      ::ending_interception_point_called = true;
     }
 }

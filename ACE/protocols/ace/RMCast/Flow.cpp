@@ -73,7 +73,6 @@ namespace ACE_RMCast
 
         l.release ();
 
-
         timespec time;
         time.tv_sec = 0;
         time.tv_nsec = static_cast<unsigned long> (dev * 500000.0);
@@ -102,7 +101,6 @@ namespace ACE_RMCast
         //cerr << "NAK from "
         //     << static_cast<From const*> (m->find (From::id))->address ()
         //     << " for " << nak->count () << " sns." << endl;
-
 
         ACE_Time_Value nak_time (ACE_OS::gettimeofday ());
 

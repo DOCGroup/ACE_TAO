@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Operation_Table.h
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
-
 #ifndef TAO_OPTABLE_H
 #define TAO_OPTABLE_H
 
@@ -21,7 +17,6 @@
 
 #include "tao/Object.h"
 #include "tao/Collocation_Strategy.h"
-#include <cstddef>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -55,7 +50,7 @@ using TAO_Collocated_Skeleton = void (*) (
  */
 struct TAO_operation_db_entry
 {
-  /// Operation name
+  /// Non-owning operation-name string supplied by the operation table.
   char const * opname;
 
   /// Remote/thru-POA skeleton pointer
@@ -64,9 +59,6 @@ struct TAO_operation_db_entry
   /// Collocated skeleton pointers.
   TAO_Collocated_Skeleton direct_skel_ptr;
 };
-
-// --------------------------
-
 namespace TAO
 {
   /**
@@ -107,7 +99,7 @@ public:
    */
   virtual int find (char const *opname,
                     TAO_Skeleton &skelfunc,
-                    std::size_t const length = 0) = 0;
+                    size_t const length = 0) = 0;
 
   /**
    * Uses @a opname to look up the collocated skeleton function and
@@ -117,14 +109,14 @@ public:
   virtual int find (char const *opname,
                     TAO_Collocated_Skeleton &skelfunc,
                     TAO::Collocation_Strategy s,
-                    std::size_t const length = 0) = 0;
+                    size_t const length = 0) = 0;
 
   /// Associate the skeleton @a skel_ptr with an operation named
   /// @a opname.  Returns -1 on failure, 0 on success, 1 on duplicate.
   virtual int bind (char const *opname,
                     TAO::Operation_Skeletons const skel_ptr) = 0;
 
-  virtual ~TAO_Operation_Table ();
+  virtual ~TAO_Operation_Table () = default;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

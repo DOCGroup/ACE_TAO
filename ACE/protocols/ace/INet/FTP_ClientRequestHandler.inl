@@ -42,7 +42,6 @@ namespace ACE
         return this->active_port_;
       }
 
-
     ACE_INLINE
     Request& ClientRequestHandler::request ()
       {

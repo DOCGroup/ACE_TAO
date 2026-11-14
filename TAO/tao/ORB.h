@@ -150,20 +150,20 @@ namespace CORBA
     public:
       InvalidName ();
       InvalidName (const InvalidName &);
-      ~InvalidName ();
+      ~InvalidName () override;
 
       InvalidName &operator= (const InvalidName &);
 
       static InvalidName *_downcast (CORBA::Exception *);
       static CORBA::Exception *_alloc ();
 
-      virtual CORBA::Exception *_tao_duplicate () const;
+      CORBA::Exception *_tao_duplicate () const override;
 
-      virtual void _raise () const;
+      void _raise () const override;
 
-      virtual void _tao_encode (TAO_OutputCDR &) const;
+      void _tao_encode (TAO_OutputCDR &) const override;
 
-      virtual void _tao_decode (TAO_InputCDR &);
+      void _tao_decode (TAO_InputCDR &) override;
     };
 
     using ObjectId = char *;
@@ -350,8 +350,6 @@ namespace CORBA
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-    // = ORB event loop methods.
-
     /**
      * Instructs the ORB to initialize itself and run its event loop in
      * the current thread, not returning until the ORB has shut down.
@@ -476,10 +474,6 @@ namespace CORBA
                                      const CORBA::Any& val);
 #endif
 
-    // ----------------------------------------------------------------
-    // = TAO-specific extensions to the CORBA specification.
-    // ----------------------------------------------------------------
-
 #if !defined(CORBA_E_MICRO)
     /// Create an empty policy, usually to be filled in later by
     /// demarshaling.
@@ -515,7 +509,6 @@ namespace CORBA
     // We must be created via the @c CORBA::ORB_init() function.
     ORB (TAO_ORB_Core *orb_core);
 
-    /// Destructor
     /**
      * Protected destructor to enforce proper memory management
      * through the reference counting mechanism.
@@ -559,7 +552,7 @@ namespace CORBA
     TAO_ORB_Core * orb_core_;
 
     /// Decides whether to use the URL notation or to use IOR notation.
-    CORBA::Boolean use_omg_ior_format_;
+    CORBA::Boolean use_omg_ior_format_ {true};
 
     // Prevent copying and assignment.
     ORB (const ORB &);

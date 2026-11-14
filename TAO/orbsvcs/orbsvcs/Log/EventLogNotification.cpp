@@ -13,10 +13,7 @@ TAO_EventLogNotification::TAO_EventLogNotification (
   obtain_proxy_consumer ();
 }
 
-TAO_EventLogNotification::~TAO_EventLogNotification ()
-{
-  // No-Op.
-}
+TAO_EventLogNotification::~TAO_EventLogNotification () = default;
 
 void
 TAO_EventLogNotification::disconnect_push_supplier ()
@@ -27,12 +24,12 @@ TAO_EventLogNotification::disconnect_push_supplier ()
 void
 TAO_EventLogNotification::obtain_proxy_consumer()
 {
-  CosEventChannelAdmin::SupplierAdmin_var supplier_admin =
+  CosEventChannelAdmin::SupplierAdmin_var const supplier_admin =
     event_channel_->for_suppliers ();
 
   consumer_ = supplier_admin->obtain_push_consumer ();
 
-  CosEventComm::PushSupplier_var supplier =
+  CosEventComm::PushSupplier_var const supplier =
     this->_this ();
 
   consumer_->connect_push_supplier (supplier.in());

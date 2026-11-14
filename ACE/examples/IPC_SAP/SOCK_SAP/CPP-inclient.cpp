@@ -1,8 +1,10 @@
-// This tests the features of the <ACE_SOCK_Connector> and
-// <ACE_SOCK_Stream> classes.  In addition, it can be used to test the
-// oneway and twoway latency and throughput at the socket-level.  This
-// is useful as a baseline to compare against ORB-level performance
-// for the same types of data.
+/**
+ * @file CPP-inclient.cpp
+ *
+ * Tests ACE_SOCK_Connector and ACE_SOCK_Stream. It can also measure
+ * one-way and two-way socket latency and throughput as a baseline for
+ * ORB-level performance with the same data.
+ */
 
 #include "CPP-inclient.h"
 
@@ -14,6 +16,7 @@
 #include "ace/Truncate.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Basic_Types.h"
+#include <cstring>
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_main.h"
@@ -41,7 +44,6 @@ Options::~Options ()
   delete [] this->message_buf_;
 }
 
-// Options Singleton.
 using OPTIONS = ACE_Singleton<Options, ACE_SYNCH_RECURSIVE_MUTEX>;
 
 int
@@ -51,7 +53,7 @@ Options::init ()
 
   // Check for default case.
   if (this->message_len_ == 0)
-    this->message_len_ = ACE_OS::strlen ("TAO");
+    this->message_len_ = std::strlen ("TAO");
   ACE_DEBUG((LM_DEBUG,"Options::init, len = %d\n",this->message_len_));
 
   this->message_len_ += sizeof (ACE_UINT32);
@@ -65,13 +67,11 @@ Options::init ()
   ACE_UINT32 length =
     ACE_NTOHL (ACE_Utils::truncate_cast<ACE_UINT32> (this->message_len_));
 
-  ACE_OS::memcpy ((void *) this->message_buf_,
-                  (void *) &length,
-                  sizeof length);
+  std::memcpy (this->message_buf_, &length, sizeof length);
 
-  ACE_OS::memset ((void *) (this->message_buf_ + sizeof (ACE_UINT32)),
-                  'a',
-                  this->message_len_ - sizeof (ACE_UINT32));
+  std::memset (this->message_buf_ + sizeof (ACE_UINT32),
+               'a',
+               this->message_len_ - sizeof (ACE_UINT32));
 
   // Allocate the barrier with the correct count.
   ACE_MT (ACE_NEW_RETURN (this->barrier_,
@@ -105,10 +105,8 @@ Options::read (void *buf, size_t len, size_t &iteration)
     return 0;
   else
     {
-      ACE_OS::memcpy (buf,
-                      this->message_buf (),
-                      len);
-      iteration++;
+      std::memcpy (buf, this->message_buf (), len);
+      ++iteration;
       return ACE_Utils::truncate_cast<ssize_t> (len);
     }
 }
@@ -228,8 +226,7 @@ Options::shared_client_test (u_short port,
   ACE_MT (this->barrier_->wait ());
   return buf;
 }
-// Static function entry point to the oneway client service.
-
+/// Runs the one-way client service.
 void *
 Options::oneway_client_test (void *)
 {
@@ -263,9 +260,9 @@ Options::oneway_client_test (void *)
        (r_bytes = options->read (request, len, iteration)) > 0;
        // Transmit at the proper rate.
        ACE_OS::sleep (options->sleep_time ()))
-    if (ACE_OS::memcmp (request,
-                        options->quit_string (),
-                        ACE_OS::strlen (options->quit_string ())) == 0)
+    if (std::memcmp (request,
+                     options->quit_string (),
+                     ACE_OS::strlen (options->quit_string ())) == 0)
       break;
     else if (cli_stream.send_n (request, r_bytes) == -1)
       {
@@ -283,8 +280,7 @@ Options::oneway_client_test (void *)
   return reinterpret_cast<void *> (result);
 }
 
-// Static function entry point to the twoway client service.
-
+/// Runs the two-way client service.
 void *
 Options::twoway_client_test (void *)
 {
@@ -320,9 +316,9 @@ Options::twoway_client_test (void *)
        (r_bytes = options->read (request, len, iteration)) > 0;
        // Transmit at the proper rate.
        ACE_OS::sleep (options->sleep_time ()))
-    if (ACE_OS::memcmp (request,
-                        options->quit_string (),
-                        ACE_OS::strlen (options->quit_string ())) == 0)
+    if (std::memcmp (request,
+                     options->quit_string (),
+                     ACE_OS::strlen (options->quit_string ())) == 0)
       break;
 
     // Transmit <request> to the server.
@@ -363,7 +359,7 @@ Options::twoway_client_test (void *)
   double messages_per_sec = iteration * double (ACE_ONE_SECOND_IN_USECS) / real_time;
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) messages = %d\n(%t) usec-per-message = %f\n(%t) messages-per-second = %0.00f\n"),
+              ACE_TEXT ("(%t) messages = %B\n(%t) usec-per-message = %f\n(%t) messages-per-second = %0.00f\n"),
               iteration,
               real_time / double (iteration),
               messages_per_sec < 0 ? 0 : messages_per_sec));

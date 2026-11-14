@@ -46,9 +46,9 @@ public:
 
   void dump ();
   ostream * stream_for (ostream *old,
-                        HostProcess *hp = 0,
-                        const char *sub = 0,
-                        const char *detail = 0);
+                        HostProcess *hp = nullptr,
+                        const char *sub = nullptr,
+                        const char *detail = nullptr);
 
 private:
   HostProcess *find_host_i (const Endpoint &endpoint, bool server);

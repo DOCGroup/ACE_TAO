@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-
 //=============================================================================
 /**
  *  @file    RecursDef_i.h
@@ -10,7 +9,6 @@
  *  @author Simon Massey <sma@prismtech.com>
  */
 //=============================================================================
-
 
 #ifndef TAO_RECURSDEF_I_H
 #define TAO_RECURSDEF_I_H
@@ -27,7 +25,6 @@
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

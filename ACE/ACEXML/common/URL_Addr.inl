@@ -50,7 +50,7 @@ ACEXML_URL_Addr::operator!= (const ACEXML_URL_Addr &addr) const
 ACE_INLINE const ACEXML_Char *
 ACEXML_URL_Addr::get_path_name () const
 {
-  return this->path_name_;
+  return this->path_name_.get ();
 }
 
 ACE_INLINE int

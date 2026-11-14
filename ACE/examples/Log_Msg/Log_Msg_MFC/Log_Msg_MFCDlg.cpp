@@ -29,7 +29,7 @@ public:
     // ClassWizard generated virtual function overrides
     //{{AFX_VIRTUAL(CAboutDlg)
     protected:
-    virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+    void DoDataExchange (CDataExchange *pDX) override; // DDX/DDV support
     //}}AFX_VIRTUAL
 
 // Implementation
@@ -61,7 +61,7 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CLog_Msg_MFCDlg dialog
 
-CLog_Msg_MFCDlg::CLog_Msg_MFCDlg(CWnd* pParent /*=0*/)
+CLog_Msg_MFCDlg::CLog_Msg_MFCDlg (CWnd *pParent)
     : CDialog(CLog_Msg_MFCDlg::IDD, pParent)
 {
     //{{AFX_DATA_INIT(CLog_Msg_MFCDlg)
@@ -96,7 +96,6 @@ BOOL CLog_Msg_MFCDlg::OnInitDialog()
 {
     CDialog::OnInitDialog();
 
-
     // Add "About..." menu item to system menu.
 
     // IDM_ABOUTBOX must be in the system command range.
@@ -104,7 +103,7 @@ BOOL CLog_Msg_MFCDlg::OnInitDialog()
     ASSERT(IDM_ABOUTBOX < 0xF000);
 
     CMenu* pSysMenu = GetSystemMenu(FALSE);
-    if (pSysMenu != 0)
+    if (pSysMenu != nullptr)
     {
         CString strAboutMenu;
         strAboutMenu.LoadString(IDS_ABOUTBOX);

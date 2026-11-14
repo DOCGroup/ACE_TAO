@@ -7,7 +7,6 @@
  *  @author  Darrell Brunsch
  *  @author  Irfan Pyarali
  */
-// ===================================================================
 
 #ifndef TAO_SERVEROBJECT_I_H
 #define TAO_SERVEROBJECT_I_H
@@ -38,24 +37,23 @@ class TAO_IMR_Client_Export ServerObject_i
   : public POA_ImplementationRepository::ServerObject
 {
 public:
-  /// Constructor.
   ServerObject_i (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa);
 
-  /// Ping method.
-  void ping ();
-
-  /// Shutdown the server.
-  void shutdown ();
-
-  /// Returns the default POA for this servant.
-  PortableServer::POA_ptr _default_POA ();
-
-protected:
   ServerObject_i (ServerObject_i const &) = delete;
   ServerObject_i &operator= (ServerObject_i const &) = delete;
   ServerObject_i (ServerObject_i &&) = delete;
   ServerObject_i &operator= (ServerObject_i &&) = delete;
 
+  /// Ping method.
+  void ping () override;
+
+  /// Shutdown the server.
+  void shutdown () override;
+
+  /// Returns the default POA for this servant.
+  PortableServer::POA_ptr _default_POA () override;
+
+protected:
   /// Our ORB.  We need this member in case we need to shutdown the
   /// server.
   CORBA::ORB_var orb_;

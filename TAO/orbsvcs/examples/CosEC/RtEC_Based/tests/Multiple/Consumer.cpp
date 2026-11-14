@@ -2,17 +2,11 @@
 #include "Consumer.h"
 #include "ace/Get_Opt.h"
 
-Consumer::Consumer ()
-  :event_count_ (1)
-{
-  // No-Op.
-}
-
 int
 Consumer::parse_args (int argc, ACE_TCHAR *argv [])
 {
- ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("n:c:"));
-  int opt;
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("n:c:"));
+  int opt {};
 
   while ((opt = get_opt ()) != EOF)
     {
@@ -29,10 +23,9 @@ Consumer::parse_args (int argc, ACE_TCHAR *argv [])
         case '?':
         default:
           ACE_DEBUG ((LM_DEBUG,
-                      "Usage: %s "
-                      " -n <COS Event Service name>"
-                      " -c event_count"
-                      "\n",
+                      ACE_TEXT ("Usage: %s ")
+                      ACE_TEXT (" -n <COS Event Service name>")
+                      ACE_TEXT (" -c event_count\n"),
                       argv[0]));
           return -1;
         }
@@ -44,7 +37,6 @@ Consumer::parse_args (int argc, ACE_TCHAR *argv [])
 void
 Consumer::open (CosEventChannelAdmin::EventChannel_ptr event_channel)
 {
-  // = Connect as a consumer.
   this->consumer_admin_ =
     event_channel->for_consumers ();
 }
@@ -64,7 +56,7 @@ Consumer::connect ()
   if (CORBA::is_nil (this->consumer_admin_.in ()))
     return;
 
-  CosEventComm::PushConsumer_var objref =
+  CosEventComm::PushConsumer_var const objref =
     this->_this ();
 
   this->supplier_proxy_ =
@@ -87,24 +79,24 @@ Consumer::disconnect ()
 }
 
 void
-Consumer::push (const CORBA::Any &)
+Consumer::push (CORBA::Any const &)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%P):%s\n",
-              " - In Consumer::push"));
+              ACE_TEXT ("(%P):%s\n"),
+              ACE_TEXT (" - In Consumer::push")));
 
   ACE_DEBUG ((LM_DEBUG,
-              "Event count = %d\n",
+              ACE_TEXT ("Event count = %d\n"),
               this->event_count_));
 
-  this->event_count_ = this->event_count_ - 1;
+  --this->event_count_;
   // decrement the count
 
   if (this->event_count_ == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P):%s\n",
-                  "exiting the consumer."));
+                  ACE_TEXT ("(%P):%s\n"),
+                  ACE_TEXT ("exiting the consumer.")));
 
       this->close ();
 
@@ -117,10 +109,10 @@ Consumer::disconnect_push_consumer ()
 {
   // Deactivate this object.
 
-  PortableServer::POA_var poa =
+  PortableServer::POA_var const poa =
     this->_default_POA ();
 
-  PortableServer::ObjectId_var id =
+  PortableServer::ObjectId_var const id =
     poa->servant_to_id (this);
 
   poa->deactivate_object (id.in ());
@@ -131,13 +123,13 @@ Consumer::init_Consumer ()
 {
   try
    {
-      this->open (this->cos_ec_);
+      this->open (this->cos_ec_.in ());
 
       this->connect ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
-      ex._tao_print_exception ("Exception in Consumer::connect ()\n");
+      ex._tao_print_exception (ACE_TEXT ("Exception in Consumer::connect ()\n"));
       return -1;
     }
 
@@ -145,7 +137,7 @@ Consumer::init_Consumer ()
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Consumer cons;
 
@@ -156,7 +148,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     return 1;
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P): %s\n", "Started the consumer.."));
+              ACE_TEXT ("(%P): %s\n"), ACE_TEXT ("Started the consumer..")));
 
   cons.runORB ();
 

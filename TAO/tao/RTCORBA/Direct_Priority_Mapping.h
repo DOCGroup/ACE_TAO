@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-// =======================================================================
 /**
  *  @file    Direct_Priority_Mapping.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
-// =======================================================================
 
 #ifndef TAO_DIRECT_PRIORITY_MAPPING_H
 #define TAO_DIRECT_PRIORITY_MAPPING_H
@@ -39,7 +37,6 @@ class TAO_RTCORBA_Export TAO_Direct_Priority_Mapping : public TAO_Priority_Mappi
 public:
   explicit TAO_Direct_Priority_Mapping (long);
 
-  /// The destructor
   ~TAO_Direct_Priority_Mapping () override = default;
 
   CORBA::Boolean

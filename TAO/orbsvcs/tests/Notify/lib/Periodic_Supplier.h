@@ -32,23 +32,21 @@ class TAO_Notify_Tests_Task_Callback;
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Periodic_Supplier : public TAO_Notify_Tests_StructuredPushSupplier, public ACE_Task <ACE_SYNCH>
 {
 public:
-  /// Constructor
   TAO_Notify_Tests_Periodic_Supplier ();
 
-  /// Destructor
   ~TAO_Notify_Tests_Periodic_Supplier ();
 
   /// set the helper callback
   void task_callback(TAO_Notify_Tests_Task_Callback* client);
 
   /// Init the state of this object.
-  int init_state (ACE_Arg_Shifter& arg_shifter);
+  int init_state (ACE_Arg_Shifter& arg_shifter) override;
 
   /// Activate this task, synch on the given barrier.
   virtual int activate_task (ACE_Barrier* barrier);
 
   /// task svc
-  virtual int svc ();
+  int svc () override;
 
   /// Dump stats.
   void dump_stats (ACE_TCHAR* msg, int dump_samples);
@@ -66,8 +64,8 @@ protected:
   /// Send Prologue
   void send_prologue ();
 
-  /// All tasks synch at this barrier.
-  ACE_Barrier* barrier_;
+  /// Non-owning barrier supplied by the activation manager.
+  ACE_Barrier* barrier_ {};
 
   /// The event to send.
   TAO_Notify_Tests_StructuredEvent event_;
@@ -101,8 +99,8 @@ protected:
   /// Stats house keeping
   Task_Stats stats_;
 
-  /// Client
-  TAO_Notify_Tests_Task_Callback* client_;
+  /// Non-owning callback supplied by the activation manager.
+  TAO_Notify_Tests_Task_Callback* client_ {};
 };
 
 #include /**/ "ace/post.h"

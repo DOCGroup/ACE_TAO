@@ -4,6 +4,8 @@
 #include "ace/Log_Msg.h"
 #include "ace/Null_Mutex.h"
 #include "ace/OS_NS_string.h"
+#include <cstring>
+#include <memory>
 
 BS_Client::BS_Client ()
 {
@@ -15,14 +17,17 @@ BS_Client::BS_Client ()
                 Options::program_name));
   else
     {
-      ACE_NEW (this->protocol_record_,
-               Protocol_Record[this->count_]);
-      ACE_NEW (this->sorted_record_,
-               Protocol_Record *[this->count_]);
+      Protocol_Record *protocol_records {};
+      ACE_NEW (protocol_records, Protocol_Record[this->count_]);
+      this->protocol_record_.reset (protocol_records);
 
-      for (int i = 0; i < this->count_; i++)
+      Protocol_Record **sorted_records {};
+      ACE_NEW (sorted_records, Protocol_Record *[this->count_]);
+      this->sorted_record_.reset (sorted_records);
+
+      for (int i = 0; i < this->count_; ++i)
         {
-          Protocol_Record *prp = &this->protocol_record_[i];
+          Protocol_Record * const prp = std::addressof (this->protocol_record_[i]);
 
           this->sorted_record_[i] = prp;
 
@@ -30,10 +35,10 @@ BS_Client::BS_Client ()
             (prp->key_name1_, prp->key_name2_);
         }
 
-      ACE_OS::qsort (this->sorted_record_,
+      ACE_OS::qsort (this->sorted_record_.get (),
                      this->count_,
-                     sizeof *this->sorted_record_,
-                     (ACE_COMPARE_FUNC)Binary_Search::name_compare);
+                     sizeof (Protocol_Record *),
+                     Binary_Search::name_compare);
     }
 }
 
@@ -43,27 +48,18 @@ BS_Client::BS_Client ()
 // binary search.
 
 Protocol_Record *
-BS_Client::insert (const char *key_name, int)
+BS_Client::insert (char const *key_name, int)
 {
-#if 0
-  Protocol_Record *pr = (Protocol_Record *)
-    ACE_OS::bsearch ((const void *) key_name,
-                     (const void *) this->sorted_record_,
-                     this->count_,
-                     sizeof ...,
-                     int (*compar)(const void *, const void *) ACE_OS::strcmp);
-  return pr;
-#else
   int lo = 0;
   int hi = this->count_ - 1;
-  Protocol_Record **sorted_buffer = this->sorted_record_;
+  Protocol_Record **sorted_buffer = this->sorted_record_.get ();
 
   while (lo <= hi)
     {
       int mid   = (lo + hi) / 2;
       Protocol_Record *prp = sorted_buffer[mid];
-      int cmp = ACE_OS::strcmp (key_name,
-                                prp->get_login ());
+      int cmp = std::strcmp (key_name,
+                             prp->get_login ());
       if (cmp == 0)
         return prp;
       else if (cmp < 0)
@@ -72,18 +68,17 @@ BS_Client::insert (const char *key_name, int)
         lo = mid + 1;
     }
 
-  return 0;
-#endif /* 0 */
+  return nullptr;
 }
 
 Protocol_Record *
 BS_Client::get_each_entry ()
 {
   for (Protocol_Record *prp = Binary_Search::get_each_entry ();
-       prp != 0;
+       prp != nullptr;
        prp = Binary_Search::get_each_entry ())
-    if (prp->get_drwho_list () != 0)
+    if (prp->get_drwho_list () != nullptr)
       return prp;
 
-  return 0;
+  return nullptr;
 }

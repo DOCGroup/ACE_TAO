@@ -18,7 +18,10 @@
 #include "tao/ORB.h"
 #include "Command.h"
 
+#include <memory>
+
 class TAO_Notify_Tests_Application_Command;
+class TAO_Notify_Tests_Priority_Mapping;
 
 /**
  * @class TAO_Notify_Tests_Application_Command
@@ -28,20 +31,18 @@ class TAO_Notify_Tests_Application_Command;
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Application_Command : public TAO_Notify_Tests_Command
 {
 public:
-  /// Constructor
   TAO_Notify_Tests_Application_Command ();
 
-  /// Destructor
   ~TAO_Notify_Tests_Application_Command ();
 
   /// Parse args and populate options.
-  virtual void init (ACE_Arg_Shifter& arg_shifter);
+  void init (ACE_Arg_Shifter& arg_shifter) override;
 
   /// Execute the command.
-  virtual void execute_i ();
+  void execute_i () override;
 
   /// Get the command name.
-  virtual const char* get_name ();
+  char const* get_name () override;
   static const char* name ();
 
 protected:
@@ -59,6 +60,9 @@ protected:
   /// Flag used with the DUMP_STATE command that asks for all samples to be put into the
   /// output data file.
   int dump_samples_;
+
+  /// Owns the priority mapping registered as a borrowed pointer with the lookup manager.
+  std::unique_ptr<TAO_Notify_Tests_Priority_Mapping> priority_mapping_;
 
   ///= Handlers
   virtual void handle_init ();

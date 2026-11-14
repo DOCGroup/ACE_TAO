@@ -1,19 +1,10 @@
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = DESCRIPTION
-//    This program exercises the ACE_Arg_Shifter class.
-//
-// = AUTHOR
-//    Steve Huston  <shuston@riverace.com>
-//
-// ============================================================================
+/// @file Arg_Shifter_Test.cpp
+/// This program exercises the ACE_Arg_Shifter class.
+///
+/// @author Steve Huston  <shuston@riverace.com>
 
 #include "ace/Arg_Shifter.h"
 #include "test_config.h"
-
 
 int
 run_main (int, ACE_TCHAR *[])
@@ -33,6 +24,16 @@ run_main (int, ACE_TCHAR *[])
 
   if (!shifter1.is_anything_left ())
     ACE_ERROR ((LM_ERROR, "is_anything_left() returned 0 at start.\n"));
+
+  int supplied_argc = 1;
+  ACE_TCHAR const * const supplied_arg = ACE_TEXT ("-supplied");
+  ACE_TCHAR const *supplied_args[] = {supplied_arg};
+  ACE_TCHAR const *supplied_temp[1] {};
+  {
+    ACE_Arg_Shifter supplied_shifter (supplied_argc, supplied_args, supplied_temp);
+    if (supplied_temp[0] != supplied_arg)
+      ACE_ERROR ((LM_ERROR, "caller-provided temporary array was not populated\n"));
+  }
 
   const int test_argc_size2 = 4;
   int arg2 = test_argc_size2;

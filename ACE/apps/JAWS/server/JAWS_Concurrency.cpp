@@ -1,9 +1,5 @@
 #include "JAWS_Concurrency.h"
 
-JAWS_Concurrency_Base::JAWS_Concurrency_Base ()
-{
-}
-
 int
 JAWS_Concurrency_Base::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
 {
@@ -17,7 +13,7 @@ JAWS_Concurrency_Base::svc ()
 
   for (;;)
     {
-      ACE_Message_Block *mb = 0;
+      ACE_Message_Block *mb {};
 
       // At this point we could set a timeout value so that the
       // threading strategy can delete a thread if there is nothing to
@@ -25,20 +21,12 @@ JAWS_Concurrency_Base::svc ()
       // yourself with 0 threads.
 
       result = this->getq (mb);
-      if (result == -1 || mb == 0)
+      if (result == -1 || mb == nullptr)
         break;
 
       this->put_next (mb);
     }
   return 0;
-}
-
-JAWS_Dispatch_Policy::JAWS_Dispatch_Policy ()
-{
-}
-
-JAWS_Dispatch_Policy::~JAWS_Dispatch_Policy ()
-{
 }
 
 JAWS_Dispatcher::JAWS_Dispatcher (JAWS_Dispatch_Policy *policy)

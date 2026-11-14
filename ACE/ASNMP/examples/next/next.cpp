@@ -37,13 +37,16 @@
 class nextapp
 {
 public:
-  nextapp(int argc, char **argv); // process command line args
-  int valid() const;             // verify transaction can proceed
-  int run();                     //  issue transaction
-  static void usage();           // operator help message
+  nextapp (int argc, char **argv); // process command line args
+  bool valid () const;            // verify transaction can proceed
+  int run ();                     // issue transaction
+  static void usage ();           // operator help message
 
 private:
-  nextapp(const nextapp&);
+  nextapp (nextapp const &) = delete;
+  nextapp (nextapp &&) = delete;
+  nextapp &operator= (nextapp const &) = delete;
+  nextapp &operator= (nextapp &&) = delete;
 
   UdpAddress address_;
   Pdu pdu_;                                // construct a request Pdu
@@ -51,36 +54,37 @@ private:
   OctetStr community_;
   Snmp snmp_;
   UdpTarget target_;
-  int valid_;
+  bool valid_ {};
 };
-
 
 // main entry point
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Argv_Type_Converter atc (argc, argv);
-  nextapp get (atc.get_argc (), atc.get_ASCII_argv ());
-  if (get.valid())
-     return get.run();
-  else
-    nextapp::usage();
-  return 1;
+  nextapp next (atc.get_argc (), atc.get_ASCII_argv ());
+  if (!next.valid ())
+    {
+      nextapp::usage ();
+      return 1;
+    }
+  return next.run ();
 }
 
-int nextapp::valid() const
+bool nextapp::valid () const
 {
- return valid_;
+  return this->valid_;
 }
-nextapp::nextapp(int argc, char *argv[]): valid_(0)
+nextapp::nextapp (int argc, char *argv[])
 {
-   Oid req, def_oid("1.3.6.1.2.1.1.1.0");      // default is sysDescr
+   Oid req {};
+   Oid const def_oid ("1.3.6.1.2.1.1.1.0"); // default is sysDescr
    if ( argc < 2)
      return;
 
-   address_ = argv[argc - 1];
-   if ( !address_.valid()) {
+   address_ = UdpAddress (argv[argc - 1]);
+   if (!address_.valid ()) {
       cout << "ERROR: Invalid IPv4 address or DNS hostname: " \
-     << argv[argc] << "\n";
+     << argv[argc - 1] << "\n";
       return;
    }
 
@@ -88,46 +92,47 @@ nextapp::nextapp(int argc, char *argv[]): valid_(0)
    ACE_Get_Opt get_opt (argc,
                         to_tchar.get_TCHAR_argv (),
                         ACE_TEXT ("o:c:r:t:"));
-   for (int c; (c = get_opt ()) != -1; )
-     switch (c)
+   for (int option = get_opt (); option != -1; option = get_opt ())
+     switch (option)
        {
        case 'o':
-         req = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg());
-         if (req.valid() == 0)
-         cout << "ERROR: oid value: "
-              << ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg())
-              << "is not valid. using default.\n";
+         {
+           char const * const oid_arg = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
+           req = oid_arg;
+           if (!req.valid ())
+             cout << "ERROR: oid value: " << oid_arg
+                  << " is not valid. using default.\n";
+         }
          break;
 
        case 'c':
-         community_ = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg());
-         target_.set_read_community(community_);
+         community_ = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
+         target_.set_read_community (community_);
          break;
 
        case 'r':
-         target_.set_retry(ACE_OS::atoi (get_opt.opt_arg()));
+         target_.set_retry (ACE_OS::atoi (get_opt.opt_arg ()));
          break;
 
        case 't':
-         target_.set_timeout(ACE_OS::atoi (get_opt.opt_arg()));
+         target_.set_timeout (ACE_OS::atoi (get_opt.opt_arg ()));
          break;
 
        default:
          break;
        }
 
-  Vb vb;                                  // construct a Vb object
-  if (req.valid())
-     vb.set_oid( req);                    // set the Oid portion of the Vb
-  else {
-     vb.set_oid( def_oid);               // set the Oid portion of the Vb
-  }
+  Vb vb {}; // construct a Vb object
+  if (req.valid ())
+    vb.set_oid (req); // set the Oid portion of the Vb
+  else
+    vb.set_oid (def_oid); // set the Oid portion of the Vb
   pdu_ += vb;
-  vb.get_oid(oid_); // store for later use
-  valid_ = 1;
+  vb.get_oid (oid_); // store for later use
+  this->valid_ = true;
 }
 
-void nextapp::usage()
+void nextapp::usage ()
 {
   cout << "Usage:\n";
   cout << "next [options] dotted-quad | DNSName[:port]\n";
@@ -137,27 +142,26 @@ void nextapp::usage()
   cout << "      -t N  timeout in seconds default is 1 second" << endl;
 }
 
-
-int nextapp::run()
+int nextapp::run ()
 {
    //----------[ create a ASNMP session ]-----------------------------------
-   if ( snmp_.valid() != SNMP_CLASS_SUCCESS) {
+   if (snmp_.valid () != SNMP_CLASS_SUCCESS) {
       cout << "\nASNMP:ERROR:Create session failed: "<<
           snmp_.error_string()<< "\n";
       return 1;
    }
 
    //--------[ build up ASNMP object needed ]-------------------------------
-   if (address_.get_port() == 0)
-     address_.set_port(DEF_AGENT_PORT);
-   target_.set_address( address_);         // make a target using the address
+   if (address_.get_port () == 0)
+     address_.set_port (DEF_AGENT_PORT);
+   target_.set_address (address_); // make a target using the address
 
    //-------[ issue the request, blocked mode ]-----------------------------
-   cout << "\nASNMP:INFO:SNMP Version " << (target_.get_version()+ 1) << \
-       " GET_NEXT SAMPLE PROGRAM \nOID: " << oid_.to_string() << "\n";
-   target_.get_address(address_); // target updates port used
-   int rc;
-   const char *name = address_.resolve_hostname(rc);
+   cout << "\nASNMP:INFO:SNMP Version " << (target_.get_version () + 1)
+        << " GET_NEXT SAMPLE PROGRAM \nOID: " << oid_.to_string () << "\n";
+   target_.get_address (address_); // target updates port used
+   int rc {};
+   char const * const name = address_.resolve_hostname (rc);
 
    cout << "Device: " << address_ << " ";
 
@@ -165,27 +169,27 @@ int nextapp::run()
    cout << (rc ? "<< did not resolve via gethostbyname() >>" : name) << "\n";
    //FUZZ: enable check_for_lack_ACE_OS
 
-   cout << "[ Retries=" << target_.get_retry() << " \
-        Timeout=" << target_.get_timeout() <<" ms " << "Community=" << \
-         community_.to_string() << " ]"<< endl;
+   cout << "[ Retries=" << target_.get_retry ()
+        << " Timeout=" << target_.get_timeout () << " ms Community="
+        << community_.to_string () << " ]" << endl;
 
-   if (snmp_.get_next( pdu_, target_) == SNMP_CLASS_SUCCESS) {
-       Vb vb;
+   if (snmp_.get_next (pdu_, target_) == SNMP_CLASS_SUCCESS) {
+       Vb vb {};
       // check to see if there are any errors
-      if (pdu_.get_error_status()) {
+      if (pdu_.get_error_status ()) {
         cout << "ERROR: agent replied as follows\n";
         cout << pdu_.agent_error_reason() << endl;
       }
       else {
-        VbIter iter(pdu_);
-        while (iter.next(vb)) {
+        VbIter iter (pdu_);
+        while (iter.next (vb)) {
           cout << "\tOid = " << vb.to_string_oid() << "\n";
           cout << "\tValue = " << vb.to_string_value() << "\n";
        }
      }
    }
    else {
-    const char *ptr = snmp_.error_string();
+    char const * const ptr = snmp_.error_string ();
     cout << "ASNMP:ERROR: get_next command failed reason: " << ptr << endl;
   }
   cout << "ASNMP:INFO:command completed normally. ACE Rocks...\n"<< endl;

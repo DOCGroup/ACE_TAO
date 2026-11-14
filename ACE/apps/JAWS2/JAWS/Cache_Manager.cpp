@@ -1,6 +1,9 @@
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
 
+#include <cstring>
+#include <memory>
+
 #include "JAWS/Cache_Manager.h"
 #include "JAWS/Cache_List_T.h"
 
@@ -19,7 +22,7 @@ JAWS_String_Equal_Functor::JAWS_String_Equal_Functor (const char *s1,
                                                     const char *s2)
   : i_ (0)
 {
-  this->i_ = ACE_OS::strcmp (s1, s2);
+  this->i_ = std::strcmp (s1, s2);
 }
 
 JAWS_String_Equal_Functor::operator int () const
@@ -81,7 +84,7 @@ JAWS_Strdup_String::operator = (const char *s)
 void
 JAWS_Strdup_String::operator = (const JAWS_Strdup_String &s)
 {
-  if (this == &s)
+  if (this == std::addressof (s))
     return;
 
   if (this->c_ && --*(this->c_) == 0)

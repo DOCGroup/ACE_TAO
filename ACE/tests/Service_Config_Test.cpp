@@ -169,7 +169,6 @@ testFailedServiceInit (int, ACE_TCHAR *[])
                 ACE_TEXT ("Repo reports no Refuses_Svc; correct.\n")));
 }
 
-
 void
 testLoadingServiceConfFileAndProcessNo (int argc, ACE_TCHAR *argv[])
 {
@@ -274,7 +273,6 @@ testLoadingServiceConfFileAndProcessNo (int argc, ACE_TCHAR *argv[])
     ACE_ERROR ((LM_ERROR, ACE_TEXT("testLoadingServiceConfFileAndProcessNo test failed\n")));
 }
 
-
 void
 testLoadingServiceConfFile (int argc, ACE_TCHAR *argv[])
 {
@@ -348,7 +346,6 @@ testLoadingServiceConfFile (int argc, ACE_TCHAR *argv[])
   ACE_Thread_Manager::instance ()->wait ();
 }
 
-
 // Loading and unloading the ACE logger service should not smash singletons.
 void
 testUnloadingACELoggingStrategy (int, ACE_TCHAR *[])
@@ -396,7 +393,6 @@ testUnloadingACELoggingStrategy (int, ACE_TCHAR *[])
   if (r1 != r2)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("Reactor before %@, after %@\n"), r1, r2));
 }
-
 
 // @brief The size of a repository is unlimited and can be exceeded
 void
@@ -502,7 +498,7 @@ testrepository (int, ACE_TCHAR *[])
     {
       ++error;
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Repository was wrong size %d\n"),
+                  ACE_TEXT ("Repository was wrong size %B\n"),
                   repository.current_size ()));
     }
   repository.insert (&s1);
@@ -510,7 +506,7 @@ testrepository (int, ACE_TCHAR *[])
     {
       ++error;
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Repository was wrong size %d\n"),
+                  ACE_TEXT ("Repository was wrong size %B\n"),
                   repository.current_size ()));
     }
   repository.insert (&s2);
@@ -518,7 +514,7 @@ testrepository (int, ACE_TCHAR *[])
     {
       ++error;
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Repository was wrong size %d\n"),
+                  ACE_TEXT ("Repository was wrong size %B\n"),
                   repository.current_size ()));
     }
   if (repository.remove (ACE_TEXT ("1"), &result) != 0)
@@ -531,7 +527,7 @@ testrepository (int, ACE_TCHAR *[])
     {
       ++error;
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Repository was wrong size %d\n"),
+                  ACE_TEXT ("Repository was wrong size %B\n"),
                   repository.current_size ()));
     }
   if (repository.array ()[1] != nullptr)
@@ -546,7 +542,7 @@ testrepository (int, ACE_TCHAR *[])
     {
       ++error;
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Repository was wrong size %d\n"),
+                  ACE_TEXT ("Repository was wrong size %B\n"),
                   repository.current_size ()));
     }
   repository.remove (ACE_TEXT ("0"), &result);
@@ -562,7 +558,7 @@ testrepository (int, ACE_TCHAR *[])
     {
       ++error;
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Repository was wrong size %d\n"),
+                  ACE_TEXT ("Repository was wrong size %B\n"),
                   repository.current_size ()));
     }
   repository.close ();
@@ -570,7 +566,7 @@ testrepository (int, ACE_TCHAR *[])
     {
       ++error;
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Repository was wrong size %d\n"),
+                  ACE_TEXT ("Repository was wrong size %B\n"),
                   repository.current_size ()));
     }
 }

@@ -29,65 +29,65 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-//Class interop_WChar_Passer_i
-class  interop_WChar_Passer_i : public virtual POA_interop::WChar_Passer
+class interop_WChar_Passer_i : public virtual POA_interop::WChar_Passer
 {
 public:
-  //Constructor
-  interop_WChar_Passer_i (CORBA::ORB_ptr o, int verbose);
+  explicit interop_WChar_Passer_i (CORBA::ORB_ptr o, bool verbose);
 
-  //Destructor
-  virtual ~interop_WChar_Passer_i ();
+  ~interop_WChar_Passer_i () override = default;
+  interop_WChar_Passer_i (interop_WChar_Passer_i const &) = delete;
+  interop_WChar_Passer_i (interop_WChar_Passer_i &&) = delete;
+  interop_WChar_Passer_i &operator= (interop_WChar_Passer_i const &) = delete;
+  interop_WChar_Passer_i &operator= (interop_WChar_Passer_i &&) = delete;
 
-  virtual char * orb_name ();
+  char * orb_name () override;
 
-  virtual CORBA::Boolean wchar_to_server (CORBA::WChar test,
-                                          CORBA::Short key);
+  CORBA::Boolean wchar_to_server (CORBA::WChar test,
+                                  CORBA::Short key) override;
 
-  virtual CORBA::WChar wchar_from_server (CORBA::Short key);
+  CORBA::WChar wchar_from_server (CORBA::Short key) override;
 
-  virtual CORBA::Boolean wstring_to_server (const CORBA::WChar * test,
-                                            CORBA::Short key);
+  CORBA::Boolean wstring_to_server (CORBA::WChar const *test,
+                                    CORBA::Short key) override;
 
-  virtual CORBA::WChar * wstring_from_server (CORBA::Short key);
+  CORBA::WChar *wstring_from_server (CORBA::Short key) override;
 
-  virtual CORBA::Boolean warray_to_server (const interop::warray test,
-                                           CORBA::Short key);
+  CORBA::Boolean warray_to_server (CORBA::WChar const *test,
+                                   CORBA::Short key) override;
 
-  virtual interop::warray_slice * warray_from_server (CORBA::Short key);
+  interop::warray_slice *warray_from_server (CORBA::Short key) override;
 
-  virtual CORBA::Boolean wstruct_to_server (const interop::wstruct & test,
-                                            CORBA::Short key);
+  CORBA::Boolean wstruct_to_server (interop::wstruct const &test,
+                                    CORBA::Short key) override;
 
-  virtual interop::wstruct * wstruct_from_server (CORBA::Short key);
+  interop::wstruct *wstruct_from_server (CORBA::Short key) override;
 
-  virtual CORBA::Boolean wstructseq_to_server (const interop::wstructseq & test,
-                                            CORBA::Short key);
+  CORBA::Boolean wstructseq_to_server (interop::wstructseq const &test,
+                                       CORBA::Short key) override;
 
-  virtual interop::wstructseq * wstructseq_from_server (CORBA::Short key);
+  interop::wstructseq *wstructseq_from_server (CORBA::Short key) override;
 
- virtual CORBA::Boolean wunion_to_server (const interop::wunion & test,
-                                           CORBA::Short key);
+  CORBA::Boolean wunion_to_server (interop::wunion const &test,
+                                   CORBA::Short key) override;
 
-  virtual interop::wunion * wunion_from_server (CORBA::Short key,
-                                                interop::wchar_types type);
+  interop::wunion *wunion_from_server (CORBA::Short key,
+                                      interop::wchar_types type) override;
 
-  virtual CORBA::Boolean any_to_server (const CORBA::Any &test,
-                                        CORBA::Short key);
+  CORBA::Boolean any_to_server (CORBA::Any const &test,
+                                CORBA::Short key) override;
 
-  virtual CORBA::Any* any_from_server (CORBA::Short key,
-                                       interop::wchar_types type);
+  CORBA::Any *any_from_server (CORBA::Short key,
+                               interop::wchar_types type) override;
 
-  virtual CORBA::Any* any_echo (const CORBA::Any &test);
+  CORBA::Any *any_echo (CORBA::Any const &test) override;
 
-virtual void exception_test (CORBA::Short key);
+  void exception_test (CORBA::Short key) override;
 
-virtual void shutdown ();
+  void shutdown () override;
 
 private:
   CORBA::ORB_var orb_;
   wchar_reference ref_;
 };
 
-
-#endif /* INTEROP_WCHAR_I_H_  */
+#endif /* INTEROP_WCHAR_I_H_ */

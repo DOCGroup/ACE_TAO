@@ -20,12 +20,12 @@ TAO::SL3::CredentialsCurator::CredentialsCurator ()
 
 TAO::SL3::CredentialsCurator::~CredentialsCurator ()
 {
-  const Factory_Iterator fend = this->acquirer_factories_.end ();
+  Factory_Iterator const fend = this->acquirer_factories_.end ();
   for (Factory_Iterator i = this->acquirer_factories_.begin ();
        i != fend;
        ++i)
     {
-      // Deallocate the Acquistion Method.
+      // Deallocate the Acquisition method.
       CORBA::string_free (const_cast<char *> ((*i).ext_id_));
 
       delete (*i).int_id_;
@@ -33,7 +33,7 @@ TAO::SL3::CredentialsCurator::~CredentialsCurator ()
 
   this->acquirer_factories_.close ();
 
-  const Credentials_Iterator end = this->credentials_table_.end ();
+  Credentials_Iterator const end = this->credentials_table_.end ();
   for (Credentials_Iterator j = this->credentials_table_.begin ();
        j != end;
        ++j)
@@ -70,7 +70,7 @@ TAO::SL3::CredentialsCurator::_nil ()
 SecurityLevel3::AcquisitionMethodList *
 TAO::SL3::CredentialsCurator::supported_methods ()
 {
-  SecurityLevel3::AcquisitionMethodList * list;
+  SecurityLevel3::AcquisitionMethodList * list {};
   ACE_NEW_THROW_EX (list,
                     SecurityLevel3::AcquisitionMethodList,
                     CORBA::NO_MEMORY ());
@@ -79,13 +79,13 @@ TAO::SL3::CredentialsCurator::supported_methods ()
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     guard,
                     this->lock_,
-                    0);
+                    nullptr);
 
   methods->length (this->acquirer_factories_.current_size ());
 
-  CORBA::ULong n = 0;
+  CORBA::ULong n {};
 
-  const Factory_Iterator end = this->acquirer_factories_.end ();
+  Factory_Iterator const end = this->acquirer_factories_.end ();
   for (Factory_Iterator i = this->acquirer_factories_.begin ();
        i != end;
        ++i)
@@ -101,7 +101,7 @@ TAO::SL3::CredentialsCurator::acquire_credentials (
     char const * acquisition_method,
     CORBA::Any const & acquisition_arguments)
 {
-  TAO::SL3::CredentialsAcquirerFactory * factory;
+  TAO::SL3::CredentialsAcquirerFactory * factory {};
 
   if (this->acquirer_factories_.find (acquisition_method,
                                       factory) == 0)
@@ -116,7 +116,7 @@ TAO::SL3::CredentialsCurator::acquire_credentials (
 SecurityLevel3::OwnCredentialsList *
 TAO::SL3::CredentialsCurator::default_creds_list ()
 {
-  SecurityLevel3::OwnCredentialsList * list;
+  SecurityLevel3::OwnCredentialsList * list {};
   ACE_NEW_THROW_EX (list,
                     SecurityLevel3::OwnCredentialsList,
                     CORBA::NO_MEMORY ());
@@ -126,13 +126,13 @@ TAO::SL3::CredentialsCurator::default_creds_list ()
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     guard,
                     this->lock_,
-                    0);
+                    nullptr);
 
   creds_list->length (this->credentials_table_.current_size ());
 
-  CORBA::ULong n = 0;
+  CORBA::ULong n {};
 
-  const Credentials_Iterator end = this->credentials_table_.end ();
+  Credentials_Iterator const end = this->credentials_table_.end ();
   for (Credentials_Iterator i = this->credentials_table_.begin ();
        i != end;
        ++i)
@@ -147,7 +147,7 @@ TAO::SL3::CredentialsCurator::default_creds_list ()
 SecurityLevel3::CredentialsIdList *
 TAO::SL3::CredentialsCurator::default_creds_ids ()
 {
-  SecurityLevel3::CredentialsIdList * list;
+  SecurityLevel3::CredentialsIdList * list {};
   ACE_NEW_THROW_EX (list,
                     SecurityLevel3::CredentialsIdList,
                     CORBA::NO_MEMORY ());
@@ -156,13 +156,13 @@ TAO::SL3::CredentialsCurator::default_creds_ids ()
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     guard,
                     this->lock_,
-                    0);
+                    nullptr);
 
   creds_ids->length (this->credentials_table_.current_size ());
 
-  CORBA::ULong n = 0;
+  CORBA::ULong n {};
 
-  const Credentials_Iterator end = this->credentials_table_.end ();
+  Credentials_Iterator const end = this->credentials_table_.end ();
   for (Credentials_Iterator i = this->credentials_table_.begin ();
        i != end;
        ++i)
@@ -177,7 +177,7 @@ SecurityLevel3::OwnCredentials_ptr
 TAO::SL3::CredentialsCurator::get_own_credentials (
     char const * credentials_id)
 {
-  Credentials_Table::ENTRY * entry = nullptr;
+  Credentials_Table::ENTRY * entry {};
 
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     guard,
@@ -197,7 +197,7 @@ void
 TAO::SL3::CredentialsCurator::release_own_credentials (
     char const * credentials_id)
 {
-  Credentials_Table::ENTRY * entry = nullptr;
+  Credentials_Table::ENTRY * entry {};
 
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
 
@@ -211,7 +211,7 @@ TAO::SL3::CredentialsCurator::release_own_credentials (
 }
 
 void
-TAO::SL3::CredentialsCurator:: register_acquirer_factory (
+TAO::SL3::CredentialsCurator::register_acquirer_factory (
   char const * acquisition_method,
   TAO::SL3::CredentialsAcquirerFactory * factory)
 {
@@ -222,14 +222,13 @@ TAO::SL3::CredentialsCurator:: register_acquirer_factory (
 
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
 
-  const int result =
+  int const result =
     this->acquirer_factories_.bind (method.in (), factory);
 
   if (result == 1)  // Entry already exists in table.
     throw CORBA::BAD_INV_ORDER ();
   else if (result == -1)  // Failure.
     throw CORBA::INTERNAL ();
-
 
   // CredentialsCurator now owns the acquisition method id.
   (void) method._retn ();
@@ -253,7 +252,7 @@ TAO::SL3::CredentialsCurator::_tao_add_own_credentials (
       throw CORBA::NO_RESOURCES ();
     }
 
- // CredentialsCurator nows owns the id.
+  // CredentialsCurator now owns the ID.
   (void) credentials_id._retn ();
 }
 

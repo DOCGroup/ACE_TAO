@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    RTPortableServer.h
  *
  *  @author  Frank Hunleth  <fhuntleth@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_RT_PORTABLESERVER_H
 #define TAO_RT_PORTABLESERVER_H
@@ -29,7 +27,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_RTPortableServer_Export TAO_RTPortableServer_Initializer
 {
 public:
-  /// Constructor.
   TAO_RTPortableServer_Initializer ();
 };
 

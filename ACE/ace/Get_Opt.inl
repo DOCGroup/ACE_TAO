@@ -2,7 +2,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE bool
-ACE_Get_Opt::ACE_Get_Opt_Long_Option::operator < (const ACE_Get_Opt_Long_Option &rhs)
+ACE_Get_Opt::ACE_Get_Opt_Long_Option::operator < (ACE_Get_Opt_Long_Option const &rhs)
 {
   return this->name_ < rhs.name_;
 }
@@ -40,7 +40,7 @@ ACE_Get_Opt::opt_ind ()
 #ifdef ACE_USES_WCHAR
 ACE_INLINE  ACE_Get_Opt::ACE_Get_Opt (int argc,
                ACE_TCHAR **argv,
-               const ACE_TCHAR *optstring,
+               ACE_TCHAR const *optstring,
                int skip_args,
                int report_errors,
                int ordering,
@@ -49,24 +49,22 @@ ACE_INLINE  ACE_Get_Opt::ACE_Get_Opt (int argc,
     argv_ (argv),
     optind (skip_args),
     opterr (report_errors),
-    optarg (0),
-    optstring_ (0),
-    long_only_ (long_only),
-    has_colon_ (0),
-    last_option_ (0),
-    nextchar_ (0),
-    optopt_ (0),
+    optarg {},
+    long_only_ (long_only != 0),
+    has_colon_ (false),
+    nextchar_ {},
+    optopt_ {},
     ordering_ (ordering),
     nonopt_start_ (optind),
     nonopt_end_ (optind),
-    long_option_ (0)
+    long_option_ {}
 {
   ACE_Get_Opt_Init (optstring);
 }
 
 ACE_INLINE  ACE_Get_Opt::ACE_Get_Opt (int argc,
                ACE_TCHAR **argv,
-               const char *optstring,
+               char const *optstring,
                int skip_args,
                int report_errors,
                int ordering,
@@ -75,17 +73,15 @@ ACE_INLINE  ACE_Get_Opt::ACE_Get_Opt (int argc,
     argv_ (argv),
     optind (skip_args),
     opterr (report_errors),
-    optarg (0),
-    optstring_ (),
-    long_only_ (long_only),
-    has_colon_ (0),
-    last_option_ (0),
-    nextchar_ (0),
-    optopt_ (0),
+    optarg {},
+    long_only_ (long_only != 0),
+    has_colon_ (false),
+    nextchar_ {},
+    optopt_ {},
     ordering_ (ordering),
     nonopt_start_ (optind),
     nonopt_end_ (optind),
-    long_option_ (0)
+    long_option_ {}
 {
   ACE_Get_Opt_Init (ACE_TEXT_CHAR_TO_TCHAR (optstring));
 }

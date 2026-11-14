@@ -20,7 +20,6 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-
 /////////////////////////////////////////////////////////////////////////////
 // CServerApp
 
@@ -36,7 +35,6 @@ BEGIN_MESSAGE_MAP(CServerApp, CWinApp)
         // Standard print setup command
         ON_COMMAND(ID_FILE_PRINT_SETUP, CWinApp::OnFilePrintSetup)
 END_MESSAGE_MAP()
-
 
 // Thread-Function!
 static unsigned long
@@ -91,7 +89,6 @@ CServerApp::CServerApp()
   // Place all significant initialization in InitInstance
 }
 
-
 CServerApp::~CServerApp()
 {
   try
@@ -116,7 +113,6 @@ CServerApp::~CServerApp()
     {
       ex._tao_print_exception ("Caught exception:");
     }
-
 
   ACE::fini ();
 }
@@ -188,7 +184,6 @@ BOOL CServerApp::InitInstance()
 
   return TRUE;
 }
-
 
 /////////////////////////////////////////////////////////////////////////////
 // CAboutDlg dialog used for App About

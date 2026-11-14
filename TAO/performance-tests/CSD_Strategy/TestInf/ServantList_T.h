@@ -5,46 +5,48 @@
 #include "tao/PortableServer/Servant_Base.h"
 #include "ace/Vector_T.h"
 
-
 // The T type is a concrete servant type.
 template <class T>
 class ServantList
 {
   public:
-    typedef typename T::_stub_type     T_stub;
-    typedef typename T::_stub_ptr_type T_stub_ptr;
-    typedef typename T::_stub_var_type T_stub_var;
+    using T_stub = typename T::_stub_type;
+    using T_stub_ptr = typename T::_stub_ptr_type;
+    using T_stub_var = typename T::_stub_var_type;
 
-    ServantList();
-    ~ServantList();
+    ServantList () = default;
+    ServantList (ServantList const &) = delete;
+    ServantList (ServantList &&) = delete;
+    ServantList &operator= (ServantList const &) = delete;
+    ServantList &operator= (ServantList &&) = delete;
+    ~ServantList () = default;
 
     /// Activate servant and output ior to a file.
-    void create_and_activate(unsigned                num_servants,
-                             CORBA::ORB_ptr          orb,
-                             PortableServer::POA_ptr poa,
-                             const ACE_TCHAR*        ior_fname_prefix);
+    void create_and_activate (unsigned num_servants,
+                              CORBA::ORB_ptr orb,
+                              PortableServer::POA_ptr poa,
+                              ACE_TCHAR const *ior_fname_prefix);
 
     /// Activate servant and not output ior to a file.
-    void create_and_activate(unsigned                num_servants,
-                             PortableServer::POA_ptr poa);
-
+    void create_and_activate (unsigned num_servants,
+                              PortableServer::POA_ptr poa);
 
     /// Get a (copy) of one of the object references (for a specific servant).
-    T_stub_ptr objref(unsigned index);
+    T_stub_ptr objref (unsigned index);
 
     /// This doesn't return a copy.
-    T* servant(unsigned index);
-
+    T *servant (unsigned index);
 
   private:
     struct ServantRecord
     {
-      T*                              servant_;
+      // Non-owning alias; safe_servant_ owns the servant reference.
+      T *servant_ {};
       PortableServer::ServantBase_var safe_servant_;
       T_stub_var                      obj_;
     };
 
-    typedef ACE_Vector<ServantRecord> ServantRecordVector;
+    using ServantRecordVector = ACE_Vector<ServantRecord>;
 
     ServantRecordVector servant_records_;
 };

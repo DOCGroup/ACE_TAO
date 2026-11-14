@@ -15,13 +15,13 @@
 
 namespace TAO_Mixed_Security_Test
 {
-  const char *cert_file = "cacert.pem";
+  char const *cert_file = "cacert.pem";
 
-  const ACE_TCHAR *permitted_ior_file = ACE_TEXT("permitted.ior");
-  const ACE_TCHAR *permitted_ior = ACE_TEXT("file://permitted.ior");
+  ACE_TCHAR const *permitted_ior_file = ACE_TEXT ("permitted.ior");
+  ACE_TCHAR const *permitted_ior = ACE_TEXT ("file://permitted.ior");
 
-  const ACE_TCHAR *restricted_ior_file = ACE_TEXT("restricted.ior");
-  const ACE_TCHAR *restricted_ior = ACE_TEXT("file://restricted.ior");
+  ACE_TCHAR const *restricted_ior_file = ACE_TEXT ("restricted.ior");
+  ACE_TCHAR const *restricted_ior = ACE_TEXT ("file://restricted.ior");
 }
 
 #endif

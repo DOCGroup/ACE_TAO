@@ -2,27 +2,28 @@
 #include "TestC.h"
 #include "ace/Get_Opt.h"
 
-ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
-
-int
-parse_args (int argc, ACE_TCHAR *argv[])
+struct Client_Options
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  ACE_TCHAR const *ior {ACE_TEXT ("file://test.ior")};
+};
+
+static int
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
+{
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
 
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "\n",
+                           ACE_TEXT ("usage: %s [-k <ior>]\n"),
                            argv [0]),
                           -1);
       }
@@ -30,40 +31,38 @@ parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  bool received_expected_exception = false;
+  bool received_expected_exception {};
   try
     {
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb (CORBA::ORB_init (argc, argv));
+      Client_Options options {};
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
-      CORBA::Object_var object =
-        orb->string_to_object (ior);
+      CORBA::Object_var const object (orb->string_to_object (options.ior));
 
-      Test::Roundtrip_var roundtrip =
-        Test::Roundtrip::_narrow (object.in ());
+      Test::Roundtrip_var const roundtrip (Test::Roundtrip::_narrow (object.in ()));
 
       if (CORBA::is_nil (roundtrip.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Nil Test::Roundtrip reference <%s>\n",
-                             ior),
+                             ACE_TEXT ("Nil Test::Roundtrip reference <%s>\n"),
+                             options.ior),
                             1);
         }
 
-      try{
-          Test::Timestamp time = 10;
+      try
+        {
+          Test::Timestamp const time (10);
           roundtrip->test_method (time);
         }
-      catch (const Test::ServerOverload& )
+      catch (Test::ServerOverload const &)
         {
-          ACE_DEBUG ((LM_DEBUG, "Received expected exception\n"));
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Received expected exception\n")));
           received_expected_exception = true;
 
           roundtrip->shutdown ();
@@ -71,7 +70,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("");
       return 1;
@@ -80,7 +79,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   if (!received_expected_exception)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "ERROR, expecting a ServerOverload exception!!\n"),
+                         ACE_TEXT ("ERROR, expecting a ServerOverload exception!!\n")),
                         1);
     }
 

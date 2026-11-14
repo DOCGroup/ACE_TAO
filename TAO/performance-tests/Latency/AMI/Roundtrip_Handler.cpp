@@ -24,7 +24,7 @@ Roundtrip_Handler::test_method (Test::Timestamp send_time)
 {
   --this->pending_callbacks_;
 
-  ACE_hrtime_t now = ACE_OS::gethrtime ();
+  ACE_hrtime_t const now = ACE_OS::gethrtime ();
   this->latency_stats_.sample (now - send_time);
 }
 
@@ -36,7 +36,7 @@ Roundtrip_Handler::test_method_excep (::Messaging::ExceptionHolder *holder)
       --this->pending_callbacks_;
       holder->raise_exception ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("test_method:");
     }
@@ -54,7 +54,7 @@ Roundtrip_Handler::shutdown_excep (::Messaging::ExceptionHolder *holder)
     {
       holder->raise_exception ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("shutdown:");
     }

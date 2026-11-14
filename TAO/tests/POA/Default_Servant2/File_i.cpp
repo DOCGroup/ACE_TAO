@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "File_i.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_fcntl.h"
@@ -29,10 +28,6 @@ FileImpl::System::System (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa)
   poa->set_servant (&this->fd_servant_);
 }
 
-FileImpl::System::~System ()
-{
-}
-
 PortableServer::POA_ptr
 FileImpl::System::_default_POA ()
 {
@@ -40,20 +35,20 @@ FileImpl::System::_default_POA ()
 }
 
 File::Descriptor_ptr
-FileImpl::System::open (const char *file_name,
+FileImpl::System::open (char const *file_name,
                         CORBA::Long flags)
 {
   // Do an ACE_OS::open
-  ACE_HANDLE file_descriptor = ACE_OS::open (file_name,
-                                             flags,
-                                             ACE_DEFAULT_FILE_PERMS);
+  ACE_HANDLE const file_descriptor = ACE_OS::open (file_name,
+                                                   flags,
+                                                   ACE_DEFAULT_FILE_PERMS);
 
   if (file_descriptor == ACE_INVALID_HANDLE)
     {
       throw File::IOError ();
     }
 
-  char file_descriptor_buffer[BUFSIZ];
+  char file_descriptor_buffer[BUFSIZ] {};
 
   // convert ACE_HANDLE to a string
   ACE_OS::sprintf (file_descriptor_buffer,
@@ -74,7 +69,6 @@ FileImpl::System::open (const char *file_name,
   File::Descriptor_var fd =
     File::Descriptor::_narrow (obj.in ());
 
-
   return fd._retn ();
 }
 
@@ -87,10 +81,6 @@ FileImpl::System::shutdown ()
 // IDL File::Descriptor constructor
 FileImpl::Descriptor::Descriptor (PortableServer::POA_ptr poa)
   : poa_ (PortableServer::POA::_duplicate (poa))
-{
-}
-
-FileImpl::Descriptor::~Descriptor ()
 {
 }
 
@@ -126,8 +116,8 @@ FileImpl::Descriptor::fd ()
   // Yet another way of getting our id.
   //
 
-  int argc = 0;
-  ACE_TCHAR **argv = 0;
+  int argc {};
+  ACE_TCHAR **argv {};
   CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
   // Get the POA Current object reference
@@ -155,13 +145,11 @@ FileImpl::Descriptor::fd ()
 CORBA::Long
 FileImpl::Descriptor::write (const File::Descriptor::DataBuffer &buffer)
 {
-  ACE_HANDLE file_descriptor = this->fd ();
+  ACE_HANDLE const file_descriptor = this->fd ();
 
-  const CORBA::Octet *data = &buffer[0];
-
-  ssize_t len = ACE_OS::write (file_descriptor,
-                               data,
-                               buffer.length ());
+  ssize_t const len = ACE_OS::write (file_descriptor,
+                                     buffer.get_buffer (),
+                                     buffer.length ());
   if (len > 0)
     return len;
 
@@ -171,7 +159,7 @@ FileImpl::Descriptor::write (const File::Descriptor::DataBuffer &buffer)
 File::Descriptor::DataBuffer *
 FileImpl::Descriptor::read (CORBA::Long num_bytes)
 {
-  ACE_HANDLE file_descriptor = this->fd ();
+  ACE_HANDLE const file_descriptor = this->fd ();
 
   CORBA::Octet *buffer = File::Descriptor::DataBuffer::allocbuf (num_bytes);
   int length = ACE_OS::read (file_descriptor, buffer, num_bytes);
@@ -190,7 +178,7 @@ CORBA::ULong
 FileImpl::Descriptor::lseek (CORBA::ULong offset,
                              CORBA::Long whence)
 {
-  ACE_HANDLE file_descriptor = this->fd ();
+  ACE_HANDLE const file_descriptor = this->fd ();
 
   CORBA::Long result = (CORBA::Long) ACE_OS::lseek (file_descriptor,
                                                     offset,
@@ -205,7 +193,7 @@ void
 FileImpl::Descriptor::destroy ()
 {
   // Get the ACE_HANDLE for this object reference
-  ACE_HANDLE file_descriptor = this->fd ();
+  ACE_HANDLE const file_descriptor = this->fd ();
 
   // Close the file corresponding to this object reference.
   ACE_OS::close (file_descriptor);

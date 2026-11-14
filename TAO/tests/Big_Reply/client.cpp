@@ -1,12 +1,14 @@
 #include "Client_Task.h"
 #include "ace/Get_Opt.h"
 
+struct Client_Options
+{
+  ACE_TCHAR const *ior {ACE_TEXT ("file://test.ior")};
+  bool server_shutdown {};
+};
 
-ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
-bool server_shutdown {};
-
-int
-parse_args (int argc, ACE_TCHAR *argv[])
+static int
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:x"));
   int c {};
@@ -15,18 +17,15 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
       case 'x':
-        server_shutdown = true;
+        options.server_shutdown = true;
         break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior>"
-                           "-x shutdown"
-                           "\n",
+                           ACE_TEXT ("usage: %s -k <ior> [-x]\n"),
                            argv [0]),
                           -1);
       }
@@ -39,23 +38,21 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb (CORBA::ORB_init (argc, argv));
+      Client_Options options;
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
-      CORBA::Object_var tmp =
-        orb->string_to_object (ior);
+      CORBA::Object_var const tmp (orb->string_to_object (options.ior));
 
-      Test::Big_Reply_var reply_gen =
-        Test::Big_Reply::_narrow (tmp.in ());
+      Test::Big_Reply_var const reply_gen (Test::Big_Reply::_narrow (tmp.in ()));
 
       if (CORBA::is_nil (reply_gen.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
-                             "Nil coordinator reference <%s>\n",
-                             ior),
+                             ACE_TEXT ("Nil coordinator reference <%s>\n"),
+                             options.ior),
                             1);
         }
 
@@ -69,9 +66,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
       ACE_Thread_Manager::instance ()->wait ();
 
-      ACE_DEBUG ((LM_DEBUG, "Got all the replies...\n"));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Got all the replies...\n")));
 
-      if (server_shutdown)
+      if (options.server_shutdown)
         {
           // Request the server to shutdown
           reply_gen->shutdown ();

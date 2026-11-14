@@ -1,6 +1,5 @@
 // -*- C++ -*-
 #include "ace/Get_Opt.h"
-#include "ace/OS_NS_stdio.h"
 #include "ace/Task.h"
 
 #include "tao/ORBInitializer_Registry.h"
@@ -9,27 +8,32 @@
 #include "Server_Request_Interceptor.h"
 #include "Server_ORBInitializer.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT ("server.ior");
-int nthreads = 1;
-int use_collocated_call = 1;
+#include <fstream>
+
+struct Options
+{
+  ACE_TCHAR const *ior_output_file {ACE_TEXT ("server.ior")};
+  int nthreads {1};
+  bool use_collocated_call {true};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("t:o:n:c:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'c':
-        use_collocated_call = ACE_OS::atoi (get_opts.opt_arg ());
+        options.use_collocated_call = ACE_OS::atoi (get_opts.opt_arg ()) != 0;
         break;
       case 'o':
-        ior_output_file = get_opts.opt_arg ();
+        options.ior_output_file = get_opts.opt_arg ();
         break;
       case 't':
-        nthreads = ACE_OS::atoi (get_opts.opt_arg ());
+        options.nthreads = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'n': // Does nothing. Added just for symetry with the client.
         break;
@@ -54,12 +58,17 @@ parse_args (int argc, ACE_TCHAR *argv[])
 class Worker : public ACE_Task_Base
 {
 public:
-  Worker (CORBA::ORB_ptr);
-  virtual int svc ();
+  explicit Worker (CORBA::ORB_ptr);
+  int svc () override;
+
+  Worker (Worker const &) = delete;
+  Worker (Worker &&) = delete;
+  Worker &operator= (Worker const &) = delete;
+  Worker &operator= (Worker &&) = delete;
 
 private:
   // The ORB
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 };
 
 /// Ctor
@@ -79,7 +88,7 @@ Worker::svc ()
     {
       this->orb_->run ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Server: exception raised");
     }
@@ -97,7 +106,7 @@ server_main (int argc,
 
   try
     {
-      PortableInterceptor::ORBInitializer_ptr temp_initializer = 0;
+      PortableInterceptor::ORBInitializer_ptr temp_initializer {};
       ACE_NEW_RETURN (temp_initializer,
                       Test::Server_ORBInitializer (cri),
                       -1);  // No exceptions yet!
@@ -106,15 +115,14 @@ server_main (int argc,
 
       PortableInterceptor::register_orb_initializer (orb_initializer.in ());
 
-
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv,
-                                            "test_orb");
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc,
+                                                  argv,
+                                                  "test_orb");
 
       CORBA::Object_var obj =
         orb->resolve_initial_references ("RootPOA");
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (obj.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
@@ -123,21 +131,22 @@ server_main (int argc,
                            ACE_TEXT (" RootPOA reference.\n")),
                           -1);
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
       poa_manager->activate ();
 
-      if (parse_args (argc, argv) != 0)
+      Options options;
+      if (parse_args (argc, argv, options) != 0)
         return -1;
 
       Current_Test_Impl server_impl (orb.in (),
                                      root_poa.in (),
-                                     use_collocated_call);
+                                     options.use_collocated_call);
 
       obj = server_impl._this ();
 
-      Test::Transport::CurrentTest_var server =
+      Test::Transport::CurrentTest_var const server =
         Test::Transport::CurrentTest::_narrow (obj.in ());
 
       if (CORBA::is_nil (server.in ()))
@@ -146,22 +155,19 @@ server_main (int argc,
                            ACE_TEXT ("reference to CurrentTest object.\n")),
                           -1);
 
-      CORBA::String_var ior =
+      CORBA::String_var const ior =
         orb->object_to_string (server.in ());
 
       // If the ior_output_file exists, output the IOR to it.
-      if (ior_output_file != 0)
+      if (options.ior_output_file != nullptr)
         {
-          FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
-          if (output_file == 0)
+          std::ofstream output_file (ACE_TEXT_ALWAYS_CHAR (options.ior_output_file));
+          if (!output_file)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "Server (%P|%t) Cannot write %s "
-                               "IOR: %C - %m",
-                               ior_output_file,
-                               ior.in ()),
+                               ACE_TEXT ("Server (%P|%t) Cannot write %s IOR\n"),
+                               options.ior_output_file),
                               -1);
-          ACE_OS::fprintf (output_file, "%s", ior.in ());
-          ACE_OS::fclose (output_file);
+          output_file << ior.in ();
         }
 
       // Spawn a number of clients doing the same thing for a
@@ -170,20 +176,20 @@ server_main (int argc,
 
 #if defined (ACE_HAS_THREADS)
       if (worker.activate (THR_NEW_LWP | THR_JOINABLE,
-                           nthreads) != 0)
+                           options.nthreads) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("Server (%P|%t) Cannot activate %d threads\n"),
-                           nthreads),
+                           options.nthreads),
                           -1);
       //FUZZ: disable check_for_lack_ACE_OS
       if(worker.thr_mgr ()->wait () != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("Server (%P|%t) wait() Cannot wait for all %d threads\n"),
-                           nthreads),
+                           options.nthreads),
                           -1);
       //FUZZ: enable check_for_lack_ACE_OS
 #else
-      if (nthreads > 1)
+      if (options.nthreads > 1)
         ACE_ERROR ((LM_WARNING,
                     ACE_TEXT ("Server (%P|%t) Cannot use threads other than ")
                     ACE_TEXT ("the only one available.\n")));
@@ -205,7 +211,7 @@ server_main (int argc,
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (ACE_TEXT ("Server (%P|%t) ERROR: "));
 

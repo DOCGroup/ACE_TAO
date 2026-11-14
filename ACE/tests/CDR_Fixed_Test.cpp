@@ -1,6 +1,7 @@
 #include "test_config.h"
 #include "ace/CDR_Base.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 #include <stdexcept>
 
 #ifndef ACE_LACKS_IOSTREAM_TOTALLY
@@ -37,7 +38,7 @@ namespace
 {                                                                       \
   char buffer[Fixed::MAX_STRING_SIZE];                                  \
   (OBJ).to_string (buffer, sizeof buffer);                                \
-  if (ACE_OS::strcmp (STR, buffer)) {                                   \
+  if (std::strcmp (STR, buffer)) {                                      \
     failed = true;                                                      \
     ACE_ERROR ((LM_ERROR, "FAILED conversion to string at line %l\n")); \
     log (os, #OBJ, STR, OBJ);                                           \

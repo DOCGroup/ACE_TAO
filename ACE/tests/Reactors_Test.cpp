@@ -57,7 +57,7 @@ private:
 // Static data member initialization.
 int Test_Task::task_count_ = 0;
 
-static ACE_Atomic_Op<ACE_Thread_Mutex, int> done_count = MAX_TASKS * 2;
+static ACE_Atomic_Op<ACE_Thread_Mutex, int> done_count {MAX_TASKS * 2};
 static ACE_Recursive_Thread_Mutex recursive_lock;
 
 Test_Task::Test_Task ()
@@ -147,11 +147,11 @@ Test_Task::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 int
 Test_Task::handle_input (ACE_HANDLE)
 {
-  this->handled_++;
+  ++this->handled_;
 
   if (this->handled_ == ACE_MAX_ITERATIONS)
     {
-      done_count--;
+      --done_count;
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%t) handle_input, handled_ = %d, done_count = %d\n"),
                   this->handled_,

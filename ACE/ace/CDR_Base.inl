@@ -624,7 +624,6 @@ operator!= (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
   return !(lhs == rhs);
 }
 
-
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 // ****************************************************************

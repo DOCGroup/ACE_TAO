@@ -1,38 +1,29 @@
-//=============================================================================
 /**
  *  @file    Scheduler_Generic.cpp
  *
  *  @author David Levine
  */
-//=============================================================================
-
 
 #include "ace/Sched_Params.h"
 
 #include "orbsvcs/Sched/Scheduler_Generic.h"
-#include "ace/OS_NS_stdio.h"
-
+#include <cstdio>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-// static functions
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-
-// Structure for storing the RT_Info information for each task, per mode.
+/// Stores RT_Info data for each task and mode.
 struct Mode_Entry
 {
-  RtecScheduler::RT_Info *rt_info_ = nullptr;
+  RtecScheduler::RT_Info *rt_info_ {};
   u_long start_time_ {}; // microseconds
   u_long stop_time_ {};  // microseconds
 
   Mode_Entry () = default;
 
-  Mode_Entry (RtecScheduler::RT_Info * const rt_info,
-             const u_long start_time = 0,
-             const u_long stop_time = 0) :
+  Mode_Entry (RtecScheduler::RT_Info *rt_info,
+             u_long start_time = 0,
+             u_long stop_time = 0) :
     rt_info_ (rt_info),
     start_time_ (start_time),
     stop_time_ (stop_time)
@@ -41,19 +32,11 @@ struct Mode_Entry
 
   ~Mode_Entry () = default;
 
-  Mode_Entry &operator= (const Mode_Entry &) = default;
+  Mode_Entry &operator= (Mode_Entry const &) = default;
 };
-
-
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-// class Scheduler_Generic member functions
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
 
 Scheduler_Generic::Scheduler_Generic () :
   Scheduler (),
-  handles_ (0),
   // Set the minimum priority to that for the current platform.  This
   // shouldn't be necessary, but UPSingleProcessorOrb::initialize_reactors
   // creates threads before the Event Channel calls Scheduler::init ().
@@ -67,13 +50,6 @@ Scheduler_Generic::Scheduler_Generic () :
   config_info_.dispatching_type = RtecScheduler::STATIC_DISPATCHING;
 }
 
-
-Scheduler_Generic::~Scheduler_Generic ()
-{
-  reset ();
-}
-
-
 void
 Scheduler_Generic::reset ()
 {
@@ -83,33 +59,34 @@ Scheduler::status_t
 Scheduler_Generic::lookup_rt_info (handle_t handle,
                                    RT_Info*& rtinfo)
 {
-  if (handle < 0 || (size_t) handle > task_entries_.size ())
+  if (handle < 0 || static_cast<size_t> (handle) > task_entries_.size ())
     {
       return ST_UNKNOWN_TASK;
     }
-  RT_Info*** entry;
+  RT_Info ***entry;
   ACE_Unbounded_Set_Iterator <RT_Info **> i (task_entries_);
   while (i.next (entry) != 0)
+  {
+    i.advance ();
+    RT_Info **array = *entry;
+    if (array[0]->handle == handle)
     {
-      i.advance ();
-      RT_Info** array = *entry;
-      if (array[0]->handle == handle)
-        {
-          rtinfo = array[0];
-          return SUCCEEDED;
-        }
+      rtinfo = array[0];
+      return SUCCEEDED;
     }
+  }
 
   return ST_UNKNOWN_TASK;
 }
 
+/// Obtains a Config_Info based on its priority.
 Scheduler::status_t
 Scheduler_Generic::lookup_config_info (Preemption_Priority priority,
                                        Config_Info* &config_info)
 {
   if (priority == config_info_.preemption_priority)
   {
-    config_info = &config_info_;
+    config_info = std::addressof (config_info_);
     return SUCCEEDED;
   }
   else
@@ -117,12 +94,10 @@ Scheduler_Generic::lookup_config_info (Preemption_Priority priority,
     return ST_UNKNOWN_PRIORITY;
   }
 }
-  // Obtains a Config_Info based on its priority.
-
 
 Scheduler::status_t
 Scheduler_Generic::register_task (RT_Info *rt_info [],
-                                   const u_int number_of_modes,
+                                   u_int number_of_modes,
                                    handle_t &handle)
 {
   status_t ret;
@@ -150,9 +125,9 @@ Scheduler_Generic::register_task (RT_Info *rt_info [],
 
           if (output_level () >= 5)
             {
-              ACE_OS::printf ("registered task \"%s\" with RT_Info starting "
+              std::printf ("registered task \"%s\" with RT_Info starting "
                               "at %p\n",
-                              (const char*)rt_info[0]->entry_point,
+                              static_cast<char const *> (rt_info[0]->entry_point),
                               rt_info[0]);
             }
         }
@@ -173,13 +148,12 @@ Scheduler_Generic::register_task (RT_Info *rt_info [],
   return ret;
 }
 
-
 void
-Scheduler_Generic::init (const int minimum_priority,
-                          const int maximum_priority,
-                          const char *runtime_filename,
-                          const char *rt_info_filename,
-                          const char *timeline_filename)
+Scheduler_Generic::init (int minimum_priority,
+                          int maximum_priority,
+                          char const *runtime_filename,
+                          char const *rt_info_filename,
+                          char const *timeline_filename)
 {
   minimum_priority_ = minimum_priority;
   maximum_priority_ = maximum_priority;
@@ -188,7 +162,6 @@ Scheduler_Generic::init (const int minimum_priority,
   timeline_filename_ = timeline_filename;
   config_info_.thread_priority = minimum_priority_;
 }
-
 
 Scheduler::status_t
 Scheduler_Generic::schedule (ACE_Unbounded_Set<Scheduling_Anomaly *> &
@@ -213,13 +186,12 @@ Scheduler_Generic::schedule (ACE_Unbounded_Set<Scheduling_Anomaly *> &
   return status;
 }
 
-
 int
-Scheduler_Generic::priority (const handle_t /* handle */,
+Scheduler_Generic::priority (handle_t /* handle */,
                              OS_Thread_Priority &priority,
                              Sub_Priority &subpriority,
                              Preemption_Priority &preemption_prio,
-                             const mode_t /* requested_mode */) const
+                             mode_t /* requested_mode */) const
 {
   priority = minimum_priority_;
   subpriority = ACE_Scheduler_MIN_SUB_PRIORITY;
@@ -227,14 +199,13 @@ Scheduler_Generic::priority (const handle_t /* handle */,
 
   if (output_level () >= 3)
     {
-      ACE_OS::printf ("preemption_prio %d: min %d, pri %d, min_pri %d\n",
+      std::printf ("preemption_prio %d: min %d, pri %d, min_pri %d\n",
                       preemption_prio, minimum_priority_queue (),
                       priority, minimum_priority_);
     }
 
   return 0;
 }
-
 
 void
 Scheduler_Generic::print_schedule ()

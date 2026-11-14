@@ -4,8 +4,10 @@
 #include "tao/ORB_Core_Auto_Ptr.h"
 // Force static build to load the DII_Arguments_Converter service.
 #include "tao/DynamicInterface/DII_Arguments_Converter_Impl.h"
+#include <cstdio>
+#include <cstring>
 
-extern CORBA::Boolean debug;
+extern bool debug;
 extern char TEST_STR[];
 extern CORBA::Long TEST_BASIC_VALUE;
 extern CORBA::Char TEST_SPECIAL_VALUE;
@@ -13,78 +15,64 @@ extern CORBA::Short TEST_HOUR;
 extern CORBA::Short TEST_MINUTE;
 extern CORBA::Short TEST_SECOND;
 
-#define ERROR_COUNT(message)                                                 \
-{ error_count_ ++;                                                           \
-  ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)%s - failed error_count = %u\n"),    \
-                       message, error_count_));                              \
-}
-
-// Implementation skeleton constructor
-Test_Simple_Test_i::Test_Simple_Test_i ()
-{
-}
-
-// Implementation skeleton destructor
-Test_Simple_Test_i::~Test_Simple_Test_i ()
-{
+#define ERROR_COUNT(message) \
+{ ++error_count_; \
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t)%s - failed error_count = %u\n"), \
+              message, error_count_)); \
 }
 
 void Test_Simple_Test_i::test_method (
-    ::CORBA::ULong & error_count
-  )
+    ::CORBA::ULong & error_count)
 {
-  error_count --;
+  --error_count;
 }
 
 Hello::Hello (CORBA::ORB_ptr orb,
               ACE_thread_t thrid)
   : orb_ (CORBA::ORB::_duplicate (orb))
     , thr_id_ (thrid)
-    , error_count_ (0)
+    , error_count_ {}
 {
 }
 
 void
 Hello::test_basic_arg (
-    ::CORBA::Long basic
-  )
+    ::CORBA::Long basic)
 {
   if (basic != TEST_BASIC_VALUE)
     ERROR_COUNT ("Hello::test_basic_arg")
 }
 
 void
-Hello::test_unbounded_string_arg(const char* message)
+Hello::test_unbounded_string_arg (char const *message)
 {
   if (debug)
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_unbounded_string_arg ")
                         ACE_TEXT("got unbounded string: %s\n"),
                         message));
-  if (ACE_OS::strncmp (message, TEST_STR, ACE_OS::strlen (TEST_STR) != 0))
+  if (std::strcmp (message, TEST_STR) != 0)
   {
     ERROR_COUNT ("Hello::test_unbounded_string_arg")
   }
 }
 
-
 void
-Hello::test_bounded_string_arg(const char* message)
+Hello::test_bounded_string_arg (char const *message)
 {
   if (debug)
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_bounded_string_arg ")
                         ACE_TEXT("got bounded string: %s\n"),
                         message));
-  if (ACE_OS::strncmp (message, TEST_STR, ::Test::BOUNDED_STRING_SIZE) != 0)
+  if (std::strncmp (message, TEST_STR, ::Test::BOUNDED_STRING_SIZE) != 0)
   {
     ERROR_COUNT ("Hello::test_bounded_string_arg")
   }
 }
 
-
 void
-Hello::test_fixed_array_arg(const ::Test::Fixed_Array message)
+Hello::test_fixed_array_arg (::Test::Fixed_Array const message)
 {
-  for (unsigned i = 0; i < ::Test::FIX_ARRAY_SIZE; i++)
+  for (CORBA::ULong i = 0; i < ::Test::FIX_ARRAY_SIZE; ++i)
   {
     if (debug)
       ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_fixed_array_arg ")
@@ -95,31 +83,29 @@ Hello::test_fixed_array_arg(const ::Test::Fixed_Array message)
   }
 }
 
-
 void
-Hello::test_bounded_var_size_arg(const ::Test::Bounded_Var_Size_Arg& message)
+Hello::test_bounded_var_size_arg (::Test::Bounded_Var_Size_Arg const &message)
 {
   if (debug)
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_bounded_var_size_arg ")
       ACE_TEXT("got bounded var size arg\n")));
-  if (ACE_OS::strncmp (message.get_buffer (), TEST_STR, ::Test::BOUNDED_VAR_SIZE) != 0)
+  if (std::strncmp (message.get_buffer (), TEST_STR, ::Test::BOUNDED_VAR_SIZE) != 0)
     ERROR_COUNT ("Hello::test_bounded_var_size_arg")
 }
 
-
 void
-Hello::test_unbounded_var_size_arg(const ::Test::Unbounded_Var_Size_Arg& message)
+Hello::test_unbounded_var_size_arg (::Test::Unbounded_Var_Size_Arg const &message)
 {
   if (debug)
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_unbounded_var_size_arg ")
                         ACE_TEXT("got unbounded var size arg.\n")));
-  if (ACE_OS::strncmp (message.get_buffer (), TEST_STR, ACE_OS::strlen (TEST_STR)) != 0)
+  if (message.length () != std::strlen (TEST_STR)
+      || std::memcmp (message.get_buffer (), TEST_STR, message.length ()) != 0)
     ERROR_COUNT ("Hello::test_unbounded_var_size_arg")
 }
 
-
 void
-Hello::test_fixed_size_arg(const ::Test::TimeOfDay& t)
+Hello::test_fixed_size_arg (::Test::TimeOfDay const &t)
 {
   if (debug)
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_fixed_size_arg ")
@@ -132,23 +118,21 @@ Hello::test_fixed_size_arg(const ::Test::TimeOfDay& t)
     ERROR_COUNT ("Hello::test_fixed_size_arg")
 }
 
-
 void
-Hello::test_var_array_arg(const Test::Var_Array messages)
+Hello::test_var_array_arg (Test::Var_Array const messages)
 {
-  for (CORBA::ULong i = 0; i != ::Test::VAR_ARRAY_SIZE; i ++)
+  for (CORBA::ULong i = 0; i != ::Test::VAR_ARRAY_SIZE; ++i)
   {
     if (debug)
       ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_var_array_arg ")
                         ACE_TEXT("messages[%d] = %s\n"), i, messages[i].in ()));
-    if (ACE_OS::strncmp (messages[i].in (), TEST_STR, ACE_OS::strlen (TEST_STR)) != 0)
+    if (std::strcmp (messages[i].in (), TEST_STR) != 0)
       ERROR_COUNT ("Hello::test_var_array_arg")
   }
 }
 
-
 void
-Hello::test_special_basic_arg(CORBA::Char value)
+Hello::test_special_basic_arg (CORBA::Char value)
 {
   if (debug)
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_special_basic_arg ")
@@ -157,10 +141,8 @@ Hello::test_special_basic_arg(CORBA::Char value)
     ERROR_COUNT ("Hello::test_special_basic_arg")
 }
 
-
 void Hello::test_objref_arg (
-    ::Test::Simple_Test_ptr test
-  )
+    ::Test::Simple_Test_ptr test)
 {
   if (debug)
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_objref_arg\n")));
@@ -171,8 +153,8 @@ void Hello::test_objref_arg (
   {
     // Increment the error_count before calling test_method() and decrement
     // the error_count when the server handling the test_method() call.
-    CORBA::ULong error_count = 0;
-    error_count ++;
+    CORBA::ULong error_count {};
+    ++error_count;
     test->test_method (error_count);
     if (error_count != 0)
     {
@@ -182,15 +164,14 @@ void Hello::test_objref_arg (
 }
 
 void Hello::test_object_arg (
-    ::CORBA::Object_ptr o
-  )
+    ::CORBA::Object_ptr o)
 {
   if (debug)
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_object_arg\n")));
-  ::Test::Simple_Test_var simple_test = ::Test::Simple_Test::_narrow (o);
+  ::Test::Simple_Test_var const simple_test = ::Test::Simple_Test::_narrow (o);
 
-  CORBA::ULong error_count = 0;
-  error_count ++;
+  CORBA::ULong error_count {};
+  ++error_count;
   simple_test->test_method (error_count);
   if (error_count != 0)
   {
@@ -201,17 +182,16 @@ void Hello::test_object_arg (
 void Hello::test_args_1 (
     ::CORBA::Object_ptr arg1,
     ::CORBA::Char arg2,
-    ::Test::Simple_Test_ptr arg3
-  )
+    ::Test::Simple_Test_ptr arg3)
 {
   if (debug)
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_args_1\n")));
-  ::Test::Simple_Test_var simple_test = ::Test::Simple_Test::_narrow (arg1);
+  ::Test::Simple_Test_var const simple_test = ::Test::Simple_Test::_narrow (arg1);
 
-  CORBA::ULong error_count = 0;
-  error_count ++;
+  CORBA::ULong error_count {};
+  ++error_count;
   simple_test->test_method (error_count);
-  error_count ++;
+  ++error_count;
   arg3->test_method (error_count);
 
   if (error_count != 0)
@@ -224,17 +204,16 @@ void Hello::test_args_1 (
 }
 
 void Hello::test_args_2 (
-    const char * arg1,
-    const ::Test::Fixed_Array arg2,
-    const ::Test::TimeOfDay & arg3
-  )
+    char const *arg1,
+    ::Test::Fixed_Array const arg2,
+    ::Test::TimeOfDay const &arg3)
 {
   if (debug)
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_args_2\n")));
-  if (ACE_OS::strncmp (arg1, TEST_STR, ACE_OS::strlen (TEST_STR)) != 0 )
+  if (std::strcmp (arg1, TEST_STR) != 0)
     ERROR_COUNT ("Hello::test_args_2")
 
-  for (unsigned i = 0; i < ::Test::FIX_ARRAY_SIZE; i++)
+  for (CORBA::ULong i = 0; i < ::Test::FIX_ARRAY_SIZE; ++i)
   {
     if (arg2[i] != static_cast<CORBA::Long> (i + 999))
       ERROR_COUNT ("Hello::test_args_2")
@@ -247,23 +226,23 @@ void Hello::test_args_2 (
 }
 
 void Hello::test_args_3 (
-    const char * arg1,
-    const ::Test::Bounded_Var_Size_Arg & arg2,
-    const ::Test::Unbounded_Var_Size_Arg & arg3,
-    const ::Test::Var_Array arg4
-  )
+    char const *arg1,
+    ::Test::Bounded_Var_Size_Arg const &arg2,
+    ::Test::Unbounded_Var_Size_Arg const &arg3,
+    ::Test::Var_Array const arg4)
 {
   if (debug)
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_args_3\n")));
-  if (ACE_OS::strncmp (arg1, TEST_STR, ACE_OS::strlen (arg1)) != 0)
+  if (std::strncmp (arg1, TEST_STR, std::strlen (arg1)) != 0)
     ERROR_COUNT ("Hello::test_args_3")
-  if (ACE_OS::strncmp (arg2.get_buffer (), TEST_STR, ::Test::BOUNDED_VAR_SIZE) != 0)
+  if (std::strncmp (arg2.get_buffer (), TEST_STR, ::Test::BOUNDED_VAR_SIZE) != 0)
     ERROR_COUNT ("Hello::test_args_3")
-  if (ACE_OS::strncmp (arg3.get_buffer (), TEST_STR, ACE_OS::strlen (TEST_STR)) != 0)
+  if (arg3.length () != std::strlen (TEST_STR)
+      || std::memcmp (arg3.get_buffer (), TEST_STR, arg3.length ()) != 0)
     ERROR_COUNT ("Hello::test_args_3")
-  for (CORBA::ULong i = 0; i != ::Test::VAR_ARRAY_SIZE; i ++)
+  for (CORBA::ULong i = 0; i != ::Test::VAR_ARRAY_SIZE; ++i)
   {
-    if (ACE_OS::strncmp (arg4[i].in (), TEST_STR, ACE_OS::strlen (TEST_STR)) != 0)
+    if (std::strcmp (arg4[i].in (), TEST_STR) != 0)
       ERROR_COUNT ("Hello::test_args_3")
   }
 }
@@ -309,18 +288,17 @@ Hello::get_string ()
 
 char *
 Hello::test_unbounded_string (
-    const char * s1,
+    char const *s1,
     char *& s2,
-    CORBA::String_out s3
-  )
+    CORBA::String_out s3)
 {
-  char *retstr = CORBA::string_dup (s1);
+  CORBA::String_var retstr (CORBA::string_dup (s1));
   s3 = CORBA::string_dup (s1);
-  char *tmp = CORBA::string_alloc (2*ACE_OS::strlen (s2));
-  ACE_OS::sprintf (tmp, "%s%s", s2, s2);
+  CORBA::String_var tmp (CORBA::string_alloc (2 * std::strlen (s2) + 1));
+  std::sprintf (tmp.inout (), "%s%s", s2, s2);
   CORBA::string_free (s2);
-  s2 = tmp;
-  return retstr;
+  s2 = tmp._retn ();
+  return retstr._retn ();
 }
 
 void
@@ -337,5 +315,3 @@ CORBA::ULong Hello::error_count () const
 {
   return error_count_;
 }
-
-

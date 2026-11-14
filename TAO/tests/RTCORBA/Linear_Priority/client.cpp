@@ -7,46 +7,52 @@
 #include "../check_supported_priorities.cpp"
 #include "../common_args.cpp"
 
-static int iterations = 5;
-static int shutdown_server = 0;
-static int debug = 1;
+#include <cstddef>
+#include <memory>
+#include <new>
+#include <vector>
 
-static const ACE_TCHAR *ior = ACE_TEXT ("file://ior");
-
-static const ACE_TCHAR *invocation_priorities_file = ACE_TEXT ("invocation_priorities");
-static const ACE_TCHAR *bands_file = ACE_TEXT ("empty_file");
+struct Client_Options
+{
+  int iterations { 5 };
+  bool shutdown_server {};
+  int debug { 1 };
+  ACE_TCHAR const *ior { ACE_TEXT ("file://ior") };
+  ACE_TCHAR const *invocation_priorities_file { ACE_TEXT ("invocation_priorities") };
+  ACE_TCHAR const *bands_file { ACE_TEXT ("empty_file") };
+};
 
 static int
-parse_args (int argc, ACE_TCHAR **argv)
+parse_args (int argc, ACE_TCHAR **argv, Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("b:d:p:k:i:x"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
 
       case 'i':
-        iterations = ACE_OS::atoi (get_opts.opt_arg ());
+        options.iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'd':
-        debug = ACE_OS::atoi (get_opts.opt_arg ());
+        options.debug = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'x':
-        shutdown_server = 1;
+        options.shutdown_server = true;
         break;
 
       case 'p':
-        invocation_priorities_file = get_opts.opt_arg ();
+        options.invocation_priorities_file = get_opts.opt_arg ();
         break;
 
       case 'b':
-        bands_file = get_opts.opt_arg ();
+        options.bands_file = get_opts.opt_arg ();
         break;
 
       case '?':
@@ -73,26 +79,34 @@ public:
   Worker_Thread (ACE_Thread_Manager &thread_manager,
                  test_ptr test,
                  RTCORBA::Current_ptr current,
-                 CORBA::Short priority);
+                 CORBA::Short priority,
+                 int iterations);
+  Worker_Thread (Worker_Thread const &) = delete;
+  Worker_Thread (Worker_Thread &&) = delete;
+  Worker_Thread &operator= (Worker_Thread const &) = delete;
+  Worker_Thread &operator= (Worker_Thread &&) = delete;
 
-  int svc ();
+  int svc () override;
 
   void validate_connection ();
 
 private:
-  test_var test_;
-  RTCORBA::Current_var current_;
-  CORBA::Short priority_;
+  test_var const test_;
+  RTCORBA::Current_var const current_;
+  CORBA::Short const priority_;
+  int const iterations_;
 };
 
 Worker_Thread::Worker_Thread (ACE_Thread_Manager &thread_manager,
                               test_ptr test,
                               RTCORBA::Current_ptr current,
-                              CORBA::Short priority)
+                              CORBA::Short priority,
+                              int iterations)
   : ACE_Task_Base (&thread_manager),
     test_ (test::_duplicate (test)),
     current_ (RTCORBA::Current::_duplicate (current)),
-    priority_ (priority)
+    priority_ (priority),
+    iterations_ (iterations)
 {
 }
 
@@ -103,8 +117,8 @@ Worker_Thread::validate_connection ()
   // exceptions.  If the connection can still not be setup, return
   // failure.
   CORBA::PolicyList_var inconsistent_policies;
-  int max_attempts = 10;
-  int current_attempt = 0;
+  int const max_attempts = 10;
+  int current_attempt {};
   for (;;)
     {
       try
@@ -115,14 +129,14 @@ Worker_Thread::validate_connection ()
           // If successful, we are done.
           return;
         }
-      catch (const CORBA::TRANSIENT& )
+      catch (CORBA::TRANSIENT const &)
         {
           // If we have reach our maximum number of tries, throw exception.
           if (current_attempt == max_attempts)
             throw;
           // Otherwise, ignore...
         }
-      catch (const CORBA::Exception&)
+      catch (CORBA::Exception const &)
         {
           // Rethrow any other exceptions.
           throw;
@@ -139,12 +153,12 @@ Worker_Thread::svc ()
 
       this->validate_connection ();
 
-      for (int i = 0; i < iterations; i++)
+      for (int i = 0; i < this->iterations_; ++i)
         {
           this->test_->method ();
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Worker Thread exception:");
     }
@@ -155,17 +169,26 @@ class Task : public ACE_Task_Base
 {
 public:
   Task (ACE_Thread_Manager &thread_manager,
-        CORBA::ORB_ptr orb);
+        CORBA::ORB_ptr orb,
+        Client_Options const &options);
+  Task (Task const &) = delete;
+  Task (Task &&) = delete;
+  Task &operator= (Task const &) = delete;
+  Task &operator= (Task &&) = delete;
 
-  int svc ();
+  int svc () override;
 
-  CORBA::ORB_var orb_;
+private:
+  CORBA::ORB_var const orb_;
+  Client_Options const options_;
 };
 
 Task::Task (ACE_Thread_Manager &thread_manager,
-            CORBA::ORB_ptr orb)
+            CORBA::ORB_ptr orb,
+            Client_Options const &options)
   : ACE_Task_Base (&thread_manager),
-    orb_ (CORBA::ORB::_duplicate (orb))
+    orb_ (CORBA::ORB::_duplicate (orb)),
+    options_ (options)
 {
 }
 
@@ -177,13 +200,13 @@ Task::svc ()
       CORBA::Object_var object =
         this->orb_->resolve_initial_references ("RTORB");
 
-      RTCORBA::RTORB_var rt_orb =
+      RTCORBA::RTORB_var const rt_orb =
         RTCORBA::RTORB::_narrow (object.in ());
 
       object =
         this->orb_->resolve_initial_references ("RTCurrent");
 
-      RTCORBA::Current_var current =
+      RTCORBA::Current_var const current =
         RTCORBA::Current::_narrow (object.in ());
 
       current->the_priority (0);
@@ -191,22 +214,22 @@ Task::svc ()
       object =
         this->orb_->resolve_initial_references ("ORBPolicyManager");
 
-      CORBA::PolicyManager_var policy_manager =
+      CORBA::PolicyManager_var const policy_manager =
         CORBA::PolicyManager::_narrow (object.in ());
 
       object =
-        this->orb_->string_to_object (ior);
+        this->orb_->string_to_object (this->options_.ior);
 
-      test_var test =
+      test_var const test =
         test::_narrow (object.in ());
 
       ULong_Array priorities;
       int result =
         get_values ("client",
-                    invocation_priorities_file,
+                    this->options_.invocation_priorities_file,
                     "invocation priorities",
                     priorities,
-                    debug);
+                    this->options_.debug);
       if (result != 0)
         return result;
 
@@ -214,68 +237,63 @@ Task::svc ()
 
       result =
         get_priority_bands ("client",
-                            bands_file,
+                            this->options_.bands_file,
                             rt_orb.in (),
                             policies,
-                            debug);
+                            this->options_.debug);
       if (result != 0)
         return result;
 
       policy_manager->set_policy_overrides (policies,
                                             CORBA::SET_OVERRIDE);
 
-      u_long i = 0;
-
       // Thread Manager for managing workers.
       ACE_Thread_Manager thread_manager;
 
-      // Workers.
-      Worker_Thread **workers = 0;
+      std::vector<std::unique_ptr<Worker_Thread>> workers;
+      workers.reserve (priorities.size ());
 
-      ACE_NEW_RETURN (workers,
-                      Worker_Thread *[priorities.size ()],
-                      -1);
-
-      for (i = 0;
-           i < priorities.size ();
-           ++i)
+      for (size_t i = 0; i < priorities.size (); ++i)
         {
-          ACE_NEW_RETURN (workers[i],
-                          Worker_Thread (thread_manager,
-                                         test.in (),
-                                         current.in (),
-                                         priorities[i]),
-                          -1);
-
-          long flags =
-            THR_NEW_LWP |
-            THR_JOINABLE |
-            this->orb_->orb_core ()->orb_params ()->thread_creation_flags ();
-
-          result =
-            workers[i]->activate (flags);
-          if (result != 0)
-            return result;
+          workers.push_back (std::make_unique<Worker_Thread> (
+                               thread_manager,
+                               test.in (),
+                               current.in (),
+                               priorities[i],
+                               this->options_.iterations));
         }
 
-      thread_manager.wait ();
+      long const flags =
+        THR_NEW_LWP |
+        THR_JOINABLE |
+        this->orb_->orb_core ()->orb_params ()->thread_creation_flags ();
 
-      for (i = 0;
-           i < priorities.size ();
-           ++i)
+      for (std::unique_ptr<Worker_Thread> const &worker : workers)
         {
-          delete workers[i];
+          int const activate_result = worker->activate (flags);
+          if (activate_result != 0)
+            {
+              thread_manager.wait ();
+              return activate_result;
+            }
         }
-      delete[] workers;
 
-      if (shutdown_server)
+      int const wait_result = thread_manager.wait ();
+      ACE_ASSERT (wait_result != -1);
+
+      if (this->options_.shutdown_server)
         {
           test->shutdown ();
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Unexpected exception!");
+      return -1;
+    }
+  catch (std::bad_alloc const &)
+    {
+      ACE_ERROR ((LM_ERROR, "Unable to allocate priority worker storage\n"));
       return -1;
     }
 
@@ -287,13 +305,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb =
+      Client_Options options;
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      int result =
-        parse_args (argc, argv);
-      if (result != 0)
-        return result;
+      int const parse_args_result = parse_args (argc, argv, options);
+      if (parse_args_result != 0)
+        return parse_args_result;
 
       // Make sure we can support multiple priorities that are required
       // for this test.
@@ -305,18 +323,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Create task.
       Task task (thread_manager,
-                 orb.in ());
+                 orb.in (),
+                 options);
 
       // Task activation flags.
-      long flags =
+      long const flags =
         THR_NEW_LWP |
         THR_JOINABLE |
         orb->orb_core ()->orb_params ()->thread_creation_flags ();
 
       // Activate task.
-      result =
-        task.activate (flags);
-      if (result == -1)
+      int const activate_result = task.activate (flags);
+      if (activate_result == -1)
         {
           if (errno == EPERM)
             {
@@ -333,11 +351,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       // Wait for task to exit.
-      result =
-        thread_manager.wait ();
-      ACE_ASSERT (result != -1);
+      int const wait_result = thread_manager.wait ();
+      ACE_ASSERT (wait_result != -1);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Unexpected exception!");
       return -1;

@@ -10,7 +10,6 @@ class Hello
   : public virtual POA_Test::Hello
 {
 public:
-  /// Constructor
   Hello (CORBA::ORB_ptr orb);
 
   virtual Test::Octet_Seq *get_big_reply (CORBA::ULong size);

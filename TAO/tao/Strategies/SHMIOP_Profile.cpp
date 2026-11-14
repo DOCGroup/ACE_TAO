@@ -9,11 +9,12 @@
 #include "tao/debug.h"
 #include "tao/IIOP_EndpointsC.h"
 
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
 #include "ace/os_include/os_netdb.h"
 #include "ace/Truncate.h"
+#include <cstdio>
+#include <cstdlib>
 #include <cstring>
+#include <memory>
 
 static const char prefix_[] = "shmiop";
 
@@ -64,7 +65,7 @@ TAO_SHMIOP_Profile::~TAO_SHMIOP_Profile ()
 {
   // Clean up the list of endpoints since we own it.
   // Skip the head, since it is not dynamically allocated.
-  TAO_Endpoint *tmp = nullptr;
+  TAO_Endpoint *tmp {};
 
   for (TAO_Endpoint *next = this->endpoint ()->next ();
        next != nullptr;
@@ -78,7 +79,7 @@ TAO_SHMIOP_Profile::~TAO_SHMIOP_Profile ()
 TAO_Endpoint*
 TAO_SHMIOP_Profile::endpoint ()
 {
-  return &this->endpoint_;
+  return std::addressof (this->endpoint_);
 }
 
 CORBA::ULong
@@ -158,13 +159,13 @@ TAO_SHMIOP_Profile::parse_string_i (const char *string)
 
   CORBA::String_var tmp = CORBA::string_alloc (length);
 
-  ACE_OS::strncpy (tmp.inout (), cp + 1, length);
+  std::strncpy (tmp.inout (), cp + 1, length);
   tmp[length] = '\0';
 
-  if (ACE_OS::strspn (tmp.in (), "1234567890") == length)
+  if (std::strspn (tmp.in (), "1234567890") == length)
     {
       this->endpoint_.port_ =
-        static_cast <CORBA::UShort> (ACE_OS::atoi (tmp.in ()));
+        static_cast <CORBA::UShort> (std::atoi (tmp.in ()));
     }
   else
     {
@@ -187,14 +188,14 @@ TAO_SHMIOP_Profile::parse_string_i (const char *string)
 
   tmp = CORBA::string_alloc (length);
 
-  ACE_OS::strncpy (tmp.inout (), start, length);
+  std::strncpy (tmp.inout (), start, length);
   tmp[length] = '\0';
 
   this->endpoint_.host_ = tmp._retn ();
 
-  ACE_INET_Addr host_addr;
+  ACE_INET_Addr const host_addr;
 
-  if (ACE_OS::strcmp (this->endpoint_.host_.in (), "") == 0)
+  if (std::strcmp (this->endpoint_.host_.in (), "") == 0)
     {
       char tmp_host [MAXHOSTNAMELEN + 1];
 
@@ -261,29 +262,29 @@ TAO_SHMIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
     dynamic_cast <const TAO_SHMIOP_Profile *> (other_profile);
 
   if (op == nullptr)
-    return 0;
+    return false;
 
   // Check endpoints equivalence.
-  const TAO_SHMIOP_Endpoint *other_endp = &op->endpoint_;
-  for (TAO_SHMIOP_Endpoint *endp = &this->endpoint_;
+  const TAO_SHMIOP_Endpoint *other_endp = std::addressof (op->endpoint_);
+  for (TAO_SHMIOP_Endpoint *endp = std::addressof (this->endpoint_);
        endp != nullptr;
        endp = endp->next_)
     {
       if (endp->is_equivalent (other_endp))
         other_endp = other_endp->next_;
       else
-        return 0;
+        return false;
     }
 
-  return 1;
+  return true;
 }
 
 CORBA::ULong
 TAO_SHMIOP_Profile::hash (CORBA::ULong max)
 {
   // Get the hashvalue for all endpoints.
-  CORBA::ULong hashval = 0;
-  for (TAO_SHMIOP_Endpoint *endp = &this->endpoint_;
+  CORBA::ULong hashval {};
+  for (TAO_SHMIOP_Endpoint *endp = std::addressof (this->endpoint_);
        endp != nullptr;
        endp = endp->next_)
     {
@@ -313,7 +314,7 @@ TAO_SHMIOP_Profile::add_endpoint (TAO_SHMIOP_Endpoint *endp)
   endp->next_ = this->endpoint_.next_;
   this->endpoint_.next_ = endp;
 
-  this->count_++;
+  ++this->count_;
 }
 
 char *
@@ -323,25 +324,25 @@ TAO_SHMIOP_Profile::to_string () const
   TAO::ObjectKey::encode_sequence_to_string (key.inout(),
                                              this->ref_object_key_->object_key ());
 
-  size_t buflen = (8 /* corbaloc */ +
+  size_t const buflen = (8 /* corbaloc */ +
                    1 /* colon separator */ +
-                   ACE_OS::strlen (::prefix_) +
+                   std::strlen (::prefix_) +
                    1 /* colon separator */ +
                    1 /* major version */ +
                    1 /* decimal point */ +
                    1 /* minor version */ +
                    1 /* `@' character */ +
-                   ACE_OS::strlen (this->endpoint_.host ()) +
+                   std::strlen (this->endpoint_.host ()) +
                    1 /* colon separator */ +
                    5 /* port number */ +
                    1 /* object key separator */ +
-                   ACE_OS::strlen (key.in ()));
+                   std::strlen (key.in ()));
 
   char * buf = CORBA::string_alloc (static_cast <CORBA::ULong> (buflen));
 
   static const char digits [] = "0123456789";
 
-  ACE_OS::sprintf (buf,
+  std::sprintf (buf,
                    "corbaloc:%s:%c.%c@%s:%d%c%s",
                    ::prefix_,
                    digits [this->version_.major],
@@ -401,8 +402,8 @@ TAO_SHMIOP_Profile::encode_endpoints ()
   TAO::IIOPEndpointSequence endpoints;
   endpoints.length (this->count_);
 
-  TAO_SHMIOP_Endpoint *endpoint = &this->endpoint_;
-  for (CORBA::ULong i = 0;
+  TAO_SHMIOP_Endpoint *endpoint = std::addressof (this->endpoint_);
+  for (CORBA::ULong i {};
        i < this->count_;
        ++i)
     {
@@ -418,7 +419,7 @@ TAO_SHMIOP_Profile::encode_endpoints ()
   if ((out_cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)) == 0
       || (out_cdr << endpoints) == 0)
     return -1;
-  size_t length = out_cdr.total_length ();
+  size_t const length = out_cdr.total_length ();
 
   IOP::TaggedComponent tagged_component;
   tagged_component.tag = TAO_TAG_ENDPOINTS;
@@ -430,8 +431,8 @@ TAO_SHMIOP_Profile::encode_endpoints ()
        iterator != nullptr;
        iterator = iterator->cont ())
     {
-      size_t i_length = iterator->length ();
-      ACE_OS::memcpy (buf, iterator->rd_ptr (), i_length);
+      size_t const i_length = iterator->length ();
+      std::memcpy (buf, iterator->rd_ptr (), i_length);
 
       buf += i_length;
     }
@@ -484,7 +485,7 @@ TAO_SHMIOP_Profile::decode_endpoints ()
            i > 0;
            --i)
         {
-          TAO_SHMIOP_Endpoint *endpoint = nullptr;
+          TAO_SHMIOP_Endpoint *endpoint {};
           ACE_NEW_RETURN (endpoint,
                           TAO_SHMIOP_Endpoint (endpoints[i].host,
                                                endpoints[i].port,

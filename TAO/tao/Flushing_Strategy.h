@@ -50,7 +50,6 @@ class TAO_Queued_Message;
 class TAO_Flushing_Strategy
 {
 public:
-  /// Destructor
   virtual ~TAO_Flushing_Strategy ();
 
   enum SCHEDULE_OUTPUT_RETURN { MUST_FLUSH = -2 };

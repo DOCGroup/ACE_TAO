@@ -526,7 +526,6 @@ Paced_Worker::print_stats (ACE_hrtime_t test_end)
                 made_total_deadlines * 100 / (double) this->history_.max_samples (),
                 made_total_deadlines / to_seconds (test_end - test_start, gsf)));
 
-
   if (do_dump_history)
     {
       this->history_.dump_samples (ACE_TEXT("HISTORY"), gsf);
@@ -931,7 +930,7 @@ Task::svc ()
       if (invocation_priorities.size () != 0 &&
           invocation_priorities.size () != rates.size ())
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Number of invocation priorities (%d) != Number of rates (%d)\n",
+                           "Number of invocation priorities (%B) != Number of rates (%B)\n",
                            invocation_priorities.size (),
                            rates.size ()),
                           -1);

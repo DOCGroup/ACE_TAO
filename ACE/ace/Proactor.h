@@ -58,7 +58,6 @@ class ACE_Export ACE_Proactor_Handle_Timeout_Upcall
   friend class ACE_Proactor;
 
 public:
-  /// Constructor.
   ACE_Proactor_Handle_Timeout_Upcall ();
 
   /// This method is called when a timer is registered.
@@ -156,6 +155,11 @@ public:
 
   /// Destruction.
   ~ACE_Proactor ();
+
+  ACE_Proactor (ACE_Proactor const &) = delete;
+  ACE_Proactor (ACE_Proactor &&) = delete;
+  ACE_Proactor &operator= (ACE_Proactor const &) = delete;
+  ACE_Proactor &operator= (ACE_Proactor &&) = delete;
 
   /// Get pointer to a process-wide ACE_Proactor.  @a threads should
   /// be part of another method.
@@ -264,7 +268,6 @@ public:
   /// <run_event_loop> method can be restarted.
   int proactor_reset_event_loop ();
 
-
   /// This method adds the @a handle to the I/O completion port. This
   /// function is a no-op function for Unix systems and returns 0;
   int register_handle (ACE_HANDLE handle,
@@ -315,7 +318,7 @@ public:
    * wasn't found.
    */
   int cancel_timer (long timer_id,
-                    const void **act = 0,
+                    const void **act = nullptr,
                     int dont_call_handle_close = 1);
 
   /**
@@ -593,12 +596,6 @@ protected:
 
   /// Mutex to protect work with lists.
   ACE_SYNCH_MUTEX mutex_;
-
-
-private:
-  /// Deny access since member-wise won't work...
-  ACE_Proactor (const ACE_Proactor &);
-  ACE_Proactor &operator= (const ACE_Proactor &);
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
@@ -623,6 +620,10 @@ public:
   ACE_Proactor (size_t /* number_of_threads */ = 0,
                 Timer_Queue * /* tq */ = 0) {}
   ~ACE_Proactor () {}
+  ACE_Proactor (ACE_Proactor const &) = delete;
+  ACE_Proactor (ACE_Proactor &&) = delete;
+  ACE_Proactor &operator= (ACE_Proactor const &) = delete;
+  ACE_Proactor &operator= (ACE_Proactor &&) = delete;
   int handle_events () { return -1; }
   int handle_events (ACE_Time_Value &) { return -1; }
 

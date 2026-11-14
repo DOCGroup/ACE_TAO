@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_UPIPE_CONNECTOR_H
 #define ACE_UPIPE_CONNECTOR_H
 #include /**/ "ace/pre.h"
@@ -32,7 +31,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_UPIPE_Connector
 {
 public:
-  /// Default constructor.
   ACE_UPIPE_Connector ();
 
   /**
@@ -88,7 +86,6 @@ public:
   /// Resets any event associations on this handle
   bool reset_new_handle (ACE_HANDLE handle);
 
-  // = Meta-type info
   using PEER_ADDR = ACE_UPIPE_Addr;
   using PEER_STREAM = ACE_UPIPE_Stream;
 

@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef HTIOP_ACCEPTOR_IMPL_H
 #define HTIOP_ACCEPTOR_IMPL_H
 #include /**/ "ace/pre.h"
@@ -43,7 +42,11 @@ namespace TAO
       /**
        * Constructor.
       */
-      Creation_Strategy (TAO_ORB_Core *orb_core);
+      explicit Creation_Strategy (TAO_ORB_Core *orb_core);
+      Creation_Strategy (Creation_Strategy const&) = delete;
+      Creation_Strategy (Creation_Strategy&&) = delete;
+      Creation_Strategy& operator= (Creation_Strategy const&) = delete;
+      Creation_Strategy& operator= (Creation_Strategy&&) = delete;
 
       /// Create a SVC_HANDLER  and set the ORB_Core pointer on it.
       int make_svc_handler (SVC_HANDLER *&sh) override;
@@ -57,8 +60,11 @@ namespace TAO
     class Accept_Strategy : public ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>
     {
     public:
-      /// Constructor.
-      Accept_Strategy (TAO_ORB_Core *orb_core);
+      explicit Accept_Strategy (TAO_ORB_Core *orb_core);
+      Accept_Strategy (Accept_Strategy const&) = delete;
+      Accept_Strategy (Accept_Strategy&&) = delete;
+      Accept_Strategy& operator= (Accept_Strategy const&) = delete;
+      Accept_Strategy& operator= (Accept_Strategy&&) = delete;
 
       /// Initialize the <peer_acceptor_> with <local_addr>.  If the
       /// process runs out of handles, purge some "old" connections.
@@ -86,8 +92,11 @@ namespace TAO
     class Concurrency_Strategy : public ACE_Concurrency_Strategy<SVC_HANDLER>
     {
     public:
-      /// Constructor.
-      Concurrency_Strategy (TAO_ORB_Core *orb_core);
+      explicit Concurrency_Strategy (TAO_ORB_Core *orb_core);
+      Concurrency_Strategy (Concurrency_Strategy const&) = delete;
+      Concurrency_Strategy (Concurrency_Strategy&&) = delete;
+      Concurrency_Strategy& operator= (Concurrency_Strategy const&) = delete;
+      Concurrency_Strategy& operator= (Concurrency_Strategy&&) = delete;
 
       /**
        * Activates the Svc_Handler.

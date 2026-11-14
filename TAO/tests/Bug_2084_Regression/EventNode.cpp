@@ -10,7 +10,8 @@ EventNode::EventNode (CORBA::ORB_ptr orb, ACE_thread_t thrid)
 {
 }
 
-void EventNode::registerHello (::Test::Hello_ptr h)
+void
+EventNode::registerHello (::Test::Hello_ptr hello)
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) EventNode: registerHello will call get_string...\n"));
@@ -31,7 +32,7 @@ void EventNode::registerHello (::Test::Hello_ptr h)
           TAO::ORB_Table * const orb_table =
             TAO::ORB_Table::instance ();
 
-          TAO_ORB_Core_Auto_Ptr tmp (orb_table->find ("server_orb"));
+          TAO_ORB_Core_Auto_Ptr const tmp (orb_table->find ("server_orb"));
           if (tmp.get () == nullptr)
             {
               // We are running on a single ORB and this is an error.
@@ -44,8 +45,8 @@ void EventNode::registerHello (::Test::Hello_ptr h)
         }
     }
 
-  CORBA::String_var str = h->get_string(
-    ACE_thread_t_to_integer< ::Test::ThreadId> (ACE_Thread::self ()));
+  CORBA::String_var const str =
+    hello->get_string (ACE_thread_t_to_integer< ::Test::ThreadId> (ACE_Thread::self ()));
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) - EventNode: string returned <%C>\n",
               str.in ()));

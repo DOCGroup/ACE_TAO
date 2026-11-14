@@ -8,9 +8,9 @@ Hello::Hello (CORBA::ORB_ptr orb)
 char *
 Hello::get_string (
         ::CORBA::Long ,
-        const char * inputa,
+        char const *inputa,
         ::CORBA::Long ,
-        const char * )
+        char const * )
 {
   return CORBA::string_dup (inputa);
 }

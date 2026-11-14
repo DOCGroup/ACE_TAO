@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_REGISTRY_NAME_SPACE_H
 #define ACE_REGISTRY_NAME_SPACE_H
 #include /**/ "ace/pre.h"
@@ -44,13 +43,11 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Registry_Name_Space : public ACE_Name_Space
 {
 public:
-  /// Constructor
   ACE_Registry_Name_Space () = default;
 
   /// Contacts and opens the registry on the specified server
   ACE_Registry_Name_Space (ACE_Name_Options *name_options);
 
-  /// Destructor
   ~ACE_Registry_Name_Space () = default;
 
   /// Contacts and opens the registry on the specified server

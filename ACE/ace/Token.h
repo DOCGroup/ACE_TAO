@@ -85,10 +85,8 @@ public:
     LIFO = 0
   };
 
-  /// Constructor
-  ACE_Token (const ACE_TCHAR *name = nullptr, void * = 0);
+  ACE_Token (const ACE_TCHAR *name = nullptr, void * = nullptr);
 
-  /// Destructor
   virtual ~ACE_Token ();
 
   // = Strategies
@@ -215,7 +213,6 @@ public:
   /// that are asleep waiting to obtain the token.
   struct ACE_Token_Queue_Entry
   {
-    /// Constructor
     ACE_Token_Queue_Entry (ACE_Thread_Mutex &m,
                            ACE_thread_t t_id);
 
@@ -257,7 +254,6 @@ private:
 
   struct ACE_Token_Queue
   {
-    /// Constructor
     ACE_Token_Queue ();
 
     /// Remove a waiter from the queue.
@@ -323,7 +319,7 @@ class ACE_Export ACE_Token
 public:
   int queueing_strategy () { ACE_NOTSUP_RETURN (-1); }
   void queueing_strategy (int /*queueing_strategy*/) { }
-  int acquire (ACE_Time_Value * = 0) { ACE_NOTSUP_RETURN (-1); }
+  int acquire (ACE_Time_Value * = nullptr) { ACE_NOTSUP_RETURN (-1); }
   int tryacquire () { ACE_NOTSUP_RETURN (-1); }
   int remove () { ACE_NOTSUP_RETURN (-1); }
   int release () { ACE_NOTSUP_RETURN (-1); }
@@ -351,7 +347,7 @@ public:
   /// Set queueing strategy.
   void queueing_strategy (int queueing_strategy);
 
-  int renew (int = 0, ACE_Time_Value * =0);
+  int renew (int = 0, ACE_Time_Value * = nullptr);
 
   /// Dump the state of an object.
   void dump () const;
@@ -365,7 +361,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #if defined (__ACE_INLINE__)
 #include "ace/Token.inl"
 #endif /* __ACE_INLINE__ */
-
 
 #include /**/ "ace/post.h"
 #endif /* ACE_TOKEN_H */

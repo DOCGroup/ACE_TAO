@@ -32,8 +32,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Obchunk
 {
 public:
-  /// Constructor.
-  ACE_Obchunk (size_t size);
+  explicit ACE_Obchunk (size_t size);
 
   /// Dtor.
   ~ACE_Obchunk () = default;

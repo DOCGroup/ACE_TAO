@@ -95,9 +95,9 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
     return -1;
   else
     {
-      sockaddr *addr = nullptr;
+      sockaddr *addr {};
       struct sockaddr_in inet_addr;
-      int *len_ptr = nullptr;
+      int *len_ptr {};
       int len = 0;
 
       if (remote_sap != nullptr)
@@ -114,7 +114,7 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
                                                addr,
                                                len_ptr));
       while (new_stream.get_handle () == ACE_INVALID_HANDLE
-             && restart != 0
+             && restart
              && errno == EINTR
              && timeout == nullptr);
 
@@ -225,7 +225,7 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
 }
 
 int
-ACE_MEM_Acceptor::shared_accept_finish (ACE_MEM_Stream new_stream,
+ACE_MEM_Acceptor::shared_accept_finish (const ACE_MEM_Stream &new_stream,
                                         int in_blocking_mode,
                                         bool reset_new_handle) const
 {

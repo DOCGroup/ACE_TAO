@@ -61,8 +61,13 @@ public:
   public:
     ACE_Malloc_Header ();
 
+    ACE_Malloc_Header (ACE_Malloc_Header const &) = delete;
+    ACE_Malloc_Header (ACE_Malloc_Header &&) = delete;
+    ACE_Malloc_Header &operator= (ACE_Malloc_Header const &) = delete;
+    ACE_Malloc_Header &operator= (ACE_Malloc_Header &&) = delete;
+
     /// Points to next block if on free list.
-    MALLOC_HEADER_PTR next_block_;
+    MALLOC_HEADER_PTR next_block_ {};
 
     /// Initialize a malloc header pointer.
     static void init_ptr (MALLOC_HEADER_PTR *ptr,
@@ -70,7 +75,7 @@ public:
                           void *base_addr);
 
     /// Size of this header control block.
-    size_t size_;
+    size_t size_ {};
 
 # if !defined (ACE_PI_MALLOC_PADDING_SIZE)
 #   define ACE_PI_MALLOC_PADDING_SIZE ACE_MALLOC_ROUNDUP (ACE_MALLOC_HEADER_SIZE + sizeof (MALLOC_HEADER_PTR) + sizeof (size_t), ACE_MALLOC_ALIGN) - (sizeof (MALLOC_HEADER_PTR) + sizeof (size_t))
@@ -80,10 +85,6 @@ public:
     /// Dump the state of the object.
     void dump () const;
 
-  private:
-    // Disallow copy construction and assignment.
-    ACE_Malloc_Header (ACE_Malloc_Header const &);
-    void operator= (ACE_Malloc_Header const &);
   };
 
   /**
@@ -99,19 +100,18 @@ public:
   class ACE_Export ACE_Name_Node
   {
   public:
-    /// Constructor.
     ACE_Name_Node (const char *name,
                    char *name_ptr,
                    char *pointer,
                    ACE_Name_Node *head);
 
-    /// Copy constructor.
-    ACE_Name_Node (const ACE_Name_Node &);
+    ACE_Name_Node (ACE_Name_Node const &) = delete;
+    ACE_Name_Node (ACE_Name_Node &&) = delete;
+    ACE_Name_Node &operator= (ACE_Name_Node const &) = delete;
+    ACE_Name_Node &operator= (ACE_Name_Node &&) = delete;
 
-    /// Constructor.
     ACE_Name_Node ();
 
-    /// Constructor.
     ~ACE_Name_Node ();
 
     /// Initialize a name node pointer.
@@ -140,9 +140,6 @@ public:
     /// Dump the state of the object.
     void dump () const;
 
-  private:
-    // Disallow assignment.
-    void operator= (const ACE_Name_Node &);
   };
 
   /// Print out a bunch of size info for debugging.

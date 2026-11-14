@@ -5,40 +5,54 @@
 #include "ace/FILE_Addr.h"
 #include "ace/FILE_Connector.h"
 #include "ace/FILE_IO.h"
+#include "MessageInfo.h"
+
+#include <memory>
+#include <new>
 
 class Util
 {
 public:
-  static MessageType *identify_message (ACE_FILE_Addr &src)
+  static MessageType identify_message (ACE_FILE_Addr &src)
   {
     // Determine the contents of the specified file
-    return new MessageType (MessageType::RAWTEXT, src);
+    return MessageType (MessageType::RAWTEXT, src);
   }
 
-  static ACE_FILE_IO *audio_to_text (ACE_FILE_Addr &, ACE_FILE_Addr &dest)
+  static std::unique_ptr<ACE_FILE_IO> audio_to_text (ACE_FILE_Addr &,
+                                                     ACE_FILE_Addr &dest)
   {
     ACE_FILE_Connector connector;
-    ACE_FILE_IO *file = 0;
+    std::unique_ptr<ACE_FILE_IO> file (new (std::nothrow) ACE_FILE_IO);
+    if (!file)
+      return {};
     if (connector.connect (*file, dest) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("%p\n"),
-                         ACE_TEXT ("create file")),
-                        0);
+      {
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("%p\n"),
+                    ACE_TEXT ("create file")));
+        return {};
+      }
 
     // Convert audio data to printable text
 
     return file;
   }
 
-  static ACE_FILE_IO *video_to_text (ACE_FILE_Addr &, ACE_FILE_Addr &dest)
+  static std::unique_ptr<ACE_FILE_IO> video_to_text (ACE_FILE_Addr &,
+                                                     ACE_FILE_Addr &dest)
   {
     ACE_FILE_Connector connector;
-    ACE_FILE_IO *file = 0;
+    std::unique_ptr<ACE_FILE_IO> file (new (std::nothrow) ACE_FILE_IO);
+    if (!file)
+      return {};
     if (connector.connect (*file, dest) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("%p\n"),
-                         ACE_TEXT ("create file")),
-                        0);
+      {
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("%p\n"),
+                    ACE_TEXT ("create file")));
+        return {};
+      }
 
     // Extract audio data from video file and convert to printable text
     return file;

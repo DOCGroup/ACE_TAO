@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_BIDIRECTIONAL_TEST_I_H
 #define TAO_BIDIRECTIONAL_TEST_I_H
 
@@ -24,14 +23,18 @@
 class Callback_i : public POA_Callback
 {
 public:
-  /// ctor
-  Callback_i (CORBA::ORB_ptr orb);
+  explicit Callback_i (CORBA::ORB_ptr orb);
+
+  Callback_i (Callback_i const &) = delete;
+  Callback_i (Callback_i &&) = delete;
+  Callback_i &operator= (Callback_i const &) = delete;
+  Callback_i &operator= (Callback_i &&) = delete;
 
   /// Safe way to shutdown
-  void shutdown ();
+  void shutdown () override;
 
   /// The callback method
-  void callback_method ();
+  void callback_method () override;
 
 private:
   /// The orb
@@ -51,12 +54,17 @@ public:
   /// ctor
   Simple_Server_i (CORBA::ORB_ptr orb, int no_iterations);
 
+  Simple_Server_i (Simple_Server_i const &) = delete;
+  Simple_Server_i (Simple_Server_i &&) = delete;
+  Simple_Server_i &operator= (Simple_Server_i const &) = delete;
+  Simple_Server_i &operator= (Simple_Server_i &&) = delete;
+
   // = The Simple_Server methods.
-  CORBA::Long test_method (CORBA::Boolean do_callback);
+  CORBA::Long test_method (CORBA::Boolean do_callback) override;
 
-  void callback_object (Callback_ptr callback);
+  void callback_object (Callback_ptr callback) override;
 
-  void shutdown ();
+  void shutdown () override;
 
   int call_client ();
 
@@ -65,13 +73,13 @@ private:
   CORBA::ORB_var orb_;
 
   /// Flag to indicate, whether we are ready for a remote call.
-  int flag_;
+  bool flag_ {};
 
   /// Callback Object
-  Callback_var callback_;
+  Callback_var callback_ {};
 
   /// Number of times the callback needs to be called
-  int no_iterations_;
+  int no_iterations_ {};
 };
 
 #if defined(__ACE_INLINE__)

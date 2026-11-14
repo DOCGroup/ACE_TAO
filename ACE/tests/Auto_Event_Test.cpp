@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Auto_Event.h"
 #include "ace/Thread.h"
@@ -46,7 +45,7 @@ static int n_iterations = 10;
 static size_t n_workers = 10;
 
 // Number of timeouts.
-static ACE_Atomic_Op<ACE_SYNCH_MUTEX, size_t> timeouts = 0;
+static ACE_Atomic_Op<ACE_SYNCH_MUTEX, size_t> timeouts {0};
 
 // Number of times to call test_timeout ().
 static size_t test_timeout_count = 3;

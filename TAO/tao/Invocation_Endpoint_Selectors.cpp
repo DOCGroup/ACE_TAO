@@ -8,6 +8,8 @@
 #include "tao/ORB_Constants.h"
 #include "tao/SystemException.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Invocation_Endpoint_Selector::~TAO_Invocation_Endpoint_Selector () = default;
@@ -17,29 +19,28 @@ TAO_Invocation_Endpoint_Selector::~TAO_Invocation_Endpoint_Selector () = default
 TAO_Default_Endpoint_Selector::~TAO_Default_Endpoint_Selector () = default;
 
 void
-TAO_Default_Endpoint_Selector::select_endpoint (TAO::Profile_Transport_Resolver *r,
-                                                ACE_Time_Value *max_wait_time)
+  TAO_Default_Endpoint_Selector::select_endpoint (TAO::Profile_Transport_Resolver *r,
+                                                  ACE_Time_Value *max_wait_time)
 {
   do
     {
       r->profile (r->stub ()->profile_in_use ());
+      bool const blocked_connect = r->blocked_connect ();
 
       // Check whether we need to do a blocked wait or we have a
       // non-blocked wait and we support that.  If this is not the
       // case we can't use this profile so try the next.
-      if (r->blocked_connect () ||
-          (!r->blocked_connect () &&
-           r->profile ()->supports_non_blocking_oneways ()))
+      if (blocked_connect || r->profile ()->supports_non_blocking_oneways ())
         {
           if (r->profile ()->endpoint_count () > 1 &&
-              r->use_parallel_connect())
+              r->use_parallel_connect ())
             {
-              TAO_Endpoint *ep = r->profile ()->endpoint ();
+              TAO_Endpoint * const ep = r->profile ()->endpoint ();
 
               TAO_Base_Transport_Property desc (ep);
 
               // Check if the connect has completed.
-              if (r->try_parallel_connect (&desc, max_wait_time))
+              if (r->try_parallel_connect (std::addressof (desc), max_wait_time))
                 return;
               // The default implementation of try_parallel_connect returns
               // a not supported errno. In this case, allow the ordinary
@@ -57,7 +58,7 @@ TAO_Default_Endpoint_Selector::select_endpoint (TAO::Profile_Transport_Resolver 
               TAO_Base_Transport_Property desc (ep);
 
               // Check if the connect has completed.
-              if (r->try_connect (&desc, max_wait_time))
+              if (r->try_connect (std::addressof (desc), max_wait_time))
                 return;
             }
         }

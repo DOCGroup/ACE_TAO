@@ -1,61 +1,52 @@
 #include "orbsvcs/CosNamingC.h"
 #include "MessengerC.h"
+
 #include <iostream>
 
-int ACE_TMAIN(int argc, ACE_TCHAR * argv[])
+int
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
-  {
-    // Initialize orb
-    CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
+    {
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
+      CORBA::Object_var const naming_obj = orb->resolve_initial_references ("NameService");
+      CosNaming::NamingContext_var const naming_context =
+        CosNaming::NamingContext::_narrow (naming_obj.in ());
 
-    CORBA::Object_var rootObj =
-      orb->resolve_initial_references("NameService");
+      CosNaming::Name name (1);
+      name.length (1);
+      name[0].id = CORBA::string_dup ("MessengerService");
+      CORBA::Object_var const messenger_obj = naming_context->resolve (name);
+      if (CORBA::is_nil (messenger_obj.in ()))
+        {
+          std::cerr << "Nil Messenger reference" << std::endl;
+          return 1;
+        }
 
-    CosNaming::NamingContext_var rootContext =
-      CosNaming::NamingContext::_narrow(rootObj.in());
+      Messenger_var const messenger = Messenger::_narrow (messenger_obj.in ());
+      if (CORBA::is_nil (messenger.in ()))
+        {
+          std::cerr << "Argument is not a Messenger reference" << std::endl;
+          return 1;
+        }
 
-    CosNaming::Name name;
-    name.length (1);
-    name[0].id = CORBA::string_dup ("MessengerService");
-
-    CORBA::Object_var messengerObj = rootContext->resolve(name);
-
-    if (CORBA::is_nil(messengerObj.in())) {
-      std::cerr << "Nil Messenger reference" << std::endl;
+      CORBA::String_var message = CORBA::string_dup ("We are experiencing network problems.");
+      messenger->send_message ("sysadmin@company.com", "urgent", message.inout ());
+      message = CORBA::string_dup ("Where can I get TAO?");
+      messenger->send_message ("person@company.com",
+                               "OCI's Distribution of TAO",
+                               message.inout ());
+      message = CORBA::string_dup ("Please contact sales@company.com regarding your request.");
+      messenger->send_message ("sysadmin@company.com",
+                               "OCI's Distribution of TAO",
+                               message.inout ());
+    }
+  catch (CORBA::Exception const &ex)
+    {
+      std::cerr << "Caught a CORBA exception: " << ex << std::endl;
       return 1;
     }
-
-    // Narrow
-    Messenger_var messenger = Messenger::_narrow(messengerObj.in());
-    if (CORBA::is_nil(messenger.in ())) {
-      std::cerr << "Argument is not a Messenger reference" << std::endl;
-      return 1;
-    }
-
-    CORBA::String_var message = CORBA::string_dup(
-      "We are experiencing network problems.");
-    messenger->send_message ("sysadmin@company.com",
-                             "urgent",
-                             message.inout());
-
-    message = CORBA::string_dup("Where can I get TAO?");
-    messenger->send_message ("person@company.com",
-                             "OCI's Distribution of TAO",
-                             message.inout());
-
-    message = CORBA::string_dup(
-      "Please contact sales@company.com regarding your request.");
-    messenger->send_message ("sysadmin@company.com",
-                             "OCI's Distribution of TAO",
-                             message.inout());
-  }
-  catch(const CORBA::Exception& ex) {
-    std::cerr << "Caught a CORBA exception: " << ex << std::endl;
-    return 1;
-  }
 
   std::cout << "MessengerClient: success" << std::endl;
   return 0;
 }
-

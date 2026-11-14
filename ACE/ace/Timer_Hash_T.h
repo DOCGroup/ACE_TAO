@@ -41,47 +41,48 @@ template <class TYPE, class FUNCTOR, class ACE_LOCK>
 class ACE_Timer_Hash_Upcall
 {
 public:
-  using TIMER_QUEUE = ACE_Timer_Queue_T<ACE_Event_Handler *, ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK>, ACE_Null_Mutex>;
+  using TIMER_QUEUE = ACE_Timer_Queue_T<
+    ACE_Event_Handler *, ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK>, ACE_Null_Mutex>;
 
   /// Default constructor (creates an invalid object, but needs to be here
   /// so timer queues using this functor can be constructed)
-  ACE_Timer_Hash_Upcall ();
+  ACE_Timer_Hash_Upcall () = default;
 
   /// Constructor that specifies a Timer_Hash to call up to
-  ACE_Timer_Hash_Upcall (ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK> *timer_hash);
+  explicit ACE_Timer_Hash_Upcall (ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK> *timer_hash);
 
-  ACE_Timer_Hash_Upcall (const ACE_Timer_Hash_Upcall &) = delete;
+  ACE_Timer_Hash_Upcall (ACE_Timer_Hash_Upcall const &) = delete;
   ACE_Timer_Hash_Upcall (ACE_Timer_Hash_Upcall &&) = delete;
-  ACE_Timer_Hash_Upcall &operator= (const ACE_Timer_Hash_Upcall &) = delete;
+  ACE_Timer_Hash_Upcall &operator= (ACE_Timer_Hash_Upcall const &) = delete;
   ACE_Timer_Hash_Upcall &operator= (ACE_Timer_Hash_Upcall &&) = delete;
 
   /// This method is called when a timer is registered.
   int registration (TIMER_QUEUE &timer_queue,
                     ACE_Event_Handler *handler,
-                    const void *arg);
+                    void const *arg);
 
   /// This method is called before the timer expires.
   int preinvoke (TIMER_QUEUE &timer_queue,
                  ACE_Event_Handler *handler,
-                 const void *arg,
+                 void const *arg,
                  int recurring_timer,
-                 const ACE_Time_Value &cur_time,
-                 const void *&upcall_act);
+                 ACE_Time_Value const &cur_time,
+                 void const *&upcall_act);
 
   /// This method is called when the timer expires.
   int timeout (TIMER_QUEUE &timer_queue,
                ACE_Event_Handler *handler,
-               const void *arg,
+               void const *arg,
                int recurring_timer,
-               const ACE_Time_Value &cur_time);
+               ACE_Time_Value const &cur_time);
 
   /// This method is called after the timer expires.
   int postinvoke (TIMER_QUEUE &timer_queue,
                   ACE_Event_Handler *handler,
-                  const void *arg,
+                  void const *arg,
                   int recurring_timer,
-                  const ACE_Time_Value &cur_time,
-                  const void *upcall_act);
+                  ACE_Time_Value const &cur_time,
+                  void const *upcall_act);
 
   /// This method is called when a handler is cancelled
   int cancel_type (TIMER_QUEUE &timer_queue,
@@ -99,11 +100,11 @@ public:
   /// the timer is still contained in it
   int deletion (TIMER_QUEUE &timer_queue,
                 ACE_Event_Handler *handler,
-                const void *arg);
+                void const *arg);
 
 private:
   /// Timer Queue to do the calling up to
-  ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK> *timer_hash_;
+  ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK> *timer_hash_ {};
 };
 
 /**
@@ -119,33 +120,37 @@ template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET, typename TIME
 class ACE_Timer_Hash_Iterator_T : public ACE_Timer_Queue_Iterator_T <TYPE>
 {
 public:
-  /// Constructor.
   using Hash = ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>;
-  ACE_Timer_Hash_Iterator_T (Hash &);
+  explicit ACE_Timer_Hash_Iterator_T (Hash &);
 
-  virtual ~ACE_Timer_Hash_Iterator_T ();
+  ACE_Timer_Hash_Iterator_T (ACE_Timer_Hash_Iterator_T const &) = delete;
+  ACE_Timer_Hash_Iterator_T (ACE_Timer_Hash_Iterator_T &&) = delete;
+  ACE_Timer_Hash_Iterator_T &operator= (ACE_Timer_Hash_Iterator_T const &) = delete;
+  ACE_Timer_Hash_Iterator_T &operator= (ACE_Timer_Hash_Iterator_T &&) = delete;
+
+  ~ACE_Timer_Hash_Iterator_T () override;
 
   /// Positions the iterator at the earliest node in the Timer Queue
-  virtual void first ();
+  void first () override;
 
   /// Positions the iterator at the next node in the Timer Queue
-  virtual void next ();
+  void next () override;
 
   /// Returns true when there are no more nodes in the sequence
-  virtual bool isdone () const;
+  bool isdone () const override;
 
   /// Returns the node at the current position in the sequence
-  virtual ACE_Timer_Node_T<TYPE> *item ();
+  ACE_Timer_Node_T<TYPE> *item () override;
 
 protected:
   /// Pointer to the ACE_Timer_Hash that we are iterating over.
-  Hash & timer_hash_;
+  Hash &timer_hash_;
 
   /// Current position in <timer_hash_>'s table
-  size_t position_;
+  size_t position_ {};
 
   /// Current iterator used on <position>'s bucket
-  ACE_Timer_Queue_Iterator_T<TYPE> *iter_;
+  ACE_Timer_Queue_Iterator_T<TYPE> *iter_ {};
 };
 
 /**
@@ -176,34 +181,38 @@ public:
   /**
    * Default constructor. @a table_size determines the size of the
    * hash table.  @a upcall_functor is the instance of the FUNCTOR
-   * to be used by the buckets. If @a upcall_functor is 0, a default
+   * to be used by the buckets. If @a upcall_functor is nullptr, a default
    * FUNCTOR will be created.
    */
-  ACE_Timer_Hash_T (size_t table_size,
-                    FUNCTOR *upcall_functor = nullptr,
-                    ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = nullptr,
-                    TIME_POLICY const & time_policy = TIME_POLICY());
+  explicit ACE_Timer_Hash_T (size_t table_size,
+                             FUNCTOR *upcall_functor = nullptr,
+                             ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = nullptr,
+                             TIME_POLICY const &time_policy = TIME_POLICY());
 
   /**
    * Default constructor. @a upcall_functor is the instance of the
-   * FUNCTOR to be used by the queue. If @a upcall_functor is 0, Timer
+   * FUNCTOR to be used by the queue. If @a upcall_functor is nullptr, Timer
    * Hash will create a default FUNCTOR.  @a freelist the freelist of
-   * timer nodes.  If 0, then a default freelist will be created.  The default
+   * timer nodes.  If nullptr, then a default freelist will be created. The default
    * size will be ACE_DEFAULT_TIMERS and there will be no preallocation.
    */
-  ACE_Timer_Hash_T (FUNCTOR *upcall_functor = nullptr,
+  explicit ACE_Timer_Hash_T (FUNCTOR *upcall_functor = nullptr,
                     ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = nullptr,
-                    TIME_POLICY const & time_policy = TIME_POLICY());
+                    TIME_POLICY const &time_policy = TIME_POLICY());
 
-  /// Destructor
-  virtual ~ACE_Timer_Hash_T ();
+  ACE_Timer_Hash_T (ACE_Timer_Hash_T const &) = delete;
+  ACE_Timer_Hash_T (ACE_Timer_Hash_T &&) = delete;
+  ACE_Timer_Hash_T &operator= (ACE_Timer_Hash_T const &) = delete;
+  ACE_Timer_Hash_T &operator= (ACE_Timer_Hash_T &&) = delete;
+
+  ~ACE_Timer_Hash_T () override;
 
   /// True if queue is empty, else false.
-  virtual bool is_empty () const;
+  bool is_empty () const override;
 
   /// Returns the time of the earlier node in the <ACE_Timer_Hash>.
   /// Must be called on a non-empty queue.
-  virtual const ACE_Time_Value &earliest_time () const;
+  ACE_Time_Value const &earliest_time () const override;
 
   /**
    * Resets the interval of the timer represented by @a timer_id to
@@ -212,8 +221,8 @@ public:
    * ACE_Time_Value::zero, the timer will become a non-rescheduling
    * timer.  Returns 0 if successful, -1 if not.
    */
-  virtual int reset_interval (long timer_id,
-                              const ACE_Time_Value &interval);
+  int reset_interval (long timer_id,
+                      ACE_Time_Value const &interval) override;
 
   /**
    * Cancel all timer associated with @a type.  If <dont_call> is 0
@@ -222,12 +231,12 @@ public:
    * of this instance of ACE_Timer_Hash_T then user will get a memory
    * leak.
    */
-  virtual int cancel (const TYPE &type,
-                      int dont_call_handle_close = 1);
+  int cancel (TYPE const &type,
+              int dont_call_handle_close = 1) override;
 
   /**
    * Cancel the single timer that matches the @a timer_id value (which
-   * was returned from the <schedule> method).  If act is non-NULL
+   * was returned from the <schedule> method).  If act is nullptr
    * then it will be set to point to the ``magic cookie'' argument
    * passed in when the timer was registered.  This makes it possible
    * to free up the memory and avoid memory leaks.  If
@@ -236,44 +245,44 @@ public:
    * found.  If any valid timer is not cancelled before destruction of
    * this instance of ACE_Timer_Hash_T then user will get a memory leak.
    */
-  virtual int cancel (long timer_id,
-                      const void **act = nullptr,
-                      int dont_call_handle_close = 1);
+  int cancel (long timer_id,
+              void const **act = nullptr,
+              int dont_call_handle_close = 1) override;
 
   /**
    * Destroy timer queue. Cancels all timers.
    */
-  virtual int close ();
+  int close () override;
 
   /**
    * Run the <functor> for all timers whose values are <=
    * gettimeofday.  Also accounts for <timer_skew>.  Returns
    * the number of timers canceled.
    */
-  virtual int expire ();
+  int expire () override;
 
   /**
    * Run the <functor> for all timers whose values are <= @a current_time.
    * This does not account for <timer_skew>.  Returns the number of
    * timers canceled.
    */
-  virtual int expire (const ACE_Time_Value &current_time);
+  int expire (ACE_Time_Value const &current_time) override;
 
   /// Returns a pointer to this ACE_Timer_Queue's iterator.
-  virtual ACE_Timer_Queue_Iterator_T<TYPE> &iter ();
+  ACE_Timer_Queue_Iterator_T<TYPE> &iter () override;
 
   /// Removes the earliest node from the queue and returns it
-  virtual ACE_Timer_Node_T<TYPE> *remove_first ();
+  ACE_Timer_Node_T<TYPE> *remove_first () override;
 
   /// Dump the state of an object.
-  virtual void dump () const;
+  void dump () const override;
 
   /// Reads the earliest node from the queue and returns it.
-  virtual ACE_Timer_Node_T<TYPE> *get_first ();
+  ACE_Timer_Node_T<TYPE> *get_first () override;
 
 protected:
   /// Factory method that frees a previously allocated node.
-  virtual void free_node (ACE_Timer_Node_T<TYPE> *);
+  void free_node (ACE_Timer_Node_T<TYPE> *) override;
 
 private:
   /**
@@ -287,26 +296,26 @@ private:
    * used to cancel the timer before it expires.  Returns -1 on
    * failure.
    */
-  virtual long schedule_i (const TYPE &type,
-                           const void *act,
-                           const ACE_Time_Value &future_time,
-                           const ACE_Time_Value &interval);
+  long schedule_i (TYPE const &type,
+                   void const *act,
+                   ACE_Time_Value const &future_time,
+                   ACE_Time_Value const &interval) override;
 
   /// Non-locking version of dispatch_info ()
-  virtual int dispatch_info_i (const ACE_Time_Value &current_time,
-                               ACE_Timer_Node_Dispatch_Info_T<TYPE> &info);
+  int dispatch_info_i (ACE_Time_Value const &current_time,
+                       ACE_Timer_Node_Dispatch_Info_T<TYPE> &info) override;
 
   /// Reschedule an "interval" ACE_Timer_Node.
-  virtual void reschedule (ACE_Timer_Node_T<TYPE> *);
+  void reschedule (ACE_Timer_Node_T<TYPE> *) override;
 
   /// Finds the earliest node
   void find_new_earliest ();
 
   /// Keeps track of the size of the queue
-  size_t size_;
+  size_t size_ {};
 
   /// Table of BUCKETS
-  BUCKET **table_;
+  BUCKET **table_ {};
 
   /// Keeps track of the size of table_
   size_t table_size_;
@@ -315,24 +324,21 @@ private:
   ACE_Timer_Hash_Upcall<TYPE, FUNCTOR, ACE_LOCK> table_functor_;
 
   /// Index to the position with the earliest entry
-  size_t earliest_position_;
+  size_t earliest_position_ {};
 
   /// Iterator used to expire timers.
-  HASH_ITERATOR *iterator_;
+  HASH_ITERATOR *iterator_ {};
 
 #if defined (ACE_WIN64)
   /// Part of a hack... see comments in schedule().
   /// This is, essentially, the upper 32 bits of a 64-bit pointer on Win64.
-  ptrdiff_t pointer_base_;
+  ptrdiff_t pointer_base_ {};
 #endif
 
   /// Hash_Token is usually allocated in schedule but its
   /// deallocation is problematic and token_list_ helps with this.
   ACE_Locked_Free_List<Hash_Token<TYPE>, ACE_Null_Mutex> token_list_;
 
-  // = Don't allow these operations for now.
-  ACE_Timer_Hash_T (const ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET> &) = delete;
-  void operator= (const ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET> &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

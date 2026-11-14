@@ -2,6 +2,7 @@
 #define TAO_BD_STRING_SARGUMENT_T_CPP
 
 #include "tao/SystemException.h"
+#include "ace/OS_NS_string.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/PortableServer/BD_String_SArgument_T.inl"
@@ -40,9 +41,6 @@ TAO::In_BD_String_SArgument_T<S_var,BOUND,Insert_Policy>::interceptor_value (
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
-
-// ===========================================================
-
 template<typename S_var,
          size_t BOUND,
          template <typename> class Insert_Policy>
@@ -88,9 +86,6 @@ interceptor_value (CORBA::Any *any) const
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
-
-// ==============================================================
-
 template<typename S_var,
          size_t BOUND,
          template <typename> class Insert_Policy>
@@ -121,9 +116,6 @@ interceptor_value (CORBA::Any *any) const
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
-
-// ============================================================
-
 template<typename S_var,
          size_t BOUND,
          template <typename> class Insert_Policy>
@@ -131,7 +123,7 @@ CORBA::Boolean
 TAO::Ret_BD_String_SArgument_T<S_var,BOUND,Insert_Policy>::marshal (
     TAO_OutputCDR & cdr)
 {
-  if (this->x_.in () != 0 && ACE_OS::strlen (this->x_.in ()) > BOUND)
+  if (this->x_.in () != nullptr && ACE_OS::strlen (this->x_.in ()) > BOUND)
     {
       throw ::CORBA::BAD_PARAM ();
     }

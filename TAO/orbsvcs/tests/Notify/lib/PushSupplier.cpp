@@ -4,7 +4,6 @@
 #include "PushSupplier.inl"
 #endif /* __ACE_INLINE__ */
 
-
 TAO_Notify_Tests_PushSupplier_Traits::TAO_Notify_Tests_PushSupplier_Traits ()
   :type_ (CosNotifyChannelAdmin::ANY_EVENT)
 {

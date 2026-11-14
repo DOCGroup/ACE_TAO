@@ -4,24 +4,19 @@
 #include "tao/Transport.h"
 #include "tao/ORB_Core.h"
 #include "tao/Client_Strategy_Factory.h"
+#include "ace/Containers_T.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Muxed_TMS::TAO_Muxed_TMS (TAO_Transport *transport)
   : TAO_Transport_Mux_Strategy (transport)
-    , lock_ (nullptr)
-    , request_id_generator_ (0)
+    , lock_ (transport->orb_core ()->client_factory ()->create_transport_mux_strategy_lock ())
     , orb_core_ (transport->orb_core ())
     , dispatcher_table_ (this->orb_core_->client_factory ()->reply_dispatcher_table_size ())
 {
-  this->lock_ =
-    this->orb_core_->client_factory ()->create_transport_mux_strategy_lock ();
 }
 
-TAO_Muxed_TMS::~TAO_Muxed_TMS ()
-{
-  delete this->lock_;
-}
+TAO_Muxed_TMS::~TAO_Muxed_TMS () = default;
 
 // Generate and return an unique request id for the current
 // invocation.
@@ -67,7 +62,7 @@ TAO_Muxed_TMS::bind_dispatcher (CORBA::ULong request_id,
                     *this->lock_,
                     -1);
 
-  if (rd == nullptr)
+  if (!rd)
     {
       if (TAO_debug_level > 0)
         {
@@ -119,8 +114,8 @@ TAO_Muxed_TMS::has_request ()
 int
 TAO_Muxed_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
 {
-  int result = 0;
-  ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd(nullptr);
+  int result {};
+  ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd {};
 
   // Grab the reply dispatcher for this id.
   {
@@ -131,26 +126,26 @@ TAO_Muxed_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
     result = this->dispatcher_table_.unbind (params.request_id_, rd);
   }
 
-    if (result == 0 && rd)
-      {
-        if (TAO_debug_level > 8)
-          TAOLIB_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - TAO_Muxed_TMS::dispatch_reply, ")
-                      ACE_TEXT ("id [%d]\n"),
-                      params.request_id_));
+  if (result == 0 && rd)
+    {
+      if (TAO_debug_level > 8)
+        TAOLIB_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("TAO (%P|%t) - TAO_Muxed_TMS::dispatch_reply, ")
+                    ACE_TEXT ("id [%d]\n"),
+                    params.request_id_));
 
-        // Dispatch the reply.
-        // They return 1 on success, and -1 on failure.
-        result = rd->dispatch_reply (params);
-      }
-    else
-      {
-        if (TAO_debug_level > 0)
-          TAOLIB_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - TAO_Muxed_TMS::dispatch_reply, ")
-                      ACE_TEXT ("unbind dispatcher failed, id [%d], result = %d\n"),
-                      params.request_id_,
-                      result));
+      // Dispatch the reply.
+      // They return 1 on success, and -1 on failure.
+      result = rd->dispatch_reply (params);
+    }
+  else
+    {
+      if (TAO_debug_level > 0)
+        TAOLIB_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("TAO (%P|%t) - TAO_Muxed_TMS::dispatch_reply, ")
+                    ACE_TEXT ("unbind dispatcher failed, id [%d], result = %d\n"),
+                    params.request_id_,
+                    result));
 
       // Result = 0 means that the mux strategy was not able
       // to find a registered reply handler, either because the reply
@@ -159,15 +154,14 @@ TAO_Muxed_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
       result = 0;
     }
 
-
   return result;
 }
 
 int
 TAO_Muxed_TMS::reply_timed_out (CORBA::ULong request_id)
 {
-  int result = 0;
-  ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd(nullptr);
+  int result {};
+  ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd {};
 
   // Grab the reply dispatcher for this id.
   {
@@ -242,7 +236,7 @@ TAO_Muxed_TMS::connection_closed ()
              ace_mon,
              *this->lock_);
 
-  int retval = 0;
+  int retval {};
   do
     {
       retval = this->clear_cache_i ();
@@ -259,24 +253,22 @@ TAO_Muxed_TMS::clear_cache_i ()
   REQUEST_DISPATCHER_TABLE::ITERATOR const end =
     this->dispatcher_table_.end ();
 
-  ACE_Unbounded_Stack <ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> > ubs;
+  ACE_Unbounded_Stack<ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher>> dispatchers;
 
   for (REQUEST_DISPATCHER_TABLE::ITERATOR i =
          this->dispatcher_table_.begin ();
        i != end;
        ++i)
     {
-      ubs.push ((*i).int_id_);
+      dispatchers.push ((*i).int_id_);
     }
 
   this->dispatcher_table_.unbind_all ();
-  size_t const sz = ubs.size ();
-
-  for (size_t k = 0 ; k != sz ; ++k)
+  size_t const count = dispatchers.size ();
+  for (size_t i {}; i != count; ++i)
     {
-      ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd(nullptr);
-
-      if (ubs.pop (rd) == 0)
+      ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd {};
+      if (dispatchers.pop (rd) == 0)
         {
           rd->connection_closed ();
         }

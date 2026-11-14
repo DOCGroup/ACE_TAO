@@ -11,19 +11,19 @@
 // ACE_DEFAULT_SEM_KEY).
 static ACE_Malloc<ACE_SHARED_MEMORY_POOL, ACE_SV_Semaphore_Simple> alloc;
 
-const int SEM_KEY = ACE_DEFAULT_SEM_KEY + 1;
+static constexpr int SEM_KEY = ACE_DEFAULT_SEM_KEY + 1;
 
 static int
-parent (char *shm)
+parent (char * const shm)
 {
-  char *s = shm;
+  char *current = shm;
 
   ACE_SV_Semaphore_Complex sem (SEM_KEY, ACE_SV_Semaphore_Complex::ACE_CREATE, 0, 2);
 
-  for (char c = 'a'; c <= 'z'; c++)
-    *s++ = c;
+  for (char c = 'a'; c <= 'z'; ++c)
+    *current++ = c;
 
-  *s = '\0';
+  *current = '\0';
 
   if (sem.release (0) == -1)
     ACE_ERROR ((LM_ERROR, "%p", "parent sem.release(0)"));
@@ -38,7 +38,7 @@ parent (char *shm)
 }
 
 static int
-child (char *shm)
+child (char const * const shm)
 {
   ACE_SV_Semaphore_Complex sem (SEM_KEY, ACE_SV_Semaphore_Complex::ACE_CREATE, 0, 2);
 
@@ -48,7 +48,7 @@ child (char *shm)
     else
       ACE_ERROR_RETURN ((LM_ERROR, "client mutex.tryacquire(0)"), 1);
 
-  for (char *s = (char *) shm; *s != '\0'; s++)
+  for (char const *s = shm; *s != '\0'; ++s)
     ACE_DEBUG ((LM_DEBUG, "%c", *s));
 
   ACE_DEBUG ((LM_DEBUG, "\n"));
@@ -61,7 +61,10 @@ child (char *shm)
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  char *shm = (char *) alloc.malloc (27);
+  // The allocator owns the shared segment; shm only borrows its mapping.
+  char * const shm = static_cast<char *> (alloc.malloc (27));
+  if (shm == nullptr)
+    ACE_ERROR_RETURN ((LM_ERROR, "%p", "alloc.malloc"), -1);
 
   switch (ACE_OS::fork ())
     {

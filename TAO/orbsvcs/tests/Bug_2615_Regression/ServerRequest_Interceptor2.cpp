@@ -2,29 +2,11 @@
 #include "ServerRequest_Interceptor2.h"
 #include "orbsvcs/FT_CORBA_ORBC.h"
 #include "tao/IOPC.h"
-#include "tao/ORB_Constants.h"
-#include "tao/AnyTypeCode/DynamicC.h"
-#include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/CDR.h"
-#include "ace/Log_Msg.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_unistd.h"
-#include "Hello.h"
-#include "ace/OS_NS_sys_time.h"
-#include "tao/PI/PIForwardRequestC.h"
+#include "tao/Exception.h"
+#include <cstring>
 
-CORBA::Boolean
-ServerRequest_Interceptor2::has_ft_request_sc_ = false;
-
-ServerRequest_Interceptor2::ServerRequest_Interceptor2 ()
-: orb_ (0)
-{
-}
-
-ServerRequest_Interceptor2::~ServerRequest_Interceptor2 ()
-{
-}
+std::atomic<bool> ServerRequest_Interceptor2::has_ft_request_sc_ {};
 
 char *
 ServerRequest_Interceptor2::name ()
@@ -47,32 +29,23 @@ void
 ServerRequest_Interceptor2::receive_request (
   PortableInterceptor::ServerRequestInfo_ptr ri)
 {
-  CORBA::String_var op = ri->operation ();
+  CORBA::String_var const op = ri->operation ();
 
-  if (ACE_OS::strcmp (op.in (), "has_ft_request_service_context"))
-  {
-    // bail if not the op we are interested in -
-    // avoid excess spurious error clutter when client calls ::shutdown; ::ping etc..
+  if (std::strcmp (op.in (), "has_ft_request_service_context") != 0)
     return;
-  }
 
   try
     {
-      IOP::ServiceContext_var sc =
+      IOP::ServiceContext_var const sc =
         ri->get_request_service_context (IOP::FT_REQUEST);
 
       // No exception therefore there was a context
       has_ft_request_sc_ = true;
     }
-  catch (const CORBA::BAD_PARAM& ex)
+  catch (CORBA::BAD_PARAM const &)
     {
-      ACE_UNUSED_ARG (ex);
       // No group version context
       has_ft_request_sc_ = false;
-    }
-  catch (const CORBA::Exception&)
-    {
-      throw;
     }
 }
 

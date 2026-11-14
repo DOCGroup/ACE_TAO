@@ -25,40 +25,38 @@ namespace Kokyu
     public DSRT_Dispatcher_Impl<DSRT_Scheduler_Traits>
   {
   public:
-    typedef typename
-    DSRT_Scheduler_Traits::Guid_t Guid_t;
+    using Guid_t = typename DSRT_Scheduler_Traits::Guid_t;
 
-    typedef typename
-    DSRT_Scheduler_Traits::QoSDescriptor_t DSRT_QoSDescriptor;
+    using DSRT_QoSDescriptor = typename DSRT_Scheduler_Traits::QoSDescriptor_t;
 
     DSRT_CV_Dispatcher_Impl (ACE_Sched_Params::Policy sched_policy,
                              int sched_scope);
 
-    DSRT_CV_Dispatcher_Impl (const DSRT_CV_Dispatcher_Impl &) = delete;
+    DSRT_CV_Dispatcher_Impl (DSRT_CV_Dispatcher_Impl const &) = delete;
     DSRT_CV_Dispatcher_Impl (DSRT_CV_Dispatcher_Impl &&) = delete;
-    DSRT_CV_Dispatcher_Impl &operator= (const DSRT_CV_Dispatcher_Impl &) = delete;
+    DSRT_CV_Dispatcher_Impl &operator= (DSRT_CV_Dispatcher_Impl const &) = delete;
     DSRT_CV_Dispatcher_Impl &operator= (DSRT_CV_Dispatcher_Impl &&) = delete;
 
-    int init_i (const DSRT_ConfigInfo&);
+    int init_i (DSRT_ConfigInfo const &) override;
 
     /// Schedule a thread dynamically based on the qos info supplied.
-    int schedule_i (Guid_t, const DSRT_QoSDescriptor&);
+    int schedule_i (Guid_t, DSRT_QoSDescriptor const &) override;
 
     /// Update the schedule for a thread. This could alter the current
     /// schedule.
-    int update_schedule_i (Guid_t, const DSRT_QoSDescriptor&);
+    int update_schedule_i (Guid_t, DSRT_QoSDescriptor const &) override;
 
     /// Inform the scheduler that the caller thread is about to
     /// block. This could alter the current schedule.
-    int update_schedule_i (Guid_t, Block_Flag_t);
+    int update_schedule_i (Guid_t, Block_Flag_t) override;
 
     /// Cancel the schedule for a thread. This could alter the current
     /// schedule.
-    int cancel_schedule_i (Guid_t);
+    int cancel_schedule_i (Guid_t) override;
 
     /// Shut down the dispatcher. The dispatcher will stop processing
     /// requests.
-    int shutdown_i ();
+    int shutdown_i () override;
 
   private:
     using cond_lock_t = ACE_SYNCH_MUTEX;

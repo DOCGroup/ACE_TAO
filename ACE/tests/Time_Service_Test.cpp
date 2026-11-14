@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Process.h"
 #include "ace/Lib_Find.h"

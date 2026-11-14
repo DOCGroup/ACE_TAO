@@ -59,6 +59,11 @@ template <class KEY, class VALUE, class CMAP_TYPE, class ITERATOR_IMPL, class RE
 class ACE_Cache_Map_Manager
 {
 public:
+  ACE_Cache_Map_Manager (ACE_Cache_Map_Manager const &) = delete;
+  ACE_Cache_Map_Manager (ACE_Cache_Map_Manager &&) = delete;
+  ACE_Cache_Map_Manager &operator= (ACE_Cache_Map_Manager const &) = delete;
+  ACE_Cache_Map_Manager &operator= (ACE_Cache_Map_Manager &&) = delete;
+
   // = Traits.
   using key_type = KEY;
   using mapped_type = VALUE;
@@ -219,11 +224,6 @@ protected:
 
   /// The strategy to be followed for caching entries in the map.
   CACHING_STRATEGY &caching_strategy_;
-
-private:
-  // = Disallow these operations.
-  void operator= (const ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMPL, CACHING_STRATEGY, ATTRIBUTES> &) = delete;
-  ACE_Cache_Map_Manager (const ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMPL, CACHING_STRATEGY, ATTRIBUTES> &) = delete;
 };
 
 /**
@@ -248,14 +248,14 @@ public:
 
   ACE_Cache_Map_Iterator (const IMPLEMENTATION &iterator_impl);
 
-  /// Copy constructor.
+
   ACE_Cache_Map_Iterator (const ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &rhs);
 
   virtual ~ACE_Cache_Map_Iterator () = default;
 
   // = Iteration methods.
 
-  /// assignment operator.
+
   ACE_Cache_Map_Iterator <KEY, VALUE, IMPLEMENTATION,
                           CACHING_STRATEGY, ATTRIBUTES> &operator=
       (const ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION,
@@ -321,14 +321,14 @@ public:
 
   ACE_Cache_Map_Reverse_Iterator (const REVERSE_IMPLEMENTATION &iterator_impl);
 
-  /// Copy constructor.
+
   ACE_Cache_Map_Reverse_Iterator (const ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &rhs);
 
   ~ACE_Cache_Map_Reverse_Iterator () = default;
 
   // = Iteration methods.
 
-  /// Assignment operator.
+
   ACE_Cache_Map_Reverse_Iterator <KEY, VALUE, REVERSE_IMPLEMENTATION,
                                   CACHING_STRATEGY, ATTRIBUTES> &operator=
      (const ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION,

@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Trader_Interfaces.h
  *
@@ -8,8 +7,6 @@
  *  @author Seth Widoff <sbw1@cs.wustl.edu>
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_TRADER_INTERFACES_H
 #define TAO_TRADER_INTERFACES_H
@@ -18,6 +15,9 @@
 #include "orbsvcs/Trader/Trader_Utils.h"
 #include "orbsvcs/Trader/Constraint_Interpreter.h"
 #include "orbsvcs/Trader/Offer_Iterators_T.h"
+
+#include <deque>
+#include <memory>
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -57,9 +57,82 @@ class TAO_Lookup :
   public TAO_Import_Attributes<POA_CosTrading::Lookup>
 {
 public:
-  TAO_Lookup (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader);
+  TAO_Lookup (TAO_Lookup const&) = delete;
+  TAO_Lookup& operator= (TAO_Lookup const&) = delete;
+  TAO_Lookup (TAO_Lookup&&) = delete;
+  TAO_Lookup& operator= (TAO_Lookup&&) = delete;
+
+  explicit TAO_Lookup (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader);
 
   ~TAO_Lookup ();
+
+  /// The query operation is the means by which an object can obtain
+  /// references to other objects that provide services meeting its
+  /// requirements.
+  /// The "type" parameter conveys the required service type. It is key
+  /// to the central purpose of trading: to perform an introduction for
+  /// future type safe interactions between importer and exporter. By
+  /// stating a service type, the importer implies the desired interface
+  /// type and a domain of discourse for talking about properties of the
+  /// service.
+  /// The trader may return a service offer of a subtype of the "type"
+  /// requested. Sub-typing of service types is discussed in "Service
+  /// Types" on page 16-4. A service subtype can be described by the
+  /// properties of its supertypes. This ensures that a well-formed
+  /// query for the "type" is also a well-formed query with respect to
+  /// any subtypes. However, if the importer specifies the policy of
+  /// exact_type_match = TRUE, then only offers with the exact (no
+  /// subtype) service type requested are returned.
+  /// The constraint "constr" is the means by which the importer states
+  /// those requirements of a service that are not captured in the
+  /// signature of the interface. These requirements deal with the
+  /// computational behavior of the desired service, non-functional
+  /// aspects, and non-computational aspects (such as the organization
+  /// owning the objects that provide the service). An importer is
+  /// always guaranteed that any returned offer satisfies the matching
+  /// constraint at the time of import. If the "constr" does not obey
+  /// the syntax rules for a legal constraint expression, then an
+  /// IllegalConstraint exception is raised.
+  /// The "pref" parameter is also used to order those offers that
+  /// match the "constr" so that the offers returned by the trader are
+  /// in the order of greatest interest to the importer. If "pref" does
+  /// not obey the syntax rules for a legal preference expression, then
+  /// an IllegalPreference exception is raised.
+  /// The "policies" parameter allows the importer to specify how the
+  /// search should be performed as opposed to what sort of services
+  /// should be found in the course of the search. This can be viewed
+  /// as parameterizing the algorithms within the trader
+  /// implementation. The "policies" are a sequence of name-value
+  /// pairs. The names available to an importer depend on the
+  /// implementation of the trader. However, some names are
+  /// standardized where they effect the interpretation of other
+  /// parameters or where they may impact linking and federation of
+  /// traders.
+  /// The "desired_props" parameter defines the set of properties
+  /// describing returned offers that are to be returned with the
+  /// object reference. There are three possibilities, the importer
+  /// wants one of the properties, all of the properties (but without
+  /// having to name them), or some properties (the names of which are
+  /// provided).
+  /// The desired_props parameter does not affect whether or not a
+  /// service offer is returned. To avoid "missing" desired properties,
+  /// the importer should specify "exists prop_name" in the
+  /// constraint.
+  /// The returned offers are passed back in one of two ways (or a
+  /// combination of both). The "offers" return result conveys a list
+  /// of offers and the "offer_itr" is a reference to an interface at
+  /// which offers can be obtained. The "how_many" parameter states
+  /// how many offers are to be returned via the "offers" result, any
+  /// remaining offers are available via the iterator interface. If the
+  /// "how_many" exceeds the number of offers to be returned, then the
+  /// "offer_itr" will be nil.
+  /// If any cardinality or other limits were applied by one or more
+  /// traders in responding to a particular query, then the
+  /// "limits_applied" parameter will contain the names of the policies
+  /// which limited the query. The sequence of names returned in
+  /// "limits_applied" from any federated or proxy queries must be
+  /// concatenated onto the names of limits applied locally and
+  /// returned.
 
   void
     query (char const* type,
@@ -72,89 +145,10 @@ public:
            CosTrading::OfferIterator_out offer_itr,
            CosTrading::PolicyNameSeq_out limits_applied) override;
 
-  // BEGIN SPEC
-  // The query operation is the means by which an object can obtain
-  // references to other objects that provide services meeting its
-  // requirements.
-
-  // The "type" parameter conveys the required service type. It is key
-  // to the central purpose of trading: to perform an introduction for
-  // future type safe interactions between importer and exporter. By
-  // stating a service type, the importer implies the desired interface
-  // type and a domain of discourse for talking about properties of the
-  // service.
-
-  // The trader may return a service offer of a subtype of the "type"
-  // requested. Sub-typing of service types is discussed in "Service
-  // Types" on page 16-4. A service subtype can be described by the
-  // properties of its supertypes. This ensures that a well-formed
-  // query for the "type" is also a well-formed query with respect to
-  // any subtypes. However, if the importer specifies the policy of
-  // exact_type_match = TRUE, then only offers with the exact (no
-  // subtype) service type requested are returned.
-
-  // The constraint "constr" is the means by which the importer states
-  // those requirements of a service that are not captured in the
-  // signature of the interface. These requirements deal with the
-  // computational behavior of the desired service, non-functional
-  // aspects, and non-computational aspects (such as the organization
-  // owning the objects that provide the service). An importer is
-  // always guaranteed that any returned offer satisfies the matching
-  // constraint at the time of import. If the "constr" does not obey
-  // the syntax rules for a legal constraint expression, then an
-  // IllegalConstraint exception is raised.
-
-  // The "pref" parameter is also used to order those offers that
-  // match the "constr" so that the offers returned by the trader are
-  // in the order of greatest interest to the importer. If "pref" does
-  // not obey the syntax rules for a legal preference expression, then
-  // an IllegalPreference exception is raised.
-
-  // The "policies" parameter allows the importer to specify how the
-  // search should be performed as opposed to what sort of services
-  // should be found in the course of the search. This can be viewed
-  // as parameterizing the algorithms within the trader
-  // implementation. The "policies" are a sequence of name-value
-  // pairs. The names available to an importer depend on the
-  // implementation of the trader. However, some names are
-  // standardized where they effect the interpretation of other
-  // parameters or where they may impact linking and federation of
-  // traders.
-
-  // The "desired_props" parameter defines the set of properties
-  // describing returned offers that are to be returned with the
-  // object reference. There are three possibilities, the importer
-  // wants one of the properties, all of the properties (but without
-  // having to name them), or some properties (the names of which are
-  // provided).
-
-  // The desired_props parameter does not affect whether or not a
-  // service offer is returned. To avoid "missing" desired properties,
-  // the importer should specify "exists prop_name" in the
-  // constraint.
-
-  // The returned offers are passed back in one of two ways (or a
-  // combination of both). The "offers" return result conveys a list
-  // of offers and the "offer_itr" is a reference to an interface at
-  // which offers can be obtained. The "how_many" parameter states
-  // how many offers are to be returned via the "offers" result, any
-  // remaining offers are available via the iterator interface. If the
-  // "how_many" exceeds the number of offers to be returned, then the
-  // "offer_itr" will be nil.
-
-  // If any cardinality or other limits were applied by one or more
-  // traders in responding to a particular query, then the
-  // "limits_applied" parameter will contain the names of the policies
-  // which limited the query. The sequence of names returned in
-  // "limits_applied" from any federated or proxy queries must be
-  // concatenated onto the names of limits applied locally and
-  // returned.
-  // END SPEC
-
 private:
   /// Factory method for creating an appropriate Offer Iterator based
   /// on the presence of the Register Interface.
-  TAO_Offer_Iterator* create_offer_iterator (const TAO_Property_Filter&);
+  TAO_Offer_Iterator* create_offer_iterator (TAO_Property_Filter const&);
 
   /// Traverse the type hierarchy to pull the matching offers from all
   /// subtypes of the root type.
@@ -218,7 +212,7 @@ private:
    * suitable for returning to the user.
    */
   void federated_query (const CosTrading::LinkNameSeq& links,
-                        const TAO_Policies& policies,
+                        TAO_Policies const& policies,
                         const CosTrading::Admin::OctetSeq& request_id,
                         TAO_Preference_Interpreter& pref_inter,
                         const char *type,
@@ -237,17 +231,12 @@ private:
   CORBA::Boolean seen_request_id (TAO_Policies& policies,
                                   const CosTrading::Admin::OctetSeq*& seq);
 
-  TAO_Lookup (TAO_Lookup const&) = delete;
-  TAO_Lookup& operator= (TAO_Lookup const&) = delete;
-  TAO_Lookup (TAO_Lookup&&) = delete;
-  TAO_Lookup& operator= (TAO_Lookup&&) = delete;
-
   const unsigned int IDS_SAVED;
 
   /// A reference to the trader for obtaining offer maps.
   TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader_;
 
-  using Request_Ids = ACE_Unbounded_Queue<CosTrading::Admin::OctetSeq const*>;
+  using Request_Ids = std::deque<std::unique_ptr<CosTrading::Admin::OctetSeq const>>;
 
   /// A list of recent request_id_stems
   Request_Ids request_ids_;
@@ -267,218 +256,193 @@ class TAO_Register :
   public TAO_Support_Attributes<POA_CosTrading::Register>
 {
 public:
-  TAO_Register (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader);
+  TAO_Register (TAO_Register const&) = delete;
+  TAO_Register& operator= (TAO_Register const&) = delete;
+  TAO_Register (TAO_Register&&) = delete;
+  TAO_Register& operator= (TAO_Register&&) = delete;
+
+  explicit TAO_Register (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader);
 
   ~TAO_Register () override;
+
+  /// The export operation is the means by which a service is
+  /// advertised, via a trader, to a community of potential
+  /// importers. The OfferId returned is the handle with which the
+  /// exporter can identify the exported offer when attempting to
+  /// access it via other operations. The OfferId is only meaningful in
+  /// the context of the trader that generated it.
+  ///   The "reference" parameter is the information that enables a client
+  /// to interact with a remote server. If a trader implementation chooses
+  /// to consider certain types of object references (e.g., a nil object
+  /// reference) to be unexportable, then it may return the InvalidObjectRef
+  /// exception in such cases.
+  /// The "type" parameter
+  /// identifies the service type, which contains the interface type of
+  /// the "reference" and a set of named property types that may be
+  /// used in further describing this offer (i.e., it restricts what is
+  /// acceptable in the properties parameter).
+  /// If the string
+  /// representation of the "type" does not obey the rules for
+  /// identifiers, then an IllegalServiceType exception is raised. If
+  /// the "type" is correct syntactically but a trader is able to
+  /// unambiguously determine that it is not a recognized service type,
+  /// then an UnknownServiceType exception is raised.
+  /// If the trader
+  /// can determine that the interface type of the "reference"
+  /// parameter is not a subtype of the interface type specified in
+  /// "type," then an InterfaceTypeMismatch exception is raised. The
+  /// "properties" parameter is a list of named values that conform to
+  /// the property value types defined for those names. They describe
+  /// the service being offered. This description typically covers
+  /// behavioral, non-functional, and non-computational aspects of the
+  /// service.
+  /// If any of the property names do not obey the syntax
+  /// rules for PropertyNames, then an IllegalPropertyName exception is
+  /// raised.
+  /// If the type of any of the property values is not the
+  /// same as the declared type (declared in the service type), then a
+  /// PropertyTypeMismatch exception is raised.
+  /// If an attempt is made to assign a dynamic property value to a
+  /// readonly property, then the ReadonlyDynamicProperty exception is
+  /// raised. If the "properties" parameter omits any property
+  /// declared in the service type with a mode of mandatory, then a
+  /// MissingMandatoryProperty exception is raised. If two or more
+  /// properties with the same property name are included in this
+  /// parameter, the DuplicatePropertyName exception is raised.
 
   CosTrading::OfferId _cxx_export (CORBA::Object_ptr reference,
                                    char const* type,
                                    CosTrading::PropertySeq const& properties) override;
 
-  // BEGIN SPEC
-  // The export operation is the means by which a service is
-  // advertised, via a trader, to a community of potential
-  // importers. The OfferId returned is the handle with which the
-  // exporter can identify the exported offer when attempting to
-  // access it via other operations. The OfferId is only meaningful in
-  // the context of the trader that generated it.
-
-  //   The "reference" parameter is the information that enables a client
-  // to interact with a remote server. If a trader implementation chooses
-  // to consider certain types of object references (e.g., a nil object
-  // reference) to be unexportable, then it may return the InvalidObjectRef
-  // exception in such cases.
-
-  // The "type" parameter
-  // identifies the service type, which contains the interface type of
-  // the "reference" and a set of named property types that may be
-  // used in further describing this offer (i.e., it restricts what is
-  // acceptable in the properties parameter).
-
-  // If the string
-  // representation of the "type" does not obey the rules for
-  // identifiers, then an IllegalServiceType exception is raised. If
-  // the "type" is correct syntactically but a trader is able to
-  // unambiguously determine that it is not a recognized service type,
-  // then an UnknownServiceType exception is raised.
-
-  // If the trader
-  // can determine that the interface type of the "reference"
-  // parameter is not a subtype of the interface type specified in
-  // "type," then an InterfaceTypeMismatch exception is raised. The
-  // "properties" parameter is a list of named values that conform to
-  // the property value types defined for those names. They describe
-  // the service being offered. This description typically covers
-  // behavioral, non-functional, and non-computational aspects of the
-  // service.
-
-  // If any of the property names do not obey the syntax
-  // rules for PropertyNames, then an IllegalPropertyName exception is
-  // raised.
-
-  // If the type of any of the property values is not the
-  // same as the declared type (declared in the service type), then a
-  // PropertyTypeMismatch exception is raised.
-
-  // If an attempt is made to assign a dynamic property value to a
-  // readonly property, then the ReadonlyDynamicProperty exception is
-  // raised. If the "properties" parameter omits any property
-  // declared in the service type with a mode of mandatory, then a
-  // MissingMandatoryProperty exception is raised. If two or more
-  // properties with the same property name are included in this
-  // parameter, the DuplicatePropertyName exception is raised.
-  // END SPEC
+  /// The withdraw operation removes the service offer from the trader
+  /// (i.e., after withdraw the offer can no longer be returned as the
+  /// result of a query). The offer is identified by the "id" parameter
+  /// which was originally returned by export. If the string
+  /// representation of "id" does not obey the rules for offer
+  /// identifiers, then an IllegalOfferId exception is raised. If the
+  /// "id" is legal but there is no offer within the trader with that
+  /// "id," then an UnknownOfferId exception is raised. If the "id"
+  /// identifies a proxy offer rather than an ordinary offer, then a
+  /// ProxyOfferId exception is raised.
 
   void withdraw (char const* id) override;
 
-  // BEGIN SPEC
-  // The withdraw operation removes the service offer from the trader
-  // (i.e., after withdraw the offer can no longer be returned as the
-  // result of a query). The offer is identified by the "id" parameter
-  // which was originally returned by export. If the string
-  // representation of "id" does not obey the rules for offer
-  // identifiers, then an IllegalOfferId exception is raised. If the
-  // "id" is legal but there is no offer within the trader with that
-  // "id," then an UnknownOfferId exception is raised. If the "id"
-  // identifies a proxy offer rather than an ordinary offer, then a
-  // ProxyOfferId exception is raised.
-  // END SPEC
+  /// The describe operation returns the information about an offered
+  /// service that is held by the trader. It comprises the "reference"
+  /// of the offered service, the "type" of the service offer, and the
+  /// "properties" that describe this offer of service. The offer is
+  /// identified by the "id" parameter which was originally returned by
+  /// export. If the string representation of "id" does not obey the
+  /// rules for object identifiers, then an IllegalOfferId exception is
+  /// raised. If the "id" is legal but there is no offer within the
+  /// trader with that "id," then an UnknownOfferId exception is
+  /// raised. If the "id" identifies a proxy offer rather than an
+  /// ordinary offer, then a ProxyOfferId exception is raised.
 
   CosTrading::Register::OfferInfo*
     describe (char const* id) override;
 
-  // BEGIN SPEC
-  // The describe operation returns the information about an offered
-  // service that is held by the trader. It comprises the "reference"
-  // of the offered service, the "type" of the service offer, and the
-  // "properties" that describe this offer of service. The offer is
-  // identified by the "id" parameter which was originally returned by
-  // export. If the string representation of "id" does not obey the
-  // rules for object identifiers, then an IllegalOfferId exception is
-  // raised. If the "id" is legal but there is no offer within the
-  // trader with that "id," then an UnknownOfferId exception is
-  // raised. If the "id" identifies a proxy offer rather than an
-  // ordinary offer, then a ProxyOfferId exception is raised.
-  // END SPEC
+  /// The modify operation is used to change the description of a
+  /// service as held within a service offer. The object reference and
+  /// the service type associated with the offer cannot be
+  /// changed. This operation may: add new (non-mandatory) properties
+  /// to describe an offer, change the values of some existing (not
+  /// readonly) properties, or delete existing (neither mandatory nor
+  /// readonly) properties.
+  /// The modify operation either succeeds completely or it fails
+  /// completely. The offer is identified by the "id" parameter which
+  /// was originally returned by export. If the string representation
+  /// of "id" does not obey the rules for offer identifiers, then an
+  /// IllegalOfferId exception is raised. If the "id" is legal but
+  /// there is no offer within the trader with that "id," then an
+  /// UnknownOfferId exception is raised. If the "id" identifies a
+  /// proxy offer rather than an ordinary offer, then a ProxyOfferId
+  /// exception is raised.
+  /// The "del_list" parameter gives the names of the properties that
+  /// are no longer to be recorded for the identified offer. Future
+  /// query and describe operations will not see these properties. If
+  /// any of the names within the "del_list" do not obey the rules for
+  /// PropertyName's, then an IllegalPropertyName exception is
+  /// raised. If a "name" is legal but there is no property for the
+  /// offer with that "name," then an UnknownPropertyName exception is
+  /// raised. If the list includes a property that has a mandatory
+  /// mode, then the MandatoryProperty exception is raised. If the
+  /// same property name is included two or more times in this
+  /// parameter, the DuplicatePropertyName exception is raised.
+  /// The "modify_list" parameter gives the names and values of
+  /// properties to be changed. If the property is not in the offer,
+  /// then the modify operation adds it. The modified (or added)
+  /// property values are returned in future query and describe
+  /// operations in place of the original values. If any of the names
+  /// within the "modify_list" do not obey the rules for
+  /// PropertyName's, then an IllegalPropertyName exception is
+  /// raised. If the list includes a property that has a readonly
+  /// mode, then the ReadonlyProperty exception is raised unless that
+  /// readonly property is not currently recorded for the offer. The
+  /// ReadonlyDynamicProperty exception is raised if an attempt is made
+  /// to assign a dynamic property value to a readonly property. If
+  /// the value of any modified property is of a type that is not the
+  /// same as the type expected, then the PropertyTypeMismatch
+  /// exception is raised. If two or more properties with the same
+  /// property name are included in this argument, the
+  /// DuplicatePropertyName exception is raised.
+  /// The NotImplemented exception shall be raised if and only if the
+  /// supports_modifiable_properties attribute yields FALSE.
 
   void modify (char const* id,
                CosTrading::PropertyNameSeq const& del_list,
                CosTrading::PropertySeq const& modify_list) override;
 
-  // BEGIN SPEC
-  // The modify operation is used to change the description of a
-  // service as held within a service offer. The object reference and
-  // the service type associated with the offer cannot be
-  // changed. This operation may: add new (non-mandatory) properties
-  // to describe an offer, change the values of some existing (not
-  // readonly) properties, or delete existing (neither mandatory nor
-  // readonly) properties.
-
-  // The modify operation either succeeds completely or it fails
-  // completely. The offer is identified by the "id" parameter which
-  // was originally returned by export. If the string representation
-  // of "id" does not obey the rules for offer identifiers, then an
-  // IllegalOfferId exception is raised. If the "id" is legal but
-  // there is no offer within the trader with that "id," then an
-  // UnknownOfferId exception is raised. If the "id" identifies a
-  // proxy offer rather than an ordinary offer, then a ProxyOfferId
-  // exception is raised.
-
-  // The "del_list" parameter gives the names of the properties that
-  // are no longer to be recorded for the identified offer. Future
-  // query and describe operations will not see these properties. If
-  // any of the names within the "del_list" do not obey the rules for
-  // PropertyName's, then an IllegalPropertyName exception is
-  // raised. If a "name" is legal but there is no property for the
-  // offer with that "name," then an UnknownPropertyName exception is
-  // raised. If the list includes a property that has a mandatory
-  // mode, then the MandatoryProperty exception is raised. If the
-  // same property name is included two or more times in this
-  // parameter, the DuplicatePropertyName exception is raised.
-
-  // The "modify_list" parameter gives the names and values of
-  // properties to be changed. If the property is not in the offer,
-  // then the modify operation adds it. The modified (or added)
-  // property values are returned in future query and describe
-  // operations in place of the original values. If any of the names
-  // within the "modify_list" do not obey the rules for
-  // PropertyName's, then an IllegalPropertyName exception is
-  // raised. If the list includes a property that has a readonly
-  // mode, then the ReadonlyProperty exception is raised unless that
-  // readonly property is not currently recorded for the offer. The
-  // ReadonlyDynamicProperty exception is raised if an attempt is made
-  // to assign a dynamic property value to a readonly property. If
-  // the value of any modified property is of a type that is not the
-  // same as the type expected, then the PropertyTypeMismatch
-  // exception is raised. If two or more properties with the same
-  // property name are included in this argument, the
-  // DuplicatePropertyName exception is raised.
-
-  // The NotImplemented exception shall be raised if and only if the
-  // supports_modifiable_properties attribute yields FALSE.
-  // END SPEC
+  /// The withdraw_using_constraint operation withdraws a set of offers
+  /// from within a single trader. This set is identified in the same
+  /// way that a query operation identifies a set of offers to be
+  /// returned to an importer.
+  /// The "type" parameter conveys the required service type. Each
+  /// offer of the specified type will have the constraint expression
+  /// applied to it. If it matches the constraint expression, then the
+  /// offer will be withdrawn. If "type" does not obey the rules for
+  /// service types, then an IllegalServiceType exception is raised.
+  /// If the "type" is correct syntactically but is not recognized as a
+  /// service type by the trader, then an UnknownServiceType exception
+  /// is raised.
+  /// The constraint "constr" is the means by which the client
+  /// restricts the set of offers to those that are intended for
+  /// withdrawal. If "constr" does not obey the syntax rules for a
+  /// constraint then an IllegalConstraint exception is raised. If
+  /// the constraint fails to match with any offer of the specified
+  /// service type, then a NoMatchingOffers exception is raised.
 
   void withdraw_using_constraint (char const* type,
                                   char const* constr) override;
 
-  // BEGIN SPEC
-  // The withdraw_using_constraint operation withdraws a set of offers
-  // from within a single trader. This set is identified in the same
-  // way that a query operation identifies a set of offers to be
-  // returned to an importer.
-
-  // The "type" parameter conveys the required service type. Each
-  // offer of the specified type will have the constraint expression
-  // applied to it. If it matches the constraint expression, then the
-  // offer will be withdrawn. If "type" does not obey the rules for
-  // service types, then an IllegalServiceType exception is raised.
-  // If the "type" is correct syntactically but is not recognized as a
-  // service type by the trader, then an UnknownServiceType exception
-  // is raised.
-
-  // The constraint "constr" is the means by which the client
-  // restricts the set of offers to those that are intended for
-  // withdrawal. If "constr" does not obey the syntax rules for a
-  // constraint then an IllegalConstraint exception is raised. If
-  // the constraint fails to match with any offer of the specified
-  // service type, then a NoMatchingOffers exception is raised.
-  // END SPEC
+  /// This operation is used to resolve a context relative name for
+  /// another trader. In particular, it is used when exporting to a
+  /// trader that is known by a name rather than by an object
+  /// reference. The client provides the name, which will be a sequence
+  /// of name components. If the content of the parameter cannot
+  /// yield legal syntax for the first component, then the
+  /// IllegalTraderName exception is raised. Otherwise, the first name
+  /// component is compared against the name held in each link. If no
+  /// match is found, or the trader does not support links, the
+  /// UnknownTraderName exception is raised. Otherwise, the trader
+  /// obtains the register_if held as part of the matched link. If
+  /// the Register interface is not nil, then the trader binds to the
+  /// Register interface and invokes resolve but passes the TraderName
+  /// with the first component removed; if it is nil, then the
+  /// RegisterNotSupported exception is raised. When a trader is able
+  /// to match the first name component leaving no residual name, that
+  /// trader returns the reference for the Register interface for that
+  /// linked trader. In unwinding the recursion, intermediate traders
+  /// return the Register interface reference to their client (another
+  /// trader).
 
   CosTrading::Register_ptr
     resolve (CosTrading::TraderName const& name) override;
-
-  // BEGIN SPEC
-  // This operation is used to resolve a context relative name for
-  // another trader. In particular, it is used when exporting to a
-  // trader that is known by a name rather than by an object
-  // reference. The client provides the name, which will be a sequence
-  // of name components. If the content of the parameter cannot
-  // yield legal syntax for the first component, then the
-  // IllegalTraderName exception is raised. Otherwise, the first name
-  // component is compared against the name held in each link. If no
-  // match is found, or the trader does not support links, the
-  // UnknownTraderName exception is raised. Otherwise, the trader
-  // obtains the register_if held as part of the matched link. If
-  // the Register interface is not nil, then the trader binds to the
-  // Register interface and invokes resolve but passes the TraderName
-  // with the first component removed; if it is nil, then the
-  // RegisterNotSupported exception is raised. When a trader is able
-  // to match the first name component leaving no residual name, that
-  // trader returns the reference for the Register interface for that
-  // linked trader. In unwinding the recursion, intermediate traders
-  // return the Register interface reference to their client (another
-  // trader).
-  // END SPEC
 
  protected:
   void validate_properties (const char* type,
                             const CosTradingRepos::ServiceTypeRepository::TypeStruct* type_struct,
                             const CosTrading::PropertySeq& properties);
-
-  TAO_Register (TAO_Register const&) = delete;
-  TAO_Register& operator= (TAO_Register const&) = delete;
-  TAO_Register (TAO_Register&&) = delete;
-  TAO_Register& operator= (TAO_Register&&) = delete;
 
  private:
   TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader_;
@@ -513,17 +477,19 @@ class TAO_Admin :
   public TAO_Link_Attributes <POA_CosTrading::Admin>
 {
 public:
-  TAO_Admin (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader);
+  TAO_Admin (TAO_Admin const&) = delete;
+  TAO_Admin& operator= (TAO_Admin const&) = delete;
+  TAO_Admin (TAO_Admin&&) = delete;
+  TAO_Admin& operator= (TAO_Admin&&) = delete;
+
+  explicit TAO_Admin (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader);
 
   ~TAO_Admin ();
-
-  // = Importing Parameters (used by the Lookup Interface)
 
   /// Search card is the cardinality of the offers searched for
   /// constraint compliance.
   CORBA::ULong set_def_search_card (CORBA::ULong value) override;
   CORBA::ULong set_max_search_card (CORBA::ULong value) override;
-
 
   /// Match card is the cardinality of offers found compliant with the
   /// constraints.
@@ -542,16 +508,12 @@ public:
   CORBA::Boolean set_supports_dynamic_properties (CORBA::Boolean value) override;
   CORBA::Boolean set_supports_proxy_offers (CORBA::Boolean value) override;
 
-  // = Link Interface parameters
-
   CORBA::ULong set_def_hop_count (CORBA::ULong value) override;
   CORBA::ULong set_max_hop_count (CORBA::ULong value) override;
 
   CosTrading::FollowOption set_def_follow_policy (CosTrading::FollowOption policy) override;
   CosTrading::FollowOption set_max_follow_policy (CosTrading::FollowOption policy) override;
   CosTrading::FollowOption set_max_link_follow_policy (CosTrading::FollowOption policy) override;
-
-  // = Set Type Repository
 
   CosTrading::TypeRepository_ptr set_type_repos (CosTrading::TypeRepository_ptr repository) override;
 
@@ -560,39 +522,31 @@ public:
   CosTrading::Admin::OctetSeq*
     set_request_id_stem (CosTrading::Admin::OctetSeq const& stem) override;
 
+  /// The list_offers operation allows the administrator of a trader to
+  /// perform housekeeping by obtaining a handle on each of the offers
+  /// within a trader (e.g., for garbage collection etc.). Only the
+  /// identifiers of ordinary offers are returned, identifiers of proxy
+  /// offers are not returned via this operation. If the trader does
+  /// not support the Register interface, the NotImplemented exception
+  /// is raised. The returned identifiers are passed back in one of two
+  /// ways (or a combination of both). The "ids" return result
+  /// conveys a list of offer identifiers and the "id_itr" is a
+  /// reference to an interface at which additional offer identities
+  /// can be obtained. The "how_many" parameter states how many
+  /// identifiers are to be returned via the "ids" result; any
+  /// remaining are available via the iterator interface. If the
+  /// "how_many" exceeds the number of offers held in the trader, then
+  /// the "id_itr" is nil.
+
   void list_offers (CORBA::ULong how_many,
                     CosTrading::OfferIdSeq_out ids,
                     CosTrading::OfferIdIterator_out id_itr) override;
-
-
-  // BEGIN SPEC
-  // The list_offers operation allows the administrator of a trader to
-  // perform housekeeping by obtaining a handle on each of the offers
-  // within a trader (e.g., for garbage collection etc.). Only the
-  // identifiers of ordinary offers are returned, identifiers of proxy
-  // offers are not returned via this operation. If the trader does
-  // not support the Register interface, the NotImplemented exception
-  // is raised. The returned identifiers are passed back in one of two
-  // ways (or a combination of both). The "ids" return result
-  // conveys a list of offer identifiers and the "id_itr" is a
-  // reference to an interface at which additional offer identities
-  // can be obtained. The "how_many" parameter states how many
-  // identifiers are to be returned via the "ids" result; any
-  // remaining are available via the iterator interface. If the
-  // "how_many" exceeds the number of offers held in the trader, then
-  // the "id_itr" is nil.
-  // END SPEC
 
   void list_proxies (CORBA::ULong,
                      CosTrading::OfferIdSeq_out,
                      CosTrading::OfferIdIterator_out) override;
 
 private:
-  TAO_Admin (TAO_Admin const&) = delete;
-  TAO_Admin& operator= (TAO_Admin const&) = delete;
-  TAO_Admin (TAO_Admin&&) = delete;
-  TAO_Admin& operator= (TAO_Admin&&) = delete;
-
   TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader_;
 
   /// Unique prefix to create a sequence number space.
@@ -604,7 +558,6 @@ private:
   TRADER_LOCK_TYPE lock_;
 };
 
-
 /**
  * @class TAO_Link
  */
@@ -615,7 +568,12 @@ class TAO_Link :
   public TAO_Link_Attributes <POA_CosTrading::Link>
 {
 public:
-  TAO_Link (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader);
+  TAO_Link (TAO_Link const&) = delete;
+  TAO_Link& operator= (TAO_Link const&) = delete;
+  TAO_Link (TAO_Link&&) = delete;
+  TAO_Link& operator= (TAO_Link&&) = delete;
+
+  explicit TAO_Link (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader);
 
   ~TAO_Link ();
 
@@ -666,86 +624,66 @@ public:
   // creation of the link.
   // END SPEC
 
+  /// The remove_link operation removes all knowledge of the target
+  /// trader. The target trader cannot be used subsequently to resolve,
+  /// forward, or propagate trading operations from this trader.
+  /// The "name" parameter identifies the link to be removed. The
+  /// exception IllegalLinkName is raised if the link is formed poorly
+  /// and the UnknownLinkName exception is raised if the named link is
+  /// not in the trader.
+
   void remove_link (char const* name) override;
 
-  // BEGIN SPEC
-  // The remove_link operation removes all knowledge of the target
-  // trader. The target trader cannot be used subsequently to resolve,
-  // forward, or propagate trading operations from this trader.
-
-  // The "name" parameter identifies the link to be removed. The
-  // exception IllegalLinkName is raised if the link is formed poorly
-  // and the UnknownLinkName exception is raised if the named link is
-  // not in the trader.
-  // END SPEC
+  /// The describe_link operation returns information on a link held in
+  /// the trader.
+  /// The "name" parameter identifies the link whose description is
+  /// required. For a malformed link name, the exception
+  /// IllegalLinkName is raised. An UnknownLinkName exception is raised
+  /// if the named link is not found in the trader.
+  /// The operation returns a LinkInfo structure comprising: the
+  /// Lookup interface of the target trading service, the Register
+  /// interface of the target trading service, and the default, as
+  /// well as the limiting follow behavior of the named link.
+  /// If the target service does not support the Register interface,
+  /// then that field of the LinkInfo structure is nil. Given the
+  /// description of the Register::resolve() operation in "Resolve
+  /// Operation" on page 16-45, most implementations will opt for
+  /// determining the Register interface when add_link is called and
+  /// storing that information statically with the rest of the link
+  /// state.
 
   CosTrading::Link::LinkInfo* describe_link (char const* name) override;
 
-  // BEGIN SPEC
-  // The describe_link operation returns information on a link held in
-  // the trader.
-
-  // The "name" parameter identifies the link whose description is
-  // required. For a malformed link name, the exception
-  // IllegalLinkName is raised. An UnknownLinkName exception is raised
-  // if the named link is not found in the trader.
-
-  // The operation returns a LinkInfo structure comprising: the
-  // Lookup interface of the target trading service, the Register
-  // interface of the target trading service, and the default, as
-  // well as the limiting follow behavior of the named link.
-
-  // If the target service does not support the Register interface,
-  // then that field of the LinkInfo structure is nil. Given the
-  // description of the Register::resolve() operation in "Resolve
-  // Operation" on page 16-45, most implementations will opt for
-  // determining the Register interface when add_link is called and
-  // storing that information statically with the rest of the link
-  // state.
-  // END SPEC
+  /// The list_links operation returns a list of the names of all
+  /// trading links within the trader. The names can be used
+  /// subsequently for other management operations, such as
+  /// describe_link or remove_link.
 
   CosTrading::LinkNameSeq* list_links () override;
 
-  // BEGIN SPEC
-  // The list_links operation returns a list of the names of all
-  // trading links within the trader. The names can be used
-  // subsequently for other management operations, such as
-  // describe_link or remove_link.
-  // END SPEC
+  /// The modify_link operation is used to change the existing link
+  /// follow behaviors of an identified link. The Lookup interface
+  /// reference of the target trader and the name of the link cannot be
+  /// changed.
+  /// The "name" parameter identifies the link whose follow behaviors
+  /// are to be changed. A poorly formed "name" raises the
+  /// IllegalLinkName exception. An UnknownLinkName exception is raised
+  /// if the link name is not known to the trader.
+  /// The "def_pass_on_follow_rule" parameter specifies the new default
+  /// link behavior for this link. If the "def_pass_on_follow_rule"
+  /// exceeds the "limiting_follow_rule" specified in the next
+  /// parameter, then a DefaultFollowTooPermissive exception is
+  /// raised.
+  /// The "limiting_follow_rule" parameter specifies the new limit for
+  /// the follow behavior of this link. The exception
+  /// LimitingFollowTooPermissive is raised if the value exceeds the
+  /// current "max_link_follow_policy" of the trader.
 
   void modify_link (char const* name,
                     CosTrading::FollowOption def_pass_on_follow_rule,
                     CosTrading::FollowOption limiting_follow_rule) override;
 
-  // BEGIN SPEC
-  // The modify_link operation is used to change the existing link
-  // follow behaviors of an identified link. The Lookup interface
-  // reference of the target trader and the name of the link cannot be
-  // changed.
-
-  // The "name" parameter identifies the link whose follow behaviors
-  // are to be changed. A poorly formed "name" raises the
-  // IllegalLinkName exception. An UnknownLinkName exception is raised
-  // if the link name is not known to the trader.
-
-  // The "def_pass_on_follow_rule" parameter specifies the new default
-  // link behavior for this link. If the "def_pass_on_follow_rule"
-  // exceeds the "limiting_follow_rule" specified in the next
-  // parameter, then a DefaultFollowTooPermissive exception is
-  // raised.
-
-  // The "limiting_follow_rule" parameter specifies the new limit for
-  // the follow behavior of this link. The exception
-  // LimitingFollowTooPermissive is raised if the value exceeds the
-  // current "max_link_follow_policy" of the trader.
-  // END SPEC
-
 private:
-  TAO_Link (TAO_Link const&) = delete;
-  TAO_Link& operator= (TAO_Link const&) = delete;
-  TAO_Link (TAO_Link&&) = delete;
-  TAO_Link& operator= (TAO_Link&&) = delete;
-
   using Links = ACE_Hash_Map_Manager_Ex<CORBA::String_var,
                                         CosTrading::Link::LinkInfo,
                                         ACE_Hash<CORBA::String_var>,
@@ -768,7 +706,12 @@ class TAO_Proxy :
   public TAO_Support_Attributes <POA_CosTrading::Proxy>
 {
 public:
-  TAO_Proxy (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader);
+  TAO_Proxy (TAO_Proxy const&) = delete;
+  TAO_Proxy& operator= (TAO_Proxy const&) = delete;
+  TAO_Proxy (TAO_Proxy&&) = delete;
+  TAO_Proxy& operator= (TAO_Proxy&&) = delete;
+
+  explicit TAO_Proxy (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader);
 
   ~TAO_Proxy ();
 
@@ -785,18 +728,11 @@ public:
   CosTrading::Proxy::ProxyInfo*
   describe_proxy (char const*) override;
 
-   // = CosTrading::TraderComponents methods.
-
   void list_proxies (CORBA::ULong,
                      CosTrading::OfferIdSeq*&,
                      CosTrading::OfferIdIterator_ptr&);
 
 private:
-  TAO_Proxy (TAO_Proxy const&) = delete;
-  TAO_Proxy& operator= (TAO_Proxy const&) = delete;
-  TAO_Proxy (TAO_Proxy&&) = delete;
-  TAO_Proxy& operator= (TAO_Proxy&&) = delete;
-
   TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>& trader_;
 };
 

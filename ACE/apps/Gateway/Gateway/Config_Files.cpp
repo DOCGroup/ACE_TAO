@@ -7,8 +7,6 @@
 #include "ace/Log_Msg.h"
 #endif /* GATEWAY_DEBUGGING */
 
-
-
 // This fixes a nasty bug with cfront-based compilers (like
 // Centerline).
 using FP_RETURN_TYPE = FPRT::Return_Type;
@@ -17,10 +15,10 @@ FP_RETURN_TYPE
 Consumer_Config_File_Parser::read_entry (Consumer_Config_Info &entry,
                                          int &line_number)
 {
-  FP_RETURN_TYPE result;
+  FP_RETURN_TYPE result {};
 
   // Increment the line count.
-  line_number++;
+  ++line_number;
 
   // Ignore comments, check for EOF and EOLINE if this succeeds, we
   // have our connection id.
@@ -30,7 +28,7 @@ Consumer_Config_File_Parser::read_entry (Consumer_Config_Info &entry,
       return FPRT::RT_EOFILE;
     else if (result == FPRT::RT_EOLINE
              || result == FPRT::RT_COMMENT)
-      line_number++;
+      ++line_number;
 
   // Get the payload type.
   result = this->getint (entry.type_);
@@ -54,8 +52,8 @@ FP_RETURN_TYPE
 Connection_Config_File_Parser::read_entry (Connection_Config_Info &entry,
                                            int &line_number)
 {
-  char buf[BUFSIZ];
-  FP_RETURN_TYPE result;
+  char buf[BUFSIZ] {};
+  FP_RETURN_TYPE result {};
 
   // Increment the line count.
   ++line_number;
@@ -75,7 +73,7 @@ Connection_Config_File_Parser::read_entry (Connection_Config_Info &entry,
   if (result != FPRT::RT_SUCCESS)
     return result;
 
-  ACE_INT32 port;
+  ACE_INT32 port {};
 
   // Get the port number.
   result = this->getint (port);
@@ -126,7 +124,7 @@ Connection_Config_File_Parser::read_entry (Connection_Config_Info &entry,
   else
     entry.local_port_ = (unsigned short) port;
 
-  ACE_INT32 priority;
+  ACE_INT32 priority {};
 
   // Get the priority.
   result = this->getint (priority);
@@ -142,16 +140,14 @@ Connection_Config_File_Parser::read_entry (Connection_Config_Info &entry,
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  FP_RETURN_TYPE result;
-  int line_number = 0;
+  FP_RETURN_TYPE result {};
+  int line_number {};
 
   {
     Connection_Config_Info entry;
     Connection_Config_File_Parser connection_config_file;
 
     connection_config_file.open (argc > 1 ? argv[1] : "connection_config");
-
-    int line_number = 0;
 
     ACE_DEBUG ((LM_DEBUG,
                 "ConnID\tHost\t\tRPort\tRole\tRetry\tLPort\tPriority\n"));
@@ -200,10 +196,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       entry.connection_id_,
                       entry.type_));
 
-          while (--entry.total_consumers_ >= 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        "%d,",
-                        entry.consumers_[entry.total_consumers_]));
+          ACE_INT32 consumer_index = entry.total_consumers_;
+          while (consumer_index > 0)
+            {
+              --consumer_index;
+              ACE_DEBUG ((LM_DEBUG,
+                          "%d,",
+                          entry.consumers_[consumer_index]));
+            }
           ACE_DEBUG ((LM_DEBUG,
                       "\n"));
         }

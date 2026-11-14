@@ -55,8 +55,10 @@
  */
 
 #include "tao/Range_Checking_T.h"
+#include <memory>
 
 #include <algorithm>
+#include <utility>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -75,7 +77,6 @@ public:
   using element_traits = ELEMENT_TRAITS;
   using range = range_checking<value_type, true>;
 
-  /// Default constructor.
   generic_sequence()
     : maximum_(allocation_traits::default_maximum())
     , length_(0)
@@ -105,7 +106,6 @@ public:
   {
   }
 
-  /// Copy constructor
   generic_sequence(generic_sequence const & rhs)
     : maximum_(0)
     , length_(0)
@@ -130,7 +130,6 @@ public:
     swap(tmp);
   }
 
-  /// Assignment operator
   generic_sequence & operator=(generic_sequence const & rhs)
   {
     generic_sequence tmp(rhs);
@@ -138,7 +137,28 @@ public:
     return * this;
   }
 
-  /// Destructor.
+  generic_sequence (generic_sequence &&rhs) noexcept
+    : maximum_ (rhs.maximum_)
+    , length_ (rhs.length_)
+    , buffer_ (rhs.buffer_)
+    , release_ (rhs.release_)
+  {
+    rhs.maximum_ = 0;
+    rhs.length_ = 0;
+    rhs.buffer_ = nullptr;
+    rhs.release_ = false;
+  }
+
+  generic_sequence &operator= (generic_sequence &&rhs) noexcept
+  {
+    if (this != std::addressof (rhs))
+      {
+        generic_sequence tmp (std::move (rhs));
+        this->swap (tmp);
+      }
+    return *this;
+  }
+
   ~generic_sequence()
   {
     if (release_)

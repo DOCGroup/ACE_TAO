@@ -14,6 +14,7 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/orbconf.h"
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -48,16 +49,19 @@ class TAO_Resource_Factory;
 class TAO_Export TAO_Thread_Lane_Resources
 {
 public:
-  /// Constructor.
   TAO_Thread_Lane_Resources (
       TAO_ORB_Core &orb_core,
       TAO_New_Leader_Generator *new_leader_generator = nullptr);
 
-  /// Destructor.
+  TAO_Thread_Lane_Resources (TAO_Thread_Lane_Resources const &) = delete;
+  TAO_Thread_Lane_Resources (TAO_Thread_Lane_Resources &&) = delete;
+  TAO_Thread_Lane_Resources &operator= (TAO_Thread_Lane_Resources const &) = delete;
+  TAO_Thread_Lane_Resources &operator= (TAO_Thread_Lane_Resources &&) = delete;
+
   ~TAO_Thread_Lane_Resources ();
 
   /// Does @a mprofile belong to us?
-  int is_collocated (const TAO_MProfile &mprofile);
+  bool is_collocated (const TAO_MProfile &mprofile);
 
   /// Open the acceptor registry.
   int open_acceptor_registry (const TAO_EndpointSet &endpoint_set,
@@ -145,8 +149,15 @@ public:
   //@}
 
 private:
+  struct Allocator_Deleter
+  {
+    void operator() (ACE_Allocator *allocator) const;
+  };
+
+  using Allocator_Ptr = std::unique_ptr<ACE_Allocator, Allocator_Deleter>;
+
   /// Checks if the acceptor registry has been created.
-  int has_acceptor_registry_been_created () const;
+  bool has_acceptor_registry_been_created () const;
 
   /// Helper to get the resource factory in the ORB_Core
   TAO_Resource_Factory *resource_factory ();
@@ -157,17 +168,17 @@ private:
 
   /// The registry which maintains a list of acceptor factories for
   /// each loaded protocol.
-  TAO_Acceptor_Registry *acceptor_registry_;
+  std::unique_ptr<TAO_Acceptor_Registry> acceptor_registry_ {};
 
   /// The connector registry which all active connectors must register
   /// themselves with.
-  TAO_Connector_Registry *connector_registry_;
+  std::unique_ptr<TAO_Connector_Registry> connector_registry_ {};
 
   /// Transport cache.
-  TAO::Transport_Cache_Manager *transport_cache_;
+  std::unique_ptr<TAO::Transport_Cache_Manager> transport_cache_ {};
 
   /// The leader/followers management class for this lane.
-  TAO_Leader_Follower *leader_follower_;
+  std::unique_ptr<TAO_Leader_Follower> leader_follower_ {};
 
   /// Synchronization.
   TAO_SYNCH_MUTEX lock_;
@@ -177,31 +188,31 @@ private:
 
   /// @name The allocators for the input CDR streams.
   //@{
-  ACE_Allocator *input_cdr_dblock_allocator_;
-  ACE_Allocator *input_cdr_buffer_allocator_;
-  ACE_Allocator *input_cdr_msgblock_allocator_;
+  Allocator_Ptr input_cdr_dblock_allocator_ {};
+  Allocator_Ptr input_cdr_buffer_allocator_ {};
+  Allocator_Ptr input_cdr_msgblock_allocator_ {};
   //@}
 
   /// @name The allocators for the buffering messages in the transport.
   //@{
-  ACE_Allocator *transport_message_buffer_allocator_;
+  Allocator_Ptr transport_message_buffer_allocator_ {};
   //@}
 
   /// @name The allocators for the output CDR streams.
   //@{
-  ACE_Allocator *output_cdr_dblock_allocator_;
-  ACE_Allocator *output_cdr_buffer_allocator_;
-  ACE_Allocator *output_cdr_msgblock_allocator_;
+  Allocator_Ptr output_cdr_dblock_allocator_ {};
+  Allocator_Ptr output_cdr_buffer_allocator_ {};
+  Allocator_Ptr output_cdr_msgblock_allocator_ {};
   //@}
 
   /// @name The allocators for AMH.
   //@{
-  ACE_Allocator *amh_response_handler_allocator_;
+  Allocator_Ptr amh_response_handler_allocator_ {};
   //@}
 
   /// @name The allocators for AMI.
   //@{
-  ACE_Allocator *ami_response_handler_allocator_;
+  Allocator_Ptr ami_response_handler_allocator_ {};
   //@}
 };
 

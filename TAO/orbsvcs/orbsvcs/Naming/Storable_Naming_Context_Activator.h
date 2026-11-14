@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-
 //=============================================================================
 /**
  *  @file   Storable_Naming_Context_Activator.h
@@ -8,7 +7,6 @@
  *  @author Byron Harris <harris_b@ociweb.com>
  */
 //=============================================================================
-
 
 #ifndef TAO_STORABLE_NAMING_CONTEXT_ACTIVATOR_H
 #define TAO_STORABLE_NAMING_CONTEXT_ACTIVATOR_H
@@ -21,6 +19,8 @@
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 
 #include "orbsvcs/Naming/naming_serv_export.h"
+
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -49,9 +49,16 @@ public:
     CORBA::ORB_ptr orb,
     TAO::Storable_Factory *factory,
     TAO_Storable_Naming_Context_Factory *context_impl_factory,
-    const ACE_TCHAR *);
+    ACE_TCHAR const *);
 
   ~TAO_Storable_Naming_Context_Activator () override;
+
+  TAO_Storable_Naming_Context_Activator (TAO_Storable_Naming_Context_Activator const &) = delete;
+  TAO_Storable_Naming_Context_Activator (TAO_Storable_Naming_Context_Activator &&) = delete;
+  TAO_Storable_Naming_Context_Activator &operator= (
+    TAO_Storable_Naming_Context_Activator const &) = delete;
+  TAO_Storable_Naming_Context_Activator &operator= (
+    TAO_Storable_Naming_Context_Activator &&) = delete;
 
   /**
    * Create a TAO_Storable_Naming_Context and TAO_Naming_Context on
@@ -71,20 +78,13 @@ public:
                     CORBA::Boolean remaining_activations) override;
 
 private:
-  TAO_Storable_Naming_Context_Activator (TAO_Storable_Naming_Context_Activator const &) = delete;
-  TAO_Storable_Naming_Context_Activator (TAO_Storable_Naming_Context_Activator &&) = delete;
-  TAO_Storable_Naming_Context_Activator &operator= (
-    TAO_Storable_Naming_Context_Activator const &) = delete;
-  TAO_Storable_Naming_Context_Activator &operator= (
-    TAO_Storable_Naming_Context_Activator &&) = delete;
-
   CORBA::ORB_ptr orb_;
 
   /// The factory for constructing the persistence mechanism for the contexts
-  TAO::Storable_Factory *persistence_factory_;
+  std::unique_ptr<TAO::Storable_Factory> persistence_factory_;
 
   /// The factory for constructing naming contexts within the index
-  TAO_Storable_Naming_Context_Factory *context_impl_factory_;
+  std::unique_ptr<TAO_Storable_Naming_Context_Factory> context_impl_factory_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

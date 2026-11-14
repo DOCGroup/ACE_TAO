@@ -38,7 +38,7 @@ ACE_Tokenizer_T<ACE_CHAR_T>::delimiter_replace (ACE_CHAR_T d,
   // Make it possible to replace delimiters on-the-fly, e.g., parse
   // string until certain token count and then copy rest of the
   // original string.
-  for (int i = 0; i < delimiter_index_; i++)
+  for (int i = 0; i < delimiter_index_; ++i)
     if (delimiters_[i].delimiter_ == d)
       {
         delimiters_[i].replacement_ = replacement;
@@ -80,7 +80,7 @@ ACE_Tokenizer_T<ACE_CHAR_T>::is_delimiter (ACE_CHAR_T d,
 {
   replace = 0;
 
-  for (int x = 0; x < delimiter_index_; x++)
+  for (int x = 0; x < delimiter_index_; ++x)
     if (delimiters_[x].delimiter_ == d)
       {
         if (delimiters_[x].replace_)
@@ -100,7 +100,7 @@ ACE_Tokenizer_T<ACE_CHAR_T>::is_preserve_designator (ACE_CHAR_T start,
                                        ACE_CHAR_T &stop,
                                        int &strip)
 {
-  for (int x = 0; x < preserves_index_; x++)
+  for (int x = 0; x < preserves_index_; ++x)
     if (preserves_[x].start_ == start)
       {
         stop = preserves_[x].stop_;
@@ -130,7 +130,7 @@ ACE_Tokenizer_T<ACE_CHAR_T>::next ()
 
   ACE_CHAR_T replacement = 0;
   int replace;
-  ACE_CHAR_T *next_token = nullptr;
+  ACE_CHAR_T *next_token {};
 
   // Skip all leading delimiters.
   for (;;)
@@ -232,7 +232,6 @@ EXIT_LABEL:
 }
 
 // *************************************************************
-
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

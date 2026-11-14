@@ -4,21 +4,19 @@
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  TLS_Client client; // Telecom Log Service Client
+  TLS_Client client {}; // Telecom Log Service client
 
   try
     {
-      client.init (argc, argv); //Init the Client
-
-      client.run_tests (); //Init the Client
-
+      client.init (argc, argv);
+      client.run_tests ();
     }
-  catch (const CORBA::UserException& ue)
+  catch (CORBA::UserException const &ue)
     {
       ue._tao_print_exception ("TLS_Client user error: ");
       return 1;
     }
-  catch (const CORBA::SystemException& se)
+  catch (CORBA::SystemException const &se)
     {
       se._tao_print_exception ("TLS_Client system error: ");
       return 1;

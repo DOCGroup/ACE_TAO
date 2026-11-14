@@ -37,10 +37,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_CSD_FW_Export TAO_CSD_Framework_Loader : public ACE_Service_Object
 {
  public:
-  /// Constructor.
   TAO_CSD_Framework_Loader () = default;
 
-  /// Destructor.
   ~TAO_CSD_Framework_Loader () override;
 
   /// Used to force the initialization of the ORB code.
@@ -49,16 +47,11 @@ class TAO_CSD_FW_Export TAO_CSD_Framework_Loader : public ACE_Service_Object
   /// Initialize the PI_Server loader hooks.
   int init (int argc, ACE_TCHAR* []) override;
 
-private:
   TAO_CSD_Framework_Loader (TAO_CSD_Framework_Loader const &) = delete;
   TAO_CSD_Framework_Loader &operator= (TAO_CSD_Framework_Loader const &) = delete;
   TAO_CSD_Framework_Loader (TAO_CSD_Framework_Loader &&) = delete;
   TAO_CSD_Framework_Loader &operator= (TAO_CSD_Framework_Loader &&) = delete;
-
-  /// Set to true after init is called.
-  bool initialized_ {};
 };
-
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_CSD_FW, TAO_CSD_Framework_Loader)
 ACE_FACTORY_DECLARE (TAO_CSD_FW, TAO_CSD_Framework_Loader)

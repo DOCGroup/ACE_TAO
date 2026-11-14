@@ -20,6 +20,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Time_Value.h"
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Message_Block;
@@ -36,7 +37,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Export TAO_Asynch_Queued_Message : public TAO_Queued_Message
 {
 public:
-  /// Constructor
   /**
    * @param contents The message block chain that must be sent.
    *
@@ -52,13 +52,15 @@ public:
    */
   TAO_Asynch_Queued_Message (ACE_Message_Block const *contents,
                              TAO_ORB_Core *oc,
-                             ACE_Time_Value *timeout,
+                             ACE_Time_Value const *timeout,
                              ACE_Allocator *alloc,
                              bool is_heap_allocated);
 
-
-  /// Destructor
   ~TAO_Asynch_Queued_Message () override;
+  TAO_Asynch_Queued_Message (TAO_Asynch_Queued_Message const &) = delete;
+  TAO_Asynch_Queued_Message &operator= (TAO_Asynch_Queued_Message const &) = delete;
+  TAO_Asynch_Queued_Message (TAO_Asynch_Queued_Message &&) = delete;
+  TAO_Asynch_Queued_Message &operator= (TAO_Asynch_Queued_Message &&) = delete;
 
   /**
    * @name Implement the Template Methods from TAO_Queued_Message
@@ -77,7 +79,6 @@ public:
   //@}
 
 protected:
-  /// Constructor
   /**
    * @param buf The buffer that needs to be sent on the wire. The
    *            buffer will be owned by this class. The buffer will be
@@ -93,18 +94,12 @@ protected:
    *
    * @param alloc Allocator used for creating <this> object.
    */
-  TAO_Asynch_Queued_Message (char *buf,
+  TAO_Asynch_Queued_Message (std::unique_ptr<char[]> buffer,
                              TAO_ORB_Core *oc,
                              size_t size,
                              const ACE_Time_Value &abs_timeout,
                              ACE_Allocator *alloc,
                              bool is_heap_allocated);
-
-private:
-  TAO_Asynch_Queued_Message (TAO_Asynch_Queued_Message const &) = delete;
-  TAO_Asynch_Queued_Message &operator= (TAO_Asynch_Queued_Message const &) = delete;
-  TAO_Asynch_Queued_Message (TAO_Asynch_Queued_Message &&) = delete;
-  TAO_Asynch_Queued_Message &operator= (TAO_Asynch_Queued_Message &&) = delete;
 
 private:
   /// The number of bytes in the buffer
@@ -115,10 +110,10 @@ private:
    * Data up to @c offset has been sent already, only the
    * [offset_,size_) range remains to be sent.
    */
-  size_t offset_;
+  size_t offset_ {};
 
   /// The buffer containing the complete message.
-  char *buffer_;
+  std::unique_ptr<char[]> buffer_;
 
   // Expiration time
   ACE_Time_Value abs_timeout_;

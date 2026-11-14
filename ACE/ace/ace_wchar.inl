@@ -26,8 +26,8 @@ inline char *
 ACE_Wide_To_Ascii::convert (const wchar_t *wstr)
 {
   // Short circuit null pointer case
-  if (wstr == 0)
-    return 0;
+  if (wstr == nullptr)
+    return nullptr;
 
 # if defined (ACE_WIN32)
   UINT const cp = GetACP ();  // Codepage
@@ -68,7 +68,7 @@ ACE_Wide_To_Ascii::convert (const wchar_t *wstr)
   if ((hr==size_t(-1))||(lensi==ACE_MAX_ICONV_BUFFER))
     {
       char *str=new char[len];
-      for (size_t i = 0; i < len; i++)
+      for (size_t i = 0; i < len; ++i)
         {
           wchar_t *t = const_cast <wchar_t *> (wstr);
           str[i] = static_cast<char> (*(t + i));
@@ -144,7 +144,7 @@ ACE_Ascii_To_Wide::convert (const char *str)
   size_t hr=iconv(ACE_Ascii_To_Wide_iconv_env, &stri, &lensi, (char**)&wstri, &lenwi);
   if((hr==size_t(-1))||(lenwi==ACE_MAX_ICONV_BUFFER)){
   wchar_t *wstr=new wchar_t[len*sizeof(wchar_t)];
-  for (size_t i = 0; i < len; i++){
+  for (size_t i = 0; i < len; ++i){
     char *t = const_cast<char *> (str);
     wstr[i] = static_cast<wchar_t> (*((unsigned char*)t + i));
   }

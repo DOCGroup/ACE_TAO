@@ -3,9 +3,10 @@
 #include "tao/Pluggable_Messaging_Utils.h"
 #include "tao/debug.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Constructor.
 TAO_Synch_Reply_Dispatcher::TAO_Synch_Reply_Dispatcher (
     TAO_ORB_Core *orb_core,
     IOP::ServiceContextList &sc
@@ -19,7 +20,7 @@ TAO_Synch_Reply_Dispatcher::TAO_Synch_Reply_Dispatcher (
          this->orb_core_->locking_strategy (),
          ACE_Message_Block::DONT_DELETE,
          this->orb_core_->input_cdr_dblock_allocator ()),
-    reply_cdr_ (&db_,
+    reply_cdr_ (std::addressof (db_),
                 ACE_Message_Block::DONT_DELETE,
                 TAO_ENCAP_BYTE_ORDER,
                 TAO_DEF_GIOP_MAJOR,
@@ -30,7 +31,6 @@ TAO_Synch_Reply_Dispatcher::TAO_Synch_Reply_Dispatcher (
   this->state_changed_i (TAO_LF_Event::LFS_ACTIVE);
 }
 
-// Destructor.
 TAO_Synch_Reply_Dispatcher::~TAO_Synch_Reply_Dispatcher () = default;
 
 TAO_InputCDR &

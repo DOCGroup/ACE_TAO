@@ -10,19 +10,19 @@
 // Initialize the static variables.
 /* static */
 
-Benchmark_Base::Benchmark_Base (int type)
+Benchmark_Base::Benchmark_Base (int const type)
   : benchmark_type_ (type)
 {
 }
 
 int
-Benchmark_Base::benchmark_type ()
+Benchmark_Base::benchmark_type () const
 {
   return this->benchmark_type_;
 }
 
 int
-Benchmark_Base::thr_id ()
+Benchmark_Base::thr_id () const
 {
 #if defined (ACE_HAS_PTHREADS) || defined (VXWORKS)
   // This invokes the thread-specific storage smart pointer.
@@ -41,23 +41,24 @@ int
 Benchmark_Method_Base::exec (ACE_Service_Repository_Iterator *sri)
 {
   sri->advance ();
-  for (const ACE_Service_Type *sr;
+  for (ACE_Service_Type const *sr;
        sri->next (sr) != 0;
        sri->advance ())
     {
       // This would greatly benefit from RTTI typesafe downcasting...
-      const ACE_Service_Type_Impl *type = sr->type ();
-      const void *obj = type->object ();
-      ACE_Service_Object *so = (ACE_Service_Object *) obj;
-      Benchmark_Base *bp = (Benchmark_Base *) so;
+      ACE_Service_Type_Impl const *type = sr->type ();
+      void * const obj = type->object ();
+      ACE_Service_Object * const so = static_cast<ACE_Service_Object *> (obj);
+      Benchmark_Base * const bp = static_cast<Benchmark_Base *> (so);
 
       if (this->valid_test_object (bp))
         {
-          ACE_DEBUG ((LM_DEBUG, "\nstarting up %s\n", sr->name ()));
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nstarting up %s\n"), sr->name ()));
 
-          int notused = this->pre_run_test (bp) == 0 && this->run_test () == 0 &&
-            this->post_run_test () == 0;
-          notused = notused;
+          if (this->pre_run_test (bp) == 0 && this->run_test () == 0)
+            {
+              this->post_run_test ();
+            }
         }
       else
         return 0;
@@ -75,13 +76,13 @@ Thr_ID::Thr_ID ()
 }
 
 int
-Thr_ID::thr_id ()
+Thr_ID::thr_id () const
 {
   return this->thr_id_;
 }
 
 void
-Thr_ID::thr_id (int i)
+Thr_ID::thr_id (int const i)
 {
   this->thr_id_ = i;
 }

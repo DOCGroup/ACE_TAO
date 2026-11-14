@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef _SEARCH_STRUCT_H
 #define _SEARCH_STRUCT_H
 
@@ -33,7 +32,7 @@ public:
   virtual Protocol_Record *get_each_entry () = 0;
 
 protected:
-  int count_;
+  int count_ {};
 };
 
 #endif /* _SEARCH_STRUCT_H */

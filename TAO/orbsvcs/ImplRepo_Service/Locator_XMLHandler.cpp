@@ -25,7 +25,6 @@ const ACE_TCHAR* Locator_XMLHandler::PID_TAG = ACE_TEXT("pid");
 const ACE_TCHAR* Locator_XMLHandler::KEYNAME_TAG = ACE_TEXT("key_name");
 const ACE_TCHAR* Locator_XMLHandler::ALTKEY_TAG = ACE_TEXT("altkey");
 
-
 Locator_XMLHandler::Locator_XMLHandler (XML_Backing_Store& repo)
   : repo_(repo),
     si_ (0),
@@ -41,7 +40,7 @@ static void convertEnvList (const Locator_XMLHandler::EnvList& in,
 {
   CORBA::ULong const sz = static_cast<CORBA::ULong> (in.size ());
   out.length (sz);
-  for (CORBA::ULong i = 0; i < sz; ++i)
+  for (CORBA::ULong i {}; i < sz; ++i)
     {
       out[i].name = ACE_TEXT_ALWAYS_CHAR (in[i].name.c_str ());
       out[i].value = ACE_TEXT_ALWAYS_CHAR (in[i].value.c_str ());
@@ -53,7 +52,7 @@ static void convertPeerList (const Locator_XMLHandler::PeerList& in,
 {
   CORBA::ULong const sz = static_cast<CORBA::ULong> (in.size ());
   out.length (sz);
-  for (CORBA::ULong i = 0; i < sz; ++i)
+  for (CORBA::ULong i {}; i < sz; ++i)
     {
       out[i] = in[i].c_str ();
     }
@@ -110,7 +109,7 @@ Locator_XMLHandler::startElement (const ACEXML_Char*,
                   if (value.length() > 0 &&
                       this->repo_.servers ().find (value, this->si_->alt_info_) != 0)
                     {
-                      Server_Info *base_si = nullptr;
+                      Server_Info *base_si {};
                       ACE_NEW (base_si, Server_Info);
                       base_si->key_name_ = value;
                       this->si_->alt_info_.reset (base_si);

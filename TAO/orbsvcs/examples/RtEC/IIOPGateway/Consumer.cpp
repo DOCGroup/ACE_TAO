@@ -4,12 +4,9 @@
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/CosNamingC.h"
 #include "ace/Arg_Shifter.h"
-#include "ace/OS_NS_string.h"
 
-const RtecEventComm::EventSourceID MY_SOURCE_ID  = ACE_ES_EVENT_SOURCE_ANY + 1;
-const RtecEventComm::EventType     MY_EVENT_TYPE = ACE_ES_EVENT_UNDEFINED + 1;
-
-static const ACE_TCHAR *ecname = 0;
+constexpr RtecEventComm::EventSourceID MY_SOURCE_ID = ACE_ES_EVENT_SOURCE_ANY + 1;
+constexpr RtecEventComm::EventType MY_EVENT_TYPE = ACE_ES_EVENT_UNDEFINED + 1;
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
@@ -21,21 +18,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-Consumer::Consumer ()
-  : event_count_ (0)
-{
-}
-
 int
 Consumer::run (int argc, ACE_TCHAR* argv[])
 {
   try
     {
       // First parse our command line options
-      if (this->parse_args(argc, argv) != 0)
-      {
-         return -1;
-      }
+      if (this->parse_args (argc, argv) != 0)
+        return -1;
 
       // ORB initialization boiler plate...
       CORBA::ORB_var orb =
@@ -67,7 +57,7 @@ Consumer::run (int argc, ACE_TCHAR* argv[])
 
       CosNaming::Name name (1);
       name.length (1);
-      name[0].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(ecname));
+      name[0].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (this->event_channel_name_.c_str ()));
 
       CORBA::Object_var ec_obj =
         naming_context->resolve (name);
@@ -94,12 +84,12 @@ Consumer::run (int argc, ACE_TCHAR* argv[])
       qos.start_disjunction_group ();
       qos.insert (MY_SOURCE_ID,   // Source ID
                   MY_EVENT_TYPE,  // Event Type
-                  0);             // handle to the rt_info
-      for (int i = 0; i < 10; i++)
+                  {});            // handle to the rt_info
+      for (int i {}; i < 10; ++i)
         {
           qos.insert (MY_SOURCE_ID  + i,   // Source ID
                       MY_EVENT_TYPE + i,  // Event Type
-                      0);             // handle to the rt_info
+                      {});            // handle to the rt_info
         }
       supplier->connect_push_consumer (consumer.in (), qos);
 
@@ -114,7 +104,7 @@ Consumer::run (int argc, ACE_TCHAR* argv[])
       // work_pending()/perform_work() to do more interesting stuff.
       // Check the supplier for the proper way to do cleanup.
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Consumer::run");
       return 1;
@@ -123,7 +113,7 @@ Consumer::run (int argc, ACE_TCHAR* argv[])
 }
 
 void
-Consumer::push (const RtecEventComm::EventSet& events)
+Consumer::push (RtecEventComm::EventSet const &events)
 {
   if (events.length () == 0)
     {
@@ -157,18 +147,18 @@ Consumer::parse_args (int argc, ACE_TCHAR *argv[])
 
   while (arg_shifter.is_anything_left ())
     {
-      const ACE_TCHAR *arg = arg_shifter.get_current ();
-
-      if (ACE_OS::strcmp (arg, ACE_TEXT("-e")) == 0)
+      ACE_TCHAR const *const parameter =
+        arg_shifter.get_the_parameter (ACE_TEXT ("-e"));
+      if (parameter != nullptr)
         {
+          this->event_channel_name_ = parameter;
           arg_shifter.consume_arg ();
-          ecname = arg_shifter.get_current ();
         }
-
-      arg_shifter.ignore_arg ();
+      else
+        arg_shifter.ignore_arg ();
     }
 
   // Indicates successful parsing of the command line
-  return 0;
+  return this->event_channel_name_.empty () ? -1 : 0;
 }
 

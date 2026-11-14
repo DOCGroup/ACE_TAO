@@ -10,6 +10,7 @@
 #define GATEWAY_H
 
 #include "orbsvcs/RtecEventCommS.h"
+#include "ace/SString.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -23,14 +24,20 @@
 class Gateway
 {
 public:
-  /// Constructor
-  Gateway ();
+  Gateway () = default;
+  Gateway (Gateway const &) = delete;
+  Gateway (Gateway &&) = delete;
+  Gateway &operator= (Gateway const &) = delete;
+  Gateway &operator= (Gateway &&) = delete;
 
   /// Run the test
   int run (int argc, ACE_TCHAR* argv[]);
 
 private:
   int parse_args (int argc, ACE_TCHAR *argv[]);
+
+  ACE_TString supplier_event_channel_name_;
+  ACE_TString consumer_event_channel_name_;
 };
 
 #endif /* GATEWAY_H */

@@ -15,9 +15,9 @@
 #include "tao/IORManipulation/IORManip_Loader.h"
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int Status = 0;
+  int status {};
 
   ACE_DEBUG ((LM_DEBUG, "---------------------------------------------\n"));
   ACE_DEBUG ((LM_DEBUG, "Running the IORManipulation Tests.\n"));
@@ -25,34 +25,30 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   try
     {
       // Retrieve the ORB.
-      CORBA::ORB_var orb_ = CORBA::ORB_init (argc,
-                                             argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
       // **********************************************************************
 
       // Get an object reference for the ORBs IORManipulation object!
-      CORBA::Object_var IORM =
-        orb_->resolve_initial_references ("IORManipulation");
+      CORBA::Object_var const iorm_object = orb->resolve_initial_references ("IORManipulation");
 
-      TAO_IOP::TAO_IOR_Manipulation_var iorm =
-        TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM.in ());
+      TAO_IOP::TAO_IOR_Manipulation_var const iorm =
+        TAO_IOP::TAO_IOR_Manipulation::_narrow (iorm_object.in ());
 
       // **********************************************************************
 
       // Create a few fictitious IORs
-      CORBA::Object_var name1 =
-        orb_->string_to_object ("corbaloc:iiop:macarena.cs.wustl.edu:6060/xyz");
-      CORBA::Object_var name2 =
-        orb_->string_to_object ("corbaloc:iiop:tango.cs.wustl.edu:7070/xyz");
+      CORBA::Object_var const name1 =
+        orb->string_to_object ("corbaloc:iiop:macarena.cs.wustl.edu:6060/xyz");
+      CORBA::Object_var const name2 =
+        orb->string_to_object ("corbaloc:iiop:tango.cs.wustl.edu:7070/xyz");
 
       // **********************************************************************
 
-      CORBA::String_var name1_ior =
-        orb_->object_to_string (name1.in ());
+      CORBA::String_var const name1_ior = orb->object_to_string (name1.in ());
       ACE_DEBUG ((LM_DEBUG, "\tFirst made up IOR = %C\n", name1_ior.in ()));
 
-      CORBA::String_var name2_ior =
-        orb_->object_to_string (name2.in ());
+      CORBA::String_var const name2_ior = orb->object_to_string (name2.in ());
       ACE_DEBUG ((LM_DEBUG, "\tSecond made up IOR = %C\n", name2_ior.in ()));
 
       // **********************************************************************
@@ -63,14 +59,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       iors [0] = name1;
       iors [1] = name2;
 
-      CORBA::Object_var merged = iorm->merge_iors (iors);
+      CORBA::Object_var const merged = iorm->merge_iors (iors);
 
-      CORBA::String_var merged_ior =
-        orb_->object_to_string (merged.in ());
+      CORBA::String_var const merged_ior = orb->object_to_string (merged.in ());
 
-      CORBA::ULong count1 = iorm->get_profile_count (iors [0]);
+      CORBA::ULong const count1 = iorm->get_profile_count (iors [0]);
 
-      CORBA::ULong count2 = iorm->get_profile_count (iors [1]);
+      CORBA::ULong const count2 = iorm->get_profile_count (iors [1]);
 
       CORBA::ULong count = iorm->get_profile_count (merged.in ());
 
@@ -79,19 +74,18 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                     "**ERROR (merge_profiles): "
                     "Merged profile count incorrect!\n"));
 
-      ACE_DEBUG ((LM_DEBUG, "\tMerged IOR(%d) = %C\n",
+      ACE_DEBUG ((LM_DEBUG, "\tMerged IOR(%u) = %C\n",
                   count,
                   merged_ior.in ()));
 
       // is_in_ior throws an exception if the intersection of the two
       // IORs is NULL.
-      CORBA::ULong in_count = iorm->is_in_ior (merged.in (),
-                                               name1.in ());
+      CORBA::ULong in_count = iorm->is_in_ior (merged.in (), name1.in ());
 
       if (count1 != in_count)
         ACE_DEBUG ((LM_ERROR,
                     "**ERROR (merge_iors): name1 is_in_ior returned profile "
-                    "count bad (%d)!\n",
+                    "count bad (%u)!\n",
                     in_count));
 
       in_count = iorm->is_in_ior (merged.in (),
@@ -100,18 +94,16 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (count2 != in_count)
         ACE_DEBUG ((LM_ERROR,
                     "**ERROR (merge_iors): name2 is_in_ior returned profile "
-                    "count bad (%d)!\n",
+                    "count bad (%u)!\n",
                     in_count));
 
       // **********************************************************************
 
       // Verify ability to remove profiles from an IOR
       // First remove the second IOR from the merged IOR
-      CORBA::Object_var just1 =
-        iorm->remove_profiles (merged.in (), name2.in ());
+      CORBA::Object_var const just1 = iorm->remove_profiles (merged.in (), name2.in ());
 
-      CORBA::String_var just1_ior =
-        orb_->object_to_string (just1.in ());
+      CORBA::String_var const just1_ior = orb->object_to_string (just1.in ());
 
       count = iorm->get_profile_count (just1.in ());
 
@@ -121,7 +113,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                     "removing last IOR after a merge_iors ()\n"));
 
       ACE_DEBUG ((LM_DEBUG,
-                  "\tJust 1 IOR(%d) = %C\n",
+                  "\tJust 1 IOR(%u) = %C\n",
                   count,
                   just1_ior.in ()));
 
@@ -131,13 +123,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         ACE_DEBUG ((LM_ERROR,
                     "**ERROR (merge_profiles): incorrect count returned for "
                     "is_in_ior"
-                    "\nafter removal (%d)\n",
+                    "\nafter removal (%u)\n",
                     in_count));
       // **********************************************************************
 
       // Now try the add_profiles interface.
-      CORBA::Object_var merged2 =
-        iorm->add_profiles (just1.in (), name2.in ());
+      CORBA::Object_var const merged2 = iorm->add_profiles (just1.in (), name2.in ());
 
       count = iorm->get_profile_count (merged2.in ());
 
@@ -145,22 +136,21 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         ACE_DEBUG ((LM_ERROR,
                     "**ERROR: add_profile failed profile count test!\n"));
 
-      CORBA::String_var merged2_ior =
-        orb_->object_to_string (merged2.in ());
+      CORBA::String_var const merged2_ior = orb->object_to_string (merged2.in ());
 
       ACE_DEBUG ((LM_DEBUG,
-                  "\tAdding 2 back in IOR(%d) = %C\n",
+                  "\tAdding 2 back in IOR(%u) = %C\n",
                   count,
                   merged2_ior.in ()));
 
       // is_in_ior throws an exception if the intersection of the two
       // IORs is NULL.
-      in_count = iorm->is_in_ior (merged2.in (), name1. in ());
+      in_count = iorm->is_in_ior (merged2.in (), name1.in ());
 
       if (count1 != in_count)
         ACE_DEBUG ((LM_ERROR,
                     "**ERROR (add_profiles): is_in_ior returned profile "
-                    "count bad (%d)!\n",
+                    "count bad (%u)!\n",
                     in_count));
 
       in_count = iorm->is_in_ior (merged2.in (), name2.in ());
@@ -172,11 +162,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // **********************************************************************
 
-      CORBA::Object_var just2 =
-        iorm->remove_profiles (merged2.in (), name1.in ());
+      CORBA::Object_var const just2 = iorm->remove_profiles (merged2.in (), name1.in ());
 
-      CORBA::String_var just2_ior =
-        orb_->object_to_string (just2.in ());
+      CORBA::String_var const just2_ior = orb->object_to_string (just2.in ());
 
       count = iorm->get_profile_count (just2.in ());
 
@@ -184,7 +172,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         ACE_DEBUG ((LM_ERROR,
                     "ERROR removing last IOR after a merge_iors ()\n"));
 
-      ACE_DEBUG ((LM_DEBUG, "\tJust 2 IOR(%d) = %C\n",
+      ACE_DEBUG ((LM_DEBUG, "\tJust 2 IOR(%u) = %C\n",
                   count,
                   just2_ior.in ()));
 
@@ -197,21 +185,21 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                     in_count));
 
       // all the primary tests worked, set status to 1
-      Status = 1;
+      status = 1;
       // Finally generate an exception and quit.
       // This will generate a NotFound exception.
       in_count = iorm->is_in_ior (just2.in (), name1.in ());
     }
-  catch (const TAO_IOP::EmptyProfileList& userex)
+  catch (TAO_IOP::EmptyProfileList const &userex)
     {
       userex._tao_print_exception ("Unexpected EmptyProfileList Exception!\n");
       return -1;
     }
-  catch (const TAO_IOP::NotFound& userex)
+  catch (TAO_IOP::NotFound const &userex)
     {
-      if (Status == 1)
+      if (status == 1)
         {
-          Status = 2;
+          status = 2;
 
           // @@ Don't use ACE_PRINT_EXCEPTION here since it will print
           //    "EXCEPTION" somewhere in the output which will make
@@ -229,35 +217,35 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           return -1;
         }
     }
-  catch (const TAO_IOP::Duplicate& userex)
+  catch (TAO_IOP::Duplicate const &userex)
     {
       userex._tao_print_exception ("Unexpected Duplicate Exception!\n");
       return -1;
     }
-  catch (const TAO_IOP::Invalid_IOR& userex)
+  catch (TAO_IOP::Invalid_IOR const &userex)
     {
       userex._tao_print_exception ("Unexpected Invalid_IOR Exception!\n");
       return -1;
     }
-  catch (const CORBA::SystemException& sysex)
+  catch (CORBA::SystemException const &sysex)
     {
       sysex._tao_print_exception ("Unexpected system Exception!!\n");
       return -1;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Unexpected CORBA Exception!\n");
       return -1;
     }
 
-  if (Status == 1)
+  if (status == 1)
     {
       // then exception didn't work!
       ACE_DEBUG ((LM_ERROR,
                   "**ERROR: Unable to generate the NotFound exception!\n"));
-      Status = 0;
+      status = 0;
     }
-  if (Status == 0)
+  if (status == 0)
     {
       ACE_DEBUG ((LM_DEBUG, "An ERROR occurred during the tests!\n"));
       return -1;

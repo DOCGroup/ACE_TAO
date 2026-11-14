@@ -12,43 +12,44 @@
  */
 //=============================================================================
 
-
 #include "client.h"
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
+
+#include <cstring>
+#include <memory>
+#include <utility>
 
 #if defined (_MSC_VER)
 # pragma warning (disable : 4250)
 #endif /* _MSC_VER */
 
+// Test servants are owned by ServantBase_var; raw locals below are borrowed for POA calls.
 class My_Test_Object :
   public virtual POA_Test_Object
 {
 public:
-  /// Constructor.
-  My_Test_Object (CORBA::Short id = 0);
+  explicit My_Test_Object (CORBA::Short id = 0);
 
-  /// Destructor.
-  ~My_Test_Object ();
+  My_Test_Object (My_Test_Object const &) = delete;
+  My_Test_Object &operator= (My_Test_Object const &) = delete;
+  My_Test_Object (My_Test_Object &&) = delete;
+  My_Test_Object &operator= (My_Test_Object &&) = delete;
 
   // = Interface implementation accessor methods.
 
   /// Sets id.
-  void id (CORBA::Short id);
+  void id (CORBA::Short id) override;
 
   /// Gets id.
-  CORBA::Short id ();
+  CORBA::Short id () override;
 
 private:
-  short id_;
+  CORBA::Short id_ {};
 };
 
 My_Test_Object::My_Test_Object (CORBA::Short id)
   : id_ (id)
-{
-}
-
-My_Test_Object::~My_Test_Object ()
 {
 }
 
@@ -64,106 +65,78 @@ My_Test_Object::id (CORBA::Short id)
   id_ = id;
 }
 
-// Constructor.
-
-CosNaming_Client::CosNaming_Client ()
-  : argc_ (0),
-    argv_ (0),
-    test_ (nullptr)
-{
-}
-
 // Parses the command line arguments and returns an error status.
 
 int
 CosNaming_Client::parse_args ()
 {
   ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("p:dstieym:c:l"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'd':  // debug flag
-        TAO_debug_level++;
+        ++TAO_debug_level;
         break;
       case 's':
         if (this->test_ == nullptr)
-          ACE_NEW_RETURN (this->test_,
-                          Simple_Test (this->orbmgr_.root_poa ()),
-                          -1);
+          this->test_ = std::make_unique<Simple_Test> (this->orbmgr_.root_poa ());
         break;
       case 'm':
         if (this->test_ == nullptr)
           {
-            int size = ACE_OS::atoi (get_opts.opt_arg ());
-            if (size <= 0)
-              size = 10;
+            int const requested_size = ACE_OS::atoi (get_opts.opt_arg ());
+            int const size = requested_size > 0 ? requested_size : 10;
 
-            ACE_NEW_RETURN (this->test_,
-                            MT_Test (this->orbmgr_.orb (),
-                                     this->orbmgr_.root_poa (),
-                                     size),
-                            -1);
+            this->test_ = std::make_unique<MT_Test> (this->orbmgr_.orb (),
+                                                     this->orbmgr_.root_poa (),
+                                                     size);
           }
 
         break;
       case 't':
         if (this->test_ == nullptr)
-          ACE_NEW_RETURN (this->test_,
-                          Tree_Test (this->orbmgr_.root_poa ()),
-                          -1);
+          this->test_ = std::make_unique<Tree_Test> (this->orbmgr_.root_poa ());
         break;
       case 'i':
         if (this->test_ == nullptr)
-          ACE_NEW_RETURN (this->test_,
-                          Iterator_Test (this->orbmgr_.root_poa ()),
-                          -1);
+          this->test_ = std::make_unique<Iterator_Test> (this->orbmgr_.root_poa ());
         break;
       case 'e':
         if (this->test_ == nullptr)
-          ACE_NEW_RETURN (this->test_,
-                          Exceptions_Test (this->orbmgr_.root_poa ()),
-                          -1);
+          this->test_ = std::make_unique<Exceptions_Test> (this->orbmgr_.root_poa ());
         break;
       case 'y':
         if (this->test_ == nullptr)
-          ACE_NEW_RETURN (this->test_,
-                          Destroy_Test (this->orbmgr_.root_poa ()),
-                          -1);
+          this->test_ = std::make_unique<Destroy_Test> (this->orbmgr_.root_poa ());
         break;
       case 'p':
         if (this->test_ == nullptr)
           {
-            FILE * ior_output_file =
-              ACE_OS::fopen (get_opts.opt_arg (), "w");
+            Persistent_Test_Begin::File_Handle ior_output_file (
+              ACE_OS::fopen (get_opts.opt_arg (), "w"), ACE_OS::fclose);
 
             if (ior_output_file == nullptr)
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "Unable to open %s for writing: %p\n",
                                  get_opts.opt_arg ()), -1);
 
-            ACE_NEW_RETURN (this->test_,
-                            Persistent_Test_Begin (this->orbmgr_.orb (),
-                                                   this->orbmgr_.root_poa (),
-                                                   ior_output_file),
-                            -1);
+            this->test_ = std::make_unique<Persistent_Test_Begin> (
+              this->orbmgr_.orb (),
+              this->orbmgr_.root_poa (),
+              std::move (ior_output_file));
           }
         break;
       case 'c':
         if (this->test_ == nullptr)
-          ACE_NEW_RETURN (this->test_,
-                          Persistent_Test_End (this->orbmgr_.orb (),
-                                               this->orbmgr_.root_poa (),
-                                               get_opts.opt_arg ()),
-                          -1);
+          this->test_ = std::make_unique<Persistent_Test_End> (
+            this->orbmgr_.orb (), this->orbmgr_.root_poa (), get_opts.opt_arg ());
         break;
       case 'l':
         if (this->test_ == nullptr)
-          ACE_NEW_RETURN (this->test_,
-                          Persistent_List_Test (this->orbmgr_.orb (),
-                                                this->orbmgr_.root_poa ()),
-                          -1);
+          this->test_ = std::make_unique<Persistent_List_Test> (
+            this->orbmgr_.orb (), this->orbmgr_.root_poa ());
         break;
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -177,9 +150,7 @@ CosNaming_Client::parse_args ()
       }
 
   if (this->test_ == nullptr)
-    ACE_NEW_RETURN (this->test_,
-                    Simple_Test (this->orbmgr_.root_poa ()),
-                    -1);
+    this->test_ = std::make_unique<Simple_Test> (this->orbmgr_.root_poa ());
 
   // Indicates successful parsing of command line.
   return 0;
@@ -190,12 +161,7 @@ CosNaming_Client::parse_args ()
 int
 CosNaming_Client::run ()
 {
-  return test_->execute (naming_client_);
-}
-
-CosNaming_Client::~CosNaming_Client ()
-{
-  delete test_;
+  return this->test_->execute (this->naming_client_);
 }
 
 int
@@ -216,10 +182,10 @@ CosNaming_Client::init (int argc, ACE_TCHAR **argv)
       if (this->parse_args () == -1)
         return -1;
 
-      CORBA::ORB_var orb = this->orbmgr_.orb ();
+      CORBA::ORB_var const orb = this->orbmgr_.orb ();
       return this->naming_client_.init (orb.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("init");
       // and return -1 below . . .
@@ -230,10 +196,6 @@ CosNaming_Client::init (int argc, ACE_TCHAR **argv)
 
 Naming_Test::Naming_Test (PortableServer::POA_ptr poa)
  : poa_ (poa)
-{
-}
-
-Naming_Test::~Naming_Test ()
 {
 }
 
@@ -256,13 +218,13 @@ MT_Test::svc ()
 
   try
     {
-      CORBA::Object_var name_service_obj =
+      CORBA::Object_var const name_service_obj =
         orb_->string_to_object (name_service_ior_.in ());
 
       name_service =
         CosNaming::NamingContext::_narrow (name_service_obj.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "Unexpected exception in MT test setup");
@@ -284,12 +246,12 @@ MT_Test::svc ()
       ACE_DEBUG ((LM_DEBUG,
                   "Bound name OK in thread %t\n"));
     }
-  catch (const CosNaming::NamingContext::AlreadyBound&)
+  catch (CosNaming::NamingContext::AlreadyBound const &)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Unable to bind in thread %t\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "Unexpected exception in MT test bind");
@@ -299,27 +261,27 @@ MT_Test::svc ()
   // Resolve the object from the Naming Context.
   try
     {
-      CORBA::Object_var result_obj_ref =
+      CORBA::Object_var const result_obj_ref =
         name_service->resolve (test_name_);
 
-      Test_Object_var result_object =
+      Test_Object_var const result_object =
         Test_Object::_narrow (result_obj_ref.in ());
 
       if (!CORBA::is_nil (result_object.in ()))
         {
-          CORBA::Short id = result_object->id ();
+          CORBA::Short const id = result_object->id ();
 
           if (id == CosNaming_Client::OBJ1_ID)
             ACE_DEBUG ((LM_DEBUG,
                         "Resolved name OK in thread %t\n"));
         }
     }
-  catch (const CosNaming::NamingContext::NotFound&)
+  catch (CosNaming::NamingContext::NotFound const &)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Unable to resolve in thread %t\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "Unexpected exception in MT test resolve");
@@ -333,13 +295,13 @@ MT_Test::svc ()
       ACE_DEBUG ((LM_DEBUG,
                   "Unbound name OK in thread %t\n"));
     }
-  catch (const CosNaming::NamingContext::NotFound&)
+  catch (CosNaming::NamingContext::NotFound const &)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Unable to unbind in thread %t\n"));
       return -1;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "Unexpected exception in MT test unbind");
@@ -358,20 +320,19 @@ MT_Test::execute (TAO_Naming_Client &root_context)
   // Create data which will be used by all threads.
 
   // Dummy object instantiation.
-  My_Test_Object *test_obj_impl =
+  My_Test_Object * const test_obj_impl =
     new My_Test_Object (CosNaming_Client::OBJ1_ID);
+  PortableServer::ServantBase_var const safe_test_obj_impl = test_obj_impl;
 
   try
     {
-      PortableServer::ObjectId_var id_act =
+      PortableServer::ObjectId_var const id_act =
         this->poa_->activate_object (test_obj_impl);
 
-      CORBA::Object_var object_act = this->poa_->id_to_reference (id_act.in ());
+      CORBA::Object_var const object_act = this->poa_->id_to_reference (id_act.in ());
 
       test_ref_ =
         Test_Object::_narrow (object_act.in ());
-
-      test_obj_impl->_remove_ref ();
 
       // Get the IOR for the Naming Service.  Each thread can use it
       // in <string_to_object> to create its own stub for the Naming
@@ -379,13 +340,12 @@ MT_Test::execute (TAO_Naming_Client &root_context)
       // cannot be using the same stub - bad things happen...  This is
       // just a way to give each thread its own stub.
 
-      CosNaming::NamingContext_var context =
-        root_context.get_context ();
+      CosNaming::NamingContext_var const context = root_context.get_context ();
 
       name_service_ior_ =
         orb_->object_to_string (context.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "Unexpected exception while instantiating dummy");
@@ -407,8 +367,8 @@ MT_Test::execute (TAO_Naming_Client &root_context)
   return status;
 }
 
-Simple_Test::Simple_Test(PortableServer::POA_ptr poa)
- : Naming_Test (poa)
+Simple_Test::Simple_Test (PortableServer::POA_ptr poa)
+  : Naming_Test (poa)
 {
 }
 
@@ -418,17 +378,17 @@ Simple_Test::execute (TAO_Naming_Client &root_context)
   try
     {
       // Dummy object instantiation.
-      My_Test_Object *test_obj_impl = new My_Test_Object (CosNaming_Client::OBJ1_ID);
-      PortableServer::ObjectId_var id_act =
+      My_Test_Object * const test_obj_impl = new My_Test_Object (CosNaming_Client::OBJ1_ID);
+      PortableServer::ServantBase_var const safe_test_obj_impl = test_obj_impl;
+      PortableServer::ObjectId_var const id_act =
         this->poa_->activate_object (test_obj_impl);
 
-      CORBA::Object_var object_act = this->poa_->id_to_reference (id_act.in ());
+      CORBA::Object_var const object_act = this->poa_->id_to_reference (id_act.in ());
 
-      Test_Object_var test_obj_ref =
+      Test_Object_var const test_obj_ref =
         Test_Object::_narrow (object_act.in ());
 
       // Give ownership of this object to POA.
-      test_obj_impl->_remove_ref ();
 
       // Bind an object to the Naming Context.
       CosNaming::Name test_name;
@@ -440,13 +400,13 @@ Simple_Test::execute (TAO_Naming_Client &root_context)
                   "Bound name OK\n"));
 
       // Resolve the object from the Naming Context.
-      CORBA::Object_var result_obj_ref =
+      CORBA::Object_var const result_obj_ref =
         root_context->resolve (test_name);
-      Test_Object_var result_object =
+      Test_Object_var const result_object =
         Test_Object::_narrow (result_obj_ref.in ());
       if (!CORBA::is_nil (result_object.in ()))
         {
-          CORBA::Short id = result_object->id ();
+          CORBA::Short const id = result_object->id ();
           if (id == CosNaming_Client::OBJ1_ID)
             ACE_DEBUG ((LM_DEBUG, "Resolved name OK\n"));
         }
@@ -456,7 +416,7 @@ Simple_Test::execute (TAO_Naming_Client &root_context)
       ACE_DEBUG ((LM_DEBUG,
                   "Unbound name OK\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "Unexpected exception in Simple test");
@@ -466,8 +426,8 @@ Simple_Test::execute (TAO_Naming_Client &root_context)
   return 0;
 }
 
-Tree_Test::Tree_Test(PortableServer::POA_ptr poa)
- : Naming_Test (poa)
+Tree_Test::Tree_Test (PortableServer::POA_ptr poa)
+  : Naming_Test (poa)
 {
 }
 
@@ -483,23 +443,22 @@ Tree_Test::execute (TAO_Naming_Client &root_context)
       CosNaming::Name level1;
       level1.length (1);
       level1[0].id = CORBA::string_dup ("level1_context");
-      CosNaming::NamingContext_var level1_context;
-      level1_context = root_context->bind_new_context (level1);
+      CosNaming::NamingContext_var const level1_context =
+        root_context->bind_new_context (level1);
 
       // Create a new context.
-      CosNaming::NamingContext_var level2_context;
-      level2_context = root_context->new_context ();
+      CosNaming::NamingContext_var const level2_context = root_context->new_context ();
 
       // Instantiate a dummy object and bind it under the new context.
-      My_Test_Object *impl1 =
+      My_Test_Object * const impl1 =
         new My_Test_Object (CosNaming_Client::OBJ1_ID);
+      PortableServer::ServantBase_var const safe_impl1 = impl1;
       PortableServer::ObjectId_var id_act =
         this->poa_->activate_object (impl1);
 
       CORBA::Object_var object_act = this->poa_->id_to_reference (id_act.in ());
 
-      Test_Object_var obj1 = Test_Object::_narrow (object_act.in ());
-      impl1->_remove_ref ();
+      Test_Object_var const obj1 = Test_Object::_narrow (object_act.in ());
 
       CosNaming::Name obj_name;
       obj_name.length (1);
@@ -527,7 +486,7 @@ Tree_Test::execute (TAO_Naming_Client &root_context)
                            "Problems with resolving foo in Tree Test - nil object ref.\n"),
                           -1);
 
-      CORBA::Short id = result_object->id ();
+      CORBA::Short const id = result_object->id ();
 
       if (id != CosNaming_Client::OBJ1_ID)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -541,8 +500,7 @@ Tree_Test::execute (TAO_Naming_Client &root_context)
                           obj1.in ());
 
       // Create new context and rebind under the name level1/level2.
-      CosNaming::NamingContext_var new_level2_context;
-      new_level2_context =
+      CosNaming::NamingContext_var const new_level2_context =
         root_context->new_context ();
       root_context->rebind_context (level2,
                                   new_level2_context.in ());
@@ -553,53 +511,46 @@ Tree_Test::execute (TAO_Naming_Client &root_context)
       result_obj_ref = root_context->resolve (test_name);
       result_object = Test_Object::_narrow (result_obj_ref.in ());
 
-      CORBA::Short obj_id = result_object->id ();
-
       if (CORBA::is_nil (result_object.in ())
-          || !(obj_id == CosNaming_Client::OBJ1_ID))
+          || result_object->id () != CosNaming_Client::OBJ1_ID)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Problems in the Tree Test\n"),
                           -1);
 
-      My_Test_Object *impl2 =
+      My_Test_Object * const impl2 =
         new My_Test_Object (CosNaming_Client::OBJ2_ID);
+      PortableServer::ServantBase_var const safe_impl2 = impl2;
       id_act = this->poa_->activate_object (impl2);
 
       object_act = this->poa_->id_to_reference (id_act.in ());
 
-      Test_Object_var obj2 = Test_Object::_narrow (object_act.in ());
-
-      impl2->_remove_ref ();
+      Test_Object_var const obj2 = Test_Object::_narrow (object_act.in ());
 
       root_context->rebind (test_name,
                             obj2.in ());
       result_obj_ref = root_context->resolve (test_name);
       result_object = Test_Object::_narrow (result_obj_ref.in ());
 
-      obj_id = result_object->id ();
-
       if (CORBA::is_nil (result_object.in ())
-          || !( obj_id == CosNaming_Client::OBJ2_ID))
+          || result_object->id () != CosNaming_Client::OBJ2_ID)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Problems with rebind in Tree Test\n"),
                           -1);
     }
-
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "Unexpected exception in Tree test");
       return -1;
     }
 
-
   ACE_DEBUG ((LM_DEBUG,
               "All functions work properly\n"));
   return 0;
 }
 
-Exceptions_Test::Exceptions_Test(PortableServer::POA_ptr poa)
- : Naming_Test (poa)
+Exceptions_Test::Exceptions_Test (PortableServer::POA_ptr poa)
+  : Naming_Test (poa)
 {
 }
 
@@ -621,14 +572,14 @@ Exceptions_Test::execute (TAO_Naming_Client &root_context)
       level2_context = level1_context->bind_new_context (context_name);
 
       // Bind a dummy object foo under each context.
-      My_Test_Object *impl = new My_Test_Object;
+      My_Test_Object * const impl = new My_Test_Object;
+      PortableServer::ServantBase_var safe_impl = impl;
       PortableServer::ObjectId_var id_act =
         this->poa_->activate_object (impl);
 
       CORBA::Object_var object_act = this->poa_->id_to_reference (id_act.in ());
 
       Test_Object_var obj = Test_Object::_narrow (object_act.in ());
-      impl->_remove_ref ();
 
       CosNaming::Name object_name;
       object_name.length (1);
@@ -648,7 +599,7 @@ Exceptions_Test::execute (TAO_Naming_Client &root_context)
       not_found_test2 (root_context);
       not_found_test3 (root_context);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "Unexpected exception in Exceptions test");
@@ -669,12 +620,12 @@ Exceptions_Test::invalid_name_test (TAO_Naming_Client &root_context)
       root_context->resolve (test_name);
       ACE_DEBUG ((LM_DEBUG, "Invalid name test failed\n"));
     }
-  catch (const CosNaming::NamingContext::InvalidName&)
+  catch (CosNaming::NamingContext::InvalidName const &)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "InvalidName exception works properly\n"));
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       ACE_DEBUG ((LM_DEBUG, "Invalid name test failed\n"));
       throw;
@@ -689,25 +640,25 @@ Exceptions_Test::already_bound_test (TAO_Naming_Client &root_context)
       CosNaming::Name test_name;
       test_name.length (1);
       test_name[0].id = CORBA::string_dup ("foo");
-      My_Test_Object *impl = new My_Test_Object;
+      My_Test_Object * const impl = new My_Test_Object;
+      PortableServer::ServantBase_var safe_impl = impl;
       PortableServer::ObjectId_var id_act =
         this->poa_->activate_object (impl);
 
       CORBA::Object_var object_act = this->poa_->id_to_reference (id_act.in ());
 
       Test_Object_var obj = Test_Object::_narrow (object_act.in ());
-      impl->_remove_ref ();
 
       root_context->bind (test_name,
                           obj.in ());
       ACE_DEBUG ((LM_DEBUG, "Already bound (case 1) test failed\n"));
     }
-  catch (const CosNaming::NamingContext::AlreadyBound&)
+  catch (CosNaming::NamingContext::AlreadyBound const &)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "AlreadyBound exception (case 1) works properly\n"));
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       ACE_DEBUG ((LM_DEBUG, "Already bound (case 1) test failed\n"));
       throw;
@@ -724,25 +675,25 @@ Exceptions_Test::already_bound_test2 (TAO_Naming_Client &root_context)
       test_name.length (2);
       test_name[0].id = CORBA::string_dup ("level1_context");
       test_name[1].id = CORBA::string_dup ("foo");
-      My_Test_Object *impl = new My_Test_Object;
+      My_Test_Object * const impl = new My_Test_Object;
+      PortableServer::ServantBase_var safe_impl = impl;
       PortableServer::ObjectId_var id_act =
         this->poa_->activate_object (impl);
 
       CORBA::Object_var object_act = this->poa_->id_to_reference (id_act.in ());
 
       Test_Object_var obj = Test_Object::_narrow (object_act.in ());
-      impl->_remove_ref ();
 
       root_context->bind (test_name,
                           obj.in ());
       ACE_DEBUG ((LM_DEBUG, "Already bound (case 2) test failed\n"));
     }
-  catch (const CosNaming::NamingContext::AlreadyBound&)
+  catch (CosNaming::NamingContext::AlreadyBound const &)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "AlreadyBound  exception (case 2) works properly\n"));
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       ACE_DEBUG ((LM_DEBUG, "Already bound (case 2) test failed\n"));
       throw;
@@ -763,12 +714,12 @@ Exceptions_Test::not_found_test (TAO_Naming_Client &root_context)
       root_context->unbind (test_name);
       ACE_DEBUG ((LM_DEBUG, "Not found test failed\n"));
     }
-  catch (const CosNaming::NamingContext::NotFound& ex)
+  catch (CosNaming::NamingContext::NotFound const &ex)
     {
       if (ex.why == CosNaming::NamingContext::missing_node &&
           ex.rest_of_name.length () == 1
-          && ACE_OS::strcmp (ex.rest_of_name[0].id.in (),
-                             "bar") == 0)
+          && std::strcmp (ex.rest_of_name[0].id.in (),
+                          "bar") == 0)
         ACE_DEBUG ((LM_DEBUG,
                     "NotFound  exception (case 1) works properly\n"));
       else
@@ -776,7 +727,7 @@ Exceptions_Test::not_found_test (TAO_Naming_Client &root_context)
                     "NotFound  exception (case 1)"
                     " - parameters aren't set correctly\n"));
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       ACE_DEBUG ((LM_DEBUG, "Not found test failed\n"));
       throw;
@@ -797,14 +748,14 @@ Exceptions_Test::not_found_test2 (TAO_Naming_Client &root_context)
       root_context->unbind (test_name);
       ACE_DEBUG ((LM_DEBUG, "Unbind test failed\n"));
     }
-  catch (const CosNaming::NamingContext::NotFound& ex)
+  catch (CosNaming::NamingContext::NotFound const &ex)
     {
       if (ex.why == CosNaming::NamingContext::missing_node
           && ex.rest_of_name.length () == 2
-          && ACE_OS::strcmp (ex.rest_of_name[0].id.in (),
-                             "level3_context") == 0
-          && ACE_OS::strcmp (ex.rest_of_name[1].id.in (),
-                             "foo") == 0)
+          && std::strcmp (ex.rest_of_name[0].id.in (),
+                          "level3_context") == 0
+          && std::strcmp (ex.rest_of_name[1].id.in (),
+                          "foo") == 0)
         ACE_DEBUG ((LM_DEBUG,
                     "NotFound  exception (case 2) works properly\n"));
       else
@@ -812,7 +763,7 @@ Exceptions_Test::not_found_test2 (TAO_Naming_Client &root_context)
                     "NotFound  exception (case 2)"
                     " - parameters aren't set correctly\n"));
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       ACE_DEBUG ((LM_DEBUG, "Unbind test failed\n"));
       throw;
@@ -834,14 +785,14 @@ Exceptions_Test::not_found_test3 (TAO_Naming_Client &root_context)
       root_context->unbind (test_name);
       ACE_DEBUG ((LM_DEBUG, "Not found (case 3) test failed - no exception was thrown\n"));
     }
-  catch (const CosNaming::NamingContext::NotFound& ex)
+  catch (CosNaming::NamingContext::NotFound const &ex)
     {
       if (ex.why == CosNaming::NamingContext::not_context
           && ex.rest_of_name.length () == 2
-          && ACE_OS::strcmp (ex.rest_of_name[0].id.in (),
-                             "foo") == 0
-          && ACE_OS::strcmp (ex.rest_of_name[1].id.in (),
-                             "foo") == 0)
+          && std::strcmp (ex.rest_of_name[0].id.in (),
+                          "foo") == 0
+          && std::strcmp (ex.rest_of_name[1].id.in (),
+                          "foo") == 0)
         ACE_DEBUG ((LM_DEBUG,
                     "NotFound  exception (case 3) works properly\n"));
       else
@@ -849,15 +800,15 @@ Exceptions_Test::not_found_test3 (TAO_Naming_Client &root_context)
                     "NotFound  exception (case 3)"
                     " - parameters aren't set correctly\n"));
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       ACE_DEBUG ((LM_DEBUG, "Not found (case 3) test failed\n"));
       throw;
     }
 }
 
-Iterator_Test::Iterator_Test(PortableServer::POA_ptr poa)
- : Naming_Test (poa)
+Iterator_Test::Iterator_Test (PortableServer::POA_ptr poa)
+  : Naming_Test (poa)
 {
 }
 
@@ -867,14 +818,14 @@ Iterator_Test::execute (TAO_Naming_Client &root_context)
   try
     {
       // Instantiate four dummy objects.
-      My_Test_Object *impl = new My_Test_Object;
+      My_Test_Object * const impl = new My_Test_Object;
+      PortableServer::ServantBase_var safe_impl = impl;
       PortableServer::ObjectId_var id_act =
         this->poa_->activate_object (impl);
 
       CORBA::Object_var object_act = this->poa_->id_to_reference (id_act.in ());
 
       Test_Object_var obj = Test_Object::_narrow (object_act.in ());
-      impl->_remove_ref ();
 
       // Bind objects to the naming context.
       CosNaming::Name name1;
@@ -942,14 +893,14 @@ Binding Type = %d\n", bindings_list->length (), bindings_list[0u].binding_type),
 
       // We already iterated over all the bindings, so the following
       // should return false.
-      CORBA::Boolean result = iter->next_one (binding.out ());
+      CORBA::Boolean const result = iter->next_one (binding.out ());
       if (result)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "CosNaming::BindingIterator does not function properly\n"),
                           -1);
       iter->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "Unexpected exception in Iterator test");
@@ -959,8 +910,8 @@ Binding Type = %d\n", bindings_list->length (), bindings_list[0u].binding_type),
   return 0;
 }
 
-Destroy_Test::Destroy_Test(PortableServer::POA_ptr poa)
- : Naming_Test (poa)
+Destroy_Test::Destroy_Test (PortableServer::POA_ptr poa)
+  : Naming_Test (poa)
 {
 }
 
@@ -975,14 +926,14 @@ Destroy_Test::execute (TAO_Naming_Client &root_context)
       my_context = root_context->new_context ();
 
       // Bind a dummy object foo under my_context.
-      My_Test_Object *impl = new My_Test_Object;
+      My_Test_Object * const impl = new My_Test_Object;
+      PortableServer::ServantBase_var safe_impl = impl;
       PortableServer::ObjectId_var id_act =
         this->poa_->activate_object (impl);
 
       CORBA::Object_var object_act = this->poa_->id_to_reference (id_act.in ());
 
       Test_Object_var obj = Test_Object::_narrow (object_act.in ());
-      impl->_remove_ref ();
 
       CosNaming::Name object_name;
       object_name.length (1);
@@ -999,7 +950,7 @@ Destroy_Test::execute (TAO_Naming_Client &root_context)
       not_exist_test (my_context);
     }
 
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "Unexpected exception in Destroy test");
@@ -1017,7 +968,7 @@ Destroy_Test::not_empty_test (CosNaming::NamingContext_var &ref)
       ref->destroy ();
     }
 
-  catch (const CosNaming::NamingContext::NotEmpty&)
+  catch (CosNaming::NamingContext::NotEmpty const &)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "NotEmpty exception works properly\n"));
@@ -1032,7 +983,7 @@ Destroy_Test::not_exist_test (CosNaming::NamingContext_var &ref)
       ref->destroy ();
     }
 
-  catch (const CORBA::OBJECT_NOT_EXIST&)
+  catch (CORBA::OBJECT_NOT_EXIST const &)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Destroy works properly\n"));
@@ -1041,14 +992,10 @@ Destroy_Test::not_exist_test (CosNaming::NamingContext_var &ref)
 
 Persistent_Test_Begin::Persistent_Test_Begin (CORBA::ORB_ptr orb,
                                               PortableServer::POA_ptr poa,
-                                              FILE * ior_output_file)
+                                              Persistent_Test_Begin::File_Handle ior_output_file)
   : Naming_Test (poa),
     orb_ (orb),
-    file_ (ior_output_file)
-{
-}
-
-Persistent_Test_Begin::~Persistent_Test_Begin ()
+    file_ (std::move (ior_output_file))
 {
 }
 
@@ -1075,14 +1022,14 @@ Persistent_Test_Begin::execute (TAO_Naming_Client &root_context)
       CORBA::String_var ior =
         orb_->object_to_string (level1_context.in ());
 
-      ACE_OS::fprintf (this->file_,
+      ACE_OS::fprintf (this->file_.get (),
                        "%s",
                        ior.in ());
-      ACE_OS::fclose (this->file_);
+      this->file_.reset ();
 
       ACE_DEBUG ((LM_DEBUG, "Persistent Naming test (part 1) OK.\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "Unexpected exception in Persistent Test (part 1)");
@@ -1094,14 +1041,10 @@ Persistent_Test_Begin::execute (TAO_Naming_Client &root_context)
 
 Persistent_Test_End::Persistent_Test_End (CORBA::ORB_ptr orb,
                                           PortableServer::POA_ptr poa,
-                                          const ACE_TCHAR *ior)
+                                          ACE_TCHAR const *ior)
   : Naming_Test (poa),
     orb_ (orb),
     ior_ (ior)
-{
-}
-
-Persistent_Test_End::~Persistent_Test_End ()
 {
 }
 
@@ -1118,7 +1061,7 @@ Persistent_Test_End::execute (TAO_Naming_Client &root_context)
       // Convert stringified ior we got from <Persistent_Test_Begin>
       // for <level1> Naming Context to Naming Context reference.
       CORBA::Object_var obj =
-        orb_->string_to_object (ior_);
+        orb_->string_to_object (this->ior_.c_str ());
 
       CosNaming::NamingContext_var level1_context =
         CosNaming::NamingContext::_narrow (obj.in ());
@@ -1144,7 +1087,7 @@ Persistent_Test_End::execute (TAO_Naming_Client &root_context)
       if (obj2->_is_equivalent (obj.in ()))
         ACE_DEBUG ((LM_DEBUG, "Persistent Naming test (part 2) OK.\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "Unexpected exception in Persistent Test (part 2)");
@@ -1158,10 +1101,6 @@ Persistent_List_Test::Persistent_List_Test (CORBA::ORB_ptr orb,
                                             PortableServer::POA_ptr poa)
   : Naming_Test (poa),
     orb_ (orb)
-{
-}
-
-Persistent_List_Test::~Persistent_List_Test ()
 {
 }
 
@@ -1200,8 +1139,8 @@ Persistent_List_Test::execute (TAO_Naming_Client &root_context)
       CosNaming::BindingIterator_var iter;
       CosNaming::BindingList_var bindings_list;
       CosNaming::Binding_var binding;
-      unsigned int objects_found = 0;
-      unsigned int contexts_found = 0;
+      unsigned int objects_found {};
+      unsigned int contexts_found {};
 
       root_context->list (0,
                           bindings_list.out (),
@@ -1232,9 +1171,9 @@ Persistent_List_Test::execute (TAO_Naming_Client &root_context)
       contexts_found = 0;
 
       // Instantiate four dummy objects.
-      My_Test_Object *impl = new My_Test_Object;
+      My_Test_Object * const impl = new My_Test_Object;
+      PortableServer::ServantBase_var safe_impl = impl;
       Test_Object_var obj = impl->_this ();
-      impl->_remove_ref ();
 
       // Bind objects to the naming context.
       CosNaming::Name name1;
@@ -1287,7 +1226,7 @@ Persistent_List_Test::execute (TAO_Naming_Client &root_context)
 
       ACE_DEBUG ((LM_DEBUG, "Persistent Naming test (part 3) OK.\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "Unexpected exception in Persistent Test (part 3)");

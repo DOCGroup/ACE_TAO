@@ -40,26 +40,23 @@ class  Test_i
   : public virtual POA_Test
 {
 public:
-  // Constructor
-  Test_i (CORBA::ORB_ptr o);
+  explicit Test_i (CORBA::ORB_ptr const orb);
 
-  // Destructor
   ~Test_i () override = default;
   Test_i (Test_i const &) = delete;
   Test_i (Test_i &&) = delete;
   Test_i &operator= (Test_i const &) = delete;
   Test_i &operator= (Test_i &&) = delete;
 
-  void do_something_FixedLength (::FixedLengthInfo_out my_info) override;
+  void do_something_FixedLength (::FixedLengthInfo_out info) override;
 
-  void do_something_VariableLength (::VariableLengthInfo_out my_info) override;
+  void do_something_VariableLength (::VariableLengthInfo_out info) override;
 
   void shutdown () override;
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 };
-
 
 #endif /* TESTI_H_  */
 

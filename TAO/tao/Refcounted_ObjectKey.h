@@ -38,7 +38,6 @@ namespace TAO
   class TAO_Export Refcounted_ObjectKey
   {
   public:
-    /// Constructor
     Refcounted_ObjectKey (ObjectKey const &ref);
 
     /// Accessor for the underlying ObjectKey.
@@ -67,7 +66,7 @@ namespace TAO
     ObjectKey object_key_;
 
     /// The refcount on the object key..
-    CORBA::ULong refcount_ {};
+    CORBA::ULong refcount_ {1};
   };
 }
 

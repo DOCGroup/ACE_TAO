@@ -19,6 +19,8 @@
 
 #include "orbsvcs/CosEvent/CEC_EventChannel.h"
 
+#include <memory>
+
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
 #include "orbsvcs/CosEvent/CEC_TypedEventChannel.h"
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
@@ -37,11 +39,14 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Event_Serv_Export TAO_CEC_Event_Loader : public TAO_Object_Loader
 {
 public:
-  /// Constructor
-  TAO_CEC_Event_Loader ();
+  TAO_CEC_Event_Loader () = default;
 
-  /// Destructor
   ~TAO_CEC_Event_Loader () override = default;
+
+  TAO_CEC_Event_Loader (TAO_CEC_Event_Loader const &) = delete;
+  TAO_CEC_Event_Loader &operator= (TAO_CEC_Event_Loader const &) = delete;
+  TAO_CEC_Event_Loader (TAO_CEC_Event_Loader &&) = delete;
+  TAO_CEC_Event_Loader &operator= (TAO_CEC_Event_Loader &&) = delete;
 
   //@{
   /**
@@ -65,39 +70,33 @@ protected:
   CORBA::ORB_var orb_;
 
   /// Flag to control the event loop
-  int terminate_flag_;
+  bool terminate_flag_ {};
 
   /// Attributes used to configure the Event Service properties.
-  TAO_CEC_EventChannel_Attributes *attributes_;
+  std::unique_ptr<TAO_CEC_EventChannel_Attributes> attributes_;
 
   /// Factory used to configure the Event Service strategies.
-  TAO_CEC_Factory *factory_;
+  TAO_CEC_Factory *factory_ {};
 
   /// The Event Service implementation class.
-  TAO_CEC_EventChannel *ec_impl_;
+  std::unique_ptr<TAO_CEC_EventChannel> ec_impl_;
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
   /// Attributes used to configure the Typed Event Service properties.
-  TAO_CEC_TypedEventChannel_Attributes *typed_attributes_;
+  std::unique_ptr<TAO_CEC_TypedEventChannel_Attributes> typed_attributes_;
 
   /// The Typed Event Service implementation class.
-  TAO_CEC_TypedEventChannel *typed_ec_impl_;
+  std::unique_ptr<TAO_CEC_TypedEventChannel> typed_ec_impl_;
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
   /// Naming Context needed if '-x' option is passed
   CosNaming::NamingContext_var naming_context_;
 
   /// Flag to check if '-x' option is passed
-  int bind_to_naming_service_;
+  bool bind_to_naming_service_ {};
 
   /// The name used when binding to the NamingService.
   CosNaming::Name channel_name_;
-
-private:
-  TAO_CEC_Event_Loader (const TAO_CEC_Event_Loader &) = delete;
-  TAO_CEC_Event_Loader &operator= (const TAO_CEC_Event_Loader &) = delete;
-  TAO_CEC_Event_Loader (TAO_CEC_Event_Loader &&) = delete;
-  TAO_CEC_Event_Loader &operator= (TAO_CEC_Event_Loader &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

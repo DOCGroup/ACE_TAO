@@ -6,30 +6,14 @@
 # include "ACEXML/common/XMLFilterImpl.inl"
 #endif /* __ACEXML_INLINE__ */
 
-ACEXML_XMLFilterImpl::ACEXML_XMLFilterImpl ()
-  :  parent_ (0),
-     // locator_ (0),
-     entityResolver_ (0),
-     dtdHandler_ (0),
-     contentHandler_ (0),
-     errorHandler_ (0)
-{
-}
+ACEXML_XMLFilterImpl::ACEXML_XMLFilterImpl () = default;
 
 ACEXML_XMLFilterImpl::ACEXML_XMLFilterImpl (ACEXML_XMLReader *parent)
-  : parent_ (parent),
-    // locator_ (0),
-    entityResolver_ (0),
-    dtdHandler_ (0),
-    contentHandler_ (0),
-    errorHandler_ (0)
+  : parent_ (parent)
 {
 }
 
-ACEXML_XMLFilterImpl::~ACEXML_XMLFilterImpl ()
-{
-  // @@ How are all the object lifecycles managed?
-}
+ACEXML_XMLFilterImpl::~ACEXML_XMLFilterImpl () = default;
 
 void
 ACEXML_XMLFilterImpl::parse (ACEXML_InputSource *input)
@@ -49,13 +33,13 @@ ACEXML_XMLFilterImpl::parse (const ACEXML_Char *systemId)
       throw ACEXML_SAXException (ACE_TEXT ("No Parent available"));
     }
 
-  this->parent_->parse (new ACEXML_InputSource (systemId));
+  this->parent_->parse (systemId);
 }
 
 int
 ACEXML_XMLFilterImpl::getFeature (const ACEXML_Char *name)
 {
-  if (this->parent_ != 0)
+  if (this->parent_ != nullptr)
     return this->parent_->getFeature (name);
 
   throw ACEXML_SAXNotRecognizedException (name);
@@ -64,7 +48,7 @@ ACEXML_XMLFilterImpl::getFeature (const ACEXML_Char *name)
 void *
 ACEXML_XMLFilterImpl::getProperty (const ACEXML_Char *name)
 {
-  if (this->parent_ != 0)
+  if (this->parent_ != nullptr)
     return this->parent_->getProperty (name);
 
   throw ACEXML_SAXNotRecognizedException (name);
@@ -73,7 +57,7 @@ ACEXML_XMLFilterImpl::getProperty (const ACEXML_Char *name)
 void
 ACEXML_XMLFilterImpl::setFeature (const ACEXML_Char *name, int boolean_value)
 {
-  if (this->parent_ != 0)
+  if (this->parent_ != nullptr)
     {
       this->parent_->setFeature (name, boolean_value);
     }
@@ -86,7 +70,7 @@ ACEXML_XMLFilterImpl::setFeature (const ACEXML_Char *name, int boolean_value)
 void
 ACEXML_XMLFilterImpl::setProperty (const ACEXML_Char *name, void *value)
 {
-  if (this->parent_ != 0)
+  if (this->parent_ != nullptr)
     {
       this->parent_->setProperty (name, value);
     }
@@ -113,14 +97,14 @@ ACEXML_XMLFilterImpl::characters (const ACEXML_Char *ch,
                                   size_t start,
                                   size_t length)
 {
-  if (this->contentHandler_ != 0)
+  if (this->contentHandler_ != nullptr)
     this->contentHandler_->characters (ch, start, length);
 }
 
 void
 ACEXML_XMLFilterImpl::endDocument ()
 {
-  if (this->contentHandler_ != 0)
+  if (this->contentHandler_ != nullptr)
     this->contentHandler_->endDocument ();
 }
 
@@ -129,7 +113,7 @@ ACEXML_XMLFilterImpl::endElement (const ACEXML_Char *namespaceURI,
                                   const ACEXML_Char *localName,
                                   const ACEXML_Char *qName)
 {
-  if (this->contentHandler_ != 0)
+  if (this->contentHandler_ != nullptr)
     this->contentHandler_->endElement (namespaceURI,
                                        localName,
                                        qName);
@@ -138,7 +122,7 @@ ACEXML_XMLFilterImpl::endElement (const ACEXML_Char *namespaceURI,
 void
 ACEXML_XMLFilterImpl::endPrefixMapping (const ACEXML_Char *prefix)
 {
-  if (this->contentHandler_ != 0)
+  if (this->contentHandler_ != nullptr)
     this->contentHandler_->endPrefixMapping (prefix);
 }
 
@@ -147,7 +131,7 @@ ACEXML_XMLFilterImpl::ignorableWhitespace (const ACEXML_Char *ch,
                                            int start,
                                            int length)
 {
-  if (this->contentHandler_ != 0)
+  if (this->contentHandler_ != nullptr)
     this->contentHandler_->ignorableWhitespace (ch,
                                                 start,
                                                 length);
@@ -157,7 +141,7 @@ void
 ACEXML_XMLFilterImpl::processingInstruction (const ACEXML_Char *target,
                                              const ACEXML_Char *data)
 {
-  if (this->contentHandler_ != 0)
+  if (this->contentHandler_ != nullptr)
     this->contentHandler_->processingInstruction (target,
                                                   data);
 }
@@ -165,21 +149,21 @@ ACEXML_XMLFilterImpl::processingInstruction (const ACEXML_Char *target,
 void
 ACEXML_XMLFilterImpl::setDocumentLocator (ACEXML_Locator *locator)
 {
-  if (this->contentHandler_ != 0)
+  if (this->contentHandler_ != nullptr)
     this->contentHandler_->setDocumentLocator (locator);
 }
 
 void
 ACEXML_XMLFilterImpl::skippedEntity (const ACEXML_Char *name)
 {
-  if (this->contentHandler_ != 0)
+  if (this->contentHandler_ != nullptr)
     this->contentHandler_->skippedEntity (name);
 }
 
 void
 ACEXML_XMLFilterImpl::startDocument ()
 {
-  if (this->contentHandler_ != 0)
+  if (this->contentHandler_ != nullptr)
     this->contentHandler_->startDocument ();
 }
 
@@ -189,7 +173,7 @@ ACEXML_XMLFilterImpl::startElement (const ACEXML_Char *namespaceURI,
                                     const ACEXML_Char *qName,
                                     ACEXML_Attributes *atts)
 {
-  if (this->contentHandler_ != 0)
+  if (this->contentHandler_ != nullptr)
     this->contentHandler_->startElement (namespaceURI,
                                          localName,
                                          qName,
@@ -200,7 +184,7 @@ void
 ACEXML_XMLFilterImpl::startPrefixMapping (const ACEXML_Char *prefix,
                                           const ACEXML_Char *uri)
 {
-  if (this->contentHandler_ != 0)
+  if (this->contentHandler_ != nullptr)
     this->contentHandler_->startPrefixMapping (prefix,
                                                uri);
 }
@@ -210,7 +194,7 @@ ACEXML_XMLFilterImpl::notationDecl (const ACEXML_Char *name,
                                     const ACEXML_Char *publicId,
                                     const ACEXML_Char *systemId)
 {
-  if (this->dtdHandler_ != 0)
+  if (this->dtdHandler_ != nullptr)
     this->dtdHandler_->notationDecl (name,
                                      publicId,
                                      systemId);
@@ -222,7 +206,7 @@ ACEXML_XMLFilterImpl::unparsedEntityDecl (const ACEXML_Char *name,
                                           const ACEXML_Char *systemId,
                                           const ACEXML_Char *notationName)
 {
-  if (this->dtdHandler_ != 0)
+  if (this->dtdHandler_ != nullptr)
     this->dtdHandler_->unparsedEntityDecl (name,
                                            publicId,
                                            systemId,
@@ -233,30 +217,30 @@ ACEXML_InputSource *
 ACEXML_XMLFilterImpl::resolveEntity (const ACEXML_Char *publicId,
                                      const ACEXML_Char *systemId)
 {
-  if (this->entityResolver_ != 0)
+  if (this->entityResolver_ != nullptr)
     return this->entityResolver_->resolveEntity (publicId,
                                                  systemId);
-  return 0;
+  return nullptr;
 }
 
 void
 ACEXML_XMLFilterImpl::error (ACEXML_SAXParseException &exception)
 {
-  if (this->errorHandler_ != 0)
+  if (this->errorHandler_ != nullptr)
     this->errorHandler_->error (exception);
 }
 
 void
 ACEXML_XMLFilterImpl::fatalError (ACEXML_SAXParseException &exception)
 {
-  if (this->errorHandler_ != 0)
+  if (this->errorHandler_ != nullptr)
     this->errorHandler_->fatalError (exception);
 }
 
 void
 ACEXML_XMLFilterImpl::warning (ACEXML_SAXParseException &exception)
 {
-  if (this->errorHandler_ != 0)
+  if (this->errorHandler_ != nullptr)
     this->errorHandler_->warning (exception);
 }
 

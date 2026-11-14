@@ -14,15 +14,9 @@ class MessageType;
 class RecordingDevice
 {
 public:
-  RecordingDevice ()
-  {
-    // Initialize the semaphore so that we don't block on the
-    // first call to wait_for_activity().
-  }
+  RecordingDevice () = default;
 
-  virtual ~RecordingDevice ()
-  {
-  }
+  virtual ~RecordingDevice () = default;
 
   virtual const ACE_TCHAR *get_name () const
   {
@@ -58,7 +52,7 @@ public:
   // wait for data to arrive.
   virtual ACE_Event_Handler *get_handler () const
   {
-    return 0;
+    return nullptr;
   }
 
   virtual RecordingDevice *wait_for_activity ()

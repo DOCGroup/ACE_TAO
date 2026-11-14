@@ -6,7 +6,6 @@
 #include "orbsvcs/Naming/FaultTolerant/nsgroup_svc.h"
 #include "ace/Task.h"
 
-
 const ACE_TCHAR *group_names[] =
   {ACE_TEXT("C++ Group"), ACE_TEXT("FORTRAN Group"), ACE_TEXT("Groovy Group"), ACE_TEXT("Basic Group"),
    ACE_TEXT("Java Group"), ACE_TEXT("Forth Group"), ACE_TEXT("COBOL Group"), ACE_TEXT("Ruby Group"),
@@ -98,7 +97,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) - Acquiring Name Service\n")));
 
-
       CORBA::Object_var nmobj = orb->resolve_initial_references ("NameManager");
       FT_Naming::NamingManager_var naming_manager =
         FT_Naming::NamingManager::_narrow (nmobj.in());
@@ -119,7 +117,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           ACE_TEXT ("service facade:"));
         return 1;
       }
-
 
       Hammer hammer;
 

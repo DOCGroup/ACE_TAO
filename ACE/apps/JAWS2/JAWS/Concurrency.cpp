@@ -6,20 +6,20 @@
 #include "JAWS/Data_Block.h"
 #include "JAWS/Waiter.h"
 #include "JAWS/Reaper.h"
-
+#include <memory>
+#include <vector>
 
 JAWS_Concurrency_Base::JAWS_Concurrency_Base ()
   : ACE_Task<ACE_SYNCH> (new ACE_Thread_Manager),
     mb_acquired_ (0),
-    mb_ (0),
-    reaper_ (new JAWS_Reaper (this))
+    mb_ (nullptr),
+    reaper_ (std::make_unique<JAWS_Reaper> (this))
 {
 }
 
 JAWS_Concurrency_Base::~JAWS_Concurrency_Base ()
 {
   delete this->thr_mgr_;
-  delete this->reaper_;
 }
 
 ACE_Message_Block *
@@ -27,18 +27,18 @@ JAWS_Concurrency_Base::singleton_mb ()
 {
   if (this->mb_acquired_ == 0)
     {
-      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, g, this->lock_, 0);
+      ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, g, this->lock_, nullptr);
 
       if (this->mb_acquired_ == 0)
         {
           int result;
-          ACE_Message_Block *mb = 0;
+          ACE_Message_Block *mb {};
 
           result = this->getq (mb);
           this->mb_acquired_ = 1;
 
-          if (result == -1 || mb == 0)
-            return 0;
+          if (result == -1 || mb == nullptr)
+            return nullptr;
 
           this->mb_ = mb;
         }
@@ -58,14 +58,14 @@ JAWS_Concurrency_Base::svc ()
 {
   JAWS_TRACE ("JAWS_Concurrency_Base::svc");
 
-  ACE_Message_Block *mb = 0;         // The message queue element
-  JAWS_Data_Block *db = 0;           // Contains the task list
+  ACE_Message_Block *mb {};         // The message queue element
+  JAWS_Data_Block *db {};           // Contains the task list
 
   mb = this->singleton_mb ();
 
   // A NULL data block indicates that the thread should shut
   // itself down
-  if (mb == 0)
+  if (mb == nullptr)
     {
       JAWS_TRACE ("JAWS_Concurrency_Base::svc, empty message block");
       return -1;
@@ -85,28 +85,21 @@ JAWS_Concurrency_Base::svc_loop (JAWS_Data_Block *db)
 
   // Thread specific message block and data block
   ACE_DEBUG ((LM_DEBUG, "(%t) Creating DataBlock\n"));
-  JAWS_Data_Block *ts_db = new JAWS_Data_Block (*db);
-  if (ts_db == 0)
-    {
-      ACE_ERROR ((LM_ERROR, "%p\n", "JAWS_Concurrency_Base::svc_hook"));
-      return -1;
-    }
+  std::unique_ptr<JAWS_Data_Block> ts_db = std::make_unique<JAWS_Data_Block> (*db);
 
   for (;;)
     {
-      if (this->svc_hook (ts_db) != 0)
+      if (this->svc_hook (ts_db.get ()) != 0)
         break;
       ts_db->task (db->task ());
       ts_db->policy (db->policy ());
-      ts_db->payload (0);
-      ts_db->io_handler (0);
+      ts_db->payload (nullptr);
+      ts_db->io_handler (nullptr);
       ts_db->rd_ptr (ts_db->wr_ptr ());
       ts_db->crunch ();
     }
 
   ACE_DEBUG ((LM_DEBUG, "(%t) Deleting DataBlock\n"));
-  delete ts_db; // ts_db->release ();
-
   return 0;
 }
 
@@ -117,16 +110,16 @@ JAWS_Concurrency_Base::svc_hook (JAWS_Data_Block *ts_db)
 
   int result = 0;
 
-  JAWS_IO_Handler *handler = 0;      // Keeps the state of the task
-  JAWS_Pipeline_Handler *task = 0;   // The task itself
-  JAWS_Data_Block *mb = 0;     // The task message block
+  JAWS_IO_Handler *handler {};      // Keeps the state of the task
+  JAWS_Pipeline_Handler *task {};   // The task itself
+  JAWS_Data_Block *mb {};     // The task message block
 
   task = ts_db->task ();
-  handler = 0;
+  handler = nullptr;
 
   // Get the waiter index
-  JAWS_Waiter *waiter = JAWS_Waiter_Singleton::instance ();
-  int waiter_index = waiter->index ();
+  JAWS_Waiter * const waiter = JAWS_Waiter_Singleton::instance ();
+  int const waiter_index = waiter->index ();
 
   mb = ts_db;
   do
@@ -134,14 +127,14 @@ JAWS_Concurrency_Base::svc_hook (JAWS_Data_Block *ts_db)
       JAWS_TRACE ("JAWS_Concurrency_Base::svc_hook, looping");
 
       // Use a NULL task to make the thread recycle now
-      if (task == 0)
+      if (task == nullptr)
         {
           JAWS_TRACE ("JAWS_Concurrency_Base::svc_hook, recycling");
           if (handler)
             handler->done ();
-          handler = 0;
-          JAWS_IO_Handler **ioh = waiter->find_by_index (waiter_index);
-          *ioh = 0;
+          handler = nullptr;
+          JAWS_IO_Handler ** const ioh = waiter->find_by_index (waiter_index);
+          *ioh = nullptr;
           break;
         }
 
@@ -150,7 +143,7 @@ JAWS_Concurrency_Base::svc_hook (JAWS_Data_Block *ts_db)
 
       if (result == 0 || result == -3)
         handler = mb->io_handler ();
-      else handler = 0;
+      else handler = nullptr;
 
       if (result == 1 || result == 2)
         {
@@ -160,7 +153,7 @@ JAWS_Concurrency_Base::svc_hook (JAWS_Data_Block *ts_db)
           // We need a way to destroy all the handlers created by the
           // Asynch_Acceptor.  Figure this out later.
           handler = waiter->wait_for_completion (waiter_index);
-          if (handler == 0)
+          if (handler == nullptr)
             {
               JAWS_TRACE ("JAWS_Concurrency_Base::svc_hook, bad proactor");
               // Proactor failed
@@ -178,17 +171,17 @@ JAWS_Concurrency_Base::svc_hook (JAWS_Data_Block *ts_db)
           if (handler)
             handler->done ();
 
-          handler = 0;
+          handler = nullptr;
           if (result == -2)
             {
-              JAWS_IO_Handler **ioh = waiter->find_by_index (waiter_index);
-              *ioh = 0;
+              JAWS_IO_Handler ** const ioh = waiter->find_by_index (waiter_index);
+              *ioh = nullptr;
               result = 0;
             }
           break;
         }
 
-      if (handler == 0)
+      if (handler == nullptr)
         break;
 
       mb = handler->message_block ();
@@ -207,7 +200,7 @@ JAWS_Concurrency_Base::activate_hook ()
 }
 
 JAWS_Dispatcher::JAWS_Dispatcher ()
-  : policy_(0)
+  : policy_ {}
 {
 }
 
@@ -237,30 +230,28 @@ JAWS_Thread_Pool_Task::make (long flags, int nthreads, int maxthreads)
   this->nthreads_ = nthreads;
   this->maxthreads_ = maxthreads;
 
-  ACE_thread_t *thr_names = new ACE_thread_t[nthreads];
+  std::vector<ACE_thread_t> thr_names (nthreads);
 
   if (this->activate (flags | THR_SUSPENDED,
                       nthreads,
                       0,          // force active
                       ACE_DEFAULT_THREAD_PRIORITY,
                       -1,         // group id
-                      0,          // ACE_Task_Base
-                      0,          // thread handles
-                      0,          // stack
-                      0,          // stack size
-                      thr_names) == -1)
+                      nullptr,    // ACE_Task_Base
+                      nullptr,    // thread handles
+                      nullptr,    // stack
+                      nullptr,    // stack size
+                      thr_names.data ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "JAWS_Thread_Pool_Task::activate"),
                       -1);
 
-  for (int i = 0; i < nthreads; i++)
+  for (int i = 0; i < nthreads; ++i)
     {
       JAWS_Thread_ID thr_id(thr_names[i]);
-      JAWS_IO_Handler *dummy = 0;
+      JAWS_IO_Handler *dummy {};
 
       JAWS_Waiter_Singleton::instance ()->insert (thr_id, dummy);
     }
-
-  delete[] thr_names;
 
   this->thr_mgr_->resume_all ();
 
@@ -307,16 +298,16 @@ JAWS_Thread_Per_Task::activate_hook ()
                       force_active,
                       ACE_DEFAULT_THREAD_PRIORITY,
                       -1,         // group id
-                      0,          // ACE_Task_Base
-                      0,          // thread handle
-                      0,          // stack
-                      0,          // stack size
+                      nullptr,    // ACE_Task_Base
+                      nullptr,    // thread handle
+                      nullptr,    // stack
+                      nullptr,    // stack size
                       &thr_name) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "JAWS_Thread_Pool_Task::activate"),
                       -1);
 
   JAWS_Thread_ID thr_id (thr_name);
-  JAWS_IO_Handler *dummy = 0;
+  JAWS_IO_Handler *dummy {};
 
   // In the thread-per-request strategy, need to take care of the
   // case when the waiter array is full.  Think about that problem

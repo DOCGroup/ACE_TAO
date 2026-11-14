@@ -1,10 +1,14 @@
 #include "ace/DEV_Addr.h"
+#include <memory>
 #if !defined (__ACE_INLINE__)
 #include "ace/DEV_Addr.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Log_Category.h"
 #include "ace/OS_NS_string.h"
+
+#include <cstring>
+
 #if defined (ACE_HAS_ALLOC_HOOKS)
 # include "ace/Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
@@ -31,7 +35,7 @@ ACE_DEV_Addr::get_addr () const
 {
   ACE_TRACE ("ACE_DEV_Addr::get_addr");
 
-  return (void *) &this->devname_;
+  return const_cast<ACE_TCHAR *> (this->devname_);
 }
 
 void
@@ -46,26 +50,21 @@ ACE_DEV_Addr::dump () const
 #endif /* ACE_HAS_DUMP */
 }
 
-// Do nothing constructor.
-
 ACE_DEV_Addr::ACE_DEV_Addr ()
   : ACE_Addr (AF_DEV, sizeof this->devname_)
 {
   ACE_TRACE ("ACE_DEV_Addr::ACE_DEV_Addr");
-
-  (void) ACE_OS::memset ((void *) &this->devname_,
-                         0, sizeof this->devname_);
 }
 
 int
-ACE_DEV_Addr::set (const ACE_DEV_Addr &sa)
+ACE_DEV_Addr::set (ACE_DEV_Addr const &sa)
 {
   this->base_set (sa.get_type (), sa.get_size ());
 
   if (sa.get_type () == AF_ANY)
-    (void) ACE_OS::memset ((void *) &this->devname_,
-                           0,
-                           sizeof this->devname_);
+    (void) std::memset (&this->devname_,
+                        0,
+                        sizeof this->devname_);
   else
     (void) ACE_OS::strsncpy (this->devname_,
                              sa.devname_,
@@ -73,9 +72,7 @@ ACE_DEV_Addr::set (const ACE_DEV_Addr &sa)
   return 0;
 }
 
-// Copy constructor.
-
-ACE_DEV_Addr::ACE_DEV_Addr (const ACE_DEV_Addr &sa)
+ACE_DEV_Addr::ACE_DEV_Addr (ACE_DEV_Addr const &sa)
   : ACE_Addr (AF_DEV, sizeof this->devname_)
 {
   ACE_TRACE ("ACE_DEV_Addr::ACE_DEV_Addr");
@@ -83,7 +80,7 @@ ACE_DEV_Addr::ACE_DEV_Addr (const ACE_DEV_Addr &sa)
   this->set (sa);
 }
 
-ACE_DEV_Addr::ACE_DEV_Addr (const ACE_TCHAR *devname)
+ACE_DEV_Addr::ACE_DEV_Addr (ACE_TCHAR const *devname)
   : ACE_Addr (AF_DEV, sizeof this->devname_)
 {
   ACE_TRACE ("ACE_DEV_Addr::ACE_DEV_Addr");
@@ -92,11 +89,11 @@ ACE_DEV_Addr::ACE_DEV_Addr (const ACE_TCHAR *devname)
 }
 
 ACE_DEV_Addr &
-ACE_DEV_Addr::operator= (const ACE_DEV_Addr &sa)
+ACE_DEV_Addr::operator= (ACE_DEV_Addr const &sa)
 {
   ACE_TRACE ("ACE_DEV_Addr::operator=");
 
-  if (this != &sa)
+  if (this != std::addressof (sa))
     this->set (sa);
 
   return *this;

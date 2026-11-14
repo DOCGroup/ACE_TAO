@@ -7,9 +7,7 @@
  * parties.
  */
 
-
 /* ------------------------------------------------------------------------ */
-
 
 /*
  * object.h: Handle httpd objects
@@ -25,27 +23,20 @@
  * Rob McCool
  */
 
-
 #ifndef OBJECT_H
 #define OBJECT_H
-
 
 #include "netsite.h"
 #include "base/pblock.h"
 #include "base/session.h"
 
-
-
 /* ------------------------------ Constants ------------------------------- */
-
 
 /* The maximum directive length unabbreviated, plus one space */
 #define MAX_DNAME_LEN 11
 #define NUM_DIRECTIVES 7
 
-
 /* ------------------------------ Structures ------------------------------ */
-
 
 /*
  * Hierarchy of httpd_object
@@ -62,7 +53,6 @@
  * and to keep track of which of their directive types maps to which dtable
  * number.
  */
-
 
 /*
  * directive is a structure containing the protection and parameters to an
@@ -101,10 +91,7 @@ typedef struct {
     dtable *dt;
 } httpd_object;
 
-
-
 /* ------------------------------ Prototypes ------------------------------ */
-
 
 /*
  * directive_name2num will return the position of the abbreviated directive
@@ -115,13 +102,11 @@ typedef struct {
 
 int directive_name2num(char *dir);
 
-
 /*
  * directive_num2name returns a string describing directive number num.
  */
 
 const char *directive_num2name(int num);
-
 
 /*
  * object_create will create a new object and return a pointer to it.
@@ -143,7 +128,6 @@ void object_free(httpd_object *obj);
 
 void object_add_directive(int dc, pblock *p, pblock *c, httpd_object *obj);
 
-
 /*
  * object_findnext finds the object configured to follow the given object,
  * and stores the variables in rq->vars. It returns REQ_PROCEED if more
@@ -154,7 +138,6 @@ void object_add_directive(int dc, pblock *p, pblock *c, httpd_object *obj);
  * Handles all DIRECTIVE_CONSTRUCT type directives such as NameTrans and
  * AuthType.
  */
-
 
 /* --------- Prototype moved to req.h because of interdependency ---------- */
 

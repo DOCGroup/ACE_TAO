@@ -51,7 +51,6 @@ namespace TAO
     using character_type = charT;
     using s_traits = TAO::details::string_traits_base<character_type>;
 
-    /// Default constructor.
     inline String_var () : ptr_ (0)
     {
     }
@@ -71,7 +70,6 @@ namespace TAO
     {
     }
 
-    /// Destructor.
     inline ~String_var ()
     {
       s_traits::release (this->ptr_);
@@ -261,7 +259,6 @@ namespace CORBA
   using WString_var = TAO::String_var<CORBA::WChar>;
   using WString_out = TAO::String_out<CORBA::WChar>;
 }
-
 
 # if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 

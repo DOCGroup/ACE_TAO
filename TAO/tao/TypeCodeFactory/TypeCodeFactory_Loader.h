@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    TypeCodeFactory_Loader.h
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_TYPECODEFACTORY_LOADER_H
 #define TAO_TYPECODEFACTORY_LOADER_H
@@ -32,8 +30,12 @@ class TAO_TypeCodeFactory_Export TAO_TypeCodeFactory_Loader
   : public TAO_Object_Loader
 {
 public:
-  /// Constructor.
-  TAO_TypeCodeFactory_Loader ();
+  TAO_TypeCodeFactory_Loader () = default;
+
+  TAO_TypeCodeFactory_Loader (TAO_TypeCodeFactory_Loader const &) = delete;
+  TAO_TypeCodeFactory_Loader &operator= (TAO_TypeCodeFactory_Loader const &) = delete;
+  TAO_TypeCodeFactory_Loader (TAO_TypeCodeFactory_Loader &&) = delete;
+  TAO_TypeCodeFactory_Loader &operator= (TAO_TypeCodeFactory_Loader &&) = delete;
 
   /// Overload the base class method to create a new instance
   /// of a TypeCodeFactory object.

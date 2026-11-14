@@ -18,8 +18,9 @@
 #include "ace/Naming_Context.h"
 #include "ace/Profile_Timer.h"
 #include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
+
+#include <cstring>
 
 #if !defined ACE_LACKS_FCNTL || defined ACE_WIN32
 
@@ -186,7 +187,7 @@ test_find (ACE_Naming_Context &ns_context, int sign, int result)
 
           if (type_out)
             {
-              ACE_TEST_ASSERT (ACE_OS::strcmp (type_out, temp_type) == 0);
+              ACE_TEST_ASSERT (std::strcmp (type_out, temp_type) == 0);
               delete[] type_out;
             }
         }

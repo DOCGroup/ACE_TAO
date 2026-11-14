@@ -25,7 +25,6 @@
 #include "ace/MMAP_Memory_Pool.h"
 #include "ace/Thread_Mutex.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // An ACE_Lite_MMAP_Memory_Pool is used since sync()ing is not
@@ -45,10 +44,8 @@ class TAO_MMAP_Allocator
   : public TAO_MMAP_Allocator_Base
 {
 public:
-  /// Constructor
   TAO_MMAP_Allocator ();
 
-  /// Destructor.
   ~TAO_MMAP_Allocator () override;
 
   /// Return backing store handle.

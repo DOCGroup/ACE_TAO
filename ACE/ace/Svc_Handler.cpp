@@ -458,7 +458,7 @@ template <typename PEER_STREAM, typename SYNCH_TRAITS> int
 ACE_Buffered_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::flush_i ()
 {
   ACE_Message_Queue_Iterator<SYNCH_TRAITS> iterator (*this->msg_queue ());
-  ACE_Message_Block *mblk = nullptr;
+  ACE_Message_Block *mblk {};
   ssize_t result = 0;
 
   // Get the first <ACE_Message_Block> so that we can write everything
@@ -487,10 +487,10 @@ ACE_Buffered_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::dump () const
 
   ACE_Buffered_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::dump ();
   ACELIB_DEBUG ((LM_DEBUG,
-              "maximum_buffer_size_ = %d\n",
+              "maximum_buffer_size_ = %B\n",
               this->maximum_buffer_size_));
   ACELIB_DEBUG ((LM_DEBUG,
-              "current_buffer_size_ = %d\n",
+              "current_buffer_size_ = %B\n",
               this->current_buffer_size_));
   if (this->timeoutp_ != 0)
     ACELIB_DEBUG ((LM_DEBUG,

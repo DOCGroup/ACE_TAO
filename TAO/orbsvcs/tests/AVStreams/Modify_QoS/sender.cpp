@@ -1,3 +1,5 @@
+#include <cstring>
+
 #include "sender.h"
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
@@ -44,7 +46,7 @@ Sender_StreamEndPoint::modify_QoS (AVStreams::streamQoS &new_qos,
   if (new_qos.length () != 0)
     {
       // Check which qos parameter has changed.
-      if (ACE_OS::strcmp (new_qos [0].QoSParams [0].property_name, "video_frame_rate") == 0)
+      if (std::strcmp (new_qos [0].QoSParams [0].property_name, "video_frame_rate") == 0)
         {
           // The video frame rate for this flow has changed.
 
@@ -61,19 +63,6 @@ Sender_StreamEndPoint::modify_QoS (AVStreams::streamQoS &new_qos,
     }
 
   return true;
-}
-
-Sender::Sender ()
-  : sender_mmdevice_ (nullptr),
-    streamctrl_ (nullptr),
-    frame_count_ (0),
-    filename_ ("input"),
-    input_file_ (nullptr),
-    protocol_ ("UDP"),
-    frame_rate_ (1),
-    mb_ (BUFSIZ),
-    protocol_object_ (nullptr)
-{
 }
 
 void
@@ -97,16 +86,16 @@ Sender::parse_args (int argc,
       switch (c)
         {
         case 'f':
-          this->filename_ = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
+          this->options_.filename = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
           break;
         case 'p':
-          this->protocol_ = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
+          this->options_.protocol = ACE_TEXT_ALWAYS_CHAR (opts.opt_arg ());
           break;
         case 'r':
-          this->frame_rate_ = ACE_OS::atoi (opts.opt_arg ());
+          this->options_.frame_rate = ACE_OS::atoi (opts.opt_arg ());
           break;
         case 'd':
-          TAO_debug_level++;
+          ++TAO_debug_level;
           break;
         default:
           ACE_DEBUG ((LM_DEBUG, "Unknown Option\n"));
@@ -165,14 +154,13 @@ Sender::init (int argc,
     return result;
 
   // Open file to read.
-  this->input_file_ =
-    ACE_OS::fopen (this->filename_.c_str (),
-                   "r");
+  this->input_file_.reset (ACE_OS::fopen (this->options_.filename.c_str (),
+                                          "r"));
 
-  if (this->input_file_ == nullptr)
+  if (!this->input_file_)
     ACE_ERROR_RETURN ((LM_DEBUG,
                        "Cannot open input file %C\n",
-                       this->filename_.c_str ()),
+                       this->options_.filename.c_str ()),
                       -1);
   else
     ACE_DEBUG ((LM_DEBUG,
@@ -185,8 +173,6 @@ Sender::init (int argc,
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) Error binding to the naming service\n"),
                       -1);
-
-
   // Initialize the  QoS
   AVStreams::streamQoS_var the_qos (new AVStreams::streamQoS);
 
@@ -195,7 +181,7 @@ Sender::init (int argc,
                                     "IN",
                                     "USER_DEFINED",
                                     "",
-                                    this->protocol_.c_str (),
+                                    this->options_.protocol.c_str (),
                                     0);
 
   AVStreams::flowSpec flow_spec (1);
@@ -241,13 +227,13 @@ int
 Sender::pace_data ()
 {
   // The time between two consecutive frames.
-  inter_frame_time.set (1 / (double) this->frame_rate_);
+  inter_frame_time.set (1 / (double) this->options_.frame_rate);
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "Frame Rate = %d / second\n"
                 "Inter Frame Time = %d (msec)\n",
-                this->frame_rate_,
+                this->options_.frame_rate,
                 inter_frame_time.msec ()));
 
   try
@@ -259,10 +245,10 @@ Sender::pace_data ()
       while (1)
         {
           // Read from the file into a message block.
-          size_t n = ACE_OS::fread (this->mb_.wr_ptr (),
-                                    1,
-                                    this->mb_.size (),
-                                    this->input_file_);
+          size_t const n = std::fread (this->mb_.wr_ptr (),
+                                            1,
+                                            this->mb_.size (),
+                                            this->input_file_.get ());
 
           if (n == 0)
             {
@@ -325,7 +311,7 @@ Sender::pace_data ()
                               -1);
 
           ACE_DEBUG ((LM_DEBUG,
-                      "Sender::pace_data frame %d was sent successfully\n",
+                      "Sender::pace_data frame %B was sent successfully\n",
                       ++this->frame_count_));
 
           // Reset the message block.

@@ -44,8 +44,13 @@ namespace TAO
     class TAO_Security_Export Current_Impl
     {
     public:
-      /// Destructor.
+      Current_Impl () = default;
       virtual ~Current_Impl ();
+
+      Current_Impl (Current_Impl const &) = delete;
+      Current_Impl (Current_Impl &&) = delete;
+      Current_Impl &operator= (Current_Impl const &) = delete;
+      Current_Impl &operator= (Current_Impl &&) = delete;
 
       /**
        * @name SecurityLevel1::Current Methods

@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   DIOP_Connection_Handler.h
  *
  *  @author  Michael Kircher
  */
-// ===================================================================
 
 #ifndef TAO_DIOP_CONNECTION_HANDLER_H
 #define TAO_DIOP_CONNECTION_HANDLER_H
@@ -31,8 +29,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// ****************************************************************
-
 /**
  * @class TAO_DIOP_Connection_Handler
  *
@@ -48,10 +44,8 @@ class TAO_Strategies_Export TAO_DIOP_Connection_Handler
 public:
   explicit TAO_DIOP_Connection_Handler (ACE_Thread_Manager *t = nullptr);
 
-  /// Constructor.
   explicit TAO_DIOP_Connection_Handler (TAO_ORB_Core *orb_core);
 
-  /// Destructor.
   ~TAO_DIOP_Connection_Handler ();
 
   /// Called by the <Strategy_Acceptor> when the handler is completely

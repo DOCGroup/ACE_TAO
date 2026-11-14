@@ -15,7 +15,6 @@ class Roundtrip
   : public virtual POA_Test::AMH_Roundtrip
 {
  public:
-    /// Constructor
     Roundtrip (CORBA::ORB_ptr orb);
 
     // = The skeleton methods

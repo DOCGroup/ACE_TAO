@@ -19,7 +19,7 @@ namespace FTRTEC
   namespace {
     std::unique_ptr<Replication_Strategy> replication_strategy;
     int threads = 1;
-    Replication_Service* service;
+    Replication_Service* service {};
   }
 
   Replication_Service* Replication_Service::instance()
@@ -34,14 +34,14 @@ namespace FTRTEC
 
   int Replication_Service::init (int argc, ACE_TCHAR* argv[])
   {
-    static int initialized = 0;
+    static bool initialized {};
 
     // Only allow initialization once.
     if (initialized)
       return 0;
 
-    initialized = 1;
-    bool ami = false;
+    initialized = true;
+    bool ami {};
 
     // Parse any service configurator parameters.
     while (argc > 0) {
@@ -82,7 +82,7 @@ namespace FTRTEC
 
         PortableInterceptor::register_orb_initializer (orb_initializer.in ());
       }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const& ex)
       {
         ex._tao_print_exception (
           "Unexpected exception caught while ""initializing the TransactionDepth");
@@ -90,7 +90,6 @@ namespace FTRTEC
       }
     return 0;
   }
-
 
   void Replication_Service::become_primary()
   {
@@ -111,8 +110,8 @@ namespace FTRTEC
     replication_strategy->check_validity();
   }
 
-
-  void Replication_Service::replicate_request(const FtRtecEventChannelAdmin::Operation& update,
+  void Replication_Service::replicate_request(
+    FtRtecEventChannelAdmin::Operation const& update,
     RollbackOperation rollback)
   {
     TAO_OutputCDR cdr;
@@ -131,12 +130,11 @@ namespace FTRTEC
 
     // Now copy over each byte.
     char* base = mb.data_block ()->base ();
-    for(CORBA::ULong i = 0; i < length; i++)
+    for(CORBA::ULong i {}; i < length; ++i)
       {
         state[i] = base[i];
       }
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
-
 
     replication_strategy->replicate_request(
       state,
@@ -144,7 +142,7 @@ namespace FTRTEC
       update.object_id);
   }
 
-  void Replication_Service::add_member(const FTRT::ManagerInfo & info,
+  void Replication_Service::add_member(FTRT::ManagerInfo const &info,
                                        CORBA::ULong object_group_ref_version)
   {
     replication_strategy->add_member(info, object_group_ref_version);
@@ -152,21 +150,21 @@ namespace FTRTEC
 
   int  Replication_Service::acquire_read ()
   {
-    int r =  replication_strategy->acquire_read();
+    int const r = replication_strategy->acquire_read();
     TAO_FTRTEC::Log(3, ACE_TEXT("Read Lock acquired %d\n"), r);
     return r;
   }
 
   int  Replication_Service::acquire_write ()
   {
-    int r= replication_strategy->acquire_write();
+    int const r = replication_strategy->acquire_write();
     TAO_FTRTEC::Log(3, ACE_TEXT("Write Lock acqured %d\n"), r);
     return r;
   }
 
   int  Replication_Service::release ()
   {
-    int r= replication_strategy->release();
+    int const r = replication_strategy->release();
     TAO_FTRTEC::Log(3, ACE_TEXT("Lock Released %d\n"), r);
     return r;
   }

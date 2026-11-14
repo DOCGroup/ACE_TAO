@@ -8,31 +8,22 @@
  */
 //=============================================================================
 
-
 #include "test_dynarray.h"
 #include "da_testsC.h"
 #include "data.h"
 #include "tao/DynamicAny/DynamicAny.h"
 #include "analyzer.h"
 
-Test_DynArray::Test_DynArray (CORBA::ORB_var orb, int debug)
+Test_DynArray::Test_DynArray (CORBA::ORB_var orb, bool debug)
   : orb_ (orb),
-    test_name_ (CORBA::string_dup ("test_dynarray")),
-    error_count_ (0),
     debug_ (debug)
 {
 }
 
-Test_DynArray::~Test_DynArray ()
-{
-  CORBA::string_free (this->test_name_);
-  this->test_name_ = 0;
-}
-
-const char*
+char const*
 Test_DynArray::test_name () const
 {
-  return this->test_name_;
+  return "test_dynarray";
 }
 
 int
@@ -40,7 +31,7 @@ Test_DynArray::run_test ()
 {
   Data data (this->orb_);
 
-  DynAnyTests::test_array ta = {0};
+  DynAnyTests::test_array ta {};
 
   try
     {
@@ -118,7 +109,6 @@ Test_DynArray::run_test ()
       in_any2 <<= DynAnyTests::test_array_forany (ta);
 
       ftc1->from_any (in_any2);
-
 
       analyzer.analyze (ftc1.in ());
 

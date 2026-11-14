@@ -90,7 +90,7 @@ TAO::TypeCode::Alias<StringType,
   // base attributes (id and name).  Perform an equality comparison of
   // the content.
 
-  CORBA::TypeCode_var rhs_content_type = tc->content_type ();
+  CORBA::TypeCode_var const rhs_content_type = tc->content_type ();
 
   return
     Traits<StringType>::get_typecode (this->content_type_)->equal (

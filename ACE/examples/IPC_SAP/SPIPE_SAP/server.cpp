@@ -6,7 +6,6 @@
 #include "ace/OS_NS_poll.h"
 #include "ace/OS_NS_unistd.h"
 
-
 #if defined (ACE_HAS_STREAM_PIPES)
 
 #include "shared.h"
@@ -70,7 +69,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                 if (handle + 1 == width)
                   {
                     while (poll_array[handle].fd == -1)
-                      handle--;
+                      --handle;
                     width = handle + 1;
                   }
               }

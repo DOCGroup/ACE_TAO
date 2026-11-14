@@ -1,47 +1,33 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/AV/RTCP_Channel.h"
 #include "orbsvcs/AV/RTP.h"
 #include "tao/debug.h"
 
+#include <cerrno>
+#include <memory>
+#include <new>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 RTCP_Channel_In::RTCP_Channel_In (ACE_UINT32 ssrc,
-                                  const ACE_Addr *peer_addr)
+                                  ACE_Addr const *peer_addr)
  : remote_ssrc_ (ssrc),
-   cname_ (""),
-   transit_ (0),
-   jitter_ (0.0),
-   first_data_packet_ (1),
-   ntp_ts_msw_ (0),
-   ntp_ts_lsw_ (0),
-   last_sr_time_ (0),
-   active_ (0),
-   no_data_counter_ (0),
-   data_since_last_report_ (0)
+   cname_ ("")
 {
-  const ACE_INET_Addr *const_inet_addr = dynamic_cast<const ACE_INET_Addr*> (peer_addr);
+  ACE_INET_Addr const *const_inet_addr = dynamic_cast<ACE_INET_Addr const *> (peer_addr);
 
-  ACE_INET_Addr *inet_addr = nullptr;
+  ACE_INET_Addr *inet_addr {};
   ACE_NEW (inet_addr,
            ACE_INET_Addr (*const_inet_addr));
-
-  this->peer_address_ = inet_addr;
+  this->peer_address_.reset (inet_addr);
 }
 
-RTCP_Channel_In::~RTCP_Channel_In()
-{
-  delete this->peer_address_;
-}
+RTCP_Channel_In::~RTCP_Channel_In() = default;
 
 void
 RTCP_Channel_In::updateStatistics(RTP_Packet* dataPkt)
 {
-  ACE_Time_Value current_time;
-  ACE_UINT32 arrival;
-  int transit, d;
-
-  this->active_ = 0;
+  this->active_ = false;
 
   // determine if the source has been declared valid
   if (update_seq(dataPkt->sn ()) == 0)
@@ -53,15 +39,13 @@ RTCP_Channel_In::updateStatistics(RTP_Packet* dataPkt)
       // store the initial timestamp
       this->init_time_stamp_ = dataPkt->ts ();
       this->init_local_time_ = ACE_OS::gettimeofday ();
-      this->first_data_packet_ = 0;
+      this->first_data_packet_ = false;
     }
 
   // Get the current time.
-  current_time = ACE_OS::gettimeofday ();
+  ACE_Time_Value const current_time = ACE_OS::gettimeofday ();
 
-  unsigned int samples_per_sec;
-  double samples_per_usec;
-
+  unsigned int samples_per_sec {};
 
   switch (dataPkt->pt())
   {
@@ -83,19 +67,18 @@ RTCP_Channel_In::updateStatistics(RTP_Packet* dataPkt)
       samples_per_sec = 1000000;
   };
 
-  samples_per_usec = samples_per_sec/1000000.0;
+  double const samples_per_usec = samples_per_sec / 1000000.0;
 
   // Calculate the current timestamp.
-  arrival = (ACE_UINT32)((current_time.sec () -
+  ACE_UINT32 const arrival = static_cast<ACE_UINT32> ((current_time.sec () -
                 this->init_local_time_.sec ()) * samples_per_sec +
             ((double)(current_time.usec () -
                 (double)this->init_local_time_.usec ()) * samples_per_usec)  +
             this->init_time_stamp_);
 
-
   // jitter calc from RFC 1889 app a.8
-  transit = arrival - dataPkt->ts ();
-  d = transit - this->transit_;
+  int const transit = arrival - dataPkt->ts ();
+  int d = transit - this->transit_;
   this->transit_ = transit;
   if (d < 0)
     d = -d;
@@ -104,7 +87,7 @@ RTCP_Channel_In::updateStatistics(RTP_Packet* dataPkt)
   this->jitter_ += (1./16.)*((double)d - this->jitter_);
 
   // Indicate that data has been received since the last report.
-  this->data_since_last_report_ = 1;
+  this->data_since_last_report_ = true;
 
   // Store the payload type.
   this->payload_type_ = dataPkt->pt ();
@@ -114,10 +97,9 @@ int
 RTCP_Channel_In::updateStatistics(RTCP_SR_Packet *sr)
 {
   // calculate the last SR time in 1/65536 sec.
-  ACE_Time_Value now = ACE_OS::gettimeofday ();
-  this->last_sr_time_ = (ACE_UINT32)
-                        (now.sec () * 65536 +
-                         now.usec () * 0.065536);
+  ACE_Time_Value const now = ACE_OS::gettimeofday ();
+  this->last_sr_time_ = static_cast<ACE_UINT32> (now.sec () * 65536 +
+                                                 now.usec () * 0.065536);
 
   this->ntp_ts_msw_ = sr->ntp_ts_msw ();
   this->ntp_ts_lsw_ = sr->ntp_ts_lsw ();
@@ -147,7 +129,7 @@ int
 RTCP_Channel_In::update_seq(ACE_UINT16 seq)
 {
   // The following is taken from RFC 1889 Appendix A.1
-  ACE_UINT16 udelta = seq - this->max_seq_;
+  ACE_UINT16 const udelta = seq - this->max_seq_;
   constexpr int MAX_DROPOUT = 3000;
   constexpr int MAX_MISORDER = 100;
   constexpr int MIN_SEQUENTIAL = 2;
@@ -159,12 +141,12 @@ RTCP_Channel_In::update_seq(ACE_UINT16 seq)
       // packet is in sequence
       if (seq == this->max_seq_ + (ACE_UINT16)1)
         {
-          this->probation_ --;
+          --this->probation_;
           this->max_seq_ = seq;
           if (this->probation_ == 0)
             {
               this->init_seq(seq);
-              this->received_++;
+              ++this->received_;
               return 1;
             }
         }
@@ -210,14 +192,14 @@ RTCP_Channel_In::update_seq(ACE_UINT16 seq)
     {
       // dup or reordered packet
     }
-  this->received_++;
+  ++this->received_;
 
   return 1;
 }
 
 void
 RTCP_Channel_In::recv_rtp_packet(ACE_Message_Block *mb,
-                                const ACE_Addr *peer_address)
+                                ACE_Addr const *peer_address)
 {
   if (*peer_address != *this->peer_address_)
     ORBSVCS_DEBUG ((LM_DEBUG,
@@ -227,109 +209,93 @@ RTCP_Channel_In::recv_rtp_packet(ACE_Message_Block *mb,
 
   // make sure the packet is valid
   if (data_packet.is_valid ())
-    this->updateStatistics(&data_packet);
+    this->updateStatistics (std::addressof (data_packet));
   else
     ORBSVCS_DEBUG ((LM_DEBUG,
                 "RTCP_Channel_In::recvDataPacket - invalid RTP packet\n"));
 }
 
-
-RR_Block *
+std::unique_ptr<RR_Block>
 RTCP_Channel_In::getRRBlock()
 {
   // If no data has been received since the last report, don't create a block.
   if (!this->data_since_last_report_)
     {
-      this->no_data_counter_++;
+      ++this->no_data_counter_;
 
       // make the source inactive if significant time has passed since last report
       if (this->no_data_counter_ == 32)
-        this->active_ = 0;
+        this->active_ = false;
 
-      return 0;
+      return {};
     }
 
   this->no_data_counter_ = 0;
 
-  RR_Block *local_block_ptr = nullptr;
-
-  ACE_NEW_RETURN (local_block_ptr,
-                  RR_Block,
-                  0);
-
-  ACE_OS::memset(local_block_ptr, 0, sizeof(RR_Block));
+  std::unique_ptr<RR_Block> local_block_ptr (new (std::nothrow) RR_Block {});
+  if (local_block_ptr == nullptr)
+    {
+      errno = ENOMEM;
+      return {};
+    }
 
   // Set the ssrc of the source this report is for.
   local_block_ptr->ssrc_ = this->remote_ssrc_;
 
   // Calculate packets expected/lost (from RFC 1889 Appendix A.3)
-  ACE_UINT32 extended_max;
-  ACE_UINT32 expected;
-  ACE_UINT32 expected_interval;
-  ACE_UINT32 received_interval;
-  int lost_interval;
-
-  extended_max = this->cycles_ + this->max_seq_;
-  expected = extended_max - this->base_seq_ + 1;
+  ACE_UINT32 const extended_max = this->cycles_ + this->max_seq_;
+  ACE_UINT32 const expected = extended_max - this->base_seq_ + 1;
 
   local_block_ptr->lost_ = expected - this->received_;
-  expected_interval = expected - this->expected_prior_;
+  ACE_UINT32 const expected_interval = expected - this->expected_prior_;
   this->expected_prior_ = expected;
-  received_interval = this->received_ - this->received_prior_;
+  ACE_UINT32 const received_interval = this->received_ - this->received_prior_;
   this->received_prior_ = this->received_;
-  lost_interval = expected_interval - received_interval;
+  int const lost_interval = expected_interval - received_interval;
 
   if ((expected_interval == 0) || (lost_interval <= 0))
     local_block_ptr->fraction_ = 0;
   else
     local_block_ptr->fraction_ = (lost_interval << 8) / expected_interval;
 
-
   local_block_ptr->last_seq_ = extended_max;
 
   // taken from RFC 1889 App A.8
-  local_block_ptr->jitter_ = (ACE_UINT32)this->jitter_;
+  local_block_ptr->jitter_ = static_cast<ACE_UINT32> (this->jitter_);
 
   // calculate the last SR timestamp (lsr)
   local_block_ptr->lsr_ = ((this->ntp_ts_msw_ & 0xFFFF) << 16) |
                           ((this->ntp_ts_lsw_ & 0xFFFF0000) >> 16);
 
   // calculate the delay since last SR (dlsr)
-  ACE_Time_Value now = ACE_OS::gettimeofday ();
-  ACE_UINT32 now32 = (ACE_UINT32)
-                     (now.sec () * 65536 +
-                      now.usec () * 0.065536);
+  ACE_Time_Value const now = ACE_OS::gettimeofday ();
+  ACE_UINT32 const now32 = static_cast<ACE_UINT32> (now.sec () * 65536 +
+                                                   now.usec () * 0.065536);
 
   local_block_ptr->dlsr_ = now32 - this->last_sr_time_;
 
   // indicate that no data has been received since the last report
-  this->data_since_last_report_ = 0;
+  this->data_since_last_report_ = false;
 
   return local_block_ptr;
 }
 
 RTCP_Channel_Out::RTCP_Channel_Out()
-  :cname_ ("cname"),
-   active_ (0),
-   timestamp_ (0),
-   packets_sent_ (0),
-   octets_sent_ (0)
+  :cname_ ("cname")
 {
 }
 
-RTCP_Channel_Out::~RTCP_Channel_Out()
-{
-}
+RTCP_Channel_Out::~RTCP_Channel_Out() = default;
 
 void
 RTCP_Channel_Out::updateStatistics (RTP_Packet *data_packet)
 {
   // indicate that this source is active
-  this->active_ = 1;
+  this->active_ = true;
 
   // Update various counters.
   this->octets_sent_ += data_packet->payload_size();
-  this->packets_sent_ ++;
+  ++this->packets_sent_;
   this->seq_num_ = data_packet->sn ();
   this->timestamp_ = data_packet->ts ();
 }

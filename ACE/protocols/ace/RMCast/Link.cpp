@@ -28,8 +28,7 @@ namespace ACE_RMCast
         stop_ (false)
 
   {
-    ACE_OS::srand ((unsigned int) ACE_OS::time (0));
-
+    ACE_OS::srand (static_cast<unsigned int> (ACE_OS::time (nullptr)));
 
     rsock_.set_option (IP_MULTICAST_LOOP, 0);
     // rsock_.set_option (IP_MULTICAST_TTL, 0);
@@ -62,7 +61,6 @@ namespace ACE_RMCast
       ACE_OS::perror ("connect: ");
       ACE_OS::abort ();
     }
-
 
     ssock_.get_local_addr (self_);
 
@@ -115,7 +113,7 @@ namespace ACE_RMCast
         {
           send_ (m);
           send_ (hold_);
-          hold_ = Message_ptr (0);
+          hold_ = Message_ptr (nullptr);
         }
         else
         {
@@ -156,13 +154,13 @@ namespace ACE_RMCast
     if (os.length () > size_t (params_.max_packet_size ()))
     {
       ACE_ERROR ((LM_ERROR,
-                  "packet length (%d) exceeds max_poacket_size (%d)\n",
+                  "packet length (%B) exceeds max_poacket_size (%d)\n",
                   os.length (), params_.max_packet_size ()));
 
       for (Message::ProfileIterator i (m->begin ()); !i.done (); i.advance ())
       {
         ACE_ERROR ((LM_ERROR,
-                    "profile id: %d; size: %d\n",
+                    "profile id: %d; size: %B\n",
                     (*i).ext_id_, (*i).int_id_->size ()));
       }
 
@@ -184,7 +182,8 @@ namespace ACE_RMCast
   {
     size_t max_packet_size (params_.max_packet_size ());
 
-    std::unique_ptr<char[]> holder (new char[max_packet_size + ACE_CDR::MAX_ALIGNMENT]);
+    std::unique_ptr<char[]> holder =
+      std::make_unique<char[]> (max_packet_size + ACE_CDR::MAX_ALIGNMENT);
 
     char* data = ACE_ptr_align_binary (holder.get (), ACE_CDR::MAX_ALIGNMENT);
 
@@ -203,7 +202,6 @@ namespace ACE_RMCast
       {
         ACE_Time_Value t (params_.tick ());
         ssize_t r = rsock_.recv (data, 4, addr, MSG_PEEK, &t);
-
 
         // Check for cancellation request.
         //
@@ -224,7 +222,6 @@ namespace ACE_RMCast
           break;
         }
       }
-
 
       if (size != 4 || addr == self_)
       {
@@ -319,7 +316,7 @@ namespace ACE_RMCast
   recv_thunk (void* obj)
   {
     reinterpret_cast<Link*> (obj)->recv ();
-    return 0;
+    return ACE_THR_FUNC_RETURN_NULL;
   }
 
   void Link::recv (Message_ptr)

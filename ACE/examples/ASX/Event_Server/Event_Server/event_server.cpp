@@ -14,53 +14,51 @@
 using MT_Stream = ACE_Stream<ACE_SYNCH>;
 using MT_Module = ACE_Module<ACE_SYNCH>;
 
+static void end_reactor_event_loop (int, siginfo_t *, ucontext_t *)
+{
+  ACE_Reactor::end_event_loop ();
+}
 
+/**
+ * @class Event_Server
+ * @brief Runs the Event Server and handles clean shutdown.
+ *
+ * In addition to packaging the Event Server components, this class handles
+ * SIGINT and terminates the application. The process can also be stopped by
+ * typing any character on standard input. Inheriting from ACE_Sig_Adapter
+ * lets it stop the ACE_Reactor cleanly when SIGINT is received.
+ */
 class Event_Server : public ACE_Sig_Adapter
 {
-  // = TITLE
-  //     Run the logic for the <Event_Server>.
-
-  //
-  // = DESCRIPTION
-  //     In addition to packaging the <Event_Server> components, this
-  //     class also handles SIGINT and terminate the entire
-  //     application process.  There are several ways to terminate
-  //     this application process:
-  //
-  //     1. Send a SIGINT signal (e.g., via ^C)
-  //     2. Type any character on the STDIN.
-  //
-  //     Note that by inheriting from the <ACE_Sig_Adapter> we can
-  //     shutdown the <ACE_Reactor> cleanly when a SIGINT is
-  //     generated.
 public:
   Event_Server ();
-  // Constructor.
+  Event_Server (Event_Server const &) = delete;
+  Event_Server (Event_Server &&) = delete;
+  Event_Server &operator= (Event_Server const &) = delete;
+  Event_Server &operator= (Event_Server &&) = delete;
 
+  /// Run the event loop for the Event Server.
   int svc ();
-  // Run the event-loop for the event server.
 
 private:
-  virtual int handle_input (ACE_HANDLE handle);
-  // Hook method called back when a user types something into the
-  // STDIN in order to shut down the program.
+  /// Handle input when the user types something on stdin to stop the program.
+  int handle_input (ACE_HANDLE handle) override;
 
+  /// Set up the modules in the stream.
   int configure_stream ();
-  // Setup the plumbing in the stream.
 
+  /// Set the high and low queue watermarks.
   int set_watermarks ();
-  // Set the high and low queue watermarks.
 
+  /// Run the Event Server event loop.
   int run_event_loop ();
-  // Run the event-loop for the <Event_Server>.
 
+  /// Stream containing the Event Server modules.
   MT_Stream event_server_;
-  // The <ACE_Stream> that contains the <Event_Server> application
-  // <Modules>.
 };
 
 Event_Server::Event_Server ()
-  : ACE_Sig_Adapter (ACE_Sig_Handler_Ex (ACE_Reactor::end_event_loop))
+  : ACE_Sig_Adapter (end_reactor_event_loop)
   // Shutdown the <ACE_Reactor>'s event loop when a SIGINT is
   // received.
 {
@@ -87,19 +85,19 @@ Event_Server::handle_input (ACE_HANDLE)
   // prematurely (even when there is no data).
   char temp_buffer [BUFSIZ];
 
-  ssize_t n = ACE_OS::read (ACE_STDIN,
-                            temp_buffer,
-                            sizeof (temp_buffer));
+  ssize_t const n = ACE_OS::read (ACE_STDIN,
+                                  temp_buffer,
+                                  sizeof (temp_buffer));
   // This ought to be > 0, otherwise something very strange has
   // happened!!
   ACE_ASSERT (n > 0);
   ACE_UNUSED_ARG (n); // To avoid compile warning with ACE_NDEBUG.
 
-  Options::instance ()->stop_timer ();
+  Options::instance ().stop_timer ();
 
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("(%t) closing down the test\n")));
-  Options::instance ()->print_results ();
+  Options::instance ().print_results ();
 
   ACE_Reactor::instance ()->end_reactor_event_loop ();
   return -1;
@@ -108,16 +106,17 @@ Event_Server::handle_input (ACE_HANDLE)
 int
 Event_Server::configure_stream ()
 {
-  Peer_Router_Context *src;
+  Peer_Router_Context *src {};
   // Create the <Supplier_Router>'s routing context.  This contains a
   // context shared by both the write-side and read-side of the
-  // <Supplier_Router> Module.
+  // <Supplier_Router> Module; the router tasks manage its lifetime through
+  // the context's explicit reference count.
   ACE_NEW_RETURN (src,
-                  Peer_Router_Context (Options::instance ()->supplier_port ()),
+                  Peer_Router_Context (Options::instance ().supplier_port ()),
                   -1);
 
-  MT_Module *srm = nullptr;
-  // Create the <Supplier_Router> module.
+  MT_Module *srm {};
+  // ACE_Module owns both tasks with its default M_DELETE policy.
   ACE_NEW_RETURN (srm,
                   MT_Module
                   (ACE_TEXT ("Supplier_Router"),
@@ -125,7 +124,7 @@ Event_Server::configure_stream ()
                    new Supplier_Router (src)),
                   -1);
 
-  MT_Module *eam = nullptr;
+  MT_Module *eam {};
   // Create the <Event_Analyzer> module.
   ACE_NEW_RETURN (eam,
                   MT_Module
@@ -134,15 +133,16 @@ Event_Server::configure_stream ()
                    new Event_Analyzer),
                   -1);
 
-  Peer_Router_Context *crc;
+  Peer_Router_Context *crc {};
   // Create the <Consumer_Router>'s routing context.  This contains a
   // context shared by both the write-side and read-side of the
-  // <Consumer_Router> Module.
+  // <Consumer_Router> Module; the router tasks manage its lifetime through
+  // the context's explicit reference count.
   ACE_NEW_RETURN (crc,
-                  Peer_Router_Context (Options::instance ()->consumer_port ()),
+                  Peer_Router_Context (Options::instance ().consumer_port ()),
                   -1);
 
-  MT_Module *crm = nullptr;
+  MT_Module *crm {};
   // Create the <Consumer_Router> module.
   ACE_NEW_RETURN (crm,
                   MT_Module
@@ -151,8 +151,8 @@ Event_Server::configure_stream ()
                    new Consumer_Router (crc)),
                   -1);
 
-  // Push the Modules onto the event_server stream.
-
+  // push() links each module before opening its tasks, so the stream owns
+  // the module even if push() reports an open error.
   if (this->event_server_.push (srm) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
@@ -177,17 +177,17 @@ Event_Server::set_watermarks ()
   // Set the high and low water marks appropriately.  The water marks
   // control how much data can be buffered before the queues are
   // considered "full."
-  size_t wm = Options::instance ()->low_water_mark ();
+  size_t low_water_mark = Options::instance ().low_water_mark ();
 
   if (this->event_server_.control (ACE_IO_Cntl_Msg::SET_LWM,
-                                   &wm) == -1)
+                                   &low_water_mark) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
                        ACE_TEXT ("push (setting low watermark)")),
                       -1);
 
-  wm = Options::instance ()->high_water_mark ();
+  size_t high_water_mark = Options::instance ().high_water_mark ();
   if (this->event_server_.control (ACE_IO_Cntl_Msg::SET_HWM,
-                                   &wm) == -1)
+                                   &high_water_mark) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
                        ACE_TEXT ("push (setting high watermark)")),
                       -1);
@@ -198,7 +198,7 @@ int
 Event_Server::run_event_loop ()
 {
   // Begin the timer.
-  Options::instance ()->start_timer ();
+  Options::instance ().start_timer ();
 
   // Perform the main event loop waiting for the user to type ^C or to
   // enter a line on the ACE_STDIN.
@@ -231,13 +231,13 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
 #if defined (ACE_HAS_THREADS)
-  Options::instance ()->parse_args (argc, argv);
+  Options::instance ().parse_args (argc, argv);
 
   // Initialize the <Event_Server>.
   Event_Server event_server;
 
   // Run the event server's event-loop.
-  int result = event_server.svc ();
+  int const result = event_server.svc ();
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("exiting main\n")));
 

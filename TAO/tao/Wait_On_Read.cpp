@@ -9,7 +9,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Constructor.
 TAO_Wait_On_Read::TAO_Wait_On_Read (TAO_Transport *transport)
   : TAO_Wait_Strategy (transport)
 {
@@ -73,9 +72,9 @@ TAO_Wait_On_Read::wait (ACE_Time_Value * max_wait_time,
 
   // Do the same sort of looping that is done in other wait
   // strategies.
-  int retval = 0;
+  int retval {};
   TAO_Resume_Handle rh;
-  while (1)
+  while (true)
     {
       retval = this->transport_->handle_input (rh, max_wait_time);
 

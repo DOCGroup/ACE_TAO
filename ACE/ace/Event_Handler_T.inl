@@ -7,14 +7,15 @@ template<class T> ACE_INLINE void
 ACE_Event_Handler_T<T>::op_handler (T *op)
 {
   ACE_TRACE ("ACE_Event_Handler_T<T>::op_handler");
-  this->op_handler_ = op;
+  if (this->op_handler_.get () != op)
+    this->op_handler_.reset (op);
 }
 
 template<class T> ACE_INLINE T *
 ACE_Event_Handler_T<T>::op_handler ()
 {
   ACE_TRACE ("ACE_Event_Handler_T<T>::op_handler");
-  return this->op_handler_;
+  return this->op_handler_.get ();
 }
 
 template<class T> ACE_INLINE typename ACE_Event_Handler_T<T>::GET_HANDLE

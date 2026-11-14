@@ -30,9 +30,7 @@ TAO::HTIOP::Transport::Transport (TAO::HTIOP::Connection_Handler *h,
 {
 }
 
-TAO::HTIOP::Transport::~Transport ()
-{
-}
+TAO::HTIOP::Transport::~Transport () = default;
 
 ACE_Event_Handler *
 TAO::HTIOP::Transport::event_handler_i ()
@@ -88,7 +86,6 @@ TAO::HTIOP::Transport::recv (char *buf,
       if (errno == EWOULDBLOCK)
         return 0;
 
-
       return -1;
     }
 
@@ -130,7 +127,6 @@ TAO::HTIOP::Transport::register_handler ()
   return r->register_handler (ch->notifier(),
                               ACE_Event_Handler::READ_MASK);
 }
-
 
 int
 TAO::HTIOP::Transport::send_request (TAO_Stub *stub,
@@ -226,20 +222,15 @@ TAO::HTIOP::Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
   TAO_Acceptor_Registry &ar =
     this->orb_core ()->lane_resources ().acceptor_registry ();
 
-  // Get the first acceptor in the registry
-  TAO_AcceptorSetIterator acceptor = ar.begin ();
-
   ::HTIOP::ListenPointList listen_point_list;
 
-  for (;
-       acceptor != ar.end ();
-       acceptor++)
+  for (std::unique_ptr<TAO_Acceptor> const& acceptor : ar.acceptors ())
     {
       // Check whether it is a HTIOP acceptor
-      if ((*acceptor)->tag () == this->tag ())
+      if (acceptor->tag () == this->tag ())
         {
           if (this->get_listen_point (listen_point_list,
-                                      *acceptor) == -1)
+                                      acceptor.get ()) == -1)
             {
               ORBSVCS_ERROR ((LM_ERROR,
                           ACE_TEXT("TAO (%P|%t) - TAO::HTIOP::Transport::set_bidir_info, "),
@@ -319,9 +310,9 @@ TAO::HTIOP::Transport::get_listen_point (::HTIOP::ListenPointList &lp_list,
                             -1);
         }
 
-      for (size_t index = 0;
+      for (size_t index {};
            index != count;
-           index++)
+           ++index)
         {
           if (local_addr.is_ip_equal (endpoint_addr[index]))
             {
@@ -350,7 +341,6 @@ TAO::HTIOP::Transport::get_listen_point (::HTIOP::ListenPointList &lp_list,
     }
   return 1;
 }
-
 
 TAO_Connection_Handler *
 TAO::HTIOP::Transport::invalidate_event_handler_i ()

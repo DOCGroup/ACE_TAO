@@ -9,29 +9,30 @@
  */
 //=============================================================================
 
-
 #include "ace/Get_Opt.h"
 #include "testC.h"
-#include "ace/OS_NS_string.h"
 
-static const ACE_TCHAR *IOR = ACE_TEXT ("file://ior");
-static int shutdown_server = 0;
+struct Client_Options
+{
+  ACE_TCHAR const *ior {ACE_TEXT ("file://ior")};
+  bool shutdown_server {};
+};
 
 static int
-parse_args (int argc, ACE_TCHAR **argv)
+parse_args (int argc, ACE_TCHAR **argv, Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:x"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'k':
-        IOR = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
 
       case 'x':
-        shutdown_server = 1;
+        options.shutdown_server = true;
         break;
 
       case '?':
@@ -45,7 +46,7 @@ parse_args (int argc, ACE_TCHAR **argv)
                           -1);
       }
 
-  if (IOR == 0)
+  if (options.ior == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Please specify the IOR\n")), -1);
 
@@ -60,20 +61,20 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      int parse_args_result =
-        parse_args (argc, argv);
+      Client_Options options;
+      int const parse_args_result = parse_args (argc, argv, options);
       if (parse_args_result != 0)
         return parse_args_result;
 
-      CORBA::Object_var object =
-        orb->string_to_object (IOR);
+      CORBA::Object_var const object =
+        orb->string_to_object (options.ior);
 
-      test_var test1 =
+      test_var const test1 =
         test::_narrow (object.in ());
 
       test1->method ();
 
-      test_var test2 =
+      test_var const test2 =
         test1->create_POA ();
 
       test2->method ();
@@ -84,28 +85,28 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           test2->method ();
         }
-      catch (const CORBA::Exception &ex)
+      catch (CORBA::Exception const &ex)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("caught expected %s\n"),
                       ex._name()));
         }
 
-      test_var test3 =
+      test_var const test3 =
         test1->create_POA ();
 
       test2->method ();
 
       test3->method ();
 
-      if (shutdown_server)
+      if (options.shutdown_server)
         {
           test1->shutdown ();
         }
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (ACE_TEXT ("Error!"));
       return -1;

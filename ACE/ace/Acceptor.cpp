@@ -401,7 +401,7 @@ ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::handle_input (ACE_HANDLE listener)
       // Create a service handler, using the appropriate creation
       // strategy.
 
-      SVC_HANDLER *svc_handler = nullptr;
+      SVC_HANDLER *svc_handler {};
 
       if (this->make_svc_handler (svc_handler) == -1)
         {
@@ -546,7 +546,6 @@ ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::open
   return this->open
     (local_addr, reactor, 0, 0, 0, 0, 0, 0, use_select, reuse_addr);
 }
-
 
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR> int
 ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::open

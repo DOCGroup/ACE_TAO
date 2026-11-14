@@ -18,17 +18,17 @@
 class TAO_Notify_Tests_SupplierAdmin_Traits
 {
  public:
-  typedef CosNotifyChannelAdmin::SupplierAdmin INTERFACE;
-  typedef CosNotifyChannelAdmin::SupplierAdmin_ptr PTR;
-  typedef CosNotifyChannelAdmin::SupplierAdmin_var VAR;
+  using INTERFACE = CosNotifyChannelAdmin::SupplierAdmin;
+  using PTR = CosNotifyChannelAdmin::SupplierAdmin_ptr;
+  using VAR = CosNotifyChannelAdmin::SupplierAdmin_var;
 };
 
 class TAO_Notify_Tests_SupplierAdmin_Ext_Traits
 {
  public:
-  typedef NotifyExt::SupplierAdmin INTERFACE;
-  typedef NotifyExt::SupplierAdmin_ptr PTR;
-  typedef NotifyExt::SupplierAdmin_var VAR;
+  using INTERFACE = NotifyExt::SupplierAdmin;
+  using PTR = NotifyExt::SupplierAdmin_ptr;
+  using VAR = NotifyExt::SupplierAdmin_var;
 };
 
 /**
@@ -39,20 +39,18 @@ class TAO_Notify_Tests_SupplierAdmin_Ext_Traits
 template <class Supplier_Traits>
 class TAO_Notify_Tests_Supplier_T : public TAO_Notify_Tests_Peer_T <Supplier_Traits>
 {
-  typedef typename Supplier_Traits::Admin_Traits Admin_Traits;
-  typedef typename Supplier_Traits::Admin_Ext_Traits Admin_Ext_Traits;
-  typedef typename Supplier_Traits::Proxy_Traits Proxy_Traits;
+  using Admin_Traits = typename Supplier_Traits::Admin_Traits;
+  using Admin_Ext_Traits = typename Supplier_Traits::Admin_Ext_Traits;
+  using Proxy_Traits = typename Supplier_Traits::Proxy_Traits;
 
-  typedef typename Proxy_Traits::INTERFACE Proxy_Traits_INTERFACE;
-  typedef typename Proxy_Traits::PTR Proxy_Traits_PTR;
-  typedef typename Admin_Traits::PTR Admin_Traits_PTR;
-  typedef typename Admin_Ext_Traits::PTR Admin_Ext_Traits_PTR;
+  using Proxy_Traits_INTERFACE = typename Proxy_Traits::INTERFACE;
+  using Proxy_Traits_PTR = typename Proxy_Traits::PTR;
+  using Admin_Traits_PTR = typename Admin_Traits::PTR;
+  using Admin_Ext_Traits_PTR = typename Admin_Ext_Traits::PTR;
 
 public:
-  /// Constructor
   TAO_Notify_Tests_Supplier_T ();
 
-  /// Destructor
   ~TAO_Notify_Tests_Supplier_T ();
 
   /// For backward compatibility. use <get_proxy> instead.
@@ -63,16 +61,16 @@ public:
 
 protected:
   /// Obtain Proxy.
-  virtual Proxy_Traits_PTR obtain_proxy (Admin_Traits_PTR admin_ptr);
+  Proxy_Traits_PTR obtain_proxy (Admin_Traits_PTR admin_ptr) override;
 
   /// Obtain Proxy with QoS.
-  virtual Proxy_Traits_PTR obtain_proxy (Admin_Ext_Traits_PTR admin_ptr
-                                         , CosNotification::QoSProperties& qos);
+  Proxy_Traits_PTR obtain_proxy (Admin_Ext_Traits_PTR admin_ptr,
+                                 CosNotification::QoSProperties &qos) override;
 
   // = NotifySubscribe
-  virtual void subscription_change (
-      const CosNotification::EventTypeSeq & added,
-      const CosNotification::EventTypeSeq & removed);
+  void subscription_change (
+      CosNotification::EventTypeSeq const &added,
+      CosNotification::EventTypeSeq const &removed) override;
 };
 
 #include "Supplier_T.cpp"

@@ -28,7 +28,7 @@ static Priority_Mapping::Priority priority_level
 static std::string stock_name = "IBM";
 
 // A flag that indicates use of the Naming Service.
-bool use_naming = false;
+static bool use_naming = false;
 
 static int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -102,11 +102,9 @@ get_distributor_reference (CORBA::ORB_ptr orb)
 {
   if (use_naming)
     {
-      CORBA::Object_var tmp =
-        orb->resolve_initial_references ("NameService");
+      CORBA::Object_var tmp (orb->resolve_initial_references ("NameService"));
 
-      CosNaming::NamingContext_var pns =
-        CosNaming::NamingContext::_narrow (tmp.in ());
+      CosNaming::NamingContext_var pns (CosNaming::NamingContext::_narrow (tmp.in ()));
 
       CosNaming::Name name (1);
       name.length (1);
@@ -125,7 +123,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   try
     {
       // Initialiaze the ORB.
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var orb (CORBA::ORB_init (argc, argv));
 
       // This call MUST come after ORB_init(), which may need to
       // extract -ORB options first.
@@ -133,19 +131,19 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         return 1;
 
       // Get a reference to the RootPOA.
-      CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
-      PortableServer::POA_var poa = PortableServer::POA::_narrow (obj.in ());
+      CORBA::Object_var obj (orb->resolve_initial_references ("RootPOA"));
+      PortableServer::POA_var poa (PortableServer::POA::_narrow (obj.in ()));
 
       // Activate the POAManager.
-      PortableServer::POAManager_var mgr = poa->the_POAManager ();
+      PortableServer::POAManager_var mgr (poa->the_POAManager ());
       mgr->activate ();
 
       // Read and destringify the Stock_Distributor object's IOR.
       obj = get_distributor_reference (orb.in ());
 
       // Narrow the IOR to a Stock_Distributor object reference.
-      Stock::StockDistributor_var stock_distributor =
-        Stock::StockDistributor::_narrow (obj.in ());
+      Stock::StockDistributor_var stock_distributor (
+        Stock::StockDistributor::_narrow (obj.in ()));
 
       if (CORBA::is_nil (stock_distributor.in ()))
         ACE_ERROR_RETURN ((LM_DEBUG,
@@ -157,9 +155,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Create the factory object. Create a <Stock::StockBroker>.
       Stock_StockBrokerHome_i stock_broker_home (orb.in ());
-      Stock::StockBroker_var stock_broker =
+      Stock::StockBroker_var stock_broker (
         stock_broker_home.create (stock_distributor.in (),
-                                  stock_name.c_str ());
+                                  stock_name.c_str ()));
 
       if (CORBA::is_nil (stock_broker.in ()))
         ACE_ERROR_RETURN ((LM_DEBUG,
@@ -168,19 +166,18 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                           1);
 
       // Create a new consumer and initialize it.
-      Stock::StockNameConsumer_var consumer =
-        stock_broker->get_consumer_notifier ();
+      Stock::StockNameConsumer_var consumer (stock_broker->get_consumer_notifier ());
 
       // Subscribe the consumer with the distributor.
-      ::Stock::Cookie_var cookie =
-        stock_distributor->subscribe_notifier (consumer.in (), priority_level);
+      ::Stock::Cookie_var cookie (
+        stock_distributor->subscribe_notifier (consumer.in (), priority_level));
 
       consumer->cookie_ (cookie.in ());
 
       // Get the object reference to a StockQuoter that's been
       // activated at the appropriate priority.
-      Stock::StockQuoter_var stock_quoter =
-        stock_distributor->provide_quoter_info (cookie.in ());
+      Stock::StockQuoter_var stock_quoter (
+        stock_distributor->provide_quoter_info (cookie.in ()));
 
       if (CORBA::is_nil (stock_quoter.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -200,7 +197,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       poa->destroy (true, true);
       orb->destroy ();
     }
-  catch (const CORBA::Exception &ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

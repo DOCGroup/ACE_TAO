@@ -4,14 +4,15 @@
 #include "ace/Synch.h"
 #include "ace/Containers.h"
 #include "ace/Task.h"
+#include <array>
+#include <memory>
 
 class Device
 {
 public:
-  Device (int id) : id_(id)
-  { }
+  explicit Device (int const id) : id_ (id) {}
 
-  int id_;
+  int id_ {};
 };
 
 using DeviceList = ACE_DLList<Device>;
@@ -21,6 +22,12 @@ using DeviceListIterator = ACE_DLList_Iterator<Device>;
 class HA_DiscoveryAgent
 {
 public:
+  HA_DiscoveryAgent () = default;
+  HA_DiscoveryAgent (HA_DiscoveryAgent const &) = delete;
+  HA_DiscoveryAgent (HA_DiscoveryAgent &&) = delete;
+  HA_DiscoveryAgent &operator= (HA_DiscoveryAgent const &) = delete;
+  HA_DiscoveryAgent &operator= (HA_DiscoveryAgent &&) = delete;
+
   void add_device (Device *device)
   {
     ACE_WRITE_GUARD (ACE_RW_Thread_Mutex, mon, rwmutex_);
@@ -29,11 +36,11 @@ public:
 
   void remove_device (Device *device)
   {
-    ACE_READ_GUARD (ACE_RW_Thread_Mutex, mon, rwmutex_);
-    list_remove_item_i(device);
+    ACE_WRITE_GUARD (ACE_RW_Thread_Mutex, mon, rwmutex_);
+    list_remove_item_i (device);
   }
 
-  int contains_device (Device *device)
+  int contains_device (Device const *device)
   {
     ACE_READ_GUARD_RETURN
       (ACE_RW_Thread_Mutex, mon, rwmutex_, -1);
@@ -41,13 +48,13 @@ public:
   }
 
 private:
-  void list_add_item_i (Device * device);
-  int list_contains_item_i (Device * device);
-  void list_remove_item_i (Device* device);
+  void list_add_item_i (Device *device);
+  int list_contains_item_i (Device const *device);
+  void list_remove_item_i (Device *device);
 
 private:
   DeviceList deviceList_;
-  ACE_RW_Thread_Mutex rwmutex_;
+  ACE_RW_Thread_Mutex rwmutex_ {};
 };
 // Listing 1
 
@@ -58,14 +65,14 @@ HA_DiscoveryAgent::list_add_item_i (Device *device)
 }
 
 int
-HA_DiscoveryAgent::list_contains_item_i (Device *device)
+HA_DiscoveryAgent::list_contains_item_i (Device const *device)
 {
   DeviceListIterator iter (deviceList_);
   while (!iter.done ())
     {
       if (iter.next () == device)
         return 1;
-      iter++;
+      iter.advance ();
     }
 
   return 0;
@@ -82,41 +89,48 @@ HA_DiscoveryAgent::list_remove_item_i (Device *device)
           iter.remove ();
           break;
         }
-      iter++;
+      iter.advance ();
     }
 }
 
-static Device *devices[100];
+static constexpr int DEVICE_COUNT {100};
 
 class Runner : public ACE_Task_Base
 {
 public:
-  Runner(HA_DiscoveryAgent &agent) : agent_(agent)
-  { }
+  Runner (HA_DiscoveryAgent &agent,
+          std::array<std::unique_ptr<Device>, DEVICE_COUNT> const &devices)
+    : agent_ (agent), devices_ (devices) {}
+  Runner (Runner const &) = delete;
+  Runner (Runner &&) = delete;
+  Runner &operator= (Runner const &) = delete;
+  Runner &operator= (Runner &&) = delete;
 
   int svc () override
   {
-    ACE_ASSERT(agent_.contains_device(devices[9]) == 1);
-    agent_.remove_device (devices[9]);
-    ACE_ASSERT(agent_.contains_device(devices[9]) == 0);
+    ACE_ASSERT (agent_.contains_device (devices_[9].get ()) == 1);
+    agent_.remove_device (devices_[9].get ());
+    ACE_ASSERT (agent_.contains_device (devices_[9].get ()) == 0);
     return 0;
   }
 
 private:
   HA_DiscoveryAgent &agent_;
+  std::array<std::unique_ptr<Device>, DEVICE_COUNT> const &devices_;
 };
 
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
+  std::array<std::unique_ptr<Device>, DEVICE_COUNT> devices {};
   HA_DiscoveryAgent agent;
 
-  for (int i = 0; i < 100; i++)
+  for (int i = 0; i < DEVICE_COUNT; ++i)
     {
-      devices[i]  = new Device (i);
-      agent.add_device (devices[i]);
+      devices[i] = std::make_unique<Device> (i);
+      agent.add_device (devices[i].get ());
     }
 
-  Runner runner (agent);
+  Runner runner (agent, devices);
   runner.activate ();
 
   runner.wait ();

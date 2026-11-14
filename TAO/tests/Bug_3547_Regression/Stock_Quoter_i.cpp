@@ -1,12 +1,9 @@
 #include "Stock_Quoter_i.h"
 #include "ace/Log_Msg.h"
+#include <cstring>
 
 Stock_Quoter_i::Stock_Quoter_i (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
-{
-}
-
-Stock_Quoter_i::~Stock_Quoter_i ()
 {
 }
 
@@ -19,12 +16,12 @@ Stock_Quoter_i::shutdown ()
 CORBA::Float Stock_Quoter_i::get_quote (char const *stock_id)
 {
   ACE_DEBUG ((LM_DEBUG, "Stock_Quoter_i::get_quote\n"));
-  CORBA::Float price = 0.0;
-  if (ACE_OS::strcmp (stock_id, "BA") == 0)
+  CORBA::Float price {};
+  if (std::strcmp (stock_id, "BA") == 0)
   {
     price = 54.25;
   }
-  else if (ACE_OS::strcmp (stock_id, "OCI") == 0)
+  else if (std::strcmp (stock_id, "OCI") == 0)
   {
     price = 100.00;
   }

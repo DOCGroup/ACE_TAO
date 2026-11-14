@@ -1,14 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Service_Type_Repository.h
  *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  *  @author Seth Widoff <sbw1@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_SERVICE_TYPE_REPOSITORY_H
 #define TAO_SERVICE_TYPE_REPOSITORY_H
@@ -17,6 +14,8 @@
 #include "orbsvcs/Trader/Trader.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Null_Mutex.h"
+
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -30,13 +29,18 @@ class TAO_Trading_Serv_Export TAO_Service_Type_Repository
   : public POA_CosTradingRepos::ServiceTypeRepository
 {
 public:
+  TAO_Service_Type_Repository (TAO_Service_Type_Repository const&) = delete;
+  TAO_Service_Type_Repository& operator= (TAO_Service_Type_Repository const&) = delete;
+  TAO_Service_Type_Repository (TAO_Service_Type_Repository&&) = delete;
+  TAO_Service_Type_Repository& operator= (TAO_Service_Type_Repository&&) = delete;
+
   /**
    * Parameterize the Service_Type_Repository with a lock to serialize
    * access to the type repository map. A reader/writer lock is
    * probably best. The Service_Type_Repository assumes control of the
    * lock.
    */
-  TAO_Service_Type_Repository (ACE_Lock* lock = nullptr);
+  explicit TAO_Service_Type_Repository (ACE_Lock* lock = nullptr);
 
   ~TAO_Service_Type_Repository () override;
 
@@ -104,19 +108,17 @@ public:
    */
   void remove_type (char const* name) override;
 
+  /// The list_types operation permits a client to obtain the names of
+  /// service types which are in the repository. The "which_types"
+  /// parameter permits the client to specify one of two possible
+  /// values:  all types known to the repository  all types
+  /// added/modified since a particular incarnation number The names of
+  /// the requested types are returned by the operation for subsequent
+  /// querying via the describe_type or the fully_describe_type
+  /// operation.
+
   CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq*
   list_types (CosTradingRepos::ServiceTypeRepository::SpecifiedServiceTypes const& which_types) override;
-
-  // BEGIN SPEC
-  // The list_types operation permits a client to obtain the names of
-  // service types which are in the repository. The "which_types"
-  // parameter permits the client to specify one of two possible
-  // values:  all types known to the repository  all types
-  // added/modified since a particular incarnation number The names of
-  // the requested types are returned by the operation for subsequent
-  // querying via the describe_type or the fully_describe_type
-  // operation.
-  // END SPEC
 
   /**
    * BEGIN SPEC
@@ -189,11 +191,12 @@ private:
     CosTradingRepos::ServiceTypeRepository::TypeStruct type_struct_;
 
     /// Names of subtypes.
-    CORBA::Boolean has_subtypes_;
+    CORBA::Boolean has_subtypes_ {};
   };
 
+  // Store property values because inherited property sequences are temporary.
   using Prop_Map = ACE_Hash_Map_Manager_Ex<CORBA::String_var,
-                                           CosTradingRepos::ServiceTypeRepository::PropStruct*,
+                                           CosTradingRepos::ServiceTypeRepository::PropStruct,
                                            ACE_Hash<CORBA::String_var>,
                                            ACE_Equal_To<CORBA::String_var>,
                                            ACE_Null_Mutex>;
@@ -245,13 +248,8 @@ private:
                         Prop_Map &prop_map,
                         Service_Type_Map &super_map);
 
-  TAO_Service_Type_Repository (TAO_Service_Type_Repository const&) = delete;
-  TAO_Service_Type_Repository& operator= (TAO_Service_Type_Repository const&) = delete;
-  TAO_Service_Type_Repository (TAO_Service_Type_Repository&&) = delete;
-  TAO_Service_Type_Repository& operator= (TAO_Service_Type_Repository&&) = delete;
-
   /// Lock with which to serialize access to the service type map.
-  ACE_Lock *lock_;
+  std::unique_ptr<ACE_Lock> lock_;
 
   /**
    * Stores information for each service type in the repository.  This
@@ -262,7 +260,7 @@ private:
 
   /// Incarnation number to be used for the next modification to the
   /// repository.
-  CosTradingRepos::ServiceTypeRepository::IncarnationNumber incarnation_;
+  CosTradingRepos::ServiceTypeRepository::IncarnationNumber incarnation_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

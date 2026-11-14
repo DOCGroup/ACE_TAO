@@ -33,9 +33,14 @@ class Thr_ID
   //   emulate this ourselves with this class (gag).
 {
 public:
+  Thr_ID (Thr_ID const &) = delete;
+  Thr_ID (Thr_ID &&) = delete;
+  Thr_ID &operator= (Thr_ID const &) = delete;
+  Thr_ID &operator= (Thr_ID &&) = delete;
+
   Thr_ID ();
-  int thr_id ();
-  void thr_id (int);
+  int thr_id () const;
+  void thr_id (int const);
 
 private:
   int thr_id_;
@@ -50,7 +55,7 @@ class SYNCHLIB_Export Benchmark_Base : public ACE_Service_Object
   //
   // = DESCRIPTION
   //     This class is the base class for all benchmarking
-  //     classes.  Its major functionalities are to privide RTTI
+  //     classes.  Its major functionalities are to provide RTTI
   //     information and to define other common methods all
   //     benchmarking classes should support.
 public:
@@ -61,21 +66,26 @@ public:
     PERFORMANCE
   };
 
-  int benchmark_type ();
+  Benchmark_Base (Benchmark_Base const &) = delete;
+  Benchmark_Base (Benchmark_Base &&) = delete;
+  Benchmark_Base &operator= (Benchmark_Base const &) = delete;
+  Benchmark_Base &operator= (Benchmark_Base &&) = delete;
+
+  int benchmark_type () const;
   // RTTI information of this module.
 
-  int thr_id ();
+  int thr_id () const;
   // Returns our thread id;
 
 protected:
-  Benchmark_Base (int type = BENCHMARK_BASE);
+  explicit Benchmark_Base (int const type = BENCHMARK_BASE);
   // Default ctor.
 
-  int benchmark_type_;
+  int const benchmark_type_;
   // Store the RTTI info of this module.
 
 #   if defined (ACE_HAS_PTHREADS) || defined (VXWORKS)
-  ACE_TSS <Thr_ID> id_;
+  ACE_TSS<Thr_ID> id_;
   // Keeps track of our "virtual" thread id...
 #   endif /* ACE_HAS_PTHREADS || VXWORKS */
 };
@@ -86,6 +96,11 @@ class SYNCHLIB_Export Benchmark_Method_Base : public Benchmark_Base
   //     This class identifies itself as Benmarking Method class.
   //     It defines a method as of how the test is setup and measured.
 public:
+  Benchmark_Method_Base (Benchmark_Method_Base const &) = delete;
+  Benchmark_Method_Base (Benchmark_Method_Base &&) = delete;
+  Benchmark_Method_Base &operator= (Benchmark_Method_Base const &) = delete;
+  Benchmark_Method_Base &operator= (Benchmark_Method_Base &&) = delete;
+
   int exec (ACE_Service_Repository_Iterator *sri);
   // Run the test and advanced the service repository iterator
 

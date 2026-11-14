@@ -42,12 +42,16 @@ class Server_ORBInitializer :
   public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
-  Server_ORBInitializer ();
+  Server_ORBInitializer () = default;
 
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
+  Server_ORBInitializer (Server_ORBInitializer const &) = delete;
+  Server_ORBInitializer (Server_ORBInitializer &&) = delete;
+  Server_ORBInitializer & operator = (Server_ORBInitializer const &) = delete;
+  Server_ORBInitializer & operator = (Server_ORBInitializer &&) = delete;
 
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
+  void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
+
+  void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
   /// Return the created server request interceptor.  Only valid after
   /// post_init(), i.e. ORB_init(), has been called.

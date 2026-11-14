@@ -2,64 +2,54 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Constructor.
 TAO_TIO::TAO_TIO (TimeBase::TimeT lower,
                   TimeBase::TimeT upper)
+  : attr_time_interval {lower, upper}
 {
-  this->attr_time_interval.lower_bound = lower;
-  this->attr_time_interval.upper_bound = upper;
 }
 
-// Destructor.
-TAO_TIO::~TAO_TIO ()
-= default;
-
-// This is the get method for the attribute time interval.
-
+/// Returns the time interval.
 TimeBase::IntervalT
 TAO_TIO::time_interval ()
 {
   return attr_time_interval;
 }
 
-// This operation returns a value of type OverlapType depending on how
-// the interval in the object and the time range represented by the
-// parameter UTO overlap.  If OverlapType is not OTNoOverlap, then the
-// out parameter overlap contains the overlap interval, otherwise the
-// out parameter contains the gap between the two intervals.
-
+/// Returns how this interval overlaps the range represented by `uto`.
+/// When the result is not OTNoOverlap, `overlap` contains the overlap
+/// interval; otherwise it contains the gap between the intervals.
 CosTime::OverlapType
 TAO_TIO::spans (CosTime::UTO_ptr uto,
                 CosTime::TIO_out overlap)
 {
-  TAO_TIO * tio = nullptr;
+  TAO_TIO * tio {};
 
   try
     {
-      TimeBase::TimeT lb1 =
+      TimeBase::TimeT const lb1 =
         this->time_interval ().lower_bound;
 
-      TimeBase::TimeT up1 =
+      TimeBase::TimeT const up1 =
         this->time_interval ().upper_bound;
 
       TimeBase::TimeT tmp1 = uto->time ();
 
       TimeBase::TimeT tmp2 = uto->inaccuracy ();
 
-      TimeBase::TimeT lb2 = tmp1 - tmp2;
-
+      TimeBase::TimeT const lb2 = tmp1 - tmp2;
 
       tmp1 = uto->time ();
 
       tmp2 = uto->inaccuracy ();
 
-      TimeBase::TimeT up2 = tmp1 + tmp2;
+      TimeBase::TimeT const up2 = tmp1 + tmp2;
 
       if (lb1 == lb2 && up1 == up2)
         {
           ACE_NEW_RETURN (tio,
                           TAO_TIO (lb1, up1),
                           CosTime::OTNoOverlap);
+          PortableServer::ServantBase_var xfer = tio;
           overlap = tio->_this ();
 
           return CosTime::OTOverlap;
@@ -70,6 +60,7 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
                           TAO_TIO (lb1, up1),
                           CosTime::OTNoOverlap);
 
+          PortableServer::ServantBase_var xfer = tio;
           overlap = tio->_this ();
 
           return CosTime::OTContained;
@@ -80,6 +71,7 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
                           TAO_TIO (lb2, up2),
                           CosTime::OTNoOverlap);
 
+          PortableServer::ServantBase_var xfer = tio;
           overlap = tio->_this ();
 
           return CosTime::OTContained;
@@ -92,6 +84,7 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
                               TAO_TIO (0, 0),
                               CosTime::OTNoOverlap);
 
+              PortableServer::ServantBase_var xfer = tio;
               overlap = tio->_this ();
 
               return CosTime::OTNoOverlap;
@@ -101,6 +94,7 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
               ACE_NEW_RETURN (tio,
                               TAO_TIO (lb2, up1),
                               CosTime::OTNoOverlap);
+              PortableServer::ServantBase_var xfer = tio;
               overlap = tio->_this ();
 
               return CosTime::OTOverlap;
@@ -112,6 +106,7 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
                           TAO_TIO (0, 0),
                           CosTime::OTNoOverlap);
 
+          PortableServer::ServantBase_var xfer = tio;
           overlap = tio->_this ();
 
           return CosTime::OTNoOverlap;
@@ -122,10 +117,11 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
                           TAO_TIO (lb1, up2),
                           CosTime::OTNoOverlap);
 
+          PortableServer::ServantBase_var xfer = tio;
           overlap = tio->_this ();
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Exception:");
     }
@@ -133,28 +129,25 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
   return CosTime::OTNoOverlap;
 }
 
-// This operation returns a value of type OverlapType depending on how
-// the interval in the object and interval in the parameter TIO
-// overlap. If OverlapType is not OTNoOverlap, then the out parameter
-// overlap contains the overlap interval, otherwise the out parameter
-// contains the gap between the two intervals.
-
+/// Returns how this interval overlaps the interval in `tio`.
+/// When the result is not OTNoOverlap, `overlap` contains the overlap
+/// interval; otherwise it contains the gap between the intervals.
 CosTime::OverlapType
 TAO_TIO::overlaps (CosTime::TIO_ptr tio,
                    CosTime::TIO_out overlap)
 {
-  TAO_TIO * tio_i = nullptr;
+  TAO_TIO * tio_i {};
 
-  TimeBase::TimeT lb1 =
+  TimeBase::TimeT const lb1 =
     this->time_interval ().lower_bound;
 
-  TimeBase::TimeT up1 =
+  TimeBase::TimeT const up1 =
     this->time_interval ().upper_bound;
 
-  TimeBase::TimeT lb2 =
+  TimeBase::TimeT const lb2 =
     tio->time_interval ().lower_bound;
 
-  TimeBase::TimeT up2 =
+  TimeBase::TimeT const up2 =
     tio->time_interval ().upper_bound;
 
   if (lb1 == lb2 && up1 == up2)
@@ -163,7 +156,7 @@ TAO_TIO::overlaps (CosTime::TIO_ptr tio,
                         TAO_TIO (lb1, up1),
                         CORBA::NO_MEMORY ());
 
-
+      PortableServer::ServantBase_var xfer = tio_i;
       overlap = tio_i->_this ();
 
       return CosTime::OTOverlap;
@@ -174,6 +167,7 @@ TAO_TIO::overlaps (CosTime::TIO_ptr tio,
                         TAO_TIO (lb1, up1),
                         CORBA::NO_MEMORY ());
 
+      PortableServer::ServantBase_var xfer = tio_i;
       overlap = tio_i->_this ();
 
       return CosTime::OTContained;
@@ -184,6 +178,7 @@ TAO_TIO::overlaps (CosTime::TIO_ptr tio,
                         TAO_TIO (lb2, up2),
                         CORBA::NO_MEMORY ());
 
+      PortableServer::ServantBase_var xfer = tio_i;
       overlap = tio_i->_this ();
 
       return CosTime::OTContained;
@@ -195,6 +190,7 @@ TAO_TIO::overlaps (CosTime::TIO_ptr tio,
           ACE_NEW_THROW_EX (tio_i,
                             TAO_TIO (0, 0),
                             CORBA::NO_MEMORY ());
+          PortableServer::ServantBase_var xfer = tio_i;
           overlap = tio_i->_this ();
 
           return CosTime::OTNoOverlap;
@@ -205,6 +201,7 @@ TAO_TIO::overlaps (CosTime::TIO_ptr tio,
                             TAO_TIO (lb2, up1),
                             CORBA::NO_MEMORY ());
 
+          PortableServer::ServantBase_var xfer = tio_i;
           overlap = tio_i->_this ();
 
           return CosTime::OTOverlap;
@@ -216,6 +213,7 @@ TAO_TIO::overlaps (CosTime::TIO_ptr tio,
                         TAO_TIO (0, 0),
                         CORBA::NO_MEMORY ());
 
+      PortableServer::ServantBase_var xfer = tio_i;
       overlap = tio_i->_this ();
 
       return CosTime::OTNoOverlap;
@@ -225,6 +223,7 @@ TAO_TIO::overlaps (CosTime::TIO_ptr tio,
       ACE_NEW_THROW_EX (tio_i,
                         TAO_TIO (lb1, up2),
                         CORBA::NO_MEMORY ());
+      PortableServer::ServantBase_var xfer = tio_i;
       overlap = tio_i->_this ();
     }
 
@@ -234,7 +233,7 @@ TAO_TIO::overlaps (CosTime::TIO_ptr tio,
 CosTime::UTO_ptr
 TAO_TIO::time ()
 {
-  TAO_UTO * uto = nullptr;
+  TAO_UTO * uto {};
 
   ACE_NEW_THROW_EX (uto,
                     TAO_UTO ((this->time_interval ().upper_bound -
@@ -244,7 +243,7 @@ TAO_TIO::time ()
                              0),
                     CORBA::NO_MEMORY ());
 
-
+  PortableServer::ServantBase_var xfer = uto;
   return uto->_this ();
 }
 

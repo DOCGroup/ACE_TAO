@@ -8,13 +8,9 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_PortableGroup_Loader::TAO_PortableGroup_Loader ()
-{
-}
-
 int
 TAO_PortableGroup_Loader::init (int /*argc*/,
-                                ACE_TCHAR* /*argv*/ [])
+                                ACE_TCHAR * /*argv*/ [])
 {
   ACE_TRACE ("TAO_PortableGroup_Loader::init");
   // Register the ORB initializer.
@@ -36,7 +32,7 @@ TAO_PortableGroup_Loader::init (int /*argc*/,
 
       PortableInterceptor::register_orb_initializer (orb_initializer.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "Unexpected exception caught while initializing the PortableGroup:");

@@ -1,4 +1,3 @@
-
 #include "Stock_Factory_i.h"
 #include "ace/streams.h"
 
@@ -24,7 +23,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       stock_factory_i._this ();
 
     // Put the object reference as an IOR string
-    CORBA::String_var ior = orb->object_to_string (stock_factory.in ());
+    CORBA::String_var ior (orb->object_to_string (stock_factory.in ()));
 
     // Print it out!
     cout << ior.in () << endl;
@@ -35,7 +34,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
     poa->destroy (true, true);
     orb->destroy ();
   }
-  catch (const CORBA::Exception &) {
+  catch (CORBA::Exception const &) {
     cerr << "CORBA exception raised!" << endl;
   }
   return 0;

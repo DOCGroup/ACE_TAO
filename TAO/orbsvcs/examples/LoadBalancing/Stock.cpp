@@ -1,8 +1,7 @@
-
 #include "Stock.h"
 
-Stock::Stock (const char *symbol,
-              const char *full_name,
+Stock::Stock (char const *symbol,
+              char const *full_name,
               CORBA::Double price)
   :  symbol_ (symbol),
      full_name_ (full_name),

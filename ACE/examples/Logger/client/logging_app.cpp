@@ -11,35 +11,57 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_unistd.h"
 
-static u_short LOGGER_PORT = ACE_DEFAULT_SERVER_PORT;
-static const ACE_TCHAR *const LOGGER_HOST = ACE_DEFAULT_SERVER_HOST;
-static constexpr int MAX_ITERATIONS = 10;
+#include <array>
+#include <cstddef>
+
+constexpr u_short default_logger_port = ACE_DEFAULT_SERVER_PORT;
+ACE_TCHAR const * const default_logger_host = ACE_DEFAULT_SERVER_HOST;
+constexpr size_t default_max_iterations = 10;
+
+struct Logger_Options
+{
+  ACE_TCHAR const *host {default_logger_host};
+  u_short port {default_logger_port};
+  size_t max_iterations {default_max_iterations};
+};
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  const ACE_TCHAR *logger_host = argc > 1 ? argv[1] : LOGGER_HOST;
-  u_short logger_port  = argc > 2 ? ACE_OS::atoi (argv[2]) : LOGGER_PORT;
-  int max_iterations = argc > 3 ? ACE_OS::atoi (argv[3]) : MAX_ITERATIONS;
+  Logger_Options options;
+  if (argc > 1)
+    options.host = argv[1];
+  if (argc > 2)
+    options.port = static_cast<u_short> (ACE_OS::atoi (argv[2]));
+  if (argc > 3)
+    {
+      int const parsed_iterations = ACE_OS::atoi (argv[3]);
+      if (parsed_iterations < 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("iterations must not be negative\n")),
+                          1);
+      options.max_iterations = static_cast<size_t> (parsed_iterations);
+    }
 
   ACE_SOCK_Stream logger;
   ACE_SOCK_Connector connector;
-  ACE_INET_Addr addr (logger_port, logger_host);
+  ACE_INET_Addr addr (options.port, options.host);
 
   if (connector.connect (logger, addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open")), -1);
 
-  for (int i = 0; i < max_iterations; i++)
+  for (size_t i = 0; i < options.max_iterations; ++i)
     {
       ACE_Log_Record log_record (LM_DEBUG,
-                                 ACE_OS::time ((time_t *) 0),
+                                 ACE_OS::time (nullptr),
                                  ACE_OS::getpid ());
 
-      ACE_TCHAR buf[BUFSIZ];
-      ACE_OS::sprintf (buf, ACE_TEXT ("message = %d\n"), i + 1);
-      log_record.msg_data (buf);
+      std::array<ACE_TCHAR, BUFSIZ> buf {};
+      ACE_OS::sprintf (buf.data (), ACE_TEXT ("message = %u\n"),
+                       static_cast<unsigned int> (i + 1));
+      log_record.msg_data (buf.data ());
 
-      const size_t max_payload_size =
+      size_t const max_payload_size =
         4 // type()
         + 8 // timestamp
         + 4 // process id
@@ -52,7 +74,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       payload << log_record;
 
       // Get the number of bytes used by the CDR stream.
-      ACE_CDR::ULong length =
+      ACE_CDR::ULong const length =
         ACE_Utils::truncate_cast<ACE_CDR::ULong> (payload.total_length ());
 
       // Send a header so the receiver can determine the byte order and
@@ -64,13 +86,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       header << ACE_CDR::ULong (length);
 
       // Use an iovec to send both buffer and payload simultaneously.
-      iovec iov[2];
+      std::array<iovec, 2> iov {};
       iov[0].iov_base = header.begin ()->rd_ptr ();
       iov[0].iov_len  = 8;
       iov[1].iov_base = payload.begin ()->rd_ptr ();
       iov[1].iov_len  = length;
 
-      if (logger.sendv_n (iov, 2) == -1)
+      if (logger.sendv_n (iov.data (), static_cast<int> (iov.size ())) == -1)
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send"), -1);
     }
 

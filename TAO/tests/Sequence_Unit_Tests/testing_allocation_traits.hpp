@@ -19,7 +19,7 @@
 template<typename T, class base>
 struct testing_allocation_traits : public base
 {
-  typedef typename base::value_type value_type;
+  using value_type = typename base::value_type;
 
   static call_counter default_buffer_allocation_calls;
   inline static value_type * default_buffer_allocation()

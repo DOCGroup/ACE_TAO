@@ -2,14 +2,7 @@
 
 Source_i::Source_i (ThreeTier_ptr target)
   : target_ (ThreeTier::_duplicate (target))
-  , counter_ (5)  // 1000000
 {
-}
-
-bool
-Source_i::parse_args (int, ACE_TCHAR *[])
-{
-  return true;
 }
 
 int
@@ -19,19 +12,20 @@ Source_i::run ()
     {
       for (size_t loop = 0; loop < counter_; ++loop)
         {
-        // call a 'nop' method on the server
+          // call a 'nop' method on the server
           target_->tick ();
 //        target_->tock ();
         // this sleep can be used give the middle tier a chance
         // to catch up.
 //        ACE_OS::sleep (3);
         }
-      unsigned long const tickCount = target_->tickCount ();
-      unsigned long const tockCount = target_->tockCount ();
+      CORBA::ULong const tick_count = target_->tickCount ();
+      CORBA::ULong const tock_count = target_->tockCount ();
 
       ACE_DEBUG ((LM_DEBUG,
-        "Count of ticks: %d tocks: %d\n",
-                  static_cast<int> (tickCount), static_cast<int> (tockCount)));
+                  "Count of ticks: %u tocks: %u\n",
+                  static_cast<unsigned int> (tick_count),
+                  static_cast<unsigned int> (tock_count)));
 
       target_->shutdown ();
     }

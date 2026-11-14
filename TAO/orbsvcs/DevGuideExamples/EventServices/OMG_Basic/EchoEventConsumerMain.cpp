@@ -1,7 +1,5 @@
 // EchoEventConsumerMain.cpp
 // Main program for a PushConsumer of Echo events.
-
-
 #include "EchoEventConsumer_i.h"
 
 #include "orbsvcs/CosEventCommC.h"
@@ -17,65 +15,67 @@ int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
   try
   {
     // Initialize the ORB.
-    CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
+    CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
     // Find the Naming Service.
-    CORBA::Object_var obj = orb->resolve_initial_references("NameService");
-    CosNaming::NamingContextExt_var root_context = CosNaming::NamingContextExt::_narrow(obj.in());
+    CORBA::Object_var obj = orb->resolve_initial_references ("NameService");
+    CosNaming::NamingContextExt_var const root_context =
+      CosNaming::NamingContextExt::_narrow (obj.in ());
 
     // Find the EchoEventChannel.
-    obj = root_context->resolve_str("CosEventService");
+    obj = root_context->resolve_str ("CosEventService");
 
     // Downcast the object reference to an EventChannel reference.
-    CosEventChannelAdmin::EventChannel_var echoEC =
-      CosEventChannelAdmin::EventChannel::_narrow(obj.in());
-    if (CORBA::is_nil(echoEC.in())) {
-      std::cerr << "Could not narrow EchoEventChannel." << std::endl;
-      return 1;
-    }
+    CosEventChannelAdmin::EventChannel_var const echoEC =
+      CosEventChannelAdmin::EventChannel::_narrow (obj.in ());
+    if (CORBA::is_nil (echoEC.in ()))
+      {
+        std::cerr << "Could not narrow EchoEventChannel." << std::endl;
+        return 1;
+      }
     std::cout << "Found the EchoEventChannel." << std::endl;
 
     // Get a ConsumerAdmin object from the EventChannel.
-    CosEventChannelAdmin::ConsumerAdmin_var consumerAdmin =
-      echoEC->for_consumers();
+    CosEventChannelAdmin::ConsumerAdmin_var const consumerAdmin =
+      echoEC->for_consumers ();
 
     // Get a ProxyPushSupplier from the ConsumerAdmin.
-    CosEventChannelAdmin::ProxyPushSupplier_var supplier =
-      consumerAdmin->obtain_push_supplier();
+    CosEventChannelAdmin::ProxyPushSupplier_var const supplier =
+      consumerAdmin->obtain_push_supplier ();
 
     // Instantiate an EchoEventConsumer_i servant.
-    PortableServer::Servant_var<EchoEventConsumer_i> servant =
-      new EchoEventConsumer_i(orb.in(), supplier.in(), EVENTS_TILL_SHUTDOWN);
+    PortableServer::Servant_var<EchoEventConsumer_i> const servant =
+      new EchoEventConsumer_i (orb.in (), supplier.in (), EVENTS_TILL_SHUTDOWN);
 
     // Register it with the RootPOA.
-    obj = orb->resolve_initial_references("RootPOA");
-    PortableServer::POA_var poa = PortableServer::POA::_narrow(obj.in());
-    PortableServer::ObjectId_var oid = poa->activate_object(servant.in());
-    CORBA::Object_var consumer_obj = poa->id_to_reference(oid.in());
-    CosEventComm::PushConsumer_var consumer =
-      CosEventComm::PushConsumer::_narrow(consumer_obj.in());
+    obj = orb->resolve_initial_references ("RootPOA");
+    PortableServer::POA_var const poa = PortableServer::POA::_narrow (obj.in ());
+    PortableServer::ObjectId_var const oid = poa->activate_object (servant.in ());
+    CORBA::Object_var const consumer_obj = poa->id_to_reference (oid.in ());
+    CosEventComm::PushConsumer_var const consumer =
+      CosEventComm::PushConsumer::_narrow (consumer_obj.in ());
 
     // Connect to the ProxyPushSupplier, passing our PushConsumer object
     // reference to it.
-    supplier->connect_push_consumer(consumer.in());
+    supplier->connect_push_consumer (consumer.in ());
 
     // Activate the POA via its POAManager.
-    PortableServer::POAManager_var poa_manager = poa->the_POAManager();
-    poa_manager->activate();
+    PortableServer::POAManager_var const poa_manager = poa->the_POAManager ();
+    poa_manager->activate ();
 
     std::cout << "Ready to receive events..." << std::endl;
 
     // Enter the ORB event loop.
-    orb->run();
+    orb->run ();
 
     // If we have reached this, we must be shutting down...
-    orb->destroy();
+    orb->destroy ();
 
     std::cout << "Test complete." << std::endl;
 
     return 0;
   }
-  catch(const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
   {
     std::cerr << "Consumer: Caught CORBA::Exception:  " << ex << std::endl;
   }

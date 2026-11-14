@@ -9,22 +9,22 @@
 // Do not attempt to narrow the object represented by this IOR, nor
 // should you modify the IOR unless you replace it with another
 // valid one!
-static const char IOR[] =
+static constexpr char IOR[] =
 "IOR:010000001600000049444c3a43756269745f466163746f72793a312e30000000010000000000000090000000010102cd14000000616e647572696c2e6563652e7563692e6564750057fecdcd2d00000014010f004e5550000000130000000001000000006368696c645f706f61000000000001000000666163746f7279cdcdcd03000000000000000800000001cdcdcd004f4154010000001400000001cdcdcd01000100000000000901010000000000004f41540400000001cd0000";
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   CORBA::ORB_var orb;
 
   try
     {
-      const char orbid[] = "mighty_orb";
+      constexpr char orbid[] = "mighty_orb";
 
-      CORBA::ORB_ptr my_orb = CORBA::ORB::_nil();
+      CORBA::ORB_ptr my_orb {};
 
       {
-        CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, orbid);
+        CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv, orbid);
 
         my_orb = orb.in ();
 
@@ -34,11 +34,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         // assigned to this ORB.
       }
 
-      // -------------------------------------------------------------
       // Verify that the same ORB is returned from a second call to
       // CORBA::ORB_init() in a different scope when the same ORBid is
       // used in that scope.
-      // -------------------------------------------------------------
 
       orb = CORBA::ORB_init (argc, argv, orbid);
 
@@ -69,10 +67,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             1);
         }
 
-      // -------------------------------------------------------------
       // Now explicitly destroy the ORB with the given ORBid and
       // attempt to initialize a new ORB with the same ORBid.
-      // -------------------------------------------------------------
 
       orb->destroy ();
 
@@ -104,36 +100,30 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           throw CORBA::INTERNAL ();
         }
 
-      // -------------------------------------------------------------
       // Create an object (but don't narrow() it) so that we can test
       // that some of the TAO_Stub internals are functioning properly
       // (leaks, etc).
-      // -------------------------------------------------------------
 
-      CORBA::Object_var object =
+      CORBA::Object_var const object =
         orb->string_to_object (IOR);
 
-      // -------------------------------------------------------------
       // Initialize another two ORBs but don't explicitly destroy them
       // to allow testing of TAO's internal ORB table resource
       // clean-up.
-      // -------------------------------------------------------------
-      CORBA::ORB_var orb2 =
+      CORBA::ORB_var const orb2 =
         CORBA::ORB_init (argc, argv, "ORB number 2");
 
-      CORBA::ORB_var orb3 =
+      CORBA::ORB_var const orb3 =
         CORBA::ORB_init (argc, argv, "ORB number 3");
 
-      // -------------------------------------------------------------
       // Now try to perform an operation using the destroyed ORB
       // pseudo object.  A CORBA::OBJECT_NOT_EXIST() exception should
       // be thrown.  This also tests whether or not exceptions or the
       // ORB itself break when the last ORB is released.
-      // -------------------------------------------------------------
 
       orb->destroy ();
 
-      CORBA::Object_var obj =
+      CORBA::Object_var const obj =
         orb->resolve_initial_references ("RootPOA");
 
       // If we get here, then something went wrong.  A
@@ -150,7 +140,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       throw CORBA::INTERNAL ();
     }
-  catch (const CORBA::OBJECT_NOT_EXIST& exc)
+  catch (CORBA::OBJECT_NOT_EXIST const &exc)
     {
       // Do something with the exception to make sure it actually
       // exists.  If it doesn't exist then there is something wrong
@@ -163,10 +153,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                   "This exception was expected.  It is safe to ignore it.\n",
                   exc._rep_id ()));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught unexpected exception:");
-
 
       ACE_DEBUG ((LM_ERROR,
                   "\n"

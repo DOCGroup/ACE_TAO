@@ -42,7 +42,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 
 #if defined(ACE_HAS_THREADS)
@@ -210,7 +209,6 @@ MyTask::start (int num_threads)
   return 0;
 }
 
-
 int
 MyTask::stop ()
 {
@@ -293,7 +291,7 @@ void
 Acceptor::on_new_receiver (Receiver &rcvr)
 {
   ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, this->mutex_);
-  this->sessions_++;
+  ++this->sessions_;
   this->list_receivers_[rcvr.index_] = & rcvr;
   ACE_DEBUG ((LM_DEBUG,
               "Receiver::CTOR sessions_=%d\n",
@@ -305,7 +303,7 @@ Acceptor::on_delete_receiver (Receiver &rcvr)
 {
   ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, this->mutex_);
 
-  this->sessions_--;
+  --this->sessions_;
 
   this->total_snd_ += rcvr.get_total_snd ();
   this->total_rcv_ += rcvr.get_total_rcv ();
@@ -381,7 +379,6 @@ Receiver::Receiver (Acceptor * acceptor, size_t index)
   if (acceptor_ != nullptr)
     acceptor_->on_new_receiver (*this);
 }
-
 
 Receiver::~Receiver ()
 {
@@ -483,7 +480,7 @@ Receiver::handle_input (ACE_HANDLE h)
   int err = 0;
   ssize_t res = this->peer ().recv (mb->rd_ptr (), BUFSIZ-1);
 
-  this->total_r_++;
+  ++this->total_r_;
 
   if (res >= 0)
     {
@@ -502,7 +499,7 @@ Receiver::handle_input (ACE_HANDLE h)
       ACE_DEBUG ((LM_DEBUG, "**** Receiver::handle_input () SessionId=%d****\n", index_));
       ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "bytes_to_read", BUFSIZ));
       ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "handle", h));
-      ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "bytes_transferred", res));
+      ACE_DEBUG ((LM_DEBUG, "%C = %b\n", "bytes_transferred", res));
       ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "error", err));
       ACE_DEBUG ((LM_DEBUG, "%C = %s\n", "message_block", mb->rd_ptr ()));
       ACE_DEBUG ((LM_DEBUG, "**** end of message ****************\n"));
@@ -572,22 +569,21 @@ Receiver::handle_output (ACE_HANDLE h)
       bytes = mb->length ();
       res = this->peer ().send (mb->rd_ptr (), bytes);
 
-      this->total_w_++;
+      ++this->total_w_;
 
       if (res < 0)
         err = errno ;
       else
         this->total_snd_ += res;
 
-
       if (loglevel == 0 || res <= 0 || err!= 0)
         {
           LogLocker log_lock;
 
           ACE_DEBUG ((LM_DEBUG, "**** Receiver::handle_output () SessionId=%d****\n", index_));
-          ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "bytes_to_write", bytes));
+          ACE_DEBUG ((LM_DEBUG, "%C = %B\n", "bytes_to_write", bytes));
           ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "handle", h));
-          ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "bytes_transferred", res));
+          ACE_DEBUG ((LM_DEBUG, "%C = %b\n", "bytes_transferred", res));
           ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "error", err));
           ACE_DEBUG ((LM_DEBUG, "%C = %s\n", "message_block", mb->rd_ptr ()));
           ACE_DEBUG ((LM_DEBUG, "**** end of message ****************\n"));
@@ -653,7 +649,7 @@ void
 Connector::on_new_sender (Sender & sndr)
 {
   ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, this->mutex_);
-  this->sessions_++;
+  ++this->sessions_;
   this->list_senders_[sndr.index_] = &sndr;
   ACE_DEBUG ((LM_DEBUG,
               "Sender::CTOR sessions_=%d\n",
@@ -665,7 +661,7 @@ Connector::on_delete_sender (Sender & sndr)
 {
   ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, this->mutex_);
 
-  this->sessions_--;
+  --this->sessions_;
   this->total_snd_ += sndr.get_total_snd();
   this->total_rcv_ += sndr.get_total_rcv();
   this->total_w_   += sndr.get_total_w();
@@ -758,7 +754,6 @@ Sender::Sender (Connector* connector, size_t index)
 
   ACE_OS::snprintf (send_buf_, 1024, "%s", data);
 }
-
 
 Sender::~Sender ()
 {
@@ -894,7 +889,7 @@ Sender::handle_input (ACE_HANDLE h)
   int     err = 0;
   ssize_t res = this->peer ().recv (mb->rd_ptr (),
                                     BUFSIZ-1);
-  this->total_r_++;
+  ++this->total_r_;
 
   if (res >= 0)
     {
@@ -913,7 +908,7 @@ Sender::handle_input (ACE_HANDLE h)
       ACE_DEBUG ((LM_DEBUG, "**** Sender::handle_input () SessionId=%d****\n", index_));
       ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "bytes_to_read", BUFSIZ));
       ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "handle", h));
-      ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "bytes_transferred", res));
+      ACE_DEBUG ((LM_DEBUG, "%C = %b\n", "bytes_transferred", res));
       ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "error", err));
       ACE_DEBUG ((LM_DEBUG, "%C = %s\n", "message_block", mb->rd_ptr ()));
       ACE_DEBUG ((LM_DEBUG, "**** end of message ****************\n"));
@@ -967,7 +962,7 @@ Sender::handle_output (ACE_HANDLE h)
       bytes = mb->length ();
       res = this->peer ().send (mb->rd_ptr (), bytes);
 
-      this->total_w_++;
+      ++this->total_w_;
 
       if (res < 0)
         err = errno ;
@@ -979,9 +974,9 @@ Sender::handle_output (ACE_HANDLE h)
           LogLocker log_lock;
 
           ACE_DEBUG ((LM_DEBUG, "**** Sender::handle_output () SessionId=%d****\n", index_));
-          ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "bytes_to_write", bytes));
+          ACE_DEBUG ((LM_DEBUG, "%C = %B\n", "bytes_to_write", bytes));
           ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "handle", h));
-          ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "bytes_transferred", res));
+          ACE_DEBUG ((LM_DEBUG, "%C = %b\n", "bytes_transferred", res));
           ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "error", err));
           ACE_DEBUG ((LM_DEBUG, "%C = %s\n", "message_block", mb->rd_ptr ()));
           ACE_DEBUG ((LM_DEBUG, "**** end of message ****************\n"));
@@ -1013,7 +1008,6 @@ Sender::handle_output (ACE_HANDLE h)
 
   return check_destroy ();
 }
-
 
 // *************************************************************
 //   Configuration helpers

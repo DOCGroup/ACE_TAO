@@ -22,8 +22,7 @@ be_visitor_interface_fwd_any_op_ch::~be_visitor_interface_fwd_any_op_ch () = def
 
 int
 be_visitor_interface_fwd_any_op_ch::visit_interface_fwd (
-    be_interface_fwd *node
-  )
+    be_interface_fwd *node)
 {
   // Only a forward declared interface that is not defined in the same
   // translation unit needs to have this generated here. The Any operators

@@ -12,8 +12,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_ZIOP_Stub::TAO_ZIOP_Stub (const char *repository_id,
-                              const TAO_MProfile &profiles,
+TAO_ZIOP_Stub::TAO_ZIOP_Stub (char const *repository_id,
+                              TAO_MProfile const &profiles,
                               TAO_ORB_Core *orb_core)
   : TAO_Stub (repository_id,
               profiles,
@@ -39,7 +39,7 @@ TAO_ZIOP_Stub::parse_policies ()
   CORBA::ULong const length = policy_list->length ();
 
   // Cache away the policies that we'll need later.
-  for (CORBA::ULong i = 0; i < length; ++i)
+  for (CORBA::ULong i {}; i < length; ++i)
     {
       switch (policy_list[i]->policy_type ())
         {
@@ -189,7 +189,7 @@ TAO_ZIOP_Stub::effective_compression_id_list_policy ()
             ACE_TEXT ("TAO_ZIOP_Stub::effective_compression_id_list_policy, ")
             ACE_TEXT ("no clientCompressorIdLevelListPolicy (did not compress).\n")));
         }
-      return 0;
+      return nullptr;
     }
   ::Compression::CompressorIdLevelList &clientList =
     *clientCompressors->compressor_ids ();
@@ -228,18 +228,18 @@ TAO_ZIOP_Stub::effective_compression_id_list_policy ()
             ACE_TEXT ("TAO_ZIOP_Stub::effective_compression_id_list_policy, ")
             ACE_TEXT ("no serverCompressorIdLevelListPolicy (did not compress).\n")));
         }
-      return 0;
+      return nullptr;
     }
   ::Compression::CompressorIdLevelList &serverList =
     *serverCompressors->compressor_ids ();
 
   // For each CLIENT compressor (in priority order) check...
-  for (CORBA::ULong client = 0u; client < clientList.length (); ++client)
+  for (CORBA::ULong client {}; client < clientList.length (); ++client)
     {
       ::Compression::CompressorIdLevel_var clientEntry (clientList[client]);
 
       // ... which each SERVER compressor id if it is available to use.
-      for (CORBA::ULong server = 0u; server < serverList.length (); ++server)
+      for (CORBA::ULong server {}; server < serverList.length (); ++server)
         {
           ::Compression::CompressorIdLevel_var serverEntry (serverList[server]);
 
@@ -249,7 +249,7 @@ TAO_ZIOP_Stub::effective_compression_id_list_policy ()
               // compressor (the one we are going to employ) use slot 0 in the
               // list we are returning. Since we can't modify the original list
               // we have to make a copy and modify that.
-              policy= clientCompressors->copy ();
+              policy = clientCompressors->copy ();
               ZIOP::CompressorIdLevelListPolicy_var returningCompressors (
                 ZIOP::CompressorIdLevelListPolicy::_narrow (policy.in ()));
               if (CORBA::is_nil (returningCompressors.in ()))
@@ -262,7 +262,7 @@ TAO_ZIOP_Stub::effective_compression_id_list_policy ()
                         ACE_TEXT ("TAO_ZIOP_Stub::effective_compression_id_list_policy, ")
                         ACE_TEXT ("could not copy clientCompressorIdLevelListPolicy (did not compress).\n")));
                     }
-                  return 0;
+                  return nullptr;
                 }
               ::Compression::CompressorIdLevelList &returningList =
                 *returningCompressors->compressor_ids ();
@@ -321,7 +321,7 @@ TAO_ZIOP_Stub::effective_compression_id_list_policy ()
                   ACE_TEXT ("TAO_ZIOP_Stub::effective_compression_id_list_policy, ")
                   ACE_TEXT("no matching CompressorIdLevelListPolicy (did not compress).\n")));
     }
-  return 0;
+  return nullptr;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

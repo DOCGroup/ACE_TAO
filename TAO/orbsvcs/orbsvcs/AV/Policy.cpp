@@ -39,11 +39,7 @@ TAO_AV_SFP_Credit_Policy::TAO_AV_SFP_Credit_Policy ()
 }
 
 // TAO_AV_Callback
-TAO_AV_Callback::TAO_AV_Callback ()
-  : protocol_object_ (nullptr)
-  , handler_ (nullptr)
-{
-}
+TAO_AV_Callback::TAO_AV_Callback () = default;
 
 TAO_AV_Callback::~TAO_AV_Callback () = default;
 
@@ -74,7 +70,7 @@ TAO_AV_Callback::handle_stop ()
 int
 TAO_AV_Callback::receive_frame (ACE_Message_Block * /*frame*/,
                                 TAO_AV_frame_info *,
-                                const ACE_Addr &)
+                                ACE_Addr const &)
 {
   if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_Callback::receive_frame\n"));
   return -1;
@@ -82,7 +78,7 @@ TAO_AV_Callback::receive_frame (ACE_Message_Block * /*frame*/,
 
 int
 TAO_AV_Callback::receive_control_frame (ACE_Message_Block *,
-                                        const ACE_Addr& )
+                                        ACE_Addr const &)
 {
   return 0;
 }

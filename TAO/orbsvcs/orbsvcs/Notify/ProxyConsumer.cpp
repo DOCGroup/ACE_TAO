@@ -26,14 +26,9 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_ProxyConsumer::TAO_Notify_ProxyConsumer ()
-  : supplier_admin_ (0)
-{
-}
+TAO_Notify_ProxyConsumer::TAO_Notify_ProxyConsumer () = default;
 
-TAO_Notify_ProxyConsumer::~TAO_Notify_ProxyConsumer ()
-{
-}
+TAO_Notify_ProxyConsumer::~TAO_Notify_ProxyConsumer () = default;
 
 TAO_Notify_Peer*
 TAO_Notify_ProxyConsumer::peer ()
@@ -131,7 +126,7 @@ TAO_Notify_ProxyConsumer::push_i (TAO_Notify_Event * event)
 bool
 TAO_Notify_ProxyConsumer::supports_reliable_events () const
 {
-  bool reliable = false;
+  bool reliable {};
   CosNotification::PropertyValue value;
   if (this->find_qos_property_value (CosNotification::EventReliability, value))
     {
@@ -163,7 +158,6 @@ TAO_Notify_ProxyConsumer::shutdown ()
   if (this->TAO_Notify_Object::shutdown () == 1)
     return 1;
 
-
   this->disconnect ();
 
   if (this->supplier_.get() != nullptr)
@@ -183,19 +177,16 @@ TAO_Notify_ProxyConsumer::destroy ()
   // It is not safe to delete the non-refcounted supplier here.
 }
 
-
 ACE_Time_Value
 TAO_Notify_ProxyConsumer::last_ping() const
 {
   return this->last_ping_.value ();
 }
 
-
 void
 TAO_Notify_ProxyConsumer::last_ping(const ACE_Time_Value& tv)
 {
   this->last_ping_ = tv;
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

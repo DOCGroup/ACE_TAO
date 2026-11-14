@@ -125,6 +125,11 @@ template <class EXT_ID, class INT_ID, class ACE_LOCK>
 class ACE_Map_Manager
 {
 public:
+  ACE_Map_Manager (ACE_Map_Manager const &) = delete;
+  ACE_Map_Manager (ACE_Map_Manager &&) = delete;
+  ACE_Map_Manager &operator= (ACE_Map_Manager const &) = delete;
+  ACE_Map_Manager &operator= (ACE_Map_Manager &&) = delete;
+
   friend class ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>;
   friend class ACE_Map_Const_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>;
   friend class ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>;
@@ -426,11 +431,6 @@ protected:
 
   /// Afterwards grow in chunks of 32K
   static constexpr int LINEAR_INCREASE = 32 * 1024;
-
-private:
-  // = Disallow these operations.
-  void operator= (const ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &) = delete;
-  ACE_Map_Manager (const ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &) = delete;
 };
 
 /**

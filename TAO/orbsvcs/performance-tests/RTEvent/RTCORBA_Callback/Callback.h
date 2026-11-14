@@ -22,9 +22,12 @@ class Callback
 
 {
 public:
-  /// Constructor
   Callback (int iterations,
             PortableServer::POA_ptr poa);
+  Callback (Callback const &) = delete;
+  Callback (Callback &&) = delete;
+  Callback &operator= (Callback const &) = delete;
+  Callback &operator= (Callback &&) = delete;
 
   /// Access the history of samples
   ACE_Sample_History &sample_history ();
@@ -32,9 +35,9 @@ public:
   //@{
   /** @name The RtecEventComm::PushCallback methods
    */
-  virtual void sample (Test::Timestamp the_timestamp);
+  void sample (Test::Timestamp the_timestamp) override;
 
-  PortableServer::POA_ptr _default_POA ();
+  PortableServer::POA_ptr _default_POA () override;
   //@}
 
 private:

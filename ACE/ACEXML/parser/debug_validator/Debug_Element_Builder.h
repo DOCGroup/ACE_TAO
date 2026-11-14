@@ -19,6 +19,7 @@
 
 #include "ACEXML/common/Element_Def_Builder.h"
 #include "ACEXML/parser/debug_validator/Element_Tree.h"
+#include <memory>
 
 /**
  * @class ACEXML_Debug_Element_Builder Debug_Element_Builder.h "parser/debug_validator/Debug_Element_Builder.h"
@@ -31,44 +32,49 @@ class ACEXML_DEBUG_DTD_MANAGER_Export ACEXML_Debug_Element_Builder
   : public ACEXML_Element_Def_Builder
 {
 public:
-  ACEXML_Debug_Element_Builder ();
+  ACEXML_Debug_Element_Builder () = default;
 
-  virtual ~ACEXML_Debug_Element_Builder ();
+  ACEXML_Debug_Element_Builder (ACEXML_Debug_Element_Builder const &) = delete;
+  ACEXML_Debug_Element_Builder (ACEXML_Debug_Element_Builder &&) = delete;
+  ACEXML_Debug_Element_Builder &operator= (ACEXML_Debug_Element_Builder const &) = delete;
+  ACEXML_Debug_Element_Builder &operator= (ACEXML_Debug_Element_Builder &&) = delete;
+
+  ~ACEXML_Debug_Element_Builder () override;
 
   /**
    * Define the name of the element.
    *
    * @retval 0 if valid, -1 otherwise.
    */
-  virtual int setElementName (const ACEXML_Char *namespaceURI,
-                              const ACEXML_Char *localName,
-                              const ACEXML_Char *qName);
+  int setElementName (ACEXML_Char const *namespaceURI,
+                      ACEXML_Char const *localName,
+                      ACEXML_Char const *qName) override;
 
   /**
    * Define the content type of the element.
    *
    * @retval 0 if valid, -1 otherwise.
    */
-  virtual int setContentType (CONTENT_TYPE type);
+  int setContentType (CONTENT_TYPE type) override;
 
   /**
    * Insert one more element into Mixed definition.
    */
-  virtual int insertMixedElement (const ACEXML_Char *namespaceURI,
-                                  const ACEXML_Char *localName,
-                                  const ACEXML_Char *qName);
+  int insertMixedElement (ACEXML_Char const *namespaceURI,
+                          ACEXML_Char const *localName,
+                          ACEXML_Char const *qName) override;
 
   /**
    * Start a new group of children.
    */
-  virtual int startChildGroup ();
+  int startChildGroup () override;
 
   /**
    * End a new group of children.
    *
    * @retval 0 on success.
    */
-  virtual int endChildGroup (CARDINALITY card);
+  int endChildGroup (CARDINALITY card) override;
 
   /**
    * Set the type of current child group to Choice.
@@ -77,7 +83,7 @@ public:
    * already been set and this action conflicts with the previous
    * setting.
    */
-  virtual int setChoice ();
+  int setChoice () override;
 
   /**
    * Set the type of current child group to Sequence.
@@ -86,32 +92,31 @@ public:
    * already been set and this action conflicts with the previous
    * setting.
    */
-  virtual int setSequence ();
+  int setSequence () override;
 
   /**
    * Insert an new element into the current child group.
    *
    * @retval 0 on success, -1 otherwise.
    */
-  virtual int insertElement  (const ACEXML_Char *namespaceURI,
-                              const ACEXML_Char *localName,
-                              const ACEXML_Char *qName)
-    ;
+  int insertElement (ACEXML_Char const *namespaceURI,
+                     ACEXML_Char const *localName,
+                     ACEXML_Char const *qName) override;
 
   /**
    * Dump the content of the attribute definition.
    */
-  virtual void dump ();
+  void dump () override;
 private:
-  CONTENT_TYPE type_;
+  CONTENT_TYPE type_ {CONTENT_TYPE::UNDEFINED};
 
   ACEXML_String element_;
 
-  ACEXML_Element_Tree_List_Node *root_;
+  std::unique_ptr<ACEXML_Element_Tree_List_Node> root_ {};
 
+  /// Non-owning stack of list nodes owned by root_.
   ACEXML_Element_Tree_List_Stack active_list_;
 };
-
 
 #include /**/ "ace/post.h"
 

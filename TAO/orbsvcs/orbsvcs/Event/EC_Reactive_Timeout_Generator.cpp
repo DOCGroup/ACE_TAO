@@ -1,15 +1,12 @@
 #include "orbsvcs/Event/EC_Reactive_Timeout_Generator.h"
 #include "ace/Reactor.h"
 
+#include <memory>
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Reactive_Timeout_Generator::
       TAO_EC_Reactive_Timeout_Generator (ACE_Reactor *reactor)
  : reactor_ (reactor)
-{
-}
-
-TAO_EC_Reactive_Timeout_Generator::~TAO_EC_Reactive_Timeout_Generator ()
 {
 }
 
@@ -21,7 +18,7 @@ TAO_EC_Reactive_Timeout_Generator::activate ()
 void
 TAO_EC_Reactive_Timeout_Generator::shutdown ()
 {
-  this->reactor_->cancel_timer (&this->event_handler_);
+  this->reactor_->cancel_timer (std::addressof (this->event_handler_));
   this->event_handler_.reactor (nullptr);
 }
 
@@ -31,7 +28,7 @@ TAO_EC_Reactive_Timeout_Generator::schedule_timer (
       const ACE_Time_Value& delta,
       const ACE_Time_Value& interval)
 {
-  return this->reactor_->schedule_timer (&this->event_handler_,
+  return this->reactor_->schedule_timer (std::addressof (this->event_handler_),
                                          static_cast<void*> (filter),
                                          delta,
                                          interval);

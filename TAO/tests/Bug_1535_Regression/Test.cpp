@@ -1,8 +1,7 @@
 #include "Test.h"
 
 Hello::Hello (PortableServer::POA_ptr poa)
-  :
-  poa_ (PortableServer::POA::_duplicate (poa))
+  : poa_ (PortableServer::POA::_duplicate (poa))
 {
 }
 

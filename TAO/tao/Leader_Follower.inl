@@ -7,16 +7,10 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-TAO_Leader_Follower::TAO_Leader_Follower (TAO_ORB_Core* orb_core,
+TAO_Leader_Follower::TAO_Leader_Follower (TAO_ORB_Core *orb_core,
                                           TAO_New_Leader_Generator *new_leader_generator)
   : orb_core_ (orb_core),
     reverse_lock_ (lock_),
-    leaders_ (0),
-    clients_ (0),
-    reactor_ (0),
-    avoid_client_leader_ (false),
-    client_thread_is_leader_ (0),
-    event_loop_threads_waiting_ (0),
     event_loop_threads_condition_ (lock_),
     new_leader_generator_ (new_leader_generator)
 {
@@ -72,7 +66,7 @@ TAO_Leader_Follower::elect_new_leader ()
 ACE_INLINE int
 TAO_Leader_Follower::set_event_loop_thread (ACE_Time_Value *max_wait_time)
 {
-  TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
+  TAO_ORB_Core_TSS_Resources * const tss = this->get_tss_resources ();
 
   // Make sure that there is no other client thread run the show.  If
   // we are the client thread running the show, then it is ok.
@@ -121,7 +115,7 @@ TAO_Leader_Follower::reset_event_loop_thread_i (TAO_ORB_Core_TSS_Resources *tss)
 ACE_INLINE void
 TAO_Leader_Follower::reset_event_loop_thread ()
 {
-  TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
+  TAO_ORB_Core_TSS_Resources * const tss = this->get_tss_resources ();
   if (tss->event_loop_thread_ > 0)
     this->reset_event_loop_thread_i (tss);
 }
@@ -135,7 +129,7 @@ TAO_Leader_Follower::lock ()
 ACE_INLINE void
 TAO_Leader_Follower::set_upcall_thread ()
 {
-  TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
+  TAO_ORB_Core_TSS_Resources * const tss = this->get_tss_resources ();
 
   if (tss->event_loop_thread_ > 0)
     {
@@ -166,7 +160,7 @@ TAO_Leader_Follower::leader_available () const
 ACE_INLINE void
 TAO_Leader_Follower::set_client_leader_thread ()
 {
-  TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
+  TAO_ORB_Core_TSS_Resources * const tss = this->get_tss_resources ();
   ++this->leaders_;
   ++this->client_thread_is_leader_;
   ++tss->client_leader_thread_;
@@ -175,7 +169,7 @@ TAO_Leader_Follower::set_client_leader_thread ()
 ACE_INLINE void
 TAO_Leader_Follower::reset_client_leader_thread ()
 {
-  TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
+  TAO_ORB_Core_TSS_Resources * const tss = this->get_tss_resources ();
   // We may be called twice when we gave up leadership from
   // set_upcall_thread () if so tss->client_leader_thread_ may
   // already have been decremented to 0
@@ -190,7 +184,7 @@ TAO_Leader_Follower::reset_client_leader_thread ()
 ACE_INLINE bool
 TAO_Leader_Follower::is_client_leader_thread () const
 {
-  TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
+  TAO_ORB_Core_TSS_Resources * const tss = this->get_tss_resources ();
   return tss->client_leader_thread_ != 0;
 }
 

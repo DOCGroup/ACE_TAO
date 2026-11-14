@@ -5,22 +5,13 @@
 #include "ace/Task.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_Task_Base::ACE_Task_Base (ACE_Thread_Manager *thr_man)
-  : thr_count_ (0),
-    thr_mgr_ (thr_man),
-    flags_ (0),
-    grp_id_ (-1)
-#if !defined (ACE_THREAD_T_IS_A_STRUCT)
-    ,last_thread_id_ (0)
-#endif /* !ACE_THREAD_T_IS_A_STRUCT */
+  : thr_mgr_ (thr_man)
 {
-#if defined (ACE_THREAD_T_IS_A_STRUCT)
-   ACE_OS::memset( &this->last_thread_id_, '\0', sizeof( this->last_thread_id_ ));
-#endif /* ACE_THREAD_T_IS_A_STRUCT */
 }
 
 ACE_Task_Base::~ACE_Task_Base () = default;
@@ -114,7 +105,7 @@ ACE_Task_Base::activate (long flags,
                          void *stack[],
                          size_t stack_size[],
                          ACE_thread_t thread_ids[],
-                         const char* thr_name[])
+                         char const *thr_name[])
 {
   ACE_TRACE ("ACE_Task_Base::activate");
 
@@ -191,7 +182,7 @@ ACE_Task_Base::activate (long flags,
     this->grp_id_ = grp_spawned;
 
 #if defined (ACE_THREAD_T_IS_A_STRUCT)
-  ACE_OS::memcpy( &this->last_thread_id_, '\0', sizeof(this->last_thread_id_));
+  std::memset (&this->last_thread_id_, 0, sizeof (this->last_thread_id_));
 #else
   this->last_thread_id_ = 0;    // Reset to prevent inadvertant match on ID
 #endif /* ACE_THREAD_T_IS_A_STRUCT */
@@ -226,7 +217,7 @@ ACE_Task_Base::cleanup (void *object, void *)
   // hook does something crazy like "delete this".
   {
     ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon, t->lock_));
-    t->thr_count_--;
+    --t->thr_count_;
     if (0 == t->thr_count_)
       t->last_thread_id_ = ACE_Thread::self ();
   }
@@ -235,7 +226,6 @@ ACE_Task_Base::cleanup (void *object, void *)
   t->close ();
   // t is undefined here. close() could have deleted it.
 }
-
 
 #if defined (ACE_HAS_SIG_C_FUNC)
 extern "C" void

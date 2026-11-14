@@ -29,9 +29,6 @@ TAO_COIOP_Acceptor::~TAO_COIOP_Acceptor ()
   this->close ();
 }
 
-// TODO =
-//    2) For V1.[1,2] there are tagged components
-
 int
 TAO_COIOP_Acceptor::create_profile (const TAO::ObjectKey & object_key,
                                    TAO_MProfile &mprofile,
@@ -54,7 +51,7 @@ TAO_COIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
   if (mprofile.grow (1) == -1)
     return -1;
 
-  TAO_COIOP_Profile *pfile = nullptr;
+  TAO_COIOP_Profile *pfile {};
   ACE_NEW_RETURN (pfile,
                   TAO_COIOP_Profile (uuid_,
                                       object_key,
@@ -91,11 +88,11 @@ TAO_COIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
                                            TAO_MProfile &mprofile,
                                            CORBA::Short priority)
 {
-  TAO_Profile *pfile = nullptr;
-  TAO_COIOP_Profile *coiop_profile = nullptr;
+  TAO_Profile *pfile {};
+  TAO_COIOP_Profile *coiop_profile {};
 
   // First see if <mprofile> already contains a COIOP profile.
-  for (TAO_PHandle i = 0; i != mprofile.profile_count (); ++i)
+  for (TAO_PHandle i {}; i != mprofile.profile_count (); ++i)
     {
       pfile = mprofile.get_profile (i);
       if (pfile->tag () == TAO_TAG_COIOP_PROFILE)
@@ -134,7 +131,7 @@ TAO_COIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
         }
     }
 
-  TAO_COIOP_Endpoint *endpoint = nullptr;
+  TAO_COIOP_Endpoint *endpoint {};
   ACE_NEW_RETURN (endpoint,
                   TAO_COIOP_Endpoint (uuid_),
                   -1);
@@ -144,7 +141,7 @@ TAO_COIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
   return 0;
 }
 
-int
+bool
 TAO_COIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 {
   const TAO_COIOP_Endpoint *endp =
@@ -223,8 +220,8 @@ TAO_COIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
                     profile.profile_data.length ());
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
-  CORBA::Octet major = 0;
-  CORBA::Octet minor = 0;
+  CORBA::Octet major {};
+  CORBA::Octet minor {};
 
   // Read the version. We just read it here. We don't*do any*
   // processing.
@@ -286,9 +283,9 @@ TAO_COIOP_Acceptor::parse_options (const char *str)
 
   // Only check for endpoints after the protocol specification and
   // before the object key.
-  for (size_t i = 0; i < len; ++i)
+  for (size_t i {}; i < len; ++i)
     if (options[i] == option_delimiter)
-      option_count++;
+      ++option_count;
 
   // The idea behind the following loop is to split the options into
   // (option, name) pairs.
@@ -298,10 +295,10 @@ TAO_COIOP_Acceptor::parse_options (const char *str)
   //    `option1=foo'
   //    `option2=bar'
 
-  ACE_CString::size_type begin = 0;
-  ACE_CString::size_type end = 0;
+  ACE_CString::size_type begin {};
+  ACE_CString::size_type end {};
 
-  for (CORBA::ULong j = 0; j < option_count; ++j)
+  for (CORBA::ULong j {}; j < option_count; ++j)
     {
       if (j < option_count - 1)
         end = options.find (option_delimiter, begin);

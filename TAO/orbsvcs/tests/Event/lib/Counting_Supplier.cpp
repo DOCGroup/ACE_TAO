@@ -117,7 +117,7 @@ EC_Counting_Supplier::push (const RtecEventComm::EventSet&)
   event[0].header.ttl = 1;
 
   this->consumer_proxy_->push (event);
-  this->event_count++;
+  ++this->event_count;
 }
 
 void
@@ -128,7 +128,7 @@ EC_Counting_Supplier::disconnect_push_consumer ()
 void
 EC_Counting_Supplier::disconnect_push_supplier ()
 {
-  this->disconnect_count++;
+  ++this->disconnect_count;
   this->consumer_proxy_ =
     RtecEventChannelAdmin::ProxyPushConsumer::_nil ();
 }
@@ -184,7 +184,7 @@ EC_Counting_Supplier_Task::run ()
 
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
-    this->push_count_++;
+    ++this->push_count_;
 
     stop = this->stop_flag_;
   } while (stop == 0);

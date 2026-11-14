@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_THREAD_EXIT_H
 #define ACE_THREAD_EXIT_H
 #include /**/ "ace/pre.h"
@@ -20,6 +19,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Thread_Control.h"
+
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -87,7 +88,11 @@ class ACE_Export ACE_Thread_Exit_Maybe
 {
 public:
   /// Don't create an ACE_Thread_Exit instance by default.
-  ACE_Thread_Exit_Maybe (int flag = 0);
+  explicit ACE_Thread_Exit_Maybe (int flag = 0);
+  ACE_Thread_Exit_Maybe (ACE_Thread_Exit_Maybe const &) = delete;
+  ACE_Thread_Exit_Maybe (ACE_Thread_Exit_Maybe &&) = delete;
+  ACE_Thread_Exit_Maybe &operator= (ACE_Thread_Exit_Maybe const &) = delete;
+  ACE_Thread_Exit_Maybe &operator= (ACE_Thread_Exit_Maybe &&) = delete;
 
   /// Destroys the underlying ACE_Thread_Exit instance if it exists.
   ~ACE_Thread_Exit_Maybe ();
@@ -100,7 +105,7 @@ public:
 
 private:
   /// Holds the underlying instance.
-  ACE_Thread_Exit *instance_;
+  std::unique_ptr<ACE_Thread_Exit> instance_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

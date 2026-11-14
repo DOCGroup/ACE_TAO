@@ -7,11 +7,10 @@
 #include "ace/OS_main.h"
 #include "ace/OS_NS_unistd.h"
 
-
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
 // Are we running verbosely?
-static int verbose = 1;
+static bool verbose = true;
 
 // Entry point into the server task.
 
@@ -126,7 +125,7 @@ run_event_loop (const ACE_TCHAR rendezvous[])
         }
 
 #if defined (ACE_HAS_THREADS)
-      if (ACE_Thread_Manager::instance ()->spawn ((ACE_THR_FUNC) server,
+      if (ACE_Thread_Manager::instance ()->spawn (server,
                                                   reinterpret_cast<void *> (new_stream.get_handle ()),
                                                   THR_DETACHED) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,

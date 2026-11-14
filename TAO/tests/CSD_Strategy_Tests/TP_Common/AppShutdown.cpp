@@ -3,18 +3,13 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_unistd.h"
 
-
 AppShutdown::AppShutdown()
   : num_clients_(0),
     num_clients_shutdown_(0)
 {
 }
 
-
-AppShutdown::~AppShutdown()
-{
-}
-
+AppShutdown::~AppShutdown() = default;
 
 void
 AppShutdown::init(CORBA::ORB_ptr orb,
@@ -35,13 +30,11 @@ AppShutdown::init(CORBA::ORB_ptr orb,
     }
 }
 
-
 void
 AppShutdown::wait ()
 {
   this->orb_shutdown_task_.wait();
 }
-
 
 void
 AppShutdown::client_done()
@@ -52,7 +45,7 @@ AppShutdown::client_done()
       return;
     }
 
-  unsigned cur_shutdown = ++this->num_clients_shutdown_;
+  unsigned const cur_shutdown = ++this->num_clients_shutdown_;
 
   if (cur_shutdown == this->num_clients_)
     {
@@ -60,7 +53,7 @@ AppShutdown::client_done()
       // is a poor-man version of "wait until the CSD request queue drains".
       ACE_OS::sleep(1);
       this->orb_shutdown_task_.orb(this->orb_.in());
-      if (this->orb_shutdown_task_.open(0) != 0)
+      if (this->orb_shutdown_task_.open() != 0)
         {
           ACE_ERROR((LM_ERROR, "(%P|%t) AppShutdown failed to create orb "\
             "shutdown thread.\n"));
@@ -68,7 +61,6 @@ AppShutdown::client_done()
         }
     }
 }
-
 
 AppShutdown*
 AppShutdown::instance ()

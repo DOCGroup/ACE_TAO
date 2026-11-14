@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    CSD_TP_Task.h
  *
  *  @author  Tim Bradley <bradley_t@ociweb.com>
  */
-//=============================================================================
-
 #ifndef TAO_CSD_TP_TASK_H
 #define TAO_CSD_TP_TASK_H
 
@@ -26,7 +22,7 @@
 #include "ace/Task.h"
 #include "ace/Synch.h"
 #include "ace/Containers_T.h"
-#include "ace/Vector_T.h"
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -75,12 +71,9 @@ namespace TAO
     class TAO_CSD_TP_Export TP_Task : public ACE_Task_Base
     {
     public:
-      /// Default Constructor.
       TP_Task();
 
-      /// Virtual Destructor.
-      ~TP_Task() override;
-
+      ~TP_Task() override = default;
       /// Put a request object on to the request queue.
       /// Returns true if successful, false otherwise (it has been "rejected").
       bool add_request(TP_Request* request);
@@ -101,12 +94,12 @@ namespace TAO
       /// Cancel all requests that are targeted for the provided servant.
       void cancel_servant (PortableServer::Servant servant);
 
-    private:
       TP_Task (TP_Task const &) = delete;
       TP_Task &operator= (TP_Task const &) = delete;
       TP_Task (TP_Task &&) = delete;
       TP_Task &operator= (TP_Task &&) = delete;
 
+    private:
       using LockType = TAO_SYNCH_MUTEX;
       using ConditionType = TAO_Condition<LockType>;
 
@@ -146,7 +139,7 @@ namespace TAO
       /// The queue of pending servant requests (a.k.a. the "request queue").
       TP_Queue queue_;
 
-      using Thread_Ids = ACE_Vector <ACE_thread_t>;
+      using Thread_Ids = std::vector<ACE_thread_t>;
 
       /// The list of ids for the threads launched by this task.
       Thread_Ids activated_threads_;

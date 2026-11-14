@@ -40,7 +40,7 @@ TAO_Reactive_Connect_Strategy::wait_i (TAO_LF_Event *ev,
                                        TAO_Transport *,
                                        ACE_Time_Value * max_wait_time)
 {
-  int result = 0;
+  int result {};
   if (ev == nullptr)
     return -1;
 

@@ -48,6 +48,5 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Run forever, performing the configured services until we receive
   // a SIGINT.
 
-
   return 0;
 }

@@ -1,3 +1,6 @@
+#include <array>
+#include <memory>
+
 #include "ace/OS_NS_unistd.h"
 #include "ace/streams.h"
 #include "ace/Monitor_Point_Registry.h"
@@ -11,30 +14,45 @@
 
 using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control;
 
+// Monitor references from the registry are released with remove_ref().
+using Monitor_Reference = Monitor_Base_Unique_Ptr;
+using Monitor_Group_Reference = std::unique_ptr<Monitor_Group,
+                                                Monitor_Base_Deleter>;
+
 /// Subclass of ACE_Task_Base, meaning that the override of
 /// the svc() method below will run in a new thread when
 /// activate() is called on a class instance.
 class Monitor_Checker : public ACE_Task_Base
 {
 public:
-  int svc ()
+  Monitor_Checker () = default;
+  Monitor_Checker (Monitor_Checker const &) = delete;
+  Monitor_Checker (Monitor_Checker &&) = delete;
+  Monitor_Checker &operator= (Monitor_Checker const &) = delete;
+  Monitor_Checker &operator= (Monitor_Checker &&) = delete;
+
+  int svc () override
   {
-    /// Get an instance of the MC service singleton.
-    MC_ADMINMANAGER* mgr =
+    // Get the borrowed MC service singleton.
+    // ACE_Dynamic_Service returns a borrowed pointer from the service repository.
+    MC_ADMINMANAGER * const mgr =
       ACE_Dynamic_Service<Monitor_Admin_Manager>::instance ("MC_ADMINMANAGER");
+    if (mgr == nullptr)
+      ACE_ERROR_RETURN ((LM_ERROR, "Monitor service is unavailable\n"), -1);
 
-    ACE::Monitor_Control::Monitor_Base *cpu_monitor =
-      mgr->admin ().monitor_point ("OS/Processor/CPULoad");
+    Monitor_Reference cpu_monitor (
+      mgr->admin ().monitor_point ("OS/Processor/CPULoad"));
 
-    ACE::Monitor_Control::Monitor_Base *memory_monitor =
-      mgr->admin ().monitor_point ("OS/Memory/TotalUsage");
+    Monitor_Reference memory_monitor (
+      mgr->admin ().monitor_point ("OS/Memory/TotalUsage"));
 
-    ACE::Monitor_Control::Monitor_Base *bytes_monitor =
-      mgr->admin ().monitor_point ("OS/Network/BytesSent");
+    Monitor_Reference bytes_monitor (
+      mgr->admin ().monitor_point ("OS/Network/BytesSent"));
+    if (cpu_monitor == nullptr || memory_monitor == nullptr || bytes_monitor == nullptr)
+      ACE_ERROR_RETURN ((LM_ERROR, "Unable to find a monitor point\n"), -1);
 
-    /// Query the monitor for its data every 2 seconds, and call the
-    /// appropriate display function.
-    for (int i = 0; i < 10; ++i)
+    // Query each monitor every 2 seconds and display its data.
+    for (int i {}; i < 10; ++i)
       {
         ACE_OS::sleep (2);
 
@@ -53,10 +71,6 @@ public:
         cout << endl;
       }
 
-    cpu_monitor->remove_ref ();
-    memory_monitor->remove_ref ();
-    bytes_monitor->remove_ref ();
-
     return 0;
   }
 };
@@ -68,24 +82,27 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
 {
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
-  /// Creates these future group members without automatic update.
-  Monitor_Base *cpu_load_monitor =
-    create_os_monitor<CPU_LOAD_MONITOR> ();
-  Monitor_Base *bytes_sent_monitor =
-    create_os_monitor<BYTES_SENT_MONITOR> ();
-  Monitor_Base *memory_usage_monitor =
-    create_os_monitor<MEMORY_USAGE_MONITOR> ();
-
-  Monitor_Group *group = new Monitor_Group ("Test_Group");
-
-  group->add_member (cpu_load_monitor);
-  group->add_member (bytes_sent_monitor);
-  group->add_member (memory_usage_monitor);
-
-  /// Register the group as an auto-updated monitor point.
-  MC_ADMINMANAGER* mgr =
+  MC_ADMINMANAGER * const mgr =
     ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
-  bool good_add = mgr->admin ().monitor_point (group, ACE_Time_Value (2));
+  if (mgr == nullptr)
+    ACE_ERROR_RETURN ((LM_ERROR, "Monitor service is unavailable\n"), 1);
+
+  // Create these future group members without automatic update.
+  Monitor_Reference const cpu_load_monitor (create_os_monitor<CPU_LOAD_MONITOR> ());
+  Monitor_Reference const bytes_sent_monitor (create_os_monitor<BYTES_SENT_MONITOR> ());
+  Monitor_Reference const memory_usage_monitor (create_os_monitor<MEMORY_USAGE_MONITOR> ());
+  if (cpu_load_monitor == nullptr || bytes_sent_monitor == nullptr || memory_usage_monitor == nullptr)
+    ACE_ERROR_RETURN ((LM_ERROR, "Unable to create group monitor members\n"), 1);
+
+  Monitor_Group_Reference const group (new Monitor_Group ("Test_Group"));
+
+  group->add_member (cpu_load_monitor.get ());
+  group->add_member (bytes_sent_monitor.get ());
+  group->add_member (memory_usage_monitor.get ());
+
+  // Register the group as an auto-updated monitor point.
+  // ACE_Dynamic_Service returns a borrowed pointer from the service repository.
+  bool const good_add = mgr->admin ().monitor_point (group.get (), ACE_Time_Value (2));
 
   if (!good_add)
     {
@@ -104,7 +121,8 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
        !i.done ();
        i.advance ())
     {
-      ACE_CString *item = 0;
+      // The iterator provides a borrowed pointer into mc_names.
+      ACE_CString *item {};
       i.next (item);
 
       cout << item->c_str () << endl;
@@ -120,45 +138,38 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
   Monitor_Checker monitor_checker;
   monitor_checker.activate ();
 
-  char * str_array[5] = {0};
+  std::array<std::unique_ptr<char[]>, 5> str_array {};
 
-  for (int i = 0; i < 10; ++i)
+  for (int i {}; i < 10; ++i)
     {
       ACE_OS::sleep (1);
 
-      /// Alternate between letting the CPU sleep and keeping it
-      /// busy.
+      // Alternate between letting the CPU sleep and keeping it busy.
       if (i % 2 == 0)
         {
           ACE_OS::sleep (1);
         }
       else
         {
-          for (unsigned long j = 0; j < 5050505; j++)
+          for (unsigned long j {}; j < 5050505; ++j)
             {
               (void) ACE::gcd (2419233733UL, 567715713UL);
             }
         }
 
-      /// Allocate a large string in each of the first 5 loops,
-      /// free them in the last 5 loops.
+      // Allocate a large string in the first five loops and free it later.
       if (i < 5)
         {
-          str_array[i] = new char[1024*1024*10];
+          str_array[i] = std::make_unique<char[]> (1024 * 1024 * 10);
         }
       else
         {
-          delete [] str_array[i - 5];
+          str_array[i - 5].reset ();
         }
     }
 
   /// End the reactor's event loop, stopping the timer(s).
   STOP_PERIODIC_MONITORS;
-
-  cpu_load_monitor->remove_ref ();
-  bytes_sent_monitor->remove_ref ();
-  memory_usage_monitor->remove_ref ();
-  group->remove_ref ();
 
 #endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
 

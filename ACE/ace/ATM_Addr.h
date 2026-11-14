@@ -66,7 +66,7 @@ public:
   /// Default constructor.
   ACE_ATM_Addr (u_char selector = DEFAULT_SELECTOR);
 
-  /// Copy constructor.
+
   ACE_ATM_Addr (const ACE_ATM_Addr &,
                 u_char selector = DEFAULT_SELECTOR);
 
@@ -182,7 +182,6 @@ private:
 
 // Close versioned namespace, if enabled by the user.
 ACE_END_VERSIONED_NAMESPACE_DECL
-
 
 #if defined (__ACE_INLINE__)
 #include "ace/ATM_Addr.inl"

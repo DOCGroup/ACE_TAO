@@ -1,5 +1,8 @@
 #include "orbsvcs/Sched/Strategy_Scheduler.h"
 #include "orbsvcs/Time_Utilities.h"
+
+#include <memory>
+
 #if defined (ACE_HAS_QUANTIFY)
 # include <quantify.h>
 #endif /* ACE_HAS_QUANTIFY */
@@ -10,50 +13,32 @@ constexpr u_long five_hz = 2000000;
 constexpr u_long ten_hz = 1000000;
 constexpr u_long twenty_hz = 500000;
 
+/// Wraps static functions used by the dynamic scheduler test.
 class DynSched_Test
-  // = TITLE
-  //    DynSched Test wrapper
-  // = DESCRIPTION
-  //    Wraps static functions for test
 {
 public:
+  /// Initializes an RT_Info.
   static void setup_rt_info (RtecScheduler::RT_Info &info,
-                             const char *entry_point,
+                             char const *entry_point,
                              u_long period,
                              RtecScheduler::Time execution,
                              RtecScheduler::Criticality_t criticality,
                              RtecScheduler::Importance_t importance,
                              u_long threads);
-  // Initializes an RT_Info.
 
+  /// Registers an RT_Info.
   static int register_rt_info (ACE_DynScheduler &scheduler,
                                RtecScheduler::RT_Info &info);
-  // Registers an RT_Info.
 
-
-#if 0 /* not currently used */
-  static void setup_conjunction (RtecScheduler::RT_Info &info,
-                                 const char *entry_point);
-  // Sets up a conjunction.
-
-  static void setup_disjunction (RtecScheduler::RT_Info &info,
-                                 const char *entry_point);
-  // Sets up a disjunction.
-
-#endif /* not currently used */
-
+  /// Creates a schedule and writes its timeline.
   static int run_schedule (ACE_Scheduler_Strategy &strategy,
-                           const char *output_filename,
-                           const char *heading);
-  // Creates the schedule, runs timelines.
+                           char const *output_filename,
+                           char const *heading);
 };
-
-
-// Initializes an RT_Info.
 
 void
 DynSched_Test::setup_rt_info (RtecScheduler::RT_Info &info,
-                              const char *entry_point,
+                              char const *entry_point,
                               u_long period,
                               RtecScheduler::Time execution,
                               RtecScheduler::Criticality_t criticality,
@@ -80,16 +65,13 @@ DynSched_Test::setup_rt_info (RtecScheduler::RT_Info &info,
   info.volatile_token = 0;
 }
 
-
-// Registers an RT_Info.
-
 int
 DynSched_Test::register_rt_info (ACE_DynScheduler &scheduler,
                                  RtecScheduler::RT_Info &info)
 {
-  int result = 0;
+  int result {};
 
-  if (scheduler.register_task (&info, info.handle) !=
+  if (scheduler.register_task (std::addressof (info), info.handle) !=
       ACE_DynScheduler::SUCCEEDED)
   {
      result = 1;
@@ -99,72 +81,13 @@ DynSched_Test::register_rt_info (ACE_DynScheduler &scheduler,
   return result;
 }
 
-#if 0 /* not currently used */
-
-// Sets up a conjunction.
-
-void
-DynSched_Test::setup_conjunction (RtecScheduler::RT_Info &info,
-                                  const char *entry_point)
-{
-  // copy the passed entry point string into the RT_Info
-  info.entry_point = CORBA::string_dup (entry_point);
-
-  // initialize other values
-  info.handle = 0;
-  info.worst_case_execution_time = ORBSVCS_Time::zero ();
-  info.typical_execution_time = ORBSVCS_Time::zero ();
-  info.cached_execution_time = ORBSVCS_Time::zero ();
-  info.period = 0;
-  info.criticality = RtecScheduler::VERY_LOW_CRITICALITY;
-  info.importance = RtecScheduler::VERY_LOW_IMPORTANCE;
-  info.quantum = ORBSVCS_Time::zero ();
-  info.threads = 0;
-  info.priority = 0;
-  info.preemption_subpriority = 0;
-  info.preemption_priority = 0;
-  info.info_type = RtecScheduler::CONJUNCTION;
-  info.volatile_token = 0;
-}
-
-
-// Sets up a disjunction.
-
-void
-DynSched_Test::setup_disjunction (RtecScheduler::RT_Info &info,
-                                  const char *entry_point)
-{
-  // copy the passed entry point string into the RT_Info
-  info.entry_point = CORBA::string_dup (entry_point);
-
-  // initialize other values
-  info.handle = 0;
-  info.worst_case_execution_time = ORBSVCS_Time::zero ();
-  info.typical_execution_time = ORBSVCS_Time::zero ();
-  info.cached_execution_time = ORBSVCS_Time::zero ();
-  info.period = 0;
-  info.criticality = RtecScheduler::VERY_LOW_CRITICALITY;
-  info.importance = RtecScheduler::VERY_LOW_IMPORTANCE;
-  info.quantum = ORBSVCS_Time::zero ();
-  info.threads = 0;
-  info.priority = 0;
-  info.preemption_subpriority = 0;
-  info.preemption_priority = 0;
-  info.info_type = RtecScheduler::DISJUNCTION;
-  info.volatile_token = 0;
-}
-#endif /* not currently used */
-
-
-// Creates the schedule, runs timelines.
-
 int
 DynSched_Test::run_schedule (ACE_Scheduler_Strategy &strategy,
-                             const char *output_filename,
-                             const char *heading)
+                             char const *output_filename,
+                             char const *heading)
 {
-  RtecScheduler::RT_Info low_1, low_5, low_10, low_20;
-  RtecScheduler::RT_Info high_1, high_5, high_10, high_20;
+  RtecScheduler::RT_Info low_1 {}, low_5 {}, low_10 {}, low_20 {};
+  RtecScheduler::RT_Info high_1 {}, high_5 {}, high_10 {}, high_20 {};
 
   ACE_Strategy_Scheduler scheduler (strategy);
 
@@ -252,7 +175,7 @@ DynSched_Test::run_schedule (ACE_Scheduler_Strategy &strategy,
 int
 ACE_TMAIN(int, ACE_TCHAR *[])
 {
-  int result = 0;
+  int result {};
 
   // create a bunch of different strategies, indicating the minimum critical
   // priority level (number of priority levels in critical set - 1) for each.

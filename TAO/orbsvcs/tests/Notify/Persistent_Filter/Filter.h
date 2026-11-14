@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef NOTIFY_FILTER_CLIENT_H
 #define NOTIFY_FILTER_CLIENT_H
 
@@ -37,10 +36,8 @@ class Filter_StructuredPushSupplier;
 class FilterClient
 {
  public:
-  /// Constructor
   FilterClient ();
 
-  /// Destructor
   ~FilterClient ();
 
   /// Init the Client.
@@ -164,7 +161,6 @@ class FilterClient
 class Filter_StructuredPushConsumer : public POA_CosNotifyComm::StructuredPushConsumer
 {
 public:
-  /// Constructor.
   Filter_StructuredPushConsumer (FilterClient* filter, const char *my_name);
 
   /// Connect the Consumer to the EventChannel.
@@ -190,19 +186,18 @@ protected:
   CosNotifyChannelAdmin::ProxyID proxy_supplier_id_;
 
   // = Methods
-  /// Destructor
   virtual ~Filter_StructuredPushConsumer ();
 
   // = NotifyPublish method
-    virtual void offer_change (
+    void offer_change (
         const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed);
+        const CosNotification::EventTypeSeq & removed) override;
 
   // = StructuredPushSupplier methods
-  virtual void push_structured_event (
-        const CosNotification::StructuredEvent & notification);
+  void push_structured_event (
+        const CosNotification::StructuredEvent & notification) override;
 
-  virtual void disconnect_structured_push_consumer ();
+  void disconnect_structured_push_consumer () override;
 };
 
 /*****************************************************************/
@@ -217,7 +212,6 @@ protected:
 class Filter_StructuredPushSupplier : public POA_CosNotifyComm::StructuredPushSupplier
 {
 public:
-  /// Constructor.
   Filter_StructuredPushSupplier (const char* my_name);
 
   /// Connect the Supplier to the EventChannel.
@@ -242,16 +236,15 @@ protected:
   CosNotifyChannelAdmin::ProxyID proxy_consumer_id_;
 
   // = Protected Methods
-  /// Destructor
   virtual ~Filter_StructuredPushSupplier ();
 
   // = NotifySubscribe
-  virtual void subscription_change (
+  void subscription_change (
         const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed);
+        const CosNotification::EventTypeSeq & removed) override;
 
   // = StructuredPushSupplier method
-  virtual void disconnect_structured_push_supplier ();
+  void disconnect_structured_push_supplier () override;
 };
 
 /***************************************************************************/

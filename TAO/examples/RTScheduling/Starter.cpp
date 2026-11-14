@@ -47,7 +47,6 @@ Starter::resolve_synch_objs ()
   this->synch_context_ =
     CosNaming::NamingContext::_narrow (object.in ());
 
-
   CosNaming::BindingIterator_var iterator;
   CosNaming::BindingList_var binding_list;
   const CORBA::ULong chunk = 100;
@@ -75,7 +74,6 @@ Starter::resolve_synch_objs ()
     }
 
 }
-
 
 void
 Starter::add_to_synchs (CosNaming::BindingList &binding_list)
@@ -106,7 +104,6 @@ Starter::add_to_synchs (CosNaming::BindingList &binding_list)
       Synch_var synch_obj =
         Synch::_narrow (obj.in ());
 
-
       synch_obj->go (static_cast<CORBA::Long> (base_time.sec ()));
 
 //        // Add this receiver to the receiver map.
@@ -114,7 +111,6 @@ Starter::add_to_synchs (CosNaming::BindingList &binding_list)
 //          synch_obj);
     }
 }
-
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])

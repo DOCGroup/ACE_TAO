@@ -12,8 +12,12 @@
 class HTTPU_Export Parse_HTTP_Request : public HTTP_HCodes
 {
 public:
-  Parse_HTTP_Request (const char *request = 0);
+  explicit Parse_HTTP_Request (char const *request = nullptr);
   ~Parse_HTTP_Request ();
+  Parse_HTTP_Request (Parse_HTTP_Request const &) = delete;
+  Parse_HTTP_Request (Parse_HTTP_Request &&) = delete;
+  Parse_HTTP_Request &operator= (Parse_HTTP_Request const &) = delete;
+  Parse_HTTP_Request &operator= (Parse_HTTP_Request &&) = delete;
 
   void init (const char *request);
 
@@ -29,8 +33,8 @@ public:
 
   enum { HTTPU_OK, NO_MEMORY, BAD_REQUEST, NOT_IMPLEMENTED };
 
+  /// Return HTTPU_OK on success or an error code.
   int error () const;
-  // 0 -> ok
 
   void dump ();
 
@@ -40,6 +44,7 @@ private:
   int minor_version_;
   char *version_;
   char *url_;
+  /// Owns the buffer; url_ and version_ point into it.
   char *request_;
   int error_;
 };

@@ -14,28 +14,30 @@
 // Network interface to subscribe to.  This is hardware specific.  use
 // netstat(1M) to find whether your interface is le0 or ie0
 
-static const ACE_TCHAR *INTERFACE = nullptr;
-static const char *MCAST_ADDR = ACE_DEFAULT_MULTICAST_ADDR;
-static const u_short UDP_PORT = ACE_DEFAULT_MULTICAST_PORT;
+static ACE_TCHAR const *INTERFACE {};
+static constexpr char MCAST_ADDR[] = ACE_DEFAULT_MULTICAST_ADDR;
+static constexpr u_short UDP_PORT = ACE_DEFAULT_MULTICAST_PORT;
 
 class Handler : public ACE_Event_Handler
 {
   // = TITLE
   //     Handle both multicast and stdin events.
 public:
-  Handler (u_short udp_port,
-           const char *ip_addr,
-           const ACE_TCHAR *a_interface,
+  Handler (u_short const udp_port,
+           char const *ip_addr,
+           ACE_TCHAR const *a_interface,
            ACE_Reactor & );
-  // Constructor.
 
   ~Handler () override;
-  // Destructor.
+
+  Handler (Handler const &) = delete;
+  Handler (Handler &&) = delete;
+  Handler &operator= (Handler const &) = delete;
+  Handler &operator= (Handler &&) = delete;
 
   // Event demuxer hooks.
   int handle_input (ACE_HANDLE) override;
-  int handle_close (ACE_HANDLE,
-                            ACE_Reactor_Mask) override;
+  int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override;
   ACE_HANDLE get_handle () const override;
 
 private:
@@ -53,13 +55,13 @@ Handler::get_handle () const
 }
 
 int
-Handler::handle_input (ACE_HANDLE h)
+Handler::handle_input (ACE_HANDLE const h)
 {
   char buf[BUFSIZ];
 
   if (h == ACE_STDIN)
     {
-      ssize_t result = ACE_OS::read (h, buf, BUFSIZ);
+      ssize_t const result = ACE_OS::read (h, buf, BUFSIZ);
 
       if (result > 0)
         {
@@ -71,10 +73,10 @@ Handler::handle_input (ACE_HANDLE h)
           return 0;
         }
       else if (result == -1)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "%p\n",
-                               "can't read from STDIN"),
-                              -1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "%p\n",
+                           "can't read from STDIN"),
+                          -1);
       else // result == 0
         {
           ACE_Reactor::end_event_loop ();
@@ -86,14 +88,14 @@ Handler::handle_input (ACE_HANDLE h)
       ACE_INET_Addr remote_addr;
 
       // Receive message from multicast group.
-      ssize_t result = this->mcast_.recv (buf,
-                                          sizeof buf,
-                                          remote_addr);
+      ssize_t const result = this->mcast_.recv (buf,
+                                                sizeof buf,
+                                                remote_addr);
 
       if (result != -1)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "received datagram from host %s on port %d bytes = %d\n",
+                      "received datagram from host %s on port %d bytes = %b\n",
                       remote_addr.get_host_name (),
                       remote_addr.get_port_number (),
                       result));
@@ -106,12 +108,12 @@ Handler::handle_input (ACE_HANDLE h)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%p\n",
                          "something amiss"),
-                              -1);
+                        -1);
     }
 }
 
 int
-Handler::handle_close (ACE_HANDLE h, ACE_Reactor_Mask)
+Handler::handle_close (ACE_HANDLE const h, ACE_Reactor_Mask)
 {
   if (h == ACE_STDIN)
     {
@@ -138,9 +140,9 @@ Handler::~Handler ()
                 "leave fails"));
 }
 
-Handler::Handler (u_short udp_port,
-                  const char *ip_addr,
-                  const ACE_TCHAR *a_interface,
+Handler::Handler (u_short const udp_port,
+                  char const *ip_addr,
+                  ACE_TCHAR const *a_interface,
                   ACE_Reactor &reactor)
 {
   // Create multicast address to listen on.
@@ -155,9 +157,6 @@ Handler::Handler (u_short udp_port,
                 "can't subscribe to multicast group"));
 
   // Disable loopbacks.
-  // if (this->mcast_.set_option (IP_MULTICAST_LOOP, 0) == -1 )
-  //   ACE_OS::perror (" can't disable loopbacks " ), ACE_OS::exit (1);
-
   // Register callbacks with the ACE_Reactor.
   else if (reactor.register_handler (this->mcast_.get_handle (),
                                      this,
@@ -175,9 +174,9 @@ Handler::Handler (u_short udp_port,
 }
 
 static void
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int const argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("i:u"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("i:u"));
 
   int c;
 

@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_METHOD_REQUEST_H
 #define ACE_METHOD_REQUEST_H
 
@@ -43,11 +42,14 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Method_Request
 {
 public:
-  /// Constructor.
-  ACE_Method_Request (unsigned long priority = 0);
+  explicit ACE_Method_Request (unsigned long priority = 0);
 
-  /// Destructor.
   virtual ~ACE_Method_Request () = default;
+
+  ACE_Method_Request (ACE_Method_Request const &) = delete;
+  ACE_Method_Request &operator= (ACE_Method_Request const &) = delete;
+  ACE_Method_Request (ACE_Method_Request &&) = delete;
+  ACE_Method_Request &operator= (ACE_Method_Request &&) = delete;
 
   // = Accessors.
   /// Get priority.
@@ -78,19 +80,12 @@ public:
    */
   virtual int call () = 0;
 
-private:
-  ACE_Method_Request (const ACE_Method_Request &) = delete;
-  void operator= (const ACE_Method_Request &) = delete;
-  ACE_Method_Request (ACE_Method_Request &&) = delete;
-  void operator= (ACE_Method_Request &&) = delete;
-
 protected:
   /// The priority of the request.
   unsigned long priority_;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
-
 
 #include /**/ "ace/post.h"
 #endif /* ACE_METHOD_REQUEST_H */

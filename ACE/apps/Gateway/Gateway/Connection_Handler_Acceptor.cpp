@@ -32,7 +32,7 @@ Connection_Handler_Acceptor::accept_svc_handler (Connection_Handler *ch)
       ch->event_channel (&this->event_channel_);
 
       // Increment the connection ID by one.
-      Options::instance ()->connection_id ()++;
+      ++Options::instance ()->connection_id ();
       return 0;
     }
 }
@@ -41,12 +41,8 @@ Connection_Handler_Acceptor::Connection_Handler_Acceptor (Event_Channel &ec,
                                                           char connection_role)
   : event_channel_ (ec)
 {
-  this->connection_config_info_.connection_id_ = 0;
-  this->connection_config_info_.host_[0] = '\0';
-  this->connection_config_info_.remote_port_ = 0;
   this->connection_config_info_.connection_role_ = connection_role;
   this->connection_config_info_.max_retry_timeout_ = Options::instance ()->max_timeout ();
-  this->connection_config_info_.local_port_ = 0;
   this->connection_config_info_.priority_ = 1;
 }
 

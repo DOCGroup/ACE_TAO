@@ -46,7 +46,7 @@ namespace ACE
     public:
       Constraint_Interpreter () = default;
 
-      virtual ~Constraint_Interpreter () = default;
+      ~Constraint_Interpreter () override = default;
 
       /**
        * This method builds an expression tree representing the
@@ -54,7 +54,7 @@ namespace ACE
        * an error message if the constraint given has syntax errors or
        * semantic errors, such as mismatched types.
        */
-      int build_tree (const char* constraints);
+      int build_tree (char const* constraints);
 
       /// Returns true if the constraint is evaluated successfully by
       /// the evaluator.

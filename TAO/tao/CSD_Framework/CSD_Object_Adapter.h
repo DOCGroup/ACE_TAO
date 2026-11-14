@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_CSD_OBJECT_ADAPTER_H
 #define TAO_CSD_OBJECT_ADAPTER_H
 #include /**/ "ace/pre.h"
@@ -34,12 +33,15 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_CSD_FW_Export TAO_CSD_Object_Adapter : public TAO_Object_Adapter
 {
 public:
-  /// Constructor
-  TAO_CSD_Object_Adapter (const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &creation_parameters,
+  TAO_CSD_Object_Adapter (TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters const &creation_parameters,
                           TAO_ORB_Core &orb_core);
 
-  /// Destructor
   ~TAO_CSD_Object_Adapter () override;
+
+  TAO_CSD_Object_Adapter (TAO_CSD_Object_Adapter const &) = delete;
+  TAO_CSD_Object_Adapter &operator= (TAO_CSD_Object_Adapter const &) = delete;
+  TAO_CSD_Object_Adapter (TAO_CSD_Object_Adapter &&) = delete;
+  TAO_CSD_Object_Adapter &operator= (TAO_CSD_Object_Adapter &&) = delete;
 
   /// Hand the request to the Service_Dispatching_Strategy_Proxy for
   /// dispatching.

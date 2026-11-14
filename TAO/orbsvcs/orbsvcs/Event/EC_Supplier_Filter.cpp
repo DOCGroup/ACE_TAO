@@ -6,12 +6,7 @@
 #include "orbsvcs/Event/EC_Supplier_Filter.inl"
 #endif /* __ACE_INLINE__ */
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-TAO_EC_Supplier_Filter::~TAO_EC_Supplier_Filter ()
-{
-}
 
 // ****************************************************************
 

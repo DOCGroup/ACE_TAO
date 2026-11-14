@@ -1,6 +1,4 @@
 
-#include "ace/Task.h"
-#include "ace/Auto_Event.h"
 #include "tao/ORB.h"
 #include "tao/Object.h"
 #include "tao/SystemException.h"
@@ -8,42 +6,37 @@
 bool
 test_string_to_object (CORBA::ORB_ptr orb, char const *ior, CORBA::ULong minor)
 {
-  bool succeed = false;
   try
     {
       // Get the object reference with the IOR
-      CORBA::Object_var object = orb->string_to_object (ior);
+      CORBA::Object_var const object = orb->string_to_object (ior);
     }
-  catch (const CORBA::BAD_PARAM& ex)
+  catch (CORBA::BAD_PARAM const &ex)
     {
       if ((ex.minor () & 0xFFFU) == minor)
         {
-          succeed = true;
+          return true;
         }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
     }
 
-  if (!succeed)
-  {
-    ACE_ERROR ((LM_ERROR,
-                "(%t) ERROR, test_string_to_object for <%C> didn't result in minor code %d\n",
-                ior,
-                minor));
-  }
-
-  return succeed;
+  ACE_ERROR ((LM_ERROR,
+              "(%t) ERROR, test_string_to_object for <%C> didn't result in minor code %u\n",
+              ior,
+              minor));
+  return false;
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int retval = 0;
+  int retval {};
 
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
       // string_to_object conversion failed due to bad scheme name
@@ -65,7 +58,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                   "%s successful\n",
                   argv [0]));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught");
       retval = -1;

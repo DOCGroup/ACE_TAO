@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef BE_IDENTIFIER_HELPER_H
 #define BE_IDENTIFIER_HELPER_H
 

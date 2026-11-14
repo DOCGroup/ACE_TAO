@@ -4,13 +4,10 @@
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/CosNamingC.h"
 #include "ace/Arg_Shifter.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 
-const RtecEventComm::EventSourceID MY_SOURCE_ID  = ACE_ES_EVENT_SOURCE_ANY + 1;
-const RtecEventComm::EventType     MY_EVENT_TYPE = ACE_ES_EVENT_UNDEFINED + 1;
-
-static const ACE_TCHAR *ecname = 0;
+constexpr RtecEventComm::EventSourceID MY_SOURCE_ID = ACE_ES_EVENT_SOURCE_ANY + 1;
+constexpr RtecEventComm::EventType MY_EVENT_TYPE = ACE_ES_EVENT_UNDEFINED + 1;
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
@@ -22,20 +19,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-Supplier::Supplier ()
-{
-}
-
 int
 Supplier::run (int argc, ACE_TCHAR* argv[])
 {
   try
     {
       // First parse our command line options
-      if (this->parse_args(argc, argv) != 0)
-      {
-         return -1;
-      }
+      if (this->parse_args (argc, argv) != 0)
+        return -1;
 
       // ORB initialization boiler plate...
       CORBA::ORB_var orb =
@@ -63,7 +54,7 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
 
       CosNaming::Name name (1);
       name.length (1);
-      name[0].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(ecname));
+      name[0].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (this->event_channel_name_.c_str ()));
 
       CORBA::Object_var ec_obj =
         naming_context->resolve (name);
@@ -85,24 +76,21 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
       ACE_SupplierQOS_Factory qos;
       qos.insert (MY_SOURCE_ID,      // Supplier's unique id
                   MY_EVENT_TYPE,     // Event type
-                  0,                 // handle to the rt_info structure
+                  {},                // handle to the rt_info structure
                   1);                // number of calls
 
       consumer->connect_push_supplier (supplier.in (), qos);
 
       // Push the events...
-      ACE_Time_Value sleep_time (0, 10000); // 10 milliseconds
+      ACE_Time_Value const sleep_time ({}, 10000); // 10 milliseconds
 
       RtecEventComm::EventSet event (1);
       event.length (1);
-      for (int j = 0; j < 1; j++)
-        {
-           event[j].header.source = MY_SOURCE_ID;
-           event[j].header.ttl = 1;
-           event[j].header.type = MY_EVENT_TYPE;
-        }
+      event[0].header.source = MY_SOURCE_ID;
+      event[0].header.ttl = 1;
+      event[0].header.type = MY_EVENT_TYPE;
 
-      for (int i = 1; i != 4000; ++i)
+      for (int i {1}; i != 4000; ++i)
         {
           if (i % 100 == 0)
             {
@@ -126,9 +114,9 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
       poa->deactivate_object (id.in ());
 
       // Destroy the POA
-      poa->destroy (1, 0);
+      poa->destroy (true, false);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Supplier::run");
       return 1;
@@ -148,18 +136,18 @@ Supplier::parse_args (int argc, ACE_TCHAR *argv[])
 
   while (arg_shifter.is_anything_left ())
     {
-      const ACE_TCHAR *arg = arg_shifter.get_current ();
-
-      if (ACE_OS::strcmp (arg, ACE_TEXT("-e")) == 0)
+      ACE_TCHAR const *const parameter =
+        arg_shifter.get_the_parameter (ACE_TEXT ("-e"));
+      if (parameter != nullptr)
         {
+          this->event_channel_name_ = parameter;
           arg_shifter.consume_arg ();
-          ecname = arg_shifter.get_current ();
         }
-
-      arg_shifter.ignore_arg ();
+      else
+        arg_shifter.ignore_arg ();
     }
 
   // Indicates successful parsing of the command line
-  return 0;
+  return this->event_channel_name_.empty () ? -1 : 0;
 }
 

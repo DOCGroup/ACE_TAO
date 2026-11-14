@@ -1,13 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Any_Basic_Impl_T.h
  *
  *  @authors  Carlos O'Ryan and Jeff Parsons
  */
-//=============================================================================
-
 
 #ifndef TAO_ANY_BASIC_IMPL_T_H
 #define TAO_ANY_BASIC_IMPL_T_H
@@ -35,14 +32,19 @@ namespace TAO
   class Any_Basic_Impl_T : public Any_Impl
   {
   public:
+    Any_Basic_Impl_T (Any_Basic_Impl_T const &) = delete;
+    Any_Basic_Impl_T (Any_Basic_Impl_T &&) = delete;
+    Any_Basic_Impl_T &operator= (Any_Basic_Impl_T const &) = delete;
+    Any_Basic_Impl_T &operator= (Any_Basic_Impl_T &&) = delete;
+
     Any_Basic_Impl_T (CORBA::TypeCode_ptr,
-                      const T & val);
+                      T const & val);
     ~Any_Basic_Impl_T () override = default;
 
     static void insert (CORBA::Any &,
                         CORBA::TypeCode_ptr,
-                        const T &);
-    static CORBA::Boolean extract (const CORBA::Any &,
+                        T const &);
+    static CORBA::Boolean extract (CORBA::Any const &,
                                    CORBA::TypeCode_ptr,
                                    T &);
 
@@ -50,7 +52,7 @@ namespace TAO
     CORBA::Boolean demarshal_value (TAO_InputCDR &);
     void _tao_decode (TAO_InputCDR &) override;
 
-    virtual const void *value () const;
+    virtual void const *value () const;
     static Any_Basic_Impl_T<T> *create_empty (CORBA::TypeCode_ptr);
 
   private:

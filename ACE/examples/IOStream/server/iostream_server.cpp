@@ -13,6 +13,12 @@
 
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
 
+static void
+end_event_loop_handler (int, siginfo_t *, ucontext_t *)
+{
+  ACE_Reactor::end_event_loop ();
+}
+
 int
 Handler::open (void *)
 {
@@ -38,8 +44,8 @@ Handler::~Handler ()
 int
 Handler::handle_input (ACE_HANDLE)
 {
-  int i;
-  float f;
+  int i {};
+  float f {};
 
   // Check to see if the socket is closed down.
   if (this->peer ().eof ())
@@ -51,7 +57,7 @@ Handler::handle_input (ACE_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR, "(%P) %p\n", "error getting data"), -1);
 
   cerr << "(" << ACE_OS::getpid () << ") Client sent:\n\t";
-  cerr << "(" << i << ") (" << f << ") (" << s << ")" << endl ;
+  cerr << "(" << i << ") (" << f << ") (" << s << ")" << endl;
 
   if (!(this->peer () << "Received: " << i << " " << f << " " << s << endl))
     ACE_ERROR_RETURN ((LM_ERROR, "(%P) %p\n", "error sending data"), -1);
@@ -77,7 +83,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
   ACE_Service_Config daemon;
 
   // Create an adapter to end the event loop.
-  ACE_Sig_Adapter sa ((ACE_Sig_Handler_Ex) ACE_Reactor::end_event_loop);
+  ACE_Sig_Adapter sa (end_event_loop_handler);
 
   ACE_Sig_Set sig_set;
   sig_set.sig_add (SIGINT);
@@ -91,7 +97,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 
   IOStream_Acceptor peer_acceptor;
 
-  ACE_INET_Addr addr (argc > 1 ? ACE_OS::atoi (argv[1]) : ACE_DEFAULT_SERVER_PORT);
+  ACE_INET_Addr const addr (argc > 1 ? ACE_OS::atoi (argv[1]) : ACE_DEFAULT_SERVER_PORT);
 
   if (peer_acceptor.open (addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,

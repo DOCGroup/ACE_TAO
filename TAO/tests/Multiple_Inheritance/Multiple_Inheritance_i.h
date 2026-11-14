@@ -3,21 +3,26 @@
 class Multiple_Inheritance_i : public POA_D
 {
 public:
-  Multiple_Inheritance_i ();
+  Multiple_Inheritance_i () = default;
 
-  virtual char* method1 ()
+  Multiple_Inheritance_i (Multiple_Inheritance_i const &) = delete;
+  Multiple_Inheritance_i (Multiple_Inheritance_i &&) = delete;
+  Multiple_Inheritance_i &operator= (Multiple_Inheritance_i const &) = delete;
+  Multiple_Inheritance_i &operator= (Multiple_Inheritance_i &&) = delete;
+
+  char* method1 () override
     {
       return CORBA::string_dup ("method1");
     }
-  virtual char* method2 ()
+  char* method2 () override
     {
       return CORBA::string_dup ("method2");
     }
-  virtual char* method3 ()
+  char* method3 () override
     {
       return CORBA::string_dup ("method3");
     }
-  virtual char* method4 ()
+  char* method4 () override
     {
       return CORBA::string_dup ("method4");
     }

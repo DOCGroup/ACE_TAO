@@ -36,7 +36,7 @@ TAO_EC_Bitmask_Filter::size () const
 }
 
 int
-TAO_EC_Bitmask_Filter::filter (const RtecEventComm::EventSet& event,
+TAO_EC_Bitmask_Filter::filter (RtecEventComm::EventSet const &event,
                                 TAO_EC_QOS_Info& qos_info)
 {
   if (event.length () != 1)
@@ -64,7 +64,7 @@ TAO_EC_Bitmask_Filter::filter_nocopy (RtecEventComm::EventSet& event,
 }
 
 void
-TAO_EC_Bitmask_Filter::push (const RtecEventComm::EventSet &event,
+TAO_EC_Bitmask_Filter::push (RtecEventComm::EventSet const &event,
                              TAO_EC_QOS_Info &qos_info)
 {
   if (this->parent () != nullptr)
@@ -93,7 +93,7 @@ TAO_EC_Bitmask_Filter::max_event_size () const
 
 int
 TAO_EC_Bitmask_Filter::can_match (
-      const RtecEventComm::EventHeader& header) const
+      RtecEventComm::EventHeader const &header) const
 {
   if ((header.type & this->type_mask_) == 0
       || (header.source & this->source_mask_) == 0)
@@ -104,8 +104,8 @@ TAO_EC_Bitmask_Filter::can_match (
 
 int
 TAO_EC_Bitmask_Filter::add_dependencies (
-      const RtecEventComm::EventHeader&,
-      const TAO_EC_QOS_Info &)
+      RtecEventComm::EventHeader const &,
+      TAO_EC_QOS_Info const &)
 {
   return 0;
 }

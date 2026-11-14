@@ -5,20 +5,8 @@
 
 // This is the interface program that accesses the remote object
 
-// Constructor.
-Bank_Client_i::Bank_Client_i ()
-{
-  //no-op
-}
-
-//Destructor.
-Bank_Client_i::~Bank_Client_i ()
-{
-  //no-op
-}
-
 int
-Bank_Client_i::run (const char *name,
+Bank_Client_i::run (char const *name,
                     int argc,
                     ACE_TCHAR *argv[])
 {
@@ -29,10 +17,10 @@ Bank_Client_i::run (const char *name,
   try
     {
       this->check_accounts ();
-      if (client_.do_shutdown () == 1)
+      if (client_.do_shutdown ())
         client_->shutdown ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("\nException caught in run\n")));
@@ -58,7 +46,7 @@ Bank_Client_i::check_accounts ()
                   ACE_TEXT ("\nTests for overdrafts\n")));
       this->test_for_overdraft ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("From Bank_Client_i::check_accounts()")));
@@ -71,8 +59,8 @@ Bank_Client_i::check_accounts ()
 void
 Bank_Client_i::test_for_same_name ()
 {
-  const char *name = "Name";
-  CORBA::Float initial_bal = 0.00;
+  constexpr char name[] = "Name";
+  constexpr CORBA::Float initial_bal = 0.00;
 
   Bank::Account_var acct_id1 = client_->open (name,
                                               initial_bal);
@@ -80,7 +68,7 @@ Bank_Client_i::test_for_same_name ()
   Bank::Account_var acct_id2 = client_->open (name,
                                               initial_bal);
 
-  ACE_ASSERT (acct_id1->_is_equivalent (acct_id2.in ()) != 0);
+  ACE_ASSERT (acct_id1->_is_equivalent (acct_id2.in ()));
 
   client_->close (acct_id1.in ());
 }
@@ -89,17 +77,17 @@ Bank_Client_i::test_for_same_name ()
 void
 Bank_Client_i::test_for_different_name ()
 {
-  const char *name1 = "Name1";
-  const char *name2 = "Name2";
+  constexpr char name1[] = "Name1";
+  constexpr char name2[] = "Name2";
 
-  CORBA::Float initial_bal = 0.0;
+  constexpr CORBA::Float initial_bal = 0.0;
 
   Bank::Account_var acct_id1 = client_->open (name1,
                                               initial_bal);
 
   Bank::Account_var acct_id2 = client_->open (name2,
                                               initial_bal);
-  ACE_ASSERT (acct_id1->_is_equivalent (acct_id2.in ()) == 0);
+  ACE_ASSERT (!acct_id1->_is_equivalent (acct_id2.in ()));
 
   client_->close (acct_id1.in ());
 
@@ -110,8 +98,8 @@ Bank_Client_i::test_for_different_name ()
 void
 Bank_Client_i::test_for_overdraft ()
 {
-  CORBA::Float initial_bal = 100.0;
-  const char *name = "Name";
+  constexpr CORBA::Float initial_bal = 100.0;
+  constexpr char name[] = "Name";
   Bank::Account_var acct_id = client_->open (name, initial_bal);
   acct_id->deposit (100.00);
 
@@ -121,7 +109,7 @@ Bank_Client_i::test_for_overdraft ()
     {
       acct_id->withdraw (bal + 20);
     }
-  catch (Bank::Account::Overdraft &)
+  catch (Bank::Account::Overdraft const &)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Overdraft caught.\n")));

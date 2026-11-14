@@ -2,17 +2,17 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 #include "tao/XtResource/XtResource_Loader.h"
+#include <cstdio>
+#include <memory>
 #include <Xm/Xm.h>
 #include "Stopwatch_display.h"
 #include "timer.h"
 
-const ACE_TCHAR *ior_output_file = 0;
-
-int
-parse_args (int argc, ACE_TCHAR *argv[])
+static int
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior_output_file)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -24,9 +24,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-o <iorfile>"
-                           "\n",
+                           ACE_TEXT ("usage:  %s "
+                                     "-o <iorfile>"
+                                     "\n"),
                            argv [0]),
                           -1);
       }
@@ -35,34 +35,34 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_TCHAR const *ior_output_file {};
+
   // We do the command line parsing first
-  if (parse_args (argc, argv) != 0)
+  if (parse_args (argc, argv, ior_output_file) != 0)
     return 1;
 
-  XtAppContext app;
-  Widget toplevel = XtAppInitialize (&app,
-                                     "Stopwatch",
-                                     0,
-                                     0,
-                                     &argc,
-                                     argv,
-                                     0,
-                                     0,
-                                     0);
+  XtAppContext app {};
+  Widget const toplevel = XtAppInitialize (&app,
+                                           "Stopwatch",
+                                           0,
+                                           nullptr,
+                                           &argc,
+                                           argv,
+                                           nullptr,
+                                           nullptr,
+                                           0);
 
   TAO::XtResource_Loader xt_loader (app);
 
   Stopwatch_display stopwatch (toplevel);
-
-
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var poa_object =
+      CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
@@ -70,10 +70,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                            " (%P|%t) Unable to initialize the POA.\n"),
                           1);
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
       stopwatch.manage ();
@@ -83,31 +83,31 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       Stopwatch_imp server_impl (orb.in (), &timer);
 
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         root_poa->activate_object (&server_impl);
 
-      CORBA::Object_var object = root_poa->id_to_reference (id.in ());
+      CORBA::Object_var const object = root_poa->id_to_reference (id.in ());
 
-      Stopwatch_var server =
+      Stopwatch_var const server =
         Stopwatch::_narrow (object.in ());
 
-      CORBA::String_var ior =
+      CORBA::String_var const ior =
         orb->object_to_string (server.in ());
 
       ACE_DEBUG ((LM_DEBUG, "Activated as <%C>\n", ior.in ()));
 
       // If the ior_output_file exists, output the ior to it
-      if (ior_output_file != 0)
-      {
-          FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-          if (output_file == 0)
+      if (ior_output_file != nullptr)
+        {
+          std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+            ACE_OS::fopen (ior_output_file, "w"), std::fclose);
+          if (!output_file)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "Cannot open output file for writing IOR: %s",
+                               ACE_TEXT ("Cannot open output file for writing IOR: %s"),
                                ior_output_file),
                               1);
-          ACE_OS::fprintf (output_file, "%s", ior.in ());
-          ACE_OS::fclose (output_file);
-      }
+          std::fprintf (output_file.get (), "%s", ior.in ());
+        }
 
       poa_manager->activate ();
 
@@ -124,7 +124,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       orb->run ();
 #endif /*ACE_HAS_THREADS*/
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;

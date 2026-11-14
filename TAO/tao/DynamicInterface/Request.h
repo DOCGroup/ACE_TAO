@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Request.h
  *
@@ -10,7 +9,6 @@
  *  @author Copyright 1994-1995 by Sun Microsystems, Inc.
  *  @author Additions and RequestSeq by Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_REQUEST_H
 #define TAO_REQUEST_H
@@ -164,7 +162,6 @@ namespace CORBA
     static CORBA::Request* _duplicate (CORBA::Request*);
     static CORBA::Request* _nil ();
 
-    // = Reference counting.
     CORBA::ULong _incr_refcount ();
     CORBA::ULong _decr_refcount ();
 

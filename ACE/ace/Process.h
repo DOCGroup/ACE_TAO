@@ -78,8 +78,11 @@ public:
                        size_t max_env_args = MAX_ENVIRONMENT_ARGS,
                        size_t max_cmdline_args = MAX_COMMAND_LINE_OPTIONS);
 
-  /// Destructor.
   ~ACE_Process_Options ();
+  ACE_Process_Options (ACE_Process_Options const &) = delete;
+  ACE_Process_Options (ACE_Process_Options &&) = delete;
+  ACE_Process_Options &operator= (ACE_Process_Options const &) = delete;
+  ACE_Process_Options &operator= (ACE_Process_Options &&) = delete;
 
   // = Methods to set process creation options portably.
 
@@ -366,11 +369,10 @@ protected:
   /// environment.
   bool inherit_environment_;
 
-  /// Default 0.
-  u_long creation_flags_;
+  u_long creation_flags_ {};
 
   /// Avoid zombies for spawned processes.
-  int avoid_zombies_;
+  int avoid_zombies_ {};
 
 #if defined (ACE_WIN32)
   /// Helper function to grab win32 environment and stick it in
@@ -378,15 +380,15 @@ protected:
   void inherit_environment ();
 
   /// Ensures once only call to inherit environment.
-  int environment_inherited_;
+  bool environment_inherited_ {};
 
   ACE_TEXT_STARTUPINFO startup_info_;
 
   /// Pointer to security_buf1_.
-  LPSECURITY_ATTRIBUTES process_attributes_;
+  LPSECURITY_ATTRIBUTES process_attributes_ {};
 
   /// Pointer to security_buf2_.
-  LPSECURITY_ATTRIBUTES thread_attributes_;
+  LPSECURITY_ATTRIBUTES thread_attributes_ {};
 
   /// Data for process_attributes_.
   SECURITY_ATTRIBUTES security_buf1_;
@@ -395,44 +397,42 @@ protected:
   SECURITY_ATTRIBUTES security_buf2_;
 
   /// User token for \a CreateProcessAsUser
-  HANDLE user_token_;
+  HANDLE user_token_ {ACE_INVALID_HANDLE};
 
   /// Keeps track of whether we need to close user token.
-  bool close_user_token_;
+  bool close_user_token_ {};
 #else /* !ACE_WIN32 */
-  ACE_HANDLE stdin_;
-  ACE_HANDLE stdout_;
-  ACE_HANDLE stderr_;
+  ACE_HANDLE stdin_ {ACE_INVALID_HANDLE};
+  ACE_HANDLE stdout_ {ACE_INVALID_HANDLE};
+  ACE_HANDLE stderr_ {ACE_INVALID_HANDLE};
 
   // = Real & effective user & group id's.
   //   These should be set to -1 to leave unchanged (default).
-  uid_t ruid_;
-  uid_t euid_;
-  gid_t rgid_;
-  gid_t egid_;
+  uid_t ruid_ {static_cast<uid_t> (-1)};
+  uid_t euid_ {static_cast<uid_t> (-1)};
+  gid_t rgid_ {static_cast<gid_t> (-1)};
+  gid_t egid_ {static_cast<gid_t> (-1)};
 #endif /* ACE_WIN32 */
 
-  /// Default true.
-  bool handle_inheritance_;
+  bool handle_inheritance_ {true};
 
-  /// Is 1 if stdhandles was called.
-  int set_handles_called_;
+  bool set_handles_called_ {};
 
   /// Pointer into environment_buf_.  This should point to the next
   /// free spot.
-  size_t environment_buf_index_;
+  size_t environment_buf_index_ {};
 
   /// Pointer to environment_argv_.
-  size_t environment_argv_index_;
+  size_t environment_argv_index_ {};
 
   /// Pointer to buffer of the environment settings.
-  ACE_TCHAR *environment_buf_;
+  ACE_TCHAR *environment_buf_ {};
 
   /// Size of the environment buffer. Configurable
   size_t environment_buf_len_;
 
   /// Pointers into environment_buf_.
-  ACE_TCHAR **environment_argv_;
+  ACE_TCHAR **environment_argv_ {};
 
   /// Maximum number of environment variables. Configurable
   size_t max_environment_args_;
@@ -444,14 +444,14 @@ protected:
   ACE_TCHAR working_directory_[MAXPATHLEN + 1];
 
   /// Ensures command_line_argv is only calculated once.
-  bool command_line_argv_calculated_;
+  bool command_line_argv_calculated_ {};
 
   /// Pointer to buffer of command-line arguments.  E.g., "-f foo -b bar".
-  ACE_TCHAR *command_line_buf_;
+  ACE_TCHAR *command_line_buf_ {};
 
   /// Pointer to copy of command-line arguments, which is needed when
   /// converting a command-line string into a command-line argv.
-  ACE_TCHAR *command_line_copy_;
+  ACE_TCHAR *command_line_copy_ {};
 
   /// Max length of command_line_buf_
   size_t command_line_buf_len_;
@@ -460,10 +460,10 @@ protected:
   size_t max_command_line_args_;
 
   /// Argv-style command-line arguments.
-  ACE_TCHAR **command_line_argv_;
+  ACE_TCHAR **command_line_argv_ {};
 
   /// Process-group on Unix; unused on Win32.
-  pid_t process_group_;
+  pid_t process_group_ {ACE_INVALID_PID};
 
   /// Set of handles that were passed in pass_handle ().
   ACE_Handle_Set handles_passed_;
@@ -476,7 +476,7 @@ protected:
   ACE_TCHAR process_name_[MAXPATHLEN + 1];
 
   /// Indicate if a Unicode environment should be used
-  bool use_unicode_environment_;
+  bool use_unicode_environment_ {};
 };
 
 //class ACE_Process_Manager;
@@ -507,8 +507,11 @@ public:
   /// Default construction.  Use ACE_Process::spawn() to start a process.
   ACE_Process ();
 
-  /// Destructor.
   virtual ~ACE_Process ();
+  ACE_Process (ACE_Process const &) = delete;
+  ACE_Process (ACE_Process &&) = delete;
+  ACE_Process &operator= (ACE_Process const &) = delete;
+  ACE_Process &operator= (ACE_Process &&) = delete;
 
   /**
    * Called back from spawn() just before spawning the child.  If this
@@ -629,12 +632,6 @@ public:
   PROCESS_INFORMATION process_info ();
 #endif /* ACE_WIN32 */
 
-private:
-  ACE_Process (const ACE_Process &) = delete;
-  void operator= (const ACE_Process &) = delete;
-  ACE_Process (ACE_Process &&) = delete;
-  void operator= (ACE_Process &&) = delete;
-
 protected:
   /// Set this process's exit code.  ACE_Process_Manager uses this
   /// method to set the exit code after successfully waiting for
@@ -645,9 +642,9 @@ protected:
   PROCESS_INFORMATION process_info_;
 #else /* ACE_WIN32 */
   /// Process id of the child.
-  pid_t child_id_;
+  pid_t child_id_ {ACE_INVALID_PID};
 #endif /* ACE_WIN32 */
-  ACE_exitcode exit_code_;
+  ACE_exitcode exit_code_ {};
 
   /// Set of handles that were passed to the child process.
   ACE_Handle_Set handles_passed_;

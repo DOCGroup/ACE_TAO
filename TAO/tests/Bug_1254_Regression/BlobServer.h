@@ -9,8 +9,7 @@ class BlobServerImpl
   : public virtual POA_BlobServer
 {
 public:
-  /// Constructor
-  BlobServerImpl (CORBA::ORB_ptr orb);
+  explicit BlobServerImpl (CORBA::ORB_ptr orb);
   BlobServerImpl (BlobServerImpl const &) = delete;
   BlobServerImpl &operator= (BlobServerImpl const &) = delete;
   BlobServerImpl (BlobServerImpl &&) = delete;
@@ -24,7 +23,7 @@ public:
 private:
   /// Use an ORB reference to convert strings to objects and shutdown
   /// the application.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 };
 
 #include /**/ "ace/post.h"

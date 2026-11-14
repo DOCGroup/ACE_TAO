@@ -8,25 +8,24 @@
  */
 //=============================================================================
 
-
 #ifndef _COMM_MANAGER_H
 #define _COMM_MANAGER_H
 
 #include "global.h"
 #include "ace/os_include/netinet/os_in.h"
 
+/**
+ * @brief Provides the virtual communication layer for the drwho program.
+ */
 class Comm_Manager
 {
 public:
   virtual ~Comm_Manager ();
-
-  // = TITLE
-  //   Provides a virtual communcations layer for the drwho program.
 protected:
   char recv_packet_[UDP_PACKET_SIZE];
   char send_packet_[UDP_PACKET_SIZE];
-  sockaddr_in sin_;
-  int sokfd_;
+  sockaddr_in sin_ {};
+  ACE_HANDLE sokfd_ {ACE_INVALID_HANDLE};
 
   virtual int mux (char *packet, int &packet_length)   = 0;
   virtual int demux (char *packet, int &packet_length) = 0;

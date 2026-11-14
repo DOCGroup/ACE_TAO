@@ -98,7 +98,7 @@ protected:
   ACE_Atomic_Op_GCC ();
 
   /// Initialize @c value_ to c.
-  ACE_Atomic_Op_GCC (T c);
+  explicit ACE_Atomic_Op_GCC (T c);
 
   /// Manage copying...
   ACE_Atomic_Op_GCC (const ACE_Atomic_Op_GCC<T> &c);

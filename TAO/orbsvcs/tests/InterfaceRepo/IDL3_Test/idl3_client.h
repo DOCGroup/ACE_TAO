@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef IDL3_CLIENT_H
 #define IDL3_CLIENT_H
 
@@ -27,12 +26,6 @@
 class IDL3_Client
 {
 public:
-  /// Constructor
-  IDL3_Client ();
-
-  /// Destructor
-  ~IDL3_Client ();
-
   /// Initialize the ORB and get the IFR object reference.
   int init (int argc,
             ACE_TCHAR *argv[]);
@@ -53,11 +46,11 @@ private:
                       char const* prefix);
 
   int component_attribute_test (
-      CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription_var&);
+      CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription_var const&);
 
-  int component_inheritance_test (CORBA::ComponentIR::ComponentDef_var&);
+  int component_inheritance_test (CORBA::ComponentIR::ComponentDef_var const&);
 
-  int component_port_test (CORBA::ComponentIR::ComponentDef_var&);
+  int component_port_test (CORBA::ComponentIR::ComponentDef_var const&);
 
   int provides_test (CORBA::ComponentIR::ProvidesDescriptionSeq const&);
 
@@ -69,26 +62,26 @@ private:
                        char const* const* names,
                        char const* const* ids);
 
-  int valuetype_inheritance_test (CORBA::ExtValueDef_var&,
+  int valuetype_inheritance_test (CORBA::ExtValueDef_var const&,
                                   char const* prefix);
 
   int valuetype_attribute_test (
-      CORBA::ExtValueDef::ExtFullValueDescription_var&,
+      CORBA::ExtValueDef::ExtFullValueDescription_var const&,
       char const* prefix);
 
   int valuetype_operation_test (
-      CORBA::ExtValueDef::ExtFullValueDescription_var&,
+      CORBA::ExtValueDef::ExtFullValueDescription_var const&,
       char const* prefix);
 
   int valuetype_member_test (
-      CORBA::ExtValueDef::ExtFullValueDescription_var&,
+      CORBA::ExtValueDef::ExtFullValueDescription_var const&,
       char const* prefix);
 
   int valuetype_factory_test (
-      CORBA::ExtValueDef::ExtFullValueDescription_var&,
+      CORBA::ExtValueDef::ExtFullValueDescription_var const&,
       char const* prefix);
 
-  int home_inheritance_test (CORBA::ComponentIR::HomeDef_var&);
+  int home_inheritance_test (CORBA::ComponentIR::HomeDef_var const&);
 
   int home_factory_test (CORBA::ComponentIR::HomeDescription const*);
 
@@ -96,13 +89,13 @@ private:
 
 private:
   /// Flag to output detailed error messages.
-  bool debug_;
+  bool debug_ {};
 
   /// Storage of the ORB reference.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 
   /// Storage of the IFR reference.
-  CORBA::Repository_var repo_;
+  CORBA::Repository_var repo_ {};
 };
 
 #endif /* IDL3_CLIENT_H */

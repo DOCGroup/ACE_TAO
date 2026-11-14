@@ -5,10 +5,9 @@
 #include "ACEXML/common/Mem_Map_Stream.h"
 
 ACEXML_Mem_Map_Stream::ACEXML_Mem_Map_Stream ()
-  : svc_handler_ (0),
-    recv_pos_ (0),
-    get_pos_ (0),
-    end_of_mapping_plus1_ (0)
+  : recv_pos_ (nullptr),
+    get_pos_ (nullptr),
+    end_of_mapping_plus1_ (nullptr)
 {
 }
 
@@ -70,7 +69,7 @@ ACEXML_Mem_Map_Stream::recv (size_t &len)
   if (this->eof () && this->grow_file_and_remap () == -1)
     {
       len = 0;
-      return 0;
+      return nullptr;
     }
   const char *s = this->recv_pos_;
   this->seek (static_cast<ACE_OFF_T> (len), SEEK_CUR);
@@ -91,7 +90,7 @@ ACEXML_Mem_Map_Stream::peek_str (size_t offset,
   // We will iterate if the size of <offset> is large.
   while (this->get_pos_ + (offset + size) > this->end_of_mapping_plus1_)
     if (this->grow_file_and_remap () == -1)
-      return 0;
+      return nullptr;
 
   return &this->get_pos_[offset];
 }
@@ -133,7 +132,7 @@ ACEXML_Mem_Map_Stream::seek (ACE_OFF_T offset, int whence)
 Svc_Handler *
 ACEXML_Mem_Map_Stream::svc_handler ()
 {
-  return this->svc_handler_;
+  return this->svc_handler_.get ();
 }
 
 size_t
@@ -146,13 +145,16 @@ int
 ACEXML_Mem_Map_Stream::open (Connector *connector,
                              const ACE_INET_Addr &addr)
 {
-  svc_handler_ = 0;
+  this->svc_handler_.reset ();
+
+  Svc_Handler *svc_handler {};
+  int const status = connector->connect (svc_handler, addr);
+  this->svc_handler_.reset (svc_handler);
 
   // Connect to the server at <addr>. If the handler has to be
   // connected to the server again, the Caching strategy takes care
   // and uses the same connection.
-  if (connector->connect (svc_handler_,
-                          addr) == -1)
+  if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%p %s %d\n",
@@ -237,7 +239,7 @@ ACEXML_Mem_Map_Stream::grow_file_and_remap ()
   if (this->mem_map_.map (static_cast<size_t> (-1),
                           PROT_RDWR,
                           ACE_MAP_PRIVATE,
-                          (void*)0) == -1)
+                          nullptr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "map"),
@@ -260,6 +262,5 @@ ACEXML_Mem_Map_Stream::~ACEXML_Mem_Map_Stream ()
 {
   // Remove the mapping and the file.
   this->mem_map_.remove ();
-  delete this->svc_handler_;
 }
 

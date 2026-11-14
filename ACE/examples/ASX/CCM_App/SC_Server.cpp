@@ -8,20 +8,30 @@
 #include "ace/Reactor.h"
 #include "ace/Sig_Adapter.h"
 
+static void end_reactor_event_loop (int, siginfo_t *, ucontext_t *)
+{
+  ACE_Reactor::end_event_loop ();
+}
 
 class Event_Handler : public ACE_Event_Handler
 {
 public:
+  Event_Handler () = default;
+
   int handle_input (ACE_HANDLE handle) override;
-  int handle_close (ACE_HANDLE,
-                            ACE_Reactor_Mask) override;
+  int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override;
+
+  Event_Handler (Event_Handler const &) = delete;
+  Event_Handler (Event_Handler &&) = delete;
+  Event_Handler &operator= (Event_Handler const &) = delete;
+  Event_Handler &operator= (Event_Handler &&) = delete;
 };
 
 int
 Event_Handler::handle_input (ACE_HANDLE handle)
 {
   char buf[BUFSIZ];
-  ssize_t n = ACE_OS::read (handle, buf, sizeof buf);
+  ssize_t const n = ACE_OS::read (handle, buf, sizeof buf);
 
   if (n == -1)
     return -1;
@@ -51,7 +61,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Service_Config loggerd;
   Event_Handler handler;
-  ACE_Sig_Adapter shutdown_handler ((ACE_Sig_Handler_Ex) ACE_Reactor::end_event_loop);
+  ACE_Sig_Adapter shutdown_handler (end_reactor_event_loop);
 
   if (ACE_Event_Handler::register_stdin_handler (&handler,
                                                  ACE_Reactor::instance (),
@@ -64,7 +74,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                     argv,
                     ACE_DEFAULT_LOGGER_KEY,
                     // Don't ignore static services!
-                    0) == -1 && errno != ENOENT)
+                    false) == -1 && errno != ENOENT)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("%p\n%a"),
                 ACE_TEXT ("open"),
@@ -79,6 +89,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Perform logging service until we receive SIGINT.
 
   ACE_Reactor::instance ()->run_reactor_event_loop ();
-  handler.remove_stdin_handler (ACE_Reactor::instance (),ACE_Thread_Manager::instance ());
+  handler.remove_stdin_handler (ACE_Reactor::instance (),
+                                ACE_Thread_Manager::instance ());
   return 0;
 }

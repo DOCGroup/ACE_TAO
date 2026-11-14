@@ -28,8 +28,8 @@ RTPOA_Setup::RTPOA_Setup (CORBA::ORB_ptr orb,
 
   const CORBA::ULong stacksize = 1024 * 1024; // 1 Mb
   const RTCORBA::ThreadpoolLanes &lanes = rtcorba_setup.lanes ();
-  const CORBA::Boolean allow_borrowing = 0;
-  const CORBA::Boolean allow_request_buffering = 0;
+  const CORBA::Boolean allow_borrowing = false;
+  const CORBA::Boolean allow_request_buffering = false;
   const CORBA::ULong max_buffered_requests   = 0; // dummy value
   const CORBA::ULong max_request_buffer_size = 0; // dummy value
 

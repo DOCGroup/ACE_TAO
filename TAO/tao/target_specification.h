@@ -23,10 +23,6 @@
 
 #include "tao/Basic_Types.h"
 
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace IOP
@@ -49,7 +45,7 @@ class TAO_Export TAO_Target_Specification
 {
 public:
   /// Ctor
-  TAO_Target_Specification ();
+  TAO_Target_Specification () = default;
   enum TAO_Target_Address
   {
     // Note that this could be extended for other protocols
@@ -62,10 +58,10 @@ public:
   /// @note Please do not pass in a identifiers that is allocated on
   /// stack. These methods does not make a copy but holds the pointer
   /// passed in.
-  void target_specifier (const TAO::ObjectKey &key);
+  void target_specifier (TAO::ObjectKey const &key);
 
   /// Set the target specification by passing in an IOP::TaggedProfile.
-  void target_specifier (IOP::TaggedProfile &profile);
+  void target_specifier (IOP::TaggedProfile const &profile);
 
   /**
    * Specify the target by passing in the IOP::IOR with a profile
@@ -77,42 +73,42 @@ public:
   /**
    * Returns the object key after a check of the stored specifier. If
    * the stored specifier is not of the right type then this would
-   * return a NULL
+   * return nullptr
    */
-  const TAO::ObjectKey* object_key ();
+  TAO::ObjectKey const *object_key () const;
 
   /**
    * Returns the IOP::TaggedProfile after a check of the stored specifier. If
    * the stored specifier is not of the right type then this would
-   * return a NULL
+   * return nullptr
    */
-  const IOP::TaggedProfile *profile ();
+  IOP::TaggedProfile const *profile () const;
 
   /**
    * Returns a  pointer to IOP::IOR through the parameters and the
    * index of the selected profile as a return parameter after a check
    * of the stored specifier. If the stored specifier is not of the
-   * right type then this would return a NULL.
+   * right type then this would return nullptr.
    */
-  CORBA::ULong iop_ior (IOP::IOR *&ior);
+  CORBA::ULong iop_ior (IOP::IOR *&ior) const;
 
   /// Access the TArget_Address specifier
-  TAO_Target_Address specifier ();
+  TAO_Target_Address specifier () const;
 
 private:
   /// The union of all the possibilities
   union
   {
-    TAO::ObjectKey *object_key_;
-    IOP::TaggedProfile *profile_;
+    TAO::ObjectKey const *object_key_ {};
+    IOP::TaggedProfile const *profile_;
     IOP::IOR *ior_;
   } u_;
 
   /// The enum identifier
-  TAO_Target_Address specifier_;
+  TAO_Target_Address specifier_ {Key_Addr};
 
   /// The profile index
-  CORBA::ULong profile_index_;
+  CORBA::ULong profile_index_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

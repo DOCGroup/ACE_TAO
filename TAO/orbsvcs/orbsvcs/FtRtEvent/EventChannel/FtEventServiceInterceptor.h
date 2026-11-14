@@ -42,14 +42,13 @@ public:
   int update (ACE_CString const& client_id,
               CORBA::Long retention_id,
               CORBA::Any const&);
-  CORBA::Any get_result (ACE_CString const& client_id);
+  void get_result (ACE_CString const& client_id, CORBA::Any& result);
   void get_state (FtRtecEventChannelAdmin::CachedOptionResults& state);
   void set_state (FtRtecEventChannelAdmin::CachedOptionResults const& state);
 private:
   using TableImpl = ACE_Hash_Map_Manager<ACE_CString, CachedRequestInfo, TAO_SYNCH_MUTEX>;
   TableImpl table_;
 };
-
 
 class FtEventServiceInterceptor :
   public PortableInterceptor::ServerRequestInterceptor
@@ -76,12 +75,13 @@ public:
 
   void get_state (FtRtecEventChannelAdmin::CachedOptionResults &state);
   void set_state (FtRtecEventChannelAdmin::CachedOptionResults const &state);
-private:
+
   FtEventServiceInterceptor (FtEventServiceInterceptor const &) = delete;
   FtEventServiceInterceptor &operator= (FtEventServiceInterceptor const &) = delete;
   FtEventServiceInterceptor (FtEventServiceInterceptor &&) = delete;
   FtEventServiceInterceptor &operator= (FtEventServiceInterceptor &&) = delete;
 
+private:
   PortableInterceptor::Current_var pic(PortableInterceptor::ServerRequestInfo_ptr ri);
 
   CORBA::ORB_var orb_;

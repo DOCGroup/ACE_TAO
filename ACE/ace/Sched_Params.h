@@ -65,7 +65,6 @@ class ACE_Export ACE_Sched_Params
 public:
   using Policy = int;
 
-  /// Constructor.
   ACE_Sched_Params (const Policy policy,
                     const ACE_Sched_Priority priority,
                     const int scope = ACE_SCOPE_THREAD,

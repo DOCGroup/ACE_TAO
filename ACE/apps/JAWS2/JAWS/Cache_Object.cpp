@@ -93,7 +93,6 @@ JAWS_Cache_Object::heap_item (void *item)
   this->heap_item_ = item;
 }
 
-
 JAWS_Referenced_Cache_Object::
 JAWS_Referenced_Cache_Object (const void *data, size_t size)
   : JAWS_Cache_Object (data, size),
@@ -144,7 +143,6 @@ JAWS_Referenced_Cache_Object::priority_i () const
 
   return priority;
 }
-
 
 JAWS_Counted_Cache_Object::
 JAWS_Counted_Cache_Object (const void *data, size_t size)

@@ -50,7 +50,6 @@ public:
                                              const ACEXML_Char *systemId) = 0;
 };
 
-
 #include /**/ "ace/post.h"
 
 #endif /* _ACEXML_ENTITYHANDLER_H_ */

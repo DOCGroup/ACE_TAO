@@ -1,6 +1,7 @@
 #include "ace/SOCK_SEQPACK_Association.h"
 
 #include "ace/Log_Category.h"
+#include "ace/Malloc_Base.h"
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_string.h"
 #include <memory>
@@ -85,8 +86,8 @@ ACE_SOCK_SEQPACK_Association::get_local_addrs (ACE_INET_Addr *addrs, size_t &siz
     it by calling sctp_freeladdrs().
   */
 
-  sockaddr_in *si = nullptr;
-  sockaddr *laddrs = nullptr;
+  sockaddr_in *si {};
+  sockaddr *laddrs {};
   int err = 0;
   size_t len = 0;
 
@@ -103,7 +104,7 @@ ACE_SOCK_SEQPACK_Association::get_local_addrs (ACE_INET_Addr *addrs, size_t &siz
       len = size;
     }
 
-    for (size_t i = 0; i < len; i++)
+    for (size_t i = 0; i < len; ++i)
     {
       // first we cast the sockaddr to sockaddr_in
       // since we only support ipv4 at this time.
@@ -143,23 +144,18 @@ ACE_SOCK_SEQPACK_Association::get_local_addrs (ACE_INET_Addr *addrs, size_t &siz
 
   */
 
-  // The array of sockaddr_in will be stored in an std::unique_ptr,
-  // which causes dynamically-allocated memory to be released as soon
-  // as the std::unique_ptr goes out of scope.
-  std::unique_ptr<sockaddr_in[]> addr_structs;
+  // Keep the temporary address buffer owned until the method returns.
+  std::unique_ptr<sockaddr_in[], ACE_Array_Deleter<sockaddr_in>> addr_structs;
 
-  // Allocate memory for this array.  Return -1 if the memory cannot
-  // be allocated.  (This activity requires a temporary variable---a
-  // bare sockaddr_in* --- because ACE_NEW_RETURN cannot act directory on
-  // an ACE_Auto_Array_Ptr.)
+  // The allocation macros require a raw pointer, which is adopted immediately.
   {
-    sockaddr_in *addr_structs_bootstrap = nullptr;
+    sockaddr_in *addr_structs_bootstrap {};
 #if defined(ACE_HAS_ALLOC_HOOKS)
     ACE_ALLOCATOR_RETURN (addr_structs_bootstrap, static_cast<sockaddr_in*>(ACE_Allocator::instance()->malloc(sizeof(sockaddr_in) * size)), -1);
 #else
     ACE_NEW_RETURN (addr_structs_bootstrap, sockaddr_in[size], -1);
 #endif
-    addr_structs.reset(addr_structs_bootstrap);
+    addr_structs.reset (addr_structs_bootstrap);
   }
 
   // Physical size of this array is its logical size multiplied by
@@ -200,7 +196,6 @@ ACE_SOCK_SEQPACK_Association::get_local_addrs (ACE_INET_Addr *addrs, size_t &siz
   return 0;
 }
 
-
 int
 ACE_SOCK_SEQPACK_Association::get_remote_addrs (ACE_INET_Addr *addrs, size_t &size) const
 {
@@ -223,8 +218,8 @@ ACE_SOCK_SEQPACK_Association::get_remote_addrs (ACE_INET_Addr *addrs, size_t &si
     it by calling sctp_freepaddrs().
   */
 
-  sockaddr_in *si = nullptr;
-  sockaddr *paddrs = nullptr;
+  sockaddr_in *si {};
+  sockaddr *paddrs {};
   int err = 0;
   size_t len = 0;
 
@@ -246,7 +241,7 @@ ACE_SOCK_SEQPACK_Association::get_remote_addrs (ACE_INET_Addr *addrs, size_t &si
       len = size;
     }
 
-    for (size_t i = 0; i < len; i++)
+    for (size_t i = 0; i < len; ++i)
     {
       // first we cast the sockaddr to sockaddr_in
       // since we only support ipv4 at this time.
@@ -286,23 +281,18 @@ ACE_SOCK_SEQPACK_Association::get_remote_addrs (ACE_INET_Addr *addrs, size_t &si
 
   */
 
-  // The array of sockaddr_in will be stored in an std::unique_ptr,
-  // which causes dynamically-allocated memory to be released as soon
-  // as the std::unique_ptr goes out of scope.
-  std::unique_ptr<sockaddr_in[]> addr_structs;
+  // Keep the temporary address buffer owned until the method returns.
+  std::unique_ptr<sockaddr_in[], ACE_Array_Deleter<sockaddr_in>> addr_structs;
 
-  // Allocate memory for this array.  Return -1 if the memory cannot
-  // be allocated.  (This activity requires a temporary variable---a
-  // bare sockaddr_in* --- because ACE_NEW_RETURN cannot act directory on
-  // an ACE_Auto_Array_Ptr.)
+  // The allocation macros require a raw pointer, which is adopted immediately.
   {
-    sockaddr_in *addr_structs_bootstrap = nullptr;
+    sockaddr_in *addr_structs_bootstrap {};
 #if defined (ACE_HAS_ALLOC_HOOKS)
     ACE_ALLOCATOR_RETURN (addr_structs_bootstrap, static_cast<sockaddr_in*>(ACE_Allocator::instance()->malloc(sizeof(sockaddr_in) * (size))), -1);
 #else
     ACE_NEW_RETURN (addr_structs_bootstrap, sockaddr_in[size], -1);
 #endif
-    addr_structs.reset(addr_structs_bootstrap);
+    addr_structs.reset (addr_structs_bootstrap);
   }
 
   // Physical size of this array is its logical size multiplied by

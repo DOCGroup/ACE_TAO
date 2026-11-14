@@ -10,13 +10,16 @@
 class HA_CommandHandler : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  enum { N_THREADS = 5 };
+  static constexpr int N_THREADS {5};
 
-  HA_CommandHandler (ACE_Barrier& startup_barrier,
+  HA_CommandHandler (ACE_Barrier &startup_barrier,
                      ACE_Barrier &shutdown_barrier)
-    : startup_barrier_(startup_barrier),
-      shutdown_barrier_(shutdown_barrier)
-    { }
+    : startup_barrier_ (startup_barrier),
+      shutdown_barrier_ (shutdown_barrier) {}
+  HA_CommandHandler (HA_CommandHandler const &) = delete;
+  HA_CommandHandler (HA_CommandHandler &&) = delete;
+  HA_CommandHandler &operator= (HA_CommandHandler const &) = delete;
+  HA_CommandHandler &operator= (HA_CommandHandler &&) = delete;
 
   void initialize_handler ();
   int handle_command_requests ();
@@ -28,7 +31,8 @@ public:
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t: %D) Started\n")));
 
     while (handle_command_requests () > 0)
-      ;
+      {
+      }
 
     shutdown_barrier_.wait ();
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t: %D) Ended\n")));
@@ -37,24 +41,24 @@ public:
   }
 
 private:
-  ACE_Barrier& startup_barrier_;
-  ACE_Barrier& shutdown_barrier_;
+  ACE_Barrier &startup_barrier_;
+  ACE_Barrier &shutdown_barrier_;
 };
 // Listing 2
 
 void
 HA_CommandHandler::initialize_handler ()
 {
-  ACE_Time_Value tv (0, ACE_OS::rand () * 100);
-  timespec_t t = (timespec_t)tv;
+  ACE_Time_Value const tv (0, ACE_OS::rand () * 100);
+  timespec_t t = static_cast<timespec_t> (tv);
   ACE_OS::nanosleep (&t);
 }
 
 int
 HA_CommandHandler::handle_command_requests ()
 {
-  ACE_Time_Value tv (0, ACE_OS::rand () * 100);
-  timespec_t t = (timespec_t)tv;
+  ACE_Time_Value const tv (0, ACE_OS::rand () * 100);
+  timespec_t t = static_cast<timespec_t> (tv);
 
   // Simulate work.
   ACE_OS::nanosleep (&t);

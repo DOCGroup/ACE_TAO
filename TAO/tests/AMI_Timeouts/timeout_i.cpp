@@ -12,8 +12,8 @@
 #include "ace/OS_NS_unistd.h"
 
 Timeout_i::Timeout_i (CORBA::ORB_ptr orb)
+  : orb_ (CORBA::ORB::_duplicate (orb))
 {
-  orb_ = CORBA::ORB::_duplicate (orb);
 }
 
 void
@@ -29,7 +29,7 @@ Timeout_i::sendTimeToWait (CORBA::Long msec)
       //            "Timeout_i::sendTimeToWait: sleeping\n\n"));
 
       ACE_Time_Value tv (0, msec * 1000);
-            ACE_OS::sleep (tv);
+      ACE_OS::sleep (tv);
     }
 }
 
@@ -44,8 +44,6 @@ Timeout_i::shutdown ()
 // Reply Handler implementation
 
 TimeoutHandler_i::TimeoutHandler_i ()
-: reply_counter_ (0)
-, reply_excep_counter_ (0)
 {
   timer_.reset ();
   timer_.start ();
@@ -70,7 +68,7 @@ TimeoutHandler_i::sendTimeToWait_excep (::Messaging::ExceptionHolder *excep_hold
     {
       excep_holder->raise_exception ();
     }
-  catch (const CORBA::TIMEOUT& )
+  catch (CORBA::TIMEOUT const &)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "timeout"));
@@ -86,25 +84,25 @@ TimeoutHandler_i::sendTimeToWait_excep (::Messaging::ExceptionHolder *excep_hold
 void
 TimeoutHandler_i::reset_reply_counter ()
 {
-  reply_counter_ = 0;
+  reply_counter_.store (0);
 }
 
 void
 TimeoutHandler_i::reset_reply_excep_counter ()
 {
-  reply_excep_counter_ = 0;
+  reply_excep_counter_.store (0);
 }
 
 unsigned short
-TimeoutHandler_i::reply_counter ()
+TimeoutHandler_i::reply_counter () const
 {
-  return reply_counter_;
+  return reply_counter_.load ();
 }
 
 unsigned short
-TimeoutHandler_i::reply_excep_counter ()
+TimeoutHandler_i::reply_excep_counter () const
 {
-  return reply_excep_counter_;
+  return reply_excep_counter_.load ();
 }
 
 void
@@ -114,9 +112,10 @@ TimeoutHandler_i::start ()
   timer_.start ();
 }
 
-ACE_Time_Value &
-TimeoutHandler_i::elapsed_time ()
+ACE_Time_Value
+TimeoutHandler_i::elapsed_time () const
 {
-  timer_.elapsed_time (elapsed_time_);
-  return elapsed_time_;
+  ACE_Time_Value elapsed_time;
+  timer_.elapsed_time (elapsed_time);
+  return elapsed_time;
 }

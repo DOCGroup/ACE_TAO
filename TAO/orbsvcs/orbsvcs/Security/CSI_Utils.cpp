@@ -1,7 +1,8 @@
 #include "orbsvcs/Security/CSI_Utils.h"
 #include "orbsvcs/CSIC.h"
 #include "tao/CDR.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -30,7 +31,7 @@ TAO::CSI_Utils::create_sas_service_context (
        i != nullptr;
        i = i->cont ())
     {
-      ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());
+      std::memcpy (buf, i->rd_ptr (), i->length ());
       buf += i->length ();
     }
 }
@@ -47,7 +48,7 @@ TAO::CSI_Utils::extract_sas_service_context (
                       sc.context_data.get_buffer ()),
                     sc.context_data.length ());
 
-  ACE_CDR::Boolean byte_order;
+  ACE_CDR::Boolean byte_order {};
 
   if (!(cdr >> ACE_InputCDR::to_boolean (byte_order)))
     return false;

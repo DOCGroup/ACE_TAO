@@ -8,24 +8,33 @@
 class ServerApp
 {
   public:
-    ServerApp();
-    ~ServerApp();
+    ServerApp () = default;
+    ~ServerApp () = default;
+
+    ServerApp (ServerApp const &) = delete;
+    ServerApp (ServerApp &&) = delete;
+    ServerApp &operator= (ServerApp const &) = delete;
+    ServerApp &operator= (ServerApp &&) = delete;
 
     int run(int argc, ACE_TCHAR* argv[]);
 
-
   private:
-    int parse_args(int argc, ACE_TCHAR* argv[]);
-    void usage_statement();
+    int parse_args (int argc, ACE_TCHAR *argv[]);
+    void usage_statement () const;
+
+    struct Options
+    {
+      ACE_TString ior_filename {ACE_TEXT("foo")};
+      unsigned num_servants {1};
+      unsigned num_csd_threads {1};
+      unsigned num_clients {1};
+      unsigned num_orb_threads {1};
+      bool collocated_test {};
+      int servant_to_deactivate {-1};
+    };
 
     ACE_TString exe_name_;
-    ACE_TString ior_filename_;
-    unsigned    num_servants_;
-    unsigned    num_csd_threads_;
-    unsigned    num_clients_;
-    unsigned    num_orb_threads_;
-    int         collocated_test_;
-    int         servant_to_deactivate_;
+    Options options_ {};
 };
 
 #endif

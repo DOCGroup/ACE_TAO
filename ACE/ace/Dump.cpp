@@ -48,8 +48,6 @@ ACE_Dumpable_Ptr::operator= (const ACE_Dumpable *dumper) const
 }
 
 ACE_ODB::ACE_ODB ()
-  // Let the Tuple default constructor initialize object_table_
-  : current_size_ (0)
 {
   ACE_TRACE ("ACE_ODB::ACE_ODB");
 }
@@ -81,7 +79,7 @@ void
 ACE_ODB::dump_objects ()
 {
   ACE_TRACE ("ACE_ODB::dump_objects");
-  for (int i = 0; i < this->current_size_; i++)
+  for (int i = 0; i < this->current_size_; ++i)
     {
       if (this->object_table_[i].this_ != nullptr)
         // Dump the state of the object.
@@ -99,7 +97,7 @@ ACE_ODB::register_object (const ACE_Dumpable *dumper)
   int i;
   int slot = 0;
 
-  for (i = 0; i < this->current_size_; i++)
+  for (i = 0; i < this->current_size_; ++i)
     {
       if (this->object_table_[i].this_ == nullptr)
         slot = i;
@@ -125,7 +123,7 @@ ACE_ODB::remove_object (const void *this_ptr)
   ACE_TRACE ("ACE_ODB::remove_object");
   int i;
 
-  for (i = 0; i < this->current_size_; i++)
+  for (i = 0; i < this->current_size_; ++i)
     {
       if (this->object_table_[i].this_ == this_ptr)
         break;

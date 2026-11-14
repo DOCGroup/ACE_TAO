@@ -13,6 +13,8 @@
 #include "tao/PortableServer/Upcall_Command.h"
 #include "tao/PortableInterceptor.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
@@ -49,7 +51,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::tao_ft_interception_point (
           if (registered.details_.should_be_processed (is_remote_request))
             {
               registered.interceptor_->
-                tao_ft_interception_point (&request_info, oc);
+                tao_ft_interception_point (std::addressof (request_info), oc);
             }
 
           if (oc != nullptr)
@@ -133,7 +135,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request_service_contexts (
           if (registered.details_.should_be_processed (is_remote_request))
             {
               registered.interceptor_->
-                receive_request_service_contexts (&request_info);
+                receive_request_service_contexts (std::addressof (request_info));
             }
         }
     }
@@ -194,7 +196,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request_service_contexts (
           if (registered.details_.should_be_processed (is_remote_request))
             {
               registered.interceptor_->
-                receive_request_service_contexts (&request_info);
+                receive_request_service_contexts (std::addressof (request_info));
             }
 
           // The starting interception point completed successfully.
@@ -262,7 +264,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request (
 
           if (registered.details_.should_be_processed (is_remote_request))
             {
-              registered.interceptor_->receive_request (&request_info);
+              registered.interceptor_->receive_request (std::addressof (request_info));
             }
 
           // Note that no interceptors are pushed on to or popped off
@@ -326,7 +328,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_reply (
 
       if (registered.details_.should_be_processed (is_remote_request))
         {
-          registered.interceptor_->send_reply (&request_info);
+          registered.interceptor_->send_reply (std::addressof (request_info));
         }
     }
 
@@ -377,7 +379,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_exception (
 
           if (registered.details_.should_be_processed (is_remote_request))
             {
-              registered.interceptor_->send_exception (&request_info);
+              registered.interceptor_->send_exception (std::addressof (request_info));
             }
         }
     }
@@ -405,7 +407,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_exception (
       // drops to zero, i.e., once each interceptor has been invoked.
       // This prevents infinite recursion from occuring.
 
-      server_request.caught_exception (&ex);
+      server_request.caught_exception (std::addressof (ex));
 
       this->send_exception (server_request,
                             args,
@@ -468,7 +470,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::send_other (
 
           if (registered.details_.should_be_processed (is_remote_request))
             {
-              registered.interceptor_->send_other (&request_info);
+              registered.interceptor_->send_other (std::addressof (request_info));
             }
         }
     }

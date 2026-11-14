@@ -13,10 +13,14 @@ class Echo
   : public POA_Test::Echo
 {
 public:
-  Echo(CORBA::ORB_ptr orb);
+  explicit Echo (CORBA::ORB_ptr orb);
+  Echo (Echo const &) = delete;
+  Echo (Echo &&) = delete;
+  Echo &operator= (Echo const &) = delete;
+  Echo &operator= (Echo &&) = delete;
 
-  virtual char * echo_operation(char const * the_input);
-  virtual void shutdown();
+  char * echo_operation (char const *the_input) override;
+  void shutdown () override;
 
 private:
   CORBA::ORB_var orb_;

@@ -29,6 +29,7 @@ run()
 
   if [ -f core ]; then
     echo \"$1\" dumped core!!!!
+    status=1
   fi
 
   for i in $SUCCESS_MSGS; do
@@ -41,23 +42,31 @@ run()
   for i in $ERROR_MSGS; do
     grep $i log/$1.log
   done
+
+  return $status
 }
 
 echo "Starting tests..."
-FILES=`ls *_Test 2>/dev/null`
-
-if [ -z $FILES ]; then
-  echo "ERROR: no test programs generated matching pattern *_Test."
-  echo "ERROR: Try compiling the test programs first."
-  exit 1
-fi
-
+found=0
+failed=0
 for i in *_Test
 do
-  run $i
+  if [ ! -x "$i" ]; then
+    continue
+  fi
+  found=1
+  if ! run "$i"; then
+    failed=1
+  fi
 done
 
 echo "Tests complete..."
+if [ "$found" -eq 0 ]; then
+  echo "ERROR: no executable tests found matching *_Test."
+  echo "ERROR: Try compiling the test programs first."
+  exit 1
+fi
+exit "$failed"
 
 
 # EOF

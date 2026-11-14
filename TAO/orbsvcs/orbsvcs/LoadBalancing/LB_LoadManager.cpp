@@ -21,7 +21,9 @@
 #include "ace/SString.h"
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
+#include <cstdio>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -51,7 +53,6 @@ TAO_LB_LoadManager::TAO_LB_LoadManager (int ping_timeout,
     built_in_balancing_strategy_name_ (1),
     custom_balancing_strategy_name_ (1),
     validate_condition_ (validate_lock_),
-    shutdown_ (false),
     ping_timeout_ (ping_timeout * 10000),
     ping_interval_ (ping_interval)
 {
@@ -101,7 +102,7 @@ TAO_LB_LoadManager::push_loads (
 
   const CORBA::ULong len = groups->length ();
 
-  for (CORBA::ULong i = 0; i < len; ++i)
+  for (CORBA::ULong i {}; i < len; ++i)
     {
       PortableGroup::ObjectGroup_ptr object_group =
         groups[i];
@@ -166,7 +167,7 @@ TAO_LB_LoadManager::enable_alert (const PortableGroup::Location & the_location)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->load_alert_lock_);
 
-  TAO_LB_LoadAlertMap::ENTRY * entry = nullptr;
+  TAO_LB_LoadAlertMap::ENTRY * entry {};
   if (this->load_alert_map_.find (the_location, entry) == 0)
     {
       TAO_LB_LoadAlertInfo & info = entry->int_id_;
@@ -174,7 +175,7 @@ TAO_LB_LoadManager::enable_alert (const PortableGroup::Location & the_location)
       // @note This could be problematic if the LoadAlert object is
       //       registered with more than LoadManager.
 
-      if (info.alerted == 1)
+      if (info.alerted)
         return;  // No need to set the alert status.  It has already
                  // been set.
 
@@ -187,8 +188,8 @@ TAO_LB_LoadManager::enable_alert (const PortableGroup::Location & the_location)
 
       // The alert condition will be enabled.
       // @@ What happens if the below call fails?  This variable
-      //    should be reset to zero!
-      info.alerted = 1;
+      //    should be reset to false!
+      info.alerted = true;
 
       {
         // Release the lock prior to making the below remote
@@ -220,14 +221,14 @@ TAO_LB_LoadManager::disable_alert (const PortableGroup::Location & the_location)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->load_alert_lock_);
 
-  TAO_LB_LoadAlertMap::ENTRY * entry = nullptr;
+  TAO_LB_LoadAlertMap::ENTRY * entry {};
   if (this->load_alert_map_.find (the_location, entry) == 0)
     {
       TAO_LB_LoadAlertInfo & info = entry->int_id_;
 
       // @note This could be problematic if the LoadAlert object is
       //       registered with more than LoadManager.
-      if (info.alerted == 0)
+      if (!info.alerted)
         return;  // No need to set the alert status.  It has already
                  // been set.
 
@@ -240,8 +241,8 @@ TAO_LB_LoadManager::disable_alert (const PortableGroup::Location & the_location)
 
       // The alert condition will be disabled.
       // @@ What happens if the below call fails?  This variable
-      //    should be reset to one!
-      info.alerted = 0;
+      //    should be reset to true!
+      info.alerted = false;
 
       {
         // Release the lock prior to making the below remote
@@ -303,7 +304,7 @@ TAO_LB_LoadManager::get_load_alert (
                     this->load_alert_lock_,
                     CosLoadBalancing::LoadAlert::_nil ());
 
-  TAO_LB_LoadAlertMap::ENTRY * entry = nullptr;
+  TAO_LB_LoadAlertMap::ENTRY * entry {};
   if (this->load_alert_map_.find (the_location, entry) == 0)
     {
       TAO_LB_LoadAlertInfo & info = entry->int_id_;
@@ -403,7 +404,7 @@ TAO_LB_LoadManager::get_load_monitor (
                     this->monitor_lock_,
                     CosLoadBalancing::LoadMonitor::_nil ());
 
-  TAO_LB_MonitorMap::ENTRY * entry = nullptr;
+  TAO_LB_MonitorMap::ENTRY * entry {};
   if (this->monitor_map_.find (the_location, entry) == 0)
     {
       return
@@ -545,7 +546,6 @@ TAO_LB_LoadManager::add_member (
   return ret._retn ();
 }
 
-
 PortableGroup::ObjectGroup_ptr
 TAO_LB_LoadManager::remove_member (
     PortableGroup::ObjectGroup_ptr object_group,
@@ -555,7 +555,6 @@ TAO_LB_LoadManager::remove_member (
     this->object_group_manager_.remove_member (object_group,
                                                the_location);
 }
-
 
 PortableGroup::Locations *
 TAO_LB_LoadManager::locations_of_members (
@@ -615,7 +614,6 @@ TAO_LB_LoadManager::create_object (
 {
 //   this->initialize ();
 
-
   PortableGroup::Criteria new_criteria (the_criteria);
   this->preprocess_properties (new_criteria);
 
@@ -624,61 +622,8 @@ TAO_LB_LoadManager::create_object (
                                           new_criteria,
                                           factory_creation_id);
 
-
   return obj;
 }
-
-#if 0
-void
-TAO_LB_LoadManager::process_criteria (
-  const PortableGroup::Criteria & the_criteria)
-{
-  // List of invalid criteria.  If this list has a length greater than
-  // zero, then the PortableGroup::InvalidCriteria exception will
-  // be thrown.
-  PortableGroup::Criteria invalid_criteria;
-
-  int found_factory = 0; // If factory was found in the_criteria, then
-                         // set to 1.
-
-  // Parse the criteria.
-  CORBA::ULong criteria_count = the_criteria.length ();
-  for (CORBA::ULong i = 0; i < criteria_size; ++i)
-    {
-      CORBA::UShort initial_number_replicas = 0;
-      PortableGroup::FactoryInfos factory_infos;
-
-      // Obtain the InitialNumberMembers from the_criteria.
-      if (this->get_initial_number_replicas (type_id,
-                                             the_criteria[i],
-                                             initial_number_replicas) != 0)
-        {
-          CORBA::ULong len = invalid_criteria.length ();
-          invalid_criteria.length (len + 1);
-          invalid_criteria[len] = the_criteria[i];
-        }
-
-      // Obtain the FactoryInfos from the_criteria.  This method also
-      // ensures that GenericFactories at different locations are used.
-      else if (this->get_factory_infos (type_id,
-                                        the_criteria[i],
-                                        factory_infos) == 0)
-        found_factory = 1;
-
-      // Unknown property
-      else
-        throw PortableGroup::InvalidProperty (
-          the_criteria[i].nam,
-          the_criteria[i].val);
-    }
-
-  if (invalid_criteria.length () != 0)
-    throw PortableGroup::InvalidCriteria (invalid_criteria);
-
-  if (found_factory == 0)
-    throw PortableGroup::NoFactory ();
-}
-#endif  /* 0 */
 
 void
 TAO_LB_LoadManager::delete_object (
@@ -726,7 +671,7 @@ TAO_LB_LoadManager::next_member (const PortableServer::ObjectId & oid)
 
       size_t n_members = this->object_group_manager_.member_count (oid, true);
 
-      size_t count = 0;
+      size_t count {};
 
       while (count < n_members)
       {
@@ -835,7 +780,7 @@ TAO_LB_LoadManager::initialize (ACE_Reactor * reactor,
 
       // Overwrite the last 8 characters in the POA name with the
       // hexadecimal representation of the time in milliseconds.
-      ACE_OS::sprintf (astr, "%x", time);
+      std::sprintf (astr, "%x", time);
 
       this->poa_ = root_poa->create_POA (poa_name,
                                          poa_manager.in (),
@@ -911,7 +856,7 @@ TAO_LB_LoadManager::preprocess_properties (PortableGroup::Properties & props)
   // @@ This is slow.  Optimize this code.
 
   const CORBA::ULong len = props.length ();
-  for (CORBA::ULong i = 0; i < len; ++i)
+  for (CORBA::ULong i {}; i < len; ++i)
     {
       PortableGroup::Property & property = props[i];
       if (property.nam == this->custom_balancing_strategy_name_)
@@ -924,7 +869,7 @@ TAO_LB_LoadManager::preprocess_properties (PortableGroup::Properties & props)
 
       else if (property.nam == this->built_in_balancing_strategy_info_name_)
         {
-          const CosLoadBalancing::StrategyInfo * info = nullptr;
+          const CosLoadBalancing::StrategyInfo * info {};
 
           if (property.val >>= info)
             {
@@ -963,7 +908,7 @@ TAO_LB_LoadManager::make_strategy (const CosLoadBalancing::StrategyInfo * info)
    * @todo We need a strategy factory.  This is just too messy.
    */
 
-  if (ACE_OS::strcmp (info->name.in (), "RoundRobin") == 0)
+  if (std::strcmp (info->name.in (), "RoundRobin") == 0)
     {
       {
         ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
@@ -988,7 +933,7 @@ TAO_LB_LoadManager::make_strategy (const CosLoadBalancing::StrategyInfo * info)
       return CosLoadBalancing::Strategy::_duplicate (this->round_robin_.in ());
     }
 
-  else if (ACE_OS::strcmp (info->name.in (), "Random") == 0)
+  else if (std::strcmp (info->name.in (), "Random") == 0)
     {
       {
         ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
@@ -1013,7 +958,7 @@ TAO_LB_LoadManager::make_strategy (const CosLoadBalancing::StrategyInfo * info)
       return CosLoadBalancing::Strategy::_duplicate (this->random_.in ());
     }
 
-  else if (ACE_OS::strcmp (info->name.in (), "LeastLoaded") == 0)
+  else if (std::strcmp (info->name.in (), "LeastLoaded") == 0)
     {
       // If no LeastLoaded properties have been set, just use the
       // default/cached LeastLoaded instance.  Otherwise create and
@@ -1059,7 +1004,7 @@ TAO_LB_LoadManager::make_strategy (const CosLoadBalancing::StrategyInfo * info)
           return ll_servant->_this ();
         }
     }
-  else if (ACE_OS::strcmp (info->name.in (), "LoadMinimum") == 0)
+  else if (std::strcmp (info->name.in (), "LoadMinimum") == 0)
     {
       if (info->props.length () == 0)
         {
@@ -1100,7 +1045,7 @@ TAO_LB_LoadManager::make_strategy (const CosLoadBalancing::StrategyInfo * info)
           return lm_servant->_this ();
         }
     }
-  else if (ACE_OS::strcmp (info->name.in (), "LoadAverage") == 0)
+  else if (std::strcmp (info->name.in (), "LoadAverage") == 0)
     {
       if (info->props.length () == 0)
         {
@@ -1157,7 +1102,6 @@ TAO_LB_LoadManager::make_strategy (const CosLoadBalancing::StrategyInfo * info)
 //   this->poa_->deactivate_object ();
 // }
 
-
 int
 TAO_LB_LoadManager::svc ()
 {
@@ -1178,6 +1122,5 @@ TAO_LB_LoadManager::svc ()
 
   return 0;
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

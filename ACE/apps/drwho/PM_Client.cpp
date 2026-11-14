@@ -3,8 +3,8 @@
 #include "PM_Client.h"
 #include "ace/ACE.h"
 #include "ace/Log_Msg.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_stdlib.h"
+#include <cstdlib>
+#include <cstring>
 
 // This function is used to merge the LOGIN_NAME from server HOST_NAME
 // into the userids kept on the client's side.  Note that we must
@@ -23,7 +23,7 @@ PM_Client::insert_protocol_info (Protocol_Record &protocol_record)
   if (np->get_active_count () < current_node->get_active_count ())
     {
       np->set_active_count (current_node->get_active_count ());
-      prp->is_active_ = 1;
+      prp->is_active_ = true;
     }
 
   if (np->get_inactive_count () < current_node->get_inactive_count())
@@ -46,7 +46,7 @@ PM_Client::process ()
     get_name = &Protocol_Record::get_real;
 
   int active_friends = 0;
-  int users = this->Protocol_Manager::get_total_users ();
+  const int users = this->Protocol_Manager::get_total_users ();
 
   ACE_DEBUG ((LM_DEBUG,
               "------------------------\n"));
@@ -58,11 +58,11 @@ PM_Client::process ()
   // out the associated information.
 
   for (Protocol_Record *prp = this->Protocol_Manager::get_each_friend ();
-       prp != 0;
+       prp != nullptr;
        prp = this->Protocol_Manager::get_each_friend ())
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "%c%-*s [", (prp->is_active_ != 0 ? '*' : ' '),
+                  "%c%-*s [", (prp->is_active_ ? '*' : ' '),
                   this->max_key_length,
                   (prp->*get_name) ()));
 
@@ -90,7 +90,7 @@ PM_Client::process ()
                         "*"));
 
           np = np->next_;
-          if (np == 0)
+          if (np == nullptr)
             break;
           else
             ACE_DEBUG ((LM_DEBUG,
@@ -119,18 +119,13 @@ PM_Client::handle_protocol_entries (const char *cp,
 
   protocol_record.set_login (login_name);
   protocol_record.set_real (real_name);
-  current_node->set_inactive_count (ACE_OS::atoi (cp));
-  current_node->set_active_count (ACE_OS::atoi (cp = ACE_OS::strchr (cp, ' ') + 1));
-  current_node->set_host_name (cp = ACE_OS::strchr (cp, ' ') + 1);
+  current_node->set_inactive_count (std::atoi (cp));
+  current_node->set_active_count (std::atoi (cp = std::strchr (cp, ' ') + 1));
+  current_node->set_host_name (cp = std::strchr (cp, ' ') + 1);
 
   this->insert_protocol_info (protocol_record);
 
   return (char *) ACE::strend (cp);
-}
-
-PM_Client::PM_Client ()
-  : max_key_length (0)
-{
 }
 
 PM_Client::~PM_Client ()

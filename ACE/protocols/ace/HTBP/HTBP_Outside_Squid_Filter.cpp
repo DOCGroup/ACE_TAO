@@ -1,3 +1,7 @@
+#include <cstring>
+#include <cstdlib>
+#include <string>
+
 #include "ace/Log_Msg.h"
 
 #include "HTBP_Session.h"
@@ -23,7 +27,7 @@ ACE::HTBP::Outside_Squid_Filter::recv_data_header (ACE::HTBP::Channel *ch)
 
   // recv header details
   char *header_end = this->header_complete(ch);
-  if (header_end == 0)
+  if (header_end == nullptr)
     {
       if (ch->state() != ACE::HTBP::Channel::Closed)
         {
@@ -35,16 +39,16 @@ ACE::HTBP::Outside_Squid_Filter::recv_data_header (ACE::HTBP::Channel *ch)
 
   char *start = ch->leftovers().rd_ptr();
 
-  int is_inbound = 0;
+  bool is_inbound = false;
   ACE_CString token ("POST ");
-  if (ACE_OS::strncmp (start,token.c_str(),token.length()) == 0)
-    is_inbound = 1;
+  if (std::strncmp (start, token.c_str (), token.length ()) == 0)
+    is_inbound = true;
   else
     {
       token = "GET ";
-      if (ACE_OS::strncmp (start,
-                           token.c_str(),
-                           token.length()) != 0)
+      if (std::strncmp (start,
+                        token.c_str (),
+                        token.length ()) != 0)
         {
           ch->leftovers().length(0);
           errno = EINVAL;
@@ -56,13 +60,13 @@ ACE::HTBP::Outside_Squid_Filter::recv_data_header (ACE::HTBP::Channel *ch)
     }
   start += token.length();
   // "http://" is stripped by squid, leaving only "/"
-  start += (ACE_OS::strncmp (start,"http://",7) == 0) ? 7 : 1;
+  start += (std::strncmp (start, "http://", 7) == 0) ? 7 : 1;
 
   // set up the actual session and stream
   ACE::HTBP::Session_Id_t session_id;
-  char * slash = ACE_OS::strchr(start,'/');
-  char * nl = ACE_OS::strchr (start,'\n');
-  if (slash == 0)
+  char *slash = std::strchr (start, '/');
+  char *nl = std::strchr (start, '\n');
+  if (slash == nullptr)
     {
       ch->leftovers().length(0);
       errno = EINVAL;
@@ -75,8 +79,8 @@ ACE::HTBP::Outside_Squid_Filter::recv_data_header (ACE::HTBP::Channel *ch)
   session_id.local_.string_to_addr (start);
   start = slash+1;
 
-  slash =  ACE_OS::strchr(start,'/');
-  if (slash == 0)
+  slash = std::strchr (start, '/');
+  if (slash == nullptr)
     {
       ch->leftovers().length(0);
       errno = EINVAL;
@@ -89,8 +93,8 @@ ACE::HTBP::Outside_Squid_Filter::recv_data_header (ACE::HTBP::Channel *ch)
   session_id.peer_.string_to_addr (start);
   start = slash + 1;
 
-  slash =  ACE_OS::strchr(start,' ');
-  if (slash == 0)
+  slash = std::strchr (start, ' ');
+  if (slash == nullptr)
     {
       ch->leftovers().length (0);
       errno = EINVAL;
@@ -100,25 +104,25 @@ ACE::HTBP::Outside_Squid_Filter::recv_data_header (ACE::HTBP::Channel *ch)
                          ACE_TEXT("missing sender key")),0);
     }
   *slash = 0;
-  session_id.id_ = ACE_OS::strtol(start,0,10);
+  session_id.id_ = std::strtol (start, nullptr, 10);
   start = slash + 1;
 
   if (is_inbound)
     {
       token = "Content-Length: ";
-      char *tpos = ACE_OS::strstr(start,token.c_str());
-      if (tpos != 0)
+      char *tpos = std::strstr (start, token.c_str ());
+      if (tpos != nullptr)
         {
-          nl = ACE_OS::strchr(tpos,'\n');
+          nl = std::strchr (tpos, '\n');
           tpos += token.length();
           *nl = 0;
-          ch->data_len(ACE_OS::strtol(tpos,0,10));
+          ch->data_len (std::strtol (tpos, nullptr, 10));
           start = nl+1;
         }
     }
   ch->leftovers().rd_ptr(header_end);
 
-  ACE::HTBP::Session *session = 0;
+  ACE::HTBP::Session *session {};
   if (ACE::HTBP::Session::find_session (session_id, session) == -1)
     {
       ACE_NEW_RETURN (session, ACE::HTBP::Session (session_id), 0);
@@ -166,9 +170,8 @@ ACE::HTBP::Outside_Squid_Filter::send_data_header (ssize_t data_len,
   ACE_CString header ("HTTP/1.1 200 OK\n"
                       "Content-Type: application/octet-stream\n"
                       "Content-Length: ");
-  char datalenstr[20];
-  ACE_OS::itoa (data_len,datalenstr,10);
-  header += datalenstr;
+  const std::string data_length = std::to_string (data_len);
+  header += data_length.c_str ();
   header += "\n\n";
   ssize_t result = ch->ace_stream().send(header.c_str(),header.length());
   ch->state(result == -1 ?

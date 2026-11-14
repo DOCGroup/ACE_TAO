@@ -1,64 +1,64 @@
 #include "testS.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_stdio.h"
 #include "tao/ORB_Core.h"
 #include "ace/Task.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
 #include "../check_supported_priorities.cpp"
 
+#include <memory>
+
+struct Server_Options
+{
+  ACE_TCHAR const *ior_output_file1 {ACE_TEXT ("test1.ior")};
+  ACE_TCHAR const *ior_output_file2 {ACE_TEXT ("test2.ior")};
+  CORBA::Short poa_priority {-1};
+  CORBA::Short object_priority {-1};
+};
+
 class Test_i : public POA_Test
 {
-  // = TITLE
-  //   An implementation for the Test interface in test.idl
-  //
 public:
-  Test_i (CORBA::ORB_ptr orb);
-  // ctor
+  explicit Test_i (CORBA::ORB_ptr orb);
+  Test_i (Test_i const &) = delete;
+  Test_i (Test_i &&) = delete;
+  Test_i &operator= (Test_i const &) = delete;
+  Test_i &operator= (Test_i &&) = delete;
 
-  void test_method (CORBA::Short priority);
+  void test_method (CORBA::Short priority) override;
 
   //FUZZ: disable check_for_lack_ACE_OS
-  void shutdown ();
+  void shutdown () override;
   //FUZZ: enable check_for_lack_ACE_OS
 
 private:
-  CORBA::ORB_var orb_;
-  // The ORB
+  CORBA::ORB_var const orb_;
 };
 
 Test_i::Test_i (CORBA::ORB_ptr orb)
-  :  orb_ (CORBA::ORB::_duplicate (orb))
+  : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
 void
 Test_i::test_method (CORBA::Short priority)
 {
-  // Use RTCurrent to find out the CORBA priority of the current
-  // thread.
+  CORBA::Object_var const object = this->orb_->resolve_initial_references ("RTCurrent");
+  RTCORBA::Current_var const current = RTCORBA::Current::_narrow (object.in ());
 
-  CORBA::Object_var obj =
-    this->orb_->resolve_initial_references ("RTCurrent");
-
-  RTCORBA::Current_var current =
-    RTCORBA::Current::_narrow (obj.in ());
-
-  if (CORBA::is_nil (obj.in ()))
+  if (CORBA::is_nil (object.in ()))
     throw CORBA::INTERNAL ();
 
-  CORBA::Short servant_thread_priority =
-    current->the_priority ();
-
-  // Print out the info.
+  CORBA::Short const servant_thread_priority = current->the_priority ();
   if (servant_thread_priority != priority)
     ACE_DEBUG ((LM_DEBUG,
-                "ERROR: servant thread priority is not equal"
-                "to method argument.\n"));
+                "ERROR: servant thread priority is not equal to method argument.\n"));
 
   ACE_DEBUG ((LM_DEBUG,
-              "Server_Declared priority: %d  "
-              "Servant thread priority: %d\n",
-              priority, servant_thread_priority));
+              "Server_Declared priority: %d  Servant thread priority: %d\n",
+              priority,
+              servant_thread_priority));
 }
 
 void
@@ -67,49 +67,38 @@ Test_i::shutdown ()
   this->orb_->shutdown (false);
 }
 
-//*************************************************************************
-
-const ACE_TCHAR *ior_output_file1 = ACE_TEXT("test1.ior");
-const ACE_TCHAR *ior_output_file2 = ACE_TEXT("test2.ior");
-CORBA::Short poa_priority = -1;
-CORBA::Short object_priority = -1;
-
-// Parse command-line arguments.
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("p:o:a:b:"));
-  int c, result;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("p:o:a:b:"));
+  int option {};
+  int result {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'p':
-        ior_output_file1 = get_opts.opt_arg ();
+        options.ior_output_file1 = get_opts.opt_arg ();
         break;
 
       case 'o':
-        ior_output_file2 = get_opts.opt_arg ();
+        options.ior_output_file2 = get_opts.opt_arg ();
         break;
 
       case 'a':
         result = ::sscanf (ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ()),
                            "%hd",
-                           &poa_priority);
+                           &options.poa_priority);
         if (result == 0 || result == EOF)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to process <-a> option"),
-                            -1);
+          ACE_ERROR_RETURN ((LM_ERROR, "Unable to process <-a> option"), -1);
         break;
 
       case 'b':
         result = ::sscanf (ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ()),
                            "%hd",
-                           &object_priority);
+                           &options.object_priority);
         if (result == 0 || result == EOF)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to process <-b> option"),
-                            -1);
+          ACE_ERROR_RETURN ((LM_ERROR, "Unable to process <-b> option"), -1);
         break;
 
       case '?':
@@ -125,26 +114,25 @@ parse_args (int argc, ACE_TCHAR *argv[])
                           -1);
       }
 
-  if (poa_priority < 0
-      || object_priority < 0)
+  if (options.poa_priority < 0 || options.object_priority < 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Valid poa and object priorities must be"
-                       " specified.\nSee README file for more info\n"),
+                       "Valid poa and object priorities must be specified.\n"
+                       "See README file for more info\n"),
                       -1);
 
   return 0;
 }
 
 int
-check_for_nil (CORBA::Object_ptr obj, const char *msg)
+check_for_nil (CORBA::Object_ptr const object, char const *message)
 {
-  if (CORBA::is_nil (obj))
+  if (CORBA::is_nil (object))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "ERROR: Object reference <%C> is nil\n",
-                       msg),
+                       message),
                       -1);
-  else
-    return 0;
+
+  return 0;
 }
 
 int
@@ -152,38 +140,29 @@ create_object (RTPortableServer::POA_ptr poa,
                CORBA::ORB_ptr orb,
                Test_i *server_impl,
                CORBA::Short priority,
-               const ACE_TCHAR *filename)
+               ACE_TCHAR const *filename)
 {
-  // Register with poa.
   PortableServer::ObjectId_var id;
-
   if (priority > -1)
-    id = poa->activate_object_with_priority (server_impl,
-                                             priority);
+    id = poa->activate_object_with_priority (server_impl, priority);
   else
     id = poa->activate_object (server_impl);
 
-
-  CORBA::Object_var server =
-    poa->id_to_reference (id.in ());
-
-  // Print out the IOR.
-  CORBA::String_var ior =
-    orb->object_to_string (server.in ());
-
+  CORBA::Object_var const server = poa->id_to_reference (id.in ());
+  CORBA::String_var const ior = orb->object_to_string (server.in ());
   ACE_DEBUG ((LM_DEBUG, "<%C>\n\n", ior.in ()));
 
-  // Print ior to the file.
-  if (filename != 0)
+  if (filename != nullptr)
     {
-      FILE *output_file= ACE_OS::fopen (filename, "w");
-      if (output_file == 0)
+      std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
+        ACE_OS::fopen (filename, ACE_TEXT ("w")), ACE_OS::fclose);
+      if (!output_file)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s",
+                           ACE_TEXT ("Cannot open output file for writing IOR: %s"),
                            filename),
                           -1);
-      ACE_OS::fprintf (output_file, "%s", ior.in ());
-      ACE_OS::fclose (output_file);
+
+      ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
     }
 
   return 0;
@@ -193,17 +172,26 @@ class Task : public ACE_Task_Base
 {
 public:
   Task (ACE_Thread_Manager &thread_manager,
-        CORBA::ORB_ptr orb);
+        CORBA::ORB_ptr orb,
+        Server_Options const &options);
+  Task (Task const &) = delete;
+  Task (Task &&) = delete;
+  Task &operator= (Task const &) = delete;
+  Task &operator= (Task &&) = delete;
 
-  int svc ();
+  int svc () override;
 
-  CORBA::ORB_var orb_;
+private:
+  CORBA::ORB_var const orb_;
+  Server_Options const options_;
 };
 
 Task::Task (ACE_Thread_Manager &thread_manager,
-            CORBA::ORB_ptr orb)
+            CORBA::ORB_ptr orb,
+            Server_Options const &options)
   : ACE_Task_Base (&thread_manager),
-    orb_ (CORBA::ORB::_duplicate (orb))
+    orb_ (CORBA::ORB::_duplicate (orb)),
+    options_ (options)
 {
 }
 
@@ -212,77 +200,56 @@ Task::svc ()
 {
   try
     {
-      // RTORB.
-      CORBA::Object_var object =
-        this->orb_->resolve_initial_references ("RTORB");
-      RTCORBA::RTORB_var rt_orb = RTCORBA::RTORB::_narrow (object.in ());
+      CORBA::Object_var object = this->orb_->resolve_initial_references ("RTORB");
+      RTCORBA::RTORB_var const rt_orb = RTCORBA::RTORB::_narrow (object.in ());
       if (check_for_nil (rt_orb.in (), "RTORB") == -1)
         return -1;
 
-      // RootPOA.
-      object =
-        this->orb_->resolve_initial_references("RootPOA");
-      PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (object.in ());
+      object = this->orb_->resolve_initial_references ("RootPOA");
+      PortableServer::POA_var const root_poa = PortableServer::POA::_narrow (object.in ());
       if (check_for_nil (root_poa.in (), "RootPOA") == -1)
         return -1;
 
-      // POAManager.
-      PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager ();
+      PortableServer::POAManager_var const poa_manager = root_poa->the_POAManager ();
 
-      // Create child POA with SERVER_DECLARED PriorityModelPolicy,
-      // and MULTIPLE_ID id uniqueness policy (so we can use one
-      // servant to create several objects).
       CORBA::PolicyList poa_policy_list;
       poa_policy_list.length (2);
-      poa_policy_list[0] =
-        rt_orb->create_priority_model_policy (RTCORBA::SERVER_DECLARED,
-                                              poa_priority);
+      poa_policy_list[0] = rt_orb->create_priority_model_policy (RTCORBA::SERVER_DECLARED,
+                                                                 this->options_.poa_priority);
+      poa_policy_list[1] = root_poa->create_id_uniqueness_policy (PortableServer::MULTIPLE_ID);
 
-      poa_policy_list[1] =
-        root_poa->create_id_uniqueness_policy (PortableServer::MULTIPLE_ID);
-
-      PortableServer::POA_var child_poa =
-        root_poa->create_POA ("Child_POA",
-                              poa_manager.in (),
-                              poa_policy_list);
-
-      RTPortableServer::POA_var rt_poa =
-        RTPortableServer::POA::_narrow (child_poa.in ());
+      PortableServer::POA_var const child_poa =
+        root_poa->create_POA ("Child_POA", poa_manager.in (), poa_policy_list);
+      RTPortableServer::POA_var const rt_poa = RTPortableServer::POA::_narrow (child_poa.in ());
       if (check_for_nil (rt_poa.in (), "RTPOA") == -1)
         return -1;
 
-      // Servant.
       Test_i server_impl (this->orb_.in ());
-
-      // Create object 1 (it will inherit POA's priority).
-      int result;
       ACE_DEBUG ((LM_DEBUG, "\nActivated object one as "));
-      result = create_object (rt_poa.in (), this->orb_.in (), &server_impl,
-                              -1, ior_output_file1);
+      int result = create_object (rt_poa.in (),
+                                 this->orb_.in (),
+                                 &server_impl,
+                                 -1,
+                                 this->options_.ior_output_file1);
       if (result == -1)
         return -1;
 
-      // Create object 2 (override POA's priority).
       ACE_DEBUG ((LM_DEBUG, "\nActivated object two as "));
-      result = create_object (rt_poa.in (), this->orb_.in (), &server_impl,
-                              object_priority, ior_output_file2);
+      result = create_object (rt_poa.in (),
+                              this->orb_.in (),
+                              &server_impl,
+                              this->options_.object_priority,
+                              this->options_.ior_output_file2);
       if (result == -1)
         return -1;
 
-      // Activate POA manager.
       poa_manager->activate ();
-
-      // Start ORB event loop.
       this->orb_->run ();
-
       ACE_DEBUG ((LM_DEBUG, "Server ORB event loop finished\n\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
-      ex._tao_print_exception (
-        "Unexpected exception caught in Server_Declared test server:");
+      ex._tao_print_exception ("Unexpected exception caught in Server_Declared test server:");
       return -1;
     }
 
@@ -290,61 +257,43 @@ Task::svc ()
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      // ORB.
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv);
-
-      // Parse arguments.
-      if (parse_args (argc, argv) != 0)
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
+      Server_Options options;
+      if (parse_args (argc, argv, options) != 0)
         return -1;
 
-      // Make sure we can support multiple priorities that are required
-      // for this test.
       if (!check_supported_priorities (orb.in ()))
         return 2;
 
-      // Thread Manager for managing task.
       ACE_Thread_Manager thread_manager;
+      Task task (thread_manager, orb.in (), options);
+      long const flags = THR_NEW_LWP |
+                         THR_JOINABLE |
+                         orb->orb_core ()->orb_params ()->thread_creation_flags ();
 
-      // Create task.
-      Task task (thread_manager,
-                 orb.in ());
-
-      // Task activation flags.
-      long flags =
-        THR_NEW_LWP |
-        THR_JOINABLE |
-        orb->orb_core ()->orb_params ()->thread_creation_flags ();
-
-      // Activate task.
-      int result =
-        task.activate (flags);
+      int result = task.activate (flags);
       if (result == -1)
         {
           if (errno == EPERM)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "Cannot create thread with scheduling policy %s\n"
-                                 "because the user does not have the appropriate privileges, terminating program....\n"
-                                 "Check svc.conf options and/or run as root\n",
-                                 sched_policy_name (orb->orb_core ()->orb_params ()->ace_sched_policy ())),
-                                2);
-            }
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Cannot create thread with scheduling policy %s\n"
+                               "because the user does not have the appropriate privileges, "
+                               "terminating program....\n"
+                               "Check svc.conf options and/or run as root\n",
+                               sched_policy_name (orb->orb_core ()->orb_params ()->ace_sched_policy ())),
+                              2);
           else
-            // Unexpected error.
             ACE_ASSERT (0);
         }
 
-      // Wait for task to exit.
-      result =
-        thread_manager.wait ();
+      result = thread_manager.wait ();
       ACE_ASSERT (result != -1);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught");
       return -1;

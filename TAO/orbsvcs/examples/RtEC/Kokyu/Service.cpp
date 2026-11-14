@@ -11,42 +11,33 @@
 #include "Consumer.h"
 #include "Supplier.h"
 
-
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"
-#include <memory>
-#include "ace/SString.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/Thread.h"
 
+#include <string>
 
-namespace
-{
-  int config_run = 0;
-  ACE_CString sched_type ="rms";
-}
-
-inline RtecScheduler::Period_t time_val_to_period (const ACE_Time_Value &tv)
+inline RtecScheduler::Period_t time_val_to_period (ACE_Time_Value const &tv)
 {
   //100s of nanoseconds
-  return static_cast<RtecScheduler::Period_t> (tv.sec () * 1000000 + tv.usec ())*10;
+  return static_cast<RtecScheduler::Period_t> (tv.sec () * 1000000 + tv.usec ()) * 10;
 }
 
-int parse_args (int argc, ACE_TCHAR *argv[]);
+int parse_args (int argc, ACE_TCHAR *argv[], std::string &sched_type);
 
-typedef TAO_Reconfig_Scheduler<TAO_RMS_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX> RECONFIG_RMS_SCHED_TYPE;
+using RECONFIG_RMS_SCHED_TYPE =
+  TAO_Reconfig_Scheduler<TAO_RMS_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
 
-typedef TAO_Reconfig_Scheduler<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX> RECONFIG_MUF_SCHED_TYPE;
+using RECONFIG_MUF_SCHED_TYPE =
+  TAO_Reconfig_Scheduler<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX>;
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_UNUSED_ARG (config_run);
-
   //TAO_EC_Default_Factory::init_svcs ();
 
   TAO_EC_Kokyu_Factory::init_svcs ();
-
 
   try
     {
@@ -54,10 +45,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) == -1)
+      std::string sched_type {"rms"};
+      if (parse_args (argc, argv, sched_type) == -1)
         {
           ACE_ERROR ((LM_ERROR,
-                      "Usage: Service [-o IOR_file_name]\n"));
+                      ACE_TEXT ("Usage: Service [-s rms|muf]\n")));
           return 1;
         }
 
@@ -72,16 +64,16 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // ****************************************************************
 
       // Create an scheduling service
-      POA_RtecScheduler::Scheduler* sched_impl = 0;
+      POA_RtecScheduler::Scheduler *sched_impl {};
 
-      if (ACE_OS::strcasecmp(sched_type.c_str(), "rms") == 0)
+      if (ACE_OS::strcasecmp (sched_type.c_str (), "rms") == 0)
         {
           ACE_DEBUG ((LM_DEBUG, "Creating RMS scheduler\n"));
           ACE_NEW_RETURN (sched_impl,
                           RECONFIG_RMS_SCHED_TYPE,
                           1);
         }
-      else if (ACE_OS::strcasecmp(sched_type.c_str(), "muf") == 0)
+      else if (ACE_OS::strcasecmp (sched_type.c_str (), "muf") == 0)
         {
           ACE_DEBUG ((LM_DEBUG, "Creating MUF scheduler\n"));
           ACE_NEW_RETURN (sched_impl,
@@ -117,8 +109,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       //so no need to specify a period here. Specifying
       //criticality is crucial since it propagates from
       //consumer to supplier.
-      ACE_Time_Value tv (0,0);
-      TimeBase::TimeT tmp;
+      ACE_Time_Value tv {};
+      TimeBase::TimeT tmp {};
       ORBSVCS_Time::Time_Value_to_TimeT (tmp, tv);
       scheduler->set (consumer1_rt_info,
                       RtecScheduler::VERY_LOW_CRITICALITY,
@@ -126,7 +118,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                       time_val_to_period (tv),
                       RtecScheduler::VERY_LOW_IMPORTANCE,
                       tmp,
-                      0,
+                      {},
                       RtecScheduler::OPERATION);
 
       scheduler->set (consumer2_rt_info,
@@ -135,7 +127,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                       time_val_to_period (tv),
                       RtecScheduler::VERY_HIGH_IMPORTANCE,
                       tmp,
-                      0,
+                      {},
                       RtecScheduler::OPERATION);
 
       ACE_ConsumerQOS_Factory consumer_qos1, consumer_qos2;
@@ -198,7 +190,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       RtecScheduler::handle_t supplier2_rt_info =
         scheduler->create ("supplier2");
 
-      RtecEventComm::EventSourceID supplier_id1 = 1, supplier_id2 = 2;
+      RtecEventComm::EventSourceID const supplier_id1 {1}, supplier_id2 {2};
       ACE_SupplierQOS_Factory supplier_qos1, supplier_qos2;
       supplier_qos1.insert (supplier_id1,
                            ACE_ES_EVENT_UNDEFINED,
@@ -250,7 +242,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         scheduler->create ("supplier1_timeout_consumer");
 
       //Period = 1sec
-      tv.set (1,0);
+      tv.set (1, {});
       ORBSVCS_Time::Time_Value_to_TimeT (tmp, tv);
 
       scheduler->set (supplier1_timeout_consumer_rt_info,
@@ -259,14 +251,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                       time_val_to_period (tv),
                       RtecScheduler::VERY_LOW_IMPORTANCE,
                       tmp,
-                      0,
+                      {},
                       RtecScheduler::OPERATION);
 
       RtecScheduler::handle_t supplier2_timeout_consumer_rt_info =
         scheduler->create ("supplier2_timeout_consumer");
 
       //Period = 3sec
-      tv.set (3, 0);
+      tv.set (3, {});
       ORBSVCS_Time::Time_Value_to_TimeT (tmp, tv);
 
       scheduler->set (supplier2_timeout_consumer_rt_info,
@@ -275,7 +267,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                       time_val_to_period (tv),
                       RtecScheduler::VERY_HIGH_IMPORTANCE,
                       tmp,
-                      0,
+                      {},
                       RtecScheduler::OPERATION);
 
       ACE_ConsumerQOS_Factory timer_qos1, timer_qos2;
@@ -356,10 +348,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // generated file, but in the future we may just use the
       // "logical" priorities and define the mapping to OS
       // priorities at run-time.
-      int min_os_priority =
+      int const min_os_priority =
         ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
                                         ACE_SCOPE_THREAD);
-      int max_os_priority =
+      int const max_os_priority =
         ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
                                         ACE_SCOPE_THREAD);
       scheduler->compute_scheduling (min_os_priority,
@@ -379,10 +371,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // ****************************************************************
       ACE_DEBUG ((LM_DEBUG, "Pushing events\n"));
 
-      ACE_hthread_t thr_handle;
+      ACE_hthread_t thr_handle {};
       ACE_Thread::self (thr_handle);
 
-      int prio = ACE_Sched_Params::priority_max (ACE_SCHED_FIFO);
+      int const prio = ACE_Sched_Params::priority_max (ACE_SCHED_FIFO);
       ACE_OS::thr_setprio (thr_handle, prio);
 
 //     // Generate a few events....
@@ -426,7 +418,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // just a simple demo so we are going to be lazy.
 
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Service");
       return 1;
@@ -436,16 +428,17 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-int parse_args (int argc, ACE_TCHAR *argv[])
+int
+parse_args (int argc, ACE_TCHAR *argv[], std::string &sched_type)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("cs:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("s:"));
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 's':
-        sched_type = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ());
+        sched_type = ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ());
         break;
 
       case '?':
@@ -457,6 +450,10 @@ int parse_args (int argc, ACE_TCHAR *argv[])
                            "-s <rms|muf>"),
                           -1);
       }
+  if (ACE_OS::strcasecmp (sched_type.c_str (), "rms") != 0
+      && ACE_OS::strcasecmp (sched_type.c_str (), "muf") != 0)
+    return -1;
+
   // Indicates successful parsing of the command line
   return 0;
 }

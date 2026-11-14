@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_REGISTRY_H
 #define ACE_REGISTRY_H
 #include /**/ "ace/pre.h"
@@ -74,12 +73,10 @@ public:
     /// Empty (default) constructor
     Binding ();
 
-    /// Constructor
     /// (Name version)
     Binding (const Name &binding_name,
              Binding_Type binding_type);
 
-    /// Constructor
     /// (String version)
     Binding (const ACE_TString &binding_name,
              Binding_Type binding_type);
@@ -251,7 +248,6 @@ public:
 
     /// Delete object with @a name in @c this context
     int unbind (const ACE_TString &name);
-
 
     // The following interfaces are for Naming Context
 
@@ -452,10 +448,8 @@ public:
     class ACE_Export Iteration_State
       {
       public:
-        /// Constructor
         Iteration_State ();
 
-        /// Destructor
         virtual ~Iteration_State ();
 
         /// Set the iterator reference.
@@ -545,7 +539,7 @@ public:
 
 private:
   /// Check if @a machine_name is the local host
-  static int is_local_host (const ACE_TCHAR *machine_name);
+  static bool is_local_host (const ACE_TCHAR *machine_name);
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

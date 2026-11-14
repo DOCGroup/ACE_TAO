@@ -23,11 +23,10 @@
 class TAO_RTEC_Perf_Export ORB_Task : public ACE_Task_Base
 {
 public:
-  /// Constructor
   ORB_Task (CORBA::ORB_ptr orb);
 
   /// Run the event loop
-  int svc ();
+  int svc () override;
 
   /// Smart-pointer operator
   CORBA::ORB_ptr operator-> () const;

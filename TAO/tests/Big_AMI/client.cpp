@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    client.cpp
@@ -9,41 +8,45 @@
  */
 //=============================================================================
 
-
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 
 #include "ami_testS.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
-int niterations = 5;
-int shutdown_flag = 0;
-int debug = 1;
-CORBA::ULong payload_size  = 128000;
+#include <atomic>
+
+struct Options
+{
+  ACE_TCHAR const *ior {ACE_TEXT ("file://test.ior")};
+  int iterations {5};
+  bool shutdown {};
+  bool debug {true};
+  CORBA::ULong payload_size {128000};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("db:k:i:x"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'd':
-        debug = 1;
+        options.debug = true;
         break;
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
       case 'i':
-        niterations = ACE_OS::atoi (get_opts.opt_arg ());
+        options.iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'x':
-        shutdown_flag = 1;
+        options.shutdown = true;
         break;
       case 'b':
-        payload_size  = ACE_OS::atoi (get_opts.opt_arg ());
+        options.payload_size = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case '?':
       default:
@@ -64,23 +67,28 @@ parse_args (int argc, ACE_TCHAR *argv[])
 class Handler : public POA_A::AMI_AMI_TestHandler
 {
 public:
-  /// Constructor.
-  Handler () : reply_count_ (0) {};
+  explicit Handler (bool debug)
+    : debug_ (debug)
+  {
+  }
 
-  /// Destructor.
-  ~Handler () = default;
+  ~Handler () override = default;
+  Handler (Handler const &) = delete;
+  Handler &operator= (Handler const &) = delete;
+  Handler (Handler &&) = delete;
+  Handler &operator= (Handler &&) = delete;
 
   /// Get the reply count
   long reply_count () const
   {
-    return reply_count_.value ();
+    return reply_count_.load ();
   }
 
   void foo (CORBA::Long ami_return_val,
-            CORBA::Long out_l)
+            CORBA::Long out_l) override
     {
       ++reply_count_;
-      if (debug)
+      if (this->debug_)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Callback method <foo> called: result <%d>, out_arg <%d>\n",
@@ -89,7 +97,7 @@ public:
         }
     };
 
-  void foo_excep (::Messaging::ExceptionHolder * excep_holder)
+  void foo_excep (::Messaging::ExceptionHolder *excep_holder) override
     {
       ++reply_count_;
 
@@ -100,7 +108,7 @@ public:
         {
           excep_holder->raise_exception ();
         }
-      catch (const CORBA::Exception&)
+      catch (CORBA::Exception const &)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "... caught the wrong exception -> ERROR\n"));
@@ -108,7 +116,8 @@ public:
     };
 
 private:
-  ACE_Atomic_Op <TAO_SYNCH_MUTEX, long> reply_count_;
+  bool const debug_;
+  std::atomic<long> reply_count_ {};
 };
 
 int
@@ -130,25 +139,26 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       poa_manager_var->activate ();
 
-      if (parse_args (argc, argv) != 0)
+      Options options;
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
       // We reuse the object_var smart pointer!
-      CORBA::Object_var ior_object = orb->string_to_object (ior);
+      CORBA::Object_var const ior_object = orb->string_to_object (options.ior);
 
-      A::AMI_Test_var ami_test_var =
+      A::AMI_Test_var const ami_test_var =
         A::AMI_Test::_narrow (ior_object.in ());
 
       if (CORBA::is_nil (ami_test_var.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Object reference <%s> is nil.\n",
-                             ior),
+                             options.ior),
                             1);
         }
 
       // Instantiate the ReplyHandler and register that with the POA.
-      Handler handler;
+      Handler handler (options.debug);
       PortableServer::ObjectId_var id =
         poa_var->activate_object (&handler);
 
@@ -157,21 +167,21 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       A::AMI_AMI_TestHandler_var the_handler_var =
         A::AMI_AMI_TestHandler::_narrow (object.in ());
 
-      CORBA::Long l = 931247;
-      A::Payload payload (payload_size);
-      payload.length (payload_size);
+      CORBA::Long l {931247};
+      A::Payload payload (options.payload_size);
+      payload.length (options.payload_size);
 
-      for (CORBA::ULong j = 0; j != payload_size; ++j)
+      for (CORBA::ULong j = 0; j != options.payload_size; ++j)
         {
           payload[j] = j % 256;
         }
 
-      for (ssize_t ni = 0; ni < niterations; ni++)
+      for (ssize_t ni = 0; ni < options.iterations; ni++)
         {
-          if (debug)
+          if (options.debug)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "Sending asynch message: %d\n",
+                          "Sending asynch message: %b\n",
                           ni));
             }
 
@@ -181,42 +191,42 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                    payload);
         }
 
-      if (debug)
+      if (options.debug)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "<%d> Asynchronous methods issued\n",
-                      niterations));
+                      options.iterations));
         }
 
-      if (debug)
+      if (options.debug)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Issuing a synchronous method to collect the AMI replies\n"));
         }
 
-      CORBA::Long number = ami_test_var->foo (l,
-                                              l,
-                                              "Let's talk SMI.",
-                                              payload);
+      CORBA::Long const number = ami_test_var->foo (l,
+                                                    l,
+                                                    "Let's talk SMI.",
+                                                    payload);
 
-      if (debug)
+      if (options.debug)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Received the following number: %d\n",
                       number));
         }
 
-      if (shutdown_flag)
+      if (options.shutdown)
         {
           ami_test_var->shutdown ();
         }
 
-      poa_var->destroy (1,  // ethernalize objects
-                        0);  // wait for completion
+      poa_var->destroy (true,  // ethernalize objects
+                        false);  // wait for completion
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;

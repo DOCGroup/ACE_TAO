@@ -24,11 +24,19 @@ ACE_INLINE void
 TAO_EC_Event_Channel_Base::factory (TAO_EC_Factory* factory,
                                     int own_factory)
 {
-  if (this->own_factory_)
-    delete this->factory_;
+  if (this->factory_ == factory)
+    {
+      if (own_factory != 0 && this->owned_factory_.get () != factory)
+        this->owned_factory_.reset (factory);
+      else if (own_factory == 0 && this->owned_factory_.get () == factory)
+        this->owned_factory_.release ();
+      return;
+    }
 
+  this->owned_factory_.reset ();
+  if (own_factory != 0)
+    this->owned_factory_.reset (factory);
   this->factory_ = factory;
-  this->own_factory_ = own_factory;
 }
 
 ACE_INLINE TAO_EC_Dispatching*
@@ -169,35 +177,35 @@ TAO_EC_Event_Channel_Base::destroy_supplier_lock (ACE_Lock* x)
   this->factory_->destroy_supplier_lock (x);
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 TAO_EC_Event_Channel_Base::consumer_reconnect () const
 {
   return this->consumer_reconnect_;
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 TAO_EC_Event_Channel_Base::supplier_reconnect () const
 {
   return this->supplier_reconnect_;
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 TAO_EC_Event_Channel_Base::disconnect_callbacks () const
 {
   return this->disconnect_callbacks_;
 }
 
 ACE_INLINE CORBA::Object_ptr
-TAO_EC_Event_Channel_Base::scheduler ()
+TAO_EC_Event_Channel_Base::scheduler () const
 {
   return CORBA::Object::_duplicate (this->scheduler_.in ());
 }
 
-ACE_INLINE int
-TAO_EC_Event_Channel_Base::destroyed ()
+ACE_INLINE bool
+TAO_EC_Event_Channel_Base::destroyed () const
 {
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
-  return (this->status_ == EC_S_DESTROYED);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, false);
+  return this->status_ == Status::destroyed;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

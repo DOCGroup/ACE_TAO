@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef FT_REPLICATION_MANAGER_H_
 #define FT_REPLICATION_MANAGER_H_
 
@@ -21,6 +20,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include <orbsvcs/FT_ReplicationManagerS.h>
+#include <string>
 //#include <orbsvcs/PortableGroup/PG_PropertyManager.h>
 //#include <orbsvcs/PortableGroup/PG_GenericFactory.h>
 //#include <orbsvcs/PortableGroup/PG_ObjectGroupManager.h>
@@ -123,12 +123,11 @@ namespace TAO
      */
     int idle (int & result);
 
-
     /**
      * Identify this fault detector factory.
      * @return a string to identify this object for logging/console message purposes.
      */
-    const char * identity () const;
+    char const * identity () const;
 
     /**
      * Get the type_id associated with an object group.
@@ -136,7 +135,6 @@ namespace TAO
      * @return String identifying the type id associated with the ObjectGroup.
      */
     char * type_id (PortableGroup::ObjectGroup_ptr object_group);
-
 
   //////////////////////
   // CORBA interface(s)
@@ -345,8 +343,7 @@ namespace TAO
 
     /// Registers the Fault Notifier with the Replication Manager.
     void register_fault_notifier_i (
-        FT::FaultNotifier_ptr fault_notifier
-      );
+        FT::FaultNotifier_ptr fault_notifier);
 
     ////////////////
     // Forbidden methods
@@ -365,10 +362,10 @@ namespace TAO
     PortableServer::POA_var poa_;
 
     /// A file to which the factory's IOR should be written.
-    ACE_TCHAR const * ior_output_file_;
+    std::basic_string<ACE_TCHAR> ior_output_file_;
 
     /// A name to be used to register the factory with the name service.
-    ACE_CString ns_name_;
+    std::string ns_name_;
     CosNaming::NamingContext_var naming_context_;
     CosNaming::Name this_name_;
 
@@ -376,7 +373,7 @@ namespace TAO
     FT::ReplicationManager_var replication_manager_ref_;
 
     /// A human-readable string to identify this Replication Manager.
-    ACE_CString identity_;
+    std::string identity_;
 
     /// an object that manages a collection of object groups
     TAO::PG_Group_Factory group_factory_;
@@ -387,7 +384,7 @@ namespace TAO
     /// The fault notifier.
     FT::FaultNotifier_var fault_notifier_;
     /// set by command line -f option
-    ACE_TCHAR const * fault_notifier_ior_string_;
+    std::basic_string<ACE_TCHAR> fault_notifier_ior_string_;
 
     /// The fault consumer.
     TAO::FT_FaultConsumer fault_consumer_;
@@ -396,7 +393,7 @@ namespace TAO
     TAO::PG_FactoryRegistry factory_registry_;
 
     /// Quit flag.
-    int quit_;
+    bool quit_ {};
   };
 } // namespace TAO
 

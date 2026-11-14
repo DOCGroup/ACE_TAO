@@ -1,21 +1,25 @@
-int
-ACE_TMAIN(int, ACE_TCHAR *[])
-{
-  double sum = 0;
-  double count = 0;
-  int input;
-  char buf[BUFSIZ];
+#include <cstdio>
+#include <cstdlib>
 
-  while (ACE_OS::fgets (buf, sizeof (buf), stdin) != 0)
+#include "ace/OS_main.h"
+
+int
+ACE_TMAIN (int, ACE_TCHAR *[])
+{
+  double sum {};
+  double count {};
+  char buf[BUFSIZ] {};
+
+  while (std::fgets (buf, sizeof (buf), stdin) != nullptr)
     {
-      input = ACE_OS::atoi (buf);
+      int const input = std::atoi (buf);
       sum += input;
-      count++;
+      ++count;
     }
 
-  ACE_OS::printf ("sum of input is: %f\n", sum);
-  ACE_OS::printf ("number of inputs is: %f\n", count);
-  ACE_OS::printf ("average of input is: %f\n", sum / count);
+  std::printf ("sum of input is: %f\n", sum);
+  std::printf ("number of inputs is: %f\n", count);
+  std::printf ("average of input is: %f\n", sum / count);
 
   return 0;
 }

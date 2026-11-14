@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 /**
  * @class ACE_RB_Tree_Test
  *
@@ -33,14 +32,12 @@ public:
   using ITERATOR = ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>;
   using REVERSE_ITERATOR = ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>;
 
-  /// Constructor.
   ACE_RB_Tree_Test (int entry_count,
                     EXT_ID key_array [],
                     INT_ID item_array [],
                     int order_index []);
 
-  /// Destructor.
-  ~ACE_RB_Tree_Test ();
+  ~ACE_RB_Tree_Test () = default;
 
   /// Run the individual interface and iteration tests in order.
   void run_test ();

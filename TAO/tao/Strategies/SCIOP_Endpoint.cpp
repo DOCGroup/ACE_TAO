@@ -11,9 +11,9 @@
 #include "ace/OS_NS_string.h"
 #include "ace/Log_Msg.h"
 #include "ace/Synch.h"
-#include "ace/OS_NS_stdio.h"
 #include "tao/ORB_Core.h"
 #include <cstring>
+#include <cstdio>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Strategies/SCIOP_Endpoint.inl"
@@ -111,7 +111,7 @@ int
 TAO_SCIOP_Endpoint::addr_to_string (char *buffer, size_t length)
 {
   size_t actual_len =
-    ACE_OS::strlen (this->host_.in ()) // chars in host name
+    std::strlen (this->host_.in ()) // chars in host name
     + sizeof (':')                     // delimiter
     + std::strlen ("65536")         // max port
     + sizeof ('\0');
@@ -119,7 +119,7 @@ TAO_SCIOP_Endpoint::addr_to_string (char *buffer, size_t length)
   if (length < actual_len)
     return -1;
 
-  ACE_OS::sprintf (buffer, "%s:%d",
+  std::sprintf (buffer, "%s:%d",
                    this->host_.in (), this->port_);
 
   return 0;
@@ -142,12 +142,12 @@ TAO_SCIOP_Endpoint::next ()
 TAO_Endpoint *
 TAO_SCIOP_Endpoint::duplicate ()
 {
-  TAO_SCIOP_Endpoint *endpoint = nullptr;
+  TAO_SCIOP_Endpoint *endpoint {};
 
   // @@NOTE: Not at all exception safe
   ACE_NEW_RETURN (endpoint,
                   TAO_SCIOP_Endpoint (*this),
-                  0);
+                  nullptr);
 
   return endpoint;
 }
@@ -164,7 +164,7 @@ TAO_SCIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
     return 0;
 
   return (this->port_ == endpoint->port_
-          && (ACE_OS::strcmp(this->host(), endpoint->host()) == 0));
+          && (std::strcmp(this->host(), endpoint->host()) == 0));
 }
 
 CORBA::ULong
@@ -251,13 +251,13 @@ TAO_SCIOP_Endpoint::preferred_interfaces (TAO_ORB_Core *oc)
   ACE_CString tmp (
     oc->orb_params ()->preferred_interfaces ());
 
-  ACE_CString::size_type pos = 0;
+  ACE_CString::size_type pos {};
 
   pos = tmp.find (this->host_.in ());
 
   TAO_SCIOP_Endpoint *latest = this;
 
-  CORBA::ULong count = 0;
+  CORBA::ULong count {};
 
   while (pos != ACE_CString::npos)
     {
@@ -265,7 +265,7 @@ TAO_SCIOP_Endpoint::preferred_interfaces (TAO_ORB_Core *oc)
       ACE_CString::size_type new_pos = tmp.find (",", pos + 1);
 
       // Length of the preferred path
-      ACE_CString::size_type length = 0;
+      ACE_CString::size_type length {};
 
       if (new_pos == ACE_CString::npos)
         length = tmp.length () - pos;

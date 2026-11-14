@@ -165,7 +165,7 @@ be_util::prep_be_arg (std::string const& s)
   std::string remaining (s);
   while (!remaining.empty ())
     {
-      std::size_t const comma = remaining.find (',');
+      size_t const comma = remaining.find (',');
       std::string const argument (remaining.substr (0, comma));
       remaining = comma == std::string::npos
         ? std::string {}
@@ -347,7 +347,7 @@ be_util::prep_be_arg (std::string const& s)
             }
           else
             {
-              be_global->max_line_length (static_cast<std::size_t> (parsed));
+              be_global->max_line_length (static_cast<size_t> (parsed));
             }
         }
       else

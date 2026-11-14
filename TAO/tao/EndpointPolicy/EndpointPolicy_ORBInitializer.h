@@ -1,13 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file EndpointPolicy_ORBInitializer.h
  *
  *  @author  Yan Dai <dai_y@ociweb.com>
  */
-//=============================================================================
-
 
 #ifndef TAO_ENDPOINTPOLICY_ORB_INITIALIZER_H
 #define TAO_ENDPOINTPOLICY_ORB_INITIALIZER_H
@@ -40,6 +37,11 @@ class TAO_EndpointPolicy_ORBInitializer
 public:
   TAO_EndpointPolicy_ORBInitializer () = default;
 
+  TAO_EndpointPolicy_ORBInitializer (TAO_EndpointPolicy_ORBInitializer const &) = delete;
+  TAO_EndpointPolicy_ORBInitializer &operator= (TAO_EndpointPolicy_ORBInitializer const &) = delete;
+  TAO_EndpointPolicy_ORBInitializer (TAO_EndpointPolicy_ORBInitializer &&) = delete;
+  TAO_EndpointPolicy_ORBInitializer &operator= (TAO_EndpointPolicy_ORBInitializer &&) = delete;
+
   /**
    * @name PortableInterceptor::ORBInitializer Methods
    *
@@ -53,11 +55,6 @@ public:
   //@}
 
 private:
-  TAO_EndpointPolicy_ORBInitializer (TAO_EndpointPolicy_ORBInitializer const &) = delete;
-  TAO_EndpointPolicy_ORBInitializer &operator= (TAO_EndpointPolicy_ORBInitializer const &) = delete;
-  TAO_EndpointPolicy_ORBInitializer (TAO_EndpointPolicy_ORBInitializer &&) = delete;
-  TAO_EndpointPolicy_ORBInitializer &operator= (TAO_EndpointPolicy_ORBInitializer &&) = delete;
-
   /// Register Endpoint policy factories.
   void register_policy_factories (PortableInterceptor::ORBInitInfo_ptr info);
 };

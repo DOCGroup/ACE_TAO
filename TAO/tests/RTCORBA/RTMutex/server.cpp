@@ -5,15 +5,15 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 
-static int test_try_lock_flag =
+static bool test_try_lock_flag =
 #if defined (ACE_HAS_MUTEX_TIMEOUTS) && !defined (ACE_HAS_WTHREADS)
-1;
+true;
 #else
 // Don't test try_lock timed waits unless the underlying OS supports it
 // Windows is the exception.  It supports some mutex timeouts, so
 // it has ACE_HAS_MUTEX_TIMEOUTS defined, but it doesn't support
 // thread mutex timeouts which is what is needed for this to work.
-0;
+false;
 #endif /* defined (ACE_HAS_MUTEX_TIMEOUTS) && !defined (ACE_HAS_WTHREADS) */
 
 // Parse command-line arguments.
@@ -21,14 +21,14 @@ static int test_try_lock_flag =
 static int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("t"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("t"));
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 't':
-        test_try_lock_flag = 0;
+        test_try_lock_flag = false;
         break;
 
       case '?':
@@ -45,7 +45,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 static int
-check_for_nil (CORBA::Object_ptr obj, const char *msg)
+check_for_nil (CORBA::Object_ptr const obj, char const *msg)
 {
   if (CORBA::is_nil (obj))
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -77,7 +77,7 @@ test_mutex_simple (RTCORBA::RTORB_ptr rt_orb)
 
       rt_orb->destroy_mutex (my_mutex.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "Unexpected exception caught in test_mutex_simple()");
@@ -97,12 +97,12 @@ test_named_mutex_simple (RTCORBA::RTORB_ptr rt_orb)
     {
       RTCORBA::Mutex_var larry_mutex1;
       RTCORBA::Mutex_var moe_mutex1;
-      CORBA::Boolean created_flag;
+      CORBA::Boolean created_flag {};
 
       larry_mutex1 = rt_orb->create_named_mutex ("larry",
                                                  created_flag);
 
-      if (created_flag != 1)
+      if (!created_flag)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "ERROR: Expected named mutex larry to be created, but it wasn't\n"),
                           -1);
@@ -110,7 +110,7 @@ test_named_mutex_simple (RTCORBA::RTORB_ptr rt_orb)
       moe_mutex1 = rt_orb->create_named_mutex ("moe",
                                                created_flag);
 
-      if (created_flag != 1)
+      if (!created_flag)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "ERROR: Expected named mutex moe to be created, but it wasn't\n"),
                           -1);
@@ -125,14 +125,13 @@ test_named_mutex_simple (RTCORBA::RTORB_ptr rt_orb)
         larry_mutex2 = rt_orb->create_named_mutex ("larry",
                                                    created_flag);
 
-        if (created_flag != 0)
+        if (created_flag)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "ERROR: Expected named mutex to already be created, but it wasn't\n"),
                             -1);
 
         // test the pointers...
-        if (reinterpret_cast<void *> (larry_mutex1.in ())
-            != reinterpret_cast<void *> (larry_mutex2.in ()))
+        if (larry_mutex1.in () != larry_mutex2.in ())
           ACE_ERROR_RETURN ((LM_ERROR,
                              "ERROR: Should have gotten the same mutex, but didn't\n"),
                             -1);
@@ -148,8 +147,7 @@ test_named_mutex_simple (RTCORBA::RTORB_ptr rt_orb)
         larry_mutex3 = rt_orb->open_named_mutex ("larry");
 
         // test the pointers...
-        if (reinterpret_cast<void *> (larry_mutex1.in ())
-            != reinterpret_cast<void *> (larry_mutex3.in ()))
+        if (larry_mutex1.in () != larry_mutex3.in ())
           ACE_ERROR_RETURN ((LM_ERROR,
                              "ERROR: Should have gotten the same mutex, but didn't\n"),
                             -1);
@@ -168,7 +166,7 @@ test_named_mutex_simple (RTCORBA::RTORB_ptr rt_orb)
 
       rt_orb->destroy_mutex (moe_mutex1.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "Unexpected exception caught in test_named_mutex_simple()");
@@ -195,11 +193,11 @@ test_named_mutex_exception (RTCORBA::RTORB_ptr rt_orb)
                          "Expected a MutexNotFound exception, but didn't get one.\n"),
                         -1);
     }
-  catch (const RTCORBA::RTORB::MutexNotFound& ex)
+  catch (RTCORBA::RTORB::MutexNotFound const &ex)
     {
       ACE_DEBUG ((LM_DEBUG, "Caught expected MutexNotFound exception.\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "Unexpected exception caught in test_named_mutex_exception()");
@@ -211,37 +209,38 @@ test_named_mutex_exception (RTCORBA::RTORB_ptr rt_orb)
 #endif /* TAO_HAS_NAMED_RT_MUTEXES == 1 */
 
 #if defined (ACE_HAS_THREADS)
-const size_t MAX_ITERATIONS=10;
-const size_t MAX_THREADS=4;
+constexpr size_t MAX_ITERATIONS {10};
+constexpr size_t MAX_THREADS {4};
 
 struct Mutex_Test_Data
 {
-  RTCORBA::Mutex_ptr mutex;
-  int *shared_var;
-  int *error_flag;
+  // These pointers are borrowed for the duration of the joined test threads.
+  RTCORBA::Mutex_ptr mutex {};
+  int *shared_var {};
+  int *error_flag {};
 };
 
 static void *
 mutex_test_thread (void *args)
 {
-  Mutex_Test_Data *data = reinterpret_cast<Mutex_Test_Data *> (args);
+  Mutex_Test_Data * const data = static_cast<Mutex_Test_Data *> (args);
 
-  RTCORBA::Mutex_ptr mutex = data->mutex;
-  int *shared_var = data->shared_var;
+  RTCORBA::Mutex_ptr const mutex = data->mutex;
+  int * const shared_var = data->shared_var;
 
-  ACE_OS::srand (static_cast<u_int> (ACE_OS::time (0)));
+  ACE_OS::srand (static_cast<u_int> (ACE_OS::time (nullptr)));
 
   try
     {
-      for (size_t i = 0; i < MAX_ITERATIONS / 2; i++)
+      for (size_t i {}; i < MAX_ITERATIONS / 2; ++i)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) = trying to lock on iteration %d\n"),
+                      ACE_TEXT ("(%P|%t) = trying to lock on iteration %B\n"),
                       i));
           mutex->lock ();
 
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) = locked on iteration %d\n"),
+                      ACE_TEXT ("(%P|%t) = locked on iteration %B\n"),
                       i));
 
           // Check if the shared var is a value it shouldn't be when
@@ -273,11 +272,11 @@ mutex_test_thread (void *args)
           mutex->unlock ();
 
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) = unlocked on iteration %d\n"),
+                      ACE_TEXT ("(%P|%t) = unlocked on iteration %B\n"),
                       i));
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "Unexpected exception caught in mutex_test_thread()");
@@ -294,21 +293,20 @@ test_mutex_threads (RTCORBA::RTORB_ptr rt_orb)
   // that repeatedly content for a lock.  This code is based on the
   // tests/Thread_Mutex_Test code.
 
-  Mutex_Test_Data test_data;
+  Mutex_Test_Data test_data {};
 
-  const u_int n_threads = MAX_THREADS;
-  int shared_var = 0;
-  int error_flag = 0;
+  int shared_var {};
+  int error_flag {};
 
   try
     {
-      RTCORBA::Mutex_ptr mutex = rt_orb->create_mutex ();
+      RTCORBA::Mutex_var const mutex = rt_orb->create_mutex ();
 
-      test_data.mutex = mutex;
+      test_data.mutex = mutex.in ();
       test_data.shared_var = &shared_var;
       test_data.error_flag = &error_flag;
 
-      if (ACE_Thread_Manager::instance ()->spawn_n (n_threads,
+      if (ACE_Thread_Manager::instance ()->spawn_n (MAX_THREADS,
                                                     ACE_THR_FUNC (mutex_test_thread),
                                                     (void *) &test_data,
                                                     THR_NEW_LWP | THR_DETACHED) == -1)
@@ -319,9 +317,8 @@ test_mutex_threads (RTCORBA::RTORB_ptr rt_orb)
       // Wait for the threads to exit.
       ACE_Thread_Manager::instance ()->wait ();
 
-      CORBA::release (mutex);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "Unexpected exception caught in test_mutex_threads()");
@@ -335,10 +332,10 @@ static void *
 mutex_test_try_lock_thread (void *args)
 {
   // test out try_lock() failure cases
-  Mutex_Test_Data *data = reinterpret_cast<Mutex_Test_Data *> (args);
+  Mutex_Test_Data * const data = static_cast<Mutex_Test_Data *> (args);
 
-  RTCORBA::Mutex_ptr mutex = data->mutex;
-  CORBA::Boolean result;
+  RTCORBA::Mutex_ptr const mutex = data->mutex;
+  CORBA::Boolean result {};
 
   try
     {
@@ -373,7 +370,7 @@ mutex_test_try_lock_thread (void *args)
               *data->error_flag = 1;
             }
 
-          ACE_Time_Value measured;
+          ACE_Time_Value measured {};
           timer.elapsed_time (measured);
           ACE_DEBUG ((LM_DEBUG,
                       "try_lock returned after %u secs, %u usecs\n",
@@ -391,7 +388,7 @@ mutex_test_try_lock_thread (void *args)
             }
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "Unexpected exception caught in mutex_test_try_lock_thread()");
@@ -404,15 +401,15 @@ mutex_test_try_lock_thread (void *args)
 static int
 test_mutex_try_lock (RTCORBA::RTORB_ptr rt_orb)
 {
-  Mutex_Test_Data test_data;
-  CORBA::Boolean result;
+  Mutex_Test_Data test_data {};
+  CORBA::Boolean result {};
 
-  int shared_var = 0;
-  int error_flag = 0;
+  int shared_var {};
+  int error_flag {};
 
   try
     {
-      RTCORBA::Mutex_ptr mutex = rt_orb->create_mutex ();
+      RTCORBA::Mutex_var const mutex = rt_orb->create_mutex ();
 
       // Test out try_lock and keep the lock so that the spawned task
       // can test out try_lock failure cases
@@ -422,7 +419,7 @@ test_mutex_try_lock (RTCORBA::RTORB_ptr rt_orb)
                            "try_lock failed\n"),
                           -1);
 
-      test_data.mutex = mutex;
+      test_data.mutex = mutex.in ();
       test_data.shared_var = &shared_var;
       test_data.error_flag = &error_flag;
 
@@ -440,9 +437,8 @@ test_mutex_try_lock (RTCORBA::RTORB_ptr rt_orb)
 
       mutex->unlock ();
 
-      CORBA::release (mutex);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "Unexpected exception caught in test_mutex_try_lock()");
@@ -455,7 +451,7 @@ test_mutex_try_lock (RTCORBA::RTORB_ptr rt_orb)
 #endif /* ACE_HAS_THREADS */
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -467,9 +463,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         return -1;
 
       // RTORB.
-      CORBA::Object_var object =
+      CORBA::Object_var const object =
         orb->resolve_initial_references ("RTORB");
-      RTCORBA::RTORB_var rt_orb = RTCORBA::RTORB::_narrow (object.in ());
+      RTCORBA::RTORB_var const rt_orb = RTCORBA::RTORB::_narrow (object.in ());
       if (check_for_nil (rt_orb.in (), "RTORB") == -1)
         return -1;
 
@@ -512,7 +508,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Mutex test finished\n\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "Unexpected exception caught in Mutex test server:");

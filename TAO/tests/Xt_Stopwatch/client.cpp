@@ -5,27 +5,25 @@
 #include "Client.h"
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  XtAppContext app;
-  Widget toplevel = XtAppInitialize (&app,
-                                     "Start & Stop",
-                                     0,
-                                     0,
-                                     &argc,
-                                     argv,
-                                     0,
-                                     0,
-                                     0);
+  XtAppContext app {};
+  Widget const toplevel = XtAppInitialize (&app,
+                                           "Start & Stop",
+                                           0,
+                                           nullptr,
+                                           &argc,
+                                           argv,
+                                           nullptr,
+                                           nullptr,
+                                           0);
 
   TAO::XtResource_Loader xt_loader (app);
 
   Control control (toplevel);
-
-
   try
     {
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
       Client client (orb.in ());
@@ -39,7 +37,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       XtRealizeWidget (toplevel);
       XtAppMainLoop (app);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;
@@ -52,18 +50,14 @@ Client::Client (CORBA::ORB_ptr orb)
 {
 }
 
-Client::~Client ()
-{
-}
-
 void
 Client::parse_args (int argc,
                     ACE_TCHAR *argv[])
 {
-  const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+  ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
 
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -74,19 +68,19 @@ Client::parse_args (int argc,
       case '?':
       default:
         ACE_ERROR ((LM_ERROR,
-                    "usage:  %s "
-                    "-k <ior> "
-                    "\n",
+                    ACE_TEXT ("usage:  %s "
+                              "-k <ior> "
+                              "\n"),
                     argv [0]));
       }
 
-  CORBA::Object_var object =
+  CORBA::Object_var const object =
     this->orb_->string_to_object (ior);
 
   this->server_ =
     Stopwatch::_narrow (object.in ());
 
-  if (CORBA::is_nil(this->server_.in ()))
+  if (CORBA::is_nil (this->server_.in ()))
     {
       ACE_DEBUG ((LM_DEBUG,
                   "\n The server value is nil "));
@@ -94,9 +88,9 @@ Client::parse_args (int argc,
 }
 
 void
-Client::add_callback (Control &ctrl)
+Client::add_callback (Control const &ctrl)
 {
-  XtPointer client_data = static_cast<XtPointer> (this);
+  XtPointer const client_data = static_cast<XtPointer> (this);
 
   // Register callbacks, specifying the object's instance pointer as
   // client data.
@@ -116,7 +110,7 @@ Client::start_callback (Widget /*widget*/,
                         XtPointer client_data,
                         XtPointer)
 {
-  Client *self = static_cast<Client *> (client_data);
+  Client * const self = static_cast<Client *> (client_data);
   self->start_hook ();
 }
 
@@ -125,7 +119,7 @@ Client::stop_callback (Widget /*widget*/,
                        XtPointer client_data,
                        XtPointer )
 {
-  Client *self = static_cast<Client *> (client_data);
+  Client * const self = static_cast<Client *> (client_data);
   self->stop_hook ();
 }
 
@@ -136,7 +130,7 @@ Client::start_hook ()
     {
       this->server_->start ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "Caught an exception in the start button callback");
@@ -151,7 +145,7 @@ Client::stop_hook ()
     {
       this->server_->stop ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "Caught an exception in the stop button callback");

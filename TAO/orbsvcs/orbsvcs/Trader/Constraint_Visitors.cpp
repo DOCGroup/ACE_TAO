@@ -5,7 +5,7 @@
 
 #include "tao/DynamicAny/DynSequence_i.h"
 
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -13,35 +13,50 @@ TAO_Constraint_Evaluator::Operand_Queue::Operand_Queue ()
 {
 }
 
+bool
+TAO_Constraint_Evaluator::Operand_Queue::empty () const
+{
+  return this->operands_.empty ();
+}
+
+void
+TAO_Constraint_Evaluator::Operand_Queue::clear ()
+{
+  this->operands_.clear ();
+}
+
+void
+TAO_Constraint_Evaluator::Operand_Queue::push_front (
+  TAO_Literal_Constraint const &operand)
+{
+  this->operands_.push_front (operand);
+}
+
 TAO_Literal_Constraint&
 TAO_Constraint_Evaluator::Operand_Queue::get_left_operand ()
 {
-  TAO_Literal_Constraint* left_operand = nullptr;
-  this->get (left_operand, 1);
-  return *left_operand;
+  return this->operands_[1];
 }
 
 TAO_Literal_Constraint&
 TAO_Constraint_Evaluator::Operand_Queue::get_right_operand ()
 {
-  TAO_Literal_Constraint* right_operand = nullptr;
-  this->get (right_operand);
-  return *right_operand;
+  return this->operands_.front ();
 }
 
 TAO_Literal_Constraint&
 TAO_Constraint_Evaluator::Operand_Queue::get_operand ()
 {
-  TAO_Literal_Constraint* operand = nullptr;
-  this->get (operand);
-  return *operand;
+  return this->operands_.front ();
 }
 
 void
 TAO_Constraint_Evaluator::Operand_Queue::dequeue_operand ()
 {
-  TAO_Literal_Constraint operand;
-  this->dequeue_head (operand);
+  if (! this->operands_.empty ())
+    {
+      this->operands_.pop_front ();
+    }
 }
 
 TAO_Constraint_Evaluator::TAO_Constraint_Evaluator ()
@@ -52,16 +67,16 @@ TAO_Constraint_Evaluator::TAO_Constraint_Evaluator ()
 CORBA::Boolean
 TAO_Constraint_Evaluator::evaluate_constraint (TAO_Constraint* root)
 {
-  CORBA::Boolean result = false;
-  this->queue_.reset ();
+  CORBA::Boolean result {};
+  this->queue_.clear ();
 
   // Evaluate the offer according to the constraints in root_;
   if (root != nullptr)
     {
       if ((root->accept (this) == 0) &&
-          (! this->queue_.is_empty ()))
+          (! this->queue_.empty ()))
         {
-          result = (CORBA::Boolean) this->queue_.get_operand();
+          result = static_cast<CORBA::Boolean> (this->queue_.get_operand ());
           this->queue_.dequeue_operand ();
         }
     }
@@ -76,14 +91,14 @@ evaluate_preference (TAO_Constraint* root,
                     TAO_Literal_Constraint& result)
 {
   int return_value = -1;
-  while (! this->queue_.is_empty ())
+  while (! this->queue_.empty ())
     this->queue_.dequeue_operand ();
 
   // Evaluate the offer according to the constraints in root_;
   if (root != nullptr)
     {
       if ((root->accept (this) == 0) &&
-          (! this->queue_.is_empty ()))
+          (! this->queue_.empty ()))
         {
           result = this->queue_.get_operand ();
           this->queue_.dequeue_operand ();
@@ -126,7 +141,7 @@ int
 TAO_Constraint_Evaluator::visit_random (TAO_Noop_Constraint *)
 {
   TAO_Literal_Constraint random (static_cast<CORBA::LongLong> (ACE_OS::rand ()));
-  this->queue_.enqueue_head (random);
+  this->queue_.push_front (random);
   return 0;
 }
 
@@ -134,7 +149,7 @@ int
 TAO_Constraint_Evaluator::visit_first (TAO_Noop_Constraint *)
 {
   TAO_Literal_Constraint first (static_cast<CORBA::LongLong> (0));
-  this->queue_.enqueue_head (first);
+  this->queue_.push_front (first);
   return 0;
 }
 
@@ -143,7 +158,7 @@ TAO_Constraint_Evaluator::
 visit_and (TAO_Binary_Constraint* boolean_and)
 {
   int return_value = -1;
-  CORBA::Boolean result = false;
+  CORBA::Boolean result {};
   TAO_Constraint* left = boolean_and->left_operand (),
     *right = boolean_and->right_operand ();
 
@@ -151,14 +166,14 @@ visit_and (TAO_Binary_Constraint* boolean_and)
 
   if (left->accept (this) == 0)
     {
-      result = (CORBA::Boolean) this->queue_.get_operand ();
+      result = static_cast<CORBA::Boolean> (this->queue_.get_operand ());
       this->queue_.dequeue_operand ();
 
       if (result)
         {
           if (right->accept(this) == 0)
             {
-              result = (CORBA::Boolean) this->queue_.get_operand();
+              result = static_cast<CORBA::Boolean> (this->queue_.get_operand ());
               this->queue_.dequeue_operand ();
 
               return_value = 0;
@@ -169,7 +184,7 @@ visit_and (TAO_Binary_Constraint* boolean_and)
     }
 
   if (return_value != -1)
-    this->queue_.enqueue_head (TAO_Literal_Constraint (result));
+    this->queue_.push_front (TAO_Literal_Constraint (result));
 
   return return_value;
 }
@@ -179,7 +194,7 @@ TAO_Constraint_Evaluator::
 visit_or (TAO_Binary_Constraint* boolean_or)
 {
   int return_value = -1;
-  CORBA::Boolean result = false;
+  CORBA::Boolean result {};
   TAO_Constraint* left = boolean_or->left_operand (),
     *right = boolean_or->right_operand ();
 
@@ -187,14 +202,14 @@ visit_or (TAO_Binary_Constraint* boolean_or)
 
   if (left->accept (this) == 0)
     {
-      result = (CORBA::Boolean) this->queue_.get_operand ();
+      result = static_cast<CORBA::Boolean> (this->queue_.get_operand ());
       this->queue_.dequeue_operand ();
 
-      if (result == (CORBA::Boolean) 0)
+      if (!result)
         {
           if (right->accept (this) == 0)
             {
-              result = (CORBA::Boolean) this->queue_.get_operand ();
+              result = static_cast<CORBA::Boolean> (this->queue_.get_operand ());
               this->queue_.dequeue_operand ();
               return_value = 0;
             }
@@ -204,7 +219,7 @@ visit_or (TAO_Binary_Constraint* boolean_or)
     }
 
   if (return_value != -1)
-    this->queue_.enqueue_head (TAO_Literal_Constraint (result));
+    this->queue_.push_front (TAO_Literal_Constraint (result));
 
   return return_value;
 }
@@ -220,9 +235,10 @@ visit_not (TAO_Unary_Constraint* unary_not)
 
   if (operand->accept (this) == 0)
     {
-      CORBA::Boolean result = ! (CORBA::Boolean)this->queue_.get_operand ();
+      CORBA::Boolean const result =
+        ! static_cast<CORBA::Boolean> (this->queue_.get_operand ());
       this->queue_.dequeue_operand ();
-      this->queue_.enqueue_head (TAO_Literal_Constraint (result));
+      this->queue_.push_front (TAO_Literal_Constraint (result));
 
       return_value = 0;
     }
@@ -235,15 +251,15 @@ TAO_Constraint_Evaluator::
 visit_exist (TAO_Unary_Constraint* unary_exist)
 {
   TAO_Property_Constraint* operand =
-    (TAO_Property_Constraint*) unary_exist->operand ();
-  CORBA::String_var property_name ((const char*) operand->name ());
+    static_cast<TAO_Property_Constraint*> (unary_exist->operand ());
+  CORBA::String_var property_name (static_cast<char const*> (operand->name ()));
 
   // Determine if a property is defined on this offer.
 
   CORBA::Boolean result =
-    (CORBA::Boolean) (this->props_.find (property_name) == 0);
+    this->props_.find (property_name) == 0;
 
-  this->queue_.enqueue_head (TAO_Literal_Constraint (result));
+  this->queue_.push_front (TAO_Literal_Constraint (result));
   return 0;
 }
 
@@ -258,7 +274,7 @@ visit_unary_minus (TAO_Unary_Constraint* unary_minus)
     {
       TAO_Literal_Constraint result = - this->queue_.get_operand ();
       this->queue_.dequeue_operand ();
-      this->queue_.enqueue_head (result);
+      this->queue_.push_front (result);
 
       return_value = 0;
     }
@@ -279,13 +295,13 @@ TAO_Constraint_Evaluator::do_the_op (int operation)
     (operation <= TAO_NE)
     ?
     TAO_Literal_Constraint
-    ((CORBA::Boolean)
+    (static_cast<CORBA::Boolean> (
      ((operation == TAO_GT) ? l_op > r_op :
       (operation == TAO_GE) ? l_op >= r_op :
       (operation == TAO_LT) ? l_op < r_op :
       (operation == TAO_LE) ? l_op <= r_op :
       (operation == TAO_NE) ? l_op != r_op :
-      (operation == TAO_EQ) ? l_op == r_op : 0))
+      (operation == TAO_EQ) ? l_op == r_op : 0)))
     :
     ((operation == TAO_PLUS) ? l_op + r_op :
      (operation == TAO_MINUS) ? l_op - r_op :
@@ -295,7 +311,7 @@ TAO_Constraint_Evaluator::do_the_op (int operation)
 
   this->queue_.dequeue_operand ();
   this->queue_.dequeue_operand ();
-  this->queue_.enqueue_head (result);
+  this->queue_.push_front (result);
 }
 
 int
@@ -367,13 +383,13 @@ visit_twiddle (TAO_Binary_Constraint* binary_twiddle)
           TAO_Literal_Constraint& left_operand = this->queue_.get_left_operand ();
           TAO_Literal_Constraint& right_operand = this->queue_.get_right_operand ();
 
-          CORBA::Boolean result = (CORBA::Boolean)
-            (ACE_OS::strstr ((const char*)right_operand,
-                             (const char*)left_operand) != 0);
+          CORBA::Boolean result =
+            std::strstr (static_cast<char const*> (right_operand),
+                         static_cast<char const*> (left_operand)) != nullptr;
 
           this->queue_.dequeue_operand ();
           this->queue_.dequeue_operand ();
-          this->queue_.enqueue_head (TAO_Literal_Constraint (result));
+          this->queue_.push_front (TAO_Literal_Constraint (result));
           return_value = 0;
         }
       else
@@ -395,19 +411,20 @@ visit_in(TAO_Binary_Constraint* binary_in)
 
   if (left->accept (this) == 0)
     {
-      if (this->visit_property ((TAO_Property_Constraint*) right) == 0)
+      if (this->visit_property (static_cast<TAO_Property_Constraint*> (right)) == 0)
         {
           TAO_Literal_Constraint& left_value = this->queue_.get_left_operand();
-          const CORBA::Any* any = (const CORBA::Any*) this->queue_.get_right_operand();
+          CORBA::Any const* any =
+            static_cast<CORBA::Any const*> (this->queue_.get_right_operand ());
 
           if (any != nullptr)
             {
               CORBA::Boolean result =
-                this->sequence_does_contain ((CORBA::Any*) any, left_value);
+                this->sequence_does_contain (any, left_value);
 
               this->queue_.dequeue_operand ();
               this->queue_.dequeue_operand ();
-              this->queue_.enqueue_head (TAO_Literal_Constraint (result));
+              this->queue_.push_front (TAO_Literal_Constraint (result));
               return_value = 0;
             }
           else
@@ -464,7 +481,7 @@ int
 TAO_Constraint_Evaluator::
 visit_literal (TAO_Literal_Constraint* literal)
 {
-  this->queue_.enqueue_head (*literal);
+  this->queue_.push_front (*literal);
   return 0;
 }
 
@@ -486,16 +503,16 @@ TAO_find_string (CosTradingSequences::StringSeq& sequence,
  int length = sequence.length (),
     return_value = 0;
 
-  for (int i = 0; i < length; i++)
+  for (int i {}; i < length; ++i)
     {
-      if (ACE_OS::strcmp (sequence[i], element) == 0)
+      if (std::strcmp (sequence[i], element) == 0)
         {
           return_value = 1;
           break;
         }
     }
 
-  return (CORBA::Boolean) return_value;
+  return static_cast<CORBA::Boolean> (return_value);
 }
 */
 
@@ -504,12 +521,21 @@ TAO_Constraint_Evaluator::
 sequence_does_contain (CORBA::Any* sequence,
                       TAO_Literal_Constraint& element)
 {
+  return this->sequence_does_contain (
+    static_cast<CORBA::Any const*> (sequence), element);
+}
+
+CORBA::Boolean
+TAO_Constraint_Evaluator::
+sequence_does_contain (CORBA::Any const* sequence,
+                      TAO_Literal_Constraint& element)
+{
   // Helper method to cast the void* value returned from the sequence
   // any into a sequence type locally compiled from idl. The sequence
   // wrapper uses the [] operator to locate the target element in the
   // sequence.
 
-  CORBA::Boolean return_value = false;
+  CORBA::Boolean return_value {};
   CORBA::TypeCode_var type = sequence->type ();
   CORBA::TCKind sequence_type = CORBA::tk_void;
   try
@@ -601,7 +627,7 @@ TAO_Element_Equal<CORBA::Short>::
 operator () (TAO_DynSequence_i& dyn_any,
              CORBA::Short element) const
 {
-  int return_value = 0;
+  int return_value {};
   try
     {
       CORBA::Short value = dyn_any.get_short ();
@@ -618,7 +644,7 @@ TAO_Element_Equal<CORBA::UShort>::
 operator () (TAO_DynSequence_i& dyn_any,
              CORBA::UShort element) const
 {
-  int return_value = 0;
+  int return_value {};
   try
     {
       CORBA::UShort value = dyn_any.get_ushort ();
@@ -635,7 +661,7 @@ TAO_Element_Equal<CORBA::Long>::
 operator () (TAO_DynSequence_i& dyn_any,
              CORBA::Long element) const
 {
-  int return_value = 0;
+  int return_value {};
   try
     {
       CORBA::Long value = dyn_any.get_long ();
@@ -652,7 +678,7 @@ TAO_Element_Equal<CORBA::ULong>::
 operator () (TAO_DynSequence_i& dyn_any,
              CORBA::ULong element) const
 {
-  int return_value = 0;
+  int return_value {};
   try
     {
       CORBA::ULong value = dyn_any.get_ulong ();
@@ -669,7 +695,7 @@ TAO_Element_Equal<CORBA::LongLong>::
 operator () (TAO_DynSequence_i& dyn_any,
              CORBA::LongLong element) const
 {
-  int return_value = 0;
+  int return_value {};
   try
     {
       CORBA::LongLong value = dyn_any.get_longlong ();
@@ -686,7 +712,7 @@ TAO_Element_Equal<CORBA::ULongLong>::
 operator () (TAO_DynSequence_i& dyn_any,
              CORBA::ULongLong element) const
 {
-  int return_value = 0;
+  int return_value {};
   try
     {
       CORBA::ULongLong value = dyn_any.get_ulonglong ();
@@ -703,7 +729,7 @@ TAO_Element_Equal<CORBA::Float>::
 operator () (TAO_DynSequence_i& dyn_any,
              CORBA::Float element) const
 {
-  int return_value = 0;
+  int return_value {};
   try
     {
       CORBA::Float value = dyn_any.get_float ();
@@ -718,7 +744,7 @@ TAO_Element_Equal<CORBA::Double>::
 operator () (TAO_DynSequence_i& dyn_any,
              CORBA::Double element) const
 {
-  int return_value = 0;
+  int return_value {};
   try
     {
       CORBA::Double value = dyn_any.get_double ();
@@ -733,10 +759,11 @@ TAO_Element_Equal<CORBA::Boolean>::
 operator () (TAO_DynSequence_i& dyn_any,
              CORBA::Boolean element) const
 {
-  int return_value = 0;
+  int return_value {};
   try
     {
-    CORBA::Boolean value = (CORBA::Boolean) dyn_any.get_short ();
+    CORBA::Boolean const value =
+      static_cast<CORBA::Boolean> (dyn_any.get_short ());
       return_value = (value == element);
     }
   catch (const CORBA::Exception&){}
@@ -748,11 +775,11 @@ TAO_Element_Equal<const char*>::
 operator () (TAO_DynSequence_i& dyn_any,
              const char* element) const
 {
-  int return_value = 0;
+  int return_value {};
   try
     {
       CORBA::String_var value = dyn_any.get_string ();
-      return_value = (ACE_OS::strcmp (value.in(), element) == 0);
+      return_value = (std::strcmp (value.in(), element) == 0);
     }
   catch (const CORBA::Exception&){}
   return return_value;
@@ -768,7 +795,7 @@ TAO_Constraint_Validator::~TAO_Constraint_Validator ()
 {
   for (TAO_Typecode_Table::iterator type_iter (this->type_map_);
        ! type_iter.done ();
-       type_iter++)
+       ++type_iter)
     {
       CORBA::TypeCode_ptr corba_type = (*type_iter).int_id_;
       CORBA::release (corba_type);
@@ -1034,7 +1061,7 @@ visit_in (TAO_Binary_Constraint* binary_in)
 
   if (right_type == TAO_SEQUENCE)
     {
-      CORBA::Boolean types_match = false;
+      CORBA::Boolean types_match {};
       CORBA::TCKind seq_type = CORBA::tk_void;
       try
         {
@@ -1170,12 +1197,13 @@ CORBA::TypeCode*
 TAO_Constraint_Validator::extract_type (TAO_Constraint* expr,
                                         TAO_Expression_Type& type)
 {
-  CORBA::TypeCode* return_value = nullptr;
+  CORBA::TypeCode* return_value {};
 
   type = expr->expr_type ();
   if (type == TAO_IDENT)
     {
-      TAO_Property_Constraint* prop = (TAO_Property_Constraint*) expr;
+      TAO_Property_Constraint* prop =
+        static_cast<TAO_Property_Constraint*> (expr);
       CORBA::String_var prop_name (prop->name ());
 
       if (this->type_map_.find (prop_name, return_value) == 0)
@@ -1190,7 +1218,7 @@ TAO_Constraint_Validator::expr_returns_boolean (TAO_Expression_Type expr_type)
 {
   // If the expression is a boolean operations, a boolean literal, or
   // a boolean property, return 1.
-  int return_value = 0;
+  int return_value {};
 
   if (expr_type <= TAO_BOOLEAN)
     return_value = 1;
@@ -1198,13 +1226,12 @@ TAO_Constraint_Validator::expr_returns_boolean (TAO_Expression_Type expr_type)
   return return_value;
 }
 
-
 int
 TAO_Constraint_Validator::expr_returns_number (TAO_Expression_Type expr_type)
 {
   // If the expression is a number operation, a numeric literal, or a
   // numeric property, return 1.
-  int return_value = 0;
+  int return_value {};
 
   if ((expr_type >= TAO_PLUS && expr_type <= TAO_NUMBER) ||
       (expr_type >= TAO_SIGNED && expr_type <= TAO_DOUBLE))
@@ -1218,7 +1245,7 @@ TAO_Constraint_Validator::expr_returns_string (TAO_Expression_Type expr_type)
 {
   // If the expression is an operation with a string return value, a
   // string literal, or a property whose type is string, return 1.
-  int return_value = 0;
+  int return_value {};
 
   if (expr_type == TAO_STRING)
     return_value = 1;

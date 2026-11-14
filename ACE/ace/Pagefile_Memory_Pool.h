@@ -65,7 +65,6 @@ public:
   ACE_Pagefile_Memory_Pool (const ACE_TCHAR *backing_store_name = nullptr,
                             const OPTIONS *options = nullptr);
 
-  /// Destructor
   virtual ~ACE_Pagefile_Memory_Pool () = default;
 
   /// Ask system for initial chunk of shared memory.

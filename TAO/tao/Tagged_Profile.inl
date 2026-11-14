@@ -3,15 +3,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO_Tagged_Profile::TAO_Tagged_Profile (TAO_ORB_Core *orb_core)
-  : orb_core_ (orb_core),
-    discriminator_ (0),
-    object_key_extracted_ (false),
-    object_key_ (),
-    profile_ (),
-    profile_index_ (0),
-    type_id_ (0)
+  : orb_core_ (orb_core)
 {
-
 }
 
 ACE_INLINE TAO::ObjectKey &
@@ -32,13 +25,13 @@ TAO_Tagged_Profile::object_key (TAO::ObjectKey &object_key)
   this->object_key_extracted_ = true;
 }
 
-ACE_INLINE const TAO::ObjectKey &
+ACE_INLINE TAO::ObjectKey const &
 TAO_Tagged_Profile::object_key () const
 {
   return const_cast<TAO_Tagged_Profile *> (this)->object_key ();
 }
 
-ACE_INLINE const IOP::TaggedProfile &
+ACE_INLINE IOP::TaggedProfile const &
 TAO_Tagged_Profile::tagged_profile () const
 {
   return this->profile_;
@@ -50,10 +43,10 @@ TAO_Tagged_Profile::profile_index () const
   return this->profile_index_;
 }
 
-ACE_INLINE const char*
+ACE_INLINE char const *
 TAO_Tagged_Profile::type_id () const
 {
-  return this->type_id_ == 0 ? "" : this->type_id_;
+  return this->type_id_ == nullptr ? "" : this->type_id_;
 }
 
 ACE_INLINE CORBA::Short

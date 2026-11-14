@@ -1,13 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   Priority_Mapping_Manager.h
  *
  *  @author Marina Spivak (marina@cs.wustl.edu)
  */
-//=============================================================================
-
 
 #ifndef TAO_PRIORITY_MAPPING_MANAGER_H
 #define TAO_PRIORITY_MAPPING_MANAGER_H
@@ -24,13 +21,13 @@
 #include "tao/RTCORBA/rtcorba_export.h"
 #include "tao/RTCORBA/Priority_Mapping.h"
 #include "tao/LocalObject.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Priority_Mapping_Manager;
 class TAO_Priority_Mapping_Manager_var;
 using TAO_Priority_Mapping_Manager_ptr = TAO_Priority_Mapping_Manager *;
-
 
 /**
  * @class TAO_Priority_Mapping_Manager
@@ -43,7 +40,6 @@ class TAO_RTCORBA_Export TAO_Priority_Mapping_Manager :
   public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   explicit TAO_Priority_Mapping_Manager (RTCORBA::PriorityMapping * mapping);
 
   ///
@@ -65,7 +61,7 @@ public:
       return nullptr;
     }
 
-  const char* _interface_repository_id () const override;
+  char const * _interface_repository_id () const override;
 
 protected:
   /// Protected destructor to enforce proper memory management of this
@@ -79,24 +75,24 @@ private:
   TAO_Priority_Mapping_Manager &operator= (TAO_Priority_Mapping_Manager &&) = delete;
 
 private:
-  TAO_Priority_Mapping *mapping_;
+  std::unique_ptr<TAO_Priority_Mapping> mapping_;
 };
 
 class TAO_RTCORBA_Export TAO_Priority_Mapping_Manager_var
   : private TAO_Base_var
 {
 public:
-  TAO_Priority_Mapping_Manager_var (); // default constructor
+  TAO_Priority_Mapping_Manager_var ();
   TAO_Priority_Mapping_Manager_var (TAO_Priority_Mapping_Manager_ptr);
-  TAO_Priority_Mapping_Manager_var (const TAO_Priority_Mapping_Manager_var &); // copy constructor
-  ~TAO_Priority_Mapping_Manager_var (); // destructor
+  TAO_Priority_Mapping_Manager_var (TAO_Priority_Mapping_Manager_var const &);
+  ~TAO_Priority_Mapping_Manager_var ();
 
   TAO_Priority_Mapping_Manager_var &operator= (TAO_Priority_Mapping_Manager_ptr);
-  TAO_Priority_Mapping_Manager_var &operator= (const TAO_Priority_Mapping_Manager_var &);
+  TAO_Priority_Mapping_Manager_var &operator= (TAO_Priority_Mapping_Manager_var const &);
   TAO_Priority_Mapping_Manager_ptr operator-> () const;
 
   /// in, inout, out, _retn
-  operator const TAO_Priority_Mapping_Manager_ptr &() const;
+  operator TAO_Priority_Mapping_Manager_ptr const &() const;
   operator TAO_Priority_Mapping_Manager_ptr &();
   TAO_Priority_Mapping_Manager_ptr in () const;
   TAO_Priority_Mapping_Manager_ptr &inout ();
@@ -114,8 +110,8 @@ public:
 
 private:
   TAO_Priority_Mapping_Manager_ptr ptr_;
-  TAO_Priority_Mapping_Manager_var (const TAO_Base_var &rhs) = delete;
-  TAO_Priority_Mapping_Manager_var &operator= (const TAO_Base_var &rhs) = delete;
+  TAO_Priority_Mapping_Manager_var (TAO_Base_var const &rhs) = delete;
+  TAO_Priority_Mapping_Manager_var &operator= (TAO_Base_var const &rhs) = delete;
 };
 
 class TAO_RTCORBA_Export TAO_Priority_Mapping_Manager_out
@@ -123,9 +119,9 @@ class TAO_RTCORBA_Export TAO_Priority_Mapping_Manager_out
 public:
   TAO_Priority_Mapping_Manager_out (TAO_Priority_Mapping_Manager_ptr &);
   TAO_Priority_Mapping_Manager_out (TAO_Priority_Mapping_Manager_var &);
-  TAO_Priority_Mapping_Manager_out (const TAO_Priority_Mapping_Manager_out &);
-  TAO_Priority_Mapping_Manager_out &operator= (const TAO_Priority_Mapping_Manager_out &);
-  TAO_Priority_Mapping_Manager_out &operator= (const TAO_Priority_Mapping_Manager_var &);
+  TAO_Priority_Mapping_Manager_out (TAO_Priority_Mapping_Manager_out const &);
+  TAO_Priority_Mapping_Manager_out &operator= (TAO_Priority_Mapping_Manager_out const &);
+  TAO_Priority_Mapping_Manager_out &operator= (TAO_Priority_Mapping_Manager_var const &);
   TAO_Priority_Mapping_Manager_out &operator= (TAO_Priority_Mapping_Manager_ptr);
   operator TAO_Priority_Mapping_Manager_ptr &();
   TAO_Priority_Mapping_Manager_ptr &ptr ();

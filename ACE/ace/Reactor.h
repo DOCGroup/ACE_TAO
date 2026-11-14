@@ -49,6 +49,11 @@ class ACE_Sig_Set;
 class ACE_Export ACE_Reactor : public ACE_Reactor_Timer_Interface
 {
 public:
+  ACE_Reactor (ACE_Reactor const &) = delete;
+  ACE_Reactor (ACE_Reactor &&) = delete;
+  ACE_Reactor &operator= (ACE_Reactor const &) = delete;
+  ACE_Reactor &operator= (ACE_Reactor &&) = delete;
+
   /// Operations on the "ready" mask and the "dispatch" mask.
   enum
   {
@@ -96,8 +101,8 @@ public:
   /// Name of the component--ACE_Reactor in this case.
   static const ACE_TCHAR *name ();
 
-  // = Singleton reactor event loop management methods.
-
+  /// @name Singleton reactor event loop methods
+  /// @{
   // Note that these method ONLY work on the "Singleton Reactor,"
   // i.e., the one returned from ACE_Reactor::instance().
   /**
@@ -166,8 +171,10 @@ public:
    */
   static int check_reconfiguration (ACE_Reactor *);
 
-  // = Reactor event loop management methods.
+  /// @}
 
+  /// @name Reactor event loop methods
+  /// @{
   // These methods work with an instance of a reactor.
   /**
    * Run the event loop until the ACE_Reactor::handle_events() or
@@ -218,6 +225,8 @@ public:
    * @a delete_implementation tells the Reactor whether or not to
    * delete the @a implementation on destruction.
    */
+  /// @}
+
   ACE_Reactor (ACE_Reactor_Impl *implementation = nullptr,
                bool delete_implementation = false);
 
@@ -252,13 +261,13 @@ public:
   /// Close down and release all resources.
   int close ();
 
-  // = Event loop drivers.
-
   /**
    * Returns non-zero if there are I/O events "ready" for dispatching,
    * but does not actually dispatch the event handlers.  By default,
    * don't block while checking this, i.e., "poll".
    */
+  /// @name Event loop drivers
+  /// @{
   int work_pending (const ACE_Time_Value &max_wait_time = ACE_Time_Value::zero);
 
   /**
@@ -299,8 +308,10 @@ public:
   int handle_events (ACE_Time_Value &max_wait_time);
   int alertable_handle_events (ACE_Time_Value &max_wait_time);
 
-  // = Register and remove handlers.
+  /// @}
 
+  /// @name Register and remove handlers
+  /// @{
   /**
    * Register handler for I/O events.
    *
@@ -473,8 +484,10 @@ public:
    */
   int remove_handler (const ACE_Sig_Set &sigset);
 
-  // = Suspend and resume Handlers.
+  /// @}
 
+  /// @name Suspend and resume handlers
+  /// @{
   /**
    * Suspend @a handle temporarily.
    */
@@ -531,8 +544,10 @@ public:
   /// are application resumable. A value of 0 indicates otherwise.
   int resumable_handler ();
 
-  // = Timer management.
+  /// @}
 
+  /// @name Timer management
+  /// @{
   /**
    * Schedule a timer event.
    *
@@ -627,8 +642,10 @@ public:
   int cancel_timer (ACE_Event_Handler *event_handler,
                             int dont_call_handle_close = 1) override;
 
-  // = High-level Event_Handler scheduling operations
+  /// @}
 
+  /// @name High-level event handler scheduling operations
+  /// @{
   /// Add @a masks_to_be_added to the @a event_handler's entry.
   /// @a event_handler must already have been registered.
   /// Note that this call does not cause the Reactor to re-examine
@@ -671,8 +688,10 @@ public:
   int cancel_wakeup (ACE_HANDLE handle,
                      ACE_Reactor_Mask masks_to_be_cleared);
 
-  // = Notification methods.
+  /// @}
 
+  /// @name Notification methods
+  /// @{
   /**
    * Dispatch user specified events.
    *
@@ -739,8 +758,10 @@ public:
                                    ACE_Reactor_Mask =
                                             ACE_Event_Handler::ALL_EVENTS_MASK);
 
-  // = Assorted helper methods.
+  /// @}
 
+  /// @name Assorted helper methods
+  /// @{
   /**
    * Return the Event_Handler associated with @a handle.  Return 0 if
    * @a handle is not registered.
@@ -772,7 +793,7 @@ public:
 
   /// Returns true if Reactor has been successfully initialized, else
   /// false.
-  int initialized ();
+  bool initialized ();
 
   /// Returns the current size of the Reactor's internal descriptor
   /// table.
@@ -803,8 +824,10 @@ public:
   /// Set a new value for restart and return the original value.
   bool restart (bool r);
 
-  // = Low-level wait_set mask manipulation methods.
+  /// @}
 
+  /// @name Low-level wait_set mask manipulation methods
+  /// @{
   /// GET/SET/ADD/CLR the dispatch mask "bit" bound with the
   /// @a event_handler and @a mask.
   int mask_ops (ACE_Event_Handler *event_handler,
@@ -817,7 +840,10 @@ public:
                 ACE_Reactor_Mask mask,
                 int ops);
 
-  // = Low-level ready_set mask manipulation methods.
+  /// @}
+
+  /// @name Low-level ready_set mask manipulation methods
+  /// @{
   /// GET/SET/ADD/CLR the ready "bit" bound with the @a event_handler
   /// and @a mask.
   int ready_ops (ACE_Event_Handler *event_handler,
@@ -828,6 +854,8 @@ public:
   int ready_ops (ACE_HANDLE handle,
                  ACE_Reactor_Mask mask,
                  int ops);
+
+  /// @}
 
   /// Get the implementation class
   ACE_Reactor_Impl *implementation () const;
@@ -867,10 +895,6 @@ protected:
 
   /// Must delete the reactor_ singleton if true.
   static bool delete_reactor_;
-
-  /// Deny access since member-wise won't work...
-  ACE_Reactor (const ACE_Reactor &) = delete;
-  ACE_Reactor &operator = (const ACE_Reactor &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

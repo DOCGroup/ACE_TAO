@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_CONNECTOR_CONNECTOR_DDS_EXH_H_
 #define _BE_CONNECTOR_CONNECTOR_DDS_EXH_H_
 

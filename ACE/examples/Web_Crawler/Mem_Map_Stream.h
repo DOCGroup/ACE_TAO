@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef _MEM_MAP_STREAM_H
 #define _MEM_MAP_STREAM_H
 #include /**/ "ace/pre.h"
@@ -18,7 +17,6 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
 
 #include "ace/Mem_Map.h"
 #include "ace/SOCK_Connector.h"
@@ -55,20 +53,22 @@ public:
 
   using STRAT_CONNECTOR = ACE_Strategy_Connector<Svc_Handler, ACE_SOCK_CONNECTOR>;
 
-  // Mem_Map_Stream ();
-  // constructor added:KIRTHIKA
   /// Initialize this object.
   virtual int open (STRAT_CONNECTOR *connector,
                     const ACE_INET_Addr &);
 
-  /// Destructor.
   virtual ~Mem_Map_Stream ();
 
-  // = Accessor.
+  /// @name Accessor
+  /// @{
+
   /// Returns the underlying <ACE_SOCK_Stream>.
   ACE_SOCK_Stream &stream ();
 
-  // = I/O methods.
+  /// @}
+
+  /// @name I/O methods
+  /// @{
 
   /// Send <size> bytes in <buf> to the connected peer.  This is a
   /// completely unbuffered call.
@@ -141,7 +141,6 @@ public:
   /// Returns 1 if we're at the end of the HTTP stream, else 0.
   virtual int eof () const;
 
-
   /*
   typedef ACE_NOOP_Creation_Strategy<Svc_Handler>
   NULL_CREATION_STRATEGY;
@@ -153,6 +152,8 @@ public:
                                     CACHED_CONNECT_STRATEGY;*/
 
   Svc_Handler *svc_handler ();
+
+  /// @}
 
 private:
   /**

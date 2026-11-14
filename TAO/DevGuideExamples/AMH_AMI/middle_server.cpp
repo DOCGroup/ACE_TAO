@@ -4,30 +4,33 @@
 #include "ace/Get_Opt.h"
 #include <iostream>
 #include <fstream>
+#include <string>
 
-int use_synch = 0;
-
-const ACE_TCHAR *ior_output_file = ACE_TEXT ("middle.ior");
-const ACE_TCHAR *ior_input_file = ACE_TEXT ("file://inner.ior");
-
-int
-parse_args (int argc, ACE_TCHAR *argv[])
+struct Middle_Server_Options
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:i:n"));
-  int c;
+  ACE_TString ior_output_file {ACE_TEXT ("middle.ior")};
+  ACE_TString ior_input_file {ACE_TEXT ("file://inner.ior")};
+  bool use_sync {};
+};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+static int
+parse_args (int argc, ACE_TCHAR *argv[], Middle_Server_Options &options)
+{
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:i:n"));
+  int option;
+
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'o':
-          ior_output_file = get_opts.opt_arg ();
-          break;
+        options.ior_output_file = get_opts.opt_arg ();
+        break;
       case 'i':
-          ior_input_file = get_opts.opt_arg ();
-          break;
+        options.ior_input_file = get_opts.opt_arg ();
+        break;
       case 'n':
-          use_synch = 1;
-          break;
+        options.use_sync = true;
+        break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -43,63 +46,66 @@ parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  try {
-    // Initialize the ORB.
-    CORBA::ORB_var orb = CORBA::ORB_init( argc, argv );
-
-    if (parse_args (argc, argv) != 0)
+  try
+    {
+      CORBA::ORB_var const orb (CORBA::ORB_init (argc, argv));
+      Middle_Server_Options options;
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
-    //Get reference to the RootPOA.
-    CORBA::Object_var obj = orb->resolve_initial_references( "RootPOA" );
-    PortableServer::POA_var poa = PortableServer::POA::_narrow( obj.in() );
+      CORBA::Object_var object (orb->resolve_initial_references ("RootPOA"));
+      PortableServer::POA_var const poa (
+        PortableServer::POA::_narrow (object.in ()));
+      PortableServer::POAManager_var const manager (poa->the_POAManager ());
+      manager->activate ();
 
-    // Activate the POAManager.
-    PortableServer::POAManager_var mgr = poa->the_POAManager();
-    mgr->activate();
+      object = orb->string_to_object (
+        ACE_TEXT_ALWAYS_CHAR (options.ior_input_file.c_str ()));
+      Inner_var const peer (Inner::_narrow (object.in ()));
+      if (CORBA::is_nil (peer.in ()))
+        {
+          std::cerr << "Could not initialize peer object reference" << std::endl;
+          return 1;
+        }
 
-    obj = orb->string_to_object(ior_input_file);
-    Inner_var peer =
-      Inner::_narrow(obj.in());
-    if (CORBA::is_nil(peer.in()))
-      {
-        std::cerr << "Could not initialize peer object reference" << std::endl;
-        ACE_OS::exit (1);
-      }
+      PortableServer::ServantBase_var servant;
+      if (options.use_sync)
+        servant = new Middle_i (peer.in ());
+      else
+        servant = new Asynch_Middle_i (poa.in (), peer.in ());
 
-    // create either a synchronous or AMH_based servant depending on command
-    // line arguement.
-    PortableServer::ServantBase_var servant;
-    if (use_synch)
-      servant = new Middle_i (peer.in());
-    else
-      servant = new Asynch_Middle_i(poa.in(), peer.in());
+      PortableServer::ObjectId_var const oid (poa->activate_object (servant.in ()));
+      object = poa->id_to_reference (oid.in ());
+      CORBA::String_var const ior (orb->object_to_string (object.in ()));
 
-    // Register the servant with the RootPOA, obtain its object
-    // reference, stringify it, and write it to a file.
-    PortableServer::ObjectId_var oid = poa->activate_object(servant.in());
-    obj = poa->id_to_reference( oid.in() );
-    CORBA::String_var str = orb->object_to_string( obj.in() );
+      std::string const ior_name (
+        ACE_TEXT_ALWAYS_CHAR (options.ior_output_file.c_str ()));
+      std::ofstream ior_file (ior_name);
+      if (!ior_file)
+        {
+          std::cerr << "Cannot open IOR output file." << std::endl;
+          return 1;
+        }
+      ior_file << ior.in () << std::endl;
+      ior_file.close ();
+      if (!ior_file)
+        {
+          std::cerr << "Cannot write IOR output file." << std::endl;
+          return 1;
+        }
+      std::cout << "IOR written to " << ior_name << std::endl;
 
-    ACE_CString iorname(ACE_TEXT_ALWAYS_CHAR(ior_output_file));
-    std::ofstream iorFile (iorname.c_str());
-    iorFile << str.in() << std::endl;
-    iorFile.close();
-    std::cout << "IOR written to " << iorname << std::endl;
+      orb->run ();
+      orb->destroy ();
+    }
+  catch (CORBA::Exception const &ex)
+    {
+      std::cerr << "CORBA exception: " << ex << std::endl;
+      return 1;
+    }
 
-    // Accept requests from clients.
-    orb->run();
-    orb->destroy();
-
-    return 0;
-  }
-  catch(const CORBA::Exception& ex) {
-    std::cerr << "CORBA exception: " << ex << std::endl;
-  }
-
-  return 1;
+  return 0;
 }

@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_unistd.h"
@@ -55,7 +54,6 @@ run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Capabilities_Test"));
 
-
   // --------------------------------------------------------
   // Create config file
   // --------------------------------------------------------
@@ -79,7 +77,6 @@ run_main (int, ACE_TCHAR *[])
                        ACE_TEXT ("ACE_OS::open")),
                       -1);
 
-
   if (ACE_OS::write (fd, file_contents, sizeof(file_contents)) !=
       (ssize_t) sizeof(file_contents))
     {
@@ -100,7 +97,6 @@ run_main (int, ACE_TCHAR *[])
                         -1);
     }
   // --------------------------------------------------------
-
 
   int const result = load_config ();
 

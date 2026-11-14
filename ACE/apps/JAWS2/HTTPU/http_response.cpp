@@ -1,4 +1,5 @@
 #include "HTTPU/http_response.h"
+#include <cstdio>
 
 void
 HTTP_Response::parse_line ()
@@ -12,22 +13,20 @@ int
 HTTP_Response::espouse_line ()
 {
   int count;
-  int status;
+  int const status = this->status_ != static_cast<int> (STATUS_OK)
+    ? this->status_
+    : this->response_line ()->code ();
 
-  if (this->status_ != (int)STATUS_OK)
-    status = this->status_;
-  else
-    status = this->response_line ()->code ();
-
-  count = ACE_OS::sprintf (this->mb_->wr_ptr (), "%s %d %s\r\n",
-                           "HTTP/1.1",
-                           status,
-                           (char *)(*HTTP_SCode::instance ())[status]);
+  count = std::snprintf (this->mb_->wr_ptr (), this->mb_->space (),
+                         "%s %d %s\r\n",
+                         "HTTP/1.1",
+                         status,
+                         (*HTTP_SCode::instance ())[status]);
   // Last arg is hard coded since we are suppose to report the
   // level of server we are, and not act like the level of the
   // client.  This information should be obtained from the config.
 
-  if (count < 0)
+  if (count < 0 || static_cast<size_t> (count) >= this->mb_->space ())
     return -1;
 
   this->mb_->wr_ptr (count);

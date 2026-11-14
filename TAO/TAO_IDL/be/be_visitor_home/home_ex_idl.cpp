@@ -295,7 +295,7 @@ be_visitor_home_ex_idl::gen_supported ()
 
   AST_Type_List const& supported = node_->supports ();
 
-  for (std::size_t i = 0; i < supported.size (); ++i)
+  for (size_t i = 0; i < supported.size (); ++i)
     {
       os_ << "," << be_nl
           << "::"
@@ -311,7 +311,7 @@ be_visitor_home_ex_idl::gen_exception_list (
   std::string const& prefix,
   bool init_op)
 {
-  std::size_t const cutoff = init_op ? 1 : 0;
+  size_t const cutoff = init_op ? 1 : 0;
 
   if (exceptions != nullptr && exceptions->length () > cutoff)
     {

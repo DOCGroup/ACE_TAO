@@ -35,10 +35,8 @@ class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Command
 {
   friend class TAO_Notify_Tests_Command_Builder;
 public:
-  /// Constructor
   TAO_Notify_Tests_Command ();
 
-  /// Destructor
   virtual ~TAO_Notify_Tests_Command ();
 
   /// Parse args and populate options.
@@ -54,8 +52,8 @@ public:
   // static const char* name ();
 
 protected:
-  /// Next command after this one.
-  TAO_Notify_Tests_Command* next_;
+  /// Non-owning link to the next command; TAO_Notify_Tests_Command_Builder owns the chain.
+  TAO_Notify_Tests_Command* next_ {};
 
   enum {INVALID = -1};
 

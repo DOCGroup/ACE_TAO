@@ -4,23 +4,22 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_unistd.h"
 
-
 static constexpr int DEFAULT_ITERATIONS = 100000000;
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Profile_Timer timer;
-  int iterations = argc > 1 ? ACE_OS::atoi (argv[1]) : DEFAULT_ITERATIONS;
+  int const iterations = argc > 1 ? ACE_OS::atoi (argv[1]) : DEFAULT_ITERATIONS;
 
   timer.start ();
 
-  for (int i = 0; i < iterations; i++)
+  for (int i = 0; i < iterations; ++i)
     ACE_OS::getpid ();
 
   timer.stop ();
 
-  ACE_Profile_Timer::ACE_Elapsed_Time et;
+  ACE_Profile_Timer::ACE_Elapsed_Time et {};
 
   timer.elapsed_time (et);
 
@@ -29,6 +28,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               et.real_time, et.user_time, et.system_time));
 
   ACE_DEBUG ((LM_DEBUG, "time per call = %f usecs\n",
-              (et.real_time / double (iterations)) * 1000000));
+              (et.real_time / static_cast<double> (iterations)) * 1000000));
   return 0;
 }

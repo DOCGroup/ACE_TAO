@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Process.h"
 #include "ace/RW_Process_Mutex.h"
@@ -20,7 +19,6 @@
 #include "ace/Time_Value.h"
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_unistd.h"
-
 
 // The parent process is number -1. Writer is 0; Readers are 1-3.
 static int child_nr = -1;
@@ -121,7 +119,6 @@ Child::any_overlaps (const Child &other) const
     }
   return overlap;
 }
-
 
 // Explain usage and exit.
 static void

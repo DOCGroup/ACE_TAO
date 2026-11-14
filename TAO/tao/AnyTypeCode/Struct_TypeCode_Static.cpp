@@ -15,6 +15,8 @@
 #include "ace/Truncate.h"
 #include <cstring>
 
+#include <vector>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 bool
@@ -52,18 +54,10 @@ TAO::TypeCode::Struct<char const *,
   if (!success)
     return false;
 
-  Struct_Field<char const *, CORBA::TypeCode_ptr const *> const * const begin =
-    &this->fields_[0];
-  Struct_Field<char const *, CORBA::TypeCode_ptr const *> const * const end =
-    begin + this->nfields_;
-
-  for (Struct_Field<char const *, CORBA::TypeCode_ptr const *> const * i =
-         begin;
-       i != end;
-       ++i)
+  for (CORBA::ULong i {}; i < this->nfields_; ++i)
     {
       Struct_Field<char const *, CORBA::TypeCode_ptr const *> const & field =
-        *i;
+        this->fields_[i];
 
       if (!(enc << TAO_OutputCDR::from_string (
                        Traits<char const *>::get_string (field.name), 0))
@@ -115,7 +109,7 @@ TAO::TypeCode::Struct<char const *,
   if (tc_nfields != this->nfields_)
     return false;
 
-  for (CORBA::ULong i = 0; i < this->nfields_; ++i)
+  for (CORBA::ULong i {}; i < this->nfields_; ++i)
     {
       Struct_Field<char const *, CORBA::TypeCode_ptr const *> const &
         lhs_field = this->fields_[i];
@@ -159,7 +153,7 @@ TAO::TypeCode::Struct<char const *,
   if (tc_nfields != this->nfields_)
     return false;
 
-  for (CORBA::ULong i = 0; i < this->nfields_; ++i)
+  for (CORBA::ULong i {}; i < this->nfields_; ++i)
     {
       CORBA::TypeCode_ptr const lhs =
         Traits<char const *>::get_typecode (this->fields_[i].type);
@@ -183,9 +177,8 @@ TAO::TypeCode::Struct<char const *,
                                                   CORBA::TypeCode_ptr const *> const *,
                       TAO::Null_RefCount_Policy>::get_compact_typecode_i () const
 {
-  ACE_Array_Base<Struct_Field<CORBA::String_var,
-                              CORBA::TypeCode_var> >
-    tc_fields (this->nfields_);
+  std::vector<Struct_Field<CORBA::String_var,
+                           CORBA::TypeCode_var> > tc_fields (this->nfields_);
 
   if (this->nfields_ > 0)
     {
@@ -194,7 +187,7 @@ TAO::TypeCode::Struct<char const *,
 
       static char const empty_name[] = "";
 
-      for (CORBA::ULong i = 0; i < this->nfields_; ++i)
+      for (CORBA::ULong i {}; i < this->nfields_; ++i)
         {
           // Member names will be stripped, i.e. not embedded within
           // the compact TypeCode.

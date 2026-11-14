@@ -35,7 +35,6 @@ public:
    using scale_factor_type = ACE_UINT64;
 #endif
 
-  /// Constructor
   /**
    * The number of samples is pre-allocated, and cannot changes once
    * the class is initialized.
@@ -62,22 +61,22 @@ public:
                      scale_factor_type scale_factor) const;
 
   /// The number of samples
-  ACE_UINT32 samples_count_;
+  ACE_UINT32 samples_count_ {};
 
   /// The minimum value
-  ACE_UINT64 min_;
+  ACE_UINT64 min_ {};
 
   /// The number of the sample that had the minimum value
-  ACE_UINT32 min_at_;
+  ACE_UINT32 min_at_ {};
 
   /// The maximum value
-  ACE_UINT64 max_;
+  ACE_UINT64 max_ {};
 
   /// The number of the sample that had the maximum value
-  ACE_UINT32 max_at_;
+  ACE_UINT32 max_at_ {};
 
   /// The sum of all the values
-  ACE_UINT64 sum_;
+  ACE_UINT64 sum_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

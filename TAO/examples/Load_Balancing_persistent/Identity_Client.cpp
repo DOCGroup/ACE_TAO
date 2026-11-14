@@ -6,7 +6,6 @@
  */
 //=============================================================================
 
-
 #include "Identity_Client.h"
 #include "IdentityC.h"
 #include "Load_BalancerC.h"
@@ -14,14 +13,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Stats.h"
-
-Identity_Client::Identity_Client ()
-  : group_factory_ior_ (0),
-    number_of_invocations_ (5),
-    use_random_ (0),
-    iterations_ (0)
-{
-}
 
 int
 Identity_Client::parse_args (int argc, ACE_TCHAR *argv[])
@@ -33,7 +24,7 @@ Identity_Client::parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'd':  // debug flag.
-        TAO_debug_level++;
+        ++TAO_debug_level;
         break;
       case 'i': // ior of the <Object_Group_Factory> object.
         this->group_factory_ior_ = get_opts.opt_arg ();
@@ -47,7 +38,7 @@ Identity_Client::parse_args (int argc, ACE_TCHAR *argv[])
       case 'r': // flag signifying to obtain references to <Identity>
                 // objects from the random <Object_Group> rather than
                 // from the round robin one.
-        this->use_random_ = 1;
+        this->use_random_ = true;
         break;
       case '?':
       default:
@@ -99,7 +90,7 @@ Identity_Client::run ()
   CORBA::Object_var obj =
     orb->string_to_object (this->group_factory_ior_);
 
-  if (obj.in () == 0)
+  if (obj.in () == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("(%N|%l) <ERROR> [Identity_Client::run]\n")
                        ACE_TEXT ("factory_resolve\n")),
@@ -113,7 +104,7 @@ Identity_Client::run ()
                        "Identity_Client: problems using the factory ior\n"),
                       -1);
 
-  const char *group_name;
+  char const *group_name;
   if (this->use_random_)
     group_name = "Random group";
   else
@@ -176,7 +167,7 @@ Identity_Client::run ()
   Load_Balancer::Member_ID_List_var id_list =
     object_group->members ();
   ACE_DEBUG ((LM_DEBUG,
-              "The group contains %d members:\n",
+              "The group contains %u members:\n",
               id_list->length ()));
   for (CORBA::ULong i = 0; i < id_list->length (); ++i)
     ACE_DEBUG ((LM_DEBUG, "%s\n", static_cast<char const*>(id_list[i])));
@@ -210,10 +201,6 @@ Identity_Client::run ()
     }
 
   return 0;
-}
-
-Identity_Client::~Identity_Client ()
-{
 }
 
 int

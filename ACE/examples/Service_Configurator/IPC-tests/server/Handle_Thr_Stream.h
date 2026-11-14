@@ -20,13 +20,17 @@ class Handle_Thr_Acceptor : public ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_A
   //   configured <ACE_Thread_Strategy>.
 {
 public:
-  Handle_Thr_Acceptor ();
+  Handle_Thr_Acceptor () = default;
   ~Handle_Thr_Acceptor ();
+  Handle_Thr_Acceptor (Handle_Thr_Acceptor const &) = delete;
+  Handle_Thr_Acceptor (Handle_Thr_Acceptor &&) = delete;
+  Handle_Thr_Acceptor &operator= (Handle_Thr_Acceptor const &) = delete;
+  Handle_Thr_Acceptor &operator= (Handle_Thr_Acceptor &&) = delete;
 
   // = Dynamic linking hooks.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
-  virtual int info (ACE_TCHAR **, size_t) const;
-  virtual int fini ();
+  int init (int argc, ACE_TCHAR *argv[]) override;
+  int info (ACE_TCHAR **, size_t) const override;
+  int fini () override;
 
 private:
   ACE_Thread_Manager thr_mgr_;
@@ -35,7 +39,7 @@ private:
   ACE_Thread_Strategy<SVC_HANDLER> thr_strategy_;
   // Threading strategy.
 
-  int thr_flags_;
+  int thr_flags_ { THR_DETACHED | THR_NEW_LWP };
   // Threading flags.
 };
 
@@ -46,15 +50,19 @@ class CLI_Stream : public ACE_Svc_Handler<ACE_PEER_STREAM_2, ACE_MT_SYNCH>
   //   thread and handles connections from remote TCP/IP connections.
 {
 public:
-  CLI_Stream (ACE_Thread_Manager * = 0);
+  explicit CLI_Stream (ACE_Thread_Manager * = nullptr);
+  CLI_Stream (CLI_Stream const &) = delete;
+  CLI_Stream (CLI_Stream &&) = delete;
+  CLI_Stream &operator= (CLI_Stream const &) = delete;
+  CLI_Stream &operator= (CLI_Stream &&) = delete;
 
-  virtual int open (void *);
+  int open (void *) override;
   // Open the service.
 
-  virtual int close (u_long);
+  int close (u_long) override;
   // Close down the service.
 
-  virtual int svc ();
+  int svc () override;
   // Execute the service.
 
 protected:

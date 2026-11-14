@@ -215,10 +215,10 @@ ACE_Message_Queue_NT::dump () const
   ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("max_cthrs_ = %d\n")
               ACE_TEXT ("cur_thrs_ = %d\n")
-              ACE_TEXT ("cur_bytes = %d\n")
-              ACE_TEXT ("cur_length = %d\n")
-              ACE_TEXT ("cur_count = %d\n")
-              ACE_TEXT ("completion_port_ = %x\n"),
+              ACE_TEXT ("cur_bytes = %B\n")
+              ACE_TEXT ("cur_length = %B\n")
+              ACE_TEXT ("cur_count = %B\n")
+              ACE_TEXT ("completion_port_ = %@\n"),
               this->max_cthrs_,
               this->cur_thrs_,
               this->cur_bytes_,

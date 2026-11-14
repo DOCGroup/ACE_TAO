@@ -69,7 +69,6 @@ ACE_Future_Rep<T>::create ()
    return temp;
  }
 
-
 template <class T> ACE_Future_Rep<T> *
 ACE_Future_Rep<T>::attach (ACE_Future_Rep<T>*& rep)
 {
@@ -394,7 +393,7 @@ ACE_Future<T>::dump () const
 }
 
 template <class T> ACE_Future_Rep<T> *
-ACE_Future<T>::get_rep ()
+ACE_Future<T>::get_rep () const
 {
   return this->future_rep_;
 }

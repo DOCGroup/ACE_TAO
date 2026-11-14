@@ -6,7 +6,7 @@
 #include "ace/High_Res_Timer.h"
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   EC_Reconnect driver;
   return driver.run (argc, argv);

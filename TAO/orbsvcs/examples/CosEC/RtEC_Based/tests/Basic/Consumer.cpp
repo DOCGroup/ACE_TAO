@@ -2,12 +2,8 @@
 #include "Consumer.h"
 
 void
-Consumer::open (CosEventChannelAdmin::EventChannel_ptr event_channel,
-                     CORBA::ORB_ptr orb)
+Consumer::open (CosEventChannelAdmin::EventChannel_ptr const event_channel)
 {
-  this->orb_ = orb;
-
-  // = Connect as a consumer.
   this->consumer_admin_ =
     event_channel->for_consumers ();
 }
@@ -27,7 +23,7 @@ Consumer::connect ()
   if (CORBA::is_nil (this->consumer_admin_.in ()))
     return;
 
-  CosEventComm::PushConsumer_var objref =
+  CosEventComm::PushConsumer_var const objref =
     this->_this ();
 
   this->supplier_proxy_ =
@@ -50,11 +46,10 @@ Consumer::disconnect ()
 }
 
 void
-Consumer::push (const CORBA::Any &)
+Consumer::push (CORBA::Any const &)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "in Consumer::push\n"));
-  // this->orb_->shutdown ();
+              ACE_TEXT ("in Consumer::push\n")));
   // @@ read comment in run
 }
 
@@ -63,10 +58,10 @@ Consumer::disconnect_push_consumer ()
 {
   // Deactivate this object.
 
-  PortableServer::POA_var poa =
+  PortableServer::POA_var const poa =
     this->_default_POA ();
 
-  PortableServer::ObjectId_var id =
+  PortableServer::ObjectId_var const id =
     poa->servant_to_id (this);
 
   poa->deactivate_object (id.in ());

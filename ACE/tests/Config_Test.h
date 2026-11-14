@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef __CONFIG_TEST_H
 #define __CONFIG_TEST_H
 
@@ -39,7 +38,6 @@ public:
   //  7. Compares to origional.
   //  8. Clean-up
   int testRegFormat ();
-
 
 private:
   // change a value for value change test

@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef OPTIONS_H
 #define OPTIONS_H
 
@@ -23,7 +22,12 @@
 class ACE_Svc_Export Options
 {
 public:
-  // = Options that can be enabled/disabled.
+  Options (Options const &) = delete;
+  Options (Options &&) = delete;
+  Options &operator= (Options const &) = delete;
+  Options &operator= (Options &&) = delete;
+
+  /// Options that can be enabled or disabled.
   enum
   {
     VERBOSE = 01,
@@ -39,7 +43,6 @@ public:
   /// Parse the arguments and set the options.
   void parse_args (int argc, ACE_TCHAR *argv[]);
 
-  // = Accessor methods.
   /// Determine if an option is enabled.
   int enabled (int option) const;
 
@@ -67,7 +70,7 @@ public:
 
   /// Our connector port host, i.e., the host running the gatewayd
   /// process.
-  const ACE_TCHAR *connector_host () const;
+  ACE_TCHAR const *connector_host () const;
 
   /// Duration between disconnects.
   long timeout () const;
@@ -96,45 +99,42 @@ private:
   /// Explain usage and exit.
   void print_usage_and_die ();
 
-  /// Singleton.
-  static Options *instance_;
-
   /// Flag to indicate if we want verbose diagnostics.
-  u_long options_;
+  u_long options_ {};
 
   /**
    * The acceptor port number, i.e., the one that we passively listen
    * on for connections to arrive from a gatewayd and create a
    * Supplier.
    */
-  u_short supplier_acceptor_port_;
+  u_short supplier_acceptor_port_ {DEFAULT_PEER_SUPPLIER_PORT};
 
   /**
    * The acceptor port number, i.e., the one that we passively listen
    * on for connections to arrive from a gatewayd and create a
    * Consumer.
    */
-  u_short consumer_acceptor_port_;
+  u_short consumer_acceptor_port_ {DEFAULT_PEER_CONSUMER_PORT};
 
   /// The connector port number, i.e., the one that we use to actively
   /// establish connections with a gatewayd and create a Supplier.
-  u_short supplier_connector_port_;
+  u_short supplier_connector_port_ {DEFAULT_GATEWAY_SUPPLIER_PORT};
 
   /// The connector port number, i.e., the one that we use to actively
   /// establish connections with a gatewayd and create a Consumer.
-  u_short consumer_connector_port_;
+  u_short consumer_connector_port_ {DEFAULT_GATEWAY_CONSUMER_PORT};
 
   /// Our connector host, i.e., where the gatewayd process is running.
-  const ACE_TCHAR *connector_host_;
+  ACE_TCHAR const *connector_host_ {ACE_DEFAULT_SERVER_HOST};
 
   /// The amount of time to wait before disconnecting from the Peerd.
-  long timeout_;
+  long timeout_ {DEFAULT_TIMEOUT};
 
   /// The maximum size that the queue can grow to.
-  long max_queue_size_;
+  long max_queue_size_ {MAX_QUEUE_SIZE};
 
   /// The connection id.
-  CONNECTION_ID connection_id_;
+  CONNECTION_ID connection_id_ {};
 };
 
 #endif /* OPTIONS_H */

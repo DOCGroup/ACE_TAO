@@ -9,7 +9,6 @@
 #include "orbsvcs/Event/ECG_CDR_Message_Sender.inl"
 #endif /* __ACE_INLINE__ */
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
@@ -43,9 +42,9 @@ TAO_ECG_CDR_Message_Sender::send_message  (const TAO_OutputCDR &cdr,
   // ACE_ASSERT (max_fragment_payload != 0);
 
 #if defined (ACE_HAS_BROKEN_DGRAM_SENDV)
-  const int TAO_WRITEV_MAX = ACE_IOV_MAX - 1;
+  constexpr int TAO_WRITEV_MAX = ACE_IOV_MAX - 1;
 #else
-  const int TAO_WRITEV_MAX = ACE_IOV_MAX;
+  constexpr int TAO_WRITEV_MAX = ACE_IOV_MAX;
 #endif /* ACE_HAS_BROKEN_DGRAM_SENDV */
   iovec iov[TAO_WRITEV_MAX];
 
@@ -61,10 +60,10 @@ TAO_ECG_CDR_Message_Sender::send_message  (const TAO_OutputCDR &cdr,
 
   // Reserve the first iovec for the header...
   int iovcnt = 1;
-  CORBA::ULong fragment_id = 0;
-  CORBA::ULong fragment_offset = 0;
-  CORBA::ULong fragment_size = 0;
-  for (const ACE_Message_Block* b = cdr.begin ();
+  CORBA::ULong fragment_id {};
+  CORBA::ULong fragment_offset {};
+  CORBA::ULong fragment_size {};
+  for (ACE_Message_Block const *b = cdr.begin ();
        b != cdr.end ();
        b = b->cont ())
     {
@@ -172,7 +171,6 @@ TAO_ECG_CDR_Message_Sender::send_message  (const TAO_OutputCDR &cdr,
   // ACE_ASSERT (fragment_id == fragment_count);
 }
 
-
 void
 TAO_ECG_CDR_Message_Sender::send_fragment (const ACE_INET_Addr &addr,
                                            CORBA::ULong request_id,
@@ -201,28 +199,27 @@ TAO_ECG_CDR_Message_Sender::send_fragment (const ACE_INET_Addr &addr,
   cdr.write_ulong (fragment_count);
   CORBA::Octet padding[4];
 
-
   // MRH
   if (checksum_)
   {
     // Compute CRC
      iov[0].iov_base = cdr.begin ()->rd_ptr ();
      iov[0].iov_len  = cdr.begin ()->length ();
-     unsigned int crc = 0;
+     unsigned int crc {};
      unsigned char *crc_parts = (unsigned char *)(&crc);
      if (iovcnt > 1)
        {
          crc = ACE::crc32 (iov, iovcnt);
          crc = ACE_HTONL (crc);
        }
-     for (int cnt=0; cnt<4; ++cnt)
+     for (int cnt {}; cnt<4; ++cnt)
        {
          padding[cnt] = crc_parts[cnt];
        }
    }
    else
    {
-     for (int cnt=0; cnt<4; ++cnt)
+     for (int cnt {}; cnt<4; ++cnt)
      {
        padding[cnt] = 0;
      }
@@ -237,7 +234,7 @@ TAO_ECG_CDR_Message_Sender::send_fragment (const ACE_INET_Addr &addr,
                                    iovcnt,
                                    addr);
   size_t expected_n = 0;
-  for (int i = 0; i < iovcnt; ++i)
+  for (int i {}; i < iovcnt; ++i)
     expected_n += iov[i].iov_len;
   if (n > 0 && size_t(n) != expected_n)
     {
@@ -266,21 +263,20 @@ TAO_ECG_CDR_Message_Sender::send_fragment (const ACE_INET_Addr &addr,
     }
 }
 
-
 CORBA::ULong
-TAO_ECG_CDR_Message_Sender::compute_fragment_count (const ACE_Message_Block* begin,
-                                                    const ACE_Message_Block* end,
+TAO_ECG_CDR_Message_Sender::compute_fragment_count (ACE_Message_Block const *begin,
+                                                    ACE_Message_Block const *end,
                                                     int iov_size,
                                                     CORBA::ULong max_fragment_payload,
                                                     CORBA::ULong& total_length)
 {
-  CORBA::ULong fragment_count = 0;
+  CORBA::ULong fragment_count {};
   total_length = 0;
 
-  CORBA::ULong fragment_size = 0;
+  CORBA::ULong fragment_size {};
   // Reserve the first iovec for the header...
   int iovcnt = 1;
-  for (const ACE_Message_Block* b = begin;
+  for (ACE_Message_Block const *b = begin;
        b != end;
        b = b->cont ())
     {

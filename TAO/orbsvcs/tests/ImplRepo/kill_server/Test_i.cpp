@@ -31,4 +31,3 @@ Test_i::get_server_num ()
   return this->server_num_;
 }
 
-

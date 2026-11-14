@@ -12,11 +12,9 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Message_Queue.h"
 #include "ace/Thread_Manager.h"
-
 
 #if defined (ACE_HAS_THREADS)
 
@@ -57,7 +55,7 @@ consumer (void *args)
       if (result == -1)
         break;
 
-      local_count++;
+      ++local_count;
 
       size_t length = mb->length ();
 

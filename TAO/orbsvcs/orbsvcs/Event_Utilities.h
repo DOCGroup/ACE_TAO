@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_EVENT_UTILITIES_H
 #define ACE_EVENT_UTILITIES_H
 
@@ -20,7 +19,6 @@
 #include "orbsvcs/Event/event_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 
 using TAO_EC_Event_Initializer = void (*) (RtecEventComm::Event&);
 
@@ -94,8 +92,8 @@ class TAO_RTEvent_Export ACE_ConsumerQOS_Factory
 {
 public:
   /// Default construction.
-  ACE_ConsumerQOS_Factory (TAO_EC_Event_Initializer initializer = 0,
-                           CORBA::ULong qos_max_len = 0);
+  explicit ACE_ConsumerQOS_Factory (TAO_EC_Event_Initializer initializer = nullptr,
+                                    CORBA::ULong qos_max_len = 0);
 
   /// Death and destruction.
   ~ACE_ConsumerQOS_Factory ();
@@ -192,10 +190,10 @@ private:
 
   /// Whether a start_XX_group has been called yet.  This is to make
   /// sure that a designator is placed in the subscription list first.
-  int designator_set_;
+  bool designator_set_ {};
 
   /**
-   * If not zero this is a user-provided function used to initialize
+   * If not nullptr this is a user-provided function used to initialize
    * the events.  When the event contains unions this is required to
    * avoid marshaling and demarshaling of default initialized unions
    * that (AFAIK) is not CORBA compliant.
@@ -209,8 +207,8 @@ class TAO_RTEvent_Export ACE_SupplierQOS_Factory
 {
 public:
   /// Default construction.
-  ACE_SupplierQOS_Factory (TAO_EC_Event_Initializer initializer = 0,
-                           CORBA::ULong qos_max_len = 0);
+  explicit ACE_SupplierQOS_Factory (TAO_EC_Event_Initializer initializer = nullptr,
+                                    CORBA::ULong qos_max_len = 0);
 
   /**
    * Publish @a sid and @a type that is generate by a method described by
@@ -236,7 +234,7 @@ private:
   RtecEventChannelAdmin::SupplierQOS qos_;
 
   /**
-   * If not zero this is a user-provided function used to initialize
+   * If not nullptr this is a user-provided function used to initialize
    * the events.  When the event contains unions this is required to
    * avoid marshaling and demarshaling of default initialized unions
    * that (AFAIK) is not CORBA compliant.

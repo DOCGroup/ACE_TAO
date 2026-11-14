@@ -1,12 +1,10 @@
 /* -*- C++ -*- */
 
-// =================================================================
 /**
  * @file PICurrent_Loader.cpp
  *
  * @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-// =================================================================
 
 #include "tao/PI/PICurrent_Loader.h"
 
@@ -29,7 +27,6 @@ TAO_PICurrent_Loader::create_object (CORBA::ORB_ptr orb,  int, ACE_TCHAR *[])
                   CORBA::Object::_nil ());
   return obj;
 }
-
 
 ACE_STATIC_SVC_DEFINE (TAO_PICurrent_Loader,
                        ACE_TEXT ("PICurrent_Loader"),

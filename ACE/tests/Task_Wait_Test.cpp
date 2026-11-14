@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Event.h"
 #include "ace/Thread_Manager.h"
@@ -50,7 +49,6 @@ Do_Nothing_Task::close (u_long)
   TaskDone.signal ();
   return 0;
 }
-
 
 // svc just waits a second then exits.
 int

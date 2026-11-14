@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file   OC_Endpoint_Selector_Factory.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author Phil Mesnier <mesnier_p@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_OC_ENDPOINT_SELECTOR_FACTORY_H
 #define TAO_OC_ENDPOINT_SELECTOR_FACTORY_H
@@ -18,6 +16,8 @@
 #include "tao/Endpoint_Selector_Factory.h"
 #include "ace/Service_Config.h"
 
+#include <memory>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -26,8 +26,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward references
 class TAO_Optimized_Connection_Endpoint_Selector;
-
-// ****************************************************************
 
 /**
  * @class TAO_OC_Endpoint_Selector_Factory
@@ -49,10 +47,8 @@ class TAO_Strategies_Export TAO_OC_Endpoint_Selector_Factory
   : public TAO_Endpoint_Selector_Factory
 {
 public:
-  /// Constructor.
-  TAO_OC_Endpoint_Selector_Factory () = default;
+  TAO_OC_Endpoint_Selector_Factory ();
 
-  /// Destructor.
   ~TAO_OC_Endpoint_Selector_Factory () override;
 
   int init (int argc, ACE_TCHAR *argv[]) override;
@@ -65,7 +61,7 @@ protected:
   /// The possible endpoint selector strategies that can be
   /// returned by this factory
 
-  TAO_Optimized_Connection_Endpoint_Selector *oc_endpoint_selector_ {};
+  std::unique_ptr<TAO_Optimized_Connection_Endpoint_Selector> oc_endpoint_selector_;
 
   int register_orb_initializer ();
 
@@ -77,8 +73,6 @@ private:
   TAO_OC_Endpoint_Selector_Factory &operator= (
     TAO_OC_Endpoint_Selector_Factory &&) = delete;
 };
-
-
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_Strategies, TAO_OC_Endpoint_Selector_Factory)
 ACE_FACTORY_DECLARE (TAO_Strategies, TAO_OC_Endpoint_Selector_Factory)

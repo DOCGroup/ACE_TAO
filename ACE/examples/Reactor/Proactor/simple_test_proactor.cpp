@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "ace/Service_Config.h"
 #include "ace/Proactor.h"
 #include "ace/Asynch_IO.h"
@@ -17,7 +16,6 @@
 #include "ace/Message_Block.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_main.h"
-
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
   // This only works on Win32 platforms and on Unix platforms supporting
@@ -37,7 +35,6 @@ static ACE_TCHAR *dump_file = ACE_TEXT("simple_output");
 class Simple_Tester : public ACE_Handler
 {
 public:
-  /// Constructor.
   Simple_Tester ();
 
   ~Simple_Tester ();
@@ -51,10 +48,10 @@ protected:
   // = These methods are called by the framework.
 
   /// This is called when asynchronous reads from the socket complete.
-  virtual void handle_read_file (const ACE_Asynch_Read_File::Result &result);
+  void handle_read_file (const ACE_Asynch_Read_File::Result &result) override;
 
   /// This is called when asynchronous writes from the socket complete.
-  virtual void handle_write_file (const ACE_Asynch_Write_File::Result &result);
+  void handle_write_file (const ACE_Asynch_Write_File::Result &result) override;
 
 private:
   int initiate_read_file ();
@@ -78,7 +75,6 @@ private:
   // File size
 };
 
-
 Simple_Tester::Simple_Tester ()
   : input_file_ (ACE_INVALID_HANDLE),
     dump_file_ (ACE_INVALID_HANDLE)
@@ -90,7 +86,6 @@ Simple_Tester::~Simple_Tester ()
   ACE_OS::close (this->input_file_);
   ACE_OS::close (this->dump_file_);
 }
-
 
 int
 Simple_Tester::open ()
@@ -121,7 +116,6 @@ Simple_Tester::open ()
   ACE_DEBUG ((LM_DEBUG,
               "Simple_Tester::open: Files and Asynch Operations opened successfully\n"));
 
-
   // Start an asynchronous read file
   if (this->initiate_read_file () == -1)
     return -1;
@@ -129,12 +123,11 @@ Simple_Tester::open ()
   return 0;
 }
 
-
 int
 Simple_Tester::initiate_read_file ()
 {
   // Create Message_Block
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb {};
   ACE_NEW_RETURN (mb, ACE_Message_Block (BUFSIZ + 1), -1);
 
   // Inititiate an asynchronous read from the file

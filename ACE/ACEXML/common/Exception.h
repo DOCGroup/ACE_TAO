@@ -34,7 +34,6 @@
 class ACEXML_Export ACEXML_Exception
 {
 public:
-  /// Destructor.
   virtual ~ACEXML_Exception ();
 
   /// Throw the exception.
@@ -50,13 +49,12 @@ public:
   virtual ACEXML_Exception *duplicate () const = 0;
 
   /// Check whether this is an exception of type specified by <name>.
-  virtual int is_a (const ACEXML_Char *name);
+  virtual bool is_a (ACEXML_Char const *name);
 
   /// Print out exception using ACE_DEBUG.
   virtual void print () const = 0;
 
 protected:
-  /// Default constructor.
   ACEXML_Exception ();
 
   /// All exceptions have names.  This name is used to identify the

@@ -376,7 +376,7 @@ ACE_OS::cuserid (char *user, size_t maxlen)
       return 0;
     }
 
-  struct passwd *pw = nullptr;
+  struct passwd *pw {};
 
   // Make sure the file pointer is at the beginning of the password file
   ACE_OS::setpwent ();
@@ -396,7 +396,7 @@ ACE_OS::cuserid (char *user, size_t maxlen)
     }
 
   size_t max_length = 0;
-  char *userid = nullptr;
+  char *userid {};
 
   if (user == 0)
     {
@@ -449,7 +449,7 @@ ACE_OS::cuserid (wchar_t *user, size_t maxlen)
     return user;
 # else /* ACE_WIN32 */
   char *char_user;
-  wchar_t *result = nullptr;
+  wchar_t *result {};
 
   ACE_NEW_RETURN (char_user, char[maxlen + 1], 0);
 
@@ -482,7 +482,7 @@ ACE_OS::fdopen (ACE_HANDLE handle, const ACE_TCHAR *mode)
   // kernel file handle -> FILE* conversion...
   // Options: _O_APPEND, _O_RDONLY and _O_TEXT are lost
 
-  FILE * file = nullptr;
+  FILE * file {};
 
   int const crt_handle = ::_open_osfhandle (intptr_t (handle), 0);
 

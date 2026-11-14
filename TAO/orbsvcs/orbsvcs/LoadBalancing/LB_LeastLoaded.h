@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef LB_LEAST_LOADED_H
 #define LB_LEAST_LOADED_H
 
@@ -24,6 +23,7 @@
 
 #include "ace/Synch_Traits.h"
 #include "ace/Thread_Mutex.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -75,8 +75,7 @@ class TAO_LB_LeastLoaded
   : public virtual POA_CosLoadBalancing::Strategy
 {
 public:
-  /// Constructor.
-  TAO_LB_LeastLoaded (PortableServer::POA_ptr poa);
+  explicit TAO_LB_LeastLoaded (PortableServer::POA_ptr poa);
 
   /**
    * @name CosLoadBalancing::Strategy methods
@@ -117,8 +116,7 @@ public:
   TAO_LB_LeastLoaded & operator= (TAO_LB_LeastLoaded &&) = delete;
 
 protected:
-  /// Destructor.
-  ~TAO_LB_LeastLoaded () override;
+  ~TAO_LB_LeastLoaded () override = default;
 
   /// Retrieve the least loaded location from the given list of
   /// locations.
@@ -147,11 +145,11 @@ private:
   PortableServer::POA_var poa_;
 
   /// Table that maps location to load list.
-  TAO_LB_LoadMap * load_map_ {};
+  std::unique_ptr<TAO_LB_LoadMap> load_map_;
 
   /// Lock used to ensure atomic access to state retained by this
   /// class.
-  TAO_SYNCH_MUTEX * lock_ {};
+  std::unique_ptr<TAO_SYNCH_MUTEX> lock_;
 
   /// Cached set of properties used when initializing this strategy.
   CosLoadBalancing::Properties properties_;
@@ -196,7 +194,6 @@ private:
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 #if defined (__ACE_INLINE__)
 #include "orbsvcs/LoadBalancing/LB_LeastLoaded.inl"

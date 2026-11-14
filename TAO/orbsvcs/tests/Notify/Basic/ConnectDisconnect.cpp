@@ -3,7 +3,6 @@
 #include "tao/debug.h"
 #include "ConnectDisconnect.h"
 
-
 #define CD_IMPLEMENT_ENTITY(X)\
 \
 CD_##X::CD_##X (ConnectDisconnect* cd, int id) \
@@ -64,12 +63,12 @@ ConnectDisconnect::~ConnectDisconnect ()
 void
 ConnectDisconnect::on_entity_destroyed ()
 {
-  this->result_count_++;
+  ++this->result_count_;
 
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG,
                 "result_count = %d\n",
-                this->result_count_.value ()));
+                this->result_count_.load ()));
 }
 
 int
@@ -134,7 +133,7 @@ ConnectDisconnect::parse_args(int argc, ACE_TCHAR *argv[])
   ACE_Arg_Shifter arg_shifter (argc,
                               argv);
 
-    const ACE_TCHAR *current_arg = 0;
+    ACE_TCHAR const *current_arg {};
 
     while (arg_shifter.is_anything_left ())
     {
@@ -191,9 +190,9 @@ ConnectDisconnect::create_EC ()
 void
 ConnectDisconnect::run_test ()
 {
-  for (int iterations = 0; iterations < count_; ++iterations)
+  for (int iterations {}; iterations < count_; ++iterations)
     {
-      int i = 0;
+      int i {};
 
       for (i = 0; i < this->consumers_; ++i)
         {
@@ -277,10 +276,10 @@ ConnectDisconnect::end_test ()
 int
 ConnectDisconnect::check_results ()
 {
-  ACE_DEBUG ((LM_DEBUG, "result_count_ = %d", this->result_count_.value ()));
+  ACE_DEBUG ((LM_DEBUG, "result_count_ = %d", this->result_count_.load ()));
   ACE_DEBUG ((LM_DEBUG, " expected_count_ = %d\n", this->expected_count_));
 
-  if (this->result_count_ != this->expected_count_)
+  if (this->result_count_.load () != this->expected_count_)
     {
       ACE_DEBUG ((LM_DEBUG, "ConnectDisconnect test failed\n"));
     }
@@ -315,19 +314,19 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       client.end_test ();
     }
-  catch (const CORBA::Exception& se)
+  catch (CORBA::Exception const &se)
     {
       se._tao_print_exception ("Error: ");
       return 1;
     }
 
-  int status = 0;
+  int status {};
 
   try
     {
       status = client.check_results ();
     }
-  catch (const CORBA::Exception& se)
+  catch (CORBA::Exception const &se)
     {
       se._tao_print_exception ("Error: ");
       status = 1;

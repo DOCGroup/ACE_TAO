@@ -17,6 +17,8 @@
 #include "tao/Resume_Handle.h"
 #include "tao/GIOP_Message_Base.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_DIOP_Transport::TAO_DIOP_Transport (TAO_DIOP_Connection_Handler *handler,
@@ -47,8 +49,8 @@ TAO_DIOP_Transport::send (iovec *iov, int iovcnt,
 {
   const ACE_INET_Addr &addr = this->connection_handler_->addr ();
 
-  ssize_t bytes_to_send = 0;
-  for (int i = 0; i < iovcnt; i++)
+  ssize_t bytes_to_send {};
+  for (int i {}; i < iovcnt; ++i)
      bytes_to_send += iov[i].iov_len;
 
   this->connection_handler_->peer ().send (iov, iovcnt, addr);
@@ -74,7 +76,7 @@ TAO_DIOP_Transport::recv (char *buf,
   if (TAO_debug_level > 0)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - DIOP_Transport::recv, received %d bytes from %C:%d %d\n",
+                  "TAO (%P|%t) - DIOP_Transport::recv, received %b bytes from %C:%d %d\n",
                   n,
                   from_addr.get_host_name (),
                   from_addr.get_port_number (),
@@ -124,9 +126,9 @@ TAO_DIOP_Transport::handle_input (TAO_Resume_Handle &rh,
   char buf [ACE_MAX_DGRAM_SIZE + ACE_CDR::MAX_ALIGNMENT];
 
 #if defined (ACE_INITIALIZE_MEMORY_BEFORE_USE)
-  (void) ACE_OS::memset (buf,
-                         '\0',
-                         sizeof buf);
+  (void) std::memset (buf,
+                      '\0',
+                      sizeof buf);
 #endif /* ACE_INITIALIZE_MEMORY_BEFORE_USE */
 
   // Create a data block
@@ -143,14 +145,12 @@ TAO_DIOP_Transport::handle_input (TAO_Resume_Handle &rh,
                                    ACE_Message_Block::DONT_DELETE,
                                    this->orb_core_->input_cdr_msgblock_allocator ());
 
-
   // Align the message block
   ACE_CDR::mb_align (&message_block);
 
-
   // Read the message into the  message block that we have created on
   // the stack.
-  ssize_t n = this->recv (message_block.rd_ptr (),
+  ssize_t const n = this->recv (message_block.rd_ptr (),
                           message_block.space (),
                           max_wait_time);
 
@@ -170,7 +170,7 @@ TAO_DIOP_Transport::handle_input (TAO_Resume_Handle &rh,
 
   // Make a node of the message block..
   TAO_Queued_Data qd (&message_block);
-  size_t mesg_length = 0;
+  size_t mesg_length {};
 
   // Parse the incoming message for validity. The check needs to be
   // performed by the messaging objects.
@@ -197,7 +197,6 @@ TAO_DIOP_Transport::handle_input (TAO_Resume_Handle &rh,
   return this->process_parsed_messages (&qd, rh);
 }
 
-
 int
 TAO_DIOP_Transport::register_handler ()
 {
@@ -212,7 +211,6 @@ TAO_DIOP_Transport::register_handler ()
   // interested in any network failures, we ignore ICMP messages.
   return 0;
 }
-
 
 int
 TAO_DIOP_Transport::send_request (TAO_Stub *stub,

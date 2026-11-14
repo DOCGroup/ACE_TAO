@@ -25,6 +25,8 @@
 #include "ace/Thread.h"
 #include "ace/Thread_Manager.h"
 
+#include <cstring>
+
 #if !defined (ACE_LACKS_MKFIFO)
 
 static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
@@ -62,7 +64,7 @@ client (void *arg)
           send_count = fifo.send (ACE_ALPHABET, ACE_OS::strlen (ACE_ALPHABET));
           if (send_count != expect)
             ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) Final send; sent %d, expected %d")
+                        ACE_TEXT ("(%P|%t) Final send; sent %b, expected %b")
                         ACE_TEXT ("%p\n"),
                         send_count, expect, ACE_TEXT ("send")));
           else
@@ -72,14 +74,14 @@ client (void *arg)
         {
           ACE_ERROR
             ((LM_ERROR,
-              ACE_TEXT ("(%P|%t) Second send expected %d; sent %d. %p\n"),
+              ACE_TEXT ("(%P|%t) Second send expected %b; sent %b. %p\n"),
               expect, send_count, ACE_TEXT ("send")));
         }
     }
   else
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) First send expected %d; sent %d. %p\n"),
+                  ACE_TEXT ("(%P|%t) First send expected %b; sent %b. %p\n"),
                   expect, send_count, ACE_TEXT ("send")));
     }
 
@@ -112,11 +114,11 @@ server (void *arg)
   recv_count = fifo->recv (buf, sizeof (buf));
   if (recv_count != expect)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Recv 1 expected %d, got %d. %p\n"),
+                       ACE_TEXT ("(%P|%t) Recv 1 expected %b, got %b. %p\n"),
                        expect, recv_count, ACE_TEXT ("recv")),
                       0);
   buf[recv_count] = '\0';
-  if (ACE_OS::strcmp (buf, ACE_ALPHABET) != 0)
+  if (std::strcmp (buf, ACE_ALPHABET) != 0)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) Recv 1 expected alphabet; got %s\n"),
                 buf));
@@ -146,8 +148,8 @@ server (void *arg)
       recv_count = fifo->recv (buf, sizeof (buf));
       if (recv_count != expect)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) Recv 2 expected %d, ")
-                           ACE_TEXT ("got %d. %p\n"),
+                           ACE_TEXT ("(%P|%t) Recv 2 expected %b, ")
+                           ACE_TEXT ("got %b. %p\n"),
                            expect, recv_count, ACE_TEXT ("recv")),
                           0);
 #if defined (ACE_HAS_STREAM_PIPES)
@@ -158,11 +160,11 @@ server (void *arg)
   recv_count = fifo->recv (buf, sizeof (buf));
   if (recv_count != expect)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Recv 3 expected %d, got %d. %p\n"),
+                       ACE_TEXT ("(%P|%t) Recv 3 expected %b, got %b. %p\n"),
                        expect, recv_count, ACE_TEXT ("recv")),
                       0);
   buf[recv_count] = '\0';
-  if (ACE_OS::strcmp (buf, ACE_ALPHABET) != 0)
+  if (std::strcmp (buf, ACE_ALPHABET) != 0)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) Recv 3 expected alphabet; got %s\n"),
                 buf));

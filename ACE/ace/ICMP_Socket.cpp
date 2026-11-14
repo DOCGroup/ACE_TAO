@@ -15,7 +15,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE (ACE_ICMP_Socket)
 
-
 void
 ACE_ICMP_Socket::dump () const
 {
@@ -126,7 +125,7 @@ ACE_ICMP_Socket::shared_open (ACE_Addr const & local)
 {
   ACE_TRACE ("ACE_ICMP_Socket::shared_open");
 
-  bool error = false;
+  bool error {};
   if (local == ACE_Addr::sap_any)
     {
       if (ACE::bind_port (this->get_handle ()) == -1)
@@ -154,9 +153,9 @@ ACE_ICMP_Socket::calculate_checksum (unsigned short * paddress,
                                      int len)
 {
   int nleft = len;
-  int sum = 0;
+  int sum {};
   unsigned short * w = paddress;
-  unsigned short answer = 0;
+  unsigned short answer {};
   while (nleft > 1)
     {
       sum += *w++;

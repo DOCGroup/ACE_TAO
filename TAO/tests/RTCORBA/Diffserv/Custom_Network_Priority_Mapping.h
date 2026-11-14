@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file   Custom_Network_Priority_Mapping.h
@@ -8,8 +7,6 @@
  *  @author Yamuna Krishnamurthy (yamuna@oomworks.com)
  */
 //=============================================================================
-
-
 #ifndef CUSTOM_NETWORK_PRIORITY_MAPPING_H
 #define CUSTOM_NETWORK_PRIORITY_MAPPING_H
 
@@ -33,20 +30,22 @@
 class Custom_Network_Priority_Mapping : public TAO_Network_Priority_Mapping
 {
 public:
-  Custom_Network_Priority_Mapping ();
+  Custom_Network_Priority_Mapping () = default;
+  Custom_Network_Priority_Mapping (Custom_Network_Priority_Mapping const &) = delete;
+  Custom_Network_Priority_Mapping (Custom_Network_Priority_Mapping &&) = delete;
+  Custom_Network_Priority_Mapping &operator= (Custom_Network_Priority_Mapping const &) = delete;
+  Custom_Network_Priority_Mapping &operator= (Custom_Network_Priority_Mapping &&) = delete;
 
   CORBA::Boolean to_network (RTCORBA::Priority corba_priority,
-                             RTCORBA::NetworkPriority &network_priority);
+                             RTCORBA::NetworkPriority &network_priority) override;
 
   CORBA::Boolean to_CORBA (RTCORBA::NetworkPriority network_priority,
-                           RTCORBA::Priority &corba_priority);
+                           RTCORBA::Priority &corba_priority) override;
 
   void corba_priority (RTCORBA::Priority corba_priority);
 
- private:
-  RTCORBA::Priority corba_priority_;
+private:
+  RTCORBA::Priority corba_priority_ {RTCORBA::minPriority};
 };
-
-
 #include /**/ "ace/post.h"
 #endif /* CUSTOM_NETWORK_PRIORITY_MAPPING_H */

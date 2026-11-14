@@ -26,16 +26,15 @@ Callback_i::callback_method ()
     ACE_DEBUG ((LM_DEBUG, "Callback method called\n"));
 }
 
-
 // ****************************************************************
 
 int
-Simple_Server_i::handle_timeout (const ACE_Time_Value &,
-                                 const void *)
+Simple_Server_i::handle_timeout (ACE_Time_Value const &,
+                                 void const *)
 {
   if (TAO_debug_level > 0)
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("About to make a remote call in the Upcall\n")));
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("About to make a remote call in the Upcall\n")));
 
   for (int times = 0;
         times < this->no_iterations_;
@@ -64,11 +63,11 @@ Simple_Server_i::test_method (CORBA::Boolean do_callback)
     {
       // Scheduling ourselves for doing the callbacks
       if (TAO_debug_level > 0)
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Scheduling for callback\n")));
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("Scheduling for callback\n")));
 
       if (this->orb_->orb_core ()->reactor ()->schedule_timer (this,
-                                                               0,
+                                                               nullptr,
                                                                ACE_Time_Value (1)) == -1)
         {
           ACE_ERROR ((LM_ERROR,
@@ -82,13 +81,11 @@ Simple_Server_i::test_method (CORBA::Boolean do_callback)
 }
 
 void
-Simple_Server_i::callback_object (Callback_ptr callback
- )
+Simple_Server_i::callback_object (Callback_ptr callback)
 {
   // Store the callback object
   this->callback_ = Callback::_duplicate (callback);
 }
-
 
 void
 Simple_Server_i::shutdown ()

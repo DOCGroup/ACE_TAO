@@ -7,37 +7,38 @@
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Transport_Cache_Manager.h"
 #include "ace/Manual_Event.h"
+#include "ace/SString.h"
+#include <memory>
 
-const ACE_TCHAR *ior_output_file = 0;
-static int no_iterations = 10;
-static int no_clients = 2;
+struct Server_Options
+{
+  ACE_TString ior_output_file;
+  int iterations {10};
+  int client_count {2};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:i:c:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'o':
-        ior_output_file = get_opts.optarg;
+        options.ior_output_file = get_opts.opt_arg ();
         break;
       case 'c':
-        no_clients = ACE_OS::atoi (get_opts.optarg);
+        options.client_count = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'i':
-        no_iterations = ACE_OS::atoi (get_opts.optarg);
+        options.iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-o <iorfile>"
-                           "-c <no_clients>"
-                           "-i <no_iterations>"
-                           "\n",
+                           ACE_TEXT ("usage: %s -o <iorfile> -c <no_clients> -i <no_iterations>\n"),
                            argv [0]),
                           -1);
       }
@@ -45,17 +46,20 @@ parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  Server_Options options;
   try
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, options) != 0)
         return 1;
+
+      if (options.client_count <= 0 || options.iterations <= 0)
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Client count and iterations must be positive.\n")), 1);
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references ("RootPOA");
@@ -101,9 +105,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_Manual_Event manual_event;
 
-      Sender_i *sender = 0;
+      // The ServantBase_var below takes ownership of the raw servant pointer.
+      Sender_i *sender {};
       ACE_NEW_RETURN (sender,
-                      Sender_i (no_clients,
+                      Sender_i (static_cast<CORBA::ULong> (options.client_count),
                                 manual_event),
                       -1);
 
@@ -121,28 +126,27 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "Activated as <%C>\n", ior.in ()));
 
       // If the ior_output_file exists, output the ior to it
-      if (ior_output_file != 0)
+      if (!options.ior_output_file.empty ())
         {
-          FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-          if (output_file == 0)
+          std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+            ACE_OS::fopen (options.ior_output_file.c_str (), ACE_TEXT ("w")),
+            ACE_OS::fclose);
+          if (!output_file)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "Cannot open output file for writing IOR: %s",
-                               ior_output_file),
+                               ACE_TEXT ("Cannot open output file for writing IOR: %s"),
+                               options.ior_output_file.c_str ()),
                               1);
-          ACE_OS::fprintf (output_file, "%s", ior.in ());
-          ACE_OS::fclose (output_file);
+          ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
         }
-
 
       // Get the main thread id..
       ACE_thread_t thr_id = ACE_Thread::self ();
 
-      Server_Task server_task (sender,
+      Server_Task server_task (*sender,
                                manual_event,
-                               no_iterations,
+                               options.iterations,
                                orb.in (),
                                ACE_Thread_Manager::instance ());
-
 
       if (server_task.activate (THR_NEW_LWP | THR_JOINABLE, 4, 1) == -1)
         {
@@ -165,7 +169,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       root_poa->destroy (true, true);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;

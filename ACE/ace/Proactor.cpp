@@ -28,11 +28,12 @@
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Auto_Event.h"
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Process-wide ACE_Proactor.
-ACE_Proactor *ACE_Proactor::proactor_ = nullptr;
+ACE_Proactor *ACE_Proactor::proactor_ {};
 
 /// Controls whether the Proactor is deleted when we shut down (we can
 /// only delete it safely if we created it!)
@@ -54,10 +55,8 @@ bool ACE_Proactor::delete_proactor_ = false;
 class ACE_Proactor_Timer_Handler : public ACE_Task<ACE_NULL_SYNCH>
 {
 public:
-  /// Constructor.
   explicit ACE_Proactor_Timer_Handler (ACE_Proactor &proactor);
 
-  /// Destructor.
   ~ACE_Proactor_Timer_Handler () override;
 
   /// Proactor calls this to shut down the timer handler
@@ -83,13 +82,12 @@ protected:
   ACE_Proactor &proactor_;
 
   /// Flag used to indicate when we are shutting down.
-  int shutting_down_;
+  bool shutting_down_ {false};
 };
 
 ACE_Proactor_Timer_Handler::ACE_Proactor_Timer_Handler (ACE_Proactor &proactor)
   : ACE_Task <ACE_NULL_SYNCH> (&proactor.thr_mgr_),
-    proactor_ (proactor),
-    shutting_down_ (0)
+    proactor_ (proactor)
 {
 }
 
@@ -102,7 +100,7 @@ int
 ACE_Proactor_Timer_Handler::destroy ()
 {
   // Mark for closing down.
-  this->shutting_down_ = 1;
+  this->shutting_down_ = true;
 
   // Signal timer event.
   this->timer_event_.signal ();
@@ -125,7 +123,7 @@ ACE_Proactor_Timer_Handler::svc ()
   ACE_Time_Value relative_time;
   int result = 0;
 
-  while (this->shutting_down_ == 0)
+  while (!this->shutting_down_)
     {
       // Check whether the timer queue has any items in it.
       if (this->proactor_.timer_queue ()->is_empty () == 0)
@@ -291,7 +289,7 @@ ACE_Proactor_Handle_Timeout_Upcall::proactor (ACE_Proactor &proactor)
 {
   if (this->proactor_ == nullptr)
     {
-      this->proactor_ = &proactor;
+      this->proactor_ = std::addressof (proactor);
       return 0;
     }
   else
@@ -461,7 +459,7 @@ ACE_Proactor::proactor_run_event_loop (PROACTOR_EVENT_HOOK eh)
       return 0;
 
     // First time you are in. Increment the thread count.
-    this->event_loop_thread_count_ ++;
+    ++this->event_loop_thread_count_;
   }
 
   // Run the event loop.
@@ -489,7 +487,7 @@ ACE_Proactor::proactor_run_event_loop (PROACTOR_EVENT_HOOK eh)
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, mutex_, -1));
 
     // Decrement the thread count.
-    this->event_loop_thread_count_ --;
+    --this->event_loop_thread_count_;
 
     if (this->event_loop_thread_count_ > 0
        && this->end_event_loop_ != 0)
@@ -518,7 +516,7 @@ ACE_Proactor::proactor_run_event_loop (ACE_Time_Value &tv,
       return 0;
 
     // First time you are in. Increment the thread count.
-    this->event_loop_thread_count_ ++;
+    ++this->event_loop_thread_count_;
   }
 
   // Run the event loop.
@@ -545,7 +543,7 @@ ACE_Proactor::proactor_run_event_loop (ACE_Time_Value &tv,
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, mutex_, -1));
 
     // Decrement the thread count.
-    this->event_loop_thread_count_ --;
+    --this->event_loop_thread_count_;
 
     if (this->event_loop_thread_count_ > 0
        && this->end_event_loop_ != 0)
@@ -809,7 +807,6 @@ ACE_Proactor::implementation () const
   return this->implementation_;
 }
 
-
 ACE_Asynch_Read_Stream_Impl *
 ACE_Proactor::create_asynch_read_stream ()
 {
@@ -885,7 +882,6 @@ ACE_Proactor::create_asynch_read_stream_result
      priority,
      signal_number);
 }
-
 
 ACE_Asynch_Write_Stream_Result_Impl *
 ACE_Proactor::create_asynch_write_stream_result

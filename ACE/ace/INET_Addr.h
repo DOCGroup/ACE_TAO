@@ -39,7 +39,7 @@ public:
   /// Default constructor.
   ACE_INET_Addr ();
 
-  /// Copy constructor.
+
   ACE_INET_Addr (const ACE_INET_Addr &);
 
   /// Creates an ACE_INET_Addr from a sockaddr_in structure.

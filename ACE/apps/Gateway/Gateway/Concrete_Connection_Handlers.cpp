@@ -4,7 +4,7 @@
 #include "Event_Channel.h"
 #include "Concrete_Connection_Handlers.h"
 
-Consumer_Handler::Consumer_Handler (const Connection_Config_Info &pci)
+Consumer_Handler::Consumer_Handler (Connection_Config_Info const &pci)
   : Connection_Handler (pci)
 {
   this->connection_role_ = 'C';
@@ -45,7 +45,7 @@ Consumer_Handler::handle_input (ACE_HANDLE)
     default:
       ACE_ERROR_RETURN ((LM_ERROR,
                         "(%t) IGNORED: Consumer is erroneously sending input to Consumer_Handler %d\n"
-                        "data size = %d\n",
+                        "data size = %b\n",
                         this->connection_id (),
                         received),
                         0); // Return 0 to identify received data successfully.
@@ -111,7 +111,7 @@ ssize_t
 Consumer_Handler::send (ACE_Message_Block *event)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) sending %d bytes to Consumer %d\n",
+              "(%t) sending %B bytes to Consumer %d\n",
               event->length (),
               this->connection_id ()));
 
@@ -143,7 +143,7 @@ Consumer_Handler::send (ACE_Message_Block *event)
 int
 Consumer_Handler::handle_output (ACE_HANDLE)
 {
-  ACE_Message_Block *event = 0;
+  ACE_Message_Block *event {};
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT("(%t) Receiver signalled 'resume transmission' %d\n"),
@@ -209,7 +209,7 @@ Consumer_Handler::handle_output (ACE_HANDLE)
         default:                // Sent the whole thing
           {
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("Sent message from message Q, Q size = %d\n"),
+                        ACE_TEXT ("Sent message from message Q, Q size = %B\n"),
                         this->msg_queue()->message_count ()));
             break;
           }
@@ -300,9 +300,8 @@ Consumer_Handler::put (ACE_Message_Block *event,
       (event, (ACE_Time_Value *) &ACE_Time_Value::zero);
 }
 
-Supplier_Handler::Supplier_Handler (const Connection_Config_Info &pci)
-  : Connection_Handler (pci),
-    msg_frag_ (0)
+Supplier_Handler::Supplier_Handler (Connection_Config_Info const &pci)
+  : Connection_Handler (pci)
 {
   this->connection_role_ = 'S';
   this->msg_queue ()->high_water_mark (0);
@@ -322,7 +321,7 @@ Supplier_Handler::Supplier_Handler (const Connection_Config_Info &pci)
 int
 Supplier_Handler::recv (ACE_Message_Block *&forward_addr)
 {
-  if (this->msg_frag_ == 0)
+  if (this->msg_frag_ == nullptr)
     // No existing fragment...
     ACE_NEW_RETURN (this->msg_frag_,
                     ACE_Message_Block (sizeof (Event),
@@ -351,7 +350,7 @@ Supplier_Handler::recv (ACE_Message_Block *&forward_addr)
           ACE_ERROR ((LM_ERROR, "%p\n",
                       "Recv error during header read "));
           ACE_DEBUG ((LM_DEBUG,
-                      "attempted to read %d\n",
+                      "attempted to read %b\n",
                       header_bytes_left_to_read));
           this->msg_frag_ = this->msg_frag_->release ();
           return header_received;
@@ -364,7 +363,7 @@ Supplier_Handler::recv (ACE_Message_Block *&forward_addr)
       if (this->msg_frag_->length () < HEADER_SIZE)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "Partial header received: only %d bytes\n",
+                      "Partial header received: only %B bytes\n",
                      this->msg_frag_->length ()));
           // Notify the caller that we didn't get an entire event.
           errno = EWOULDBLOCK;
@@ -443,7 +442,7 @@ Supplier_Handler::recv (ACE_Message_Block *&forward_addr)
                                                 0,
                                                 0,
                                                 Options::instance ()->locking_strategy ());
-          if (forward_addr == 0)
+          if (forward_addr == nullptr)
             {
               this->msg_frag_ = this->msg_frag_->release ();
               errno = ENOMEM;
@@ -457,7 +456,7 @@ Supplier_Handler::recv (ACE_Message_Block *&forward_addr)
           forward_addr->copy ((char *) &event_addr, sizeof (Event_Key));
 
           // Reset the pointer to indicate we've got an entire event.
-          this->msg_frag_ = 0;
+          this->msg_frag_ = nullptr;
         }
 
       this->total_bytes (data_received + header_received);
@@ -485,7 +484,7 @@ Supplier_Handler::recv (ACE_Message_Block *&forward_addr)
 int
 Supplier_Handler::handle_input (ACE_HANDLE)
 {
-  ACE_Message_Block *event_key = 0;
+  ACE_Message_Block *event_key {};
 
   switch (this->recv (event_key))
     {
@@ -527,11 +526,10 @@ Supplier_Handler::process (ACE_Message_Block *event_key)
   return this->event_channel_->put (event_key);
 }
 
-Thr_Consumer_Handler::Thr_Consumer_Handler (const Connection_Config_Info &pci)
+Thr_Consumer_Handler::Thr_Consumer_Handler (Connection_Config_Info const &pci)
   : Consumer_Handler (pci)
 {
   // It is not in thread svc() now.
-  in_thread_ = 0;
 }
 
 // Overriding handle_close() method.  If in thread svc(), no need to
@@ -640,7 +638,7 @@ Thr_Consumer_Handler::put (ACE_Message_Block *mb, ACE_Time_Value *)
 int
 Thr_Consumer_Handler::svc ()
 {
-  for (in_thread_ = 1;;)
+  for (in_thread_ = true;;)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "(%t) Thr_Consumer_Handler's handle = %d\n",
@@ -649,7 +647,7 @@ Thr_Consumer_Handler::svc ()
       // Since this method runs in its own thread it is OK to block on
       // output.
 
-      for (ACE_Message_Block *mb = 0;
+      for (ACE_Message_Block *mb {};
            this->msg_queue ()->dequeue_head (mb) != -1;
            )
         if (this->send (mb) == -1)
@@ -669,7 +667,7 @@ Thr_Consumer_Handler::svc ()
       // Re-establish the connection, using exponential backoff.
       for (this->timeout (1);
            // Default is to reconnect synchronously.
-           this->event_channel_->initiate_connection_connection (this, 1) == -1;
+           this->event_channel_->initiate_connection_connection (this, true) == -1;
            // Second parameter '1' means using sync mode directly,
            // don't care Options::blocking_semantics().  If don't do
            // so, async mode will be used to connect which won't
@@ -689,11 +687,10 @@ Thr_Consumer_Handler::svc ()
   ACE_NOTREACHED (return 0;)
 }
 
-Thr_Supplier_Handler::Thr_Supplier_Handler (const Connection_Config_Info &pci)
+Thr_Supplier_Handler::Thr_Supplier_Handler (Connection_Config_Info const &pci)
   : Supplier_Handler (pci)
 {
   // It is not in thread svc() now.
-  in_thread_ = 0;
 }
 
 // Overriding handle_close() method.  If in thread svc(), no need to
@@ -750,7 +747,7 @@ Thr_Supplier_Handler::open (void *)
 int
 Thr_Supplier_Handler::svc ()
 {
-  for (in_thread_ = 1;;)
+  for (in_thread_ = true;;)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "(%t) Thr_Supplier_Handler's handle = %d\n",
@@ -777,7 +774,7 @@ Thr_Supplier_Handler::svc ()
       // Re-establish the connection, using expoential backoff.
       for (this->timeout (1);
            // Default is to reconnect synchronously.
-           this->event_channel_->initiate_connection_connection (this, 1) == -1;
+           this->event_channel_->initiate_connection_connection (this, true) == -1;
            // Second parameter '1' means using sync mode directly,
            // don't care Options::blocking_semantics().  If don't do
            // so, async mode will be used to connect which won't

@@ -6,7 +6,8 @@
 #ifndef __RECORD_H_
 #define __RECORD_H_
 
-#include "ace/OS_NS_string.h"
+#include <memory>
+#include <cstring>
 #include "ace/Based_Pointer_T.h"
 
 // Listing 11 code/ch17
@@ -16,16 +17,27 @@ public:
   Record () = default;
   ~Record () = default;
 
-  Record (const Record& rec)
+  Record (Record const &rec)
     : id1_(rec.id1_), id2_(rec.id2_)
   {
-    ACE_OS::strcpy (recName_, rec.name_);
+    std::strcpy (recName_, rec.name_);
     this->name_ = recName_;
   }
-  Record (int id1, int id2, char *name)
+  Record &operator= (Record const &rec)
+  {
+    if (this != std::addressof (rec))
+      {
+        this->id1_ = rec.id1_;
+        this->id2_ = rec.id2_;
+        std::strcpy (this->recName_, rec.name_);
+        this->name_ = this->recName_;
+      }
+    return *this;
+  }
+  Record (int id1, int id2, char const *name)
     : id1_(id1), id2_(id2)
   {
-    ACE_OS::strcpy (recName_, name);
+    std::strcpy (recName_, name);
     this->name_ = recName_;
   }
   char *name () { return recName_; }
@@ -35,7 +47,7 @@ public:
 private:
   int id1_ {};
   int id2_ {};
-  char recName_[128];
+  char recName_[128] {};
   ACE_Based_Pointer_Basic<char> name_;
 };
 // Listing 11

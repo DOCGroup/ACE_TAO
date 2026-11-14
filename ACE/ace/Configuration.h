@@ -35,7 +35,6 @@
 #include "ace/Local_Memory_Pool.h"
 #include "ace/Synch_Traits.h"
 
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -142,7 +141,6 @@ public:
     INVALID
   };
 
-  /// Destructor
   virtual ~ACE_Configuration () = default;
 
   /// Obtain a reference to the root section of this configuration.
@@ -420,7 +418,7 @@ class ACE_Export ACE_Section_Key_Win32 : public ACE_Section_Key_Internal
 {
 public:
   /// Constructor based on an HKEY
-  ACE_Section_Key_Win32 (HKEY hKey);
+  explicit ACE_Section_Key_Win32 (HKEY hKey);
 
   HKEY hKey_;
 
@@ -453,7 +451,6 @@ public:
   explicit ACE_Configuration_Win32Registry (HKEY hKey,
                                             u_long security_access = KEY_ALL_ACCESS);
 
-  /// Destructor
   virtual ~ACE_Configuration_Win32Registry () = default;
 
   virtual int open_section (const ACE_Configuration_Section_Key& base,
@@ -560,10 +557,8 @@ public:
   /// Copy ctor
   ACE_Configuration_ExtId (const ACE_Configuration_ExtId& rhs);
 
-  /// destructor
   ~ACE_Configuration_ExtId () = default;
 
-  /// Assignment operator
   ACE_Configuration_ExtId& operator= (const ACE_Configuration_ExtId& rhs);
 
   /// Equality comparison operator (must match name_).
@@ -616,10 +611,8 @@ public:
   /// Copy ctor
   ACE_Configuration_Value_IntId (const ACE_Configuration_Value_IntId& rhs);
 
-  /// Destructor
   ~ACE_Configuration_Value_IntId () = default;
 
-  /// Assignment operator
   ACE_Configuration_Value_IntId& operator= (
     const ACE_Configuration_Value_IntId& rhs);
 
@@ -665,10 +658,8 @@ public:
   /// Copy ctor
   ACE_Configuration_Section_IntId (const ACE_Configuration_Section_IntId& rhs);
 
-  /// Destructor
   ~ACE_Configuration_Section_IntId () = default;
 
-  /// Assignment operator
   ACE_Configuration_Section_IntId& operator= (
     const ACE_Configuration_Section_IntId& rhs);
 
@@ -700,7 +691,7 @@ class ACE_Export ACE_Configuration_Section_Key_Heap
 {
 public:
   /// Constructor based on the full path of the section
-  ACE_Configuration_Section_Key_Heap (const ACE_TCHAR* path);
+  explicit ACE_Configuration_Section_Key_Heap (const ACE_TCHAR* path);
 
   /// The path itself
   ACE_TCHAR* path_;
@@ -744,7 +735,6 @@ public:
   /// Default ctor
   ACE_Configuration_Heap ();
 
-  /// Destructor
   ~ACE_Configuration_Heap () override;
 
   /**

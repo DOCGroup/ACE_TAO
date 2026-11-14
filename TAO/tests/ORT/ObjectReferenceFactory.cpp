@@ -12,7 +12,7 @@ ObjectReferenceFactory::ObjectReferenceFactory (
 ::CORBA::ValueBase *
 ObjectReferenceFactory::_copy_value ()
 {
-  ::CORBA::ValueBase *ret_val= 0;
+  ::CORBA::ValueBase *ret_val = nullptr;
   ACE_NEW_THROW_EX (
     ret_val,
     ObjectReferenceFactory (old_orf_.inout ()),
@@ -28,10 +28,10 @@ ObjectReferenceFactory::~ObjectReferenceFactory ()
 
 CORBA::Object_ptr
 ObjectReferenceFactory::make_object (
-    const char *repository_id,
-    const PortableInterceptor::ObjectId & id)
+    char const *repository_id,
+    PortableInterceptor::ObjectId const &id)
 {
-  ACE_ASSERT (repository_id != 0);
+  ACE_ASSERT (repository_id != nullptr);
 
   ACE_DEBUG ((LM_INFO,
               "Invoked custom ObjectReferenceFactory::make_object()\n"));

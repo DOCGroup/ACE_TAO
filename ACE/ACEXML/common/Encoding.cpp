@@ -1,7 +1,8 @@
 // -*- C++ -*-
 
 #include "ACEXML/common/Encoding.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 const ACEXML_Char* ACEXML_Encoding::encoding_names_[8] = {
   ACE_TEXT ("UCS-4BE"),
@@ -37,19 +38,19 @@ const ACEXML_UTF8 ACEXML_Encoding::magic_values_[][4] = {
 const ACEXML_Char*
 ACEXML_Encoding::get_encoding (const char* input)
 {
-  if ((ACE_OS::memcmp (&ACEXML_Encoding::byte_order_mark_[ACEXML_Encoding::UTF16BE][0], input, 2) == 0)
+  if ((std::memcmp (&ACEXML_Encoding::byte_order_mark_[ACEXML_Encoding::UTF16BE][0], input, 2) == 0)
       && (input[2] != 0 || input[3] != 0)) // 3 & 4 should not be both zero
     return ACEXML_Encoding::encoding_names_[ACEXML_Encoding::UTF16BE];
-  else if ((ACE_OS::memcmp (&ACEXML_Encoding::byte_order_mark_[ACEXML_Encoding::UTF16LE][0], input, 2) == 0)
+  else if ((std::memcmp (&ACEXML_Encoding::byte_order_mark_[ACEXML_Encoding::UTF16LE][0], input, 2) == 0)
     && (input[2] != 0 || input[3] != 0)) // 3 & 4 should not be both zero
     return ACEXML_Encoding::encoding_names_[ACEXML_Encoding::UTF16LE];
-  else if (ACE_OS::memcmp (&ACEXML_Encoding::byte_order_mark_[ACEXML_Encoding::UTF8][0], input, 3) == 0)
+  else if (std::memcmp (&ACEXML_Encoding::byte_order_mark_[ACEXML_Encoding::UTF8][0], input, 3) == 0)
     return ACEXML_Encoding::encoding_names_[ACEXML_Encoding::UTF8];
-  else if (ACE_OS::memcmp (&ACEXML_Encoding::magic_values_[ACEXML_Encoding::UTF16BE][0], input, 4) == 0)
+  else if (std::memcmp (&ACEXML_Encoding::magic_values_[ACEXML_Encoding::UTF16BE][0], input, 4) == 0)
     return ACEXML_Encoding::encoding_names_[ACEXML_Encoding::UTF16BE];
-  else if (ACE_OS::memcmp (&ACEXML_Encoding::magic_values_[ACEXML_Encoding::UTF16LE][0], input, 4) == 0)
+  else if (std::memcmp (&ACEXML_Encoding::magic_values_[ACEXML_Encoding::UTF16LE][0], input, 4) == 0)
     return ACEXML_Encoding::encoding_names_[ACEXML_Encoding::UTF16LE];
-  else if (ACE_OS::memcmp (&ACEXML_Encoding::magic_values_[ACEXML_Encoding::UTF8][0], input, 4) == 0)
+  else if (std::memcmp (&ACEXML_Encoding::magic_values_[ACEXML_Encoding::UTF8][0], input, 4) == 0)
     return ACEXML_Encoding::encoding_names_[ACEXML_Encoding::UTF8];
   else
     {

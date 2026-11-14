@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_IFR_CLIENT_ADAPTER_H
 #define TAO_IFR_CLIENT_ADAPTER_H
 
@@ -57,7 +56,6 @@ namespace CORBA
 class TAO_Export TAO_IFR_Client_Adapter : public ACE_Service_Object
 {
 public:
-    /// Destructor.
     /**
      * @note Even though this class only defines an interface, a
      *       destructor is necessary to avoid dynamic_cast<> failures

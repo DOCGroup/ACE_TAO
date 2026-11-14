@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file ServantRetentionStrategyRetain.h
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
 #ifndef TAO_SERVANT_RETENTION_STRATEGY_RETAIN_H
 #define TAO_SERVANT_RETENTION_STRATEGY_RETAIN_H
 #include /**/ "ace/pre.h"
@@ -128,7 +124,7 @@ namespace TAO
 
     private:
       std::unique_ptr<TAO_Active_Object_Map> active_object_map_;
-      CORBA::ULong waiting_servant_deactivation_ { 0 } ;
+      CORBA::ULong waiting_servant_deactivation_ {};
     };
   }
 }

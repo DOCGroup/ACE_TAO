@@ -9,10 +9,11 @@
 
 #include "ace/Reactor.h"
 
+#include <memory>
+
 #if ! defined (__ACE_INLINE__)
 #include "orbsvcs/Event/EC_Reactive_SupplierControl.inl"
 #endif /* __ACE_INLINE__ */
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -32,10 +33,6 @@ TAO_EC_Reactive_SupplierControl::
 {
   this->reactor_ =
     this->orb_->orb_core ()->reactor ();
-}
-
-TAO_EC_Reactive_SupplierControl::~TAO_EC_Reactive_SupplierControl ()
-{
 }
 
 void
@@ -67,7 +64,7 @@ TAO_EC_Reactive_SupplierControl::handle_timeout (
 
       this->policy_current_->set_policy_overrides (policies.in (),
                                                    CORBA::SET_OVERRIDE);
-      for (CORBA::ULong i = 0; i != policies->length (); ++i)
+      for (CORBA::ULong i {}; i != policies->length (); ++i)
         {
           policies[i]->destroy ();
         }
@@ -108,7 +105,7 @@ TAO_EC_Reactive_SupplierControl::activate ()
         // Schedule the timer after these policies has been set, because the
         // handle_timeout uses these policies, if done in front, the channel
         // can crash when the timeout expires before initiazation is ready.
-        timer_id_ = this->reactor_->schedule_timer (&this->adapter_,
+        timer_id_ = this->reactor_->schedule_timer (std::addressof (this->adapter_),
                                                     nullptr,
                                                     this->rate_,
                                                     this->rate_);
@@ -128,7 +125,7 @@ TAO_EC_Reactive_SupplierControl::activate ()
 int
 TAO_EC_Reactive_SupplierControl::shutdown ()
 {
-  int r = 0;
+  int r {};
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
   r = this->reactor_->cancel_timer (timer_id_);

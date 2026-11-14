@@ -1,6 +1,4 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    DynAnyUtils_T.h
  *
@@ -8,8 +6,6 @@
  *
  *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
-//=============================================================================
-
 #ifndef TAO_DYNANYUTILS_T_H
 #define TAO_DYNANYUTILS_T_H
 

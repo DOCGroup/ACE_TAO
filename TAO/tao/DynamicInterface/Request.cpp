@@ -20,6 +20,7 @@
 # include "tao/DynamicInterface/Request.inl"
 #endif /* ! __ACE_INLINE__ */
 
+#include <array>
 #include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -62,7 +63,7 @@ CORBA::Request::Request (CORBA::Object_ptr obj,
 {
   if (this->exceptions_.in () == nullptr)
     {
-      CORBA::ExceptionList *tmp = nullptr;
+      CORBA::ExceptionList *tmp {};
       ACE_NEW (tmp,
                CORBA::ExceptionList);
 
@@ -79,7 +80,7 @@ CORBA::Request::Request (CORBA::Object_ptr obj,
     flags_ (0)
     // env_ (env)
 {
-  CORBA::ExceptionList *tmp = nullptr;
+  CORBA::ExceptionList *tmp {};
   ACE_NEW (tmp,
            CORBA::ExceptionList);
 
@@ -118,15 +119,12 @@ CORBA::Request::invoke ()
   TAO::NVList_Argument _tao_in_list (this->args_,
                                      this->lazy_evaluation_);
 
-  TAO::Argument *_tao_arg_list [] = {
-    &_tao_retval,
-    &_tao_in_list
-  };
+  std::array<TAO::Argument *, 2> _tao_arg_list {&_tao_retval, &_tao_in_list};
 
   TAO::DII_Invocation_Adapter _tao_call (
        this->target_,
-       _tao_arg_list,
-       sizeof( _tao_arg_list ) / sizeof( TAO::Argument* ),
+       _tao_arg_list.data (),
+       static_cast<int> (_tao_arg_list.size ()),
        this->opname_,
        static_cast<CORBA::ULong> (std::strlen (this->opname_)),
        this->exceptions_.in (),
@@ -135,7 +133,7 @@ CORBA::Request::invoke ()
   // forward requested byte order
   _tao_call._tao_byte_order (this->_tao_byte_order ());
 
-  _tao_call.invoke (0, 0);
+  _tao_call.invoke (nullptr, 0);
 
   // If we returned without an exception being thrown the response
   // (if any) is assumed to be received.
@@ -156,15 +154,12 @@ CORBA::Request::send_oneway ()
   TAO::NVList_Argument _tao_in_list (this->args_,
                                      this->lazy_evaluation_);
 
-  TAO::Argument *_tao_arg_list [] = {
-    &_tao_retval,
-    &_tao_in_list
-  };
+  std::array<TAO::Argument *, 2> _tao_arg_list {&_tao_retval, &_tao_in_list};
 
   TAO::DII_Oneway_Invocation_Adapter _tao_call (
       this->target_,
-      _tao_arg_list,
-      sizeof( _tao_arg_list ) / sizeof( TAO::Argument* ),
+      _tao_arg_list.data (),
+      static_cast<int> (_tao_arg_list.size ()),
       this->opname_,
       static_cast<CORBA::ULong> (std::strlen (this->opname_)),
       TAO::TAO_SYNCHRONOUS_INVOCATION);
@@ -172,7 +167,7 @@ CORBA::Request::send_oneway ()
   // forward requested byte order
   _tao_call._tao_byte_order (this->_tao_byte_order ());
 
-  _tao_call.invoke (0, 0);
+  _tao_call.invoke (nullptr, 0);
 }
 
 void
@@ -192,12 +187,9 @@ CORBA::Request::send_deferred ()
   TAO::NVList_Argument _tao_in_list (this->args_,
                                      this->lazy_evaluation_);
 
-  TAO::Argument *_tao_arg_list [] = {
-    &_tao_retval,
-    &_tao_in_list
-  };
+  std::array<TAO::Argument *, 2> _tao_arg_list {&_tao_retval, &_tao_in_list};
 
-  size_t number_args = 0;
+  size_t number_args {};
 
   if (argument_flag)
     number_args = 2;
@@ -206,7 +198,7 @@ CORBA::Request::send_deferred ()
 
   TAO::DII_Deferred_Invocation_Adapter _tao_call (
       this->target_,
-      _tao_arg_list,
+      _tao_arg_list.data (),
       static_cast<int> (number_args),
       this->opname_,
       std::strlen (this->opname_),
@@ -217,7 +209,7 @@ CORBA::Request::send_deferred ()
   // forward requested byte order
   _tao_call._tao_byte_order (this->_tao_byte_order ());
 
-  _tao_call.invoke (0, 0);
+  _tao_call.invoke (nullptr, 0);
 }
 
 #if defined (TAO_HAS_AMI)
@@ -229,15 +221,12 @@ CORBA::Request::sendc (CORBA::Object_ptr handler)
   TAO::NVList_Argument _tao_in_list (this->args_,
                                      this->lazy_evaluation_);
 
-  TAO::Argument *_tao_arg_list [] = {
-    &_tao_retval,
-    &_tao_in_list
-  };
+  std::array<TAO::Argument *, 2> _tao_arg_list {&_tao_retval, &_tao_in_list};
 
   TAO::Asynch_Invocation_Adapter _tao_call (
        this->target_,
-       _tao_arg_list,
-       sizeof( _tao_arg_list ) / sizeof( TAO::Argument* ),
+       _tao_arg_list.data (),
+       static_cast<int> (_tao_arg_list.size ()),
        const_cast<char *> (this->opname_),
        static_cast<CORBA::ULong> (std::strlen (this->opname_)),
        0); // collocation proxy broker
@@ -255,7 +244,7 @@ CORBA::Request::_tao_reply_stub (TAO_InputCDR &_tao_in,
                                  CORBA::ULong reply_status)
 {
   // Retrieve Reply Handler object.
-  TAO_DII_Reply_Handler* reply_handler =
+  TAO_DII_Reply_Handler* const reply_handler =
     dynamic_cast<TAO_DII_Reply_Handler*> (rh);
 
   // Exception handling
@@ -300,7 +289,7 @@ CORBA::Request::get_response ()
 CORBA::Boolean
 CORBA::Request::poll_response ()
 {
-  CORBA::Boolean response_received = false;
+  CORBA::Boolean response_received {};
 
   {
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,

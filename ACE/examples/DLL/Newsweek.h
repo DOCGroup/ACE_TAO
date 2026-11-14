@@ -11,13 +11,12 @@
  */
 //=============================================================================
 
-
 #ifndef NEWSWEEK_H
 #define NEWSWEEK_H
 
 #include "ace/os_include/os_stddef.h"
-#include "ace/OS_Memory.h"
 #include "Magazine.h"
+#include <new>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -34,6 +33,13 @@
 class Newsweek : public Magazine
 {
 public:
+  Newsweek () = default;
+
+  Newsweek (Newsweek const &) = delete;
+  Newsweek (Newsweek &&) = delete;
+  Newsweek &operator= (Newsweek const &) = delete;
+  Newsweek &operator= (Newsweek &&) = delete;
+
   // This is the abstract class method which describes the magazine.
   void title () override;
 
@@ -42,9 +48,9 @@ public:
   // DLL/SO.
   void *operator new (size_t bytes);
   // Overloaded new operator, nothrow_t variant.
-  void *operator new (size_t bytes, const std::nothrow_t&);
-  void operator delete (void *p, const std::nothrow_t&) noexcept;
+  void *operator new (size_t bytes, std::nothrow_t const &);
+  void operator delete (void *p, std::nothrow_t const &) noexcept;
   void operator delete (void *ptr);
 };
 
-# endif /* NEWSWEEK_H */
+#endif /* NEWSWEEK_H */

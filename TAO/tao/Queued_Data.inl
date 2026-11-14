@@ -1,12 +1,14 @@
 // -*- C++ -*-
 //
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /*static*/
 ACE_INLINE void
 TAO_Queued_Data::replace_data_block (ACE_Message_Block &mb)
 {
-  size_t const newsize = ACE_CDR::total_length (&mb, 0) + ACE_CDR::MAX_ALIGNMENT;
+  size_t const newsize = ACE_CDR::total_length (std::addressof (mb), 0) + ACE_CDR::MAX_ALIGNMENT;
 
   ACE_Data_Block *db = mb.data_block ()->clone_nocopy ();
 
@@ -14,7 +16,7 @@ TAO_Queued_Data::replace_data_block (ACE_Message_Block &mb)
     return;
 
   ACE_Message_Block tmp (db);
-  ACE_CDR::mb_align (&tmp);
+  ACE_CDR::mb_align (std::addressof (tmp));
 
   tmp.copy (mb.rd_ptr (), mb.length());
   mb.data_block (tmp.data_block ()->duplicate ());
@@ -44,7 +46,8 @@ TAO_Queued_Data::TAO_Queued_Data (ACE_Message_Block *mb,
 
 ACE_INLINE
 TAO_Queued_Data::TAO_Queued_Data (TAO_Queued_Data const &qd)
-  : msg_block_ (qd.msg_block_->duplicate ()),
+  : msg_block_owner_ (qd.msg_block_->duplicate ()),
+    msg_block_ (msg_block_owner_.get ()),
     missing_data_ (qd.missing_data_),
     state_ (qd.state_),
     allocator_ (qd.allocator_)
@@ -94,7 +97,7 @@ TAO_Queued_Data::next () const
 }
 
 ACE_INLINE void
-TAO_Queued_Data::next (TAO_Queued_Data* qd)
+TAO_Queued_Data::next (TAO_Queued_Data *qd)
 {
   this->next_ = qd;
 }
@@ -108,16 +111,25 @@ TAO_Queued_Data::msg_block () const
 ACE_INLINE void
 TAO_Queued_Data::msg_block (ACE_Message_Block *mb)
 {
-  this->msg_block_ = mb;
+  if (mb == nullptr)
+    {
+      this->msg_block_owner_.release ();
+      this->msg_block_ = nullptr;
+    }
+  else if (mb != this->msg_block_ || !this->msg_block_owner_)
+    {
+      this->msg_block_owner_.reset (mb);
+      this->msg_block_ = mb;
+    }
 }
 
 ACE_INLINE void
-TAO_Queued_Data::state (const TAO_GIOP_Message_State& state)
+TAO_Queued_Data::state (TAO_GIOP_Message_State const &state)
 {
   this->state_ = state;
 }
 
-ACE_INLINE const TAO_GIOP_Message_State&
+ACE_INLINE TAO_GIOP_Message_State const &
 TAO_Queued_Data::state () const
 {
   return this->state_;

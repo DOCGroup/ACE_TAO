@@ -15,7 +15,6 @@ class Memory_Growth
   : public virtual POA_Test::Memory_Growth
 {
 public:
-  /// Constructor
   Memory_Growth (CORBA::ORB_ptr orb);
 
   // = The skeleton methods

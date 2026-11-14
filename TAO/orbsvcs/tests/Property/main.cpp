@@ -16,7 +16,6 @@
 #include "orbsvcs/CosPropertyS.h"
 #include "orbsvcs/Property/CosPropertyService_i.h"
 
-
 class TAO_PropertySet_Tester
 {
   // = TITLE
@@ -31,11 +30,13 @@ public:
   // He has to instantiate TAO_NamesIterator class using the instance
   // of TAO_PropertySet.
 
-  TAO_PropertySet_Tester ();
-  // Constructor.
+  TAO_PropertySet_Tester () = default;
 
-  ~TAO_PropertySet_Tester ();
-  // Destructor.
+  ~TAO_PropertySet_Tester () = default;
+  TAO_PropertySet_Tester (TAO_PropertySet_Tester const&) = delete;
+  TAO_PropertySet_Tester& operator= (TAO_PropertySet_Tester const&) = delete;
+  TAO_PropertySet_Tester (TAO_PropertySet_Tester&&) = delete;
+  TAO_PropertySet_Tester& operator= (TAO_PropertySet_Tester&&) = delete;
 
   int test_define_property ();
   // Defines a char,a short, a long, a float and a string property.
@@ -43,7 +44,7 @@ public:
   int test_get_number_of_properties ();
   // Gets the number of properties currently defined in the PropertySet.
 
-  int test_delete_property (const char *property_name);
+  int test_delete_property (char const* property_name);
   // Delete a given property.
 
   int test_is_property_defined ();
@@ -79,11 +80,15 @@ class TAO_PropertyNamesIterator_Tester
   //     Go thru the functions to understand the usage of the various
   //     methods of the PropertyNamesIterator interaface.
 public:
-  TAO_PropertyNamesIterator_Tester (TAO_PropertySet_Tester &propertyset_tester);
+  explicit TAO_PropertyNamesIterator_Tester (
+    TAO_PropertySet_Tester &propertyset_tester);
   // Constructor. To make names iterator from the property set object.
 
-  ~TAO_PropertyNamesIterator_Tester ();
-  // Destructor.
+  ~TAO_PropertyNamesIterator_Tester () = default;
+  TAO_PropertyNamesIterator_Tester (TAO_PropertyNamesIterator_Tester const&) = delete;
+  TAO_PropertyNamesIterator_Tester& operator= (TAO_PropertyNamesIterator_Tester const&) = delete;
+  TAO_PropertyNamesIterator_Tester (TAO_PropertyNamesIterator_Tester&&) = delete;
+  TAO_PropertyNamesIterator_Tester& operator= (TAO_PropertyNamesIterator_Tester&&) = delete;
 
   int test_next_one ();
   // Test next one method. Iterate thru all the names in the
@@ -99,17 +104,6 @@ private:
   // Our names iterator.
 };
 
-
-// Constructor.
-TAO_PropertySet_Tester::TAO_PropertySet_Tester ()
-{
-}
-
-// Destructor.
-TAO_PropertySet_Tester::~TAO_PropertySet_Tester ()
-{
-}
-
 // Defines a char, a short, a long, a float and a string.
 int
 TAO_PropertySet_Tester::test_define_property ()
@@ -121,9 +115,9 @@ TAO_PropertySet_Tester::test_define_property ()
 
   // Prepare a char and "define" that in the PropertySet.
   CORBA::Char ch = '#';
-  anyval <<= from_char (ch);
+  anyval <<= CORBA::Any::from_char (ch);
   ch = '*';
-  anyval >>= to_char (ch);
+  anyval >>= CORBA::Any::to_char (ch);
   ACE_DEBUG ((LM_DEBUG,
               "Main : Char ch = %c\n",
               ch));
@@ -141,7 +135,6 @@ TAO_PropertySet_Tester::test_define_property ()
   property_set_.define_property ("short_property",
                                  anyval);
 
-
   // Prepare a Long and "define" that in the PropertySet.
   CORBA::Long l = 931232;
   anyval <<= l;
@@ -150,8 +143,6 @@ TAO_PropertySet_Tester::test_define_property ()
   ACE_DEBUG ((LM_DEBUG,
               "Main : Long l = %d\n",
               l));
-  CORBA::Any newany(anyval);
-
   property_set_.define_property ("long_property",
                                  anyval);
 
@@ -171,7 +162,7 @@ TAO_PropertySet_Tester::test_define_property ()
               "Main: Any holding String\n"));
   CORBA::String_var strvar (CORBA::string_dup ("Test_String"));
   anyval <<= strvar.in ();
-  CORBA::String newstr;
+  char const* newstr {};
   anyval >>= newstr;
   ACE_DEBUG ((LM_DEBUG,
               "Main: String :  %s, From any :  %s\n",
@@ -197,7 +188,7 @@ TAO_PropertySet_Tester::test_get_number_of_properties ()
 // Testing the delete_property. Delets property, with the given name,
 // if that exsists.
 int
-TAO_PropertySet_Tester::test_delete_property (const char *property_name)
+TAO_PropertySet_Tester::test_delete_property (char const* property_name)
 {
   ACE_DEBUG ((LM_DEBUG, "\nChecking delete_property\n"));
   property_set_.delete_property (property_name);
@@ -213,10 +204,11 @@ TAO_PropertySet_Tester::test_get_property_value ()
   ACE_DEBUG ((LM_DEBUG,
               "\nChecking get_property_value\n"));
 
+  // The property set owns the returned Any; this pointer is only borrowed.
   CORBA::Any_ptr anyptr = property_set_.get_property_value ("short_property");
 
   // Get the short value.
-  if (anyptr != 0)
+  if (anyptr != nullptr)
     {
       CORBA::Short s;
       *anyptr >>= s;
@@ -229,9 +221,9 @@ TAO_PropertySet_Tester::test_get_property_value ()
                 "Short property not found\n"));
   // Get the string.
   anyptr = property_set_.get_property_value ("string_property");
-  if (anyptr != 0)
+  if (anyptr != nullptr)
     {
-      CORBA::String str;
+      char const* str {};
       *anyptr >>= str;
       ACE_DEBUG ((LM_DEBUG,
                   "Str %s\n", str));
@@ -250,19 +242,19 @@ TAO_PropertySet_Tester::test_is_property_defined ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "\nChecking is_property_defined ()\n"));
-  if (property_set_.is_property_defined ("short_property") == 0)
+  if (!property_set_.is_property_defined ("short_property"))
     ACE_DEBUG ((LM_DEBUG,
                 "short_property not defined\n"));
   else
     ACE_DEBUG ((LM_DEBUG,
                 "short_property defined\n"));
-  if (property_set_.is_property_defined ("string_property") == 0)
+  if (!property_set_.is_property_defined ("string_property"))
     ACE_DEBUG ((LM_DEBUG,
                 "string_property not defined\n"));
   else
     ACE_DEBUG ((LM_DEBUG,
                 "string_property defined\n"));
-  if (property_set_.is_property_defined ("char_property") == 0)
+  if (!property_set_.is_property_defined ("char_property"))
     ACE_DEBUG ((LM_DEBUG,
                 "char_property not defined\n"));
   else
@@ -287,7 +279,7 @@ TAO_PropertySet_Tester::test_delete_properties ()
   prop_names [2] = CORBA::string_dup ("long_property");
   prop_names [3] = CORBA::string_dup ("float_property");
   ACE_DEBUG ((LM_DEBUG,
-              "Length of sequence %d, Maxlength : %d\n",
+              "Length of sequence %u, Maxlength : %u\n",
               prop_names.length (),
               prop_names.maximum ()));
   property_set_.delete_properties (prop_names);
@@ -309,11 +301,11 @@ TAO_PropertySet_Tester::test_define_properties ()
   CORBA::Any anyval;
   // Prepare a char and "define" that in the PropertySet.
   CORBA::Char ch = '#';
-  anyval <<= from_char (ch);
+  anyval <<= CORBA::Any::from_char (ch);
   ch = '*';
-  anyval >>= to_char (ch);
+  anyval >>= CORBA::Any::to_char (ch);
   nproperties[0].property_name  = CORBA::string_dup ("char_property");
-  nproperties[0].property_value <<= from_char (ch);
+  nproperties[0].property_value <<= CORBA::Any::from_char (ch);
 
   // Prepare a Short and "define" that in the PropertySet.
   CORBA::Short s = 3;
@@ -358,7 +350,7 @@ TAO_PropertySet_Tester::test_delete_all_properties ()
   // Deleting all the properties
   ACE_DEBUG ((LM_DEBUG,
               "\nChecking delete_all_properties\n"));
-  int ret = property_set_.delete_all_properties ();
+  int const ret = property_set_.delete_all_properties ();
   if (ret == 1)
     ACE_DEBUG ((LM_DEBUG,
                 "All properties deleted, I guess\n"));
@@ -369,13 +361,9 @@ TAO_PropertySet_Tester::test_delete_all_properties ()
 }
 
 // Constructor. To make names iterator from the property set object.
-TAO_PropertyNamesIterator_Tester::TAO_PropertyNamesIterator_Tester (TAO_PropertySet_Tester &propertyset_tester)
+TAO_PropertyNamesIterator_Tester::TAO_PropertyNamesIterator_Tester (
+    TAO_PropertySet_Tester &propertyset_tester)
   : iterator_ (propertyset_tester.property_set_)
-{
-}
-
-// Destructor.
-TAO_PropertyNamesIterator_Tester::~TAO_PropertyNamesIterator_Tester ()
 {
 }
 
@@ -388,8 +376,8 @@ TAO_PropertyNamesIterator_Tester::test_next_one ()
   ACE_DEBUG ((LM_DEBUG,
               "\nTesting next_one of NamesIterator, Iterating thru names.\n"));
   // Let us iterate, now.
-  int ret = iterator_.next_one (strvar.out ());
-  while (ret != 0)
+  CORBA::Boolean ret = iterator_.next_one (strvar.out ());
+  while (ret)
     {
       ACE_DEBUG ((LM_DEBUG, "Str : %s\n", strvar.in ()));
       ret = iterator_.next_one (strvar.out ());
@@ -413,29 +401,29 @@ TAO_PropertyNamesIterator_Tester::test_next_n (size_t n)
 {
   CosPropertyService::PropertyNames_var pnames_var;
   ACE_DEBUG ((LM_DEBUG,
-              "Checking next_n (), next %d\n",
+              "Checking next_n (), next %B\n",
               n));
-  int ret = iterator_.next_n (n, pnames_var.out ());
-  if (ret == 0)
+  CORBA::Boolean const ret = iterator_.next_n (n, pnames_var.out ());
+  if (!ret)
     {
       // Return if no more items in the iterator.
       ACE_DEBUG ((LM_DEBUG,
                   "Iterator has no more items\n"));
       return 0;
     }
-  for (size_t i = 0; i < pnames_var.in ().length (); i++)
+  for (size_t i {}; i < pnames_var.in ().length (); ++i)
     ACE_DEBUG ((LM_DEBUG,
                 "str %s\n",
-                (const char *) pnames_var[i]));
+                static_cast<char const*> (pnames_var[i])));
   return 0;
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      CORBA::ORB_var orb_var = CORBA::ORB_init (argc,
+      CORBA::ORB_var const orb_var = CORBA::ORB_init (argc,
                                                 argv,
                                                 "internet");
 
@@ -513,14 +501,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Try next_n without resetting.
       names_iterator_tester.test_next_n (6);
     }
-  catch (const CORBA::SystemException& sysex)
+  catch (CORBA::SystemException const &sysex)
     {
-.print_exception ("System Exception");
+      sysex._tao_print_exception ("System Exception");
       return -1;
     }
-  catch (const CORBA::UserException& userex)
+  catch (CORBA::UserException const &userex)
     {
-.print_exception ("User Exception");
+      userex._tao_print_exception ("User Exception");
       return -1;
     }
   return 0;

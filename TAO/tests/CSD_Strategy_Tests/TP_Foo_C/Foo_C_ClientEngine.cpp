@@ -2,7 +2,6 @@
 #include "AppHelper.h"
 #include "ace/Log_Msg.h"
 
-
 Foo_C_ClientEngine::Foo_C_ClientEngine(Foo_C_ptr obj,
                                        unsigned  client_id)
   : obj_(Foo_C::_duplicate(obj)),
@@ -10,11 +9,7 @@ Foo_C_ClientEngine::Foo_C_ClientEngine(Foo_C_ptr obj,
 {
 }
 
-
-Foo_C_ClientEngine::~Foo_C_ClientEngine()
-{
-}
-
+Foo_C_ClientEngine::~Foo_C_ClientEngine() = default;
 
 bool
 Foo_C_ClientEngine::execute()
@@ -70,7 +65,6 @@ Foo_C_ClientEngine::execute()
 
   return check_validity;
 }
-
 
 void
 Foo_C_ClientEngine::expected_results(Foo_C_Statistics& stats)

@@ -27,7 +27,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_PSEUDO_VAROUT_T_H
 #define TAO_PSEUDO_VAROUT_T_H
 
@@ -61,6 +60,8 @@ public:
 
   TAO_Pseudo_Var_T<T> & operator= (typename T::_ptr_type);
   TAO_Pseudo_Var_T<T> & operator= (const TAO_Pseudo_Var_T<T> &);
+  TAO_Pseudo_Var_T (TAO_Base_var const &) = delete;
+  TAO_Pseudo_Var_T &operator= (TAO_Base_var const &) = delete;
 
   typename T::_ptr_type operator-> () const;
 
@@ -79,11 +80,6 @@ public:
 
   // TAO extension.
   _retn_type    ptr () const;
-private:
-  // Unimplemented - prevents widening assignment.
-  TAO_Pseudo_Var_T (const TAO_Base_var &);
-  void operator= (const TAO_Base_var &);
-
 private:
   typename T::_ptr_type ptr_;
 };

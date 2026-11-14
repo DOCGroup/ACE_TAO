@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    PG_FactoryRegistry.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_PG_FACTORYREGISTRY_H_
 #define TAO_PG_FACTORYREGISTRY_H_
@@ -57,7 +55,12 @@ namespace TAO
       ACE_CString type_id_;
       PortableGroup::FactoryInfos infos_;
 
-      RoleInfo(size_t estimated_number_entries = 5);
+      explicit RoleInfo (size_t estimated_number_entries = 5);
+
+      RoleInfo (RoleInfo const &) = delete;
+      RoleInfo (RoleInfo &&) = delete;
+      RoleInfo & operator= (RoleInfo const &) = delete;
+      RoleInfo & operator= (RoleInfo &&) = delete;
     };
     using MapMutex = ACE_Null_Mutex;
     using RegistryType = ACE_Hash_Map_Manager<ACE_CString, RoleInfo *, MapMutex>;
@@ -67,11 +70,15 @@ namespace TAO
     //////////////////////
     // non-CORBA interface
   public:
-    /// Constructor
-    PG_FactoryRegistry (const char * name = "FactoryRegistry");
+    explicit PG_FactoryRegistry (char const * name = "FactoryRegistry");
 
     /// virtual Destructor
     ~PG_FactoryRegistry () override;
+
+    PG_FactoryRegistry (PG_FactoryRegistry const &) = delete;
+    PG_FactoryRegistry (PG_FactoryRegistry &&) = delete;
+    PG_FactoryRegistry & operator= (PG_FactoryRegistry const &) = delete;
+    PG_FactoryRegistry & operator= (PG_FactoryRegistry &&) = delete;
 
     /**
      * Parse command line arguments.
@@ -104,19 +111,19 @@ namespace TAO
      * @param result is a place to return status to be returned by the process
      * @returns 0 to continue.  1 to quit.
      */
-    int idle(int & result);
+    int idle (int &result);
 
     /**
      * Identify this object.
      * @return a string to identify this object for logging/console message purposes.
      */
-    const char * identity () const;
+    char const * identity () const;
 
     /**
      * An object reference to the this object.
      * Duplicated by the call so it may (and probably should) be assigned to a _var..
      */
-    ::PortableGroup::FactoryRegistry_ptr reference();
+    ::PortableGroup::FactoryRegistry_ptr reference ();
 
     ////////////////////////////////
     // override servant base methods
@@ -127,26 +134,25 @@ namespace TAO
     // See IDL for documentation
 
     void register_factory (
-        const char * role,
-        const char * type_id,
-        const PortableGroup::FactoryInfo & factory_info) override;
+        char const *role,
+        char const *type_id,
+        PortableGroup::FactoryInfo const &factory_info) override;
 
     void unregister_factory (
-        const char * role,
-        const PortableGroup::Location & location) override;
+        char const *role,
+        PortableGroup::Location const &location) override;
 
-    void unregister_factory_by_role (const char * role) override;
-
+    void unregister_factory_by_role (char const *role) override;
 
     void unregister_factory_by_location (
-      const PortableGroup::Location & location) override;
+      PortableGroup::Location const &location) override;
 
     ::PortableGroup::FactoryInfos * list_factories_by_role (
-        const char * role,
+        char const *role,
         CORBA::String_out type_id) override;
 
     ::PortableGroup::FactoryInfos * list_factories_by_location (
-      const PortableGroup::Location & location) override;
+      PortableGroup::Location const &location) override;
 
     /////////////////////////
     // Implementation methods
@@ -154,7 +160,7 @@ namespace TAO
     /**
      * Write this factory's IOR to a file
      */
-    int write_ior_file (const ACE_TCHAR * outputFile, const char * ior);
+    int write_ior_file (ACE_TCHAR const *outputFile, char const *ior);
 
     ///////////////
     // Data Members
@@ -206,14 +212,15 @@ namespace TAO
     /**
      * Quit on idle flag.
      */
-    int quit_on_idle_;
+    bool quit_on_idle_ {};
 
     /**
      * State of the quit process
      */
-    enum {LIVE, DEACTIVATED, GONE} quit_state_;
+    enum class Quit_State { live, deactivated, gone };
+    Quit_State quit_state_ {Quit_State::live};
 
-    int linger_;
+    int linger_ {};
 
     RegistryType registry_;
   };

@@ -1,22 +1,13 @@
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = DESCRIPTION
-//    This test exercises ACE_Service_Config SEGV during shutdown when
-//    Modules get double deleted. Once by Stream parent,
-//    once by ACE_Service_Repository
-//
-// = AUTHOR
-//    Chad Beaulac <chad@objectivesolutions.com>
-//
-// ============================================================================
+/// @file Bug_3334_Regression_Test.cpp
+/// This test exercises ACE_Service_Config SEGV during shutdown when
+/// Modules get double deleted. Once by Stream parent,
+/// once by ACE_Service_Repository
+///
+/// @author Chad Beaulac <chad@objectivesolutions.com>
 
 #include "test_config.h"
 #include "ace/Log_Msg.h"
 #include "ace/Service_Config.h"
-
 
 int
 run_main (int, ACE_TCHAR *argv[])

@@ -4,8 +4,8 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class T, size_t DEFAULT_SIZE> ACE_INLINE
-ACE_Vector<T, DEFAULT_SIZE>::ACE_Vector (const size_t init_size,
-                                         ACE_Allocator* alloc)
+ACE_Vector<T, DEFAULT_SIZE>::ACE_Vector (size_t const init_size,
+                                         ACE_Allocator *alloc)
   : ACE_Array<T> (init_size == 0 ? DEFAULT_SIZE : init_size, alloc),
     length_ (0)
 {
@@ -55,7 +55,7 @@ typename ACE_Array_Base<T>::const_iterator ACE_Vector<T, DEFAULT_SIZE>::end () c
 // Compare this vector with <s> for inequality.
 
 template <class T, size_t DEFAULT_SIZE> ACE_INLINE bool
-ACE_Vector<T, DEFAULT_SIZE>::operator!= (const ACE_Vector<T, DEFAULT_SIZE> &s) const
+ACE_Vector<T, DEFAULT_SIZE>::operator!= (ACE_Vector<T, DEFAULT_SIZE> const &s) const
 {
   return !(*this == s);
 }

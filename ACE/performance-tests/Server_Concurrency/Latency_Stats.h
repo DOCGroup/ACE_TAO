@@ -1,36 +1,36 @@
+#ifndef ACE_PERFORMANCE_TESTS_SERVER_CONCURRENCY_LATENCY_STATS_H
+#define ACE_PERFORMANCE_TESTS_SERVER_CONCURRENCY_LATENCY_STATS_H
+
+#include "ace/High_Res_Timer.h"
+#include "ace/Log_Msg.h"
+#include "ace/OS_NS_Thread.h"
+#include "ace/Sched_Params.h"
+
+#include <stddef.h>
+
 class Latency_Stats
 {
 public:
-  Latency_Stats ();
+  Latency_Stats () = default;
 
-  void dump_results (const ACE_TCHAR* test_name,
-                     const ACE_TCHAR* sub_test);
+  void dump_results (ACE_TCHAR const *test_name,
+                     ACE_TCHAR const *sub_test) const;
 
-  void sample (ACE_hrtime_t sample);
+  void sample (ACE_hrtime_t const sample);
 
-  void accumulate (const Latency_Stats& stats);
-  // Useful to merge several Latency_Stats.
+  /// Merge another latency sample set into this one.
+  void accumulate (Latency_Stats const &stats);
 
 private:
-  u_long n_;
-  ACE_hrtime_t sum_;
-  ACE_hrtime_t sum2_;
-  ACE_hrtime_t min_;
-  ACE_hrtime_t max_;
+  size_t n_ {};
+  ACE_hrtime_t sum_ {};
+  ACE_hrtime_t sum2_ {};
+  ACE_hrtime_t min_ {};
+  ACE_hrtime_t max_ {};
 };
 
-inline
-Latency_Stats::Latency_Stats ()
-  :  n_ (0),
-     sum_ (0),
-     sum2_ (0),
-     min_ (0),
-     max_ (0)
-{
-}
-
 inline void
-Latency_Stats::sample (ACE_hrtime_t sample)
+Latency_Stats::sample (ACE_hrtime_t const sample)
 {
   this->sum_  += sample;
   this->sum2_ += sample * sample;
@@ -43,34 +43,36 @@ Latency_Stats::sample (ACE_hrtime_t sample)
     this->min_ = sample;
   if (this->max_ < sample)
     this->max_ = sample;
-  this->n_++;
+  ++this->n_;
 }
 
 inline void
-Latency_Stats::dump_results (const ACE_TCHAR *test_name,
-                             const ACE_TCHAR *sub_test)
+Latency_Stats::dump_results (ACE_TCHAR const *test_name,
+                             ACE_TCHAR const *sub_test) const
 {
   if (this->n_ < 1)
     return;
 
-  ACE_hrtime_t avg = this->sum_ / this->n_;
-  ACE_hrtime_t dev =
-    this->sum2_ / this->n_ - avg*avg;
-  ACE_High_Res_Timer::global_scale_factor_type gsf =
-    ACE_High_Res_Timer::global_scale_factor ();
+  ACE_hrtime_t const avg {this->sum_ / this->n_};
+  ACE_hrtime_t const dev {this->sum2_ / this->n_ - avg * avg};
+  ACE_High_Res_Timer::global_scale_factor_type const gsf {
+    ACE_High_Res_Timer::global_scale_factor ()};
 
-  ACE_UINT64 min_usec = this->min_ / gsf;
-  ACE_UINT64 max_usec = this->max_ / gsf;
-  ACE_UINT64 avg_usec = avg / gsf;
-  ACE_UINT64 dev_usec = dev / (gsf * gsf);
+  ACE_UINT64 const min_usec {this->min_ / gsf};
+  ACE_UINT64 const max_usec {this->max_ / gsf};
+  ACE_UINT64 const avg_usec {avg / gsf};
+  ACE_UINT64 const dev_usec {dev / (gsf * gsf)};
   ACE_DEBUG ((LM_DEBUG,
               "%s/%s: %.2f/%.2f/%.2f/%.2f (min/avg/max/var^2) [usecs]\n",
               test_name, sub_test,
-              min_usec, avg_usec, max_usec, dev_usec));
+              static_cast<double> (min_usec),
+              static_cast<double> (avg_usec),
+              static_cast<double> (max_usec),
+              static_cast<double> (dev_usec)));
 }
 
 inline void
-Latency_Stats::accumulate (const Latency_Stats& rhs)
+Latency_Stats::accumulate (Latency_Stats const &rhs)
 {
   if (rhs.n_ == 0)
     return;
@@ -98,25 +100,25 @@ Latency_Stats::accumulate (const Latency_Stats& rhs)
 class Throughput_Stats
 {
 public:
-  Throughput_Stats ();
+  Throughput_Stats () = default;
 
-  void dump_results (const ACE_TCHAR* test_name,
-                     const ACE_TCHAR* sub_test);
+  void dump_results (ACE_TCHAR const *test_name,
+                     ACE_TCHAR const *sub_test) const;
 
+  /// Record one received event.
   void sample ();
-  // An event has been received
 
-  void accumulate (const Throughput_Stats& stats);
-  // Useful to merge several Throughput_Stats.
+  /// Merge another event count and its time range into this one.
+  void accumulate (Throughput_Stats const &stats);
 
 private:
-  u_long n_;
-  ACE_hrtime_t start_;
-  ACE_hrtime_t stop_;
+  size_t n_ {};
+  ACE_hrtime_t start_ {};
+  ACE_hrtime_t stop_ {};
 };
 
 inline void
-Throughput_Stats::accumulate (const Throughput_Stats& rhs)
+Throughput_Stats::accumulate (Throughput_Stats const &rhs)
 {
   if (rhs.n_ == 0)
     return;
@@ -139,8 +141,8 @@ Throughput_Stats::accumulate (const Throughput_Stats& rhs)
 }
 
 inline void
-Throughput_Stats::dump_results (const ACE_TCHAR *test_name,
-                                const ACE_TCHAR *subtest)
+Throughput_Stats::dump_results (ACE_TCHAR const *test_name,
+                                ACE_TCHAR const *subtest) const
 {
   if (this->n_ == 0)
     {
@@ -150,27 +152,28 @@ Throughput_Stats::dump_results (const ACE_TCHAR *test_name,
       return;
     }
 
-  ACE_Time_Value tv;
+  ACE_Time_Value tv {};
   ACE_High_Res_Timer::hrtime_to_tv (tv, this->stop_ - this->start_);
 
-  double f = 1.0/(tv.sec () + tv.usec () / 1000000.0);
-  double events_per_second = this->n_ * f;
+  double const elapsed_seconds {
+    static_cast<double> (tv.sec ())
+      + static_cast<double> (tv.usec ()) / 1000000.0};
+  if (elapsed_seconds <= 0.0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "%s/%s: elapsed time is too short to measure\n",
+                  test_name, subtest));
+      return;
+    }
+  double const events_per_second {
+    static_cast<double> (this->n_) / elapsed_seconds};
 
   ACE_DEBUG ((LM_DEBUG,
-              "%s/%s: "
-              "%d / %d.%06.6d = %.3f events/second\n",
+              "%s/%s: %B / %.6f = %.3f events/second\n",
               test_name, subtest,
               this->n_,
-              tv.sec (), tv.usec (),
+              elapsed_seconds,
               events_per_second));
-}
-
-inline
-Throughput_Stats::Throughput_Stats ()
-  : n_ (0),
-    start_ (),
-    stop_ ()
-{
 }
 
 inline void
@@ -180,7 +183,7 @@ Throughput_Stats::sample ()
     {
       this->start_ = ACE_OS::gethrtime ();
     }
-  this->n_++;
+  ++this->n_;
   this->stop_ = ACE_OS::gethrtime ();
 }
 
@@ -188,13 +191,13 @@ inline void
 move_to_rt_class ()
 {
   // Enable FIFO scheduling
-  int priority =
-    (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
-     + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
+  int const priority_min {ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)};
+  int const priority_max {ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)};
+  int const priority {(priority_min + priority_max) / 2};
 
-  int result = ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
+  int result {ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
                                                        priority,
-                                                       ACE_SCOPE_PROCESS));
+                                                       ACE_SCOPE_PROCESS))};
   if (result == 0)
     {
       result = ACE_OS::thr_setprio (priority);
@@ -206,3 +209,5 @@ move_to_rt_class ()
                   "Cannot move program to realtime class.\n"));
     }
 }
+
+#endif /* ACE_PERFORMANCE_TESTS_SERVER_CONCURRENCY_LATENCY_STATS_H */

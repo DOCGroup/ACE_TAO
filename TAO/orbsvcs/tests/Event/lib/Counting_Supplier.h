@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef EC_COUNTING_SUPPLIER_H
 #define EC_COUNTING_SUPPLIER_H
 
@@ -31,7 +30,6 @@
 class EC_Test_Export EC_Counting_Supplier : public POA_RtecEventComm::PushSupplier
 {
 public:
-  /// Constructor
   EC_Counting_Supplier ();
 
   // = The RtecEventComm::PushSupplier methods
@@ -61,7 +59,7 @@ public:
   void disconnect_push_consumer ();
 
   /// The skeleton methods.
-  virtual void disconnect_push_supplier ();
+  void disconnect_push_supplier () override;
 
   /// Count the number of events sent
   CORBA::ULong event_count;
@@ -93,7 +91,7 @@ public:
   EC_Counting_Supplier_Task (EC_Counting_Supplier *supplier);
 
   // = Check the ACE_Task_Base documentation.
-  int svc ();
+  int svc () override;
 
   void stop ();
   CORBA::ULong push_count ();

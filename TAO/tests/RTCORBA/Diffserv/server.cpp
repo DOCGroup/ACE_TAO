@@ -8,19 +8,30 @@
 #include "Custom_Network_Priority_Mapping.h"
 #include "tao/debug.h"
 
+#include <memory>
+
+struct Server_Options
+{
+  RTCORBA::Priority corba_priority {RTCORBA::minPriority};
+};
+
 class Test_i : public POA_Test
 {
 public:
-  Test_i (CORBA::ORB_ptr orb);
+  explicit Test_i (CORBA::ORB_ptr orb);
+  Test_i (Test_i const &) = delete;
+  Test_i (Test_i &&) = delete;
+  Test_i &operator= (Test_i const &) = delete;
+  Test_i &operator= (Test_i &&) = delete;
 
-  void test_method ();
+  void test_method () override;
 
   //FUZZ: disable check_for_lack_ACE_OS
-  void shutdown ();
+  void shutdown () override;
   //FUZZ: enable check_for_lack_ACE_OS
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 };
 
 Test_i::Test_i (CORBA::ORB_ptr orb)
@@ -41,21 +52,20 @@ Test_i::shutdown ()
   this->orb_->shutdown (false);
 }
 
-static const ACE_TCHAR *simple_servant_ior_file = ACE_TEXT("simple_servant.ior");
-static const ACE_TCHAR *diffserv_servant_ior_file = ACE_TEXT("diffserv_servant.ior");
-static RTCORBA::Priority corba_priority = RTCORBA::minPriority;
+constexpr ACE_TCHAR simple_servant_ior_file[] = ACE_TEXT("simple_servant.ior");
+constexpr ACE_TCHAR diffserv_servant_ior_file[] = ACE_TEXT("diffserv_servant.ior");
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("p:"));
-  int c;
+  int option;
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'p':
-        corba_priority = ACE_OS::atoi (get_opts.opt_arg ());
+        options.corba_priority = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       default:
@@ -64,32 +74,39 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            "\t-p <corba priority> [defaults to %d]\n"
                            "\n",
                            argv [0],
-                           corba_priority),
+                           options.corba_priority),
                           -1);
       }
 
   return 0;
 }
 
-void
+int
 create_object (PortableServer::POA_ptr poa,
                CORBA::ORB_ptr orb,
                PortableServer::Servant servant,
-               const ACE_TCHAR *filename)
+               ACE_TCHAR const *filename)
 {
   // Register with poa.
-  PortableServer::ObjectId_var id =
+  PortableServer::ObjectId_var const id =
     poa->activate_object (servant);
 
-  CORBA::Object_var object =
+  CORBA::Object_var const object =
     poa->id_to_reference (id.in ());
 
-  CORBA::String_var ior =
+  CORBA::String_var const ior =
     orb->object_to_string (object.in ());
 
-  FILE *output_file= ACE_OS::fopen (filename, "w");
-  ACE_OS::fprintf (output_file, "%s", ior.in ());
-  ACE_OS::fclose (output_file);
+  std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
+    ACE_OS::fopen (filename, "w"), ACE_OS::fclose);
+  if (!output_file)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("Cannot open output file for IOR: %s\n"),
+                       filename),
+                      -1);
+
+  ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
+  return 0;
 }
 
 int
@@ -100,57 +117,61 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::Object_var object;
 
       // ORB.
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
       // Parse arguments.
-      if (parse_args (argc, argv) != 0)
+      Server_Options options;
+      if (parse_args (argc, argv, options) != 0)
         return -1;
 
       // RootPOA.
       object =
         orb->resolve_initial_references ("RootPOA");
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (object.in ());
 
       // POAManager.
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
       // Servant.
       Test_i servant (orb.in ());
 
       // Create the first object in Root POA
-      create_object (root_poa.in (),
-                     orb.in (),
-                     &servant,
-                     simple_servant_ior_file);
+      if (create_object (root_poa.in (),
+                         orb.in (),
+                         &servant,
+                         simple_servant_ior_file) != 0)
+        return -1;
 
       object =
         orb->resolve_initial_references ("NetworkPriorityMappingManager");
 
-      RTCORBA::NetworkPriorityMappingManager_var mapping_manager =
+      RTCORBA::NetworkPriorityMappingManager_var const mapping_manager =
         RTCORBA::NetworkPriorityMappingManager::_narrow (object.in ());
 
-      Custom_Network_Priority_Mapping *cnpm = 0;
-      ACE_NEW_RETURN  (cnpm,
-                       Custom_Network_Priority_Mapping,
-                       -1);
+      Custom_Network_Priority_Mapping *raw_mapping {};
+      ACE_NEW_RETURN (raw_mapping,
+                      Custom_Network_Priority_Mapping,
+                      -1);
+      std::unique_ptr<Custom_Network_Priority_Mapping> cnpm {raw_mapping};
 
-      cnpm->corba_priority (corba_priority);
+      cnpm->corba_priority (options.corba_priority);
 
-      mapping_manager->mapping (cnpm);
+      // The manager takes ownership of the custom mapping.
+      mapping_manager->mapping (cnpm.release ());
 
       // RTORB.
       object =
         orb->resolve_initial_references ("RTORB");
 
-      RTCORBA::RTORB_var rt_orb =
+      RTCORBA::RTORB_var const rt_orb =
         RTCORBA::RTORB::_narrow (object.in ());
 
       // Set transport protocol properties
-      RTCORBA::TCPProtocolProperties_var tcp_properties =
+      RTCORBA::TCPProtocolProperties_var const tcp_properties =
         rt_orb->create_tcp_protocol_properties (ACE_DEFAULT_MAX_SOCKET_BUFSIZ,
                                                 ACE_DEFAULT_MAX_SOCKET_BUFSIZ,
                                                 1,
@@ -179,10 +200,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                               policy_list);
 
       // Create object 2.
-      create_object (poa_with_diffserv.in (),
-                     orb.in (),
-                     &servant,
-                     diffserv_servant_ior_file);
+      if (create_object (poa_with_diffserv.in (),
+                         orb.in (),
+                         &servant,
+                         diffserv_servant_ior_file) != 0)
+        return -1;
 
       // Activate POA manager.
       poa_manager->activate ();
@@ -192,7 +214,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Server ORB event loop finished\n\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Unexpected exception caught:");
       return -1;

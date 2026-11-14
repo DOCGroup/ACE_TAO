@@ -24,10 +24,15 @@ class Adapter_Activator
   : public PortableServer::AdapterActivator
 {
 public:
-  Adapter_Activator (PortableServer::POAManager_ptr poa_manager);
+  explicit Adapter_Activator (PortableServer::POAManager_ptr poa_manager);
+
+  Adapter_Activator (Adapter_Activator const &) = delete;
+  Adapter_Activator &operator= (Adapter_Activator const &) = delete;
+  Adapter_Activator (Adapter_Activator &&) = delete;
+  Adapter_Activator &operator= (Adapter_Activator &&) = delete;
 
   CORBA::Boolean unknown_adapter (PortableServer::POA_ptr parent,
-                                  const char *name);
+                                  char const *name) override;
 
 protected:
   /// POA Manager

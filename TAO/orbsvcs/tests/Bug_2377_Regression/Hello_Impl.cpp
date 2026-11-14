@@ -1,7 +1,6 @@
-
 #include "Hello_Impl.h"
 
-Hello_Impl::Hello_Impl (CORBA::ORB_ptr orb, MessageLog *log)
+Hello_Impl::Hello_Impl (CORBA::ORB_ptr orb, MessageLog &log)
   : orb_ (CORBA::ORB::_duplicate (orb))
   , logger_ (log)
 {
@@ -10,7 +9,7 @@ Hello_Impl::Hello_Impl (CORBA::ORB_ptr orb, MessageLog *log)
 void
 Hello_Impl::say_hello (CORBA::Short count)
 {
-  this->logger_->register_message_recv (count);
+  this->logger_.register_message_recv (count);
 }
 
 void
@@ -20,7 +19,7 @@ Hello_Impl::shutdown ()
     {
       this->orb_->shutdown (false);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       //FUZZ: disable check_for_lack_ACE_OS
       ex._tao_print_exception ("Exception caught in shutdown ():");
@@ -28,31 +27,17 @@ Hello_Impl::shutdown ()
     }
 }
 
-MessageLog::MessageLog (int num, bool sprs)
-  : expected_ (num)
-  , overdoseS_ (0)
-  , overdoseR_ (0)
-  , supress_ (sprs)
+MessageLog::MessageLog (int const expected)
+  : sent_ (expected)
+  , rcvd_ (expected)
+  , expected_ (expected)
+  , overdose_sent_ {}
+  , overdose_received_ {}
 {
-  this->sent_ = new int[this->expected_];
-  this->rcvd_ = new int[this->expected_];
-
-  int i;
-  for (i = 0; i < this->expected_; i++)
-    {
-      this->sent_[i] = 0;
-      this->rcvd_[i] = 0;
-    }
-}
-
-MessageLog::~MessageLog ()
-{
-  delete [] this->sent_;
-  delete [] this->rcvd_;
 }
 
 void
-MessageLog::register_message_send (int message_num)
+MessageLog::register_message_send (int const message_num)
 {
   ACE_GUARD (ACE_Mutex, ace_mon, this->mutex_);
   if (0 <= message_num && message_num < this->expected_)
@@ -61,19 +46,16 @@ MessageLog::register_message_send (int message_num)
     }
   else
     {
-      this->overdoseS_++;
+      ++this->overdose_sent_;
     }
 
-  if (!this->supress_)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "%02d>>; ",
-                  message_num));
-    }
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("%02d>>; "),
+              message_num));
 }
 
 void
-MessageLog::register_message_recv (int message_num)
+MessageLog::register_message_recv (int const message_num)
 {
   ACE_GUARD (ACE_Mutex, ace_mon, this->mutex_);
   if (0 <= message_num && message_num < this->expected_)
@@ -82,59 +64,53 @@ MessageLog::register_message_recv (int message_num)
     }
   else
     {
-      this->overdoseR_++;
+      ++this->overdose_received_;
     }
 
-  if (!this->supress_)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "%02d<<; ",
-                  message_num));
-    }
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("%02d<<; "),
+              message_num));
 }
 
 int
-MessageLog::report_statistics ()
+MessageLog::report_statistics () const
 {
-  int i;
-  int lmco = 0;
+  int lmco {};
 
-  for (i = 0; i < this->expected_; i++)
+  for (int i = 0; i < this->expected_; ++i)
     {
       lmco += this->sent_[i] - this->rcvd_[i];
 
-      if (this->sent_[i] > 1 && !this->supress_)
+      if (this->sent_[i] > 1)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "\nSENT message <<< %d >>> %d times",
+                      ACE_TEXT ("\nSENT message <<< %d >>> %d times"),
                       i, this->sent_[i]));
         }
 
-      if (this->rcvd_[i] > 1 && !this->supress_)
+      if (this->rcvd_[i] > 1)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "\nRECEIVED message <<< %d >>> %d times",
+                      ACE_TEXT ("\nRECEIVED message <<< %d >>> %d times"),
                       i, this->rcvd_[i]));
         }
 
-      if (this->sent_[i] != this->rcvd_[i] && !this->supress_)
+      if (this->sent_[i] != this->rcvd_[i])
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "\nLOST message <<< %d >>> %d times",
+                      ACE_TEXT ("\nLOST message <<< %d >>> %d times"),
                       i, this->sent_[i] - this->rcvd_[i]));
         }
     }
 
-  if (this->overdoseS_ != 0 && !this->supress_)
+  if (this->overdose_sent_ != 0)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "\nSent more than expected."));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nSent more than expected.")));
     }
 
-  if (this->overdoseR_ != 0 && !this->supress_)
+  if (this->overdose_received_ != 0)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "\nReceived more than expected."));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nReceived more than expected.")));
     }
 
   return lmco;

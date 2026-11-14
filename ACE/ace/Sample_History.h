@@ -8,13 +8,14 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_SAMPLE_HISTORY_H
 #define ACE_SAMPLE_HISTORY_H
 #include /**/ "ace/pre.h"
 
 #include /**/ "ace/config-all.h"
 #include "ace/Basic_Types.h"
+
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -38,14 +39,16 @@ public:
    using scale_factor_type = ACE_UINT64;
 #endif
 
-  /// Constructor
   /**
    * The number of samples is pre-allocated, and cannot changes once
    * the class is initialized.
    */
-  ACE_Sample_History (size_t max_samples);
+  explicit ACE_Sample_History (size_t max_samples);
+  ACE_Sample_History (ACE_Sample_History const &) = delete;
+  ACE_Sample_History (ACE_Sample_History &&) = delete;
+  ACE_Sample_History &operator= (ACE_Sample_History const &) = delete;
+  ACE_Sample_History &operator= (ACE_Sample_History &&) = delete;
 
-  /// Destructor
   ~ACE_Sample_History ();
 
   /// Record one sample.
@@ -75,14 +78,20 @@ public:
   ACE_UINT64 get_sample (size_t i) const;
 
 private:
+  // Select the matching deallocator for the configured ACE allocation mode.
+  struct Samples_Deleter
+  {
+    void operator() (ACE_UINT64 *samples) const;
+  };
+
   /// The maximum number of samples
-  size_t max_samples_;
+  size_t max_samples_ {};
 
   /// The current number of samples
-  size_t sample_count_;
+  size_t sample_count_ {};
 
   /// The samples
-  ACE_UINT64 *samples_;
+  std::unique_ptr<ACE_UINT64[], Samples_Deleter> samples_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

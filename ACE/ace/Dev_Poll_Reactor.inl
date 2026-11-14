@@ -42,7 +42,7 @@ ACE_Dev_Poll_Handler_Guard::ACE_Dev_Poll_Handler_Guard
   : eh_ (eh),
     refcounted_ (false)
 {
-  if (eh == 0)
+  if (eh == nullptr)
     return;
 
   this->refcounted_ =
@@ -56,7 +56,7 @@ ACE_Dev_Poll_Handler_Guard::ACE_Dev_Poll_Handler_Guard
 ACE_INLINE
 ACE_Dev_Poll_Handler_Guard::~ACE_Dev_Poll_Handler_Guard ()
 {
-  if (this->refcounted_ && this->eh_ != 0)
+  if (this->refcounted_ && this->eh_ != nullptr)
     this->eh_->remove_reference ();
 }
 
@@ -87,7 +87,6 @@ ACE_Dev_Poll_Reactor::upcall (ACE_Event_Handler *event_handler,
 
   return status;
 }
-
 
 /************************************************************************/
 // Methods for ACE_Dev_Poll_Reactor::Token_Guard

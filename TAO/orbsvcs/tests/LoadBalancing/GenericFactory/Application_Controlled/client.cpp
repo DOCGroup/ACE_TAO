@@ -1,13 +1,11 @@
 #include "TestC.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://obj.ior");
-
-int
-parse_args (int argc, ACE_TCHAR *argv[])
+static int
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -19,9 +17,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "\n",
+                           ACE_TEXT ("usage: %s -k <ior>\n"),
                            argv [0]),
                           -1);
       }
@@ -30,14 +26,16 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      ACE_TCHAR const *ior = ACE_TEXT ("file://obj.ior");
+
+      if (parse_args (argc, argv, ior) != 0)
         return 1;
 
       CORBA::Object_var tmp =
@@ -49,12 +47,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (basic.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
-                             "Nil Test::Basic reference <%s>\n",
+                             ACE_TEXT ("Nil Test::Basic reference <%s>\n"),
                              ior),
                             1);
         }
 
-      for (int i = 0; i < 5; i++)
+      for (int i {}; i < 5; ++i)
         {
           CORBA::String_var the_string =
             basic->get_string ();
@@ -69,7 +67,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught in client.cpp:");
       return 1;

@@ -7,9 +7,7 @@
  * parties.
  */
 
-
 /* ------------------------------------------------------------------------ */
-
 
 /*
  * ereport.h: Records transactions, reports errors to administrators, etc.
@@ -17,19 +15,15 @@
  * Rob McCool
  */
 
-
 #ifndef EREPORT_H
 #define EREPORT_H
-
 
 #include "../base/session.h"   /* Session structure */
 #ifdef XP_UNIX
 #include <pwd.h>      /* struct passwd */
 #endif /* XP_UNIX */
 
-
 /* ------------------------------ Constants ------------------------------- */
-
 
 /*
  * The maximum length of an error message. NOT RUN-TIME CHECKED
@@ -77,14 +71,11 @@
 
 #define ERR_TIMEFMT "[%d/%b/%Y:%H:%M:%S]"
 
-
 /* The fd you will get if you are reporting errors to SYSLOG */
 
 #define ERRORS_TO_SYSLOG -1
 
-
 /* ------------------------------ Prototypes ------------------------------ */
-
 
 /*
  * ereport logs an error of the given degree and formats the arguments with

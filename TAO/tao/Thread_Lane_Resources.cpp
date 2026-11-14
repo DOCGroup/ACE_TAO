@@ -9,8 +9,10 @@
 #include "tao/ORB_Core.h"
 #include "tao/Transport_Descriptor_Interface.h"
 
+#include "ace/Malloc_Base.h"
 #include "ace/Reactor.h"
-
+#include <memory>
+#include <utility>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -18,23 +20,11 @@ TAO_Thread_Lane_Resources::TAO_Thread_Lane_Resources (
     TAO_ORB_Core &orb_core,
     TAO_New_Leader_Generator *new_leader_generator)
   : orb_core_ (orb_core),
-    acceptor_registry_ (nullptr),
-    connector_registry_ (nullptr),
-    transport_cache_ (nullptr),
-    leader_follower_ (nullptr),
-    new_leader_generator_ (new_leader_generator),
-    input_cdr_dblock_allocator_ (nullptr),
-    input_cdr_buffer_allocator_ (nullptr),
-    input_cdr_msgblock_allocator_ (nullptr),
-    transport_message_buffer_allocator_ (nullptr),
-    output_cdr_dblock_allocator_ (nullptr),
-    output_cdr_buffer_allocator_ (nullptr),
-    output_cdr_msgblock_allocator_ (nullptr),
-    amh_response_handler_allocator_ (nullptr),
-    ami_response_handler_allocator_ (nullptr)
+    new_leader_generator_ (new_leader_generator)
 {
   // Create the transport cache.
-  ACE_NEW (this->transport_cache_,
+  TAO::Transport_Cache_Manager *transport_cache {};
+  ACE_NEW (transport_cache,
            TAO::Transport_Cache_Manager (
             *this->leader_follower ().reactor (),
             orb_core.resource_factory ()->purge_percentage (),
@@ -44,9 +34,21 @@ TAO_Thread_Lane_Resources::TAO_Thread_Lane_Resources (
             orb_core.orbid (),
             orb_core.resource_factory ()->transport_idle_timeout (),
             orb_core.resource_factory ()->transport_idle_scan_interval ()));
+  this->transport_cache_.reset (transport_cache);
 }
 
 TAO_Thread_Lane_Resources::~TAO_Thread_Lane_Resources () = default;
+
+void
+TAO_Thread_Lane_Resources::Allocator_Deleter::operator() (
+    ACE_Allocator *allocator) const
+{
+  if (allocator != nullptr)
+    {
+      allocator->remove ();
+      delete allocator;
+    }
+}
 
 TAO::Transport_Cache_Manager &
 TAO_Thread_Lane_Resources::transport_cache ()
@@ -54,18 +56,18 @@ TAO_Thread_Lane_Resources::transport_cache ()
   return *this->transport_cache_;
 }
 
-int
+bool
 TAO_Thread_Lane_Resources::has_acceptor_registry_been_created () const
 {
   return this->acceptor_registry_ != nullptr;
 }
 
-int
+bool
 TAO_Thread_Lane_Resources::is_collocated (const TAO_MProfile& mprofile)
 {
   if (!this->has_acceptor_registry_been_created ())
     {
-      return 0;
+      return false;
     }
 
   return this->acceptor_registry ().is_collocated (mprofile);
@@ -92,8 +94,8 @@ TAO_Thread_Lane_Resources::acceptor_registry ()
             *this->orb_core_.resource_factory ();
 
           // Ask it to create a new acceptor registry.
-          this->acceptor_registry_ =
-            resource_factory.get_acceptor_registry ();
+          this->acceptor_registry_.reset (
+            resource_factory.get_acceptor_registry ());
         }
     }
 
@@ -113,9 +115,9 @@ TAO_Thread_Lane_Resources::connector_registry ()
 
       if (this->connector_registry_ == nullptr)
         {
-          // Ask it to create a new acceptor registry.
-          TAO_Connector_Registry *connector_registry =
-            this->orb_core_.resource_factory ()->get_connector_registry ();
+          // Ask it to create a new connector registry.
+          std::unique_ptr<TAO_Connector_Registry> connector_registry (
+            this->orb_core_.resource_factory ()->get_connector_registry ());
 
           if (connector_registry == nullptr)
             {
@@ -126,7 +128,7 @@ TAO_Thread_Lane_Resources::connector_registry ()
                 CORBA::COMPLETED_NO);
             }
 
-          if (connector_registry->open (&this->orb_core_) != 0)
+          if (connector_registry->open (std::addressof (this->orb_core_)) != 0)
             {
               throw ::CORBA::INITIALIZE (
                 CORBA::SystemException::_tao_minor_code (
@@ -138,13 +140,12 @@ TAO_Thread_Lane_Resources::connector_registry ()
           // Finally, everything is created and opened successfully:
           // now we can assign to the member.  Otherwise, the
           // assignment would be premature.
-          this->connector_registry_ = connector_registry;
+          this->connector_registry_ = std::move (connector_registry);
         }
     }
 
-  return this->connector_registry_;
+  return this->connector_registry_.get ();
 }
-
 
 TAO_Leader_Follower &
 TAO_Thread_Lane_Resources::leader_follower ()
@@ -160,16 +161,18 @@ TAO_Thread_Lane_Resources::leader_follower ()
       if (this->leader_follower_ == nullptr)
         {
           // Create a new Leader Follower object.
-          ACE_NEW_RETURN (this->leader_follower_,
-                          TAO_Leader_Follower (&this->orb_core_,
-                                               this->new_leader_generator_),
-                          *this->leader_follower_);
+          TAO_Leader_Follower *leader_follower {};
+          ACE_NEW_THROW_EX (leader_follower,
+                            TAO_Leader_Follower (
+                              std::addressof (this->orb_core_),
+                              this->new_leader_generator_),
+                            CORBA::NO_MEMORY ());
+          this->leader_follower_.reset (leader_follower);
         }
     }
 
   return *this->leader_follower_;
 }
-
 
 ACE_Allocator*
 TAO_Thread_Lane_Resources::input_cdr_dblock_allocator ()
@@ -181,14 +184,13 @@ TAO_Thread_Lane_Resources::input_cdr_dblock_allocator ()
 
       if (this->input_cdr_dblock_allocator_ == nullptr)
         {
-          this->input_cdr_dblock_allocator_ =
-            this->resource_factory ()->input_cdr_dblock_allocator ();
+          this->input_cdr_dblock_allocator_.reset (
+            this->resource_factory ()->input_cdr_dblock_allocator ());
         }
     }
 
-  return this->input_cdr_dblock_allocator_;
+  return this->input_cdr_dblock_allocator_.get ();
 }
-
 
 ACE_Allocator*
 TAO_Thread_Lane_Resources::input_cdr_buffer_allocator ()
@@ -200,14 +202,13 @@ TAO_Thread_Lane_Resources::input_cdr_buffer_allocator ()
 
       if (this->input_cdr_buffer_allocator_ == nullptr)
         {
-          this->input_cdr_buffer_allocator_ =
-            this->resource_factory ()->input_cdr_buffer_allocator ();
+          this->input_cdr_buffer_allocator_.reset (
+            this->resource_factory ()->input_cdr_buffer_allocator ());
         }
     }
 
-  return this->input_cdr_buffer_allocator_;
+  return this->input_cdr_buffer_allocator_.get ();
 }
-
 
 ACE_Allocator*
 TAO_Thread_Lane_Resources::input_cdr_msgblock_allocator ()
@@ -219,12 +220,12 @@ TAO_Thread_Lane_Resources::input_cdr_msgblock_allocator ()
 
       if (this->input_cdr_msgblock_allocator_ == nullptr)
         {
-          this->input_cdr_msgblock_allocator_ =
-            this->resource_factory ()->input_cdr_msgblock_allocator ();
+          this->input_cdr_msgblock_allocator_.reset (
+            this->resource_factory ()->input_cdr_msgblock_allocator ());
         }
     }
 
-  return this->input_cdr_msgblock_allocator_;
+  return this->input_cdr_msgblock_allocator_.get ();
 }
 
 ACE_Allocator*
@@ -237,14 +238,13 @@ TAO_Thread_Lane_Resources::transport_message_buffer_allocator ()
 
       if (this->transport_message_buffer_allocator_ == nullptr)
         {
-          this->transport_message_buffer_allocator_ =
-            this->resource_factory ()->input_cdr_dblock_allocator ();
+          this->transport_message_buffer_allocator_.reset (
+            this->resource_factory ()->input_cdr_dblock_allocator ());
         }
     }
 
-  return this->transport_message_buffer_allocator_;
+  return this->transport_message_buffer_allocator_.get ();
 }
-
 
 ACE_Allocator*
 TAO_Thread_Lane_Resources::output_cdr_dblock_allocator ()
@@ -256,14 +256,13 @@ TAO_Thread_Lane_Resources::output_cdr_dblock_allocator ()
 
       if (this->output_cdr_dblock_allocator_ == nullptr)
         {
-          this->output_cdr_dblock_allocator_ =
-            this->resource_factory ()->output_cdr_dblock_allocator ();
+          this->output_cdr_dblock_allocator_.reset (
+            this->resource_factory ()->output_cdr_dblock_allocator ());
         }
     }
 
-  return this->output_cdr_dblock_allocator_;
+  return this->output_cdr_dblock_allocator_.get ();
 }
-
 
 ACE_Allocator*
 TAO_Thread_Lane_Resources::output_cdr_buffer_allocator ()
@@ -275,14 +274,13 @@ TAO_Thread_Lane_Resources::output_cdr_buffer_allocator ()
 
       if (this->output_cdr_buffer_allocator_ == nullptr)
         {
-          this->output_cdr_buffer_allocator_ =
-            this->resource_factory ()->output_cdr_buffer_allocator ();
+          this->output_cdr_buffer_allocator_.reset (
+            this->resource_factory ()->output_cdr_buffer_allocator ());
         }
     }
 
-  return this->output_cdr_buffer_allocator_;
+  return this->output_cdr_buffer_allocator_.get ();
 }
-
 
 ACE_Allocator*
 TAO_Thread_Lane_Resources::output_cdr_msgblock_allocator ()
@@ -294,12 +292,12 @@ TAO_Thread_Lane_Resources::output_cdr_msgblock_allocator ()
 
       if (this->output_cdr_msgblock_allocator_ == nullptr)
         {
-          this->output_cdr_msgblock_allocator_ =
-            this->resource_factory ()->output_cdr_msgblock_allocator ();
+          this->output_cdr_msgblock_allocator_.reset (
+            this->resource_factory ()->output_cdr_msgblock_allocator ());
         }
     }
 
-  return this->output_cdr_msgblock_allocator_;
+  return this->output_cdr_msgblock_allocator_.get ();
 }
 
 ACE_Allocator*
@@ -312,12 +310,12 @@ TAO_Thread_Lane_Resources::amh_response_handler_allocator ()
 
       if (this->amh_response_handler_allocator_ == nullptr)
         {
-          this->amh_response_handler_allocator_ =
-            this->resource_factory ()->amh_response_handler_allocator ();
+          this->amh_response_handler_allocator_.reset (
+            this->resource_factory ()->amh_response_handler_allocator ());
         }
     }
 
-  return this->amh_response_handler_allocator_;
+  return this->amh_response_handler_allocator_.get ();
 }
 
 ACE_Allocator*
@@ -330,12 +328,12 @@ TAO_Thread_Lane_Resources::ami_response_handler_allocator ()
 
       if (this->ami_response_handler_allocator_ == nullptr)
         {
-          this->ami_response_handler_allocator_ =
-            this->resource_factory ()->ami_response_handler_allocator ();
+          this->ami_response_handler_allocator_.reset (
+            this->resource_factory ()->ami_response_handler_allocator ());
         }
     }
 
-  return this->ami_response_handler_allocator_;
+  return this->ami_response_handler_allocator_.get ();
 }
 
 int
@@ -346,7 +344,7 @@ TAO_Thread_Lane_Resources::open_acceptor_registry (const TAO_EndpointSet &endpoi
   TAO_Acceptor_Registry &ar = this->acceptor_registry ();
 
   // Open it.
-  return ar.open (&this->orb_core_,
+  return ar.open (std::addressof (this->orb_core_),
                   this->leader_follower ().reactor (),
                   endpoint_set,
                   ignore_address);
@@ -361,22 +359,9 @@ TAO_Thread_Lane_Resources::resource_factory ()
 void
 TAO_Thread_Lane_Resources::finalize ()
 {
-  // Close connectors before acceptors!
-  // Ask the registry to close all registered connectors.
-  if (this->connector_registry_ != nullptr)
-    {
-      this->connector_registry_->close_all ();
-      delete this->connector_registry_;
-      this->connector_registry_ = nullptr;
-    }
-
-  // Ask the registry to close all registered acceptors.
-  if (this->acceptor_registry_ != nullptr)
-    {
-      this->acceptor_registry_->close_all ();
-      delete this->acceptor_registry_;
-      this->acceptor_registry_ = nullptr;
-    }
+  // Destroy connectors before acceptors; their destructors close them.
+  this->connector_registry_.reset ();
+  this->acceptor_registry_.reset ();
 
   // Set of handlers still in the connection cache.
   TAO::Connection_Handler_Set handlers;
@@ -390,7 +375,7 @@ TAO_Thread_Lane_Resources::finalize ()
 
   // Go through the handler set, closing the connections and removing
   // the references.
-  TAO_Connection_Handler **handler = nullptr;
+  TAO_Connection_Handler **handler {};
 
   for (TAO::Connection_Handler_Set::iterator iter (handlers);
        iter.next (handler);
@@ -403,77 +388,22 @@ TAO_Thread_Lane_Resources::finalize ()
       (*handler)->transport ()->remove_reference ();
     }
 
-  delete this->transport_cache_;
-  this->transport_cache_ = nullptr;
+  this->transport_cache_.reset ();
 
-  delete this->leader_follower_;
-  this->leader_follower_ = nullptr;
+  this->leader_follower_.reset ();
 
   // Delete all the allocators here.. They shouldnt be done earlier,
   // lest some of the contents in the above, say reactor or acceptor
   // may use memory from the pool..
-  if (this->input_cdr_dblock_allocator_ != nullptr)
-    {
-      this->input_cdr_dblock_allocator_->remove ();
-      delete this->input_cdr_dblock_allocator_;
-      this->input_cdr_dblock_allocator_ = nullptr;
-    }
-
-  if (this->input_cdr_buffer_allocator_ != nullptr)
-    {
-      this->input_cdr_buffer_allocator_->remove ();
-      delete this->input_cdr_buffer_allocator_;
-      this->input_cdr_buffer_allocator_ = nullptr;
-    }
-
-  if (this->input_cdr_msgblock_allocator_ != nullptr)
-    {
-      this->input_cdr_msgblock_allocator_->remove ();
-      delete this->input_cdr_msgblock_allocator_;
-      this->input_cdr_msgblock_allocator_ = nullptr;
-    }
-
-  if (this->transport_message_buffer_allocator_ != nullptr)
-    {
-      this->transport_message_buffer_allocator_->remove ();
-      delete this->transport_message_buffer_allocator_;
-      this->transport_message_buffer_allocator_ = nullptr;
-    }
-
-  if (this->output_cdr_dblock_allocator_ != nullptr)
-    {
-      this->output_cdr_dblock_allocator_->remove ();
-      delete this->output_cdr_dblock_allocator_;
-      this->output_cdr_dblock_allocator_ = nullptr;
-    }
-
-  if (this->output_cdr_buffer_allocator_ != nullptr)
-    {
-      this->output_cdr_buffer_allocator_->remove ();
-      delete this->output_cdr_buffer_allocator_;
-      this->output_cdr_buffer_allocator_ = nullptr;
-    }
-
-  if (this->output_cdr_msgblock_allocator_ != nullptr)
-    {
-      this->output_cdr_msgblock_allocator_->remove ();
-      delete this->output_cdr_msgblock_allocator_;
-      this->output_cdr_msgblock_allocator_ = nullptr;
-    }
-
-  if (this->amh_response_handler_allocator_ != nullptr)
-    {
-      this->amh_response_handler_allocator_->remove ();
-      delete this->amh_response_handler_allocator_;
-      this->amh_response_handler_allocator_ = nullptr;
-    }
-
-  if (this->ami_response_handler_allocator_ != nullptr)
-    {
-      this->ami_response_handler_allocator_->remove ();
-      delete this->ami_response_handler_allocator_;
-      this->ami_response_handler_allocator_ = nullptr;
-    }
+  this->input_cdr_dblock_allocator_.reset ();
+  this->input_cdr_buffer_allocator_.reset ();
+  this->input_cdr_msgblock_allocator_.reset ();
+  this->transport_message_buffer_allocator_.reset ();
+  this->output_cdr_dblock_allocator_.reset ();
+  this->output_cdr_buffer_allocator_.reset ();
+  this->output_cdr_msgblock_allocator_.reset ();
+  this->amh_response_handler_allocator_.reset ();
+  this->ami_response_handler_allocator_.reset ();
 }
 
 void
@@ -528,7 +458,7 @@ TAO_Thread_Lane_Resources::close_all_transports ()
 
   // Go through the handler set, closing the connections and removing
   // the references.
-  TAO_Connection_Handler **handler = nullptr;
+  TAO_Connection_Handler **handler {};
 
   for (TAO::Connection_Handler_Set::iterator iter (handlers);
        iter.next (handler);

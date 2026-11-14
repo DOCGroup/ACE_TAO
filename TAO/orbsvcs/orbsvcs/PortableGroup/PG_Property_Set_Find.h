@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    PG_Property_Set_Find.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
-//=============================================================================
 #ifndef TAO_PG_PROPERTY_SET_FIND_H
 #define TAO_PG_PROPERTY_SET_FIND_H
 #include /**/ "ace/pre.h"
@@ -34,10 +32,10 @@ namespace TAO
    * templated methods.
    */
   template <typename TYPE>
-  int find (const PG_Property_Set & decoder, const ACE_CString & key, TYPE & value)
+  int find (PG_Property_Set const & decoder, ACE_CString const & key, TYPE & value)
   {
     int result = 0;
-    const PortableGroup::Value * any {};
+    PortableGroup::Value const * any {};
     if (decoder.find (key, any))
     {
       result = ((*any) >>= value);

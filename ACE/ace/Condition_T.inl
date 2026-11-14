@@ -12,7 +12,7 @@ ACE_Condition<MUTEX>::remove ()
   // has called the cond_wait routine after the signal call.  Since
   // the condition signal is not queued in any way, deadlock occurs.
 
-  int result = 0;
+  int result {};
 
   while ((result = ACE_OS::cond_destroy (&this->cond_)) == -1
           && errno == EBUSY)

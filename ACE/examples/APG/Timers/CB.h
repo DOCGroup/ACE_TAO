@@ -10,24 +10,28 @@
 class CB : public ACE_Event_Handler
 {
 public:
-  CB ();
+  CB () = default;
+  CB (CB const &) = delete;
+  CB (CB &&) = delete;
+  CB &operator= (CB const &) = delete;
+  CB &operator= (CB &&) = delete;
 
   // Set the timer id that is being handled by this instance.
   void setID (long timerID);
 
   // Get the timer id.
-  long getID ();
+  long getID () const;
 
   // Handle the timeout.
-  virtual int handle_timeout(const ACE_Time_Value &tv,
-                             const void *arg = 0);
+  int handle_timeout (ACE_Time_Value const &tv,
+                      void const *arg = nullptr) override;
 
-  virtual int handle_close (ACE_HANDLE handle,
-                            ACE_Reactor_Mask close_mask);
+  int handle_close (ACE_HANDLE handle,
+                    ACE_Reactor_Mask close_mask) override;
 
 private:
-  long timerID_;
-  int count_;
+  long timerID_ {};
+  int count_ {};
 };
 // Listing 1
 

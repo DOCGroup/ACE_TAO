@@ -150,7 +150,7 @@ prepare_tests (CORBA::ORB_ptr orb, PortableServer::POA_ptr root_poa)
   CORBA::PolicyManager_var policy_manager =
     CORBA::PolicyManager::_narrow (objectman.in ());
 
-  PortableServer::POA_var my_compress_poa = 0;
+  PortableServer::POA_var my_compress_poa {};
   CORBA::PolicyList policies(4);
   policies.length(4);
 
@@ -181,7 +181,7 @@ prepare_tests (CORBA::ORB_ptr orb, PortableServer::POA_ptr root_poa)
 
   PortableServer::POAManager_var poa_manager = my_compress_poa->the_POAManager ();
 
-  Hello *hello_impl = 0;
+  Hello *hello_impl {};
   ACE_NEW_RETURN (hello_impl,
                   Hello (orb),
                   0);

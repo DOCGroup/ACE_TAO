@@ -1,6 +1,8 @@
 #include "Stock_Factory_Locator_i.h"
 #include "Stock_Factory_i.h"
 
+#include <cstring>
+
 Quoter_Stock_Factory_Locator_i::
 Quoter_Stock_Factory_Locator_i (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
@@ -8,10 +10,10 @@ Quoter_Stock_Factory_Locator_i (CORBA::ORB_ptr orb)
 }
 
 PortableServer::Servant
-Quoter_Stock_Factory_Locator_i::preinvoke (const PortableServer::ObjectId &oid,
+Quoter_Stock_Factory_Locator_i::preinvoke (PortableServer::ObjectId const &oid,
                                            PortableServer::POA_ptr,
-                                           const char *,
-                                           void * & cookie)
+                                           char const *,
+                                           void *&cookie)
 {
   // Check to see if the object ID is valid
   try {
@@ -20,32 +22,34 @@ Quoter_Stock_Factory_Locator_i::preinvoke (const PortableServer::ObjectId &oid,
       PortableServer::ObjectId_to_string (oid);
 
     // Check if the ObjectId is valid
-    if (ACE_OS::strcmp (oid_str.in (), "Quoter/Stock_Factory") != 0) {
+    if (std::strcmp (oid_str.in (), "Quoter/Stock_Factory") != 0) {
       // Create the required servant
-      PortableServer::Servant servant =
+      PortableServer::ServantBase_var servant_owner =
         new Quoter_Stock_Factory_i ();
+      PortableServer::Servant servant = servant_owner.in ();
       cookie = servant;
 
-      return servant;
+      return servant_owner._retn ();
     }
     else {
       throw CORBA::OBJECT_NOT_EXIST ();
     }
 
-  } catch (const CORBA::BAD_PARAM &) {
+  } catch (CORBA::BAD_PARAM const &) {
     throw CORBA::OBJECT_NOT_EXIST ();
   }
 }
 
 void
-Quoter_Stock_Factory_Locator_i::postinvoke (const PortableServer::ObjectId &,
+Quoter_Stock_Factory_Locator_i::postinvoke (PortableServer::ObjectId const &,
                                             PortableServer::POA_ptr,
-                                            const char *,
-                                            void * cookie,
+                                            char const *,
+                                            void *cookie,
                                             PortableServer::Servant servant)
 {
-  // Delete the servant as it is no longer needed.
-  PortableServer::Servant my_servant = (PortableServer::Servant) cookie;
-  if (servant == my_servant)
-    delete servant;
+  // Release the servant as it is no longer needed.
+  if (servant == cookie)
+    {
+      PortableServer::ServantBase_var servant_owner (servant);
+    }
 }

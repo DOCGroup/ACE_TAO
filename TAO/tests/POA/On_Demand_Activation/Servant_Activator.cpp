@@ -10,10 +10,11 @@
  */
 //=============================================================================
 
-
 #include "Servant_Activator.h"
 #include "test_i.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
+#include <memory>
 
 ServantActivator::ServantActivator (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
@@ -21,7 +22,7 @@ ServantActivator::ServantActivator (CORBA::ORB_ptr orb)
 }
 
 PortableServer::Servant
-ServantActivator::incarnate (const PortableServer::ObjectId &oid,
+ServantActivator::incarnate (PortableServer::ObjectId const &oid,
                              PortableServer::POA_ptr poa)
 {
   // Convert ObjectId to String.
@@ -31,24 +32,28 @@ ServantActivator::incarnate (const PortableServer::ObjectId &oid,
   // If ObjectId string has a test substring, create and return a
   // test_i.
 
-  if (ACE_OS::strstr (s.in (), "test") != 0)
-    return new test_i (this->orb_.in (), poa);
-  else
+  if (std::strstr (s.in (), "test") != nullptr)
     {
-      throw CORBA::OBJECT_NOT_EXIST ();
+      std::unique_ptr<test_i> servant =
+        std::make_unique<test_i> (this->orb_.in (), poa);
+      // The POA takes ownership of the newly created servant.
+      return servant.release ();
     }
+
+  throw CORBA::OBJECT_NOT_EXIST ();
 }
 
-
 void
-ServantActivator::etherealize (const PortableServer::ObjectId &,
-                               PortableServer::POA_ptr ,
+ServantActivator::etherealize (PortableServer::ObjectId const &,
+                               PortableServer::POA_ptr,
                                PortableServer::Servant servant,
-                               CORBA::Boolean ,
+                               CORBA::Boolean,
                                CORBA::Boolean remaining_activations)
 {
   // If there are no remaining activations i.e ObjectIds associated
   // with test_i delete it.
   if (!remaining_activations)
-    delete servant;
+    {
+      PortableServer::ServantBase_var servant_owner (servant);
+    }
 }

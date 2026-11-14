@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=====================================================================
 /**
  *  @file AMH_DSI_Response_Handler.h
  *
  *  @brief Handle the Response appropriately.
  */
-//=====================================================================
 
 #ifndef TAO_AMH_DSI_RESPONSE_HANDLER_H
 #define TAO_AMH_DSI_RESPONSE_HANDLER_H
@@ -142,9 +140,9 @@ class TAO_DynamicInterface_Export TAO_AMH_DSI_Exception_Holder
 {
 public:
   using _var_type = TAO_AMH_DSI_Exception_Holder_var;
-  TAO_AMH_DSI_Exception_Holder (CORBA::Exception *ex);
+  explicit TAO_AMH_DSI_Exception_Holder (CORBA::Exception *ex);
 
-  ~TAO_AMH_DSI_Exception_Holder () override;
+  ~TAO_AMH_DSI_Exception_Holder () override = default;
   ::CORBA::ValueBase *_copy_value () override;
 
   static TAO_AMH_DSI_Exception_Holder* _downcast (CORBA::ValueBase*);
@@ -207,8 +205,8 @@ public:
   using _ptr_type = TAO_AMH_DSI_Response_Handler_ptr;
   using _var_type = TAO_AMH_DSI_Response_Handler_var;
 
-  TAO_AMH_DSI_Response_Handler (TAO_ServerRequest &sr);
-  ~TAO_AMH_DSI_Response_Handler () override;
+  explicit TAO_AMH_DSI_Response_Handler (TAO_ServerRequest &sr);
+  ~TAO_AMH_DSI_Response_Handler () override = default;
 
   virtual void invoke_reply (CORBA::NVList_ptr args,
                              CORBA::NamedValue_ptr result);

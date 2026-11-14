@@ -1,16 +1,8 @@
 %{
-  // ========================================================================
-//
-// = LIBRARY
-//    orbsvcs
-// 
-// = FILENAME
-//    constraint.y
-//
-// = AUTHOR
-//    Seth Widoff <sbw1@cs.wustl.edu>
-//
-// ========================================================================
+/**
+ * @file constraint.y
+ * @author Seth Widoff <sbw1@cs.wustl.edu>
+ */
 
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdlib.h"

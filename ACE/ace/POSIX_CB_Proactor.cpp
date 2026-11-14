@@ -20,7 +20,6 @@ ACE_POSIX_CB_Proactor::ACE_POSIX_CB_Proactor (size_t max_aio_operations)
   this->get_asynch_pseudo_task ().start ();
 }
 
-// Destructor.
 ACE_POSIX_CB_Proactor::~ACE_POSIX_CB_Proactor ()
 {
   this->close ();
@@ -68,7 +67,6 @@ ACE_POSIX_CB_Proactor::notify_completion (int sig_num)
 
   return this->sema_.release();
 }
-
 
 ssize_t
 ACE_POSIX_CB_Proactor::allocate_aio_slot (ACE_POSIX_Asynch_Result *result)
@@ -137,7 +135,7 @@ ACE_POSIX_CB_Proactor::handle_events_i (u_long milli_seconds)
   int ret_aio = 0;
   int ret_que = 0;
 
-  for (;; ret_aio++)
+  for (;; ++ret_aio)
     {
       ACE_POSIX_Asynch_Result * asynch_result =
           this->find_completed_aio (error_status,

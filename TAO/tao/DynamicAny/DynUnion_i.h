@@ -1,13 +1,9 @@
 // -*- C++ -*-
-//=============================================================================
 /**
  *  @file    DynUnion_i.h
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
-
-
 #ifndef TAO_DYNUNION_I_H
 #define TAO_DYNUNION_I_H
 #include /**/ "ace/pre.h"
@@ -39,11 +35,15 @@ class TAO_DynamicAny_Export TAO_DynUnion_i
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
-  explicit TAO_DynUnion_i (CORBA::Boolean allow_truncation=true);
+  explicit TAO_DynUnion_i (CORBA::Boolean allow_truncation = true);
 
-  /// Destructor.
-  ~TAO_DynUnion_i () = default;
+  ~TAO_DynUnion_i () override = default;
+
+  /// Use copy() or assign() instead of these.
+  TAO_DynUnion_i (TAO_DynUnion_i const &src) = delete;
+  TAO_DynUnion_i &operator= (TAO_DynUnion_i const &src) = delete;
+  TAO_DynUnion_i (TAO_DynUnion_i &&) = delete;
+  TAO_DynUnion_i &operator= (TAO_DynUnion_i &&) = delete;
 
   /// Constructor taking an Any argument.
   void init (CORBA::Any const& any);
@@ -51,10 +51,15 @@ public:
   /// Constructor taking a typecode argument.
   void init (CORBA::TypeCode_ptr tc);
 
-  // = LocalObject methods.
+  /// @name LocalObject methods
+  /// @{
+
   static TAO_DynUnion_i *_narrow (CORBA::Object_ptr obj);
 
-  // = Functions specific to DynUnion.
+  /// @}
+
+  /// @name Functions specific to DynUnion
+  /// @{
 
   DynamicAny::DynAny_ptr get_discriminator () override;
 
@@ -74,7 +79,10 @@ public:
 
   CORBA::TCKind member_kind () override;
 
-  // = DynAny common functions not implemented in class TAO_DynCommon.
+  /// @}
+
+  /// @name DynAny common functions not implemented in TAO_DynCommon
+  /// @{
 
   void from_any (CORBA::Any const& value) override;
 
@@ -85,6 +93,8 @@ public:
   void destroy () override;
 
   DynamicAny::DynAny_ptr current_component () override;
+
+  /// @}
 
 private:
   /// Code common to the constructor from an Any arg and the member
@@ -98,13 +108,6 @@ private:
   CORBA::Boolean label_match (CORBA::Any const& my_any,
                               CORBA::Any const& other_any);
 
-  /// Use copy() or assign() instead of these.
-  TAO_DynUnion_i (TAO_DynUnion_i const &src) = delete;
-  TAO_DynUnion_i &operator= (TAO_DynUnion_i const &src) = delete;
-  TAO_DynUnion_i (TAO_DynUnion_i &&) = delete;
-  TAO_DynUnion_i &operator= (TAO_DynUnion_i &&) = delete;
-
-private:
   /// Just two components.
   DynamicAny::DynAny_var member_;
   DynamicAny::DynAny_var discriminator_;

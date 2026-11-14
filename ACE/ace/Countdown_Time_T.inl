@@ -15,7 +15,7 @@ ACE_Countdown_Time_T<TIME_POLICY>::update ()
 }
 
 template <typename TIME_POLICY> ACE_INLINE void
-ACE_Countdown_Time_T<TIME_POLICY>::set_time_policy(TIME_POLICY const & time_policy)
+ACE_Countdown_Time_T<TIME_POLICY>::set_time_policy (TIME_POLICY const & time_policy)
 {
   this->time_policy_ = time_policy;
 }

@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "FileS.h"
 
 /**
@@ -31,26 +30,27 @@ public:
   class Descriptor : public POA_File::Descriptor
   {
   public:
-    /// Constructor
-    Descriptor (PortableServer::POA_ptr poa);
+    explicit Descriptor (PortableServer::POA_ptr poa);
 
-    /// Destructor
-    ~Descriptor ();
+    Descriptor (Descriptor const &) = delete;
+    Descriptor &operator= (Descriptor const &) = delete;
+    Descriptor (Descriptor &&) = delete;
+    Descriptor &operator= (Descriptor &&) = delete;
 
     /// Returns the default POA of this object
-    PortableServer::POA_ptr _default_POA ();
+    PortableServer::POA_ptr _default_POA () override;
 
     /// write buffer to File corresponding to this Descriptor
-    virtual CORBA::Long write (const File::Descriptor::DataBuffer &buffer);
+    CORBA::Long write (File::Descriptor::DataBuffer const &buffer) override;
 
-    virtual File::Descriptor::DataBuffer *read (CORBA::Long num_bytes);
+    File::Descriptor::DataBuffer *read (CORBA::Long num_bytes) override;
 
     /// seek to the offset in file from whence
-    virtual CORBA::ULong lseek (CORBA::ULong offset,
-                                CORBA::Long whence);
+    CORBA::ULong lseek (CORBA::ULong offset,
+                        CORBA::Long whence) override;
 
     /// closes the file corresponding to the requested ObjectID
-    virtual void destroy ();
+    void destroy () override;
 
   private:
     /// Extracts the ACE_HANDLE from the objectID
@@ -72,18 +72,20 @@ public:
     System (CORBA::ORB_ptr orb,
             PortableServer::POA_ptr poa);
 
-    ///Destructor
-    ~System ();
+    System (System const &) = delete;
+    System &operator= (System const &) = delete;
+    System (System &&) = delete;
+    System &operator= (System &&) = delete;
 
-    ///Returns the default POA of this object
-    PortableServer::POA_ptr _default_POA ();
+    /// Returns the default POA of this object
+    PortableServer::POA_ptr _default_POA () override;
 
     /// Opens a file ,creates a Descriptor reference with the
     /// ACE_HANDLE and returns that reference
-    File::Descriptor_ptr open (const char *file_name,
-                               CORBA::Long flags);
+    File::Descriptor_ptr open (char const *file_name,
+                               CORBA::Long flags) override;
 
-    void shutdown ();
+    void shutdown () override;
   private:
     CORBA::ORB_var orb_;
 

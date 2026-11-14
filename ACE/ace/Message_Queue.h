@@ -74,6 +74,11 @@ public:
 
   ACE_Message_Queue_Base ();
 
+  ACE_Message_Queue_Base (ACE_Message_Queue_Base const &) = delete;
+  ACE_Message_Queue_Base (ACE_Message_Queue_Base &&) = delete;
+  ACE_Message_Queue_Base &operator= (ACE_Message_Queue_Base const &) = delete;
+  ACE_Message_Queue_Base &operator= (ACE_Message_Queue_Base &&) = delete;
+
   /// Close down the message queue and release all resources.
   virtual int close () = 0;
 
@@ -197,10 +202,6 @@ public:
 
   /// Dump the state of an object.
   virtual void dump () const = 0;
-
-private:
-  ACE_Message_Queue_Base (const ACE_Message_Queue_Base &) = delete;
-  void operator= (const ACE_Message_Queue_Base &) = delete;
 
 protected:
   /// Indicates the state of the queue, which can be

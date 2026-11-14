@@ -5,10 +5,11 @@
 #include "tao/Transport_Cache_Manager.h"
 #include "tao/Thread_Lane_Resources.h"
 
+#include <cstdlib>
+
 #if !defined(__ACE_INLINE__)
 #include "test_i.inl"
 #endif /* __ACE_INLINE__ */
-
 
 void
 Callback_i::shutdown ()
@@ -24,24 +25,17 @@ Callback_i::callback_method ()
     ACE_DEBUG ((LM_DEBUG, "Callback method called\n"));
 }
 
-
-// ****************************************************************
-
 CORBA::Long
-Simple_Server_i::test_method (CORBA::Boolean do_callback
- )
+Simple_Server_i::test_method (CORBA::Boolean do_callback)
 {
   if (do_callback)
-    {
-      this->flag_ = 1;
-    }
+    this->flag_ = true;
 
   return 0;
 }
 
 void
-Simple_Server_i::callback_object (Callback_ptr callback
- )
+Simple_Server_i::callback_object (Callback_ptr callback)
 {
   // Store the callback object
   this->callback_ = Callback::_duplicate (callback);
@@ -50,40 +44,39 @@ Simple_Server_i::callback_object (Callback_ptr callback
 int
 Simple_Server_i::call_client ()
 {
-  size_t pre_call_connections =
+  size_t const pre_call_connections =
     this->orb_->orb_core ()->lane_resources ().transport_cache ().current_size ();
 
   if (this->flag_)
     {
-      for (int times = 0; times < this->no_iterations_; ++times)
+      for (int times {}; times < this->no_iterations_; ++times)
         {
           this->callback_->callback_method ();
 
-          size_t cur_connections =
-            this->orb_->orb_core()->lane_resources().transport_cache().current_size ();
+          size_t const cur_connections =
+            this->orb_->orb_core ()->lane_resources ().transport_cache ().current_size ();
 
           if (cur_connections > pre_call_connections)
             {
               ACE_ERROR ((LM_ERROR,
-                          "(%P|%t) TEST OUTPUT: expected to find %d "
+                          "(%P|%t) TEST OUTPUT: expected to find %B "
                           "connections in the transport cache, but found "
-                          "%d instead.  Aborting.\n",
+                          "%B instead.  Aborting.\n",
                           pre_call_connections,
                           cur_connections));
 
-              ACE_OS::abort ();
+              std::abort ();
             }
         }
 
       this->callback_->shutdown ();
-      this->flag_ = 0;
+      this->flag_ = false;
 
       return 1;
     }
 
   return 0;
 }
-
 
 void
 Simple_Server_i::shutdown ()

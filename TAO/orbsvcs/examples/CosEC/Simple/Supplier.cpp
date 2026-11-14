@@ -3,13 +3,11 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior = ACE_TEXT ("file://ec.ior");
-
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -21,9 +19,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "\n",
+                           ACE_TEXT ("usage:  %s -k <ior>\n"),
                            argv [0]),
                           -1);
       }
@@ -32,17 +28,11 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Supplier supplier;
 
   return supplier.run (argc, argv);
-}
-
-// ****************************************************************
-
-Supplier::Supplier ()
-{
 }
 
 int
@@ -50,38 +40,38 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
 {
   try
     {
-      // ORB initialization boiler plate...
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      ACE_TCHAR const *ior = ACE_TEXT ("file://ec.ior");
+      if (parse_args (argc, argv, ior) != 0)
         return 1;
 
-      CORBA::Object_var object =
+      CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");
-      PortableServer::POA_var poa =
-        PortableServer::POA::_narrow (object.in ());
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POA_var const poa =
+        PortableServer::POA::_narrow (poa_object.in ());
+      PortableServer::POAManager_var const poa_manager =
         poa->the_POAManager ();
       poa_manager->activate ();
 
       // Obtain the event channel, we could use a naming service, a
       // command line argument or resolve_initial_references(), but
       // this is simpler...
-      object =
+      CORBA::Object_var const event_channel_object =
         orb->string_to_object (ior);
 
-      CosEventChannelAdmin::EventChannel_var event_channel =
-        CosEventChannelAdmin::EventChannel::_narrow (object.in ());
+      CosEventChannelAdmin::EventChannel_var const event_channel =
+        CosEventChannelAdmin::EventChannel::_narrow (event_channel_object.in ());
 
       // The canonical protocol to connect to the EC
-      CosEventChannelAdmin::SupplierAdmin_var supplier_admin =
+      CosEventChannelAdmin::SupplierAdmin_var const supplier_admin =
         event_channel->for_suppliers ();
 
-      CosEventChannelAdmin::ProxyPushConsumer_var consumer =
+      CosEventChannelAdmin::ProxyPushConsumer_var const consumer =
         supplier_admin->obtain_push_consumer ();
 
-      CosEventComm::PushSupplier_var supplier =
+      CosEventComm::PushSupplier_var const supplier =
         this->_this ();
 
       consumer->connect_push_supplier (supplier.in ());
@@ -89,10 +79,10 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
       // Push the events...
       ACE_Time_Value sleep_time (0, 10000); // 10 milliseconds
 
-      CORBA::Any event;
+      CORBA::Any event {};
       event <<= CORBA::ULong (10);
 
-      for (int i = 0; i != 2000; ++i)
+      for (int i {}; i != 2000; ++i)
         {
           consumer->push (event);
           ACE_OS::sleep (sleep_time);
@@ -105,16 +95,16 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
       event_channel->destroy ();
 
       // Deactivate this object...
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         poa->servant_to_id (this);
       poa->deactivate_object (id.in ());
 
       // Destroy the POA
-      poa->destroy (1, 0);
+      poa->destroy (true, false);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
-      ex._tao_print_exception ("Supplier::run");
+      ex._tao_print_exception (ACE_TEXT ("Supplier::run"));
       return 1;
     }
   return 0;

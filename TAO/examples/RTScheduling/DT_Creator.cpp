@@ -4,11 +4,11 @@
 #include "DT_Creator.h"
 
 #include "tao/ORB_Core.h"
+#include <atomic>
+
 #include "tao/RTScheduling/Current.h"
 
 #include "ace/High_Res_Timer.h"
-
-ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> guid_counter;
 
 int
 DT_Creator::dt_task_init (ACE_Arg_Shifter& arg_shifter)
@@ -18,9 +18,9 @@ DT_Creator::dt_task_init (ACE_Arg_Shifter& arg_shifter)
   int load = 0;
   int iter = 0;
   int importance = 0;
-  char *job_name = 0;
+  char *job_name {};
   int dist = 0;
-  const ACE_TCHAR* current_arg = 0;
+  ACE_TCHAR const *current_arg {};
 
   if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Importance")) == 0)
     {
@@ -79,7 +79,7 @@ DT_Creator::init (int argc, ACE_TCHAR *argv [])
 
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
-  const ACE_TCHAR* current_arg = 0;
+  ACE_TCHAR const *current_arg {};
 
   dt_count_ = 0;
   poa_count_ = 0;
@@ -90,7 +90,9 @@ DT_Creator::init (int argc, ACE_TCHAR *argv [])
     {
       if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-GuidSeed"))))
         {
-          guid_counter = (long) ACE_OS::atoi (current_arg);
+          TAO_RTScheduler_Current::guid_counter.store (
+            ACE_OS::atoi (current_arg),
+            std::memory_order_relaxed);
           arg_shifter.consume_arg ();
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-DT_Count"))))
@@ -129,7 +131,7 @@ DT_Creator::init (int argc, ACE_TCHAR *argv [])
             }
           else
             {
-              poa_count++;
+              ++poa_count;
             }
         }
       else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Job")) == 0)
@@ -145,7 +147,7 @@ DT_Creator::init (int argc, ACE_TCHAR *argv [])
             }
           else
             {
-              job_count++;
+              ++job_count;
             }
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-OutFile"))))
@@ -229,7 +231,6 @@ DT_Creator::register_synch_obj ()
   synch_context->rebind (name,
        synch.in ());
 }
-
 
 int
 DT_Creator::activate_root_poa ()
@@ -436,7 +437,7 @@ DT_Creator::create_distributable_threads (RTScheduling::Current_ptr current)
 
   CORBA::Policy_var sched_param;
   sched_param = this->sched_param (100);
-  const char * name = 0;
+  char const *name {};
   current->begin_scheduling_segment (name,
               sched_param.in (),
               sched_param.in ());
@@ -622,7 +623,6 @@ DT_Creator::~DT_Creator ()
   delete shutdown_lock_;
 }
 
-
 void
 DT_Creator::log_msg (char* msg)
 {
@@ -652,7 +652,6 @@ DT_Creator::base_time (ACE_Time_Value* base_time)
 {
   this->base_time_ = base_time;
 }
-
 
 Synch_i*
 DT_Creator::synch ()

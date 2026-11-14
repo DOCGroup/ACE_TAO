@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    TAO_UTO.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Vishal Kachroo  <vishal@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_UTO_H
 #define TAO_UTO_H
@@ -40,13 +38,16 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Time_Serv_Export TAO_UTO : public POA_CosTime::UTO
 {
 public:
-  /// Constructor.
   TAO_UTO (TimeBase::TimeT time,
            TimeBase::InaccuracyT inaccuracy,
            TimeBase::TdfT tdf);
 
-  /// Destructor.
-  ~TAO_UTO () override;
+  ~TAO_UTO () override = default;
+
+  TAO_UTO (TAO_UTO const &) = delete;
+  TAO_UTO (TAO_UTO &&) = delete;
+  TAO_UTO &operator= (TAO_UTO const &) = delete;
+  TAO_UTO &operator= (TAO_UTO &&) = delete;
 
   /// For the readonly attribute <time>.
   TimeBase::TimeT time () override;
@@ -66,12 +67,12 @@ public:
    * ?? Find out more about the Base Time, UTC and
    *    Distributed Time Sync. Algos. [3
    */
-  CosTime::UTO_ptr absolute_time ();
+  CosTime::UTO_ptr absolute_time () override;
 
   /// Compares the time contained in the object with the time in the
   /// supplied uto according to the supplied comparison type.
   CosTime::TimeComparison compare_time (CosTime::ComparisonType comparison_type,
-                                        CosTime::UTO_ptr uto);
+                                        CosTime::UTO_ptr uto) override;
 
   /**
    * Returns a TIO representing the time interval between the time in
@@ -80,18 +81,13 @@ public:
    * two UTOs. Inaccuracies are ignored.  Note the result of this
    * operation is meaningless if the base times of UTOs are different.
    */
-  CosTime::TIO_ptr time_to_interval (CosTime::UTO_ptr);
+  CosTime::TIO_ptr time_to_interval (CosTime::UTO_ptr) override;
 
   /// Returns a TIO object representing the error interval around the
   /// time value in the UTO.
-  CosTime::TIO_ptr interval ();
+  CosTime::TIO_ptr interval () override;
 
 private:
-  TAO_UTO (TAO_UTO const &) = delete;
-  TAO_UTO (TAO_UTO &&) = delete;
-  TAO_UTO &operator= (TAO_UTO const &) = delete;
-  TAO_UTO &operator= (TAO_UTO &&) = delete;
-
   /**
    * The readonly attribute structure having the time, inaccuracy and
    * displacement.  The get methods for other readonly attributes

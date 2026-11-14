@@ -14,7 +14,7 @@ class TAO_TTest_Export TT_Info
 public:
   static void dump_properties (const CosTrading::PropertySeq& prop_seq,
                                CORBA::Boolean print_dynamic = 1);
-  // Dump the contents of this property sequence.
+  /// Dump the contents of this property sequence.
 
   enum INTERFACES
   {
@@ -25,7 +25,8 @@ public:
     PS_PRINTER
   };
 
-  // = Test servants.
+  ///@name Test servants
+  ///@{
 
   class Remote_Output :
     public POA_TAO_Trader_Test::Remote_Output
@@ -33,10 +34,9 @@ public:
   public:
     Remote_Output () {}
 
-    virtual void confirm ()
+    /// Confirm that the importer received a valid reference to the exported object.
+    void confirm () override
       {}
-    // Method to test that the importer received a valid reference to
-    // the exported object.
   };
 
   class TAO_TTest_Export Printer :
@@ -45,10 +45,9 @@ public:
   public:
     Printer () {}
 
-    virtual void confirm ()
+    /// Confirm that the importer received a valid reference to the exported object.
+    void confirm () override
       {}
-    // Method to test that the importer received a valid reference to
-    // the exported object.
   };
 
   class TAO_TTest_Export Plotter :
@@ -57,10 +56,9 @@ public:
   public:
     Plotter () {}
 
-    virtual void confirm ()
+    /// Confirm that the importer received a valid reference to the exported object.
+    void confirm () override
       {}
-    // Method to test that the importer received a valid reference to
-    // the exported object.
   };
 
   class TAO_TTest_Export File_System :
@@ -69,10 +67,9 @@ public:
   public:
     File_System () {}
 
-    virtual void confirm ()
+    /// Confirm that the importer received a valid reference to the exported object.
+    void confirm () override
       {}
-    // Method to test that the importer received a valid reference to
-    // the exported object.
   };
 
   class TAO_TTest_Export PostScript_Printer :
@@ -81,16 +78,17 @@ public:
   public:
     PostScript_Printer () {}
 
-    virtual void confirm ()
+    /// Confirm that the importer received a valid reference to the exported object.
+    void confirm () override
       {}
-    // Method to test that the importer received a valid reference to
-    // the exported object.
   };
+  ///@}
 
 #define NUM_TYPES 5
   static const char* INTERFACE_NAMES[];
 
-  // = Remote IO property descriptions
+  ///@name Remote I/O property descriptions
+  ///@{
 
   enum REMOTE_IO_PROPERTIES
   {
@@ -104,8 +102,10 @@ public:
 
   static const char* REMOTE_IO_NAME;
   static const char* REMOTE_IO_PROPERTY_NAMES[];
+  ///@}
 
-  // = Plotter property descriptions
+  ///@name Plotter property descriptions
+  ///@{
 
   enum PLOTTER_PROPERTIES
   {
@@ -119,8 +119,10 @@ public:
 
   static const char* PLOTTER_NAME;
   static const char* PLOTTER_PROPERTY_NAMES[];
+  ///@}
 
-  // = Printer property descriptions
+  ///@name Printer property descriptions
+  ///@{
 
   enum PRINTER_PROPERTIES
   {
@@ -135,8 +137,10 @@ public:
 
   static const char* PRINTER_NAME;
   static const char* PRINTER_PROPERTY_NAMES[];
+  ///@}
 
-  // = File System Property Descriptions
+  ///@name File system property descriptions
+  ///@{
 
   enum FILESYSTEM_PROPERTIES
   {
@@ -147,8 +151,10 @@ public:
 
   static const char* FILESYSTEM_NAME;
   static const char* FILESYSTEM_PROPERTY_NAMES[];
+  ///@}
 
-  // = PostScript Printer property descriptions.
+  ///@name PostScript printer property descriptions
+  ///@{
 
   enum PS_PRINTER_PROPERTIES
   {
@@ -157,41 +163,44 @@ public:
 
   static const char* PS_PRINTER_NAME;
   static const char* PS_PRINTER_PROPERTY_NAMES[];
+  ///@}
 
-  // = Offer Info
+  ///@name Offer information
+  ///@{
 
 #define NUM_OFFERS 15
   static const char* LOCATIONS[];
   static const char* USERS[];
   static const char* MODEL_NUMBERS[];
+  ///@}
 
-  // = Query info
+  ///@name Query information
+  ///@{
 
   static const int NUM_QUERIES;
   static const char* QUERIES[][4];
+  ///@}
 };
 
+/// Parses command-line arguments for the Trading Service tests.
 class TAO_TTest_Export TT_Parse_Args
-  // = TITLE
-  // Utility to parse the command-line arguments to the trading service tests.
 {
   public:
   TT_Parse_Args (int& argc, ACE_TCHAR** argv);
 
   ~TT_Parse_Args ();
 
-  int federated () const;
-  // True if the test should test the federated features of the trading
-  // service.
+  /// Whether the test should exercise federated trading features.
+  bool federated () const;
 
-  int quiet () const;
-  // True if the tests should supress all but the most essential output.
+  /// Whether to limit output to essential test information.
+  bool quiet () const;
 
+  /// Explicit IOR supplied by the user, or null if none was supplied.
   char* ior () const;
-  // Not null if the test user supplied an explicit ior.
 
   private:
-  int federated_, quiet_;
+  bool federated_, quiet_;
   char* ior_;
 };
 

@@ -3,6 +3,8 @@
 #include "Stock_i.h"
 #include "ace/streams.h"
 
+#include <array>
+
 int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   try {
@@ -30,27 +32,25 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
                        poa_manager.in (),
                        policies);
 
-    for (CORBA::ULong i = 0; i != policies.length (); ++i) {
+    for (CORBA::ULong i {}; i != policies.length (); ++i) {
       policies[i]->destroy ();
     }
 
-    while (!cin.eof () && cin.peek () != EOF) {
-      const int max_symbol_length = 8;
-      char symbol[max_symbol_length];
-      const int max_full_name_length = 64;
-      char full_name[max_full_name_length];
+    while (cin >> std::ws && cin.peek () != EOF) {
+      std::array<char, 8> symbol {};
+      std::array<char, 64> full_name {};
       double price;
 
-      cin.getline (symbol, max_symbol_length, '\n');
-      cin.getline (full_name, max_full_name_length, '\n');
+      cin.getline (symbol.data (), static_cast<std::streamsize> (symbol.size ()), '\n');
+      cin.getline (full_name.data (), static_cast<std::streamsize> (full_name.size ()), '\n');
       cin >> price;
       cin.ignore (1, '\n');
 
       PortableServer::ServantBase_var servant =
-        new Quoter_Stock_i (symbol, full_name, price);
+        new Quoter_Stock_i (symbol.data (), full_name.data (), price);
 
       PortableServer::ObjectId_var oid =
-        PortableServer::string_to_ObjectId (symbol);
+        PortableServer::string_to_ObjectId (symbol.data ());
 
       stock_factory_poa->activate_object_with_id (oid.in (),
                                                   servant.in ());
@@ -74,7 +74,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
     poa->destroy (true, true);
     orb->destroy ();
   }
-  catch (const CORBA::Exception &) {
+  catch (CORBA::Exception const &) {
     cerr << "CORBA exception raised!" << endl
          << endl;
   }

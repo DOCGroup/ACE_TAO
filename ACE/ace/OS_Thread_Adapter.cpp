@@ -27,8 +27,7 @@ ACE_OS_Thread_Adapter::ACE_OS_Thread_Adapter (
                              , selector
                              , handler
 #endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
-                             , cancel_flags
-                             )
+                             , cancel_flags)
 {
 }
 

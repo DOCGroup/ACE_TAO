@@ -10,13 +10,15 @@
  */
 //=============================================================================
 
-
 #include "testS.h"
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/ORB_Core.h"
 #include "ace/Profile_Timer.h"
 #include "ace/Get_Opt.h"
 #include "ace/Truncate.h"
+#include <cstdio>
+#include <memory>
+#include <vector>
 
 //
 // The following macros help take a very precise look into the
@@ -70,12 +72,14 @@ class test_i : public POA_test
 {
 };
 
-// Program statics
-static int measure_reverse_map_effectiveness = 0;
-static u_long iterations = 1000;
+struct Registration_Options
+{
+  bool measure_reverse_map_effectiveness {};
+  u_long iterations {1000};
+};
 
 static int
-parse_args (int argc, ACE_TCHAR **argv)
+parse_args (int argc, ACE_TCHAR **argv, Registration_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("i:r"));
   int c;
@@ -84,11 +88,11 @@ parse_args (int argc, ACE_TCHAR **argv)
     switch (c)
       {
       case 'i':
-        iterations = static_cast<u_long> (ACE_OS::atoi (get_opts.opt_arg ()));
+        options.iterations = static_cast<u_long> (ACE_OS::atoi (get_opts.opt_arg ()));
         break;
 
       case 'r':
-        measure_reverse_map_effectiveness = 1;
+        options.measure_reverse_map_effectiveness = true;
         break;
 
       case '?':
@@ -110,7 +114,8 @@ parse_args (int argc, ACE_TCHAR **argv)
 // Code for printing stats
 //
 void
-print_stats (ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time)
+print_stats (ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time,
+             u_long iterations)
 {
   if (iterations > 0)
     {
@@ -122,15 +127,15 @@ print_stats (ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time)
       elapsed_time.user_time /= iterations;
       elapsed_time.system_time /= iterations;
 
-      double tmp = 1000 / elapsed_time.real_time;
+      double const tmp = 1000 / elapsed_time.real_time;
 
       ACE_DEBUG ((LM_DEBUG,
-                  "\titerations\t = %d,\n"
+                  "\titerations\t = %B,\n"
                   "\treal_time\t = %0.06f ms,\n"
                   "\tuser_time\t = %0.06f ms,\n"
                   "\tsystem_time\t = %0.06f ms,\n"
                   "\t%0.00f calls/second\n",
-                  iterations,
+                  static_cast<size_t> (iterations),
                   elapsed_time.real_time   < 0.0 ? 0.0 : elapsed_time.real_time,
                   elapsed_time.user_time   < 0.0 ? 0.0 : elapsed_time.user_time,
                   elapsed_time.system_time < 0.0 ? 0.0 : elapsed_time.system_time,
@@ -141,58 +146,52 @@ print_stats (ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time)
                 "\tNo time stats printed.  Zero iterations or error occurred.\n"));
 }
 
-
 //
 // Measures how well the reverse hash map works.
 //
 void
-reverse_map_effectiveness (test_i *servants)
+reverse_map_effectiveness (test_i const *servants,
+                           u_long iterations)
 {
   // Size of the active object map
-  const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &parameters =
+  TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters const& parameters =
     TAO_ORB_Core_instance ()->server_factory ()->active_object_map_creation_parameters ();
 
-  u_long active_object_map_size = parameters.active_object_map_size_;
+  u_long const active_object_map_size = parameters.active_object_map_size_;
 
   // Hash counters
-  u_long *hash_counter = new u_long[active_object_map_size];
-
-  // Index counter
-  u_long i = 0;
-
-  // Initialize the hash counters
-  for (i = 0; i < active_object_map_size; i++)
-    {
-      hash_counter[i] = 0;
-    }
+  std::vector<u_long> hash_counter (active_object_map_size);
 
   // Calculate the effectiveness of the hash.
-  for (i = 0; i < iterations; i++)
+  for (u_long i = 0; i < iterations; ++i)
     {
-      u_long hash_index = ACE_Utils::truncate_cast<u_long> ((intptr_t)&servants[i]) % active_object_map_size;
+      u_long const hash_index =
+        ACE_Utils::truncate_cast<u_long> (
+          reinterpret_cast<intptr_t> (std::addressof (servants[i]))) % active_object_map_size;
       hash_counter[hash_index]++;
     }
 
-  for (i = 0; i < active_object_map_size; i++)
+  for (u_long i = 0; i < active_object_map_size; ++i)
     {
       if (((i) % 10) == 0)
         {
           ACE_DEBUG ((LM_DEBUG, "\n"));
         }
-      ACE_DEBUG ((LM_DEBUG, "%d = %d, ", i, hash_counter[i]));
+      ACE_DEBUG ((LM_DEBUG, "%B = %B, ", static_cast<size_t> (i),
+                  static_cast<size_t> (hash_counter[i])));
     }
   ACE_DEBUG ((LM_DEBUG, "\n\n"));
-
-  delete[] hash_counter;
 }
 
 class stats
 {
 public:
-  stats (int quantify,
-         const char *test_name)
+  stats (bool quantify,
+         char const *test_name,
+         u_long iterations)
     : quantify_ (quantify),
-      test_name_ (test_name)
+      test_name_ (test_name),
+      iterations_ (iterations)
   {
     this->timer_.start ();
 
@@ -206,6 +205,11 @@ public:
 #endif /* USING_QUANTIFY */
       }
   }
+
+  stats (stats const&) = delete;
+  stats& operator= (stats const&) = delete;
+  stats (stats&&) = delete;
+  stats& operator= (stats&&) = delete;
 
   ~stats ()
   {
@@ -227,18 +231,21 @@ public:
     // compute average time.
     ACE_DEBUG ((LM_DEBUG, "\n%C stats...\n",
                 this->test_name_));
-    print_stats (elapsed_time);
+    print_stats (elapsed_time,
+                 this->iterations_);
   }
 
 private:
   // Profile timer
   ACE_Profile_Timer timer_;
-  int quantify_;
-  const char *test_name_;
+  bool const quantify_;
+  char const * const test_name_;
+  u_long const iterations_;
 };
 
 void
-child_poa_testing (PortableServer::POA_ptr root_poa)
+child_poa_testing (PortableServer::POA_ptr root_poa,
+                   Registration_Options const& options)
 {
   // Policies for the child POA.
   CORBA::PolicyList policies (1);
@@ -254,35 +261,24 @@ child_poa_testing (PortableServer::POA_ptr root_poa)
                           PortableServer::POAManager::_nil (),
                           policies);
 
-  // Create an array of servants
-  test_i *servants =
-    new test_i[iterations];
-
-      // Create an array of objects
-  CORBA::Object_var *objects =
-    new CORBA::Object_var[iterations];
-
-      // Create an array of object ids
-  PortableServer::ObjectId_var *object_ids =
-    new PortableServer::ObjectId_var[iterations];
+  // Create arrays of servants, references, and object ids.
+  std::unique_ptr<test_i[]> servants = std::make_unique<test_i[]> (options.iterations);
+  std::vector<CORBA::Object_var> objects (options.iterations);
+  std::vector<PortableServer::ObjectId_var> object_ids (options.iterations);
 
   // Buffer for the id string.
-  char id_buffer[128];
-
-  // Index counter
-  u_long i = 0;
+  char id_buffer[128] {};
 
   {
     // Record and quantify stats.
     stats s (QUANTIFY_CREATE_REFERENCE_WITH_ID,
-             "create_reference_with_id");
+             "create_reference_with_id",
+             options.iterations);
     ACE_UNUSED_ARG (s);
 
-    for (i = 0; i < iterations; i++)
+    for (u_long i = 0; i < options.iterations; ++i)
       {
-        ACE_OS::sprintf (id_buffer,
-                         "%ld",
-                         i);
+        std::snprintf (id_buffer, sizeof (id_buffer), "%lu", i);
 
         object_ids[i] =
           PortableServer::string_to_ObjectId (id_buffer);
@@ -296,32 +292,29 @@ child_poa_testing (PortableServer::POA_ptr root_poa)
   {
     // Record and quantify stats.
     stats s (QUANTIFY_ACTIVATE_OBJECT_WITH_ID,
-             "activate_object_with_id");
+             "activate_object_with_id",
+             options.iterations);
     ACE_UNUSED_ARG (s);
 
-    for (i = 0; i < iterations; i++)
+    for (u_long i = 0; i < options.iterations; ++i)
       {
         child_poa->activate_object_with_id (object_ids[i].in (),
-                                            &servants[i]);
+                                            std::addressof (servants[i]));
       }
   }
 
   {
     // Record and quantify stats.
     stats s (QUANTIFY_DEACTIVATE_OBJECT,
-             "deactivate_object");
+             "deactivate_object",
+             options.iterations);
     ACE_UNUSED_ARG (s);
 
-    for (i = 0; i < iterations; i++)
+    for (u_long i = 0; i < options.iterations; ++i)
       {
         child_poa->deactivate_object (object_ids[i].in ());
       }
   }
-
-  // Cleanup
-  delete[] object_ids;
-  delete[] objects;
-  delete[] servants;
 }
 
 int
@@ -332,7 +325,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Initialize the ORB first.
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-      int result = parse_args (argc, argv);
+      Registration_Options options;
+      int const result = parse_args (argc, argv, options);
       if (result != 0)
         return result;
 
@@ -343,35 +337,26 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (obj.in ());
 
-      // Create an array of servants
-      test_i *servants =
-        new test_i[iterations];
+      // Create arrays of servants, references, and object ids.
+      std::unique_ptr<test_i[]> servants = std::make_unique<test_i[]> (options.iterations);
+      std::vector<CORBA::Object_var> objects (options.iterations);
+      std::vector<PortableServer::ObjectId_var> object_ids (options.iterations);
 
-      // Create an array of objects
-      CORBA::Object_var *objects =
-        new CORBA::Object_var[iterations];
-
-      // Create an array of object ids
-      PortableServer::ObjectId_var *object_ids =
-        new PortableServer::ObjectId_var[iterations];
-
-      if (measure_reverse_map_effectiveness)
+      if (options.measure_reverse_map_effectiveness)
         {
-          reverse_map_effectiveness (servants);
+          reverse_map_effectiveness (servants.get (), options.iterations);
         }
-
-      // Index counter
-      u_long i = 0;
 
       {
         stats s (QUANTIFY_UNDERBAR_THIS,
-                 "_this");
+                 "_this",
+                 options.iterations);
         ACE_UNUSED_ARG (s);
 
-        for (i = 0; i < iterations; i++)
+        for (u_long i = 0; i < options.iterations; ++i)
           {
             PortableServer::ObjectId_var id =
-              root_poa->activate_object (&servants[i]);
+              root_poa->activate_object (std::addressof (servants[i]));
             CORBA::Object_var object = root_poa->id_to_reference (id.in ());
             objects[i] = test::_narrow (object.in ());
           }
@@ -379,25 +364,21 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       {
         stats s (QUANTIFY_SERVANT_TO_ID,
-                 "servant_to_id");
+                 "servant_to_id",
+                 options.iterations);
         ACE_UNUSED_ARG (s);
 
-        for (i = 0; i < iterations; i++)
+        for (u_long i = 0; i < options.iterations; ++i)
           {
-            object_ids[i] = root_poa->servant_to_id (&servants[i]);
+            object_ids[i] = root_poa->servant_to_id (std::addressof (servants[i]));
           }
       }
 
       // Create the child POA.
-      child_poa_testing (root_poa.in ());
+      child_poa_testing (root_poa.in (), options);
 
       // Destroy RootPOA.
       root_poa->destroy (true, true);
-
-      // Cleanup
-      delete[] object_ids;
-      delete[] objects;
-      delete[] servants;
     }
   catch (const CORBA::Exception& ex)
     {

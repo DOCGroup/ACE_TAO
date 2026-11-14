@@ -17,6 +17,7 @@
 
 #include /**/ "tao/Versioned_Namespace.h"
 
+#include <cstddef>
 #include "ace/RB_Tree.h"
 #include "ace/Null_Mutex.h"
 
@@ -27,15 +28,14 @@ template<class PROXY>
 class TAO_ESF_Proxy_RB_Tree_Iterator
 {
 public:
-  using Implementation = ACE_RB_Tree_Iterator<PROXY *,
-                                               int,
-                                               ACE_Less_Than<PROXY *>,
-                                               ACE_Null_Mutex>;
+  using Implementation = ACE_RB_Tree_Iterator<PROXY *, int,
+                                                ACE_Less_Than<PROXY *>,
+                                                ACE_Null_Mutex>;
 
-  TAO_ESF_Proxy_RB_Tree_Iterator (const Implementation &i);
+  explicit TAO_ESF_Proxy_RB_Tree_Iterator (Implementation const &i);
 
-  bool operator == (const TAO_ESF_Proxy_RB_Tree_Iterator<PROXY> &rhs) const;
-  bool operator != (const TAO_ESF_Proxy_RB_Tree_Iterator<PROXY> &rhs) const;
+  bool operator == (TAO_ESF_Proxy_RB_Tree_Iterator<PROXY> const &rhs) const;
+  bool operator != (TAO_ESF_Proxy_RB_Tree_Iterator<PROXY> const &rhs) const;
   TAO_ESF_Proxy_RB_Tree_Iterator<PROXY>& operator++ ();
   TAO_ESF_Proxy_RB_Tree_Iterator<PROXY> operator++ (int);
   PROXY *operator *();
@@ -58,14 +58,11 @@ template<class PROXY>
 class TAO_ESF_Proxy_RB_Tree
 {
 public:
-  /// A typedef for the underlying implementaiton class
+  /// An alias for the underlying implementation class
   using Implementation = ACE_RB_Tree<PROXY *, int, ACE_Less_Than<PROXY *>, ACE_Null_Mutex>;
 
-  /// A typedef for the underlying iterator
+  /// An alias for the underlying iterator
   using Iterator = TAO_ESF_Proxy_RB_Tree_Iterator<PROXY>;
-
-  /// Constructor
-  TAO_ESF_Proxy_RB_Tree ();
 
   /// Return the first element in the collection, or end() if there
   /// are none

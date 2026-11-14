@@ -3,7 +3,6 @@
 #ifndef i_wxViewIORDialog_h
 #define i_wxViewIORDialog_h
 
-
 class WxViewIORDialog:
   public wxDialog
 {

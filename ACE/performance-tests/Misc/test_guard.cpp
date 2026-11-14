@@ -5,10 +5,11 @@
 #include "ace/Profile_Timer.h"
 #include "ace/Thread_Mutex.h"
 #include "ace/Guard_T.h"
+#include "ace/OS_NS_stdlib.h"
 
 #if defined (ACE_HAS_THREADS)
 
-static const int DEFAULT_ITERATIONS = 100000000;
+static constexpr int DEFAULT_ITERATIONS = 100000000;
 
 enum
 {
@@ -17,34 +18,34 @@ enum
   TEST_END
 };
 
-ACE_Thread_Mutex lock_;
-typedef void (*guard_func)();
-int test_type = TEST_GUARD;
-int dummy = 0;
+static ACE_Thread_Mutex lock_ {};
+using guard_func = void (*) ();
+static int test_type {TEST_GUARD};
+static int dummy {};
 
-void guard ()
+static void guard ()
 {
   ACE_GUARD (ACE_Thread_Mutex, _ace_mon, lock_);
-  dummy++;
+  ++dummy;
 }
 
 // FUZZ: disable check_for_ACE_Guard
-const char *test_name[TEST_END] = { "ACE_Guard" };
+static char const *const test_name[TEST_END] { "ACE_Guard" };
 // FUZZ: enable check_for_ACE_Guard
 
-guard_func test_function=guard;
+static guard_func test_function {guard};
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_Profile_Timer timer;
 
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("gn:"));
 
-  int iterations = DEFAULT_ITERATIONS;
-  int c, i;
+  int iterations {DEFAULT_ITERATIONS};
+  int c {};
 
-  while ((c = get_opt()) != -1)
+  while ((c = get_opt ()) != -1)
     switch (c)
       {
       case 'g':
@@ -53,6 +54,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         break;
       case 'n':
         iterations = ACE_OS::atoi (get_opt.opt_arg ());
+        if (iterations <= 0)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Iterations must be greater than 0\n"),
+                            1);
         break;
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -66,7 +71,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   // Test the thread mutex (which doesn't use inheritance or dynamic
   // binding).
 
-  for (i = 0; i < iterations; i++)
+  for (int i {}; i < iterations; ++i)
     test_function ();
 
   timer.stop ();

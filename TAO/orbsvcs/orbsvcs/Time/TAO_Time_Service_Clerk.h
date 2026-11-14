@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    TAO_Time_Service_Clerk.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Vishal Kachroo  <vishal@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_TIME_SERVICE_CLERK_H
 #define TAO_TIME_SERVICE_CLERK_H
@@ -19,6 +17,7 @@
 #include "orbsvcs/TimeServiceS.h"
 #include "orbsvcs/Time/Timer_Helper.h"
 #include "orbsvcs/Time/time_serv_export.h"
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -40,16 +39,19 @@ public:
   /// Helper class to help in the updation of time.
   friend class Timer_Helper;
 
-  /// Unbounded set of IORs.
-  using IORS = ACE_Array_Base<CosTime::TimeService_var>;
+  /// Time server references.
+  using IORS = std::vector<CosTime::TimeService_var>;
 
-  /// Constructor.
   TAO_Time_Service_Clerk (int timer_value,
                           int timer_value_usecs,
                           IORS const & server);
 
-  /// Destructor.
-  ~TAO_Time_Service_Clerk () override;
+  ~TAO_Time_Service_Clerk () override = default;
+
+  TAO_Time_Service_Clerk (TAO_Time_Service_Clerk const &) = delete;
+  TAO_Time_Service_Clerk (TAO_Time_Service_Clerk &&) = delete;
+  TAO_Time_Service_Clerk &operator= (TAO_Time_Service_Clerk const &) = delete;
+  TAO_Time_Service_Clerk &operator= (TAO_Time_Service_Clerk &&) = delete;
 
   /// This operation returns the global time and an estimate of
   /// inaccuracy in a UTO.
@@ -76,40 +78,35 @@ public:
                                  TimeBase::TimeT upper) override;
 
   /// Return the globally synchronized time.
-  CORBA::ULongLong get_time ();
+  CORBA::ULongLong get_time () const;
 
   /// Returns the time displacement factor.
-  CORBA::Short time_displacement_factor ();
+  CORBA::Short time_displacement_factor () const;
 
   /// Set the TDF.
   void time_displacement_factor (CORBA::Short);
 
   /// Get method for inaccuracy.
-  TimeBase::InaccuracyT inaccuracy ();
+  TimeBase::InaccuracyT inaccuracy () const;
 
   /// Set method for inaccuracy.
   void inaccuracy (TimeBase::InaccuracyT inaccuracy);
 
   /// Clerk's notion of time.
-  CORBA::ULongLong time_;
+  CORBA::ULongLong time_ {};
 
 private:
-  TAO_Time_Service_Clerk (TAO_Time_Service_Clerk const &) = delete;
-  TAO_Time_Service_Clerk (TAO_Time_Service_Clerk &&) = delete;
-  TAO_Time_Service_Clerk &operator= (TAO_Time_Service_Clerk const &) = delete;
-  TAO_Time_Service_Clerk &operator= (TAO_Time_Service_Clerk &&) = delete;
-
   /// Time displacement factor in minutes.
-  CORBA::Short time_displacement_factor_;
+  CORBA::Short time_displacement_factor_ {};
 
   /// Inaccuracy in the time.
-  TimeBase::InaccuracyT inaccuracy_;
+  TimeBase::InaccuracyT inaccuracy_ {};
 
   /// Set of server Time Server IORs.
   IORS server_;
 
   /// Time when last global synchronization was done.
-  CORBA::ULongLong update_timestamp_;
+  CORBA::ULongLong update_timestamp_ {};
 
   /**
    * This is a friend class that inherits from the Event Handler

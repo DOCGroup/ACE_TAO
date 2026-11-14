@@ -13,23 +13,24 @@ TAO_Endpoint_Acceptor_Filter_Factory::create_object (TAO_POA_Manager& poamanager
   CORBA::PolicyList& policies = poamanager.get_policies ();
 
   EndpointPolicy::EndpointList endpoints;
-  TAO_Acceptor_Filter* filter = nullptr;
+  TAO_Acceptor_Filter* filter {};
 
-  for (CORBA::ULong i = 0; i < policies.length(); ++i)
+  for (CORBA::ULong i {}; i < policies.length(); ++i)
     {
       if (policies[i]->policy_type() == EndpointPolicy::ENDPOINT_POLICY_TYPE)
         {
-          EndpointPolicy::Policy_var cur_policy = EndpointPolicy::Policy::_narrow (policies[i]);
+          EndpointPolicy::Policy_var const cur_policy =
+            EndpointPolicy::Policy::_narrow (policies[i]);
           if (CORBA::is_nil (cur_policy.in ()))
             return nullptr;
 
           EndpointPolicy::EndpointList_var cur_endpoints = cur_policy->value ();
-          CORBA::ULong cur_num_endpoints = cur_endpoints->length ();
+          CORBA::ULong const cur_num_endpoints = cur_endpoints->length ();
 
-          CORBA::ULong num_endpoints = endpoints.length ();
+          CORBA::ULong const num_endpoints = endpoints.length ();
           endpoints.length (num_endpoints + cur_num_endpoints);
 
-          for (CORBA::ULong ii = 0; ii < cur_num_endpoints; ++ii)
+          for (CORBA::ULong ii {}; ii < cur_num_endpoints; ++ii)
             {
               endpoints[num_endpoints + ii] = cur_endpoints[ii];
             }
@@ -48,7 +49,6 @@ TAO_Endpoint_Acceptor_Filter_Factory::create_object (TAO_POA_Manager& poamanager
 
   return filter;
 }
-
 
 ACE_FACTORY_DEFINE (TAO_EndpointPolicy, TAO_Endpoint_Acceptor_Filter_Factory)
 ACE_STATIC_SVC_DEFINE (TAO_Endpoint_Acceptor_Filter_Factory,

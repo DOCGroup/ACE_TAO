@@ -2,20 +2,9 @@
 #include "AppShutdown.h"
 #include "CustomExceptionC.h"
 
+Foo_C_i::Foo_C_i() = default;
 
-Foo_C_i::Foo_C_i()
-{
-  for (unsigned i = 0; i < 10; i++)
-    {
-      this->count_[i] = 0;
-    }
-}
-
-
-Foo_C_i::~Foo_C_i()
-{
-}
-
+Foo_C_i::~Foo_C_i() = default;
 
 void
 Foo_C_i::op1()
@@ -23,14 +12,12 @@ Foo_C_i::op1()
   ++this->count_[0];
 }
 
-
 void
 Foo_C_i::op2(CORBA::Long value)
 {
   this->in_values_[1].push_back (value);
   ++this->count_[1];
 }
-
 
 CORBA::Long
 Foo_C_i::op3(CORBA::Long value)
@@ -40,14 +27,12 @@ Foo_C_i::op3(CORBA::Long value)
   return value;
 }
 
-
 void
 Foo_C_i::op4(CORBA::Long value)
 {
   this->in_values_[3].push_back (value);
   ++this->count_[3];
 }
-
 
 void
 Foo_C_i::op5()
@@ -56,13 +41,11 @@ Foo_C_i::op5()
   throw FooException();
 }
 
-
 void
 Foo_C_i::done()
 {
   TheAppShutdown->client_done();
 }
-
 
 void
 Foo_C_i::cust_op1()
@@ -70,14 +53,12 @@ Foo_C_i::cust_op1()
   ++this->count_[5];
 }
 
-
 void
 Foo_C_i::cust_op2(long value)
 {
   this->in_values_[6].push_back (value);
   ++this->count_[6];
 }
-
 
 long
 Foo_C_i::cust_op3(long value)
@@ -87,7 +68,6 @@ Foo_C_i::cust_op3(long value)
   return value;
 }
 
-
 void
 Foo_C_i::cust_op4(long value)
 {
@@ -95,14 +75,12 @@ Foo_C_i::cust_op4(long value)
   ++this->count_[8];
 }
 
-
 void
 Foo_C_i::cust_op5()
 {
   ++this->count_[9];
   throw CustomException();
 }
-
 
 void
 Foo_C_i::gather_stats(Foo_C_Statistics& stats)
@@ -113,7 +91,6 @@ Foo_C_i::gather_stats(Foo_C_Statistics& stats)
       stats.actual_in_values (i + 1, this->in_values_[i]);
     }
 }
-
 
 void
 Foo_C_i::dump()

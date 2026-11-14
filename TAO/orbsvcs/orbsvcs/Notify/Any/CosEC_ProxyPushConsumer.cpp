@@ -7,15 +7,12 @@
 #include "orbsvcs/Notify/Any/AnyEvent.h"
 #include "orbsvcs/Notify/Any/PushSupplier.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_CosEC_ProxyPushConsumer::TAO_Notify_CosEC_ProxyPushConsumer ()
-{
-}
-
-TAO_Notify_CosEC_ProxyPushConsumer::~TAO_Notify_CosEC_ProxyPushConsumer ()
-{
-}
+= default;
 
 void
 TAO_Notify_CosEC_ProxyPushConsumer::release ()
@@ -25,7 +22,7 @@ TAO_Notify_CosEC_ProxyPushConsumer::release ()
 }
 
 void
-TAO_Notify_CosEC_ProxyPushConsumer::push (const CORBA::Any& any)
+TAO_Notify_CosEC_ProxyPushConsumer::push (CORBA::Any const &any)
 {
   // Check if we should proceed at all.
   if (this->admin_properties().reject_new_events () == 1
@@ -48,24 +45,25 @@ void
 TAO_Notify_CosEC_ProxyPushConsumer::connect_push_supplier (CosEventComm::PushSupplier_ptr push_supplier)
 {
   // Convert Supplier to Base Type
-  TAO_Notify_PushSupplier *supplier;
+  TAO_Notify_PushSupplier *supplier {};
   ACE_NEW_THROW_EX (supplier,
                     TAO_Notify_PushSupplier (this),
                     CORBA::NO_MEMORY ());
 
-  supplier->init (push_supplier);
+  std::unique_ptr<TAO_Notify_PushSupplier> supplier_guard (supplier);
+  supplier_guard->init (push_supplier);
 
-  this->connect (supplier);
+  this->connect (supplier_guard.release ());
 }
 
 void
 TAO_Notify_CosEC_ProxyPushConsumer::disconnect_push_consumer ()
 {
-  TAO_Notify_CosEC_ProxyPushConsumer::Ptr guard( this );
+  TAO_Notify_CosEC_ProxyPushConsumer::Ptr guard (this);
   this->destroy ();
 }
 
-const char *
+char const *
 TAO_Notify_CosEC_ProxyPushConsumer::get_proxy_type_name () const
 {
   return "ec_proxy_push_consumer";
@@ -74,7 +72,7 @@ TAO_Notify_CosEC_ProxyPushConsumer::get_proxy_type_name () const
 void
 TAO_Notify_CosEC_ProxyPushConsumer::validate ()
 {
-  TAO_Notify_Supplier* sup = this->supplier ();
+  TAO_Notify_Supplier * const sup = this->supplier ();
   if (sup != nullptr && ! sup->is_alive (true))
   {
     if (TAO_debug_level > 0)
@@ -89,13 +87,12 @@ TAO_Notify_CosEC_ProxyPushConsumer::validate ()
 }
 
 void
-TAO_Notify_CosEC_ProxyPushConsumer::configure(
+TAO_Notify_CosEC_ProxyPushConsumer::configure (
   TAO_Notify_SupplierAdmin & /*admin*/,
   CosNotifyChannelAdmin::ProxyID_out /*proxy_id*/)
 {
   // Nothing to do.
   // This virtual method was added to support Notification MC
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -9,14 +9,8 @@
  */
 //=============================================================================
 
-
 #include "client.h"
 #include "tao/debug.h"
-
-
-  Client::Client ()
-{
-}
 
 int
 Client::init (int argc,
@@ -24,7 +18,7 @@ Client::init (int argc,
 {
   // Init the ORB.
   manager_.init (argc, argv);
-  CORBA::ORB_var orb = manager_.orb();
+  CORBA::ORB_var const orb = manager_.orb ();
   // Initialize the naming services
   if (my_name_client_.init (orb.in ()) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -37,7 +31,7 @@ Client::init (int argc,
   CosNaming::Name propsetdef_name (1);
   propsetdef_name.length (1);
   propsetdef_name [0].id = CORBA::string_dup ("PropertySetDef");
-  CORBA::Object_var propsetdef_obj = my_name_client_->resolve (propsetdef_name);
+  CORBA::Object_var const propsetdef_obj = my_name_client_->resolve (propsetdef_name);
 
   this->propsetdef_ = CosPropertyService::PropertySetDef::_narrow (propsetdef_obj.in ());
 
@@ -130,7 +124,6 @@ Client::test_define_property ()
   anyval <<= l;
   l = 931233;
   anyval >>= l;
-  CORBA::Any newany(anyval);
   propsetdef_->define_property ("long_property",
                                 anyval);
 
@@ -143,15 +136,13 @@ Client::test_define_property ()
   propsetdef_->define_property ("float_property",
                                 anyval);
 
-
   // Prepare a String and "define" that in the PropertySet.
   CORBA::String_var strvar (CORBA::string_dup ("Test_String"));
   anyval <<= strvar.in ();
-  const char * newstr;
+  char const* newstr {};
   anyval >>= newstr;
   propsetdef_->define_property ("string_property",
                                 anyval);
-
 
   return 0;
 }
@@ -162,20 +153,20 @@ int
 Client::test_get_all_property_names ()
 {
   // Get the size.
-  CORBA::ULong num_of_properties =
+  CORBA::ULong const num_of_properties =
     propsetdef_->get_number_of_properties ();
 
   // Get half on the names and half of on the iterator.
-  CORBA::ULong how_many = num_of_properties / 2;
+  CORBA::ULong const how_many = num_of_properties / 2;
 
   // The extra ptr's and out's required to avoind SunnCC's warning
   // when foo.out () is passed to a function.
   CosPropertyService::PropertyNames_var names_var;
-  CosPropertyService::PropertyNames     *names_ptr = 0;
+  CosPropertyService::PropertyNames *names_ptr {};
   CosPropertyService::PropertyNames_out names_out (names_ptr);
 
   CosPropertyService::PropertyNamesIterator_var iterator_var;
-  CosPropertyService::PropertyNamesIterator_ptr iterator_ptr;
+  CosPropertyService::PropertyNamesIterator_ptr iterator_ptr {};
   CosPropertyService::PropertyNamesIterator_out iterator_out (iterator_ptr);
 
   propsetdef_->get_all_property_names (how_many,
@@ -189,22 +180,22 @@ Client::test_get_all_property_names ()
   // Print out the names in the names-sequence.
   if (TAO_debug_level > 0)
     {
-      if (names_var.ptr () != 0)
+      if (names_var.ptr () != nullptr)
         {
-          CORBA::ULong len = names_var->length ();
+          CORBA::ULong const len = names_var->length ();
 
-          for (CORBA::ULong ni = 0; ni < len; ni++)
+          for (CORBA::ULong ni {}; ni < len; ++ni)
             ACE_DEBUG ((LM_DEBUG,
                         "%s\n",
-                        (const char *) names_var [ni]));
+                        static_cast<char const*> (names_var [ni])));
         }
 
       // Iterate thru and print out the names in the iterator, if any.
-      if (iterator_var.ptr () != 0)
+      if (iterator_var.ptr () != nullptr)
         {
           // Helper variables to stop the SunCC warnings on on foo.out
           // ().
-          CosPropertyService::PropertyName  name_ptr = 0;
+          CosPropertyService::PropertyName name_ptr {};
           CosPropertyService::PropertyName_out name_out (name_ptr);
 
           // Call the function.
@@ -213,7 +204,7 @@ Client::test_get_all_property_names ()
           // Get the values back on a _var variable.
           CosPropertyService::PropertyName_var name_var = name_out.ptr ();
 
-          while (next_one_result == 1)
+          while (next_one_result)
             {
               ACE_DEBUG ((LM_DEBUG, "%s\n", name_var.in ()));
 
@@ -238,27 +229,19 @@ Client::test_get_properties ()
   // Get float_property, string_property and no_property. If return
   // value is false and type is tc_void then that name is not there in
   // the PropertySet.
-  CosPropertyService::PropertyNames_var names;
-  CosPropertyService::PropertyNames     *names_ptr;
-
-  ACE_NEW_RETURN (names_ptr,
-                  CosPropertyService::PropertyNames,
-                  -1);
-  names = names_ptr;
-
-  names->length (3);
+  CosPropertyService::PropertyNames names;
+  names.length (3);
   names [0u] = CORBA::string_dup ("float_property");
   //names [1] = CORBA::string_dup ("string_property");
   names [1u] = CORBA::string_dup ("long_property");
   names [2u] = CORBA::string_dup ("char_property");
   //names [2] = CORBA::string_dup ("no_property");
 
-
-  CosPropertyService::Properties *properties_ptr = 0;
+  CosPropertyService::Properties *properties_ptr {};
   CosPropertyService::Properties_out properties_out (properties_ptr);
 
   // Get the properties.
-  CORBA::Boolean return_val = propsetdef_->get_properties (names.in (),
+  CORBA::Boolean const return_val = propsetdef_->get_properties (names,
                                                            properties_out);
   ACE_UNUSED_ARG (return_val);
 
@@ -267,26 +250,27 @@ Client::test_get_properties ()
 
   if (TAO_debug_level > 0)
     {
-      if (properties.ptr () != 0)
+      if (properties.ptr () != nullptr)
         {
           // Go thru the properties and print them out, if they are not
           // _tc_void typed values.
-          CORBA::ULong len = properties->length ();
+          CORBA::ULong const len = properties->length ();
 
-          for (CORBA::ULong pi = 0; pi < len; pi++)
+          for (CORBA::ULong pi {}; pi < len; ++pi)
             {
               // Print the name.
               ACE_DEBUG ((LM_DEBUG,
                           "%s : ",
-                          (const char *) properties [pi].property_name.in ()));
+                          static_cast<char const*> (
+                            properties [pi].property_name.in ())));
 
               // Print the value.
-              CORBA::Char    char_val;
-              CORBA::Long    long_val;
-              CORBA::ULong  ulong_val;
-              CORBA::Float  float_val;
-              CORBA::Double double_val;
-              const char *  string_val;
+              CORBA::Char char_val {};
+              CORBA::Long long_val {};
+              CORBA::ULong ulong_val {};
+              CORBA::Float float_val {};
+              CORBA::Double double_val {};
+              char const* string_val {};
 
               if (properties [pi].property_value >>=
                   CORBA::Any::to_char (char_val))
@@ -324,7 +308,7 @@ Client::test_get_properties ()
 int
 Client::test_get_number_of_properties ()
 {
-  CORBA::ULong nproperties = this->propsetdef_->get_number_of_properties ();
+  CORBA::ULong const nproperties = this->propsetdef_->get_number_of_properties ();
 
   if (TAO_debug_level > 0)
     {
@@ -338,7 +322,7 @@ Client::test_get_number_of_properties ()
 // Test delete_property.
 
 int
-Client::test_delete_property (const char *property_name)
+Client::test_delete_property (char const* property_name)
 {
   try
     {
@@ -346,12 +330,12 @@ Client::test_delete_property (const char *property_name)
 
       this->propsetdef_->delete_property (property_name_var.in ());
     }
-  catch (const CORBA::UserException&)
+  catch (CORBA::UserException const &)
     {
       // For no property, it is ok to get the user exception.
       return 0;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Not an user exception");
       return -1;
@@ -432,17 +416,17 @@ int
 Client::test_get_all_properties ()
 {
   // Get the number of current properties.
-  CORBA::ULong num_of_properties =
+  CORBA::ULong const num_of_properties =
     this->propsetdef_->get_number_of_properties ();
   ACE_UNUSED_ARG (num_of_properties);
 
   // Get half on the properties and half of on the iterator.
-  CORBA::ULong how_many = 1;
+  CORBA::ULong const how_many = 1;
 
   // Helper variables to avoid SunCC warnings.
-  CosPropertyService::Properties *properties_ptr = 0;
+  CosPropertyService::Properties *properties_ptr {};
   CosPropertyService::Properties_out properties_out (properties_ptr);
-  CosPropertyService::PropertiesIterator_ptr iterator_ptr = 0;
+  CosPropertyService::PropertiesIterator_ptr iterator_ptr {};
   CosPropertyService::PropertiesIterator_out iterator_out (iterator_ptr);
 
   propsetdef_->get_all_properties (how_many,
@@ -456,11 +440,11 @@ Client::test_get_all_properties ()
   // Print out the properties now.
   if (TAO_debug_level > 0)
     {
-      if (properties.ptr () != 0)
+      if (properties.ptr () != nullptr)
         {
-          CORBA::ULong len = properties->length ();
+          CORBA::ULong const len = properties->length ();
 
-          for (CORBA::ULong pi = 0; pi < len; pi++)
+          for (CORBA::ULong pi {}; pi < len; ++pi)
             {
               // Print the property_name.
               ACE_DEBUG ((LM_DEBUG,
@@ -473,21 +457,21 @@ Client::test_get_all_properties ()
 
               if (properties [pi].property_value.type () == CORBA::_tc_float)
                 {
-                  CORBA::Float f;
+                  CORBA::Float f {};
                   properties [pi].property_value >>= f;
                   ACE_DEBUG ((LM_DEBUG,"%f\n", f));
                 }
 
               if (properties [pi].property_value.type () == CORBA::_tc_string)
                 {
-                  const char* str;
+                  char const* str {};
                   properties [pi].property_value >>= str;
                   ACE_DEBUG ((LM_DEBUG,"%s\n", str));
                 }
 
               if (properties [pi].property_value.type () == CORBA::_tc_long)
                 {
-                  CORBA::Long l;
+                  CORBA::Long l {};
                   properties [pi].property_value >>= l;
                   ACE_DEBUG ((LM_DEBUG,"%d\n", l));
                 }
@@ -495,10 +479,10 @@ Client::test_get_all_properties ()
         }
 
       // Pass thru the iterator.
-      if (iterator.ptr () != 0)
+      if (iterator.ptr () != nullptr)
         {
           // Helper variables to avoid warnings with .out () in SunCC.
-          CosPropertyService::Property* property_ptr = 0;
+          CosPropertyService::Property* property_ptr {};
           CosPropertyService::Property_out property_out (property_ptr);
 
           // Call the function.
@@ -507,7 +491,7 @@ Client::test_get_all_properties ()
           // Get the value to the _var variable.
           CosPropertyService::Property_var property = property_out.ptr ();
 
-          while (next_one_result != 0)
+          while (next_one_result)
             {
               ACE_DEBUG ((LM_DEBUG,
                           "%s : ",
@@ -516,35 +500,35 @@ Client::test_get_all_properties ()
               // Print the property_value.
               if (property->property_value.type () == CORBA::_tc_char)
                 {
-                  CORBA::Char c;
+                  CORBA::Char c {};
                   property->property_value >>= CORBA::Any::to_char (c);
                   ACE_DEBUG ((LM_DEBUG,"%c\n", c));
                 }
 
               if (property->property_value.type () == CORBA::_tc_short)
                 {
-                  CORBA::Short s;
+                  CORBA::Short s {};
                   property->property_value >>= s;
                   ACE_DEBUG ((LM_DEBUG,"%d\n", s));
                 }
 
               if (property->property_value.type () == CORBA::_tc_float)
                 {
-                  CORBA::Float f;
+                  CORBA::Float f {};
                   property->property_value >>= f;
                   ACE_DEBUG ((LM_DEBUG,"%f\n", f));
                 }
 
               if (property->property_value.type () == CORBA::_tc_string)
                 {
-                  const char* str;
+                  char const* str {};
                   property->property_value >>= str;
                   ACE_DEBUG ((LM_DEBUG,"%s\n", str));
                 }
 
               if (property->property_value.type () == CORBA::_tc_long)
                 {
-                  CORBA::Long l;
+                  CORBA::Long l {};
                   property->property_value >>= l;
                   ACE_DEBUG ((LM_DEBUG,"%d\n", l));
                 }
@@ -592,11 +576,9 @@ Client::test_define_property_with_mode ()
   anyval <<= l;
   l = 931233;
   anyval >>= l;
-  CORBA::Any newany(anyval);
   propsetdef_->define_property_with_mode ("long_property",
                                           anyval,
                                           CosPropertyService::fixed_normal);
-
 
   // Prepare a Float and "define" that in the PropertySet.
   CORBA::Float f = 3.14F;
@@ -610,7 +592,7 @@ Client::test_define_property_with_mode ()
   // Prepare a String and "define" that in the PropertySet.
   CORBA::String_var strvar (CORBA::string_dup ("Test_String"));
   anyval <<= strvar.in ();
-  const char* newstr;
+  char const* newstr {};
   anyval >>= newstr;
 
   propsetdef_->define_property  ("string_property",
@@ -639,7 +621,7 @@ Client::test_get_property_value ()
                            "invalid object reference\n"),
                           -1);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("get_property_value");
       return -1;
@@ -648,7 +630,7 @@ Client::test_get_property_value ()
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -658,13 +640,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         return 1;
 
       //  client.run ();
-      int ret = client.property_tester ();
+      int const ret = client.property_tester ();
       if (ret != 0)
         ACE_DEBUG ((LM_DEBUG, "Test failed\n"));
       else
         ACE_DEBUG ((LM_DEBUG, "Test succeeded\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("PropertyService Test : client");
       return -1;

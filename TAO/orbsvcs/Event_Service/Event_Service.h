@@ -16,7 +16,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 #include "orbsvcs/RtecSchedulerS.h"
-#include "ace/SString.h"
+#include <memory>
+#include <string>
 
 /**
  * @class Event_Service
@@ -31,7 +32,7 @@
 class Event_Service : public POA_RtecEventChannelAdmin::EventChannel
 {
 public:
-  Event_Service ();
+  Event_Service () = default;
   ~Event_Service () override;
 
   /// Run the event service.
@@ -54,29 +55,28 @@ private:
   /// Parse the command line args
   int parse_args (int argc, ACE_TCHAR *argv[]);
 
-  enum Sched_type_t {ES_SCHED_NONE, ES_SCHED_GLOBAL, ES_SCHED_LOCAL};
+  enum class Scheduler_Type { none, global, local };
 
-private:
   /// The Scheduler implementation.
-  POA_RtecScheduler::Scheduler *sched_impl_ {};
+  std::unique_ptr<POA_RtecScheduler::Scheduler> sched_impl_ {};
 
   /// The Event Channel implementation.
-  POA_RtecEventChannelAdmin::EventChannel *ec_impl_ {};
+  std::unique_ptr<POA_RtecEventChannelAdmin::EventChannel> ec_impl_ {};
 
   /// The name we use to bind with the NameService
-  ACE_CString service_name_;
+  std::string service_name_ {};
 
   /// The name of the file were we output the Event_Service IOR.
-  ACE_TString ior_file_name_;
+  std::basic_string<ACE_TCHAR> ior_file_name_ {};
 
   /// The name of a file where the process stores its pid
-  ACE_TString pid_file_name_;
+  std::basic_string<ACE_TCHAR> pid_file_name_ {};
 
   /// The name of the servant we use when we use persistent IORs
-  ACE_CString object_id_;
+  std::string object_id_ {};
 
   /// Should we use a global scheduler or a local one or none?
-  Sched_type_t scheduler_type_ {ES_SCHED_NONE};
+  Scheduler_Type scheduler_type_ {Scheduler_Type::none};
 
   /// A reference to the ORB, to shut it down properly.
   CORBA::ORB_var orb_ {};

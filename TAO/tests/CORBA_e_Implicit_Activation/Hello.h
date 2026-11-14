@@ -10,8 +10,11 @@ class Hello
   : public virtual POA_Test::Hello
 {
 public:
-  /// Constructor
-  Hello ();
+  Hello () = default;
+  Hello (Hello const &) = delete;
+  Hello (Hello &&) = delete;
+  Hello &operator= (Hello const &) = delete;
+  Hello &operator= (Hello &&) = delete;
 };
 
 #include /**/ "ace/post.h"

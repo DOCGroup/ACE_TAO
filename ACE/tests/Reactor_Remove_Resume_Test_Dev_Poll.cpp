@@ -13,7 +13,6 @@
  * @author  Ossama Othman
  */
 
-
 #include "test_config.h"
 
 #if defined (ACE_HAS_EVENT_POLL) || defined (ACE_HAS_DEV_POLL)
@@ -333,7 +332,6 @@ handle_events (ACE_Reactor & reactor,
       // should be dispatched.
       timeout.sec (2);
       int const result = reactor.handle_events (&timeout);
-
 
       if (result > 0)
         {

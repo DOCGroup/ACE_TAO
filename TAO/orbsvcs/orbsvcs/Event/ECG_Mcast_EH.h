@@ -21,7 +21,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Unbounded_Set.h"
-#include "ace/Array_Base.h"
 #include "ace/SOCK_Dgram_Mcast.h"
 
 #include "orbsvcs/RtecEventChannelAdminS.h"
@@ -30,6 +29,12 @@
 #include "orbsvcs/Event/ECG_Adapters.h"
 #include "orbsvcs/Event/EC_Lifetime_Utils.h"
 #include "orbsvcs/Event/EC_Lifetime_Utils_T.h"
+
+#include <memory>
+#include <optional>
+#include <string>
+#include <utility>
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -66,8 +71,7 @@ public:
                     ACE_TCHAR const *net_if = nullptr,
                     CORBA::ULong buf_sz = 0);
 
-  /// Destructor.
-  virtual ~TAO_ECG_Mcast_EH () override;
+  ~TAO_ECG_Mcast_EH () override;
 
   /**
    * Register for changes in the EC subscription list.
@@ -88,12 +92,12 @@ public:
    * multicast groups, close the sockets and deregister from the
    * reactor.
    */
-  virtual int shutdown () override;
+  int shutdown () override;
   //@}
 
   /// Reactor callback.  Notify receiver_ that a dgram corresponding
   /// to \a fd is ready for reading.
-  virtual int handle_input (ACE_HANDLE fd) override;
+  int handle_input (ACE_HANDLE fd) override;
 
 private:
   /**
@@ -109,7 +113,7 @@ private:
   public:
     /// Constructor.  Changes in the EC subscriptions will be reported
     /// to the \a eh.
-    Observer (TAO_ECG_Mcast_EH* eh);
+    explicit Observer (TAO_ECG_Mcast_EH* eh);
 
     /// Shut down the observer: disconnect from EC and deactivate from
     /// POA.
@@ -117,10 +121,10 @@ private:
 
     /// Event Channel Observer methods
     //@{
-    virtual void update_consumer (
-        const RtecEventChannelAdmin::ConsumerQOS& sub);
-    virtual void update_supplier (
-        const RtecEventChannelAdmin::SupplierQOS& pub);
+    void update_consumer (
+        RtecEventChannelAdmin::ConsumerQOS const &sub) override;
+    void update_supplier (
+        RtecEventChannelAdmin::SupplierQOS const &pub) override;
 
   private:
     /// Handler we notify of subscriptions changes.
@@ -137,8 +141,7 @@ private:
 
   /// The Observer method.  Subscribe/unsubscribe to multicast groups
   /// according to changes in consumer subscriptions.
-  void update_consumer (const RtecEventChannelAdmin::ConsumerQOS& sub);
-
+  void update_consumer (RtecEventChannelAdmin::ConsumerQOS const &sub);
 
   using Address_Set = ACE_Unbounded_Set<ACE_INET_Addr>;
 
@@ -160,7 +163,7 @@ private:
    *        back to the caller.
    */
   void compute_required_subscriptions (
-        const RtecEventChannelAdmin::ConsumerQOS& sub,
+        RtecEventChannelAdmin::ConsumerQOS const &sub,
               Address_Set& multicast_addresses);
 
   /// Unsubscribe from any multicast addresses we are currently
@@ -203,8 +206,8 @@ private:
     Observer_Disconnect_Command (RtecEventChannelAdmin::Observer_Handle handle,
                                  RtecEventChannelAdmin::EventChannel_ptr ec);
 
-    Observer_Disconnect_Command (const Observer_Disconnect_Command &rhs);
-    Observer_Disconnect_Command & operator= (const Observer_Disconnect_Command & rhs);
+    Observer_Disconnect_Command (Observer_Disconnect_Command const &rhs);
+    Observer_Disconnect_Command &operator= (Observer_Disconnect_Command const &rhs);
 
     void execute ();
 
@@ -215,14 +218,14 @@ private:
 
 private:
   /// The NIC used to subscribe for multicast traffic.
-  ACE_TCHAR *net_if_;
+  std::optional<std::basic_string<ACE_TCHAR>> net_if_;
 
   struct Subscription
   {
     ACE_INET_Addr mcast_addr;
-    ACE_SOCK_Dgram_Mcast* dgram;
+    std::unique_ptr<ACE_SOCK_Dgram_Mcast> dgram;
   };
-  using Subscriptions = ACE_Array_Base<Subscription>;
+  using Subscriptions = std::vector<Subscription>;
 
   /// List of multicast addresses we subscribe to and dgrams we use.
   /*
@@ -233,7 +236,7 @@ private:
    * not possible to subscribe to more than one mcast address on the same
    * socket.
    *
-   * Performance.  We use array to store subscriptions (mcast addr / dgram
+   * Performance.  We use a vector to store subscriptions (mcast addr / dgram
    * pairs).  If performance is not adequate, we should look into
    * using a hash map, keyed on file descriptors, instead.  When there
    * are many subscriptions, handle_input() is likely to be more

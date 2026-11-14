@@ -22,45 +22,43 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/**
+ * @brief Simple consumer object.
+ *
+ * This class is a consumer of log-generated events.
+ */
 class Consumer : public POA_CosEventComm::PushConsumer
 {
-  // = TITLE
-  //   Simple consumer object
-  //
-  // = DESCRIPTION
-  //   This class is a consumer of log generated events.
-  //
 public:
-  Consumer ();
-  // Constructor
+  Consumer () = default;
 
-  int run (int argc, ACE_TCHAR* argv[]);
-  // Run the test
+  Consumer (Consumer const &) = delete;
+  Consumer (Consumer &&) = delete;
+  Consumer &operator= (Consumer const &) = delete;
+  Consumer &operator= (Consumer &&) = delete;
 
-  // = The CosEventComm::PushConsumer methods
+  /// Run the test.
+  int run (int argc, ACE_TCHAR *argv[]);
 
-  virtual void push (const CORBA::Any &event);
+  void push (CORBA::Any const &event) override;
 
-  virtual void disconnect_push_consumer ();
-  // The skeleton methods.
+  void disconnect_push_consumer () override;
 
 private:
-  // = Data Members
-  CORBA::ULong event_count_;
-  // Keep track of the number of events received.
+  /// Number of events received.
+  CORBA::ULong event_count_ {};
 
+  /// The ORB reference used by the disconnect callback.
   CORBA::ORB_var orb_;
-  // The orb, just a pointer because the ORB does not outlive the
-  // run() method...
 
+  /// Handle to the name service.
   CosNaming::NamingContext_var naming_context_;
-  // Handle to the name service.
 
+  /// The Event Log Factory that generates the events to be consumed.
   DsEventLogAdmin::EventLogFactory_var event_log_factory_;
-  // The Event Log Factory that generates the events to be consumed.
 
+  /// The proxy to which this consumer is connected.
   CosEventChannelAdmin::ProxyPushSupplier_var supplier_;
-  // The proxy that we are connected to.
 };
 
 #endif /* EVENT_CONSUMER_H */

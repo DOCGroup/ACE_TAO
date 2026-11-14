@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    COIOP_Acceptor.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author  Johnny Willemsen <jwillemsen@remedy.nl>
  */
-//=============================================================================
 
 #ifndef TAO_COIOP_ACCEPTOR_H
 #define TAO_COIOP_ACCEPTOR_H
@@ -43,10 +41,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Strategies_Export TAO_COIOP_Acceptor : public TAO_Acceptor
 {
 public:
-  /// Constructor.
   TAO_COIOP_Acceptor ();
 
-  /// Destructor.
   ~TAO_COIOP_Acceptor ();
 
   /**
@@ -71,7 +67,7 @@ public:
                               TAO_MProfile &mprofile,
                       CORBA::Short priority) override;
 
-  int is_collocated (TAO_Endpoint const *endpoint) override;
+  bool is_collocated (TAO_Endpoint const *endpoint) override;
   CORBA::ULong endpoint_count () override;
 
   int object_key (IOP::TaggedProfile &profile,

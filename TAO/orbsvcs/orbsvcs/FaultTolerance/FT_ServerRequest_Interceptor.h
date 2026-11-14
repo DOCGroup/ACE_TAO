@@ -50,11 +50,9 @@ namespace TAO
     , public virtual ::CORBA::LocalObject
   {
   public:
-    /// Constructor.
     FT_ServerRequest_Interceptor ();
 
-    /// Destructor.
-    ~FT_ServerRequest_Interceptor ();
+    ~FT_ServerRequest_Interceptor () override;
 
     /**
      * @name Methods Required by the Server Request Interceptor
@@ -85,25 +83,25 @@ namespace TAO
     void send_other (
         PortableInterceptor::ServerRequestInfo_ptr ri) override;
     //@}
-  private:
-    void check_iogr_version (const IOP::ServiceContext &svc);
-
-    void update_iogr (
-        PortableInterceptor::ServerRequestInfo_ptr ri);
-
-  private:
-    CORBA::ULong object_group_ref_version_;
-
-    CORBA::Boolean is_primary_;
-
-    CORBA::Object_var iogr_;
-
-    CORBA::ORB_var orb_;
 
     FT_ServerRequest_Interceptor (FT_ServerRequest_Interceptor const&) = delete;
     FT_ServerRequest_Interceptor& operator= (FT_ServerRequest_Interceptor const&) = delete;
     FT_ServerRequest_Interceptor (FT_ServerRequest_Interceptor&&) = delete;
     FT_ServerRequest_Interceptor& operator= (FT_ServerRequest_Interceptor&&) = delete;
+
+  private:
+    void check_iogr_version (IOP::ServiceContext const &svc);
+
+    void update_iogr (
+        PortableInterceptor::ServerRequestInfo_ptr ri);
+
+    CORBA::ULong object_group_ref_version_ {};
+
+    CORBA::Boolean is_primary_ {};
+
+    CORBA::Object_var iogr_ {};
+
+    CORBA::ORB_var orb_ {};
   };
 }
 

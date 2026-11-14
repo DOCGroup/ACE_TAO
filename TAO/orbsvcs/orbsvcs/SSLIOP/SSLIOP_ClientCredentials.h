@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_SSLIOP_CLIENT_CREDENTIALS_H
 #define TAO_SSLIOP_CLIENT_CREDENTIALS_H
 
@@ -46,7 +45,6 @@ namespace TAO
         public virtual SSLIOP_Credentials
     {
     public:
-      /// Constructor
       ClientCredentials (::X509 * cert, ::EVP_PKEY * evp, ::SSL * ssl);
 
       /**
@@ -92,12 +90,11 @@ namespace TAO
       //@}
 
     protected:
-      /// Destructor
       /**
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.
        */
-      ~ClientCredentials ();
+      ~ClientCredentials () override = default;
 
     private:
       /// Reference to the OpenSSL @c SSL data structure associated

@@ -104,16 +104,8 @@ namespace ACE
     ACE_INLINE
     void SessionBase::close_streams ()
       {
-        if (this->in_stream_)
-          {
-            delete this->in_stream_;
-            this->in_stream_ = 0;
-          }
-        if (this->out_stream_)
-          {
-            delete this->out_stream_;
-            this->out_stream_ = 0;
-          }
+        this->in_stream_.reset ();
+        this->out_stream_.reset ();
       }
   }
 }

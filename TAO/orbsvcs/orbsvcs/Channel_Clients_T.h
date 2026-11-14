@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-
 //=============================================================================
 /**
  *  @file    Channel_Clients_T.h
@@ -13,7 +12,6 @@
  *  inheritance (which is this root of all evil.)
  */
 //=============================================================================
-
 
 #ifndef ACE_CHANNEL_CLIENTS_T_H
 #define ACE_CHANNEL_CLIENTS_T_H
@@ -38,10 +36,10 @@ public:
   ACE_PushConsumer_Adapter (TARGET *target);
 
   /// Forwards to target_.
-  virtual void push (const RtecEventComm::EventSet& events);
+  void push (const RtecEventComm::EventSet& events) override;
 
   /// Forwards to target_.
-  virtual void disconnect_push_consumer ();
+  void disconnect_push_consumer () override;
 
 private:
   TARGET *target_;
@@ -64,7 +62,7 @@ public:
   ACE_PushSupplier_Adapter (TARGET *target);
 
   /// Forwards to target_.
-  virtual void disconnect_push_supplier ();
+  void disconnect_push_supplier () override;
 
 private:
   TARGET *target_;

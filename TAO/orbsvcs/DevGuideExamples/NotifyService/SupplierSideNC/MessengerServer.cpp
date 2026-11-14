@@ -1,16 +1,16 @@
 #include "orbsvcs/CosNamingC.h"
 #include "Messenger_i.h"
-#include <iostream>
-#include <fstream>
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT ("Messenger.ior");
+#include <cstdio>
+#include <iostream>
+#include <memory>
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior_output_file)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -21,66 +21,62 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
       case '?':
       default:
-      ;
+        break;
       }
-  // Indicates successful parsing of the command line
+
   return 0;
 }
 
 int
-ACE_TMAIN (int argc, ACE_TCHAR *argv [])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
-  {
-    // Initialize orb
-    CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
+    {
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
+      ACE_TCHAR const *ior_output_file { ACE_TEXT ("Messenger.ior") };
+      if (parse_args (argc, argv, ior_output_file) != 0)
+        return 1;
 
-    if (parse_args (argc, argv) != 0)
+      CORBA::Object_var const naming_obj = orb->resolve_initial_references ("NameService");
+      CosNaming::NamingContext_var const naming_context =
+        CosNaming::NamingContext::_narrow (naming_obj.in ());
+      CORBA::Object_var const poa_object = orb->resolve_initial_references ("RootPOA");
+      PortableServer::POA_var const poa = PortableServer::POA::_narrow (poa_object.in ());
+      PortableServer::POAManager_var const manager = poa->the_POAManager ();
+      manager->activate ();
+
+      PortableServer::Servant_var<Messenger_i> const servant = new Messenger_i (orb.in ());
+      PortableServer::ObjectId_var const object_id = poa->activate_object (servant.in ());
+      CORBA::Object_var const messenger_object = poa->id_to_reference (object_id.in ());
+
+      CosNaming::Name name {};
+      name.length (1);
+      name[0].id = CORBA::string_dup ("MessengerService");
+      naming_context->rebind (name, messenger_object.in ());
+
+      CORBA::String_var const ior = orb->object_to_string (messenger_object.in ());
+      {
+        std::unique_ptr<FILE, int (*) (FILE *)> ior_file (
+          ACE_OS::fopen (ior_output_file, ACE_TEXT ("w")),
+          ACE_OS::fclose);
+        if (!ior_file)
+          {
+            std::cerr << "Could not create IOR output file" << std::endl;
+            return 1;
+          }
+        ACE_OS::fprintf (ior_file.get (), "%s\n", ior.in ());
+      }
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("IOR written to file %s\n"),
+                  ior_output_file));
+      orb->run ();
+      orb->destroy ();
+    }
+  catch (CORBA::Exception const &ex)
+    {
+      std::cerr << ex << std::endl;
       return 1;
+    }
 
-    // Find the Naming Service.
-    CORBA::Object_var rootObj =  orb->resolve_initial_references("NameService");
-    CosNaming::NamingContext_var rootNC =
-      CosNaming::NamingContext::_narrow(rootObj.in());
-
-    // Get the  Root POA.
-    CORBA::Object_var obj = orb->resolve_initial_references("RootPOA");
-    PortableServer::POA_var poa = PortableServer::POA::_narrow(obj.in());
-
-    // Activate POA manager
-    PortableServer::POAManager_var mgr = poa->the_POAManager();
-    mgr->activate();
-
-    // Create our Messenger servant.
-    PortableServer::Servant_var<Messenger_i> messenger_servant =
-      new Messenger_i(orb.in());
-
-    // Register it with the RootPOA.
-    PortableServer::ObjectId_var oid =
-      poa->activate_object( messenger_servant.in() );
-    CORBA::Object_var messenger_obj = poa->id_to_reference( oid.in() );
-
-    // Bind it in the Naming Service.
-    CosNaming::Name name;
-    name.length (1);
-    name[0].id = CORBA::string_dup("MessengerService");
-    rootNC->rebind(name, messenger_obj.in());
-
-    CORBA::String_var str = orb->object_to_string (messenger_obj.in());
-    std::ofstream iorFile (ACE_TEXT_ALWAYS_CHAR(ior_output_file));
-    iorFile << str.in () << std::endl;
-    iorFile.close ();
-    std::cout << "IOR written to file " << ior_output_file << std::endl;
-
-    // Accept requests
-    orb->run();
-    orb->destroy();
-  }
-  catch(const CORBA::Exception& ex) {
-    std::cerr << ex << std::endl;
-    return 1;
-  }
   return 0;
 }
-
-

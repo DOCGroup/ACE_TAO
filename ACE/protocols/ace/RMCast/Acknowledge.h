@@ -26,21 +26,16 @@ namespace ACE_RMCast
   public:
     Acknowledge (Parameters const& params);
 
-    virtual void
-    in_start (In_Element* in);
+    void in_start (In_Element* in) override;
 
-    virtual void
-    out_start (Out_Element* out);
+    void out_start (Out_Element* out) override;
 
-    virtual void
-    out_stop ();
+    void out_stop () override;
 
   public:
-    virtual void
-    recv (Message_ptr m);
+    void recv (Message_ptr m) override;
 
-    virtual void
-    send (Message_ptr m);
+    void send (Message_ptr m) override;
 
   private:
     struct Descr
@@ -66,7 +61,7 @@ namespace ACE_RMCast
       bool
       lost () const
       {
-        return m_.get () == 0;
+        return m_.get () == nullptr;
       }
 
     public:
@@ -202,13 +197,11 @@ namespace ACE_RMCast
       u64 sn_, max_sn_;
     };
 
-    typedef
-    ACE_Hash_Map_Manager_Ex<Address,
-                            Queue,
-                            AddressHasher,
-                            ACE_Equal_To<Address>,
-                            ACE_Null_Mutex>
-    Map;
+    using Map = ACE_Hash_Map_Manager_Ex<Address,
+                                        Queue,
+                                        AddressHasher,
+                                        ACE_Equal_To<Address>,
+                                        ACE_Null_Mutex>;
 
   private:
     void

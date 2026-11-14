@@ -16,6 +16,6 @@ public:
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  MyTestValuetypeFactory myFactory;
+  MyTestValuetypeFactory const myFactory {};
   return 0;
 }

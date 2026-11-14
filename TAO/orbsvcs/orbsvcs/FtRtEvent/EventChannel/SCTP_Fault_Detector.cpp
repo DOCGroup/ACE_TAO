@@ -16,10 +16,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-SCTP_Connector::SCTP_Connector()
-: heart_beat_(0)
-{
-}
+SCTP_Connector::SCTP_Connector () = default;
 
 int
 SCTP_Connector::connect (ACE_SOCK_SEQPACK_Association &new_association,
@@ -58,27 +55,20 @@ SCTP_Connector::connect (ACE_SOCK_SEQPACK_Association &new_association,
                                       result);
 }
 
-
 inline void SCTP_Connector::set_heart_beat(int hb)
 {
   heart_beat_ = hb;
 }
 
-
-SCTP_Fault_Detector::~SCTP_Fault_Detector()
-{
-}
-
-
 int SCTP_Fault_Detector::parse_conf(int argc, ACE_TCHAR** argv)
 {
   ACE_TRACE ("SCTP_Fault_Detector::parse_conf");
 
-  for (int curarg = 0; curarg < argc; curarg++)
+  for (int curarg {}; curarg < argc; ++curarg)
     if (ACE_OS::strcasecmp (argv[curarg],
       ACE_TEXT("-HeartBeat")) == 0)
     {
-      curarg++;
+      ++curarg;
       if (curarg < argc)
         connector_.set_heart_beat(ACE_OS::atoi(argv[curarg]));
     }

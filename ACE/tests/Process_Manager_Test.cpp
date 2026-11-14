@@ -17,6 +17,8 @@
  */
 //=============================================================================
 
+#include <string>
+
 #include "test_config.h"
 #include "ace/SString.h"
 #include "ace/Atomic_Op.h"
@@ -157,7 +159,7 @@ const ACE_TCHAR *cmdline_format = ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE
 
 ACE_CString order;
 
-ACE_Atomic_Op<ACE_SYNCH_MUTEX, int> running_tasks = 0;
+ACE_Atomic_Op<ACE_SYNCH_MUTEX, int> running_tasks {0};
 
 class Process_Task : public ACE_Task<ACE_SYNCH>
 {
@@ -173,8 +175,7 @@ public:
       /// FUZZ: enable check_for_lack_ACE_OS
   int open (void*) override
   {
-    char tmp[10];
-    order += ACE_OS::itoa (sleep_time_, tmp, 10);
+    order += std::to_string (sleep_time_).c_str ();
     ++running_tasks;
     activate ();
     return 0;
@@ -205,8 +206,7 @@ public:
                   ACE_TEXT ("(%P) reaped child, pid %d: %d\n"),
                   my_child,
                   exitcode));
-    char tmp[10];
-    order += ACE_OS::itoa (sleep_time_, tmp, 10);
+    order += std::to_string (sleep_time_).c_str ();
     return 0;
   }
 
@@ -594,7 +594,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   size_t const nr_procs = mgr.managed ();
   if (nr_procs != 0)
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P) %d processes left in manager\n"),
+                ACE_TEXT ("(%P) %B processes left in manager\n"),
                 nr_procs));
 #endif /* defined (ACE_WIN32) */
 #endif // ACE_HAS_PROCESS_SPAWN

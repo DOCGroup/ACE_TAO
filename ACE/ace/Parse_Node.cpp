@@ -65,8 +65,6 @@ ACE_Stream_Node::apply (ACE_Service_Gestalt *config, int &yyerrno)
   for (iter = mod_list.begin (); iter != mod_list.end (); ++iter)
     {
       module = *iter;
-      ACE_ARGV args (module->parameters ());
-
       const ACE_Service_Type *mst = module->record (config);
       if (mst == nullptr)
         const_cast<ACE_Static_Node *> (module)->apply (config, yyerrno);
@@ -157,7 +155,6 @@ ACE_Stream_Node::ACE_Stream_Node (const ACE_Static_Node *str_ops,
   ACE_TRACE ("ACE_Stream_Node::ACE_Stream_Node");
 }
 
-
 ACE_Stream_Node::~ACE_Stream_Node ()
 {
   ACE_TRACE ("ACE_Stream_Node::~ACE_Stream_Node");
@@ -173,7 +170,6 @@ ACE_Parse_Node::ACE_Parse_Node ()
 {
   ACE_TRACE ("ACE_Parse_Node::ACE_Parse_Node");
 }
-
 
 ACE_Parse_Node::ACE_Parse_Node (const ACE_TCHAR *nm)
   : name_ (ACE::strnew (nm)),
@@ -194,7 +190,6 @@ ACE_Parse_Node::print () const
   if (this->next_)
     this->next_->print ();
 }
-
 
 ACE_Parse_Node::~ACE_Parse_Node ()
 {
@@ -313,7 +308,6 @@ ACE_Remove_Node::apply (ACE_Service_Gestalt *config, int &yyerrno)
 #endif /* ACE_NLOGGING */
 }
 
-
 ACE_Dynamic_Node::ACE_Dynamic_Node (ACE_Service_Type_Factory const *stf,
                                     ACE_TCHAR *parms)
   : ACE_Static_Node (stf->name (), parms)
@@ -378,7 +372,7 @@ const ACE_Service_Type *
 ACE_Static_Node::record (const ACE_Service_Gestalt *config) const
 {
   ACE_TRACE ("ACE_Static_Node::record");
-  ACE_Service_Type *sr = nullptr;
+  ACE_Service_Type *sr {};
 
   if (config->find (this->name (), (const ACE_Service_Type **) &sr) == -1)
     return nullptr;
@@ -420,7 +414,6 @@ ACE_Static_Node::~ACE_Static_Node ()
   delete[] this->parameters_;
 #endif /* ACE_HAS_ALLOC_HOOKS */
 }
-
 
 ACE_ALLOC_HOOK_DEFINE (ACE_Location_Node)
 
@@ -801,7 +794,7 @@ ACE_Static_Function_Node::symbol (ACE_Service_Gestalt *config,
   // Locate the factory function <function_name> in the statically
   // linked svcs.
 
-  ACE_Static_Svc_Descriptor *ssd = nullptr;
+  ACE_Static_Svc_Descriptor *ssd {};
   if (config->find_static_svc_descriptor (this->function_name_, &ssd) == -1)
     {
       ++yyerrno;
@@ -875,9 +868,7 @@ ACE_Service_Type_Factory::ACE_Service_Type_Factory (ACE_TCHAR const *name,
 {
 }
 
-
 ACE_Service_Type_Factory::~ACE_Service_Type_Factory () = default;
-
 
 ACE_Service_Type *
 ACE_Service_Type_Factory::make_service_type (ACE_Service_Gestalt *cfg) const
@@ -903,7 +894,7 @@ ACE_Service_Type_Factory::make_service_type (ACE_Service_Gestalt *cfg) const
       if (stp == nullptr)
         ++yyerrno;
 
-      ACE_Service_Type *tmp = nullptr;
+      ACE_Service_Type *tmp {};
       ACE_NEW_RETURN (tmp,
                       ACE_Service_Type (this->name (),
                                         stp,
@@ -931,7 +922,6 @@ ACE_Service_Type_Factory::name () const
 {
   return name_.c_str ();
 }
-
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

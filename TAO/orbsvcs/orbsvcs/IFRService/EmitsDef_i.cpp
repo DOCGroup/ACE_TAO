@@ -18,5 +18,4 @@ TAO_EmitsDef_i::def_kind ()
   return CORBA::dk_Emits;
 }
 
-
 TAO_END_VERSIONED_NAMESPACE_DECL

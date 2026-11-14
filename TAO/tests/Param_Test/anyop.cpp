@@ -7,8 +7,9 @@
  */
 //=============================================================================
 
-
 #include "param_testC.h"
+
+#include <cstring>
 
 #include "tao/debug.h"
 #include "ace/OS_NS_string.h"
@@ -36,7 +37,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           switch (opt)
             {
             case 'd':
-              TAO_debug_level++;
+              ++TAO_debug_level;
               break;
             case 'n':
               n = ACE_OS::atoi (get_opt.opt_arg ());
@@ -176,7 +177,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
           {
             CORBA::Any any;
-            CORBA::Any *i = 0;
+            CORBA::Any *i {};
             ACE_NEW_RETURN (i,
                             CORBA::Any,
                             -1);
@@ -216,7 +217,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             const char *o;
 
             if (!(any >>= o)
-                || ACE_OS::strcmp (i, o) != 0)
+                || std::strcmp (i, o) != 0)
               {
                 ACE_DEBUG ((LM_DEBUG,
                             "Failure for char* (%C,%C)\n",
@@ -227,7 +228,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
           {
             CORBA::Any any;
-            Param_Test::Fixed_Struct *i = 0;
+            Param_Test::Fixed_Struct *i {};
             ACE_NEW_RETURN (i,
                             Param_Test::Fixed_Struct,
                             -1);
@@ -240,7 +241,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             i->d = 3.1416;
 
             any <<= *i;
-            const Param_Test::Fixed_Struct *o = 0;
+            Param_Test::Fixed_Struct const *o {};
 
             if (!(any >>= o)
                 || o->l != i->l
@@ -276,7 +277,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           {
             CORBA::ULong len = 3;
             CORBA::Any any;
-            CORBA::LongSeq *i = 0;
+            CORBA::LongSeq *i {};
             ACE_NEW_RETURN (i,
                             CORBA::LongSeq (len),
                             -1);
@@ -288,7 +289,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               }
 
             any <<= *i;
-            const CORBA::LongSeq *o = 0;
+            CORBA::LongSeq const *o {};
 
             if (!(any >>= o)
                 || (*i)[0] != (*o)[0]

@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "ace/Log_Msg.h"
 
 #include "Options.h"
@@ -22,16 +21,16 @@
 static SM_Client *
 make_client ()
 {
-  SM_Client *client = 0;
+  SM_Client *client {};
 
-  if (Options::get_opt (Options::REMOTE_USAGE) == 0)
+  if (!Options::get_opt (Options::REMOTE_USAGE))
     ACE_NEW_RETURN (client,
                     SML_Client,
-                    0);
+                    nullptr);
   else
     ACE_NEW_RETURN (client,
                     SMR_Client (Options::port_number),
-                    0);
+                    nullptr);
   return client;
 }
 

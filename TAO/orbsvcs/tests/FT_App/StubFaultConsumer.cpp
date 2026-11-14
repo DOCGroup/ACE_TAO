@@ -2,13 +2,13 @@
 #include "StubFaultConsumer.h"
 #include "ace/Get_Opt.h"
 #include "orbsvcs/PortableGroup/PG_Properties_Encoder.h"
+#include <cstring>
 
 StubFaultConsumer::StubFaultConsumer ()
   : quit_(0)
   , notifications_(0)
 {
 }
-
 
 StubFaultConsumer::~StubFaultConsumer ()
 {
@@ -29,7 +29,6 @@ size_t StubFaultConsumer::notifications () const
   return this->notifications_;
 }
 
-
 int StubFaultConsumer::parse_args (int argc, ACE_TCHAR * argv[])
 {
   int optionError = 0;
@@ -45,28 +44,28 @@ int StubFaultConsumer::parse_args (int argc, ACE_TCHAR * argv[])
     {
       case 'r':
       {
-        if (this->replicaIorBuffer_ == 0)
+        if (this->replicaIorBuffer_ == nullptr)
         {
           const char * repNames = get_opts.opt_arg ();
-          size_t repNameLen = ACE_OS::strlen(repNames);
+          size_t repNameLen = std::strlen (repNames);
 
           // make a working copy of the string
           ACE_NEW_NORETURN(this->replicaIorBuffer_,
             char[repNameLen + 1]);
-          if ( this->replicaIorBuffer_ != 0)
+          if (this->replicaIorBuffer_ != nullptr)
           {
-            ACE_OS::memcpy(this->replicaIorBuffer_, repNames, repNameLen+1);
+            std::memcpy (this->replicaIorBuffer_, repNames, repNameLen + 1);
 
             // tokenize the string on ','
             // into iorReplicaFiles_
             char * pos = this->replicaIorBuffer_;
-            while (pos != 0)
+            while (pos != nullptr)
             {
               this->iorReplicaFiles_.push_back(pos);
               // find a comma delimiter, and
               // chop the string there.
-              pos = ACE_OS::strchr (pos, ',');
-              if (pos != 0)
+              pos = std::strchr (pos, ',');
+              if (pos != nullptr)
               {
                 *pos = '\0';
                 pos += 1;
@@ -117,14 +116,14 @@ int StubFaultConsumer::parse_args (int argc, ACE_TCHAR * argv[])
 
   if(! optionError)
   {
-    if (0 == this->replicaIorBuffer_)
+    if (this->replicaIorBuffer_ == nullptr)
     {
       ACE_ERROR ((LM_ERROR,
         "-r option is required.\n"
         ));
       optionError = -1;
     }
-    if (0 == this->iorDetectorFile_)
+    if (this->iorDetectorFile_ == nullptr)
     {
       ACE_ERROR ((LM_ERROR,
         "-d option is required.\n"
@@ -159,7 +158,6 @@ int StubFaultConsumer::init (CORBA::ORB_ptr orb,
   this->orb_ = CORBA::ORB::_duplicate (orb);
   this->notifier_ = notifier;
   this->identity_ = "StubFaultConsumer";
-
 
   // Use the ROOT POA for now
   CORBA::Object_var poa_object =
@@ -221,7 +219,6 @@ int StubFaultConsumer::fini ()
   return 0;
 }
 
-
 int StubFaultConsumer::idle(int & result)
 {
   ACE_UNUSED_ARG(result);
@@ -231,8 +228,7 @@ int StubFaultConsumer::idle(int & result)
 ////////////////
 // CORBA methods
 void StubFaultConsumer::push_structured_event(
-  const CosNotification::StructuredEvent &notification
-  )
+  const CosNotification::StructuredEvent &notification)
 {
   ////////////////////////////////////////
   // keep track of how many we've received
@@ -266,7 +262,6 @@ void StubFaultConsumer::push_structured_event(
       value
       ));
 
-
 //    int todo_finish_decode;
   }
 
@@ -274,8 +269,7 @@ void StubFaultConsumer::push_structured_event(
 
 void StubFaultConsumer::offer_change (
     const CosNotification::EventTypeSeq & added,
-    const CosNotification::EventTypeSeq & removed
-  )
+    const CosNotification::EventTypeSeq & removed)
 {
   ACE_UNUSED_ARG (added);
   ACE_UNUSED_ARG (removed);

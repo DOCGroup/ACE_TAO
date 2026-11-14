@@ -1,27 +1,17 @@
 #include "Collocation_Tester.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
-const char *Quote::top = "Ciao";
-const char *Quote::left = "Hola";
-const char *Quote::right = "Hello";
-const char *Quote::bottom = "Previet";
-
-Collocation_Tester::Collocation_Tester (CORBA::Object_ptr object)
+Collocation_Tester::Collocation_Tester (CORBA::Object_ptr const object)
+  : object_ (CORBA::Object::_duplicate (object))
 {
-  this->object_ = CORBA::Object::_duplicate (object);
-}
-
-Collocation_Tester::~Collocation_Tester ()
-{
-  // No-Op.
 }
 
 int
-Collocation_Tester::match_answer (const char *actual_answer,
-                                  const char *right_answer,
-                                  const char *method_name)
+Collocation_Tester::match_answer (char const *actual_answer,
+                                  char const *right_answer,
+                                  char const *method_name)
 {
-  if (ACE_OS::strcmp (actual_answer, right_answer))
+  if (std::strcmp (actual_answer, right_answer) != 0)
     {
       ACE_ERROR ((LM_DEBUG,
                   ACE_TEXT ("Call to <%C> returned the wrong value!\n"), method_name));
@@ -36,13 +26,13 @@ Collocation_Tester::match_answer (const char *actual_answer,
 }
 
 int
-Collocation_Tester::test_top ()
+Collocation_Tester::test_top () const
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT("\n------------------------<TOP>-------------------------------\n")));
-  int failure = 0;
-  int call_num = 1;
-  Multiple::Top_var top =
+  int failure {};
+  int const call_num {1};
+  Multiple::Top_var const top =
     Multiple::Top::_narrow (this->object_.in ());
 
   if (CORBA::is_nil (top.in ()))
@@ -55,7 +45,7 @@ Collocation_Tester::test_top ()
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("\n\nCalling all method supported by the Interface Top\n\n")));
 
-  CORBA::String_var msg = top->top_quote ();
+  CORBA::String_var const msg = top->top_quote ();
 
   failure += this->match_answer (Quote::top, msg.in (), "top_quote");
 
@@ -70,13 +60,13 @@ Collocation_Tester::test_top ()
 }
 
 int
-Collocation_Tester::test_right ()
+Collocation_Tester::test_right () const
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT("\n------------------------<RIGHT>-------------------------------\n")));
-  int failure = 0;
-  int call_num = 2;
-  Multiple::Right_var right =
+  int failure {};
+  int const call_num {2};
+  Multiple::Right_var const right =
     Multiple::Right::_narrow (this->object_.in ());
 
   if (CORBA::is_nil (right.in ()))
@@ -89,13 +79,13 @@ Collocation_Tester::test_right ()
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("\n\nCalling all method supported by the Interface Right\n\n")));
 
-  CORBA::String_var msg = right->top_quote ();
+  CORBA::String_var const msg = right->top_quote ();
 
   failure += this->match_answer (Quote::top, msg.in (), "top_quote");
 
-  msg = right->right_quote ();
+  CORBA::String_var const right_msg = right->right_quote ();
 
-  failure += this->match_answer (Quote::right, msg.in (), "right_quote");
+  failure += this->match_answer (Quote::right, right_msg.in (), "right_quote");
 
   if (failure)
     ACE_ERROR ((LM_DEBUG,
@@ -107,16 +97,15 @@ Collocation_Tester::test_right ()
   return failure;
 }
 
-
 int
-Collocation_Tester::test_left ()
+Collocation_Tester::test_left () const
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT("\n------------------------<LEFT>-------------------------------\n")));
-  int failure = 0;
-  int call_num = 2;
+  int failure {};
+  int const call_num {2};
 
-  Multiple::Left_var left =
+  Multiple::Left_var const left =
     Multiple::Left::_narrow (this->object_.in ());
 
   if (CORBA::is_nil (left.in ()))
@@ -129,13 +118,13 @@ Collocation_Tester::test_left ()
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("\n\nCalling all method supported by the Interface Left\n\n")));
 
-  CORBA::String_var msg = left->top_quote ();
+  CORBA::String_var const msg = left->top_quote ();
 
   failure += this->match_answer (Quote::top, msg.in (), "top_quote");
 
-  msg = left->left_quote ();
+  CORBA::String_var const left_msg = left->left_quote ();
 
-  failure += this->match_answer (Quote::left, msg.in (), "left_quote");
+  failure += this->match_answer (Quote::left, left_msg.in (), "left_quote");
 
   if (failure)
     ACE_ERROR ((LM_DEBUG,
@@ -147,16 +136,15 @@ Collocation_Tester::test_left ()
   return failure;
 }
 
-
 int
-Collocation_Tester::test_bottom ()
+Collocation_Tester::test_bottom () const
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT("\n-----------------------<BOTTOM>-------------------------------\n")));
-  int failure = 0;
-  int call_num = 4;
+  int failure {};
+  int const call_num {4};
 
-  Multiple::Bottom_var bottom =
+  Multiple::Bottom_var const bottom =
     Multiple::Bottom::_narrow (this->object_.in ());
 
   if (CORBA::is_nil (bottom.in ()))
@@ -169,21 +157,21 @@ Collocation_Tester::test_bottom ()
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("\n\nCalling all method supported by the Interface Bottom\n\n")));
 
-  CORBA::String_var msg = bottom->top_quote ();
+  CORBA::String_var const top_msg = bottom->top_quote ();
 
-  failure += this->match_answer (Quote::top, msg.in (), "top_quote");
+  failure += this->match_answer (Quote::top, top_msg.in (), "top_quote");
 
-  msg = bottom->left_quote ();
+  CORBA::String_var const left_msg = bottom->left_quote ();
 
-  failure += this->match_answer (Quote::left, msg.in (), "left_quote");
+  failure += this->match_answer (Quote::left, left_msg.in (), "left_quote");
 
-  msg = bottom->right_quote ();
+  CORBA::String_var const right_msg = bottom->right_quote ();
 
-  failure += this->match_answer (Quote::right, msg.in (), "right_quote");
+  failure += this->match_answer (Quote::right, right_msg.in (), "right_quote");
 
-  msg = bottom->bottom_quote ();
+  CORBA::String_var const bottom_msg = bottom->bottom_quote ();
 
-  failure += this->match_answer (Quote::bottom, msg.in (), "bottom_quote");
+  failure += this->match_answer (Quote::bottom, bottom_msg.in (), "bottom_quote");
 
   if (failure)
     ACE_ERROR ((LM_DEBUG,
@@ -196,9 +184,9 @@ Collocation_Tester::test_bottom ()
 }
 
 void
-Collocation_Tester::shutdown ()
+Collocation_Tester::shutdown () const
 {
-  Multiple::Top_var top =
+  Multiple::Top_var const top =
     Multiple::Top::_narrow (this->object_.in ());
 
   if (CORBA::is_nil (top.in ()))
@@ -215,9 +203,9 @@ Collocation_Tester::shutdown ()
 }
 
 void
-Collocation_Tester::run ()
+Collocation_Tester::run () const
 {
-  int failure_num =   this->test_top ();
+  int failure_num = this->test_top ();
 
   failure_num += this->test_left ();
 

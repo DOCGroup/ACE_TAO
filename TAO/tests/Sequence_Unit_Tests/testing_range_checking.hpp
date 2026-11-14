@@ -17,7 +17,7 @@
 template<typename T>
 struct testing_range_checking
 {
-  typedef T value_type;
+  using value_type = T;
 
   inline static void check(
       CORBA::ULong index,

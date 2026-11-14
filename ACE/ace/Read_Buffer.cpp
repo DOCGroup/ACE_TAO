@@ -19,7 +19,7 @@ ACE_Read_Buffer::dump () const
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Read_Buffer::dump");
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("size_ = %d"), this->size_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("size_ = %B"), this->size_));
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\noccurrences_ = %d"), this->occurrences_));
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nstream_ = %x"), this->stream_));
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nallocator_ = %x"), this->allocator_));
@@ -99,7 +99,7 @@ ACE_Read_Buffer::rec_read (int term, int search, int replace)
 
   int c = EOF;
   size_t slot = 0;
-  int done = 0;
+  bool done = false;
 
   // Read in the file char by char
   while (slot < BUFSIZ)
@@ -113,7 +113,7 @@ ACE_Read_Buffer::rec_read (int term, int search, int replace)
           break;
         }
       else if (c == term)
-        done = 1;
+        done = true;
 
       // Check for possible substitutions.
       if (c == search)
@@ -138,7 +138,7 @@ ACE_Read_Buffer::rec_read (int term, int search, int replace)
   if (this->size_ == 0)
     return nullptr;
 
-  char *result = nullptr;
+  char *result {};
 
   // Recurse, when the recursion bottoms out, allocate the result
   // buffer.
@@ -164,7 +164,7 @@ ACE_Read_Buffer::rec_read (int term, int search, int replace)
   // Copy buf into the appropriate location starting from end of
   // buffer.  Peter says this is confusing and that we should use
   // memcpy() ;-)
-  for (size_t j = slot; j > 0; j--)
+  for (size_t j = slot; j > 0; --j)
     *--result = buf[j - 1];
 
   return result;

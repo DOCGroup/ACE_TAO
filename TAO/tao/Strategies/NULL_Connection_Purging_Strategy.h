@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// ================================================================
 /**
  *  @file   NULL_Connection_Purging_Strategy.h
  *
  *  @author Chad Elliott (elliott_c@ociweb.com)
  */
-// ================================================================
 
 #ifndef TAO_NULL_PURGING_STRATEGY_H
 #define TAO_NULL_PURGING_STRATEGY_H
@@ -19,7 +17,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Connection_Purging_Strategy.h"
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -34,7 +31,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Strategies_Export TAO_NULL_Connection_Purging_Strategy: public TAO_Connection_Purging_Strategy
 {
 public:
-  /// The constructor
   explicit TAO_NULL_Connection_Purging_Strategy (int cache_maximum);
 
   /// Does nothing.

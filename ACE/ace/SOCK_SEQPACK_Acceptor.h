@@ -98,7 +98,6 @@ public:
             int backlog = ACE_DEFAULT_BACKLOG,
             int protocol = 132);
 
-
   /// Initialize a passive-mode QoS-enabled acceptor socket.  Returns 0
   /// on success and -1 on failure.
   int open (const ACE_Addr &local_sap,

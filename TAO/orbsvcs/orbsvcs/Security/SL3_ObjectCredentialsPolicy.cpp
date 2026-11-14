@@ -3,19 +3,15 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::SL3::ObjectCredentialsPolicy::ObjectCredentialsPolicy (
-  const SecurityLevel3::OwnCredentialsList & creds)
+  SecurityLevel3::OwnCredentialsList const & creds)
   : creds_list_ (creds)
-{
-}
-
-TAO::SL3::ObjectCredentialsPolicy::~ObjectCredentialsPolicy ()
 {
 }
 
 SecurityLevel3::OwnCredentialsList *
 TAO::SL3::ObjectCredentialsPolicy::creds_list ()
 {
-  SecurityLevel3::OwnCredentialsList * creds = nullptr;
+  SecurityLevel3::OwnCredentialsList * creds {};
 
   ACE_NEW_THROW_EX (creds,
                     SecurityLevel3::OwnCredentialsList (this->creds_list_),
@@ -33,7 +29,7 @@ TAO::SL3::ObjectCredentialsPolicy::policy_type ()
 CORBA::Policy_ptr
 TAO::SL3::ObjectCredentialsPolicy::copy ()
 {
-  CORBA::Policy_ptr p = CORBA::Policy_ptr ();
+  CORBA::Policy_ptr p {};
   ACE_NEW_THROW_EX (p,
                     TAO::SL3::ObjectCredentialsPolicy (this->creds_list_),
                     CORBA::NO_MEMORY ());

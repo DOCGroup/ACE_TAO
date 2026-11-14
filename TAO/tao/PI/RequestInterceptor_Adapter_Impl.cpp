@@ -1,13 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    RequestInterceptor_Adapter_Impl.cpp
  *
  *   This file an adapter class to simplify the support of
  *   interceptors.
  */
-//=============================================================================
 
 #include "tao/PI/RequestInterceptor_Adapter_Impl.h"
 
@@ -19,8 +17,6 @@
 #include "tao/PI/PICurrent_Impl.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-TAO_RequestInterceptor_Adapter_Impl::~TAO_RequestInterceptor_Adapter_Impl () = default;
 
 void
 TAO_RequestInterceptor_Adapter_Impl::popTSC (

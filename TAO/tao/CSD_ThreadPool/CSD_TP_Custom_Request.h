@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    CSD_TP_Custom_Request.h
  *
  *  @author  Tim Bradley <bradley_t@ociweb.com>
  */
-//=============================================================================
-
 #ifndef TAO_CSD_TP_CUSTOM_REQUEST_H
 #define TAO_CSD_TP_CUSTOM_REQUEST_H
 
@@ -43,11 +39,13 @@ namespace TAO
     class TAO_CSD_TP_Export TP_Custom_Request : public TP_Request
     {
     public:
-      /// Virtual Destructor.
-      ~TP_Custom_Request() override;
+      ~TP_Custom_Request() override = default;
+      TP_Custom_Request (TP_Custom_Request const &) = delete;
+      TP_Custom_Request &operator= (TP_Custom_Request const &) = delete;
+      TP_Custom_Request (TP_Custom_Request &&) = delete;
+      TP_Custom_Request &operator= (TP_Custom_Request &&) = delete;
 
     protected:
-      /// Constructor.
       TP_Custom_Request(TP_Custom_Request_Operation* op,
                         TP_Servant_State*            servant_state);
 

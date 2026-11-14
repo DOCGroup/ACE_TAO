@@ -1,5 +1,6 @@
 // -*- C++ -*-
 #include "ace/Log_Category.h"
+#include <memory>
 
 #if defined (ACE_HAS_STRINGS)
 #  include "ace/os_include/os_strings.h"
@@ -18,13 +19,13 @@ ACE_Handle_Set::reset ()
 #endif /* ACE_HAS_BIG_FD_SET */
   this->size_ = 0;
   // #if !defined (ACE_HAS_BIG_FD_SET)      Why is this here?  -Steve Huston
-  FD_ZERO (&this->mask_);
+  FD_ZERO (std::addressof (this->mask_));
   // #endif /* ACE_HAS_BIG_FD_SET */
 }
 
 #if defined (ACE_HAS_BIG_FD_SET)
 ACE_INLINE ACE_Handle_Set &
-ACE_Handle_Set::operator = (const ACE_Handle_Set &rhs)
+ACE_Handle_Set::operator = (ACE_Handle_Set const &rhs)
 {
   ACE_TRACE ("ACE_Handle_Set::operator =");
 
@@ -44,7 +45,7 @@ ACE_Handle_Set::operator = (const ACE_Handle_Set &rhs)
 }
 
 ACE_INLINE
-ACE_Handle_Set::ACE_Handle_Set (const ACE_Handle_Set &rhs)
+ACE_Handle_Set::ACE_Handle_Set (ACE_Handle_Set const &rhs)
 {
   ACE_TRACE ("ACE_Handle_Set::ACE_Handle_Set");
 
@@ -71,13 +72,13 @@ ACE_Handle_Set::max_set () const
 }
 
 /// Checks whether handle is enabled.
-ACE_INLINE int
+ACE_INLINE bool
 ACE_Handle_Set::is_set (ACE_HANDLE handle) const
 {
   ACE_TRACE ("ACE_Handle_Set::is_set");
 
-  fd_set *set = const_cast<fd_set*> (&this->mask_);
-  int ret = FD_ISSET (handle, set);
+  fd_set *set = const_cast<fd_set *> (std::addressof (this->mask_));
+  bool ret = FD_ISSET (handle, set);
 
 #if defined (ACE_HAS_BIG_FD_SET)
   ret = ret && this->size_ > 0;
@@ -97,19 +98,19 @@ ACE_Handle_Set::set_bit (ACE_HANDLE handle)
     {
 #if defined (ACE_HANDLE_SET_USES_FD_ARRAY)
       FD_SET ((SOCKET) handle,
-              &this->mask_);
+              std::addressof (this->mask_));
       ++this->size_;
 #else /* ACE_HANDLE_SET_USES_FD_ARRAY */
 #if defined (ACE_HAS_BIG_FD_SET)
       if (this->size_ == 0)
-        FD_ZERO (&this->mask_);
+        FD_ZERO (std::addressof (this->mask_));
 
       if (handle < this->min_handle_)
         this->min_handle_ = handle;
 #endif /* ACE_HAS_BIG_FD_SET */
 
       FD_SET (handle,
-              &this->mask_);
+              std::addressof (this->mask_));
       ++this->size_;
 
       if (handle > this->max_handle_)
@@ -128,7 +129,7 @@ ACE_Handle_Set::clr_bit (ACE_HANDLE handle)
       (this->is_set (handle)))
     {
       FD_CLR ((ACE_SOCKET) handle,
-              &this->mask_);
+              std::addressof (this->mask_));
       --this->size_;
 
 #if !defined (ACE_HANDLE_SET_USES_FD_ARRAY)
@@ -157,7 +158,7 @@ ACE_Handle_Set::operator fd_set *()
   ACE_TRACE ("ACE_Handle_Set::operator fd_set *");
 
   if (this->size_ > 0)
-    return (fd_set *) &this->mask_;
+    return std::addressof (this->mask_);
   else
     return nullptr;
 }
@@ -169,7 +170,7 @@ ACE_Handle_Set::fdset ()
   ACE_TRACE ("ACE_Handle_Set::fdset");
 
   if (this->size_ > 0)
-    return (fd_set *) &this->mask_;
+    return std::addressof (this->mask_);
   else
     return nullptr;
 }

@@ -8,6 +8,7 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_ctype.h"
 #include "ace/Default_Constants.h"
+#include "ace/Malloc_Base.h"
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_Thread.h"
 #include "ace/Object_Manager_Base.h"
@@ -171,7 +172,7 @@ ACE_OS::argv_to_string (int argc,
       buf_len += ACE_OS::strlen (argv_p[i]);
 
       // Add one for the extra space between each string.
-      buf_len++;
+      ++buf_len;
     }
 
   // Step through all argv params and copy each one into buf; separate
@@ -291,8 +292,8 @@ ACE_OS::fork_exec (ACE_TCHAR *argv[])
 {
 # if defined (ACE_WIN32)
 
-  ACE_TCHAR *buf = nullptr;
-  std::unique_ptr<ACE_TCHAR[]> safe_ptr (buf);
+  ACE_TCHAR *buf {};
+  std::unique_ptr<ACE_TCHAR[], ACE_Array_Deleter<ACE_TCHAR>> safe_ptr (buf);
   if (ACE_OS::argv_to_string (argv, buf) != -1)
     {
       PROCESS_INFORMATION process_info;
@@ -329,7 +330,7 @@ ACE_OS::fork_exec (ACE_TCHAR *argv[])
 #   if defined (ACE_USES_WCHAR)
       // Wide-char builds need to convert the command-line args to
       // narrow char strings for execv ().
-      char **cargv = nullptr;
+      char **cargv {};
       int arg_count;
 #   endif /* ACE_HAS_WCHAR */
 
@@ -423,7 +424,7 @@ ACE_OS::num_processors_online ()
   CPUSET_ZERO (cpuset);
   cpuset = vxCpuEnabledGet();
   unsigned int const maxcpu = vxCpuConfiguredGet();
-  for (unsigned int i =0; i < maxcpu; i++)
+  for (unsigned int i =0; i < maxcpu; ++i)
     {
       if (CPUSET_ISSET (cpuset, i))
         {

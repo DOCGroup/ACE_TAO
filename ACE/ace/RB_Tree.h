@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_RB_TREE_H
 #define ACE_RB_TREE_H
 #include /**/ "ace/pre.h"
@@ -52,10 +51,8 @@ template <class EXT_ID, class INT_ID>
 class ACE_RB_Tree_Node : public ACE_RB_Tree_Node_Base
 {
 public:
-  /// Constructor.
   ACE_RB_Tree_Node (const EXT_ID &k, const INT_ID &t);
 
-  /// Destructor.
   ~ACE_RB_Tree_Node ();
 
   /// Key accessor.
@@ -195,10 +192,9 @@ public:
   using iterator = ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>;
   using reverse_iterator = ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>;
 
-  /// Constructor.
   ACE_RB_Tree (ACE_Allocator *alloc = nullptr);
 
-  /// Copy constructor.
+
   ACE_RB_Tree (const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &rbt);
 
   /// Initialize an RB Tree.
@@ -208,7 +204,6 @@ public:
   /// resources.
   int close ();
 
-  /// Destructor.
   virtual ~ACE_RB_Tree ();
 
   // = insertion, removal, and search methods.
@@ -230,7 +225,6 @@ public:
   int bind (const EXT_ID &ext_id,
             const INT_ID &int_id,
             ACE_RB_Tree_Node<EXT_ID, INT_ID> *&entry);
-
 
   /**
    * Associate @a ext_id with @a int_id if and only if @a ext_id is not
@@ -350,7 +344,7 @@ public:
   /// Returns the current number of nodes in the tree.
   size_t current_size () const;
 
-  /// Assignment operator.
+
   void operator= (const ACE_RB_Tree<EXT_ID,
                   INT_ID,
                   COMPARE_KEYS,
@@ -583,7 +577,7 @@ template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 class ACE_RB_Tree_Iterator_Base
 {
 public:
-  /// Copy constructor.
+
   ACE_RB_Tree_Iterator_Base (const ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &iter);
 
   /// Assignment operator: copies both the tree reference and the position in the tree.
@@ -642,7 +636,6 @@ protected:
   ACE_RB_Tree_Iterator_Base (const EXT_ID& key,
                              ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS,ACE_LOCK> &tree);
 
-  /// Destructor.
   ~ACE_RB_Tree_Iterator_Base ();
 
   // = Internal methods
@@ -705,7 +698,6 @@ public:
   ACE_RB_Tree_Iterator (const EXT_ID &key,
                         ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree);
 
-  /// Destructor.
   ~ACE_RB_Tree_Iterator ();
 
   // = ACE-style iteration methods.
@@ -775,10 +767,10 @@ public:
 
   /**
    * @deprecated: use the base class <done> method instead.
-   * Returns 0 if the iterator is positioned over a valid ACE_RB_Tree
-   * node, returns 1 if not.
+   * Returns true if the iterator is not positioned over a valid
+   * ACE_RB_Tree node.
    */
-  int is_done ();
+  bool is_done ();
 };
 
 /**
@@ -820,7 +812,6 @@ public:
   ACE_RB_Tree_Reverse_Iterator (const EXT_ID &key,
                                 ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree);
 
-  /// Destructor.
   ~ACE_RB_Tree_Reverse_Iterator ();
 
   // = ACE-style iteration methods.

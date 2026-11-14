@@ -36,6 +36,8 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Functor_T.h"
+#include <cstring>
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -265,7 +267,7 @@ ACE_Dev_Poll_Reactor_Notify::read_notify_pipe (ACE_HANDLE handle,
           // doesn't work we're in big trouble since the input stream
           // won't be aligned correctly.  I'm not sure quite what to
           // do at this point.  It's probably best just to return -1.
-          if (ACE::recv (handle, &read_p[n], remainder) <= 0)
+          if (ACE::recv (handle, read_p + n, remainder) <= 0)
             return -1;
         }
 
@@ -279,7 +281,6 @@ ACE_Dev_Poll_Reactor_Notify::read_notify_pipe (ACE_HANDLE handle,
   return 0;
 #endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
 }
-
 
 int
 ACE_Dev_Poll_Reactor_Notify::handle_input (ACE_HANDLE /*handle*/)
@@ -309,7 +310,7 @@ ACE_Dev_Poll_Reactor_Notify::dispatch_notify (ACE_Notification_Buffer &buffer)
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor_Notify::dispatch_notify");
 
-  // If eh == 0 then another thread is unblocking the
+  // If eh is nullptr then another thread is unblocking the
   // ACE_Dev_Poll_Reactor to update the ACE_Dev_Poll_Reactor's
   // internal structures.  Otherwise, we need to dispatch the
   // appropriate handle_* method on the ACE_Event_Handler
@@ -408,7 +409,6 @@ ACE_Dev_Poll_Reactor_Notify::dequeue_one (ACE_Notification_Buffer &nb)
   nb.mask_ = 0;
   return this->read_notify_pipe (this->notify_handle (), nb);
 }
-
 
 // -----------------------------------------------------------------
 
@@ -512,7 +512,7 @@ ACE_Dev_Poll_Reactor::Handler_Repository::find (ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::Handler_Repository::find");
 
-  Event_Tuple *tuple = nullptr;
+  Event_Tuple *tuple {};
 
   // Only bother to search for the <handle> if it's in range.
   if (!this->handle_in_range (handle))
@@ -520,7 +520,7 @@ ACE_Dev_Poll_Reactor::Handler_Repository::find (ACE_HANDLE handle)
       return nullptr;
     }
 
-  tuple = &(this->handlers_[handle]);
+  tuple = std::addressof (this->handlers_[handle]);
   if (tuple->event_handler == nullptr)
     {
       errno = ENOENT;
@@ -602,12 +602,12 @@ ACE_Dev_Poll_Reactor::ACE_Dev_Poll_Reactor (ACE_Sig_Handler *sh,
   , notify_handler_ (nullptr)
   , delete_notify_handler_ (false)
   , mask_signals_ (mask_signals)
-  , restart_ (0)
+  , restart_ (false)
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::ACE_Dev_Poll_Reactor");
 
   if (this->open (ACE::max_handles (),
-                  0,
+                  false,
                   sh,
                   tq,
                   disable_notify_pipe,
@@ -645,7 +645,7 @@ ACE_Dev_Poll_Reactor::ACE_Dev_Poll_Reactor (size_t size,
   , notify_handler_ (nullptr)
   , delete_notify_handler_ (false)
   , mask_signals_ (mask_signals)
-  , restart_ (0)
+  , restart_ (false)
 {
   if (this->open (size,
                   rs,
@@ -683,7 +683,7 @@ ACE_Dev_Poll_Reactor::open (size_t size,
     return -1;
 
 #ifdef ACE_HAS_EVENT_POLL
-  ACE_OS::memset (&this->event_, 0, sizeof (this->event_));
+  std::memset (&this->event_, 0, sizeof (this->event_));
   this->event_.data.fd = ACE_INVALID_HANDLE;
 #endif /* ACE_HAS_EVENT_POLL */
 
@@ -786,7 +786,6 @@ ACE_Dev_Poll_Reactor::current_info (ACE_HANDLE, size_t & /* size */)
   ACE_NOTSUP_RETURN (-1);
 }
 
-
 int
 ACE_Dev_Poll_Reactor::set_sig_handler (ACE_Sig_Handler *signal_handler)
 {
@@ -835,7 +834,7 @@ ACE_Dev_Poll_Reactor::close ()
 
 #if defined (ACE_HAS_EVENT_POLL)
 
-  ACE_OS::memset (&this->event_, 0, sizeof (this->event_));
+  std::memset (&this->event_, 0, sizeof (this->event_));
   this->event_.data.fd = ACE_INVALID_HANDLE;
 
 #else
@@ -973,7 +972,6 @@ ACE_Dev_Poll_Reactor::work_pending_i (ACE_Time_Value * max_wait_time)
   // If timers are pending, override any timeout from the poll.
   return (nfds == 0 && timers_pending != 0 ? 1 : nfds);
 }
-
 
 int
 ACE_Dev_Poll_Reactor::handle_events (ACE_Time_Value *max_wait_time)
@@ -1170,10 +1168,10 @@ ACE_Dev_Poll_Reactor::dispatch_io_event (Token_Guard &guard)
 
       // Going to access handler repo, so lock it. If the lock is
       // unobtainable, something is very wrong so bail out.
-      Event_Tuple *info = nullptr;
+      Event_Tuple *info {};
       ACE_Reactor_Mask disp_mask = 0;
-      ACE_Event_Handler *eh = nullptr;
-      int (ACE_Event_Handler::*callback)(ACE_HANDLE) = nullptr;
+      ACE_Event_Handler *eh {};
+      int (ACE_Event_Handler::*callback)(ACE_HANDLE) {};
 #ifndef ACE_HAS_DEV_POLL
       bool reactor_resumes_eh = false;
 #endif /* !ACE_HAS_DEV_POLL */
@@ -1442,7 +1440,7 @@ ACE_Dev_Poll_Reactor::register_handler_i (ACE_HANDLE handle,
      Event_Tuple *info = this->handler_rep_.find (handle);
 
      struct epoll_event epev;
-     ACE_OS::memset (&epev, 0, sizeof (epev));
+     std::memset (&epev, 0, sizeof (epev));
      static constexpr int op = EPOLL_CTL_ADD;
 
      epev.data.fd = handle;
@@ -1782,7 +1780,7 @@ ACE_Dev_Poll_Reactor::suspend_handler_i (ACE_HANDLE handle)
 #if defined (ACE_HAS_EVENT_POLL)
 
   struct epoll_event epev;
-  ACE_OS::memset (&epev, 0, sizeof (epev));
+  std::memset (&epev, 0, sizeof (epev));
   static constexpr int op = EPOLL_CTL_DEL;
 
   epev.events  = 0;
@@ -1899,7 +1897,7 @@ ACE_Dev_Poll_Reactor::resume_handler_i (ACE_HANDLE handle)
 #if defined (ACE_HAS_EVENT_POLL)
 
   struct epoll_event epev;
-  ACE_OS::memset (&epev, 0, sizeof (epev));
+  std::memset (&epev, 0, sizeof (epev));
   int op = EPOLL_CTL_ADD;
   if (info->controlled)
     op = EPOLL_CTL_MOD;
@@ -2338,7 +2336,7 @@ ACE_Dev_Poll_Reactor::mask_ops_i (ACE_HANDLE handle,
 #if defined (ACE_HAS_EVENT_POLL)
 
       struct epoll_event epev;
-      ACE_OS::memset (&epev, 0, sizeof (epev));
+      std::memset (&epev, 0, sizeof (epev));
       int op;
 
       // ACE_Event_Handler::NULL_MASK ???
@@ -2422,7 +2420,7 @@ ACE_Dev_Poll_Reactor::dump () const
               ACE_TEXT ("initialized_ = %d"),
               this->initialized_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("poll_fd_ = %d"), this->poll_fd_));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("size_ = %u"), this->handler_rep_.size ()));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("size_ = %B"), this->handler_rep_.size ()));
   ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("deactivated_ = %d"),
               this->deactivated_));

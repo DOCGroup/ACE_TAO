@@ -2,7 +2,8 @@
 #include "tao/OctetSeqC.h"
 
 #include "ace/Log_Msg.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 const IOP::ServiceId service_id = 0xdeadbeef;
 const char *request_msg = "The Echo_Request_Interceptor request message";
@@ -52,7 +53,7 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
               buf));
 #endif /*if 0*/
 
-  if (ACE_OS::strcmp (buf, request_msg) != 0)
+  if (std::strcmp (buf, request_msg) != 0)
     {
         ACE_ERROR ((LM_ERROR,
                     "ERROR: Echo_Server_Request_Interceptor::receive_request_service_contexts: "
@@ -65,17 +66,16 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
 
   scc.context_id = ::service_id;
 
-  CORBA::ULong string_len = ACE_OS::strlen (reply_msg) + 1;
+  CORBA::ULong string_len = std::strlen (reply_msg) + 1;
   CORBA::Octet *buff = CORBA::OctetSeq::allocbuf (string_len);
 
-  ACE_OS::strcpy (reinterpret_cast<char *> (buff), reply_msg);
+  std::strcpy (reinterpret_cast<char *> (buff), reply_msg);
 
   scc.context_data.replace (string_len, string_len, buff, 1);
 
   // Add this context to the service context list.
   ri->add_reply_service_context (scc, 0);
 }
-
 
 void
 Echo_Server_Request_Interceptor::receive_request (
@@ -107,7 +107,7 @@ Echo_Server_Request_Interceptor::send_reply (
               buf));
 #endif /*if 0*/
 
-  if (ACE_OS::strcmp (buf, reply_msg) != 0)
+  if (std::strcmp (buf, reply_msg) != 0)
     {
         ACE_ERROR ((LM_ERROR,
                     "ERROR: Echo_Server_Request_Interceptor::send_reply: "
@@ -121,7 +121,7 @@ Echo_Server_Request_Interceptor::send_reply (
 
   const char *buf2 = reinterpret_cast<const char *> (sc2->context_data.get_buffer ());
 
-  if (ACE_OS::strcmp (buf2, request_msg) != 0)
+  if (std::strcmp (buf2, request_msg) != 0)
     {
         ACE_ERROR ((LM_ERROR,
                     "ERROR: Echo_Server_Request_Interceptor::send_reply: "
@@ -157,7 +157,7 @@ Echo_Server_Request_Interceptor::send_exception (
               buf));
 #endif /*if 0*/
 
-  if (ACE_OS::strcmp (buf, reply_msg) != 0)
+  if (std::strcmp (buf, reply_msg) != 0)
     {
         ACE_ERROR ((LM_ERROR,
                     "ERROR: Echo_Server_Request_Interceptor::send_exception: "
@@ -171,7 +171,7 @@ Echo_Server_Request_Interceptor::send_exception (
 
   const char *buf2 = reinterpret_cast<const char *> (sc2->context_data.get_buffer ());
 
-  if (ACE_OS::strcmp (buf2, request_msg) != 0)
+  if (std::strcmp (buf2, request_msg) != 0)
     {
         ACE_ERROR ((LM_ERROR,
                     "ERROR: Echo_Server_Request_Interceptor::send_exception: "

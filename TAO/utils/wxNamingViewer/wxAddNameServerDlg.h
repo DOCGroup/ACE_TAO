@@ -3,7 +3,6 @@
 #ifndef i_wxAddNameServerDlg_h
 #define i_wxAddNameServerDlg_h
 
-
 class WxAddNameServerDlg:
   public wxDialog
 {

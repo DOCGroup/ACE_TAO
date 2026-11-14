@@ -47,8 +47,12 @@ class TAO_Security_Export TAO_Security_Current
     public ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
-  TAO_Security_Current (size_t tss_slot, const char *orb_id);
+  TAO_Security_Current (size_t tss_slot, char const *orb_id);
+
+  TAO_Security_Current (TAO_Security_Current const &) = delete;
+  TAO_Security_Current (TAO_Security_Current &&) = delete;
+  TAO_Security_Current &operator= (TAO_Security_Current const &) = delete;
+  TAO_Security_Current &operator= (TAO_Security_Current &&) = delete;
 
   /**
    * @name SecurityLevel1::Current Methods
@@ -83,9 +87,8 @@ public:
   size_t tss_slot () const;
 
 protected:
-  /// Destructor
   /// Protected to force allocation on the heap.
-  ~TAO_Security_Current () override;
+  ~TAO_Security_Current () override = default;
 
   /// Fully initialize this object.  This method is used predominantly
   /// to set the ORB core pointer.
@@ -102,12 +105,6 @@ protected:
    * TSS.  The underlying security mechanism does that.
    */
   TAO::Security::Current_Impl *implementation ();
-
-private:
-  TAO_Security_Current (const TAO_Security_Current &) = delete;
-  TAO_Security_Current (TAO_Security_Current &&) = delete;
-  void operator= (const TAO_Security_Current &) = delete;
-  void operator= (TAO_Security_Current &&) = delete;
 
 private:
   /// TSS slot assigned to this object.

@@ -3,8 +3,6 @@
 #include "ace/SPIPE_Connector.h"
 #include "ace/SPIPE_Addr.h"
 #include "CPP-connector.h"
-
-
 #if !defined (ACE_WIN32)
 using PEER_HANDLER = Peer_Handler<ACE_SPIPE_STREAM>;
 using IPC_CLIENT = IPC_Client<PEER_HANDLER, ACE_SPIPE_CONNECTOR>;
@@ -31,7 +29,7 @@ int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
-                     "This test is not ported to Win32 (yet)\n"),
+                     ACE_TEXT ("This test is not ported to Win32 (yet)\n")),
                     -1);
 }
 #endif /* !ACE_WIN32 */

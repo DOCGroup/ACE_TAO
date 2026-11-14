@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_SSLIOP_CREDENTIALS_ACQUIRER_FACTORY_H
 #define TAO_SSLIOP_CREDENTIALS_ACQUIRER_FACTORY_H
 
@@ -23,7 +22,6 @@
 #include "orbsvcs/Security/SL3_CredentialsAcquirerFactory.h"
 
 #include "orbsvcs/SecurityLevel3C.h"
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -46,7 +44,7 @@ namespace TAO
       /// Create a TAO::SSLIOP::CredentialsAcquirerFactory.
       SecurityLevel3::CredentialsAcquirer_ptr make (
         TAO::SL3::CredentialsCurator_ptr curator,
-        const CORBA::Any & acquisition_arguments) override;
+        CORBA::Any const & acquisition_arguments) override;
     };
   } // End SSLIOP namespace
 }  // End TAO namespace

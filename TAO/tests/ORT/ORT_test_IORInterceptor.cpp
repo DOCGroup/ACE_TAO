@@ -44,7 +44,6 @@ ORT_test_IORInterceptor::components_established (
               "components_established() has been invoked %d times\n",
               this->establish_count_));
 
-
   // Swap out the current ObjectReferenceFactory with our own.
 
   // Save a copy of the current ObjectReferenceFactory.
@@ -67,7 +66,7 @@ ORT_test_IORInterceptor::components_established (
 
 void
 ORT_test_IORInterceptor::adapter_manager_state_changed (
-    const char * id,
+    char const *id,
     PortableInterceptor::AdapterState)
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -76,7 +75,7 @@ ORT_test_IORInterceptor::adapter_manager_state_changed (
 
 void
 ORT_test_IORInterceptor:: adapter_state_changed (
-    const PortableInterceptor::ObjectReferenceTemplateSeq &,
+    PortableInterceptor::ObjectReferenceTemplateSeq const &,
     PortableInterceptor::AdapterState)
 {
 }

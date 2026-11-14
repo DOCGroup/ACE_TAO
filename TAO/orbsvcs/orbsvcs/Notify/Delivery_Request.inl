@@ -20,5 +20,4 @@ Delivery_Request::set_destination_id (IdVec & destination_id)
 
 } // namespace TAO_Notify
 
-
 TAO_END_VERSIONED_NAMESPACE_DECL

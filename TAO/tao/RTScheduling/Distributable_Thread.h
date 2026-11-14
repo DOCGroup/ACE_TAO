@@ -8,13 +8,18 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-class TAO_RTScheduler_Export TAO_DistributableThread:
-  public RTScheduling::DistributableThread,
-  public ::CORBA::LocalObject
+class TAO_RTScheduler_Export TAO_DistributableThread
+  : public RTScheduling::DistributableThread,
+    public ::CORBA::LocalObject
 {
 public:
   TAO_DistributableThread () = default;
-  ~TAO_DistributableThread () = default;
+  ~TAO_DistributableThread () override = default;
+
+  TAO_DistributableThread (TAO_DistributableThread const &) = delete;
+  TAO_DistributableThread &operator= (TAO_DistributableThread const &) = delete;
+  TAO_DistributableThread (TAO_DistributableThread &&) = delete;
+  TAO_DistributableThread &operator= (TAO_DistributableThread &&) = delete;
 
   void cancel () override;
 

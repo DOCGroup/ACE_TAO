@@ -1,13 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file   RT_Mutex.h
  *
  *  @author Frank Hunleth <fhunleth@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_RT_MUTEX_H
 #define TAO_RT_MUTEX_H
@@ -25,7 +22,7 @@
 #include "tao/LocalObject.h"
 
 #if (TAO_HAS_NAMED_RT_MUTEXES == 1)
-# include "ace/SString.h"
+# include <string>
 #endif /* TAO_HAS_NAMED_RT_MUTEXES == 1 */
 
 #if defined(_MSC_VER)
@@ -67,7 +64,6 @@ public:
   /// Returns the name of the mutex.
   virtual char const *name () const;
 
-  /// Destructor.
   ~TAO_RT_Mutex () override;
 
 protected:
@@ -84,7 +80,6 @@ protected:
 class TAO_RTCORBA_Export TAO_Named_RT_Mutex : public TAO_RT_Mutex
 {
 public:
-  /// Constructor.
   explicit TAO_Named_RT_Mutex (char const *name);
 
   /// Returns the name of the mutex.
@@ -92,7 +87,7 @@ public:
 
 protected:
   /// My name.
-  ACE_CString name_;
+  std::string name_;
 };
 #endif /* TAO_HAS_NAMED_RT_MUTEXES == 1 */
 

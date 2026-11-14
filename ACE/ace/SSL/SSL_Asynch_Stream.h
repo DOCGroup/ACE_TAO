@@ -27,6 +27,8 @@
 #include "ace/Synch_Traits.h"
 #include "ace/Thread_Mutex.h"
 
+#include <memory>
+
 /*
  * This facility doesn't follow the normal ACE asynch I/O support classes'
  * interface/implementation arrangement. It's not needed because rather than
@@ -56,7 +58,6 @@ using AWS_RESULT = ACE_POSIX_Asynch_Write_Stream_Result;
 # define ERR_CANCELED ECANCELED
 
 #endif  /* ACE_WIN32 */
-
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -106,7 +107,6 @@ protected:
                                       int signal_number);
 };
 
-
 /**
  * @class ACE_SSL_Asynch_Result
  *
@@ -115,14 +115,13 @@ protected:
 class ACE_SSL_Asynch_Result : public A_RESULT
 {
 public:
-    ACE_SSL_Asynch_Result (ACE_Handler &handler);
+    explicit ACE_SSL_Asynch_Result (ACE_Handler &handler);
 
     void complete (size_t bytes_transferred,
-                   int    success,
-                   const  void * completion_key,
-                   u_long error);
+                   int success,
+                   const void *completion_key,
+                   u_long error) override;
 };
-
 
 // Only provide forward declarations to prevent possible abuse of the
 // friend declarations in ACE_SSL_Asynch_Stream.
@@ -162,21 +161,24 @@ public:
       ST_SERVER = 0x0002
     };
 
-  /// Constructor.
   /**
    * @arg context  Pointer to an ACE_SSL_Context instance containing
    *               the OpenSSL information to be associated with this
    *               ACE_SSL_Asynch_Stream.  The needed SSL data will be
    *               copied before return. Therefore, this object can be
-   *               reused, modified, or deleted upon return. If a 0 pointer
+   *               reused, modified, or deleted upon return. If a null pointer
    *               is passed, the ACE_SSL_Context::instance() method will
    *               be called to get access to a singleton.
    */
   ACE_SSL_Asynch_Stream (Stream_Type s_type = ST_SERVER,
                          ACE_SSL_Context * context = nullptr);
 
-  /// Destructor
-  virtual ~ACE_SSL_Asynch_Stream ();
+  ACE_SSL_Asynch_Stream (ACE_SSL_Asynch_Stream const &) = delete;
+  ACE_SSL_Asynch_Stream &operator= (ACE_SSL_Asynch_Stream const &) = delete;
+  ACE_SSL_Asynch_Stream (ACE_SSL_Asynch_Stream &&) = delete;
+  ACE_SSL_Asynch_Stream &operator= (ACE_SSL_Asynch_Stream &&) = delete;
+
+  ~ACE_SSL_Asynch_Stream () override;
 
   int cancel ();
 
@@ -276,23 +278,21 @@ public:
 protected:
   /// Virtual from ACE_Asynch_Operation. Since this class is essentially an
   /// implementation class, simply return 0.
-  virtual ACE_Asynch_Operation_Impl *implementation () const { return nullptr; }
+  ACE_Asynch_Operation_Impl *implementation () const override { return nullptr; }
 
   /// virtual from ACE_Handler
 
   /// This method is called when BIO write request is completed. It
   /// processes the IO completion and calls do_SSL_state_machine().
-  virtual void handle_write_stream
-               (const ACE_Asynch_Write_Stream::Result &result);
+  void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result) override;
 
   /// This method is called when BIO read request is completed. It
   /// processes the IO completion and calls do_SSL_state_machine().
-  virtual void handle_read_stream
-               (const ACE_Asynch_Read_Stream::Result &result);
+  void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result) override;
 
   /// This method is called when all SSL sessions are closed and no
   /// more pending AIOs exist.  It also calls users handle_wakeup().
-  virtual void handle_wakeup ();
+  void handle_wakeup () override;
 
   /**
    * This method will be called after a successful SSL handshake indicating
@@ -365,25 +365,20 @@ protected:
   int ssl_bio_write (const char * buf, size_t len, int & errval);
   //@}
 
-private:
-  ACE_SSL_Asynch_Stream (ACE_SSL_Asynch_Stream const &) = delete;
-  ACE_SSL_Asynch_Stream & operator= (ACE_SSL_Asynch_Stream const &) = delete;
-
-protected:
   /// Stream Type ST_CLIENT/ST_SERVER
-  Stream_Type type_;
+  Stream_Type type_ {ST_SERVER};
 
   /// The proactor
-  ACE_Proactor * proactor_;
+  ACE_Proactor *proactor_ {};
 
   /// External,i.e user  handler
-  ACE_Handler * ext_handler_;
+  ACE_Handler *ext_handler_ {};
 
   /// External, i.e. read result faked for user
-  ACE_SSL_Asynch_Read_Stream_Result *  ext_read_result_ ;
+  ACE_SSL_Asynch_Read_Stream_Result *ext_read_result_ {};
 
   /// External, i.e. write result faked for user
-  ACE_SSL_Asynch_Write_Stream_Result * ext_write_result_ ;
+  ACE_SSL_Asynch_Write_Stream_Result *ext_write_result_ {};
 
   /// Stream state/flags
   enum Stream_Flag
@@ -400,16 +395,23 @@ protected:
       SF_DELETE_ENABLE  = 0x0010
     };
 
-  int flags_;
+  int flags_ {};
 
+private:
   /// The SSL session.
-  SSL * ssl_;
+  struct SSL_Deleter
+  {
+    void operator() (SSL *ssl) const
+    {
+      ::SSL_free (ssl);
+    }
+  };
+
+protected:
+  std::unique_ptr<SSL, SSL_Deleter> ssl_ {};
 
   /// Flag ensures that post_connection_check() is called at most one time.
-  bool handshake_complete_;
-
-  /// The BIO implementation
-  BIO * bio_;
+  bool handshake_complete_ {};
 
   /// The real streams which work under the ssl connection.
   /// BIO performs I/O via this streams
@@ -425,24 +427,24 @@ protected:
    * @name Internal stream, buffer and info for BIO read
    */
   //@{
-  ACE_Asynch_Read_Stream  bio_istream_;
-  ACE_Message_Block       bio_inp_msg_;
-  int                     bio_inp_errno_;
-  int                     bio_inp_flag_;
+  ACE_Asynch_Read_Stream bio_istream_ {};
+  ACE_Message_Block bio_inp_msg_ {};
+  int bio_inp_errno_ {};
+  int bio_inp_flag_ {};
   //@}
 
   /**
    * @name Internal stream, buffer and info for BIO write
    */
   //@{
-  ACE_Asynch_Write_Stream bio_ostream_;
-  ACE_Message_Block       bio_out_msg_;
-  int                     bio_out_errno_;
-  int                     bio_out_flag_;
+  ACE_Asynch_Write_Stream bio_ostream_ {};
+  ACE_Message_Block bio_out_msg_ {};
+  int bio_out_errno_ {};
+  int bio_out_flag_ {};
   //@}
 
   /// Mutex to protect work
-  ACE_SYNCH_MUTEX mutex_;
+  ACE_SYNCH_MUTEX mutex_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -34,17 +34,14 @@ template <class EXT_ID, class INT_ID>
 class ACE_Hash_Map_Entry
 {
 public:
-  /// Constructor.
   ACE_Hash_Map_Entry (const EXT_ID &ext_id,
                       const INT_ID &int_id,
                       ACE_Hash_Map_Entry<EXT_ID, INT_ID> *next = nullptr,
                       ACE_Hash_Map_Entry<EXT_ID, INT_ID> *prev = nullptr);
 
-  /// Constructor.
   ACE_Hash_Map_Entry (ACE_Hash_Map_Entry<EXT_ID, INT_ID> *next,
                       ACE_Hash_Map_Entry<EXT_ID, INT_ID> *prev);
 
-  /// Destructor.
   ~ACE_Hash_Map_Entry ();
 
   /// Key accessor.
@@ -126,6 +123,11 @@ template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class 
 class ACE_Hash_Map_Manager_Ex
 {
 public:
+  ACE_Hash_Map_Manager_Ex (ACE_Hash_Map_Manager_Ex const &) = delete;
+  ACE_Hash_Map_Manager_Ex (ACE_Hash_Map_Manager_Ex &&) = delete;
+  ACE_Hash_Map_Manager_Ex &operator= (ACE_Hash_Map_Manager_Ex const &) = delete;
+  ACE_Hash_Map_Manager_Ex &operator= (ACE_Hash_Map_Manager_Ex &&) = delete;
+
   friend class ACE_Hash_Map_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
   friend class ACE_Hash_Map_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
   friend class ACE_Hash_Map_Const_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
@@ -561,10 +563,6 @@ private:
   /// @note That this can be larger than <total_size_> due to the
   /// bucket chaining).
   size_t cur_size_;
-
-  // = Disallow these operations.
-  void operator= (const ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID,  HASH_KEY, COMPARE_KEYS, ACE_LOCK> &) = delete;
-  ACE_Hash_Map_Manager_Ex (const ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID,  HASH_KEY, COMPARE_KEYS, ACE_LOCK> &) = delete;
 };
 
 /**
@@ -588,7 +586,6 @@ public:
   using pointer = typename container_type::pointer;
   using difference_type = typename container_type::difference_type;
 
-  /// Constructor.
   /**
    *  If @a head != @c false, the iterator constructed is positioned
    *  at the head of the map.  It is positioned at the end otherwise.
@@ -602,7 +599,6 @@ public:
     ACE_LOCK> &mm,
     bool head);
 
-  /// Constructor.
   /**
    * This constructor positions the iterator to the given @a entry.
    */
@@ -768,7 +764,6 @@ public:
   ACE_Hash_Map_Iterator_Ex (ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
                             int tail = 0);
 
-  /// Constructor.
   /**
    * This constructor positions the iterator to the given @a entry.
    */

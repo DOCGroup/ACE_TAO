@@ -11,9 +11,9 @@
 #include "tao/Profile_Transport_Resolver.h"
 #include "tao/SystemException.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include <memory>
 
-// ****************************************************************
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_Time_Value TAO_Optimized_Connection_Endpoint_Selector::timeout_;
 
@@ -35,10 +35,6 @@ TAO_Optimized_Connection_Endpoint_Selector (ACE_Time_Value const &tv)
     }
 }
 
-TAO_Optimized_Connection_Endpoint_Selector::
-~TAO_Optimized_Connection_Endpoint_Selector () = default;
-
-
 void
 TAO_Optimized_Connection_Endpoint_Selector::hook (TAO_ORB_Core *,
                                                   TAO_Stub *,
@@ -56,15 +52,15 @@ int
 TAO_Optimized_Connection_Endpoint_Selector::check_profile (TAO_Profile *p,
                                                            TAO::Profile_Transport_Resolver *r)
 {
-  TAO_Endpoint *effective_endpoint = nullptr;
+  TAO_Endpoint *effective_endpoint {};
 
   r->profile(p);
   effective_endpoint = p->endpoint ();
-  size_t endpoint_count = p->endpoint_count();
-  for (size_t i = 0; i < endpoint_count; ++i)
+  size_t const endpoint_count = p->endpoint_count();
+  for (size_t i {}; i < endpoint_count; ++i)
     {
       TAO_Base_Transport_Property desc (effective_endpoint);
-      if (r->find_transport(&desc))
+      if (r->find_transport (std::addressof (desc)))
         return 1;
       // Go to the next endpoint in this profile
       effective_endpoint = effective_endpoint->next();
@@ -94,7 +90,7 @@ TAO_Optimized_Connection_Endpoint_Selector::select_endpoint
   TAO_MProfile const *profiles = stub->forward_profiles();
   if (profiles != nullptr)
     {
-      for (CORBA::ULong count = 0; count <  profiles->profile_count(); count++)
+      for (CORBA::ULong count {}; count < profiles->profile_count (); ++count)
         {
           p = const_cast<TAO_Profile *>(profiles->get_profile(count));
           if (this->check_profile (p, r) != 0)
@@ -122,7 +118,6 @@ TAO_Optimized_Connection_Endpoint_Selector::select_endpoint
       while (stub->next_profile_retry () != 0);
     }
 
-
   // at this point, we do not have an existing transport, so we must
   // reset the profile list and try establishing connections via the
   // connector(s).
@@ -141,10 +136,10 @@ TAO_Optimized_Connection_Endpoint_Selector::select_endpoint
 
           TAO_Endpoint *ep = r->profile ()->endpoint ();
 
-          for (size_t i = 0; i < endpoint_count; ++i)
+          for (size_t i {}; i < endpoint_count; ++i)
             {
               TAO_Base_Transport_Property desc (ep);
-              const bool retval = r->try_connect (&desc, max_wait_time);
+              const bool retval = r->try_connect (std::addressof (desc), max_wait_time);
 
               // Check if the connect has completed.
               if (retval)

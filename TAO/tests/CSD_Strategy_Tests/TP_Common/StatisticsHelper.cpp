@@ -9,7 +9,6 @@ void swap (CORBA::Long& x, CORBA::Long& y)
   y = temp;
 }
 
-
 void sort (LongVector & vector)
 {
   unsigned size = vector.size ();

@@ -8,32 +8,23 @@
  */
 //=============================================================================
 
-
 #include "test_dynstruct.h"
 #include "da_testsC.h"
 #include "data.h"
 #include "tao/DynamicAny/DynamicAny.h"
 #include "analyzer.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
-Test_DynStruct::Test_DynStruct (CORBA::ORB_var orb, int debug)
+Test_DynStruct::Test_DynStruct (CORBA::ORB_var orb, bool debug)
   : orb_ (orb),
-    test_name_ (CORBA::string_dup ("test_dynstruct")),
-    error_count_ (0),
     debug_ (debug)
 {
 }
 
-Test_DynStruct::~Test_DynStruct ()
-{
-  CORBA::string_free (this->test_name_);
-  this->test_name_ = 0;
-}
-
-const char*
+char const*
 Test_DynStruct::test_name () const
 {
-  return this->test_name_;
+  return "test_dynstruct";
 }
 
 int
@@ -181,7 +172,7 @@ Test_DynStruct::run_test ()
       CORBA::Any_var out_any1 =
         ftc1->to_any ();
 
-      const DynAnyTests::test_struct* ts_out = 0;
+      DynAnyTests::test_struct const* ts_out {};
       out_any1.in () >>= ts_out;
 
       if (ts_out->es.s == data.m_short1)
@@ -197,8 +188,7 @@ Test_DynStruct::run_test ()
       ACE_DEBUG ((LM_DEBUG,
                   "testing: constructor(TypeCode alias)/from_any/to_any\n"));
 
-
-      const DynAnyTests::test_struct *ts_out2 = 0;
+      DynAnyTests::test_struct const* ts_out2 {};
       CORBA::Any_var out_any2 ;
       DynamicAny::DynStruct_var ftc2;
 
@@ -234,14 +224,14 @@ Test_DynStruct::run_test ()
 
           if (!(out_any2.in () >>= ts_out2)) // problem
             {
-              ts_out2 = 0;
+              ts_out2 = nullptr;
             }
         }
       catch (const CORBA::TypeCode::BadKind& )
         {
         }
 
-      if (ts_out2 != 0 && ts_out2->es.s == data.m_short1)
+      if (ts_out2 != nullptr && ts_out2->es.s == data.m_short1)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "++ OK ++\n"));
@@ -251,7 +241,6 @@ Test_DynStruct::run_test ()
           ++this->error_count_;
         }
 
-
       ACE_DEBUG ((LM_DEBUG,
                   "testing: current_member_name/current_member_kind\n"));
 
@@ -260,7 +249,7 @@ Test_DynStruct::run_test ()
       DynamicAny::FieldName_var fn =
         ftc1->current_member_name ();
 
-      if (ACE_OS::strcmp (fn.in (), "es"))
+      if (std::strcmp (fn.in (), "es"))
         {
           ++this->error_count_;
         }
@@ -287,7 +276,7 @@ Test_DynStruct::run_test ()
       DynamicAny::FieldName_var fn2 =
         ftc2->current_member_name ();
 
-      if (ACE_OS::strcmp (fn2.in (), "es"))
+      if (std::strcmp (fn2.in (), "es"))
         {
           ++this->error_count_;
         }
@@ -333,7 +322,7 @@ Test_DynStruct::run_test ()
 
       CORBA::ULong index = 2;
 
-      if (ACE_OS::strcmp (gm[index].id, "es"))
+      if (std::strcmp (gm[index].id, "es"))
         {
           ++this->error_count_;
         }

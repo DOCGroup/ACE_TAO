@@ -1,6 +1,5 @@
 #include "URL.h"
 
-
 Mem_Map_Stream &
 URL::stream ()
 {

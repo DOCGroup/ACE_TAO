@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #ifndef EC_RECONNECT_H
 #define EC_RECONNECT_H
 
@@ -36,23 +35,26 @@
 class EC_Reconnect : public EC_Driver
 {
 public:
-  /// Constructor
   EC_Reconnect ();
+  EC_Reconnect (EC_Reconnect const &) = delete;
+  EC_Reconnect &operator= (EC_Reconnect const &) = delete;
+  EC_Reconnect (EC_Reconnect &&) = delete;
+  EC_Reconnect &operator= (EC_Reconnect &&) = delete;
 
   // = The EC_Driver methods
   /// add some command line args to enable/disable reconnections
-  virtual int parse_args (int& argc, ACE_TCHAR* argv[]);
-  virtual void print_args () const;
-  virtual void print_usage ();
+  int parse_args (int& argc, ACE_TCHAR* argv[]) override;
+  void print_args () const override;
+  void print_usage () override;
 
   /// set the reconnection flags
-  virtual void modify_attributes (TAO_EC_Event_Channel_Attributes& attr);
+  void modify_attributes (TAO_EC_Event_Channel_Attributes& attr) override;
 
   /// Don't run the suppliers, just test connect and disconnect calls.
-  void execute_test ();
+  void execute_test () override;
 
   /// Don't dump the EC_Driver results, they are meaningless.
-  void dump_results ();
+  void dump_results () override;
 
   /// Separate the suppliers and consumers.
   void execute_consumer_test ();

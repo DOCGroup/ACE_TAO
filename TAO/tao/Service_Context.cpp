@@ -6,7 +6,8 @@
 # include "tao/Service_Context.inl"
 #endif /* ! __ACE_INLINE__ */
 
-#include "ace/OS_NS_string.h"
+#include <cstring>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -21,11 +22,11 @@ TAO_Service_Context::set_context_i (IOP::ServiceId id, TAO_OutputCDR &cdr)
   context.context_data.length (static_cast<CORBA::ULong> (length));
   CORBA::Octet *buf = context.context_data.get_buffer ();
 
-  for (const ACE_Message_Block *i = cdr.begin ();
+  for (ACE_Message_Block const *i = cdr.begin ();
        i != nullptr;
        i = i->cont ())
     {
-      ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());
+      std::memcpy (buf, i->rd_ptr (), i->length ());
       buf += i->length ();
     }
 
@@ -41,26 +42,26 @@ TAO_Service_Context::set_context_i (IOP::ServiceContext &context,
   context.context_data.length (static_cast<CORBA::ULong> (length));
   CORBA::Octet *buf = context.context_data.get_buffer ();
 
-  for (const ACE_Message_Block *i = cdr.begin ();
+  for (ACE_Message_Block const *i = cdr.begin ();
        i != nullptr;
        i = i->cont ())
     {
-      ACE_OS::memcpy (buf, i->rd_ptr (), i->length ());
+      std::memcpy (buf, i->rd_ptr (), i->length ());
       buf += i->length ();
     }
 }
 
 void
-TAO_Service_Context::set_context (const IOP::ServiceContext &context)
+TAO_Service_Context::set_context (IOP::ServiceContext const &context)
 {
   this->add_context_i (context);
 }
 
 int
-TAO_Service_Context::set_context (const IOP::ServiceContext &context,
+TAO_Service_Context::set_context (IOP::ServiceContext const &context,
                                   CORBA::Boolean replace)
 {
-  for (CORBA::ULong i = 0; i != this->service_context_.length (); ++i)
+  for (CORBA::ULong i {}; i != this->service_context_.length (); ++i)
     {
       if (context.context_id == this->service_context_[i].context_id)
         {
@@ -81,11 +82,11 @@ TAO_Service_Context::set_context (const IOP::ServiceContext &context,
 }
 
 void
-TAO_Service_Context::set_context_i (const IOP::ServiceContext& context)
+TAO_Service_Context::set_context_i (IOP::ServiceContext const &context)
 {
   // @@ TODO Some contexts can show up multiple times, others
   //    can't find out and take appropriate action.
-  for (CORBA::ULong i = 0; i != this->service_context_.length (); ++i)
+  for (CORBA::ULong i {}; i != this->service_context_.length (); ++i)
     {
       if (context.context_id == this->service_context_[i].context_id)
         {
@@ -98,16 +99,16 @@ TAO_Service_Context::set_context_i (const IOP::ServiceContext& context)
 }
 
 void
-TAO_Service_Context::set_context_i (IOP::ServiceContext& context)
+TAO_Service_Context::set_context_i (IOP::ServiceContext &context)
 {
-  for (CORBA::ULong i = 0; i != this->service_context_.length (); ++i)
+  for (CORBA::ULong i {}; i != this->service_context_.length (); ++i)
     {
       if (context.context_id == this->service_context_[i].context_id)
         {
           CORBA::ULong const max = context.context_data.maximum ();
           CORBA::ULong const len = context.context_data.length ();
-          CORBA::Octet * const buf = context.context_data.get_buffer (1);
-          this->service_context_[i].context_data.replace (max, len, buf, 1);
+          CORBA::Octet * const buf = context.context_data.get_buffer (true);
+          this->service_context_[i].context_data.replace (max, len, buf, true);
           return;
         }
     }
@@ -116,7 +117,7 @@ TAO_Service_Context::set_context_i (IOP::ServiceContext& context)
 }
 
 void
-TAO_Service_Context::add_context_i (IOP::ServiceContext& context)
+TAO_Service_Context::add_context_i (IOP::ServiceContext &context)
 {
   // @@ TODO Some contexts can show up multiple times, others
   //    can't find out and take appropriate action.
@@ -125,12 +126,12 @@ TAO_Service_Context::add_context_i (IOP::ServiceContext& context)
   this->service_context_[l].context_id = context.context_id;
   CORBA::ULong const max = context.context_data.maximum ();
   CORBA::ULong const len = context.context_data.length ();
-  CORBA::Octet* const buf = context.context_data.get_buffer (1);
-  this->service_context_[l].context_data.replace (max, len, buf, 1);
+  CORBA::Octet * const buf = context.context_data.get_buffer (true);
+  this->service_context_[l].context_data.replace (max, len, buf, true);
 }
 
 void
-TAO_Service_Context::add_context_i (const IOP::ServiceContext& context)
+TAO_Service_Context::add_context_i (IOP::ServiceContext const &context)
 {
   // @@ TODO Some contexts can show up multiple times, others
   //    can't find out and take appropriate action.
@@ -140,9 +141,9 @@ TAO_Service_Context::add_context_i (const IOP::ServiceContext& context)
 }
 
 int
-TAO_Service_Context::get_context (IOP::ServiceContext& context) const
+TAO_Service_Context::get_context (IOP::ServiceContext &context) const
 {
-  for (CORBA::ULong i = 0; i != this->service_context_.length (); ++i)
+  for (CORBA::ULong i {}; i != this->service_context_.length (); ++i)
     {
       if (context.context_id == this->service_context_[i].context_id)
         {
@@ -156,13 +157,13 @@ TAO_Service_Context::get_context (IOP::ServiceContext& context) const
 
 int
 TAO_Service_Context::get_context (IOP::ServiceId id,
-                                  const IOP::ServiceContext **context) const
+                                  IOP::ServiceContext const **context) const
 {
-  for (CORBA::ULong i = 0; i != this->service_context_.length (); ++i)
+  for (CORBA::ULong i {}; i != this->service_context_.length (); ++i)
     {
       if (id == this->service_context_[i].context_id)
         {
-          *context = &this->service_context_[i];
+          *context = std::addressof (this->service_context_[i]);
           return 1;
         }
     }
@@ -176,7 +177,7 @@ TAO_Service_Context::get_context (IOP::ServiceId id,
 {
   CORBA::ULong const len = this->service_context_.length ();
 
-  for (CORBA::ULong i = 0; i < len; ++i)
+  for (CORBA::ULong i {}; i < len; ++i)
     {
       if (id == this->service_context_[i].context_id)
         {
@@ -192,13 +193,13 @@ TAO_Service_Context::get_context (IOP::ServiceId id,
 }
 
 int
-TAO_Service_Context::encode (TAO_OutputCDR& cdr) const
+TAO_Service_Context::encode (TAO_OutputCDR &cdr) const
 {
   return (cdr << this->service_context_);
 }
 
 int
-TAO_Service_Context::decode (TAO_InputCDR& cdr)
+TAO_Service_Context::decode (TAO_InputCDR &cdr)
 {
   if (!(cdr >> this->service_context_))
     {

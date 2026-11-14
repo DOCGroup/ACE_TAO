@@ -9,11 +9,12 @@
  */
 //=============================================================================
 
-
 #ifndef ETCL_INTERPRETER_H
 #define ETCL_INTERPRETER_H
 
 #include /**/ "ace/pre.h"
+
+#include <memory>
 
 #include "ace/Thread_Mutex.h"
 
@@ -43,26 +44,28 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ETCL_Parser_Export ETCL_Interpreter
 {
 protected:
-  /// Constructor.
   ETCL_Interpreter ();
 
-  /// Destructor.
   virtual ~ETCL_Interpreter ();
+
+  ETCL_Interpreter (ETCL_Interpreter const &) = delete;
+  ETCL_Interpreter &operator= (ETCL_Interpreter const &) = delete;
+  ETCL_Interpreter (ETCL_Interpreter &&) = delete;
+  ETCL_Interpreter &operator= (ETCL_Interpreter &&) = delete;
 
   /// Using the Yacc generated parser, construct an expression tree
   /// representing @a constraints from the tokens returned by it.
-  int build_tree (const char* constraints);
+  int build_tree (char const *constraints);
 
-  static int is_empty_string (const char* str);
+  static bool is_empty_string (char const *str);
 
   /// The root of the expression tree, not equal to null if build_tree
   /// successfully builds a tree from the constraints.
-  ETCL_Constraint* root_;
+  std::unique_ptr<ETCL_Constraint> root_ {};
 private:
   /// This mutex protects the <build_tree> method from reentrance.
   static ACE_SYNCH_MUTEX parserMutex__;
 };
-
 
 // Functions we need for parsing.
 extern int yyparse ();
@@ -85,23 +88,22 @@ class Lex_String_Input
 {
 public:
   /// Reset the lex input.
-  static void reset (char* input_string);
+  static void reset (char const *input_string);
 
   /// Method lex will call to read from the input string.
-  static int copy_into (char* buf, int max_size);
+  static int copy_into (char *buf, int max_size);
 
 private:
   /// Pointers to keep track of the input string.
-  static char* string_;
-  static char* current_;
-  static char* end_;
+  static char const *current_;
+  static char const *end_;
 };
 
 /// The union used by lex and bison to build the Abstract Syntax Tree.
-typedef union
+union YYSTYPE
 {
-  ACE_VERSIONED_NAMESPACE_NAME::ETCL_Constraint* constraint;
-} YYSTYPE;
+  ACE_VERSIONED_NAMESPACE_NAME::ETCL_Constraint *constraint;
+};
 
 extern YYSTYPE yylval;
 extern YYSTYPE yyval;

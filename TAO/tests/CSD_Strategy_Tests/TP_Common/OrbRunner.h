@@ -7,10 +7,15 @@
 class CSD_TP_Test_Export OrbRunner
 {
 public:
-  OrbRunner(CORBA::ORB_ptr orb, unsigned num_orb_threads = 1);
+  explicit OrbRunner(CORBA::ORB_ptr orb, unsigned num_orb_threads = 1);
   virtual ~OrbRunner();
 
   void run();
+
+  OrbRunner (OrbRunner const &) = delete;
+  OrbRunner (OrbRunner &&) = delete;
+  OrbRunner & operator= (OrbRunner const &) = delete;
+  OrbRunner & operator= (OrbRunner &&) = delete;
 
 private:
   CORBA::ORB_var orb_;

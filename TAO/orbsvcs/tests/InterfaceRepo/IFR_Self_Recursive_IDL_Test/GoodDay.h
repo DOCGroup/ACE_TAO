@@ -14,7 +14,6 @@ class GoodDay
   : public virtual POA_Test::GoodDay
 {
 public:
-  /// Constructor
   GoodDay (CORBA::ORB_ptr orb);
 
   GoodDay (GoodDay const&) = delete;

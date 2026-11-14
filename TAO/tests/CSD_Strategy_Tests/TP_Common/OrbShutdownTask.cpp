@@ -10,10 +10,6 @@
 #include "ace/CORBA_macros.h"
 #include "ace/OS_NS_unistd.h"
 
-OrbShutdownTask::OrbShutdownTask()
-{
-}
-
 void
 OrbShutdownTask::orb(CORBA::ORB_ptr orb)
 {
@@ -37,13 +33,12 @@ OrbShutdownTask::open(void*)
   return 0;
 }
 
-
 int
 OrbShutdownTask::svc()
 {
   try
   {
-    this->orb_->shutdown(0);
+    this->orb_->shutdown (false);
   }
   catch (...)
   {
@@ -54,7 +49,6 @@ OrbShutdownTask::svc()
 
   return 0;
 }
-
 
 int
 OrbShutdownTask::close(u_long)

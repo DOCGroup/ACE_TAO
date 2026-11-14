@@ -17,7 +17,7 @@ public:
   Get_Task (ACE_Thread_Manager *thr_mgr,
             int n_threads);
 
-  virtual int svc ();
+  int svc () override;
 
   const ACE_Array<ACE_CString>& results ();
 
@@ -107,7 +107,7 @@ class Get_MultiTask : public ACE_Task<ACE_MT_SYNCH>
 public:
   Get_MultiTask (ACE_Thread_Manager *thr_mgr);
 
-  virtual int svc ();
+  int svc () override;
 
   int failures ();
 
@@ -257,7 +257,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   if (get_task.results ().size () != ACE_Utils::truncate_cast<size_t> (n_threads))
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("%d results found; ")
+                  ACE_TEXT ("%B results found; ")
                   ACE_TEXT ("should be %d\n"),
                   get_task.results ().size (),
                   n_threads));

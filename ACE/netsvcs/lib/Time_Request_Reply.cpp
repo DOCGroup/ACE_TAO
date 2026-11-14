@@ -160,7 +160,7 @@ ACE_Time_Request::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Time_Request::dump");
-  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("*******\nlength = %d\n"),
+  ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("*******\nlength = %b\n"),
               this->size ()));
   ACE_DEBUG ((LM_DEBUG,  ACE_TEXT ("message-type = ")));
 

@@ -168,7 +168,6 @@ public:
                  ACE_CDR::Octet giop_major_version = ACE_CDR_GIOP_MAJOR_VERSION,
                  ACE_CDR::Octet giop_minor_version = ACE_CDR_GIOP_MINOR_VERSION);
 
-  /// destructor
   ~ACE_OutputCDR ();
 
   /**
@@ -551,10 +550,10 @@ private:
   // that the provide location locates.
   ACE_Message_Block* find (char* loc);
 
-  ACE_OutputCDR (const ACE_OutputCDR&) = delete;
-  ACE_OutputCDR& operator= (const ACE_OutputCDR&) = delete;
-  ACE_OutputCDR (ACE_OutputCDR&&) = delete;
-  ACE_OutputCDR& operator= (ACE_OutputCDR&&) = delete;
+  ACE_OutputCDR (ACE_OutputCDR const &) = delete;
+  ACE_OutputCDR &operator= (ACE_OutputCDR const &) = delete;
+  ACE_OutputCDR (ACE_OutputCDR &&) = delete;
+  ACE_OutputCDR &operator= (ACE_OutputCDR &&) = delete;
 
   ACE_CDR::Boolean write_1 (const ACE_CDR::Octet *x);
   ACE_CDR::Boolean write_2 (const ACE_CDR::UShort *x);
@@ -579,10 +578,8 @@ private:
                                 size_t align,
                                 ACE_CDR::ULong length);
 
-
   ACE_CDR::Boolean write_wchar_array_i (const ACE_CDR::WChar* x,
                                         ACE_CDR::ULong length);
-
 
   /**
    * Grow the CDR stream. When it returns @a buf contains a pointer to
@@ -663,7 +660,6 @@ protected:
    */
   static size_t wchar_maxbytes_;
 };
-
 
 // ****************************************************************
 
@@ -781,9 +777,8 @@ public:
     ACE_InputCDR &rhs_;
   };
   /// Transfer the contents from @a rhs to a new CDR
-  ACE_InputCDR (Transfer_Contents rhs);
+  explicit ACE_InputCDR (Transfer_Contents rhs);
 
-  /// Destructor
   virtual ~ACE_InputCDR ();
 
   /// Disambiguate overloading when extracting octets, chars,
@@ -1386,7 +1381,6 @@ extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
 
 extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
                                                ACE_CString &x);
-
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

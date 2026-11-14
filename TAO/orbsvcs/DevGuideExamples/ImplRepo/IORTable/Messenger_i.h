@@ -3,7 +3,7 @@
 
 #include "MessengerS.h"
 
-class  Messenger_i : public virtual POA_Messenger
+class Messenger_i : public virtual POA_Messenger
 {
 public:
   Messenger_i () = default;
@@ -13,10 +13,9 @@ public:
   Messenger_i &operator= (Messenger_i &&) = delete;
 
   CORBA::Boolean send_message (
-    char const * user_name,
-    char const * subject,
-    char *& message
-  ) override;
+    char const *user_name,
+    char const *subject,
+    char *&message) override;
 };
 
 #endif

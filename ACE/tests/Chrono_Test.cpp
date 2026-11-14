@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Time_Value.h"
@@ -209,7 +208,6 @@ test_streamers ()
     ++errors;
   }
 
-
   ACE_Time_Value const test_sec {12, 132};
   // Seconds
   s << test_sec;
@@ -338,7 +336,6 @@ test_chrono_operators ()
                 tv_hr.sec (), tv_hr.usec (), hr.count ()));
     ++errors;
   }
-
 
   std::chrono::minutes mn {1};
   ACE_Time_Value const tv_min {75, 0};

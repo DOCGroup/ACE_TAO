@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-// The interface between a supplier and an Event Service ACE_Stream.
 
 #ifndef _SUPPLIER_ROUTER_H
 #define _SUPPLIER_ROUTER_H
@@ -17,38 +16,53 @@
 
 #if defined (ACE_HAS_THREADS)
 
-// Forward declaration.
 class Supplier_Handler;
 
-// Type of search key for SUPPLIER_MAP.
+/// Handle type used as the supplier map key.
 using SUPPLIER_KEY = ACE_HANDLE;
 
-// Instantiated type for routing messages to suppliers.
-
+/// Router type that handles supplier connections.
 using SUPPLIER_ROUTER = Peer_Router<Supplier_Handler, SUPPLIER_KEY>;
 
 class Supplier_Handler
   : public Peer_Handler<SUPPLIER_ROUTER, SUPPLIER_KEY>
 {
 public:
-  Supplier_Handler (ACE_Thread_Manager *tm = 0);
-  virtual int open (void *);
+  explicit Supplier_Handler (ACE_Thread_Manager *tm = nullptr);
+  Supplier_Handler (Supplier_Handler const &) = delete;
+  Supplier_Handler (Supplier_Handler &&) = delete;
+  Supplier_Handler &operator= (Supplier_Handler const &) = delete;
+  Supplier_Handler &operator= (Supplier_Handler &&) = delete;
+  int open (void *) override;
 };
 
+/// The interface between a supplier and an Event Service ACE_Stream.
 class Supplier_Router : public SUPPLIER_ROUTER
 {
 public:
-  Supplier_Router (ACE_Thread_Manager *);
+  explicit Supplier_Router (ACE_Thread_Manager *);
+  Supplier_Router (Supplier_Router const &) = delete;
+  Supplier_Router (Supplier_Router &&) = delete;
+  Supplier_Router &operator= (Supplier_Router const &) = delete;
+  Supplier_Router &operator= (Supplier_Router &&) = delete;
 
 protected:
-  // ACE_Task hooks..
-  virtual int open (void *a = 0);
-  virtual int close (u_long flags = 0);
-  virtual int put (ACE_Message_Block *msg, ACE_Time_Value * = 0);
-  virtual int svc ();
+  /// @name ACE_Task hooks
+  /// @{
 
-  // Dynamic linking hooks inherited from Peer_Router.
-  virtual int info (ACE_TCHAR **info_string, size_t length) const;
+  int open (void *a = nullptr) override;
+  int close (u_long flags = 0) override;
+  int put (ACE_Message_Block *msg, ACE_Time_Value * = nullptr) override;
+  int svc () override;
+
+  /// @}
+
+  /// @name Dynamic linking hooks inherited from Peer_Router
+  /// @{
+
+  int info (ACE_TCHAR **info_string, size_t length) const override;
+
+  /// @}
 };
 
 #endif /* ACE_HAS_THREADS */

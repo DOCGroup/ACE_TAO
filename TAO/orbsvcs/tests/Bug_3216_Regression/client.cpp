@@ -2,54 +2,56 @@
 #include "tao/PI/PI.h"
 #include "TestC.h"
 #include "ace/Get_Opt.h"
+#include "ace/SString.h"
 #include "orbsvcs/FaultTolerance/FT_ClientService_Activate.h"
 #include "Hello.h"
 
-
-ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
+struct Client_Options
+{
+  ACE_TString ior { ACE_TEXT ("file://test.ior") };
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:"));
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
 
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "\n",
+                           ACE_TEXT ("usage:  %s -k <ior>\n"),
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
   return 0;
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  CORBA::Boolean result = false;
+  CORBA::Boolean result {};
   try
     {
-      int one = 1;
-      char CLIENT[] = "client"; // Copy const into non-const storage.
+      Client_Options options;
+      int one { 1 };
+      // ORB_init accepts mutable argv strings and may adjust them.
+      char CLIENT[] = "client";
       char *argv1[] = { CLIENT, nullptr };
 
-      CORBA::ORB_var orb1 =
-      CORBA::ORB_init (one, argv1, "orb1");
+      CORBA::ORB_var const orb1 =
+        CORBA::ORB_init (one, argv1, "orb1");
 
-      int three = 3;
-      char OPTION[] = "-ORBFTSendFullGroupTC"; // Copy const into non-const storage.
-      char VALUE[]  = "1"; // Copy const into non-const storage.
+      int three { 3 };
+      char OPTION[] = "-ORBFTSendFullGroupTC";
+      char VALUE[] = "1";
       char *argv2[] = { CLIENT, OPTION, VALUE, nullptr };
       CORBA::ORB_var orb2;
 
@@ -58,26 +60,27 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           orb2 =
             CORBA::ORB_init (three, argv2, "orb2");
         }
-      catch (const CORBA::BAD_PARAM&)
+      catch (CORBA::BAD_PARAM const &)
         {
           ACE_DEBUG ((LM_ERROR, "Error - REGRESSION - ORB doesn't even accept the config option\n"));
           return 1;
         }
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
       CORBA::Object_var tmp =
-        orb1->string_to_object (ior);
+        orb1->string_to_object (options.ior.c_str ());
 
       Test::Hello_var hello =
-        Test::Hello::_narrow(tmp.in ());
+        Test::Hello::_narrow (tmp.in ());
 
       if (CORBA::is_nil (hello.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
-                             "Test failed - Not regression - Unexpected Nil Test::Hello reference <%s>\n",
-                             ior),
+                             ACE_TEXT ("Test failed - Not regression - Unexpected Nil Test::Hello "
+                                       "reference <%s>\n"),
+                             options.ior.c_str ()),
                             1);
         }
 
@@ -85,24 +88,24 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         {
           hello->check_normal_context ();
         }
-      catch (Test::MyException&)
+      catch (Test::MyException const &)
         {
           ACE_DEBUG ((LM_ERROR, "Error - REGRESSION - normal format service context not transmitted\n"));
           result = 1;
         }
 
-
       tmp =
-        orb2->string_to_object (ior);
+        orb2->string_to_object (options.ior.c_str ());
 
       hello =
-        Test::Hello::_narrow(tmp.in ());
+        Test::Hello::_narrow (tmp.in ());
 
       if (CORBA::is_nil (hello.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
-                             "Test failed - Not regression - Unexpected Nil Test::Hello reference <%s>\n",
-                             ior),
+                             ACE_TEXT ("Test failed - Not regression - Unexpected Nil Test::Hello "
+                                       "reference <%s>\n"),
+                             options.ior.c_str ()),
                             1);
         }
 
@@ -110,12 +113,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         {
           hello->check_extended_context ();
         }
-      catch (const Test::MyException&)
+      catch (Test::MyException const &)
         {
           ACE_DEBUG ((LM_ERROR, "Error - REGRESSION - extended format service context not transmitted\n"));
           result = 1;
         }
-
 
       hello->shutdown ();
 

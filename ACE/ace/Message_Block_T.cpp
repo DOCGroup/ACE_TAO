@@ -12,9 +12,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class L>
-ACE_Locked_Data_Block<L>::~ACE_Locked_Data_Block ()
-{
-}
+ACE_Locked_Data_Block<L>::~ACE_Locked_Data_Block () = default;
 
 template<class ACE_LOCK> ACE_Data_Block *
 ACE_Locked_Data_Block<ACE_LOCK>::clone_nocopy (ACE_Message_Block::Message_Flags mask,
@@ -27,7 +25,7 @@ ACE_Locked_Data_Block<ACE_LOCK>::clone_nocopy (ACE_Message_Block::Message_Flags 
   const ACE_Message_Block::Message_Flags always_clear =
     ACE_Message_Block::DONT_DELETE;
 
-  ACE_Locked_Data_Block<ACE_LOCK> *nb = nullptr;
+  ACE_Locked_Data_Block<ACE_LOCK> *nb {};
 
   ACE_NEW_MALLOC_RETURN (nb,
                          static_cast<ACE_Locked_Data_Block<ACE_LOCK>*> (

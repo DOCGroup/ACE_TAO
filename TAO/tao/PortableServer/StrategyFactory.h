@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file StrategyFactory.h
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
 #ifndef TAO_PORTABLESERVER_STRATEGYFACTORY_H
 #define TAO_PORTABLESERVER_STRATEGYFACTORY_H
 
@@ -31,7 +27,7 @@ namespace TAO
       : public ACE_Service_Object
     {
     public:
-      virtual ~StrategyFactory ();
+      ~StrategyFactory () override = default;
     };
   } /* namespace Portable_Server */
 } /* namespace TAO */

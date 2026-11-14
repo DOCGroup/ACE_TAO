@@ -2,20 +2,29 @@
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 
-static int quiet = 0;
+#include <cstdio>
+#include <cstring>
+#include <memory>
+
+static bool quiet {};
 // The test is quiet...
 
-static const ACE_TCHAR *ior_file = ACE_TEXT ("test.ior");
+static ACE_TCHAR const *ior_file = ACE_TEXT ("test.ior");
 // File of file to which the ior is written
 
-static int number_of_threads = 1;
+static int number_of_threads {1};
 // Number of server threads.
 
 class Server_Task : public ACE_Task_Base
 {
 public:
-  Server_Task (CORBA::ORB_ptr orb);
-  int svc ();
+  explicit Server_Task (CORBA::ORB_ptr orb);
+  int svc () override;
+
+  Server_Task (Server_Task const &) = delete;
+  Server_Task (Server_Task &&) = delete;
+  Server_Task &operator= (Server_Task const &) = delete;
+  Server_Task &operator= (Server_Task &&) = delete;
 
 private:
   CORBA::ORB_var orb_;
@@ -33,7 +42,7 @@ Server_Task::svc ()
     {
       this->orb_->run ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       return -1;
     }
@@ -41,29 +50,24 @@ Server_Task::svc ()
 }
 
 static int
-write_ior_to_file (const char *ior)
+write_ior_to_file (char const *ior)
 {
-  FILE *output_file = ACE_OS::fopen (ior_file, "w");
+  std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+    ACE_OS::fopen (ior_file, "w"), &std::fclose);
 
-  if (output_file == 0)
+  if (!output_file)
     ACE_ERROR_RETURN ((LM_ERROR, "Cannot open output files for writing IOR: %s\n",
                        ior_file),
                       -1);
 
-  int result = 0;
-
-  result = ACE_OS::fprintf (output_file,
-                            "%s",
-                            ior);
+  int const result = std::fprintf (output_file.get (), "%s", ior);
   if (result < 0 ||
-      static_cast<size_t> (result) != ACE_OS::strlen (ior))
+      static_cast<size_t> (result) != std::strlen (ior))
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "ACE_OS::fprintf failed while writing %C to %s\n",
+                       "fprintf failed while writing %C to %s\n",
                        ior,
                        ior_file),
                       -1);
-
-  ACE_OS::fclose (output_file);
 
   return 0;
 }
@@ -79,7 +83,7 @@ parse_args (int argc,
     switch (c)
       {
       case 'q':
-        quiet = 1;
+        quiet = true;
         break;
 
       case 't':
@@ -102,6 +106,9 @@ parse_args (int argc,
                           -1);
       }
 
+  if (number_of_threads <= 0)
+    ACE_ERROR_RETURN ((LM_ERROR, "The number of server threads must be positive.\n"), -1);
+
   return 0;
 }
 
@@ -112,9 +119,9 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-      int result = parse_args (argc, argv);
-      if (result != 0)
-        return result;
+      int const parse_result = parse_args (argc, argv);
+      if (parse_result != 0)
+        return parse_result;
 
       CORBA::Object_var object = orb->resolve_initial_references ("RootPOA");
 
@@ -138,7 +145,7 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
 
       CORBA::String_var ior = orb->object_to_string (server_object.in ());
 
-      result = write_ior_to_file (ior.in ());
+      int result = write_ior_to_file (ior.in ());
       if (result != 0)
         return result;
 
@@ -157,7 +164,7 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
 
       root_poa->destroy (true, true);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("server::main");
       return -1;

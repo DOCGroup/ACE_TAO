@@ -2,36 +2,17 @@
 
 #if (TAO_HAS_HTTP_PARSER == 1)
 
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_strings.h"
 #include "tao/debug.h"
 #include <cstring>
+#include <string>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_HTTP_Handler::TAO_HTTP_Handler () :
-  mb_ (nullptr),
-  filename_ (nullptr),
-  bytecount_ (0)
-{
-}
-
 TAO_HTTP_Handler::TAO_HTTP_Handler (ACE_Message_Block * mb,
-                            ACE_TCHAR *filename) :
+                                    const ACE_TCHAR *filename) :
   mb_ (mb),
-  filename_ (ACE_OS::strdup (filename)),
-  bytecount_ (0)
+  filename_ (filename)
 {
-}
-
-TAO_HTTP_Handler::~TAO_HTTP_Handler ()
-{
-  if (this->filename_)
-    {
-      ACE_OS::free (this->filename_);
-      filename_ = nullptr;
-    }
 }
 
 int
@@ -72,7 +53,7 @@ TAO_HTTP_Handler::byte_count () const
 // Reader **************************************************
 
 TAO_HTTP_Reader::TAO_HTTP_Reader (ACE_Message_Block * mb,
-                                  ACE_TCHAR *filename,
+                                  const ACE_TCHAR *filename,
                                   const char *request_prefix,
                                   const char *request_suffix) :
   TAO_HTTP_Handler (mb, filename),
@@ -84,21 +65,26 @@ TAO_HTTP_Reader::TAO_HTTP_Reader (ACE_Message_Block * mb,
 int
 TAO_HTTP_Reader::send_request ()
 {
-  char mesg [MAX_HEADER_SIZE];
+  size_t const request_size = std::strlen (request_prefix_)
+                              + this->filename_.size ()
+                              + std::strlen (request_suffix_);
 
   // Check to see if the request is too big
-  if (MAX_HEADER_SIZE < (std::strlen (request_prefix_)
-                         + ACE_OS::strlen (filename_)
-                         + std::strlen (request_suffix_) + 4))
+  if (MAX_HEADER_SIZE < request_size + 4)
     TAOLIB_ERROR_RETURN((LM_ERROR,"TAO (%P|%t) - HTTP_Reader::send_request, request too large!"), -1);
 
   // Create a message to send to the server requesting retrieval of the file
-  int const len = ACE_OS::sprintf (mesg, "%s %s %s", request_prefix_,
-                                   ACE_TEXT_ALWAYS_CHAR (filename_),
-                                   request_suffix_);
+  std::string message;
+  message.reserve (request_size + 2);
+  message += request_prefix_;
+  message += ' ';
+  message += ACE_TEXT_ALWAYS_CHAR (this->filename_.c_str ());
+  message += ' ';
+  message += request_suffix_;
+  int const len = static_cast<int> (message.size ());
 
   // Send the message to server
-  if (peer ().send_n (mesg, len) != len)
+  if (peer ().send_n (message.data (), len) != len)
     TAOLIB_ERROR_RETURN((LM_ERROR,"TAO (%P|%t) - HTTP_Reader::send_request, error sending request\n"), -1);
 
   return 0;
@@ -107,25 +93,25 @@ TAO_HTTP_Reader::send_request ()
 int
 TAO_HTTP_Reader::receive_reply ()
 {
-  size_t num_recvd = 0;
+  size_t num_recvd {};
   char buf [MTU+1];
-  char *buf_ptr = nullptr;
-  size_t bytes_read = 0;
+  char *buf_ptr {};
+  size_t bytes_read {};
 
   // Receive the first MTU bytes and strip the header off.
   // Note that we assume that the header will fit into MTU bytes.
   if (peer ().recv_n (buf, MTU, nullptr, &num_recvd) >= 0)
     {
       //Make sure that response type is 200 OK
-      if (ACE_OS::strstr (buf,"200 OK") == nullptr)
+      if (std::strstr (buf,"200 OK") == nullptr)
         TAOLIB_ERROR_RETURN ((LM_ERROR,
                             "TAO (%P|%t) - HTTP_Reader::receive_reply, Response is not 200 OK\n" ), -1);
 
       // Search for the header termination string "\r\n\r\n", or "\n\n". If
       // found, move past it to get to the data portion.
-      if ((buf_ptr = ACE_OS::strstr (buf,"\r\n\r\n")) != nullptr)
+      if ((buf_ptr = std::strstr (buf,"\r\n\r\n")) != nullptr)
         buf_ptr += 4;
-      else if ((buf_ptr = ACE_OS::strstr (buf, "\n\n")) != nullptr)     //for compatibility with JAWS
+      else if ((buf_ptr = std::strstr (buf, "\n\n")) != nullptr)     //for compatibility with JAWS
         buf_ptr += 2;
       else
         buf_ptr = buf;
@@ -144,7 +130,7 @@ TAO_HTTP_Reader::receive_reply ()
   // At this point, we have stripped off the header and are ready to
   // process data. buf_ptr points to the data
 
-  ACE_Message_Block* temp = nullptr;
+  ACE_Message_Block* temp {};
   ACE_Message_Block* curr = this->mb_;
 
   ACE_NEW_RETURN (temp,

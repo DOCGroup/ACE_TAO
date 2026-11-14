@@ -16,7 +16,6 @@
  */
 //=============================================================================
 
-
 #include "ace/HTBP/HTBP_Stream.h"
 #include "ace/HTBP/HTBP_Session.h"
 #include "ace/HTBP/HTBP_ID_Requestor.h"
@@ -32,8 +31,10 @@
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/os_include/os_netdb.h"
 
+#include <memory>
+
 // Change to non-zero if test fails
-static int Test_Result = 0;
+static int Test_Result {};
 
 // In test 3, a large amount of data is sent. The purpose is to overflow the
 // TCP send window, causing the sender to block (it's a send_n). This value
@@ -46,7 +47,7 @@ const size_t Test3_Send_Size = 4*1024;
 const size_t Test3_Loops = 10;
 const size_t Test3_Total_Size = Test3_Send_Size * Test3_Loops;
 unsigned port = 8088;
-const ACE_TCHAR *notifier_file = 0;
+const ACE_TCHAR *notifier_file {};
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -111,12 +112,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               ACE_TEXT ("(%P|%t) starting server at port %d\n"),
               server_addr.get_port_number ()));
 
-  if (notifier_file != 0)
+  if (notifier_file != nullptr)
     {
-      FILE *f = ACE_OS::fopen (notifier_file,ACE_TEXT("w+"));
-      const char *msg = "server ready";
-      ACE_OS::fwrite (msg,ACE_OS::strlen(msg),1,f);
-      ACE_OS::fclose (f);
+      std::unique_ptr<FILE, int (*) (FILE *)> file (
+        ACE_OS::fopen (notifier_file, ACE_TEXT ("w+")), ACE_OS::fclose);
+      if (!file)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("Cannot open notifier file '%s'\n"),
+                           notifier_file), 1);
+      char const * const msg = "server ready";
+      ACE_OS::fwrite (msg, ACE_OS::strlen (msg), 1, file.get ());
     }
 
   ACE_INET_Addr cli_addr;
@@ -149,7 +154,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT("(%P) Got sock_stream[1], handle = %d\n"),
               sock_stream[1].get_handle()));
-  int res = 0;
+  int res {};
   while ((res = channel1.pre_recv()) != 0)
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -194,13 +199,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ssize_t len;
   int i;
 
-  iov[0].iov_base = reinterpret_cast<char *> (&buffer[0]);
+  iov[0].iov_base = reinterpret_cast<char *> (buffer);
   iov[0].iov_len = 75;
 
-  iov[1].iov_base = reinterpret_cast<char *> (&buffer[75]);
+  iov[1].iov_base = reinterpret_cast<char *> (buffer + 75);
   iov[1].iov_len = 100;
 
-  iov[2].iov_base = reinterpret_cast<char *> (&buffer[175]);
+  iov[2].iov_base = reinterpret_cast<char *> (buffer + 175);
   iov[2].iov_len = 80;
 
   len = stream.recvv (iov, 3);
@@ -213,7 +218,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT("(%P) server, Test 1: recvd len = %d\n"),len));
+              ACE_TEXT("(%P) server, Test 1: recvd len = %b\n"),len));
 
   for (i = 0; i < 255; i++)
     if (buffer[i] != i)
@@ -238,7 +243,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   len += stream.send (buffer + 48,189);
   len += stream.send (buffer + 237,18);
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT("(%P) server sent len=%d\n"),len));
+              ACE_TEXT("(%P) server sent len=%b\n"),len));
   //  ACE_OS::sleep(10);
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT("(%P) flushing outbound queue\n")));
@@ -268,7 +273,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   stream.close ();
 
   peer_acceptor.close ();
-
 
   if (len != 255)
     {

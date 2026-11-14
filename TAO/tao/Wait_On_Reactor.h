@@ -29,10 +29,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Wait_On_Reactor : public TAO_Wait_Strategy
 {
 public:
-  /// Constructor.
   explicit TAO_Wait_On_Reactor (TAO_Transport *transport);
 
-  /// Destructor.
   ~TAO_Wait_On_Reactor () override = default;
 
   /*! @copydoc TAO_Wait_Strategy::wait() */
@@ -46,6 +44,12 @@ public:
 
   /*! @copydoc TAO_Wait_Strategy::can_process_upcalls() */
   bool can_process_upcalls () const override;
+
+private:
+  TAO_Wait_On_Reactor (TAO_Wait_On_Reactor const &) = delete;
+  TAO_Wait_On_Reactor &operator= (TAO_Wait_On_Reactor const &) = delete;
+  TAO_Wait_On_Reactor (TAO_Wait_On_Reactor &&) = delete;
+  TAO_Wait_On_Reactor &operator= (TAO_Wait_On_Reactor &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,15 +1,6 @@
 // file      : Agent.cpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-#include <ace/streams.h>
-#if defined(ACE_USES_OLD_IOSTREAMS)
-#  if defined(_MSC_VER)
-#    include <strstrea.h>
-#  else
-#    include <strstream.h>
-#  endif
-#else
-# include <sstream>
-#endif
+#include <sstream>
 
 #include "tao/corba.h"
 #include "ace/OS_NS_unistd.h"
@@ -24,7 +15,6 @@
 #include "orbsvcs/Notify/Service.h"
 #include "orbsvcs/Notify/CosNotify_Initializer.h" // NS static link helper.
 
-
 #include "Gate/Gate.h"
 
 using namespace CORBA;
@@ -35,18 +25,17 @@ using namespace CosNotifyChannelAdmin;
 class Agent : public POA_CosNotifyComm::StructuredPushConsumer
 {
 public:
-  Agent (char const* space_craft_name,
-         char const* agent_name,
+  Agent (char const *space_craft_name,
+         char const *agent_name,
          EventChannel_ptr ch)
-      : space_craft_name_ (space_craft_name),
-        agent_name_ (agent_name),
-        counter_ (0)
+    : space_craft_name_ (space_craft_name),
+      agent_name_ (agent_name)
   {
     // Obtain a proxy consumer.
     //
-    ProxyConsumer_var pc (
+    ProxyConsumer_var pc {
       ch->default_supplier_admin ()->obtain_notification_push_consumer (
-        STRUCTURED_EVENT, consumer_id_));
+        STRUCTURED_EVENT, consumer_id_)};
 
     consumer_ = StructuredProxyPushConsumer::_narrow (pc.in ());
 
@@ -55,11 +44,11 @@ public:
 
     // Register as a consumer.
     //
-    StructuredPushConsumer_var ref (_this ()); // Activate on the default POA.
+    StructuredPushConsumer_var ref {_this ()}; // Activate on the default POA.
 
-    ProxySupplier_var ps (
+    ProxySupplier_var ps {
       ch->default_consumer_admin ()->obtain_notification_push_supplier (
-        STRUCTURED_EVENT, supplier_id_));
+        STRUCTURED_EVENT, supplier_id_)};
 
     supplier_ = StructuredProxyPushSupplier::_narrow (ps.in ());
 
@@ -75,12 +64,17 @@ public:
   }
 
 private:
+  Agent (Agent const &) = delete;
+  Agent (Agent &&) = delete;
+  Agent &operator= (Agent const &) = delete;
+  Agent &operator= (Agent &&) = delete;
+
   static ACE_THR_FUNC_RETURN
   tracker_thunk (void* arg)
   {
-    Agent* a = reinterpret_cast<Agent*> (arg);
+    Agent * const a = static_cast<Agent *> (arg);
     a->tracker ();
-    return 0;
+    return ACE_THR_FUNC_RETURN_NULL;
   }
 
   void
@@ -88,7 +82,7 @@ private:
   {
     while (true)
     {
-      StructuredEvent e;
+      StructuredEvent e {};
 
       // Header.
       //
@@ -98,18 +92,11 @@ private:
       // Make a unique "event id" by combining space_craft_name, agent_name,
       // and counter. This can be handy for debugging.
       //
-#if defined(ACE_USES_OLD_IOSTREAMS)
-      ostrstream ostr;
-#else
       std::ostringstream ostr;
-#endif
       ostr << space_craft_name_ << ":" << agent_name_ << ":" << counter_++;
 
-#if defined(ACE_USES_OLD_IOSTREAMS)
-      e.header.fixed_header.event_name = ostr.str ();
-#else
-      e.header.fixed_header.event_name = ostr.str ().c_str ();
-#endif
+      std::string const event_name = ostr.str ();
+      e.header.fixed_header.event_name = string_dup (event_name.c_str ());
 
       // Also add space_craft_name and agent_name fields separately
       // into variable_header. This will make filtering easier.
@@ -129,39 +116,38 @@ private:
       e.filterable_data[0].name = string_dup ("counter");
       e.filterable_data[0].value <<= counter_;
 
-
       consumer_->push_structured_event (e);
 
       ACE_OS::sleep (ACE_Time_Value (3, 0));
-    }
+  }
   }
 
 private:
   // NotifyPublish interface.
   //
-  virtual void
+  void
   offer_change (EventTypeSeq const&,
-                EventTypeSeq const&)
+                EventTypeSeq const&) override
   {
     // We don't care.
   }
 
   // StructuredPushSupplier interface.
   //
-  virtual void
-  push_structured_event (StructuredEvent const& e)
+  void
+  push_structured_event (StructuredEvent const& e) override
   {
     // Extract space_craft_name and agent_name.
     //
-    Char const* space_craft_name = 0;
-    Char const* agent_name = 0;
+    Char const *space_craft_name {};
+    Char const *agent_name {};
 
     e.header.variable_header[0].value >>= space_craft_name;
     e.header.variable_header[1].value >>= agent_name;
 
     // Extract the counter value.
     //
-    CORBA::ULong counter;
+    CORBA::ULong counter {};
     e.filterable_data[0].value >>= counter;
 
     cerr << e.header.fixed_header.event_type.domain_name << "::"
@@ -171,98 +157,89 @@ private:
          << ": " << counter << endl;
   }
 
-
-  virtual void
-  disconnect_structured_push_consumer ()
+  void
+  disconnect_structured_push_consumer () override
   {
     // We don't care.
   }
 
 private:
-  String_var space_craft_name_;
-  String_var agent_name_;
-  ULong counter_;
+  String_var space_craft_name_ {};
+  String_var agent_name_ {};
+  ULong counter_ {};
 
-  ACE_thread_t thread_;
+  ACE_thread_t thread_ {};
 
-  ProxyID consumer_id_;
-  StructuredProxyPushConsumer_var consumer_;
+  ProxyID consumer_id_ {};
+  StructuredProxyPushConsumer_var consumer_ {};
 
-  ProxyID supplier_id_;
-  StructuredProxyPushSupplier_var supplier_;
+  ProxyID supplier_id_ {};
+  StructuredProxyPushSupplier_var supplier_ {};
 };
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
   {
-    ORB_var orb (ORB_init (argc, argv));
+    ORB_var orb {ORB_init (argc, argv)};
 
     if (argc < 2)
     {
       ACE_ERROR ((LM_ERROR,
-                  "Usage: %s <agent-name> [<space-craft-name>={a, b, c}]\n",
+                  ACE_TEXT ("Usage: %s <agent-name> [<space-craft-name>={a, b, c}]\n"),
                   argv[0]));
       return 1;
     }
 
-
     // Activate the root POA.
     //
-    CORBA::Object_var obj (
-      orb->resolve_initial_references ("RootPOA"));
+    CORBA::Object_var obj {
+      orb->resolve_initial_references ("RootPOA")};
 
-    PortableServer::POA_var root_poa (PortableServer::POA::_narrow (obj.in ()));
+    PortableServer::POA_var root_poa {PortableServer::POA::_narrow (obj.in ())};
 
-    PortableServer::POAManager_var poa_manager (root_poa->the_POAManager ());
+    PortableServer::POAManager_var poa_manager {root_poa->the_POAManager ()};
 
     poa_manager->activate ();
 
-
     // Initialize Notification Service.
     //
-    TAO_Notify_Service* ns = TAO_Notify_Service::load_default ();
+    TAO_Notify_Service * const ns = TAO_Notify_Service::load_default ();
 
-    if (ns == 0)
+    if (ns == nullptr)
     {
       ACE_ERROR ((LM_ERROR,
-                  "Notification Service not found! check svc.conf\n"));
+                  ACE_TEXT ("Notification Service not found! check svc.conf\n")));
       return -1;
     }
-
 
     ns->init_service (orb.in ());
 
     // Create the channel factory.
     //
-    EventChannelFactory_var factory (ns->create (root_poa.in ()));
+    EventChannelFactory_var factory {ns->create (root_poa.in ())};
 
     if (is_nil (factory.in ()))
     {
       ACE_ERROR ((LM_ERROR,
-                  "Unable to create channel factory\n"));
+                  ACE_TEXT ("Unable to create channel factory\n")));
       return 1;
     }
 
-
     // Create the channel.
     //
-    QoSProperties qosp;
-    AdminProperties ap;
-    ChannelID id;
+    QoSProperties qosp {};
+    AdminProperties ap {};
+    ChannelID id {};
 
-    EventChannel_var channel (factory->create_channel (qosp, ap, id));
+    EventChannel_var channel {factory->create_channel (qosp, ap, id)};
 
     // Find which space craft we are on.
     //
-    ACE_INET_Addr addr;
-    const ACE_TCHAR *space_craft_name = 0;
-
-    if (argc < 3)
-      space_craft_name = ACE_TEXT("a");  // Default to spacecraft "a".
-    else
-      space_craft_name = argv[2];
+    ACE_INET_Addr addr {};
+    ACE_TCHAR const * const space_craft_name =
+      argc < 3 ? ACE_TEXT ("a") : argv[2];
 
     // Do a quick mapping to mcast addresses.
     //
@@ -286,31 +263,31 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     default:
       {
         ACE_ERROR ((LM_ERROR,
-                    "Space craft name should be either 'a', 'b', or 'c'.\n"));
+                    ACE_TEXT ("Space craft name should be either 'a', 'b', or 'c'.\n")));
         return 1;
       }
     }
 
     // Create the gate.
     //
-    Gate gate (addr, channel.in ());
+    Gate gate {addr, channel.in ()};
 
     // Start the agent.
     //
-    Agent agent (ACE_TEXT_ALWAYS_CHAR(space_craft_name),
-                 ACE_TEXT_ALWAYS_CHAR(argv[1]),
+    Agent agent (ACE_TEXT_ALWAYS_CHAR (space_craft_name),
+                 ACE_TEXT_ALWAYS_CHAR (argv[1]),
                  channel.in ());
 
     orb->run ();
 
     return 0;
   }
-  catch (const CORBA::UserException& ue)
+  catch (CORBA::UserException const &ue)
   {
     ue._tao_print_exception ("User exception: ");
     return 1;
   }
-  catch (const CORBA::SystemException& se)
+  catch (CORBA::SystemException const &se)
   {
     se._tao_print_exception ("System exception: ");
     return 1;

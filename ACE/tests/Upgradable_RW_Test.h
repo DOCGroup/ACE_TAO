@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_TESTS_UPGRADABLE_RW_TEST_H
 #define ACE_TESTS_UPGRADABLE_RW_TEST_H
 
@@ -111,7 +110,7 @@ public:
   {
   };
 
-  virtual int svc ();
+  int svc () override;
 
 private:
   /// keep a reference to the time calculation class
@@ -137,7 +136,7 @@ public:
   {
   };
 
-  virtual int svc ();
+  int svc () override;
 
 private:
   /// keep a reference to the time calculation class

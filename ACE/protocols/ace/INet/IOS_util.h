@@ -35,7 +35,6 @@
 // So we replace each call to init() with the
 // ace_ios_init macro defined below.
 
-
 #if !defined(ACE_IOS_INIT_FIX)
   // Microsoft Visual Studio with Dinkumware STL (but not STLport)
 # if defined(_MSC_VER) && (!defined(_STLP_MSVC) || defined(_STLP_NO_OWN_IOSTREAMS))

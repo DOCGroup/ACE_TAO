@@ -27,7 +27,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Reactor.h"
 #include "ace/Task.h"
@@ -39,7 +38,6 @@
 #include "ace/Null_Mutex.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
-
 
 static int iterations = 10;
 
@@ -57,7 +55,6 @@ static constexpr int watermark_iterations = 2 * default_high_water_mark;
 class Message_Handler : public ACE_Task<ACE_NULL_SYNCH>
 {
 public:
-  /// Constructor.
   Message_Handler (ACE_Reactor &reactor);
 
   // = Demuxing hooks.
@@ -215,7 +212,7 @@ Watermark_Test::producer ()
     {
       this->put_message ();
       this->print_producer_debug_message ();
-      i--;
+      --i;
       if (this->msg_queue ()->is_full ())
         break;
     }

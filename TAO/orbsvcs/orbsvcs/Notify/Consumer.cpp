@@ -11,6 +11,8 @@
 #include "orbsvcs/Notify/QoSProperties.h"
 #include "orbsvcs/Notify/Properties.h"
 
+#include <memory>
+
 #include "orbsvcs/Time_Utilities.h"
 
 #include "tao/debug.h"
@@ -18,26 +20,24 @@
 #include "tao/Messaging/Messaging_TypesC.h"
 
 #include "ace/Bound_Ptr.h"
-#include "ace/Unbounded_Queue.h"
 
 #ifndef DEBUG_LEVEL
 # define DEBUG_LEVEL TAO_debug_level
 #endif //DEBUG_LEVEL
 
-static const int DEFAULT_RETRY_TIMEOUT = 10;//120; // Note : This should be a config param or qos setting
+// This should be a configuration parameter or QoS setting.
+static constexpr int DEFAULT_RETRY_TIMEOUT = 10;
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_Consumer::TAO_Notify_Consumer (TAO_Notify_ProxySupplier* proxy)
 : proxy_ (proxy)
-, is_suspended_ (0)
-, have_not_yet_verified_publish_ (true)
 , pacing_ (proxy->qos_properties_.pacing_interval ())
 , max_batch_size_ (CosNotification::MaximumBatchSize, 0)
 , timer_id_ (-1)
 , timer_ (0)
 {
-  Request_Queue* pending_events = nullptr;
+  Request_Queue* pending_events {};
   ACE_NEW (pending_events, TAO_Notify_Consumer::Request_Queue ());
   this->pending_events_.reset( pending_events );
 
@@ -76,7 +76,7 @@ TAO_Notify_Consumer::proxy ()
 }
 
 void
-TAO_Notify_Consumer::qos_changed (const TAO_Notify_QoSProperties& qos_properties)
+TAO_Notify_Consumer::qos_changed (TAO_Notify_QoSProperties const &qos_properties)
 {
   this->max_batch_size_ = qos_properties.maximum_batch_size ();
 }
@@ -84,7 +84,7 @@ TAO_Notify_Consumer::qos_changed (const TAO_Notify_QoSProperties& qos_properties
 void
 TAO_Notify_Consumer::resume ()
 {
-  this->is_suspended_ = 0;
+  this->is_suspended_ = false;
 
   this->dispatch_pending ();
 }
@@ -134,7 +134,7 @@ TAO_Notify_Consumer::enqueue_if_necessary (TAO_Notify_Method_Request_Event * req
       this->schedule_timer (false);
       return true;
     }
-  if (this->is_suspended_ == 1)
+  if (this->is_suspended_)
     {
       if (DEBUG_LEVEL > 3)
         ORBSVCS_DEBUG ((LM_DEBUG,
@@ -165,7 +165,7 @@ TAO_Notify_Consumer::deliver (TAO_Notify_Method_Request_Event * request)
   bool queued = enqueue_if_necessary (request);
   if (!queued)
     {
-      bool from_timeout = false;
+      bool from_timeout {};
       DispatchStatus status = this->dispatch_request (request);
       switch (status)
         {
@@ -472,7 +472,7 @@ TAO_Notify_Consumer::dispatch_pending ()
 {
   if (DEBUG_LEVEL  > 5)
     ORBSVCS_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("Consumer %d dispatching pending events.  Queue size: %d\n"),
+                ACE_TEXT ("Consumer %d dispatching pending events.  Queue size: %B\n"),
                 static_cast<int> (this->proxy ()->id ()),
                 this->pending_events().size ()
                 ));
@@ -495,7 +495,6 @@ TAO_Notify_Consumer::dispatch_pending ()
     }
 }
 
-
 // virtual: this is the default, overridden for SequencePushConsumer
 // FUZZ: disable check_for_ACE_Guard
 bool
@@ -505,7 +504,7 @@ TAO_Notify_Consumer::dispatch_from_queue (
 {
 // FUZZ: enable check_for_ACE_Guard
   bool result = true;
-  TAO_Notify_Method_Request_Event_Queueable * request = nullptr;
+  TAO_Notify_Method_Request_Event_Queueable * request {};
   if (requests.dequeue_head (request) == 0)
     {
       ace_mon.release ();
@@ -703,7 +702,7 @@ TAO_Notify_Consumer::dispatch_updates_i (const CosNotification::EventTypeSeq& ad
 TAO_SYNCH_MUTEX*
 TAO_Notify_Consumer::proxy_lock ()
 {
-  return &this->proxy_->lock_;
+  return std::addressof (this->proxy_->lock_);
 }
 
 TAO_Notify_ProxySupplier*
@@ -741,7 +740,7 @@ TAO_Notify_Consumer::assume_pending_events (TAO_Notify_Consumer& rhs)
 bool
 TAO_Notify_Consumer::is_alive (bool allow_nil_consumer)
 {
-  bool status = false;
+  bool status {};
   CORBA::Object_var consumer = this->get_consumer ();
   if (CORBA::is_nil (consumer.in ()))
   {
@@ -758,7 +757,7 @@ TAO_Notify_Consumer::is_alive (bool allow_nil_consumer)
   CORBA::PolicyList policy_list;
   try
     {
-      bool do_liveliness_check = false;
+      bool do_liveliness_check {};
       ACE_Time_Value now = ACE_OS::gettimeofday ();
 
       if (CORBA::is_nil (this->rtt_obj_.in ()))
@@ -785,7 +784,7 @@ TAO_Notify_Consumer::is_alive (bool allow_nil_consumer)
                                           CORBA::ADD_OVERRIDE);
 
         // Clean up the policy that was allocated in the try/catch
-        for (CORBA::ULong i = 0; i < policy_list.length (); i++)
+        for (CORBA::ULong i {}; i < policy_list.length (); ++i)
           policy_list[i]->destroy ();
 
         do_liveliness_check

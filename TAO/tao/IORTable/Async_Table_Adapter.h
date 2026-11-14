@@ -1,14 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file Async_Table_Adapter.h
  *
  *  @author Phil Mesnier <mesnier_p@ociweb.com>
  */
-//=============================================================================
-
-
 #ifndef TAO_ASYNC_TABLE_ADAPTER_H
 #define TAO_ASYNC_TABLE_ADAPTER_H
 #include /**/ "ace/pre.h"
@@ -28,46 +24,42 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Async_IORTable_Export TAO_Async_Table_Adapter : public TAO_Table_Adapter
 {
 public:
-  /// Constructor
-  TAO_Async_Table_Adapter (TAO_ORB_Core &orb_core);
+  explicit TAO_Async_Table_Adapter (TAO_ORB_Core &orb_core);
 
-  /// Destructor
-  ~TAO_Async_Table_Adapter () override;
+  ~TAO_Async_Table_Adapter () override = default;
 
-  // = The TAO_Adapter methods, please check tao/Adapter.h for the
-  // documentation
+  /// @name TAO_Adapter methods
+  /// @{
+
   void open () override;
 
   int dispatch (TAO::ObjectKey &key,
                 TAO_ServerRequest &request,
                 CORBA::Object_out foward_to) override;
 
-protected:
-  /// Helper method to find an object bound in the table.
-  void find_object (::IORTable::Locate_ResponseHandler rh,
-                    TAO::ObjectKey &key);
+  /// @}
 
-private:
   TAO_Async_Table_Adapter (TAO_Async_Table_Adapter const &) = delete;
   TAO_Async_Table_Adapter &operator= (TAO_Async_Table_Adapter const &) = delete;
   TAO_Async_Table_Adapter (TAO_Async_Table_Adapter &&) = delete;
   TAO_Async_Table_Adapter &operator= (TAO_Async_Table_Adapter &&) = delete;
-};
 
-// ****************************************************************
+protected:
+  /// Helper method to find an object bound in the table.
+  void find_object (::IORTable::Locate_ResponseHandler rh,
+                    TAO::ObjectKey &key);
+};
 
 class TAO_Async_IORTable_Export TAO_Async_Table_Adapter_Factory :
   public TAO_Table_Adapter_Factory
 {
 public:
-  /// Constructor
   TAO_Async_Table_Adapter_Factory () = default;
 
   /// The TAO_Adapter_Factory methods, please read tao/Adapter.h for
   /// details.
   TAO_Adapter *create (TAO_ORB_Core *orb_core) override;
 
-private:
   TAO_Async_Table_Adapter_Factory (TAO_Async_Table_Adapter_Factory const &) = delete;
   TAO_Async_Table_Adapter_Factory &operator= (TAO_Async_Table_Adapter_Factory const &) = delete;
   TAO_Async_Table_Adapter_Factory (TAO_Async_Table_Adapter_Factory &&) = delete;

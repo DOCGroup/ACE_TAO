@@ -11,16 +11,7 @@
 #include "ace/Barrier.h"
 #include "ace/OS_NS_unistd.h"
 
-Send_Task::Send_Task ()
-  : iterations_ (0)
-  , period_in_usecs_ (0)
-  , startup_sleep_ (0)
-  , event_type_ (0)
-  , event_source_ (0)
-  , barrier_ (0)
-  , stop_ (0)
-{
-}
+Send_Task::Send_Task () = default;
 
 void
 Send_Task::init (int iterations,
@@ -45,13 +36,13 @@ void
 Send_Task::stop ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
-  this->stop_ = 1;
+  this->stop_ = true;
 }
 
 int
 Send_Task::svc ()
 {
-  if (this->barrier_ == 0)
+  if (this->barrier_ == nullptr)
     return -1;
 
   this->barrier_->wait ();
@@ -64,7 +55,6 @@ Send_Task::svc ()
               "iterations = %d, period = %d, event_type = %d\n",
               this->iterations_, this->period_in_usecs_,
               this->event_type_));
-
 
   int start_i = 0;
   if (this->iterations_ == 0)
@@ -94,7 +84,7 @@ Send_Task::svc ()
       ACE_OS::sleep (period);
       {
         ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
-        if (this->stop_ != 0)
+        if (this->stop_)
           {
             ACE_DEBUG ((LM_DEBUG,
                         "(%P|%t) - Thread has been stopped\n"));

@@ -73,9 +73,8 @@ const CORBA::ULong TAO_ORB_TYPE = 0x54414f00U;
 class TAO_Export TAO_Acceptor
 {
 public:
-  TAO_Acceptor (CORBA::ULong tag);
+  explicit TAO_Acceptor (CORBA::ULong tag);
 
-  /// Destructor
   virtual ~TAO_Acceptor ();
 
   /// The tag, each concrete class will have a specific tag value.
@@ -117,8 +116,8 @@ public:
                               TAO_MProfile &mprofile,
                               CORBA::Short priority) = 0;
 
-  /// Return 1 if the @a endpoint has the same address as the acceptor.
-  virtual int is_collocated (const TAO_Endpoint *endpoint) = 0;
+  /// Return true if the @a endpoint has the same address as the acceptor.
+  virtual bool is_collocated (const TAO_Endpoint *endpoint) = 0;
 
   /**
    * Returns the number of endpoints this acceptor is listening on.  This
@@ -168,17 +167,17 @@ class TAO_Strategy_Acceptor:
   public ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>
 {
 public:
-  TAO_Strategy_Acceptor (TAO_Acceptor* acceptor)
+  explicit TAO_Strategy_Acceptor (TAO_Acceptor* acceptor)
    : acceptor_ (acceptor)
   {
   }
 
-  virtual int handle_accept_error ()
+  int handle_accept_error () override
   {
     return this->acceptor_->handle_accept_error (this);
   }
 
-  virtual int handle_timeout (const ACE_Time_Value&, const void*)
+  int handle_timeout (const ACE_Time_Value&, const void*) override
   {
     return this->acceptor_->handle_expiration (this);
   }

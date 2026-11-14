@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef _PM_CLIENT_H
 #define _PM_CLIENT_H
 
@@ -22,21 +21,21 @@
 class PM_Client : public Protocol_Manager
 {
 public:
-  PM_Client ();
-  virtual ~PM_Client ();
+  PM_Client () = default;
+  ~PM_Client () override;
 
-  virtual int encode (char *packet, int &total_bytes) = 0;
-  virtual int decode (char *packet, int &total_bytes) = 0;
+  int encode (char *packet, int &total_bytes) override = 0;
+  int decode (char *packet, int &total_bytes) override = 0;
   virtual void process ();
 
 protected:
-  int max_key_length;
+  int max_key_length {};
 
   virtual char *handle_protocol_entries (const char *cp,
                                          const char *key_name1,
-                                         const char *key_name2 = 0);
+                                         const char *key_name2 = nullptr);
 
-  virtual Protocol_Record *insert_protocol_info (Protocol_Record &protocol_record);
+  Protocol_Record *insert_protocol_info (Protocol_Record &protocol_record) override;
 };
 
 #endif /* _PM_CLIENT_H */

@@ -40,7 +40,6 @@ class TAO_Export TAO_Network_Priority_Protocols_Hooks
       : public ACE_Service_Object
 {
 public:
-  /// destructor
   ~TAO_Network_Priority_Protocols_Hooks () override;
 
   virtual void init_hooks (TAO_ORB_Core *orb_core) = 0;

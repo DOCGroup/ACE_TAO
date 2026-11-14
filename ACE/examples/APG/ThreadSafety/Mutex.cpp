@@ -7,11 +7,12 @@
 class LogMessage
 {
 public:
-  enum { CRITICAL, NORMAL};
+  static constexpr int CRITICAL {0};
+  static constexpr int NORMAL {1};
 
   virtual ~LogMessage () = default;
 
-  virtual int priority ()
+  virtual int priority () const
   {
     return NORMAL;
   }
@@ -19,7 +20,7 @@ public:
 
 class CriticalLogMessage : public LogMessage
 {
-  int priority () override
+  int priority () const override
   {
     return LogMessage::CRITICAL;
   }
@@ -30,29 +31,35 @@ using MUTEX = ACE_Thread_Mutex;
 class Logger
 {
 public:
-  void log (LogMessage *msg)
+  Logger () = default;
+  Logger (Logger const &) = delete;
+  Logger (Logger &&) = delete;
+  Logger &operator= (Logger const &) = delete;
+  Logger &operator= (Logger &&) = delete;
+
+  void log (LogMessage const &message)
   {
     ACE_GUARD (MUTEX, mon, mutex_);
-    if (msg->priority () == LogMessage::CRITICAL)
-      logCritical (msg);
+    if (message.priority () == LogMessage::CRITICAL)
+      logCritical (message);
   }
 
-  void logCritical (LogMessage *)
+  void logCritical (LogMessage const &)
   {
     // Acquires the same mutex as log()!
-    ACE_GUARD(MUTEX, mon, mutex_);
+    ACE_GUARD (MUTEX, mon, mutex_);
   }
 
 private:
-  MUTEX mutex_;
+  MUTEX mutex_ {};
 };
 
-static Logger logger;
+static Logger logger {};
 
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   CriticalLogMessage cm;
-  logger.log(&cm);  // Will cause deadlock.
+  logger.log (cm);  // Will cause deadlock.
   return 0;
 }
 // Listing 1

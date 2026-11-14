@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #ifndef _BE_VISITOR_VALUETYPE_MARSHAL_CH_H_
 #define _BE_VISITOR_VALUETYPE_MARSHAL_CH_H_
 

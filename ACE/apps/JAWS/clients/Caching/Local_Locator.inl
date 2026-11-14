@@ -1,14 +1,15 @@
 // -*- C++ -*-
 ACE_INLINE
 ACE_URL_Record::ACE_URL_Record ()
-  : id_ (0),
-    offer_ (0)
+  : id_ (nullptr),
+    offer_ (nullptr)
 {
 }
 
 ACE_INLINE
 ACE_URL_Record::ACE_URL_Record (ACE_URL_Offer *offer)
-  : offer_ (offer)
+  : id_ (nullptr),
+    offer_ (offer)
 {
   char buf[ACE_OFFER_ID_LENGTH];
 
@@ -25,7 +26,7 @@ ACE_URL_Record::~ACE_URL_Record ()
 ACE_INLINE bool
 ACE_URL_Record::operator== (const ACE_URL_Record &rhs) const
 {
-  return this == &rhs || *this->id_ == *rhs.id_;
+  return this == std::addressof (rhs) || *this->id_ == *rhs.id_;
 }
 
 ACE_INLINE bool

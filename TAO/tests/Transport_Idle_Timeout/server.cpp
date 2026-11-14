@@ -9,13 +9,15 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/Log_Msg.h"
 
-static const ACE_TCHAR *ior_output_file = ACE_TEXT ("test.ior");
+#include <memory>
+
+static ACE_TCHAR const *ior_output_file = ACE_TEXT ("test.ior");
 
 static int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:"));
-  int c;
+  int c {};
   while ((c = get_opts ()) != -1)
     switch (c)
       {
@@ -52,7 +54,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       PortableServer::POAManager_var mgr = root_poa->the_POAManager ();
 
-      Echo_i *echo_impl = nullptr;
+      Echo_i *echo_impl {};
       ACE_NEW_RETURN (echo_impl, Echo_i (orb.in ()), 1);
       PortableServer::ServantBase_var owner (echo_impl);
 
@@ -65,13 +67,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::String_var ior = orb->object_to_string (echo.in ());
 
       // Write IOR to file so the test driver and client can find it
-      FILE *f = ACE_OS::fopen (ior_output_file, ACE_TEXT ("w"));
-      if (f == nullptr)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Cannot open output file '%s'\n"),
-                           ior_output_file), 1);
-      ACE_OS::fprintf (f, "%s", ior.in ());
-      ACE_OS::fclose (f);
+      {
+        std::unique_ptr<FILE, int (*) (FILE *)> file (
+          ACE_OS::fopen (ior_output_file, ACE_TEXT ("w")), ACE_OS::fclose);
+        if (!file)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Cannot open output file '%s'\n"),
+                             ior_output_file), 1);
+        ACE_OS::fprintf (file.get (), "%s", ior.in ());
+      }
 
       mgr->activate ();
 
@@ -84,7 +88,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       root_poa->destroy (true, true);
       orb->destroy ();
     }
-  catch (const CORBA::Exception &ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception (ACE_TEXT ("server exception"));
       return 1;
