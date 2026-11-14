@@ -80,6 +80,10 @@ public:
                       TAO_ORB_Core &orb_core);
 
   ~TAO_Object_Adapter ();
+  TAO_Object_Adapter (TAO_Object_Adapter const &) = delete;
+  TAO_Object_Adapter &operator= (TAO_Object_Adapter const &) = delete;
+  TAO_Object_Adapter (TAO_Object_Adapter &&) = delete;
+  TAO_Object_Adapter &operator= (TAO_Object_Adapter &&) = delete;
 
   int dispatch_servant (const TAO::ObjectKey &key,
                         TAO_ServerRequest &req,

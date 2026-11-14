@@ -50,6 +50,10 @@ public:
     const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &creation_parameters);
 
   ~TAO_Active_Object_Map ();
+  TAO_Active_Object_Map (TAO_Active_Object_Map const &) = delete;
+  TAO_Active_Object_Map &operator= (TAO_Active_Object_Map const &) = delete;
+  TAO_Active_Object_Map (TAO_Active_Object_Map &&) = delete;
+  TAO_Active_Object_Map &operator= (TAO_Active_Object_Map &&) = delete;
 
   /// Must be used with UNIQUE_ID policy.
   int
