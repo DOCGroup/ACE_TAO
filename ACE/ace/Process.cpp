@@ -18,7 +18,6 @@
 #include "ace/OS_Memory.h"
 #include "ace/Countdown_Time.h"
 #include "ace/Truncate.h"
-#include "ace/Vector_T.h"
 #include "ace/Tokenizer_T.h"
 
 #if defined (ACE_VXWORKS) && defined (__RTP__)
@@ -785,7 +784,7 @@ ACE_Process_Options::inherit_environment ()
   ACE_TCHAR *existing_environment {};
 #if defined (ACE_HAS_WCHAR) && !defined (ACE_USES_WCHAR)
   WCHAR *existing_wide_env {};
-  ACE_Vector<char> temp_narrow_env;
+  std::vector<char> temp_narrow_env;
   if (this->use_unicode_environment_)
     {
       existing_wide_env = ::GetEnvironmentStringsW ();
@@ -794,12 +793,12 @@ ACE_Process_Options::inherit_environment ()
           ACE_Wide_To_Ascii wta (iter);
           size_t const len = std::strlen (wta.char_rep ());
           size_t const idx = temp_narrow_env.size ();
-          temp_narrow_env.resize (idx + len + 1, 0);
-          std::strncpy (&temp_narrow_env[idx], wta.char_rep (), len);
+          temp_narrow_env.resize (idx + len + 1, '\0');
+          std::memcpy (temp_narrow_env.data () + idx, wta.char_rep (), len);
           iter += len;
         }
-      temp_narrow_env.push_back (0);
-      existing_environment = &temp_narrow_env[0];
+      temp_narrow_env.push_back ('\0');
+      existing_environment = temp_narrow_env.data ();
     }
   else
 #endif
