@@ -51,7 +51,7 @@ run_destroy_case (int argc,
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  std::array<Destroy_Options, 12> const test_cases {{
+  std::array<Destroy_Options, 8> const test_cases {{
     {"destroy_nothing_with_poa_manager", false, false, true},
     {"destroy_poa_with_poa_manager", false, true, true},
     {"destroy_orb_with_poa_manager", true, false, true},
@@ -59,11 +59,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {"destroy_nothing_without_poa_manager", false, false, false},
     {"destroy_poa_without_poa_manager", false, true, false},
     {"destroy_orb_without_poa_manager", true, false, false},
-    {"destroy_poa_and_orb_without_poa_manager", true, true, false},
-    {"destroy_nothing_with_funky_poa_manager", false, false, true},
-    {"destroy_poa_with_funky_poa_manager", false, true, true},
-    {"destroy_orb_with_funky_poa_manager", true, false, true},
-    {"destroy_poa_and_orb_with_funky_poa_manager", true, true, true}
+    {"destroy_poa_and_orb_without_poa_manager", true, true, false}
   }};
 
   for (Destroy_Options const &options : test_cases)
@@ -74,6 +70,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (orb_manager.fini () != 0 || orb_manager.fini () != 0)
     return 1;
 
+  // Check that Server_Main can be constructed with a null name.
   TAO::Utils::Server_Main<PortableServer::ServantBase> const null_name_server (nullptr);
 
   ACE_TCHAR orb_name[] = ACE_TEXT ("ORB_Manager_fini");
