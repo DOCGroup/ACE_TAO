@@ -13,10 +13,8 @@
 #ifndef _LOG_WRAPPER_H
 #define _LOG_WRAPPER_H
 
+/// Wraps the sending of log messages over IP multicast.
 class Log_Wrapper
-  // = TITLE
-  //      Provide a wrapper around sending log messages via IP
-  //      multicast.
 {
 public:
   Log_Wrapper () = default;
@@ -26,7 +24,8 @@ public:
   Log_Wrapper &operator= (Log_Wrapper const &) = delete;
   Log_Wrapper &operator= (Log_Wrapper &&) = delete;
 
-  // = Types of logging messages.
+  /// @name Logging message types
+  /// @{
   enum Log_Priority
   {
     LM_MESSAGE,
@@ -35,14 +34,16 @@ public:
     LM_ERROR,
     LM_EMERG
   };
+  /// @}
 
+  /// Subscribes to a UDP multicast group.
   int open (int port, char const *mcast_addr);
-  // Subscribe to a given UDP multicast group
 
+  /// Sends a string to the logger.
   int log_message (Log_Priority type, char *message);
-  // send a string to the logger
 
-  // = Format of the logging record.
+  /// @name Logging record format
+  /// @{
   struct Log_Record
   {
     u_long sequence_number;
@@ -52,19 +53,20 @@ public:
     long  app_id;
     long  msg_length;
   };
+  /// @}
 
 private:
+  /// Server address where records are logged.
   ACE_INET_Addr server_;
-  // Server address where records are logged.
 
+  /// Sequence number for log records.
   u_long sequence_number_ {};
-  // Keep track of the sequence.
 
+  /// One record reused for multiple log messages.
   Log_Record log_msg_ {};
-  // One record used for many log messages.
 
+  /// Multicast logger socket.
   ACE_SOCK_Dgram_Mcast logger_;
-  // A logger object.
 };
 
 #endif /* _LOG_WRAPPER_H */

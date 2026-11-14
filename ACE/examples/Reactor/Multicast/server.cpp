@@ -1,7 +1,7 @@
 // server.cpp (written by Tim Harrison)
 
-// Listens to multicast address for client log messages.  Prints
-// Mbits/sec received from client.
+/// Listens for client log messages on a multicast address and prints the
+/// received throughput in Mbits/sec.
 
 #include "ace/OS_main.h"
 #include "ace/SOCK_Dgram.h"
@@ -44,18 +44,21 @@ private:
 
   int initialized_ {};
   int count_ {1};
+
+  /// Time interval for logging messages.
   long interval_ {};
-  // time interval to log messages
 
   ACE_Time_Value *how_long_ {};
   ACE_SOCK_Dgram_Mcast mcast_dgram_;
   ACE_INET_Addr remote_addr_;
   ACE_INET_Addr mcast_addr_;
 
-  // = statistics on messages received
+  /// @name Message statistics
+  /// @{
   double total_bytes_received_ {};
   int total_messages_received_ {};
   int last_sequence_number_ {};
+  /// @}
 };
 
 static constexpr char MCAST_ADDR[] = ACE_DEFAULT_MULTICAST_ADDR;

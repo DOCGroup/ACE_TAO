@@ -11,8 +11,7 @@
 
 #include <cstring>
 
-// Set the log_msg_ host address.
-
+/// Sets the host address in the log record.
 int
 Log_Wrapper::open (int port, char const *mcast_addr)
 {
@@ -38,10 +37,8 @@ Log_Wrapper::open (int port, char const *mcast_addr)
   return 0;
 }
 
-// Send the message to a logger object.
-// This wrapper fills in all the log_record info for you.
-// uses iovector stuff to make contiguous header and message.
-
+/// Sends the message to the logger and fills in the log record metadata.
+/// An iovec keeps the header and message contiguous for the send operation.
 int
 Log_Wrapper::log_message (Log_Priority type, char *message)
 {
