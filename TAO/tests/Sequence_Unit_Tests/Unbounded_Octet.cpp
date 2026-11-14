@@ -83,13 +83,23 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
           || idl_moved[0] != 3
           || idl_moved[1] != 7)
         return 1;
+      if (idl_source.maximum () != 0
+          || idl_source.length () != 0
+          || idl_source.release ())
+        return 1;
 
-      CORBA::OctetSeq idl_move_assigned;
+      CORBA::OctetSeq idl_move_assigned (3);
+      idl_move_assigned.length (1);
+      idl_move_assigned[0] = 9;
       CORBA::Octet * const idl_move_buffer = idl_moved.get_buffer ();
       idl_move_assigned = std::move (idl_moved);
       if (idl_move_assigned.get_buffer () != idl_move_buffer
           || idl_move_assigned[0] != 3
           || idl_move_assigned[1] != 7)
+        return 1;
+      if (idl_moved.maximum () != 0
+          || idl_moved.length () != 0
+          || idl_moved.release ())
         return 1;
     }
   catch (const ::CORBA::Exception &)
