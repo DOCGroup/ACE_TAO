@@ -18,10 +18,11 @@
 #include "ace/Task.h"
 #include "ace/Atomic_Op.h"
 #include "ace/Auto_IncDec_T.h"
-#include "ace/Vector_T.h"
 #include "ace/Stats.h"
 #include "ace/ACE.h"
 #include "ace/Barrier.h"
+
+#include <vector>
 
 #if defined (ACE_HAS_THREADS)
 
@@ -55,7 +56,7 @@ private:
   int invocations_;
 
   // Vector of token counts, one per thread.
-  ACE_Vector<ACE_INT32> vec_token_count_;
+  std::vector<ACE_INT32> vec_token_count_;
 
   // This keeps a count of the number of threads who have the token--should always
   // be 0 or 1;
@@ -81,13 +82,6 @@ Token_Strategy_Test::Token_Strategy_Test (ACE_Token::QUEUEING_STRATEGY strategy,
   this->counter_ = 0;
   this->active_ = 0;
   this->errors_ = 0;
-
-  // Initialize the per thread counters used for generating stats.
-  for (int i = 0; i < this->threads_; ++i)
-    {
-      const ACE_UINT32 sample = 0;
-      this->vec_token_count_.push_back (sample);
-    }
 
   this->token_.queueing_strategy (this->strategy_);
 

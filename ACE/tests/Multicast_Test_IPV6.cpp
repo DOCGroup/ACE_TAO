@@ -35,7 +35,6 @@
 
 #include "test_config.h"
 #include "ace/Get_Opt.h"
-#include "ace/Vector_T.h"
 #include "ace/SOCK_Dgram_Mcast.h"
 #include "ace/ACE.h"
 #include "ace/Reactor.h"
@@ -46,6 +45,7 @@
 #include "ace/SString.h"
 #include "ace/Signal.h"
 #include <algorithm>
+#include <vector>
 
 #if defined (ACE_HAS_IP_MULTICAST) && defined (ACE_HAS_THREADS)
 
@@ -457,8 +457,6 @@ class MCT_Event_Handler : public ACE_Event_Handler
 public:
   MCT_Event_Handler (ACE_SOCK_Dgram_Mcast::options options
                       = ACE_SOCK_Dgram_Mcast::DEFOPTS);
-  ~MCT_Event_Handler () override;
-
   int join (const ACE_INET_Addr &mcast_addr,
             int reuse_addr = 1,
             const ACE_TCHAR *net_if = nullptr);
@@ -479,7 +477,7 @@ private:
   ACE_SOCK_Dgram_Mcast mcast_;
 
   // List of groups we've joined
-  ACE_Vector<ACE_CString*> address_vec_;
+  std::vector<ACE_CString> address_vec_;
 
   // Flag used to set the 'finished' flag when the last event handler
   // gets removed from the reactor.
@@ -496,16 +494,6 @@ MCT_Event_Handler::MCT_Event_Handler (ACE_SOCK_Dgram_Mcast::options options)
   ++MCT_Event_Handler::active_handlers_;
 }
 
-MCT_Event_Handler::~MCT_Event_Handler ()
-{
-  size_t size = this->address_vec_.size ();
-  for (size_t i = 0; i < size; ++i)
-    {
-      delete this->address_vec_[i];
-      this->address_vec_[i] = 0;
-    }
-}
-
 ACE_SOCK_Dgram_Mcast *
 MCT_Event_Handler::mcast ()
 {
@@ -515,21 +503,19 @@ MCT_Event_Handler::mcast ()
 int
 MCT_Event_Handler::find (const char *buf)
 {
-  size_t size = this->address_vec_.size ();
-  size_t i;
-  for (i = 0; i < size; ++i)
+  for (ACE_CString const &address : this->address_vec_)
     {
-      if (ACE_OS::strcasecmp (buf, this->address_vec_[i]->c_str ()) == 0)
+      if (ACE_OS::strcasecmp (buf, address.c_str ()) == 0)
         return 0;
     }
 
   // Not found, so output message we received along with a list of groups
   // we've joined for debugging.
   ACE_CString local;
-  for (i = 0; i < size; ++i)
+  for (ACE_CString const &address : this->address_vec_)
     {
       local += "\t";
-      local += this->address_vec_[i]->c_str ();
+      local += address.c_str ();
       local += "\n";
     }
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%C not in:\n%C"),
@@ -556,9 +542,7 @@ MCT_Event_Handler::join (const ACE_INET_Addr &mcast_addr,
                       -1);
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Joined %C\n"), buf));
 
-  ACE_CString *str = nullptr;
-  ACE_NEW_RETURN (str, ACE_CString (buf), -1);
-  this->address_vec_.push_back (str);
+  this->address_vec_.emplace_back (buf);
   return 0;
 }
 
@@ -569,15 +553,14 @@ MCT_Event_Handler::leave (const ACE_INET_Addr &mcast_addr,
   if (this->mcast_.leave (mcast_addr, net_if) == 0)
     {
       char buf[MAX_STRING_SIZE];
-      size_t size = this->address_vec_.size ();
-      for (size_t i = 0; i < size; ++i)
+      for (ACE_CString &address : this->address_vec_)
         {
           ACE_OS::snprintf (buf, MAX_STRING_SIZE, "%s/%d",
                             mcast_addr.get_host_addr (),
                             mcast_addr.get_port_number ());
-          if (ACE_OS::strcasecmp (buf, this->address_vec_[i]->c_str ()) == 0)
+          if (ACE_OS::strcasecmp (buf, address.c_str ()) == 0)
           {
-            this->address_vec_[i]->set ("");
+            address.set ("");
             break;
           }
         }
