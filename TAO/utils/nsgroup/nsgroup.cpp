@@ -1,31 +1,26 @@
-//==========================================================================
 /**
  *  @file    nsgroup.cpp
  *
  *  @author Phillip LaBanca <labancap@ociweb.com>
  */
-//==========================================================================
 
 #include "orbsvcs/Naming/FaultTolerant/nsgroup_svc.h"
 #include "ace/Get_Opt.h"
 
-//============================================================================
 bool
-show_help(int argc, ACE_TCHAR *argv[])
+show_help (int argc, ACE_TCHAR *argv[])
 {
-  static constexpr ACE_TCHAR options[] = ACE_TEXT("h");
+  static constexpr ACE_TCHAR options[] = ACE_TEXT ("h");
   static constexpr int skip_args = 1;
   static constexpr int report_errors {};
   static constexpr int ordering = ACE_Get_Opt::RETURN_IN_ORDER;
   static constexpr int long_only {};
 
   // Not enough arguments indicates help is required
-  if( argc < 2 )
-  {
+  if (argc < 2)
     return true;
-  }
 
-  // Did they ask for help ?
+  // Did they ask for help?
   ACE_Get_Opt get_opts (
     argc,
     argv,
@@ -36,24 +31,18 @@ show_help(int argc, ACE_TCHAR *argv[])
     long_only
   );
 
-  if (get_opts.long_option (ACE_TEXT ("help"),'h') != 0)
-  {
+  if (get_opts.long_option (ACE_TEXT ("help"), 'h') != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("  Unable to add long option 'H'\n")),
                       true);
-  }
 
   int c {};
   while ((c = get_opts ()) != -1)
-  {
     switch (c)
       {
-        case 'h':  // help
-
-          return true;
-        break;
+      case 'h':
+        return true;
       }
-  }
   return false;
 }
 
@@ -63,10 +52,10 @@ show_help(int argc, ACE_TCHAR *argv[])
  * @brief Encapsulate the NS group command line operations in a class.
  */
 
-class  NSGROUP
+class NSGROUP
 {
 public:
-  enum NSGROUP_COMMAND {
+  enum class NSGROUP_COMMAND {
     none,
     help,
     group_create,
@@ -95,7 +84,7 @@ public:
   int run_cmd ();
 
   /// Display command line interface usage
-  int show_usage();
+  int show_usage ();
 
   ACE_TCHAR const *group_arg () const { return group_arg_; }
   ACE_TCHAR const *policy_arg () const { return policy_arg_; }
@@ -138,16 +127,6 @@ NSGROUP::start_orb ()
 
   try
   {
-#if 0
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("start_orb::argc(%u)\n"), this->argc_));
-    for( int i = 0; i < this->argc_; ++i){
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("start_orb::argv(%u:%s)\n"),
-                  i,
-                  this->argv_[i]));
-    }
-#endif //
-
     // Initialise the ORB.
 
     CORBA::ORB_var orb_ = CORBA::ORB_init (this->argc_, this->argv_);
@@ -159,9 +138,6 @@ NSGROUP::start_orb ()
                           RC_ERROR);
     }
 
-    //////////////////////////////////////////////////////////////////////////
-    //
-    //////////////////////////////////////////////////////////////////////////
     CORBA::Object_var naming_manager_object =
       orb_->resolve_initial_references ("NamingManager");
 
@@ -175,11 +151,8 @@ NSGROUP::start_orb ()
                           ACE_TEXT ("Manager Reference\n")),
                         RC_ERROR);
     }
-    //////////////////////////////////////////////////////////////////////////
-    //
-    //////////////////////////////////////////////////////////////////////////
     CORBA::Object_var naming_object =
-      orb_->resolve_initial_references("NameService");
+      orb_->resolve_initial_references ("NameService");
 
     CosNaming::NamingContextExt_var name_service_ =
       CosNaming::NamingContextExt::_narrow (naming_object.in ());
@@ -191,14 +164,10 @@ NSGROUP::start_orb ()
                           ACE_TEXT ("Reference\n")),
                         RC_ERROR);
     }
-    //////////////////////////////////////////////////////////////////////////
-    //
-    //////////////////////////////////////////////////////////////////////////
-
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
   {
-    ex._tao_print_exception (ACE_TEXT("\nException raised initialising ORB\n"));
+    ex._tao_print_exception (ACE_TEXT ("\nException raised initialising ORB\n"));
     return RC_ERROR;
   }
 
@@ -206,67 +175,65 @@ NSGROUP::start_orb ()
 }
 
 int
-NSGROUP::run_cmd()
+NSGROUP::run_cmd ()
 {
   constexpr int RC_ERROR = -1;
   constexpr int RC_BADARG = -2;
 
   int rc {RC_ERROR};
 
-  switch( parse_command_line () )
-  {
+  switch (parse_command_line ())
+    {
     case NSGROUP_COMMAND::help:
       return show_usage ();
 
     case NSGROUP_COMMAND::group_create:
-      rc = svc_.group_create ( group_arg(), policy_arg() );
-    break;
+      rc = svc_.group_create (group_arg (), policy_arg ());
+      break;
 
     case NSGROUP_COMMAND::group_bind:
-      rc = svc_.group_bind ( group_arg(), namepath_arg() );
-    break;
+      rc = svc_.group_bind (group_arg (), namepath_arg ());
+      break;
 
     case NSGROUP_COMMAND::group_unbind:
-      rc = svc_.group_unbind ( namepath_arg() );
-    break;
+      rc = svc_.group_unbind (namepath_arg ());
+      break;
 
     case NSGROUP_COMMAND::group_modify:
-      rc = svc_.group_modify ( group_arg(), policy_arg() );
-    break;
+      rc = svc_.group_modify (group_arg (), policy_arg ());
+      break;
 
     case NSGROUP_COMMAND::group_list:
       rc = svc_.group_list ();
-    break;
+      break;
 
     case NSGROUP_COMMAND::group_remove:
-      rc = svc_.group_remove ( group_arg() );
-    break;
+      rc = svc_.group_remove (group_arg ());
+      break;
 
     case NSGROUP_COMMAND::member_list:
-      rc = svc_.member_list ( group_arg() );
-    break;
+      rc = svc_.member_list (group_arg ());
+      break;
 
     case NSGROUP_COMMAND::member_add:
-      rc = svc_.member_add ( group_arg(), location_arg(), ior_arg() );
-    break;
+      rc = svc_.member_add (group_arg (), location_arg (), ior_arg ());
+      break;
 
     case NSGROUP_COMMAND::member_remove:
-      rc = svc_.member_remove ( group_arg(), location_arg() );
-    break;
+      rc = svc_.member_remove (group_arg (), location_arg ());
+      break;
 
     case NSGROUP_COMMAND::member_show:
-      rc = svc_.member_show ( group_arg(), location_arg() );
-    break;
+      rc = svc_.member_show (group_arg (), location_arg ());
+      break;
 
     default:
       show_usage ();
       return rc;
-  }
+    }
 
   if (rc == RC_BADARG)
-  {
     show_usage ();
-  }
 
   return rc;
 }
@@ -274,19 +241,7 @@ NSGROUP::run_cmd()
 NSGROUP::NSGROUP_COMMAND
 NSGROUP::parse_command_line ()
 {
-  #if 0
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("parse_command_line::argc(%u)\n"),
-              this->argc_));
-  for( int i = 0; i < this->argc_; ++i){
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("parse_command_line::argv(%u:%s)\n"),
-                i,
-                this->argv_[i]));
-  }
-  #endif
-
-  static constexpr ACE_TCHAR options[] = ACE_TEXT("g:p:t:l:i:n:h");
+  static constexpr ACE_TCHAR options[] = ACE_TEXT ("g:p:l:i:n:h");
   static constexpr int skip_args = 1;
   static constexpr int report_errors {};
   static constexpr int ordering = ACE_Get_Opt::PERMUTE_ARGS;
@@ -306,46 +261,58 @@ NSGROUP::parse_command_line ()
   if (get_opts.long_option (ACE_TEXT ("group"),
                            'g',
                            ACE_Get_Opt::ARG_REQUIRED) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Unable to add long option 'g'\n")),
-                      NSGROUP_COMMAND::none);
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Unable to add long option 'g'\n")));
+      return NSGROUP_COMMAND::none;
+    }
 
   this->policy_arg_ = nullptr;
   if (get_opts.long_option (ACE_TEXT ("policy"),
                            'p',
                            ACE_Get_Opt::ARG_REQUIRED) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Unable to add long option 'p'\n")),
-                      NSGROUP_COMMAND::none);
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Unable to add long option 'p'\n")));
+      return NSGROUP_COMMAND::none;
+    }
 
   this->location_arg_ = nullptr;
   if (get_opts.long_option (ACE_TEXT ("location"),
                            'l',
                            ACE_Get_Opt::ARG_REQUIRED) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Unable to add long option 'l'\n")),
-                      NSGROUP_COMMAND::none);
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Unable to add long option 'l'\n")));
+      return NSGROUP_COMMAND::none;
+    }
 
   this->ior_arg_ = nullptr;
   if (get_opts.long_option (ACE_TEXT ("ior"),
                            'i',
                            ACE_Get_Opt::ARG_REQUIRED) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Unable to add long option 'i'\n")),
-                      NSGROUP_COMMAND::none);
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Unable to add long option 'i'\n")));
+      return NSGROUP_COMMAND::none;
+    }
 
   this->namepath_arg_ = nullptr;
   if (get_opts.long_option (ACE_TEXT ("name"),
                            'n',
                            ACE_Get_Opt::ARG_REQUIRED) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Unable to add long option 'n'\n")),
-                      NSGROUP_COMMAND::none);
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Unable to add long option 'n'\n")));
+      return NSGROUP_COMMAND::none;
+    }
 
   if (get_opts.long_option (ACE_TEXT ("help"), 'h') != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Unable to add long option 'h'\n")),
-                      NSGROUP_COMMAND::none);
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Unable to add long option 'h'\n")));
+      return NSGROUP_COMMAND::none;
+    }
 
   int c {};
   while ((c = get_opts ()) != -1)
@@ -373,71 +340,37 @@ NSGROUP::parse_command_line ()
   // handle non-option arguments
   int non_option_arg_count {};
   for (int i {get_opts.opt_ind ()}; i < this->argc_; ++i)
-  {
-    ++non_option_arg_count;
+    {
+      ++non_option_arg_count;
 
-    if( ACE_OS::strncmp (this->argv_[i],ACE_TEXT("group_create"),
-                         ACE_OS::strlen (ACE_TEXT("group_create"))) == 0 )
-      {
+      if (ACE_OS::strcmp (this->argv_[i], ACE_TEXT ("group_create")) == 0)
         nsgroup_cmd_ = NSGROUP_COMMAND::group_create;
-      }
-    else if(ACE_OS::strncmp (this->argv_[i], ACE_TEXT("group_bind"),
-                             ACE_OS::strlen (ACE_TEXT("group_bind"))) == 0 )
-      {
+      else if (ACE_OS::strcmp (this->argv_[i], ACE_TEXT ("group_bind")) == 0)
         nsgroup_cmd_ = NSGROUP_COMMAND::group_bind;
-      }
-    else if(ACE_OS::strncmp (this->argv_[i], ACE_TEXT("group_unbind"),
-                             ACE_OS::strlen (ACE_TEXT("group_unbind")))
-            == 0 )
-      {
+      else if (ACE_OS::strcmp (this->argv_[i], ACE_TEXT ("group_unbind")) == 0)
         nsgroup_cmd_ = NSGROUP_COMMAND::group_unbind;
-      }
-    else if(ACE_OS::strncmp (this->argv_[i], ACE_TEXT("group_modify"),
-                             ACE_OS::strlen (ACE_TEXT("group_modify"))) == 0 )
-      {
-        /// reserve command group_modify for future use
+      else if (ACE_OS::strcmp (this->argv_[i], ACE_TEXT ("group_modify")) == 0)
+        // reserve command group_modify for future use
         nsgroup_cmd_ = NSGROUP_COMMAND::none;
-      }
-    else if(ACE_OS::strncmp (this->argv_[i], ACE_TEXT("group_list"),
-                               ACE_OS::strlen (ACE_TEXT("group_list"))) == 0 )
-      {
+      else if (ACE_OS::strcmp (this->argv_[i], ACE_TEXT ("group_list")) == 0)
         nsgroup_cmd_ = NSGROUP_COMMAND::group_list;
-      }
-    else if(ACE_OS::strncmp (this->argv_[i], ACE_TEXT("group_remove"),
-                             ACE_OS::strlen (ACE_TEXT("group_remove"))) == 0 )
-      {
+      else if (ACE_OS::strcmp (this->argv_[i], ACE_TEXT ("group_remove")) == 0)
         nsgroup_cmd_ = NSGROUP_COMMAND::group_remove;
-      }
-    else if(ACE_OS::strncmp (this->argv_[i], ACE_TEXT("member_list"),
-                               ACE_OS::strlen (ACE_TEXT("member_list"))) == 0 )
-      {
+      else if (ACE_OS::strcmp (this->argv_[i], ACE_TEXT ("member_list")) == 0)
         nsgroup_cmd_ = NSGROUP_COMMAND::member_list;
-      }
-    else if(ACE_OS::strncmp (this->argv_[i], ACE_TEXT("member_add"),
-                             ACE_OS::strlen (ACE_TEXT("member_add"))) == 0 )
-      {
+      else if (ACE_OS::strcmp (this->argv_[i], ACE_TEXT ("member_add")) == 0)
         nsgroup_cmd_ = NSGROUP_COMMAND::member_add;
-      }
-    else if(ACE_OS::strncmp (this->argv_[i], ACE_TEXT("member_remove"),
-                             ACE_OS::strlen (ACE_TEXT("member_remove"))) == 0 )
-      {
+      else if (ACE_OS::strcmp (this->argv_[i], ACE_TEXT ("member_remove")) == 0)
         nsgroup_cmd_ = NSGROUP_COMMAND::member_remove;
-      }
-    else if(ACE_OS::strncmp (this->argv_[i], ACE_TEXT("member_show"),
-                               ACE_OS::strlen (ACE_TEXT("member_show"))) == 0 )
-      {
+      else if (ACE_OS::strcmp (this->argv_[i], ACE_TEXT ("member_show")) == 0)
         nsgroup_cmd_ = NSGROUP_COMMAND::member_show;
-      }
-    else
-      {
+      else
         nsgroup_cmd_ = NSGROUP_COMMAND::none;
-      }
-  }
+    }
 
   // The command should be the only non option argument
-  if ( non_option_arg_count > 1 ) {
-      nsgroup_cmd_ = NSGROUP_COMMAND::none;
-  }
+  if (non_option_arg_count > 1)
+    nsgroup_cmd_ = NSGROUP_COMMAND::none;
 
   return nsgroup_cmd_;
 }
@@ -465,7 +398,6 @@ NSGROUP::show_usage ()
   return RC_SUCCESS;
 }
 
-//============================================================================
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
@@ -478,17 +410,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       NSGROUP ns_group (argc, argv);
 
-      if ( show_help (argc, argv) )
-      {
+      if (show_help (argc, argv))
         rc = ns_group.show_usage ();
-      }
-      else if ( RC_SUCCESS == ns_group.start_orb ())
-      {
+      else if (RC_SUCCESS == ns_group.start_orb ())
         rc = ns_group.run_cmd ();
-      }
-
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("Unable to run %s\n"),

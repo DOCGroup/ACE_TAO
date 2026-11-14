@@ -273,6 +273,10 @@ sub run_clients ()
         $NEGATIVE_TEST_RESULT);
 
     run_client (
+        "group_create-extra -group invalid -policy round",
+        $NEGATIVE_TEST_RESULT);
+
+    run_client (
         "group_create -group ieee -policy round",
         $NEGATIVE_TEST_RESULT);
 
