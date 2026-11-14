@@ -163,7 +163,7 @@ TAO_Thread_Lane_Resources::leader_follower ()
         {
           // Create a new Leader Follower object.
           ACE_NEW_RETURN (this->leader_follower_,
-                          TAO_Leader_Follower (&this->orb_core_,
+                          TAO_Leader_Follower (std::addressof (this->orb_core_),
                                                this->new_leader_generator_),
                           *this->leader_follower_);
         }
@@ -342,7 +342,7 @@ TAO_Thread_Lane_Resources::open_acceptor_registry (const TAO_EndpointSet &endpoi
   TAO_Acceptor_Registry &ar = this->acceptor_registry ();
 
   // Open it.
-  return ar.open (&this->orb_core_,
+  return ar.open (std::addressof (this->orb_core_),
                   this->leader_follower ().reactor (),
                   endpoint_set,
                   ignore_address);

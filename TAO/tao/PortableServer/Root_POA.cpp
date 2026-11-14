@@ -881,7 +881,7 @@ TAO_Root_POA::destroy_i (CORBA::Boolean etherealize_objects,
     this->object_adapter ().non_servant_upcall_in_progress ();
   if (this->outstanding_requests_ == 0 &&
       (non_servant_upcall_in_progress == nullptr ||
-       &non_servant_upcall_in_progress->poa () != this))
+       std::addressof (non_servant_upcall_in_progress->poa ()) != this))
     {
       TAO::ORT_Array my_array_obj_ref_template;
 
@@ -1211,7 +1211,8 @@ TAO_Root_POA::check_for_valid_wait_for_completions (const TAO_ORB_Core &orb_core
           // POA destruction does not occur.
           if ((poa_current_impl != nullptr) && (poa_current_impl->poa () != nullptr))
             {
-              if (&orb_core == &poa_current_impl->orb_core ())
+              if (std::addressof (orb_core)
+                  == std::addressof (poa_current_impl->orb_core ()))
                 {
                   // CORBA 2.3 specifies which minor code corresponds
                   // to this particular problem.
