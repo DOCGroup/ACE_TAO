@@ -3,6 +3,7 @@
 #include "ace/os_include/os_netdb.h"
 #include <cstdlib>
 #include <cstring>
+#include <memory>
 
 // This constructor takes a message of sorted login names and loads up
 // the symbol table on the server's side.  It assumes that the number
@@ -26,7 +27,7 @@ BS_Server::BS_Server (char const *packet)
 
   for (int i = 0; i < this->count_; ++i)
     {
-      Protocol_Record *rec_ptr = &this->protocol_record_[i];
+      Protocol_Record * const rec_ptr = std::addressof (this->protocol_record_[i]);
 
       this->sorted_record_[i] = rec_ptr;
       rec_ptr->key_name1_ = buf_ptr;

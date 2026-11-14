@@ -5,6 +5,7 @@
 #include "ace/Null_Mutex.h"
 #include "ace/OS_NS_string.h"
 #include <cstring>
+#include <memory>
 
 BS_Client::BS_Client ()
 {
@@ -26,7 +27,7 @@ BS_Client::BS_Client ()
 
       for (int i = 0; i < this->count_; ++i)
         {
-          Protocol_Record *prp = &this->protocol_record_[i];
+          Protocol_Record * const prp = std::addressof (this->protocol_record_[i]);
 
           this->sorted_record_[i] = prp;
 
