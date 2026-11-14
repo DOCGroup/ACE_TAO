@@ -1611,15 +1611,15 @@ ACE_OS::sema_init (ACE_sema_t *s,
   ACE_UNUSED_ARG (sa);
   int             flags = 0;
   mode_t          mode = S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP;
+  char uname[ACE_UNIQUE_NAME_LEN];
 
   if (type == USYNC_THREAD)
     {
       // Create systemwide unique name for semaphore
-      char   uname[ACE_UNIQUE_NAME_LEN];
       ACE_OS::unique_name ((const void *) s,
                             uname,
                             ACE_UNIQUE_NAME_LEN);
-      name = &uname[0];
+      name = uname;
     }
 
   s->name_ = 0;
