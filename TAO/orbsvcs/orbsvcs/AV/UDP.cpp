@@ -590,6 +590,7 @@ TAO_AV_UDP_Connector::connect (TAO_FlowSpec_Entry *entry,
 {
   ACE_INET_Addr *local_addr {};
   ACE_INET_Addr *control_inet_addr {};
+  std::unique_ptr<ACE_INET_Addr> owned_control_inet_addr;
 
   this->entry_ = entry;
   this->flow_component_ = flow_component;
@@ -687,7 +688,7 @@ TAO_AV_UDP_Connector::connect (TAO_FlowSpec_Entry *entry,
                           ACE_NEW_RETURN (control_inet_address,
                                           ACE_INET_Addr ("0"),
                                           -1);
-                          this->control_inet_address_.reset (control_inet_address);
+                          owned_control_inet_addr.reset (control_inet_address);
                         }
                     }
 

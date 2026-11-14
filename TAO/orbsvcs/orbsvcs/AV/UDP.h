@@ -189,7 +189,6 @@ public:
   virtual int activate_svc_handler (TAO_AV_Flow_Handler *handler);
   int close () override;
 protected:
-  std::unique_ptr<ACE_INET_Addr> control_inet_address_ {};
   TAO_Base_StreamEndPoint *endpoint_ {};
   TAO_AV_Core *av_core_ {};
   TAO_FlowSpec_Entry *entry_ {};

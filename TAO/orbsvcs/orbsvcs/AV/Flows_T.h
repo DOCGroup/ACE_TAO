@@ -82,6 +82,8 @@ public:
                 char const *fdev_name) override;
 
 protected:
+  /// These lists hold non-owning pointers to activated servants. destroy()
+  /// deactivates and deletes each servant explicitly.
   ACE_DLList <TAO_FlowProducer> producer_list_;
   using PRODUCER_LIST_ITERATOR = ACE_DLList_Iterator<TAO_FlowProducer>;
   ACE_DLList <TAO_FlowConsumer> consumer_list_;
