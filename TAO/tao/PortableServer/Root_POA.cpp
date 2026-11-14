@@ -1791,8 +1791,7 @@ TAO_Root_POA::set_id (TAO_Root_POA *parent)
   // Put the POA name into the key (for non-root POAs).
   if (parent != nullptr)
     {
-      std::memcpy (&buffer[starting_at], this->system_name_->get_buffer (),
-                   this->system_name_->length ());
+      std::memcpy (&buffer[starting_at], this->system_name_->get_buffer (), this->system_name_->length ());
       starting_at += this->system_name_->length ();
     }
 }

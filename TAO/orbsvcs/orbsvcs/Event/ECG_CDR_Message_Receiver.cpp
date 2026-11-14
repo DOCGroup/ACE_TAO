@@ -444,8 +444,7 @@ TAO_ECG_CDR_Message_Receiver::process_fragment (
 
   // Add the fragment to the request entry.
   (*request)->mark_received (header.fragment_id);
-  std::memcpy ((*request)->fragment_buffer (header.fragment_offset), data_buf,
-               header.fragment_size);
+  std::memcpy ((*request)->fragment_buffer (header.fragment_offset), data_buf, header.fragment_size);
 
   // The request is not yet complete.
   if (!(*request)->complete ())

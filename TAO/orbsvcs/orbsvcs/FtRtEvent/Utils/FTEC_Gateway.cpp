@@ -291,8 +291,7 @@ FTEC_Gateway_ConsumerAdmin::obtain_push_supplier ()
 
   FtRtecEventComm::ObjectId local_oid;
   local_oid.length(sizeof(remote_proxy_oid_ptr));
-  std::memcpy (local_oid.get_buffer (), std::addressof (remote_proxy_oid_ptr),
-               sizeof (remote_proxy_oid_ptr));
+  std::memcpy (local_oid.get_buffer (), std::addressof (remote_proxy_oid_ptr), sizeof (remote_proxy_oid_ptr));
 
   RtecEventChannelAdmin::ProxyPushSupplier_ptr result;
   activate_object_with_id(result, impl_->poa.in(),
@@ -318,8 +317,7 @@ FTEC_Gateway_SupplierAdmin::obtain_push_consumer ()
 
   FtRtecEventComm::ObjectId local_oid;
   local_oid.length(sizeof(remote_proxy_oid_ptr));
-  std::memcpy (local_oid.get_buffer (), std::addressof (remote_proxy_oid_ptr),
-               sizeof (remote_proxy_oid_ptr));
+  std::memcpy (local_oid.get_buffer (), std::addressof (remote_proxy_oid_ptr), sizeof (remote_proxy_oid_ptr));
 
   RtecEventChannelAdmin::ProxyPushConsumer_ptr result;
   activate_object_with_id(result, impl_->poa.in(),

@@ -91,9 +91,7 @@ ACE_WString_Helper::decode (void *buf)
       if (encoded_value != 0)
         {
           ACE_UINT16 const decoded_value = ntohs (encoded_value);
-          std::memcpy (bytes + count * sizeof (decoded_value),
-                       &decoded_value,
-                       sizeof (decoded_value));
+          std::memcpy (bytes + count * sizeof (decoded_value), &decoded_value, sizeof (decoded_value));
         }
       ++count;
     }

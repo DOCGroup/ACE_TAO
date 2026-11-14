@@ -29,8 +29,7 @@ namespace TAO
     ACE_INLINE void
     Creation_Time::creation_time (void const *creation_time)
     {
-      std::memcpy (std::addressof (this->time_stamp_), creation_time,
-                   Creation_Time::creation_time_length ());
+      std::memcpy (std::addressof (this->time_stamp_), creation_time, Creation_Time::creation_time_length ());
     }
 
     ACE_INLINE void const *
