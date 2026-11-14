@@ -10,18 +10,16 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+/// Options singleton.
 class Options
-  // = TITLE
-  //   Options Singleton.
 {
 public:
+  /// Returns the singleton.
   static Options *instance ();
-  // Return Singleton.
 
+  /// Parses the command-line arguments.
   void parse_args (int argc, ACE_TCHAR *argv[]);
-  // Parse the arguments.
 
-  // = Accessor methods.
   std::string const &program_name () const;
   std::string const &slave_name () const;
   bool debug () const;
@@ -36,52 +34,52 @@ public:
   bool child () const;
 
 private:
+  /// Singleton-only constructor.
   Options () = default;
-  // Ensure Singleton.
 
   Options (Options const &) = delete;
   Options (Options &&) = delete;
   Options &operator= (Options const &) = delete;
   Options &operator= (Options &&) = delete;
 
+  /// Prints usage information and exits.
   void print_usage_and_die ();
-  // Explain usage and exit.
 
+  /// Program name.
   std::string program_name_ {};
-  // Name of the program.
 
+  /// Slave process name.
   std::string slave_name_ { "slave" };
-  // Name of slave process.
 
+  /// Whether debugging is enabled.
   bool debug_ {};
-  // Flag to indicate if we are debugging.
 
+  /// Whether to exec after forking.
   bool exec_slave_ {};
-  // Flag to indicate if we should exec after forking.
 
+  /// Number of iterations to call malloc_recurse().
   size_t iteration_count_ { 100 };
-  // Number of iterations to call malloc_recurse().
 
+  /// Whether to use sbrk(2).
   bool use_sbrk_ {};
-  // Should we use sbrk(2)?
 
+  /// Whether to use shared memory.
   bool use_shmem_ {};
-  // Should we use Shared Memory?
 
+  /// Maximum number of bytes to allocate.
   size_t max_msg_size_ { 127 };
-  // Maximum number of bytes to malloc.
 
+  /// Number of threads.
   size_t spawn_count_ { 1 };
-  // Number of threads.
 
+  /// Whether to spawn threads instead of processes.
   bool spawn_threads_ { true };
-  // Spawn threads vs. processes.
 
+  /// Whether to use mmap() as the backing store.
   bool use_mmap_ {};
-  // Use mmap() as the backing store.
 
+  /// Whether this is a child process.
   bool child_ {};
-  // We're a child process.
 };
 
 #endif /* _OPTIONS */
