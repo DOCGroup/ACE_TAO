@@ -58,12 +58,12 @@ int processRecords (HASH_MAP *map, ALLOCATOR *shmem_allocator)
 
   for (HASH_MAP::iterator iter = map->begin ();
       iter != map->end ();
-      iter++)
+      ++iter)
     {
       int key = (*iter).ext_id_;
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) [%d] Preprocessing %d:%@\n"),
-                  i+1, key, &(*iter).ext_id_));
+                  i+1, key, std::addressof ((*iter).ext_id_)));
 
       todelete[i++] = key;    // Mark message for deletion.
 
@@ -81,7 +81,7 @@ int processRecords (HASH_MAP *map, ALLOCATOR *shmem_allocator)
     }
 
   // Delete everything we processed.
-  for (int j = 0; j < i ; j++)
+  for (int j = 0; j < i ; ++j)
     {
       int result = map->unbind (todelete[j],
                                 shmem_allocator);
@@ -111,7 +111,7 @@ int addRecords(HASH_MAP *map, ALLOCATOR *shmem_allocator)
               ACE_TEXT ("Map has %B entries; adding 20 more\n"),
               mapLength));
 
-  for (int i = mapLength ; i < mapLength + 20; i++)
+  for (int i = mapLength ; i < mapLength + 20; ++i)
     {
       ACE_OS::sprintf (buf, "%s:%d", "Record", i);
 
