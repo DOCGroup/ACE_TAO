@@ -681,7 +681,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }
   catch  (...)
     {
-      assert (false);  // Uncaught exception, dump core
+      std::cerr << "Uncaught non-CORBA exception" << std::endl;
+      return 1;
     }
   return 0;
 }
