@@ -17,6 +17,8 @@
 #include "tao/Strategies/DIOP_Profile.h"
 #include <cstring>
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_DIOP_Connector::TAO_DIOP_Connector ()
@@ -182,7 +184,7 @@ TAO_DIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
 
   // Add the handler to Cache
   retval =
-    this->orb_core ()->lane_resources ().transport_cache ().cache_transport (&desc,
+    this->orb_core ()->lane_resources ().transport_cache ().cache_transport (std::addressof (desc),
                                                                              transport);
 
   // Failure in adding to cache.

@@ -190,7 +190,7 @@ TAO::Storable_FlatFileStream::open()
     flags |= O_CREAT;
 
 #ifndef ACE_WIN32
-  if( ACE_OS::flock_init (&filelock_, flags,
+  if( ACE_OS::flock_init (std::addressof (filelock_), flags,
                           ACE_TEXT_CHAR_TO_TCHAR (file_.c_str()), 0666) != 0 )
     TAOLIB_ERROR_RETURN ((LM_ERROR,
                           ACE_TEXT ("(%P|%t) Storable_FFS::open ")
@@ -236,7 +236,7 @@ TAO::Storable_FlatFileStream::close()
 {
   ACE_OS::fflush(fl_);
 #ifndef ACE_WIN32
-  ACE_OS::flock_destroy (&filelock_, 0);
+  ACE_OS::flock_destroy (std::addressof (filelock_), 0);
 #endif
   ACE_OS::fclose (fl_);  // even though flock_destroy closes the handle
                          // we still need to destroy the FILE*
@@ -265,8 +265,8 @@ TAO::Storable_FlatFileStream::flock (int whence, int start, int len)
         this->reopen();
       retry = true;
       result = shared ?
-        ACE_OS::flock_rdlock(&filelock_, whence, start, len) :
-        ACE_OS::flock_wrlock(&filelock_, whence, start, len);
+        ACE_OS::flock_rdlock(std::addressof (filelock_), whence, start, len) :
+        ACE_OS::flock_wrlock(std::addressof (filelock_), whence, start, len);
       if (result != 0)
         {
           if (TAO_debug_level > 0)
@@ -307,7 +307,7 @@ TAO::Storable_FlatFileStream::funlock (int whence, int start, int len)
       if (retry)
         this->reopen();
       retry = true;
-      result = ACE_OS::flock_unlock(&filelock_, whence, start, len);
+      result = ACE_OS::flock_unlock(std::addressof (filelock_), whence, start, len);
       if (result != 0)
         {
           if (TAO_debug_level > 0)

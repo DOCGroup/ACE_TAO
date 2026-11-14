@@ -236,7 +236,7 @@ TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
                                ep_ptr,
                                1U,
                                r,
-                               &mev,
+                               std::addressof (mev),
                                timeout);
 
   // If complete_connection was unsuccessful then remove
@@ -319,7 +319,7 @@ TAO_IIOP_Connector::make_parallel_connection (
                 {
                   struct timespec nsleep = {sec_stagger, ns_stagger};
                   ACE_OS::nanosleep (&nsleep);
-                  result = this->active_connect_strategy_->poll (&mev);
+                  result = this->active_connect_strategy_->poll (std::addressof (mev));
                   if (result != -1)
                     break;
                 }
@@ -350,7 +350,7 @@ TAO_IIOP_Connector::make_parallel_connection (
                                           shlist.data (),
                                           eplist.data (),
                                           count,r,
-                                          &mev,
+                                          std::addressof (mev),
                                           timeout);
 
       // We add here an extra reference so that when svc_handler_auto_ptr

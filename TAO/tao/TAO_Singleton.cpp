@@ -86,7 +86,7 @@ TAO_Singleton<TYPE, ACE_LOCK>::instance ()
               TAO_Singleton_Manager::at_exit (singleton, 0,
                                               typeid (TYPE).name ());
 #else
-              TAO_Singleton_Manager::at_exit (singleton, &lock,
+              TAO_Singleton_Manager::at_exit (singleton, std::addressof (lock),
                                               typeid (TYPE).name());
             }
 #endif /* ACE_MT_SAFE */

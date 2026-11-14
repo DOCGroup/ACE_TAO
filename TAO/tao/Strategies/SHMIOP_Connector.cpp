@@ -213,7 +213,7 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
 
   // Add the handler to Cache
   int const retval =
-    this->orb_core ()->lane_resources ().transport_cache ().cache_transport (&desc,
+    this->orb_core ()->lane_resources ().transport_cache ().cache_transport (std::addressof (desc),
                                                                              transport);
 
   // Failure in adding to cache.
