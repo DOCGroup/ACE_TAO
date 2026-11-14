@@ -361,55 +361,55 @@ namespace CORBA
 void
 operator<<= (CORBA::Any &any, CORBA::Short s)
 {
-  TAO::Any_Basic_Impl::insert (any, CORBA::_tc_short, &s);
+  TAO::Any_Basic_Impl::insert (any, CORBA::_tc_short, std::addressof (s));
 }
 
 void
 operator<<= (CORBA::Any &any, CORBA::UShort us)
 {
-  TAO::Any_Basic_Impl::insert (any, CORBA::_tc_ushort, &us);
+  TAO::Any_Basic_Impl::insert (any, CORBA::_tc_ushort, std::addressof (us));
 }
 
 void
 operator<<= (CORBA::Any &any, CORBA::Long l)
 {
-  TAO::Any_Basic_Impl::insert (any, CORBA::_tc_long, &l);
+  TAO::Any_Basic_Impl::insert (any, CORBA::_tc_long, std::addressof (l));
 }
 
 void
 operator<<= (CORBA::Any &any, CORBA::ULong ul)
 {
-  TAO::Any_Basic_Impl::insert (any, CORBA::_tc_ulong, &ul);
+  TAO::Any_Basic_Impl::insert (any, CORBA::_tc_ulong, std::addressof (ul));
 }
 
 void
 operator<<= (CORBA::Any &any, CORBA::LongLong ll)
 {
-  TAO::Any_Basic_Impl::insert (any, CORBA::_tc_longlong, &ll);
+  TAO::Any_Basic_Impl::insert (any, CORBA::_tc_longlong, std::addressof (ll));
 }
 
 void
 operator<<= (CORBA::Any &any, CORBA::ULongLong ull)
 {
-  TAO::Any_Basic_Impl::insert (any, CORBA::_tc_ulonglong, &ull);
+  TAO::Any_Basic_Impl::insert (any, CORBA::_tc_ulonglong, std::addressof (ull));
 }
 
 void
 operator<<= (CORBA::Any &any, CORBA::Float f)
 {
-  TAO::Any_Basic_Impl::insert (any, CORBA::_tc_float, &f);
+  TAO::Any_Basic_Impl::insert (any, CORBA::_tc_float, std::addressof (f));
 }
 
 void
 operator<<= (CORBA::Any &any, CORBA::Double d)
 {
-  TAO::Any_Basic_Impl::insert (any, CORBA::_tc_double, &d);
+  TAO::Any_Basic_Impl::insert (any, CORBA::_tc_double, std::addressof (d));
 }
 
 void
 operator<<= (CORBA::Any &any, CORBA::LongDouble ld)
 {
-  TAO::Any_Basic_Impl::insert (any, CORBA::_tc_longdouble, &ld);
+  TAO::Any_Basic_Impl::insert (any, CORBA::_tc_longdouble, std::addressof (ld));
 }
 
 // Insertion of Any - copying.
@@ -438,7 +438,7 @@ void
 operator<<= (CORBA::Any &any, CORBA::TypeCode_ptr tc)
 {
   CORBA::TypeCode_ptr dup = CORBA::TypeCode::_duplicate (tc);
-  any <<= &dup;
+  any <<= std::addressof (dup);
 }
 
 // Insertion of TypeCode - non-copying.
@@ -457,7 +457,7 @@ void
 operator<<= (CORBA::Any &any, CORBA::Object_ptr const obj)
 {
   CORBA::Object_ptr dup = CORBA::Object::_duplicate (obj);
-  any <<= &dup;
+  any <<= std::addressof (dup);
 }
 
 // Insertion of CORBA object - non-copying.

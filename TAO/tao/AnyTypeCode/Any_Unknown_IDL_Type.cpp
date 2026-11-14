@@ -64,8 +64,8 @@ TAO::Unknown_IDL_Type::marshal_value (TAO_OutputCDR & cdr)
 
       TAO::traverse_status const status =
         TAO_Marshal_Object::perform_append (this->type_,
-                                            &for_reading,
-                                            &cdr);
+                                            std::addressof (for_reading),
+                                            std::addressof (cdr));
 
       if (status != TAO::TRAVERSE_CONTINUE)
         {
