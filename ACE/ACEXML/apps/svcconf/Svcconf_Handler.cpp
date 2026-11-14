@@ -10,6 +10,7 @@
 #include "ace/Module.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/SString.h"
+#include <memory>
 
 #if (ACE_USES_CLASSIC_SVC_CONF == 0)
 
@@ -37,8 +38,8 @@ ACEXML_Svcconf_Handler::endElement (ACEXML_Char const *,
   if (ACE_OS::strcmp (qName, ACE_TEXT ("dynamic")) == 0)
     {
       ACE_Parsed_Info const *active_info = (!this->in_stream_def_ ?
-                                            &this->parsed_info_ :
-                                            &this->stream_info_);
+                                            std::addressof (this->parsed_info_) :
+                                            std::addressof (this->stream_info_));
 
       // We must allocate a string here to ensure that the
       // name is still available by the time the
@@ -78,7 +79,7 @@ ACEXML_Svcconf_Handler::endElement (ACEXML_Char const *,
 
           throw ACEXML_SAXException (msg.c_str ());
         }
-      void * const symbol = (*func)(&gobbler); // target object created in the loaded DLL.
+      void * const symbol = (*func)(std::addressof (gobbler)); // target object created in the loaded DLL.
 
       ACE_Service_Type_Impl * const stp = ACE_Service_Config::create_service_type_impl
         (active_info->name (),
@@ -590,8 +591,8 @@ ACEXML_Svcconf_Handler::get_dynamic_attrs (ACEXML_Attributes *alist)
   if (alist != nullptr)
     {
       ACE_Parsed_Info * const info = (!this->in_stream_def_ ?
-                                      &this->parsed_info_ :
-                                      &this->stream_info_);
+                                      std::addressof (this->parsed_info_) :
+                                      std::addressof (this->stream_info_));
       for (size_t i = 0; i < alist->getLength (); ++i)
         {
           if (ACE_OS::strcmp (alist->getQName (i), ACE_TEXT ("id")) == 0)
@@ -669,8 +670,8 @@ ACEXML_Svcconf_Handler::get_initializer_attrs (ACEXML_Attributes *alist)
   if (alist != nullptr)
     {
       ACE_Parsed_Info * const info = (!this->in_stream_def_ ?
-                                      &this->parsed_info_ :
-                                      &this->stream_info_);
+                                      std::addressof (this->parsed_info_) :
+                                      std::addressof (this->stream_info_));
       for (size_t i = 0; i < alist->getLength (); ++i)
         {
           if (ACE_OS::strcmp (alist->getQName (i), ACE_TEXT ("init")) == 0)
@@ -707,8 +708,8 @@ ACEXML_Svcconf_Handler::get_static_attrs (ACEXML_Attributes *alist)
   if (alist != nullptr)
     {
       ACE_Parsed_Info * const info = (!this->in_stream_def_ ?
-                                      &this->parsed_info_ :
-                                      &this->stream_info_);
+                                      std::addressof (this->parsed_info_) :
+                                      std::addressof (this->stream_info_));
       for (size_t i = 0; i < alist->getLength (); ++i)
         {
           if (ACE_OS::strcmp (alist->getQName (i), ACE_TEXT ("id")) == 0)

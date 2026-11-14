@@ -21,16 +21,16 @@ _ACEXML_create_XML_Svc_Conf_Object ()
 
 ACEXML_Svcconf_Parser::ACEXML_Svcconf_Parser ()
 {
-  this->parser_.setContentHandler (&this->svcconf_handler_);
-  this->parser_.setDTDHandler (&this->svcconf_handler_);
-  this->parser_.setErrorHandler (&this->svcconf_handler_);
-  this->parser_.setEntityResolver (&this->svcconf_handler_);
+  this->parser_.setContentHandler (std::addressof (this->svcconf_handler_));
+  this->parser_.setDTDHandler (std::addressof (this->svcconf_handler_));
+  this->parser_.setErrorHandler (std::addressof (this->svcconf_handler_));
+  this->parser_.setEntityResolver (std::addressof (this->svcconf_handler_));
   try
     {
       this->parser_.setFeature (ACE_TEXT ("http://xml.org/sax/features/validation"),
                                 false);
     }
-  catch (const ACEXML_SAXException& ex)
+  catch (ACEXML_SAXException const& ex)
     {
       ex.print ();              // Can't do much except printing the error.
     }
@@ -55,9 +55,9 @@ ACEXML_Svcconf_Parser::parse_file (ACE_TCHAR const file[])
 
   try
     {
-      this->parser_.parse (&this->input_stream_);
+      this->parser_.parse (std::addressof (this->input_stream_));
     }
-  catch (const ACEXML_SAXException& ex)
+  catch (ACEXML_SAXException const& ex)
     {
       ex.print ();
       return -1;
@@ -80,9 +80,9 @@ ACEXML_Svcconf_Parser::parse_string (ACE_TCHAR const str[])
   this->input_stream_.setCharStream (stm.release ());
   try
     {
-      this->parser_.parse (&this->input_stream_);
+      this->parser_.parse (std::addressof (this->input_stream_));
     }
-  catch (const ACEXML_SAXException& ex)
+  catch (ACEXML_SAXException const& ex)
     {
       // If there was a problem parsing the stream, set the errno
       // to EINVAL to indicate to upper levels that the stream was
