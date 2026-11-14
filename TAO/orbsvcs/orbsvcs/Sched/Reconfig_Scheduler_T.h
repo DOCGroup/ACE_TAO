@@ -580,13 +580,12 @@ protected:
   ACE_LOCK mutex_;
 };
 
+/// Ensures that the scheduling pointer arrays have room, expanding them
+/// eagerly to minimize allocation overhead at the cost of some unused space.
 template <class ARRAY_ELEMENT_TYPE> void
 maintain_scheduling_array (ARRAY_ELEMENT_TYPE ** & current_ptr_array,
                            long & current_ptr_array_size,
                            RtecScheduler::handle_t handle);
-// Helper function: makes sure there is room in the scheduling pointer
-// arrays.  This function expands the array eagerly, to minimize time
-// overhead for memory allocation (at a cost of some unused space).
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

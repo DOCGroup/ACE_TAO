@@ -293,5 +293,3 @@ using Scheduler = ACE_Scheduler;
 
 #include /**/ "ace/post.h"
 #endif /* SCHEDULER_H */
-
-// EOF

@@ -23,7 +23,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 using Scheduler_File_Ptr = std::unique_ptr<FILE, int (*) (FILE *)>;
 
-// compare the DFS finish times of two task entries, order higher time *first*
+/// Compares two task entries by DFS finish time, ordering higher times first.
 extern "C" int compare_entry_finish_times (void const *first, void const *second)
 {
   // sort blank entries to the end

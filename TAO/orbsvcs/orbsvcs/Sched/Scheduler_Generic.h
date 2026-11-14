@@ -133,5 +133,3 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* SCHEDULER_INTERNAL_H */
-
-// EOF

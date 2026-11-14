@@ -880,7 +880,7 @@ ACE_RMS_Scheduler_Strategy::dynamic_subpriority_comp
   return 0;
 }
 
-// Comparison function to pass to qsort.
+/// Comparison function passed to qsort.
 
 int
 ACE_RMS_Scheduler_Strategy::sort_function (void const *arg1, void const *arg2)

@@ -43,8 +43,8 @@ Task_Entry::~Task_Entry ()
   }
 }
 
-// Merge dispatches according to info type and type of call, update
-// relevant scheduling characteristics for this entry.
+/// Merges dispatches according to info type and type of call, updating
+/// relevant scheduling characteristics for this entry.
 
 Task_Entry::Propagation_Status
 Task_Entry::merge_dispatches (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries,
@@ -118,12 +118,10 @@ Task_Entry::merge_dispatches (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_ent
   return result;
 }
 
-// Prohibit calls of the given type: currently used to enforce the
-// notion that two-way calls to disjunctive or conjunctive RT_Infos do
-// not have any defined meaning, and thus should be considered
-// dependency specification errors: if these constraints are removed
-// in the future, this method should be removed as well Returns 0 if
-// all is well, or -1 if an error has occurred.
+/// Prohibits calls of the given type, enforcing that two-way calls to
+/// disjunctive or conjunctive RT_Infos are treated as dependency
+/// specification errors. If these constraints are removed, this method
+/// should also be removed. Returns 0 if all is well, or -1 on error.
 
 int
 Task_Entry::prohibit_dispatches (Dependency_Type dt)
@@ -143,9 +141,9 @@ Task_Entry::prohibit_dispatches (Dependency_Type dt)
   return 0;
 }
 
-// Perform disjunctive merge of arrival times of oneway calls: all
-// arrival times of all dependencies are duplicated by the multiplier
-// and repetition over the new frame size.
+/// Performs disjunctive merge of arrival times of oneway calls. All
+/// arrival times of all dependencies are duplicated by the multiplier
+/// and repeated over the new frame size.
 
 int
 Task_Entry::disjunctive_merge (Dependency_Type dt,
@@ -228,12 +226,12 @@ Task_Entry::disjunctive_merge (Dependency_Type dt,
   return 0;
 }
 
-// Perform conjunctive merge of arrival times of calls: all arrival
-// times of all dependencies are duplicated by the multiplier and
-// repetition over the new frame size and then iteratively merged by
-// choosing the maximal arrival time at the current position in each
-// queue (iteration is in lockstep over all queues, and ends when any
-// queue ends).
+/// Performs conjunctive merge of arrival times of calls. All arrival
+/// times of all dependencies are duplicated by the multiplier and
+/// repeated over the new frame size, then iteratively merged by choosing
+/// the maximal arrival time at the current position in each queue. The
+/// iteration proceeds in lockstep over all queues and ends when any queue
+/// ends.
 
 int
 Task_Entry::conjunctive_merge (Dependency_Type dt,
@@ -479,12 +477,10 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
   return result;
 }
 
-// This static method is used to reframe an existing dispatch set to
-// the given new period multiplier, creating new instances of each
-// existing dispatch (with adjusted arrival and deadline) in each
-// successive sub-frame.  Returns 1 if the set was reframed to a new
-// period, 0 if the set was not changed (the new period was not a
-// multiple of the old one), or -1 if an error occurred.
+/// Reframes an existing dispatch set to the given new period multiplier,
+/// creating new instances of each existing dispatch with adjusted arrival
+/// and deadline in each successive sub-frame. Returns 1 if the set was
+/// reframed to a new period, 0 if it was unchanged, or -1 on error.
 
 int
 Task_Entry::reframe (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries,
@@ -544,10 +540,9 @@ Task_Entry::reframe (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries,
   return result;
 }
 
-// This static method is used to merge an existing dispatch set,
-// multiplied by the given multipliers for the period and number of
-// instances in each period of each existing dispatch, into the given
-// "into" set, without affecting the "from set".
+/// Merges an existing dispatch set into the given destination set,
+/// applying the period and instance multipliers to each dispatch without
+/// affecting the source set.
 
 int
 Task_Entry::merge_frames (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries,
