@@ -9,6 +9,8 @@
 #include "orbsvcs/Sched/Scheduler_Generic.h"
 #include "ace/OS_NS_stdio.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Structure for storing the RT_Info information for each task, per mode.
@@ -85,7 +87,7 @@ Scheduler_Generic::lookup_config_info (Preemption_Priority priority,
 {
   if (priority == config_info_.preemption_priority)
   {
-    config_info = &config_info_;
+    config_info = std::addressof (config_info_);
     return SUCCEEDED;
   }
   else

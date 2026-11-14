@@ -13,6 +13,8 @@
 #include "ace/Sched_Params.h"
 #include "ace/ACE.h"
 
+#include <memory>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -793,7 +795,7 @@ TAO_RSE_Priority_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::visit (TAO_Reconfig
   rse.actual_rt_info ()->preemption_priority = priority_;
 
   // Remember the current entry for the next visit.
-  previous_entry_ = &rse;
+  previous_entry_ = std::addressof (rse);
 
   return result;
 }
@@ -874,7 +876,7 @@ TAO_Tuple_Admission_Visitor<RECONFIG_SCHED_STRATEGY>::visit (TAO_RT_Info_Tuple &
           < this->critical_utilization_threshold_)
         {
           this->critical_utilization_ += delta_utilization;
-          entry->current_admitted_tuple (&t);
+          entry->current_admitted_tuple (std::addressof (t));
           entry->actual_rt_info ()->period = t.period;
         }
     }
@@ -886,7 +888,7 @@ TAO_Tuple_Admission_Visitor<RECONFIG_SCHED_STRATEGY>::visit (TAO_RT_Info_Tuple &
           < this->noncritical_utilization_threshold_)
         {
           this->noncritical_utilization_ += delta_utilization;
-          entry->current_admitted_tuple (&t);
+          entry->current_admitted_tuple (std::addressof (t));
           entry->actual_rt_info ()->period = t.period;
         }
     }

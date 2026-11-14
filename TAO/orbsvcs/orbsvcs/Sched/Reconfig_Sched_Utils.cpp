@@ -13,6 +13,8 @@
 
 #include "orbsvcs/Time_Utilities.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_RT_Info_Ex::TAO_RT_Info_Ex ()
@@ -173,7 +175,7 @@ TAO_RT_Info_Tuple::operator < (TAO_RT_Info_Tuple const &t) const
 
 TAO_Reconfig_Scheduler_Entry::
 TAO_Reconfig_Scheduler_Entry (TAO_RT_Info_Ex &rt_info)
-  : actual_rt_info_ (&rt_info),
+  : actual_rt_info_ (std::addressof (rt_info)),
     enabled_ (rt_info.enabled)
   //    effective_exec_multiplier_ (0),  //WSOA merge commented out
   //  effective_period_ (0)              //WSOA merge commented out
@@ -287,13 +289,13 @@ insert_tuple (TAO_RT_Info_Tuple &tuple,
     {
       this->orig_tuple_period_sum_ += tuple.period;
       ++this->orig_tuple_count_;
-      return (this->orig_tuple_subset_.insert (&tuple) < 0) ? -1 : 0;
+      return (this->orig_tuple_subset_.insert (std::addressof (tuple)) < 0) ? -1 : 0;
     }
   else
     {
       this->prop_tuple_period_sum_ += tuple.period;
       ++this->prop_tuple_count_;
-      return (this->prop_tuple_subset_.insert (&tuple) < 0) ? -1 : 0;
+      return (this->prop_tuple_subset_.insert (std::addressof (tuple)) < 0) ? -1 : 0;
     }
 }
 
