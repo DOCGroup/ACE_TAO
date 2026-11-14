@@ -1243,7 +1243,7 @@ TAO_Notify_Constraint_Visitor::sequence_does_contain (
 
     for (CORBA::ULong i {}; i < length; ++i)
       {
-        TAO_ETCL_Literal_Constraint element (&any_seq[i]);
+        TAO_ETCL_Literal_Constraint element (std::addressof (any_seq[i]));
 
         if (item == element)
           {
@@ -1289,7 +1289,7 @@ TAO_Notify_Constraint_Visitor::array_does_contain (
 
     for (CORBA::ULong i {}; i < length; ++i)
       {
-        TAO_ETCL_Literal_Constraint element (&any_seq[i]);
+        TAO_ETCL_Literal_Constraint element (std::addressof (any_seq[i]));
 
         if (item == element)
           {
@@ -1338,7 +1338,7 @@ TAO_Notify_Constraint_Visitor::struct_does_contain (
             continue;
           }
 
-        TAO_ETCL_Literal_Constraint element (&members[i].value);
+        TAO_ETCL_Literal_Constraint element (std::addressof (members[i].value));
 
         if (item == element)
           {

@@ -16,6 +16,7 @@
 
 #include <cstring>
 #include <deque>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -1064,7 +1065,7 @@ TAO_Log_Constraint_Visitor::sequence_does_contain (
 
       for (CORBA::ULong i {}; i < length; ++i)
         {
-          TAO_ETCL_Literal_Constraint const element (&any_seq[i]);
+          TAO_ETCL_Literal_Constraint const element (std::addressof (any_seq[i]));
 
           if (item == element)
             {
@@ -1109,7 +1110,7 @@ TAO_Log_Constraint_Visitor::array_does_contain (
 
       for (CORBA::ULong i {}; i < length; ++i)
         {
-          TAO_ETCL_Literal_Constraint const element (&any_seq[i]);
+          TAO_ETCL_Literal_Constraint const element (std::addressof (any_seq[i]));
 
           if (item == element)
             {
@@ -1157,7 +1158,7 @@ TAO_Log_Constraint_Visitor::struct_does_contain (
           return false;
         }
 
-          TAO_ETCL_Literal_Constraint const element (&members[i].value);
+          TAO_ETCL_Literal_Constraint const element (std::addressof (members[i].value));
 
           if (item == element)
             {
