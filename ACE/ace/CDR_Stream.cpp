@@ -1720,7 +1720,7 @@ ACE_InputCDR::read_string (std::string& x)
         }
 #endif
 
-      if (len == 0 || this->read_char_array (&x[0], len-1))
+      if (this->read_char_array (x.data (), len-1))
       {
         return this->skip_char (); // skip the terminating '\0'
       }
@@ -1780,7 +1780,7 @@ ACE_InputCDR::read_wstring (std::wstring& x)
             }
 #endif
 
-          if (this->read_wchar_array (&x[0], len))
+          if (this->read_wchar_array (x.data (), len))
             {
               return true;
             }
@@ -1800,7 +1800,7 @@ ACE_InputCDR::read_wstring (std::wstring& x)
             }
 #endif
 
-          if (len == 1 || this->read_wchar_array (&x[0], len-1))
+          if (len == 1 || this->read_wchar_array (x.data (), len-1))
             {
               return this->skip_wchar (); // skip the terminating '\0'
             }
