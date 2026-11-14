@@ -178,7 +178,7 @@ private:
   std::unique_ptr<TAO::Transport_Cache_Manager> transport_cache_ {};
 
   /// The leader/followers management class for this lane.
-  TAO_Leader_Follower *leader_follower_;
+  std::unique_ptr<TAO_Leader_Follower> leader_follower_ {};
 
   /// Synchronization.
   TAO_SYNCH_MUTEX lock_;

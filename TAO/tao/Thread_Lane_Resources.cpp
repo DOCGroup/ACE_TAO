@@ -20,7 +20,6 @@ TAO_Thread_Lane_Resources::TAO_Thread_Lane_Resources (
     TAO_ORB_Core &orb_core,
     TAO_New_Leader_Generator *new_leader_generator)
   : orb_core_ (orb_core),
-    leader_follower_ (nullptr),
     new_leader_generator_ (new_leader_generator)
 {
   // Create the transport cache.
@@ -162,10 +161,13 @@ TAO_Thread_Lane_Resources::leader_follower ()
       if (this->leader_follower_ == nullptr)
         {
           // Create a new Leader Follower object.
-          ACE_NEW_RETURN (this->leader_follower_,
-                          TAO_Leader_Follower (std::addressof (this->orb_core_),
-                                               this->new_leader_generator_),
-                          *this->leader_follower_);
+          TAO_Leader_Follower *leader_follower {};
+          ACE_NEW_THROW_EX (leader_follower,
+                            TAO_Leader_Follower (
+                              std::addressof (this->orb_core_),
+                              this->new_leader_generator_),
+                            CORBA::NO_MEMORY ());
+          this->leader_follower_.reset (leader_follower);
         }
     }
 
@@ -388,8 +390,7 @@ TAO_Thread_Lane_Resources::finalize ()
 
   this->transport_cache_.reset ();
 
-  delete this->leader_follower_;
-  this->leader_follower_ = nullptr;
+  this->leader_follower_.reset ();
 
   // Delete all the allocators here.. They shouldnt be done earlier,
   // lest some of the contents in the above, say reactor or acceptor
