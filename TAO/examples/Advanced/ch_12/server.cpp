@@ -539,7 +539,7 @@ preinvoke (PortableServer::ObjectId const& oid,
 
   // Look at the object map to find out whether
   // we have a servant in memory.
-  Thermometer_impl *servant = nullptr;
+  Thermometer_impl *servant {};
   ActiveObjectMap::iterator servant_pos = m_aom.find (anum);
   if  (servant_pos  == m_aom.end ())
     {

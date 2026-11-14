@@ -70,7 +70,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       /* Create, register factories */
 
-      Supports_Test::Node_init *node_factory = nullptr;
+      Supports_Test::Node_init *node_factory {};
 
       ACE_NEW_RETURN (node_factory, node_init_impl, 1);
 
@@ -82,7 +82,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       node_factory->_remove_ref ();
 
-      Supports_Test::vt_graph_init *vt_graph_factory = nullptr;
+      Supports_Test::vt_graph_init *vt_graph_factory {};
 
       ACE_NEW_RETURN (vt_graph_factory, vt_graph_init_impl, 1);
 
@@ -96,7 +96,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       /* Check return values for register_value_factory */
 
-      Supports_Test::Node_init *node_factory2 = nullptr;
+      Supports_Test::Node_init *node_factory2 {};
 
       ACE_NEW_RETURN (node_factory2, node_init_impl, 1);
 

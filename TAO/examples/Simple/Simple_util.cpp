@@ -12,7 +12,7 @@
 template <class Servant>
 Server<Servant>::Server ()
 {
-  Servant *tmp = nullptr;
+  Servant *tmp {};
   ACE_NEW_THROW_EX (tmp,
                     Servant (),
                     CORBA::NO_MEMORY ());

@@ -58,7 +58,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         return 1;
 
       // Keep the raw servant pointer until ownership transfers to ServantBase_var.
-      Sleep_Service *sleep_service_impl = nullptr;
+      Sleep_Service *sleep_service_impl {};
       ACE_NEW_RETURN (sleep_service_impl,
                       Sleep_Service (orb.in ()),
                       1);

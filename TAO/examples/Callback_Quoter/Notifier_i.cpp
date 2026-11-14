@@ -54,7 +54,7 @@ Notifier_i::register_callback (char const *stock_name,
 
   consumer_data.desired_value_= threshold_value;
 
-  CONSUMERS *consumers = nullptr;
+  CONSUMERS *consumers {};
 
   // The consumer_map consists of the stockname and various consumers
   // with their threshold values. To register a consumer into this
@@ -163,7 +163,7 @@ Notifier_i::market_status (char const *stock_name,
               stock_name,
               stock_value));
 
-  CONSUMERS *consumers = nullptr;
+  CONSUMERS *consumers {};
 
   if (this->consumer_map_.find (stock_name, consumers) == 0)
     {

@@ -85,7 +85,7 @@ Consumer_Entry::Consumer_Entry (Event_Comm::Consumer *consumer,
   : filtering_criteria_ (filtering_criteria)
   , consumer_ (consumer)
 {
-  char *compile_buffer = nullptr;
+  char *compile_buffer {};
 
   ACE_ASSERT (filtering_criteria != nullptr);
 
@@ -213,7 +213,7 @@ Notifier_i::unsubscribe (Event_Comm::Consumer_ptr consumer_ref,
               "in Notifier_i::unsubscribe for %x\n",
               consumer_ref));
 
-  Consumer_Entry *nr_entry = nullptr;
+  Consumer_Entry *nr_entry {};
   MAP_ITERATOR mi (this->map_);
   bool found = false;
 

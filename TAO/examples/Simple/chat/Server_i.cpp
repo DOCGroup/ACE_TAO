@@ -15,7 +15,7 @@
 
 Server_i::Server_i ()
 {
-  Broadcaster_i *tmp = nullptr;
+  Broadcaster_i *tmp {};
   ACE_NEW_THROW_EX (tmp,
                     Broadcaster_i (),
                     CORBA::NO_MEMORY ());

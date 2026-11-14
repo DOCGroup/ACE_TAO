@@ -282,7 +282,7 @@ Consumer_Handler::run ()
 
      poa_manager->activate ();
 
-     Consumer_i *servant = nullptr;
+     Consumer_i *servant {};
      ACE_NEW_RETURN (servant,
                      Consumer_i (),
                      -1);

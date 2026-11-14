@@ -76,7 +76,7 @@ Peer_i::start (PeerSet const& the_peers,
     this->reply_handler_._this ();
 
   // @@ Report errors as exceptions...
-  Peer_Task *task = nullptr;
+  Peer_Task *task {};
   ACE_NEW (task, Peer_Task (the_peers,
                             iterations,
                             this->progress_.in (),

@@ -22,7 +22,7 @@
 Client_i::Client_i ()
   : nickname_ ("noname")
 {
-  Receiver_i *tmp = nullptr;
+  Receiver_i *tmp {};
   ACE_NEW_THROW_EX (tmp,
                     Receiver_i (),
                     CORBA::NO_MEMORY ());

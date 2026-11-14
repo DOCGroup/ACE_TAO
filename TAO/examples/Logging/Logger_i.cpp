@@ -9,7 +9,7 @@
 Logger_ptr
 Logger_Factory_i::make_logger (char const *name)
 {
-  Logger_i *result = nullptr;
+  Logger_i *result {};
   // If name is already in the map, <find> will assign <result> to the
   // appropriate value
 

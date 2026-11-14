@@ -240,7 +240,7 @@ Event_List_impl::store_event (Event *e)
   // guard against the access to the list from another thread.
   // But this is omitted in this example.
 
-  Event_List_Link_impl *new_link_impl = nullptr;
+  Event_List_Link_impl *new_link_impl {};
   ACE_NEW (new_link_impl,
            Event_List_Link_impl (e));
   Event_List_Link_var new_link = new_link_impl;

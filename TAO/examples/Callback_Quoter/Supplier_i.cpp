@@ -233,7 +233,7 @@ Supplier::init (int argc, ACE_TCHAR **argv)
         return -1;
 
       // Create the Timer_Handler.
-      Supplier_Timer_Handler *timer_handler = nullptr;
+      Supplier_Timer_Handler *timer_handler {};
       ACE_NEW_RETURN (timer_handler,
                       Supplier_Timer_Handler (this,
                                               this->reactor_used (),

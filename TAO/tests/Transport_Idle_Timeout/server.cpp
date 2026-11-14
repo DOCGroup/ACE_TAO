@@ -52,7 +52,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       PortableServer::POAManager_var mgr = root_poa->the_POAManager ();
 
-      Echo_i *echo_impl = nullptr;
+      Echo_i *echo_impl {};
       ACE_NEW_RETURN (echo_impl, Echo_i (orb.in ()), 1);
       PortableServer::ServantBase_var owner (echo_impl);
 

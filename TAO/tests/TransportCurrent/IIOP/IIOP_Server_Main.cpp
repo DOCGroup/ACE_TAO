@@ -13,7 +13,7 @@ int
 ACE_TMAIN (int argc,
            ACE_TCHAR *argv[])
 {
-  Test::IIOP_Server_Request_Interceptor *cri = nullptr;
+  Test::IIOP_Server_Request_Interceptor *cri {};
   ACE_NEW_RETURN (cri,
                   Test::IIOP_Server_Request_Interceptor ("test_orb",
                                                          test_transport_current),
