@@ -14,6 +14,7 @@
 #include "tao/ZIOP_Adapter.h"
 #include <algorithm>
 #include <cstdio>
+#include <memory>
 #include <string>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -1352,15 +1353,15 @@ TAO_GIOP_Message_Base::get_parser (
         case 0:
           return
             const_cast<TAO_GIOP_Message_Generator_Parser_10 *> (
-                                     &this->tao_giop_impl_.tao_giop_10);
+              std::addressof (this->tao_giop_impl_.tao_giop_10));
         case 1:
           return
             const_cast<TAO_GIOP_Message_Generator_Parser_11 *> (
-                                     &this->tao_giop_impl_.tao_giop_11);
+              std::addressof (this->tao_giop_impl_.tao_giop_11));
         case 2:
           return
             const_cast<TAO_GIOP_Message_Generator_Parser_12 *> (
-                                     &this->tao_giop_impl_.tao_giop_12);
+              std::addressof (this->tao_giop_impl_.tao_giop_12));
         default:
           throw ::CORBA::INTERNAL (0, CORBA::COMPLETED_NO);
         }

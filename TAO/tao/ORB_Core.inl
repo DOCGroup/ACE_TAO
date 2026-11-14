@@ -2,6 +2,8 @@
 #include "tao/ORB_Core_TSS_Resources.h"
 #include "tao/ORB_Table.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE ACE_Service_Gestalt*
@@ -37,9 +39,9 @@ ACE_INLINE ACE_Lock *
 TAO_ORB_Core::locking_strategy ()
 {
   if (this->resource_factory ()->use_locked_data_blocks ())
-    return &this->data_block_lock_;
+    return std::addressof (this->data_block_lock_);
 
-  return 0;
+  return nullptr;
 }
 
 ACE_INLINE CORBA::Boolean
@@ -156,7 +158,7 @@ TAO_ORB_Core::ft_send_extended_sc ()
 ACE_INLINE ACE_Thread_Manager *
 TAO_ORB_Core::thr_mgr ()
 {
-  return &this->tm_;
+  return std::addressof (this->tm_);
 }
 
 ACE_INLINE CORBA::ORB_ptr
@@ -180,7 +182,7 @@ TAO_ORB_Core::request_dispatcher ()
 ACE_INLINE TAO_ORB_Core::InitRefMap *
 TAO_ORB_Core::init_ref_map ()
 {
-  return &this->init_ref_map_;
+  return std::addressof (this->init_ref_map_);
 }
 
 ACE_INLINE void
@@ -247,7 +249,7 @@ TAO_ORB_Core::protocol_factories ()
 ACE_INLINE TAO_Parser_Registry *
 TAO_ORB_Core::parser_registry ()
 {
-  return &this->parser_registry_;
+  return std::addressof (this->parser_registry_);
 }
 
 #undef TAO_OC_RETRIEVE
@@ -265,7 +267,8 @@ TAO_ORB_Core::policy_manager ()
 ACE_INLINE TAO_ORB_Core_TSS_Resources*
 TAO_ORB_Core::get_tss_resources ()
 {
-  return ACE_TSS_GET (&this->tss_resources_,TAO_ORB_Core_TSS_Resources);
+  return ACE_TSS_GET (std::addressof (this->tss_resources_),
+                      TAO_ORB_Core_TSS_Resources);
 }
 
 ACE_INLINE void *

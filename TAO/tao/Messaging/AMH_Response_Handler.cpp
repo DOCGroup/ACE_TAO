@@ -12,6 +12,8 @@
 #include "tao/SystemException.h"
 #include "tao/PortableServer/ForwardRequestC.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_AMH_Response_Handler::~TAO_AMH_Response_Handler ()
@@ -66,7 +68,9 @@ TAO_AMH_Response_Handler::init(TAO_ServerRequest &server_request,
   TAO_GIOP_Message_Version v;
   server_request.outgoing()->get_version(v);
   this->_tao_out.set_version(v.major, v.minor);
-  this->transport_->assign_translators (nullptr, &this->_tao_out);
+  this->transport_->assign_translators (
+    nullptr,
+    std::addressof (this->_tao_out));
   this->transport_->add_reference ();
 }
 
@@ -174,7 +178,8 @@ TAO_AMH_Response_Handler::_tao_rh_send_exception (CORBA::Exception const &ex)
   TAO_Pluggable_Reply_Params_Base reply_params;
   reply_params.request_id_ = this->request_id_;
   reply_params.svc_ctx_.length (0);
-  reply_params.service_context_notowned (&this->reply_service_context_.service_info ());
+  reply_params.service_context_notowned (
+    std::addressof (this->reply_service_context_.service_info ()));
   reply_params.argument_flag_ = true;
   // @@ It appears as if there should be a more efficient way to do
   //    this: the caller already knows this because it is part of the
@@ -250,7 +255,8 @@ TAO_AMH_Response_Handler::_tao_rh_send_location_forward (CORBA::Object_ptr fwd,
   TAO_Pluggable_Reply_Params_Base reply_params;
   reply_params.request_id_ = this->request_id_;
   reply_params.svc_ctx_.length (0);
-  reply_params.service_context_notowned (&this->reply_service_context_.service_info ());
+  reply_params.service_context_notowned (
+    std::addressof (this->reply_service_context_.service_info ()));
   reply_params.argument_flag_ = true;
   if (is_perm)
     {

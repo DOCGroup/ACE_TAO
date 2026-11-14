@@ -11,6 +11,7 @@
 #include "tao/CDR.h"
 #include "tao/SystemException.h"
 #include <cstring>
+#include <memory>
 
 #if TAO_HAS_INTERCEPTORS == 1
 #include "tao/PortableInterceptorC.h"
@@ -199,7 +200,8 @@ TAO_ServerRequest::init_reply ()
   reply_params.dsi_nvlist_align_ = this->dsi_nvlist_align_;
 
   // Send back the reply service context.
-  reply_params.service_context_notowned (&this->reply_service_info ());
+  reply_params.service_context_notowned (
+    std::addressof (this->reply_service_info ()));
 
   // Are we going to marshall any data with the reply?
   reply_params.argument_flag_ = this->argument_flag_;
@@ -262,7 +264,8 @@ TAO_ServerRequest::send_no_exception_reply ()
   reply_params.svc_ctx_.length (0);
 
   // Send back the reply service context.
-  reply_params.service_context_notowned (&this->reply_service_info ());
+  reply_params.service_context_notowned (
+    std::addressof (this->reply_service_info ()));
 
   reply_params.reply_status (GIOP::NO_EXCEPTION);
 
@@ -336,7 +339,8 @@ TAO_ServerRequest::tao_send_reply_exception (CORBA::Exception const &ex)
       reply_params.svc_ctx_.length (0);
 
       // Send back the reply service context.
-      reply_params.service_context_notowned (&this->reply_service_info ());
+      reply_params.service_context_notowned (
+        std::addressof (this->reply_service_info ()));
 
       // We are going to send some data
       reply_params.argument_flag_ = true;
@@ -469,7 +473,8 @@ TAO_ServerRequest::send_cached_reply (CORBA::OctetSeq &s)
   reply_params.svc_ctx_.length (0);
 
   // Send back the empty reply service context.
-  reply_params.service_context_notowned (&this->reply_service_info ());
+  reply_params.service_context_notowned (
+    std::addressof (this->reply_service_info ()));
 
   // We are going to send some data
   reply_params.argument_flag_ = true;

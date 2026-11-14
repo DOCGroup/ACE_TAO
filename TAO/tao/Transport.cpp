@@ -1410,8 +1410,8 @@ TAO_Transport::check_buffering_constraints_i (TAO_Stub *stub, bool &must_flush)
         }
 
       this->flush_timer_id_ =
-        reactor->schedule_timer (&this->transport_timer_,
-                                 &this->current_deadline_,
+        reactor->schedule_timer (std::addressof (this->transport_timer_),
+                                 std::addressof (this->current_deadline_),
                                  delay);
     }
 
