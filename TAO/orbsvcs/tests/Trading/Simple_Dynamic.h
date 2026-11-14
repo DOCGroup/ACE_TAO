@@ -1,16 +1,3 @@
-// ========================================================================
-//
-// = FILE
-//     Simple_Dynamic.h
-//
-// = DESCRIPTION
-//    Class that implements a really simple dynamic property.
-//
-// = AUTHOR
-//     Seth Widoff <sbw1@cs.wustl.edu>
-//
-// =======================================================================
-
 #ifndef TAO_SIMPLE_DYNAMIC_H
 #define TAO_SIMPLE_DYNAMIC_H
 
@@ -21,6 +8,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+/// Implements a dynamic property whose value is supplied at construction.
 template<class T>
 class TAO_Simple_Dynamic_Property : public TAO_Dynamic_Property
 {
