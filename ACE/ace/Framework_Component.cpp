@@ -250,8 +250,10 @@ ACE_Framework_Repository::compact ()
           // move the contents and reset current_size_
           while (end_hole + 1 < this->current_size_)
             {
-              this->component_vector_[start_hole++] =
-                this->component_vector_[++end_hole];
+              ++end_hole;
+              this->component_vector_[start_hole] =
+                this->component_vector_[end_hole];
+              ++start_hole;
             }
           // Since start_hole is now one past the last
           // active slot.
