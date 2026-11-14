@@ -1642,7 +1642,7 @@ TAO_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
       AVStreams::StreamEndPoint_var streamendpoint = this->_this ();
 
       retv = responder->request_connection (streamendpoint.in (),
-                                            0,
+                                            false,
                                             network_qos,
                                             flow_spec);
 
