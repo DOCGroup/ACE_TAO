@@ -402,7 +402,6 @@ ACE_Strategy_Scheduler::schedule_timeline_entry (
   Time last_stop = dispatch_entry.arrival ();
 
   TimeLine_Entry *last_entry {};
-  TimeLine_Entry *current_entry {};
   ACE_Ordered_MultiSet_Iterator <TimeLine_Entry_Link> iter (*timeline_);
   for (iter.first (); (remaining_time > 0U) && (iter.done () == 0);
        iter.advance ())
@@ -495,8 +494,9 @@ ACE_Strategy_Scheduler::schedule_timeline_entry (
     // If there's room, schedule a new timeline entry for the dispatch.
     if (link->entry ().start() > last_stop)
     {
+      TimeLine_Entry *current_entry_raw {};
       ACE_NEW_RETURN (
-        current_entry,
+        current_entry_raw,
         TimeLine_Entry (
           dispatch_entry,
           last_stop,
@@ -506,15 +506,20 @@ ACE_Strategy_Scheduler::schedule_timeline_entry (
           dispatch_entry.deadline (),
           (TimeLine_Entry *) 0, last_entry),
         ST_VIRTUAL_MEMORY_EXHAUSTED);
+      std::unique_ptr<TimeLine_Entry> current_entry (current_entry_raw);
+
+      if (timeline_->insert (TimeLine_Entry_Link (*current_entry)) != 0)
+      {
+        return ST_VIRTUAL_MEMORY_EXHAUSTED;
+      }
 
       // Patch up the pointers within the list of entries for this dispatch.
       if (last_entry != nullptr)
       {
-        last_entry->next (current_entry);
+        last_entry->next (current_entry.get ());
       }
-      last_entry = current_entry;
-
-      timeline_->insert(TimeLine_Entry_Link(*current_entry));
+      // The scheduler timeline now owns this entry until reset or rescheduling.
+      last_entry = current_entry.release ();
 
       // Update the remaining time and last stop values.
       remaining_time -= ((remaining_time < (link->entry ().start() - last_stop))
@@ -532,8 +537,9 @@ ACE_Strategy_Scheduler::schedule_timeline_entry (
   // reached the end of the list, insert what's left.
   if (remaining_time > 0U)
   {
+    TimeLine_Entry *current_entry_raw {};
     ACE_NEW_RETURN (
-      current_entry,
+      current_entry_raw,
       TimeLine_Entry (
         dispatch_entry,
         last_stop,
@@ -542,14 +548,20 @@ ACE_Strategy_Scheduler::schedule_timeline_entry (
         dispatch_entry.deadline (),
         0, last_entry),
       ST_VIRTUAL_MEMORY_EXHAUSTED);
+    std::unique_ptr<TimeLine_Entry> current_entry (current_entry_raw);
+
+    if (timeline_->insert (TimeLine_Entry_Link (*current_entry)) != 0)
+    {
+      return ST_VIRTUAL_MEMORY_EXHAUSTED;
+    }
 
     // Patch up the pointers within the list of entries for this dispatch.
     if (last_entry != nullptr)
     {
-      last_entry->next (current_entry);
+      last_entry->next (current_entry.get ());
     }
-
-    timeline_->insert(TimeLine_Entry_Link(*current_entry));
+    // The scheduler timeline now owns this entry until reset or rescheduling.
+    current_entry.release ();
   }
 
   return status;
