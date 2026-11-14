@@ -125,13 +125,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       reference_counted_test_i (orb.in (),
                                                 root_poa.in ()),
                       -1);
+      PortableServer::ServantBase_var servant_owner (servant);
 
       // Get Object Reference for the servant object.
       test_var test = servant->_this ();
 
-      // This means that the ownership of <servant> now belongs to
-      // the POA.
-      servant->_remove_ref ();
+      // The local servant reference is released when servant_owner goes
+      // out of scope; the POA keeps its own reference to the active servant.
 
       // Stringyfy all the object references and print them out.
       CORBA::String_var ior = orb->object_to_string (test.in ());
