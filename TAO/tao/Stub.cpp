@@ -123,9 +123,10 @@ TAO_Stub::add_forward_profiles (TAO_MProfile const &mprofiles,
       this->reset_forward ();
     }
 
-  TAO_MProfile *now_pfiles = this->forward_profiles_;
-  if (now_pfiles == nullptr)
-    now_pfiles = std::addressof (this->base_profiles_);
+  TAO_MProfile * const now_pfiles =
+    this->forward_profiles_ != nullptr
+      ? this->forward_profiles_
+      : std::addressof (this->base_profiles_);
 
   ACE_NEW (this->forward_profiles_,
            TAO_MProfile (mprofiles));
@@ -359,7 +360,7 @@ TAO_Stub::set_profile_in_use_i (TAO_Profile *pfile)
 void
 TAO_Stub::forward_back_one ()
 {
-  TAO_MProfile *from = forward_profiles_->forward_from ();
+  TAO_MProfile * const from = forward_profiles_->forward_from ();
 
   // Only delete the forward location if it is not permanent
   if (this->forward_profiles_ != this->forward_profiles_perm_)
@@ -470,8 +471,8 @@ TAO_Stub::set_policy_overrides (CORBA::PolicyList const &policies,
       policy_manager->set_policy_overrides (policies, set_add);
     }
 
-  TAO_Stub* stub = this->orb_core_->create_stub (this->type_id.in (),
-                                                 this->base_profiles_);
+  TAO_Stub * const stub = this->orb_core_->create_stub (this->type_id.in (),
+                                                        this->base_profiles_);
 
   stub->policies_ = std::move (policy_manager);
 
@@ -506,24 +507,24 @@ TAO_Stub::marshal (TAO_OutputCDR &cdr)
   // do as many outside of locked else-branch as posssible
 
   // STRING, a type ID hint
-  if ((cdr << this->type_id.in()) == 0)
-    return 0;
+  if (!(cdr << this->type_id.in()))
+    return false;
 
   if ( ! this->forward_profiles_perm_)
     {
       TAO_MProfile const &mprofile = this->base_profiles_;
 
       CORBA::ULong const profile_count = mprofile.profile_count ();
-      if ((cdr << profile_count) == 0)
-        return 0;
+      if (!(cdr << profile_count))
+        return false;
 
     // @@ The MProfile should be locked during this iteration, is there
     // anyway to achieve that?
     for (CORBA::ULong i {}; i < profile_count; ++i)
       {
-        TAO_Profile const *p = mprofile.get_profile (i);
-        if (p->encode (cdr) == 0)
-          return 0;
+        TAO_Profile const * const p = mprofile.get_profile (i);
+        if (!p->encode (cdr))
+          return false;
       }
     }
   else
@@ -550,16 +551,16 @@ TAO_Stub::marshal (TAO_OutputCDR &cdr)
         : this->base_profiles_;
 
       CORBA::ULong const profile_count = mprofile.profile_count ();
-      if ((cdr << profile_count) == 0)
-           return 0;
+      if (!(cdr << profile_count))
+        return false;
 
       // @@ The MProfile should be locked during this iteration, is there
       // anyway to achieve that?
       for (CORBA::ULong i {}; i < profile_count; ++i)
         {
-          TAO_Profile const *p = mprofile.get_profile (i);
-          if (p->encode (cdr) == 0)
-            return 0;
+          TAO_Profile const * const p = mprofile.get_profile (i);
+          if (!p->encode (cdr))
+            return false;
         }
 
       // release ACE_Lock
