@@ -229,44 +229,58 @@ TAO_Object_Adapter::init_default_policies (TAO_POA_Policy_Set &policies)
   // Initialize the default policies.
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 
-  TAO::Portable_Server::ThreadPolicy thread_policy (PortableServer::ORB_CTRL_MODEL);
-  policies.merge_policy (&thread_policy);
+  {
+    TAO::Portable_Server::ThreadPolicy thread_policy (PortableServer::ORB_CTRL_MODEL);
+    policies.merge_policy (std::addressof (thread_policy));
+  }
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 #if !defined (CORBA_E_MICRO)
   // Lifespan policy.
-  TAO::Portable_Server::LifespanPolicy lifespan_policy (PortableServer::TRANSIENT);
-  policies.merge_policy (&lifespan_policy);
+  {
+    TAO::Portable_Server::LifespanPolicy lifespan_policy (PortableServer::TRANSIENT);
+    policies.merge_policy (std::addressof (lifespan_policy));
+  }
 #endif
 
 #if !defined (CORBA_E_MICRO)
   // ID uniqueness policy.
-  TAO::Portable_Server::IdUniquenessPolicy id_uniqueness_policy (PortableServer::UNIQUE_ID);
-  policies.merge_policy (&id_uniqueness_policy);
+  {
+    TAO::Portable_Server::IdUniquenessPolicy id_uniqueness_policy (PortableServer::UNIQUE_ID);
+    policies.merge_policy (std::addressof (id_uniqueness_policy));
+  }
 #endif
 
 #if !defined (CORBA_E_MICRO)
   // ID assignment policy.
-  TAO::Portable_Server::IdAssignmentPolicy id_assignment_policy (PortableServer::SYSTEM_ID);
-  policies.merge_policy (&id_assignment_policy);
+  {
+    TAO::Portable_Server::IdAssignmentPolicy id_assignment_policy (PortableServer::SYSTEM_ID);
+    policies.merge_policy (std::addressof (id_assignment_policy));
+  }
 #endif
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   // Implicit activation policy.
-  TAO::Portable_Server::ImplicitActivationPolicy implicit_activation_policy
-    (PortableServer::NO_IMPLICIT_ACTIVATION);
-  policies.merge_policy (&implicit_activation_policy);
+  {
+    TAO::Portable_Server::ImplicitActivationPolicy implicit_activation_policy
+      (PortableServer::NO_IMPLICIT_ACTIVATION);
+    policies.merge_policy (std::addressof (implicit_activation_policy));
+  }
 
   // Servant retention policy.
-  TAO::Portable_Server::ServantRetentionPolicy servant_retention_policy
-    (PortableServer::RETAIN);
-  policies.merge_policy (&servant_retention_policy);
+  {
+    TAO::Portable_Server::ServantRetentionPolicy servant_retention_policy
+      (PortableServer::RETAIN);
+    policies.merge_policy (std::addressof (servant_retention_policy));
+  }
 
   // Request processing policy.
-  TAO::Portable_Server::RequestProcessingPolicy request_processing_policy
-    (PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY);
-  policies.merge_policy (&request_processing_policy);
+  {
+    TAO::Portable_Server::RequestProcessingPolicy request_processing_policy
+      (PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY);
+    policies.merge_policy (std::addressof (request_processing_policy));
+  }
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 #if defined (CORBA_E_MICRO)
   ACE_UNUSED_ARG (policies);
@@ -584,9 +598,11 @@ TAO_Object_Adapter::open ()
   // policy.  (Otherwise, we'd have to allocate the policy
   // on the heap.)
   // Implicit activation policy.
-  TAO::Portable_Server::ImplicitActivationPolicy implicit_activation_policy
-    (PortableServer::IMPLICIT_ACTIVATION);
-  policies.merge_policy (&implicit_activation_policy);
+  {
+    TAO::Portable_Server::ImplicitActivationPolicy implicit_activation_policy
+      (PortableServer::IMPLICIT_ACTIVATION);
+    policies.merge_policy (std::addressof (implicit_activation_policy));
+  }
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   // Merge policies from the ORB level.
