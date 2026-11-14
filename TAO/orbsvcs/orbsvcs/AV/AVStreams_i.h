@@ -201,7 +201,6 @@ public:
   TAO_StreamCtrl &operator= (TAO_StreamCtrl const &) = delete;
   TAO_StreamCtrl &operator= (TAO_StreamCtrl &&) = delete;
 
-  /// virtual destructor.
   ~TAO_StreamCtrl () override;
 
   /// Stop the transfer of data of the stream
@@ -300,7 +299,6 @@ public:
   TAO_MCastConfigIf &operator= (TAO_MCastConfigIf const &) = delete;
   TAO_MCastConfigIf &operator= (TAO_MCastConfigIf &&) = delete;
 
-  /// Dtor
   ~TAO_MCastConfigIf ();
 
   CORBA::Boolean set_peer (CORBA::Object_ptr peer,
@@ -965,9 +963,9 @@ public:
    * pure virtual since we need to know the role of the flowendpoint to create appropriate
    * protocol objects. eg. in SFP to create Producer Object/ Consumer Object.
    */
-  virtual CORBA::Boolean connect_to_peer (AVStreams::QoS & the_qos,
-                                          char const *address,
-                                          char const *use_flow_protocol) override = 0;
+  CORBA::Boolean connect_to_peer (AVStreams::QoS & the_qos,
+                                  char const *address,
+                                  char const *use_flow_protocol) override = 0;
 
   /// connect to the peer endpoint.
   virtual CORBA::Boolean connect_to_peer_i (TAO_FlowSpec_Entry::Role role,
@@ -980,10 +978,10 @@ public:
    * pure virtual since we need to know the role of the flowendpoint to create appropriate
    * protocol objects. eg. in SFP to create Producer Object/ Consumer Object.
    */
-  virtual char * go_to_listen (AVStreams::QoS & the_qos,
-                               CORBA::Boolean is_mcast,
-                               AVStreams::FlowEndPoint_ptr peer,
-                               char *& flowProtocol) override = 0;
+  char * go_to_listen (AVStreams::QoS & the_qos,
+                       CORBA::Boolean is_mcast,
+                       AVStreams::FlowEndPoint_ptr peer,
+                       char *& flowProtocol) override = 0;
 
   /// listen request from the peer.
   virtual char * go_to_listen_i (TAO_FlowSpec_Entry::Role role,

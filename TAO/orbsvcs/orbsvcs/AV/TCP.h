@@ -225,7 +225,6 @@ public:
   TAO_AV_TCP_Object (TAO_AV_Callback *callback,
                      TAO_AV_Transport *transport = nullptr);
 
-  /// Dtor
   ~TAO_AV_TCP_Object () override;
 
   int handle_input () override;

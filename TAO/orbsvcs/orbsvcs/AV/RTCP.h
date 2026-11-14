@@ -136,7 +136,6 @@ public:
   /// RTCP callback.
   TAO_AV_RTCP_Callback ();
 
-  /// virtual destructor.
   ~TAO_AV_RTCP_Callback () override;
 
   /// Called during Streamctrl->start.

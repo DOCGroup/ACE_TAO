@@ -104,7 +104,6 @@ public:
   /// construct the entry from a string specified by the flowSpec grammar.
   virtual int parse (char const *flowSpec_entry) = 0;
 
-  /// virtual destructor.
   virtual ~TAO_FlowSpec_Entry ();
   TAO_FlowSpec_Entry (TAO_FlowSpec_Entry const &) = delete;
   TAO_FlowSpec_Entry &operator= (TAO_FlowSpec_Entry const &) = delete;

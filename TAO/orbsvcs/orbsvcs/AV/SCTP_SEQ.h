@@ -248,7 +248,6 @@ public:
   TAO_AV_SCTP_SEQ_Object (TAO_AV_Callback *callback,
                      TAO_AV_Transport *transport = nullptr);
 
-  /// Dtor
   ~TAO_AV_SCTP_SEQ_Object () override;
 
   int handle_input () override;

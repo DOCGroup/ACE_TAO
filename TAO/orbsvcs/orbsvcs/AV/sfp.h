@@ -228,15 +228,14 @@ public:
   // We should add a sfp options parameter.
 
   ~TAO_SFP_Object () override;
-  // Dtor
 
   int handle_input () override = 0;
-  virtual int send_frame (ACE_Message_Block *frame,
-                          TAO_AV_frame_info *frame_info = nullptr) override;
+  int send_frame (ACE_Message_Block *frame,
+                  TAO_AV_frame_info *frame_info = nullptr) override;
 
-  virtual int send_frame (iovec const *iov,
-                          int iovcnt,
-                          TAO_AV_frame_info *frame_info = nullptr) override;
+  int send_frame (iovec const *iov,
+                  int iovcnt,
+                  TAO_AV_frame_info *frame_info = nullptr) override;
 
   int send_frame (char const *buf,
                   size_t len) override;

@@ -457,7 +457,6 @@ TAO_AV_Acceptor_Registry::close_all ()
 
 TAO_AV_Transport::TAO_AV_Transport () = default;
 
-// Virtual destructor.
 TAO_AV_Transport::~TAO_AV_Transport () = default;
 
 ACE_Addr*

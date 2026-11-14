@@ -110,8 +110,6 @@ class TAO_AV_Export TAO_AV_UDP_Flow_Handler
    public virtual ACE_Event_Handler
 {
 public:
-  ///Ctor
-  /// Dtor
   TAO_AV_UDP_Flow_Handler ();
   ~TAO_AV_UDP_Flow_Handler () override;
   int open (ACE_Addr &address);
@@ -231,7 +229,6 @@ public:
   TAO_AV_UDP_Object (TAO_AV_Callback *callback,
                      TAO_AV_Transport *transport = nullptr);
 
-  /// Dtor
   ~TAO_AV_UDP_Object () override;
 
   int handle_input () override;
