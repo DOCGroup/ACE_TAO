@@ -166,6 +166,11 @@ class TAO_Export TAO_ORB_Core
 public:
   TAO_ORB_Core (const char* id, ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> g);
 
+  TAO_ORB_Core (TAO_ORB_Core const &) = delete;
+  TAO_ORB_Core (TAO_ORB_Core &&) = delete;
+  TAO_ORB_Core &operator= (TAO_ORB_Core const &) = delete;
+  TAO_ORB_Core &operator= (TAO_ORB_Core &&) = delete;
+
   /// Accessor for the ORB parameters.
   TAO_ORB_Parameters *orb_params ();
 
@@ -991,12 +996,6 @@ protected:
                                    const TAO_MProfile& mprofile);
 
 private:
-  /// The ORB Core should not be copied.
-  //@{
-  TAO_ORB_Core(const TAO_ORB_Core&);
-  void operator=(const TAO_ORB_Core&);
-  //@}
-
   /// Obtain and cache the ior table object reference.
   void resolve_ior_table_i ();
 

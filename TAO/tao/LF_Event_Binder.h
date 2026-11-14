@@ -36,9 +36,10 @@ public:
 
   ~TAO_LF_Event_Binder ();
 
-private:
-  void operator= (const TAO_LF_Event_Binder &);
-  TAO_LF_Event_Binder (const TAO_LF_Event_Binder &);
+  TAO_LF_Event_Binder (TAO_LF_Event_Binder const &) = delete;
+  TAO_LF_Event_Binder (TAO_LF_Event_Binder &&) = delete;
+  TAO_LF_Event_Binder &operator= (TAO_LF_Event_Binder const &) = delete;
+  TAO_LF_Event_Binder &operator= (TAO_LF_Event_Binder &&) = delete;
 
 private:
   /// Keep a reference to the leader follower
