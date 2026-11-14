@@ -16,31 +16,31 @@ public:
   Connection_Handler &operator= (Connection_Handler const &) = delete;
   Connection_Handler &operator= (Connection_Handler &&) = delete;
 
-  // Initialize the <Connection_Handler> and make it an Active Object.
+  /// Initializes the handler and makes it an active object.
   int open (void *) override;
 
-  // Terminate the <Connection_Handler>.
+  /// Terminates the handler.
   int close (u_long) override;
 
-  // Run the <Connection_Handler>'s main event loop.
+  /// Runs the handler's main event loop.
   int svc () override;
 
 protected:
-  // Signal the Active Object to stop when called.
+  /// Signals the active object to stop when called.
   int handle_close (ACE_HANDLE,
                     ACE_Reactor_Mask) override;
 
-  // Handle input from the client.
+  /// Handles input from the client.
   int handle_input (ACE_HANDLE) override;
 
-  // Handle timeouts.
+  /// Handles timeouts.
   int handle_timeout (const ACE_Time_Value &tv,
                       const void *arg) override;
 
-  // Handle signal.
+  /// Handles a signal.
   int handle_signal (int signum, siginfo_t *, ucontext_t *) override;
 
-  // Keeps track of whether we're done.
+  /// Tracks whether the handler's event loop should finish.
   sig_atomic_t finished_ {};
 };
 

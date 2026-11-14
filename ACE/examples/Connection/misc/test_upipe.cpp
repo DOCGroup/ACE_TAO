@@ -15,11 +15,9 @@
 
 #include "test_upipe.h"
 
+/// Accepts connections and creates and activates Server_Service objects.
 class Server : public ACE_Strategy_Acceptor <Server_Service, ACE_UPIPE_ACCEPTOR>
 {
-  // = TITLE
-  //     Defines the interface for a factory that accepts connections
-  //     and creates/activates Server_Service objects.
 public:
   Server (ACE_Thread_Manager *thr_mgr,
           ACE_Reactor *reactor)
@@ -52,22 +50,18 @@ public:
     }
 
 private:
-  // These pointers refer to objects owned by main.
+  /// Refers to the reactor owned by main.
   ACE_Reactor *reactor_;
-  // Our instance of the reactor.
 
+  /// Refers to the thread manager owned by main.
   ACE_Thread_Manager *thr_mgr_;
-  // Our instance of a thread manager.
 
   ACE_Thread_Strategy<Server_Service> thr_strategy_;
-  // Our concurrency strategy.
 };
 
+/// Connects a Client_Service with a Server.
 class Client : public ACE_Connector <Client_Service, ACE_UPIPE_CONNECTOR>
 {
-  // = TITLE
-  //     Defines the interface for a factory that connects
-  //     a Client_Service with a Server.
 public:
   explicit Client (ACE_Thread_Manager *thr_mgr)
     : thr_mgr_ (thr_mgr)
@@ -96,7 +90,7 @@ public:
   }
 
 private:
-  // This pointer refers to the thread manager owned by main.
+  /// Refers to the thread manager owned by main.
   ACE_Thread_Manager *thr_mgr_;
 };
 

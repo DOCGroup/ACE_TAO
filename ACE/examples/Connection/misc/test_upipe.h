@@ -10,10 +10,11 @@
 
 using SVC_HANDLER = ACE_Svc_Handler<ACE_UPIPE_STREAM, ACE_NULL_SYNCH>;
 
+/**
+ * Defines a service that receives data from its client and writes it to
+ * standard output.
+ */
 class Server_Service : public SVC_HANDLER
-  // = TITLE
-  //     Defines the interface for a service that recvs data from its
-  //     client and writes the data to its stdout.
 {
 public:
   explicit Server_Service (ACE_Thread_Manager *thr_mgr = nullptr)
@@ -50,10 +51,11 @@ public:
     }
 };
 
+/**
+ * Defines a service that reads data from standard input and forwards it to
+ * its server.
+ */
 class Client_Service : public SVC_HANDLER
-  // = TITLE
-  //     Defines the interface for a service that recvs data from its
-  //     stdin and forward the data to its server.
 {
 public:
   explicit Client_Service (ACE_Thread_Manager *thr_mgr = nullptr)
