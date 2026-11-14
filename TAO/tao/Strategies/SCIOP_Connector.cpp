@@ -66,7 +66,7 @@ TAO_SCIOP_Connector::open (TAO_ORB_Core *orb_core)
 
   int const result = this->base_connector_.open (this->orb_core ()->reactor (),
                                                  creation_strategy_owner.get (),
-                                                 &this->connect_strategy_,
+                                                 std::addressof (this->connect_strategy_),
                                                  concurrency_strategy_owner.get ());
   this->creation_strategy_.reset (creation_strategy_owner.release ());
   this->concurrency_strategy_.reset (concurrency_strategy_owner.release ());

@@ -384,7 +384,7 @@ TAO_DTP_Task::svc ()
                               0,
                               0,
                               this->thread_stack_size_ == 0 ? nullptr :
-                              &this->thread_stack_size_) != 0)
+                              std::addressof (this->thread_stack_size_)) != 0)
             {
               TAOLIB_ERROR ((LM_ERROR,
                              ACE_TEXT ("(%P|%t) DTP_Task::svc() failed to ")

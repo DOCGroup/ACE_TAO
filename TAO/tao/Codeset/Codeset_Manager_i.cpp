@@ -75,13 +75,13 @@ TAO_Codeset_Manager_i::TAO_Codeset_Manager_i ()
 TAO_Codeset_Descriptor_Base *
 TAO_Codeset_Manager_i::char_codeset_descriptor ()
 {
-  return &this->char_descriptor_;
+  return std::addressof (this->char_descriptor_);
 }
 
 TAO_Codeset_Descriptor_Base *
 TAO_Codeset_Manager_i::wchar_codeset_descriptor ()
 {
-  return &this->wchar_descriptor_;
+  return std::addressof (this->wchar_descriptor_);
 }
 
 void

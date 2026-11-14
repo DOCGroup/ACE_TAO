@@ -13,6 +13,7 @@
 #include "ace/Truncate.h"
 
 #include <cstring>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -94,7 +95,7 @@ TAO_DynValue_i::init_helper (CORBA::TypeCode_ptr tc)
   get_base_types (
     tc,
     this->da_base_types_,
-    &this->component_count_);
+    std::addressof (this->component_count_));
   this->da_members_.size (this->component_count_);
 
   // And initialize all of the DynCommon mix-in

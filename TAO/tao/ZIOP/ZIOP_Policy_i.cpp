@@ -4,6 +4,8 @@
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -74,7 +76,7 @@ CompressorIdLevelListPolicy::destroy ()
 ::Compression::CompressorIdLevelList *
 CompressorIdLevelListPolicy::compressor_ids ()
 {
-  return &this->value_;
+  return std::addressof (this->value_);
 }
 
 TAO_Cached_Policy_Type

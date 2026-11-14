@@ -11,6 +11,8 @@
 #include "tao/TAO_Server_Request.h"
 #include "ace/CORBA_macros.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::PICurrent::PICurrent (TAO_ORB_Core &orb_core)
@@ -54,7 +56,7 @@ TAO::PICurrent::tsc ()
   if (!impl)
   {
     ACE_NEW_THROW_EX (impl,
-                      TAO::PICurrent_Impl (&this->orb_core_, this->tss_slot_),
+                      TAO::PICurrent_Impl (std::addressof (this->orb_core_), this->tss_slot_),
                       CORBA::NO_MEMORY (
                         CORBA::SystemException::_tao_minor_code (
                           TAO::VMCID,

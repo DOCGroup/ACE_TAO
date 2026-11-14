@@ -55,7 +55,7 @@ TAO_RTScheduler_Current::orb ()
 DT_Hash_Map*
 TAO_RTScheduler_Current::dt_hash ()
 {
-  return &this->dt_hash_;
+  return std::addressof (this->dt_hash_);
 }
 
 void
@@ -70,7 +70,7 @@ TAO_RTScheduler_Current::begin_scheduling_segment (
     {
       ACE_NEW_THROW_EX (impl,
                         TAO_RTScheduler_Current_i (this->orb_,
-                                                   &this->dt_hash_),
+                                                   std::addressof (this->dt_hash_)),
                         CORBA::NO_MEMORY (
                                           CORBA::SystemException::_tao_minor_code (
                                           TAO::VMCID,

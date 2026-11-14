@@ -118,7 +118,7 @@ template<typename T>
 void const *
 TAO::Any_Basic_Impl_T<T>::value () const
 {
-  return &this->value_;
+  return std::addressof (this->value_);
 }
 
 template<typename T>
