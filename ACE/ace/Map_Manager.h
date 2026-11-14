@@ -56,8 +56,8 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
-  // = These are really private, but unfortunately template friends
-  // are not portable.
+  /// @note These methods and members are logically private, but template
+  /// friends are not portable.
 
   /// Get next entry.
   ACE_UINT32 next () const;
@@ -136,7 +136,8 @@ public:
   friend class ACE_Map_Const_Iterator<EXT_ID, INT_ID, ACE_LOCK>;
   friend class ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>;
 
-  // = Traits.
+  /// @name Traits
+  /// @{
   using KEY = EXT_ID;
   using VALUE = INT_ID;
   using lock_type = ACE_LOCK;
@@ -148,6 +149,7 @@ public:
   using iterator = ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>;
   using const_iterator = ACE_Map_Const_Iterator<EXT_ID, INT_ID, ACE_LOCK>;
   using reverse_iterator = ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>;
+  /// @}
 
   /// Initialize a ACE_Map_Manager with the ACE_DEFAULT_MAP_SIZE.
   ACE_Map_Manager (ACE_Allocator *alloc = nullptr);
@@ -274,7 +276,8 @@ public:
   /// Dump the state of an object.
   void dump () const;
 
-  // = STL styled iterator factory functions.
+  /// @name STL styled iterator factory functions
+  /// @{
 
   /// Return forward iterator.
   ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> begin ();
@@ -283,15 +286,16 @@ public:
   /// Return reverse iterator.
   ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> rbegin ();
   ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> rend ();
+  /// @}
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  // = The following methods do the actual work.
+  /// @name Internal map operations
+  /// @{
 
-  // These methods assume that the locks are held by the private
-  // methods.
+  /// These methods assume that the locks are held by the private methods.
 
   /// Performs the binding of @a ext_id to @a int_id.  Must be called
   /// with locks held.
@@ -404,6 +408,7 @@ protected:
                     ACE_UINT32 current_list_id,
                     ACE_Map_Entry<EXT_ID, INT_ID> &new_list,
                     ACE_UINT32 new_list_id);
+  /// @}
 
   /// Pointer to a memory allocator.
   ACE_Allocator *allocator_;
@@ -449,7 +454,8 @@ public:
   /// at the head of the map, it is positioned at the end otherwise.
   ACE_Map_Iterator_Base (ACE_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> &mm);
 
-  // = Iteration methods.
+  /// @name Iteration methods
+  /// @{
 
   /// Pass back the next <entry> that hasn't been seen in the Set.
   /// Returns 0 when all items have been seen, else 1.
@@ -468,6 +474,7 @@ public:
   /// Check if two iterators point to the same position
   bool operator== (const ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK> &) const;
   bool operator!= (const ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK> &) const;
+  /// @}
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -507,7 +514,8 @@ public:
   /// at the head of the map, it is positioned at the end otherwise.
   ACE_Map_Const_Iterator_Base (const ACE_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> &mm);
 
-  // = Iteration methods.
+  /// @name Iteration methods
+  /// @{
 
   /// Pass back the next <entry> that hasn't been seen in the Set.
   /// Returns 0 when all items have been seen, else 1.
@@ -526,6 +534,7 @@ public:
   /// Check if two iterators point to the same position
   bool operator== (const ACE_Map_Const_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK> &) const;
   bool operator!= (const ACE_Map_Const_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK> &) const;
+  /// @}
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -568,7 +577,8 @@ public:
   ACE_Map_Iterator (ACE_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> &mm,
                     int pass_end = 0);
 
-  // = Iteration methods.
+  /// @name Iteration methods
+  /// @{
 
   /// Move forward by one element in the set.   Returns 0 when all the
   /// items in the set have been seen, else 1.
@@ -576,8 +586,10 @@ public:
 
   /// Dump the state of an object.
   void dump () const;
+  /// @}
 
-  // = STL styled iteration, compare, and reference functions.
+  /// @name STL styled iteration, comparison, and reference functions
+  /// @{
 
   /// Prefix advance.
   ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> &operator++ ();
@@ -590,6 +602,7 @@ public:
 
   /// Postfix reverse.
   ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> operator-- (int);
+  /// @}
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -614,7 +627,8 @@ public:
   ACE_Map_Const_Iterator (const ACE_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> &mm,
                           int pass_end = 0);
 
-  // = Iteration methods.
+  /// @name Iteration methods
+  /// @{
 
   /// Move forward by one element in the set.   Returns 0 when all the
   /// items in the set have been seen, else 1.
@@ -622,8 +636,10 @@ public:
 
   /// Dump the state of an object.
   void dump () const;
+  /// @}
 
-  // = STL styled iteration, compare, and reference functions.
+  /// @name STL styled iteration, comparison, and reference functions
+  /// @{
 
   /// Prefix advance.
   ACE_Map_Const_Iterator<EXT_ID, INT_ID, ACE_LOCK> &operator++ ();
@@ -636,6 +652,7 @@ public:
 
   /// Postfix reverse.
   ACE_Map_Const_Iterator<EXT_ID, INT_ID, ACE_LOCK> operator-- (int);
+  /// @}
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -660,7 +677,8 @@ public:
   ACE_Map_Reverse_Iterator (ACE_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> &mm,
                             int pass_end = 0);
 
-  // = Iteration methods.
+  /// @name Iteration methods
+  /// @{
 
   /// Move forward by one element in the set.  Returns 0 when all the
   /// items in the set have been seen, else 1.
@@ -668,8 +686,10 @@ public:
 
   /// Dump the state of an object.
   void dump () const;
+  /// @}
 
-  // = STL styled iteration, compare, and reference functions.
+  /// @name STL styled iteration, comparison, and reference functions
+  /// @{
 
   /// Prefix reverse.
   ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> &operator++ ();
@@ -682,6 +702,7 @@ public:
 
   /// Postfix advance.
   ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> operator-- (int);
+  /// @}
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

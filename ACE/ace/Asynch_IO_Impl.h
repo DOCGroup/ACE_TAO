@@ -129,10 +129,12 @@ public:
    */
   virtual int cancel () = 0;
 
-  // = Access methods.
+  /// @name Access methods
+  /// @{
 
   /// Return the underlying proactor.
   virtual ACE_Proactor* proactor () const = 0;
+  /// @}
 
 protected:
   ACE_Asynch_Operation_Impl () = default;

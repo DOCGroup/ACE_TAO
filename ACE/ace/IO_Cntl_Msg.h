@@ -51,7 +51,8 @@ public:
   /// Initialize the control message.
   explicit ACE_IO_Cntl_Msg (ACE_IO_Cntl_Cmds c);
 
-  // = Get/set methods
+  /// @name Get and set methods
+  /// @{
 
   /// Get command.
   ACE_IO_Cntl_Cmds cmd ();
@@ -76,6 +77,7 @@ public:
 
   /// Set return value.
   void rval (int r);
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;
