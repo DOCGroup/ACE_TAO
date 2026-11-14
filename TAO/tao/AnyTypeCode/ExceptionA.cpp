@@ -15,12 +15,12 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Specializations for CORBA::Exception Any operators.
+/// Specializations for CORBA::Exception Any operators.
 namespace TAO
 {
   template<>
   void
-  Any_Dual_Impl_T<CORBA::Exception>::value (const CORBA::Exception & val)
+  Any_Dual_Impl_T<CORBA::Exception>::value (CORBA::Exception const &val)
   {
     this->value_ = val._tao_duplicate ();
   }
@@ -35,7 +35,7 @@ namespace TAO
 
         return true;
       }
-    catch (const ::CORBA::Exception&)
+    catch (::CORBA::Exception const &)
       {
       }
 
@@ -52,7 +52,7 @@ namespace TAO
 
         return true;
       }
-    catch (const ::CORBA::Exception&)
+    catch (::CORBA::Exception const &)
       {
       }
 
@@ -66,22 +66,20 @@ namespace TAO
   template<>
   CORBA::Boolean
   Any_Dual_Impl_T<CORBA::Exception>::extract (
-      const CORBA::Any &,
+      CORBA::Any const &,
       _tao_destructor,
       CORBA::TypeCode_ptr,
-      const CORBA::Exception *&)
+      CORBA::Exception const *&)
   {
     return false;
   }
 }
 
-// =======================================================================
-
 namespace CORBA
 {
-// Insertion of CORBA::Exception - copying.
+/// Inserts a copy of a CORBA::Exception into an Any.
 void
-operator<<= (CORBA::Any &any, const CORBA::Exception &exception)
+operator<<= (CORBA::Any &any, CORBA::Exception const &exception)
 {
   TAO::Any_Dual_Impl_T<CORBA::Exception>::insert_copy (
       any,

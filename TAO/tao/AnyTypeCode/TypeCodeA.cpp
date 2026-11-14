@@ -40,9 +40,8 @@ namespace TAO
 }
 
 
-// ------------------------------------------------------------------
-// OMG defined TypeCode constants
-// ------------------------------------------------------------------
+/// @name OMG-defined TypeCode constants
+/// @{
 
 // Notice that these are constant TypeCode references/pointers, not
 // constant TypeCodes.  TypeCodes are effectively read-only since
@@ -54,5 +53,6 @@ CORBA::TypeCode_ptr const CORBA::TypeCode::_tc_BadKind =
 CORBA::TypeCode_ptr const CORBA::TypeCode::_tc_Bounds =
   std::addressof (TAO::TypeCode::tc_Bounds);
 
+/// @}
 
 TAO_END_VERSIONED_NAMESPACE_DECL
