@@ -22,6 +22,7 @@
 #include <cstring>
 #include <memory>
 #include <new>
+#include <string>
 
 Test_ECG::Test_ECG ()
   : lcl_name_ ("Test_ECG"),
@@ -323,10 +324,8 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
           break;
         }
 
-      // We use this buffer to generate the names of the local
-      // services.
-      constexpr int bufsize {512};
-      char buf[bufsize];
+      // Build the names of the local services.
+      std::string buf;
 
       // Register the scheduler with the naming service.
       switch (this->scheduling_type_)
@@ -343,17 +342,17 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
             ACE_DEBUG ((LM_DEBUG, "The (local) scheduler IOR is <%C>\n",
                         str.in ()));
 
-            ACE_OS::strcpy (buf, "ScheduleService@");
-            ACE_OS::strcat (buf, this->lcl_name_.c_str ());
+            buf = "ScheduleService@";
+            buf += this->lcl_name_.c_str ();
 
             // Register the servant with the Naming Context....
             CosNaming::Name schedule_name (1);
             schedule_name.length (1);
-            schedule_name[0].id = CORBA::string_dup (buf);
+            schedule_name[0].id = CORBA::string_dup (buf.c_str ());
             naming_context->bind (schedule_name, scheduler.in ());
 
             if (ACE_Scheduler_Factory::use_config (naming_context.in (),
-                                                   buf) == -1)
+                                                   buf.c_str ()) == -1)
               return -1;
           }
           break;
@@ -375,12 +374,12 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
       ACE_OS::sleep (5);
       ACE_DEBUG ((LM_DEBUG, "The (local) EC IOR is <%C>\n", str.in ()));
 
-      ACE_OS::strcpy (buf, "EventChannel@");
-      ACE_OS::strcat (buf, this->lcl_name_.c_str ());
+      buf = "EventChannel@";
+      buf += this->lcl_name_.c_str ();
 
       CosNaming::Name channel_name (1);
       channel_name.length (1);
-      channel_name[0].id = CORBA::string_dup (buf);
+      channel_name[0].id = CORBA::string_dup (buf.c_str ());
       naming_context->bind (channel_name, ec.in ());
 
       ACE_DEBUG ((LM_DEBUG, "waiting to start\n"));
@@ -425,13 +424,13 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
 
           CosNaming::Name rsch_name (1);
           rsch_name.length (1);
-          ACE_OS::strcpy (buf, "ScheduleService");
+          buf = "ScheduleService";
           if (this->scheduling_type_ != Test_ECG::ss_global)
             {
-              ACE_OS::strcat (buf, "@");
-              ACE_OS::strcat (buf, this->rmt_name_.c_str ());
+              buf += '@';
+              buf += this->rmt_name_.c_str ();
             }
-          rsch_name[0].id = CORBA::string_dup (buf);
+          rsch_name[0].id = CORBA::string_dup (buf.c_str ());
           CORBA::Object_var tmpobj =
             naming_context->resolve (rsch_name);
 
@@ -549,14 +548,12 @@ RtecEventChannelAdmin::EventChannel_ptr
 Test_ECG::get_ec (CosNaming::NamingContext_ptr naming_context,
                   char const* process_name)
 {
-  constexpr int bufsize {512};
-  char buf[bufsize];
-  ACE_OS::strcpy (buf, "EventChannel@");
-  ACE_OS::strcat (buf, process_name);
+  std::string buf {"EventChannel@"};
+  buf += process_name;
 
   CosNaming::Name channel_name (1);
   channel_name.length (1);
-  channel_name[0].id = CORBA::string_dup (buf);
+  channel_name[0].id = CORBA::string_dup (buf.c_str ());
 
   CORBA::Object_var ec_ptr =
     naming_context->resolve (channel_name);
@@ -737,27 +734,23 @@ Test_ECG::connect_ecg (RtecEventChannelAdmin::EventChannel_ptr local_ec,
     ACE_Scheduler_Factory::server ();
 
   // ECG name.
-  constexpr int bufsize {512};
-  char ecg_name[bufsize];
-  ACE_OS::strcpy (ecg_name, "ecg_");
-  ACE_OS::strcat (ecg_name, this->lcl_name_.c_str ());
+  std::string ecg_name {"ecg_"};
+  ecg_name += this->lcl_name_.c_str ();
 
   // We could use the same name on the local and remote scheduler,
   // but that fails when using a global scheduler.
-  char rmt[BUFSIZ];
-  ACE_OS::strcpy (rmt, ecg_name);
-  ACE_OS::strcat (rmt, "@");
-  ACE_OS::strcat (rmt, this->rmt_name_.c_str ());
+  std::string rmt {ecg_name};
+  rmt += '@';
+  rmt += this->rmt_name_.c_str ();
 
   // We could use the same name on the local and remote scheduler,
   // but that fails when using a global scheduler.
-  char lcl[bufsize];
-  ACE_OS::strcpy (lcl, ecg_name);
-  ACE_OS::strcat (lcl, "@");
-  ACE_OS::strcat (lcl, this->lcl_name_.c_str ());
+  std::string lcl {ecg_name};
+  lcl += '@';
+  lcl += this->lcl_name_.c_str ();
 
   this->ecg_.init (remote_ec, local_ec, remote_sch, local_sch,
-                   rmt, lcl);
+                   rmt.c_str (), lcl.c_str ());
 }
 
 void
@@ -1249,12 +1242,10 @@ Test_Supplier::activate (char const* name,
   RtecScheduler::Scheduler_ptr server =
     ACE_Scheduler_Factory::server ();
 
-  constexpr int bufsize {512};
-  char buf[bufsize];
-  ACE_OS::strcpy (buf, "consumer_");
-  ACE_OS::strcat (buf, name);
+  std::string buf {"consumer_"};
+  buf += name;
   RtecScheduler::handle_t rt_info =
-    server->create (buf);
+    server->create (buf.c_str ());
 
   // The execution times are set to reasonable values, but
   // actually they are changed on the real execution, i.e. we
@@ -1263,7 +1254,7 @@ Test_Supplier::activate (char const* name,
   ACE_Time_Value tv (0, 2000);
   TimeBase::TimeT time;
   ORBSVCS_Time::Time_Value_to_TimeT (time, tv);
-  ACE_DEBUG ((LM_DEBUG, "activate \"%C\"\n", buf));
+  ACE_DEBUG ((LM_DEBUG, "activate \"%C\"\n", buf.c_str ()));
   server->set (rt_info,
                RtecScheduler::VERY_HIGH_CRITICALITY,
                time, time, time,
