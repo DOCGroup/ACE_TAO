@@ -47,14 +47,14 @@ protected:
   char mtext_[MSGSZ];
 };
 
+/**
+ * @brief Stores message content.
+ *
+ * This may not be 100 percent portable on all C++ compilers since it relies
+ * on inheritance to be "concatenation."
+ */
 class Message_Block : public ACE_SV_Message, public Message_Data
 {
-  // = TITLE
-  //   Stores message content.
-  // = DESCRIPTION
-  //   This may not be 100 percent portable on all C++ compilers since
-  //   it relies on inheritance to be "concatenation."
-  //
 public:
   explicit Message_Block (long t,
                           long p = 0,
