@@ -281,47 +281,54 @@ Performance_Test_Options::print_results ()
       ACE_DEBUG ((LM_INFO,
                   "\n%8B PEs\n"
                   "%8.2f Mbit/sec\n"
-                  "%8d (voluntary context switches)\n"
-                  "%8d (involuntary context switches)\n"
-                  "%8d (total context switches)\n"
-                  "%8d.%d sec (wait-cpu time)\n"
-                  "%8d.%d sec (user lock wait sleep time)\n"
-                  "%8d.%d sec (all other sleep time)\n"
-                  "%8d (major page faults)\n"
-                  "%8d (minor page faults)\n"
+                  "%8Q (voluntary context switches)\n"
+                  "%8Q (involuntary context switches)\n"
+                  "%8Q (total context switches)\n"
+                  "%8Q.%Q sec (wait-cpu time)\n"
+                  "%8Q.%Q sec (user lock wait sleep time)\n"
+                  "%8Q.%Q sec (all other sleep time)\n"
+                  "%8Q (major page faults)\n"
+                  "%8Q (minor page faults)\n"
                   "%8d (number of LWPs)\n",
                   this->thr_count (),
                   (nbytes / et.real_time) * 8.0 / 1024.0 / 1024.0,
-                  rusage.pr_vctx,
-                  rusage.pr_ictx,
-                  rusage.pr_vctx + rusage.pr_ictx,
-                  rusage.pr_wtime.tv_sec, rusage.pr_wtime.tv_nsec / 1000000,
-                  rusage.pr_ltime.tv_sec, rusage.pr_ltime.tv_nsec / 1000000,
-                  rusage.pr_slptime.tv_sec, rusage.pr_slptime.tv_nsec / 1000000,
-                  rusage.pr_majf,
-                  rusage.pr_minf,
+                  static_cast<ACE_UINT64> (rusage.pr_vctx),
+                  static_cast<ACE_UINT64> (rusage.pr_ictx),
+                  static_cast<ACE_UINT64> (rusage.pr_vctx) +
+                    static_cast<ACE_UINT64> (rusage.pr_ictx),
+                  static_cast<ACE_UINT64> (rusage.pr_wtime.tv_sec),
+                  static_cast<ACE_UINT64> (rusage.pr_wtime.tv_nsec / 1000000),
+                  static_cast<ACE_UINT64> (rusage.pr_ltime.tv_sec),
+                  static_cast<ACE_UINT64> (rusage.pr_ltime.tv_nsec / 1000000),
+                  static_cast<ACE_UINT64> (rusage.pr_slptime.tv_sec),
+                  static_cast<ACE_UINT64> (rusage.pr_slptime.tv_nsec / 1000000),
+                  static_cast<ACE_UINT64> (rusage.pr_majf),
+                  static_cast<ACE_UINT64> (rusage.pr_minf),
                   ACE_Thread::getconcurrency ()));
 #elif defined (ACE_HAS_GETRUSAGE) && !defined (ACE_WIN32)
       ACE_DEBUG ((LM_INFO,
                   "\n%8B PEs\n"
                   "%8.2f Mbit/sec\n"
-                  "%8d (voluntary context switches)\n"
-                  "%8d (involuntary context switches)\n"
-                  "%8d (total context switches)\n"
-                  "%8d.%d sec (user time)\n"
-                  "%8d.%d sec (system time)\n"
-                  "%8d (major page faults)\n"
-                  "%8d (minor page faults)\n"
+                  "%8Q (voluntary context switches)\n"
+                  "%8Q (involuntary context switches)\n"
+                  "%8Q (total context switches)\n"
+                  "%8Q.%Q sec (user time)\n"
+                  "%8Q.%Q sec (system time)\n"
+                  "%8Q (major page faults)\n"
+                  "%8Q (minor page faults)\n"
                   "%8d (number of LWPs)\n",
                   this->thr_count (),
                   (nbytes / et.real_time) * 8.0 / 1024.0 / 1024.0,
-                  rusage.ru_nvcsw,
-                  rusage.ru_nivcsw,
-                  rusage.ru_nvcsw + rusage.ru_nivcsw,
-                  rusage.ru_utime.tv_sec, rusage.ru_utime.tv_usec / 1000000,
-                  rusage.ru_stime.tv_sec, rusage.ru_stime.tv_usec / 1000000,
-                  rusage.ru_majflt,
-                  rusage.ru_minflt,
+                  static_cast<ACE_UINT64> (rusage.ru_nvcsw),
+                  static_cast<ACE_UINT64> (rusage.ru_nivcsw),
+                  static_cast<ACE_UINT64> (rusage.ru_nvcsw) +
+                    static_cast<ACE_UINT64> (rusage.ru_nivcsw),
+                  static_cast<ACE_UINT64> (rusage.ru_utime.tv_sec),
+                  static_cast<ACE_UINT64> (rusage.ru_utime.tv_usec / 1000000),
+                  static_cast<ACE_UINT64> (rusage.ru_stime.tv_sec),
+                  static_cast<ACE_UINT64> (rusage.ru_stime.tv_usec / 1000000),
+                  static_cast<ACE_UINT64> (rusage.ru_majflt),
+                  static_cast<ACE_UINT64> (rusage.ru_minflt),
                   ACE_Thread::getconcurrency ()));
 #elif defined (ACE_HAS_GETRUSAGE) && defined (ACE_WIN32)
       // Need more stuff for Win32.
@@ -347,76 +354,81 @@ Performance_Test_Options::print_results ()
 
 #if defined (ACE_HAS_PRUSAGE_T)
       ACE_DEBUG ((LM_INFO,
-                  "%8d = lwpid\n"
-                  "%8d = lwp count\n"
-                  "%8d = minor page faults\n"
-                  "%8d = major page faults\n"
-                  "%8d = input blocks\n"
-                  "%8d = output blocks\n"
-                  "%8d = messages sent\n"
-                  "%8d = messages received\n"
-                  "%8d = signals received\n"
-                  "%8ds, %dms = wait-cpu (latency) time\n"
-                  "%8ds, %dms = user lock wait sleep time\n"
-                  "%8ds, %dms = all other sleep time\n"
-                  "%8d = voluntary context switches\n"
-                  "%8d = involuntary context switches\n"
-                  "%8d = total context switches\n"
-                  "%8d = system calls\n"
-                  "%8d = chars read/written\n"
+                  "%8Q = lwpid\n"
+                  "%8Q = lwp count\n"
+                  "%8Q = minor page faults\n"
+                  "%8Q = major page faults\n"
+                  "%8Q = input blocks\n"
+                  "%8Q = output blocks\n"
+                  "%8Q = messages sent\n"
+                  "%8Q = messages received\n"
+                  "%8Q = signals received\n"
+                  "%8Qs, %Qms = wait-cpu (latency) time\n"
+                  "%8Qs, %Qms = user lock wait sleep time\n"
+                  "%8Qs, %Qms = all other sleep time\n"
+                  "%8Q = voluntary context switches\n"
+                  "%8Q = involuntary context switches\n"
+                  "%8Q = total context switches\n"
+                  "%8Q = system calls\n"
+                  "%8Q = chars read/written\n"
                   "%8d = number of LWPs\n"
                   "---------------------\n"
                   "real time   = %.3f\n"
                   "user time   = %.3f\n"
                   "system time = %.3f\n"
                   "---------------------\n",
-                  rusage.pr_lwpid,
-                  rusage.pr_count,
-                  rusage.pr_minf,
-                  rusage.pr_majf,
-                  rusage.pr_inblk,
-                  rusage.pr_oublk,
-                  rusage.pr_msnd,
-                  rusage.pr_mrcv,
-                  rusage.pr_sigs,
-                  rusage.pr_wtime.tv_sec, rusage.pr_wtime.tv_nsec / 1000000,
-                  rusage.pr_ltime.tv_sec, rusage.pr_ltime.tv_nsec / 1000000,
-                  rusage.pr_slptime.tv_sec, rusage.pr_slptime.tv_nsec / 1000000,
-                  rusage.pr_vctx,
-                  rusage.pr_ictx,
-                  rusage.pr_vctx + rusage.pr_ictx,
-                  rusage.pr_sysc,
-                  rusage.pr_ioch,
+                  static_cast<ACE_UINT64> (rusage.pr_lwpid),
+                  static_cast<ACE_UINT64> (rusage.pr_count),
+                  static_cast<ACE_UINT64> (rusage.pr_minf),
+                  static_cast<ACE_UINT64> (rusage.pr_majf),
+                  static_cast<ACE_UINT64> (rusage.pr_inblk),
+                  static_cast<ACE_UINT64> (rusage.pr_oublk),
+                  static_cast<ACE_UINT64> (rusage.pr_msnd),
+                  static_cast<ACE_UINT64> (rusage.pr_mrcv),
+                  static_cast<ACE_UINT64> (rusage.pr_sigs),
+                  static_cast<ACE_UINT64> (rusage.pr_wtime.tv_sec),
+                  static_cast<ACE_UINT64> (rusage.pr_wtime.tv_nsec / 1000000),
+                  static_cast<ACE_UINT64> (rusage.pr_ltime.tv_sec),
+                  static_cast<ACE_UINT64> (rusage.pr_ltime.tv_nsec / 1000000),
+                  static_cast<ACE_UINT64> (rusage.pr_slptime.tv_sec),
+                  static_cast<ACE_UINT64> (rusage.pr_slptime.tv_nsec / 1000000),
+                  static_cast<ACE_UINT64> (rusage.pr_vctx),
+                  static_cast<ACE_UINT64> (rusage.pr_ictx),
+                  static_cast<ACE_UINT64> (rusage.pr_vctx) +
+                    static_cast<ACE_UINT64> (rusage.pr_ictx),
+                  static_cast<ACE_UINT64> (rusage.pr_sysc),
+                  static_cast<ACE_UINT64> (rusage.pr_ioch),
                   ACE_Thread::getconcurrency (),
                   et.real_time, et.user_time, et.system_time));
 #elif defined (ACE_HAS_GETRUSAGE) && !defined (ACE_WIN32)
       ACE_DEBUG ((LM_INFO,
-                  "%8d = minor page faults\n"
-                  "%8d = major page faults\n"
-                  "%8d = input blocks\n"
-                  "%8d = output blocks\n"
-                  "%8d = messages sent\n"
-                  "%8d = messages received\n"
-                  "%8d = signals received\n"
-                  "%8d = voluntary context switches\n"
-                  "%8d = involuntary context switches\n"
-                  "%8d = total context switches\n"
+                  "%8Q = minor page faults\n"
+                  "%8Q = major page faults\n"
+                  "%8Q = input blocks\n"
+                  "%8Q = output blocks\n"
+                  "%8Q = messages sent\n"
+                  "%8Q = messages received\n"
+                  "%8Q = signals received\n"
+                  "%8Q = voluntary context switches\n"
+                  "%8Q = involuntary context switches\n"
+                  "%8Q = total context switches\n"
                   "%8d = number of LWPs\n"
                   "---------------------\n"
                   "real time   = %.3f\n"
                   "user time   = %.3f\n"
                   "system time = %.3f\n"
                   "---------------------\n",
-                  rusage.ru_minflt,
-                  rusage.ru_majflt,
-                  rusage.ru_inblock,
-                  rusage.ru_oublock,
-                  rusage.ru_msgsnd,
-                  rusage.ru_msgrcv,
-                  rusage.ru_nsignals,
-                  rusage.ru_nvcsw,
-                  rusage.ru_nivcsw,
-                  rusage.ru_nvcsw + rusage.ru_nivcsw,
+                  static_cast<ACE_UINT64> (rusage.ru_minflt),
+                  static_cast<ACE_UINT64> (rusage.ru_majflt),
+                  static_cast<ACE_UINT64> (rusage.ru_inblock),
+                  static_cast<ACE_UINT64> (rusage.ru_oublock),
+                  static_cast<ACE_UINT64> (rusage.ru_msgsnd),
+                  static_cast<ACE_UINT64> (rusage.ru_msgrcv),
+                  static_cast<ACE_UINT64> (rusage.ru_nsignals),
+                  static_cast<ACE_UINT64> (rusage.ru_nvcsw),
+                  static_cast<ACE_UINT64> (rusage.ru_nivcsw),
+                  static_cast<ACE_UINT64> (rusage.ru_nvcsw) +
+                    static_cast<ACE_UINT64> (rusage.ru_nivcsw),
                   ACE_Thread::getconcurrency (),
                   et.real_time, et.user_time, et.system_time));
 #elif defined (ACE_HAS_GETRUSAGE) && defined (ACE_WIN32)
