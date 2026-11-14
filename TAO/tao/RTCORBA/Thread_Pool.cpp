@@ -91,7 +91,7 @@ TAO_Thread_Pool_Threads::set_tss_resources (TAO_ORB_Core &orb_core,
     *orb_core.get_tss_resources ();
 
   /// Set the lane attribute in TSS.
-  tss.lane_ = &thread_lane;
+  tss.lane_ = std::addressof (thread_lane);
 
   TAO_TSS_Resources::instance ()->rtcorba_current_priority_
     = thread_lane.lane_priority ();
