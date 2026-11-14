@@ -27,7 +27,9 @@
 class Current_Test_Impl : public virtual POA_Test::Transport::CurrentTest
 {
 public:
-  Current_Test_Impl (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa, int do_collocated_calls = 1);
+  Current_Test_Impl (CORBA::ORB_ptr orb,
+                     PortableServer::POA_ptr poa,
+                     bool do_collocated_calls = true);
 
   ~Current_Test_Impl () override;
 
@@ -69,7 +71,7 @@ private:
   PortableServer::POA_var poa_;
 
   /// To do or not to do ...
-  int do_collocated_calls_;
+  bool do_collocated_calls_;
 };
 
 #endif  /* CURRENT_TEST_IMPL_H */

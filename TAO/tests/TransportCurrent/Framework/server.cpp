@@ -14,7 +14,7 @@ struct Options
 {
   ACE_TCHAR const *ior_output_file {ACE_TEXT ("server.ior")};
   int nthreads {1};
-  int use_collocated_call {1};
+  bool use_collocated_call {true};
 };
 
 int
@@ -27,7 +27,7 @@ parse_args (int argc, ACE_TCHAR *argv[], Options &options)
     switch (c)
       {
       case 'c':
-        options.use_collocated_call = ACE_OS::atoi (get_opts.opt_arg ());
+        options.use_collocated_call = ACE_OS::atoi (get_opts.opt_arg ()) != 0;
         break;
       case 'o':
         options.ior_output_file = get_opts.opt_arg ();

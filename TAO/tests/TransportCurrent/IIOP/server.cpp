@@ -9,27 +9,32 @@
 #include "Server_Request_Interceptor.h"
 #include "Server_ORBInitializer.h"
 
-ACE_TCHAR const *ior_output_file = ACE_TEXT ("server.ior");
-int nthreads = 1;
-int use_collocated_call = 1;
+#include <memory>
+
+struct Server_Options
+{
+  ACE_TCHAR const *ior_output_file {ACE_TEXT ("server.ior")};
+  int nthreads {1};
+  bool use_collocated_calls {true};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("t:o:n:c:"));
-  int c = 0;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'c':
-        use_collocated_call = ACE_OS::atoi (get_opts.opt_arg ());
+        options.use_collocated_calls = ACE_OS::atoi (get_opts.opt_arg ()) != 0;
         break;
       case 'o':
-        ior_output_file = get_opts.opt_arg ();
+        options.ior_output_file = get_opts.opt_arg ();
         break;
       case 't':
-        nthreads = ACE_OS::atoi (get_opts.opt_arg ());
+        options.nthreads = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'n': // Does nothing. Added just for symetry with the client.
         break;
@@ -129,12 +134,13 @@ server_main (int argc,
 
       poa_manager->activate ();
 
-      if (parse_args (argc, argv) != 0)
+      Server_Options options;
+      if (parse_args (argc, argv, options) != 0)
         return -1;
 
       Current_Test_Impl server_impl (orb.in (),
                                      root_poa.in (),
-                                     use_collocated_call);
+                                     options.use_collocated_calls);
 
       obj = server_impl._this ();
 
@@ -151,18 +157,18 @@ server_main (int argc,
         orb->object_to_string (server.in ());
 
       // If the ior_output_file exists, output the IOR to it.
-      if (ior_output_file != nullptr)
+      if (options.ior_output_file != nullptr)
         {
-          FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
-          if (output_file == nullptr)
+          std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+            ACE_OS::fopen (options.ior_output_file, "w"), ACE_OS::fclose);
+          if (!output_file)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Server (%P|%t) Cannot write file %s "
                                "IOR: %C - %m",
-                               ior_output_file,
+                               options.ior_output_file,
                                ior.in ()),
                               -1);
-          ACE_OS::fprintf (output_file, "%s", ior.in ());
-          ACE_OS::fclose (output_file);
+          ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
         }
 
       // Spawn a number of clients doing the same thing for a
@@ -171,14 +177,14 @@ server_main (int argc,
 
 #if defined (ACE_HAS_THREADS)
       if (worker.activate (THR_NEW_LWP | THR_JOINABLE,
-                           nthreads) != 0)
+                           options.nthreads) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("Server (%P|%t) Cannot activate %d threads\n"),
-                           nthreads),
+                           options.nthreads),
                           -1);
       worker.thr_mgr ()->wait ();
 #else
-      if (nthreads > 1)
+      if (options.nthreads > 1)
         ACE_ERROR ((LM_WARNING,
                     ACE_TEXT ("Server (%P|%t) Cannot use threads other than ")
                     ACE_TEXT ("the only one available.\n")));
