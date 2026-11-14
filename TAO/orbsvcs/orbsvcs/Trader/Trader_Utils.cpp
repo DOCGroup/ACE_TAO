@@ -419,15 +419,15 @@ TAO_Property_Evaluator_By_Name::property_type (const char* property_name)
   return prop_type;
 }
 
-const CosTrading::Property*
-TAO_Property_Evaluator_By_Name::get_property (const char* property_name)
+CosTrading::Property const*
+TAO_Property_Evaluator_By_Name::get_property (char const* property_name)
 {
   int index {};
-  CosTrading::Property* property {};
+  CosTrading::Property const* property {};
   CORBA::String_var prop_name (property_name);
 
   if (this->table_.find (prop_name, index) == 0)
-    property = (CosTrading::Property *) &this->props_[index];
+    property = std::addressof (this->props_[index]);
 
   return property;
 }

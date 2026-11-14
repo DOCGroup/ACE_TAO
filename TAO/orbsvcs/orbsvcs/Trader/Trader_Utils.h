@@ -156,7 +156,7 @@ public:
    */
   CORBA::TypeCode_ptr property_type(const char* property_name);
 
-  const CosTrading::Property* get_property (const char* property_name);
+  CosTrading::Property const* get_property (char const* property_name);
 
 private:
   /// The instance of the above mapping for the offer provided in the
