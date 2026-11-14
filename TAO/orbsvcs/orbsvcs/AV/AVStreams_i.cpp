@@ -931,8 +931,8 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
       FlowEndPoint_Map *map_a {}, *map_b {};
       if (flow_spec.length () == 0)
         {
-          map_a = &a_fep_map;
-          map_b = &b_fep_map;
+          map_a = std::addressof (a_fep_map);
+          map_b = std::addressof (b_fep_map);
         }
       else
         {
@@ -958,8 +958,8 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
               if (result == -1)
                 if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG, "Bind failed for %s\n", flow_spec[i].in ()));
             }
-          map_a = &spec_fep_map_a;
-          map_b = &spec_fep_map_b;
+          map_a = std::addressof (spec_fep_map_a);
+          map_b = std::addressof (spec_fep_map_b);
         }
 
       TAO_AV_QoS qos (stream_qos);
