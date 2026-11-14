@@ -11,12 +11,10 @@
 #include "ace/Svc_Handler.h"
 #include "ace/Sig_Adapter.h"
 
+/// Performs service work after the one-shot acceptor accepts a connection.
 template <typename PEER_STREAM>
 class Svc_Handler : public ACE_Svc_Handler <PEER_STREAM, ACE_NULL_SYNCH>
 {
-  // = TITLE
-  //     This class does the work once the <ACE_Oneshot_Acceptor> has
-  //     accepted a connection.
 public:
   explicit Svc_Handler (ACE_Reactor *r);
   Svc_Handler (Svc_Handler const &) = delete;
@@ -24,27 +22,26 @@ public:
   Svc_Handler &operator= (Svc_Handler const &) = delete;
   Svc_Handler &operator= (Svc_Handler &&) = delete;
 
+  /// Performs the work of the service handler.
   int open (void *) override;
-  // Perform the work of the SVC_HANDLER.
 
+  /// Handles data from the client.
   int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE) override;
-  // Handle data from the client.
 
+  /// Handles an unexpected service-handler shutdown.
   int close (u_long) override;
-  // Called if ACE_Svc_Handler is closed down unexpectedly.
 
+  /// Handles acceptor timeouts.
   int handle_timeout (ACE_Time_Value const &, void const *arg) override;
-  // Handles acceptor timeouts.
 
 private:
   using SVC_HANDLER = ACE_Svc_Handler<PEER_STREAM, ACE_NULL_SYNCH>;
 };
 
+/// Illustrates the ACE_Oneshot_Acceptor interface.
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR>
 class IPC_Server : public ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>
 {
-  // = TITLE
-  //     This class illustrates how the <ACE_Oneshot_Acceptor> works.
 public:
   IPC_Server ();
 
@@ -53,34 +50,36 @@ public:
   IPC_Server (IPC_Server &&) = delete;
   IPC_Server &operator= (IPC_Server const &) = delete;
   IPC_Server &operator= (IPC_Server &&) = delete;
-  // = Demultiplexing hooks.
+  /// @name Demultiplexing hooks
+  /// @{
+  /// Keeps the handle open when it is removed from the reactor.
   int handle_close (ACE_HANDLE handle,
                     ACE_Reactor_Mask mask) override;
-  // Make sure not to close down the <handle> if we're removed from
-  // the <Reactor>.
+  /// @}
 
-  // = Dynamic linking hooks.
+  /// @name Dynamic linking hooks
+  /// @{
+  /// Initializes the network server.
   int init (int argc, ACE_TCHAR *argv[]) override;
-  // Initialize the network server.
 
+  /// Closes down the server.
   int fini () override;
-  // Close down the server.
+  /// @}
 
+  /// Runs the interactive service.
   virtual int svc ();
-  // Run the interative service.
 
 private:
   using inherited = ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>;
 
+  /// Address of this server.
   typename PEER_ACCEPTOR::PEER_ADDR server_addr_;
-  // Address of this server.
 
+  /// Options used by this server.
   ACE_Synch_Options options_;
-  // Options that this server is using.
 
+  /// Tracks shutdown after receipt of SIGINT.
   ACE_Sig_Adapter done_handler_;
-  // Keeps track of when we shut down due to receipt of the SIGINT
-  // signal.
 };
 
 #include "CPP-acceptor.cpp"
