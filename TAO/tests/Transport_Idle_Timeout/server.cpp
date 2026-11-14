@@ -9,6 +9,8 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/Log_Msg.h"
 
+#include <memory>
+
 static ACE_TCHAR const *ior_output_file = ACE_TEXT ("test.ior");
 
 static int
@@ -65,13 +67,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::String_var ior = orb->object_to_string (echo.in ());
 
       // Write IOR to file so the test driver and client can find it
-      FILE *f = ACE_OS::fopen (ior_output_file, ACE_TEXT ("w"));
-      if (f == nullptr)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Cannot open output file '%s'\n"),
-                           ior_output_file), 1);
-      ACE_OS::fprintf (f, "%s", ior.in ());
-      ACE_OS::fclose (f);
+      {
+        std::unique_ptr<FILE, int (*) (FILE *)> file (
+          ACE_OS::fopen (ior_output_file, ACE_TEXT ("w")), ACE_OS::fclose);
+        if (!file)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Cannot open output file '%s'\n"),
+                             ior_output_file), 1);
+        ACE_OS::fprintf (file.get (), "%s", ior.in ());
+      }
 
       mgr->activate ();
 
