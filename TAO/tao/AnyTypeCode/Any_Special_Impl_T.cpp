@@ -109,7 +109,7 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::extract (CORBA::Any const & any,
               return false;
             }
 
-          _tao_elem = (T *) narrow_impl->value_;
+          _tao_elem = static_cast<T const *> (narrow_impl->value_);
           return true;
         }
 

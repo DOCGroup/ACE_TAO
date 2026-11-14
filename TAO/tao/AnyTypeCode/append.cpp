@@ -667,7 +667,7 @@ TAO_Marshal_Sequence::append (CORBA::TypeCode_ptr  tc,
             if (dest->adjust (ACE_CDR::OCTET_SIZE * bounds,
                               ACE_CDR::OCTET_ALIGN, buf) == 0)
               {
-                if (!src->read_octet_array ((ACE_CDR::Octet*)buf, bounds))
+                if (!src->read_octet_array (reinterpret_cast<ACE_CDR::Octet *> (buf), bounds))
                   retval = TAO::TRAVERSE_STOP;
               }
           }
@@ -678,7 +678,7 @@ TAO_Marshal_Sequence::append (CORBA::TypeCode_ptr  tc,
             if (dest->adjust (ACE_CDR::OCTET_SIZE * bounds,
                               ACE_CDR::OCTET_ALIGN, buf) == 0)
               {
-                if (!src->read_boolean_array ((ACE_CDR::Boolean*)buf, bounds))
+                if (!src->read_boolean_array (reinterpret_cast<ACE_CDR::Boolean *> (buf), bounds))
                   retval = TAO::TRAVERSE_STOP;
               }
           }
@@ -689,7 +689,7 @@ TAO_Marshal_Sequence::append (CORBA::TypeCode_ptr  tc,
             if (dest->adjust (ACE_CDR::OCTET_SIZE * bounds,
                               ACE_CDR::OCTET_ALIGN, buf) == 0)
               {
-                if (!src->read_char_array ((ACE_CDR::Char*)buf, bounds))
+                if (!src->read_char_array (reinterpret_cast<ACE_CDR::Char *> (buf), bounds))
                   retval = TAO::TRAVERSE_STOP;
               }
           }
@@ -700,7 +700,7 @@ TAO_Marshal_Sequence::append (CORBA::TypeCode_ptr  tc,
             if (dest->adjust (ACE_CDR::SHORT_SIZE * bounds,
                               ACE_CDR::SHORT_ALIGN, buf) == 0)
               {
-                if (!src->read_short_array ((ACE_CDR::Short*)buf, bounds))
+                if (!src->read_short_array (reinterpret_cast<ACE_CDR::Short *> (buf), bounds))
                   retval = TAO::TRAVERSE_STOP;
               }
           }
@@ -711,7 +711,7 @@ TAO_Marshal_Sequence::append (CORBA::TypeCode_ptr  tc,
             if (dest->adjust (ACE_CDR::SHORT_SIZE * bounds,
                               ACE_CDR::SHORT_ALIGN, buf) == 0)
               {
-                if (!src->read_ushort_array ((ACE_CDR::UShort*)buf, bounds))
+                if (!src->read_ushort_array (reinterpret_cast<ACE_CDR::UShort *> (buf), bounds))
                   retval = TAO::TRAVERSE_STOP;
               }
           }
@@ -722,7 +722,7 @@ TAO_Marshal_Sequence::append (CORBA::TypeCode_ptr  tc,
             if (dest->adjust (ACE_CDR::SHORT_SIZE * bounds,
                               ACE_CDR::SHORT_ALIGN, buf) == 0)
               {
-                if (!src->read_wchar_array ((ACE_CDR::WChar*)buf, bounds))
+                if (!src->read_wchar_array (reinterpret_cast<ACE_CDR::WChar *> (buf), bounds))
                   retval = TAO::TRAVERSE_STOP;
               }
           }
@@ -733,7 +733,7 @@ TAO_Marshal_Sequence::append (CORBA::TypeCode_ptr  tc,
             if (dest->adjust (ACE_CDR::LONG_SIZE * bounds,
                               ACE_CDR::LONG_ALIGN, buf) == 0)
               {
-                if (!src->read_long_array ((ACE_CDR::Long*)buf, bounds))
+                if (!src->read_long_array (reinterpret_cast<ACE_CDR::Long *> (buf), bounds))
                   retval = TAO::TRAVERSE_STOP;
               }
           }
@@ -744,7 +744,7 @@ TAO_Marshal_Sequence::append (CORBA::TypeCode_ptr  tc,
             if (dest->adjust (ACE_CDR::LONG_SIZE * bounds,
                               ACE_CDR::LONG_ALIGN, buf) == 0)
               {
-                if (!src->read_ulong_array ((ACE_CDR::ULong*)buf, bounds))
+                if (!src->read_ulong_array (reinterpret_cast<ACE_CDR::ULong *> (buf), bounds))
                   retval = TAO::TRAVERSE_STOP;
               }
           }
@@ -755,7 +755,7 @@ TAO_Marshal_Sequence::append (CORBA::TypeCode_ptr  tc,
             if (dest->adjust (ACE_CDR::LONG_SIZE * bounds,
                               ACE_CDR::LONG_ALIGN, buf) == 0)
               {
-                if (!src->read_float_array ((ACE_CDR::Float*)buf, bounds))
+                if (!src->read_float_array (reinterpret_cast<ACE_CDR::Float *> (buf), bounds))
                   retval = TAO::TRAVERSE_STOP;
               }
           }
@@ -766,7 +766,7 @@ TAO_Marshal_Sequence::append (CORBA::TypeCode_ptr  tc,
             if (dest->adjust (ACE_CDR::LONGLONG_SIZE * bounds,
                               ACE_CDR::LONGLONG_ALIGN, buf) == 0)
               {
-                if (!src->read_double_array ((ACE_CDR::Double*)buf, bounds))
+                if (!src->read_double_array (reinterpret_cast<ACE_CDR::Double *> (buf), bounds))
                   retval = TAO::TRAVERSE_STOP;
               }
           }
@@ -777,7 +777,7 @@ TAO_Marshal_Sequence::append (CORBA::TypeCode_ptr  tc,
             if (dest->adjust (ACE_CDR::LONGLONG_SIZE * bounds,
                               ACE_CDR::LONGLONG_ALIGN, buf) == 0)
               {
-                if (!src->read_longlong_array ((ACE_CDR::LongLong*)buf, bounds))
+                if (!src->read_longlong_array (reinterpret_cast<ACE_CDR::LongLong *> (buf), bounds))
                   retval = TAO::TRAVERSE_STOP;
               }
           }
@@ -788,7 +788,7 @@ TAO_Marshal_Sequence::append (CORBA::TypeCode_ptr  tc,
             if (dest->adjust (ACE_CDR::LONGLONG_SIZE * bounds,
                               ACE_CDR::LONGLONG_ALIGN, buf) == 0)
               {
-                if (!src->read_ulonglong_array ((ACE_CDR::ULongLong*)buf, bounds))
+                if (!src->read_ulonglong_array (reinterpret_cast<ACE_CDR::ULongLong *> (buf), bounds))
                   retval = TAO::TRAVERSE_STOP;
               }
           }
@@ -799,7 +799,7 @@ TAO_Marshal_Sequence::append (CORBA::TypeCode_ptr  tc,
             if (dest->adjust (ACE_CDR::LONGDOUBLE_SIZE * bounds,
                               ACE_CDR::LONGDOUBLE_ALIGN, buf) == 0)
               {
-                if (!src->read_longdouble_array ((ACE_CDR::LongDouble*)buf, bounds))
+                if (!src->read_longdouble_array (reinterpret_cast<ACE_CDR::LongDouble *> (buf), bounds))
                   retval = TAO::TRAVERSE_STOP;
               }
           }
@@ -852,7 +852,7 @@ TAO_Marshal_Array::append (CORBA::TypeCode_ptr  tc,
         if (dest->adjust (ACE_CDR::OCTET_SIZE * bounds,
                           ACE_CDR::OCTET_ALIGN, buf) == 0)
           {
-            if (!src->read_octet_array ((ACE_CDR::Octet*)buf, bounds))
+            if (!src->read_octet_array (reinterpret_cast<ACE_CDR::Octet *> (buf), bounds))
               retval = TAO::TRAVERSE_STOP;
           }
       }
@@ -863,7 +863,7 @@ TAO_Marshal_Array::append (CORBA::TypeCode_ptr  tc,
         if (dest->adjust (ACE_CDR::OCTET_SIZE * bounds,
                           ACE_CDR::OCTET_ALIGN, buf) == 0)
           {
-            if (!src->read_boolean_array ((ACE_CDR::Boolean*)buf, bounds))
+            if (!src->read_boolean_array (reinterpret_cast<ACE_CDR::Boolean *> (buf), bounds))
               retval = TAO::TRAVERSE_STOP;
           }
       }
@@ -874,7 +874,7 @@ TAO_Marshal_Array::append (CORBA::TypeCode_ptr  tc,
         if (dest->adjust (ACE_CDR::OCTET_SIZE * bounds,
                           ACE_CDR::OCTET_ALIGN, buf) == 0)
           {
-            if (!src->read_char_array ((ACE_CDR::Char*)buf, bounds))
+            if (!src->read_char_array (reinterpret_cast<ACE_CDR::Char *> (buf), bounds))
               retval = TAO::TRAVERSE_STOP;
           }
       }
@@ -885,7 +885,7 @@ TAO_Marshal_Array::append (CORBA::TypeCode_ptr  tc,
         if (dest->adjust (ACE_CDR::SHORT_SIZE * bounds,
                           ACE_CDR::SHORT_ALIGN, buf) == 0)
           {
-            if (!src->read_short_array ((ACE_CDR::Short*)buf, bounds))
+            if (!src->read_short_array (reinterpret_cast<ACE_CDR::Short *> (buf), bounds))
               retval = TAO::TRAVERSE_STOP;
           }
       }
@@ -896,7 +896,7 @@ TAO_Marshal_Array::append (CORBA::TypeCode_ptr  tc,
         if (dest->adjust (ACE_CDR::SHORT_SIZE * bounds,
                           ACE_CDR::SHORT_ALIGN, buf) == 0)
           {
-            if (!src->read_ushort_array ((ACE_CDR::UShort*)buf, bounds))
+            if (!src->read_ushort_array (reinterpret_cast<ACE_CDR::UShort *> (buf), bounds))
               retval = TAO::TRAVERSE_STOP;
           }
       }
@@ -907,7 +907,7 @@ TAO_Marshal_Array::append (CORBA::TypeCode_ptr  tc,
         if (dest->adjust (ACE_CDR::SHORT_SIZE * bounds,
                           ACE_CDR::SHORT_ALIGN, buf) == 0)
           {
-            if (!src->read_wchar_array ((ACE_CDR::WChar*)buf, bounds))
+            if (!src->read_wchar_array (reinterpret_cast<ACE_CDR::WChar *> (buf), bounds))
               retval = TAO::TRAVERSE_STOP;
           }
       }
@@ -918,7 +918,7 @@ TAO_Marshal_Array::append (CORBA::TypeCode_ptr  tc,
         if (dest->adjust (ACE_CDR::LONG_SIZE * bounds,
                           ACE_CDR::LONG_ALIGN, buf) == 0)
           {
-            if (!src->read_long_array ((ACE_CDR::Long*)buf, bounds))
+            if (!src->read_long_array (reinterpret_cast<ACE_CDR::Long *> (buf), bounds))
               retval = TAO::TRAVERSE_STOP;
           }
       }
@@ -929,7 +929,7 @@ TAO_Marshal_Array::append (CORBA::TypeCode_ptr  tc,
         if (dest->adjust (ACE_CDR::LONG_SIZE * bounds,
                           ACE_CDR::LONG_ALIGN, buf) == 0)
           {
-            if (!src->read_ulong_array ((ACE_CDR::ULong*)buf, bounds))
+            if (!src->read_ulong_array (reinterpret_cast<ACE_CDR::ULong *> (buf), bounds))
               retval = TAO::TRAVERSE_STOP;
           }
       }
@@ -940,7 +940,7 @@ TAO_Marshal_Array::append (CORBA::TypeCode_ptr  tc,
         if (dest->adjust (ACE_CDR::LONG_SIZE * bounds,
                           ACE_CDR::LONG_ALIGN, buf) == 0)
           {
-            if (!src->read_float_array ((ACE_CDR::Float*)buf, bounds))
+            if (!src->read_float_array (reinterpret_cast<ACE_CDR::Float *> (buf), bounds))
               retval = TAO::TRAVERSE_STOP;
           }
       }
@@ -951,7 +951,7 @@ TAO_Marshal_Array::append (CORBA::TypeCode_ptr  tc,
         if (dest->adjust (ACE_CDR::LONGLONG_SIZE * bounds,
                           ACE_CDR::LONGLONG_ALIGN, buf) == 0)
           {
-            if (!src->read_double_array ((ACE_CDR::Double*)buf, bounds))
+            if (!src->read_double_array (reinterpret_cast<ACE_CDR::Double *> (buf), bounds))
               retval = TAO::TRAVERSE_STOP;
           }
       }
@@ -962,7 +962,7 @@ TAO_Marshal_Array::append (CORBA::TypeCode_ptr  tc,
         if (dest->adjust (ACE_CDR::LONGLONG_SIZE * bounds,
                           ACE_CDR::LONGLONG_ALIGN, buf) == 0)
           {
-            if (!src->read_longlong_array ((ACE_CDR::LongLong*)buf, bounds))
+            if (!src->read_longlong_array (reinterpret_cast<ACE_CDR::LongLong *> (buf), bounds))
               retval = TAO::TRAVERSE_STOP;
           }
       }
@@ -973,7 +973,7 @@ TAO_Marshal_Array::append (CORBA::TypeCode_ptr  tc,
         if (dest->adjust (ACE_CDR::LONGLONG_SIZE * bounds,
                           ACE_CDR::LONGLONG_ALIGN, buf) == 0)
           {
-            if (!src->read_ulonglong_array ((ACE_CDR::ULongLong*)buf, bounds))
+            if (!src->read_ulonglong_array (reinterpret_cast<ACE_CDR::ULongLong *> (buf), bounds))
               retval = TAO::TRAVERSE_STOP;
           }
       }
@@ -984,7 +984,7 @@ TAO_Marshal_Array::append (CORBA::TypeCode_ptr  tc,
         if (dest->adjust (ACE_CDR::LONGDOUBLE_SIZE * bounds,
                           ACE_CDR::LONGDOUBLE_ALIGN, buf) == 0)
           {
-            if (!src->read_longdouble_array ((ACE_CDR::LongDouble*)buf, bounds))
+            if (!src->read_longdouble_array (reinterpret_cast<ACE_CDR::LongDouble *> (buf), bounds))
               retval = TAO::TRAVERSE_STOP;
           }
       }
