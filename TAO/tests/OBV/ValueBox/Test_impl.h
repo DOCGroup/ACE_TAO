@@ -15,7 +15,6 @@
 class Test_impl : public POA_Test
 {
 public:
-  /// ctor
   explicit Test_impl (CORBA::ORB_ptr orb);
   Test_impl (Test_impl const&) = delete;
   Test_impl (Test_impl&&) = delete;

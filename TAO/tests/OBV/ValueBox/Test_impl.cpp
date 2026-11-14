@@ -1,5 +1,6 @@
 #include "Test_impl.h"
 
+#include <cstddef>
 #include <cstring>
 
 Test_impl::Test_impl (CORBA::ORB_ptr orb)
@@ -7,21 +8,17 @@ Test_impl::Test_impl (CORBA::ORB_ptr orb)
 {
 }
 
-//***************************************************************************
-// Rotate characters in string, last character becomes the first and
-// all others are shifted to the right.
-//***************************************************************************
+/// Rotate characters in the string, moving the last character to the front.
 static void
 rotate_string (char *s)
 {
-  unsigned char c;
   size_t const l = std::strlen (s);
 
   if (l > 1)
     {
-      c = s[l - 1];
-      std::memmove (&s[1], &s[0], l - 1);
-      s[0] = c;
+      char const last_char = s[l - 1];
+      std::memmove (s + 1, s, l - 1);
+      s[0] = last_char;
     }
 }
 
@@ -115,13 +112,12 @@ Test_impl::seq_op1 (::VBseqlong * p1,
   ACE_NEW_RETURN (p3,
                   VBseqlong(*p2),
                   nullptr);
-  CORBA::ULong i;
-  for (i=0; i<p3->_value().length(); i++)
+  for (CORBA::ULong i {}; i < p3->_value ().length (); ++i)
     {
       (*p3)[i] *= 5;
     }
 
-  for (i=0; i<p2->_value().length(); i++)
+  for (CORBA::ULong i {}; i < p2->_value ().length (); ++i)
     {
       (*p2)[i] *= 3;
     }
@@ -141,13 +137,12 @@ Test_impl::seq_op2 (::TDseqlong const &p1,
 {
   ACE_NEW (p3,
            TDseqlong(p1));
-  CORBA::ULong i;
-  for (i=0; i<p3->length(); i++)
+  for (CORBA::ULong i {}; i < p3->length (); ++i)
     {
       (*p3)[i] *= 5;
     }
 
-  for (i=0; i<p2.length(); i++)
+  for (CORBA::ULong i {}; i < p2.length (); ++i)
     {
       p2[i] *= 3;
     }
@@ -231,9 +226,9 @@ Test_impl::array_op1 (::VBlongarray * p1,
                       ::VBlongarray *& p2,
                       ::VBlongarray_out p3)
 {
-  long array_len = sizeof(LongArray) / sizeof(CORBA::Long);
+  size_t const array_len = sizeof (LongArray) / sizeof (CORBA::Long);
 
-  for (long i=0; i<array_len; i++)
+  for (size_t i {}; i < array_len; ++i)
     {
       (*p2)[i] *= 3;
     }
@@ -255,15 +250,14 @@ Test_impl::array_op2 (::LongArray const p1,
                       ::LongArray p2,
                       ::LongArray_out p3)
 {
-  long array_len = sizeof(LongArray) / sizeof(CORBA::Long);
+  size_t const array_len = sizeof (LongArray) / sizeof (CORBA::Long);
 
-  long i;
-  for (i=0; i<array_len; i++)
+  for (size_t i {}; i < array_len; ++i)
     {
       p2[i] *= 3;
     }
 
-  for (i=0; i<array_len; i++)
+  for (size_t i {}; i < array_len; ++i)
     {
       p3[i] = p1[i];
     }
@@ -274,12 +268,11 @@ Test_impl::array_op3 (::VBstringarray * p1,
                       ::VBstringarray *& p2,
                       ::VBstringarray_out p3)
 {
-  long array_len = sizeof( ::StringArray  ) / sizeof( StringArray_slice);
+  size_t const array_len = sizeof (::StringArray) / sizeof (StringArray_slice);
 
-  char *p {};
-  for (long i=0; i<array_len; i++)
+  for (size_t i {}; i < array_len; ++i)
     {
-      p = (*p2)[i].inout ();
+      char * const p = (*p2)[i].inout ();
       rotate_string (p);
     }
 
@@ -300,19 +293,17 @@ Test_impl::array_op4 (::StringArray const p1,
                       ::StringArray p2,
                       ::StringArray_out p3)
 {
-  long array_len = sizeof(::StringArray) / sizeof( StringArray_slice);
+  size_t const array_len = sizeof (::StringArray) / sizeof (StringArray_slice);
 
-  char *p {};
-  long i;
-  for (i=0; i<array_len; i++)
+  for (size_t i {}; i < array_len; ++i)
     {
-      p = p2[i].inout ();
+      char * const p = p2[i].inout ();
       rotate_string (p);
     }
 
-  StringArray_slice *sa = StringArray_alloc ();
+  StringArray_slice * const sa = StringArray_alloc ();
 
-  for (i=0; i<array_len; i++)
+  for (size_t i {}; i < array_len; ++i)
     {
       sa[i] = p1[i];
     }

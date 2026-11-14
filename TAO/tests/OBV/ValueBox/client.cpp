@@ -4,19 +4,22 @@
 #include <memory>
 #include "ace/Get_Opt.h"
 
-ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
+struct Client_Options
+{
+  ACE_TCHAR const *ior {ACE_TEXT ("file://test.ior")};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'k':
-        ior = get_opts.optarg;
+        options.ior = get_opts.opt_arg ();
         break;
 
       case '?':
@@ -57,7 +60,8 @@ int box_test1 (BoxT *valuebox, UT val1, UT val2)
                     1);
 
     // should be a deep copy of val1...
-    OBV_VERITY (&valuebox_clone->_boxed_inout () != &valuebox->_boxed_inout ());
+    OBV_VERITY (std::addressof (valuebox_clone->_boxed_inout ())
+                != std::addressof (valuebox->_boxed_inout ()));
 
     // but values should be equal
     OBV_VERITY (ACE::is_equal (valuebox_clone->_value (), valuebox->_value ()));
@@ -85,14 +89,14 @@ int box_test1 (BoxT *valuebox, UT val1, UT val2)
     OBV_VERITY (ACE::is_equal (valuebox_clone->_value (), val1));
 
     // Test _copy_value
-    CORBA::ValueBase *copy = valuebox->_copy_value ();
+    CORBA::ValueBase * const copy = valuebox->_copy_value ();
     OBV_VERITY (copy != nullptr);
     // check add_ref, remove_ref
     copy->_add_ref ();
     copy->_remove_ref ();
 
     // try downcast...then we can check that copy was correct.
-    BoxT *down = BoxT::_downcast (copy);
+    BoxT * const down = BoxT::_downcast (copy);
     if (down == nullptr)
       {
         ++fail;
@@ -158,13 +162,16 @@ int box_test_ref (BoxT *valuebox, UT &val1, UT &val2)
                     1);
 
     // should be a deep copy of val1...
-    OBV_VERITY (&p->_boxed_inout () != &valuebox->_boxed_inout ());
+    OBV_VERITY (std::addressof (p->_boxed_inout ())
+                != std::addressof (valuebox->_boxed_inout ()));
 
     p->_value (val2); // deep copy
-    OBV_VERITY (&p->_boxed_inout () != &valuebox->_boxed_inout () );
+    OBV_VERITY (std::addressof (p->_boxed_inout ())
+                != std::addressof (valuebox->_boxed_inout ()));
 
     *valuebox = val2;      // deep copy, too.
-    OBV_VERITY (&p->_boxed_inout () != &valuebox->_boxed_inout () );
+    OBV_VERITY (std::addressof (p->_boxed_inout ())
+                != std::addressof (valuebox->_boxed_inout ()));
 
     CORBA::remove_ref (p);
 
@@ -1438,25 +1445,26 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Test_var test_object;
   CORBA::ORB_var orb;
+  Client_Options options;
 
   try
     {
       orb = CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
       // Obtain reference to the object.
       CORBA::Object_var tmp =
-        orb->string_to_object(ior);
+        orb->string_to_object (options.ior);
 
       test_object = Test::_narrow(tmp.in ());
 
       if (CORBA::is_nil (test_object.in ()))
       {
         ACE_ERROR_RETURN ((LM_DEBUG,
-                           "Nil Test reference <%s>\n",
-                           ior),
+                           ACE_TEXT ("Nil Test reference <%s>\n"),
+                           options.ior),
                           1);
       }
     }
