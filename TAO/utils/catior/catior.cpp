@@ -1,20 +1,11 @@
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/Utils/catior
-//
-// = FILENAME
-//    catior.cpp
-//
-// = DESCRIPTION
-//    Reads stringified IORs and outputs the encoded information.
-//
-// = AUTHORS
-//      Jeff Hopper <jrhopper@cts.com>
-//      SCIOP and Tagged component modifications by:
-//      Jason Cohen, Lockheed Martin ATL <jcohen@atl.lmco.com>
-//
-// ============================================================================
+/**
+ * @file catior.cpp
+ * @brief Reads stringified IORs and outputs the encoded information.
+ * @author Jeff Hopper <jrhopper@cts.com>
+ *
+ * SCIOP and tagged component modifications by Jason Cohen,
+ * Lockheed Martin ATL <jcohen@atl.lmco.com>.
+ */
 
 #include "Catior_i.h"
 #include "ace/Get_Opt.h"
