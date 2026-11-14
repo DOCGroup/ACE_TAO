@@ -1,15 +1,7 @@
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = DESCRIPTION
-//    This simple test exercises and illustrates use of OS wrapper functions.
-//
-// = AUTHOR
-//    Steve Huston <shuston@riverace.com>
-//
-// ============================================================================
+/// @file OS_Test.cpp
+/// This simple test exercises and illustrates use of OS wrapper functions.
+///
+/// @author Steve Huston <shuston@riverace.com>
 
 #include "test_config.h"
 #include "ace/ACE.h"

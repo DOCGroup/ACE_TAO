@@ -1,15 +1,7 @@
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = DESCRIPTION
-//    This program exercises the ACE_Arg_Shifter class.
-//
-// = AUTHOR
-//    Steve Huston  <shuston@riverace.com>
-//
-// ============================================================================
+/// @file Arg_Shifter_Test.cpp
+/// This program exercises the ACE_Arg_Shifter class.
+///
+/// @author Steve Huston  <shuston@riverace.com>
 
 #include "ace/Arg_Shifter.h"
 #include "test_config.h"

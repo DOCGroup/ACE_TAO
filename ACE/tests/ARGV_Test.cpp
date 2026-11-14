@@ -1,17 +1,9 @@
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = DESCRIPTION
-//    This simple test illustrates how to use advanced features of
-//    <ACE_ARGV>.
-//
-// = AUTHOR
-//    Suresh Kannan <kannan@uav.ae.gatech.edu> and
-//    Duane Binder <duane.binder@veritas.com>
-
-// ============================================================================
+/// @file ARGV_Test.cpp
+/// This simple test illustrates how to use advanced features of
+/// <ACE_ARGV>.
+///
+/// @author Suresh Kannan <kannan@uav.ae.gatech.edu> and
+/// @author Duane Binder <duane.binder@veritas.com>
 
 #include "ace/ARGV.h"
 #include "ace/Arg_Shifter.h"

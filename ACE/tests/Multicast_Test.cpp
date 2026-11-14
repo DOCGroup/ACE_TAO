@@ -1,35 +1,27 @@
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = DESCRIPTION
-//    This program tests ACE_SOCK_Dgram_Mcast class.
-//    It specifically tests subscribing to multiple groups on the same socket
-//    on one or more physical interfaces (if available).
-//
-//    The test can be run as a producer, consumer, or both producer/consumer
-//    (default).  The test requires at least two (2) multicast groups which can
-//    be configured as command line options.  The consumer subscribes to a
-//    single group per instance and an additional instance tries to subscribe
-//    to all groups on a single socket (if the ACE_SOCK_Dgram_Mcast instance
-//    bind()'s the first address to the socket, additional joins will fail).
-//    The producer iterates through the list of group addresses and sends a
-//    single message containing the destination address and port to each one.
-//    It also sends messages to five (5) additional groups and a message to an
-//    additional port for each group in order to produce a bit of "noise" in
-//    order to help validate how well the multicast filtering works on a
-//    particular platform.
-//
-//    The list of destination groups start at 239.255.0.1 (default) and
-//    increment by 1 up to 5 (default) groups.  Both of these values, as well
-//    as others, can be overridden via command-line options.  Use the -?
-//    option to display the usage message...
-//
-// = AUTHOR
-//    Don Hinton <dhinton@dresystems.com>
-//
-// ============================================================================
+/// @file Multicast_Test.cpp
+/// This program tests ACE_SOCK_Dgram_Mcast class.
+/// It specifically tests subscribing to multiple groups on the same socket
+/// on one or more physical interfaces (if available).
+///
+/// The test can be run as a producer, consumer, or both producer/consumer
+/// (default).  The test requires at least two (2) multicast groups which can
+/// be configured as command line options.  The consumer subscribes to a
+/// single group per instance and an additional instance tries to subscribe
+/// to all groups on a single socket (if the ACE_SOCK_Dgram_Mcast instance
+/// bind()'s the first address to the socket, additional joins will fail).
+/// The producer iterates through the list of group addresses and sends a
+/// single message containing the destination address and port to each one.
+/// It also sends messages to five (5) additional groups and a message to an
+/// additional port for each group in order to produce a bit of "noise" in
+/// order to help validate how well the multicast filtering works on a
+/// particular platform.
+///
+/// The list of destination groups start at 239.255.0.1 (default) and
+/// increment by 1 up to 5 (default) groups.  Both of these values, as well
+/// as others, can be overridden via command-line options.  Use the -?
+/// option to display the usage message...
+///
+/// @author Don Hinton <dhinton@dresystems.com>
 
 #include "test_config.h"
 #include "ace/Get_Opt.h"

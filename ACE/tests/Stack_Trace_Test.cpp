@@ -1,15 +1,7 @@
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = DESCRIPTION
-//    This program exercises the ACE_Stack_Trace class.
-//
-// = AUTHOR
-//    Chris Cleeland <cleeland @ ociweb . com>
-//
-// ============================================================================
+/// @file Stack_Trace_Test.cpp
+/// This program exercises the ACE_Stack_Trace class.
+///
+/// @author Chris Cleeland <cleeland @ ociweb . com>
 
 #include "ace/Stack_Trace.h"
 #include "ace/OS_NS_string.h"

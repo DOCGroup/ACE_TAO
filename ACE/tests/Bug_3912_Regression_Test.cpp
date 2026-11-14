@@ -1,16 +1,8 @@
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = DESCRIPTION
-//    This test asserts that close is called on Modules during
-//    ACE_Service_Repository shutdown
-//
-// = AUTHOR
-//    Chad Beaulac <chad@objectivesolutions.com>
-//
-// ============================================================================
+/// @file Bug_3912_Regression_Test.cpp
+/// This test asserts that close is called on Modules during
+/// ACE_Service_Repository shutdown
+///
+/// @author Chad Beaulac <chad@objectivesolutions.com>
 
 #include "test_config.h"
 

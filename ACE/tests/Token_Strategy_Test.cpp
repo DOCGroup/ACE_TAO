@@ -1,17 +1,9 @@
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = DESCRIPTION
-//    This program tests the behavior of ACE_Token under a variety of scenarios
-//    in order verify whether or not tokens are returned, and threads run, in
-//    a LIFO or FIFO manner.
-//
-// = AUTHOR
-//    Don Hinton <dhinton@ieee.org>
-//
-// ============================================================================
+/// @file Token_Strategy_Test.cpp
+/// This program tests the behavior of ACE_Token under a variety of scenarios
+/// in order verify whether or not tokens are returned, and threads run, in
+/// a LIFO or FIFO manner.
+///
+/// @author Don Hinton <dhinton@ieee.org>
 
 #include "test_config.h"
 #include "ace/Token.h"

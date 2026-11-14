@@ -16,20 +16,18 @@
 
 #if defined (ACE_HAS_THREADS)
 
+/// Arguments passed to each test thread.
 struct Tester_Args
-  // = TITLE
-  //     These arguments are passed into each test thread.
 {
   Tester_Args (ACE_Barrier &tb, int i)
     : tester_barrier_ (tb),
     n_iterations_ (i) {}
 
+  /// Reference to the tester barrier controlling each thread iteration.
   ACE_Barrier &tester_barrier_;
-  // Reference to the tester barrier.  This controls each iteration
-  // of the tester function running in every thread.
 
+  /// Number of iterations to run.
   int n_iterations_;
-  // Number of iterations to run.
 };
 
 // Iterate <n_iterations> time printing off a message and "waiting"

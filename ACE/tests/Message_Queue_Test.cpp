@@ -55,20 +55,14 @@ static ACE_High_Res_Timer *timer = nullptr;
 #if defined (ACE_HAS_THREADS)
 using SYNCH_QUEUE = ACE_Message_Queue<ACE_MT_SYNCH>;
 
+/// Container for queue data shared by the multithreaded performance test.
 struct Queue_Wrapper
 {
-  // = TITLE
-  //     Container for data passed to sender and receiver in
-  //     performance test.
-  //
-  // = DESCRIPTION
-  //     For use in multithreaded performance test.
-
+  /// Queue used by the sender and receiver.
   ACE_Message_Queue_Base *q_;
-  // The message queue.
 
+  /// Message blocks for the sender to transmit to the receiver.
   ACE_Message_Block **send_block_;
-  // Pointer to messages blocks for sender to send to reciever.
 
   Queue_Wrapper ()
     : q_ (nullptr), send_block_ (nullptr)

@@ -1,25 +1,14 @@
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Bug_3943_Regression_Test.cpp
-//
-// = DESCRIPTION
-//    When a large buffer is sent to ACE_OS::sendv, using winsock2,
-//    ENOBUFS occurs, which indicates that the buffer was too large
-//    for WSASend to accept. On other platforms ENOBUFS indicates a
-//    situation similar to EWOULDBLOCK, only that the buffer on the
-//    send side is completely full. ACE_OS::sendv for winsock2 now
-//    tries to divide the buffer and try to send, until data is sent
-//    or a different error is received. This test allocates a large
-//    iovec array buffer and verifies that a partial send occurs.
-//
-// = AUTHOR
-//    Brian Johnson <johnsonb@ociweb.com>,
-//
-// ============================================================================
+/// @file Bug_3943_Regression_Test.cpp
+/// When a large buffer is sent to ACE_OS::sendv, using winsock2,
+/// ENOBUFS occurs, which indicates that the buffer was too large
+/// for WSASend to accept. On other platforms ENOBUFS indicates a
+/// situation similar to EWOULDBLOCK, only that the buffer on the
+/// send side is completely full. ACE_OS::sendv for winsock2 now
+/// tries to divide the buffer and try to send, until data is sent
+/// or a different error is received. This test allocates a large
+/// iovec array buffer and verifies that a partial send occurs.
+///
+/// @author Brian Johnson <johnsonb@ociweb.com>
 
 #include "test_config.h"
 #include "ace/SOCK_Connector.h"

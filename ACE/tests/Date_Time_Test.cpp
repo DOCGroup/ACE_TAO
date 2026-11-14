@@ -1,15 +1,7 @@
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = DESCRIPTION
-//    This program verifies the ACE_Date_Time class.
-//
-// = AUTHOR
-//    Steve Huston  <shuston@riverace.com>
-//
-// ============================================================================
+/// @file Date_Time_Test.cpp
+/// This program verifies the ACE_Date_Time class.
+///
+/// @author Steve Huston  <shuston@riverace.com>
 
 #include "ace/Date_Time.h"
 #include "test_config.h"

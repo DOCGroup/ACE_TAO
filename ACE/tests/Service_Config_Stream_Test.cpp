@@ -1,15 +1,7 @@
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = DESCRIPTION
-//    This test exercises ACE_Service_Config assembling a stream.
-//
-// = AUTHOR
-//    Steve Huston <shuston@riverace.com>
-//
-// ============================================================================
+/// @file Service_Config_Stream_Test.cpp
+/// This test exercises ACE_Service_Config assembling a stream.
+///
+/// @author Steve Huston <shuston@riverace.com>
 
 #include "test_config.h"
 #include "ace/Log_Msg.h"

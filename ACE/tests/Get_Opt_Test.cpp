@@ -1,16 +1,8 @@
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = DESCRIPTION
-//    This program tests both the short and long option support in
-//    <ACE_Get_Opt>, and demonstrates how to use it.
-//
-// = AUTHOR
-//    Don Hinton <dhinton@dresystems.com>
-//
-// ============================================================================
+/// @file Get_Opt_Test.cpp
+/// This program tests both the short and long option support in
+/// <ACE_Get_Opt>, and demonstrates how to use it.
+///
+/// @author Don Hinton <dhinton@dresystems.com>
 
 #include "test_config.h"
 #include "ace/Get_Opt.h"

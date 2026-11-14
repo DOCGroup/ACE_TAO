@@ -1,16 +1,8 @@
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = DESCRIPTION
-//    This simple test exercises and illustrates use of ACE value-added
-//    functions.
-//
-// = AUTHOR
-//    Steve Huston <shuston@riverace.com>
-//
-// ============================================================================
+/// @file ACE_Test.cpp
+/// This simple test exercises and illustrates use of ACE value-added
+/// functions.
+///
+/// @author Steve Huston <shuston@riverace.com>
 
 #include "test_config.h"
 

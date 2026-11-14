@@ -1,16 +1,8 @@
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = DESCRIPTION
-//      This is a simple test to make sure the Env_Value template is
-//      working correctly.
-//
-// = AUTHOR
-//    Chris Cleeland <cleeland@cs.wustl.edu>
-//
-// ============================================================================
+/// @file Env_Value_Test.cpp
+/// This is a simple test to make sure the Env_Value template is
+/// working correctly.
+///
+/// @author Chris Cleeland <cleeland@cs.wustl.edu>
 
 #include "test_config.h"
 #include "ace/OS_NS_stdlib.h"

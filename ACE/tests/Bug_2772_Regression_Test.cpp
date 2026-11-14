@@ -1,15 +1,7 @@
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = DESCRIPTION
-//    Test bug 2772 regression
-//
-// = AUTHOR
-//    Johnny Willemsen
-//
-// ============================================================================
+/// @file Bug_2772_Regression_Test.cpp
+/// Test bug 2772 regression
+///
+/// @author Johnny Willemsen
 
 #include "test_config.h"
 #include "ace/Recursive_Thread_Mutex.h"

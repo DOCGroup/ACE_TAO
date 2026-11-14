@@ -1,15 +1,7 @@
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = DESCRIPTION
-//    Test ACE_OS::strptime
-//
-// = AUTHOR
-//    Johnny Willemsen
-//
-// ============================================================================
+/// @file Bug_3432_Regression_Test.cpp
+/// Test ACE_OS::strptime
+///
+/// @author Johnny Willemsen
 
 #include "test_config.h"
 #include "ace/OS_NS_string.h"

@@ -1,25 +1,14 @@
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Bug_3332_Regression_Test.cpp
-//
-// = DESCRIPTION
-//    This is a test to verify the node unbind/remove stability.
-//    Originally the deletion of a node from the rb_tree would cause some nodes
-//    to be "swapped" and the node being deleted to be reused to hold data still
-//    in the rb_tree, whilst the original "still in the tree" data node would be
-//    unbound instead. This caused externally held pointers to existing data that
-//    should still be in the tree to become invalidated unnecessarily. This test
-//    ensures that the node NOT being deleted always keep their original entries
-//    (and thus only the deleted node is actually unbound and released).
-//
-// = AUTHOR
-//    Simon Massey <sma@prismtech.com>
-//
-// ============================================================================
+/// @file Bug_3332_Regression_Test.cpp
+/// This is a test to verify the node unbind/remove stability.
+/// Originally the deletion of a node from the rb_tree would cause some nodes
+/// to be "swapped" and the node being deleted to be reused to hold data still
+/// in the rb_tree, whilst the original "still in the tree" data node would be
+/// unbound instead. This caused externally held pointers to existing data that
+/// should still be in the tree to become invalidated unnecessarily. This test
+/// ensures that the node NOT being deleted always keep their original entries
+/// (and thus only the deleted node is actually unbound and released).
+///
+/// @author Simon Massey <sma@prismtech.com>
 
 #include "test_config.h" /* Include first to enable ACE_TEST_ASSERT. */
 #include "ace/RB_Tree.h"
