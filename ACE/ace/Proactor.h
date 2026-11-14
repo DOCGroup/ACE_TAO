@@ -126,7 +126,8 @@ protected:
  */
 class ACE_Export ACE_Proactor
 {
-  // = Here are the private typedefs that the ACE_Proactor uses.
+  /// @name Internal timer types
+  /// @{
 
   using TIMER_QUEUE_ITERATOR = ACE_Timer_Queue_Iterator_T<ACE_Handler *>;
   using TIMER_LIST = ACE_Timer_List_T<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall, ACE_MT_SYNCH::RECURSIVE_MUTEX>;
@@ -135,8 +136,7 @@ class ACE_Export ACE_Proactor
   using TIMER_HEAP_ITERATOR = ACE_Timer_Heap_Iterator_T<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall, ACE_MT_SYNCH::RECURSIVE_MUTEX>;
   using TIMER_WHEEL = ACE_Timer_Wheel_T<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall, ACE_MT_SYNCH::RECURSIVE_MUTEX>;
   using TIMER_WHEEL_ITERATOR = ACE_Timer_Wheel_Iterator_T<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall, ACE_MT_SYNCH::RECURSIVE_MUTEX>;
-
-  // = Friendship.
+  /// @}
 
   /// Timer handler runs a thread and manages the timers, on behalf of
   /// the Proactor.
@@ -183,7 +183,8 @@ public:
   /// Name of component--ACE_Proactor in this case.
   static const ACE_TCHAR *name ();
 
-  // = Proactor event loop management methods.
+  /// @name Proactor event loop management
+  /// @{
 
   /// Run the event loop until the <ACE_Proactor::handle_events> method
   /// returns -1 or the <end_event_loop> method is invoked.
@@ -272,8 +273,10 @@ public:
   /// function is a no-op function for Unix systems and returns 0;
   int register_handle (ACE_HANDLE handle,
                        const void *completion_key);
+  /// @}
 
-  // = Timer management.
+  /// @name Timer management
+  /// @{
   /**
    * Schedule a @a handler that will expire after <time>.  If it
    * expires then @a act is passed in as the value to the @a handler's
@@ -320,6 +323,7 @@ public:
   int cancel_timer (long timer_id,
                     const void **act = nullptr,
                     int dont_call_handle_close = 1);
+  /// @}
 
   /**
    * Dispatch a single set of events, waiting up to a specified time limit
@@ -368,10 +372,9 @@ public:
   /// Get the implementation class.
   ACE_Proactor_Impl *implementation () const;
 
-  // = Factory methods for the operations
-
-  // Note that the user does not have to use or know about these
-  // methods.
+  /// @name Operation implementation factories
+  /// These methods are normally used internally by ACE_Proactor.
+  /// @{
 
   /// Create the correct implementation class for doing
   /// Asynch_Read_Stream.
@@ -406,11 +409,12 @@ public:
   /// Create the correct implementation class for doing
   /// Asynch_Write_Dgram.
   ACE_Asynch_Write_Dgram_Impl *create_asynch_write_dgram ();
+  /// @}
 
-  // = Factory methods for the results
-
-  // Note that the user does not have to use or know about these
-  // methods unless they want to "fake" results.
+  /// @name Result implementation factories
+  /// These methods are normally used internally, unless applications need to
+  /// create custom results.
+  /// @{
 
   /// Create the correct implementation class for
   /// ACE_Asynch_Read_Stream::Result class.
@@ -543,6 +547,7 @@ public:
                          ACE_HANDLE event = ACE_INVALID_HANDLE,
                          int priority = 0,
                          int signal_number = ACE_SIGRTMIN);
+  /// @}
 
 protected:
   /**

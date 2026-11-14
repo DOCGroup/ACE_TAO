@@ -58,13 +58,15 @@ public:
   };
 
 protected:
-  // = Default settings not part of public Interface.
-  //
+  /// @name Internal default settings
+  /// These settings are not part of the public interface.
+  /// @{
   /// @todo These sizes should be taken from the appropriate
   /// POSIX/system header files and/or defined dynamically.
   static constexpr int MAX_COMMAND_LINE_OPTIONS = 128;
   static constexpr int ENVIRONMENT_BUFFER = 16 * 1024; // 16K
   static constexpr int MAX_ENVIRONMENT_ARGS = 512;
+  /// @}
 
 public:
   /**
@@ -84,7 +86,8 @@ public:
   ACE_Process_Options &operator= (ACE_Process_Options const &) = delete;
   ACE_Process_Options &operator= (ACE_Process_Options &&) = delete;
 
-  // = Methods to set process creation options portably.
+  /// @name Portable process creation options
+  /// @{
 
   /**
    * Set the standard handles of the new process to the respective
@@ -299,8 +302,12 @@ public:
   /// Return the unicode environment status
   bool use_unicode_environment () const;
 
+  /// @}
+
 #if defined (ACE_WIN32)
-  // = Non-portable accessors for when you "just have to use them."
+
+  /// @name Windows-specific process accessors
+  /// @{
 
   /// Used for setting and getting.
   ACE_TEXT_STARTUPINFO *startup_info ();
@@ -328,18 +335,22 @@ public:
   /// @param token the user token is passed to \c ::CreateProcessAsUser.
   /// @param close_token whether to close the user token when destructing.
   void set_user_token (HANDLE token, bool close_token = false);
+  /// @}
 
 #else /* All things not WIN32 */
 
   /// argv-style array of environment settings.
   ACE_TCHAR *const *env_argv ();
 
-  // = Accessors for the standard handles.
+  /// @name Standard handle accessors
+  /// @{
   ACE_HANDLE get_stdin () const;
   ACE_HANDLE get_stdout () const;
   ACE_HANDLE get_stderr () const;
+  /// @}
 
-  // = Set/get real & effective user & group id associated with user.
+  /// @name Real and effective user/group ID accessors
+  /// @{
   int setreugid (const ACE_TCHAR* user);
   void setruid (uid_t id);
   void seteuid (uid_t id);
@@ -349,6 +360,7 @@ public:
   uid_t geteuid () const;
   gid_t getrgid () const;
   gid_t getegid () const;
+  /// @}
 
   /**
    * Get the inherit_environment flag.
@@ -406,12 +418,14 @@ protected:
   ACE_HANDLE stdout_ {ACE_INVALID_HANDLE};
   ACE_HANDLE stderr_ {ACE_INVALID_HANDLE};
 
-  // = Real & effective user & group id's.
-  //   These should be set to -1 to leave unchanged (default).
+  /// @name Real and effective user/group IDs
+  /// A value of -1 leaves the ID unchanged by default.
+  /// @{
   uid_t ruid_ {static_cast<uid_t> (-1)};
   uid_t euid_ {static_cast<uid_t> (-1)};
   gid_t rgid_ {static_cast<gid_t> (-1)};
   gid_t egid_ {static_cast<gid_t> (-1)};
+  /// @}
 #endif /* ACE_WIN32 */
 
   bool handle_inheritance_ {true};
