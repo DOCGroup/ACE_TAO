@@ -25,7 +25,7 @@ namespace Test {
   IIOP_Server_Request_Interceptor::resolve_iiop_transport_current (char const *orbid)
   {
     int tmpargc = 0;
-    ACE_TCHAR **tmpargv = nullptr;
+    ACE_TCHAR **tmpargv {};
     CORBA::ORB_var orb = CORBA::ORB_init (tmpargc,
                                           tmpargv,
                                           orbid);

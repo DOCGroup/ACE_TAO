@@ -99,7 +99,7 @@ server_main (int argc,
 
   try
     {
-      PortableInterceptor::ORBInitializer_ptr temp_initializer = nullptr;
+      PortableInterceptor::ORBInitializer_ptr temp_initializer {};
       ACE_NEW_RETURN (temp_initializer,
                       Test::Server_ORBInitializer (cri),
                       -1);  // No exceptions yet!

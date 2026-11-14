@@ -157,7 +157,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       -1);
       PortableInterceptor::ClientRequestInterceptor_var cri_safe (cri);
 
-      PortableInterceptor::ORBInitializer_ptr temp_initializer = nullptr;
+      PortableInterceptor::ORBInitializer_ptr temp_initializer {};
       ACE_NEW_RETURN (temp_initializer,
                       Test::Client_ORBInitializer (cri),
                       -1);
