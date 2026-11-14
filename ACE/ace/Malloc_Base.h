@@ -41,7 +41,8 @@ public:
   /// Unsigned integer type used for specifying memory block lengths.
   using size_type = size_t;
 
-  // = Memory Management
+  /// @name Memory management
+  /// @{
 
   /// Get pointer to a default ACE_Allocator.
   static ACE_Allocator *instance ();
@@ -76,8 +77,10 @@ public:
 
   /// Remove any resources associated with this memory manager.
   virtual int remove () = 0;
+  /// @}
 
-  // = Map manager like functions
+  /// @name Map operations
+  /// @{
 
   /**
    * Associate @a name with @a pointer.  If @a duplicates == 0 then do
@@ -116,9 +119,12 @@ public:
   /// Break any association of name.  Returns the value of pointer in
   /// case the caller needs to deallocate memory.
   virtual int unbind (const char *name, void *&pointer) = 0;
+  /// @}
 
-  // = Protection and "sync" (i.e., flushing memory to persistent
-  // backing store).
+  /** @name Memory protection and synchronization
+   * Synchronization flushes memory to persistent backing storage.
+   */
+  /// @{
 
   /**
    * Sync @a len bytes of the memory region to the backing store
@@ -141,6 +147,7 @@ public:
   /// Change the protection of the pages of the mapped region to @a prot
   /// starting at @a addr up to @a len bytes.
   virtual int protect (void *addr, size_type len, int prot = PROT_RDWR) = 0;
+  /// @}
 
 #if defined (ACE_HAS_MALLOC_STATS)
   /// Dump statistics of how malloc is behaving.

@@ -152,7 +152,8 @@ public:
   /// Initialize @c value_ to c.
   ACE_Atomic_Op_Ex (ACE_LOCK & mtx, arg_type c);
 
-  // = Accessors.
+  /// @name Atomic operations and accessors
+  /// @{
 
   /// Atomically pre-increment @c value_.
   TYPE operator++ ();
@@ -202,6 +203,7 @@ public:
 
   /// Explicitly return @c value_.
   TYPE value () const;
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;

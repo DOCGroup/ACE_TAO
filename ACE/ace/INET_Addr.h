@@ -111,7 +111,8 @@ public:
   /// Default dtor.
   ~ACE_INET_Addr () override;
 
-  // = Direct initialization methods.
+  /// @name Direct initialization methods
+  /// @{
 
   // These methods are useful after the object has been constructed.
 
@@ -208,6 +209,7 @@ public:
 
   int set (const wchar_t addr[], int address_family = AF_UNSPEC);
 #endif /* ACE_HAS_WCHAR */
+  /// @}
 
   /// Return a pointer to the underlying network address.
   void *get_addr () const override;
