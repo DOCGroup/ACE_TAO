@@ -183,7 +183,7 @@ TAO_MCAST_Parser::multicast_query (char* & buf,
               if (dgram.set_option (
                     IPPROTO_IPV6,
                     IPV6_MULTICAST_HOPS,
-                    &mcast_ttl_optval,
+                    std::addressof (mcast_ttl_optval),
                     sizeof (mcast_ttl_optval)) != 0)
                 return -1;
             }
@@ -192,7 +192,7 @@ TAO_MCAST_Parser::multicast_query (char* & buf,
           if (dgram.set_option (
                 IPPROTO_IP,
                 IP_MULTICAST_TTL,
-                &mcast_ttl_optval,
+                std::addressof (mcast_ttl_optval),
                 sizeof (mcast_ttl_optval)) != 0)
             result = -1;
 
@@ -213,11 +213,11 @@ TAO_MCAST_Parser::multicast_query (char* & buf,
           iovec iovp[iovcnt];
 
           // The length of service name string.
-          iovp[0].iov_base = (char *) &data_len;
+          iovp[0].iov_base = std::addressof (data_len);
           iovp[0].iov_len  = sizeof (CORBA::Short);
 
           // The port at which we are listening.
-          iovp[1].iov_base = (char *) &response_port;
+          iovp[1].iov_base = std::addressof (response_port);
           iovp[1].iov_len  = sizeof (ACE_UINT16);
 
           // The service name string.
@@ -271,7 +271,7 @@ TAO_MCAST_Parser::multicast_query (char* & buf,
 
                   // IOR length.
                   CORBA::Short ior_len;
-                  result = stream.recv_n (&ior_len,
+                  result = stream.recv_n (std::addressof (ior_len),
                                           sizeof ior_len,
                                           0,
                                           std::addressof (tv));
