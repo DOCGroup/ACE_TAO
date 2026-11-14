@@ -42,7 +42,9 @@ TAO_MProfile::get_cnext ()
   if (current_ == last_)
     current_ = 0;
 
-  return pfiles_[current_++];
+  TAO_Profile * const profile = pfiles_[current_];
+  ++current_;
+  return profile;
 }
 
 /// This will return the next element until either null is found or the
@@ -54,7 +56,11 @@ TAO_MProfile::get_next ()
   if (last_ == 0 || current_ == last_)
     return nullptr;
   else
-    return pfiles_[current_++];
+    {
+      TAO_Profile * const profile = pfiles_[current_];
+      ++current_;
+      return profile;
+    }
 }
 
 ACE_INLINE TAO_Profile *
@@ -139,7 +145,8 @@ TAO_MProfile::give_profile (TAO_Profile *pfile, int share)
   if (last_ == this->pfiles_.size ()) // full!
     return -1;
 
-  pfiles_[last_++] = pfile;
+  pfiles_[last_] = pfile;
+  ++last_;
 
   return static_cast<int> (last_ - 1);
 }

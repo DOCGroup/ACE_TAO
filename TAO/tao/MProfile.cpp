@@ -148,7 +148,8 @@ TAO_MProfile::add_profile (TAO_Profile *pfile)
         return -1;
     }
 
-  pfiles_[last_++] = pfile;
+  pfiles_[last_] = pfile;
+  ++last_;
 
   if (pfile && pfile->_incr_refcnt () == 0)
     TAOLIB_ERROR_RETURN ((LM_ERROR,

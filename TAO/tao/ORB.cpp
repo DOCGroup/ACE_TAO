@@ -1464,8 +1464,9 @@ CORBA::ORB::object_to_string (CORBA::Object_ptr obj)
           const char *bytes = i->rd_ptr ();
           size_t len = i->length ();
 
-          while (len--)
+          while (len > 0)
             {
+              --len;
               *cp++ = static_cast<char> (ACE::nibble2hex ((*bytes) >> 4));
               *cp++ = static_cast<char> (ACE::nibble2hex (*bytes));
               ++bytes;
@@ -1636,7 +1637,8 @@ CORBA::ORB::ior_string_to_object (const char *str)
       byte = (u_char) (ACE::hex2byte (tmp [0]) << 4);
       byte |= ACE::hex2byte (tmp [1]);
 
-      buffer [len++] = byte;
+      buffer [len] = byte;
+      ++len;
       tmp += 2;
     }
 
