@@ -319,7 +319,7 @@ int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
 #if defined (ACE_WIN32) && defined (ACE_HAS_IPV6)
   OSVERSIONINFO vinfo;
   vinfo.dwOSVersionInfoSize = sizeof (vinfo);
-  int vres = GetVersionEx (&vinfo);
+  int vres = GetVersionEx (std::addressof (vinfo));
   if ((vres == 0 || vinfo.dwMajorVersion < 6) &&
       !orb_core->orb_params ()->connect_ipv6_only ()
       && this->acceptors_.empty ())
@@ -669,7 +669,7 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
   char *last_addr {};
   std::unique_ptr<char[]> addr_str (addrs.rep ());
 
-  char const *astr = ACE_OS::strtok_r (addr_str.get (), ",", &last_addr);
+  char const *astr = ACE_OS::strtok_r (addr_str.get (), ",", std::addressof (last_addr));
 
   // Iterate over the addrs specified in the endpoint.
 
@@ -856,7 +856,7 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
             CORBA::COMPLETED_NO);
         }
     }
-  while (astr != nullptr && (astr = ACE_OS::strtok_r (nullptr, ",", &last_addr)) != nullptr);
+  while (astr != nullptr && (astr = ACE_OS::strtok_r (nullptr, ",", std::addressof (last_addr))) != nullptr);
 
   return 0;
 }
