@@ -1,6 +1,5 @@
 // -*- C++ -*-
 #include "tao/CodecFactory/CDR_Encaps_Codec.h"
-
 #include "tao/CDR.h"
 #include "tao/OctetSeqC.h"
 #include "tao/AnyTypeCode/Any.h"
@@ -13,8 +12,10 @@
 #include "tao/ORB_Constants.h"
 #include "tao/Codeset_Translator_Base.h"
 
-#include "ace/OS_NS_string.h"
 #include "ace/CORBA_macros.h"
+
+#include <cstring>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -39,10 +40,8 @@ TAO_CDR_Encaps_Codec::encode (CORBA::Any const& data)
 {
   this->check_type_for_encoding (data);
 
-  // ----------------------------------------------------------------
-
-  TAO_OutputCDR cdr ((size_t) 0,            // size
-                     (int) TAO_ENCAP_BYTE_ORDER,
+  TAO_OutputCDR cdr (static_cast<size_t> (0), // size
+                     static_cast<int> (TAO_ENCAP_BYTE_ORDER),
                      nullptr,               // buffer_allocator
                      nullptr,               // data_block_allocator
                      nullptr,               // message_block_allocator
@@ -50,19 +49,19 @@ TAO_CDR_Encaps_Codec::encode (CORBA::Any const& data)
                      this->major_,
                      this->minor_);
 
-  if (this->char_translator_)
+  if (this->char_translator_ != nullptr)
     {
-      this->char_translator_->assign (&cdr);
+      this->char_translator_->assign (std::addressof (cdr));
     }
-  if (this->wchar_translator_)
+  if (this->wchar_translator_ != nullptr)
     {
-      this->wchar_translator_->assign (&cdr);
+      this->wchar_translator_->assign (std::addressof (cdr));
     }
 
   if ((cdr << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER))
       && (cdr << data))
     {
-      CORBA::OctetSeq * octet_seq = nullptr;
+      CORBA::OctetSeq * octet_seq {};
 
       ACE_NEW_THROW_EX (octet_seq,
                         CORBA::OctetSeq,
@@ -82,7 +81,7 @@ TAO_CDR_Encaps_Codec::encode (CORBA::Any const& data)
            i = i->cont ())
         {
           size_t const len = i->length ();
-          ACE_OS::memcpy (buf, i->rd_ptr (), len);
+          std::memcpy (buf, i->rd_ptr (), len);
           buf += len;
         }
 
@@ -104,12 +103,12 @@ TAO_CDR_Encaps_Codec::decode (CORBA::OctetSeq const& data)
   // insert the octet sequence into the Any.
 
   ACE_Message_Block mb (data.length () + 2 * ACE_CDR::MAX_ALIGNMENT);
-  ACE_CDR::mb_align (&mb);
+  ACE_CDR::mb_align (std::addressof (mb));
 
-  ACE_OS::memcpy (mb.rd_ptr (), data.get_buffer (), data.length ());
+  std::memcpy (mb.rd_ptr (), data.get_buffer (), data.length ());
 
-  size_t rd_pos = mb.rd_ptr () - mb.base ();
-  size_t wr_pos = mb.wr_ptr () - mb.base () + data.length ();
+  size_t const rd_pos = mb.rd_ptr () - mb.base ();
+  size_t const wr_pos = mb.wr_ptr () - mb.base () + data.length ();
 
   TAO_InputCDR cdr (mb.data_block (),
                     ACE_Message_Block::DONT_DELETE,
@@ -120,21 +119,21 @@ TAO_CDR_Encaps_Codec::decode (CORBA::OctetSeq const& data)
                     this->minor_,
                     this->orb_core_);
 
-  if (this->char_translator_)
+  if (this->char_translator_ != nullptr)
     {
-      this->char_translator_->assign (&cdr);
+      this->char_translator_->assign (std::addressof (cdr));
     }
-  if (this->wchar_translator_)
+  if (this->wchar_translator_ != nullptr)
     {
-      this->wchar_translator_->assign (&cdr);
+      this->wchar_translator_->assign (std::addressof (cdr));
     }
 
-  CORBA::Boolean byte_order;
+  CORBA::Boolean byte_order {};
   if (cdr >> TAO_InputCDR::to_boolean (byte_order))
     {
       cdr.reset_byte_order (static_cast<int> (byte_order));
 
-      CORBA::Any * any = nullptr;
+      CORBA::Any * any {};
       ACE_NEW_THROW_EX (any,
                         CORBA::Any,
                         CORBA::NO_MEMORY (
@@ -157,9 +156,8 @@ TAO_CDR_Encaps_Codec::encode_value (CORBA::Any const& data)
 {
   this->check_type_for_encoding (data);
 
-  // ----------------------------------------------------------------
-  TAO_OutputCDR cdr ((size_t) 0,            // size
-                     (int) TAO_ENCAP_BYTE_ORDER,
+  TAO_OutputCDR cdr (static_cast<size_t> (0), // size
+                     static_cast<int> (TAO_ENCAP_BYTE_ORDER),
                      nullptr,               // buffer_allocator
                      nullptr,               // data_block_allocator
                      nullptr,               // message_block_allocator
@@ -167,18 +165,18 @@ TAO_CDR_Encaps_Codec::encode_value (CORBA::Any const& data)
                      this->major_,
                      this->minor_);
 
-  if (this->char_translator_)
+  if (this->char_translator_ != nullptr)
     {
-      this->char_translator_->assign (&cdr);
+      this->char_translator_->assign (std::addressof (cdr));
     }
-  if (this->wchar_translator_)
+  if (this->wchar_translator_ != nullptr)
     {
-      this->wchar_translator_->assign (&cdr);
+      this->wchar_translator_->assign (std::addressof (cdr));
     }
 
   if ((cdr << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)))
     {
-      TAO::Any_Impl *impl = data.impl ();
+      TAO::Any_Impl * const impl = data.impl ();
 
       if (impl->encoded ())
         {
@@ -203,7 +201,7 @@ TAO_CDR_Encaps_Codec::encode_value (CORBA::Any const& data)
 
       // TAO extension: replace the contents of the octet sequence with
       // the CDR stream.
-      CORBA::OctetSeq * octet_seq = nullptr;
+      CORBA::OctetSeq * octet_seq {};
 
       ACE_NEW_THROW_EX (octet_seq,
                         CORBA::OctetSeq,
@@ -224,10 +222,10 @@ TAO_CDR_Encaps_Codec::encode_value (CORBA::Any const& data)
            i != nullptr;
            i = i->cont ())
         {
-          size_t len = i->length ();
-          ACE_OS::memcpy (buf,
-                          i->rd_ptr (),
-                          len);
+          size_t const len = i->length ();
+          std::memcpy (buf,
+                       i->rd_ptr (),
+                       len);
           buf += len;
         }
 
@@ -248,11 +246,11 @@ TAO_CDR_Encaps_Codec::decode_value (CORBA::OctetSeq const& data,
   // 2 * ACE_CDR::MAX_ALIGNMENT bytes of additional space in
   // the message block.
   ACE_Message_Block mb (data.length () + 2 * ACE_CDR::MAX_ALIGNMENT);
-  ACE_CDR::mb_align (&mb);
+  ACE_CDR::mb_align (std::addressof (mb));
 
-  ACE_OS::memcpy (mb.rd_ptr (),
-                  data.get_buffer (),
-                  data.length ());
+  std::memcpy (mb.rd_ptr (),
+               data.get_buffer (),
+               data.length ());
 
   // @todo How do we check for a type mismatch so that we can
   //       throw a IOP::Codec::TypeMismatch exception?
@@ -267,8 +265,8 @@ TAO_CDR_Encaps_Codec::decode_value (CORBA::OctetSeq const& data,
   //       rather than attempt to extract it from the CDR
   //       encapsulation.
 
-  size_t rd_pos = mb.rd_ptr () - mb.base ();
-  size_t wr_pos = mb.wr_ptr () - mb.base () + data.length ();
+  size_t const rd_pos = mb.rd_ptr () - mb.base ();
+  size_t const wr_pos = mb.wr_ptr () - mb.base () + data.length ();
 
   TAO_InputCDR cdr (mb.data_block (),
                     ACE_Message_Block::DONT_DELETE,
@@ -279,22 +277,22 @@ TAO_CDR_Encaps_Codec::decode_value (CORBA::OctetSeq const& data,
                     this->minor_,
                     this->orb_core_);
 
-  if (this->char_translator_)
+  if (this->char_translator_ != nullptr)
     {
-      this->char_translator_->assign (&cdr);
+      this->char_translator_->assign (std::addressof (cdr));
     }
-  if (this->wchar_translator_)
+  if (this->wchar_translator_ != nullptr)
     {
-      this->wchar_translator_->assign (&cdr);
+      this->wchar_translator_->assign (std::addressof (cdr));
     }
 
-  CORBA::Boolean byte_order;
+  CORBA::Boolean byte_order {};
 
   if (cdr >> TAO_InputCDR::to_boolean (byte_order))
     {
       cdr.reset_byte_order (static_cast<int> (byte_order));
 
-      CORBA::Any * any = nullptr;
+      CORBA::Any * any {};
       ACE_NEW_THROW_EX (any,
                         CORBA::Any,
                         CORBA::NO_MEMORY (
@@ -308,7 +306,7 @@ TAO_CDR_Encaps_Codec::decode_value (CORBA::OctetSeq const& data,
       CORBA::Any_var safe_any = any;
 
       // Stick it into the Any.
-      TAO::Unknown_IDL_Type *unk = nullptr;
+      TAO::Unknown_IDL_Type *unk {};
       ACE_NEW_RETURN (unk,
                       TAO::Unknown_IDL_Type (tc, cdr),
                       nullptr);
@@ -320,11 +318,11 @@ TAO_CDR_Encaps_Codec::decode_value (CORBA::OctetSeq const& data,
 }
 
 void
-TAO_CDR_Encaps_Codec::check_type_for_encoding (CORBA::Any const& data)
+TAO_CDR_Encaps_Codec::check_type_for_encoding (CORBA::Any const& data) const
 {
   // @@ TODO: Are there any other conditions we need to check?
 
-  CORBA::TypeCode_var typecode = data.type ();
+  CORBA::TypeCode_var const typecode = data.type ();
   if (this->major_ == 1
       && this->minor_ == 0
       && typecode->equivalent (CORBA::_tc_wstring))

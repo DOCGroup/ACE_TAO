@@ -1,13 +1,9 @@
 // -*- C++ -*-
-
-//=============================================================================
 /**
  * @file CDR_Encaps_Codec.h
  *
  * @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
-
 #ifndef TAO_CDR_ENCAPS_CODEC_H
 #define TAO_CDR_ENCAPS_CODEC_H
 
@@ -46,7 +42,6 @@ class TAO_CDR_Encaps_Codec
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   TAO_CDR_Encaps_Codec (CORBA::Octet major,
                         CORBA::Octet minor,
                         TAO_ORB_Core * orb_core,
@@ -70,8 +65,12 @@ public:
   CORBA::Any * decode_value (CORBA::OctetSeq const& data,
                              CORBA::TypeCode_ptr tc) override;
 
+  TAO_CDR_Encaps_Codec (TAO_CDR_Encaps_Codec const &) = delete;
+  TAO_CDR_Encaps_Codec &operator= (TAO_CDR_Encaps_Codec const &) = delete;
+  TAO_CDR_Encaps_Codec (TAO_CDR_Encaps_Codec &&) = delete;
+  TAO_CDR_Encaps_Codec &operator= (TAO_CDR_Encaps_Codec &&) = delete;
+
 protected:
-  /// Destructor.
   /**
    * Only allow this class to be instantiated on the heap since it is
    * reference counted.
@@ -85,13 +84,7 @@ protected:
    * that isn't supported for the version of GIOP associated with this
    * Codec.
    */
-  void check_type_for_encoding (CORBA::Any const& data);
-
-private:
-  TAO_CDR_Encaps_Codec (TAO_CDR_Encaps_Codec const &) = delete;
-  TAO_CDR_Encaps_Codec &operator= (TAO_CDR_Encaps_Codec const &) = delete;
-  TAO_CDR_Encaps_Codec (TAO_CDR_Encaps_Codec &&) = delete;
-  TAO_CDR_Encaps_Codec &operator= (TAO_CDR_Encaps_Codec &&) = delete;
+  void check_type_for_encoding (CORBA::Any const& data) const;
 
 private:
   /// The major GIOP version associated with this Codec.
@@ -100,15 +93,14 @@ private:
   /// The minor GIOP version associated with this Codec.
   CORBA::Octet const minor_;
 
-  /// The ORB Core to be used when decoding values from a CDR
-  /// encapsulation.
+  /// Borrowed ORB Core used when decoding values from a CDR encapsulation.
   TAO_ORB_Core * const orb_core_;
 
-  /// Char codeset translator
-  TAO_Codeset_Translator_Base * char_translator_;
+  /// Borrowed char codeset translator; owned by the ORB codeset manager.
+  TAO_Codeset_Translator_Base * const char_translator_;
 
-  /// WChar codeset translator
-  TAO_Codeset_Translator_Base * wchar_translator_;
+  /// Borrowed wchar codeset translator; owned by the ORB codeset manager.
+  TAO_Codeset_Translator_Base * const wchar_translator_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
