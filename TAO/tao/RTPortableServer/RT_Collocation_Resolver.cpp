@@ -11,6 +11,8 @@
 #include "tao/RTCORBA/Thread_Pool.h"
 #include "tao/Profile.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Boolean
@@ -52,7 +54,7 @@ TAO_RT_Collocation_Resolver::is_collocated (CORBA::Object_ptr object) const
   // If we don't have a lane, we don't have a pool.
   if (current_thread_lane != nullptr)
     current_thread_pool =
-      &current_thread_lane->pool ();
+      std::addressof (current_thread_lane->pool ());
 
   // If the pools don't match, then the current thread belongs to a
   // different pool than POA.  Therefore, this object is not
