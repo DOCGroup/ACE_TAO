@@ -67,6 +67,7 @@ namespace TAO
     {
     public:
       explicit Server_Main (std::string const &name);
+      explicit Server_Main (char const *name);
       Server_Main (Server_Main const &) = delete;
       Server_Main (Server_Main &&) = delete;
       Server_Main &operator= (Server_Main const &) = delete;
