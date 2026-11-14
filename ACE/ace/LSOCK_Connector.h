@@ -66,9 +66,11 @@ public:
                int flags = 0,
                int perms = 0);
 
-  // = Meta-type info
+  /// @name Meta-type traits
+  /// @{
   using PEER_ADDR = ACE_UNIX_Addr;
   using PEER_STREAM = ACE_LSOCK_Stream;
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;
