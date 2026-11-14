@@ -238,7 +238,8 @@ public:
             const ACE_TCHAR *net_if = nullptr,
             int reuse_addr = 1);
 
-  // = Multicast group subscribe/unsubscribe routines.
+  /// @name Multicast group subscriptions
+  /// @{
 
   /// Join a multicast group on a given interface (or all interfaces, if
   /// supported).
@@ -292,8 +293,10 @@ public:
    */
   int leave (const ACE_INET_Addr &mcast_addr,
              const ACE_TCHAR *net_if = nullptr);
+  /// @}
 
-  // = Data transfer routines.
+  /// @name Data transfer
+  /// @{
 
   /// Send @a n bytes in @a buf, using the multicast address and network interface
   /// defined by the first open() or subscribe().
@@ -306,8 +309,10 @@ public:
   ssize_t send (const iovec iov[],
                 int n,
                 int flags = 0) const;
+  /// @}
 
-  // = Options.
+  /// @name Socket options
+  /// @{
 
   /// Set a socket option.
   /**
@@ -340,6 +345,7 @@ public:
 
   /// Read accessor for the constructor options (@see enum options above)
   int opts () const;
+  /// @}
 
 private:
   /// Subscribe to a multicast address on one or more network interface(s).

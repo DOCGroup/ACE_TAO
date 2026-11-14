@@ -87,7 +87,8 @@ public:
   /// Default dtor.
   ~ACE_SOCK_Dgram ();
 
-  // = Data transfer routines.
+  /// @name Data transfer
+  /// @{
   /// Send an @a n byte @a buf to the datagram socket (uses <sendto(3)>).
   ssize_t send (const void *buf,
                 size_t n,
@@ -199,8 +200,9 @@ public:
                 int flags,
                 ACE_OVERLAPPED *overlapped,
                 ACE_OVERLAPPED_COMPLETION_FUNC func) const;
+  /// @}
 
-  // = Meta-type info.
+  /// Peer address type.
   using PEER_ADDR = ACE_INET_Addr;
 
   /// Dump the state of an object.

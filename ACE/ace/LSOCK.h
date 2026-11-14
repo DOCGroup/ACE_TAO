@@ -51,7 +51,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  // = Ensure that ACE_LSOCK is an abstract base class
+  /// ACE_LSOCK is an abstract base class.
 
   /// Default constructor.
   ACE_LSOCK ();

@@ -64,14 +64,17 @@ public:
   /// Transform the string into the current addressing format.
   virtual int string_to_addr (const ACE_TCHAR *addr);
 
-  // = Equality/inequality tests
+  /// @name Equality comparisons
+  /// @{
   /// Check for equality.
   bool operator == (const ACE_SPIPE_Addr &SAP) const;
 
   /// Check for inequality
   bool operator != (const ACE_SPIPE_Addr &SAP) const;
+  /// @}
 
-  // = SPIPE-specific address operations
+  /// @name SPIPE address operations
+  /// @{
   /// Pathname of rendezvous point in file system.
   const ACE_TCHAR *get_path_name () const;
 
@@ -86,6 +89,7 @@ public:
 
   /// Get group ids.
   gid_t group_id () const;
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;

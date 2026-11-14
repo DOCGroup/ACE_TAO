@@ -100,7 +100,6 @@ public:
   /// Remove the underlying mounted pipe from the file system.
   int remove ();
 
-  // = Passive connection acceptance method.
   /**
    * Accept a new data transfer connection.
    *
@@ -119,9 +118,11 @@ public:
               bool restart = true,
               bool reset_new_handle = false);
 
-  // = Meta-type info
+  /// @name Peer types
+  /// @{
   using PEER_ADDR = ACE_SPIPE_Addr;
   using PEER_STREAM = ACE_SPIPE_Stream;
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;
