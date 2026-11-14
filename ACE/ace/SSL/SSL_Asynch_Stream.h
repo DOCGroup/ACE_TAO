@@ -331,13 +331,13 @@ protected:
   /**
    * @name SSL State Machine
    */
-  //@{
+  /// @{
   int do_SSL_state_machine ();
   int do_SSL_handshake ();
   int do_SSL_read ();
   int do_SSL_write();
   int do_SSL_shutdown();
-  //@}
+  /// @}
 
   void print_error (int err_ssl,
                     const ACE_TCHAR *pText);
@@ -360,10 +360,10 @@ protected:
   /**
    * @name BIO Helpers
    */
-  //@{
+  /// @{
   int ssl_bio_read (char * buf, size_t len, int & errval);
   int ssl_bio_write (const char * buf, size_t len, int & errval);
-  //@}
+  /// @}
 
   /// Stream Type ST_CLIENT/ST_SERVER
   Stream_Type type_ {ST_SERVER};
@@ -426,22 +426,22 @@ protected:
   /**
    * @name Internal stream, buffer and info for BIO read
    */
-  //@{
+  /// @{
   ACE_Asynch_Read_Stream bio_istream_ {};
   ACE_Message_Block bio_inp_msg_ {};
   int bio_inp_errno_ {};
   int bio_inp_flag_ {};
-  //@}
+  /// @}
 
   /**
    * @name Internal stream, buffer and info for BIO write
    */
-  //@{
+  /// @{
   ACE_Asynch_Write_Stream bio_ostream_ {};
   ACE_Message_Block bio_out_msg_ {};
   int bio_out_errno_ {};
   int bio_out_flag_ {};
-  //@}
+  /// @}
 
   /// Mutex to protect work
   ACE_SYNCH_MUTEX mutex_ {};

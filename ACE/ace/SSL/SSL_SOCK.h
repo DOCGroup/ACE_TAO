@@ -42,7 +42,7 @@ public:
    * Override ACE_SOCK base class implementations with these SSL
    * specific ones.
    */
-  //@{
+  /// @{
   int set_option (int level,
                   int option,
                   void *optval,
@@ -56,7 +56,7 @@ public:
   void set_handle (ACE_HANDLE);
   ACE_HANDLE get_handle () const;
   int control (int cmd, void *arg) const;
-  //@}
+  /// @}
 
 protected:
   ACE_SSL_SOCK (ACE_SSL_SOCK const &) = delete;

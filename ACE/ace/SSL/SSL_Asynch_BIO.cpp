@@ -28,7 +28,7 @@
  * @name OpenSSL BIO Helper Methods for use with ACE's Asynchronous
  *       SSL I/O support.
  */
-//@{
+/// @{
 extern "C"
 {
   int  ACE_ASYNCH_BIO_WRITE_NAME (BIO *pBIO, const char *buf, int len);
@@ -38,7 +38,7 @@ extern "C"
   int  ACE_ASYNCH_BIO_NEW_NAME   (BIO *pBIO);
   int  ACE_ASYNCH_BIO_FREE_NAME  (BIO *pBIO);
 }
-//@}
+/// @}
 
 #define BIO_TYPE_ACE  ( 21 | BIO_TYPE_SOURCE_SINK )
 

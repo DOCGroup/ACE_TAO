@@ -36,7 +36,6 @@ class ACE_INET_Addr;
 class ACE_SSL_Export ACE_SSL_Data_File
 {
 public:
-  /// Default constructor
   ACE_SSL_Data_File ();
 
   /// Constructor from a file name and the file type.
@@ -56,8 +55,6 @@ private:
   /// The type, used by the SSL library to parse the file contents.
   int type_ {-1};
 };
-
-// ****************************************************************
 
 // NOTE: Some compilers will issue warnings if the
 // the correct type of function pointer (i.e. extern "C" ) is not stored/used
@@ -327,7 +324,7 @@ public:
    * pseudo-random number generator.  These methods can be called more
    * than once.
    */
-  //@{
+  /// @{
   /// Seed the underlying random number generator.  This value should
   /// have at least 128 bits of entropy.
   static int random_seed (const char * seed);
@@ -342,7 +339,7 @@ public:
    * read.
    */
   static int seed_file (const char * seed_file, long bytes = -1);
-  //@}
+  /// @}
 
   /// Print SSL error corresponding to the given error code.
   static void report_error (unsigned long error_code);
@@ -359,7 +356,7 @@ public:
    * the code itself.  ACE_SSL supports loaded parameters.
    *
    */
-  //@{
+  /// @{
   /**
    * Load Diffie-Hellman parameters from file_name.  The specified file can be
    * a standalone file containing only DH parameters (e.g., as created
@@ -369,7 +366,7 @@ public:
   int dh_params (const char *file_name, int type = SSL_FILETYPE_PEM);
   const char *dh_params_file_name () const;
   int dh_params_file_type () const;
-  //@}
+  /// @}
 
 private:
   /// Verify if the context has been initialized or not.

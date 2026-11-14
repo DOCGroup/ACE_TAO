@@ -24,8 +24,6 @@ ACE_SSL_Data_File::type () const
   return this->type_;
 }
 
-// ****************************************************************
-
 ACE_INLINE void
 ACE_SSL_Context::check_context ()
 {

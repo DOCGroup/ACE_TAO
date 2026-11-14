@@ -187,7 +187,7 @@ public:
    * @note In the following four methods, only MSG_PEEK is supported
    * for recv_n(), and no flags are supported for send_n().
    */
-  //@{
+  /// @{
   /// Send @a n bytes, keep trying until @a n are sent.
   ssize_t send_n (const void *buf, int n, int flags) const;
 
@@ -249,7 +249,7 @@ public:
                   size_t len,
                   const ACE_Time_Value *timeout,
                   size_t *bytes_transferred = nullptr) const;
-  //@}
+  /// @}
 
   /**
    * Send an iovec of size n to the connected socket.  Will block
@@ -265,13 +265,13 @@ public:
   /**
    * Selectively close endpoints.
    */
-  //@{
+  /// @{
   /// Close down the reader.
   int close_reader ();
 
   /// Close down the writer.
   int close_writer ();
-  //@}
+  /// @}
 
   ///Close down the socket.
   int close ();

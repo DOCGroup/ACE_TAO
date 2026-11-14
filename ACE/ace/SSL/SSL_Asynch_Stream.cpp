@@ -85,9 +85,6 @@ ACE_SSL_Asynch_Result::complete (size_t /* bytes_transferred */,
   this->handler_proxy_->handler ()->handle_wakeup ();
 }
 
-// ************************************************************
-//  ACE_SSL_Asynch_Stream Constructor / Destructor
-// ************************************************************
 ACE_SSL_Asynch_Stream::ACE_SSL_Asynch_Stream (
   ACE_SSL_Asynch_Stream::Stream_Type s_type,
   ACE_SSL_Context * context)
@@ -131,15 +128,9 @@ ACE_SSL_Asynch_Stream::~ACE_SSL_Asynch_Stream ()
   // seems to work fine!
 }
 
-// ************************************************************
-//  close ()
-//  returns :
-//  0  - Stream is in the state SF_DELETE_ENABLE,
-//       so  it is safe to delete stream
-//  -1 - Stream has pending AIO requests,
-//       close should be repeated later one more
-// ************************************************************
-
+/// Closes the stream if shutdown is complete.
+/// @retval 0 The stream is safe to delete.
+/// @retval -1 Asynchronous I/O is pending; call close again later.
 int
 ACE_SSL_Asynch_Stream::close ()
 {
@@ -158,10 +149,6 @@ ACE_SSL_Asynch_Stream::close ()
   return -1;
 }
 
-// ************************************************************
-//  Asynch_Operation interface
-//    cancel
-// ************************************************************
 int
 ACE_SSL_Asynch_Stream::cancel ()
 {
@@ -201,10 +188,6 @@ ACE_SSL_Asynch_Stream::cancel ()
   return 0;    // AIO_CANCELED, at least will be one notification
 }
 
-// ************************************************************
-//  Asynch_Operation interface
-//    open
-// ************************************************************
 int
 ACE_SSL_Asynch_Stream::open (ACE_Handler & handler,
                              ACE_HANDLE handle,
@@ -292,10 +275,6 @@ ACE_SSL_Asynch_Stream::open (ACE_Handler & handler,
   return 0;
 }
 
-// ************************************************************
-//  Asynch_Operation interface
-//    read
-// ************************************************************
 int
 ACE_SSL_Asynch_Stream::read (ACE_Message_Block & message_block,
                              size_t bytes_to_read,
@@ -335,10 +314,6 @@ ACE_SSL_Asynch_Stream::read (ACE_Message_Block & message_block,
   return 0;
 }
 
-// ************************************************************
-//  Asynch_Operation interface
-//    write
-// ************************************************************
 int
 ACE_SSL_Asynch_Stream::write (ACE_Message_Block & message_block,
                               size_t bytes_to_write,
@@ -378,9 +353,6 @@ ACE_SSL_Asynch_Stream::write (ACE_Message_Block & message_block,
   return 0;
 }
 
-// ************************************************************
-//  Main SSL engine
-// ************************************************************
 int
 ACE_SSL_Asynch_Stream::do_SSL_state_machine ()
 {
@@ -407,13 +379,10 @@ ACE_SSL_Asynch_Stream::do_SSL_state_machine ()
   return 0;
 }
 
-// ************************************************************
-// do_SSL_shutdown
-// return code:
-// 1   SSL shutdown is finished already, success
-// 0   SSL shutdown in progress
-// -1  failure
-// ************************************************************
+/// Advances SSL shutdown.
+/// @retval 1 Shutdown is already complete or completed successfully.
+/// @retval 0 Shutdown is still in progress.
+/// @retval -1 Shutdown failed.
 int
 ACE_SSL_Asynch_Stream::do_SSL_shutdown ()
 {
@@ -458,13 +427,10 @@ ACE_SSL_Asynch_Stream::do_SSL_shutdown ()
   return retval;
 }
 
-// ************************************************************
-// Do SSL handshake if necessary
-// return code:
-// 1   SSL handshake is finished already, success
-// 0   SSL handshake in progress
-// -1  failure
-// ************************************************************
+/// Advances the SSL handshake when one is still in progress.
+/// @retval 1 The handshake is complete.
+/// @retval 0 The handshake is still in progress.
+/// @retval -1 The handshake failed.
 int
 ACE_SSL_Asynch_Stream::do_SSL_handshake ()
 {
@@ -536,9 +502,7 @@ ACE_SSL_Asynch_Stream::post_handshake_check ()
   return true;
 }
 
-// ************************************************************
-// Perform SSL_read call if necessary and notify user
-// ************************************************************
+/// Reads SSL data when a read request is pending and notifies the user.
 int
 ACE_SSL_Asynch_Stream::do_SSL_read ()
 {
@@ -598,9 +562,7 @@ ACE_SSL_Asynch_Stream::do_SSL_read ()
  return -1;
 }
 
-// ************************************************************
-// Perform SSL_write call if necessary  and notify user
-// ************************************************************
+/// Writes SSL data when a write request is pending and notifies the user.
 int
 ACE_SSL_Asynch_Stream::do_SSL_write ()
 {
@@ -653,14 +615,10 @@ ACE_SSL_Asynch_Stream::do_SSL_write ()
  return -1;
 }
 
-// ************************************************************
-//  notify external user handler that
-//  it is now to safe destroy stream
-//  Return code  looks like cancel() return code
-//  0  - notified               NOTIFIED
-//  1  - nothing to notify      ALLDONE
-//  2  - unable to notify       NOT NOTIFIED
-// ************************************************************
+/// Notifies the external handler that the stream is safe to destroy.
+/// @retval 0 The close notification was posted.
+/// @retval 1 No notification was needed.
+/// @retval 2 The notification could not be posted yet.
 int
 ACE_SSL_Asynch_Stream::notify_close ()
 {
@@ -706,14 +664,10 @@ ACE_SSL_Asynch_Stream::notify_close ()
   return 2;
 }
 
-// ************************************************************
-//  notify external user handler about user write completion
-//  Return code  looks like cancel() return code
-//  0  - notified               NOTIFIED/CANCELED
-//  1  - nothing to notify      ALLDONE
-//  2  - unable to notify       NOT NOTIFIED/CANCELED
-// ************************************************************
-
+/// Notifies the external handler that a read request completed.
+/// @retval 0 The completion notification was posted.
+/// @retval 1 No notification was needed.
+/// @retval 2 The notification could not be posted.
 int
 ACE_SSL_Asynch_Stream::notify_read (int bytes_transferred,
                                     int error)
@@ -750,14 +704,10 @@ ACE_SSL_Asynch_Stream::notify_read (int bytes_transferred,
   return 2; // unable to notify
 }
 
-// ************************************************************
-//  notify external user handler about user write completion
-//  Return code  looks like cancel() return code
-//  0  - notified               NOTIFIED/CANCELED
-//  1  - nothing to notify      ALLDONE
-//  2  - unable to notify       NOT NOTIFIED/CANCELED
-// ************************************************************
-
+/// Notifies the external handler that a write request completed.
+/// @retval 0 The completion notification was posted.
+/// @retval 1 No notification was needed.
+/// @retval 2 The notification could not be posted.
 int
 ACE_SSL_Asynch_Stream::notify_write (int bytes_transferred,
                                      int error)
@@ -794,9 +744,7 @@ ACE_SSL_Asynch_Stream::notify_write (int bytes_transferred,
   return 2; // unable to notify
 }
 
-// ************************************************************
-// Print SSL errors
-// ************************************************************
+/// Prints the SSL error and any queued OpenSSL error details.
 void
 ACE_SSL_Asynch_Stream::print_error (int err_ssl,
                                     const ACE_TCHAR * pText)
@@ -820,11 +768,7 @@ ACE_SSL_Asynch_Stream::print_error (int err_ssl,
 #endif  /* OPENSSL_VERSION_NUMBER */
 }
 
-// ************************************************************
-//  BIO helper functions
-//  SSL library will ask BIO to do raw I/O
-//  BIO will call us to do this
-// ************************************************************
+/// Implements raw BIO reads and writes through the asynchronous stream.
 int
 ACE_SSL_Asynch_Stream::ssl_bio_read (char * buf,
                                      size_t len,
@@ -988,10 +932,7 @@ ACE_SSL_Asynch_Stream::ssl_bio_write (const char * buf,
   return ACE_Utils::truncate_cast<int> (len);
 }
 
-// ************************************************************
-//  Internal IO handlers
-//  virtual from ACE_Service_Handler
-// ************************************************************
+/// Handles completion of internal asynchronous I/O.
 void
 ACE_SSL_Asynch_Stream::handle_write_stream (
   const ACE_Asynch_Write_Stream::Result &result)

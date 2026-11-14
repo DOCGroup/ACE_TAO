@@ -58,7 +58,6 @@ public:
   ACE_SSL_SOCK_Connector (ACE_SSL_SOCK_Connector &&) = delete;
   ACE_SSL_SOCK_Connector &operator= (ACE_SSL_SOCK_Connector &&) = delete;
 
-  /// Default constructor.
   ACE_SSL_SOCK_Connector ();
 
   /**
@@ -163,7 +162,6 @@ public:
                           int reuse_addr = 0,
                           int perms = 0);
 
-  /// Default dtor.
   virtual ~ACE_SSL_SOCK_Connector ();
 
   /**
@@ -282,10 +280,10 @@ public:
   bool reset_new_handle (ACE_HANDLE handle);
 
   /// Meta-type info
-  //@{
+  /// @{
   using PEER_ADDR = ACE_INET_Addr;
   using PEER_STREAM = ACE_SSL_SOCK_Stream;
-  //@}
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;

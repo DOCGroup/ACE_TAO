@@ -54,10 +54,8 @@ public:
   ACE_SSL_SOCK_Acceptor (ACE_SSL_SOCK_Acceptor &&) = delete;
   ACE_SSL_SOCK_Acceptor &operator= (ACE_SSL_SOCK_Acceptor &&) = delete;
 
-  /// Default constructor.
   ACE_SSL_SOCK_Acceptor ();
 
-  /// Default destructor.
   ~ACE_SSL_SOCK_Acceptor ();
 
   /**
@@ -124,7 +122,7 @@ public:
    *
    * These are the canonical methods exposed by the Acceptor pattern.
    */
-  //@{
+  /// @{
   /**
    * Accept a new ACE_SSL_SOCK_Stream connection. On successful return,
    * the socket has been accepted and the SSL handshake has been completed.
@@ -167,13 +165,13 @@ public:
               ACE_Time_Value *timeout = nullptr,
               bool restart = true,
               bool reset_new_handle = false) const;
-  //@}
+  /// @}
 
   /// Meta-type info
-  //@{
+  /// @{
   using PEER_ADDR = ACE_INET_Addr;
   using PEER_STREAM = ACE_SSL_SOCK_Stream;
-  //@}
+  /// @}
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

@@ -86,8 +86,6 @@ extern "C"
       (void) ssl_locks[type].release ();
   }
 
-  // -------------------------------
-
   // Return the current thread ID.  OpenSSL uses this on platforms
   // that need it.
   unsigned long
@@ -97,8 +95,6 @@ extern "C"
   }
 }
 #endif  /* ACE_HAS_THREADS && (OPENSSL_VERSION_NUMBER < 0x10100000L) */
-
-// ****************************************************************
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -818,7 +814,6 @@ ACE_SSL_Context::dh_params (const char *file_name,
   return 0;
 }
 
-// ****************************************************************
 ACE_SINGLETON_TEMPLATE_INSTANTIATE(ACE_Unmanaged_Singleton, ACE_SSL_Context, ACE_SYNCH_MUTEX)
 
 ACE_END_VERSIONED_NAMESPACE_DECL
