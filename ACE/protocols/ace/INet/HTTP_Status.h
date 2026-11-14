@@ -88,10 +88,8 @@ namespace ACE
 
               Status(Code status, const ACE_CString& reason);
 
-              /// Copy constructor
               Status(const Status& status);
 
-              /// Copy assignment
               Status& operator =(const Status& status);
 
               /// Set the status code.

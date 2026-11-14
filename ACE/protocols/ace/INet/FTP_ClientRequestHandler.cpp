@@ -42,7 +42,7 @@ namespace ACE
         SessionHolder* session_holder {};
         ACE_NEW_RETURN (session_holder,
                         SessionHolder (),
-                        0);
+                        nullptr);
         std::unique_ptr<SessionHolder> session_safe_ref (session_holder);
 
         (*session_holder)->set_host (ikey.host (), ikey.port ());
@@ -52,7 +52,7 @@ namespace ACE
             return session_safe_ref.release ();
           }
 
-        return 0;
+        return nullptr;
       }
 
     ClientRequestHandler::Authentication::Authentication (
@@ -336,7 +336,7 @@ namespace ACE
                 return this->open_data_connection (Request::FTP_RETR, path);
               }
           }
-        return 0;
+        return nullptr;
       }
 
     ClientRequestHandler::stream_type*
@@ -346,28 +346,22 @@ namespace ACE
           {
             return this->open_data_connection (Request::FTP_STOR, path);
           }
-        return 0;
+        return nullptr;
       }
 
     bool ClientRequestHandler::finish_transfer ()
       {
         if (transfer_active_)
           {
-            stream_type* old_stream = dynamic_cast<stream_type*> (this->in_data_stream_.set_stream (nullptr));
-            if (old_stream)
-              {
-                // decrease ref count to 1
-                const_cast<connection_type&> (old_stream->stream ()).remove_reference ();
-                // also removes last ref count on stream handler
-                delete old_stream;
-              }
-            old_stream = dynamic_cast<stream_type*> (this->out_data_stream_.set_stream (nullptr));
-              {
-                // decrease ref count to 1
-                const_cast<connection_type&> (old_stream->stream ()).remove_reference ();
-                // also removes last ref count on stream handler
-                delete old_stream;
-              }
+            if (std::unique_ptr<stream_type> old_stream (
+                  dynamic_cast<stream_type*> (this->in_data_stream_.set_stream (nullptr)));
+                old_stream != nullptr)
+              const_cast<connection_type&> (old_stream->stream ()).remove_reference ();
+
+            if (std::unique_ptr<stream_type> old_stream (
+                  dynamic_cast<stream_type*> (this->out_data_stream_.set_stream (nullptr)));
+                old_stream != nullptr)
+              const_cast<connection_type&> (old_stream->stream ()).remove_reference ();
 
             this->transfer_active_ = false;
 
@@ -386,20 +380,15 @@ namespace ACE
             if (this->response_.status () == 426)
               this->session ()->receive_response (this->response_);
 
-            stream_type* old_stream = dynamic_cast<stream_type*> (this->in_data_stream_.set_stream (nullptr));
-              {
-                // decrease ref count to 1
-                const_cast<connection_type&> (old_stream->stream ()).remove_reference ();
-                // also removes last ref count on stream handler
-                delete old_stream;
-              }
-            old_stream = dynamic_cast<stream_type*> (this->out_data_stream_.set_stream (nullptr));
-              {
-                // decrease ref count to 1
-                const_cast<connection_type&> (old_stream->stream ()).remove_reference ();
-                // also removes last ref count on stream handler
-                delete old_stream;
-              }
+            if (std::unique_ptr<stream_type> old_stream (
+                  dynamic_cast<stream_type*> (this->in_data_stream_.set_stream (nullptr)));
+                old_stream != nullptr)
+              const_cast<connection_type&> (old_stream->stream ()).remove_reference ();
+
+            if (std::unique_ptr<stream_type> old_stream (
+                  dynamic_cast<stream_type*> (this->out_data_stream_.set_stream (nullptr)));
+                old_stream != nullptr)
+              const_cast<connection_type&> (old_stream->stream ()).remove_reference ();
 
             this->transfer_active_ = false;
 
@@ -450,7 +439,7 @@ namespace ACE
                                 SessionHolder::session_type::connection_type(sync_opt));
                 if (data_connection == nullptr)
                   {
-                    return 0;
+                    return nullptr;
                   }
 
                 // connect to data connection address
@@ -468,7 +457,7 @@ namespace ACE
                     // as the connection was dynamically allocated
                     // the connector causes it to be destroyed after
                     // the connection failure
-                    return 0;
+                    return nullptr;
                   }
 
                 // enable ref counting so we can control when to destroy
@@ -479,12 +468,12 @@ namespace ACE
                 stream_type* data_stream {};
                 ACE_NEW_NORETURN (data_stream,
                                   stream_type (data_connection));
-                if (data_stream)
+                std::unique_ptr<stream_type> data_stream_owner (data_stream);
+                if (data_stream_owner != nullptr)
                   {
                     if (this->process_command (cmd, arg) == Response::PRELIM_OK)
-                      return data_stream;
-
-                    delete data_stream; // decreases ref count on connection
+                      return data_stream_owner.release ();
+                    data_stream_owner.reset ();
                   }
                 // remove last ref count -> delete
                 data_connection->remove_reference ();
@@ -520,7 +509,7 @@ namespace ACE
                                     SessionHolder::session_type::connection_type(sync_opt));
                     if (data_connection == nullptr)
                       {
-                        return 0;
+                        return nullptr;
                       }
 
                     // accept data connection from peer
@@ -539,7 +528,7 @@ namespace ACE
                         // as the connection was dynamically allocated
                         // the acceptor causes it to be destroyed after
                         // the connection failure
-                        return 0;
+                        return nullptr;
                       }
 
                     // enable ref counting so we can control when to destroy
@@ -550,16 +539,15 @@ namespace ACE
                     stream_type* data_stream {};
                     ACE_NEW_NORETURN (data_stream,
                                       stream_type (data_connection));
-                    if (data_stream)
-                      {
-                        return data_stream;
-                      }
+                    std::unique_ptr<stream_type> data_stream_owner (data_stream);
+                    if (data_stream_owner != nullptr)
+                      return data_stream_owner.release ();
                     // remove last ref count -> delete
                     data_connection->remove_reference ();
                   }
               }
           }
-        return 0;
+        return nullptr;
       }
 
     bool
