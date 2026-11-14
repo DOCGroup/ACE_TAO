@@ -28,7 +28,6 @@ public:
    */
   explicit Servant_var (SERVANT *s = nullptr);
 
-  /// Copy constructor
   Servant_var (const Servant_var<SERVANT> &rhs);
 
   /// Assignment

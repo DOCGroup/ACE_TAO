@@ -36,7 +36,6 @@ public:
    */
   explicit Auto_Disconnect (Client *s = nullptr);
 
-  /// Assignment operator
   Auto_Disconnect<Client>& operator= (Client *client);
 };
 

@@ -31,7 +31,6 @@
 class Nestea_Server_i
 {
 public:
-  /// Default constructor
   Nestea_Server_i () = default;
 
   ~Nestea_Server_i () = default;

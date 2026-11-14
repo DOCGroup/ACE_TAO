@@ -38,10 +38,8 @@ namespace TAO_PG
   class TAO_PortableGroup_Export Fragments_Cleanup_Strategy
   {
   public:
-    /// The constructor
     explicit Fragments_Cleanup_Strategy (int bound);
 
-    /// The destructor
     virtual ~Fragments_Cleanup_Strategy () = default;
 
     /// Sub-classes must implement these methods
@@ -61,7 +59,6 @@ namespace TAO_PG
     : public Fragments_Cleanup_Strategy
   {
   public:
-    /// The constructor
     explicit Time_Bound_Fragments_Cleanup_Strategy (int bound);
 
     void cleanup (TAO_UIPMC_Mcast_Transport::Packets_Map &packets) override;
@@ -76,7 +73,6 @@ namespace TAO_PG
     : public Fragments_Cleanup_Strategy
   {
   public:
-    /// The constructor
     explicit Number_Bound_Fragments_Cleanup_Strategy (int bound);
 
     void cleanup (TAO_UIPMC_Mcast_Transport::Packets_Map &packets) override;
@@ -91,7 +87,6 @@ namespace TAO_PG
     : public Fragments_Cleanup_Strategy
   {
   public:
-    /// The constructor
     explicit Memory_Bound_Fragments_Cleanup_Strategy (int bound);
 
     void cleanup (TAO_UIPMC_Mcast_Transport::Packets_Map &packets) override;

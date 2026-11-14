@@ -26,7 +26,6 @@ public:
 
   ~Implicit_Deactivator ();
 
-  /// Assignment operator
   Implicit_Deactivator& operator= (PortableServer::Servant servant);
 
   /// Release the servant, i.e. the destructor does not deactivate anything

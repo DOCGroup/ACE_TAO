@@ -54,7 +54,7 @@ namespace TAO_Notify
     /// Construct from name and string value.
     NVP(const char * n, const ACE_CString & v);
 
-    /// Assignment operator
+    /// Equality comparison operator.
     bool operator==(const NVP& rhs) const;
     /// Comparison operator compares only name (not value)
     bool operator!=(const NVP& rhs) const;

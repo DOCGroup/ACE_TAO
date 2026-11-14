@@ -28,7 +28,6 @@ class TAO_RT_NOTIFY_TEST_Export TAO_Notify_Tests_RT_Priority_Mapping : public TA
 public:
   TAO_Notify_Tests_RT_Priority_Mapping () = default;
 
-  /// The destructor
   ~TAO_Notify_Tests_RT_Priority_Mapping () override = default;
 
   TAO_Notify_Tests_RT_Priority_Mapping (TAO_Notify_Tests_RT_Priority_Mapping const&) = delete;

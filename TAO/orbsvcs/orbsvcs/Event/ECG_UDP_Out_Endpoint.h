@@ -52,7 +52,6 @@ public:
 
   TAO_ECG_UDP_Out_Endpoint (TAO_ECG_UDP_Out_Endpoint const &rhs);
 
-  /// Assignment operator
   TAO_ECG_UDP_Out_Endpoint& operator= (TAO_ECG_UDP_Out_Endpoint const &rhs);
 
   /// Obtain the datagram associated with this endpoint. Clients of

@@ -25,7 +25,6 @@
 class EC
 {
 public:
-  /// Constructor
   EC () = default;
   EC (EC const &) = delete;
   EC (EC &&) = delete;

@@ -31,7 +31,6 @@
 class Airplane_Server_i
 {
 public:
-  /// Default constructor
   Airplane_Server_i () = default;
 
   ~Airplane_Server_i () = default;

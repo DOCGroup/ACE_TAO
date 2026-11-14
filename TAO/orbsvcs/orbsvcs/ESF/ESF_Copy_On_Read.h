@@ -35,7 +35,6 @@ template<class PROXY, class COLLECTION, class ITERATOR, class ACE_LOCK>
 class TAO_ESF_Copy_On_Read : public TAO_ESF_Proxy_Collection<PROXY>
 {
 public:
-  /// Constructors
   TAO_ESF_Copy_On_Read ();
   explicit TAO_ESF_Copy_On_Read (COLLECTION const &collection);
 
