@@ -1659,7 +1659,7 @@ TAO_Root_POA::parse_key (const TAO::ObjectKey &key,
       poa_system_name.replace (poa_name_size,
                                poa_name_size,
                                (CORBA::Octet *) key_data + starting_at,
-                               0);
+                               false);
 
       starting_at += poa_name_size;
     }

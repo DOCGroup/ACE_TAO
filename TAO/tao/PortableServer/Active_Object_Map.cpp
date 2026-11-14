@@ -619,7 +619,7 @@ TAO_Unique_Id_Strategy::remaining_activations (
   ACE_UNUSED_ARG (servant);
 
   // Since servant are always unique here, return false.
-  return 0;
+  return false;
 }
 
 ////////////////////////////////////////////////////////////////////////////////

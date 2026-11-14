@@ -74,7 +74,7 @@ TAO_Ignore_Original_Key_Adapter::decode (PortableServer::ObjectId const &modifie
                         modified_key.length (),
                         const_cast <CORBA::Octet *>
                                    (modified_key.get_buffer ()),
-                        0);
+                        false);
 
   // Success.
   return 0;
@@ -131,7 +131,7 @@ TAO_Preserve_Original_Key_Adapter::decode (PortableServer::ObjectId const &modif
                             (modified_key.length () - active_key_size),
                         const_cast <CORBA::Octet *>
                             (modified_key.get_buffer ()) + active_key_size,
-                        0);
+                        false);
 
   // Success.
   return 0;

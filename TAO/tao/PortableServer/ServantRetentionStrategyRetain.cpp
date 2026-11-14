@@ -212,7 +212,7 @@ namespace TAO
           this->poa_->key_to_object_params_.set (system_id,
                                                  servant->_interface_repository_id (),
                                                  servant,
-                                                 1,
+                                                 true,
                                                  priority,
                                                  indirect);
 
@@ -659,7 +659,7 @@ namespace TAO
         system_id,
         servant->_interface_repository_id (),
         servant,
-        1,
+        true,
         priority,
         true);
 
@@ -871,7 +871,7 @@ namespace TAO
       this->poa_->key_to_object_params_.set (system_id,
                                              intf,
                                              nullptr,
-                                             1,
+                                             true,
                                              priority,
                                              true);
 
@@ -915,7 +915,7 @@ namespace TAO
       this->poa_->key_to_object_params_.set (system_id,
                                        intf,
                                        servant,
-                                       1,
+                                       true,
                                        priority,
                                        true);
 
