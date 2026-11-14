@@ -314,8 +314,7 @@ TAO_IIOP_Connector::make_parallel_connection (
         {
           if (errno == EWOULDBLOCK)
             {
-              mev.add_event(shlist[count]);
-              ++count;
+              mev.add_event(shlist[count++]);
               if (ep->next() != nullptr)
                 {
                   struct timespec nsleep = {sec_stagger, ns_stagger};

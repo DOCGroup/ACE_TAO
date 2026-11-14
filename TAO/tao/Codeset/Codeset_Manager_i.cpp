@@ -456,9 +456,8 @@ TAO_Codeset_Manager_i::init_ccs (TAO_Codeset_Descriptor& cd,
       if (tlist.translator_factory_->tcs() ==  cs_comp.native_code_set)
         continue;
 
-      cs_comp.conversion_code_sets[index] =
+      cs_comp.conversion_code_sets[index++] =
         tlist.translator_factory_->tcs();
-      ++index;
       if (TAO_debug_level > 2)
         {
           TAOLIB_DEBUG ((LM_DEBUG,

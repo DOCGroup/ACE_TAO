@@ -16,9 +16,7 @@ TAO_FIFO_Connection_Purging_Strategy::update_item (TAO_Transport& transport)
   // item has not been cached yet.
   if (transport.purging_order () == 0)
     {
-      unsigned long const purging_order = this->order_;
-      ++this->order_;
-      transport.purging_order (purging_order);
+      transport.purging_order (this->order_++);
     }
 }
 

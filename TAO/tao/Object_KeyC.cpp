@@ -180,11 +180,8 @@ TAO::ObjectKey::decode_string_to_sequence (
           cp += 3;
         }
       else
-        {
-          // Copy it in
-          seq[i] = *cp;
-          ++cp;
-        }
+        // Copy it in
+        seq[i] = *cp++;
     }
 
   // Set the length appropriately

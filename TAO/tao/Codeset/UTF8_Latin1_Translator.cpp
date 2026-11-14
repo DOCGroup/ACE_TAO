@@ -88,8 +88,7 @@ TAO_UTF8_Latin1_Translator::read_string (ACE_InputCDR &cdr,
       ACE_CDR::ULong incr = 1;
       for (ACE_CDR::ULong i {}; incr > 0 && i < len; i += incr)
         {
-          incr = this->read_char_i (cdr, buffer_guard[pos]);
-          ++pos;
+          incr = this->read_char_i (cdr, buffer_guard[pos++]);
         }
       if (incr > 0)
         {
@@ -145,8 +144,7 @@ TAO_UTF8_Latin1_Translator::read_string (ACE_InputCDR &cdr,
       ACE_CDR::ULong incr = 1;
       for (ACE_CDR::ULong i {}; incr > 0 && i < len; i += incr)
         {
-          incr = this->read_char_i(cdr,x[pos]);
-          ++pos;
+          incr = this->read_char_i(cdr,x[pos++]);
         }
       if (incr > 0)
       {

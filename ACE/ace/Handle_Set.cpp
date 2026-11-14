@@ -266,13 +266,8 @@ ACE_Handle_Set_Iterator::operator () ()
   ACE_TRACE ("ACE_Handle_Set_Iterator::operator");
 #if defined (ACE_HANDLE_SET_USES_FD_ARRAY)
   if (this->handle_index_ < this->handles_.mask_.fd_count)
-    {
-      // Return the handle and advance the iterator.
-      ACE_HANDLE const handle = static_cast<ACE_HANDLE> (
-        this->handles_.mask_.fd_array[this->handle_index_]);
-      ++this->handle_index_;
-      return handle;
-    }
+    // Return the handle and advance the iterator.
+    return (ACE_HANDLE) this->handles_.mask_.fd_array[this->handle_index_++];
   else
     return ACE_INVALID_HANDLE;
 

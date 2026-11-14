@@ -56,10 +56,7 @@ Gen_Perf::compute_disjoint_union (char *set1, char *set2, char *set3)
 
   while (*set1 && *set2)
     if (*set1 == *set2)
-      {
-        ++set1;
-        ++set2;
-      }
+      ++set1, ++set2;
     else
       {
         *set3 = *set1 < *set2 ? *set1++ : *set2++;

@@ -353,8 +353,7 @@ TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
       return -1;
 
     // Put secondary ip address into the array
-    secondary_ip_addrs[i] = temp_addr.get_ip_address();
-    ++i;
+    secondary_ip_addrs[i++] = temp_addr.get_ip_address();
   }
 
   // Populate our ACE_Multihomed_INET_Addr with all the right
@@ -846,8 +845,7 @@ TAO_SCIOP_Acceptor::parse_multiple_hostnames (const char *hostnames,
 
   while (index < num_hostnames) {
     ACE_CString hostname_object(hostname);
-    hostnames_out.set (hostname_object, index);
-    ++index;
+    hostnames_out.set(hostname_object, index++);
 
     hostname = ACE_OS::strtok_r (0, "+", &last);
   }

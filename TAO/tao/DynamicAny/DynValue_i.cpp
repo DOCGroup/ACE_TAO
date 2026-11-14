@@ -137,8 +137,7 @@ TAO_DynValue_i::get_base_types (
         }
 
       base_types.size (numberOfBases + 1);
-      base_types[numberOfBases] = CORBA::TypeCode::_duplicate (base.in ());
-      ++numberOfBases;
+      base_types[numberOfBases++] = CORBA::TypeCode::_duplicate (base.in ());
       base = base->concrete_base_type();
     }
 }

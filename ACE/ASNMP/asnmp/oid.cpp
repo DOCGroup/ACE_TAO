@@ -580,10 +580,7 @@ int Oid::StrToOid( const char *string, SmiLPOID dstOid, size_t& how_many)
 
             // grab a digit token and convert it to a long int
     while (ACE_OS::ace_isdigit(*string))
-      {
-        number = number * 10 + *string - '0';
-        ++string;
-      }
+      number=number*10 + *(string++)-'0';
 
                 // check for invalid chars
     if (*string!=0 && *string!='.') {
@@ -747,11 +744,8 @@ int Oid::OidToStr( SmiLPOID srcOid, unsigned long size,
       return -2;
 
     // if not at end, pad with a dot
-    if (totLen != 0)
-      {
-        string[totLen] = '.';
-        ++totLen;
-      }
+    if (totLen!=0)
+      string[totLen++] = '.';
 
     // copy the string token into the main string
     std::strcpy (string + totLen, szNumber);

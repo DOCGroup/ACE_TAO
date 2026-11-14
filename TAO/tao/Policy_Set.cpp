@@ -274,9 +274,8 @@ TAO_Policy_Set::get_policy_overrides (CORBA::PolicyTypeSeq const &types)
               continue;
             }
 
-          policy_list[n] =
+          policy_list[n++] =
             CORBA::Policy::_duplicate (this->policy_list_[i]);
-          ++n;
           break;
         }
     }
