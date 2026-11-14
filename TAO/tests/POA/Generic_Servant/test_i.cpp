@@ -1,6 +1,7 @@
 #include "test_i.h"
 #include "ace/OS_NS_unistd.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 test_i::test_i (CORBA::ORB_ptr orb,
                 PortableServer::POA_ptr poa)
@@ -92,7 +93,7 @@ supply_servant (const PortableServer::ObjectId &oid,
   // Convert ObjectId to string.
   CORBA::String_var s = PortableServer::ObjectId_to_string (oid);
 
-  if (ACE_OS::strstr (s.in (), "test") != 0)
+  if (std::strstr (s.in (), "test") != nullptr)
     ACE_NEW_RETURN (servant,
                     test_i (orb,
                             poa),

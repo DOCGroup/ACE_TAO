@@ -4,7 +4,9 @@
 #include "ace/FILE_Connector.h"
 #include "ace/FILE_IO.h"
 #include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_stdlib.h"
+
+#include <cstring>
 
 constexpr size_t MAX_UINT32_STR_LEN = 11;  // Largest UINT32 decimal value plus NUL.
 
@@ -108,7 +110,7 @@ Nestea_i::save_data ()
 
   ACE_OS::snprintf (str, sizeof str, "%u", static_cast<unsigned int> (this->cans_));
 
-  return file.send_n (str, ACE_OS::strlen (str) + 1);
+  return file.send_n (str, std::strlen (str) + 1);
 }
 
 // Loads bookshelf data from a file.
