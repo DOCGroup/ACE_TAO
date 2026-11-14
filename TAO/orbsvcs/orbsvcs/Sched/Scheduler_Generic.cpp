@@ -7,8 +7,7 @@
 #include "ace/Sched_Params.h"
 
 #include "orbsvcs/Sched/Scheduler_Generic.h"
-#include "ace/OS_NS_stdio.h"
-
+#include <cstdio>
 #include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -126,7 +125,7 @@ Scheduler_Generic::register_task (RT_Info *rt_info [],
 
           if (output_level () >= 5)
             {
-              ACE_OS::printf ("registered task \"%s\" with RT_Info starting "
+              std::printf ("registered task \"%s\" with RT_Info starting "
                               "at %p\n",
                               static_cast<char const *> (rt_info[0]->entry_point),
                               rt_info[0]);
@@ -200,7 +199,7 @@ Scheduler_Generic::priority (handle_t /* handle */,
 
   if (output_level () >= 3)
     {
-      ACE_OS::printf ("preemption_prio %d: min %d, pri %d, min_pri %d\n",
+      std::printf ("preemption_prio %d: min %d, pri %d, min_pri %d\n",
                       preemption_prio, minimum_priority_queue (),
                       priority, minimum_priority_);
     }

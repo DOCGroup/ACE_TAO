@@ -8,7 +8,7 @@
 #include "ace/Sched_Params.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/Sched/Scheduler.h"
-#include "ace/OS_NS_stdio.h"
+#include <cstdio>
 
 #include "ace/Lock_Adapter_T.h"
 
@@ -20,31 +20,31 @@ ACE_Scheduler::output (FILE *file, status_t status)
   switch (status)
   {
     case NOT_SCHEDULED :
-      ACE_OS::fprintf (file, "NOT_SCHEDULED");
+      std::fprintf (file, "NOT_SCHEDULED");
       break;
     case SUCCEEDED :
-      ACE_OS::fprintf (file, "SUCCEEDED");
+      std::fprintf (file, "SUCCEEDED");
       break;
     case ST_TASK_ALREADY_REGISTERED :
-      ACE_OS::fprintf (file, "TASK_ALREADY_REGISTERED");
+      std::fprintf (file, "TASK_ALREADY_REGISTERED");
       break;
     case ST_VIRTUAL_MEMORY_EXHAUSTED :
-      ACE_OS::fprintf (file, "VIRTUAL_MEMORY_EXHAUSTED");
+      std::fprintf (file, "VIRTUAL_MEMORY_EXHAUSTED");
       break;
     case ST_UNKNOWN_TASK :
-      ACE_OS::fprintf (file, "UNKNOWN_TASK");
+      std::fprintf (file, "UNKNOWN_TASK");
       break;
     case INVALID_MODE :
-      ACE_OS::fprintf (file, "INVALID_MODE");
+      std::fprintf (file, "INVALID_MODE");
       break;
     case MODE_COUNT_MISMATCH :
-      ACE_OS::fprintf (file, "MODE_COUNT_MISMATCH");
+      std::fprintf (file, "MODE_COUNT_MISMATCH");
       break;
     case TASK_COUNT_MISMATCH :
-      ACE_OS::fprintf (file, "TASK_COUNT_MISMATCH");
+      std::fprintf (file, "TASK_COUNT_MISMATCH");
       break;
     case INVALID_PRIORITY :
-      ACE_OS::fprintf (file, "INVALID_PRIORITY");
+      std::fprintf (file, "INVALID_PRIORITY");
       break;
 
     // The following are only used during scheduling (in the case of
@@ -53,24 +53,24 @@ ACE_Scheduler::output (FILE *file, status_t status)
     // we could conditionally compile them so that they're not in the
     // runtime version.
     case ST_UTILIZATION_BOUND_EXCEEDED :
-      ACE_OS::fprintf (file, "UTILIZATION_BOUND_EXCEEDED");
+      std::fprintf (file, "UTILIZATION_BOUND_EXCEEDED");
       break;
     case ST_INSUFFICIENT_THREAD_PRIORITY_LEVELS :
-      ACE_OS::fprintf (file, "INSUFFICIENT_THREAD_PRIORITY_LEVELS");
+      std::fprintf (file, "INSUFFICIENT_THREAD_PRIORITY_LEVELS");
       break;
     case ST_CYCLE_IN_DEPENDENCIES :
-      ACE_OS::fprintf (file, "CYCLE_IN_DEPENDENCIES");
+      std::fprintf (file, "CYCLE_IN_DEPENDENCIES");
       break;
     case UNABLE_TO_OPEN_SCHEDULE_FILE :
-      ACE_OS::fprintf (file, "UNABLE_TO_OPEN_SCHEDULE_FILE");
+      std::fprintf (file, "UNABLE_TO_OPEN_SCHEDULE_FILE");
       break;
     case UNABLE_TO_WRITE_SCHEDULE_FILE :
-      ACE_OS::fprintf (file, "UNABLE_TO_WRITE_SCHEDULE_FILE");
+      std::fprintf (file, "UNABLE_TO_WRITE_SCHEDULE_FILE");
       break;
     // End of config-only status values.
 
     default:
-      ACE_OS::fprintf (file, "UNKNOWN STATUS: %d", status);
+      std::fprintf (file, "UNKNOWN STATUS: %d", status);
   }
 }
 
@@ -156,7 +156,7 @@ void ACE_Scheduler::export_to_file (RT_Info* info, FILE* file)
 
 void ACE_Scheduler::export_to_file (RT_Info& info, FILE* file)
 {
-  (void) ACE_OS::fprintf (file,
+  (void) std::fprintf (file,
                           ACE_TEXT("%s\n%d\n")
                           ACE_UINT64_FORMAT_SPECIFIER ACE_TEXT("\n")
                           ACE_UINT64_FORMAT_SPECIFIER ACE_TEXT("\n")
@@ -179,12 +179,12 @@ void ACE_Scheduler::export_to_file (RT_Info& info, FILE* file)
     {
       RT_Info tmp;
       // TODO: info.dependencies [i].rt_info >>= &tmp;
-      (void) ACE_OS::fprintf (file, "%s, %d\n",
+      (void) std::fprintf (file, "%s, %d\n",
                               static_cast<char const *> (tmp.entry_point),
                               info.dependencies[i].number_of_calls);
     }
 
-  (void) ACE_OS::fprintf (file, "# end dependencies\n%d\n%d\n\n",
+  (void) std::fprintf (file, "# end dependencies\n%d\n%d\n\n",
                           info.priority,
                           info.preemption_subpriority);
 
