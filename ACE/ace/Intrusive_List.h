@@ -55,8 +55,6 @@ template <class T>
 class ACE_Intrusive_List
 {
 public:
-  /// Constructor.  Use user specified allocation strategy
-  /// if specified.
   ACE_Intrusive_List () = default;
 
   ~ACE_Intrusive_List () = default;
@@ -66,10 +64,12 @@ public:
   ACE_Intrusive_List<T> &operator= (ACE_Intrusive_List const &) = delete;
   ACE_Intrusive_List<T> &operator= (ACE_Intrusive_List &&) = delete;
 
-  // = Check boundary conditions.
+  /// @name Boundary conditions
+  /// @{
 
   /// Returns true if the container is empty, otherwise returns false.
   bool is_empty () const;
+  /// @}
 
   /// Insert an element at the beginning of the list
   void push_front (T *node);

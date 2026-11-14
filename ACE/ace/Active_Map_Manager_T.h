@@ -43,7 +43,8 @@ public:
   ACE_Active_Map_Manager &operator= (ACE_Active_Map_Manager const &) = delete;
   ACE_Active_Map_Manager &operator= (ACE_Active_Map_Manager &&) = delete;
 
-  // = Traits.
+  /// @name Traits
+  /// @{
   using key_type = ACE_Active_Map_Manager_Key;
   using mapped_type = T;
 
@@ -54,6 +55,7 @@ public:
   using entry = ENTRY;
   using iterator = ITERATOR;
   using reverse_iterator = REVERSE_ITERATOR;
+  /// @}
 
   /// Initialize a Active_Map_Manager with the ACE_DEFAULT_MAP_SIZE.
   ACE_Active_Map_Manager (ACE_Allocator *alloc = nullptr);
@@ -136,10 +138,6 @@ public:
   int find (const ACE_Active_Map_Manager_Key &key,
             T *&internal_value) const;
 
-  // Creates a key.  User should place their @a value into
-  // <*internal_value>.  This method is useful in reducing the number
-  // of copies required in some cases.
-
   /// Remove @a key from the map.
   int unbind (const ACE_Active_Map_Manager_Key &key);
 
@@ -170,7 +168,8 @@ public:
   /// Dump the state of an object.
   void dump () const;
 
-  // = STL styled iterator factory functions.
+  /// @name STL styled iterator factory functions
+  /// @{
 
   /// Return forward iterator.
   ACE_Map_Iterator<ACE_Active_Map_Manager_Key, T, ACE_Null_Mutex> begin ();
@@ -179,6 +178,7 @@ public:
   /// Return reverse iterator.
   ACE_Map_Reverse_Iterator<ACE_Active_Map_Manager_Key, T, ACE_Null_Mutex> rbegin ();
   ACE_Map_Reverse_Iterator<ACE_Active_Map_Manager_Key, T, ACE_Null_Mutex> rend ();
+  /// @}
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

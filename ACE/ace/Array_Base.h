@@ -41,11 +41,14 @@ template<class T>
 class ACE_Array_Base
 {
 public:
-  // Old/ACE-style traits.
+  /// @name ACE style traits
+  /// @{
   using TYPE = T;
   using ITERATOR = ACE_Array_Iterator<T>;
+  /// @}
 
-  // STL-style typedefs/traits.
+  /// @name STL typedefs and traits
+  /// @{
   using value_type = T;
   using iterator = value_type *;
   using const_iterator = const value_type *;
@@ -57,6 +60,7 @@ public:
   using size_type = ACE_Allocator::size_type;
   using reverse_iterator = std::reverse_iterator<iterator>;
   using const_reverse_iterator = std::reverse_iterator<const_iterator>;
+  /// @}
 
   /// Dynamically create an uninitialized array.
   explicit ACE_Array_Base (size_type size = 0,
@@ -89,7 +93,8 @@ public:
   /// Clean up the array (e.g., delete dynamically allocated memory).
   ~ACE_Array_Base ();
 
-  // = Set/get methods.
+  /// @name Element access and size management
+  /// @{
 
   /// Set item in the array at location @a slot.  Doesn't
   /// perform range checking.
@@ -131,30 +136,23 @@ public:
    * It does not affect new_size
    */
   int max_size (size_type new_size);
+  /// @}
 
-  /**
-   * @name Forward Iterator Accessors
-   *
-   * Forward iterator accessors.
-   */
-  //@{
+  /// @name Forward iterator accessors
+  /// @{
   iterator begin ();
   iterator end   ();
   const_iterator begin () const;
   const_iterator end   () const;
-  //@}
+  /// @}
 
-  /**
-   * @name Reverse Iterator Accessors
-   *
-   * Reverse iterator accessors.
-   */
-  //@{
+  /// @name Reverse iterator accessors
+  /// @{
   reverse_iterator rbegin ();
   reverse_iterator rend   ();
   const_reverse_iterator rbegin () const;
   const_reverse_iterator rend   () const;
-  //@}
+  /// @}
 
   /// Swap the contents of this array with the given @a array in
   /// an exception-safe manner.
@@ -205,7 +203,8 @@ class ACE_Array_Iterator
 public:
   explicit ACE_Array_Iterator (ACE_Array_Base<T> &);
 
-  // = Iteration methods.
+  /// @name Iteration methods
+  /// @{
 
   /// Pass back the @a next_item that hasn't been seen in the Array.
   /// Returns 0 when all items have been seen, else 1.
@@ -220,6 +219,7 @@ public:
 
   /// Dump the state of an object.
   void dump () const;
+  /// @}
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
