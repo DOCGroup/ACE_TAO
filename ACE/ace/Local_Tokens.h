@@ -160,7 +160,7 @@ public:
   /// Dump the state of the class.
   void dump () const;
 
-  // = Used to block the thread if an acquire fails with EWOULDBLOCK.
+  /// Synchronize threads blocked after an acquire returns EWOULDBLOCK.
   ACE_TOKEN_CONST::COND_VAR cond_var_;
   ACE_TOKEN_CONST::MUTEX lock_;
 
@@ -239,8 +239,7 @@ public:
 #endif /* ACE_NO_TSS_TOKENS */
 
 private:
-  // = These are passed to the constructor of ACE_TPQ_Entry in
-  // make_TSS_TYPE
+  /// Arguments passed to the ACE_TPQ_Entry constructor in make_TSS_TYPE.
 
   /// Proxy.
   const ACE_Token_Proxy *proxy_;
@@ -392,8 +391,8 @@ public:
   /// Remove the caller from the waiter list.
   void remove (ACE_TPQ_Entry *caller);
 
-  // = Accessor methods.
-
+  /// @name Token accessors
+  /// @{
   /// Stack of owners.
   using OWNER_STACK = ACE_Unbounded_Stack<ACE_TPQ_Entry *>;
 
@@ -419,11 +418,14 @@ public:
 
   /// Token name.
   const ACE_TCHAR* name ();
+  /// @}
 
-  // = Reference counting.  These are only called by the
-  // Token_Manager.
+  /// @name Reference counting
+  /// These methods are only called by ACE_Token_Manager.
+  /// @{
   void inc_reference ();
   int dec_reference ();
+  /// @}
 
   /// Dump the state of the class.
   void dump () const;
@@ -442,14 +444,16 @@ public:
    */
   virtual int type () const = 0;
 
-  // = The following methods allow the deadlock detection algorithm to
-  // check if this token has been visited.
+  /// @name Deadlock detection
+  /// Track whether this token has been visited by the deadlock detector.
+  /// @{
 
   /// Mark or unmark the token as visited.
   void visit (int v);
 
   /// Check if the token has been visited.
   int visited ();
+  /// @}
 
   /// All the data of the current owner.
   ACE_TPQ_Entry *owner ();
@@ -493,10 +497,9 @@ public:
 
   virtual ~ACE_Mutex_Token ();
 
-  // = Synchronization operations.
-  // With acquire, renew, and release, the caller must be specified so
-  // that multiple proxies (e.g. ACE_Local_Mutex) can use the same
-  // token.
+  /// @name Synchronization operations
+  /// Callers must be specified so multiple proxies can share this token.
+  /// @{
 
   /**
    * Returns 0 on success, -1 on failure with <ACE_Log_Msg::errnum> as
@@ -541,6 +544,7 @@ public:
    * removed from the waiter list.
    */
   int release (ACE_TPQ_Entry *caller) override;
+  /// @}
 
   /// Dump the state of the class.
   void dump () const;
@@ -586,10 +590,9 @@ public:
 
   virtual ~ACE_RW_Token ();
 
-  // = Synchronization operations.
-  // With acquire, renew, and release, the caller must be specified so
-  // that multiple proxies (e.g. ACE_Local_Mutex) can use the same
-  // token.
+  /// @name Synchronization operations
+  /// Callers must be specified so multiple proxies can share this token.
+  /// @{
 
   /**
    * Returns 0 on success, -1 on failure with <ACE_Log_Msg::errnum> as
@@ -634,6 +637,7 @@ public:
    * removed from the waiter list.
    */
   int release (ACE_TPQ_Entry *caller) override;
+  /// @}
 
   /// Dump the state of the class.
   void dump () const;
@@ -756,12 +760,10 @@ public:
                     int ignore_deadlock = 0,
                     int debug = 0);
 
-  // = The following methods have implementations which are
-  // independent of the token semantics (mutex, rwlock, etc.)  They
-  // forward operations to the underlying token and perform the
-  // necessary blocking semantics for operations (condition variables
-  // etc.)  This allows reuse of the blocking code as well as having
-  // multiple proxies to the same token.
+  /// @name Token operations
+  /// These methods forward to the underlying token and provide blocking
+  /// behavior shared by mutex and reader/writer proxies.
+  /// @{
 
   /// Calls acquire on the token.  Blocks the calling thread if would
   /// block.
@@ -807,9 +809,10 @@ public:
   /// Since the locking mechanism doesn't support write locks then this
   /// just calls <tryacquire>.
   virtual int tryacquire_write (void (*sleep_hook)(void *) = nullptr);
+  /// @}
 
-  // = Utility methods.
-
+  /// @name Utility methods
+  /// @{
   /// Get the client id of the proxy.  This is implemented as
   /// thread-specific data.
   virtual const ACE_TCHAR *client_id () const;
@@ -858,6 +861,7 @@ public:
    * default implementation returns 0.
    */
   virtual int type () const;
+  /// @}
 
 protected:
   /// Duplication.
