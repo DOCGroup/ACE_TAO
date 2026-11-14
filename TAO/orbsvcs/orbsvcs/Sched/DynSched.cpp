@@ -1837,7 +1837,7 @@ ACE_DynScheduler::output_dispatch_priorities (char const *filename)
 
   Scheduler_File_Ptr file (
     ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(filename), ACE_TEXT("w")),
-    ACE_OS::fclose);
+    std::fclose);
   if (file)
   {
     status = output_dispatch_priorities (file.get ());
@@ -1928,7 +1928,7 @@ ACE_DynScheduler::output_dispatch_timeline (char const *filename)
 
   Scheduler_File_Ptr file (
     ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(filename), ACE_TEXT("w")),
-    ACE_OS::fclose);
+    std::fclose);
   if (file)
   {
     status = output_dispatch_timeline (file.get ());
@@ -2055,7 +2055,7 @@ ACE_DynScheduler::output_preemption_timeline (char const *filename)
 
   Scheduler_File_Ptr file (
     ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(filename), ACE_TEXT("w")),
-    ACE_OS::fclose);
+    std::fclose);
   if (file)
   {
     status = output_preemption_timeline (file.get ());
@@ -2144,7 +2144,7 @@ ACE_DynScheduler::output_viewer_timeline (char const *filename)
 
   Scheduler_File_Ptr file (
     ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(filename), ACE_TEXT("w")),
-    ACE_OS::fclose);
+    std::fclose);
   if (file)
   {
     status = output_dispatch_timeline (file.get ());
@@ -2260,7 +2260,7 @@ ACE_DynScheduler::status_t
 ACE_DynScheduler::output_timeline (char const *filename, char const *heading)
 {
   status_t status = SUCCEEDED;
-  Scheduler_File_Ptr file (nullptr, ACE_OS::fclose);
+  Scheduler_File_Ptr file (nullptr, std::fclose);
 
   // bail out if we're not up to date or there is no timeline
   if (!up_to_date_ || timeline_ == nullptr)
