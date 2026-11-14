@@ -25,6 +25,14 @@
 // #include <iostream.h>
 
 constexpr char Controller_oid[] = "Controller";
+
+static void
+check_icp_status (int status)
+{
+  if (status != 0)
+    throw CORBA::INTERNAL ();
+}
+
 // Generic ostream inserter for exceptions. Inserts the exception
 // name, if available, and the repository ID otherwise.
 
@@ -62,7 +70,7 @@ make_dref (PortableServer::POA_ptr poa, CCS::AssetType anum)
   // Look at the model via the network to determine
   // the repository ID.
   char buf[32] {};
-  assert (ICP_get (anum, "model", buf, sizeof (buf)) == 0);
+  check_icp_status (ICP_get (anum, "model", buf, sizeof (buf)));
   char const *rep_id = std::strcmp (buf, "Sens-A-Temp") == 0
     ? "IDL:acme.com/CCS/Thermometer:1.0"
     : "IDL:acme.com/CCS/Thermostat:1.0";
@@ -82,7 +90,7 @@ Thermometer_impl::
 get_model () const
 {
   char buf[32] {};
-  assert (ICP_get (m_anum, "model", buf, sizeof (buf)) == 0);
+  check_icp_status (ICP_get (m_anum, "model", buf, sizeof (buf)));
   return CORBA::string_dup (buf);
 }
 
@@ -93,7 +101,7 @@ Thermometer_impl::
 get_temp () const
 {
   short temp {};
-  assert (ICP_get (m_anum, "temperature", &temp, sizeof (temp)) == 0);
+  check_icp_status (ICP_get (m_anum, "temperature", &temp, sizeof (temp)));
   return temp;
 }
 
@@ -104,7 +112,7 @@ Thermometer_impl::
 get_loc () const
 {
   char buf[32] {};
-  assert (ICP_get (m_anum, "location", buf, sizeof (buf)) == 0);
+  check_icp_status (ICP_get (m_anum, "location", buf, sizeof (buf)));
   return CORBA::string_dup (buf);
 }
 
@@ -114,7 +122,7 @@ void
 Thermometer_impl::
 set_loc (char const *loc)
 {
-  assert (ICP_set (m_anum, "location", loc) == 0);
+  check_icp_status (ICP_set (m_anum, "location", loc));
 }
 
 Thermometer_impl::
@@ -167,9 +175,8 @@ Thermometer_impl::location ()
 void
 Thermometer_impl::remove ()
 {
+  check_icp_status (ICP_offline (m_anum));
   m_ctrl->remove_impl (m_anum);
-  assert (ICP_offline (m_anum) == 0);
-  // delete this;
 }
 
 // IDL location attribute modifier.
@@ -189,7 +196,7 @@ Thermostat_impl::
 get_nominal_temp () const
 {
   short temp {};
-  assert (ICP_get (m_anum, "nominal_temp", &temp, sizeof (temp)) == 0);
+  check_icp_status (ICP_get (m_anum, "nominal_temp", &temp, sizeof (temp)));
   return temp;
 }
 
@@ -204,7 +211,7 @@ set_nominal_temp (CCS::TempType new_temp)
   // We need to return the previous nominal temperature,
   // so we first read the current nominal temperature before
   // changing it.
-  assert (ICP_get (m_anum, "nominal_temp", &old_temp, sizeof (old_temp)) == 0);
+  check_icp_status (ICP_get (m_anum, "nominal_temp", &old_temp, sizeof (old_temp)));
 
   // Now set the nominal temperature to the new value.
   if  (ICP_set (m_anum, "nominal_temp", &new_temp) != 0)
@@ -212,10 +219,10 @@ set_nominal_temp (CCS::TempType new_temp)
       // If ICP_set () failed, read this thermostat's minimum and
       // maximum so we can initialize the BadTemp exception.
       CCS::Thermostat::BtData btd;
-      ICP_get (m_anum, "MIN_TEMP",
-               &btd.min_permitted, sizeof (btd.min_permitted));
-      ICP_get (m_anum, "MAX_TEMP",
-               &btd.max_permitted, sizeof (btd.max_permitted));
+      check_icp_status (ICP_get (m_anum, "MIN_TEMP",
+                                 &btd.min_permitted, sizeof (btd.min_permitted)));
+      check_icp_status (ICP_get (m_anum, "MAX_TEMP",
+                                 &btd.max_permitted, sizeof (btd.max_permitted)));
       btd.requested = new_temp;
       btd.error_msg = CORBA::string_dup (new_temp > btd.max_permitted ? "Too hot" : "Too cold");
       throw CCS::Thermostat::BadTemp (btd);
@@ -331,10 +338,19 @@ Controller_impl::
   if  (exists (anum))
     throw CCS::Controller::DuplicateAsset ();
 
-  assert (ICP_online (anum) == 0);
-  assert (ICP_set (anum, "location", loc) == 0);
-  add_impl (anum, nullptr);
-  return make_dref (m_poa.in (), anum);
+  check_icp_status (ICP_online (anum));
+  try
+    {
+      check_icp_status (ICP_set (anum, "location", loc));
+      CCS::Thermometer_var result = make_dref (m_poa.in (), anum);
+      add_impl (anum, nullptr);
+      return result._retn ();
+    }
+  catch (...)
+    {
+      (void) ICP_offline (anum);
+      throw;
+    }
 }
 
 CCS::Thermostat_ptr
@@ -348,26 +364,36 @@ create_thermostat (CCS::AssetType anum,
   if  (exists (anum))
     throw CCS::Controller::DuplicateAsset ();
 
-  assert (ICP_online (anum) == 0);
-  assert (ICP_set (anum, "location", loc) == 0);
-  // Set the nominal temperature.
-  if  (ICP_set (anum, "nominal_temp", &temp) != 0)
+  check_icp_status (ICP_online (anum));
+  try
     {
-      // If ICP_set () failed, read this thermostat's minimum
-      // and maximum so we can initialize the BadTemp exception.
-      CCS::Thermostat::BtData btd;
-      ICP_get (anum, "MIN_TEMP",
-               &btd.min_permitted, sizeof (btd.min_permitted));
-      ICP_get (anum, "MAX_TEMP", &btd.max_permitted, sizeof (btd.max_permitted));
-      btd.requested = temp;
-      btd.error_msg = CORBA::string_dup (temp > btd.max_permitted ? "Too hot" : "Too cold");
-      ICP_offline (anum);
-      throw CCS::Thermostat::BadTemp (btd);
-    }
+      check_icp_status (ICP_set (anum, "location", loc));
+      if  (ICP_set (anum, "nominal_temp", &temp) != 0)
+        {
+          // If ICP_set () failed, read this thermostat's minimum
+          // and maximum so we can initialize the BadTemp exception.
+          CCS::Thermostat::BtData btd;
+          check_icp_status (ICP_get (anum, "MIN_TEMP",
+                                     &btd.min_permitted, sizeof (btd.min_permitted)));
+          check_icp_status (ICP_get (anum, "MAX_TEMP",
+                                     &btd.max_permitted, sizeof (btd.max_permitted)));
+          btd.requested = temp;
+          btd.error_msg = CORBA::string_dup (temp > btd.max_permitted ? "Too hot" : "Too cold");
+          throw CCS::Thermostat::BadTemp (btd);
+        }
 
-  add_impl (anum, nullptr);
-  CORBA::Object_var obj = make_dref (m_poa.in (), anum);
-  return CCS::Thermostat::_narrow (obj.in ());
+      CORBA::Object_var const obj = make_dref (m_poa.in (), anum);
+      CCS::Thermostat_var result = CCS::Thermostat::_narrow (obj.in ());
+      if (CORBA::is_nil (result.in ()))
+        throw CORBA::INTERNAL ();
+      add_impl (anum, nullptr);
+      return result._retn ();
+    }
+  catch (...)
+    {
+      (void) ICP_offline (anum);
+      throw;
+    }
 }
 
 // IDL list operation.
@@ -554,7 +580,7 @@ preinvoke (PortableServer::ObjectId const& oid,
         }
       // Instantiate correct type of servant.
       char buf[32] {};
-      assert (ICP_get (anum, "model", buf, sizeof (buf)) == 0);
+      check_icp_status (ICP_get (anum, "model", buf, sizeof (buf)));
       if  (std::strcmp (buf, "Sens-A-Temp") == 0)
         servant = new Thermometer_impl (anum);
       else
