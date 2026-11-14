@@ -203,11 +203,14 @@ protected:
   /// sets the protocol_ enum from the carrier_protocol_ string.
   int set_protocol ();
 
-  /// Addr information for the carrier protocol.
+  /// Owns addresses parsed from a flow specification when these addresses are local.
+  std::unique_ptr<ACE_Addr> owned_address_ {};
+  std::unique_ptr<ACE_Addr> owned_control_address_ {};
+  std::unique_ptr<ACE_Addr> owned_peer_addr_ {};
+
+  /// Non-owning address views; parsed addresses are owned by the members above.
   ACE_Addr *address_ {};
-  bool clean_up_address_ {};     // added to clean up a memory leak
   ACE_Addr *control_address_ {};
-  bool clean_up_control_address_ {}; // added to clean up a memory leak
 
   /// Fwd Addr in string format i.e hostname:port.
   ACE_CString address_str_;
@@ -242,7 +245,6 @@ protected:
   ACE_CString entry_;
 
   bool is_multicast_ {};
-  bool delete_peer_addr_ {};
   ACE_Addr *peer_addr_ {};
   std::vector<std::string> local_sec_addrs_ {};
   std::vector<std::string> peer_sec_addrs_ {};

@@ -62,16 +62,7 @@ TAO_FlowSpec_Entry::TAO_FlowSpec_Entry (char const *flowname,
   this->set_direction (direction);
 }
 
-TAO_FlowSpec_Entry::~TAO_FlowSpec_Entry ()
-{
-  if (this->delete_peer_addr_)
-    delete this->peer_addr_;
-
-  if (this->clean_up_address_)
-    delete address_;
-  if (this->clean_up_control_address_)
-    delete control_address_;
-}
+TAO_FlowSpec_Entry::~TAO_FlowSpec_Entry () = default;
 
 int
 TAO_FlowSpec_Entry::set_protocol ()
@@ -228,12 +219,12 @@ TAO_FlowSpec_Entry::parse_address (char const *address,
                                 -1);
                 if (flow_comp == TAO_AV_Core::TAO_AV_DATA)
                   {
-                    this->clean_up_address_ = true;
+                    this->owned_address_.reset (inet_addr);
                     this->address_ = inet_addr;
                   }
                 else
                   {
-                    this->clean_up_control_address_ = true;
+                    this->owned_control_address_.reset (inet_addr);
                     this->control_address_ = inet_addr;
                   }
 
@@ -313,7 +304,7 @@ TAO_FlowSpec_Entry::parse_address (char const *address,
                 ACE_NEW_RETURN (inet_addr,
                                 ACE_INET_Addr (addr.c_str() ),
                                 -1);
-                this->clean_up_address_ = true;
+                this->owned_address_.reset (inet_addr);
                 this->address_ = inet_addr;
 
                 if (ACE_OS::strcasecmp (this->carrier_protocol_.c_str(),"RTP/UDP") == 0)
@@ -328,7 +319,7 @@ TAO_FlowSpec_Entry::parse_address (char const *address,
                       control_port = static_cast<u_short> (
                         std::atoi (port_tokenizer[1]));
                     control_inet_addr->set_port_number (control_port);
-                    this->clean_up_control_address_ = true;
+                    this->owned_control_address_.reset (control_inet_addr);
                     this->control_address_ = control_inet_addr;
                   }
 
@@ -491,7 +482,7 @@ TAO_Forward_FlowSpec_Entry::parse (char const *flowSpec_entry)
                           ACE_INET_Addr (tokenizer [TAO_AV_PEER_ADDR]),
                           0);
         }
-      this->delete_peer_addr_ = true;
+      this->owned_peer_addr_.reset (addr);
       this->peer_addr_ = addr;
 
       ACE_TCHAR buf [BUFSIZ];
@@ -607,6 +598,7 @@ TAO_Forward_FlowSpec_Entry::entry_to_string ()
             ACE_NEW_RETURN (inet_control_addr,
                             ACE_INET_Addr (control_port, inet_addr->get_host_addr ()),
                             "");
+            this->owned_control_address_.reset (inet_control_addr);
             this->control_address_ = inet_control_addr;
           }
           break;

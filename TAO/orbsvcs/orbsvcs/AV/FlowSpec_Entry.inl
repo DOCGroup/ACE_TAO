@@ -90,11 +90,9 @@ ACE_INLINE
 void
 TAO_FlowSpec_Entry::address (ACE_Addr *addr, bool cleanup)
 {
-  if (this->clean_up_address_)
-    delete this->address_;
-
+  if (this->owned_address_.get () != addr)
+    this->owned_address_.reset (cleanup ? addr : nullptr);
   this->address_ = addr;
-  this->clean_up_address_ = cleanup;
 }
 
 ACE_INLINE
@@ -108,6 +106,8 @@ ACE_INLINE
 void
 TAO_FlowSpec_Entry::control_address (ACE_Addr *addr)
 {
+  if (this->owned_control_address_.get () != addr)
+    this->owned_control_address_.reset ();
   this->control_address_ = addr;
 }
 
@@ -136,10 +136,8 @@ ACE_INLINE
 int
 TAO_FlowSpec_Entry::set_peer_addr (ACE_Addr *peer_addr)
 {
-  if (this->delete_peer_addr_)
-    delete this->peer_addr_;
-
-  this->delete_peer_addr_ = false;
+  if (this->owned_peer_addr_.get () != peer_addr)
+    this->owned_peer_addr_.reset ();
   this->peer_addr_ = peer_addr;
 
   if (this->handler_ != nullptr)
