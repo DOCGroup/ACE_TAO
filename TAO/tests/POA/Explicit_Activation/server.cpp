@@ -13,6 +13,7 @@
 #include "test_i.h"
 #include "ace/OS_NS_stdio.h"
 
+#include <cstring>
 #include <memory>
 #include <string>
 
@@ -61,7 +62,7 @@ write_ior_to_file (std::basic_string<ACE_TCHAR> const &file_name,
                       -1);
 
   int const result = ACE_OS::fprintf (output_file.get (), "%s", ior);
-  if (result <= 0 || static_cast<size_t> (result) != ACE_OS::strlen (ior))
+  if (result <= 0 || static_cast<size_t> (result) != std::strlen (ior))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "ACE_OS::fprintf failed while writing %C to %s\n",
                        ior,

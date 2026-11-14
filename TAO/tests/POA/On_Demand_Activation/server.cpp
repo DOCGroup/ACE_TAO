@@ -15,6 +15,7 @@
 #include "Servant_Locator.h"
 #include "ace/OS_NS_stdio.h"
 
+#include <cstring>
 #include <memory>
 #include <string>
 
@@ -74,7 +75,7 @@ write_iors_to_file (ACE_TCHAR const *ior_output_file,
 
   int result = ACE_OS::fprintf (output_file_1.get (), "%s", first_ior);
   if (result <= 0
-      || static_cast<size_t> (result) != ACE_OS::strlen (first_ior))
+      || static_cast<size_t> (result) != std::strlen (first_ior))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "ACE_OS::fprintf failed while writing %C to %s\n",
                        first_ior,
@@ -83,7 +84,7 @@ write_iors_to_file (ACE_TCHAR const *ior_output_file,
 
   result = ACE_OS::fprintf (output_file_2.get (), "%s", second_ior);
   if (result <= 0
-      || static_cast<size_t> (result) != ACE_OS::strlen (second_ior))
+      || static_cast<size_t> (result) != std::strlen (second_ior))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "ACE_OS::fprintf failed while writing %C to %s\n",
                        second_ior,

@@ -10,6 +10,7 @@
 
 #include "testC.h"
 
+#include <cstring>
 #include <memory>
 #include <string>
 
@@ -117,7 +118,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           std::string tmp (1024 * i, 'a');
           CORBA::String_var result = target->test_op (tmp.c_str ());
-          cout << "reply to client = " << ACE_OS::strlen (result.in ())
+          cout << "reply to client = " << std::strlen (result.in ())
                << " bytes" << endl;
           ACE_OS::sleep (2);
         }

@@ -1,5 +1,6 @@
 #include "Server_Task.h"
 #include "Servant_Activator.h"
+#include <cstring>
 #include <memory>
 #include "ace/OS_NS_stdio.h"
 #include "ace/Manual_Event.h"
@@ -18,7 +19,7 @@ write_iors_to_file (ACE_TCHAR const *output_file_name,
   int const result = ACE_OS::fprintf (output_file.get (), "%s", first_ior);
 
   if (result <= 0
-      || static_cast<size_t> (result) != ACE_OS::strlen (first_ior))
+      || static_cast<size_t> (result) != std::strlen (first_ior))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "ACE_OS::fprintf failed while writing %C to %s\n",
                        first_ior,

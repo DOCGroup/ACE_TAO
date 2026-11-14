@@ -6,6 +6,7 @@
 #include "../check_supported_priorities.cpp"
 #include "../common_args.cpp"
 
+#include <cstring>
 #include <memory>
 
 class test_i :
@@ -135,7 +136,7 @@ write_iors_to_file (CORBA::Object_ptr object,
                      ior.in ());
 
   ACE_ASSERT (result >= 0 &&
-              static_cast<size_t> (result) == ACE_OS::strlen (ior.in ()));
+              static_cast<size_t> (result) == std::strlen (ior.in ()));
   ACE_UNUSED_ARG (result);
 }
 

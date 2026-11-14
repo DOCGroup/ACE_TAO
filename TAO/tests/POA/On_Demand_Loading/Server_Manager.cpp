@@ -3,6 +3,7 @@
 #include "ace/SString.h"
 #include "ace/OS_NS_stdio.h"
 
+#include <cstring>
 #include <memory>
 
 Server_i::Server_i ()
@@ -69,7 +70,7 @@ Server_i::write_iors_to_file (char const *first_ior,
                                 "%s",
                                 first_ior);
   if (result <= 0
-      || static_cast<size_t> (result) != ACE_OS::strlen (first_ior))
+      || static_cast<size_t> (result) != std::strlen (first_ior))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "ACE_OS::fprintf failed while writing %C to %s\n",
                        first_ior,
@@ -80,7 +81,7 @@ Server_i::write_iors_to_file (char const *first_ior,
                             "%s",
                             second_ior);
   if (result <= 0
-      || static_cast<size_t> (result) != ACE_OS::strlen (second_ior))
+      || static_cast<size_t> (result) != std::strlen (second_ior))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "ACE_OS::fprintf failed while writing %C to %s\n",
                        second_ior,
