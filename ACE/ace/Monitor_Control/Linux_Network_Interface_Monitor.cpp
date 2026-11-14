@@ -6,6 +6,7 @@
 #include "ace/OS_NS_stdio.h"
 
 #include <cstdio>
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -13,6 +14,14 @@ namespace ACE
 {
   namespace Monitor_Control
   {
+    struct Monitor_Control_File_Closer
+    {
+      void operator() (FILE *file) const
+      {
+        (void) std::fclose (file);
+      }
+    };
+
     Linux_Network_Interface_Monitor::Linux_Network_Interface_Monitor (
       char const *scan_format)
       : scan_format_ (scan_format)
@@ -24,8 +33,8 @@ namespace ACE
     Linux_Network_Interface_Monitor::update_i ()
     {
       char buf[1024] {};
-      FILE* const fp = ACE_OS::fopen (ACE_TEXT ("/proc/net/dev"),
-                                      ACE_TEXT ("r"));
+      std::unique_ptr<FILE, Monitor_Control_File_Closer> fp (
+        ACE_OS::fopen (ACE_TEXT ("/proc/net/dev"), ACE_TEXT ("r")));
 
       if (fp == nullptr)
         {
@@ -37,14 +46,14 @@ namespace ACE
 
       /// Ignore the first 2 lines of the file, which are file
       /// and column headers.
-      (void) std::fgets (buf, sizeof (buf), fp);
-      (void) std::fgets (buf, sizeof (buf), fp);
+      (void) std::fgets (buf, sizeof (buf), fp.get ());
+      (void) std::fgets (buf, sizeof (buf), fp.get ());
 
       unsigned long iface_value {};
       ACE_UINT32 iface_index {};
       ACE_UINT64 total_value {};
 
-      while (std::fgets (buf, sizeof (buf), fp) != nullptr)
+      while (std::fgets (buf, sizeof (buf), fp.get ()) != nullptr)
         {
           std::sscanf (buf, this->scan_format_.c_str (), &iface_value);
 
@@ -60,7 +69,6 @@ namespace ACE
         }
 
       this->value_ = total_value - this->start_;
-      (void) std::fclose (fp);
     }
 
     void
@@ -81,8 +89,8 @@ namespace ACE
       /// from subsequent readings to get bytes sent since we started
       /// monitoring.
       char buf[1024] {};
-      FILE* const fp = ACE_OS::fopen (ACE_TEXT ("/proc/net/dev"),
-                                      ACE_TEXT ("r"));
+      std::unique_ptr<FILE, Monitor_Control_File_Closer> fp (
+        ACE_OS::fopen (ACE_TEXT ("/proc/net/dev"), ACE_TEXT ("r")));
 
       if (fp == nullptr)
         {
@@ -94,18 +102,16 @@ namespace ACE
 
       /// Ignore the first 2 lines of the file, which are file
       /// and column headers.
-      (void) std::fgets (buf, sizeof (buf), fp);
-      (void) std::fgets (buf, sizeof (buf), fp);
+      (void) std::fgets (buf, sizeof (buf), fp.get ());
+      (void) std::fgets (buf, sizeof (buf), fp.get ());
 
       unsigned long iface_value {};
 
-      while (std::fgets (buf, sizeof (buf), fp) != nullptr)
+      while (std::fgets (buf, sizeof (buf), fp.get ()) != nullptr)
         {
           std::sscanf (buf, this->scan_format_.c_str (), &iface_value);
           this->start_ += iface_value;
         }
-
-      (void) std::fclose (fp);
     }
   }
 }
