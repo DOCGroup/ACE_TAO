@@ -78,7 +78,7 @@ make_dref (PortableServer::POA_ptr poa, CCS::AssetType anum)
   // Make a new reference.
   CORBA::Object_var obj
     = poa->create_reference_with_id (oid.in (), rep_id);
-  return CCS::Thermometer::_narrow (obj.in ());
+  return CCS::Thermometer::_unchecked_narrow (obj.in ());
 }
 
 Controller_impl *Thermometer_impl::m_ctrl {};  // static member
@@ -383,7 +383,7 @@ create_thermostat (CCS::AssetType anum,
         }
 
       CORBA::Object_var const obj = make_dref (m_poa.in (), anum);
-      CCS::Thermostat_var result = CCS::Thermostat::_narrow (obj.in ());
+      CCS::Thermostat_var result = CCS::Thermostat::_unchecked_narrow (obj.in ());
       if (CORBA::is_nil (result.in ()))
         throw CORBA::INTERNAL ();
       add_impl (anum, nullptr);
