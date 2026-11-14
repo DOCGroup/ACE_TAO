@@ -51,15 +51,13 @@ public:
 
   ~TAO_TSS_Resources ();
 
+  TAO_TSS_Resources (TAO_TSS_Resources const &) = delete;
+  TAO_TSS_Resources (TAO_TSS_Resources &&) = delete;
+  TAO_TSS_Resources &operator= (TAO_TSS_Resources const &) = delete;
+  TAO_TSS_Resources &operator= (TAO_TSS_Resources &&) = delete;
+
   /// Return a singleton instance of this class.
   static TAO_TSS_Resources * instance ();
-
-private:
-  /// Do not copy TSS resources
-  //@{
-  TAO_TSS_Resources (const TAO_TSS_Resources&);
-  void operator= (const TAO_TSS_Resources&);
-  //@}
 
 public:
   /**
