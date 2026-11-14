@@ -854,12 +854,12 @@ TAO_Naming_Server::bundle_at(size_t ndx)
       {
       ORBSVCS_ERROR((LM_ERROR,
         ACE_TEXT("(%P|%t) TAO_naming_Server::bundle_at, ")
-        ACE_TEXT("index %d out of range\n"),
+        ACE_TEXT("index %B out of range\n"),
         ndx));
       }
     return nullptr;
     }
-  return &iors_[ndx];
+  return std::addressof (iors_[ndx]);
   }
 
 TAO_Naming_Server::IOR_Bundle const *
@@ -871,12 +871,12 @@ TAO_Naming_Server::bundle_at(size_t ndx) const
       {
       ORBSVCS_ERROR((LM_ERROR,
         ACE_TEXT("(%P|%t) const TAO_naming_Server::bundle_at, ")
-        ACE_TEXT("index %d out of range\n"),
+        ACE_TEXT("index %B out of range\n"),
         ndx));
       }
     return nullptr;
     }
-  return &iors_[ndx];
+  return std::addressof (iors_[ndx]);
   }
 
 int
