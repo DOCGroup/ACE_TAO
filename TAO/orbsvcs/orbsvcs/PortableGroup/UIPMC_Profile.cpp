@@ -10,6 +10,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <cstdio>
+#include <memory>
 
 #include "orbsvcs/miopC.h"
 #include "orbsvcs/PortableGroupC.h"
@@ -477,7 +478,7 @@ TAO_UIPMC_Profile::do_is_equivalent (TAO_Profile const *other_profile)
   if (op == nullptr)
     return false;
 
-  return this->endpoint_.is_equivalent (&op->endpoint_);
+  return this->endpoint_.is_equivalent (std::addressof (op->endpoint_));
 }
 
 CORBA::ULong
@@ -495,7 +496,7 @@ TAO_UIPMC_Profile::hash (CORBA::ULong max)
 TAO_Endpoint*
 TAO_UIPMC_Profile::endpoint ()
 {
-  return &this->endpoint_;
+  return std::addressof (this->endpoint_);
 }
 
 int

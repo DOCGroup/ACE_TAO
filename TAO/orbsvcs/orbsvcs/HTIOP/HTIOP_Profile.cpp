@@ -13,6 +13,7 @@
 
 #include <cstdlib>
 #include <cstring>
+#include <memory>
 
 static constexpr char the_prefix[] = "htiop";
 
@@ -217,8 +218,8 @@ TAO::HTIOP::Profile::do_is_equivalent (const TAO_Profile *other_profile)
     return 0;
 
   // Check endpoints equivalence.
-  const TAO::HTIOP::Endpoint *other_endp = &op->endpoint_;
-  for (TAO::HTIOP::Endpoint *endp = &this->endpoint_;
+  const TAO::HTIOP::Endpoint *other_endp = std::addressof (op->endpoint_);
+  for (TAO::HTIOP::Endpoint *endp = std::addressof (this->endpoint_);
        endp != nullptr;
        endp = endp->next_)
     {
@@ -236,7 +237,7 @@ TAO::HTIOP::Profile::hash (CORBA::ULong max)
 {
   // Get the hashvalue for all endpoints.
   CORBA::ULong hashval {};
-  for (TAO::HTIOP::Endpoint *endp = &this->endpoint_;
+  for (TAO::HTIOP::Endpoint *endp = std::addressof (this->endpoint_);
        endp != nullptr;
        endp = endp->next_)
     {
@@ -261,7 +262,7 @@ TAO::HTIOP::Profile::hash (CORBA::ULong max)
 TAO_Endpoint*
 TAO::HTIOP::Profile::endpoint ()
 {
-  return &this->endpoint_;
+  return std::addressof (this->endpoint_);
 }
 
 CORBA::ULong
@@ -370,7 +371,7 @@ TAO::HTIOP::Profile::encode_endpoints ()
   HTIOPEndpointSequence endpoints;
   endpoints.length (this->count_);
 
-  const TAO::HTIOP::Endpoint *endpoint = &this->endpoint_;
+  const TAO::HTIOP::Endpoint *endpoint = std::addressof (this->endpoint_);
   for (CORBA::ULong i {};
        i < this->count_;
        ++i)
