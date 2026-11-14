@@ -251,13 +251,13 @@ TAO_SHMIOP_Connection_Handler::add_transport_to_cache ()
       this->orb_core()->orb_params()->use_dotted_decimal_addresses ());
 
   // Construct a property object
-  TAO_Base_Transport_Property prop (&endpoint);
+  TAO_Base_Transport_Property prop (std::addressof (endpoint));
 
   TAO::Transport_Cache_Manager &cache =
     this->orb_core ()->lane_resources ().transport_cache ();
 
   // Add the handler to Cache
-  return cache.cache_transport (&prop, this->transport ());
+  return cache.cache_transport (std::addressof (prop), this->transport ());
 }
 
 int

@@ -270,7 +270,7 @@ namespace TAO
     catch ( ::CORBA::Exception& ex)
       {
         PortableInterceptor::ReplyStatus const status =
-          this->handle_any_exception (&ex);
+          this->handle_any_exception (std::addressof (ex));
 
         if (status == PortableInterceptor::LOCATION_FORWARD ||
             status == PortableInterceptor::TRANSPORT_RETRY)
@@ -426,7 +426,7 @@ namespace TAO
     TAO_InputCDR &cdr = rd.reply_cdr ();
 
     // Set the translators
-    this->resolver_.transport ()->assign_translators (&cdr, nullptr);
+    this->resolver_.transport ()->assign_translators (std::addressof (cdr), nullptr);
 
     // At this point it can be assumed that the GIOP/whatever protocol
     // header and the reply header are already handled.  Further it
@@ -888,7 +888,7 @@ namespace TAO
     catch ( ::CORBA::Exception& ex)
       {
         PortableInterceptor::ReplyStatus const status =
-          this->handle_any_exception (&ex);
+          this->handle_any_exception (std::addressof (ex));
 
         if (status == PortableInterceptor::LOCATION_FORWARD ||
             status == PortableInterceptor::TRANSPORT_RETRY)

@@ -12,6 +12,7 @@
 #include "ace/Dynamic_Service.h"
 
 #include <cstring>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -163,7 +164,7 @@ TAO_DynamicImplementation::_dispatch (
               // If we have a cac it will handle the exception and no
               // need to do any further processing
               request.operation_details ()->cac ()->handle_corba_exception (
-                request, &ex);
+                request, std::addressof (ex));
               return;
             }
           else

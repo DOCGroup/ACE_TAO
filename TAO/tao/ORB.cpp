@@ -40,6 +40,7 @@
 #include "ace/CORBA_macros.h"
 #include <cstdlib>
 #include <cstring>
+#include <memory>
 #include <string>
 
 static const char ior_prefix[] = "IOR:";
@@ -774,7 +775,7 @@ CORBA::ORB::resolve_policy_current ()
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
   TAO_Policy_Current &policy_current = this->orb_core_->policy_current ();
-  return CORBA::Object::_duplicate (&policy_current);
+  return CORBA::Object::_duplicate (std::addressof (policy_current));
 
 #else
 
@@ -1616,7 +1617,7 @@ CORBA::ORB::ior_string_to_object (const char *str)
   ACE_Message_Block mb (std::strlen (str) / 2 + 1
                         + ACE_CDR::MAX_ALIGNMENT + 1);
 
-  ACE_CDR::mb_align (&mb);
+  ACE_CDR::mb_align (std::addressof (mb));
 
   char *buffer = mb.rd_ptr ();
   const char *tmp = str;
@@ -1650,7 +1651,7 @@ CORBA::ORB::ior_string_to_object (const char *str)
   int const byte_order = *(mb.rd_ptr ());
   mb.rd_ptr (1);
   mb.wr_ptr (len);
-  TAO_InputCDR stream (&mb,
+  TAO_InputCDR stream (std::addressof (mb),
                        byte_order,
                        TAO_DEF_GIOP_MAJOR,
                        TAO_DEF_GIOP_MINOR,

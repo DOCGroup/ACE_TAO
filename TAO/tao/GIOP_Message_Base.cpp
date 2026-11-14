@@ -964,7 +964,7 @@ TAO_GIOP_Message_Base::process_request (
       if (csm)
         {
           csm->process_service_context (request);
-          transport->assign_translators (&cdr, &output);
+          transport->assign_translators (std::addressof (cdr), std::addressof (output));
         }
 
       request_id = request.request_id ();
@@ -1049,7 +1049,7 @@ TAO_GIOP_Message_Base::process_request (
                                                output,
                                                request_id,
                                                std::addressof (request.reply_service_info ()),
-                                               &ex);
+                                               std::addressof (ex));
           if (result == -1)
             {
               if (TAO_debug_level > 0)

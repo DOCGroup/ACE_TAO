@@ -342,11 +342,11 @@ TAO_DIOP_Connection_Handler::add_transport_to_cache ()
       this->orb_core ()->orb_params ()->cache_incoming_by_dotted_decimal_address ());
 
   // Construct a property object
-  TAO_Base_Transport_Property prop (&endpoint);
+  TAO_Base_Transport_Property prop (std::addressof (endpoint));
 
   // Add the handler to Cache
   return this->orb_core ()->lane_resources ()
-    .transport_cache ().cache_transport (&prop, this->transport ());
+    .transport_cache ().cache_transport (std::addressof (prop), this->transport ());
 }
 
 int

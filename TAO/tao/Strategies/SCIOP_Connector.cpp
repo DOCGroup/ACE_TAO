@@ -265,7 +265,7 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
 
   // Add the handler to Cache
   int retval =
-    this->orb_core ()->lane_resources ().transport_cache ().cache_transport (&desc,
+    this->orb_core ()->lane_resources ().transport_cache ().cache_transport (std::addressof (desc),
                                                                              transport);
 
   // Failure in adding to cache.

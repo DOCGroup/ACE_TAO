@@ -483,13 +483,13 @@ TAO_IIOP_Connection_Handler::add_transport_to_cache ()
       this->orb_core()->orb_params()->cache_incoming_by_dotted_decimal_address ());
 
   // Construct a property object
-  TAO_Base_Transport_Property prop (&endpoint);
+  TAO_Base_Transport_Property prop (std::addressof (endpoint));
 
   TAO::Transport_Cache_Manager &cache =
     this->orb_core ()->lane_resources ().transport_cache ();
 
   // Idle the transport..
-  return cache.cache_transport (&prop, this->transport ());
+  return cache.cache_transport (std::addressof (prop), this->transport ());
 }
 
 int
@@ -554,14 +554,14 @@ TAO_IIOP_Connection_Handler::process_listen_point_list (
                                   listen_point.port, addr);
 
       // Construct a property object
-      TAO_Base_Transport_Property prop (&endpoint);
+      TAO_Base_Transport_Property prop (std::addressof (endpoint));
 
       // Mark the connection as bidirectional
       prop.set_bidir_flag (1);
 
       // The property for this handler has changed. Recache the
       // handler with this property
-      if (this->transport ()->recache_transport (&prop) == -1)
+      if (this->transport ()->recache_transport (std::addressof (prop)) == -1)
         return -1;
 
       // Make the handler idle and ready for use

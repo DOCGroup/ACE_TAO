@@ -346,13 +346,13 @@ TAO_SCIOP_Connection_Handler::add_transport_to_cache ()
       this->orb_core()->orb_params()->use_dotted_decimal_addresses ());
 
   // Construct a property object
-  TAO_Base_Transport_Property prop (&endpoint);
+  TAO_Base_Transport_Property prop (std::addressof (endpoint));
 
   TAO::Transport_Cache_Manager &cache =
     this->orb_core ()->lane_resources ().transport_cache ();
 
   // Idle the transport..
-  return cache.cache_transport (&prop, this->transport ());
+  return cache.cache_transport (std::addressof (prop), this->transport ());
 }
 
 int
@@ -381,14 +381,14 @@ TAO_SCIOP_Connection_Handler::process_listen_point_list (
         this->orb_core()->orb_params()->use_dotted_decimal_addresses ());
 
       // Construct a property object
-      TAO_Base_Transport_Property prop (&endpoint);
+      TAO_Base_Transport_Property prop (std::addressof (endpoint));
 
       // Mark the connection as bidirectional
       prop.set_bidir_flag (1);
 
       // The property for this handler has changed. Recache the
       // handler with this property
-      int const retval = this->transport ()->recache_transport (&prop);
+      int const retval = this->transport ()->recache_transport (std::addressof (prop));
       if (retval == -1)
         return retval;
 

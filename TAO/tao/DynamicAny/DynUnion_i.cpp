@@ -10,6 +10,8 @@
 
 #include "tao/CDR.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_DynUnion_i::TAO_DynUnion_i (CORBA::Boolean allow_truncation)
@@ -183,7 +185,7 @@ TAO_DynUnion_i::set_from_any (CORBA::Any const& any)
       this->allow_truncation_ );
 
   // Move to the next field in the CDR stream.
-  (void) TAO_Marshal_Object::perform_skip (disc_tc.in (), &in);
+  (void) TAO_Marshal_Object::perform_skip (disc_tc.in (), std::addressof (in));
 
   CORBA::TypeCode_var const unaliased =
     TAO_DynAnyFactory::strip_alias (tc.in ());

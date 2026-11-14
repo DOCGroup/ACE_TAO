@@ -11,6 +11,8 @@
 #include "tao/Profile_Transport_Resolver.h"
 #include "tao/SystemException.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_Time_Value TAO_Optimized_Connection_Endpoint_Selector::timeout_;
@@ -58,7 +60,7 @@ TAO_Optimized_Connection_Endpoint_Selector::check_profile (TAO_Profile *p,
   for (size_t i {}; i < endpoint_count; ++i)
     {
       TAO_Base_Transport_Property desc (effective_endpoint);
-      if (r->find_transport(&desc))
+      if (r->find_transport (std::addressof (desc)))
         return 1;
       // Go to the next endpoint in this profile
       effective_endpoint = effective_endpoint->next();
@@ -137,7 +139,7 @@ TAO_Optimized_Connection_Endpoint_Selector::select_endpoint
           for (size_t i {}; i < endpoint_count; ++i)
             {
               TAO_Base_Transport_Property desc (ep);
-              const bool retval = r->try_connect (&desc, max_wait_time);
+              const bool retval = r->try_connect (std::addressof (desc), max_wait_time);
 
               // Check if the connect has completed.
               if (retval)

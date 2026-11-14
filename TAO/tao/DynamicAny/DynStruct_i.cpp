@@ -9,6 +9,8 @@
 
 #include "tao/CDR.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_DynStruct_i::TAO_DynStruct_i (CORBA::Boolean allow_truncation)
@@ -120,7 +122,7 @@ TAO_DynStruct_i::set_from_any (CORBA::Any const& any)
           this->allow_truncation_);
 
       // Move to the next field in the CDR stream.
-      (void) TAO_Marshal_Object::perform_skip (field_tc.in (), &in);
+      (void) TAO_Marshal_Object::perform_skip (field_tc.in (), std::addressof (in));
     }
 }
 
@@ -478,7 +480,7 @@ TAO_DynStruct_i::from_any (CORBA::Any const& any)
               this->allow_truncation_);
 
           // Move to the next field in the CDR stream.
-          (void) TAO_Marshal_Object::perform_skip (field_tc.in (), &in);
+          (void) TAO_Marshal_Object::perform_skip (field_tc.in (), std::addressof (in));
         }
 
       this->current_position_ = this->component_count_ ? 0 : -1;

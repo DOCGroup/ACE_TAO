@@ -2138,7 +2138,7 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
                                    this->orb_core_->input_cdr_msgblock_allocator ());
 
   // Align the message block
-  ACE_CDR::mb_align (&message_block);
+  ACE_CDR::mb_align (std::addressof (message_block));
 
   size_t recv_size {}; // Note: unsigned integer
 
