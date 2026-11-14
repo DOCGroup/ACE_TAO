@@ -21,6 +21,7 @@
 
 #include "ace/Object_Manager.h"
 #include "ace/Global_Macros.h"
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -114,8 +115,9 @@ public:
 
     // Cast the return type of the the object pointer based
     // on the type of the function template parameter.
-    return &((ACE_Cleanup_Adapter<TYPE> *)
-             ACE_Object_Manager::preallocated_object[identifier])->object ();
+    return std::addressof (
+      static_cast<ACE_Cleanup_Adapter<TYPE> *> (
+        ACE_Object_Manager::preallocated_object[identifier])->object ());
   }
   /// Get the preallocated array identified by "id".  Returns a
   /// pointer to the array.  Beware: no error indication is provided,
@@ -129,8 +131,9 @@ public:
 
     // Cast the return type of the the object pointer based
     // on the type of the function template parameter.
-    return &((ACE_Cleanup_Adapter<TYPE> *)
-             ACE_Object_Manager::preallocated_array[identifier])->object ();
+    return std::addressof (
+      static_cast<ACE_Cleanup_Adapter<TYPE> *> (
+        ACE_Object_Manager::preallocated_array[identifier])->object ());
   }
 
 protected:
