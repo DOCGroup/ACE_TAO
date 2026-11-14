@@ -405,9 +405,9 @@ pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
   return 0;
 }
 
-// Sets the entry's reverse finish time and marks it as finished in
-// the reverse DFS traversal, after visiting all of its successors.
-// Returns 0 on success and -1 on error.
+/// Sets the entry's reverse finish time and marks it as finished in
+/// the reverse DFS traversal, after visiting all of its successors.
+/// Returns 0 on success and -1 on error.
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_SCC_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::

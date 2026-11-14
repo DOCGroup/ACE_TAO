@@ -60,8 +60,6 @@ TAO_RT_Info_Ex::TAO_RT_Info_Ex (RtecScheduler::RT_Info const &info)
   this->volatile_token = info.volatile_token;
 }
 
-// Assignment operator with an RT_Info on the RHS.
-
 void
 TAO_RT_Info_Ex::operator = (RtecScheduler::RT_Info const &info)
 {
@@ -146,15 +144,13 @@ TAO_RT_Info_Tuple::TAO_RT_Info_Tuple (RtecScheduler::RT_Info const &info)
 
 TAO_RT_Info_Tuple::~TAO_RT_Info_Tuple () = default;
 
-// Assignment operator with an RT_Info on the RHS.
-
 void
 TAO_RT_Info_Tuple::operator = (RtecScheduler::RT_Info const &info)
 {
   static_cast<TAO_RT_Info_Ex> (*this) = info;
 }
 
-// Less-than comparison operator: orders tuples by ascending rate (descending period).
+/// Less-than comparison operator: orders tuples by ascending rate (descending period).
 
 bool
 TAO_RT_Info_Tuple::operator < (TAO_RT_Info_Tuple const &t) const
@@ -841,8 +837,8 @@ TAO_Reconfig_Sched_Strategy_Base::comp_entry_finish_times (void const *first, vo
   return 0;
 }
 
-// Determines whether or not an entry is critical, based on operation characteristics.
-// returns 1 if critical, 0 if not
+/// Determines whether or not an entry is critical, based on operation characteristics.
+/// Returns true if critical, false otherwise.
 
 bool
 TAO_Reconfig_Sched_Strategy_Base::is_critical (TAO_Reconfig_Scheduler_Entry &rse)
@@ -852,8 +848,8 @@ TAO_Reconfig_Sched_Strategy_Base::is_critical (TAO_Reconfig_Scheduler_Entry &rse
          rse.actual_rt_info ()->criticality == RtecScheduler::VERY_HIGH_CRITICALITY;
 }
 
-// Determines whether or not a tuple is critical, based on operation
-// characteristics.  returns 1 if critical, 0 if not
+/// Determines whether or not a tuple is critical, based on operation
+/// characteristics. Returns true if critical, false otherwise.
 
 bool
 TAO_Reconfig_Sched_Strategy_Base::is_critical (TAO_RT_Info_Tuple &t)

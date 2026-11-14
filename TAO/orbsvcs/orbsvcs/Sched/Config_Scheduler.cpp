@@ -1,6 +1,3 @@
-// ============================================================================
-// ============================================================================
-
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/Scheduler_Factory.h"

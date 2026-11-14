@@ -729,9 +729,9 @@ Dispatch_Proxy_Iterator::Dispatch_Proxy_Iterator
   first (starting_sub_frame);
 }
 
-// positions the iterator at the first entry of the passed sub-frame,
-// returns 1 if it could position the iterator correctly, 0 if not,
-// and -1 if an error occurred.
+/// Positions the iterator at the first entry of the passed sub-frame.
+/// Returns 1 if it could position the iterator correctly, 0 if not,
+/// and -1 if an error occurred.
 
 int
 Dispatch_Proxy_Iterator::first (u_int sub_frame)
@@ -753,9 +753,9 @@ Dispatch_Proxy_Iterator::first (u_int sub_frame)
   return iter_.first ();
 }
 
-// positions the iterator at the last entry of the total frame,
-// returns 1 if it could position the iterator correctly, 0 if not,
-// and -1 if an error occurred.
+/// Positions the iterator at the last entry of the total frame.
+/// Returns 1 if it could position the iterator correctly, 0 if not,
+/// and -1 if an error occurred.
 
 int
 Dispatch_Proxy_Iterator::last ()
@@ -770,9 +770,9 @@ Dispatch_Proxy_Iterator::last ()
   return iter_.first ();
 }
 
-// positions the iterator at the next entry of the total frame,
-// returns 1 if it could position the iterator correctly, 0 if not,
-// and -1 if an error occurred.
+/// Positions the iterator at the next entry of the total frame.
+/// Returns 1 if it could position the iterator correctly, 0 if not,
+/// and -1 if an error occurred.
 
 int
 Dispatch_Proxy_Iterator::advance ()
@@ -809,9 +809,9 @@ Dispatch_Proxy_Iterator::advance ()
   return result;
 }
 
-// positions the iterator at the previous entry of the total frame,
-// returns 1 if it could position the iterator correctly, 0 if not,
-// and -1 if an error occurred.
+/// Positions the iterator at the previous entry of the total frame.
+/// Returns 1 if it could position the iterator correctly, 0 if not,
+/// and -1 if an error occurred.
 
 int
 Dispatch_Proxy_Iterator::retreat ()
@@ -848,7 +848,7 @@ Dispatch_Proxy_Iterator::retreat ()
   return result;
 }
 
-// returns the adjusted arrival time of the virtual entry
+/// Returns the adjusted arrival time of the virtual entry.
 
 RtecScheduler::Time
 Dispatch_Proxy_Iterator::arrival () const
@@ -865,7 +865,7 @@ Dispatch_Proxy_Iterator::arrival () const
          RtecScheduler::Time (current_frame_offset_);
 }
 
-// returns the adjusted deadline time of the virtual entry
+/// Returns the adjusted deadline time of the virtual entry.
 
 RtecScheduler::Time
 Dispatch_Proxy_Iterator::deadline () const
@@ -882,7 +882,7 @@ Dispatch_Proxy_Iterator::deadline () const
          RtecScheduler::Time (current_frame_offset_);
 }
 
-// returns the scheduler priority of the virtual entry
+/// Returns the scheduler priority of the virtual entry.
 
 Dispatch_Proxy_Iterator::Preemption_Priority
 Dispatch_Proxy_Iterator::priority () const
@@ -897,7 +897,7 @@ Dispatch_Proxy_Iterator::priority () const
   return link->dispatch_entry ().priority ();
 }
 
-// returns the OS priority of the virtual entry
+/// Returns the OS priority of the virtual entry.
 
 Dispatch_Proxy_Iterator::OS_Priority
 Dispatch_Proxy_Iterator::OS_priority () const

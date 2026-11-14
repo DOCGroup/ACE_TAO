@@ -1682,8 +1682,8 @@ lookup_i (char const * entry_point)
   return rt_info->handle;
 }
 
-// Internal method that returns the priority and subpriority values
-// assigned to an RT_Info, based on its handle.
+/// Returns the priority and subpriority values assigned to an RT_Info,
+/// based on its handle.
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 void
@@ -2327,7 +2327,7 @@ propagate_criticalities_i ()
     }
 }
 
-// Propagates periods, sets total frame size.
+/// Propagates periods and sets the total frame size.
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 propagate_characteristics_i ()
@@ -2364,9 +2364,9 @@ propagate_characteristics_i ()
     }
 }
 
-// Sort operations by urgency (done by strategy), then
-// assign priorities and subpriorities in one pass.
-// Sets last scheduled priority.
+/// Sorts operations by urgency (done by strategy), then
+/// assigns priorities and subpriorities in one pass.
+/// Sets last scheduled priority.
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
 assign_priorities_i ()
