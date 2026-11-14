@@ -39,17 +39,17 @@ public:
 
 ACE_WIN32_Proactor::ACE_WIN32_Proactor (size_t number_of_threads,
                                         bool used_with_reactor_event_loop)
-  : completion_port_ (0),
-    // This *MUST* be 0, *NOT* ACE_INVALID_HANDLE !!!
+  : completion_port_ (nullptr),
+    // This *MUST* be nullptr, *NOT* ACE_INVALID_HANDLE !!!
     number_of_threads_ (static_cast<DWORD> (number_of_threads)),
     used_with_reactor_event_loop_ (used_with_reactor_event_loop)
 {
   // Create the completion port.
   this->completion_port_ = ::CreateIoCompletionPort (INVALID_HANDLE_VALUE,
-                                                     0,
+                                                     nullptr,
                                                      0,
                                                      this->number_of_threads_);
-  if (this->completion_port_ == 0)
+  if (this->completion_port_ == nullptr)
     ACELIB_ERROR ((LM_ERROR,
                 ACE_TEXT ("%p\n"),
                 ACE_TEXT ("CreateIoCompletionPort")));
@@ -74,7 +74,7 @@ int
 ACE_WIN32_Proactor::close ()
 {
   // Close the completion port
-  if (this->completion_port_ != 0)
+  if (this->completion_port_ != nullptr)
     {
       // To avoid memory leaks we should delete all results from queue.
 
@@ -92,17 +92,17 @@ ACE_WIN32_Proactor::close ()
              &overlapped,
              0);  // poll
 
-          if (overlapped == 0 || res == FALSE)
+          if (overlapped == nullptr || res == FALSE)
             break;
 
           ACE_WIN32_Asynch_Result *asynch_result =
-            (ACE_WIN32_Asynch_Result *) overlapped;
+            static_cast<ACE_WIN32_Asynch_Result *> (overlapped);
 
           delete asynch_result;
         }
 
       int result = ACE_OS::close (this->completion_port_);
-      this->completion_port_ = 0;
+      this->completion_port_ = nullptr;
       return result;
     }
 
@@ -120,7 +120,7 @@ ACE_WIN32_Proactor::register_handle (ACE_HANDLE handle,
                                             this->completion_port_,
                                             comp_key,
                                             this->number_of_threads_);
-  if (cp == 0)
+  if (cp == nullptr)
     {
       ACE_OS::set_errno_to_last_error ();
       // If errno == ERROR_INVALID_PARAMETER, then this handle was
@@ -565,7 +565,7 @@ ACE_WIN32_Proactor::handle_events (unsigned long milli_seconds)
                                              &completion_key,
                                              &overlapped,
                                              milli_seconds);
-  if (result == FALSE && overlapped == 0)
+  if (result == FALSE && overlapped == nullptr)
     {
       ACE_OS::set_errno_to_last_error ();
 
@@ -589,10 +589,11 @@ ACE_WIN32_Proactor::handle_events (unsigned long milli_seconds)
           return -1;
         }
     }
-  else if (overlapped != 0)
+  else if (overlapped != nullptr)
     {
       // Narrow the result.
-      ACE_WIN32_Asynch_Result *asynch_result = (ACE_WIN32_Asynch_Result *) overlapped;
+      ACE_WIN32_Asynch_Result *asynch_result =
+        static_cast<ACE_WIN32_Asynch_Result *> (overlapped);
 
       // If errors happen, grab the error.
       if (result == FALSE)
@@ -621,7 +622,7 @@ ACE_WIN32_Proactor::handle_events (unsigned long milli_seconds)
 
       this->application_specific_code (asynch_result,
                                        static_cast<size_t> (bytes_transferred),
-                                       (void *) completion_key,
+                                       completion_key,
                                        result_err);
     }
   return 1;
@@ -638,7 +639,7 @@ ACE_WIN32_Proactor::application_specific_code (ACE_WIN32_Asynch_Result *asynch_r
       // Call completion hook
       asynch_result->complete (bytes_transferred,
                                error ? 0 : 1,
-                               (void *) completion_key,
+                               completion_key,
                                error);
     }
   ACE_SEH_FINALLY
@@ -661,9 +662,9 @@ ACE_WIN32_Proactor::post_completion (ACE_WIN32_Asynch_Result *result)
   //   error will be extracted later in handle_events()
 
   DWORD bytes_transferred = 0;
-  const void * completion_key = nullptr ;
+  void const *completion_key {};
 
-  if (result != 0)
+  if (result != nullptr)
     {
       // This cast is ok since the original API calls restricted the transfer
       // counts to DWORD range.
@@ -693,7 +694,7 @@ ACE_WIN32_Proactor::post_completion (ACE_WIN32_Asynch_Result *result)
 
   // If Proactor event is valid, signal it
   if (handle != ACE_INVALID_HANDLE
-      && handle != 0)
+      && handle != nullptr)
     ACE_OS::event_signal (&handle);
 
   return 0;
@@ -763,7 +764,7 @@ ACE_WIN32_Asynch_Timer::complete (size_t,
                                   u_long)
 {
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
-  if (handler != 0)
+  if (handler != nullptr)
     handler->handle_time_out (this->time_, this->act ());
 }
 
@@ -788,7 +789,7 @@ ACE_WIN32_Wakeup_Completion::complete (size_t       /* bytes_transferred */,
                                        u_long       /*  error */)
 {
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
-  if (handler != 0)
+  if (handler != nullptr)
     handler->handle_wakeup ();
 }
 
