@@ -7,7 +7,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_INLINE void
 ACE_SSL_SOCK_Stream::set_handle (ACE_HANDLE fd)
 {
-  if (this->ssl_.get () == nullptr || fd == ACE_INVALID_HANDLE)
+  if (!this->ssl_ || fd == ACE_INVALID_HANDLE)
     {
       this->ACE_SSL_SOCK::set_handle (ACE_INVALID_HANDLE);
       return;
@@ -314,7 +314,7 @@ ACE_SSL_SOCK_Stream::close ()
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::close");
 
-  if (this->ssl_.get () == nullptr || this->get_handle () == ACE_INVALID_HANDLE)
+  if (!this->ssl_ || this->get_handle () == ACE_INVALID_HANDLE)
     return 0;  // SSL_SOCK_Stream was never opened.
 
   // SSL_shutdown() returns 1 on successful shutdown of the SSL

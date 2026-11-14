@@ -27,12 +27,12 @@ ACE_SSL_Data_File::type () const
 ACE_INLINE void
 ACE_SSL_Context::check_context ()
 {
-  if (this->context_.get () == nullptr)
+  if (!this->context_)
     {
       this->set_mode ();
     }
 
-  if (this->context_.get () != nullptr)
+  if (this->context_)
     {
       ::SSL_CTX_set_verify (this->context_.get (), this->default_verify_mode (),
                             this->default_verify_callback ());

@@ -232,7 +232,7 @@ ACE_SSL_Context::set_mode (int mode)
                             *ACE_Static_Object_Lock::instance (),
                             -1));
 
-  if (this->context_.get () != nullptr)
+  if (this->context_)
     return -1;
 
 #if OPENSSL_VERSION_NUMBER >= 0x10000002
@@ -259,7 +259,7 @@ ACE_SSL_Context::set_mode (int mode)
     }
 
   this->context_.reset (::SSL_CTX_new (method));
-  if (this->context_.get () == nullptr)
+  if (!this->context_)
     return -1;
 
   this->mode_ = mode;

@@ -98,7 +98,7 @@ ACE_SSL_Asynch_Stream::ACE_SSL_Asynch_Stream (
 
   this->ssl_.reset (::SSL_new (ctx->context ()));
 
-  if (this->ssl_.get () == nullptr)
+  if (!this->ssl_)
     ACELIB_ERROR
       ((LM_ERROR,
         ACE_TEXT ("(%P|%t) ACE_SSL_Asynch_Stream %p\n"),
@@ -203,7 +203,7 @@ ACE_SSL_Asynch_Stream::open (ACE_Handler & handler,
         ACE_TEXT ("- already opened")),
        -1);
 
-  if (this->ssl_.get () == nullptr)
+  if (!this->ssl_)
     ACELIB_ERROR_RETURN
       ((LM_ERROR,
         ACE_TEXT ("(%P|%t) ACE_SSL_Asynch_Stream::open() %p\n"),
