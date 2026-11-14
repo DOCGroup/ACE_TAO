@@ -42,7 +42,7 @@ TAO_Time_Policy_Manager::parse_args (int argc, ACE_TCHAR* argv[])
       if (ACE_OS::strcasecmp (argv[curarg],
                                    ACE_TEXT("-ORBTimePolicyStrategy")) == 0)
         {
-          curarg++;
+          ++curarg;
           if (curarg < argc)
             {
               ACE_TCHAR const *name = argv[curarg];

@@ -75,7 +75,7 @@ TAO_CORBALOC_Parser::parse_string_rir_helper (const char * ior,
   const char *objkey = ior + rir_token_len;
   if (*objkey == '/') // there is an explicit object key, which may
                       // validly be null.
-    objkey++;
+    ++objkey;
 
   CORBA::Object_var rir_obj =
     orb->resolve_initial_references (*objkey == '\0' ? "NameService" : objkey);

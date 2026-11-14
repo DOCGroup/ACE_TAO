@@ -334,7 +334,7 @@ TAO_IIOP_Connector::make_parallel_connection (
 
       if (result != -1) // we have a winner!
         {
-          count++;
+          ++count;
           break; // no waiting involved since a connection is completed
         }
     }

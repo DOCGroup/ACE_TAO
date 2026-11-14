@@ -213,7 +213,7 @@ TAO_MProfile::remove_profile (const TAO_Profile *pfile)
               this->pfiles_[inner] = this->pfiles_[inner + 1];
             }
           // subtract 1 from last_ to indicate we have one fewer profiles
-          this->last_--;
+          --this->last_;
           this->pfiles_[this->last_] = nullptr;
           found = true;
           break;

@@ -1122,7 +1122,7 @@ TAO_IIOP_Acceptor::parse_options (char const *str)
 
   for (size_t i {}; i < len; ++i)
     if (options[i] == option_delimiter)
-      argc++;
+      ++argc;
 
   // The idea behind the following loop is to split the options into
   // (option, name) pairs.
