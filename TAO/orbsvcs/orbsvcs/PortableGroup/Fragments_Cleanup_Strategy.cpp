@@ -124,7 +124,7 @@ namespace TAO_PG
 
     for (int i {}; i < current_size; ++i)
       {
-        sorted_set[i] = &(*iter);
+        sorted_set[i] = std::addressof (*iter);
         ++iter;
       }
 
@@ -202,7 +202,7 @@ namespace TAO_PG
 
     for (int i {}; i < current_size; ++i)
       {
-        sorted_set[i] = &(*iter);
+        sorted_set[i] = std::addressof (*iter);
         ++iter;
       }
 
