@@ -2,6 +2,7 @@
 #include "StubFaultConsumer.h"
 #include "ace/Get_Opt.h"
 #include "orbsvcs/PortableGroup/PG_Properties_Encoder.h"
+#include <cstring>
 
 StubFaultConsumer::StubFaultConsumer ()
   : quit_(0)
@@ -48,14 +49,14 @@ int StubFaultConsumer::parse_args (int argc, ACE_TCHAR * argv[])
         if (this->replicaIorBuffer_ == nullptr)
         {
           const char * repNames = get_opts.opt_arg ();
-          size_t repNameLen = ACE_OS::strlen(repNames);
+          size_t repNameLen = std::strlen (repNames);
 
           // make a working copy of the string
           ACE_NEW_NORETURN(this->replicaIorBuffer_,
             char[repNameLen + 1]);
           if (this->replicaIorBuffer_ != nullptr)
           {
-            ACE_OS::memcpy(this->replicaIorBuffer_, repNames, repNameLen+1);
+            std::memcpy (this->replicaIorBuffer_, repNames, repNameLen + 1);
 
             // tokenize the string on ','
             // into iorReplicaFiles_
@@ -65,7 +66,7 @@ int StubFaultConsumer::parse_args (int argc, ACE_TCHAR * argv[])
               this->iorReplicaFiles_.push_back(pos);
               // find a comma delimiter, and
               // chop the string there.
-              pos = ACE_OS::strchr (pos, ',');
+              pos = std::strchr (pos, ',');
               if (pos != nullptr)
               {
                 *pos = '\0';

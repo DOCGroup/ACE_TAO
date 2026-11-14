@@ -17,6 +17,7 @@
 
 #include <ace/Get_Opt.h>
 #include <ace/OS_NS_stdio.h>
+#include <cstring>
 
 FTAPP::FT_Creator::FT_Creator ()
   : creator_ ()
@@ -198,7 +199,7 @@ int FTAPP::FT_Creator::run ()
       if (iogr_file != nullptr)
       {
         char const * siogr = static_cast<const char *> (iogr.in ());
-        ACE_OS::fwrite (siogr, 1, ACE_OS::strlen(siogr), iogr_file);
+        ACE_OS::fwrite (siogr, 1, std::strlen (siogr), iogr_file);
         ACE_OS::fclose (iogr_file);
       }
       else

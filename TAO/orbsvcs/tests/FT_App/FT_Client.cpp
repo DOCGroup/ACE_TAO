@@ -6,6 +6,9 @@
 #include "ace/streams.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_stdio.h"
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 
 class FTClientMain
 {
@@ -231,10 +234,10 @@ int FTClientMain::pass (
     if (! retry || command.length () == 0 )
     {
       char buffer[1000];
-      char *str_ = ACE_OS::fgets (buffer, sizeof(buffer)-1, this->commandIn_);
+      char *str_ = std::fgets (buffer, sizeof (buffer) - 1, this->commandIn_);
       if ( str_ )
       {
-        str_ = ACE_OS::strrchr (str_, '\n');
+        str_ = std::strrchr (str_, '\n');
         if ( str_ )
           *str_ = '\0';
       }
@@ -247,7 +250,7 @@ int FTClientMain::pass (
       char op = command[0];
       ACE_CString cdr = command.substr(1);
       char * junque;
-      long operand = ACE_OS::strtol(cdr.c_str(),&junque, 10);
+      long operand = std::strtol (cdr.c_str (), &junque, 10);
 
       if (this->verbose_ >= NOISY)
       {
