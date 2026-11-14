@@ -49,9 +49,12 @@ public:
   ///FUZZ: enable check_for_lack_ACE_OS
   int open (int argc, ACE_TCHAR *argv[]);
 
-  // = Event_Handler methods.
+  /// @name Event handler callbacks.
+  /// @{
+
   int handle_input (ACE_HANDLE) override;
   int handle_exception (ACE_HANDLE) override;
+  /// @}
 
   STDIN_Token (STDIN_Token const &) = delete;
   STDIN_Token (STDIN_Token &&) = delete;
@@ -72,15 +75,19 @@ private:
   /// Create a proxy to <token> with a <tid> client id.
   std::unique_ptr<ACE_Token_Proxy> create_proxy (std::string const &token, char type);
 
-  // = Mapping from tid to Token_Collection.
-  /// COLLECTION maintains a mapping from tid to a collection.
+  /// @name Token collections indexed by client ID.
+  /// @{
+
   using COLLECTIONS = ACE_Map_Manager<TID, ACE_Token_Collection *, ACE_Null_Mutex>;
 
+  /// Owns collections whose pointers are stored in collections_.
   std::vector<std::unique_ptr<ACE_Token_Collection>> owned_collections_;
   /// A collection for each <tid>.
   COLLECTIONS collections_;
+  /// @}
 
-  ACE_TCHAR const *server_host_ {ACE_DEFAULT_SERVER_HOST}; // Borrowed from argv.
+  /// Borrowed from argv.
+  ACE_TCHAR const *server_host_ {ACE_DEFAULT_SERVER_HOST};
   int server_port_ {ACE_DEFAULT_SERVER_PORT};
   bool ignore_deadlock_ {};
   bool debug_ {};
