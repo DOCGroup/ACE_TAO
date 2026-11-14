@@ -81,9 +81,9 @@ TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *data,
                           "warning invalid rtcp packet\n"));
 
             if (this->inputs_.find (sr.ssrc (), c) == -1 &&
-                this->add_input_channel (sr.ssrc (), &peer_address, c) < 0)
+                this->add_input_channel (sr.ssrc (), std::addressof (peer_address), c) < 0)
               return -1;
-            c->updateStatistics (&sr);
+            c->updateStatistics (std::addressof (sr));
 
             if (TAO_debug_level > 0)
               sr.dump ();
@@ -100,10 +100,10 @@ TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *data,
                           "warning invalid rtcp packet\n"));
 
             if (this->inputs_.find (rr.ssrc (), c) == -1 &&
-                this->add_input_channel (rr.ssrc (), &peer_address, c) < 0)
+                this->add_input_channel (rr.ssrc (), std::addressof (peer_address), c) < 0)
               return -1;
 
-            c->updateStatistics (&rr);
+            c->updateStatistics (std::addressof (rr));
 
             if (TAO_debug_level > 0)
               rr.dump ();
@@ -389,7 +389,7 @@ TAO_AV_RTCP_Object::handle_input ()
     }
   data.wr_ptr (n);
   ACE_Addr *peer_addr = this->transport_->get_peer_addr ();
-  this->callback_->receive_control_frame (&data,*peer_addr);
+  this->callback_->receive_control_frame (std::addressof (data), *peer_addr);
   return 0;
 }
 
@@ -726,7 +726,7 @@ TAO_AV_RTCP_Callback::send_report (int bye)
     }
 
   // send the report
-  this->protocol_object_->send_frame (&mb);
+  this->protocol_object_->send_frame (std::addressof (mb));
 
   this->packet_size_ = cp_length + sdes_length + bye_length;
 
@@ -797,10 +797,10 @@ TAO_AV_RTCP_Callback::receive_frame (ACE_Message_Block *frame,
   RTP_Packet packet (frame->rd_ptr(), static_cast<int> (frame->length()));
 
   if (this->inputs_.find (packet.ssrc(), c) < 0 &&
-      this->add_input_channel (packet.ssrc (), &peer_address, c) < 0)
+      this->add_input_channel (packet.ssrc (), std::addressof (peer_address), c) < 0)
     return -1;
 
-  c->recv_rtp_packet (frame, &peer_address);
+  c->recv_rtp_packet (frame, std::addressof (peer_address));
   return 0;
 }
 
@@ -808,7 +808,7 @@ int
 TAO_AV_RTCP_Callback::send_frame (ACE_Message_Block *frame)
 {
   RTP_Packet packet (frame->rd_ptr(), static_cast<int> (frame->length()));
-  this->output_.updateStatistics (&packet);
+  this->output_.updateStatistics (std::addressof (packet));
 
   return 0;
 }
