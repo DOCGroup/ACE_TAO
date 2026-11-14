@@ -130,7 +130,7 @@ ACE_NS_WString::ACE_NS_WString (const char *s,
                  (ACE_WSTRING_TYPE *)
                  this->allocator_->malloc ((this->buf_len_ + 1) *
                                            sizeof (ACE_WSTRING_TYPE)));
-  this->release_ = 1;
+  this->release_ = true;
   for (size_type i = 0; i <= this->buf_len_; ++i)
     this->rep_[i] = s[i];
 }
@@ -153,7 +153,7 @@ ACE_NS_WString::ACE_NS_WString (const ACE_UINT16 *s,
                  (ACE_WSTRING_TYPE *)
                  this->allocator_->malloc ((this->buf_len_) *
                                            sizeof (ACE_WSTRING_TYPE)));
-  this->release_ = 1;
+  this->release_ = true;
   for (size_type i = 0; i < this->buf_len_; ++i)
     this->rep_[i] = s[i];
 }

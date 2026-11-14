@@ -101,7 +101,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
             }
           *end = 0;
 
-          if (config_.expand_path (config_.root_section (), buffer + 1, section, 1))
+          if (config_.expand_path (config_.root_section (), buffer + 1, section, true))
             {
               return -3;
             }
@@ -346,7 +346,7 @@ ACE_Registry_ImpExp::export_section (const ACE_Configuration_Section_Key& sectio
       if (path.length ())
         sub_section += ACE_TEXT ("\\");
       sub_section += name;
-      if (config_.open_section (section, name.fast_rep (), 0, sub_key))
+      if (config_.open_section (section, name.fast_rep (), false, sub_key))
         return -5;
       if (export_section (sub_key, sub_section.fast_rep (), out))
         return -6;
@@ -435,7 +435,7 @@ ACE_Ini_ImpExp::import_config (const ACE_TCHAR* filename)
           if (config_.expand_path (config_.root_section (),
                                    line + 1,
                                    section,
-                                   1))
+                                   true))
             {
               ACE_OS::fclose (in);
               return -3;
@@ -624,7 +624,7 @@ ACE_Ini_ImpExp::export_section (const ACE_Configuration_Section_Key& section,
       if (path.length ())
         sub_section += ACE_TEXT ("\\");
       sub_section += name;
-      if (config_.open_section (section, name.fast_rep (), 0, sub_key))
+      if (config_.open_section (section, name.fast_rep (), false, sub_key))
         return -5;
       if (export_section (sub_key, sub_section.fast_rep (), out))
         return -6;

@@ -57,7 +57,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_Log_Msg)
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  bool ACE_Log_Msg::key_created_ = 0;
+  bool ACE_Log_Msg::key_created_ = false;
 # if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || \
     defined (ACE_HAS_TSS_EMULATION)
 
@@ -620,7 +620,7 @@ ACE_Log_Msg::ACE_Log_Msg ()
     errnum_ (0),
     linenum_ (0),
     msg_ (nullptr),
-    restart_ (1),  // Restart by default...
+    restart_ (true),  // Restart by default...
     ostream_ (nullptr),
     ostream_refcount_ (nullptr),
     msg_callback_ (nullptr),

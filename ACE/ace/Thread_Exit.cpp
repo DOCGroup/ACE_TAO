@@ -78,7 +78,7 @@ ACE_Thread_Exit::thr_mgr (ACE_Thread_Manager *tm)
   ACE_OS_TRACE ("ACE_Thread_Exit::thr_mgr");
 
   if (tm != nullptr)
-    this->thread_control_.insert (tm, 0);
+    this->thread_control_.insert (tm, false);
 }
 
 // When this object is destroyed the Task is automatically closed

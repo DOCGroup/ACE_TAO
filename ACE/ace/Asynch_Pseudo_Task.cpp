@@ -7,7 +7,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_Asynch_Pseudo_Task::ACE_Asynch_Pseudo_Task ()
   : select_reactor_ (),               // should be initialized before reactor_
-    reactor_ (&select_reactor_, 0)    // don't delete implementation
+    reactor_ (&select_reactor_, false)    // don't delete implementation
 {
 }
 

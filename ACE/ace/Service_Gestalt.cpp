@@ -466,7 +466,7 @@ ACE_Service_Gestalt::initialize (const ACE_TCHAR *svc_name,
     }
 
   // If everything is ok, activate it
-  const_cast<ACE_Service_Type *>(srp)->active (1);
+  const_cast<ACE_Service_Type *>(srp)->active (true);
   return 0;
 }
 
@@ -1166,7 +1166,7 @@ ACE_Service_Gestalt::parse_args_i (int argc,
     switch (c)
       {
       case 'd':
-        ACE::debug (1);
+        ACE::debug (true);
         break;
       case 'f':
         if (this->svc_conf_file_queue_->enqueue_tail (ACE_TString (get_opt.opt_arg ())) == -1)

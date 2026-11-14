@@ -19,7 +19,7 @@ ACE_DLL::ACE_DLL (bool close_handle_on_destruction)
     dll_name_ (nullptr),
     close_handle_on_destruction_ (close_handle_on_destruction),
     dll_handle_ (nullptr),
-    error_ (0)
+    error_ (false)
 {
   ACE_TRACE ("ACE_DLL::ACE_DLL (int)");
 }
@@ -29,7 +29,7 @@ ACE_DLL::ACE_DLL (const ACE_DLL &rhs)
     dll_name_ (nullptr),
     close_handle_on_destruction_ (false),
     dll_handle_ (nullptr),
-    error_ (0)
+    error_ (false)
 {
   ACE_TRACE ("ACE_DLL::ACE_DLL (const ACE_DLL &)");
 
@@ -73,7 +73,7 @@ ACE_DLL::ACE_DLL (const ACE_TCHAR *dll_name,
     dll_name_ (nullptr),
     close_handle_on_destruction_ (close_handle_on_destruction),
     dll_handle_ (nullptr),
-    error_ (0)
+    error_ (false)
 {
   ACE_TRACE ("ACE_DLL::ACE_DLL");
 
@@ -134,7 +134,7 @@ ACE_DLL::open_i (const ACE_TCHAR *dll_filename,
 {
   ACE_TRACE ("ACE_DLL::open_i");
 
-  this->error_ = 0;
+  this->error_ = false;
   this->errmsg_.clear (true);
 
   if (!dll_filename)
@@ -178,7 +178,7 @@ ACE_DLL::open_i (const ACE_TCHAR *dll_filename,
             this->errmsg_ += ACE_TEXT ("\n");
           this->errmsg_ += errtmp;
         }
-      this->error_ = 1;
+      this->error_ = true;
     }
 
   return this->error_ ? -1 : 0;
@@ -191,7 +191,7 @@ ACE_DLL::symbol (const ACE_TCHAR *sym_name, int ignore_errors)
 {
   ACE_TRACE ("ACE_DLL::symbol");
 
-  this->error_ = 0;
+  this->error_ = false;
   this->errmsg_.clear (true);
 
   void *sym {};
@@ -199,7 +199,7 @@ ACE_DLL::symbol (const ACE_TCHAR *sym_name, int ignore_errors)
     sym = this->dll_handle_->symbol (sym_name, ignore_errors, this->errmsg_);
 
   if (!sym)
-    this->error_ = 1;
+    this->error_ = true;
 
   return sym;
 }
@@ -218,7 +218,7 @@ ACE_DLL::close ()
       && this->close_handle_on_destruction_
       && this->dll_name_
       && (retval = ACE_DLL_Manager::instance ()->close_dll (this->dll_name_)) != 0)
-    this->error_ = 1;
+    this->error_ = true;
 
   // Even if close_dll() failed, go ahead and cleanup.
   this->dll_handle_ = nullptr;

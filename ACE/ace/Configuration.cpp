@@ -193,7 +193,7 @@ ACE_Configuration::operator== (const ACE_Configuration& rhs) const
       // find that section in the rhs object
       if (nonconst_rhs.open_section (rhsRoot,
                                      sectionName.c_str (),
-                                     0,
+                                     false,
                                      rhsSection) != 0)
         {
           // If the rhs object does not contain the section then we are
@@ -202,7 +202,7 @@ ACE_Configuration::operator== (const ACE_Configuration& rhs) const
         }
       else if (nonconst_this->open_section (this->root_,
                                             sectionName.c_str (),
-                                            0,
+                                            false,
                                             thisSection) != 0)
         {
           // if there is some error opening the section in this object
@@ -375,7 +375,7 @@ ACE_Configuration::operator== (const ACE_Configuration& rhs) const
       // find the section in this
       if (nonconst_this->open_section (this->root_,
                                        sectionName.c_str (),
-                                       0,
+                                       false,
                                        thisSection) != 0)
         {
           // if there is some error opening the section in this object
@@ -383,7 +383,7 @@ ACE_Configuration::operator== (const ACE_Configuration& rhs) const
         }
       else if (nonconst_rhs.open_section (rhsRoot,
                                           sectionName.c_str (),
-                                          0,
+                                          false,
                                           rhsSection) != 0)
         {
           // If the rhs object does not contain the section then we
@@ -515,7 +515,7 @@ ACE_Configuration_Win32Registry::remove_section (const ACE_Configuration_Section
   if (recursive)
     {
       ACE_Configuration_Section_Key section;
-      if (open_section (key, sub_section, 0, section))
+      if (open_section (key, sub_section, false, section))
         return -1;
 
       HKEY sub_key;
@@ -1558,7 +1558,7 @@ ACE_Configuration_Heap::remove_section (const ACE_Configuration_Section_Key& key
   if (recursive)
     {
       ACE_Configuration_Section_Key recursive_section;
-      if (open_section (key, sub_section, 0, recursive_section))
+      if (open_section (key, sub_section, false, recursive_section))
         return -1;
 
       int index = 0;

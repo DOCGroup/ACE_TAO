@@ -91,9 +91,9 @@ ACE_Trace::ACE_Trace (const ACE_TCHAR *n,
     {
       ACE_Log_Msg *lm = ACE_LOG_MSG;
       if (lm->tracing_enabled ()
-          && lm->trace_active () == 0)
+          && !lm->trace_active ())
         {
-          lm->trace_active (1);
+          lm->trace_active (true);
           ACELIB_DEBUG ((LM_TRACE,
                       ACE_TEXT ("%*s(%t) calling %s in file `%s' on line %d\n"),
                       ACE_Trace::nesting_indent_ * lm->inc (),
@@ -101,7 +101,7 @@ ACE_Trace::ACE_Trace (const ACE_TCHAR *n,
                       this->name_,
                       file,
                       line));
-          lm->trace_active (0);
+          lm->trace_active (false);
         }
     }
 }
@@ -117,15 +117,15 @@ ACE_Trace::~ACE_Trace ()
     {
       ACE_Log_Msg *lm = ACE_LOG_MSG;
       if (lm->tracing_enabled ()
-          && lm->trace_active () == 0)
+          && !lm->trace_active ())
         {
-          lm->trace_active (1);
+          lm->trace_active (true);
           ACELIB_DEBUG ((LM_TRACE,
                       ACE_TEXT ("%*s(%t) leaving %s\n"),
                       ACE_Trace::nesting_indent_ * lm->dec (),
                       ACE_TEXT (""),
                       this->name_));
-          lm->trace_active (0);
+          lm->trace_active (false);
         }
     }
 }

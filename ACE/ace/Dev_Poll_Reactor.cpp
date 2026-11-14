@@ -601,12 +601,12 @@ ACE_Dev_Poll_Reactor::ACE_Dev_Poll_Reactor (ACE_Sig_Handler *sh,
   , notify_handler_ (nullptr)
   , delete_notify_handler_ (false)
   , mask_signals_ (mask_signals)
-  , restart_ (0)
+  , restart_ (false)
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::ACE_Dev_Poll_Reactor");
 
   if (this->open (ACE::max_handles (),
-                  0,
+                  false,
                   sh,
                   tq,
                   disable_notify_pipe,
@@ -644,7 +644,7 @@ ACE_Dev_Poll_Reactor::ACE_Dev_Poll_Reactor (size_t size,
   , notify_handler_ (nullptr)
   , delete_notify_handler_ (false)
   , mask_signals_ (mask_signals)
-  , restart_ (0)
+  , restart_ (false)
 {
   if (this->open (size,
                   rs,

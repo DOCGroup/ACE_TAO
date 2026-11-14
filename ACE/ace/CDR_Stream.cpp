@@ -562,7 +562,7 @@ ACE_OutputCDR::write_16 (const ACE_CDR::LongDouble *x)
     {
 #if !defined (ACE_ENABLE_SWAP_ON_WRITE)
       *reinterpret_cast<ACE_CDR::LongDouble*> (buf) = *x;
-      return 1;
+      return true;
 #else
       if (!this->do_byte_swap_)
         {
@@ -714,7 +714,7 @@ ACE_OutputCDR::write_boolean_placeholder ()
 {
   char *buf {};
   if (this->adjust (ACE_CDR::OCTET_SIZE, buf) == 0)
-    *reinterpret_cast<ACE_CDR::Boolean*> (buf) = 0;
+    *reinterpret_cast<ACE_CDR::Boolean*> (buf) = false;
   else
     buf = nullptr;
   return buf;

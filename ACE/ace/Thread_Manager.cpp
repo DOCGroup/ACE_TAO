@@ -123,7 +123,7 @@ int
 ACE_Thread_Descriptor::at_exit (ACE_At_Thread_Exit& cleanup)
 {
   ACE_TRACE ("ACE_Thread_Descriptor::at_exit");
-  at_push (&cleanup, 1);
+  at_push (&cleanup, true);
   return 0;
 }
 
@@ -468,7 +468,7 @@ ACE_Thread_Manager::close ()
 
   // Clean up the thread descriptor list.
   if (this->automatic_wait_)
-    this->wait (nullptr, 1);
+    this->wait (nullptr, true);
   else
     {
       ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));

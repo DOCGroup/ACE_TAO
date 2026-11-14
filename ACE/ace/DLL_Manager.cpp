@@ -713,7 +713,7 @@ ACE_DLL_Manager::unload_dll (ACE_DLL_Handle *dll_handle, int force_unload)
               using dll_unload_policy = int (*)();
 
               void * const unload_policy_ptr =
-                dll_handle->symbol (ACE_TEXT ("_get_dll_unload_policy"), 1);
+                dll_handle->symbol (ACE_TEXT ("_get_dll_unload_policy"), true);
               intptr_t const temp_p = reinterpret_cast<intptr_t> (unload_policy_ptr);
 
               dll_unload_policy const the_policy =

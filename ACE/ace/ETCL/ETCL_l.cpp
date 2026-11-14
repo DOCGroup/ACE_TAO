@@ -866,7 +866,7 @@ YY_RULE_SETUP
 //#line 84 "ETCL/ETCL.ll"
 {
       yylval.constraint =
-        new ETCL_Literal_Constraint ((ACE_CDR::Boolean) 1);
+        new ETCL_Literal_Constraint ((ACE_CDR::Boolean) true);
       YY_LEX_DEBUG; return ETCL_BOOLEAN;
     }
   YY_BREAK
@@ -875,7 +875,7 @@ YY_RULE_SETUP
 //#line 89 "ETCL/ETCL.ll"
 {
       yylval.constraint =
-        new ETCL_Literal_Constraint ((ACE_CDR::Boolean) 0);
+        new ETCL_Literal_Constraint ((ACE_CDR::Boolean) false);
       YY_LEX_DEBUG; return ETCL_BOOLEAN;
     }
   YY_BREAK

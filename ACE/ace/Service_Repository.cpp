@@ -319,7 +319,7 @@ ACE_Service_Repository::relocate_i (size_t begin,
                                     size_t end,
                                     ACE_DLL const &adll)
 {
-  ACE_SHLIB_HANDLE const new_handle = adll.get_handle (0);
+  ACE_SHLIB_HANDLE const new_handle = adll.get_handle (false);
 
   for (size_t i = begin; i < end; ++i)
     {
@@ -328,7 +328,7 @@ ACE_Service_Repository::relocate_i (size_t begin,
 
       ACE_SHLIB_HANDLE const old_handle =
         (type == nullptr) ? ACE_SHLIB_INVALID_HANDLE
-                          : type->dll ().get_handle (0);
+                          : type->dll ().get_handle (false);
 
 #ifndef ACE_NLOGGING
       if (ACE::debug ())
