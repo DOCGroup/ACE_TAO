@@ -310,7 +310,8 @@ TAO_Object_Adapter::dispatch_servant (const TAO::ObjectKey &key,
 
   // This object is magical, i.e., it has a non-trivial constructor
   // and destructor.
-  TAO::Portable_Server::Servant_Upcall servant_upcall (&this->orb_core_);
+  TAO::Portable_Server::Servant_Upcall servant_upcall (
+    std::addressof (this->orb_core_));
 
   // Set up state in the POA et al (including the POA Current), so
   // that we know that this servant is currently in an upcall.

@@ -211,7 +211,8 @@ TAO_Root_POA::TAO_Root_POA (const TAO_Root_POA::String &name,
   // Since we are keeping a reference to a POAManager, we need to
   // increment the reference count but we do this safely.
   PortableServer::POAManager_var pm_guard (
-    PortableServer::POAManager::_duplicate(&this->poa_manager_));
+    PortableServer::POAManager::_duplicate (
+      std::addressof (this->poa_manager_)));
 
   // Parse the policies that are used in the critical path in
   // a cache.
@@ -2544,14 +2545,16 @@ TAO_Root_POA::imr_client_adapter_name ()
 PortableServer::POAManager_ptr
 TAO_Root_POA::the_POAManager ()
 {
-  return PortableServer::POAManager::_duplicate (&this->poa_manager_);
+  return PortableServer::POAManager::_duplicate (
+    std::addressof (this->poa_manager_));
 }
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 PortableServer::POAManagerFactory_ptr
 TAO_Root_POA::the_POAManagerFactory ()
 {
-  return PortableServer::POAManagerFactory::_duplicate (&this->poa_manager_factory_);
+  return PortableServer::POAManagerFactory::_duplicate (
+    std::addressof (this->poa_manager_factory_));
 }
 #endif
 
