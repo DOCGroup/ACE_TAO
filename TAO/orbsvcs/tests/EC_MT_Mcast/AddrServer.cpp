@@ -11,7 +11,7 @@ AddrServer::AddrServer (ACE_INET_Addr const& addr)
       RtecUDPAdmin::UDP_Addr_v6 v6;
       sockaddr_in6 *in6 =
         reinterpret_cast<sockaddr_in6 *>(addr.get_addr());
-      ACE_OS::memcpy (v6.ipaddr,&in6->sin6_addr,16);
+      ACE_OS::memcpy (v6.ipaddr, &in6->sin6_addr, 16);
       v6.port = addr.get_port_number();
       this->addr_.v6_addr (v6);
       return;

@@ -676,7 +676,6 @@ ECM_Supplier::activate (RtecEventChannelAdmin::EventChannel_ptr ec,
                             interval,
                             0);
 
-  // = Connect as a consumer.
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
     ec->for_consumers ();
 
@@ -731,7 +730,6 @@ ECM_Consumer::open (char const*,
                     RtecEventChannelAdmin::EventChannel_ptr ec,
                     unsigned int *seed)
 {
-  // = Connect as a consumer.
   this->consumer_admin_ = ec->for_consumers ();
 
   this->connect (seed);

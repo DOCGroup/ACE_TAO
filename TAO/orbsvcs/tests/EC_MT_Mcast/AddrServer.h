@@ -27,16 +27,18 @@ public:
   AddrServer& operator= (AddrServer const&) = delete;
   AddrServer& operator= (AddrServer&&) = delete;
 
-  // = The RtecUDPAdmin::AddrServer methods
+  /// @name RtecUDPAdmin::AddrServer methods
+  /// @{
   void get_addr (RtecEventComm::EventHeader const& header,
                  RtecUDPAdmin::UDP_Addr_out addr) override;
 
   void get_address (RtecEventComm::EventHeader const& header,
                     RtecUDPAdmin::UDP_Address_out addr) override;
+  /// @}
 
 private:
+  /// Address returned for event types.
   RtecUDPAdmin::UDP_Address addr_;
-  // The address
 };
 
 #include /**/ "ace/post.h"
