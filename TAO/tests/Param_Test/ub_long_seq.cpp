@@ -50,17 +50,17 @@ Test_Long_Sequence::dii_req_invoke (CORBA::Request *req)
 
   CORBA::LongSeq const *tmp {};
   req->return_value () >>= tmp;
-  this->ret_ = CORBA::LongSeq (*tmp);
+  this->ret_ = new CORBA::LongSeq (*tmp);
 
   CORBA::NamedValue_ptr o2 =
     req->arguments ()->item (1);
   *o2->value () >>= tmp;
-  this->inout_ = CORBA::LongSeq (*tmp);
+  this->inout_ = new CORBA::LongSeq (*tmp);
 
   CORBA::NamedValue_ptr o3 =
     req->arguments ()->item (2);
   *o3->value () >>= tmp;
-  this->out_ = CORBA::LongSeq (*tmp);
+  this->out_ = new CORBA::LongSeq (*tmp);
 }
 
 int
