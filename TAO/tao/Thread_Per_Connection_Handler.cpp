@@ -61,7 +61,7 @@ TAO_Thread_Per_Connection_Handler::activate_ch (long flags,
                          nullptr,
                          nullptr,
                          nullptr,
-                         &thread_names[0]);
+                         thread_names.data ());
 }
 
 int
