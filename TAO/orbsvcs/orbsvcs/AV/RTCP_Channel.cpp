@@ -3,7 +3,9 @@
 #include "orbsvcs/AV/RTP.h"
 #include "tao/debug.h"
 
+#include <cerrno>
 #include <memory>
+#include <new>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -213,7 +215,7 @@ RTCP_Channel_In::recv_rtp_packet(ACE_Message_Block *mb,
                 "RTCP_Channel_In::recvDataPacket - invalid RTP packet\n"));
 }
 
-RR_Block *
+std::unique_ptr<RR_Block>
 RTCP_Channel_In::getRRBlock()
 {
   // If no data has been received since the last report, don't create a block.
@@ -225,16 +227,17 @@ RTCP_Channel_In::getRRBlock()
       if (this->no_data_counter_ == 32)
         this->active_ = false;
 
-      return nullptr;
+      return {};
     }
 
   this->no_data_counter_ = 0;
 
-  RR_Block *local_block_ptr {};
-
-  ACE_NEW_RETURN (local_block_ptr,
-                  RR_Block (),
-                  nullptr);
+  std::unique_ptr<RR_Block> local_block_ptr (new (std::nothrow) RR_Block {});
+  if (local_block_ptr == nullptr)
+    {
+      errno = ENOMEM;
+      return {};
+    }
 
   // Set the ssrc of the source this report is for.
   local_block_ptr->ssrc_ = this->remote_ssrc_;

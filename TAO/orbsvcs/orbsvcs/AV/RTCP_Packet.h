@@ -9,6 +9,7 @@
 #include "tao/Versioned_Namespace.h"
 
 #include <memory>
+#include <utility>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -143,6 +144,15 @@ private:
 
 struct RR_Block
 {
+  ~RR_Block ()
+  {
+    while (this->next_)
+      {
+        std::unique_ptr<RR_Block> next = std::move (this->next_->next_);
+        this->next_ = std::move (next);
+      }
+  }
+
   /// The synchronization source id of the source of the data.
   ACE_UINT32 ssrc_;
 
@@ -167,7 +177,7 @@ struct RR_Block
   ACE_UINT32 dlsr_;
 
   /// Link to the next receiver report block.
-  RR_Block *next_;
+  std::unique_ptr<RR_Block> next_ {};
 };
 
 /**
@@ -184,7 +194,7 @@ public:
   RTCP_RR_Packet (char *buffer, int* len);
 
   /// Constructor for outgoing receiver reports.
-  RTCP_RR_Packet (ACE_UINT32 ssrc, RR_Block *blocks);
+  RTCP_RR_Packet (ACE_UINT32 ssrc, std::unique_ptr<RR_Block> blocks);
 
   ~RTCP_RR_Packet () override;
   RTCP_RR_Packet (RTCP_RR_Packet const &) = delete;
@@ -209,7 +219,7 @@ private:
   ACE_UINT32 ssrc_;
 
   /// A linked list of the receiver report block(s) being sent.
-  RR_Block *rr_ {};
+  std::unique_ptr<RR_Block> rr_ {};
 };
 
 struct sdesItem_s;
@@ -366,7 +376,7 @@ public:
                  ACE_UINT32 timestamp,
                  ACE_UINT32 pktsSent,
                  ACE_UINT32 octetsSent,
-                 RR_Block *rrBlocks);
+                 std::unique_ptr<RR_Block> rr_blocks);
 
   ~RTCP_SR_Packet () override;
   RTCP_SR_Packet (RTCP_SR_Packet const &) = delete;
@@ -412,7 +422,7 @@ private:
   ACE_UINT32 osent_;
 
   /// A linked list of receiver report blocks.
-  RR_Block *rr_ {};
+  std::unique_ptr<RR_Block> rr_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -6,6 +6,7 @@
 #include <cerrno>
 #include <cstring>
 #include <new>
+#include <utility>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -254,15 +255,16 @@ RTCP_BYE_Packet::dump ()
               this->reason_));
 }
 
-RTCP_RR_Packet::RTCP_RR_Packet(ACE_UINT32 ssrc, RR_Block *blocks)
+RTCP_RR_Packet::RTCP_RR_Packet (ACE_UINT32 ssrc,
+                                std::unique_ptr<RR_Block> blocks)
 {
-  RR_Block *block_ptr = blocks;
+  RR_Block *block_ptr = blocks.get ();
 
   this->chd_.count_ = 0;
   this->chd_.ver_ = 2;
   this->chd_.pt_ = RTCP_PT_RR;
   this->ssrc_ = ssrc;
-  this->rr_ = blocks;
+  this->rr_ = std::move (blocks);
 
   while (block_ptr)
     {
@@ -271,11 +273,11 @@ RTCP_RR_Packet::RTCP_RR_Packet(ACE_UINT32 ssrc, RR_Block *blocks)
       // Can only have 31 receiver reports
       if (this->chd_.count_ == 31)
         {
-          block_ptr->next_ = nullptr;
+          block_ptr->next_.reset ();
           break;
         }
 
-      block_ptr = block_ptr->next_;
+      block_ptr = block_ptr->next_.get ();
     }
 
   this->chd_.length_ = static_cast<ACE_UINT16> (1+6*(this->chd_.count_)); // + profile specific extensions ??
@@ -288,7 +290,7 @@ RTCP_RR_Packet::RTCP_RR_Packet (char* buffer,
   :RTCP_Packet (buffer)
 {
   unsigned int i = 0;
-  RR_Block *local_block_ptr {};
+  std::unique_ptr<RR_Block> *next_block = &this->rr_;
 
   // The common part of the header is initialized in the parent.
   i=4;
@@ -296,20 +298,16 @@ RTCP_RR_Packet::RTCP_RR_Packet (char* buffer,
   i+=4;
   for (unsigned int j {}; j < this->chd_.count_; ++j)
     {
-      if (j==0)
+      *next_block = std::unique_ptr<RR_Block> (
+        new (std::nothrow) RR_Block {});
+      if (*next_block == nullptr)
         {
-          ACE_NEW (this->rr_,
-                   RR_Block);
-          local_block_ptr = this->rr_;
-        }
-      else
-        {
-          ACE_NEW (local_block_ptr->next_,
-                   RR_Block);
-          local_block_ptr = local_block_ptr->next_;
+          errno = ENOMEM;
+          return;
         }
 
-      local_block_ptr->next_ = nullptr;
+      RR_Block * const local_block_ptr = next_block->get ();
+      next_block = &local_block_ptr->next_;
       local_block_ptr->ssrc_ = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
       i+=4;
       ACE_UINT32 temp = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
@@ -331,20 +329,7 @@ RTCP_RR_Packet::RTCP_RR_Packet (char* buffer,
 
 //==============================================================================
 
-RTCP_RR_Packet::~RTCP_RR_Packet()
-{
-  RR_Block *prev;
-
-  if (this->rr_)
-    {
-      while (this->rr_)
-        {
-          prev = this->rr_;
-          this->rr_ = this->rr_->next_;
-          delete prev;
-        }
-    }
-}
+RTCP_RR_Packet::~RTCP_RR_Packet() = default;
 
 //==============================================================================
 
@@ -382,7 +367,7 @@ RTCP_RR_Packet::build_packet()
   *((ACE_UINT32*)&this->packet_data_[index]) = ACE_HTONL(this->ssrc_);
   index+=4;
 
-  local_block_ptr = this->rr_;
+  local_block_ptr = this->rr_.get ();
   while (local_block_ptr)
     {
       *((ACE_UINT32*)&this->packet_data_[index]) = ACE_HTONL(local_block_ptr->ssrc_);
@@ -399,14 +384,14 @@ RTCP_RR_Packet::build_packet()
       index+=4;
       *((ACE_UINT32*)&this->packet_data_[index]) = ACE_HTONL(local_block_ptr->dlsr_);
       index+=4;
-      local_block_ptr = local_block_ptr->next_;
+      local_block_ptr = local_block_ptr->next_.get ();
     }
 }
 
 void
 RTCP_RR_Packet::dump ()
 {
-  RR_Block *b = this->rr_;
+  RR_Block const *b = this->rr_.get ();
   int count = 1;
 
   ORBSVCS_DEBUG ((LM_DEBUG,
@@ -429,7 +414,7 @@ RTCP_RR_Packet::dump ()
                   b->lsr_,
                   b->dlsr_));
 
-      b = b->next_;
+      b = b->next_.get ();
       ++count;
     }
 }
@@ -965,9 +950,9 @@ RTCP_SR_Packet::RTCP_SR_Packet(ACE_UINT32 ssrc,
                                ACE_UINT32 timestamp,
                                ACE_UINT32 packets_sent,
                                ACE_UINT32 octets_sent,
-                               RR_Block *blocks)
+                               std::unique_ptr<RR_Block> rr_blocks)
 {
-  RR_Block *block_ptr {};
+  RR_Block *block_ptr = rr_blocks.get ();
   chd_.count_ = 0;
   chd_.ver_ = 2;
   chd_.pt_ = RTCP_PT_SR;
@@ -978,9 +963,7 @@ RTCP_SR_Packet::RTCP_SR_Packet(ACE_UINT32 ssrc,
   this->rtp_ts_ = timestamp;
   this->psent_ = packets_sent;
   this->osent_ = octets_sent;
-  this->rr_ = blocks;
-
-  block_ptr = blocks;
+  this->rr_ = std::move (rr_blocks);
 
   while (block_ptr)
     {
@@ -989,11 +972,11 @@ RTCP_SR_Packet::RTCP_SR_Packet(ACE_UINT32 ssrc,
       // Can only have 31 receiver reports
       if (this->chd_.count_ == 31)
         {
-          block_ptr->next_ = nullptr;
+          block_ptr->next_.reset ();
           break;
         }
 
-      block_ptr = block_ptr->next_;
+      block_ptr = block_ptr->next_.get ();
     }
 
   this->chd_.length_ = static_cast<ACE_UINT16> (6 + 6*(chd_.count_)); //+profile specific extensions ??
@@ -1006,7 +989,7 @@ RTCP_SR_Packet::RTCP_SR_Packet (char* buffer,
                 : RTCP_Packet (buffer)
 {
   unsigned int i = 0;
-  RR_Block *local_block_ptr {};
+  std::unique_ptr<RR_Block> *next_block = &this->rr_;
 
   // The common part of the header is initialized in the parent.
   i=4;
@@ -1024,20 +1007,16 @@ RTCP_SR_Packet::RTCP_SR_Packet (char* buffer,
   i+=4;
   for (unsigned int j {}; j < this->chd_.count_; ++j)
     {
-      if (j==0)
+      *next_block = std::unique_ptr<RR_Block> (
+        new (std::nothrow) RR_Block {});
+      if (*next_block == nullptr)
         {
-          ACE_NEW (local_block_ptr,
-                   RR_Block);
-          this->rr_ = local_block_ptr;
-        }
-      else
-        {
-          ACE_NEW (local_block_ptr->next_,
-                   RR_Block);
-          local_block_ptr = local_block_ptr->next_;
+          errno = ENOMEM;
+          return;
         }
 
-      local_block_ptr->next_ = nullptr;
+      RR_Block * const local_block_ptr = next_block->get ();
+      next_block = &local_block_ptr->next_;
       local_block_ptr->ssrc_ = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
       i+=4;
       ACE_UINT32 temp = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
@@ -1059,20 +1038,7 @@ RTCP_SR_Packet::RTCP_SR_Packet (char* buffer,
 
 //==============================================================================
 
-RTCP_SR_Packet::~RTCP_SR_Packet()
-{
-  RR_Block *prev;
-
-  if (this->rr_)
-    {
-      while (this->rr_)
-        {
-          prev = this->rr_;
-          this->rr_ = this->rr_->next_;
-          delete prev;
-        }
-    }
-}
+RTCP_SR_Packet::~RTCP_SR_Packet() = default;
 
 //==============================================================================
 
@@ -1119,7 +1085,7 @@ void RTCP_SR_Packet::build_packet()
   *((ACE_UINT32*)&this->packet_data_[index]) = ACE_HTONL(this->osent_);
   index+=4;
 
-  local_block_ptr = this->rr_;
+  local_block_ptr = this->rr_.get ();
   while (local_block_ptr)
     {
       *((ACE_UINT32*)&this->packet_data_[index]) = ACE_HTONL(local_block_ptr->ssrc_);
@@ -1136,14 +1102,14 @@ void RTCP_SR_Packet::build_packet()
       index+=4;
       *((ACE_UINT32*)&this->packet_data_[index]) = ACE_HTONL(local_block_ptr->dlsr_);
       index+=4;
-      local_block_ptr = local_block_ptr->next_;
+      local_block_ptr = local_block_ptr->next_.get ();
     }
 }
 
 void
 RTCP_SR_Packet::dump ()
 {
-  RR_Block *b = this->rr_;
+  RR_Block const *b = this->rr_.get ();
   int count = 1;
 
   ORBSVCS_DEBUG ((LM_DEBUG,
@@ -1175,7 +1141,7 @@ RTCP_SR_Packet::dump ()
                   b->lsr_,
                   b->dlsr_));
 
-      b = b->next_;
+      b = b->next_.get ();
       ++count;
     }
 }

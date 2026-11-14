@@ -47,7 +47,7 @@ public:
                         ACE_Addr const *peer_addr);
 
   /// Takes statistics of incoming RTP traffic and creates a receiver report block.
-  RR_Block *getRRBlock();
+  std::unique_ptr<RR_Block> getRRBlock();
 
   /// Returns the delay since last sender report.
   ACE_UINT32 dlsr ();

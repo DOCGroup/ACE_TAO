@@ -48,6 +48,7 @@
 
 #include <cstring>
 #include <cstdio>
+#include <utility>
 #include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -567,35 +568,28 @@ TAO_AV_RTCP_Callback::send_report (int bye)
   iter = this->inputs_.begin();
 
   // first send an SR/RR
-  RR_Block *blocks {};
-  RR_Block *b_iter {};
-  RR_Block *b_ptr {};
+  std::unique_ptr<RR_Block> blocks;
+  RR_Block *tail {};
 
-  while (iter != this->inputs_.end() )
+  while (iter != this->inputs_.end ())
     {
-      if (!b_iter)
-      {
-        b_ptr = (*iter).int_id_->getRRBlock ();
-        if (b_ptr)
-          {
-            blocks = b_ptr;
-            b_iter = b_ptr;
-          }
-      }
-      else
-      {
-        b_ptr = (*iter).int_id_->getRRBlock ();
-        if (b_ptr)
-          {
-            b_iter->next_ = b_ptr;
-          }
-      }
+      std::unique_ptr<RR_Block> block = (*iter).int_id_->getRRBlock ();
+      if (block != nullptr)
+        {
+          if (tail == nullptr)
+            {
+              blocks = std::move (block);
+              tail = blocks.get ();
+            }
+          else
+            {
+              tail->next_ = std::move (block);
+              tail = tail->next_.get ();
+            }
+        }
 
       ++iter;
     }
-
-  if (b_iter)
-    b_iter->next_ = nullptr;
 
   if (this->output_.active ())
     {
@@ -612,7 +606,7 @@ TAO_AV_RTCP_Callback::send_report (int bye)
                                      rtp_ts,
                                      this->output_.packets_sent (),
                                      this->output_.octets_sent (),
-                                     blocks),
+                                     std::move (blocks)),
                      -1);
       cp.reset (raw_cp);
     }
@@ -620,7 +614,7 @@ TAO_AV_RTCP_Callback::send_report (int bye)
     {
       ACE_NEW_RETURN(raw_cp,
                      RTCP_RR_Packet (my_ssrc,
-                                     blocks),
+                                     std::move (blocks)),
                      -1);
       cp.reset (raw_cp);
     }
