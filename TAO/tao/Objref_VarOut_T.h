@@ -54,6 +54,8 @@ public:
 
   TAO_Objref_Var_T<T> & operator= (T *);
   TAO_Objref_Var_T<T> & operator= (const TAO_Objref_Var_T<T> &);
+  TAO_Objref_Var_T (TAO_Base_var const &) = delete;
+  TAO_Objref_Var_T &operator= (TAO_Base_var const &) = delete;
   T * operator-> () const;
 
   /// Cast operators.
@@ -78,11 +80,6 @@ protected:
   T * ptr_;
   void free ();
   void reset (T *);
-
-private:
-  // Unimplemented - prevents widening assignment.
-  TAO_Objref_Var_T (const TAO_Base_var &);
-  void operator= (const TAO_Base_var &);
 };
 
 /**

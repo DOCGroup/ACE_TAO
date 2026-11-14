@@ -31,11 +31,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Base_var
 {
 public:
-  TAO_Base_var () {}
-
-private:
-  TAO_Base_var (const TAO_Base_var &);
-  TAO_Base_var & operator= (const TAO_Base_var &);
+  TAO_Base_var () = default;
+  TAO_Base_var (TAO_Base_var const &) = delete;
+  TAO_Base_var (TAO_Base_var &&) = delete;
+  TAO_Base_var &operator= (TAO_Base_var const &) = delete;
+  TAO_Base_var &operator= (TAO_Base_var &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
