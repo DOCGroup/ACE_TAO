@@ -797,7 +797,7 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
 
       if (sri_adapter != nullptr)
         {
-          request.caught_exception (&ex);
+          request.caught_exception (std::addressof (ex));
 
           sri_adapter->send_exception (request,
                                        nullptr,  // args
@@ -1195,7 +1195,7 @@ void
 TAO_Object_Adapter::do_dispatch (TAO_ServerRequest& req,
                                  TAO::Portable_Server::Servant_Upcall& upcall)
 {
-  upcall.servant ()->_dispatch(req, &upcall);
+  upcall.servant ()->_dispatch(req, std::addressof (upcall));
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

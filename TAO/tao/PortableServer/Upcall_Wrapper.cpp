@@ -3,6 +3,8 @@
 #include "tao/PortableServer/Collocated_Arguments_Converter.h"
 #include "tao/SystemException.h"
 
+#include <memory>
+
 #if TAO_HAS_INTERCEPTORS == 1
 # include "tao/ServerRequestInterceptor_Adapter.h"
 # include "tao/ORB_Core.h"
@@ -152,7 +154,7 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
         PortableInterceptor::SYSTEM_EXCEPTION;
 
 #if TAO_HAS_INTERCEPTORS == 1
-      server_request.caught_exception (&ex);
+      server_request.caught_exception (std::addressof (ex));
 
       if (interceptor_adapter != nullptr)
         {
@@ -176,7 +178,7 @@ TAO::Upcall_Wrapper::upcall (TAO_ServerRequest & server_request,
               // If we have a cac it will handle the exception and no
               // need to do any further processing
               server_request.operation_details ()->cac ()->handle_corba_exception (
-                server_request, &ex);
+                server_request, std::addressof (ex));
               return;
             }
           else

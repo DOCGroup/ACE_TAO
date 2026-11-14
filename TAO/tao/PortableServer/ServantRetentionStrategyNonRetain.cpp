@@ -14,6 +14,7 @@
 #include "ace/Time_Value.h"
 
 #include <cstring>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -98,7 +99,7 @@ namespace TAO
       // not own the data.
       poa_current_impl.replace_object_id (system_id);
 
-      servant_upcall.user_id (&system_id);
+      servant_upcall.user_id (std::addressof (system_id));
 
       return nullptr;
     }

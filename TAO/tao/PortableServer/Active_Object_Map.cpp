@@ -1080,7 +1080,7 @@ TAO_Active_Hint_Strategy::bind (TAO_Active_Object_Map_Entry &entry)
 {
   entry.system_id_ = entry.user_id_;
 
-  return this->system_id_map_.bind_modify_key (&entry,
+  return this->system_id_map_.bind_modify_key (std::addressof (entry),
                                                entry.system_id_);
 }
 
