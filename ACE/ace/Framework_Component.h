@@ -126,7 +126,10 @@ public:
   /// Delete the dynamically allocated Singleton.
   static void close_singleton ();
 
-  // = Search structure operations (all acquire locks as necessary).
+  /** @name Search structure operations
+   * These operations acquire the repository lock when necessary.
+   */
+  /// @{
 
   /// Insert a new component.  Returns -1 when the repository is full
   /// and 0 on success. Ownership transfers to the repository only when
@@ -145,6 +148,7 @@ public:
 
   /// Return the total size of the repository.
   int total_size () const;
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;

@@ -62,7 +62,8 @@ class ACE_Message_Block;
 class ACE_Export ACE_CDR
 {
 public:
-  // = Constants defined by the CDR protocol.
+  /// @name Constants defined by the CDR protocol
+  /// @{
 
   static constexpr size_t OCTET_SIZE = 1;
   static constexpr size_t SHORT_SIZE = 2;
@@ -98,6 +99,7 @@ public:
   /// in chunks of this size, note that this constants have the same
   /// value right now, but it does not need to be so.
   static constexpr size_t LINEAR_GROWTH_CHUNK = ACE_DEFAULT_CDR_LINEAR_GROWTH_CHUNK;
+  /// @}
 
   /**
    * @class Byte_Order

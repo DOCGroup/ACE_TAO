@@ -25,7 +25,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Time_Value;
 
-// = Operations on HANDLEs.
+/// Operations on HANDLEs.
 namespace ACE
 {
   /**

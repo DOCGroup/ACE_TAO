@@ -52,7 +52,8 @@ public:
   /// Default constructor.
   ACE_Name_Proxy ();
 
-  // = Establish a binding with the ACE_Name Server.
+  /// @name Establishing a binding with the ACE_Name Server
+  /// @{
   ACE_Name_Proxy (const ACE_INET_Addr &remote_addr, // Address of ACE_Name Server.
                   ACE_Synch_Options& options =
                   ACE_Synch_Options::defaults);
@@ -60,6 +61,7 @@ public:
   int open (const ACE_INET_Addr &remote_addr,  // Address of ACE_Name Server.
             ACE_Synch_Options& options =
             ACE_Synch_Options::defaults);
+  /// @}
 
   /// Perform the request and wait for the reply.
   int request_reply (ACE_Name_Request &request);

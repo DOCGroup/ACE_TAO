@@ -123,7 +123,8 @@ public:
   /// you construct the underneath @c lock_.
   ~ACE_Adaptive_Lock () override = default;
 
-  // = Lock/unlock operations.
+  /// @name Lock and unlock operations
+  /// @{
 
   int remove () override;
   int acquire () override;
@@ -134,6 +135,7 @@ public:
   int tryacquire_read () override;
   int tryacquire_write () override;
   int tryacquire_write_upgrade () override;
+  /// @}
   void dump () const;
 
 protected:

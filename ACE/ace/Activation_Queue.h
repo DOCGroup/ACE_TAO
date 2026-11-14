@@ -82,7 +82,8 @@ public:
   ACE_Activation_Queue (ACE_Activation_Queue &&) = delete;
   ACE_Activation_Queue &operator= (ACE_Activation_Queue &&) = delete;
 
-  // = Activate Queue operations.
+  /// @name Queue operations
+  /// @{
 
   /// Dequeue the next available ACE_Method_Request.
   /**
@@ -128,6 +129,7 @@ public:
 
   /// Returns true if the queue is full, false otherwise.
   bool is_full () const;
+  /// @}
 
   /// Dump the state of an request.
   void dump () const;

@@ -21,7 +21,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
 {
-  // = Methods for searching and opening shared libraries.
+  /// @name Shared library and temporary-file operations
+  /// @{
 
   /**
    * Finds the file @a filename either using an absolute path or using
@@ -66,6 +67,7 @@ namespace ACE
   extern ACE_Export ACE_HANDLE open_temp_file (const ACE_TCHAR *name,
                                                int mode,
                                                int perm = 0);
+  /// @}
 
   // @@ Though the following functions don't come under the same category as
   // above, these are used only in the functions in this class. So it makes

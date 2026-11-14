@@ -52,7 +52,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 struct ACE_Export ACE_Sub_Barrier
 {
-  // = Initialization.
+  /// Initialization.
   ACE_Sub_Barrier (unsigned int count,
                    ACE_Thread_Mutex &lock,
                    const ACE_TCHAR *name = nullptr,
