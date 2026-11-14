@@ -14,17 +14,17 @@ ZlibCompressor::ZlibCompressor (
 
 void
 ZlibCompressor::compress (
-    ::Compression::Buffer const & source,
-    ::Compression::Buffer & target)
+  ::Compression::Buffer const &source,
+  ::Compression::Buffer &target)
 {
   // Ensure maximum is at least a bit bigger than input length.
-  target.length(static_cast<CORBA::ULong>((source.length() * 1.001) + 12));
+  target.length (static_cast<CORBA::ULong> ((source.length () * 1.001) + 12));
 
-  uLongf max_length = static_cast <uLongf>(target.maximum());
+  uLongf max_length = static_cast<uLongf> (target.maximum ());
 
-  int const retval = ::compress2 (reinterpret_cast <Bytef*>(target.get_buffer ()),
+  int const retval = ::compress2 (reinterpret_cast<Bytef *> (target.get_buffer ()),
                                   &max_length,
-                                  reinterpret_cast <Bytef const*>(source.get_buffer ()),
+                                  reinterpret_cast<Bytef const *> (source.get_buffer ()),
                                   source.length (),
                                   this->compression_level ());
 
@@ -32,10 +32,7 @@ ZlibCompressor::compress (
     {
       throw ::Compression::CompressionException (retval, ::zError (retval));
     }
-  else
-    {
-      target.length (static_cast <CORBA::ULong> (max_length));
-    }
+  target.length (static_cast<CORBA::ULong> (max_length));
 
   // Update statistics for this compressor
   this->update_stats (source.length (), target.length ());
@@ -43,23 +40,20 @@ ZlibCompressor::compress (
 
 void
 ZlibCompressor::decompress (
-  ::Compression::Buffer const & source,
-  ::Compression::Buffer & target)
+  ::Compression::Buffer const &source,
+  ::Compression::Buffer &target)
 {
-  uLongf max_length = static_cast <uLongf> (target.maximum ());
-  int const retval = uncompress (reinterpret_cast <Bytef*>(target.get_buffer ()),
-                                 &max_length,
-                                 reinterpret_cast <Bytef const*>(source.get_buffer ()),
-                                 source.length ());
+  uLongf max_length = static_cast<uLongf> (target.maximum ());
+  int const retval = ::uncompress (reinterpret_cast<Bytef *> (target.get_buffer ()),
+                                   &max_length,
+                                   reinterpret_cast<Bytef const *> (source.get_buffer ()),
+                                   source.length ());
 
   if (retval != Z_OK)
     {
       throw ::Compression::CompressionException (retval, "");
     }
-  else
-    {
-      target.length (static_cast  <CORBA::ULong> (max_length));
-    }
+  target.length (static_cast<CORBA::ULong> (max_length));
 }
 }
 

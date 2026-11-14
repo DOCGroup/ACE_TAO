@@ -16,10 +16,11 @@ Zlib_CompressorFactory::Zlib_CompressorFactory ()
 Zlib_CompressorFactory::get_compressor (
     ::Compression::CompressionLevel compression_level)
 {
-    // Ensure Compression range 0-9 and will also convert -1(default) to 9(max).
-    compression_level = ace_range(  ::Compression::CompressionLevel(Z_NO_COMPRESSION),   // Min value
-                                    ::Compression::CompressionLevel(Z_BEST_COMPRESSION), // Max value
-                                    compression_level); // Argument value
+    // Ensure Compression range 0-9 and convert -1 (default) to 9 (maximum).
+    ::Compression::CompressionLevel const selected_level = ace_range (
+      static_cast<::Compression::CompressionLevel> (Z_NO_COMPRESSION),
+      static_cast<::Compression::CompressionLevel> (Z_BEST_COMPRESSION),
+      compression_level);
 
     ::Compression::Compressor_var compressor;
 
@@ -29,13 +30,14 @@ Zlib_CompressorFactory::get_compressor (
 
         try
           {
-            ZlibCompressorMap::iterator it = this->compressors_.find(compression_level);
+            ZlibCompressorMap::iterator it =
+              this->compressors_.find (selected_level);
 
             if (it == this->compressors_.end())
               {
-                compressor = new ::TAO::ZlibCompressor (this, compression_level);
+                compressor = new ::TAO::ZlibCompressor (this, selected_level);
                 it = this->compressors_.insert (
-                  ZlibCompressorMap::value_type (compression_level, compressor)).first;
+                  ZlibCompressorMap::value_type (selected_level, compressor)).first;
               }
 
             // Assignment from a raw pointer transfers ownership to the var.
