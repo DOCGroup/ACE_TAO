@@ -1,5 +1,4 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/sfp.h"
 #include "orbsvcs/AV/MCast.h"
@@ -17,6 +16,8 @@
 #include "tao/debug.h"
 
 #include "ace/Dynamic_Service.h"
+
+#include <memory>
 
 #if !defined (__ACE_INLINE__)
 #include "orbsvcs/AV/Transport.inl"
@@ -89,12 +90,16 @@ TAO_AV_Connector_Registry::open (TAO_Base_StreamEndPoint *endpoint,
               // @@Naga:Instead of making a new connector every time we should try and see if a connector exists
               // for this transport already and hence we can reuse it.
 
-              TAO_AV_Connector *connector = transport_factory->make_connector ();
+              std::unique_ptr<TAO_AV_Connector> connector_owner (
+                transport_factory->make_connector ());
+              TAO_AV_Connector * const connector = connector_owner.get ();
 
               if (connector != nullptr)
                 {
                   // add connector to list.
-                  this->connectors_.insert (connector);
+                  if (this->connectors_.insert (connector) == -1)
+                    return -1;
+                  connector_owner.release ();
 
                   if (connector->open (endpoint,
                                        av_core,
@@ -121,13 +126,17 @@ TAO_AV_Connector_Registry::open (TAO_Base_StreamEndPoint *endpoint,
 
               if (control_flow_factory != nullptr)
                 {
-                  TAO_AV_Connector *control_connector =
-                    transport_factory->make_connector ();
+                  std::unique_ptr<TAO_AV_Connector> control_connector_owner (
+                    transport_factory->make_connector ());
+                  TAO_AV_Connector * const control_connector =
+                    control_connector_owner.get ();
 
                   if (control_connector != nullptr)
                     {
                       // add connector to list.
-                      this->connectors_.insert (control_connector);
+                      if (this->connectors_.insert (control_connector) == -1)
+                        return -1;
+                      control_connector_owner.release ();
 
                       if (control_connector->open (endpoint,
                                                    av_core,
@@ -254,11 +263,15 @@ TAO_AV_Acceptor_Registry::open (TAO_Base_StreamEndPoint *endpoint,
 
               if (transport_protocol != nullptr)
                 {
-                  TAO_AV_Acceptor *acceptor = transport_factory->make_acceptor ();
+                  std::unique_ptr<TAO_AV_Acceptor> acceptor_owner (
+                    transport_factory->make_acceptor ());
+                  TAO_AV_Acceptor * const acceptor = acceptor_owner.get ();
                   if (acceptor != nullptr)
                     {
                       // add acceptor to list.
-                      this->acceptors_.insert (acceptor);
+                      if (this->acceptors_.insert (acceptor) == -1)
+                        return -1;
+                      acceptor_owner.release ();
 
                       if (acceptor->open (endpoint,
                                           av_core,
@@ -272,17 +285,22 @@ TAO_AV_Acceptor_Registry::open (TAO_Base_StreamEndPoint *endpoint,
 
                       if (control_flow_factory != nullptr)
                         {
-                          TAO_AV_Acceptor *acceptor = transport_factory->make_acceptor ();
+                          std::unique_ptr<TAO_AV_Acceptor> acceptor_owner (
+                            transport_factory->make_acceptor ());
+                          TAO_AV_Acceptor * const acceptor = acceptor_owner.get ();
                           if (acceptor != nullptr)
                             {
+                              // add acceptor to list.
+                              if (this->acceptors_.insert (acceptor) == -1)
+                                return -1;
+                              acceptor_owner.release ();
+
                               if (acceptor->open (endpoint,
                                                   av_core,
                                                   entry,
                                                   control_flow_factory,
                                                   TAO_AV_Core::TAO_AV_CONTROL) == -1)
                                 return -1;
-                              // add acceptor to list.
-                              this->acceptors_.insert (acceptor);
 
                               entry->protocol_object ()->control_object (entry->control_protocol_object ());
                              }
@@ -350,8 +368,9 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
                        -1);
 
   // make an acceptor
-  TAO_AV_Acceptor *acceptor =
-    transport_factory->make_acceptor();
+  std::unique_ptr<TAO_AV_Acceptor> acceptor_owner (
+    transport_factory->make_acceptor ());
+  TAO_AV_Acceptor * const acceptor = acceptor_owner.get ();
 
   if (acceptor == nullptr)
     ORBSVCS_ERROR_RETURN ((LM_ERROR,
@@ -359,6 +378,10 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
                         "an acceptor for <%d>\n",
                         transport_protocol),
                        -1);
+
+  if (this->acceptors_.insert (acceptor) == -1)
+    return -1;
+  acceptor_owner.release ();
 
   if (acceptor->open_default (endpoint,
                               av_core,
@@ -370,8 +393,6 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
                        "default acceptor for <%s>%p\n",
                        flow_protocol),
                       -1);
-
-  this->acceptors_.insert (acceptor);
 
   char const *control_flow_factory_name = flow_factory->control_flow_factory ();
 
@@ -387,7 +408,9 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
                            control_flow_factory_name),
                           -1);
 
-      TAO_AV_Acceptor *control_acceptor = transport_factory->make_acceptor ();
+      std::unique_ptr<TAO_AV_Acceptor> control_acceptor_owner (
+        transport_factory->make_acceptor ());
+      TAO_AV_Acceptor * const control_acceptor = control_acceptor_owner.get ();
 
       if (control_acceptor == nullptr)
         ORBSVCS_ERROR_RETURN ((LM_ERROR,
@@ -395,6 +418,10 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
                            "an acceptor for <%d>\n",
                            transport_protocol),
                           -1);
+
+      if (this->acceptors_.insert (control_acceptor) == -1)
+        return -1;
+      control_acceptor_owner.release ();
 
       if (control_acceptor->open_default (endpoint,
                                           av_core,
@@ -406,8 +433,6 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
                            "default acceptor for <%s>%p\n",
                            transport_protocol),
                           -1);
-
-      this->acceptors_.insert (control_acceptor);
 
       entry->protocol_object ()->control_object (entry->control_protocol_object ());
     }
