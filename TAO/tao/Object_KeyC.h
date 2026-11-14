@@ -84,7 +84,7 @@ namespace TAO
   {
   public:
     ObjectKey ();
-    ObjectKey (CORBA::ULong max);
+    explicit ObjectKey (CORBA::ULong max);
     ObjectKey (
         CORBA::ULong max,
         CORBA::ULong length,
