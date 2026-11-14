@@ -6,6 +6,7 @@
 
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Sched/Strategy_Scheduler.h"
+#include <cstdlib>
 #include <new>
 #include "ace/Sched_Params.h"
 
@@ -700,7 +701,7 @@ ACE_MUF_Scheduler_Strategy::priority_comp (Dispatch_Entry const &first_entry,
 void
 ACE_MUF_Scheduler_Strategy::sort (Dispatch_Entry **dispatch_entries, u_int size)
 {
-  ACE_OS::qsort (static_cast<void *> (dispatch_entries),
+  std::qsort (static_cast<void *> (dispatch_entries),
                  size,
                  sizeof (Dispatch_Entry *),
                  static_cast<COMP_FUNC> (ACE_MUF_Scheduler_Strategy::sort_function));
@@ -834,7 +835,7 @@ void
 ACE_RMS_Scheduler_Strategy::sort (
   Dispatch_Entry **dispatch_entries_, u_int size)
 {
-  ACE_OS::qsort (static_cast<void *> (dispatch_entries_),
+  std::qsort (static_cast<void *> (dispatch_entries_),
                  size,
                  sizeof (Dispatch_Entry *),
                  static_cast<COMP_FUNC> (ACE_RMS_Scheduler_Strategy::sort_function));
@@ -925,7 +926,7 @@ void
 ACE_MLF_Scheduler_Strategy::sort (
   Dispatch_Entry **dispatch_entries_, u_int size)
 {
-  ACE_OS::qsort (static_cast<void *> (dispatch_entries_),
+  std::qsort (static_cast<void *> (dispatch_entries_),
                  size,
                  sizeof (Dispatch_Entry *),
                  static_cast<COMP_FUNC> (ACE_MLF_Scheduler_Strategy::sort_function));
@@ -1033,7 +1034,7 @@ void
 ACE_EDF_Scheduler_Strategy::sort (
   Dispatch_Entry **dispatch_entries_, u_int size)
 {
-  ACE_OS::qsort (static_cast<void *> (dispatch_entries_),
+  std::qsort (static_cast<void *> (dispatch_entries_),
                  size,
                  sizeof (Dispatch_Entry *),
                  static_cast<COMP_FUNC> (ACE_EDF_Scheduler_Strategy::sort_function));
@@ -1152,7 +1153,7 @@ void
 ACE_Criticality_Scheduler_Strategy::sort (
   Dispatch_Entry **dispatch_entries_, u_int size)
 {
-  ACE_OS::qsort (static_cast<void *> (dispatch_entries_),
+  std::qsort (static_cast<void *> (dispatch_entries_),
                  size,
                  sizeof (Dispatch_Entry *),
                  static_cast<COMP_FUNC> (ACE_Criticality_Scheduler_Strategy::sort_function));
