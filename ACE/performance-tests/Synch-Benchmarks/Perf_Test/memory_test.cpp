@@ -1,6 +1,5 @@
 #define  ACE_BUILD_SVC_DLL
 #include "ace/OS_NS_string.h"
-#include "ace/Log_Msg.h"
 #include "Performance_Test_Options.h"
 #include "Benchmark_Performance.h"
 

@@ -15,8 +15,6 @@
 
 #include "ace/Default_Constants.h"
 #include "ace/Profile_Timer.h"
-#include "ace/Log_Msg.h"
-#include "ace/Thread_Manager.h"
 #include "ace/svc_export.h"
 
 #if defined (ACE_HAS_THREADS)
