@@ -355,7 +355,8 @@ TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_Operation_Details const *& from,
               break;
             }
 
-          cloned_args[num_cloned_args++] = cloned_arg;
+          cloned_args[num_cloned_args] = cloned_arg;
+          ++num_cloned_args;
         }
     }
 
