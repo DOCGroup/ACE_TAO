@@ -996,7 +996,7 @@ TAO_GIOP_Message_Base::process_request (
 
           // Send back the reply service context.
           reply_params.service_context_notowned (
-            &request.reply_service_info ());
+            std::addressof (request.reply_service_info ()));
 
           output.message_attributes (request_id,
                                      nullptr,
@@ -1047,7 +1047,7 @@ TAO_GIOP_Message_Base::process_request (
           result = this->send_reply_exception (transport,
                                                output,
                                                request_id,
-                                               &request.reply_service_info (),
+                                               std::addressof (request.reply_service_info ()),
                                                &ex);
           if (result == -1)
             {
@@ -1102,7 +1102,7 @@ TAO_GIOP_Message_Base::process_request (
           if (this->send_reply_exception (transport,
                                           output,
                                           request_id,
-                                          &request.reply_service_info (),
+                                          std::addressof (request.reply_service_info ()),
                                           &exception) == -1
               && TAO_debug_level > 0)
             {
