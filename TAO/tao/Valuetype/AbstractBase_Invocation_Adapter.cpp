@@ -10,7 +10,7 @@ namespace TAO
       CORBA::AbstractBase_ptr target,
       Argument **args,
       int arg_number,
-      const char *operation,
+      char const *operation,
       size_t op_len,
       int collocation_opportunity,
       Invocation_Type type,

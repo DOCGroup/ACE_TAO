@@ -1,12 +1,11 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    AbstractBase_Invocation_Adapter.h
  *
  *  @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
-//=============================================================================
+
 #ifndef TAO_ABSTRACTBASE_INVOCATION_ADAPTER_H
 #define TAO_ABSTRACTBASE_INVOCATION_ADAPTER_H
 
@@ -43,21 +42,21 @@ namespace TAO
     : public Invocation_Adapter
   {
   public:
+    AbstractBase_Invocation_Adapter () = delete;
+
     AbstractBase_Invocation_Adapter (
         CORBA::AbstractBase_ptr target,
         Argument **args,
         int arg_number,
-        const char *operation,
+        char const *operation,
         size_t op_len,
         int collocation_opportunity,
         TAO::Invocation_Type type = TAO_TWOWAY_INVOCATION,
         TAO::Invocation_Mode mode = TAO_SYNCHRONOUS_INVOCATION,
         bool has_in_args = false);
 
-  private:
-    AbstractBase_Invocation_Adapter () = delete;
-    AbstractBase_Invocation_Adapter (const AbstractBase_Invocation_Adapter &) = delete;
-    AbstractBase_Invocation_Adapter & operator= (const AbstractBase_Invocation_Adapter &) = delete;
+    AbstractBase_Invocation_Adapter (AbstractBase_Invocation_Adapter const &) = delete;
+    AbstractBase_Invocation_Adapter & operator= (AbstractBase_Invocation_Adapter const &) = delete;
     AbstractBase_Invocation_Adapter (AbstractBase_Invocation_Adapter &&) = delete;
     AbstractBase_Invocation_Adapter & operator= (AbstractBase_Invocation_Adapter &&) = delete;
   };

@@ -12,7 +12,7 @@ namespace TAO
   template<typename T> T *
   AbstractBase_Narrow_Utils<T>::narrow (
       CORBA::AbstractBase_ptr obj,
-      const char *repo_id)
+      char const *repo_id)
   {
     if (CORBA::is_nil (obj))
       {
@@ -41,7 +41,7 @@ namespace TAO
       {
         if (obj->_is_objref ())
           {
-            TAO_Stub* stub = obj->_stubobj ();
+            TAO_Stub * const stub = obj->_stubobj ();
 
             bool const collocated =
               !CORBA::is_nil (stub->servant_orb_var ().in ())
@@ -57,11 +57,11 @@ namespace TAO
         else
           {
             proxy = dynamic_cast<T *> (obj);
-            if (proxy)
+            if (proxy != nullptr)
               proxy->_add_ref ();
           }
       }
-    catch (const ::CORBA::Exception&)
+    catch (::CORBA::Exception const &)
       {
       }
 

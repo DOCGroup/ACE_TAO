@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Value_CORBA_methods.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_VALUETYPE_CORBA_METHODS_H
 #define TAO_VALUETYPE_CORBA_METHODS_H

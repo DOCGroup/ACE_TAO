@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file     ValueFactory.h
  *
  *  @author  Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
  */
-//=============================================================================
 
 #ifndef TAO_VALUEFACTORY_H
 #define TAO_VALUEFACTORY_H
@@ -65,12 +63,12 @@ namespace CORBA
     /// that support an abstract interface.
     virtual CORBA::AbstractBase_ptr create_for_unmarshal_abstract ();
 
-  private:
     ValueFactoryBase (ValueFactoryBase const &) = delete;
     ValueFactoryBase &operator= (ValueFactoryBase const &) = delete;
     ValueFactoryBase (ValueFactoryBase &&) = delete;
     ValueFactoryBase &operator= (ValueFactoryBase &&) = delete;
 
+  private:
     /// Reference counter.
     std::atomic<uint32_t> refcount_ {1};
   };
@@ -118,14 +116,12 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 // orb->lookup_value_factory (char * repo_id) .)
 
 #define TAO_OBV_REGISTER_FACTORY(FACTORY, VALUETYPE) \
-  { CORBA::ValueFactory factory = new FACTORY; \
-    CORBA::ValueFactory prev_factory = \
-    TAO_ORB_Core_instance ()->orb ()->register_value_factory (\
+  { CORBA::ValueFactory_var factory (new FACTORY); \
+    CORBA::ValueFactory prev_factory {}; \
+    prev_factory = TAO_ORB_Core_instance ()->orb ()->register_value_factory ( \
       VALUETYPE::_tao_obv_static_repository_id (),\
-                                   factory); \
-    if (prev_factory) prev_factory->_remove_ref (); \
-    factory->_remove_ref (); }
-
+                                   factory.in ()); \
+    if (prev_factory != nullptr) prev_factory->_remove_ref (); }
 
 #include /**/ "ace/post.h"
 

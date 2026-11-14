@@ -108,7 +108,7 @@ template <typename T>
 T *
 TAO_Value_Var_T<T>::_retn ()
 {
-  T * tmp = this->ptr_;
+  T * const tmp = this->ptr_;
   this->ptr_ = nullptr;
   return tmp;
 }

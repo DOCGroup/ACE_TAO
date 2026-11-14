@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file     AbstractBase_T.h
  *
  *  @author  Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_ABSTRACTBASE_T_H
 #define TAO_ABSTRACTBASE_T_H
@@ -35,7 +33,7 @@ namespace TAO
     using T_ptr = T *;
 
     static T_ptr narrow (CORBA::AbstractBase_ptr,
-                         const char *repo_id);
+                         char const *repo_id);
 
     static T_ptr unchecked_narrow (CORBA::AbstractBase_ptr);
   };

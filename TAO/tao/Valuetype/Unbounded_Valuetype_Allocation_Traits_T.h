@@ -33,9 +33,11 @@ struct unbounded_valuetype_allocation_traits
     return nullptr;
   }
 
+  // The sequence API stores the returned element pointer, so reserve slot zero
+  // for the end pointer that freebuf uses to recover the allocation bounds.
   inline static value_type * allocbuf(CORBA::ULong maximum)
   {
-    value_type * buffer = new value_type[maximum + 1];
+    value_type * const buffer = new value_type[maximum + 1];
     reinterpret_cast<value_type**>(buffer)[0] = buffer + maximum + 1;
 
     // no throw
@@ -46,7 +48,7 @@ struct unbounded_valuetype_allocation_traits
 
   inline static value_type * allocbuf_noinit(CORBA::ULong maximum)
   {
-    value_type * buffer = new value_type[maximum + 1];
+    value_type * const buffer = new value_type[maximum + 1];
     reinterpret_cast<value_type**>(buffer)[0] = buffer + maximum + 1;
 
     // no throw
@@ -59,8 +61,8 @@ struct unbounded_valuetype_allocation_traits
   {
     if(buffer != nullptr)
     {
-      value_type * begin = buffer - 1;
-      value_type * end = reinterpret_cast<value_type*>(*begin);
+      value_type * const begin = buffer - 1;
+      value_type * const end = reinterpret_cast<value_type*> (*begin);
       valuetype_traits::release_range(buffer, end);
 
       buffer = begin;

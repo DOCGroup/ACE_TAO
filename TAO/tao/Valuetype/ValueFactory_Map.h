@@ -1,13 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file     ValueFactory_Map.h
  *
  *  @author  Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
  */
-//=============================================================================
-
 
 #ifndef TAO_VALUEFACTORY_MAP_H
 #define TAO_VALUEFACTORY_MAP_H
@@ -46,12 +43,12 @@ public:
    * Returns -1 on failure, 0 on success and 1 if a previous factory
    * is found (and returned in factory).
    */
-  int rebind (const char *repo_id,
+  int rebind (char const *repo_id,
               CORBA::ValueFactory &factory);
 
   /// Removes entry for @a repo_id from the map and sets factory to
   /// the tied one.
-  int unbind (const char *repo_id,
+  int unbind (char const *repo_id,
               CORBA::ValueFactory &factory);
 
   /**
@@ -59,7 +56,7 @@ public:
    * Invokes _add_ref () on the factory if found.
    * Returns -1 on failure and 0 on success.
    */
-  int find (const char *repo_id,
+  int find (char const *repo_id,
             CORBA::ValueFactory &factory);
 
   void dump ();
@@ -67,17 +64,17 @@ public:
   /// Return singleton instance of this class.
   static TAO_ValueFactory_Map * instance ();
 
-private:
   TAO_ValueFactory_Map (TAO_ValueFactory_Map const &) = delete;
   TAO_ValueFactory_Map &operator= (TAO_ValueFactory_Map const &) = delete;
   TAO_ValueFactory_Map (TAO_ValueFactory_Map &&) = delete;
   TAO_ValueFactory_Map &operator= (TAO_ValueFactory_Map &&) = delete;
 
+private:
   /// The hash table data structure.
-  using FACTORY_MAP_MANAGER = ACE_Hash_Map_Manager_Ex<const char *,
+  using FACTORY_MAP_MANAGER = ACE_Hash_Map_Manager_Ex<char const *,
                                                        CORBA::ValueFactory,
-                                                       ACE_Hash<const char *>,
-                                                       ACE_Equal_To<const char *>,
+                                                       ACE_Hash<char const *>,
+                                                       ACE_Equal_To<char const *>,
                                                        ACE_SYNCH_NULL_MUTEX>;
   FACTORY_MAP_MANAGER map_;
 

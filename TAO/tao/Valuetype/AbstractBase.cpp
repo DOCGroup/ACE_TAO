@@ -10,13 +10,16 @@
 #include "tao/debug.h"
 #include "tao/CDR.h"
 
+#include <cstring>
+#include <memory>
+
 #if !defined (__ACE_INLINE__)
 # include "tao/Valuetype/AbstractBase.inl"
 #endif /* ! __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-CORBA::AbstractBase::AbstractBase (const CORBA::AbstractBase &rhs)
+CORBA::AbstractBase::AbstractBase (CORBA::AbstractBase const &rhs)
   : is_objref_ (rhs.is_objref_)
   , refcount_ (1)
   , is_collocated_ (rhs.is_collocated_)
@@ -41,6 +44,8 @@ CORBA::AbstractBase::AbstractBase (TAO_Stub * protocol_proxy,
   , equivalent_obj_ (this->create_object (protocol_proxy))
 {
 }
+
+CORBA::AbstractBase::~AbstractBase () = default;
 
 void
 CORBA::AbstractBase::_add_ref ()
@@ -76,7 +81,7 @@ CORBA::AbstractBase::_remove_ref ()
 void
 CORBA::AbstractBase::_tao_any_destructor (void *x)
 {
-  CORBA::AbstractBase_ptr tmp = static_cast<CORBA::AbstractBase_ptr> (x);
+  CORBA::AbstractBase_ptr const tmp = static_cast<CORBA::AbstractBase_ptr> (x);
   ::CORBA::release (tmp);
 }
 
@@ -99,7 +104,7 @@ CORBA::AbstractBase::_to_value ()
       return nullptr;
     }
 
-  CORBA::ValueBase *retval = this->_tao_to_value ();
+  CORBA::ValueBase * const retval = this->_tao_to_value ();
 
   if (retval != nullptr)
     {
@@ -110,7 +115,7 @@ CORBA::AbstractBase::_to_value ()
 }
 
 CORBA::Boolean
-CORBA::AbstractBase::_is_a (const char *type_id)
+CORBA::AbstractBase::_is_a (char const *type_id)
 {
   if (this->is_objref_)
     {
@@ -120,25 +125,25 @@ CORBA::AbstractBase::_is_a (const char *type_id)
         }
     }
 
-  return (ACE_OS::strcmp (type_id, "IDL:omg.org/CORBA/AbstractBase:1.0") == 0);
+  return (std::strcmp (type_id, "IDL:omg.org/CORBA/AbstractBase:1.0") == 0);
 }
 
-const char *
+char const *
 CORBA::AbstractBase::_interface_repository_id () const
 {
   return "IDL:omg.org/CORBA/AbstractBase:1.0";
 }
 
-const char *
+char const *
 CORBA::AbstractBase::_tao_obv_repository_id () const
 {
   return "IDL:omg.org/CORBA/AbstractBase:1.0";
 }
 
 CORBA::Boolean
-operator<< (TAO_OutputCDR &strm, const CORBA::AbstractBase_ptr abs)
+operator<< (TAO_OutputCDR &strm, CORBA::AbstractBase_ptr const abs)
 {
-  CORBA::Boolean discriminator = true;
+  CORBA::Boolean discriminator {true};
 
   // We marshal a null abstract interface ptr as a discriminator
   // plus null object reference (see CORBA::Object::marshal()
@@ -154,7 +159,7 @@ operator<< (TAO_OutputCDR &strm, const CORBA::AbstractBase_ptr abs)
     {
       if (strm << ACE_OutputCDR::from_boolean (discriminator))
         {
-          TAO_Stub *stubobj = abs->_stubobj ();
+          TAO_Stub * const stubobj = abs->_stubobj ();
 
           if (stubobj == nullptr)
             {
@@ -162,25 +167,25 @@ operator<< (TAO_OutputCDR &strm, const CORBA::AbstractBase_ptr abs)
             }
 
           // STRING, a type ID hint
-          if ((strm << stubobj->type_id.in ()) == 0)
+          if (!(strm << stubobj->type_id.in ()))
             {
               return false;
             }
 
-          const TAO_MProfile& mprofile = stubobj->base_profiles ();
+          TAO_MProfile const &mprofile = stubobj->base_profiles ();
 
           CORBA::ULong const profile_count = mprofile.profile_count ();
 
-          if ((strm << profile_count) == 0)
+          if (!(strm << profile_count))
             {
               return false;
             }
 
           // @@ The MProfile should be locked during this iteration, is there
           // anyway to achieve that?
-          for (CORBA::ULong i = 0; i < profile_count; ++i)
+          for (CORBA::ULong i {}; i < profile_count; ++i)
             {
-              const TAO_Profile *p = mprofile.get_profile (i);
+              TAO_Profile const *p = mprofile.get_profile (i);
 
               if (p->encode (strm) == 0)
                 {
@@ -197,15 +202,15 @@ operator<< (TAO_OutputCDR &strm, const CORBA::AbstractBase_ptr abs)
 
       if (strm << ACE_OutputCDR::from_boolean (discriminator))
         {
-          CORBA::ULong value_tag = TAO_OBV_GIOP_Flags::Value_tag_base
-                                   | TAO_OBV_GIOP_Flags::Type_info_single;
+          CORBA::ULong const value_tag = TAO_OBV_GIOP_Flags::Value_tag_base
+                                         | TAO_OBV_GIOP_Flags::Type_info_single;
 
-          if ((strm.write_ulong (value_tag)) == 0)
+          if (!strm.write_ulong (value_tag))
             {
               return false;
             }
 
-          if ((strm << abs->_tao_obv_repository_id ()) == 0)
+          if (!(strm << abs->_tao_obv_repository_id ()))
             {
               return false;
             }
@@ -221,15 +226,15 @@ CORBA::Boolean
 operator>> (TAO_InputCDR &strm, CORBA::AbstractBase_ptr &abs)
 {
   abs = nullptr;
-  CORBA::Boolean discriminator = false;
-  ACE_InputCDR::to_boolean tb (discriminator);
-  TAO_ORB_Core *orb_core = nullptr;
+  CORBA::Boolean discriminator {false};
+  ACE_InputCDR::to_boolean const tb (discriminator);
+  TAO_ORB_Core *orb_core {};
 
   if (strm >> tb)
     {
       if (!discriminator)
         {
-          CORBA::ULong value_tag;
+          CORBA::ULong value_tag {};
 
           if (!strm.read_ulong (value_tag))
             {
@@ -256,7 +261,7 @@ operator>> (TAO_InputCDR &strm, CORBA::AbstractBase_ptr &abs)
           CORBA::String_var repo_id_stream;
 
           // It would be more efficient not to copy the string)
-          if (strm.read_string (repo_id_stream.inout ()) == 0)
+          if (!strm.read_string (repo_id_stream.inout ()))
             {
               return false;
             }
@@ -275,7 +280,7 @@ operator>> (TAO_InputCDR &strm, CORBA::AbstractBase_ptr &abs)
                 }
             }
 
-          CORBA::ValueFactory_var factory =
+          CORBA::ValueFactory_var const factory =
             orb_core->orb ()->lookup_value_factory (repo_id_stream.in ());
 
           // We should throw an exception, if there were an appropriate one.
@@ -292,7 +297,7 @@ operator>> (TAO_InputCDR &strm, CORBA::AbstractBase_ptr &abs)
 
           abs = factory->create_for_unmarshal_abstract ();
 
-          return (abs == 0 ? false : abs->_tao_unmarshal_v (strm));
+          return (abs == nullptr ? false : abs->_tao_unmarshal_v (strm));
         }
       else
         {
@@ -305,7 +310,7 @@ operator>> (TAO_InputCDR &strm, CORBA::AbstractBase_ptr &abs)
                   return true;
                 }
 
-              TAO_Stub *concrete_stubobj = generic_objref->_stubobj ();
+              TAO_Stub * const concrete_stubobj = generic_objref->_stubobj ();
 
               bool const collocated =
                 !CORBA::is_nil (concrete_stubobj->servant_orb_var ().in ())
@@ -359,7 +364,7 @@ CORBA::AbstractBase::_tao_match_formal_type (ptrdiff_t ) const
 
 std::ostream &
 CORBA::AbstractBase::_tao_stream (std::ostream &strm,
-                                  const CORBA::AbstractBase_ptr _tao_objref)
+                                  CORBA::AbstractBase_ptr const _tao_objref)
 {
   return _tao_objref->_tao_stream_v (strm);
 }
@@ -381,13 +386,13 @@ CORBA::AbstractBase::_tao_to_value ()
 CORBA::Object_ptr
 CORBA::AbstractBase::create_object (TAO_Stub *stub)
 {
-  if (stub)
+  if (stub != nullptr)
     {
       stub->_incr_refcnt ();
 
       TAO_Stub_Auto_Ptr safe_stub (stub);
 
-      CORBA::Object_ptr obj =
+      CORBA::Object_ptr const obj =
         stub->orb_core ()->create_object (stub);
 
       safe_stub.release ();
@@ -397,8 +402,6 @@ CORBA::AbstractBase::create_object (TAO_Stub *stub)
 
   return CORBA::Object::_nil ();
 }
-
-// ================== Typecode initializations ==================
 
 namespace TAO
 {
@@ -416,7 +419,7 @@ namespace TAO
 
 namespace CORBA
 {
-  TypeCode_ptr const _tc_AbstractBase = &TAO::TypeCode::tc_AbstractBase;
+  TypeCode_ptr const _tc_AbstractBase = std::addressof (TAO::TypeCode::tc_AbstractBase);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

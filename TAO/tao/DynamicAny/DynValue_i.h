@@ -12,6 +12,7 @@
 #define TAO_DYNVALUE_I_H
 #include /**/ "ace/pre.h"
 
+#include "ace/Array_Base.h"
 #include "tao/DynamicAny/DynValueCommon_i.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

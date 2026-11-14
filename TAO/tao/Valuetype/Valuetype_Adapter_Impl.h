@@ -1,13 +1,10 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    Valuetype_Adapter_Impl.h
  *
  *  @author  Jeff Parsons <j.parsons@vanderbilt.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_VALUETYPE_ADAPTER_IMPL_H
 #define TAO_VALUETYPE_ADAPTER_IMPL_H
@@ -40,7 +37,7 @@ class TAO_Valuetype_Export TAO_Valuetype_Adapter_Impl
 {
 public:
   TAO_Valuetype_Adapter_Impl () = default;
-  ~TAO_Valuetype_Adapter_Impl () override = default;
+  ~TAO_Valuetype_Adapter_Impl () override;
 
   CORBA::Object_ptr abstractbase_to_object (
       CORBA::AbstractBase_ptr) override;
@@ -58,20 +55,20 @@ public:
   CORBA::Boolean is_type_info_list (CORBA::Long) const override;
   CORBA::Boolean is_value_chunked (CORBA::Long) const override;
 
-  int vf_map_rebind (const char *, CORBA::ValueFactory &) override;
+  int vf_map_rebind (char const *, CORBA::ValueFactory &) override;
 
-  int vf_map_unbind (const char *) override;
+  int vf_map_unbind (char const *) override;
 
-  CORBA::ValueFactory vf_map_find (const char *) override;
+  CORBA::ValueFactory vf_map_find (char const *) override;
 
   CORBA::TypeCode_ptr derived_type (CORBA::ValueBase *) override;
 
-private:
   TAO_Valuetype_Adapter_Impl (TAO_Valuetype_Adapter_Impl const &) = delete;
   TAO_Valuetype_Adapter_Impl &operator= (TAO_Valuetype_Adapter_Impl const &) = delete;
   TAO_Valuetype_Adapter_Impl (TAO_Valuetype_Adapter_Impl &&) = delete;
   TAO_Valuetype_Adapter_Impl &operator= (TAO_Valuetype_Adapter_Impl &&) = delete;
 
+private:
   TAO_ValueFactory_Map map_;
 };
 
