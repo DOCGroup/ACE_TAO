@@ -73,7 +73,7 @@ namespace
         return;
       }
 
-    switch (sscanf (buf, format, &i))
+    switch (std::sscanf (buf, format, std::addressof (i)))
       {
       case 0:
         state = TAO::Storable_Base::badbit;
@@ -348,7 +348,7 @@ TAO::Storable_FlatFileStream::last_changed ()
           retry = true;
 
           ACE_stat st;
-          result = ACE_OS::fstat (filelock_.handle_, &st);
+          result = ACE_OS::fstat (filelock_.handle_, std::addressof (st));
           if (result == 0)
             mtime = st.st_mtime;
           else
@@ -369,7 +369,7 @@ TAO::Storable_FlatFileStream::last_changed ()
   else
     {
       ACE_stat st;
-      result = ACE_OS::stat (file_.c_str (), &st);
+      result = ACE_OS::stat (file_.c_str (), std::addressof (st));
       if (result == 0)
         mtime = st.st_mtime;
     }
@@ -423,7 +423,7 @@ TAO::Storable_FlatFileStream::operator >> (std::string &str)
   std::string::size_type const max_buf_len =
     ACE_Numeric_Limits<std::string::size_type>::max ();
   int const max_int = ACE_Numeric_Limits<int>::max ();
-  switch (std::fscanf (fl_, "%d\n", &bufSize))
+  switch (std::fscanf (fl_, "%d\n", std::addressof (bufSize)))
     {
     case 0:
       this->throw_on_read_error (badbit);
