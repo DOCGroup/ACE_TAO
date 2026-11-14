@@ -19,15 +19,10 @@
 
 #include "UDPC.h"
 
-class UDP_Client_i
-: public ACE_Task_Base
+/// UDP client interface subclass.
+/// Wraps the client functionality in one class.
+class UDP_Client_i : public ACE_Task_Base
 {
-  // = TITLE
-  //    UDP Client interface subclass.
-  //
-  // = DESCRIPTION
-  //    This class wrapps the client functionality into one class
-  //
 public:
   UDP_Client_i (CORBA::ORB_ptr orb,
                 UDP_ptr udp,
@@ -42,7 +37,7 @@ public:
   ~UDP_Client_i () override = default;
 
 private:
-  // Runs in a separate thread.
+  /// Runs in a separate thread.
   int svc () override;
 
 private:

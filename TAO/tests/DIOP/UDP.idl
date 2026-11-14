@@ -2,15 +2,14 @@
 // UDP.idl
 interface UDP
 {
-  // = TITLE
-  //    Defines an interface that encapsulates operations that
-  //    return the current time of day and shuts down the server.
+  /// Defines operations to request the current time from another
+  /// machine and shut down the server.
 
+  /// Returns the current time of day to a client on another machine.
   oneway void invoke (in string client_name,
                       in UDP udpHandler,
                       in long request_id);
-  // Returns the current time of day on another machine.
 
+  /// Shuts down the application.
   oneway void shutdown ();
-  // Shutdown the application.
 };
