@@ -20,6 +20,7 @@
 #include <iostream>
 #include <map>
 #include <string>
+#include <utility>
 
 enum class DeviceType { thermometer = 0, thermostat = 1 };
 
@@ -204,6 +205,9 @@ ICP_get (unsigned long id,
          void *value,
          size_t len)
 {
+  if (attr == nullptr || value == nullptr)
+    return -1;
+
   // Look for id in state map
   StateMap::const_iterator pos = dstate.find (id);
   if (pos == dstate.end ())
@@ -258,6 +262,9 @@ extern "C"
 int
 ICP_set (unsigned long id, char const *attr, void const *value)
 {
+  if (attr == nullptr || value == nullptr)
+    return -1;
+
   // Look for id in state map
   StateMap::iterator pos = dstate.find (id);
   if  (pos == dstate.end ())
@@ -266,7 +273,9 @@ ICP_set (unsigned long id, char const *attr, void const *value)
   // Change either location or nominal temp, depending on attr.
   if (std::strcmp (attr, "location") == 0)
     {
-      pos->second.location.assign (static_cast<char const *> (value), MAXSTR - 1);
+      char const * const location = static_cast<char const *> (value);
+      pos->second.location.assign (location,
+                                   (std::min) (std::strlen (location), MAXSTR - 1));
     }
   else if (std::strcmp (attr, "nominal_temp") == 0)
     {
@@ -293,20 +302,20 @@ public:
   ICP_Persist& operator= (ICP_Persist const&) = delete;
   ICP_Persist& operator= (ICP_Persist&&) = delete;
 
-  explicit ICP_Persist (char const *file);
+  explicit ICP_Persist (std::string const& file);
   ~ICP_Persist ();
 private:
-  std::string m_filename;
+  std::string const m_filename;
 };
 
 // Read device state from a file and initialize the dstate map.
 
 ICP_Persist::
-ICP_Persist (char const *file)
+ICP_Persist (std::string const& file)
   : m_filename (file)
 {
   // Open input file, creating it if necessary.
-  std::ifstream db (m_filename.c_str (), std::ios::in|std::ios::out);//, 0666);
+  std::ifstream db (m_filename, std::ios::in | std::ios::out);
   if  (!db)
     {
       std::cerr << "Error opening " << m_filename << std::endl;
@@ -314,10 +323,10 @@ ICP_Persist (char const *file)
     }
 
   // Read device details, one attribute per line.
-  DeviceState ds {};
   unsigned long id {};
   while  (db >> id)
     {
+      DeviceState ds {};
       // Read device type and set model string accordingly.
       int dtype {};
       db >> dtype;
@@ -331,14 +340,8 @@ ICP_Persist (char const *file)
       ds.location = loc;
       if  (ds.type == DeviceType::thermostat)
         db >> ds.nominal_temp;      // Read temperature
-      dstate[id] = ds;                // Add entry to map
+      dstate[id] = std::move (ds);    // Add entry to map
     }
-
-  //db.close ();
-  //if  (!db) {
-  //    cerr << "Error closing " << m_filename << endl;
-  //    exit (1);
-  //}
 }
 
 // Write device state to the file.
@@ -346,9 +349,8 @@ ICP_Persist (char const *file)
 ICP_Persist::
 ~ICP_Persist ()
 {
-  std::cout<<"~ICP_Persist"<<std::endl;///////////////////////
   // Open input file, truncating it.
-  std::ofstream db (m_filename.c_str ());
+  std::ofstream db (m_filename);
   if  (!db)
     {
       std::cerr << "Error opening " << m_filename << std::endl;
@@ -356,13 +358,13 @@ ICP_Persist::
     }
 
   // Write the state details for each device.
-  for (StateMap::const_iterator i = dstate.cbegin (); i != dstate.cend (); ++i)
+  for (StateMap::value_type const& entry : dstate)
     {
-      db << i->first << std::endl;
-      db << static_cast<unsigned long> (i->second.type) << std::endl;
-      db << i->second.location << std::endl;
-      if  (i->second.type == DeviceType::thermostat)
-        db << i->second.nominal_temp << std::endl;
+      db << entry.first << '\n';
+      db << static_cast<unsigned long> (entry.second.type) << '\n';
+      db << entry.second.location << '\n';
+      if  (entry.second.type == DeviceType::thermostat)
+        db << entry.second.nominal_temp << '\n';
     }
   if  (!db)
     {
