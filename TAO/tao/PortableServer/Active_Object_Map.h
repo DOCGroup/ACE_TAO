@@ -333,7 +333,7 @@ public:
 
 protected:
   /// Non-owning back-reference to the active map that owns this strategy.
-  TAO_Active_Object_Map *active_object_map_;
+  TAO_Active_Object_Map *active_object_map_ {};
 };
 
 /**
@@ -459,7 +459,7 @@ public:
 
 protected:
   /// Non-owning back-reference to the active map that owns this strategy.
-  TAO_Active_Object_Map *active_object_map_;
+  TAO_Active_Object_Map *active_object_map_ {};
 };
 
 /**
@@ -527,7 +527,7 @@ public:
 
 protected:
   /// Non-owning back-reference to the active map that owns this strategy.
-  TAO_Active_Object_Map *active_object_map_;
+  TAO_Active_Object_Map *active_object_map_ {};
 };
 
 #if !defined (CORBA_E_MICRO)
