@@ -37,7 +37,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // TAO_IDL - Generated from
 // be\be_visitor_typecode/struct_typecode.cpp:87
 
-static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const * const _tao_fields_CORBA_WrongTransaction = 0;
+static TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const * const _tao_fields_CORBA_WrongTransaction {};
 static TAO::TypeCode::Struct<char const *,
                       CORBA::TypeCode_ptr const *,
                       TAO::TypeCode::Struct_Field<char const *, CORBA::TypeCode_ptr const *> const *,
