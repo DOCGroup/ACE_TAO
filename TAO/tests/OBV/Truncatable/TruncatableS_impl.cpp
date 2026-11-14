@@ -1,5 +1,7 @@
 #include "TruncatableS_impl.h"
-#include "ace/OS_NS_stdio.h"
+
+#include <cstdio>
+#include <cstring>
 
 Test_impl::Test_impl (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
@@ -20,8 +22,8 @@ Test_impl::op1 (
                id, iv->basic_data (), desc));
 
    char *tmp = CORBA::string_alloc (
-     static_cast<CORBA::ULong> (ACE_OS::strlen (id) + ACE_OS::strlen (desc) + 2));
-   ACE_OS::sprintf (tmp, "%s: %s", id, desc);
+     static_cast<CORBA::ULong> (std::strlen (id) + std::strlen (desc) + 2));
+   std::sprintf (tmp, "%s: %s", id, desc);
    CORBA::string_free (desc);
    desc = tmp;
 
@@ -42,8 +44,8 @@ Test_impl::op2 (
                ACE_TEXT(" id=%s basic_data=%u data1=%u desc=%s\n"),
                id, iv->basic_data (), iv->data1 (), desc));
   char *tmp = CORBA::string_alloc (
-    static_cast<CORBA::ULong> (ACE_OS::strlen (id) + ACE_OS::strlen (desc) + 2));
-  ACE_OS::sprintf (tmp, "%s: %s", id, desc);
+    static_cast<CORBA::ULong> (std::strlen (id) + std::strlen (desc) + 2));
+  std::sprintf (tmp, "%s: %s", id, desc);
   CORBA::string_free (desc);
   desc = tmp;
 
@@ -66,8 +68,8 @@ Test_impl::op3 (
                id, iv->basic_data (), iv->nv4()->data (), iv->data4 (), desc));
 
   char *tmp = CORBA::string_alloc (
-    static_cast<CORBA::ULong> (ACE_OS::strlen (id) + ACE_OS::strlen (desc) + 2));
-  ACE_OS::sprintf (tmp, "%s: %s", id, desc);
+    static_cast<CORBA::ULong> (std::strlen (id) + std::strlen (desc) + 2));
+  std::sprintf (tmp, "%s: %s", id, desc);
   CORBA::string_free (desc);
   desc = tmp;
 
@@ -114,8 +116,8 @@ Test_impl::op4 (
   }
 
   char *tmp = CORBA::string_alloc (
-    static_cast<CORBA::ULong> (ACE_OS::strlen (id) + ACE_OS::strlen (desc) + 2));
-  ACE_OS::sprintf (tmp, "%s: %s", id, desc);
+    static_cast<CORBA::ULong> (std::strlen (id) + std::strlen (desc) + 2));
+  std::sprintf (tmp, "%s: %s", id, desc);
   CORBA::string_free (desc);
   desc = tmp;
 
@@ -155,8 +157,8 @@ Test_impl::op5 (CORBA::Any const &val,
                    ACE_TEXT(" id=%s basic_data=%u data1=%u desc=%s\n"),
                    id, iv->basic_data (), iv->data1 (), desc));
       char *tmp = CORBA::string_alloc (
-        static_cast<CORBA::ULong> (ACE_OS::strlen (id) + ACE_OS::strlen (desc) + 2));
-      ACE_OS::sprintf (tmp, "%s: %s", id, desc);
+        static_cast<CORBA::ULong> (std::strlen (id) + std::strlen (desc) + 2));
+      std::sprintf (tmp, "%s: %s", id, desc);
       CORBA::string_free (desc);
       desc = tmp;
 
