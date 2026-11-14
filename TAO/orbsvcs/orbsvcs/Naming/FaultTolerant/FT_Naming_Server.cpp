@@ -35,11 +35,10 @@
 #include "tao/Storable_FlatFileStream.h"
 
 #include <array>
+#include <memory>
 #include <string>
 #include <utility>
 
-#include "tao/debug.h"
-#include "tao/default_ports.h"
 #include "tao/IORTable/IORTable.h"
 #include "tao/IORManipulation/IORManip_Loader.h"
 
@@ -135,7 +134,8 @@ TAO_FT_Naming_Server::update_info (FT_Naming::UpdateInfoSeq &infos)
     this->u_infos_.push_back (std::move (block_owner));
   }
 
-  this->orb_->orb_core ()->reactor ()->notify (&this->info_notifier_);
+  this->orb_->orb_core ()->reactor ()->notify (
+    std::addressof (this->info_notifier_));
 }
 
 void
@@ -175,7 +175,8 @@ TAO_FT_Naming_Server::update_iors (FT_Naming::ReplicaInfo const &iors)
     ACE_GUARD(TAO_SYNCH_MUTEX, guard, this->ior_lock_);
     this->u_iors_.push_back (iors);
   }
-  this->orb_->orb_core ()->reactor ()->notify (&this->ior_notifier_);
+  this->orb_->orb_core ()->reactor ()->notify (
+    std::addressof (this->ior_notifier_));
 }
 
 int
@@ -309,7 +310,8 @@ TAO_FT_Naming_Server::init_naming_manager_with_orb (int, ACE_TCHAR *[], CORBA::O
       PortableServer::ObjectId_var id =
         PortableServer::string_to_ObjectId ("NamingManager");
 
-      this->naming_manager_poa_->activate_object_with_id (id.in (), &this->naming_manager_);
+      this->naming_manager_poa_->activate_object_with_id (
+        id.in (), std::addressof (this->naming_manager_));
       this->assign (size_t(GROUP), true, this->naming_manager_poa_->id_to_reference (id.in ()));
 
       if (write (size_t(GROUP)) != 0)

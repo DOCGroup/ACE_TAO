@@ -308,7 +308,7 @@ ACE_Unbounded_List_Iterator<T>::next (T *&item)
     return 0;
   else
     {
-      item = &this->current_->item_;
+      item = std::addressof (this->current_->item_);
       return 1;
     }
 }
