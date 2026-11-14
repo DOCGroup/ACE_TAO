@@ -167,7 +167,7 @@ class TAO_Strategy_Acceptor:
   public ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>
 {
 public:
-  TAO_Strategy_Acceptor (TAO_Acceptor* acceptor)
+  explicit TAO_Strategy_Acceptor (TAO_Acceptor* acceptor)
    : acceptor_ (acceptor)
   {
   }
