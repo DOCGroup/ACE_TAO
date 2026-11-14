@@ -1,4 +1,6 @@
-/*
+/**
+ * @file RLECompressor.cpp
+ *
  *  Run-length encoding (RLE) is a very simple form of data compression
  *  in which runs of data (that is, sequences in which the same data value
  *  occurs in many consecutive data elements) are stored as a single data
@@ -28,49 +30,58 @@
 #include "RLECompressor.h"
 #include "ace/Compression/rle/RLECompressor.h"
 
+#include <limits>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-RLECompressor::RLECompressor(::Compression::CompressorFactory_ptr compressor_factory)
+  RLECompressor::RLECompressor (
+    ::Compression::CompressorFactory_ptr compressor_factory)
     : BaseCompressor (compressor_factory, 0)
-{
-}
+  {
+  }
 
-void
-RLECompressor::compress(const ::Compression::Buffer &source, ::Compression::Buffer &target)
-{
-    // Ensure maximum is at least X 1.1 input length.
-    target.length(static_cast<CORBA::ULong>((source.length() * 1.1) + 32U));
+  void
+  RLECompressor::compress (
+    ::Compression::Buffer const &source,
+    ::Compression::Buffer &target)
+  {
+    // Ensure maximum is at least 1.1 times the input length.
+    target.length (static_cast<CORBA::ULong> ((source.length () * 1.1) + 32U));
 
-    ACE_UINT64 out_len = ACE_RLECompression::instance()->compress( source.get_buffer(),
-                                                                   source.length(),
-                                                                   target.get_buffer(),
-                                                                   target.maximum() );
-    if (ACE_UINT64(-1) == out_len) { // Overrun
-        throw ::Compression::CompressionException();
-    }
+    ACE_UINT64 const out_len = ACE_RLECompression::instance ()->compress (
+      source.get_buffer (),
+      source.length (),
+      target.get_buffer (),
+      target.maximum ());
+    if (out_len == std::numeric_limits<ACE_UINT64>::max ())
+      {
+        throw ::Compression::CompressionException ();
+      }
 
-    target.length(static_cast< CORBA::ULong>(out_len)); // Set Output Buffer to the right size now.
+    target.length (static_cast<CORBA::ULong> (out_len));
 
-    // Update statistics for this compressor
-    this->update_stats(source.length(), target.length());
-}
+    this->update_stats (source.length (), target.length ());
+  }
 
-void
-RLECompressor::decompress(const ::Compression::Buffer &source, ::Compression::Buffer &target)
-{
-    ACE_UINT64 out_len = ACE_RLECompression::instance()->decompress(source.get_buffer(),
-                                                                    source.length(),
-                                                                    target.get_buffer(),
-                                                                    target.maximum() );
-    if (ACE_UINT64(-1) == out_len) { // Overrun
-        throw ::Compression::CompressionException();
-    }
+  void
+  RLECompressor::decompress (
+    ::Compression::Buffer const &source,
+    ::Compression::Buffer &target)
+  {
+    ACE_UINT64 const out_len = ACE_RLECompression::instance ()->decompress (
+      source.get_buffer (),
+      source.length (),
+      target.get_buffer (),
+      target.maximum ());
+    if (out_len == std::numeric_limits<ACE_UINT64>::max ())
+      {
+        throw ::Compression::CompressionException ();
+      }
 
-    target.length(static_cast<CORBA::ULong>(out_len));
-}
-
+    target.length (static_cast<CORBA::ULong> (out_len));
+  }
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

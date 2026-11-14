@@ -1,12 +1,10 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   Base_Compressor.h
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-// ===================================================================
 
 #ifndef TAO_BASE_COMPRESSOR_H
 #define TAO_BASE_COMPRESSOR_H
@@ -37,10 +35,10 @@ namespace TAO
     BaseCompressor (::Compression::CompressorFactory_ptr compressor_factory,
                     ::Compression::CompressionLevel compression_level);
 
-    void compress (::Compression::Buffer const& source,
+    void compress (::Compression::Buffer const &source,
                    ::Compression::Buffer &target) override = 0;
 
-    void decompress (::Compression::Buffer const& source,
+    void decompress (::Compression::Buffer const &source,
                      ::Compression::Buffer &target) override = 0;
 
     ::Compression::CompressorFactory_ptr compressor_factory () override;
@@ -53,21 +51,21 @@ namespace TAO
 
     ::Compression::CompressionRatio compression_ratio () override;
 
+    BaseCompressor (BaseCompressor const &) = delete;
+    BaseCompressor &operator= (BaseCompressor const &) = delete;
+    BaseCompressor (BaseCompressor &&) = delete;
+    BaseCompressor &operator= (BaseCompressor &&) = delete;
+
   protected:
     void update_stats (::CORBA::ULongLong uncompressed_bytes,
                        ::CORBA::ULongLong compressed_bytes);
 
     TAO_SYNCH_MUTEX mutex_;
-    ::Compression::CompressionLevel compression_level_;
-    ::Compression::CompressorFactory *compressor_factory_;
-    ::CORBA::ULongLong compressed_bytes_;
-    ::CORBA::ULongLong uncompressed_bytes_;
-
-  private:
-    BaseCompressor (BaseCompressor const &) = delete;
-    BaseCompressor &operator= (BaseCompressor const &) = delete;
-    BaseCompressor (BaseCompressor &&) = delete;
-    BaseCompressor &operator= (BaseCompressor &&) = delete;
+    ::Compression::CompressionLevel const compression_level_;
+    // Non-owning back-reference; the compressor factory retains the compressor.
+    ::Compression::CompressorFactory * const compressor_factory_;
+    ::CORBA::ULongLong compressed_bytes_ {};
+    ::CORBA::ULongLong uncompressed_bytes_ {};
   };
 }
 
