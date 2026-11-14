@@ -6,6 +6,7 @@
 #endif
 
 #include "ace/Truncate.h"
+#include <utility>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -13,21 +14,18 @@ namespace ACE
 {
   namespace HTTP
   {
-    StreamBuffer::StreamBuffer (std::iostream& stream, StreamBuffer::policy_type* policy)
+    StreamBuffer::StreamBuffer (std::iostream& stream,
+                                std::unique_ptr<StreamBuffer::policy_type> policy)
       : ACE::IOS::BufferedStreamBuffer (BUFFER_SIZE,
                                         std::ios::in | std::ios::out),
         stream_ (stream),
-        policy_ (policy)
+        policy_ (std::move (policy))
       {
         if (this->policy_)
           this->policy_->set_stream_buffer (this);
       }
 
-    StreamBuffer::~StreamBuffer ()
-      {
-        if (this->policy_)
-          delete this->policy_;
-      }
+    StreamBuffer::~StreamBuffer () = default;
 
     int StreamBuffer::read_from_stream (char* buffer, std::streamsize length)
       {
@@ -64,8 +62,9 @@ namespace ACE
         return this->stream_.sync ();
       }
 
-    IOS::IOS (std::iostream& stream, StreamBuffer::policy_type* policy)
-      : streambuf_ (stream, policy)
+    IOS::IOS (std::iostream& stream,
+              std::unique_ptr<StreamBuffer::policy_type> policy)
+      : streambuf_ (stream, std::move (policy))
       {
         ace_ios_init (&this->streambuf_);
       }
@@ -81,15 +80,17 @@ namespace ACE
           }
       }
 
-    OStream::OStream(std::iostream& stream, StreamBuffer::policy_type* policy)
-      : IOS (stream, policy), std::ostream (&streambuf_)
+    OStream::OStream (std::iostream& stream,
+                      std::unique_ptr<StreamBuffer::policy_type> policy)
+      : IOS (stream, std::move (policy)), std::ostream (&streambuf_)
       {
       }
 
     OStream::~OStream() = default;
 
-    IStream::IStream(std::iostream& stream, StreamBuffer::policy_type* policy)
-      : IOS (stream, policy), std::istream (&streambuf_)
+    IStream::IStream (std::iostream& stream,
+                      std::unique_ptr<StreamBuffer::policy_type> policy)
+      : IOS (stream, std::move (policy)), std::istream (&streambuf_)
       {
       }
 

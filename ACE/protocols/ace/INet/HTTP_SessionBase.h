@@ -16,6 +16,7 @@
 #include "ace/INet/HTTP_Request.h"
 #include "ace/INet/HTTP_Response.h"
 #include "ace/INet/HTTP_IOStream.h"
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -112,10 +113,8 @@ namespace ACE
               u_short proxy_target_port_ {};
 
               bool reactive_ {};
-              /// Owned by this session and released by close_streams ().
-              IStream* in_stream_ {};
-              /// Owned by this session and released by close_streams ().
-              OStream* out_stream_ {};
+              std::unique_ptr<IStream> in_stream_;
+              std::unique_ptr<OStream> out_stream_;
               ACE_Time_Value http_timeout_;
               ACE_Time_Value keep_alive_timeout_;
               ACE_Time_Value reconnect_timer_;

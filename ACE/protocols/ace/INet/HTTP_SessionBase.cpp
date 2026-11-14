@@ -13,6 +13,7 @@
 #include "ace/String_Base.h"
 #include <istream>
 #include <ostream>
+#include <utility>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -72,11 +73,7 @@ namespace ACE
       {
         INET_TRACE ("ACE_HTTP_SessionBase::send_request");
 
-        if (this->in_stream_)
-          {
-            delete this->in_stream_;
-            this->in_stream_ = nullptr;
-          }
+        this->in_stream_.reset ();
 
         bool keep_alive = this->keep_alive ();
         if ((this->is_connected () && !keep_alive) || this->reconnect_needed ())
@@ -85,11 +82,7 @@ namespace ACE
           this->needs_reconnect_ = false;
         }
 
-        if (this->out_stream_)
-          {
-            delete this->out_stream_;
-            this->out_stream_ = nullptr;
-          }
+        this->out_stream_.reset ();
 
         if (!this->is_connected ())
           {
@@ -118,45 +111,56 @@ namespace ACE
         if (request.has_chunked_transfer_encoding ())
         {
           request.write (this->sock_stream ());
-          ChunkedTransferStreamPolicy* pol;
-          ACE_NEW_RETURN (pol,
+          ChunkedTransferStreamPolicy* raw_policy {};
+          ACE_NEW_RETURN (raw_policy,
                           ChunkedTransferStreamPolicy (),
                           ACE::IOS::Null::out_stream_);
-          ACE_NEW_RETURN (this->out_stream_,
-                          OStream (this->sock_stream (), pol),
+          std::unique_ptr<StreamBuffer::policy_type> policy (raw_policy);
+          OStream* stream {};
+          ACE_NEW_RETURN (stream,
+                          OStream (this->sock_stream (), std::move (policy)),
                           ACE::IOS::Null::out_stream_);
+          this->out_stream_.reset (stream);
         }
         else if (request.get_content_length () != Header::UNKNOWN_CONTENT_LENGTH)
         {
           ACE::IOS::CString_OStream cs;
           request.write (cs);
-          FixedLengthStreamPolicy* pol;
-          ACE_NEW_RETURN (pol,
+          FixedLengthStreamPolicy* raw_policy {};
+          ACE_NEW_RETURN (raw_policy,
                           FixedLengthStreamPolicy (cs.str ().length () + request.get_content_length ()),
                           ACE::IOS::Null::out_stream_);
-          ACE_NEW_RETURN (this->out_stream_,
-                          OStream (this->sock_stream (), pol),
+          std::unique_ptr<StreamBuffer::policy_type> policy (raw_policy);
+          OStream* stream {};
+          ACE_NEW_RETURN (stream,
+                          OStream (this->sock_stream (), std::move (policy)),
                           ACE::IOS::Null::out_stream_);
+          this->out_stream_.reset (stream);
           (*this->out_stream_) << cs.str ().c_str ();
         }
         else if (request.get_method () != Request::HTTP_PUT && request.get_method() != Request::HTTP_POST)
         {
           ACE::IOS::CString_OStream cs;
           request.write (cs);
-          FixedLengthStreamPolicy* pol;
-          ACE_NEW_RETURN (pol,
+          FixedLengthStreamPolicy* raw_policy {};
+          ACE_NEW_RETURN (raw_policy,
                           FixedLengthStreamPolicy (cs.str ().length ()),
                           ACE::IOS::Null::out_stream_);
-          ACE_NEW_RETURN (this->out_stream_,
-                          OStream (this->sock_stream (), pol),
+          std::unique_ptr<StreamBuffer::policy_type> policy (raw_policy);
+          OStream* stream {};
+          ACE_NEW_RETURN (stream,
+                          OStream (this->sock_stream (), std::move (policy)),
                           ACE::IOS::Null::out_stream_);
+          this->out_stream_.reset (stream);
           (*this->out_stream_) << cs.str ().c_str ();
         }
         else
         {
-          ACE_NEW_RETURN (this->out_stream_,
+          OStream* stream {};
+          ACE_NEW_RETURN (stream,
                           OStream (this->sock_stream ()),
                           ACE::IOS::Null::out_stream_);
+          this->out_stream_.reset (stream);
           request.write (*this->out_stream_);
         }
         // reset reconnect timer
@@ -200,11 +204,7 @@ namespace ACE
             return ACE::IOS::Null::in_stream_;
           }
 
-        if (this->out_stream_)
-          {
-            delete this->out_stream_;
-            this->out_stream_ = nullptr;
-          }
+        this->out_stream_.reset ();
 
         this->sock_stream ().flush ();
 
@@ -226,39 +226,50 @@ namespace ACE
 
         if (!this->expects_response_body_)
           {
-            FixedLengthStreamPolicy* pol;
-            ACE_NEW_RETURN (pol,
+            FixedLengthStreamPolicy* raw_policy {};
+            ACE_NEW_RETURN (raw_policy,
                             FixedLengthStreamPolicy (0),
                             ACE::IOS::Null::in_stream_);
-            ACE_NEW_RETURN (this->in_stream_,
-                            IStream (this->sock_stream (), pol),
+            std::unique_ptr<StreamBuffer::policy_type> policy (raw_policy);
+            IStream* stream {};
+            ACE_NEW_RETURN (stream,
+                            IStream (this->sock_stream (), std::move (policy)),
                             ACE::IOS::Null::in_stream_);
+            this->in_stream_.reset (stream);
           }
         else if (response.has_chunked_transfer_encoding ())
           {
-            ChunkedTransferStreamPolicy* pol;
-            ACE_NEW_RETURN (pol,
+            ChunkedTransferStreamPolicy* raw_policy {};
+            ACE_NEW_RETURN (raw_policy,
                             ChunkedTransferStreamPolicy (),
                             ACE::IOS::Null::in_stream_);
-            ACE_NEW_RETURN (this->in_stream_,
-                            IStream (this->sock_stream (), pol),
+            std::unique_ptr<StreamBuffer::policy_type> policy (raw_policy);
+            IStream* stream {};
+            ACE_NEW_RETURN (stream,
+                            IStream (this->sock_stream (), std::move (policy)),
                             ACE::IOS::Null::in_stream_);
+            this->in_stream_.reset (stream);
           }
         else if (response.get_content_length () != Header::UNKNOWN_CONTENT_LENGTH)
           {
-            FixedLengthStreamPolicy* pol;
-            ACE_NEW_RETURN (pol,
+            FixedLengthStreamPolicy* raw_policy {};
+            ACE_NEW_RETURN (raw_policy,
                             FixedLengthStreamPolicy (response.get_content_length ()),
                             ACE::IOS::Null::in_stream_);
-            ACE_NEW_RETURN (this->in_stream_,
-                            IStream (this->sock_stream (), pol),
+            std::unique_ptr<StreamBuffer::policy_type> policy (raw_policy);
+            IStream* stream {};
+            ACE_NEW_RETURN (stream,
+                            IStream (this->sock_stream (), std::move (policy)),
                             ACE::IOS::Null::in_stream_);
+            this->in_stream_.reset (stream);
           }
         else
           {
-            ACE_NEW_RETURN (this->in_stream_,
+            IStream* stream {};
+            ACE_NEW_RETURN (stream,
                             IStream (this->sock_stream ()),
                             ACE::IOS::Null::in_stream_);
+            this->in_stream_.reset (stream);
           }
 
         return *this->in_stream_;

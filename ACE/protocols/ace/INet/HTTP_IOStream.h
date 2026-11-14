@@ -18,6 +18,7 @@
 #include "ace/INet/INet_Export.h"
 #include "ace/INet/BufferedStreamBuffer.h"
 #include "ace/INet/HTTP_StreamPolicyBase.h"
+#include <memory>
 #include <ostream>
 #include <istream>
 
@@ -39,7 +40,8 @@ namespace ACE
             public:
               using policy_type = StreamPolicyBase<StreamBuffer>;
 
-              explicit StreamBuffer (std::iostream& stream, policy_type* policy = nullptr);
+              explicit StreamBuffer (std::iostream& stream,
+                                     std::unique_ptr<policy_type> policy = {});
               ~StreamBuffer () override;
 
               int sync () override;
@@ -62,7 +64,7 @@ namespace ACE
 
             private:
               std::iostream & stream_;
-              policy_type * policy_;
+              std::unique_ptr<policy_type> policy_;
           };
 
         /**
@@ -75,7 +77,8 @@ namespace ACE
           : public virtual std::ios
           {
             public:
-              explicit IOS (std::iostream& stream, StreamBuffer::policy_type* policy = nullptr);
+              explicit IOS (std::iostream& stream,
+                            std::unique_ptr<StreamBuffer::policy_type> policy = {});
               ~IOS ();
 
               StreamBuffer* rdbuf ();
@@ -94,7 +97,8 @@ namespace ACE
           : public IOS, public std::ostream
           {
             public:
-              explicit OStream(std::iostream& stream, StreamBuffer::policy_type* policy = nullptr);
+              explicit OStream(std::iostream& stream,
+                               std::unique_ptr<StreamBuffer::policy_type> policy = {});
               ~OStream();
 
               void set_interceptor (StreamBuffer::interceptor_type& interceptor);
@@ -110,7 +114,8 @@ namespace ACE
           : public IOS, public std::istream
           {
             public:
-              explicit IStream(std::iostream& stream, StreamBuffer::policy_type* policy = nullptr);
+              explicit IStream(std::iostream& stream,
+                               std::unique_ptr<StreamBuffer::policy_type> policy = {});
               ~IStream();
 
               void set_interceptor (StreamBuffer::interceptor_type& interceptor);
