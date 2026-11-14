@@ -32,6 +32,8 @@
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/AnyTypeCode/Any_Dual_Impl_T.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // TAO_IDL - Generated from
@@ -52,7 +54,7 @@ static TAO::TypeCode::Struct<char const *,
 namespace CORBA
 {
   ::CORBA::TypeCode_ptr const _tc_WrongTransaction =
-    &_tao_tc_CORBA_WrongTransaction;
+    std::addressof (_tao_tc_CORBA_WrongTransaction);
 }
 
 
