@@ -26,11 +26,11 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Encode instances of arbitrary data types based only on typecode.
-// "data" points to the data type; if it's not a primitve data type,
-// the TypeCode interpreter is used to recursively encode its
-// components.  "context" is the marshaling stream on which to encode
-// the data value.
+/// Encode instances of arbitrary data types based only on typecode.
+/// "data" points to the data type; if it's not a primitve data type,
+/// the TypeCode interpreter is used to recursively encode its
+/// components.  "context" is the marshaling stream on which to encode
+/// the data value.
 
 TAO::traverse_status
 TAO_Marshal_Primitive::append (CORBA::TypeCode_ptr tc,
@@ -1036,13 +1036,13 @@ TAO_Marshal_Alias::append (CORBA::TypeCode_ptr  tc,
   throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_MAYBE);
 }
 
-// Decode exception For exceptions, the "hidden" type ID near the
-// front of the on-wire representation was previously unmarshaled and
-// mapped to the "tc" typcode we're using to traverse the memory ...
-// at the same time its vtable, refcount, and other state was
-// established.
-//
-// NOTE: This is asymmetric with respect to encoding exceptions.
+/// Decode exception For exceptions, the "hidden" type ID near the
+/// front of the on-wire representation was previously unmarshaled and
+/// mapped to the "tc" typcode we're using to traverse the memory ...
+/// at the same time its vtable, refcount, and other state was
+/// established.
+///
+/// NOTE: This is asymmetric with respect to encoding exceptions.
 TAO::traverse_status
 TAO_Marshal_Except::append (CORBA::TypeCode_ptr  tc,
                             TAO_InputCDR *src,

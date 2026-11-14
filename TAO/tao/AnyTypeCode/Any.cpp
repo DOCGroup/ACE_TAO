@@ -527,11 +527,11 @@ operator <<= (CORBA::Any &, std::wstring *)
 }
 #endif
 
-// Extraction: these are safe and hence we have to check that the
-// typecode of the Any is equal to the one we are trying to extract
-// into.
+/// Extraction: these are safe and hence we have to check that the
+/// typecode of the Any is equal to the one we are trying to extract
+/// into.
 
-// Extraction into the special basic types.
+/// Extraction into the special basic types.
 
 CORBA::Boolean
 CORBA::Any::operator>>= (CORBA::Any::to_boolean b) const
@@ -605,7 +605,7 @@ CORBA::Any::operator>>= (CORBA::Any::to_value obj) const
   return this->checked_to_value (obj.ref_);
 }
 
-// Extraction into the other basic types.
+/// Extraction into the other basic types.
 
 CORBA::Boolean
 operator>>= (CORBA::Any const &any, CORBA::Short &s)
@@ -743,7 +743,7 @@ operator >>= (CORBA::Any const &any, std::wstring &str)
 
 }
 
-// Any_Impl_T template specializations.
+/// Any_Impl_T template specializations.
 
 namespace TAO
 {

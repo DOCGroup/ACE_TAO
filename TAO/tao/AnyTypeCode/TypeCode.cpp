@@ -371,7 +371,7 @@ TAO::unaliased_typecode (CORBA::TypeCode_ptr tc)
   return CORBA::TypeCode::_duplicate (tc);
 }
 
-// Traits specializations for CORBA::TypeCode.
+/// Traits specializations for CORBA::TypeCode.
 namespace TAO
 {
   CORBA::TypeCode_ptr
