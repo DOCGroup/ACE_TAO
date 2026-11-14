@@ -15,7 +15,6 @@
 #include "ace/ACE.h"
 #include "ace/INET_Addr.h"
 #include "ace/OS_NS_errno.h"
-#include "ace/OS_NS_ctype.h"
 #include "ace/OS_NS_netdb.h"
 
 #ifdef ACE_HAS_THREADS
@@ -29,6 +28,7 @@
 #include <openssl/rand.h>
 #include <openssl/safestack.h>
 
+#include <cctype>
 #include <cstring>
 #include <memory>
 
@@ -293,7 +293,8 @@ ACE_SSL_Context::filter_versions (const char* versionlist)
 
   for (; pos < vlist.length (); ++pos)
     {
-      vlist[pos] = ACE_OS::ace_tolower (vlist[pos]);
+      vlist[pos] = static_cast<char> (
+        std::tolower (static_cast<unsigned char> (vlist[pos])));
     }
 
 #if defined (SSL_OP_NO_SSLv2)

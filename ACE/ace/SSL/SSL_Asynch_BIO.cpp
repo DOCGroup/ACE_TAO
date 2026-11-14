@@ -158,7 +158,7 @@ ACE_ASYNCH_BIO_NEW_NAME (BIO * pBIO)
 int
 ACE_ASYNCH_BIO_FREE_NAME (BIO * pBIO)
 {
-  if (pBIO && BIO_get_shutdown(pBIO))
+  if (pBIO != nullptr && BIO_get_shutdown (pBIO))
     {
       BIO_set_data(pBIO, nullptr);
       BIO_set_init(pBIO, 0);
