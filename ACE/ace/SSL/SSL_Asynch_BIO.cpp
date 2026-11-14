@@ -67,7 +67,6 @@ static BIO_METHOD methods_ACE =
 # define BIO_get_data(b) b->ptr
 # define BIO_get_shutdown(b) b->shutdown
 #else
-static BIO_METHOD* methods_ACE {};
 # define BIO_set_num(b, val)
 #endif /* OPENSSL_VERSION_NUMBER < 0x10100000L || (defined(LIBRESSL_VERSION_NUMBER) && LIBRESSL_VERSION_NUMBER < 0x30500000L) */
 
@@ -79,23 +78,31 @@ ACE_SSL_make_BIO (void * ssl_asynch_stream)
 #if OPENSSL_VERSION_NUMBER < 0x10100000L || (defined(LIBRESSL_VERSION_NUMBER) && LIBRESSL_VERSION_NUMBER < 0x30500000L)
   BIO * const pBIO = BIO_new (&methods_ACE);
 #else
-  if (!methods_ACE)
+  // Keep the immutable method object alive for the process lifetime; BIO
+  // instances may outlive the call that created them.
+  static BIO_METHOD * const methods_ACE = [] () -> BIO_METHOD *
   {
-    methods_ACE = BIO_meth_new(BIO_TYPE_ACE, "ACE_Asynch_BIO");
-    if (methods_ACE)
-    {
-      BIO_meth_set_write(methods_ACE, ACE_ASYNCH_BIO_WRITE_NAME);
-      BIO_meth_set_read(methods_ACE, ACE_ASYNCH_BIO_READ_NAME);
-      BIO_meth_set_puts(methods_ACE, ACE_ASYNCH_BIO_PUTS_NAME);
-      BIO_meth_set_ctrl(methods_ACE, ACE_ASYNCH_BIO_CTRL_NAME);
-      BIO_meth_set_create(methods_ACE, ACE_ASYNCH_BIO_NEW_NAME);
-      BIO_meth_set_destroy(methods_ACE, ACE_ASYNCH_BIO_FREE_NAME);
-    }
-  }
-  BIO * const pBIO = BIO_new (methods_ACE);
+    BIO_METHOD *methods = BIO_meth_new (BIO_TYPE_ACE, "ACE_Asynch_BIO");
+    if (methods == nullptr)
+      return nullptr;
+
+    if (BIO_meth_set_write (methods, ACE_ASYNCH_BIO_WRITE_NAME) != 1
+        || BIO_meth_set_read (methods, ACE_ASYNCH_BIO_READ_NAME) != 1
+        || BIO_meth_set_puts (methods, ACE_ASYNCH_BIO_PUTS_NAME) != 1
+        || BIO_meth_set_ctrl (methods, ACE_ASYNCH_BIO_CTRL_NAME) != 1
+        || BIO_meth_set_create (methods, ACE_ASYNCH_BIO_NEW_NAME) != 1
+        || BIO_meth_set_destroy (methods, ACE_ASYNCH_BIO_FREE_NAME) != 1)
+      {
+        BIO_meth_free (methods);
+        return nullptr;
+      }
+
+    return methods;
+  } ();
+  BIO * const pBIO = methods_ACE == nullptr ? nullptr : BIO_new (methods_ACE);
 #endif
 
-  if (pBIO)
+  if (pBIO != nullptr)
     BIO_ctrl (pBIO,
               BIO_C_SET_FILE_PTR,
               0,
