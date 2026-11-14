@@ -289,7 +289,7 @@ namespace ACE
               {
                 // signal other threads about closed connection
                 this->condition_.broadcast ();
-                delete conn; // clean up
+                std::unique_ptr<connection_type> connection_owner (conn);
                 return true;
               }
             else
@@ -335,7 +335,7 @@ namespace ACE
                 connection_type* conn = (*iter).int_id_.connection ();
                 (*iter).int_id_.connection (nullptr);
                 (*iter).int_id_.state (ConnectionCacheValue::CST_CLOSED);
-                delete conn;
+                std::unique_ptr<connection_type> connection_owner (conn);
               }
           }
         this->cache_map_.unbind_all ();

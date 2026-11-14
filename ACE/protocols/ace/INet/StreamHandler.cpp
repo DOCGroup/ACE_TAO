@@ -3,6 +3,7 @@
 
 #include "ace/INet/INet_Log.h"
 #include "ace/INet/StreamHandler.h"
+#include "ace/Message_Block.h"
 #include "ace/OS_NS_Thread.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/Countdown_Time.h"
@@ -93,20 +94,21 @@ namespace ACE
             INET_HEX_DUMP (11, (LM_DEBUG, buffer, bytes_in, DLINFO
                                 ACE_TEXT ("ACE_IOS_StreamHandler::handle_input_i <--")));
 
-            ACE_Message_Block *mb {};
-            ACE_NEW_RETURN (mb, ACE_Message_Block (bytes_in), -1);
+            ACE_Message_Block *raw_mb {};
+            ACE_NEW_RETURN (raw_mb, ACE_Message_Block (bytes_in), -1);
+            ACE_Message_Block_Unique_Ptr mb (raw_mb);
             mb->copy (buffer, bytes_in);
             ACE_Time_Value nowait (ACE_OS::gettimeofday ());
-            if (this->putq (mb, &nowait) == -1)
+            if (this->putq (mb.get (), &nowait) == -1)
               {
                 INET_ERROR (1, (LM_ERROR, DLINFO
                             ACE_TEXT ("ACE_IOS_StreamHandler - discarding input data, "),
                             ACE_TEXT ("enqueue failed (%d)\n"),
                             ACE_OS::last_error ()));
-                mb->release ();
                 this->connected_ = false;
                 return -1;
               }
+            mb.release ();
           }
 
         if (recv_cnt == 0 || (recv_cnt < 0 && !no_wait))
@@ -140,11 +142,12 @@ namespace ACE
       {
         INET_TRACE ("ACE_IOS_StreamHandler::handle_output_i");
 
-        ACE_Message_Block *mb {};
+        ACE_Message_Block *raw_mb {};
         ACE_Time_Value nowait (ACE_OS::gettimeofday ());
         size_t bytes_out = 0;
-        if (-1 != this->getq (mb, &nowait))
+        if (-1 != this->getq (raw_mb, &nowait))
           {
+            ACE_Message_Block_Unique_Ptr mb (raw_mb);
             ssize_t send_cnt =
               this->peer ().send_n (mb->rd_ptr (), mb->length (), timeout, &bytes_out);
             if (bytes_out > 0)
@@ -154,9 +157,16 @@ namespace ACE
 
                 mb->rd_ptr (static_cast<size_t> (bytes_out));
                 if (mb->length () > 0)
-                    this->ungetq (mb);
-                else
-                    mb->release ();
+                  {
+                    if (this->ungetq (mb.get ()) == -1)
+                      {
+                        INET_ERROR (1, (LM_ERROR, DLINFO
+                                    ACE_TEXT ("ACE_IOS_StreamHandler - failed to requeue output data\n")));
+                        this->connected_ = false;
+                        return -1;
+                      }
+                    mb.release ();
+                  }
               }
             if (send_cnt <= 0)
               {
@@ -345,10 +355,11 @@ namespace ACE
               {
                 if ((mb_remain->length () + mb->length ()) < char_size)
                   {
-                    ACE_Message_Block *mb_new {};
-                    ACE_NEW_NORETURN (mb,
+                    ACE_Message_Block *raw_mb_new {};
+                    ACE_NEW_NORETURN (raw_mb_new,
                                       ACE_Message_Block (mb_remain->length () + mb->length ()));
-                    if (mb_new == nullptr)
+                    ACE_Message_Block_Unique_Ptr mb_new (raw_mb_new);
+                    if (!mb_new)
                       {
                         mb->release ();
                         mb_remain->release ();
@@ -358,7 +369,7 @@ namespace ACE
                     mb_remain->release ();
                     mb_new->copy (mb->rd_ptr (), mb->length ());
                     mb->release ();
-                    mb_remain = mb_new;
+                    mb_remain = mb_new.release ();
                     continue; // check for next msg block
                   }
 
@@ -451,19 +462,20 @@ namespace ACE
                                                 &this->notification_strategy_ : nullptr);
 
         size_t datasz = length * char_size;
-        ACE_Message_Block *mb {};
-        ACE_NEW_RETURN (mb, ACE_Message_Block (datasz), -1);
+        ACE_Message_Block *raw_mb {};
+        ACE_NEW_RETURN (raw_mb, ACE_Message_Block (datasz), -1);
+        ACE_Message_Block_Unique_Ptr mb (raw_mb);
         mb->copy ((const char*)buf, datasz);
         ACE_Time_Value nowait (ACE_OS::gettimeofday ());
-        if (this->putq (mb, &nowait) == -1)
+        if (this->putq (mb.get (), &nowait) == -1)
           {
             INET_ERROR (1, (LM_ERROR, DLINFO
                         ACE_TEXT ("(%d) ACE_IOS_StreamHandler - discarding output data, "),
                         ACE_TEXT ("enqueue failed\n"),
                         ACE_OS::last_error ()));
-            mb->release ();
             return 0;
           }
+        mb.release ();
 
         ACE_Time_Value max_wait_time = this->sync_opt_.timeout ();
         int result = 0;
