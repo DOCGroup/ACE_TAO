@@ -113,9 +113,11 @@ public:
   /// Returns 0 if successful, else -1.
   int get_local_addr (ACE_MEM_Addr &) const;
 
-  // = Meta-type info
+  /// @name Peer types
+  /// @{
   using PEER_ADDR = ACE_MEM_Addr;
   using PEER_STREAM = ACE_MEM_Stream;
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;
@@ -124,8 +126,11 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  // = The following methods should not be accessable externally
-  //   because MEM_Acceptor do not support their semantics.
+  /** @name Unsupported inherited operations
+   * These inherited operations are protected because MEM_Acceptor does not
+   * support their semantics.
+   */
+  /// @{
   int open (const ACE_Addr &local_sap,
             int reuse_addr = 0,
             int protocol_family = PF_INET,
@@ -153,6 +158,7 @@ protected:
               ACE_Time_Value *timeout = nullptr,
               bool restart = true,
               bool reset_new_handle = false) const;
+  /// @}
 
 private:
   /// The filename prefix of the created mmap files.  It should
