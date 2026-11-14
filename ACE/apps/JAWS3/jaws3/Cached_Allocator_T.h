@@ -11,15 +11,10 @@
 #define JAWS_CACHED_ALLOCATOR(T) \
         JAWS_Cached_Allocator< T, ACE_SYNCH_NULL_MUTEX >
 
+/// Caches dynamically allocated objects of fixed size in a pool of
+/// <n_chunks> chunks, each sized for <T>.
 template <class T, class ACE_LOCK>
 class JAWS_Cached_Allocator : public ACE_New_Allocator
-// = TITLE
-//   Create a cached memory pool with <n_chunks> chunks each with
-//   sizeof (<TYPE>) size.
-//
-// = DESCRIPTION
-//   This class enables caching of dynamically allocated,
-//   fixed-sized classes.
 {
 public:
   explicit JAWS_Cached_Allocator (size_t n_chunks = JAWS_DEFAULT_ALLOCATOR_CHUNKS);
@@ -30,11 +25,11 @@ public:
   JAWS_Cached_Allocator &operator= (JAWS_Cached_Allocator const &) = delete;
   JAWS_Cached_Allocator &operator= (JAWS_Cached_Allocator &&) = delete;
 
+  /// Gets a chunk of memory from the free store.
   void* malloc (size_t) override;
-  // get a chunk of memory from free store.
 
+  /// Returns a chunk of memory to the free store.
   void free (void *) override;
-  // return a chunk of memory back to free store.
 
 protected:
   char * get_next_pool (char *pool);
@@ -46,25 +41,20 @@ protected:
 private:
   size_t pool_size_;
 
+  /// Head of the memory pool.
   char *pool_head_;
-  // Head of memory pool.
 
+  /// Tail of the memory pool.
   char *pool_tail_;
-  // Tail of memory pool.
 
+  /// Cached memory free list.
   ACE_Locked_Free_List<ACE_Cached_Mem_Pool_Node<T>, ACE_LOCK> free_list_;
-  // Maintain a cached memory free list.
 };
 
+/// Caches dynamically allocated objects of fixed size in a thread-specific
+/// pool of <n_chunks> chunks, each sized for <T>.
 template <class T>
 class JAWS_TSS_Cached_Allocator : public ACE_New_Allocator
-// = TITLE
-//   Create a thread specific cached memory pool with <n_chunks>
-//   chunks each with sizeof (<TYPE>) size.
-//
-// = DESCRIPTION
-//   This class enables caching of dynamically allocated,
-//   fixed-sized classes.
 {
 public:
   explicit JAWS_TSS_Cached_Allocator (size_t n_chunks = JAWS_DEFAULT_ALLOCATOR_CHUNKS);
@@ -75,11 +65,11 @@ public:
   JAWS_TSS_Cached_Allocator &operator= (JAWS_TSS_Cached_Allocator const &) = delete;
   JAWS_TSS_Cached_Allocator &operator= (JAWS_TSS_Cached_Allocator &&) = delete;
 
+  /// Gets a chunk of memory from the free store.
   void * malloc (size_t) override;
-  // get a chunk of memory from free store.
 
+  /// Returns a chunk of memory to the free store.
   void free (void *) override;
-  // return a chunk of memory back to free store.
 
 protected:
   JAWS_Cached_Allocator<T, ACE_SYNCH_NULL_MUTEX> * ts_allocator ();

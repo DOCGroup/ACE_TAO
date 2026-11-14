@@ -6,19 +6,13 @@
 
 class JAWS_Protocol_Handler;
 
+/// Concurrency bridge abstraction using the Concrete Bridge pattern.
+///
+/// When CONCURRENCY_IMPL is JAWS_Concurrency_Impl, this class has the classic
+/// abstraction role. When it is a concrete implementor, the class acts more
+/// like an adapter, avoiding the Bridge pattern's polymorphism overhead.
 template <class CONCURRENCY_IMPL>
 class JAWS_Concurrency_Bridge
-// = TITLE
-//     The Concurrency Bridge uses the Concrete Bridge pattern.
-//
-// = DESCRIPTION
-//     The Concurrency Bridge class plays the role of Abstraction
-//     in the Bridge pattern.  If the CONCURRENCY_IMPL is the
-//     base class JAWS_Concurrency_Impl, then it plays the classic
-//     role.  If the CONCURRENCY_IMPL is one of the Concrete
-//     Implementors, then its role is more that of an Adapter,
-//     which is like Bridge, but without the polymorphism overhead.
-//
 {
 public:
   explicit JAWS_Concurrency_Bridge (CONCURRENCY_IMPL *impl = nullptr);

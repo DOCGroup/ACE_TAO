@@ -12,40 +12,39 @@
 class JAWS_Timer;
 class JAWS_Timer_Impl;
 
+/// Timer implementation base class, corresponding to the right-hand side of
+/// the Bridge pattern.
 class JAWS_Export JAWS_Timer_Impl
-// = TITLE
-//     Implementation base class for Timers that corresponds to the
-//     RHS of the Bridge pattern.
 {
 public:
   virtual ~JAWS_Timer_Impl () = default;
 
+  /// Schedules a timer to expire at the current time plus delta.
   virtual void schedule_timer ( long *timer_id
                               , const ACE_Time_Value &delta
                               , JAWS_Event_Completer *completer
                               , void *act = nullptr) = 0;
-  // Schedule a timer to expire at now+delta.
 
+  /// Schedules a timer to expire at tv.
   virtual void schedule_absolute_timer ( long *timer_id
                                        , const ACE_Time_Value &tv
                                        , JAWS_Event_Completer *completer
                                        , void *act = nullptr) = 0;
-  // Schedule a timer to expire at tv.
 
+  /// Schedules a timer at the current time plus interval, then repeats it
+  /// after each interval.
   virtual void schedule_interval_timer ( long *timer_id
                                        , const ACE_Time_Value &interval
                                        , JAWS_Event_Completer *completer
                                        , void *act = nullptr) = 0;
-  // Schedule a timer to expire at now+interval, and every interval following.
 
+  /// Cancels a timer.
   virtual void cancel_timer (long timer_id) = 0;
-  // Cancel a timer.
 };
 
+/// Timer abstraction, corresponding to the left-hand side of the Bridge
+/// pattern.
 class JAWS_Export JAWS_Timer
-// = TITLE
-//     Abstraction base class for Timers that corresponds to the LHS of the
-//     Bridge pattern.
 {
 public:
   explicit JAWS_Timer (JAWS_Timer_Impl *impl = nullptr);

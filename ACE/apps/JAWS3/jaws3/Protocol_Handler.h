@@ -21,10 +21,9 @@ protected:
                                            , void *act) = 0;
 };
 
+/// Abstraction that interacts with concurrency dispatching.
 class JAWS_Export JAWS_Protocol_Handler
   : public JAWS_Event_Completer
-// = TITLE
-//     Abstraction that interacts with concurrency dispatching.
 {
   friend class JAWS_TPOOL_Concurrency;
   friend class JAWS_TPR_Concurrency;
@@ -46,13 +45,12 @@ public:
   }
 
 protected:
+  /// Destructor is protected to ensure instances are created dynamically.
   virtual ~JAWS_Protocol_Handler ();
-  // Try to guarantee this class will be created dynamically.
 
 protected:
+  /// Handles event completion and transitions to the next protocol state.
   void event_complete (const JAWS_Event_Result &result, void *act);
-  // The event completion routine that triggers the transition
-  // to the next Protocol State.
 
   void default_complete (const JAWS_Event_Result &result, void *act) override
   {

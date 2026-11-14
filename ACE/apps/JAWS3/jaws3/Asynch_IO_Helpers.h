@@ -11,13 +11,11 @@
 
 class JAWS_Asynch_IO;
 
+/// Adapts a JAWS_Event_Completer to ACE_Handler.
+///
+/// Included conditionally by jaws3/Asynch_IO.cpp when the platform supports
+/// POSIX or Win32 asynchronous I/O.
 class JAWS_EC_AH_Adapter : public ACE_Handler
-// = TITLE
-//     A JAWS_Event_Completer - ACE_Handler adapter.
-//
-// = DESCRIPTION
-//     This class will be conditionally #included by jaws3/Asynch_IO.cpp
-//     if the given platform supports POSIX or WIN32 asynch IO.
 {
 public:
   static JAWS_EC_AH_Adapter * make (JAWS_Event_Completer *);

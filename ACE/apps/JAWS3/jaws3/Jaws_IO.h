@@ -11,15 +11,15 @@
 class JAWS_IO;
 class JAWS_Event_Completer;
 
+/// I/O interface for the implementation classes on the right-hand side of
+/// the Bridge pattern.
 class JAWS_Export JAWS_IO_Impl
-// = TITLE
-//     IO inteface for the implementation classes on the RHS of the
-//     Bridge Pattern.
 {
 public:
   virtual ~JAWS_IO_Impl () = default;
 
-  // = Regular IO methods.
+  /// @name Regular I/O methods
+  /// @{
 
   virtual void send ( ACE_HANDLE handle
                     , ACE_Message_Block *mb
@@ -38,7 +38,9 @@ public:
                         , ACE_Message_Block *header = nullptr
                         , ACE_Message_Block *trailer = nullptr) = 0;
 
-  // = Timed IO methods.
+  /// @}
+  /// @name Timed I/O methods
+  /// @{
 
   virtual void send ( ACE_HANDLE handle
                     , ACE_Message_Block *mb
@@ -59,6 +61,7 @@ public:
                         , void *act = nullptr
                         , ACE_Message_Block *header = nullptr
                         , ACE_Message_Block *trailer = nullptr) = 0;
+  /// @}
 };
 
 class JAWS_Export JAWS_IO
