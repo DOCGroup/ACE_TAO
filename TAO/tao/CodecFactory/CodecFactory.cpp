@@ -1,23 +1,19 @@
-// =================================================================
 /**
  * @file CodecFactory.cpp
  *
  * @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-// =================================================================
-
 #include "tao/CodecFactory/CodecFactory.h"
 #include "tao/CodecFactory/CodecFactory_impl.h"
 
 #include "tao/ORB.h"
-#include "tao/debug.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Object_ptr
-TAO_CodecFactory_Loader::create_object (CORBA::ORB_ptr orb,  int, ACE_TCHAR *[])
+TAO_CodecFactory_Loader::create_object (CORBA::ORB_ptr orb, int, ACE_TCHAR *[])
 {
-  CORBA::Object_ptr obj = nullptr;
+  CORBA::Object_ptr obj {};
   ACE_NEW_RETURN (obj,
                   TAO_CodecFactory (orb->orb_core ()),
                   CORBA::Object::_nil ());
