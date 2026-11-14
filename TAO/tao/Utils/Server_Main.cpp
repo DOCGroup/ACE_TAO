@@ -22,14 +22,8 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <typename SERVANT>
-TAO::Utils::Server_Main<SERVANT>::Server_Main (std::string const &name)
-  : name_ (name)
-{
-}
-
-template <typename SERVANT>
 TAO::Utils::Server_Main<SERVANT>::Server_Main (char const *name)
-  : Server_Main (name != nullptr ? std::string (name) : std::string {})
+  : name_ (name != nullptr ? name : "")
 {
 }
 

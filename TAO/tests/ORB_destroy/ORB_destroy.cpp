@@ -2,6 +2,8 @@
 
 #include "tao/ORB.h"
 #include "tao/PortableServer/PortableServer.h"
+#include "tao/Utils/ORB_Manager.h"
+#include "tao/Utils/Server_Main.h"
 
 #include "ace/Log_Msg.h"
 
@@ -67,6 +69,20 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   for (Destroy_Options const &options : test_cases)
     if (run_destroy_case (argc, argv, options) != 0)
       return 1;
+
+  TAO_ORB_Manager orb_manager;
+  if (orb_manager.fini () != 0 || orb_manager.fini () != 0)
+    return 1;
+
+  TAO::Utils::Server_Main<PortableServer::ServantBase> const null_name_server (nullptr);
+
+  ACE_TCHAR orb_name[] = ACE_TEXT ("ORB_Manager_fini");
+  ACE_TCHAR *manager_argv[] = {orb_name, nullptr};
+  int manager_argc = 1;
+  if (orb_manager.init (manager_argc, manager_argv) != 0
+      || orb_manager.fini () != 0
+      || orb_manager.fini () != 0)
+    return 1;
 
   return 0;
 }

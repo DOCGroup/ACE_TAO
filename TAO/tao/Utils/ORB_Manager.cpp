@@ -43,6 +43,11 @@ TAO_ORB_Manager::init (int &argc,
 
       // Get the POA object.
       this->poa_ = PortableServer::POA::_narrow (poa_object.in ());
+
+      if (CORBA::is_nil (this->poa_.in ()))
+        TAOLIB_ERROR_RETURN ((LM_ERROR,
+                              ACE_TEXT (" (%P|%t) Unable to narrow the RootPOA reference.\n")),
+                             -1);
     }
 
   if (CORBA::is_nil (this->poa_manager_.in ()))
@@ -128,7 +133,7 @@ TAO_ORB_Manager::activate_under_child_poa (char const *object_name,
   if (object_name == nullptr)
     {
       TAOLIB_ERROR ((LM_ERROR,
-                     ACE_TEXT ("\n(%P|%t) TAO_ORB_Manager::register: ")
+                     ACE_TEXT ("\n(%P|%t) TAO_ORB_Manager::activate_under_child_poa: ")
                      ACE_TEXT ("object_name is null!")));
       return nullptr;
     }
@@ -170,13 +175,15 @@ TAO_ORB_Manager::run (ACE_Time_Value &tv)
 int
 TAO_ORB_Manager::fini ()
 {
-  this->poa_->destroy (true, true);
+  if (!CORBA::is_nil (this->poa_.in ()))
+    this->poa_->destroy (true, true);
 
   this->child_poa_   = PortableServer::POA::_nil ();
   this->poa_         = PortableServer::POA::_nil ();
   this->poa_manager_ = PortableServer::POAManager::_nil ();
 
-  this->orb_->destroy ();
+  if (!CORBA::is_nil (this->orb_.in ()))
+    this->orb_->destroy ();
 
   this->orb_ = CORBA::ORB::_nil ();
 
