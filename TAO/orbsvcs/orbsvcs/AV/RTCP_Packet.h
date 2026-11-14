@@ -233,37 +233,32 @@ using sdesItem_t = sdesItem_s;
 
 struct sdesItem_s
 {
+  ~sdesItem_s ()
+  {
+    while (this->next_)
+      {
+        std::unique_ptr<sdesItem_t> next = std::move (this->next_->next_);
+        this->next_ = std::move (next);
+      }
+  }
+
   /// link to next item.
-  sdesItem_t *next_;
+  std::unique_ptr<sdesItem_t> next_ {};
 
   /// Type of item (eg canonical name).
   unsigned char type_;
 
-  union
-  {
-    struct
-    {
-      /// Length of an item (in octets).
-      unsigned char length_;
+  /// Length of a standard item or the private item name, in octets.
+  unsigned char length_ {};
 
-      /// Item text, not null-terminated.
-      char *data_;
-    } standard_;
-    struct
-    {
-      /// Length of the name of an item (in octets).
-      unsigned char name_length_;
+  /// Length of the private item data, in octets.
+  unsigned char data_length_ {};
 
-      /// Length of the item data (in octets).
-      unsigned char data_length_;
+  /// Standard item text or private item name, not null-terminated.
+  std::unique_ptr<char[]> data_ {};
 
-      /// The name of the item, not null-terminated.
-      char *name_;
-
-      /// Item data, not null-terminated.
-      char *data_;
-    } priv_;
-  } info_;
+  /// Private item data, not null-terminated.
+  std::unique_ptr<char[]> priv_data_ {};
 };
 
 struct sdesChunk_s;
@@ -277,14 +272,23 @@ using sdesChunk_t = sdesChunk_s;
  */
 struct sdesChunk_s
 {
+  ~sdesChunk_s ()
+  {
+    while (this->next_)
+      {
+        std::unique_ptr<sdesChunk_t> next = std::move (this->next_->next_);
+        this->next_ = std::move (next);
+      }
+  }
+
   /// Link to next item.
-  sdesChunk_t *next_;
+  std::unique_ptr<sdesChunk_t> next_ {};
 
   /// The synchronization source id that this chunk describes.
   ACE_UINT32 ssrc_;
 
   /// A linked list of items to describe this source.
-  sdesItem_t *item_;
+  std::unique_ptr<sdesItem_t> item_ {};
 };
 
 /**
@@ -343,7 +347,8 @@ private:
   void build_packet () override;
 
   /// Add a chunk to the packet.
-  void add_chunk(ACE_UINT32 ssrc);
+  sdesChunk_t *add_chunk (ACE_UINT32 ssrc);
+  sdesItem_t *add_item_node (sdesChunk_t *chunk);
 
   /// The number of chunks contained in this packet.
   /// 1 for end systems, 1+ for mixers
@@ -352,7 +357,7 @@ private:
 //  unsigned long num_items_;
 
   /// A linked list of chunks for this packet (only 1 for non-mixers).
-  sdesChunk_t *chunk_ {};
+  std::unique_ptr<sdesChunk_t> chunk_ {};
 };
 
 /**

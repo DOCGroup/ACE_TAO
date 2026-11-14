@@ -1,5 +1,4 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/AV/RTCP_Packet.h"
 #include "orbsvcs/AV/RTP.h"
 
@@ -432,8 +431,7 @@ RTCP_SDES_Packet::RTCP_SDES_Packet(char* buffer, int *len):
                    RTCP_Packet (buffer)
 {
   unsigned int i;
-  sdesChunk_t *cp {}; // pointer to chunk
-  sdesItem_t *ip {}; // pointer to item
+  std::unique_ptr<sdesChunk_t> *next_chunk = &this->chunk_;
 
   // The common part of the control packet header is processed
   // in the parent. It is 4 bytes long.
@@ -441,80 +439,71 @@ RTCP_SDES_Packet::RTCP_SDES_Packet(char* buffer, int *len):
   i=4;
   for (unsigned int j {}; j < this->chd_.count_; ++j)
     {
-      if (j==0)
+      *next_chunk = std::unique_ptr<sdesChunk_t> (
+        new (std::nothrow) sdesChunk_t {});
+      if (*next_chunk == nullptr)
         {
-          ACE_NEW (this->chunk_,
-                   sdesChunk_t);
-          cp = this->chunk_;
-
-          this->num_chunks_ = 1;
+          errno = ENOMEM;
+          return;
         }
-      else
-        {
-          ACE_NEW (cp->next_,
-                   sdesChunk_t);
-          cp = cp->next_;
 
-          ++this->num_chunks_;
-        }
-      cp->next_ = nullptr;
-      cp->item_ = nullptr;
+      sdesChunk_t * const cp = next_chunk->get ();
+      next_chunk = &cp->next_;
+      ++this->num_chunks_;
       cp->ssrc_ = ACE_NTOHL(*(ACE_UINT32*)&buffer[i]);
       i+=4;
 
+      std::unique_ptr<sdesItem_t> *next_item = &cp->item_;
       while (buffer[i]!=RTCP_SDES_END)
         {
-          if (!cp->item_)
+          *next_item = std::unique_ptr<sdesItem_t> (
+            new (std::nothrow) sdesItem_t {});
+          if (*next_item == nullptr)
             {
-              ACE_NEW (cp->item_,
-                       sdesItem_t);
-              ip = cp->item_;
-
-//              this->num_items_ = 1;
+              errno = ENOMEM;
+              return;
             }
-          else
-            {
-              ACE_NEW (ip->next_,
-                       sdesItem_t);
-              ip = ip->next_;
 
-//              this->num_items_++;
-            }
-          ip->next_ = nullptr;
+          sdesItem_t * const ip = next_item->get ();
+          next_item = &ip->next_;
           ip->type_ = buffer[i];
           ++i;
           if (ip->type_ != RTCP_SDES_PRIV)
             {
-              ip->info_.standard_.length_ = buffer[i];
+              ip->length_ = buffer[i];
               ++i;
-              ACE_NEW (ip->info_.standard_.data_,
-                       char[ip->info_.standard_.length_+1]);
-              std::memcpy(ip->info_.standard_.data_,
-                             &buffer[i],
-                             ip->info_.standard_.length_);
-              ip->info_.standard_.data_[ip->info_.standard_.length_] = 0;
-              i+=ip->info_.standard_.length_;
+              ip->data_.reset (new (std::nothrow) char[ip->length_ + 1] {});
+              if (ip->data_ == nullptr)
+                {
+                  errno = ENOMEM;
+                  return;
+                }
+              std::memcpy (ip->data_.get (), &buffer[i], ip->length_);
+              i += ip->length_;
             }
           else
             {
-              ip->info_.priv_.name_length_ = buffer[i];
+              ip->length_ = buffer[i];
               ++i;
-              ip->info_.priv_.data_length_ = buffer[i];
+              ip->data_length_ = buffer[i];
               ++i;
-              ACE_NEW (ip->info_.priv_.name_,
-                       char[ip->info_.priv_.name_length_+1]);
-              std::memcpy(ip->info_.priv_.name_,
-                             &buffer[i],
-                             ip->info_.priv_.name_length_);
-              ip->info_.priv_.name_[ip->info_.priv_.name_length_] = 0;
-              i+=ip->info_.priv_.name_length_;
-              ACE_NEW (ip->info_.priv_.data_,
-                       char[ip->info_.priv_.data_length_+1]);
-              std::memcpy(ip->info_.priv_.data_,
-                             &buffer[i],
-                             ip->info_.priv_.data_length_);
-              ip->info_.priv_.data_[ip->info_.priv_.data_length_] = 0;
-              i+=ip->info_.priv_.data_length_;
+              ip->data_.reset (new (std::nothrow) char[ip->length_ + 1] {});
+              if (ip->data_ == nullptr)
+                {
+                  errno = ENOMEM;
+                  return;
+                }
+              std::memcpy (ip->data_.get (), &buffer[i], ip->length_);
+              i += ip->length_;
+              ip->priv_data_.reset (
+                new (std::nothrow) char[ip->data_length_ + 1] {});
+              if (ip->priv_data_ == nullptr)
+                {
+                  errno = ENOMEM;
+                  return;
+                }
+              std::memcpy (ip->priv_data_.get (), &buffer[i], ip->data_length_);
+              i += ip->data_length_;
             }
         }
         ++i; // each chunk ends with a zero (END) item
@@ -528,69 +517,55 @@ RTCP_SDES_Packet::RTCP_SDES_Packet(char* buffer, int *len):
 
 //==============================================================================
 
-RTCP_SDES_Packet::~RTCP_SDES_Packet()
-{
-  sdesChunk_t *cp; // pointer to chunk
-  sdesChunk_t *cpprev;
-  sdesItem_t *ip; // pointer to item
-  sdesItem_t *ipprev;
-
-  cp = this->chunk_;
-  while (cp)
-    {
-      ip = cp->item_;
-      while (ip)
-        {
-          ipprev = ip;
-          ip = ip->next_;
-          if (ipprev->type_ != RTCP_SDES_PRIV)
-            {
-              delete []ipprev->info_.standard_.data_;
-            }
-          else
-            {
-              delete []ipprev->info_.priv_.name_;
-              delete []ipprev->info_.priv_.data_;
-            }
-
-          delete ipprev;
-        }
-      cpprev = cp;
-      cp = cp->next_;
-      delete cpprev;
-    }
-}
+RTCP_SDES_Packet::~RTCP_SDES_Packet() = default;
 
 //==============================================================================
 
-void
-RTCP_SDES_Packet::add_chunk(ACE_UINT32 ssrc)
+sdesChunk_t *
+RTCP_SDES_Packet::add_chunk (ACE_UINT32 ssrc)
 {
-  sdesChunk_t *cp {}; // pointer to chunk
-
-  // If this is the first chunk.
-  if (chd_.count_ == 0)
+  std::unique_ptr<sdesChunk_t> chunk (
+    new (std::nothrow) sdesChunk_t {});
+  if (chunk == nullptr)
     {
-      ACE_NEW (this->chunk_,
-               sdesChunk_t);
-      this->chunk_->next_ = nullptr;
-      this->chunk_->item_ = nullptr;
-      cp = this->chunk_;
+      errno = ENOMEM;
+      return nullptr;
     }
+
+  sdesChunk_t * const cp = chunk.get ();
+  cp->ssrc_ = ssrc;
+  if (this->chunk_ == nullptr)
+    this->chunk_ = std::move (chunk);
   else
     {
-      cp = this->chunk_;
-      while (cp->next_)
-        cp = cp->next_;
-
-      ACE_NEW (cp->next_,
-               sdesChunk_t);
-      cp = cp->next_;
-      cp->next_ = nullptr;
-      cp->item_ = nullptr;
+      sdesChunk_t *tail = this->chunk_.get ();
+      while (tail->next_)
+        tail = tail->next_.get ();
+      tail->next_ = std::move (chunk);
     }
-  cp->ssrc_ = ssrc;    // store the source
-  ++chd_.count_;       // increment the source count
+
+  ++this->num_chunks_;
+  ++this->chd_.count_;
+  return cp;
+}
+
+sdesItem_t *
+RTCP_SDES_Packet::add_item_node (sdesChunk_t *chunk)
+{
+  std::unique_ptr<sdesItem_t> item (
+    new (std::nothrow) sdesItem_t {});
+  if (item == nullptr)
+    {
+      errno = ENOMEM;
+      return nullptr;
+    }
+
+  sdesItem_t * const item_ptr = item.get ();
+  std::unique_ptr<sdesItem_t> *next_item = &chunk->item_;
+  while (*next_item != nullptr)
+    next_item = &(*next_item)->next_;
+  *next_item = std::move (item);
+  return item_ptr;
 }
 
 //==============================================================================
@@ -601,65 +576,42 @@ RTCP_SDES_Packet::add_item (ACE_UINT32 ssrc,
                             unsigned char length,
                             char const *data)
 {
-  sdesChunk_t *cp; // pointer to chunk
-  sdesItem_t *ip; // pointer to item
+  sdesChunk_t *cp = this->chunk_.get ();
 
-  if (this->chunk_ == nullptr)
+  if (cp == nullptr)
     {
-      this->add_chunk(ssrc);
-    }
-
-  cp = this->chunk_;
-
-  while (cp != nullptr)
-    {
-      if (cp->ssrc_ == ssrc)
-        {
-          break;
-        }
-
-      if (!cp->next_)
-        {
-          this->add_chunk(ssrc);
-          cp = cp->next_;
-          break;
-        }
-
-      cp = cp->next_;
-    }
-
-  ip = cp->item_;
-
-  if (ip == nullptr)
-    {
-      ACE_NEW (cp->item_,
-               sdesItem_t);
-
-      ip = cp->item_;
-      ip->next_ = nullptr;
+      cp = this->add_chunk (ssrc);
+      if (cp == nullptr)
+        return;
     }
   else
     {
-      while (ip->next_)
+      while (cp->ssrc_ != ssrc && cp->next_ != nullptr)
+        cp = cp->next_.get ();
+      if (cp->ssrc_ != ssrc)
         {
-          ip = ip->next_;
+          cp = this->add_chunk (ssrc);
+          if (cp == nullptr)
+            return;
         }
-
-      ACE_NEW (ip->next_,
-               sdesItem_t);
-
-      ip = ip->next_;
-      ip->next_ = nullptr;
     }
 
+  std::unique_ptr<char[]> item_data (
+    new (std::nothrow) char[length + 1] {});
+  if (item_data == nullptr)
+    {
+      errno = ENOMEM;
+      return;
+    }
+  std::memcpy (item_data.get (), data, length);
+
+  sdesItem_t * const ip = this->add_item_node (cp);
+  if (ip == nullptr)
+    return;
+
   ip->type_ = type;
-
-  ip->info_.standard_.length_ = length;
-
-  ACE_NEW (ip->info_.standard_.data_,
-           char[length]);
-
-  std::memcpy(ip->info_.standard_.data_, data, length);
+  ip->length_ = length;
+  ip->data_ = std::move (item_data);
 }
 
 //==============================================================================
@@ -671,70 +623,47 @@ RTCP_SDES_Packet::add_priv_item (ACE_UINT32 ssrc,
                                  unsigned char dataLength,
                                  char const *data)
 {
-  sdesChunk_t *cp; // pointer to chunk
-  sdesItem_t *ip; // pointer to item
+  sdesChunk_t *cp = this->chunk_.get ();
 
-  if (this->chunk_ == nullptr)
+  if (cp == nullptr)
     {
-      this->add_chunk(ssrc);
-    }
-
-  cp = this->chunk_;
-
-  while (cp != nullptr)
-    {
-      if (cp->ssrc_ == ssrc)
-        {
-          break;
-        }
-
-      if (!cp->next_)
-        {
-          this->add_chunk(ssrc);
-          cp = cp->next_;
-          break;
-        }
-
-      cp = cp->next_;
-    }
-
-  ip = cp->item_;
-
-  if (ip == nullptr)
-    {
-      ACE_NEW (cp->item_,
-               sdesItem_t);
-
-      ip = cp->item_;
-      ip->next_ = nullptr;
+      cp = this->add_chunk (ssrc);
+      if (cp == nullptr)
+        return;
     }
   else
     {
-      while (ip->next_)
+      while (cp->ssrc_ != ssrc && cp->next_ != nullptr)
+        cp = cp->next_.get ();
+      if (cp->ssrc_ != ssrc)
         {
-          ip = ip->next_;
+          cp = this->add_chunk (ssrc);
+          if (cp == nullptr)
+            return;
         }
-
-      ACE_NEW (ip->next_,
-               sdesItem_t);
-
-      ip = ip->next_;
-      ip->next_ = nullptr;
     }
 
+  std::unique_ptr<char[]> item_name (
+    new (std::nothrow) char[nameLength + 1] {});
+  std::unique_ptr<char[]> item_data (
+    new (std::nothrow) char[dataLength + 1] {});
+  if (item_name == nullptr || item_data == nullptr)
+    {
+      errno = ENOMEM;
+      return;
+    }
+  std::memcpy (item_name.get (), name, nameLength);
+  std::memcpy (item_data.get (), data, dataLength);
+
+  sdesItem_t * const ip = this->add_item_node (cp);
+  if (ip == nullptr)
+    return;
+
   ip->type_ = RTCP_SDES_PRIV;
-
-  ip->info_.priv_.name_length_ = nameLength;
-  ip->info_.priv_.data_length_ = dataLength;
-
-  ACE_NEW (ip->info_.priv_.name_,
-           char[nameLength]);
-
-  ACE_NEW (ip->info_.priv_.data_,
-           char[dataLength]);
-
-  std::memcpy(ip->info_.priv_.name_, name, nameLength);
-  std::memcpy(ip->info_.priv_.data_, data, dataLength);
+  ip->length_ = nameLength;
+  ip->data_length_ = dataLength;
+  ip->data_ = std::move (item_name);
+  ip->priv_data_ = std::move (item_data);
 }
 
 //==============================================================================
@@ -749,26 +678,26 @@ RTCP_SDES_Packet::packet_size()
   // Determine the size of the packet.
   size = 4;  // size of common header data in octets
 
-  cp = this->chunk_;
+  cp = this->chunk_.get ();
   while (cp)
     {
       size += 4; // size of ssrc
-      ip = cp->item_;
+      ip = cp->item_.get ();
 
       while (ip && (ip->type_ != 0))
         {
           if (ip->type_ != RTCP_SDES_PRIV)
             {
-              size += 2 + ip->info_.standard_.length_;  // size of item
+              size += 2 + ip->length_;  // size of item
             }
           else
             {
-              size += 3 + ip->info_.priv_.name_length_ + ip->info_.priv_.data_length_;
+              size += 3 + ip->length_ + ip->data_length_;
             }
-          ip = ip->next_;
+          ip = ip->next_.get ();
         }
       size += 4 - size%4;           // pad with zeros to even 32 bit bound
-      cp = cp->next_;
+      cp = cp->next_.get ();
     }
 
   chd_.length_ = static_cast<ACE_UINT16> (size/4 - 1);
@@ -802,46 +731,46 @@ RTCP_SDES_Packet::build_packet()
   *((ACE_UINT16*)&this->packet_data_[index]) = ACE_HTONS(chd_.length_);
   index+=2;
 
-  cp = this->chunk_;
+  cp = this->chunk_.get ();
   while (cp)
     {
       *((ACE_UINT32*)&this->packet_data_[index]) = ACE_HTONL(cp->ssrc_);
       index+=4;
 
-      ip = cp->item_;
+      ip = cp->item_.get ();
       while (ip && (ip->type_ != 0))
         {
           this->packet_data_[index] = ip->type_;
           ++index;
           if (ip->type_ != RTCP_SDES_PRIV)
             {
-              this->packet_data_[index] = ip->info_.standard_.length_;
+              this->packet_data_[index] = ip->length_;
               ++index;
-              for (i=0; i<ip->info_.standard_.length_; ++i)
+              for (i=0; i<ip->length_; ++i)
                 {
-                  this->packet_data_[index] = ip->info_.standard_.data_[i];
+                  this->packet_data_[index] = ip->data_[i];
                   ++index;
                 }
             }
           else
             {
-              this->packet_data_[index] = ip->info_.priv_.name_length_;
+              this->packet_data_[index] = ip->length_;
               ++index;
-              this->packet_data_[index] = ip->info_.priv_.data_length_;
+              this->packet_data_[index] = ip->data_length_;
               ++index;
-              for (i=0; i<ip->info_.priv_.name_length_; ++i)
+              for (i=0; i<ip->length_; ++i)
                 {
-                  this->packet_data_[index] = ip->info_.priv_.name_[i];
+                  this->packet_data_[index] = ip->data_[i];
                   ++index;
                 }
-              for (i=0; i<ip->info_.priv_.data_length_; ++i)
+              for (i=0; i<ip->data_length_; ++i)
                 {
-                  this->packet_data_[index] = ip->info_.priv_.data_[i];
+                  this->packet_data_[index] = ip->priv_data_[i];
                   ++index;
                 }
             }
 
-          ip = ip->next_;
+          ip = ip->next_.get ();
         }
 
       this->packet_data_[index] = 0;
@@ -858,7 +787,7 @@ RTCP_SDES_Packet::build_packet()
       // Store the number of bytes added. TODO: do we need this
       // this->packet_data_[index - 1] = i;
 
-      cp = cp->next_;
+      cp = cp->next_.get ();
     }
 }
 
@@ -882,14 +811,14 @@ RTCP_SDES_Packet::dump ()
               this->chunk_->ssrc_));
 
   // Loop through all of the items.
-  ip = this->chunk_->item_;
+  ip = this->chunk_->item_.get ();
 
   while (ip)
     {
       // If there is no data to store, continue.
-      if (ip->info_.standard_.length_ == 0)
+      if (ip->type_ != RTCP_SDES_PRIV && ip->length_ == 0)
         {
-          ip = ip->next_;
+          ip = ip->next_.get ();
           continue;
         }
 
@@ -900,46 +829,46 @@ RTCP_SDES_Packet::dump ()
         case RTCP_SDES_CNAME:
              ORBSVCS_DEBUG ((LM_DEBUG,
                          "    CNAME '%s'\n",
-                         ip->info_.standard_.data_));
+                         ip->data_.get ()));
              break;
         case RTCP_SDES_NAME:
              ORBSVCS_DEBUG ((LM_DEBUG,
                          "    NAME '%s'\n",
-                         ip->info_.standard_.data_));
+                         ip->data_.get ()));
              break;
         case RTCP_SDES_EMAIL:
              ORBSVCS_DEBUG ((LM_DEBUG,
                          "    EMAIL '%s'\n",
-                         ip->info_.standard_.data_));
+                         ip->data_.get ()));
              break;
         case RTCP_SDES_PHONE:
              ORBSVCS_DEBUG ((LM_DEBUG,
                          "    PHONE '%s'\n",
-                         ip->info_.standard_.data_));
+                         ip->data_.get ()));
              break;
         case RTCP_SDES_LOC:
              ORBSVCS_DEBUG ((LM_DEBUG,
                          "    LOC '%s'\n",
-                         ip->info_.standard_.data_));
+                         ip->data_.get ()));
              break;
         case RTCP_SDES_TOOL:
              ORBSVCS_DEBUG ((LM_DEBUG,
                          "    TOOL '%s'\n",
-                         ip->info_.standard_.data_));
+                         ip->data_.get ()));
              break;
         case RTCP_SDES_NOTE:
              ORBSVCS_DEBUG ((LM_DEBUG,
                          "    NOTE '%s'\n",
-                         ip->info_.standard_.data_));
+                         ip->data_.get ()));
              break;
         case RTCP_SDES_PRIV:
              ORBSVCS_DEBUG ((LM_DEBUG,
                          "    '%s' '%s'\n",
-                         ip->info_.priv_.name_,
-                         ip->info_.priv_.data_));
+                         ip->data_.get (),
+                         ip->priv_data_.get ()));
              break;
       }
-      ip = ip->next_;
+      ip = ip->next_.get ();
     }
 
 }
