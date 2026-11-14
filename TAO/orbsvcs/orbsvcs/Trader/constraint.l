@@ -10,18 +10,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 %{
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-// ========================================================================
-//
-// = LIBRARY
-//    orbsvcs
-//
-// = FILENAME
-//    constraint.l
-//
-// = AUTHOR
-//    Seth Widoff <sbw1@cs.wustl.edu>
-//
-// ========================================================================
+/**
+ * @file constraint.l
+ * @author Seth Widoff <sbw1@cs.wustl.edu>
+ */
 
 #include "orbsvcs/Trader/Constraint_Interpreter.h"
 #include "orbsvcs/Trader/Constraint_Nodes.h"
