@@ -370,16 +370,12 @@ TAO_FlowSpec_Entry::get_local_addr_str ()
     {
     case AF_INET:
       {
-        ACE_TCHAR *buf {};
-        ACE_NEW_RETURN (buf,
-                        ACE_TCHAR [BUFSIZ],
-                        0);
+        ACE_TCHAR buf [BUFSIZ] {};
 
         ACE_INET_Addr *inet_addr = dynamic_cast<ACE_INET_Addr *> (this->local_addr_);
-        inet_addr->addr_to_string (buf,BUFSIZ);
-        ACE_CString cstring (ACE_TEXT_ALWAYS_CHAR(buf), 0, false);
+        inet_addr->addr_to_string (buf, BUFSIZ);
 
-        return CORBA::string_dup (cstring.c_str ());
+        return CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (buf));
       }
     default:
       ORBSVCS_ERROR_RETURN ((LM_ERROR,"Address family not supported"),0);
