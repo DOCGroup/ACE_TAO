@@ -114,7 +114,7 @@ TAO_Leader_Follower::wait_for_client_leader_to_complete (ACE_Time_Value *max_wai
           countdown.update ();
           ACE_Time_Value tv {ACE_OS::gettimeofday ()};
           tv += *max_wait_time;
-          if (this->event_loop_threads_condition_.wait (&tv) == -1)
+          if (this->event_loop_threads_condition_.wait (std::addressof (tv)) == -1)
             {
               if (errno != ETIME)
                 TAOLIB_ERROR ((LM_ERROR,
@@ -359,7 +359,7 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
             countdown.update ();
             ACE_Time_Value tv {ACE_OS::gettimeofday ()};
             tv += *max_wait_time;
-            if (follower->wait (&tv) == -1)
+            if (follower->wait (std::addressof (tv)) == -1)
               {
                 if (TAO_debug_level >= 5)
                   TAOLIB_DEBUG ((LM_DEBUG,

@@ -11,6 +11,7 @@
 #include "ace/Dynamic_Service.h"
 
 #include <cstring>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -115,7 +116,7 @@ TAO::Unknown_IDL_Type::_tao_decode (TAO_InputCDR & cdr)
 
   // Skip over the next argument.
   TAO::traverse_status const status =
-    TAO_Marshal_Object::perform_skip (this->type_, &cdr);
+    TAO_Marshal_Object::perform_skip (this->type_, std::addressof (cdr));
 
   if (status != TAO::TRAVERSE_CONTINUE)
     {
@@ -134,7 +135,7 @@ TAO::Unknown_IDL_Type::_tao_decode (TAO_InputCDR & cdr)
 
   ACE_Message_Block new_mb (size + 2 * ACE_CDR::MAX_ALIGNMENT);
 
-  ACE_CDR::mb_align (&new_mb);
+  ACE_CDR::mb_align (std::addressof (new_mb));
   ptrdiff_t offset = ptrdiff_t (begin) % ACE_CDR::MAX_ALIGNMENT;
 
   if (offset < 0)
@@ -147,7 +148,7 @@ TAO::Unknown_IDL_Type::_tao_decode (TAO_InputCDR & cdr)
 
   std::memcpy (new_mb.rd_ptr (), begin, size);
 
-  this->cdr_.reset (&new_mb, cdr.byte_order ());
+  this->cdr_.reset (std::addressof (new_mb), cdr.byte_order ());
   this->cdr_.char_translator (cdr.char_translator ());
   this->cdr_.wchar_translator (cdr.wchar_translator ());
 

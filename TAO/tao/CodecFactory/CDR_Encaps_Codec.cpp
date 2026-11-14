@@ -1,6 +1,5 @@
 // -*- C++ -*-
 #include "tao/CodecFactory/CDR_Encaps_Codec.h"
-
 #include "tao/CDR.h"
 #include "tao/OctetSeqC.h"
 #include "tao/AnyTypeCode/Any.h"
@@ -16,6 +15,7 @@
 #include "ace/CORBA_macros.h"
 
 #include <cstring>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -51,11 +51,11 @@ TAO_CDR_Encaps_Codec::encode (CORBA::Any const& data)
 
   if (this->char_translator_ != nullptr)
     {
-      this->char_translator_->assign (&cdr);
+      this->char_translator_->assign (std::addressof (cdr));
     }
   if (this->wchar_translator_ != nullptr)
     {
-      this->wchar_translator_->assign (&cdr);
+      this->wchar_translator_->assign (std::addressof (cdr));
     }
 
   if ((cdr << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER))
@@ -103,7 +103,7 @@ TAO_CDR_Encaps_Codec::decode (CORBA::OctetSeq const& data)
   // insert the octet sequence into the Any.
 
   ACE_Message_Block mb (data.length () + 2 * ACE_CDR::MAX_ALIGNMENT);
-  ACE_CDR::mb_align (&mb);
+  ACE_CDR::mb_align (std::addressof (mb));
 
   std::memcpy (mb.rd_ptr (), data.get_buffer (), data.length ());
 
@@ -121,11 +121,11 @@ TAO_CDR_Encaps_Codec::decode (CORBA::OctetSeq const& data)
 
   if (this->char_translator_ != nullptr)
     {
-      this->char_translator_->assign (&cdr);
+      this->char_translator_->assign (std::addressof (cdr));
     }
   if (this->wchar_translator_ != nullptr)
     {
-      this->wchar_translator_->assign (&cdr);
+      this->wchar_translator_->assign (std::addressof (cdr));
     }
 
   CORBA::Boolean byte_order {};
@@ -167,11 +167,11 @@ TAO_CDR_Encaps_Codec::encode_value (CORBA::Any const& data)
 
   if (this->char_translator_ != nullptr)
     {
-      this->char_translator_->assign (&cdr);
+      this->char_translator_->assign (std::addressof (cdr));
     }
   if (this->wchar_translator_ != nullptr)
     {
-      this->wchar_translator_->assign (&cdr);
+      this->wchar_translator_->assign (std::addressof (cdr));
     }
 
   if ((cdr << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)))
@@ -246,7 +246,7 @@ TAO_CDR_Encaps_Codec::decode_value (CORBA::OctetSeq const& data,
   // 2 * ACE_CDR::MAX_ALIGNMENT bytes of additional space in
   // the message block.
   ACE_Message_Block mb (data.length () + 2 * ACE_CDR::MAX_ALIGNMENT);
-  ACE_CDR::mb_align (&mb);
+  ACE_CDR::mb_align (std::addressof (mb));
 
   std::memcpy (mb.rd_ptr (),
                data.get_buffer (),
@@ -279,11 +279,11 @@ TAO_CDR_Encaps_Codec::decode_value (CORBA::OctetSeq const& data,
 
   if (this->char_translator_ != nullptr)
     {
-      this->char_translator_->assign (&cdr);
+      this->char_translator_->assign (std::addressof (cdr));
     }
   if (this->wchar_translator_ != nullptr)
     {
-      this->wchar_translator_->assign (&cdr);
+      this->wchar_translator_->assign (std::addressof (cdr));
     }
 
   CORBA::Boolean byte_order {};

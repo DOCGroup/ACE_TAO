@@ -5,6 +5,8 @@
 #include "tao/Synch_Reply_Dispatcher.h"
 #include "tao/ORB_Core.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Wait_On_Leader_Follower::TAO_Wait_On_Leader_Follower
@@ -49,7 +51,7 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
 {
   TAO_Leader_Follower &leader_follower =
     this->transport_->orb_core ()->leader_follower ();
-  return leader_follower.wait_for_event (&rd, this->transport_, max_wait_time);
+  return leader_follower.wait_for_event (std::addressof (rd), this->transport_, max_wait_time);
 }
 
 bool

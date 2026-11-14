@@ -120,7 +120,7 @@ TAO_Connection_Handler::svc_i ()
   if (this->orb_core_->thread_per_connection_timeout (timeout))
     {
       current_timeout = timeout;
-      max_wait_time = &current_timeout;
+      max_wait_time = std::addressof (current_timeout);
     }
 
   TAO_Resume_Handle rh (this->orb_core_, ACE_INVALID_HANDLE);

@@ -7,6 +7,8 @@
 
 #include "ace/Dynamic_Service.h"
 
+#include <memory>
+
 #if TAO_HAS_INTERCEPTORS == 1
 # include "tao/PortableInterceptorC.h"
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
@@ -81,7 +83,7 @@ namespace TAO
           }
         catch ( ::CORBA::Exception& ex)
           {
-            (void) this->handle_any_exception (&ex);
+            (void) this->handle_any_exception (std::addressof (ex));
             throw;
           }
         catch (...)
@@ -116,7 +118,7 @@ namespace TAO
           }
         catch ( ::CORBA::Exception& ex)
           {
-            (void) this->handle_any_exception (&ex);
+            (void) this->handle_any_exception (std::addressof (ex));
             throw;
           }
         catch (...)
@@ -148,7 +150,7 @@ namespace TAO
           }
         catch ( ::CORBA::Exception& ex)
           {
-            (void) this->handle_any_exception (&ex);
+            (void) this->handle_any_exception (std::addressof (ex));
             throw;
           }
         catch (...)
@@ -201,7 +203,7 @@ namespace TAO
   PortableInterceptor::ReplyStatus
   Invocation_Base::handle_all_exception ()
   {
-    this->exception (&unknown_exception);
+    this->exception (std::addressof (unknown_exception));
 
     PortableInterceptor::ReplyStatus status =
       PortableInterceptor::SYSTEM_EXCEPTION;

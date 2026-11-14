@@ -8,6 +8,8 @@
 #include "tao/ORB_Constants.h"
 #include "tao/SystemException.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Invocation_Endpoint_Selector::~TAO_Invocation_Endpoint_Selector () = default;
@@ -38,7 +40,7 @@ void
               TAO_Base_Transport_Property desc (ep);
 
               // Check if the connect has completed.
-              if (r->try_parallel_connect (&desc, max_wait_time))
+              if (r->try_parallel_connect (std::addressof (desc), max_wait_time))
                 return;
               // The default implementation of try_parallel_connect returns
               // a not supported errno. In this case, allow the ordinary
@@ -56,7 +58,7 @@ void
               TAO_Base_Transport_Property desc (ep);
 
               // Check if the connect has completed.
-              if (r->try_connect (&desc, max_wait_time))
+              if (r->try_connect (std::addressof (desc), max_wait_time))
                 return;
             }
         }

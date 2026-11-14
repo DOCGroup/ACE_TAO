@@ -1,6 +1,8 @@
 // -*- C++ -*-
 #include "tao/AnyTypeCode/Empty_Param_TypeCode.h"
 
+#include <memory>
+
 #ifndef __ACE_INLINE__
 # include "tao/AnyTypeCode/Empty_Param_TypeCode.inl"
 #endif  /* !__ACE_INLINE__ */
@@ -67,7 +69,7 @@ TAO::TypeCode::Empty_Param::get_compact_typecode_i () const
 
   static TAO::TypeCode::Empty_Param compact_typecode (this->kind_);
 
-  return &compact_typecode;
+  return std::addressof (compact_typecode);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

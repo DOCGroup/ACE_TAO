@@ -621,7 +621,7 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
   // lock, we need to set things like this -- put stuff in TSS here
   // and transfer to global memory when we get flow controlled. We
   // need to work on the message block to get it right!
-  TAO_OutputCDR output (&out_db,
+  TAO_OutputCDR output (std::addressof (out_db),
                         TAO_ENCAP_BYTE_ORDER,
                         this->orb_core_->input_cdr_msgblock_allocator (),
                         this->orb_core_->orb_params ()->cdr_memcpy_tradeoff (),
@@ -695,7 +695,8 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
                           qd->giop_version ().minor_version (),
                           this->orb_core_);
 
-  transport->assign_translators(&input_cdr,&output);
+  transport->assign_translators (std::addressof (input_cdr),
+                                 std::addressof (output));
 
   // We know we have some request message. Check whether it is a
   // GIOP_REQUEST or GIOP_LOCATE_REQUEST to take action.
@@ -843,7 +844,7 @@ TAO_GIOP_Message_Base::process_reply_message (
   if (retval == -1)
     return retval;
 
-  params.input_cdr_ = &input_cdr;
+  params.input_cdr_ = std::addressof (input_cdr);
   params.transport_->assign_translators (params.input_cdr_, nullptr);
 
   retval = params.transport_->tms ()->dispatch_reply (params);
@@ -1324,12 +1325,12 @@ TAO_GIOP_Message_Base::send_error (TAO_Transport *transport)
                              nullptr,
                              ACE_Message_Block::DONT_DELETE,
                              nullptr);
-  ACE_Message_Block message_block(&data_block,
+  ACE_Message_Block message_block (std::addressof (data_block),
                                   ACE_Message_Block::DONT_DELETE);
   message_block.wr_ptr (TAO_GIOP_MESSAGE_HEADER_LEN);
 
   size_t bt;
-  int const result = transport->send_message_block_chain (&message_block, bt);
+  int const result = transport->send_message_block_chain (std::addressof (message_block), bt);
   if (result == -1)
     {
       if (TAO_debug_level > 0)
@@ -1426,12 +1427,12 @@ TAO_GIOP_Message_Base::
                              nullptr,
                              ACE_Message_Block::DONT_DELETE,
                              nullptr);
-  ACE_Message_Block message_block (&data_block,
+  ACE_Message_Block message_block (std::addressof (data_block),
                                   ACE_Message_Block::DONT_DELETE);
   message_block.wr_ptr (TAO_GIOP_MESSAGE_HEADER_LEN);
 
   size_t bt;
-  int const result = transport->send_message_block_chain (&message_block, bt);
+  int const result = transport->send_message_block_chain (std::addressof (message_block), bt);
   if (result == -1)
     {
       if (TAO_debug_level > 0)

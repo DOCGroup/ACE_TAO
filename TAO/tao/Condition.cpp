@@ -3,6 +3,8 @@
 #include "tao/Condition.h"
 #include "tao/debug.h"
 
+#include <memory>
+
 #if !defined (__ACE_INLINE__)
 # include "tao/Condition.inl"
 #endif /* __ACE_INLINE__ */
@@ -11,7 +13,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class MUTEX>
 TAO_Condition<MUTEX>::TAO_Condition (MUTEX &m)
-  : mutex_ (&m)
+  : mutex_ (std::addressof (m))
 {
   // @todo: Need to add the allocatore here..
   TAO_SYNCH_CONDITION *cond {};

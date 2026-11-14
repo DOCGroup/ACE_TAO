@@ -2133,7 +2133,7 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
                      this->orb_core_->input_cdr_dblock_allocator ());
 
   // Create a message block
-  ACE_Message_Block message_block (&db,
+  ACE_Message_Block message_block (std::addressof (db),
                                    ACE_Message_Block::DONT_DELETE,
                                    this->orb_core_->input_cdr_msgblock_allocator ());
 
@@ -2343,7 +2343,7 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
       // (PRE: first message resides in aligned memory) Make a node of
       // the message-block..
 
-      TAO_Queued_Data qd (&message_block,
+      TAO_Queued_Data qd (std::addressof (message_block),
                           this->orb_core_->transport_message_buffer_allocator ());
 
       size_t mesg_length  = 0;
@@ -2503,7 +2503,7 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
             }
 
           // PRE: incoming_message_queue is empty
-          if (this->process_parsed_messages (&qd, rh) == -1)
+          if (this->process_parsed_messages (std::addressof (qd), rh) == -1)
             {
               return -1;
             }

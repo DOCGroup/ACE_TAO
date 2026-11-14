@@ -686,7 +686,7 @@ TAO_Default_Resource_Factory::use_locked_data_blocks () const
 TAO_ProtocolFactorySet *
 TAO_Default_Resource_Factory::get_protocol_factories ()
 {
-  return &protocol_factories_;
+  return std::addressof (protocol_factories_);
 }
 
 TAO_Acceptor_Registry *

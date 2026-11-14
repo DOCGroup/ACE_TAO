@@ -1,5 +1,7 @@
 // -*- C++ -*-
 //
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE void
@@ -15,14 +17,14 @@ TAO_Target_Specification::target_specifier (TAO::ObjectKey const &key)
   // general is better....  but you are probably right in this case, i
   // suspect this stuff goes right in the critical path, right? So
   // making a copy of the object key would be too expensive..
-  this->u_.object_key_ = &key;
+  this->u_.object_key_ = std::addressof (key);
 }
 
 ACE_INLINE void
 TAO_Target_Specification::target_specifier (IOP::TaggedProfile const &profile)
 {
   this->specifier_ = TAO_Target_Specification::Profile_Addr;
-  this->u_.profile_ = &profile;
+  this->u_.profile_ = std::addressof (profile);
 }
 
 ACE_INLINE void
@@ -30,7 +32,7 @@ TAO_Target_Specification::target_specifier (IOP::IOR &ior,
                                             CORBA::ULong prof_index)
 {
   this->specifier_ = TAO_Target_Specification::Reference_Addr;
-  this->u_.ior_ = const_cast<IOP::IOR *> (&ior);
+  this->u_.ior_ = std::addressof (ior);
   this->profile_index_ = prof_index;
 
 }

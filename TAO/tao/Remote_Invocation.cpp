@@ -9,6 +9,8 @@
 #include "tao/debug.h"
 #include "tao/SystemException.h"
 
+#include <memory>
+
 #if !defined (__ACE_INLINE__)
 # include "tao/Remote_Invocation.inl"
 #endif /* __ACE_INLINE__ */
@@ -94,7 +96,7 @@ namespace TAO
   void
   Remote_Invocation::write_header (TAO_OutputCDR &out_stream)
   {
-    this->resolver_.transport ()->clear_translators (nullptr, &out_stream);
+    this->resolver_.transport ()->clear_translators (nullptr, std::addressof (out_stream));
 
     TAO_Target_Specification spec;
     this->init_target_spec (spec, out_stream);
@@ -107,7 +109,7 @@ namespace TAO
         throw ::CORBA::MARSHAL ();
       }
 
-    this->resolver_.transport ()->assign_translators (nullptr, &out_stream);
+    this->resolver_.transport ()->assign_translators (nullptr, std::addressof (out_stream));
   }
 
   Invocation_Status

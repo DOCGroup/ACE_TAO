@@ -8,6 +8,8 @@
 #include "tao/SystemException.h"
 #include "tao/Abstract_Servant_Base.h"
 
+#include <memory>
+
 #if TAO_HAS_INTERCEPTORS == 1
 # include "tao/PortableInterceptorC.h"
 #endif /*TAO_HAS_INTERCEPTORS */
@@ -124,7 +126,7 @@ namespace TAO
 
 #if TAO_HAS_INTERCEPTORS == 1
         PortableInterceptor::ReplyStatus const status =
-          this->handle_any_exception (&ex);
+          this->handle_any_exception (std::addressof (ex));
 
         if (status == PortableInterceptor::LOCATION_FORWARD ||
             status == PortableInterceptor::TRANSPORT_RETRY)
@@ -153,7 +155,7 @@ namespace TAO
 
 #if TAO_HAS_INTERCEPTORS == 1
         PortableInterceptor::ReplyStatus const status =
-          this->handle_any_exception (&ex);
+          this->handle_any_exception (std::addressof (ex));
 
         if (status == PortableInterceptor::LOCATION_FORWARD ||
             status == PortableInterceptor::TRANSPORT_RETRY)
