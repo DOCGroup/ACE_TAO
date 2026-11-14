@@ -31,6 +31,8 @@
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/os_include/os_netdb.h"
 
+#include <memory>
+
 // Change to non-zero if test fails
 static int Test_Result {};
 
@@ -112,10 +114,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   if (notifier_file != nullptr)
     {
-      FILE *f = ACE_OS::fopen (notifier_file,ACE_TEXT("w+"));
-      const char *msg = "server ready";
-      ACE_OS::fwrite (msg,ACE_OS::strlen(msg),1,f);
-      ACE_OS::fclose (f);
+      std::unique_ptr<FILE, int (*) (FILE *)> file (
+        ACE_OS::fopen (notifier_file, ACE_TEXT ("w+")), ACE_OS::fclose);
+      if (!file)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("Cannot open notifier file '%s'\n"),
+                           notifier_file), 1);
+      char const * const msg = "server ready";
+      ACE_OS::fwrite (msg, ACE_OS::strlen (msg), 1, file.get ());
     }
 
   ACE_INET_Addr cli_addr;

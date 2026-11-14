@@ -15,6 +15,8 @@
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/os_include/os_netdb.h"
 
+#include <memory>
+
 unsigned port = 8088;
 ACE_TCHAR const *notifier_file {};
 int
@@ -71,10 +73,14 @@ ACE_TMAIN (int argc , ACE_TCHAR *argv[])
               host));
   if (notifier_file != nullptr)
     {
-      FILE *f = ACE_OS::fopen (notifier_file,ACE_TEXT("w+"));
+      std::unique_ptr<FILE, int (*) (FILE *)> file (
+        ACE_OS::fopen (notifier_file, ACE_TEXT ("w+")), ACE_OS::fclose);
+      if (!file)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("Cannot open notifier file '%s'\n"),
+                           notifier_file), 1);
       char const * const msg = "server ready";
-      ACE_OS::fwrite (msg,ACE_OS::strlen(msg),1,f);
-      ACE_OS::fclose (f);
+      ACE_OS::fwrite (msg, ACE_OS::strlen (msg), 1, file.get ());
     }
   acc.accept (sock[0]);
   ACE::HTBP::Channel channel1(sock[0]);

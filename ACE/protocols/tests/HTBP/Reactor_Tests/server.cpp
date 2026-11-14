@@ -244,10 +244,14 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 
   if (notifier_file != nullptr)
     {
-      FILE *f = ACE_OS::fopen (notifier_file,ACE_TEXT("w+"));
+      std::unique_ptr<FILE, int (*) (FILE *)> file (
+        ACE_OS::fopen (notifier_file, ACE_TEXT ("w+")), ACE_OS::fclose);
+      if (!file)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("Cannot open notifier file '%s'\n"),
+                           notifier_file), 1);
       char const * const msg = "server ready";
-      ACE_OS::fwrite (msg,ACE_OS::strlen(msg),1,f);
-      ACE_OS::fclose (f);
+      ACE_OS::fwrite (msg, ACE_OS::strlen (msg), 1, file.get ());
     }
 
   ACE_Reactor::instance()->run_reactor_event_loop();
