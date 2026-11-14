@@ -18,6 +18,7 @@
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/os_include/os_netdb.h"
 #include <array>
+#include <memory>
 
 unsigned port = 8088;
 ACE_TCHAR const *notifier_file {};
@@ -99,7 +100,9 @@ Accept_Handler::handle_input (ACE_HANDLE h)
     {
       ACE_SOCK_Stream *sock = new ACE_SOCK_Stream;
       acceptor_.accept(*sock);
-      ch = channels_[0] == nullptr ? &channels_[0] :& channels_[1];
+      ch = channels_[0] == nullptr
+        ? std::addressof (channels_[0])
+        : std::addressof (channels_[1]);
       // The session takes over this channel when its HTBP data header arrives.
       *ch = new ACE::HTBP::Channel(*sock);
       this->reactor()->register_handler (sock->get_handle(),
@@ -110,7 +113,7 @@ Accept_Handler::handle_input (ACE_HANDLE h)
   for (int i {}; i < 2; i++)
     if (channels_[i] != nullptr && channels_[i]->get_handle() == h)
       {
-        ch = &channels_[i];
+        ch = std::addressof (channels_[i]);
         break;
       }
   if (ch == nullptr)
