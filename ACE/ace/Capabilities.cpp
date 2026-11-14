@@ -9,6 +9,8 @@
 
 #include "ace/OS_NS_stdio.h"
 
+#include <memory>
+
 #define ACE_ESC ((ACE_TCHAR)0x1b)
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -300,7 +302,8 @@ is_line (const ACE_TCHAR *line)
 int
 ACE_Capabilities::getent (const ACE_TCHAR *fname, const ACE_TCHAR *name)
 {
-  FILE *fp = ACE_OS::fopen (fname, ACE_TEXT ("r"));
+  std::unique_ptr<FILE, int (*) (FILE *)> fp {
+    ACE_OS::fopen (fname, ACE_TEXT ("r")), ACE_OS::fclose};
 
   if (fp == nullptr)
     ACELIB_ERROR_RETURN ((LM_ERROR,
@@ -311,7 +314,7 @@ ACE_Capabilities::getent (const ACE_TCHAR *fname, const ACE_TCHAR *name)
   bool done {};
   ACE_TString line;
 
-  while (!(done = (this->getline (fp, line) == -1))
+  while (!(done = (this->getline (fp.get (), line) == -1))
          && is_empty (line.c_str ()))
     continue;
 
@@ -320,7 +323,7 @@ ACE_Capabilities::getent (const ACE_TCHAR *fname, const ACE_TCHAR *name)
       ACE_TString newline;
       ACE_TString description;
 
-      while (!(done = (this->getline (fp, newline) == -1)))
+      while (!(done = (this->getline (fp.get (), newline) == -1)))
         if (is_line (newline.c_str ()))
           description += newline;
         else
@@ -328,16 +331,15 @@ ACE_Capabilities::getent (const ACE_TCHAR *fname, const ACE_TCHAR *name)
 
       if (this->is_entry (name, line.c_str()))
         {
-          ACE_OS::fclose (fp);
+          fp.reset ();
           return this->fillent (description.c_str ());
         }
 
       line = newline;
       while (!done && is_empty (line.c_str ()))
-        done = this->getline (fp, line) == -1;
+        done = this->getline (fp.get (), line) == -1;
     }
 
-  ACE_OS::fclose (fp);
   return -1;
 }
 
