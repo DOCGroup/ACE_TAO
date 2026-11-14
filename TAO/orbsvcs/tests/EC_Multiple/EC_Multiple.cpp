@@ -113,6 +113,20 @@ print_priority_info (char const* const name)
 #endif /* ACE_HAS_PTHREADS */
 }
 
+static std::string
+make_service_name (char const* prefix,
+                   int index,
+                   ACE_CString const& local_name)
+{
+  std::string result {prefix};
+  if (index >= 0 && index < 10)
+    result += '0';
+  result += std::to_string (index);
+  result += '@';
+  result += local_name.c_str ();
+  return result;
+}
+
 int
 Test_ECG::run (int argc, ACE_TCHAR* argv[])
 {
@@ -583,8 +597,7 @@ Test_ECG::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec)
       if (mc == 0)
         mc = 1;
 
-      char buf[BUFSIZ];
-      ACE_OS::sprintf (buf, "hp_supplier_%02d@%s", i, this->lcl_name_.c_str ());
+      std::string const buf = make_service_name ("hp_supplier_", i, this->lcl_name_);
 
       Test_Supplier* const supplier =
         new (std::nothrow) Test_Supplier (this, this->suppliers_.data () + i);
@@ -592,7 +605,7 @@ Test_ECG::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec)
         throw CORBA::NO_MEMORY ();
       this->suppliers_[i] = supplier;
 
-      this->suppliers_[i]->open (buf,
+      this->suppliers_[i]->open (buf.c_str (),
                                  this->hps_event_a_,
                                  this->hps_event_b_,
                                  mc,
@@ -607,9 +620,9 @@ Test_ECG::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec)
       if (mc == 0)
         mc = 1;
 
-      char buf[BUFSIZ];
-      ACE_OS::sprintf (buf, "lp_supplier_%02d@%s",
-                       i - this->hp_suppliers_, this->lcl_name_.c_str ());
+      std::string const buf = make_service_name ("lp_supplier_",
+                                                 i - this->hp_suppliers_,
+                                                 this->lcl_name_);
 
       Test_Supplier* const supplier =
         new (std::nothrow) Test_Supplier (this, this->suppliers_.data () + i);
@@ -617,7 +630,7 @@ Test_ECG::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec)
         throw CORBA::NO_MEMORY ();
       this->suppliers_[i] = supplier;
 
-      this->suppliers_[i]->open (buf,
+      this->suppliers_[i]->open (buf.c_str (),
                                  this->lps_event_a_,
                                  this->lps_event_b_,
                                  mc,
@@ -648,10 +661,9 @@ Test_ECG::activate_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec)
           if (mc == 0)
             mc = 1;
 
-          char buf[BUFSIZ];
-          ACE_OS::sprintf (buf, "hp_supplier_%02d@%s", i, this->lcl_name_.c_str ());
+          std::string const buf = make_service_name ("hp_supplier_", i, this->lcl_name_);
 
-          this->suppliers_[i]->activate (buf,
+          this->suppliers_[i]->activate (buf.c_str (),
                                          this->hp_interval_ * 10,
                                          local_ec);
         }
@@ -663,11 +675,11 @@ Test_ECG::activate_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec)
           if (mc == 0)
             mc = 1;
 
-          char buf[BUFSIZ];
-          ACE_OS::sprintf (buf, "lp_supplier_%02d@%s",
-                           i - this->hp_suppliers_, this->lcl_name_.c_str ());
+          std::string const buf = make_service_name ("lp_supplier_",
+                                                     i - this->hp_suppliers_,
+                                                     this->lcl_name_);
 
-          this->suppliers_[i]->activate (buf,
+          this->suppliers_[i]->activate (buf.c_str (),
                                          this->lp_interval_ * 10,
                                          local_ec);
         }
@@ -684,8 +696,7 @@ Test_ECG::connect_consumers (RtecEventChannelAdmin::EventChannel_ptr local_ec)
   int i;
   for (i = 0; i < this->hp_consumers_; ++i)
     {
-      char buf[BUFSIZ];
-      ACE_OS::sprintf (buf, "hp_consumer_%02d@%s", i, this->lcl_name_.c_str ());
+      std::string const buf = make_service_name ("hp_consumer_", i, this->lcl_name_);
 
       Test_Consumer* const consumer =
         new (std::nothrow) Test_Consumer (this, this->consumers_.data () + i);
@@ -693,7 +704,7 @@ Test_ECG::connect_consumers (RtecEventChannelAdmin::EventChannel_ptr local_ec)
         throw CORBA::NO_MEMORY ();
       this->consumers_[i] = consumer;
 
-      this->consumers_[i]->open (buf,
+      this->consumers_[i]->open (buf.c_str (),
                                  this->hpc_event_a_,
                                  this->hpc_event_b_,
                                  local_ec);
@@ -704,9 +715,9 @@ Test_ECG::connect_consumers (RtecEventChannelAdmin::EventChannel_ptr local_ec)
 
   for (; i < this->hp_consumers_ + this->lp_consumers_; ++i)
     {
-      char buf[BUFSIZ];
-      ACE_OS::sprintf (buf, "lp_consumer_%02d@%s",
-                       i - this->hp_consumers_, this->lcl_name_.c_str ());
+      std::string const buf = make_service_name ("lp_consumer_",
+                                                 i - this->hp_consumers_,
+                                                 this->lcl_name_);
 
       Test_Consumer* const consumer =
         new (std::nothrow) Test_Consumer (this, this->consumers_.data () + i);
@@ -714,7 +725,7 @@ Test_ECG::connect_consumers (RtecEventChannelAdmin::EventChannel_ptr local_ec)
         throw CORBA::NO_MEMORY ();
       this->consumers_[i] = consumer;
 
-      this->consumers_[i]->open (buf,
+      this->consumers_[i]->open (buf.c_str (),
                                  this->lpc_event_a_,
                                  this->lpc_event_b_,
                                  local_ec);
@@ -855,13 +866,13 @@ Test_ECG::push_consumer (void *consumer_cookie,
 
           CORBA::ULong tmp = ACE_U64_TO_U32 (s - now);
           this->stats_[ID].laxity_[count] = 1 + tmp/1000.0F/interval;
-          count++;
+          ++count;
         }
       else
         {
           int& count = this->stats_[ID].rmt_count_;
           this->stats_[ID].rmt_latency_[count] = nsec;
-          count++;
+          ++count;
         }
     }
 }
@@ -1326,7 +1337,7 @@ Test_Supplier::push (RtecEventComm::EventSet const& events)
       ACE_hrtime_t t = ACE_OS::gethrtime ();
       ORBSVCS_Time::hrtime_to_TimeT (s.header.creation_time, t);
 
-      this->message_count_--;
+      --this->message_count_;
 
       if (this->message_count_ < 0)
         {

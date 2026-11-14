@@ -317,7 +317,7 @@ private:
   };
 
   /// Results indexed by consumer slot.
-  Stats stats_[Test_ECG::MAX_CONSUMERS];
+  std::array<Stats, Test_ECG::MAX_CONSUMERS> stats_;
 
   /// Whether suppliers may proceed with event delivery.
   bool ready_;
