@@ -35,6 +35,11 @@ namespace TAO
   class TAO_AnyTypeCode_Export Any_Basic_Impl : public Any_Impl
   {
   public:
+    Any_Basic_Impl (Any_Basic_Impl const &) = delete;
+    Any_Basic_Impl (Any_Basic_Impl &&) = delete;
+    Any_Basic_Impl &operator= (Any_Basic_Impl const &) = delete;
+    Any_Basic_Impl &operator= (Any_Basic_Impl &&) = delete;
+
     Any_Basic_Impl (CORBA::TypeCode_ptr,
                     void *value);
 

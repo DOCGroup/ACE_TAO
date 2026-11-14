@@ -38,6 +38,11 @@ namespace TAO
   class Any_SystemException : public Any_Impl
   {
   public:
+    Any_SystemException (Any_SystemException const &) = delete;
+    Any_SystemException (Any_SystemException &&) = delete;
+    Any_SystemException &operator= (Any_SystemException const &) = delete;
+    Any_SystemException &operator= (Any_SystemException &&) = delete;
+
     Any_SystemException (_tao_destructor destructor,
                          CORBA::TypeCode_ptr,
                          CORBA::SystemException* const);

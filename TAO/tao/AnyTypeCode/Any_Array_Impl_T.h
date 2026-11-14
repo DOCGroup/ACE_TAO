@@ -32,6 +32,11 @@ namespace TAO
   class Any_Array_Impl_T : public Any_Impl
   {
   public:
+    Any_Array_Impl_T (Any_Array_Impl_T const &) = delete;
+    Any_Array_Impl_T (Any_Array_Impl_T &&) = delete;
+    Any_Array_Impl_T &operator= (Any_Array_Impl_T const &) = delete;
+    Any_Array_Impl_T &operator= (Any_Array_Impl_T &&) = delete;
+
     Any_Array_Impl_T (_tao_destructor destructor,
                       CORBA::TypeCode_ptr,
                       T_slice * const);

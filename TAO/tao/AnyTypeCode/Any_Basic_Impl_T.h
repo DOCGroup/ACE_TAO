@@ -32,6 +32,11 @@ namespace TAO
   class Any_Basic_Impl_T : public Any_Impl
   {
   public:
+    Any_Basic_Impl_T (Any_Basic_Impl_T const &) = delete;
+    Any_Basic_Impl_T (Any_Basic_Impl_T &&) = delete;
+    Any_Basic_Impl_T &operator= (Any_Basic_Impl_T const &) = delete;
+    Any_Basic_Impl_T &operator= (Any_Basic_Impl_T &&) = delete;
+
     Any_Basic_Impl_T (CORBA::TypeCode_ptr,
                       T const & val);
     ~Any_Basic_Impl_T () override = default;
