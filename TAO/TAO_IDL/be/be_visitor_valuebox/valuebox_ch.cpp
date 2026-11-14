@@ -162,7 +162,6 @@ be_visitor_valuebox_ch::visit_array (be_array *node)
   // Public constructor that takes a const array argument
   this->emit_constructor_one_arg (node, "", "const ", "");
 
-  // Public copy constructor
   this->emit_copy_constructor ();
 
   // Public assignment operator that takes a const array argument
@@ -306,7 +305,6 @@ be_visitor_valuebox_ch::visit_sequence (be_sequence *node)
   // Public constructor with single argument of type const T&
   this->emit_constructor_one_arg (node, "", "const ", "&");
 
-  // Public copy constructor
   this->emit_copy_constructor ();
 
   // Public assignment operator with one argument of type const T&
@@ -453,7 +451,6 @@ be_visitor_valuebox_ch::visit_structure (be_structure *node)
   // Public constructor with one argument of const T&
   this->emit_constructor_one_arg (node, "", "const ", "&");
 
-  // Public copy constructor
   this->emit_copy_constructor ();
 
   // Public assignment operator with one argument of type const T&
@@ -547,7 +544,6 @@ be_visitor_valuebox_ch::visit_union (be_union *node)
   // Public constructor with single argument of type const T&
   this->emit_constructor_one_arg (node, "", "const ", "&");
 
-  // Public copy constructor
   this->emit_copy_constructor ();
 
   // Public assignment operator with one argument of type const T&
@@ -655,7 +651,6 @@ be_visitor_valuebox_ch::emit_for_predef_enum (be_type *node,
       this->emit_constructor_one_arg (node, type_suffix, "", "");
     }
 
-  // Public copy constructor
   this->emit_copy_constructor ();
 
   if (is_any)
@@ -729,7 +724,6 @@ be_visitor_valuebox_ch::emit_copy_constructor () const
   // Retrieve the node being visited by this be_visitor_valuebox_ch.
   be_decl * const vb_node = this->ctx_->node ();
 
-  // Public Copy constructor
   *os << vb_node->local_name ()
       << " (" << vb_node->local_name () << " const &val);" << be_nl;
 }

@@ -44,14 +44,11 @@ int be_visitor_union_ch::visit_union (be_union *node)
       << "{" << be_nl
       << "public:" << be_idt_nl
 
-    // Generate default and copy constructors.
       << node->local_name () << " ();" << be_nl
       << node->local_name () << " (" << node->local_name ()
       << " const &);" << be_nl
-    // Generate destructor.
       << "~" << node->local_name () << " ();";
 
-    // Generate assignment operator.
   *os << be_nl_2
       << node->local_name () << " &operator= ("
       << node->local_name () << " const &);";

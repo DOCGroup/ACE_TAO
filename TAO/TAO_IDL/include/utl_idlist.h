@@ -89,7 +89,6 @@ class TAO_IDL_FE_Export UTL_IdList : public UTL_List
   //  is to maintain a scoped name.
 public:
   explicit UTL_IdList (Identifier *car, UTL_IdList *cdr = nullptr);
-  // Constructor(s)
 
   ~UTL_IdList () override = default;
 

@@ -725,7 +725,6 @@ be_visitor_valuebox_cs::emit_destructor () const
   // Retrieve the node being visited by this be_visitor_valuebox_cs.
   be_decl * const vb_node = this->ctx_->node ();
 
-  // Protected destructor
   os << vb_node->name () << "::~" << vb_node->local_name () << " ()"
      << be_nl << "{" << be_nl << "}" << be_nl_2;
 }

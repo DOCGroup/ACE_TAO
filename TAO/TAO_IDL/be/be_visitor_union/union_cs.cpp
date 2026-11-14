@@ -214,7 +214,6 @@ int be_visitor_union_cs::visit_union (be_union *node)
   // Reset this for generating the assignment operator.
   this->ctx_->sub_state (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN);
 
-  // Assignment operator.
   *os << node->name () << " &" << be_nl;
   *os << node->name () << "::operator= (::"
       << node->name () << " const &u)" << be_nl;

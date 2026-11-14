@@ -66,7 +66,6 @@ be_visitor_valuebox_ci::visit_array (be_array *node)
 
   TAO_INSERT_COMMENT (os);
 
-  // Public default constructor
   *os << "ACE_INLINE" << be_nl
       << vb_node->name () << "::" << vb_node->local_name () << " ()"
       << be_nl << "{" << be_idt_nl
@@ -82,7 +81,6 @@ be_visitor_valuebox_ci::visit_array (be_array *node)
       << be_uidt_nl
       << "}" << be_nl_2;
 
-  // Public copy constructor
   *os << "ACE_INLINE" << be_nl
       << vb_node->name () << "::" << vb_node->local_name () << " ("
       << vb_node->local_name () << " const &val)" << be_idt_nl
@@ -605,7 +603,6 @@ be_visitor_valuebox_ci::emit_default_constructor () const
   // Retrieve the node being visited by this be_visitor_valuebox_ci.
   be_decl * const vb_node = this->ctx_->node ();
 
-  // Public default constructor
   *os << "ACE_INLINE" << be_nl;
   *os << vb_node->name () << "::" << vb_node->local_name ()
       << " ()" << be_nl;
@@ -622,7 +619,6 @@ be_visitor_valuebox_ci::emit_default_constructor_alloc (be_decl *node) const
   bool const node_not_pod =
     dynamic_cast<be_type*> (node)->size_type () == AST_Type::VARIABLE;
 
-  // Public default constructor
   *os << "ACE_INLINE" << be_nl
       << vb_node->name () << "::" << vb_node->local_name () << " ()"
       << be_nl << "{" << be_idt_nl
@@ -682,7 +678,6 @@ be_visitor_valuebox_ci::emit_copy_constructor () const
   // Retrieve the node being visited by this be_visitor_valuebox_ci.
   be_decl * const vb_node = this->ctx_->node ();
 
-  // Public Copy constructor
   *os << "ACE_INLINE" << be_nl
       << vb_node->name () << "::" << vb_node->local_name ()
       << " (" << vb_node->full_name () << " const &val)" << be_idt_nl
@@ -702,7 +697,6 @@ be_visitor_valuebox_ci::emit_copy_constructor_alloc (be_decl *node) const
   // Retrieve the node being visited by this be_visitor_valuebox_ci.
   be_decl * const vb_node = this->ctx_->node ();
 
-  // Public copy constructor
   *os << "ACE_INLINE" << be_nl
       << vb_node->name () << "::" << vb_node->local_name () << " ("
       << vb_node->full_name () << " const &val)" << be_idt_nl

@@ -198,7 +198,6 @@ public:
 
  // Operations.
 
-  // Constructor(s).
   AST_Expression (AST_Expression *v,
                   ExprType t);
   AST_Expression (AST_Expression const &) = delete;

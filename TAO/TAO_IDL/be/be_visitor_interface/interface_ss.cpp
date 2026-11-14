@@ -114,7 +114,6 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       *os << be_nl;
     }
 
-  // Default constructor body.
   *os << "{" << be_idt_nl
       << "this->optable_ = std::addressof (tao_" << flat_name
       << "_optable);" << be_uidt_nl

@@ -154,7 +154,6 @@ public:
 
   // Operations.
 
-  // Constructor(s).
   UTL_Scope ();
   explicit UTL_Scope (AST_Decl::NodeType nt);
   UTL_Scope (UTL_Scope const&) = delete;

@@ -75,7 +75,6 @@ class TAO_IDL_FE_Export Identifier
 {
 public:
   Identifier () = default;
-  // Default Constructor.
 
   explicit Identifier (std::string const& s);
 

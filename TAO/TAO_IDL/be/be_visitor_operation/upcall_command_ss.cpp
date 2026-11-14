@@ -96,7 +96,6 @@ be_visitor_operation_upcall_command_ss::visit (
      << "{" << be_nl
      << "public:" << be_idt_nl;
 
-  // Generate constructor
   os << "inline " << upcall_command_name
      << " (" << be_idt
      << full_skel_name << " * servant";
