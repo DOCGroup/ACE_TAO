@@ -186,51 +186,47 @@ TAO_FlowSpec_Entry::get_local_control_addr ()
 }
 
 ACE_INLINE
-int
-TAO_FlowSpec_Entry::set_local_sec_addr (char** local_sec_addr,
-                                        int size)
+void
+TAO_FlowSpec_Entry::set_local_sec_addrs (
+  std::vector<std::string> const &addresses)
 {
-  this->local_sec_addr_ = local_sec_addr;
-  this->num_local_sec_addrs_ = size;
-  return 0;
+  this->local_sec_addrs_ = addresses;
 }
 
 ACE_INLINE
-char**
-TAO_FlowSpec_Entry::get_local_sec_addr ()
+std::vector<std::string> const &
+TAO_FlowSpec_Entry::get_local_sec_addrs () const
 {
-  return this->local_sec_addr_;
+  return this->local_sec_addrs_;
 }
 
 ACE_INLINE
-int
-TAO_FlowSpec_Entry::num_local_sec_addrs ()
+size_t
+TAO_FlowSpec_Entry::num_local_sec_addrs () const
 {
-  return this->num_local_sec_addrs_;
+  return this->local_sec_addrs_.size ();
 }
 
 ACE_INLINE
-int
-TAO_FlowSpec_Entry::set_peer_sec_addr (char** peer_sec_addr,
-                                       int size)
+void
+TAO_FlowSpec_Entry::set_peer_sec_addrs (
+  std::vector<std::string> const &addresses)
 {
-  this->peer_sec_addr_ = peer_sec_addr;
-  this->num_peer_sec_addrs_ = size;
-  return 0;
+  this->peer_sec_addrs_ = addresses;
 }
 
 ACE_INLINE
-char**
-TAO_FlowSpec_Entry::get_peer_sec_addr ()
+std::vector<std::string> const &
+TAO_FlowSpec_Entry::get_peer_sec_addrs () const
 {
-  return this->peer_sec_addr_;
+  return this->peer_sec_addrs_;
 }
 
 ACE_INLINE
-int
-TAO_FlowSpec_Entry::num_peer_sec_addrs ()
+size_t
+TAO_FlowSpec_Entry::num_peer_sec_addrs () const
 {
-  return this->num_peer_sec_addrs_;
+  return this->peer_sec_addrs_.size ();
 }
 
 ACE_INLINE

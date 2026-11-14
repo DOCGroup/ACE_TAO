@@ -232,22 +232,8 @@ Sender::init (int argc,
 
   entry.set_peer_addr (&peer_addr);
 
-  // FlowSpec_Entry keeps these pointer arrays only while creating the flow string.
-  std::vector<char *> local_sec_addr_data;
-  local_sec_addr_data.reserve (this->options_.local_sec_addrs.size ());
-  for (std::string &address : this->options_.local_sec_addrs)
-    local_sec_addr_data.push_back (address.data ());
-  entry.set_local_sec_addr (
-    local_sec_addr_data.empty () ? nullptr : local_sec_addr_data.data (),
-    static_cast<int> (local_sec_addr_data.size ()));
-
-  std::vector<char *> peer_sec_addr_data;
-  peer_sec_addr_data.reserve (this->options_.peer_sec_addrs.size ());
-  for (std::string &address : this->options_.peer_sec_addrs)
-    peer_sec_addr_data.push_back (address.data ());
-  entry.set_peer_sec_addr (
-    peer_sec_addr_data.empty () ? nullptr : peer_sec_addr_data.data (),
-    static_cast<int> (peer_sec_addr_data.size ()));
+  entry.set_local_sec_addrs (this->options_.local_sec_addrs);
+  entry.set_peer_sec_addrs (this->options_.peer_sec_addrs);
 
   AVStreams::flowSpec flow_spec (1);
   flow_spec.length (1);

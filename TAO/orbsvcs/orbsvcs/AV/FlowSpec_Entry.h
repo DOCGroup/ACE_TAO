@@ -19,6 +19,8 @@
 #include "ace/SString.h"
 
 #include <memory>
+#include <string>
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -155,13 +157,13 @@ public:
   int set_peer_control_addr (ACE_Addr *peer_control_addr);
   ACE_Addr *get_peer_control_addr ();
 
-  int set_local_sec_addr (char** local_sec_addr, int size);
-  char** get_local_sec_addr ();
-  int num_local_sec_addrs ();
+  void set_local_sec_addrs (std::vector<std::string> const &addresses);
+  std::vector<std::string> const &get_local_sec_addrs () const;
+  size_t num_local_sec_addrs () const;
 
-  int set_peer_sec_addr (char** peer_sec_addr, int size);
-  char** get_peer_sec_addr ();
-  int num_peer_sec_addrs ();
+  void set_peer_sec_addrs (std::vector<std::string> const &addresses);
+  std::vector<std::string> const &get_peer_sec_addrs () const;
+  size_t num_peer_sec_addrs () const;
 
   int set_local_addr (ACE_Addr *local_addr);
   ACE_Addr *get_local_addr ();
@@ -243,10 +245,8 @@ protected:
   bool is_multicast_ {};
   bool delete_peer_addr_ {};
   ACE_Addr *peer_addr_ {};
-  char** local_sec_addr_ {};
-  int num_local_sec_addrs_ {};
-  char** peer_sec_addr_ {};
-  int num_peer_sec_addrs_ {};
+  std::vector<std::string> local_sec_addrs_ {};
+  std::vector<std::string> peer_sec_addrs_ {};
   ACE_Addr *peer_control_addr_ {};
   ACE_Addr *local_addr_ {};
   /// Owns the local control address passed to set_local_control_addr().

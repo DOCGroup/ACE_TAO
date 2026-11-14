@@ -10,6 +10,8 @@
 
 #include <cstring>
 #include <memory>
+#include <string>
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -169,13 +171,12 @@ TAO_AV_SCTP_SEQ_Base_Acceptor::acceptor_open (TAO_AV_SCTP_SEQ_Acceptor *acceptor
   this->reactor_ = reactor;
   this->entry_ = entry;
 
-  std::unique_ptr<ACE_UINT32[]> local_ip_addr =
-    std::make_unique<ACE_UINT32[]> (entry->num_local_sec_addrs ());
+  std::vector<ACE_UINT32> local_ip_addr (entry->num_local_sec_addrs ());
   ACE_INET_Addr ip_addr;
-  char * const * const addrs = entry->get_local_sec_addr ();
-  for (int i {}; i < entry->num_local_sec_addrs (); ++i)
+  std::vector<std::string> const &addrs = entry->get_local_sec_addrs ();
+  for (size_t i {}; i < addrs.size (); ++i)
     {
-      ACE_CString addr_str (addrs[i]);
+      ACE_CString addr_str (addrs[i].c_str ());
       addr_str += ":";
       ip_addr.set (addr_str.c_str ());
       local_ip_addr[i] = ip_addr.get_ip_address ();
@@ -184,8 +185,8 @@ TAO_AV_SCTP_SEQ_Base_Acceptor::acceptor_open (TAO_AV_SCTP_SEQ_Acceptor *acceptor
   ACE_Multihomed_INET_Addr multi_addr;
   multi_addr.set (local_addr.get_port_number (),
                   local_addr.get_ip_address (),
-                  1,
-                  local_ip_addr.get (),
+                  true,
+                  local_ip_addr.data (),
                   entry->num_local_sec_addrs ());
 
   char buf[BUFSIZ];
@@ -461,13 +462,13 @@ TAO_AV_SCTP_SEQ_Connector::connect (TAO_FlowSpec_Entry *entry,
   ACE_Multihomed_INET_Addr remote_multi_addr;
   remote_multi_addr.set (inet_addr->get_port_number (),
                          inet_addr->get_ip_address (),
-                         1,
-                         0,
+                         true,
+                         nullptr,
                          0);
 
   ACE_Multihomed_INET_Addr local_addr; //This can be a multihomed address
   ACE_INET_Addr const default_addr ("0");
-  ACE_INET_Addr const *addr = &default_addr;
+  ACE_INET_Addr const *addr = std::addressof (default_addr);
   if (entry->get_peer_addr () != nullptr)
     {
       addr = dynamic_cast<ACE_INET_Addr const *> (entry->get_peer_addr ());
@@ -475,13 +476,12 @@ TAO_AV_SCTP_SEQ_Connector::connect (TAO_FlowSpec_Entry *entry,
         return -1;
     }
 
-  std::unique_ptr<ACE_UINT32[]> local_ip_addr =
-    std::make_unique<ACE_UINT32[]> (entry->num_peer_sec_addrs ());
+  std::vector<ACE_UINT32> local_ip_addr (entry->num_peer_sec_addrs ());
   ACE_INET_Addr ip_addr;
-  char * const * const addrs = entry->get_peer_sec_addr ();
-  for (int i {}; i < entry->num_peer_sec_addrs (); ++i)
+  std::vector<std::string> const &addrs = entry->get_peer_sec_addrs ();
+  for (size_t i {}; i < addrs.size (); ++i)
     {
-      ACE_CString addr_str (addrs[i]);
+      ACE_CString addr_str (addrs[i].c_str ());
       addr_str += ":";
       ip_addr.set (addr_str.c_str ());
       local_ip_addr[i] = ip_addr.get_ip_address ();
@@ -490,14 +490,14 @@ TAO_AV_SCTP_SEQ_Connector::connect (TAO_FlowSpec_Entry *entry,
   if (entry->num_peer_sec_addrs () != 0)
     local_addr.set (addr->get_port_number (),
                     addr->get_ip_address (),
-                    1,
-                    local_ip_addr.get (),
+                    true,
+                    local_ip_addr.data (),
                     entry->num_peer_sec_addrs ());
   else
     local_addr.set (addr->get_port_number (),
                     addr->get_ip_address (),
-                    1,
-                    0,
+                    true,
+                    nullptr,
                     entry->num_peer_sec_addrs ());
 
   int result = this->connector_.connector_connect (handler,

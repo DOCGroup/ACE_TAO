@@ -196,16 +196,16 @@ TAO_FlowSpec_Entry::parse_address (char const *address,
               if (addr_token.num_tokens () != 0)
                 {
                   addr += addr_token [0];
-                  ACE_NEW_RETURN (local_sec_addr_, char* [addr_token.num_tokens () - 1],-1);
+                  this->local_sec_addrs_.clear ();
+                  this->local_sec_addrs_.reserve (addr_token.num_tokens () - 1);
                   for (int j = 1; j <= addr_token.num_tokens () - 1; ++j)
                     {
                       ORBSVCS_DEBUG ((LM_DEBUG,
                                   "adding addresses to sequence %s\n",
                                   addr_token [j]));
 
-                      local_sec_addr_ [j-1] =  CORBA::string_dup (addr_token [j]);
+                      this->local_sec_addrs_.emplace_back (addr_token [j]);
                     }
-                  num_local_sec_addrs_ = addr_token.num_tokens () - 1;
                 }
             }
           else addr += protocol_tokenizer[1];
@@ -283,18 +283,18 @@ TAO_FlowSpec_Entry::parse_address (char const *address,
                           "Number of local sec addresses = %d\n",
                           port_tokenizer.num_tokens () - 1));
 
-              if (port_tokenizer.num_tokens () - 1 != 0)
+              if (port_tokenizer.num_tokens () > 1)
                 {
-                  ACE_NEW_RETURN (local_sec_addr_, char* [port_tokenizer.num_tokens () - 1],-1);
+                  this->local_sec_addrs_.clear ();
+                  this->local_sec_addrs_.reserve (port_tokenizer.num_tokens () - 1);
                   for (int j = 1; j <= port_tokenizer.num_tokens () - 1; ++j)
                     {
                       ORBSVCS_DEBUG ((LM_DEBUG,
                                   "adding addresses to sequence %s\n",
                                   port_tokenizer [j]));
 
-                      local_sec_addr_ [j-1] =  CORBA::string_dup (port_tokenizer [j]);
+                      this->local_sec_addrs_.emplace_back (port_tokenizer [j]);
                     }
-                  num_local_sec_addrs_ = port_tokenizer.num_tokens () - 1;
                 }
             }
 
@@ -473,16 +473,16 @@ TAO_Forward_FlowSpec_Entry::parse (char const *flowSpec_entry)
                               ACE_INET_Addr (addr_token [0]),
                               0);
 
-              ACE_NEW_RETURN (peer_sec_addr_, char* [addr_token.num_tokens () - 1],-1);
+              this->peer_sec_addrs_.clear ();
+              this->peer_sec_addrs_.reserve (addr_token.num_tokens () - 1);
               for (int j = 1; j <= addr_token.num_tokens () - 1; ++j)
                 {
                   ORBSVCS_DEBUG ((LM_DEBUG,
                               "adding addresses to sequence %s\n",
                               addr_token [j]));
 
-                  peer_sec_addr_ [j-1] =  CORBA::string_dup (addr_token [j]);
+                  this->peer_sec_addrs_.emplace_back (addr_token [j]);
                 }
-              num_peer_sec_addrs_ = addr_token.num_tokens () - 1;
             }
         }
       else
@@ -568,10 +568,10 @@ TAO_Forward_FlowSpec_Entry::entry_to_string ()
 
       if (this->protocol_ == TAO_AV_Core::TAO_AV_SCTP_SEQ)
         {
-          for (int i {}; i < this->num_local_sec_addrs_; ++i)
+          for (std::string const &address : this->local_sec_addrs_)
             {
               address_str += ";";
-              address_str += this->local_sec_addr_ [i];
+              address_str += address.c_str ();
             }
         }
 
@@ -647,10 +647,10 @@ TAO_Forward_FlowSpec_Entry::entry_to_string ()
 
           if (this->protocol_ == TAO_AV_Core::TAO_AV_SCTP_SEQ)
             {
-              for (int i {}; i < this->num_peer_sec_addrs_; ++i)
+              for (std::string const &address : this->peer_sec_addrs_)
                 {
                   peer_address_str += ";";
-                  peer_address_str += this->peer_sec_addr_ [i];
+                  peer_address_str += address.c_str ();
                 }
             }
 
@@ -825,10 +825,10 @@ TAO_Reverse_FlowSpec_Entry::entry_to_string ()
 
       if (this->protocol_ == TAO_AV_Core::TAO_AV_SCTP_SEQ)
         {
-          for (int i {}; i < this->num_local_sec_addrs_; ++i)
+          for (std::string const &address : this->local_sec_addrs_)
             {
               address_str += ";";
-              address_str += this->local_sec_addr_ [i];
+              address_str += address.c_str ();
             }
         }
 
