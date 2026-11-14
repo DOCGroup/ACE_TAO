@@ -23,12 +23,17 @@ class Ping_Death_Request_Interceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-  Ping_Death_Request_Interceptor (int *counter);
+  explicit Ping_Death_Request_Interceptor (int *counter);
 
-  ~Ping_Death_Request_Interceptor () override;
+  Ping_Death_Request_Interceptor (Ping_Death_Request_Interceptor const &) = delete;
+  Ping_Death_Request_Interceptor (Ping_Death_Request_Interceptor &&) = delete;
+  Ping_Death_Request_Interceptor &operator= (Ping_Death_Request_Interceptor const &) = delete;
+  Ping_Death_Request_Interceptor &operator= (Ping_Death_Request_Interceptor &&) = delete;
+
+  ~Ping_Death_Request_Interceptor () override = default;
   void set_poa (PortableServer::POA_ptr poa);
 
-  // Canonical name of the interceptor.
+  /// Canonical name of the interceptor.
   char * name () override;
 
   void destroy () override;
@@ -44,8 +49,8 @@ public:
   void send_other (PortableInterceptor::ServerRequestInfo_ptr) override;
 
 private:
-  const char *myname_;
-  int *counter_;
+  /// Non-owning counter retained by the ORB initializer for the interceptor's lifetime.
+  int * const counter_;
   PortableServer::POA_var poa_;
 };
 
