@@ -45,7 +45,7 @@ namespace ACE
         ConnectionKey* k {};
         ACE_NEW_RETURN (k,
                         INetConnectionKey (this->host_, this->port_),
-                        0);
+                        nullptr);
         return k;
       }
 
