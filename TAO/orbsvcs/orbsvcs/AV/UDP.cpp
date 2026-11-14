@@ -689,6 +689,7 @@ TAO_AV_UDP_Connector::connect (TAO_FlowSpec_Entry *entry,
                                           ACE_INET_Addr ("0"),
                                           -1);
                           owned_control_inet_addr.reset (control_inet_address);
+                          control_inet_addr = owned_control_inet_addr.get ();
                         }
                     }
 
