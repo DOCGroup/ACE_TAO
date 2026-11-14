@@ -14,6 +14,7 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
+#include "ace/Message_Block.h"
 
 #include "tao/ORB.h"
 #include "tao/CDR.h"
@@ -126,6 +127,48 @@ test_octet_sequence_copy_move ()
 
   return true;
 }
+
+#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
+static bool
+test_message_block_sequence_copy_move ()
+{
+  Test::OctetSeq copied;
+  Test::OctetSeq moved;
+  char const payload[] {1, 2, 3, 4};
+
+  {
+    ACE_Message_Block message_block (sizeof (payload));
+    if (message_block.copy (payload, sizeof (payload)) == -1)
+      return false;
+
+    Test::OctetSeq original (sizeof (payload), &message_block);
+    copied = original;
+    if (copied.length () != sizeof (payload))
+      return false;
+
+    copied[0] = 42;
+    if (original[0] != 1)
+      return false;
+
+    Test::OctetSeq move_constructed (std::move (original));
+    if (original.length () != 0 || move_constructed.length () != sizeof (payload))
+      return false;
+    moved = std::move (move_constructed);
+    if (move_constructed.length () != 0)
+      return false;
+  }
+
+  if (copied.length () != sizeof (payload) || copied[0] != 42 ||
+      moved.length () != sizeof (payload) || moved[0] != 1)
+    return false;
+  for (CORBA::ULong i = 1; i != moved.length (); ++i)
+    if (copied[i] != static_cast<CORBA::Octet> (i + 1) ||
+        moved[i] != static_cast<CORBA::Octet> (i + 1))
+      return false;
+
+  return true;
+}
+#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
 using Writer = int (*) (TAO_OutputCDR &cdr, char *buf, size_t bufsize);
 using Reader = int (*) (TAO_InputCDR &cdr, char *buf, size_t bufsize);
@@ -262,6 +305,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Octet sequence copy/move test failed\n"),
                           1);
+#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
+      if (!test_message_block_sequence_copy_move ())
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Message block sequence copy/move test failed\n"),
+                          1);
+#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
       ACE_DEBUG ((LM_DEBUG, "Running:\n"
                   "  low: %d\n"
