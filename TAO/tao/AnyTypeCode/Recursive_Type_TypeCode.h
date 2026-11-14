@@ -85,11 +85,11 @@ namespace TAO
        *
        * @see @c CORBA::TypeCode
        */
-      //@{
+      /// @{
       bool tao_marshal_kind (TAO_OutputCDR & cdr) const override;
       bool tao_marshal (TAO_OutputCDR & cdr,
                         CORBA::ULong offset) const override;
-      //@}
+      /// @}
 
     protected:
       /**
@@ -100,10 +100,10 @@ namespace TAO
        *
        * @see @c CORBA::TypeCode
        */
-      //@{
+      /// @{
       CORBA::Boolean equal_i (CORBA::TypeCode_ptr tc) const override;
       CORBA::Boolean equivalent_i (CORBA::TypeCode_ptr tc) const override;
-      //@}
+      /// @}
 
     public:
       /// Set @c struct @c TypeCode parameters.

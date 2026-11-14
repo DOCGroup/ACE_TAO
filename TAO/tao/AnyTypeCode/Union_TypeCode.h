@@ -69,12 +69,12 @@ namespace TAO
        *
        * @see @c CORBA::TypeCode
        */
-      //@{
+      /// @{
       bool tao_marshal (TAO_OutputCDR & cdr,
                         CORBA::ULong offset) const override;
       void tao_duplicate () override;
       void tao_release () override;
-      //@}
+      /// @}
 
       /// Accessor for cases_
       CaseArrayType const & cases() const;
@@ -87,7 +87,7 @@ namespace TAO
        *
        * @see @c CORBA::TypeCode
        */
-      //@{
+      /// @{
       CORBA::Boolean equal_i (CORBA::TypeCode_ptr tc) const override;
       CORBA::Boolean equivalent_i (CORBA::TypeCode_ptr tc) const override;
       CORBA::TypeCode_ptr get_compact_typecode_i () const override;
@@ -99,7 +99,7 @@ namespace TAO
       CORBA::Any * member_label_i (CORBA::ULong index) const override;
       CORBA::TypeCode_ptr discriminator_type_i () const override;
       CORBA::Long default_index_i () const override;
-      //@}
+      /// @}
 
     protected:
       /**
@@ -112,7 +112,7 @@ namespace TAO
        *       they are marshaled into a CDR stream in order to
        *       increase cache hits by improving spatial locality.
        */
-      //@{
+      /// @{
       /// Base attributes containing repository ID and name of
       /// union type.
       Base_Attributes<StringType> base_attributes_;
@@ -135,7 +135,7 @@ namespace TAO
       /// the OMG IDL defined @c union.
       CaseArrayType cases_;
 
-      //@}
+      /// @}
 
     };
   }  // End namespace TypeCode

@@ -133,7 +133,7 @@ namespace CORBA
      * pattern, not the C++ feature) listed below in the @c protected
      * block.
      */
-    //@{
+    /// @{
     /// Equality of two @c TypeCodes.
     /**
      * @return @c true if and only if the set of legal operations is
@@ -367,7 +367,7 @@ namespace CORBA
      *         @c CORBA::TypeCode::_nil() if no concrete base exists.
      */
     TypeCode_ptr concrete_base_type () const;
-    //@}
+    /// @}
 
     /// Marshal the @c TypeCode @c TCKind.
     /**
@@ -442,7 +442,7 @@ namespace CORBA
      * @c TypeCodes which is why their template method "@c _i"
      * counterparts are pure virtual.
      */
-    //@{
+    /// @{
     virtual Boolean equal_i (TypeCode_ptr tc) const = 0;
     virtual Boolean equivalent_i (TypeCode_ptr tc) const = 0;
     virtual TypeCode_ptr get_compact_typecode_i () const = 0;
@@ -462,7 +462,7 @@ namespace CORBA
     virtual Visibility member_visibility_i (ULong index) const;
     virtual ValueModifier type_modifier_i () const;
     virtual TypeCode_ptr concrete_base_type_i () const;
-    //@}
+    /// @}
 
   private:
     // Prevent copying and assignment.

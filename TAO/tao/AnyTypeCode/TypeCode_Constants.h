@@ -31,7 +31,7 @@ namespace CORBA
    *
    * All the TypeCode constants
    */
-  //@{
+  /// @{
   extern TAO_AnyTypeCode_Export TypeCode_ptr const _tc_null;
   extern TAO_AnyTypeCode_Export TypeCode_ptr const _tc_void;
   extern TAO_AnyTypeCode_Export TypeCode_ptr const _tc_boolean;
@@ -59,7 +59,7 @@ namespace CORBA
   extern TAO_AnyTypeCode_Export TypeCode_ptr const _tc_Object;
   extern TAO_AnyTypeCode_Export TypeCode_ptr const _tc_Component;
   extern TAO_AnyTypeCode_Export TypeCode_ptr const _tc_Home;
-  //@}
+  /// @}
 
 #define TAO_SYSTEM_EXCEPTION_LIST \
   TAO_SYSTEM_EXCEPTION(UNKNOWN); \
@@ -106,12 +106,12 @@ namespace CORBA
   /**
    * @name TypeCode constants for system exceptions
    */
-  //@{
+  /// @{
 #define TAO_SYSTEM_EXCEPTION(name) \
   extern TAO_AnyTypeCode_Export TypeCode_ptr const _tc_ ## name
   TAO_SYSTEM_EXCEPTION_LIST
 #undef  TAO_SYSTEM_EXCEPTION
-  //@}
+  /// @}
 
   extern TAO_AnyTypeCode_Export TypeCode_ptr const _tc_Current;
 

@@ -73,11 +73,11 @@ namespace TAO
        *
        * @see @c CORBA::TypeCode
        */
-      //@{
+      /// @{
       bool tao_marshal (TAO_OutputCDR & cdr, CORBA::ULong offset) const override;
       void tao_duplicate () override;
       void tao_release () override;
-      //@}
+      /// @}
 
     protected:
       /**
@@ -88,7 +88,7 @@ namespace TAO
        *
        * @see @c CORBA::TypeCode
        */
-      //@{
+      /// @{
       CORBA::Boolean equal_i (CORBA::TypeCode_ptr tc) const override;
       CORBA::Boolean equivalent_i (CORBA::TypeCode_ptr tc) const override;
       CORBA::TypeCode_ptr get_compact_typecode_i () const override;
@@ -100,7 +100,7 @@ namespace TAO
       CORBA::Visibility member_visibility_i (CORBA::ULong index) const override;
       CORBA::ValueModifier type_modifier_i () const override;
       CORBA::TypeCode_ptr concrete_base_type_i () const override;
-      //@}
+      /// @}
 
     private:
       /**
@@ -113,7 +113,7 @@ namespace TAO
        *       they are marshaled into a CDR stream in order to
        *       increase cache hits by improving spatial locality.
        */
-      //@{
+      /// @{
       /// Base attributes containing repository ID and name of
       /// @c valuetype.
       Base_Attributes<char const *> const base_attributes_;
@@ -134,7 +134,7 @@ namespace TAO
       Value_Field<char const *,
                   CORBA::TypeCode_ptr const *> const * const fields_;
 
-      //@}
+      /// @}
 
     };
   }  // End namespace TypeCode

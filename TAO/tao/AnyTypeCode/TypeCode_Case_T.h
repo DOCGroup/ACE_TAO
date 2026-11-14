@@ -101,13 +101,13 @@ namespace TAO
        *
        * @see @c TAO::TypeCode::Case
        */
-      //@{
+      /// @{
       Case<StringType, TypeCodeType> * clone () const override;
       CORBA::Any * label () const override;
       bool marshal_label (TAO_OutputCDR & cdr) const override;
       bool equal_label (CORBA::ULong index,
                         CORBA::TypeCode_ptr tc) const override;
-      //@}
+      /// @}
 
     private:
       /// IDL @c union case/member label value.
