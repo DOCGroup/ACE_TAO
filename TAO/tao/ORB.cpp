@@ -58,14 +58,12 @@ CORBA::ORB::InvalidName::InvalidName ()
 // Destructor - all members are of self managing types.
 CORBA::ORB::InvalidName::~InvalidName () = default;
 
-// Copy constructor.
 CORBA::ORB::InvalidName::InvalidName (const CORBA::ORB::InvalidName &exc)
   : CORBA::UserException (exc._rep_id (),
                           exc._name ())
 {
 }
 
-// Assignment operator.
 CORBA::ORB::InvalidName&
 CORBA::ORB::InvalidName::operator= (const ::CORBA::ORB::InvalidName &_tao_excp)
 {
