@@ -16,21 +16,19 @@ Client_Task::Client_Task (Test::Hello_ptr receiver,
 int
 Client_Task::svc ()
 {
-  // ACE_DEBUG ((LM_DEBUG, "(%P|%t) Starting client task\n"));
-
   try
     {
       for (CORBA::Long j = 0;
            j != 1000;
            ++j)
         {
-          // Send 25 messages in every loop..
+          // Send 25 requests per batch.
           for (CORBA::Short i = 0; i != 25; ++i)
             {
               this->receiver_->sendc_next_prime (this->handler_var_.in ());
             }
 
-          CORBA::Short repl = 0;
+          CORBA::Short repl {};
           while (repl != 25)
             {
               bool const pending =

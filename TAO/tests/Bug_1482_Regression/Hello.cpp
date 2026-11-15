@@ -16,7 +16,7 @@ Hello::next_prime ()
        ind != 400;
        ++ind)
     {
-      bool is_prime = false;
+      bool is_prime {};
 
       while (!is_prime)
         {

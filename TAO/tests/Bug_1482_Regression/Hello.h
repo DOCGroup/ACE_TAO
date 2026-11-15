@@ -16,8 +16,10 @@ public:
   Hello (Hello &&) = delete;
   Hello &operator= (Hello &&) = delete;
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   CORBA::ULong next_prime () override;
+  /// @}
 
 private:
   /// Mutex
