@@ -66,11 +66,11 @@ public:
   // = The EC_Dispatching methods.
   void activate () override;
   void shutdown () override;
-  virtual void push (TAO_EC_ProxyPushSupplier* proxy,
+  void push (TAO_EC_ProxyPushSupplier* proxy,
                      RtecEventComm::PushConsumer_ptr consumer,
                      const RtecEventComm::EventSet& event,
                      TAO_EC_QOS_Info& qos_info) override;
-  virtual void push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
+  void push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
                             RtecEventComm::PushConsumer_ptr consumer,
                             RtecEventComm::EventSet& event,
                             TAO_EC_QOS_Info& qos_info) override;

@@ -67,7 +67,7 @@ public:
 
 private:
   /// Handle SIGPIPE.
-  virtual int handle_signal (int signum,
+  int handle_signal (int signum,
                              siginfo_t *,
                              ucontext_t *) override;
 

@@ -75,7 +75,7 @@ public:
   int init (int argc, ACE_TCHAR* argv[]) override;
   int fini () override;
 
-  virtual int queue_full_action (TAO_EC_Dispatching_Task *task,
+  int queue_full_action (TAO_EC_Dispatching_Task *task,
                                  TAO_EC_ProxyPushSupplier *proxy,
                                  RtecEventComm::PushConsumer_ptr consumer,
                                  RtecEventComm::EventSet& event) override;

@@ -108,14 +108,14 @@ public:
   ACE_HANDLE get_handle () const override;
 
   /// Called when object is removed from the ACE_Reactor
-  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
+  int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
                             ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK) override;
 
   /// Receive time update from a server.
   int handle_input (ACE_HANDLE) override;
 
   /// Restart connection asynchronously when timeout occurs.
-  virtual int handle_timeout (const ACE_Time_Value &tv,
+  int handle_timeout (const ACE_Time_Value &tv,
                               const void *arg) override;
 
   /// Get/Set remote addr
@@ -191,7 +191,7 @@ public:
   ACE_TS_Clerk_Processor ();
 
   /// Query servers for time periodically (timeout value)
-  virtual int handle_timeout (const ACE_Time_Value &tv,
+  int handle_timeout (const ACE_Time_Value &tv,
                               const void *arg) override;
 
   /// Set up connections to all servers

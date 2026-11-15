@@ -37,7 +37,7 @@ public:
   void add_proxy_supplier_dependencies (
       TAO_EC_ProxyPushSupplier *supplier,
       TAO_EC_ProxyPushConsumer *consumer) override;
-  virtual void schedule_event (const RtecEventComm::EventSet &event,
+  void schedule_event (const RtecEventComm::EventSet &event,
                                TAO_EC_ProxyPushConsumer *consumer,
                                TAO_EC_Supplier_Filter *filter) override;
 

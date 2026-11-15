@@ -39,7 +39,7 @@ public:
 
   void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void receive_request_service_contexts (
+  void receive_request_service_contexts (
         PortableInterceptor::ServerRequestInfo_ptr) override;
 
   void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri) override;

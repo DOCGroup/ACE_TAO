@@ -12,7 +12,7 @@ public:
       orb_ (CORBA::ORB::_duplicate (orb))
   {}
 
-  virtual CORBA::Boolean
+  CORBA::Boolean
   send_message (const char *user_name, const char *subject, char *&message) override;
 
 private:
