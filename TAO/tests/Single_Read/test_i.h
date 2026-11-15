@@ -21,18 +21,19 @@
 class test_i : public POA_test
 {
 public:
-  /// ctor.
   test_i (CORBA::ORB_ptr orb, ACE_TString const& file_name);
   test_i (test_i const&) = delete;
   test_i (test_i&&) = delete;
   test_i& operator= (test_i const&) = delete;
   test_i& operator= (test_i&&) = delete;
 
-  // = The test interface methods.
+  /// @name Test interface methods
+  /// @{
   void method (CORBA::ULong request_number,
                test::data const&) override;
 
   void shutdown () override;
+  /// @}
 
 private:
   /// The ORB.

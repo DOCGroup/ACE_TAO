@@ -29,10 +29,12 @@ public:
   Simple_Server_i &operator= (Simple_Server_i const &) = delete;
   Simple_Server_i &operator= (Simple_Server_i &&) = delete;
 
-  // = The Simple_Server methods.
+  /// @name Simple_Server methods
+  /// @{
   CORBA::Boolean print_status () override;
 
   void shutdown () override;
+  /// @}
 
 private:
   CORBA::ORB_var orb_ {};

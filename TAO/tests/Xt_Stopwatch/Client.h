@@ -17,7 +17,6 @@ class Control;
 class Client
 {
 public:
-  /// ctor
   explicit Client (CORBA::ORB_ptr orb);
 
   ~Client () = default;
