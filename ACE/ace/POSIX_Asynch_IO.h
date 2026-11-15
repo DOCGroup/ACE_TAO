@@ -38,6 +38,8 @@
 
 #include "ace/Null_Mutex.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward declarations
@@ -1227,7 +1229,7 @@ protected:
   ACE_Message_Block *message_block_;
 
   /// The address of where the packet came from
-  ACE_Addr *remote_address_;
+  std::unique_ptr<ACE_Addr> remote_address_;
 
   int addr_len_;
 

@@ -2289,7 +2289,9 @@ ACE_POSIX_Asynch_Read_Dgram_Result::ACE_POSIX_Asynch_Read_Dgram_Result
   this->aio_fildes = handle;
   this->aio_buf = message_block->wr_ptr ();
   this->aio_nbytes = bytes_to_read;
-  ACE_NEW (this->remote_address_, ACE_INET_Addr);
+  ACE_INET_Addr *remote_address {};
+  ACE_NEW (remote_address, ACE_INET_Addr);
+  this->remote_address_.reset (remote_address);
 }
 
 void
@@ -2323,10 +2325,7 @@ ACE_POSIX_Asynch_Read_Dgram_Result::complete (size_t bytes_transferred,
   }
 }
 
-ACE_POSIX_Asynch_Read_Dgram_Result::~ACE_POSIX_Asynch_Read_Dgram_Result ()
-{
-  delete this->remote_address_;
-}
+ACE_POSIX_Asynch_Read_Dgram_Result::~ACE_POSIX_Asynch_Read_Dgram_Result () = default;
 
 //***************************************************************************
 size_t
