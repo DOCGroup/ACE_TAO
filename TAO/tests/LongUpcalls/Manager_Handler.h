@@ -12,9 +12,11 @@ public:
   Manager_Handler (Test::Manager_ptr manager,
                    Test::Controller_ptr controller);
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   void start_workers () override;
   void start_workers_excep (::Messaging::ExceptionHolder *holder) override;
+  /// @}
 
   Manager_Handler (Manager_Handler const &) = delete;
   Manager_Handler (Manager_Handler &&) = delete;
@@ -22,12 +24,11 @@ public:
   Manager_Handler &operator= (Manager_Handler &&) = delete;
 
 private:
+  /// Manager used to reissue the request from the upcall context.
   Test::Manager_var manager_;
-  // The manager to reissue the request from the context of the
-  // upcall
 
+  /// Controller used to report worker progress.
   Test::Controller_var controller_;
-  // The controller
 };
 
 #endif /* LONGUPCALLS_MANAGER_HANDLER_H */

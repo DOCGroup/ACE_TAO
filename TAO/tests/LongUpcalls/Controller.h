@@ -9,12 +9,14 @@ class Controller
 public:
   Controller () = default;
 
+  /// Print the results and any errors.
   void dump_results ();
-  // Print out the results and any errors
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   void worker_started () override;
   void worker_finished () override;
+  /// @}
 
   Controller (Controller const &) = delete;
   Controller (Controller &&) = delete;
