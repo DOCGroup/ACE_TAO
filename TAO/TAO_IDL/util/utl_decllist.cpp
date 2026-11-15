@@ -119,10 +119,6 @@ UTL_DeclList::destroy ()
 
 // UTL_DeclList active iterator
 
-/*
- * Constructor
- */
-
 UTL_DecllistActiveIterator::UTL_DecllistActiveIterator (UTL_DeclList *s)
   : UTL_ListActiveIterator (s)
 {
