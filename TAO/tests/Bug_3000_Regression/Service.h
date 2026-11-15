@@ -16,10 +16,12 @@ public:
   Service (Service &&) = delete;
   Service &operator= (Service &&) = delete;
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   void run_test (Test::Callback_ptr callback) override;
 
   void shutdown () override;
+  /// @}
 
 private:
   /// Use an ORB reference to shutdown the application.
