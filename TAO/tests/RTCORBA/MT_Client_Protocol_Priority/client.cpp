@@ -364,9 +364,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       // Wait for task to exit.
-      int const wait_result =
-        thread_manager.wait ();
-      ACE_ASSERT (wait_result != -1);
+      if (thread_manager.wait () == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Thread_Manager::wait failed\n"),
+                            2);
+        }
     }
   catch (CORBA::Exception const &ex)
     {
