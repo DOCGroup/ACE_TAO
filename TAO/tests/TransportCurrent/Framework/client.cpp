@@ -88,8 +88,6 @@ private:
   bool const use_dii_too_;
 };
 
-/// Ctor
-
 Worker::Worker (Test::Transport::CurrentTest_ptr server,
                 int niterations,
                 bool use_dii_too)

@@ -85,8 +85,6 @@ private:
   int use_dii_too_;
 };
 
-/// Ctor
-
 Worker::Worker (Test::Transport::CurrentTest_ptr server,
                 int niterations,
                 int use_dii_too)

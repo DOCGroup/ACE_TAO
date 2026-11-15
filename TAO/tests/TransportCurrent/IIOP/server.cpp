@@ -71,7 +71,6 @@ private:
   CORBA::ORB_var orb_;
 };
 
-/// Ctor
 Worker::Worker (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {
