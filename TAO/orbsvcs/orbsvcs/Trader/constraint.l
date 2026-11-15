@@ -11,7 +11,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 /**
- * @file constraint.l
  * @author Seth Widoff <sbw1@cs.wustl.edu>
  */
 

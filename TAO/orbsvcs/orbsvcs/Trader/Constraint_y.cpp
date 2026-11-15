@@ -21,7 +21,6 @@
 #define YYPURE 0
 
 /**
- * @file constraint.y
  * @author Seth Widoff <sbw1@cs.wustl.edu>
  */
 
