@@ -28,6 +28,8 @@ TAO::SSLIOP::Connector::Connector (::Security::QOP qop, bool check_host)
     qop_ (qop),
     check_host_ (check_host),
     connect_strategy_ (),
+    creation_strategy_ {},
+    concurrency_strategy_ {},
     base_connector_ (nullptr)
 {
 }
@@ -58,6 +60,7 @@ TAO::SSLIOP::Connector::open (TAO_ORB_Core *orb_core)
                       (orb_core->thr_mgr (),
                        orb_core),
                   -1);
+  this->creation_strategy_.reset (connect_creation_strategy);
 
   // Our activation strategy
   CONNECT_CONCURRENCY_STRATEGY *concurrency_strategy {};
@@ -65,13 +68,14 @@ TAO::SSLIOP::Connector::open (TAO_ORB_Core *orb_core)
   ACE_NEW_RETURN (concurrency_strategy,
                   CONNECT_CONCURRENCY_STRATEGY (orb_core),
                   -1);
+  this->concurrency_strategy_.reset (concurrency_strategy);
 
   ACE_Reactor *r = this->orb_core ()->reactor ();
 
   return this->base_connector_.open (r,
-                                     connect_creation_strategy,
+                                     this->creation_strategy_.get (),
                                      std::addressof (this->connect_strategy_),
-                                     concurrency_strategy);
+                                     this->concurrency_strategy_.get ());
 }
 
 int
@@ -79,9 +83,10 @@ TAO::SSLIOP::Connector::close ()
 {
   (void) this->TAO::IIOP_SSL_Connector::close ();
 
-  delete this->base_connector_.creation_strategy ();
-  delete this->base_connector_.concurrency_strategy ();
-  return this->base_connector_.close ();
+  int const result = this->base_connector_.close ();
+  this->creation_strategy_.reset ();
+  this->concurrency_strategy_.reset ();
+  return result;
 }
 
 TAO_Transport *

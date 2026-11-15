@@ -20,6 +20,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO::IIOP_SSL_Connector::IIOP_SSL_Connector ()
   : TAO_IIOP_Connector (),
     connect_strategy_ (),
+    creation_strategy_ {},
+    concurrency_strategy_ {},
     base_connector_ (nullptr)
 {
 }
@@ -42,6 +44,7 @@ TAO::IIOP_SSL_Connector::open (TAO_ORB_Core *orb_core)
                   CONNECT_CREATION_STRATEGY (orb_core->thr_mgr (),
                                              orb_core),
                   -1);
+  this->creation_strategy_.reset (connect_creation_strategy);
 
   // Our activation strategy
   CONNECT_CONCURRENCY_STRATEGY *concurrency_strategy {};
@@ -49,19 +52,21 @@ TAO::IIOP_SSL_Connector::open (TAO_ORB_Core *orb_core)
   ACE_NEW_RETURN (concurrency_strategy,
                   CONNECT_CONCURRENCY_STRATEGY (orb_core),
                   -1);
+  this->concurrency_strategy_.reset (concurrency_strategy);
 
   return this->base_connector_.open (this->orb_core ()->reactor (),
-                                     connect_creation_strategy,
+                                     this->creation_strategy_.get (),
                                      std::addressof (this->connect_strategy_),
-                                     concurrency_strategy);
+                                     this->concurrency_strategy_.get ());
 }
 
 int
 TAO::IIOP_SSL_Connector::close ()
 {
-  delete this->base_connector_.creation_strategy ();
-  delete this->base_connector_.concurrency_strategy ();
-  return this->base_connector_.close ();
+  int const result = this->base_connector_.close ();
+  this->creation_strategy_.reset ();
+  this->concurrency_strategy_.reset ();
+  return result;
 }
 
 int

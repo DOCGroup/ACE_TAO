@@ -23,6 +23,8 @@
 
 #include "tao/IIOP_Connector.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -75,6 +77,10 @@ namespace TAO
   private:
     /// Our connect strategy
     CONNECT_STRATEGY connect_strategy_;
+
+    /// Owned here; base_connector_ borrows these strategy pointers.
+    std::unique_ptr<CONNECT_CREATION_STRATEGY> creation_strategy_ {};
+    std::unique_ptr<CONNECT_CONCURRENCY_STRATEGY> concurrency_strategy_ {};
 
     /// The connector initiating connection requests for IIOP_SSL.
     BASE_CONNECTOR base_connector_;
