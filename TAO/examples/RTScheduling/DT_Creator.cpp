@@ -314,7 +314,7 @@ DT_Creator::activate_job_list ()
 
       // find your poa
       PortableServer::POA_var host_poa =
-        root_poa->find_POA (job->poa ().c_str (), 0);
+        root_poa->find_POA (job->poa ().c_str (), false);
 
       // Register with poa.
       PortableServer::ObjectId_var id;

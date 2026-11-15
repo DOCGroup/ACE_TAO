@@ -130,7 +130,7 @@ Activity::activate_job_list ()
 
       // find your poa
       PortableServer::POA_var host_poa =
-        root_poa_->find_POA (job->poa ().c_str (), 0);
+        root_poa_->find_POA (job->poa ().c_str (), false);
 
       PortableServer::ServantBase_var servant_var (job);
 

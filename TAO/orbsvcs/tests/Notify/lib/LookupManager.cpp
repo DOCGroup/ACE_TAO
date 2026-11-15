@@ -108,7 +108,7 @@ TAO_Notify_Tests_LookupManager::resolve (PortableServer::POA_var& poa, const cha
     }
   else
     {
-      poa = root_poa_->find_POA (poa_name, 0);
+      poa = root_poa_->find_POA (poa_name, false);
     }
 }
 
