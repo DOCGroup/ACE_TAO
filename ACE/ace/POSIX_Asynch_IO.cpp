@@ -1858,6 +1858,8 @@ protected:
   /// This is called when asynchronous reads from the file complete.
   void handle_read_file (const ACE_Asynch_Read_File::Result &result) override;
 
+  void complete_failure (u_long error);
+
   /// Issue asynch read from  the file.
   int initiate_read_file ();
 
@@ -1895,6 +1897,22 @@ ACE_POSIX_Asynch_Transmit_Handler::ACE_POSIX_Asynch_Transmit_Handler
 ACE_POSIX_Asynch_Transmit_Handler::~ACE_POSIX_Asynch_Transmit_Handler ()
 {
   delete this->result_;
+}
+
+void
+ACE_POSIX_Asynch_Transmit_Handler::complete_failure (u_long error)
+{
+  ACE_SEH_TRY
+    {
+      this->result_->complete (this->bytes_transferred_,
+                               0,
+                               nullptr,
+                               error);
+    }
+  ACE_SEH_FINALLY
+    {
+      delete this;
+    }
 }
 
 // Do the transmission.
@@ -1950,20 +1968,7 @@ ACE_POSIX_Asynch_Transmit_Handler::handle_write_stream (const ACE_Asynch_Write_S
 
       ACELIB_ERROR ((LM_ERROR,
                   "Asynch_Transmit_File failed.\n"));
-
-      ACE_SEH_TRY
-        {
-          this->result_->complete (this->bytes_transferred_,
-                                   0,      // Failure.
-                                   nullptr,      // @@ Completion key.
-                                   0);     // @@ Error no.
-        }
-      ACE_SEH_FINALLY
-        {
-          // This is crucial to prevent memory leaks. This deletes
-          // the result pointer also.
-          delete this;
-        }
+      this->complete_failure (result.error ());
       return;
     }
 
@@ -1976,16 +1981,16 @@ ACE_POSIX_Asynch_Transmit_Handler::handle_write_stream (const ACE_Asynch_Write_S
       ACELIB_DEBUG ((LM_DEBUG,
                   "%N:%l:Partial write to socket: Asynch_write called again\n"));
 
-      // Duplicate the message block and retry remaining data
-      if (this->ws_.write (*result.message_block ().duplicate (),
+      // Retry the remaining data from the current read pointer.
+      if (this->ws_.write (result.message_block (),
                            unsent_data,
                            result.act (),
                            this->result_->priority (),
                            this->result_->signal_number ()) == -1)
         {
-          // @@ Handle this error.
           ACELIB_ERROR ((LM_ERROR,
                       "Asynch_Transmit_Handler:write_stream failed\n"));
+          this->complete_failure (errno);
           return;
         }
 
@@ -2025,15 +2030,19 @@ ACE_POSIX_Asynch_Transmit_Handler::handle_write_stream (const ACE_Asynch_Write_S
     case DATA_ACT:
       // If header/data was sent, initiate the file data transmission.
       if (this->initiate_read_file () == -1)
-        // @@ Handle this error.
-        ACELIB_ERROR ((LM_ERROR,
-                    "Error:Asynch_Transmit_Handler:read_file couldnt be initiated\n"));
+        {
+          ACELIB_ERROR ((LM_ERROR,
+                      "Error:Asynch_Transmit_Handler:read_file couldnt be initiated\n"));
+          this->complete_failure (errno);
+          return;
+        }
       break;
 
     default:
-      // @@ Handle this error.
       ACELIB_ERROR ((LM_ERROR,
                   "Error:ACE_Asynch_Transmit_Handler::handle_write_stream::Unexpected act\n"));
+      this->complete_failure (EINVAL);
+      return;
     }
 }
 
@@ -2043,23 +2052,14 @@ ACE_POSIX_Asynch_Transmit_Handler::handle_read_file (const ACE_Asynch_Read_File:
   // Failure.
   if (result.success () == 0)
     {
-      ACE_SEH_TRY
-        {
-          this->result_->complete (this->bytes_transferred_,
-                                   0,      // Failure.
-                                   nullptr,      // @@ Completion key.
-                                   errno); // Error no.
-        }
-      ACE_SEH_FINALLY
-        {
-          delete this;
-        }
+      this->complete_failure (result.error ());
       return;
     }
 
   // Read successful.
   if (result.bytes_transferred () == 0)
   {
+    this->complete_failure (EIO);
     return;
   }
 
@@ -2073,9 +2073,9 @@ ACE_POSIX_Asynch_Transmit_Handler::handle_read_file (const ACE_Asynch_Read_File:
                        this->result_->priority (),
                        this->result_->signal_number ()) == -1)
     {
-      // @@ Handle this error.
       ACELIB_ERROR ((LM_ERROR,
                   "Error:ACE_Asynch_Transmit_File : write to the stream failed\n"));
+      this->complete_failure (errno);
       return;
     }
 }
