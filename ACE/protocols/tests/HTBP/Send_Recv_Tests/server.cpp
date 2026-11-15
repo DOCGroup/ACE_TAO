@@ -107,8 +107,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (peer_acceptor.open (addr) == -1
       || peer_acceptor.get_local_addr (server_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) %p\n"),
-                ACE_TEXT ("open")), 1);
+                       ACE_TEXT ("(%P|%t) open: %p\n")), 1);
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) starting server at port %d\n"),
@@ -134,33 +133,31 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (peer_acceptor.accept(sock_stream[0],&cli_addr,0) == -1)
     {
         ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %p\n"),
-                  ACE_TEXT ("accept")));
+                    ACE_TEXT ("(%P|%t) accept: %p\n")));
       return 1;
     }
 
   ACE::HTBP::Channel channel1(sock_stream[0]);
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT("(%P) Got sock[0], handle = %d\n"),
-                       sock_stream[0].get_handle()));
+              ACE_TEXT("(%P) Got sock[0], handle = %@\n"),
+              reinterpret_cast<void *> (sock_stream[0].get_handle())));
 
   if (peer_acceptor.accept(sock_stream[1],&cli_addr,0) == -1)
     {
         ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %p\n"),
-                  ACE_TEXT ("accept")));
+                    ACE_TEXT ("(%P|%t) accept: %p\n")));
       return 1;
     }
 
   ACE::HTBP::Channel channel2(sock_stream[1]);
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT("(%P) Got sock_stream[1], handle = %d\n"),
-              sock_stream[1].get_handle()));
+              ACE_TEXT("(%P) Got sock_stream[1], handle = %@\n"),
+              reinterpret_cast<void *> (sock_stream[1].get_handle())));
   int res {};
   while ((res = channel1.pre_recv()) != 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT("(%P)res = %d. waiting 1 sec. %p\n"),
+                  ACE_TEXT("(%P)res = %d. waiting 1 sec. after %s\n"),
                   res,
                   ACE_TEXT("stream.pre_recv()")));
       ACE_OS::sleep (1);
@@ -171,7 +168,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   while ((res = channel2.pre_recv()) != 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT("(%P)res = %d, waiting 1 sec. %p\n"),res,
+                  ACE_TEXT("(%P)res = %d, waiting 1 sec. after %s\n"),
+                  res,
                   ACE_TEXT("stream2.pre_recv()")));
       ACE_OS::sleep (1);
     }
@@ -214,8 +212,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (len == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %p\n"),
-                  ACE_TEXT ("Test 1, recvv failed")));
+                  ACE_TEXT ("(%P|%t) Test 1, recvv failed: %p\n")));
       Test_Result = 1;
     }
 
@@ -254,7 +251,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
          (res = channel2.pre_recv()) != 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT("(%P)res = %d. waiting 1 sec. %p\n"),
+                  ACE_TEXT("(%P)res = %d. waiting 1 sec. after %s\n"),
                   res,
                   ACE_TEXT("stream.pre_recv()")));
       ACE_OS::sleep (1);
@@ -279,7 +276,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (len != 255)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT("(%P} server: send result %b != 255\n"), len));
+                  ACE_TEXT("(%P) server: send result %b != 255\n"), len));
       return 1;
     }
 

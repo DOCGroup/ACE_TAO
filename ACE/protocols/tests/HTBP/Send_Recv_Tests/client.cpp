@@ -163,20 +163,19 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   iov[4].iov_len = 1;
 
   len = stream.sendv (iov, 5);
-  ACE_DEBUG ((LM_DEBUG,"(%P) after send, len = %d\n"));
+  ACE_DEBUG ((LM_DEBUG, "(%P) after send, len = %b\n", len));
   if (len == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %p\n"),
-                  ACE_TEXT ("Test 1, sendv failed")));
+                  ACE_TEXT ("(%P|%t) Test 1, sendv failed: %p\n")));
       Test_Result = 1;
     }
   else
     if (len != 255)
       {
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) %p\n"),
-                    ACE_TEXT ("Test 1, len = %d != 255\n"), len));
+                    ACE_TEXT ("(%P|%t) Test 1, len = %b != 255\n"),
+                    len));
           Test_Result = 1;
       }
 
@@ -223,7 +222,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     if (buffer2[i] != buffer[i])
       {
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) Test 2, rcvd byte %B is %d, not %d\n"),
+                    ACE_TEXT ("(%P|%t) Test 2, rcvd byte %d is %d, not %d\n"),
                     i, buffer2[i], buffer[i]));
         Test_Result = 1;
       }
