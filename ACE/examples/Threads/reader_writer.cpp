@@ -103,8 +103,7 @@ reader (void *)
 
           if (ACE_OS::thr_equal (shared_thr_id, thr_id) == 0)
             ACE_DEBUG ((LM_DEBUG,
-                        "(%t) somebody changed %d to %d\n",
-                        thr_id, shared_thr_id));
+                        "(%t) somebody changed the shared thread id\n"));
         }
 
       current_readers.fetch_sub (1, std::memory_order_relaxed);
@@ -148,8 +147,8 @@ writer (void *)
           ACE_Thread::yield();
 
           if (ACE_OS::thr_equal (shared_thr_id, self) == 0)
-            ACE_DEBUG ((LM_DEBUG, "(%t) somebody wrote on my data %d\n",
-                        shared_thr_id));
+            ACE_DEBUG ((LM_DEBUG,
+                        "(%t) somebody wrote while a different thread id was recorded\n"));
         }
 
       current_writers.fetch_sub (1, std::memory_order_relaxed);

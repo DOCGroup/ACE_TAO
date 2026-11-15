@@ -78,7 +78,7 @@ Test_Task::svc (void *arg)
   Test_Task::wait_count_.fetch_add (1, std::memory_order_relaxed);
   Test_Task::max_count_.fetch_add (1, std::memory_order_relaxed);
 
-  ACE_DEBUG ((LM_DEBUG, "(%t) svc: waiting (data = %u)\n",
+  ACE_DEBUG ((LM_DEBUG, "(%t) svc: waiting (data = %@)\n",
               arg));
 
   // Do a bunch of set operations on the TSS data just to make sure
@@ -90,7 +90,7 @@ Test_Task::svc (void *arg)
       ACE_Thread::yield ();
     }
 
-  ACE_DEBUG ((LM_DEBUG, "(%t) svc: waiting finished (data = %u)\n",
+  ACE_DEBUG ((LM_DEBUG, "(%t) svc: waiting finished (data = %@)\n",
               arg));
 
 #if 0
