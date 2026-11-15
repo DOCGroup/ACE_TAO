@@ -16,11 +16,13 @@ public:
   Blocking_Sync_None &operator= (Blocking_Sync_None const &) = delete;
   Blocking_Sync_None &operator= (Blocking_Sync_None &&) = delete;
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   void slow_operation (Test::Payload const &the_payload,
                        CORBA::ULong sleep_microseconds) override;
 
   void shutdown () override;
+  /// @}
 
 private:
   /// Use an ORB reference to shutdown the application.
