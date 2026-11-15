@@ -52,8 +52,6 @@ CORBA::Long
 TAO_DS_Network_Priority_Protocols_Hooks::get_dscp_codepoint (
   TAO_Stub *stub, CORBA::Object *object)
 {
-  CORBA::Long dscp {};
-  TAO::DiffservCodepoint diffserv_codepoint {};
   CORBA::Policy_var server_nw_priority_policy;
 
   CORBA::Policy_var const client_nw_priority_policy =
@@ -80,27 +78,21 @@ TAO_DS_Network_Priority_Protocols_Hooks::get_dscp_codepoint (
 
       if (CORBA::is_nil (server_nw_priority_policy.in ()))
         {
-          return dscp;
+          return 0;
         }
-      else
+      TAO::NetworkPriorityPolicy_var const npp =
+        TAO::NetworkPriorityPolicy::_narrow (
+          server_nw_priority_policy.in ());
+
+      if (!CORBA::is_nil (npp.in ()))
         {
-          TAO::NetworkPriorityPolicy_var const npp =
-            TAO::NetworkPriorityPolicy::_narrow (
-              server_nw_priority_policy.in ());
+          TAO::NetworkPriorityModel const network_priority_model =
+            npp->network_priority_model ();
 
-          if (!CORBA::is_nil (npp.in ()))
+          if (network_priority_model ==
+              TAO::SERVER_DECLARED_NETWORK_PRIORITY)
             {
-              TAO::NetworkPriorityModel const network_priority_model =
-                npp->network_priority_model ();
-
-              if (network_priority_model ==
-                  TAO::SERVER_DECLARED_NETWORK_PRIORITY)
-                {
-                  diffserv_codepoint =
-                    npp->request_diffserv_codepoint ();
-                  dscp = diffserv_codepoint;
-                  return dscp;
-                }
+              return npp->request_diffserv_codepoint ();
             }
         }
     }
@@ -111,14 +103,11 @@ TAO_DS_Network_Priority_Protocols_Hooks::get_dscp_codepoint (
 
       if (!CORBA::is_nil (client_nw_priority.in ()))
         {
-          diffserv_codepoint =
-            client_nw_priority->request_diffserv_codepoint ();
-          dscp = diffserv_codepoint;
-          return dscp;
+          return client_nw_priority->request_diffserv_codepoint ();
         }
     }
 
-  return dscp;
+  return 0;
 }
 
 ACE_STATIC_SVC_DEFINE (TAO_DS_Network_Priority_Protocols_Hooks,
