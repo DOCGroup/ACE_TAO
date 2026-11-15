@@ -10,7 +10,6 @@
 // root node and the rest will be children of it.
 vt_graph_impl::vt_graph_impl (int num_nodes)
 {
-  nodes_ ().length (0);
   add_node ("ROOT");
   for (int i = 1; i < num_nodes; i++)
     {
@@ -164,9 +163,6 @@ test_impl::finish ()
 node_impl::node_impl (char const *name)
 {
   name_ (name);
-  weight_ (0);
-  degree_ (0);
-  neighbors_ ().length (0);
 }
 
 // Add an edge from this node to neighbor.
