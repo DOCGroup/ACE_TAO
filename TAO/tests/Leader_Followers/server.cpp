@@ -18,7 +18,7 @@ struct Server_Options
 };
 
 int
-parse_args (int argc, ACE_TCHAR *argv[], Server_Options& options)
+parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("e:o:"));
   int c {};
@@ -45,7 +45,6 @@ parse_args (int argc, ACE_TCHAR *argv[], Server_Options& options)
                           -1);
       }
 
-  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -57,10 +56,10 @@ public:
     {
     }
 
-  Event_Loop_Task (Event_Loop_Task const&) = delete;
-  Event_Loop_Task (Event_Loop_Task&&) = delete;
-  Event_Loop_Task& operator= (Event_Loop_Task const&) = delete;
-  Event_Loop_Task& operator= (Event_Loop_Task&&) = delete;
+  Event_Loop_Task (Event_Loop_Task const &) = delete;
+  Event_Loop_Task (Event_Loop_Task &&) = delete;
+  Event_Loop_Task &operator= (Event_Loop_Task const &) = delete;
+  Event_Loop_Task &operator= (Event_Loop_Task &&) = delete;
 
   int svc () override
     {
@@ -68,7 +67,7 @@ public:
         {
           this->orb_->run ();
         }
-      catch (CORBA::Exception const& ex)
+      catch (CORBA::Exception const &ex)
         {
           ex._tao_print_exception ("Exception caught in thread:");
           return -1;
@@ -100,7 +99,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       poa_manager->activate ();
 
-      Server_Options options;
+      Server_Options options {};
       if (parse_args (argc, argv, options) != 0)
         return -1;
 
@@ -120,7 +119,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Activated as <%C>\n"), ior.in ()));
 
       {
-        std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+        std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
           ACE_OS::fopen (options.ior_output_file.c_str (), ACE_TEXT ("w")), std::fclose);
         if (!output_file)
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -144,7 +143,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       root_poa->destroy (true, true);
     }
-  catch (CORBA::Exception const& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return -1;

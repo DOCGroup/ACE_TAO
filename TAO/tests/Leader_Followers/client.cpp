@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file     client.cpp
  *
@@ -7,7 +6,6 @@
  *
  *  @author  Irfan Pyarali
  */
-//=============================================================================
 
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
@@ -31,7 +29,7 @@ struct Client_Options
 };
 
 static int
-parse_args (int argc, ACE_TCHAR *argv[], Client_Options& options)
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:c:e:w:t:x"));
   int c {};
@@ -84,16 +82,16 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options& options)
 class Client_Task : public ACE_Task_Base
 {
 public:
-  Client_Task (test_ptr t, Client_Options const& options)
+  Client_Task (test_ptr t, Client_Options const &options)
     : test_ (test::_duplicate (t)),
       options_ (options)
     {
     }
 
-  Client_Task (Client_Task const&) = delete;
-  Client_Task (Client_Task&&) = delete;
-  Client_Task& operator= (Client_Task const&) = delete;
-  Client_Task& operator= (Client_Task&&) = delete;
+  Client_Task (Client_Task const &) = delete;
+  Client_Task (Client_Task &&) = delete;
+  Client_Task &operator= (Client_Task const &) = delete;
+  Client_Task &operator= (Client_Task &&) = delete;
 
   int svc () override
     {
@@ -131,7 +129,7 @@ public:
 
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Client: client loop finished for thread %t @ %T\n")));
         }
-      catch (CORBA::Exception const& ex)
+      catch (CORBA::Exception const &ex)
         {
           ex._tao_print_exception ("Exception caught in thread:");
           return -1;
@@ -157,16 +155,16 @@ private:
 class Event_Loop_Task : public ACE_Task_Base
 {
 public:
-  Event_Loop_Task (CORBA::ORB_ptr orb, Client_Options const& options)
+  Event_Loop_Task (CORBA::ORB_ptr orb, Client_Options const &options)
     : orb_ (CORBA::ORB::_duplicate (orb)),
       options_ (options)
     {
     }
 
-  Event_Loop_Task (Event_Loop_Task const&) = delete;
-  Event_Loop_Task (Event_Loop_Task&&) = delete;
-  Event_Loop_Task& operator= (Event_Loop_Task const&) = delete;
-  Event_Loop_Task& operator= (Event_Loop_Task&&) = delete;
+  Event_Loop_Task (Event_Loop_Task const &) = delete;
+  Event_Loop_Task (Event_Loop_Task &&) = delete;
+  Event_Loop_Task &operator= (Event_Loop_Task const &) = delete;
+  Event_Loop_Task &operator= (Event_Loop_Task &&) = delete;
 
   int svc () override
     {
@@ -194,7 +192,7 @@ public:
 
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Client: Event loop finished for thread %t @ %T\n")));
         }
-      catch (CORBA::Exception const& ex)
+      catch (CORBA::Exception const &ex)
         {
           ex._tao_print_exception ("Exception caught in thread:");
           return -1;
@@ -225,7 +223,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       // Initialize options based on command-line arguments.
-      Client_Options options;
+      Client_Options options {};
       int const parse_args_result = parse_args (argc, argv, options);
       if (parse_args_result != 0)
         return parse_args_result;
@@ -268,7 +266,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           server->shutdown ();
         }
     }
-  catch (CORBA::Exception const& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return -1;
