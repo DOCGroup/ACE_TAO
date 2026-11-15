@@ -24,9 +24,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class  TAO_FtNaming_Intf_Export NS_group_svc
 {
 public:
-  /**
-   *  Constructor
-   */
   explicit NS_group_svc (bool quiet = false);
 
   NS_group_svc (NS_group_svc const &) = delete;

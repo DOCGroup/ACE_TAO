@@ -55,9 +55,6 @@ namespace TAO
     explicit FT_ReplicationManagerFaultAnalyzer (
       TAO::FT_ReplicationManager * replication_manager);
 
-    /**
-    * Destructor.
-    */
     ~FT_ReplicationManagerFaultAnalyzer () override;
 
   public:

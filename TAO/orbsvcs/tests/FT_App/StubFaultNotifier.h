@@ -28,14 +28,8 @@ class  StubFaultNotifier : public virtual POA_FT::FaultNotifier
   //////////////////////
   // non-CORBA interface
 public:
-  /**
-   * Default constructor.
-   */
   StubFaultNotifier ();
 
-  /**
-   * Virtual destructor.
-   */
   virtual ~StubFaultNotifier ();
 
   /**

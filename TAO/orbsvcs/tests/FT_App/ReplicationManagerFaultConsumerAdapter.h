@@ -23,14 +23,8 @@
 class ReplicationManagerFaultConsumerAdapter
 {
 public:
-  /**
-   * Default constructor.
-   */
   ReplicationManagerFaultConsumerAdapter ();
 
-  /**
-   * virtual destructor.
-   */
   virtual ~ReplicationManagerFaultConsumerAdapter ();
 
   /**

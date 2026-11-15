@@ -106,9 +106,6 @@ class TAO_AV_UDP_QoS_Flow_Handler
    public virtual ACE_Event_Handler
 {
 public:
-  /**
-   * Destructor
-   */
   TAO_AV_UDP_QoS_Flow_Handler ();
   ~TAO_AV_UDP_QoS_Flow_Handler () override;
   int open (ACE_Addr &address);

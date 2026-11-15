@@ -49,14 +49,8 @@ class  FT_ReplicaFactory_i
   //////////////////////
   // non-CORBA interface
 public:
-  /**
-   * Default constructor.
-   */
   FT_ReplicaFactory_i ();
 
-  /**
-   * Virtual destructor.
-   */
   virtual ~FT_ReplicaFactory_i ();
 
   /**

@@ -26,14 +26,8 @@ class StubBatchConsumer
   : public virtual POA_CosNotifyComm::SequencePushConsumer
 {
 public:
-  /**
-   * Default constructor.
-   */
   StubBatchConsumer ();
 
-  /**
-   * virtual destructor.
-   */
   virtual ~StubBatchConsumer ();
 
   ::PortableServer::POA_ptr _default_POA () override;

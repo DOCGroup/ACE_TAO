@@ -39,9 +39,6 @@ namespace TAO
     class Creation_Strategy : public ACE_Creation_Strategy<SVC_HANDLER>
     {
     public:
-      /**
-       * Constructor.
-      */
       explicit Creation_Strategy (TAO_ORB_Core *orb_core);
       Creation_Strategy (Creation_Strategy const&) = delete;
       Creation_Strategy (Creation_Strategy&&) = delete;

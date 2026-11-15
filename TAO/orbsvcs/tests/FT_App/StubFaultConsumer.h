@@ -26,14 +26,8 @@ class StubFaultConsumer
   : public virtual POA_CosNotifyComm::StructuredPushConsumer
 {
 public:
-  /**
-   * Default constructor.
-   */
   StubFaultConsumer ();
 
-  /**
-   * virtual destructor.
-   */
   virtual ~StubFaultConsumer ();
 
   ::PortableServer::POA_ptr _default_POA () override;

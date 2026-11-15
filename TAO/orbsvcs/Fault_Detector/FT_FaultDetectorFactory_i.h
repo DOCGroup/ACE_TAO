@@ -92,14 +92,8 @@ namespace TAO
     //////////////////////
     // non-CORBA interface
   public:
-    /**
-     * Default constructor.
-     */
     FT_FaultDetectorFactory_i ();
 
-    /**
-     * Virtual destructor.
-     */
     ~FT_FaultDetectorFactory_i () override;
 
     /**
