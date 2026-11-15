@@ -36,7 +36,8 @@ namespace Kokyu
     using Guid_t = typename DSRT_Scheduler_Traits::Guid_t;
     using DSRT_QoSDescriptor = typename DSRT_Scheduler_Traits::QoSDescriptor_t;
 
-    // = Scheduling methods.
+    /// @name Scheduling methods
+    /// @{
 
     /// Schedule a thread dynamically based on the qos info supplied.
     int schedule (Guid_t guid, DSRT_QoSDescriptor const &);
@@ -53,11 +54,14 @@ namespace Kokyu
 
     /// Supply this interface with an appropriate implementation.
     void implementation (DSRT_Dispatcher_Impl<DSRT_Scheduler_Traits>*);
+    /// @}
 
-    // = Termination methods.
+    /// @name Termination methods
+    /// @{
 
     /// Shut down the dispatcher. The dispatcher will stop processing requests.
     int shutdown ();
+    /// @}
 
     DSRT_Dispatcher () = default;
 
@@ -71,9 +75,8 @@ namespace Kokyu
     ~DSRT_Dispatcher ();
 
   private:
-    /// Auto ptr to the implementation. Implementation will be created on the
-    /// heap and deleted automatically when the dispatcher object is destructed.
-    std::unique_ptr<DSRT_Dispatcher_Impl<DSRT_Scheduler_Traits> > dispatcher_impl_;
+    /// Owns the implementation created for this dispatcher.
+    std::unique_ptr<DSRT_Dispatcher_Impl<DSRT_Scheduler_Traits>> dispatcher_impl_;
   };
 
   /**

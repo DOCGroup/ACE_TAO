@@ -11,6 +11,8 @@
 
 namespace Kokyu
 {
+Dispatcher::Dispatcher () = default;
+
 int Dispatcher::dispatch (Dispatch_Command const *cmd, QoSDescriptor const &qos)
 {
   return dispatcher_impl_->dispatch (cmd, qos);

@@ -18,24 +18,6 @@
 
 namespace Kokyu
 {
-/*
-//@@VS: This is somehow not being recognized by MSVC, which results
-//in a link error. For now, the definition has been moved to the .h
-//file. Needs further investigation.
-
-template <class DSRT_Scheduler_Traits,
-          class More_Eligible_Comparator,
-          class ACE_LOCK>
-u_long
-Sched_Ready_Queue<DSRT_Scheduler_Traits,
-                  More_Eligible_Comparator,
-                  ACE_LOCK>::
-Guid_Hash::operator () (Guid_t const &id)
-{
-  typename DSRT_Scheduler_Traits::Guid_Hash guid_hash;
-  return guid_hash(id);
-}
-*/
 template <class DSRT_Scheduler_Traits,
           class More_Eligible_Comparator,
           class ACE_LOCK>
@@ -216,30 +198,6 @@ void Sched_Ready_Queue<DSRT_Scheduler_Traits,
 dump ()
 {
   ACE_GUARD (ACE_LOCK, mon, lock_);
-  ACE_DEBUG ((LM_DEBUG, "(%t|%T):##########################\n"));
-  if (dispatch_items_prio_queue_.current_size ())
-    {
-      PRIO_QUEUE_ITERATOR end_iter = dispatch_items_prio_queue_.end ();
-      PRIO_QUEUE_ITERATOR iter;
-
-      iter = dispatch_items_prio_queue_.begin ();
-      while( iter != end_iter )
-        {
-          PRIO_QUEUE_ENTRY &ent = (*iter);
-          DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits>
-            item_var = ent.item ();
-          /*
-          int guid;
-          ACE_OS::memcpy (&guid,
-                  item_var->guid ().get_buffer (),
-                  item_var->guid ().length ());
-
-          ACE_DEBUG ((LM_DEBUG, "(%t|%T):guid %d, thr_handle = %d\n",
-                      guid, item_var->thread_handle ()));
-          */
-          ++iter;
-        }
-    }
   ACE_DEBUG ((LM_DEBUG, "(%t|%T):##########################\n"));
 }
 

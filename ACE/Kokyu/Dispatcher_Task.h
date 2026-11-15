@@ -49,8 +49,8 @@ private:
   void init_i (QoSDescriptor const &);
 
 private:
-  // The caller retains ownership when can_be_deleted() is false; otherwise
-  // the worker destroys the command after execution.
+  /// The caller owns the command unless can_be_deleted() is true; then the
+  /// worker destroys it after execution.
   Dispatch_Command const *command_;
   QoSDescriptor qos_info_;
 };
@@ -90,12 +90,13 @@ private:
   ConfigInfo curr_config_info_;
 
   std::unique_ptr<ACE_Allocator> owned_allocator_;
-  ACE_Allocator *allocator_; // Borrowed unless owned_allocator_ owns it.
+  /// Borrowed unless owned_allocator_ owns it.
+  ACE_Allocator *allocator_;
 
   /// Helper data structure to minimize memory allocations...
   ACE_Locked_Data_Block<ACE_Lock_Adapter<ACE_SYNCH_MUTEX> > data_block_;
-  // Destroy the queue before its data block and allocator.
-  std::unique_ptr<ACE_Message_Queue<ACE_SYNCH> > owned_queue_;
+  /// Declared after the data block and allocator so it is destroyed first.
+  std::unique_ptr<ACE_Message_Queue<ACE_SYNCH>> owned_queue_;
 };
 } //end of namespace
 

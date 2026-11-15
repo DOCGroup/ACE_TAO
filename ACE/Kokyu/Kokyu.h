@@ -21,27 +21,9 @@
 #include "kokyu_export.h"
 #include "Kokyu_defs.h"
 
-//Currently I am not seeing a way to avoid including these here. The
-//whole purpose of the pImpl idiom is to avoid this dependency. But
-//using std::unique_ptr<> to store the implementation causes a compile
-//error (in the destructor) that the implementation definition is not
-//found. Note that std::unique_ptr<T>'s destructor calls delete on the
-//internal pointer, so the class definition needs to be
-//visible. Need to revisit this and see whether there is a work
-//around.
-#include "Dispatcher_Impl.h"
-
-//#################################################################
-//Beware that this interface will be subject to change in the future
-//since this is the very initial release. We will be working on
-//trying to merge the DSRT and EC mechanisms in the future. If you
-//are a user of this interface, kindly let us know so that we can
-//coordinate with you when we refactor this interface.
-//##################################################################
-
 namespace Kokyu
 {
-  //class Dispatcher_Impl;
+  class Dispatcher_Impl;
 
   /**
    * @class Dispatcher
@@ -58,7 +40,7 @@ namespace Kokyu
   class Kokyu_Export Dispatcher
   {
   public:
-    Dispatcher () = default;
+    Dispatcher ();
     Dispatcher (Dispatcher const &) = delete;
     Dispatcher (Dispatcher &&) = delete;
     Dispatcher &operator= (Dispatcher const &) = delete;
@@ -79,8 +61,7 @@ namespace Kokyu
     /// for inheritance<i></b>.
     ~Dispatcher ();
   private:
-    /// Auto ptr to the implementation. Implementation will be created on the
-    /// heap and deleted automatically when the dispatcher object is destructed.
+    /// Owns the implementation created for this dispatcher.
     std::unique_ptr<Dispatcher_Impl> dispatcher_impl_;
   };
 

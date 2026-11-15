@@ -9,31 +9,6 @@
 
 namespace Kokyu
 {
-/*
-//@@VS: This is somehow not being recognized by MSVC, which results
-//in a link error. For now, the definition has been moved to the .h
-//file. Needs further investigation.
-
-template <class DSRT_Scheduler_Traits>
-int Comparator_Adapter_Generator<DSRT_Scheduler_Traits>::MoreEligible::
-operator ()(DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits> const &item1,
-            DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits> const &item2)
-{
-  int rc = qos_comparator_ (item1->qos (), item2->qos ());
-
-  //more eligible
-  if (rc == 1)
-    return 1;
-
-  //if equally eligible, then resolve tie with the creation time of
-  //the item
-  if (rc == 0 && item1->insertion_time () < item2->insertion_time ())
-    return 1;
-
-  return 0;
-}
-*/
-
 template <class DSRT_Scheduler_Traits>
 DSRT_CV_Dispatcher_Impl<DSRT_Scheduler_Traits>::
 DSRT_CV_Dispatcher_Impl (ACE_Sched_Params::Policy sched_policy,
