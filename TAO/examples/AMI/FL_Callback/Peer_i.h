@@ -1,11 +1,8 @@
-
-//=============================================================================
 /**
  *  @file   Peer_i.h
  *
  *  @author Carlos O'Ryan
  */
-//=============================================================================
 
 #ifndef PEER_I_H
 #define PEER_I_H
@@ -61,13 +58,16 @@ public:
   /// received.
   void reply (CORBA::Long result);
 
-   // = See test.idl for an explanation of these methods.
+  /// @name Peer operations
+  /// @{
+  /// See test.idl for an explanation of these methods.
   CORBA::Long request (CORBA::Long id) override;
 
   void start (PeerSet const& the_peers,
               CORBA::Long iterations) override;
 
   void shutdown () override;
+  /// @}
 
 private:
   /// The reply_handler

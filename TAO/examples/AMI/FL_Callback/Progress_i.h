@@ -1,11 +1,8 @@
-
-//=============================================================================
 /**
  *  @file   Progress_i.h
  *
  *  @author Carlos O'Ryan
  */
-//=============================================================================
 
 #ifndef PROGRESS_I_H
 #define PROGRESS_I_H
@@ -46,7 +43,6 @@ private:
   /// The callback method
   static void start_callback (Fl_Widget *widget, void *data);
 
-private:
   /// The total number of peers
   int n_peers_ {};
 
@@ -72,7 +68,6 @@ private:
 class Progress_i : public POA_Progress
 {
 public:
-  /// ctor
   explicit Progress_i (Progress_Window *window);
 
   Progress_i (Progress_i const &) = delete;
@@ -80,10 +75,12 @@ public:
   Progress_i (Progress_i &&) = delete;
   Progress_i &operator= (Progress_i &&) = delete;
 
-  // = The Progress methods.
+  /// @name Progress methods
+  /// @{
   void sent_request (CORBA::Long id) override;
   void recv_reply (CORBA::Long id) override;
   CORBA::Long bind (Peer_ptr a_peer) override;
+  /// @}
 
 private:
   /// Display the graphics...

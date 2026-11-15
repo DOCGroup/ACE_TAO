@@ -34,7 +34,7 @@ Peer_Handler_i::shutdown ()
 }
 
 Peer_i::Peer_i ()
-  :  reply_handler_ (this)
+  : reply_handler_ (this)
 {
 }
 
@@ -91,14 +91,12 @@ Peer_i::shutdown ()
   this->orb_->shutdown (false);
 }
 
-// ****************************************************************
-
 Peer_Task::Peer_Task (PeerSet const& the_peers,
                       CORBA::Long iterations,
                       Progress_ptr progress,
                       AMI_PeerHandler_ptr handler,
                       CORBA::Long id)
-  :  the_peers_ (the_peers),
+  : the_peers_ (the_peers),
      iterations_ (iterations),
      progress_ (Progress::_duplicate (progress)),
      handler_ (AMI_PeerHandler::_duplicate (handler)),

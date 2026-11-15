@@ -4,7 +4,7 @@
 #include <FL/Fl_Button.H>
 
 Progress_i::Progress_i (Progress_Window *window)
-  :  window_ (window)
+  : window_ (window)
 {
 }
 
@@ -28,14 +28,12 @@ Progress_i::bind (Peer_ptr a_peer)
   return this->window_->bind (a_peer);
 }
 
-// ****************************************************************
-
 Progress_Window::Progress_Window (int n_peers,
                                   int n_iterations,
                                   int x, int y,
                                   int w, int h,
                                   char const *l)
-  :  Fl_Box (x, y, w, h, l),
+  : Fl_Box (x, y, w, h, l),
      n_peers_ (n_peers),
      peers_ (n_peers),
      n_iterations_ (n_iterations),
@@ -49,7 +47,7 @@ Progress_Window::Progress_Window (int n_peers,
   button->callback (Progress_Window::start_callback, this);
 
   // Compute the slider height, leaving a little margin...
-  int sh = h / ( 2 * this->n_peers_);
+  int sh = h / (2 * this->n_peers_);
   sh = sh - 5;
 
   // The initial position, with margin...
