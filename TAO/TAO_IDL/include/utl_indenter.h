@@ -67,38 +67,31 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ace/iosfwd.h"
 
-// Utility class for control of indentation level during dumping
-// May also be useful for BEs that want to produce nicely formatted
-// output.
-
+/// Controls indentation when dumping output, including from back ends.
 class UTL_Indenter
 {
-  // =TITLE
-  //  UTL_Indenter
-  // =DESCRIPTION
-  //  useful in generating indented output
 public:
   UTL_Indenter () = default;
 
   ~UTL_Indenter () = default;
 
+  /// Reset indentation level to zero.
   void reset ();
-  // Reset indentation level to 0.
 
+  /// Increase indentation level.
   void increase ();
-  // Increase indentation level.
 
+  /// Decrease indentation level.
   void decrease ();
-  // Decrease indentation level.
 
+  /// Skip to the current indentation level in the output stream.
   void skip_to (ACE_OSTREAM_TYPE &o);
-  // Skip to indentation level stop.
 
+  /// Skip to the current indentation level in a file.
   void skip_to (FILE *fp);
-  // skip to indentation level stop.
 
 private:
-  // How far to indent.
+  /// Current indentation level.
   long pd_indent_level {};
 };
 

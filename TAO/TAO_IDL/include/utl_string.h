@@ -69,26 +69,24 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "TAO_IDL_FE_Export.h"
 
+/// String comparison and canonicalization helpers.
 class TAO_IDL_FE_Export UTL_String
 {
-  // =TITLE
-  //  UTL_String
-  // =DESCRIPTION
-  //  String comparison and canonicalization helpers.
 public:
+  /// Compare strings without considering case. Set mixed_case when a matching
+  /// pair differs only in case.
   static bool strcmp_caseless (
     std::string const& lhs,
     std::string const& rhs,
     bool &mixed_case);
-  // Caseless string compare returns true if match, mixed_case is
-  // true if match only true due to ignoring case differences.
 
+  /// Compare two strings and report case-only differences.
   static bool compare (std::string const& lhs, std::string const& rhs);
-  // Compare two strings and report case-only differences.
 
+  /// Compare two strings quietly, without error or warning messages.
   static bool compare_quiet (std::string const& lhs, std::string const& rhs);
-  // Like the above but without error or warning message output.
 
+  /// Return the canonical representation of a string.
   static std::string get_canonical_rep (std::string str);
 };
 
