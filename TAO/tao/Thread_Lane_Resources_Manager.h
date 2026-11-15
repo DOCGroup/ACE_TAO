@@ -98,7 +98,6 @@ class TAO_Export TAO_Thread_Lane_Resources_Manager_Factory
 public:
   TAO_Thread_Lane_Resources_Manager_Factory () = default;
 
-  /// Virtual destructor.
   ~TAO_Thread_Lane_Resources_Manager_Factory () override;
 
   /// Factory method.
