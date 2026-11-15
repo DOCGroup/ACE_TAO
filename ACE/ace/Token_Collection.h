@@ -69,7 +69,8 @@ public:
   ACE_Token_Collection &operator= (ACE_Token_Collection const &) = delete;
   ACE_Token_Collection &operator= (ACE_Token_Collection &&) = delete;
 
-// Collection Management operations
+  /// @name Collection management
+  /// @{
 
   /**
    * Insert a Token into the collection.  All ACE_Token type
@@ -102,19 +103,14 @@ public:
    * Returns true when the specified token is in the collection.
    */
   bool is_member (const ACE_Token_Proxy &token);
+  /// @}
 
-// = Collective operation semantics.
-
-//   For acquire, renew, and release, there are two interfaces.  Once
-//   interface allows an operation on a single token in the
-//   collection.  The collective interfaces perform atomic operations
-//   on the entire collection.  For instance, a collective acquire
-//   will perform an acquire for each and every token in the
-//   collection or the operation will fail.  Currently, these
-//   operations are performed with no ordering heuristics.  That is,
-//   the Collection steps through the tokens in the order they were
-//   inserted.  For each one it performs the operation (acquire,
-//   renew, or release).
+  /// @name Collective operations
+  /// @{
+  /// Acquire, renew, and release each have an operation for one token and a
+  /// collective operation for the entire collection. A collective operation
+  /// succeeds only if it succeeds for every token. Tokens are processed in
+  /// insertion order.
 
   /**
    * Acquire "atomically" all resources in the collection.  This is
@@ -183,6 +179,7 @@ public:
   virtual int release (const ACE_TCHAR *token_name,
                        ACE_Synch_Options &options =
                        ACE_Synch_Options::defaults);
+  /// @}
 
   ~ACE_Token_Collection ();
 
@@ -208,8 +205,8 @@ protected:
   /// Name of the collection.
   ACE_TCHAR name_[ACE_MAXTOKENNAMELEN];
 
-  // = I'm not sure what these mean, but they have to be defined since they're
-  //   pure virtual in ACE_Token_Proxy.
+  /// Required implementations for pure virtual methods inherited from
+  /// ACE_Token_Proxy.
   ACE_Token_Proxy *clone () const override;
   ACE_Tokens *create_token (const ACE_TCHAR *name) override;
 };

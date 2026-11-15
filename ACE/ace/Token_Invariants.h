@@ -50,13 +50,14 @@ public:
   /// Updates internal database.
   void releasing ();
 
-  // = Map_Manager operations.
-
+  /// @name Copy operations
+  /// @{
   /// Copy construction.
   ACE_Mutex_Invariants (const ACE_Mutex_Invariants &rhs) = default;
 
   /// Copy.
   ACE_Mutex_Invariants &operator= (const ACE_Mutex_Invariants &rhs) = default;
+  /// @}
 
   /// Dump the state of the class.
   void dump () const;
@@ -92,13 +93,14 @@ public:
   /// Updates internal database.
   void releasing ();
 
-  // = Map_Manager operations.
-
+  /// @name Copy operations
+  /// @{
   /// Copy construction.
   ACE_RWLock_Invariants (const ACE_RWLock_Invariants &rhs) = default;
 
   /// Copy.
   ACE_RWLock_Invariants &operator= (const ACE_RWLock_Invariants &rhs) = default;
+  /// @}
 
   /// Dump the state of the class.
   void dump () const;
@@ -129,19 +131,20 @@ public:
   /// Singleton access point.
   static ACE_Token_Invariant_Manager *instance ();
 
-  // = Polymorphic methods.  Just pass in the proxy and the method
-  // figures out the type of the token.
-
+  /// @name Proxy-based operations
+  /// Just pass in the proxy; the operation determines the token type.
+  /// @{
   /// Returns 1 on success, 0 when an invariant has been violated and
   /// -1 on error.
   int acquired (const ACE_Token_Proxy *proxy);
 
   /// Updates internal database.
   void releasing (const ACE_Token_Proxy *proxy);
+  /// @}
 
-  // = Explicit methods.  These to not require actual proxies in order
-  // to test a scenario.
-
+  /// @name Explicit operations
+  /// These operations do not require proxies and allow testing a scenario.
+  /// @{
   /// Returns 1 on success, 0 when an invariant has been violated and
   /// -1 on error.
   int mutex_acquired (const ACE_TCHAR *token_name);
@@ -159,12 +162,13 @@ public:
 
   /// Updates internal database.
   void rwlock_releasing (const ACE_TCHAR *token_name);
+  /// @}
 
   /// Dump the state of the class.
   void dump () const;
 
-  // = The following two method should be in the protected part of the
-  //   class.  Bugs with certain compilers preclude this.
+  /// These members are public because of bugs in certain compilers, although
+  /// they should be protected.
   /// Prevent non-singleton construction.
   ACE_Token_Invariant_Manager ();
 

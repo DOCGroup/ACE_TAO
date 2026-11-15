@@ -89,15 +89,18 @@ public:
 
   virtual ~ACE_Token ();
 
-  // = Strategies
+  /// @name Queueing strategies
+  /// @{
 
   /// Retrieve the current queueing strategy.
   int queueing_strategy ();
 
   /// Set the queueing strategy.
   void queueing_strategy (int queueing_strategy);
+  /// @}
 
-  // = Synchronization operations.
+  /// @name Synchronization operations
+  /// @{
 
   /**
    * Acquire the token, sleeping until it is obtained or until the
@@ -193,8 +196,10 @@ public:
 
   /// Assumes the caller has acquired the token and returns 0.
   int tryacquire_write_upgrade ();
+  /// @}
 
-  // = Accessor methods.
+  /// @name Accessors
+  /// @{
 
   /// Return the number of threads that are currently waiting to get
   /// the token.
@@ -202,6 +207,7 @@ public:
 
   /// Return the id of the current thread that owns the token.
   ACE_thread_t current_owner ();
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;
