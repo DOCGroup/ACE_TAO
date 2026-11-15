@@ -106,11 +106,13 @@ RTP_Packet::RTP_Packet(char* buffer, int length)
         }
     }
   else
-    for (int i {}; i < this->payload_size_; ++i)
-      {
-        this->host_byte_order_payload_[i] = this->packet_[index];
-        ++index;
-      }
+    {
+      for (int i {}; i < this->payload_size_; ++i)
+        {
+          this->host_byte_order_payload_[i] = this->packet_[index];
+          ++index;
+        }
+    }
 }
 
 RTP_Packet::RTP_Packet(unsigned char padding,
@@ -140,11 +142,13 @@ RTP_Packet::RTP_Packet(unsigned char padding,
   }
 
   if (csrc_list != nullptr)
-    for (unsigned char i {}; i < csrc_count; ++i)
-      {
-        size+=4;
-        this->host_byte_order_csrc_list_[i] = csrc_list[i];
-      }
+    {
+      for (unsigned char i {}; i < csrc_count; ++i)
+        {
+          size+=4;
+          this->host_byte_order_csrc_list_[i] = csrc_list[i];
+        }
+    }
 
   this->packet_size_ = size + data_size;
 
@@ -196,11 +200,13 @@ RTP_Packet::RTP_Packet(unsigned char padding,
         }
     }
   else
-    for (int i {}; i < this->payload_size_; ++i)
-      {
-        this->packet_[index] = data[i];
-        ++index;
-      }
+    {
+      for (int i {}; i < this->payload_size_; ++i)
+        {
+          this->packet_[index] = data[i];
+          ++index;
+        }
+    }
 }
 
 RTP_Packet::~RTP_Packet() = default;
@@ -359,8 +365,10 @@ TAO_AV_RTP_Object::handle_input ()
   TAO_AV_frame_info frame_info;
 
   if (TAO_debug_level > 1)
-    ORBSVCS_DEBUG ((LM_DEBUG,
-                "\nTAO_AV_RTP_Object::handle_input\n"));
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                  "\nTAO_AV_RTP_Object::handle_input\n"));
+    }
 
   // Handles the incoming RTP packet input.
   this->frame_.rd_ptr (this->frame_.base ());
@@ -433,8 +441,10 @@ TAO_AV_RTP_Object::send_frame (ACE_Message_Block *frame,
   if (frame_info != nullptr)
     {
       if (frame_info->format != this->format_)
-        ORBSVCS_DEBUG ((LM_DEBUG,
-                    "TAO_AV_RTP_Object::send_frame - error: format type mismatch"));
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                      "TAO_AV_RTP_Object::send_frame - error: format type mismatch"));
+        }
       if (frame_info->ssrc != 0)
       {
         this->ssrc_ = frame_info->ssrc;
@@ -561,8 +571,10 @@ TAO_AV_RTP_Object::send_frame (iovec const *iov,
   if (frame_info != nullptr)
     {
       if (frame_info->format != this->format_)
-        ORBSVCS_DEBUG ((LM_DEBUG,
-                    "TAO_AV_RTP_Object::send_frame - error: format type mismatch"));
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                      "TAO_AV_RTP_Object::send_frame - error: format type mismatch"));
+        }
       this->sequence_num_ = static_cast<ACE_UINT16> (frame_info->sequence_num);
       if (frame_info->ssrc != 0)
       {
@@ -658,8 +670,10 @@ TAO_AV_RTP_Object::send_frame (iovec const *iov,
   iovec send_iov[ACE_IOV_MAX];
   send_iov [0].iov_base = data_ptr;
   send_iov [0].iov_len  = data_length;
-  for (int i=1;i<iovcnt; ++i)
-    send_iov [i] = iov [i];
+  for (int i = 1; i < iovcnt; ++i)
+    {
+      send_iov[i] = iov[i];
+    }
   result = this->transport_->send (send_iov, iovcnt);
 
   if (result < 0)
