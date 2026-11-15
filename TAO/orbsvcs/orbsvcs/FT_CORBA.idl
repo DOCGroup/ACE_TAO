@@ -1,15 +1,15 @@
-// FT.idl
+/// @file FT.idl
 #ifndef _FT_IDL_
 #define _FT_IDL_
 
-// The OMG file has been devided into several portions:
-//  FT_CORBA.idl
-//  FT_CORBA_ORB.idl
-//  FT_Detector.idl
-//  FT_Notifier.idl
-//  FT_Replica.idl
+/// The OMG file has been devided into several portions:
+/// @file FT_CORBA.idl
+/// @file FT_CORBA_ORB.idl
+/// @file FT_Detector.idl
+/// @file FT_Notifier.idl
+/// @file FT_Replica.idl
 
-// The next include is TAO specific.
+/// The next include is TAO specific.
 #include "orbsvcs/FT_CORBA_ORB.idl"
 
 #define FT_USES_PORTABLE_GROUP
@@ -62,16 +62,16 @@ module FT
 
 #ifdef FT_USES_PORTABLE_GROUP
   /////////////////////////////////////////
-  // The following typedefs "import"
-  // definitions from the PortableGroup module
-  // definitions into the FT module.
-  // This is an interim step during the process
-  // of having FT depend on the commmon
-  // of PortableGroup module rather than defining
-  // everything itself.
+  /// The following typedefs "import"
+  /// definitions from the PortableGroup module
+  /// definitions into the FT module.
+  /// This is an interim step during the process
+  /// of having FT depend on the commmon
+  /// of PortableGroup module rather than defining
+  /// everything itself.
 
-  // this typedef trick doesn't work for exceptions, so they must
-  // use the PortableGroup:: prefix
+  /// this typedef trick doesn't work for exceptions, so they must
+  /// use the PortableGroup:: prefix
   typedef PortableGroup::_TypeId _TypeId;
   typedef PortableGroup::ObjectGroup ObjectGroup;
   typedef PortableGroup::Name Name;
@@ -93,8 +93,8 @@ module FT
   typedef PortableGroup::ObjectGroupManager ObjectGroupManager;
   typedef PortableGroup::GenericFactory GenericFactory;
 
-  // Specification of FTObjectGroupManager Interface
-  // which ReplicationManager Inherits
+  /// Specification of FTObjectGroupManager Interface
+  /// which ReplicationManager Inherits
   interface FTObjectGroupManager : PortableGroup::ObjectGroupManager {
 
     ::PortableGroup::ObjectGroup set_primary_member(in ::PortableGroup::ObjectGroup object_group,
@@ -105,9 +105,8 @@ module FT
              BadReplicationStyle);
   };
 
-
   ///////////////////////////////////////////////////
-  // names for properties used in Fault Tolerant CORBA
+  /// names for properties used in Fault Tolerant CORBA
 
   /// FT::ReplicationStyle
   const string FT_REPLICATION_STYLE = "org.omg.ft.ReplicationStyle";
@@ -141,9 +140,8 @@ module FT
   /// FT::CheckpointInterval
   const string FT_CHECKPOINT_INTERVAL = "org.omg.ft.CheckpointInterval";
 
-  // end of property names from FT CORBA specification
+  /// end of property names from FT CORBA specification
   ///////////////////////////////////////////////////
-
 
 #else // (not) FT_USES_PORTABLE_GROUP
   interface GenericFactory;
@@ -170,7 +168,6 @@ module FT
   typedef Name Location;
   typedef sequence<Location> Locations;
   typedef Properties Criteria;
-
 
   /**
    * @struct FactoryInfo
@@ -244,8 +241,8 @@ module FT
   exception CannotMeetCriteria {
     Criteria unmet_criteria; };
 
-  // Specification of PropertyManager Interface
-  // which ReplicationManager Inherits
+  /// Specification of PropertyManager Interface
+  /// which ReplicationManager Inherits
 
   interface PropertyManager {
 
@@ -274,8 +271,8 @@ module FT
       raises(ObjectGroupNotFound);
   };
 
-  // Specification of ObjectGroupManager Interface
-  // which ReplicationManager Inherits
+  /// Specification of ObjectGroupManager Interface
+  /// which ReplicationManager Inherits
   interface ObjectGroupManager {
     ObjectGroup create_member(in ObjectGroup object_group,
                               in Location the_location,
@@ -321,9 +318,8 @@ module FT
       raises(ObjectGroupNotFound, MemberNotFound);
   };
 
-
-  // Specification of GenericFactory Interface
-  // which ReplicationManager Inherits and Application Objects Implement
+  /// Specification of GenericFactory Interface
+  /// which ReplicationManager Inherits and Application Objects Implement
   interface GenericFactory {
     typedef any FactoryCreationId;
     Object create_object(in _TypeId type_id,
@@ -341,11 +337,10 @@ module FT
 
 #endif // FT_USES_PORTABLE_GROUP
 
-  // Specifications for Fault Management moved to FT_Replica.idl
-  // Specification of FaultNotifier Interface: moved to FT_Notifier.idl
-  // Specifications for Logging and Recovery: moved to FT_Replica.idl
-  // Specifications for Replication Manager moved to FT_ReplicationManager.idl
+  /// Specifications for Fault Management moved to FT_Replica.idl
+  /// Specification of FaultNotifier Interface: moved to FT_Notifier.idl
+  /// Specifications for Logging and Recovery: moved to FT_Replica.idl
+  /// Specifications for Replication Manager moved to FT_ReplicationManager.idl
 };
-
 
 #endif // for #ifndef _FT_IDL_

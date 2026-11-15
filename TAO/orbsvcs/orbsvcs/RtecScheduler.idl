@@ -222,8 +222,8 @@ module RtecScheduler
   typedef sequence<RT_Info> RT_Info_Set;
 
   // TODO: Find a reasonable name for this interface, maybe we should
-  // change the name of the module to RtecSchedulerAdmin and name this
-  // Scheduler.
+  /// change the name of the module to RtecSchedulerAdmin and name this
+  /// Scheduler.
   /// Holds all RT_Info entries for a single application. During configuration,
   /// this is implemented as a single remote object used by suppliers,
   /// consumers, and the event channel. At run time, each process holds a
@@ -348,10 +348,10 @@ module RtecScheduler
       raises (SYNCHRONIZATION_FAILURE, INTERNAL, UNKNOWN_TASK);
 
     // TODO: Do we need the two interfaces or is it simply confusing?
-    // If we should to keep only the <handle> version: Are the extra
-    // round-trips too expensive?
-    // If we choose only the <entry_point> version: Are the copies for
-    // the string affordable?
+    /// If we should to keep only the <handle> version: Are the extra
+    /// round-trips too expensive?
+    /// If we choose only the <entry_point> version: Are the copies for
+    /// the string affordable?
     /// Obtain the run time priorities.
     void priority (in handle_t handle,
                    out OS_Priority o_priority,

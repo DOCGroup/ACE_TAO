@@ -1,7 +1,7 @@
 #ifndef TAO_LOGGER_IDL
 #define TAO_LOGGER_IDL
 
-// TAO_MAXLOGMSGLEN must be the same size as ACE_MAXLOGMSGLEN.
+/// TAO_MAXLOGMSGLEN must be the same size as ACE_MAXLOGMSGLEN.
 #if !defined TAO_MAXLOGMSGLEN
 #define TAO_MAXLOGMSGLEN 4 * 1024
 #endif /* TAO_MAXLOGMSGLEN */

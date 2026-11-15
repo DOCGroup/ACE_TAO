@@ -1,4 +1,4 @@
-//IDL
+/// IDL
 
 #ifndef TAO_COUNTRY_IDL
 #define TAO_COUNTRY_IDL

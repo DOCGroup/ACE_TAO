@@ -1,4 +1,4 @@
-// messenger.idl
+/// @file messenger.idl
 interface Messenger
     {
         boolean send_message ( in    string user_name,

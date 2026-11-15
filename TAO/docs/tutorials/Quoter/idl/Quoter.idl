@@ -4,7 +4,7 @@ module Quoter
   /// Used to report an invalid stock name.
   exception Invalid_Stock_Symbol {};
 
-  // Forward declare the Stock interface
+  /// Forward declare the Stock interface
   interface Stock;
 
   /// A factory class for the stock quoter interfaces.

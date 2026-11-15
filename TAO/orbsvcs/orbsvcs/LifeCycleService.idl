@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    LifeCycleService.idl
  *
@@ -9,7 +8,6 @@
  *
  *  @author Michael Kircher (mk1@cs.wustl.edu)
  */
-//=============================================================================
 
 #ifndef TAO_LIFECYCLESERVICE_IDL
 #define TAO_LIFECYCLESERVICE_IDL
@@ -38,15 +36,15 @@ module LifeCycleService
   /// This interface wraps CosLifeCycle criteria to make access easier.
   interface Criteria_Evaluator
     {
-      // @@ NOTE: The definition should be this. But see note below!
+      /// @@ NOTE: The definition should be this. But see note below!
       // typedef sequence <CosLifeCycle::NameValuePair> SeqNamedValuePair;
 
-      // @@ NOTE: This is just a workaround for a problem seen with
-      // explicit template builds. This file and CosLifeCycle.idl
-      // define a sequence of the same data structure which creates
-      // multiply defined symbols in the above configuration. We need
-      // to fix the IDL compile at some point of time. Till then this
-      // should be okay...
+      /// @@ NOTE: This is just a workaround for a problem seen with
+      /// explicit template builds. This file and CosLifeCycle.idl
+      /// define a sequence of the same data structure which creates
+      /// multiply defined symbols in the above configuration. We need
+      /// to fix the IDL compile at some point of time. Till then this
+      /// should be okay...
       typedef CosLifeCycle::Criteria SeqNamedValuePair;
       typedef CosLifeCycle::Criteria Criteria;
 

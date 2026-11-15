@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/// -*- C++ -*-
 interface Grid
 {
   /// Creates a Grid of the specified type.

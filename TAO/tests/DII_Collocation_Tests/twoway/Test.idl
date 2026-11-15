@@ -14,9 +14,12 @@ module Test
   typedef string<BOUNDED_STRING_SIZE> Bounded_String;
 
   struct TimeOfDay {
-    short   hour;       // 0 - 23
-    short   minute;     // 0 - 59
-    short   second;     // 0 - 59
+    /// 0 - 23
+    short   hour;
+    /// 0 - 59
+    short   minute;
+    /// 0 - 59
+    short   second;
   };
 
   interface Simple_Test

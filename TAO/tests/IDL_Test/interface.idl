@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    interface.idl
  *
@@ -11,11 +10,9 @@
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
  */
-//=============================================================================
 
-
-// Used to be a problem in the get() and set()
-// generated code.
+/// Used to be a problem in the get() and set()
+/// generated code.
 
 interface Base
 {
@@ -26,9 +23,9 @@ interface Derived : Base
 {
 };
 
-// The fact that the interface begins with 'foo' was causing
-// problems. The IDL compiler thought the interface was in
-// foo's scope.
+/// The fact that the interface begins with 'foo' was causing
+/// problems. The IDL compiler thought the interface was in
+/// foo's scope.
 module foo_mod
 {
   struct date
@@ -42,8 +39,8 @@ interface foostep
   foo_mod::date getDate ();
 };
 
-// Only operations or attributes should cause a clash
-// in this type of situation.
+/// Only operations or attributes should cause a clash
+/// in this type of situation.
 interface mother
 {
   struct member
@@ -68,7 +65,7 @@ interface try
 {
 };
 
-// Definition below in file.
+/// Definition below in file.
 interface later;
 
 typedef boolean Bool;
@@ -79,9 +76,9 @@ interface later_user
             inout later inoutarg,
             out later outarg);
 
-  // Not a clash with the C++ keyword because they are case sensitive,
-  // but the Arg_Traits<> specialization parameter (ACE_InputCDR::to_boolean)
-  // needs the unaliased type name to work.
+  /// Not a clash with the C++ keyword because they are case sensitive,
+  /// but the Arg_Traits<> specialization parameter (ACE_InputCDR::to_boolean)
+  /// needs the unaliased type name to work.
   void op2 (in Bool inarg2);
 };
 
@@ -92,11 +89,11 @@ struct later_holder
 
 interface later {};
 
-// Previously, we could have found v if it
-// was inherited into Client, but not in
-// the case below, where it is inherited into
-// somewhere other than the scope where the
-// lookup starts.
+/// Previously, we could have found v if it
+/// was inherited into Client, but not in
+/// the case below, where it is inherited into
+/// somewhere other than the scope where the
+/// lookup starts.
 
 interface Begin
 {
@@ -116,8 +113,8 @@ interface Client
   attribute End::Value v;
 };
 
-// Tests arg_traits visitor for unaliased bounded (w)string
-// attributes.
+/// Tests arg_traits visitor for unaliased bounded (w)string
+/// attributes.
 interface AttributeTester
 {
   typedef string string_1[1];
@@ -126,7 +123,7 @@ interface AttributeTester
   attribute string_1 a_sb;
 };
 
-// All of the 'recursion' below is legal.
+/// All of the 'recursion' below is legal.
 module ParamMod
 {
   interface ParameterTester
@@ -242,11 +239,11 @@ module redefs
   };
 };
 
-// Had to relocate the spot where the typedef is marked as
-// having its arg traits instantiation already generated.
-// Otherwise, when the scope of the base interface is visited
-// as part of this process, we had infinite recursion and a
-// stack overflow.
+/// Had to relocate the spot where the typedef is marked as
+/// having its arg traits instantiation already generated.
+/// Otherwise, when the scope of the base interface is visited
+/// as part of this process, we had infinite recursion and a
+/// stack overflow.
 module Rec_Arg_Traits
 {
   interface base
@@ -260,8 +257,8 @@ module Rec_Arg_Traits
   };
 };
 
-// Test to validate that the generated code is compilable
-// when we have an argument `call`
+/// Test to validate that the generated code is compilable
+/// when we have an argument `call`
 module call_test
 {
   interface iTest
@@ -270,7 +267,7 @@ module call_test
   };
 };
 
-// Test that using an attribut call is working correctly
+/// Test that using an attribut call is working correctly
 module call_attribute
 {
   interface iBar

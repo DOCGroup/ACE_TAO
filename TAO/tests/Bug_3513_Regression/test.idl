@@ -10,8 +10,8 @@ directives:
 
 #undef FOO
 #ifdef FOO
-// We've ifdef'd these directives out because we don't want to include them right now
-// either because that would be wrong too.
+/// We've ifdef'd these directives out because we don't want to include them right now
+/// either because that would be wrong too.
 #include "tao/PI_Server/PI_Server.pidl"
 #include "tao/CodecFactory/IOP_Codec.pidl"
 #include "tao/RTCORBA/RTCORBA.pidl"
@@ -19,7 +19,7 @@ directives:
 #include "tao/RTScheduling/RTScheduler.pidl"
 #endif
 
-// We *are* including these files instead because that's the right thing to do
+/// We *are* including these files instead because that's the right thing to do
 
 #include "tao/PortableServer/PortableServer_include.pidl"
 #include "tao/ObjRefTemplate/ObjectReferenceTemplate_include.pidl"

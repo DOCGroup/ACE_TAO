@@ -1,13 +1,10 @@
-// -*- IDL -*-
+/// -*- IDL -*-
 
-//=============================================================================
 /**
  *  @file    CosLoadBalancing.idl
  *
  *  @author Object Management Group
  */
-//=============================================================================
-
 
 #ifndef COSLOADBALANCING_IDL
 #define COSLOADBALANCING_IDL
@@ -35,15 +32,16 @@ module CosLoadBalancing
 {
   typeprefix CosLoadBalancing "tao.lb";
 
-  const IOP::ServiceId LOAD_MANAGED = 123456;  // @todo TBA by OMG
+  /// @todo TBA by OMG
+  const IOP::ServiceId LOAD_MANAGED = 123456;
 
   typedef PortableGroup::Location Location;
   typedef PortableGroup::Properties Properties;
 
-  // Types used for obtaining and/or reporting loads
+  /// Types used for obtaining and/or reporting loads
   typedef unsigned long LoadId;
 
-  // OMG defined LoadId constants.
+  /// OMG defined LoadId constants.
   const LoadId LoadAverage = 0;
   const LoadId Disk = 1;
   const LoadId Memory = 2;
@@ -98,10 +96,10 @@ module CosLoadBalancing
     oneway void analyze_loads (in PortableGroup::ObjectGroup object_group,
                                in LoadManager load_manager);
 
-    // The loads at the given location should no longer be considered
-    // when performing load analysis.
+    /// The loads at the given location should no longer be considered
+    /// when performing load analysis.
     // void location_removed (in PortableGroup::Location the_location)
-    //   raises (LocationNotFound);
+    /// raises (LocationNotFound);
   };
 
   typedef Strategy CustomStrategy;
@@ -175,8 +173,8 @@ module CosLoadBalancing
     void remove_load_alert (in PortableGroup::Location the_location)
       raises (LoadAlertNotFound);
 
-    // The following load monitor methods are only used for the PULL
-    // load monitoring style.
+    /// The following load monitor methods are only used for the PULL
+    /// load monitoring style.
 
     /// Register a LoadMonitor object for "pull" monitoring of the
     /// given location.

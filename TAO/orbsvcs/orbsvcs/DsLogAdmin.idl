@@ -1,12 +1,10 @@
 
-//=============================================================================
 /**
  *  @file    DsLogAdmin.idl
  *
  *  This module defines the Log, Iterator, LogMgr and LogFactory
  *  interfaces for the OMG's Telecom Event Log Service
  */
-//=============================================================================
 
 #ifndef DS_LOG_ADMIN_IDL
 #define DS_LOG_ADMIN_IDL

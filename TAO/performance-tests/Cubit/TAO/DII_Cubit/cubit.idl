@@ -59,7 +59,7 @@ interface Cubit
       Many cm;
 
       // default:
-      // Many cm;
+      /// Many cm;
     };
   /// Cube a union.
   oneof cube_union (in oneof values);
@@ -101,7 +101,7 @@ interface Cubit
   {
     objectUpdate,
     interaction
-    // others omitted
+    /// others omitted
   };
 
   typedef sequence<HandleValuePair> HandleValuePairSeq;

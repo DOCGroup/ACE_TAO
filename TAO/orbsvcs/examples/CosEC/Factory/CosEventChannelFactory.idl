@@ -1,10 +1,8 @@
-//=============================================================================
 /**
  *  @file    CosEventChannelFactory.idl
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_COSEVENTCHANNELFACTORY_IDL
 #define TAO_COSEVENTCHANNELFACTORY_IDL

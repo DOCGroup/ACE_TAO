@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/// -*- C++ -*-
 /// This module defines the Account interface and a factory for Account objects.
 module Bank
 {

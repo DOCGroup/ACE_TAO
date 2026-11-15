@@ -38,8 +38,9 @@ module Plesk
       string kernel_resolver_ior;
     };
 
-    const long ERR_NO_SUCH_OBJ = 6; // don't change it
-                                    // reserved for Naming
+    /// don't change it
+    const long ERR_NO_SUCH_OBJ = 6;
+                                    /// reserved for Naming
 
     interface ObjectResolver
     {

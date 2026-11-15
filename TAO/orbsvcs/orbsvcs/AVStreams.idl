@@ -1,13 +1,10 @@
 /* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file   AVStreams.idl
  *
  *  @author Sumedh Mungee <sumedh@cs.wustl.edu>
  *  @author Nagarajan Surendran <naga@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_AV_STREAMS_IDL
 #define TAO_AV_STREAMS_IDL
@@ -104,7 +101,6 @@ module AVStreams
   /// Used to convey events, in Basic_StreamCtrl::push_event.
   typedef CosPropertyService::Property streamEvent;
 
-
   exception notSupported
     {
       /// Used to indicate that an operation is not supported.
@@ -120,7 +116,6 @@ module AVStreams
       /// An flow protocol related error.
       string flow_name;
     };
-
 
   exception streamOpFailed
     {
@@ -153,7 +148,7 @@ module AVStreams
     */
   interface Basic_StreamCtrl : CosPropertyService::PropertySet {
 
-      // = Empty flowSpec => apply operation to all flows
+      /// Empty flowSpec => apply operation to all flows
       /// Stop the transfer of data of the stream.Empty the_spec means
       /// apply operation to all flows.
       void stop (in flowSpec the_spec) raises (noSuchFlow);
@@ -211,7 +206,7 @@ module AVStreams
                          in streamQoS qos_spec);
     };
 
-  // Forward declarations.
+  /// Forward declarations.
   interface VDev;
   interface MMDevice;
   interface StreamEndPoint;
@@ -287,20 +282,18 @@ module AVStreams
       /// Sets the initial configuration to be used for all added peers.
       void set_initial_configuration (in CosPropertyService::Properties initial);
 
-
       /// Uses <format_name> standardised by OMG and IETF
       /// Multicasting operations are not supported yet.
       void set_format (in string flowName,
                        in string format_name)
         raises (notSupported);
 
-
       /// Note, some of these device params are standardised by OMG
       /// Multicasting operations are not supported yet.
       void set_dev_params (in string flowName,
                            in CosPropertyService::Properties new_params)
-        //   raises (CosPropertyService::PropertyException,
-        //      streamOpFailed);
+        /// raises (CosPropertyService::PropertyException,
+        /// streamOpFailed);
         raises (PropertyException,
                 streamOpFailed);
 
@@ -465,7 +458,7 @@ module AVStreams
                        in string format_name)
         raises (notSupported);
 
-      // = Note, some of these device params are standardised by OMG
+      /// Note, some of these device params are standardised by OMG
       /// Used to set device parameters.
       void set_dev_params (in string flowName,
                            in CosPropertyService::Properties new_params)
@@ -477,7 +470,6 @@ module AVStreams
                           in flowSpec the_spec)
         raises (noSuchFlow,
                 QoSRequestFailed);
-
 
     };
 
@@ -537,7 +529,7 @@ module AVStreams
       /// Remove the StreamEndPoint and the related vdev.
       void destroy (in StreamEndPoint the_ep,
                     in string vdev_name)
-        // ie VDev not found
+        /// ie VDev not found
         raises (notSupported);
 
       /// Not supported in the light profile, raises notsupported.
@@ -557,7 +549,7 @@ module AVStreams
                 streamOpFailed);
     };
 
-  // Define the exceptions.
+  /// Define the exceptions.
   exception protocolNotSupported{};
   exception formatNotSupported{};
   exception formatMismatch{};
@@ -569,7 +561,7 @@ module AVStreams
   exception failedToConnect{string reason;};
   exception failedToListen{string reason;};
 
-  // Forward declarations of the interfaces.
+  /// Forward declarations of the interfaces.
   interface FlowProducer;
   interface FlowConsumer;
   interface FlowEndPoint;
@@ -602,8 +594,8 @@ module AVStreams
 
     boolean disconnect();
 
-    // The notSupported exception is raised where
-    // flow cannot have multiple producers
+    /// The notSupported exception is raised where
+    /// flow cannot have multiple producers
     boolean add_producer(in FlowProducer flow_producer,
                          inout AVStreams::QoS the_qos)
       raises (alreadyConnected, AVStreams::notSupported);
@@ -643,7 +635,7 @@ module AVStreams
         raises (AVStreams::notSupported);
 
       void set_dev_params(in CosPropertyService::Properties new_settings)
-        //      raises (CosPropertyService::PropertyException, AVStreams::streamOpFailed);
+        /// raises (CosPropertyService::PropertyException, AVStreams::streamOpFailed);
         raises (PropertyException, AVStreams::streamOpFailed);
 
       void set_protocol_restriction(in AVStreams::protocolSpec the_spec)
@@ -675,8 +667,8 @@ module AVStreams
                           in boolean is_mcast,
                           in FlowEndPoint peer,
                           inout string flowProtocol)// syntax <flowProtocol>
-        // The out value of flowProtocol contains SFP version
-        // supported and all options including "Credit".
+        /// The out value of flowProtocol contains SFP version
+        /// supported and all options including "Credit".
         raises(failedToListen, AVStreams::FPError,
                AVStreams::QoSRequestFailed);
     };
@@ -733,7 +725,7 @@ module AVStreams
               AVStreams::QoSRequestFailed);
 
     void destroy(in FlowEndPoint the_ep, in string fdev_name)
-      // ie FDev not found
+      /// ie FDev not found
       raises (AVStreams::notSupported);
   };
 
@@ -781,7 +773,7 @@ module AVStreams
       raises(InvalidPosition);
   };
 
-  // Additional sequences needed for the properties.
+  /// Additional sequences needed for the properties.
 
   typedef sequence<FlowConnection> FlowConnection_seq;
   typedef sequence<StreamEndPoint_A> StreamEndPoint_A_seq;

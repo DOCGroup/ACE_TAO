@@ -1,4 +1,4 @@
-// Test Bug 2619
+/// Test Bug 2619
 
 struct Type_T
 {

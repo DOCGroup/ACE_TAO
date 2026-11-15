@@ -5,7 +5,8 @@
 module Test
 {
    typedef string<10> MyStringType;
-   typedef string<10> MyOtherStringType;     // Note: SAME LENGTH
+   /// Note: SAME LENGTH
+   typedef string<10> MyOtherStringType;
 
    interface Foo
    {
@@ -28,7 +29,8 @@ module Foo
 
    module Two
    {
-      typedef string<100> MyString; // Same name, different size!
+      /// Same name, different size!
+      typedef string<100> MyString;
 
       interface WhoCares
       {
@@ -38,7 +40,8 @@ module Foo
 
    module Three
    {
-      typedef string<100> MyString; // Same name, same size!
+      /// Same name, same size!
+      typedef string<100> MyString;
 
       interface WhoCares
       {

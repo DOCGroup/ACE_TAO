@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    test.idl
  *
@@ -7,26 +6,24 @@
  *
  *  @author Irfan Pyarali
  */
-//=============================================================================
-
 
 interface client
 {
+  /// Decrements <time_to_live>.  If <time_to_live> becomes zero, it
+  /// stops. Otherwise, it pings the server.
   void ping (in unsigned short time_to_live);
-  // Decrements <time_to_live>.  If <time_to_live> becomes zero, it
-  // stops. Otherwise, it pings the server.
 };
 
 interface server
 {
+  /// Turns around and starts pinging the client.
   void start (in client c,
               in unsigned short time_to_live);
-  // Turns around and starts pinging the client.
 
+  /// Decrements <time_to_live>.  If <time_to_live> becomes zero, it
+  /// stops. Otherwise, it pings the client.
   void ping (in unsigned short time_to_live);
-  // Decrements <time_to_live>.  If <time_to_live> becomes zero, it
-  // stops. Otherwise, it pings the client.
 
+  /// Shutdown the server.
   oneway void shutdown ();
-  // Shutdown the server.
 };

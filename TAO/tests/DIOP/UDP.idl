@@ -1,5 +1,5 @@
 /* -*- C++ -*- */
-// UDP.idl
+/// @file UDP.idl
 interface UDP
 {
   /// Defines operations to request the current time from another

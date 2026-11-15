@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    array_anonymous.idl
  *
@@ -10,10 +9,9 @@
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
  */
-//=============================================================================
 
-// Once a problem with expressions in the brackets,
-// as well as the typedef'd/anonymous thing.
+/// Once a problem with expressions in the brackets,
+/// as well as the typedef'd/anonymous thing.
 interface tdef
 {
   const short byteslen = 12;
@@ -21,13 +19,15 @@ interface tdef
 
   struct bytes_or_longs
     {
-      Bytes the_bytes;            // typedef'd
-      long Longs[byteslen];       // anonymous
+      /// typedef'd
+      Bytes the_bytes;
+      /// anonymous
+      long Longs[byteslen];
     };
 };
 
-// To test that all the octet arrays build and link as
-// unique types.
+/// To test that all the octet arrays build and link as
+/// unique types.
 module ABCModule
 {
   struct RmtPhysicalInfo
@@ -42,6 +42,4 @@ module ABCModule
     octet rmtDetails[22];
   };
 };
-
-
 

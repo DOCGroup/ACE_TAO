@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    enum_in_struct.idl
  *
@@ -11,11 +10,9 @@
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
  */
-//=============================================================================
 
-
-// Tests for correct parsing and code generation for
-// both named and anonymous enums in a struct.
+/// Tests for correct parsing and code generation for
+/// both named and anonymous enums in a struct.
 
 enum UnNamed
   {
@@ -36,7 +33,7 @@ struct HoldsEnum
   UnNamed unnamed_enum;
 };
 
-// Test for anonymous arrays of member declarations
+/// Test for anonymous arrays of member declarations
 
 struct decl_heavy_struct
 {
@@ -60,9 +57,9 @@ struct decl_heavy_struct
   } m_un[10];
 };
 
-// Similar case for exception included here - no sense
-// in making a separate file for exceptions, which are
-// almost the same as structs.
+/// Similar case for exception included here - no sense
+/// in making a separate file for exceptions, which are
+/// almost the same as structs.
 
 exception ErrorException
 {

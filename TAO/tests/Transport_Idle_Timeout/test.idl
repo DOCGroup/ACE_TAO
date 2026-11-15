@@ -1,7 +1,7 @@
-// Simple interface used by the transport idle timeout regression test.
-// The server exposes a single 'ping' operation so the client can
-// establish a real IIOP connection, then go silent and let the idle
-// timer fire.
+/// Simple interface used by the transport idle timeout regression test.
+/// The server exposes a single 'ping' operation so the client can
+/// establish a real IIOP connection, then go silent and let the idle
+/// timer fire.
 
 module Test
 {

@@ -191,14 +191,14 @@ module RtecEventChannelAdmin
     void resume_connection ();
 
 /*
-      //@{
+      /// @{
       void checkpoint (in RtecEventComm::SequenceNumber last_received)
         raises (Invalid_Checkpoint);
       void resend_by_sequence (in RtecEventComm::SequenceNumber last_received)
         raises (Invalid_Resend_Request);
       void resend_by_date (in RtecEventComm::Time last_timestamp)
         raises (Invalid_Resend_Request);
-      //@}
+      /// @}
 */
     };
 
@@ -335,7 +335,7 @@ module RtecEventChannelAdmin
      */
     exception CANT_REMOVE_OBSERVER {};
 
-    //@{
+    /// @{
     /**
      * @name Unused exceptions
      *
@@ -357,7 +357,7 @@ module RtecEventChannelAdmin
 
     /// Exception raised if the event cannot be dispatched
     exception DISPATCH_ERROR {};
-    //@}
+    /// @}
 
     /// Consumers call this method to gain access to the
     /// ProxyPushSupplier factory.

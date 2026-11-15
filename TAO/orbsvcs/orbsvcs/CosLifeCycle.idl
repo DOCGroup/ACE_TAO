@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    CosLifeCycle.idl
  *
@@ -16,15 +15,13 @@
  *  @author Torben Worm <tworm@cs.wustl.edu>
  *  @author and Michael Kircher <mk1@cec.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_LIFECYCLE_IDL
 #define TAO_LIFECYCLE_IDL
 
-// OMG IDL for CosLifeCycle Module, page 6-10 in
-// Includes the following interfaces:
-//   FactoryFinder, LifeCycleObject, GenericFactory
+/// OMG IDL for CosLifeCycle Module, page 6-10 in
+/// Includes the following interfaces:
+/// FactoryFinder, LifeCycleObject, GenericFactory
 
 #include "CosNaming.idl"
 

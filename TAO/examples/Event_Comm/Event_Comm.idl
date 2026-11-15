@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    Event_Comm.idl
  *
@@ -9,8 +8,6 @@
  *
  *  @author Douglas C. Schmidt (d.schmidt@vanderbilt.edu) and Pradeep Gore (pradeep@cs.wustl.edu)
  */
-//=============================================================================
-
 
 #if !defined (_EVENT_COMM_IDL)
 #define _EVENT_COMM_IDL

@@ -1,4 +1,4 @@
-// Test Bug 2616
+/// Test Bug 2616
 
 struct AA
 {

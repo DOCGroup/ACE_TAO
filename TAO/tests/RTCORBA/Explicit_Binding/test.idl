@@ -1,9 +1,9 @@
 
 interface Test
 {
+  /// Print out a message.
   void test_method ();
-  // Print out a message.
 
+  /// Shut down the ORB.
   oneway void shutdown ();
-  // Shut down the ORB.
 };

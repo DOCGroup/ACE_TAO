@@ -12,10 +12,10 @@ module Test
      */
     oneway void shutdown ();
 
-    // check the version of the context as per the spec
+    /// check the version of the context as per the spec
     void check_normal_context () raises (MyException);
 
-    // check the extended version of the context
+    /// check the extended version of the context
     void check_extended_context () raises (MyException);
 
   };
