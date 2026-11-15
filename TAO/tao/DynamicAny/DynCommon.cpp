@@ -765,7 +765,7 @@ TAO_DynCommon::next ()
 
   CORBA::Long const component_count = static_cast<CORBA::Long> (this->component_count_);
 
-  if (this->has_components_ == 0
+  if (!this->has_components_
       || this->current_position_ + 1 >= component_count)
     {
       this->current_position_ = -1;
