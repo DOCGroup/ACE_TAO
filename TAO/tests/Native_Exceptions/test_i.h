@@ -1,11 +1,9 @@
 
-//=============================================================================
 /**
  *  @file   test_i.h
  *
  *  @author Carlos O'Ryan
  */
-//=============================================================================
 
 #ifndef TAO_NATIVE_EXCEPTIONS_TEST_I_H
 #define TAO_NATIVE_EXCEPTIONS_TEST_I_H
@@ -22,18 +20,19 @@
 class Simple_Server_i : public POA_Simple_Server
 {
 public:
-  /// ctor
-  Simple_Server_i (CORBA::ORB_ptr orb);
+  explicit Simple_Server_i (CORBA::ORB_ptr orb);
 
-  // = The Simple_Server methods.
-  CORBA::Long test_method (CORBA::Long x);
+  /// @name Simple_Server methods
+  /// @{
+  CORBA::Long test_method (CORBA::Long x) override;
 
-  CORBA::Long test_raise (CORBA::Long x);
+  CORBA::Long test_raise (CORBA::Long x) override;
 
-  void shutdown ();
+  void shutdown () override;
+  /// @}
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 };
 
 #if defined(__ACE_INLINE__)
