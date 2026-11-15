@@ -16,19 +16,17 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+/// Server-side echo interceptor used for visual interceptor checks.
 class Echo_Server_Request_Interceptor
   : public virtual PortableInterceptor::ServerRequestInterceptor,
     public virtual ::CORBA::LocalObject
 {
-  // = Server-side echo interceptor.  For checking interceptor visually only.
 public:
   Echo_Server_Request_Interceptor () = default;
-  // cotr.
 
   explicit Echo_Server_Request_Interceptor (CORBA::Object_ptr forward_location);
 
   ~Echo_Server_Request_Interceptor () override = default;
-  // dotr.
 
   Echo_Server_Request_Interceptor (Echo_Server_Request_Interceptor const &) = delete;
   Echo_Server_Request_Interceptor &operator= (Echo_Server_Request_Interceptor const &) = delete;
@@ -37,8 +35,8 @@ public:
 
   void forward_reference (CORBA::Object_ptr forward_location);
 
+  /// Returns the canonical interceptor name.
   char *name () override;
-  // Canonical name of the interceptor.
 
   void destroy () override;
 

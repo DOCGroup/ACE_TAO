@@ -1,12 +1,8 @@
-
-//=============================================================================
 /**
  *  @file   ami_test_i.h
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
 #ifndef TAO_AMI_TEST_I_H
 #define TAO_AMI_TEST_I_H
 
@@ -22,7 +18,6 @@
 class AMI_Test_i : public POA_A::AMI_Test
 {
 public:
-  /// ctor
   explicit AMI_Test_i (CORBA::ORB_ptr orb);
 
   AMI_Test_i (AMI_Test_i const &) = delete;
@@ -30,10 +25,12 @@ public:
   AMI_Test_i (AMI_Test_i &&) = delete;
   AMI_Test_i &operator= (AMI_Test_i &&) = delete;
 
-  // The AMI_Test methods.
+  /// @name AMI_Test methods
+  /// @{
   void foo (CORBA::Long value) override;
 
   void shutdown () override;
+  /// @}
 
 private:
   CORBA::ORB_var const orb_;

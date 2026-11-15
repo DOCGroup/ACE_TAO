@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    client.cpp
  *
@@ -8,8 +6,6 @@
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 #include "ami_test_i.h"
@@ -72,7 +68,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
 class Client : public ACE_Task_Base
 {
 public:
-  /// ctor
   Client (A::AMI_Test_ptr server, int niterations);
   Client (Client const &) = delete;
   Client &operator= (Client const &) = delete;
