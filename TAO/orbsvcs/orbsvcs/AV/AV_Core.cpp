@@ -43,10 +43,12 @@ add_default_av_factory (Set &factories,
   if (factory == nullptr)
     {
       if (TAO_debug_level)
-        ORBSVCS_ERROR ((LM_WARNING,
-                        "(%P|%t) WARNING - No %s found in Service Repository."
-                        "  Using default instance.\n",
-                        warning_name));
+        {
+          ORBSVCS_ERROR ((LM_WARNING,
+                          "(%P|%t) WARNING - No %s found in Service Repository."
+                          "  Using default instance.\n",
+                          warning_name));
+        }
 
       ACE_NEW_RETURN (factory,
                       DefaultFactory,
@@ -175,7 +177,9 @@ TAO_AV_Core::run ()
 {
   this->stop_run_ = false;
   while (!this->stop_run_ && this->orb_->work_pending ())
-    this->orb_->perform_work ();
+    {
+      this->orb_->perform_work ();
+    }
   return 0;
 }
 
@@ -214,8 +218,10 @@ TAO_AV_Core::init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
                                  AVStreams::flowSpec &flow_spec)
 {
   if (TAO_debug_level > 0)
-    ORBSVCS_DEBUG ((LM_DEBUG,
-                "TAO_AV_Core::init_forward_flows\n"));
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      "TAO_AV_Core::init_forward_flows\n"));
+    }
 
   TAO_AV_FlowSpecSet address_flow_set;
   TAO_AV_FlowSpecSet flow_set;
@@ -263,9 +269,11 @@ TAO_AV_Core::init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
       if (address != nullptr)
         {
           if (TAO_debug_level > 0)
-            ORBSVCS_DEBUG ((LM_DEBUG,
-                        "address given for flow %s\n",
-                        entry->flowname ()));
+            {
+              ORBSVCS_DEBUG ((LM_DEBUG,
+                              "address given for flow %s\n",
+                              entry->flowname ()));
+            }
 
           address_flow_set.insert (entry);
         }
@@ -285,9 +293,11 @@ TAO_AV_Core::init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
                                                    this,
                                                    address_flow_set);
           if (result < 0)
-            ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                               "TAO_AV_Core::init_forward_flows::acceptor_registry::open failed\n"),
-                              -1);
+            {
+              ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                     "TAO_AV_Core::init_forward_flows::acceptor_registry::open failed\n"),
+                                    -1);
+            }
           TAO_AV_FlowSpecSetItor end = address_flow_set.end ();
           for (TAO_AV_FlowSpecSetItor start = address_flow_set.begin ();
                start != end; ++start)
@@ -365,9 +375,13 @@ TAO_AV_Core::init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
                           result = event_handler->reactor ()->remove_handler (event_handler,
                                                                               ACE_Event_Handler::READ_MASK);
                           if (result < 0)
-                          if (TAO_debug_level > 0)
-                            ORBSVCS_DEBUG ((LM_DEBUG,
-                                        "TAO_AV_Core::init_forward_flows: remove_handler failed\n"));
+                            {
+                              if (TAO_debug_level > 0)
+                                {
+                                  ORBSVCS_DEBUG ((LM_DEBUG,
+                                                  "TAO_AV_Core::init_forward_flows: remove_handler failed\n"));
+                                }
+                            }
                         }
                     }
                   default:
@@ -423,9 +437,13 @@ TAO_AV_Core::init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
                           result = event_handler->reactor ()->remove_handler (event_handler,
                                                                               ACE_Event_Handler::READ_MASK);
                           if (result < 0)
-                          if (TAO_debug_level > 0)
-                            ORBSVCS_DEBUG ((LM_DEBUG,
-                                        "TAO_AV_Core::init_forward_flows: remove_handler failed\n"));
+                            {
+                              if (TAO_debug_level > 0)
+                                {
+                                  ORBSVCS_DEBUG ((LM_DEBUG,
+                                                  "TAO_AV_Core::init_forward_flows: remove_handler failed\n"));
+                                }
+                            }
                         }
                     }
                   default:
@@ -818,8 +836,10 @@ TAO_AV_Core::init_transport_factories ()
   if (factory == end)
     {
       if (TAO_debug_level > 0)
-        ORBSVCS_DEBUG ((LM_DEBUG,
-                    "Loading default transport protocols\n"));
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          "Loading default transport protocols\n"));
+        }
       this->load_default_transport_factories ();
     }
   else
@@ -828,9 +848,11 @@ TAO_AV_Core::init_transport_factories ()
         {
           ACE_CString const &name = (*factory)->name ();
           if (TAO_debug_level > 0)
-            ORBSVCS_DEBUG ((LM_DEBUG,
-                        "%s\n",
-                        name.c_str ()));
+            {
+              ORBSVCS_DEBUG ((LM_DEBUG,
+                              "%s\n",
+                              name.c_str ()));
+            }
 
           (*factory)->factory (
                                ACE_Dynamic_Service<TAO_AV_Transport_Factory>::instance (name.c_str ()));
@@ -948,9 +970,11 @@ TAO_AV_Core::init_flow_protocol_factories ()
         {
           ACE_CString const &name = (*factory)->name ();
           if (TAO_debug_level > 0)
-            ORBSVCS_DEBUG ((LM_DEBUG,
-                        "%s\n",
-                        name.c_str ()));
+            {
+              ORBSVCS_DEBUG ((LM_DEBUG,
+                              "%s\n",
+                              name.c_str ()));
+            }
 
           (*factory)->factory (
                                ACE_Dynamic_Service<TAO_AV_Flow_Protocol_Factory>::instance (name.c_str ()));
@@ -1009,7 +1033,9 @@ TAO_AV_Core::get_flowname (char const *flow_spec_entry_str)
   ACE_CString::size_type slash_pos = flow_spec_entry.find ('\\');
   ACE_CString flow_name;
   if (slash_pos != flow_spec_entry.npos)
-    flow_name = flow_spec_entry.substring (0, slash_pos);
+    {
+      flow_name = flow_spec_entry.substring (0, slash_pos);
+    }
   else
   {
     flow_name = flow_spec_entry_str;
