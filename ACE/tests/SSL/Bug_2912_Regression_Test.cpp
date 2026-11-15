@@ -337,8 +337,8 @@ Server_Service_Handler::handle_read_stream(
       if (!result.success ())
       {
         ACE_DEBUG ((LM_DEBUG,
-          ACE_TEXT ("Server_Service_Handler::handle_read_stream: error: %d\n"),
-          result.error ()));
+          ACE_TEXT ("Server_Service_Handler::handle_read_stream: error: %Q\n"),
+          static_cast<ACE_UINT64> (result.error ())));
       }
       else
       {
@@ -398,8 +398,8 @@ Server_Service_Handler::handle_write_stream (
     result.message_block ().release ();
 
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT (
-      "Server_Service_Handler::handle_write_stream: error: %d\n"),
-      result.error ()));
+      "Server_Service_Handler::handle_write_stream: error: %Q\n"),
+      static_cast<ACE_UINT64> (result.error ())));
 
     this->cancel_and_close ();
   }
@@ -784,8 +784,8 @@ Client_Service_Handler::handle_read_stream (
       if (!result.success ())
       {
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT (
-          "Client_Service_Handler::handle_read_stream: error: %d\n"),
-          result.error ()));
+          "Client_Service_Handler::handle_read_stream: error: %Q\n"),
+          static_cast<ACE_UINT64> (result.error ())));
       }
       else
       {
@@ -856,8 +856,8 @@ Client_Service_Handler::handle_write_stream (
     result.message_block ().release ();
 
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT (
-      "Client_Service_Handler::handle_write_stream: error: %d\n"),
-      result.error ()));
+      "Client_Service_Handler::handle_write_stream: error: %Q\n"),
+      static_cast<ACE_UINT64> (result.error ())));
 
     this->cancel_and_close ();
   }
@@ -1080,7 +1080,8 @@ Connector::validate_connection (const ACE_Asynch_Connect::Result& result,
   if (!result.success ())
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT (
-      "Connector::validate_connection failed: %d\n"), result.error ()));
+      "Connector::validate_connection failed: %Q\n"),
+      static_cast<ACE_UINT64> (result.error ())));
     return -1;
   }
   else

@@ -812,9 +812,9 @@ Writer::initiate_write_file ()
   // Write the size, not the length, because we must write in chunks
   // of <page size>
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Writer::initiate_write_file: write %d bytes at %d\n"),
+              ACE_TEXT ("Writer::initiate_write_file: write %B bytes at %Q\n"),
               united_mb->total_size (),
-              this->writing_file_offset_));
+              static_cast<ACE_UINT64> (this->writing_file_offset_)));
   if (this->wf_.writev (*united_mb,
                         united_mb->total_size (),
                         this->writing_file_offset_) == -1)
@@ -842,8 +842,8 @@ Writer::handle_write_file (const ACE_Asynch_Write_File::Result &result)
   ACE_Message_Block *mb = &result.message_block ();
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Writer::handle_write_file at offset %d wrote %B\n"),
-              this->reported_file_offset_,
+              ACE_TEXT ("Writer::handle_write_file at offset %Q wrote %B\n"),
+              static_cast<ACE_UINT64> (this->reported_file_offset_),
               result.bytes_transferred ()));
 
   this->reported_file_offset_ +=
