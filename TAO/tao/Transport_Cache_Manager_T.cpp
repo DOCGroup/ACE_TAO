@@ -576,7 +576,7 @@ namespace TAO
   int
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::close_i (Connection_Handler_Set &handlers)
   {
-    HASH_MAP_ITER end_iter = this->cache_map_.end ();
+    HASH_MAP_ITER const end_iter = this->cache_map_.end ();
 
     for (HASH_MAP_ITER iter = this->cache_map_.begin ();
          iter != end_iter;
@@ -603,7 +603,7 @@ namespace TAO
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::blockable_client_transports_i (
     Connection_Handler_Set &h)
   {
-    HASH_MAP_ITER end_iter = this->cache_map_.end ();
+    HASH_MAP_ITER const end_iter = this->cache_map_.end ();
 
     for (HASH_MAP_ITER iter = this->cache_map_.begin ();
          iter != end_iter;
@@ -719,8 +719,8 @@ namespace TAO
   int
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::cpscmp(const void* a, const void* b)
   {
-    const HASH_MAP_ENTRY** left  = (const HASH_MAP_ENTRY**) const_cast<void *> (a);
-    const HASH_MAP_ENTRY** right = (const HASH_MAP_ENTRY**) const_cast<void *> (b);
+    const HASH_MAP_ENTRY** const left = (const HASH_MAP_ENTRY**) const_cast<void *> (a);
+    const HASH_MAP_ENTRY** const right = (const HASH_MAP_ENTRY**) const_cast<void *> (b);
 
     if ((*left)->int_id_.transport ()->purging_order () <
         (*right)->int_id_.transport ()->purging_order ())
@@ -855,13 +855,13 @@ namespace TAO
         if (entries[i]->int_id_.transport ()->purging_order () <
             entries[i - 1]->int_id_.transport ()->purging_order ())
           {
-            HASH_MAP_ENTRY* entry = entries[i];
+            HASH_MAP_ENTRY * const entry = entries[i];
 
             for(int j = i; j > 0 &&
                   entries[j - 1]->int_id_.transport ()->purging_order () >
                   entry->item ().transport ()->purging_order (); --j)
               {
-                HASH_MAP_ENTRY* holder = entries[j];
+                HASH_MAP_ENTRY * const holder = entries[j];
                 entries[j] = entries[j - 1];
                 entries[j - 1] = holder;
               }
