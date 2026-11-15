@@ -23,8 +23,10 @@ public:
    */
   void dump_results () const;
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   void run_test (Test::Callback_ptr callback) override;
+  /// @}
 
 private:
   /// Call the are_you_there callback multiple times.

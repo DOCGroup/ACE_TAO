@@ -18,12 +18,14 @@ public:
   Hello (CORBA::ORB_ptr orb,
          ACE_thread_t thr_id);
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   char * get_string () override;
 
   void onewayTest () override;
 
   void shutdown () override;
+  /// @}
 
   Hello (Hello const &) = delete;
   Hello (Hello &&) = delete;

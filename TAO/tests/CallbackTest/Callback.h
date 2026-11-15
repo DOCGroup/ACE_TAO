@@ -17,12 +17,15 @@ public:
   Callback &operator= (Callback const &) = delete;
   Callback &operator= (Callback &&) = delete;
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   CORBA::Boolean are_you_there (CORBA::String_out answer) override;
 
   void test_oneway () override;
 
   void shutdown () override;
+  /// @}
+
 private:
   /// Use an ORB reference to shutdown the application.
   CORBA::ORB_var orb_;
