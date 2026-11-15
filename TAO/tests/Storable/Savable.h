@@ -5,6 +5,8 @@
 #include /**/ "tao/Version.h"
 #include /**/ "tao/Versioned_Namespace.h"
 
+#include <array>
+#include <memory>
 #include <string>
 
 class Savable_Exception
@@ -52,7 +54,7 @@ class Savable
 
   static const int bytes_size_max;
   int bytes_size_[2];
-  char * bytes_[2];
+  std::array<std::unique_ptr<char[]>, 2> bytes_;
 
   friend class Savable_File_Guard;
 };

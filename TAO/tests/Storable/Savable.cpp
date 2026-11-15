@@ -98,7 +98,7 @@ Savable::Savable (TAO::Storable_Factory & storable_factory)
       this->i_[index] = 0;
       this->ui_[index] = 0;
       this->bytes_size_[index] = 0;
-      this->bytes_[index] = new char [this->bytes_size_max];
+      this->bytes_[index] = std::make_unique<char[]> (this->bytes_size_max);
       for (int i = 0; i < this->bytes_size_max; ++i)
         {
           this->bytes_[index][i] = ACE_CHAR_MAX;
@@ -117,13 +117,7 @@ Savable::Savable (TAO::Storable_Factory & storable_factory)
     }
 }
 
-Savable::~Savable ()
-{
-  for (int index = 0; index < 2; ++index)
-    {
-      delete []this->bytes_[index];
-    }
-}
+Savable::~Savable () = default;
 
 bool
 Savable::is_loaded_from_stream ()
@@ -142,7 +136,7 @@ Savable::read (TAO::Storable_Base & stream)
       stream >> this->i_[index];
       stream >> this->ui_[index];
       stream >> this->bytes_size_[index];
-      stream.read (this->bytes_size_[index], this->bytes_[index]);
+      stream.read (this->bytes_size_[index], this->bytes_[index].get ());
     }
 }
 
@@ -157,7 +151,7 @@ Savable::write (TAO::Storable_Base & stream)
       stream << this->i_[index];
       stream << this->ui_[index];
       stream << this->bytes_size_[index];
-      stream.write (this->bytes_size_[index], this->bytes_[index]);
+      stream.write (this->bytes_size_[index], this->bytes_[index].get ());
     }
 
   stream.flush ();
