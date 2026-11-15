@@ -15,8 +15,6 @@
  */
 // ============================================================================
 
-// Macros for handling CORBA exceptions.
-
 #ifndef ACE_CORBA_MACROS_H
 #define ACE_CORBA_MACROS_H
 

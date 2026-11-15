@@ -25,16 +25,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// ============================================================================
-// UNICODE macros (to be added later)
-// ============================================================================
-
 // Get the unicode (i.e. ACE_TCHAR) defines
 # include "ace/ace_wchar.h"
-
-// ============================================================================
-// at_exit declarations
-// ============================================================================
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -58,10 +50,6 @@ typedef void (*ACE_CLEANUP_FUNC)(void *object, void *param) /* noexcept */;
 # if defined (ACE_HAS_SIG_C_FUNC)
 }
 # endif /* ACE_HAS_SIG_C_FUNC */
-
-// ============================================================================
-// log_msg declarations
-// ============================================================================
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
