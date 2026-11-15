@@ -12,27 +12,7 @@
 #define QOS_UTIL_H
 
 #include "ace/INET_Addr.h"
-#include "ace/QoS/QoS_Session.h"
-
-#include <memory>
-
-class ACE_QoS_Session_Factory;
-
-struct QoS_Session_Deleter
-{
-  explicit QoS_Session_Deleter (ACE_QoS_Session_Factory &factory)
-    : factory_ (factory)
-  {
-  }
-
-  void operator() (ACE_QoS_Session *session) const;
-
-private:
-  ACE_QoS_Session_Factory &factory_;
-};
-
-using QoS_Session_Ptr =
-  std::unique_ptr<ACE_QoS_Session, QoS_Session_Deleter>;
+#include "../QoS_Session_Ptr.h"
 
 /**
  * @class QoS_Util

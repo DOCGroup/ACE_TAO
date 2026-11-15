@@ -5,17 +5,6 @@
 #include "ace/Get_Opt.h"
 #include "QoS_Util.h"
 #include "ace/OS_NS_strings.h"
-#include "ace/QoS/QoS_Session_Factory.h"
-
-void
-QoS_Session_Deleter::operator() (ACE_QoS_Session *session) const
-{
-  if (session != nullptr)
-    {
-      this->factory_.destroy_session (session);
-      delete session;
-    }
-}
 
 QoS_Util::QoS_Util (int argc,
                     ACE_TCHAR *argv[])
