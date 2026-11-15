@@ -37,7 +37,8 @@ public:
   /// visit the field node
   int visit_field (be_field *node) override;
 
-  // =visit operations on all possible data types that a field can be
+  /// @name Visitor methods for field types
+  /// @{
 
   /// visit array type
   int visit_array (be_array *node) override;
@@ -58,6 +59,7 @@ public:
   int visit_union (be_union *node) override;
 
   std::string pre_, post_;
+  /// @}
 };
 
 #endif /*  _BE_VISITOR_VALUETYPE_FIELD_CDR_CH_H_ */

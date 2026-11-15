@@ -39,7 +39,8 @@ public:
   /// visit the field node
   int visit_field (be_field *node) override;
 
-  // =visit operations on all possible data types that a union_branch can be
+  /// @name Visitor methods for union branch field types
+  /// @{
 
   /// visit array type
   int visit_array (be_array *node) override;
@@ -88,6 +89,7 @@ public:
   void op_name (be_valuetype *node, TAO_OutStream *os);
 
   bool in_obv_space_ {};
+  /// @}
 private:
   std::string pre_op_ {};
 

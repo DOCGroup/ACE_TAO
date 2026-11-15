@@ -40,7 +40,6 @@ public:
   be_visitor_sequence_base &operator= (const be_visitor_sequence_base &) = delete;
   be_visitor_sequence_base &operator= (be_visitor_sequence_base &&) = delete;
 
-  // = Visitor methods.
   int visit_predefined_type (be_predefined_type *node) override;
   int visit_interface (be_interface *node) override;
   int visit_interface_fwd (be_interface_fwd *node) override;
@@ -90,7 +89,6 @@ public:
   be_visitor_sequence_base_template_args &operator= (
     be_visitor_sequence_base_template_args &&) = delete;
 
-  //= Visit methods
   int visit_interface (be_interface *node) override;
 
   int visit_interface_fwd (be_interface_fwd *node) override;

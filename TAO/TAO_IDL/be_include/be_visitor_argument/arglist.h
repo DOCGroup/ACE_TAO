@@ -41,7 +41,8 @@ public:
   /// visit the argument node
   int visit_argument (be_argument *node) override;
 
-  // =visit all the nodes that can be the types for the argument
+  /// @name Visitor methods for argument types
+  /// @{
 
   /// visit array type
   int visit_array (be_array *node) override;
@@ -103,9 +104,10 @@ public:
 
   int visit_map (be_map *node) override;
 
+  /// @}
+
   /// Set the member.
   void unused (bool val);
-
 private:
   int emit_common (be_type *node);
 

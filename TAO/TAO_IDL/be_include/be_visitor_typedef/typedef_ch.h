@@ -37,8 +37,8 @@ public:
   /// visit typedef. We provide code for this method in the derived class
   int visit_typedef (be_typedef *node) override;
 
-  // =visit methods on all elements syntactically valid as types that can be
-  // typedefed.
+  /// @name Visitor methods for types that can be typedefed
+  /// @{
 
   /// visit a array
   int visit_array (be_array *node) override;
@@ -78,6 +78,7 @@ public:
 
   /// visit a valuetype
   int visit_valuetype (be_valuetype *node) override;
+  /// @}
 };
 
 #endif /* _BE_VISITOR_TYPEDEF_TYPEDEF_CH_H_ */

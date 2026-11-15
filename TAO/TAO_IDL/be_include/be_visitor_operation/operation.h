@@ -37,8 +37,6 @@ public:
   be_visitor_operation &operator= (be_visitor_operation const &) = delete;
   be_visitor_operation &operator= (be_visitor_operation &&) = delete;
 
-  // =helper
-
   /// is my return type void?
   virtual int void_return_type (be_type *);
 

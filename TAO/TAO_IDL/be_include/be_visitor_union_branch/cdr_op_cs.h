@@ -35,7 +35,8 @@ public:
   /// visit the union_branch node
   int visit_union_branch (be_union_branch *node) override;
 
-  // =visit operations on all possible data types that a union_branch can be
+  /// @name Visitor methods for union branch field types
+  /// @{
 
   int visit_array (be_array *node) override;
   int visit_enum (be_enum *node) override;
@@ -51,6 +52,7 @@ public:
   int visit_typedef (be_typedef *node) override;
   int visit_union (be_union *node) override;
 
+  /// @}
  private:
   int emit_valuetype_common (be_type *node);
 };

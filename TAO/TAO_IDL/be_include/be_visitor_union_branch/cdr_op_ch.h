@@ -35,7 +35,8 @@ public:
   /// visit the union_branch node
   int visit_union_branch (be_union_branch *node) override;
 
-  // =visit operations on all possible data types that a union_branch can be
+  /// @name Visitor methods for union branch field types
+  /// @{
 
   /// visit array type
   int visit_array (be_array *node) override;
@@ -54,6 +55,7 @@ public:
 
   /// visit union type
   int visit_union (be_union *node) override;
+  /// @}
 };
 
 #endif /*  _BE_VISITOR_UNION_BRANCH_CDR_OP_CH_H_ */

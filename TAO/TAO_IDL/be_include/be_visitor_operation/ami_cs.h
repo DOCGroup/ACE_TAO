@@ -40,12 +40,10 @@ public:
   /// visit argument to generate ParamData entries
   int visit_argument (be_argument *node) override;
 
-  // = template methods
   /// generate any info before the actual code for the stub is generated
   int gen_pre_stub_info (be_operation *node,
                          be_type *bt);
 
-  // =helper
   /// stuff to output after every member of the scope is handled
   int post_process (be_decl *) override;
 };
