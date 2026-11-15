@@ -1,27 +1,13 @@
 
-// ============================================================================
-//
-// = LIBRARY
-//    TAO IDL
-//
-// = FILENAME
-//    union_branch_cdr_op_cs.cpp
-//
-// = DESCRIPTION
-//    Visitor generating code for Union_Branch in the client stubs file.
-//
-// = AUTHOR
-//    Aniruddha Gokhale
-//
-// ============================================================================
+/**
+ * @file cdr_op_cs.cpp
+ * @brief Visitor that generates client-stub CDR operators for union branches.
+ * @author Aniruddha Gokhale
+ */
 
 #include "union_branch.h"
 
 #include <string>
-
-// **********************************************
-//  Visitor for union_branch in the client stubs file.
-// **********************************************
 
 be_visitor_union_branch_cdr_op_cs::be_visitor_union_branch_cdr_op_cs (
     be_visitor_context *ctx
