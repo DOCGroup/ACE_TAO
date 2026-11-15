@@ -135,8 +135,7 @@ disable_signal (int sigmin, int sigmax)
   sigset_t signal_set;
   if (ACE_OS::sigemptyset (&signal_set) == - 1)
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Error: (%P|%t):%p\n"),
-                ACE_TEXT ("sigemptyset failed")));
+                ACE_TEXT ("Error: (%P|%t): sigemptyset failed: %p\n")));
 
   for (int i = sigmin; i <= sigmax; ++i)
     ACE_OS::sigaddset (&signal_set, i);
@@ -150,8 +149,7 @@ disable_signal (int sigmin, int sigmax)
   if (ACE_OS::thr_sigsetmask (SIG_BLOCK, &signal_set, nullptr) != 0)
 # endif /* ACE_LACKS_PTHREAD_THR_SIGSETMASK */
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Error: (%P|%t): %p\n"),
-                       ACE_TEXT ("SIG_BLOCK failed")),
+                       ACE_TEXT ("Error: (%P|%t): SIG_BLOCK failed: %p\n")),
                       -1);
 #else
   ACE_UNUSED_ARG (sigmin);
@@ -203,22 +201,22 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
 Client_Handler::~Client_Handler ()
 {
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Client %@ handle %d down\n"),
-              this, this->stream_.handle ()));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Client %@ handle %@ down\n"),
+              this, reinterpret_cast<void *> (this->stream_.handle ())));
   if (this->stream_.handle () != ACE_INVALID_HANDLE)
     {
       if (this->msgs_sent_ != cli_req_no)
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%t) Client handle %d sent %d messages; ")
-                    ACE_TEXT ("expected %d\n"),
-                    this->stream_.handle (),
+                    ACE_TEXT ("(%t) Client handle %@ sent %B messages; ")
+                    ACE_TEXT ("expected %B\n"),
+                    reinterpret_cast<void *> (this->stream_.handle ()),
                     this->msgs_sent_,
                     cli_req_no));
       else
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%t) Client handle %d sent %d messages; ")
+                    ACE_TEXT ("(%t) Client handle %@ sent %B messages; ")
                     ACE_TEXT ("closing connection\n"),
-                    this->stream_.handle (),
+                    reinterpret_cast<void *> (this->stream_.handle ()),
                     cli_req_no));
     }
   this->stream_.close ();
@@ -227,18 +225,16 @@ Client_Handler::~Client_Handler ()
 int
 Client_Handler::open (ACE_HANDLE handle)
 {
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Client %@ handle %d up\n"),
-              this, handle));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Client %@ handle %@ up\n"),
+              this, reinterpret_cast<void *> (handle)));
   if (this->stream_.open (*this, handle) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%t) Client_Handler: %p\n"),
-                       ACE_TEXT ("open")),
+                       ACE_TEXT ("(%t) Client_Handler::open failed: %p\n")),
                       -1);
   this->block_.copy (test_string);
   if (this->stream_.write (this->block_, this->block_.length ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%t) Client_Handler: %p\n"),
-                       ACE_TEXT ("initiate write")),
+                       ACE_TEXT ("(%t) Client_Handler::write failed: %p\n")),
                       -1);
   return 0;
 }
@@ -251,14 +247,13 @@ Client_Handler::handle_write_stream
     {
       errno = result.error ();
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%t) Client handle %d: %p\n"),
-                  this->stream_.handle (),
-                  ACE_TEXT ("write")));
+                  ACE_TEXT ("(%t) Client handle %@ write failed: %p\n"),
+                  reinterpret_cast<void *> (this->stream_.handle ())));
       delete this;
       return;
     }
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Client %@ handle %d sent %B of %B bytes\n"),
-              this, this->stream_.handle (),
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Client %@ handle %@ sent %B of %B bytes\n"),
+              this, reinterpret_cast<void *> (this->stream_.handle ()),
               result.bytes_transferred (), result.bytes_to_write ()));
   ACE_Message_Block &b = result.message_block ();
   bool send_again = true;
@@ -280,16 +275,15 @@ Client_Handler::handle_write_stream
       if (this->stream_.write (this->block_, this->block_.length ()) == -1)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%t) Client_Handler: %p\n"),
-                      ACE_TEXT ("initiate write")));
+                      ACE_TEXT ("(%t) Client_Handler::write failed: %p\n")));
           delete this;
         }
     }
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%t) Client handle %d done sending\n"),
-                  this->stream_.handle ()));
+                  ACE_TEXT ("(%t) Client handle %@ done sending\n"),
+                  reinterpret_cast<void *> (this->stream_.handle ())));
       delete this;
     }
   return;
@@ -297,22 +291,22 @@ Client_Handler::handle_write_stream
 
 Server_Handler::~Server_Handler ()
 {
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Server %@ handle %d down\n"),
-              this, this->stream_.handle ()));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Server %@ handle %@ down\n"),
+              this, reinterpret_cast<void *> (this->stream_.handle ())));
   if (this->stream_.handle () != ACE_INVALID_HANDLE)
     {
       if (this->msgs_rcvd_ != cli_req_no)
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%t) Server handle %d received %d messages; ")
-                    ACE_TEXT ("expected %d\n"),
-                    this->stream_.handle (),
+                    ACE_TEXT ("(%t) Server handle %@ received %B messages; ")
+                    ACE_TEXT ("expected %B\n"),
+                    reinterpret_cast<void *> (this->stream_.handle ()),
                     this->msgs_rcvd_,
                     cli_req_no));
       else
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%t) Server handle %d received %d messages; ")
+                    ACE_TEXT ("(%t) Server handle %@ received %B messages; ")
                     ACE_TEXT ("closing connection\n"),
-                    this->stream_.handle (),
+                    reinterpret_cast<void *> (this->stream_.handle ()),
                     cli_req_no));
     }
   this->stream_.close ();
@@ -321,17 +315,15 @@ Server_Handler::~Server_Handler ()
 int
 Server_Handler::open (ACE_HANDLE handle)
 {
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Server %@ handle %d up\n"),
-              this, handle));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Server %@ handle %@ up\n"),
+              this, reinterpret_cast<void *> (handle)));
   if (this->stream_.open (*this, handle) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%t) Server_Handler: %p\n"),
-                       ACE_TEXT ("open")),
+                       ACE_TEXT ("(%t) Server_Handler::open failed: %p\n")),
                       -1);
   if (this->stream_.read (this->block_, this->block_.space () - 1) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%t) Server_Handler: %p\n"),
-                       ACE_TEXT ("read")),
+                       ACE_TEXT ("(%t) Server_Handler::read failed: %p\n")),
                       -1);
   return 0;
 }
@@ -344,20 +336,19 @@ Server_Handler::handle_read_stream
     {
       errno = result.error ();
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%t) Server handle %d: %p\n"),
-                  this->stream_.handle (),
-                  ACE_TEXT ("read")));
+                  ACE_TEXT ("(%t) Server handle %@ read failed: %p\n"),
+                  reinterpret_cast<void *> (this->stream_.handle ())));
       delete this;
       return;
     }
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Server %@ handle %d recv %B of %B bytes\n"),
-              this, this->stream_.handle (),
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Server %@ handle %@ recv %B of %B bytes\n"),
+              this, reinterpret_cast<void *> (this->stream_.handle ()),
               result.bytes_transferred (), result.bytes_to_read ()));
   if (result.bytes_transferred () == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%t) Server handle %d closed by peer\n"),
-                  this->stream_.handle ()));
+                  ACE_TEXT ("(%t) Server handle %@ closed by peer\n"),
+                  reinterpret_cast<void *> (this->stream_.handle ())));
       delete this;
       return;
     }
@@ -391,8 +382,7 @@ Server_Handler::handle_read_stream
   if (this->stream_.read (b, b.space () - 1) == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%t) Server_Handler: %p\n"),
-                  ACE_TEXT ("read")));
+                  ACE_TEXT ("(%t) Server_Handler::read failed: %p\n")));
       delete this;
     }
   return;
@@ -403,8 +393,7 @@ Server_Acceptor::open (const ACE_INET_Addr &listen_addr)
 {
   if (this->acceptor_.open (listen_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("listen")),
+                       ACE_TEXT ("listen: %p\n")),
                       -1);
   return 0;
 }
@@ -421,8 +410,7 @@ Server_Acceptor::handle_input (ACE_HANDLE)
   ACE_SSL_SOCK_Stream new_stream;
   if (this->acceptor_.accept (new_stream) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%t) %p\n"),
-                       ACE_TEXT ("accept")),
+                       ACE_TEXT ("(%t) accept: %p\n")),
                       -1);
   Server_Handler *new_handler {};
   ACE_NEW_RETURN (new_handler, Server_Handler, -1);
@@ -453,8 +441,7 @@ proactor_loop (void *)
     ACE_Proactor::instance ()->proactor_run_event_loop ();
   if (result == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%t) %p\n"),
-                       ACE_TEXT ("Error handling events")),
+                       ACE_TEXT ("(%t) Error handling events: %p\n")),
                       0);
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Done handling events.\n")));
@@ -478,8 +465,7 @@ start_clients (void *)
       if (connect.connect (stream, addr) < 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%t) %p\n"),
-                      ACE_TEXT ("connect")));
+                      ACE_TEXT ("(%t) connect: %p\n")));
           continue;
         }
 
@@ -531,14 +517,13 @@ run_main (int argc, ACE_TCHAR *argv[])
                                                         ACE_Event_Handler::ACCEPT_MASK))
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%t) %p; aborting\n"),
-                  ACE_TEXT ("register_handler")));
+                  ACE_TEXT ("(%t) register_handler: %p; aborting\n")));
       return 1;
     }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Listening at %s\n"), rendezvous));
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) Spawning %d proactor threads\n"),
+              ACE_TEXT ("(%t) Spawning %B proactor threads\n"),
               num_threads));
   ACE_Thread_Manager::instance ()->spawn_n (num_threads, proactor_loop);
   ACE_Thread_Manager::instance ()->spawn (start_clients);

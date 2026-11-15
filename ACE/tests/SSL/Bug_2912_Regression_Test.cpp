@@ -56,8 +56,7 @@ disable_signal (int sigmin, int sigmax)
   sigset_t signal_set;
   if (ACE_OS::sigemptyset (&signal_set) == - 1)
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Error: (%P|%t):%p\n"),
-                ACE_TEXT ("sigemptyset failed")));
+                ACE_TEXT ("Error: (%P|%t): sigemptyset failed: %p\n")));
 
   for (int i = sigmin; i <= sigmax; ++i)
     ACE_OS::sigaddset (&signal_set, i);
@@ -71,8 +70,7 @@ disable_signal (int sigmin, int sigmax)
   if (ACE_OS::thr_sigsetmask (SIG_BLOCK, &signal_set, nullptr) != 0)
 # endif /* ACE_LACKS_PTHREAD_THR_SIGSETMASK */
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Error: (%P|%t): %p\n"),
-                       ACE_TEXT ("SIG_BLOCK failed")),
+                       ACE_TEXT ("Error: (%P|%t): SIG_BLOCK failed: %p\n")),
                       -1);
 #else
   ACE_UNUSED_ARG (sigmin);
