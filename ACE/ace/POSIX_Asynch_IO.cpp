@@ -1161,10 +1161,16 @@ ACE_POSIX_Asynch_Accept::handle_input (ACE_HANDLE /* fd */)
   // Notify the main process about this completion
   // Send the Result through the notification pipe.
   if (this->posix_proactor ()->post_completion (result_owner.get ()) == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT("Error:(%P | %t):%p\n"),
-                ACE_TEXT("ACE_POSIX_Asynch_Accept::handle_input: ")
-                ACE_TEXT(" <post_completion> failed")));
+    {
+      if (new_handle != ACE_INVALID_HANDLE)
+        {
+          ACE_OS::closesocket (new_handle);
+        }
+      ACELIB_ERROR ((LM_ERROR,
+                  ACE_TEXT("Error:(%P | %t):%p\n"),
+                  ACE_TEXT("ACE_POSIX_Asynch_Accept::handle_input: ")
+                  ACE_TEXT(" <post_completion> failed")));
+    }
   else
     result_owner.release ();
 
