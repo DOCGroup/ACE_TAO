@@ -340,7 +340,8 @@ private:
    */
   virtual int parse_args_i (int argc, ACE_TCHAR *argv[]);
 
-  /// = Static interfaces
+  /// @name Static interfaces
+  /// @{
 
  public:
  /**
@@ -487,18 +488,13 @@ private:
 
   /// Perform the reconfiguration process.
   static void reconfigure ();
+  /// @}
 
-  // = The following methods are static in order to enforce Singleton
-  // semantics for the Reactor, Service_Repository, Thread_Manager,
-  // and Acceptor/Connector Strategy factory.  Other portions of the
-  // system may need to access them at some point or another...
-
-  // = This is not strictly needed, anymore since the service configurator
-  // has been refactored to allow multiple service configuration
-  // instances (called gestalts). The interfaces, however were retained in for
-  // the sake of maintaining source-code compatibility.
-
-  // = Accessors and mutators for process-wide Singletons.
+  /// @name Legacy process-wide singleton accessors
+  /// The service configurator now supports multiple gestalts. These
+  /// interfaces remain for source compatibility and access to process-wide
+  /// singleton services.
+  /// @{
 
   /// Returns a pointer to the list of statically linked services.
   ///
@@ -516,8 +512,10 @@ private:
   /// services repository and provide a better way of debugging service
   /// loading and registration problems.
   static int insert (ACE_Static_Svc_Descriptor *svc);
+  /// @}
 
-  // = Utility methods.
+  /// @name Service utility methods
+  /// @{
   /// Dynamically link the shared object file and retrieve a pointer to
   /// the designated shared object in this file.
   static int initialize (const ACE_Service_Type *,
@@ -544,6 +542,7 @@ private:
   /// Totally remove @a svc_name from the daemon by removing it
   /// from the ACE_Reactor, and unlinking it if necessary.
   static int remove (const ACE_TCHAR svc_name[]);
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;
@@ -654,7 +653,8 @@ private:
   /// True if reconfiguration occurred.
   static sig_atomic_t reconfig_occurred_;
 
-  // = Set by command-line options.
+  /// @name Command-line configuration state
+  /// @{
   /// Shall we become a daemon process?
   static bool be_a_daemon_;
 
@@ -666,6 +666,7 @@ private:
 
   /// Handles the reconfiguration signals.
   static ACE_Sig_Adapter *signal_handler_;
+  /// @}
 
   /// Pointer to the Singleton (ACE_Cleanup) Gestalt instance.
   /// There is thread-specific global instance pointer, which is used to

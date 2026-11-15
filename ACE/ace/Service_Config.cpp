@@ -136,8 +136,6 @@ ACE_Sig_Adapter *ACE_Service_Config::signal_handler_ {};
 // Trigger a reconfiguration.
 sig_atomic_t ACE_Service_Config::reconfig_occurred_ = 0;
 
-// = Set by command-line options.
-
 /// Pathname of file to write process id.
 ACE_TCHAR *ACE_Service_Config::pid_file_name_ {};
 
