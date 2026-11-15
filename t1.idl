@@ -1,0 +1,15 @@
+    module pk_msgs {
+            module msg {
+                    struct _Object {
+                            long long id;
+                    };
+
+                    typedef sequence<_Object> ObjectSeq;
+
+                    struct Objects {
+                            ObjectSeq objs;
+                    };
+            };
+    };
+
+

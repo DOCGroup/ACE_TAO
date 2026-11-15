@@ -1,0 +1,2 @@
+typedef sequence<octet> Pixels[2];
+

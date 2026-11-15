@@ -1,13 +1,10 @@
-/// @file FT.idl
+/// @file FT_CORBA.idl
 #ifndef _FT_IDL_
 #define _FT_IDL_
 
-/// The OMG file has been devided into several portions:
-/// @file FT_CORBA.idl
-/// @file FT_CORBA_ORB.idl
-/// @file FT_Detector.idl
-/// @file FT_Notifier.idl
-/// @file FT_Replica.idl
+/// The original OMG file was split into these IDL files:
+/// @c FT_CORBA.idl, @c FT_CORBA_ORB.idl, @c FT_Detector.idl,
+/// @c FT_Notifier.idl, and @c FT_Replica.idl.
 
 /// The next include is TAO specific.
 #include "orbsvcs/FT_CORBA_ORB.idl"

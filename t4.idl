@@ -1,0 +1,9 @@
+typedef sequence<octet> Pixels;
+module message {
+  struct Image {
+    unsigned short width;
+    unsigned short height;
+    unsigned short bytesPerPixel;
+    Pixels data;
+  };
+};
