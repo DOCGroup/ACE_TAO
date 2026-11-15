@@ -17,10 +17,12 @@ public:
   Hello &operator= (Hello const &) = delete;
   Hello &operator= (Hello &&) = delete;
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   Test::ObjectSeq *get_objects () override;
 
   void shutdown () override;
+  /// @}
 
 private:
   CORBA::ORB_var const orb_;
