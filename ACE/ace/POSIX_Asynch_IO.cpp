@@ -1312,6 +1312,17 @@ ACE_POSIX_Asynch_Connect::connect (ACE_HANDLE connect_handle,
                                                    priority,
                                                    signal_number),
                   -1);
+  auto result_deleter = [] (ACE_POSIX_Asynch_Connect_Result *result)
+    {
+      ACE_HANDLE handle = result->connect_handle ();
+      if (handle != ACE_INVALID_HANDLE)
+        {
+          ACE_OS::closesocket (handle);
+        }
+      delete result;
+    };
+  std::unique_ptr<ACE_POSIX_Asynch_Connect_Result, decltype (result_deleter)>
+    result_owner (result, result_deleter);
 
   int rc = connect_i (result,
                       remote_sap,
@@ -1323,7 +1334,7 @@ ACE_POSIX_Asynch_Connect::connect (ACE_HANDLE connect_handle,
 
   if (rc != 0)
   {
-    return post_result (result, true);
+    return post_result (result_owner.release (), true);
   }
 
   //  Enqueue result we will wait for completion
@@ -1338,9 +1349,10 @@ ACE_POSIX_Asynch_Connect::connect (ACE_HANDLE connect_handle,
                      ACE_TEXT ("bind")));
 
         result->set_error (EFAULT);
-        return post_result (result, true);
+        return post_result (result_owner.release (), true);
       }
   }
+  result_owner.release ();
 
   ACE_Asynch_Pseudo_Task & task =
     this->posix_proactor ()->get_asynch_pseudo_task ();
