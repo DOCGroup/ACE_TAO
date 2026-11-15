@@ -34,7 +34,7 @@ HostProcess::~HostProcess ()
       delete reinterpret_cast<Thread *>(i.next()->item_);
     }
 #if 0
-  for (PeerProcs::ITERATOR i = by_addr_.begin(); i != servers_.end(); i++)
+  for (PeerProcs::ITERATOR i = by_addr_.begin(); i != servers_.end(); ++i)
     {
       PeerProcs::ENTRY *entry;
       if (i.next(entry) == 0)
@@ -347,7 +347,7 @@ HostProcess::iterate_peers (int group,
                             Session *session)
 {
   bool first {true};
-  for (PeerProcs::ITERATOR i = this->by_addr_.begin(); i != by_addr_.end(); i++)
+  for (PeerProcs::ITERATOR i = this->by_addr_.begin(); i != by_addr_.end(); ++i)
     {
       PeerProcs::ENTRY *entry;
       if (i.next(entry) == 0)
@@ -412,7 +412,7 @@ HostProcess::dump_peer_summary (ostream &strm)
   size_t num_servers {};
   size_t num_clients {};
   strm << " total peers: " << this->by_addr_.current_size() << endl;
-  for (PeerProcs::ITERATOR i = this->by_addr_.begin(); i != by_addr_.end(); i++)
+  for (PeerProcs::ITERATOR i = this->by_addr_.begin(); i != by_addr_.end(); ++i)
     {
       PeerProcs::ENTRY *entry;
       if (i.next(entry) == 0)

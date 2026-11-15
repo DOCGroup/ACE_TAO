@@ -137,7 +137,7 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
       return 0;
     }
   Session session;
-  for (int i = 1; i < argc; i++)
+  for (int i = 1; i < argc; ++i)
     {
       if (ACE_OS::strcasecmp (argv[i], ACE_TEXT("-o")) == 0)
         {

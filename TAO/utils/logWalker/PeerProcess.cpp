@@ -151,7 +151,7 @@ PeerProcess::~PeerProcess ()
       Invocation *head = this->invocations_.delete_head();
       delete head;
     }
-  for (PeerObjectTable::ITERATOR i = objects_.begin(); i != objects_.end(); i++)
+  for (PeerObjectTable::ITERATOR i = objects_.begin(); i != objects_.end(); ++i)
     {
       PeerObjectTable::ENTRY *entry;
       if (i.next(entry) == 0)
