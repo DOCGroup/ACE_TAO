@@ -112,7 +112,8 @@ public:
 
   virtual ~ACE_NT_Service ();
 
-  // = Functions to operate the service
+  /// @name Service lifecycle hooks
+  /// @{
 
   /**
    * Hook called to open the service.  By default, sets the service
@@ -152,10 +153,10 @@ public:
   /// Set the svc_handle_ member.  This is only a public function because
   /// the macro-generated service function calls it.
   void svc_handle (const SERVICE_STATUS_HANDLE new_svc_handle);
+  /// @}
 
-  // = Methods which can be used to do SCP-like functions. The first group
-  // are used to register/insert and remove the service's definition in the
-  // SCM registry.
+  /// @name Service Control Manager operations
+  /// @{
 
   /// Sets the name and description for the service.
   /// If @a desc is 0, it takes the same value as name.
@@ -202,8 +203,10 @@ public:
 
   /// Returns the current startup type.
   DWORD startup ();
+  /// @}
 
-  // = Methods to control ACE_Log_Msg behavior in the service.
+  /// @name Logging configuration
+  /// @{
 
   /**
    * Set the ACE_Log_Msg attributes that the service thread will use to
@@ -225,8 +228,10 @@ public:
    * correctly into the process's established logging setup.
    */
   void inherit_log_msg_attributes ();
+  /// @}
 
-  // = Methods which control the service's execution.
+  /// @name Service execution control
+  /// @{
 
   // These methods to start/pause/resume/stop/check the service all
   // have the following common behavior with respect to @a wait_time
@@ -310,6 +315,7 @@ public:
    * ACE_OS::last_error to get the specific error indication.
    */
   int test_access (DWORD desired_access = SERVICE_ALL_ACCESS);
+  /// @}
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
