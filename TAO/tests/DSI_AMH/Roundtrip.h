@@ -25,8 +25,8 @@ public:
   Roundtrip &operator= (Roundtrip const &) = delete;
   Roundtrip &operator= (Roundtrip &&) = delete;
 
-  // = The DSI methods
-
+  /// @name DSI methods
+  /// @{
   /// Turns around and calls invoke, but using AMH style handler
   void _dispatch (TAO_ServerRequest &request,
                   TAO::Portable_Server::Servant_Upcall *context) override;
@@ -38,6 +38,7 @@ public:
   CORBA::RepositoryId _primary_interface (
       const PortableServer::ObjectId &oid,
       PortableServer::POA_ptr poa) override;
+  /// @}
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

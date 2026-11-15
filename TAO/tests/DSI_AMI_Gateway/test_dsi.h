@@ -26,7 +26,6 @@
 class DSI_Simple_Server : public TAO_DynamicImplementation
 {
 public:
-  /// ctor
   DSI_Simple_Server (CORBA::ORB_ptr orb,
                      CORBA::Object_ptr target,
                      PortableServer::POA_ptr poa);
@@ -37,9 +36,9 @@ public:
 
   /**
    * Turns around and calls invoke, but using AMH style handler
-   * = The DynamicImplementation methods.
-   *
    */
+  /// @name DynamicImplementation methods
+  /// @{
   void _dispatch (TAO_ServerRequest &request,
                   TAO::Portable_Server::Servant_Upcall *context) override;
 
@@ -54,9 +53,10 @@ public:
       PortableServer::POA_ptr poa) override;
 
   PortableServer::POA_ptr _default_POA () override;
+  /// @}
 
 private:
-  /// The ORB
+  /// The ORB.
   CORBA::ORB_var const orb_;
 
   /// Target object, forward requests to it...

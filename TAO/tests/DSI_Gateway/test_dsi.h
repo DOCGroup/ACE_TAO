@@ -25,7 +25,6 @@
 class DSI_Simple_Server : public TAO_DynamicImplementation
 {
 public:
-  /// ctor
   DSI_Simple_Server (CORBA::ORB_ptr orb,
                      CORBA::Object_ptr target,
                      PortableServer::POA_ptr poa);
@@ -34,7 +33,8 @@ public:
   DSI_Simple_Server &operator= (DSI_Simple_Server const &) = delete;
   DSI_Simple_Server &operator= (DSI_Simple_Server &&) = delete;
 
-  // = The DynamicImplementation methods.
+  /// @name DynamicImplementation methods
+  /// @{
   void invoke (CORBA::ServerRequest_ptr request) override;
 
   CORBA::RepositoryId _primary_interface (
@@ -42,9 +42,10 @@ public:
       PortableServer::POA_ptr poa) override;
 
   PortableServer::POA_ptr _default_POA () override;
+  /// @}
 
 private:
-  /// The ORB
+  /// The ORB.
   CORBA::ORB_var const orb_;
 
   /// Target object, forward requests to it...
