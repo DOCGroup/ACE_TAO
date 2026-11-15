@@ -45,29 +45,23 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 
 class Client : public ACE_Task_Base
 {
-  // = TITLE
-  //   Run the client thread
-  //
-  // = DESCRIPTION
-  //   Use the ACE_Task_Base class to run the client threads.
-  //
+  /// Runs the client work on a separate thread using `ACE_Task_Base`.
 public:
   Client (int niterations, ACE_TString const &ior);
-  // ctor
   Client (Client const &) = delete;
   Client (Client &&) = delete;
   Client &operator= (Client const &) = delete;
   Client &operator= (Client &&) = delete;
 
+  /// Entry point for the client thread.
   int svc () override;
-  // The thread entry point.
 
 private:
+  /// Number of requests made by this client thread.
   int const niterations_;
-  // The number of iterations on each client thread.
 
+  /// IOR used by this client thread.
   ACE_TString const ior_;
-  // The IOR that we should use.
 };
 
 int
