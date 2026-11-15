@@ -798,6 +798,7 @@ public:
   ACE_Dynamic_Message_Queue &operator= (ACE_Dynamic_Message_Queue const &) = delete;
   ACE_Dynamic_Message_Queue &operator= (ACE_Dynamic_Message_Queue &&) = delete;
 
+  /// Takes ownership of the dynamically allocated message_strategy.
   ACE_Dynamic_Message_Queue (ACE_Dynamic_Message_Strategy & message_strategy,
                              size_t hwm = ACE_Message_Queue_Base::DEFAULT_HWM,
                              size_t lwm = ACE_Message_Queue_Base::DEFAULT_LWM,

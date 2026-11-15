@@ -44,6 +44,7 @@ Dispatcher_Task::initialize ()
           deadline_queue,
           ACE_Dynamic_Message_Queue<ACE_SYNCH> (*strategy),
           -1);
+      // The queue owns the strategy after successful construction.
       strategy.release ();
       this->owned_queue_.reset (deadline_queue);
       break;
@@ -65,6 +66,7 @@ Dispatcher_Task::initialize ()
            laxity_queue,
            ACE_Dynamic_Message_Queue<ACE_SYNCH> (*strategy),
            -1);
+      // The queue owns the strategy after successful construction.
       strategy.release ();
       this->owned_queue_.reset (laxity_queue);
       break;
