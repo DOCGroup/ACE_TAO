@@ -7,7 +7,6 @@
 #include "ace/Argv_Type_Converter.h"
 #include "ace/Task.h"
 
-// Default Constructor.
 TAO_Naming_Service::TAO_Naming_Service () = default;
 
 // Constructor taking command-line arguments.

@@ -11,7 +11,6 @@ class bug3688_Export TestBroadcaster
 {
   // public types and methods
   public:
-    /// Default constructor.
     TestBroadcaster ();
     TestBroadcaster (TestBroadcaster const&) = delete;
     TestBroadcaster (TestBroadcaster&&) = delete;

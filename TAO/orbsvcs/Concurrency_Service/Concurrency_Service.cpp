@@ -22,8 +22,6 @@
 
 #include <memory>
 
-// Default Constructor.
-
 Concurrency_Service::Concurrency_Service ()
 {
   ORBSVCS_DEBUG ((LM_DEBUG,

@@ -60,7 +60,6 @@ namespace TAO
       Transport (Connection_Handler *handler,
                  TAO_ORB_Core *orb_core);
 
-      /// Default destructor.
       ~Transport () override = default;
 
       /// Overload of the handle_input () in the TAO_Transport

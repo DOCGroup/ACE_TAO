@@ -22,7 +22,6 @@
 class Simple_Server_i : public POA_Simple_Server
 {
 public:
-  /// ctor
   explicit Simple_Server_i (CORBA::ORB_ptr orb);
   Simple_Server_i (Simple_Server_i const &) = delete;
   Simple_Server_i (Simple_Server_i &&) = delete;
@@ -49,7 +48,6 @@ private:
 class Another_One_i : public POA_Another_One
 {
 public:
-  /// ctor
   explicit Another_One_i (CORBA::ORB_ptr orb);
   Another_One_i (Another_One_i const &) = delete;
   Another_One_i (Another_One_i &&) = delete;

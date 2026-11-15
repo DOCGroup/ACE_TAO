@@ -82,7 +82,6 @@ TAO_Offer_Iterator_Collection::~TAO_Offer_Iterator_Collection ()
       catch (const CORBA::Exception&)
         {
           // Don't let the exceptions propagate since we're in a
-          // destructor!
         }
     }
 }

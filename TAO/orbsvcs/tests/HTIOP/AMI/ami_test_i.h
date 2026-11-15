@@ -22,7 +22,6 @@
 class AMI_Test_i : public POA_A::AMI_Test
 {
 public:
-  /// ctor
   AMI_Test_i (CORBA::ORB_ptr orb);
 
   // The AMI_Test methods.

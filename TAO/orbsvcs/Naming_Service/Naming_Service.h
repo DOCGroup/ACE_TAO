@@ -31,7 +31,6 @@
 class TAO_Naming_Service
 {
 public:
-  /// Default Constructor.
   TAO_Naming_Service ();
 
   /// Constructor taking the command-line arguments.

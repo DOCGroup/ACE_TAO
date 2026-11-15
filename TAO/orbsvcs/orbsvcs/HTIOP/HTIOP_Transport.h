@@ -65,7 +65,6 @@ namespace TAO
       Transport& operator= (Transport const&) = delete;
       Transport& operator= (Transport&&) = delete;
 
-      /// Default destructor.
       ~Transport () override;
 
     protected:

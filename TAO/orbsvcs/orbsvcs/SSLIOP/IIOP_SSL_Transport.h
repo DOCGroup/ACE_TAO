@@ -57,7 +57,6 @@ namespace TAO
     IIOP_SSL_Transport (IIOP_SSL_Connection_Handler *handler,
                         TAO_ORB_Core *orb_core);
 
-    /// Default destructor.
     ~IIOP_SSL_Transport () override = default;
 
     /** @name Overridden Template Methods

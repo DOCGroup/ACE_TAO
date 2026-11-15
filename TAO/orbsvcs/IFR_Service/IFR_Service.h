@@ -27,7 +27,6 @@
 class IFR_Service
 {
 public:
-  /// Default constructor.
   IFR_Service ();
 
   IFR_Service (IFR_Service const &) = delete;

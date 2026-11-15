@@ -69,7 +69,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
 class Client : public ACE_Task_Base
 {
 public:
-  /// ctor
   Client (A::AMI_Test_ptr server, int niterations);
 
   /// The thread entry point.

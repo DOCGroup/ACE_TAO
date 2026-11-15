@@ -37,7 +37,6 @@
 class Concurrency_Service : public TAO_ORB_Manager
 {
 public:
-  /// Default Constructor.
   Concurrency_Service ();
 
   /// Constructor taking the command-line arguments.

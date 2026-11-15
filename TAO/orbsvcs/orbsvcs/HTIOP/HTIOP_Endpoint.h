@@ -46,7 +46,6 @@ namespace TAO
       friend class Profile;
       friend class TAO_SSLIOP_Profile;
 
-      /// Default constructor.
       Endpoint ();
       Endpoint (Endpoint const&) = delete;
       Endpoint (Endpoint&&) = delete;

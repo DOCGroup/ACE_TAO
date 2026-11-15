@@ -61,7 +61,6 @@ private:
 class Worker : public ACE_Task_Base
 {
 public:
-  /// ctor
   Worker ();
 
   Worker (Worker const &) = delete;

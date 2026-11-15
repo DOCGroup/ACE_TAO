@@ -36,7 +36,6 @@ class TAO_Notify_Tests_Worker : public ACE_Task_Base
 {
 public:
   TAO_Notify_Tests_Worker ();
-  // ctor
 
   /// Set the command builder.
   void command_builder (TAO_Notify_Tests_Command_Builder* cmd_builder);
@@ -60,7 +59,6 @@ class TAO_Notify_Tests_ORB_Run_Worker : public ACE_Task_Base
 {
 public:
   TAO_Notify_Tests_ORB_Run_Worker ();
-  // ctor
 
   void orb (CORBA::ORB_ptr orb);
 

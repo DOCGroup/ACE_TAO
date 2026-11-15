@@ -26,7 +26,6 @@ class TAO_RTEvent_Serv_Export TAO_EC_TPC_ProxyPushSupplier :
 public:
   TAO_EC_TPC_ProxyPushSupplier (TAO_EC_Event_Channel_Base* event_channel, int validate_connection);
 
-  /// Dtor
   ~TAO_EC_TPC_ProxyPushSupplier () override = default;
 
   /*! These are overridden from the base class in order to maintain the

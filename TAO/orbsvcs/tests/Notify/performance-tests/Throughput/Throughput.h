@@ -37,7 +37,6 @@
 class Worker : public ACE_Task_Base
 {
 public:
-  /// ctor
   Worker () = default;
 
   Worker (Worker const&) = delete;

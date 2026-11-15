@@ -22,7 +22,6 @@
 class Simple_Server_i : public POA_Simple_Server
 {
 public:
-  /// ctor
   explicit Simple_Server_i (CORBA::ORB_ptr orb);
 
   Simple_Server_i (Simple_Server_i const &) = delete;

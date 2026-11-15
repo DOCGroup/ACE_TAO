@@ -22,7 +22,6 @@
 class ECMcastTests_Export Gateway_EC
 {
 public:
-  /// Constructor.
   Gateway_EC ();
 
   Gateway_EC (Gateway_EC const&) = delete;

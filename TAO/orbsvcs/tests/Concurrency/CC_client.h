@@ -47,7 +47,6 @@ extern FILE *ace_cc_yyin;
 class CC_Client
 {
 public:
-  /// Default constructor.
   CC_Client () = default;
 
   ~CC_Client ();

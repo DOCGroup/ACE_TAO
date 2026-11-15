@@ -36,7 +36,6 @@ class TAO_IFRService_Export Options
 public:
   Options ();
 
-  /// dtor
   ~Options();
 
   /// Parse the command-line arguments and initialize the options.

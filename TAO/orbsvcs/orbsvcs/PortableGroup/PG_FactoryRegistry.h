@@ -72,7 +72,6 @@ namespace TAO
   public:
     explicit PG_FactoryRegistry (char const * name = "FactoryRegistry");
 
-    /// virtual Destructor
     ~PG_FactoryRegistry () override;
 
     PG_FactoryRegistry (PG_FactoryRegistry const &) = delete;

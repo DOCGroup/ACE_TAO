@@ -23,7 +23,6 @@
 class Callback_i : public POA_Callback
 {
 public:
-  /// ctor
   Callback_i (CORBA::ORB_ptr orb);
 
   /// Safe way to shutdown
@@ -47,7 +46,6 @@ private:
 class Simple_Server_i : public POA_Simple_Server
 {
 public:
-  /// ctor
   Simple_Server_i (CORBA::ORB_ptr orb, int no_iterations);
 
   // = The Simple_Server methods.
