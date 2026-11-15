@@ -43,7 +43,8 @@ public:
   friend class ACE_Module<ACE_SYNCH_USE, TIME_POLICY>;
   friend class ACE_Module_Type;
 
-  // = Initialization/termination methods.
+  /// @name Initialization and termination
+  /// @{
   /**
    * Initialize a Task, supplying a thread manager and a message
    * queue.  If the user doesn't supply a ACE_Message_Queue pointer
@@ -59,6 +60,7 @@ public:
   ACE_Task &operator= (ACE_Task &&) = delete;
 
   ~ACE_Task () override;
+  /// @}
 
   /// Gets the message queue associated with this task.
   ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY> *msg_queue ();
@@ -75,9 +77,8 @@ public:
   void set_time_policy (TIME_POLICY const & time_policy);
 
 public: // Should be protected:
-  // = Message queue manipulation methods.
-
-  // = Enqueue and dequeue methods.
+  /// @name Message queue operations
+  /// @{
 
   // For the following five method if @a timeout == 0, the caller will
   // block until action is possible, else will wait until the
@@ -120,13 +121,14 @@ public: // Should be protected:
    * time.
    */
   int put_next (ACE_Message_Block *msg, ACE_Time_Value *timeout = nullptr);
+  /// @}
 
-  // = ACE_Task utility routines to identify names et al.
   /// Return the name of the enclosing Module if there's one associated
   /// with the Task, else returns nullptr.
   ACE_TCHAR const *name () const;
 
-  // = Pointers to next ACE_Task_Base (if ACE is part of an ACE_Stream).
+  /// @name Stream relationships
+  /// @{
   /// Get next Task pointer.
   virtual ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *next ();
 
@@ -139,6 +141,7 @@ public: // Should be protected:
 
   /// Return the Task's Module if there is one, else returns nullptr.
   ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *module () const;
+  /// @}
 
   /**
    * Flush the task's queue, i.e., free all of the enqueued
@@ -147,8 +150,6 @@ public: // Should be protected:
    * function, just rewrite the iostream function as ::<flush>.
    */
   virtual int flush (u_long flag = ACE_Task_Flags::ACE_FLUSHALL);
-
-  // = Special routines corresponding to certain message types.
 
   /// Manipulate watermarks.
   void water_marks (ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds, size_t);

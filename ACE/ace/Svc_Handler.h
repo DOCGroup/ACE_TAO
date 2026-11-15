@@ -124,7 +124,8 @@ public:
    */
   virtual void cleanup_hint (void **act_holder = nullptr);
 
-  // = Dynamic linking hooks.
+  /// @name Dynamic linking hooks
+  /// @{
   /// Default version does no work and returns -1.  Must be overloaded
   /// by application developer to do anything meaningful.
   int init (int argc, ACE_TCHAR *argv[]) override;
@@ -136,8 +137,10 @@ public:
   /// Default version does no work and returns -1.  Must be overloaded
   /// by application developer to do anything meaningful.
   int info (ACE_TCHAR **info_string, size_t length) const override;
+  /// @}
 
-  // = Demultiplexing hooks.
+  /// @name Demultiplexing hooks
+  /// @{
 
   /**
    * Perform termination activities on the SVC_HANDLER.  The default
@@ -158,6 +161,7 @@ public:
 
   /// Set the underlying handle associated with the <peer_>.
   void set_handle (ACE_HANDLE) override;
+  /// @}
 
   /// Returns the underlying PEER_STREAM.  Used by
   /// <ACE_Acceptor::accept> and <ACE_Connector::connect> factories.
@@ -211,12 +215,9 @@ public:
   void dump () const;
 
 public:
-  // = The following methods are not suppose to be public.
-
-  // Because friendship is *not* inherited in C++, these methods have
-  // to be public.
-
-  // = Accessors to set/get the connection recycler.
+  /// These methods remain public because friendship is not inherited in C++.
+  /// @name Connection recycler accessors
+  /// @{
 
   /// Set the recycler and the @a recycling_act that is used during
   /// purging and caching.
@@ -236,6 +237,7 @@ public:
    * failures.
    */
   virtual int recycle (void * = nullptr);
+  /// @}
 
 protected:
   /// Maintain connection with client.
