@@ -23,7 +23,8 @@ interface Coffee
     string name;
   };
 
-  attribute Desc description; // provides us the coffee object type
+  /// Provides us the coffee object type.
+  attribute Desc description;
 };
 
 //typedef sequence<Coffee> ObjSeq;
@@ -82,9 +83,8 @@ interface Param_Test
                                   inout Fixed_Struct s2,
                                   out Fixed_Struct s3);
 
-  // = Sequences of long, strings, Var_Struct and Object
-  // references...
-
+  /// @name Sequences of long, strings, Var_Struct and Object references
+  /// @{
 
   struct NameComponent
   {
@@ -162,6 +162,7 @@ interface Param_Test
   CORBA::AnySeq test_anyseq (in CORBA::AnySeq s1,
                              inout CORBA::AnySeq s2,
                              out CORBA::AnySeq s3);
+  /// @}
 
 /*  typedef sequence<any, 32> Bounded_AnySeq;
   Bounded_AnySeq test_bounded_anyseq (in Bounded_AnySeq s1,
@@ -197,7 +198,8 @@ interface Param_Test
                                     out Nested_Struct s3);
 
   // object references
-  Coffee make_coffee (); // make a Coffee object
+  /// Make a Coffee object.
+  Coffee make_coffee ();
 
   // test the parameter passing conventions for ObjRefs
   Coffee test_objref (in Coffee o1, inout Coffee o2, out Coffee o3);
@@ -215,10 +217,10 @@ interface Param_Test
     long x;
     Coffee y;
   };
+  /// Test structures that contain object references.
   Objref_Struct test_objref_struct (in Objref_Struct t1,
                                     inout Objref_Struct t2,
                                     out Objref_Struct t3);
-  // test structures that contain object references.
 
   // arrays (fixed)
   const unsigned long DIM1 = 10;
@@ -384,10 +386,10 @@ interface Param_Test
   //  typedef sequence<TypeCode> TypeCodeSeq;
   //  TypeCodeSeq test_tcseq (in TypeCodeSeq t1,  inout TypeCodeSeq t2, out TypeCodeSeq t3);
 
+  /// Shutdown the server: this is useful to check for memory leaks,
+  /// performance results and in general to verify that orderly
+  /// shutdown is possible.
   void shutdown ();
-  // Shutdown the server: this is useful to check for memory leaks,
-  // performance results and in general to verify that orderly
-  // shutdown is possible.
 
   // test simple objects
   //  Object test_object (in Object o1, inout Object o2, out Object o3);
