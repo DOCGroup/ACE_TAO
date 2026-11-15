@@ -80,7 +80,9 @@ Iterator_Factory_i::modification_date (ACE_stat const& file_status,
                                        Web_Server::Metadata_Type& metadata)
 {
   // Get the modification time from the file status structure/
-  struct tm const *const t_gmt = ACE_OS::gmtime (&file_status.st_mtime);
+  struct tm gmt_time {};
+  struct tm const *const t_gmt = ACE_OS::gmtime_r (&file_status.st_mtime,
+                                                  &gmt_time);
   if (t_gmt == nullptr)
   {
     return -1;
