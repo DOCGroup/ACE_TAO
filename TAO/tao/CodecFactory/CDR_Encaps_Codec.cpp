@@ -40,8 +40,8 @@ TAO_CDR_Encaps_Codec::encode (CORBA::Any const& data)
 {
   this->check_type_for_encoding (data);
 
-  TAO_OutputCDR cdr (static_cast<size_t> (0), // size
-                     static_cast<int> (TAO_ENCAP_BYTE_ORDER),
+  TAO_OutputCDR cdr (0, // size
+                     TAO_ENCAP_BYTE_ORDER,
                      nullptr,               // buffer_allocator
                      nullptr,               // data_block_allocator
                      nullptr,               // message_block_allocator
@@ -156,8 +156,8 @@ TAO_CDR_Encaps_Codec::encode_value (CORBA::Any const& data)
 {
   this->check_type_for_encoding (data);
 
-  TAO_OutputCDR cdr (static_cast<size_t> (0), // size
-                     static_cast<int> (TAO_ENCAP_BYTE_ORDER),
+  TAO_OutputCDR cdr (0, // size
+                     TAO_ENCAP_BYTE_ORDER,
                      nullptr,               // buffer_allocator
                      nullptr,               // data_block_allocator
                      nullptr,               // message_block_allocator
