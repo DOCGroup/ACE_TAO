@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    simple_client.cpp
  *
@@ -8,7 +6,6 @@
  *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
  *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
  */
-//=============================================================================
 
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
