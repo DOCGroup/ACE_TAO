@@ -24,8 +24,10 @@ DSRT_Direct_Dispatcher_Impl (ACE_Sched_Params::Policy sched_policy,
                   "(%t|%T) cannot activate scheduler thread in RT mode."
                   "Trying in non RT mode\n"));
       if (this->activate (this->non_rt_thr_flags_) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    "(%t|%T) cannot activate scheduler thread\n"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "(%t|%T) cannot activate scheduler thread\n"));
+        }
     }
 }
 
@@ -81,7 +83,9 @@ DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::svc ()
                         0);
 
       if (this->shutdown_flagged_)
-        break;
+        {
+          break;
+        }
 
       while (!sched_queue_modified_)
         {
@@ -104,7 +108,9 @@ DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::svc ()
                         0);
 
       if (this->ready_queue_.current_size () <= 0)
-        continue;
+        {
+          continue;
+        }
 
 #ifdef KOKYU_DSRT_LOGGING
       ACE_DEBUG ((LM_DEBUG, "(%t|%T):Sched Queue contents===>\n"));
@@ -180,7 +186,9 @@ schedule_i (Guid_t id, DSRT_QoSDescriptor const &qos)
   item->thread_handle (thr_handle);
 
   if (this->ready_queue_.insert (item) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,

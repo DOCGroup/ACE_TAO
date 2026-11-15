@@ -54,7 +54,9 @@ schedule_i (Guid_t id, DSRT_QoSDescriptor const &qos)
 
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->synch_lock_, -1);
   if (this->ready_queue_.insert (item) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
 #ifdef KOKYU_DSRT_LOGGING
   this->ready_queue_.dump ();
@@ -171,9 +173,13 @@ update_schedule_i (Guid_t guid, Block_Flag_t flag)
 
 #ifdef KOKYU_DSRT_LOGGING
   if (found == 0)
+    {
       ACE_DEBUG ((LM_DEBUG, "(%t|%T): current thread is in the ready queue\n"));
+    }
   else
+    {
       ACE_DEBUG ((LM_DEBUG, "(%t|%T): current thread is not in the ready queue\n"));
+    }
 #endif
 
   if (found == 0 && flag == BLOCK)

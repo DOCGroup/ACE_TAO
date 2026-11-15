@@ -37,9 +37,13 @@ DSRT_Dispatcher_Impl (ACE_Sched_Params::Policy sched_policy,
     curr_scheduled_guid_ {}
 {
   if (sched_policy_ == ACE_SCHED_FIFO)
-    rt_thr_flags_ = non_rt_thr_flags_ | THR_SCHED_FIFO;
+    {
+      rt_thr_flags_ = non_rt_thr_flags_ | THR_SCHED_FIFO;
+    }
   else if (sched_policy_ == ACE_SCHED_RR)
-    rt_thr_flags_ = non_rt_thr_flags_ | THR_SCHED_RR;
+    {
+      rt_thr_flags_ = non_rt_thr_flags_ | THR_SCHED_RR;
+    }
 }
 
 //virtual - so don't inline

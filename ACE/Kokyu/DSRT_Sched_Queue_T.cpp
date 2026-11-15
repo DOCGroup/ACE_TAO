@@ -219,9 +219,10 @@ change_prio(int old_prio, int new_prio, int policy)
           DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits>
             item_var = ent.item ();
           ACE_OS::thr_getprio (item_var->thread_handle (), prio);
-          if (prio==old_prio) {
-            ACE_OS::thr_setprio(item_var->thread_handle (), new_prio, policy);
-          }
+          if (prio == old_prio)
+            {
+              ACE_OS::thr_setprio (item_var->thread_handle (), new_prio, policy);
+            }
           ++iter;
         }
     }

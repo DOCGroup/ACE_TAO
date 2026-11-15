@@ -26,16 +26,13 @@ Default_Dispatcher_Impl::init_i (Dispatcher_Attributes const &attrs)
 
   this->tasks_.reset (tasks_array);
 
-  ConfigInfoSet &config_set =
-    const_cast<ConfigInfoSet&> (attrs.config_info_set_);
-  ConfigInfoSet::ITERATOR iter (config_set);
-  ConfigInfo *config {};
+  ConfigInfoSet::const_iterator iter = attrs.config_info_set_.begin ();
   int i {};
-  for (; i < size && iter.next (config); iter.advance (), ++i)
+  for (; i < size; ++i, ++iter)
     {
       Dispatcher_Task *task {};
       ACE_NEW_RETURN (task,
-                      Dispatcher_Task (*config,
+                      Dispatcher_Task (*iter,
                                        ACE_Thread_Manager::instance()),
                       -1);
       this->tasks_[i].reset (task);
@@ -102,9 +99,9 @@ Default_Dispatcher_Impl::dispatch_i (Dispatch_Command const *cmd,
 {
   //delegate to the appropriate task
   if (qos_info.preemption_priority_ < 0)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   Dispatcher_Task *task =
     this->find_task_with_preemption_prio (qos_info.preemption_priority_);
@@ -112,9 +109,9 @@ Default_Dispatcher_Impl::dispatch_i (Dispatch_Command const *cmd,
   //@@VS - We should insert this into the lowest prio queue.
   //How do we know that the last queue is the lowest prio queue.
   if (task == nullptr)
-  {
-    task = this->tasks_[this->ntasks_ - 1].get ();
-  }
+    {
+      task = this->tasks_[this->ntasks_ - 1].get ();
+    }
 
   return task->enqueue (cmd, qos_info);
 }
@@ -133,9 +130,9 @@ Default_Dispatcher_Impl::shutdown_i ()
       ACE_NEW_RETURN (raw_shutdown_cmd, Shutdown_Task_Command, -1);
       std::unique_ptr<Shutdown_Task_Command> shutdown_cmd (raw_shutdown_cmd);
       if (this->tasks_[i]->enqueue (shutdown_cmd.get (), qos_info) == 0)
-      {
-        shutdown_cmd.release ();
-      }
+        {
+          shutdown_cmd.release ();
+        }
     }
 
   //wait for all tasks to exit
