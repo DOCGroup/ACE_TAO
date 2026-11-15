@@ -27,9 +27,9 @@ Coffee_i::~Coffee_i ()
 Coffee::Desc *
 Coffee_i::description ()
 {
-  Coffee::Desc *desc = new Coffee::Desc;
+  Coffee::Desc_var desc (new Coffee::Desc);
   desc->name = CORBA::string_dup (this->name_.in ());
-  return desc;
+  return desc._retn ();
 }
 
 // set attribute
@@ -89,14 +89,14 @@ Param_Test_i::test_unbounded_string (const char *s1,
                                      char *&s2,
                                      CORBA::String_out s3)
 {
-  char *retstr = CORBA::string_dup (s1);
+  CORBA::String_var retstr (CORBA::string_dup (s1));
   s3 = CORBA::string_dup (s1);
   std::string doubled (s2);
   doubled += s2;
-  char *tmp = CORBA::string_dup (doubled.c_str ());
+  CORBA::String_var tmp (CORBA::string_dup (doubled.c_str ()));
   CORBA::string_free (s2);
-  s2 = tmp;
-  return retstr;
+  s2 = tmp._retn ();
+  return retstr._retn ();
 }
 
 // test bounded strings. For return and out types, we return duplicates of
@@ -107,14 +107,14 @@ Param_Test_i::test_bounded_string (const char *s1,
                                    char *&s2,
                                    CORBA::String_out s3)
 {
-  char *retstr = CORBA::string_dup (s1);
+  CORBA::String_var retstr (CORBA::string_dup (s1));
   s3 = CORBA::string_dup (s1);
   std::string doubled (s2);
   doubled += s2;
-  char *tmp = CORBA::string_dup (doubled.c_str ());
+  CORBA::String_var tmp (CORBA::string_dup (doubled.c_str ()));
   CORBA::string_free (s2);
-  s2 = tmp;
-  return retstr;
+  s2 = tmp._retn ();
+  return retstr._retn ();
 }
 
 // test unbounded strings. For return and out types, we return duplicates of
@@ -125,17 +125,21 @@ Param_Test_i::test_unbounded_wstring (const CORBA::WChar *ws1,
                                       CORBA::WChar *&ws2,
                                       CORBA::WString_out ws3)
 {
-  CORBA::WChar *retwstr = CORBA::wstring_dup (ws1);
+  CORBA::WString_var retwstr (CORBA::wstring_dup (ws1));
   ws3 = CORBA::wstring_dup (ws1);
   CORBA::ULong len = ACE_OS::wslen (ws2);
-  CORBA::WChar *tmp = CORBA::wstring_alloc (2*len);
+  CORBA::WString_var tmp (CORBA::wstring_alloc (2*len));
   for (CORBA::ULong i = 0; i < 2; i++)
-    for (CORBA::ULong j = 0; j < len; j++)
-      tmp[j + i*len] = ws2[j];
+    {
+      for (CORBA::ULong j = 0; j < len; j++)
+        {
+          tmp[j + i*len] = ws2[j];
+        }
+    }
   tmp[2*len] = 0;
   CORBA::wstring_free (ws2);
-  ws2 = tmp;
-  return retwstr;
+  ws2 = tmp._retn ();
+  return retwstr._retn ();
 }
 
 // test bounded strings. For return and out types, we return duplicates of
@@ -146,17 +150,21 @@ Param_Test_i::test_bounded_wstring (const CORBA::WChar *ws1,
                                     CORBA::WChar *&ws2,
                                     CORBA::WString_out ws3)
 {
-  CORBA::WChar *retwstr = CORBA::wstring_dup (ws1);
+  CORBA::WString_var retwstr (CORBA::wstring_dup (ws1));
   ws3 = CORBA::wstring_dup (ws1);
   CORBA::ULong len = ACE_OS::wslen (ws2);
-  CORBA::WChar *tmp = CORBA::wstring_alloc (2*len);
+  CORBA::WString_var tmp (CORBA::wstring_alloc (2*len));
   for (CORBA::ULong i = 0; i < 2; i++)
-    for (CORBA::ULong j = 0; j < len; j++)
-      tmp[j + i*len] = ws2[j];
+    {
+      for (CORBA::ULong j = 0; j < len; j++)
+        {
+          tmp[j + i*len] = ws2[j];
+        }
+    }
   tmp[2*len] = 0;
   CORBA::wstring_free (ws2);
-  ws2 = tmp;
-  return retwstr;
+  ws2 = tmp._retn ();
+  return retwstr._retn ();
 }
 
 // test for fixed structures. Just copy the in parameter into all the others
