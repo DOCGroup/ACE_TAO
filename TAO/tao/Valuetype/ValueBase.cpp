@@ -392,11 +392,11 @@ CORBA::ValueBase::_tao_unmarshal_find_factory (
   CORBA::ValueFactory_var factory;
   CORBA::Boolean requires_truncation {};
   size_t const num_ids = ids.size ();
-  char const *id = (num_ids) ? ids[0].c_str () : "{Null}";
+  char const *id = num_ids != 0 ? ids[0].c_str () : "{Null}";
   for (size_t i = 0u; i < num_ids; ++i)
     {
       factory = orb_core->orb ()->lookup_value_factory (ids[i].c_str ());
-  if (factory.in() != nullptr)
+      if (factory.in () != nullptr)
         {
           id = ids[i].c_str ();
           requires_truncation = (i != 0u);
@@ -405,7 +405,7 @@ CORBA::ValueBase::_tao_unmarshal_find_factory (
     }
 
   // Obtain the actual ValueType from the factory
-  if (factory.in() == nullptr || (valuetype = factory->create_for_unmarshal ()) == nullptr)
+  if (factory.in () == nullptr || (valuetype = factory->create_for_unmarshal ()) == nullptr)
     {
       if (TAO_debug_level)
         {
@@ -1258,42 +1258,42 @@ CORBA::ValueBase::_tao_read_repository_id (TAO_InputCDR& strm,
   // It's possible the id is read again from an indirection stream,
   // so make sure the id is the same.
   ACE_CString mapped_id;
-  if (strm.get_repo_id_map ()->get()->find (pos, mapped_id) == 0)
-  {
-    if (TAO_debug_level)
+  if (strm.get_repo_id_map ()->get ()->find (pos, mapped_id) == 0)
+    {
+      if (TAO_debug_level)
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
+            ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_read_repository_id, found %@=%C\n"),
+            pos, mapped_id.c_str ()));
+        }
+
+      if (mapped_id != id)
+        {
+          if (TAO_debug_level > 0)
+            {
+              TAOLIB_ERROR ((LM_ERROR,
+                ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_read_repository_id, found %C in map for %C\n"),
+                mapped_id.c_str (), id.c_str ()));
+            }
+          throw CORBA::INTERNAL ();
+        }
+    }
+  else if (strm.get_repo_id_map ()->get ()->bind (pos, id) != 0)
+    {
+      if (TAO_debug_level > 0)
+        {
+          TAOLIB_ERROR ((LM_ERROR,
+            ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_read_repository_id, can't bind %C\n"),
+            id.c_str ()));
+        }
+      throw CORBA::INTERNAL ();
+    }
+  else if (TAO_debug_level)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-        ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_read_repository_id, found %@=%C\n"),
-        pos, mapped_id.c_str ()));
+        ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_read_repository_id, bound %@=%C\n"),
+        pos, id.c_str ()));
     }
-
-    if (std::strcmp (mapped_id.c_str (), id.c_str ()) != 0)
-      {
-        if (TAO_debug_level > 0)
-          {
-            TAOLIB_ERROR ((LM_ERROR,
-              ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_read_repository_id, found %C in map for %C\n"),
-              mapped_id.c_str (), id.c_str ()));
-          }
-        throw CORBA::INTERNAL ();
-      }
-  }
-  else if (strm.get_repo_id_map ()->get ()->bind (pos, id) != 0)
-  {
-    if (TAO_debug_level > 0)
-      {
-        TAOLIB_ERROR ((LM_ERROR,
-          ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_read_repository_id, can't bind %C\n"),
-          mapped_id.c_str ()));
-      }
-    throw CORBA::INTERNAL ();
-  }
-  else if (TAO_debug_level)
-  {
-    TAOLIB_DEBUG ((LM_DEBUG,
-      ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_read_repository_id, bound %@=%C\n"),
-      pos, id.c_str ()));
-  }
 
   // Since the ID is always read from the indirection cdr we have to skip
   // the main CDR forward if we were in fact reading from the current
@@ -1348,44 +1348,41 @@ CORBA::ValueBase::_tao_read_codebase_url (TAO_InputCDR& strm,
   // It's possible the codebase url is read again from an indirection stream,
   // so make sure the codebase url is the same.
   ACE_CString mapped_url;
-  if (strm.get_codebase_url_map ()->get()->find (pos, mapped_url) == 0)
-  {
-    if (TAO_debug_level)
+  if (strm.get_codebase_url_map ()->get ()->find (pos, mapped_url) == 0)
     {
-      TAOLIB_DEBUG ((LM_DEBUG,
-        ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_read_codebase_url, found %@=%C\n"),
-        pos, mapped_url.c_str ()));
+      if (TAO_debug_level)
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
+            ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_read_codebase_url, found %@=%C\n"),
+            pos, mapped_url.c_str ()));
+        }
+      if (mapped_url != codebase_url)
+        {
+          if (TAO_debug_level > 0)
+            {
+              TAOLIB_ERROR ((LM_ERROR,
+                ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_read_codebase_url, found %C in map for %C\n"),
+                mapped_url.c_str (), codebase_url.c_str ()));
+            }
+          throw CORBA::INTERNAL ();
+        }
     }
-    if (std::strcmp (mapped_url.c_str (), codebase_url.c_str ()) != 0)
-      {
-        if (TAO_debug_level > 0)
-          {
-            TAOLIB_ERROR ((LM_ERROR,
-              ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_read_codebase_url, found %C in map for %C\n"),
-              mapped_url.c_str (), codebase_url.c_str ()));
-          }
-        throw CORBA::INTERNAL ();
-      }
-  }
-  else if (strm.get_codebase_url_map ()->get()->bind (pos, codebase_url) != 0)
-  {
-    if (TAO_debug_level > 0)
-      {
-        TAOLIB_ERROR ((LM_ERROR,
-          ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_read_codebase_url, can't bind %C\n"),
-          mapped_url.c_str ()));
-      }
-    throw CORBA::INTERNAL ();
-  }
-  else
-  {
-    if (TAO_debug_level)
+  else if (strm.get_codebase_url_map ()->get ()->bind (pos, codebase_url) != 0)
+    {
+      if (TAO_debug_level > 0)
+        {
+          TAOLIB_ERROR ((LM_ERROR,
+            ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_read_codebase_url, can't bind %C\n"),
+            codebase_url.c_str ()));
+        }
+      throw CORBA::INTERNAL ();
+    }
+  else if (TAO_debug_level)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
         ACE_TEXT ("TAO (%P|%t) - %N:%l ValueBase::_tao_read_codebase_url, bound %@=%C\n"),
         pos, codebase_url.c_str ()));
     }
-  }
 
   // Since the codebase url is always read from the indirection cdr we have to skip
   // the main CDR forward if we were in fact reading from the current
