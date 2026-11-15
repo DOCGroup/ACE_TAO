@@ -130,15 +130,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   u_short const port = argc > 1 ? ACE_OS::atoi (argv[1])
                                 : ACE_DEFAULT_SERVER_PORT;
 
-  if (argc < 3)
-    {
-      run_test (port);
-    }
-  else
+  if (argc >= 3)
     {
       ACE_DEBUG ((LM_DEBUG, "\nUsage:\n  %s [port number]\n", argv[0]));
       return -1;
     }
 
-  return 0;
+  return run_test (port);
 }
