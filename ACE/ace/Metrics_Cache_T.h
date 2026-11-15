@@ -116,7 +116,6 @@ class ACE_Metrics_Cache
 public:
   using ACE_METRICS_CACHE_TYPE = ACE_Metrics_Cache<ACE_LOCK, ALLOCATOR>;
 
-  /// Default constructor.
   ACE_Metrics_Cache (u_long table_size
                        = METRICS_DEFAULT_TIMEPROBE_TABLE_SIZE,
                      u_long number_of_probes

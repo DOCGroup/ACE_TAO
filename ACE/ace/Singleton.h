@@ -94,7 +94,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  /// Default constructor.
   ACE_Singleton ();
 
   ACE_Singleton (ACE_Singleton const &) = delete;
@@ -146,7 +145,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  /// Default constructor.
   ACE_Unmanaged_Singleton ();
 
   ACE_Unmanaged_Singleton (ACE_Unmanaged_Singleton const &) = delete;
@@ -197,7 +195,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  /// Default constructor.
   ACE_TSS_Singleton ();
 
   /// Contained instance.
@@ -245,7 +242,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  /// Default constructor.
   ACE_Unmanaged_TSS_Singleton ();
 
   ACE_Unmanaged_TSS_Singleton (ACE_Unmanaged_TSS_Singleton const &) = delete;
@@ -309,7 +305,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  /// Default constructor.
   ACE_DLL_Singleton_T ();
 
   ACE_DLL_Singleton_T (ACE_DLL_Singleton_T const &) = delete;

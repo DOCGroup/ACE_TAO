@@ -63,7 +63,6 @@ public:
   static const int OPT_FLAGS_PMP;
   static const int DEFAULT_SELECTOR;
 
-  /// Default constructor.
   ACE_ATM_Addr (u_char selector = DEFAULT_SELECTOR);
 
 
@@ -87,7 +86,6 @@ public:
   ACE_ATM_Addr (const ACE_TCHAR sap[],
                 u_char selector = DEFAULT_SELECTOR);
 
-  /// Default dtor.
   ~ACE_ATM_Addr () = default;
 
   /// Default initialization for non-address values (e.g.,

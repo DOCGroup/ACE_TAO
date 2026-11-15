@@ -36,7 +36,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  */
 class ACE_Export ACE_Netlink_Addr : public ACE_Addr {
 public:
-  /// Default constructor.
   ACE_Netlink_Addr ();
 
 
@@ -45,7 +44,6 @@ public:
   /// Creates an ACE_INET_Addr from a sockaddr_in structure.
   ACE_Netlink_Addr (const sockaddr_nl *, int len);
 
-  /// Dtor
   ~ACE_Netlink_Addr () override = default;
 
   /**

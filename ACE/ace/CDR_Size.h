@@ -40,7 +40,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_SizeCDR
 {
 public:
-  /// Default constructor.
   ACE_SizeCDR (ACE_CDR::Octet major_version = ACE_CDR_GIOP_MAJOR_VERSION,
                ACE_CDR::Octet minor_version = ACE_CDR_GIOP_MINOR_VERSION);
 

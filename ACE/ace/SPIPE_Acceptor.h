@@ -44,7 +44,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_SPIPE_Acceptor : public ACE_SPIPE
 {
 public:
-  /// Default constructor.
   ACE_SPIPE_Acceptor ();
 
   /// Initiate a passive-mode STREAM pipe listener.

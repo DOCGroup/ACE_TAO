@@ -56,10 +56,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Command_Base
 {
 public:
-  /// Default constructor.
   ACE_Command_Base ();
 
-  /// Virtual destructor.
   virtual ~ACE_Command_Base () = default;
 
   /**

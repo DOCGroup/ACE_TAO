@@ -44,7 +44,6 @@ class ACE_Export ACE_TLI_Acceptor : public ACE_TLI
 public:
   friend class ACE_Request_Queue;
 
-  /// Default constructor.
   ACE_TLI_Acceptor ();
 
   /// Initiate a passive mode socket.

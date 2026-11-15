@@ -57,7 +57,6 @@ public:
   /// "No-op" constructor (needed to make certain compilers happy).
   ACE_Allocator ();
 
-  /// Virtual destructor
   virtual ~ACE_Allocator ();
 
   /// Allocate @a nbytes, but don't give them any initial value.

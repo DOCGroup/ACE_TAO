@@ -36,7 +36,6 @@ class ACE_Str_Buf;
 class ACE_Export ACE_FIFO_Send_Msg : public ACE_FIFO_Send
 {
 public:
-  /// Default constructor.
   ACE_FIFO_Send_Msg ();
 
   /// Open up a record-oriented named pipe for writing.

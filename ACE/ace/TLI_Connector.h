@@ -32,7 +32,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_TLI_Connector
 {
 public:
-  /// Default constructor.
   ACE_TLI_Connector ();
 
   /**

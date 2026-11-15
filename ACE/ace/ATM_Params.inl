@@ -38,7 +38,6 @@ ACE_ATM_Params::ACE_ATM_Params (int rw_flag,
   ACE_TRACE ("ACE_ATM_Params::ACE_ATM_Params");
 }
 
-// Default dtor.
 ACE_INLINE
 ACE_ATM_Params::~ACE_ATM_Params ()
 {

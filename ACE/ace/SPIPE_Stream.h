@@ -54,7 +54,6 @@ public:
   friend class ACE_SPIPE_Acceptor;
   friend class ACE_SPIPE_Connector;
 
-  /// Default constructor.
   ACE_SPIPE_Stream ();
 
   /// Obtain the address of whom we are connected with.

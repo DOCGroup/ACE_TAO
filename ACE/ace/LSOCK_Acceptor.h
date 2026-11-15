@@ -38,7 +38,6 @@ class ACE_Reactor;
 class ACE_Export ACE_LSOCK_Acceptor : public ACE_SOCK_Acceptor
 {
 public:
-  /// Default constructor.
   ACE_LSOCK_Acceptor ();
 
   /// Initiate a passive mode socket.

@@ -105,7 +105,6 @@ public:
   using Base_Timer_Queue = ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>;
   using FreeList = ACE_Free_List<Node>;
 
-  /// Default constructor
   explicit ACE_Timer_Wheel_T (FUNCTOR *upcall_functor = nullptr, FreeList *freelist = nullptr,
                               TIME_POLICY const &time_policy = TIME_POLICY());
 

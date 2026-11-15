@@ -65,7 +65,6 @@ public:
     MAX_NAME_LENGTH = MAXPATHLEN + 1
   };
 
-  /// Default constructor.
   ACE_Name_Request ();
 
   /// Create a ACE_Name_Request message.
@@ -191,7 +190,6 @@ public:
     MAX_NAME_LENGTH = MAXPATHLEN + 1
   };
 
-  /// Default constructor.
   ACE_Name_Reply ();
 
   /// Create a ACE_Name_Reply message.

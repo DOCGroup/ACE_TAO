@@ -87,7 +87,6 @@ public:
 protected:
   /// @name Protected construction and destruction
   /// @{
-  /// Default constructor.
   ACE_TLI ();
 
   ~ACE_TLI ();

@@ -44,7 +44,6 @@ class ACE_Export ACE_FILE_IO : public ACE_FILE
 public:
   friend class ACE_FILE_Connector;
 
-  /// Default constructor.
   ACE_FILE_IO ();
 
   /// send upto @a n bytes in @a buf.

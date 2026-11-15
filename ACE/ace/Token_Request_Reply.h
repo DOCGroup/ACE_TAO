@@ -56,7 +56,6 @@ public:
     TRY_ACQUIRE
   };
 
-  /// Default constructor.
   ACE_Token_Request () = default;
 
   /**
@@ -200,7 +199,6 @@ private:
 class ACE_Export ACE_Token_Reply
 {
 public:
-  /// Default constructor.
   ACE_Token_Reply ();
 
   /// Get the length of the encoded/decoded message.

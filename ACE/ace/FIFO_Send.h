@@ -38,7 +38,6 @@ public:
   /// Default behavior is to block until a receiver also opens the fifo.
   /// To use non-blocking behavior include ACE_NONBLOCK in @a flags.
   //@{
-  /// Default constructor.
   ACE_FIFO_Send ();
 
   /// Open up a bytestream named pipe for writing.

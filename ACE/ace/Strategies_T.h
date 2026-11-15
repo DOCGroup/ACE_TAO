@@ -54,7 +54,6 @@ public:
   using handler_type = SVC_HANDLER;
   using stream_type = typename SVC_HANDLER::stream_type;
 
-  /// Virtual Destructor
   virtual ~ACE_Recycling_Strategy ();
 
   /// Tell the Svc_Handler something about the recycler, so that it can
@@ -88,7 +87,6 @@ public:
   using handler_type = SVC_HANDLER;
   using stream_type = typename SVC_HANDLER::stream_type;
 
-  /// Default constructor.
   ACE_Creation_Strategy (ACE_Thread_Manager * = nullptr,
                          ACE_Reactor * = ACE_Reactor::instance ());
 
@@ -482,7 +480,6 @@ public:
   using handler_type = SVC_HANDLER;
   using stream_type = typename SVC_HANDLER::stream_type;
 
-  /// Default constructor.
   ACE_Accept_Strategy (ACE_Reactor *reactor = ACE_Reactor::instance ());
 
   /// Initialize the @c peer_acceptor_ with @a local_addr.
@@ -546,7 +543,6 @@ public:
   using handler_type = SVC_HANDLER;
   using stream_type = typename SVC_HANDLER::stream_type;
 
-  /// Default constructor.
   ACE_Connect_Strategy ();
 
   /// Return a reference to the <peer_connector_>.
@@ -755,7 +751,6 @@ class ACE_Refcounted_Hash_Recyclable :  public ACE_Refcountable_T<ACE_Null_Mutex
                                         public ACE_Recyclable
 {
 public:
-  /// Default constructor.
   ACE_Refcounted_Hash_Recyclable ();
 
   ACE_Refcounted_Hash_Recyclable (T const &t,

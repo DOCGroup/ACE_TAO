@@ -89,7 +89,6 @@ public:
 class ACE_Event_Tuple
 {
 public:
-  /// Default constructor.
   ACE_Event_Tuple ();
 
   ACE_Event_Tuple (ACE_Event_Handler *eh, ACE_HANDLE h);

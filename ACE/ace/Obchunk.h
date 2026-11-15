@@ -34,7 +34,6 @@ class ACE_Export ACE_Obchunk
 public:
   explicit ACE_Obchunk (size_t size);
 
-  /// Dtor.
   ~ACE_Obchunk () = default;
 
   /// Dump the state of an object.

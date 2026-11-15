@@ -62,7 +62,6 @@ public:
   static const int DEFAULT_SELECTOR;
   static const int DEFAULT_PKT_SIZE;
 
-  /// Default constructor.
   ACE_ATM_QoS(int = DEFAULT_PKT_SIZE);
 
   /// Constructor with a CBR rate.

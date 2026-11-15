@@ -37,7 +37,6 @@ class ACE_Time_Value;
 class ACE_Export ACE_SOCK_Dgram : public ACE_SOCK
 {
 public:
-  /// Default constructor.
   ACE_SOCK_Dgram ();
 
   /// This is a BSD-style method (i.e., no QoS) for initiating a socket
@@ -84,7 +83,6 @@ public:
             int reuse_addr = 0,
             int ipv6_only = 0);
 
-  /// Default dtor.
   ~ACE_SOCK_Dgram ();
 
   /// @name Data transfer

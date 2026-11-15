@@ -303,7 +303,6 @@ public:
   using SCHEDULING_STRATEGY = ACE_Scheduling_Strategy<SVC_HANDLER>;
   /// @}
 
-  /// Default constructor.
   ACE_Strategy_Acceptor (const ACE_TCHAR service_name[] = nullptr,
                          const ACE_TCHAR service_description[] = nullptr,
                          int use_select = ACE_DEFAULT_ACCEPTOR_USE_SELECT,

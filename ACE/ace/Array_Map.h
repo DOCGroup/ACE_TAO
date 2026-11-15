@@ -106,7 +106,6 @@ public:
   using reverse_iterator = std::reverse_iterator<iterator>;
   using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 
-  /// Default Constructor.
   /**
    * Create an empty map with a preallocated buffer of size @a s.
    */

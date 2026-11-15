@@ -31,7 +31,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Bcast_Node
 {
 public:
-  /// Default constructor.
   ACE_Bcast_Node (ACE_INET_Addr &,
                   ACE_Bcast_Node *);
 
@@ -55,7 +54,6 @@ public:
 class ACE_Export ACE_SOCK_Dgram_Bcast : public ACE_SOCK_Dgram
 {
 public:
-  /// Default constructor.
   ACE_SOCK_Dgram_Bcast ();
 
   ACE_SOCK_Dgram_Bcast (const ACE_Addr &local,
@@ -64,7 +62,6 @@ public:
                         int reuse_addr = 0,
                         const ACE_TCHAR *host_name = nullptr);
 
-  /// Default dtor.
   ~ACE_SOCK_Dgram_Bcast ();
 
   // Initiate a connectionless datagram broadcast endpoint.

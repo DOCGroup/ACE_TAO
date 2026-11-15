@@ -235,7 +235,6 @@ public:
   class ACE_Export Policy
   {
   public:
-    /// Virtual destructor.
     virtual ~Policy ();
   };
 
@@ -316,7 +315,6 @@ private:
 class ACE_Export ACE_Event_Handler_var
 {
 public:
-  /// Default constructor.
   ACE_Event_Handler_var ();
 
   /// Construct with a handler.
@@ -396,7 +394,6 @@ public:
 
   ACE_Notification_Buffer (ACE_Event_Handler *eh, ACE_Reactor_Mask mask);
 
-  /// Default destructor.
   ~ACE_Notification_Buffer () = default;
 
   /// Pointer to the Event_Handler that will be dispatched

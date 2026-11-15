@@ -61,7 +61,6 @@ public:
    */
   static ACE_Time_Value const max_time;
 
-  /// Default Constructor.
   ACE_Time_Value ();
 
   explicit ACE_Time_Value (time_t sec, suseconds_t usec = 0);

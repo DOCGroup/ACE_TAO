@@ -40,7 +40,6 @@ class ACE_Export ACE_DEV_IO : public ACE_DEV
 public:
   friend class ACE_DEV_Connector;
 
-  /// Default constructor.
   ACE_DEV_IO ();
 
   /// @name Send and receive operations

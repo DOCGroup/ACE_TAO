@@ -103,7 +103,6 @@ public:
                const ACE_TCHAR *name = nullptr,
                void *arg = nullptr);
 
-  /// Default destructor.
   ~ACE_Barrier () = default;
 
   /// Block the caller until all @c count threads have called @c wait and
@@ -167,7 +166,6 @@ public:
   /// Create a Thread_Barrier, passing in the optional @a name.
   ACE_Thread_Barrier (unsigned int count, const ACE_TCHAR *name = nullptr);
 
-  /// Default destructor.
   ~ACE_Thread_Barrier () = default;
 
   /// Dump the state of an object.

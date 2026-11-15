@@ -955,7 +955,6 @@ class ACE_TSS_Ref
 public:
   explicit ACE_TSS_Ref (ACE_thread_t id);
 
-  /// Default constructor
   ACE_TSS_Ref ();
 
   /// Check for equality.
@@ -985,7 +984,6 @@ public:
   ACE_TSS_Info (ACE_thread_key_t key,
                 Destructor dest = nullptr);
 
-  /// Default constructor
   ACE_TSS_Info ();
 
   /// Returns 1 if the key is in use, 0 if not.

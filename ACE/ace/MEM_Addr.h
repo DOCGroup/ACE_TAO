@@ -33,7 +33,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_MEM_Addr : public ACE_Addr
 {
 public:
-  /// Default constructor.
   ACE_MEM_Addr ();
 
 
@@ -47,7 +46,6 @@ public:
   /// Creates an ACE_MEM_Addr from a @a port_name.
   explicit ACE_MEM_Addr (const ACE_TCHAR port_name[]);
 
-  /// Default dtor.
   ~ACE_MEM_Addr () override = default;
 
   /// Default initialization routine.

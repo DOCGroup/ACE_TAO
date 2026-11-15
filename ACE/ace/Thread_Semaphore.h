@@ -43,7 +43,6 @@ public:
                         void * = nullptr,
                         int max = 0x7FFFFFFF);
 
-  /// Default destructor.
   ~ACE_Thread_Semaphore ();
 
   /// Dump the state of an object.

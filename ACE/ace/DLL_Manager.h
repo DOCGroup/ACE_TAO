@@ -55,7 +55,6 @@ public:
   /// Error stack. Fixed size should suffice. Ignores any errors exceeding the size.
   using ERROR_STACK = ACE_Fixed_Stack<ACE_TString, 10>;
 
-  /// Default constructor.
   ACE_DLL_Handle ();
 
   ~ACE_DLL_Handle ();
@@ -263,7 +262,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  /// Default constructor.
   ACE_DLL_Manager (int size = ACE_DLL_Manager::DEFAULT_SIZE);
 
   ~ACE_DLL_Manager ();

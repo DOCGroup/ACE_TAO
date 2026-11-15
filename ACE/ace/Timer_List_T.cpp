@@ -9,8 +9,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// Default Constructor
-
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY>
 ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::ACE_Timer_List_Iterator_T (List &lst)
   : list_ (lst)

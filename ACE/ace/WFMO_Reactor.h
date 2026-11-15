@@ -153,7 +153,6 @@ public:
      */
     ACE_Reactor_Mask close_masks_ { ACE_Event_Handler::NULL_MASK };
 
-    /// Default constructor
     Common_Info () = default;
 
     /// Reset the state of the structure
@@ -187,7 +186,6 @@ public:
     /// This is set when the entry needed to be suspended.
     bool suspend_entry_ {};
 
-    /// Default constructor
     Current_Info () = default;
 
     /// Reset the state of the structure
@@ -226,7 +224,6 @@ public:
     /// This is set when the entry needed to be suspended.
     bool suspend_entry_ {};
 
-    /// Default constructor
     To_Be_Added_Info () = default;
 
     /// Reset the state of the structure
@@ -267,7 +264,6 @@ public:
     /// This is set when the entry needed to be resumed.
     bool resume_entry_ {};
 
-    /// Default constructor
     Suspended_Info () = default;
 
     /// Reset the state of the structure

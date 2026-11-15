@@ -89,7 +89,6 @@ class ACE_Export ACE_At_Thread_Exit
   friend class ACE_Thread_Descriptor;
   friend class ACE_Thread_Manager;
 public:
-  /// Default constructor
   ACE_At_Thread_Exit ();
 
   virtual ~ACE_At_Thread_Exit ();

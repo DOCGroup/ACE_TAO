@@ -39,7 +39,6 @@ public:
                     const ACE_NS_WString &v,
                     const char *t);
 
-  /// Default constructor.
   ACE_Name_Binding ();
 
 

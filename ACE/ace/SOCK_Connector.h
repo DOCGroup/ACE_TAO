@@ -41,7 +41,6 @@ class ACE_Time_Value;
 class ACE_Export ACE_SOCK_Connector
 {
 public:
-  /// Default constructor.
   ACE_SOCK_Connector ();
 
   /**
@@ -242,7 +241,6 @@ public:
                int reuse_addr = 0,
                int perms = 0);
 
-  /// Default destructor.
   ~ACE_SOCK_Connector ();
 
   /// @name Nonblocking connection completion

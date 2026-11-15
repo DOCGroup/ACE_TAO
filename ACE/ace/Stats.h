@@ -124,7 +124,6 @@ private:
 class ACE_Export ACE_Stats
 {
 public:
-  /// Default constructor.
   ACE_Stats ();
 
   /// Provide a new sample.  Returns 0 on success, -1 if it fails due

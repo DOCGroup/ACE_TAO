@@ -53,7 +53,6 @@ public:
 protected:
   /// ACE_LSOCK is an abstract base class.
 
-  /// Default constructor.
   ACE_LSOCK ();
 
   /// Initialize based on @a handle.

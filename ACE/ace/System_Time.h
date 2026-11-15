@@ -55,10 +55,8 @@ public:
    */
   enum Sync_Mode { Jump, Adjust };
 
-  /// Default constructor.
   ACE_System_Time (ACE_TCHAR const *poolname = nullptr);
 
-  /// Default destructor.
   ~ACE_System_Time ();
   ACE_System_Time (ACE_System_Time const &) = delete;
   ACE_System_Time (ACE_System_Time &&) = delete;

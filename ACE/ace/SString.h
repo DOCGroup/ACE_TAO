@@ -58,7 +58,6 @@ class ACE_Export ACE_NS_WString : public ACE_WString
 public:
   using ACE_WString::size_type;
 
-  /// Default constructor.
   ACE_NS_WString (ACE_Allocator *alloc = nullptr);
 
   /// Constructor that copies @a s into dynamically allocated memory.
@@ -136,7 +135,6 @@ public:
   /// No position constant
   static const size_type npos;
 
-  /// Default constructor.
   ACE_SString (ACE_Allocator *alloc = nullptr);
 
   /// Constructor that copies @a s into dynamically allocated memory.
@@ -152,7 +150,6 @@ public:
   /// Constructor that copies @a c into dynamically allocated memory.
   ACE_SString (char c, ACE_Allocator *alloc = nullptr);
 
-  /// Default destructor.
   ~ACE_SString () = default;
 
   /// Return the slot'th character in the string (doesn't perform

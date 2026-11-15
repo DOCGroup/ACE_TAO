@@ -87,7 +87,6 @@ public:
 
   virtual Proactor_Type  get_impl_type ();
 
-  /// Virtual destructor.
   ~ACE_POSIX_Proactor () override;
 
   /// Close down the Proactor.

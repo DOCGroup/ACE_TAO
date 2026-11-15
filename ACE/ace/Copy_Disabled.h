@@ -58,7 +58,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class [[deprecated]] ACE_Copy_Disabled
 {
 public:
-  /// Default constructor
   ACE_Copy_Disabled () = default;
 
 private:

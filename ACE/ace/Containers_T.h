@@ -1412,7 +1412,6 @@ public:
   using ITERATOR = ACE_Fixed_Set_Iterator<T, ACE_SIZE>;
   using CONST_ITERATOR = ACE_Fixed_Set_Const_Iterator<T, ACE_SIZE>;
 
-  /// Default Constructor.
   /**
    * Creates an empy set
    */

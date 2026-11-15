@@ -32,7 +32,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Thread_Hook
 {
 public:
-  /// Default constructor
   ACE_Thread_Hook ();
 
   virtual ~ACE_Thread_Hook ();

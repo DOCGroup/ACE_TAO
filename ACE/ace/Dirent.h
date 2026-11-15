@@ -33,7 +33,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Dirent
 {
 public:
-  /// Default constructor.
   ACE_Dirent () = default;
 
   /// Constructor calls @c opendir()

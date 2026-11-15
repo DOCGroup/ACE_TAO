@@ -38,7 +38,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Mem_Map
 {
 public:
-  /// Default constructor.
   ACE_Mem_Map ();
 
   ACE_Mem_Map (const ACE_Mem_Map &) = delete;

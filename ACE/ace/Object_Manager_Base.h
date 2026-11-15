@@ -44,7 +44,6 @@ class ACE_Thread_Hook;
 class ACE_Export ACE_Object_Manager_Base
 {
 protected:
-  /// Default constructor.
   ACE_Object_Manager_Base ();
 
   virtual ~ACE_Object_Manager_Base ();

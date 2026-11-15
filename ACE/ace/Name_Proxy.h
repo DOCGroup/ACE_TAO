@@ -49,7 +49,6 @@ public:
   ACE_Name_Proxy &operator= (ACE_Name_Proxy const &) = delete;
   ACE_Name_Proxy &operator= (ACE_Name_Proxy &&) = delete;
 
-  /// Default constructor.
   ACE_Name_Proxy ();
 
   /// @name Establishing a binding with the ACE_Name Server

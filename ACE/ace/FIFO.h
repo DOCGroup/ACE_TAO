@@ -72,7 +72,6 @@ protected:
    * User code must use ACE_FIFO_Send and/or ACE_FIFO_Recv.
    */
   //@{
-  /// Default constructor.
   ACE_FIFO ();
 
   /// Open up the named pipe on the @a rendezvous in accordance with the

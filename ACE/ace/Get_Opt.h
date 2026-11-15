@@ -196,7 +196,6 @@ public:
                int ordering = PERMUTE_ARGS,
                int long_only = 0);
 #endif
-  /// Default dtor.
   ~ACE_Get_Opt ();
 
   ACE_Get_Opt (ACE_Get_Opt const &) = delete;
@@ -388,12 +387,10 @@ private:
   class ACE_Get_Opt_Long_Option
   {
   public:
-    /// ctor
     ACE_Get_Opt_Long_Option (ACE_TCHAR const *name,
                              int has_arg,
                              int val = 0);
 
-    /// Dtor.
     ~ACE_Get_Opt_Long_Option ();
 
     bool operator < (ACE_Get_Opt_Long_Option const &rhs);

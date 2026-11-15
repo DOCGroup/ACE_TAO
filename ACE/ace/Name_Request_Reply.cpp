@@ -381,8 +381,6 @@ ACE_Name_Request::dump () const
 #endif /* ACE_HAS_DUMP */
 }
 
-// Default constructor.
-
 ACE_Name_Reply::ACE_Name_Reply ()
 {
   ACE_TRACE ("ACE_Name_Reply::ACE_Name_Reply");

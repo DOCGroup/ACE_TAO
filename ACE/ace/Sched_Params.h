@@ -181,7 +181,6 @@ public:
   ACE_Sched_Priority_Iterator (const ACE_Sched_Params::Policy &policy,
                                int scope = ACE_SCOPE_THREAD);
 
-  /// Default dtor.
   ~ACE_Sched_Priority_Iterator ();
 
   /// Check if there are more priorities.

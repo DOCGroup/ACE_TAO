@@ -57,7 +57,6 @@ class ACE_Time_Value;
 class ACE_Export ACE_ATM_Acceptor
 {
 public:
-  /// Default constructor.
   ACE_ATM_Acceptor ();
 
   ~ACE_ATM_Acceptor ();

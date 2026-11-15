@@ -202,8 +202,6 @@ ACE_SString::ACE_SString (const ACE_SString &s)
   this->rep_[this->len_] = '\0';
 }
 
-// Default constructor.
-
 ACE_SString::ACE_SString (ACE_Allocator *alloc)
   : allocator_ (alloc),
     len_ (0),

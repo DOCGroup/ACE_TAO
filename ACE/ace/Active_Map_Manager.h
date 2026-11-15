@@ -34,7 +34,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Active_Map_Manager_Key
 {
 public:
-  /// Default constructor.
   ACE_Active_Map_Manager_Key ();
 
   /**

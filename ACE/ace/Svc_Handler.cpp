@@ -114,8 +114,6 @@ ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::operator delete (void *obj)
   ::delete [] static_cast <char *> (obj);
 }
 
-// Default constructor.
-
 template <typename PEER_STREAM, typename SYNCH_TRAITS>
 ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::ACE_Svc_Handler (ACE_Thread_Manager *tm,
                                                           ACE_Message_Queue<SYNCH_TRAITS> *mq,

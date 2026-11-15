@@ -894,7 +894,6 @@ public:
               int priority,
               int signal_number = 0);
 
-  /// Destructor.
   virtual ~ACE_WIN32_Asynch_Write_File ();
 
   /// @name ACE_WIN32_Asynch_Operation methods

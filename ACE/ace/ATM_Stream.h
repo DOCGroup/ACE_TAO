@@ -45,7 +45,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_ATM_Stream
 {
 public:
-  /// Default constructor.
   ACE_ATM_Stream ();
 
   /// @name ATM-specific open and shutdown operations

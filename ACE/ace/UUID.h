@@ -199,7 +199,6 @@ namespace ACE_Utils
   public:
     static constexpr int ACE_UUID_CLOCK_SEQ_MASK = 0x3FFF;
 
-    /// Default constructor.
     UUID_Generator();
 
     ~UUID_Generator();

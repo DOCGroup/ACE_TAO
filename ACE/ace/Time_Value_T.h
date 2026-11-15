@@ -37,7 +37,6 @@ class ACE_Time_Value_T : public ACE_Time_Value
 public:
   using time_policy_t = TIME_POLICY;
 
-  /// Default Constructor.
   ACE_Time_Value_T () {}
 
   explicit ACE_Time_Value_T (time_t sec, suseconds_t usec = 0)

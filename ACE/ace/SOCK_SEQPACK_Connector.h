@@ -48,7 +48,6 @@ class ACE_Time_Value;
 class ACE_Export ACE_SOCK_SEQPACK_Connector
 {
 public:
-  /// Default constructor.
   ACE_SOCK_SEQPACK_Connector ();
 
   /**
@@ -250,7 +249,6 @@ public:
                int perms = 0,
                int protocol = 132);
 
-  /// Default dtor.
   ~ACE_SOCK_SEQPACK_Connector ();
 
   /// @name Nonblocking connection completion

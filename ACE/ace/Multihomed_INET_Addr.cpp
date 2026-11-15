@@ -11,8 +11,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Multihomed_INET_Addr)
 
-// Default constructor
-
 ACE_Multihomed_INET_Addr::ACE_Multihomed_INET_Addr ()
   : secondaries_ (0)
 {

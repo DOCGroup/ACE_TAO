@@ -39,7 +39,6 @@ public:
   friend class ACE_TLI_Acceptor;
   friend class ACE_TLI_Connector;
 
-  /// Default constructor.
   ACE_TLI_Stream ();
 
   /// @name TLI-specific shutdown operations

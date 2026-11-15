@@ -36,7 +36,6 @@ public:
     INVALID_HANDLE = -1
   };
 
-  /// Default dtor.
   ~ACE_IO_SAP ();
 
   /// Interface for ioctl.

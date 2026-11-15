@@ -747,7 +747,6 @@ ACE_Registry::Naming_Context::list (Binding_List &list)
   return 0;
 }
 
-// Default constructor
 ACE_Registry::Binding_Iterator::Binding_Iterator ()
 {
   this->object_iteration_.iterator (this);

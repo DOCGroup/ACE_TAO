@@ -66,7 +66,6 @@ public:
 protected:
   /// @name Construction
   /// @{
-  /// Default constructor.
   ACE_IPC_SAP ();
 
   /// Protected destructor.

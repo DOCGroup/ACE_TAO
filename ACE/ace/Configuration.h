@@ -94,7 +94,6 @@ class ACE_Export ACE_Configuration_Section_Key
 {
   friend class ACE_Configuration;
 public:
-  /// Default constructor.
   ACE_Configuration_Section_Key () = default;
 
   /// Constructor that initializes to a pointer to a concrete internal key.
@@ -374,7 +373,6 @@ public:
   static ACE_TCHAR NULL_String_;
 
 protected:
-  /// Default ctor
   ACE_Configuration ();
 
   /// Resolves the internal key from a section key
@@ -600,7 +598,6 @@ using SUBSECTION_HASH = ACE_Hash_Map_Manager_Ex<ACE_Configuration_ExtId, int, AC
 class ACE_Export ACE_Configuration_Value_IntId
 {
 public:
-  /// Default constructor
   ACE_Configuration_Value_IntId ();
 
   /// String constructor, takes ownership of string
@@ -654,7 +651,6 @@ using VALUE_ENTRY = VALUE_HASH::ENTRY;
 class ACE_Export ACE_Configuration_Section_IntId
 {
 public:
-  /// Default ctor
   ACE_Configuration_Section_IntId ();
 
   /// Named ctor
@@ -740,7 +736,6 @@ protected:
 class ACE_Export ACE_Configuration_Heap : public ACE_Configuration
 {
 public:
-  /// Default ctor
   ACE_Configuration_Heap ();
 
   ~ACE_Configuration_Heap () override;

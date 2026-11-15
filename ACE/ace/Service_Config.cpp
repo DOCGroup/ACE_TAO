@@ -96,7 +96,6 @@ ACE_Threading_Helper<ACE_Null_Mutex>::get ()
   */
 using ACE_SERVICE_CONFIG_SINGLETON = ACE_Unmanaged_Singleton<ACE_Service_Config, ACE_SYNCH_RECURSIVE_MUTEX>;
 
-/// ctor
 ACE_Service_Config_Guard::ACE_Service_Config_Guard (ACE_Service_Gestalt *psg)
   : saved_ (ACE_Service_Config::current ())
 {

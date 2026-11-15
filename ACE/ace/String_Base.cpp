@@ -21,8 +21,6 @@ ACE_ALLOC_HOOK_DEFINE_Tc(ACE_String_Base)
 template <class ACE_CHAR_T>
 ACE_CHAR_T ACE_String_Base<ACE_CHAR_T>::NULL_String_ = 0;
 
-// Default constructor.
-
 template <class ACE_CHAR_T>
 ACE_String_Base<ACE_CHAR_T>::ACE_String_Base (ACE_Allocator *the_allocator)
   : allocator_ (the_allocator ? the_allocator : ACE_Allocator::instance ()),

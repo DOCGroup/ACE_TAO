@@ -392,7 +392,6 @@ private:
    */
   struct Process_Descriptor
   {
-    /// Default ctor/dtor.
     Process_Descriptor ();
     ~Process_Descriptor ();
 

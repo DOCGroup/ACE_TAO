@@ -39,8 +39,6 @@ const int ACE_ATM_Addr::OPT_FLAGS_PMP = 0;
 const int ACE_ATM_Addr::DEFAULT_SELECTOR = 0x0;
 #endif /* ACE_HAS_FORE_ATM_XTI || ACE_HAS_FORE_ATM_WS2 || ACE_HAS_LINUX_ATM */
 
-// Default constructor
-
 ACE_ATM_Addr::ACE_ATM_Addr (u_char selector)
 #if defined (ACE_HAS_FORE_ATM_XTI) || defined (ACE_HAS_FORE_ATM_WS2)
   : ACE_Addr (AF_ATM,

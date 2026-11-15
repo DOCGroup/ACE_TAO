@@ -65,7 +65,6 @@ public:
                   long pid);
   /// @}
 
-  /// Default dtor.
   ~ACE_Log_Record ();
 
   /// Write the contents of the logging record to the appropriate

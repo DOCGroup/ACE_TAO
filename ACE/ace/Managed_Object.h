@@ -42,7 +42,6 @@ template <class TYPE>
 class ACE_Cleanup_Adapter : public ACE_Cleanup
 {
 public:
-  /// Default constructor.
   ACE_Cleanup_Adapter ();
 
   /// Virtual destructor, needed by some compilers for vtable placement.

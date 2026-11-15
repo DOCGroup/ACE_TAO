@@ -78,7 +78,6 @@ public:
 
 protected:
   // Protected constructors, so the class can only be derived from.
-  /// Default constructor.
   ACE_ICMP_Socket ();
 
   /// Constructor that takes a local listening address.

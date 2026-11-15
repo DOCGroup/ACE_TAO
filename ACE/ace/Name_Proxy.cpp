@@ -17,7 +17,6 @@ ACE_Name_Proxy::dump () const
 #endif /* ACE_HAS_DUMP */
 }
 
-/// Default constructor.
 ACE_Name_Proxy::ACE_Name_Proxy ()
 {
   ACE_TRACE ("ACE_Name_Proxy::ACE_Name_Proxy");

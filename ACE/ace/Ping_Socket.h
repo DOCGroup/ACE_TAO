@@ -39,7 +39,6 @@ class ACE_Export ACE_Ping_Socket : public ACE_ICMP_Socket
 {
   using inherited = ACE_ICMP_Socket;
 public:
-  /// Default constructor.
   ACE_Ping_Socket ();
 
   ACE_Ping_Socket (ACE_Addr const & local,

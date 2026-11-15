@@ -164,7 +164,6 @@ class ACE_Export ACE_Flow_Spec
 #endif /* ACE_HAS_WINSOCK2 */
 {
 public:
-  /// Default constructor.
   ACE_Flow_Spec ();
 
   /// Constructor that initializes all the fields.

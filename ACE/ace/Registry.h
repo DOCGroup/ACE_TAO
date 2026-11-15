@@ -126,7 +126,6 @@ public:
   class ACE_Export Object
   {
   public:
-    /// Default constructor
     Object (void *data = nullptr,
             u_long size = 0,
             u_long type = REG_NONE);
@@ -410,7 +409,6 @@ public:
     /// Friend factory
     friend class Naming_Context;
 
-    /// Default constructor
     Binding_Iterator ();
 
     /// Next entry

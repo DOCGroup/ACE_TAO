@@ -32,7 +32,6 @@ public:
                     const char * = nullptr,
                     void * = nullptr) {}
 
-  /// Default dtor.
   ~ACE_Null_Barrier () = default;
 
   /// Block the caller until all <count> threads have called <wait> and

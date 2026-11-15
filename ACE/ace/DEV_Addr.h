@@ -31,7 +31,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_DEV_Addr : public ACE_Addr
 {
 public:
-  /// Default constructor.
   ACE_DEV_Addr ();
 
   ACE_DEV_Addr (ACE_DEV_Addr const &sa);

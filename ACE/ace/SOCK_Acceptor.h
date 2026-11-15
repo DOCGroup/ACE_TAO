@@ -37,7 +37,6 @@ class ACE_Accept_QoS_Params;
 class ACE_Export ACE_SOCK_Acceptor : public ACE_SOCK
 {
 public:
-  /// Default constructor.
   ACE_SOCK_Acceptor ();
 
   /**
@@ -100,7 +99,6 @@ public:
   /// Close the socket.  Returns 0 on success and -1 on failure.
   int close ();
 
-  /// Default dtor.
   ~ACE_SOCK_Acceptor ();
 
   /// @name Passive connection accept methods

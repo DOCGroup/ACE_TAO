@@ -41,7 +41,6 @@ class ACE_Sig_Action;
 class ACE_Export ACE_Sig_Handler
 {
 public:
-  /// Default constructor.
   ACE_Sig_Handler ();
 
   virtual ~ACE_Sig_Handler ();
@@ -166,7 +165,6 @@ private:
 class ACE_Export ACE_Sig_Handlers : public ACE_Sig_Handler
 {
 public:
-  /// Default constructor
   ACE_Sig_Handlers ();
 
   /// @name Registration and removal

@@ -157,7 +157,6 @@ public:
   ACE_Sig_Action& operator = (ACE_Sig_Action const &) = default;
   ACE_Sig_Action &operator = (ACE_Sig_Action&&)  = default;
 
-  /// Default dtor.
   ~ACE_Sig_Action ();
 
   /// @name Signal action management

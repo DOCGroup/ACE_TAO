@@ -36,7 +36,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_INET_Addr : public ACE_Addr
 {
 public:
-  /// Default constructor.
   ACE_INET_Addr ();
 
 
@@ -108,7 +107,6 @@ public:
                  const wchar_t protocol[] = ACE_TEXT_WIDE ("tcp"));
 #endif /* ACE_HAS_WCHAR */
 
-  /// Default dtor.
   ~ACE_INET_Addr () override;
 
   /// @name Direct initialization methods

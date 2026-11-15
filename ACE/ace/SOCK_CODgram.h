@@ -33,7 +33,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_SOCK_CODgram : public ACE_SOCK_IO
 {
 public:
-  /// Default constructor.
   ACE_SOCK_CODgram ();
 
   /**
@@ -76,7 +75,6 @@ public:
                     int protocol = 0,
                     int reuse_addr = 0);
 
-  /// Default dtor.
   ~ACE_SOCK_CODgram ();
 
   // Initiate a connected dgram.

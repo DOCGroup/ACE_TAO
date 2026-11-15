@@ -33,8 +33,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 // GOF Command Pattern Classes and Template Specializations //
 //////////////////////////////////////////////////////////////
 
-// Default constructor.
-
 ACE_INLINE
 ACE_Command_Base::ACE_Command_Base ()
 {

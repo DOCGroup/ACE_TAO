@@ -33,7 +33,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Multihomed_INET_Addr : public ACE_INET_Addr
 {
 public:
-  /// Default constructor.
   ACE_Multihomed_INET_Addr ();
 
   /**
@@ -101,7 +100,6 @@ public:
 
   /// Use compiler-generated assignment operator.
 
-  /// Default destructor.
   ~ACE_Multihomed_INET_Addr () override = default;
 
   /// @name Direct initialization methods

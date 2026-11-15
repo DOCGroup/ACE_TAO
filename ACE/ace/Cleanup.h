@@ -115,7 +115,6 @@ using ACE_Cleanup_Info_Node_List = ACE_Intrusive_List<ACE_Cleanup_Info_Node>;
 class ACE_Export ACE_OS_Exit_Info
 {
 public:
-  /// Default constructor.
   ACE_OS_Exit_Info () = default;
 
   ~ACE_OS_Exit_Info () = default;

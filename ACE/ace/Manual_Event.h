@@ -55,7 +55,6 @@ public:
                       void *arg = nullptr);
 #endif /* ACE_HAS_WCHAR */
 
-  /// Default dtor.
   ~ACE_Manual_Event_T () override = default;
 
   /// Dump the state of an object.
@@ -91,7 +90,6 @@ public:
   {}
 #endif /* ACE_HAS_WCHAR */
 
-  /// Default dtor.
   ~ACE_Manual_Event () override = default;
 };
 
