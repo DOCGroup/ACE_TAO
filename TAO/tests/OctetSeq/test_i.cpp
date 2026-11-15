@@ -19,8 +19,7 @@ Database_i::set (Test::Index i,
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
   CORBA::ULong const len = seq.length ();
-  // CORBA::ULong max = seq.maximum ();
-  ACE_Message_Block *mb = seq.mb ();
+  ACE_Message_Block * const mb = seq.mb ();
   if (mb == nullptr)
     {
       this->elements_[i] = seq;

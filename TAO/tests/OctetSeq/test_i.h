@@ -1,11 +1,8 @@
-
-//=============================================================================
 /**
  *  @file   test_i.h
  *
  *  @author Carlos O'Ryan
  */
-//=============================================================================
 
 #ifndef TAO_OCTETSEQ_TEST_I_H
 #define TAO_OCTETSEQ_TEST_I_H
@@ -22,11 +19,9 @@
 class Database_i : public POA_Test::Database
 {
 public:
-  /// ctor
   Database_i (CORBA::ORB_ptr orb,
               Test::Index max_range);
 
-  /// dtor
   ~Database_i () override = default;
 
   Database_i (Database_i const &) = delete;
@@ -34,7 +29,8 @@ public:
   Database_i (Database_i &&) = delete;
   Database_i &operator= (Database_i &&) = delete;
 
-  // = The Simple_Server methods.
+  /// @name Database methods
+  /// @{
   void set (Test::Index i,
             Test::OctetSeq const &seq,
             CORBA::Double verification_token,
@@ -45,6 +41,7 @@ public:
   CORBA::ULong get_crc (Test::Index i) override;
 
   void shutdown () override;
+  /// @}
 
 private:
   /// The ORB pointer
