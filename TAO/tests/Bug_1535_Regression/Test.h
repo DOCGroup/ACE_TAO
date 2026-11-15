@@ -16,10 +16,12 @@ public:
   Hello (Hello &&) = delete;
   Hello &operator= (Hello &&) = delete;
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   void print_hello_world () override;
 
   PortableServer::POA_ptr _default_POA () override;
+  /// @}
 
 private:
   PortableServer::POA_var const poa_;
