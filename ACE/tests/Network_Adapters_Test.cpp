@@ -29,6 +29,7 @@
 
 #include <cstring>
 #include <memory>
+#include <new>
 
 #include "Network_Adapters_Test.h"
 
@@ -1057,8 +1058,13 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_OS::exit(-2);
     }
 
-  ACE_TCHAR *ping_status {};
-  ACE_NEW_RETURN (ping_status, ACE_TCHAR[number_of_ping_points], -1);
+  std::unique_ptr<ACE_TCHAR[]> ping_status (
+    new (std::nothrow) ACE_TCHAR[number_of_ping_points]);
+  if (!ping_status)
+    {
+      errno = ENOMEM;
+      return -1;
+    }
 
   // wait_echo_reply_timer is in msec
   int seconds = 0;
@@ -1081,7 +1087,7 @@ run_main (int argc, ACE_TCHAR *argv[])
                               wait_timer,
                               ping_points_addrs,
                               number_of_ping_points,
-                              ping_status,
+                              ping_status.get (),
                               2,  // max_attempts_number
                               local_adapter) == -1)
         {
@@ -1102,7 +1108,6 @@ run_main (int argc, ACE_TCHAR *argv[])
               res = -4;
             }
           delete ping_handler;
-          delete [] ping_status;
           delete main_reactor;
           delete stop_handler;
 
@@ -1119,7 +1124,7 @@ run_main (int argc, ACE_TCHAR *argv[])
                               wait_timer,
                               ping_points_addrs,
                               number_of_ping_points,
-                              ping_status,
+                              ping_status.get (),
                               2) == -1)   // max_attempts_number
         {
           int res = 0;
@@ -1137,7 +1142,6 @@ run_main (int argc, ACE_TCHAR *argv[])
               res = -4;
             }
           delete ping_handler;
-          delete [] ping_status;
           delete main_reactor;
           delete stop_handler;
 
@@ -1158,7 +1162,6 @@ run_main (int argc, ACE_TCHAR *argv[])
 
       delete repeats_handler;
       delete ping_handler;
-      delete [] ping_status;
       delete main_reactor;
       delete stop_handler;
 
@@ -1181,7 +1184,6 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   delete repeats_handler;
   delete ping_handler;
-  delete [] ping_status;
   delete main_reactor;
   delete stop_handler;
 
