@@ -1,10 +1,7 @@
-// ===================================================================
 /**
- *  @file   Big_Reply_i.h
- *
- *  @author Balachandran Natarajan <bala@cs.wustl.edu>
- **/
-// ===================================================================
+ * @file Big_Reply_i.h
+ * @author Balachandran Natarajan <bala@cs.wustl.edu>
+ */
 
 #ifndef TAO_TESTS_BIG_REPLY_I_H
 #define TAO_TESTS_BIG_REPLY_I_H
@@ -13,10 +10,7 @@
 #include "TestS.h"
 
 /// Implement the Test::Big_Reply interface
-/**
- * Simply return a Big_Reply
- */
-
+/// Simply returns a large reply.
 class Big_Reply_i
   : public virtual POA_Test::Big_Reply
 {
@@ -30,12 +24,14 @@ public:
 
   ~Big_Reply_i () override = default;
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   Test::Octet_Seq *get_big_reply () override;
 
   void ping () override;
 
   void shutdown () override;
+  /// @}
 
 private:
   /// Our local ORB ptr
