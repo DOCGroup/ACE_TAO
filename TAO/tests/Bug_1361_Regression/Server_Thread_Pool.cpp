@@ -54,7 +54,7 @@ Thread_Pool::shutdown ()
   return 0;
 }
 
-// Simply enqueue the Message_Block into the end of the queue.
+/// Enqueues the message block at the end of the queue.
 int
 Thread_Pool::put (Test::Echo_ptr echoptr)
 {
@@ -74,9 +74,8 @@ Thread_Pool::put (ACE_Message_Block *mb,
   return this->putq (mb, tv);
 }
 
-// Iterate <n_iterations> time printing off a message and "waiting"
-// for all other threads to complete this iteration.
-
+/// Iterates, prints a message, and waits for all other threads to complete
+/// each iteration.
 int
 Thread_Pool::svc ()
 {
