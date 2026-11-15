@@ -142,12 +142,7 @@ CORBA::ContextList::_duplicate ()
 void
 CORBA::ContextList::_destroy ()
 {
-  CORBA::ULong const current = --this->refcount_;
-
-  if (current == 0)
-    {
-      delete this;
-    }
+  this->_decr_refcount ();
 }
 
 void
@@ -159,9 +154,9 @@ CORBA::ContextList::_incr_refcount ()
 void
 CORBA::ContextList::_decr_refcount ()
 {
-  --this->refcount_;
+  CORBA::ULong const refcount = --this->refcount_;
 
-  if (this->refcount_ != 0)
+  if (refcount == 0)
     {
       delete this;
     }
