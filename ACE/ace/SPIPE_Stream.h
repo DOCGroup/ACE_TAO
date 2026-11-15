@@ -147,7 +147,7 @@ public:
   ssize_t recvv_n (iovec iov[],
                    int len) const;
 
-  // = Meta-type info
+  /// Peer address type.
   using PEER_ADDR = ACE_SPIPE_Addr;
 
   /// Dump the state of an object.

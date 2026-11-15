@@ -101,7 +101,8 @@ public:
    */
   int get_remote_addrs (ACE_INET_Addr *addrs, size_t &size) const;
 
-  // = I/O functions.
+  /// @name Data transfer
+  /// @{
 
   /// Try to recv exactly @a len bytes into @a buf from the connected socket.
   ssize_t recv_n (void *buf,
@@ -147,8 +148,10 @@ public:
                    int iovcnt,
                    const ACE_Time_Value *timeout = nullptr,
                    size_t *bytes_transferred = nullptr) const;
+  /// @}
 
-  // = Send/receive ``urgent'' data (see TCP specs...).
+  /// @name Urgent data transfer
+  /// @{
   ssize_t send_urg (const void *ptr,
                     size_t len = sizeof (char),
                     const ACE_Time_Value *timeout = nullptr) const;
@@ -156,8 +159,10 @@ public:
   ssize_t recv_urg (void *ptr,
                     size_t len = sizeof (char),
                     const ACE_Time_Value *timeout = nullptr) const;
+  /// @}
 
-  // = Selectively close endpoints.
+  /// @name Endpoint shutdown
+  /// @{
   /// Close down the reader.
   int close_reader ();
 
@@ -175,8 +180,9 @@ public:
    * in draft-ietf-tsvwg-sctpsocket-09 7.1.4.
    */
   int abort ();
+  /// @}
 
-  // = Meta-type info
+  /// Peer address type.
   using PEER_ADDR = ACE_Multihomed_INET_Addr;
 
   /// Dump the state of an object.

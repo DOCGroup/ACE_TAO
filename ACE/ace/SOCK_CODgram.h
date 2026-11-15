@@ -120,7 +120,7 @@ public:
             int protocol = 0,
             int reuse_addr = 0);
 
-  // = Meta-type info.
+  /// Peer address type.
   using PEER_ADDR = ACE_INET_Addr;
 
   /// Dump the state of an object.

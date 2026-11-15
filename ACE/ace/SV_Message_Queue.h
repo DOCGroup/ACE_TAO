@@ -35,13 +35,15 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_SV_Message_Queue
 {
 public:
-  // = Useful symbolic constants.
+  /// @name Queue flags
+  /// @{
   enum
   {
     ACE_CREATE = IPC_CREAT,
     ACE_OPEN   = 0,
     ACE_NOWAIT = IPC_NOWAIT
   };
+  /// @}
 
   /// Open a message queue using the <external_id>.
   ACE_SV_Message_Queue ();
@@ -61,7 +63,8 @@ public:
   /// Close down and remove the message queue from the system.
   int remove ();
 
-  // = Message transfer methods.
+  /// @name Message transfer
+  /// @{
   ssize_t recv (ACE_SV_Message &mb,
                 int length,
                 long mtype = 0,
@@ -70,6 +73,7 @@ public:
   int send (const ACE_SV_Message &mb,
             int length,
             int mflags = 0);
+  /// @}
 
   /// Access the underlying control operations.
   int control (int option, void *arg = nullptr);
