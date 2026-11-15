@@ -31,7 +31,7 @@ supplier (void *)
 
   std::unique_ptr<char[]> mybuf (std::make_unique<char[]> (size));
 
-  for (int i = 0; i < size; i++)
+  for (int i = 0; i < size; ++i)
     mybuf[i] = 'a';
 
   ACE_DEBUG ((LM_DEBUG,
@@ -49,7 +49,7 @@ supplier (void *)
 
   ACE_Message_Block *mb_p = nullptr;
 
-  for (int j = 0; j < iterations; j++)
+  for (int j = 0; j < iterations; ++j)
     {
       ACE_NEW_RETURN (mb_p,
                       ACE_Message_Block (size,

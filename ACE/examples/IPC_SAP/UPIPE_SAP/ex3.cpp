@@ -41,10 +41,10 @@ supplier (void *)
 
   std::unique_ptr<char[]> mybuf (std::make_unique<char[]> (size));
 
-  for (int i = 0; i < size; i++)
+  for (int i = 0; i < size; ++i)
     mybuf[i] = 'a';
 
-  for (int j = 0; j < iterations; j++)
+  for (int j = 0; j < iterations; ++j)
     if (s_stream.send (mybuf.get (), size) == -1)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%t) %p\n", "send failed"),
@@ -97,7 +97,7 @@ consumer (void *)
   int result = 0;
   int blocks = 0;
 
-  for (;; blocks++)
+  for (;; ++blocks)
     {
       result = c_stream.recv (mybuf.get (), size);
       if (result <= 0)
