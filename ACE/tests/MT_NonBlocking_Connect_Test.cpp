@@ -29,6 +29,8 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/Thread_Mutex.h"
 
+#include <vector>
+
 #if defined (ACE_HAS_THREADS)
 
 static int test_select_reactor = 1;
@@ -159,7 +161,7 @@ int
 Connect_Thread::svc ()
 {
   size_t const nr_names = sizeof hosts / sizeof (char *);
-  ACE_INET_Addr *addresses = new ACE_INET_Addr[nr_names];
+  std::vector<ACE_INET_Addr> addresses (nr_names);
 
   for (size_t i = 0; i < nr_names; ++i)
     {
@@ -241,8 +243,6 @@ Connect_Thread::svc ()
       // Close the connector.
       this->base_connector_.close ();
     }
-
-  delete[] addresses;
 
   return 0;
 }
