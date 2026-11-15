@@ -49,8 +49,7 @@ client (void *arg)
                    &timeout) == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %p\n"),
-                  ACE_TEXT ("connection failed")));
+                  ACE_TEXT ("(%P|%t) connect failed: %p\n")));
       Test_Result = 1;
       return nullptr;
     }
@@ -85,7 +84,7 @@ client (void *arg)
       || (in_fd = ACE_OS::open (test_file, O_CREAT | O_RDWR | O_TRUNC,
                                 ACE_DEFAULT_FILE_PERMS)) == ACE_INVALID_HANDLE)
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) open %p\n"), test_file));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) open %s: %p\n"), test_file));
       Test_Result = 1;
       goto cleanup;
     }
@@ -96,7 +95,7 @@ client (void *arg)
 
   if (byte_count != static_cast<ssize_t> (sizeof (buffer)))
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) write %p\n"), test_file));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) write %s: %p\n"), test_file));
       Test_Result = 1;
     }
 
@@ -108,8 +107,7 @@ client (void *arg)
   if (len == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %p\n"),
-                  ACE_TEXT ("Test 1, sendfile failed")));
+                  ACE_TEXT ("(%P|%t) Test 1, sendfile failed: %p\n")));
       Test_Result = 1;
       goto cleanup;
     }
@@ -175,8 +173,7 @@ server (void *arg)
                              &timeout) == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %p\n"),
-                  ACE_TEXT ("accept")));
+                    ACE_TEXT ("(%P|%t) accept: %p\n")));
       Test_Result = 1;
       return nullptr;
     }
@@ -202,8 +199,7 @@ server (void *arg)
   if (len == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %p\n"),
-                  ACE_TEXT ("Test 1, recv failed")));
+                  ACE_TEXT ("(%P|%t) Test 1, recv failed: %p\n")));
       Test_Result = 1;
     }
 
@@ -266,8 +262,7 @@ spawn ()
   if (peer_acceptor.open (ACE_Addr::sap_any) == -1
       || peer_acceptor.get_local_addr (server_addr) == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) %p\n"),
-                ACE_TEXT ("open")));
+                    ACE_TEXT ("(%P|%t) open: %p\n")));
   else
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -279,9 +274,7 @@ spawn ()
         {
         case -1:
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%P|%t) %p\n"),
-                      ACE_TEXT ("fork failed"),
-                      1));
+                      ACE_TEXT ("(%P|%t) fork failed: %p\n")));
           ACE_OS::abort ();
         case 0:
           client (&server_addr);
@@ -297,18 +290,16 @@ spawn ()
            reinterpret_cast<void *> (&peer_acceptor),
            THR_NEW_LWP | THR_DETACHED) == -1)
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) %p\n%a"),
-                    ACE_TEXT ("thread create failed"),
-                    1));
+                    ACE_TEXT ("(%P|%t) %s: %p\n%a"),
+                    ACE_TEXT ("server thread create failed")));
 
       if (ACE_Thread_Manager::instance ()->spawn
           (ACE_THR_FUNC (client),
            reinterpret_cast<void *> (&server_addr),
            THR_NEW_LWP | THR_DETACHED) == -1)
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) %p\n%a"),
-                    ACE_TEXT ("thread create failed"),
-                    1));
+                    ACE_TEXT ("(%P|%t) %s: %p\n%a"),
+                    ACE_TEXT ("client thread create failed")));
 
       // Wait for the threads to exit.
       ACE_Thread_Manager::instance ()->wait ();
