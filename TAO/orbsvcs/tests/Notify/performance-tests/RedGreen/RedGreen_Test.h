@@ -67,7 +67,6 @@ private:
 class RedGreen_Test
 {
  public:
-  // = Initialization
   RedGreen_Test () = default;
 
   RedGreen_Test (RedGreen_Test const&) = delete;
@@ -128,7 +127,9 @@ protected:
   /// send the events.
   void send_events ();
 
-  // = Data Members.
+  /// @name Data members
+  /// @{
+
   /// Reference to the root poa.
   PortableServer::POA_var root_poa_ {};
 
@@ -166,21 +167,17 @@ protected:
   /// Non-owning pointer; its reference is held by the POA.
   RedGreen_Test_StructuredPushSupplier* supplier_ {};
 
+  /// @}
+
 private:
   friend class RedGreen_Test_StructuredPushConsumer;
   friend class RedGreen_Test_StructuredPushSupplier;
 };
 
-/*****************************************************************/
+/// A consumer for the RedGreen_Test example.
 class RedGreen_Test_StructuredPushConsumer
   : public POA_CosNotifyComm::StructuredPushConsumer
 {
-  // = TITLE
-  //   RedGreen_Test_StructuredPushConsumer
-  //
-  // = DESCRIPTION
-  //   Consumer for the RedGreen_Test example.
-  //
 public:
   explicit RedGreen_Test_StructuredPushConsumer (RedGreen_Test& test_client);
 
@@ -207,7 +204,9 @@ public:
                    ACE_High_Res_Timer::global_scale_factor_type gsf);
 
 protected:
-  // = Data members
+  /// @name Data members
+  /// @{
+
   /// The proxy that we are connected to.
   CosNotifyChannelAdmin::StructuredProxyPushSupplier_var proxy_supplier_ {};
 
@@ -225,22 +224,19 @@ protected:
   /// Used for reporting stats
   ACE_Throughput_Stats throughput_;
 
-  // = Methods
+  /// @}
+
   ~RedGreen_Test_StructuredPushConsumer () override = default;
 
-  // = NotifyPublish method
   void offer_change (
       CosNotification::EventTypeSeq const& added,
       CosNotification::EventTypeSeq const& removed) override;
 
-  // = StructuredPushSupplier methods
   void push_structured_event (
       CosNotification::StructuredEvent const& notification) override;
 
   void disconnect_structured_push_consumer () override;
 };
-
-/*****************************************************************/
 
 class SlowConsumer : public RedGreen_Test_StructuredPushConsumer
 {
@@ -257,16 +253,10 @@ public:
       CosNotification::StructuredEvent const& notification) override;
 };
 
-/*****************************************************************/
+/// A supplier for the RedGreen_Test example.
 class RedGreen_Test_StructuredPushSupplier
   : public POA_CosNotifyComm::StructuredPushSupplier
 {
-  // = TITLE
-  //   RedGreen_Test_StructuredPushSupplier
-  //
-  // = DESCRIPTION
-  //   Supplier for the RedGreen_Test example.
-  //
 public:
   explicit RedGreen_Test_StructuredPushSupplier (RedGreen_Test& test_client);
 
@@ -293,7 +283,9 @@ public:
                    ACE_High_Res_Timer::global_scale_factor_type gsf);
 
 protected:
-  // = Data members
+  /// @name Data members
+  /// @{
+
   /// The proxy that we are connected to.
   CosNotifyChannelAdmin::StructuredProxyPushConsumer_var proxy_consumer_ {};
 
@@ -305,19 +297,16 @@ protected:
   /// Measure the elapsed time spent while sending the events.
   ACE_Throughput_Stats throughput_;
 
-  // = Protected Methods
+  /// @}
+
   ~RedGreen_Test_StructuredPushSupplier () override = default;
 
-  // = NotifyRedGreen_Test
   void subscription_change (
       CosNotification::EventTypeSeq const& added,
       CosNotification::EventTypeSeq const& removed) override;
 
-  // = StructuredPushSupplier method
   void disconnect_structured_push_supplier () override;
 };
-
-/*****************************************************************/
 
 #if defined(_MSC_VER)
 #pragma warning(pop)
