@@ -54,13 +54,13 @@ ACE_HTTP_Addr::operator= (const ACE_HTTP_Addr& rhs)
 ACE_INLINE ACE_INET_Addr
 ACE_HTTP_Addr::get_inet_address () const
 {
-  return ACE_INET_Addr (this->port_number_, this->hostname_);
+  return ACE_INET_Addr (this->port_number_, this->hostname_.get ());
 }
 
 ACE_INLINE const ACE_TCHAR *
 ACE_HTTP_Addr::get_hostname () const
 {
-  return this->hostname_;
+  return this->hostname_.get ();
 }
 
 ACE_INLINE u_short
@@ -72,13 +72,13 @@ ACE_HTTP_Addr::get_port_number () const
 ACE_INLINE const ACE_TCHAR *
 ACE_HTTP_Addr::get_path () const
 {
-  return this->path_;
+  return this->path_.get ();
 }
 
 ACE_INLINE const ACE_TCHAR *
 ACE_HTTP_Addr::get_query () const
 {
-  return this->query_;
+  return this->query_.get ();
 }
 
 // ****************************************************************
@@ -96,31 +96,31 @@ ACE_FTP_Addr::operator= (const ACE_FTP_Addr& rhs)
 ACE_INLINE const ACE_TCHAR *
 ACE_FTP_Addr::get_user () const
 {
-  return this->user_;
+  return this->user_.get ();
 }
 
 ACE_INLINE const ACE_TCHAR *
 ACE_FTP_Addr::get_hostname () const
 {
-  return this->hostname_;
+  return this->hostname_.get ();
 }
 
 ACE_INLINE const ACE_TCHAR *
 ACE_FTP_Addr::get_passwd () const
 {
-  return this->password_;
+  return this->password_.get ();
 }
 
 ACE_INLINE const ACE_TCHAR *
 ACE_FTP_Addr::get_path () const
 {
-  return this->path_;
+  return this->path_.get ();
 }
 
 ACE_INLINE ACE_INET_Addr
 ACE_FTP_Addr::get_inet_address () const
 {
-  return ACE_INET_Addr (ACE_TEXT ("ftp"), this->hostname_);
+  return ACE_INET_Addr (ACE_TEXT ("ftp"), this->hostname_.get ());
 }
 
 // ****************************************************************
@@ -138,17 +138,17 @@ ACE_Mailto_Addr::operator= (const ACE_Mailto_Addr& rhs)
 ACE_INLINE const ACE_TCHAR *
 ACE_Mailto_Addr::get_user () const
 {
-  return this->user_;
+  return this->user_.get ();
 }
 
 ACE_INLINE const ACE_TCHAR *
 ACE_Mailto_Addr::get_hostname () const
 {
-  return this->hostname_;
+  return this->hostname_.get ();
 }
 
 ACE_INLINE const ACE_TCHAR *
 ACE_Mailto_Addr::get_headers () const
 {
-  return this->headers_;
+  return this->headers_.get ();
 }

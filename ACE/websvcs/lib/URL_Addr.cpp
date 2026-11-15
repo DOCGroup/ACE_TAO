@@ -50,6 +50,21 @@ ACE_URL_Addr::URL_Deleter::operator () (ACE_TCHAR *url) const
   ACE_OS::free (url);
 }
 
+template <typename String_Owner>
+static bool
+duplicate_url_string (String_Owner &destination, const ACE_TCHAR *source)
+{
+  ACE_TCHAR * const copy = ACE_OS::strdup (source);
+  if (copy == nullptr)
+    {
+      errno = ENOMEM;
+      return false;
+    }
+
+  destination.reset (copy);
+  return true;
+}
+
 ACE_URL_Addr::~ACE_URL_Addr () = default;
 
 int
@@ -212,12 +227,7 @@ ACE_HTTP_Addr::ACE_HTTP_Addr (const ACE_HTTP_Addr &addr)
 }
 
 ACE_HTTP_Addr::~ACE_HTTP_Addr ()
-{
-  this->clear ();
-  this->hostname_ = nullptr;
-  this->path_ = nullptr;
-  this->query_ = nullptr;
-}
+  = default;
 
 int
 ACE_HTTP_Addr::set (const ACE_TCHAR *host_name,
@@ -228,14 +238,18 @@ ACE_HTTP_Addr::set (const ACE_TCHAR *host_name,
   if (host_name == nullptr || path == nullptr)
     return -1;
 
-  this->clear ();
-  ACE_ALLOCATOR_RETURN (this->hostname_, ACE_OS::strdup (host_name), -1);
+  if (!duplicate_url_string (this->hostname_, host_name))
+    return -1;
   this->port_number_ = port;
-  ACE_ALLOCATOR_RETURN (this->path_, ACE_OS::strdup (path), -1);
+  if (!duplicate_url_string (this->path_, path))
+    return -1;
   if (query != nullptr)
-    ACE_ALLOCATOR_RETURN (this->query_, ACE_OS::strdup (query), -1);
+    {
+      if (!duplicate_url_string (this->query_, query))
+        return -1;
+    }
   else
-    this->query_ = nullptr;
+    this->query_.reset ();
 
   size_t size = this->url_size (1);
 
@@ -256,30 +270,42 @@ ACE_HTTP_Addr::set (const ACE_HTTP_Addr &addr)
     return -1;
   this->clear ();
   if (addr.hostname_ != nullptr)
-    ACE_ALLOCATOR_RETURN (this->hostname_, ACE_OS::strdup (addr.hostname_), -1);
+    {
+      if (!duplicate_url_string (this->hostname_, addr.hostname_.get ()))
+        return -1;
+    }
   else
-    ACE_ALLOCATOR_RETURN (this->hostname_, ACE_OS::strdup (ACE_TEXT ("")), -1);
+    {
+      if (!duplicate_url_string (this->hostname_, ACE_TEXT ("")))
+        return -1;
+    }
   if (addr.path_ != nullptr)
-    ACE_ALLOCATOR_RETURN (this->path_, ACE_OS::strdup (addr.path_), -1);
+    {
+      if (!duplicate_url_string (this->path_, addr.path_.get ()))
+        return -1;
+    }
   else
-    ACE_ALLOCATOR_RETURN (this->path_, ACE_OS::strdup (ACE_TEXT ("")), -1);
+    {
+      if (!duplicate_url_string (this->path_, ACE_TEXT ("")))
+        return -1;
+    }
   this->port_number_ = addr.port_number_;
   if (addr.query_ != nullptr)
-    ACE_ALLOCATOR_RETURN (this->query_, ACE_OS::strdup (addr.query_), -1);
+    {
+      if (!duplicate_url_string (this->query_, addr.query_.get ()))
+        return -1;
+    }
   else
-    this->query_ = nullptr;
+    this->query_.reset ();
   return 0;
 }
 
 void
 ACE_HTTP_Addr::clear ()
 {
-  if (this->hostname_ != nullptr)
-    ACE_OS::free (this->hostname_);
-  if (this->path_ != nullptr)
-    ACE_OS::free (this->path_);
-  if (this->query_ != nullptr)
-    ACE_OS::free (this->query_);
+  this->hostname_.reset ();
+  this->path_.reset ();
+  this->query_.reset ();
 }
 
 size_t
@@ -292,8 +318,8 @@ ACE_HTTP_Addr::url_size (int flags) const
     + sizeof (ACE_TEXT ("/:?")); // separators
 
   size_t chars =
-    + (this->path_?ACE_OS::strlen (this->path_):0)
-    + (this->query_?ACE_OS::strlen (this->query_):0);
+    + (this->path_?ACE_OS::strlen (this->path_.get ()):0)
+    + (this->query_?ACE_OS::strlen (this->query_.get ()):0);
 
   if (flags == 0)
     {
@@ -301,7 +327,7 @@ ACE_HTTP_Addr::url_size (int flags) const
     }
   else
     {
-      chars += ACE_OS::strlen (this->hostname_);
+      chars += ACE_OS::strlen (this->hostname_.get ());
     }
 
   if (this->port_number_ != ACE_DEFAULT_HTTP_PORT)
@@ -460,9 +486,9 @@ ACE_HTTP_Addr::string_to_addr (const ACE_TCHAR *address)
     return -1;
 
   this->clear ();
-  this->hostname_ = nullptr;
-  this->path_ = nullptr;
-  this->query_ = nullptr;
+  this->hostname_.reset ();
+  this->path_.reset ();
+  this->query_.reset ();
 
   // Save the original URL....
   if (this->ACE_URL_Addr::string_to_addr (address) != 0)
@@ -473,9 +499,10 @@ ACE_HTTP_Addr::string_to_addr (const ACE_TCHAR *address)
   string += 2; // == strlen ("//");
 
   // Make a copy of the string to manipulate it.
-  ACE_ALLOCATOR_RETURN (this->hostname_, ACE_OS::strdup (string), -1);
+  if (!duplicate_url_string (this->hostname_, string))
+    return -1;
 
-  ACE_TCHAR *path_start = ACE_OS::strchr (this->hostname_, '/');
+  ACE_TCHAR *path_start = ACE_OS::strchr (this->hostname_.get (), '/');
   if (path_start != nullptr)
     {
       // terminate the host:port substring
@@ -486,16 +513,16 @@ ACE_HTTP_Addr::string_to_addr (const ACE_TCHAR *address)
         {
           query_start[0] = '\0';
           ++query_start;
-          ACE_ALLOCATOR_RETURN (this->query_,
-                                ACE_OS::strdup (query_start),
-                                -1);
+          if (!duplicate_url_string (this->query_, query_start))
+            return -1;
         }
-      ACE_ALLOCATOR_RETURN (this->path_, ACE_OS::strdup (path_start), -1);
+      if (!duplicate_url_string (this->path_, path_start))
+        return -1;
     }
 
   // By now t is null terminated at the start of the path, find the
   // port (if present).
-  ACE_TCHAR *port_start = ACE_OS::strchr(this->hostname_, ':');
+  ACE_TCHAR *port_start = ACE_OS::strchr (this->hostname_.get (), ':');
   this->port_number_ = ACE_DEFAULT_HTTP_PORT;
   if (port_start != nullptr)
     {
@@ -528,7 +555,7 @@ ACE_HTTP_Addr::addr_to_string (ACE_TCHAR *buffer,
     }
   else
     {
-     n += ACE_OS::sprintf (buffer + n, ACE_TEXT ("%") ACE_TEXT_PRIs, this->hostname_);
+     n += ACE_OS::sprintf (buffer + n, ACE_TEXT ("%") ACE_TEXT_PRIs, this->hostname_.get ());
     }
 
   if (this->port_number_ != ACE_DEFAULT_HTTP_PORT)
@@ -539,13 +566,13 @@ ACE_HTTP_Addr::addr_to_string (ACE_TCHAR *buffer,
     {
       n += ACE_OS::sprintf (buffer + n,
                             ACE_TEXT ("/%") ACE_TEXT_PRIs,
-                            this->path_);
+                            this->path_.get ());
     }
   if (this->query_ != nullptr)
     {
       n += ACE_OS::sprintf (buffer + n,
                             ACE_TEXT ("?%") ACE_TEXT_PRIs,
-                            this->query_);
+                            this->query_.get ());
     }
   return 0;
 }
@@ -589,9 +616,7 @@ ACE_FTP_Addr::ACE_FTP_Addr (const ACE_FTP_Addr& addr)
 }
 
 ACE_FTP_Addr::~ACE_FTP_Addr ()
-{
-  this->clear ();
-}
+  = default;
 
 int
 ACE_FTP_Addr::set (const ACE_TCHAR *host_name,
@@ -602,16 +627,23 @@ ACE_FTP_Addr::set (const ACE_TCHAR *host_name,
   if (host_name == nullptr || path == nullptr)
     return -1;
   this->clear ();
-  ACE_ALLOCATOR_RETURN (this->hostname_, ACE_OS::strdup (host_name), -1);
-  ACE_ALLOCATOR_RETURN (this->path_, ACE_OS::strdup (path), -1);
+  if (!duplicate_url_string (this->hostname_, host_name)
+      || !duplicate_url_string (this->path_, path))
+    return -1;
   if (user != nullptr)
-    ACE_ALLOCATOR_RETURN (this->user_, ACE_OS::strdup (user), -1);
+    {
+      if (!duplicate_url_string (this->user_, user))
+        return -1;
+    }
   else
-    this->user_ = nullptr;
-  if (this->password_ != nullptr)
-    ACE_ALLOCATOR_RETURN (this->password_, ACE_OS::strdup (password), -1);
+    this->user_.reset ();
+  if (password != nullptr)
+    {
+      if (!duplicate_url_string (this->password_, password))
+        return -1;
+    }
   else
-    this->password_ = nullptr;
+    this->password_.reset ();
 
   size_t size = this->url_size (1);
 
@@ -631,30 +663,33 @@ ACE_FTP_Addr::set (const ACE_FTP_Addr& addr)
   if (this->ACE_URL_Addr::set (addr) != 0)
     return -1;
   this->clear ();
-  ACE_ALLOCATOR_RETURN (this->hostname_, ACE_OS::strdup (addr.hostname_), -1);
-  ACE_ALLOCATOR_RETURN (this->path_, ACE_OS::strdup (addr.path_), -1);
+  if (!duplicate_url_string (this->hostname_, addr.hostname_.get ())
+      || !duplicate_url_string (this->path_, addr.path_.get ()))
+    return -1;
   if (addr.user_ != nullptr)
-    ACE_ALLOCATOR_RETURN (this->user_, ACE_OS::strdup (addr.user_), -1);
+    {
+      if (!duplicate_url_string (this->user_, addr.user_.get ()))
+        return -1;
+    }
   else
-    this->user_ = nullptr;
+    this->user_.reset ();
   if (addr.password_ != nullptr)
-    ACE_ALLOCATOR_RETURN (this->password_, ACE_OS::strdup (addr.password_), -1);
+    {
+      if (!duplicate_url_string (this->password_, addr.password_.get ()))
+        return -1;
+    }
   else
-    this->password_ = nullptr;
+    this->password_.reset ();
   return 0;
 }
 
 void
 ACE_FTP_Addr::clear ()
 {
-  if (this->hostname_ != nullptr)
-    ACE_OS::free (this->hostname_);
-  if (this->path_ != nullptr)
-    ACE_OS::free (this->path_);
-  if (this->user_ != nullptr)
-    ACE_OS::free (this->user_);
-  if (this->password_ != nullptr)
-    ACE_OS::free (this->password_);
+  this->hostname_.reset ();
+  this->path_.reset ();
+  this->user_.reset ();
+  this->password_.reset ();
 }
 
 size_t
@@ -667,9 +702,9 @@ ACE_FTP_Addr::url_size (int flags) const
     + sizeof (ACE_TEXT ("@:/")); // separators
 
   size_t chars =
-    + (this->user_?ACE_OS::strlen (this->path_):0)
-    + (this->password_?ACE_OS::strlen (this->password_):0)
-    + (this->path_?ACE_OS::strlen (this->path_):0);
+    + (this->user_?ACE_OS::strlen (this->user_.get ()):0)
+    + (this->password_?ACE_OS::strlen (this->password_.get ()):0)
+    + (this->path_?ACE_OS::strlen (this->path_.get ()):0);
 
   if (flags == 0)
     {
@@ -677,7 +712,7 @@ ACE_FTP_Addr::url_size (int flags) const
     }
   else
     {
-      chars += ACE_OS::strlen (this->hostname_);
+      chars += ACE_OS::strlen (this->hostname_.get ());
     }
 
   size += chars * sizeof(ACE_TCHAR);
@@ -697,13 +732,13 @@ ACE_FTP_Addr::addr_to_string (ACE_TCHAR *buffer,
 
   if (this->user_ != nullptr)
     {
-      n += ACE_OS::sprintf (buffer + n, ACE_TEXT ("%") ACE_TEXT_PRIs, this->user_);
+      n += ACE_OS::sprintf (buffer + n, ACE_TEXT ("%") ACE_TEXT_PRIs, this->user_.get ());
     }
   if (this->password_ != nullptr)
     {
       n += ACE_OS::sprintf (buffer + n,
                             ACE_TEXT (":%") ACE_TEXT_PRIs,
-                            this->password_);
+                            this->password_.get ());
     }
 
   if (this->user_ != nullptr)
@@ -718,13 +753,13 @@ ACE_FTP_Addr::addr_to_string (ACE_TCHAR *buffer,
     }
   else
     {
-      n += ACE_OS::sprintf (buffer + n, ACE_TEXT ("%") ACE_TEXT_PRIs, this->hostname_);
+      n += ACE_OS::sprintf (buffer + n, ACE_TEXT ("%") ACE_TEXT_PRIs, this->hostname_.get ());
     }
   if (this->path_ != nullptr)
     {
       n += ACE_OS::sprintf (buffer + n,
                             ACE_TEXT ("/%") ACE_TEXT_PRIs,
-                            this->path_);
+                            this->path_.get ());
     }
   return 0;
 }
@@ -738,10 +773,10 @@ ACE_FTP_Addr::string_to_addr (const ACE_TCHAR *address)
     return -1;
 
   this->clear ();
-  this->hostname_ = nullptr;
-  this->user_ = nullptr;
-  this->password_ = nullptr;
-  this->path_ = nullptr;
+  this->hostname_.reset ();
+  this->user_.reset ();
+  this->password_.reset ();
+  this->path_.reset ();
 
   // Save the original URL....
   this->ACE_URL_Addr::string_to_addr (address);
@@ -751,40 +786,43 @@ ACE_FTP_Addr::string_to_addr (const ACE_TCHAR *address)
   string += 2; // == strlen ("//");
 
   // Make a copy of the string to manipulate it.
-  ACE_TCHAR *t;
-  ACE_ALLOCATOR_RETURN (t, ACE_OS::strdup (string), -1);
+  URL_String t (ACE_OS::strdup (string));
+  if (t == nullptr)
+    {
+      errno = ENOMEM;
+      return -1;
+    }
 
-  ACE_TCHAR *path_start = ACE_OS::strchr (t, '/');
+  ACE_TCHAR *path_start = ACE_OS::strchr (t.get (), '/');
   if (path_start != nullptr)
     {
       // terminate the host:port substring
       path_start[0] = '\0';
       ++path_start;
-      ACE_ALLOCATOR_RETURN (this->path_, ACE_OS::strdup (path_start), -1);
+      if (!duplicate_url_string (this->path_, path_start))
+        return -1;
     }
 
-  ACE_TCHAR *host_start = ACE_OS::strchr (t, '@');
+  ACE_TCHAR *host_start = ACE_OS::strchr (t.get (), '@');
   if (host_start != nullptr)
     {
       host_start[0] = '\0';
       ++host_start;
-      ACE_ALLOCATOR_RETURN (this->hostname_,
-                            ACE_OS::strdup (host_start),
-                            -1);
-      ACE_TCHAR *pass_start = ACE_OS::strchr (t, ':');
+      if (!duplicate_url_string (this->hostname_, host_start))
+        return -1;
+      ACE_TCHAR *pass_start = ACE_OS::strchr (t.get (), ':');
       if (pass_start != nullptr)
         {
           pass_start[0] = '\0';
           ++pass_start;
-          ACE_ALLOCATOR_RETURN (this->password_,
-                                ACE_OS::strdup (pass_start),
-                                -1);
+          if (!duplicate_url_string (this->password_, pass_start))
+            return -1;
         }
-      this->user_ = t;
+      this->user_ = std::move (t);
     }
   else
     {
-      this->hostname_ = t;
+      this->hostname_ = std::move (t);
     }
 
   return 0;
@@ -825,9 +863,7 @@ ACE_Mailto_Addr::ACE_Mailto_Addr (const ACE_Mailto_Addr &addr)
 }
 
 ACE_Mailto_Addr::~ACE_Mailto_Addr ()
-{
-  this->clear ();
-}
+  = default;
 
 int
 ACE_Mailto_Addr::set (const ACE_TCHAR *user,
@@ -837,12 +873,16 @@ ACE_Mailto_Addr::set (const ACE_TCHAR *user,
   if (user == nullptr || hostname == nullptr)
     return -1;
   this->clear ();
-  ACE_ALLOCATOR_RETURN (this->user_, ACE_OS::strdup (user), -1);
-  ACE_ALLOCATOR_RETURN (this->hostname_, ACE_OS::strdup (hostname), -1);
+  if (!duplicate_url_string (this->user_, user)
+      || !duplicate_url_string (this->hostname_, hostname))
+    return -1;
   if (headers != nullptr)
-    ACE_ALLOCATOR_RETURN (this->headers_, ACE_OS::strdup (headers), -1);
+    {
+      if (!duplicate_url_string (this->headers_, headers))
+        return -1;
+    }
   else
-    this->headers_ = nullptr;
+    this->headers_.reset ();
   size_t size = this->url_size (1);
   ACE_TCHAR *buffer;
   ACE_ALLOCATOR_RETURN (buffer,
@@ -860,24 +900,25 @@ ACE_Mailto_Addr::set (const ACE_Mailto_Addr &addr)
   if (this->ACE_URL_Addr::set (addr) != 0)
     return -1;
   this->clear ();
-  ACE_ALLOCATOR_RETURN (this->user_, ACE_OS::strdup (addr.user_), -1);
-  ACE_ALLOCATOR_RETURN (this->hostname_, ACE_OS::strdup (addr.hostname_), -1);
+  if (!duplicate_url_string (this->user_, addr.user_.get ())
+      || !duplicate_url_string (this->hostname_, addr.hostname_.get ()))
+    return -1;
   if (addr.headers_ != nullptr)
-    ACE_ALLOCATOR_RETURN (this->headers_, ACE_OS::strdup (addr.headers_), -1);
+    {
+      if (!duplicate_url_string (this->headers_, addr.headers_.get ()))
+        return -1;
+    }
   else
-    this->headers_ = nullptr;
+    this->headers_.reset ();
   return 0;
 }
 
 void
 ACE_Mailto_Addr::clear ()
 {
-  if (this->user_ != nullptr)
-    ACE_OS::free (this->user_);
-  if (this->hostname_ != nullptr)
-    ACE_OS::free (this->hostname_);
-  if (this->headers_ != nullptr)
-    ACE_OS::free (this->headers_);
+  this->user_.reset ();
+  this->hostname_.reset ();
+  this->headers_.reset ();
 }
 
 size_t
@@ -889,9 +930,9 @@ ACE_Mailto_Addr::url_size (int) const
     + sizeof (ACE_TEXT ("@?")); // separators
 
   size_t chars =
-    + (this->user_?ACE_OS::strlen (this->user_):0)
-    + (this->hostname_?ACE_OS::strlen (this->hostname_):0)
-    + (this->headers_?ACE_OS::strlen (this->headers_):0);
+    + (this->user_?ACE_OS::strlen (this->user_.get ()):0)
+    + (this->hostname_?ACE_OS::strlen (this->hostname_.get ()):0)
+    + (this->headers_?ACE_OS::strlen (this->headers_.get ()):0);
   size += chars * sizeof (ACE_TCHAR);
 
   return size;
@@ -910,11 +951,11 @@ ACE_Mailto_Addr::addr_to_string (ACE_TCHAR *buffer,
   size_t n = ACE_OS::sprintf (buffer,
                               ACE_TEXT ("mailto:%") ACE_TEXT_PRIs
                               ACE_TEXT ("@%") ACE_TEXT_PRIs,
-                              this->user_, this->hostname_);
+                              this->user_.get (), this->hostname_.get ());
   if (this->headers_ != nullptr)
     {
       n += ACE_OS::sprintf (buffer + n, ACE_TEXT ("?%") ACE_TEXT_PRIs,
-                            this->headers_);
+                            this->headers_.get ());
     }
 
   return 0;
@@ -923,13 +964,16 @@ ACE_Mailto_Addr::addr_to_string (ACE_TCHAR *buffer,
 int
 ACE_Mailto_Addr::string_to_addr (const ACE_TCHAR *address)
 {
+  if (address == nullptr)
+    return -1;
+
   if (ACE_OS::strncasecmp (mailto, address, mailto_size) != 0)
     return -1;
 
   this->clear ();
-  this->user_ = nullptr;
-  this->hostname_ = nullptr;
-  this->headers_ = nullptr;
+  this->user_.reset ();
+  this->hostname_.reset ();
+  this->headers_.reset ();
 
   // Save the original URL....
   if (this->ACE_URL_Addr::string_to_addr (address) != 0)
@@ -939,10 +983,14 @@ ACE_Mailto_Addr::string_to_addr (const ACE_TCHAR *address)
   string += mailto_size;
 
   // Make a copy of the string to manipulate it.
-  ACE_TCHAR *t;
-  ACE_ALLOCATOR_RETURN (t, ACE_OS::strdup (string), -1);
+  URL_String t (ACE_OS::strdup (string));
+  if (t == nullptr)
+    {
+      errno = ENOMEM;
+      return -1;
+    }
 
-  ACE_TCHAR *host_start = ACE_OS::strchr (t, '@');
+  ACE_TCHAR *host_start = ACE_OS::strchr (t.get (), '@');
   if (host_start != nullptr)
     {
       // terminate the host:port substring
@@ -953,18 +1001,15 @@ ACE_Mailto_Addr::string_to_addr (const ACE_TCHAR *address)
         {
           headers_start[0] = '\0';
           ++headers_start;
-          ACE_ALLOCATOR_RETURN (this->headers_,
-                                ACE_OS::strdup (headers_start),
-                                -1);
+          if (!duplicate_url_string (this->headers_, headers_start))
+            return -1;
         }
-      ACE_ALLOCATOR_RETURN (this->hostname_, ACE_OS::strdup (host_start), -1);
+      if (!duplicate_url_string (this->hostname_, host_start))
+        return -1;
     }
   else
-    {
-      ACE_OS::free (t);
-      return -1;
-    }
-  this->user_ = t;
+    return -1;
+  this->user_ = std::move (t);
 
   return 0;
 }

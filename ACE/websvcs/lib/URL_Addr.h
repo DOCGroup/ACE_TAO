@@ -81,17 +81,19 @@ public:
   u_long hash () const override;
 
 protected:
-  /// Allows the derived classes to store the compact representation of
-  /// the URL
-  void set_url (ACE_TCHAR *url);
-
-private:
   struct URL_Deleter
   {
     void operator () (ACE_TCHAR *) const;
   };
 
-  std::unique_ptr<ACE_TCHAR, URL_Deleter> url_ {};
+  using URL_String = std::unique_ptr<ACE_TCHAR, URL_Deleter>;
+
+  /// Allows the derived classes to store the compact representation of
+  /// the URL
+  void set_url (ACE_TCHAR *url);
+
+private:
+  URL_String url_ {};
 };
 
 /**
@@ -238,14 +240,14 @@ private:
 
 private:
   /// The host:port component in the URL
-  ACE_TCHAR *hostname_;
+  URL_String hostname_;
   u_short port_number_;
 
   /// The path component in the URL
-  ACE_TCHAR *path_;
+  URL_String path_;
 
   /// The query component in the URL
-  ACE_TCHAR *query_;
+  URL_String query_;
 };
 
 // ****************************************************************
@@ -325,14 +327,14 @@ private:
 
 private:
   /// The login name
-  ACE_TCHAR *user_;
-  ACE_TCHAR *password_;
+  URL_String user_;
+  URL_String password_;
 
   /// The hostname part.
-  ACE_TCHAR *hostname_;
+  URL_String hostname_;
 
   /// The other components.
-  ACE_TCHAR *path_;
+  URL_String path_;
 };
 
 // ****************************************************************
@@ -401,9 +403,9 @@ private:
   void clear ();
 
 private:
-  ACE_TCHAR *user_;
-  ACE_TCHAR *hostname_;
-  ACE_TCHAR *headers_;
+  URL_String user_;
+  URL_String hostname_;
+  URL_String headers_;
 };
 
 #if defined (__ACE_INLINE__)
