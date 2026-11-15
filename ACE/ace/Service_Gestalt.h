@@ -257,7 +257,8 @@ public:
   /// Registers a service descriptor for a static service object
   int insert (ACE_Static_Svc_Descriptor *stsd);
 
-  // = Utility methods.
+  /// @name Utility methods
+  /// @{
 
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
   /// Dynamically link the shared object file and retrieve a pointer to
@@ -325,6 +326,7 @@ public:
 
   /// Get the current ACE_Service_Repository held by this object.
   ACE_Service_Repository* current_service_repository ();
+  /// @}
 
 protected:
   int parse_args_i (int, ACE_TCHAR *argv[],
