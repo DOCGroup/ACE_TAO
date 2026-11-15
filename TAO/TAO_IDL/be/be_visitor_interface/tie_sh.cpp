@@ -102,6 +102,7 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
 
   *os << be_uidt_nl << be_nl
       << "private:" << be_idt_nl
+      << "/// Non-owning unless rel_ is true; the tie deletes ptr_ when it owns it." << be_nl
       << "T *ptr_;" << be_nl
       << "PortableServer::POA_var poa_;" << be_nl
       << "::CORBA::Boolean rel_;" << be_nl_2
