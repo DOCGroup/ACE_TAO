@@ -199,7 +199,7 @@ Test_Recursive_Union::deep_init (Param_Test::Recursive_Union &ru,
       ru.rec_member (tmp);
 
       // We recurse for each element of the member sequence.
-      for (CORBA::ULong i = 0; i < len; i++)
+      for (CORBA::ULong i = 0; i < len; ++i)
         {
           this->deep_init (ru.rec_member ()[i],
                            gen,
@@ -237,7 +237,7 @@ Test_Recursive_Union::deep_init_nested (Param_Test::nested_rec_union &nu,
       nu.nested_rec_member (tmp);
 
       // We recurse for each element of the member sequence.
-      for (CORBA::ULong i = 0; i < len; i++)
+      for (CORBA::ULong i = 0; i < len; ++i)
         {
           this->deep_init_nested (nu.nested_rec_member ()[i],
                                   gen,
@@ -275,7 +275,7 @@ Test_Recursive_Union::deep_check (const Param_Test::Recursive_Union &in_union,
               return 0;
             }
 
-          for (CORBA::ULong i = 0; i < in_union.rec_member ().length (); i++)
+          for (CORBA::ULong i = 0; i < in_union.rec_member ().length (); ++i)
             {
               if (!this->deep_check (in_union.rec_member ()[i],
                                      test_union.rec_member ()[i]))
@@ -345,7 +345,7 @@ Test_Recursive_Union::deep_check_nested (const Param_Test::nested_rec_union &in,
               return 0;
             }
 
-          for (CORBA::ULong i = 0; i < in.nested_rec_member ().length (); i++)
+          for (CORBA::ULong i = 0; i < in.nested_rec_member ().length (); ++i)
             {
               if (!this->deep_check_nested (in.nested_rec_member ()[i],
                                             test.nested_rec_member ()[i]))

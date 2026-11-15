@@ -56,7 +56,7 @@ Param_Test_Client<T>::run_sii_test ()
     }
 
   // Make the calls in a loop.
-  for (i = 0; i < opt->loop_count (); i++)
+  for (i = 0; i < opt->loop_count (); ++i)
     {
       try
         {
@@ -160,7 +160,7 @@ Param_Test_Client<T>::run_dii_test ()
     }
 
       // Make the calls in a loop.
-  for (CORBA::ULong i = 0; i < opt->loop_count (); i++)
+  for (CORBA::ULong i = 0; i < opt->loop_count (); ++i)
     {
       this->results_.call_count (this->results_.call_count () + 1);
 

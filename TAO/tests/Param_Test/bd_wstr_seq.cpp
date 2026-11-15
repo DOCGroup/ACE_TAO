@@ -67,7 +67,7 @@ Test_Bounded_WString_Sequence::init_parameters (Param_Test_ptr)
   this->inout_->length (len);
 
   // now set each individual element
-  for (CORBA::ULong i = 0; i < this->in_->length (); i++)
+  for (CORBA::ULong i = 0; i < this->in_->length (); ++i)
     {
       this->in_[i] = gen->gen_wstring ();
 
@@ -117,7 +117,7 @@ Test_Bounded_WString_Sequence::check_validity ()
     {
       flag = 1; // assume all are equal
       // lengths are same. Now compare the contents
-      for (CORBA::ULong i=0; i < this->in_->length () && flag; i++)
+      for (CORBA::ULong i=0; i < this->in_->length () && flag; ++i)
         {
           if (ACE_OS::wscmp (this->in_[i], this->inout_[i]) ||
               ACE_OS::wscmp (this->in_[i], this->out_[i]) ||

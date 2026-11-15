@@ -179,7 +179,7 @@ Test_Recursive_Struct::deep_init (Param_Test::Recursive_Struct &rs,
       rs.children.length (len);
 
       // We recurse for each element of the member sequence.
-      for (CORBA::ULong i = 0; i < len; i++)
+      for (CORBA::ULong i = 0; i < len; ++i)
         {
           this->deep_init (rs.children[i],
                            gen,
@@ -213,7 +213,7 @@ Test_Recursive_Struct::deep_check (const Param_Test::Recursive_Struct &in_struct
 
   // At the bottom level, the length is 0 and we skip this part.
   // Otherwise recurse.
-  for (CORBA::ULong i = 0; i < in_struct.children.length (); i++)
+  for (CORBA::ULong i = 0; i < in_struct.children.length (); ++i)
     {
       if (!this->deep_check (in_struct.children[i],
                              test_struct.children[i]))

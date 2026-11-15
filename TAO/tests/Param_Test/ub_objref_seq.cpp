@@ -79,7 +79,7 @@ Test_ObjRef_Sequence::init_parameters (Param_Test_ptr objref)
       this->in_.length (len);
       // now set each individual element
 
-      for (CORBA::ULong i = 0; i < this->in_.length (); i++)
+      for (CORBA::ULong i = 0; i < this->in_.length (); ++i)
         {
           // generate some arbitrary string to be filled into the ith location in
           // the sequence
@@ -199,7 +199,7 @@ Test_ObjRef_Sequence::compare (const Param_Test::Coffee_Mix &s1,
           return 0;
         }
 
-      for (CORBA::ULong i=0; i < s1.length (); i++)
+      for (CORBA::ULong i=0; i < s1.length (); ++i)
         {
           Coffee_ptr vs1 = s1[i];
           Coffee_ptr vs2 = s2[i];
@@ -246,7 +246,7 @@ Test_ObjRef_Sequence::print_sequence (const Param_Test::Coffee_Mix &s)
               s.maximum (),
               s.length ()));
   ACE_DEBUG ((LM_DEBUG, "Elements -\n"));
-  for (CORBA::ULong i=0; i < s.length (); i++)
+  for (CORBA::ULong i=0; i < s.length (); ++i)
     {
       Coffee_ptr c = s[i];
       if (CORBA::is_nil (c))

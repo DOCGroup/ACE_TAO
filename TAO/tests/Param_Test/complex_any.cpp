@@ -87,9 +87,9 @@ Test_Complex_Any::reset_parameters ()
   level2_seq.length (LEVEL_2_LENGTH);
   level3_seq.length (LEVEL_3_LENGTH);
 
-  for (int j = 0; j < LEVEL_2_LENGTH; j++)
+  for (int j = 0; j < LEVEL_2_LENGTH; ++j)
     {
-      for (int i = 0; i < LEVEL_3_LENGTH; i++)
+      for (int i = 0; i < LEVEL_3_LENGTH; ++i)
         {
           Param_Test::level4 level4_struct;
 
@@ -222,7 +222,7 @@ Test_Complex_Any::comp_engine (const CORBA::AnySeq *level2_in_seq,
       return 0;
     }
 
-  for (CORBA::ULong i = 0; i < level2_in_seq->length (); i++)
+  for (CORBA::ULong i = 0; i < level2_in_seq->length (); ++i)
     {
       CORBA::AnySeq const *level3_in_seq {};
       CORBA::AnySeq const *level3_test_seq {};
@@ -243,7 +243,7 @@ Test_Complex_Any::comp_engine (const CORBA::AnySeq *level2_in_seq,
           return 0;
         }
 
-      for (CORBA::ULong j = 0; j < level3_in_seq->length (); j ++)
+      for (CORBA::ULong j = 0; j < level3_in_seq->length (); ++j)
         {
           Param_Test::level4 const *level4_in_struct {};
           Param_Test::level4 const *level4_test_struct {};

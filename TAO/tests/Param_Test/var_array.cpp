@@ -61,7 +61,7 @@ Test_Var_Array::init_parameters (Param_Test_ptr)
   Generator *gen = GENERATOR::instance (); // value generator
 
   // fill the in_ array
-  for (CORBA::ULong i=0; i < Param_Test::DIM2; i++)
+  for (CORBA::ULong i=0; i < Param_Test::DIM2; ++i)
     {
       this->in_[i] = gen->gen_string ();
     }
@@ -122,7 +122,7 @@ CORBA::Boolean
 Test_Var_Array::compare (const Param_Test::Var_Array_slice *a1,
                          const Param_Test::Var_Array_slice *a2)
 {
-  for (CORBA::ULong i=0; i < Param_Test::DIM2; i++)
+  for (CORBA::ULong i=0; i < Param_Test::DIM2; ++i)
     {
       if (std::strcmp (a1[i].in (), a2[i].in ()))
       {
@@ -148,7 +148,7 @@ Test_Var_Array::print_values ()
 void
 Test_Var_Array::print (const Param_Test::Var_Array_slice *a)
 {
-  for (CORBA::ULong i = 0; i < Param_Test::DIM2; i++)
+  for (CORBA::ULong i = 0; i < Param_Test::DIM2; ++i)
     {
       ACE_DEBUG ((LM_DEBUG, "\t\tElement #%d = %C\n",i, a[i].in ()));
     }

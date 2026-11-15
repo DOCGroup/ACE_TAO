@@ -129,9 +129,9 @@ Param_Test_i::test_unbounded_wstring (const CORBA::WChar *ws1,
   ws3 = CORBA::wstring_dup (ws1);
   CORBA::ULong len = ACE_OS::wslen (ws2);
   CORBA::WString_var tmp (CORBA::wstring_alloc (2*len));
-  for (CORBA::ULong i = 0; i < 2; i++)
+  for (CORBA::ULong i = 0; i < 2; ++i)
     {
-      for (CORBA::ULong j = 0; j < len; j++)
+      for (CORBA::ULong j = 0; j < len; ++j)
         {
           tmp[j + i*len] = ws2[j];
         }
@@ -154,9 +154,9 @@ Param_Test_i::test_bounded_wstring (const CORBA::WChar *ws1,
   ws3 = CORBA::wstring_dup (ws1);
   CORBA::ULong len = ACE_OS::wslen (ws2);
   CORBA::WString_var tmp (CORBA::wstring_alloc (2*len));
-  for (CORBA::ULong i = 0; i < 2; i++)
+  for (CORBA::ULong i = 0; i < 2; ++i)
     {
-      for (CORBA::ULong j = 0; j < len; j++)
+      for (CORBA::ULong j = 0; j < len; ++j)
         {
           tmp[j + i*len] = ws2[j];
         }
@@ -258,7 +258,7 @@ Param_Test_i::test_strseq (const CORBA::StringSeq &s1,
   if (TAO_debug_level > 0)
     {
       ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*SERVER SIDE=*=*=*=*=*=*=\n"));
-      for (CORBA::ULong i=0; (i < s2.length ()); i++)
+      for (CORBA::ULong i=0; (i < s2.length ()); ++i)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Element #%d\n"
@@ -756,11 +756,11 @@ Param_Test_i::test_any (const CORBA::Any &a1,
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG, "Received Fixed_Array:"));
-          for (CORBA::ULong i = 0; i < Param_Test::DIM1; i++)
+          for (CORBA::ULong i = 0; i < Param_Test::DIM1; ++i)
             ACE_DEBUG ((LM_DEBUG, " %d", array[i]));
           ACE_DEBUG ((LM_DEBUG, "\n"));
         }
-      for (CORBA::ULong i = 0; i < Param_Test::DIM1; i++)
+      for (CORBA::ULong i = 0; i < Param_Test::DIM1; ++i)
         array[i] = i * i;
       a2 <<= Param_Test::Fixed_Array_forany (array);
       *ret <<= Param_Test::Fixed_Array_forany (array);
@@ -770,12 +770,12 @@ Param_Test_i::test_any (const CORBA::Any &a1,
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG, "Received Unbounded Short_Seq:"));
-          for (size_t i = 0; i < ub_short_sequence->length (); i++)
+          for (size_t i = 0; i < ub_short_sequence->length (); ++i)
             ACE_DEBUG ((LM_DEBUG, " %d", (*ub_short_sequence)[i]));
           ACE_DEBUG ((LM_DEBUG, "\n"));
         }
       CORBA::ShortSeq newseq (*ub_short_sequence);
-      for (size_t i = 0; i < ub_short_sequence->length (); i++)
+      for (size_t i = 0; i < ub_short_sequence->length (); ++i)
         newseq[i] = (CORBA::Short) (i * i);
       a2   <<= newseq;
       *ret <<= newseq;
@@ -785,12 +785,12 @@ Param_Test_i::test_any (const CORBA::Any &a1,
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG, "Received Bounded_Short_Seq:"));
-          for (size_t i = 0; i < bd_short_sequence->length (); i++)
+          for (size_t i = 0; i < bd_short_sequence->length (); ++i)
             ACE_DEBUG ((LM_DEBUG, " %d", (*bd_short_sequence)[i]));
           ACE_DEBUG ((LM_DEBUG, "\n"));
         }
       Param_Test::Bounded_Short_Seq newseq (*bd_short_sequence);
-      for (size_t i = 0; i < bd_short_sequence->length (); i++)
+      for (size_t i = 0; i < bd_short_sequence->length (); ++i)
         newseq[i] = (CORBA::Short) (i * i);
       a2 <<= newseq;
       *ret <<= newseq;

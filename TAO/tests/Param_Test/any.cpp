@@ -153,7 +153,7 @@ Test_Any::reset_parameters ()
                       "Param_Test: ANY_ARRAY subtest\n"));
 
         Param_Test::Fixed_Array array;
-        for (size_t i = 0; i < Param_Test::DIM1; i++)
+        for (size_t i = 0; i < Param_Test::DIM1; ++i)
           array[i] = i;
         if (TAO_debug_level > 0)
         {
@@ -171,7 +171,7 @@ Test_Any::reset_parameters ()
                       "Param_Test: ANY_SHORT_SEQ subtest\n"));
         CORBA::ShortSeq seq;
         seq.length (gen->gen_short () % 16);
-        for (size_t i = 0; i < seq.length (); i++)
+        for (size_t i = 0; i < seq.length (); ++i)
           seq[i] = gen->gen_short ();
         this->in_    <<= seq;
         this->inout_ <<= seq;
@@ -185,7 +185,7 @@ Test_Any::reset_parameters ()
                       "Param_Test: ANY_BD_SHORT_SEQ subtest\n"));
         Param_Test::Bounded_Short_Seq seq;
         seq.length (gen->gen_short () % seq.maximum ());
-        for (size_t i = 0; i < seq.length (); i++)
+        for (size_t i = 0; i < seq.length (); ++i)
           seq[i] = gen->gen_short ();
         this->in_    <<= seq;
         this->inout_ <<= seq;
@@ -334,7 +334,7 @@ Test_Any::check_validity ()
            (this->out_.in () >>= array_out) &&
            (this->ret_.in () >>= array_ret))
     {
-      for (CORBA::ULong i = 0; i < Param_Test::DIM1; i ++)
+      for (CORBA::ULong i = 0; i < Param_Test::DIM1; ++i)
         {
           CORBA::Long ii = i;
           CORBA::Long square = i * i;
@@ -353,7 +353,7 @@ Test_Any::check_validity ()
            (this->out_.in () >>= bdss_out) &&
            (this->ret_.in () >>= bdss_ret))
     {
-      for (size_t i = 0; i < bdss_in->length (); i ++)
+      for (size_t i = 0; i < bdss_in->length (); ++i)
         {
           ssize_t square = i * i;
           if ((*bdss_in)[i] != (*bdss_out)[i] ||
@@ -370,7 +370,7 @@ Test_Any::check_validity ()
            (this->out_.in () >>= ubss_out) &&
            (this->ret_.in () >>= ubss_ret))
     {
-      for (size_t i = 0; i < ubss_in->length (); i ++)
+      for (size_t i = 0; i < ubss_in->length (); ++i)
         {
           ssize_t square = i * i;
           if ((*ubss_in)[i] != (*ubss_out)[i] ||

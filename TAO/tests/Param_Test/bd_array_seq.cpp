@@ -67,18 +67,18 @@ Test_Bounded_Array_Sequence::init_parameters (Param_Test_ptr)
   // now set each individual element
   Param_Test::Fixed_Array tmp;
 
-  for (CORBA::ULong j = 0; j < Param_Test::DIM1; j++)
+  for (CORBA::ULong j = 0; j < Param_Test::DIM1; ++j)
     {
       tmp[j] = gen->gen_long ();
     }
 
   Param_Test::Fixed_Array_copy (this->inout_[0], tmp);
 
-  for (CORBA::ULong i = 0; i < this->in_.length (); i++)
+  for (CORBA::ULong i = 0; i < this->in_.length (); ++i)
     {
       // Generate some arbitrary array to be filled into the ith
       // location in the sequence.
-      for (CORBA::ULong j = 0; j < Param_Test::DIM1; j++)
+      for (CORBA::ULong j = 0; j < Param_Test::DIM1; ++j)
         {
           tmp[j] = gen->gen_long ();
         }
@@ -174,12 +174,12 @@ Test_Bounded_Array_Sequence::compare (const Param_Test::Bounded_ArraySeq &s1,
       return 0;
     }
 
-  for (CORBA::ULong i = 0; i < s1.length (); i++)
+  for (CORBA::ULong i = 0; i < s1.length (); ++i)
     {
       const Param_Test::Fixed_Array& vs1 = s1[i];
       const Param_Test::Fixed_Array& vs2 = s2[i];
 
-      for (CORBA::ULong j = 0; j < Param_Test::DIM1; j++)
+      for (CORBA::ULong j = 0; j < Param_Test::DIM1; ++j)
         {
           if (vs1[j] != vs2[j])
             {
@@ -201,7 +201,7 @@ Test_Bounded_Array_Sequence::print_sequence (const Param_Test::Bounded_ArraySeq 
               s.length ()));
   ACE_DEBUG ((LM_DEBUG, "Elements -\n"));
 
-  for (CORBA::ULong i=0; i < s.length (); i++)
+  for (CORBA::ULong i=0; i < s.length (); ++i)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d --\n",
@@ -209,7 +209,7 @@ Test_Bounded_Array_Sequence::print_sequence (const Param_Test::Bounded_ArraySeq 
 
       const Param_Test::Fixed_Array& vs = s[i];
 
-      for (CORBA::ULong j = 0; j < Param_Test::DIM1; j++)
+      for (CORBA::ULong j = 0; j < Param_Test::DIM1; ++j)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Element%d[%d] = %d\n",

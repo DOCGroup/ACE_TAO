@@ -69,7 +69,7 @@ Test_AnySeq::init_parameters (Param_Test_ptr objref)
   this->in_->length (TEST_SEQ_LENGTH);
   this->inout_->length (TEST_SEQ_LENGTH);
 
-  for (CORBA::ULong i=0; i < this->in_->length (); i++)
+  for (CORBA::ULong i=0; i < this->in_->length (); ++i)
     {
       CORBA::ULong index =
         (CORBA::ULong) (gen->gen_short () % NUM_TEST_TYPES);
@@ -136,7 +136,7 @@ Test_AnySeq::reset_parameters ()
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
-  for (CORBA::ULong i=0; i < this->in_->length (); i++)
+  for (CORBA::ULong i=0; i < this->in_->length (); ++i)
     {
       CORBA::ULong index =
         (CORBA::ULong) (gen->gen_long () % NUM_TEST_TYPES);
@@ -203,7 +203,7 @@ Test_AnySeq::check_validity ()
   const char *str_ret;
   Coffee_ptr obj_in, obj_inout, obj_out, obj_ret;
 
-  for (CORBA::ULong i=0; i < this->in_->length (); i++)
+  for (CORBA::ULong i=0; i < this->in_->length (); ++i)
     {
       if ((this->in_[i] >>= short_in) &&
           (this->inout_[i] >>= short_inout) &&
@@ -312,7 +312,7 @@ Test_AnySeq::print_sequence (const CORBA::AnySeq &s)
               s.maximum (),
               s.length ()));
   ACE_DEBUG ((LM_DEBUG, "Elements -\n"));
-  for (CORBA::ULong i=0; i < s.length (); i++)
+  for (CORBA::ULong i=0; i < s.length (); ++i)
     {
       /*     const CORBA::Any& vs = s[i];
 

@@ -125,7 +125,7 @@ Test_Bounded_Short_Sequence::check_validity ()
     {
       flag = 1; // assume all are equal
       // lengths are same. Now compare the contents
-      for (CORBA::ULong i=0; i < this->in_->length () && flag; i++)
+      for (CORBA::ULong i=0; i < this->in_->length () && flag; ++i)
         {
           if (this->in_[i] != this->inout_[i] ||
               this->in_[i] != this->out_[i] ||

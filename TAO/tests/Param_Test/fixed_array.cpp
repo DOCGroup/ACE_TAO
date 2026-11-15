@@ -59,7 +59,7 @@ Test_Fixed_Array::init_parameters (Param_Test_ptr /*objref*/
 
   //ACE_UNUSED_ARG (objref);
 
-  for (CORBA::ULong i=0; i < Param_Test::DIM1; i++)
+  for (CORBA::ULong i=0; i < Param_Test::DIM1; ++i)
     {
       this->in_ [i] = gen->gen_long ();
     }
@@ -70,7 +70,7 @@ Test_Fixed_Array::init_parameters (Param_Test_ptr /*objref*/
 int
 Test_Fixed_Array::reset_parameters ()
 {
-  for (CORBA::ULong i=0; i < Param_Test::DIM1; i++)
+  for (CORBA::ULong i=0; i < Param_Test::DIM1; ++i)
     {
       this->inout_ [i] = 0;
       this->out_ [i] = 0;
@@ -124,7 +124,7 @@ CORBA::Boolean
 Test_Fixed_Array::compare (const Param_Test::Fixed_Array_slice *a1,
                            const Param_Test::Fixed_Array_slice *a2)
 {
-  for (CORBA::ULong i=0; i < Param_Test::DIM1; i++)
+  for (CORBA::ULong i=0; i < Param_Test::DIM1; ++i)
     {
       if (a1[i] != a2[i])
       {
@@ -150,7 +150,7 @@ Test_Fixed_Array::print_values ()
 void
 Test_Fixed_Array::print (const Param_Test::Fixed_Array_slice *a)
 {
-  for (CORBA::ULong i = 0; i < Param_Test::DIM1; i++)
+  for (CORBA::ULong i = 0; i < Param_Test::DIM1; ++i)
     {
       ACE_DEBUG ((LM_DEBUG, "\t\tElement #%d = %d\n",i, a[i]));
     }

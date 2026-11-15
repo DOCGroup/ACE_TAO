@@ -28,7 +28,7 @@ Results::print_stats ()
                   "\tSystem time (msec)\n\n"));
       //FUZZ: enable check_for_lack_ACE_OS
 
-      for (i = 0; i < this->call_count_; i++)
+      for (i = 0; i < this->call_count_; ++i)
         {
           this->elapsed_time_[i].real_time *= ACE_ONE_SECOND_IN_MSECS;
           this->elapsed_time_[i].user_time *= ACE_ONE_SECOND_IN_MSECS;

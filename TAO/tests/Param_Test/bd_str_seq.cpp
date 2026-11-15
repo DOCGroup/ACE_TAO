@@ -72,7 +72,7 @@ Test_Bounded_String_Sequence::init_parameters (Param_Test_ptr)
   this->in_->length (len);
   this->inout_->length (len);
   // now set each individual element
-  for (CORBA::ULong i=0; i < this->in_->length (); i++)
+  for (CORBA::ULong i=0; i < this->in_->length (); ++i)
     {
       this->in_[i] = choiceList[i%3];
       this->inout_[i] = choiceList[(i+1)%3]; // different from in_
@@ -119,7 +119,7 @@ Test_Bounded_String_Sequence::check_validity ()
     {
       flag = 1; // assume all are equal
       // lengths are same. Now compare the contents
-      for (CORBA::ULong i=0; i < this->in_->length () && flag; i++)
+      for (CORBA::ULong i=0; i < this->in_->length () && flag; ++i)
         {
           if (std::strcmp(this->in_[i], this->inout_[i]) ||
               std::strcmp(this->in_[i], this->out_[i]) ||
@@ -143,7 +143,7 @@ Test_Bounded_String_Sequence::print_values ()
 {
   CORBA::ULong i;
   ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*=*=*=*=*=*=*=\n"));
-  for (i=0; this->in_.ptr () && (i < this->in_->length ()); i++)
+  for (i=0; this->in_.ptr () && (i < this->in_->length ()); ++i)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"
@@ -156,7 +156,7 @@ Test_Bounded_String_Sequence::print_values ()
     ACE_DEBUG ((LM_DEBUG, "\nin sequence is NUL\n"));
   }
   ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*=*=*=*=*=*=*=\n"));
-  for (i=0; this->inout_.ptr () && (i < this->inout_->length ()); i++)
+  for (i=0; this->inout_.ptr () && (i < this->inout_->length ()); ++i)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"
@@ -169,7 +169,7 @@ Test_Bounded_String_Sequence::print_values ()
     ACE_DEBUG ((LM_DEBUG, "\ninout sequence is NUL\n"));
   }
   ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*=*=*=*=*=*=*=\n"));
-  for (i=0; this->out_.ptr () && (i < this->out_->length ()); i++)
+  for (i=0; this->out_.ptr () && (i < this->out_->length ()); ++i)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"
@@ -182,7 +182,7 @@ Test_Bounded_String_Sequence::print_values ()
     ACE_DEBUG ((LM_DEBUG, "\nout sequence is NUL\n"));
   }
   ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*=*=*=*=*=*=*=\n"));
-  for (i=0; this->ret_.ptr () && (i < this->ret_->length ()); i++)
+  for (i=0; this->ret_.ptr () && (i < this->ret_->length ()); ++i)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"

@@ -72,7 +72,7 @@ Test_Var_Struct::init_parameters (Param_Test_ptr)
   this->in_.seq.length (len);
 
   // now set each individual element
-  for (CORBA::ULong i = 0; i < this->in_.seq.length (); i++)
+  for (CORBA::ULong i = 0; i < this->in_.seq.length (); ++i)
     {
       // generate some arbitrary string to be filled into the ith location in
       // the sequence
@@ -153,7 +153,7 @@ Test_Var_Struct::check_validity ()
     {
       flag = 1; // assume all are equal
       // lengths are same. Now compare the contents
-      for (CORBA::ULong i=0; i < this->in_.seq.length () && flag; i++)
+      for (CORBA::ULong i=0; i < this->in_.seq.length () && flag; ++i)
         {
           if (std::strcmp (this->in_.seq[i], this->inout_->seq[i]) ||
               std::strcmp (this->in_.seq[i], this->out_->seq[i]) ||
@@ -198,7 +198,7 @@ Test_Var_Struct::print_values ()
 
   CORBA::ULong i;
   ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*=*=*=*=*=*=*=\n"));
-  for (i=0; i < this->in_.seq.length (); i++)
+  for (i=0; i < this->in_.seq.length (); ++i)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"
@@ -207,7 +207,7 @@ Test_Var_Struct::print_values ()
                   (this->in_.seq[i]? (const char *)this->in_.seq[i]:"<nul>")));
     }
   ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*=*=*=*=*=*=*=\n"));
-  for (i=0; this->inout_.ptr () && (i < this->inout_->seq.length ()); i++)
+  for (i=0; this->inout_.ptr () && (i < this->inout_->seq.length ()); ++i)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"
@@ -220,7 +220,7 @@ Test_Var_Struct::print_values ()
     ACE_DEBUG ((LM_DEBUG, "\ninout struct does not exist\n"));
   }
   ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*=*=*=*=*=*=*=\n"));
-  for (i=0; this->out_.ptr () && (i < this->out_->seq.length ()); i++)
+  for (i=0; this->out_.ptr () && (i < this->out_->seq.length ()); ++i)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"
@@ -233,7 +233,7 @@ Test_Var_Struct::print_values ()
     ACE_DEBUG ((LM_DEBUG, "\nout struct is NUL\n"));
   }
   ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*=*=*=*=*=*=*=\n"));
-  for (i=0; this->ret_.ptr () && (i < this->ret_->seq.length ()); i++)
+  for (i=0; this->ret_.ptr () && (i < this->ret_->seq.length ()); ++i)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"

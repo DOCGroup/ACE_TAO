@@ -132,7 +132,7 @@ Test_Big_Union::reset_parameters ()
       {
         CORBA::ShortSeq seq;
         seq.length (gen->gen_short () % 50);
-        for (size_t i = 0; i < seq.length (); i++)
+        for (size_t i = 0; i < seq.length (); ++i)
           seq[i] = gen->gen_short ();
         this->in_.the_sequence (seq);
         this->inout_.the_sequence (seq);

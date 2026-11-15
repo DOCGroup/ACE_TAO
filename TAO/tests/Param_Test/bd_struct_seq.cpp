@@ -63,7 +63,7 @@ Test_Bounded_Struct_Sequence::init_parameters (Param_Test_ptr /* objref */
   // set the length of the sequence
   this->in_.length (MAX_STRUCTSEQ_LEN);
   // now set each individual element
-  for (CORBA::ULong i = 0; i < this->in_.length (); i++)
+  for (CORBA::ULong i = 0; i < this->in_.length (); ++i)
     {
       // generate some arbitrary struct to be filled into the ith location in
       // the sequence
@@ -164,7 +164,7 @@ Test_Bounded_Struct_Sequence::compare (const Param_Test::Bounded_StructSeq &s1,
     return 0;
   }
 
-  for (CORBA::ULong i=0; i < s1.length (); i++)
+  for (CORBA::ULong i=0; i < s1.length (); ++i)
     {
       const Param_Test::Fixed_Struct& vs1 = s1[i];
       const Param_Test::Fixed_Struct& vs2 = s2[i];
@@ -193,7 +193,7 @@ Test_Bounded_Struct_Sequence::print_sequence (const Param_Test::Bounded_StructSe
               s.maximum (),
               s.length ()));
   ACE_DEBUG ((LM_DEBUG, "Elements -\n"));
-  for (CORBA::ULong i=0; i < s.length (); i++)
+  for (CORBA::ULong i=0; i < s.length (); ++i)
     {
       const Param_Test::Fixed_Struct& vs = s[i];
 

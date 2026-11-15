@@ -136,7 +136,7 @@ Test_Nested_Struct::check_validity ()
     {
       flag = 1; // assume all are equal
       // lengths are same. Now compare the contents
-      for (CORBA::ULong i=0; i < this->in_.vs.seq.length () && flag; i++)
+      for (CORBA::ULong i=0; i < this->in_.vs.seq.length () && flag; ++i)
         {
           if (std::strcmp (this->in_.vs.seq[i], this->inout_->vs.seq[i]) ||
               std::strcmp (this->in_.vs.seq[i], this->out_->vs.seq[i]) ||
@@ -158,7 +158,7 @@ Test_Nested_Struct::check_validity (CORBA::Request_ptr /*req*/)
 void
 Test_Nested_Struct::print_values ()
 {
-  for (CORBA::ULong i=0; i < this->in_.vs.seq.length (); i++)
+  for (CORBA::ULong i=0; i < this->in_.vs.seq.length (); ++i)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "\n*=*=*=*=*=*=*=*=*=*=\n"
