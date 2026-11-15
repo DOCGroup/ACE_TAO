@@ -1,8 +1,6 @@
 /* -*- C++ -*- */
 /* Option manager for ustreams */
 
-#include "ace/Get_Opt.h"
-
 // Since this is only included in the .h file, these should be
 // remain inline, not ACE_INLINE.
 // FUZZ: disable check_for_inline
