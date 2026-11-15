@@ -1,10 +1,10 @@
 // QoS_Session_Impl.cpp
-#define SENDER_PORT 10001
-
 #include "ace/Log_Msg.h"
 #include "ace/Get_Opt.h"
 #include "QoS_Util.h"
 #include "ace/OS_NS_strings.h"
+
+constexpr u_short SENDER_PORT {10001};
 
 QoS_Util::QoS_Util (int argc,
                     ACE_TCHAR *argv[])
@@ -33,10 +33,10 @@ QoS_Util::parse_args ()
         this->dest_addr_.set (get_opts.opt_arg ());
         break;
       case 'p': // protocol.
-        if (ACE_OS::strcasecmp (get_opts.opt_arg (), ACE_TEXT("tcp")) == 0)
+        if (ACE_OS::strcasecmp (get_opts.opt_arg (), ACE_TEXT ("tcp")) == 0)
           this->protocol_ = IPPROTO_TCP;
         else
-          if (ACE_OS::strcasecmp (get_opts.opt_arg (), ACE_TEXT("udp")) == 0)
+          if (ACE_OS::strcasecmp (get_opts.opt_arg (), ACE_TEXT ("udp")) == 0)
             this->protocol_ = IPPROTO_UDP;
           else
             ACE_DEBUG ((LM_DEBUG,

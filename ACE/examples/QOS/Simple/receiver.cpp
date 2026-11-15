@@ -166,7 +166,7 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
                     "Dgram_Mcast subscribe succeeds\n"));
 
       int nIP_TTL = 25;
-      char achInBuf [BUFSIZ];
+      char achInBuf [BUFSIZ] {};
       u_long dwBytes {};
 
       // Should this be abstracted into QoS objects ?? Doesnt seem to have
