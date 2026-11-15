@@ -35,7 +35,7 @@ module CosNotification
     void clear_statistics (in Monitor::NameList names)
       raises (InvalidName);
 
-    // Control commands begin here
+    /// Control commands begin here
     void shutdown_event_channel (in string name)
       raises (InvalidName);
 

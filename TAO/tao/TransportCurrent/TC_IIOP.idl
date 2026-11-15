@@ -17,16 +17,15 @@ module SSLIOP
   interface Current;
 };
 
-
 module TAO
 {
   module Transport
   {
     module IIOP
     {
-      // The primary interface, providing access to IIOP-specific
-      // transport information, if it is indeed an IIOP (-like) transport
-      // that has been selected.
+      /// The primary interface, providing access to IIOP-specific
+      /// transport information, if it is indeed an IIOP (-like) transport
+      /// that has been selected.
 
       local interface Current : TAO::Transport::Current
       {

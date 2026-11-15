@@ -3,13 +3,13 @@
 
 interface Callback
 {
+  /// A safe way to shutdown the client, using either clean shutdowns
+  /// or "catastrophic failures".
   oneway void shutdown ();
-  // A safe way to shutdown the client, using either clean shutdowns
-  // or "catastrophic failures".
 
+  /// A simple remote call takes a payload to increase the duration of
+  /// call to trigger the wait strategy and thus the error.
   void callback_method (in CORBA::OctetSeq payload);
-  // A simple remote call takes a payload to increase the duration of
-  // call to trigger the wait strategy and thus the error.
 
 };
 
@@ -17,13 +17,13 @@ interface Simple_Server
 {
   oneway void ow_test ();
 
+  /// Just call a method on the server,
   long test_method (in boolean do_callback);
-  // Just call a method on the server,
 
+  /// send the callback object to the server
   void callback_object (in Callback cb);
-  // send the callback object to the server
 
+  /// A safe way to shutdown the server, it is a oneway function so we
+  /// will never get a COMM_FAILURE error
   oneway void shutdown ();
-  // A safe way to shutdown the server, it is a oneway function so we
-  // will never get a COMM_FAILURE error
 };

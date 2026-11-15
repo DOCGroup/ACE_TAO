@@ -1,5 +1,5 @@
-//
-// broken.idl -- Test IDL for array type CCA regressions
+///
+/// broken.idl -- Test IDL for array type CCA regressions
 
 enum enum1
 {
@@ -54,7 +54,6 @@ struct  Bucket
 typedef Bucket    BucketArray[10];
 typedef Bucket    BucketArrayArray[10][10];
 typedef moola::Account  AccountArray[10];
-
 
 struct SimpleStruct
 {

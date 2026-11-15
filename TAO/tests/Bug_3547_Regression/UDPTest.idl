@@ -8,5 +8,4 @@ interface UDPTestI
   oneway void send( in BufferT Msg);
 };
 
-
 #endif

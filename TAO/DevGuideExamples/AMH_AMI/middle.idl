@@ -1,4 +1,4 @@
-// file: middle.idl
+/// @file middle.idl
 
 interface Middle
 {

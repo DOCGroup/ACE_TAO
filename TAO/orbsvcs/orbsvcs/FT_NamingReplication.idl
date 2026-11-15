@@ -1,5 +1,4 @@
 /* -*- IDL -*- */
-//=============================================================================
 /**
  *  @file    FT_NamingReplication.idl
  *
@@ -9,7 +8,6 @@
  *
  *  @author Kevin Stanley <stanleyk@ociweb.com>
  */
-//=============================================================================
 
 #ifndef _FT_NAMING_REPLICATION_IDL_
 #define _FT_NAMING_REPLICATION_IDL_
@@ -101,6 +99,5 @@ module FT_Naming
     oneway void notify_updated_context(in NamingContextUpdate context_info);
   };
 };
-
 
 #endif // _FT_NAMING_REPLICATION_IDL_

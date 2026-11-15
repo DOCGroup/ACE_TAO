@@ -3,18 +3,13 @@ module Test_Interceptors
   exception Silly
     {};
 
+  /// Tests portable interceptor behavior visually.
   interface Visual
   {
-    // = TITLE
-    //   A test idl for checking interceptor visually.
-    //
-    // = DESCRIPTION
-    //
-
+    /// Normal operation.
     void normal (in long arg);
-    // Normal operation.
 
+    /// Shuts down the ORB.
     oneway void shutdown ();
-    // shutdown the ORB
   };
 };

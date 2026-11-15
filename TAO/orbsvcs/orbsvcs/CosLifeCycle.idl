@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    CosLifeCycle.idl
  *
@@ -16,29 +15,23 @@
  *  @author Torben Worm <tworm@cs.wustl.edu>
  *  @author and Michael Kircher <mk1@cec.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_LIFECYCLE_IDL
 #define TAO_LIFECYCLE_IDL
 
-// OMG IDL for CosLifeCycle Module, page 6-10 in
-// Includes the following interfaces:
-//   FactoryFinder, LifeCycleObject, GenericFactory
+/// OMG IDL for CosLifeCycle Module, page 6-10 in
+/// Includes the following interfaces:
+/// FactoryFinder, LifeCycleObject, GenericFactory
 
 #include "CosNaming.idl"
 
 #pragma prefix "omg.org"
 
+/// @brief CosLifeCycle
+///
+/// This idl file describes the life cycle service.
 module CosLifeCycle
 {
-  // = TITLE
-  //     CosLifeCycle
-  //
-  // = DESCRIPTION
-  //     This idl file describes the life cycle service.
-  //     The purpose of the life cycle service is to
-
   typedef CosNaming::Name Key;
   typedef Object _Factory;
   typedef sequence <_Factory> Factories;
@@ -69,11 +62,6 @@ module CosLifeCycle
 
   interface FactoryFinder
     {
-      // = TITLE
-      //   @@ Please fill in.
-      // = DESCRIPTION
-      //   @@ Please fill in.
-
       Factories find_factories (in Key factory_key)
         raises (NoFactory);
     };
@@ -98,17 +86,6 @@ module CosLifeCycle
         raises (NoFactory, InvalidCriteria, CannotMeetCriteria);
     };
 };
-
-// Criteria, page 6-17:
-/*
-typedef struct NVP
-{
-  CosNaming::Istring name;
-  any value;
-} NameValuePair;
-
-typedef sequence <NameValuePair> Criteria;
-*/
 
 #endif /* TAO_LIFECYCLE_IDL */
 

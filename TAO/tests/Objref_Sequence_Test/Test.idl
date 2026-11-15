@@ -10,6 +10,6 @@ interface Server
 
   void DeleteExtra (in ServerSequence seq);
 
-  // Shutdown operation
+  /// Shutdown operation
   oneway void shutdown ();
 };

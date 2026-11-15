@@ -63,65 +63,65 @@ module Test
                            in bounded_string arg1,
                            out bounded_string arg2,
                            inout bounded_string arg3);
+    /// Operations on strings.
     bounded_string method_s (in FailOn where,
                             in bounded_string arg1,
                             out bounded_string arg2,
                             inout bounded_string arg3);
-    // Operations on strings.
 
     seq_bd_str seq_method (in FailOn where,
                            in seq_bd_str arg1,
                            out seq_bd_str arg2,
                            inout seq_bd_str arg3);
+    /// Operations on sequences.
     seq_bds_str seq_method_s (in FailOn where,
                               in seq_bds_str arg1,
                               out seq_bds_str arg2,
                               inout seq_bds_str arg3);
-    // Operations on sequences.
 
     arr_bd_str arr_method (in FailOn where,
                            in arr_bd_str arg1,
                            out arr_bd_str arg2,
                            inout arr_bd_str arg3);
+    /// Operations on arrays.
     arr_bds_str arr_method_s (in FailOn where,
                               in arr_bds_str arg1,
                               out arr_bds_str arg2,
                               inout arr_bds_str arg3);
-    // Operations on arrays.
 
+    /// Operation on structs.
     sct sct_method (in FailOn where,
                     in sct arg1,
                     out sct arg2,
                     inout sct arg3);
-    // Operation on structs.
 
+    /// Operation on unions.
     unn unn_method (in FailOn where,
                     in unn arg1,
                     out unn arg2,
                     inout unn arg3);
-    // Operation on unions.
 
     val_bd_str vbx_method (in FailOn where,
                            in val_bd_str arg1,
                            out val_bd_str arg2,
                            inout val_bd_str arg3);
+    /// Operations on value boxes.
     val_bds_str vbx_method_s (in FailOn where,
                               in val_bds_str arg1,
                               out val_bds_str arg2,
                               inout val_bds_str arg3);
-    // Operations on value boxes.
 
+    /// Operation on value types.
     vtp vtp_method (in FailOn where,
                     in vtp arg1,
                     out vtp arg2,
                     inout vtp arg3);
-    // Operation on value types.
 
+    /// Operation that throws.
     void exc_method (in string_field f)
       raises (exc);
-    // Operation that throws.
 
+    /// shutdown the ORB
     oneway void shutdown ();
-    // shutdown the ORB
   };
 };

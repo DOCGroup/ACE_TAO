@@ -6,7 +6,7 @@
 /// information and the consumer interface.
 module Callback_Quoter
 {
-  // Requested stock does not exist.
+  /// Requested stock does not exist.
   exception Invalid_Stock
   {
     /// The message which declares the reason for this exception.

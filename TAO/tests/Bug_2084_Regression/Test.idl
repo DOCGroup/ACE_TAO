@@ -2,7 +2,7 @@
 /// Put the interfaces in a module, to avoid global namespace pollution
 module Test
 {
-  // Use "long long" to support platforms with 64-bit thread IDs.
+  /// Use "long long" to support platforms with 64-bit thread IDs.
   typedef long long ThreadId;
 
   /// A very simple interface

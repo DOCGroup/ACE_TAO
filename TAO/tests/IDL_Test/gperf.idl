@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    gperf.idl
  *
@@ -11,16 +10,13 @@
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
  */
-//=============================================================================
 
+/// The examples below uncovered some bugs in gperf,
+/// in the form of runtime errors when clients made
+/// requests on some of the methods, for example
 
-// The examples below uncovered some bugs in gperf,
-// in the form of runtime errors when clients made
-// requests on some of the methods, for example
-
-//       TAO_Perfect_Hash_Table:find failed
-//       Bad operation <ackConfArchData>
-
+/// TAO_Perfect_Hash_Table:find failed
+/// Bad operation <ackConfArchData>
 
 enum TestEnum
 {
@@ -33,7 +29,6 @@ interface testlistitem
 {
   readonly attribute string name;
 };
-
 
 interface test
 {
@@ -89,5 +84,4 @@ interface Simple_Server
  oneway void transferTriggerDb ();
  oneway void transferTriggerTdc ();
 };
-
 

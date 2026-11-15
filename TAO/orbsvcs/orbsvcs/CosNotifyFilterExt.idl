@@ -47,7 +47,6 @@ module CosNotifyFilterExt
     CosNotifyFilter::Filter get_filter (in CosNotifyFilter::FilterID id);
   };
 
-
 };
 
 #endif /* _COS_NOTIFY_FILTER_EXT_IDL_ */

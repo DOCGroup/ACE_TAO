@@ -1,5 +1,4 @@
-// -*- IDL -*-
-// ===================================================================
+/// -*- IDL -*-
 /**
  *  @file   test.idl
  *
@@ -8,7 +7,6 @@
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-// ===================================================================
 
 module Test_Interceptors
 {

@@ -1,13 +1,10 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file    CosNaming.idl
  *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_NAMING_IDL
 #define TAO_NAMING_IDL
@@ -63,13 +60,14 @@ module CosNaming
 
   typedef sequence <Binding> BindingList;
 
-  // Forward declaration.
+  /// Forward declaration.
   interface BindingIterator;
 
   /// Interface for managing name bindings and naming contexts.
   interface NamingContext
     {
-      // = Exceptions.
+      /// @name Exceptions
+      /// @{
 
       enum NotFoundReason
       {
@@ -114,7 +112,9 @@ module CosNaming
       {
       };
 
-      // = Binding operations.
+      /// @}
+      /// @name Binding operations
+      /// @{
 
       /// Create a binding for name @a n and object @a obj in the naming
       /// context.  Compound names are treated as follows: ctx->bind
@@ -146,7 +146,9 @@ module CosNaming
       void rebind_context (in Name n, in NamingContext nc)
         raises (NotFound, CannotProceed, InvalidName);
 
-      // = Resolving names.
+      /// @}
+      /// @name Resolving names
+      /// @{
 
       /// Return object reference that is bound to the name.  Compound
       /// name resolve is defined as follows: ctx->resolve (<c1; c2;
@@ -157,7 +159,9 @@ module CosNaming
       Object resolve (in Name n)
         raises (NotFound, CannotProceed, InvalidName);
 
-      // = Unbinding names.
+      /// @}
+      /// @name Unbinding names
+      /// @{
 
       /// Remove the name binding from the context.  When compound
       /// names are used, unbind is defined as follows: ctx->unbind
@@ -166,7 +170,9 @@ module CosNaming
       void unbind (in Name n)
         raises (NotFound, CannotProceed, InvalidName);
 
-      // = Creating Naming Contexts.
+      /// @}
+      /// @name Creating Naming Contexts
+      /// @{
 
       /// This operation returns a new naming context implemented by
       /// the same naming server in which the operation was invoked.
@@ -180,7 +186,9 @@ module CosNaming
       NamingContext bind_new_context (in Name n)
         raises (NotFound, AlreadyBound, CannotProceed, InvalidName);
 
-      // = Deleting contexts.
+      /// @}
+      /// @name Deleting contexts
+      /// @{
 
       /// Delete the naming context.  @note the user should <unbind>
       /// any bindings in which the given context is bound to some
@@ -188,8 +196,9 @@ module CosNaming
       void destroy ()
         raises (NotEmpty);
 
-
-      // = Listing the naming context.
+      /// @}
+      /// @name Listing the naming context
+      /// @{
 
       /// Returns at most the requested number of bindings @a how_many
       /// in @a bl.  If the naming context contains additional bindings,
@@ -199,6 +208,7 @@ module CosNaming
       void list (in unsigned long how_many,
                  out BindingList bl,
                  out BindingIterator bi);
+      /// @}
     };
 
   /// Interface for iterating over Bindings returned with the

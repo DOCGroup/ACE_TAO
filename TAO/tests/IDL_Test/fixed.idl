@@ -1,14 +1,12 @@
-//=============================================================================
 /**
  *  @file    fixed.idl
  *
  *  Coverage for IDL fixed-point types and their generated C++ mappings.
  */
-//=============================================================================
 
 module FixedPoint
 {
-  // Exercise the smallest useful combinations as well as both legal limits.
+  /// Exercise the smallest useful combinations as well as both legal limits.
   typedef fixed<3, 0> WholeNumber;
   typedef fixed<3, 3> Fraction;
   typedef fixed<10, 3> Amount;
@@ -29,7 +27,7 @@ module FixedPoint
     attribute Amount rate;
   };
 
-  // Verify that aliases preserve the declared precision and scale.
+  /// Verify that aliases preserve the declared precision and scale.
   typedef Amount AmountAlias;
   typedef AmountAlias AmountAlias2;
 };

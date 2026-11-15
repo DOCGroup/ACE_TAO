@@ -1,8 +1,8 @@
 interface sig
 {
-  // Tell the server to start
+  /// Tell the server to start
   oneway void go ();
 
-  // Tell the server the consumer is done
+  /// Tell the server the consumer is done
   oneway void done ();
 };

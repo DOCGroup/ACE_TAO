@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    test.idl
  *
@@ -7,24 +6,17 @@
  *
  *  @author Phil Mesnier <mesnier_p@ociweb.com>
  */
-//=============================================================================
-
 
 module Interop
 {
 
+  /// Tests CDR marshalling of an out argument.
   interface CDR_Out_Arg
   {
-    // = TITLE
-    //   A test idl for checking interceptor visually.
-    //
-    // = DESCRIPTION
-    //
-
+    /// Normal operation.
     void get_out (out long arg);
-    // Normal operation.
 
-   oneway void shutdown ();
-    // shutdown the ORB
+    /// Shuts down the ORB.
+    oneway void shutdown ();
   };
 };

@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    sequence_anonymous.idl
  *
@@ -10,10 +9,9 @@
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
  */
-//=============================================================================
 
-// Bounded string elements of a sequence,
-// require the use of CORBA_Any::to_char.
+/// Bounded string elements of a sequence,
+/// require the use of CORBA_Any::to_char.
 interface seqTest
 {
   typedef sequence< string<12> > dozens;
@@ -21,17 +19,17 @@ interface seqTest
   void send_dozen (inout dozens bouquets);
 };
 
-// Anonymous sequence members must be unique types even if the
-// sequence itself is not, so the member name has been
-// incorported into the sequence class name. #if !defined guards
-// are generated around code for the inner anonymous sequences.
+/// Anonymous sequence members must be unique types even if the
+/// sequence itself is not, so the member name has been
+/// incorported into the sequence class name. #if !defined guards
+/// are generated around code for the inner anonymous sequences.
 struct twinStruct
   {
     sequence<sequence<short> > and_;
     sequence<sequence<short> > or_;
   };
 
-// Nested sequences
+/// Nested sequences
 typedef sequence<sequence<short, 5> > outside;
 
 struct nestedSeqStruct

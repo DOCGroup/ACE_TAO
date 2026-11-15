@@ -2,37 +2,29 @@
 interface Peer;
 typedef sequence<Peer> PeerSet;
 
+/// A simple interface to demonstrate AMI. A set of peers connect to the
+/// progress server. Once all peers have connected, each sends multiple
+/// requests to every other peer using AMI. The progress server displays
+/// the reported progress.
 interface Peer
 {
-  // = DESCRIPTION
-  //   A simple interface to demo the AMI implementation.
-  //   A set of "peers" run in the network, each one binds to the
-  //   progress server, when all the peers are bound the server
-  //   requests that each one send multiple "request" messages to each
-  //   other, using AMI. The progress is reported back to the progress
-  //   server for display.
-
+  /// Sends back the number in <id>.
   long request (in long id);
-  // A simple request, sends back the number in <id>.
-
+  /// Starts the demo in one peer.
   oneway void start (in PeerSet the_peers,
                      in long iterations);
-  // Start the demo in one Peer
-
+  /// Shuts down the ORB.
   oneway void shutdown ();
-  // Shutdown the ORB
 };
 
+/// Reports progress for multiple applications running in parallel.
+/// Each application is identified by an <id> and reports as asynchronous
+/// requests are sent and received.
 interface Progress
 {
-  // = DESCRIPTION
-  //   This interface is used to report progress, multiple
-  //   applications identified by an <id> run in parallel, each one
-  //   reports as the asynchronous requests are sent and received.
-
   oneway void sent_request (in long id);
   oneway void recv_reply (in long id);
 
+  /// Binds one of the peers.
   long bind (in Peer a_peer);
-  // Bind one of the peers.
 };

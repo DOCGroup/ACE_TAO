@@ -6,5 +6,3 @@ valuetype MyValueType
    private MyValueType_Seq myValueTypes;
 };
 
-
-

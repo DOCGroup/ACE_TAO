@@ -1,5 +1,5 @@
 interface Paper_Airplane_Server
 {
+  /// Returns the plane of the moment.
   string get_plane ();
-  // Returns the plane of the moment.
 };
