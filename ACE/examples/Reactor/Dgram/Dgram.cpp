@@ -1,26 +1,27 @@
-// Exercise the <ACE_SOCK_Dgram> wrapper along with the <ACE_Reactor>.
-// This test simply ping-pongs datagrams back and forth between the
-// peer1 and peer2 processes.  This test can be run in two ways:
-//
-// 1. Stand-alone -- e.g.,
-//
-//    % ./dgram
-//
-//    which will spawn a child process and run peer1 and peer2
-//    in different processes on the same machine.
-//
-// 2. Distributed -- e.g.,
-//
-//    # Peer1
-//    % ./dgram 10002 tango.cs.wustl.edu 10003 peer1
-//
-//    # Peer1
-//    % ./dgram 10003 tango.cs.wustl.edu 10002 peer2
-//
-//    which will run peer1 and peer2 in different processes
-//    on the same or different machines.  Note that you MUST
-//    give the name "peer1" as the final argument to one and
-//    only one of the programs so that the test will work properly.
+/// @file Dgram.cpp
+/// Exercise the <ACE_SOCK_Dgram> wrapper along with the <ACE_Reactor>.
+/// This test simply ping-pongs datagrams back and forth between the
+/// peer1 and peer2 processes. This test can be run in two ways:
+///
+/// 1. Stand-alone -- e.g.,
+///
+///    % ./dgram
+///
+///    which will spawn a child process and run peer1 and peer2
+///    in different processes on the same machine.
+///
+/// 2. Distributed -- e.g.,
+///
+///    # Peer1
+///    % ./dgram 10002 tango.cs.wustl.edu 10003 peer1
+///
+///    # Peer1
+///    % ./dgram 10003 tango.cs.wustl.edu 10002 peer2
+///
+///    which will run peer1 and peer2 in different processes
+///    on the same or different machines. Note that you MUST
+///    give the name "peer1" as the final argument to one and
+///    only one of the programs so that the test will work properly.
 
 #include "ace/OS_main.h"
 #include "ace/OS_NS_string.h"
@@ -33,7 +34,7 @@
 
 #include <memory>
 
-// Port used to receive for dgrams.
+/// Port used to receive datagrams.
 static u_short port1 {};
 
 class Dgram_Endpoint : public ACE_Event_Handler
@@ -45,22 +46,24 @@ public:
   Dgram_Endpoint &operator= (Dgram_Endpoint const &) = delete;
   Dgram_Endpoint &operator= (Dgram_Endpoint &&) = delete;
 
-  // = Hook methods inherited from the <ACE_Event_Handler>.
+  /// @name Hook methods inherited from the <ACE_Event_Handler>
+  /// @{
   ACE_HANDLE get_handle () const override;
   int handle_input (ACE_HANDLE handle) override;
   int handle_timeout (ACE_Time_Value const &tv,
                       void const *arg = nullptr) override;
   int handle_close (ACE_HANDLE handle,
                     ACE_Reactor_Mask close_mask) override;
+  /// @}
 
   //FUZZ: disable check_for_lack_ACE_OS
+  /// Send the <buf> to the peer.
   int send (char const *buf, size_t len, ACE_INET_Addr const &);
-  // Send the <buf> to the peer.
   //FUZZ: enable check_for_lack_ACE_OS
 
 private:
+  /// Wrapper for sending and receiving datagrams.
   ACE_SOCK_Dgram endpoint_;
-  // Wrapper for sending/receiving dgrams.
 };
 
 int
