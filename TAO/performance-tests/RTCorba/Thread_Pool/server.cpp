@@ -232,13 +232,13 @@ Task::svc ()
 
       int result = 0;
       CORBA::ULong stacksize = 0;
-      CORBA::Boolean allow_request_buffering = 0;
+      CORBA::Boolean allow_request_buffering = false;
       CORBA::ULong max_buffered_requests = 0;
       CORBA::ULong max_request_buffer_size = 0;
 
       CORBA::PolicyList policies;
 
-      CORBA::Boolean allow_borrowing = 0;
+      CORBA::Boolean allow_borrowing = false;
       if (number_of_lanes != 0)
         {
           get_auto_priority_lanes_and_bands (number_of_lanes,

@@ -216,10 +216,10 @@ public:
   {
     from_string (ACE_CDR::Char* s,
                  ACE_CDR::ULong b,
-                 ACE_CDR::Boolean nocopy = 0);
+                 ACE_CDR::Boolean nocopy = false);
     from_string (const ACE_CDR::Char* s,
                  ACE_CDR::ULong b,
-                 ACE_CDR::Boolean nocopy = 0);
+                 ACE_CDR::Boolean nocopy = false);
     ACE_CDR::Char *val_;
     ACE_CDR::ULong bound_;
     ACE_CDR::Boolean nocopy_;
@@ -229,10 +229,10 @@ public:
   {
     from_wstring (ACE_CDR::WChar* ws,
                   ACE_CDR::ULong b,
-                  ACE_CDR::Boolean nocopy = 0);
+                  ACE_CDR::Boolean nocopy = false);
     from_wstring (const ACE_CDR::WChar* ws,
                   ACE_CDR::ULong b,
-                  ACE_CDR::Boolean nocopy = 0);
+                  ACE_CDR::Boolean nocopy = false);
     ACE_CDR::WChar *val_;
     ACE_CDR::ULong bound_;
     ACE_CDR::Boolean nocopy_;

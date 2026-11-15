@@ -16,7 +16,7 @@ class TAO_TTest_Export TAO_Offer_Importer
 {
 public:
   TAO_Offer_Importer (CosTrading::Lookup_ptr lookup_if,
-                      CORBA::Boolean verbose = 1);
+                      CORBA::Boolean verbose = true);
 
   /// Send a set of queries to the bootstrapped trader.
   void perform_queries ();

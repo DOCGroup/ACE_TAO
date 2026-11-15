@@ -61,7 +61,7 @@ Starter::resolve_synch_objs ()
 
   if (!CORBA::is_nil (iterator.in ()))
     {
-      CORBA::Boolean more = 1;
+      CORBA::Boolean more = true;
 
       // Check to see if there are more receivers listed.
       while (more)

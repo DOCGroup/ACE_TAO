@@ -26,7 +26,7 @@ McastHello::send_forty_two (CORBA::Long forty_two)
 void
 McastHello::send_large_octet_array (const Test::Octets &payload)
 {
-  CORBA::Boolean valid_payload = 1;
+  CORBA::Boolean valid_payload = true;
   for (CORBA::ULong i = 0; i < payload.length (); ++i)
     {
       if ((CORBA::ULong) payload [i] != i % 256)
@@ -35,7 +35,7 @@ McastHello::send_large_octet_array (const Test::Octets &payload)
                       "ERROR: (%P|%t) McastHello::send_large_octet_array, "
                       "unexpected value at index %d (%d != %d)\n",
                       i, payload [i], i % 256));
-          valid_payload = 0;
+          valid_payload = false;
           break;
         }
     }
