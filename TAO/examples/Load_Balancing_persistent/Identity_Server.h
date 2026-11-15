@@ -33,7 +33,6 @@
 class Identity_Server
 {
 public:
-  /// Default constructor.
   Identity_Server () = default;
 
   ~Identity_Server () = default;

@@ -20,7 +20,6 @@
 class test_i : public POA_test
 {
 public:
-  /// ctor.
   explicit test_i (CORBA::ORB_ptr orb);
 
   ~test_i () override = default;

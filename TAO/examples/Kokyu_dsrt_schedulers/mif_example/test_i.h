@@ -22,7 +22,6 @@
 class Simple_Server_i : public POA_Simple_Server
 {
 public:
-  /// ctor
   Simple_Server_i (CORBA::ORB_ptr orb,
                    RTScheduling::Current_ptr current,
                    Task_Stats &task_stats,

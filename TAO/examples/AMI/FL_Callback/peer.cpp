@@ -56,7 +56,6 @@ parse_args (int argc, ACE_TCHAR *argv[], Peer_Options &options)
 class Worker : public ACE_Task_Base
 {
 public:
-  /// ctor
   explicit Worker (CORBA::ORB_ptr orb);
 
   /// The thread entry point.

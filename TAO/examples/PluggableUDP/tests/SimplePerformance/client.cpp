@@ -62,7 +62,6 @@ constexpr ACE_UINT32 SIZE_BLOCK { 256 };
 class Client
 {
 public:
-  /// ctor
   Client (Simple_Server_ptr server, ACE_UINT32 niterations);
 
   Client (Client const &) = delete;

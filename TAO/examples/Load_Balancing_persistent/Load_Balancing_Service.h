@@ -29,7 +29,6 @@
 class Load_Balancing_Service
 {
 public:
-  /// Default constructor.
   Load_Balancing_Service () = default;
 
   ~Load_Balancing_Service () = default;
