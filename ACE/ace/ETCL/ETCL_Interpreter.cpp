@@ -68,8 +68,8 @@ ETCL_Interpreter::is_empty_string (char const *str)
   return return_value;
 }
 
-char const *Lex_String_Input::current_ = nullptr;
-char const *Lex_String_Input::end_ = nullptr;
+char const *Lex_String_Input::current_ {};
+char const *Lex_String_Input::end_ {};
 
 // Routine to have Lex read its input from the constraint string.
 
