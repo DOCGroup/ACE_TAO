@@ -60,9 +60,9 @@ Time_Handler::handle_close (ACE_HANDLE handle,
                             ACE_Reactor_Mask close_mask)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("[%x] handle = %d, close_mask = %d, timer id = %d\n"),
+              ACE_TEXT ("[%@] handle = %@, close_mask = %d, timer id = %ld\n"),
               this,
-              handle,
+              reinterpret_cast<void *> (handle),
               close_mask,
               this->timer_id ()));
   return 0;

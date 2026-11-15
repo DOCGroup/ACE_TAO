@@ -56,7 +56,7 @@ Reference_Counted_Event_Handler::Reference_Counted_Event_Handler ()
     ACE_DEBUG
       ((LM_DEBUG,
         ACE_TEXT ("Reference count in Reference_Counted_Event_Handler() ")
-        ACE_TEXT ("is %d\n"),
+        ACE_TEXT ("is %ld\n"),
         this->reference_count_.load ()));
 }
 
@@ -66,14 +66,14 @@ Reference_Counted_Event_Handler::~Reference_Counted_Event_Handler ()
     ACE_DEBUG
       ((LM_DEBUG,
         ACE_TEXT ("Reference count in ~Reference_Counted_Event_Handler() ")
-        ACE_TEXT ("is %d\n"),
+        ACE_TEXT ("is %ld\n"),
         this->reference_count_.load ()));
 
   if (0 != this->reference_count_.load ())
     ACE_ERROR
       ((LM_ERROR,
         ACE_TEXT ("Reference count in ~Reference_Counted_Event_Handler() ")
-        ACE_TEXT ("should be 0 but is %d\n"),
+        ACE_TEXT ("should be 0 but is %ld\n"),
         this->reference_count_.load ()));
 }
 
@@ -84,14 +84,14 @@ Reference_Counted_Event_Handler::handle_input (ACE_HANDLE)
     ACE_DEBUG
       ((LM_DEBUG,
         ACE_TEXT ("Reference count in Reference_Counted_Event_Handler::")
-        ACE_TEXT ("handle_input() is %d\n"),
+        ACE_TEXT ("handle_input() is %ld\n"),
         this->reference_count_.load ()));
 
   if (2 != this->reference_count_.load ())
     ACE_ERROR
       ((LM_ERROR,
         ACE_TEXT ("Reference count in Reference_Counted_Event_Handler::")
-        ACE_TEXT ("handle_input() should be 2 but is %d\n"),
+        ACE_TEXT ("handle_input() should be 2 but is %ld\n"),
         this->reference_count_.load ()));
 
   return 0;
@@ -105,7 +105,7 @@ Reference_Counted_Event_Handler::add_reference ()
 
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("Reference count after add_reference() is %d\n"),
+                ACE_TEXT ("Reference count after add_reference() is %ld\n"),
                 this->reference_count_.load ()));
 
   return reference_count;
@@ -119,7 +119,7 @@ Reference_Counted_Event_Handler::remove_reference ()
 
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("Reference count after remove_reference() is %d\n"),
+                ACE_TEXT ("Reference count after remove_reference() is %ld\n"),
                 reference_count));
 
   return reference_count;
