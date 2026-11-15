@@ -17,10 +17,12 @@ public:
   Hello &operator= (Hello const &) = delete;
   Hello &operator= (Hello &&) = delete;
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   void method (Test::Hello_out r) override;
 
   void shutdown () override;
+  /// @}
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown
