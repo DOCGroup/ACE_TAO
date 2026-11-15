@@ -74,14 +74,14 @@ schedule_i (Guid_t id, DSRT_QoSDescriptor const &qos)
 
 #ifdef KOKYU_DSRT_LOGGING
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t|%T):curr thr handle = %d\n",
-                  thr_handle));
+                  "(%t|%T): current thread is scheduled = %d\n",
+                  this->curr_scheduled_thr_handle_ == thr_handle));
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t|%T):curr scheduled thr handle = %d\n",
-                  this->curr_scheduled_thr_handle_));
+                  "(%t|%T): current thread is most eligible = %d\n",
+                  most_eligible_thr_handle == thr_handle));
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t|%T):most eligible thr handle = %d\n",
-                  most_eligible_thr_handle));
+                  "(%t|%T): a thread is scheduled = %d\n",
+                  this->curr_scheduled_thr_handle_ != 0));
 #endif
 
   if (this->curr_scheduled_thr_handle_ == thr_handle &&
@@ -126,8 +126,7 @@ schedule_i (Guid_t id, DSRT_QoSDescriptor const &qos)
 
 #ifdef KOKYU_DSRT_LOGGING
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t|%T): %d is currently running\n",
-                  thr_handle));
+                  "(%t|%T): current thread is currently running\n"));
 #endif
 
   if (ACE_OS::thr_setprio (thr_handle,
@@ -172,10 +171,9 @@ update_schedule_i (Guid_t guid, Block_Flag_t flag)
 
 #ifdef KOKYU_DSRT_LOGGING
   if (found == 0)
-      ACE_DEBUG ((LM_DEBUG, "(%t|%T): %d found in ready queue\n", thr_handle));
+      ACE_DEBUG ((LM_DEBUG, "(%t|%T): current thread is in the ready queue\n"));
   else
-      ACE_DEBUG ((LM_DEBUG, "(%t|%T): %d not found in ready queue\n",
-                  thr_handle));
+      ACE_DEBUG ((LM_DEBUG, "(%t|%T): current thread is not in the ready queue\n"));
 #endif
 
   if (found == 0 && flag == BLOCK)
@@ -183,7 +181,7 @@ update_schedule_i (Guid_t guid, Block_Flag_t flag)
       thr_handle = dispatch_item->thread_handle ();
 
 #ifdef KOKYU_DSRT_LOGGING
-      ACE_DEBUG ((LM_DEBUG, "(%t|%T): update schedule: %d found\n", thr_handle));
+      ACE_DEBUG ((LM_DEBUG, "(%t|%T): updating schedule for blocked thread\n"));
 #endif
 
       if (ACE_OS::thr_setprio (thr_handle,

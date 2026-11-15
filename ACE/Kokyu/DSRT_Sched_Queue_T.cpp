@@ -88,18 +88,15 @@ insert (DSRT_Dispatch_Item<DSRT_Scheduler_Traits>* item)
   Guid_t guid = item->guid ();
 
 #ifdef KOKYU_DSRT_LOGGING
-  ACE_hthread_t thr_handle = item->thread_handle ();
-
   ACE_DEBUG ((LM_DEBUG,
-              "(%t|%T) about to insert %d in sched queue\n",
-              thr_handle));
+              "(%t|%T) about to insert item in sched queue\n"));
 #endif
 
   if (dispatch_items_hash_map_.find (guid, rb_tree_node) == -1)
     {
 #ifdef KOKYU_DSRT_LOGGING
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t|%T) %d not found in hashmap\n", thr_handle));
+                  "(%t|%T) item not found in hashmap\n"));
 #endif
       if (dispatch_items_prio_queue_.bind (item_var,
                                            item_var,
@@ -126,14 +123,14 @@ insert (DSRT_Dispatch_Item<DSRT_Scheduler_Traits>* item)
     {
 #ifdef KOKYU_DSRT_LOGGING
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t|%T) %d found in hashmap\n", thr_handle));
+                  "(%t|%T) item found in hashmap\n"));
 #endif
       dispatch_items_hash_map_.unbind (guid);
       dispatch_items_prio_queue_.unbind (rb_tree_node);
 
 #ifdef KOKYU_DSRT_LOGGING
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t|%T) %d removed from hashmap and rbtree\n", thr_handle));
+                  "(%t|%T) item removed from hashmap and rbtree\n"));
 #endif
       if (dispatch_items_prio_queue_.bind (item_var,
                                            item_var,
@@ -141,13 +138,13 @@ insert (DSRT_Dispatch_Item<DSRT_Scheduler_Traits>* item)
         {
 #ifdef KOKYU_DSRT_LOGGING
           ACE_DEBUG ((LM_DEBUG,
-                      "(%t|%T) %d bound to rbtree\n", thr_handle));
+                      "(%t|%T) replacement item bound to rbtree\n"));
 #endif
           if (dispatch_items_hash_map_.bind (guid, rb_tree_node) == 0)
             {
 #ifdef KOKYU_DSRT_LOGGING
               ACE_DEBUG ((LM_DEBUG,
-                          "(%t|%T) %d bound to hashmap\n", thr_handle));
+                          "(%t|%T) replacement item bound to hashmap\n"));
               ACE_DEBUG ((LM_DEBUG,
                           "<===Hash Table contents Begin===>\n"));
               dispatch_items_hash_map_.dump ();

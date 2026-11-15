@@ -49,10 +49,10 @@ DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::svc ()
               ACE_TEXT ("min prio=%d\n")
               ACE_TEXT ("active prio=%d\n")
               ACE_TEXT ("inactive prio=%d\n"),
-              max_prio_,
-              min_prio_,
-              active_prio_,
-              inactive_prio_));
+              this->max_prio_,
+              this->min_prio_,
+              this->active_prio_,
+              this->inactive_prio_));
 
   if (ACE_OS::thr_getprio (scheduler_thr_handle, prio) == -1)
     {
@@ -117,11 +117,8 @@ DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::svc ()
 
 #ifdef KOKYU_DSRT_LOGGING
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t|%T):curr scheduled thr handle = %d\n",
-                  this->curr_scheduled_thr_handle_));
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%t|%T):most eligible thr handle = %d\n",
-                  most_eligible_thr_handle));
+                  "(%t|%T): current scheduled thread is most eligible = %d\n",
+                  this->curr_scheduled_thr_handle_ == most_eligible_thr_handle));
 #endif
 
       if (this->curr_scheduled_thr_handle_ != most_eligible_thr_handle)
@@ -135,8 +132,7 @@ DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::svc ()
                   ACE_ERROR ((LM_ERROR,
                               ACE_TEXT ("%p\n"),
                               ACE_TEXT ("thr_setprio on curr_scheduled_thr_handle_ failed.")));
-                  ACE_DEBUG ((LM_DEBUG, "thr_handle = %d, prio = %d\n",
-                              this->curr_scheduled_thr_handle_,
+                  ACE_DEBUG ((LM_DEBUG, "inactive thread priority = %d\n",
                               this->inactive_prio_));
                 }
             }
