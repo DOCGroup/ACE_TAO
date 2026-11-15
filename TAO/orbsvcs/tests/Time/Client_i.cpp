@@ -2,6 +2,7 @@
 
 #include "tao/debug.h"
 
+#include "ace/Assert.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 #include "ace/OS_NS_fcntl.h"
@@ -24,9 +25,8 @@ struct Read_Buffer_Deleter
   }
 };
 
-// The following test throws an exception that the operation
-// <secure_universal_time> has not been currently implemented in the
-// given server.
+/// This test expects the server to report that secure universal time is not
+/// implemented.
 
 void
 Client_i::test_for_secure_universal_time ()
@@ -37,6 +37,7 @@ Client_i::test_for_secure_universal_time ()
   try
     {
       CosTime::UTO_var const uto_server = this->clerk_->secure_universal_time ();
+      ACE_TEST_ASSERT (false);
     }
   catch (CORBA::SystemException const &sysex)
     {
@@ -46,8 +47,7 @@ Client_i::test_for_secure_universal_time ()
     }
 }
 
-// The following test retrieves the current universal time as a UTO
-// from the clerk_ and prints out the various attributes of the UTO.
+/// Retrieves the current universal time from the clerk and prints its fields.
 
 void
 Client_i::test_for_universal_time ()
@@ -93,20 +93,22 @@ Client_i::test_for_new_universal_time ()
       CosTime::UTO_var const uto_server = this->clerk_->new_universal_time (time,
                                                                             inaccuracy,
                                                                             tdf);
+      TimeBase::UtcT const utc_time = uto_server->utc_time ();
 
-      ACE_ASSERT (uto_server->time () == 999999999);
-      ACE_ASSERT (uto_server->inaccuracy () == 9999);
-      ACE_ASSERT (uto_server->tdf () == 99);
-      ACE_ASSERT ((uto_server->utc_time ()).time == 999999999);
-      ACE_ASSERT ((uto_server->utc_time ()).inacchi == 0);
-      ACE_ASSERT ((uto_server->utc_time ()).inacclo == 9999);
-      ACE_ASSERT ((uto_server->utc_time ()).tdf == 99);
+      ACE_TEST_ASSERT (uto_server->time () == 999999999);
+      ACE_TEST_ASSERT (uto_server->inaccuracy () == 9999);
+      ACE_TEST_ASSERT (uto_server->tdf () == 99);
+      ACE_TEST_ASSERT (utc_time.time == 999999999);
+      ACE_TEST_ASSERT (utc_time.inacchi == 0);
+      ACE_TEST_ASSERT (utc_time.inacclo == 9999);
+      ACE_TEST_ASSERT (utc_time.tdf == 99);
     }
   catch (CORBA::Exception const &ex)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "[CLIENT] Process/Thread Id : (%P/%t) Test new_universal_time () fails.\n"));
       ex._tao_print_exception ("Exception :\n");
+      ACE_TEST_ASSERT (false);
     }
 }
 
@@ -121,22 +123,25 @@ Client_i::test_for_uto_from_utc ()
   try
     {
       CosTime::UTO_var const uto_server = this->clerk_->uto_from_utc (utc_struct);
+      TimeBase::UtcT const utc_time = uto_server->utc_time ();
 
-      ACE_ASSERT (uto_server->time () == 999999999);
-      ACE_ASSERT (uto_server->inaccuracy () ==
-                  ((static_cast<TimeBase::InaccuracyT> (utc_struct.inacchi) << 32)
-                   | utc_struct.inacclo));
-      ACE_ASSERT (uto_server->tdf () == 99);
-      ACE_ASSERT ((uto_server->utc_time ()).time == 999999999);
-      ACE_ASSERT ((uto_server->utc_time ()).inacclo == 50);
-      ACE_ASSERT ((uto_server->utc_time ()).inacchi == 50);
-      ACE_ASSERT ((uto_server->utc_time ()).tdf == 99);
+      TimeBase::InaccuracyT const expected_inaccuracy =
+        (static_cast<TimeBase::InaccuracyT> (utc_struct.inacchi) << 32)
+        | utc_struct.inacclo;
+      ACE_TEST_ASSERT (uto_server->time () == 999999999);
+      ACE_TEST_ASSERT (uto_server->inaccuracy () == expected_inaccuracy);
+      ACE_TEST_ASSERT (uto_server->tdf () == 99);
+      ACE_TEST_ASSERT (utc_time.time == 999999999);
+      ACE_TEST_ASSERT (utc_time.inacclo == 50);
+      ACE_TEST_ASSERT (utc_time.inacchi == 50);
+      ACE_TEST_ASSERT (utc_time.tdf == 99);
     }
   catch (CORBA::Exception const &ex)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "[CLIENT] Process/Thread Id : (%P/%t) Test uto_from_utc () fails.\n"));
       ex._tao_print_exception ("Exception :\n");
+      ACE_TEST_ASSERT (false);
     }
 }
 
@@ -153,19 +158,21 @@ Client_i::test_for_new_interval ()
     {
       CosTime::TIO_var const tio_server = this->clerk_->new_interval (lower,
                                                                       upper);
+      TimeBase::IntervalT const interval = tio_server->time_interval ();
 
-      ACE_ASSERT ((tio_server->time_interval ()).lower_bound == 666666666);
-      ACE_ASSERT ((tio_server->time_interval ()).upper_bound == 999999999);
+      ACE_TEST_ASSERT (interval.lower_bound == 666666666);
+      ACE_TEST_ASSERT (interval.upper_bound == 999999999);
     }
   catch (CORBA::Exception const &ex)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "[CLIENT] Process/Thread Id : (%P/%t) Test new_interval () fails.\n"));
       ex._tao_print_exception ("Exception :\n");
+      ACE_TEST_ASSERT (false);
     }
 }
 
-// Reads the Time Service Server ior from a file
+/// Reads the Time Service server IOR from a file.
 
 int
 Client_i::read_ior (ACE_TCHAR const *filename)
@@ -193,7 +200,7 @@ Client_i::read_ior (ACE_TCHAR const *filename)
   return 0;
 }
 
-// Parses the command line arguments and returns an error status.
+/// Parses the command-line arguments.
 
 int
 Client_i::parse_args (int argc, ACE_TCHAR *argv[])
@@ -231,11 +238,11 @@ Client_i::parse_args (int argc, ACE_TCHAR *argv[])
                           -1);
       }
 
-   // Indicates successful parsing of command line.
+  // Indicates successful parsing of command line.
   return 0;
 }
 
-// Execute client example code.
+/// Executes the client tests.
 
 int
 Client_i::run ()
@@ -309,8 +316,8 @@ Client_i::obtain_initial_references ()
   return 0;
 }
 
-// This method uses the IOR if specified on the command line or in a
-// file, else it uses the Naming Service
+/// Uses the command-line or file IOR when supplied; otherwise resolves the
+/// Time Service through the Naming Service.
 
 int
 Client_i::init (int argc, ACE_TCHAR **argv)
