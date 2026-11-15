@@ -30,15 +30,11 @@
 
 #pragma prefix "omg.org"
 
+/// @brief CosLifeCycle
+///
+/// This idl file describes the life cycle service.
 module CosLifeCycle
 {
-  // = TITLE
-  //     CosLifeCycle
-  //
-  // = DESCRIPTION
-  //     This idl file describes the life cycle service.
-  //     The purpose of the life cycle service is to
-
   typedef CosNaming::Name Key;
   typedef Object _Factory;
   typedef sequence <_Factory> Factories;
@@ -69,11 +65,6 @@ module CosLifeCycle
 
   interface FactoryFinder
     {
-      // = TITLE
-      //   @@ Please fill in.
-      // = DESCRIPTION
-      //   @@ Please fill in.
-
       Factories find_factories (in Key factory_key)
         raises (NoFactory);
     };
@@ -98,17 +89,6 @@ module CosLifeCycle
         raises (NoFactory, InvalidCriteria, CannotMeetCriteria);
     };
 };
-
-// Criteria, page 6-17:
-/*
-typedef struct NVP
-{
-  CosNaming::Istring name;
-  any value;
-} NameValuePair;
-
-typedef sequence <NameValuePair> Criteria;
-*/
 
 #endif /* TAO_LIFECYCLE_IDL */
 
