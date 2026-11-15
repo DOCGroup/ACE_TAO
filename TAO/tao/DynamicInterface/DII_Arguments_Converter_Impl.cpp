@@ -61,8 +61,7 @@ TAO_DII_Arguments_Converter_Impl::convert_request (
         }
     }
 
-  TAO_Operation_Details* details
-    = const_cast <TAO_Operation_Details*> (server_request.operation_details ());
+  TAO_Operation_Details * const details = server_request.operation_details ();
 
   // The NVList_Argument in operation details is converted to skel
   // args, the invocation of the dii collocation requests should use

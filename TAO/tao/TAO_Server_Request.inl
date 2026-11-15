@@ -214,6 +214,12 @@ TAO_ServerRequest::is_dsi ()
   this->is_dsi_ = true;
 }
 
+ACE_INLINE TAO_Operation_Details *
+TAO_ServerRequest::operation_details ()
+{
+  return this->operation_details_;
+}
+
 ACE_INLINE TAO_Operation_Details const *
 TAO_ServerRequest::operation_details () const
 {

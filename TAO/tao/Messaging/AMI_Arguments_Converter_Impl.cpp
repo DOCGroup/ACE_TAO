@@ -35,8 +35,7 @@ TAO_AMI_Arguments_Converter_Impl::convert_request (
         }
     }
 
-  TAO_Operation_Details* details
-    = const_cast <TAO_Operation_Details*> (server_request.operation_details ());
+  TAO_Operation_Details * const details = server_request.operation_details ();
 
   details->use_stub_args (false);
 }

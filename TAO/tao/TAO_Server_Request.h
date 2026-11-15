@@ -120,7 +120,7 @@ public:
 
   /// Constructor used by thru-POA collocated invocation path.
   TAO_ServerRequest (TAO_ORB_Core * orb_core,
-                     TAO_Operation_Details const & details,
+                     TAO_Operation_Details & details,
                      CORBA::Object_ptr target);
 
   ~TAO_ServerRequest ();
@@ -246,6 +246,7 @@ public:
   void dsi_nvlist_align (ptrdiff_t alignment);
 
   /// Get the operation details for the current request.
+  TAO_Operation_Details * operation_details ();
   TAO_Operation_Details const * operation_details () const;
 
   /// Set the argument_flag
@@ -364,7 +365,7 @@ private:
   /// Used to pad CDR stream if we have used DSI.
   ptrdiff_t dsi_nvlist_align_ {};
 
-  TAO_Operation_Details const * operation_details_ {};
+  TAO_Operation_Details * operation_details_ {};
 
   /**
    * An argument flag to indicate whether there is any data that is
