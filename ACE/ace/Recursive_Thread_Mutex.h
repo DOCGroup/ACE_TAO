@@ -164,7 +164,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  // = This method should *not* be public (they hold no locks...)
+  /// Internal helper; this operation does not hold the mutex locks.
   void set_thread_id (ACE_thread_t t);
 
   /// Recursive mutex.

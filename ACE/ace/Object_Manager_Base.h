@@ -186,11 +186,8 @@ public:
 #endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
 
 public:
-  // = Applications shouldn't use these so they're hidden here.
-
-  // They're public so that the ACE_Object_Manager can be
-  // constructed/destructed in <main> with
-  // <ACE_HAS_NONSTATIC_OBJECT_MANAGER>.
+  /// These remain public so ACE_Object_Manager can be constructed and
+  /// destroyed in @c main when @c ACE_HAS_NONSTATIC_OBJECT_MANAGER is enabled.
   ACE_OS_Object_Manager ();
 
   ~ACE_OS_Object_Manager () override;

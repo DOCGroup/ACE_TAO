@@ -111,7 +111,8 @@ public:
    */
   int remove () const;
 
-  // = Semaphore acquire and release methods.
+  /// @name Semaphore acquire and release
+  /// @{
   /**
    * Wait until a ACE_SV_Semaphore's value is greater than 0, the
    * decrement it by 1 and return. Dijkstra's P operation, Tannenbaums
@@ -137,18 +138,23 @@ public:
   /// Increment ACE_SV_Semaphore by one. Dijkstra's V operation,
   /// Tannenbaums UP operation.
   int release (u_short n = 0, short flags = 0) const;
+  /// @}
 
-  // = Semaphore operation methods.
+  /// @name Semaphore operations
+  /// @{
   /// General ACE_SV_Semaphore operation. Increment or decrement by a
   /// specific amount (positive or negative; amount can`t be zero).
   int op (short val, u_short semnum = 0, short flags = SEM_UNDO) const;
 
   /// General ACE_SV_Semaphore operation on an array of SV_Semaphores.
   int op (sembuf op_vec[], u_short nsems) const;
+  /// @}
 
-  // = Semaphore control methods.
+  /// @name Semaphore control
+  /// @{
   int control (int cmd, semun arg, u_short n = 0) const;
   int control (int cmd, int value = 0, u_short n = 0) const;
+  /// @}
 
   /// Get underlying internal id.
   int get_id () const;
