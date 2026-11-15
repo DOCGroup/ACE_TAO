@@ -28,6 +28,8 @@
 #include "ace/INet/FTP_IOStream.h"
 #include "ace/INet/Sock_IOStream.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE

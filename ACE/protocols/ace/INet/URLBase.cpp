@@ -9,6 +9,7 @@
 
 #include "ace/INet/ClientRequestHandler.h"
 #include <istream>
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -44,8 +45,8 @@ namespace ACE
     std::istream* URLStream::operator -> ()
       {
         return this->request_handler_ ?
-          &this->request_handler_->response_stream () :
-          &ACE::IOS::Null::in_stream_;
+          std::addressof (this->request_handler_->response_stream ()) :
+          std::addressof (ACE::IOS::Null::in_stream_);
       }
 
     URLStream::URLStream (ClientRequestHandler& rh)

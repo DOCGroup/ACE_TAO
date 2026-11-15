@@ -9,7 +9,7 @@ namespace ACE
     ACE_INLINE
     StreamBuffer* IOS::rdbuf ()
       {
-        return &this->streambuf_;
+        return std::addressof (this->streambuf_);
       }
 
     ACE_INLINE

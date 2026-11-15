@@ -6,6 +6,7 @@
 #endif
 
 #include "ace/Truncate.h"
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -55,7 +56,7 @@ namespace ACE
     IOS::IOS (std::iostream * stream)
       : streambuf_ (stream)
       {
-        ace_ios_init (&this->streambuf_);
+        ace_ios_init (std::addressof (this->streambuf_));
       }
 
     IOS::~IOS ()
@@ -77,14 +78,14 @@ namespace ACE
       }
 
     OStream::OStream(std::iostream * stream)
-      : IOS (stream), std::ostream (&streambuf_)
+      : IOS (stream), std::ostream (std::addressof (streambuf_))
       {
       }
 
     OStream::~OStream() = default;
 
     IStream::IStream(std::iostream * stream)
-      : IOS (stream), std::istream (&streambuf_)
+      : IOS (stream), std::istream (std::addressof (streambuf_))
       {
       }
 

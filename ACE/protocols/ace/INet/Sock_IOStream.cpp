@@ -3,6 +3,7 @@
 
 #include "ace/INet/Sock_IOStream.h"
 #include "ace/INet/IOS_util.h"
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -26,7 +27,7 @@ namespace ACE
     Sock_IOSBase<ACE_SYNCH_USE>::Sock_IOSBase (stream_type* stream)
       : streambuf_ (stream)
       {
-        ace_ios_init (&this->streambuf_);
+        ace_ios_init (std::addressof (this->streambuf_));
       }
 
     template <ACE_SYNCH_DECL>
@@ -45,7 +46,7 @@ namespace ACE
     typename Sock_IOSBase<ACE_SYNCH_USE>::buffer_type*
     Sock_IOSBase<ACE_SYNCH_USE>::rdbuf ()
       {
-        return &this->streambuf_;
+        return std::addressof (this->streambuf_);
       }
 
     template <ACE_SYNCH_DECL>

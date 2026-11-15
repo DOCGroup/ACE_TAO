@@ -6,6 +6,7 @@
 #endif
 
 #include "ace/Truncate.h"
+#include <memory>
 #include <utility>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -66,7 +67,7 @@ namespace ACE
               std::unique_ptr<StreamBuffer::policy_type> policy)
       : streambuf_ (stream, std::move (policy))
       {
-        ace_ios_init (&this->streambuf_);
+        ace_ios_init (std::addressof (this->streambuf_));
       }
 
     IOS::~IOS ()
@@ -82,7 +83,7 @@ namespace ACE
 
     OStream::OStream (std::iostream& stream,
                       std::unique_ptr<StreamBuffer::policy_type> policy)
-      : IOS (stream, std::move (policy)), std::ostream (&streambuf_)
+      : IOS (stream, std::move (policy)), std::ostream (std::addressof (streambuf_))
       {
       }
 
@@ -90,7 +91,7 @@ namespace ACE
 
     IStream::IStream (std::iostream& stream,
                       std::unique_ptr<StreamBuffer::policy_type> policy)
-      : IOS (stream, std::move (policy)), std::istream (&streambuf_)
+      : IOS (stream, std::move (policy)), std::istream (std::addressof (streambuf_))
       {
       }
 

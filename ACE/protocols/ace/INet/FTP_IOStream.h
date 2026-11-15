@@ -17,8 +17,9 @@
 
 #include "ace/INet/INet_Export.h"
 #include "ace/INet/BufferedStreamBuffer.h"
-#include <ostream>
 #include <istream>
+#include <memory>
+#include <ostream>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

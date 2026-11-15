@@ -6,6 +6,7 @@
 #include "ace/Truncate.h"
 
 #include <cstring>
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -123,14 +124,14 @@ namespace ACE
     String_IOSBase<ACE_CHAR_T, TR>::String_IOSBase (openmode mode)
       : streambuf_ (mode)
       {
-        ace_ios_init (&this->streambuf_);
+        ace_ios_init (std::addressof (this->streambuf_));
       }
 
     template <class ACE_CHAR_T, class TR>
     String_IOSBase<ACE_CHAR_T, TR>::String_IOSBase (string_type& string, openmode mode)
       : streambuf_ (string, mode)
       {
-        ace_ios_init (&this->streambuf_);
+        ace_ios_init (std::addressof (this->streambuf_));
       }
 
     template <class ACE_CHAR_T, class TR>
@@ -143,7 +144,7 @@ namespace ACE
     typename String_IOSBase<ACE_CHAR_T, TR>::buffer_type*
     String_IOSBase<ACE_CHAR_T, TR>::rdbuf ()
       {
-        return &this->streambuf_;
+        return std::addressof (this->streambuf_);
       }
 
     template <class ACE_CHAR_T, class TR>
