@@ -43,7 +43,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   std::strcpy (buf, "hello");
   size = ACE_Utils::truncate_cast<int> (std::strlen (buf) + 1);
 
-  for (i = 0; i < iterations; i++)
+  for (i = 0; i < iterations; ++i)
     if (cli_stream.send (buf, size) != size)
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("%p\n"),

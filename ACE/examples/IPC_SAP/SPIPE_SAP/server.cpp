@@ -21,7 +21,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   struct pollfd poll_array[MAX_HANDLES];
   ACE_HANDLE handle;
 
-  for (handle = 0; handle < MAX_HANDLES; handle++)
+  for (handle = 0; handle < MAX_HANDLES; ++handle)
     {
       poll_array[handle].fd = -1;
       poll_array[handle].events = POLLIN;
@@ -49,7 +49,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Handle pending logging messages first (s_handle + 1 is
       // guaranteed to be lowest client descriptor).
 
-      for (handle = s_handle + 1; handle < width; handle++)
+      for (handle = s_handle + 1; handle < width; ++handle)
         if (ACE_BIT_ENABLED (poll_array[handle].revents, POLLIN)
             || ACE_BIT_ENABLED (poll_array[handle].revents, POLLHUP))
           {

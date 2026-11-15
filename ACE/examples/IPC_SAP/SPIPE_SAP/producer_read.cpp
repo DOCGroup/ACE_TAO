@@ -29,10 +29,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (con.connect (cli_stream, ACE_SPIPE_Addr (rendezvous)) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", rendezvous), -1);
 
-  for (i = 0; i < size; i++)
+  for (i = 0; i < size; ++i)
     buf[i] = 'a';
 
-  for (i = 0; i < iterations; i++)
+  for (i = 0; i < iterations; ++i)
     if (cli_stream.send (buf.get (), size) != size)
       ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "putmsg"), -1);
 
