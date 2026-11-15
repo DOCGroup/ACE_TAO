@@ -14,6 +14,7 @@
 #include "ace/SSL/SSL_SOCK_Connector.h"
 #include "ace/String_Base.h"
 #include <istream>
+#include <memory>
 #include <ostream>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -82,7 +83,7 @@ namespace ACE
             proxy_connection_type proxy_connection(sync_opt);
             proxy_connector_type proxy_connector;
 
-            proxy_connection_type* proxy_connection_ptr = &proxy_connection;
+            proxy_connection_type* proxy_connection_ptr = std::addressof (proxy_connection);
             if (proxy_connector.connect (proxy_connection_ptr,
                                          ACE_INET_Addr (this->port_,
                                                         this->host_.c_str ()),
@@ -95,7 +96,7 @@ namespace ACE
                 return false;
               }
 
-            proxy_stream_type proxy_stream (&proxy_connection);
+            proxy_stream_type proxy_stream (std::addressof (proxy_connection));
             ACE::IOS::CString_OStream target_address;
             target_address << this->proxy_target_host_ << ':' << this->proxy_target_port_;
             ACE::HTTP::Request connect_request (ACE::HTTP::Request::HTTP_CONNECT,
@@ -136,7 +137,7 @@ namespace ACE
             ACE_Time_Value conn_timeout (this->http_timeout_);
             if (proxy_ssl_connector.connect (new_connection->peer (),
                                              proxy_conn_handle,
-                                             &conn_timeout) != 0)
+                                             std::addressof (conn_timeout)) != 0)
               {
                 INET_ERROR (1, (LM_ERROR, DLINFO
                                 ACE_TEXT ("ACE_HTTPS_Session::connect_i - ")

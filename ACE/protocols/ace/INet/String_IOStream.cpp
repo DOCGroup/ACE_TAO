@@ -17,7 +17,7 @@ namespace ACE
     template <class ACE_CHAR_T, class TR>
     String_StreamBufferBase<ACE_CHAR_T, TR>::String_StreamBufferBase (openmode mode)
       : BasicBufferedStreamBuffer<ACE_CHAR_T, TR> (BUFFER_SIZE, mode),
-        string_ref_ (&string_),
+        string_ref_ (std::addressof (string_)),
         rd_ptr_ (0)
       {
       }
@@ -25,7 +25,7 @@ namespace ACE
     template <class ACE_CHAR_T, class TR>
     String_StreamBufferBase<ACE_CHAR_T, TR>::String_StreamBufferBase (string_type& string, openmode mode)
       : BasicBufferedStreamBuffer<ACE_CHAR_T, TR> (BUFFER_SIZE, mode),
-        string_ref_ (&string),
+        string_ref_ (std::addressof (string)),
         rd_ptr_ (0)
       {
       }

@@ -8,8 +8,8 @@
 #include "ace/OS_NS_errno.h"
 #include "ace/Countdown_Time.h"
 #include "ace/Truncate.h"
-
 #include <cstring>
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -87,7 +87,7 @@ namespace ACE
         recv_cnt = this->peer ().recv_n (buffer,
                                          rdlen <= sizeof(buffer) ? rdlen : sizeof(buffer),
                                          timeout,
-                                         &bytes_in);
+                                         std::addressof (bytes_in));
 
         if (bytes_in > 0)
           {
@@ -149,7 +149,7 @@ namespace ACE
           {
             ACE_Message_Block_Unique_Ptr mb (raw_mb);
             ssize_t send_cnt =
-              this->peer ().send_n (mb->rd_ptr (), mb->length (), timeout, &bytes_out);
+              this->peer ().send_n (mb->rd_ptr (), mb->length (), timeout, std::addressof (bytes_out));
             if (bytes_out > 0)
               {
                 INET_HEX_DUMP (11, (LM_DEBUG, mb->rd_ptr (), bytes_out, DLINFO
@@ -218,7 +218,7 @@ namespace ACE
                   {
                     // Run the event loop.
                     result = this->reactor ()->handle_events (this->use_timeout () ?
-                                                                  &max_wait_time : nullptr);
+                                                                  std::addressof (max_wait_time) : nullptr);
                   }
 
                 if (result != -1)
@@ -227,7 +227,7 @@ namespace ACE
                                                   char_length,
                                                   char_size,
                                                   this->use_timeout () ?
-                                                        &max_wait_time : nullptr);
+                                                        std::addressof (max_wait_time) : nullptr);
                   }
 
                 if (result == -1)
@@ -282,7 +282,7 @@ namespace ACE
                                               char_length,
                                               char_size,
                                               this->use_timeout () ?
-                                                        &max_wait_time : nullptr);
+                                                        std::addressof (max_wait_time) : nullptr);
 
                 if (result == -1)
                   return result;
@@ -308,7 +308,7 @@ namespace ACE
                     // nothing has been read the first time round
                     // now start blocking read 1 char_size data at a time
                     rdlen = char_size;
-                    to = this->use_timeout () ? &max_wait_time : nullptr;
+                    to = this->use_timeout () ? std::addressof (max_wait_time) : nullptr;
                   }
               }
           }
@@ -459,7 +459,7 @@ namespace ACE
         // set notification strategy if reactive
         NotificationStrategyGuard ns_guard__(*this,
                                              use_reactor ?
-                                                &this->notification_strategy_ : nullptr);
+                                                std::addressof (this->notification_strategy_) : nullptr);
 
         size_t datasz = length * char_size;
         ACE_Message_Block *raw_mb {};
@@ -494,7 +494,7 @@ namespace ACE
               {
                 // Run the event loop.
                 result = this->reactor ()->handle_events (this->use_timeout () ?
-                                                              &max_wait_time : nullptr);
+                                                              std::addressof (max_wait_time) : nullptr);
 
                 if (result == -1)
                   {
@@ -537,7 +537,7 @@ namespace ACE
             while (this->connected_)
               {
                 result = this->handle_output_i (this->use_timeout () ?
-                                                    &max_wait_time : nullptr);
+                                                    std::addressof (max_wait_time) : nullptr);
 
                 // If we got our message out, no need to run the event loop any
                 // further.

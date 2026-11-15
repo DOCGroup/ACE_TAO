@@ -12,6 +12,7 @@
 #include "ace/INET_Addr.h"
 #include "ace/String_Base.h"
 #include <istream>
+#include <memory>
 #include <ostream>
 #include <utility>
 
@@ -26,7 +27,7 @@ namespace ACE
         http_timeout_ (DEFAULT_TIMEOUT),
         keep_alive_timeout_ (DEFAULT_KEEP_ALIVE_TIMEOUT),
         reconnect_timer_ (DEFAULT_KEEP_ALIVE_TIMEOUT),
-        reconnect_countdown_ (&reconnect_timer_),
+        reconnect_countdown_ (std::addressof (reconnect_timer_)),
         keep_alive_ (keep_alive)
       {
         INET_TRACE ("ACE_HTTP_SessionBase - ctor");
@@ -40,7 +41,7 @@ namespace ACE
         http_timeout_ (timeout),
         keep_alive_timeout_ (DEFAULT_KEEP_ALIVE_TIMEOUT),
         reconnect_timer_ (DEFAULT_KEEP_ALIVE_TIMEOUT),
-        reconnect_countdown_ (&reconnect_timer_),
+        reconnect_countdown_ (std::addressof (reconnect_timer_)),
         keep_alive_ (keep_alive)
       {
         INET_TRACE ("ACE_HTTP_SessionBase - ctor");

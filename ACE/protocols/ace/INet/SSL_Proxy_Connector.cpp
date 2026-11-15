@@ -6,7 +6,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/Countdown_Time.h"
 #include "ace/Truncate.h"
-
+#include <memory>
 #include <openssl/err.h>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -64,7 +64,7 @@ namespace ACE
           t = *timeout;   // Need a non-const copy.
 
         // Take into account the time between each select() call below.
-        ACE_Countdown_Time countdown ((timeout == nullptr ? nullptr : &t));
+        ACE_Countdown_Time countdown ((timeout == nullptr ? nullptr : std::addressof (t)));
 
         int status;
 
@@ -153,10 +153,10 @@ namespace ACE
                 select_width = handle + 1;
 #endif /* ACE_WIN32 */
                 status = ACE::select (select_width,
-                                      &rd_handle,
-                                      &wr_handle,
+                                      std::addressof (rd_handle),
+                                      std::addressof (wr_handle),
                                       nullptr,
-                                      (timeout == nullptr ? nullptr : &t));
+                                      (timeout == nullptr ? nullptr : std::addressof (t)));
 
                 (void) countdown.update ();
 
