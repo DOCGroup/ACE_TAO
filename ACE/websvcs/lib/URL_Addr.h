@@ -212,12 +212,14 @@ public:
    */
   ACE_URL_Addr* create_relative_address (const ACE_TCHAR *url) const;
 
-  // = The ACE_URL methods, see the documentation above.
-  virtual int string_to_addr (const ACE_TCHAR *address) override;
-  virtual int addr_to_string (ACE_TCHAR *s,
-                              size_t size,
-                              int flags = 0) const override;
-  virtual int accept (ACE_URL_Addr_Visitor* visitor) override;
+  /// @name Address conversion and visitor methods
+  /// @{
+  int string_to_addr (const ACE_TCHAR *address) override;
+  int addr_to_string (ACE_TCHAR *s,
+                      size_t size,
+                      int flags = 0) const override;
+  int accept (ACE_URL_Addr_Visitor* visitor) override;
+  /// @}
 
 private:
   /// Compute the size required to store the URL in a string
@@ -297,12 +299,14 @@ public:
   /// obtain the host and the port.
   ACE_INET_Addr get_inet_address () const;
 
-  // = The ACE_Addr methods, see the documentation above.
-  virtual int string_to_addr (const ACE_TCHAR *address) override;
-  virtual int addr_to_string (ACE_TCHAR *s,
-                              size_t size,
-                              int flags = 0) const override;
-  virtual int accept (ACE_URL_Addr_Visitor* visitor) override;
+  /// @name Address conversion and visitor methods
+  /// @{
+  int string_to_addr (const ACE_TCHAR *address) override;
+  int addr_to_string (ACE_TCHAR *s,
+                      size_t size,
+                      int flags = 0) const override;
+  int accept (ACE_URL_Addr_Visitor* visitor) override;
+  /// @}
 
 private:
   /// Compute the size required to store the URL in a string
@@ -372,12 +376,14 @@ public:
   // over them would be a good idea. Similarly a method to *add*
   // headers would be nice also.
 
-  // = The ACE_URL methods, see the documentation above.
-  virtual int string_to_addr (const ACE_TCHAR *address) override;
-  virtual int addr_to_string (ACE_TCHAR *s,
-                              size_t size,
-                              int flags = 0) const override;
-  virtual int accept (ACE_URL_Addr_Visitor* visitor) override;
+  /// @name Address conversion and visitor methods
+  /// @{
+  int string_to_addr (const ACE_TCHAR *address) override;
+  int addr_to_string (ACE_TCHAR *s,
+                      size_t size,
+                      int flags = 0) const override;
+  int accept (ACE_URL_Addr_Visitor* visitor) override;
+  /// @}
 
 private:
   /// Compute the size required to store the URL in a string
