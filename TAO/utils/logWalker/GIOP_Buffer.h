@@ -8,6 +8,8 @@
 #include "ace/SString.h"
 #include "ace/CDR_Stream.h"
 
+#include <memory>
+
 class Invocation;
 class Thread;
 
@@ -87,7 +89,8 @@ private:
   bool parse_svc_contexts ();
   bool parse_header ();
 
-  ACE_InputCDR *cdr_;
+  std::unique_ptr<char[]> octets_;
+  std::unique_ptr<ACE_InputCDR> cdr_;
   ACE_CString preamble_;
   size_t log_offset_;
   Thread *thr_;
@@ -96,11 +99,11 @@ private:
   size_t expected_size_;
   char   expected_type_;
   size_t buffer_size_;
-  char * wr_pos_;
-  char * octets_;
+  char * wr_pos_; // Non-owning cursor into octets_.
   Invocation *owner_;
   bool buffer_lost_;
   bool sending_;
+  // Non-owning pointers into octets_ / cdr_.
   char * oid_;
   size_t oid_len_;
   char * opname_;

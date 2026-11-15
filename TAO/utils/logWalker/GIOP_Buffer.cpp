@@ -3,6 +3,7 @@
 
 #include <cstdlib>
 #include <cstring>
+#include <utility>
 
 static const char *size_leadin_1_5 = "GIOP v1."; //"x msg, ";
 static size_t leadin_len_1_5 = 15;
@@ -106,7 +107,8 @@ struct ReplyHeader_1_0 { // Renamed from ReplyHeader
 // 12 = req_id + flags + RESVD + addr disp.
 
 GIOP_Buffer::GIOP_Buffer()
-  : cdr_ (nullptr),
+  : octets_ {},
+    cdr_ {},
     preamble_(),
     log_offset_(0),
     thr_ (nullptr),
@@ -116,7 +118,6 @@ GIOP_Buffer::GIOP_Buffer()
     expected_type_(0),
     buffer_size_(0),
     wr_pos_ (nullptr),
-    octets_ (nullptr),
     owner_ (nullptr),
     buffer_lost_ (false),
     sending_(false),
@@ -139,7 +140,8 @@ GIOP_Buffer::GIOP_Buffer(const char *text,
                          size_t offset,
                          Thread *thread,
                          Invocation *owner)
-  : cdr_ (nullptr),
+  : octets_ {},
+    cdr_ {},
     preamble_(text),
     log_offset_(offset),
     thr_(thread),
@@ -149,7 +151,6 @@ GIOP_Buffer::GIOP_Buffer(const char *text,
     expected_type_(0),
     buffer_size_(0),
     wr_pos_ (nullptr),
-    octets_ (nullptr),
     owner_ (owner),
     buffer_lost_ (false),
     sending_(false),
@@ -205,19 +206,13 @@ GIOP_Buffer::init_buf (const char *text, size_t offset)
       size_str += 14;
       this->buffer_size_ = std::strtol (size_str, nullptr, 10);
     }
-  if (this->octets_ != nullptr)
-    {
-      delete [] this->octets_;
-    }
-  this->octets_ = new char [this->buffer_size_];
-  std::memset (this->octets_, 0, this->buffer_size_);
-  this->wr_pos_ = this->octets_;
+  this->cdr_.reset ();
+  this->octets_.reset (new char [this->buffer_size_]);
+  std::memset (this->octets_.get (), 0, this->buffer_size_);
+  this->wr_pos_ = this->octets_.get ();
 }
 
-GIOP_Buffer::~GIOP_Buffer()
-{
-  delete [] this->octets_;
-}
+GIOP_Buffer::~GIOP_Buffer() = default;
 
 int
 GIOP_Buffer::add_octets (const char *text, size_t offset)
@@ -261,11 +256,10 @@ GIOP_Buffer::add_octets (const char *text, size_t offset)
       char vmaj = this->octets_[4];
       char order = this->octets_[6];
 
-      delete this->cdr_;
-      this->cdr_ = new ACE_InputCDR (this->octets_,
-                                     this->cur_size(),
-                                     order, vmaj, this->ver_minor_);
-      this->cdr_->skip_bytes (this->payload_start_ - this->octets_);
+      this->cdr_ = std::make_unique<ACE_InputCDR> (this->octets_.get (),
+                                                   this->cur_size(),
+                                                   order, vmaj, this->ver_minor_);
+      this->cdr_->skip_bytes (this->payload_start_ - this->octets_.get ());
       rtn = -1;
     }
   return rtn;
@@ -408,7 +402,7 @@ GIOP_Buffer::actual_req_id ()
 size_t
 GIOP_Buffer::cur_size () const
 {
-  return this->wr_pos_ - this->octets_;
+  return this->wr_pos_ - this->octets_.get ();
 }
 
 bool
@@ -459,10 +453,9 @@ GIOP_Buffer::parse_header ()
     {
       return false;
     }
-  delete this->cdr_;
-  this->cdr_ = new ACE_InputCDR (this->octets_,
-                                 this->cur_size(),
-                                 order, vmaj, this->ver_minor_);
+  this->cdr_ = std::make_unique<ACE_InputCDR> (this->octets_.get (),
+                                               this->cur_size(),
+                                               order, vmaj, this->ver_minor_);
   this->cdr_->skip_bytes (8);
   this->payload_start_ = this->cdr_->rd_ptr();
   ACE_CDR::ULong len_ulong;
@@ -621,20 +614,24 @@ GIOP_Buffer::matches (GIOP_Buffer *other) const
 void
 GIOP_Buffer::reset ()
 {
-  this->octets_ = nullptr;
+  this->cdr_.reset ();
+  this->octets_.reset ();
   this->wr_pos_ = nullptr;
   this->buffer_size_ = 0;
   this->payload_size_ = 0;
   this->buffer_lost_ = true;
   this->header_parsed_ = false;
+  this->oid_ = nullptr;
+  this->oid_len_ = 0;
   this->opname_ = nullptr;
+  this->payload_start_ = nullptr;
 }
 
 void
 GIOP_Buffer::transfer_from (GIOP_Buffer *other)
 {
-  delete this->octets_;
-  this->octets_ = other->octets_;
+  this->cdr_.reset ();
+  this->octets_ = std::move (other->octets_);
   this->wr_pos_ = other->wr_pos_;
   this->buffer_size_ = other->buffer_size_;
   this->payload_size_ = other->payload_size_;
@@ -645,17 +642,15 @@ GIOP_Buffer::transfer_from (GIOP_Buffer *other)
 void
 GIOP_Buffer::swap (GIOP_Buffer *other)
 {
-  char *tmp_octets = this->octets_;
   char *tmp_wr_pos = this->wr_pos_;
   size_t tmp_bsize = this->buffer_size_;
   size_t tmp_psize = this->payload_size_;
 
-  this->octets_ = other->octets_;
+  this->octets_.swap (other->octets_);
   this->wr_pos_ = other->wr_pos_;
   this->buffer_size_ = other->buffer_size_;
   this->payload_size_ = other->payload_size_;
 
-  other->octets_ = tmp_octets;
   other->wr_pos_ = tmp_wr_pos;
   other->buffer_size_ = tmp_bsize;
   other->payload_size_= tmp_psize;
