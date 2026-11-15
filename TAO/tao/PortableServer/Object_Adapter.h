@@ -259,6 +259,7 @@ public:
       TAO_Root_POA *,
       TAO_Preserve_Original_Key_Adapter>;
 
+    /// Non-owning POA lookup index; the POA hierarchy retains the references.
     persistent_poa_system_map persistent_poa_system_map_;
   };
 
@@ -294,6 +295,8 @@ public:
 protected:
   std::unique_ptr<Hint_Strategy> hint_strategy_;
 
+  /// These maps index POAs without owning them; the POA hierarchy retains
+  /// their references.
   /// Base class of the id map.
   using transient_poa_map = ACE_Map<
     poa_name,
