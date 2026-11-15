@@ -23,7 +23,7 @@ ACE_RLECompressor::compress (void const *in_ptr,
   ACE_UINT64 const src_len {in_len};
   ACE_UINT64 out_index {};
   ACE_UINT64 out_base {};
-  size_t run_count {};
+  ACE_Byte run_count {};
   bool run_code {};
 
   if (in_p != nullptr && out_p != nullptr && in_len != 0)
