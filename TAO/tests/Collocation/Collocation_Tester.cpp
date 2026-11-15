@@ -1,15 +1,8 @@
-//============================================================================
-//
-//  =FILENAME
-//     Collocation_Test.h
-//
-//  =DESCRIPTION
-//     Server class to perform testing of TAO's collocation mechanism.
-//
-//  =AUTHOR
-//     Nanbor Wang
-//
-//=============================================================================
+/**
+ * @file Collocation_Tester.cpp
+ * @brief Server class for testing TAO's collocation mechanism.
+ * @author Nanbor Wang
+ */
 
 #include "Collocation_Tester.h"
 

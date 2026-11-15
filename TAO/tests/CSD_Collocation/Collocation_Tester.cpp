@@ -1,21 +1,10 @@
-//============================================================================
-//
-//  =FILENAME
-//     Collocation_Test.h
-//
-//  =DESCRIPTION
-//     Server class to perform testing of TAO's collocation mechanism.
-//
-//  =AUTHOR
-//     Nanbor Wang
-//
-//=============================================================================
+/**
+ * @file Collocation_Tester.cpp
+ * @brief Server class for testing TAO's collocation mechanism.
+ * @author Nanbor Wang
+ */
 
 #include "Collocation_Tester.h"
-
-Collocation_Test::Collocation_Test ()
-{
-}
 
 void
 Collocation_Test::shutdown ()
@@ -67,9 +56,6 @@ Collocation_Test::init (int argc, ACE_TCHAR *argv[])
   // Activate the diamond servant and its base classes under childPOA.
   PortableServer::ObjectId_var id =
     childPOA->activate_object (&this->top_servant_);
-
-//    // We only care about the most derived class here.
-//    this->diamond_obj_ = this->diamond_servant_._this ();
 
   id =
     childPOA->activate_object (&this->diamond_servant_);
