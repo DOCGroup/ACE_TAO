@@ -36,7 +36,7 @@ peer1 (void *)
     ACE_ERROR ((LM_ERROR,
                 "(%t) peer1 ACE_UPIPE_Connector failed\n"));
 
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block (20),
                   ACE_THR_FUNC_RETURN_NULL);
@@ -112,7 +112,7 @@ peer2 (void *)
     ACE_ERROR ((LM_ERROR,
                 "(%t) ACE_UPIPE_Acceptor.accept failed\n"));
 
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
 
   if (s_stream.recv (mb) == -1)
     ACE_ERROR ((LM_ERROR,

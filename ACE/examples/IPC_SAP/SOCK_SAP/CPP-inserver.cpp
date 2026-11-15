@@ -64,7 +64,7 @@ twoway_server (void *arg)
   size_t total_bytes = 0;
   size_t message_count = 0;
 
-  char *request = nullptr;
+  char *request {};
 
   // Read data from client (terminate on error).
 
@@ -180,7 +180,7 @@ oneway_server (void *arg)
   size_t total_bytes = 0;
   size_t message_count = 0;
 
-  char *request = nullptr;
+  char *request {};
 
   // Read data from client (terminate on error).
 

@@ -47,7 +47,7 @@ supplier (void *)
   // Test asynchronicity (the "acausal principle" ;-)).
   s_stream.enable (ACE_SIGIO);
 
-  ACE_Message_Block *mb_p = nullptr;
+  ACE_Message_Block *mb_p {};
 
   for (int j = 0; j < iterations; ++j)
     {
@@ -125,7 +125,7 @@ consumer (void *)
 
   int received_messages = 0;
 
-  for (ACE_Message_Block *mb = nullptr;
+  for (ACE_Message_Block *mb {};
        c_stream.recv (mb) != -1 && mb->size () != 0;
        mb->release ())
     ++received_messages;
