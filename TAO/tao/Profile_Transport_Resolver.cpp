@@ -30,6 +30,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
+  void
+  Policy_List_Deleter::operator() (CORBA::PolicyList *policies) const
+  {
+    delete policies;
+  }
+
   Profile_Transport_Resolver::Profile_Transport_Resolver (
     CORBA::Object *p,
     TAO_Stub *stub,

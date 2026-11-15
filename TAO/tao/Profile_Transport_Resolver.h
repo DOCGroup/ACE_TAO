@@ -47,6 +47,11 @@ namespace TAO
 {
   class Synch_Twoway_Invocation;
 
+  struct Policy_List_Deleter
+  {
+    void operator() (CORBA::PolicyList *policies) const;
+  };
+
   /**
    * @class Profile_Transport_Resolver
    *
@@ -197,7 +202,7 @@ namespace TAO
      * Policy_ForwardC.h, and that is what we precisely want to
      * avoid.
      */
-    std::unique_ptr<CORBA::PolicyList> inconsistent_policies_ {};
+    std::unique_ptr<CORBA::PolicyList, Policy_List_Deleter> inconsistent_policies_ {};
 
     /// Has the transport been idle?
     mutable bool is_released_;
