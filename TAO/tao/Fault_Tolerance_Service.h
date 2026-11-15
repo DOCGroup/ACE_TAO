@@ -41,10 +41,8 @@ class TAO_ORB_Core;
 class TAO_Export TAO_Fault_Tolerance_Service
 {
 public:
-  /// Ctor
   TAO_Fault_Tolerance_Service () = default;
 
-  /// Dtor
   ~TAO_Fault_Tolerance_Service ();
 
   /// Initialize the internal data structures

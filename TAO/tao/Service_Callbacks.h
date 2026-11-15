@@ -65,7 +65,6 @@ public:
     DONT_KNOW
   };
 
-  /// Dtor
   virtual ~TAO_Service_Callbacks ();
 
   /// Select the profile from MProfile as the needs of the services

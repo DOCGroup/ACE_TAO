@@ -36,9 +36,6 @@ template <class SVC_HANDLER>
 class TAO_Creation_Strategy : public ACE_Creation_Strategy<SVC_HANDLER>
 {
 public:
-  /**
-   * Constructor.
-   */
   explicit TAO_Creation_Strategy (TAO_ORB_Core *orb_core);
 
   /// Create a SVC_HANDLER  and set the ORB_Core pointer on it.

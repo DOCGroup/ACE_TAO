@@ -42,7 +42,6 @@ public:
                             TAO::Profile_Transport_Resolver &r);
 
 private:
-  /// ctor.
   TAO_RT_Endpoint_Utils () = delete;
 };
 
