@@ -89,7 +89,8 @@ public:
   ACE_TkReactor &operator = (ACE_TkReactor const &) = delete;
   ACE_TkReactor &operator = (ACE_TkReactor &&) = delete;
 
-  // = Timer operations.
+  /// @name Timer operations
+  /// @{
   long schedule_timer (ACE_Event_Handler *event_handler,
                        void const *arg,
                        ACE_Time_Value const &delay,
@@ -101,9 +102,12 @@ public:
   int cancel_timer (long timer_id,
                     void const **arg = nullptr,
                     int dont_call_handle_close = 1) override;
+  /// @}
 
 protected:
-  // = Register timers/handles with Tk.
+  /// @name Timer and handle registration
+  /// @{
+
   /// Register a single @a handler.
   int register_handler_i (ACE_HANDLE handle,
                           ACE_Event_Handler *handler,
@@ -133,6 +137,7 @@ protected:
   virtual int TkWaitForMultipleEvents (int,
                                       ACE_Select_Reactor_Handle_Set &,
                                       ACE_Time_Value *);
+  /// @}
 
   ACE_TkReactorID *ids_ {}; // Head of the manually managed linked list.
   Tk_TimerToken timeout_ {};
@@ -142,9 +147,11 @@ private:
   /// the Reactor's Timer_Queue.
   void reset_timeout ();
 
-  // = Integrate with the X callback function mechanism.
+  /// @name Tk callbacks
+  /// @{
   static void TimerCallbackProc (ClientData cd);
   static void InputCallbackProc (ClientData cd, int mask);
+  /// @}
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

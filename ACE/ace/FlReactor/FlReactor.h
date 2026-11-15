@@ -53,7 +53,8 @@ public:
   ACE_FlReactor &operator = (ACE_FlReactor const &) = delete;
   ACE_FlReactor &operator = (ACE_FlReactor &&) = delete;
 
-  // = Timer operations.
+  /// @name Timer operations
+  /// @{
   long schedule_timer (ACE_Event_Handler *event_handler,
                        void const *arg,
                        ACE_Time_Value const &delay,
@@ -65,9 +66,12 @@ public:
   int cancel_timer (long timer_id,
                     void const **arg = nullptr,
                     int dont_call_handle_close = 1) override;
+  /// @}
 
 protected:
-  // = Register timers/handles with Fl.
+  /// @name Timer and handle registration
+  /// @{
+
   /// Register a single @a handler.
   int register_handler_i (ACE_HANDLE handle,
                           ACE_Event_Handler *handler,
@@ -89,15 +93,18 @@ protected:
   /// Wait for events to occur.
   int wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &,
                                 ACE_Time_Value *) override;
+  /// @}
 
 private:
   /// This method ensures there's an Fl timeout for the first timeout
   /// in the Reactor's Timer_Queue.
   void reset_timeout ();
 
-  // = Integrate with the FL callback function mechanism.
+  /// @name FL callbacks
+  /// @{
   static void fl_io_proc (int fd, void*);
   static void fl_timeout_proc (void*);
+  /// @}
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

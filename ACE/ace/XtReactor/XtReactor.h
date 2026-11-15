@@ -75,7 +75,8 @@ public:
   XtAppContext context () const;
   void context (XtAppContext);
 
-  // = Timer operations.
+  /// @name Timer operations
+  /// @{
   long schedule_timer (ACE_Event_Handler *event_handler,
                        void const *arg,
                        ACE_Time_Value const &delay,
@@ -88,9 +89,12 @@ public:
   int cancel_timer (long timer_id,
                     void const **arg = nullptr,
                     int dont_call_handle_close = 1) override;
+  /// @}
 
 protected:
-  // = Register timers/handles with Xt.
+  /// @name Timer and handle registration
+  /// @{
+
   /// Register a single @a handler.
   int register_handler_i (ACE_HANDLE handle,
                           ACE_Event_Handler *handler,
@@ -129,6 +133,7 @@ protected:
   virtual int XtWaitForMultipleEvents (int,
                                       ACE_Select_Reactor_Handle_Set &,
                                       ACE_Time_Value *);
+  /// @}
 
   XtAppContext context_ {}; // Borrowed from the X toolkit application.
   ACE_XtReactorID *ids_ {}; // Head of the manually managed linked list.
@@ -139,11 +144,13 @@ private:
   /// in the Reactor's Timer_Queue.
   void reset_timeout ();
 
-  // = Integrate with the X callback function mechanism.
+  /// @name Xt callbacks
+  /// @{
   static void TimerCallbackProc (XtPointer closure, XtIntervalId *id);
   static void InputCallbackProc (XtPointer closure,
                                  int *source,
                                  XtInputId *id);
+  /// @}
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
