@@ -64,7 +64,6 @@ template class ACE_Svc_Export ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 class ACE_Svc_Export ACE_TS_Clerk_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
 public:
-  /// Default constructor.
   ACE_TS_Clerk_Handler (ACE_TS_Clerk_Processor *processor = nullptr,
                         ACE_INET_Addr &addr = (ACE_INET_Addr &) ACE_Addr::sap_any);
 
@@ -187,7 +186,6 @@ private:
 class ACE_TS_Clerk_Processor : public ACE_Connector <ACE_TS_Clerk_Handler, ACE_SOCK_CONNECTOR>
 {
 public:
-  /// Default constructor
   ACE_TS_Clerk_Processor ();
 
   /// Query servers for time periodically (timeout value)

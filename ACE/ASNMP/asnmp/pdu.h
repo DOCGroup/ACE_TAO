@@ -198,7 +198,6 @@ private:
 class ASNMP_Export VbIter
 {
 public:
-  /// default constructor
   explicit VbIter (Pdu &pdu);
   VbIter (VbIter const &) = delete;
   VbIter &operator= (VbIter const &) = delete;

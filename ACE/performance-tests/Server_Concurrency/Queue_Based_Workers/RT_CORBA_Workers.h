@@ -56,7 +56,6 @@ public:
     MB_STOP_FLAG = 0x2000
   };
 
-  /// Ctor
   Synchronisers ();
 
   int  start_synchronization ();
@@ -86,7 +85,6 @@ private:
 class Input_Task : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  /// Ctor
   Input_Task (Message_Queue *mq,
               Synchronisers &synch);
 
@@ -114,7 +112,6 @@ private:
 class Output_Task : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  /// Ctor
   Output_Task (Message_Queue *mq,
               Synchronisers &synch);
 
@@ -145,7 +142,6 @@ private:
 class Worker_Task : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  /// Ctor
   Worker_Task (Message_Queue *mq,
                Synchronisers &synch);
 

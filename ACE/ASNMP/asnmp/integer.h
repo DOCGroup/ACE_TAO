@@ -45,7 +45,6 @@ constexpr size_t INTOUTBUF = 3 * sizeof (long) + 2;
 class ASNMP_Export SnmpUInt32 : public SnmpSyntax
 {
 public:
-  /// default constructor
   explicit SnmpUInt32 (unsigned long const i = 0);
 
   SnmpUInt32 (SnmpUInt32 const &c);

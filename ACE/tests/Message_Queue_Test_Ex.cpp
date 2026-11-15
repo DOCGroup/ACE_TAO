@@ -77,7 +77,6 @@ struct Queue_Wrapper
   /// Pointer to messages blocks for sender to send to reciever.
   User_Class **send_block_ {};
 
-  /// Default constructor.
   Queue_Wrapper () = default;
 };
 

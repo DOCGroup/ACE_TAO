@@ -46,7 +46,6 @@
 class ASNMP_Export Counter64 : public  SnmpSyntax
 {
 public:
-  /// default constructor
   explicit Counter64 (ACE_UINT64 llw = 0);
 
   /// constructor with values

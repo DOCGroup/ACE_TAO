@@ -117,7 +117,6 @@ public:
                       LOG_MSGS_RCVD = 2,
                       PRINT_MSGS_RCVD = 4};
 
-  /// Default constructor.
   explicit Text_Output_Device_Wrapper (int logging = 0);
 
   Text_Output_Device_Wrapper (Text_Output_Device_Wrapper const &) = delete;

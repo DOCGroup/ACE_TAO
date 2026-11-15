@@ -32,7 +32,6 @@
 class Test_Aio
 {
 public:
-  /// Default constructor.
   Test_Aio ();
 
   /// Initting the output file and the buffer.

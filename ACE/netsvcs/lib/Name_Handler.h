@@ -56,7 +56,6 @@ public:
   /// Pointer to a member function of ACE_Name_Handler returning ACE_Name_Request
   using REQUEST = ACE_Name_Request (ACE_Name_Handler::*) (ACE_NS_WString *);
 
-  /// Default constructor.
   ACE_Name_Handler (ACE_Thread_Manager * = nullptr);
 
   /// Activate this instance of the <ACE_Name_Handler> (called by the

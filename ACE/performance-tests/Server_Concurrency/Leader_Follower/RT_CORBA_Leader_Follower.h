@@ -44,7 +44,6 @@ class Synchronisers
 public:
   friend class Leader_Follower_Task;
 
-  /// Ctor
   Synchronisers ();
 
   int  start_synchronization ();

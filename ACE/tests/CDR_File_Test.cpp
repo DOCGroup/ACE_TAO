@@ -43,7 +43,6 @@ class CDR_Test
   friend void operator >> (ACE_InputCDR &is, CDR_Test &);
 
 public:
-  /// Default constructor.
   CDR_Test ();
 
   CDR_Test (ACE_CDR::Char o,

@@ -42,7 +42,6 @@ public:
     MAX_TIME_LEN = MAXPATHLEN + 1
   };
 
-  /// Default constructor.
   ACE_Time_Request ();
 
   /**

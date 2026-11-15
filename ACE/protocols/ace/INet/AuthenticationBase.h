@@ -61,7 +61,6 @@ namespace ACE
         class ACE_INET_Export AuthenticatorBase
           {
             public:
-              /// Default constructor
               AuthenticatorBase ();
 
               virtual ~AuthenticatorBase ();

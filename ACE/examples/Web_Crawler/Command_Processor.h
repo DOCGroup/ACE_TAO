@@ -34,7 +34,6 @@ class URL;
 class Command
 {
 public:
-  /// Virtual destructor.
   virtual ~Command ();
 
   /// This is the entry point to execute the command.
