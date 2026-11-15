@@ -115,19 +115,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // If expect_servant_calls is 0, this is the request-forwarding loop case. The
       // servant should receive more calls than there were requests.
-      if ((options.expect_servant_calls == 0 &&
-           (server_impl.ncalls () > options.num_requests))
-          || (options.expect_servant_calls > 0 &&
-              (server_impl.ncalls () == options.expect_servant_calls)))
-      {
+      if ((options.expect_servant_calls == 0
+           && server_impl.ncalls () > options.num_requests)
+          || (options.expect_servant_calls > 0
+              && server_impl.ncalls () == options.expect_servant_calls))
         return 0;
-      }
-      else
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "server: Test failed - expected %d servant calls but got %d calls \n",
-                           options.expect_servant_calls, server_impl.ncalls ()),
-                          1);
-     }
+
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "server: Test failed - expected %d servant calls but got %d calls\n",
+                         options.expect_servant_calls, server_impl.ncalls ()),
+                        1);
+    }
   catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");

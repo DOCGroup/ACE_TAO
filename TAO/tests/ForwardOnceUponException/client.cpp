@@ -74,27 +74,28 @@ class Worker : public ACE_Task_Base
 public:
   Worker (CORBA::ORB_ptr orb, Client_Options const &options);
 
-  // = The Task_Base methods
+  /// @name ACE task methods
+  /// @{
   int svc () override;
 
-  // Caught any exception ?
+  /// Return the kind of exception caught by the worker.
   int received_ex_kind () const;
 
-  // Return number of received exceptions.
+  /// Return the number of exceptions received.
   int num_received_ex () const;
 
-  // Is test done ?
+  /// Mark the test as done.
   void done ();
+  /// @}
 
 private:
-  // The ORB reference
+  /// The ORB reference.
   CORBA::ORB_var orb_ {};
-  // The exceptions caught.
+  /// The exceptions caught.
   std::atomic_int received_ex_kind_ {TAO::FOE_NON};
-  // The number of received exceptions.
+  /// The number of received exceptions.
   std::atomic_int num_received_ex_ {};
-  // Flag for test completion. The result is
-  // collected before done.
+  /// Flag for test completion; collected before done.
   std::atomic_bool done_ {};
   ACE_TString ior_ {};
   int num_requests_ {};
@@ -177,8 +178,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   return 0;
 }
-
-// ****************************************************************
 
 Worker::Worker (CORBA::ORB_ptr orb, Client_Options const &options)
   : orb_ (CORBA::ORB::_duplicate (orb))
