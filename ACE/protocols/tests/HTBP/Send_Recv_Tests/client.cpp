@@ -194,7 +194,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   do {
     len = stream.recv (buffer2+total, 145 - total);
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT("(%P) Test 2: want %d bytes, got %b\n"),
+                ACE_TEXT("(%P) Test 2: want %b bytes, got %b\n"),
                 145 - total,len));
     if (len == -1 || errno == EWOULDBLOCK)
       ACE_OS::sleep (1);
