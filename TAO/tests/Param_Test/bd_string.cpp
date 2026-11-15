@@ -88,7 +88,7 @@ Test_Bounded_String::run_sii_test (Param_Test_ptr objref)
 {
   try
     {
-      CORBA::String_out str_out (this->out_);
+      CORBA::String_out const str_out (this->out_);
 
       this->ret_ = objref->test_bounded_string (this->in_.in (),
                                                 this->inout_.inout (),
@@ -106,7 +106,7 @@ Test_Bounded_String::run_sii_test (Param_Test_ptr objref)
 CORBA::Boolean
 Test_Bounded_String::check_validity ()
 {
-  CORBA::ULong len = std::strlen (this->in_.in ());
+  CORBA::ULong const len = std::strlen (this->in_.in ());
 
   if (!std::strcmp (this->in_.in (), this->out_.in ()) &&
       !std::strcmp (this->in_.in (), this->ret_.in ()) &&

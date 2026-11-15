@@ -77,7 +77,7 @@ Test_ObjRef::init_parameters (Param_Test_ptr objref)
       this->in_ = objref->make_coffee ();
 
       // Get some index into Coffee_Flavor [].
-      CORBA::ULong index = (CORBA::ULong) (gen->gen_long () % 6);
+      CORBA::ULong const index = (CORBA::ULong) (gen->gen_long () % 6);
       desc.name = Coffee_Flavor [index];
 
       // set the attribute of the object
@@ -105,7 +105,7 @@ Test_ObjRef::reset_parameters ()
   Generator *gen = GENERATOR::instance (); // value generator
 
   // Get some index into Coffee_Flavor [].
-  CORBA::ULong index = (CORBA::ULong) (gen->gen_long () % 6);
+  CORBA::ULong const index = (CORBA::ULong) (gen->gen_long () % 6);
   desc.name = Coffee_Flavor [index];
 
   try

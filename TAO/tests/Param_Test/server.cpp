@@ -104,7 +104,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       param_test = std::make_unique<Param_Test_i> ("unknown", orb_ptr.in ());
 
       // Register with GoodPOA with a specific name
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         PortableServer::string_to_ObjectId ("param_test");
       good_poa->activate_object_with_id (id.in (),
                                          param_test.get ());

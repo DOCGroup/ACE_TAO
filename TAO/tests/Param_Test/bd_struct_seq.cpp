@@ -96,7 +96,7 @@ Test_Bounded_Struct_Sequence::run_sii_test (Param_Test_ptr objref)
 {
   try
     {
-      Param_Test::Bounded_StructSeq_out out (this->out_.out ());
+      Param_Test::Bounded_StructSeq_out const out (this->out_.out ());
 
       this->ret_ = objref->test_bounded_struct_sequence (this->in_,
                                                          this->inout_.inout (),

@@ -74,7 +74,7 @@ Test_Recursive_Union::reset_parameters ()
   Generator *gen = GENERATOR::instance ();
 
   // Set the depth of recursion.
-  CORBA::ULong depth =
+  CORBA::ULong const depth =
     (CORBA::ULong) (gen->gen_long () % MAX_DEPTH) + 1;
 
   // Create a nested union to put in inout_.
@@ -97,7 +97,7 @@ Test_Recursive_Union::run_sii_test (Param_Test_ptr objref)
 {
   try
     {
-      Param_Test::Recursive_Union_out out (this->out_.out ());
+      Param_Test::Recursive_Union_out const out (this->out_.out ());
 
       this->ret_ = objref->test_recursive_union (this->in_,
                                                  this->inout_.inout (),
@@ -166,7 +166,7 @@ Test_Recursive_Union::deep_init (Param_Test::Recursive_Union &ru,
   if (level == 1)
   // No more recursion, just insert a nested_rec_union.
     {
-      CORBA::ULong nested_depth =
+      CORBA::ULong const nested_depth =
         (CORBA::ULong) (gen->gen_long () % MAX_DEPTH) + 1;
 
       Param_Test::nested_rec_union nru;
@@ -177,7 +177,7 @@ Test_Recursive_Union::deep_init (Param_Test::Recursive_Union &ru,
 
       ru.nested_member (nru);
 
-      Param_Test::RecUnionSeq tmp (MAX_SEQ_LENGTH);
+      Param_Test::RecUnionSeq const tmp (MAX_SEQ_LENGTH);
 
       ru.rec_member (tmp);
 
@@ -186,7 +186,7 @@ Test_Recursive_Union::deep_init (Param_Test::Recursive_Union &ru,
   else
     {
       // Generate a member sequence.
-      CORBA::ULong len =
+      CORBA::ULong const len =
         (CORBA::ULong) (gen->gen_long () % MAX_SEQ_LENGTH) + 1;
 
       // This line is TAO-specific, but some compilers we support
@@ -224,7 +224,7 @@ Test_Recursive_Union::deep_init_nested (Param_Test::nested_rec_union &nu,
   else
     {
       // Generate a sequence length.
-      CORBA::ULong len =
+      CORBA::ULong const len =
         (CORBA::ULong) (gen->gen_long () % MAX_SEQ_LENGTH) + 1;
 
       // This line is TAO-specific, but some compilers we support

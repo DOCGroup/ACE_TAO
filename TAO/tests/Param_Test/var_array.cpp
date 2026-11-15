@@ -85,7 +85,7 @@ Test_Var_Array::run_sii_test (Param_Test_ptr objref)
 {
   try
     {
-      Param_Test::Var_Array_out out_arr (this->out_.out ());
+      Param_Test::Var_Array_out const out_arr (this->out_.out ());
       this->ret_ = objref->test_var_array (this->in_,
                                            this->inout_,
                                            out_arr);

@@ -66,7 +66,7 @@ Test_Bounded_String_Sequence::init_parameters (Param_Test_ptr)
     "three"
   };
 
-  CORBA::ULong len = this->in_->maximum ();
+  CORBA::ULong const len = this->in_->maximum ();
 
   // set the length of the sequence
   this->in_->length (len);
@@ -94,7 +94,7 @@ Test_Bounded_String_Sequence::run_sii_test (Param_Test_ptr objref)
 {
   try
     {
-      Param_Test::Bounded_StrSeq_out out (this->out_.out ());
+      Param_Test::Bounded_StrSeq_out const out (this->out_.out ());
 
       this->ret_ = objref->test_bounded_strseq (this->in_.in (),
                                                 this->inout_.inout (),

@@ -60,7 +60,7 @@ Test_Bounded_WString_Sequence::init_parameters (Param_Test_ptr)
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
-  CORBA::ULong len = this->in_->maximum ();
+  CORBA::ULong const len = this->in_->maximum ();
 
   // set the length of the sequence
   this->in_->length (len);
@@ -92,7 +92,7 @@ Test_Bounded_WString_Sequence::run_sii_test (Param_Test_ptr objref)
 {
   try
     {
-      Param_Test::Bounded_WStrSeq_out out (this->out_.out ());
+      Param_Test::Bounded_WStrSeq_out const out (this->out_.out ());
 
       this->ret_ = objref->test_bounded_wstrseq (this->in_.in (),
                                                  this->inout_.inout (),

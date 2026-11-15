@@ -60,7 +60,7 @@ Test_Long_Sequence::init_parameters (Param_Test_ptr)
   Generator *gen = GENERATOR::instance (); // value generator
 
   // get some sequence length (not more than 10)
-  CORBA::ULong len = (CORBA::ULong) (gen->gen_long () % 10) + 1;
+  CORBA::ULong const len = (CORBA::ULong) (gen->gen_long () % 10) + 1;
 
   // set the length of the sequence
   this->in_->length (len);
@@ -88,7 +88,7 @@ Test_Long_Sequence::run_sii_test (Param_Test_ptr objref)
 {
   try
     {
-      CORBA::LongSeq_out out (this->out_.out ());
+      CORBA::LongSeq_out const out (this->out_.out ());
 
       this->ret_ = objref->test_long_sequence (this->in_.in (),
                                                this->inout_.inout (),

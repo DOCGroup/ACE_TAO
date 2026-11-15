@@ -100,7 +100,7 @@ Test_TypeCode::run_sii_test (Param_Test_ptr objref)
     {
       this->init_parameters (objref);
 
-      CORBA::TypeCode_out out (this->out_);
+      CORBA::TypeCode_out const out (this->out_);
 
       this->ret_ = objref->test_typecode (this->in_.in (),
                                           this->inout_.inout (),

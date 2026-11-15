@@ -75,7 +75,7 @@ Test_Recursive_Struct::reset_parameters ()
   Generator *gen = GENERATOR::instance ();
 
   // Set the depth of recursion.
-  CORBA::ULong depth = (CORBA::ULong) (gen->gen_long () % MAX_DEPTH) + 1;
+  CORBA::ULong const depth = (CORBA::ULong) (gen->gen_long () % MAX_DEPTH) + 1;
 
   // No recursion for inout_ until after the call.
   this->inout_->children.length (0);
@@ -96,7 +96,7 @@ Test_Recursive_Struct::run_sii_test (Param_Test_ptr objref)
 {
   try
     {
-      Param_Test::Recursive_Struct_out out (this->out_.out ());
+      Param_Test::Recursive_Struct_out const out (this->out_.out ());
 
       this->ret_ = objref->test_recursive_struct (this->in_,
                                                   this->inout_.inout (),
@@ -174,7 +174,7 @@ Test_Recursive_Struct::deep_init (Param_Test::Recursive_Struct &rs,
   else
     {
       // Generate a sequence length.
-      CORBA::ULong len = (CORBA::ULong) (gen->gen_long () % MAX_SEQ_LENGTH) + 1;
+      CORBA::ULong const len = (CORBA::ULong) (gen->gen_long () % MAX_SEQ_LENGTH) + 1;
 
       rs.children.length (len);
 

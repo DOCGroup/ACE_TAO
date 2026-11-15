@@ -61,7 +61,7 @@ Test_Var_Struct::init_parameters (Param_Test_ptr)
   Generator *gen = GENERATOR::instance (); // value generator
 
   // get some sequence length (not more than 10)
-  CORBA::ULong len = (CORBA::ULong) (gen->gen_long () % 10) + 1;
+  CORBA::ULong const len = (CORBA::ULong) (gen->gen_long () % 10) + 1;
 
   this->in_.dbl = 3.14159;
   this->in_.dummy1 = gen->gen_string ();
@@ -114,7 +114,7 @@ Test_Var_Struct::run_sii_test (Param_Test_ptr objref)
 {
   try
     {
-      Param_Test::Var_Struct_out out (this->out_.out ());
+      Param_Test::Var_Struct_out const out (this->out_.out ());
       this->ret_ = objref->test_var_struct (this->in_,
                                             this->inout_.inout (),
                                             out);

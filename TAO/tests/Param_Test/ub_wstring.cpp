@@ -87,7 +87,7 @@ Test_Unbounded_WString::run_sii_test (Param_Test_ptr objref)
 {
   try
     {
-      CORBA::WString_out str_out (this->out_);
+      CORBA::WString_out const str_out (this->out_);
 
       this->ret_ = objref->test_unbounded_wstring (this->in_.in (),
                                                    this->inout_.inout (),
@@ -105,7 +105,7 @@ Test_Unbounded_WString::run_sii_test (Param_Test_ptr objref)
 CORBA::Boolean
 Test_Unbounded_WString::check_validity ()
 {
-  CORBA::ULong len = ACE_OS::wslen (this->in_.in ());
+  CORBA::ULong const len = ACE_OS::wslen (this->in_.in ());
 
   if (!ACE_OS::wscmp (this->in_.in (), this->out_.in ()) &&
       !ACE_OS::wscmp (this->in_.in (), this->ret_.in ()) &&

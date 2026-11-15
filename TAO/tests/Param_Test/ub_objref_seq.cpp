@@ -73,7 +73,7 @@ Test_ObjRef_Sequence::init_parameters (Param_Test_ptr objref)
       Generator *gen = GENERATOR::instance (); // value generator
 
       // get some sequence length (not more than 10)
-      CORBA::ULong len = (CORBA::ULong) (gen->gen_long () % 5) + 5;
+      CORBA::ULong const len = (CORBA::ULong) (gen->gen_long () % 5) + 5;
 
       // set the length of the sequence
       this->in_.length (len);
@@ -86,7 +86,7 @@ Test_ObjRef_Sequence::init_parameters (Param_Test_ptr objref)
           this->in_[i] = objref->make_coffee ();
 
           // select a Coffee flavor at random
-          CORBA::ULong index = (CORBA::ULong) (gen->gen_long () % 6);
+          CORBA::ULong const index = (CORBA::ULong) (gen->gen_long () % 6);
 
           desc.name = Coffee_Flavor [index];
           // set the attribute for the in object
@@ -118,7 +118,7 @@ Test_ObjRef_Sequence::run_sii_test (Param_Test_ptr objref)
 {
   try
     {
-      Param_Test::Coffee_Mix_out out (this->out_.out ());
+      Param_Test::Coffee_Mix_out const out (this->out_.out ());
 
       this->ret_ = objref->test_coffe_mix (this->in_,
                                            this->inout_.inout (),
@@ -216,11 +216,11 @@ Test_ObjRef_Sequence::compare (const Param_Test::Coffee_Mix &s1,
 
           Coffee::Desc_var desc1 = vs1->description ();
 
-          CORBA::String_var n1 = desc1->name.in ();
+          CORBA::String_var const n1 = desc1->name.in ();
 
           Coffee::Desc_var desc2 = vs2->description ();
 
-          CORBA::String_var n2 = desc2->name.in ();
+          CORBA::String_var const n2 = desc2->name.in ();
 
           if (std::strcmp(n1.in (), n2.in ()) != 0)
             {

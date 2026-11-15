@@ -71,7 +71,7 @@ Test_AnySeq::init_parameters (Param_Test_ptr objref)
 
   for (CORBA::ULong i=0; i < this->in_->length (); ++i)
     {
-      CORBA::ULong index =
+      CORBA::ULong const index =
         (CORBA::ULong) (gen->gen_short () % NUM_TEST_TYPES);
       switch (index)
         {
@@ -88,7 +88,7 @@ Test_AnySeq::init_parameters (Param_Test_ptr objref)
           break;
         case 1:
           {
-            CORBA::String_var str = gen->gen_string ();
+            CORBA::String_var const str = gen->gen_string ();
             if (TAO_debug_level > 0)
               ACE_DEBUG ((LM_DEBUG,
                           "setting string = %C\n", str.in ()));
@@ -104,7 +104,7 @@ Test_AnySeq::init_parameters (Param_Test_ptr objref)
             try
               {
                 // get access to a Coffee Object
-                Coffee_var cobj = objref->make_coffee ();
+                Coffee_var const cobj = objref->make_coffee ();
 
                 // insert the coffee object into the Any
                 this->in_[i] <<= cobj.in ();
@@ -138,7 +138,7 @@ Test_AnySeq::reset_parameters ()
 
   for (CORBA::ULong i=0; i < this->in_->length (); ++i)
     {
-      CORBA::ULong index =
+      CORBA::ULong const index =
         (CORBA::ULong) (gen->gen_long () % NUM_TEST_TYPES);
 
       switch (index)
@@ -153,7 +153,7 @@ Test_AnySeq::reset_parameters ()
           break;
         case 1:
           {
-            CORBA::String_var str = gen->gen_string ();
+            CORBA::String_var const str = gen->gen_string ();
             this->in_[i] <<= str.in ();
             this->inout_[i] <<= str.in ();
           }
@@ -178,7 +178,7 @@ Test_AnySeq::run_sii_test (Param_Test_ptr objref)
 {
   try
     {
-      CORBA::AnySeq_out out (this->out_.out ());
+      CORBA::AnySeq_out const out (this->out_.out ());
 
       this->ret_ = objref->test_anyseq (this->in_.in (),
                                         this->inout_.inout (),

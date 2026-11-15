@@ -64,7 +64,7 @@ Test_Exception::dii_req_invoke (CORBA::Request_ptr req)
       if (user_ex.exception () >>= oops)
         {
           const char *reason = oops->reason.in ();
-          CORBA::ULong mod_value = oops->input;
+          CORBA::ULong const mod_value = oops->input;
 
           if (TAO_debug_level > 0)
             {
@@ -278,7 +278,7 @@ Test_Exception::run_sii_test (Param_Test_ptr objref)
       // 'SystemException' should be caught here, 'CORBA::NO_MEMORY'
       // system exception is thrown by the servant when the
           // IN argument == 2.
-      int d = this->in_ % 4;
+      int const d = this->in_ % 4;
 
       if (d != 2)
         {
@@ -320,7 +320,7 @@ Test_Exception::run_sii_test (Param_Test_ptr objref)
       // Param_Test::test_exception() knows nothing about it.
       // 'Ooops' however, should not be caught here. 'BadBoy'
       // is thrown by the servant when the IN argument == 3.
-      int d = this->in_ % 4;
+      int const d = this->in_ % 4;
 
       if (d != 3)
         {

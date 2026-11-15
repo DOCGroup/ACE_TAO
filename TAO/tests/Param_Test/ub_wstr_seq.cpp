@@ -60,7 +60,7 @@ Test_WString_Sequence::init_parameters (Param_Test_ptr)
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
-  CORBA::ULong len = 2;
+  CORBA::ULong const len = 2;
 
   // set the length of the sequences
   this->in_->length (len);
@@ -90,7 +90,7 @@ Test_WString_Sequence::run_sii_test (Param_Test_ptr objref)
 {
   try
     {
-      CORBA::WStringSeq_out out (this->out_.out ());
+      CORBA::WStringSeq_out const out (this->out_.out ());
 
       this->ret_ = objref->test_wstrseq (this->in_.in (),
                                          this->inout_.inout (),

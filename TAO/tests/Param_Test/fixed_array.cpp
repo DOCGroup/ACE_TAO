@@ -46,7 +46,7 @@ Test_Fixed_Array::dii_req_invoke (CORBA::Request *req)
 
   CORBA::NamedValue_ptr arg3 =
     req->arguments ()->item (2);
-  Param_Test::Fixed_Array_forany out_any (this->out_);
+  Param_Test::Fixed_Array_forany const out_any (this->out_);
   *arg3->value () >>= forany;
   Param_Test::Fixed_Array_copy (this->out_, forany.in ());
 }

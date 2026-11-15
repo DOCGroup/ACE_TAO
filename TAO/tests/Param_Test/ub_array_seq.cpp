@@ -59,7 +59,7 @@ Test_Array_Sequence::init_parameters (Param_Test_ptr)
   Generator *gen = GENERATOR::instance (); // value generator
 
   // get some sequence length (not more than 10)
-  CORBA::ULong len = (CORBA::ULong) (gen->gen_long () % 10) + 1;
+  CORBA::ULong const len = (CORBA::ULong) (gen->gen_long () % 10) + 1;
 
   // set the length of the in sequence
   this->in_.length (len);
@@ -106,7 +106,7 @@ Test_Array_Sequence::run_sii_test (Param_Test_ptr objref)
 {
   try
     {
-      Param_Test::ArraySeq_out out (this->out_.out ());
+      Param_Test::ArraySeq_out const out (this->out_.out ());
 
       this->ret_ = objref->test_array_sequence (this->in_,
                                                 this->inout_.inout (),

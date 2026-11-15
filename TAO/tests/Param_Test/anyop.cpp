@@ -24,7 +24,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
       ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("dn:"));
       int opt;
@@ -78,10 +78,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           }
 
           {
-            CORBA::Object_var obj =
+            CORBA::Object_var const obj =
               orb->string_to_object ("corbaloc:iiop:localhost:1234/Foo/Bar");
 
-            Param_Test_var param_test =
+            Param_Test_var const param_test =
               TAO::Narrow_Utils<Param_Test>::unchecked_narrow (obj.in ());
             TAO_Stub *stub = param_test->_stubobj ();
             stub->type_id = CORBA::string_dup ("IDL:Param_Test:1.0");
@@ -95,7 +95,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                 ACE_DEBUG ((LM_DEBUG,
                             "Cannot extract Param_Test (oh the horror)\n"));
               }
-            CORBA::Boolean equiv =
+            CORBA::Boolean const equiv =
               param_test->_is_equivalent (o);
 
             if (!equiv)
@@ -114,7 +114,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           }
 
           {
-            CORBA::Short i = 123;
+            CORBA::Short const i = 123;
             any <<= i;
 
             CORBA::Short o;
@@ -129,7 +129,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           }
 
           {
-            CORBA::Long i = 123;
+            CORBA::Long const i = 123;
             any <<= i;
 
             CORBA::Long o;
@@ -144,7 +144,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           }
 
           {
-            CORBA::ULongLong i = 123;
+            CORBA::ULongLong const i = 123;
             any <<= i;
 
             CORBA::ULongLong o;
@@ -159,7 +159,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           }
 
           {
-            CORBA::Double i = 123;
+            CORBA::Double const i = 123;
             any <<= i;
 
             CORBA::Double o;
@@ -272,7 +272,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           }
 
           {
-            CORBA::ULong len = 3;
+            CORBA::ULong const len = 3;
             CORBA::Any any;
             CORBA::LongSeq *i {};
             ACE_NEW_RETURN (i,

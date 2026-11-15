@@ -40,13 +40,13 @@ Generator::gen_string ()
 char *
 Generator::gen_string (int max_length)
 {
-  CORBA::ULong len = (CORBA::ULong) (std::rand () % max_length);
+  CORBA::ULong const len = (CORBA::ULong) (std::rand () % max_length);
   char *buf = CORBA::string_alloc (len);
   CORBA::ULong i = 0;
 
   while (i < len)
     {
-      int c = std::rand () % 128;
+      int const c = std::rand () % 128;
       if (ACE_OS::ace_isprint (c) && !ACE_OS::ace_isspace (c))
         {
           buf [i] = c;
@@ -67,14 +67,14 @@ Generator::gen_wstring ()
 CORBA::WChar *
 Generator::gen_wstring (int max_length)
 {
-  CORBA::ULong len = (CORBA::ULong) (std::rand () % max_length);
+  CORBA::ULong const len = (CORBA::ULong) (std::rand () % max_length);
   CORBA::WChar *buf = CORBA::wstring_alloc (len);
   CORBA::ULong i = 0;
-  CORBA::WChar limit =
+  CORBA::WChar const limit =
     ACE_OutputCDR::wchar_maxbytes() == 1 ? ACE_OCTET_MAX : ACE_WCHAR_MAX;
   while (i < len)
     {
-      CORBA::WChar wc = std::rand () % limit;
+      CORBA::WChar const wc = std::rand () % limit;
       if (wc)
         {
           buf[i] = wc;

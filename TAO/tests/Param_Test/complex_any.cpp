@@ -115,7 +115,7 @@ Test_Complex_Any::reset_parameters ()
 
           level8_struct.level9_string = l9_str;
 
-          CORBA::Short l9_bool = std::rand () % 2;
+          CORBA::Short const l9_bool = std::rand () % 2;
 
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
@@ -124,7 +124,7 @@ Test_Complex_Any::reset_parameters ()
 
           level8_struct.level9_boolean = (CORBA::Boolean) l9_bool;
 
-          CORBA::Short l9_short = gen->gen_short ();
+          CORBA::Short const l9_short = gen->gen_short ();
 
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,

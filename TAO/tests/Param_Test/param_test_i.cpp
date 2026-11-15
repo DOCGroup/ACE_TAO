@@ -127,7 +127,7 @@ Param_Test_i::test_unbounded_wstring (const CORBA::WChar *ws1,
 {
   CORBA::WString_var retwstr (CORBA::wstring_dup (ws1));
   ws3 = CORBA::wstring_dup (ws1);
-  CORBA::ULong len = ACE_OS::wslen (ws2);
+  CORBA::ULong const len = ACE_OS::wslen (ws2);
   CORBA::WString_var tmp (CORBA::wstring_alloc (2*len));
   for (CORBA::ULong i = 0; i < 2; ++i)
     {
@@ -152,7 +152,7 @@ Param_Test_i::test_bounded_wstring (const CORBA::WChar *ws1,
 {
   CORBA::WString_var retwstr (CORBA::wstring_dup (ws1));
   ws3 = CORBA::wstring_dup (ws1);
-  CORBA::ULong len = ACE_OS::wslen (ws2);
+  CORBA::ULong const len = ACE_OS::wslen (ws2);
   CORBA::WString_var tmp (CORBA::wstring_alloc (2*len));
   for (CORBA::ULong i = 0; i < 2; ++i)
     {
@@ -636,14 +636,14 @@ Param_Test_i::test_objref (Coffee_ptr o1,
 
   try
     {
-      Coffee_var myobj = obj_._this ();
+      Coffee_var const myobj = obj_._this ();
 
       if (!CORBA::is_nil (o2))
       {
         CORBA::release (o2);
       }
 
-      CORBA::Boolean equiv = myobj->_is_equivalent (o1);
+      CORBA::Boolean const equiv = myobj->_is_equivalent (o1);
 
       if (equiv)
         {
@@ -706,8 +706,8 @@ Param_Test_i::test_any (const CORBA::Any &a1,
 
   if (TAO_debug_level > 0)
     {
-      CORBA::TypeCode_var tc = a1.type ();
-      int kind = tc->kind ();
+      CORBA::TypeCode_var const tc = a1.type ();
+      int const kind = tc->kind ();
 
       ACE_DEBUG ((LM_DEBUG,
                   "Received any contents are <%d>\n",
@@ -895,7 +895,7 @@ Param_Test_i::test_exception (CORBA::ULong s1,
                               CORBA::ULong& s2,
                               CORBA::ULong_out s3)
 {
-  CORBA::ULong d = s1 % 4;
+  CORBA::ULong const d = s1 % 4;
 
   // No exceptions to throw.
   if (d == 0)

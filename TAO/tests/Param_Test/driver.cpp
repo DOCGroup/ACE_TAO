@@ -75,7 +75,7 @@ Driver::init (int argc, ACE_TCHAR **argv)
       // Retrieve a Param_Test object reference
       std::strcpy (exception_string,"ORB::string_to_object() failed.");
 
-      CORBA::Object_var temp =
+      CORBA::Object_var const temp =
         this->orb_->string_to_object (opt->param_test_ior ());
 
       if (CORBA::is_nil (temp.in()))

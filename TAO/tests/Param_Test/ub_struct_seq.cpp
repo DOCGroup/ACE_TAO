@@ -63,7 +63,7 @@ Test_Struct_Sequence::init_parameters (Param_Test_ptr)
   Generator *gen = GENERATOR::instance (); // value generator
 
   // get some sequence length (not more than 10)
-  CORBA::ULong len = (CORBA::ULong) (gen->gen_long () % 10) + 1;
+  CORBA::ULong const len = (CORBA::ULong) (gen->gen_long () % 10) + 1;
 
   // set the length of the sequence
   this->in_.length (len);
@@ -93,7 +93,7 @@ Test_Struct_Sequence::run_sii_test (Param_Test_ptr objref)
 {
   try
     {
-      Param_Test::StructSeq_out out (this->out_.out ());
+      Param_Test::StructSeq_out const out (this->out_.out ());
 
       this->ret_ = objref->test_struct_sequence (this->in_,
                                                  this->inout_.inout (),
@@ -258,7 +258,7 @@ Test_Unbounded_Struct_Sequence::init_parameters (Param_Test_ptr)
   Generator *gen = GENERATOR::instance (); // value generator
 
   // get some sequence length (not more than 10)
-  CORBA::ULong len = (CORBA::ULong) (gen->gen_long () % 10) + 1;
+  CORBA::ULong const len = (CORBA::ULong) (gen->gen_long () % 10) + 1;
 
   // set the length of the sequence
   this->in_.length (len);
@@ -287,7 +287,7 @@ Test_Unbounded_Struct_Sequence::reset_parameters ()
 int
 Test_Unbounded_Struct_Sequence::run_sii_test (Param_Test_ptr objref)
 {
-  Param_Test::PathSpec_out out (this->out_.out ());
+  Param_Test::PathSpec_out const out (this->out_.out ());
   this->ret_ = objref->test_unbounded_struct_sequence (this->in_,
                                                        this->inout_.inout (),
                                                        out);

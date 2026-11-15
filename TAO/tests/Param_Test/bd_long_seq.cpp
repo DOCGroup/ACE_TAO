@@ -57,7 +57,7 @@ int
 Test_Bounded_Long_Sequence::init_parameters (Param_Test_ptr)
 {
   // get some sequence length (32 in this case)
-  CORBA::ULong len = this->in_->maximum ();
+  CORBA::ULong const len = this->in_->maximum ();
 
   // set the length of the sequence
   this->in_->length (len);
@@ -95,7 +95,7 @@ Test_Bounded_Long_Sequence::run_sii_test (Param_Test_ptr objref)
 {
   try
     {
-      Param_Test::Bounded_Long_Seq_out out (this->out_.out ());
+      Param_Test::Bounded_Long_Seq_out const out (this->out_.out ());
       this->ret_ = objref->test_bounded_long_sequence (this->in_.in (),
                                                        this->inout_.inout (),
                                                        out);

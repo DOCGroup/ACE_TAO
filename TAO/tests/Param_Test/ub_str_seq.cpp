@@ -67,7 +67,7 @@ Test_String_Sequence::init_parameters (Param_Test_ptr)
     "four"
   };
 
-  CORBA::ULong len = sizeof(choiceList)/sizeof(char *) - 1;
+  CORBA::ULong const len = sizeof(choiceList)/sizeof(char *) - 1;
 
   // set the length of the sequences
   this->in_->length (len);
@@ -96,7 +96,7 @@ Test_String_Sequence::run_sii_test (Param_Test_ptr objref)
 {
   try
     {
-      CORBA::StringSeq_out out (this->out_.out ());
+      CORBA::StringSeq_out const out (this->out_.out ());
 
       this->ret_ = objref->test_strseq (this->in_.in (),
                                         this->inout_.inout (),

@@ -60,7 +60,7 @@ Test_Nested_Struct::init_parameters (Param_Test_ptr)
   Generator *gen = GENERATOR::instance (); // value generator
 
   // get some sequence length (not more than 10)
-  CORBA::ULong len = (CORBA::ULong) (gen->gen_long () % 10) + 1;
+  CORBA::ULong const len = (CORBA::ULong) (gen->gen_long () % 10) + 1;
 
   this->in_.vs.dbl = 0.0;
   this->in_.vs.dummy1 = CORBA::string_dup ("");
@@ -112,7 +112,7 @@ Test_Nested_Struct::run_sii_test (Param_Test_ptr objref)
 {
   try
     {
-      Param_Test::Nested_Struct_out out (this->out_.out ());
+      Param_Test::Nested_Struct_out const out (this->out_.out ());
       this->ret_ = objref->test_nested_struct (this->in_,
                                                this->inout_.inout (),
                                                out);

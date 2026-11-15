@@ -104,7 +104,7 @@ Test_Bounded_Array_Sequence::run_sii_test (Param_Test_ptr objref)
 {
   try
     {
-      Param_Test::Bounded_ArraySeq_out out (this->out_.out ());
+      Param_Test::Bounded_ArraySeq_out const out (this->out_.out ());
 
       this->ret_ =
         objref->test_bounded_array_sequence (this->in_,

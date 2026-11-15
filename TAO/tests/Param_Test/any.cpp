@@ -95,7 +95,7 @@ int
 Test_Any::reset_parameters ()
 {
   Generator *gen = GENERATOR::instance (); // value generator
-  CORBA::ULong index = (counter++ % Test_Any::ANY_LAST_TEST_ITEM);
+  CORBA::ULong const index = (counter++ % Test_Any::ANY_LAST_TEST_ITEM);
 
   switch (index)
     {
@@ -206,7 +206,7 @@ Test_Any::reset_parameters ()
 
     case Test_Any::ANY_BIG_UNION:
       {
-        CORBA::Long x = gen->gen_long ();
+        CORBA::Long const x = gen->gen_long ();
         Param_Test::Big_Union the_union;
         the_union.the_long (x);
         this->in_    <<= the_union;
@@ -230,7 +230,7 @@ Test_Any::reset_parameters ()
 
     case Test_Any::ANY_SMALL_UNION:
       {
-        CORBA::Long x = gen->gen_long ();
+        CORBA::Long const x = gen->gen_long ();
         Param_Test::Small_Union the_union;
         the_union.the_long (x);
         this->in_    <<= the_union;
@@ -336,8 +336,8 @@ Test_Any::check_validity ()
     {
       for (CORBA::ULong i = 0; i < Param_Test::DIM1; ++i)
         {
-          CORBA::Long ii = i;
-          CORBA::Long square = i * i;
+          CORBA::Long const ii = i;
+          CORBA::Long const square = i * i;
           if (array_in[i] != ii ||
               array_out[i] != ii ||
               array_inout[i] != square ||
@@ -355,7 +355,7 @@ Test_Any::check_validity ()
     {
       for (size_t i = 0; i < bdss_in->length (); ++i)
         {
-          ssize_t square = i * i;
+          ssize_t const square = i * i;
           if ((*bdss_in)[i] != (*bdss_out)[i] ||
               (*bdss_inout)[i] != square ||
               (*bdss_inout)[i] != (*bdss_ret)[i])
@@ -372,7 +372,7 @@ Test_Any::check_validity ()
     {
       for (size_t i = 0; i < ubss_in->length (); ++i)
         {
-          ssize_t square = i * i;
+          ssize_t const square = i * i;
           if ((*ubss_in)[i] != (*ubss_out)[i] ||
               (*ubss_inout)[i] != square ||
               (*ubss_inout)[i] != (*ubss_ret)[i])
