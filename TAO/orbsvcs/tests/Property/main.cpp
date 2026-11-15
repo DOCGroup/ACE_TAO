@@ -1,34 +1,23 @@
-// ========================================================================
-//
-// = FILE
-//     Program to test the property services.
-//
-// = DESCRIPTION
-//     Here all the objects are at one address space. See the
-//     client.cpp and server.cpp to see property calls on remote
-//     objects.
-//
-// = AUTHOR
-//     Alexander Babu Arulanthu <alex@cs.wustl.edu>
-//
-// ========================================================================
+/**
+ * @file main.cpp
+ * @brief Tests the Property Service.
+ *
+ * The objects in this test run in one address space. The client and server
+ * examples demonstrate property calls on remote objects.
+ *
+ * @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
+ */
 
 #include "orbsvcs/CosPropertyS.h"
 #include "orbsvcs/Property/CosPropertyService_i.h"
 
+/// Groups tests for the `PropertySet` interface. Each test method exercises
+/// one or more of its operations.
 class TAO_PropertySet_Tester
 {
-  // = TITLE
-  //     The testing code for the PropertySet interface are grouped
-  //     under the functions of this class.
-  //
-  // = DESCRIPTION
-  //     Go thru the functions to understand the usage of the various
-  //     methods of the PropertySet interaface.
 public:
+  /// Allows the iterator tester to access this tester's PropertySet.
   friend class TAO_PropertyNamesIterator_Tester;
-  // He has to instantiate TAO_NamesIterator class using the instance
-  // of TAO_PropertySet.
 
   TAO_PropertySet_Tester () = default;
 
@@ -38,51 +27,42 @@ public:
   TAO_PropertySet_Tester (TAO_PropertySet_Tester&&) = delete;
   TAO_PropertySet_Tester& operator= (TAO_PropertySet_Tester&&) = delete;
 
+  /// Defines a char, short, long, float, and string property.
   int test_define_property ();
-  // Defines a char,a short, a long, a float and a string property.
 
+  /// Gets the number of properties currently defined in the PropertySet.
   int test_get_number_of_properties ();
-  // Gets the number of properties currently defined in the PropertySet.
 
+  /// Deletes the named property.
   int test_delete_property (char const* property_name);
-  // Delete a given property.
 
+  /// Checks whether the char, short, and string properties are defined.
   int test_is_property_defined ();
-  // Check the following properties are defined or
-  // no. "char_property", "short_property" and a "string_property".
 
+  /// Gets and prints the float and string property values.
   int test_get_property_value ();
-  // Get the "float_property" and "string_property" and print them
-  // out.
 
+  /// Deletes the char, short, long, and string properties.
   int test_delete_properties ();
-  // Delete char, short,long, and string properties.
 
+  /// Deletes all properties.
   int test_delete_all_properties ();
-  // Delete all the properties.
 
+  /// Defines a sequence of char, short, long, float, and string properties.
   int test_define_properties ();
-  // Define a sequence of properties. a char, a short, a long, a float
-  // and a string.
 
 private:
+  /// The PropertySet under test.
   TAO_PropertySet property_set_;
-  // The PropertySet.
 };
 
+/// Groups tests for the `PropertyNamesIterator` interface.
 class TAO_PropertyNamesIterator_Tester
 {
-  // = TITLE
-  //     The testing code for the PropertyNamesIterator interface are grouped
-  //     under the functions of this class.
-  //
-  // = DESCRIPTION
-  //     Go thru the functions to understand the usage of the various
-  //     methods of the PropertyNamesIterator interaface.
 public:
+  /// Creates a names iterator from the PropertySet tester.
   explicit TAO_PropertyNamesIterator_Tester (
     TAO_PropertySet_Tester &propertyset_tester);
-  // Constructor. To make names iterator from the property set object.
 
   ~TAO_PropertyNamesIterator_Tester () = default;
   TAO_PropertyNamesIterator_Tester (TAO_PropertyNamesIterator_Tester const&) = delete;
@@ -90,18 +70,18 @@ public:
   TAO_PropertyNamesIterator_Tester (TAO_PropertyNamesIterator_Tester&&) = delete;
   TAO_PropertyNamesIterator_Tester& operator= (TAO_PropertyNamesIterator_Tester&&) = delete;
 
+  /// Advances through all names in the PropertySet and prints them.
   int test_next_one ();
-  // Test next one method. Iterate thru all the names in the
-  // PropertySet and print them out.
 
+  /// Tests resetting the iterator.
   int test_reset ();
-  // Test the reset method.
 
+  /// Tests retrieving the next `n` names.
   int test_next_n (size_t n);
-  // Test the next_n method.
+
 private:
+  /// The PropertySet names iterator.
   TAO_PropertyNamesIterator iterator_;
-  // Our names iterator.
 };
 
 // Defines a char, a short, a long, a float and a string.
