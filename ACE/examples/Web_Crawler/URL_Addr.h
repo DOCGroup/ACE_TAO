@@ -13,6 +13,8 @@
 
 #include "ace/INET_Addr.h"
 
+#include <string>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -78,7 +80,7 @@ public:
   /// Assignment operator.
   void operator= (const ACE_URL_Addr &addr);
 
-  ~ACE_URL_Addr ();
+  ~ACE_URL_Addr () = default;
 
   /**
    * Compare two addresses for equality.  The addresses are considered
@@ -99,16 +101,11 @@ public:
   /// Commit suicide.
   int destroy ();
 private:
-  /// Manually owned ACE_OS::strdup() allocation, released with
-  /// ACE_OS::free().
-  ACE_TCHAR *path_name_;
+  /// URL path.
+  std::basic_string<ACE_TCHAR> path_name_;
 
-  /// Manually owned buffer used by addr_to_string(); managed with ACE_OS
-  /// allocation calls.
-  ACE_TCHAR *addr_string_;
-
-  /// Current length of the <addr_string_>
-  size_t addr_string_len_;
+  /// Cached result of addr_to_string().
+  mutable std::basic_string<ACE_TCHAR> addr_string_;
 };
 
 #endif /* ACE_URL_ADDR_H */

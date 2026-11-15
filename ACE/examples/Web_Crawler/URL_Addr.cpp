@@ -3,12 +3,12 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_stdlib.h"
-#include "ace/OS_Memory.h"
+#include <new>
+#include <utility>
 
 ACE_URL_Addr::ACE_URL_Addr ()
   : path_name_ {},
-    addr_string_ {},
-    addr_string_len_ (0)
+    addr_string_ {}
 {
 }
 
@@ -44,9 +44,7 @@ ACE_URL_Addr::addr_to_string (ACE_TCHAR *s,
 const ACE_TCHAR *
 ACE_URL_Addr::addr_to_string (int ipaddr_format) const
 {
-  ACE_URL_Addr *this_ptr = const_cast<ACE_URL_Addr *> (this);
-
-  size_t size =
+  size_t const size =
     ACE_OS::strlen (ipaddr_format == 0 ?
                     this->get_host_name () :
                     this->get_host_addr ())
@@ -56,78 +54,77 @@ ACE_URL_Addr::addr_to_string (int ipaddr_format) const
     + sizeof ('/')
     + sizeof ('\0'); // For trailing '\0'.
 
-  if (size > this->addr_string_len_)
+  try
     {
-      ACE_ALLOCATOR_RETURN (this_ptr->addr_string_,
-                            static_cast<ACE_TCHAR *> (ACE_OS::realloc (this->addr_string_,
-                                                                       size)),
-                            nullptr);
-      this_ptr->addr_string_len_ = size;
+      this->addr_string_.resize (size);
+      ACE_OS::sprintf (this->addr_string_.data (),
+                       ACE_TEXT ("%s:%d/%s"),
+                       ACE_TEXT_CHAR_TO_TCHAR (ipaddr_format == 0
+                                               ? this->get_host_name ()
+                                               : this->get_host_addr ()),
+                       this->get_port_number (),
+                       this->get_path_name ());
+      this->addr_string_.resize (size - 1);
     }
-  ACE_OS::sprintf (this->addr_string_,
-                   ACE_TEXT ("%s:%d/%s"),
-                   ACE_TEXT_CHAR_TO_TCHAR (ipaddr_format == 0
-                                           ? this->get_host_name ()
-                                          : this->get_host_addr ()),
-                   this->get_port_number (),
-                   this->get_path_name ());
-  return this->addr_string_;
+  catch (const std::bad_alloc &)
+    {
+      return nullptr;
+    }
+  return this->addr_string_.c_str ();
 }
 
 int
 ACE_URL_Addr::string_to_addr (const ACE_TCHAR *s,
                               int /* address_family */)
 {
-  int result {};
-  ACE_TCHAR *t {};
+  if (s == nullptr)
+    return -1;
 
-  // Need to make a duplicate since we'll be overwriting the string.
-  ACE_ALLOCATOR_RETURN (t,
-                        ACE_OS::strdup (s),
-                        -1);
-
-  // First split off the path_name.
-
-  ACE_TCHAR *path_name = ACE_OS::strchr (t, ACE_TEXT ('/'));
-  const ACE_TCHAR *name = ACE_TEXT ("index.html");
-  if (path_name != nullptr)
+  try
     {
-      if (ACE_OS::strlen (path_name + 1) > 0)
-        name = path_name + 1;
+      std::basic_string<ACE_TCHAR> parsed_address (s);
+      size_t const path_start = parsed_address.find (ACE_TEXT ('/'));
+      std::basic_string<ACE_TCHAR> path_name (ACE_TEXT ("index.html"));
+      if (path_start != std::basic_string<ACE_TCHAR>::npos)
+        {
+          if (path_start + 1 < parsed_address.size ())
+            path_name = parsed_address.substr (path_start + 1);
+          parsed_address.resize (path_start);
+        }
 
-      *path_name = '\0';
+      // Now handle the host address and port number.
+      size_t const port_start = parsed_address.find (ACE_TEXT (':'));
+      int result {};
+      if (port_start == std::basic_string<ACE_TCHAR>::npos)
+        {
+          // Assume it's an ip-address or ip-number.
+          result = this->ACE_INET_Addr::set (ACE_DEFAULT_HTTP_PORT,
+                                             parsed_address.c_str ());
+        }
+      else
+        {
+          u_short const port = static_cast<u_short> (
+            ACE_OS::atoi (parsed_address.c_str () + port_start + 1));
+          parsed_address.resize (port_start);
+          result = this->ACE_INET_Addr::set (port,
+                                             parsed_address.c_str ());
+        }
+
+      if (result == 0)
+        this->path_name_ = std::move (path_name);
+
+      return result;
     }
-
-  ACE_ALLOCATOR_RETURN (this->path_name_,
-                        // Skip over '/'
-                        ACE_OS::strdup (name),
-                        -1);
-
-  // Now handle the host address and port number.
-  ACE_TCHAR *port_number = ACE_OS::strchr (t, ':');
-
-  if (port_number == nullptr)
+  catch (const std::bad_alloc &)
     {
-      // Assume it's an ip-address or ip-number.
-      result = this->ACE_INET_Addr::set (ACE_DEFAULT_HTTP_PORT,
-                                         t);
+      return -1;
     }
-  else
-    {
-      *port_number = '\0';
-      u_short port = (u_short) ACE_OS::atoi (port_number + 1); // Skip over ':'
-      result = this->ACE_INET_Addr::set (port, t);
-    }
-
-  ACE_OS::free (ACE_MALLOC_T (t));
-  return result;
 }
 
 ACE_URL_Addr::ACE_URL_Addr (const ACE_URL_Addr &addr)
   : ACE_INET_Addr (),
     path_name_ {},
-    addr_string_ {},
-    addr_string_len_ (0)
+    addr_string_ {}
 {
   if (this->set (addr) == -1)
     ACE_ERROR ((LM_ERROR,
@@ -138,25 +135,19 @@ ACE_URL_Addr::ACE_URL_Addr (const ACE_URL_Addr &addr)
 int
 ACE_URL_Addr::set (const ACE_URL_Addr &addr)
 {
-  ACE_OS::free (reinterpret_cast<void *> (const_cast<ACE_TCHAR *>
-                                                      (this->path_name_)));
-  ACE_OS::free (reinterpret_cast<void *> (const_cast<ACE_TCHAR *>
-                                                      (this->addr_string_)));
-  if (this->ACE_INET_Addr::set (addr) == -1)
-    return -1;
-  else
+  try
     {
-      if (addr.path_name_)
-        ACE_ALLOCATOR_RETURN (this->path_name_,
-                              ACE_OS::strdup (addr.path_name_),
-                              -1);
-      if (addr.addr_string_)
-        ACE_ALLOCATOR_RETURN (this->addr_string_,
-                              ACE_OS::strdup (addr.addr_string_),
-                              -1);
-      this->addr_string_len_ =
-        addr.addr_string_len_;
+      std::basic_string<ACE_TCHAR> path_name (addr.path_name_);
+      std::basic_string<ACE_TCHAR> addr_string (addr.addr_string_);
+      if (this->ACE_INET_Addr::set (addr) == -1)
+        return -1;
+      this->path_name_ = std::move (path_name);
+      this->addr_string_ = std::move (addr_string);
       return 0;
+    }
+  catch (const std::bad_alloc &)
+    {
+      return -1;
     }
 }
 
@@ -197,25 +188,15 @@ ACE_URL_Addr::ACE_URL_Addr (const ACE_TCHAR *host_name,
                             const ACE_TCHAR *path_name,
                             u_short port)
   : ACE_INET_Addr (port, host_name),
-    path_name_ (ACE_OS::strdup (path_name)),
-    addr_string_ {},
-    addr_string_len_ (0)
+    path_name_ (path_name == nullptr ? ACE_TEXT ("") : path_name),
+    addr_string_ {}
 {
 }
 
 const ACE_TCHAR *
 ACE_URL_Addr::get_path_name () const
 {
-  return this->path_name_;
-}
-
-ACE_URL_Addr::~ACE_URL_Addr ()
-{
-  ACE_OS::free (reinterpret_cast<void *> (const_cast<ACE_TCHAR *>
-                                                      (this->path_name_)));
-  ACE_OS::free (reinterpret_cast<void *> (const_cast<ACE_TCHAR *>
-                                                      (this->addr_string_)));
-  this->path_name_ = nullptr;
+  return this->path_name_.c_str ();
 }
 
 int
