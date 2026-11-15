@@ -535,7 +535,7 @@ ACE_DLL_Manager::open_dll (const ACE_TCHAR *dll_name,
 {
   ACE_TRACE ("ACE_DLL_Manager::open_dll");
 
-  ACE_DLL_Handle *temp_handle {};
+  std::unique_ptr<ACE_DLL_Handle> temp_handle;
   ACE_DLL_Handle *dll_handle {};
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, nullptr));
@@ -544,11 +544,13 @@ ACE_DLL_Manager::open_dll (const ACE_TCHAR *dll_name,
       {
         if (this->current_size_ < this->total_size_)
           {
-            ACE_NEW_RETURN (temp_handle,
+            ACE_DLL_Handle *new_handle {};
+            ACE_NEW_RETURN (new_handle,
                             ACE_DLL_Handle,
                             nullptr);
 
-            dll_handle = temp_handle;
+            temp_handle.reset (new_handle);
+            dll_handle = temp_handle.get ();
           }
       }
   }
@@ -564,17 +566,17 @@ ACE_DLL_Manager::open_dll (const ACE_TCHAR *dll_name,
                         ACE_TEXT ("open dll <%s>\n"),
                         dll_name));
 
-          delete temp_handle;
           return nullptr;
         }
 
       // Add the handle to the vector only if the dll is successfully
       // opened.
-      if (temp_handle != nullptr)
+      if (temp_handle)
         {
           ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, nullptr));
           this->handle_vector_[this->current_size_] = dll_handle;
           ++this->current_size_;
+          temp_handle.release ();
         }
     }
 
