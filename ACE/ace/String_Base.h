@@ -605,12 +605,14 @@ template <class ACE_CHAR_T>
 class ACE_String_Base_Iterator
 {
 public:
-  // = std::iterator_traits typedefs/traits.
+  /// @name Iterator traits
+  /// @{
   using iterator_category = std::bidirectional_iterator_tag;
   using value_type = ACE_CHAR_T;
   using reference = ACE_CHAR_T &;
   using pointer = ACE_CHAR_T *;
   using difference_type = ptrdiff_t;
+  /// @}
 
   /**
    * Initializing constructor
@@ -731,12 +733,14 @@ template <class ACE_CHAR_T>
 class ACE_String_Base_Const_Iterator
 {
 public:
-  // = std::iterator_traits typedefs/traits.
+  /// @name Iterator traits
+  /// @{
   using iterator_category = std::bidirectional_iterator_tag;
   using value_type = const ACE_CHAR_T;
   using reference = const ACE_CHAR_T &;
   using pointer = const ACE_CHAR_T *;
   using difference_type = ptrdiff_t;
+  /// @}
 
   /**
    * Initializing constructor

@@ -217,7 +217,8 @@ public:
   using ALLOCATOR = MALLOC;
   using MEMORY_POOL_OPTIONS = const typename MALLOC::MEMORY_POOL_OPTIONS *;
 
-  // = Initialization.
+  /// @name Initialization
+  /// @{
   /**
    * Note that @a pool_name should be located in
    * a directory with the appropriate visibility and protection so
@@ -251,8 +252,10 @@ public:
 #endif /* ACE_HAS_WCHAR */
 
   ~ACE_Allocator_Adapter () override;
+  /// @}
 
-  // = Memory Management
+  /// @name Memory management
+  /// @{
 
   /// Allocate @a nbytes, but don't give them any initial value.
   void *malloc (size_t nbytes) override;
@@ -271,8 +274,10 @@ public:
 
   /// Remove any resources associated with this memory manager.
   int remove () override;
+  /// @}
 
-  // = Map manager like functions
+  /// @name Map operations
+  /// @{
 
   /**
    * Associate @a name with @a pointer.  If @a duplicates == 0 then do
@@ -311,8 +316,10 @@ public:
   /// Break any association of name.  Returns the value of pointer in
   /// case the caller needs to deallocate memory.
   int unbind (const char *name, void *&pointer) override;
+  /// @}
 
-  // = Protection and "sync" (i.e., flushing data to backing store).
+  /// @name Memory protection and synchronization
+  /// @{
 
   /**
    * Sync @a len bytes of the memory region to the backing store
@@ -335,6 +342,7 @@ public:
   /// Change the protection of the pages of the mapped region to @a prot
   /// starting at @a addr up to @a len bytes.
   int protect (void *addr, size_t len, int prot = PROT_RDWR) override;
+  /// @}
 
   /// Returns the underlying allocator.
   ALLOCATOR &alloc ();
@@ -492,7 +500,8 @@ public:
   /// Releases resources allocated by this object.
   int remove ();
 
-  // = Memory management
+  /// @name Memory management
+  /// @{
 
   /// Allocate @a nbytes, but don't give them any initial value.
   void *malloc (size_t nbytes);
@@ -512,8 +521,10 @@ public:
 
   /// Returns a reference to the underlying memory pool.
   MEMORY_POOL &memory_pool ();
+  /// @}
 
-  // = Map manager like functions
+  /// @name Map operations
+  /// @{
 
   /**
    * Associate @a name with @a pointer.  If @a duplicates == 0 then do
@@ -559,8 +570,10 @@ public:
    * need to call this method multiple times until it fails...
    */
   int unbind (const char *name, void *&pointer);
+  /// @}
 
-  // = Protection and "sync" (i.e., flushing data to backing store).
+  /// @name Memory protection and synchronization
+  /// @{
 
   /**
    * Sync @a len bytes of the memory region to the backing store
@@ -583,6 +596,7 @@ public:
   /// Change the protection of the pages of the mapped region to @a prot
   /// starting at @a addr up to @a len bytes.
   int protect (void *addr, size_t len, int prot = PROT_RDWR);
+  /// @}
 
   /**
    * Returns a count of the number of available chunks that can hold
@@ -705,7 +719,8 @@ public:
 
   ~ACE_Malloc_LIFO_Iterator_T ();
 
-  // = Iteration methods.
+  /// @name Iteration methods
+  /// @{
 
   /// Returns 1 when all items have been seen, else 0.
   int done () const;
@@ -724,6 +739,7 @@ public:
   /// Move forward by one element in the set.  Returns 0 when all the
   /// items in the set have been seen, else 1.
   int advance ();
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;
@@ -772,7 +788,8 @@ public:
 
   ~ACE_Malloc_FIFO_Iterator_T ();
 
-  // = Iteration methods.
+  /// @name Iteration methods
+  /// @{
 
   /// Returns 1 when all items have been seen, else 0.
   int done () const;
@@ -795,6 +812,7 @@ public:
   /// Go to the starting element that was inserted first. Returns 0
   /// when there is no item in the set, else 1.
   int start ();
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;
