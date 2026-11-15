@@ -46,7 +46,7 @@ class MyTask : public ACE_Task_Base
 public:
   MyTask (ACE_Barrier& bar,
           Kokyu::DSRT_Dispatcher<mif_scheduler_traits>* dispatcher,
-          mif_scheduler_traits::QoSDescriptor_t& qos,
+          mif_scheduler_traits::QoSDescriptor_t const &qos,
           int exec_duration)
     : barrier_ (bar),
      dispatcher_ (dispatcher),
@@ -64,10 +64,10 @@ public:
 
  private:
   ACE_Barrier& barrier_;
-  Kokyu::DSRT_Dispatcher<mif_scheduler_traits>* dispatcher_; // Non-owning.
-  mif_scheduler_traits::QoSDescriptor_t qos_;
-  mif_scheduler_traits::Guid_t guid_;
-  int exec_duration_;
+  Kokyu::DSRT_Dispatcher<mif_scheduler_traits>* const dispatcher_; // Non-owning.
+  mif_scheduler_traits::QoSDescriptor_t const qos_;
+  mif_scheduler_traits::Guid_t const guid_;
+  int const exec_duration_;
 };
 
 int MyTask::svc ()
@@ -82,13 +82,13 @@ int MyTask::svc ()
 
   barrier_.wait ();
 
-  long prime_number = 9619899;
+  long const prime_number = 9619899;
 
   ACE_High_Res_Timer timer;
   ACE_Time_Value elapsed_time;
   ACE_Time_Value seconds_tracker(0,0);
 
-  ACE_Time_Value one_second (1,0);
+  ACE_Time_Value const one_second (1,0);
   ACE_Time_Value compute_count_down_time (exec_duration_, 0);
   ACE_Countdown_Time compute_count_down (&compute_count_down_time);
 
@@ -108,8 +108,8 @@ int MyTask::svc ()
         seconds_tracker.set (0,0);
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%t) Currently running guid=%d")
-                    ACE_TEXT (", qos_.importance=%d\n"),
-                    guid_, qos_.importance_));
+                    ACE_TEXT (", qos_.importance=%q\n"),
+                    guid_, static_cast<ACE_INT64> (qos_.importance_)));
       }
       timer.reset ();
       timer.start ();
@@ -140,11 +140,9 @@ int ACE_TMAIN (int, ACE_TCHAR **)
 
   ACE_ASSERT (disp.get () != nullptr);
 
-  mif_scheduler_traits::QoSDescriptor_t qos1, qos2, qos3;
-
-  qos1.importance_ = 1;
-  qos2.importance_ = 2;
-  qos3.importance_ = 3;
+  mif_scheduler_traits::QoSDescriptor_t const qos1 {1};
+  mif_scheduler_traits::QoSDescriptor_t const qos2 {2};
+  mif_scheduler_traits::QoSDescriptor_t const qos3 {3};
 
   MyTask mytask1 (bar, disp.get (), qos1, 15);
   MyTask mytask2 (bar, disp.get (), qos2, 6);
