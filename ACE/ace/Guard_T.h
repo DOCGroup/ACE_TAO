@@ -79,7 +79,8 @@ public:
   /// Implicitly release the lock.
   ~ACE_Guard ();
 
-  // = Lock accessors.
+  /// @name Lock operations
+  /// @{
 
   /// Explicitly acquire the lock.
   int acquire ();
@@ -94,7 +95,10 @@ public:
   /// implicitly in the destructor.
   void disown ();
 
-  // = Utility methods.
+  /// @}
+
+  /// @name Utility operations
+  /// @{
   /// true if locked, false if couldn't acquire the lock
   /// (errno will contain the reason for this).
   bool locked () const;
@@ -106,6 +110,7 @@ public:
   void dump () const;
 
   // ACE_ALLOC_HOOK_DECLARE;
+  /// @}
   // Declare the dynamic allocation hooks.
 
 protected:
@@ -146,7 +151,8 @@ public:
   /// lock.
   ACE_Write_Guard (ACE_LOCK &m, bool block);
 
-  // = Lock accessors.
+  /// @name Lock operations
+  /// @{
 
   /// Explicitly acquire the write lock.
   int acquire_write ();
@@ -160,12 +166,16 @@ public:
   /// Conditionally acquire the write lock (i.e., won't block).
   int tryacquire ();
 
-  // = Utility methods.
+  /// @}
+
+  /// @name Utility operations
+  /// @{
 
   /// Dump the state of an object.
   void dump () const;
 
   // ACE_ALLOC_HOOK_DECLARE;
+  /// @}
   // Declare the dynamic allocation hooks.
 };
 
@@ -190,7 +200,8 @@ public:
   /// lock.
   ACE_Read_Guard (ACE_LOCK &m, bool block);
 
-  // = Lock accessors.
+  /// @name Lock operations
+  /// @{
 
   /// Explicitly acquire the read lock.
   int acquire_read ();
@@ -204,12 +215,16 @@ public:
   /// Conditionally acquire the read lock (i.e., won't block).
   int tryacquire ();
 
-  // = Utility methods.
+  /// @}
+
+  /// @name Utility operations
+  /// @{
 
   /// Dump the state of an object.
   void dump () const;
 
   // ACE_ALLOC_HOOK_DECLARE;
+  /// @}
   // Declare the dynamic allocation hooks.
 };
 
@@ -241,7 +256,8 @@ public:
   /// Implicitly release the thread-specific lock.
   ~ACE_TSS_Guard ();
 
-  // = Lock accessors.
+  /// @name Lock operations
+  /// @{
 
   /// Explicitly acquire the thread-specific lock.
   int acquire ();
@@ -253,7 +269,10 @@ public:
   /// Explicitly release the thread-specific lock.
   int release ();
 
-  // = Utility methods.
+  /// @}
+
+  /// @name Utility operations
+  /// @{
   /// Explicitly release the thread-specific lock.
   int remove ();
 
@@ -262,6 +281,7 @@ public:
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
+  /// @}
 
 protected:
   /// Helper, meant for subclass only.
@@ -302,7 +322,8 @@ public:
   /// Implicitly and automatically acquire the thread-specific write lock.
   ACE_TSS_Write_Guard (ACE_LOCK &lock, bool block = true);
 
-  // = Lock accessors.
+  /// @name Lock operations
+  /// @{
 
   /// Explicitly acquire the thread-specific write lock.
   int acquire_write ();
@@ -316,12 +337,16 @@ public:
   /// Conditionally acquire the thread-specific write lock (i.e., won't block).
   int tryacquire ();
 
-  // = Utility methods.
+  /// @}
+
+  /// @name Utility operations
+  /// @{
 
   /// Dump the state of an object.
   void dump () const;
 
   // ACE_ALLOC_HOOK_DECLARE;
+  /// @}
   // Declare the dynamic allocation hooks.
 private:
   // FUZZ: disable check_for_ACE_Guard
@@ -345,7 +370,8 @@ public:
   /// Implicitly and automatically acquire the thread-specific read lock.
   ACE_TSS_Read_Guard (ACE_LOCK &lock, bool block = true);
 
-  // = Lock accessors.
+  /// @name Lock operations
+  /// @{
   /// Explicitly acquire the thread-specific read lock.
   int acquire_read ();
 
@@ -360,11 +386,15 @@ public:
   /// block).
   int tryacquire ();
 
-  // = Utility methods.
+  /// @}
+
+  /// @name Utility operations
+  /// @{
   /// Dump the state of an object.
   void dump () const;
 
   // ACE_ALLOC_HOOK_DECLARE;
+  /// @}
   // Declare the dynamic allocation hooks.
 private:
   // FUZZ: disable check_for_ACE_Guard
