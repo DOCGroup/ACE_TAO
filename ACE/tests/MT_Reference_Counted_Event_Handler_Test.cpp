@@ -35,6 +35,8 @@
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <vector>
+
 #if defined (ACE_HAS_THREADS) && !defined ACE_LACKS_ACCEPT
 
 static const char message[] = "abcdefghijklmnopqrstuvwxyz";
@@ -277,7 +279,7 @@ public:
     State state_;
   };
 
-  Entry *entries_;
+  std::vector<Entry> entries_;
 
   ACE_SYNCH_MUTEX lock_;
 };
@@ -640,11 +642,8 @@ Connector::connect (ACE_HANDLE &client_handle,
 }
 
 Connection_Cache::Connection_Cache ()
+  : entries_ (number_of_connections)
 {
-  // Initialize the connection cache.
-  this->entries_ =
-    new Entry[number_of_connections];
-
   for (int i = 0; i < number_of_connections; ++i)
     {
       this->entries_[i].sender_ = nullptr;
@@ -768,8 +767,6 @@ Connection_Cache::~Connection_Cache ()
         this->remove_connection (this->entries_[i].sender_);
       }
     }
-
-  delete[] this->entries_;
 }
 
 class Invocation_Thread : public ACE_Task_Base
