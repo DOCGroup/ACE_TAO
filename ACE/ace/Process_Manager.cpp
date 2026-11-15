@@ -19,6 +19,7 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/os_include/os_typeinfo.h"
 #include "ace/Truncate.h"
+#include <memory>
 
 #if defined (ACE_HAS_SIG_C_FUNC)
 extern "C" void
@@ -418,12 +419,13 @@ ACE_Process_Manager::spawn (ACE_Process_Options &options,
   ACE_NEW_RETURN (process,
                   ACE_Managed_Process,
                   ACE_INVALID_PID);
+  std::unique_ptr<ACE_Process> process_owner (process);
 
-  pid_t const pid = this->spawn (process, options, event_handler);
-  if (pid == ACE_INVALID_PID || pid == 0)
-  {
-    delete process;
-  }
+  pid_t const pid = this->spawn (process_owner.get (), options, event_handler);
+  if (pid != ACE_INVALID_PID && pid != 0)
+    {
+      process_owner.release ();
+    }
 
   return pid;
 }
