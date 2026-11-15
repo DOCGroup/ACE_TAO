@@ -11,8 +11,14 @@
 #include "tao/SystemException.h"
 
 #define CHECK_NO_THROW(statement) \
-try { statement; } catch(...) { \
-  return 1; }
+try \
+  { \
+    statement; \
+  } \
+catch (...) \
+  { \
+    return 1; \
+  }
 
 using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO::details;
 

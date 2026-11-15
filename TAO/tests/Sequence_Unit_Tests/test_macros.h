@@ -27,7 +27,8 @@
       }
 
 #define CHECK_THROW(X, Y) \
-    try { \
+    try \
+        { \
            X; \
         } \
     catch (Y const &) \

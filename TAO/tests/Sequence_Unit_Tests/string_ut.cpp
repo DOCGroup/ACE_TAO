@@ -23,22 +23,28 @@ struct helper {};
 template<>
 struct helper<char>
 {
-  static char const * empty() {
+  static char const * empty ()
+  {
     return "";
   }
-  static char const * sample0() {
+  static char const * sample0 ()
+  {
     return "Hello";
   }
-  static char const * sample1() {
+  static char const * sample1 ()
+  {
     return "World";
   }
-  static char * dup_sample0() {
+  static char * dup_sample0 ()
+  {
     return string_traits<char,true>::duplicate(sample0());
   }
-  static char * dup_sample1() {
+  static char * dup_sample1 ()
+  {
     return string_traits<char,true>::duplicate(sample1());
   }
-  static bool equal(char const * lhs, char const * rhs) {
+  static bool equal (char const *lhs, char const *rhs)
+  {
     return std::strcmp (lhs, rhs) == 0;
   }
 };
@@ -46,22 +52,28 @@ struct helper<char>
 template<>
 struct helper<CORBA::WChar>
 {
-  static CORBA::WChar const * empty() {
+  static CORBA::WChar const * empty ()
+  {
     return L"";
   }
-  static CORBA::WChar const * sample0() {
+  static CORBA::WChar const * sample0 ()
+  {
     return L"Hello";
   }
-  static CORBA::WChar const * sample1() {
+  static CORBA::WChar const * sample1 ()
+  {
     return L"World";
   }
-  static CORBA::WChar * dup_sample0() {
+  static CORBA::WChar * dup_sample0 ()
+  {
     return string_traits<CORBA::WChar,true>::duplicate(sample0());
   }
-  static CORBA::WChar * dup_sample1() {
+  static CORBA::WChar * dup_sample1 ()
+  {
     return string_traits<CORBA::WChar,true>::duplicate(sample1());
   }
-  static bool equal(CORBA::WChar const * lhs, CORBA::WChar const * rhs) {
+  static bool equal (CORBA::WChar const *lhs, CORBA::WChar const *rhs)
+  {
     return std::wcscmp (lhs, rhs) == 0;
   }
 };
