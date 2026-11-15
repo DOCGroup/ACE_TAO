@@ -114,16 +114,16 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv)
   Kokyu::QoSDescriptor qos1, qos2, qos3;
 
   qos1.preemption_priority_ = 2;
-  ACE_DEBUG ((LM_DEBUG, "Priority of command1 is %d\n",
-              qos1.preemption_priority_));
+  ACE_DEBUG ((LM_DEBUG, "Priority of command1 is %q\n",
+              static_cast<ACE_INT64> (qos1.preemption_priority_)));
 
   qos2.preemption_priority_ = 3;
-  ACE_DEBUG ((LM_DEBUG, "Priority of command2 is %d\n",
-              qos2.preemption_priority_));
+  ACE_DEBUG ((LM_DEBUG, "Priority of command2 is %q\n",
+              static_cast<ACE_INT64> (qos2.preemption_priority_)));
 
   qos3.preemption_priority_ = 1;
-  ACE_DEBUG ((LM_DEBUG, "Priority of command3 is %d\n",
-              qos3.preemption_priority_));
+  ACE_DEBUG ((LM_DEBUG, "Priority of command3 is %q\n",
+              static_cast<ACE_INT64> (qos3.preemption_priority_)));
 
   if (disp->dispatch (&cmd1, qos1) == -1 ||
       disp->dispatch (&cmd2, qos2) == -1 ||

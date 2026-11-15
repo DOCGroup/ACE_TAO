@@ -119,15 +119,15 @@ int ACE_TMAIN (int argc, ACE_TCHAR **argv)
   qos3.preemption_priority_ = 1;
   qos3.deadline_ = deadline3;
 
-  ACE_DEBUG ((LM_DEBUG, "Deadline of command1 is %d\n",
+  ACE_DEBUG ((LM_DEBUG, "Deadline of command1 is %:\n",
               qos1.deadline_.sec ()));
   disp->dispatch (&cmd1, qos1);
 
-  ACE_DEBUG ((LM_DEBUG, "Deadline of command2 is %d\n",
+  ACE_DEBUG ((LM_DEBUG, "Deadline of command2 is %:\n",
               qos2.deadline_.sec ()));
   disp->dispatch (&cmd2, qos2);
 
-  ACE_DEBUG ((LM_DEBUG, "Deadline of command3 is %d\n",
+  ACE_DEBUG ((LM_DEBUG, "Deadline of command3 is %:\n",
               qos3.deadline_.sec ()));
   disp->dispatch (&cmd3, qos3);
 

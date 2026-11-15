@@ -45,14 +45,14 @@ DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::svc ()
 #ifdef KOKYU_DSRT_LOGGING
   int prio {};
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("max prio=%d\n")
-              ACE_TEXT ("min prio=%d\n")
-              ACE_TEXT ("active prio=%d\n")
-              ACE_TEXT ("inactive prio=%d\n"),
-              this->max_prio_,
-              this->min_prio_,
-              this->active_prio_,
-              this->inactive_prio_));
+              ACE_TEXT ("max prio=%q\n")
+              ACE_TEXT ("min prio=%q\n")
+              ACE_TEXT ("active prio=%q\n")
+              ACE_TEXT ("inactive prio=%q\n"),
+              static_cast<ACE_INT64> (this->max_prio_),
+              static_cast<ACE_INT64> (this->min_prio_),
+              static_cast<ACE_INT64> (this->active_prio_),
+              static_cast<ACE_INT64> (this->inactive_prio_)));
 
   if (ACE_OS::thr_getprio (scheduler_thr_handle, prio) == -1)
     {
@@ -132,8 +132,8 @@ DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits>::svc ()
                   ACE_ERROR ((LM_ERROR,
                               ACE_TEXT ("%p\n"),
                               ACE_TEXT ("thr_setprio on curr_scheduled_thr_handle_ failed.")));
-                  ACE_DEBUG ((LM_DEBUG, "inactive thread priority = %d\n",
-                              this->inactive_prio_));
+                  ACE_DEBUG ((LM_DEBUG, "inactive thread priority = %q\n",
+                              static_cast<ACE_INT64> (this->inactive_prio_)));
                 }
             }
 
