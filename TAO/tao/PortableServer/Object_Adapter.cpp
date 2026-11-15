@@ -1105,8 +1105,8 @@ TAO_Object_Adapter::poa_name_iterator::operator* () const
     - this->last_separator_
     - TAO_Root_POA::name_separator_length ();
 
-  return ACE_CString (reinterpret_cast <const char *>
-                                       (&this->folded_buffer_[start_at]),
+  return ACE_CString (reinterpret_cast <char const *> (
+                        this->folded_buffer_ + start_at),
                       how_many);
 }
 
