@@ -145,9 +145,9 @@ TAO_CDR_Encaps_Codec::decode (CORBA::OctetSeq const& data)
       CORBA::Any_var safe_any = any;
 
       if (cdr >> (*any))
-      {
-        return safe_any._retn ();
-      }
+        {
+          return safe_any._retn ();
+        }
     }
 
   throw IOP::Codec::FormatMismatch ();
@@ -186,9 +186,9 @@ TAO_CDR_Encaps_Codec::encode_value (CORBA::Any const& data)
             dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
 
           if (unk == nullptr)
-          {
-            throw ::CORBA::INTERNAL ();
-          }
+            {
+              throw ::CORBA::INTERNAL ();
+            }
 
           // We don't want unk's rd_ptr to move, in case we are shared by
           // another Any, so we use this to copy the state, not the buffer.
@@ -326,9 +326,9 @@ TAO_CDR_Encaps_Codec::check_type_for_encoding (CORBA::Any const& data) const
   if (this->major_ == 1
       && this->minor_ == 0
       && typecode->equivalent (CORBA::_tc_wstring))
-  {
-    throw IOP::Codec::InvalidTypeForEncoding ();
-  }
+    {
+      throw IOP::Codec::InvalidTypeForEncoding ();
+    }
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
