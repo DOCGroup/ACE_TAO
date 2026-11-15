@@ -298,6 +298,15 @@ csdb_generator::init_output (char const *srcfile)
   }
 
   time_t const now = ACE_OS::time ();
+  struct tm local_time {};
+  if (ACE_OS::localtime_r (&now, &local_time) == nullptr)
+    ACE_ERROR_RETURN ((LM_ERROR, "Unable to convert generation time\n"), -1);
+  std::array<char, 26> generation_time {};
+  if (ACE_OS::asctime_r (&local_time,
+                         generation_time.data (),
+                         static_cast<int> (generation_time.size ())) == nullptr)
+    ACE_ERROR_RETURN ((LM_ERROR, "Unable to format generation time\n"), -1);
+
   std::string temp_template = this->ace_src_ + ACE_DIRECTORY_SEPARATOR_STR + "csdbXXXXXX";
   ACE_HANDLE const fd = ACE_OS::mkstemp (temp_template.data ());
   if (fd == ACE_INVALID_HANDLE)
@@ -315,7 +324,7 @@ csdb_generator::init_output (char const *srcfile)
     }
 
   std::fprintf (this->outf_.get (), "/*\n * Codeset registry DB, generated %s * source: %s\n",
-                   ACE_OS::asctime (ACE_OS::localtime(&now)),
+                   generation_time.data (),
                    srcfile);
   std::fprintf (this->outf_.get (),
                 " *\n * To populate the registry_db, construct a codeset registry text file "
