@@ -77,8 +77,6 @@ ACE_Name_Request::init ()
   this->length (sizeof this->transfer_);
 }
 
-// = Set/get the length of the encoded/decoded message.
-
 ACE_UINT32
 ACE_Name_Request::length () const
 {
@@ -92,8 +90,6 @@ ACE_Name_Request::length (ACE_UINT32 l)
   ACE_TRACE ("ACE_Name_Request::length");
   this->transfer_.length_ = l;
 }
-
-// = Set/get the type of the message.
 
 ACE_INT32
 ACE_Name_Request::msg_type () const
@@ -109,8 +105,6 @@ ACE_Name_Request::msg_type (ACE_INT32 t)
   this->transfer_.msg_type_ = t;
 }
 
-// = Set/get the len of the name
-
 ACE_UINT32
 ACE_Name_Request::name_len () const
 {
@@ -124,8 +118,6 @@ ACE_Name_Request::name_len (ACE_UINT32 t)
   ACE_TRACE ("ACE_Name_Request::name_len");
   this->transfer_.name_len_ = t;
 }
-
-// = Set/get the len of the value
 
 ACE_UINT32
 ACE_Name_Request::value_len () const
@@ -141,8 +133,6 @@ ACE_Name_Request::value_len (ACE_UINT32 t)
   this->transfer_.value_len_ = t;
 }
 
-// = Set/get the len of the type
-
 ACE_UINT32
 ACE_Name_Request::type_len () const
 {
@@ -157,8 +147,6 @@ ACE_Name_Request::type_len (ACE_UINT32 t)
   this->transfer_.type_len_ = t;
 }
 
-// = Set/get the blocking semantics.
-
 ACE_UINT32
 ACE_Name_Request::block_forever () const
 {
@@ -172,8 +160,6 @@ ACE_Name_Request::block_forever (ACE_UINT32 bs)
   ACE_TRACE ("ACE_Name_Request::block_forever");
   this->transfer_.block_forever_ = bs;
 }
-
-// = Set/get the timeout.
 
 ACE_Time_Value
 ACE_Name_Request::timeout () const
@@ -191,8 +177,6 @@ ACE_Name_Request::timeout (const ACE_Time_Value timeout)
   this->transfer_.usec_timeout_ = static_cast<ACE_UINT32> (timeout.usec ());
 }
 
-// = Set/get the name
-
 const ACE_WCHAR_T *
 ACE_Name_Request::name () const
 {
@@ -206,8 +190,6 @@ ACE_Name_Request::name (const ACE_WCHAR_T *t)
   ACE_TRACE ("ACE_Name_Request::name");
   (void) std::memcpy (this->name_, t, this->name_len ());
 }
-
-// = Set/get the value
 
 const ACE_WCHAR_T *
 ACE_Name_Request::value () const
@@ -223,8 +205,6 @@ ACE_Name_Request::value (const ACE_WCHAR_T *c)
 
   (void) std::memcpy (this->value_, c, this->value_len());
 }
-
-// = Set/get the type
 
 const char *
 ACE_Name_Request::type () const
@@ -432,8 +412,6 @@ ACE_Name_Reply::init ()
   this->length (sizeof this->transfer_);
 }
 
-// = Set/get the length of the encoded/decoded message.
-
 ACE_UINT32
 ACE_Name_Reply::length () const
 {
@@ -447,8 +425,6 @@ ACE_Name_Reply::length (ACE_UINT32 l)
   ACE_TRACE ("ACE_Name_Reply::length");
   this->transfer_.length_ = l;
 }
-
-// = Set/get the type of the message.
 
 ACE_INT32
 ACE_Name_Reply::msg_type () const
@@ -485,7 +461,6 @@ ACE_Name_Reply::status (ACE_INT32 s)
     this->transfer_.type_ = 0;
 }
 
-// = Set/get the errno of a failed reply.
 ACE_UINT32
 ACE_Name_Reply::errnum () const
 {
