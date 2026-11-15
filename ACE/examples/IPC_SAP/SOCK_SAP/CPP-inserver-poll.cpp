@@ -39,7 +39,7 @@ init_poll_array ()
 {
   int i;
 
-  for (i = 0; i < MAX_HANDLES; i++)
+  for (i = 0; i < MAX_HANDLES; ++i)
     {
       poll_array[i].fd = ACE_INVALID_HANDLE;
       poll_array[i].events = POLLIN;
@@ -80,7 +80,7 @@ handle_data (size_t &n_handles)
   // Handle pending logging messages first (s_handle + 1 is guaranteed
   // to be lowest client descriptor).
 
-  for (size_t index = 1; index < n_handles; index++)
+  for (size_t index = 1; index < n_handles; ++index)
     {
       if (ACE_BIT_ENABLED (poll_array[index].revents, POLLIN))
         {
