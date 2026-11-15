@@ -15,11 +15,10 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+/// Server-side echo interceptor used for visual checks.
 class ForwardTest_Request_Interceptor
   : public virtual PortableInterceptor::ServerRequestInterceptor
-
 {
-  // = Server-side echo interceptor.  For checking interceptor visually only.
 public:
   ForwardTest_Request_Interceptor ();
   explicit ForwardTest_Request_Interceptor (CORBA::Object_ptr forward_location);
@@ -31,8 +30,8 @@ public:
 
   void forward_reference (CORBA::Object_ptr forward_location);
 
+  /// Canonical name of the interceptor.
   char * name () override;
-  // Canonical name of the interceptor.
 
   void destroy () override;
 

@@ -5,15 +5,10 @@
 
 #include "testS.h"
 
+/// Servant that throws a location-forward exception when given a target IOR;
+/// otherwise, it echoes the source string.
 class Forward_Test_i : public POA_Forward::Test
 {
-  // = TITLE
-  //   Location Forward exception tester
-  //
-  // = DESCRIPTION
-  //   servant throws a location forward exception when constructed with a
-  //   target IOR, otherwise it echos the source string.
-
 public:
   explicit Forward_Test_i (CORBA::ORB_ptr orb);
   Forward_Test_i (Forward_Test_i const &) = delete;
