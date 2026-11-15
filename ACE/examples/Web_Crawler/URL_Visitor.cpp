@@ -1,3 +1,4 @@
+#include <memory>
 #include <utility>
 
 #include "ace/OS_NS_string.h"
@@ -141,19 +142,19 @@ HTML_Body_Validation_Strategy::execute ()
         {
           if (url[0] == '.' && url[1] == '.')
            {
-             url.set (&url[3], 1);
+             url = url.substr (3);
              int i =
                ACE_Utils::truncate_cast<int> (
                  prev_location.rfind ('/', prev_location.length () - 1));
              prev_location = prev_location.substring (0, i+1);
            }
           if (url[0] == '.' && url[1] == '/')
-            url.set (&url[2], 1);
+            url = url.substr (2);
 
           url = prev_location + url;
         }
       else
-        url.set (&url[7], 1);
+        url = url.substr (7);
       // Double slash at the end works!e.g www.cs.wustl.edu/~kirthika//
       if (url.find (".html") == url.npos)
         url = url + "/";
@@ -169,7 +170,7 @@ HTML_Body_Validation_Strategy::execute ()
           HTTP_URL *http_url {};
           ACE_NEW_RETURN (http_url,
                           HTTP_URL (*url_addr_ptr,
-                                    dynamic_cast<HTTP_URL *> (&this->url_)),
+                                    dynamic_cast<HTTP_URL *> (std::addressof (this->url_))),
                           0);
           std::unique_ptr<HTTP_URL> http_url_ptr (http_url);
           URL_Command *url_command {};
@@ -245,9 +246,9 @@ URL_Validation_Visitor::URL_Validation_Visitor ()
     std::make_unique<CACHED_CONNECT_STRATEGY> (this->caching_strategy_);
   this->strat_connector_ =
     std::make_unique<STRATEGY_CONNECTOR> (nullptr,
-                                          &this->creation_strategy_,
+                                          std::addressof (this->creation_strategy_),
                                           this->caching_connect_strategy_.get (),
-                                          &this->activation_strategy_);
+                                          std::addressof (this->activation_strategy_));
 }
 
 URL_Validation_Visitor::~URL_Validation_Visitor () = default;

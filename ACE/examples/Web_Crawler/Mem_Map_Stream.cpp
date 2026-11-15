@@ -87,7 +87,7 @@ Mem_Map_Stream::peek_str (size_t offset,
     if (this->grow_file_and_remap () == -1)
       return nullptr;
 
-  return &this->get_pos_[offset];
+  return this->get_pos_ + offset;
 }
 
 ACE_OFF_T

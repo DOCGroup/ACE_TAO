@@ -4,6 +4,8 @@
 #include "Options.h"
 #include "ace/OS_NS_string.h"
 
+#include <memory>
+
 int
 Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
@@ -108,7 +110,7 @@ Options::recurse () const
 const ACE_Time_Value *
 Options::timeout () const
 {
-  return &this->timeout_;
+  return std::addressof (this->timeout_);
 }
 
 bool
