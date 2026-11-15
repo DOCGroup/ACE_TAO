@@ -39,7 +39,6 @@ parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -67,8 +66,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         root_poa->the_POAManager ();
 
       poa_manager->activate ();
-
-      /* Create, register factories */
 
       Supports_Test::Node_init *node_factory {};
 
@@ -108,8 +105,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       node_factory2->_remove_ref ();
 
-      /* Get test object reference */
-
       CORBA::Object_var tmp = orb->string_to_object (options.ior);
 
       Supports_Test::test_var my_test =
@@ -122,8 +117,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                           1);
 
       my_test->start ();
-
-      /* Perform test */
 
       for (int i = 0; i < options.num_trials; i++)
         {
@@ -182,8 +175,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       my_test->finish ();
-
-      /* Shut down */
 
       orb->destroy ();
 

@@ -30,7 +30,6 @@ parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
                            argv [0]),
                           -1);
       }
-  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -56,8 +55,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       PortableServer::POAManager_var poa_manager = root_poa->the_POAManager ();
 
-      /* Create, register factories */
-
       Supports_Test::Node_init *node_factory {};
 
       ACE_NEW_RETURN (node_factory, node_init_impl, 1);
@@ -81,8 +78,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_ASSERT (returned_factory == nullptr);
 
       vt_graph_factory->_remove_ref ();
-
-      /* create and activate test servant */
 
       test_impl *a_test_impl {};
 

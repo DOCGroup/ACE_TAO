@@ -4,9 +4,6 @@
 #include "Supports_TestS.h"
 #include "ace/Get_Opt.h"
 
-/**
- * \class node_impl
- */
 class node_impl :
   public virtual OBV_Supports_Test::Node,
   public virtual CORBA::DefaultValueRefCountBase

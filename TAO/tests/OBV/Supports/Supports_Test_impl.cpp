@@ -4,10 +4,8 @@
 
 #include "ace/streams.h"
 
-/* vt_graph_impl */
-
-// Creates a vt_graph_impl with the given number of nodes. There will be one
-// root node and the rest will be children of it.
+/// Creates a graph with the requested number of nodes. The first node is the
+/// root and all remaining nodes are its children.
 vt_graph_impl::vt_graph_impl (int num_nodes)
 {
   add_node ("ROOT");
@@ -18,14 +16,14 @@ vt_graph_impl::vt_graph_impl (int num_nodes)
     }
 }
 
-// Get the number of nodes in the vt_graph.
+/// Returns the number of nodes in the graph.
 CORBA::Long
 vt_graph_impl::size ()
 {
   return nodes_ ().length ();
 }
 
-// Add a node to the graph with no edges.
+/// Adds a node to the graph with no edges.
 void
 vt_graph_impl::add_node (char const *name)
 {
@@ -35,7 +33,7 @@ vt_graph_impl::add_node (char const *name)
   nodes_ ()[nodes_ ().length () - 1] = new_node;
 }
 
-// Print out information about each node.
+/// Prints information about each node.
 void
 vt_graph_impl::print ()
 {
@@ -59,8 +57,6 @@ vt_graph_impl::_copy_value ()
   return owner._retn ();
 }
 
-/* vt_graph_init_impl - factory operations */
-
 Supports_Test::vt_graph *
 vt_graph_init_impl::create ()
 {
@@ -76,8 +72,6 @@ vt_graph_init_impl::create_for_unmarshal ()
   ACE_NEW_RETURN (ret_val, vt_graph_impl, nullptr);
   return ret_val;
 }
-
-/* test_impl */
 
 test_impl::test_impl (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
@@ -157,15 +151,12 @@ test_impl::finish ()
   this->orb_->shutdown (false);
 }
 
-/* node_impl */
-
-// Initialize state.
 node_impl::node_impl (char const *name)
 {
   name_ (name);
 }
 
-// Add an edge from this node to neighbor.
+/// Adds an edge from this node to neighbor.
 void
 node_impl::add_edge (Supports_Test::Node * neighbor)
 {
@@ -175,7 +166,7 @@ node_impl::add_edge (Supports_Test::Node * neighbor)
   neighbor->_add_ref ();
 }
 
-// Remove the edge from this node to neighbor.
+/// Removes the edge from this node to neighbor.
 void
 node_impl::remove_edge (Supports_Test::Node * neighbor)
 {
@@ -217,8 +208,6 @@ node_impl::_copy_value ()
   copy->neighbors_ (this->neighbors_ ());
   return owner._retn ();
 }
-
-/* node_init_impl - factory operations */
 
 Supports_Test::Node *
 node_init_impl::create ()
