@@ -42,6 +42,9 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/ACE.h"
 
+#include <memory>
+#include <new>
+
 #if defined(USE_GETRUSAGE) && !defined(ACE_HAS_GETRUSAGE)
 #error "Can't define USE_GETRUSAGE on this platform."
 #endif
@@ -180,26 +183,21 @@ CDR_Test<T, H>::CDR_Test (int total, int niter, int use_array)
       return;
     }
 
-  char* srcbuf;
-  char* dstbuf;
-  {
-    const size_t stotal =
-      (total + 10) * H::size () + sizeof(ACE_UINT32) + ACE_CDR::MAX_ALIGNMENT;
+  const size_t stotal =
+    (total + 10) * H::size () + sizeof(ACE_UINT32) + ACE_CDR::MAX_ALIGNMENT;
+  std::unique_ptr<char[]> srcbuf (new (std::nothrow) char[stotal]);
+  if (!srcbuf)
+    {
+      memabort ();
+    }
+  zero (srcbuf.get (), stotal);
 
-    ACE_NEW(srcbuf, char[stotal]);
-    if (srcbuf == nullptr)
-      {
-        memabort ();
-      }
-    zero(srcbuf, stotal);
-
-    ACE_NEW(dstbuf, char[stotal]);
-    if (dstbuf == nullptr)
-      {
-        memabort ();
-      }
-    zero(dstbuf, stotal);
-  }
+  std::unique_ptr<char[]> dstbuf (new (std::nothrow) char[stotal]);
+  if (!dstbuf)
+    {
+      memabort ();
+    }
+  zero (dstbuf.get (), stotal);
 
   if (use_array)
     {
@@ -228,7 +226,7 @@ CDR_Test<T, H>::CDR_Test (int total, int niter, int use_array)
                   int tdelta = t - mymax(sk, dk);
 
                   CDR_Test<T, H>::do_test(tdelta, niter, 1,
-                                          srcbuf, dstbuf,
+                                          srcbuf.get (), dstbuf.get (),
                                           sk, dk);
                 }
             }
@@ -236,11 +234,8 @@ CDR_Test<T, H>::CDR_Test (int total, int niter, int use_array)
     }
   else
     {
-      do_test(total, niter, use_array, srcbuf, dstbuf);
+      do_test(total, niter, use_array, srcbuf.get (), dstbuf.get ());
     }
-
-  delete[] srcbuf;
-  delete[] dstbuf;
 }
 
 // Generate an ``interesting'' value for testing at pos >i<.

@@ -25,6 +25,9 @@
 #include "ace/Get_Opt.h"
 #include "Cache_Map_Manager_Test.h"     // Hash_Key class defined in here
 
+#include <memory>
+#include <new>
+
 using KEY = size_t;
 using VALUE = size_t;
 using ATTR = int;
@@ -98,7 +101,7 @@ static int randomize_lookups = 1;
 static int purge_percent = 10;
 static int debug = 0;
 static Caching_Strategy_Type caching_strategy_type = ACE_ALL;
-static KEY *lookup_array {};
+static std::unique_ptr<KEY[]> lookup_array;
 
 static void
 test_caching_utility_ownership ()
@@ -568,9 +571,12 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_OS::srand (static_cast<u_int> (ACE_OS::time (nullptr)));
 
   // Create the lookup array.
-  ACE_NEW_RETURN (lookup_array,
-                  KEY[no_of_lookups],
-                  -1);
+  lookup_array.reset (new (std::nothrow) KEY[no_of_lookups]);
+  if (!lookup_array)
+    {
+      errno = ENOMEM;
+      return -1;
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("\nLookup sequence: ")));
@@ -614,8 +620,6 @@ run_main (int argc, ACE_TCHAR *argv[])
     {
       test_caching_strategy_type ();
     }
-
-  delete[] lookup_array;
 
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::VERBOSE_LITE);
   ACE_END_TEST;
