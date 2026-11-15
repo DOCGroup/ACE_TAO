@@ -29,8 +29,8 @@ public:
   {
     int result = reactor->register_handler (SIGINT, this);
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT("Main::Test_SIGINT_Handler (%u) - Result %i\n"),
-                this,
+                ACE_TEXT("Main::Test_SIGINT_Handler (%@) - Result %i\n"),
+                static_cast<void *> (this),
                 result));
     Test_SIGINT_Handler::registration_count_++;
   }
@@ -44,8 +44,8 @@ public:
   {
     ACE_TEST_ASSERT (signal == SIGINT);
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT("Main::Test_SIGINT_Handler (%u) - %s\n"),
-                this,
+                ACE_TEXT("Main::Test_SIGINT_Handler (%@) - %s\n"),
+                static_cast<void *> (this),
                 this->message_.c_str()));
     Test_SIGINT_Handler::handle_signal_count_++;
     return 0;
@@ -69,8 +69,8 @@ public:
   {
     int result = reactor->register_handler (SIGINT, this);
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT("Main::Test_SIGINT_Shutdown_Handler (%u) - Result %i\n"),
-                this,
+                ACE_TEXT("Main::Test_SIGINT_Shutdown_Handler (%@) - Result %i\n"),
+                static_cast<void *> (this),
                 result));
   }
 
@@ -78,8 +78,8 @@ public:
   {
     ACE_TEST_ASSERT (signal == SIGINT);
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT("Main::Test_SIGINT_Shutdown_Handler (%u)\n"),
-                this));
+                ACE_TEXT("Main::Test_SIGINT_Shutdown_Handler (%@)\n"),
+                static_cast<void *> (this)));
     ACE_Reactor::instance ()->end_reactor_event_loop ();
     return 0;
   }
