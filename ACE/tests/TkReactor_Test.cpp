@@ -30,6 +30,8 @@
 #include <tcl.h>
 #include <tk.h>
 
+#include <string>
+
 Tcl_Interp* tcl_interp;
 void eval (const char *s)
 {
@@ -38,11 +40,10 @@ void eval (const char *s)
   int st = Tcl_GlobalEval(tcl_interp,buf);
   if (st != TCL_OK)
     {
-      int n =  ACE_OS::strlen(s);
-      char *wrk = new char[n + 80];
-      ACE_OS::snprintf (wrk, n + 80, "tkerror \"%s\"", s);
-      Tcl_GlobalEval(tcl_interp, wrk);
-      delete [] wrk;
+      std::string command = "tkerror \"";
+      command += s;
+      command += '"';
+      Tcl_GlobalEval(tcl_interp, command.c_str());
     }
 }
 

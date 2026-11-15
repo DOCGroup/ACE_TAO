@@ -20,6 +20,9 @@
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_Memory.h"
 
+#include <memory>
+#include <new>
+
 #if !defined (ACE_LACKS_MMAP)
 
 static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
@@ -57,9 +60,13 @@ reverse_file (ACE_HANDLE file_handle,
 static int
 create_test_file (ACE_TCHAR *filename, int line_length, int num_lines)
 {
-  char *mybuf {};
-
-  ACE_NEW_RETURN (mybuf, char[line_length + 1], -1);
+  std::unique_ptr<char[]> mybuf (
+    new (std::nothrow) char[line_length + 1]);
+  if (!mybuf)
+    {
+      errno = ENOMEM;
+      return -1;
+    }
   const char *c = ACE_ALPHABET;
   const char *d = c;
 #if defined (__QNXNTO__) || (defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x670))
@@ -74,7 +81,6 @@ create_test_file (ACE_TCHAR *filename, int line_length, int num_lines)
 #endif
   if (file_handle  == ACE_INVALID_HANDLE)
     {
-      delete [] mybuf;
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("Open failed for %s\n"),
                          filename),
@@ -93,9 +99,8 @@ create_test_file (ACE_TCHAR *filename, int line_length, int num_lines)
 
       c = ++d;
 
-      if (ACE_OS::write (file_handle, mybuf, line_length) != line_length)
+      if (ACE_OS::write (file_handle, mybuf.get (), line_length) != line_length)
         {
-          delete [] mybuf;
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("%p (%d) <%s>\n"),
                              ACE_TEXT ("Write to file failed:"),
@@ -106,7 +111,6 @@ create_test_file (ACE_TCHAR *filename, int line_length, int num_lines)
 
       if (ACE_OS::write (file_handle, ACE_TEXT ("\n"), 1) != 1)
         {
-          delete [] mybuf;
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("write to file %s failed\n"),
                              filename),
@@ -119,7 +123,6 @@ create_test_file (ACE_TCHAR *filename, int line_length, int num_lines)
   ACE_OS::close (file_handle);
 #endif
 
-  delete [] mybuf;
   return 0;
 }
 
