@@ -12,6 +12,7 @@
 #include "URL_Locator.h"
 #include <cstring>
 #include <memory>
+#include <utility>
 
 static ACE_NS_WString
 ace_url_wstring_from_buffer (char const *buffer)
@@ -39,7 +40,9 @@ ACE_URL_Locator_Request::url_query (const int how,
 
   if (how >= ACE_URL_Locator::INVALID_SELECTION)
     return -1;
-  ACE_NEW_RETURN (this->seq1_, ACE_URL_Property_Seq (pseq), -1);
+  ACE_URL_Property_Seq *seq {};
+  ACE_NEW_RETURN (seq, ACE_URL_Property_Seq (pseq), -1);
+  this->seq1_.reset (seq);
   this->how_ = how;
   this->how_many_ = how_many;
   this->code_ = ACE_URL_Locator::QUERY;
@@ -51,7 +54,9 @@ ACE_URL_Locator_Request::export_offer (const ACE_URL_Offer &offer)
 {
   ACE_TRACE ("ACE_URL_Locator_Request::export_offer");
 
-  ACE_NEW_RETURN (this->offer_, ACE_URL_Offer (offer), -1);
+  ACE_URL_Offer *new_offer {};
+  ACE_NEW_RETURN (new_offer, ACE_URL_Offer (offer), -1);
+  this->offer_.reset (new_offer);
   this->code_ = ACE_URL_Locator::EXPORT;
   return 0;
 }
@@ -84,8 +89,14 @@ ACE_URL_Locator_Request::modify_offer (const ACE_WString &offer_id,
 {
   ACE_TRACE ("ACE_URL_Locator_Request::modify_offer");
 
-  ACE_NEW_RETURN (this->seq1_, ACE_URL_Property_Seq (del), -1);
-  ACE_NEW_RETURN (this->seq2_, ACE_URL_Property_Seq (modify), -1);
+  ACE_URL_Property_Seq *seq1 {};
+  ACE_NEW_RETURN (seq1, ACE_URL_Property_Seq (del), -1);
+  std::unique_ptr<ACE_URL_Property_Seq> seq1_owner (seq1);
+  ACE_URL_Property_Seq *seq2 {};
+  ACE_NEW_RETURN (seq2, ACE_URL_Property_Seq (modify), -1);
+  std::unique_ptr<ACE_URL_Property_Seq> seq2_owner (seq2);
+  this->seq1_ = std::move (seq1_owner);
+  this->seq2_ = std::move (seq2_owner);
 
   if (url != nullptr)
     static_cast<ACE_WString &> (this->url_) = *url;
@@ -122,39 +133,41 @@ ACE_URL_Locator_Request::encode ()
   size_t buf_size = this->size ();
   size_t total_length = 0;
 
-  ACE_NEW_RETURN (this->buffer_, char [buf_size], 0);
+  char *buffer {};
+  ACE_NEW_RETURN (buffer, char [buf_size], 0);
+  this->buffer_.reset (buffer);
 
-  ENCODE_UINT32 (this->buffer_, total_length, buf_size);
+  ENCODE_UINT32 (this->buffer_.get (), total_length, buf_size);
   // Encode buffer size.
 
-  ENCODE_UINT32 (this->buffer_, total_length, this->code_);
+  ENCODE_UINT32 (this->buffer_.get (), total_length, this->code_);
   // Encode Op code.
 
-  ENCODE_UINT32 (this->buffer_, total_length, this->how_);
+  ENCODE_UINT32 (this->buffer_.get (), total_length, this->how_);
   // Encode selection criteria.
 
-  ENCODE_UINT32 (this->buffer_, total_length, this->how_many_);
+  ENCODE_UINT32 (this->buffer_.get (), total_length, this->how_many_);
   // Encode number of offers interested.
 
-  ENCODE_UINT32 (this->buffer_, total_length, this->valid_ptr_);
+  ENCODE_UINT32 (this->buffer_.get (), total_length, this->valid_ptr_);
   // Encode valide pointer flag.
 
   if (this->seq1_ != nullptr)
     {
-      ENCODE_UINT32 (this->buffer_, total_length, this->seq1_->size ());
-      total_length += ace_array_encode (this->buffer_ + total_length, *this->seq1_);
+      ENCODE_UINT32 (this->buffer_.get (), total_length, this->seq1_->size ());
+      total_length += ace_array_encode (this->buffer_.get () + total_length, *this->seq1_);
     }
   if (this->seq2_ != nullptr)
     {
-      ENCODE_UINT32 (this->buffer_, total_length, this->seq2_->size ());
-      total_length += ace_array_encode (this->buffer_ + total_length, *this->seq2_);
+      ENCODE_UINT32 (this->buffer_.get (), total_length, this->seq2_->size ());
+      total_length += ace_array_encode (this->buffer_.get () + total_length, *this->seq2_);
     }
   if (this->offer_ != nullptr)
-    total_length += this->offer_->encode (this->buffer_ + total_length);
+    total_length += this->offer_->encode (this->buffer_.get () + total_length);
 
-  total_length += ACE_WString_Helper::encode (this->buffer_ + total_length,
+  total_length += ACE_WString_Helper::encode (this->buffer_.get () + total_length,
                                               this->id_);
-  total_length += ACE_WString_Helper::encode (this->buffer_ + total_length,
+  total_length += ACE_WString_Helper::encode (this->buffer_.get () + total_length,
                                               this->url_);
 
   ACE_ASSERT (total_length == buf_size);
@@ -194,19 +207,25 @@ ACE_URL_Locator_Request::decode (void *buffer)
     {
       size_t n;
       DECODE_UINT32 (cbuffer, total_length, n);
-      ACE_NEW_RETURN (this->seq1_, ACE_URL_Property_Seq (n), 0);
+      ACE_URL_Property_Seq *seq {};
+      ACE_NEW_RETURN (seq, ACE_URL_Property_Seq (n), 0);
+      this->seq1_.reset (seq);
       total_length += ace_array_decode (cbuffer + total_length, *this->seq1_);
     }
   if ((this->valid_ptr_ & VALID_SEQ2) != 0)
     {
       size_t n;
       DECODE_UINT32 (cbuffer, total_length, n);
-      ACE_NEW_RETURN (this->seq2_, ACE_URL_Property_Seq (n), 0);
+      ACE_URL_Property_Seq *seq {};
+      ACE_NEW_RETURN (seq, ACE_URL_Property_Seq (n), 0);
+      this->seq2_.reset (seq);
       total_length += ace_array_decode (cbuffer + total_length, *this->seq2_);
     }
   if ((this->valid_ptr_ & VALID_OFFER) != 0)
     {
-      ACE_NEW_RETURN (this->offer_, ACE_URL_Offer, 0);
+      ACE_URL_Offer *offer {};
+      ACE_NEW_RETURN (offer, ACE_URL_Offer, 0);
+      this->offer_.reset (offer);
       total_length += this->offer_->decode (cbuffer + total_length);
     }
 
@@ -279,17 +298,20 @@ ACE_URL_Locator_Request::dump () const
 
   ACE_DEBUG ((LM_DEBUG, "Valid pointer pattern: %x\n", this->valid_ptr_));
 
-  ACE_DEBUG ((LM_DEBUG, "Property sequence 1: %x\n", this->seq1_));
+  ACE_DEBUG ((LM_DEBUG, "Property sequence 1: %@\n",
+              static_cast<void *> (this->seq1_.get ())));
   if (this->seq1_ != nullptr)
     for (i = 0; i < this->seq1_->size (); ++i)
       (*this->seq1_)[i].dump ();
 
-  ACE_DEBUG ((LM_DEBUG, "Property sequence 2: %x\n", this->seq2_));
+  ACE_DEBUG ((LM_DEBUG, "Property sequence 2: %@\n",
+              static_cast<void *> (this->seq2_.get ())));
   if (this->seq2_ != nullptr)
     for (i = 0; i < this->seq2_->size (); ++i)
       (*this->seq2_)[i].dump();
 
-  ACE_DEBUG ((LM_DEBUG, "Offer: %x\n", this->offer_));
+  ACE_DEBUG ((LM_DEBUG, "Offer: %@\n",
+              static_cast<void *> (this->offer_.get ())));
   if (this->offer_ != nullptr)
     this->offer_->dump ();
 
@@ -327,7 +349,9 @@ ACE_URL_Locator_Reply::query_reply (int result, size_t num,
   this->code_ = ACE_URL_Locator::QUERY;
   this->status_ = result;
   this->num_offers_ = num;
-  ACE_NEW_RETURN (this->offers_, ACE_URL_Offer_Seq (offers), -1);
+  ACE_URL_Offer_Seq *new_offers {};
+  ACE_NEW_RETURN (new_offers, ACE_URL_Offer_Seq (offers), -1);
+  this->offers_.reset (new_offers);
   return 0;
 }
 
@@ -339,7 +363,9 @@ ACE_URL_Locator_Reply::describe_reply (int result,
 
   this->code_ = ACE_URL_Locator::DESCRIBE;
   this->status_ = result;
-  ACE_NEW_RETURN (this->offer_, ACE_URL_Offer (offer), -1);
+  ACE_URL_Offer *new_offer {};
+  ACE_NEW_RETURN (new_offer, ACE_URL_Offer (offer), -1);
+  this->offer_.reset (new_offer);
   return 0;
 }
 
@@ -351,30 +377,32 @@ ACE_URL_Locator_Reply::encode ()
   size_t buf_size = this->size ();
   size_t total_length = 0;
 
-  ACE_NEW_RETURN (this->buffer_, char [buf_size], 0);
+  char *buffer {};
+  ACE_NEW_RETURN (buffer, char [buf_size], 0);
+  this->buffer_.reset (buffer);
 
-  ENCODE_UINT32 (this->buffer_, total_length, buf_size);
+  ENCODE_UINT32 (this->buffer_.get (), total_length, buf_size);
   // Encode buffer size.
 
-  ENCODE_UINT32 (this->buffer_, total_length, this->code_);
+  ENCODE_UINT32 (this->buffer_.get (), total_length, this->code_);
   // Encode Op code.
 
-  ENCODE_UINT32 (this->buffer_, total_length, this->status_);
+  ENCODE_UINT32 (this->buffer_.get (), total_length, this->status_);
   // Encode Op result status.
 
-  ENCODE_UINT32 (this->buffer_, total_length, this->num_offers_);
+  ENCODE_UINT32 (this->buffer_.get (), total_length, this->num_offers_);
   // Encode number of offers in this->offers_.
 
-  ENCODE_UINT32 (this->buffer_, total_length, this->valid_ptr_);
+  ENCODE_UINT32 (this->buffer_.get (), total_length, this->valid_ptr_);
   // Encode valid pointers mask.
 
   if (this->offer_ != nullptr)
-    total_length += this->offer_->encode (this->buffer_ + total_length);
+    total_length += this->offer_->encode (this->buffer_.get () + total_length);
 
   if (this->offers_ != nullptr)
     {
-      ENCODE_UINT32 (this->buffer_, total_length, this->offers_->size ());
-      total_length += ace_array_encode (this->buffer_ + total_length, *this->offers_);
+      ENCODE_UINT32 (this->buffer_.get (), total_length, this->offers_->size ());
+      total_length += ace_array_encode (this->buffer_.get () + total_length, *this->offers_);
     }
 
   ACE_ASSERT (total_length == buf_size);
@@ -412,7 +440,9 @@ ACE_URL_Locator_Reply::decode (void *buffer)
 
   if ((this->valid_ptr_ & VALID_OFFER) != 0)
     {
-      ACE_NEW_RETURN (this->offer_, ACE_URL_Offer, 0);
+      ACE_URL_Offer *offer {};
+      ACE_NEW_RETURN (offer, ACE_URL_Offer, 0);
+      this->offer_.reset (offer);
       total_length += this->offer_->decode (cbuffer + total_length);
     }
 
@@ -420,7 +450,9 @@ ACE_URL_Locator_Reply::decode (void *buffer)
     {
       size_t n;
       DECODE_UINT32 (cbuffer, total_length, n);
-      ACE_NEW_RETURN (this->offers_, ACE_URL_Offer_Seq (n), 0);
+      ACE_URL_Offer_Seq *offers {};
+      ACE_NEW_RETURN (offers, ACE_URL_Offer_Seq (n), 0);
+      this->offers_.reset (offers);
       total_length += ace_array_decode (cbuffer + total_length, *this->offers_);
     }
 
@@ -472,11 +504,13 @@ ACE_URL_Locator_Reply::dump () const
 
   ACE_DEBUG ((LM_DEBUG, "Valid pointer pattern: %x\n", this->valid_ptr_));
 
-  ACE_DEBUG ((LM_DEBUG, "Offer: %x\n", this->offer_));
+  ACE_DEBUG ((LM_DEBUG, "Offer: %@\n",
+              static_cast<void *> (this->offer_.get ())));
   if (this->offer_ != nullptr)
     this->offer_->dump ();
 
-  ACE_DEBUG ((LM_DEBUG, "Offer sequence: %x\n", this->offers_));
+  ACE_DEBUG ((LM_DEBUG, "Offer sequence: %@\n",
+              static_cast<void *> (this->offers_.get ())));
   if (this->offers_ != nullptr)
     for (size_t i = 0; i < this->offers_->size (); ++i)
       (*this->offers_)[i].dump();

@@ -13,6 +13,8 @@
 
 #include "URL_Properties.h"
 
+#include <memory>
+
 /**
  * @class ACE_URL_Locator_Request
  *
@@ -112,13 +114,13 @@ protected:
   int valid_ptr_ {};
 
   /// For query or del in modify_offer.
-  ACE_URL_Property_Seq *seq1_ {};
+  std::unique_ptr<ACE_URL_Property_Seq> seq1_;
 
   /// For modify seq. in modify_offer.
-  ACE_URL_Property_Seq *seq2_ {};
+  std::unique_ptr<ACE_URL_Property_Seq> seq2_;
 
   /// Offer to export.
-  ACE_URL_Offer *offer_ {};
+  std::unique_ptr<ACE_URL_Offer> offer_;
 
   /// Offer ID.
   ACE_NS_WString id_;
@@ -127,7 +129,7 @@ protected:
   ACE_NS_WString url_;
 
   /// Buffer to store encoded data.
-  char *buffer_ {};
+  std::unique_ptr<char[]> buffer_;
 };
 
 /**
@@ -204,13 +206,13 @@ protected:
   int valid_ptr_ {};
 
   /// Holds a single offer.  Used in query offer property.
-  ACE_URL_Offer *offer_ {};
+  std::unique_ptr<ACE_URL_Offer> offer_;
 
   /// Holds the replying offer sequence from a Locator.
-  ACE_URL_Offer_Seq *offers_ {};
+  std::unique_ptr<ACE_URL_Offer_Seq> offers_;
 
   /// Buffer to store encoded data.
-  char *buffer_ {};
+  std::unique_ptr<char[]> buffer_;
 };
 #if defined (__ACE_INLINE__)
 #include "Locator_Request_Reply.inl"

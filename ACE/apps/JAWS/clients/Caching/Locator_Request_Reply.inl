@@ -10,12 +10,7 @@ ACE_URL_Locator_Request::ACE_URL_Locator_Request ()
 
 ACE_INLINE
 ACE_URL_Locator_Request::~ACE_URL_Locator_Request ()
-{
-  delete this->seq1_;
-  delete this->seq2_;
-  delete this->offer_;
-  delete [] this->buffer_;
-}
+  = default;
 
 ACE_INLINE int
 ACE_URL_Locator_Request::how () const
@@ -38,25 +33,25 @@ ACE_URL_Locator_Request::opcode () const
 ACE_INLINE ACE_URL_Property_Seq const *
 ACE_URL_Locator_Request::seq () const
 {
-  return this->seq1_;
+  return this->seq1_.get ();
 }
 
 ACE_INLINE ACE_URL_Property_Seq const *
 ACE_URL_Locator_Request::del () const
 {
-  return this->seq1_;
+  return this->seq1_.get ();
 }
 
 ACE_INLINE ACE_URL_Property_Seq const *
 ACE_URL_Locator_Request::modify () const
 {
-  return this->seq2_;
+  return this->seq2_.get ();
 }
 
 ACE_INLINE ACE_URL_Offer const *
 ACE_URL_Locator_Request::offer () const
 {
-  return this->offer_;
+  return this->offer_.get ();
 }
 
 ACE_INLINE ACE_WString const &
@@ -74,7 +69,7 @@ ACE_URL_Locator_Request::url () const
 ACE_INLINE char const *
 ACE_URL_Locator_Request::buffer () const
 {
-  return this->buffer_;
+  return this->buffer_.get ();
 }
 
 ACE_INLINE
@@ -85,11 +80,7 @@ ACE_URL_Locator_Reply::ACE_URL_Locator_Reply ()
 
 ACE_INLINE
 ACE_URL_Locator_Reply::~ACE_URL_Locator_Reply ()
-{
-  delete this->offer_;
-  delete this->offers_;
-  delete [] this->buffer_;
-}
+  = default;
 
 ACE_INLINE size_t
 ACE_URL_Locator_Reply::num_offers () const
@@ -100,13 +91,13 @@ ACE_URL_Locator_Reply::num_offers () const
 ACE_INLINE ACE_URL_Offer const *
 ACE_URL_Locator_Reply::offer () const
 {
-  return this->offer_;
+  return this->offer_.get ();
 }
 
 ACE_INLINE ACE_URL_Offer_Seq const *
 ACE_URL_Locator_Reply::offers () const
 {
-  return this->offers_;
+  return this->offers_.get ();
 }
 
 ACE_INLINE u_int
@@ -124,5 +115,5 @@ ACE_URL_Locator_Reply::status () const
 ACE_INLINE char const *
 ACE_URL_Locator_Reply::buffer () const
 {
-  return this->buffer_;
+  return this->buffer_.get ();
 }
