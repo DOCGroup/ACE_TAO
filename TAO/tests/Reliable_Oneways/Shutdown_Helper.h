@@ -16,8 +16,10 @@ public:
   Shutdown_Helper &operator= (Shutdown_Helper const &) = delete;
   Shutdown_Helper &operator= (Shutdown_Helper &&) = delete;
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   void shutdown () override;
+  /// @}
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

@@ -16,12 +16,14 @@ public:
   Oneway_Receiver &operator= (Oneway_Receiver const &) = delete;
   Oneway_Receiver &operator= (Oneway_Receiver &&) = delete;
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   void raise_no_permission () override;
 
   void destroy () override;
 
   Test::Shutdown_Helper_ptr get_shutdown_helper () override;
+  /// @}
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown
