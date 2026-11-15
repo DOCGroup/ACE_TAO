@@ -1104,6 +1104,10 @@ ACE_POSIX_Asynch_Accept::handle_input (ACE_HANDLE /* fd */)
   // should be the same as the <listen_handle>.
 
   ACE_POSIX_Asynch_Accept_Result* result {};
+  auto result_deleter = [] (ACE_POSIX_Asynch_Accept_Result *result)
+    {
+      delete result;
+    };
 
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0));
@@ -1124,6 +1128,9 @@ ACE_POSIX_Asynch_Accept::handle_input (ACE_HANDLE /* fd */)
         task.suspend_io_handler (this->get_handle());
       }
   }
+
+  std::unique_ptr<ACE_POSIX_Asynch_Accept_Result, decltype (result_deleter)>
+    result_owner (result, result_deleter);
 
   // Issue <accept> now.
   // @@ We shouldnt block here since we have already done poll/select
@@ -1153,11 +1160,13 @@ ACE_POSIX_Asynch_Accept::handle_input (ACE_HANDLE /* fd */)
 
   // Notify the main process about this completion
   // Send the Result through the notification pipe.
-  if (this->posix_proactor ()->post_completion (result) == -1)
+  if (this->posix_proactor ()->post_completion (result_owner.get ()) == -1)
     ACELIB_ERROR ((LM_ERROR,
                 ACE_TEXT("Error:(%P | %t):%p\n"),
                 ACE_TEXT("ACE_POSIX_Asynch_Accept::handle_input: ")
                 ACE_TEXT(" <post_completion> failed")));
+  else
+    result_owner.release ();
 
   return 0;
 }
@@ -1359,12 +1368,20 @@ ACE_POSIX_Asynch_Connect::connect (ACE_HANDLE connect_handle,
 int ACE_POSIX_Asynch_Connect::post_result (ACE_POSIX_Asynch_Connect_Result * result,
                                            bool post_enable)
 {
-  if (this->flg_open_ && post_enable != 0)
+  auto result_deleter = [] (ACE_POSIX_Asynch_Connect_Result *result)
     {
-      if (this->posix_proactor ()->post_completion (result) == 0)
-      {
-        return 0;
-      }
+      delete result;
+    };
+  std::unique_ptr<ACE_POSIX_Asynch_Connect_Result, decltype (result_deleter)>
+    result_owner (result, result_deleter);
+
+  if (this->flg_open_ && post_enable)
+    {
+      if (this->posix_proactor ()->post_completion (result_owner.get ()) == 0)
+        {
+          result_owner.release ();
+          return 0;
+        }
 
       ACELIB_ERROR ((LM_ERROR,
                   ACE_TEXT("Error:(%P | %t):%p\n"),
@@ -1379,9 +1396,7 @@ int ACE_POSIX_Asynch_Connect::post_result (ACE_POSIX_Asynch_Connect_Result * res
     ACE_OS::closesocket (handle);
   }
 
-   delete result;
-
-   return -1;
+  return -1;
 }
 
 //connect_i
