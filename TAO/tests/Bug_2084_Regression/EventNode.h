@@ -20,11 +20,13 @@ public:
   EventNode (EventNode &&) = delete;
   EventNode &operator= (EventNode &&) = delete;
 
-  // = The skeleton methods
-  // The Hello reference is borrowed for the duration of this upcall.
+  /// @name Skeleton methods
+  /// @{
+  /// The Hello reference is borrowed for the duration of this upcall.
   void registerHello (::Test::Hello_ptr hello) override;
 
   void shutdown () override;
+  /// @}
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown
