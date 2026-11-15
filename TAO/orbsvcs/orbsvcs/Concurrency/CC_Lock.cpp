@@ -1,19 +1,9 @@
-// ============================================================================
-//
-// = LIBRARY
-//    TAO/orbsvcs/Concurrency_Service
-//
-// = FILENAME
-//    CC_Lock.cpp
-//
-// = DESCRIPTION
-//      This class implements a lock used by the lock set from the
-//      concurrency control service.
-//
-// = AUTHORS
-//    Torben Worm <tworm@cs.wustl.edu>
-//
-// ============================================================================
+/**
+ * @file CC_Lock.cpp
+ * @brief Implements a lock used by lock sets in the concurrency control
+ * service.
+ * @author Torben Worm <tworm@cs.wustl.edu>
+ */
 
 #include "orbsvcs/Concurrency/CC_Lock.h"
 #include "orbsvcs/Log_Macros.h"
