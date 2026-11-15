@@ -39,7 +39,7 @@ struct CreateDynAnyUtils {
         }
         catch (DA_IMPL* original) {
             ACE_DEBUG ((LM_DEBUG, ACE_TEXT("!!! CAUGHT pointer %@ at depth %d (destroying blank %@) !!!\n"),
-                original, depth, p));
+                        static_cast<void *> (original), depth, static_cast<void *> (p)));
             return original;
         }
         return guard.release();
@@ -63,12 +63,12 @@ struct TAO_DynValue_i : virtual DynamicAny::DynValue, virtual TAO_DynValueCommon
                 da_members_.push_back(member);
             }
             catch (TAO_DynValue_i* orig) {
-                ACE_DEBUG ((LM_DEBUG,ACE_TEXT("    Nested member threw indirection %@\n"), orig));
+                ACE_DEBUG ((LM_DEBUG,ACE_TEXT("    Nested member threw indirection %@\n"), static_cast<void *> (orig)));
                 da_members_.push_back(orig);
             }
         }
         if (trigger_indirection && cached && depth >= 2) {
-            ACE_DEBUG ((LM_DEBUG,ACE_TEXT("*** INDIRECTION - THROWING CACHED POINTER %@ ***\n"), cached));
+            ACE_DEBUG ((LM_DEBUG,ACE_TEXT("*** INDIRECTION - THROWING CACHED POINTER %@ ***\n"), static_cast<void *> (cached)));
             cached->_add_ref();
             throw cached; // throw of the raw pointer
         }
@@ -88,7 +88,7 @@ int run_main (int, ACE_TCHAR*[])
   try
   {
     TAO_DynValue_i* result = CreateDynAnyUtils<TAO_DynValue_i>::create(true, 0);
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Success - returned %@\n"), result));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Success - returned %@\n"), static_cast<void *> (result)));
     delete result;
   }
   catch (...) {

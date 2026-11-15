@@ -597,7 +597,8 @@ TestData::server_done (Server *s)
     }
   if (i >= MAX_SERVERS)
   {
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Server %@ done but not listed\n"), s));
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Server %@ done but not listed\n"),
+                static_cast<void *> (s)));
   }
 
   return;
@@ -634,7 +635,8 @@ TestData::client_done (Client *c)
     }
   if (i >= MAX_CLIENTS)
   {
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Client %@ done but not listed\n"), c));
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Client %@ done but not listed\n"),
+                static_cast<void *> (c)));
   }
 
   return;

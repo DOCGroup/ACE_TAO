@@ -183,6 +183,6 @@ dynamic_cast_test (Parent *target)
   Child *c {};
   c = dynamic_cast<Child*> (target);
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("dynamic_cast_test: parent %@; child %@\n"),
-              target, c));
+              static_cast<void *> (target), static_cast<void *> (c)));
   return target == c ? 0 : -1;
 }

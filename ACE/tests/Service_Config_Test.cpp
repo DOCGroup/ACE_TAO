@@ -396,7 +396,8 @@ testUnloadingACELoggingStrategy (int, ACE_TCHAR *[])
   ACE_Reactor *r2 = ACE_Reactor::instance ();
   if (r1 != r2)
   {
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Reactor before %@, after %@\n"), r1, r2));
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Reactor before %@, after %@\n"),
+                static_cast<void *> (r1), static_cast<void *> (r2)));
   }
 }
 

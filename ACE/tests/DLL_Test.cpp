@@ -131,7 +131,8 @@ int dynamic_cast_test (ACE_DLL &dll)
                       -1);
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("before %@ %@\n"),
-              &child,  dynamic_cast<Child*> (parent)));
+              static_cast<void *> (&child),
+              static_cast<void *> (dynamic_cast<Child*> (parent))));
 
   if (pfnAcquire (&child) == -1)
   {
@@ -170,7 +171,7 @@ run_main (int, ACE_TCHAR *[])
   void* invalid_handle = ACE_OS::dlsym (ACE_SHLIB_INVALID_HANDLE, ACE_TEXT ("open"));
   if (invalid_handle != nullptr)
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("ACE_OS::dlsym using invalid handle should be nullptr and not %@\n")));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("ACE_OS::dlsym using invalid handle should be nullptr\n")));
       ++retval;
     }
   else
