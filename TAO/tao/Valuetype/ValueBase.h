@@ -27,9 +27,7 @@
 
 #include "ace/Basic_Types.h"
 #include "ace/Synch_Traits.h"
-#include "ace/Thread_Mutex.h"
 #include <atomic>
-#include "ace/Null_Mutex.h"
 #include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
