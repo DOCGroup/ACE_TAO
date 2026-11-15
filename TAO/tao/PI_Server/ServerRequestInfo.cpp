@@ -87,27 +87,28 @@ TAO::ServerRequestInfo::arguments ()
   // Return value is always generated as first TAO::Argument in
   // skeleton.  It shouldn't be included in the parameter list.
   // Skip it.
-  TAO::Argument * const * const begin = this->args_ + 1;
-  TAO::Argument * const * const end   = this->args_ + this->nargs_;
+  if (this->nargs_ == 0)
+    {
+      throw ::CORBA::INTERNAL ();
+    }
 
-  ACE_ASSERT (end - begin >= 0);
+  size_t const parameter_count = this->nargs_ - 1u;
+  parameter_list->length (static_cast<CORBA::ULong> (parameter_count));
 
-  parameter_list->length (static_cast<CORBA::ULong> (end - begin));
-
-  CORBA::ULong p {};
-  for (TAO::Argument * const * i = begin; i != end; ++i, ++p)
+  for (size_t i {}; i < parameter_count; ++i)
     {
       // Insert the operation parameters into the
       // Dynamic::ParameterList.
-      Dynamic::Parameter& parameter = (*parameter_list)[p];
-      parameter.mode = (*i)->mode ();
+      TAO::Argument * const argument = this->args_[i + 1u];
+      Dynamic::Parameter& parameter = (*parameter_list)[static_cast<CORBA::ULong> (i)];
+      CORBA::ParameterMode const mode = argument->mode ();
+      parameter.mode = mode;
       // When we are in receive_request and have an out argument, then
       // don't copy it, just let the any be empty with typecode tk_null
-      if ((this->server_request_.pi_reply_status () != -1) ||
-          (this->server_request_.pi_reply_status () == -1 &&
-           (*i)->mode () != CORBA::PARAM_OUT))
+      if (this->server_request_.pi_reply_status () != -1 ||
+          mode != CORBA::PARAM_OUT)
         {
-          (*i)->interceptor_value (std::addressof (parameter.argument));
+          argument->interceptor_value (std::addressof (parameter.argument));
         }
     }
 
