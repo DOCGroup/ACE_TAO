@@ -22,6 +22,7 @@
 #include "ace/Basic_Types.h"
 #include "ace/Global_Macros.h"
 #include "ace/Default_Constants.h"
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -338,7 +338,7 @@ ACE_ALLOC_HOOK_DEFINE_Tc(ACE_Double_Linked_List_Iterator_Base)
 
 template <class T>
 ACE_Double_Linked_List_Iterator_Base<T>::ACE_Double_Linked_List_Iterator_Base (const ACE_Double_Linked_List<T> &dll)
-  : current_ (0), dllist_ (&dll)
+  : current_ (0), dllist_ (std::addressof (dll))
 {
   // Do nothing
 }

@@ -1093,7 +1093,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::remove_i (ACE_RB_Tree_Node<
 
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree_Iterator_Base (const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree, int set_first)
-  : tree_ (&tree), node_ (0)
+  : tree_ (std::addressof (tree)), node_ (0)
 {
   ACE_TRACE ("ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree_Iterator_Base (ACE_RB_Tree, int)");
 
@@ -1106,7 +1106,7 @@ ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree_I
 
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree_Iterator_Base (const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree, ACE_RB_Tree_Node<EXT_ID, INT_ID>* entry)
-  : tree_ (&tree), node_ (0)
+  : tree_ (std::addressof (tree)), node_ (0)
 {
   ACE_TRACE ("ACE_RB_Tree_Iterator_Base(const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree, ACE_RB_Tree_Node<EXT_ID, INT_ID>* entry)");
   node_ = entry;
@@ -1114,7 +1114,7 @@ ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree_I
 
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree_Iterator_Base (const EXT_ID& key,ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree)
-   : tree_ (&tree), node_ (0)
+   : tree_ (std::addressof (tree)), node_ (0)
 {
   ACE_TRACE("ACE_RB_Tree_Iterator_Base (ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree, const EXT_ID& key)");
   ACE_RB_Tree_Node<EXT_ID, INT_ID>* entry {};

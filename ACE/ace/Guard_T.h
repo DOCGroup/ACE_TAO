@@ -13,6 +13,7 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/Lock.h"
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

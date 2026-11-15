@@ -463,7 +463,7 @@ ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::cu
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> ACE_INLINE
 ACE_Hash_Multi_Map_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::ACE_Hash_Multi_Map_Iterator_Base (ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
                                                                                                                       int head)
-  : map_man_ (&mm),
+  : map_man_ (std::addressof (mm)),
     index_ (head != 0 ? -1 : (ssize_t) mm.total_size_),
     next_ (0)
 {
@@ -561,7 +561,7 @@ ACE_Hash_Multi_Map_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOC
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> ACE_INLINE
 ACE_Hash_Multi_Map_Const_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::ACE_Hash_Multi_Map_Const_Iterator_Base (const ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
                                                                                                                                   int head)
-  : map_man_ (&mm),
+  : map_man_ (std::addressof (mm)),
     index_ (head != 0 ? -1 : (ssize_t) mm.total_size_),
     next_ (0)
 {
@@ -800,7 +800,7 @@ template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class 
 ACE_Hash_Multi_Map_Bucket_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::ACE_Hash_Multi_Map_Bucket_Iterator (ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
                                                                                                                           const EXT_ID &ext_id,
                                                                                                                           int tail)
-  : map_man_ (&mm)
+  : map_man_ (std::addressof (mm))
 {
   ACE_TRACE ("ACE_Hash_Multi_Map_Bucket_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::ACE_Hash_Multi_Map_Bucket_Iterator");
 

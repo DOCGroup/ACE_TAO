@@ -22,6 +22,7 @@
 #include "ace/Functor_T.h"
 #include "ace/Log_Category.h"
 #include <iterator>
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

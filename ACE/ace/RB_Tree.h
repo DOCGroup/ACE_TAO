@@ -14,6 +14,7 @@
 
 #include "ace/Global_Macros.h"
 #include "ace/Functor_T.h"
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

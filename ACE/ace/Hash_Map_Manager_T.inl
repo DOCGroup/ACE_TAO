@@ -486,7 +486,7 @@ ACE_Hash_Map_Iterator_Base_Ex<EXT_ID,
                           COMPARE_KEYS,
                           ACE_LOCK> &mm,
   bool head)
-  : map_man_ (&mm),
+  : map_man_ (std::addressof (mm)),
     index_ (head ? -1 : (ssize_t) mm.total_size_),
     next_ (0)
 {
@@ -512,7 +512,7 @@ ACE_Hash_Map_Iterator_Base_Ex<EXT_ID,
                           ACE_LOCK> & mm,
   ACE_Hash_Map_Entry<EXT_ID, INT_ID> * entry,
   size_t index)
-  : map_man_ (&mm)
+  : map_man_ (std::addressof (mm))
   , index_ (static_cast<ssize_t> (index))
   , next_ (entry)
 {
@@ -607,7 +607,7 @@ ACE_Hash_Map_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>:
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> ACE_INLINE
 ACE_Hash_Map_Const_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::ACE_Hash_Map_Const_Iterator_Base_Ex (const ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
                                                                                                                             bool head)
-  : map_man_ (&mm),
+  : map_man_ (std::addressof (mm)),
     index_ (head ? -1 : (ssize_t) mm.total_size_),
     next_ (0)
 {
@@ -874,7 +874,7 @@ template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class 
 ACE_Hash_Map_Bucket_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::ACE_Hash_Map_Bucket_Iterator (ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
                                                                                                               const EXT_ID &ext_id,
                                                                                                               int tail)
-  : map_man_ (&mm)
+  : map_man_ (std::addressof (mm))
 {
   ACE_TRACE ("ACE_Hash_Map_Bucket_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::ACE_Hash_Map_Bucket_Iterator");
 

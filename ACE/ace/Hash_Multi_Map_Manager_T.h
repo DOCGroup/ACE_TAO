@@ -33,6 +33,7 @@
 #include "ace/Default_Constants.h"
 #include "ace/Functor_T.h"
 #include "ace/Log_Category.h"
+#include <memory>
 
 #include "ace/Unbounded_Set.h"
 

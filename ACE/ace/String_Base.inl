@@ -170,7 +170,7 @@ ACE_String_Base<ACE_CHAR_T>::end () const
 template <class ACE_CHAR_T> ACE_INLINE
 ACE_String_Base_Iterator <ACE_CHAR_T>::
 ACE_String_Base_Iterator (ACE_String_Base <ACE_CHAR_T> & str, int end)
-: str_ (&str),
+: str_ (std::addressof (str)),
   index_ (0 == end ? 0 : str.length ())
 {
   ACE_TRACE ("ACE_String_Base_Iterator<ACE_CHAR_T>::ACE_String_Base_Iterator");
@@ -306,7 +306,7 @@ operator <= (const ACE_String_Base_Iterator <ACE_CHAR_T> & rhs) const
 template <class ACE_CHAR_T> ACE_INLINE
 ACE_String_Base_Const_Iterator <ACE_CHAR_T>::
 ACE_String_Base_Const_Iterator (const ACE_String_Base <ACE_CHAR_T> & str, int end)
-: str_ (&str),
+: str_ (std::addressof (str)),
   index_ (0 == end ? 0 : str.length ())
 {
   ACE_TRACE ("ACE_String_Base_Const_Iterator<ACE_CHAR_T>::ACE_String_Base_Const_Iterator");

@@ -22,6 +22,7 @@
 
 #include "ace/String_Base_Const.h"
 #include <iterator>
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
