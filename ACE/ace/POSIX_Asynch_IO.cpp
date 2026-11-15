@@ -1964,6 +1964,7 @@ ACE_POSIX_Asynch_Transmit_Handler::handle_write_stream (const ACE_Asynch_Write_S
           // the result pointer also.
           delete this;
         }
+      return;
     }
 
   // Write stream successful.
