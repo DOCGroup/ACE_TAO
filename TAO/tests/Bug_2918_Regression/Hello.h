@@ -1,14 +1,12 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
- *  @file    Hello.h
+ * @file Hello.h
  *
- *  Header file for recursive type Any insertion and extraction test.
+ * Header file for recursive type Any insertion and extraction test.
  *
- *  @author Ossama Othman
+ * @author Ossama Othman
  */
-//=============================================================================
 
 #ifndef HELLO_H
 #define HELLO_H
@@ -25,8 +23,7 @@ public:
   Hello (Hello &&) = delete;
   Hello &operator= (Hello &&) = delete;
 
-  // Return the any provide as an "in" argument.
-  // The returned Any transfers ownership to the caller.
+  /// Returns the input Any with ownership transferred to the caller.
   CORBA::Any *get_any (CORBA::Any const &the_any) override;
 
   void shutdown () override;
