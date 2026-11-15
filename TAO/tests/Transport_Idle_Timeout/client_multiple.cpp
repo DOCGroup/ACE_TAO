@@ -57,8 +57,8 @@ cache_size (CORBA::ORB_ptr orb)
 // Argument parsing
 // ---------------------------------------------------------------------------
 
-static char const *ior          = nullptr;
-static char const *ior2         = nullptr;
+static char const *ior {};
+static char const *ior2 {};
 static int         timeout_sec  = 3;    // must match server svc.conf value
 static int         scan_interval_sec = 2;
 static int         loop_count   = 10;
