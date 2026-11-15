@@ -16,16 +16,10 @@
 // ************************************************************************
 
 Test_Var_Array::Test_Var_Array ()
-  : opname_ (CORBA::string_dup ("test_var_array")),
+  : opname_ ("test_var_array"),
     out_ (new Param_Test::Var_Array),
     ret_ (new Param_Test::Var_Array)
 {
-}
-
-Test_Var_Array::~Test_Var_Array ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = nullptr;
 }
 
 const char *

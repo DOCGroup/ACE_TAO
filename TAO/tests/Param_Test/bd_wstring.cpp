@@ -15,7 +15,7 @@
 // ************************************************************************
 
 Test_Bounded_WString::Test_Bounded_WString ()
-  : opname_ (CORBA::string_dup ("test_bounded_wstring")),
+  : opname_ ("test_bounded_wstring"),
     in_ (nullptr),
     inout_ (nullptr),
     out_ (nullptr),
@@ -25,12 +25,10 @@ Test_Bounded_WString::Test_Bounded_WString ()
 
 Test_Bounded_WString::~Test_Bounded_WString ()
 {
-  CORBA::string_free (this->opname_);
   CORBA::wstring_free (this->in_);
   CORBA::wstring_free (this->inout_);
   CORBA::wstring_free (this->out_);
   CORBA::wstring_free (this->ret_);
-  this->opname_ = nullptr;
   this->in_ = nullptr;
   this->inout_ = nullptr;
   this->out_ = nullptr;

@@ -17,7 +17,7 @@ class Test_Multdim_Array
 public:
   Test_Multdim_Array ();
 
-  ~Test_Multdim_Array ();
+  ~Test_Multdim_Array () = default;
 
   /// run the SII test
   int run_sii_test (Param_Test_ptr objref);
@@ -52,7 +52,7 @@ private:
   void print (const Param_Test::Multdim_Array_slice *a);
 
   /// operation name
-  char *opname_;
+  char const *opname_;
 
   /// in parameter
   Param_Test::Multdim_Array_var in_;

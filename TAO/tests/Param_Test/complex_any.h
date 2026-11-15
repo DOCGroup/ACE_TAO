@@ -19,7 +19,7 @@ class Test_Complex_Any
 public:
   Test_Complex_Any ();
 
-  ~Test_Complex_Any ();
+  ~Test_Complex_Any () = default;
 
   /// run the SII test
   int run_sii_test (Param_Test_ptr objref);
@@ -47,7 +47,7 @@ public:
 
 private:
   /// operation name
-  char *opname_;
+  char const *opname_;
 
   /// test counter.
   static size_t counter;

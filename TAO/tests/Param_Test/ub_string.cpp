@@ -16,7 +16,7 @@
 // ************************************************************************
 
 Test_Unbounded_String::Test_Unbounded_String ()
-  : opname_ (CORBA::string_dup ("test_unbounded_string")),
+  : opname_ ("test_unbounded_string"),
     in_ (nullptr),
     inout_ (nullptr),
     out_ (nullptr),
@@ -26,12 +26,10 @@ Test_Unbounded_String::Test_Unbounded_String ()
 
 Test_Unbounded_String::~Test_Unbounded_String ()
 {
-  CORBA::string_free (this->opname_);
   CORBA::string_free (this->in_);
   CORBA::string_free (this->inout_);
   CORBA::string_free (this->out_);
   CORBA::string_free (this->ret_);
-  this->opname_ = nullptr;
   this->in_ = nullptr;
   this->inout_ = nullptr;
   this->out_ = nullptr;

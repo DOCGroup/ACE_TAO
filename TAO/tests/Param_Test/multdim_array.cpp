@@ -14,18 +14,12 @@
 // ************************************************************************
 
 Test_Multdim_Array::Test_Multdim_Array ()
-  : opname_ (CORBA::string_dup ("test_multdim_array")),
+  : opname_ ("test_multdim_array"),
     in_ (new Param_Test::Multdim_Array),
     inout_ (new Param_Test::Multdim_Array),
     out_ (new Param_Test::Multdim_Array),
     ret_ (new Param_Test::Multdim_Array)
 {
-}
-
-Test_Multdim_Array::~Test_Multdim_Array ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = nullptr;
 }
 
 const char *

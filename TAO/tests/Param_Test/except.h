@@ -16,7 +16,7 @@ class Test_Exception
 public:
   Test_Exception ();
 
-  ~Test_Exception ();
+  ~Test_Exception () = default;
 
   /// run the SII test
   int run_sii_test (Param_Test_ptr objref);
@@ -44,7 +44,7 @@ public:
 
 private:
   /// operation name
-  char *opname_;
+  char const *opname_;
 
   /// in parameter
   CORBA::ULong in_;

@@ -19,10 +19,6 @@ Generator::Generator ()
 {
 }
 
-Generator::~Generator ()
-{
-}
-
 CORBA::Short
 Generator::gen_short ()
 {

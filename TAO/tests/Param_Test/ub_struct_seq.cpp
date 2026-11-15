@@ -18,19 +18,11 @@
 // ************************************************************************
 
 Test_Struct_Sequence::Test_Struct_Sequence ()
-  : opname_ (CORBA::string_dup ("test_struct_sequence")),
+  : opname_ ("test_struct_sequence"),
     inout_ (new Param_Test::StructSeq),
     out_ (new Param_Test::StructSeq),
     ret_ (new Param_Test::StructSeq)
 {
-}
-
-Test_Struct_Sequence::~Test_Struct_Sequence ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = nullptr;
-  // the other data members will be freed as they are "_var"s and objects
-  // (rather than pointers to objects)
 }
 
 const char *
@@ -221,19 +213,11 @@ Test_Struct_Sequence::print_sequence (const Param_Test::StructSeq &s)
 // ************************************************************************
 
 Test_Unbounded_Struct_Sequence::Test_Unbounded_Struct_Sequence ()
-  : opname_ (CORBA::string_dup ("test_unbounded_struct_sequence")),
+  : opname_ ("test_unbounded_struct_sequence"),
     inout_ (new Param_Test::PathSpec),
     out_ (new Param_Test::PathSpec),
     ret_ (new Param_Test::PathSpec)
 {
-}
-
-Test_Unbounded_Struct_Sequence::~Test_Unbounded_Struct_Sequence ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = nullptr;
-  // the other data members will be freed as they are "_var"s and objects
-  // (rather than pointers to objects)
 }
 
 const char *

@@ -10,14 +10,8 @@
 #include "ulonglong.h"
 
 Test_ULongLong::Test_ULongLong ()
-  : opname_ (CORBA::string_dup ("test_ulonglong"))
+  : opname_ ("test_ulonglong")
 {
-}
-
-Test_ULongLong::~Test_ULongLong ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = nullptr;
 }
 
 const char *

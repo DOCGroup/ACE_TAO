@@ -18,14 +18,8 @@
 size_t Test_Big_Union::counter = 0;
 
 Test_Big_Union::Test_Big_Union ()
-  : opname_ (CORBA::string_dup ("test_big_union"))
+  : opname_ ("test_big_union")
 {
-}
-
-Test_Big_Union::~Test_Big_Union ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = nullptr;
 }
 
 const char *

@@ -26,16 +26,10 @@ const int LEVEL_3_LENGTH = 3;
 size_t Test_Complex_Any::counter = 0;
 
 Test_Complex_Any::Test_Complex_Any ()
-  : opname_ (CORBA::string_dup ("test_complex_any")),
+  : opname_ ("test_complex_any"),
     out_ (new CORBA::Any),
     ret_ (new CORBA::Any)
 {
-}
-
-Test_Complex_Any::~Test_Complex_Any ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = nullptr;
 }
 
 const char *

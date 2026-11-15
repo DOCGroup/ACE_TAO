@@ -16,19 +16,11 @@
 // ************************************************************************
 
 Test_Nested_Struct::Test_Nested_Struct ()
-  : opname_ (CORBA::string_dup ("test_nested_struct")),
+  : opname_ ("test_nested_struct"),
     inout_ (new Param_Test::Nested_Struct),
     out_ (new Param_Test::Nested_Struct),
     ret_ (new Param_Test::Nested_Struct)
 {
-}
-
-Test_Nested_Struct::~Test_Nested_Struct ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = nullptr;
-  // the other data members will be freed as they are "_var"s and objects
-  // (rather than pointers to objects)
 }
 
 const char *

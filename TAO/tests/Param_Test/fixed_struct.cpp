@@ -14,14 +14,8 @@
 // ************************************************************************
 
 Test_Fixed_Struct::Test_Fixed_Struct ()
-  : opname_ (CORBA::string_dup ("test_fixed_struct"))
+  : opname_ ("test_fixed_struct")
 {
-}
-
-Test_Fixed_Struct::~Test_Fixed_Struct ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = nullptr;
 }
 
 const char *

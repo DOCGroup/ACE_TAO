@@ -17,15 +17,9 @@
 // ************************************************************************
 
 Test_Exception::Test_Exception ()
-  : opname_ (CORBA::string_dup ("test_exception")),
+  : opname_ ("test_exception"),
     iterations_ (0)
 {
-}
-
-Test_Exception::~Test_Exception ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = nullptr;
 }
 
 const char *

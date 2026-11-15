@@ -71,7 +71,7 @@ public:
 
   Options ();
 
-  ~Options ();
+  ~Options () = default;
 
   /// Parses the arguments passed on the command line.
   int parse_args (int argc, ACE_TCHAR **argv);

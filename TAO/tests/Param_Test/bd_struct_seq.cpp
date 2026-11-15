@@ -16,19 +16,11 @@ const CORBA::ULong MAX_STRUCTSEQ_LEN = 1;
 // ************************************************************************
 
 Test_Bounded_Struct_Sequence::Test_Bounded_Struct_Sequence ()
-  : opname_ (CORBA::string_dup ("test_bounded_struct_sequence")),
+  : opname_ ("test_bounded_struct_sequence"),
     inout_ (new Param_Test::Bounded_StructSeq),
     out_ (new Param_Test::Bounded_StructSeq),
     ret_ (new Param_Test::Bounded_StructSeq)
 {
-}
-
-Test_Bounded_Struct_Sequence::~Test_Bounded_Struct_Sequence ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = nullptr;
-  // the other data members will be freed as they are "_var"s and objects
-  // (rather than pointers to objects)
 }
 
 const char *

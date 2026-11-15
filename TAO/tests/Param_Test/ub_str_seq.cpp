@@ -16,18 +16,12 @@
 // ************************************************************************
 
 Test_String_Sequence::Test_String_Sequence ()
-  : opname_ (CORBA::string_dup ("test_strseq")),
+  : opname_ ("test_strseq"),
     in_ (new CORBA::StringSeq),
     inout_ (new CORBA::StringSeq),
     out_ (new CORBA::StringSeq),
     ret_ (new CORBA::StringSeq)
 {
-}
-
-Test_String_Sequence::~Test_String_Sequence ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = nullptr;
 }
 
 const char *

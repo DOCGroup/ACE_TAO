@@ -17,7 +17,7 @@ class Test_Big_Union
 public:
   Test_Big_Union ();
 
-  ~Test_Big_Union ();
+  ~Test_Big_Union () = default;
 
   enum {
     BIG_UNION_N_BRANCHES = 12
@@ -49,7 +49,7 @@ public:
 
 private:
   /// operation name
-  char *opname_;
+  char const *opname_;
 
   /// Coffee object used to test Big_Union with object.
   Coffee_var cobj_;

@@ -18,7 +18,7 @@ class Test_Bounded_Array_Sequence
 public:
   Test_Bounded_Array_Sequence ();
 
-  ~Test_Bounded_Array_Sequence ();
+  ~Test_Bounded_Array_Sequence () = default;
 
   /// run the SII test
   int run_sii_test (Param_Test_ptr objref);
@@ -54,7 +54,7 @@ protected:
 
 private:
   /// operation name
-  char *opname_;
+  char const *opname_;
 
   /// in parameter
   Param_Test::Bounded_ArraySeq in_;

@@ -19,7 +19,7 @@ class Generator
 public:
   Generator ();
 
-  ~Generator ();
+  ~Generator () = default;
 
   CORBA::Short gen_short ();
   CORBA::Long gen_long ();

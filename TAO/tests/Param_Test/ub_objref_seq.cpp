@@ -25,19 +25,11 @@ static const char *Coffee_Flavor [] = {
 };
 
 Test_ObjRef_Sequence::Test_ObjRef_Sequence ()
-  : opname_ (CORBA::string_dup ("test_coffe_mix")),
+  : opname_ ("test_coffe_mix"),
     inout_ (new Param_Test::Coffee_Mix),
     out_ (new Param_Test::Coffee_Mix),
     ret_ (new Param_Test::Coffee_Mix)
 {
-}
-
-Test_ObjRef_Sequence::~Test_ObjRef_Sequence ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = nullptr;
-  // the other data members will be freed as they are "_var"s and objects
-  // (rather than pointers to objects)
 }
 
 const char *

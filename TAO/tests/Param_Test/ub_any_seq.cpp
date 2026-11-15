@@ -20,18 +20,12 @@ const CORBA::ULong NUM_TEST_TYPES = 4;
 // ************************************************************************
 
 Test_AnySeq::Test_AnySeq ()
-  : opname_ (CORBA::string_dup ("test_anyseq")),
+  : opname_ ("test_anyseq"),
     in_ (new CORBA::AnySeq (TEST_SEQ_LENGTH)),
     inout_ (new CORBA::AnySeq (TEST_SEQ_LENGTH)),
     out_ (new CORBA::AnySeq),
     ret_ (new CORBA::AnySeq)
 {
-}
-
-Test_AnySeq::~Test_AnySeq ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = nullptr;
 }
 
 const char *

@@ -16,14 +16,8 @@
 // ************************************************************************
 
 Test_ObjRef::Test_ObjRef ()
-  : opname_ (CORBA::string_dup ("test_objref"))
+  : opname_ ("test_objref")
 {
-}
-
-Test_ObjRef::~Test_ObjRef ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = nullptr;
 }
 
 const char *

@@ -16,19 +16,11 @@ const CORBA::ULong MAX_ARRAYSEQ_LEN = 1;
 // ************************************************************************
 
 Test_Bounded_Array_Sequence::Test_Bounded_Array_Sequence ()
-  : opname_ (CORBA::string_dup ("test_bounded_array_sequence")),
+  : opname_ ("test_bounded_array_sequence"),
     inout_ (new Param_Test::Bounded_ArraySeq),
     out_ (new Param_Test::Bounded_ArraySeq),
     ret_ (new Param_Test::Bounded_ArraySeq)
 {
-}
-
-Test_Bounded_Array_Sequence::~Test_Bounded_Array_Sequence ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = nullptr;
-  // the other data members will be freed as they are "_var"s and objects
-  // (rather than pointers to objects)
 }
 
 const char *

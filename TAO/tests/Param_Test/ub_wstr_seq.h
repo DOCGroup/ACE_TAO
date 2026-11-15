@@ -18,7 +18,7 @@ class Test_WString_Sequence
 public:
   Test_WString_Sequence ();
 
-  ~Test_WString_Sequence ();
+  ~Test_WString_Sequence () = default;
 
   /// run the SII test
   int run_sii_test (Param_Test_ptr objref);
@@ -46,7 +46,7 @@ public:
 
 private:
   /// operation name
-  char *opname_;
+  char const *opname_;
 
   /// in parameter
   CORBA::WStringSeq_var in_;

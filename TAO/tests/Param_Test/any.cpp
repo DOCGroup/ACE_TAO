@@ -19,16 +19,10 @@
 size_t Test_Any::counter = 0;
 
 Test_Any::Test_Any ()
-  : opname_ (CORBA::string_dup ("test_any")),
+  : opname_ ("test_any"),
     out_ (new CORBA::Any),
     ret_ (new CORBA::Any)
 {
-}
-
-Test_Any::~Test_Any ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = nullptr;
 }
 
 const char *

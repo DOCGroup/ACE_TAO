@@ -15,18 +15,12 @@
 // ************************************************************************
 
 Test_Bounded_WString_Sequence::Test_Bounded_WString_Sequence ()
-  : opname_ (CORBA::string_dup ("test_bounded_wstrseq")),
+  : opname_ ("test_bounded_wstrseq"),
     in_ (new Param_Test::Bounded_WStrSeq),
     inout_ (new Param_Test::Bounded_WStrSeq),
     out_ (new Param_Test::Bounded_WStrSeq),
     ret_ (new Param_Test::Bounded_WStrSeq)
 {
-}
-
-Test_Bounded_WString_Sequence::~Test_Bounded_WString_Sequence ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = nullptr;
 }
 
 const char *

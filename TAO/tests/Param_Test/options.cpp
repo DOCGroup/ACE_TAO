@@ -24,10 +24,6 @@ Options::Options ()
 {
 }
 
-Options::~Options ()
-{
-}
-
 // Parses the command line arguments and returns an error status.
 
 int

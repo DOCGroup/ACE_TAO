@@ -16,14 +16,8 @@
 size_t Test_Small_Union::counter = 0;
 
 Test_Small_Union::Test_Small_Union ()
-  : opname_ (CORBA::string_dup ("test_small_union"))
+  : opname_ ("test_small_union")
 {
-}
-
-Test_Small_Union::~Test_Small_Union ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = nullptr;
 }
 
 const char *

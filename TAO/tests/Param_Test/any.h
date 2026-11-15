@@ -17,7 +17,7 @@ class Test_Any
 public:
   Test_Any ();
 
-  ~Test_Any ();
+  ~Test_Any () = default;
 
   enum
   {
@@ -59,7 +59,7 @@ public:
 
 private:
   /// operation name
-  char *opname_;
+  char const *opname_;
 
   /// Coffee object used to test Any with object.
   Coffee_var cobj_;

@@ -17,7 +17,7 @@ class Test_AnySeq
 public:
   Test_AnySeq ();
 
-  ~Test_AnySeq ();
+  ~Test_AnySeq () = default;
 
   /// run the SII test
   int run_sii_test (Param_Test_ptr objref);
@@ -53,7 +53,7 @@ protected:
 
 private:
   /// operation name
-  char *opname_;
+  char const *opname_;
 
   /// in parameter
   CORBA::AnySeq_var in_;

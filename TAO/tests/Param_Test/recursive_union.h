@@ -19,7 +19,7 @@ class Test_Recursive_Union
 public:
   Test_Recursive_Union ();
 
-  ~Test_Recursive_Union ();
+  ~Test_Recursive_Union () = default;
 
   /// run the SII test
   int run_sii_test (Param_Test_ptr objref);
@@ -47,7 +47,7 @@ public:
 
 private:
   /// operation name
-  char *opname_;
+  char const *opname_;
 
   /// in parameter
   Param_Test::Recursive_Union in_;

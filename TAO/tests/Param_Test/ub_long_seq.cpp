@@ -14,18 +14,12 @@
 // ************************************************************************
 
 Test_Long_Sequence::Test_Long_Sequence ()
-  : opname_ (CORBA::string_dup ("test_long_sequence")),
+  : opname_ ("test_long_sequence"),
     in_ (new CORBA::LongSeq),
     inout_ (new CORBA::LongSeq),
     out_ (new CORBA::LongSeq),
     ret_ (new CORBA::LongSeq)
 {
-}
-
-Test_Long_Sequence::~Test_Long_Sequence ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = nullptr;
 }
 
 const char *

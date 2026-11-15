@@ -18,7 +18,7 @@ class Test_ObjRef_Sequence
 public:
   Test_ObjRef_Sequence ();
 
-  ~Test_ObjRef_Sequence ();
+  ~Test_ObjRef_Sequence () = default;
 
   /// run the SII test
   int run_sii_test (Param_Test_ptr objref);
@@ -53,7 +53,7 @@ protected:
   void print_sequence (const Param_Test::Coffee_Mix &s);
 private:
   /// operation name
-  char *opname_;
+  char const *opname_;
 
   /// in parameter
   Param_Test::Coffee_Mix in_;

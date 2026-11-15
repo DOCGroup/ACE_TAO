@@ -20,7 +20,7 @@ class Test_Recursive_Struct
 public:
   Test_Recursive_Struct ();
 
-  ~Test_Recursive_Struct ();
+  ~Test_Recursive_Struct () = default;
 
   /// run the SII test
   int run_sii_test (Param_Test_ptr objref);
@@ -48,7 +48,7 @@ public:
 
 private:
   /// operation name
-  char *opname_;
+  char const *opname_;
 
   /// in parameter
   Param_Test::Recursive_Struct in_;

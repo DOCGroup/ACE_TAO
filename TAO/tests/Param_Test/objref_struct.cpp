@@ -16,19 +16,11 @@
 // ************************************************************************
 
 Test_Objref_Struct::Test_Objref_Struct ()
-  : opname_ (CORBA::string_dup ("test_objref_struct")),
+  : opname_ ("test_objref_struct"),
     inout_ (new Param_Test::Objref_Struct),
     out_ (new Param_Test::Objref_Struct),
     ret_ (new Param_Test::Objref_Struct)
 {
-}
-
-Test_Objref_Struct::~Test_Objref_Struct ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = nullptr;
-  // the other data members will be freed as they are "_var"s and objects
-  // (rather than pointers to objects)
 }
 
 const char *

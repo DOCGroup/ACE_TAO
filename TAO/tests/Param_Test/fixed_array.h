@@ -17,7 +17,7 @@ class Test_Fixed_Array
 public:
   Test_Fixed_Array ();
 
-  ~Test_Fixed_Array ();
+  ~Test_Fixed_Array () = default;
 
   /// run the SII test
   int run_sii_test (Param_Test_ptr objref);
@@ -52,7 +52,7 @@ private:
   void print (const Param_Test::Fixed_Array_slice *a);
 
   /// operation name
-  char *opname_;
+  char const *opname_;
 
   /// in parameter
   Param_Test::Fixed_Array in_;

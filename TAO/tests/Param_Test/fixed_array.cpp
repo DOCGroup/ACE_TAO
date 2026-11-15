@@ -14,15 +14,9 @@
 // ************************************************************************
 
 Test_Fixed_Array::Test_Fixed_Array ()
-  : opname_ (CORBA::string_dup ("test_fixed_array")),
+  : opname_ ("test_fixed_array"),
     ret_ (new Param_Test::Fixed_Array)
 {
-}
-
-Test_Fixed_Array::~Test_Fixed_Array ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = nullptr;
 }
 
 const char *

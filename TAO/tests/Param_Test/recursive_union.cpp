@@ -16,16 +16,8 @@ const CORBA::ULong MAX_SEQ_LENGTH = 2;
 // ************************************************************************
 
 Test_Recursive_Union::Test_Recursive_Union ()
-  : opname_ (CORBA::string_dup ("test_recursive_union"))
+  : opname_ ("test_recursive_union")
 {
-}
-
-Test_Recursive_Union::~Test_Recursive_Union ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = nullptr;
-  // the other data members will be freed as they are "_var"s and objects
-  // (rather than pointers to objects)
 }
 
 const char *

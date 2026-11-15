@@ -14,14 +14,8 @@
 // ************************************************************************
 
 Test_Short::Test_Short ()
-  : opname_ (CORBA::string_dup ("test_short"))
+  : opname_ ("test_short")
 {
-}
-
-Test_Short::~Test_Short ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = nullptr;
 }
 
 const char *

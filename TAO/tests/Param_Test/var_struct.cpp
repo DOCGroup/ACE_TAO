@@ -16,19 +16,11 @@
 // ************************************************************************
 
 Test_Var_Struct::Test_Var_Struct ()
-  : opname_ (CORBA::string_dup ("test_var_struct")),
+  : opname_ ("test_var_struct"),
     inout_ (new Param_Test::Var_Struct),
     out_ (new Param_Test::Var_Struct),
     ret_ (new Param_Test::Var_Struct)
 {
-}
-
-Test_Var_Struct::~Test_Var_Struct ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = nullptr;
-  // the other data members will be freed as they are "_var"s and objects
-  // (rather than pointers to objects)
 }
 
 const char *

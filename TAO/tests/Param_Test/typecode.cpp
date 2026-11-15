@@ -14,14 +14,8 @@
 // ************************************************************************
 
 Test_TypeCode::Test_TypeCode ()
-  : opname_ (CORBA::string_dup ("test_typecode"))
+  : opname_ ("test_typecode")
 {
-}
-
-Test_TypeCode::~Test_TypeCode ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = nullptr;
 }
 
 const char *

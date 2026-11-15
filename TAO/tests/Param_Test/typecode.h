@@ -17,7 +17,7 @@ class Test_TypeCode
 public:
   Test_TypeCode ();
 
-  ~Test_TypeCode ();
+  ~Test_TypeCode () = default;
 
   /// run the SII test
   int run_sii_test (Param_Test_ptr objref);
@@ -49,7 +49,7 @@ private:
   CORBA::TypeCode_var tc_holder_;
 
   /// operation name
-  char *opname_;
+  char const *opname_;
 
   /// in parameter
   CORBA::TypeCode_var in_;

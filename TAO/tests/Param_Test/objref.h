@@ -17,7 +17,7 @@ class Test_ObjRef
 public:
   Test_ObjRef ();
 
-  ~Test_ObjRef ();
+  ~Test_ObjRef () = default;
 
   /// run the SII test
   int run_sii_test (Param_Test_ptr objref);
@@ -45,7 +45,7 @@ public:
 
 private:
   /// operation name
-  char *opname_;
+  char const *opname_;
 
   /// in parameter
   Coffee_var in_;

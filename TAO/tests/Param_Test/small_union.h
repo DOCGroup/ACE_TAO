@@ -17,7 +17,7 @@ class Test_Small_Union
 public:
   Test_Small_Union ();
 
-  ~Test_Small_Union ();
+  ~Test_Small_Union () = default;
 
   /// run the SII test
   int run_sii_test (Param_Test_ptr objref);
@@ -45,7 +45,7 @@ public:
 
 private:
   /// operation name
-  char *opname_;
+  char const *opname_;
 
   /// Coffee object used to test Small_Union with object.
   Coffee_var cobj_;

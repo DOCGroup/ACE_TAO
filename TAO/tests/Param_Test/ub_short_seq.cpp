@@ -14,18 +14,12 @@
 // ************************************************************************
 
 Test_Short_Sequence::Test_Short_Sequence ()
-  : opname_ (CORBA::string_dup ("test_short_sequence")),
+  : opname_ ("test_short_sequence"),
     in_ (new CORBA::ShortSeq),
     inout_ (new CORBA::ShortSeq),
     out_ (new CORBA::ShortSeq),
     ret_ (new CORBA::ShortSeq)
 {
-}
-
-Test_Short_Sequence::~Test_Short_Sequence ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = nullptr;
 }
 
 const char *

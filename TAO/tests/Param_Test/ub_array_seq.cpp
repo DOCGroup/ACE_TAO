@@ -14,19 +14,11 @@
 // ************************************************************************
 
 Test_Array_Sequence::Test_Array_Sequence ()
-  : opname_ (CORBA::string_dup ("test_array_sequence")),
+  : opname_ ("test_array_sequence"),
     inout_ (new Param_Test::ArraySeq),
     out_ (new Param_Test::ArraySeq),
     ret_ (new Param_Test::ArraySeq)
 {
-}
-
-Test_Array_Sequence::~Test_Array_Sequence ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = nullptr;
-  // the other data members will be freed as they are "_var"s and objects
-  // (rather than pointers to objects)
 }
 
 const char *

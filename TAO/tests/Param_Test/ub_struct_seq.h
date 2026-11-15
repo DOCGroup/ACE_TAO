@@ -18,7 +18,7 @@ class Test_Struct_Sequence
 public:
   Test_Struct_Sequence ();
 
-  ~Test_Struct_Sequence ();
+  ~Test_Struct_Sequence () = default;
 
   /// run the SII test
   int run_sii_test (Param_Test_ptr objref);
@@ -54,7 +54,7 @@ protected:
 
 private:
   /// operation name
- char *opname_;
+ char const *opname_;
 
   /// in parameter
   Param_Test::StructSeq in_;
@@ -75,7 +75,7 @@ class Test_Unbounded_Struct_Sequence
 public:
   Test_Unbounded_Struct_Sequence ();
 
-  ~Test_Unbounded_Struct_Sequence ();
+  ~Test_Unbounded_Struct_Sequence () = default;
 
   /// run the SII test
   int run_sii_test (Param_Test_ptr objref);
@@ -111,7 +111,7 @@ protected:
 
 private:
   /// operation name
- char *opname_;
+ char const *opname_;
 
   /// in parameter
   Param_Test::PathSpec in_;
