@@ -5,13 +5,10 @@
 
 #include "Default_Dispatcher_Impl.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "Kokyu.inl"
-#endif /* __ACE_INLINE__ */
-
 namespace Kokyu
 {
 Dispatcher::Dispatcher () = default;
+Dispatcher::~Dispatcher () = default;
 
 int Dispatcher::dispatch (Dispatch_Command const *cmd, QoSDescriptor const &qos)
 {

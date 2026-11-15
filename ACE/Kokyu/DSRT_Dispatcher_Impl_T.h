@@ -74,12 +74,16 @@ namespace Kokyu
 
         //more eligible
         if (rc == 1)
-          return rc;
+          {
+            return rc;
+          }
 
         //if equally eligible, then resolve tie with the creation time of
         //the item
         if (rc == 0 && item1->insertion_time () < item2->insertion_time ())
-          return 1;
+          {
+            return 1;
+          }
 
         return 0;
       }

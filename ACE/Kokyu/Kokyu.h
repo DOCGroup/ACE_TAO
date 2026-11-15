@@ -98,9 +98,5 @@ namespace Kokyu
   };
 } //end of namespace
 
-#if defined (__ACE_INLINE__)
-#include "Kokyu.inl"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /* KOKYU_H */

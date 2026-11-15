@@ -156,24 +156,30 @@ int ACE_TMAIN (int, ACE_TCHAR **)
     {
       flags = THR_BOUND;
       if (mytask1.activate (flags) == -1)
-        ACE_ERROR ((LM_ERROR,
-                        "EC (%P|%t) cannot activate task\n"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "EC (%P|%t) cannot activate task\n"));
+        }
     }
 
   if (mytask2.activate (flags) == -1)
     {
       flags = THR_BOUND;
       if (mytask2.activate (flags) == -1)
-        ACE_ERROR ((LM_ERROR,
-                        "EC (%P|%t) cannot activate task\n"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "EC (%P|%t) cannot activate task\n"));
+        }
     }
 
   if (mytask3.activate (flags) == -1)
     {
       flags = THR_BOUND;
       if (mytask3.activate (flags) == -1)
-        ACE_ERROR ((LM_ERROR,
-                        "EC (%P|%t) cannot activate task\n"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "EC (%P|%t) cannot activate task\n"));
+        }
     }
 
   mytask1.wait ();
