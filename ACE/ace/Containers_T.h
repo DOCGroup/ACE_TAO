@@ -76,7 +76,8 @@ template <class T>
 class ACE_Bounded_Stack
 {
 public:
-  // = Initialization, assignment, and termination methods.
+  /// @name Initialization, assignment, and termination methods
+  /// @{
 
   /// Initialize a new empty stack with the provided size..
   /**
@@ -105,7 +106,9 @@ public:
    */
   ~ACE_Bounded_Stack ();
 
-  // = Classic Stack operations.
+  /// @}
+  /// @name Classic Stack operations
+  /// @{
 
   ///Add an element to the top of the stack.
   /**
@@ -131,7 +134,9 @@ public:
    */
   int top (T &item) const;
 
-  // = Check boundary conditions.
+  /// @}
+  /// @name Check boundary conditions
+  /// @{
 
   /// Returns true if the container is empty.
   /**
@@ -157,6 +162,7 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
+  /// @}
 private:
   /// Size of the dynamically allocated data.
   size_t size_;
@@ -204,7 +210,8 @@ template <class T, size_t ACE_SIZE>
 class ACE_Fixed_Stack
 {
 public:
-  // = Initialization, assignment, and termination methods.
+  /// @name Initialization, assignment, and termination methods
+  /// @{
   /// Initialize a new stack so that it is empty.
   /**
    * Initialize an empty stack.
@@ -229,7 +236,9 @@ public:
    */
   ~ACE_Fixed_Stack ();
 
-  // = Classic Stack operations.
+  /// @}
+  /// @name Classic Stack operations
+  /// @{
 
   ///Constant time placement of element on top of stack.
   /**
@@ -255,7 +264,9 @@ public:
    */
   int top (T &item) const;
 
-  // = Check boundary conditions.
+  /// @}
+  /// @name Check boundary conditions
+  /// @{
 
   /// Returns true if the container is empty.
   /**
@@ -281,6 +292,7 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
+  /// @}
 private:
   /// Size of the allocated data.
   size_t size_;
@@ -371,7 +383,8 @@ public:
   // Trait definition.
   using ITERATOR = ACE_Unbounded_Stack_Iterator<T>;
 
-  // = Initialization, assignment, and termination methods.
+  /// @name Initialization, assignment, and termination methods
+  /// @{
   /// Initialize a new stack so that it is empty.  Use user defined
   /// allocation strategy if specified.
   /**
@@ -398,7 +411,9 @@ public:
    */
   ~ACE_Unbounded_Stack ();
 
-  // = Classic Stack operations.
+  /// @}
+  /// @name Classic Stack operations
+  /// @{
 
   ///Push an element onto the top of stack.
   /**
@@ -424,7 +439,9 @@ public:
    */
   int top (T &item) const;
 
-  // = Check boundary conditions.
+  /// @}
+  /// @name Check boundary conditions
+  /// @{
 
   /// Returns true if the container is empty.
   /**
@@ -438,7 +455,9 @@ public:
    */
   bool is_full () const;
 
-  // = Auxiliary methods (not strictly part of the Stack ADT).
+  /// @}
+  /// @name Auxiliary methods (not strictly part of the Stack ADT)
+  /// @{
 
   ///Linear Insert of an item.
   /**
@@ -473,6 +492,7 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
+  /// @}
 private:
   /// Delete all the nodes in the stack.
   void delete_all_nodes ();
@@ -502,7 +522,8 @@ public:
   /// Move to the first element in the {stack}.
   ACE_Unbounded_Stack_Iterator (ACE_Unbounded_Stack<T> &stack);
 
-  // = Iteration methods.
+  /// @name Iteration methods
+  /// @{
 
   /// Pass back the @a next_item that hasn't been seen in the Stack.
   /// Returns 0 when all items have been seen, else 1.
@@ -525,6 +546,7 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
+  /// @}
 private:
   /// Pointer to the current node in the iteration.
   ACE_Node<T> *current_;
@@ -546,7 +568,8 @@ template <class T>
 class ACE_Double_Linked_List_Iterator_Base
 {
 public:
-  // = Iteration methods.
+  /// @name Iteration methods
+  /// @{
 
   /// Passes back the {entry} under the iterator. Returns 0 if the
   /// iteration has completed, otherwise 1
@@ -578,6 +601,7 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
+  /// @}
 protected:
   ACE_Double_Linked_List_Iterator_Base (const ACE_Double_Linked_List<T> &);
 
@@ -586,7 +610,8 @@ protected:
                                         ACE_Double_Linked_List_Iterator_Base<T>
                                         &iter);
 
-  // = Iteration methods.
+  /// @name Iteration methods
+  /// @{
   /**
    * Move to the first element of the list. Returns 0 if the list is
    * empty, else 1.
@@ -622,6 +647,7 @@ protected:
   T *current_;
 
   const ACE_Double_Linked_List<T> *dllist_;
+  /// @}
 };
 
 /**
@@ -670,7 +696,8 @@ public:
    */
   T* advance_and_remove (bool dont_remove);
 
-  // = STL-style iteration methods
+  /// @name STL-style iteration methods
+  /// @{
 
   /// Prefix advance.
   ACE_Double_Linked_List_Iterator<T> & operator++ ();
@@ -689,6 +716,7 @@ public:
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
+  /// @}
 };
 
 /**
@@ -738,7 +766,8 @@ public:
    */
   T* advance_and_remove (bool dont_remove);
 
-  // = STL-style iteration methods
+  /// @name STL-style iteration methods
+  /// @{
 
   /// Prefix advance.
   ACE_Double_Linked_List_Reverse_Iterator<T> & operator++ ();
@@ -757,6 +786,7 @@ public:
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
+  /// @}
 };
 
 /**
@@ -841,7 +871,8 @@ public:
    */
   ~ACE_Double_Linked_List ();
 
-  // = Check boundary conditions.
+  /// @name Check boundary conditions
+  /// @{
 
   /// Returns true if the container is empty.
   /**
@@ -855,7 +886,9 @@ public:
    */
   bool is_full () const;
 
-  // = Classic queue operations.
+  /// @}
+  /// @name Classic queue operations
+  /// @{
 
   /// Adds @a new_item to the tail of the list. Returns the new item
   /// that was inserted.
@@ -887,7 +920,9 @@ public:
    */
   T *delete_tail ();
 
-  // = Additional utility methods.
+  /// @}
+  /// @name Additional utility methods
+  /// @{
 
   ///Empty the list.
   /**
@@ -923,6 +958,7 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
+  /// @}
 protected:
   /// Delete all the nodes in the list.
   /**
@@ -1118,7 +1154,8 @@ public:
    */
   void reset (ACE_DLList<T> &l);
 
-  // = Iteration methods.
+  /// @name Iteration methods
+  /// @{
   /// Move forward by one element in the list.  Returns 0 when all the
   /// items in the list have been seen, else 1.
   int advance ();
@@ -1145,6 +1182,7 @@ public:
   /// Delegates to ACE_Double_Linked_List_Iterator.
   void dump () const;
 
+  /// @}
 private:
   ACE_DLList<T> *list_;
 };
@@ -1178,7 +1216,8 @@ public:
    */
   void reset (ACE_DLList<T> &l);
 
-  // = Iteration methods.
+  /// @name Iteration methods
+  /// @{
   /// Move forward by one element in the list.  Returns 0 when all the
   /// items in the list have been seen, else 1.
   int advance ();
@@ -1199,6 +1238,7 @@ public:
   /// Delegates to ACE_Double_Linked_List_Iterator.
   void dump () const;
 
+  /// @}
 private:
   ACE_DLList<T> *list_;
 };
@@ -1216,7 +1256,8 @@ template <class T, size_t ACE_SIZE>
 class ACE_Fixed_Set_Iterator_Base
 {
 public:
-  // = Iteration methods.
+  /// @name Iteration methods
+  /// @{
 
   /// Pass back the {next_item} that hasn't been seen in the Set.
   /// Returns 0 when all items have been seen, else 1.
@@ -1236,6 +1277,7 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
+  /// @}
 protected:
   ACE_Fixed_Set_Iterator_Base (ACE_Fixed_Set<T, ACE_SIZE> &s);
 
@@ -1270,7 +1312,8 @@ class ACE_Fixed_Set_Iterator : public ACE_Fixed_Set_Iterator_Base <T, ACE_SIZE>
 public:
   ACE_Fixed_Set_Iterator (ACE_Fixed_Set<T, ACE_SIZE> &s);
 
-  // = Iteration methods.
+  /// @name Iteration methods
+  /// @{
 
   /// Pass back the {next_item} that hasn't been seen in the Set.
   /// Returns 0 when all items have been seen, else 1.
@@ -1290,6 +1333,7 @@ public:
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
+  /// @}
 };
 
 /**
@@ -1305,7 +1349,8 @@ class ACE_Fixed_Set_Const_Iterator : public ACE_Fixed_Set_Iterator_Base <T, ACE_
 public:
   ACE_Fixed_Set_Const_Iterator (const ACE_Fixed_Set<T, ACE_SIZE> &s);
 
-  // = Iteration methods.
+  /// @name Iteration methods
+  /// @{
 
   /// Pass back the {next_item} that hasn't been seen in the Set.
   /// Returns 0 when all items have been seen, else 1.
@@ -1320,6 +1365,7 @@ public:
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
+  /// @}
 };
 
 /**
@@ -1389,7 +1435,8 @@ public:
    */
   ~ACE_Fixed_Set ();
 
-  // = Check boundary conditions.
+  /// @name Check boundary conditions
+  /// @{
 
   /// Returns true if the container is empty.
   /**
@@ -1403,7 +1450,9 @@ public:
    */
   bool is_full () const;
 
-  // = Classic unordered set operations.
+  /// @}
+  /// @name Classic unordered set operations
+  /// @{
 
   ///Linear time insertion of an item unique to the set.
   /**
@@ -1439,6 +1488,7 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
+  /// @}
 private:
   /// Holds the contents of the set.
   struct
@@ -1475,7 +1525,8 @@ class ACE_Bounded_Set_Iterator
 public:
   ACE_Bounded_Set_Iterator (ACE_Bounded_Set<T> &s);
 
-  // = Iteration methods.
+  /// @name Iteration methods
+  /// @{
 
   /// Pass back the {next_item} that hasn't been seen in the Set.
   /// Returns 0 when all items have been seen, else 1.
@@ -1498,6 +1549,7 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
+  /// @}
 private:
   /// Set we are iterating over.
   ACE_Bounded_Set<T> &s_;
@@ -1587,7 +1639,8 @@ public:
    */
   ~ACE_Bounded_Set ();
 
-  // = Check boundary conditions.
+  /// @name Check boundary conditions
+  /// @{
 
   /// Returns true if the container is empty.
   /**
@@ -1603,7 +1656,9 @@ public:
    */
   bool is_full () const;
 
-  // = Classic unordered set operations.
+  /// @}
+  /// @name Classic unordered set operations
+  /// @{
 
   ///Inserts a new element unique to the set.
   /**
@@ -1642,6 +1697,7 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
+  /// @}
 private:
   struct Search_Structure
   {
@@ -1678,7 +1734,8 @@ public:
 
   ACE_Ordered_MultiSet_Iterator (ACE_Ordered_MultiSet<T> &s);
 
-  // = Iteration methods.
+  /// @name Iteration methods
+  /// @{
 
   /// Pass back the {next_item} that hasn't been seen in the ordered multiset.
   /// Returns 0 when all items have been seen, else 1.
@@ -1712,6 +1769,7 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
+  /// @}
 private:
   /// Pointer to the current node in the iteration.
   ACE_DNode<T> *current_;
@@ -1787,7 +1845,8 @@ public:
    */
   void operator= (const ACE_Ordered_MultiSet<T> &);
 
-  // = Check boundary conditions.
+  /// @name Check boundary conditions
+  /// @{
 
   /// Returns true if the container is empty.
   /**
@@ -1801,7 +1860,9 @@ public:
    */
   size_t size () const;
 
-  // = Classic unordered set operations.
+  /// @}
+  /// @name Classic unordered set operations
+  /// @{
 
   /// Insert @a new_item into the ordered multiset.
   /// Returns -1 if failures occur, else 0.
@@ -1847,6 +1908,7 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
+  /// @}
 private:
   /**
    * Insert @a item, starting its search at the position given,
@@ -1966,7 +2028,8 @@ public:
    */
   void operator= (const ACE_Array<T> &s);
 
-  // = Compare operators
+  /// @name Compare operators
+  /// @{
 
   ///Equality comparison operator.
   /**
@@ -1983,6 +2046,7 @@ public:
    * {*this} == {s}.
    */
   bool operator!= (const ACE_Array<T> &s) const;
+  /// @}
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
