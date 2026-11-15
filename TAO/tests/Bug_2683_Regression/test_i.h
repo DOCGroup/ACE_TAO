@@ -17,8 +17,9 @@ public:
   ORB_Killer &operator= (ORB_Killer &&) = delete;
 
   int svc () override;
+
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 };
 
 /// Implement the Test::Hello interface
@@ -32,10 +33,12 @@ public:
   test_i (test_i &&) = delete;
   test_i &operator= (test_i &&) = delete;
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   void ping () override;
 
   void shutdown () override;
+  /// @}
 
 private:
   /// Non-owning pointer to the server's ORB_Killer, which outlives this servant.

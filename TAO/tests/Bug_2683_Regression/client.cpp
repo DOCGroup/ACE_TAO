@@ -9,8 +9,8 @@
 class Pinger : public ACE_Task_Base
 {
 private:
-  std::string ior_;
-  CORBA::ORB_var orb_;
+  std::string const ior_;
+  CORBA::ORB_var const orb_;
   std::atomic<bool> do_shutdown_ {};
   std::atomic<bool> stop_ {};
 

@@ -36,7 +36,7 @@ parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior_output_file)
 class ORB_Run_Task : public ACE_Task_Base
 {
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 
 public:
   explicit ORB_Run_Task (CORBA::ORB_ptr orb)
@@ -105,7 +105,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       IORTable::Table_var const iortable = IORTable::Table::_narrow (ior_table_object.in ());
 
-      if (CORBA::is_nil (root_poa.in ()))
+      if (CORBA::is_nil (iortable.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Panic: nil IORTable\n"),
                           1);
@@ -145,7 +145,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Output the IOR to the <ior_output_file> - to signal readiness.
       {
         // The IOR file signals readiness to the test harness.
-        std::unique_ptr<FILE, int (*) (FILE *)> output_file (ACE_OS::fopen (ior_output_file, "w"), ACE_OS::fclose);
+        std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+          ACE_OS::fopen (ior_output_file, "w"), ACE_OS::fclose);
         if (!output_file)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Cannot open output file for writing IOR: %s\n",
