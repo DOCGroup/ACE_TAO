@@ -243,7 +243,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
       *os << be_uidt_nl << be_nl << "public:" << be_idt_nl;
       *os << be_nl << "void _add_ref () override = 0;" << be_nl;
       *os << "void _remove_ref () override = 0;" << be_nl;
-      *os << "::CORBA::ValueBase *_tao_to_value () override;";
+      *os << "virtual ::CORBA::ValueBase *_tao_to_value ();";
     }
 
   // Generate the "protected" constructor so that users cannot
@@ -395,8 +395,15 @@ be_visitor_valuetype_ch::visit_operation (be_operation *node)
 
   TAO_INSERT_COMMENT (os);
 
-  // Every operation is declared public and virtual in the client code.
-  *os << be_uidt_nl << "public:" << be_idt_nl << "virtual ";
+  bool const supported_operation =
+    this->ctx_->interface () != nullptr
+    && this->ctx_->interface () != node->defined_in ();
+
+  *os << be_uidt_nl << "public:" << be_idt_nl;
+  if (!supported_operation)
+    {
+      *os << "virtual ";
+    }
 
   be_type *bt = dynamic_cast<be_type*> (node->return_type ());
 

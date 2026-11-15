@@ -50,6 +50,16 @@ vt_graph_impl::print ()
     nodes_ ()[i]->print ();
 }
 
+CORBA::ValueBase *
+vt_graph_impl::_copy_value ()
+{
+  vt_graph_impl *copy {};
+  ACE_NEW_THROW_EX (copy, vt_graph_impl, CORBA::NO_MEMORY ());
+  CORBA::ValueBase_var owner (copy);
+  copy->nodes_ (this->nodes_ ());
+  return owner._retn ();
+}
+
 /* vt_graph_init_impl - factory operations */
 
 Supports_Test::vt_graph *
@@ -197,6 +207,19 @@ node_impl::print ()
   cout << "    Neighbors: " << endl;
   for (size_t i = 0; i < neighbors_ ().length (); i++)
     cout << "      " << neighbors_ ()[i]->name_ () << endl;
+}
+
+CORBA::ValueBase *
+node_impl::_copy_value ()
+{
+  node_impl *copy {};
+  ACE_NEW_THROW_EX (copy, node_impl, CORBA::NO_MEMORY ());
+  CORBA::ValueBase_var owner (copy);
+  copy->name_ (this->name_ ());
+  copy->weight_ (this->weight_ ());
+  copy->degree_ (this->degree_ ());
+  copy->neighbors_ (this->neighbors_ ());
+  return owner._retn ();
 }
 
 /* node_init_impl - factory operations */
