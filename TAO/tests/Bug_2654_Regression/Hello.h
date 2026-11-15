@@ -17,15 +17,17 @@ public:
   Hello (Hello &&) = delete;
   Hello &operator= (Hello &&) = delete;
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   void method (CORBA::Short count) override;
 
   void set_callback (Test::CallBack_ptr cb) override;
+  /// @}
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown
   /// the application.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
   Test::CallBack_var callback_;
   std::atomic<int> count_ {};
 };
