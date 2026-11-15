@@ -506,7 +506,7 @@ private:
   TAO_OutStream *ciao_conn_source_ {};
 
   /// Component connector impl source file.
-  TAO_OutStream *ciao_ami_conn_idl_ {};
+  std::unique_ptr<TAO_OutStream> ciao_ami_conn_idl_;
 
   /**
    * Name of the temp file used to collect the input for gperf

@@ -1436,11 +1436,13 @@ int
 TAO_CodeGen::start_ciao_ami_conn_idl (const std::string &fname)
 {
   // Clean up between multiple files.
-  delete this->ciao_ami_conn_idl_;
+  this->ciao_ami_conn_idl_.reset ();
 
-  ACE_NEW_RETURN (this->ciao_ami_conn_idl_,
+  TAO_OutStream *stream {};
+  ACE_NEW_RETURN (stream,
                   TAO_OutStream,
                   -1);
+  this->ciao_ami_conn_idl_.reset (stream);
 
   int const status =
     this->ciao_ami_conn_idl_->open (fname,
@@ -1460,7 +1462,7 @@ TAO_CodeGen::start_ciao_ami_conn_idl (const std::string &fname)
 
   // Generate the #ifndef clause.
   this->gen_ifndef_string (fname,
-                           this->ciao_ami_conn_idl_,
+                           this->ciao_ami_conn_idl_.get (),
                            "_CIAO_",
                            "_IDL_");
 
@@ -1472,7 +1474,7 @@ TAO_CodeGen::start_ciao_ami_conn_idl (const std::string &fname)
 TAO_OutStream *
 TAO_CodeGen::ciao_ami_conn_idl ()
 {
-  return this->ciao_ami_conn_idl_;
+  return this->ciao_ami_conn_idl_.get ();
 }
 
 // Set the server header stream.
@@ -3402,11 +3404,13 @@ TAO_CodeGen::gen_ami_conn_idl_includes ()
   // Include the AMI4CCM library entry point, if AMI4CCM is enabled.
   if (be_global->ami4ccm_call_back ())
     {
-      this->gen_standard_include (this->ciao_ami_conn_idl_, "connectors/ami4ccm/ami4ccm/ami4ccm.idl");
+      this->gen_standard_include (
+        this->ciao_ami_conn_idl_.get (),
+        "connectors/ami4ccm/ami4ccm/ami4ccm.idl");
     }
 
   this->gen_standard_include (
-    this->ciao_ami_conn_idl_,
+    this->ciao_ami_conn_idl_.get (),
     idl_global->stripped_filename ());
 }
 
@@ -3461,6 +3465,6 @@ TAO_CodeGen::destroy ()
   delete this->ciao_exec_idl_;
   delete this->ciao_conn_header_;
   delete this->ciao_conn_source_;
-  delete this->ciao_ami_conn_idl_;
+  this->ciao_ami_conn_idl_.reset ();
   this->gperf_input_stream_.reset ();
 }
