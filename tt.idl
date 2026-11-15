@@ -1,1 +1,0 @@
-    const long DATA_WRITER_DATA_RETURN_STATUS                 = 0x00000001 << 33;
