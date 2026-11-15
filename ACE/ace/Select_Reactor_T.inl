@@ -119,10 +119,11 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::uses_event_associations ()
   return false;
 }
 
-// = The remaining methods in this file must be called with locks
-// held.
+/// @name Operations requiring locks
+/// These operations must be called with locks held.
+/// @{
 
-// Performs operations on the "ready" bits.
+/// Performs operations on the ready bits.
 
 template <class ACE_SELECT_REACTOR_TOKEN> ACE_INLINE int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::ready_ops (ACE_Event_Handler *handler,
@@ -133,7 +134,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::ready_ops (ACE_Event_Handler *ha
   return this->ready_ops (handler->get_handle (), mask, ops);
 }
 
-// Performs operations on the "dispatch" masks.
+/// Performs operations on the dispatch masks.
 
 template <class ACE_SELECT_REACTOR_TOKEN> ACE_INLINE int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::mask_ops (ACE_Event_Handler *handler,
@@ -175,6 +176,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::cancel_wakeup (ACE_HANDLE handle
   ACE_TRACE ("ACE_Select_Reactor_T::cancel_wakeup");
   return this->mask_ops (handle, mask, ACE_Reactor::CLR_MASK);
 }
+/// @}
 
 template <class ACE_SELECT_REACTOR_TOKEN> ACE_INLINE ACE_Lock &
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::lock ()

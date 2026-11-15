@@ -171,13 +171,14 @@ public:
   /// Check the documentation for ACE_Asynch_Operation::cancel.
   int cancel () override;
 
-  // = Access methods.
-
+  /// @name Access methods
+  /// @{
   /// Return the underlying proactor.
   ACE_Proactor* proactor () const override;
 
   /// Return the underlying Proactor implementation.
   ACE_POSIX_Proactor * posix_proactor () const;
+  /// @}
 
 protected:
   ACE_POSIX_Asynch_Operation (ACE_POSIX_Proactor *posix_proactor);
