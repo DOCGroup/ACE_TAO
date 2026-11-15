@@ -17,7 +17,7 @@ class Test_Bounded_WString
 public:
   Test_Bounded_WString ();
 
-  ~Test_Bounded_WString ();
+  ~Test_Bounded_WString () = default;
 
   /// run the SII test
   int run_sii_test (Param_Test_ptr objref);
@@ -48,16 +48,16 @@ private:
   char const *opname_;
 
   /// in parameter
-  CORBA::WChar *in_;
+  CORBA::WString_var in_;
 
   /// inout parameter
-  CORBA::WChar *inout_;
+  CORBA::WString_var inout_;
 
   /// out parameter
-  CORBA::WChar *out_;
+  CORBA::WString_var out_;
 
   /// return value
-  CORBA::WChar *ret_;
+  CORBA::WString_var ret_;
 };
 
 #endif /* PARAM_TEST_BOUNDED_WSTRING_H */

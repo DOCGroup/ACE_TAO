@@ -15,24 +15,8 @@
 // ************************************************************************
 
 Test_Bounded_WString::Test_Bounded_WString ()
-  : opname_ ("test_bounded_wstring"),
-    in_ (nullptr),
-    inout_ (nullptr),
-    out_ (nullptr),
-    ret_ (nullptr)
+  : opname_ ("test_bounded_wstring")
 {
-}
-
-Test_Bounded_WString::~Test_Bounded_WString ()
-{
-  CORBA::wstring_free (this->in_);
-  CORBA::wstring_free (this->inout_);
-  CORBA::wstring_free (this->out_);
-  CORBA::wstring_free (this->ret_);
-  this->in_ = nullptr;
-  this->inout_ = nullptr;
-  this->out_ = nullptr;
-  this->ret_ = nullptr;
 }
 
 const char *
@@ -44,12 +28,12 @@ Test_Bounded_WString::opname () const
 void
 Test_Bounded_WString::dii_req_invoke (CORBA::Request *req)
 {
-  req->add_in_arg ("s1") <<= CORBA::Any::from_wstring (this->in_, 128);
-  req->add_inout_arg ("s2") <<= CORBA::Any::from_wstring (this->inout_, 128);
-  req->add_out_arg ("s3") <<= CORBA::Any::from_wstring (this->out_, 128);
+  req->add_in_arg ("s1") <<= CORBA::Any::from_wstring (this->in_.in (), 128);
+  req->add_inout_arg ("s2") <<= CORBA::Any::from_wstring (this->inout_.in (), 128);
+  req->add_out_arg ("s3") <<= CORBA::Any::from_wstring (this->out_.in (), 128);
 
-  // The Any arg manages its memory but this class member does not.
-  CORBA::wstring_free (this->inout_);
+  // The Any arg has copied the value; release the member before reuse.
+  this->inout_.out ();
 
   req->set_return_type (Param_Test::_tc_short_wstring);
 
@@ -76,17 +60,13 @@ Test_Bounded_WString::init_parameters (Param_Test_ptr)
   Generator *gen = GENERATOR::instance (); // value generator
 
   // release any previously occupied values
-  CORBA::wstring_free (this->in_);
-  CORBA::wstring_free (this->inout_);
-  CORBA::wstring_free (this->out_);
-  CORBA::wstring_free (this->ret_);
-  this->in_ = nullptr;
-  this->inout_ = nullptr;
-  this->out_ = nullptr;
-  this->ret_ = nullptr;
+  this->in_.out ();
+  this->inout_.out ();
+  this->out_.out ();
+  this->ret_.out ();
 
   this->in_ = gen->gen_wstring (32);
-  this->inout_ = CORBA::wstring_dup (this->in_);
+  this->inout_ = CORBA::wstring_dup (this->in_.in ());
   return 0;
 }
 
@@ -94,14 +74,11 @@ int
 Test_Bounded_WString::reset_parameters ()
 {
   // release any previously occupied values
-  CORBA::wstring_free (this->inout_);
-  CORBA::wstring_free (this->out_);
-  CORBA::wstring_free (this->ret_);
-  this->inout_ = nullptr;
-  this->out_ = nullptr;
-  this->ret_ = nullptr;
+  this->inout_.out ();
+  this->out_.out ();
+  this->ret_.out ();
 
-  this->inout_ = CORBA::wstring_dup (this->in_);
+  this->inout_ = CORBA::wstring_dup (this->in_.in ());
   return 0;
 }
 
@@ -112,8 +89,8 @@ Test_Bounded_WString::run_sii_test (Param_Test_ptr objref)
     {
       CORBA::WString_out str_out (this->out_);
 
-      this->ret_ = objref->test_bounded_wstring (this->in_,
-                                                 this->inout_,
+      this->ret_ = objref->test_bounded_wstring (this->in_.in (),
+                                                 this->inout_.inout (),
                                                  str_out);
 
       return 0;
@@ -128,13 +105,13 @@ Test_Bounded_WString::run_sii_test (Param_Test_ptr objref)
 CORBA::Boolean
 Test_Bounded_WString::check_validity ()
 {
-  CORBA::ULong len = ACE_OS::wslen (this->in_);
+  CORBA::ULong len = ACE_OS::wslen (this->in_.in ());
 
-  if (!ACE_OS::wscmp (this->in_, this->out_) &&
-      !ACE_OS::wscmp (this->in_, this->ret_) &&
-      ACE_OS::wslen (this->inout_) == 2*len &&
-      !ACE_OS::wsncmp (this->in_, this->inout_, len) &&
-      !ACE_OS::wsncmp (this->in_, &this->inout_[len], len))
+  if (!ACE_OS::wscmp (this->in_.in (), this->out_.in ()) &&
+      !ACE_OS::wscmp (this->in_.in (), this->ret_.in ()) &&
+      ACE_OS::wslen (this->inout_.in ()) == 2*len &&
+      !ACE_OS::wsncmp (this->in_.in (), this->inout_.in (), len) &&
+      !ACE_OS::wsncmp (this->in_.in (), &this->inout_[len], len))
   {
     return 1;
   }
