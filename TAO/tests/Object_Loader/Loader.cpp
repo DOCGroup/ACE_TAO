@@ -14,6 +14,11 @@ Loader::create_object (CORBA::ORB_ptr orb,
       PortableServer::POA_var poa =
         PortableServer::POA::_narrow (obj.in ());
 
+      if (CORBA::is_nil (poa.in ()))
+        {
+          return CORBA::Object::_nil ();
+        }
+
       PortableServer::POAManager_var mgr =
         poa->the_POAManager ();
 
@@ -38,8 +43,6 @@ Loader::create_object (CORBA::ORB_ptr orb,
     }
   return CORBA::Object::_nil ();
 }
-
-// ****************************************************************
 
 #if 0
 ACE_STATIC_SVC_DEFINE (Loader,

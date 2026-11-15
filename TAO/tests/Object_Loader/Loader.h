@@ -1,11 +1,9 @@
 
-//=============================================================================
 /**
  *  @file   Loader.h
  *
  *  @author Carlos O'Ryan
  */
-//=============================================================================
 
 #ifndef TAO_OBJECT_LOADER_LOADER_H
 #define TAO_OBJECT_LOADER_LOADER_H
@@ -21,7 +19,6 @@
 class OLT_Export Loader : public TAO_Object_Loader
 {
 public:
-  /// ctor
   Loader () = default;
 
   Loader (Loader const &) = delete;

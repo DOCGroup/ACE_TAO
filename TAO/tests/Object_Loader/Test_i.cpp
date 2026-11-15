@@ -3,7 +3,7 @@
 std::atomic<CORBA::Long> Test_i::instance_count_ {};
 
 Test_i::Test_i (PortableServer::POA_ptr poa)
-  :  poa_ (PortableServer::POA::_duplicate (poa))
+  : poa_ (PortableServer::POA::_duplicate (poa))
 {
   ++Test_i::instance_count_;
 }

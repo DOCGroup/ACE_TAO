@@ -1,11 +1,8 @@
-
-//=============================================================================
 /**
  *  @file   Test_i.h
  *
  *  @author Carlos O'Ryan
  */
-//=============================================================================
 
 #ifndef TAO_OBJECT_LOADER_TEST_I_H
 #define TAO_OBJECT_LOADER_TEST_I_H
@@ -23,7 +20,6 @@
 class OLT_Export Test_i : public POA_Test
 {
 public:
-  /// ctor
   explicit Test_i (PortableServer::POA_ptr poa);
 
   Test_i (Test_i const &) = delete;
