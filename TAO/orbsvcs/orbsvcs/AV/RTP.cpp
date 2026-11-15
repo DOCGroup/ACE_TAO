@@ -286,7 +286,7 @@ RTP_Packet::is_valid ()
   // the header size.
   if (this->pad() != 0)
     {
-      if (static_cast<unsigned int> (this->packet_[this->packet_size_]) >=
+      if (static_cast<unsigned int> (this->packet_[this->packet_size_ - 1]) >=
           (this->packet_size_ - (12 + this->cc() + this->extension_bytes_)))
         {
           return false;
