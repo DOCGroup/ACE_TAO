@@ -1,5 +1,6 @@
 #include "Task_Stats.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_stdio.h"
 
 #include <memory>
 #include <new>
@@ -68,10 +69,18 @@ Task_Stats::dump_samples (
   ACE_TCHAR const *msg,
   ACE_High_Res_Timer::global_scale_factor_type scale_factor)
 {
-  FILE* output_file = ACE_OS::fopen (file_name, "w");
+  std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+    ACE_OS::fopen (file_name, ACE_TEXT ("w")), ACE_OS::fclose);
+  if (!output_file)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Cannot open sample output file: %s\n"),
+                  file_name));
+      return;
+    }
 
   // first dump what the caller has to say.
-  ACE_OS::fprintf (output_file, "%s\n", ACE_TEXT_ALWAYS_CHAR (msg));
+  ACE_OS::fprintf (output_file.get (), "%s\n", ACE_TEXT_ALWAYS_CHAR (msg));
 
   // next, compose and dump what we want to say.
 
@@ -86,12 +95,12 @@ Task_Stats::dump_samples (
     double(samples_count_) / elapsed_seconds;
 
   ACE_OS::sprintf (out_msg, ACE_TEXT("#Throughtput: %f\n"), throughput);
-  ACE_OS::fprintf (output_file, ACE_TEXT("%s\n"),out_msg);
+  ACE_OS::fprintf (output_file.get (), ACE_TEXT("%s\n"),out_msg);
 
   // dump latency stats.
   this->dump_latency_stats (out_msg, scale_factor);
-  ACE_OS::fprintf (output_file, "%s\n", ACE_TEXT_ALWAYS_CHAR (out_msg));
-  ACE_OS::fprintf (output_file, "#Invocation time \t Execution time\n");
+  ACE_OS::fprintf (output_file.get (), "%s\n", ACE_TEXT_ALWAYS_CHAR (out_msg));
+  ACE_OS::fprintf (output_file.get (), "#Invocation time \t Execution time\n");
 
   // dump the samples recorded.
   for (size_t i = 0; i != this->samples_count_; ++i)
@@ -102,10 +111,8 @@ Task_Stats::dump_samples (
       ACE_UINT64 y = this->time_exec_[i] / scale_factor;
       ACE_UINT32 val_2 = ACE_CU64_TO_CU32 (y);
 
-      ACE_OS::fprintf (output_file, "%u \t %u\n",val_1, val_2);
+      ACE_OS::fprintf (output_file.get (), "%u \t %u\n",val_1, val_2);
     }
-
-  ACE_OS::fclose (output_file);
 }
 
 void
