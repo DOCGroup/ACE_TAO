@@ -165,8 +165,6 @@ public:
   /// Hook for construction parameters.
   virtual TYPE *make_TSS_TYPE () const;
 
-  // = Utility methods.
-
   /// Dump the state of an object.
   void dump () const;
 

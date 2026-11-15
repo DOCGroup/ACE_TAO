@@ -102,10 +102,8 @@ public:
    */
   virtual int module_closed ();
 
-  // = Immediate and deferred processing methods, respectively.
-
-  // These methods should be overridden by subclasses if you'd like to
-  // provide <Task>-specific message processing behavior.
+  /// Override these methods to provide task-specific message processing
+  /// behavior.
 
   /// A hook method that can be used to pass a message to a
   /// task, where it can be processed immediately or queued for subsequent
@@ -115,7 +113,6 @@ public:
   /// Run by a daemon thread to handle deferred processing.
   virtual int svc ();
 
-  // = Active object activation method.
   /**
    * Turn the task into an active object, i.e., having @a n_threads of
    * control, all running at the @a priority level (see below) with the
@@ -198,15 +195,16 @@ public:
    */
   virtual int wait ();
 
-  // = Suspend/resume a Task.
-
-  // Note that these methods are not portable and should be avoided
-  // since they are inherently error-prone to use.  They are only here
-  // for (the rare) applications that know how to use them correctly.
+  /// @name Suspend and resume
+  /// These methods are not portable and should be avoided because they are
+  /// inherently error-prone. They are provided for applications that know
+  /// how to use them correctly.
+  /// @{
   /// Suspend a task.
   int suspend () override;
   /// Resume a suspended task.
   int resume () override;
+  /// @}
 
   /// Get the current group id.
   int grp_id () const;

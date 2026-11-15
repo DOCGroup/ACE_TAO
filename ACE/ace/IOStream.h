@@ -193,7 +193,6 @@ protected:
   /// descriptions.
   virtual int sync ();
 
-  // = Signatures for the underflow/overflow discussed above.
   virtual int underflow ();
 
   /// The overflow function receives the character which caused the
@@ -205,7 +204,7 @@ protected:
   void reset_base ();
 
 protected:
-  // = Two pointer sets for manipulating the read/write areas.
+  /// Saved pointers used to manipulate the read/write areas.
   char *eback_saved_;
   char *gptr_saved_;
   char *egptr_saved_;
@@ -213,9 +212,7 @@ protected:
   char *pptr_saved_;
   char *epptr_saved_;
 
-  // = With cur_mode_ we keep track of our current IO mode.
-
-  // This helps us to optimize the underflow/overflow functions.
+  /// Track the current I/O mode to optimize underflow/overflow.
   u_char cur_mode_;
   const u_char get_mode_;
   const u_char put_mode_;

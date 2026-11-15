@@ -66,7 +66,8 @@ public:
 
   explicit ACE_Time_Value (time_t sec, suseconds_t usec = 0);
 
-  // = Methods for converting to/from various time formats.
+  /// @name Time format conversions
+  /// @{
 
   /// Construct the ACE_Time_Value from a timeval.
   explicit ACE_Time_Value (struct timeval const &t);
@@ -213,7 +214,9 @@ public:
   operator FILETIME () const;
 # endif /* ACE_WIN32 */
 
-  // = The following are accessor/mutator methods.
+  /// @}
+  /// @name Accessors and mutators
+  /// @{
 
   /// Get seconds.
   /**
@@ -245,7 +248,9 @@ public:
    */
   void to_usec (ACE_UINT64 &usec) const;
 
-  // = The following arithmetic methods operate on ACE_Time_Value's.
+  /// @}
+  /// @name Arithmetic operations
+  /// @{
 
   /// Add @a tv to this.
   ACE_Time_Value &operator += (ACE_Time_Value const &tv);
@@ -364,6 +369,8 @@ public:
   friend ACE_Export ACE_Time_Value operator * (ACE_Time_Value const &tv,
                                                double d);
   //@}
+
+  /// @}
 
   /// Get current time of day.
   /**
