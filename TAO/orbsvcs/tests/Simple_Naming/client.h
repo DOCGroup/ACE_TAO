@@ -3,15 +3,13 @@
 #ifndef TAO_ORBSVCS_TESTS_SIMPLE_NAMING_CLIENT_H
 #define TAO_ORBSVCS_TESTS_SIMPLE_NAMING_CLIENT_H
 
-//=============================================================================
 /**
- *  @file    client.h
+ * @file client.h
  *
- *    This class tests the facilities to connect to the naming service.
+ * This class tests the facilities to connect to the Naming Service.
  *
- *  @author   Marina Spivak <marina@cs.wustl.edu>
+ * @author Marina Spivak <marina@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "test_objectS.h"
 #include "orbsvcs/CosNamingC.h"
@@ -191,15 +189,15 @@ public:
   int execute (TAO_Naming_Client &root_context) override;
 
 private:
-  // the following functions isolate specific tests due to the
-  // limitation of only 1 TAO_TRY being allowed per function.
-
+  /// Isolated tests required because each function can contain only one TAO_TRY.
+  /// @{
   void invalid_name_test (TAO_Naming_Client &root_context);
   void already_bound_test (TAO_Naming_Client &root_context);
   void already_bound_test2 (TAO_Naming_Client &root_context);
   void not_found_test (TAO_Naming_Client &root_context);
   void not_found_test2 (TAO_Naming_Client &root_context);
   void not_found_test3 (TAO_Naming_Client &root_context);
+  /// @}
 };
 
 /**
@@ -222,9 +220,11 @@ public:
   int execute (TAO_Naming_Client &root_context) override;
 
 private:
-  // = The following functions isolate specific tests.
+  /// @name Isolated destroy tests
+  /// @{
   void not_empty_test (CosNaming::NamingContext_var &ref);
   void not_exist_test (CosNaming::NamingContext_var &ref);
+  /// @}
 };
 
 /**
@@ -343,12 +343,14 @@ public:
   CosNaming_Client (CosNaming_Client &&) = delete;
   CosNaming_Client &operator= (CosNaming_Client &&) = delete;
 
-  // = Symbolic ids.
+  /// @name Symbolic ids
+  /// @{
   enum OBJ_ID
   {
     OBJ1_ID = 5,
     OBJ2_ID = 6
   };
+  /// @}
 
 private:
   /// Parses the arguments passed on the command line.
