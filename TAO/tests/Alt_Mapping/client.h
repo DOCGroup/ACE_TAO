@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    client.h
  *
@@ -7,8 +5,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
-
 #ifndef ALT_MAPPING_CLIENT_H
 #define ALT_MAPPING_CLIENT_H
 
@@ -34,7 +30,6 @@ class Alt_Mapping_Client
 public:
   using TEST_OBJECT = T;
 
-  // = Constructor and destructor.
   Alt_Mapping_Client (CORBA::ORB_ptr orb,
                      Alt_Mapping_ptr objref,
                      std::unique_ptr<T>);

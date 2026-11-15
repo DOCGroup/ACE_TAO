@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    ub_struct_seq.h
  *
@@ -7,7 +5,6 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef ALT_MAPPING_TEST_UNBOUNED_STRUCT_SEQUENCE_H
 #define ALT_MAPPING_TEST_UNBOUNED_STRUCT_SEQUENCE_H
@@ -15,17 +12,12 @@
 #include "alt_mappingC.h"
 #include <string>
 
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//           test unbounded sequence of structs
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-
+/// Tests an unbounded sequence of structs.
 class Test_Unbounded_Struct_Sequence
 {
 public:
-  /// ctor
   Test_Unbounded_Struct_Sequence () = default;
 
-  /// dtor
   ~Test_Unbounded_Struct_Sequence () = default;
   Test_Unbounded_Struct_Sequence (Test_Unbounded_Struct_Sequence const &) = delete;
   Test_Unbounded_Struct_Sequence (Test_Unbounded_Struct_Sequence &&) = delete;

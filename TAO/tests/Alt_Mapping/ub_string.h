@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    ub_string.h
  *
@@ -7,7 +5,6 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef PARAM_TEST_UNBOUNDED_STRING_H
 #define PARAM_TEST_UNBOUNDED_STRING_H
@@ -15,16 +12,12 @@
 #include "alt_mappingC.h"
 #include <string>
 
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//                        test unbounded strings
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+/// Tests an unbounded string.
 class Test_Unbounded_String
 {
 public:
-  /// ctor
   Test_Unbounded_String () = default;
 
-  /// dtor
   ~Test_Unbounded_String () = default;
   Test_Unbounded_String (Test_Unbounded_String const &) = delete;
   Test_Unbounded_String (Test_Unbounded_String &&) = delete;

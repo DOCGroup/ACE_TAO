@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    results.cpp
  *
@@ -7,24 +5,19 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #include "results.h"
 #include "tao/debug.h"
 #include "ace/Log_Msg.h"
 
-Results::Results () = default;
-
 void
 Results::print_stats ()
 {
   double
-    avg_real_time = 0,
-    avg_user_time = 0,
-    avg_system_time = 0,
-    cps; // calls per sec
-
-  CORBA::ULong i;
+    avg_real_time {},
+    avg_user_time {},
+    avg_system_time {},
+    cps {}; // calls per sec
 
   if (TAO_debug_level > 0 && this->error_count_ == 0)
     {
@@ -34,7 +27,7 @@ Results::print_stats ()
                   "\tSystem time (msec)\n\n"));
       //FUZZ: enable check_for_lack_ACE_OS
 
-      for (i = 0; i < this->call_count_; i++)
+      for (CORBA::ULong i {}; i < this->call_count_; ++i)
         {
           this->elapsed_time_[i].real_time *= ACE_ONE_SECOND_IN_MSECS;
           this->elapsed_time_[i].user_time *= ACE_ONE_SECOND_IN_MSECS;

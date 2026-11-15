@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    client.cpp
  *
@@ -8,7 +6,6 @@
  *
  *  @author   Jeff Parsons
  */
-//=============================================================================
 
 #ifndef CLIENT_CPP
 #define CLIENT_CPP
@@ -18,7 +15,6 @@
 #include "client.h"
 #include <utility>
 
-// Constructor.p
 template <class T>
 Alt_Mapping_Client<T>::Alt_Mapping_Client (CORBA::ORB_ptr orb,
                                            Alt_Mapping_ptr objref,
@@ -33,9 +29,8 @@ Alt_Mapping_Client<T>::Alt_Mapping_Client (CORBA::ORB_ptr orb,
 template <class T> int
 Alt_Mapping_Client<T>::run_sii_test ()
 {
-  CORBA::ULong i = 0;  // loop index
-  Options *opt = OPTIONS::instance (); // get the options
-  char const *opname = this->test_object_->opname (); // operation
+  Options const *opt = OPTIONS::instance (); // get the options
+  char const * const opname = this->test_object_->opname (); // operation
 
   if (opt->debug ())
     ACE_DEBUG ((LM_DEBUG,
@@ -49,7 +44,7 @@ Alt_Mapping_Client<T>::run_sii_test ()
 
   // Declare the Env
   // Initialize parameters for the test.
-  int check = this->test_object_->init_parameters (this->alt_mapping_test_);
+  int const check = this->test_object_->init_parameters (this->alt_mapping_test_);
 
   if (check == -1)
     {
@@ -61,7 +56,7 @@ Alt_Mapping_Client<T>::run_sii_test ()
     }
 
   // Make the calls in a loop.
-  for (i = 0; i < opt->loop_count (); i++)
+  for (CORBA::ULong i {}; i < opt->loop_count (); ++i)
     {
       try
         {

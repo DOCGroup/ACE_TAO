@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    ub_struct_seq.cpp
  *
@@ -7,7 +5,6 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
 
 #include "helper.h"
 #include "ub_struct_seq.h"
@@ -35,7 +32,7 @@ Test_Unbounded_Struct_Sequence::init_parameters (Alt_Mapping_ptr)
   this->inout_.resize (len);
 
   // Now set each individual element.
-  for (CORBA::ULong i = 0; i < this->in_.size (); i++)
+  for (CORBA::ULong i {}; i < this->in_.size (); ++i)
     {
       // Generate some arbitrary struct to be filled into the ith location in
       // the sequence.
@@ -125,7 +122,7 @@ Test_Unbounded_Struct_Sequence::compare (
       return false;
     }
 
-  for (CORBA::ULong i=0; i < s1.size (); i++)
+  for (CORBA::ULong i {}; i < s1.size (); ++i)
     {
       Alt_Mapping::Fixed_Struct const &vs1 = s1[i];
       Alt_Mapping::Fixed_Struct const &vs2 = s2[i];
@@ -154,7 +151,7 @@ Test_Unbounded_Struct_Sequence::print_sequence (
               s.size ()));
   ACE_DEBUG ((LM_DEBUG, "Elements -\n"));
 
-  for (CORBA::ULong i = 0; i < s.size (); i++)
+  for (CORBA::ULong i {}; i < s.size (); ++i)
     {
       Alt_Mapping::Fixed_Struct const &vs = s[i];
 

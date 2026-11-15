@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-//=============================================================================
 /**
  *  @file    options.cpp
  *
@@ -8,7 +7,6 @@
  *
  *  @author Jeff Parsonss
  */
-//=============================================================================
 
 #include "options.h"
 #include "tao/debug.h"
@@ -18,7 +16,6 @@
 #include "ace/OS_NS_fcntl.h"
 #include "ace/Log_Msg.h"
 
-// Constructor.p
 Options::Options ()
   : ior_ (CORBA::string_dup ("file://test.ior"))
 {
