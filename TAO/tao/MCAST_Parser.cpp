@@ -46,7 +46,7 @@ TAO_MCAST_Parser::parse_string (const char *ior, CORBA::ORB_ptr orb)
    * Now that we got the global variables.
    * we can invoke multicast_to_service and multicast_query
    */
-  ACE_Time_Value *timeout = orb->get_timeout ();
+  ACE_Time_Value * const timeout = orb->get_timeout ();
 
   return
     this->multicast_to_service (service_name_.in (),
