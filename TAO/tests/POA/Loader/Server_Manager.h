@@ -34,7 +34,6 @@ public:
   /// Initialisation.
   Server_i ();
 
-  /// Destruction.
   ~Server_i ();
 
   Server_i (Server_i const &) = delete;

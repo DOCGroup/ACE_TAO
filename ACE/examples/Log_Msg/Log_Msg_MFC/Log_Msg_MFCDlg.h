@@ -18,7 +18,6 @@
 class CLog_Msg_MFCDlg : public CDialog
 {
 public:
-  // Construction
   CLog_Msg_MFCDlg (CWnd *pParent = nullptr);
 
   // Dialog Data

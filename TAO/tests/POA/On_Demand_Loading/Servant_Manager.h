@@ -51,7 +51,6 @@ public:
   ServantManager_i (ServantManager_i &&) = delete;
   ServantManager_i &operator= (ServantManager_i &&) = delete;
 
-  /// Destruction.
   ~ServantManager_i ();
 
   /**

@@ -49,7 +49,6 @@ template <ACE_SYNCH_DECL, class TIME_POLICY = ACE_System_Time_Policy>
 class ACE_Stream_Head : public ACE_Task<ACE_SYNCH_USE, TIME_POLICY>
 {
 public:
-  /// Construction
   ACE_Stream_Head ();
 
   ACE_Stream_Head (ACE_Stream_Head const &) = delete;
@@ -57,7 +56,6 @@ public:
   ACE_Stream_Head &operator= (ACE_Stream_Head const &) = delete;
   ACE_Stream_Head &operator= (ACE_Stream_Head &&) = delete;
 
-  /// Destruction
   ~ACE_Stream_Head () override;
 
   /// @name Task hooks
@@ -96,7 +94,6 @@ template <ACE_SYNCH_DECL, class TIME_POLICY = ACE_System_Time_Policy>
 class ACE_Stream_Tail : public ACE_Task<ACE_SYNCH_USE, TIME_POLICY>
 {
 public:
-  /// Construction
   ACE_Stream_Tail ();
 
   ACE_Stream_Tail (ACE_Stream_Tail const &) = delete;
@@ -104,7 +101,6 @@ public:
   ACE_Stream_Tail &operator= (ACE_Stream_Tail const &) = delete;
   ACE_Stream_Tail &operator= (ACE_Stream_Tail &&) = delete;
 
-  /// Destruction
   ~ACE_Stream_Tail () override;
 
   /// @name Task hooks
@@ -144,7 +140,6 @@ template <ACE_SYNCH_DECL, class TIME_POLICY = ACE_System_Time_Policy>
 class ACE_Thru_Task : public ACE_Task<ACE_SYNCH_USE, TIME_POLICY>
 {
 public:
-  /// Construction
   ACE_Thru_Task ();
 
   ACE_Thru_Task (ACE_Thru_Task const &) = delete;
@@ -152,7 +147,6 @@ public:
   ACE_Thru_Task &operator= (ACE_Thru_Task const &) = delete;
   ACE_Thru_Task &operator= (ACE_Thru_Task &&) = delete;
 
-  /// Destruction
   ~ACE_Thru_Task () override;
 
   /// @name Task hooks

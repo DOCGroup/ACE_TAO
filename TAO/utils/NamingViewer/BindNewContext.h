@@ -12,7 +12,6 @@
 
 class CBindNewContext : public CDialog
 {
-// Construction
 public:
   CBindNewContext(CWnd* pParent = 0);   // standard constructor
 

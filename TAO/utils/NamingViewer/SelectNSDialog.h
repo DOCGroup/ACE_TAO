@@ -13,7 +13,6 @@
 
 class CSelectNSDialog : public CDialog
 {
-// Construction
 public:
   CSelectNSDialog(CWnd* pParent = 0);   // standard constructor
 

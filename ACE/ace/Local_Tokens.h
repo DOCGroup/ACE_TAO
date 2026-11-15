@@ -684,7 +684,6 @@ protected:
 class ACE_Export ACE_Token_Name
 {
 public:
-  /// Construction.
   ACE_Token_Name (const ACE_TCHAR *token_name = nullptr);
 
   /// Copy construction.
@@ -745,7 +744,6 @@ public:
   friend class ACE_Token_Invariant_Manager; // For testing.
 
   // Initialization and termination methods.
-  /// Construction.
   ACE_Token_Proxy ();
 
   virtual ~ACE_Token_Proxy ();
@@ -898,7 +896,6 @@ protected:
 class ACE_Export ACE_Null_Token : public ACE_Token_Proxy
 {
 public:
-  /// Construction.
   ACE_Null_Token () = default;
 
   ~ACE_Null_Token () override = default;

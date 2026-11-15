@@ -12,7 +12,6 @@
 
 class ViewIORDialog : public CDialog
 {
-// Construction
 public:
   ViewIORDialog(CORBA::ORB_ptr pORB, CORBA::Object_ptr pObject, CWnd* pParent = 0);   // standard constructor
 

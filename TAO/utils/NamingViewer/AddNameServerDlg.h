@@ -12,7 +12,6 @@
 
 class CAddNameServerDlg : public CDialog
 {
-// Construction
 public:
   CAddNameServerDlg(CWnd* pParent = 0);   // standard constructor
 

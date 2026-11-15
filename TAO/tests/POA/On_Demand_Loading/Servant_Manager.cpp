@@ -21,7 +21,6 @@ ServantManager_i::ServantManager_i (CORBA::ORB_ptr orb)
 {
 }
 
-// Destruction.
 ServantManager_i::~ServantManager_i ()
 {
   SERVANT_MAP::iterator const end = this->servant_map_.end ();

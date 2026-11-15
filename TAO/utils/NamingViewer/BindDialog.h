@@ -13,7 +13,6 @@
 
 class CBindDialog : public CDialog
 {
-// Construction
 public:
   CBindDialog(bool Context, CORBA::ORB_ptr pORB, CWnd* pParent = 0);   // standard constructor
 

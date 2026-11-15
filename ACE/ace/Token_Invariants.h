@@ -172,7 +172,6 @@ public:
   /// Prevent non-singleton construction.
   ACE_Token_Invariant_Manager ();
 
-  /// Destruction.
   virtual ~ACE_Token_Invariant_Manager ();
 
 protected:

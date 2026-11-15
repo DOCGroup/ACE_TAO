@@ -153,7 +153,6 @@ public:
                 bool delete_implementation = false,
                 ACE_Proactor_Timer_Queue *tq = nullptr);
 
-  /// Destruction.
   ~ACE_Proactor ();
 
   ACE_Proactor (ACE_Proactor const &) = delete;

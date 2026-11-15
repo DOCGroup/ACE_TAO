@@ -7,7 +7,6 @@
 
 class CACE_Init_TestDlg : public CDialog
 {
-// Construction
 public:
   CACE_Init_TestDlg(CWnd* pParent = 0);  // standard constructor
 

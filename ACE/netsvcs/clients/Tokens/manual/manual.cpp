@@ -38,7 +38,6 @@ using ACE_TOKEN_INVARIANTS = ACE_Token_Invariant_Manager;
 class STDIN_Token : public ACE_Event_Handler
 {
 public:
-  /// Construction.
   STDIN_Token () = default;
 
   /// Parse command-line arguments.
