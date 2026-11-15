@@ -43,11 +43,7 @@ using TUPLE_SET_ITERATOR = ACE_Ordered_MultiSet_Iterator<TAO_RT_Info_Tuple *>;
 class TAO_RTSched_Export ACE_Scheduler_Factory
 {
 public:
-  /*
-   * This type enumerates the possible states of the factory:
-   * uninitialized, or in a configuration, runtime, or
-   * reconfigurable mode of operation.
-   */
+  /// Possible factory states: uninitialized, config, reconfigurable, or runtime.
   enum Factory_Status
   {
     UNINITIALIZED,
@@ -56,13 +52,7 @@ public:
     RUNTIME
   };
 
-  /*
-   * @brief Plain Old Data for RT_Infos.
-   *
-   * This class provide us with a plain old data version of
-   * RT_Info, this is useful for implementing arrays of
-   * those.
-   */
+  /// Plain Old Data representation of RT_Info for array storage.
   struct POD_RT_Info
   {
     const char *entry_point;
@@ -82,16 +72,9 @@ public:
     RtecScheduler::RT_Info_Enabled_Type_t enabled;
   };
 
+  /// Plain Old Data representation of dependencies between RT_Infos.
   struct POD_Dependency_Info
   {
-    // = TITLE
-    //   Plain Old Data for RT_Info Dependencies.
-    //
-    // = DESCRIPTION
-    //   This class provide us with a plain old data version of
-    //   dependencies between RT_Infos.  This is useful for implementing
-    //   arrays of those.
-
     RtecScheduler::Dependency_Type_t dependency_type;
     CORBA::Long number_of_calls;
     RtecScheduler::handle_t info_that_depends;
@@ -99,32 +82,23 @@ public:
     RtecScheduler::Dependency_Enabled_Type_t enabled;
   };
 
+  /**
+   * Plain Old Data for dispatch queue configuration information.
+   *
+   * In arrays, the run-time scheduler requires the array index to match the
+   * preemption priority stored at that index. This detects uninitialized or
+   * corrupted schedules.
+   */
   struct POD_Config_Info
   {
-    // = TITLE
-    //   Plain Old Data for dispatch queue configuration information.
-    //
-    // = DESCRIPTION
-    //   This class provide us with a plain old data version of
-    //   configuration info, which is useful for implementing static arrays
-    //   NOTE: if used in an array, the run-time scheduler requires that the
-    //   array index match the preemption priority stored in the config info
-    //   at that index: this is used to detect uninitialized/corrupted schedules
     RtecScheduler::Preemption_Priority_t preemption_priority;
     RtecScheduler::OS_Priority thread_priority;
     RtecScheduler::Dispatching_Type_t dispatching_type;
   };
 
+  /// Plain Old Data representation of anomalies for runtime schedule output.
   struct POD_Scheduling_Anomaly
   {
-    // = TITLE
-    //   Plain Old Data for scheduling anomaly information.
-    //
-    // = DESCRIPTION
-    //   This class provide us with a plain old data version of
-    //   scheduling anomalies, which is used to generate error
-    //   and warning lines in the runtime scheduling header output.
-
     const char* description;
     RtecScheduler::Anomaly_Severity severity;
   };
@@ -199,11 +173,12 @@ public:
    */
   static Factory_Status status ();
 
-  // = Access the (OS independent) preemption priority of the calling thread.
-  /// Returns (u_int) -1 if the preemption priority hadn't been set.
+  /// @name Calling thread preemption priority
+  /// @{
+  /// Returns `u_int` -1 if the priority has not been set.
   static RtecScheduler::Preemption_Priority_t preemption_priority ();
 
-  // = Set the (OS independent) preemption priority of the calling thread.
+  /// Sets the OS-independent preemption priority of the calling thread.
   /**
    * The application or Event Channel is responsible for making sure
    * that the preemption priority is set before any access of the
@@ -211,31 +186,32 @@ public:
    */
   static void set_preemption_priority
     (const RtecScheduler::Preemption_Priority_t);
+  /// @}
 
-  // Accessor for obtaining the default period (Boeing Extension)
-  /// Method for setting the default period (Boeing Extension)
+  /// Gets the default period (Boeing extension).
   static RtecScheduler::Period_t period_default();
+  /// Sets the default period (Boeing extension).
   static void period_default(RtecScheduler::Period_t period_default);
 
-  // Accessor for obtaining the default threads (Boeing Extension)
-  /// Method for setting the default threads (Boeing Extension)
+  /// Gets the default thread count (Boeing extension).
   static RtecScheduler::Threads_t threads_default();
+  /// Sets the default thread count (Boeing extension).
   static void threads_default(RtecScheduler::Threads_t threads_default);
 
-  // Accessor for obtaining the default importance (VERY_LOW_IMPORTANCE to VERY_HIGH_IMPORTANCE).  (Boeing Extension)
-  /// Method for setting the default importance (VERY_LOW_IMPORTANCE to VERY_HIGH_IMPORTANCE).  (Boeing Extension)
+  /// Gets the default importance (VERY_LOW_IMPORTANCE to VERY_HIGH_IMPORTANCE).
   static RtecScheduler::Importance_t importance_default();
+  /// Sets the default importance (Boeing extension).
   static void importance_default(RtecScheduler::Importance_t importance_default);
 
-  // Accessor for obtaining the default criticality (VERY_LOW_CRITICALITY to VERY_HIGH_CRITICALITY).  (Boeing Extension)
-  /// Method for setting the default criticality (VERY_LOW_CRITICALITY to VERY_HIGH_CRITICALITY).  (Boeing Extension)
+  /// Gets the default criticality (VERY_LOW_CRITICALITY to VERY_HIGH_CRITICALITY).
   static RtecScheduler::Criticality_t criticality_default();
+  /// Sets the default criticality (Boeing extension).
   static void criticality_default(RtecScheduler::Criticality_t criticality_default);
 
-  // Accessor for obtaining the default rt_info enabled state.  (RT_INFO_DISABLED, RT_INFO_ENABLED, or RT_INFO_NON_VOLATILE)
+  /// Gets the default RT_Info enabled state.
   static RtecScheduler::RT_Info_Enabled_Type_t rt_info_enable_state_default();
 
-  // Method for setting the default rt_info enabled state.  (RT_INFO_DISABLED, RT_INFO_ENABLED, or RT_INFO_NON_VOLATILE)
+  /// Sets the default RT_Info enabled state.
   static void rt_info_enable_state_default(RtecScheduler::RT_Info_Enabled_Type_t rt_info_enable_state_default);
 
 protected:

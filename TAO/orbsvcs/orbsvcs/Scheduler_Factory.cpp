@@ -85,24 +85,23 @@ ACE_Scheduler_Factory::POD_Dependency_Info* TAO_SF_dep_info {};
 
 struct ACE_Scheduler_Factory_Data
 {
-  // = TITLE
-  //   Helper struct, to encapsulate the singleton static server and
-  //   ACE_TSS objects.  We can't use ACE_Singleton directly, because
-  //   construction of ACE_Runtime_Scheduler takes arguments.
+  /**
+   * Encapsulates the singleton scheduler and ACE_TSS objects. ACE_Singleton
+   * cannot be used directly because ACE_Runtime_Scheduler requires arguments
+   * during construction.
+   */
 
 /* WSOA merge - commented out
   ACE_Runtime_Scheduler scheduler_;
   // The static runtime scheduler.
 */
 
+  /// The scheduler instance.
   TAO_Reconfig_Scheduler<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX> scheduler_;
-  // The scheduler.
 
+  /// Dispatch queue number for the calling thread, set by the application or Event Channel.
   ACE_TSS<ACE_TSS_Type_Adapter<RtecScheduler::Preemption_Priority_t> >
   preemption_priority_;
-  // The dispatch queue number of the calling thread.  For access by
-  // applications; must be set by either the application or Event
-  // Channel.
 
   ACE_Scheduler_Factory_Data ()
     : scheduler_ (TAO_SF_config_count,
