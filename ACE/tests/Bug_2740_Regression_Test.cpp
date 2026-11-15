@@ -187,8 +187,8 @@ int
 ClientSvcHandler::handle_timeout (const ACE_Time_Value &, const void*)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("%t: client h %d: timeout\n"),
-              this->peer ().get_handle ()));
+              ACE_TEXT ("%t: client h %@: timeout\n"),
+              reinterpret_cast<void *> (this->peer ().get_handle ())));
   reactor()->remove_handler (this, ACE_Event_Handler::ALL_EVENTS_MASK);
   return 0;
 }
@@ -197,8 +197,8 @@ int
 ClientSvcHandler::handle_close (ACE_HANDLE handle, ACE_Reactor_Mask mask)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("%t: client h %d handle_close\n"),
-              handle));
+              ACE_TEXT ("%t: client h %@ handle_close\n"),
+              reinterpret_cast<void *> (handle)));
 
   // If not done iterating, just close the socket and reopen the connection.
   // Else shut down and delete.
@@ -216,8 +216,8 @@ ClientSvcHandler::handle_close (ACE_HANDLE handle, ACE_Reactor_Mask mask)
 int
 ServerSvcHandler::open (void* factory)
 {
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%t: server h %d open\n"),
-              this->peer ().get_handle ()));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%t: server h %@ open\n"),
+              reinterpret_cast<void *> (this->peer ().get_handle ())));
 
   return ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::open (factory);
 }
@@ -225,7 +225,8 @@ ServerSvcHandler::open (void* factory)
 int
 ServerSvcHandler::handle_input (ACE_HANDLE handle)
 {
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%t: server h %d input\n"), handle));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%t: server h %@ input\n"),
+              reinterpret_cast<void *> (handle)));
 
   // Receive whatever is here and send it back.
   char buffer[ACE_DEFAULT_MAX_SOCKET_BUFSIZ];
@@ -234,20 +235,20 @@ ServerSvcHandler::handle_input (ACE_HANDLE handle)
   if (bc > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("%t: server h %d recv %b bytes\n"),
-                  handle,
+                  ACE_TEXT ("%t: server h %@ recv %b bytes\n"),
+                  reinterpret_cast<void *> (handle),
                   bc));
       if (-1 == this->peer ().send_n (buffer, bc))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%t: server h %d: %p\n"),
-                           handle, ACE_TEXT ("send")),
+                           ACE_TEXT ("%t: server h %@: send failed %p\n"),
+                           reinterpret_cast<void *> (handle)),
                           -1);
     }
   else if (bc == 0 || errno == ECONNRESET) // Socket was closed by client
     {
       ACE_ERROR_RETURN ((LM_DEBUG,
-                         ACE_TEXT ("%t: server h %d: closed by client\n"),
-                         handle),
+                         ACE_TEXT ("%t: server h %@: closed by client\n"),
+                         reinterpret_cast<void *> (handle)),
                         -1);
     }
   else if (errno == EWOULDBLOCK) // no data ready on socket
@@ -255,14 +256,13 @@ ServerSvcHandler::handle_input (ACE_HANDLE handle)
       // The reactor shouldn't call back for input if there's no data, so
       // log an error, but keep running.
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("%t: server h %d: recv no data\n"),
-                         handle),
+                         ACE_TEXT ("%t: server h %@: recv no data\n"),
+                         reinterpret_cast<void *> (handle)),
                         0);
     }
   else
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%t: server h %d: %p\n"),
-                       handle,
-                       ACE_TEXT ("recv")),
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%t: server h %@: recv failed %p\n"),
+                       reinterpret_cast<void *> (handle)),
                       -1);
 
   return 0;
@@ -271,7 +271,8 @@ ServerSvcHandler::handle_input (ACE_HANDLE handle)
 int
 ServerSvcHandler::handle_close(ACE_HANDLE handle, ACE_Reactor_Mask mask)
 {
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%t: server h %d: handle_close\n"), handle));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%t: server h %@: handle_close\n"),
+              reinterpret_cast<void *> (handle)));
   return ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::handle_close (handle,
                                                                          mask);
 }

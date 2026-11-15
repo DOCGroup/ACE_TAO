@@ -202,9 +202,9 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
                       -1);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%P|%t) opening %s on handle %d.\n"),
+              ACE_TEXT ("(%P|%t) opening %s on handle %@.\n"),
               this->filename_,
-              this->file_lock_.get_handle ()));
+              reinterpret_cast<void *> (this->file_lock_.get_handle ())));
 
   int count = 0;
 
@@ -282,8 +282,8 @@ Counting_Service::read ()
   ACE_READ_GUARD_RETURN (ACE_File_Lock, ace_mon, OPTIONS::instance ()->file_lock (), -1);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%P|%t) reading on handle %d.\n"),
-              OPTIONS::instance ()->file_lock ().get_handle ()));
+              ACE_TEXT ("(%P|%t) reading on handle %@.\n"),
+              reinterpret_cast<void *> (OPTIONS::instance ()->file_lock ().get_handle ())));
 
   int count;
   if (ACE_OS::pread (OPTIONS::instance ()->file_lock ().get_handle (),
@@ -318,8 +318,8 @@ Counting_Service::inc ()
                           OPTIONS::instance ()->file_lock (), -1);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%P|%t) incrementing on handle %d.\n"),
-              OPTIONS::instance ()->file_lock ().get_handle ()));
+              ACE_TEXT ("(%P|%t) incrementing on handle %@.\n"),
+              reinterpret_cast<void *> (OPTIONS::instance ()->file_lock ().get_handle ())));
 
   int count;
   if (ACE_OS::pread (OPTIONS::instance ()->file_lock ().get_handle (),

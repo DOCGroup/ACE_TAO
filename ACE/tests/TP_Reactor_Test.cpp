@@ -522,7 +522,8 @@ Receiver::handle_input (ACE_HANDLE h)
 
       ACE_DEBUG ((LM_DEBUG, "**** Receiver::handle_input () SessionId=%d****\n", index_));
       ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "bytes_to_read", BUFSIZ));
-      ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "handle", h));
+      ACE_DEBUG ((LM_DEBUG, "%C = %@\n", "handle",
+                  reinterpret_cast<void *> (h)));
       ACE_DEBUG ((LM_DEBUG, "%C = %b\n", "bytes_transferred", res));
       ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "error", err));
       ACE_DEBUG ((LM_DEBUG, "%C = %s\n", "message_block", mb->rd_ptr ()));
@@ -614,7 +615,8 @@ Receiver::handle_output (ACE_HANDLE h)
 
           ACE_DEBUG ((LM_DEBUG, "**** Receiver::handle_output () SessionId=%d****\n", index_));
           ACE_DEBUG ((LM_DEBUG, "%C = %B\n", "bytes_to_write", bytes));
-          ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "handle", h));
+          ACE_DEBUG ((LM_DEBUG, "%C = %@\n", "handle",
+                      reinterpret_cast<void *> (h)));
           ACE_DEBUG ((LM_DEBUG, "%C = %b\n", "bytes_transferred", res));
           ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "error", err));
           ACE_DEBUG ((LM_DEBUG, "%C = %s\n", "message_block", mb->rd_ptr ()));
@@ -973,7 +975,8 @@ Sender::handle_input (ACE_HANDLE h)
 
       ACE_DEBUG ((LM_DEBUG, "**** Sender::handle_input () SessionId=%d****\n", index_));
       ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "bytes_to_read", BUFSIZ));
-      ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "handle", h));
+      ACE_DEBUG ((LM_DEBUG, "%C = %@\n", "handle",
+                  reinterpret_cast<void *> (h)));
       ACE_DEBUG ((LM_DEBUG, "%C = %b\n", "bytes_transferred", res));
       ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "error", err));
       ACE_DEBUG ((LM_DEBUG, "%C = %s\n", "message_block", mb->rd_ptr ()));
@@ -1051,7 +1054,8 @@ Sender::handle_output (ACE_HANDLE h)
 
           ACE_DEBUG ((LM_DEBUG, "**** Sender::handle_output () SessionId=%d****\n", index_));
           ACE_DEBUG ((LM_DEBUG, "%C = %B\n", "bytes_to_write", bytes));
-          ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "handle", h));
+          ACE_DEBUG ((LM_DEBUG, "%C = %@\n", "handle",
+                      reinterpret_cast<void *> (h)));
           ACE_DEBUG ((LM_DEBUG, "%C = %b\n", "bytes_transferred", res));
           ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "error", err));
           ACE_DEBUG ((LM_DEBUG, "%C = %s\n", "message_block", mb->rd_ptr ()));
