@@ -466,6 +466,7 @@ namespace CORBA
 
   private:
     // Prevent copying and assignment.
+    TypeCode () = delete;
     TypeCode (TypeCode const &) = delete;
     TypeCode &operator= (TypeCode const &) = delete;
     TypeCode (TypeCode &&) = delete;

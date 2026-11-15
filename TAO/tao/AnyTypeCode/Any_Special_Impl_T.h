@@ -30,6 +30,7 @@ namespace TAO
   class Any_Special_Impl_T : public Any_Impl
   {
   public:
+    Any_Special_Impl_T () = delete;
     Any_Special_Impl_T (Any_Special_Impl_T const &) = delete;
     Any_Special_Impl_T (Any_Special_Impl_T &&) = delete;
     Any_Special_Impl_T &operator= (Any_Special_Impl_T const &) = delete;

@@ -42,6 +42,7 @@ namespace TAO
       : public CORBA::TypeCode
     {
     public:
+      Indirected_Type () = delete;
       Indirected_Type (CORBA::TCKind kind,
                        char const * id);
 

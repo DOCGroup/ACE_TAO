@@ -35,6 +35,7 @@ namespace TAO
   class Any_Impl_T : public Any_Impl
   {
   public:
+    Any_Impl_T () = delete;
     Any_Impl_T (Any_Impl_T const &) = delete;
     Any_Impl_T (Any_Impl_T &&) = delete;
     Any_Impl_T &operator= (Any_Impl_T const &) = delete;

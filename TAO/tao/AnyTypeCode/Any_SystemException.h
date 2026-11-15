@@ -38,6 +38,7 @@ namespace TAO
   class Any_SystemException : public Any_Impl
   {
   public:
+    Any_SystemException () = delete;
     Any_SystemException (Any_SystemException const &) = delete;
     Any_SystemException (Any_SystemException &&) = delete;
     Any_SystemException &operator= (Any_SystemException const &) = delete;

@@ -36,6 +36,7 @@ namespace TAO
   class TAO_AnyTypeCode_Export Unknown_IDL_Type : public Any_Impl
   {
   public:
+    Unknown_IDL_Type () = delete;
     Unknown_IDL_Type (Unknown_IDL_Type const &) = delete;
     Unknown_IDL_Type (Unknown_IDL_Type &&) = delete;
     Unknown_IDL_Type &operator= (Unknown_IDL_Type const &) = delete;

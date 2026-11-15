@@ -52,6 +52,7 @@ namespace TAO
   class TAO_AnyTypeCode_Export Any_Impl
   {
   public:
+    Any_Impl () = delete;
     Any_Impl (Any_Impl const &) = delete;
     Any_Impl (Any_Impl &&) = delete;
     Any_Impl &operator= (Any_Impl const &) = delete;
