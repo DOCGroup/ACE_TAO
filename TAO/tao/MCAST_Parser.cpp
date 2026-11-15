@@ -147,8 +147,8 @@ TAO_MCAST_Parser::multicast_query (char* & buf,
 
       // Set the address if multicast_discovery_endpoint option
       // is specified for the Naming Service.
-      ACE_CString mde (orb->orb_core ()->orb_params ()
-                       ->mcast_discovery_endpoint ());
+      ACE_CString const mde (orb->orb_core ()->orb_params ()
+                             ->mcast_discovery_endpoint ());
 
       if (ACE_OS::strcasecmp (service_name,
                               "NameService") == 0
