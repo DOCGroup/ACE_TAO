@@ -16,10 +16,12 @@ public:
   Hello &operator= (Hello const &) = delete;
   Hello &operator= (Hello &&) = delete;
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   char * get_string () override;
 
   void shutdown () override;
+  /// @}
 
 private:
   /// Use an ORB reference to conver strings to objects and shutdown

@@ -1,9 +1,7 @@
 // -*- C++ -*-
-//=============================================================================
 /**
  *  @file     ClientRequest_Interceptor.h
  */
-//=============================================================================
 #ifndef CLIENTREQUEST_INTERCEPTOR_H
 #define CLIENTREQUEST_INTERCEPTOR_H
 #include /**/ "ace/pre.h"
@@ -19,10 +17,6 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-/**
-* @class ClientRequest_Interceptor
-*
-*/
 class ClientRequest_Interceptor
 : public virtual PortableInterceptor::ClientRequestInterceptor,
   public virtual ::CORBA::LocalObject
@@ -51,7 +45,7 @@ public:
 
   void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-static bool success_flag_;
+  static bool success_flag_;
 
 private:
 /// Name of the interceptor
