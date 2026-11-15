@@ -622,7 +622,7 @@ ACE_WIN32_Proactor::handle_events (unsigned long milli_seconds)
 
       this->application_specific_code (asynch_result,
                                        static_cast<size_t> (bytes_transferred),
-                                       completion_key,
+                                       reinterpret_cast<void const *> (completion_key),
                                        result_err);
     }
   return 1;
