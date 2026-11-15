@@ -22,15 +22,8 @@
 
 using MT_INT = ACE_Atomic_Op<ACE_Thread_Mutex, int>;
 
+/// Provides a thread-specific value to compensate for POSIX Pthreads.
 class Thr_ID
-  // TITLE
-  //   A simple class that provides a thread-specific value in order
-  //   to compensate for POSIX Pthreads.
-  //
-  // DESCRIPTION
-  //   Pthreads are too lame to have a sensible scalar values for the
-  //   thread id.   Therefore, we have to
-  //   emulate this ourselves with this class (gag).
 {
 public:
   Thr_ID (Thr_ID const &) = delete;
@@ -48,16 +41,14 @@ private:
 };
 #   endif /* ACE_HAS_PTHREADS || VXWORKS */
 
+/**
+ * Base class for benchmarking objects.
+ *
+ * Provides RTTI information and common operations supported by benchmark
+ * classes.
+ */
 class SYNCHLIB_Export Benchmark_Base : public ACE_Service_Object
 {
-  // = TITLE
-  //     Base class for all benchmarking objects.
-  //
-  // = DESCRIPTION
-  //     This class is the base class for all benchmarking
-  //     classes.  Its major functionalities are to provide RTTI
-  //     information and to define other common methods all
-  //     benchmarking classes should support.
 public:
   enum {
     BENCHMARK_BASE,
@@ -71,30 +62,27 @@ public:
   Benchmark_Base &operator= (Benchmark_Base const &) = delete;
   Benchmark_Base &operator= (Benchmark_Base &&) = delete;
 
+  /// Returns the benchmark type.
   int benchmark_type () const;
-  // RTTI information of this module.
 
+  /// Returns the thread identifier.
   int thr_id () const;
-  // Returns our thread id;
 
 protected:
   explicit Benchmark_Base (int const type = BENCHMARK_BASE);
-  // Default ctor.
 
+  /// RTTI value identifying this benchmark module.
   int const benchmark_type_;
-  // Store the RTTI info of this module.
 
 #   if defined (ACE_HAS_PTHREADS) || defined (VXWORKS)
+  /// Tracks this thread's virtual benchmark identifier.
   ACE_TSS<Thr_ID> id_;
-  // Keeps track of our "virtual" thread id...
 #   endif /* ACE_HAS_PTHREADS || VXWORKS */
 };
 
+/// Identifies and configures a benchmark method.
 class SYNCHLIB_Export Benchmark_Method_Base : public Benchmark_Base
 {
-  // = TITLE
-  //     This class identifies itself as Benmarking Method class.
-  //     It defines a method as of how the test is setup and measured.
 public:
   Benchmark_Method_Base (Benchmark_Method_Base const &) = delete;
   Benchmark_Method_Base (Benchmark_Method_Base &&) = delete;
@@ -102,22 +90,18 @@ public:
   Benchmark_Method_Base &operator= (Benchmark_Method_Base &&) = delete;
 
   int exec (ACE_Service_Repository_Iterator *sri);
-  // Run the test and advanced the service repository iterator
 
+  /// Prepares a test before it runs.
   virtual int pre_run_test (Benchmark_Base *bp) = 0;
-  // Before running the real test.  Subclasses implement this method
-  // to dictate how the test is performed.
 
+  /// Runs the test.
   virtual int run_test () = 0;
-  // Run the real test.  Subclasses implement this method to
-  // dictate how the test is performed.
 
+  /// Cleans up after the test runs.
   virtual int post_run_test () = 0;
-  // After running the real test.  Subclasses implement this method to
-  // dictate how the test is performed.
 
+  /// Checks whether a benchmark object is valid for this test.
   virtual int valid_test_object (Benchmark_Base *) = 0;
-  // Check if we got a valid test to perform.
 
 protected:
   Benchmark_Method_Base ();

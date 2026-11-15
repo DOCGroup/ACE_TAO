@@ -20,10 +20,9 @@ enum class Baseline_Yield_Method
   thread_yield
 };
 
+/// Base class for baseline performance tests.
 class ACE_Svc_Export Baseline_Test_Base : public Benchmark_Base
 {
-  // = TITLE
-  //     This class identifies itself as Benmarking Performance Test class.
 public:
   enum class Lock_Type
   {
@@ -37,46 +36,47 @@ public:
   Baseline_Test_Base &operator= (Baseline_Test_Base const &) = delete;
   Baseline_Test_Base &operator= (Baseline_Test_Base &&) = delete;
 
+  /// Initializes the baseline test.
   int init (int argc, ACE_TCHAR *argv[]) override;
-  // Standard initializing method for Baseline Test.
 
+  /// Parses arguments from the service configuration.
   int parse_args (int argc, ACE_TCHAR *argv[]);
-  // Parsing the svc.conf file arguments.
 
+  /// Acquires the lock type selected for the test.
   virtual int acquire () = 0;
+  /// Releases the lock type selected for the test.
   virtual int release () = 0;
-  // These two method are used to test try_acquire performance.
 
+  /// Runs the acquire/release performance test.
   virtual int test_acquire_release () = 0;
+  /// Runs the try-lock performance test.
   virtual int test_try_lock () = 0;
-  // Real test methods.
 
+  /// Returns the yield method used by the test.
   virtual Baseline_Yield_Method yield_method () const;
-  // Query the yield method used.
 
+  /// Yields execution to another thread.
   virtual void yield () const;
-  // Yield to other thread.
 
+  /// Returns the number of iterations used by the test.
   size_t iteration () const;
-  // Access methods.
 
 protected:
   Baseline_Test_Base ();
 
+  /// Selects whether to call thr_yield or sleep (0).
   Baseline_Yield_Method yield_method_ {Baseline_Yield_Method::sleep_zero};
-  // Should we your thr_yield or sleep (0).
 
+  /// Total number of operations to run.
   size_t iteration_ {DEFAULT_ITERATIONS};
-  // Total number of operations.  <iterations_>
 
+  /// Lock operation measured by the test.
   Lock_Type what_ {Lock_Type::lock};
-  // What test should be performed?
 };
 
+/// Holds global settings for the baseline test.
 class ACE_Svc_Export Baseline_Test_Options
 {
-  // = TITLE
-  //    This class holds the global settings for Baseline Test.
 public:
   friend class Baseline_Test;
 
@@ -88,42 +88,40 @@ public:
   Baseline_Test_Options () = default;
 
   int parse_args (int argc, ACE_TCHAR *argv[]);
-  // Parse and set the Baseline_Test options and flags.
 
+  /// Resets test parameters for the next round.
   void reset_params (size_t iteration, Baseline_Yield_Method yield);
-  // Reset test parameters for next round.
 
+  /// Returns whether the test measures try-lock performance.
   bool test_try_lock () const;
-  // Return test configuration.
 
+  /// Starts and stops timing each increment operation.
   void start_inc_timer ();
   void stop_inc_timer ();
-  // Start/stop measuring time.
 
   bool inc_loop_counter ();
 
+  /// Prints the measured results.
   void print_result ();
-  // Print out the result.
 
 private:
+  /// Selects whether to measure try_lock or lock/release.
   bool test_try_lock_ {};
-  // A flag indicates whether we are testing try_lock or lock and
-  // release.
 
+  /// Enables verbose result output.
   bool verbose_ {};
-  // Print out the result in verbose mode.
 
+  /// Yield method used in the current round.
   Baseline_Yield_Method current_yield_method_ {Baseline_Yield_Method::sleep_zero};
-  // yield or sleep.
 
+  /// Number of iterations completed in the current round.
   size_t current_iteration_ {};
-  // Number of iteration.
 
+  /// Total number of iterations requested for the run.
   size_t total_iteration_ {DEFAULT_ITERATIONS};
-  // Total number of target iteration.
 
+  /// Measures elapsed time for the current run.
   ACE_High_Res_Timer timer;
-  // Profile timer result.
 };
 
 extern Baseline_Test_Options baseline_options;
@@ -143,9 +141,8 @@ public:
   int post_run_test () override;
   int valid_test_object (Benchmark_Base *) override;
 
+  /// Holds the lock from another thread during the try-lock test.
   static ACE_THR_FUNC_RETURN hold_lock (void *arg);
-  // This method runs in a separate thread, and is used to hold the lock while
-  // we test the performance of try lock.
 
 private:
   // The service repository owns the test object; this pointer is non-owning.
