@@ -76,7 +76,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       bar_members[1].name = CORBA::string_dup ("bar_foo_member");
 
-      bar_members[1].type = foo_tc.in ();
+      bar_members[1].type = foo_tc._retn ();
 
       bar_members[1].type_def = CORBA::IDLType::_nil ();
 
