@@ -63,7 +63,8 @@ public:
   friend class ACE_Module_Type;
   using MESSAGE_QUEUE_EX = ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, _ACE_SYNCH, TIME_POLICY>;
 
-  // = Initialization/termination methods.
+  /// @name Initialization and termination
+  /// @{
   /**
    * Initialize a Task, supplying a thread manager and a message
    * queue.  If the user doesn't supply a ACE_Message_Queue pointer
@@ -84,18 +85,18 @@ public:
 
   /// Sets the message queue associated with this task.
   void msg_queue (MESSAGE_QUEUE_EX *);
+  /// @}
 
 public: // Should be protected:
-  // = Message queue manipulation methods.
+  /// @name Message queue operations
+  /// @{
 
-  // = Enqueue and dequeue methods.
-
-  // For the following five method if @a timeout == 0, the caller will
-  // block until action is possible, else will wait until the
-  // <{absolute}> time specified in *@a timeout elapses).  These calls
-  // will return, however, when queue is closed, deactivated, when a
-  // signal occurs, or if the time specified in timeout elapses, (in
-  // which case errno = EWOULDBLOCK).
+  /**
+   * Message queue operations block if @a timeout is zero. Otherwise,
+   * they wait until the absolute time specified by @a timeout. They
+   * also return if the queue is closed or deactivated, a signal occurs,
+   * or the timeout expires (setting errno to EWOULDBLOCK).
+   */
 
   /// Insert message into the message queue.  Note that @a timeout uses
   /// <{absolute}> time rather than <{relative}> time.
@@ -126,12 +127,15 @@ public: // Should be protected:
    */
   int put_next (ACE_MESSAGE_TYPE *msg, ACE_Time_Value *timeout = nullptr);
 
-  // = ACE_Task utility routines to identify names et al.
+  /// @}
+
+  /// @name Task and stream accessors
+  /// @{
+
   /// Return the name of the enclosing Module if there's one associated
   /// with the Task, else returns nullptr.
   ACE_TCHAR const *name () const;
 
-  // = Pointers to next ACE_Task_Base (if ACE is part of an ACE_Stream).
   /// Get next Task pointer.
   ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *next ();
 
@@ -143,6 +147,7 @@ public: // Should be protected:
 
   /// Return the Task's Module if there is one, else returns nullptr.
   ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *module () const;
+  /// @}
 
   /**
    * Flush the task's queue, i.e., free all of the enqueued
@@ -151,8 +156,6 @@ public: // Should be protected:
    * function, just rewrite the iostream function as ::<flush>.
    */
   int flush (u_long flag = ACE_Task_Flags::ACE_FLUSHALL);
-
-  // = Special routines corresponding to certain message types.
 
   /// Manipulate watermarks.
   void water_marks (ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds, size_t);

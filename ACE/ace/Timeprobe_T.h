@@ -101,7 +101,8 @@ public:
   /// Not implemented (stupid MSVC won't let it be protected).
   ACE_Timeprobe_Ex (const ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR> &);
 
-  // = (Somewhat private) Accessors
+  /// @name Internal accessors
+  /// @{
 
   /// Event Descriptions
   ACE_Unbounded_Set<ACE_Event_Descriptions> &event_descriptions ();
@@ -126,6 +127,7 @@ public:
 
   /// Current size of timestamp table
   u_long current_size ();
+  /// @}
 
 protected:
   /// Obtain an allocator pointer.  If there is no allocator stored in
