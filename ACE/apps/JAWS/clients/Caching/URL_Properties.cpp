@@ -69,7 +69,7 @@ ACE_URL_Offer::url (ACE_UINT16 const *url)
 size_t
 ACE_WString_Helper::encode (void *buf, const ACE_WString &wstr)
 {
-  char *bytes = static_cast<char *> (buf);
+  char * const bytes = static_cast<char *> (buf);
   size_t const count = wstr.length () + 1;
   for (size_t i = 0; i < count; ++i)
     {
@@ -82,7 +82,7 @@ ACE_WString_Helper::encode (void *buf, const ACE_WString &wstr)
 size_t
 ACE_WString_Helper::decode (void *buf)
 {
-  char *bytes = static_cast<char *> (buf);
+  char * const bytes = static_cast<char *> (buf);
   size_t count {};
   ACE_UINT16 encoded_value {};
   do
@@ -129,20 +129,20 @@ ACE_URL_Property::dump () const
   if (this->name_.length () > 0)
     {
       std::unique_ptr<char[]> name (this->name_.char_rep ());
-      ACE_DEBUG ((LM_DEBUG, "\n    name_:  \"%s\"\n",
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n    name_:  \"%C\"\n"),
                   name.get ()));
     }
   else
-    ACE_DEBUG ((LM_DEBUG, "\n   name_:  \"\"\n"));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n   name_:  \"\"\n")));
 
   if (this->value_.length () > 0)
     {
       std::unique_ptr<char[]> value (this->value_.char_rep ());
-      ACE_DEBUG ((LM_DEBUG, "   value_:  \"%s\"\n",
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("   value_:  \"%C\"\n"),
                   value.get ()));
     }
   else
-    ACE_DEBUG ((LM_DEBUG, "   value_:  \"\"\n"));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("   value_:  \"\"\n")));
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
@@ -174,7 +174,7 @@ size_t
 ACE_URL_Offer::decode (void *buf)
 {
   size_t len = sizeof (ACE_UINT32);
-  ACE_UINT32 encoded_size;
+  ACE_UINT32 encoded_size {};
   std::memcpy (&encoded_size, buf, sizeof (encoded_size));
   size_t a_size = static_cast<size_t> (ntohl (encoded_size));
   len += ACE_WString_Helper::decode (static_cast<char *> (buf) + len);
@@ -196,11 +196,11 @@ ACE_URL_Offer::dump () const
   if (this->url_.length () > 0)
     {
       std::unique_ptr<char[]> url (this->url_.char_rep ());
-      ACE_DEBUG ((LM_DEBUG, "\n url_:  \"%s\"\n",
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n url_:  \"%C\"\n"),
                   url.get ()));
     }
   else
-    ACE_DEBUG ((LM_DEBUG, "\n url_:  \"\"\n"));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n url_:  \"\"\n")));
 
   for (size_t i = 0; i < this->prop_.size (); ++i)
     this->prop_[i].dump ();
