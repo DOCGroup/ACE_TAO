@@ -111,7 +111,10 @@ Task_Stats::dump_samples (
       ACE_UINT64 y = this->time_exec_[i] / scale_factor;
       ACE_UINT32 val_2 = ACE_CU64_TO_CU32 (y);
 
-      ACE_OS::fprintf (output_file.get (), "%u \t %u\n",val_1, val_2);
+      ACE_OS::fprintf (output_file.get (),
+                       ACE_UINT32_FORMAT_SPECIFIER_ASCII " \t "
+                       ACE_UINT32_FORMAT_SPECIFIER_ASCII "\n",
+                       val_1, val_2);
     }
 }
 
@@ -146,13 +149,20 @@ Task_Stats::dump_latency_stats (
   ACE_UINT64 tmax_ = this->time_inv_[samples_count_-1] / sf;
   ACE_UINT32 tmax = ACE_CU64_TO_CU32 (tmax_);
 
-  ACE_OS::sprintf(out_msg,
-                ACE_TEXT ("#latency   : %u[%d]/%u/%u[%d]/%u (min/avg/max/var^2)\n #first invocation time = %u, last invocation time = %u\n"),
-                l_min, this->exec_time_min_at_,
-                l_avg,
-                l_max, this->exec_time_max_at_,
-                l_dev,
-                tmin,tmax);
+  ACE_OS::sprintf (out_msg,
+                   ACE_TEXT ("#latency   : ")
+                   ACE_UINT32_FORMAT_SPECIFIER ACE_TEXT ("[")
+                   ACE_UINT32_FORMAT_SPECIFIER ACE_TEXT ("]/")
+                   ACE_UINT32_FORMAT_SPECIFIER ACE_TEXT ("/")
+                   ACE_UINT32_FORMAT_SPECIFIER ACE_TEXT ("[")
+                   ACE_UINT32_FORMAT_SPECIFIER ACE_TEXT ("]/")
+                   ACE_UINT32_FORMAT_SPECIFIER
+                   ACE_TEXT (" (min/avg/max/var^2)\n #first invocation time = ")
+                   ACE_UINT32_FORMAT_SPECIFIER
+                   ACE_TEXT (", last invocation time = ")
+                   ACE_UINT32_FORMAT_SPECIFIER ACE_TEXT ("\n"),
+                   l_min, this->exec_time_min_at_, l_avg,
+                   l_max, this->exec_time_max_at_, l_dev, tmin, tmax);
 }
 
 ACE_SINGLETON_TEMPLATE_INSTANTIATE(ACE_Singleton, Base_Time,  TAO_SYNCH_MUTEX);

@@ -68,11 +68,16 @@ Periodic_Task::init_task (ACE_Arg_Shifter& arg_shifter)
         }
       else
         {
-          ACE_DEBUG ((LM_DEBUG, "parse Task unknown option %s\n",
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("parse Task unknown option %s\n"),
                       arg_shifter.get_current ()));
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG, "name %s, priority %d, period %duS, exec_time %duS, phase %duS, iter %d, load %d\n",
-                        name_.c_str(), task_priority_, period_, exec_time_, phase_, iter_, load_));
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("name %C, priority %d, period %QuS, ")
+                        ACE_TEXT ("exec_time %QuS, phase %quS, iter %d, load %d\n"),
+                        name_.c_str (), task_priority_,
+                        static_cast<ACE_UINT64> (period_),
+                        static_cast<ACE_UINT64> (exec_time_),
+                        static_cast<ACE_INT64> (phase_), iter_, load_));
           break;
         }
     }
@@ -95,12 +100,18 @@ void
 Periodic_Task::dump_stats (ACE_TCHAR const *msg)
 {
   ACE_TCHAR buf[BUFSIZ];
-  ACE_OS::sprintf (buf, ACE_TEXT("%s%s"), name_.c_str (), ACE_TEXT(".dat"));
+  ACE_OS::snprintf (buf, sizeof (buf) / sizeof (buf[0]),
+                    ACE_TEXT ("%s%s"),
+                    ACE_TEXT_CHAR_TO_TCHAR (name_.c_str ()),
+                    ACE_TEXT (".dat"));
 
   ACE_TString fname (buf);
 
-  ACE_OS::sprintf (buf,ACE_TEXT("#%s #name %s, priority %d, period %ld, exec_time %ld, phase %ld, iter_ %d , load_ %d"),
-                   msg, name_.c_str(), task_priority_, period_, exec_time_, phase_, iter_, load_);
+  ACE_OS::snprintf (buf, sizeof (buf) / sizeof (buf[0]),
+                    ACE_TEXT ("#%s #name %s, priority %d, period %lu, ")
+                    ACE_TEXT ("exec_time %lu, phase %ld, iter_ %d, load_ %d"),
+                    msg, ACE_TEXT_CHAR_TO_TCHAR (name_.c_str ()), task_priority_,
+                    period_, exec_time_, phase_, iter_, load_);
 
   task_stats_->dump_samples (fname.c_str (), buf,
                              ACE_High_Res_Timer::global_scale_factor ());

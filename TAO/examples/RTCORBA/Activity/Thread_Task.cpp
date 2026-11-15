@@ -120,7 +120,8 @@ Thread_Task::svc ()
 
           if (TAO_debug_level > 0)
           {
-            ACE_DEBUG ((LM_DEBUG, "(%t) sleep time = %d\n", sleep_time));
+            ACE_DEBUG ((LM_DEBUG, "(%t) sleep time = %q\n",
+                        static_cast<ACE_INT64> (sleep_time)));
           }
 
           ACE_Time_Value t_sleep (0, sleep_time);

@@ -52,10 +52,10 @@ POA_Holder::init (ACE_Arg_Shifter& arg_shifter)
                   arg_shifter.consume_arg ();
 
                   //if (TAO_debug_level > 0)
-                  ACE_DEBUG ((LM_DEBUG, "lane parsed - %d, %d, %d\n",
+                  ACE_DEBUG ((LM_DEBUG, "lane parsed - %d, %Q, %Q\n",
                               lanes_[l_index].lane_priority,
-                              lanes_[l_index].static_threads,
-                              lanes_[l_index].dynamic_threads));
+                              static_cast<ACE_UINT64> (lanes_[l_index].static_threads),
+                              static_cast<ACE_UINT64> (lanes_[l_index].dynamic_threads)));
                   ++l_index;
                 }
               else
