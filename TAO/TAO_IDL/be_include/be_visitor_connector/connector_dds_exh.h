@@ -17,18 +17,10 @@
 
 class be_visitor_context;
 
+/// Generates DDS connector executor implementation headers.
 class be_visitor_connector_dds_exh
   : public be_visitor_connector_dds_ex_base
 {
-  //
-  // = TITLE
-  //   be_visitor_connector_dds_exh
-  //
-  // = DESCRIPTION
-  //   This is a concrete visitor to generate
-  //   the executor implementation header for DDS connectors.
-  //
-  //
 public:
   explicit be_visitor_connector_dds_exh (be_visitor_context *ctx);
 

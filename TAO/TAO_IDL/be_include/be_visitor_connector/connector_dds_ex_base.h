@@ -17,18 +17,10 @@
 class be_visitor_context;
 class AST_Template_Module;
 
+/// Base visitor for generating DDS connector executor implementations.
 class be_visitor_connector_dds_ex_base
   : public be_visitor_component_scope
 {
-  //
-  // = TITLE
-  //   be_visitor_connector_dds_ex_base
-  //
-  // = DESCRIPTION
-  //   This is a base class visitor to generate
-  //   the executor implementation for DDS connectors.
-  //
-  //
 public:
   explicit be_visitor_connector_dds_ex_base (be_visitor_context *ctx);
 
@@ -44,15 +36,13 @@ protected:
   bool is_dds_type (be_connector *node, AST_Decl *d);
 
 protected:
-  // Storage for the current template module instantiation we
-  // are using, and its associated template args.
+  /// Current template module instantiation and its template arguments.
   AST_Template_Module_Inst *t_inst_ {};
   AST_Template_Module_Ref *t_ref_ {};
   FE_Utils::T_ARGLIST t_args_;
   FE_Utils::T_PARAMLIST_INFO *t_params_ {};
 
-  // Derives from the DDS datatype, so we want to calculate it
-  // once and store it.
+  /// Traits name derived from the DDS datatype and calculated once.
   std::string dds_traits_name_;
   std::string base_tname_;
 
