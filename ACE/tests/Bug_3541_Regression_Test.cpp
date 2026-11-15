@@ -43,8 +43,8 @@ run_main (int, ACE_TCHAR *[])
     ret = -1;
 
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("ACE_Event(%s) failed - handle %d lastError %d\n"),
-                eventName, eventHandle, lastError));
+                ACE_TEXT ("ACE_Event(%s) failed - handle %@ lastError %d\n"),
+                eventName, reinterpret_cast<void *> (eventHandle), lastError));
   }
   else
   {
@@ -63,8 +63,8 @@ run_main (int, ACE_TCHAR *[])
       ret = -1;
 
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("ACE_Event(%s) failed - handle %d lastError %d\n"),
-                  eventName, eventHandle, lastError));
+                  ACE_TEXT ("ACE_Event(%s) failed - handle %@ lastError %d\n"),
+                  eventName, reinterpret_cast<void *> (eventHandle), lastError));
     }
   }
 
@@ -85,8 +85,8 @@ run_main (int, ACE_TCHAR *[])
     ret = -1;
 
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("ACE_Semaphore(%s) failed - lock %d lastError %d\n"),
-                semaphoreName, semaphoreLock, lastError));
+                ACE_TEXT ("ACE_Semaphore(%s) failed - lock %@ lastError %d\n"),
+                semaphoreName, reinterpret_cast<void *> (semaphoreLock), lastError));
   }
   else
   {
@@ -104,8 +104,8 @@ run_main (int, ACE_TCHAR *[])
       ret = -1;
 
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("ACE_Semaphore(%s) failed - lock %d lastError %d\n"),
-                  semaphoreName, semaphoreLock, lastError));
+                  ACE_TEXT ("ACE_Semaphore(%s) failed - lock %@ lastError %d\n"),
+                  semaphoreName, reinterpret_cast<void *> (semaphoreLock), lastError));
     }
   }
 
@@ -126,8 +126,8 @@ run_main (int, ACE_TCHAR *[])
     ret = -1;
 
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("ACE_Mutex(%s) failed - lock %d lastError %d\n"),
-                mutexName, mutexLock, lastError));
+                ACE_TEXT ("ACE_Mutex(%s) failed - lock %@ lastError %d\n"),
+                mutexName, reinterpret_cast<void *> (mutexLock.proc_mutex_), lastError));
   }
   else
   {
@@ -144,8 +144,8 @@ run_main (int, ACE_TCHAR *[])
       ret = -1;
 
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("ACE_Mutex(%s) failed - lock %d lastError %d\n"),
-                  mutexName, mutexLock, lastError));
+                  ACE_TEXT ("ACE_Mutex(%s) failed - lock %@ lastError %d\n"),
+                  mutexName, reinterpret_cast<void *> (mutexLock.proc_mutex_), lastError));
     }
   }
 
