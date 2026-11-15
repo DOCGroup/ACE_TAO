@@ -821,16 +821,17 @@ ACE_Process_Manager::wait (pid_t pid,
       ACE_NEW_RETURN (handles,
                       HANDLE[this->current_count_],
                       ACE_INVALID_PID);
+      std::unique_ptr<HANDLE[]> handles_owner (handles);
 
       for (size_t i = 0;
            i < this->current_count_;
            ++i)
-        handles[i] =
+        handles_owner[i] =
           process_table_[i].process_->gethandle ();
 
       DWORD handle_count = static_cast<DWORD> (this->current_count_);
       DWORD result = ::WaitForMultipleObjects (handle_count,
-                                               handles,
+                                               handles_owner.get (),
                                                FALSE,
                                                timeout == ACE_Time_Value::max_time
                                                ? INFINITE
@@ -852,12 +853,12 @@ ACE_Process_Manager::wait (pid_t pid,
                       && result < WAIT_OBJECT_0 + this->current_count_);
 # endif
 
-          idx = this->find_proc (handles[result - WAIT_OBJECT_0]);
+          idx = this->find_proc (handles_owner[result - WAIT_OBJECT_0]);
 
           if (idx != -1)
             {
               pid = process_table_[idx].process_->getpid ();
-              result = ::GetExitCodeProcess (handles[result - WAIT_OBJECT_0],
+              result = ::GetExitCodeProcess (handles_owner[result - WAIT_OBJECT_0],
                                              status);
               if (result == 0)
                 {
@@ -870,7 +871,6 @@ ACE_Process_Manager::wait (pid_t pid,
             {
               // uh oh...handle removed from process_table_, even though
               // we're holding a lock!
-              delete [] handles;
               ACELIB_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("Process removed")
                                  ACE_TEXT (" -- somebody's ignoring the lock!\n")),
@@ -878,7 +878,6 @@ ACE_Process_Manager::wait (pid_t pid,
             }
         }
 
-      delete [] handles;
 #else /* !defined(ACE_WIN32) */
       if (timeout == ACE_Time_Value::max_time)
         pid = ACE_OS::waitpid (-1, status, 0);
