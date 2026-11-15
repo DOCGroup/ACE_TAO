@@ -17,14 +17,10 @@
 #include "be_interface.h"
 #include "ast_home.h"
 
+/// Extends AST_Home with additional means for C++ mapping of a component home.
 class be_home : public virtual AST_Home,
                 public virtual be_interface
 {
-  // =TITLE
-  //   be_home
-  //
-  // =DESCRIPTION
-  //   Extensions to the AST_Home class
 public:
   be_home (UTL_ScopedName *n,
            AST_Home *base_home,
