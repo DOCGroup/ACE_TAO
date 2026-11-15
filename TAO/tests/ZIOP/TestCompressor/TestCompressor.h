@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   TestCompressor.h
  *
@@ -8,8 +7,6 @@
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-// ===================================================================
-
 #ifndef TAO_TESTCOMPRESSOR_H
 #define TAO_TESTCOMPRESSOR_H
 
@@ -30,17 +27,15 @@ namespace TAO
 {
   class TAO_TESTCOMPRESSOR_Export TestCompressor : public BaseCompressor
   {
-    public:
-      TestCompressor (::Compression::CompressorFactory_ptr compressor_factory,
-                      ::Compression::CompressionLevel compression_level);
+  public:
+    TestCompressor (::Compression::CompressorFactory_ptr compressor_factory,
+                    ::Compression::CompressionLevel compression_level);
 
-      virtual void compress (
-          const ::Compression::Buffer &,
-          ::Compression::Buffer &);
+    void compress (::Compression::Buffer const &,
+                   ::Compression::Buffer &) override;
 
-      virtual void decompress (
-          const ::Compression::Buffer &,
-          ::Compression::Buffer &);
+    void decompress (::Compression::Buffer const &,
+                     ::Compression::Buffer &) override;
   };
 }
 

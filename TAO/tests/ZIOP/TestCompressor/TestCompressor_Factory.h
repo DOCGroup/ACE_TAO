@@ -1,13 +1,10 @@
 // -*- C++ -*-
 
-// ===================================================================
 /**
  *  @file   TestCompressor_Factory.h
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-// ===================================================================
-
 #ifndef TAO_TESTCOMPRESSOR_FACTORY_H
 #define TAO_TESTCOMPRESSOR_FACTORY_H
 
@@ -28,17 +25,18 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-    class TAO_TESTCOMPRESSOR_Export Test_CompressorFactory :
-      public ::TAO::CompressorFactory
-    {
-      public:
-        Test_CompressorFactory ();
+  class TAO_TESTCOMPRESSOR_Export Test_CompressorFactory
+    : public ::TAO::CompressorFactory
+  {
+  public:
+    Test_CompressorFactory ();
 
-        virtual ::Compression::Compressor_ptr get_compressor (
-            ::Compression::CompressionLevel compression_level);
-       private:
-         ::Compression::Compressor_var compressor_;
-    };
+    ::Compression::Compressor_ptr get_compressor (
+      ::Compression::CompressionLevel compression_level) override;
+
+  private:
+    ::Compression::Compressor_var compressor_;
+  };
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
