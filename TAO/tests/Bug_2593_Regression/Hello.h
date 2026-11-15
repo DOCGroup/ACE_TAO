@@ -17,15 +17,17 @@ public:
   Hello (Hello &&) = delete;
   Hello &operator= (Hello &&) = delete;
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   char *get_string () override;
 
   void shutdown () override;
+  /// @}
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown
   /// the application.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 };
 
 #include /**/ "ace/post.h"
