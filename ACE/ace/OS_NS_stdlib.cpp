@@ -1173,7 +1173,7 @@ ACE_OS::mkstemp_emulation (ACE_TCHAR * s)
   // meaning multiple threads could potentially initialize this value
   // in parallel.
   float const MAX_VAL =
-    static_cast<float> (ACE_Numeric_Limits<char>::max ());
+    static_cast<float> ((ACE_Numeric_Limits<char>::max) ());
 
   // Use high-order bits rather than low-order ones (e.g. rand() %
   // MAX_VAL).  See Numerical Recipes in C: The Art of Scientific

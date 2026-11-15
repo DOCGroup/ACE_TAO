@@ -421,8 +421,8 @@ TAO::Storable_FlatFileStream::operator >> (std::string &str)
 {
   int bufSize {};
   std::string::size_type const max_buf_len =
-    ACE_Numeric_Limits<std::string::size_type>::max ();
-  int const max_int = ACE_Numeric_Limits<int>::max ();
+    (ACE_Numeric_Limits<std::string::size_type>::max) ();
+  int const max_int = (ACE_Numeric_Limits<int>::max) ();
   switch (std::fscanf (fl_, "%d\n", std::addressof (bufSize)))
     {
     case 0:

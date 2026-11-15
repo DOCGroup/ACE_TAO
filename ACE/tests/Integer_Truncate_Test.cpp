@@ -36,7 +36,7 @@ sizeof_from_lt_sizeof_to ()
     ACE_TEST_ASSERT (sizeof (from_type) < sizeof (to_type));
 
     from_type f =
-      ACE_Numeric_Limits<from_type>::max ();  // Should not be truncated.
+      (ACE_Numeric_Limits<from_type>::max) ();  // Should not be truncated.
 
     if (truncate_cast<to_type> (f) != static_cast<to_type> (f))
       {
@@ -56,7 +56,7 @@ sizeof_from_lt_sizeof_to ()
     ACE_TEST_ASSERT (sizeof (from_type) < sizeof (to_type));
 
     from_type f =
-      ACE_Numeric_Limits<from_type>::max ();  // Should not be truncated.
+      (ACE_Numeric_Limits<from_type>::max) ();  // Should not be truncated.
 
     if (truncate_cast<to_type> (f) != static_cast<to_type> (f))
       {
@@ -77,7 +77,7 @@ sizeof_from_lt_sizeof_to ()
 
     from_type f1 = -1;  // Should not be truncated.
     from_type f2 =
-      ACE_Numeric_Limits<from_type>::max ();  // Should not be truncated.
+      (ACE_Numeric_Limits<from_type>::max) ();  // Should not be truncated.
 
     if (truncate_cast<to_type> (f1) != f1
         || truncate_cast<to_type> (f2) != f2)
@@ -98,7 +98,7 @@ sizeof_from_lt_sizeof_to ()
     ACE_TEST_ASSERT (sizeof (from_type) < sizeof (to_type));
 
     from_type f =
-      ACE_Numeric_Limits<from_type>::max ();  // Should not be truncated.
+      (ACE_Numeric_Limits<from_type>::max) ();  // Should not be truncated.
 
     if (truncate_cast<to_type> (f) != static_cast<to_type> (f))
       {
@@ -136,7 +136,7 @@ sizeof_from_eq_sizeof_to ()
 
     from_type f1 = -1;  // Should not be truncated.
     from_type f2 =
-      ACE_Numeric_Limits<from_type>::max ();  // Should not be truncated.
+      (ACE_Numeric_Limits<from_type>::max) ();  // Should not be truncated.
 
     if (static_cast<from_type> (truncate_cast<to_type> (f1)) != f1
         || static_cast<from_type> (truncate_cast<to_type> (f2)) != f2)
@@ -157,9 +157,9 @@ sizeof_from_eq_sizeof_to ()
     ACE_TEST_ASSERT (sizeof (from_type) == sizeof (to_type));
 
     from_type f =
-      ACE_Numeric_Limits<from_type>::max ();  // Should be truncated.
+      (ACE_Numeric_Limits<from_type>::max) ();  // Should be truncated.
 
-    if (truncate_cast<to_type> (f) != ACE_Numeric_Limits<to_type>::max ())
+    if (truncate_cast<to_type> (f) != (ACE_Numeric_Limits<to_type>::max) ())
       {
         success = false;
 
@@ -178,7 +178,7 @@ sizeof_from_eq_sizeof_to ()
 
     from_type f1 = -1;  // Should not be truncated.
     from_type f2 =
-      ACE_Numeric_Limits<from_type>::max ();  // Should not be truncated.
+      (ACE_Numeric_Limits<from_type>::max) ();  // Should not be truncated.
 
     if (truncate_cast<to_type> (f1) != f1
         || truncate_cast<to_type> (f2) != f2)
@@ -199,7 +199,7 @@ sizeof_from_eq_sizeof_to ()
     ACE_TEST_ASSERT (sizeof (from_type) == sizeof (to_type));
 
     from_type f =
-      ACE_Numeric_Limits<from_type>::max ();  // Should not be truncated.
+      (ACE_Numeric_Limits<from_type>::max) ();  // Should not be truncated.
 
     if (truncate_cast<to_type> (f) != f)
       {
@@ -236,9 +236,9 @@ sizeof_from_gt_sizeof_to ()
     ACE_TEST_ASSERT (sizeof (from_type) > sizeof (to_type));
 
     from_type f =
-      ACE_Numeric_Limits<from_type>::max ();  // Should be truncated.
+      (ACE_Numeric_Limits<from_type>::max) ();  // Should be truncated.
 
-    if (truncate_cast<to_type> (f) != ACE_Numeric_Limits<to_type>::max ())
+    if (truncate_cast<to_type> (f) != (ACE_Numeric_Limits<to_type>::max) ())
       {
         success = false;
 
@@ -256,9 +256,9 @@ sizeof_from_gt_sizeof_to ()
     ACE_TEST_ASSERT (sizeof (from_type) > sizeof (to_type));
 
     from_type f =
-      ACE_Numeric_Limits<from_type>::max ();  // Should be truncated.
+      (ACE_Numeric_Limits<from_type>::max) ();  // Should be truncated.
 
-    if (truncate_cast<to_type> (f) != ACE_Numeric_Limits<to_type>::max ())
+    if (truncate_cast<to_type> (f) != (ACE_Numeric_Limits<to_type>::max) ())
       {
         success = false;
 
@@ -277,10 +277,10 @@ sizeof_from_gt_sizeof_to ()
 
     from_type f1 = -1;  // Should not be truncated.
     from_type f2 =
-      ACE_Numeric_Limits<from_type>::max ();  // Should be truncated.
+      (ACE_Numeric_Limits<from_type>::max) ();  // Should be truncated.
 
     if (truncate_cast<to_type> (f1) != f1
-        || truncate_cast<to_type> (f2) != ACE_Numeric_Limits<to_type>::max ())
+        || truncate_cast<to_type> (f2) != (ACE_Numeric_Limits<to_type>::max) ())
       {
         success = false;
 
@@ -298,9 +298,9 @@ sizeof_from_gt_sizeof_to ()
     ACE_TEST_ASSERT (sizeof (from_type) > sizeof (to_type));
 
     from_type f =
-      ACE_Numeric_Limits<from_type>::max ();  // Should be truncated.
+      (ACE_Numeric_Limits<from_type>::max) ();  // Should be truncated.
 
-    if (truncate_cast<to_type> (f) != ACE_Numeric_Limits<to_type>::max ())
+    if (truncate_cast<to_type> (f) != (ACE_Numeric_Limits<to_type>::max) ())
       {
         success = false;
 

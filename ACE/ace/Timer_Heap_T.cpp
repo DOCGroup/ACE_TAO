@@ -106,9 +106,9 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::ACE_Timer_Heap_T (
   ACE_TRACE ("ACE_Timer_Heap_T::ACE_Timer_Heap_T");
 
   // Possibly reduce size to fit in a long.
-  if (size > static_cast<size_t> (ACE_Numeric_Limits<long>::max ()))
+  if (size > static_cast<size_t> ((ACE_Numeric_Limits<long>::max) ()))
     {
-      size = static_cast<size_t> (ACE_Numeric_Limits<long>::max ());
+      size = static_cast<size_t> ((ACE_Numeric_Limits<long>::max) ());
       this->max_size_ = size;
     }
 
@@ -178,8 +178,8 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::ACE_Timer_Heap_T (
   ACE_TRACE ("ACE_Timer_Heap_T::ACE_Timer_Heap_T");
 
   // Possibly reduce size to fit in a long.
-  if (this->max_size_ > static_cast<size_t> (ACE_Numeric_Limits<long>::max ()))
-    this->max_size_ = static_cast<size_t> (ACE_Numeric_Limits<long>::max ());
+  if (this->max_size_ > static_cast<size_t> ((ACE_Numeric_Limits<long>::max) ()))
+    this->max_size_ = static_cast<size_t> ((ACE_Numeric_Limits<long>::max) ());
 
   // Create the heap array.
 #if defined (ACE_HAS_ALLOC_HOOKS)

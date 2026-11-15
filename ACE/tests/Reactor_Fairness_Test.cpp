@@ -72,7 +72,7 @@ namespace {
                   ACE_TEXT ("Results (%B entries):\n"),
                   reports.size()));
       unsigned int max_chunks = 0;
-      unsigned int min_chunks = ACE_Numeric_Limits<unsigned int>::max();
+      unsigned int min_chunks = (ACE_Numeric_Limits<unsigned int>::max) ();
       for (report_map::iterator iter = reports.begin();
            iter != reports.end ();
            ++iter)

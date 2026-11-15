@@ -214,23 +214,23 @@ run_main (int, ACE_TCHAR *[])
   ACE_TEST_ASSERT (ACE_Time_Value::max_time.usec () != -1);
 
   // Test performance of normalize()
-  ACE_Time_Value v1(ACE_Numeric_Limits<time_t>::max(),
-                    ACE_Numeric_Limits<suseconds_t>::max());
-  ACE_Time_Value v2(ACE_Numeric_Limits<time_t>::min(),
-                   ACE_Numeric_Limits<suseconds_t>::min());
-  ACE_Time_Value v3(ACE_Numeric_Limits<time_t>::max(),
-                    ACE_Numeric_Limits<suseconds_t>::min());
-  ACE_Time_Value v4(ACE_Numeric_Limits<time_t>::min(),
-                    ACE_Numeric_Limits<suseconds_t>::max());
+  ACE_Time_Value v1((ACE_Numeric_Limits<time_t>::max) (),
+                    (ACE_Numeric_Limits<suseconds_t>::max) ());
+  ACE_Time_Value v2((ACE_Numeric_Limits<time_t>::min) (),
+                   (ACE_Numeric_Limits<suseconds_t>::min) ());
+  ACE_Time_Value v3((ACE_Numeric_Limits<time_t>::max) (),
+                    (ACE_Numeric_Limits<suseconds_t>::min) ());
+  ACE_Time_Value v4((ACE_Numeric_Limits<time_t>::min) (),
+                    (ACE_Numeric_Limits<suseconds_t>::max) ());
 
-  v1.set(ACE_Numeric_Limits<time_t>::max(),
-         ACE_Numeric_Limits<suseconds_t>::max());
-  v2.set(ACE_Numeric_Limits<time_t>::min(),
-         ACE_Numeric_Limits<suseconds_t>::min());
-  v3.set(ACE_Numeric_Limits<time_t>::max(),
-         ACE_Numeric_Limits<suseconds_t>::min());
-  v4.set(ACE_Numeric_Limits<time_t>::min(),
-         ACE_Numeric_Limits<suseconds_t>::max());
+  v1.set((ACE_Numeric_Limits<time_t>::max) (),
+         (ACE_Numeric_Limits<suseconds_t>::max) ());
+  v2.set((ACE_Numeric_Limits<time_t>::min) (),
+         (ACE_Numeric_Limits<suseconds_t>::min) ());
+  v3.set((ACE_Numeric_Limits<time_t>::max) (),
+         (ACE_Numeric_Limits<suseconds_t>::min) ());
+  v4.set((ACE_Numeric_Limits<time_t>::min) (),
+         (ACE_Numeric_Limits<suseconds_t>::max) ());
 
   v1.set(DBL_MAX);
 

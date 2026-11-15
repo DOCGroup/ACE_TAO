@@ -375,8 +375,8 @@ namespace ACE_Utils
     TO operator() (FROM val)
     {
       return
-        (comparator::greater_than (val, ACE_Numeric_Limits<TO>::max ())
-         ? ACE_Numeric_Limits<TO>::max ()
+        (comparator::greater_than (val, (ACE_Numeric_Limits<TO>::max) ())
+         ? (ACE_Numeric_Limits<TO>::max) ()
          : static_cast<TO> (val));
     }
 

@@ -162,7 +162,7 @@ ACE_NS_WString::ACE_NS_WString (const ACE_UINT16 *s,
 // *****************************************************************
 
 ACE_SString::size_type const ACE_SString::npos =
-  ACE_Numeric_Limits<ACE_SString::size_type>::max ();
+  (ACE_Numeric_Limits<ACE_SString::size_type>::max) ();
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SString)
 
