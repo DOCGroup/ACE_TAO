@@ -81,7 +81,7 @@ Performance_Test::post_run_test ()
 
   ACE_DEBUG ((LM_DEBUG, "------------------------------------------------------------------------\n"));
   ACE_DEBUG ((LM_DEBUG, "targ 0x%x (%s, %s, %s)\n"
-              "n_lwps_orig = %d, n_lwps_set = %B, n_lwps_end = %d\n",
+              "n_lwps_orig = %d, n_lwps_set = %d, n_lwps_end = %d\n",
               static_cast<unsigned int> (performance_test_options.t_flags ()),
               (performance_test_options.t_flags () & THR_DETACHED) ? "THR_DETACHED" : "Not Detached",
               (performance_test_options.t_flags () & THR_BOUND) ? "THR_BOUND"    : "Not Bound",
