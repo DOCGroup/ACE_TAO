@@ -20,6 +20,7 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Task.h"
 
+#include <memory>
 #include <vector>
 
 /// We want to give shutdown a little more time to work, so that we
@@ -1054,15 +1055,16 @@ ImR_Locator_i::force_remove_server
       return;
     }
 
-  ImR_ResponseHandler *aam_rh =
-    new ImR_Loc_ResponseHandler (ImR_Loc_ResponseHandler::LOC_FORCE_REMOVE_SERVER,
-                                 _tao_rh);
-  if (aam->force_remove_rh (aam_rh))
+  std::unique_ptr<ImR_ResponseHandler> aam_rh =
+    std::make_unique<ImR_Loc_ResponseHandler> (
+      ImR_Loc_ResponseHandler::LOC_FORCE_REMOVE_SERVER,
+      _tao_rh);
+  if (aam->force_remove_rh (aam_rh.get ()))
     {
-      delete aam_rh;
       _tao_rh->force_remove_server ();
       return;
     }
+  aam_rh.release ();
 
   bool active = (signum > 0) ?
     this->kill_server_i (si, signum, ex) :

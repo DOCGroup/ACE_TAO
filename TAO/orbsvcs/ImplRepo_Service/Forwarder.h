@@ -61,6 +61,7 @@ public:
   void send_exception (CORBA::Exception *ex) override;
 
 private:
+  /// Takes ownership of ex and transfers it to the AMH exception holder.
   void invoke_excep_i (CORBA::Exception *ex);
 
   CORBA::String_var key_str_;

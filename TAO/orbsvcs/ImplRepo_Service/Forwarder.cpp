@@ -26,6 +26,8 @@
 #include "tao/DynamicInterface/AMH_DSI_Response_Handler.h"
 #include "tao/Messaging/AMH_Response_Handler.h"
 
+#include <memory>
+
 ImR_DSI_Forwarder::ImR_DSI_Forwarder (ImR_Locator_i& imr_impl)
   : locator_ (imr_impl)
   , orb_ (nullptr)
@@ -223,7 +225,9 @@ ImR_DSI_ResponseHandler::send_ior (const char *pior)
 void
 ImR_DSI_ResponseHandler::invoke_excep_i (CORBA::Exception *ex)
 {
-  TAO_AMH_DSI_Exception_Holder h(ex);
+  std::unique_ptr<CORBA::Exception> exception {ex};
+  TAO_AMH_DSI_Exception_Holder h (exception.get ());
+  exception.release ();
   this->resp_->invoke_excep(&h);
   delete this;
 }
