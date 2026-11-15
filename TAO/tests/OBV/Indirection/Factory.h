@@ -5,7 +5,7 @@
 // The ORB runtime assumes ownership of values returned by these factories.
 class NodeFactory : public CORBA::ValueFactoryBase
 {
- public:
+public:
   NodeFactory () = default;
   NodeFactory (NodeFactory const&) = delete;
   NodeFactory (NodeFactory&&) = delete;
@@ -18,7 +18,7 @@ class NodeFactory : public CORBA::ValueFactoryBase
 
 class BoxedValueFactory : public CORBA::ValueFactoryBase
 {
- public:
+public:
   BoxedValueFactory () = default;
   BoxedValueFactory (BoxedValueFactory const&) = delete;
   BoxedValueFactory (BoxedValueFactory&&) = delete;
@@ -31,7 +31,7 @@ class BoxedValueFactory : public CORBA::ValueFactoryBase
 
 class BaseValueFactory : public CORBA::ValueFactoryBase
 {
- public:
+public:
   BaseValueFactory () = default;
   BaseValueFactory (BaseValueFactory const&) = delete;
   BaseValueFactory (BaseValueFactory&&) = delete;
@@ -44,7 +44,7 @@ class BaseValueFactory : public CORBA::ValueFactoryBase
 
 class TValueFactory : public CORBA::ValueFactoryBase
 {
- public:
+public:
   TValueFactory () = default;
   TValueFactory (TValueFactory const&) = delete;
   TValueFactory (TValueFactory&&) = delete;
@@ -57,7 +57,7 @@ class TValueFactory : public CORBA::ValueFactoryBase
 
 class ConfigValueFactory : public CORBA::ValueFactoryBase
 {
- public:
+public:
   ConfigValueFactory () = default;
   ConfigValueFactory (ConfigValueFactory const&) = delete;
   ConfigValueFactory (ConfigValueFactory&&) = delete;

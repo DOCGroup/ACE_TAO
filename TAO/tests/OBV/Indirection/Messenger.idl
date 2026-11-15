@@ -1,5 +1,3 @@
-// Messenger.idl
-
 module demo {
 
    module value {
@@ -19,9 +17,7 @@ module demo {
           public unsigned long basic_data;
         };
 
-        //
-        // Valuetype with one-level truncatable inheritence.
-        //
+        /// Valuetype with one-level truncatable inheritance.
         valuetype TValue : truncatable BaseValue
         {
           public unsigned long data;
