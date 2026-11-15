@@ -12,6 +12,8 @@
 
 #include "test_config.h"
 
+#include <memory>
+
 #include "ace/Containers.h"
 #include "Collection_Test.h"
 
@@ -22,7 +24,7 @@ UglyThing::UglyThing (void* alloc, deletion_func dfunc)
 }
 
 bool
-UglyThing::operator== (const UglyThing& r) const
+UglyThing::operator== (UglyThing const& r) const
 {
   return this->alloc_ == r.alloc_;
 }
@@ -36,19 +38,19 @@ using ARRAY_DATA = int;
 using ARRAY = ACE_Array<ARRAY_DATA>;
 using ARRAY_ITERATOR = ACE_Array_Iterator<ARRAY_DATA>;
 
-void iterate_const(const UNBOUNDED_SET& set)
+void iterate_const (UNBOUNDED_SET const& set)
 {
   {
     UNBOUNDED_SET_CONST_ITERATOR iterator (set);
     while (!iterator.done ())
     {
-      DATA *data = nullptr;
+      DATA *data {};
       iterator.next (data);
 
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%x,%x\n"),
                   data->alloc_, (void *) data->dfunc_));
 
-      DATA data_second = *iterator;
+      DATA const data_second = *iterator;
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%x,%x\n"),
                   data_second.alloc_, (void *) data_second.dfunc_));
 
@@ -67,14 +69,14 @@ run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Collection_Test"));
 
-  deletion_func NO_DFUNC = (deletion_func)nullptr;
+  deletion_func const NO_DFUNC {};
   DummyFunctor dummyfunc;
 
   {
     UNBOUNDED_SET unbounded_set;
 
-    unbounded_set.insert (UglyThing ((void*)&unbounded_set, NO_DFUNC));
-    unbounded_set.insert (UglyThing ((void*)&dummyfunc, NO_DFUNC));
+    unbounded_set.insert (UglyThing (std::addressof (unbounded_set), NO_DFUNC));
+    unbounded_set.insert (UglyThing (std::addressof (dummyfunc), NO_DFUNC));
 
     {
       for (UNBOUNDED_SET::iterator iterator = unbounded_set.begin ();
@@ -87,13 +89,13 @@ run_main (int, ACE_TCHAR *[])
     }
 
     unbounded_set.insert (UglyThing (nullptr, NO_DFUNC));
-    unbounded_set.remove (UglyThing ((void*)&dummyfunc, NO_DFUNC));
+    unbounded_set.remove (UglyThing (std::addressof (dummyfunc), NO_DFUNC));
 
     {
       UNBOUNDED_SET_ITERATOR iterator (unbounded_set);
       while (!iterator.done ())
         {
-          DATA *data = nullptr;
+          DATA *data {};
           iterator.next (data);
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%x,%x\n"),
                       data->alloc_, (void *) data->dfunc_));
@@ -176,7 +178,7 @@ run_main (int, ACE_TCHAR *[])
       ARRAY_ITERATOR iterator (array1);
       while (!iterator.done ())
         {
-          ARRAY_DATA *data = nullptr;
+          ARRAY_DATA *data {};
           iterator.next (data);
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%d\n"),
                       (*data)));
