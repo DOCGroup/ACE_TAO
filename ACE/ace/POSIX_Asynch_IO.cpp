@@ -961,22 +961,30 @@ ACE_POSIX_Asynch_Accept::cancel_uncompleted (int flg_notify)
         break;
       }
 
-      if (this->flg_open_ == 0 || flg_notify == 0) //if we should not notify
-        delete result ;                            // we have to delete result
-      else                                 //else notify as any cancelled AIO
+      auto result_deleter = [] (ACE_POSIX_Asynch_Accept_Result *result)
         {
-          // Store the new handle.
-          result->aio_fildes = ACE_INVALID_HANDLE ;
-          result->set_bytes_transferred (0);
-          result->set_error (ECANCELED);
+          delete result;
+        };
+      std::unique_ptr<ACE_POSIX_Asynch_Accept_Result, decltype (result_deleter)>
+        result_owner (result, result_deleter);
 
-          if (this->posix_proactor ()->post_completion (result) == -1)
-            ACELIB_ERROR ((LM_ERROR,
-                        ACE_TEXT("(%P | %t):%p\n"),
-                        ACE_TEXT("ACE_POSIX_Asynch_Accept::")
-                        ACE_TEXT("cancel_uncompleted")
-                        ));
+      if (this->flg_open_ == 0 || flg_notify == 0)
+        {
+          continue;
         }
+
+      // Store the new handle.
+      result->aio_fildes = ACE_INVALID_HANDLE;
+      result->set_bytes_transferred (0);
+      result->set_error (ECANCELED);
+
+      if (this->posix_proactor ()->post_completion (result_owner.get ()) == -1)
+        ACELIB_ERROR ((LM_ERROR,
+                    ACE_TEXT("(%P | %t):%p\n"),
+                    ACE_TEXT("ACE_POSIX_Asynch_Accept::")
+                    ACE_TEXT("cancel_uncompleted")));
+      else
+        result_owner.release ();
     }
   return retval;
 }
