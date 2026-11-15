@@ -301,22 +301,19 @@ TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_InputCDR*& from)
 }
 
 bool
-TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_Operation_Details const *& from,
-                                            TAO_Operation_Details const *& to,
+TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_Operation_Details *& from,
+                                            TAO_Operation_Details *& to,
                                             TAO_InputCDR*& cdr)
 {
-  TAO_Operation_Details *& from_non_const
-    = const_cast <TAO_Operation_Details *&>(from);
-
   char *cloned_op_name_buffer {};
   ACE_NEW_RETURN (cloned_op_name_buffer,
-                  char[from_non_const->opname_len_ + 1],
+                  char[from->opname_len_ + 1],
                   false);
   std::unique_ptr<char[]> cloned_op_name (cloned_op_name_buffer);
   std::strncpy (cloned_op_name.get (),
-                from_non_const->opname_,
-                from_non_const->opname_len_);
-  cloned_op_name[from_non_const->opname_len_] = '\0';
+                from->opname_,
+                from->opname_len_);
+  cloned_op_name[from->opname_len_] = '\0';
 
   // See if we can clone arguments.  If we can, the user compiled the
   // idl with the clonable arguments option, great.  If not, then
@@ -371,7 +368,7 @@ TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_Operation_Details const *& from,
       ACE_Message_Block * const mb = const_cast<ACE_Message_Block *> (cdr->start ());
       TAO_OutputCDR outcdr (mb);
 
-      if (! from_non_const->marshal_args (outcdr))
+      if (! from->marshal_args (outcdr))
         {
           TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT("(%P|%T) TAO::CSD::FW_Server_Request_Wrapper::")
@@ -407,7 +404,7 @@ TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_Operation_Details const *& from,
   TAO_Operation_Details *to_non_const {};
   ACE_NEW_RETURN (to_non_const,
                   TAO_Operation_Details(cloned_op_name.get (),
-                                        from_non_const->opname_len_,
+                                        from->opname_len_,
                                         cloned_args.get (),
                                         num_cloned_args,
                                         false,
@@ -445,8 +442,8 @@ TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_Operation_Details const *& from,
   //
   //    ACTION: Use the TAO_Service_Context clone() method.
   //
-  this->clone (from_non_const->request_service_info_, to_non_const->request_service_info_);
-  this->clone (from_non_const->reply_service_info_, to_non_const->reply_service_info_);
+  this->clone (from->request_service_info_, to_non_const->request_service_info_);
+  this->clone (from->reply_service_info_, to_non_const->reply_service_info_);
 
   to = to_non_const;
 

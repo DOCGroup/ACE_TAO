@@ -35,8 +35,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO_CSD_Strategy_Repository found\n")));
 
   // Check that configured POA names exist and unconfigured names do not.
-  std::array<Expected_POA_Config, 4> const poa_list {{
+  std::array<Expected_POA_Config, 5> const poa_list {{
     {"MyPOA", true},
+    {"MyPOA2", true},
     {"POA2", false},
     {"MyPOA3", true},
     {"MyPOA1", false}

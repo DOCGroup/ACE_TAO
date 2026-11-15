@@ -91,8 +91,8 @@ namespace TAO
       /// code to determine whether the arguments are in the operation_details_
       /// object or should be demarshalled from the incoming_ stream in the request_
       /// object.
-      bool clone (TAO_Operation_Details const *& from,
-                  TAO_Operation_Details const *& to,
+      bool clone (TAO_Operation_Details *& from,
+                  TAO_Operation_Details *& to,
                   TAO_InputCDR* & cdr);
 
       /// Clone the TAO_Tagged_Profile object.

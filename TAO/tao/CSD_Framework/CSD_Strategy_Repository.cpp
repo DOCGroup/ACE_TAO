@@ -6,7 +6,14 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_CSD_Strategy_Repository::~TAO_CSD_Strategy_Repository () = default;
+TAO_CSD_Strategy_Repository::~TAO_CSD_Strategy_Repository ()
+{
+  while (this->strategy_list_head_ != nullptr)
+    {
+      std::unique_ptr<Strategy_Node> node = std::move (this->strategy_list_head_);
+      this->strategy_list_head_ = std::move (node->next_);
+    }
+}
 
 int
 TAO_CSD_Strategy_Repository::init (int, ACE_TCHAR **)
@@ -17,12 +24,14 @@ TAO_CSD_Strategy_Repository::init (int, ACE_TCHAR **)
 CSD_Framework::Strategy_ptr
 TAO_CSD_Strategy_Repository::find (std::string const &name)
 {
-  if (this->strategy_list_head_ != nullptr)
+  Strategy_Node const *node = this->strategy_list_head_.get ();
+  while (node != nullptr && node->poa_name_ != name)
     {
-      Strategy_Node const * const node = this->strategy_list_head_->find (name);
-      if (node != nullptr)
-        return CSD_Framework::Strategy::_duplicate (node->strategy_.in ());
+      node = node->next_.get ();
     }
+
+  if (node != nullptr)
+    return CSD_Framework::Strategy::_duplicate (node->strategy_.in ());
 
   return CSD_Framework::Strategy::_nil();
 }
@@ -34,10 +43,10 @@ TAO_CSD_Strategy_Repository::add_strategy (std::string const &name,
   Strategy_Node *node {};
   ACE_NEW_RETURN (node, Strategy_Node (name, strat), -1);
   std::unique_ptr<Strategy_Node> node_owner (node);
-  if (!this->strategy_list_head_)
-    this->strategy_list_head_ = std::move (node_owner);
-  else
-    this->strategy_list_head_->add_node (std::move (node_owner));
+  std::unique_ptr<Strategy_Node> *tail = &this->strategy_list_head_;
+  while (*tail != nullptr)
+    tail = &(*tail)->next_;
+  *tail = std::move (node_owner);
 
   if (TAO_debug_level > 3)
     {
@@ -57,26 +66,6 @@ TAO_CSD_Strategy_Repository::Strategy_Node::Strategy_Node (
 }
 
 TAO_CSD_Strategy_Repository::Strategy_Node::~Strategy_Node () = default;
-
-void
-TAO_CSD_Strategy_Repository::Strategy_Node::add_node (
-  std::unique_ptr<Strategy_Node> node)
-{
-  if (this->next_ != nullptr)
-    this->next_->add_node (std::move (node));
-  else
-    this->next_ = std::move (node);
-}
-
-TAO_CSD_Strategy_Repository::Strategy_Node const *
-TAO_CSD_Strategy_Repository::Strategy_Node::find (std::string const &name) const
-{
-  if (this->poa_name_ == name)
-    return this;
-  if (this->next_ != nullptr)
-    return this->next_->find (name);
-  return nullptr;
-}
 
 /////////////////////////////////////////////////////////////////////
 
