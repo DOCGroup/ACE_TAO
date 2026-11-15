@@ -89,7 +89,7 @@ public:
   int total_duplicates {};
 
 private:
-  // = Make hash table 10 times larger than # of keyword entries.
+  // Make hash table 10 times larger than # of keyword entries.
   enum
   {
     TABLE_MULTIPLE = 10
