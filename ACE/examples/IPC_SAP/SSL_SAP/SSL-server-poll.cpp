@@ -126,7 +126,7 @@ handle_data (size_t &n_handles)
           else if (verbose)
             ACE_DEBUG ((LM_DEBUG,
                         "(%P|%t) %*s",
-                        n,
+                        static_cast<int> (n),
                         buffer_array[index].buf_));
         }
     }
