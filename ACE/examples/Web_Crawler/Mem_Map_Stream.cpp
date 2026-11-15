@@ -11,7 +11,7 @@ Mem_Map_Stream::stream ()
 }
 
 ssize_t
-Mem_Map_Stream::send_n (const void *buf, size_t size, ACE_Time_Value *tv)
+Mem_Map_Stream::send_n (const void *buf, size_t size, const ACE_Time_Value *tv)
 {
   return svc_handler_->peer ().send_n (buf, size, 0, tv);
 }

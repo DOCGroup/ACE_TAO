@@ -47,8 +47,7 @@ HTTP_URL::send_request ()
   // Send the GET command to the connected server.
   if (this->stream ().send_n (cmd_ptr.get (),
                               std::strlen (cmd_ptr.get ()),
-                              const_cast<ACE_Time_Value *>
-                                (OPTIONS::instance ()->timeout ()))  > 0)
+                              OPTIONS::instance ()->timeout ()) > 0)
     {
       ACE_OS::sprintf (cmd_ptr.get (),
                        "Host: %s\r\n\r\n",
@@ -58,8 +57,7 @@ HTTP_URL::send_request ()
       const ssize_t retval =
         this->stream ().send_n (cmd_ptr.get (),
                                 std::strlen (cmd_ptr.get ()),
-                                const_cast<ACE_Time_Value *>
-                                  (OPTIONS::instance ()->timeout ()));
+                                OPTIONS::instance ()->timeout ());
       this->stream ().svc_handler ()->idle (0);
       if (retval <= 0)
         return -1;
