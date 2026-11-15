@@ -993,23 +993,23 @@ TAO_Log_Constraint_Visitor::visit_in (
               switch (kind)
               {
                 case CORBA::tk_sequence:
-                  result = this->sequence_does_contain (&component.in (),
+                  result = this->sequence_does_contain (std::addressof (component.in ()),
                                                         left);
                   break;
                 case CORBA::tk_array:
-                  result = this->array_does_contain (&component.in (),
+                  result = this->array_does_contain (std::addressof (component.in ()),
                                                      left);
                   break;
                 case CORBA::tk_struct:
-                  result = this->struct_does_contain (&component.in (),
+                  result = this->struct_does_contain (std::addressof (component.in ()),
                                                       left);
                   break;
                 case CORBA::tk_union:
-                  result = this->union_does_contain (&component.in (),
+                  result = this->union_does_contain (std::addressof (component.in ()),
                                                      left);
                   break;
                 case CORBA::tk_any:
-                  result = this->any_does_contain (&component.in (),
+                  result = this->any_does_contain (std::addressof (component.in ()),
                                                    left);
                   break;
                 default:
@@ -1202,7 +1202,7 @@ TAO_Log_Constraint_Visitor::union_does_contain (
           return false;
         }
 
-      TAO_ETCL_Literal_Constraint const element (&member.inout ());
+      TAO_ETCL_Literal_Constraint const element (std::addressof (member.inout ()));
 
       return (item == element);
     }
