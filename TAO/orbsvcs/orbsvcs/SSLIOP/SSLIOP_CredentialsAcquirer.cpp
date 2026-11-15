@@ -10,6 +10,7 @@
 #include "ace/OS_NS_stdio.h"
 
 #include <cstring>
+#include <memory>
 
 #include <openssl/x509.h>
 #include <openssl/pem.h>
@@ -218,59 +219,39 @@ TAO::SSLIOP::CredentialsAcquirer::make_X509 (::SSLIOP::File const &certificate)
     return nullptr;
   }
 
-  FILE *fp {};
+  std::unique_ptr<FILE, int (*) (FILE *)> fp (
+      ACE_OS::fopen (filename,
+                     certificate.type == ::SSLIOP::ASN1 ? "rb" : "r"),
+      ACE_OS::fclose);
   ::X509 *x {};
+
+  if (fp == nullptr)
+    {
+      if (TAO_debug_level > 0)
+        ORBSVCS_ERROR ((LM_ERROR,
+                    ACE_TEXT ("(%P|%t) SSLIOP::CredentialsAcquirer::make_X509 - %p\n"),
+                    ACE_TEXT ("fopen")));
+
+      return nullptr;
+    }
 
   if (certificate.type == ::SSLIOP::ASN1)
     {
-      // ASN.1/DER encoded certificate
-
-      // No password is used or needed when reading ASN.1 encoded
-      // certificates.
-
-      fp = ACE_OS::fopen (filename, "rb");
-
-      if (fp == nullptr)
-        {
-          if (TAO_debug_level > 0)
-            ORBSVCS_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) SSLIOP::CredentialsAcquirer::make_X509 - %p\n"),
-                        ACE_TEXT ("fopen")));
-
-          return nullptr;
-        }
-
       // Read ASN.1 / DER encoded X.509 certificate from a file, and
       // convert it to OpenSSL's internal X.509 format.
-      x = ::d2i_X509_fp (fp, nullptr);
+      x = ::d2i_X509_fp (fp.get (), nullptr);
     }
   else
     {
-      // PEM encoded certificate
-
-      fp = ACE_OS::fopen (filename, "r");
-
-      if (fp == nullptr)
-        {
-          if (TAO_debug_level > 0)
-            ORBSVCS_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) SSLIOP::CredentialsAcquirer::make_X509 - %p\n"),
-                        ACE_TEXT ("fopen")));
-
-          return nullptr;
-        }
-
       char const *password = certificate.password.in ();
 
       // Read PEM encoded X.509 certificate from a file, and convert
       // it to OpenSSL's internal X.509 format.
-      x = PEM_read_X509 (fp,
+      x = PEM_read_X509 (fp.get (),
                          nullptr,
                          TAO_SSLIOP_PASSWORD_CALLBACK_NAME,
                          const_cast<char *> (password));
     }
-
-  (void) ACE_OS::fclose (fp);
 
   if (x == nullptr && TAO_debug_level > 0)
   {
@@ -293,61 +274,39 @@ TAO::SSLIOP::CredentialsAcquirer::make_EVP_PKEY (::SSLIOP::File const &key)
     return nullptr;
   }
 
-  FILE *fp {};
+  std::unique_ptr<FILE, int (*) (FILE *)> fp (
+      ACE_OS::fopen (filename, key.type == ::SSLIOP::ASN1 ? "rb" : "r"),
+      ACE_OS::fclose);
   ::EVP_PKEY *evp {};
+
+  if (fp == nullptr)
+    {
+      if (TAO_debug_level > 0)
+        ORBSVCS_ERROR ((LM_ERROR,
+                    ACE_TEXT ("(%P|%t) SSLIOP::CredentialsAcquirer::make_EVP_PKEY ")
+                    ACE_TEXT ("- %p\n"),
+                    ACE_TEXT ("fopen")));
+
+      return nullptr;
+    }
 
   if (key.type == ::SSLIOP::ASN1)
     {
-      // ASN.1/DER encoded private key
-
-      // No password is used or needed when reading ASN.1 encoded
-      // private keys.
-
-      fp = ACE_OS::fopen (filename, "rb");
-
-      if (fp == nullptr)
-        {
-          if (TAO_debug_level > 0)
-            ORBSVCS_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) SSLIOP::CredentialsAcquirer::make_EVP_PKEY ")
-                        ACE_TEXT ("- %p\n"),
-                        ACE_TEXT ("fopen")));
-
-          return nullptr;
-        }
-
       // Read ASN.1 / DER encoded private key from a file, and convert
       // it to OpenSSL's internal private key format.
-      evp = ::d2i_PrivateKey_fp (fp, nullptr);
+      evp = ::d2i_PrivateKey_fp (fp.get (), nullptr);
     }
   else
     {
-      // PEM encoded private key
-
-      fp = ACE_OS::fopen (filename, "r");
-
-      if (fp == nullptr)
-        {
-          if (TAO_debug_level > 0)
-            ORBSVCS_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) SSLIOP::CredentialsAcquirer::make_EVP_PKEY ")
-                        ACE_TEXT ("- %p\n"),
-                        ACE_TEXT ("fopen")));
-
-          return nullptr;
-        }
-
       char const *password = key.password.in ();
 
       // Read PEM encoded private key from a file, and convert it to
       // OpenSSL's internal private key format.
-      evp = PEM_read_PrivateKey (fp,
+      evp = PEM_read_PrivateKey (fp.get (),
                                  nullptr,
                                  TAO_SSLIOP_PASSWORD_CALLBACK_NAME,
                                  const_cast<char *> (password));
     }
-
-  (void) ACE_OS::fclose (fp);
 
   if (evp == nullptr && TAO_debug_level > 0)
   {
