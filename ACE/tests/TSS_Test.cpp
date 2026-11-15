@@ -47,7 +47,7 @@ int Errno::flags_;
 int Errno::created_;
 int Errno::deleted_;
 
-ACE_Thread_Mutex *Errno::lock_ = nullptr;
+ACE_Thread_Mutex *Errno::lock_ {};
 
 // This is our thread-specific error handler . . .
 // See comment below about why it's dynamically allocated.

@@ -76,7 +76,7 @@ struct TAO_DynValue_i : virtual DynamicAny::DynValue, virtual TAO_DynValueCommon
     }
     void _add_ref() { ACE_DEBUG ((LM_DEBUG, ACE_TEXT("    _add_ref on %@\n"), this)); }
 };
-TAO_DynValue_i* TAO_DynValue_i::cached = nullptr;
+TAO_DynValue_i* TAO_DynValue_i::cached {};
 
 int run_main (int, ACE_TCHAR*[])
 {

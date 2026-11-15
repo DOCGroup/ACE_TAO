@@ -9,7 +9,7 @@ static size_t leadin_len_1_5 = 15;
 static const char *size_leadin_1_6 = "GIOP message v1."; //2, ";
 static size_t leadin_len_1_6 = 19;
 
-const char *GIOP_Buffer::size_leadin = nullptr;
+char const *GIOP_Buffer::size_leadin {};
 size_t GIOP_Buffer::leadin_len {};
 const size_t GIOP_Buffer::giop_header_len = 12;
 

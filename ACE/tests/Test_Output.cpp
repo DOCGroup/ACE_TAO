@@ -33,7 +33,7 @@
 # include "ace/OS_NS_fcntl.h"
 #endif /* VXWORKS */
 
-ACE_Test_Output *ACE_Test_Output::instance_ = nullptr;
+ACE_Test_Output *ACE_Test_Output::instance_ {};
 
 ACE_Test_Output::ACE_Test_Output ()
   : output_file_ (nullptr)

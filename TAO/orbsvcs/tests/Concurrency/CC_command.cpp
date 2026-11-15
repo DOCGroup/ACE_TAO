@@ -68,7 +68,7 @@ CC_Command::GetLockSet (char const* lock_set_name)
   return ccls_ret;
 }
 
-CORBA::Exception *CC_Command::excep_ = nullptr;
+CORBA::Exception *CC_Command::excep_ {};
 
 CosConcurrencyControl::LockSet_var CC_Command::cc_lockset_ (nullptr);
 

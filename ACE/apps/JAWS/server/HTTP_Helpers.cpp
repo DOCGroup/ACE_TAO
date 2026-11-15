@@ -17,7 +17,7 @@ HTTP_Helper::months_[12]=
 
 char const *HTTP_Helper::alphabet_ = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
-char * HTTP_Helper::date_string_ = nullptr;
+char * HTTP_Helper::date_string_ {};
 ACE_SYNCH_MUTEX HTTP_Helper::mutex_;
 
 ACE_SYNCH_MUTEX HTTP_Status_Code::lock_;

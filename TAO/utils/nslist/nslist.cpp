@@ -97,7 +97,7 @@ namespace
     NestedNamingContexts &operator= (NestedNamingContexts const &) = delete;
     NestedNamingContexts &operator= (NestedNamingContexts &&) = delete;
   };
-  NestedNamingContexts const *NestedNamingContexts::pBottom = nullptr;
+  NestedNamingContexts const *NestedNamingContexts::pBottom {};
 
   //==========================================================================
   void

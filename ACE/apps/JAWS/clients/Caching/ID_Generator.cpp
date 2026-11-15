@@ -12,7 +12,7 @@ time_t ACE_ID_Generator::last_time_ = 0;
 
 size_t ACE_ID_Generator::last_number_ = 0;
 
-ACE_SYNCH_MUTEX *ACE_ID_Generator::lock_ = nullptr;
+ACE_SYNCH_MUTEX *ACE_ID_Generator::lock_ {};
 
 char *
 ACE_ID_Generator::get_new_id (char *id)

@@ -31,7 +31,7 @@ public:
 int Errno::flags_;
 int Errno::created_;
 int Errno::deleted_;
-ACE_Thread_Mutex *Errno::lock_ = nullptr;
+ACE_Thread_Mutex *Errno::lock_ {};
 
 ACE_THR_FUNC_RETURN
 check_tss (ObjectWithTSS *o)

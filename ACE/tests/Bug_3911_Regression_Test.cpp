@@ -130,7 +130,7 @@ public:
   };
 };
 
-ShmemMan* ShmemMan::c_instance = nullptr;
+ShmemMan* ShmemMan::c_instance {};
 
 const char* block_name = "block_1";
 
