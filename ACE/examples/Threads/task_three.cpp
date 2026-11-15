@@ -69,7 +69,7 @@ Test_Task::Test_Task ()
 
   ++Test_Task::current_count_;
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Test_Task constructed, current_count_ = %d\n"),
+              ACE_TEXT ("Test_Task constructed, current_count_ = %B\n"),
               Test_Task::current_count_));
 }
 
@@ -78,7 +78,7 @@ Test_Task::~Test_Task ()
   ACE_GUARD (ACE_Thread_Mutex, ace_mon, Lock);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Test_Task destroyed, current_count_ = %d\n"),
+              ACE_TEXT ("Test_Task destroyed, current_count_ = %B\n"),
               Test_Task::current_count_));
 }
 
@@ -96,7 +96,7 @@ Test_Task::close (u_long)
 
   --Test_Task::current_count_;
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Test_Task::close () current_count_ = %d.\n"),
+              ACE_TEXT ("Test_Task::close () current_count_ = %B.\n"),
               Test_Task::current_count_));
   return 0;
 }

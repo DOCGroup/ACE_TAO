@@ -363,7 +363,7 @@ Oneway_Handler::print_results ()
               et.system_time));
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("\t\tmessages = %d\n\t\ttotal bytes = %d\n\t\tmbits/sec = %f\n\t\tusec-per-message = %f\n"),
+              ACE_TEXT ("\t\tmessages = %B\n\t\ttotal bytes = %B\n\t\tmbits/sec = %f\n\t\tusec-per-message = %f\n"),
               this->message_count_,
               this->total_bytes_,
               (((double) this->total_bytes_ * 8) / et.real_time) / (double) (1024 * 1024),

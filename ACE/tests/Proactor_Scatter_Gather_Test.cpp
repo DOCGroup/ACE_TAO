@@ -493,7 +493,7 @@ Receiver::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
   ACE_Message_Block *mb = &result.message_block ();
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Receiver::handle_read_stream - (%s) read %d\n"),
+              ACE_TEXT ("Receiver::handle_read_stream - (%s) read %B\n"),
               this->odd_ ? ACE_TEXT ("ODD ") : ACE_TEXT ("EVEN"),
               result.bytes_transferred ()));
 
@@ -842,7 +842,7 @@ Writer::handle_write_file (const ACE_Asynch_Write_File::Result &result)
   ACE_Message_Block *mb = &result.message_block ();
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Writer::handle_write_file at offset %d wrote %d\n"),
+              ACE_TEXT ("Writer::handle_write_file at offset %d wrote %B\n"),
               this->reported_file_offset_,
               result.bytes_transferred ()));
 
@@ -1282,7 +1282,7 @@ Sender::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
   ACE_Message_Block *mb = &result.message_block ();
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Sender::handle_write_stream - wrote %d bytes\n"),
+              ACE_TEXT ("Sender::handle_write_stream - wrote %B bytes\n"),
               result.bytes_transferred ()));
 
   if (result.error () == 0 && result.bytes_transferred () != 0)
@@ -1370,15 +1370,15 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   if (client_only)
     ACE_DEBUG ((LM_INFO,
-                ACE_TEXT ("Running as client only, page size %d\n"),
+                ACE_TEXT ("Running as client only, page size %B\n"),
                 chunk_size));
   else if (server_only)
     ACE_DEBUG ((LM_INFO,
-                ACE_TEXT ("Running as server only, page size %d\n"),
+                ACE_TEXT ("Running as server only, page size %B\n"),
                 chunk_size));
   else
     ACE_DEBUG ((LM_INFO,
-                ACE_TEXT ("Running as server and client, page size %d\n"),
+                ACE_TEXT ("Running as server and client, page size %B\n"),
                 chunk_size));
 
   Acceptor  acceptor;

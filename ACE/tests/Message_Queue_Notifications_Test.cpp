@@ -343,8 +343,8 @@ run_main (int, ACE_TCHAR *[])
               ACE_TEXT ("Starting message queue watermark test...\n")));
   Watermark_Test watermark_test;
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("High water mark is %d\n")
-              ACE_TEXT ("Low water mark is %d\n"),
+              ACE_TEXT ("High water mark is %B\n")
+              ACE_TEXT ("Low water mark is %B\n"),
               default_high_water_mark,
               default_low_water_mark));
 

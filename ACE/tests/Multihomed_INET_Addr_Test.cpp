@@ -178,7 +178,7 @@ int run_main (int, ACE_TCHAR *[])
     } else {
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("Failed get_num_secondary_addresses check\n")
-                    ACE_TEXT ("%B != %d\n"),
+                    ACE_TEXT ("%B != %B\n"),
                     returned_num_secondaries,
                     num_secondaries));
         status = 1;
@@ -276,7 +276,7 @@ int run_main (int, ACE_TCHAR *[])
     } else {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Failed second get_num_secondary_addresses check\n")
-                  ACE_TEXT ("%d != %d\n"),
+                  ACE_TEXT ("%B != %B\n"),
                   returned_num_secondaries,
                   i));
       status = 1;
@@ -348,7 +348,7 @@ int run_main (int, ACE_TCHAR *[])
     } else {
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("Failed third get_num_secondary_addresses check\n")
-                    ACE_TEXT ("%d != %d\n"),
+                    ACE_TEXT ("%B != %B\n"),
                     returned_num_secondaries,
                     num_secondaries));
         status = 1;
@@ -418,7 +418,7 @@ int run_main (int, ACE_TCHAR *[])
     } else {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Failed forth get_num_secondary_addresses check\n")
-                  ACE_TEXT ("%d != %d\n"),
+                  ACE_TEXT ("%B != %B\n"),
                   returned_num_secondaries,
                   i));
       status = 1;

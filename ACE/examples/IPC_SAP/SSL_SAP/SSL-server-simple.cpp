@@ -231,7 +231,7 @@ oneway_server (ACE_SSL_SOCK_Stream &stream)
   double messages_per_sec = double (message_count) / et.real_time;
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("\t\tmessages = %d\n\t\ttotal bytes = %d\n\t\tmbits/sec = %f\n\t\tusec-per-message = %f\n\t\tmessages-per-second = %0.00f\n"),
+              ACE_TEXT ("\t\tmessages = %B\n\t\ttotal bytes = %B\n\t\tmbits/sec = %f\n\t\tusec-per-message = %f\n\t\tmessages-per-second = %0.00f\n"),
               message_count,
               total_bytes,
               (((double) total_bytes * 8) / et.real_time) / (double) (1024 * 1024),

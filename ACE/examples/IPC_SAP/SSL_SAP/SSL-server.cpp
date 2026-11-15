@@ -259,8 +259,8 @@ oneway_server (void *arg)
   double messages_per_sec = double (message_count) / et.real_time;
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("\t\tmessages = %d\n")
-              ACE_TEXT ("\t\ttotal bytes = %d\n")
+              ACE_TEXT ("\t\tmessages = %B\n")
+              ACE_TEXT ("\t\ttotal bytes = %B\n")
               ACE_TEXT ("\t\tmbits/sec = %f\n")
               ACE_TEXT ("\t\tusec-per-message = %f\n")
               ACE_TEXT ("\t\tmessages-per-second = %0.00f\n"),

@@ -877,7 +877,7 @@ Server::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
                     ACE_TEXT ("(%t) **** Server %d: handle_read_stream() ****\n"),
                     this->id_));
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("%s = %d\n"),
+                    ACE_TEXT ("%s = %B\n"),
                     ACE_TEXT ("bytes_to_read"),
                     result.bytes_to_read ()));
         ACE_DEBUG ((LM_DEBUG,
@@ -885,7 +885,7 @@ Server::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
                     ACE_TEXT ("handle"),
                     result.handle ()));
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("%s = %d\n"),
+                    ACE_TEXT ("%s = %B\n"),
                     ACE_TEXT ("bytes_transfered"),
                     result.bytes_transferred ()));
         ACE_DEBUG ((LM_DEBUG,
@@ -934,7 +934,7 @@ Server::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
     else if (loglevel > 0)
       {
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%t) Server %d: read %d bytes\n"),
+                    ACE_TEXT ("(%t) Server %d: read %B bytes\n"),
                     this->id_,
                     result.bytes_transferred ()));
       }
@@ -983,7 +983,7 @@ Server::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
                     ACE_TEXT ("(%t) **** Server %d: handle_write_stream() ****\n"),
                     this->id_));
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("%s = %d\n"),
+                    ACE_TEXT ("%s = %B\n"),
                     ACE_TEXT ("bytes_to_write"),
                     result.bytes_to_write ()));
         ACE_DEBUG ((LM_DEBUG,
@@ -991,7 +991,7 @@ Server::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
                     ACE_TEXT ("handle"),
                     result.handle ()));
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("%s = %d\n"),
+                    ACE_TEXT ("%s = %B\n"),
                     ACE_TEXT ("bytes_transfered"),
                     result.bytes_transferred ()));
         ACE_DEBUG ((LM_DEBUG,
@@ -1040,7 +1040,7 @@ Server::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
     else if (loglevel > 0)
       {
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%t) Server %d: wrote %d bytes ok\n"),
+                    ACE_TEXT ("(%t) Server %d: wrote %B bytes ok\n"),
                     this->id_,
                     result.bytes_transferred ()));
       }
@@ -1533,7 +1533,7 @@ Client::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
                     ACE_TEXT ("(%t) **** Client %d: handle_write_stream() ****\n"),
                     this->id_));
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("%s = %d\n"),
+                    ACE_TEXT ("%s = %B\n"),
                     ACE_TEXT ("bytes_to_write"),
                     result.bytes_to_write ()));
         ACE_DEBUG ((LM_DEBUG,
@@ -1541,7 +1541,7 @@ Client::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
                     ACE_TEXT ("handle"),
                     result.handle ()));
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("%s = %d\n"),
+                    ACE_TEXT ("%s = %B\n"),
                     ACE_TEXT ("bytes_transfered"),
                     result.bytes_transferred ()));
         ACE_DEBUG ((LM_DEBUG,
@@ -1629,7 +1629,7 @@ Client::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
     else if (loglevel > 0)
       {
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%t) Client %d: wrote %d bytes ok\n"),
+                    ACE_TEXT ("(%t) Client %d: wrote %B bytes ok\n"),
                     this->id_,
                     result.bytes_transferred ()));
       }
@@ -1680,7 +1680,7 @@ Client::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
                     ACE_TEXT ("(%t) **** Client %d: handle_read_stream() ****\n"),
                     this->id_));
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("%s = %d\n"),
+                    ACE_TEXT ("%s = %B\n"),
                     ACE_TEXT ("bytes_to_read"),
                     result.bytes_to_read ()));
         ACE_DEBUG ((LM_DEBUG,
@@ -1688,7 +1688,7 @@ Client::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
                     ACE_TEXT ("handle"),
                     result.handle ()));
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("%s = %d\n"),
+                    ACE_TEXT ("%s = %B\n"),
                     ACE_TEXT ("bytes_transfered"),
                     result.bytes_transferred ()));
         ACE_DEBUG ((LM_DEBUG,
@@ -1759,7 +1759,7 @@ Client::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
     else if (loglevel > 0)
       {
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%t) Client %d: read %d bytes ok\n"),
+                    ACE_TEXT ("(%t) Client %d: read %B bytes ok\n"),
                     this->id_,
                     result.bytes_transferred ()));
       }

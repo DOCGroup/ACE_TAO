@@ -211,7 +211,7 @@ Thread_Handler::handle_input (ACE_HANDLE handle)
                   buf));
 
       ACE_DEBUG ((LM_DEBUG,
-                  "%d more input to kill\n",
+                  "%B more input to kill\n",
                   this->iterations_));
 
       // Only wait up to 10 milliseconds to notify the Reactor.
@@ -298,7 +298,7 @@ int
 Thread_Handler::handle_timeout (ACE_Time_Value const &time, void const *)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) received timeout at (%u, %u), iterations = %d\n",
+              "(%t) received timeout at (%u, %u), iterations = %B\n",
               time.sec (),
               time.usec (),
               this->iterations_));
@@ -318,7 +318,7 @@ int
 Thread_Handler::handle_exception (ACE_HANDLE)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) exception to id %d, iteration = %d\n",
+              "(%t) exception to id %B, iteration = %B\n",
               this->id_,
               this->iterations_));
   return 0;
@@ -330,7 +330,7 @@ int
 Thread_Handler::handle_output (ACE_HANDLE)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) output to id %d, iteration = %d\n",
+              "(%t) output to id %B, iteration = %B\n",
               this->id_,
               // This decrement must come last since
               // <handle_exception> is called before <handle_output>!
