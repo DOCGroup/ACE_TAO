@@ -11,14 +11,14 @@ int
 parse_args (int argc, ACE_TCHAR *argv[],
             CORBA::Boolean& verbose)
 {
-  verbose = 1;
+  verbose = true;
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("qh"));
   for (int opt; (opt = get_opts()) != -1;)
   {
     switch (opt)
     {
       case 'q':
-        verbose = 0;
+        verbose = false;
         break;
 
       case 'h':
@@ -50,7 +50,7 @@ int failure = 0;
   try
     {
       // Command line argument interpretation.
-      CORBA::Boolean verbose = 0;
+      CORBA::Boolean verbose {};
       if (parse_args (argc, argv, verbose) != 0)
         return 1;
 

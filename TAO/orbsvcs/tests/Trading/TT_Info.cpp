@@ -143,9 +143,9 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
 {
   TAO_Property_Evaluator prop_eval (prop_seq);
 
-  for (int length = prop_seq.length (), k = 0; k < length; k++)
+  CORBA::ULong const property_count = prop_seq.length ();
+  for (CORBA::ULong k {}; k < property_count; ++k)
     {
-      CORBA::ULong seq_length = 0, i= 0;
       CORBA::Any const* value {};
       CORBA::TypeCode_ptr tc {};
       ACE_DEBUG ((LM_DEBUG, "%-15s: ", prop_seq[k].name.in ()));
@@ -172,45 +172,43 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
 
       if (tc == nullptr)
         continue;
-      int check = tc->equal (TAO_Trader_Test::_tc_StringSeq);
-
-      if (check)
+      if (tc->equal (TAO_Trader_Test::_tc_StringSeq))
         {
           TAO_Trader_Test::StringSeq const *str_seq {};
           (*value) >>= str_seq;
 
-          for (seq_length = str_seq->length (), i = 0; i < seq_length; i++)
-            ACE_DEBUG ((LM_DEBUG, "%C ", (const char *) (*str_seq)[i]));
+          CORBA::ULong const sequence_length = str_seq->length ();
+          for (CORBA::ULong i {}; i < sequence_length; ++i)
+            ACE_DEBUG ((LM_DEBUG, "%C ", static_cast<char const *> ((*str_seq)[i])));
 
           ACE_DEBUG ((LM_DEBUG, "\n"));
         }
       else
         {
-          check = tc->equal (TAO_Trader_Test::_tc_ULongSeq);
-
-          if (check)
+          if (tc->equal (TAO_Trader_Test::_tc_ULongSeq))
             {
               TAO_Trader_Test::ULongSeq const *ulong_seq {};
               (*value) >>= ulong_seq;
 
-              for (seq_length = ulong_seq->length (), i = 0; i < seq_length; i++)
-                ACE_DEBUG ((LM_DEBUG, "%d ", (*ulong_seq)[i]));
+              CORBA::ULong const sequence_length = ulong_seq->length ();
+              for (CORBA::ULong i {}; i < sequence_length; ++i)
+                ACE_DEBUG ((LM_DEBUG, "%u ", (*ulong_seq)[i]));
 
               ACE_DEBUG ((LM_DEBUG, "\n"));
             }
           else
             {
               // @@ Print the any value...
-              CORBA::Char       char_val;
-              CORBA::Octet     octet_val;
-              CORBA::Boolean boolean_val;
-              CORBA::Short     short_val;
-              CORBA::UShort   ushort_val;
-              CORBA::Long       long_val;
-              CORBA::ULong     ulong_val;
-              CORBA::Float     float_val;
-              CORBA::Double   double_val;
-              const char *    string_val;
+              CORBA::Char char_val {};
+              CORBA::Octet octet_val {};
+              CORBA::Boolean boolean_val {};
+              CORBA::Short short_val {};
+              CORBA::UShort ushort_val {};
+              CORBA::Long long_val {};
+              CORBA::ULong ulong_val {};
+              CORBA::Float float_val {};
+              CORBA::Double double_val {};
+              char const *string_val {};
 
               if ((*value) >>= CORBA::Any::to_char (char_val))
                 {
@@ -231,7 +229,7 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
                 }
               else if ((*value) >>= ushort_val)
                 {
-                  ACE_DEBUG ((LM_DEBUG, "%ld\n", ushort_val));
+                  ACE_DEBUG ((LM_DEBUG, "%u\n", ushort_val));
                 }
               else if ((*value) >>= long_val)
                 {
@@ -239,7 +237,7 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
                 }
               else if ((*value) >>= ulong_val)
                 {
-                  ACE_DEBUG ((LM_DEBUG, "%ld\n", ulong_val));
+                  ACE_DEBUG ((LM_DEBUG, "%u\n", ulong_val));
                 }
               else if ((*value) >>= float_val)
                 {

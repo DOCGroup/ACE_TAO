@@ -495,20 +495,17 @@ ACE_Select_Reactor_Handler_Repository::dump () const
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Select_Reactor_Handler_Repository::dump");
 
-# ifdef ACE_SELECT_REACTOR_BASE_USES_HASH_MAP
-#  define ACE_HANDLE_FORMAT_SPECIFIER ACE_TEXT("%@")
-#  define ACE_MAX_HANDLEP1_FORMAT_SPECIFIER ACE_TEXT("%u")
-# else
-#  define ACE_HANDLE_FORMAT_SPECIFIER ACE_TEXT("%d")
-#  define ACE_MAX_HANDLEP1_FORMAT_SPECIFIER ACE_TEXT("%d")
-# endif  /* ACE_SELECT_REACTOR_BASE_USES_HASH_MAP */
-
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+# ifdef ACE_SELECT_REACTOR_BASE_USES_HASH_MAP
   ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("max_handlep1_ = ")
-              ACE_MAX_HANDLEP1_FORMAT_SPECIFIER
-              ACE_TEXT ("\n"),
+              ACE_TEXT ("%B\n"),
               this->max_handlep1 ()));
+# else
+  ACELIB_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("max_handlep1_ = %d\n"),
+              this->max_handlep1 ()));
+# endif /* ACE_SELECT_REACTOR_BASE_USES_HASH_MAP */
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("[")));
 
   ACE_Event_Handler *event_handler {};
@@ -516,13 +513,19 @@ ACE_Select_Reactor_Handler_Repository::dump () const
   for (ACE_Select_Reactor_Handler_Repository_Iterator iter (this);
        iter.next (event_handler) != 0;
        iter.advance ())
+# ifdef ACE_SELECT_REACTOR_BASE_USES_HASH_MAP
     ACELIB_DEBUG ((LM_DEBUG,
                 ACE_TEXT (" (event_handler = %@,")
-                ACE_TEXT (" event_handler->handle_ = ")
-                ACE_HANDLE_FORMAT_SPECIFIER
-                ACE_TEXT ("\n"),
+                ACE_TEXT (" event_handler->handle_ = %@\n"),
                 event_handler,
                 event_handler->get_handle ()));
+# else
+    ACELIB_DEBUG ((LM_DEBUG,
+                ACE_TEXT (" (event_handler = %@,")
+                ACE_TEXT (" event_handler->handle_ = %d\n"),
+                event_handler,
+                event_handler->get_handle ()));
+# endif /* ACE_SELECT_REACTOR_BASE_USES_HASH_MAP */
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT (" ]\n")));
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));

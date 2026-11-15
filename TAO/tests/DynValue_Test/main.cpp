@@ -269,14 +269,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         NestedValue_impl (s1, s2),
         CORBA::NO_MEMORY ());
       ACE_DEBUG ((LM_DEBUG,
-                  "..%N:%l checking value, shorts are %hd, %hd\n",
+                  "..%N:%l checking value, shorts are %d, %d\n",
                   myNestedValue->Nested_s1 (),
                   myNestedValue->Nested_s2 ()              ));
       if (s1 != myNestedValue->Nested_s1 () ||
           s2 != myNestedValue->Nested_s2 ())
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "..%N:%l FAILED should have been %hd, %hd\n",
+                      "..%N:%l FAILED should have been %d, %d\n",
                       s1, s2));
           return 1;
         }
@@ -305,14 +305,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_DEBUG ((LM_DEBUG, "..%N:%l FAILED pointer NOT extracted\n"));
           return 1;
         }
-      ACE_DEBUG ((LM_DEBUG, "..%N:%l checking value, shorts are %hd, %hd\n",
+      ACE_DEBUG ((LM_DEBUG, "..%N:%l checking value, shorts are %d, %d\n",
                   myNestedValueExtracted->Nested_s1 (),
                   myNestedValueExtracted->Nested_s2 ()));
       if (s1 != myNestedValueExtracted->Nested_s1 () ||
           s2 != myNestedValueExtracted->Nested_s2 ()   )
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "..%N:%l FAILED should have been %hd, %hd\n", s1, s2));
+                      "..%N:%l FAILED should have been %d, %d\n", s1, s2));
           return 1;
         }
 
@@ -519,14 +519,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_DEBUG ((LM_DEBUG, "..%N:%l FAILED pointer NOT extracted\n"));
           return 1;
         }
-      ACE_DEBUG ((LM_DEBUG, "..%N:%l checking value, shorts are %hd, %hd\n",
+      ACE_DEBUG ((LM_DEBUG, "..%N:%l checking value, shorts are %d, %d\n",
                   myNestedValueExtracted->Nested_s1 (),
                   myNestedValueExtracted->Nested_s2 ()));
       if (s1 != myNestedValueExtracted->Nested_s1 () ||
           s2 != myNestedValueExtracted->Nested_s2 ()   )
         {
           ACE_DEBUG ((LM_DEBUG,
-            "..%N:%l FAILED should have been %hd, %hd\n", s1, s2));
+            "..%N:%l FAILED should have been %d, %d\n", s1, s2));
           return 1;
         }
 
@@ -541,14 +541,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             "..%N:%l FAILED get_val unsuccessful even with factory\n"));
           return 1;
         }
-      ACE_DEBUG ((LM_DEBUG, "..%N:%l checking value, shorts are %hd, %hd\n",
+      ACE_DEBUG ((LM_DEBUG, "..%N:%l checking value, shorts are %d, %d\n",
                   myNestedValueExtracted->Nested_s1 (),
                   myNestedValueExtracted->Nested_s2 ()));
       if (s1 != myNestedValueExtracted->Nested_s1 () ||
           s2 != myNestedValueExtracted->Nested_s2 ()   )
         {
           ACE_DEBUG ((LM_DEBUG,
-            "..%N:%l FAILED should have been %hd, %hd\n", s1, s2));
+            "..%N:%l FAILED should have been %d, %d\n", s1, s2));
           return 1;
         }
       myNestedValueExtracted->_remove_ref ();

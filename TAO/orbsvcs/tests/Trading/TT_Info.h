@@ -13,7 +13,7 @@ class TAO_TTest_Export TT_Info
 {
 public:
   static void dump_properties (const CosTrading::PropertySeq& prop_seq,
-                               CORBA::Boolean print_dynamic = 1);
+                               CORBA::Boolean print_dynamic = true);
   /// Dump the contents of this property sequence.
 
   enum INTERFACES
@@ -32,7 +32,7 @@ public:
     public POA_TAO_Trader_Test::Remote_Output
   {
   public:
-    Remote_Output () {}
+    Remote_Output () = default;
 
     /// Confirm that the importer received a valid reference to the exported object.
     void confirm () override
@@ -43,7 +43,7 @@ public:
     public POA_TAO_Trader_Test::Printer
   {
   public:
-    Printer () {}
+    Printer () = default;
 
     /// Confirm that the importer received a valid reference to the exported object.
     void confirm () override
@@ -54,7 +54,7 @@ public:
     public POA_TAO_Trader_Test::Plotter
   {
   public:
-    Plotter () {}
+    Plotter () = default;
 
     /// Confirm that the importer received a valid reference to the exported object.
     void confirm () override
@@ -65,7 +65,7 @@ public:
     public POA_TAO_Trader_Test::File_System
   {
   public:
-    File_System () {}
+    File_System () = default;
 
     /// Confirm that the importer received a valid reference to the exported object.
     void confirm () override
@@ -76,7 +76,7 @@ public:
     public POA_TAO_Trader_Test::PostScript_Printer
   {
   public:
-    PostScript_Printer () {}
+    PostScript_Printer () = default;
 
     /// Confirm that the importer received a valid reference to the exported object.
     void confirm () override

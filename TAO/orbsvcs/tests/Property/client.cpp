@@ -283,11 +283,11 @@ Client::test_get_properties ()
                 }
               else if (properties [pi].property_value >>= ulong_val)
                 {
-                  ACE_DEBUG ((LM_DEBUG, "%ld\n", ulong_val));
+                  ACE_DEBUG ((LM_DEBUG, "%u\n", ulong_val));
                 }
               else if (properties [pi].property_value >>= float_val)
                 {
-                  ACE_DEBUG ((LM_DEBUG, "%f\n", long_val));
+                  ACE_DEBUG ((LM_DEBUG, "%f\n", float_val));
                 }
               else if (properties [pi].property_value >>= double_val)
                 {

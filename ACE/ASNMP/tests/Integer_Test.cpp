@@ -86,20 +86,20 @@ static void TestInteger32()
    std::unique_ptr<SnmpInt32> i8 = std::make_unique<SnmpInt32> (i5);
    ACE_TEST_ASSERT(i8 != nullptr);
 
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) i1(\"\") [%lu]\n",
-    static_cast<unsigned long> (i1)));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) i2(\"%ld\") [%lu]\n",
-    l, static_cast<unsigned long> (i2)));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) i3(\"%ld\") [%lu]\n",
-    nl, static_cast<unsigned long> (i3)));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) i4(\"%lu\") [%lu]\n",
-    ul, static_cast<unsigned long> (i4)));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) i5(\"%d\") [%lu]\n",
-    i, static_cast<unsigned long> (i5)));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) i6(\"%d\") [%lu]\n",
-    ni, static_cast<unsigned long> (i6)));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) i7(\"%u\") [%lu]\n",
-    ui, static_cast<unsigned long> (i7)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) i1(\"\") [%Q]\n",
+    static_cast<ACE_UINT64> (i1)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) i2(\"%q\") [%Q]\n",
+    static_cast<ACE_INT64> (l), static_cast<ACE_UINT64> (i2)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) i3(\"%q\") [%Q]\n",
+    static_cast<ACE_INT64> (nl), static_cast<ACE_UINT64> (i3)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) i4(\"%Q\") [%Q]\n",
+    static_cast<ACE_UINT64> (ul), static_cast<ACE_UINT64> (i4)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) i5(\"%d\") [%Q]\n",
+    i, static_cast<ACE_UINT64> (i5)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) i6(\"%d\") [%Q]\n",
+    ni, static_cast<ACE_UINT64> (i6)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) i7(\"%u\") [%Q]\n",
+    ui, static_cast<ACE_UINT64> (i7)));
 
   // assignent
   i1 = i2;  // obj
@@ -151,20 +151,20 @@ static void TestUnsignedInteger32()
    std::unique_ptr<SnmpUInt32> u8 = std::make_unique<SnmpUInt32> (u5);
    ACE_TEST_ASSERT(u8 != nullptr);
 
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) u1(\"\") [%lu]\n",
-    static_cast<unsigned long> (u1)));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) u2(\"%ld\") [%lu]\n",
-    l, static_cast<unsigned long> (u2)));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) u3(\"%ld\") [%lu]\n",
-    nl, static_cast<unsigned long> (u3)));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) u4(\"%lu\") [%lu]\n",
-    ul, static_cast<unsigned long> (u4)));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) u5(\"%d\") [%lu]\n",
-    i, static_cast<unsigned long> (u5)));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) u6(\"%d\") [%lu]\n",
-    ni, static_cast<unsigned long> (u6)));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) u7(\"%u\") [%lu]\n",
-    ui, static_cast<unsigned long> (u7)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) u1(\"\") [%Q]\n",
+    static_cast<ACE_UINT64> (u1)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) u2(\"%q\") [%Q]\n",
+    static_cast<ACE_INT64> (l), static_cast<ACE_UINT64> (u2)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) u3(\"%q\") [%Q]\n",
+    static_cast<ACE_INT64> (nl), static_cast<ACE_UINT64> (u3)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) u4(\"%Q\") [%Q]\n",
+    static_cast<ACE_UINT64> (ul), static_cast<ACE_UINT64> (u4)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) u5(\"%d\") [%Q]\n",
+    i, static_cast<ACE_UINT64> (u5)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) u6(\"%d\") [%Q]\n",
+    ni, static_cast<ACE_UINT64> (u6)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) u7(\"%u\") [%Q]\n",
+    ui, static_cast<ACE_UINT64> (u7)));
 
  // assignent
   u1 = u2;  // obj

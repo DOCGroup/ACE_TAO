@@ -73,11 +73,8 @@ print_priority_info (char const* const name)
   if ((status = pthread_getschedparam (pthread_self (), &policy,
                                        &param)) == 0) {
     ACE_DEBUG ((LM_DEBUG,
-                "%C (%lu|%u); policy is %d, priority is %d\n",
+                "%C (%P|%t); policy is %d, priority is %d\n",
                 name,
-                ACE_OS::getpid (),
-                0,
-                pthread_self (),
                 policy, param.sched_priority ));
   } else {
     ACE_DEBUG ((LM_DEBUG,"pthread_getschedparam failed: %d\n", status));

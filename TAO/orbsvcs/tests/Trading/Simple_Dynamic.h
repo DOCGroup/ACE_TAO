@@ -9,16 +9,16 @@
 #endif /* _MSC_VER */
 
 /// Implements a dynamic property whose value is supplied at construction.
-template<class T>
+template <class T>
 class TAO_Simple_Dynamic_Property : public TAO_Dynamic_Property
 {
 public:
-  TAO_Simple_Dynamic_Property (const T& dp);
-  TAO_Simple_Dynamic_Property (T&& dp);
+  explicit TAO_Simple_Dynamic_Property (T const &dp);
+  explicit TAO_Simple_Dynamic_Property (T &&dp);
 
-  CORBA::Any* evalDP (const char* /* name */,
+  CORBA::Any *evalDP (char const * /* name */,
                       CORBA::TypeCode_ptr /* returned_type */,
-                      const CORBA::Any&) override; /* extra_info */
+                      CORBA::Any const &) override; /* extra_info */
 
 private:
   T dp_;

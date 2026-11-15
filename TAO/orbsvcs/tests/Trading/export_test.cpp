@@ -11,7 +11,7 @@
 const ACE_TCHAR *done_file = ACE_TEXT("export_test_ready");
 
 int
-parse_args_spec (int argc, ACE_TCHAR *argv[], int help)
+parse_args_spec (int argc, ACE_TCHAR *argv[], bool help)
 {
   if (help!=0)
   {
@@ -50,7 +50,7 @@ int failure = 0;
 
   try
     {
-      int help=(argc<=1);
+      bool const help = argc <= 1;
 
       TAO_ORB_Manager orb_manager;
       orb_manager.init (argc, argv);
@@ -66,8 +66,8 @@ int failure = 0;
       CORBA::ORB_var orb = orb_manager.orb ();
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT("*** Bootstrap to the Lookup interface.\n")));
 
-      char* ior = parse_args.ior ();
-      CORBA::Object_var trading_obj = (ior == 0) ?
+      char *ior = parse_args.ior ();
+      CORBA::Object_var trading_obj = (ior == nullptr) ?
         orb->resolve_initial_references ("TradingService") :
         orb->string_to_object (ior);
 

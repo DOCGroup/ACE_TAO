@@ -43,7 +43,7 @@ test_i::method (CORBA::ULong work,
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
-                "test_i::method: %hd units of work\n",
+                "test_i::method: %u units of work\n",
                 work));
 
   for (; work != 0; work--)

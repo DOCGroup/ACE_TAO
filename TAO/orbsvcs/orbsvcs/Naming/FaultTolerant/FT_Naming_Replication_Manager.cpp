@@ -40,7 +40,7 @@ FT_Update_Replicant_i::notify_update (CORBA::ULongLong seq_num,
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) FT_Update_Replicant_i::notify_updated_entity ")
-                          ACE_TEXT ("expected %Lu got %Lu\n"),
+                          ACE_TEXT ("expected %Q got %Q\n"),
                           expected, seq_num ));
         }
       this->owner_.replica_seq_num_ = seq_num;
@@ -51,7 +51,7 @@ FT_Update_Replicant_i::notify_update (CORBA::ULongLong seq_num,
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) FT_Update_Replicant_i::notify_updated_entity ")
-                          ACE_TEXT ("expected %Lu got %Lu\n"),
+                          ACE_TEXT ("expected %Q got %Q\n"),
                           expected, seq_num ));
         }
       --this->owner_.replica_seq_num_;

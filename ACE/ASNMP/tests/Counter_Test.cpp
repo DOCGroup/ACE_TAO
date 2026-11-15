@@ -90,20 +90,20 @@ static void  TestCounter()
    std::unique_ptr<Counter32> c8 = std::make_unique<Counter32> (c5);
    ACE_TEST_ASSERT(c8 != nullptr);
 
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) c1(\"\") [%lu]\n",
-    static_cast<unsigned long> (c1)));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) c2(\"%ld\") [%lu]\n",
-    l, static_cast<unsigned long> (c2)));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) c3(\"%ld\") [%lu]\n",
-    nl, static_cast<unsigned long> (c3)));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) c4(\"%lu\") [%lu]\n",
-    ul, static_cast<unsigned long> (c4)));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) c5(\"%d\") [%lu]\n",
-    i, static_cast<unsigned long> (c5)));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) c6(\"%d\") [%lu]\n",
-    ni, static_cast<unsigned long> (c6)));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) c7(\"%u\") [%lu]\n",
-    ui, static_cast<unsigned long> (c7)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) c1(\"\") [%Q]\n",
+    static_cast<ACE_UINT64> (c1)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) c2(\"%q\") [%Q]\n",
+    static_cast<ACE_INT64> (l), static_cast<ACE_UINT64> (c2)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) c3(\"%q\") [%Q]\n",
+    static_cast<ACE_INT64> (nl), static_cast<ACE_UINT64> (c3)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) c4(\"%Q\") [%Q]\n",
+    static_cast<ACE_UINT64> (ul), static_cast<ACE_UINT64> (c4)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) c5(\"%d\") [%Q]\n",
+    i, static_cast<ACE_UINT64> (c5)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) c6(\"%d\") [%Q]\n",
+    ni, static_cast<ACE_UINT64> (c6)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) c7(\"%u\") [%Q]\n",
+    ui, static_cast<ACE_UINT64> (c7)));
 
   // assignent
   c1 = c2;  // obj

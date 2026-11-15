@@ -711,7 +711,7 @@ TAO_FT_Naming_Server::update_object_group (
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) - ")
-                      ACE_TEXT ("An update of object group with ID %lld ")
+                      ACE_TEXT ("An update of object group with ID %Q ")
                       ACE_TEXT ("has been made by the peer\n"),
                       group_info.id
                       ));

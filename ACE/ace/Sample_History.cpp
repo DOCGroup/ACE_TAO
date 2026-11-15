@@ -51,7 +51,7 @@ ACE_Sample_History::dump_samples (
       ACE_UINT64 const val = this->samples_[i] / scale_factor;
       ACELIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("%s: ")
-                  ACE_SIZE_T_FORMAT_SPECIFIER
+                  ACE_TEXT ("%B")
                   ACE_TEXT ("\t%Q\n"),
                   msg,
                   i,

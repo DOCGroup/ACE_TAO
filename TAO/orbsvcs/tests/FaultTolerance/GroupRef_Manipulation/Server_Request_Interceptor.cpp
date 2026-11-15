@@ -89,7 +89,7 @@ Server_Request_Interceptor::receive_request (
   if (this->request_count_ == 8)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "SERVER (%P|%t) Request " ACE_UINT32_FORMAT_SPECIFIER " will be forwarded "
+                  "SERVER (%P|%t) Request %u will be forwarded "
                   "to object 1\n"        // "object 1" as in "obj_[0]"
                   "SERVER (%P|%t) via "
                   "receive_request_service_contexts().\n",

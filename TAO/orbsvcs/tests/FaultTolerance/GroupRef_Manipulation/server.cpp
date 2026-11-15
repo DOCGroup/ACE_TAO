@@ -103,7 +103,7 @@ test_colocal (ForwardRequestTest::test_ptr server)
   for (CORBA::ULong i {1}; i <= 25; ++i)
     {
       ACE_DEBUG ((LM_INFO,
-                  "CLIENT: Issuing colocal request " ACE_UINT32_FORMAT_SPECIFIER ".\n",
+                  "CLIENT: Issuing colocal request %u.\n",
                   i));
       CORBA::ULong const retval =
         server->number ();
@@ -119,7 +119,7 @@ test_colocal (ForwardRequestTest::test_ptr server)
 
       number += retval;
       ACE_DEBUG ((LM_INFO,
-                  "CLIENT: Number " ACE_UINT32_FORMAT_SPECIFIER ".\n",
+                  "CLIENT: Number %u.\n",
                   number));
     }
 

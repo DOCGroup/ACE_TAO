@@ -49,7 +49,7 @@ Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
 
           if (TAO_debug_level > 0)
             TAOLIB_DEBUG ((LM_DEBUG,
-                        "The Guid is %B %ld\n",
+                        "The Guid is %B %B\n",
                         id,
                         TAO_RTScheduler_Current::guid_counter.load ()));
 

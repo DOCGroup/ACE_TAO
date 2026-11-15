@@ -19,8 +19,8 @@ static bool expect_open (ACE_SOCK_Stream &stream, bool open)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) socket open=%d, expected=%d, recv=")
-                  ACE_SSIZE_T_FORMAT_SPECIFIER ACE_TEXT (" errno=%b\n"),
-                  actual, open, result, errno));
+                  ACE_TEXT ("%b errno=%m\n"),
+                  actual, open, result));
       return false;
     }
   return true;
@@ -39,8 +39,8 @@ static bool expect_close_connection (ACE_SOCK_Stream &stream)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) expected GIOP::CloseConnection, recv=")
-                  ACE_SSIZE_T_FORMAT_SPECIFIER ACE_TEXT (" errno=%b\n"),
-                  result, errno));
+                  ACE_TEXT ("%b errno=%m\n"),
+                  result));
       return false;
     }
   return true;

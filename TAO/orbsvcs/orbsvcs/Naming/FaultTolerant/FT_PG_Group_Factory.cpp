@@ -45,8 +45,8 @@ TAO::FT_PG_Group_Factory::set_object_group_stale (
                 }
               ORBSVCS_DEBUG ((LM_DEBUG,
                               ACE_TEXT ("TAO (%P|%t) - FT_PG_Group_Factory: ")
-                              ACE_TEXT ("Setting list store as stale "),
-                              ACE_TEXT ("because of group with ID %lld "),
+                              ACE_TEXT ("Setting list store as stale ")
+                              ACE_TEXT ("because of group with ID %Q ")
                               ACE_TEXT ("was %C\n"),
                               group_id, change_type_str.c_str ()));
             }
@@ -74,7 +74,7 @@ TAO::FT_PG_Group_Factory::set_object_group_stale (
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - ")
-                      ACE_TEXT ("Setting object group with ID %lld as stale\n"),
+                      ACE_TEXT ("Setting object group with ID %Q as stale\n"),
                       group_id
                       ));
         }

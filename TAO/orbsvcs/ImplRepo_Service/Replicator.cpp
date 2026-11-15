@@ -27,7 +27,7 @@ UPN_i::notify_update (CORBA::ULongLong seq_num,
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) UPN_i::notify_updated_entity ")
-                          ACE_TEXT ("expected %Lu got %Lu\n"),
+                          ACE_TEXT ("expected %Q got %Q\n"),
                           expected, seq_num ));
         }
       this->owner_.replica_seq_num_ = seq_num;
@@ -38,7 +38,7 @@ UPN_i::notify_update (CORBA::ULongLong seq_num,
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) UPN_i::notify_updated_entity ")
-                          ACE_TEXT ("expected %Lu got %Lu\n"),
+                          ACE_TEXT ("expected %Q got %Q\n"),
                           expected, seq_num ));
         }
       --this->owner_.replica_seq_num_;
@@ -350,7 +350,7 @@ Replicator::send_registration (char *&imr_ior)
     {
       ORBSVCS_DEBUG ((LM_INFO,
         ACE_TEXT("Initializing repository with ft ior=<%C> ")
-        ACE_TEXT("and replica seq number %Lu\n"),
+        ACE_TEXT("and replica seq number %Q\n"),
         imr_ior, replica_seq_num_));
     }
 

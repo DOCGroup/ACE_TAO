@@ -86,20 +86,20 @@ TestGuage ()
    std::unique_ptr<Gauge32> g8 = std::make_unique<Gauge32> (g5);
    ACE_TEST_ASSERT(g8 != nullptr);
 
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) g1(\"\") [%lu]\n",
-    static_cast<unsigned long> (g1)));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) g2(\"%ld\") [%lu]\n",
-    l, static_cast<unsigned long> (g2)));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) g3(\"%ld\") [%lu]\n",
-    nl, static_cast<unsigned long> (g3)));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) g4(\"%lu\") [%lu]\n",
-    ul, static_cast<unsigned long> (g4)));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) g5(\"%d\") [%lu]\n",
-    i, static_cast<unsigned long> (g5)));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) g6(\"%d\") [%lu]\n",
-    ni, static_cast<unsigned long> (g6)));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) g7(\"%u\") [%lu]\n",
-    ui, static_cast<unsigned long> (g7)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) g1(\"\") [%Q]\n",
+    static_cast<ACE_UINT64> (g1)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) g2(\"%q\") [%Q]\n",
+    static_cast<ACE_INT64> (l), static_cast<ACE_UINT64> (g2)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) g3(\"%q\") [%Q]\n",
+    static_cast<ACE_INT64> (nl), static_cast<ACE_UINT64> (g3)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) g4(\"%Q\") [%Q]\n",
+    static_cast<ACE_UINT64> (ul), static_cast<ACE_UINT64> (g4)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) g5(\"%d\") [%Q]\n",
+    i, static_cast<ACE_UINT64> (g5)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) g6(\"%d\") [%Q]\n",
+    ni, static_cast<ACE_UINT64> (g6)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) g7(\"%u\") [%Q]\n",
+    ui, static_cast<ACE_UINT64> (g7)));
 
   // assignent
   g1 = g2;  // obj

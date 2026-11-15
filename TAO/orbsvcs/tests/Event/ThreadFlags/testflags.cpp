@@ -111,14 +111,14 @@ print_results (int const how, ExpectedValues const& expected, ExpectedValues con
     (how == ThreadFlagsTest::BOTH) ? "BOTH" :
     "unk?";
 
-  ACE_DEBUG ((LM_DEBUG, "  %s: expected {%lx,%lx,%lx} got {%lx,%lx,%lx}",
+  ACE_DEBUG ((LM_DEBUG, "  %s: expected {%q,%q,%q} got {%q,%q,%q}",
               op,
-              static_cast<unsigned long> (expected.flags),
-              static_cast<unsigned long> (expected.scope),
-              static_cast<unsigned long> (expected.sched),
-              static_cast<unsigned long> (actuals.flags),
-              static_cast<unsigned long> (actuals.scope),
-              static_cast<unsigned long> (actuals.sched)));
+              static_cast<ACE_INT64> (expected.flags),
+              static_cast<ACE_INT64> (expected.scope),
+              static_cast<ACE_INT64> (expected.sched),
+              static_cast<ACE_INT64> (actuals.flags),
+              static_cast<ACE_INT64> (actuals.scope),
+              static_cast<ACE_INT64> (actuals.sched)));
 }
 
 int

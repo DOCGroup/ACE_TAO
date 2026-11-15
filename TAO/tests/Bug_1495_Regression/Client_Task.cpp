@@ -68,7 +68,7 @@ Client_Task::svc ()
 
           ACE_DEBUG ((LM_INFO,
                       ACE_TEXT ("Remote thread ID was ")
-                      ACE_INT64_FORMAT_SPECIFIER
+                      ACE_TEXT ("%q")
                       ACE_TEXT ("\n"),
                       remote_thread_id));
 
@@ -80,9 +80,9 @@ Client_Task::svc ()
               ACE_ERROR ((LM_ERROR,
                           ACE_TEXT ("ERROR:  Failed Bug_1495_Regression test. ")
                           ACE_TEXT ("Expected thread id was ")
-                          ACE_INT64_FORMAT_SPECIFIER
+                          ACE_TEXT ("%q")
                           ACE_TEXT (", received ")
-                          ACE_INT64_FORMAT_SPECIFIER
+                          ACE_TEXT ("%q")
                           ACE_TEXT (".\n"),
                           mythread_id,
                           remote_thread_id));
@@ -92,9 +92,9 @@ Client_Task::svc ()
               ACE_DEBUG ((LM_INFO,
                           ACE_TEXT ("Passed Bug_1495_Regression test.\n")
                           ACE_TEXT ("Local thread id was ")
-                          ACE_INT64_FORMAT_SPECIFIER
+                          ACE_TEXT ("%q")
                           ACE_TEXT (", received ")
-                          ACE_INT64_FORMAT_SPECIFIER
+                          ACE_TEXT ("%q")
                           ACE_TEXT (".\n"),
                           mythread_id,
                           remote_thread_id));

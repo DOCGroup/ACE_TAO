@@ -313,7 +313,7 @@ Logger_Client::show_record (Logger::Log_Record const &newrec) const
   ACE_DEBUG ((LM_DEBUG,
               " Log Priority: %d\n"
               "         Time: %d\n"
-              "          PID: %ld\n"
+              "          PID: %d\n"
               " Host Address: %s\n"
               "      Message: %s\n",
               newrec.type,

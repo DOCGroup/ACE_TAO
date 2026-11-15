@@ -28,9 +28,9 @@ TAO_Notify_ThreadPool_Consumer::init (
   this->delay_ = ACE_Time_Value (delay, {});
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P, %t)Consumer Delay = %ld, param = %ld\n",
-              static_cast<long> (this->delay_.sec ()),
-              delay));
+              "(%P, %t)Consumer Delay = %q, param = %q\n",
+              static_cast<ACE_INT64> (this->delay_.sec ()),
+              static_cast<ACE_INT64> (delay)));
 
   this->connect ();
 }

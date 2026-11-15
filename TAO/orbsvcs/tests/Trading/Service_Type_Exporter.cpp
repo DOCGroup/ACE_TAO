@@ -33,7 +33,7 @@ TAO_Service_Type_Exporter::remove_all_types ()
   ACE_DEBUG ((LM_DEBUG, "*** TAO_Service_Type_Exporter::removing all"
               " types from the Repository.\n"));
 
-  for (int i = NUM_TYPES - 1; i >= 0; i--)
+  for (int i = NUM_TYPES - 1; i >= 0; --i)
     {
       try
         {
@@ -43,7 +43,7 @@ TAO_Service_Type_Exporter::remove_all_types ()
         {
           if (this->verbose_)
             {
-              if (excp.type.in () != 0)
+              if (excp.type.in () != nullptr)
                 ACE_DEBUG ((LM_DEBUG, "Service type not yet registered: %C\n", excp.type.in ()));
             }
           // Don't re-throw, this one is expected in the test.
@@ -82,7 +82,7 @@ TAO_Service_Type_Exporter::add_all_types_to_all ()
               " traders.\n"));
   for (CORBA::ULong i = link_name_seq->length () - 1; i > 0; i--)
     {
-      CosTradingRepos::ServiceTypeRepository_ptr str = 0;
+      CosTradingRepos::ServiceTypeRepository_ptr str {};
       try
         {
           ACE_DEBUG ((LM_DEBUG, "Getting link information for %C\n",

@@ -2010,7 +2010,7 @@ Admin_Client::constant_test ()
   if (this->debug_)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("ConstantDef::value (short): %hd\n"),
+                  ACE_TEXT ("ConstantDef::value (short): %d\n"),
                   out_short_val));
     }
 
@@ -2246,7 +2246,7 @@ Admin_Client::interface_test ()
   if (this->debug_)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("\nInterfaceDef::is_a (same class): %hd\n"),
+                  ACE_TEXT ("\nInterfaceDef::is_a (same class): %d\n"),
                   is_it));
     }
 
@@ -2257,7 +2257,7 @@ Admin_Client::interface_test ()
   if (this->debug_)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("InterfaceDef::is_a (base class): %hd\n"),
+                  ACE_TEXT ("InterfaceDef::is_a (base class): %d\n"),
                   is_it));
     }
 
@@ -2268,7 +2268,7 @@ Admin_Client::interface_test ()
   if (this->debug_)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("InterfaceDef::is_a (derived class): %hd\n"),
+                  ACE_TEXT ("InterfaceDef::is_a (derived class): %d\n"),
                   is_it));
     }
 

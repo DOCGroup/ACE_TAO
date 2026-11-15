@@ -199,7 +199,7 @@ ACE_Scheduler::dispatch_configuration (Preemption_Priority const &p_priority,
   if (lookup_config_info (p_priority, config_info) != SUCCEEDED)
   {
     ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       "Config info for priority %lu could not be found\n",
+                       "Config info for priority %d could not be found\n",
                        p_priority),
                       -1);
   }

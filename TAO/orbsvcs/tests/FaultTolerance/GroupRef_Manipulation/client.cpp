@@ -63,13 +63,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       for (CORBA::ULong i {1}; i <= 25; ++i)
         {
           ACE_DEBUG ((LM_INFO,
-                      "CLIENT: Issuing request " ACE_UINT32_FORMAT_SPECIFIER ".\n",
+                      "CLIENT: Issuing request %u.\n",
                       i));
 
           number += server->number ();
 
           ACE_DEBUG ((LM_INFO,
-                      "CLIENT: Number " ACE_UINT32_FORMAT_SPECIFIER ".\n",
+                      "CLIENT: Number %u.\n",
                       number));
         }
 
