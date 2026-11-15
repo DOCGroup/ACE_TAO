@@ -15,8 +15,10 @@ public:
   test_i & operator= (test_i const &) = delete;
   test_i & operator= (test_i &&) = delete;
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   void send_stuff (char const * string) override;
+  /// @}
 };
 
 #include /**/ "ace/post.h"

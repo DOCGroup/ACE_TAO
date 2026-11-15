@@ -12,10 +12,12 @@ class Hello
 public:
   explicit Hello (CORBA::ORB_ptr orb);
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   char * get_string () override;
 
   void shutdown () override;
+  /// @}
 
   Hello (Hello const&) = delete;
   Hello (Hello&&) = delete;

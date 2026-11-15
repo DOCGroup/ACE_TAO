@@ -31,7 +31,8 @@ public:
   Hello &operator= (Hello const &) = delete;
   Hello &operator= (Hello &&) = delete;
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   void test_basic_arg (::CORBA::Long basic) override;
 
   void test_unbounded_string_arg (char const *message) override;
@@ -80,6 +81,7 @@ public:
       CORBA::String_out s3);
 
   void shutdown () override;
+  /// @}
 
   CORBA::ULong error_count () const;
 

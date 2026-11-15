@@ -19,8 +19,10 @@ public:
    */
   void dump_results ();
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   void run_test (Test::Crashed_Callback_ptr callback) override;
+  /// @}
 
   Service (Service const&) = delete;
   Service (Service&&) = delete;

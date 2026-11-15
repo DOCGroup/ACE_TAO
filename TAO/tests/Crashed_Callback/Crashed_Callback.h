@@ -12,12 +12,14 @@ class Crashed_Callback
 public:
   Crashed_Callback () = default;
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   CORBA::Boolean are_you_there () override;
 
   void crash_now_please () override;
 
   void test_oneway () override;
+  /// @}
 
   Crashed_Callback (Crashed_Callback const&) = delete;
   Crashed_Callback (Crashed_Callback&&) = delete;

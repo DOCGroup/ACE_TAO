@@ -17,8 +17,10 @@ public:
   Oneway_Receiver & operator= (Oneway_Receiver const &) = delete;
   Oneway_Receiver & operator= (Oneway_Receiver &&) = delete;
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   void receive_oneway () override;
+  /// @}
 };
 
 #include /**/ "ace/post.h"
