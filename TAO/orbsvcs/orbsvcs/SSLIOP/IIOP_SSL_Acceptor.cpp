@@ -9,10 +9,6 @@ TAO::IIOP_SSL_Acceptor::~IIOP_SSL_Acceptor ()
   // Make sure we are closed before we start destroying the
   // strategies.
   this->close ();
-
-  delete this->creation_strategy_;
-  delete this->concurrency_strategy_;
-  delete this->accept_strategy_;
 }
 
 int

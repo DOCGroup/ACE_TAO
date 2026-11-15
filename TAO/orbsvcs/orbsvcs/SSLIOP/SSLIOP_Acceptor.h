@@ -29,6 +29,8 @@
 #include "orbsvcs/SSLIOPC.h"  /* CSIv1 */
 #include "orbsvcs/CSIIOPC.h"  /* CSIv2 */
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -119,9 +121,12 @@ namespace TAO
        *
        * Strategies used when accepting an incoming connection.
        */
-      CREATION_STRATEGY *creation_strategy_ {};
-      CONCURRENCY_STRATEGY *concurrency_strategy_ {};
-      ACCEPT_STRATEGY *accept_strategy_ {};
+      //@{
+      /// Owned here; ssl_acceptor_ borrows these strategy pointers.
+      std::unique_ptr<CREATION_STRATEGY> creation_strategy_ {};
+      std::unique_ptr<CONCURRENCY_STRATEGY> concurrency_strategy_ {};
+      std::unique_ptr<ACCEPT_STRATEGY> accept_strategy_ {};
+      //@}
 
       /// The CSIv1 SSL component.
       /**

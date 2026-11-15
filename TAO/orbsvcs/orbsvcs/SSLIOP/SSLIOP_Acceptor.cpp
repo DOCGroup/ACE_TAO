@@ -86,10 +86,6 @@ TAO::SSLIOP::Acceptor::~Acceptor ()
   // Make sure we are closed before we start destroying the
   // strategies.
   this->close ();
-
-  delete this->creation_strategy_;
-  delete this->concurrency_strategy_;
-  delete this->accept_strategy_;
 }
 
 int
@@ -476,19 +472,25 @@ TAO::SSLIOP::Acceptor::ssliop_open_i (TAO_ORB_Core *orb_core,
 {
   this->orb_core_ = orb_core;
 
-  ACE_NEW_RETURN (this->creation_strategy_,
+  CREATION_STRATEGY *creation_strategy {};
+  ACE_NEW_RETURN (creation_strategy,
                   CREATION_STRATEGY (this->orb_core_),
                   -1);
+  this->creation_strategy_.reset (creation_strategy);
 
-  ACE_NEW_RETURN (this->concurrency_strategy_,
+  CONCURRENCY_STRATEGY *concurrency_strategy {};
+  ACE_NEW_RETURN (concurrency_strategy,
                   CONCURRENCY_STRATEGY (this->orb_core_),
                   -1);
+  this->concurrency_strategy_.reset (concurrency_strategy);
 
-  ACE_NEW_RETURN (this->accept_strategy_,
+  ACCEPT_STRATEGY *accept_strategy {};
+  ACE_NEW_RETURN (accept_strategy,
                   ACCEPT_STRATEGY (this->orb_core_,
                                    this->timeout_,
                                    this->check_host_),
                   -1);
+  this->accept_strategy_.reset (accept_strategy);
 
   u_short requested_port = addr.get_port_number ();
   if (requested_port == 0)
@@ -496,9 +498,9 @@ TAO::SSLIOP::Acceptor::ssliop_open_i (TAO_ORB_Core *orb_core,
       // don't care, i.e., let the OS choose an ephemeral port
       if (this->ssl_acceptor_.open (addr,
                                     reactor,
-                                    this->creation_strategy_,
-                                    this->accept_strategy_,
-                                    this->concurrency_strategy_,
+                                    this->creation_strategy_.get (),
+                                    this->accept_strategy_.get (),
+                                    this->concurrency_strategy_.get (),
                                     0, 0, 0, 1,
                                     this->reuse_addr_) == -1)
         {
@@ -528,9 +530,9 @@ TAO::SSLIOP::Acceptor::ssliop_open_i (TAO_ORB_Core *orb_core,
           a.set_port_number ((u_short)p);
           if (this->ssl_acceptor_.open (a,
                                         reactor,
-                                        this->creation_strategy_,
-                                        this->accept_strategy_,
-                                        this->concurrency_strategy_,
+                                        this->creation_strategy_.get (),
+                                        this->accept_strategy_.get (),
+                                        this->concurrency_strategy_.get (),
                                         0, 0, 0, 1,
                                         this->reuse_addr_) != -1)
             {

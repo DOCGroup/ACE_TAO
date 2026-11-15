@@ -42,10 +42,6 @@ namespace TAO
   {
   public:
     using TAO_IIOP_SSL_BASE_ACCEPTOR = ACE_Strategy_Acceptor<IIOP_SSL_Connection_Handler, ACE_SOCK_ACCEPTOR>;
-    using TAO_IIOP_SSL_CREATION_STRATEGY = TAO_Creation_Strategy<IIOP_SSL_Connection_Handler>;
-    using TAO_IIOP_SSL_CONCURRENCY_STRATEGY = TAO_Concurrency_Strategy<IIOP_SSL_Connection_Handler>;
-    using TAO_IIOP_SSL_ACCEPT_STRATEGY = TAO_Accept_Strategy<IIOP_SSL_Connection_Handler, ACE_SOCK_ACCEPTOR>;
-
     IIOP_SSL_Acceptor () = default;
 
     ~IIOP_SSL_Acceptor () override;
@@ -53,19 +49,8 @@ namespace TAO
     int close () override;
 
   private:
-    /// The concrete acceptor, as a pointer to it's base class.
+    /// The concrete acceptor, as a pointer to its base class.
     TAO_IIOP_SSL_BASE_ACCEPTOR base_acceptor_;
-
-    /**
-     * @name Acceptor Strategies
-     *
-     * Server side creation, concurrency and accept strategies.
-     */
-    //@{
-    TAO_IIOP_SSL_CREATION_STRATEGY *creation_strategy_ {};
-    TAO_IIOP_SSL_CONCURRENCY_STRATEGY *concurrency_strategy_ {};
-    TAO_IIOP_SSL_ACCEPT_STRATEGY *accept_strategy_ {};
-    //@}
   };
 } // End TAO namespace.
 
