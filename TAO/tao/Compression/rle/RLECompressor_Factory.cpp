@@ -14,6 +14,8 @@ namespace TAO
   RLE_CompressorFactory::get_compressor (
     ::Compression::CompressionLevel)
   {
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, nullptr);
+
     if (::CORBA::is_nil (this->compressor_.in ()))
       {
         ::Compression::Compressor_ptr compressor {};

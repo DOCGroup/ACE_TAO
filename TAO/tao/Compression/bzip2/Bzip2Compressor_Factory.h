@@ -39,6 +39,7 @@ namespace TAO
         Bzip2_CompressorFactory &operator= (Bzip2_CompressorFactory &&) = delete;
 
       private:
+         TAO_SYNCH_MUTEX mutex_;
          ::Compression::Compressor_var compressor_;
     };
 }

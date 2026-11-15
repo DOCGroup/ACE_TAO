@@ -39,6 +39,7 @@ namespace TAO
     RLE_CompressorFactory &operator= (RLE_CompressorFactory &&) = delete;
 
   private:
+    TAO_SYNCH_MUTEX mutex_;
     ::Compression::Compressor_var compressor_;
   };
 }

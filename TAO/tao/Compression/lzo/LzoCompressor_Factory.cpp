@@ -17,6 +17,8 @@ Lzo_CompressorFactory::Lzo_CompressorFactory () :
 Lzo_CompressorFactory::get_compressor (
     ::Compression::CompressionLevel compression_level)
 {
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, nullptr);
+
   // @todo, make a array based on compression level
   if (CORBA::is_nil (compressor_.in ()))
     {
