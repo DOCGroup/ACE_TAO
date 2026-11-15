@@ -67,10 +67,9 @@ namespace TAO
       }
     }
   }
+}
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
-}
 #endif /* defined (TAO_AS_STATIC_LIBS) */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
