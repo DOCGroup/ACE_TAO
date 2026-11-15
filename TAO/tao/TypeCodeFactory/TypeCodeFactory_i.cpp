@@ -353,7 +353,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
                   {
                     TAO_OutputCDR out;
                     impl->marshal_value (out);
-                    TAO_InputCDR tmp (out);
+                    TAO_InputCDR const tmp (out);
                     for_reading = tmp;
                   }
 
@@ -554,7 +554,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
     }
 
   // @@ Blame this on MSVC++ 6 workarounds.  *sigh*
-  CORBA::TypeCode_var duped_disc_type (
+  CORBA::TypeCode_var const duped_disc_type (
     CORBA::TypeCode::_duplicate (discriminator_type));
 
   if (is_recursive)
@@ -962,7 +962,7 @@ TAO_TypeCodeFactory_i::compute_default_label (
                 {
                   TAO_OutputCDR out;
                   impl->marshal_value (out);
-                  TAO_InputCDR tmp (out);
+                  TAO_InputCDR const tmp (out);
                   for_reading = tmp;
                 }
 
@@ -1137,7 +1137,7 @@ TAO_TypeCodeFactory_i::sequence_array_tc_common (
       throw ::CORBA::BAD_TYPECODE (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
     }
 
-  CORBA::TypeCode_var tmp (CORBA::TypeCode::_duplicate (element_type));
+  CORBA::TypeCode_var const tmp (CORBA::TypeCode::_duplicate (element_type));
 
   using typecode_type = TAO::TypeCode::Sequence<CORBA::TypeCode_var,
                                                 TAO::True_RefCount_Policy>;
@@ -1286,7 +1286,7 @@ TAO_TypeCodeFactory_i::alias_value_box_tc_common (
       throw ::CORBA::BAD_TYPECODE (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
     }
 
-  CORBA::TypeCode_var tmp (CORBA::TypeCode::_duplicate (underlying_type));
+  CORBA::TypeCode_var const tmp (CORBA::TypeCode::_duplicate (underlying_type));
 
   using typecode_type = TAO::TypeCode::Alias<CORBA::String_var,
                                               CORBA::TypeCode_var,
@@ -1385,7 +1385,7 @@ TAO_TypeCodeFactory_i::value_event_tc_common (
       field.visibility = members[index].access;
     }
 
-  CORBA::TypeCode_var tmp (
+  CORBA::TypeCode_var const tmp (
     CORBA::TypeCode::_duplicate (CORBA::is_nil (concrete_base)
                                  ? CORBA::_tc_null
                                  : concrete_base));
@@ -1625,7 +1625,7 @@ TAO_TypeCodeFactory_i::unique_label_values (
                 {
                   TAO_OutputCDR out;
                   impl->marshal_value (out);
-                  TAO_InputCDR tmp (out);
+                  TAO_InputCDR const tmp (out);
                   for_reading = tmp;
                 }
 
@@ -1679,7 +1679,7 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
     return false;
   }
 
-  CORBA::TypeCode_var unaliased_member =
+  CORBA::TypeCode_var const unaliased_member =
     TAO::unaliased_typecode (member);
 
   CORBA::TCKind const unaliased_member_kind =
@@ -1700,7 +1700,7 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
 
         for (CORBA::ULong i {}; i < nfields; ++i)
           {
-            CORBA::TypeCode_var member_tc =
+            CORBA::TypeCode_var const member_tc =
               unaliased_member->member_type (i);
 
             CORBA::TCKind const member_tc_kind =
@@ -1795,7 +1795,7 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
     case CORBA::tk_sequence:
     case CORBA::tk_array:
       {
-        CORBA::TypeCode_var content_tc =
+        CORBA::TypeCode_var const content_tc =
           unaliased_member->content_type ();
 
         CORBA::TCKind const content_tc_kind =
