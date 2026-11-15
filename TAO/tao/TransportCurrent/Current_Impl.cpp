@@ -14,6 +14,8 @@
 #include "tao/TransportCurrent/Current_Loader.h"
 #include "tao/TransportCurrent/Current_Impl.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -53,7 +55,7 @@ namespace TAO
 
       TAO::Transport::Stats const * const stats =
         t == nullptr ? nullptr : t->stats ();
-      return stats == nullptr ? &dummy_transport_stats : stats;
+      return stats == nullptr ? std::addressof (dummy_transport_stats) : stats;
     }
 
     CORBA::Long Current_Impl::id ()
