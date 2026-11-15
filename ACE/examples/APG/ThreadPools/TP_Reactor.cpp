@@ -63,8 +63,8 @@ Request_Handler::handle_input (ACE_HANDLE fd)
       ++this->nr_msgs_rcvd_;
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%t) svr input; fd: 0x%x; input: %s\n"),
-                  fd,
+                  ACE_TEXT ("(%t) svr input; fd: %@; input: %s\n"),
+                  reinterpret_cast<void *> (fd),
                   buffer.data ()));
       if (ACE_OS::strcmp (buffer.data (), ACE_TEXT ("shutdown")) == 0)
       {
@@ -74,8 +74,8 @@ Request_Handler::handle_input (ACE_HANDLE fd)
     }
   else
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%t) Request_Handler: 0x%x peer closed (0x%x)\n"),
-                this, fd));
+                ACE_TEXT ("(%t) Request_Handler: %@ peer closed (%@)\n"),
+                this, reinterpret_cast<void *> (fd)));
   return -1;
 }
 
@@ -83,13 +83,13 @@ int
 Request_Handler::handle_close (ACE_HANDLE fd, ACE_Reactor_Mask)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) svr close; fd: 0x%x, rcvd %d msgs\n"),
-              fd,
+              ACE_TEXT ("(%t) svr close; fd: %@, rcvd %B msgs\n"),
+              reinterpret_cast<void *> (fd),
               this->nr_msgs_rcvd_));
 
   if (this->nr_msgs_rcvd_ != cli_req_no)
     ACE_ERROR ((LM_ERROR,
-               ACE_TEXT ("(%t) Handler 0x%x: Expected %B messages; got %d\n"),
+               ACE_TEXT ("(%t) Handler %@: Expected %B messages; got %B\n"),
                this,
                cli_req_no,
                this->nr_msgs_rcvd_));
@@ -188,8 +188,8 @@ private:
           for (size_t j = 0; j < cli_req_no; ++j)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("Sending work to server on handle 0x%x, req %B\n"),
-                          stream.get_handle (),
+                          ACE_TEXT ("Sending work to server on handle %@, req %B\n"),
+                          reinterpret_cast<void *> (stream.get_handle ()),
                           j + 1));
               if (stream.send_n (arg,
                                  (len + 1) * sizeof (ACE_TCHAR)) == -1)
@@ -220,8 +220,8 @@ private:
       ACE_TCHAR const *const sbuf = ACE_TEXT ("\011shutdown");
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("shutdown stream handle = %x\n"),
-                  stream.get_handle ()));
+                  ACE_TEXT ("shutdown stream handle = %@\n"),
+                  reinterpret_cast<void *> (stream.get_handle ())));
 
       if (stream.send_n (sbuf, (ACE_OS::strlen (sbuf) + 1) * sizeof (ACE_TCHAR)) == -1)
         ACE_ERROR ((LM_ERROR,
@@ -251,7 +251,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
                       1);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) Spawning %d server threads...\n"),
+              ACE_TEXT ("(%t) Spawning %B server threads...\n"),
               svr_thrno));
 
   ServerTP serverTP;

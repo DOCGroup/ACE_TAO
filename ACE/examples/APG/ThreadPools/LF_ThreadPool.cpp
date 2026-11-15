@@ -20,7 +20,7 @@ class Follower
 {
 public:
   explicit Follower (ACE_Thread_Mutex &leader_lock)
-    : cond_ (leader_lock), owner_ (ACE_Thread::self ())
+    : cond_ (leader_lock)
   {
   }
   Follower (Follower const &) = delete;
@@ -40,14 +40,8 @@ public:
   }
   //FUZZ: enable check_for_lack_ACE_OS
 
-  ACE_thread_t owner () const
-  {
-    return this->owner_;
-  }
-
 private:
   ACE_Condition<ACE_Thread_Mutex> cond_;
-  ACE_thread_t owner_ {};
 };
 // Listing 4
 // Listing 1 code/ch16
@@ -258,8 +252,7 @@ LF_ThreadPool::elect_new_leader ()
         return -1;
       }
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%t) Resigning and Electing %d\n"),
-                  fw->owner ()));
+                  ACE_TEXT ("(%t) Resigning and electing a follower\n")));
       return (fw->signal () == 0) ? 0 : -1;
     }
   else

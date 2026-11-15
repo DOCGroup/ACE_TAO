@@ -132,7 +132,6 @@ public:
 
   int svc () override
   {
-    this->thread_id_ = ACE_Thread::self ();
     while (true)
       {
         ACE_Method_Request *request = this->queue_.dequeue ();
@@ -155,19 +154,11 @@ public:
     return 0;
   }
 
-  ACE_thread_t thread_id () const;
-
 private:
   IManager &manager_; // Manager owns the pool and outlives its workers.
-  ACE_thread_t thread_id_ {};
   ACE_Activation_Queue queue_;
 };
 // Listing 3
-
-ACE_thread_t Worker::thread_id () const
-{
-  return thread_id_;
-}
 
 // Listing 4 code/ch16
 class Manager : public ACE_Task_Base, private IManager
@@ -278,11 +269,6 @@ private:
     return shutdown_;
   }
 
-  ACE_thread_t thread_id (Worker &worker)
-  {
-    return worker.thread_id ();
-  }
-
 private:
   bool shutdown_ {};
   ACE_Thread_Mutex workers_lock_;
@@ -302,8 +288,7 @@ Manager::shut_down ()
     {
       iter.next (worker_ptr);
       Worker *const worker = *worker_ptr;
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Attempting shutdown of %d\n"),
-                  thread_id (*worker)));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Attempting shutdown of a worker\n")));
 
       Exit *req {};
       ACE_NEW_RETURN (req, Exit (), -1);
@@ -316,8 +301,7 @@ Manager::shut_down ()
       worker->wait ();
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%t) Worker %d shut down.\n"),
-                  thread_id (*worker)));
+                  ACE_TEXT ("(%t) Worker shut down.\n")));
       std::unique_ptr<Worker> worker_owner {worker};
 
     }
