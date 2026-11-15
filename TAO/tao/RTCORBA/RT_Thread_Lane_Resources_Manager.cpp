@@ -10,22 +10,15 @@
 #include "tao/LF_Follower.h"
 #include "tao/Leader_Follower.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_RT_Thread_Lane_Resources_Manager::TAO_RT_Thread_Lane_Resources_Manager (TAO_ORB_Core &orb_core)
   : TAO_Thread_Lane_Resources_Manager (orb_core)
+  , tp_manager_ (std::make_unique<TAO_Thread_Pool_Manager> (orb_core))
+  , default_lane_resources_ (std::make_unique<TAO_Thread_Lane_Resources> (orb_core))
 {
-  // Create the default resources.
-  TAO_Thread_Lane_Resources *default_lane_resources {};
-  ACE_NEW (default_lane_resources,
-           TAO_Thread_Lane_Resources (orb_core));
-  this->default_lane_resources_.reset (default_lane_resources);
-
-  // Create the thread-pool manager.
-  TAO_Thread_Pool_Manager *tp_manager {};
-  ACE_NEW (tp_manager,
-           TAO_Thread_Pool_Manager (orb_core));
-  this->tp_manager_.reset (tp_manager);
 }
 
 TAO_RT_Thread_Lane_Resources_Manager::~TAO_RT_Thread_Lane_Resources_Manager () = default;
