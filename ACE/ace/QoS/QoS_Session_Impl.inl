@@ -106,7 +106,9 @@ ACE_INLINE void
 ACE_RAPI_Session::source_addr (ACE_INET_Addr *source_addr)
 {
   if (source_addr != this->src_addr_.get ())
-    this->src_addr_.reset (source_addr);
+    {
+      this->src_addr_.reset (source_addr);
+    }
 }
 
 /// RAPI version. Returned value = 100 * major-version + minor-version.
@@ -214,7 +216,9 @@ ACE_INLINE void
 ACE_GQoS_Session::source_addr (ACE_INET_Addr *source_addr)
 {
   if (source_addr != this->src_addr_.get ())
-    this->src_addr_.reset (source_addr);
+    {
+      this->src_addr_.reset (source_addr);
+    }
 }
 
 /// GQoS version.

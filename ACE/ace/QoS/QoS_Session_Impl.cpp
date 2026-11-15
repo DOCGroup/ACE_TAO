@@ -310,10 +310,14 @@ ACE_RAPI_Session::qos (ACE_SOCK * /* socket */,
   // If both : call sending_qos () and receiving_qos ()
 
   if (this->flags_ != ACE_QOS_RECEIVER)
-    return this->sending_qos (ace_qos);
+    {
+      return this->sending_qos (ace_qos);
+    }
 
   if (this->flags_ != ACE_QOS_SENDER)
-    return this->receiving_qos (ace_qos);
+    {
+      return this->receiving_qos (ace_qos);
+    }
 
   return 0;
 }
@@ -335,23 +339,29 @@ ACE_RAPI_Session::sending_qos (ACE_QoS const &ace_qos)
                                 0,
                                 25);
       if (result != 0)
-        ACELIB_ERROR_RETURN ((LM_ERROR,
-                           "(%N|%l) rapi_sender error %d:\n\tPATH Generation can't be started\n",
-                           result),
-                          -1);
+        {
+          ACELIB_ERROR_RETURN ((LM_ERROR,
+                                "(%N|%l) rapi_sender error %d:\n\tPATH Generation can't be started\n",
+                                result),
+                               -1);
+        }
       else
-        ACELIB_DEBUG ((LM_DEBUG,
-                    "rapi_sender () call succeeds with PATH Tear!\n"));
+        {
+          ACELIB_DEBUG ((LM_DEBUG,
+                         "rapi_sender () call succeeds with PATH Tear!\n"));
+        }
 
       return 0;
     }
 
   rapi_tspec_t *t_spec = this->init_tspec_simplified (*sending_flowspec);
   if (t_spec == nullptr)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       "(%N|%l) Error in translating from ACE Flow Spec to"
-                       " RAPI TSpec\n"),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            "(%N|%l) Error in translating from ACE Flow Spec to"
+                            " RAPI TSpec\n"),
+                           -1);
+    }
 
   char buffer[BUFSIZ];
 
@@ -409,13 +419,17 @@ ACE_RAPI_Session::sending_qos (ACE_QoS const &ace_qos)
                            sending_flowspec->ttl ()) ;
   */
   if (result != 0)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       "(%N|%l) rapi_sender error %d:\n\tPATH Generation can't be started\n",
-                      result),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            "(%N|%l) rapi_sender error %d:\n\tPATH Generation can't be started\n",
+                            result),
+                           -1);
+    }
   else
-    ACELIB_DEBUG ((LM_DEBUG,
-                "rapi_sender () call succeeds !\n"));
+    {
+      ACELIB_DEBUG ((LM_DEBUG,
+                     "rapi_sender () call succeeds !\n"));
+    }
   return 0;
 }
 
@@ -655,10 +669,12 @@ ACE_GQoS_Session::qos (ACE_SOCK *socket,
   // subscribed to by the given socket.
 
   if (qos_manager->qos_session_set ().find (this) == -1)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("This QoS session was not subscribed to")
-                       ACE_TEXT (" by the socket\n")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("This QoS session was not subscribed to")
+                            ACE_TEXT (" by the socket\n")),
+                           -1);
+    }
 
   // Set the QOS according to the supplied ACE_QoS. The I/O control
   // code used under the hood is SIO_SET_QOS.
@@ -670,13 +686,17 @@ ACE_GQoS_Session::qos (ACE_SOCK *socket,
                      ACE_SIO_SET_QOS,
                      qos,
                      &ret_bytes) == -1)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Error in Qos set ACE_OS::ioctl() %d\n"),
-                       ret_bytes),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("Error in Qos set ACE_OS::ioctl() %d\n"),
+                            ret_bytes),
+                           -1);
+    }
   else
-    ACELIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("Setting QoS with ACE_OS::ioctl () succeeds\n")));
+    {
+      ACELIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("Setting QoS with ACE_OS::ioctl () succeeds\n")));
+    }
 
   return 0;
 }

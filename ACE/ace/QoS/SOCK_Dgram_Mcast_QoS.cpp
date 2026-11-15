@@ -46,7 +46,9 @@ ACE_SOCK_Dgram_Mcast_QoS::open (ACE_INET_Addr const &addr,
   // Only perform the <open> initialization if we haven't been opened
   // earlier.
   if (this->get_handle () != ACE_INVALID_HANDLE)
-    return 0;
+    {
+      return 0;
+    }
 
   ACELIB_DEBUG ((LM_DEBUG,
               "Get Handle Returns Invalid Handle\n"));
@@ -101,7 +103,9 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe_ifs (ACE_INET_Addr const &mcast_addr,
       int const result = ACE::get_ip_interfaces (if_cnt, if_addrs_raw);
       std::unique_ptr<ACE_INET_Addr[]> if_addrs (if_addrs_raw);
       if (result != 0)
-        return -1;
+        {
+          return -1;
+        }
 
       size_t nr_subscribed {};
 
@@ -125,7 +129,9 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe_ifs (ACE_INET_Addr const &mcast_addr,
 
             // Convert to 0-based for indexing, next loop check.
             if (if_addrs[if_cnt].is_loopback())
-              continue;
+              {
+                continue;
+              }
             if (this->subscribe (mcast_addr,
                                  qos_params,
                                  reuse_addr,
@@ -162,9 +168,13 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe_ifs (ACE_INET_Addr const &mcast_addr,
   if (this->make_multicast_ifaddr (nullptr,
                                    mcast_addr,
                                    net_if) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 int
@@ -201,7 +211,9 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe (ACE_INET_Addr const &mcast_addr,
                                           protocolinfo);
   // Check for the "short-circuit" return value of 1 (for NT).
   if (result != 0)
-    return result;
+    {
+      return result;
+    }
 
   // Tell network device driver to read datagrams with a
   // <mcast_request_if_> IP interface.
@@ -213,9 +225,11 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe (ACE_INET_Addr const &mcast_addr,
         {
           // Subscribe to the QoS session.
           if (this->qos_manager_.join_qos_session (qos_session) == -1)
-            ACELIB_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("Unable to join QoS Session\n")),
-                              -1);
+            {
+              ACELIB_ERROR_RETURN ((LM_ERROR,
+                                    ACE_TEXT ("Unable to join QoS Session\n")),
+                                   -1);
+            }
         }
       else
         {
@@ -240,11 +254,13 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe (ACE_INET_Addr const &mcast_addr,
                              sizeof ret_mreq.IMR_MULTIADDR.s_addr,
                              qos_params) == ACE_INVALID_HANDLE
           && errno != ENOTSUP)
-        return -1;
-
-      else
-        if (qos_params.socket_qos () != nullptr && qos_session != nullptr)
+        {
+          return -1;
+        }
+      else if (qos_params.socket_qos () != nullptr && qos_session != nullptr)
+        {
           qos_session->qos (*(qos_params.socket_qos ()));
+        }
 
       return 0;
     }
