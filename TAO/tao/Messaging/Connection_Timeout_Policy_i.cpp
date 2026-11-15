@@ -85,8 +85,7 @@ TAO_ConnectionTimeoutPolicy::hook (TAO_ORB_Core *orb_core,
 
       if (TAO_debug_level > 0)
         {
-          ACE_UINT64 msecs {};
-          const_cast<ACE_Time_Value const &> (time_value).msec (msecs);
+          ACE_UINT64 const msecs = time_value.get_msec ();
           TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - Connect timeout is ")
                       ACE_TEXT ("%Q milliseconds\n"),
@@ -166,8 +165,7 @@ TAO_ConnectionTimeoutPolicy::set_time_value (ACE_Time_Value &time_value)
 
   if (TAO_debug_level > 0)
     {
-      ACE_UINT64 msecs;
-      const_cast<ACE_Time_Value const &> (time_value).msec (msecs);
+      ACE_UINT64 const msecs = time_value.get_msec ();
       TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - Connect timeout is ")
                   ACE_TEXT ("%Q milliseconds\n"),
