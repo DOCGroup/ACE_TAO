@@ -8,12 +8,18 @@ void test_ftp_addr ();
 void test_mailto_addr ();
 void test_url_addr ();
 bool test_url_buffer_aliasing ();
+bool test_ftp_set_components ();
 
 int ACE_TMAIN (int, ACE_TCHAR*[])
 {
   if (!test_url_buffer_aliasing ())
     {
       ACE_ERROR ((LM_ERROR, "URL buffer aliasing test failed\n"));
+      return 1;
+    }
+  if (!test_ftp_set_components ())
+    {
+      ACE_ERROR ((LM_ERROR, "FTP set components test failed\n"));
       return 1;
     }
 
@@ -32,6 +38,26 @@ bool test_url_buffer_aliasing ()
   return addr.string_to_addr (url) == 0
     && addr.string_to_addr (addr.get_url ()) == 0
     && ACE_OS::strcmp (addr.get_url (), url) == 0;
+}
+
+bool test_ftp_set_components ()
+{
+  ACE_FTP_Addr addr;
+  ACE_TCHAR const host[] = ACE_TEXT ("ftp.example.org");
+  ACE_TCHAR const path[] = ACE_TEXT ("x");
+  ACE_TCHAR const user[] = ACE_TEXT ("a-long-user-name-that-is-longer-than-the-path");
+  ACE_TCHAR const password[] = ACE_TEXT ("secret");
+  ACE_TCHAR buffer[BUFSIZ];
+
+  if (addr.set (host, path, user, password) != 0
+      || ACE_OS::strcmp (addr.get_user (), user) != 0
+      || ACE_OS::strcmp (addr.get_passwd (), password) != 0
+      || addr.addr_to_string (buffer, BUFSIZ, 1) != 0)
+    return false;
+
+  ACE_TCHAR const expected[] =
+    ACE_TEXT ("ftp://a-long-user-name-that-is-longer-than-the-path:secret@ftp.example.org/x");
+  return ACE_OS::strcmp (buffer, expected) == 0;
 }
 
 #define HTTP_TEST_ARRAY \
