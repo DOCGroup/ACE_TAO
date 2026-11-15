@@ -517,7 +517,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::allocate_pi_current ()
   TAO::PICurrent_Impl *pi {};
   ACE_NEW_RETURN (pi,
                   TAO::PICurrent_Impl,
-                  pi);
+                  nullptr);
   return pi;
 }
 
