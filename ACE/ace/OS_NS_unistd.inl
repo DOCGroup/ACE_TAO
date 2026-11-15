@@ -8,6 +8,8 @@
 #include "ace/OS_Memory.h"
 #include "ace/Truncate.h"
 
+#include <memory>
+
 #if defined (ACE_HAS_CLOCK_GETTIME)
 # include "ace/os_include/os_time.h"
 #endif /* ACE_HAS_CLOCK_GETTIME */
@@ -403,14 +405,13 @@ ACE_OS::getcwd (wchar_t *buf, size_t size)
 #  if defined (ACE_WIN32)
   return ::_wgetcwd (buf, static_cast<int> (size));
 #  else
-  char *narrow_buf = new char[size];
-  char *result {};
-  result = ACE_OS::getcwd (narrow_buf, size);
+  std::unique_ptr<char[]> narrow_buf (new char[size]);
+  char *result {ACE_OS::getcwd (narrow_buf.get (), size)};
+  if (result == nullptr)
+    return nullptr;
   ACE_Ascii_To_Wide wide_buf (result);
-  delete [] narrow_buf;
-  if (result != 0)
-    ACE_OS::strsncpy (buf, wide_buf.wchar_rep (), size);
-  return result == 0 ? 0 : buf;
+  ACE_OS::strsncpy (buf, wide_buf.wchar_rep (), size);
+  return buf;
 #  endif /* ACE_WIN32 */
 }
 #endif /* ACE_HAS_WCHAR */
