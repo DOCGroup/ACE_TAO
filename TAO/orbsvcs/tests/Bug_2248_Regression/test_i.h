@@ -3,14 +3,9 @@
 
 #include "testS.h"
 
+/// Implements the Simple_Server interface declared in test.idl.
 class Simple_Server_i : public POA_Simple_Server
 {
-  // = TITLE
-  //   Simpler Server implementation
-  //
-  // = DESCRIPTION
-  //   Implements the Simple_Server interface in test.idl
-  //
 public:
   Simple_Server_i (CORBA::ORB_ptr orb, char const * key);
 
