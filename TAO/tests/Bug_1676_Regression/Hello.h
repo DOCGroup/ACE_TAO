@@ -15,7 +15,8 @@ public:
   Hello (Hello &&) = delete;
   Hello &operator= (Hello &&) = delete;
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   ::Test::StringList *get_stringList () override;
 
   void get_stringList2 (::CORBA::Boolean initialize,
@@ -24,6 +25,7 @@ public:
   void mod_stringList (::Test::StringList &iosl) override;
 
   void shutdown () override;
+  /// @}
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown
