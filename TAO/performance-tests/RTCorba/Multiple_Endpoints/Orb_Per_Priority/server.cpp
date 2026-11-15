@@ -8,30 +8,22 @@
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_errno.h"
 
+/// Runs a server thread with its own ORB.
 class Server : public ACE_Task_Base
 {
-  // = TITLE
-  //   Run the server thread, which will create its own orb.
-  //
-  // = DESCRIPTION
-  //   Use the ACE_Task_Base class to run the server threads.
-  //
 public:
-  Server ();
-  // ctor
+  Server () = default;
 
+  /// Sets the server and thread attributes.
   void set (Test_i *server, int priority, int argc, ACE_TCHAR *argv[]);
-  // Set the test attributes.
 
-  // = The ACE_Task_Base methods....
-  virtual int svc ();
+  int svc () override;
 
 private:
   Test_i *server_;
 
+  /// CORBA priority used to create this thread's ORB.
   int priority_;
-  // Corba priority at which this thread is running.  (This number is
-  // used for creating the name of the orb.)
 
   int argc_;
   ACE_TCHAR *argv_[256];
@@ -167,10 +159,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 }
 
 // ****************************************************************
-
-Server::Server ()
-{
-}
 
 void
 Server::set (Test_i *server,

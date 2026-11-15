@@ -11,50 +11,44 @@
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_unistd.h"
 
+/// Runs client threads and collects their throughput statistics.
 class Client : public ACE_Task_Base
 {
-  // = TITLE
-  //   Run the client thread
-  //
-  // = DESCRIPTION
-  //   Use the ACE_Task_Base class to run the client threads.
-  //
 public:
-  Client ();
-  // ctor
+  Client () = default;
 
+  /// Sets the test attributes.
   void set (Test_ptr server,
             int niterations,
             int id,
             CORBA::ORB_ptr,
             ACE_Barrier *before,
             ACE_Barrier *after);
-  // Set the test attributes.
 
+  /// Adds this client's throughput statistics to the aggregate.
   void accumulate_into (ACE_Throughput_Stats &throughput) const;
-  // Accumulate the throughput statistics into <throughput>
 
+  /// Outputs the accumulated statistics.
   void dump_stats (const ACE_TCHAR* msg, ACE_High_Res_Timer::global_scale_factor_type gsf);
-  // Output the accumulated statistics.
 
-  // = The ACE_Task_Base methods....
-  virtual int svc ();
+  int svc () override;
 
 private:
   CORBA::ORB_ptr orb_;
 
+  /// Server reference used for invocations.
   Test_var server_;
-  // The server.
 
+  /// Number of iterations for this client thread.
   int niterations_;
-  // The number of iterations on each client thread.
 
+  /// Index of this thread in the client array.
   int id_;
-  // The index into array for this thread.
 
+  /// Per-thread throughput statistics.
   ACE_Throughput_Stats throughput_;
-  // Keep throughput statistics on a per-thread basis
 
+  /// Barriers for coordinating connection setup.
   ACE_Barrier *before_connection_;
   ACE_Barrier *after_connection_;
 };
@@ -229,10 +223,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 }
 
 // ****************************************************************
-
-Client::Client ()
-{
-}
 
 void
 Client::set (Test_ptr server,
