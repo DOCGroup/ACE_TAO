@@ -38,8 +38,6 @@ namespace CORBA
 {
   class Object;
   class PolicyList;
-
-  class Object;
   using Object_ptr = Object *;
 }
 

@@ -44,8 +44,8 @@ namespace TAO
     virtual ~Storable_File_Guard () noexcept(false);
 
     /// Releases the lock, closes the file, and deletes the I/O stream.
-    /// Destructors of derived classes should call this this will
-    /// virtual functions are available.
+    /// Derived class destructors should call this while virtual functions
+    /// are still available.
     void release ();
 
     /// Return when the object in memory has last changed
