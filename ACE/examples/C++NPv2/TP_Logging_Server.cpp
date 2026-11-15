@@ -10,7 +10,7 @@
 int TP_Logging_Handler::handle_input (ACE_HANDLE) {
   ACE_Message_Block_Unique_Ptr mblk;
   if (logging_handler_.recv_log_record (mblk) != -1) {
-    ACE_Message_Block *log_blk = nullptr;
+    ACE_Message_Block *log_blk {};
     ACE_NEW_RETURN
       (log_blk, ACE_Message_Block
                   (reinterpret_cast<char *> (this)), -1);

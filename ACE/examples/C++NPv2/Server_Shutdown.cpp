@@ -39,7 +39,7 @@ protected:
 static ACE_THR_FUNC_RETURN controller (void *arg) {
   ACE_Reactor *reactor = static_cast<ACE_Reactor *> (arg);
 
-  Quit_Handler *quit_handler = nullptr;
+  Quit_Handler *quit_handler {};
   ACE_NEW_RETURN (quit_handler, Quit_Handler (reactor), ACE_THR_FUNC_RETURN_NULL);
 
 #if defined (ACE_WIN32) && defined (ACE_USES_OLD_IOSTREAMS)
@@ -74,7 +74,7 @@ public:
   }
 
   int fini () override {
-    Quit_Handler *quit_handler = nullptr;
+    Quit_Handler *quit_handler {};
     ACE_NEW_RETURN (quit_handler,
                     Quit_Handler (reactor_), -1);
     return reactor_->notify (quit_handler);

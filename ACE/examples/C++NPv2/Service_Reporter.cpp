@@ -61,7 +61,7 @@ int Service_Reporter::handle_input (ACE_HANDLE) {
       ACE_Utils::truncate_cast<u_long> (
         ACE_OS::strlen (state) * sizeof (ACE_TCHAR));
 
-    ACE_TCHAR *report = nullptr;   // Ask info() to allocate buffer
+    ACE_TCHAR *report {};   // Ask info() to allocate buffer
     int len = st->type ()->info (&report, 0);
     iov[2].iov_base = static_cast<ACE_TCHAR *> (report);
 

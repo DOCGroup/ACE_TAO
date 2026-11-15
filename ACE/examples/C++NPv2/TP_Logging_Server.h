@@ -78,7 +78,7 @@ public:
     : Logging_Acceptor (r) {}
 
   int handle_input (ACE_HANDLE) override {
-    TP_Logging_Handler *peer_handler = nullptr;
+    TP_Logging_Handler *peer_handler {};
     ACE_NEW_RETURN (peer_handler,
                     TP_Logging_Handler (reactor ()), -1);
     if (acceptor_.accept (peer_handler->peer ()) == -1) {
@@ -106,7 +106,7 @@ public:
   TP_Logging_Server &operator= (TP_Logging_Server &&) = delete;
 
   int init (int argc, ACE_TCHAR *argv[]) override {
-    LOGGING_DISPATCHER *dispatcher = nullptr;
+    LOGGING_DISPATCHER *dispatcher {};
     ACE_NEW_NORETURN
       (dispatcher,
        TP_Logging_Server::LOGGING_DISPATCHER

@@ -172,7 +172,7 @@ ACE_THR_FUNC_RETURN CLD_Handler::forward () {
       timeout = ACE_OS::gettimeofday ();
       timeout += FLUSH_TIMEOUT;
     }
-    ACE_Message_Block *mblk = nullptr;
+    ACE_Message_Block *mblk {};
     if (msg_queue_.dequeue_head (mblk, &timeout) == -1) {
       if (errno != EWOULDBLOCK) break;
       else if (message_index == 0) continue;
@@ -232,7 +232,7 @@ int CLD_Handler::send (
 }
 
 int CLD_Handler::close () {
-  ACE_Message_Block *shutdown_message = nullptr;
+  ACE_Message_Block *shutdown_message {};
   ACE_NEW_RETURN
     (shutdown_message,
      ACE_Message_Block (0, ACE_Message_Block::MB_STOP), -1);

@@ -241,7 +241,7 @@ public:
 
   int svc () override {
     bool stop = false;
-    for (ACE_Message_Block *mb = nullptr; !stop && getq (mb) != -1; ) {
+    for (ACE_Message_Block *mb {}; !stop && getq (mb) != -1; ) {
       ACE_Message_Block_Unique_Ptr mb_owner {mb};
       if (mb->msg_type () == ACE_Message_Block::MB_STOP)
         stop = true;

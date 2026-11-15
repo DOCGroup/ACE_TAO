@@ -89,7 +89,7 @@ void AIO_Output_Handler::open
   reader_.open (*this, new_handle, nullptr, proactor ());
   writer_.open (*this, new_handle, nullptr, proactor ());
 
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
   ACE_NEW (mb, ACE_Message_Block (1));
   reader_.read (*mb, 1);
   ACE_Sig_Action no_sigpipe ((ACE_SignalHandler) SIG_IGN);
@@ -155,7 +155,7 @@ AIO_Input_Handler::~AIO_Input_Handler () {
 void AIO_Input_Handler::open
   (ACE_HANDLE new_handle, ACE_Message_Block &) {
   reader_.open (*this, new_handle, nullptr, proactor ());
-  ACE_Message_Block *message_block = nullptr;
+  ACE_Message_Block *message_block {};
   ACE_NEW_NORETURN (message_block, ACE_Message_Block (ACE_DEFAULT_CDR_BUFSIZE));
   mblk_.reset (message_block);
   // Align the Message Block for a CDR stream

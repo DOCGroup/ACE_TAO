@@ -190,7 +190,7 @@ int AC_Output_Handler::svc () {
       timeout = ACE_OS::gettimeofday ();
       timeout += FLUSH_TIMEOUT;
     }
-    ACE_Message_Block *mblk = nullptr;
+    ACE_Message_Block *mblk {};
     if (getq (mblk, &timeout) == -1) {
       if (errno == ESHUTDOWN) {
         if (connector_->reconnect () == -1)
@@ -267,7 +267,7 @@ int AC_Input_Handler::open (void *) {
 }
 
 int AC_Input_Handler::close (u_long) {
-  ACE_Message_Block *shutdown_message = nullptr;
+  ACE_Message_Block *shutdown_message {};
   ACE_NEW_RETURN
     (shutdown_message,
      ACE_Message_Block (0, ACE_Message_Block::MB_STOP), -1);
