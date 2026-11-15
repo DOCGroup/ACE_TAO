@@ -323,7 +323,7 @@ iterator_test ()
 
   int i;
 
-  for (i = 0; i < ITERATIONS; i++)
+  for (i = 0; i < ITERATIONS; ++i)
     {
       ACE_OS::snprintf (buffer[i], BUFSIZ, ACE_TEXT ("%d"), i + 1);
 

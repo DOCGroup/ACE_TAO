@@ -480,7 +480,7 @@ client (void *arg)
   size_t command_len;
   size_t i;
 
-  for (i = 0; i < ACE_MAX_ITERATIONS; i++)
+  for (i = 0; i < ACE_MAX_ITERATIONS; ++i)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) client iteration %B\n"),

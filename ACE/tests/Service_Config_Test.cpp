@@ -758,7 +758,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 #endif
   // Test with a large amount of threads to determine whether
   // TSS works correctly with non ACE threads
-  for (unsigned int i = 0 ; i < n_threads; i++)
+  for (unsigned int i = 0 ; i < n_threads; ++i)
     {
       testNonACEThread();
     }

@@ -82,7 +82,7 @@ client (void *arg)
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) client: Sending data...\n"));
 
-  for (const char *c = ACE_ALPHABET; *c != '\0'; c++)
+  for (const char *c = ACE_ALPHABET; *c != '\0'; ++c)
     if (cli_stream.send_n (c, 1) == -1)
       {
         // This is, I believe, more of an issue with WinXP-64 _server_
@@ -323,7 +323,7 @@ spawn (int num_clients)
                   server_addr.get_port_number ()));
 
 #if !defined (ACE_LACKS_FORK)
-    for (int i = 0; i < num_clients; i++)
+    for (int i = 0; i < num_clients; ++i)
         {
           switch (ACE_OS::fork (ACE_TEXT ("child")))
             {

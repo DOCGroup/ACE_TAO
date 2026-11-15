@@ -645,7 +645,7 @@ Secondary_Ipaddr_Handler::fill_inet_prefix (
 
   char* to_search = ip_buff, *dot {};
 
-  for (int i = 0; i < 4; i++)
+  for (int i = 0; i < 4; ++i)
     {
       if (i < 3)
         {

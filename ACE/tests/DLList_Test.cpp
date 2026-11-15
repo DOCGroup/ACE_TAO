@@ -41,7 +41,7 @@ run_iterate (STRLIST &list)
 
   for (STRLIST_ITERATOR iter (list);
        (entry = iter.next ()) != nullptr;
-       iter.advance (), i++)
+       iter.advance (), ++i)
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("iterating (%B): [%s]\n"),
                   i,
@@ -57,7 +57,7 @@ run_reverse_iterate (STRLIST &list)
 
   for (STRLIST_REVERSE_ITERATOR iter (list);
        iter.next (entry) != 0;
-       iter.advance (), i++)
+       iter.advance (), ++i)
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("iterating (%B): [%s]\n"),
                   i,
@@ -72,7 +72,7 @@ run_test ()
 
   size_t i;
 
-  for (i = 0; string_table[i] != nullptr; i++)
+  for (i = 0; string_table[i] != nullptr; ++i)
     {
       if (ACE_EVEN (i)
           && list.insert_tail ((ACE_STRING *) &string_table[i]) == nullptr)

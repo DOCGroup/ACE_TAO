@@ -108,7 +108,7 @@ disable_signal (int sigmin, int sigmax)
                 ACE_TEXT ("Error: (%P|%t):%p\n"),
                 ACE_TEXT ("sigemptyset failed")));
 
-  for (int i = sigmin; i <= sigmax; i++)
+  for (int i = sigmin; i <= sigmax; ++i)
     ACE_OS::sigaddset (&signal_set, i);
 
   // Put the <signal_set>.
@@ -1277,7 +1277,7 @@ test<REACTOR_IMPL>::test (int ignore_nested_upcalls,
 {
   for (int i = 0;
        i < (int) (sizeof test_configs / (sizeof (int) * number_of_options));
-       i++)
+       ++i)
     {
       if ((make_invocations == -1 ||
            make_invocations == test_configs[i][0]) &&

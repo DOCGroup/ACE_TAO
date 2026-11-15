@@ -27,7 +27,7 @@ run_test (SVC_HANDLER &svc_handler,
 {
   // Create a whole slew of message blocks and pass them to the
   // <svc_handler>.
-  for (size_t i = 0; i < iterations; i++)
+  for (size_t i = 0; i < iterations; ++i)
     {
       ACE_Message_Block *mb {};
       ACE_NEW (mb,

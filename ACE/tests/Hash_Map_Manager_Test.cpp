@@ -122,7 +122,7 @@ int test_two_allocators ()
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Entry allocator depth: %d.\n"),
               entry_alloc.pool_depth ()));
 
-  for (size_t i = 0; i < chunks; i++)
+  for (size_t i = 0; i < chunks; ++i)
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("- Binding ('%s', '%s'), should succeed...\n"),
                   string_table[i].key_ , string_table[i].value_));
@@ -171,7 +171,7 @@ run_test ()
   size_t i;
 
   // Check the <bind> operation.
-  for (i = 0; string_table[i].key_ != nullptr; i++)
+  for (i = 0; string_table[i].key_ != nullptr; ++i)
     if (hash.bind (string_table[i].key_,
                    string_table[i].value_) == -1)
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -182,7 +182,7 @@ run_test ()
   const ACE_TCHAR *entry {};
 
   // Check the <find> operation.
-  for (i = 0; string_table[i].key_ != nullptr; i++)
+  for (i = 0; string_table[i].key_ != nullptr; ++i)
     if (hash.find (string_table[i].key_,
                    entry) == 0)
       ACE_DEBUG ((LM_DEBUG,
@@ -248,7 +248,7 @@ run_test ()
   hash.unbind (string_table[2].key_, entry);
 
   // Check the <find> operation again.
-  for (i = 0; string_table[i].key_ != nullptr; i++)
+  for (i = 0; string_table[i].key_ != nullptr; ++i)
     if (hash.find (string_table[i].key_,
                    entry) == 0)
       ACE_DEBUG ((LM_DEBUG,
@@ -286,7 +286,7 @@ run_test ()
                        -1);
 
   // Redo the <bind> operations.
-  for (i = 0; string_table[i].key_ != nullptr; i++)
+  for (i = 0; string_table[i].key_ != nullptr; ++i)
     if (hash.bind (string_table[i].key_,
                    string_table[i].value_) != 0)
       ACE_ERROR_RETURN ((LM_ERROR,

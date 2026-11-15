@@ -141,7 +141,7 @@ client (void *arg)
                   len));
     }
 
-  for (i = 0; i < static_cast<size_t>(len); i++)
+  for (i = 0; i < static_cast<size_t>(len); ++i)
     if (buffer2[i] != buffer[i])
       {
         ACE_ERROR ((LM_ERROR,
@@ -214,7 +214,7 @@ server (void *arg)
                   len));
     }
 
-  for (i = 0; i < static_cast<int>(len); i++)
+  for (i = 0; i < static_cast<int>(len); ++i)
     if (buffer[i] != i)
       {
         ACE_ERROR ((LM_ERROR,

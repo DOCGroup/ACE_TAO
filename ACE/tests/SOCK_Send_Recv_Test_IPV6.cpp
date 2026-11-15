@@ -141,7 +141,7 @@ client (void *arg)
     }
   ACE_TEST_ASSERT (len == 255);
 
-  for (i = 0; i < 255; i++)
+  for (i = 0; i < 255; ++i)
     if (buffer2[i] != buffer[i])
       {
         ACE_ERROR ((LM_ERROR,
@@ -237,7 +237,7 @@ server (void *arg)
     }
 
   ACE_TEST_ASSERT (len == 255);
-  for (i = 0; i < 255; i++)
+  for (i = 0; i < 255; ++i)
     if (buffer[i] != i)
       {
         ACE_ERROR ((LM_ERROR,

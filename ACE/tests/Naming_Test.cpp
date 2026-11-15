@@ -60,7 +60,7 @@ test_bind (ACE_Naming_Context &ns_context)
   randomize (array, sizeof (array) / sizeof (array[0]));
 
   // do the binds
-  for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; i++)
+  for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; ++i)
     {
       ACE_OS::snprintf (name, BUFSIZ, "%s%d", "name", array[i]);
       ACE_NS_WString w_name (name);
@@ -83,7 +83,7 @@ test_find_failure (ACE_Naming_Context &ns_context)
   char *l_type {};
 
   // Do the finds.
-  for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; i++)
+  for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; ++i)
     {
       int resolve = ns_context.resolve (w_name, w_value, l_type);
       ACE_TEST_ASSERT (resolve == -1);
@@ -99,7 +99,7 @@ test_rebind (ACE_Naming_Context &ns_context)
   randomize (array, sizeof (array) / sizeof (array[0]));
 
   // do the rebinds
-  for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; i++)
+  for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; ++i)
     {
       ACE_OS::snprintf (name, BUFSIZ, "%s%d", "name", array[i]);
       ACE_NS_WString w_name (name);
@@ -122,7 +122,7 @@ test_unbind (ACE_Naming_Context &ns_context)
   randomize (array, sizeof (array) / sizeof (array[0]));
 
   // do the unbinds
-  for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; i++)
+  for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; ++i)
     {
       ACE_OS::snprintf (name, BUFSIZ, "%s%d", "name", array[i]);
       ACE_NS_WString w_name (name);
@@ -143,7 +143,7 @@ test_find (ACE_Naming_Context &ns_context, int sign, int result)
   randomize (array, sizeof (array) / sizeof (array[0]));
 
   // do the finds
-  for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; i++)
+  for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; ++i)
     {
       if (sign == 1)
         {

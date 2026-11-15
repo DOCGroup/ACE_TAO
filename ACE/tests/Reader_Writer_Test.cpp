@@ -101,7 +101,7 @@ reader (void *)
   int usecs = 1000 + ACE_OS::rand() % 2000;
   ACE_Time_Value pause(0, usecs);
 
-  for (size_t iterations = 1; iterations <= n_iterations; iterations++)
+  for (size_t iterations = 1; iterations <= n_iterations; ++iterations)
     {
       ACE_OS::sleep (pause);
       ACE_READ_GUARD_RETURN (ACE_RW_Thread_Mutex, g, rw_mutex, nullptr);
@@ -115,7 +115,7 @@ reader (void *)
 
       ACE_thread_t data = shared_data;
 
-      for (size_t loop = 1; loop <= n_loops; loop++)
+      for (size_t loop = 1; loop <= n_loops; ++loop)
         {
           ACE_Thread::yield ();
 
@@ -140,7 +140,7 @@ reader (void *)
           shared_data = self;
           data = self;
 
-          for (size_t loop = 1; loop <= n_loops; loop++)
+          for (size_t loop = 1; loop <= n_loops; ++loop)
             {
               if (ACE_OS::thr_equal (shared_data, data) == 0)
                 ACE_DEBUG ((LM_DEBUG,
@@ -201,7 +201,7 @@ writer (void *)
   int usecs = 1000 + ACE_OS::rand() % 2000;
   ACE_Time_Value pause(0, usecs);
 
-  for (size_t iterations = 1; iterations <= n_iterations; iterations++)
+  for (size_t iterations = 1; iterations <= n_iterations; ++iterations)
     {
       ACE_OS::sleep (pause);
 
@@ -221,7 +221,7 @@ writer (void *)
 
       shared_data = self;
 
-      for (size_t loop = 1; loop <= n_loops; loop++)
+      for (size_t loop = 1; loop <= n_loops; ++loop)
         {
           ACE_Thread::yield ();
 

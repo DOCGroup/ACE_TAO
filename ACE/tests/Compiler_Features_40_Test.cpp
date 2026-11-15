@@ -23,7 +23,7 @@ public:
     this_pointer = this;
 
     // Generate a sequence of numbers (0 - 255)
-    for (int i = 0; i < 256; i++)
+    for (int i = 0; i < 256; ++i)
     {
       data[i] = i;
     }
@@ -38,7 +38,7 @@ public:
     }
 
     // Check if number sequence is still the same
-    for (int i = 0; i < 256; i++)
+    for (int i = 0; i < 256; ++i)
     {
       if (data[i] != i)
       {

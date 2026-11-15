@@ -53,7 +53,7 @@ run_main (int, ACE_TCHAR *[])
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" there are %B interfaces\n"), how_many));
       int num_ipv4 = 0;
       int num_ipv6 = 0;
-      for (size_t i = 0; i < how_many; i++)
+      for (size_t i = 0; i < how_many; ++i)
         {
           if (the_addr_array[i].get_type() == AF_INET)
           {

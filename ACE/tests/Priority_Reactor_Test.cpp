@@ -189,7 +189,7 @@ client (void *arg)
   options.timeout (msec);
 
   // Try up to <max_retries> to connect to the server.
-  for (int i = 0; i < max_retries; i++)
+  for (int i = 0; i < max_retries; ++i)
     {
       if (connector.connect (writer,
                              *connection_addr,

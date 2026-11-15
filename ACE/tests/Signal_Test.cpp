@@ -198,7 +198,7 @@ worker_child (void *arg)
   long handle_signals_synchronously =
     reinterpret_cast <long> (arg);
 
-  for (size_t i = 0; i < n_iterations; i++)
+  for (size_t i = 0; i < n_iterations; ++i)
     {
       if (shut_down > 0)
         {

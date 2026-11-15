@@ -231,7 +231,7 @@ Watermark_Test::producer ()
 
   this->print_producer_debug_message ();
 
-  for (i--; i >= 0 ; i--)
+  for (i--; i >= 0 ; --i)
     {
       this->put_message ();
       this->print_producer_debug_message ();
@@ -249,7 +249,7 @@ Watermark_Test::consumer ()
 
   // Let producer proceed and block in putq.
 
-  for (int i = watermark_iterations; i >= 0; i--)
+  for (int i = watermark_iterations; i >= 0; --i)
     {
       this->get_message ();
       ACE_OS::sleep (0);

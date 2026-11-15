@@ -254,7 +254,7 @@ cli_worker (void *arg)
   ACE_Time_Value delay (0, req_delay);
   size_t len = * reinterpret_cast<ACE_TCHAR *> (arg);
 
-  for (size_t i = 0 ; i < cli_conn_no; i++)
+  for (size_t i = 0 ; i < cli_conn_no; ++i)
     {
       if (connect.connect (stream, addr) < 0)
         {
@@ -264,7 +264,7 @@ cli_worker (void *arg)
           continue;
         }
 
-      for (size_t j = 0; j < cli_req_no; j++)
+      for (size_t j = 0; j < cli_req_no; ++j)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%t) conn_worker handle = %x, req = %d\n",

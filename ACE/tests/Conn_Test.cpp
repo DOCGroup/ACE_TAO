@@ -118,7 +118,7 @@ Svc_Handler::send_data ()
 {
   // Send data to server.
 
-  for (const char *c = ACE_ALPHABET; *c != '\0'; c++)
+  for (const char *c = ACE_ALPHABET; *c != '\0'; ++c)
     if (this->peer ().send_n (c, 1) == -1)
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) %p\n"),
@@ -308,7 +308,7 @@ cached_connect (STRAT_CONNECTOR &con,
 {
   Svc_Handler *svc_handler {};
 
-  for (int i = 0; i < n_client_iterations; i++)
+  for (int i = 0; i < n_client_iterations; ++i)
     {
       // Perform a blocking connect to the server using the Strategy
       // Connector with a connection caching strategy.  Since we are
@@ -520,7 +520,7 @@ spawn_processes (ACCEPTOR *acceptor,
 
   // Spawn off a number of server processes all of which will listen
   // on the same port number for clients to connect.
-  for (i = 0; i < n_servers; i++)
+  for (i = 0; i < n_servers; ++i)
     {
       pid_t pid = ACE_OS::fork (ACE_TEXT ("child"));
       switch (pid)
@@ -550,7 +550,7 @@ spawn_processes (ACCEPTOR *acceptor,
 
   client ((void *) server_addr);
 
-  for (i = 0; i < n_servers; i++)
+  for (i = 0; i < n_servers; ++i)
     // Shutdown the servers.
     if (ACE_OS::kill (children[i], SIGTERM) == -1)
       ACE_ERROR ((LM_ERROR,

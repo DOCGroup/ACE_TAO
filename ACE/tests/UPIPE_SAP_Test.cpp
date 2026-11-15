@@ -69,7 +69,7 @@ connector (void *)
 
   int i = 0;
 
-  for (char c = ' '; c != '!'; i++)
+  for (char c = ' '; c != '!'; ++i)
     {
       if (c_stream.recv (&c, 1) == -1)
         ACE_DEBUG ((LM_DEBUG,

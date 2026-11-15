@@ -157,7 +157,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
     ACE_SOCK_Dgram dgram (ACE_sap_any_cast (ACE_INET_Addr &), PF_INET);
 
-    for (size_t i = 0; i < ACE_MAX_ITERATIONS; i++)
+    for (size_t i = 0; i < ACE_MAX_ITERATIONS; ++i)
       dgram.send (ACE_TEXT ("Hello"),
                   sizeof (ACE_TEXT ("Hello")),
                   remote_addr);

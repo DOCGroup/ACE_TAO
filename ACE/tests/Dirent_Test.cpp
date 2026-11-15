@@ -164,7 +164,7 @@ dirent_test ()
 
   for (ACE_DIRENT *directory {};
        (directory = dir.read ()) != nullptr;
-       entrycount++)
+       ++entrycount)
     {
 #if defined (ACE_HAS_TCHAR_DIRENT)
       ACE_DEBUG ((LM_DEBUG,

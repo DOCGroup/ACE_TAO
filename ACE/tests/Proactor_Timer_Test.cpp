@@ -176,7 +176,7 @@ test_registering_all_handlers ()
   size_t which[ACE_MAX_TIMERS];
   long secs = 0;
   size_t i = 0;
-  for ( ; i < ACE_MAX_TIMERS; i++, secs++)
+  for ( ; i < ACE_MAX_TIMERS; ++i, ++secs)
     {
       which[i] = i;
       t_id[i] =
@@ -207,7 +207,7 @@ test_registering_one_handler ()
   counter = 0;
   long secs = 0;
   size_t i = 0;
-  for ( ; i < ACE_MAX_TIMERS; i++, secs++)
+  for ( ; i < ACE_MAX_TIMERS; ++i, ++secs)
     {
       which[i] = i;
       t_id[i] =
@@ -238,7 +238,7 @@ test_canceling_odd_timers ()
   odd = 1;
   size_t i = 0;
   long secs = 0;
-  for ( ; i < ACE_MAX_TIMERS; i++, secs++)
+  for ( ; i < ACE_MAX_TIMERS; ++i, ++secs)
     {
       which[i] = i;
       t_id[i] = ACE_Proactor::instance ()->schedule_timer
@@ -250,7 +250,7 @@ test_canceling_odd_timers ()
       rt[i].timer_id (t_id[i]);
     }
 
-  for (i = 0; i < ACE_MAX_TIMERS; i++)
+  for (i = 0; i < ACE_MAX_TIMERS; ++i)
     // Cancel handlers with odd numbered timer ids.
     if (ACE_ODD (rt[i].timer_id ()))
       {

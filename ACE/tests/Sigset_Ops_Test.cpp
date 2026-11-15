@@ -21,7 +21,7 @@ siglistset (sigset_t x, int *sigset, int can_miss = 0)
   bool empty = true;
   int result = 0;
 
-  for (int i = 1; i < ACE_NSIG; i++)
+  for (int i = 1; i < ACE_NSIG; ++i)
     {
       result = ACE_OS::sigismember (&x, i);
 
@@ -73,7 +73,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_OS::sigfillset (&x) ;
 
   // fill the comparison set
-  for (i = 0 ; i < ACE_NSIG ; i++)
+  for (i = 0 ; i < ACE_NSIG ; ++i)
     sigset [i] = 1 ;
 
   // There's no guarantee that the valid signals are sequential without
@@ -88,7 +88,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_OS::sigemptyset (&x) ;
 
   // empty the comparison set
-  for (i = 0 ; i < ACE_NSIG ; i++)
+  for (i = 0 ; i < ACE_NSIG ; ++i)
     sigset [i] = 0 ;
 
   siglistset (x, sigset) ;

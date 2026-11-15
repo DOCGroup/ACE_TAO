@@ -138,7 +138,7 @@ disable_signal (int sigmin, int sigmax)
                 ACE_TEXT ("Error: (%P|%t):%p\n"),
                 ACE_TEXT ("sigemptyset failed")));
 
-  for (int i = sigmin; i <= sigmax; i++)
+  for (int i = sigmin; i <= sigmax; ++i)
     ACE_OS::sigaddset (&signal_set, i);
 
   // Put the <signal_set>.
@@ -472,7 +472,7 @@ start_clients (void *)
   disable_signal (ACE_SIGRTMIN, ACE_SIGRTMAX);
   disable_signal (SIGPIPE, SIGPIPE);
 
-  for (size_t i = 0 ; i < cli_conn_no; i++)
+  for (size_t i = 0 ; i < cli_conn_no; ++i)
     {
       ACE_SSL_SOCK_Stream stream;
       if (connect.connect (stream, addr) < 0)

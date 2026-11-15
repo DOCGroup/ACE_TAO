@@ -126,7 +126,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
       ACE_exitcode status = 0;
 
-      for (int i = 0; i < ::iterations; i++)
+      for (int i = 0; i < ::iterations; ++i)
         {
           ACE_Process server;
 

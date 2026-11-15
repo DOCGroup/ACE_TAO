@@ -120,7 +120,7 @@ Supplier::svc ()
 
   // Send one message for each letter of the alphabet, then send an empty
   // message to mark the end.
-  for (const char *c = ACE_ALPHABET; *c != '\0'; c++)
+  for (const char *c = ACE_ALPHABET; *c != '\0'; ++c)
     {
       // Allocate a new message.
       char d[2];

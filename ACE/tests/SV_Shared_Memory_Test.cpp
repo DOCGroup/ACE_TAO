@@ -52,7 +52,7 @@ parent (char *shm)
 {
   // This for loop executes in a critical section proteced by
   // <parent_mutex>.
-  for (int i = 0; i < SHMSZ; i++)
+  for (int i = 0; i < SHMSZ; ++i)
     shm[i] = SHMDATA[i];
 
   int result;
@@ -111,7 +111,7 @@ child (char *shm)
         ACE_TEST_ASSERT (result != -1);
       }
 
-  for (int i = 0; i < SHMSZ; i++)
+  for (int i = 0; i < SHMSZ; ++i)
     ACE_TEST_ASSERT (SHMDATA[i] == shm[i]);
 
   result = synch.release ();

@@ -46,7 +46,7 @@ test_simple_argv (ACE_TCHAR *argv[])
               a.argc ()));
 
   // Print the contents of the combined <ACE_ARGV>.
-  for (int i = 0; i < a.argc (); i++)
+  for (int i = 0; i < a.argc (); ++i)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT (" (%d) %s\n"),
                 i,
@@ -86,7 +86,7 @@ test_argv_type_converter ()
   }
 
   {
-    for (size_t i = 0; i < 4; i++)
+    for (size_t i = 0; i < 4; ++i)
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT (" (%B) %C\n"),
                   i,
@@ -123,7 +123,7 @@ test_argv_type_converter2 ()
   consume_arg (argc, argv);
 
   {
-    for (size_t i = 0; i < 4; i++)
+    for (size_t i = 0; i < 4; ++i)
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT (" (%B) %s\n"),
                   i,

@@ -437,7 +437,7 @@ test_performance (ACE_Timer_Queue *tq,
 
   timer.start ();
 
-  for (i = max_iterations - 1; i >= 0; i--)
+  for (i = max_iterations - 1; i >= 0; --i)
     {
       tq->cancel (timer_ids[i], &timer_act);
       delete (int *) timer_act;

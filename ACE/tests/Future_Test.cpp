@@ -402,7 +402,7 @@ run_main (int, ACE_TCHAR *[])
   result = matias->open ();
   ACE_TEST_ASSERT (result != -1);
 
-  for (int i = 0; i < n_loops; i++)
+  for (int i = 0; i < n_loops; ++i)
     {
       {
         ACE_Future<u_long> fresulta;

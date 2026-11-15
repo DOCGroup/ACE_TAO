@@ -97,7 +97,7 @@ void print_till_death ()
   ACE_DEBUG ((LM_DEBUG,
               "\n-> start generating messages...\n"));
 
-  for (int i = 0; i < 1000; i++)
+  for (int i = 0; i < 1000; ++i)
     {
       if (i % 50 == 0)
       {
@@ -443,7 +443,7 @@ int run_main (int argc, ACE_TCHAR *argv [])
                    ACE_TEXT ("*ACE:_make_ACE_Logging_Strategy()")
                    ACE_TEXT ("\""));
 
-  for (int i = 1; i < argc; i++)
+  for (int i = 1; i < argc; ++i)
     {
       ACE_OS::strcat (arg_str, argv[i]);
       ACE_OS::strcat (arg_str, ACE_TEXT (" "));
@@ -461,7 +461,7 @@ int run_main (int argc, ACE_TCHAR *argv [])
   unsigned char ls_argc = argc - 1;
   std::unique_ptr<ACE_TCHAR *> ls_argv (new ACE_TCHAR *[ls_argc]);
 
-  for (unsigned char c = 0; c < ls_argc; c++)
+  for (unsigned char c = 0; c < ls_argc; ++c)
     (ls_argv.get ())[c] = argv[c+1];
 
   if (logging_strategy.init (ls_argc, ls_argv.get ()) == -1)

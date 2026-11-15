@@ -166,7 +166,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
       for (i = 0;
            i < n_processes;
-           i++)
+           ++i)
         {
           // Spawn the child process.
           if (children[i].spawn (options) == -1)
@@ -191,7 +191,7 @@ run_main (int argc, ACE_TCHAR *argv[])
           ACE_OS::sleep (1);
         }
 
-      for (i = 0; i < n_processes; i++)
+      for (i = 0; i < n_processes; ++i)
         {
           ACE_exitcode child_status;
           // Wait for the child processes we created to exit.

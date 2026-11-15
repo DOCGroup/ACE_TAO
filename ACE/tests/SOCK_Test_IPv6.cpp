@@ -71,7 +71,7 @@ client (void *arg)
 
   // Send data to server (correctly handles "incomplete writes").
 
-  for (const char *c = ACE_ALPHABET; *c != '\0'; c++)
+  for (const char *c = ACE_ALPHABET; *c != '\0'; ++c)
     if (cli_stream.send_n (c, 1) == -1)
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("send_n")));
 

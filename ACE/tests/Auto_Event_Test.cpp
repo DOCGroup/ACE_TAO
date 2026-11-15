@@ -141,7 +141,7 @@ worker (void *)
 {
   for (int iterations = 1;
        iterations <= n_iterations;
-       iterations++)
+       ++iterations)
     {
       //FUZZ: disable check_for_lack_ACE_OS
       ACE_Time_Value wait (0,
@@ -202,7 +202,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
   ACE_OS::srand ((u_int) ACE_OS::time (nullptr));
 
   //Test timed waits.
-  for (size_t i = 0; i < test_timeout_count; i++)
+  for (size_t i = 0; i < test_timeout_count; ++i)
     if (test_timeout () != 0)
     {
       test_result = 1;

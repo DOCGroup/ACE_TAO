@@ -81,9 +81,9 @@ create_test_file (ACE_TCHAR *filename, int line_length, int num_lines)
                         -1);
     }
 
-  for (int j = 0; j < num_lines; j++)
+  for (int j = 0; j < num_lines; ++j)
     {
-      for (int i = 0; i < line_length; i++)
+      for (int i = 0; i < line_length; ++i)
         {
           mybuf[i] = *c;
           ++c;

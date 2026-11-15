@@ -112,7 +112,7 @@ Test_Task::svc ()
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) svc\n")));
 
-  for (size_t i = 0; i < ACE_MAX_ITERATIONS; i++)
+  for (size_t i = 0; i < ACE_MAX_ITERATIONS; ++i)
     {
       ACE_OS::thr_yield ();
 
@@ -210,7 +210,7 @@ run_main (int, ACE_TCHAR *[])
 
   // Activate all of the Tasks.
 
-  for (int i = 0; i < MAX_TASKS; i++)
+  for (int i = 0; i < MAX_TASKS; ++i)
     {
       tt1[i].open (ACE_Reactor::instance ());
       tt2[i].open (&reactor);

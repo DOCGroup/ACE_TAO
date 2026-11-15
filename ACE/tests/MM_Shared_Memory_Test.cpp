@@ -88,7 +88,7 @@ child (void * = nullptr)
 
   ACE_TEST_ASSERT (shm != nullptr);
 
-  for (char *s = shm; *s != '\0'; s++)
+  for (char *s = shm; *s != '\0'; ++s)
     {
       ACE_TEST_ASSERT (*t == s[0]);
       ++t;
@@ -115,7 +115,7 @@ parent (void * = nullptr)
 
   char *s = shm;
 
-  for (const char *c = ACE_ALPHABET; *c != '\0'; c++)
+  for (const char *c = ACE_ALPHABET; *c != '\0'; ++c)
     *s++ = *c;
 
   *s = '\0';

@@ -201,7 +201,7 @@ client (void *arg)
   std::unique_ptr <ACE_INET_Addr[]> addresses (temp_addresses);
 
   // Initialize array.
-  for (i = 0; i < opt_nconnections; i++)
+  for (i = 0; i < opt_nconnections; ++i)
     {
       writers[i] = 0;
       addresses[i] = *connection_addr;
@@ -215,7 +215,7 @@ client (void *arg)
   if (result == -1)
     {
       // Print out the connections that failed...
-      for (i = 0; i < opt_nconnections; i++)
+      for (i = 0; i < opt_nconnections; ++i)
         if (failed_svc_handlers.get ()[i])
           {
             ACE_INET_Addr failed_addr = addresses.get()[i];
@@ -230,15 +230,15 @@ client (void *arg)
   // If no connections failed (result == 0) then there should be valid
   // ACE_Svc_handler pointers in each writers[] position.  Iterate to
   // send data
-  for (int j = 0; j < opt_nloops; j++)
-    for (i = 0; i < opt_nconnections; i++)
+  for (int j = 0; j < opt_nloops; ++j)
+    for (i = 0; i < opt_nconnections; ++i)
       if (writers[i]->send_data () == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("(%t) %p\n"),
                            ACE_TEXT ("writer::send_data")),
                           0);
   // Cleanup
-  for (i = 0; i < opt_nconnections; i++)
+  for (i = 0; i < opt_nconnections; ++i)
     writers[i]->destroy ();
 
   ACE_DEBUG ((LM_DEBUG,

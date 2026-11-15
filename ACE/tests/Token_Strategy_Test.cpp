@@ -110,7 +110,7 @@ Token_Strategy_Test::svc ()
   this->barrier_.wait ();
 
   //ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (tid = %t) starting loop\n")));
-  for (int i = 0; i < this->invocations_; i++)
+  for (int i = 0; i < this->invocations_; ++i)
     {
       ACE_GUARD_RETURN (ACE_Token, lock, this->token_, -1);
       this->vec_token_count_[current]++;

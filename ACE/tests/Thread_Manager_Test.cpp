@@ -94,7 +94,7 @@ worker (int iterations)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) worker starting loop\n")));
 
-  for (int i = 0; i < iterations; i++)
+  for (int i = 0; i < iterations; ++i)
     {
       if ((i % 1000) == 0)
         {

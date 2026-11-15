@@ -59,7 +59,7 @@ test_cache_map_manager (size_t table_size,
   TYPE j = TYPE ();
   ssize_t k;
 
-  for (i = 0; i < iterations; i++)
+  for (i = 0; i < iterations; ++i)
     ACE_TEST_ASSERT (map.bind (i, i) != -1);
 
   if (test_iterators)
@@ -183,7 +183,7 @@ test_hash_cache_map_manager (size_t table_size,
   TYPE j = 0;
   ssize_t k;
 
-  for (i = 0; i < iterations; i++)
+  for (i = 0; i < iterations; ++i)
     ACE_TEST_ASSERT (map.bind (i, i) != -1);
 
   if (test_iterators)
@@ -312,7 +312,7 @@ test_active_map_manager (size_t table_size,
 
   for (i = 0;
        i < iterations;
-       i++)
+       ++i)
     ACE_TEST_ASSERT (map.bind (i, active_keys[i]) != -1);
 
   if (test_iterators)
@@ -396,7 +396,7 @@ test_hash_map_manager (size_t table_size,
   TYPE j = 0;
   ssize_t k;
 
-  for (i = 0; i < iterations; i++)
+  for (i = 0; i < iterations; ++i)
     ACE_TEST_ASSERT (map.bind (i, i) != -1);
 
   if (test_iterators)

@@ -31,7 +31,7 @@ test_duplicates (size_t count)
 
   u_int seed = (u_int) ACE_OS::time (nullptr);
 
-  for (size_t i = 0; i < count; i++)
+  for (size_t i = 0; i < count; ++i)
     {
       size_t const handle = static_cast<size_t> (ACE_OS::rand_r (&seed) % ACE_Handle_Set::MAXSIZE);
 
@@ -133,7 +133,7 @@ test_boundaries ()
 #endif /* ACE_WIN64 */
   for (int i = 0;
        handle_vector[i] != ACE_INVALID_HANDLE;
-       i++)
+       ++i)
     {
       if (handle_vector[i] < (ACE_HANDLE) ACE_DEFAULT_SELECT_REACTOR_SIZE)
         {
@@ -169,7 +169,7 @@ test_performance (size_t max_handles,
   ACE_Handle_Set handle_set;
   size_t i;
 
-  for (i = 0; i < max_handles; i++)
+  for (i = 0; i < max_handles; ++i)
     handle_set.set_bit ((ACE_HANDLE) i);
 
   ACE_Profile_Timer timer;
@@ -177,7 +177,7 @@ test_performance (size_t max_handles,
 
   timer.start ();
 
-  for (i = 0; i < max_iterations; i++)
+  for (i = 0; i < max_iterations; ++i)
     {
       ACE_Handle_Set_Iterator iter (handle_set);
 

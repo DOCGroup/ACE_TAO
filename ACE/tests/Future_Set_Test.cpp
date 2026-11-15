@@ -414,7 +414,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) initializing future sets with non-blocking call\n")));
 
-  for (int i = 0; i < n_loops; i++)
+  for (int i = 0; i < n_loops; ++i)
     {
       // Spawn off the methods, which run in a separate thread as
       // active object invocations.

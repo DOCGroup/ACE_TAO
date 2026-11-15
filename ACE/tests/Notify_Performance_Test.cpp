@@ -78,7 +78,7 @@ client (void *arg)
     handler = (Handler *) arg;
   }
 
-  for (int i = 0; i < opt_nloops; i++)
+  for (int i = 0; i < opt_nloops; ++i)
     ACE_Reactor::instance ()->notify (handler);
 
   if (--thread_counter == 0)

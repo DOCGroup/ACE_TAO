@@ -202,12 +202,12 @@ parse_args (int test_number,
 
   // Print out the rest of the arguments left in the command line (if any).
   int index = 0;
-  for (index = get_opt.opt_ind (); index < args.argc (); index++)
+  for (index = get_opt.opt_ind (); index < args.argc (); ++index)
     ACE_DEBUG ((LM_INFO, "   Found non-option argument \"%s\"\n",
                 args.argv ()[index]));
 
   // Now print them all so we can examine the permuted cmd line.
-  for (index = 0; index < args.argc (); index++)
+  for (index = 0; index < args.argc (); ++index)
     ACE_DEBUG ((LM_INFO, "   argv[%u] \"%s\"\n",
                 index, args.argv ()[index]));
   return 0;

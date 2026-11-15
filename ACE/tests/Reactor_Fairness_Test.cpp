@@ -192,7 +192,7 @@ sender (void *arg)
 
   // Connection all <opt_nconnections> connections before sending data.
   ACE_SOCK_Connector c;
-  for (i = 0; i < opt_nconnections; i++)
+  for (i = 0; i < opt_nconnections; ++i)
     {
       if (c.connect (socks[i], *connection_addr) == -1)
         {
@@ -223,7 +223,7 @@ sender (void *arg)
   while (!tm->testcancel (me) && !fail)
     {
       bool sent_something = false;
-      for (i = 0; i < opt_nconnections; i++)
+      for (i = 0; i < opt_nconnections; ++i)
         {
           ssize_t cnt = socks[i].send (ACE_ALPHABET, send_cnt);
           if (opt_debug)
@@ -256,7 +256,7 @@ sender (void *arg)
     }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Done sending.\n")));
-  for (i = 0; i < opt_nconnections; i++)
+  for (i = 0; i < opt_nconnections; ++i)
     socks[i].close ();
   return ACE_THR_FUNC_RETURN_NULL;
 }

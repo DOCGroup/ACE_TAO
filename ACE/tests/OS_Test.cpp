@@ -1218,7 +1218,7 @@ ceilf_test ()
   float result = 0.0;
   int error_count = 0;
 
-  for (size_t i = 0 ; i < sizeof (values) / sizeof (float) ; i++)
+  for (size_t i = 0 ; i < sizeof (values) / sizeof (float) ; ++i)
     {
       result = ACE_OS::ceil (values [i]);
       if (ACE::is_inequal(result, results[i]))
@@ -1246,7 +1246,7 @@ floorf_test ()
   float result = 0.0;
   int error_count = 0;
 
-  for (size_t i = 0 ; i < sizeof (values) / sizeof (float) ; i++)
+  for (size_t i = 0 ; i < sizeof (values) / sizeof (float) ; ++i)
     {
       result = ACE_OS::floor (values [i]);
       if (ACE::is_inequal(result, results[i]))
@@ -1272,7 +1272,7 @@ ceil_test ()
   double result = 0.0;
   int error_count = 0;
 
-  for (size_t i = 0 ; i < sizeof (values) / sizeof (double) ; i++)
+  for (size_t i = 0 ; i < sizeof (values) / sizeof (double) ; ++i)
     {
       result = ACE_OS::ceil (values [i]);
       if (ACE::is_inequal(result, results[i]))
@@ -1300,7 +1300,7 @@ floor_test ()
   double result = 0.0;
   int error_count = 0;
 
-  for (size_t i = 0 ; i < sizeof (values) / sizeof (double) ; i++)
+  for (size_t i = 0 ; i < sizeof (values) / sizeof (double) ; ++i)
     {
       result = ACE_OS::floor (values [i]);
       if (ACE::is_inequal(result, results[i]))
@@ -1328,7 +1328,7 @@ ceill_test ()
   long double result = 0.0;
   int error_count = 0;
 
-  for (size_t i = 0 ; i < sizeof (values) / sizeof (long double) ; i++)
+  for (size_t i = 0 ; i < sizeof (values) / sizeof (long double) ; ++i)
     {
       result = ACE_OS::ceil (values [i]);
       if (ACE::is_inequal(result, results[i]))
@@ -1356,7 +1356,7 @@ floorl_test ()
   long double result = 0.0;
   int error_count = 0;
 
-  for (size_t i = 0 ; i < sizeof (values) / sizeof (long double) ; i++)
+  for (size_t i = 0 ; i < sizeof (values) / sizeof (long double) ; ++i)
     {
       result = ACE_OS::floor (values [i]);
       if (ACE::is_inequal(result, results[i]))
@@ -1382,7 +1382,7 @@ log2_test ()
   int result = 0;
   int error_count = 0;
 
-  for (size_t i = 0 ; i < sizeof (values) / sizeof (double) ; i++)
+  for (size_t i = 0 ; i < sizeof (values) / sizeof (double) ; ++i)
     {
       result = static_cast<int> (ACE_OS::log2 (values [i]) + 0.5);
       if (result != results [i])

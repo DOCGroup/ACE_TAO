@@ -121,7 +121,7 @@ Thread_Pool::svc ()
   // Keep looping, reading a message out of the queue, until we get a
   // message with a length == 0, which signals us to quit.
 
-  for (int count = 1; ; count++)
+  for (int count = 1; ; ++count)
     {
       ACE_Message_Block *mb {};
 
@@ -371,7 +371,7 @@ Thread_Pool::test_empty_message_shutdown ()
           // inform it to shutdown.
           for (i = this->thr_count ();
                i > 0;
-               i--)
+               --i)
             {
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%t) end of input, ")

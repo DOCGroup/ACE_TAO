@@ -24,7 +24,7 @@ int run_main (int, ACE_TCHAR *[])
   const ACE_TCHAR str2[] = ACE_TEXT ("It's fleece was white as snow; but....");
   ACE_Obstack_T<ACE_TCHAR> stack (sizeof (str1) + 1);
 
-  for (size_t i = 0; i < ACE_OS::strlen (str1); i++)
+  for (size_t i = 0; i < ACE_OS::strlen (str1); ++i)
     stack.grow_fast (str1[i]);
 
   ACE_TCHAR *str = stack.freeze ();

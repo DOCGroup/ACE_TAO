@@ -36,7 +36,7 @@ run_test ()
   size_t i;
 
   // Check the <bind> operation.
-  for (i = 0; warm_colors[i] != nullptr; i++)
+  for (i = 0; warm_colors[i] != nullptr; ++i)
     {
       if (colors.bind (color_sorts[0],
                        warm_colors[i]) == -1)
@@ -48,7 +48,7 @@ run_test ()
     }
 
   HASH_STRING_ENTRY *entry {};
-  for (i = 0; cold_colors[i] != nullptr; i++)
+  for (i = 0; cold_colors[i] != nullptr; ++i)
     {
       if (colors.bind (color_sorts[1],
                        cold_colors[i],
@@ -62,7 +62,7 @@ run_test ()
 
   HASH_STRING_VALUE_SET value_set;
   entry = nullptr;
-  for (i = 0; neutral_colors[i] != nullptr; i++)
+  for (i = 0; neutral_colors[i] != nullptr; ++i)
     value_set.insert (neutral_colors[i]);
   if (colors.bind (color_sorts[2],
                    value_set,
@@ -160,7 +160,7 @@ run_test ()
                        -1);
 
   value_set.reset ();
-  for (i = 0; neutral_colors[i] != nullptr; i++)
+  for (i = 0; neutral_colors[i] != nullptr; ++i)
     value_set.insert (neutral_colors[i]);
   old_key = nullptr;
   old_value_set.reset ();
@@ -176,7 +176,7 @@ run_test ()
                        -1);
 
   // Check the <find> operation.
-  for (i = 0; color_sorts[i] != nullptr; i++)
+  for (i = 0; color_sorts[i] != nullptr; ++i)
     if (colors.find (color_sorts[i]) == 0)
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("%s found\n"),
@@ -188,7 +188,7 @@ run_test ()
                         -1);
 
   entry = nullptr;
-  for (i = 0; color_sorts[i] != nullptr; i++)
+  for (i = 0; color_sorts[i] != nullptr; ++i)
     if (colors.find (color_sorts[i],
                      entry) == 0)
       ACE_DEBUG ((LM_DEBUG,
@@ -201,7 +201,7 @@ run_test ()
                         -1);
 
   value_set.reset ();
-  for (i = 0; color_sorts[i] != nullptr; i++)
+  for (i = 0; color_sorts[i] != nullptr; ++i)
     if (colors.find (color_sorts[i],
                      value_set) == 0)
       ACE_DEBUG ((LM_DEBUG,
@@ -213,7 +213,7 @@ run_test ()
                          color_sorts[i]),
                         -1);
 
-  for (i = 0; warm_colors[i] != nullptr; i++)
+  for (i = 0; warm_colors[i] != nullptr; ++i)
     if (colors.find (color_sorts[0],
                      warm_colors[i]) == 0)
       ACE_DEBUG ((LM_DEBUG,
@@ -242,7 +242,7 @@ run_test ()
 
       for (HASH_STRING_VALUE_SET_ITERATOR iter (entry->item ());
            iter != entry->item ().end ();
-           iter++)
+           ++iter)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("%s \n"),
@@ -256,7 +256,7 @@ run_test ()
                        ACE_TEXT ("unbind failed for %s\n"),
                        color_sorts[1]),
                       -1);
-  for (i = 0; warm_colors[i] != nullptr; i++)
+  for (i = 0; warm_colors[i] != nullptr; ++i)
     {
       if (colors.bind (color_sorts[0],
                        warm_colors[i]) == -1)
@@ -273,7 +273,7 @@ run_test ()
                        ACE_TEXT ("unbind failed for %s\n"),
                        color_sorts[1]),
                       -1);
-  for (i = 0; warm_colors[i] != nullptr; i++)
+  for (i = 0; warm_colors[i] != nullptr; ++i)
     {
       if (colors.bind (color_sorts[0],
                        warm_colors[i]) == -1)
@@ -284,7 +284,7 @@ run_test ()
                           -1);
     }
 
-  for (i = 0; warm_colors[i] != nullptr; i++)
+  for (i = 0; warm_colors[i] != nullptr; ++i)
     {
       if (colors.unbind (color_sorts[0],
                          warm_colors[i]) == -1)
@@ -310,7 +310,7 @@ run_test ()
 
       for (HASH_STRING_VALUE_SET_ITERATOR iter (entry->item ());
            iter != entry->item ().end ();
-           iter++)
+           ++iter)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("%s \n"),
@@ -341,7 +341,7 @@ run_test ()
 
       for (HASH_STRING_VALUE_SET_ITERATOR iter (entry->item ());
            iter != entry->item ().end ();
-           iter++)
+           ++iter)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("%s \n"),

@@ -286,7 +286,7 @@ disable_signal (int sigmin, int sigmax)
                 ACE_TEXT ("Error: (%P|%t):%p\n"),
                 ACE_TEXT ("sigemptyset failed")));
 
-  for (int i = sigmin; i <= sigmax; i++)
+  for (int i = sigmin; i <= sigmax; ++i)
     ACE_OS::sigaddset (&signal_set, i);
 
   // Put the <signal_set>.

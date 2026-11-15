@@ -772,7 +772,7 @@ build_config_object (ACE_Configuration& cfg)
 
   u_char data[80];
 
-  for (int i = 0; i < 80; i++)
+  for (int i = 0; i < 80; ++i)
     data[i] = i + 128;
 
   if (cfg.set_binary_value (BinarySection,
@@ -1583,7 +1583,7 @@ Config_Test::get_section_boolean (ACE_Configuration&             config,
                        10);
       for (ACE_TCHAR* pSrc = pszString;
            *pSrc != ACE_TEXT ('\0');
-           pSrc++)
+           ++pSrc)
         // Convert to uppercase
         if (ACE_OS::ace_islower (*pSrc))
         {

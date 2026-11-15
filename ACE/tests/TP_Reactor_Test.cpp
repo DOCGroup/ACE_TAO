@@ -203,7 +203,7 @@ MyTask::start (int num_threads)
                        ACE_TEXT ("unable to activate thread pool")),
                       -1);
 
-  for (; num_threads > 0 ; num_threads--)
+  for (; num_threads > 0 ; --num_threads)
     sem_.acquire ();
 
   return 0;
@@ -743,7 +743,7 @@ Connector::start (const ACE_INET_Addr & addr, int num)
 
   int rc = 0;
 
-  for (int i = 0 ; i < num ; i++)
+  for (int i = 0 ; i < num ; ++i)
     {
       Sender * sender {};
 
@@ -1203,7 +1203,7 @@ disable_signal (int sigmin, int sigmax)
                 ACE_TEXT("Error: (%P | %t):%p\n"),
                 ACE_TEXT("sigemptyset failed")));
 
-  for (int i = sigmin; i <= sigmax; i++)
+  for (int i = sigmin; i <= sigmax; ++i)
     ACE_OS::sigaddset (&signal_set, i);
 
   // Put the <signal_set>.

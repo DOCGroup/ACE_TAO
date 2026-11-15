@@ -83,7 +83,7 @@ int testIterator()
   count = 0;
 
   for (ACE_CString::iterator iter = s1.begin (), iter_end = s1.end ();
-       iter != iter_end; iter ++)
+       iter != iter_end; ++iter)
   {
     ++ count;
   }
@@ -130,7 +130,7 @@ int testConstIterator()
   count = 0;
 
   for (ACE_CString::const_iterator iter = s1.begin (), iter_end = s1.end ();
-       iter != iter_end; iter ++)
+       iter != iter_end; ++iter)
   {
     ++ count;
   }

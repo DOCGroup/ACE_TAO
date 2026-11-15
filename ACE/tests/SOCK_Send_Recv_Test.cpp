@@ -174,7 +174,7 @@ client (void *arg)
                   len));
     }
 
-  for (i = 0; i < 255; i++)
+  for (i = 0; i < 255; ++i)
     if (buffer2[i] != buffer[i])
       {
         ACE_ERROR ((LM_ERROR,
@@ -286,7 +286,7 @@ server (void *arg)
                   static_cast<int> (len)));
       Test_Result = 1;
     }
-  for (i = 0; i < 255; i++)
+  for (i = 0; i < 255; ++i)
     if (buffer[i] != i)
       {
         ACE_ERROR ((LM_ERROR,

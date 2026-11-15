@@ -105,7 +105,7 @@ Worker_Task::svc ()
   // Keep looping, reading a message out of the queue, until we get a
   // message with a length == 0, which signals us to quit.
 
-  for (int count = 0; ; count++)
+  for (int count = 0; ; ++count)
     {
       ACE_Message_Block *mb {};
 
@@ -149,7 +149,7 @@ Worker_Task::svc ()
           ACE_Message_Block *dup;
 
           // Enqueue <current_count> duplicates with msg_priority == 1.
-          for (i = current_count; i > 0; i--)
+          for (i = current_count; i > 0; --i)
             {
               ACE_ALLOCATOR_RETURN (dup,
                                     mb->duplicate (),
@@ -179,7 +179,7 @@ Worker_Task::svc ()
                       current_count));
 
           // Dequeue the same <current_count> duplicates.
-          for (i = current_count; i > 0; i--)
+          for (i = current_count; i > 0; --i)
             {
               if (-1 == this->msg_queue ()->dequeue_head (dup))
                 ACE_ERROR_BREAK ((LM_ERROR,
@@ -256,7 +256,7 @@ produce (Worker_Task &worker_task,
   int status;
 
   // Send <n_iteration> messages through the pipeline.
-  for (size_t count = 0; count < n_iterations; count++)
+  for (size_t count = 0; count < n_iterations; ++count)
     {
       ACE_TCHAR buf[BUFSIZ];
       ACE_OS::snprintf (buf, BUFSIZ, ACE_SIZE_T_FORMAT_SPECIFIER, count);
@@ -429,7 +429,7 @@ run_main (int, ACE_TCHAR *[])
 
   int i;
 
-  for (i = 0; i < ACE_ALLOC_STRATEGY_NO; i++)
+  for (i = 0; i < ACE_ALLOC_STRATEGY_NO; ++i)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%t) Start Message_Block_Test using %s allocation strategy\n"),
@@ -439,7 +439,7 @@ run_main (int, ACE_TCHAR *[])
       Worker_Task worker_task[ACE_MAX_THREADS] ;
 
       // Link all the tasks together into a simple pipeline.
-      for (size_t j = 1; j < ACE_MAX_THREADS; j++)
+      for (size_t j = 1; j < ACE_MAX_THREADS; ++j)
         worker_task[j - 1].next (&worker_task[j]);
 
       ptime.start ();
@@ -459,7 +459,7 @@ run_main (int, ACE_TCHAR *[])
                   ACE_TEXT ("(%t) destroying worker tasks\n")));
     }
 
-  for (i = 0; i < ACE_ALLOC_STRATEGY_NO; i++)
+  for (i = 0; i < ACE_ALLOC_STRATEGY_NO; ++i)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("Elapsed time using %s allocation strategy: %f sec\n"),
                 alloc_struct[i].name_,

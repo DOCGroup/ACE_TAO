@@ -340,7 +340,7 @@ int run_main (int, ACE_TCHAR *[])
   status |= check_type_consistency (addr);
   char hostaddr[1024];
 
-  for (int i=0; ipv4_addresses[i] != nullptr; i++)
+  for (int i=0; ipv4_addresses[i] != nullptr; ++i)
     {
       struct in_addr addrv4;
       ACE_OS::memset ((void *) &addrv4, 0, sizeof addrv4);
@@ -492,7 +492,7 @@ int run_main (int, ACE_TCHAR *[])
         nullptr
       };
 
-      for (int i=0; ipv6_addresses[i] != nullptr; i++)
+      for (int i=0; ipv6_addresses[i] != nullptr; ++i)
         {
           ACE_INET_Addr addr (80, ipv6_addresses[i]);
           status |= check_type_consistency (addr);
@@ -512,7 +512,7 @@ int run_main (int, ACE_TCHAR *[])
         "v6.ipv6-test.com",
         nullptr
       };
-      for (int i=0; ipv6_names[i] != nullptr; i++)
+      for (int i=0; ipv6_names[i] != nullptr; ++i)
         {
           ACE_INET_Addr addr (80, ipv6_names[i]);
           status |= check_type_consistency (addr);
@@ -552,7 +552,7 @@ int run_main (int, ACE_TCHAR *[])
       , {"126.255.255.255", false}, {"128.0.0.0", false}, {nullptr, true}
     };
 
-  for (int i=0; loopback_addresses[i].name != nullptr; i++)
+  for (int i=0; loopback_addresses[i].name != nullptr; ++i)
     {
       struct in_addr addrv4;
       ACE_UINT32 addr32 = 0;

@@ -38,7 +38,7 @@ wait_tester (Tester_Args *args)
 {
   for (int iterations = 1;
        iterations <= args->n_iterations_;
-       iterations++)
+       ++iterations)
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) in iteration %d\n"),
                   iterations));
@@ -85,7 +85,7 @@ run_main (int, ACE_TCHAR *[])
 
   for (size_t iteration_count = 0;
        iteration_count < ACE_MAX_ITERATIONS;
-       iteration_count++)
+       ++iteration_count)
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("starting iteration %B\n"),
                   iteration_count));

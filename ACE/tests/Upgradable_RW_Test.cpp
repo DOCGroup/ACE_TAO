@@ -155,7 +155,7 @@ Reader_Task::svc ()
 
   for (int iterations = 1;
        iterations <= n_iterations;
-       iterations++)
+       ++iterations)
     {
       ACE_Thread::yield ();
 
@@ -230,7 +230,7 @@ Writer_Task::svc ()
 
   for (int iterations = 1;
        iterations <= n_iterations;
-       iterations++)
+       ++iterations)
     {
       ACE_Thread::yield ();
 
@@ -320,7 +320,7 @@ init ()
                   Linked_List,
                   -1);
 
-  for (u_int i = 0; i < n_entries; i++)
+  for (u_int i = 0; i < n_entries; ++i)
     {
       ACE_OS::snprintf (entry, MAX_STRING_SIZE, "%d", i);
       ACE_NEW_RETURN (cString_ptr,
@@ -375,7 +375,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   for (i = 0;
        i < n_readers;
-       i++)
+       ++i)
     {
       ACE_NEW_RETURN (reader_tasks[i],
                       Reader_Task (time_Calculation,
@@ -397,7 +397,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   for (i = 0;
        i < n_writers;
-       i++)
+       ++i)
     {
       ACE_NEW_RETURN (writer_tasks[i],
                       Writer_Task (time_Calculation,
@@ -448,7 +448,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   for (i = 0;
        i < n_entries;
-       i++)
+       ++i)
     {
       if (nullptr != (element_ptr = linked_list_ptr->delete_head ()))
         {
@@ -462,14 +462,14 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   for (i = 0;
        i < n_writers;
-       i++)
+       ++i)
     delete writer_tasks[i];
 
   delete [] writer_tasks;
 
   for (i = 0;
        i < n_readers;
-       i++)
+       ++i)
     delete reader_tasks [i];
 
   delete [] reader_tasks;

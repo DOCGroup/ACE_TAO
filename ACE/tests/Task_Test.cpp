@@ -97,7 +97,7 @@ Barrier_Task::svc ()
 {
   for (int iterations = 1;
        iterations <= this->n_iterations_;
-       iterations++)
+       ++iterations)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%t) in iteration %d\n"),

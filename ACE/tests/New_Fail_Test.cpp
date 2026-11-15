@@ -73,7 +73,7 @@ run_main (int, ACE_TCHAR *[])
   try
     {
       // First part: test ACE_NEW
-      for (i = 0; i < MAX_ALLOCS_IN_TEST; i++)
+      for (i = 0; i < MAX_ALLOCS_IN_TEST; ++i)
         {
           try_ace_new (&blocks[i]);
           if (blocks[i] == nullptr)
@@ -109,7 +109,7 @@ run_main (int, ACE_TCHAR *[])
         delete [] blocks[i--];
 
       // Second part: test ACE_NEW_RETURN
-      for (i = 0; i < MAX_ALLOCS_IN_TEST; i++)
+      for (i = 0; i < MAX_ALLOCS_IN_TEST; ++i)
         {
           blocks[i] = try_ace_new_return ();
           if (blocks[i] == nullptr)
@@ -144,7 +144,7 @@ run_main (int, ACE_TCHAR *[])
         delete [] blocks[i--];
 
       // Third part: test ACE_NEW_NORETURN
-      for (i = 0; i < MAX_ALLOCS_IN_TEST; i++)
+      for (i = 0; i < MAX_ALLOCS_IN_TEST; ++i)
         {
           blocks[i] = try_ace_new_noreturn ();
           if (blocks[i] == nullptr)

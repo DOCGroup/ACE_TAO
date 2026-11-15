@@ -158,7 +158,7 @@ private:
                       worker_mon,
                       this->workers_lock_,
                       -1);
-    for (int i = 0; i < POOL_SIZE; i++)
+    for (int i = 0; i < POOL_SIZE; ++i)
       {
         Worker *worker;
         ACE_NEW_RETURN (worker, Worker (this), -1);
@@ -248,7 +248,7 @@ run_main (int, ACE_TCHAR *[])
   tv.msec (100);
 
   ACE_Message_Block *mb {};
-  for (int i = 0; i < 3; i++)
+  for (int i = 0; i < 3; ++i)
     {
       ACE_NEW_RETURN
         (mb, ACE_Message_Block(sizeof(int)), -1);

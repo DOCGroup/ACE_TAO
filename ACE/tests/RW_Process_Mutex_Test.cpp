@@ -460,7 +460,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       Child readers[Nr_Processes - 1];
       int i;
 
-      for (i = 0; i < Nr_Processes; i++)
+      for (i = 0; i < Nr_Processes; ++i)
         {
           Child *child = (i == 0 ? &writer : &readers[i-1]);
           ACE_Process_Options options;
@@ -494,7 +494,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       // checking for exits.
       int processes = Nr_Processes;
       Child *children[Nr_Processes];
-      for (i = 0; i < Nr_Processes; i++)
+      for (i = 0; i < Nr_Processes; ++i)
         children[i] = (i == 0 ? &writer : &readers[i-1]);
 
       Range_Report report;
@@ -533,7 +533,7 @@ run_main (int argc, ACE_TCHAR *argv[])
               }
             }
 
-          for (i = 0; i < Nr_Processes; i++)
+          for (i = 0; i < Nr_Processes; ++i)
             {
               if (children[i] == nullptr)
               {

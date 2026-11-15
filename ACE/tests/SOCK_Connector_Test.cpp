@@ -129,7 +129,7 @@ find_another_host (ACE_TCHAR other_host[])
         }
 
       // Now try to connect to candidates
-      for (int i = 0; i < candidate_count; i++)
+      for (int i = 0; i < candidate_count; ++i)
         if (host_is_up (candidate[i].host_name))
           {
             ACE_OS::strcpy (other_host, candidate[i].host_name);

@@ -173,7 +173,7 @@ int run_main (int, ACE_TCHAR *[])
     ACE_TEST_ASSERT (vector.begin () == vector.end ());
 
     size_t i;
-    for (i = 0; i < size; i++)
+    for (i = 0; i < size; ++i)
       {
         vector.push_back (i + offset);
       }

@@ -98,7 +98,7 @@ run_main (int, ACE_TCHAR *[])
 
   ACE_TIMEPROBE ("Starting Test");
 
-  for (int i = 0; i < 3; i++)
+  for (int i = 0; i < 3; ++i)
     {
       work (i);
       ACE_TIMEPROBE (EVENT_ZERO + i);

@@ -43,7 +43,7 @@ test (void *args)
   ACE_UNUSED_ARG (mutex); // Suppress ghs warning about unused local "mutex".
   u_int seed = (u_int) ACE_OS::time (nullptr);
 
-  for (size_t i = 0; i < ACE_MAX_ITERATIONS / 2; i++)
+  for (size_t i = 0; i < ACE_MAX_ITERATIONS / 2; ++i)
     {
       int result = 0;
 

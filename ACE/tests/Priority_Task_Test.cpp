@@ -200,7 +200,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_Sched_Priority_Iterator priority (ACE_SCHED_FIFO,
                                         ACE_SCOPE_THREAD);
 
-  for (i = 0; i < ACE_MAX_ITERATIONS; i++)
+  for (i = 0; i < ACE_MAX_ITERATIONS; ++i)
     {
       int p = priority.priority ();
       if (tasks[i].open ((void *) &p) == -1)
@@ -222,7 +222,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   // Wait for all tasks to exit.
   ACE_Thread_Manager::instance ()->wait ();
 
-  for (i = 0; i < ACE_MAX_ITERATIONS; i++)
+  for (i = 0; i < ACE_MAX_ITERATIONS; ++i)
     if (!tasks[i].succeeded ())
       {
         ++status;

@@ -101,7 +101,7 @@ worker (void *c)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
                 ACE_TEXT ("ACE_Thread::setspecific")));
 
-  for (int i = 0; i < count; i++)
+  for (int i = 0; i < count; ++i)
     {
       if (ACE_Thread::keycreate (&key, cleanup) == -1)
         {

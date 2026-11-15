@@ -255,7 +255,7 @@ Supplier_Task::perform_notifications (int notifications)
 #endif
     }
 
-  for (size_t i = 0; i < iterations; i++)
+  for (size_t i = 0; i < iterations; ++i)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%t) notifying reactor on iteration %B\n"),
@@ -390,7 +390,7 @@ run_test (int disable_notify_pipe,
   // <handle_exception> notifications.
   for (int iteration = 1;
        shutdown == 0;
-       iteration++)
+       ++iteration)
     {
       ACE_Time_Value timeout (tv);
 

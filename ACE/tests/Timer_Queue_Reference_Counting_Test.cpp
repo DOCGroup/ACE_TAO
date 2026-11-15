@@ -237,7 +237,7 @@ cancellation_test<TIMER_QUEUE>::cancellation_test (const char *timer_queue_type)
 
   for (int i = 0;
        i < (int) (sizeof configs / (sizeof (int) * 5));
-       i++)
+       ++i)
     {
       TIMER_QUEUE timer_queue;
 

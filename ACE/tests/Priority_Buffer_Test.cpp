@@ -46,7 +46,7 @@ consumer (void *args)
 
   // Keep looping, reading a message out of the queue, until we get a
   // message with a length == 0, which signals us to quit.
-  for (char c = 'z'; ; c--)
+  for (char c = 'z'; ; --c)
     {
       ACE_Message_Block *mb {};
 
@@ -98,7 +98,7 @@ producer (void *args)
 
   ACE_Message_Block *mb {};
 
-  for (const char *c = ACE_ALPHABET; *c != '\0'; c++)
+  for (const char *c = ACE_ALPHABET; *c != '\0'; ++c)
     {
       ++message_count;
 

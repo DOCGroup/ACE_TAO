@@ -73,7 +73,7 @@ Time_Handler::verify_results ()
   ACE_TEST_ASSERT (this->timer_id_[5] == Time_Handler::TIMER_FIRED);
   ACE_TEST_ASSERT (this->timer_id_[6] == Time_Handler::TIMER_FIRED);
 
-  for (int i = 7; i < Time_Handler::TIMER_SLOTS; i++)
+  for (int i = 7; i < Time_Handler::TIMER_SLOTS; ++i)
     ACE_TEST_ASSERT (this->timer_id_[i] == Time_Handler::TIMER_NOTSET);
 
   return 0;
@@ -285,7 +285,7 @@ run_main (int, ACE_TCHAR *[])
 
   Dispatch_Count_Handler callback;
 
-  for (int i = ACE_MAX_TIMERS; i > 0; i--)
+  for (int i = ACE_MAX_TIMERS; i > 0; --i)
     // Schedule a timeout to expire immediately.
     if (r->schedule_timer (&callback,
                            reinterpret_cast <const void *> (static_cast <size_t> (i)),

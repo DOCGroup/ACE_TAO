@@ -126,7 +126,7 @@ test_registering_all_handlers ()
   Time_Handler rt[ACE_MAX_TIMERS];
   long t_id[ACE_MAX_TIMERS];
 
-  for (size_t i = 0; i < ACE_MAX_TIMERS; i++)
+  for (size_t i = 0; i < ACE_MAX_TIMERS; ++i)
     {
       t_id[i] =
         ACE_Reactor::instance ()->schedule_timer (std::addressof (rt[i]),
@@ -152,7 +152,7 @@ test_registering_one_handler ()
   done = 0;
   the_count = 0;
 
-  for (size_t i = 0; i < ACE_MAX_TIMERS; i++)
+  for (size_t i = 0; i < ACE_MAX_TIMERS; ++i)
     {
       t_id[i] =
         ACE_Reactor::instance ()->schedule_timer (std::addressof (rt[0]),
@@ -178,7 +178,7 @@ test_canceling_odd_timers ()
   the_count = 1;
   odd = 1;
 
-  for (size_t i = 0; i < ACE_MAX_TIMERS; i++)
+  for (size_t i = 0; i < ACE_MAX_TIMERS; ++i)
     {
       t_id[i] = ACE_Reactor::instance ()->schedule_timer (std::addressof (rt[i]),
                                                           (const void *) i,
@@ -187,7 +187,7 @@ test_canceling_odd_timers ()
       rt[i].timer_id (t_id[i]);
     }
 
-  for (size_t j = 0; (u_long) j < ACE_MAX_TIMERS; j++)
+  for (size_t j = 0; (u_long) j < ACE_MAX_TIMERS; ++j)
     // Cancel handlers with odd numbered timer ids.
     if (ACE_ODD (rt[j].timer_id ()))
       {
