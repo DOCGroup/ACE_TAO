@@ -32,33 +32,32 @@ public:
   Manager &operator= (Manager const &) = delete;
   Manager &operator= (Manager &&) = delete;
 
+  /// Initializes the ORB and POA.
   void init (int argc,
              ACE_TCHAR *argv[]);
 
   int parse_args (int argc, ACE_TCHAR *argv[]);
 
-  // Initialize the ORB, POA etc.
-
+  /// Merges the IORs from the configured servers.
   int make_merged_iors ();
-  // Merges the different IORS
 
+  /// Sets the properties for the profiles.
   int set_properties ();
-  // Sets the properties for the profiles
 
+  /// Writes the merged IOR to a file.
   int write_to_file ();
-  // Write the merged IOR to a file
 
+  /// Returns a pointer to the manager's ORB.
   CORBA::ORB_ptr orb () const;
-  // Return the pointer to the copy of our ORB
 
   Test_Options const &options () const;
 
 private:
+  /// The manager's ORB.
   CORBA::ORB_var orb_ {};
-  // Our ORB
 
+  /// Merged IOR set.
   CORBA::Object_var merged_set_ {};
-  // The merged IOR set
 
   CORBA::Object_var object_primary_ {};
   CORBA::Object_var object_secondary_ {};

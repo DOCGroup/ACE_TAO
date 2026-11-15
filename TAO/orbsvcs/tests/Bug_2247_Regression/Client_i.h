@@ -19,8 +19,8 @@ public:
   Client_i &operator= (Client_i const &) = delete;
   Client_i &operator= (Client_i &&) = delete;
 
+  /// Initializes the client ORB.
   int init ();
-  // Initialize the ORB etc.
 
 private:
   CORBA::ORB_var orb_ {};
