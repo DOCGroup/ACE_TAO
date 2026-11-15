@@ -15,7 +15,8 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/Connector.h"
 #include "ace/Svc_Handler.h"
-#include <cstdio>
+
+#include <string>
 
 /**
  * @class HTTP_Handler
@@ -30,7 +31,7 @@ class HTTP_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
 public:
   HTTP_Handler () = default;
-  explicit HTTP_Handler (char const *path);
+  explicit HTTP_Handler (std::string const &path);
 
   /// Open hook.
   int open (void *) override;
@@ -39,13 +40,11 @@ public:
   int svc () override;
 
   /// Accessor to the file being fetched.
-  char const *filename () const;
+  std::string const &filename () const;
 
 private:
-  char request_[BUFSIZ] {};
-  size_t request_size_ {};
-
-  char filename_[BUFSIZ] {};
+  std::string request_;
+  std::string filename_;
   size_t response_size_ {};
 };
 
@@ -61,14 +60,14 @@ class HTTP_Connector
 {
 public:
   /// User entry point into the HTTP connector.
-  int connect (char const *url);
+  int connect (std::string const &url);
 
 private:
   /// Helper function.
-  int parseurl (char const *url,
-                char *host,
-                u_short *port,
-                char *path);
+  int parseurl (std::string const &url,
+                std::string &host,
+                u_short &port,
+                std::string &path);
 
 private:
   /// Factory that actively establishes a connection with an HTTP
