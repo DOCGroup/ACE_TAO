@@ -37,15 +37,19 @@ ACE_QoS_Session_Factory::create_session (ACE_QoS_Session_Type qos_session_type)
 
 #if defined (ACE_HAS_RAPI)
   if (qos_session_type == ACE_RAPI_SESSION)
-    ACE_NEW_RETURN (qos_session,
-                    ACE_RAPI_Session,
-                    nullptr);
+    {
+      ACE_NEW_RETURN (qos_session,
+                      ACE_RAPI_Session,
+                      nullptr);
+    }
 #endif /* ACE_HAS_RAPI */
 
   if (qos_session_type == ACE_GQOS_SESSION)
-    ACE_NEW_RETURN (qos_session,
-                    ACE_GQoS_Session,
-                    nullptr);
+    {
+      ACE_NEW_RETURN (qos_session,
+                      ACE_GQoS_Session,
+                      nullptr);
+    }
 
   if (qos_session == nullptr)
     {
@@ -58,8 +62,8 @@ ACE_QoS_Session_Factory::create_session (ACE_QoS_Session_Type qos_session_type)
   if (this->add_session (qos_session_owner.get ()) == -1)
     {
       ACELIB_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Error in adding session\n")),
-                        0);
+                            ACE_TEXT ("Error in adding session\n")),
+                           0);
     }
 
   return qos_session_owner.release ();
@@ -70,9 +74,11 @@ int
 ACE_QoS_Session_Factory::destroy_session (ACE_QoS_Session *qos_session)
 {
   if (qos_session != nullptr && this->remove_session (qos_session) == -1)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Error in destroying session\n")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("Error in destroying session\n")),
+                           -1);
+    }
 
   return 0;
 }
@@ -83,10 +89,12 @@ int
 ACE_QoS_Session_Factory::add_session (ACE_QoS_Session *qos_session)
 {
   if (this->qos_session_set_.insert (qos_session) != 0)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Error in adding a new session")
-                       ACE_TEXT ("to the session set\n")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("Error in adding a new session")
+                            ACE_TEXT ("to the session set\n")),
+                           -1);
+    }
 
   return 0;
 }
@@ -97,10 +105,12 @@ int
 ACE_QoS_Session_Factory::remove_session (ACE_QoS_Session *qos_session)
 {
   if (this->qos_session_set_.remove (qos_session) == -1)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Error in removing a session")
-                       ACE_TEXT ("from the session set\n")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("Error in removing a session")
+                            ACE_TEXT ("from the session set\n")),
+                           -1);
+    }
 
   return 0;
 }
