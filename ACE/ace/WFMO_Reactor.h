@@ -303,7 +303,8 @@ public:
   /// Close down the handler repository.
   int close ();
 
-  // = Search structure operations.
+  /// @name Search structure operations
+  /// @{
 
   /// Insert I/O Event_Handler entry into the system. This method
   /// assumes that the lock are head *before* this method is invoked.
@@ -326,12 +327,14 @@ public:
   /// Remove all bindings of <ACE_HANDLE, ACE_Event_Handler> tuples.
   void unbind_all ();
 
-  // = Sanity checking.
+  /// @}
 
-  // Check the @a handle to make sure it's a valid ACE_HANDLE
+  /// Check the @a handle to make sure it's a valid ACE_HANDLE.
   int invalid_handle (ACE_HANDLE handle) const;
 
-  // = Accessors.
+  /// @name Accessors
+  /// @{
+
   /// Maximum ACE_HANDLE value, plus 1.
   DWORD max_handlep1 () const;
 
@@ -426,6 +429,7 @@ public:
 
   /// Dump the state of an object.
   void dump () const;
+  /// @}
 
 protected:
   /// Reference to our WFMO_Reactor.
@@ -710,7 +714,8 @@ public:
   /// Close down the ACE_WFMO_Reactor and release all of its resources.
   virtual ~ACE_WFMO_Reactor ();
 
-  // = Event loop drivers.
+  /// @name Event loop drivers
+  /// @{
 
   /**
    * This method is not currently implemented.  We recommend that you
@@ -756,8 +761,10 @@ public:
    */
   virtual int handle_events (ACE_Time_Value &max_wait_time);
   virtual int alertable_handle_events (ACE_Time_Value &max_wait_time);
+  /// @}
 
-  // = Event handling control.
+  /// @name Event handling control
+  /// @{
 
   /**
    * Return the status of Reactor.  If this function returns 0, the reactor is
@@ -772,8 +779,10 @@ public:
    * is in active state and can be deactivated/reactivated as wish.
    */
   virtual void deactivate (int do_stop);
+  /// @}
 
-  // = Register and remove Handlers.
+  /// @name Handler registration and removal
+  /// @{
 
   /**
    * Register an ACE_Event_Handler @a event_handler.  Since no Event
@@ -893,8 +902,10 @@ public:
 
   /// Calls remove_handler() for every signal in @a sigset.
   virtual int remove_handler (const ACE_Sig_Set &sigset);
+  /// @}
 
-  // = Suspend and resume Handlers.
+  /// @name Handler suspension and resumption
+  /// @{
 
   /// Suspend @a event_handler temporarily.  Use
   /// ACE_Event_Handler::get_handle() to get the handle.
@@ -935,8 +946,10 @@ public:
    * return true.
    */
   virtual bool uses_event_associations ();
+  /// @}
 
-  // Timer management.
+  /// @name Timer management
+  /// @{
 
   /**
    * Schedule an ACE_Event_Handler that will expire after an amount
@@ -987,8 +1000,10 @@ public:
   virtual int cancel_timer (long timer_id,
                             const void **arg = nullptr,
                             int dont_call_handle_close = 1);
+  /// @}
 
-  // = High-level Event_Handler scheduling operations
+  /// @name Event handler scheduling
+  /// @{
 
   /**
    * Add @a masks_to_be_added to the @a event_handler's entry in
@@ -1021,8 +1036,10 @@ public:
    */
   virtual int cancel_wakeup (ACE_HANDLE handle,
                              ACE_Reactor_Mask masks_to_be_deleted);
+  /// @}
 
-  // = Notification methods.
+  /// @name Notification methods
+  /// @{
 
   /**
    * Wakeup one <ACE_WFMO_Reactor> thread if it is currently blocked
@@ -1065,8 +1082,10 @@ public:
    */
   virtual int purge_pending_notifications (ACE_Event_Handler * = nullptr,
                                            ACE_Reactor_Mask    = ACE_Event_Handler::ALL_EVENTS_MASK);
+  /// @}
 
-  // = Assorted helper methods.
+  /// @name Helper methods
+  /// @{
 
   /**
    * Return the Event_Handler associated with @a handle.  Return 0 if
@@ -1127,8 +1146,10 @@ public:
 
   /// Not implemented
   virtual int requeue_position ();
+  /// @}
 
-  // = Low-level wait_set mask manipulation methods.
+  /// @name Wait set mask operations
+  /// @{
 
   /**
    * Modify @a masks of the @a event_handler's entry in WFMO_Reactor
@@ -1147,8 +1168,10 @@ public:
   virtual int mask_ops (ACE_HANDLE handle,
                         ACE_Reactor_Mask masks,
                         int ops);
+  /// @}
 
-  // = Low-level ready_set mask manipulation methods.
+  /// @name Ready set mask operations
+  /// @{
 
   /// Not implemented
   virtual int ready_ops (ACE_Event_Handler *event_handler,
@@ -1159,6 +1182,7 @@ public:
   virtual int ready_ops (ACE_HANDLE handle,
                          ACE_Reactor_Mask,
                          int ops);
+  /// @}
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
