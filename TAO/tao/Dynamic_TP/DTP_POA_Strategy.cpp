@@ -244,17 +244,17 @@ TAO_DTP_POA_Strategy::dispatch_collocated_request_i
   // synchronous request.
   if (!synch_request.is_nil ())
     {
-      int const srw = synch_request->wait ();
-      if (srw == false)
+      bool const dispatched = synch_request->wait ();
+      if (!dispatched)
         {
           // Raise exception when request was cancelled.
           throw ::CORBA::NO_IMPLEMENT ();
         }
     }
-  else if (!synch_with_server_request.is_nil())
+  else if (!synch_with_server_request.is_nil ())
     {
-      bool const swsr = synch_with_server_request->wait();
-      if (swsr == false)
+      bool const dispatched = synch_with_server_request->wait ();
+      if (!dispatched)
         {
           // Raise exception when request was cancelled.
           throw ::CORBA::NO_IMPLEMENT ();
