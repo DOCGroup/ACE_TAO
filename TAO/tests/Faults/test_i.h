@@ -12,18 +12,11 @@
 
 #include "testS.h"
 
+/// Callback servant used to notify the client during server-failure tests.
 class Callback_i
   : public virtual POA_Callback
 {
-  // = TITLE
-  //   A callback object to shutdown the "client"
-  //
-  // = DESCRIPTION
-  //   To test that the server can tolerate client crashes the server
-  //   receives a callback object.
-  //
 public:
-  /// ctor
   explicit Callback_i (CORBA::ORB_ptr orb);
   Callback_i (Callback_i const &) = delete;
   Callback_i (Callback_i &&) = delete;
@@ -48,14 +41,12 @@ private:
 class Simple_Server_i : public POA_Simple_Server
 {
 public:
-  /// ctor
   explicit Simple_Server_i (CORBA::ORB_ptr orb);
   Simple_Server_i (Simple_Server_i const &) = delete;
   Simple_Server_i (Simple_Server_i &&) = delete;
   Simple_Server_i &operator= (Simple_Server_i const &) = delete;
   Simple_Server_i &operator= (Simple_Server_i &&) = delete;
 
-  // = The Simple_Server methods.
   CORBA::Long test_method (CORBA::Boolean do_callback,
                            CORBA::Boolean is_clean,
                            Callback_ptr callback) override;
@@ -79,7 +70,6 @@ private:
 class Middle_i : public virtual POA_Simple_Server
 {
 public:
-  /// ctor
   Middle_i (CORBA::ORB_ptr orb,
             Simple_Server_ptr server);
   Middle_i (Middle_i const &) = delete;
@@ -87,7 +77,6 @@ public:
   Middle_i &operator= (Middle_i const &) = delete;
   Middle_i &operator= (Middle_i &&) = delete;
 
-  // = The Simple_Server methods.
   CORBA::Long test_method (CORBA::Boolean do_callback,
                            CORBA::Boolean is_clean,
                            Callback_ptr callback) override;

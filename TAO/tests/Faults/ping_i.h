@@ -23,7 +23,6 @@
 class PingObject_i : public POA_PingObject
 {
 public:
-  /// ctor
   explicit PingObject_i (CORBA::ORB_ptr orb,
                          PortableServer::POA_ptr the_poa);
   PingObject_i (PingObject_i const &) = delete;
@@ -31,7 +30,6 @@ public:
   PingObject_i &operator= (PingObject_i const &) = delete;
   PingObject_i &operator= (PingObject_i &&) = delete;
 
-  // = The PingObject interface methods
   void ping (PingObject_ptr callback) override;
   void pong () override;
   void shutdown () override;
