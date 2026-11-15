@@ -33,8 +33,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
   int c {};
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
+    {
+      switch (c)
+        {
       case 'o':
         ior_output_file = get_opts.opt_arg ();
         break;
@@ -58,7 +59,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
       case 'b':
         {
           int const requested_message_size = ACE_OS::atoi (get_opts.opt_arg ());
-          if (requested_message_size < static_cast<int> (sizeof(ACE_hrtime_t)))
+          if (requested_message_size < static_cast<int> (sizeof (ACE_hrtime_t)))
             {
               ACE_DEBUG ((LM_DEBUG, "Invalid message size\n"));
               message_size = 64;
@@ -87,7 +88,8 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            "\n",
                            argv [0]),
                           -1);
-      }
+        }
+    }
 
   // If no protocols are specified use the default...
   if (pong_protocols.length () == 0)
@@ -102,7 +104,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
       ping_protocols[0] = CORBA::string_dup ("UDP=localhost:12345");
     }
 
-  // Indicates successful parsing of the command line
   return 0;
 }
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
@@ -196,9 +197,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         ACE_High_Res_Timer::global_scale_factor ();
       ACE_DEBUG ((LM_DEBUG, "done\n"));
 
-      recv_latency.dump_results (ACE_TEXT("Receive"), gsf);
+      recv_latency.dump_results (ACE_TEXT ("Receive"), gsf);
 
-      send_latency.dump_results (ACE_TEXT("Send"), gsf);
+      send_latency.dump_results (ACE_TEXT ("Send"), gsf);
     }
   catch (CORBA::Exception const &ex)
     {
@@ -208,8 +209,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   return 0;
 }
-// ****************************************************************
-
 Pong_Recv::Pong_Recv ()
   : TAO_FlowConsumer ("Pong",
                        pong_protocols,
@@ -265,11 +264,9 @@ Pong_Recv_Callback::receive_frame (ACE_Message_Block *frame,
 int
 Pong_Recv_Callback::handle_destroy ()
 {
-  ACE_DEBUG ((LM_DEBUG,"Pong_Recv_Callback::destroy\n"));
+  ACE_DEBUG ((LM_DEBUG, "Pong_Recv_Callback::destroy\n"));
   return 0;
 }
-
-// ****************************************************************
 
 Ping_Send::Ping_Send ()
   : TAO_FlowProducer ("Ping",

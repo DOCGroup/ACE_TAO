@@ -25,8 +25,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
   int c {};
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
+    {
+      switch (c)
+        {
       case 'f':
         options.ping_ior = get_opts.opt_arg ();
         break;
@@ -63,9 +64,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            "\n",
                            argv [0]),
                           -1);
-      }
+        }
+    }
 
-  // Indicates successful parsing of the command line
   return 0;
 }
 

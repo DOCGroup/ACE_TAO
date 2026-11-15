@@ -28,8 +28,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
   int c {};
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
+    {
+      switch (c)
+        {
       case 'o':
         ior_output_file = get_opts.opt_arg ();
         break;
@@ -64,7 +65,8 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            "\n",
                            argv [0]),
                           -1);
-      }
+        }
+    }
 
   // If no protocols are specified use the default...
   if (ping_protocols.length () == 0)
@@ -79,7 +81,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
       pong_protocols[0] = CORBA::string_dup ("UDP=localhost:23456");
     }
 
-  // Indicates successful parsing of the command line
   return 0;
 }
 
@@ -172,9 +173,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "Calibrating scale factory . . . "));
       ACE_High_Res_Timer::global_scale_factor_type const gsf =
         ACE_High_Res_Timer::global_scale_factor ();
-      ACE_DEBUG ((LM_DEBUG, "done %d\n", gsf));
+      ACE_DEBUG ((LM_DEBUG, "done\n"));
 
-      recv_latency.dump_results (ACE_TEXT("Receive"), gsf);
+      recv_latency.dump_results (ACE_TEXT ("Receive"), gsf);
     }
   catch (CORBA::Exception const &ex)
     {
@@ -184,8 +185,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   return 0;
 }
-
-// ****************************************************************
 
 Ping_Recv::Ping_Recv ()
   : TAO_FlowConsumer ("Ping",
@@ -198,7 +197,7 @@ int
 Ping_Recv::get_callback (char const *,
                          TAO_AV_Callback *&callback)
 {
-  ACE_DEBUG ((LM_DEBUG,"Ping_Recv::get_callback\n"));
+  ACE_DEBUG ((LM_DEBUG, "Ping_Recv::get_callback\n"));
   callback = std::addressof (this->callback_);
   return 0;
 }
@@ -206,7 +205,7 @@ Ping_Recv::get_callback (char const *,
 int
 Ping_Recv_Callback::handle_stop ()
 {
-  ACE_DEBUG ((LM_DEBUG,"Ping_Recv_Callback::stop"));
+  ACE_DEBUG ((LM_DEBUG, "Ping_Recv_Callback::stop"));
   TAO_AV_CORE::instance ()->orb ()->shutdown ();
 
   return 0;
@@ -219,7 +218,7 @@ Ping_Recv_Callback::receive_frame (ACE_Message_Block *frame,
 {
   ++this->count_;
 
-  ACE_DEBUG ((LM_DEBUG,"Ping_Recv_Callback::receive_frame %d\n", this->count_));
+  ACE_DEBUG ((LM_DEBUG, "Ping_Recv_Callback::receive_frame %d\n", this->count_));
 
   if (this->count_ < 10)
     {
@@ -263,11 +262,9 @@ Ping_Recv_Callback::receive_frame (ACE_Message_Block *frame,
 int
 Ping_Recv_Callback::handle_destroy ()
 {
-  ACE_DEBUG ((LM_DEBUG,"Ping_Recv_Callback::destroy\n"));
+  ACE_DEBUG ((LM_DEBUG, "Ping_Recv_Callback::destroy\n"));
   return 0;
 }
-
-// ****************************************************************
 
 Pong_Send::Pong_Send ()
   : TAO_FlowProducer ("Pong",
@@ -280,7 +277,7 @@ int
 Pong_Send::get_callback (char const *,
                          TAO_AV_Callback *&callback)
 {
-  ACE_DEBUG ((LM_DEBUG,"Pong_Send::get_callback\n"));
+  ACE_DEBUG ((LM_DEBUG, "Pong_Send::get_callback\n"));
   callback = std::addressof (pong_callback);
   return 0;
 }
@@ -289,7 +286,7 @@ void
 Pong_Send_Callback::get_timeout (ACE_Time_Value *&tv,
                                  void *&)
 {
-  ACE_DEBUG ((LM_DEBUG,"Pong_Send_Callback::get_timeout\n"));
+  ACE_DEBUG ((LM_DEBUG, "Pong_Send_Callback::get_timeout\n"));
   tv = nullptr;
 }
 
@@ -302,7 +299,7 @@ Pong_Send_Callback::handle_timeout (void *)
 int
 Pong_Send_Callback::send_response (ACE_hrtime_t stamp)
 {
-  ACE_DEBUG ((LM_DEBUG, "pong send response)\n"));
+  ACE_DEBUG ((LM_DEBUG, "Pong_Send_Callback::send_response\n"));
 
   std::array<ACE_hrtime_t, 2> buf {stamp, ACE_OS::gethrtime ()};
 
