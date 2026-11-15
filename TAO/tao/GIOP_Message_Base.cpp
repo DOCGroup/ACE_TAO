@@ -12,6 +12,7 @@
 #include "tao/Codeset_Manager.h"
 #include "tao/SystemException.h"
 #include "tao/ZIOP_Adapter.h"
+#include "ace/Message_Block.h"
 #include <algorithm>
 #include <cstdio>
 #include <memory>
@@ -234,20 +235,19 @@ TAO_GIOP_Message_Base::dump_consolidated_msg (TAO_OutputCDR &stream)
   // Check whether the output cdr stream is build up of multiple
   // messageblocks. If so, consolidate them to one block that can be
   // dumped
-  ACE_Message_Block* consolidated_block {};
+  ACE_Message_Block_Unique_Ptr consolidated_block;
   char *buf = const_cast <char*> (stream.buffer ());
   size_t const total_len = stream.total_length ();
   if (stream.begin()->cont () != nullptr)
     {
-      ACE_NEW_RETURN (consolidated_block, ACE_Message_Block, 0);
-      ACE_CDR::consolidate (consolidated_block, stream.begin ());
-      buf = (char *) (consolidated_block->rd_ptr ());
+      ACE_Message_Block *block {};
+      ACE_NEW_RETURN (block, ACE_Message_Block, 0);
+      consolidated_block.reset (block);
+      ACE_CDR::consolidate (consolidated_block.get (), stream.begin ());
+      buf = consolidated_block->rd_ptr ();
     }
 
   this->dump_msg ("send", reinterpret_cast <u_char *> (buf), total_len);
-
-  delete consolidated_block;
-  consolidated_block = nullptr;
 
   return 0;
 }
