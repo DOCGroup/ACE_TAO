@@ -20,6 +20,8 @@
 #include "ast_predefined_type.h"
 #include "ast_root.h"
 
+#include "fe_utils.h"
+
 #include "utl_identifier.h"
 #include "utl_string.h"
 #include "global_extern.h"
@@ -28,6 +30,7 @@
 #include <cctype>
 #include <cstdlib>
 #include <cstring>
+#include <memory>
 #include <string>
 
 #include "ace/ACE.h"
@@ -1891,23 +1894,33 @@ BE_GlobalData::ccmobject ()
       ACE_NEW_RETURN (local_id,
                       Identifier ("CCMObject"),
                       nullptr);
+      std::unique_ptr<Identifier> local_id_owner (local_id);
+
       UTL_ScopedName *local_name {};
       ACE_NEW_RETURN (local_name,
                       UTL_ScopedName (local_id, nullptr),
                       nullptr);
+      local_id_owner.release ();
+      FE_Utils::Scoped_Name_Owner local_name_owner (local_name);
 
       Identifier *module_id {};
       ACE_NEW_RETURN (module_id,
                       Identifier ("Components"),
                       nullptr);
-      UTL_ScopedName sn (module_id,
-                         local_name);
+      std::unique_ptr<Identifier> module_id_owner (module_id);
+
+      UTL_ScopedName *scoped_name {};
+      ACE_NEW_RETURN (scoped_name,
+                      UTL_ScopedName (module_id, local_name),
+                      nullptr);
+      module_id_owner.release ();
+      local_name_owner.release ();
+      FE_Utils::Scoped_Name_Owner scoped_name_owner (scoped_name);
 
       AST_Decl *d =
-        idl_global->scopes ().top_non_null ()->lookup_by_name (&sn,
-                                                               true);
-
-      sn.destroy ();
+        idl_global->scopes ().top_non_null ()->lookup_by_name (
+          scoped_name_owner.get (),
+          true);
 
       if (nullptr == d)
         {
