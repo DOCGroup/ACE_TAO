@@ -2,9 +2,15 @@
 #include "ace/Task.h"
 #include "ace/Get_Opt.h"
 
+struct Client_Options
+{
+  ACE_TCHAR const *ior {ACE_TEXT ("file://test.ior")};
+  int task_count {45};
+  bool server_shutdown {true};
+};
+
 int
-parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior, int &n_tasks,
-            bool &server_shutdown)
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:c:x"));
   int option {};
@@ -13,13 +19,13 @@ parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior, int &n_tasks,
     switch (option)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
       case 'c':
-        n_tasks = ACE_OS::atoi (get_opts.opt_arg ());
+        options.task_count = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'x':
-        server_shutdown = false;
+        options.server_shutdown = false;
         break;
       case '?':
       default:
@@ -37,7 +43,6 @@ parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior, int &n_tasks,
 class Client : public ACE_Task_Base
 {
 public:
-  // ctor
   explicit Client (test_ptr server);
   Client (Client const &) = delete;
   Client &operator= (Client const &) = delete;
@@ -46,7 +51,7 @@ public:
 
   int svc () override;
 
-  // The server.
+  /// The server.
   test_var const server_;
 };
 
@@ -72,30 +77,28 @@ Client::svc ()
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
-  int n_tasks = 45;
-  bool server_shutdown = true;
+  Client_Options options;
   try
     {
       CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv, ior, n_tasks, server_shutdown) != 0)
+      if (parse_args (argc, argv, options) != 0)
         return 1;
 
-      CORBA::Object_var const obj = orb->string_to_object (ior);
+      CORBA::Object_var const obj = orb->string_to_object (options.ior);
       test_var const server = test::_narrow (obj.in ());
       if (CORBA::is_nil (server.in ()))
-        ACE_ERROR_RETURN ((LM_DEBUG, "Nil reference <%s>\n", ior), 1);
+        ACE_ERROR_RETURN ((LM_DEBUG, "Nil reference <%s>\n", options.ior), 1);
 
       Client client (server.in ());
-      if (client.activate (THR_NEW_LWP | THR_JOINABLE, n_tasks) != 0)
+      if (client.activate (THR_NEW_LWP | THR_JOINABLE, options.task_count) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                             "Cannot activate client threads\n"),
                           1);
 
       client.thr_mgr ()->wait ();
 
-      if (server_shutdown)
+      if (options.server_shutdown)
         {
           server->shutdown ();
         }
