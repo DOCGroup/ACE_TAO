@@ -6,12 +6,13 @@
 #include "tao/corba.h"
 
 #include <cstring>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_StructuredEvent_No_Copy::TAO_Notify_StructuredEvent_No_Copy (
   CosNotification::StructuredEvent const &notification)
-  : notification_ (&notification), type_ (notification.header.fixed_header.event_type)
+  : notification_ (std::addressof (notification)), type_ (notification.header.fixed_header.event_type)
 {
   CosNotification::PropertySeq const &prop_seq =
     notification.header.variable_header;
@@ -129,7 +130,7 @@ TAO_Notify_StructuredEvent::TAO_Notify_StructuredEvent (
   : TAO_Notify_StructuredEvent_No_Copy (notification)
     , notification_copy (notification)
 {
-  this->notification_ = &notification_copy;
+  this->notification_ = std::addressof (notification_copy);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

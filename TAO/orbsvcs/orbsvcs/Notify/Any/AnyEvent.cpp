@@ -4,6 +4,8 @@
 #include "tao/corba.h"
 #include "tao/debug.h"
 
+#include <memory>
+
 //#define DEBUG_LEVEL 10
 #ifndef DEBUG_LEVEL
 # define DEBUG_LEVEL TAO_debug_level
@@ -14,7 +16,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_Notify_EventType TAO_Notify_AnyEvent_No_Copy::event_type_;
 
 TAO_Notify_AnyEvent_No_Copy::TAO_Notify_AnyEvent_No_Copy (CORBA::Any const &event)
-  : event_ (&event)
+  : event_ (std::addressof (event))
 {
 }
 
@@ -119,7 +121,7 @@ TAO_Notify_AnyEvent::TAO_Notify_AnyEvent (CORBA::Any const &event)
   : TAO_Notify_AnyEvent_No_Copy (event)
     , any_copy_ (event)
 {
-  this->event_ = &any_copy_;
+  this->event_ = std::addressof (any_copy_);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
