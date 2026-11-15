@@ -74,7 +74,7 @@ ACE_SOCK_Acceptor acceptor_factory;
 ACE_INET_Addr address;
 
 #if defined(SYSV)
-#define bcopy(b1,b2,n)  std::memcpy(b2,b1,n)
+#define bcopy(b1,b2,n)  std::memcpy (b2, b1, n)
 #define bzero(b1,n)             std::memset(b1,0,n)
 #include <sys/times.h>
 #include <sys/param.h>

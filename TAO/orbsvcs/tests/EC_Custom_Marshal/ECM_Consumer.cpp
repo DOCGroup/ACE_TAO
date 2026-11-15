@@ -179,7 +179,7 @@ Driver::push_consumer (RtecEventComm::EventSet const& events)
 
   this->recv_count_ += events.length ();
 
-  int const x = std::max (1, this->event_count_ / 10);
+  int const x = (std::max) (1, this->event_count_ / 10);
   if (this->recv_count_ % x == 0)
     {
       ACE_DEBUG ((LM_DEBUG,

@@ -2210,7 +2210,7 @@ ACE_Log_Formatter::ACE_Log_Formatter (ACE_Log_Priority prio, const char *fmt)
 
 int ACE_Log_Formatter::copy_trunc (const char *str, int limit)
 {
-  const int n = std::min (static_cast<int> (this->bspace_), limit);
+  const int n = (std::min) (static_cast<int> (this->bspace_), limit);
   std::memcpy (this->bp_, str, n);
   ACE_UPDATE_COUNT (this->bspace_, n);
   this->bp_ += n;
@@ -2301,13 +2301,13 @@ bool ACE_Log_Formatter::process_conversion ()
       this->copy_trunc ("\n", 1);
       ACE_FALLTHROUGH;
     case 'I':
-      len = std::min (static_cast<int> (this->bspace_),
-                      this->logger_->trace_depth_ *
-                      (this->last_star_ ? this->last_star_ :
+      len = (std::min) (static_cast<int> (this->bspace_),
+                        this->logger_->trace_depth_ *
+                        (this->last_star_ ? this->last_star_ :
 #ifdef ACE_HAS_TRACE
-                       ACE_Trace::get_nesting_indent ()));
+                         ACE_Trace::get_nesting_indent ()));
 #else
-                       4));
+                         4));
 #endif
       ACE_OS::memset (this->bp_, ' ', len);
       ACE_UPDATE_COUNT (this->bspace_, len);

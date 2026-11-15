@@ -13,8 +13,8 @@ TimeStamp_Protocol_Object::TimeStamp_Protocol_Object (
     TAO_AV_Transport *transport)
   : TAO_AV_Protocol_Object (callback, transport),
     frame_ (new ACE_Message_Block (
-      std::max (static_cast<size_t> (BUFSIZ),
-                4 * static_cast<size_t> (this->transport_->mtu ())) +
+      (std::max) (static_cast<size_t> (BUFSIZ),
+                  4 * static_cast<size_t> (this->transport_->mtu ())) +
       sizeof (ACE_hrtime_t)))
 {
 }

@@ -169,7 +169,7 @@ supplier (void *dummy)
         {
           std::memset (mb_p->rd_ptr (), 0, msiz);
           size_t const message_length =
-            std::min (std::strlen (message), msiz - 1);
+            (std::min) (std::strlen (message), msiz - 1);
           std::memcpy (mb_p->rd_ptr (), message, message_length);
         }
       mb_p->length (msiz);
