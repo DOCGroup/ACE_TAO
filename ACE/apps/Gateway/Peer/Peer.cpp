@@ -311,7 +311,7 @@ Peer_Handler::send (ACE_Message_Block *mb)
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("sent %b bytes, total bytes sent = %d\n"),
+              ACE_TEXT ("sent %b bytes, total bytes sent = %B\n"),
               n,
               this->total_bytes_));
   return n;
@@ -591,7 +591,7 @@ Peer_Handler::await_events ()
         this->total_bytes_ += message->length ();
 
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("route id = %d, cur len = %d, total len = %d\n"),
+                    ACE_TEXT ("route id = %d, cur len = %d, total len = %B\n"),
                     event->header_.connection_id_,
                     event->header_.len_,
                     this->total_bytes_));
