@@ -35,7 +35,8 @@ public:
   /// visit array
   int visit_array (be_array *node) override;
 
-  // = Visitor methods on array types
+  /// @name Visitor methods on array types
+  /// @{
 
   /// visit an enum
   int visit_enum (be_enum *node) override;
@@ -69,6 +70,8 @@ public:
 
   /// visit union
   int visit_union (be_union *node) override;
+
+  /// @}
 
 protected:
   /// helper that does the common job

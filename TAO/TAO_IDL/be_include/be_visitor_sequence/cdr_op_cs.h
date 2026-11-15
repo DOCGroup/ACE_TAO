@@ -36,7 +36,8 @@ public:
   /// visit sequence
   int visit_sequence (be_sequence *node) override;
 
-  // = Visitor methods on sequence types
+  /// @name Visitor methods on sequence types
+  /// @{
 
   /// visit sequence
   int visit_array (be_array *node) override;
@@ -88,6 +89,8 @@ public:
 
   /// visit union
   int visit_union (be_union *node) override;
+
+  /// @}
 
 protected:
   /// helper that does the common job

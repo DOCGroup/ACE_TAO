@@ -35,7 +35,6 @@ public:
   be_visitor_map_buffer_type &operator= (const be_visitor_map_buffer_type &) = delete;
   be_visitor_map_buffer_type &operator= (be_visitor_map_buffer_type &&) = delete;
 
-  // = Visitor methods.
   int visit_predefined_type (be_predefined_type *node) override;
   int visit_interface (be_interface *node) override;
   int visit_interface_fwd (be_interface_fwd *node) override;
