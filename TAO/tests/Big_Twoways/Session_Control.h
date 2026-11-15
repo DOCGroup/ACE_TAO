@@ -24,8 +24,10 @@ public:
   /// Return 1 when all sessions have finished
   bool all_sessions_finished () const;
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   void session_finished (CORBA::Boolean success) override;
+  /// @}
 
 private:
   /// Synchronize the internal state

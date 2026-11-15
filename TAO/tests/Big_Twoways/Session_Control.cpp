@@ -60,5 +60,4 @@ Session_Control::session_finished (CORBA::Boolean success)
         poa->servant_to_id (this);
       poa->deactivate_object (oid.in ());
     }
-
 }

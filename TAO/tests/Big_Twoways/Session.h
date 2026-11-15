@@ -31,12 +31,14 @@ public:
   /// Run one of the experiment threads
   int svc ();
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   void start (Test::Session_List const &other_sessions) override;
 
   Test::Payload *echo_payload (Test::Payload const &the_payload) override;
 
   void destroy () override;
+  /// @}
 
 protected:
   /// Protected destructor, call _remove_ref() to delete

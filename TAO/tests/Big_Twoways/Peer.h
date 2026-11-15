@@ -18,13 +18,15 @@ public:
 
   ~Peer () override = default;
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   Test::Session_ptr create_session (Test::Session_Control_ptr control,
-                                            CORBA::ULong payload_size,
-                                            CORBA::ULong thread_count,
-                                            CORBA::ULong message_count,
+                                    CORBA::ULong payload_size,
+                                    CORBA::ULong thread_count,
+                                    CORBA::ULong message_count,
                                     CORBA::ULong peer_count) override;
   void shutdown () override;
+  /// @}
 
 private:
   /// Keep a pointer to the ORB to shutdown cleanly

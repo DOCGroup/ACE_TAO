@@ -232,5 +232,4 @@ Session::terminate (CORBA::Boolean success)
     {
       ex._tao_print_exception ("Session::terminate, ignored");
     }
-
 }

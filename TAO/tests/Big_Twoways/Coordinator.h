@@ -30,8 +30,10 @@ public:
   /// Shutdown all the peers
   void shutdown_all_peers ();
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   void add_peer (Test::Peer_ptr peer) override;
+  /// @}
 
 protected:
   /// Protected destructor, call _remove_ref() to delete
