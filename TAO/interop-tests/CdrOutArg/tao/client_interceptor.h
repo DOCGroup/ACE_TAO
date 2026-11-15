@@ -16,24 +16,22 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+/// Client-side echo interceptor used by the CDR out-argument test.
 class Echo_Client_Request_Interceptor
   : public virtual PortableInterceptor::ClientRequestInterceptor,
     public virtual ::CORBA::LocalObject
 {
-  // = Client-side echo interceptor.  For checking interceptor visually only.
 public:
   explicit Echo_Client_Request_Interceptor (char const *orb_id);
-  // ctor.
 
   ~Echo_Client_Request_Interceptor () override = default;
   Echo_Client_Request_Interceptor (Echo_Client_Request_Interceptor const &) = delete;
   Echo_Client_Request_Interceptor (Echo_Client_Request_Interceptor &&) = delete;
   Echo_Client_Request_Interceptor &operator= (Echo_Client_Request_Interceptor const &) = delete;
   Echo_Client_Request_Interceptor &operator= (Echo_Client_Request_Interceptor &&) = delete;
-  // dtor.
 
+  /// Returns the canonical name of the interceptor.
   char *name () override;
-  // Canonical name of the interceptor.
 
   void destroy () override;
 
@@ -50,9 +48,9 @@ public:
 private:
   char const *myname_;
 
+  /// ID of the ORB where this interceptor was created, usually obtained from
+  /// the ORBInitInfo.
   CORBA::String_var orb_id_;
-  // The ID of the ORB where this interceptor was created, usually
-  // obtained from the ORBInitInfo
 
   CORBA::ORB_var orb_;
 };
