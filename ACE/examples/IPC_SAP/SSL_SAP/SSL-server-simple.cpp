@@ -37,7 +37,7 @@ twoway_server (ACE_SSL_SOCK_Stream &stream)
   size_t total_bytes = 0;
   size_t message_count = 0;
 
-  char *request = nullptr;
+  char *request {};
 
   // Read data from client (terminate on error).
 
@@ -149,7 +149,7 @@ oneway_server (ACE_SSL_SOCK_Stream &stream)
   size_t total_bytes = 0;
   size_t message_count = 0;
 
-  char *request = nullptr;
+  char *request {};
 
   // Read data from client (terminate on error).
 

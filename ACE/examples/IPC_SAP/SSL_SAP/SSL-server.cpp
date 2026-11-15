@@ -58,7 +58,7 @@ twoway_server (void *arg)
   size_t total_bytes = 0;
   size_t message_count = 0;
 
-  char *request = nullptr;
+  char *request {};
 
   // Read data from client (terminate on error).
 
@@ -175,7 +175,7 @@ oneway_server (void *arg)
   size_t total_bytes = 0;
   size_t message_count = 0;
 
-  char *request = nullptr;
+  char *request {};
 
   // Read data from client (terminate on error).
 
@@ -320,7 +320,7 @@ run_event_loop (u_short port)
   handle_set.set_bit (twoway_acceptor.get_handle ());
   handle_set.set_bit (oneway_acceptor.get_handle ());
 
-  ACE_SSL_SOCK_Stream * new_stream = nullptr;
+  ACE_SSL_SOCK_Stream * new_stream {};
 
   // Performs the iterative server activities.
   for (;;)

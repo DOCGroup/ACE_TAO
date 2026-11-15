@@ -279,7 +279,7 @@ Twoway_Handler::run ()
 {
   // Read data from client (terminate on error).
 
-  char *request = nullptr;
+  char *request {};
 
   for (;;)
     {
@@ -373,7 +373,7 @@ Oneway_Handler::run ()
 {
   // Read data from client (terminate on error).
 
-  char *request = nullptr;
+  char *request {};
 
   for (;;)
     {
