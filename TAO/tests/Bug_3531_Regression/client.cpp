@@ -21,7 +21,8 @@ public:
   Simple_Server_i &operator= (Simple_Server_i const &) = delete;
   Simple_Server_i &operator= (Simple_Server_i &&) = delete;
 
-  // = The Simple_Server methods.
+  /// @name Simple_Server methods
+  /// @{
   char *test_method (Simple_Server_ptr objref) override
   {
     ACE_DEBUG ((LM_DEBUG, "Client test_method() - sleeping\n"));
@@ -43,10 +44,11 @@ public:
   void shutdown () override
   {
   }
+  /// @}
 
 private:
+  /// The ORB used by this servant.
   CORBA::ORB_var orb_;
-  // The ORB
 };
 
 static int

@@ -25,7 +25,8 @@ public:
   /// Get the status of the flag..
   bool is_done () const;
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   CORBA::Boolean get_data (CORBA::ULong size,
                            Test::Payload_out payload) override;
 
@@ -34,6 +35,7 @@ public:
   void ping () override;
 
   void shutdown () override;
+  /// @}
 
 private:
   TAO_SYNCH_MUTEX mutex_;

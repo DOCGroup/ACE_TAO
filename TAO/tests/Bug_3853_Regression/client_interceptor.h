@@ -18,24 +18,21 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+/// Client-side echo interceptor, used for visual interceptor checks.
 class Echo_Client_Request_Interceptor
   : public virtual PortableInterceptor::ClientRequestInterceptor,
     public virtual ::CORBA::LocalObject
 {
-  // = Client-side echo interceptor.  For checking interceptor visually only.
 public:
   Echo_Client_Request_Interceptor ();
   Echo_Client_Request_Interceptor (Echo_Client_Request_Interceptor const &) = delete;
   Echo_Client_Request_Interceptor (Echo_Client_Request_Interceptor &&) = delete;
   Echo_Client_Request_Interceptor &operator= (Echo_Client_Request_Interceptor const &) = delete;
   Echo_Client_Request_Interceptor &operator= (Echo_Client_Request_Interceptor &&) = delete;
-  // ctor.
-
   ~Echo_Client_Request_Interceptor () override = default;
-  // dtor.
 
+  /// Canonical name of the interceptor.
   char *name () override;
-  // Canonical name of the interceptor.
 
   void destroy () override;
 
