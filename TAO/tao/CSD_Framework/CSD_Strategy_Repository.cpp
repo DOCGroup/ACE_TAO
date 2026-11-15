@@ -2,6 +2,7 @@
 #include "tao/CSD_Framework/CSD_Strategy_Repository.h"
 #include "tao/debug.h"
 
+#include <memory>
 #include <utility>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -43,9 +44,9 @@ TAO_CSD_Strategy_Repository::add_strategy (std::string const &name,
   Strategy_Node *node {};
   ACE_NEW_RETURN (node, Strategy_Node (name, strat), -1);
   std::unique_ptr<Strategy_Node> node_owner (node);
-  std::unique_ptr<Strategy_Node> *tail = &this->strategy_list_head_;
+  std::unique_ptr<Strategy_Node> *tail = std::addressof (this->strategy_list_head_);
   while (*tail != nullptr)
-    tail = &(*tail)->next_;
+    tail = std::addressof ((*tail)->next_);
   *tail = std::move (node_owner);
 
   if (TAO_debug_level > 3)
