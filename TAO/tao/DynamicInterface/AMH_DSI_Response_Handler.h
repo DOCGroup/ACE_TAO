@@ -22,6 +22,8 @@
 #include "tao/Valuetype/ValueBase.h"
 #include "dynamicinterface_export.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_AMH_DSI_Response_Handler;
@@ -140,6 +142,7 @@ class TAO_DynamicInterface_Export TAO_AMH_DSI_Exception_Holder
 {
 public:
   using _var_type = TAO_AMH_DSI_Exception_Holder_var;
+  /// Takes ownership of ex.
   explicit TAO_AMH_DSI_Exception_Holder (CORBA::Exception *ex);
 
   ~TAO_AMH_DSI_Exception_Holder () override = default;
@@ -169,7 +172,7 @@ protected:
 private:
   TAO_AMH_DSI_Exception_Holder (const TAO_AMH_DSI_Exception_Holder &);
   void operator= (const TAO_AMH_DSI_Exception_Holder &);
-  CORBA::Exception *exception_ {};
+  std::unique_ptr<CORBA::Exception> exception_;
 
 protected:
   virtual CORBA::Boolean _tao_marshal__Test_TAO_AMH_DSI_Exception_Holder (

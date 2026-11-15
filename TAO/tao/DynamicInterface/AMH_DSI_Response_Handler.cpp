@@ -1,5 +1,4 @@
 #include "AMH_DSI_Response_Handler.h"
-#include <memory>
 #include "Request.h"
 #include "ExceptionList.h"
 #include "DII_Invocation.h"
@@ -35,14 +34,17 @@ TAO_AMH_DSI_Exception_Holder::TAO_AMH_DSI_Exception_Holder (CORBA::Exception *ex
 ::CORBA::ValueBase *
 TAO_AMH_DSI_Exception_Holder::_copy_value ()
 {
+  std::unique_ptr<CORBA::Exception> exception (
+    this->exception_->_tao_duplicate ());
   ::CORBA::ValueBase *ret_val {};
   ACE_NEW_THROW_EX (
     ret_val,
     TAO_AMH_DSI_Exception_Holder (
-      exception_
+      exception.get ()
     ),
     ::CORBA::NO_MEMORY ()
   );
+  exception.release ();
   return ret_val;
 }
 
@@ -296,7 +298,6 @@ TAO_AMH_DSI_Exception_Holder::_tao_unmarshal (
 void
 TAO_AMH_DSI_Exception_Holder::raise_invoke ()
 {
-  std::unique_ptr< ::CORBA::Exception> const safety (this->exception_);
   this->exception_->_raise ();
 }
 

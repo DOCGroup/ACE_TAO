@@ -49,10 +49,57 @@ parse_args (int argc, ACE_TCHAR *argv[], Gateway_Options &options)
   return 0;
 }
 
+static int
+test_exception_holder_copy ()
+{
+  TAO_AMH_DSI_Exception_Holder original (new CORBA::UNKNOWN ());
+  CORBA::ValueBase_var copy (original._copy_value ());
+  TAO_AMH_DSI_Exception_Holder * const copied_holder =
+    TAO_AMH_DSI_Exception_Holder::_downcast (copy.in ());
+
+  if (copied_holder == nullptr)
+    return -1;
+
+  bool copy_raised {};
+  try
+    {
+      copied_holder->raise_invoke ();
+    }
+  catch (CORBA::UNKNOWN const &)
+    {
+      copy_raised = true;
+    }
+  catch (...)
+    {
+      return -1;
+    }
+
+  bool original_raised {};
+  try
+    {
+      original.raise_invoke ();
+    }
+  catch (CORBA::UNKNOWN const &)
+    {
+      original_raised = true;
+    }
+  catch (...)
+    {
+      return -1;
+    }
+
+  return copy_raised && original_raised ? 0 : -1;
+}
+
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Gateway_Options options;
+  if (test_exception_holder_copy () != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "DSI exception holder copy test failed\n"),
+                      1);
+
   try
     {
       CORBA::ORB_var const orb =
