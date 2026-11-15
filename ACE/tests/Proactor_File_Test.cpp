@@ -223,14 +223,18 @@ FileIOHandler::handle_read_file(const ACE_Asynch_Read_File::Result &result)
   else
   {
     // We have a message block with some read data in it. Send it onward
-    ACE_DEBUG((LM_INFO, ACE_TEXT("FileIOHandler received %d bytes of data at offset %d\n"),
-                        result.bytes_transferred(), result.offset ()));
+    ACE_DEBUG ((LM_INFO,
+                ACE_TEXT ("FileIOHandler received %B bytes of data at offset %Q\n"),
+                result.bytes_transferred (),
+                static_cast<ACE_UINT64> (result.offset ())));
 
     // TODO: Process this data in some meaningful way
     if (result.offset () != (unsigned long)*reinterpret_cast<unsigned char*> (mb.rd_ptr ()))
     {
-      ACE_DEBUG((LM_ERROR, ACE_TEXT("FileIOHandler received incorrect data: got [%u] expected [%u]\n"),
-                           *reinterpret_cast<unsigned char*> (mb.rd_ptr ()), result.offset ()));
+      ACE_DEBUG ((LM_ERROR,
+                  ACE_TEXT ("FileIOHandler received incorrect data: got [%d] expected [%Q]\n"),
+                  *reinterpret_cast<unsigned char *> (mb.rd_ptr ()),
+                  static_cast<ACE_UINT64> (result.offset ())));
     }
 
     // Release the message block when we're done with it
