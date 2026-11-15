@@ -64,12 +64,12 @@ namespace TAO
   {
   public:
     In_Var_Size_Clonable_Argument_T (S const & x);
-    ~In_Var_Size_Clonable_Argument_T () override;
+    ~In_Var_Size_Clonable_Argument_T () override = default;
 
     Argument* clone () override;
 
   private:
-    bool is_clone_ {};
+    std::unique_ptr<S> clone_value_;
   };
 
   /**

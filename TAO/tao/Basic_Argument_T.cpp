@@ -4,6 +4,7 @@
 #include "tao/Basic_Argument_T.h"
 
 #include <memory>
+#include <utility>
 
 #if !defined (__ACE_INLINE__)
 #include "tao/Basic_Argument_T.inl"
@@ -33,25 +34,13 @@ TAO::In_Basic_Argument_T<S, Insert_Policy>::interceptor_value (CORBA::Any *any) 
 
 template<typename S,
          template <typename> class Insert_Policy>
-TAO::In_Basic_Clonable_Argument_T<S,Insert_Policy>::~In_Basic_Clonable_Argument_T ()
-{
-  if (this->is_clone_)
-    {
-      S* tmp = const_cast<S*> (std::addressof (this->x_));
-      delete tmp;
-    }
-}
-
-template<typename S,
-         template <typename> class Insert_Policy>
 TAO::Argument*
 TAO::In_Basic_Clonable_Argument_T<S,Insert_Policy>::clone ()
 {
   std::unique_ptr<S> clone_x = std::make_unique<S> (this->x_);
   std::unique_ptr<In_Basic_Clonable_Argument_T<S,Insert_Policy>> clone_arg =
     std::make_unique<In_Basic_Clonable_Argument_T<S,Insert_Policy>> (*clone_x);
-  clone_arg->is_clone_ = true;
-  clone_x.release ();
+  clone_arg->clone_value_ = std::move (clone_x);
   return clone_arg.release ();
 }
 
