@@ -32,6 +32,9 @@
 #include "ace/Containers_T.h"
 #include "ace/Event_Handler.h"
 
+#include <memory>
+#include <new>
+
 // Number of iterations for the performance tests.  Some platforms
 // have a very high ACE_DEFAULT_TIMERS (HP-UX is 400), so limit this
 // to a reasonable run time.
@@ -47,7 +50,7 @@ static int max_iterations = ACE_DEFAULT_TIMERS * 100;
 static int TIMER_DISTANCE = 50;
 
 // Array of timer ids assigned to us that we need to keep track of.
-static long *timer_ids {};
+static std::unique_ptr<long[]> timer_ids;
 
 class Example_Handler : public ACE_Event_Handler
 {
@@ -317,8 +320,13 @@ test_performance (ACE_Timer_Queue *tq,
 
   // Test the amount of time required to schedule all the timers.
 
-  ACE_Time_Value *times {};
-  ACE_NEW (times, ACE_Time_Value[max_iterations]);
+  std::unique_ptr<ACE_Time_Value[]> times (
+    new (std::nothrow) ACE_Time_Value[max_iterations]);
+  if (!times)
+    {
+      errno = ENOMEM;
+      return;
+    }
 
   // Set up a bunch of times TIMER_DISTANCE ms apart.
   for (i = 0; i < max_iterations; ++i)
@@ -417,7 +425,7 @@ test_performance (ACE_Timer_Queue *tq,
               ACE_TEXT ("time per call = %f usecs\n"),
               (et.user_time / ACE_timer_t (max_iterations)) * 1000000));
 
-  randomize (times,
+  randomize (times.get (),
              max_iterations,
              static_cast<unsigned int> (ACE_OS::time (nullptr)));
 
@@ -515,7 +523,6 @@ test_performance (ACE_Timer_Queue *tq,
               ACE_TEXT ("time per call = %f usecs\n"),
               (et.user_time / ACE_timer_t (max_iterations)) * 1000000));
 
-  delete [] times;
 }
 
 // This test function was contributed with Bugzilla #2447 to test validity
@@ -697,9 +704,12 @@ run_main (int argc, ACE_TCHAR *argv[])
                   -1);
 
   // Create the Timer ID array
-  ACE_NEW_RETURN (timer_ids,
-                  long[max_iterations],
-                  -1);
+  timer_ids.reset (new (std::nothrow) long[max_iterations]);
+  if (!timer_ids)
+    {
+      errno = ENOMEM;
+      return -1;
+    }
 
   Timer_Queue_Stack *tq_ptr = tq_stack;
 
@@ -717,8 +727,6 @@ run_main (int argc, ACE_TCHAR *argv[])
       tq_ptr = tq_ptr->next_;
       delete temp;
     }
-  delete [] timer_ids;
-
   ACE_DEBUG
     ((LM_DEBUG,
       ACE_TEXT ("**** starting unique IDs test for ACE_Timer_Heap\n")));

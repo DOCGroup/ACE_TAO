@@ -21,6 +21,9 @@
 #include "ace/Hash_Cache_Map_Manager_T.h"
 #include "ace/Caching_Strategies_T.h"
 
+#include <memory>
+#include <new>
+
 using MUTEX = ACE_Null_Mutex;
 using TYPE = ACE_UINT32;
 using ACTIVE_KEY = ACE_Active_Map_Manager_Key;
@@ -304,11 +307,13 @@ test_active_map_manager (size_t table_size,
   TYPE j = 0;
   ssize_t k;
 
-  ACTIVE_MAP_MANAGER::key_type *active_keys;
-
-  ACE_NEW_RETURN (active_keys,
-                  ACTIVE_MAP_MANAGER::key_type[iterations],
-                  1);
+  std::unique_ptr<ACTIVE_MAP_MANAGER::key_type[]> active_keys (
+    new (std::nothrow) ACTIVE_MAP_MANAGER::key_type[iterations]);
+  if (!active_keys)
+    {
+      errno = ENOMEM;
+      return 1;
+    }
 
   for (i = 0;
        i < iterations;
@@ -380,8 +385,6 @@ test_active_map_manager (size_t table_size,
       --remaining_entries;
       ACE_TEST_ASSERT (map.current_size () == remaining_entries);
     }
-
-  delete [] active_keys;
 
   return 0;
 }
