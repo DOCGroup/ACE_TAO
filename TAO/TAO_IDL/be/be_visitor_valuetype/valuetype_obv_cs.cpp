@@ -72,11 +72,10 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
   *os << node->local_name () << " ()" << be_nl
       << "{}";
 
-  // Provide a default _copy_value() implementation when the OBV_ class is
-  // concrete. A valuetype that supports interfaces remains abstract until the
-  // application implements the supported operations, so its most-derived
-  // class must provide the appropriate _copy_value() implementation.
-  if (this->obv_need_ref_counter (node) && node->n_supports () == 0)
+  // The generated value factory instantiates the OBV_ class, so it needs the
+  // default _copy_value() implementation even when interfaces are supported.
+  // Derived implementations can override it to preserve their dynamic type.
+  if (this->obv_need_ref_counter (node))
     {
       *os << be_nl_2
           << "::CORBA::ValueBase *" << be_nl
