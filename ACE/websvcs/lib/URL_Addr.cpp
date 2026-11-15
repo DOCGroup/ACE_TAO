@@ -82,9 +82,13 @@ ACE_URL_Addr::string_to_addr (const ACE_TCHAR *address)
       return -1;
     }
 
-  ACE_TCHAR *url {};
-  ACE_ALLOCATOR_RETURN (url, ACE_OS::strdup (address), -1);
-  this->url_.reset (url);
+  URL_String url (ACE_OS::strdup (address));
+  if (url == nullptr)
+    {
+      errno = ENOMEM;
+      return -1;
+    }
+  this->url_ = std::move (url);
   return 0;
 }
 
@@ -109,22 +113,23 @@ ACE_URL_Addr::accept (ACE_URL_Addr_Visitor* visitor)
 ACE_URL_Addr*
 ACE_URL_Addr::create_address (const ACE_TCHAR *url)
 {
-  ACE_URL_Addr *addr {};
-  if (ACE_OS::strncasecmp (http, url, http_size) == 0)
-    ACE_NEW_RETURN (addr, ACE_HTTP_Addr (), nullptr);
-  else if (ACE_OS::strncasecmp (ftp, url, ftp_size) == 0)
-    ACE_NEW_RETURN (addr, ACE_FTP_Addr (), nullptr);
-  else if (ACE_OS::strncasecmp (mailto, url, mailto_size) == 0)
-    ACE_NEW_RETURN (addr, ACE_Mailto_Addr (), nullptr);
-  else
-    ACE_NEW_RETURN (addr, ACE_URL_Addr (), nullptr);
+  if (url == nullptr)
+    return nullptr;
 
+  ACE_URL_Addr *raw_addr {};
+  if (ACE_OS::strncasecmp (http, url, http_size) == 0)
+    ACE_NEW_RETURN (raw_addr, ACE_HTTP_Addr (), nullptr);
+  else if (ACE_OS::strncasecmp (ftp, url, ftp_size) == 0)
+    ACE_NEW_RETURN (raw_addr, ACE_FTP_Addr (), nullptr);
+  else if (ACE_OS::strncasecmp (mailto, url, mailto_size) == 0)
+    ACE_NEW_RETURN (raw_addr, ACE_Mailto_Addr (), nullptr);
+  else
+    ACE_NEW_RETURN (raw_addr, ACE_URL_Addr (), nullptr);
+
+  std::unique_ptr<ACE_URL_Addr> addr (raw_addr);
   if (addr->string_to_addr (url) != 0)
-    {
-      delete addr;
-      addr = nullptr;
-    }
-  return addr;
+    return nullptr;
+  return addr.release ();
 }
 
 bool
@@ -253,13 +258,14 @@ ACE_HTTP_Addr::set (const ACE_TCHAR *host_name,
 
   size_t size = this->url_size (1);
 
-  ACE_TCHAR *buffer;
-  ACE_ALLOCATOR_RETURN (buffer,
+  ACE_TCHAR *raw_buffer {};
+  ACE_ALLOCATOR_RETURN (raw_buffer,
                         reinterpret_cast<ACE_TCHAR *> (ACE_OS::malloc (size)),
                         -1);
-  if (this->addr_to_string (buffer, size, 1) == -1)
+  URL_String buffer (raw_buffer);
+  if (this->addr_to_string (buffer.get (), size, 1) == -1)
     return -1;
-  this->set_url (buffer);
+  this->set_url (buffer.release ());
   return 0;
 }
 
@@ -400,40 +406,41 @@ ACE_HTTP_Addr::create_relative_address (const ACE_TCHAR *url) const
   else
     {
       const ACE_TCHAR *path = this->get_path ();
-      ACE_TCHAR *buf;
+      ACE_TCHAR *raw_buffer {};
       size_t n = ACE_OS::strlen (url)
         + ACE_OS::strlen (path)
         + 2;
-      ACE_NEW_RETURN (buf,
+      ACE_NEW_RETURN (raw_buffer,
                       ACE_TCHAR [n],
                       nullptr);
+      std::unique_ptr<ACE_TCHAR[]> buffer (raw_buffer);
 
       // We copy the contens of <path> into <buf>; but simplifying the
       // path, to avoid infinite loop like:
       // "foo/../foo/../foo/../foo/../foo/index.html"
       //
-      ACE_TCHAR *target = buf;
+      ACE_TCHAR *target = buffer.get ();
 
       // Copy the path
-      path_copy (buf, buf + n, target, path);
+      path_copy (buffer.get (), buffer.get () + n, target, path);
 
       if (url[0] == '#')
         {
           // Remove any # from the path
           ACE_TCHAR *p = target;
 
-          while (p != buf && *(--p) != '#')
+          while (p != buffer.get () && *(--p) != '#')
             {
               // No action.
             }
 
-          if (p != buf)
+          if (p != buffer.get ())
             target = p;
         }
       else
         {
           // Go back to the last / to remove the basename.
-          while (target != buf && *(--target) != '/')
+          while (target != buffer.get () && *(--target) != '/')
             {
               // No action.
             }
@@ -445,7 +452,7 @@ ACE_HTTP_Addr::create_relative_address (const ACE_TCHAR *url) const
               if (url[1] == '.')
                 {
                   // A ../ go back
-                  while (target != buf && *(--target) != '/')
+                  while (target != buffer.get () && *(--target) != '/')
                     {
                       // No action.
                     }
@@ -462,15 +469,14 @@ ACE_HTTP_Addr::create_relative_address (const ACE_TCHAR *url) const
           *target = '/'; ++target;
         }
       // Copy the url
-      path_copy (buf, buf + n, target, url);
+      path_copy (buffer.get (), buffer.get () + n, target, url);
       // null terminate.
       *target = 0;
       ACE_NEW_RETURN (addr, ACE_HTTP_Addr (this->get_hostname (),
-                                           buf,
+                                           buffer.get (),
                                            nullptr,
                                            this->get_port_number ()),
                       nullptr);
-      delete[] buf;
     }
 
   return addr;
@@ -647,13 +653,14 @@ ACE_FTP_Addr::set (const ACE_TCHAR *host_name,
 
   size_t size = this->url_size (1);
 
-  ACE_TCHAR *buffer;
-  ACE_ALLOCATOR_RETURN (buffer,
+  ACE_TCHAR *raw_buffer {};
+  ACE_ALLOCATOR_RETURN (raw_buffer,
                         reinterpret_cast<ACE_TCHAR *> (ACE_OS::malloc (size)),
                         -1);
-  if (this->addr_to_string (buffer, size, 1) == -1)
+  URL_String buffer (raw_buffer);
+  if (this->addr_to_string (buffer.get (), size, 1) == -1)
     return -1;
-  this->set_url (buffer);
+  this->set_url (buffer.release ());
   return 0;
 }
 
@@ -884,13 +891,14 @@ ACE_Mailto_Addr::set (const ACE_TCHAR *user,
   else
     this->headers_.reset ();
   size_t size = this->url_size (1);
-  ACE_TCHAR *buffer;
-  ACE_ALLOCATOR_RETURN (buffer,
+  ACE_TCHAR *raw_buffer {};
+  ACE_ALLOCATOR_RETURN (raw_buffer,
                         reinterpret_cast<ACE_TCHAR *> (ACE_OS::malloc (size)),
                         -1);
-  if (this->addr_to_string (buffer, size, 1) == -1)
+  URL_String buffer (raw_buffer);
+  if (this->addr_to_string (buffer.get (), size, 1) == -1)
     return -1;
-  this->set_url (buffer);
+  this->set_url (buffer.release ());
   return 0;
 }
 
