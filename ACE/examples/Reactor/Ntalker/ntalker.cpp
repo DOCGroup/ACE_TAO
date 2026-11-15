@@ -1,5 +1,5 @@
-// Listens to multicast address.  After first message received, will
-// listen for 5 more seconds.  Prints Mbits/sec received from client.
+/// Listens to a multicast address. After the first message, it listens for
+/// five more seconds and prints Mbits/sec received from the client.
 
 #include "ace/OS_main.h"
 #include "ace/OS_NS_unistd.h"
@@ -18,10 +18,9 @@ static ACE_TCHAR const *INTERFACE {};
 static constexpr char MCAST_ADDR[] = ACE_DEFAULT_MULTICAST_ADDR;
 static constexpr u_short UDP_PORT = ACE_DEFAULT_MULTICAST_PORT;
 
+/// Handles both multicast and stdin events.
 class Handler : public ACE_Event_Handler
 {
-  // = TITLE
-  //     Handle both multicast and stdin events.
 public:
   Handler (u_short const udp_port,
            char const *ip_addr,
@@ -35,17 +34,19 @@ public:
   Handler &operator= (Handler const &) = delete;
   Handler &operator= (Handler &&) = delete;
 
-  // Event demuxer hooks.
+  /// @name Event demultiplexer hooks
+  /// @{
   int handle_input (ACE_HANDLE) override;
   int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override;
   ACE_HANDLE get_handle () const override;
+  /// @}
 
 private:
+  /// Multicast wrapper.
   ACE_SOCK_Dgram_Mcast mcast_;
-  // Multicast wrapper.
 
+  /// Address to multicast to.
   ACE_INET_Addr sockmc_addr_;
-  // Address to multicast to.
 };
 
 ACE_HANDLE
