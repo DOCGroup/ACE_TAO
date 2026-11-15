@@ -61,9 +61,11 @@ ACE_URL_Addr::set (const ACE_URL_Addr& address)
 int
 ACE_URL_Addr::string_to_addr (const ACE_TCHAR *address)
 {
-  this->url_.reset ();
   if (address == nullptr)
-    return -1;
+    {
+      this->url_.reset ();
+      return -1;
+    }
 
   ACE_TCHAR *url {};
   ACE_ALLOCATOR_RETURN (url, ACE_OS::strdup (address), -1);

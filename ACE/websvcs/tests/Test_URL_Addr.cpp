@@ -1,19 +1,37 @@
 #include "websvcs/lib/URL_Addr.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_string.h"
 #include <memory>
 
 void test_http_addr ();
 void test_ftp_addr ();
 void test_mailto_addr ();
 void test_url_addr ();
+bool test_url_buffer_aliasing ();
 
 int ACE_TMAIN (int, ACE_TCHAR*[])
 {
+  if (!test_url_buffer_aliasing ())
+    {
+      ACE_ERROR ((LM_ERROR, "URL buffer aliasing test failed\n"));
+      return 1;
+    }
+
   test_http_addr ();
   test_ftp_addr ();
   test_mailto_addr ();
   test_url_addr ();
   return 0;
+}
+
+bool test_url_buffer_aliasing ()
+{
+  ACE_HTTP_Addr addr;
+  ACE_TCHAR const url[] = ACE_TEXT ("http://www.cs.wustl.edu/");
+
+  return addr.string_to_addr (url) == 0
+    && addr.string_to_addr (addr.get_url ()) == 0
+    && ACE_OS::strcmp (addr.get_url (), url) == 0;
 }
 
 #define HTTP_TEST_ARRAY \
