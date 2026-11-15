@@ -168,8 +168,8 @@ public:
    */
   void dump () const;
 
-  // = Compare operators
-
+  /// @name Comparison operators
+  /// @{
   /// Equality comparison operator.
   /**
    * Compare this vector with @arg s for equality.  Two vectors are equal
@@ -184,6 +184,7 @@ public:
    * @c *this == @arg s.
    */
   bool operator!= (ACE_Vector<T, DEFAULT_SIZE> const &s) const;
+  /// @}
 
   void swap (ACE_Vector &rhs);
 
@@ -226,8 +227,8 @@ class ACE_Vector_Iterator
 public:
   explicit ACE_Vector_Iterator (ACE_Vector<T, DEFAULT_SIZE> &);
 
-  // = Iteration methods.
-
+  /// @name Iteration methods
+  /// @{
   /// Pass back the @a next_item that hasn't been seen in the vector.
   /// Returns 0 when all items have been seen, else 1.
   int next (T *&next_item);
@@ -238,6 +239,7 @@ public:
 
   /// Returns 1 when all items have been seen, else 0.
   int done () const;
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;

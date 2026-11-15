@@ -46,7 +46,8 @@ public:
 
   virtual ~ACE_Sig_Handler ();
 
-  // = Registration and removal methods.
+  /// @name Registration and removal
+  /// @{
   /**
    * Add a new ACE_Event_Handler and a new sigaction associated with
    * @a signum.  Passes back the existing ACE_Event_Handler and its
@@ -71,15 +72,19 @@ public:
                               ACE_Sig_Action *new_disp = nullptr,
                               ACE_Sig_Action *old_disp = nullptr,
                               int sigkey = -1);
+  /// @}
 
-  // Set/get signal status.
+  /// @name Signal status
+  /// @{
   /// True if there is a pending signal.
   static int sig_pending ();
 
   /// Reset the value of sig_pending_ so that no signal is pending.
   static void sig_pending (int);
+  /// @}
 
-  // = Set/get the handler associated with a particular signal.
+  /// @name Signal handlers
+  /// @{
 
   /// Return the ACE_Sig_Handler associated with @a signum.
   virtual ACE_Event_Handler *handler (int signum);
@@ -94,6 +99,7 @@ public:
    * ACE_Event_Handler.
    */
   static void dispatch (int, siginfo_t *, ucontext_t *);
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;
@@ -102,7 +108,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  // = These methods and data members are shared by derived classes.
+  /// Methods and data shared by derived classes.
 
   /**
    * Set a new ACE_Event_Handler that is associated with @a signum.
@@ -163,7 +169,8 @@ public:
   /// Default constructor
   ACE_Sig_Handlers ();
 
-  // = Registration and removal methods.
+  /// @name Registration and removal
+  /// @{
   /**
    * Add a new ACE_Event_Handler and a new sigaction associated with
    * @a signum.  Passes back the existing ACE_Event_Handler and its
@@ -189,9 +196,10 @@ public:
                       ACE_Sig_Action *new_disp = nullptr,
                       ACE_Sig_Action *old_disp = nullptr,
                       int sigkey = -1) override;
+  /// @}
 
-  // = Set/get the handler associated with a particular signal.
-
+  /// @name Signal handlers
+  /// @{
   /// Return the head of the list of ACE_Sig_Handlers associated with
   /// @a signum.
   ACE_Event_Handler *handler (int signum) override;
@@ -209,6 +217,7 @@ public:
    * ACE_Event_Handlers for @a signum
    */
   static void dispatch (int signum, siginfo_t *, ucontext_t *);
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;

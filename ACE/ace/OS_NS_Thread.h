@@ -786,9 +786,8 @@ private:
   ACE_hthread_t thread_handle_;
 };
 
-// = The ACE_Sched_Priority type should be used for platform-
-//   independent thread and process priorities, by convention.
-//   int should be used for OS-specific priorities.
+/// Use ACE_Sched_Priority for platform-independent thread and process
+/// priorities; use int for OS-specific priorities.
 using ACE_Sched_Priority = int;
 
 # if !defined (ACE_DEFAULT_SYNCH_TYPE)

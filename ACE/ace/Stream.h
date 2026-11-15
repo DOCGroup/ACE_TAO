@@ -59,7 +59,8 @@ public:
     M_DELETE = 3
   };
 
-  // = Initializatation and termination methods.
+  /// @name Initialization and termination
+  /// @{
   /**
    * Create a Stream consisting of @a head and @a tail as the Stream
    * head and Stream tail, respectively.  If these are nullptr then the
@@ -85,8 +86,10 @@ public:
 
   /// Close down the stream and release all the resources.
   virtual ~ACE_Stream ();
+  /// @}
 
-  // = ACE_Stream plumbing operations
+  /// @name Stream operations
+  /// @{
 
   /// Add a new module @a mod right below the Stream head.  The
   /// @c open() hook methods of the @c ACE_Tasks in this ACE_Module
@@ -130,8 +133,10 @@ public:
 
   /// Remove a pipe formed between two Streams.
   virtual int unlink ();
+  /// @}
 
-  // = Blocking data transfer operations
+  /// @name Blocking data transfer
+  /// @{
   /**
    * Send the message @a mb down the stream, starting at the Module
    * below the Stream head.  Wait for upto @a timeout amount of
@@ -155,6 +160,7 @@ public:
 
   /// Synchronize with the final close of the stream.
   virtual int wait ();
+  /// @}
 
   /// Dump the state of an object.
   virtual void dump () const;
@@ -172,7 +178,8 @@ protected:
   /// Pointer to an adjoining linked stream.
   ACE_Stream<ACE_SYNCH_USE, TIME_POLICY> *linked_us_ {};
 
-  // = Synchronization objects used for thread-safe streams.
+  /// @name Synchronization objects for thread-safe streams
+  /// @{
   /// Protect the stream against race conditions.
   mutable ACE_SYNCH_MUTEX_T lock_;
 
@@ -186,6 +193,7 @@ protected:
 
   /// Use to tell all threads waiting on the close that we are done.
   ACE_SYNCH_CONDITION_T final_close_;
+  /// @}
 
 private:
   /// Actually perform the unlinking of two Streams (must be called
@@ -214,7 +222,8 @@ public:
   explicit ACE_Stream_Iterator (
     ACE_Stream<ACE_SYNCH_USE, TIME_POLICY> const &sr);
 
-  // = Iteration methods.
+  /// @name Iteration methods
+  /// @{
 
   /// Pass back the @a next_item that hasn't been seen in the set.
   /// Returns 0 when all items have been seen, else 1.
@@ -226,6 +235,7 @@ public:
   /// Move forward by one element in the set.  Returns 0 when all the
   /// items in the set have been seen, else 1.
   int advance ();
+  /// @}
 
 private:
   /// Next ACE_Module that we haven't yet seen.
