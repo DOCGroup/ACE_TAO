@@ -1,16 +1,9 @@
-// =========================================================================================================
-//
-// = FILE
-//     NavWeap.idl
-//
-// = DESCRIPTION
-//    Navigation and Weapon structs for the DOVE/EventService demo.
-
-// = AUTHORS
-//     Michael Kircher <mk1@cec.wustl.edu>
-//     Modified by
-//     Chris Gill <cdgill@cs.wustl.edu>
-// =========================================================================================================
+/**
+ * @file NavWeap.idl
+ * @brief Navigation and weapon structs for the DOVE/EventService demo.
+ * @author Michael Kircher <mk1@cec.wustl.edu>
+ * @author Chris Gill <cdgill@cs.wustl.edu> (modified)
+ */
 
 #include "tao/TimeBase.pidl"
 
@@ -22,7 +15,8 @@ struct Navigation
   long heading;
   long roll;
   long pitch;
-  // common part
+  /// @name Common part
+  /// @{
   double utilization;
   double overhead;
   TimeBase::TimeT arrival_time;
@@ -31,6 +25,7 @@ struct Navigation
   TimeBase::TimeT computation_time;
   unsigned long criticality;
   unsigned long update_data;
+  /// @}
 };
 
 struct Weapons
@@ -46,7 +41,8 @@ struct Weapons
   unsigned long weapon4_status;
   string weapon5_identifier;
   unsigned long weapon5_status;
-  // common part
+  /// @name Common part
+  /// @{
   double utilization;
   double overhead;
   TimeBase::TimeT arrival_time;
@@ -55,15 +51,13 @@ struct Weapons
   TimeBase::TimeT computation_time;
   unsigned long criticality;
   unsigned long update_data;
+  /// @}
 };
 
+/// This interface provides an operation for cleanly shutting down the ORB
+/// from a synchronously dispatched servant when a request originates in
+/// another thread.
 interface NavWeapTerminator
-    // = DESCRIPTION
-    // This interface specifies a single operation, used
-    // to shut down the orb.  This allows the orb to
-    // be shut down cleanly, from within a synchronously
-    // servant dispatched servant, but with the request
-    // originating from another thread.
 {
   void shutdown ();
 };

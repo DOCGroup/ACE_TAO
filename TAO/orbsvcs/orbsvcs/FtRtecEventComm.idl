@@ -1,12 +1,10 @@
-// -*- IDL -*-
+/// -*- IDL -*-
 
-//=============================================================================
 /**
  *  @file    FtRtecEventComm.idl
  *
  *  @author Huang-Ming Huang
  */
-//=============================================================================
 
 #ifndef FTRTECEVNETCOMM_H
 #define FTRTECEVNETCOMM_H

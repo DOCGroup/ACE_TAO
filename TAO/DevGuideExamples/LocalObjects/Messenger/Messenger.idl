@@ -1,4 +1,4 @@
-// Messenger.idl
+/// @file Messenger.idl
 
 local interface Messenger
 {

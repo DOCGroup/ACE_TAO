@@ -3,15 +3,9 @@ module MCast
 
   interface Server
   {
-    // = TITLE
-    //
-    // = DESCRIPTION
-    //     Prints out the status.
-
+    /// Prints out the status.
+    /// Returns true if the server received the request from the client.
     boolean connect_server ();
-    // Return <true> if the server received the
-    // request from the client.
-
   };
 
 };

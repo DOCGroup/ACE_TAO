@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-//=============================================================================
 /**
  *  @file   CosTrading.idl
  *
@@ -8,8 +7,6 @@
  * Services Specification, chapter 16 OMG IDL for Trading Function
  * Module, p 16-74
  */
-//=============================================================================
-
 
 #ifndef TAO_TRADING_IDL
 #define TAO_TRADING_IDL
@@ -20,7 +17,7 @@
 
 module CosTrading
 {
-  // forward references to our interfaces
+  /// forward references to our interfaces
 
   interface Lookup;
   interface Register;
@@ -30,7 +27,7 @@ module CosTrading
   interface OfferIterator;
   interface OfferIdIterator;
 
-  // type definitions used in more than one interface
+  /// type definitions used in more than one interface
   typedef string Istring;
   typedef Object TypeRepository;
 
@@ -55,7 +52,8 @@ module CosTrading
   typedef string OfferId;
   typedef sequence<OfferId> OfferIdSeq;
 
-  typedef Istring ServiceTypeName;  // similar structure to IR::Identifier
+  /// similar structure to IR::Identifier
+  typedef Istring ServiceTypeName;
 
   typedef Istring Constraint;
 
@@ -70,7 +68,8 @@ module CosTrading
   typedef sequence<LinkName> LinkNameSeq;
   typedef LinkNameSeq TraderName;
 
-  typedef string PolicyName;  // policy names restricted to Latin1
+  /// policy names restricted to Latin1
+  typedef string PolicyName;
   typedef sequence<PolicyName> PolicyNameSeq;
   typedef any PolicyValue;
 
@@ -81,7 +80,7 @@ module CosTrading
   };
   typedef sequence<Policy> PolicySeq;
 
-  // exceptions used in more than one interface
+  /// exceptions used in more than one interface
 
   exception UnknownMaxLeft {};
 
@@ -150,7 +149,7 @@ module CosTrading
        PolicyName name;
      };
 
-     // the interfaces
+     /// the interfaces
 
    interface TraderComponents
      {
@@ -296,7 +295,8 @@ module CosTrading
                    IllegalServiceType,
                    UnknownServiceType,
                    InterfaceTypeMismatch,
-                   IllegalPropertyName, // e.g. prop_name = "<foo-bar"
+                   /// e.g. prop_name = "<foo-bar"
+                   IllegalPropertyName,
                    PropertyTypeMismatch,
                    ReadonlyDynamicProperty,
                    MissingMandatoryProperty,
@@ -378,7 +378,8 @@ module CosTrading
                                in FollowOption limiting_follow_rule)
                   raises (IllegalLinkName,
                           DuplicateLinkName,
-                          InvalidLookupRef, // e.g. nil
+                          /// e.g. nil
+                          InvalidLookupRef,
                           DefaultFollowTooPermissive,
                           LimitingFollowTooPermissive);
 
@@ -431,7 +432,8 @@ module CosTrading
                                   in PolicySeq policies_to_pass_on)
               raises (IllegalServiceType,
                       UnknownServiceType,
-                      InvalidLookupRef, // e.g. nil
+                      /// e.g. nil
+                      InvalidLookupRef,
                       IllegalPropertyName,
                       PropertyTypeMismatch,
                       ReadonlyDynamicProperty,

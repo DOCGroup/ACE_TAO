@@ -1,10 +1,10 @@
 interface test
 {
+  /// Returns numbers: they are constantly increasing
   long doit ();
-  // Returns numbers: they are constantly increasing
 
+  /// Raised if object cannot be forwarded.
   exception Cannot_Forward {};
-  // Raised if object cannot be forwarded.
 
   void forward ()
     raises (Cannot_Forward);

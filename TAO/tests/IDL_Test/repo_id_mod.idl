@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    repo_id_mod.idl
  *
@@ -11,8 +10,6 @@
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
  */
-//=============================================================================
-
 
 module gleep
 {
@@ -28,8 +25,8 @@ module gleep
 {
   local interface schlemiel {};
 
-  // This should propagate to all previous and subsequent
-  // openings of this module.
+  /// This should propagate to all previous and subsequent
+  /// openings of this module.
   typeprefix gleep "gleep_prefix";
 };
 
@@ -42,7 +39,7 @@ module gleep
     local interface schmuck {};
     local interface schmendrick;
 
-// Tests the handling of extra whitespace as well as the version setting.
+/// Tests the handling of extra whitespace as well as the version setting.
 #    pragma version     gleep::floop::schmendrick    524.23
 
     local interface schmendrick {};
@@ -51,8 +48,8 @@ module gleep
     {
       local interface schlemazel {};
 
-    // This will override the prefix directive for module floop at the end
-    // of the file.
+    /// This will override the prefix directive for module floop at the end
+    /// of the file.
       typeprefix floop::verklempt "verklempt_prefix";
     };
   };
@@ -60,11 +57,11 @@ module gleep
   local interface schmegegging {};
 };
 
-// This should override any existing prefix and disable any subsequent
-// attempts to set it, such as in the directive below.
+/// This should override any existing prefix and disable any subsequent
+/// attempts to set it, such as in the directive below.
 typeid gleep::floop::schmuck "ABRA:cadabra/hocus/pocus:1.23";
 
-// This will affect everything in floop's scope recursively, except items
-// which have a prefix that was applied to a narrower scope.
+/// This will affect everything in floop's scope recursively, except items
+/// which have a prefix that was applied to a narrower scope.
 typeprefix ::gleep::floop "floop_prefix";
 

@@ -1,4 +1,4 @@
-// Logger.idl
+/// @file Logger.idl
 
 interface Logger
 {

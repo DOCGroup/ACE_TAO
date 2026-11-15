@@ -1,5 +1,4 @@
-// file: inner.idl
-
+/// @file inner.idl
 
 interface Inner
 {

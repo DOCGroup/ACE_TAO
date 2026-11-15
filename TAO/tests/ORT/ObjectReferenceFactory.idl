@@ -1,13 +1,10 @@
-// -*- IDL -*-
+/// -*- IDL -*-
 
-//=============================================================================
 /**
  * @file   ObjectReferenceFactory.idl
  *
  * @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
-
 
 #ifndef OBJECT_REFERENCE_FACTORY_IDL
 #define OBJECT_REFERENCE_FACTORY_IDL

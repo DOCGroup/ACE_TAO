@@ -1,4 +1,4 @@
-// -*- C++ -*-
+/// -*- C++ -*-
 module warehouse
 {
   interface inventory
@@ -8,5 +8,4 @@ module warehouse
                        out float price);
   };
 };
-
 

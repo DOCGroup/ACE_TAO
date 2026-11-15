@@ -1,22 +1,13 @@
-///////////////////////////////////////////////////////////////////////////////
 /**
- * \file Supports_Test.idl
+ * @file Supports_Test.idl
+ * @author George Edwards <g.edwards@vanderbilt.edu>
+ * @brief Defines valuetypes and interfaces for testing TAO's OBV support.
  *
- * \author George Edwards <g.edwards@vanderbilt.edu>
- *
- * This file contain definitions of the valuetypes and interfaces of
- * Supports_Test, a test of TAO's OBV capabilities. Specifically, Supports_Test
- * checks proper operation of the following features:
- *
- * -Valuetypes that support concrete interfaces:
- *    Using the same valuetype implementation, Supports_Test creates both
- *    valuetypes and object references, passes them as parameters, and
- *    invokes both local and remote calls.
- * -ORB::register_value_factory () return values:
- *    Supports_Test checks the return values of register_value_factory () to
- *    ensure compliance with the spec.
+ * The test checks valuetypes that support concrete interfaces by using one
+ * implementation for both valuetypes and object references, passing them as
+ * parameters, and invoking local and remote calls. It also checks the return
+ * values of ORB::register_value_factory().
  */
-///////////////////////////////////////////////////////////////////////////////
 
 module Supports_Test
 {
@@ -26,10 +17,9 @@ module Supports_Test
   typedef sequence<Node> Node_List;
 
   /**
+   * @brief Basic building block of the vt_graph valuetype defined below.
    *
-   * This valuetype is the basic building block of the vt_graph valuetype,
-   * defined below. Some of these operations and state members are not
-   * currently used in the test.
+   * Some operations and state members are not currently used in the test.
    */
   valuetype Node
   {
@@ -50,12 +40,10 @@ module Supports_Test
   };
 
   /**
-   * \interface graph
+   * @brief Operations invoked on vt_graph valuetypes and graph object refs.
    *
-   * This interface contains the operations we will invoke on vt_graph
-   * valuetypes as well as graph object references. The implementations of
-   * these operations will be defined in vt_graph. All graph object refs will
-   * be vt_graphs under the hood.
+   * The implementations are defined in vt_graph. All graph object refs are
+   * vt_graph instances under the hood.
    */
   interface graph
   {
@@ -74,11 +62,7 @@ module Supports_Test
 
   };
 
-  /**
-   * \interface test
-   *
-   * This interface contains the operations that will perform the tests.
-   */
+  /// Operations used to run the test.
   interface test
   {
 

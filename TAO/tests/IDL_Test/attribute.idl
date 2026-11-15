@@ -9,7 +9,7 @@ module Hello
 
   typedef short MyType;
 
-  // Sender/Receiver interface
+  /// Sender/Receiver interface
   interface MyFoo
     {
       attribute MyType rw_attrib_mytype

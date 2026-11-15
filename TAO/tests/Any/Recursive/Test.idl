@@ -30,8 +30,6 @@ module Test
     long i;
   };
 
-  // --------------------------
-
   union RecursiveUnion;
   typedef sequence<RecursiveUnion> RecursiveUnionSeq;
 
@@ -95,10 +93,6 @@ module Test
     RecursiveUnionSeqNoDefault recursive_unions_second;
   };
 
-  // --------------------------
-
-  // --------------------------
-
   enum VSort {
     UNKNOWN_TYPE,
     RECURSIVE_TYPE,
@@ -116,8 +110,6 @@ module Test
     long i;
   };
 
-  // --------------------------
-
   union EnumUnion switch (VSort)
   {
   case BOOL_STYPE:
@@ -125,8 +117,6 @@ module Test
   case LONG_STYPE:
     long i;
   };
-
-  // --------------------------
 
   valuetype IndirectlyRecursiveValuetype;
   typedef sequence<IndirectlyRecursiveValuetype>
@@ -137,15 +127,11 @@ module Test
     public IndirectlyRecursiveValuetypeSeq recursive_valuetypes;
   };
 
-  // --------------------------
-
   valuetype DirectlyRecursiveValuetype
   {
     public DirectlyRecursiveValuetype recursive_valuetype;
     public DirectlyRecursiveValuetype recursive_valuetype_second;
   };
-
-  // --------------------------
 
   enum PositionEnum { unknownpos };
 
@@ -165,8 +151,6 @@ module Test
   case OCTET_SEQ_TYPE:
     OctetSeq octet_seq_val;
   };
-
-  // --------------------------
 
   enum ValueSort2 {
     SYMBOL_TYPE2

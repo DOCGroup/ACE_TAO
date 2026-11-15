@@ -1,6 +1,6 @@
-// -*- IDL -*-
+/// -*- IDL -*-
 
-// Included for compatibility with the CORBA 2 specification.
+/// Included for compatibility with the CORBA 2 specification.
 
 #ifndef TAO_ORB_IDL
 #define TAO_ORB_IDL
