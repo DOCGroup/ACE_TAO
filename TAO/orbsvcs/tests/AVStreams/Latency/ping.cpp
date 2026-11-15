@@ -91,9 +91,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       int const result = parse_args (argc, argv);
       if (result != 0)
-      {
-        return result;
-      }
+        {
+          return result;
+        }
 
       CORBA::Object_var obj
         = orb->resolve_initial_references ("RootPOA");
@@ -134,11 +134,13 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           File_Ptr output_file (ACE_OS::fopen (ior_output_file.c_str (), ACE_TEXT ("w")),
                                 std::fclose);
           if (!output_file)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Cannot open output file %s for writing IOR: %C",
-                               ior_output_file.c_str (),
-                               ior.in ()),
-                              1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Cannot open output file %s for writing IOR: %C",
+                                 ior_output_file.c_str (),
+                                 ior.in ()),
+                                1);
+            }
           std::fprintf (output_file.get (), "%s", ior.in ());
         }
 
@@ -197,7 +199,7 @@ Ping_Recv::get_callback (char const *,
                          TAO_AV_Callback *&callback)
 {
   ACE_DEBUG ((LM_DEBUG,"Ping_Recv::get_callback\n"));
-  callback = &this->callback_;
+  callback = std::addressof (this->callback_);
   return 0;
 }
 
@@ -225,14 +227,14 @@ Ping_Recv_Callback::receive_frame (ACE_Message_Block *frame,
            i != nullptr;
            i = i->cont ())
         {
-          ACE_hrtime_t stamp;
+          ACE_hrtime_t stamp {};
 
-          if (i->length () < sizeof(stamp))
-          {
-            return 0;
-          }
+          if (i->length () < sizeof (stamp))
+            {
+              return 0;
+            }
 
-          std::memcpy (&stamp, i->rd_ptr (), sizeof(stamp));
+          std::memcpy (std::addressof (stamp), i->rd_ptr (), sizeof (stamp));
 
           ACE_hrtime_t const now = ACE_OS::gethrtime ();
           if (recv_base == 0)
@@ -241,20 +243,20 @@ Ping_Recv_Callback::receive_frame (ACE_Message_Block *frame,
             }
           else
             {
-          recv_latency.sample (now - recv_base,
-                               now - stamp);
+              recv_latency.sample (now - recv_base,
+                                   now - stamp);
             }
 
           if (respond)
-          {
-            pong_callback.send_response (stamp);
-          }
+            {
+              pong_callback.send_response (stamp);
+            }
         }
     }
   else
-  {
-    TAO_AV_CORE::instance ()->orb ()->shutdown ();
-  }
+    {
+      TAO_AV_CORE::instance ()->orb ()->shutdown ();
+    }
   return 0;
 }
 
@@ -279,7 +281,7 @@ Pong_Send::get_callback (char const *,
                          TAO_AV_Callback *&callback)
 {
   ACE_DEBUG ((LM_DEBUG,"Pong_Send::get_callback\n"));
-  callback = &pong_callback;
+  callback = std::addressof (pong_callback);
   return 0;
 }
 
@@ -308,12 +310,14 @@ Pong_Send_Callback::send_response (ACE_hrtime_t stamp)
                         buf.size () * sizeof (buf[0]));
   mb.wr_ptr (buf.size () * sizeof (buf[0]));
 
-  int const result = this->protocol_object_->send_frame (&mb);
+  int const result = this->protocol_object_->send_frame (std::addressof (mb));
   if (result < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Pong_Send_Callback::send - %p\n",
-                       ""),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Pong_Send_Callback::send - %p\n",
+                         ""),
+                        -1);
+    }
 
   return 0;
 }

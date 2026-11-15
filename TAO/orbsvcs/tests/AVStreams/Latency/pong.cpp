@@ -59,14 +59,14 @@ parse_args (int argc, ACE_TCHAR *argv[])
         {
           int const requested_message_size = ACE_OS::atoi (get_opts.opt_arg ());
           if (requested_message_size < static_cast<int> (sizeof(ACE_hrtime_t)))
-          {
-            ACE_DEBUG ((LM_DEBUG, "Invalid message size\n"));
-            message_size = 64;
-          }
+            {
+              ACE_DEBUG ((LM_DEBUG, "Invalid message size\n"));
+              message_size = 64;
+            }
           else
-          {
-            message_size = static_cast<size_t> (requested_message_size);
-          }
+            {
+              message_size = static_cast<size_t> (requested_message_size);
+            }
         }
         break;
 
@@ -113,9 +113,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       int const result = parse_args (argc, argv);
       if (result != 0)
-      {
-        return result;
-      }
+        {
+          return result;
+        }
 
       CORBA::Object_var obj
         = orb->resolve_initial_references ("RootPOA");
@@ -155,11 +155,13 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           File_Ptr output_file (ACE_OS::fopen (ior_output_file.c_str (), ACE_TEXT ("w")),
                                 std::fclose);
           if (!output_file)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Cannot open output file %s for writing IOR: %C",
-                               ior_output_file.c_str (),
-                               ior.in ()),
-                              1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Cannot open output file %s for writing IOR: %C",
+                                 ior_output_file.c_str (),
+                                 ior.in ()),
+                                1);
+            }
           std::fprintf (output_file.get (), "%s", ior.in ());
         }
 
@@ -219,7 +221,7 @@ int
 Pong_Recv::get_callback (char const *,
                          TAO_AV_Callback *&callback)
 {
-  callback = &this->callback_;
+  callback = std::addressof (this->callback_);
   return 0;
 }
 
@@ -280,7 +282,7 @@ int
 Ping_Send::get_callback (char const *,
                          TAO_AV_Callback *&callback)
 {
-  callback = &this->callback_;
+  callback = std::addressof (this->callback_);
   return 0;
 }
 
@@ -295,7 +297,7 @@ void
 Ping_Send_Callback::get_timeout (ACE_Time_Value *&tv,
                                  void *&)
 {
-  tv = &this->timeout_;
+  tv = std::addressof (this->timeout_);
 }
 
 int
@@ -312,14 +314,17 @@ Ping_Send_Callback::handle_timeout (void *)
     }
 
   ACE_hrtime_t const stamp = ACE_OS::gethrtime ();
-  std::memcpy (this->frame_.rd_ptr (), &stamp, sizeof(stamp));
+  std::memcpy (this->frame_.rd_ptr (), std::addressof (stamp), sizeof (stamp));
 
-  int const result = this->protocol_object_->send_frame (&this->frame_);
+  int const result = this->protocol_object_->send_frame (
+    std::addressof (this->frame_));
   if (result < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Ping_Send_Callback::handle_timeout - send_frame - %p\n",
-                       ""),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Ping_Send_Callback::handle_timeout - send_frame - %p\n",
+                         ""),
+                        -1);
+    }
 
   if (send_throughput_base == 0)
     {

@@ -5,6 +5,7 @@
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
 #include "ace/INET_Addr.h"
+#include <memory>
 
 struct Control_Options
 {
@@ -75,9 +76,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
       int const result = parse_args (argc, argv);
       if (result != 0)
-      {
-        return result;
-      }
+        {
+          return result;
+        }
 
       CORBA::Object_var obj
         = orb->resolve_initial_references ("RootPOA");
@@ -104,7 +105,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                        "UNS:ping",
                                        "",
                                        ACE_TEXT_ALWAYS_CHAR (options.protocol.c_str ()),
-                                       &ping_addr);
+                                       std::addressof (ping_addr));
       flow_spec[0] = CORBA::string_dup (ping.entry_to_string ());
 
       ACE_INET_Addr pong_addr;
@@ -114,7 +115,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                        "UNS:pong",
                                        "",
                                        ACE_TEXT_ALWAYS_CHAR (options.protocol.c_str ()),
-                                       &pong_addr);
+                                       std::addressof (pong_addr));
       flow_spec[1] = CORBA::string_dup (pong.entry_to_string ());
 
       TAO_StreamCtrl stream_control_impl;
