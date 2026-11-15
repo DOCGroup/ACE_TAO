@@ -1,11 +1,8 @@
-
-//=============================================================================
 /**
  *  @file   TruncatableS_impl.h
  *
  *  @author Boris Kolpackov <bosk@ipmce.ru>
  */
-//=============================================================================
 
 #ifndef TAO_TRUNCATABLE_S_IMPL_H
 #define TAO_TRUNCATABLE_S_IMPL_H
@@ -23,7 +20,6 @@
 class Test_impl : public POA_OBV_TruncatableTest::Test
 {
 public:
-  /// ctor
   explicit Test_impl (CORBA::ORB_ptr orb);
 
   Test_impl (Test_impl const&) = delete;
@@ -64,7 +60,7 @@ public:
 
 private:
   /// The ORB
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 };
 
 #endif /* TAO_TRUNCATABLE_S_IMPL_H */
